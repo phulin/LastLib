@@ -1,0 +1,1877 @@
+# Automorphic Representations of $\mathrm{GL}_2$
+
+## Contents
+
+1. [The global representation problem](#1-the-global-representation-problem)
+   - [From arithmetic functions to one global representation](#11-from-arithmetic-functions-to-one-global-representation)
+   - [Standing notation and conventions](#12-standing-notation-and-conventions)
+   - [What will and will not be constructed](#13-what-will-and-will-not-be-constructed)
+2. [The adelic group and its quotients](#2-the-adelic-group-and-its-quotients)
+   - [Restricted products and rational points](#21-restricted-products-and-rational-points)
+   - [The center and the determinant direction](#22-the-center-and-the-determinant-direction)
+   - [Haar measures and quotient integration](#23-haar-measures-and-quotient-integration)
+   - [Reduction theory and finite volume](#24-reduction-theory-and-finite-volume)
+   - [A lattice model for the cusp](#25-a-lattice-model-for-the-cusp)
+3. [Automorphic forms and central characters](#3-automorphic-forms-and-central-characters)
+   - [Why analytic and finiteness conditions coexist](#31-why-analytic-and-finiteness-conditions-coexist)
+   - [Fixed central character](#32-fixed-central-character)
+   - [Smooth automorphic representations](#33-smooth-automorphic-representations)
+   - [Examples and failures](#34-examples-and-failures)
+   - [Analytic vectors and algebraic normalizations](#35-analytic-vectors-and-algebraic-normalizations)
+4. [Constant terms and cuspidality](#4-constant-terms-and-cuspidality)
+   - [Fourier analysis along the unipotent quotient](#41-fourier-analysis-along-the-unipotent-quotient)
+   - [What cuspidality removes](#42-what-cuspidality-removes)
+   - [A Fourier counterexample](#43-a-fourier-counterexample)
+   - [Orthogonality to induced behavior](#44-orthogonality-to-induced-behavior)
+   - [Poincaré series as a source of cusp forms](#45-poincaré-series-as-a-source-of-cusp-forms)
+5. [The cuspidal spectrum](#5-the-cuspidal-spectrum)
+   - [The Hilbert space with central character](#51-the-hilbert-space-with-central-character)
+   - [Why the cuspidal spectrum is discrete](#52-why-the-cuspidal-spectrum-is-discrete)
+   - [Admissibility of global constituents](#53-admissibility-of-global-constituents)
+   - [The residual boundary](#54-the-residual-boundary)
+   - [Compact-open projectors](#55-compact-open-projectors)
+6. [Restricted tensor products and local components](#6-restricted-tensor-products-and-local-components)
+   - [Why a global irreducible representation should factor](#61-why-a-global-irreducible-representation-should-factor)
+   - [Factorization theorem](#62-factorization-theorem)
+   - [Finite and archimedean local components](#63-finite-and-archimedean-local-components)
+   - [Almost-everywhere spherical vectors](#64-almost-everywhere-spherical-vectors)
+   - [Central characters and reference vectors](#65-central-characters-and-reference-vectors)
+7. [Unramified Hecke data](#7-unramified-hecke-data)
+   - [Convolution and the fixed-level viewpoint](#71-convolution-and-the-fixed-level-viewpoint)
+   - [Satake parameters and the raw operator](#72-satake-parameters-and-the-raw-operator)
+   - [The local polynomial and standard factor](#73-the-local-polynomial-and-standard-factor)
+   - [Twists and a worked unramified example](#74-twists-and-a-worked-unramified-example)
+   - [Radial recurrences](#75-radial-recurrences)
+8. [Global Whittaker expansions](#8-global-whittaker-expansions)
+   - [Why the nonconstant coefficient should determine the form](#81-why-the-nonconstant-coefficient-should-determine-the-form)
+   - [Fourier expansion and injectivity](#82-fourier-expansion-and-injectivity)
+   - [Global and local uniqueness](#83-global-and-local-uniqueness)
+   - [The spherical Whittaker function](#84-the-spherical-whittaker-function)
+   - [Standard zeta integrals](#85-standard-zeta-integrals)
+9. [Multiplicity one](#9-multiplicity-one)
+   - [Two logically distinct assertions](#91-two-logically-distinct-assertions)
+   - [Global multiplicity one from Whittaker expansion](#92-global-multiplicity-one-from-whittaker-expansion)
+   - [The Rankin--Selberg integral](#93-the-rankin--selberg-integral)
+   - [Strong multiplicity one](#94-strong-multiplicity-one)
+10. [Contragredients, twists, and central characters](#10-contragredients-twists-and-central-characters)
+    - [The contragredient in the automorphic realization](#101-the-contragredient-in-the-automorphic-realization)
+    - [Twisting by a Hecke character](#102-twisting-by-a-hecke-character)
+    - [Finite-order and algebraic characters](#103-finite-order-and-algebraic-characters)
+    - [Self-twists and a warning](#104-self-twists-and-a-warning)
+    - [Local factors under duality](#105-local-factors-under-duality)
+11. [Conductors and compact-open invariants](#11-conductors-and-compact-open-invariants)
+    - [The local exponent and global ideal](#111-the-local-exponent-and-global-ideal)
+    - [Global level groups and existence of invariants](#112-global-level-groups-and-existence-of-invariants)
+    - [$K_0$ and the central-character correction](#113-k_0-and-the-central-character-correction)
+    - [Conductors of local families](#114-conductors-of-local-families)
+    - [Worked conductor profiles](#115-worked-conductor-profiles)
+12. [Newforms and oldforms](#12-newforms-and-oldforms)
+    - [Why minimal level singles out an eigenform](#121-why-minimal-level-singles-out-an-eigenform)
+    - [Degeneracy maps and level raising](#122-degeneracy-maps-and-level-raising)
+    - [The new subspace](#123-the-new-subspace)
+    - [A counterexample to “new means ramified everywhere”](#124-a-counterexample-to-new-means-ramified-everywhere)
+    - [Recovering new dimensions](#125-recovering-new-dimensions)
+13. [Classical modular forms over $\mathbf Q$](#13-classical-modular-forms-over-mathbf-q)
+    - [The adelization problem](#131-the-adelization-problem)
+    - [Weight, level, and central character](#132-weight-level-and-central-character)
+    - [Cuspidality and Fourier expansions](#133-cuspidality-and-fourier-expansions)
+    - [Hecke eigenvalues and the unitary shift](#134-hecke-eigenvalues-and-the-unitary-shift)
+    - [Primes dividing the level](#135-primes-dividing-the-level)
+    - [The classical correspondence](#136-the-classical-correspondence)
+14. [Hilbert modular representations](#14-hilbert-modular-representations)
+    - [Several real places, one adelic object](#141-several-real-places-one-adelic-object)
+    - [Algebraic and cohomological weights](#142-algebraic-and-cohomological-weights)
+    - [Parity from the center](#143-parity-from-the-center)
+    - [Hilbert Hecke data and conductor](#144-hilbert-hecke-data-and-conductor)
+    - [The Hilbert correspondence](#145-the-hilbert-correspondence)
+15. [Algebraicity and rationality](#15-algebraicity-and-rationality)
+    - [What finite-dimensionality proves](#151-what-finite-dimensionality-proves)
+    - [Field of rationality versus field of definition](#152-field-of-rationality-versus-field-of-definition)
+    - [Galois conjugation of eigenforms](#153-galois-conjugation-of-eigenforms)
+    - [The boundary of the algebraicity assertion](#154-the-boundary-of-the-algebraicity-assertion)
+16. [Hecke algebras on fixed-level spaces](#16-hecke-algebras-on-fixed-level-spaces)
+    - [The restricted tensor algebra](#161-the-restricted-tensor-algebra)
+    - [Spectral decomposition of the action](#162-spectral-decomposition-of-the-action)
+    - [Eigenvalue multiplicity versus representation multiplicity](#163-eigenvalue-multiplicity-versus-representation-multiplicity)
+    - [Central operators and fixed character](#164-central-operators-and-fixed-character)
+17. [The global dictionary](#17-the-global-dictionary)
+    - [From eigenform data to local representations](#171-from-eigenform-data-to-local-representations)
+    - [Normalization dictionary](#172-normalization-dictionary)
+    - [Reading local types from global data](#173-reading-local-types-from-global-data)
+    - [Twists through the dictionary](#174-twists-through-the-dictionary)
+    - [Reconstruction and its limits](#175-reconstruction-and-its-limits)
+18. [Conclusion: one form across all places](#18-conclusion-one-form-across-all-places)
+
+## 1. The global representation problem
+
+### 1.1 From arithmetic functions to one global representation
+
+A classical modular eigenform appears at first as a holomorphic function on the upper half-plane. Its Fourier coefficients, congruence level, nebentype, and weight seem to be different kinds of data. The adelic viewpoint makes them shadows of one object. The finite primes record smooth representations and their distinguished vectors; the real places record analytic representations and their lowest weights; the Fourier expansion becomes a Whittaker expansion; and all Hecke operators arise from convolution in one group.
+
+This book develops that viewpoint for
+
+$$
+G=\mathrm{GL}_{2/F},
+$$
+
+where $F$ is a number field. Its endpoint is a dictionary, not merely a change of notation. A cuspidal eigenform determines an irreducible representation
+
+$$
+\pi\cong\bigotimes_v'\pi_v
+$$
+
+of $G(\mathbf A_F)$, and the local factors recover level, Hecke eigenvalues, central character, and archimedean weight. Conversely, an automorphic representation with the appropriate archimedean and finite vectors produces a classical or Hilbert modular eigenform.
+
+Two distinctions govern the narrative. First, an automorphic **form** is a function satisfying analytic and finiteness conditions, whereas an automorphic **representation** is an irreducible constituent of a space of such functions. Second, local cuspidality and global cuspidality are not the same statement. A global cuspidal representation may have principal-series components at almost every finite place. Global cuspidality is the vanishing of a global constant term; it forces the representation into the discrete spectrum.
+
+### 1.2 Standing notation and conventions
+
+Write
+
+$$
+\mathbf A=\mathbf A_F=F_\infty\times\mathbf A_{F,f},
+\qquad G_v=\mathrm{GL}_2(F_v),
+\qquad G(\mathbf A)=\prod_v'G_v.
+$$
+
+At a finite place $v$, let $\mathcal O_v$ be the integers, $\mathfrak p_v=(\varpi_v)$, $q_v=|\mathcal O_v/\mathfrak p_v|$, and $K_v=\mathrm{GL}_2(\mathcal O_v)$. The restricted product is taken relative to the $K_v$. Put
+
+$$
+K_f=\prod_{v<\infty}K_v,
+$$
+
+and choose a maximal compact subgroup $K_\infty\subset G(F_\infty)$. The center and the standard Borel are
+
+$$
+Z=\left\{\begin{pmatrix}z&0\\0&z\end{pmatrix}\right\},\qquad
+B=TN,\qquad
+N=\left\{n(x)=\begin{pmatrix}1&x\\0&1\end{pmatrix}\right\}.
+$$
+
+All actions on functions are on the right:
+
+$$
+(R(g)\phi)(x)=\phi(xg).
+$$
+
+Thus $R(g_1)R(g_2)=R(g_1g_2)$. Left multiplication by $G(F)$ expresses automorphy and commutes with this right action.
+
+We use normalized absolute values, so $|\varpi_v|_v=q_v^{-1}$ and $\prod_v|a|_v=1$ for $a\in F^\times$. A Hecke character is a continuous character
+
+$$
+\omega:F^\times\backslash\mathbf A^\times\longrightarrow\mathbf C^\times.
+$$
+
+It is called unitary when $|\omega|=1$. Unless explicitly stated otherwise, Hilbert-space assertions use unitary central characters. Smooth representations at finite places are complex and admissible; archimedean representations are understood through their smooth, $K_v$-finite vectors and their Hilbert completions when unitarity is relevant.
+
+### 1.3 What will and will not be constructed
+
+The theory here is intrinsic to split rank two. We will construct the cuspidal spectrum, its local factorization, Whittaker models, Hecke data, conductors, and newforms, and then connect them with classical and Hilbert modular forms. One-dimensional and residual representations will be described only far enough to locate the boundary of cuspidality.
+
+Representations of multiplicative groups of quaternion algebras, their global transfer, automorphic induction, base change, and representations attached to Galois groups require additional ideas and belong later. Keeping that boundary sharp is mathematically useful: none of the factorization, multiplicity-one, or newform arguments below depends on those constructions.
+
+## 2. The adelic group and its quotients
+
+### 2.1 Restricted products and rational points
+
+The adelic group must allow independent motion at finitely many places while retaining an integral tail. Explicitly,
+
+$$
+G(\mathbf A_f)=\left\{(g_v)_{v<\infty}:g_v\in K_v
+\text{ for almost every }v\right\}.
+$$
+
+A basic open set specifies open subsets at finitely many places and uses $K_v$ elsewhere. This makes $G(\mathbf A_f)$ totally disconnected and locally compact; $G(\mathbf A)$ is locally compact after adjoining the finitely many archimedean factors. The diagonal subgroup $G(F)$ is discrete. Indeed, matrix entries and the inverse determinant reduce the assertion to discreteness of $F$ in $\mathbf A$.
+
+The left quotient
+
+$$
+[G]=G(F)\backslash G(\mathbf A)
+$$
+
+therefore carries the quotient topology of a properly discontinuous action. It is locally compact and Hausdorff. A compact open $U\subset G(\mathbf A_f)$ cuts it into finitely many arithmetic quotients at infinity:
+
+$$
+G(F)\backslash G(\mathbf A)/(UK_\infty)
+$$
+
+has finitely many connected pieces, although each piece can be noncompact. This finite decomposition is the topological reason that finite level converts adelic analysis into analysis on finitely many locally symmetric spaces.
+
+### 2.2 The center and the determinant direction
+
+The center satisfies $Z(\mathbf A)\cong\mathbf A^\times$ and $Z(F)\cong F^\times$. It is not harmless. The quotient $[G]$ has an obvious noncompact direction measured by
+
+$$
+g\longmapsto |\det g|_{\mathbf A}.
+$$
+
+Scalar multiplication by $zI_2$ changes this value by $|z|_{\mathbf A}^2$. For fixed central character, the natural geometric quotient is therefore
+
+$$
+X_G=Z(\mathbf A)G(F)\backslash G(\mathbf A).
+$$
+
+Equivalently one may choose the subgroup
+
+$$
+G(\mathbf A)^1=\{g:|\det g|_{\mathbf A}=1\}
+$$
+
+and work modulo $Z(\mathbf A)^1G(F)$. The two descriptions differ only by choosing a positive scalar section. Neither quotient is compact: removing the scalar determinant direction does not remove the cusp produced by matrices whose two diagonal entries have very different sizes.
+
+A useful counterexample is the sequence
+
+$$
+a(t)=\begin{pmatrix}t&0\\0&t^{-1}\end{pmatrix}
+$$
+
+at one archimedean place, with all other components $1$. Its determinant has module $1$, so passage to $G(\mathbf A)^1$ does not control it. Reduction by $G(F)$ and the center still leaves representatives with height tending to infinity. Thus finite volume must not be confused with compactness.
+
+### 2.3 Haar measures and quotient integration
+
+Choose additive Haar measure $dx_v$ on each $F_v$, with $\operatorname{vol}(\mathcal O_v)=1$ for almost every finite $v$. The product measure on $\mathbf A$ is then well defined. We normalize the measure on $N(F)\backslash N(\mathbf A)\cong F\backslash\mathbf A$ to have volume $1$. Fix local Haar measures $dg_v$ on $G_v$ with
+
+$$
+\operatorname{vol}(K_v)=1
+$$
+
+for almost every finite $v$. Their restricted product gives $dg$ on $G(\mathbf A)$. Since $\mathrm{GL}_2$ is unimodular, left and right Haar measures agree.
+
+Quotient measures are specified by Weil's integration formula. For example, once measures on $Z(\mathbf A)$, $G(F)\backslash G(\mathbf A)$, and $X_G$ are compatibly chosen,
+
+$$
+\int_{G(F)\backslash G(\mathbf A)}f(g)\,dg
+=\int_{X_G}\int_{Z(F)\backslash Z(\mathbf A)}f(zg)\,dz\,d\dot g
+$$
+
+whenever the integrals converge. Scaling all measures changes inner products by a positive scalar but does not change representations or orthogonality. Local Hecke eigenvalues do depend on the convention $\operatorname{vol}(K_v)=1$, so that convention will always be visible.
+
+### 2.4 Reduction theory and finite volume
+
+Reduction theory supplies a coarse fundamental set. In rank two, every point of $X_G$ can be represented, up to a compact set, by an element of the positive diagonal chamber
+
+$$
+a(y)=\begin{pmatrix}y&0\\0&1\end{pmatrix},
+\qquad |y|_{\mathbf A}\ge c,
+$$
+
+together with bounded unipotent and compact factors. The quotient has finite invariant volume because the modular character of $B$ makes the tail integrable. It is not compact because $|y|_{\mathbf A}$ has no upper bound.
+
+This is the geometric source of growth on the quotient by the center. On $X_G$, an automorphic function only needs control in finitely many cusp regions, and on each region the dangerous variable is a rational height comparable to
+
+$$
+\operatorname{ht}_X(g)=\max\{|y|_{\mathbf A},|y|_{\mathbf A}^{-1}\}
+$$
+
+after reduction. This height deliberately omits the scalar determinant direction because that direction has been divided out in $X_G$. On $G(F)\backslash G(\mathbf A)$ one must also control the center. For example, one may use the adelic matrix height
+
+$$
+\|g\|_G=
+\prod_v\max\left\{1,|g_{ij}|_v,|(g^{-1})_{ij}|_v:
+1\le i,j\le2\right\}.
+$$
+
+The product is finite because almost every local matrix is integral with integral inverse. After reduction, $\|g\|_G$ is polynomially comparable to a product of a height in the scalar determinant direction and $\operatorname{ht}_X(g)$. Different standard choices are polynomially comparable, so moderate growth does not depend on this particular formula.
+
+### 2.5 A lattice model for the cusp
+
+Over $F=\mathbf Q$, the quotient can be visualized through lattices. A matrix in $G(\mathbf A)$ determines, after rational change of basis and scalar homothety, an adelic rank-two lattice. In the real component, the class of
+
+$$
+\begin{pmatrix}y^{1/2}&xy^{-1/2}\\0&y^{-1/2}\end{pmatrix}
+$$
+
+has one increasingly short direction as $y\to\infty$. The unipotent coordinate $x$ is periodic, while $y$ escapes every compact subset.
+
+For a general number field, ideal classes give finitely many lattice genera and units identify logarithmic directions, but a ratio of successive minima can still become arbitrarily large. A bounded-determinant subset of $X_G$ is relatively compact when the corresponding lattices have a uniform lower bound on their shortest nonzero vector at all embeddings. The cusp is precisely the failure of that bound.
+
+This model also explains the constant term geometrically. Averaging over $N(F)\backslash N(\mathbf A)$ forgets the position of the long basis vector relative to the short one and retains the asymptotic contribution of the degenerating lattice shape.
+
+## 3. Automorphic forms and central characters
+
+### 3.1 Why analytic and finiteness conditions coexist
+
+Left invariance under $G(F)$ alone permits far too many functions. One could prescribe arbitrary data on a fundamental set, with no local regularity and no manageable representation generated by translations. The definition of an automorphic form combines analytic control at infinity with algebraic finiteness under compact groups and infinitesimal operators. Each clause solves a separate problem.
+
+Let $\mathfrak g_\infty$ be the complexified Lie algebra of $G(F_\infty)$ and $\mathcal Z(\mathfrak g_\infty)$ the center of its enveloping algebra. A complex-valued function $\phi$ on $G(\mathbf A)$ is an **automorphic form** if:
+
+1. $\phi(\gamma g)=\phi(g)$ for every $\gamma\in G(F)$;
+2. $\phi$ is smooth in the archimedean variables and locally constant in the finite variables;
+3. some compact open $U\subset G(\mathbf A_f)$ fixes $\phi$ on the right;
+4. the span of $R(K_\infty)\phi$ is finite dimensional;
+5. the span of $\mathcal Z(\mathfrak g_\infty)\phi$ is finite dimensional;
+6. $\phi$ and every right-invariant differential derivative $D\phi$ have moderate growth: for each $D$ there are constants $C_D,N_D$ such that
+
+$$
+|D\phi(g)|\le C_D\|g\|_G^{N_D}
+$$
+
+on a reduction-theoretic fundamental set for $G(F)\backslash G(\mathbf A)$. If a central quasi-character has been fixed, its prescribed growth in the scalar direction may instead be removed by a norm twist; for a unitary central character the remaining estimate is exactly a polynomial estimate in $\operatorname{ht}_X$ on $X_G$.
+
+The derivative form of moderate growth is often called uniform moderate growth. It is the stable condition under right translation and differential operators. Merely bounding $\phi$ itself would not control the representation it generates.
+
+Conditions 3 and 4 are not smoothness. At a finite place, local constancy of one function already gives an open stabilizer, but a common compact-open stabilizer across the restricted product is the finite-level condition. At infinity, smoothness does not imply $K_\infty$-finiteness: a generic smooth function on a circle has infinitely many Fourier modes. The $K_\infty$-finite and $\mathcal Z(\mathfrak g_\infty)$-finite conditions select the representation-theoretic vectors inside the analytic space.
+
+### 3.2 Fixed central character
+
+Let $\omega:F^\times\backslash\mathbf A^\times\to\mathbf C^\times$ be a Hecke character. An automorphic form has **central character $\omega$** if
+
+$$
+\phi(zg)=\omega(z)\phi(g)
+\qquad(z\in Z(\mathbf A)).
+$$
+
+The triviality of $\omega$ on $F^\times$ is forced: a scalar rational matrix belongs both to $G(F)$ and to $Z(\mathbf A)$. If these two transformation laws are imposed with a character not trivial on $F^\times$, the only form is zero.
+
+Every continuous Hecke character admits a unique expression
+
+$$
+\omega=\omega_0|\cdot|_{\mathbf A}^{t}
+$$
+
+with $\omega_0$ unitary and $t\in\mathbf R$ when the absolute value of $\omega$ is positive real; in general one separates the real part of its exponent. Twisting a form by $|\det|_{\mathbf A}^{-t/2}$ reduces many analytic questions to unitary central character. The factor $1/2$ occurs because $\det(zI_2)=z^2$.
+
+For unitary $\omega$, the norm
+
+$$
+\|\phi\|^2=\int_{X_G}|\phi(g)|^2\,dg
+$$
+
+is well defined: $|\phi(zg)|=|\phi(g)|$. For a nonunitary central character this expression does not descend to $X_G$, which is why unitarity is not an aesthetic restriction in spectral theory.
+
+### 3.3 Smooth automorphic representations
+
+Right translation preserves all six conditions and the central character. The resulting space $\mathcal A(G,\omega)$ is a module for
+
+$$
+G(\mathbf A_f)\times(\mathfrak g_\infty,K_\infty).
+$$
+
+An **automorphic representation** is an irreducible subquotient of this module. A **cuspidal automorphic representation** will mean an irreducible subrepresentation of its cuspidal part; in the cuspidal spectrum subquotient and subrepresentation cause no ambiguity because the Hilbert decomposition is discrete.
+
+This definition deliberately keeps the smooth vectors visible. The full right regular representation on an $L^2$ space is a unitary Hilbert representation. Its smooth, $K_\infty$-finite, finite-level vectors are the automorphic forms that support Hecke operators and Fourier expansions. Moving between these two categories is legitimate but never silent.
+
+### 3.4 Examples and failures
+
+The constant function is an automorphic form of trivial central character. It is smooth, finite at every level, and of moderate growth. It is not cuspidal, as its constant term will equal itself.
+
+If $\chi$ is a Hecke character, then
+
+$$
+g\longmapsto\chi(\det g)
+$$
+
+is one dimensional and has central character $\chi^2$. It again fails cuspidality. This example explains why central character alone does not determine an automorphic representation: many nonisomorphic $\chi$ can have the same square.
+
+At the opposite extreme, take an arbitrary measurable function on a fundamental domain and extend it by left invariance. It may lie in $L^2$, but it need not be smooth, finite-level, or generate an admissible module. Spectral theory begins on the Hilbert space, while automorphic representation theory extracts its smooth finite vectors.
+
+### 3.5 Analytic vectors and algebraic normalizations
+
+Three spaces attached to one cuspidal constituent should be distinguished. The Hilbert representation contains all square-integrable vectors in the closed irreducible summand. Its smooth vectors have smooth archimedean orbit maps and locally constant finite-adelic orbit maps. Its automorphic-form vectors are additionally $K_\infty$-finite, finite-level, and finite under the infinitesimal center.
+
+The last space is dense in the Hilbert representation. At finite places, convolve with normalized characteristic functions of shrinking compact opens. At infinity, convolve with smooth approximate identities and project to finitely many $K_\infty$-types. These operations converge strongly to the identity, commute with left $G(F)$-invariance, and preserve cuspidality because constant term commutes with right convolution.
+
+An algebraic normalization is different again. It twists the group action by a real norm power; it does not merely select a dense subspace. Consequently a holomorphic eigenform can have algebraically normalized Hecke eigenvalues while its unitary realization has those eigenvalues divided by explicit powers of $q_v$.
+
+## 4. Constant terms and cuspidality
+
+### 4.1 Fourier analysis along the unipotent quotient
+
+The noncompact cusp is controlled by the unipotent radical $N$. Because
+
+$$
+N(F)\backslash N(\mathbf A)\cong F\backslash\mathbf A
+$$
+
+is compact, one can Fourier expand any sufficiently regular automorphic form along it. The zeroth Fourier coefficient is the **constant term**
+
+$$
+\phi_N(g)=\int_{F\backslash\mathbf A}\phi(n(x)g)\,dx.
+$$
+
+The integral converges because its domain is compact. It is invariant under left $N(\mathbf A)$ and encodes the part of $\phi$ that can persist far into the diagonal cusp.
+
+An automorphic form is **cuspidal** if
+
+$$
+\phi_N(g)=0\qquad\text{for every }g\in G(\mathbf A).
+$$
+
+For $\mathrm{GL}_2$, the standard Borel is the only proper parabolic up to conjugacy, so this single condition is the full cuspidality condition. Requiring only $\phi_N(1)=0$ would be inadequate: right translation gives $(R(g)\phi)_N(1)=\phi_N(g)$, and the cuspidal space must be stable under the global group.
+
+### 4.2 What cuspidality removes
+
+Reduction theory shows that the leading asymptotic term of an automorphic form in a cusp is its constant term. When this term vanishes, the remaining nontrivial Fourier modes oscillate along the compact quotient $F\backslash\mathbf A$. Repeated integration by parts at infinity and finite Fourier orthogonality then force rapid decay in the height variable.
+
+**Theorem 4.1 (rapid decay of cusp forms modulo the center).** Let $\phi$ be a cuspidal automorphic form with unitary central character. On every Siegel set in $X_G$ and for every integer $M\ge0$ and right-invariant differential operator $D$, there is a constant $C_{D,M}$ such that
+
+$$
+|D\phi(g)|\le C_{D,M}\operatorname{ht}_X(g)^{-M}.
+$$
+
+For a nonunitary central quasi-character, first remove its real norm power as in Section 3.2; the same estimate then holds for the normalized form, while the original form retains the prescribed scalar norm factor. Thus rapid decay concerns escape toward the parabolic cusp, not arbitrary escape along the center.
+
+**Proof strategy.** Expand along $F\backslash\mathbf A$. Cuspidality deletes the zero frequency. Every remaining frequency is nontrivial, so differentiation in the compact unipotent variable gains powers of its frequency. Conjugation by the diagonal turns frequency size into cusp height. Finite-level and $K_\infty$-finiteness make the estimates uniform.
+
+**Proof.** Choose a nontrivial additive character $\psi:F\backslash\mathbf A\to\mathbf C^\times$. Fourier inversion gives
+
+$$
+\phi(n(x)g)=\sum_{\alpha\in F}W_\alpha(g)\psi(\alpha x),
+\qquad
+W_\alpha(g)=\int_{F\backslash\mathbf A}
+\phi(n(u)g)\psi(-\alpha u)\,du.
+$$
+
+The term $W_0$ is $\phi_N$ and vanishes. On a Siegel set write the diagonal coordinate as $a(y)$. Since
+
+$$
+a(y)^{-1}n(u)a(y)=n(y^{-1}u),
+$$
+
+differentiating in $u$ transfers a power of the archimedean size of $\alpha y$ to a fixed derivative of $\phi$. Integrating by parts gives arbitrary inverse powers. At finite places, the fixed level forces the coefficient to vanish unless $\alpha y$ lies in a fixed fractional lattice, and lattice counting is polynomial. Choosing more integrations than the counting exponent yields arbitrary decay. The same argument applies after $D$. $\square$
+
+Consequently every cusp form of unitary central character is square integrable on $X_G$. Cuspidality does not make the quotient compact; it makes the function decay as if the missing boundary were infinitely far away.
+
+### 4.3 A Fourier counterexample
+
+Vanishing average in one chosen cusp coordinate is not enough without automorphy. The function $e^{2\pi ix}$ on a strip has zero average in $x$ but may grow exponentially in the height. Automorphy and the differential finiteness conditions link the variables tightly enough for zero constant term to imply rapid decay. This shows why cuspidality is powerful only inside the automorphic category.
+
+For the constant function, $\phi_N=\phi$. For $\chi\circ\det$, the determinant is unchanged by $n(x)$, so again $\phi_N=\phi$. Thus all one-dimensional automorphic representations lie outside the cuspidal spectrum.
+
+### 4.4 Orthogonality to induced behavior
+
+The constant-term operator is adjoint to forming functions from the Borel. Schematically, unfolding gives
+
+$$
+\langle\phi,E(f)\rangle
+=\int_{B(F)\backslash G(\mathbf A)}\phi_N(g)\overline{f(g)}\,dg,
+$$
+
+where $E(f)$ is an Eisenstein series in a region of convergence. Hence cusp forms are orthogonal to the continuous spectrum generated from the Borel. This identity explains the terminology: the cusp condition is not an arbitrary boundary condition but the projection away from proper-parabolic induction.
+
+### 4.5 Poincaré series as a source of cusp forms
+
+Cuspidality can be built into a function. Let $h$ be smooth, compactly supported modulo $Z(\mathbf A)N(\mathbf A)$, transform under $N(\mathbf A)$ by $\psi$, and have sufficiently small finite support. Form
+
+$$
+P_h(g)=\sum_{\gamma\in N(F)\backslash G(F)}h(\gamma g).
+$$
+
+Properness and compact support make the sum locally finite. Its left $G(F)$-invariance is immediate. Averaging along $N(F)\backslash N(\mathbf A)$ and unfolding reduces its constant term to integrals of a nontrivial additive character; with the support chosen off the degenerate Bruhat contribution, these vanish. Thus $P_h$ is cuspidal.
+
+Its first Whittaker coefficient unfolds to an integral of $h$ and can be made nonzero. This verifies concretely that the global Whittaker functional is not formal: the open Bruhat cell creates nonzero Fourier coefficients, while the closed Borel cell is exactly where constant terms live.
+
+## 5. The cuspidal spectrum
+
+### 5.1 The Hilbert space with central character
+
+Fix a unitary Hecke character $\omega$. Let
+
+$$
+L^2(G(F)\backslash G(\mathbf A),\omega)
+$$
+
+be the measurable functions satisfying
+
+$$
+f(\gamma zg)=\omega(z)f(g)
+$$
+
+and square integrable over $X_G$. Define $L^2_{\mathrm{cusp}}(\omega)$ as the closed subspace whose constant term vanishes almost everywhere. Smooth cuspidal automorphic forms are dense in it.
+
+Right translation is unitary:
+
+$$
+\|R(h)f\|^2
+=\int_{X_G}|f(gh)|^2\,dg
+=\|f\|^2,
+$$
+
+because $G(\mathbf A)$ is unimodular. Notice that left translation would conflict with the left $G(F)$ quotient; the right action is forced by the geometry.
+
+### 5.2 Why the cuspidal spectrum is discrete
+
+Rapid decay converts noncompactness into compactness of the relevant analytic embeddings. At fixed finite level, fixed $K_\infty$-types, and bounded infinitesimal character, cusp forms satisfy uniform Sobolev estimates and vanish rapidly in every cusp. Rellich compactness on a truncated quotient and negligible tails together make the resolvent of a positive elliptic operator compact.
+
+**Theorem 5.1 (discrete cuspidal decomposition).** There is a Hilbert direct sum
+
+$$
+L^2_{\mathrm{cusp}}(\omega)
+\cong\widehat{\bigoplus}_{\pi}m(\pi)\,\pi,
+$$
+
+where $\pi$ runs over irreducible unitary representations of $G(\mathbf A)$ with central character $\omega$, each multiplicity $m(\pi)$ is finite, and only finitely many constituents occur with prescribed finite level, prescribed finite set of $K_\infty$-types, and bounded archimedean spectral parameter.
+
+**Proof strategy.** First freeze level and compact type so that the problem lives on a finite union of locally symmetric quotients. A positive elliptic operator from the archimedean center controls derivatives. Cuspidal rapid decay prevents mass from escaping into the cusps. Compact resolvent gives a discrete eigenspace decomposition, and commuting right translations assemble the eigenspaces into irreducible representations.
+
+**Proof.** Let $U\subset G(\mathbf A_f)$ be compact open and let $\tau$ be a finite set of $K_\infty$-types. On the $U$-fixed, $\tau$-isotypic cuspidal subspace, choose a positive elliptic combination $\Delta$ of Casimir operators. Local elliptic estimates control a Sobolev norm on compact truncations. The rapid-decay theorem controls the complement uniformly, so the inclusion of the first Sobolev domain into $L^2$ is compact. Hence $(1+\Delta)^{-1}$ is compact and has discrete spectrum with finite-dimensional eigenspaces.
+
+Taking the increasing union over $U$ and $\tau$, and decomposing the unitary action into irreducibles, gives the asserted Hilbert sum. Finite dimensionality of the frozen eigenspaces gives finite multiplicities and the stated local finiteness. $\square$
+
+Later strong multiplicity one will imply $m(\pi)=1$. It would be circular to use that here: discreteness and finite multiplicity are analytic facts, whereas multiplicity one uses the special Fourier theory of $\mathrm{GL}_2$.
+
+### 5.3 Admissibility of global constituents
+
+Let $\pi$ occur in the cuspidal spectrum. For every compact open $U\subset G(\mathbf A_f)$ and irreducible $K_\infty$-type $\tau$, the space
+
+$$
+\operatorname{Hom}_{K_\infty}(\tau,\pi^U)
+$$
+
+is finite dimensional. Indeed it sits in a fixed-level cuspidal eigenspace for the infinitesimal character of $\pi_\infty$. Thus global spectral discreteness implies the admissibility needed to extract local components.
+
+There is an important asymmetry. At a finite place, admissibility means finite-dimensional invariants under every compact open subgroup. At infinity, it means finite multiplicity of each maximal-compact type in the smooth representation. Both express finite complexity, but the definitions reflect the different topologies.
+
+### 5.4 The residual boundary
+
+The orthogonal complement of the cuspidal space is not empty. Characters $\chi\circ\det$ occur discretely when unitary, and residues of Eisenstein series can also produce square-integrable representations. For $\mathrm{GL}_2$, the residual irreducible constituents are one dimensional: they are representations $\chi\circ\det$ satisfying $\chi^2=\omega$. There may be several such $\chi$, or none.
+
+The continuous spectrum is built from unitary normalized principal series. Its vectors have nonzero constant terms and are parametrized continuously along an imaginary axis. We need this boundary only to prevent a false identification:
+
+$$
+\text{discrete automorphic}\ne\text{cuspidal automorphic}.
+$$
+
+Every cuspidal representation is discrete, but the determinant characters are discrete and not cuspidal.
+
+### 5.5 Compact-open projectors
+
+For compact open $U\subset G(\mathbf A_f)$, put
+
+$$
+e_U=\operatorname{vol}(U)^{-1}\mathbf1_U.
+$$
+
+Then $R(e_U)$ is the orthogonal projector onto $U$-fixed vectors. If $U'\subset U$, one has $e_U*e_{U'}=e_U=e_{U'}*e_U$. At infinity, convolution with $\dim(\tau)\overline{\operatorname{tr}\tau(k)}$ projects to a maximal-compact type $\tau$.
+
+Combining these projectors isolates the finite-dimensional shadows used in the discreteness proof. On one irreducible constituent, the trace of $R(e_U)$ is $\dim\pi_f^U$. This makes clear why an infinite-dimensional representation nevertheless yields finite Hecke matrices at every fixed level.
+
+## 6. Restricted tensor products and local components
+
+### 6.1 Why a global irreducible representation should factor
+
+The adelic group is a restricted product, so a finite-level vector is fixed by $K_v$ at almost every finite place. One expects independent local actions to generate local representations and the original vector to be a tensor of local vectors. The word “restricted” is essential: an unrestricted algebraic tensor product would allow infinitely many factors to deviate simultaneously and would not carry a natural action of an adelic element.
+
+Given representations $\pi_v$ and nonzero reference vectors $e_v\in\pi_v^{K_v}$ for almost every finite $v$, the restricted tensor product
+
+$$
+\bigotimes_v'\pi_v
+$$
+
+is the union, over finite sets $S$, of
+
+$$
+\left(\bigotimes_{v\in S}\pi_v\right)
+\otimes\left(\bigotimes_{v\notin S}\mathbf Ce_v\right).
+$$
+
+If $g=(g_v)\in G(\mathbf A)$, then $g_v\in K_v$ almost everywhere, so $\pi_v(g_v)e_v=e_v$ almost everywhere and the componentwise action is defined.
+
+### 6.2 Factorization theorem
+
+**Theorem 6.1 (factorization of a cuspidal constituent).** Let $\pi$ be an irreducible cuspidal automorphic representation of $G(\mathbf A)$. Then there are uniquely determined irreducible admissible local representations $\pi_v$ such that
+
+$$
+\pi^{\mathrm{fin}}\cong
+\pi_\infty^{K_\infty\text{-fin}}\otimes
+\bigotimes_{v<\infty}'\pi_v.
+$$
+
+For almost every finite $v$, $\pi_v^{K_v}$ is one dimensional, and a choice of nonzero vector in each such line supplies the reference vectors. The unitary completion is the corresponding Hilbert restricted tensor product.
+
+Here $\pi^{\mathrm{fin}}$ denotes the vectors that are $K_\infty$-finite and fixed by some compact open subgroup of $G(\mathbf A_f)$.
+
+**Proof strategy.** The needed algebraic input is the factorization lemma for an irreducible admissible module over a restricted product: finite sets of local groups separate by the ordinary external-tensor-product theorem, while the hyperspecial tail is recovered from its commuting spherical Hecke characters. The local factors obtained for different finite sets are compatible, and their spherical lines supply the reference vectors. This route does not assume that an arbitrarily chosen global vector is already a pure tensor.
+
+**Proof.** We first record the restricted-product factorization lemma. Let
+
+$$
+H=H_\infty\times\prod_{v<\infty}'(H_v,K_v)
+$$
+
+and let $V$ be an irreducible admissible module in the archimedean finite-vector and nonarchimedean smooth categories. Then there are unique irreducible admissible $V_v$, spherical with a one-dimensional $K_v$-fixed space for almost every finite $v$, such that
+
+$$
+V\cong V_\infty\otimes\bigotimes_{v<\infty}'V_v.
+$$
+
+Here is the algebra behind the lemma. Choose a nonzero vector fixed by a product compact open $U=\prod_vU_v$, with $U_v=K_v$ outside a finite set $S$. The convolution algebra acting on the cyclic module is the directed union of the algebras obtained by allowing nontrivial kernels at only finitely many places. For a finite set $T\supset S$, its relevant finite-level quotient is a tensor product of the local convolution algebras at $T$ and the commuting spherical algebras outside $T$. Admissibility makes every compact-type shadow finite dimensional. On such a shadow, the ordinary double-commutant theorem separates the factors at the places in $T$; each unused spherical algebra acts through a character on an irreducible simultaneous summand. The spherical classification recovers from that character a unique irreducible spherical $V_v$ and its unique $K_v$-fixed line.
+
+If $T$ is enlarged, the new decomposition restricts to the old one because the local convolution algebra at each previously isolated place and the algebra of its commuting complement are mutual commutants on every irreducible finite-level summand. Thus the $V_v$ are compatible as $T$ varies. Choosing $0\ne e_v\in V_v^{K_v}$ outside $S$, the transition from $T$ to $T\cup\{v\}$ is tensoring with $e_v$. The directed union is therefore $V_\infty\otimes\bigotimes'V_v$, and its map to the original cyclic module is nonzero and surjective. Its kernel is stable under every finite set of local convolution algebras; irreducibility of the finite tensor factors makes that kernel zero. This proves the lemma. The same mutual-commutant argument shows uniqueness: a second factorization has the same module for the local convolution algebra supported at $v$, hence the same $V_v$.
+
+Apply the lemma to the irreducible finite-vector module of the cuspidal constituent $\pi$. Admissibility was proved in Section 5.3. We obtain the displayed factorization and one-dimensional spherical lines at almost every finite place. Completing the algebraic tensor product with the product inner product gives the Hilbert restricted tensor product, because the automorphic realization is unitary. $\square$
+
+The proof explains both factorization and almost-everywhere unramifiedness. It is not enough to say that the group is a restricted product: irreducibility, admissibility, and the one-dimensional spherical lines are the decisive representation-theoretic inputs.
+
+### 6.3 Finite and archimedean local components
+
+At a finite place, $\pi_v$ is an irreducible admissible smooth representation of $\mathrm{GL}_2(F_v)$. It is therefore a principal-series constituent, a special representation, a supercuspidal representation, or one dimensional. A cuspidal global representation is infinite dimensional and generic, and its finite local components are generic; hence no finite component is one dimensional. The generic local possibilities are irreducible principal series, special representations, and supercuspidals.
+
+At an archimedean place, $\pi_v$ is an irreducible admissible representation of $\mathrm{GL}_2(\mathbf R)$ or $\mathrm{GL}_2(\mathbf C)$, with a unitary completion in the $L^2$ normalization. Principal series, limits, and discrete series may occur according to the infinity type. Holomorphic modular forms select lowest-weight discrete series at real places; general Maass forms usually select principal series.
+
+At a real place, normalized principal series are induced from characters
+
+$$
+x\longmapsto\operatorname{sgn}(x)^{\epsilon_i}|x|^{s_i}.
+$$
+
+Unitary principal series have purely imaginary relative exponent; a bounded real relative exponent gives the complementary range. Discrete series are indexed by a lowest or highest compact weight, together with a central twist. The holomorphic representation $D_k^{\rm hol}$ has lowest $\mathrm{SO}_2(\mathbf R)$-weight $k$, while its antiholomorphic companion has highest weight $-k$. A representation of the full group $\mathrm{GL}_2(\mathbf R)$ must also specify how the negative-determinant component relates these pieces.
+
+At a complex place, the maximal compact is $U(2)$ and irreducible admissible representations relevant here arise as constituents of normalized induction from characters of $\mathbf C^\times$. There is no holomorphic discrete series analogous to the real upper-half-plane case. An algebraic infinity type is encoded by integral powers $z^p\bar z^q$ after a norm twist; a general unitary infinity type can have continuous imaginary exponents.
+
+The finite and infinite notions of “unramified” are consequently not identical pieces of terminology. At a finite place it means a $K_v$-fixed line. At infinity one instead records an infinitesimal character and maximal-compact types. The analytic conductor later packages both, but the ideal conductor of Chapter 11 has only finite-place exponents.
+
+Global cuspidality does **not** force $\pi_v$ to be supercuspidal at any particular place. For example, a level-one classical cusp form has spherical principal-series components at every finite prime. The adjective “cuspidal” lives globally in the vanishing constant term; “supercuspidal” is a local Jacquet-module condition.
+
+### 6.4 Almost-everywhere spherical vectors
+
+For $v$ outside a finite set, $\pi_v^{K_v}$ is a line. The normalized vector $e_v$ is determined only up to scalar. A pure tensor $\otimes_vW_v$ or $\otimes_vf_v$ is therefore meaningful only after choosing normalizations such as $W_v(1)=1$ in a Whittaker model. Changing $e_v$ at infinitely many places by arbitrary scalars changes the restricted tensor product datum and can destroy convergence of factorizable integrals.
+
+At a ramified place, $K_v$-invariants may vanish while invariants under a smaller compact open are nonzero. The conductor will identify the smallest $K_1$-level with a distinguished line. Thus spherical vectors and newvectors are the same organizing idea at different depths: both provide canonical local anchors for a global tensor product.
+
+### 6.5 Central characters and reference vectors
+
+Under factorization, Schur's lemma gives
+
+$$
+\omega_\pi=\prod_v\omega_{\pi_v}.
+$$
+
+At almost every finite place, $\omega_{\pi_v}$ is unramified because scalar units fix the spherical vector. For $z=(z_v)\in\mathbf A^\times$, only finitely many local factors act nontrivially on the reference tensor, so the product is defined. Its triviality on $F^\times$ follows from automorphy.
+
+The local characters are not freely specifiable. A family unramified almost everywhere gives an adelic character only when the product is continuous and trivial on $F^\times$. This global condition contains both parity at the real places and compatibility of norm exponents.
+
+Changing $e_v$ by $c_ve_v$ at finitely many places gives a canonically isomorphic restricted tensor product. An infinite rescaling is not harmless unless the product of scalars is controlled. Whittaker normalization $W_v(1)=1$ at almost every place removes this ambiguity.
+
+## 7. Unramified Hecke data
+
+### 7.1 Convolution and the fixed-level viewpoint
+
+Let $v$ be finite, $K=K_v$, and normalize Haar measure by $\operatorname{vol}(K)=1$. The spherical Hecke algebra
+
+$$
+\mathcal H(G_v,K)=C_c(K\backslash G_v/K)
+$$
+
+acts on $\pi_v^K$ by
+
+$$
+\pi_v(h)w=\int_{G_v}h(g)\pi_v(g)w\,dg.
+$$
+
+If $KgK=\coprod_i g_iK$, this is the finite sum $\sum_i\pi_v(g_i)w$. Globally, for $U=\prod_vU_v$, convolution by a pure tensor $\otimes_vh_v$, with $h_v=\mathbf1_{U_v}$ almost everywhere, acts on $U$-fixed automorphic forms. Operators at distinct places commute because their group elements occupy different factors.
+
+This viewpoint separates two objects that are often conflated. The abstract restricted tensor product of local Hecke algebras may be an infinite polynomial algebra, while its image on one fixed-level, fixed-weight cuspidal space is finite dimensional and can have relations. A Hecke eigensystem is a character of the acting image, or equivalently a compatible system of eigenvalues for the abstract operators.
+
+### 7.2 Satake parameters and the raw operator
+
+Suppose $\pi_v$ is spherical. It is the spherical constituent of the normalized principal series
+
+$$
+I(\chi_{1,v},\chi_{2,v}),
+$$
+
+where the unordered characters $\chi_{i,v}$ are unramified. Its functions satisfy, for $b=\begin{pmatrix}a&*\\0&d\end{pmatrix}$,
+
+$$
+f(bg)=\left|\frac ad\right|_v^{1/2}
+\chi_{1,v}(a)\chi_{2,v}(d)f(g).
+$$
+
+The group acts by right translation. The half-modulus in this formula is the source of the symmetric Satake normalization; removing it would change every power of $q_v$ below. Put
+
+$$
+\alpha_v=\chi_{1,v}(\varpi_v),
+\qquad \beta_v=\chi_{2,v}(\varpi_v).
+$$
+
+These are the representation-normalized Satake parameters. Let
+
+$$
+T_v^{\rm raw}=\mathbf1_{K_v\operatorname{diag}(\varpi_v,1)K_v},
+\qquad
+S_v=\mathbf1_{K_v(\varpi_vI_2)K_v}.
+$$
+
+On the spherical line,
+
+$$
+T_v^{\rm raw}=q_v^{1/2}(\alpha_v+\beta_v),
+\qquad S_v=\alpha_v\beta_v=\omega_{\pi_v}(\varpi_v).
+$$
+
+Thus the spectrally normalized operator
+
+$$
+\mathsf T_v=q_v^{-1/2}T_v^{\rm raw}
+$$
+
+has eigenvalue $\alpha_v+\beta_v$. The sanity check is the trivial representation. It corresponds to the exceptional normalized inducing pair with parameters $q_v^{1/2},q_v^{-1/2}$; the raw eigenvalue is $q_v+1$, the number of right cosets.
+
+### 7.3 The local polynomial and standard factor
+
+The representation-normalized Hecke polynomial is
+
+$$
+P_v(X)=(1-\alpha_vX)(1-\beta_vX)
+=1-(\alpha_v+\beta_v)X+\omega_{\pi_v}(\varpi_v)X^2.
+$$
+
+Accordingly,
+
+$$
+L(s,\pi_v)=P_v(q_v^{-s})^{-1}.
+$$
+
+In terms of the raw operator eigenvalue $t_v^{\rm raw}$ and central eigenvalue $s_v$, the same polynomial is
+
+$$
+1-q_v^{-1/2}t_v^{\rm raw}X+s_vX^2.
+$$
+
+There is also an **integral raw normalization** in which
+
+$$
+P_v^{\rm ar}(X)=1-a_vX+q_vs_vX^2.
+$$
+
+Its reciprocal roots are $q_v^{1/2}\alpha_v$ and $q_v^{1/2}\beta_v$, and $a_v=t_v^{\rm raw}$. This integral normalization belongs to the double-coset algebra; it should not be confused with the weight-dependent algebraic normalization of a holomorphic eigenform in Chapter 13. Both conventions are valid. The error is to use the raw eigenvalue as the middle coefficient while retaining $\alpha_v\beta_v=s_v$ as the constant coefficient. The missing $q_v$ would mix normalizations.
+
+In normalized Satake language,
+
+$$
+\mathcal S(T_v^{\rm raw})=q_v^{1/2}(X_1+X_2),
+\qquad \mathcal S(S_v)=X_1X_2.
+$$
+
+The half-modulus in this transform matches normalized induction. Omitting both gives a consistent but asymmetric unnormalized transform; omitting only one gives wrong eigenvalues.
+
+### 7.4 Twists and a worked unramified example
+
+If $\mu_v$ is unramified, then
+
+$$
+(\pi_v\otimes\mu_v)(g)=\mu_v(\det g)\pi_v(g)
+$$
+
+has parameters
+
+$$
+\mu_v(\varpi_v)\alpha_v,
+\qquad \mu_v(\varpi_v)\beta_v.
+$$
+
+Its central character is $\omega_{\pi_v}\mu_v^2$. Both roots scale once, while their product scales twice. This is the quickest normalization test for a proposed Hecke polynomial.
+
+For example, let $F_v=\mathbf Q_p$ and take unitary unramified characters with values $A,B$ on $p$. Then
+
+$$
+T_p^{\rm raw}e=p^{1/2}(A+B)e,\qquad
+S_p e=ABe,\qquad
+L(s,\pi_p)=\frac1{(1-Ap^{-s})(1-Bp^{-s})}.
+$$
+
+If one uses the integral raw roots $p^{1/2}A,p^{1/2}B$, the polynomial becomes
+
+$$
+1-p^{1/2}(A+B)X+pABX^2.
+$$
+
+No assertion about Frobenius is needed to define either polynomial. If reciprocity later sends a uniformizer to arithmetic Frobenius, the representation-normalized parameters match arithmetic-Frobenius eigenvalues in that convention; geometric Frobenius gives their inverses. Naming the Frobenius without its direction is incomplete.
+
+### 7.5 Radial recurrences
+
+Put
+
+$$
+A_{v,n}=\mathbf1_{K_v\operatorname{diag}(\varpi_v^n,1)K_v},
+\qquad n\ge0.
+$$
+
+The tree of homothety classes of lattices shows that the first double coset moves a vertex to its $q_v+1$ neighbors. One edge points back and $q_v$ point forward. Keeping track of central homothety gives
+
+$$
+A_{v,1}*A_{v,1}=A_{v,2}+(q_v+1)S_v
+$$
+
+and, for $n\ge2$,
+
+$$
+A_{v,1}*A_{v,n}=A_{v,n+1}+q_vS_v*A_{v,n-1}.
+$$
+
+Equivalently,
+
+$$
+\sum_{n\ge0}A_{v,n}X^n
+=\frac{1-S_vX^2}{1-T_v^{\rm raw}X+q_vS_vX^2}.
+$$
+
+Evaluating this identity on a spherical line recovers every radial eigenvalue from the trace and determinant operators. The denominator is the integral raw polynomial; rescaling $T_v$ and $X$ gives the representation-normalized polynomial of Section 7.3.
+
+## 8. Global Whittaker expansions
+
+### 8.1 Why the nonconstant coefficient should determine the form
+
+Cuspidality deletes the constant term, leaving only nonzero Fourier modes along $N$. Rational diagonal matrices act transitively on the nonzero characters of $F\backslash\mathbf A$. Therefore all nonzero Fourier coefficients are translates of one coefficient. This rank-one orbit statement is the source of global genericity and multiplicity one.
+
+Fix a nontrivial unitary character
+
+$$
+\psi:F\backslash\mathbf A\longrightarrow\mathbf C^\times,
+\qquad \psi=\prod_v\psi_v.
+$$
+
+For a cusp form $\phi$, define
+
+$$
+W_\phi(g)=\int_{F\backslash\mathbf A}
+\phi(n(x)g)\psi(-x)\,dx.
+$$
+
+Then
+
+$$
+W_\phi(n(u)g)=\psi(u)W_\phi(g).
+$$
+
+The sign is consistent: translating $x$ to $x+u$ changes $\psi(-x)$ by $\psi(u)$.
+
+### 8.2 Fourier expansion and injectivity
+
+**Theorem 8.1 (global Whittaker expansion).** Every smooth cuspidal automorphic form has the absolutely and locally uniformly convergent expansion
+
+$$
+\boxed{
+\phi(g)=\sum_{\alpha\in F^\times}
+W_\phi\left(\begin{pmatrix}\alpha&0\\0&1\end{pmatrix}g\right).}
+$$
+
+The series remains convergent after right-invariant differentiation.
+
+**Proof strategy.** Apply Fourier inversion on the compact group $F\backslash\mathbf A$. Cuspidality removes the zero coefficient. Conjugating $n(x)$ by $\operatorname{diag}(\alpha,1)$ identifies the coefficient indexed by $\alpha$ with the chosen coefficient indexed by $1$. Rapid decay supplies convergence.
+
+**Proof.** For fixed $g$, Fourier inversion gives
+
+$$
+\phi(n(x)g)=\sum_{\alpha\in F}W_{\phi,\alpha}(g)\psi(\alpha x).
+$$
+
+The coefficient at $0$ is $\phi_N(g)=0$. Since $|\alpha|_{\mathbf A}=1$ for $\alpha\in F^\times$, change of variables in $F\backslash\mathbf A$ introduces no measure factor, and
+
+$$
+W_{\phi,\alpha}(g)
+=W_\phi\left(\begin{pmatrix}\alpha&0\\0&1\end{pmatrix}g\right).
+$$
+
+Set $x=0$. The rapid-decay estimates used in Chapter 4 imply rapid decay of the coefficients in the archimedean lattice directions, uniformly on compact sets and after differentiation. This justifies the displayed convergence. $\square$
+
+In particular, $W_\phi=0$ implies $\phi=0$. The single Whittaker coefficient is not merely an invariant; on the cuspidal space it is a faithful coordinate system.
+
+### 8.3 Global and local uniqueness
+
+Let $\pi$ be an irreducible cuspidal representation. A global Whittaker functional is a linear map
+
+$$
+\Lambda:\pi^{\mathrm{fin}}\longrightarrow\mathbf C,
+\qquad
+\Lambda(\pi(n(x))v)=\psi(x)\Lambda(v).
+$$
+
+The integral above gives a nonzero one. Local Whittaker uniqueness says
+
+$$
+\dim\operatorname{Hom}_{N(F_v)}(\pi_v,\psi_v)\le1.
+$$
+
+Every local component of a cuspidal representation is generic. To see this without assuming it, first write a vector on which $\Lambda$ is nonzero as a finite sum of pure tensors; at least one summand $v=\otimes_uv_u$ still has $\Lambda(v)\ne0$. For a chosen place $v$, holding every other factor fixed turns
+
+$$
+w_v\longmapsto
+\Lambda\left(w_v\otimes\bigotimes_{u\ne v}v_u\right)
+$$
+
+into a nonzero local Whittaker functional.
+
+**Theorem 8.2 (global uniqueness and factorization).** The space of global Whittaker functionals on $\pi$ is one dimensional. After choosing nonzero local functionals $\lambda_v$ and normalizing them by $\lambda_v(e_v)=1$ at almost every unramified finite place,
+
+$$
+\Lambda\left(\bigotimes_vv_v\right)=\prod_v\lambda_v(v_v).
+$$
+
+Consequently a pure tensor has a factorizable Whittaker function
+
+$$
+W_v(g)=\lambda_v(\pi_v(g)v_v),
+\qquad
+W(g)=\prod_vW_v(g_v).
+$$
+
+**Proof strategy.** On each finite tensor stage, successive local uniqueness bounds a Whittaker functional by a tensor product of the local lines. The spherical normalization makes these finite-stage scalars compatible when a new unramified place is added. The restricted tensor product is the union of the finite stages.
+
+**Proof.** Fix a finite set $S$ containing the archimedean and ramified places. On
+
+$$
+\bigotimes_{v\in S}\pi_v\otimes
+\bigotimes_{v\notin S}\mathbf Ce_v,
+$$
+
+equivariance under $N(F_v)$ for each $v\in S$ implies, one place at a time, that the restriction of $\Lambda$ lies in the tensor product of the one-dimensional spaces $\operatorname{Hom}_{N(F_v)}(\pi_v,\psi_v)$, with the reference vectors held fixed outside $S$. Hence it is a scalar multiple of $\otimes_{v\in S}\lambda_v$, evaluated as $1$ outside $S$. Enlarge $S$. At a spherical generic place the spherical vector has nonzero Whittaker value, so normalizing $\lambda_v(e_v)=1$ makes the old and new scalars agree. Thus the formula holds on the union of all finite stages and global uniqueness follows. $\square$
+
+### 8.4 The spherical Whittaker function
+
+At an unramified finite place choose $W_v^\circ(1)=1$. If the Satake parameters are $\alpha_v,\beta_v$, then for $m\ge0$,
+
+$$
+W_v^\circ\left(\begin{pmatrix}\varpi_v^m&0\\0&1\end{pmatrix}\right)
+=q_v^{-m/2}
+\frac{\alpha_v^{m+1}-\beta_v^{m+1}}{\alpha_v-\beta_v},
+$$
+
+with the evident limiting formula $(m+1)q_v^{-m/2}\alpha_v^m$ if $\alpha_v=\beta_v$, and the value is $0$ for $m<0$. Therefore
+
+$$
+\sum_{m\ge0}W_v^\circ
+\left(\begin{pmatrix}\varpi_v^m&0\\0&1\end{pmatrix}\right)
+q_v^{m/2}X^m
+=\frac1{(1-\alpha_vX)(1-\beta_vX)}.
+$$
+
+This calculation unifies Hecke and Fourier data: the same two parameters govern the spherical Hecke polynomial and the diagonal values of the normalized Whittaker function.
+
+### 8.5 Standard zeta integrals
+
+For a local Whittaker function, set initially in a right half-plane
+
+$$
+Z_v(s,W_v)=\int_{F_v^\times}
+W_v\left(\begin{pmatrix}y&0\\0&1\end{pmatrix}\right)
+|y|_v^{s-1/2}\,d^\times y.
+$$
+
+For $W_v^\circ$, valuation-shell decomposition and Section 8.4 give $Z_v(s,W_v^\circ)=L(s,\pi_v)$. At a ramified place, all such integrals form a fractional ideal in $\mathbf C[q_v^s,q_v^{-s}]$ whose distinguished generator is the standard local factor. For an irreducible principal series it is the product of the factors attached to its unramified inducing characters. For $\operatorname{St}\otimes\mu$ in unitary normalization it is $L(s+1/2,\mu)$. For a supercuspidal representation of $\mathrm{GL}_2(F_v)$ it is $1$.
+
+For a factorizable global Whittaker function, the corresponding integral is over $\mathbf A^\times$, not over $F^\times\backslash\mathbf A^\times$:
+
+$$
+Z(s,W)=\int_{\mathbf A^\times}
+W\left(\begin{pmatrix}y&0\\0&1\end{pmatrix}\right)
+|y|_{\mathbf A}^{s-1/2}\,d^\times y.
+$$
+
+The distinction matters because $W(\operatorname{diag}(\alpha,1)g)$ is the Fourier coefficient indexed by $\alpha$, not generally $W(g)$. The integral factors into local integrals and at unramified places produces $\prod_vL(s,\pi_v)$. Equivalently, one starts with a Mellin integral of the automorphic form over $F^\times\backslash\mathbf A^\times$ and unfolds its Whittaker expansion to the displayed integral over $\mathbf A^\times$. Fourier transform supplies continuation and a functional equation involving $\pi^\vee$. The Rankin--Selberg product of Chapter 9, rather than this degree-two integral, is the analytic engine used for strong multiplicity one.
+
+## 9. Multiplicity one
+
+### 9.1 Two logically distinct assertions
+
+There are two multiplicity-one statements. **Global multiplicity one** says that an irreducible cuspidal representation occurs only once in the cuspidal spectrum. **Strong multiplicity one** says that two cuspidal representations with isomorphic local components outside a finite set are globally isomorphic. The first controls copies of one representation; the second reconstructs a representation from almost all of its local data.
+
+Both ultimately arise from the Whittaker coefficient, but strong multiplicity one requires a decisive global analytic input. We give the Rankin--Selberg route because it makes that input visible.
+
+### 9.2 Global multiplicity one from Whittaker expansion
+
+**Theorem 9.1.** Every irreducible cuspidal representation of $G(\mathbf A)$ occurs in $L^2_{\mathrm{cusp}}(\omega)$ with multiplicity one.
+
+**Proof strategy.** Each occurrence maps equivariantly and injectively into the same global Whittaker model. Global Whittaker uniqueness leaves room for only one such embedding.
+
+**Proof.** Let $M=\operatorname{Hom}_{G(\mathbf A)}(\pi,L^2_{\mathrm{cusp}}(\omega))$ be the multiplicity space. For an embedding $i\in M$, composition with the Whittaker integral gives a functional $\Lambda_i$ on $\pi$. If $\Lambda_i=0$, every form in the image of $i$ has zero Whittaker coefficient and hence is zero by Theorem 8.1; thus $i=0$. The map
+
+$$
+M\longrightarrow\operatorname{Hom}_{N(\mathbf A)}(\pi,\psi),
+\qquad i\longmapsto\Lambda_i,
+$$
+
+is injective. The target is one dimensional by Theorem 8.2, so $\dim M\le1$. Since $\pi$ occurs, equality holds. $\square$
+
+The proof uses global uniqueness, not only local uniqueness. A collection of one-dimensional local Hom spaces would not by itself exclude two independent global embeddings with different global scalars.
+
+### 9.3 The Rankin--Selberg integral
+
+Let $\pi$ and $\pi'$ be unitary cuspidal representations with the same central character, and choose cusp forms $\phi$ and $\phi'$. Form an Eisenstein series $E(g,s)$ from the normalized induction attached to the standard Borel, with trivial central character. For $\operatorname{Re}(s)$ large, consider
+
+$$
+I(s)=\int_{X_G}\phi(g)\overline{\phi'(g)}E(g,s)\,dg.
+$$
+
+The common-central-character hypothesis is what makes the integrand descend to $X_G$: the two unitary central factors cancel. For unequal central characters one uses the corresponding character-adjusted Rankin--Selberg datum, but strong multiplicity one below first proves that no adjustment is needed.
+
+Unfolding the Eisenstein series, then inserting the Whittaker expansions, gives an Euler product. For factorizable newvectors and suitable local sections,
+
+$$
+I(s)=\prod_vZ_v(s,W_v,\overline{W_v'},f_{v,s}),
+$$
+
+and at every unramified place the local integral equals
+
+$$
+L(s,\pi_v\times\pi_v'{}^\vee)
+=\prod_{i,j=1}^2(1-\alpha_{i,v}\alpha_{j,v}'{}^{-1}q_v^{-s})^{-1}.
+$$
+
+At the finitely many remaining places the local data can be chosen so that the local integrals are holomorphic and nonzero at $s=1$. The quotient of each such integral by the declared local $L$-factor is then a meromorphic correction factor. This is more than the formal existence of an Euler product: unfolding identifies the analytic continuation of the partial product with that of an Eisenstein integral divided by finitely many explicitly controlled corrections.
+
+The decisive analytic facts are these:
+
+1. $E(g,s)$ continues meromorphically and, in the chosen normalization, has a simple pole at $s=1$ with constant nonzero residue;
+2. the unfolded integral continues meromorphically and has no pole on $\operatorname{Re}(s)=1$ except the possible pole at $s=1$ inherited from $E$;
+3. that residue is a nonzero constant times $\langle\phi,\phi'\rangle$;
+4. the finitely many correction factors can be chosen holomorphic and nonzero at $s=1$, and the omitted local $L$-factors have neither zeros nor poles there for unitary generic data.
+
+The constant residue follows from the constant term of $E(g,s)$ and the simple pole of the global intertwining scalar. Cuspidal rapid decay justifies moving contours and ensures that no boundary integrals survive. Dividing the unfolded identity by the nonvanishing finite corrections shows that a pole of the partial Euler product at $1$ is equivalent to a nonzero residue of the Eisenstein integral. Consequently
+
+$$
+L^S(s,\pi\times\pi^\vee)
+$$
+
+has a simple pole at $s=1$, whereas
+
+$$
+L^S(s,\pi\times\pi'{}^\vee)
+$$
+
+is holomorphic there if $\pi\not\cong\pi'$. In the latter case the cusp forms belong to orthogonal irreducible summands, so the Eisenstein residue pairing vanishes. Because the finite corrections are nonzero at $1$, that vanishing cannot conceal a pole of the partial product. This pole criterion is the analytic input to strong multiplicity one; it has not been inferred merely from the formal Euler factors.
+
+### 9.4 Strong multiplicity one
+
+**Theorem 9.2 (strong multiplicity one).** If $\pi$ and $\pi'$ are irreducible cuspidal automorphic representations of $\mathrm{GL}_2(\mathbf A_F)$ and
+
+$$
+\pi_v\cong\pi_v'
+$$
+
+for all but finitely many places $v$, then $\pi\cong\pi'$.
+
+**Proof strategy.** Outside a finite set, the two Rankin--Selberg products against $\pi^\vee$ are identical. The self-product has a pole at $1$. If $\pi'$ were distinct, the cross-product would be holomorphic there. Ramified local factors cannot create or cancel that distinction.
+
+**Proof.** First the central characters agree. Indeed, put
+
+$$
+\eta=\omega_\pi\omega_{\pi'}^{-1}.
+$$
+
+The local character $\eta_v$ is trivial for $v$ outside a finite set $S$. Enlarge $S$ to contain the archimedean places. Since $\eta$ is trivial on $F^\times$, the product character $\prod_{v\in S}\eta_v$ is trivial on the diagonal copy of $F^\times$. Weak approximation makes that diagonal copy dense in $\prod_{v\in S}F_v^\times$, and continuity therefore makes every remaining local product trivial. Hence $\eta=1$.
+
+Now enlarge $S$ further so it contains all ramified places and $\pi_v\cong\pi_v'$ for $v\notin S$. Then term by term
+
+$$
+L^S(s,\pi\times\pi^\vee)
+=L^S(s,\pi'\times\pi^\vee).
+$$
+
+The left side has a simple pole at $s=1$ by the Rankin--Selberg analysis. If $\pi'\not\cong\pi$, the right side is holomorphic there. The finite set has already been omitted, so no exceptional ramified factor can alter the equality. This contradiction proves $\pi'\cong\pi$. $\square$
+
+Equality of almost all normalized Hecke polynomials is equivalent to equality of almost all unramified local components, because the Satake transform recovers the unordered parameter pair. Thus a cuspidal representation is determined by almost all $T_v$ and $S_v$ eigenvalues. Omitting the central eigenvalues is safe only when the central character has already been fixed.
+
+## 10. Contragredients, twists, and central characters
+
+### 10.1 The contragredient in the automorphic realization
+
+For an admissible representation $\pi$, the contragredient $\pi^\vee$ has local factors $\pi_v^\vee$. Its central character is $\omega_\pi^{-1}$, and
+
+$$
+(\pi^\vee)_v\cong\pi_v^\vee,
+\qquad
+\pi^\vee\cong\bigotimes_v'\pi_v^\vee.
+$$
+
+If $\pi_v$ is unramified with parameters $\alpha_v,\beta_v$, then $\pi_v^\vee$ has parameters $\alpha_v^{-1},\beta_v^{-1}$. It follows that
+
+$$
+P_{\pi_v^\vee}(X)
+=(1-\alpha_v^{-1}X)(1-\beta_v^{-1}X).
+$$
+
+Complex conjugation and contragredience agree for a unitary representation, but not as an algebraic identity for an arbitrary nonunitary normalization. It is safer to say $\overline\pi\cong\pi^\vee$ in the unitary category and to retain $\pi^\vee$ elsewhere.
+
+The Whittaker model of $\pi^\vee$ uses $\psi^{-1}$. This inverse is forced by the invariant pairing:
+
+$$
+\langle\pi(n(x))v,\pi^\vee(n(x))\lambda\rangle
+=\langle v,\lambda\rangle.
+$$
+
+### 10.2 Twisting by a Hecke character
+
+Let $\chi:F^\times\backslash\mathbf A^\times\to\mathbf C^\times$ be a Hecke character. Define
+
+$$
+(\pi\otimes\chi)(g)=\chi(\det g)\pi(g).
+$$
+
+On automorphic forms this is realized by
+
+$$
+\phi(g)\longmapsto\chi(\det g)\phi(g).
+$$
+
+The factor is left $G(F)$-invariant because $\chi$ is trivial on $F^\times$. Since $\det n(x)=1$, the constant term is multiplied by $\chi(\det g)$; cuspidality is preserved. Locally,
+
+$$
+(\pi\otimes\chi)_v\cong\pi_v\otimes\chi_v,
+$$
+
+and the central character becomes
+
+$$
+\omega_{\pi\otimes\chi}=\omega_\pi\chi^2.
+$$
+
+Also
+
+$$
+(\pi\otimes\chi)^\vee\cong\pi^\vee\otimes\chi^{-1}.
+$$
+
+These formulas explain why quadratic twists preserve the central character but need not preserve conductor or Hecke eigenvalues.
+
+### 10.3 Finite-order and algebraic characters
+
+A finite-order Hecke character is unitary and has archimedean components of finite order: at a real place it is $\operatorname{sgn}^{\epsilon_v}$, while at a complex place a continuous finite-order character is trivial on the connected group $\mathbf C^\times$. Such characters change nebentype and finite local types without shifting infinitesimal characters.
+
+An **algebraic Hecke character** has archimedean form
+
+$$
+\chi_v(x)=x^{p_v}\bar x^{q_v}
+$$
+
+at a complex embedding, and $\chi_v(x)=x^{m_v}$ times a sign character at a real embedding, with integral exponents, subject to the condition that the product be trivial on $F^\times$. Its unitary normalization divides by an appropriate power of $|\cdot|_{\mathbf A}$. Algebraic and unitary are therefore different adjectives. A character can be both, as finite-order characters are, but an algebraic norm power is not unitary unless its exponent is zero.
+
+### 10.4 Self-twists and a warning
+
+It can happen that $\pi\otimes\chi\cong\pi$ for a nontrivial character $\chi$. Strong multiplicity one then forces
+
+$$
+\{\chi_v(\varpi_v)\alpha_v,\chi_v(\varpi_v)\beta_v\}
+=\{\alpha_v,\beta_v\}
+$$
+
+at almost every unramified place. Such self-twists are rigid, but they are not excluded by multiplicity one.
+
+There is no formula for $a(\pi_v\otimes\chi_v)$ in terms of only $a(\pi_v)$ and $a(\chi_v)$. If two characters have the same depth, their leading ramification can cancel. Exact conductor calculations must use the local representation: for a principal series they use the two inducing characters, and for a special or supercuspidal representation they use its corresponding local formula.
+
+### 10.5 Local factors under duality
+
+At an unramified place,
+
+$$
+L(s,\pi_v^\vee)
+=\frac1{(1-\alpha_v^{-1}q_v^{-s})(1-\beta_v^{-1}q_v^{-s})}.
+$$
+
+An unramified twist multiplies both inverse roots by $\chi_v(\varpi_v)$. At ramified places the analogous statement is defined through Whittaker zeta integrals; one must not invent a pair of nonzero Satake roots when the local factor has degree one or zero.
+
+Contragredience preserves conductor:
+
+$$
+a(\pi_v^\vee)=a(\pi_v),
+\qquad
+\mathfrak f(\pi^\vee)=\mathfrak f(\pi).
+$$
+
+The $K_1$-fixed spaces dualize, and the newvector lines pair nontrivially. This stable behavior contrasts with twisting, which can alter conductor through cancellation.
+
+## 11. Conductors and compact-open invariants
+
+### 11.1 The local exponent and global ideal
+
+For $n\ge0$, define
+
+$$
+K_{1,v}(\mathfrak p_v^n)=
+\left\{
+\begin{pmatrix}a&b\\c&d\end{pmatrix}\in\mathrm{GL}_2(\mathcal O_v):
+c\in\mathfrak p_v^n,\ d\equiv1\pmod{\mathfrak p_v^n}
+\right\}.
+$$
+
+At $n=0$ the congruence is vacuous and this is $K_v$. For an infinite-dimensional irreducible generic $\pi_v$, its conductor exponent is
+
+$$
+a(\pi_v)=\min\{n:\pi_v^{K_{1,v}(\mathfrak p_v^n)}\ne0\}.
+$$
+
+The local newvector theorem gives
+
+$$
+\dim\pi_v^{K_{1,v}(\mathfrak p_v^m)}=
+\begin{cases}
+0,&m<a(\pi_v),\\
+m-a(\pi_v)+1,&m\ge a(\pi_v).
+\end{cases}
+$$
+
+Only finitely many exponents are nonzero for an automorphic representation, so its finite conductor is the ideal
+
+$$
+\mathfrak f(\pi)=\prod_{v<\infty}\mathfrak p_v^{a(\pi_v)},
+$$
+
+and its norm is
+
+$$
+N(\pi)=\mathbf N_{F/\mathbf Q}\mathfrak f(\pi)
+=\prod_{v<\infty}q_v^{a(\pi_v)}.
+$$
+
+The ideal is the more precise invariant; the integer norm can identify different ideals.
+
+### 11.2 Global level groups and existence of invariants
+
+For an integral ideal $\mathfrak n=\prod_v\mathfrak p_v^{n_v}$, put
+
+$$
+K_1(\mathfrak n)=\prod_{v<\infty}K_{1,v}(\mathfrak p_v^{n_v}).
+$$
+
+Factorization gives
+
+$$
+\pi_f^{K_1(\mathfrak n)}
+\cong\bigotimes_{v<\infty}
+\pi_v^{K_{1,v}(\mathfrak p_v^{n_v})}.
+$$
+
+Hence
+
+$$
+\pi_f^{K_1(\mathfrak n)}\ne0
+\quad\Longleftrightarrow\quad
+\mathfrak f(\pi)\mid\mathfrak n.
+$$
+
+Moreover, if $\mathfrak f(\pi)\mid\mathfrak n$, then
+
+$$
+\boxed{
+\dim\pi_f^{K_1(\mathfrak n)}
+=\prod_{v\mid\mathfrak n}
+(n_v-a(\pi_v)+1).}
+$$
+
+Factors at places with $n_v=0=a(\pi_v)$ equal $1$ and may be omitted. This product formula is the global oldform multiplicity inside one automorphic representation.
+
+If $v_f=\otimes_vv_v^{\rm new}$ is the tensor of normalized local newvectors, then
+
+$$
+\mathbf Cv_f=\pi_f^{K_1(\mathfrak f(\pi))}.
+$$
+
+Thus the global finite newvector exists and is unique up to scalar. Its uniqueness is a product of local uniqueness; global multiplicity one ensures that there is not a second automorphic copy carrying another such line.
+
+### 11.3 $K_0$ and the central-character correction
+
+Classical modular forms are often presented at
+
+$$
+K_{0,v}(\mathfrak p_v^n)
+=\left\{\begin{pmatrix}a&b\\c&d\end{pmatrix}\in K_v:
+c\in\mathfrak p_v^n\right\}.
+$$
+
+The quotient $K_0/K_1$ is represented by the lower-right entry in $(\mathcal O_v/\mathfrak p_v^n)^\times$. A local newvector does not generally remain fixed by $K_0$. With the right-translation convention it transforms by the character prescribed by the central character on that lower-right entry, after fixing the standard convention for the classical nebentype:
+
+$$
+\pi_v(k)v_v^{\rm new}=\omega_{\pi_v}(d)v_v^{\rm new}
+\qquad
+k=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in K_{0,v}(\mathfrak p_v^{a(\pi_v)}).
+$$
+
+Some classical conventions place the inverse character here because they use $f|g$ with an inverse right action. The formula must be derived from the chosen adelization, not memorized independently. Literal $K_0$-invariance in the presence of ramified central character is generally false.
+
+Scalar matrices in $K_{1,v}(\mathfrak p_v^n)$ show the necessary inequality
+
+$$
+a(\omega_{\pi_v})\le a(\pi_v).
+$$
+
+The inequality can be strict. An unramified Steinberg twist has conductor exponent $1$ but unramified central character; a ramified quadratic twist of Steinberg can have trivial central character and conductor exponent $2$.
+
+### 11.4 Conductors of local families
+
+The local formulas give useful global diagnostics. For an irreducible principal series,
+
+$$
+a(I(\chi_{1,v},\chi_{2,v}))
+=a(\chi_{1,v})+a(\chi_{2,v}).
+$$
+
+For a special representation,
+
+$$
+a(\operatorname{St}\otimes\mu_v)=
+\begin{cases}
+1,&a(\mu_v)=0,\\
+2a(\mu_v),&a(\mu_v)>0.
+\end{cases}
+$$
+
+Supercuspidal conductors are determined by their local newvectors; in tame dihedral constructions they can be computed from the quadratic extension, character conductor, and different. The global conductor simply multiplies these local contributions. It does not acquire an additional archimedean ideal factor. Archimedean parameters instead enter the analytic conductor, which also depends on the spectral parameter and is a different invariant.
+
+### 11.5 Worked conductor profiles
+
+Suppose over $\mathbf Q$ that
+
+$$
+\pi_2=\operatorname{St}\otimes\mu_2,\qquad
+\pi_3=I(\chi_1,\chi_2),
+$$
+
+with $\mu_2$ unramified, $a(\chi_1)=1$, and $a(\chi_2)=2$, while every other finite component is spherical. Then
+
+$$
+a(\pi_2)=1,\qquad a(\pi_3)=3,\qquad
+N(\pi)=2\cdot3^3=54.
+$$
+
+At level $2^2 3^5$, this representation contributes
+
+$$
+(2-1+1)(5-3+1)=6
+$$
+
+finite $K_1$-fixed vectors.
+
+Now twist by a character of conductor $3$. The exponent at $2$ stays fixed if the local twist there is unramified, but at $3$ the new exponent is
+
+$$
+a(\chi_1\eta_3)+a(\chi_2\eta_3).
+$$
+
+Its value depends on the characters, not only their old exponents: equal-depth leading characters may cancel. This concrete example is why conductor tables must record local types and twists, not just an integer level.
+
+## 12. Newforms and oldforms
+
+### 12.1 Why minimal level singles out an eigenform
+
+At a level divisible by $\mathfrak f(\pi)$, one representation contributes several invariant vectors. Most are inherited from smaller level. Newform theory isolates the minimal vector that contains the intrinsic finite ramification of $\pi$, then describes every higher-level vector as a controlled translate.
+
+Let $n=a(\pi_v)$ and choose $v_v^{\rm new}\ne0$. For $m\ge n$, the local oldvectors
+
+$$
+v_{v,j}=\pi_v\left(\begin{pmatrix}\varpi_v^{-j}&0\\0&1\end{pmatrix}\right)v_v^{\rm new},
+\qquad0\le j\le m-n,
+$$
+
+form a basis of $\pi_v^{K_{1,v}(\mathfrak p_v^m)}$. Each step of level raising adds one valuation shell in the Kirillov model, hence one dimension.
+
+Globally, if
+
+$$
+\mathfrak n=\mathfrak f(\pi)\mathfrak r,
+\qquad \mathfrak r=\prod_v\mathfrak p_v^{r_v},
+$$
+
+then tensors of the vectors above, indexed by $0\le j_v\le r_v$, form a basis. The number of oldvectors is
+
+$$
+\prod_v(r_v+1)=\prod_v(n_v-a(\pi_v)+1).
+$$
+
+### 12.2 Degeneracy maps and level raising
+
+The translate by $\operatorname{diag}(\varpi_v^{-1},1)$ is the adelic form of a degeneracy map. Over $\mathbf Q$, raising level from $N$ to $Np$ produces the familiar pair
+
+$$
+f(z),\qquad f(pz)
+$$
+
+when $p\nmid N$, after the scalar factors dictated by the slash convention are inserted. Representation theory explains why there are exactly two: the local fixed-space dimension rises from $1$ to $2$.
+
+If the exponent is raised by $r$, the translates corresponding to $f(p^jz)$ for $0\le j\le r$ give $r+1$ local vectors. At several primes, degeneracy maps tensor, so their multiplicities multiply rather than add.
+
+This count concerns one representation. A full fixed-level cusp space is the direct sum
+
+$$
+S_{\mathrm{cusp}}(K_1(\mathfrak n),\tau)
+\cong\bigoplus_{\pi:\,\mathfrak f(\pi)\mid\mathfrak n}
+\operatorname{Hom}_{K_\infty}(\tau,\pi_\infty)
+\otimes\pi_f^{K_1(\mathfrak n)},
+$$
+
+with multiplicity one. Therefore its dimension is the sum, over representations of compatible infinity type, of the product oldform multiplicities. Confusing this sum with the multiplicity of one representation leads to incorrect dimension formulas.
+
+### 12.3 The new subspace
+
+At exact level $\mathfrak n$, the **new subspace** is the direct sum of the lines belonging to representations with $\mathfrak f(\pi)=\mathfrak n$, together with their prescribed archimedean lowest-weight or $K$-type lines. Equivalently, after choosing the standard invariant inner product, it is the orthogonal complement of the images of all degeneracy maps from proper divisor levels. The equivalence rests on the local oldvector basis and multiplicity one.
+
+**Proof strategy.** Decompose the fixed-level space by irreducible cuspidal representations. Inside each summand, local newvector theory describes exactly which lower levels map into it. If the representation conductor is a proper divisor, its entire fixed space is old. If its conductor equals the level, its fixed space is the tensor of new lines and has no lower-level source.
+
+The orthogonal-complement definition depends on a Hilbert structure, while the representation-theoretic direct sum does not. Over $\mathbf C$ they agree. Over more general coefficient rings, orthogonal complements may fail to be direct summands, so the characteristic-zero representation decomposition is the clean statement used here.
+
+### 12.4 A counterexample to “new means ramified everywhere”
+
+A global newform of level $\mathfrak n$ is unramified at every $v\nmid\mathfrak n$. It need not be supercuspidal at $v\mid\mathfrak n$. If $v$ divides the level exactly once and the local central character is unramified, the local component is often an unramified twist of Steinberg. At higher exponent it may be a ramified principal series, a ramified special representation, or supercuspidal. Newness specifies a minimal invariant vector, not a local classification family.
+
+### 12.5 Recovering new dimensions
+
+In a one-prime tower, let $D(m)$ be the full fixed-space dimension at exponent $m$ and let $N(n)$ count new lines of exact exponent $n$, with archimedean type fixed. Then
+
+$$
+D(m)=\sum_{0\le n\le m}(m-n+1)N(n).
+$$
+
+Taking two successive differences yields
+
+$$
+N(m)=D(m)-2D(m-1)+D(m-2),
+$$
+
+where $D(-1)=D(-2)=0$. At several primes, apply this second-difference operator separately in each valuation coordinate. This is the numerical shadow of the tensor-product oldvector basis.
+
+The formula assumes the characteristic-zero spectral decomposition and local newvector theorem. Over coefficient rings with torsion, degeneracy images can intersect unexpectedly and this direct-sum count need not survive unchanged.
+
+## 13. Classical modular forms over $\mathbf Q$
+
+### 13.1 The adelization problem
+
+Let $f$ be a holomorphic cusp form of weight $k\ge2$, level $\Gamma_0(N)$, and nebentype $\varepsilon$. We use the classical convention
+
+$$
+f(\gamma z)=\varepsilon(d)(cz+d)^kf(z)
+\qquad
+\left(\gamma=\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\in\Gamma_0(N)\right).
+$$
+
+The compatibility condition at $-I$ is
+
+$$
+\varepsilon(-1)=(-1)^k.
+$$
+
+Adelization must absorb three transformation laws at once: rational matrices act on the left, the finite level acts on the right, and rotation at infinity records weight. The determinant factor that appears below is not cosmetic; it makes the archimedean action unitary and removes the positive real central character.
+
+For $g_\infty\in\mathrm{GL}_2(\mathbf R)^+$, write
+
+$$
+j(g_\infty,i)=ci+d,
+$$
+
+and set
+
+$$
+\Phi_f(g_\infty)
+=\det(g_\infty)^{k/2}j(g_\infty,i)^{-k}f(g_\infty i).
+$$
+
+Let $K_0(N)\subset\mathrm{GL}_2(\widehat{\mathbf Z})$ be defined by $c\equiv0\pmod N$. Extend $\varepsilon$ to its lower-right entry. Strong approximation gives decompositions
+
+$$
+g=\gamma g_\infty k_f,
+\qquad \gamma\in\mathrm{GL}_2(\mathbf Q),\quad
+k_f\in K_0(N),
+$$
+
+after accounting for the determinant class and the second real component. Define
+
+$$
+\phi_f(\gamma g_\infty k_f)
+=\varepsilon(k_f)^{-1}\Phi_f(g_\infty),
+$$
+
+on the positive-determinant component. To reach the other real component, multiply on the left by a rational matrix of negative determinant and reapply the same decomposition. Left rational invariance makes the result independent of that auxiliary matrix. This is not an additional holomorphic choice: a negative-determinant element exchanges the holomorphic and antiholomorphic discrete-series pieces, thereby producing a representation of the full group $\mathrm{GL}_2(\mathbf R)$.
+
+Why is this well defined? If a second decomposition differs by $\delta\in\Gamma_0(N)$, then both $g_\infty$ and $k_f$ are multiplied on the left by $\delta$. The classical law multiplies $\Phi_f$ by $\varepsilon(d_\delta)$, while $\varepsilon(k_f)^{-1}$ is multiplied by its inverse. The two factors cancel. This calculation also fixes the inverse appearing in the right $K_0(N)$ law; changing the classical slash convention changes both inverses together.
+
+### 13.2 Weight, level, and central character
+
+For a rotation
+
+$$
+r(\theta)=\begin{pmatrix}\cos\theta&\sin\theta\\-\sin\theta&\cos\theta\end{pmatrix},
+$$
+
+one has
+
+$$
+\phi_f(gr(\theta))=e^{ik\theta}\phi_f(g)
+$$
+
+with this choice of rotation orientation. On the positive-determinant component, $\phi_f$ lies in the lowest compact type of weight $k$ and generates the holomorphic discrete series of lowest weight $k$. The full $\mathrm{GL}_2(\mathbf R)$-representation also contains the conjugate antiholomorphic piece, exchanged by a negative-determinant element. For $k=1$ one obtains a limit-type representation and several statements need separate treatment, which is why we assume $k\ge2$ here.
+
+At finite level,
+
+$$
+\phi_f(gk)=\varepsilon(k)^{-1}\phi_f(g)
+\qquad(k\in K_0(N)).
+$$
+
+The adelic central character $\omega_\varepsilon$ is the Hecke character attached to the Dirichlet character $\varepsilon$. With the present classical convention its ramified local restriction to units appears by the inverse in the displayed $K_0$ law, while for $p\nmid N$ one has
+
+$$
+\omega_{\varepsilon,p}(p)=\varepsilon(p).
+$$
+
+At infinity $\omega_{\varepsilon,\infty}(-1)=(-1)^k$, exactly the parity condition. On positive real scalars the determinant factor in $\Phi_f$ makes the unitary central character trivial.
+
+The level $N$ of a chosen form need not equal the conductor of its generated representation. If $f$ is obtained from level $M\mid N$ by a degeneracy map, its representation has conductor $M$. A normalized classical newform is precisely the vector of minimal finite conductor together with the lowest-weight line at infinity.
+
+### 13.3 Cuspidality and Fourier expansions
+
+Write
+
+$$
+f(z)=\sum_{n\ge1}a_n(f)e^{2\pi inz}.
+$$
+
+The absence of an $n=0$ term at every classical cusp is equivalent to adelic cuspidality. One direction is immediate at the standard cusp: the adelic constant term specializes to the horizontal average of $f$. The other cusps are obtained by right translating $g$, which is why the adelic definition requires vanishing for every $g$.
+
+For the standard additive character and compatible measures, the adelic Whittaker coefficient evaluated on
+
+$$
+\begin{pmatrix}y&x\\0&1\end{pmatrix}
+$$
+
+recovers $a_n(f)$ after a rational diagonal translate, multiplied by the explicit archimedean factor $y^{k/2}e^{-2\pi ny}$ and the finite normalization. Normalizing $a_1(f)=1$ is exactly the global choice $W(1)=1$ after the standard local newvectors and archimedean Whittaker vector have been fixed.
+
+This is why multiplicativity of Fourier coefficients is not an accidental identity among integers. For coprime indices it comes from factorization of $W=\prod_vW_v$; at powers of one prime it comes from the local spherical recurrence.
+
+### 13.4 Hecke eigenvalues and the unitary shift
+
+Suppose $f$ is a normalized eigenform and $p\nmid N$. Its classical Hecke polynomial is
+
+$$
+P_{f,p}(X)=1-a_p(f)X+\varepsilon(p)p^{k-1}X^2.
+$$
+
+Let its reciprocal roots be $A_p,B_p$. The automorphic representation in the $L^2$ or unitary normalization has Satake parameters
+
+$$
+\alpha_p=p^{-(k-1)/2}A_p,
+\qquad
+\beta_p=p^{-(k-1)/2}B_p.
+$$
+
+Therefore
+
+$$
+\alpha_p+\beta_p=p^{-(k-1)/2}a_p(f),
+\qquad
+\alpha_p\beta_p=\varepsilon(p).
+$$
+
+The spectrally normalized operator $\mathsf T_p$ acts on the unitary spherical line by $p^{-(k-1)/2}a_p(f)$, while the raw characteristic double coset acts by
+
+$$
+p^{1/2}(\alpha_p+\beta_p)=p^{1-k/2}a_p(f).
+$$
+
+The classical operator $T_p$ therefore differs from the raw adelic convolution operator by $p^{k/2-1}$ under this adelization.
+
+It is often more convenient arithmetically to define
+
+$$
+\pi^{\rm alg}=\pi^{\rm u}\otimes|\det|_{\mathbf A}^{-(k-1)/2}.
+$$
+
+Its local Satake parameters are $A_p,B_p$, so the normalized local Hecke polynomial is literally $P_{f,p}(X)$. Its central character is no longer unitary:
+
+$$
+\omega_{\pi^{\rm alg}}
+=\omega_\varepsilon|\cdot|_{\mathbf A}^{-(k-1)}.
+$$
+
+Correspondingly,
+
+$$
+L(s,f)=L\left(s-\frac{k-1}{2},\pi^{\rm u}\right)
+=L(s,\pi^{\rm alg}).
+$$
+
+This shift accounts for most apparent disagreements between analytic and arithmetic Euler factors.
+
+### 13.5 Primes dividing the level
+
+If $p\mid N$, the local component is determined by more than the unramified polynomial. At exact conductor exponent one, with unramified central character, it is a twist of Steinberg and contributes a one-factor local $L$-function. If only one inducing character in a principal series is unramified, one Euler factor remains. If both inducing characters are ramified, or if the component is supercuspidal, the standard local factor can be $1$ even though the representation carries substantial conductor and type information.
+
+The classical $U_p$ eigenvalue is read from the action on the newvector or an Iwahori line, with a scaling depending on the unitary or algebraic normalization. It is not a Satake eigenvalue of the hyperspecial algebra, because there is no hyperspecial fixed vector. Treating $U_p$ as if it were the good-prime $T_p$ loses the local type.
+
+For example, an elliptic newform of squarefree level and trivial character has a Steinberg twist at each $p\mid N$. Its conductor exponent is one and its $U_p$ eigenvalue records the unramified twisting character. By contrast, a depth-zero supercuspidal component has exponent two and no Iwahori-fixed vector. Both are “ramified,” but their fixed-vector geometry is entirely different.
+
+### 13.6 The classical correspondence
+
+**Theorem 13.1.** Normalized holomorphic newforms of weight $k\ge2$, nebentype $\varepsilon$, and exact level $N$ correspond to cuspidal automorphic representations $\pi$ such that:
+
+- $\pi_\infty$ is the discrete-series representation of the full group $\mathrm{GL}_2(\mathbf R)$ whose restriction to the positive-determinant component contains the holomorphic discrete series of lowest weight $k$;
+- $\omega_\pi=\omega_\varepsilon$ in unitary normalization;
+- $\mathfrak f(\pi)=N\mathbf Z$;
+- the finite newvector transforms under $K_0(N)$ by the inverse lower-right character $\varepsilon^{-1}$ used in Section 13.1;
+- for every $p\nmid N$, the arithmetic Satake polynomial is $P_{f,p}(X)$.
+
+The correspondence is one-to-one after the normalization $a_1(f)=1$.
+
+**Proof strategy.** Adelization sends a classical newform to a cusp form with the required local vectors. Its Hecke eigensystem generates an irreducible cuspidal constituent. Strong multiplicity one makes that constituent unique. Conversely, evaluate a lowest-weight, finite-newvector cusp form on the real orbit of $i$; its transformation laws give a classical form, and the Whittaker expansion gives holomorphy and the Fourier series. The local newvector theorem proves exact level.
+
+The normalization is essential. Without $a_1=1$, a single representation corresponds to a line of classical forms, not a distinguished vector. Without “exact level,” all degeneracy images of that line would occur at every multiple of $N$.
+
+## 14. Hilbert modular representations
+
+### 14.1 Several real places, one adelic object
+
+Now suppose $F$ is totally real of degree $d$. Its symmetric space is a product of $d$ upper half-planes, one for each embedding $\tau:F\hookrightarrow\mathbf R$. A Hilbert modular form has a weight vector
+
+$$
+\mathbf k=(k_\tau)_{\tau:F\hookrightarrow\mathbf R}.
+$$
+
+The adelic construction is the same as over $\mathbf Q$, but it removes a serious classical nuisance: different ideal classes give different connected components and sometimes different congruence groups. The quotient
+
+$$
+G(F)\backslash G(\mathbf A)/(K_\infty^+U)
+$$
+
+holds all components at once. The narrow class group indexes determinant components after positive archimedean scalars are taken into account.
+
+A holomorphic Hilbert cusp form adelizes to a cusp form whose restriction to the positive-determinant component at each real place contains the holomorphic discrete series of lowest weight $k_\tau$. The representation of the full local group also contains the conjugate piece exchanged by negative determinant. The finite part has a level and central character exactly as in Chapters 11 and 12. The tensor product across real places replaces the single lowest-weight line over $\mathbf Q$.
+
+### 14.2 Algebraic and cohomological weights
+
+The clean algebraic parametrization uses integers $a_\tau\ge b_\tau$ and the coefficient representation
+
+$$
+V_{a,b}=\bigotimes_\tau
+\left(\operatorname{Sym}^{a_\tau-b_\tau}\mathbf C^2
+\otimes\det^{b_\tau}\right).
+$$
+
+The associated holomorphic discrete-series weight is
+
+$$
+k_\tau=a_\tau-b_\tau+2.
+$$
+
+For an algebraic representation of the group with a single rational central weight, one requires
+
+$$
+a_\tau+b_\tau=w
+$$
+
+independent of $\tau$. Hence
+
+$$
+k_\tau\equiv w\pmod2
+$$
+
+for every $\tau$. This is the parity constraint on a cohomological weight. It is not imposed by local representation theory at one real place; it comes from asking the archimedean data and the global algebraic central character to agree on $F^\times$.
+
+The frequently used “cohomological” or “$L$-algebraic” normalization differs from the unitary normalization by a norm power. In the above convention, the arithmetic determinant term at an unramified prime ideal has size governed by $q_v^{w+1}$, while the unitary central character has removed that power. For the classical weight-$k$ case, $a=k-2$, $b=0$, so $w=k-2$ and $w+1=k-1$, recovering Chapter 13.
+
+### 14.3 Parity from the center
+
+At a real place, the lowest-weight discrete series of weight $k_\tau$ sends the scalar $-1$ to $(-1)^{k_\tau}$. On the principal idele $-1$, the product of all local central-character values must be $1$. Therefore the parities of the $k_\tau$, the finite central character, and any prescribed archimedean sign characters must satisfy this product constraint.
+
+This gives a simple counterexample to an overly local construction. Choose two real places and weights $2$ and $3$, with trivial finite central character and no compensating signs. Each discrete series exists locally, but their tensor product cannot be the infinity type of an automorphic representation with trivial global central character: on the principal idele $-1$, the product of the two archimedean scalar actions is $(-1)^2(-1)^3=-1$, whereas a Hecke character must be trivial on $F^\times$.
+
+More generally, an algebraic Hecke central character supplies sign exponents at real places and a common norm exponent. Its restriction to $F^\times$ imposes both the parity equations and the compatibility of central weights. These are global arithmetic conditions, not optional conventions.
+
+### 14.4 Hilbert Hecke data and conductor
+
+Let $\mathfrak p\nmid\mathfrak n$ be a prime ideal at which $\pi$ is unramified. The representation-normalized polynomial is
+
+$$
+1-(\alpha_\mathfrak p+\beta_\mathfrak p)X
++\omega_\pi(\varpi_\mathfrak p)X^2.
+$$
+
+After the algebraic twist appropriate to the central weight $w$, the polynomial takes the arithmetic form
+
+$$
+1-a_\mathfrak pX
++\varepsilon(\mathfrak p)q_\mathfrak p^{w+1}X^2.
+$$
+
+The first coefficient is the Hilbert Hecke eigenvalue in the corresponding classical normalization. The formula assumes that the algebraic normalization has been fixed globally; when weights are described with a different determinant twist, both the norm exponent and the $L$-function shift change together.
+
+At primes dividing the level, the ideal conductor exponent $a(\pi_\mathfrak p)$ determines the minimal $K_1$-level, and the local type distinguishes principal-series, special, and supercuspidal behavior. The global newvector is the tensor of these local newvectors. Oldform multiplicity at $\mathfrak n$ remains
+
+$$
+\prod_{\mathfrak p\mid\mathfrak n}
+\bigl(v_\mathfrak p(\mathfrak n)-a(\pi_\mathfrak p)+1\bigr).
+$$
+
+Nothing in this formula requires the narrow class number to be one. Adeles have already assembled the class-group components.
+
+### 14.5 The Hilbert correspondence
+
+A normalized holomorphic Hilbert newform of cohomological weight $(a_\tau,b_\tau)$, exact ideal level $\mathfrak n$, and compatible nebentype determines a unique cuspidal automorphic representation $\pi$. At each real place, the restriction of $\pi_\tau$ to the positive-determinant component contains $D_{k_\tau}^{\rm hol}$; in the customary shorthand,
+
+$$
+\pi_\infty\cong\bigotimes_{\tau}D_{k_\tau}^{\rm hol},
+\qquad
+\mathfrak f(\pi)=\mathfrak n.
+$$
+
+At unramified primes its Hecke eigenvalues determine $\pi_\mathfrak p$ by the Satake polynomial. Conversely, a cuspidal representation with these holomorphic infinity types and a finite newvector produces a Hilbert newform on every connected component; the adelic transformation law glues those componentwise forms.
+
+The statement is representation theoretic. No passage to a quaternion algebra, no transfer, and no change of base field is involved. Those operations require separate global theorems.
+
+## 15. Algebraicity and rationality
+
+### 15.1 What finite-dimensionality proves
+
+For holomorphic classical or Hilbert forms of cohomological weight, fixed level and fixed nebentype, the relevant space admits a model over a number field generated by the values of the nebentype. Fourier expansions give a lattice over its ring of integers after denominators are controlled, and the standard Hecke correspondences preserve that rational structure. Therefore the eigenvalues of a simultaneous Hecke eigenform are algebraic numbers.
+
+Concretely, each Hecke operator has a matrix with entries in a number field on a finite-dimensional space. Its eigenvalues satisfy its characteristic polynomial and are algebraic. Since the image of the full commuting Hecke algebra is finite dimensional, finitely many operators generate it, so all eigenvalues of one eigensystem lie in a finite extension.
+
+Define the **Hecke field** of a normalized cohomological eigenform by
+
+$$
+E_f=\mathbf Q\bigl(a_\mathfrak p(f),
+\varepsilon(\mathfrak p):\mathfrak p\nmid\mathfrak n\bigr),
+$$
+
+or include the finitely many bad-place eigenvalues when the complete finite eigensystem is desired. Strong multiplicity one shows that the good-prime system determines the complex cuspidal representation, but it does not say that every vector in that representation has coordinates in $E_f$.
+
+### 15.2 Field of rationality versus field of definition
+
+The **field of rationality** of $\pi_f$ is the fixed field of automorphisms $\sigma\in\operatorname{Aut}(\mathbf C)$ for which the finite representation $\pi_f^\sigma$ is isomorphic to $\pi_f$. For a cohomological cuspidal representation, the unramified Hecke eigenvalues and central-character values identify this field with the corresponding Hecke field, after the normalization data are included.
+
+A **field of definition** is a number field $E$ over which a representation model and its group action can actually be realized. A field of rationality need not automatically be a field of definition: descent can be obstructed by a nontrivial division algebra of endomorphisms, and choosing a particular local type or archimedean model can enlarge the necessary field. For the one-dimensional newvector eigensystem, the normalized eigenline is often defined over the Hecke field; this does not by itself descend the entire infinite-dimensional representation.
+
+This distinction prevents a common overstatement. Algebraic Hecke eigenvalues prove that the eigencharacter is number-field valued. They do not prove that every local representation, every invariant pairing, and every chosen Whittaker normalization descends to exactly that same field.
+
+### 15.3 Galois conjugation of eigenforms
+
+Let $\sigma\in\operatorname{Aut}(\mathbf C)$. Applying $\sigma$ to the algebraic Fourier coefficients and nebentype values of a cohomological eigenform gives another eigenform, with
+
+$$
+a_\mathfrak p(f^\sigma)=\sigma(a_\mathfrak p(f)),
+\qquad
+\varepsilon^\sigma=\sigma\circ\varepsilon.
+$$
+
+The associated finite automorphic representation has unramified Satake polynomials obtained by applying $\sigma$ to the algebraically normalized coefficients. At infinity one must retain the cohomological weight through its algebraic coefficient system; applying a wild automorphism directly to analytic quantities such as $q_v^{1/2}$ is not a meaningful replacement for this rational structure.
+
+The orbit of $f$ under such conjugation is finite because its coefficients lie in a number field. A form with rational coefficients has Hecke field $\mathbf Q$, but this still does not imply that all analytic normalizations are rational: periods, Petersson norms, and unitary square-root scalings generally are not.
+
+### 15.4 The boundary of the algebraicity assertion
+
+For a general Maass cusp form, spectral theory gives complex Hecke eigenvalues but does not by itself prove that they are algebraic. Finite dimensionality over $\mathbf C$ only says that an eigenvalue is a root of a characteristic polynomial with complex coefficients. The algebraic conclusion for holomorphic cohomological forms used an independently constructed number-field structure.
+
+Similarly, an arbitrary unitary automorphic representation can have archimedean spectral parameters with no established algebraicity. One must not transfer the cohomological theorem to all cusp forms merely because their unramified Hecke operators look formally identical.
+
+## 16. Hecke algebras on fixed-level spaces
+
+### 16.1 The restricted tensor algebra
+
+Let $U=\prod_vU_v\subset G(\mathbf A_f)$ be compact open. Its Hecke algebra is
+
+$$
+\mathcal H(G(\mathbf A_f),U)
+=\bigotimes_{v<\infty}'\mathcal H(G_v,U_v),
+$$
+
+where the reference element is the idempotent $\mathbf1_{U_v}$ with $\operatorname{vol}(U_v)=1$. A pure tensor differs from the reference element at only finitely many places. Convolution factors place by place.
+
+If $\Sigma$ contains the primes dividing the level and the ramification of the central character, the away-from-$\Sigma$ spherical algebra is generated by $T_v^{\rm raw}$ and $S_v^{\pm1}$ for $v\notin\Sigma$. It is commutative. At primes in the level, $\mathcal H(G_v,U_v)$ can be noncommutative, and operators called $U_v$ depend on the chosen $K_0$, $K_1$, or Iwahori level. Commutativity away from level does not imply commutativity of the full Hecke algebra.
+
+### 16.2 Spectral decomposition of the action
+
+Fix a finite set of $K_\infty$-types $\tau$. The cuspidal fixed-level space decomposes as
+
+$$
+\mathcal A_{\mathrm{cusp}}(U,\tau,\omega)
+\cong\bigoplus_\pi
+\operatorname{Hom}_{K_\infty}(\tau,\pi_\infty)
+\otimes\pi_f^U.
+$$
+
+Only finitely many $\pi$ occur after the infinitesimal character is also fixed or bounded appropriately. The local Hecke algebra acts on $\pi_f^U$ and trivially on the archimedean multiplicity factor. At hyperspecial places its character is the Satake character of $\pi_v$.
+
+If the space is holomorphic of fixed weight, it is already finite dimensional. The commuting good-place Hecke operators then admit simultaneous eigenvectors. Strong multiplicity one says that a full good-place eigensystem belongs to at most one cuspidal representation, but the corresponding eigenspace at nonminimal level can have dimension greater than one because of oldvectors.
+
+### 16.3 Eigenvalue multiplicity versus representation multiplicity
+
+Suppose $f$ is a level-$N$ newform and view it at level $Np$ with $p\nmid N$. The two degeneracy images have the same $T_\ell$ eigenvalues for every $\ell\nmid Np$. Thus the away-from-$Np$ Hecke eigenspace has dimension at least two. This does not contradict multiplicity one: both vectors lie in the single automorphic representation $\pi_f$, whose local $K_1(p)$-fixed space is two dimensional.
+
+Adding the operator at $p$ may split this oldspace into two stabilized eigenlines when its characteristic polynomial has distinct roots. If the roots coincide, the action may have a generalized eigenspace. Thus “one good-prime eigensystem” identifies a representation, while “one-dimensional eigenspace at a chosen level” is a separate linear-algebra statement.
+
+### 16.4 Central operators and fixed character
+
+Before fixing $\omega$, the scalar double cosets $S_v$ carry genuine information. On the $\omega$-central-character subspace they act by known scalars $\omega_v(\varpi_v)$. One may then suppress them from the list of generators, but their values still form the determinant term of every Hecke polynomial.
+
+Forgetting them without fixing the central character can identify different representations whose normalized trace parameters agree but determinant parameters differ. Strong multiplicity one uses the full unramified local component, equivalently both symmetric functions of the two Satake parameters.
+
+## 17. The global dictionary
+
+### 17.1 From eigenform data to local representations
+
+For a normalized classical or Hilbert eigenform $f$, the passage to $\pi_f$ can be read one place at a time:
+
+| form-theoretic datum | automorphic datum | local meaning |
+|---|---|---|
+| weight $k_\tau$ | $\pi_\tau$ at a real place | holomorphic discrete series of lowest weight $k_\tau$ |
+| nebentype $\varepsilon$ | central character $\omega_{\pi_f}$ | scalar action; parity at infinity |
+| exact level $\mathfrak n$ | conductor $\mathfrak f(\pi_f)$ | $a(\pi_v)=v(\mathfrak n)$ |
+| normalized newform | pure tensor newvector | local newvectors and lowest-weight vectors |
+| $a_\mathfrak p$ for $\mathfrak p\nmid\mathfrak n$ | arithmetic Satake trace | sum of algebraically normalized parameters |
+| determinant term of the Hecke polynomial | central Satake eigenvalue | product of the two parameters |
+| Fourier coefficient | global Whittaker value | product of local Whittaker values |
+| degeneracy images | oldvectors | diagonal translates of the local newvector |
+| twist by a character | $\pi_f\otimes\chi$ | determinant twist at every place |
+
+At a good finite place, the polynomial determines an unramified principal-series constituent. At a bad place, conductor plus the $U_v$ eigenvalue may distinguish special from some principal-series cases, but conductor alone never determines the local representation. A local type, its Hecke action, or further local factors can be needed.
+
+### 17.2 Normalization dictionary
+
+Let a classical weight-$k$ form have arithmetic roots $A_v,B_v$. Then the central conversion is
+
+$$
+\begin{array}{c|c|c}
+&\text{unitary representation}&\text{algebraic normalization}\\ \hline
+\text{Satake roots}&q_v^{-(k-1)/2}A_v,\ q_v^{-(k-1)/2}B_v&A_v,B_v\\
+\text{trace}&q_v^{-(k-1)/2}a_v&a_v\\
+\text{product}&\varepsilon(v)&\varepsilon(v)q_v^{k-1}\\
+\text{central character}&\omega_\varepsilon&\omega_\varepsilon|\cdot|^{-(k-1)}\\
+\text{$L$-function}&L(s,\pi^{\rm u})&L(s,f)=L(s,\pi^{\rm alg})
+\end{array}
+$$
+
+The raw characteristic double coset contributes one further factor $q_v^{1/2}$ to the trace eigenvalue. These three rows—unitary Satake, algebraic Satake, and raw convolution—must not be collapsed.
+
+### 17.3 Reading local types from global data
+
+The following implications are reliable:
+
+- $v\nmid\mathfrak f(\pi)$ if and only if $\pi_v$ is spherical;
+- $a(\pi_v)=1$ with unramified central character forces an infinite-dimensional generic representation to be an unramified twist of Steinberg;
+- an irreducible principal series has conductor equal to the sum of the character conductors;
+- an unramified twist of Steinberg has exponent $1$, and a ramified twist has twice the character exponent;
+- a depth-zero supercuspidal has exponent $2$ and no Iwahori-fixed vector.
+
+The converses must be used carefully. Conductor exponent $2$ does not force depth-zero supercuspidal: it can also arise from a principal series with two conductor-one characters or a ramified Steinberg twist. Likewise, a one-factor local $L$-function suggests special or partly ramified principal-series behavior but is not, by itself, a complete local type.
+
+### 17.4 Twists through the dictionary
+
+If $f$ corresponds to $\pi$ and $\chi$ is a finite-order Hecke character, the twisted representation has
+
+$$
+\omega_{\pi\otimes\chi}=\omega_\pi\chi^2,
+$$
+
+and at every unramified place
+
+$$
+a_v(f\otimes\chi)=\chi_v(\varpi_v)a_v(f)
+$$
+
+in the algebraic normalization. The two Satake roots both acquire the same factor. At ramified places the conductor must be recomputed locally; it can rise, stay fixed, or in cancellation cases fall.
+
+The archimedean weight is unchanged by a finite-order character except for compatible sign data. A norm-power twist changes the normalization and infinitesimal central character rather than producing a new holomorphic weight in the naive sense.
+
+### 17.5 Reconstruction and its limits
+
+Almost all Hecke polynomials reconstruct a cuspidal representation by strong multiplicity one. They do not reconstruct a chosen vector at a higher level, because oldspaces can have dimension greater than one. Adding the conductor and choosing the newvector line recovers the normalized eigenform, once the archimedean lowest-weight vector and first Whittaker coefficient are normalized.
+
+The dictionary deliberately stops at the automorphic representation. It does not construct a representation of a Galois group from the Hecke polynomials, does not transfer $\pi$ to a quaternion algebra, and does not compare it across field extensions. Those later constructions must preserve the central character, conductor, twists, and unramified polynomials assembled here.
+
+## 18. Conclusion: one form across all places
+
+A cusp form begins as a function on a noncompact arithmetic quotient. Its vanishing constant term removes the only parabolic asymptotic, produces rapid decay, and places it in a discrete Hilbert spectrum. Irreducibility then separates the global symmetry into local components, spherical almost everywhere and anchored by unique newvectors at the remaining finite places.
+
+The Whittaker coefficient is the central organizing device. Fourier inversion reconstructs the cusp form from that one coefficient; local uniqueness factors it into place-by-place functions; its unramified values reproduce the Satake polynomial; and its global uniqueness proves multiplicity one. Rankin--Selberg continuation then turns agreement of almost all local data into global isomorphism.
+
+Level, weight, and nebentype consequently cease to be unrelated decorations. Level is the product of local conductor exponents. Weight is the archimedean representation and its lowest compact type. Nebentype is the global central character, constrained at infinity by parity. Hecke eigenvalues are symmetric functions of unramified local parameters, with the powers of $q_v$ determined by the choice between unitary, algebraic, and raw-convolution normalizations. Oldforms are higher-level fixed vectors inside the same representation, while the newform is the tensor of minimal local lines.
+
+This synthesis is the durable global language of $\mathrm{GL}_2$. It retains enough analysis to explain why cusp forms are discrete, enough harmonic analysis to prove factorization and multiplicity one, and enough arithmetic normalization to recover classical and Hilbert modular forms without ambiguity. Every later comparison can now be tested against one coherent set of invariants: local component, central character, Whittaker model, Hecke polynomial, conductor, newvector, contragredient, and twist.
