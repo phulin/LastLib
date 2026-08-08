@@ -8,7 +8,7 @@ Write a polished graduate-level textbook titled “Finite Extensions of Local Fi
 
 Book 1 is established background. Refer to its definitions and results where appropriate instead of awkwardly reconstructing them, while briefly recalling notation when needed. Book 2 must nevertheless read as one continuous mathematical narrative: a reader familiar with Book 1 should encounter no unexplained gaps.
 
-Before important definitions, explain the mathematical problem they solve and why they take their stated form. Develop intuition alongside precise statements. Include worked examples and illuminating counterexamples throughout. Before substantial proofs, explain the proof strategy; within proofs, make the decisive reasoning explicit; afterward, explain the consequences. Avoid a compressed definition–theorem–proof catalogue.
+Before important definitions, explain the mathematical problem they solve and why they take their stated form. Give every chapter and every section a thorough motivation that explains its underlying ideas, its purpose in the theory, and its relationship to what precedes and follows; Book 1 was somewhat sparse, so err toward sustained explanation rather than compressed exposition. Develop intuition alongside precise statements. Include worked examples and illuminating counterexamples throughout. Before substantial proofs, explain the proof strategy; within proofs, make the decisive reasoning explicit; afterward, explain the consequences. Avoid a compressed definition–theorem–proof catalogue.
 
 Develop the following arc:
 
@@ -41,6 +41,6 @@ Carefully distinguish separable, inseparable, normal, Galois, unramified, and to
 
 Reserve lower and upper ramification filtrations, Herbrand functions, the different, discriminant formulas, and Artin and Swan conductors for Book 3. Mention those topics only when necessary to define the boundary of Book 2.
 
-Use Markdown with `$...$` for inline mathematics and `$$...$$` for display mathematics. Do not use `\(...\)` or `\[...\]`. ASCII diagrams are allowed. Include a useful linked table of contents. Do not include exercises, appendices, optional sections, further-reading notes, bibliographic commentary, or implementation discussion.
+Use Markdown with `$...$` for inline mathematics and `$$...$$` for display mathematics. Do not use `\(...\)` or `\[...\]`. ASCII diagrams are allowed. Do not include exercises, appendices, optional sections, further-reading notes, bibliographic commentary, or implementation discussion.
 
-Write incrementally to the target file. Self-review the completed manuscript for mathematical correctness, consistent notation, coherent cross-references, adequate explanations, and complete coverage. Finish with a genuine mathematical conclusion rather than planning notes. Report the path, word count, line count, chapter count, and a concise coverage summary.
+Write incrementally to the target file. Once the entire book is finished and its chapter and section structure is final, write a useful linked table of contents at the top that accurately reflects that completed structure. Self-review the completed manuscript for mathematical correctness, consistent notation, coherent cross-references, adequate explanations, and complete coverage. Finish with a genuine mathematical conclusion rather than planning notes. Report the path, word count, line count, chapter count, and a concise coverage summary.
