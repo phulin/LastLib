@@ -15,7 +15,7 @@ Follow this batching discipline:
 3. Only after the whole-file proof-writing pass, compile and eliminate errors in batches to reduce the number of agent turns.
 4. Continue autonomously until the file contains no `sorry`, `admit`, or `aesop` and its Lake target builds.
 
-You may revise a definition or theorem statement only when the original is genuinely false, unprovable from its stated assumptions, blocks later results because it is malformed, or inaccurately formalizes the book. Keep every correction as close as possible to the book. Do not weaken a valid mathematical claim merely to make compilation pass. Record every declaration change and its precise mathematical or formalization reason for your final report.
+You may revise a definition or theorem statement only when the original is genuinely false, unprovable from its stated assumptions, blocks later results because it is malformed, or inaccurately formalizes the book. Keep every correction as close as possible to the book. Do not weaken a valid mathematical claim merely to make compilation pass. Do not add the conclusion as a hypothesis. Only make these revisions to move the semantics closer to those in the source book, and more mathematically accurate. Record every declaration change and its precise mathematical or formalization reason for your final report.
 
 Use only Lake builds for compilation and testing. Never run `lake env lean`. Run builds from `/home/phulin/LastLib-book1/ValuationsBook` so all workers use the same project `.lake` cache. Do not override `LAKE_HOME`, `LEAN_PATH`, the package cache, or the build directory.
 
