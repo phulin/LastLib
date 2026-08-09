@@ -149,7 +149,11 @@ $$
 \tag{1.3}
 $$
 
-be a characteristic-zero lift, where $\mathcal O'$ is the ring of integers of a finite extension of the coefficient field. The lift has the expected weight-two determinant and is finite flat at the places above $\ell$, but it may have additional controlled ramification away from $\ell$.
+be a characteristic-zero lift, where $\mathcal O'$ is the ring of integers
+of a finite extension of the coefficient field,
+$E'=\operatorname{Frac}(\mathcal O')$, and $\varpi'$ is a uniformizer. The lift has the expected
+weight-two determinant and is finite flat at the places above $\ell$, but it
+may have additional controlled ramification away from $\ell$.
 
 The question is:
 
@@ -190,7 +194,7 @@ $$
 
 whenever the balanced Taylor--Wiles calculation is invoked. Absolute irreducibility gives the first equality; the second excludes a global cyclotomic self-twist.
 
-Let $S_0$ contain the archimedean places, the places above $\ell$, and every place at which $\bar\rho$ or $\delta$ is ramified. A minimal datum $\mathcal D^{\min}$ chooses at each finite place the exact minimal condition of Books 23--25. Let $P$ be a finite set of fixed nonminimal places, disjoint from the Taylor--Wiles sets that will vary later. At $v\in P$ choose one precise represented condition $\mathcal D_v^P$ and, when necessary, one generic component of its local ring.
+Let $S_0$ contain the archimedean places, the places above $\ell$, and every place at which $\bar\rho$ or $\delta$ is ramified, and write $S_f$ for its finite places. A minimal datum $\mathcal D^{\min}$ chooses at each finite place the exact minimal condition of Books 23--25. Let $P$ be a finite set of fixed nonminimal places, disjoint from the Taylor--Wiles sets that will vary later. At $v\in P$ choose one precise represented condition $\mathcal D_v^P$ and, when necessary, one generic component of its local ring.
 
 At a good place $v\nmid\ell$, write $q_v$ for the residue cardinality. In the ambient central-character normalization, the good Hecke polynomial is
 
@@ -199,13 +203,17 @@ X^2-S_v^{-1}T_vX+q_vS_v^{-1}.
 \tag{1.7}
 $$
 
-On the quotient with determinant (1.4), the operator $S_v$ specializes to the value determined by $\psi$; for trivial $\psi$ it is $1$. All level-raising congruences below are first written in the trivial-central-character case and then translated by (1.7).
+On the quotient with determinant (1.4), $S_v^{-1}$ specializes to
+$\psi(\operatorname{Frob}_v)$. Thus the actual trace operator in this
+normalization is $S_v^{-1}T_v$, and for trivial $\psi$ it is simply $T_v$.
+All level-raising congruences below are first written in the
+trivial-central-character case and then translated by (1.7).
 
 ### 1.3 Three proof routes
 
 There are three legitimate routes from residual modularity to modularity of (1.3).
 
-The **direct route** builds the nonminimal deformation ring and matching Hecke algebra at the enlarged level, adds Taylor--Wiles primes disjoint from $P$, patches the resulting modules, and proves a full, reduced, or componentwise equality.
+The **direct route** builds the nonminimal deformation ring and matching Hecke algebra at the enlarged level, adds Taylor--Wiles primes disjoint from $P$, and patches the resulting modules. In the balanced smooth-neutral range, reusing Book 55's sharp absolute method with a newly proved $q_P$-generator count gives faithfulness and full equality directly. In a broader singular or nonbalanced range, a support argument instead gives a full, reduced, or componentwise equality under the additional coverage and nilpotent-control hypotheses stated below. Neither direct argument uses a minimal determinant comparison.
 
 The **relative route** first lowers the residual automorphic source to a minimal level, applies the minimal theorem there, raises a congruent automorphic point back to the desired local components, and compares the extra cotangent and congruence factors one fixed prime at a time. The last comparison is essential: level raising alone produces some congruent form, not the target lift.
 
@@ -242,11 +250,22 @@ The foundational results already available have sharply limited roles.
 | Books 37--44 | integral Hecke modules, old/new algebra, local types, and characteristic-zero Jacquet--Langlands |
 | Books 46--48 | local and global cyclic base change, solvable iteration, descent fibers, and descent obstructions |
 | Books 52--54 | degeneracy correspondences, curve cohomology, Hecke-valued determinants, and weight-two Galois representations in the stated geometric range |
-| Book 55 | the clean rational minimal equality and its three integral infrastructure theorems, only under their stated hypotheses |
+| Book 55 | in its clean rational cyclotomic range, the proved minimal equality from sharp absolute $q$-generator patching, finite-flat complete-intersection and Gorenstein structure, the faithful free rank-one minimal module with perfect pairing, and the post-equality Fitting--congruence equality |
 
-Three new infrastructure theorems, NM-I through NM-III, will be stated in Chapter 10. They are the nonminimal analogues of the three inputs isolated in Book 55. They are not inferred from characteristic-zero transfer or from the minimal equality. Their jobs are, respectively, integral level/type control, integral reciprocity with exact local compatibility, and determinant-line plus component-support control.
+Three new infrastructure theorems, NM-I through NM-III, will be stated in
+Chapter 10. NM-I and NM-II extend Book 55's two integral infrastructure
+theorems to the added level and types. NM-III records only what is genuinely
+new after the minimal theorem: relative determinant factors at the added
+places and nonminimal component support. Book 55 did not assume a common
+determinant to prove its minimal equality; it proved that equality by the
+sharp absolute patch and derived the base Fitting--congruence equality
+afterward. Accordingly no new hypothesis in this book is allowed to
+reassume that proved base comparison.
 
-The principal theorems of this book are conditional on those inputs in exactly the cases where the preceding books stop. This is mathematical information: it marks the difference between a proved local equation and a desired global packet comparison.
+The principal theorems of this book are conditional on the applicable parts
+of those inputs exactly where the preceding books stop. This is mathematical
+information: it marks the difference between a proved local equation and a
+desired global packet comparison.
 
 ### 1.5 Scope and exclusions
 
@@ -759,7 +778,21 @@ $$
 \tag{4.1}
 $$
 
-one first removes the finite-order twist $\psi$ when it extends through the integral category, applies the type-$(0,1)$ theory, and twists back. A ramified twist not known to extend integrally is not harmless.
+the reduction to the cyclotomic-determinant theorem requires more than the
+character $\psi$ itself. One must have a finite-order integral character
+$\eta$ with
+
+$$
+\eta^2=\psi|_{G_K},
+\tag{4.1a}
+$$
+
+possibly after an allowed coefficient extension, and twisting by
+$\eta^{\pm1}$ must extend through the finite-flat integral category. One then
+twists by $\eta^{-1}$, applies the type-$(0,1)$ theory, and twists back. A
+ramified twist not known to extend integrally is not harmless, and a
+finite-order determinant factor with no such square root is not covered by
+this reduction.
 
 ### 4.2 The power-series theorem and its range
 
@@ -771,10 +804,11 @@ K/\mathbf Q_\ell\text{ is unramified of degree }f_v,
 \tag{4.2}
 $$
 
-$\bar\rho_v$ is finite flat with cyclotomic determinant after the fixed finite-order twist, and
+$\bar\rho_v\otimes\bar\eta^{-1}$ is finite flat with cyclotomic determinant
+for a character $\eta$ satisfying Section 4.1, and
 
 $$
-\operatorname{End}_{k[G_K]}(\bar V)=k.
+\operatorname{End}_{k[G_K]}(\bar\rho_v)=k.
 \tag{4.3}
 $$
 
@@ -932,19 +966,33 @@ An automorphic point $y$ on one component proves only that this component is non
 
 ### 5.4 A controlled local datum
 
-A fixed nonminimal place $v\nmid\ell$ is **controlled** if all of the following are recorded.
+A fixed nonminimal place $v\nmid\ell$ is **controlled** if items 1--8 below
+are recorded. Item 9 is the additional requirement for a relative numerical
+comparison.
 
 1. A framed closed local condition $D_v^P$ containing the residual point is represented.
 2. Its determinant equals $\delta_v$ on every Artinian point.
 3. Its tangent subspace $L_v^P$, exact Tate orthogonal, and complete obstruction theory are known.
 4. Its framed ring is either explicitly smooth of dimension three or is presented with every local equation retained in the local base.
 5. A generic component $\mathfrak p_v$ containing the target is specified.
-6. The conductor and local automorphic type are constant on the relevant generic locus.
+6. The conductor and local automorphic type are constant on a named generic
+   locus of that component, and the target lies in that locus. In particular,
+   a target on the $N=0$ boundary of a closed special component is not
+   relabelled Steinberg merely because the component has generically nonzero
+   monodromy.
 7. An integral type projector or newvector lattice is defined on the automorphic side.
 8. Local--global compatibility places the Hecke-valued representation on the same quotient $R_v^{\mathfrak p_v}$.
-9. The local pairing factor used in the determinant comparison is computed and is a unit after any named congruence factor has been separated.
+9. For the relative numerical route, the local pairing factor used in the
+   determinant comparison is computed and is a unit after any named
+   congruence factor has been separated.
 
-The clean local conditions of Chapter 3 satisfy items 1--6 under their stated hypotheses. Items 7--9 are automorphic inputs and will be clauses of NM-I through NM-III. This nine-part package, rather than the adjective “nonminimal,” is what later theorems use.
+The clean local conditions of Chapter 3 satisfy items 1--6 under their stated
+hypotheses. Items 7--8 are the integral level and reciprocity inputs of NM-I
+and NM-II. Item 9 belongs only to NM-III's relative determinant part. Thus
+the sharp direct route can use a controlled datum without assuming a local
+determinant formula, while the numerical route adds exactly that formula.
+This route-labelled package, rather than the adjective “nonminimal,” is what
+later theorems use.
 
 ## 6. Level raising from degeneracy maps
 
@@ -1255,6 +1303,24 @@ $$
 
 because the kernels of the two faithful actions need not contain one another. A map exists only after an old projector, a degeneracy correspondence, or a type comparison has produced an actual module map and its compatibility with the chosen faithful quotients has been checked.
 
+For the exact clean rational datum of Book 55, the minimal objects come with
+substantially more than a ring isomorphism. That book proves
+
+$$
+R^{\min}\simeq\mathbb T^{\min},
+\qquad
+M^{\min}\simeq\mathbb T^{\min}
+\tag{8.3a}
+$$
+
+with the second module free of rank one and faithful, and it proves the
+perfect primary--companion pairing. The common ring is finite flat,
+complete-intersection, reduced, and Gorenstein. Only after establishing
+(8.3a), Book 55 proves its intrinsic Fitting--congruence equality. These are
+valid base-level inputs after the coefficient operation of Section 8.3; none
+of them supplies an enlarged-level lattice, an action on a new component,
+or a local factor at a prime of $P$.
+
 On the Galois side, by contrast, weakening a represented local condition gives the quotient map in the direction fixed in (2.3). The two categories therefore do not come with parallel arrows merely because one level is called larger.
 
 ### 8.2 Old, new, and saturated lattices
@@ -1294,7 +1360,12 @@ At several primes, oldness is a cubical diagram indexed by subsets of $P$. Its t
 
 ### 8.3 Cotangent modules and local congruence factors
 
-Let $A$ be a finite flat local $\mathcal O$-algebra with augmentation $\lambda:A\to\mathcal O'$. Put
+After any finite coefficient extension needed to realize the distinguished
+point, base-change the rings along the resulting finite flat map of
+coefficient DVRs, then localize and complete at the extended augmentation.
+Thus fix one coefficient DVR
+$\mathcal O'$ and let $A$ be a finite flat local $\mathcal O'$-algebra with an
+$\mathcal O'$-algebra augmentation $\lambda:A\to\mathcal O'$. Put
 
 $$
 \mathfrak p_\lambda=\ker\lambda,
@@ -1314,7 +1385,11 @@ $$
 
 For a complete-intersection order with a perfect eigenlattice, the Fitting ideal of the cotangent module and the congruence ideal agree. Outside that situation there is only the inequality supplied by the numerical criterion; equality must not be presumed.
 
-At a clean Steinberg level-raising prime, let $a_p=\lambda_{\min}(T_p)$ and choose the sign $\varepsilon$. The normalized local comparison complex has determinant
+For a linked minimal augmentation
+$\lambda_{\min}:\mathbb T^{\min}\to\mathcal O'$, and in the
+trivial-central-character normalization used for the clean formula, put
+$a_p=\lambda_{\min}(T_p)$ and choose the sign $\varepsilon$. The normalized
+local comparison complex has determinant
 
 $$
 c_p^\varepsilon=q_p+1-\varepsilon a_p.
@@ -1342,7 +1417,28 @@ where $C_v^\bullet$ is the explicitly normalized perfect two-term complex compar
 
 ### 8.4 One-prime and many-prime cost formulas
 
-Under the integral comparison hypotheses, adding one clean Steinberg prime gives
+Fix compatible base and enlarged augmentations. For the clean rational
+cyclotomic base in the range of Book 55, the boxed equality in Section 12.6
+of that book gives,
+after the finite coefficient extension and localized completion of Section
+8.3,
+
+$$
+\operatorname{Fitt}_{\mathcal O'}
+\Phi_{R^{\min},\lambda_{\min}}
+=\eta_{\mathbb T^{\min},\lambda_{\min}}.
+\tag{8.12a}
+$$
+
+This is a theorem exported by Book 55, not a determinant hypothesis and not
+an inference from ring equality alone. The base-changed common
+complete-intersection presentation gives the displayed equality at the
+extended augmentation. Outside Book 55's exact range, a relative numerical
+argument must name an analogous proved base equality; the direct patching
+route does not need one.
+
+Under the independent relative comparison hypotheses at the added places,
+adding one clean Steinberg prime gives
 
 $$
 \eta_{\mathbb T^p,\lambda_p}
@@ -1383,6 +1479,18 @@ $$
 \prod_{v\in P}\bigl(c_v\bigr).
 \tag{8.16}
 $$
+
+Combining (8.12a) with (8.15)--(8.16) gives
+
+$$
+\operatorname{Fitt}_{\mathcal O'}
+\Phi_{R^P,\lambda_P}
+=\eta_{\mathbb T^P,\lambda_P}.
+\tag{8.16a}
+$$
+
+Thus the only new determinant input in the clean relative route is the
+matching of the local nonminimal factors and any higher-torsion factor.
 
 Taking lengths gives the numerical price of the fixed nonminimal set:
 
@@ -1625,7 +1733,13 @@ If a fixed local factor is singular, (9.11) cannot be used. Its complete local d
 
 ## 10. The three nonminimal infrastructure theorems
 
-The minimal theorem imported from Book 55 supplies its conclusion only for its clean datum. It does not supply integral level raising, a type-selected Hecke-valued representation at new primes, or component coverage at an enlarged level. We now state the three additional inputs in a form that can be checked independently in any chosen automorphic realization.
+The minimal theorem imported from Book 55 proves its conclusion, its faithful
+rank-one module, and its post-equality numerical package for its clean datum.
+It does not supply integral level raising, a type-selected Hecke-valued
+representation at new primes, relative determinant factors there, or
+component coverage at an enlarged level. We now state the three additional
+inputs in a form that can be checked independently in any chosen automorphic
+realization.
 
 ### 10.1 Infrastructure NM-I: integral level and type control
 
@@ -1663,7 +1777,13 @@ Write $\mathbb T_n^P=\mathbb T_n^{P,+}$ and $\mathbb T^P=\mathbb T^{P,+}$ for th
    reducing to $\bar\rho$ and having determinant $\delta$;
 2. for $v$ outside the level, its characteristic polynomial is the Hecke polynomial (1.7);
 3. at every $v\mid\ell$, every Artinian quotient of (10.1) is finite flat of type $(0,1)$, not merely crystalline at characteristic-zero points;
-4. at every $v\in P$, the restriction of (10.1), together with its line or finite-type data when applicable, factors through the selected quotient $R_v^{\square,P}$; character ordering is integral, and nonzero monodromy and conductor are checked on the relevant generic locus rather than imposed as Artinian nonvanishing conditions;
+4. at every $v\in(S_f\cup P)$ with $v\nmid\ell$, the restriction of
+   (10.1), together with its line or finite-type data when applicable,
+   factors through the exact named minimal or nonminimal local quotient; at
+   $v\in P$ this is the selected quotient $R_v^{\square,P}$, character
+   ordering is integral, and nonzero monodromy and conductor are checked on
+   the relevant generic locus rather than imposed as Artinian nonvanishing
+   conditions;
 5. at every $v\in Q_n$, inertia acts through the tautological diamond character and its inverse on the ordered lines, and augmentation makes the restriction unramified; and
 6. if the module was constructed on a quaternion algebra or transferred between inner forms, the faithful integral Hecke orders and their Galois families are identified, not only their characteristic-zero simple constituents; and
 7. the faithful order $\mathbb T_n^P$ is generated as an $\mathcal O$-algebra by the verified Galois trace and determinant values, diamond characters, and those named local operators that are themselves functions of the retained line or type data.
@@ -1688,20 +1808,58 @@ The proof separates existence of a genuine representation from exact local compa
 
 ### 10.3 Infrastructure NM-III: determinant lines and component support
 
-**Infrastructure Theorem NM-III.** Assume NM-I and NM-II. Suppose in addition that:
+**Infrastructure Theorem NM-III.** Assume NM-I and NM-II. This theorem has
+two independent parts; an argument invokes only the part it uses.
+
+For the **relative determinant part**, fix a chain from a base datum to
+$\mathcal D^P$ and compatible augmentations as in Section 8.3. Treat the
+base Fitting--congruence equality as an already proved input to that route:
+in the clean rational cyclotomic range it is (8.12a), exported by Book 55
+after its proof of minimal $R=T$. NM-III does not assume that base equality
+again. Suppose the following genuinely nonminimal assertions hold:
 
 1. the global deformation problem and every local condition are represented by complete effective perfect complexes whose tangent and obstruction groups are the stated Selmer groups;
 2. the primary--companion degeneracy, type, and monodromy complexes are perfect and the pairing (9.7b), not a presumed self-adjoint $U$-projector, identifies their determinant lines with those of the corresponding local deformation complexes;
 3. under this identification, the one-prime determinant is $c_p^\varepsilon$ for a clean Steinberg prime and $c_v(\tau_v,\mathfrak p_v)$ for a general controlled type;
-4. the multi-prime determinant is the tensor product of the local determinant lines, with every higher $\operatorname{Tor}$ contribution either zero or explicitly included;
+4. the multi-prime determinant is the tensor product of the local determinant lines, with every higher $\operatorname{Tor}$ contribution either zero or explicitly included.
+
+Then the relative deformation and automorphic determinant lines have the
+same change from the base datum. At every augmentation satisfying the
+finiteness hypotheses of the numerical criterion, the cotangent and
+congruence factors change according to (8.13)--(8.16), and a proved base
+equality gives (8.16a).
+
+For the independent **component-support part**, suppose:
+
 5. for each global component claimed in the theorem, the patched module is nonzero at its generic point; full coverage means that this holds at every minimal prime of the patched deformation ring; and
 6. for a componentwise conclusion, the selected component ideals are compatible through the finite shadows, and augmentation of the patched component quotient is identified with the finite component-closure quotient (12.4).
 
-Then the patched deformation and automorphic determinant lines agree. At every augmentation satisfying the finiteness hypotheses of the numerical criterion, the cotangent and congruence factors change according to (8.13)--(8.16). Clauses 5--6 supply the component-coverage and specialization inputs for the abstract support theorem; they do not themselves assert faithfulness.
+These two clauses supply the nonminimal component-coverage and
+specialization inputs for the abstract support theorem; they do not
+themselves assert faithfulness.
 
-**Proof.** The complete effective complexes give a well-defined determinant line before any minimal presentation is chosen. Clause 2 identifies the local Kodaira--Spencer maps with the adjoint automorphic correspondences. Clause 3 computes their determinants, and clause 4 multiplies them without discarding derived torsion. The minimal determinant comparison and these local ratios therefore give (8.13)--(8.16). Clause 5 is the independent arithmetic coverage statement required by Book 32. Dimension equality, Cohen--Macaulayness, and near faithfulness are deduced from it only after patching. Clause 6 prevents a patch-defined union of components from being silently identified with a different finite deformation quotient. $\square$
+**Proof.** For the determinant part, the complete effective complexes give a well-defined relative
+determinant line before any presentation is chosen. Clause 2 identifies the
+local Kodaira--Spencer maps with the adjoint automorphic correspondences.
+Clause 3 computes their determinants, and clause 4 multiplies them without
+discarding derived torsion. These are precisely the new ratios in
+(8.13)--(8.16); combining them with the already proved base equality gives
+(8.16a). For the support part, clause 5 is the independent arithmetic coverage statement required
+by Book 32. Dimension equality, Cohen--Macaulayness, and near faithfulness
+are deduced from it only after patching. Clause 6 prevents a patch-defined
+union of components from being silently identified with a different finite
+deformation quotient. $\square$
 
 Component support is an independent clause. Equality of determinant lines controls multiplicity and congruence length at an augmentation; it does not force a module to meet a different component with the same generic inertial type.
+
+The two halves of NM-III have disjoint uses. Clauses 1--4 are needed for the
+relative numerical route of Sections 12.4 and 14.4, but not for a direct
+support proof. Clauses 5--6 are needed for the support-based direct route,
+but not for the numerical criterion at one augmentation. The sharp balanced
+absolute patch of Section 11.3 needs neither half: it proves faithfulness
+directly. Outside Book 55's clean base range, a relative argument must first
+supply its own base Fitting--congruence theorem; that is a hypothesis on the
+base theorem, not part of the new local content of NM-III.
 
 ### 10.4 Logical separation of the three inputs
 
@@ -1711,9 +1869,15 @@ The division of labor is exact.
 |---|---|---|
 | NM-I | integral lattices, level/type projectors, Ihara saturation, diamond freeness, primary--companion duality, augmentation | a Galois representation or local deformation factorization |
 | NM-II | Hecke-valued Galois representations, determinant, exact local conditions, maps $R\twoheadrightarrow\mathbb T$ | numerical equality, faithfulness, or component coverage |
-| NM-III | determinant comparison, local cost factors, component coverage, and component-specialization compatibility | existence of the modules, representations, reducedness, or faithfulness |
+| NM-III | relative nonminimal determinant factors, nonminimal component coverage, and component-specialization compatibility | the already proved clean minimal comparison, existence of the modules or representations, reducedness, or faithfulness |
 
-In the clean rational minimal setting, the three corresponding theorems of Book 55 remain available at the minimal level. The new clauses involving $P$ must still be proved. Over a totally real field, all three Hilbert or quaternionic analogues are hypotheses until the relevant integral geometry has established them.
+In the clean rational cyclotomic setting, Book 55's Infrastructures I--II,
+sharp absolute patch, rank-one freeness, and post-equality numerical theorem
+remain available at the minimal level. The new clauses involving $P$ must
+still be proved. Over a totally real field, the Hilbert or quaternionic
+analogues of NM-I and NM-II, the relevant nonminimal clauses of NM-III, and
+any base theorem used by the relative route are hypotheses until the
+relevant integral geometry has established them.
 
 ## 11. Direct nonminimal patching
 
@@ -1757,7 +1921,8 @@ The sets $Q_n$ are not nested. Consequently there is generally no arithmetic map
 
 ### 11.2 Verification of the Taylor--Wiles axioms
 
-The eight required checks can be displayed without abbreviation.
+The seven finite-level system checks and the additional route-specific
+support check can be displayed without abbreviation.
 
 1. **Residual identification.** Every Hecke-valued representation reduces to the same absolutely irreducible $\bar\rho$, and every determinant is $\delta$.
 2. **Auxiliary groups.** The groups $\Delta_n$ have $q_P$ named cyclic factors of growing $\ell$-power order, and their group algebras receive compatible maps from one fixed power-series algebra after finite-shadow choices.
@@ -1766,9 +1931,19 @@ The eight required checks can be displayed without abbreviation.
 5. **Augmentation.** Every exact identity in (11.3) holds and the pairing augments to the base primary--companion pairing. In particular, augmentation retains all fixed conditions at $P$.
 6. **Deformation control.** The ordered primes $Q_n$ kill the dual Selmer group (9.1). NM-II gives the surjection in (11.2) and verifies its local condition at every finite place.
 7. **Uniform presentations.** The complete effective complexes and the ledger (9.11)--(9.17) give uniformly bounded square presentations. Coordinates are padded only by variable--linear-relation pairs.
-8. **Automorphic support.** NM-III places the patched primary module on every selected component claimed in the conclusion; this is checked at the generic points and is not inferred from equality of types.
+8. **Automorphic support.** For the support-based direct route, NM-III
+   clauses 5--6 place the patched primary module on every selected component
+   claimed in the conclusion; this is checked at the generic points and is
+   not inferred from equality of types. This item is not an axiom of the
+   sharp balanced faithful-action route, which proves full support as a
+   consequence of faithfulness.
 
-These checks also explain the division between fixed and varying primes. Clauses 3--5 concern the diamond tower at $Q_n$, while clauses 4 and 8 retain the integral component data at $P$ throughout that tower.
+Items 1--7 verify the Taylor--Wiles system, with companion duality supplying
+the role of the eighth axiom in Book 30; item 8 is the extra arithmetic
+support input for the support-based comparison theorem. These checks also
+explain the division between fixed and varying primes. Items 3--5 concern
+the diamond tower at $Q_n$, while items 4 and 8 retain the integral component
+data at $P$ throughout that tower.
 
 ### 11.3 The patched pair and its dimension
 
@@ -1816,6 +1991,92 @@ $$
 
 Since a nonzero $S_\infty$-free module has support of dimension $q_P+1$, (11.8) is only the lower half of the dimension argument. If NM-III gives coverage of every minimal prime, Book 32's sharp patched comparison supplies the reverse inequality on every component. It then proves that $R_\infty^P$ is equidimensional of dimension $q_P+1$, that the $F_i$ form a regular sequence, that $M_\infty^P$ is maximal Cohen--Macaulay, and that $R_\infty^P$ is finite free over $S_\infty$. If only selected components are covered, those conclusions require an independent dimension ceiling on the corresponding component quotient. They do not follow merely by ignoring the uncovered components.
 
+In the smooth neutral range there is a stronger direct argument, and this is
+the exact point at which the final method of Book 55 can be reused. The
+Wiles defect of the fixed-$P$ datum is zero. Indeed, the Schur hypotheses
+make $h^0(F_v,W)=0$ at $v\mid\ell$, so the places above $\ell$ contribute
+
+$$
+\sum_{v\mid\ell}f_v=[F:\mathbf Q]=d,
+$$
+
+the $d$ real places contribute $-d$, every clean condition away from $\ell$
+satisfies $\dim L_v^P=h^0(F_v,W)$, and the two global invariant groups vanish
+by (1.6). Hence
+
+$$
+h^1_{\mathcal L_P}(F,W)=
+h^1_{\mathcal L_P^\perp}(F,W(1))=q_P.
+\tag{11.8a}
+$$
+
+The Poitou--Tate sequence for the ordered conditions at $Q_n$ has a
+$q_P$-dimensional local quotient mapping isomorphically to the dual of the
+group in (9.1), by the prime-selection condition. Consequently
+
+$$
+h^1_{\mathcal L_{P,Q_n}}(F,W)=q_P.
+\tag{11.8b}
+$$
+
+Absolute residual irreducibility identifies the tangent space of the
+unframed auxiliary functor with the group in (11.8b). Choosing a basis and
+lifts, topological Nakayama therefore gives the sharp absolute source
+
+$$
+\mathscr P=\mathcal O[[X_1,\ldots,X_{q_P}]]
+\twoheadrightarrow R_n^P.
+\tag{11.8c}
+$$
+
+Retain the kernels of these source maps, lifts of the diamond parameters,
+the actions, and all three exact augmentations (11.3) in the finite shadows.
+The same marked inverse-limit argument as in Book 55 gives
+
+$$
+S_\infty\longrightarrow\mathscr P
+\longrightarrow R_\infty^P
+\longrightarrow A_\infty^P
+\subseteq\operatorname{End}_{S_\infty}(M_\infty^P),
+\tag{11.8d}
+$$
+
+where $A_\infty^P$ is the action image and the composite from $S_\infty$ is
+faithful scalar multiplication. The two power-series rings $S_\infty$ and
+$\mathscr P$ have the same dimension $q_P+1$. Book 55's equal-variable
+rigidity lemma therefore makes the action of $\mathscr P$ injective, makes
+$\mathscr P$ finite free over $S_\infty$, and makes $M_\infty^P$ finite free
+over $\mathscr P$. Since the action factors through the quotient
+$\mathscr P\twoheadrightarrow R_\infty^P$, one obtains
+
+$$
+R_\infty^P=\mathscr P=A_\infty^P,
+\qquad
+M_\infty^P\simeq\mathscr P^{\,e}
+\quad(e>0).
+\tag{11.8e}
+$$
+
+Exact augmentation then gives
+
+$$
+R^P\simeq\mathbb T^P,
+\qquad
+M^P\simeq(R^P)^e.
+\tag{11.8f}
+$$
+
+Indeed, the $R^P$-action on the free module in (11.8f) factors through the
+faithful Hecke order, so the kernel of $R^P\twoheadrightarrow\mathbb T^P$ is
+zero. This route uses NM-I and NM-II and the sharp balance (11.8a)--(11.8c).
+It uses neither a minimal theorem, NM-III's determinant clauses, NM-III's
+coverage clauses, nor an independent reducedness hypothesis.
+
+When (11.8a)--(11.8c) are unavailable, the preceding square-presentation and
+support argument remains a distinct direct route. It is then the coverage
+statement, not the minimal equality, that supplies the missing dimension
+ceiling.
+
 For a singular local component, the patched source is built over the completed tensor product of its actual local rings. The same conclusion follows only after constructing a presentation $R_\infty^P=P_\infty/J_\infty$ in which $P_\infty$ is Cohen--Macaulay, catenary, and equidimensional of the required dimension, the dimension formula holds at primes minimal over $J_\infty$, and $J_\infty$ has the asserted generator bound. The local rings' perfect obstruction complexes must produce that presentation. One may not replace them by smooth rings having the same generic dimension.
 
 ### 11.4 Coverage, faithfulness, and nilpotents
@@ -1842,15 +2103,55 @@ These observations give three distinct outputs:
 - coverage of a selected union, together with a compatible patched component quotient and an independent dimension ceiling, gives a reduced componentwise equality; and
 - source reducedness, generic reducedness plus $S_\infty$-torsion-freeness, or a direct annihilator theorem upgrades the corresponding reduced equality to full equality.
 
+The sharp balanced route adds a fourth output: (11.8e) proves faithful action
+before any component argument, so full support and absence of a kernel are
+consequences rather than hypotheses.
+
 Patching does not manufacture coverage. If the type module misses a local component, the corresponding global component is absent from (11.9), even when it has the same characteristic-zero inertial type as a component that is present.
 
 ## 12. The nonminimal $R=T$ theorem
 
-We can now separate the strongest equality from the two variants that require less control. In every statement, the map is the canonical surjection (10.3). Its direction comes from the Hecke-valued Galois representation satisfying the deformation problem.
+We can now separate two mechanisms for full equality from the reduced,
+componentwise, and numerical variants. In every statement, the map is the
+canonical surjection (10.3). Its direction comes from the Hecke-valued
+Galois representation satisfying the deformation problem.
 
 ### 12.1 Full equality
 
-**Theorem 12.1 (full nonminimal $R=T$).** Let $F$, $\ell$, $\bar\rho$, $\delta$, and $\mathcal D^P$ satisfy the standing hypotheses. Assume:
+**Theorem 12.1A (sharp balanced full nonminimal $R=T$).** Let $F$,
+$\ell$, $\bar\rho$, $\delta$, and $\mathcal D^P$ satisfy the standing
+hypotheses and the smooth neutral hypotheses of Section 9.4. Assume that the
+calculation (11.8a)--(11.8b) applies, the residual image supplies the ordered
+sets $Q_n$, and NM-I and NM-II hold with the pairing-compatible finite
+shadows and exact ring, module, order, and action augmentations of Sections
+11.1 and 11.3. Then
+
+$$
+R^P\xrightarrow{\sim}\mathbb T^P.
+\tag{12.1}
+$$
+
+The common ring is finite flat and a complete intersection over $\mathcal O$,
+and $M^P$ is finite free of positive rank over it. If the selected type
+module is independently cyclic, this rank is one.
+
+**Proof.** Equations (11.8a)--(11.8c) give an absolute source with exactly
+$q_P$ variables, matching the $q_P$ diamond variables. Equal-variable
+rigidity gives (11.8e), and exact augmentation and faithful definition of the
+Hecke order give (11.8f), which is (12.1). Since $\mathscr P$ is finite free
+over $S_\infty$, the diamond parameters form a regular sequence in
+$\mathscr P$; its augmentation is therefore finite flat and
+complete-intersection. The module statement follows by augmenting the free
+module in (11.8e). $\square$
+
+This is the closest nonminimal analogue of Book 55's kernel-killing proof.
+It does not descend to minimal level, and it does not use a determinant or
+component-coverage theorem.
+
+For local conditions outside this sharp balanced range, one can instead use
+the following support-based result.
+
+**Theorem 12.1B (support-based full nonminimal $R=T$).** Let $F$, $\ell$, $\bar\rho$, $\delta$, and $\mathcal D^P$ satisfy the standing hypotheses. Assume:
 
 1. the finite-flat local theorem of Section 4.2 applies at all $v\mid\ell$;
 2. every $v\in P$ has a smooth neutral controlled local condition, or the actual singular local base yields a presentation
@@ -1862,7 +2163,9 @@ We can now separate the strongest equality from the two variants that require le
    in which $P_\infty$ is Cohen--Macaulay, catenary, and equidimensional of dimension $q_P+1+b$, the dimension formula holds at primes minimal over $J_\infty$, and $J_\infty$ is generated by at most $b$ elements;
 3. the residual image admits Taylor--Wiles sets for the recomputed dual Selmer group;
 4. NM-I and NM-II hold at every finite level;
-5. NM-III holds with coverage of every minimal prime of $R_\infty^P$, and the exact ring, module, and faithful-action augmentation identities (11.5)--(11.6) hold; and
+5. NM-III clause 5 holds with coverage of every minimal prime of
+   $R_\infty^P$, and the exact ring, module, and faithful-action augmentation
+   identities (11.5)--(11.6) hold; and
 6. at least one of the following independent kernel-killing hypotheses holds:
 
    $$
@@ -1875,12 +2178,7 @@ We can now separate the strongest equality from the two variants that require le
    \tag{12.1a}
    $$
 
-Then
-
-$$
-R^P\xrightarrow{\sim}\mathbb T^P.
-\tag{12.1}
-$$
+Then (12.1) holds.
 
 The ring is finite flat over $\mathcal O$. In the smooth neutral case it is a complete intersection and the corresponding automorphic module is maximal Cohen--Macaulay. That module is free of rank one over the Hecke order only if it is independently known to be cyclic and faithful, or if another criterion such as finite projective dimension proves freeness; generic multiplicity one alone does not suffice.
 
@@ -1895,7 +2193,8 @@ and proves that $R_\infty^P$ is finite free over $S_\infty$. Under the first alt
 
 ### 12.2 Reduced equality
 
-**Theorem 12.2 (reduced nonminimal $R=T$).** Retain clauses 1--5 of Theorem 12.1, but omit every alternative in (12.1a). Then
+**Theorem 12.2 (reduced nonminimal $R=T$).** Retain clauses 1--5 of
+Theorem 12.1B, but omit every alternative in (12.1a). Then
 
 $$
 (R^P)_{\mathrm{red}}\xrightarrow{\sim}(\mathbb T^P)_{\mathrm{red}}.
@@ -1921,7 +2220,14 @@ $$
 
 be the schematic closure quotient of the selected generic components. Assume a saturated Hecke-stable quotient $M^{P,\mathcal C}$ has been constructed whose generic constituents are exactly the automorphic points on $\mathcal C$, and let $\mathbb T^{P,\mathcal C}$ be its faithful Hecke order. The existence and saturation of this quotient are integral automorphic assertions, not consequences of the notation.
 
-**Theorem 12.3 (componentwise nonminimal $R=T$).** Suppose the presentation and module hypotheses of Theorem 12.2 hold on a patched union $\Sigma$ of minimal primes, the patched module has exactly that generic support, an independent ceiling proves that the selected quotient is equidimensional of dimension $q_P+1$, and NM-III clause 6 identifies its augmentation with $R^{P,\mathcal C}$ and $M^{P,\mathcal C}$. Then
+**Theorem 12.3 (componentwise nonminimal $R=T$).** Suppose the presentation
+and module hypotheses of Theorem 12.2 hold on a patched union $\Sigma$ of
+minimal primes. Let $P_\Sigma$ be the kernel of the map from the patched
+deformation ring to the product of its quotients by the primes in $\Sigma$.
+Assume the patched module has exactly that generic support, an independent
+ceiling proves that the selected quotient is equidimensional of dimension
+$q_P+1$, and NM-III clause 6 identifies its augmentation with
+$R^{P,\mathcal C}$ and $M^{P,\mathcal C}$. Then
 
 $$
 (R^{P,\mathcal C})_{\mathrm{red}}
@@ -1952,7 +2258,11 @@ $$
 
 ### 12.4 The numerical variant
 
-Sometimes the minimal equality and the local cost formulas permit a shorter argument at one augmentation. Let
+Sometimes the minimal post-equality Fitting--congruence package and the local
+cost formulas permit a shorter argument at one augmentation. Make the
+coefficient extension and localized completed base changes of Section 8.3
+first, and continue to denote the resulting rings by $R^P$ and
+$\mathbb T^P$. Let
 
 $$
 R^P\twoheadrightarrow\mathbb T^P
@@ -1996,14 +2306,19 @@ $$
 
 at the localized augmentation, and both are complete intersections there.
 
-For a clean relative argument, the minimal theorem supplies equality of the two minimal lengths. NM-III supplies the identical increment
+For a clean relative argument based on the rational cyclotomic datum, Book
+55 supplies (8.12a) as a proved post-equality statement. NM-III clauses 1--4
+supply the identical new increment
 
 $$
 \sum_{v\in P}\operatorname{ord}_{\varpi'}c_v
 \tag{12.11}
 $$
 
-on both sides. Hence (12.8) follows. If one local factor is missing, if an opposite Steinberg factor is nonunit, or if higher $\operatorname{Tor}$ contributes, this cancellation fails and the numerical proof stops.
+on both sides. Hence (12.8) follows. NM-III's coverage clauses are not used
+in this numerical proof. If one local factor is missing, if an opposite
+Steinberg factor is nonunit, or if higher $\operatorname{Tor}$ contributes,
+this cancellation fails and the numerical proof stops.
 
 ## 13. Extracting modularity of a specified lift
 
@@ -2021,14 +2336,31 @@ $$
 be a lift of $\bar\rho$ satisfying $\mathcal D^P$ and lying on the selected component tuple. Universality gives
 
 $$
-x_\rho:R^{P,\mathcal C}\longrightarrow\mathcal O'.
+x_\rho:R^P\longrightarrow\mathcal O'.
 \tag{13.2}
 $$
 
-If Theorem 12.1 or 12.3 gives a full equality, transport (13.2) directly to a Hecke character. If only Theorem 12.2 gives reduced equality, (13.2) still factors through the reduced quotient because $\mathcal O'$ is a domain. In every case one obtains
+For the full and reduced whole-ring theorems, put
+$R^\star=R^P$ and $\mathbb T^\star=\mathbb T^P$. For the componentwise
+theorem, put
 
 $$
-\lambda_\rho:\mathbb T^{P,\mathcal C}\longrightarrow\mathcal O'.
+R^\star=R^{P,\mathcal C},
+\qquad
+\mathbb T^\star=\mathbb T^{P,\mathcal C};
+\tag{13.2a}
+$$
+
+in this case the component hypothesis makes (13.2) factor through $R^\star$.
+If Theorem 12.1A, Theorem 12.1B, or (12.5b) gives a full equality, transport the resulting
+point directly to a Hecke character. If only (12.3) or (12.5a) gives a
+reduced equality, the point still factors through $(R^\star)_{\mathrm{red}}$
+because $\mathcal O'$ is a domain; compose the inverse reduced equality with
+the quotient $\mathbb T^\star\to(\mathbb T^\star)_{\mathrm{red}}$. In every
+case one obtains
+
+$$
+\lambda_\rho:\mathbb T^\star\longrightarrow\mathcal O'.
 \tag{13.3}
 $$
 
@@ -2040,7 +2372,7 @@ Let $\rho_\pi$ be the Galois representation obtained by specializing the Hecke-v
 
 $$
 \operatorname{tr}\rho(\operatorname{Frob}_v)
-=\lambda_\rho(T_v)
+=\lambda_\rho(S_v^{-1}T_v)
 =\operatorname{tr}\rho_\pi(\operatorname{Frob}_v),
 \tag{13.4}
 $$
@@ -2062,7 +2394,22 @@ $$
 \tag{13.5a}
 $$
 
-Now restrict (13.5a) to every decomposition group. At $v\mid\ell$, it transfers the integral finite-flat property. At $v\in P$, it transfers the actual inertia action, the stable line when that line is part of the represented condition, and the monodromy operator. Thus $\pi_v$ has the exact prescribed special or principal-series type and conductor. This last conclusion uses NM-II's local compatibility. Equality of traces at the unramified places alone would identify the global semisimplification but would not, without (13.5a) and local compatibility, label an integral component.
+Now restrict (13.5a) to every decomposition group. At $v\mid\ell$, it
+transfers the integral finite-flat property of the chosen Galois lattice. At
+$v\in P$, it transfers the actual inertia action, the monodromy operator, and
+any stable line uniquely determined by the representation. A nonintrinsic
+ordered line or flag is instead matched because (13.2)--(13.3) are the same
+point of the retained deformation and Hecke refinement data, as required by
+NM-II; it does not follow from an abstract isomorphism of representations.
+Thus, at every $v\nmid\ell$ covered by the assumed local compatibility theorem,
+$\pi_v$ has the exact prescribed special or principal-series type and
+conductor. This last conclusion uses NM-II's local compatibility. No
+identification of the automorphic representation $\pi_v$ at $v\mid\ell$ is
+deduced from finite flatness alone; such a conclusion requires a separate
+$\ell$-adic local--global compatibility theorem. Equality of traces at the
+unramified places alone would identify the global semisimplification but
+would not, without (13.5a) and local compatibility, label an integral
+component.
 
 ### 13.3 The controlled nonminimal lifting theorem
 
@@ -2073,17 +2420,25 @@ $$
 \tag{13.6}
 $$
 
-be continuous, absolutely irreducible, totally odd, and adequate for Taylor--Wiles prime selection. Assume $H^0(F,W(1))=0$. Suppose $\bar\rho$ occurs in a non-Eisenstein weight-two automorphic maximal ideal from which the required fixed-level type module can be reached by independent level-raising, saturated type-selection, and level-lowering theorems of Chapters 6, 7, and 10.
+be continuous, absolutely irreducible, totally odd, and adequate for Taylor--Wiles prime selection. Assume $H^0(F,W(1))=0$. Suppose $\bar\rho$ occurs in a non-Eisenstein weight-two automorphic maximal ideal and the required fixed-level type module is independently known to be nonzero. This nonvanishing may come directly from the given automorphic packet or from the level-raising, saturated type-selection, and level-lowering theorems of Chapters 6, 7, and 10; it is not a consequence of the desired nonminimal $R=T$ theorem.
 
 Let $\rho:G_F\to\operatorname{GL}_2(\mathcal O')$ be a lift such that:
 
 1. $\det\rho=\psi\chi_\ell$, with $\psi$ finite order and compatible with every chosen integral local condition;
 2. $\rho$ is unramified outside a finite set;
-3. at every $v\mid\ell$, $F_v/\mathbf Q_\ell$ is unramified, $\rho_v$ is finite flat of type $(0,1)$, and the residual Schur hypotheses of Section 4.2 hold;
+3. at every $v\mid\ell$, $F_v/\mathbf Q_\ell$ is unramified,
+   $\rho_v$ is finite flat of type $(0,1)$, the determinant twist is supplied
+   by a character $\eta_v$ satisfying Section 4.1, and the residual Schur
+   hypotheses of Section 4.2 hold;
 4. away from $\ell$, every nonminimal place belongs to a controlled datum in the sense of Section 5.4, and $\rho_v$ lies on its named component;
 5. the residual restrictions and residue cardinalities satisfy the nonvexing hypotheses used by the relevant Ihara and type theorems;
 6. the fixed determinant global deformation problem is represented and has no unrecorded local equation; and
-7. NM-I--NM-III hold for the selected component tuple, and the coverage, component-specialization, dimension-ceiling, and reducedness hypotheses of the applicable theorem in Chapter 12 are verified.
+7. NM-I and NM-II hold for the selected component tuple, and one of the
+   following route-specific packages is verified: the sharp balance of
+   Theorem 12.1A; NM-III clauses 5--6 together with the applicable coverage,
+   component-specialization, dimension-ceiling, and nilpotent-control
+   hypotheses of Theorems 12.1B--12.3; or the proved base equality,
+   NM-III clauses 1--4, and the finiteness hypotheses of Section 12.4.
 
 Then there is a cuspidal automorphic representation $\pi$ of $\operatorname{GL}_2(\mathbf A_F)$ of parallel weight two such that
 
@@ -2092,15 +2447,36 @@ $$
 \tag{13.7}
 $$
 
-At every finite place, $\pi_v$ has the conductor, inertial type, ordered branch, and monodromy prescribed by $\rho_v$ under the fixed reciprocity normalization.
+At every $v\nmid\ell$ covered by the stated local compatibility hypotheses,
+$\pi_v$ has the conductor, inertial type, ordered branch, and monodromy
+prescribed by $\rho_v$ under the fixed reciprocity normalization. At
+$v\mid\ell$, the asserted conclusion is that the Galois lattice in (13.7) is
+finite flat of type $(0,1)$; a stronger assertion about $\pi_v$ is included
+only when a separate $\ell$-adic local--global compatibility theorem is
+assumed. When an ordering is not intrinsic to the isomorphism class of
+$\pi_v$, “ordered branch” refers to the retained local eigenline or
+refinement in the automorphic module, whose compatibility is part of NM-I
+and NM-II.
 
-**Proof.** The local properties of $\rho$ define the point (13.2). Adequacy supplies the sets $Q_n$ for the nonminimal dual Selmer group. The hypotheses of Chapters 9--11 verify the Taylor--Wiles system with $P$ fixed. The applicable theorem of Chapter 12 identifies the relevant deformation component, at least after reduction, with its faithful Hecke order. Sections 13.1 and 13.2 then produce $\pi$, prove (13.7), and recover every local type. $\square$
+**Proof.** The local properties of $\rho$ define the point (13.2). Adequacy supplies the sets $Q_n$ for the nonminimal dual Selmer group. The hypotheses of Chapters 9--11 verify the Taylor--Wiles system with $P$ fixed. The applicable theorem of Chapter 12 identifies the relevant deformation component, at least after reduction, with its faithful Hecke order. Sections 13.1 and 13.2 then produce $\pi$, prove (13.7), and recover every local property asserted above. $\square$
 
-For $F=\mathbf Q$ with the clean squarefree nonvexing datum of Book 55, the minimal clauses of NM-I--NM-III are already supplied there. Theorem 13.1 still requires the new integral level/type, component-support, and determinant-factor clauses for every added prime. It never invokes the minimal theorem beyond that theorem's stated range.
+For $F=\mathbf Q$ with the exact clean nontrivial squarefree nonvexing
+cyclotomic-determinant datum of Book 55, that book supplies the minimal equality, the
+faithful free rank-one module and perfect pairing, and the post-equality base
+Fitting--congruence equality. It also supplies the minimal-level instances of
+the integral control and reciprocity used by NM-I and NM-II. Theorem 13.1
+still requires every new integral level/type and local-compatibility clause
+at the added primes. The sharp direct route requires no NM-III clause; the
+support route requires its nonminimal coverage clauses; and the relative
+route requires its nonminimal determinant-factor clauses. A nontrivial
+$\psi$ is not in Book 55's theorem merely because local square roots exist at
+$\ell$; using that base theorem then requires a separately proved global
+twisting equivalence compatible with every deformation condition and
+automorphic central character.
 
 ## 14. The minimal-level route down and back up
 
-Direct patching is conceptually uniform, but a relative argument can be shorter when the minimal equality is already known and every added prime has a primitive local comparison factor. The route has three separate movements: lower the residual automorphic source, raise an automorphic point on each desired branch, and prove that the entire target deformation component is controlled by the raised Hecke order.
+Direct patching is conceptually uniform, but a relative argument can be shorter when the minimal ring equality and its post-equality Fitting--congruence equality are already known and every added prime has a primitive local comparison factor. The route has three separate movements: lower the residual automorphic source, raise an automorphic point on each desired branch, and prove that the entire target deformation component is controlled by the raised Hecke order.
 
 ### 14.1 Lowering the residual source
 
@@ -2116,7 +2492,17 @@ For every $p\in P_{\mathrm{low}}$, verify all hypotheses of Theorem 7.1 on the m
 
 Iteration then produces a lower-level residual eigensystem. It yields some characteristic-zero automorphic lift $\pi_{\min}$ of that system. It does not assert that $\pi_{\min}$ is the original $\pi_0$ with local factors deleted.
 
-One may now invoke the minimal theorem only if the resulting datum is exactly within its range. In the clean rational case this means, among other things, the coefficient-prime, squarefree-level, nonzero residual monodromy, nonvexing, determinant, and integral infrastructure hypotheses of Book 55. If lowering creates zero residual monodromy at a prime retained in the minimal set, or if the coefficient-prime restriction has non-scalar endomorphisms, the imported theorem does not apply.
+One may now invoke the minimal theorem only if the resulting datum is exactly
+within its range. In the clean rational case this means, among other things,
+the coefficient-prime, nontrivial squarefree-level, nonzero residual
+monodromy, nonvexing, exact-level source, cyclotomic-determinant, and two
+integral infrastructure hypotheses of Book 55. Its conclusion supplies not
+only $R^{\min}=\mathbb T^{\min}$ but also the faithful free rank-one minimal
+module and the post-equality Fitting--congruence equality. If lowering
+creates zero residual monodromy at a prime retained in the minimal set, if
+the coefficient-prime restriction has nonscalar endomorphisms, or if the
+determinant is not cyclotomic and no global twisting theorem has been proved,
+the imported theorem does not apply.
 
 ### 14.2 Raising a congruent automorphic point
 
@@ -2133,6 +2519,11 @@ $$
 \bar T_{v_i}=\varepsilon_i(q_{v_i}+1).
 \tag{14.2}
 $$
+
+in the trivial-central-character normalization. With general $\psi$, the
+same assertion is the signed special-root condition for (1.7), with
+$S_{v_i}^{-1}$ specialized to $\psi(\operatorname{Frob}_{v_i})$; one must not
+reuse (14.2) without that translation.
 
 At an ordered tame principal-series prime, (14.2) has no analogue sufficient by itself. One needs an integral type-raising theorem: the tame characters must extend to integral type lattices, the type projector must be defined over $\mathcal O$, its reduction must meet the current residual block, and the selected ordered component must be nonzero. A characteristic-zero packet containing the type does not establish any of these assertions.
 
@@ -2151,7 +2542,7 @@ There are exactly two noncircular ways to connect (14.3) to $x_\rho$.
 
 The first is the componentwise direct theorem: prove Theorem 12.3 on $\mathcal C$. Then every characteristic-zero point of $R^{P,\mathcal C}$, including $x_\rho$, is automorphic.
 
-The second is a relative numerical comparison. For each added prime, compare the cotangent module at the global deformation augmentation and the congruence module at the raised automorphic augmentation. The comparison must show that both acquire the same factor $c_{v_i}$. Starting from the minimal equality, the numerical criterion then proves the equality at the enlarged level.
+The second is a relative numerical comparison. For each added prime, compare the cotangent module at the global deformation augmentation and the congruence module at the raised automorphic augmentation. The comparison must show that both acquire the same factor $c_{v_i}$. Starting from the proved minimal Fitting--congruence equality, the numerical criterion then proves the equality at the enlarged level. Minimal ring equality alone is not the numerical input, although Book 55 proves both statements in the required order.
 
 Neither route uses the assertion “there is a congruent form on this level” as a substitute for $R=T$. The congruent form only proves nonvanishing of the Hecke localization and supplies an augmentation at which the determinant comparison can be evaluated.
 
@@ -2162,16 +2553,19 @@ R^P\twoheadrightarrow\mathbb T^P,
 \tag{14.4}
 $$
 
-and what is transported from the minimal level is a determinant-line equality, not a fictitious quotient map.
+and what is transported from the minimal level is the post-equality
+determinant-line comparison, not a fictitious quotient map.
 
 ### 14.4 The inductive relative criterion
 
 The preceding argument is conveniently packaged as follows.
 
-**Theorem 14.1 (inductive nonminimal criterion).** Let $\mathcal D_0,\ldots,\mathcal D_r$ be global data, where $\mathcal D_0$ is minimal and $\mathcal D_i$ adds the controlled condition at $v_i$. No inclusion of the local functors is assumed. After extending all augmentations to one common coefficient DVR, suppose for each $i$:
+**Theorem 14.1 (inductive nonminimal criterion).** Let $\mathcal D_0,\ldots,\mathcal D_r$ be global data, where $\mathcal D_0$ is minimal and $\mathcal D_i$ adds the controlled condition at $v_i$. No inclusion of the local functors is assumed. After extending all augmentations to one common coefficient DVR, suppose clauses 1--3 hold for every $0\le i\le r$, clauses 4--6 hold for every $1\le i\le r$, and clause 7 holds at the base:
 
 1. there is a finite flat faithful Hecke order $\mathbb T_i$ and a canonical surjection $R_i\twoheadrightarrow\mathbb T_i$;
-2. an independent integral level/type-raising theorem produces an augmentation $\lambda_i$ on the target component;
+2. the independent minimal source for $i=0$, and an integral
+   level/type-raising theorem for $i>0$, produces an augmentation $\lambda_i$
+   on the target component;
 3. the cotangent module $\Phi_{R_i,\lambda_i}$ is finite;
 4. a perfect incidence comparison between $\mathcal D_{i-1}$ and $\mathcal D_i$ has a nonzero determinant $c_{v_i}$;
 5. the deformation and automorphic determinant theorems give
@@ -2191,11 +2585,31 @@ The preceding argument is conveniently packaged as follows.
    $$
 
 6. all multi-prime higher torsion has been shown to vanish or has been included in both formulas; and
-7. $R_0\simeq\mathbb T_0$ by a minimal theorem whose own hypotheses are satisfied.
+7. the base datum has already been proved to satisfy
+   $R_0\simeq\mathbb T_0$ and, at $\lambda_0$,
+
+   $$
+   \operatorname{Fitt}\Phi_{R_0,\lambda_0}
+   =\eta_{\mathbb T_0,\lambda_0}.
+   \tag{14.7}
+   $$
+
+   In the exact clean rational cyclotomic range, Book 55 proves the ring
+   equality by sharp absolute patching and then proves (14.7) in its Section
+   12.6. After a permitted coefficient extension, use the
+   resulting base-changed complete-intersection equality at the extended
+   augmentation. Outside that range, (14.7) requires a separately named base
+   theorem.
 
 Then $R_i\simeq\mathbb T_i$ at $\lambda_i$ for every $i$. In particular, every characteristic-zero point on the controlled component reached at the last step is automorphic.
 
-**Proof.** The base equality makes the minimal cotangent Fitting ideal equal to the minimal congruence ideal. Equations (14.5)--(14.6) preserve this equality from $i-1$ to $i$. Thus the inclusion (12.9) holds at every step. The numerical criterion applied to the independently constructed surjection $R_i\twoheadrightarrow\mathbb T_i$ gives the asserted isomorphism and complete-intersection property. Induction completes the proof. $\square$
+**Proof.** The base numerical equality (14.7), not ring equality by itself,
+makes the minimal cotangent Fitting ideal equal to the minimal congruence
+ideal. Equations (14.5)--(14.6) preserve this equality from $i-1$ to $i$.
+Thus the inclusion (12.9) holds at every step. The numerical criterion
+applied to the independently constructed surjection
+$R_i\twoheadrightarrow\mathbb T_i$ gives the asserted isomorphism and
+complete-intersection property. Induction completes the proof. $\square$
 
 If $c_{v_i}=0$, the augmentation is not isolated and the cotangent module is not finite; the criterion does not apply. If $c_{v_i}$ contains an untracked opposite branch or stabilizer factor, the two equalities can differ even when their valuations happen to agree in one example.
 
@@ -2331,7 +2745,7 @@ $$
 
 Finite flatness is preserved by base change of finite flat group schemes. Away from $\ell$, the full Weil--Deligne parameter restricts; in particular, nonzero Steinberg monodromy remains nonzero. Conductors can change under ramified restriction, so the local type for the deformation problem over $E$ is the actual restricted type, not the old conductor exponent copied from $F$.
 
-Suppose that for every $w\mid v\in P$, the target point and an available automorphic point lie on the same specified component of the local ring over $E_w$. Suppose also that the analogues of NM-I--NM-III and Theorem 13.1 hold over $E$. Then
+Suppose that for every $w\mid v\in P$, the target point and an available automorphic point lie on the same specified component of the local ring over $E_w$. Suppose also that the analogues of NM-I and NM-II, the route-specific sharp-balance or NM-III clauses, any base equality required by the relative route, and Theorem 13.1 hold over $E$. Then
 
 $$
 \rho_E\simeq\rho_{\Pi_E}
@@ -2409,13 +2823,22 @@ $$
 \tag{16.13}
 $$
 
-The equality follows globally from the compatible choice at every cyclic layer, not from solvable invariance alone. Restricting (16.13) to $G_{F_v}$ recovers the original local parameter of $\rho_v$, including monodromy and the ordered characters. Thus any merging of components after passage to $E_w$ is harmless only because the final global identity distinguishes the original representation downstairs.
+The equality follows globally from the compatible choice at every cyclic
+layer, not from solvable invariance alone. Restricting (16.13) to $G_{F_v}$
+recovers the intrinsic local parameter of $\rho_v$, including inertia and
+monodromy. An ordered line, $U_v$-refinement, or flag is recovered only when
+it is unique for $\rho_v$ or when it has been transported explicitly through
+the cyclic descent data; abstract equality of representations does not
+recover a nonintrinsic enhancement. Thus any merging of components after
+passage to $E_w$ is harmless only because the final global identity
+distinguishes the original representation downstairs, with any required
+enhancement tracked separately.
 
 We record the route as a theorem.
 
-**Theorem 16.1 (solvable switching and descent).** Assume there is an admissible extension $E/F$ satisfying Sections 16.1--16.2; the restricted target and a residual automorphic source are component-compatible at every place as in (16.7); controlled nonminimal modularity lifting holds over every field in the tower where it is invoked; cyclic base change and descent hold with all local compatibility and central-character hypotheses; and each twisting character in (16.11) is identified and corrected. Then modularity of $\rho|_{G_E}$ implies modularity of $\rho$ over $F$, with the original determinant and local types.
+**Theorem 16.1 (solvable switching and descent).** Assume there is an admissible extension $E/F$ satisfying Sections 16.1--16.2; the restricted target and a residual automorphic source are component-compatible at every place as in (16.7); controlled nonminimal modularity lifting holds over every field in the tower where it is invoked; cyclic base change and descent hold with all local compatibility and central-character hypotheses; each twisting character in (16.11) is identified and corrected; and every nonintrinsic ordered refinement claimed at the end is transported through the tower. Then modularity of $\rho|_{G_E}$ implies modularity of $\rho$ over $F$, with the original determinant, the intrinsic local types at places away from $\ell$ covered by local compatibility, and precisely the ordered refinements that were so transported. At $v\mid\ell$, the conclusion is the finite-flat Galois-lattice statement of Theorem 13.1 unless a stronger $\ell$-adic local--global compatibility theorem is assumed.
 
-**Proof.** Apply Theorem 13.1 over $E$ to obtain (16.6). Equations (16.8)--(16.12) descend it one cyclic layer at a time, correcting the unique character ambiguity by the global representation $\rho$. At the bottom, Chebotarev identifies the resulting Galois representation with $\rho$, and restriction gives the asserted local types. $\square$
+**Proof.** Apply Theorem 13.1 over $E$ to obtain (16.6). Equations (16.8)--(16.12) descend it one cyclic layer at a time, correcting the unique character ambiguity by the global representation $\rho$. At the bottom, Chebotarev identifies the resulting Galois representation with $\rho$, and restriction gives the asserted local conclusions. $\square$
 
 ## 17. The ordinary residually reducible maneuver
 
@@ -2496,7 +2919,10 @@ The following theorem is a separate deep input, not a consequence of Chapters 11
    \eta_{\mathbb T^{\mathrm{ord}},\lambda_0}\bigr);
    \tag{17.2d}
    $$
-9. every added prime away from $\ell$ satisfies the integral Ihara/type, component-support, and determinant-factor hypotheses analogous to NM-I--NM-III; and
+9. every added prime away from $\ell$ satisfies the integral Ihara/type and
+   local-compatibility hypotheses analogous to NM-I--NM-II, together with
+   the determinant-factor or component-support clauses used by the chosen
+   ordinary comparison; and
 10. any solvable base change and descent used in the proof satisfies all conditions of Chapter 16.
 
 Then $\rho$ is automorphic of the prescribed ordinary weight and local types.
@@ -2592,7 +3018,14 @@ $$
 
 Thus the only conductor increase is one at each prime of $P_{\mathrm{hr}}$. For a semistable representation over $\mathbf Q$, $S_{\mathrm{ft}}$ is empty and both conductors are squarefree away from $\ell$.
 
-Definition 18.1 is arithmetic and local. A **lifting-admissible hardly ramified datum** additionally requires residual modularity and adequacy, the coefficient-prime Schur hypotheses, the independent Ihara and level-control theorems, and NM-I--NM-III on the named components. Keeping these global requirements out of the adjective makes it possible to diagnose which part of an application has failed.
+Definition 18.1 is arithmetic and local. A **lifting-admissible hardly
+ramified datum** additionally requires residual modularity and adequacy, the
+coefficient-prime Schur and determinant-twist hypotheses of Sections
+4.1--4.2, the independent Ihara and level-control theorems, NM-I and NM-II,
+and whichever sharp-balance or NM-III clauses the chosen proof route uses on
+the named components, together with any base equality required by the
+relative route. Keeping these global requirements out of the adjective makes
+it possible to diagnose which part of an application has failed.
 
 ### 18.2 The absolutely irreducible theorem
 
@@ -2607,18 +3040,34 @@ be continuous, irreducible, and totally odd, with determinant $\psi\chi_\ell$. S
 
 1. $\bar\rho$ is absolutely irreducible, automorphic of parallel weight two, and adequate for the Taylor--Wiles selection used over $F$;
 2. $H^0(F,\operatorname{ad}^0\bar\rho(1))=0$;
-3. the local finite-flat Schur hypotheses of Section 4.2 hold;
+3. the local finite-flat Schur hypotheses of Section 4.2 hold, and for every
+   $v\mid\ell$ the finite-order determinant factor has a square root
+   $\eta_v$ whose twists extend through the finite-flat integral category as
+   in Section 4.1;
 4. $\rho$ is hardly ramified relative to $\bar\rho$ in the sense of Definition 18.1;
-5. the residual automorphic system can be lowered to the exact minimal datum without circular use of this theorem and raised to every selected sign by Theorems 7.1 and 6.1; and
-6. NM-I--NM-III hold on the component tuple containing $\rho$, and the applicable full, reduced, or componentwise theorem of Chapter 12 has all of its additional commutative-algebra hypotheses.
+5. the selected fixed-level type module is independently nonzero, either by
+   a direct automorphic construction or by lowering the residual system to
+   the exact minimal datum and raising to every selected sign through
+   Theorems 7.1 and 6.1 without circular use of this theorem; and
+6. NM-I and NM-II hold on the component tuple containing $\rho$, and one of
+   the three route-specific packages in Theorem 13.1, clause 7, holds.
 
 Then $\rho$ is automorphic of parallel weight two, and its automorphic representation has exactly the conductor and local signs in (18.3).
 
-**Proof.** Every place in $S_{\mathrm{ft}}\cup S_{\mathrm{st}}$ carries its minimal represented condition. Every place of $P_{\mathrm{hr}}$ carries the smooth closed special quotient (3.18) and the target lies in its nonzero-monodromy generic locus. Conditions (18.1)--(18.2) give the integral branch, Ihara, and primitive determinant hypotheses. Thus the datum is controlled in the sense of Section 5.4. Apply Theorem 13.1 and then (13.5a) to recover nonzero monodromy and the signs. The conductor formula follows from Section 5.1. $\square$
+**Proof.** Every place in $S_{\mathrm{ft}}\cup S_{\mathrm{st}}$ carries its minimal represented condition. Every place of $P_{\mathrm{hr}}$ carries the smooth closed special quotient (3.18) and the target lies in its nonzero-monodromy generic locus. Conditions (18.1)--(18.2) give the integral branch and Ihara hypotheses and, for the relative route, the primitive local determinant setting. Thus the datum is controlled in the sense of Section 5.4. Apply Theorem 13.1 and then (13.5a) to recover nonzero monodromy and the signs. The conductor formula follows from Section 5.1. $\square$
 
-For the clean rational realization imported from Book 55, one retains its stronger restriction $\ell\ge7$ and all its exact-level hypotheses. The theorem over a general totally real field requires the Hilbert or quaternionic forms of NM-I--NM-III; it is not a consequence of the rational case.
+For the clean rational cyclotomic realization imported from Book 55, one
+retains its stronger restriction $\ell\ge7$ and all its exact-level
+hypotheses. The theorem over a general totally real field requires the
+Hilbert or quaternionic forms of NM-I and NM-II and whichever independent
+nonminimal determinant or support clauses the chosen route uses; it is not a
+consequence of the rational case.
 
-If a lift has an added ordered tame principal-series prime, it is **suitably controlled** rather than hardly ramified. Theorem 13.1 still applies when the enhanced local ring, saturated integral type lattice, component support, and determinant factor (8.12) have all been supplied.
+If a lift has an added ordered tame principal-series prime, it is **suitably
+controlled** rather than hardly ramified. Theorem 13.1 still applies when the
+enhanced local ring, saturated integral type lattice, and exact local
+compatibility have been supplied, together with component support for the
+support route or the determinant factor (8.12) for the numerical route.
 
 ### 18.3 The $3$-adic boundary
 
@@ -2637,8 +3086,12 @@ A direct $3$-adic version requires a separate package:
 2. integral automorphic lattices with all $3$-torsion stabilizers removed or explicitly measured;
 3. at $q\equiv1\pmod3$, a framed or line-enhanced treatment of scalar Frobenius and colliding $U_q$ roots;
 4. at $q\equiv-1\pmod3$, a $U_q$-selected Ihara theorem and a two-factor determinant calculation replacing (6.11);
-5. finite-flat local control at $3$ within Section 4.2, which is available only under its unramified and Schur hypotheses; and
-6. the small-prime analogues of NM-II and NM-III, including component coverage.
+5. finite-flat local control at $3$ within Sections 4.1--4.2, including the
+   determinant square-root condition and the unramified and Schur
+   hypotheses; and
+6. the small-prime analogues of NM-I and NM-II, together with either the
+   sharp absolute generator count or the applicable relative determinant and
+   component-support clauses of NM-III.
 
 With all six inputs, the proof of Theorem 18.2 applies using the refined ledger. Without them, a hardly ramified $3$-adic representation belongs to the classification problem of the later small-ramification books, not automatically to this lifting theorem.
 
@@ -2767,7 +3220,7 @@ $$
 
 Ihara injectivity gives a nonzero residual new class; saturation lifts it to a torsion-free new localization; the integral $U_p=\varepsilon$ projector selects the component. Omitting any of those three assertions stops the argument at a congruence in a quotient that may be torsion.
 
-**Global audit.** Recompute the nonminimal dual Selmer group. In the framed ledger, adding $p$ raises $t$ by one, adds three local-base variables, adds four gauge variables, and changes $G^\square-b^\square$ by one. These changes cancel in (9.16). NM-III then inserts the same factor (19.8) in the deformation cotangent and automorphic congruence ideals.
+**Global audit.** Recompute the nonminimal dual Selmer group. In the framed ledger, adding $p$ raises $t$ by one, adds three local-base variables, adds four gauge variables, and changes $G^\square-b^\square$ by one. These changes cancel in (9.16). In the relative route, NM-III clauses 1--4 insert the same new factor (19.8) in the deformation cotangent and automorphic congruence ideals, on top of Book 55's already proved base equality. In the sharp direct route, the exact absolute count instead gives (11.8b), and no determinant calculation is used to kill the kernel.
 
 **Verdict.** The prime is controlled. If one instead draws $R_p^{\mathrm{sp}}\twoheadrightarrow R_p^{\mathrm{ur}}$, omits saturation, or identifies the target merely because a raised form exists, the proof is invalid.
 
@@ -2815,7 +3268,11 @@ must be computed from that lattice and matched with the incidence equations (19.
 
 **Global audit.** If the enhanced fixed-character chart is used, its neutral framed dimension is three and the smooth ledger applies. If the whole group-algebra family is retained, $\mathcal O[\Delta_p]$ belongs in the local base and its nonregular special fiber must be carried into the patched complex. The automorphic module must meet the exact generic character factor containing the target.
 
-**Verdict.** The prime is controlled only under the enhanced representability, saturated type-lattice, component-support, and determinant hypotheses. Calling (19.9) a tame type and invoking the prime-to-$\ell$ theorem loses the central integral difficulty.
+**Verdict.** The prime is controlled only under enhanced representability,
+the saturated type lattice, and exact local compatibility. A support proof
+additionally needs component support, while a relative numerical proof needs
+the determinant factor (19.12). Calling (19.9) a tame type and invoking the
+prime-to-$\ell$ theorem loses the central integral difficulty.
 
 ### 19.3 One scalar or vexing prime
 
@@ -2895,7 +3352,7 @@ The main theorem is deliberately narrower than the set of all potentially semist
 
 ### 20.1 Small coefficient primes and small images
 
-At $\ell=2$, scalars lie in $\operatorname{ad}^0$, the trace pairing is degenerate, and the fixed-determinant dual module is not identified with $W(1)$ by the argument used here. The finite-flat power-series theorem of Section 4.2 also assumes $\ell>2$. Oddness and the real-place correction require a different formulation. None of Theorems 12.1, 13.1, or 18.2 includes $\ell=2$.
+At $\ell=2$, scalars lie in $\operatorname{ad}^0$, the trace pairing is degenerate, and the fixed-determinant dual module is not identified with $W(1)$ by the argument used here. The finite-flat power-series theorem of Section 4.2 also assumes $\ell>2$. Oddness and the real-place correction require a different formulation. None of Theorems 12.1A--12.3, 13.1, or 18.2 includes $\ell=2$.
 
 At $\ell=3$, the finite-flat theorem can apply locally, but the clean away-from-$\ell$ exclusions collapse as in (18.6), and common residual images may not meet the adequate-image hypotheses. At $\ell=5$, exceptional projective images and stabilizer torsion can still obstruct prime selection or multiplicity one. A small-prime theorem must replace each failed clause explicitly.
 
@@ -2970,7 +3427,7 @@ For a proposed added place $v$, the order of questions is:
         v
     Do local and automorphic determinant factors agree?
         |
-        +-- no --> numerical lifting stops
+        +-- no --> numerical route stops; test a direct route separately
         |
         v
     Does patched support contain the target component?
@@ -2980,6 +3437,11 @@ For a proposed added place $v$, the order of questions is:
         v
     full, reduced, or componentwise R=T according to coverage
                  and independent nilpotent control
+
+The sharp balanced route branches after construction of the canonical map:
+if the absolute auxiliary tangent space has exactly $q_P$ generators and the
+marked free diamond action is available, Theorem 12.1A proves faithfulness
+without passing through either determinant or support questions.
 
 At a proposed base change, prepend three questions: does the residual image remain adequate, does the packet remain cuspidal without new self-twists, and is the descent fiber compatible with the target determinant? A negative answer changes the theorem, not merely its proof.
 
@@ -2995,8 +3457,13 @@ Book 60 can use Theorem 13.1 only through the following interface. A potential-m
 2. the places above $\ell$ are unramified, or preferably split, so that the exact finite-flat local theorem remains available;
 3. every prescribed local point of the moduli construction lands on a named deformation component;
 4. the auxiliary residual automorphic representation is cuspidal and lies in the correct non-Eisenstein block;
-5. the Hilbert or quaternionic forms of NM-I--NM-III hold at the levels introduced over $E$; and
-6. determinant characters of the geometric object and the target have been identified, including finite-order twists.
+5. the Hilbert or quaternionic forms of NM-I and NM-II and the
+   route-specific sharp-balance or NM-III clauses hold at the levels
+   introduced over $E$, together with any base equality required by the
+   relative route; and
+6. determinant characters of the geometric object and the target have been
+   identified, including finite-order twists and the square-root and integral
+   twisting condition of Section 4.1 at every place above $\ell$.
 
 Under these clauses, Theorem 13.1 proves automorphy of $\rho|_{G_E}$. That is the exact output required by potential modularity. It does not descend automorphy to $F$ unless Theorem 16.1 or the later compatible-system descent machinery is applied.
 
@@ -3011,7 +3478,11 @@ P_v(X)=X^2-a_vX+\psi(v)q_v
 \tag{21.1}
 $$
 
-at almost every place. The compatible-system construction can then realize these polynomials in coefficient fields at other primes. Theorem 13.1 contributes three pieces of data that must be retained:
+at almost every place, where $\lambda_\pi$ is the Hecke character of $\pi$,
+$a_v=\lambda_\pi(S_v^{-1}T_v)$ in the normalization (1.7), and
+$\psi(v)=\psi(\operatorname{Frob}_v)$. The compatible-system construction
+can then realize these polynomials in coefficient fields at other primes.
+Theorem 13.1 contributes three pieces of data that must be retained:
 
 - the exact determinant $\psi\chi_\ell$;
 - the conductor and Weil--Deligne type at every fixed nonminimal place; and
@@ -3095,6 +3566,22 @@ $$
 \tag{21.7}
 $$
 
-When all six entries match, direct patching proves the full, reduced, or componentwise nonminimal equality, and a target point becomes automorphic. The relative route reaches the same conclusion by transporting equal determinant costs from a minimal equality. Solvable base change can move the comparison to a more favorable field, but only component control and recursive character-corrected descent bring the original representation back.
+These six entries form the complete audit ledger, but the kernel-killing
+routes use different columns. In the sharp balanced case, direct patching
+uses the exact local and global tangent count and the free faithful-action
+system to kill the kernel by Book 55's equal-variable mechanism, without a
+determinant or coverage hypothesis. The support route additionally uses the
+component column and concludes at the strength allowed by nilpotent control.
+The relative route instead starts from Book 55's proved minimal ring and
+Fitting--congruence equalities and transports only the new local determinant
+costs. Solvable base change can move the comparison to a more favorable
+field, but only component control and recursive character-corrected descent
+bring the original representation back.
 
-The durable lesson is not that added ramification is harmless. It is that its cost is local, integral, and measurable. Once the local component, automorphic lattice, determinant line, and global support have all been identified, that cost can be paid without losing the specified lift.
+The durable lesson is not that added ramification is harmless. It is that its
+cost is local, integral, and measurable. Once the local component and
+automorphic lattice are matched, that cost can be paid by one genuinely
+verified bridge: sharp absolute faithfulness, component support with
+nilpotent control, or relative determinant comparison from an already proved
+base equality. Each bridge preserves the specified lift, and none may be
+silently substituted for another.
