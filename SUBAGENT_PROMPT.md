@@ -78,7 +78,7 @@ A successful build may emit warnings for remaining placeholders, plus unrelated 
 Before finishing:
 
 1. Run a fresh guarded build after the final edit and confirm the assigned chapter target succeeds.
-2. Confirm the assigned file contains no `admit`, `aesop`, `axiom`, `unsafe`, `sorryAx`, or equivalent loophole.
+2. Confirm the assigned file contains no `admit`, `aesop`, `axiom`, `unsafe`, `sorryAx`, or equivalent loophole, except for statements you failed to prove or needing update.
 3. Account for every remaining `sorry`: each must be either attached to a precise `STATEMENT_NEEDS_UPDATE` marker or reported as an unresolved proof obligation. Never claim completion merely because the file builds with placeholders.
 4. Inspect the diff to verify that declaration headers and imports are unchanged and that only proof bodies and `STATEMENT_NEEDS_UPDATE` comments were edited.
 5. Run `git diff --check` for the assigned file.
