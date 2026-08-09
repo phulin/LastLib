@@ -645,21 +645,12 @@ theorem valuation_newton_induction {K Γ : Type*} [Field K]
     (hderiv : v (f.derivative.eval a₀) ≠ ⊤) :
     let s := v (f.derivative.eval a₀)
     let q₀ := v (f.eval a₀) - (s + s)
-    (∀ n : ℕ,
-      v (f.derivative.eval (newtonIterate f a₀ n)) = s ∧
-        valuationExcess v f s (newtonIterate f a₀ n) ≥ (2 ^ n) • q₀ ∧
-        v (newtonIterate f a₀ (n + 1) - newtonIterate f a₀ n) =
-          s + valuationExcess v f s (newtonIterate f a₀ n)) →
-    let s := v (f.derivative.eval a₀)
-    let q₀ := v (f.eval a₀) - (s + s)
     ∀ n : ℕ,
       v (f.derivative.eval (newtonIterate f a₀ n)) = s ∧
         valuationExcess v f s (newtonIterate f a₀ n) ≥ (2 ^ n) • q₀ ∧
         v (newtonIterate f a₀ (n + 1) - newtonIterate f a₀ n) =
           s + valuationExcess v f s (newtonIterate f a₀ n) := by
-  dsimp
-  intro hnewton
-  exact hnewton
+  sorry
 
 /-- The valuation Newton form of Hensel's lemma, including the integral root condition. -/
 theorem hensel_newton_form {K Γ : Type*} [Field K]
@@ -670,16 +661,12 @@ theorem hensel_newton_form {K Γ : Type*} [Field K]
     (hderiv : v (f.derivative.eval a₀) ≠ ⊤)
     (hcomplete : Chapter09NonarchimedeanComplete v)
     (hcofinal : Chapter09DoublingCofinal
-      (valuationExcess v f (v (f.derivative.eval a₀)) a₀))
-    (hroot : ∃! a : K,
-      a ∈ A ∧ f.eval a = 0 ∧
-        v (a - a₀) > v (f.derivative.eval a₀) ∧
-          v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀)) :
+      (valuationExcess v f (v (f.derivative.eval a₀)) a₀)) :
     ∃! a : K,
       a ∈ A ∧ f.eval a = 0 ∧
         v (a - a₀) > v (f.derivative.eval a₀) ∧
           v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
-  exact hroot
+  sorry
 
 /-- The exact displacement in the valuation Newton form of Hensel's lemma. -/
 theorem hensel_newton_exact_displacement {K Γ : Type*} [Field K]
@@ -690,14 +677,11 @@ theorem hensel_newton_exact_displacement {K Γ : Type*} [Field K]
     (hderiv : v (f.derivative.eval a₀) ≠ ⊤)
     (hcomplete : Chapter09NonarchimedeanComplete v)
     (hcofinal : Chapter09DoublingCofinal
-      (valuationExcess v f (v (f.derivative.eval a₀)) a₀))
-    (hroot : ∃ a : K,
-      a ∈ A ∧ f.eval a = 0 ∧
-        v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀)) :
+      (valuationExcess v f (v (f.derivative.eval a₀)) a₀)) :
     ∃ a : K,
       a ∈ A ∧ f.eval a = 0 ∧
         v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
-  exact hroot
+  sorry
 
 /-- The Newton corrections tend to the top of the value group. -/
 theorem valuation_newton_corrections_tend_to_top {K Γ : Type*} [Field K]
@@ -708,11 +692,9 @@ theorem valuation_newton_corrections_tend_to_top {K Γ : Type*} [Field K]
     (hderiv : v (f.derivative.eval a₀) ≠ ⊤)
     (hcomplete : Chapter09NonarchimedeanComplete v)
     (hcofinal : Chapter09DoublingCofinal
-      (valuationExcess v f (v (f.derivative.eval a₀)) a₀))
-    (hTends : TendsToTop
-      (fun n => v (newtonIterate f a₀ (n + 1) - newtonIterate f a₀ n))) :
+      (valuationExcess v f (v (f.derivative.eval a₀)) a₀)) :
     TendsToTop (fun n => v (newtonIterate f a₀ (n + 1) - newtonIterate f a₀ n)) := by
-  exact hTends
+  sorry
 
 /-- The strict Newton inequality is the error being smaller than the square of the derivative. -/
 def StrictNewtonCondition {K Γ : Type*} [Field K]
@@ -771,10 +753,9 @@ def CoprimeCorrectionProperty {R : Type*} [CommRing R]
 
 /-- Coprimality gives the unique bounded-degree solution to the linear correction equation. -/
 theorem coprime_correction_property {k : Type*} [Field k]
-    {g h : k[X]} (hg : g.Monic) (hh : h.Monic) (hcop : IsCoprime g h)
-    (hproperty : CoprimeCorrectionProperty g h) :
+    {g h : k[X]} (hg : g.Monic) (hh : h.Monic) (hcop : IsCoprime g h) :
     CoprimeCorrectionProperty g h := by
-  exact hproperty
+  sorry
 
 /-- One coefficientwise Hensel correction step, modulo `π^(n+1)`. -/
 theorem hensel_factorization_step {A : Type*} [CommRing A] [IsDomain A]
@@ -786,16 +767,11 @@ theorem hensel_factorization_step {A : Type*} [CommRing A] [IsDomain A]
     (hcop : IsCoprime g₀ h₀)
     (hred : residuePolynomial f = g₀ * h₀)
     (hn : 1 ≤ n) :
-    (∃ r s : A[X],
-      r.natDegree < g.natDegree ∧ s.natDegree < h.natDegree ∧
-        ApproximateFactorization f
-          (g + C (π ^ n) * r) (h + C (π ^ n) * s) (n + 1)) →
     ∃ r s : A[X],
       r.natDegree < g.natDegree ∧ s.natDegree < h.natDegree ∧
         ApproximateFactorization f
           (g + C (π ^ n) * r) (h + C (π ^ n) * s) (n + 1) := by
-  intro hstep
-  exact hstep
+  sorry
 
 /-- A pair of lifted factors with the prescribed reductions and degrees. -/
 def IsFactorizationLift {A : Type*} [CommRing A] [IsLocalRing A]
@@ -810,10 +786,8 @@ theorem hensel_factorization {A : Type*} [CommRing A] [IsDomain A]
     (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
     (hcop : IsCoprime g₀ h₀)
     (hred : residuePolynomial f = g₀ * h₀) :
-    (∃! gh : A[X] × A[X], IsFactorizationLift f g₀ h₀ gh.1 gh.2) →
     ∃! gh : A[X] × A[X], IsFactorizationLift f g₀ h₀ gh.1 gh.2 := by
-  intro hfactor
-  exact hfactor
+  sorry
 
 /- Coefficientwise adic Cauchy condition for a sequence of polynomial factors. -/
 def PolynomialAdicCauchy {A : Type*} [CommRing A] [IsLocalRing A]
@@ -828,14 +802,6 @@ theorem hensel_factorization_coefficients_are_adic_cauchy
     {f : A[X]} {g₀ h₀ : Polynomial (ResidueRing A)}
     (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
     (hcop : IsCoprime g₀ h₀) (hred : residuePolynomial f = g₀ * h₀) :
-    (∃ g h : ℕ → A[X],
-      (∀ n : ℕ,
-        (g n).Monic ∧ (h n).Monic ∧
-          (g n).natDegree = g₀.natDegree ∧
-          (h n).natDegree = h₀.natDegree ∧
-          residuePolynomial (g n) = g₀ ∧ residuePolynomial (h n) = h₀ ∧
-          ApproximateFactorization f (g n) (h n) (n + 1)) ∧
-      PolynomialAdicCauchy g ∧ PolynomialAdicCauchy h) →
     ∃ g h : ℕ → A[X],
       (∀ n : ℕ,
         (g n).Monic ∧ (h n).Monic ∧
@@ -844,8 +810,7 @@ theorem hensel_factorization_coefficients_are_adic_cauchy
           residuePolynomial (g n) = g₀ ∧ residuePolynomial (h n) = h₀ ∧
           ApproximateFactorization f (g n) (h n) (n + 1)) ∧
       PolynomialAdicCauchy g ∧ PolynomialAdicCauchy h := by
-  intro hsequence
-  exact hsequence
+  sorry
 
 /-- The homogeneous first-precision correction equation proves uniqueness of factor lifts. -/
 theorem hensel_factorization_unique_at_first_nonzero_precision
@@ -853,14 +818,10 @@ theorem hensel_factorization_unique_at_first_nonzero_precision
     {f : A[X]} {g₀ h₀ : Polynomial (ResidueRing A)}
     (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
     (hcop : IsCoprime g₀ h₀) :
-    (∀ gh₁ gh₂ : A[X] × A[X],
-      IsFactorizationLift f g₀ h₀ gh₁.1 gh₁.2 →
-      IsFactorizationLift f g₀ h₀ gh₂.1 gh₂.2 → gh₁ = gh₂) →
     ∀ gh₁ gh₂ : A[X] × A[X],
       IsFactorizationLift f g₀ h₀ gh₁.1 gh₁.2 →
       IsFactorizationLift f g₀ h₀ gh₂.1 gh₂.2 → gh₁ = gh₂ := by
-  intro huniq
-  exact huniq
+  sorry
 
 /-- A simple residue root is a linear factor and therefore lifts uniquely. -/
 theorem monic_simple_residue_root_lifts {A : Type*} [CommRing A] [IsDomain A]
@@ -868,10 +829,8 @@ theorem monic_simple_residue_root_lifts {A : Type*} [CommRing A] [IsDomain A]
     (hf : f.Monic)
     (hroot : (residuePolynomial f).eval a₀ = 0)
     (hsimple : IsUnit ((residuePolynomial f).derivative.eval a₀)) :
-    (∃! a : A, f.eval a = 0 ∧ residueClass a = a₀) →
     ∃! a : A, f.eval a = 0 ∧ residueClass a = a₀ := by
-  intro hlift
-  exact hlift
+  sorry
 
 /-- Pairwise coprime residue factors lift simultaneously. -/
 def PairwiseCoprimeFamily {ι R : Type*} [CommRing R]
@@ -884,16 +843,11 @@ theorem hensel_lift_pairwise_coprime_factors {A ι : Type*} [CommRing A] [IsDoma
     (hf : f.Monic) (hmonic : ∀ i, (f₀ i).Monic)
     (hpair : PairwiseCoprimeFamily f₀)
     (hred : residuePolynomial f = ∏ i, f₀ i) :
-    (∃ lifts : ι → A[X],
-      (∀ i, (lifts i).Monic ∧ (lifts i).natDegree = (f₀ i).natDegree ∧
-        residuePolynomial (lifts i) = f₀ i) ∧
-      f = ∏ i, lifts i) →
     ∃ lifts : ι → A[X],
       (∀ i, (lifts i).Monic ∧ (lifts i).natDegree = (f₀ i).natDegree ∧
         residuePolynomial (lifts i) = f₀ i) ∧
       f = ∏ i, lifts i := by
-  intro hlifts
-  exact hlifts
+  sorry
 
 /-- Residue-field factorization predicts a corresponding factorization upstairs. -/
 theorem residue_factorization_predicts_complete_factorization
@@ -901,10 +855,8 @@ theorem residue_factorization_predicts_complete_factorization
     (f : A[X]) (g₀ h₀ : Polynomial (ResidueRing A))
     (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
     (hcop : IsCoprime g₀ h₀) (hred : residuePolynomial f = g₀ * h₀) :
-    (∃ g h : A[X], IsFactorizationLift f g₀ h₀ g h) →
     ∃ g h : A[X], IsFactorizationLift f g₀ h₀ g h := by
-  intro hfactor
-  exact hfactor
+  sorry
 
 /-! ## 9.4 Henselian local rings -/
 
@@ -946,25 +898,22 @@ theorem simple_residue_root_iff_linear_factor {A : Type*} [CommRing A] [IsLocalR
 /-- Lifting factors one at a time reduces the factorization property to simple roots. -/
 theorem henselian_factorization_by_successive_linear_lifts
     {A : Type*} [CommRing A] [IsLocalRing A]
-    (hroot : SimpleResidueRootLiftingProperty A)
-    (hfactor : HenselianFactorizationProperty A) :
+    (hroot : SimpleResidueRootLiftingProperty A) :
     HenselianFactorizationProperty A := by
-  exact hfactor
+  sorry
 
 /-- Conversely, a factorization lift applied to `X-ā` gives simple-root lifting. -/
 theorem simple_root_lifting_by_linear_factorization
     {A : Type*} [CommRing A] [IsLocalRing A]
-    (hfactor : HenselianFactorizationProperty A)
-    (hroot : SimpleResidueRootLiftingProperty A) :
+    (hfactor : HenselianFactorizationProperty A) :
     SimpleResidueRootLiftingProperty A := by
-  exact hroot
+  sorry
 
 /-- Factorization and simple-root definitions of henselianity are equivalent. -/
 theorem henselian_iff_simple_residue_root_lifting {A : Type*} [CommRing A]
-    [IsLocalRing A]
-    (hiff : IsHenselianLocalRingChapter09 A ↔ SimpleResidueRootLiftingProperty A) :
+    [IsLocalRing A] :
     IsHenselianLocalRingChapter09 A ↔ SimpleResidueRootLiftingProperty A := by
-  exact hiff
+  sorry
 
 /-- Complete and separated maximal-ideal-adic local rings. -/
 def IsMaximalIdealAdicallyCompleteSeparated (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
@@ -1011,9 +960,8 @@ structure Chapter09HenselianNoncompleteDVRExample where
   not_adically_complete : ¬ IsMaximalIdealAdicallyCompleteSeparated A
 
 theorem henselian_DVR_need_not_be_complete
-    (hEx : Nonempty Chapter09HenselianNoncompleteDVRExample.{u}) :
-    Nonempty Chapter09HenselianNoncompleteDVRExample.{u} := by
-  exact hEx
+    : Nonempty Chapter09HenselianNoncompleteDVRExample.{u} := by
+  sorry
 /-- A minimal local interface for the henselization of a local ring. -/
 def IsHenselizationOf {A H : Type*} [CommRing A] [IsLocalRing A]
     [CommRing H] [IsLocalRing H] [Algebra A H] : Prop :=
@@ -1060,12 +1008,9 @@ theorem henselization_can_be_strictly_smaller_than_completion
     [CommRing C] [IsLocalRing C] [Algebra A C] [HenselianLocalRing C]
     (hH : IsHenselizationOf (A := A) (H := H))
     (hC : IsAdicCompletionOf (A := A) (C := C))
-    (hnotH : ¬ IsMaximalIdealAdicallyCompleteSeparated H)
-    (hφ : ∃! φ : H →+* C,
-      IsLocalHom φ ∧ φ.comp (algebraMap A H) = algebraMap A C) :
-    ∃! φ : H →+* C,
-      IsLocalHom φ ∧ φ.comp (algebraMap A H) = algebraMap A C := by
-  exact hφ
+    (hnotH : ¬ IsMaximalIdealAdicallyCompleteSeparated H) :
+    ∃ φ : H →+* C, IsStrictRingEmbedding φ := by
+  sorry
 
 /-! ## 9.5 Worked lifts -/
 
@@ -1500,11 +1445,9 @@ theorem padicTwoSeventeen_first_iterate_and_error :
 
 /-- The lifted root has displacement of value three from one, matching the first correction. -/
 theorem padicTwoSeventeen_lifted_root_displacement
-    (hdisp : ∃ a : ℚ_[2], padicTwoSeventeenPolynomial.eval a = 0 ∧
-      Padic.addValuation (p := 2) (a - 1) = (3 : WithTop ℤ)) :
-    ∃ a : ℚ_[2], padicTwoSeventeenPolynomial.eval a = 0 ∧
+    : ∃ a : ℚ_[2], padicTwoSeventeenPolynomial.eval a = 0 ∧
       Padic.addValuation (p := 2) (a - 1) = (3 : WithTop ℤ) := by
-  exact hdisp
+  sorry
 
 /-- The Artin--Schreier polynomial `X^p-X-a`. -/
 def artinSchreierPolynomial {A : Type*} [CommRing A] (p : ℕ) (a : A) : A[X] :=
@@ -1706,10 +1649,8 @@ theorem henselianity_lifts_coprime_residue_factorization
     (f : A[X]) (g₀ h₀ : Polynomial (ResidueRing A))
     (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
     (hcop : IsCoprime g₀ h₀) (hred : residuePolynomial f = g₀ * h₀) :
-    (∃! gh : A[X] × A[X], IsFactorizationLift f g₀ h₀ gh.1 gh.2) →
     ∃! gh : A[X] × A[X], IsFactorizationLift f g₀ h₀ gh.1 gh.2 := by
-  intro hfactor
-  exact hfactor
+  sorry
 
 /-- A prime of an extension ring lying above the maximal ideal. -/
 def PrimeAboveMaximal {A B : Type*} [CommRing A] [IsLocalRing A]
@@ -1805,10 +1746,9 @@ theorem finite_extension_prime_valuation_correspondence
     [Algebra A L] [IsScalarTower A K L]
     [CommRing B] [Algebra A B] [Algebra B L] [IsScalarTower A B L]
     [IsIntegralClosure B A L]
-    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
-    (hcor : ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK) :
+    [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ) :
     ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK := by
-  exact hcor
+  sorry
 
 /-- The correspondence transfers uniqueness of a prime to uniqueness of the extension valuation. -/
 theorem unique_prime_iff_unique_valuation_extension
@@ -1817,11 +1757,8 @@ theorem unique_prime_iff_unique_valuation_extension
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hcor : ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK) :
     (HasUniquePrimeAbove (A := A) (B := B) ↔
-      HasUniqueValuationExtension (L := L) vK) →
-    (HasUniquePrimeAbove (A := A) (B := B) ↔
       HasUniqueValuationExtension (L := L) vK) := by
-  intro hiff
-  exact hiff
+  sorry
 
 /-- A henselian valued field has one prime above the maximal ideal in every finite extension. -/
 theorem henselian_valued_field_has_unique_prime_and_extension
@@ -1835,11 +1772,8 @@ theorem henselian_valued_field_has_unique_prime_and_extension
     [LinearOrderedCommGroupWithZero Γ] (vK : Valuation K Γ)
     (hH : IsHenselianValuedField vK)
     (hcor : ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK) :
-    (HasUniquePrimeAbove (A := A) (B := B) ∧
-      HasUniqueValuationExtension (L := L) vK) →
     HasUniquePrimeAbove (A := A) (B := B) ∧ HasUniqueValuationExtension (L := L) vK := by
-  intro hunique
-  exact hunique
+  sorry
 
 /-- The finite integral extension has a finite nonempty set of primes above the maximal ideal. -/
 theorem finite_extension_primes_above_are_finite

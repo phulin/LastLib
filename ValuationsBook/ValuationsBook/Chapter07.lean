@@ -130,19 +130,9 @@ theorem chapter07_completion_unique_up_to_unique_isometric_field_equiv
     {K F G Γ₀ : Type*} [Field K] [Field F] [Field G]
     [LinearOrderedCommGroupWithZero Γ₀]
     [Valued K Γ₀] [Valued F Γ₀] [Valued G Γ₀]
-    [T2Space G]
-    (A : Chapter07CompletionData K F Γ₀) (B : Chapter07CompletionData K G Γ₀)
-    (e₁ e₂ : F ≃+* G)
-    (h₁ : chapter07IsometricFieldEquiv A B e₁)
-    (h₂ : chapter07IsometricFieldEquiv A B e₂)
-    (he₁ : Continuous e₁) (he₂ : Continuous e₂) :
-  e₁ = e₂ := by
-  apply RingEquiv.ext
-  intro x
-  have hcomp : (e₁ : F → G) ∘ A.embedding = (e₂ : F → G) ∘ A.embedding := by
-    funext y
-    exact (h₁.2 y).trans (h₂.2 y).symm
-  exact congrFun (A.dense.equalizer he₁ he₂ hcomp) x
+    (A : Chapter07CompletionData K F Γ₀) (B : Chapter07CompletionData K G Γ₀) :
+    ∃! e : F ≃+* G, chapter07IsometricFieldEquiv A B e := by
+  sorry
 
 -- The standard Mathlib completion package for a valued field.
 noncomputable def chapter07StandardValuedCompletionData
@@ -649,8 +639,8 @@ structure Chapter07CauchyCompletionModel
 -- Section 7.1: a diagonal argument makes the Cauchy quotient complete.
 theorem chapter07_cauchy_quotient_complete
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K] :
-    CompleteSpace (UniformSpace.Completion K) := by
-  infer_instance
+    Nonempty (Chapter07CauchyCompletionModel K) := by
+  sorry
 
 -- The diagonal representative assertion used to prove completeness.
 theorem chapter07_cauchy_diagonal_representative
@@ -1064,30 +1054,12 @@ theorem chapter07_completion_extension_preserves_valuation
     [LinearOrderedCommGroupWithZero Γ₀] [Valued K Γ₀] [Valued F Γ₀]
     [CompleteSpace F] [T0Space F] [T2Space Γ₀]
     (f : K →+* F) (hf : Continuous f)
-    (hcompat : chapter07ValuationCompatibleRingHom (Valued.v (R := K)) (Valued.v (R := F)) f)
-    (hKsurj : Function.Surjective (Valued.v (R := K)))
-    (hFsurj : Function.Surjective (Valued.v (R := F))) :
+    (hcompat : chapter07ValuationCompatibleRingHom
+      (Valued.v (R := K)) (Valued.v (R := F)) f) :
     ∀ x : UniformSpace.Completion K,
       Valued.v (R := F) (chapter07UniversalCompletionRingHom f hf x) =
         chapter07CompletionValuation K Γ₀ x := by
-  have hfun :
-      (fun x : UniformSpace.Completion K =>
-        Valued.v (R := F) (chapter07UniversalCompletionRingHom f hf x)) =
-      (fun x : UniformSpace.Completion K => chapter07CompletionValuation K Γ₀ x) := by
-    apply UniformSpace.Completion.ext
-    · exact (Valued.continuous_valuation_of_surjective hFsurj).comp
-        UniformSpace.Completion.continuous_extension
-    · apply Valued.continuous_valuation_of_surjective
-      intro γ
-      obtain ⟨r, hr⟩ := hKsurj γ
-      refine ⟨(r : UniformSpace.Completion K), ?_⟩
-      simpa [chapter07CompletionValuation] using hr
-    · intro x
-      rw [chapter07UniversalCompletionRingHom,
-        UniformSpace.Completion.extensionHom_coe]
-      exact (hcompat x).trans
-        (chapter07_completion_valuation_apply_coe (K := K) (Γ₀ := Γ₀) x).symm
-  exact fun x => congr_fun hfun x
+  sorry
 
 /-! ### 7.4. Completion of a valuation ring -/
 
@@ -1208,24 +1180,20 @@ theorem chapter07_completed_uniformizer_preserves_value
 -- The completion has the same discrete value group.
 theorem chapter07_completed_dvr_value_group_is_integer
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
-    [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete]
-    [hcompletion : (chapter07CompletionValuation K Γ₀).IsRankOneDiscrete] :
+    [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete] :
     Nonempty
       (ValueGroup₀ (.ofClass (chapter07CompletionValuation K Γ₀)) ≃*o ℤᵐ⁰) := by
-  exact ⟨chapter07DiscreteValueGroupEquiv (chapter07CompletionValuation K Γ₀)⟩
+  sorry
 
 -- The completed valuation ring is a DVR.
 theorem chapter07_completed_valuation_ring_is_dvr
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
-    [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete]
-    [hcompletion : (chapter07CompletionValuation K Γ₀).IsRankOneDiscrete]
-    [hcyclic : IsCyclic
-      (ValueGroup₀ (.ofClass (chapter07CompletionValuation K Γ₀)))]
-    [hnontrivial : Nontrivial
-      (ValueGroup₀ (.ofClass (chapter07CompletionValuation K Γ₀)))] :
-    IsDiscreteValuationRing (chapter07CompletedValuationRing K Γ₀) := by
-  exact Valuation.valuationSubring_isDiscreteValuationRing
-    (chapter07CompletionValuation K Γ₀)
+    [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete] :
+    IsDiscreteValuationRing (chapter07CompletedValuationRing K Γ₀) ∧
+      IsAdicComplete
+        (IsLocalRing.maximalIdeal (chapter07CompletedValuationRing K Γ₀))
+        (chapter07CompletedValuationRing K Γ₀) := by
+  sorry
 
 -- A uniformizer generates the maximal ideal in any DVR.
 theorem chapter07_dvr_uniformizer_generates_maximal_ideal
@@ -1243,17 +1211,10 @@ theorem chapter07_dvr_finite_level_quotient_equivalence
       ((chapter07ValuationRing K Γ₀) ⧸
           Ideal.span ({(π.val : chapter07ValuationRing K Γ₀) ^ n} : Set
             (chapter07ValuationRing K Γ₀)) ≃+*
-        (chapter07ValuationRing K Γ₀) ⧸
-          (IsLocalRing.maximalIdeal (chapter07ValuationRing K Γ₀)) ^ n) := by
-  have hπ : Ideal.span ({(π.val : chapter07ValuationRing K Γ₀)} :
-      Set (chapter07ValuationRing K Γ₀)) =
-      IsLocalRing.maximalIdeal (chapter07ValuationRing K Γ₀) :=
-    π.2.is_generator.symm
-  have hn_eq : Ideal.span ({(π.val : chapter07ValuationRing K Γ₀) ^ n} :
-      Set (chapter07ValuationRing K Γ₀)) =
-      (IsLocalRing.maximalIdeal (chapter07ValuationRing K Γ₀)) ^ n := by
-    rw [← Ideal.span_singleton_pow, hπ]
-  exact ⟨Ideal.quotEquivOfEq hn_eq⟩
+        (chapter07CompletedValuationRing K Γ₀) ⧸
+          Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set
+            (chapter07CompletedValuationRing K Γ₀))) := by
+  sorry
 
 -- The residue fields are canonically identified at level n = 1.
 theorem chapter07_dvr_residue_field_equivalence
@@ -1264,10 +1225,10 @@ theorem chapter07_dvr_residue_field_equivalence
       ((chapter07ValuationRing K Γ₀) ⧸
           Ideal.span ({(π.val : chapter07ValuationRing K Γ₀)} : Set
             (chapter07ValuationRing K Γ₀)) ≃+*
-        (chapter07ValuationRing K Γ₀) ⧸
-          IsLocalRing.maximalIdeal (chapter07ValuationRing K Γ₀)) := by
-  exact ⟨Ideal.quotEquivOfEq
-    π.2.is_generator.symm⟩
+        (chapter07CompletedValuationRing K Γ₀) ⧸
+          Ideal.span ({chapter07CompletedUniformizer π} : Set
+            (chapter07CompletedValuationRing K Γ₀))) := by
+  sorry
 
 -- The completed field is the fraction field of the completed DVR.
 theorem chapter07_completed_field_is_fraction_field
@@ -1389,19 +1350,24 @@ noncomputable def chapter07DvrUniformSpace
 -- The standard DVR statement comparing metric and ideal-adic completion.
 theorem chapter07_dvr_metric_completion_agrees_with_adic_completion
     {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-    : Function.Injective (chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A)) := by
-  exact (chapter07_adic_completion_injective_iff_separated
-    (R := A) (IsLocalRing.maximalIdeal A)).2 inferInstance
+    : ∃ e : @UniformSpace.Completion A (chapter07DvrUniformSpace A) ≃+*
+        AdicCompletion (IsLocalRing.maximalIdeal A) A,
+      ∀ a : A,
+        e ((a : A) : @UniformSpace.Completion A (chapter07DvrUniformSpace A)) =
+        chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A) a := by
+  sorry
 
 -- The finite filtration is unchanged by completion in the DVR case.
 theorem chapter07_dvr_adic_completion_preserves_finite_filtration
     {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     (π : A) (hπ : Irreducible π) :
     ∀ n : ℕ, 1 ≤ n →
-      Ideal.span ({π ^ n} : Set A) = (IsLocalRing.maximalIdeal A) ^ n := by
-  intro n hn
-  rw [← Ideal.span_singleton_pow,
-    (IsDiscreteValuationRing.irreducible_iff_uniformizer π).mp hπ]
+      Nonempty
+        (A ⧸ Ideal.span ({π ^ n} : Set A) ≃+*
+          AdicCompletion (IsLocalRing.maximalIdeal A) A ⧸ Ideal.span
+            ({chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A) (π ^ n)} : Set
+              (AdicCompletion (IsLocalRing.maximalIdeal A) A))) := by
+  sorry
 
 /-! ### 7.6. Examples: p-adic completions -/
 
@@ -1424,28 +1390,9 @@ abbrev chapter07PAdicUniformSpace (p : ℕ) [Fact p.Prime] : UniformSpace ℚ :=
 
 -- Section 7.6: the rationals are incomplete for the p-adic uniformity.
 theorem chapter07_rationals_are_padic_incomplete
-    (p : ℕ) [Fact p.Prime]
-    (hnot : ¬ Function.Surjective ((↑) : ℚ → chapter07PAdicField p)) :
+    (p : ℕ) [Fact p.Prime] :
     ¬ @CompleteSpace ℚ (chapter07PAdicUniformSpace p) := by
-  intro hcomplete
-  letI : UniformSpace ℚ := chapter07PAdicUniformSpace p
-  letI : @CompleteSpace ℚ (chapter07PAdicUniformSpace p) := hcomplete
-  have hinducing : @IsUniformInducing ℚ (chapter07PAdicField p)
-      (chapter07PAdicUniformSpace p) inferInstance
-      ((↑) : ℚ → chapter07PAdicField p) := by
-    change @IsUniformInducing ℚ (chapter07PAdicField p)
-      (chapter07PAdicUniformSpace p)
-      (inferInstance : UniformSpace (chapter07PAdicField p))
-      ((↑) : ℚ → chapter07PAdicField p)
-    exact (isUniformInducing_iff_uniformSpace).2 rfl
-  have hclosed : IsClosed (Set.range ((↑) : ℚ → chapter07PAdicField p)) :=
-    hinducing.isComplete_range.isClosed
-  apply hnot
-  intro x
-  have hx : x ∈ closure (Set.range ((↑) : ℚ → chapter07PAdicField p)) :=
-    (Padic.denseRange_ratCast p) x
-  rw [hclosed.closure_eq] at hx
-  exact hx
+  sorry
 
 -- The p-adic field is complete.
 theorem chapter07_padic_field_is_complete

@@ -57,7 +57,7 @@ theorem Chapter08CompatibleFamily.compatible
 
 def Chapter08FiniteQuotientTopology
     (A : Type*) [CommRing A] (I : Ideal A) (n : ℕ) :
-    TopologicalSpace (A ⧸ I ^ (n + 1)) := ⊥
+    TopologicalSpace (A ⧸ I ^ (n + 1)) := ⊤
 
 /-- A small interface for the phrase topological-ring isomorphism. -/
 structure Chapter08TopologicalRingEquiv (R S : Type*)
@@ -81,7 +81,7 @@ def Chapter08InverseLimitTopology
 def Chapter08AdicCompletionTopology
     (A : Type*) [CommRing A] (I : Ideal A) :
     TopologicalSpace (AdicCompletion I A) :=
-  ⊥
+  (Ideal.map (algebraMap A (AdicCompletion I A)) I).adicTopology
 
 /-- The residue family attached to an element of an adic completion. -/
 def Chapter08CompletionResidues
@@ -121,7 +121,7 @@ def Chapter08CompletionResidues
       congr 1
     _ = _ := hright.symm
 
-theorem chapter08_theorem_8_1_inverse_limit_description
+private theorem chapter08_inverse_limit_ring_equiv
     {A : Type*} [CommRing A] (I : Ideal A)
     :
     ∃ e : AdicCompletion I A ≃+* Chapter08CompatibleFamily A I,
@@ -232,6 +232,17 @@ theorem chapter08_theorem_8_1_inverse_limit_description
   let er : AdicCompletion I A ≃+* Chapter08CompatibleFamily A I :=
     RingEquiv.ofBijective e ⟨heinj, hesurj⟩
   exact ⟨er, by intro x; rfl⟩
+
+/-! Theorem 8.1: the completion is canonically the inverse limit of its finite quotients,
+including the adic and inverse-limit topologies. -/
+theorem chapter08_theorem_8_1_inverse_limit_description
+    {A : Type*} [CommRing A] (I : Ideal A) :
+    ∃ e : Chapter08TopologicalRingEquiv (AdicCompletion I A)
+        (Chapter08CompatibleFamily A I)
+        (Chapter08AdicCompletionTopology A I)
+        (Chapter08InverseLimitTopology A I),
+      ∀ x, e.ringEquiv x = Chapter08CompletionResidues I x := by
+  sorry
 
 /-- Coordinatewise operations preserve compatibility, so there is no extra consistency datum. -/
 theorem chapter08_inverse_limit_coordinatewise_operations
@@ -841,7 +852,7 @@ def Chapter08CoefficientwiseAdditiveCoding
 
 /-! In mixed characteristic, the absence of a coefficient-field embedding is the carry
 obstruction behind the preceding set-theoretic, rather than coefficientwise-ring, model. -/
-theorem chapter08_mixed_characteristic_digit_carries_obstruct_coefficientwise_addition
+private theorem chapter08_mixed_characteristic_additive_section_obstruction
     {A : Type*} [CommRing A] [CharZero A] (I : Ideal A) (S : Set A)
     (p : ℕ) [Fact p.Prime]
     (hI : I = Ideal.span {(p : A)})
@@ -927,6 +938,17 @@ theorem chapter08_mixed_characteristic_digit_carries_obstruct_coefficientwise_ad
     exact (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).2 habI
   exact hnoembed ⟨f, hf_inj⟩
 
+theorem chapter08_mixed_characteristic_digit_carries_obstruct_coefficientwise_addition
+    {A : Type*} [CommRing A] [CharZero A] (I : Ideal A) (S : Set A)
+    (p : ℕ) [Fact p.Prime]
+    (hI : I = Ideal.span {(p : A)})
+    (hS : Chapter08IsResidueRepresentativeSet A I S)
+    (hnoembed : ¬ ∃ f : ZMod p →+* A, Function.Injective f)
+    (e : AdicCompletion I A ≃ Chapter08DigitSequences A S)
+    (hdigits : ∀ x, Chapter08DigitExpansion I (p : A) S x (e x).1) :
+    ¬ Chapter08CoefficientwiseAdditiveCoding I S e := by
+  sorry
+
 /-! Equal characteristic: a coefficient field gives literal formal-series coefficients. -/
 structure Chapter08CoefficientFieldSection
     (A k : Type*) [CommRing A] [Field k] (I : Ideal A) where
@@ -980,13 +1002,8 @@ theorem chapter08_equal_characteristic_formal_series_model
     (hI : I = Ideal.span {π})
     (hcomplete : IsAdicComplete I A)
     (sectionData : Chapter08CoefficientFieldSection A k I) :
-    Nonempty (Chapter08FormalSeriesModel A k I π sectionData) →
-      Nonempty (AdicCompletion I A ≃+* Chapter08CompatibleFamily A I) := by
-  classical
-  intro hmodel
-  obtain ⟨e⟩ := hmodel
-  obtain ⟨f, hf⟩ := chapter08_theorem_8_1_inverse_limit_description I
-  exact ⟨f⟩
+    Nonempty (Chapter08FormalSeriesModel A k I π sectionData) := by
+  sorry
 
 /-! ### 8.3 The p-adic integers and numbers -/
 
@@ -996,7 +1013,7 @@ abbrev Chapter08PadicNumbers (p : ℕ) [Fact p.Prime] := Padic p
 
 /-- The inverse-limit presentation of Z_p used in this chapter. -/
 abbrev Chapter08PadicIntegerInverseLimit (p : ℕ) [Fact p.Prime] :=
-  Chapter08CompatibleFamily (PadicInt p) (IsLocalRing.maximalIdeal (PadicInt p))
+  Chapter08CompatibleFamily ℤ (Ideal.span {(p : ℤ)})
 
 abbrev Chapter08Zp (p : ℕ) [Fact p.Prime] := Chapter08PadicIntegerInverseLimit p
 abbrev Chapter08Qp (p : ℕ) [Fact p.Prime] := Chapter08PadicNumbers p
@@ -1005,13 +1022,7 @@ abbrev Chapter08Qp (p : ℕ) [Fact p.Prime] := Chapter08PadicNumbers p
 theorem chapter08_padic_integer_inverse_limit
     (p : ℕ) [Fact p.Prime] :
     Nonempty (Chapter08PadicIntegers p ≃+* Chapter08Zp p) := by
-  classical
-  obtain ⟨e, he⟩ :=
-    chapter08_theorem_8_1_inverse_limit_description
-      (IsLocalRing.maximalIdeal (Chapter08PadicIntegers p))
-  let c := AdicCompletion.ofAlgEquiv
-    (IsLocalRing.maximalIdeal (Chapter08PadicIntegers p))
-  exact ⟨c.toRingEquiv.trans e⟩
+  sorry
 
 -- Z_p is a complete DVR with uniformizer p and residue field F_p. -/
 theorem chapter08_padic_integers_are_a_complete_dvr
@@ -1276,7 +1287,7 @@ def Chapter08FirstNonzeroExponent (N : ℤ) (a : ℕ → ℕ) : WithTop ℤ := b
     (N + (Nat.find h : ℤ) : WithTop ℤ)
   else ⊤
 
-theorem chapter08_padic_valuation_is_first_nonzero_digit
+private theorem chapter08_padic_leading_term_valuation
     (p : ℕ) [Fact p.Prime] (x : Chapter08PadicNumbers p)
     (N : ℤ) (a : ℕ → ℕ)
     (ha : Chapter08PadicLaurentExpansion p x N a)
@@ -1304,6 +1315,14 @@ theorem chapter08_padic_valuation_is_first_nonzero_digit
     hval, Padic.valuation_zpow, Padic.valuation_p, zero_add,
     Chapter08FirstNonzeroExponent]
   simp [j, hnonzero]
+
+theorem chapter08_padic_valuation_is_first_nonzero_digit
+    (p : ℕ) [Fact p.Prime] (x : Chapter08PadicNumbers p)
+    (N : ℤ) (a : ℕ → ℕ)
+    (ha : Chapter08PadicLaurentExpansion p x N a)
+    (hnonzero : ∃ i : ℕ, a i ≠ 0) :
+    Padic.addValuation x = Chapter08FirstNonzeroExponent N a := by
+  sorry
 
 theorem chapter08_rationals_are_dense_in_Qp
     (p : ℕ) [Fact p.Prime] :
@@ -1389,7 +1408,7 @@ theorem chapter08_power_series_inverse_limit
     Nonempty (PowerSeries k ≃+* Chapter08FormalPowerSeriesInverseLimit k) := by
   classical
     obtain ⟨e, he⟩ :=
-    chapter08_theorem_8_1_inverse_limit_description
+    chapter08_inverse_limit_ring_equiv
       (MvPolynomial.idealOfVars PUnit.{1} k)
   let c := MvPowerSeries.toAdicCompletionAlgEquiv PUnit.{1} k
   exact ⟨c.toRingEquiv.trans e⟩

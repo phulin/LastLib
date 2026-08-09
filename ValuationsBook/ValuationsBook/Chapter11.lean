@@ -130,15 +130,10 @@ theorem chapter11_branch_labels_valuation_extensions
     (hKinj : Function.Injective (algebraMap K L))
     (m : Ideal A) (hm : m = IsLocalRing.maximalIdeal A)
     (P : Ideal B) (hP : chapter11Branch A B m P)
-    (vK : Valuation K ℤᵐ⁰)
-    (hcorrespondence :
-      ∃ (vL : Valuation L ℤᵐ⁰),
-        Nonempty (Chapter11ValuationBranchCorrespondence B L P vL) ∧
-          chapter11ValuationExtensionAt K L vK vL) :
+    (vK : Valuation K ℤᵐ⁰) :
     ∃ (vL : Valuation L ℤᵐ⁰) (ι : B →+* vL.valuationSubring),
       chapter11ValuationExtensionAt K L vK vL ∧ chapter11ValuationCenter B L P vL ι := by
-  rcases hcorrespondence with ⟨vL, ⟨hdata⟩, hext⟩
-  exact ⟨vL, hdata.embedding, hext, hdata.center⟩
+  sorry
 
 /-- Conversely, a valuation ring containing the normalization has a center at a branch. -/
 theorem chapter11_valuation_ring_converse
@@ -153,15 +148,10 @@ theorem chapter11_valuation_ring_converse
     (W : ValuationSubring L) (vK : Valuation K W.ValueGroup)
     (hext : vK.IsEquiv (W.valuation.comap (algebraMap K L)))
     (ι : B →+* W.valuation.valuationSubring)
-    (hcontains : ∀ x : B, (ι x : L) ∈ W)
-    (hcenter : ∃ P : Ideal B, chapter11ValuationCenter B L P W.valuation ι)
-    (hbranch_of_center : ∀ P : Ideal B,
-      chapter11ValuationCenter B L P W.valuation ι →
-        chapter11Branch A B m P) :
+    (hcontains : ∀ x : B, (ι x : L) ∈ W) :
     ∃ P : Ideal B, chapter11Branch A B m P ∧
       chapter11ValuationCenter B L P W.valuation ι := by
-  rcases hcenter with ⟨P, hP⟩
-  exact ⟨P, hbranch_of_center P hP, hP⟩
+  sorry
 
 /-- A branch localization is a local ring, and in the Dedekind situation it is a DVR. -/
 theorem chapter11_branch_localization_is_dvr
@@ -186,13 +176,7 @@ theorem chapter11_finite_normalization_is_semilocal_dedekind
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
     [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [FaithfulSMul A B]
-    (hfinite : Module.Finite A B) (vK : Valuation K ΓK)
-    (hvaluation : ∀ (ΓL : Type v) [LinearOrderedCommGroupWithZero ΓL]
-        (vL : Valuation L ΓL),
-      vK.IsEquiv (vL.comap (algebraMap K L)) ↔
-        ∃! P : Ideal B,
-          P.IsMaximal ∧ P.LiesOver (IsLocalRing.maximalIdeal A) ∧
-            Nonempty (Chapter11ValuationBranchCorrespondence B L P vL)) :
+    (hfinite : Module.Finite A B) (vK : Valuation K ΓK) :
     IsDedekindDomain B ∧
       chapter11IsSemilocal B ∧
       (∀ P : Ideal B,
@@ -205,44 +189,7 @@ theorem chapter11_finite_normalization_is_semilocal_dedekind
           ∃! P : Ideal B,
             P.IsMaximal ∧ P.LiesOver (IsLocalRing.maximalIdeal A) ∧
               Nonempty (Chapter11ValuationBranchCorrespondence B L P vL)) := by
-  letI : IsDedekindDomain A :=
-    ((IsDiscreteValuationRing.TFAE A (IsDiscreteValuationRing.not_isField A)).out 0 2).mp
-      (inferInstance : IsDiscreteValuationRing A)
-  letI : IsDedekindDomain B := IsIntegralClosure.isDedekindDomain A K L B
-  have hm0 : IsLocalRing.maximalIdeal A ≠ (⊥ : Ideal A) :=
-    IsDiscreteValuationRing.not_a_field A
-  have hbranch : ∀ P : Ideal B,
-      P.IsMaximal ↔ P.IsPrime ∧ P.LiesOver (IsLocalRing.maximalIdeal A) := by
-    intro P
-    constructor
-    · intro hP
-      letI : P.IsMaximal := hP
-      have hcomp : P.comap (algebraMap A B) = IsLocalRing.maximalIdeal A :=
-        IsLocalRing.eq_maximalIdeal
-          (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P)
-      exact ⟨hP.isPrime, ⟨hcomp.symm⟩⟩
-    · rintro ⟨hPprime, hPover⟩
-      letI : P.IsPrime := hPprime
-      letI : P.LiesOver (IsLocalRing.maximalIdeal A) := hPover
-      exact hPprime.isMaximal
-        (Ideal.ne_bot_of_liesOver_of_ne_bot hm0 P)
-  let s : Finset (Ideal B) :=
-    IsDedekindDomain.primesOverFinset (IsLocalRing.maximalIdeal A) B
-  have hmem : ∀ P : Ideal B,
-      P ∈ (s : Set (Ideal B)) ↔
-        P.IsPrime ∧ P.LiesOver (IsLocalRing.maximalIdeal A) := by
-    intro P
-    simpa [s, Ideal.primesOver] using
-      (IsDedekindDomain.mem_primesOverFinset_iff (p := IsLocalRing.maximalIdeal A)
-        hm0 B (P := P))
-  refine ⟨inferInstance, ⟨s, fun P ↦ (hbranch P).trans (hmem P).symm⟩, hbranch, ?_, hvaluation⟩
-  intro P hPprime hPmax
-  letI : P.IsPrime := hPprime
-  letI : P.IsMaximal := hPmax
-  have hPover : P.LiesOver (IsLocalRing.maximalIdeal A) := (hbranch P).mp hPmax |>.2
-  letI : P.LiesOver (IsLocalRing.maximalIdeal A) := hPover
-  exact chapter11_branch_localization_is_dvr B P
-    (Ideal.ne_bot_of_liesOver_of_ne_bot hm0 P)
+  sorry
 
 /-- In the finite normalization, maximal ideals are exactly the primes above the base maximal ideal. -/
 theorem chapter11_maximal_ideals_are_precisely_branches
@@ -386,22 +333,9 @@ theorem chapter11_denominators_are_powers_of_a_uniformizer
     [CommRing B] [Field K] [Field L] [Algebra A B] [Algebra A K]
     [Algebra K L] [Algebra B L] [Algebra A L] [IsScalarTower A K L]
     [IsScalarTower A B L] (m : Ideal A) (π : A)
-    (hπ : chapter11IsUniformizer A m π) (hfinite : Module.Finite A B) (x : L)
-    (hdenom : ∃ a : A, a ≠ 0 ∧ ∃ b : B, algebraMap A L a * x = algebraMap B L b)
-    (hπ_power : ∀ a : A, a ≠ 0 → ∃ n : ℕ, ∃ c : A, a * c = π ^ n) :
+    (hπ : chapter11IsUniformizer A m π) (hfinite : Module.Finite A B) (x : L) :
     chapter11DenominatorCleared A B L π x := by
-  rcases hdenom with ⟨a, ha, b, hab⟩
-  rcases hπ_power a ha with ⟨n, c, hac⟩
-  refine ⟨n, algebraMap A B c * b, ?_⟩
-  calc
-    (algebraMap A L π) ^ n * x = algebraMap A L (π ^ n) * x := by simp
-    _ = algebraMap A L (a * c) * x := by rw [← hac]
-    _ = algebraMap A L c * (algebraMap A L a * x) := by
-      simp only [map_mul]
-      ring
-    _ = algebraMap A L c * algebraMap B L b := by rw [hab]
-    _ = algebraMap B L (algebraMap A B c * b) := by
-      rw [map_mul, ← IsScalarTower.algebraMap_apply A B L]
+  sorry
 
 /-- Completeness or the Japanese hypothesis is the standard source of normalization finiteness. -/
 theorem chapter11_complete_or_japanese_gives_finite_normalization
@@ -447,16 +381,12 @@ theorem chapter11_every_extension_is_one_of_the_branch_localizations
     (hKinj : Function.Injective (algebraMap K L))
     (m : Ideal A) (hbranches : chapter11IsSemilocal B)
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
-    (hext : chapter11ValuationExtensionAt K L vK vL)
-    (hcorrespondence : ∃! P : Ideal B,
-      chapter11Branch A B (IsLocalRing.maximalIdeal A) P ∧
-        ∃ ι : B →+* vL.valuationSubring,
-          chapter11ValuationCenter B L P vL ι) :
+    (hext : chapter11ValuationExtensionAt K L vK vL) :
     ∃! P : Ideal B,
       chapter11Branch A B (IsLocalRing.maximalIdeal A) P ∧
         ∃ ι : B →+* vL.valuationSubring,
           chapter11ValuationCenter B L P vL ι := by
-  exact hcorrespondence
+  sorry
 
 /-- A split extension is not itself a valuation ring: opposite branches see opposite signs. -/
 theorem chapter11_split_semilocal_ring_is_not_a_valuation_ring
@@ -576,14 +506,13 @@ theorem chapter11_prime_power_layer_is_a_residue_line
 
 /-- The quotient `B / πB` has one `k`-dimension for every residue-degree layer. -/
 theorem chapter11_residue_quotient_dimension_sum
-    (k A B : Type) [Field k] [CommRing A] [CommRing B] [Algebra A B]
-    [Algebra k (B ⧸ (⊥ : Ideal B))] {ι : Type*} [Fintype ι]
-    (Q : Type) [AddCommGroup Q] [Module k Q] [FiniteDimensional k Q]
-    (e f : ι → ℕ) (hQ : Q = (B ⧸ (Ideal.map (algebraMap A B) (⊥ : Ideal A))))
-    (hdecomp : Q ≃ₗ[k] (∀ i, Fin (e i) → Fin (f i) → k)) :
-      Module.finrank k Q = ∑ i, e i * f i := by
-  rw [hdecomp.finrank_eq, Module.finrank_pi_fintype]
-  simp [Module.finrank_pi_fintype, Module.finrank_pi]
+    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    [Algebra A B] [Module.Finite A B] [Module.Free A B]
+    [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [IsDedekindDomain B]
+    (m : Ideal A) [m.IsPrime] [m.IsMaximal] :
+    Module.finrank (A ⧸ m) (B ⧸ Ideal.map (algebraMap A B) m) =
+      ∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A := by
+  sorry
 
 /-- Under finite freeness, the sum of `e_i f_i` is the field degree. -/
 theorem chapter11_sum_ramification_times_inertia_is_degree
@@ -607,16 +536,11 @@ theorem chapter11_fundamental_inequality_without_finiteness
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
     [Algebra A L] [Algebra K L] [IsScalarTower A B L] [IsScalarTower A K L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
-    [Module.Finite A B] [Module.Free A B] [Algebra.IsIntegral A B]
-    [Module.IsTorsionFree A B] [IsDedekindDomain B]
-    (m : Ideal A) [m.IsPrime] [m.IsMaximal] :
-    ∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A ≤
-      Module.finrank K L := by
-  calc
-    ∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A =
-        Module.finrank A B := Ideal.sum_ramification_inertia_eq_finrank m B
-    _ = Module.finrank K L := (IsFractionRing.finrank_eq A K B L).symm
-    _ ≤ Module.finrank K L := le_rfl
+    {iota : Type*} [Fintype iota] (m : Ideal A) (P : iota → Ideal B)
+    (hbranch : ∀ i, chapter11Branch A B m (P i))
+    (hinj : Function.Injective P) :
+    ∑ i, (P i).ramificationIdx A * (P i).inertiaDeg A ≤ Module.finrank K L := by
+  sorry
 
 /-! ## 11.5. Patterns and examples -/
 
@@ -891,36 +815,28 @@ theorem chapter11_gaussian_five_factorization :
 
 /-- The two factors over `5` have residue field `𝔽₅`. -/
 theorem chapter11_gaussian_five_residue_fields
-    (hplus : Nonempty
-      (chapter11GaussianOrder ⧸ chapter11GaussianIdealFivePlus ≃+* ZMod 5))
-    (hminus : Nonempty
-      (chapter11GaussianOrder ⧸ chapter11GaussianIdealFiveMinus ≃+* ZMod 5)) :
+    :
     Nonempty
         (chapter11GaussianOrder ⧸ chapter11GaussianIdealFivePlus ≃+* ZMod 5) ∧
       Nonempty
         (chapter11GaussianOrder ⧸ chapter11GaussianIdealFiveMinus ≃+* ZMod 5) := by
-  exact ⟨hplus, hminus⟩
+  sorry
 
 /-- The ideal above `3` has residue degree two. -/
 theorem chapter11_gaussian_three_inert_residue_degree
-    (hresidue : Nonempty
-      (chapter11GaussianOrder ⧸ chapter11GaussianIdealThree ≃+*
-        AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3)))) :
+    :
     Nonempty
       (chapter11GaussianOrder ⧸ chapter11GaussianIdealThree ≃+*
         AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) := by
-  exact hresidue
+  sorry
 
 /-- The ideal above `2` is generated by `1+i`, with ramification index two. -/
 theorem chapter11_gaussian_two_ramification_data
-    (hfactor : Ideal.span {(2 : chapter11GaussianOrder)} =
-      chapter11GaussianIdealTwo ^ 2)
-    (hresidue : Nonempty
-      (chapter11GaussianOrder ⧸ chapter11GaussianIdealTwo ≃+* ZMod 2)) :
+    :
     Ideal.span {(2 : chapter11GaussianOrder)} =
         chapter11GaussianIdealTwo ^ 2 ∧
       Nonempty (chapter11GaussianOrder ⧸ chapter11GaussianIdealTwo ≃+* ZMod 2) := by
-  exact ⟨hfactor, hresidue⟩
+  sorry
 
 /-- The Gaussian examples satisfy `∑ e_i f_i = 2`. -/
 theorem chapter11_gaussian_sum_e_f_is_two :
@@ -939,25 +855,23 @@ def chapter11TensorInert (K L C E : Type*) [CommRing K] [CommRing L] [CommRing C
 
 /-- The Gaussian tensor product at `5` is split. -/
 theorem chapter11_gaussian_completed_tensor_at_five [Fact (Nat.Prime 5)]
-    (hTensor : chapter11TensorSplit ℚ chapter11GaussianField ℚ_[5]) :
+    :
     chapter11TensorSplit ℚ chapter11GaussianField ℚ_[5] := by
-  exact hTensor
+  sorry
 
 /-- The Gaussian tensor product at `3` is one inert quadratic factor. -/
 theorem chapter11_gaussian_completed_tensor_at_three [Fact (Nat.Prime 3)]
-    (hTensor : chapter11TensorInert ℚ chapter11GaussianField ℚ_[3]
-      (AdjoinRoot (chapter11GaussianPolynomial ℚ_[3]))) :
+    :
     chapter11TensorInert ℚ chapter11GaussianField ℚ_[3]
       (AdjoinRoot (chapter11GaussianPolynomial ℚ_[3])) := by
-  exact hTensor
+  sorry
 
 /-- The Gaussian tensor product at `2` is a single ramified quadratic factor. -/
 theorem chapter11_gaussian_completed_tensor_at_two [Fact (Nat.Prime 2)]
-    (hTensor : chapter11TensorInert ℚ chapter11GaussianField ℚ_[2]
-      (AdjoinRoot (chapter11GaussianPolynomial ℚ_[2]))) :
+    :
     chapter11TensorInert ℚ chapter11GaussianField ℚ_[2]
       (AdjoinRoot (chapter11GaussianPolynomial ℚ_[2])) := by
-  exact hTensor
+  sorry
 
 /-! ### Equal-characteristic square covers -/
 
@@ -982,10 +896,9 @@ theorem chapter11_square_cover_at_zero_is_totally_ramified
 theorem chapter11_square_cover_at_one_hensel_splits
     (K L C : Type*) [Field K] [Field L] [Field C] [Algebra K L] [Algebra K C]
     [Algebra C (L ⊗[K] C)] [Algebra C (C × C)]
-    (f : C[X]) (hroots : chapter11SimpleRootPair C f)
-    (hTensor : chapter11TensorSplit K L C) :
+    (f : C[X]) (hroots : chapter11SimpleRootPair C f) :
     chapter11TensorSplit K L C := by
-  exact hTensor
+  sorry
 
 /-- At a nonsquare residue c, the square cover is one unramified quadratic branch. -/
 theorem chapter11_square_cover_at_nonsquare_is_unramified_quadratic
@@ -1054,28 +967,21 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
     (R L : Type*) [CommRing R] [IsDomain R] [Field L] [Algebra R L]
     (p : Ideal R) (f : R[X])
     (hrep : chapter11RepeatedResidueFactor (R ⧸ p)
-      (chapter11Reduction R p f)) (hdef : chapter11RootPresentsExtension R L f)
-    (hdiagnosis :
-      (∃ P : Ideal (integralClosure R L), P.IsPrime ∧
-          1 < P.ramificationIdx R) ∨
-        (∃ α : L, ¬chapter11RootOrderIsIntegralClosure R L α)) :
+      (chapter11Reduction R p f)) (hdef : chapter11RootPresentsExtension R L f) :
     (∃ P : Ideal (integralClosure R L), P.IsPrime ∧
         1 < P.ramificationIdx R) ∨
       (∃ α : L, ¬chapter11RootOrderIsIntegralClosure R L α) := by
-  exact hdiagnosis
+  sorry
 
 /-- The intrinsic replacement for the polynomial test is the integral closure and its local DVRs. -/
 theorem chapter11_intrinsic_integral_closure_controls_repeated_factors
     (R L : Type*) [CommRing R] [IsDomain R] [Field L] [Algebra R L]
     (p : Ideal R) (f : R[X]) (hf : f.Monic)
-    (hdef : chapter11RootPresentsExtension R L f)
-    (hintegral : ∃ α : L,
-      Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
-        IsIntegral R α) :
+    (hdef : chapter11RootPresentsExtension R L f) :
     ∃ α : L,
       Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
         IsIntegral R α := by
-  exact hintegral
+  sorry
 
 /-! ## 11.6. Localization, residue fields, and lengths -/
 
@@ -1150,28 +1056,21 @@ theorem chapter11_length_as_base_module_is_e_f
     (A B : Type*) [CommRing A] [CommRing B] [IsDomain B] [IsDedekindDomain B]
     [Algebra A B]
     (m : Ideal A) (π : A) (hπ : chapter11IsUniformizer A m π)
-    (P : Ideal B) [P.IsPrime] [P.IsMaximal] [P.LiesOver m]
-    (hbase :
-      (Module.length A
-          (Localization.AtPrime P ⧸
-            Ideal.span {algebraMap A (Localization.AtPrime P) π})).toNat =
-        P.ramificationIdx A * P.inertiaDeg A) :
+    (P : Ideal B) [P.IsPrime] [P.IsMaximal] [P.LiesOver m] :
     (Module.length A
         (Localization.AtPrime P ⧸
           Ideal.span {algebraMap A (Localization.AtPrime P) π})).toNat =
       P.ramificationIdx A * P.inertiaDeg A := by
-  exact hbase
+  sorry
 
 /-- The localized length is the normalized discrete valuation on nonzero integral elements. -/
 theorem chapter11_length_value_is_a_discrete_valuation
     (B : Type*) [CommRing B] [IsDomain B] [IsDedekindDomain B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal]
-    (x y : B) (hx : x ≠ 0) (hy : y ≠ 0)
-    (hmul : chapter11LocalLengthValue B P (x * y) =
-      chapter11LocalLengthValue B P x + chapter11LocalLengthValue B P y) :
+    (x y : B) (hx : x ≠ 0) (hy : y ≠ 0) :
     chapter11LocalLengthValue B P (x * y) =
       chapter11LocalLengthValue B P x + chapter11LocalLengthValue B P y := by
-  exact hmul
+  sorry
 
 /-! ## 11.7. Norms and the sum over branches -/
 
@@ -1219,12 +1118,10 @@ theorem chapter11_norm_valuation_formula
     (w : ι → AddValuation L (WithTop ℤ)) (f : ι → ℕ)
     (hbranches : chapter11CompleteNormalizedBranchFamily v w)
     (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranches.1 i))
-    (x : L) (hx : x ≠ 0)
-    (hnorm : v (Algebra.norm K x) =
-      ∑ i, (f i : WithTop ℤ) * w i x) :
+    (x : L) (hx : x ≠ 0) :
     v (Algebra.norm K x) =
       ∑ i, (f i : WithTop ℤ) * w i x := by
-  exact hnorm
+  sorry
 
 /-- For a base uniformizer, the branch values are e_i, so the norm sees Σ e_i f_i. -/
 theorem chapter11_norm_of_uniformizer
@@ -1234,12 +1131,10 @@ theorem chapter11_norm_of_uniformizer
     (hbranches : chapter11CompleteNormalizedBranchFamily v w)
     (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranches.1 i))
     (hπ : ∀ i, w i (algebraMap K L π) = (e i : WithTop ℤ))
-    (hπ_ne : π ≠ 0)
-    (hnorm : v (Algebra.norm K (algebraMap K L π)) =
-      ∑ i, (f i : WithTop ℤ) * w i (algebraMap K L π)) :
+    (hπ_ne : π ≠ 0) :
     v (Algebra.norm K (algebraMap K L π)) =
       ∑ i, (f i : WithTop ℤ) * (e i : WithTop ℤ) := by
-  simpa [hπ] using hnorm
+  sorry
 
 /-- The same formula extends from integral elements to fractions by division. -/
 theorem chapter11_norm_valuation_on_fractions
@@ -1256,41 +1151,13 @@ theorem chapter11_norm_uniformizer_consistency
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     {ι : Type*} [Fintype ι] (v : AddValuation K (WithTop ℤ))
     (w : ι → AddValuation L (WithTop ℤ)) (e f : ι → ℕ) (π : K)
-    (hbranch : ∀ i, v.IsEquiv (AddValuation.comap (algebraMap K L) (w i)))
-    (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranch i))
+    (hbranches : chapter11CompleteNormalizedBranchFamily v w)
+    (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranches.1 i))
     (hπ : ∀ i, w i (algebraMap K L π) = (e i : WithTop ℤ))
-    (hnorm : v (Algebra.norm K (algebraMap K L π)) =
-      ∑ i, (f i : WithTop ℤ) * w i (algebraMap K L π))
     (hdegree : Module.finrank K L = ∑ i, e i * f i) :
     v (Algebra.norm K (algebraMap K L π)) =
       (Module.finrank K L : WithTop ℤ) := by
-  calc
-    v (Algebra.norm K (algebraMap K L π)) =
-        ∑ i, (f i : WithTop ℤ) * w i (algebraMap K L π) := hnorm
-    _ = ∑ i, (f i : WithTop ℤ) * (e i : WithTop ℤ) := by
-      simp_rw [hπ]
-    _ = (Module.finrank K L : WithTop ℤ) := by
-      have hcast :
-          (∑ i, (f i : WithTop ℤ) * (e i : WithTop ℤ)) =
-            ∑ i, ((e i * f i : ℕ) : WithTop ℤ) := by
-        apply Finset.sum_congr rfl
-        intro i _hi
-        change ((f i : ℤ) : WithTop ℤ) * ((e i : ℤ) : WithTop ℤ) =
-          ((e i * f i : ℤ) : WithTop ℤ)
-        calc
-          ((f i : ℤ) : WithTop ℤ) * ((e i : ℤ) : WithTop ℤ) =
-              (((f i : ℤ) * (e i : ℤ)) : WithTop ℤ) :=
-            (WithTop.coe_mul _ _).symm
-          _ = ((f i * e i : ℕ) : WithTop ℤ) := by
-            change (((f i : ℤ) * (e i : ℤ) : ℤ) : WithTop ℤ) =
-              (((f i * e i : ℕ) : ℤ) : WithTop ℤ)
-            exact congrArg (fun z : ℤ => (z : WithTop ℤ))
-              (Int.natCast_mul (f i) (e i)).symm
-          _ = ((e i * f i : ℕ) : WithTop ℤ) := by
-            exact congrArg (fun n : ℕ => (n : WithTop ℤ)) (Nat.mul_comm _ _)
-      rw [hcast]
-      have hd := congrArg (fun n : ℕ => (n : WithTop ℤ)) hdegree
-      simpa only [Nat.cast_sum] using hd.symm
+  sorry
 
 /-! ## 11.8. Trace, norm, and boundedness -/
 
@@ -1361,18 +1228,13 @@ theorem chapter11_trace_pairing_has_common_denominator
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A B L] [IsScalarTower A K L] [FiniteDimensional K L]
-    [Algebra.IsSeparable K L] [Module.Finite A B] (x : B)
-    (hcommon : ∃ d : A, d ≠ 0 ∧
-      ∀ y : B, ∃ φ : B →ₗ[A] A,
-        algebraMap A K (φ y) =
-          algebraMap A K d *
-            Algebra.trace K L (algebraMap B L x * algebraMap B L y)) :
+    [Algebra.IsSeparable K L] [Module.Finite A B] (x : B) :
     ∃ d : A, d ≠ 0 ∧
       ∀ y : B, ∃ φ : B →ₗ[A] A,
         algebraMap A K (φ y) =
           algebraMap A K d *
             Algebra.trace K L (algebraMap B L x * algebraMap B L y) := by
-  exact hcommon
+  sorry
 
 /-- Mathlib's different ideal is the inverse of the trace dual. -/
 def chapter11DifferentIdeal
@@ -1389,18 +1251,13 @@ theorem chapter11_different_records_trace_denominators
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegrallyClosed A] [IsDedekindDomain B]
     [Module.IsTorsionFree A B] [Module.Finite A B]
-    (x : B) (hx : x ∈ chapter11DifferentIdeal A B)
-    (hcommon : ∃ d : A, d ≠ 0 ∧
-      ∀ y : B, ∃ φ : B →ₗ[A] A,
-        algebraMap A K (φ y) =
-          algebraMap A K d *
-            Algebra.trace K L (algebraMap B L x * algebraMap B L y)) :
+    (x : B) (hx : x ∈ chapter11DifferentIdeal A B) :
     ∃ d : A, d ≠ 0 ∧
       ∀ y : B, ∃ φ : B →ₗ[A] A,
         algebraMap A K (φ y) =
           algebraMap A K d *
             Algebra.trace K L (algebraMap B L x * algebraMap B L y) := by
-  exact hcommon
+  sorry
 
 /-- The quadratic equation T² - Tr(x) T + N(x) proves integrality from trace and norm. -/
 def chapter11QuadraticTraceNormRelation

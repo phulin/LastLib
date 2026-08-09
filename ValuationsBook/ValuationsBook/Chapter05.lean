@@ -637,12 +637,13 @@ theorem chapter_initial_form_cancellation_strict_valuation
 
 /-- Book §5.2: changing `π` to `uπ` rescales the degree-one generator by `ū`. -/
 theorem chapter_initial_form_uniformizer_change
-    (u : Aˣ) (hπ' : Irreducible ((u : A) * π))
-    (e : chapterAssociatedGradedRing (A := A) ≃+* Polynomial (IsLocalRing.ResidueField A))
-    (he : e (chapterInitialFormUniformizer (A := A) π hπ) = Polynomial.X) :
-    e (chapterInitialFormUniformizer (A := A) ((u : A) * π) hπ') =
-      Polynomial.X := by
-  simpa [chapterInitialFormUniformizer] using he
+    (u : Aˣ) :
+    chapterInitialForm (A := A) π hπ ((u : A) * π) =
+      Polynomial.C (IsLocalRing.residue A (u : A)) *
+        chapterInitialFormUniformizer (A := A) π hπ := by
+  rw [chapterInitialForm_eq_factorization (A := A) π hπ
+    (n := 1) (mul_ne_zero (Units.ne_zero u) hπ.ne_zero) u (by simp)]
+  simp [chapterInitialFormUniformizer]
 
 /-- A set of residue representatives, including `0`. -/
 def chapterIsResidueRepresentativeSet (S : Set A) : Prop :=

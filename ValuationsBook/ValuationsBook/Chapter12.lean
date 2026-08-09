@@ -135,19 +135,12 @@ theorem finite_precision_pi_power_product_form
 /-- Localizing a primary branch quotient does not change it. -/
 theorem localization_of_branch_quotient_equiv
     {B : Type*} [CommRing B] (P : Ideal B) (n : ℕ)
-    (hP : P.IsPrime) (hmax : P.IsMaximal)
-    /- Formal correction: Mathlib's available localization quotient theorem
-       is only for the first power of a maximal ideal, while this chapter
-       uses all powers. -/
-    (hquot : Nonempty
-      ((Localization.AtPrime P ⧸
-          Ideal.map (algebraMap B (Localization.AtPrime P)) (P ^ n)) ≃+*
-        (B ⧸ P ^ n))) :
+    (hP : P.IsPrime) (hmax : P.IsMaximal) :
     Nonempty
       ((Localization.AtPrime P ⧸
           Ideal.map (algebraMap B (Localization.AtPrime P)) (P ^ n)) ≃+*
         (B ⧸ P ^ n)) := by
-  exact hquot
+  sorry
 
 /-- Positive multiples are cofinal among all positive exponents. -/
 theorem positive_multiples_are_cofinal (e : ℕ) (he : positiveExponent (e := e)) :
@@ -170,14 +163,10 @@ theorem completion_product_of_finite_precision_crt
     {R ι : Type*} [CommRing R] [Finite ι]
     (I : Ideal R) (J : ι → Ideal R)
     (hcrt : Chapter12CompatibleCRTSystem I J)
-    (hcofinal : ∀ i, adicFiltrationsCofinal I (J i))
-    /- Formal correction: finite-level compatibility and cofinality do not
-       by themselves instantiate the inverse-limit equivalence in Mathlib. -/
-    (hcompletion : Nonempty
-      (AdicCompletion I R ≃+* (∀ i, AdicCompletion (J i) R))) :
+    (hcofinal : ∀ i, adicFiltrationsCofinal I (J i)) :
     Nonempty
       (AdicCompletion I R ≃+* (∀ i, AdicCompletion (J i) R)) := by
-  exact hcompletion
+  sorry
 
 /--
 The completed product decomposition from Theorem 12.1.  The branch factors
@@ -190,17 +179,14 @@ theorem completed_product_decomposition
     (hfinite : Module.Finite A B) (hfree : Module.Free A B)
     (hfactor : ∀ n : ℕ,
       extendedPrincipalPowerIdeal A B π n = ⨅ i, P i ^ (n * e i))
+    (he : ∀ i, 0 < e i)
     (hpair : pairwiseCoprimeIdeals P)
     [hprime : ∀ i, (P i).IsPrime]
     [Algebra (AdicCompletion m A) (B ⊗[A] AdicCompletion m A)]
-    [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))]
-    /- Formal correction: the stated finite-level hypotheses do not provide
-       the completed algebra equivalence without an inverse-limit theorem. -/
-    (hproduct : hasCompletedAlgebraProduct A B (AdicCompletion m A)
-      (fun i => branchCompletion B (P i))) :
+    [∀ i, Algebra (AdicCompletion m A) (branchCompletion B (P i))] :
     hasCompletedAlgebraProduct A B (AdicCompletion m A)
       (fun i => branchCompletion B (P i)) := by
-  exact hproduct
+  sorry
 
 /-- Each finite quotient remembers the `i`th branch to precision `n * e i`. -/
 theorem finite_precision_branch_indexing
@@ -223,14 +209,10 @@ theorem compatible_branch_projectors
     {R ι : Type*} [CommRing R] [Finite ι]
     (I : Ideal R) (J : ι → Ideal R)
     (hcrt : Chapter12CompatibleCRTSystem I J)
-    (hcofinal : ∀ i, adicFiltrationsCofinal I (J i))
-    /- Formal correction: this is the same missing inverse-limit interface as
-       in `completion_product_of_finite_precision_crt`. -/
-    (hcompletion : Nonempty
-      (AdicCompletion I R ≃+* (∀ i, AdicCompletion (J i) R))) :
+    (hcofinal : ∀ i, adicFiltrationsCofinal I (J i)) :
     Nonempty
       (AdicCompletion I R ≃+* (∀ i, AdicCompletion (J i) R)) := by
-  exact hcompletion
+  exact completion_product_of_finite_precision_crt I J hcrt hcofinal
 
 /-- A convenient predicate for a complete DVR factor. -/
 def isCompleteDVR (R : Type*) [CommRing R] [IsDomain R]
@@ -294,16 +276,11 @@ theorem completed_product_field_decomposition
     [Algebra (FractionRing A) (FractionRing B)]
     [Algebra (FractionRing A) (completionFractionField A m)]
     (hproduct : hasCompletedRingProduct A B (AdicCompletion m A)
-      (fun i => branchCompletion B (P i)))
-    /- Formal correction: passing from the completed ring product to its
-       fraction-field tensor product needs this induced field equivalence. -/
-    (hfield : Nonempty
-      (FractionRing B ⊗[FractionRing A] completionFractionField A m ≃+*
-        (∀ i, branchFractionField B (P i)))) :
+      (fun i => branchCompletion B (P i))) :
     Nonempty
       (FractionRing B ⊗[FractionRing A] completionFractionField A m ≃+*
         (∀ i, branchFractionField B (P i))) := by
-  exact hfield
+  sorry
 
 /-- If the base is already complete, the tensor product has only one branch. -/
 theorem complete_base_has_one_completed_factor
@@ -373,12 +350,12 @@ theorem complete_one_branch_fundamental_equality
       (IsLocalRing.maximalIdeal w.valuationSubring) = e)
     (hf : chapterResidueDegree v.valuationSubring w.valuationSubring
       (IsLocalRing.maximalIdeal w.valuationSubring) = f)
-    /- Formal correction: the defectless/fundamental equality is not a
-       consequence of uniqueness alone in the available interface. -/
-    (hfundamental : Module.finrank K L = e * f)
+    [Valuation.IsRankOneDiscrete v] [Valuation.IsRankOneDiscrete w]
+    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal v.valuationSubring)
+      v.valuationSubring)
     (hunique : hasUniqueValuationExtension v L) :
     Module.finrank K L = e * f := by
-  exact hfundamental
+  sorry
 
 /-! ## 12.3. Completion of a localization -/
 
@@ -396,39 +373,33 @@ abbrev localizationFractionField
 
 /-- The two completed local-global dictionaries for a finite extension. -/
 theorem dedekind_local_completion_product
-    {R S : Type*} [CommRing R] [CommRing S] [Algebra R S]
+    {R S : Type*} [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
+    [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
     {g : ℕ} (p : Ideal R) [p.IsPrime] (P : Fin g → Ideal S)
+    (hp : p ≠ ⊥)
     (hfinite : Module.Finite R S) (hfree : Module.Free R S)
     (hlies : ∀ i, (P i).LiesOver p)
-    [hprime : ∀ i, (P i).IsPrime]
-    /- Formal correction: the finite local hypotheses alone do not supply
-       the completed localization/product equivalence in Mathlib. -/
-    (hproduct : Nonempty
-      (S ⊗[R] completedLocalization R p ≃+*
-        (∀ i, branchCompletion S (P i)))) :
+    [hprime : ∀ i, (P i).IsPrime] :
     Nonempty
       (S ⊗[R] completedLocalization R p ≃+*
         (∀ i, branchCompletion S (P i))) := by
-  exact hproduct
+  sorry
 
 /-- Fraction-field form of the localization/completion dictionary. -/
 theorem dedekind_local_fraction_field_product
-    {R S : Type*} [CommRing R] [CommRing S] [IsDomain R] [IsDomain S] [Algebra R S]
+    {R S : Type*} [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
+    [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
     {g : ℕ} (p : Ideal R) [p.IsPrime] (P : Fin g → Ideal S)
+    (hp : p ≠ ⊥)
     [Algebra (FractionRing R) (FractionRing S)]
     [Algebra (FractionRing R) (localizationFractionField R p)]
     (hfinite : Module.Finite R S) (hfree : Module.Free R S)
     (hlies : ∀ i, (P i).LiesOver p)
-    [hprime : ∀ i, (P i).IsPrime]
-    /- Formal correction: the fraction-field product equivalence is an
-       additional base-change interface not provided by the hypotheses. -/
-    (hproduct : Nonempty
-      (FractionRing S ⊗[FractionRing R] localizationFractionField R p ≃+*
-        (∀ i, branchFractionField S (P i)))) :
+    [hprime : ∀ i, (P i).IsPrime] :
     Nonempty
       (FractionRing S ⊗[FractionRing R] localizationFractionField R p ≃+*
         (∀ i, branchFractionField S (P i))) := by
-  exact hproduct
+  sorry
 
 /-- Tensoring with a completed base records all primes above the chosen base prime. -/
 theorem tensor_product_remembers_all_local_choices
@@ -457,17 +428,11 @@ abbrev completedPolynomialQuotient
 /-- A tensor product with a primitive polynomial quotient is a completed polynomial quotient. -/
 theorem primitive_tensor_polynomial_model
     {K Khat : Type*} [Field K] [Field Khat] [Algebra K Khat]
-    (f : K[X]) (hf : Irreducible f)
-    /- Formal correction: the polynomial quotient/base-change equivalence is
-       recorded explicitly because this chapter's blueprint does not select
-       a particular Mathlib construction of it. -/
-    (hmodel : Nonempty
-      ((K[X] ⧸ Ideal.span {f}) ⊗[K] Khat ≃+*
-        completedPolynomialQuotient (Khat := Khat) f)) :
+    (f : K[X]) :
     Nonempty
       ((K[X] ⧸ Ideal.span {f}) ⊗[K] Khat ≃+*
         completedPolynomialQuotient (Khat := Khat) f) := by
-  exact hmodel
+  sorry
 
 /-- Coprime completed factors give a product of completed polynomial fields. -/
 theorem completed_polynomial_factorization_product
@@ -507,16 +472,11 @@ theorem henselian_coprime_factor_lift
     (hf : f.Monic)
     (hbar_monic : gbar.Monic ∧ hbar.Monic)
     (hbar_coprime : IsCoprime gbar hbar)
-    (hfactor : f.map (Ideal.Quotient.mk I) = gbar * hbar)
-    /- Formal correction: Mathlib exposes Hensel root lifting here, but not
-       the coprime polynomial-factor lifting theorem used by the blueprint. -/
-    (hlift : ∃ g h : A[X], g.Monic ∧ h.Monic ∧ g * h = f ∧
-      g.map (Ideal.Quotient.mk I) = gbar ∧
-      h.map (Ideal.Quotient.mk I) = hbar) :
+    (hfactor : f.map (Ideal.Quotient.mk I) = gbar * hbar) :
     ∃ g h : A[X], g.Monic ∧ h.Monic ∧ g * h = f ∧
       g.map (Ideal.Quotient.mk I) = gbar ∧
       h.map (Ideal.Quotient.mk I) = hbar := by
-  exact hlift
+  sorry
 
 /-- The coprime factor lift is unique once the residue factors and degrees are fixed. -/
 theorem henselian_coprime_factor_lift_unique
@@ -526,12 +486,9 @@ theorem henselian_coprime_factor_lift_unique
     (h₁spec : g₁.Monic ∧ h₁.Monic ∧ g₁ * h₁ = f ∧
       g₁.map (Ideal.Quotient.mk I) = gbar ∧ h₁.map (Ideal.Quotient.mk I) = hbar)
     (h₂spec : g₂.Monic ∧ h₂.Monic ∧ g₂ * h₂ = f ∧
-      g₂.map (Ideal.Quotient.mk I) = gbar ∧ h₂.map (Ideal.Quotient.mk I) = hbar)
-    /- Formal correction: uniqueness of the lift is not currently an API
-       theorem for `HenselianRing`; it is therefore an explicit interface. -/
-    (hunique : g₁ = g₂ ∧ h₁ = h₂) :
+      g₂.map (Ideal.Quotient.mk I) = gbar ∧ h₂.map (Ideal.Quotient.mk I) = hbar) :
     g₁ = g₂ ∧ h₁ = h₂ := by
-  exact hunique
+  sorry
 
 /-- The split quadratic algebra used for the explicit idempotent example. -/
 abbrev quadraticSplitAlgebra (R : Type*) [CommRing R] (a b : R) : Type _ :=
@@ -686,12 +643,9 @@ def idempotentReduction
 /-- Idempotents lift uniquely over a henselian local base. -/
 theorem henselian_idempotent_lifting
     (A C : Type*) [CommRing A] [CommRing C] [Algebra A C]
-    [Module.Finite A C] [HenselianLocalRing A]
-    /- Formal correction: the idempotent lifting theorem is not present in
-       Mathlib's Henselian interface, so its bijectivity is carried as data. -/
-    (hbijective : Function.Bijective (idempotentReduction A C)) :
+    [Module.Finite A C] [HenselianLocalRing A] :
     Function.Bijective (idempotentReduction A C) := by
-  exact hbijective
+  sorry
 
 /-- An idempotent in the Jacobson radical is zero. -/
 theorem idempotent_in_jacobson_is_zero
@@ -713,30 +667,20 @@ theorem idempotent_in_jacobson_is_zero
 /-- The complementary projector argument produces orthogonal primitive idempotents. -/
 theorem henselian_finite_algebra_has_orthogonal_idempotents
     (A C : Type*) [CommRing A] [CommRing C] [Algebra A C]
-    [Module.Finite A C] [HenselianLocalRing A]
-    /- Formal correction: the primitive-idempotent decomposition is retained
-       as an explicit conclusion interface; no such theorem is in Mathlib. -/
-    (hdata : ∃ n : ℕ, 0 < n ∧ ∃ e : Fin n → IdempotentElement C,
-      (∀ i j, i ≠ j → (e i).1 * (e j).1 = 0) ∧
-      (∑ i, (e i).1) = 1 ∧
-      (∀ i (z : C), z * z = z → z * (e i).1 = (e i).1 →
-        z = 0 ∨ z = (e i).1)) :
+    [Module.Finite A C] [HenselianLocalRing A] :
     ∃ n : ℕ, 0 < n ∧ ∃ e : Fin n → IdempotentElement C,
       (∀ i j, i ≠ j → (e i).1 * (e j).1 = 0) ∧
       (∑ i, (e i).1) = 1 ∧
       (∀ i (z : C), z * z = z → z * (e i).1 = (e i).1 →
         z = 0 ∨ z = (e i).1) := by
-  exact hdata
+  sorry
 
 /-- Henselian finite algebras split into local factors. -/
 theorem henselian_finite_algebra_is_local_product
     (A C : Type*) [CommRing A] [CommRing C] [Algebra A C]
-    [Module.Finite A C] [HenselianLocalRing A]
-    /- Formal correction: Mathlib does not yet provide the finite local
-       product decomposition in this interface. -/
-    (hproduct : IsFiniteProductOfLocalRings C) :
+    [Module.Finite A C] [HenselianLocalRing A] :
     IsFiniteProductOfLocalRings C := by
-  exact hproduct
+  sorry
 
 /-- The center of an extension valuation on an integral closure. -/
 def extendedValuationCenter
@@ -749,70 +693,55 @@ theorem integral_closure_lies_in_extension_valuation_ring
     {A E Γ : Type*} [CommRing A] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra A E]
     (w : Valuation E Γ) (x : integralClosure A E)
-    (hintegers : w.Integers (integralClosure A E))
+    (hintegers : w.Integers A)
     (hx : IsIntegral A (algebraMap (integralClosure A E) E x)) :
     w (algebraMap (integralClosure A E) E x) ≤ 1 := by
-  exact hintegers.isIntegral_iff_v_le_one.mp hx.tower_top
+  exact hintegers.isIntegral_iff_v_le_one.mp hx
 
 /-- Maximal ideals of integral closures are the centers of extended valuations. -/
 theorem integral_closure_maximal_ideals_are_valuation_centers
-    {A E Γ : Type*} [CommRing A] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra A E]
-    [IsLocalRing (integralClosure A E)]
-    (w : Valuation E Γ)
-    /- Formal correction: identifying the valuation center with the maximal
-       ideal requires compatibility data not present in the bare statement. -/
-    (hcenter : extendedValuationCenter w (integralClosure A E) =
-      (IsLocalRing.maximalIdeal (integralClosure A E) : Set (integralClosure A E))) :
-    extendedValuationCenter w (integralClosure A E) =
-      (IsLocalRing.maximalIdeal (integralClosure A E) : Set (integralClosure A E)) := by
-  exact hcenter
+    {K E Γ : Type*} [Field K] [Field E]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
+    (v : Valuation K Γ) (w : Valuation E Γ) [v.HasExtension w]
+    [Algebra v.valuationSubring E]
+    [IsScalarTower v.valuationSubring K E]
+    [IsLocalRing (integralClosure v.valuationSubring E)] :
+    extendedValuationCenter w (integralClosure v.valuationSubring E) =
+      (IsLocalRing.maximalIdeal (integralClosure v.valuationSubring E) :
+        Set (integralClosure v.valuationSubring E)) := by
+  sorry
 
 /-- Two extensions to a finite field remain distinct after extension to an algebraic closure. -/
 theorem distinct_finite_extensions_remain_distinct_in_algebraic_closure
     {K E Γ : Type*} [Field K] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K E] [Algebra.IsAlgebraic K E]
     (v : Valuation K Γ) (w₁ w₂ : ValuationExtension v E)
     (hne : ¬ w₁.1.IsEquiv w₂.1)
-    /- Formal correction: Mathlib has no valuation-extension-to-an-algebraic-
-       closure construction for this interface, so the two lifted branches
-       are supplied explicitly. -/
-    (hlift : ∃ W₁ W₂ : ValuationExtension v (AlgebraicClosure K),
-      ¬ W₁.1.IsEquiv W₂.1) :
+    (ι : E →ₐ[K] AlgebraicClosure K) :
     ∃ W₁ W₂ : ValuationExtension v (AlgebraicClosure K),
+      w₁.1.IsEquiv (W₁.1.comap ι.toRingHom) ∧
+      w₂.1.IsEquiv (W₂.1.comap ι.toRingHom) ∧
       ¬ W₁.1.IsEquiv W₂.1 := by
-  exact hlift
+  sorry
 
 /-- The five conditions in Theorem 12.2 are equivalent. -/
 theorem henselian_uniqueness_criterion
     {K Γ : Type u} [Field K] [LinearOrderedCommGroupWithZero Γ]
-    (v : Valuation K Γ)
-    /- Formal correction: the equivalence theorem itself is not exposed by
-       the pinned Mathlib Henselian API, so its theorem-level interface is
-       an explicit hypothesis. -/
-    (hcriterion : List.TFAE
-      [HenselianLocalRing v.valuationSubring,
-       hasUniqueExtensionToEveryAlgebraicField v,
-       hasUniqueExtensionToAlgebraicClosure v,
-       allFiniteIntegralClosuresAreLocal v,
-       allFiniteAlgebrasAreLocalProducts v.valuationSubring]) :
+    (v : Valuation K Γ) :
     List.TFAE
       [HenselianLocalRing v.valuationSubring,
        hasUniqueExtensionToEveryAlgebraicField v,
        hasUniqueExtensionToAlgebraicClosure v,
        allFiniteIntegralClosuresAreLocal v,
        allFiniteAlgebrasAreLocalProducts v.valuationSubring] := by
-  exact hcriterion
+  sorry
 
 /-- Completeness supplies the henselian property. -/
 theorem complete_nonarchimedean_field_is_henselian
     {K Γ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ]
-    [Valued K Γ] [CompleteSpace K]
-    /- Formal correction: the bridge from metric completeness to adic
-       completeness is not an instance in the pinned Mathlib API. -/
-    (hH : HenselianLocalRing (Valued.v (R := K)).valuationSubring) :
+    [Valued K Γ] [CompleteSpace K] :
     HenselianLocalRing (Valued.v (R := K)).valuationSubring := by
-  exact hH
+  sorry
 
 /-- Henselianity alone is the weaker condition used for uniqueness statements. -/
 def HenselianButNotAdicallyComplete
@@ -859,37 +788,28 @@ def coordinateNorm
 /-- Equivalence of the coordinate norm and the field norm. -/
 theorem coordinate_and_field_norms_are_equivalent
     {K L : Type*} [NormedField K] [NormedField L] [NormedSpace K L]
-    {n : ℕ} (b : Module.Basis (Fin n) K L)
-    /- Formal correction: the finite-dimensional norm-comparison theorem is
-       not available for this custom coordinate norm in the pinned API. -/
-    (hnorm : ∃ c₁ c₂ : ℝ, 0 < c₁ ∧ 0 < c₂ ∧
-      ∀ x : L, c₁ * coordinateNorm b x ≤ ‖x‖ ∧
-        ‖x‖ ≤ c₂ * coordinateNorm b x) :
+    [CompleteSpace K]
+    {n : ℕ} (b : Module.Basis (Fin n) K L) :
     ∃ c₁ c₂ : ℝ, 0 < c₁ ∧ 0 < c₂ ∧
       ∀ x : L, c₁ * coordinateNorm b x ≤ ‖x‖ ∧
         ‖x‖ ≤ c₂ * coordinateNorm b x := by
-  exact hnorm
+  sorry
 
 /-- Comparison of the extended closed unit ball with two integral lattices. -/
 theorem unit_ball_between_scaled_coordinate_lattices
     {A K L : Type*} [CommRing A] [NormedField K] [NormedField L]
-    [Algebra A K] [Algebra K L] [Algebra A L] [IsScalarTower A K L]
+    [Algebra A K] [NormedAlgebra K L] [Algebra A L] [IsScalarTower A K L]
+    [CompleteSpace K]
     {n : ℕ} (π : A) (b : Module.Basis (Fin n) K L)
-    /- Formal correction: no norm or lattice hypotheses on `A` and `π`
-       imply this comparison; the comparison is therefore an interface. -/
-    (hcomparison : ∃ r s : ℕ,
-      scaledSet A L (π ^ r) (coordinateLattice A L (fun i => b i)) ⊆
-          closedUnitBall L ∧
-        closedUnitBall L ⊆
-          scaledByFieldElement L ((algebraMap A L π) ^ (-(s : ℤ)))
-            (coordinateLattice A L (fun i => b i))) :
+    (hA : Set.range (algebraMap A K) = closedUnitBall K)
+    (hπ : 0 < ‖algebraMap A K π‖ ∧ ‖algebraMap A K π‖ < 1) :
     ∃ r s : ℕ,
       scaledSet A L (π ^ r) (coordinateLattice A L (fun i => b i)) ⊆
           closedUnitBall L ∧
         closedUnitBall L ⊆
           scaledByFieldElement L ((algebraMap A L π) ^ (-(s : ℤ)))
             (coordinateLattice A L (fun i => b i)) := by
-  exact hcomparison
+  sorry
 
 /-- The valuation unit ball is the valuation ring. -/
 def valuationUnitBall
@@ -941,14 +861,12 @@ theorem complete_extension_unit_ball_is_finite
     {K L Γ : Type*} [Field K] [Field L]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
     (vK : Valuation K Γ) (w : Valuation L Γ)
-    [vK.HasExtension w] [Module.Finite K L]
+    [vK.HasExtension w] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete w] [Module.Finite K L]
     (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    /- Formal correction: this finite-lattice conclusion is not supplied by
-       the pinned completion API, so it is an explicit arithmetic interface. -/
-    (hfinite : Module.Finite vK.valuationSubring w.valuationSubring) :
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.Finite vK.valuationSubring w.valuationSubring := by
-  exact hfinite
+  sorry
 
 /-- The valuation ring in a finite complete extension is torsion-free over the base. -/
 theorem complete_extension_unit_ball_is_torsion_free
@@ -1000,21 +918,13 @@ theorem finite_complete_extension_valuation_ring
     [vK.HasExtension w] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete w] [Module.Finite K L]
     (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    /- Formal correction: the full structural package is not a theorem of
-       the pinned valuation/completion API, so it is supplied as one package. -/
-    (hstructure :
-      Module.Finite vK.valuationSubring w.valuationSubring ∧
-      Module.Free vK.valuationSubring w.valuationSubring ∧
-      IsAdicComplete (IsLocalRing.maximalIdeal w.valuationSubring)
-        w.valuationSubring ∧
-      IsDiscreteValuationRing w.valuationSubring) :
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.Finite vK.valuationSubring w.valuationSubring ∧
       Module.Free vK.valuationSubring w.valuationSubring ∧
       IsAdicComplete (IsLocalRing.maximalIdeal w.valuationSubring)
         w.valuationSubring ∧
       IsDiscreteValuationRing w.valuationSubring := by
-  exact hstructure
+  sorry
 
 /-- The maximal ideal extension and residue degree formulas in the complete case. -/
 theorem complete_extension_ideal_and_residue_formulas
@@ -1027,18 +937,13 @@ theorem complete_extension_ideal_and_residue_formulas
       w.valuationSubring (IsLocalRing.maximalIdeal w.valuationSubring) = e)
     (hf : chapterResidueDegree vK.valuationSubring
       w.valuationSubring (IsLocalRing.maximalIdeal w.valuationSubring) = f)
-    /- Formal correction: these two arithmetic identities are not derived by
-       the bare rank-one hypotheses in the pinned API. -/
-    (hformulas :
-      (IsLocalRing.maximalIdeal vK.valuationSubring).map
-          (algebraMap vK.valuationSubring w.valuationSubring) =
-        (IsLocalRing.maximalIdeal w.valuationSubring) ^ e ∧
-        Module.finrank K L = e * f) :
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     (IsLocalRing.maximalIdeal vK.valuationSubring).map
         (algebraMap vK.valuationSubring w.valuationSubring) =
       (IsLocalRing.maximalIdeal w.valuationSubring) ^ e ∧
       Module.finrank K L = e * f := by
-  exact hformulas
+  sorry
 
 /-- The degree equality needs neither separability nor perfection hypotheses. -/
 theorem complete_extension_defectless_without_separability
@@ -1048,20 +953,13 @@ theorem complete_extension_defectless_without_separability
     [vK.HasExtension w] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete w] [Module.Finite K L]
     (hcomplete : IsAdicComplete
-      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
-    /- Formal correction: the defectless equality is retained as an explicit
-       interface because the pinned API does not prove it from these fields. -/
-    (hdefectless : Module.finrank K L =
-      chapterRamificationIndex vK.valuationSubring w.valuationSubring
-        (IsLocalRing.maximalIdeal w.valuationSubring) *
-      chapterResidueDegree vK.valuationSubring w.valuationSubring
-        (IsLocalRing.maximalIdeal w.valuationSubring)) :
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.finrank K L =
       chapterRamificationIndex vK.valuationSubring w.valuationSubring
         (IsLocalRing.maximalIdeal w.valuationSubring) *
       chapterResidueDegree vK.valuationSubring w.valuationSubring
         (IsLocalRing.maximalIdeal w.valuationSubring) := by
-  exact hdefectless
+  sorry
 
 /-! ## 12.7. Unramified and totally ramified endpoints -/
 
@@ -1125,17 +1023,15 @@ def coefficientsAreIntegral
 
 /-- The power-basis expansion is unique for an Eisenstein root. -/
 theorem eisenstein_power_basis_expansion_unique
-    {A K L : Type*} [CommRing A] [IsLocalRing A] [Field K] [Field L]
-    [Algebra A K] [Algebra K L] [Algebra A L] [IsScalarTower A K L]
+    {A K L : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
+    [Algebra K L] [Algebra A L] [IsScalarTower A K L]
     {n : ℕ} (π : A) (f : A[X]) (Pi : L)
     (hf : IsEisensteinAt π f) (hroot : aeval Pi f = 0)
     (hdegree : f.natDegree = n)
-    (hgenerates : Algebra.adjoin A ({Pi} : Set L) = ⊤)
-    /- Formal correction: the power-basis theorem requires finite-module and
-       coefficient-identification data absent from this interface. -/
-    (hmodel : ∀ x : L, ∃! a : Fin n → K, x = eisensteinExpansion Pi a) :
+    (hgenerates : Algebra.adjoin K ({Pi} : Set L) = ⊤) :
     ∀ x : L, ∃! a : Fin n → K, x = eisensteinExpansion Pi a := by
-  exact hmodel
+  sorry
 
 /-- The valuation of the `i`th power-basis term has value congruent to `i mod n`. -/
 theorem eisenstein_term_values_are_distinct_modulo_degree
@@ -1184,18 +1080,17 @@ theorem least_valued_term_does_not_cancel
 
 /-- Integrality of an Eisenstein expansion is equivalent to integral coefficients. -/
 theorem eisenstein_expansion_integrality_iff
-    {A K L : Type*} [CommRing A] [IsLocalRing A] [Field K] [Field L]
-    [Algebra A K] [Algebra K L] [Algebra A L] [IsScalarTower A K L]
+    {A K L : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
+    [Algebra K L] [Algebra A L] [IsScalarTower A K L]
     {n : ℕ} (π : A) (f : A[X]) (Pi : L)
     (hf : IsEisensteinAt π f) (hroot : aeval Pi f = 0)
-    (hdegree : f.natDegree = n) (a : Fin n → K)
-    /- Formal correction: the coefficientwise integrality equivalence is an
-       additional arithmetic input not derivable from this interface. -/
-    (hiff : IsIntegral A (eisensteinExpansion Pi a) ↔
-      ∀ i, IsLocalization.IsInteger A (a i)) :
+    (hdegree : f.natDegree = n)
+    (hgenerates : Algebra.adjoin K ({Pi} : Set L) = ⊤)
+    (a : Fin n → K) :
     IsIntegral A (eisensteinExpansion Pi a) ↔
       ∀ i, IsLocalization.IsInteger A (a i) := by
-  exact hiff
+  sorry
 
 /-- A uniformizer is characterized by generating the maximal ideal. -/
 def isUniformizerElement
@@ -1205,55 +1100,52 @@ def isUniformizerElement
 
 /-- An Eisenstein root is a uniformizer and has ramification index equal to the degree. -/
 theorem eisenstein_root_is_uniformizer_and_totally_ramified
-    {A K L Γ : Type*} [CommRing A] [IsLocalRing A] [Field K] [Field L]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra A K] [Algebra K L]
+    {A K L Γ : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L]
     (vK : Valuation K Γ) (v : Valuation L Γ) [vK.HasExtension v]
     [Valuation.IsRankOneDiscrete v]
     {n : ℕ} (π : A) (f : A[X]) (Pi : L)
     (hf : IsEisensteinAt π f) (hroot : aeval Pi f = 0)
-    (hdegree : f.natDegree = n) (hvaluation : v Pi = Valuation.IsRankOneDiscrete.generator v)
-    (hbase : vK (algebraMap A K π) = (v Pi) ^ n)
-    /- Formal correction: the uniformizer and endpoint-index conclusions are
-       not an API theorem for the stated valuation data. -/
-    (hresult : v.IsUniformizer Pi ∧ ∃ e fdeg : ℕ, e = n ∧ fdeg = 1) :
-    v.IsUniformizer Pi ∧ ∃ e fdeg : ℕ, e = n ∧ fdeg = 1 := by
-  exact hresult
+    (hdegree : f.natDegree = n)
+    (hgenerates : Algebra.adjoin K ({Pi} : Set L) = ⊤)
+    (hvaluation : v Pi = Valuation.IsRankOneDiscrete.generator v)
+    (hbase : vK (algebraMap A K π) = (v Pi) ^ n) :
+    v.IsUniformizer Pi ∧
+      chapterRamificationIndex vK.valuationSubring v.valuationSubring
+          (IsLocalRing.maximalIdeal v.valuationSubring) = n ∧
+      chapterResidueDegree vK.valuationSubring v.valuationSubring
+          (IsLocalRing.maximalIdeal v.valuationSubring) = 1 := by
+  sorry
 
 /-- The residue field does not change in an Eisenstein extension. -/
 theorem eisenstein_residue_field_is_unchanged
-    {A K L : Type*} [CommRing A] [IsLocalRing A] [Field K] [Field L]
-    [Algebra A K] [Algebra K L] [Algebra A L] [IsScalarTower A K L]
+    {A K L : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
+    [Algebra K L] [Algebra A L] [IsScalarTower A K L]
     {n : ℕ} (π : A) (f : A[X]) (Pi : L)
     [IsLocalRing (Algebra.adjoin A ({Pi} : Set L))]
     (hf : IsEisensteinAt π f) (hroot : aeval Pi f = 0)
-    (hdegree : f.natDegree = n)
-    /- Formal correction: the residue-field identification is an explicit
-       interface because the pinned API has no Eisenstein residue theorem. -/
-    (hequiv : Nonempty
-      ((A ⧸ IsLocalRing.maximalIdeal A) ≃+*
-        (Algebra.adjoin A ({Pi} : Set L) ⧸
-          IsLocalRing.maximalIdeal (Algebra.adjoin A ({Pi} : Set L))))) :
+    (hdegree : f.natDegree = n) :
     Nonempty
       ((A ⧸ IsLocalRing.maximalIdeal A) ≃+*
         (Algebra.adjoin A ({Pi} : Set L) ⧸
           IsLocalRing.maximalIdeal (Algebra.adjoin A ({Pi} : Set L)))) := by
-  exact hequiv
+  sorry
 
 /-- The Eisenstein order is generated by the root. -/
 theorem eisenstein_integral_closure_is_root_order
-    {A K L : Type*} [CommRing A] [IsLocalRing A] [Field K] [Field L]
-    [Algebra A K] [Algebra K L] [Algebra A L] [IsScalarTower A K L]
+    {A K L : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
+    [Algebra K L] [Algebra A L] [IsScalarTower A K L]
     {n : ℕ} (π : A) (f : A[X]) (Pi : L)
     (hf : IsEisensteinAt π f) (hroot : aeval Pi f = 0)
     (hdegree : f.natDegree = n)
-    /- Formal correction: the integral-closure identification is not
-       derivable from the stated root data in the pinned API. -/
-    (heq : (integralClosure A L : Set L) =
-      (Algebra.adjoin A ({Pi} : Set L) : Set L)) :
+    (hgenerates : Algebra.adjoin K ({Pi} : Set L) = ⊤) :
     (integralClosure A L : Set L) =
       (Algebra.adjoin A ({Pi} : Set L) : Set L) := by
-  exact heq
+  sorry
 
 /-! ## 12.8. Synthesis and the final degree formula -/
 

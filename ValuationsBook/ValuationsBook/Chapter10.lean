@@ -7,8 +7,6 @@ open Polynomial
 
 noncomputable section
 
-universe uV
-
 /-!
 # Chapter 10: Extensions of valuations
 
@@ -101,88 +99,54 @@ def Chapter10DominationChain
       Chapter10DominationPair.Dominates P Q ∨
       Chapter10DominationPair.Dominates Q P
 
-/-- The data needed to run the maximal-domination argument.  The union-of-a-chain
-construction is deliberately recorded here: it depends on the chosen class of
-domination pairs and is not a consequence of the bare `Chapter10DominationPair`
-structure. -/
-structure Chapter10DominationZornData
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    {V : Subring K} [IsLocalRing V] where
-  nonempty : Nonempty (Chapter10DominationPair (K := K) (L := L) V)
-  trans : ∀ {P Q R : Chapter10DominationPair (K := K) (L := L) V},
-    P.Dominates Q → Q.Dominates R → P.Dominates R
-  upperBound : ∀ (C : Set (Chapter10DominationPair (K := K) (L := L) V)),
-    Chapter10DominationChain C → C.Nonempty →
-      ∃ Q, ∀ P ∈ C, P.Dominates Q
-
-/-- The consequences of the maximal-pair construction.  They require the
-additional localization and prime-ideal argument from the book. -/
-structure Chapter10MaximalDominationConsequences
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    {V : Subring K} [IsLocalRing V]
-    (P : Chapter10DominationPair (K := K) (L := L) V) : Prop where
-  isLocal : IsLocalRing P.carrier
-  primeMaximal : P.prime.IsMaximal
-  isValuationRing : Chapter10ValuationRingCriterion P.carrier
-
 /-- Zorn upper bound for a domination chain. -/
 theorem chapter10_domination_chain_upper_bound
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     {V : Subring K} [IsLocalRing V]
-    (D : Chapter10DominationZornData (K := K) (L := L) (V := V))
     (C : Set (Chapter10DominationPair (K := K) (L := L) V))
-    (hC : Chapter10DominationChain C) (hCne : C.Nonempty) :
+    (hC : Chapter10DominationChain C) :
     ∃ Q : Chapter10DominationPair (K := K) (L := L) V, ∀ P ∈ C,
       Chapter10DominationPair.Dominates P Q := by
-  exact D.upperBound C hC hCne
+  sorry
 
 /-- Existence of a maximal domination pair. -/
 theorem chapter10_maximal_domination_pair
     {K L : Type*} [Field K] [Field L] [Algebra K L]
-    {V : Subring K} [IsLocalRing V]
-    (D : Chapter10DominationZornData (K := K) (L := L) (V := V)) :
+    {V : Subring K} [IsLocalRing V] :
     ∃ P : Chapter10DominationPair (K := K) (L := L) V, ∀ Q,
       Chapter10DominationPair.Dominates P Q →
         Chapter10DominationPair.Dominates Q P := by
-  letI : Nonempty (Chapter10DominationPair (K := K) (L := L) V) := D.nonempty
-  apply exists_maximal_of_nonempty_chains_bounded
-    (r := fun P Q : Chapter10DominationPair (K := K) (L := L) V => P.Dominates Q)
-  · intro C hC hCne
-    apply D.upperBound C ?_ hCne
-    intro P hP Q hQ
-    by_cases hPQ : P = Q
-    · left
-      subst Q
-      exact ⟨le_rfl, fun x => Iff.rfl⟩
-    · exact hC hP hQ hPQ
-  · exact D.trans
+  sorry
 
 /-- A maximal pair is local. -/
 theorem chapter10_maximal_domination_pair_is_local
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     {V : Subring K} [IsLocalRing V]
     (P : Chapter10DominationPair (K := K) (L := L) V)
-    (hconseq : Chapter10MaximalDominationConsequences P) :
+    (hmax : ∀ Q, Chapter10DominationPair.Dominates P Q →
+      Chapter10DominationPair.Dominates Q P) :
     IsLocalRing P.carrier := by
-  exact hconseq.isLocal
+  sorry
 
 /-- The prime in a maximal pair is maximal. -/
 theorem chapter10_maximal_domination_pair_prime_maximal
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     {V : Subring K} [IsLocalRing V]
     (P : Chapter10DominationPair (K := K) (L := L) V)
-    (hconseq : Chapter10MaximalDominationConsequences P) :
+    (hmax : ∀ Q, Chapter10DominationPair.Dominates P Q →
+      Chapter10DominationPair.Dominates Q P) :
     P.prime.IsMaximal := by
-  exact hconseq.primeMaximal
+  sorry
 
 /-- The intrinsic valuation-ring test obtained from maximality. -/
 theorem chapter10_maximal_domination_pair_is_valuation_ring
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     {V : Subring K} [IsLocalRing V]
     (P : Chapter10DominationPair (K := K) (L := L) V)
-    (hconseq : Chapter10MaximalDominationConsequences P) :
+    (hmax : ∀ Q, Chapter10DominationPair.Dominates P Q →
+      Chapter10DominationPair.Dominates Q P) :
     Chapter10ValuationRingCriterion P.carrier := by
-  exact hconseq.isValuationRing
+  sorry
 
 /-- Every valuation extends to an arbitrary field extension. -/
 theorem chapter10_valuation_extension_exists
@@ -223,6 +187,7 @@ theorem chapter10_valuation_extension_exists
 /-- The algebraic case of the extension theorem. -/
 theorem chapter10_algebraic_valuation_extension_exists
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
+    [Algebra.IsAlgebraic K L]
     [LinearOrderedCommGroupWithZero Γ₀]
     (v : Valuation K Γ₀) :
     ∃ W : ValuationSubring L,
@@ -286,72 +251,41 @@ theorem chapter10_integral_closure_subset_bounded
   letI : Valuation.HasExtension v W.valuation := ⟨hExt⟩
   exact chapter10_integral_elements_are_bounded v W.valuation hx
 
-/- The universe-polymorphic family of extensions is named once so that the
-   set-valued statements below use one fixed family. -/
-def Chapter10ExtensionBoundedSet
-    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ₀]
-    {ΓL : Type uV} [LinearOrderedCommGroupWithZero ΓL]
-    (v : Valuation K Γ₀) : Set L :=
-  {x : L | ∀ (w : Valuation L ΓL),
-    v.IsEquiv (w.comap (algebraMap K L)) → x ∈ w.valuationSubring}
-
-def Chapter10ExtensionValuationIntersection
-    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ₀]
-    {ΓL : Type uV} [LinearOrderedCommGroupWithZero ΓL]
-    (v : Valuation K Γ₀) :=
-  ⨅ (w : Valuation L ΓL)
-    (_ : v.IsEquiv (w.comap (algebraMap K L))),
-    w.valuationSubring.toSubring
-
-/-! The valuative criterion is accepted as an explicit field-theoretic input:
-the maximal-domination construction above provides it in the book's setting. -/
+/-- The field-theoretic valuative criterion for integrality. -/
 theorem chapter10_integral_closure_valuative_criterion
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀]
-    {ΓL : Type uV} [LinearOrderedCommGroupWithZero ΓL]
-    (v : Valuation K Γ₀)
-    (hcriterion : ∀ x : L,
-      IsIntegral v.valuationSubring x ↔
-        x ∈ Chapter10ExtensionBoundedSet (ΓL := ΓL) v) :
+    (v : Valuation K Γ₀) :
     Chapter10IntegralElements v.valuationSubring L =
-      Chapter10ExtensionBoundedSet (ΓL := ΓL) v := by
-  ext x
-  change IsIntegral v.valuationSubring x ↔
-    x ∈ Chapter10ExtensionBoundedSet (ΓL := ΓL) v
-  exact hcriterion x
+      {x : L | ∀ (W : Chapter10ValuationOnField L),
+        v.IsEquiv (W.valuation.comap (algebraMap K L)) →
+          x ∈ W.valuation.valuationSubring} := by
+  sorry
 
 /-- Equivalent set notation for the intersection of all extending valuation rings. -/
 theorem chapter10_integral_closure_is_intersection
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀]
-    {ΓL : Type uV} [LinearOrderedCommGroupWithZero ΓL]
-    (v : Valuation K Γ₀)
-    (hcriterion : ∀ x : L,
-      IsIntegral v.valuationSubring x ↔
-        x ∈ Chapter10ExtensionValuationIntersection (ΓL := ΓL) v) :
+    (v : Valuation K Γ₀) :
     (Chapter10IntegralClosure v.valuationSubring L).toSubring =
-      Chapter10ExtensionValuationIntersection (ΓL := ΓL) v := by
-  ext x
-  change IsIntegral v.valuationSubring x ↔
-    x ∈ Chapter10ExtensionValuationIntersection (ΓL := ΓL) v
-  exact hcriterion x
+      ⨅ (W : Chapter10ValuationOnField L)
+        (_ : v.IsEquiv (W.valuation.comap (algebraMap K L))),
+        W.valuation.valuationSubring.toSubring := by
+  sorry
 
 /-- If the extension is unique, the integral closure itself is a valuation ring. -/
 theorem chapter10_unique_extension_makes_integral_closure_valuation_ring
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀]
+    [Algebra.IsAlgebraic K L]
     (v : Valuation K Γ₀) [Algebra v.valuationSubring L]
     (hunique : ∀ (W₁ W₂ : Chapter10ValuationOnField L),
       v.IsEquiv (W₁.valuation.comap (algebraMap K L)) →
       v.IsEquiv (W₂.valuation.comap (algebraMap K L)) →
-      W₁.valuation.IsEquiv W₂.valuation)
-    (hvaluation : Chapter10ValuationRingCriterion
-      (Chapter10IntegralClosure v.valuationSubring L).toSubring) :
+      W₁.valuation.IsEquiv W₂.valuation) :
     Chapter10ValuationRingCriterion
       (Chapter10IntegralClosure v.valuationSubring L).toSubring := by
-  exact hvaluation
+  sorry
 
 /-- All coefficients of the characteristic polynomial, trace, and norm are integral. -/
 def Chapter10CharacteristicPolynomialIntegral
@@ -369,13 +303,9 @@ theorem chapter10_integral_element_characteristic_data
     [FiniteDimensional K L]
     (R : Subring K)
     {x : L} (hx : IsIntegral A x)
-    (hAtoR : ∀ z : K, IsIntegral A z → z ∈ R)
-    (hcoeff : ∀ i, IsIntegral A
-      ((LinearMap.charpoly (Algebra.lmul K L x)).coeff i)) :
+    (hAtoR : ∀ z : K, IsIntegral A z → z ∈ R) :
     Chapter10CharacteristicPolynomialIntegral x R := by
-  refine ⟨fun i => hAtoR _ (hcoeff i), ?_, ?_⟩
-  · exact hAtoR _ (Algebra.isIntegral_trace hx)
-  · exact hAtoR _ (Algebra.isIntegral_norm K hx)
+  sorry
 
 /-- A cancellation example witnessing that the norm alone is not a converse. -/
 structure Chapter10NormCancellationExample
@@ -468,7 +398,6 @@ theorem chapter10_value_group_inclusion
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀]
     (v : Valuation K Γ₀) (w : Valuation L Γ₀)
-    (h : v.IsEquiv (w.comap (algebraMap K L)))
     (hval : ∀ x : K, v x = w (algebraMap K L x)) :
     Chapter10ValueGroup v ≤ Chapter10ValueGroup w := by
   change MonoidWithZeroHom.valueGroup v.toMonoidWithZeroHom ≤
@@ -486,33 +415,39 @@ theorem chapter10_value_group_inclusion
 /-- Finiteness of the value-group quotient in a finite extension. -/
 theorem chapter10_value_group_quotient_finite
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ₀]
+    [LinearOrderedCommGroupWithZero Γ₀] [FiniteDimensional K L]
     (v : Valuation K Γ₀) (w : Valuation L Γ₀)
     (h : v.IsEquiv (w.comap (algebraMap K L)))
-    (data : Chapter10HeterogeneousExtensionData v w h) :
-    Finite (Chapter10ValueGroup w ⧸ data.valueGroupMap.range) := by
-  exact data.finite_quotient
+    (hΓ : Chapter10ValueGroup v ≤ Chapter10ValueGroup w) :
+    Finite (Chapter10ValueGroup w ⧸
+      (Chapter10ValueGroup v).subgroupOf (Chapter10ValueGroup w)) := by
+  sorry
 
 /-- Finiteness of the induced residue-field extension. -/
 theorem chapter10_residue_degree_finite
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀] [FiniteDimensional K L]
     (v : Valuation K Γ₀) (w : Valuation L Γ₀)
-    [h : Valuation.HasExtension v w]
-    [Module.Finite v.valuationSubring w.valuationSubring] :
+    [h : Valuation.HasExtension v w] :
     FiniteDimensional (Chapter10ResidueField v) (Chapter10ResidueField w) := by
-  infer_instance
+  sorry
 
 /-- The value-group and residue directions give independent vectors. -/
 theorem chapter10_value_residue_product_independence
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
-    [LinearOrderedCommGroupWithZero Γ₀] [FiniteDimensional K L]
+    [LinearOrderedCommGroupWithZero Γ₀]
     (v : Valuation K Γ₀) (w : Valuation L Γ₀)
     [Valuation.HasExtension v w]
     {r s : ℕ} (x : Fin r → L) (y : Fin s → L)
-    (hLI : LinearIndependent K (fun ij : Fin r × Fin s => x ij.1 * y ij.2)) :
-    r * s ≤ Module.finrank K L := by
-  simpa [Fintype.card_prod] using hLI.fintype_card_le_finrank
+    (hblock : ∀ (a : Fin s → K),
+      (∑ j, algebraMap K L (a j) * y j) = 0 → ∀ j, a j = 0)
+    (hvalues : ∀ (a : Fin r × Fin s → K) (i i' : Fin r), i ≠ i' →
+      (∑ j, algebraMap K L (a (i, j)) * y j) ≠ 0 →
+      (∑ j, algebraMap K L (a (i', j)) * y j) ≠ 0 →
+      w (x i * ∑ j, algebraMap K L (a (i, j)) * y j) ≠
+        w (x i' * ∑ j, algebraMap K L (a (i', j)) * y j)) :
+    LinearIndependent K (fun ij : Fin r × Fin s => x ij.1 * y ij.2) := by
+  sorry
 
 /-- The single-extension fundamental inequality ef ≤ [L:K]. -/
 theorem chapter10_single_extension_fundamental_inequality
@@ -520,12 +455,10 @@ theorem chapter10_single_extension_fundamental_inequality
     [LinearOrderedCommGroupWithZero Γ₀] [FiniteDimensional K L]
     (v : Valuation K Γ₀) (w : Valuation L Γ₀)
     [h : Valuation.HasExtension v w]
-    (hΓ : Chapter10ValueGroup v ≤ Chapter10ValueGroup w)
-    (hbound : Chapter10RamificationIndex v w hΓ *
-      Chapter10ResidueDegree v w ≤ Module.finrank K L) :
+    (hΓ : Chapter10ValueGroup v ≤ Chapter10ValueGroup w) :
     Chapter10RamificationIndex v w hΓ * Chapter10ResidueDegree v w ≤
       Module.finrank K L := by
-  exact hbound
+  sorry
 
 /-- Normalized discrete additive valuations. -/
 def Chapter10DiscreteAddValuation {K : Type*} [Field K]
@@ -589,10 +522,9 @@ theorem chapter10_ramification_residue_finite
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀] [FiniteDimensional K L]
     (v : Valuation K Γ₀) (w : Valuation L Γ₀)
-    [Valuation.HasExtension v w]
-    [Module.Finite v.valuationSubring w.valuationSubring] :
+    [Valuation.HasExtension v w] :
     FiniteDimensional (Chapter10ResidueField v) (Chapter10ResidueField w) := by
-  infer_instance
+  sorry
 
 /-! ## 10.5. Several extensions and the fundamental inequality -/
 
@@ -655,25 +587,21 @@ noncomputable def Chapter10ResidueDegreeOfExtension
 theorem chapter10_finitely_many_valuation_extensions
     {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
-    (v : Valuation K ΓK)
-    (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
-    (hcomplete : Chapter10CompleteBranchFamily v S) :
-    Chapter10CompleteBranchFamily v S := by
-  exact hcomplete
+    (v : Valuation K ΓK) :
+    ∃ S : Finset (Chapter10ValuationBranch (K := K) (L := L) v),
+      Chapter10CompleteBranchFamily v S := by
+  sorry
 
 /-- The sum of ef over all branches is bounded by the extension degree. -/
 theorem chapter10_fundamental_inequality
     {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
-    (v : Valuation K ΓK)
-    (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
-    (hcomplete : Chapter10CompleteBranchFamily v S)
-    (hbound : Finset.sum S
-      (fun b => Chapter10BranchContribution b.profile) ≤ Module.finrank K L) :
-    Chapter10CompleteBranchFamily v S ∧
-      Finset.sum S (fun b => Chapter10BranchContribution b.profile) ≤
-        Module.finrank K L := by
-  exact ⟨hcomplete, hbound⟩
+    (v : Valuation K ΓK) :
+    ∃ S : Finset (Chapter10ValuationBranch (K := K) (L := L) v),
+      Chapter10CompleteBranchFamily v S ∧
+        Finset.sum S (fun b => Chapter10BranchContribution b.profile) ≤
+          Module.finrank K L := by
+  sorry
 
 /-- A henselization is immediate: it does not change value group or residue field. -/
 def Chapter10ImmediateValuationExtension
@@ -725,21 +653,19 @@ theorem chapter10_henselized_tensor_has_finitely_many_factors
     IsArtinianRing.of_finite Kh (L ⊗[K] Kh)
   exact IsArtinianRing.setOfPred_isMaximal_finite (L ⊗[K] Kh)
 
-/-- Dimensions of the local tensor factors account for the total dimension. -/
+/-- Residue-field dimensions of the local tensor factors are bounded by the total
+dimension; nilpotent Artinian multiplicities account for the possible gap. -/
 theorem chapter10_henselized_tensor_factor_dimensions
     {K L Kh : Type*} [Field K] [Field L] [Field Kh]
     [Algebra K L] [Algebra K Kh] [Algebra Kh (L ⊗[K] Kh)]
     [FiniteDimensional K L]
     (factors : Finset (Ideal (L ⊗[K] Kh)))
     (hmax : ∀ P ∈ factors, P.IsMaximal)
-    (hexhaustive : ∀ P, P.IsMaximal ↔ P ∈ factors)
-    (hsum : Finset.sum factors
-      (fun P => Module.finrank Kh ((L ⊗[K] Kh) ⧸ P)) =
-      Module.finrank K L) :
+    (hexhaustive : ∀ P, P.IsMaximal ↔ P ∈ factors) :
     Finset.sum factors
-        (fun P => Module.finrank Kh ((L ⊗[K] Kh) ⧸ P)) =
+        (fun P => Module.finrank Kh ((L ⊗[K] Kh) ⧸ P)) ≤
       Module.finrank K L := by
-  exact hsum
+  sorry
 
 /-- The defect records the possible loss in a local tensor factor. -/
 def Chapter10Defect (degree e f : ℕ) : ℚ :=
@@ -772,19 +698,17 @@ def Chapter10FiniteNormalization (A B : Type*) [Semiring A]
 
 /-- Finite normalization of a DVR gives equality in the sum formula. -/
 theorem chapter10_finite_dvr_normalization_fundamental_equality
-    {A B K L Γ₀ : Type*} [CommRing A] [CommRing B]
-    [Field K] [Field L] [Algebra K L]
+    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀] [FiniteDimensional K L]
-    [Module A B] [IsDomain A] [IsDiscreteValuationRing A]
-    (hfinite : Chapter10FiniteNormalization A B)
     (v : Valuation K Γ₀)
+    [IsDiscreteValuationRing v.valuationSubring]
+    (hfinite : Module.Finite v.valuationSubring
+      (integralClosure v.valuationSubring L))
     (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
     (hcomplete : Chapter10CompleteBranchFamily v S)
-    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b)
-    (hsum : Finset.sum S (fun b => Chapter10BranchContribution b.profile) =
-      Module.finrank K L) :
+    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
-  exact hsum
+  sorry
 
 /-- The normalization of a ring in an algebra, named for the Dedekind case. -/
 noncomputable def Chapter10Normalization (A L : Type*) [CommRing A] [CommRing L]
@@ -801,20 +725,22 @@ theorem chapter10_dedekind_separable_normalization_finite
     Module.Finite A (Chapter10Normalization A L) := by
   exact IsIntegralClosure.finite A K L (integralClosure A L)
 
-/-- Complete discretely valued fields are defectless, without residue perfection. -/
+/-- In the complete discrete setting, finite normalization gives defectlessness
+without a residue-perfection hypothesis. -/
 theorem chapter10_complete_discrete_valuation_defectless
     {K L Γ₀ : Type*} [NormedField K] [NormedField L]
     [CompleteSpace K] [IsUltrametricDist K] [Algebra K L]
     [FiniteDimensional K L]
     [LinearOrderedCommGroupWithZero Γ₀]
     (v : Valuation K Γ₀)
+    [IsDiscreteValuationRing v.valuationSubring]
+    (hfinite : Module.Finite v.valuationSubring
+      (integralClosure v.valuationSubring L))
     (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
     (hcomplete : Chapter10CompleteBranchFamily v S)
-    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b)
-    (hsum : Finset.sum S (fun b => Chapter10BranchContribution b.profile) =
-      Module.finrank K L) :
+    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
     Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
-  exact hsum
+  sorry
 
 /-- A convenient record for a nontrivial separable defect extension. -/
 structure Chapter10SeparableDefectExample where
@@ -847,10 +773,10 @@ structure Chapter10SeparableDefectExample where
   nontrivial : 1 < defect
 
 /-- Separable defect extensions can occur in poorly controlled positive residue characteristic. -/
-theorem chapter10_separable_defect_extensions_can_occur
-    (E : Chapter10SeparableDefectExample) :
-    Nat.Prime E.residueCharacteristic ∧ 1 < E.defect := by
-  exact ⟨E.residueCharacteristic_prime, E.nontrivial⟩
+theorem chapter10_separable_defect_extensions_can_occur :
+    ∃ E : Chapter10SeparableDefectExample,
+      Nat.Prime E.residueCharacteristic ∧ 1 < E.defect := by
+  sorry
 
 /-- Henselian valuation rings have one branch over an algebraic extension. -/
 theorem chapter10_henselian_valuation_has_unique_branch
@@ -859,10 +785,9 @@ theorem chapter10_henselian_valuation_has_unique_branch
     (v : Valuation K Γ₀) [HenselianLocalRing v.valuationSubring]
     (w₁ w₂ : Valuation L Γ₀)
     (h₁ : v.IsEquiv (w₁.comap (algebraMap K L)))
-    (h₂ : v.IsEquiv (w₂.comap (algebraMap K L)))
-    (hvaluation : w₁.valuationSubring = w₂.valuationSubring) :
+    (h₂ : v.IsEquiv (w₂.comap (algebraMap K L))) :
     w₁.IsEquiv w₂ := by
-  exact (Valuation.isEquiv_iff_valuationSubring w₁ w₂).2 hvaluation
+  sorry
 
 /-- Complete nonarchimedean fields are henselian. -/
 theorem chapter10_complete_nonarchimedean_is_henselian
@@ -1300,10 +1225,9 @@ theorem chapter10_henselian_unique_extension
     (v : Valuation K Γ₀) [HenselianLocalRing v.valuationSubring]
     (w₁ w₂ : Valuation L Γ₀)
     (h₁ : v.IsEquiv (w₁.comap (algebraMap K L)))
-    (h₂ : v.IsEquiv (w₂.comap (algebraMap K L)))
-    (hvaluation : w₁.valuationSubring = w₂.valuationSubring) :
+    (h₂ : v.IsEquiv (w₂.comap (algebraMap K L))) :
     w₁.IsEquiv w₂ := by
-  exact (Valuation.isEquiv_iff_valuationSubring w₁ w₂).2 hvaluation
+  sorry
 
 /-- Every algebraic element lies in a finite intermediate extension. -/
 theorem chapter10_algebraic_element_in_finite_subextension
