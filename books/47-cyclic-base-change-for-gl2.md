@@ -207,8 +207,10 @@ $$
 It should be invariant under $\Gamma$, unique, and compatible with all operations
 visible on local parameters. Its output need not be cuspidal. This last warning is
 not a technical blemish: if $E$ contains the quadratic field from which a dihedral
-$\pi$ was automorphically induced, restriction exposes the two inducing characters,
-and the global lift becomes their isobaric sum.
+$\pi$ was automorphically induced, restriction exposes two distinct inducing
+characters, and the global lift becomes their isobaric sum. The distinctness is a
+cyclic Clifford-theory consequence proved in Section 10.3; it is not an extra
+regularity assumption on the lifted characters.
 
 There are therefore three distinct assertions to prove:
 
@@ -238,8 +240,9 @@ $$
 =\theta\boxplus\theta^\tau,
 $$
 
-which is Eisenstein rather than cuspidal. No inspection of generic unramified local
-components alone detects this failure of cuspidality. The global self-twist
+whose two constituents are distinct because $\theta\ne\theta^\tau$. It is Eisenstein
+rather than cuspidal. No inspection of generic unramified local components alone
+detects this failure of cuspidality. The global self-twist
 $\pi\otimes\eta_{M/F}\cong\pi$ does.
 
 ## 2. Norm characters and the expected lift
@@ -760,7 +763,9 @@ would count the same source constituent twice.
 
 A free $X(E/F)$-orbit contributes once. If a cuspidal representation
 has a quadratic stabilizer, the orbit contributes with coefficient $1/2$; that is
-exactly the Weyl stabilizer appearing in the associated Eisenstein term upstairs.
+the reciprocal of the order-two Weyl stabilizer appearing in the associated
+Eisenstein term upstairs. Section 10.5 separates this source-orbit count from the
+size and multiplicities of the two constituent characters upstairs.
 
 This factor is sometimes hidden by fixing a descent datum or by summing over central
 characters. We keep it visible. It is not a local transfer factor, which remains
@@ -957,8 +962,9 @@ full trace identity leaves an equality of cuspidal distributions, except when a
 quadratic stabilizer turns a source cusp form into precisely such an induced term.
 
 That exception is not lost in subtraction. It appears with coefficient $1/2$, the
-order of the Weyl stabilizer, matching the $1/2$ contributed by the source
-$X(E/F)$-orbit with a quadratic stabilizer.
+reciprocal of the order-two Weyl stabilizer, matching the $1/2$ contributed by the
+source $X(E/F)$-orbit with a quadratic stabilizer. The exceptional constituents are
+shown in Section 10.3 to be distinct; no multiplicity-two term is being matched here.
 
 ### 6.3 Isolating one Hecke eigensystem
 
@@ -1053,8 +1059,11 @@ representations have the required local components, they agree outside a finite 
 so strong multiplicity one gives their isomorphism. $\square$
 
 The theorem does not claim that the lift is always cuspidal. Chapter 10 will identify
-the exact exception and will show that odd-degree cyclic base change has no exception
-for a cuspidal rank-two source.
+the exact exception, prove that the two characters in the exceptional sum are
+distinct and occur with multiplicity one, and show that odd-degree cyclic base change
+has no exception for a cuspidal rank-two source. Repeated isobaric sums can occur in
+the induced-spectrum calculation of Section 6.2 when the source is already isobaric;
+that reducible input is a different case.
 
 ### 7.2 Uniqueness needs less data than existence
 
@@ -1350,9 +1359,12 @@ becomes principal merely because its semisimplification splits.
 
 For a supercuspidal $\pi_v$, the lift remains supercuspidal exactly when the restricted
 two-dimensional Weil representation remains irreducible. If it splits as
-$\xi_1\oplus\xi_2$, the lift is the principal-series representation attached to those
-characters. In particular, “base change preserves supercuspidality” is false even for
-unramified extensions.
+$\xi_1\oplus\xi_2$, cyclic Clifford theory says $\xi_1\ne\xi_2$, and the lift is the
+principal-series representation attached to those characters. A repeated character
+can arise by restricting an already split local parameter, but never by restricting
+this irreducible two-dimensional parameter through the cyclic decomposition quotient.
+In particular, “base change preserves supercuspidality” is false even for unramified
+extensions.
 
 ### 9.4 Local $L$-packets are not an extra ambiguity
 
@@ -1457,18 +1469,26 @@ which is not cuspidal.
 
 Conversely, suppose the lift is noncuspidal. By Theorem 7.1 it has the form
 $\xi_1\boxplus\xi_2$. The cyclic descent datum preserves the unordered pair
-$\{\xi_1,\xi_2\}$. If it fixed each character through the whole group, both would
-descend to $F$, and the source parameter would be reducible at almost every place;
-strong multiplicity one would contradict cuspidality of $\pi$. Hence $\Gamma$ acts
-transitively on the two characters. The stabilizer has index two, defining a quadratic
-subextension $M/F$ contained in $E$. Descent of one character to $M$ gives $\theta$,
-and automorphic induction gives
+$\{\xi_1,\xi_2\}$. First suppose it is a repeated multiset. Then its single character
+is invariant and descends as a character. On the two-dimensional multiplicity space,
+rescale an operator lifting a generator of $\Gamma$ so that it satisfies the cyclic
+relation; over $\mathbb C$ it then diagonalizes. Its two eigenspaces give two
+one-dimensional descents. Thus every descent of this repeated isobaric datum is
+itself isobaric, contradicting cuspidality of $\pi$. Hence $\xi_1\ne\xi_2$.
+
+If $\Gamma$ fixed each of these two distinct characters, both would descend to $F$,
+and the source would again be isobaric by strong multiplicity one. Hence $\Gamma$
+acts transitively on them. The stabilizer of either character has index two, defining
+a quadratic subextension $M/F$ contained in $E$. Descent of one character to $M$
+gives $\theta$, and automorphic induction gives
 $\pi\cong\operatorname{AI}_{M/F}(\theta)$. Thus
 $\pi\otimes\eta_{M/F}\cong\pi$, and
 $\eta_{M/F}\in X(E/F)$. $\square$
 
 The proof shows more than noncuspidality: it determines the only possible Eisenstein
-output and the unique quadratic field responsible for it.
+output, proves that its two constituents are distinct and have multiplicity one, and
+determines the unique quadratic field responsible for it. The exclusion of the
+repeated case is the global cyclic analogue of Book 46, Section 9.1.
 
 ### 10.2 Odd degree
 
@@ -1528,9 +1548,36 @@ $$
 }
 $$
 
-The two displayed characters may become equal after pullback to $E$. In that case the
-output is the repeated isobaric sum $\xi\boxplus\xi$. It is still an Eisenstein
-isobaric representation and is not to be called cuspidal.
+The two displayed characters are necessarily distinct. Indeed, regularity
+$\theta\ne\theta^\tau$ makes the two-dimensional induced parameter
+$\operatorname{Ind}_{W_M}^{W_F}\theta$ irreducible. Its restriction to the normal
+subgroup $W_E$ has cyclic quotient $\operatorname{Gal}(E/F)$. By the Clifford-theory
+argument of Book 46, Section 9.1, a reducible restriction of such an irreducible
+two-dimensional parameter is a sum of two distinct characters, never two copies of
+one character. Thus
+
+$$
+\theta\circ N_{E/M}\ne\theta^\tau\circ N_{E/M}.
+$$
+
+Equivalently, $\Gamma$ acts on the two constituents through its quotient of order two:
+$\operatorname{Gal}(E/M)$ fixes each constituent and the other coset exchanges them.
+Their $\Gamma$-orbit therefore has size two, and each occurs with multiplicity one.
+
+This conclusion uses both irreducibility downstairs and cyclicity of the total
+quotient. It does not say that distinct characters in reducible data always remain
+distinct. If $\Sigma=\mu_1\boxplus\mu_2$ is already isobaric over $F$, then
+
+$$
+\operatorname{BC}_{E/F}(\Sigma)
+=(\mu_1\circ N_{E/F})\boxplus(\mu_2\circ N_{E/F}),
+$$
+
+and its two constituents are equal exactly when
+$\mu_1\mu_2^{-1}\in X(E/F)$. A repeated sum is allowed in that reducible-source
+case. Book 48 uses precisely this distinction: a later noncyclic total restriction
+may also have a projective multiplicity phenomenon, but a single cyclic base change
+of a cuspidal rank-two source cannot.
 
 ### 10.4 Why local splitting is not the criterion
 
@@ -1544,7 +1591,8 @@ For instance, choose $v$ splitting in $M/F$. Then
 $\pi_v$ attached to an automorphic induction is already principal series. At an inert
 place it may be supercuspidal if the local inducing character is noninvariant. Both
 local behaviors belong to the same cuspidal $\pi$ over $F$, and both become the two
-character lines after global base change to a field containing $M$.
+distinct global character lines after global base change to a cyclic field containing
+$M$.
 
 ### 10.5 Self-twist order and orbit size
 
@@ -1568,7 +1616,12 @@ n/2,&\operatorname{BC}\pi\text{ noncuspidal}.
 $$
 
 After the $1/n$ trace normalization these contribute respectively $1$ and $1/2$.
-This numerical check ties the cuspidality theorem back to the twisted trace formula.
+In the noncuspidal case this source twisting orbit of size $n/2$ must not be confused
+with the constituent orbit upstairs: the latter has size two, its two distinct
+characters each have multiplicity one, and the stabilizer of either character in
+$\Gamma$ has order $n/2$. These are different actions with complementary numerical
+roles. The source stabilizer has order two and gives the coefficient $1/2$ after
+normalization, tying the cuspidality theorem back to the twisted trace formula.
 
 ## 11. Descent, image, and fibers
 
@@ -1660,7 +1713,9 @@ $$
 
 for every $w\mid v$. Hence $\operatorname{BC}(\pi)\cong\Pi$ by uniqueness. If $\pi$
 were noncuspidal, it would be an isobaric sum of characters and its base change would
-remain such a sum, contradicting cuspidality of $\Pi$. $\square$
+remain such a sum, contradicting cuspidality of $\Pi$. The two pulled-back characters
+could coincide in this last reducible-source argument; that possibility still gives a
+repeated isobaric sum and never a cusp form. $\square$
 
 Thus the global image among cuspidal representations is exactly the invariant
 cuspidal spectrum. The central-character condition is present in the proof but is
@@ -1723,8 +1778,10 @@ make the lift noncuspidal by Theorem 10.2. Hence the set of descents of a cuspid
 $\Pi$ is an $X(E/F)$-torsor and has exactly $n$ elements.
 
 If the common lift is noncuspidal, the source $\pi$ has the quadratic stabilizer
-$\{1,\eta_{M/F}\}$. Its twisting fiber has $n/2$ distinct cuspidal members. Saying
-that every fiber has $n$ elements would therefore be false.
+$\{1,\eta_{M/F}\}$. The common lift has two distinct multiplicity-one character
+constituents by Section 10.3, while its twisting fiber has $n/2$ distinct cuspidal
+members. Saying that every fiber has $n$ elements, or confusing constituent
+multiplicity with the number of sources, would therefore be false.
 
 ### 11.6 A counterexample involving only central characters
 
@@ -1801,7 +1858,8 @@ Weil parameters, not to base change.
 cuspidal base change $\operatorname{BC}_{E/F}(\pi)$ is regular algebraic and
 cohomological with weights pulled back along embeddings. If the base change is the
 isobaric sum $\xi_1\boxplus\xi_2$, its two algebraic Hecke characters have the
-corresponding pulled-back infinity types.
+corresponding pulled-back infinity types; for the noncuspidal lift of a cuspidal
+source they are globally distinct, even if some of their local infinity types agree.
 
 **Proof.** The local component at infinity is obtained by restricting the local Weil
 parameter. Restriction preserves the integral exponents and their multiset. The
@@ -1956,6 +2014,14 @@ norm pullback, $\eta_v$ becomes trivial, so the two inducing characters coincide
 upstairs conductor is twice the conductor of $\mu\circ N$, which can be strictly
 smaller than the original sum.
 
+There is no conflict with the distinctness assertion for a restricted supercuspidal
+or for the global automorphic-induction exception. The parameter of this principal
+series is already reducible,
+$\mu\oplus\mu\eta_v$, before restriction. Its two distinct character lines are
+allowed to coalesce because their ratio is the local norm character. Cyclic Clifford
+theory forbids a repeated restriction only when the two-dimensional parameter
+downstairs is irreducible.
+
 Another character of the same conductor exponent but nontrivial on local norms need
 not cancel. Equal downstairs levels have produced different upstairs levels. No
 formula depending only on $a(\pi_v)$, $e_v$, and $f_v$ can therefore be exact at all
@@ -2032,7 +2098,10 @@ wherever both inner forms are meaningful.
 If $\operatorname{BC}(\pi)$ is a two-character isobaric sum, it is not the global
 Jacquet--Langlands transfer of a noncharacter automorphic representation on a division
 inner form. No $\rho_E$ of the preceding kind exists when $D_E$ is nonsplit. This is a
-global boundary even though each local restricted parameter exists.
+global boundary even though each local restricted parameter exists. For the cuspidal
+source considered here, Section 10.3 shows that the two characters are distinct and
+have multiplicity one; a repeated sum would belong to base change of already
+isobaric data, outside this commuting square.
 
 If $D_E\cong M_2(E)$ globally, the lower inner form is the split group itself and the
 isobaric representation remains meaningful. The lower horizontal arrow is then the
@@ -2140,6 +2209,11 @@ $$
 (\theta^\tau\circ N_{E/M}).
 $$
 
+The two displayed characters are distinct by Section 10.3. Thus this is a
+multiplicity-free Eisenstein sum: regularity of $\theta$ makes the induced
+two-dimensional datum over $F$ irreducible, and cyclic restriction cannot turn it
+into a repeated character.
+
 Its central character is the product of these two characters. Meanwhile
 
 $$
@@ -2222,6 +2296,8 @@ $\mathrm{GL}_2(\mathbb A_E)$ with these properties.
    \boxplus(\theta^\tau\circ N_{E/M}).
    $$
 
+   The two displayed characters are distinct and each occurs with multiplicity one.
+
 5. A cuspidal representation over $E$ lies in the image exactly when it is
    $\Gamma$-invariant. Its descents form an $X(E/F)$-torsor.
 
@@ -2261,7 +2337,8 @@ a later tower argument are nevertheless clear:
 - every local component is characterized by parameter restriction;
 - norm directions and central characters are functorial;
 - the kernel of a cyclic step is its finite norm-character group;
-- cuspidality can fail only at a quadratic self-twist, with an explicit isobaric sum;
+- cuspidality can fail only at a quadratic self-twist, with an explicit
+  multiplicity-free two-character isobaric sum;
 - invariant cuspidal representations descend, with controlled fibers and central
   square classes;
 - conductors, weights, coefficient fields, and inner-form conditions are checked one
@@ -2269,7 +2346,9 @@ a later tower argument are nevertheless clear:
 
 No solvable extension has been treated here. Compatibility among different cyclic
 factorizations, accumulation of twisting ambiguity, and descent through a solvable
-tower belong to Book 48.
+tower belong to Book 48. In particular, Book 48's repeated-character endpoint is a
+noncyclic-total-restriction or already-isobaric phenomenon, not an exception to the
+cyclic distinctness proved here.
 
 ### 16.3 Conclusion
 
@@ -2291,7 +2370,8 @@ The exceptional spectrum is informative. A cuspidal rank-two representation can 
 stabilized by a norm character only when that character is quadratic. It is then
 dihedral, induced from the unique quadratic subfield of an even-degree cyclic
 extension, and restriction exposes its two characters as an isobaric Eisenstein sum.
-Odd-degree cyclic base change is therefore always cuspidal.
+Those two characters are distinct and occur once each. Odd-degree cyclic base change
+is therefore always cuspidal.
 
 In the reverse direction, Galois invariance is the image condition for cuspidal
 representations. Norm characters measure the full fiber, while their squares measure
