@@ -7,6 +7,7 @@
    - [Absolute and root discriminants](#12-absolute-and-root-discriminants)
    - [The pressure created by towers](#13-the-pressure-created-by-towers)
    - [Signature as visible infinite ramification](#14-signature-as-visible-infinite-ramification)
+   - [The two inputs and the logical route](#15-the-two-inputs-and-the-logical-route)
 2. [The geometric baseline](#2-the-geometric-baseline)
    - [Minkowski's convex-body theorem](#21-minkowskis-convex-body-theorem)
    - [The ideal-class estimate](#22-the-ideal-class-estimate)
@@ -18,12 +19,14 @@
    - [Euler product and logarithmic derivative](#32-euler-product-and-logarithmic-derivative)
    - [Completion and functional equation](#33-completion-and-functional-equation)
    - [Poles, trivial zeros, and nontrivial zeros](#34-poles-trivial-zeros-and-nontrivial-zeros)
+   - [Analytic hypotheses and growth estimates](#35-analytic-hypotheses-and-growth-estimates)
 4. [The explicit formula](#4-the-explicit-formula)
    - [From a functional equation to a weighted identity](#41-from-a-functional-equation-to-a-weighted-identity)
    - [Transform conventions and admissibility](#42-transform-conventions-and-admissibility)
    - [The Weil--Poitou identity](#43-the-weil--poitou-identity)
    - [Why every sign matters](#44-why-every-sign-matters)
    - [Discarding positive terms](#45-discarding-positive-terms)
+   - [Convergence and passage to nonsmooth kernels](#46-convergence-and-passage-to-nonsmooth-kernels)
 5. [Designing test functions](#5-designing-test-functions)
    - [Positive type and autocorrelation](#51-positive-type-and-autocorrelation)
    - [The GRH and unconditional positivity mechanisms](#52-the-grh-and-unconditional-positivity-mechanisms)
@@ -40,8 +43,9 @@
    - [An explicit optimization algorithm](#71-an-explicit-optimization-algorithm)
    - [Certified evaluation of the integrals](#72-certified-evaluation-of-the-integrals)
    - [The thresholds needed at 2, 3, and 5](#73-the-thresholds-needed-at-2-3-and-5)
-   - [Totally real improvements](#74-totally-real-improvements)
-   - [Degree and signature grids](#75-degree-and-signature-grids)
+   - [The decisive two-prime certificate](#74-the-decisive-two-prime-certificate)
+   - [Totally real improvements](#75-totally-real-improvements)
+   - [Degree and signature grids](#76-degree-and-signature-grids)
 8. [Upper bounds force finite degree](#8-upper-bounds-force-finite-degree)
    - [Monotonicity in degree](#81-monotonicity-in-degree)
    - [The threshold principle](#82-the-threshold-principle)
@@ -56,17 +60,21 @@
     - [Bounded degree at one torsion level](#102-bounded-degree-at-one-torsion-level)
     - [Auxiliary ramification](#103-auxiliary-ramification)
     - [Base fields](#104-base-fields)
+    - [Why the finite-flat exponent is uniform](#105-why-the-finite-flat-exponent-is-uniform)
+    - [The residual three-adic ledger](#106-the-residual-three-adic-ledger)
 11. [Fontaine's stabilization mechanism](#11-fontaines-stabilization-mechanism)
     - [The maximal small-ramification compositum](#111-the-maximal-small-ramification-compositum)
     - [Uniform exponent-$\ell$ layers](#112-uniform-exponent-ell-layers)
     - [From bounded degree to stabilization](#113-from-bounded-degree-to-stabilization)
     - [Successive torsion fields](#114-successive-torsion-fields)
     - [The missing group-theoretic bridge](#115-the-missing-group-theoretic-bridge)
+    - [Forbidden large torsion fields](#116-forbidden-large-torsion-fields)
 12. [Small-prime calculations](#12-small-prime-calculations)
     - [The prime 2](#121-the-prime-2)
     - [The prime 3](#122-the-prime-3)
     - [The prime 5](#123-the-prime-5)
     - [Strict and weak inequalities](#124-strict-and-weak-inequalities)
+    - [The prime 3 with tame cubic inertia at 2](#125-the-prime-3-with-tame-cubic-inertia-at-2)
 13. [Signature and base-field refinements](#13-signature-and-base-field-refinements)
     - [Totally real fields](#131-totally-real-fields)
     - [Intermediate signatures](#132-intermediate-signatures)
@@ -189,6 +197,68 @@ $$
 $$
 
 corresponding respectively to totally imaginary and totally real fields. A field with no real embeddings is not necessarily a CM field; the analytic estimate depends on signature, not on the existence of a special involution.
+
+### 1.5 The two inputs and the logical route
+
+The argument developed in this book has two independent engines. The first is analytic. It begins
+with the completed Dedekind zeta function, inserts a positive test function into its explicit
+formula, and ends with a lower bound for the root discriminant in terms of degree and signature.
+The second is arithmetic. It begins with a finite Galois module possessing integral finite-flat
+models at the coefficient prime, converts separation of torsion points into an upper ramification
+break, and ends with an upper bound for the root discriminant of the field cut out by the module.
+Neither engine knows the conclusion of the other.
+
+The architecture is therefore
+
+```
+Dedekind zeta function                 finite-flat integral model
+          |                                      |
+          v                                      v
+positive explicit formula              upper ramification cutoff
+          |                                      |
+          v                                      v
+lower bound for rd(L)                   upper bound for rd(L)
+          \                                      /
+           \                                    /
+            +-------- degree comparison -------+
+                              |
+                              v
+                 exclusion or stabilization
+```
+
+This separation prevents several circular arguments. The field whose zeta function is used must
+already have been defined; analysis does not construct it. Its ramification ceiling must already
+have been proved; the explicit formula does not make a local representation finite flat. In the
+opposite direction, the local argument controls discriminant but not degree from below; a large
+image must be supplied by independent group theory. At the last step, a degree contradiction
+rules out the specified field, but it does not classify every smaller field under the same
+ceiling.
+
+The principal concrete comparison is three-adic. If $M$ is killed by $3$, finite flat at $3$, and
+unramified away from $3$, then its cutout field $L$ satisfies
+
+$$
+\operatorname{rd}(L)<3^{3/2}.
+$$
+
+If the only extra ramification is nontrivial tame cubic inertia at $2$, then the exact additional
+cost is $2^{2/3}$, giving
+
+$$
+\operatorname{rd}(L)<3^{3/2}2^{2/3}.
+$$
+
+The dedicated Minkowski certificate for the first inequality gives the valid cap $52$. The
+explicit-formula certificate for the larger second ceiling gives the stronger cap $20$; because a
+field below the first ceiling is also below the second, the stronger cap applies to both once it
+has been proved. This dominance is easy to overlook when numerical rows are organized by their
+arithmetic source. Degree $20$ excludes residual fields whose Galois groups have orders $24$ or
+$48$. Those are the forbidden large torsion fields relevant here.
+
+Every logarithm in this book is natural. Ramification groups use upper numbering when a quotient
+field is under discussion. The root discriminant is always absolute, even when it is computed
+from a relative extension. The main comparison is unconditional. Conditional estimates are
+included to explain the analytic landscape, but no Fontaine conclusion rests on them.
 
 ## 2. The geometric baseline
 
@@ -326,16 +396,25 @@ M_n,
 M_n:=\left(\frac{n^n}{n!}\right)^{2/n}.
 $$
 
-The sequence $M_n$ is increasing. One proof writes
+The sequence $M_n$ is increasing, and the finite certificates later use this fact. Put
 
 $$
-\log M_n=\frac2n\sum_{j=1}^n\log\frac nj
+a_n=\frac{(n!)^{1/n}}n,
 $$
 
-and compares consecutive averages; equivalently, log-convexity of $n!$ supplies the same inequality. Stirling's formula gives
+so $M_n=a_n^{-2}$. The inequality $a_{n+1}\leq a_n$, after raising to the positive power
+$n(n+1)$ and canceling factorials, is equivalent to
 
 $$
-M_n=e^2\exp\left(-\frac{\log(2\pi n)}n+O(n^{-2})\right),
+\left(1+\frac1n\right)^{n^2}\geq n+1.
+$$
+
+By the binomial theorem $(1+1/n)^n\geq2$, so the left side is at least $2^n\geq n+1$.
+Therefore $M_{n+1}\geq M_n$. Stirling's formula with its usual two-sided remainder gives
+
+$$
+\log M_n
+=2-\frac{\log(2\pi n)}n-\frac1{6n^2}+O(n^{-4}),
 $$
 
 so the limiting bounds are $\pi e^2/4$ in the worst signature and $e^2$ in the totally real case.
@@ -425,6 +504,89 @@ $$
 
 Poisson summation relates this series at $t$ to the theta series of the trace-dual lattice at $1/t$. The covolume of the lattice contributes $D_K^{1/2}$, while the one- and two-dimensional Gaussian integrals contribute the real and complex gamma factors. Mellin transforming $\Theta_{\mathfrak a}(t)-1$ and summing over ideal classes gives $\Lambda_K(s)$. Splitting the Mellin integral at $t=1$ and applying Poisson summation on $(0,1)$ continues it meromorphically and produces the symmetry $s\leftrightarrow1-s$.
 
+Here are the details of that passage. Equip $K_{\mathbf R}$ with the trace pairing
+
+$$
+\langle x,y\rangle=\operatorname{Tr}_{K/\mathbf Q}(x\overline y).
+$$
+
+The lattice dual to a fractional ideal $\mathfrak a$ is
+
+$$
+\mathfrak a^*=\mathfrak D_K^{-1}\mathfrak a^{-1},
+$$
+
+where $\mathfrak D_K$ is the different. With complex coordinates counted with weight two, Fourier
+transformation of the Gaussian gives
+
+$$
+\Theta_{\mathfrak a}(t)
+=\frac{t^{-n/2}}{\operatorname{covol}(\mathfrak a)}
+\Theta_{\mathfrak a^*}(t^{-1}),
+\qquad
+\operatorname{covol}(\mathfrak a)
+=2^{-r_2}\sqrt{D_K}\,N\mathfrak a.
+\tag{3.1}
+$$
+
+Units prevent a raw theta series from being a sum indexed once by ideals. To remove the
+overcounting, let $Y$ be the group of positive archimedean scalings of weighted product one and
+integrate over a fundamental parallelepiped for the logarithmic image of
+$\mathcal O_K^\times$. Every nonzero element of $\mathfrak a$ is then counted once modulo units,
+and its orbit corresponds to the integral ideal it generates in the inverse ideal class. Separating
+the radial coordinate from $Y$ gives, initially for $\Re(s)>1$,
+
+$$
+\Gamma_{\mathbf R}(s)=\pi^{-s/2}\Gamma(s/2),
+\qquad
+\Gamma_{\mathbf C}(s)=(2\pi)^{-s}\Gamma(s),
+$$
+
+and
+
+$$
+\int_0^\infty\int_P
+\bigl(\Theta_{\mathfrak a}(t,y)-1\bigr)t^{s/2}
+\,d^\times y\,\frac{dt}{t}
+=c_KD_K^{s/2}
+\Gamma_{\mathbf R}(s)^{r_1}
+\Gamma_{\mathbf C}(s)^{r_2}
+\zeta_{[\mathfrak a]^{-1}}(s),
+\tag{3.2}
+$$
+
+where $c_K>0$ is independent of the ideal class. The one-dimensional radial Mellin integrals are
+
+$$
+\int_{-\infty}^{\infty}e^{-\pi x^2}|x|^s\frac{dx}{|x|}
+=\pi^{-s/2}\Gamma(s/2),
+$$
+
+and the two-dimensional complex integrals give $(2\pi)^{-s}\Gamma(s)$ after the common measure
+normalization is absorbed into $c_K$. This proves (3.2) rather than merely identifying its shape.
+
+Split the $t$-integral at $1$. On $(0,1)$ use (3.1), then substitute $t\mapsto1/t$. The nonzero
+parts become exponentially convergent integrals over $(1,\infty)$ with $s$ replaced by $1-s$ and
+the ideal class replaced by its inverse dual class. They are entire in $s$. The zero-vector terms
+are elementary:
+
+$$
+\int_0^1t^{s/2}\frac{dt}{t}=\frac2s,
+\qquad
+\int_0^1t^{(1-s)/2}\frac{dt}{t}=\frac2{1-s}.
+$$
+
+Thus every completed partial zeta function continues meromorphically with only simple poles at
+$0$ and $1$. Duality permutes ideal classes, so summing (3.2) over the class group proves both the
+continuation of $\Lambda_K$ and
+
+$$
+\Lambda_K(s)=\Lambda_K(1-s).
+$$
+
+The exponent $s/2$ on $D_K$ is forced: inversion in Poisson summation contributes
+$D_K^{-1/2}$, and only $D_K^{s/2}$ transforms it into $D_K^{(1-s)/2}$.
+
 This argument also identifies the poles. The zero vector in the theta series produces simple terms proportional to $1/s$ and $1/(s-1)$; everything left after their removal is entire. Thus the analytic continuation, the functional equation, and the pole orders are consequences of the same lattice duality. The discriminant appears because the duality changes covolume, not because it was inserted after the fact.
 
 There are several equivalent conventions in which powers of $2$ and $\pi$ move between the discriminant factor and gamma factors. The displayed convention is fixed throughout this book. Under it, the explicit formula below contains $\gamma+\log(8\pi)$ and $r_1\pi/2$. Changing the completed function without changing those constants would give a wrong root-discriminant threshold.
@@ -463,6 +625,64 @@ $$
 $$
 
 We will derive both unconditional and conditional bounds. Every result used in the main Fontaine stabilization theorem will be unconditional.
+
+### 3.5 Analytic hypotheses and growth estimates
+
+The contour argument needs more than a formal functional equation. It needs enough control on
+$\xi_K$ and on the test transform to make the horizontal sides of large rectangles disappear and
+to make the sum over zeros meaningful. We record the required estimates because this is where a
+plausible formal identity becomes a theorem.
+
+The theta-integral representation used in §3.3 shows that $\xi_K$ is entire of order one. Stirling's
+formula for the gamma factors, the Euler product on $\Re(s)>1$, and the functional equation then
+give, for $T\geq2$,
+
+$$
+N_K(T+1)-N_K(T)
+\ll n\log\bigl(D_K(T+3)^n\bigr),
+\tag{3.3}
+$$
+
+where $N_K(T)$ counts nontrivial zeros with $|\operatorname{Im}\rho|\leq T$, with
+multiplicity. To prove (3.3), apply the argument principle to $\xi_K$ on a rectangle of width one.
+On the right edge, $\zeta_K$ is bounded by a suitable power of the ordinary zeta function; on the
+left edge the functional equation supplies the same bound; on the horizontal edges Stirling's
+formula controls the logarithmic derivatives of the gamma factors.
+
+If $F$ is compactly supported, piecewise $C^2$, and has one-sided first derivatives of bounded
+variation, integration by parts on its smooth pieces gives
+
+$$
+\Phi_F(\sigma+it)=O_F((1+|t|)^{-2})
+$$
+
+uniformly when $\sigma$ remains in a bounded interval. Combining this with (3.3) shows that the
+symmetric zero sum converges after grouping zeros in horizontal bands. For a smooth $F$, repeated
+integration by parts gives arbitrarily rapid decay.
+
+The horizontal sides require a mild avoidance argument. Because an order-one entire function has
+only the number of zeros permitted by (3.3), one can choose heights $T_j\to\infty$ that remain an
+inverse-polynomial distance from every zero ordinate. On those heights the logarithmic derivative
+satisfies a polynomial logarithmic bound, while $\Phi_F$ decays faster than any polynomial in the
+smooth case. Hence the horizontal integrals tend to zero. The final identity is independent of
+this chosen sequence because the zero series converges symmetrically.
+
+There is also a local integrability condition at the origin. The kernel
+
+$$
+\frac1{2\sinh(x/2)}
+$$
+
+has a simple pole, so it is enough to require
+
+$$
+\int_0^1\frac{|1-F(x)|}{x}\,dx<\infty.
+\tag{3.4}
+$$
+
+Smooth even functions satisfy $1-F(x)=O(x^2)$. Triangular functions satisfy
+$1-F(x)=O(x)$, which also suffices. Condition (3.4), compact support, and the exponential decay of
+the hyperbolic kernels account for every archimedean convergence assertion below.
 
 ## 4. The explicit formula
 
@@ -615,6 +835,37 @@ $$
 
 This is the basic Odlyzko--Poitou inequality. It is already an explicit algorithm: choose $F$, evaluate three one-dimensional integrals, and compare the result with an arithmetic upper bound. Prime powers may be restored whenever splitting information is known; omitting them is uniform over all fields of the given degree and signature.
 
+### 4.6 Convergence and passage to nonsmooth kernels
+
+For completeness, we explain why the formula proved first for smooth functions applies to the
+triangles used numerically. Let $h_j$ be nonnegative, even, smooth approximations to the indicator
+of $[-T/2,T/2]$, and take the normalized autocorrelation $G_{T,j}$. Then
+
+$$
+G_{T,j}(0)=1,
+\qquad G_{T,j}\geq0,
+\qquad \widehat G_{T,j}\geq0,
+$$
+
+and $G_{T,j}\to G_T$ pointwise away from the corners and in $L^1$. Multiplication by
+$\operatorname{sech}(x/2)$ preserves a common compact support and gives an integrable majorant for
+the pole integral. Near zero the quotient in (3.4) is uniformly bounded after a rescaling tending
+to one that restores value $1$ at the origin.
+
+The prime sum is finite because the support is compact, so it passes to the limit term by term
+unless a prime power lies exactly at an endpoint. In that exceptional case one approaches the
+triangle through supports from the appropriate side; because the universal inequality discards
+the prime sum, its endpoint value is immaterial here. The archimedean terms pass by dominated
+convergence. Finally the zero sums have a common
+$(1+|\operatorname{Im}\rho|)^{-2}$ majorant, and (3.3) permits dominated convergence by horizontal
+bands. Thus the explicit formula and every lower bound derived from it hold for the triangular
+limiting functions exactly as stated.
+
+This passage identifies which facts are structural and which are cosmetic. Positivity comes from
+autocorrelation and survives smoothing. The exact elementary formulas for $B_T$ and $C_T$ belong
+to the nonsmooth limit. Smoothness is used only to justify the contour shift before that limit is
+taken.
+
 ## 5. Designing test functions
 
 ### 5.1 Positive type and autocorrelation
@@ -694,6 +945,59 @@ $$
 $$
 
 with the boundary cases obtained by limits. The product of two positive-type functions is again of positive type, because on the transform side it corresponds to convolution of nonnegative measures. Since $|\beta-1/2|\leq1/2$, the paired zero contribution is nonnegative.
+
+We include the residue calculation because unconditionality rests on it. For $t>0$, integrate
+
+$$
+\frac{\cosh(az)}{\cosh(z/2)}e^{-itz}
+$$
+
+over a large rectangle closed in the lower half-plane. The vertical sides vanish because
+$|a|<1/2$, and the lower horizontal side vanishes because of the exponential factor. The enclosed
+poles are
+
+$$
+z_k=-(2k+1)\pi i,
+\qquad k\geq0.
+$$
+
+Since
+
+$$
+\frac{d}{dz}\cosh(z/2)\bigg|_{z=z_k}
+=-\frac i2(-1)^k,
+$$
+
+the clockwise residue theorem gives
+
+$$
+\widehat H_a(t)
+=4\pi\sum_{k\geq0}(-1)^k
+\cos\bigl((2k+1)\pi a\bigr)e^{-(2k+1)\pi t}.
+$$
+
+Writing the cosine as the real part of an exponential and summing the resulting geometric series
+reduces this expression to
+
+$$
+\widehat H_a(t)
+=\frac{4\pi\cos(\pi a)\cosh(\pi t)}
+{\cosh(2\pi t)+\cos(2\pi a)}.
+$$
+
+Evenness gives the same formula for $t<0$. Its denominator is
+$2(\sinh^2(\pi t)+\cos^2(\pi a))$ and its numerator is nonnegative for
+$|a|\leq1/2$. At the endpoints, monotone weak limits of the nonnegative Fourier measures preserve
+positive type. Finally,
+
+$$
+\widehat{G H_a}
+=\frac1{2\pi}\widehat G*\widehat H_a\geq0.
+$$
+
+The paired zero contribution is twice $\widehat{G H_{\beta-1/2}}(\gamma)$ and is therefore
+nonnegative. This proves positivity for every symmetric zero pair, including zeros off the
+critical line.
 
 This argument explains both the strength and the cost of the unconditional method. The factor $1/\cosh(x/2)$ protects positivity throughout the critical strip, but prevents $F$ itself from tending to $1$ at large fixed $x$. That loss changes the asymptotic constant by an exact, computable amount.
 
@@ -1081,7 +1385,83 @@ $$
 
 These degree bounds are deliberately elementary rather than optimal. Their virtue is that every constant used later has been derived in the text.
 
-### 7.4 Totally real improvements
+### 7.4 The decisive two-prime certificate
+
+The three-adic application permits a specific auxiliary contribution at $2$. When inertia there
+is tame of order $3$, its normalized different exponent is $1-1/3=2/3$. The resulting ceiling is
+
+$$
+U_{2,3}=3^{3/2}2^{2/3}
+=8.248377821991616\ldots.
+$$
+
+This ceiling is larger than the three-only value, so the degree-$53$ Minkowski calculation cannot
+be recycled. We need a separate finite certificate. Take $T=6$, $n=21$, and $\alpha=0$. The
+certified enclosure $B_6<1.10356$ gives
+
+$$
+\begin{aligned}
+\log\operatorname{rd}(K)
+&>\gamma+\log(8\pi)-\frac{12}{21}-1.10356\\
+&>2.126398521002197.
+\end{aligned}
+\tag{7.1}
+$$
+
+The elementary logarithm series
+
+$$
+\log\frac{1+y}{1-y}
+=2\sum_{j=0}^{m}\frac{y^{2j+1}}{2j+1}+R_m,
+\qquad
+|R_m|\leq
+\frac{2|y|^{2m+3}}{(2m+3)(1-y^2)},
+$$
+
+after power-of-two range reduction, gives directed enclosures for $\log2$ and $\log3$. They yield
+
+$$
+\log U_{2,3}
+=\frac32\log3+\frac23\log2
+<2.110016553375462.
+\tag{7.2}
+$$
+
+The logarithmic margin in (7.1)--(7.2) is greater than
+$0.016381967626735$. It is therefore far larger than every interval remainder used in §7.2.
+Exponentiating only to make the comparison visible,
+
+$$
+\operatorname{rd}(K)>8.38461535304387
+>8.248377821991616=U_{2,3}.
+$$
+
+Degree monotonicity now proves the exact interface needed later:
+
+$$
+\boxed{
+\operatorname{rd}(K)<3^{3/2}2^{2/3}
+\Longrightarrow [K:\mathbf Q]\leq20.}
+\tag{7.3}
+$$
+
+The same conclusion holds if the arithmetic premise is weak,
+$\operatorname{rd}(K)\leq U_{2,3}$, because the analytic lower bound at degree $21$ is strictly
+larger. The certificate is unconditional and makes no signature assumption.
+
+Since $3^{3/2}<U_{2,3}$, this certificate also sharpens the standalone degree-$52$ row of §7.3:
+
+$$
+\operatorname{rd}(K)<3^{3/2}
+\quad\Longrightarrow\quad
+[K:\mathbf Q]\leq20.
+\tag{7.4}
+$$
+
+There is no paradox. The degree-$52$ row used only Minkowski's inequality and was never asserted
+to be optimal; the degree-$20$ row uses the stronger explicit formula.
+
+### 7.5 Totally real improvements
 
 For a totally real field, Minkowski has no $(\pi/4)$ loss. At degrees $6$ and $13$,
 
@@ -1122,7 +1502,7 @@ $$
 
 Consequently a totally real field below the $5$-threshold has degree at most $6$.
 
-### 7.5 Degree and signature grids
+### 7.6 Degree and signature grids
 
 For intermediate signatures, no new theory is required. At fixed $T$ and $n$, solve
 
@@ -1309,7 +1689,7 @@ Let $F$ be a number field, let $\ell$ be a rational prime, and let $M$ be a fini
 - $L/F$ is unramified away from places above $\ell$;
 - at every $v\mid\ell$, the local module is the generic fiber of a finite flat commutative group scheme over $\mathcal O_{F_v}$.
 
-The established local ramification estimate gives
+The local ramification estimate, proved in §10.5, gives
 
 $$
 \boxed{
@@ -1399,6 +1779,282 @@ $$
 $$
 
 This cancellation concerns only the new relative ramification. It does not cancel $\operatorname{rd}(F)$.
+
+### 10.5 Why the finite-flat exponent is uniform
+
+The upper bound in §10.1 is the arithmetic half of Fontaine's argument, so we now reconstruct its
+proof. The important feature is that the exponent depends on the power of $\ell$ annihilating the
+module, but not on its rank.
+
+Let $K/\mathbf Q_\ell$ be finite, put $R=\mathcal O_K$, normalize $v_K(K^\times)=\mathbf Z$, and
+write
+
+$$
+e_K=v_K(\ell).
+$$
+
+Let $\mathcal G=\operatorname{Spec}A$ be a finite locally free commutative $R$-group scheme with
+étale generic fiber. Its identity section is an augmentation $\varepsilon:A\to R$; write
+$I=\ker\varepsilon$. For a geometric point $P:A\to\mathcal O_{\overline K}$, define its depth
+from the identity by
+
+$$
+\nu(P)=\inf_{a\in I}v_K(P(a)).
+$$
+
+Because $I$ is a finite $R$-module, the infimum is attained on any finite set of generators. The
+group law makes the same definition measure the distance between two points:
+
+$$
+\nu(P-Q)=\inf_{a\in A}v_K(P(a)-Q(a)).
+\tag{10.1}
+$$
+
+This translation invariance is what an arbitrary finite flat algebra lacks.
+
+The decisive Hopf-algebra estimate is
+
+$$
+[\ell]^*I\subseteq \ell I+I^\ell,
+\qquad
+[\ell]^*a-\ell a\in\ell I^2+I^\ell
+\quad(a\in I).
+\tag{10.2}
+$$
+
+To prove it, choose generators of $I$ and express multiplication by $\ell$ through the iterated
+comultiplication. The degree-one contribution is the sum of the same generator in the $\ell$
+tensor positions, hence becomes $\ell a$. Modulo $\ell$, multiplication by $\ell$ on a
+commutative group factors through relative Frobenius. Its pullback carries the augmentation ideal
+into its $\ell$th power. Equivalently, every homogeneous contribution of degree strictly between
+$1$ and $\ell$ has a multinomial coefficient divisible by $\ell$. Lifting from $R/\ell R$ gives
+(10.2), including the sharper assertion about the linear term.
+
+Suppose now that $P$ is killed by $\ell$ and set $r=\nu(P)>0$. Choose a generator $a$ attaining
+$r$. Evaluating $[\ell]^*a$ at $P$ produces a sum whose linear term $\ell P(a)$ has valuation
+$e_K+r$, whose terms in $\ell I^2$ have valuation at least $e_K+2r$, and whose terms in $I^\ell$
+have valuation at least $\ell r$. If
+
+$$
+r>\frac{e_K}{\ell-1},
+$$
+
+then $e_K+r<\ell r$, so the linear term is uniquely of least valuation. A nonarchimedean sum with
+a unique least-valuation term cannot be zero. This contradicts $[\ell]P=0$ unless $P=0$.
+
+The same ball contains no nonzero point killed by any power of $\ell$. Indeed, (10.2) gives
+
+$$
+\nu([\ell]P)\geq\min\{e_K+\nu(P),\ell\nu(P)\}.
+$$
+
+If $\nu(P)>e_K/(\ell-1)$, the right side is again greater than that radius. Induction on the
+exponent reduces to the order-$\ell$ case. By (10.1), any two distinct $\ell$-power torsion points
+are therefore separated by some integral function at depth at most
+
+$$
+c=\frac{e_K}{\ell-1}.
+\tag{10.3}
+$$
+
+For $\mu_\ell$, a primitive root satisfies
+$v_K(\zeta_\ell-1)=e_K/(\ell-1)$, so the strict radius cannot be improved uniformly.
+
+It remains to convert separation of points into an upper ramification cutoff. We state the bridge
+with its endpoint, since confusing the radius with the ramification break loses $e_K-1$ over a
+ramified base.
+
+**Lemma 10.1 (congruence to ramification).** Suppose a finite locally free commutative
+$R$-group scheme is killed by $\ell^a$, its generic fiber is étale, and every two distinct
+geometric points are separated at depth at most $c$. Then the upper ramification group $G_K^u$
+acts trivially on its geometric points for
+
+$$
+u>e_Ka+c-1.
+\tag{10.4}
+$$
+
+**Proof.** Choose a finite Galois extension $E/K$ splitting every point. For $r\geq0$, put two
+points in the same $r$-class when every integral function takes values differing by valuation
+greater than $r$. Translation shows that every nonempty class is a coset of the class of zero;
+all classes consequently have equal size. As $r$ passes the finitely many critical distances,
+the stabilizers of the classes form a filtration of $\operatorname{Gal}(E/K)$.
+
+Measure distances with $v_E$. An interval of $v_K$-length $b$ has $v_E$-length
+$e(E/K)b$. When a congruence class has $h$ points, its conjugates form equal blocks, and the
+index of its stabilizer divides this raw length in the Herbrand integral. Thus the factor
+$e(E/K)$ cancels when the filtration is converted to upper numbering. This is the orbit count
+behind quotient compatibility of upper ramification groups.
+
+Refine the zero class by its intersections with the kernels of $[\ell^j]$, for
+$1\leq j\leq a$. Let $b_j$ be the last upper parameter at which the action on the order
+$\ell^j$ layer can be nontrivial. At the terminal order-$\ell$ layer, multiplication by $\ell$
+contributes $e_K$, separation contributes at most $c$, and the isolated tame inertia term
+contributes the shift $-1$. Hence
+
+$$
+b_1\leq e_K+c-1.
+$$
+
+For each lift from the $\ell^{j-1}$-layer to the $\ell^j$-layer, (10.2) spends at most one further
+$v_K(\ell)=e_K$ on the upper clock. Therefore
+
+$$
+b_j\leq b_{j-1}+e_K.
+$$
+
+Induction gives $b_a\leq e_Ka+c-1$. Above that value every difference of points is fixed, so every
+point is fixed. Enlarging $E$ does not alter the conclusion because upper numbering passes to
+quotients. $\square$
+
+Combining (10.3) and (10.4) yields the finite-flat ramification theorem.
+
+**Theorem 10.2 (finite-flat upper break).** Let $M$ be a finite continuous $G_K$-module killed by
+$\ell^a$. If $M$ is the generic fiber of a finite locally free commutative group scheme over
+$R$, then
+
+$$
+G_K^u\text{ acts trivially on }M
+\quad\text{for every}\quad
+u>e_K\left(a+\frac1{\ell-1}\right)-1.
+\tag{10.5}
+$$
+
+Let $E=K(M)$ and let $e=e(E/K)$ and $d=d(E/K)$. Hilbert's different formula in upper numbering is
+
+$$
+d=(e-1)+e\int_0^\infty
+\left(1-\frac1{|G^u|}\right)du.
+\tag{10.6}
+$$
+
+The cutoff (10.5) and the bound of the integrand by $1$ give
+
+$$
+d\leq e\,e_K\left(a+\frac1{\ell-1}\right)-1,
+$$
+
+and hence
+
+$$
+\boxed{
+\frac de<e_K\left(a+\frac1{\ell-1}\right).}
+\tag{10.7}
+$$
+
+The strict sign in (10.7) comes from the surviving $-1/e$, not from removing the possible endpoint
+break in (10.5). For $a=1$ and $K/\mathbf Q_\ell$ unramified, the last upper break is at most
+$1/(\ell-1)$ while the normalized different is strictly less than $\ell/(\ell-1)$. These are
+different constants with different meanings.
+
+Finally let $F$ be a number field and $L=F(M)$. At a place $v\mid\ell$, put
+$e_v^0=e(F_v/\mathbf Q_\ell)$ and $f_v^0=f(F_v/\mathbf Q_\ell)$. The exact global formula is
+
+$$
+\operatorname{rd}(L)=\operatorname{rd}(F)
+\prod_v(Nv)^{d_v/(e_v[F:\mathbf Q])}.
+\tag{10.8}
+$$
+
+Using (10.7) at all $v\mid\ell$ and
+$\sum_{v\mid\ell}e_v^0f_v^0=[F:\mathbf Q]$ gives
+
+$$
+\operatorname{rd}(L)
+<\operatorname{rd}(F)\ell^{a+1/(\ell-1)}
+$$
+
+when no other finite prime ramifies. This proves §10.1, and also proves the general exponent-$a$
+form needed to diagnose higher torsion levels.
+
+### 10.6 The residual three-adic ledger
+
+We now specialize every factor rather than hiding it under the phrase “small ramification.” Let
+$M$ be a finite $G_{\mathbf Q}$-module killed by $3$, possessing a finite-flat model at $3$, and
+let $L=\mathbf Q(M)$. At $3$, Theorem 10.2 gives last upper break at most $1/2$ and
+
+$$
+\frac{d_3}{e_3}<\frac32.
+\tag{10.9}
+$$
+
+If $L$ is unramified outside $3$, then
+
+$$
+\boxed{\operatorname{rd}(L)<3^{3/2}.}
+\tag{10.10}
+$$
+
+The strongest certified degree consequence in this book is nevertheless $[L:\mathbf Q]\leq20$,
+by (7.4). The degree-$52$ Minkowski row remains a useful independent check, but is weaker.
+
+If $L$ is also ramified at $2$ and the inertia image there has order $3$, it is tame because the
+residue characteristic is $2$. Its positive ramification groups vanish, so
+
+$$
+d_2=e_2-1=2,
+\qquad
+\frac{d_2}{e_2}=\frac23.
+\tag{10.11}
+$$
+
+An unramified part at $2$ changes the residue degree but not either value in (10.11). Formula
+(10.8) now gives the exact two-prime ceiling
+
+$$
+\boxed{
+\operatorname{rd}(L)<3^{3/2}2^{2/3}.}
+\tag{10.12}
+$$
+
+If inertia at $2$ is trivial, its factor is $1$, not $2^{2/3}$. If its order is an arbitrary odd
+power $3^b$, the exact tame factor is
+
+$$
+2^{1-3^{-b}}.
+$$
+
+No assertion about $b$ follows from finite flatness at $3$; it is separate local information.
+
+The coefficient exponent also matters. Let $\mathcal O$ be the integers of a finite extension of
+$\mathbf Q_3$, choose a uniformizer $\varpi$, and write
+
+$$
+e_{\mathcal O}=v_\varpi(3).
+$$
+
+For a free $\mathcal O$-lattice $T$, the quotient $T/\varpi^nT$ is killed by
+
+$$
+3^{m(n)},
+\qquad
+m(n)=\left\lceil\frac{n}{e_{\mathcal O}}\right\rceil,
+\tag{10.13}
+$$
+
+and, when $T\ne0$, by no smaller power. Thus the full-level three-adic bound is
+
+$$
+\operatorname{rd}\bigl(\mathbf Q(T/\varpi^nT)\bigr)
+<3^{m(n)+1/2}
+$$
+
+before auxiliary factors. Only at residual level is $m(1)=1$ automatically. A first-order
+difference module arising at a high coefficient level can return to the residual ceiling if its
+underlying additive group is killed by $3$ and an actual finite-flat model of the whole difference
+module is supplied. Finite flatness of its diagonal constituents alone does not control an
+off-diagonal extension class.
+
+For rank two over $\mathbf F_3$, the matrix degree bound is
+
+$$
+[L:\mathbf Q]leq|\operatorname{GL}_2(\mathbf F_3)|
+=(3^2-1)(3^2-3)=48.
+\tag{10.14}
+$$
+
+The determinant-one subgroup has order $24$. The analytic bounds do not replace these image
+calculations; their force comes from simultaneous comparison with (10.10) or (10.12).
 
 ## 11. Fontaine's stabilization mechanism
 
@@ -1550,6 +2206,85 @@ To obtain a classification of a representation, one still needs group-theoretic 
 
 None follows from a root-discriminant inequality. In particular, finite image does not imply reducibility, and bounded degree does not determine the semisimplification. The next stage of the theory supplies these group-theoretic inputs.
 
+### 11.6 Forbidden large torsion fields
+
+We can now state the exclusion furnished by Fontaine's comparison without folding later
+classification into it.
+
+**Theorem 11.1 (two-prime forbidden-field theorem).** Let $M$ be a finite
+$\mathbf F_3$-representation of $G_{\mathbf Q}$ satisfying the following hypotheses:
+
+- $M$ is the generic fiber of a finite locally free commutative group scheme over $\mathbf Z_3$;
+- the cutout field $L=\mathbf Q(M)$ is unramified outside $\{2,3\}$;
+- inertia at $2$ is either trivial or cyclic of order $3$.
+
+Then
+
+$$
+[L:\mathbf Q]\leq20.
+\tag{11.1}
+$$
+
+Consequently the image of $G_{\mathbf Q}$ on $M$ cannot have order divisible by $24$. In
+particular, when $M$ has dimension two, its image is neither
+$\operatorname{SL}_2(\mathbf F_3)$ nor $\operatorname{GL}_2(\mathbf F_3)$.
+
+**Proof.** The whole module is killed by $3$, so its model gives the strict local exponent
+$d_3/e_3<3/2$. If inertia at $2$ is trivial, the factor at $2$ is absent; if it has order $3$, the
+exact tame exponent is $2/3$. In both cases
+
+$$
+\operatorname{rd}(L)<3^{3/2}2^{2/3}.
+$$
+
+The certified comparison (7.3) gives $[L:\mathbf Q]\leq20$. Because $L/\mathbf Q$ is Galois,
+its degree is the order of the image. An image whose order is divisible by $24$ would give degree
+at least $24$, a contradiction. The two named groups have orders $24$ and $48$. $\square$
+
+There are two useful quotient forms. If a projective representation attached to $M$ has image
+$\operatorname{PGL}_2(\mathbf F_3)$, its projective cutout field is a Galois subfield of degree
+
+$$
+|\operatorname{PGL}_2(\mathbf F_3)|=24.
+$$
+
+Root discriminants decrease on passage to subfields, so this already contradicts (11.1).
+Equivalently, upper ramification cutoffs pass to quotient actions. Also, if the linear image
+contains $\operatorname{SL}_2(\mathbf F_3)$ and the determinant is surjective, then it is all of
+$\operatorname{GL}_2(\mathbf F_3)$: the determinant-one subgroup has index two and the image meets
+the other coset. The theorem excludes this common large-image alternative.
+
+The hypotheses attach to the full faithful action. Knowing only that the semisimplification has
+small constituents is insufficient: a nontrivial extension class can cut out a larger unipotent
+field. Conversely, once a full affine or difference representation is killed by $3$ and has its
+own finite-flat model, its dimension is irrelevant to the discriminant estimate. The same degree
+cap applies.
+
+The theorem also persists under finite composita of such modeled exponent-three fields. Products
+of the models give a model of the direct sum, still killed by $3$. At $2$, tame inertia is a finite
+cyclic quotient of tame inertia. If every summand has exponent-three inertial image, the direct
+sum image is cyclic of order at most $3$, not a product of arbitrarily many independent cubic
+groups. Thus the factor $2^{2/3}$ is paid once. Every finite subcompositum again has degree at most
+$20$, so the directed compositum is finite by the maximal-degree argument of §11.2.
+
+If inertia at $2$ is absent, one has the stronger arithmetic inequality
+
+$$
+\operatorname{rd}(L)<3^{3/2},
+$$
+
+and the same degree-$20$ conclusion follows because $3^{3/2}<3^{3/2}2^{2/3}$. The separate
+degree-$52$ Minkowski calculation is valid but not optimal after the explicit-formula certificate
+has been established. In particular, the universal root-discriminant comparison does exclude
+the full $\operatorname{GL}_2(\mathbf F_3)$ image in the three-only case as well.
+
+Finally, the theorem is a fixed-exponent result. For $T/3^nT$, the safe upper bound grows like
+$3^{n+1/2}$ and cannot be compared with the fixed certificate (7.3). To use Theorem 11.1 at a high
+lifting stage, the obstruction must be represented by a new exponent-three module over the fixed
+base, with the stated local models and ramification. This is Fontaine's stabilization mechanism in
+its precise form: return each first-order obstruction to one uniformly bounded category, rather
+than pretend that the full torsion tower has a uniform discriminant.
+
 ## 12. Small-prime calculations
 
 ### 12.1 The prime 2
@@ -1590,10 +2325,17 @@ $$
 \operatorname{rd}(L)<3^{3/2}=5.1961524227\ldots,
 $$
 
-and the unrestricted Minkowski calculation gives
+and the standalone Minkowski calculation gives
 
 $$
 [L:\mathbf Q]\leq52.
+$$
+
+The explicit-formula certificate of §7.4 is stronger: because
+$3^{3/2}<3^{3/2}2^{2/3}$, it gives
+
+$$
+[L:\mathbf Q]\leq20.
 $$
 
 If $L$ is totally real, then
@@ -1602,10 +2344,10 @@ $$
 [L:\mathbf Q]\leq12.
 $$
 
-Suppose additional residual structure shows that the image is an extension of a $3$-group by a group of order dividing $2$, as happens when all diagonal constituents are trivial or cyclotomic. Then its order divides $2\cdot3^a$. The degree cap excludes $54$, so the possible orders are contained in
+Suppose additional residual structure shows that the image is an extension of a $3$-group by a group of order dividing $2$, as happens when all diagonal constituents are trivial or cyclotomic. Then its order divides $2\cdot3^a$. The strongest degree cap leaves only
 
 $$
-1,2,3,6,9,18,27.
+1,2,3,6,9,18.
 $$
 
 If the cyclotomic quotient of order $2$ is known to occur, only the even entries remain. If the field is totally real, complex conjugation is trivial in the Galois group and the cyclotomic constituent at $3$ cannot occur nontrivially; that is a group-theoretic signature constraint, not part of the analytic estimate.
@@ -1655,13 +2397,19 @@ $$
 6,\qquad48,\qquad480.
 $$
 
-The unrestricted $2$- and $3$-bounds do not by themselves exclude the first two images: $6\leq11$ and $48\leq52$. At $5$, however, $480>16$. Therefore there is no surjective action
+The unrestricted $2$-bound does not exclude the first image because $6\leq11$. The strongest
+$3$-bound does exclude the second because $48>20$, and the $5$-bound excludes the third because
+$480>16$. Therefore there is no surjective action
 
 $$
 G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\mathbf F_5)
 $$
 
 whose cutout field is unramified away from $5$ and whose local module at $5$ is finite flat. This is a genuine nonexistence conclusion, not merely bounded degree. If an independent hypothesis makes a cutout field totally real, the smaller signature caps can exclude additional images; one must first check compatibility of that hypothesis with complex conjugation and the determinant.
+
+Likewise, there is no surjective action to $\operatorname{GL}_2(\mathbf F_3)$ whose cutout field is
+unramified away from $3$ and whose local module at $3$ is finite flat. This conclusion uses the
+degree-$20$ explicit-formula row, not the weaker degree-$52$ Minkowski row.
 
 ### 12.4 Strict and weak inequalities
 
@@ -1686,6 +2434,52 @@ U<C(\alpha_0).
 $$
 
 Equality with the limiting constant gives no finite-degree cutoff by this argument. Likewise, the local statement that an upper ramification group is trivial for $u>R$ allows a break at $R$; the strict root-discriminant inequality comes instead from the $-1/e$ in the normalized different. These are distinct endpoint phenomena.
+
+### 12.5 The prime 3 with tame cubic inertia at 2
+
+The two-prime row is the one that changes a degree estimate into a large-image exclusion. Let
+$L/\mathbf Q$ be the field cut out by an exponent-three module finite flat at $3$. Suppose its only
+other ramification is tame at $2$, with inertia of order at most $3$. Then
+
+$$
+\operatorname{rd}(L)<3^{3/2}2^{2/3}
+$$
+
+and §7.4 gives
+
+$$
+[L:\mathbf Q]\leq20.
+\tag{12.1}
+$$
+
+This conclusion is stronger than combining separate one-prime estimates. The exponent $3/2$ at
+$3$ already includes the tame baseline there, and the exponent $2/3$ at $2$ is exact. There is no
+additional factor $2$, no factor counting the number of primes above $2$, and no multiplication by
+the representation dimension.
+
+For a two-dimensional $\mathbf F_3$-module, the complete matrix group has order $48$ and its
+determinant-one subgroup has order $24$. Both are impossible by (12.1). A Borel subgroup has order
+
+$$
+(3-1)^2\cdot3=12,
+$$
+
+so the analytic cap does not exclude reducible upper-triangular actions. A nonsplit Cartan has
+order $3^2-1=8$, and its normalizer has order $16$; these too fit below the cap. Thus the numerical
+comparison separates genuinely large images from several small irreducible or reducible
+possibilities, but it does not itself decide among the survivors.
+
+The subgroup arithmetic makes the division of labor clear. If an independent argument proves
+that the image contains $\operatorname{SL}_2(\mathbf F_3)$, then the degree is at least $24$ and
+Fontaine's comparison gives an immediate contradiction. If all that is known is irreducibility,
+the image might have order $8$ or $16$, so no contradiction follows. Irreducible, large, and
+surjective are distinct hypotheses at this exceptional small prime.
+
+The same caution applies to projective images. The scalar subgroup of
+$\operatorname{GL}_2(\mathbf F_3)$ has order $2$, so passage to the projective field can halve the
+degree. A projective image $S_4$ has order $24$ and is excluded; a projective image $A_4$ has order
+$12$ and is not. Quotienting never worsens the ramification ceiling, but it can move the degree
+below the analytic cutoff.
 
 ## 13. Signature and base-field refinements
 
@@ -1940,12 +2734,29 @@ $$
 &[L:\mathbf Q]\text{, totally real}\\
 \hline
 2&4&\leq11&\leq5\\
-3&3^{3/2}&\leq52&\leq12\\
+3&3^{3/2}&\leq20&\leq12\\
 5&5^{5/4}&\leq16&\leq6.
 \end{array}
 $$
 
-The upper inequalities for root discriminants are strict; the degree conclusions are weak inequalities because degrees are integers.
+The upper inequalities for root discriminants are strict; the degree conclusions are weak
+inequalities because degrees are integers. The arbitrary-signature entry $20$ at $3$ uses the
+explicit-formula certificate for the larger ceiling $3^{3/2}2^{2/3}$; the independent Minkowski
+row gives the weaker but still valid value $52$.
+
+There is one additional certified row with $S\ne\varnothing$. For $\ell=3$, if the only auxiliary
+place is $2$ and its inertia has order at most $3$, then
+
+$$
+\operatorname{rd}(L)<3^{3/2}2^{2/3}
+\quad\Longrightarrow\quad
+[L:\mathbf Q]\leq20.
+\tag{15.1}
+$$
+
+Thus no such faithful action has image order divisible by $24$; in rank two over $\mathbf F_3$,
+the groups $\operatorname{SL}_2(\mathbf F_3)$ and
+$\operatorname{GL}_2(\mathbf F_3)$ are excluded.
 
 ### 15.3 Uniform-compositum stabilization
 
@@ -1974,6 +2785,13 @@ What the package does not say is that every finite-flat representation is reduci
 The discriminant is simultaneously a covolume, a ramification product, and a coefficient in a functional equation. Minkowski's theorem uses the first interpretation to give a universal geometric lower bound. Dedekind's zeta function exposes the deeper arithmetic: its logarithmic derivative counts prime powers, its gamma factors record signature, and its functional equation balances primes against zeros. The Weil--Poitou explicit formula makes that balance numerical.
 
 Positivity is the decisive design principle. On the critical line, Fourier positivity controls zeros under the generalized Riemann hypothesis. Unconditionally, dividing a positive-type function by $\cosh(x/2)$ controls symmetric zero pairs throughout the strip. The exact archimedean cost of that protection changes $8\pi e^{\gamma+\alpha\pi/2}$ into the unconditional constant $4\pi e^{\gamma+\alpha}$. Finite support then converts the asymptotic statement into explicit degree bounds, with every value needed at $2$, $3$, and $5$ obtained directly from the displayed integrals.
+
+The certified two-prime value is particularly decisive. The strict ceiling
+$3^{3/2}2^{2/3}$ forces degree at most $20$, and therefore rules out three-adic residual torsion
+fields with Galois group of order $24$ or $48$ under the stated finite-flat and tame-inertia
+hypotheses. The smaller three-only ceiling inherits the same cap. Its dedicated Minkowski
+calculation gives $52$, a useful independent but nonoptimal row; the stronger conclusion comes
+from the explicit formula.
 
 Fontaine's method is the collision of this analytic lower pressure with an arithmetic upper ceiling. Finite-flat exponent-$\ell$ modules over a fixed base have cutout fields with uniformly small root discriminant, and finite direct sums preserve the bound across composita. If that ceiling lies below the Odlyzko--Poitou threshold, the maximal compositum is finite. Nested fields stabilize; separated torsion quotients then have finite image.
 

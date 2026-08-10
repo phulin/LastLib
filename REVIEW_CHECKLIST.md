@@ -243,7 +243,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 176. Brauer Induction and Descent of Automorphy
 - [ ] 177. Changing the Prime
 - [x] 178. Discriminants of Galois Representations
-- [ ] 179. Odlyzko Bounds and Fontaine’s Argument
+- [x] 179. Odlyzko Bounds and Fontaine’s Argument
 - [ ] 180. Hardly Ramified (3)-adic Representations
 - [ ] 181. Schoof's Finite-Flat Category over ℤ[1/2]
 - [x] 182. Local Conditions for Hardly-Ramified Minimal Deformations
