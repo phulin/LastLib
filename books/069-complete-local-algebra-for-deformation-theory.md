@@ -22,13 +22,16 @@
    - [Minimal generators of modules and ideals](#34-minimal-generators-of-modules-and-ideals)
    - [Topological generators of algebras](#35-topological-generators-of-algebras)
    - [What fails without completeness or finiteness](#36-what-fails-without-completeness-or-finiteness)
-4. [Formal coordinates and minimal presentations](#4-formal-coordinates-and-minimal-presentations)
+4. [Cohen structure, formal coordinates, and minimal presentations](#4-cohen-structure-formal-coordinates-and-minimal-presentations)
    - [Why formal power series are the correct source](#41-why-formal-power-series-are-the-correct-source)
-   - [Building a presentation from tangent lifts](#42-building-a-presentation-from-tangent-lifts)
-   - [Minimality over a field](#43-minimality-over-a-field)
-   - [Minimality over a coefficient ring](#44-minimality-over-a-coefficient-ring)
-   - [Changes of coordinates and uniqueness information](#45-changes-of-coordinates-and-uniqueness-information)
-   - [Worked presentations](#46-worked-presentations)
+   - [The coefficient-ring theorem](#42-the-coefficient-ring-theorem)
+   - [The Cohen presentation theorem](#43-the-cohen-presentation-theorem)
+   - [Cohen presentations are not canonical](#44-cohen-presentations-are-not-canonical)
+   - [Building a presentation from tangent lifts](#45-building-a-presentation-from-tangent-lifts)
+   - [Minimality over a field](#46-minimality-over-a-field)
+   - [Minimality over a coefficient ring](#47-minimality-over-a-coefficient-ring)
+   - [Changes of coordinates and uniqueness information](#48-changes-of-coordinates-and-uniqueness-information)
+   - [Worked presentations](#49-worked-presentations)
 5. [Relation modules and the number of equations](#5-relation-modules-and-the-number-of-equations)
    - [Why an ideal is not yet a count of relations](#51-why-an-ideal-is-not-yet-a-count-of-relations)
    - [The minimal relation module](#52-the-minimal-relation-module)
@@ -36,6 +39,9 @@
    - [Relative and special-fiber relation counts](#54-relative-and-special-fiber-relation-counts)
    - [Changing a presentation](#55-changing-a-presentation)
    - [Examples and counterexamples](#56-examples-and-counterexamples)
+   - [Relation modules, syzygies, and redundancy](#57-relation-modules-syzygies-and-redundancy)
+   - [Relative relation modules for a map](#58-relative-relation-modules-for-a-map)
+   - [The universal small extension attached to a relation](#59-the-universal-small-extension-attached-to-a-relation)
 6. [Krull dimension in the complete local setting](#6-krull-dimension-in-the-complete-local-setting)
    - [Dimension as chains of irreducible constraints](#61-dimension-as-chains-of-irreducible-constraints)
    - [Prime chains and quotients](#62-prime-chains-and-quotients)
@@ -49,13 +55,19 @@
    - [The associated graded criterion](#73-the-associated-graded-criterion)
    - [Complete regular rings and coefficient bases](#74-complete-regular-rings-and-coefficient-bases)
    - [Detecting singularity in examples](#75-detecting-singularity-in-examples)
-   - [The boundary with homological algebra](#76-the-boundary-with-homological-algebra)
-8. [Parameters without depth theory](#8-parameters-without-depth-theory)
+   - [From regularity to regular sequences](#76-from-regularity-to-regular-sequences)
+8. [Parameters, depth, and complete intersections](#8-parameters-depth-and-complete-intersections)
    - [Why dimension needs concrete witnesses](#81-why-dimension-needs-concrete-witnesses)
    - [Systems of parameters](#82-systems-of-parameters)
    - [Existence and dimension cutting](#83-existence-and-dimension-cutting)
    - [Parameter ideals and finite quotients](#84-parameter-ideals-and-finite-quotients)
    - [Examples and limitations](#85-examples-and-limitations)
+   - [Non-zero-divisors and regular sequences](#86-non-zero-divisors-and-regular-sequences)
+   - [Depth and Cohen--Macaulay rings](#87-depth-and-cohen--macaulay-rings)
+   - [Regular local rings are Cohen--Macaulay](#88-regular-local-rings-are-cohen--macaulay)
+   - [Quotients by regular sequences](#89-quotients-by-regular-sequences)
+   - [Complete intersections](#810-complete-intersections)
+   - [Regular sequences under flat base change](#811-regular-sequences-under-flat-base-change)
 9. [Finite local homomorphisms](#9-finite-local-homomorphisms)
    - [Why finite maps matter](#91-why-finite-maps-matter)
    - [Integrality, lying over, and going up](#92-integrality-lying-over-and-going-up)
@@ -66,18 +78,29 @@
    - [Finite does not mean quotient](#97-finite-does-not-mean-quotient)
 10. [Finite modules as geometric detectors](#10-finite-modules-as-geometric-detectors)
     - [Support and annihilators](#101-support-and-annihilators)
-    - [Faithful modules](#102-faithful-modules)
-    - [What reduction modulo the maximal ideal detects](#103-what-reduction-modulo-the-maximal-ideal-detects)
-    - [Closed submodules and exact limits](#104-closed-submodules-and-exact-limits)
-    - [Examples of support and failure of detection](#105-examples-of-support-and-failure-of-detection)
+   - [Faithful modules](#102-faithful-modules)
+   - [What reduction modulo the maximal ideal detects](#103-what-reduction-modulo-the-maximal-ideal-detects)
+   - [Closed submodules and exact limits](#104-closed-submodules-and-exact-limits)
+   - [Examples of support and failure of detection](#105-examples-of-support-and-failure-of-detection)
+   - [Why coefficient flatness is torsion control](#106-why-coefficient-flatness-is-torsion-control)
+   - [Finite flat modules are free](#107-finite-flat-modules-are-free)
+   - [The torsion exact sequence and specialization](#108-the-torsion-exact-sequence-and-specialization)
+   - [Flatness of a presented algebra](#109-flatness-of-a-presented-algebra)
+   - [Dimension of special and generic fibers](#1010-dimension-of-special-and-generic-fibers)
+   - [Exactness under completed scalar extension](#1011-exactness-under-completed-scalar-extension)
 11. [Completed tensor products](#11-completed-tensor-products)
-    - [Combining two formal local problems](#111-combining-two-formal-local-problems)
-    - [Construction and universal property](#112-construction-and-universal-property)
-    - [Noetherianity and locality](#113-noetherianity-and-locality)
+   - [Combining two formal local problems](#111-combining-two-formal-local-problems)
+   - [Construction and universal property](#112-construction-and-universal-property)
+   - [Noetherianity and locality](#113-noetherianity-and-locality)
     - [Relative tangent spaces add](#114-relative-tangent-spaces-add)
-    - [Dimension over a field](#115-dimension-over-a-field)
-    - [Dimension over a discrete valuation ring](#116-dimension-over-a-discrete-valuation-ring)
-    - [Examples and topology warnings](#117-examples-and-topology-warnings)
+   - [Dimension over a field](#115-dimension-over-a-field)
+   - [Dimension over a discrete valuation ring](#116-dimension-over-a-discrete-valuation-ring)
+   - [Examples and topology warnings](#117-examples-and-topology-warnings)
+   - [Fiber products solve a different problem](#118-fiber-products-solve-a-different-problem)
+   - [Locality, completeness, and the exact sequence](#119-locality-completeness-and-the-exact-sequence)
+   - [Prime spectra and dimension of a fiber product](#1110-prime-spectra-and-dimension-of-a-fiber-product)
+   - [Cotangent spaces of fiber products](#1111-cotangent-spaces-of-fiber-products)
+   - [Fiber products in lifting arguments](#1112-fiber-products-in-lifting-arguments)
 12. [Base change and formal smoothness](#12-base-change-and-formal-smoothness)
     - [Base-changing a presentation](#121-base-changing-a-presentation)
     - [Cotangent spaces after coefficient extension](#122-cotangent-spaces-after-coefficient-extension)
@@ -89,9 +112,12 @@
     - [Tangent dimension counts variables](#131-tangent-dimension-counts-variables)
     - [When obstruction dimension bounds relations](#132-when-obstruction-dimension-bounds-relations)
     - [The basic dimension bound](#133-the-basic-dimension-bound)
-    - [What cohomology does not determine](#134-what-cohomology-does-not-determine)
-    - [Unobstructed problems](#135-unobstructed-problems)
-    - [Framed and fixed-determinant bookkeeping](#136-framed-and-fixed-determinant-bookkeeping)
+   - [What cohomology does not determine](#134-what-cohomology-does-not-determine)
+   - [Unobstructed problems](#135-unobstructed-problems)
+   - [Framed and fixed-determinant bookkeeping](#136-framed-and-fixed-determinant-bookkeeping)
+   - [Relative tangent and obstruction theory](#137-relative-tangent-and-obstruction-theory)
+   - [Local products and the global presentation](#138-local-products-and-the-global-presentation)
+   - [Balanced presentations](#139-balanced-presentations)
 14. [A gallery of deformation-shaped local rings](#14-a-gallery-of-deformation-shaped-local-rings)
     - [A smooth universal ring](#141-a-smooth-universal-ring)
     - [A fat infinitesimal direction](#142-a-fat-infinitesimal-direction)
@@ -101,16 +127,20 @@
     - [A completed product of constrained problems](#146-a-completed-product-of-constrained-problems)
 15. [The patching dictionary](#15-the-patching-dictionary)
     - [Reading cohomology as a presentation](#151-reading-cohomology-as-a-presentation)
-    - [Reading a ring map](#152-reading-a-ring-map)
-    - [Reading completed products](#153-reading-completed-products)
-    - [A disciplined numerical workflow](#154-a-disciplined-numerical-workflow)
-    - [Conclusion](#155-conclusion)
+   - [Reading a ring map](#152-reading-a-ring-map)
+   - [Reading completed products](#153-reading-completed-products)
+   - [A disciplined numerical workflow](#154-a-disciplined-numerical-workflow)
+   - [Balance plus finiteness over a regular base](#155-balance-plus-finiteness-over-a-regular-base)
+   - [The local-to-global numerical package](#156-the-local-to-global-numerical-package)
+   - [A faithful patched module controls its ring](#157-a-faithful-patched-module-controls-its-ring)
+   - [Augmentation and descent to finite level](#158-augmentation-and-descent-to-finite-level)
+   - [Conclusion](#159-conclusion)
 
 ## 1. The local algebra behind a universal object
 
 ### 1.1 From representability to equations
 
-Book 62 established the coefficient rings on which deformation theory lives: local Artinian rings record finite infinitesimal thickness, and complete Noetherian local rings assemble all thicknesses at once. Book 65 then explained when a deformation problem is represented by such a complete ring. We now begin after existence. A universal ring has been produced; the question is what its algebra says.
+Book 62 established the coefficient rings on which deformation theory lives: local Artinian rings record finite infinitesimal thickness, and complete Noetherian local rings assemble all thicknesses at once. We now study what can be deduced whenever a deformation problem is represented by such a complete ring. Existence and the calculation of particular tangent and obstruction spaces are separate inputs; the question here is what their algebra says once they are available.
 
 Three transitions drive the subject. A tangent calculation should become a count of formal coordinates. An obstruction calculation should, under additional effectiveness hypotheses, become a bound on equations. A map between deformation problems should become a local homomorphism whose finiteness, dimension, or surjectivity can be checked. None of these transitions is automatic. They require a careful distinction between absolute and coefficient-relative directions, between a chosen presentation and a minimal one, and between a finite map and a faithfully finite map.
 
@@ -121,6 +151,8 @@ R\simeq \mathcal O[[X_1,\ldots,X_r]]/(f_1,\ldots,f_s),
 $$
 
 but this picture is useful only after every symbol has been justified. Why are there $r$ variables? In what sense are the $f_j$ minimal? Does $s$ give a dimension drop of exactly $s$, or only at most $s$? What happens to the presentation after changing coefficients or combining two local problems? These are the questions that follow.
+
+The narrative moves from Cohen coefficient rings and minimal presentations to relation modules and dimension, then to regular sequences, complete intersections, and coefficient flatness. Completed tensor products combine independent local conditions, while fiber products glue compatible reductions. The final chapters place a global ring over the completed product of its local rings and prove the exact balanced-presentation and faithful-module criteria used to force complete-intersection and freeness conclusions in patching.
 
 ### 1.2 The coefficient conventions
 
@@ -136,7 +168,7 @@ $$
 
 When $\mathcal O=k$, the structural map is a coefficient field and the relative and absolute theories coincide. When $\mathcal O$ is a discrete valuation ring, $\varpi$ is a coefficient parameter. It may remain a genuine tangent direction in $R$, fall into $\mathfrak m_R^2$, or vanish. Relative invariants deliberately ignore it; absolute invariants do not.
 
-We use only the coefficient structure already justified in Book 62. In equal characteristic, a chosen coefficient field permits presentations over $k$. In mixed characteristic, a fixed complete coefficient ring is part of the data. We do not assert that an arbitrary complete local ring contains a canonical coefficient field or a canonical discrete valuation subring. All power-series presentations over $\mathcal O$ presuppose the displayed structural map.
+Book 62 supplied the fixed-base coefficient formalism. Chapter 4 proves the coefficient-ring existence theorem needed to place an arbitrary complete Noetherian local ring into that formalism. In equal characteristic a chosen coefficient field permits presentations over $k$; in mixed characteristic a chosen complete coefficient ring supplies the base. Neither choice is generally canonical, and all relative power-series presentations remember the displayed structural map.
 
 ### 1.3 Continuity and finite shadows
 
@@ -480,7 +512,7 @@ Finiteness also matters for algebraic Nakayama. Let $R=k[[t]]$ and $M=k((t))/k[[
 
 Finally, merely being complete as an abstract metric object is insufficient if the topology is not the $J$-adic one used in the approximation. The correction terms must tend to zero in the topology under which both $R^r$ and $M$ are complete.
 
-## 4. Formal coordinates and minimal presentations
+## 4. Cohen structure, formal coordinates, and minimal presentations
 
 ### 4.1 Why formal power series are the correct source
 
@@ -501,7 +533,96 @@ $$
 
 is complete Noetherian local, with maximal ideal $(\mathfrak m_{\mathcal O},X_1,\ldots,X_r)$. If $\mathcal O$ is a field, $\dim P=r$; if $\mathcal O$ is a discrete valuation ring, $\dim P=r+1$. Every ideal is closed, so every local quotient is again complete and separated.
 
-### 4.2 Building a presentation from tangent lifts
+### 4.2 The coefficient-ring theorem
+
+A presentation over a field or a complete discrete valuation ring begins with a less visible question: why may the residue field be lifted into the ring at all? In equal characteristic one wants an actual field of representatives. In mixed characteristic that is impossible, and one instead wants a characteristic-zero discrete valuation ring whose residue map is the prescribed one. These are the two forms of the coefficient-ring theorem.
+
+**Theorem (coefficient rings).** Let $(R,\mathfrak m,k)$ be a complete Noetherian local ring.
+
+1. If $R$ and $k$ have the same characteristic, there is a subfield $k_0\subseteq R$ mapping isomorphically onto $k$.
+2. Suppose $R$ has characteristic zero and $k$ has characteristic $p>0$. There is a complete discrete valuation ring $C$ of characteristic zero, with maximal ideal $(p)$ and residue field $k$, together with a local homomorphism $C\to R$ inducing the identity on $k$. The map is injective.
+3. If $k$ is perfect, the mixed-characteristic ring $C$ is unique up to the unique isomorphism compatible with multiplicative representatives of $k$. In particular it may be fixed once and for all. For imperfect $k$, existence remains true, but choices of representatives of a $p$-basis enter and uniqueness is not asserted without those choices.
+
+Here and below a chosen copy of $k_0$ or a chosen map from $C$ is part of the presentation data. The theorem does not make arbitrary morphisms preserve independently chosen coefficient rings.
+
+**Proof strategy.** One first chooses representatives in successively thicker quotients $R/\mathfrak m^n$. At each stage the failure of addition and multiplication lies one order deeper. Completeness turns a compatible tower of increasingly accurate representatives into exact representatives. In equal characteristic the correction equations are linear over $k$. In mixed characteristic the multiplicative representatives and their $p$-adic digits are lifted instead; for an imperfect residue field, a chosen $p$-basis supplies the missing independent digits.
+
+**Proof.** We give the decisive construction. In equal characteristic, choose a transcendence basis $S$ of $k$ over its prime field and lift its elements to $R$. Every nonzero polynomial in finitely many elements of $S$ has nonzero residue and is therefore a unit in $R$. The resulting map from the rational function field on $S$ embeds into $R$. The residue extension $k/k_{\mathrm{prime}}(S)$ is algebraic. For a finite separable subextension, a primitive element has separable minimal polynomial; a lift of a simple residue root is corrected uniquely modulo $\mathfrak m^n$ at each stage because the derivative is a unit. Completeness supplies a root in $R$. Purely inseparable generators are handled by choosing a $p$-basis before the induction: at each finite stage the needed representatives are chosen freely on the basis and extended by the unique finite $p$-polynomial expansion. Taking the directed union of the lifted finitely generated subfields and closing under the compatible construction gives a subfield mapping onto $k$. Its intersection with $\mathfrak m$ is zero, so the residue map restricts to an isomorphism.
+
+In mixed characteristic, begin with multiplicative representatives of a $p$-basis of $k$. Construct rings $C_n$ of characteristic $p^n$ recursively so that $C_{n+1}/p^nC_{n+1}\simeq C_n$, $p$ generates the maximal ideal, and the residue field is $k$. The lift from level $n$ to $n+1$ is determined on the chosen $p$-basis; every residue element has a unique finite expression in $p$-basis monomials with coefficients in $k^p$, so induction extends the lift to addition and multiplication. The inverse limit
+
+$$
+C=\varprojlim_n C_n
+$$
+
+is complete, has maximal ideal $(p)$, and every nonzero element is uniquely $p^au$ with $u$ a unit. Hence $C$ is a discrete valuation ring. The same recursive corrections, now performed inside $R/\mathfrak m^n$ and made compatible with the $p$-adic quotients, give $C\to R$. Its kernel is an ideal $(p^a)$ if nonzero, but $p^a$ cannot vanish in a characteristic-zero ring; therefore the map is injective. When $k$ is perfect there is no $p$-basis choice beyond the empty one, and the multiplicative representatives determine all digits, giving the stated uniqueness. $\square$
+
+For a finite field $k$, the perfect case is the one used most often. Each $a\in k$ has a unique multiplicative lift $[a]\in C$, and every element of $C$ has a unique convergent expansion
+
+$$
+[a_0]+p[a_1]+p^2[a_2]+\cdots.
+$$
+
+The representatives are multiplicative, not additive. Treating $a\mapsto[a]$ as a field embedding would contradict the characteristic difference.
+
+### 4.3 The Cohen presentation theorem
+
+The coefficient-ring theorem supplies constants. Cotangent lifts supply variables. Together they give the structural presentation on which all later numerical arguments rest.
+
+**Theorem (Cohen presentation).** Let $(R,\mathfrak m,k)$ be complete Noetherian local.
+
+- In equal characteristic, after choosing a coefficient field $k\hookrightarrow R$, there is a surjection
+
+  $$
+  k[[X_1,\ldots,X_e]]\twoheadrightarrow R,
+  $$
+
+  where $e=\dim_k\mathfrak m/\mathfrak m^2$. It may be chosen minimal, and then its kernel lies in $(X_1,\ldots,X_e)^2$.
+- In mixed characteristic, choose a coefficient ring $C\to R$. Put
+
+  $$
+  r=\dim_k\frac{\mathfrak m}{\mathfrak m^2+pR}.
+  $$
+
+  There is a surjection
+
+  $$
+  C[[X_1,\ldots,X_r]]\twoheadrightarrow R
+  $$
+
+  inducing the given coefficient map, and it is minimal relative to $C$.
+
+**Proof strategy.** Lift a basis of the appropriate cotangent space, map the formal variables to those lifts, and prove surjectivity one order at a time. The coefficient ring supplies the constant term at every order; products of the chosen lifts supply every graded correction.
+
+**Proof.** In equal characteristic choose $y_i\in\mathfrak m$ lifting a basis of $\mathfrak m/\mathfrak m^2$. In mixed characteristic choose lifts of a basis of $\mathfrak m/(\mathfrak m^2+pR)$. Substitution gives the displayed continuous map $\phi$. In the equal-characteristic case its cotangent map is onto. In the mixed-characteristic case its relative cotangent map is onto; the image of $pR$ already comes from $C$, so its absolute cotangent map is also onto. The complete cotangent criterion proves that $\phi$ is surjective. The chosen bases make the relative cotangent maps isomorphisms. The conormal sequence then says precisely that the kernel has no unit-coefficient linear part. $\square$
+
+In mixed characteristic the absolute embedding dimension $e$ and the relative number $r$ differ according to the position of $p$:
+
+$$
+r=
+\begin{cases}
+e-1,&p\notin\mathfrak m^2,\\
+e,&p\in\mathfrak m^2.
+\end{cases}
+$$
+
+Indeed the image of $pR$ in $\mathfrak m/\mathfrak m^2$ is respectively one-dimensional or zero. In the second case the coefficient parameter is already decomposable; a typical ramified presentation has a relation
+
+$$
+p-F(X_1,\ldots,X_e),\qquad F\in(X_1,\ldots,X_e)^2.
+$$
+
+This is why a ramified regular local ring can require as many relative variables as its absolute embedding dimension.
+
+### 4.4 Cohen presentations are not canonical
+
+The structure theorem gives existence, not preferred coordinates. A different coefficient field, a different coefficient-ring map, a different cotangent basis, or different lifts of that basis can alter the kernel inside the source. Even in $k[[T]]$, the parameters $T$ and $T+T^2$ give different written coordinates.
+
+What is intrinsic is more modest and more useful: the minimal number of variables, the isomorphism class of the quotient, the minimal number of generators of the kernel after the coefficient map is fixed, and properties invariant under source automorphisms. Dimension, regularity, flatness, and the complete-intersection property belong to this stable package. Individual equations generally do not.
+
+The coefficient-ring map also matters. A ring can admit two coefficient structures over the same residue field that are not carried into one another by an automorphism fixed in advance. Every relative statement in this book therefore names its base. Absolute invariants such as $\dim R$ and $\operatorname{edim}R$ do not depend on that choice; relative embedding dimension and a relative relation module do.
+
+### 4.5 Building a presentation from tangent lifts
 
 Let $R$ be an admissible complete local $\mathcal O$-algebra, and put
 
@@ -525,7 +646,7 @@ for the closed ideal $I=\ker\phi$.
 
 This construction separates intrinsic data from choices. The number $r$ is intrinsic. The basis, its lifts, the variables, and the kernel as a named subideal of a named power-series ring are not. What survives changes of coordinates is the isomorphism class of $R$ and the numerical data attached to a minimal presentation.
 
-### 4.3 Minimality over a field
+### 4.6 Minimality over a field
 
 Assume first that $\mathcal O=k$ and write $\mathfrak n=(X_1,\ldots,X_r)$. A surjection
 
@@ -550,7 +671,7 @@ $$
 
 but the second presentation has a linear relation and is not minimal.
 
-### 4.4 Minimality over a coefficient ring
+### 4.7 Minimality over a coefficient ring
 
 Let $P=\mathcal O[[X_1,\ldots,X_r]]$ with maximal ideal $\mathfrak n$. The presentation $P\twoheadrightarrow R$ is **minimal relative to $\mathcal O$** when
 
@@ -568,7 +689,7 @@ This criterion allows a relation whose apparent linear term is a coefficient mul
 
 Absolute minimality is a different question. In $R=\mathcal O[[X,Y]]/(XY-\varpi)$, the relative presentation has two variables and one equation. Absolutely, $\varpi$ becomes decomposable, so the maximal ideal of $R$ is generated by $X,Y$ rather than by $\varpi,X,Y$. A relative presentation need not display an absolute minimal generating set term by term.
 
-### 4.5 Changes of coordinates and uniqueness information
+### 4.8 Changes of coordinates and uniqueness information
 
 Two choices of bases of $C_{R/\mathcal O}$ differ by an element of $\operatorname{GL}_r(k)$. More strongly, let $\phi,\psi:P=\mathcal O[[\mathbf X]]\twoheadrightarrow R$ be two minimal presentations. Choose $z_i\in\mathfrak n_P$ with $\phi(z_i)=\psi(X_i)$. Substitution $X_i\mapsto z_i$ defines a continuous $\mathcal O$-endomorphism $\alpha$ of $P$ satisfying $\phi\circ\alpha=\psi$. Its relative linear part is invertible because both presentations identify $C_{P/\mathcal O}$ with $C_{R/\mathcal O}$. The relative cotangent surjectivity criterion makes $\alpha$ surjective, and a surjective endomorphism of the Noetherian ring $P$ is injective. Thus $\alpha$ is an automorphism carrying $\ker\psi$ to $\ker\phi$.
 
@@ -578,7 +699,7 @@ The resulting principle is:
 
 This is exactly the uniqueness one should expect. A universal deformation ring may be canonical relative to its universal property, but coordinates on its formal neighborhood never are.
 
-### 4.6 Worked presentations
+### 4.9 Worked presentations
 
 The ring $R=k[[T]]/(T^3)$ has $C_R=k\bar T$, so its displayed one-variable presentation is minimal. The kernel is generated by one cubic relation. Replacing $T$ by $T+T^2$ gives another minimal coordinate and changes the written equation by a unit multiple plus higher terms.
 
@@ -746,6 +867,93 @@ $$
 
 there is one relative variable and one minimal relation. The ring has both a horizontal component $(X)$ and a vertical component $(\varpi)$. Its dimension is $1$, not something obtained by indiscriminately subtracting one from every component dimension. Prime geometry, developed next, controls the actual answer.
 
+### 5.7 Relation modules, syzygies, and redundancy
+
+The space $I/\mathfrak nI$ counts generators of the ideal $I$; it does not record relations among those generators. If $f_1,\ldots,f_s$ generate $I$, the surjection
+
+$$
+P^s\longrightarrow I,
+\qquad (a_1,\ldots,a_s)\longmapsto\sum_ia_if_i
+$$
+
+has kernel $Z$, the first **syzygy module**. An element of $Z$ is an algebraic identity among the equations. Replacing an equation by itself plus a combination of the others changes the chosen basis of $P^s$ but not the ideal or the quotient.
+
+Minimality has a useful exact form. If the classes of the $f_i$ form a basis of $I/\mathfrak nI$, then
+
+$$
+Z\subseteq\mathfrak nP^s.
+$$
+
+Indeed, reducing a syzygy modulo $\mathfrak n$ gives a linear dependence among those basis classes. Conversely, if a generating list has this containment, its residue classes are linearly independent and the list is minimal. Thus a minimal presentation has no syzygy with a unit coefficient. It may still have many higher syzygies. For $I=(X^2,XY)$, the identity
+
+$$
+Y\cdot X^2-X\cdot XY=0
+$$
+
+is a nontrivial syzygy, but both coefficients lie in the maximal ideal, so neither equation is redundant.
+
+This distinction matters in obstruction calculations. An obstruction space that bounds the number of ideal generators need not describe all identities among the resulting equations. Those identities enter homological invariants and cannot be recovered from the mere dimension of $I/\mathfrak nI$.
+
+### 5.8 Relative relation modules for a map
+
+Often one does not present a ring over the coefficient ring directly. Instead one has a local map $A\to R$ and wants to count only the new global equations beyond those already present in $A$. Choose a relative minimal surjection
+
+$$
+P=A[[X_1,\ldots,X_g]]\twoheadrightarrow R
+$$
+
+and write $I$ for its kernel and $\mathfrak n$ for the maximal ideal of $P$. The **relation module of $R$ over $A$ in this presentation** is
+
+$$
+\operatorname{Rel}_{P/A}(R)=I/\mathfrak nI.
+$$
+
+The variables are counted by
+
+$$
+g=\dim_k\frac{\mathfrak m_R}
+{\mathfrak m_R^2+\mathfrak m_AR},
+$$
+
+provided $A$ and $R$ have the same residue field. The relations are counted by $\dim_k I/\mathfrak nI$. All equations already defining $A$ are built into the base and are not counted again.
+
+Two relative minimal presentations over the same $A$ are related by an $A$-linear formal coordinate change, exactly as in Section 4.8. Their relation spaces therefore have the same dimension. This number depends on the map $A\to R$, not merely on the abstract ring $R$. Taking $A=\mathcal O$ counts all deformation equations; taking $A$ to be a completed product of prescribed local rings counts only the global compatibility equations.
+
+The relative conormal sequence is
+
+$$
+I/I^2\longrightarrow
+\Omega_{P/A}\otimes_PR
+\longrightarrow\Omega_{R/A}\longrightarrow0.
+$$
+
+After tensoring with $k$, a relative minimal presentation again makes the first arrow zero. The ideal generators survive in $I/\mathfrak nI$ even though their closed-point differentials vanish.
+
+### 5.9 The universal small extension attached to a relation
+
+A nonzero functional
+
+$$
+\lambda:I/\mathfrak nI\longrightarrow k
+$$
+
+isolates one relation direction. This statement can be made into an explicit small extension. Choose $N$ large enough that a representative of the selected relation is nonzero in $P/\mathfrak n^N$. Form
+
+$$
+E_N=
+\frac{P}{I\mathfrak n+\mathfrak n^N+\ker(\lambda)},
+$$
+
+where $\ker(\lambda)$ denotes the inverse image in $I$ of the kernel of the functional. The image of $I$ in $E_N$ is one-dimensional over $k$ and is killed by the maximal ideal. Quotienting it out gives an Artinian quotient of $R$. Hence
+
+$$
+E_N\twoheadrightarrow E_N/(I)
+$$
+
+is a principal small extension. It asks whether the universal object can be lifted while relaxing precisely the equation selected by $\lambda$.
+
+Different sufficiently large $N$ give compatible tests. This is the algebra behind the injection from the dual relation space into an effective obstruction space in Chapter 13. The construction also explains why the dual appears: a relation itself is an element of a kernel, while pushing that kernel out to a one-dimensional small extension requires a linear functional on its residue fiber.
+
 ## 6. Krull dimension in the complete local setting
 
 ### 6.1 Dimension as chains of irreducible constraints
@@ -883,7 +1091,7 @@ $$
 \dim(P/I)=\dim P-s
 $$
 
-holds exactly when $\operatorname{ht}(I)=s$, provided $s$ is the minimal number of ideal generators under discussion. This numerical equality alone does not license any conclusion about regular sequences or complete intersections; those require the depth theory reserved for Book 70.
+holds exactly when $\operatorname{ht}(I)=s$, provided $s$ is the minimal number of ideal generators under discussion. Chapter 8 proves that, in the regular source $P$, this equality is exactly the condition that a minimal generating list be a regular sequence; it is therefore the numerical complete-intersection criterion.
 
 For one nonzero equation in the domain $P$, the principal ideal theorem and absence of height-zero containment give height exactly one. Thus, if $0\neq f\in P$ is a nonunit,
 
@@ -1021,13 +1229,13 @@ $$
 
 has dimension $1$ and maximal ideal minimally generated by $\varpi,X$, hence embedding dimension $2$. It is not regular.
 
-### 7.6 The boundary with homological algebra
+### 7.6 From regularity to regular sequences
 
-There is a deep homological characterization of regular local rings through finite global dimension. Proving it requires projective dimension, resolutions, and depth in a scope far beyond what is needed for the present generator-and-dimension arguments. We therefore do not use it here.
+The associated graded criterion does more than recognize a smooth formal space. If $x_1,\ldots,x_d$ minimally generate the maximal ideal of a regular local ring, then their initial forms are polynomial variables. It follows successively that $x_1$ is a non-zero-divisor, that the image of $x_2$ is a non-zero-divisor modulo $x_1$, and so on. Indeed, if $x_i a$ belonged to the ideal generated by the preceding $x_j$, comparison of the first nonzero initial forms in the polynomial associated graded ring would force the initial form of $a$ into the same preceding ideal. Repeating by order and using separation gives the desired divisibility in the local ring.
 
-Similarly, equality between relation count and codimension does not by itself supply the module-theoretic conclusions associated with complete intersections. Regular sequences, depth, Cohen--Macaulayness, projective dimension, and the homological force of complete-intersection presentations belong to Book 70. The current chapter supplies only the elementary regularity criteria required to recognize formal power-series rings and singular closed points.
+Thus a regular system of parameters behaves not only like a coordinate list but also like a sequence of independent equations. Chapter 8 develops this idea carefully, including the exact distinction between a dimension-cutting parameter and a non-zero-divisor, and uses it to characterize the complete-intersection presentations needed later.
 
-## 8. Parameters without depth theory
+## 8. Parameters, depth, and complete intersections
 
 ### 8.1 Why dimension needs concrete witnesses
 
@@ -1092,6 +1300,179 @@ which is Artinian. Neither $X$ nor $Y$ is a parameter, because quotienting by on
 In $k[[X,Y]]/(X^2,XY)$, the element $Y$ is a parameter and the quotient is $k[[X]]/(X^2)$. Yet $Y$ kills the nonzero class of $X$, so it is a zero divisor. Dimension cutting alone gives no regularity of action.
 
 In a $d$-dimensional regular local ring, any minimal generating set of the maximal ideal is a system of parameters. The converse is false: a singular ring still has systems of parameters, but its maximal ideal needs more than $d$ generators. That excess is precisely the gap between embedding dimension and dimension.
+
+### 8.6 Non-zero-divisors and regular sequences
+
+Dimension measures how many equations can cut a space; injectivity measures whether an equation cuts without killing an existing component. Let $M$ be a finite module over a local ring $(R,\mathfrak m)$. An element $x\in\mathfrak m$ is **$M$-regular** if multiplication
+
+$$
+M\xrightarrow{x}M
+$$
+
+is injective and $M/xM\neq0$. A sequence $x_1,\ldots,x_c\in\mathfrak m$ is **$M$-regular** if $x_i$ is regular on
+
+$$
+M/(x_1,\ldots,x_{i-1})M
+$$
+
+for every $i$. For $M=R$ we simply say **regular sequence**.
+
+The order matters in the definition, although in a Noetherian local ring permutations of a regular sequence are again regular. The local hypothesis and the requirement that all elements lie in $\mathfrak m$ exclude the vacuous use of units.
+
+**Proposition (dimension drop).** If $x$ is a non-zero-divisor on a nonzero Noetherian local ring $R$, then
+
+$$
+\dim R/xR=\dim R-1.
+$$
+
+Consequently, if $x_1,\ldots,x_c$ is a regular sequence, then
+
+$$
+\dim R/(x_1,\ldots,x_c)=\dim R-c.
+$$
+
+**Proof strategy.** The principal ideal theorem gives a drop of at most one. The non-zero-divisor hypothesis keeps $x$ out of every associated minimal prime, so every prime minimal above $(x)$ has height exactly one over a minimal prime of maximal dimension.
+
+**Proof.** Every prime minimal over $(x)$ has height at most one above some minimal prime by the principal ideal theorem. It cannot itself be minimal in $R$, since a zero divisor in a Noetherian ring is contained in an associated prime and every minimal prime is associated; the hypothesis excludes this. Thus the height increase is exactly one along the components that attain the dimension. Taking the supremum of chains gives the first equality. Apply it successively in the quotient rings to obtain the second. $\square$
+
+The converse is false without further hypotheses. In the reduced node $k[[X,Y]]/(XY)$, quotienting by $X$ leaves dimension one, so no drop occurs; $X$ is a zero divisor. But a zero divisor can sometimes lower the maximum dimension by one if it kills only lower-dimensional embedded information. Dimension alone does not detect injectivity.
+
+### 8.7 Depth and Cohen--Macaulay rings
+
+The **depth** of a nonzero finite $R$-module $M$ is the largest length of an $M$-regular sequence in $\mathfrak m$. We put $\operatorname{depth}_R0=\infty$. Every regular sequence cuts support dimension once at each step, so
+
+$$
+\operatorname{depth}_RM\leq\dim\operatorname{Supp}_R(M).
+$$
+
+A Noetherian local ring $R$ is **Cohen--Macaulay** if
+
+$$
+\operatorname{depth}R=\dim R.
+$$
+
+Equivalently, some system of parameters is a regular sequence; in that case every system of parameters is regular. The equivalence is worth seeing. A regular sequence of length $d=\dim R$ has an Artinian quotient by the dimension-drop proposition, so it is a system of parameters. Conversely, if depth is $d$, a maximal regular sequence has length $d$ and its quotient has dimension zero. For the assertion about every system, choose the parameters one at a time. In a Cohen--Macaulay ring no associated prime has dimension below $d$; a parameter avoids all associated primes and is therefore a non-zero-divisor. The quotient remains Cohen--Macaulay of dimension $d-1$, and induction finishes.
+
+The key exact-sequence rule is the **depth lemma**. If
+
+$$
+0\longrightarrow M'\longrightarrow M\longrightarrow M''\longrightarrow0
+$$
+
+is exact with finite modules over a local ring, then
+
+$$
+\operatorname{depth}M\geq
+\min(\operatorname{depth}M',\operatorname{depth}M''),
+$$
+
+with the two companion inequalities obtained by cyclically moving one term and increasing the smaller depth by one. To prove it, choose an element outside the finite union of associated primes obstructing regularity on the relevant modules, reduce the sequence modulo that element, and induct. The connecting kernel after reduction is exactly the submodule killed by the element, so regularity on two terms supplies regularity on the third in precisely the stated ranges.
+
+Depth is the module-theoretic refinement of dimension needed in patching. A parameter may cut dimension while killing torsion; a regular parameter cuts dimension and preserves exact control.
+
+### 8.8 Regular local rings are Cohen--Macaulay
+
+Let $(P,\mathfrak n)$ be regular local of dimension $d$, and choose a minimal generating set $x_1,\ldots,x_d$ of $\mathfrak n$. Section 7.3 identifies
+
+$$
+\operatorname{gr}_{\mathfrak n}P\simeq k[T_1,\ldots,T_d].
+$$
+
+The sequence $x_1,\ldots,x_d$ is regular. We prove the first step; the rest follows after quotienting. Suppose $x_1a=0$ with $a\neq0$, and choose the least $n$ with $a\in\mathfrak n^n\setminus\mathfrak n^{n+1}$. In the associated graded ring,
+
+$$
+T_1\operatorname{in}(a)=0,
+$$
+
+which is impossible in a polynomial ring. Hence $x_1$ is a non-zero-divisor. The associated graded ring of $P/x_1P$ is $k[T_2,\ldots,T_d]$, so the quotient is regular of dimension $d-1$. Induction proves regularity of the full sequence.
+
+Therefore every regular local ring is Cohen--Macaulay. In the power-series sources used here this is also visible directly:
+
+$$
+X_1,\ldots,X_r
+$$
+
+is regular in $k[[X_1,\ldots,X_r]]$, while
+
+$$
+\varpi,X_1,\ldots,X_r
+$$
+
+is regular in $\mathcal O[[X_1,\ldots,X_r]]$ for a coefficient discrete valuation ring.
+
+### 8.9 Quotients by regular sequences
+
+Let $P$ be Cohen--Macaulay local of dimension $d$, and let $f_1,\ldots,f_c$ be a $P$-regular sequence. Repeated dimension drop gives
+
+$$
+\dim P/(f_1,\ldots,f_c)=d-c.
+$$
+
+The quotient is again Cohen--Macaulay: a system of parameters of the quotient lifts to elements which, appended to the $f_i$, form a system of parameters of $P$; in a Cohen--Macaulay ring that full system is regular, so the lifted tail is regular on the quotient.
+
+There is also a converse in the form used for presentations.
+
+**Theorem (height equals number of equations).** Let $P$ be Cohen--Macaulay local and let $I=(f_1,\ldots,f_c)$ be generated minimally by $c$ elements. If
+
+$$
+\operatorname{ht}(I)=c,
+$$
+
+then $f_1,\ldots,f_c$ is a regular sequence.
+
+**Proof strategy.** Choose among the generators an element outside the finitely many associated primes of $P$ that contain too little of $I$. It is a non-zero-divisor. The height of the remaining ideal modulo that element is $c-1$, and induction applies. Minimality ensures that the remaining images still need $c-1$ generators.
+
+**Proof.** Since $\operatorname{ht}I>0$, the ideal $I$ is not contained in any associated prime of height zero of the Cohen--Macaulay ring $P$. If the residue field is finite, first make the faithfully flat local extension $P\to P[T]_{\mathfrak nP[T]}$, whose residue field $k(T)$ is infinite; height, minimal number of generators, and regularity all descend along this extension. Over an infinite residue field, prime avoidance permits a linear change of the minimal generators so that $f_1$ avoids every associated prime; it is a non-zero-divisor. The quotient $P/(f_1)$ is Cohen--Macaulay. The image $I'$ of $I$ has height $c-1$: prime chains above $I$ lose exactly the first regular cut. Its remaining $c-1$ displayed generators are minimal by reduction of $I/\mathfrak nI$. Induction makes them regular in the quotient. Faithful flatness descends injectivity of each multiplication map, so the conclusion holds over the original ring. $\square$
+
+The height condition is essential. In $k[[X,Y]]$, the ideal $(X^2,XY)$ has two minimal generators but height one. Its generators cannot be a regular sequence because $XY$ is killed modulo $X^2$ by the nonzero class of $X$.
+
+### 8.10 Complete intersections
+
+A complete Noetherian local ring $R$ is a **complete intersection** over a fixed coefficient base if it has a presentation
+
+$$
+R\simeq P/(f_1,\ldots,f_c),
+$$
+
+where $P$ is a regular complete local power-series ring over that base and $f_1,\ldots,f_c$ is a $P$-regular sequence. A hypersurface is the case $c=1$. The empty sequence gives a regular local ring.
+
+For a minimal Cohen presentation $R=P/I$, the following numerical criterion is exact:
+
+$$
+R\text{ is a complete intersection}
+\quad\Longleftrightarrow\quad
+\mu_P(I)=\operatorname{ht}(I).
+$$
+
+The forward direction follows because a regular sequence of length $c$ has height $c$. For the reverse direction, choose a minimal set of $c=\mu_P(I)$ generators and apply the theorem of Section 8.9. Coordinate changes between minimal Cohen presentations preserve the criterion. Thus the property does not depend on the chosen minimal coordinates over the fixed coefficient structure.
+
+Every complete intersection is Cohen--Macaulay, and
+
+$$
+\dim R=\dim P-c.
+$$
+
+It is not generally regular: $k[[X,Y]]/(XY)$ is a hypersurface and hence a complete intersection, but its embedding dimension exceeds its dimension. Nor is every Cohen--Macaulay ring a complete intersection. The Artinian ring
+
+$$
+k[[X,Y]]/(X,Y)^2
+$$
+
+is Cohen--Macaulay because its dimension and depth are both zero, but its defining ideal has height two and needs three generators.
+
+### 8.11 Regular sequences under flat base change
+
+Let $P\to P'$ be flat and local. If $f_1,\ldots,f_c$ is $P$-regular and $P'/(f_1,\ldots,f_c)P'$ is nonzero, then their images form a $P'$-regular sequence. Tensor the exact multiplication sequence
+
+$$
+0\longrightarrow P/(f_1,\ldots,f_{i-1})
+\xrightarrow{f_i}
+P/(f_1,\ldots,f_{i-1})
+$$
+
+with $P'$. Flatness preserves injectivity at every step. The nonzero quotient condition prevents a terminal unit.
+
+Consequently flat coefficient extension preserves complete-intersection presentations when the kernel base-changes exactly. Nonflat specialization can behave differently. The regular element $\varpi$ in $\mathcal O$ becomes zero after passage to $k$, so a presentation involving it may lose both a relation and a dimension. Flatness is the hypothesis that keeps independent equations independent.
 
 ## 9. Finite local homomorphisms
 
@@ -1298,7 +1679,7 @@ $$
 
 for $R=k[[X]]$ induces an isomorphism after reduction modulo $\mathfrak m$, yet has nonzero kernel generated by $X$. Even the dimensions of the closed fibers do not measure torsion hidden at higher order.
 
-One useful positive statement adds flatness or freeness, but those module-theoretic criteria belong with the deeper theory of Book 70. Here the safe rule is asymmetric: residue reduction detects zero objects, generators, and surjections of finite modules; it does not by itself detect injections, faithfulness, or freeness.
+Flatness or a known free rank can turn this into an injectivity statement, as Sections 10.6--10.11 explain. Without such an additional hypothesis the safe rule is asymmetric: residue reduction detects zero objects, generators, and surjections of finite modules; it does not by itself detect injections, faithfulness, or freeness.
 
 ### 10.4 Closed submodules and exact limits
 
@@ -1338,6 +1719,176 @@ inside the reduced node. Thus several nonfaithful modules can jointly detect the
 For the nonreduced ring $R=k[[X]]/(X^2)$, the residue field $k=R/(X)$ has support equal to the only point of $\operatorname{Spec}R$, hence full support, but is not faithful because $X$ annihilates it. Topological support does not see nilpotent functions.
 
 Finally, $M=R^a$ is faithful for every $a>0$, and its closed fiber has dimension $a$. The converse is false: knowing $\dim_kM/\mathfrak mM=a$ only gives the number of generators, not a free basis. Relations among their lifts may occur in higher order.
+
+### 10.6 Why coefficient flatness is torsion control
+
+Let $(\mathcal O,(\varpi),k)$ be a discrete valuation ring. A deformation ring over $\mathcal O$ is meant to connect its special fiber to characteristic-zero information. If $\varpi$ kills a nonzero element, part of the ring exists only in the special fiber. Flatness is the condition excluding precisely this phenomenon.
+
+An $\mathcal O$-module $M$ is **torsion-free** if
+
+$$
+\varpi m=0\quad\Longrightarrow\quad m=0.
+$$
+
+Because every nonzero element of $\mathcal O$ is a unit times a power of $\varpi$, this is equivalent to having no nonzero element killed by any nonzero coefficient.
+
+**Theorem (flatness over a discrete valuation ring).** An $\mathcal O$-module is flat if and only if it is torsion-free.
+
+**Proof strategy.** Flatness preserves the injection $(\varpi^n)\hookrightarrow\mathcal O$, giving torsion-freeness. Conversely, the criterion for flatness may be tested on finitely generated ideals; every such ideal is principal, and torsion-freeness makes the relevant multiplication map injective.
+
+**Proof.** If $M$ is flat, tensoring
+
+$$
+0\longrightarrow\mathcal O\xrightarrow{\varpi} \mathcal O
+$$
+
+with $M$ proves that multiplication by $\varpi$ on $M$ is injective. Conversely, flatness of a module over a ring is equivalent to injectivity of
+
+$$
+J\otimes_{\mathcal O}M\longrightarrow M
+$$
+
+for every finitely generated ideal $J$. Here $J=(\varpi^n)$ is free of rank one, and the displayed map identifies with multiplication by $\varpi^n$, which is injective on a torsion-free module. $\square$
+
+For an $\mathcal O$-algebra $R$, therefore,
+
+$$
+R\text{ is }\mathcal O\text{-flat}
+\quad\Longleftrightarrow\quad
+\varpi\text{ is a non-zero-divisor on }R.
+$$
+
+This is the flatness test used throughout the mixed-characteristic theory.
+
+### 10.7 Finite flat modules are free
+
+Let $A$ be a Noetherian local ring and let $M$ be a finite flat $A$-module. Then $M$ is free. Choose elements $m_1,\ldots,m_r$ lifting a basis of $M/\mathfrak m_AM$. Nakayama gives a surjection
+
+$$
+A^r\twoheadrightarrow M.
+$$
+
+Let $K$ be its kernel. Since $M$ is flat, tensoring the sequence with $A/\mathfrak m_A$ remains exact on the left. The chosen basis makes $K/\mathfrak m_AK=0$. The kernel is finite because $A$ is Noetherian, so Nakayama gives $K=0$. Thus $M\simeq A^r$.
+
+Over a discrete valuation ring this combines with Section 10.6:
+
+$$
+M\text{ finite and torsion-free}
+\quad\Longleftrightarrow\quad
+M\text{ finite free}.
+$$
+
+If $R$ is a nonzero finite flat local $\mathcal O$-algebra with residue field $k$, its rank is
+
+$$
+\operatorname{rank}_{\mathcal O}R
+=\dim_k R/\varpi R.
+$$
+
+The equality follows by reducing a free basis. Thus the length of the special fiber measures the degree of a finite flat coefficient algebra exactly.
+
+### 10.8 The torsion exact sequence and specialization
+
+For any $\mathcal O$-module $M$, tensor the exact sequence
+
+$$
+0\longrightarrow\mathcal O\xrightarrow{\varpi}\mathcal O
+\longrightarrow k\longrightarrow0
+$$
+
+with $M$. The resulting exact sequence begins
+
+$$
+0\longrightarrow M[\varpi]
+\longrightarrow M\xrightarrow{\varpi}M
+\longrightarrow M/\varpi M\longrightarrow0,
+$$
+
+where
+
+$$
+M[\varpi]=\{m\in M:\varpi m=0\}.
+$$
+
+Equivalently, the failure of tensoring with $k$ to preserve the injection on the left is exactly $M[\varpi]$. This makes coefficient torsion visible at the first derived stage, but no derived language is needed for the calculation.
+
+For a finite $R$-module $M$ over an $\mathcal O$-flat complete local algebra, the special fiber $M/\varpi M$ cannot by itself detect whether $M$ is $\mathcal O$-torsion-free. One must inspect the kernel of multiplication by $\varpi$. For example,
+
+$$
+M=\mathcal O\oplus k
+$$
+
+has a nonzero special fiber and a free summand, but its second summand is pure coefficient torsion.
+
+### 10.9 Flatness of a presented algebra
+
+Let $P=\mathcal O[[X_1,\ldots,X_r]]$ and $R=P/I$. Since $P$ is $\mathcal O$-flat, multiplication by $\varpi$ on $R$ is injective exactly when
+
+$$
+(I:\varpi)=I,
+$$
+
+where
+
+$$
+(I:\varpi)=\{a\in P:\varpi a\in I\}.
+$$
+
+Indeed a class $\bar a\in R$ is killed by $\varpi$ precisely when $a\in(I:\varpi)$, and it is zero precisely when $a\in I$. Thus the colon-ideal equality is an exact presentation test for flatness.
+
+The relation $\varpi X$ illustrates failure:
+
+$$
+R=\mathcal O[[X]]/(\varpi X)
+$$
+
+has $X\in(I:\varpi)\setminus I$. The special fiber is $k[[X]]$, while the generic fiber is the coefficient fraction field: the entire $X$-branch disappears after inverting $\varpi$.
+
+By contrast,
+
+$$
+R=\mathcal O[[X,Y]]/(XY-\varpi)
+$$
+
+is flat. The source is a domain and $XY-\varpi$ is not divisible by $\varpi$; if $\varpi a$ lies in the principal ideal, reduction modulo $\varpi$ shows that $XY$ divides the reduction of $a$. Lifting the quotient and iterating $\varpi$-adically yields $a\in(XY-\varpi)$. Equivalently, the quotient is the regular local domain already identified in Section 7.5, so $\varpi=XY$ is nonzero.
+
+### 10.10 Dimension of special and generic fibers
+
+Let $R$ be a nonzero complete Noetherian local $\mathcal O$-algebra which is flat over the discrete valuation ring $\mathcal O$. Then $\varpi$ is a non-zero-divisor, and Section 8.6 gives
+
+$$
+\dim R/\varpi R=\dim R-1.
+$$
+
+The special fiber therefore has exactly one dimension less than the total ring. The generic fiber $R[1/\varpi]$ need not be local, but every maximal-dimensional component of $R$ meets it because $\varpi$ lies in no minimal prime. In the topologically finite-type setting its dimension is also $\dim R-1$.
+
+Without flatness the special fiber can have the same dimension as the total ring. For $R=\mathcal O[[X]]/(\varpi X)$, both $R$ and $R/\varpi R\simeq k[[X]]$ have dimension one. The vertical component prevents the expected drop.
+
+If $R$ is finite over $\mathcal O$, then $\dim R\leq1$. When $R$ is nonzero and $\mathcal O$-flat, integrality and injectivity give $\dim R=1$ and the generic fiber is a nonzero finite-dimensional algebra over the fraction field. When $R$ is killed by a power of $\varpi$, it has dimension zero. Mixed horizontal and vertical components require separate torsion analysis.
+
+### 10.11 Exactness under completed scalar extension
+
+Let $\mathcal O\to\mathcal O'$ be a flat local map of complete Noetherian coefficient rings, and let
+
+$$
+0\longrightarrow M'\longrightarrow M\longrightarrow M''\longrightarrow0
+$$
+
+be an exact sequence of finite modules over a topologically finite-type complete $\mathcal O$-algebra. Ordinary tensoring with $\mathcal O'$ is exact. The resulting finite modules are complete for the induced adic topology, so completion changes none of them. Hence
+
+$$
+0\longrightarrow
+M'\widehat\otimes_{\mathcal O}\mathcal O'
+\longrightarrow
+M\widehat\otimes_{\mathcal O}\mathcal O'
+\longrightarrow
+M''\widehat\otimes_{\mathcal O}\mathcal O'
+\longrightarrow0
+$$
+
+is exact.
+
+This is the legitimate reason flat coefficient extension preserves kernels, relation modules, and regular sequences. Completion alone is not exact on arbitrary modules, and a nonflat coefficient quotient can create a kernel. The map $\mathcal O\to k$ sends the injection $\mathcal O\xrightarrow{\varpi}\mathcal O$ to the zero map $k\to k$, the smallest possible counterexample.
 
 ## 11. Completed tensor products
 
@@ -1527,7 +2078,144 @@ $$
 
 The node acquires one independent smooth direction; both dimension and embedding dimension increase by one.
 
-Finally, closures in quotient formulas are not optional outside Noetherian settings. Under our hypotheses every extended ideal is finitely generated and hence closed. If finite generation is dropped, quotienting before completion can differ from quotienting by the closure after completion, and the result can cease to be separated.
+Finally, closures in quotient formulas are indispensable outside Noetherian settings. Under our hypotheses every extended ideal is finitely generated and hence closed. If finite generation is dropped, quotienting before completion can differ from quotienting by the closure after completion, and the result can cease to be separated.
+
+### 11.8 Fiber products solve a different problem
+
+Completed tensor products combine two independent choices over a common base. Fiber products glue two coefficient rings that have already been identified after passing to a common quotient. The arrows point in the opposite pattern:
+
+$$
+\begin{array}{ccc}
+D&\longrightarrow&B\\
+\downarrow&&\downarrow\\
+A&\longrightarrow&C,
+\end{array}
+\qquad
+D=A\times_CB.
+$$
+
+Explicitly,
+
+$$
+A\times_CB=
+\{(a,b)\in A\times B:\alpha(a)=\beta(b)\}.
+$$
+
+A map $T\to A\times_CB$ is the same as a pair of maps $T\to A$ and $T\to B$ whose composites to $C$ agree. This is a pullback universal property. By contrast, a map *out of* $A\widehat\otimes_CB$ is a pair of maps out of $A$ and $B$. Interchanging the two constructions reverses the deformation problem being represented.
+
+### 11.9 Locality, completeness, and the exact sequence
+
+Assume $A\twoheadrightarrow C$ and $B\twoheadrightarrow C$ are surjective local maps of complete Noetherian local rings inducing the same residue field. Then $D=A\times_CB$ is local, with
+
+$$
+\mathfrak m_D=
+\mathfrak m_A\times_{\mathfrak m_C}\mathfrak m_B,
+$$
+
+and residue field equal to the common residue field. A pair is a unit exactly when either, hence both, of its residues is nonzero; its inverse is the compatible pair of inverses.
+
+There is an exact sequence of rings viewed additively,
+
+$$
+0\longrightarrow D
+\longrightarrow A\oplus B
+\xrightarrow{(a,b)\mapsto\alpha(a)-\beta(b)}C
+\longrightarrow0.
+$$
+
+It proves that $D$ is closed in the complete module $A\oplus B$, hence complete for the induced topology. It is Noetherian as well. The exact sequence shows that $A\oplus B$ is finite as a $D$-module, because the quotient is the cyclic $D$-module $C$. A subring over which a Noetherian ring is module-finite is Noetherian; the proof applies the determinant trick to finite module generators and then contracts finitely generated extended ideals. Thus $D$ is Noetherian. The induced topology and the maximal-ideal topology are cofinal, because the kernels of the finite-level projections have radical $\mathfrak m_D$. Hence $D$ is complete in its intrinsic maximal-adic topology.
+
+The same exact sequence gives the length formula in the Artinian case:
+
+$$
+\ell(D)=\ell(A)+\ell(B)-\ell(C),
+$$
+
+when all residue fields are the same and length is measured in residue-field composition factors.
+
+### 11.10 Prime spectra and dimension of a fiber product
+
+Put $I_A=\ker(D\to A)$ and $I_B=\ker(D\to B)$. Their product is zero: an element supported in the $A$-kernel times one supported in the $B$-kernel vanishes coordinatewise. Every prime of $D$ therefore contains $I_A$ or $I_B$. Primes containing $I_A$ correspond to primes of $A$, and primes containing $I_B$ correspond to primes of $B$. The overlap consists of primes coming from $C$. Thus
+
+$$
+\operatorname{Spec}D
+=\operatorname{Spec}A\cup_{\operatorname{Spec}C}\operatorname{Spec}B
+$$
+
+as a union of closed pieces, and
+
+$$
+\dim D=\max(\dim A,\dim B).
+$$
+
+This behavior differs sharply from a completed tensor product, whose dimensions add under flatness. A fiber product glues branches; it does not form their Cartesian product.
+
+For example,
+
+$$
+k[[X]]\times_k k[[Y]]
+\simeq k[[X,Y]]/(XY).
+$$
+
+The two one-dimensional formal discs are glued at their closed points. The result has dimension one, not two, and has two minimal primes.
+
+### 11.11 Cotangent spaces of fiber products
+
+The cleanest formula occurs when the common quotient is the residue field:
+
+$$
+D=A\times_kB.
+$$
+
+Then
+
+$$
+\mathfrak m_D=\mathfrak m_A\oplus\mathfrak m_B,
+\qquad
+\mathfrak m_D^2=\mathfrak m_A^2\oplus\mathfrak m_B^2,
+$$
+
+because mixed products vanish. Therefore
+
+$$
+C_D\simeq C_A\oplus C_B.
+$$
+
+The same direct-sum formula holds relatively over a coefficient ring when both maps to the common quotient kill precisely the respective relative closed-point directions.
+
+For a general common quotient $C$, the cotangent space is the fiber product of the first-order compatibility conditions, with an additional term measuring the two kernels. It is safer to compute from
+
+$$
+\mathfrak m_D/mathfrak m_D^2
+$$
+
+or from a presentation than to assert a direct sum. Directions already identified in $C$ must be identified, while kernel directions from the two sides remain independent.
+
+### 11.12 Fiber products in lifting arguments
+
+Let $A'\twoheadrightarrow A$ be a small extension and let $B\to A$ be any local map of Artinian coefficient rings. The pullback
+
+$$
+B'=A'\times_AB
+$$
+
+is an Artinian local ring and $B'\twoheadrightarrow B$ is again a small extension. Its kernel is canonically the kernel of $A'\to A$, with the residue-field action transported through $B$. This base-change stability is what permits obstruction classes to be compared after changing a test object.
+
+If two lifts over $A'$ and $B$ agree over $A$, the universal property gives one object over the fiber product. Represented functors preserve this pullback automatically:
+
+$$
+h_R(A'\times_AB)
+\simeq h_R(A')\times_{h_R(A)}h_R(B).
+$$
+
+This identity is categorical, whereas the completed tensor product identity
+
+$$
+h_{R\widehat\otimes_{\mathcal O}S}(T)
+\simeq h_R(T)\times h_S(T)
+$$
+
+combines two represented functors. The two formulas look similar only because both involve pairs; their variance and their algebra are different.
 
 ## 12. Base change and formal smoothness
 
@@ -1658,7 +2346,7 @@ This conclusion uses representability, topological finite type, and formal smoot
 
 ### 13.1 Tangent dimension counts variables
 
-We now reconnect the algebra to the functorial theory of Books 64 and 65. Let $F$ be a deformation functor over $\mathcal O$, and suppose $F$ is represented by an admissible complete local ring $R$. Then
+We now connect the algebra to a represented deformation problem. Let $F$ be a deformation functor over $\mathcal O$, and suppose $F$ is represented by an admissible complete local ring $R$. Then
 
 $$
 t_F\simeq T_{R/\mathcal O}
@@ -1861,6 +2549,116 @@ $$
 $$
 
 This formula is relative to the fixed coefficient base and determinant. Coefficient deformations and determinant deformations that have been frozen must not be restored as variables in the count.
+
+### 13.7 Relative tangent and obstruction theory
+
+Global deformation problems are assembled from prescribed local ones. Algebraically, this means that the natural base is not merely $\mathcal O$ but a complete local ring $A$ already representing all chosen local conditions. Let $A\to R$ be the induced local map. The relative tangent space is
+
+$$
+t_{R/A}=
+\operatorname{Hom}_k
+\left(
+\frac{\mathfrak m_R}
+{\mathfrak m_R^2+\mathfrak m_AR},k
+\right).
+$$
+
+If its dimension is $g$, relative cotangent lifts give a minimal surjection
+
+$$
+A[[X_1,\ldots,X_g]]\twoheadrightarrow R.
+$$
+
+Suppose a finite-dimensional space $V_{R/A}$ carries a complete, functorial, additive, effective obstruction theory for lifting the global object while the local object over $A$ is held fixed. The universal relation argument applies word for word relative to $A$, and gives
+
+$$
+\operatorname{Rel}_{A[[\mathbf X]]/A}(R)^\vee
+\hookrightarrow V_{R/A}.
+$$
+
+Thus, with $r=\dim_kV_{R/A}$,
+
+$$
+R\simeq
+A[[X_1,\ldots,X_g]]/(f_1,\ldots,f_s),
+\qquad s\leq r.
+$$
+
+No regularity of $A$ is required for this presentation. Krull's height theorem still yields
+
+$$
+\dim R\geq\dim A+g-s
+\geq\dim A+g-r,
+$$
+
+because $\dim A[[\mathbf X]]=\dim A+g$ in the complete Noetherian setting. This is the relative generator--relation inequality used for a global ring over its local deformation base.
+
+### 13.8 Local products and the global presentation
+
+Suppose a finite collection of local conditions is represented by complete local $\mathcal O$-algebras $R_v$, all with residue field $k$. Their simultaneous independent choice is represented by
+
+$$
+R_{\mathrm{loc}}
+=\widehat\bigotimes_{v,\mathcal O}R_v.
+$$
+
+The relative cotangent space is the direct sum of the local relative cotangent spaces. If every $R_v$ is $\mathcal O$-flat, then so is $R_{\mathrm{loc}}$, and repeated use of the DVR dimension formula gives
+
+$$
+\dim R_{\mathrm{loc}}
+=1+\sum_v(\dim R_v-1).
+$$
+
+Now let $R_{\mathrm{glob}}$ represent global objects equipped with their prescribed localizations. The localization transformation induces
+
+$$
+R_{\mathrm{loc}}\longrightarrow R_{\mathrm{glob}}.
+$$
+
+If the relative tangent space has dimension $g$ and an effective relative obstruction space has dimension $r$, then
+
+$$
+R_{\mathrm{glob}}
+\simeq
+R_{\mathrm{loc}}[[X_1,\ldots,X_g]]
+/(f_1,\ldots,f_s),
+\qquad s\leq r,
+$$
+
+and therefore
+
+$$
+\dim R_{\mathrm{glob}}
+\geq\dim R_{\mathrm{loc}}+g-r.
+$$
+
+This formula is exact about what is local and what is global. Equations already cutting out the $R_v$ sit inside $R_{\mathrm{loc}}$. The $g$ new variables measure global tangent classes invisible to the fixed local base, while the at most $r$ new equations measure global compatibility obstructions.
+
+In arithmetic applications the relative tangent space is often a Selmer group and the effective obstruction space injects into the dual of a dual Selmer group, possibly with explicit local correction terms. The local algebra uses only the resulting finite dimensions and the effectiveness map; it does not identify a cohomology group with equations without that map.
+
+### 13.9 Balanced presentations
+
+A relative presentation is **balanced** when it has no more relations than variables:
+
+$$
+s\leq g.
+$$
+
+Equivalently, the elementary dimension bound gives
+
+$$
+\dim R\geq\dim A.
+$$
+
+Balanced does not mean complete intersection, flat, or finite. The ring
+
+$$
+A[[X,Y]]/(X^2,XY)
+$$
+
+has two variables and two relations, hence is balanced, but the equations have height one and are not a regular sequence. Balance is a numerical lower bound; equality of relation number and height is the extra condition that produces a complete intersection.
+
+The power of balance appears when an independent argument gives an upper dimension bound or finiteness over the base. Then the height of the kernel is forced to be as large as the number of available variables. Chapter 15 makes this forcing argument precise and records the hypotheses under which it also yields flatness.
 
 ## 14. A gallery of deformation-shaped local rings
 
@@ -2093,14 +2891,200 @@ When a deformation ring enters a patching argument, the following order keeps th
 
 This workflow is not bureaucratic. Each checkpoint blocks a characteristic error: counting $\varpi$ as a deformation variable, treating all obstruction classes as equations, subtracting relation number as though it were height, or concluding an isomorphism from finiteness and equal dimension.
 
-### 15.5 Conclusion
+### 15.5 Balance plus finiteness over a regular base
 
-Complete local algebra turns infinitesimal deformation data into geometry around one closed point. The relative cotangent space is the hinge: its dual is the deformation tangent space, while its basis lifts provide the smallest possible system of formal coordinates. Topological Nakayama and completeness promote this first-order spanning statement to a surjection from a power-series ring. The kernel then has its own first-order shadow, the relation module, whose dimension counts minimal equations in that source.
+The most useful numerical forcing theorem begins with a balanced presentation and ends with a complete intersection.
 
-Krull dimension measures something different. It follows prime chains, so equations lower it according to height rather than according to their raw number. This distinction explains both the power and the limitation of obstruction calculations: an effective finite obstruction space bounds relations and hence gives a lower dimension bound, but it does not usually determine the equations or force equality. Regular local rings are the case in which dimension and absolute embedding dimension meet and every maximal-adic layer looks polynomial.
+**Theorem (balanced finite criterion).** Let $A$ be a regular complete local ring of dimension $d$, let
 
-Finite maps and finite modules provide the next bridge. Integrality gives the exact dimension formula after quotienting by the kernel; faithfulness removes that kernel; cotangent surjectivity supplies actual ring surjectivity. Support records what a finite module sees, while its annihilator records whether it sees every function, including nilpotents. These distinctions are the algebraic core of later arguments in which rings act on patched modules.
+$$
+P=A[[X_1,\ldots,X_g]],
+$$
 
-Completed tensor products combine independent formal problems without duplicating their coefficient direction. Relative tangent spaces add unconditionally in the finite-type local setting; dimensions add over a field and obey the expected subtraction over a coefficient DVR only under flatness. Formal smoothness is the special case in which all infinitesimal lifting succeeds, and completeness then identifies the ring with a genuine power-series extension.
+and suppose
 
-The final dictionary is therefore exact in its modesty. Tangent dimension gives variables. An effective obstruction theory gives an upper bound on relations. Height converts that bound into a dimension inequality. Faithful finite maps preserve dimension, cotangent-surjective faithful finite maps are isomorphisms, and flat completed products have predictable dimension. These statements are strong enough to carry cohomological calculations into patching, while leaving depth, regular sequences, complete intersections, and the homological analysis of patched modules to the theory that follows.
+$$
+R=P/(f_1,\ldots,f_s)
+$$
+
+is a nonzero local ring finite over $A$. Assume $A\to R$ is injective and $s\leq g$. Then:
+
+1. $s=g$ and the kernel has height $g$;
+2. $f_1,\ldots,f_g$ is a regular sequence;
+3. $R$ is a complete intersection and Cohen--Macaulay of dimension $d$;
+4. $R$ is finite free over $A$.
+
+**Proof strategy.** Finiteness and injectivity impose the upper and lower dimension $d$. Balance imposes the opposite lower bound from the presentation. Equality forces height to equal relation number. Cohen--Macaulayness then turns the parameters of $A$ into a regular sequence on $R$, and a finite-module lifting argument gives freeness.
+
+**Proof.** Since $R$ is finite and faithful over $A$,
+
+$$
+\dim R=\dim A=d.
+$$
+
+The source has dimension $d+g$, while the height theorem gives
+
+$$
+d=\dim R\geq d+g-s.
+$$
+
+Thus $s\geq g$. Since $s\leq g$, equality holds. The kernel has height
+
+$$
+\dim P-\dim R=(d+g)-d=g.
+$$
+
+It is minimally generated by $g$ elements after redundancies are removed, so the height criterion of Section 8.9 makes those generators a regular sequence. Hence $R$ is Cohen--Macaulay of dimension $d$.
+
+Let $a_1,\ldots,a_d$ be a regular system of parameters of $A$. Because $R$ is finite local over $A$, the ideal $(a_1,\ldots,a_d)R$ is $\mathfrak m_R$-primary, so the $a_i$ form a system of parameters of $R$. Cohen--Macaulayness makes them an $R$-regular sequence. We prove freeness over $A$ by induction on $d$. For $d=0$, $A$ is a field. For $d>0$, $R/a_1R$ is finite free over $A/a_1A$ by induction. Lift a basis to obtain a surjection $A^n\twoheadrightarrow R$. If $K$ is its kernel, reduction modulo $a_1$ remains left exact because $a_1$ is a non-zero-divisor on $R$. The reduced map is an isomorphism, so $K/a_1K=0$. Nakayama gives $K=0$. Thus $R\simeq A^n$. $\square$
+
+For $A=\mathcal O$, the injectivity hypothesis can be replaced by the assertion that $\varpi$ is not nilpotent. The complete-intersection conclusion makes $R$ one-dimensional and Cohen--Macaulay, hence unmixed. A vertical minimal component would be finite over $k$ and have dimension zero, contradicting unmixedness. Thus $\varpi$ belongs to no associated prime, is a non-zero-divisor, and $R$ is $\mathcal O$-flat and therefore finite free.
+
+Each hypothesis has a job. Without balance there may be too many equations. Without finiteness there is no upper dimension bound. Without injectivity, a quotient such as $A/(a)$ can satisfy a presentation while living over a smaller base. Without regularity of $A$, its parameters need not form the regular sequence required for freeness.
+
+### 15.6 The local-to-global numerical package
+
+Let
+
+$$
+R_{\mathrm{loc}}
+=\widehat\bigotimes_{v,\mathcal O}R_v
+$$
+
+be the completed product of prescribed local rings, and assume every factor is $\mathcal O$-flat. Suppose a global deformation ring has a relative presentation
+
+$$
+R_{\mathrm{glob}}
+\simeq
+R_{\mathrm{loc}}[[X_1,\ldots,X_g]]
+/(f_1,\ldots,f_s),
+\qquad s\leq r.
+$$
+
+Then the complete numerical statement is
+
+$$
+\dim R_{\mathrm{glob}}
+\geq
+1+\sum_v(\dim R_v-1)+g-r.
+$$
+
+When a global duality calculation gives $g-r=q$, adjoining $q$ auxiliary formally smooth directions balances the presentation against an auxiliary regular ring of dimension $1+q$. The equality is numerical bookkeeping, not yet a ring isomorphism. Its purpose is to arrange that a finite or faithful module argument can force all inequalities to become equalities.
+
+A common schematic arrangement is
+
+$$
+S_\infty=\mathcal O[[Z_1,\ldots,Z_q]],
+$$
+
+with augmentation ideal
+
+$$
+\mathfrak a=(Z_1,\ldots,Z_q),
+$$
+
+and a patched ring $R_\infty$ carrying an $S_\infty$-algebra structure. One aims for a presentation of $R_\infty$ whose variable-minus-relation count matches
+
+$$
+\dim S_\infty=1+q.
+$$
+
+The local rings contribute their already known dimensions; global tangent directions add variables; dual obstruction directions bound equations; and the auxiliary variables supply exactly the surplus required to reach the regular base dimension.
+
+### 15.7 A faithful patched module controls its ring
+
+The module is the bridge from the regular auxiliary ring to the patched deformation ring.
+
+**Theorem (faithful free control).** Let $S$ be a Noetherian local ring, let $R$ be a local $S$-algebra, and let $M$ be a nonzero module with commuting actions such that:
+
+- $M$ is finite free over $S$;
+- $M$ is finite over $R$;
+- the action of $R$ on $M$ is faithful.
+
+Then $S\to R$ is injective, $R$ is finite as an $S$-module, and
+
+$$
+\dim R=\dim S.
+$$
+
+**Proof.** The $R$-action gives an injective map
+
+$$
+R\hookrightarrow\operatorname{End}_S(M)
+$$
+
+by faithfulness. If $M$ has $S$-rank $n$, the endomorphism module is isomorphic to a matrix module of rank $n^2$ over $S$. Since $S$ is Noetherian, its submodule $R$ is finite over $S$. If $s\in S$ maps to zero in $R$, it acts as zero on the nonzero free $S$-module $M$, so $s=0$. Hence the map is finite and injective, and the finite-map dimension theorem gives $\dim R=\dim S$. $\square$
+
+If faithfulness is not initially known, the same argument applies to
+
+$$
+R/\operatorname{Ann}_R(M).
+$$
+
+It proves that the support of $M$ has the auxiliary dimension, but it does not remove the annihilator. This is exactly why full-dimensional support is weaker than faithfulness.
+
+Combine this theorem with the balanced finite criterion. If $S$ is regular and $R$ has a balanced power-series presentation over $S$, a faithful $S$-free module makes $R$ finite and faithful over $S$. The criterion then proves that $R$ is a complete intersection and finite free over $S$. Thus the chain is
+
+$$
+\text{free module over }S
+\Longrightarrow
+\text{finite faithful ring over }S
+\Longrightarrow
+\text{height equality}
+\Longrightarrow
+\text{regular-sequence equations}.
+$$
+
+No arrow may be omitted: freeness over $S$ alone controls only the quotient of $R$ acting faithfully, and balance alone supplies only a lower dimension bound.
+
+### 15.8 Augmentation and descent to finite level
+
+Let $S_\infty=\mathcal O[[Z_1,\ldots,Z_q]]$ and $\mathfrak a=(Z_1,\ldots,Z_q)$. If $M_\infty$ is finite free over $S_\infty$, then
+
+$$
+M_0=M_\infty/\mathfrak aM_\infty
+$$
+
+is finite free over $\mathcal O$ of the same rank. If $R_\infty$ acts $S_\infty$-linearly, the action descends through
+
+$$
+R_0=R_\infty/\mathfrak aR_\infty.
+$$
+
+These quotient identities are exact because the $Z_i$ form an $S_\infty$-regular sequence and $M_\infty$ is free. In particular, successively tensoring
+
+$$
+0\longrightarrow S_\infty\xrightarrow{Z_i}S_\infty
+$$
+
+with the relevant successive quotients of $M_\infty$ preserves injectivity.
+
+Faithfulness does not automatically descend: an element of $R_0$ may annihilate $M_0$ even when no lift annihilates $M_\infty$. A descent argument must therefore prove that
+
+$$
+\operatorname{Ann}_{R_\infty}(M_\infty)
+\quad\text{and}\quad
+\operatorname{Ann}_{R_0}(M_0)
+$$
+
+have the required relation, or must establish faithfulness anew at finite level. Similarly, an isomorphism between a finite-level deformation ring and a comparison ring requires both a surjection and a mechanism killing its kernel; equal dimensions alone do not suffice.
+
+When there is a surjection $R_0\twoheadrightarrow T_0$ and $T_0$ acts faithfully on $M_0$, a standard final route is:
+
+1. use the patched module to prove $R_0$ has the predicted complete-intersection and flatness properties;
+2. compare cotangent or congruence data to show the surjection has no residual relation direction;
+3. use completeness, faithfulness, or a length equality to kill the full kernel.
+
+The first step is the local algebra developed here. The second and third require the particular comparison invariants of the problem, but the logical roles of their hypotheses are now explicit.
+
+### 15.9 Conclusion
+
+Complete local algebra turns infinitesimal deformation data into geometry around one closed point. The relative cotangent space is the hinge: its dual is the deformation tangent space, while its basis lifts provide the smallest possible system of formal coordinates. Cohen structure supplies the coefficient field or coefficient ring over which those coordinates live. Topological Nakayama and completeness promote first-order spanning to a power-series surjection, and the relation module counts the genuinely necessary equations in its kernel.
+
+Krull dimension measures something different. It follows prime chains, so equations lower it according to height rather than raw number. Regular sequences are precisely the equations that cut dimension without introducing torsion at each stage. A quotient of a regular local ring is a complete intersection when minimal relation number equals codimension; it is then Cohen--Macaulay, so parameter sequences have the injectivity needed for flatness and freeness arguments.
+
+Over a coefficient discrete valuation ring, flatness is exactly absence of coefficient torsion. This criterion explains when special fibers drop dimension by one, when completed tensor-product dimensions subtract a single shared coefficient direction, and when finite coefficient algebras are free. Fiber products serve a different purpose: they glue compatible quotients and create unions of branches, with dimension given by a maximum rather than a sum.
+
+The global presentation over $R_{\mathrm{loc}}$ now has a precise reading. Relative tangent classes give variables; an effective relative obstruction theory bounds global equations; duality supplies the balance; and a patched module free over an auxiliary regular ring can force the patched ring to be finite, faithful, and equal in dimension to that base. Balance plus finiteness turns the equations into a regular sequence. Augmentation then returns to the original coefficient level, with faithfulness and kernel control checked rather than assumed.
+
+The resulting dictionary is exact: tangent dimension gives variables, effective obstructions bound relations, height detects complete intersections, torsion detects coefficient flatness, completed tensor products combine independent local conditions, fiber products glue common reductions, and faithful free modules convert numerical balance into structural theorems. These are the complete-local algebraic moves by which local and global deformation calculations become the ring statements used in patching.
