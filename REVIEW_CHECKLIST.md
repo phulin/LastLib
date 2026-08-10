@@ -97,7 +97,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 030. Local Galois Cohomology
 - [x] 031. Tate Local Duality
 - [x] 032. Global Galois Cohomology and Selmer Groups
-- [ ] 033. Poitou–Tate Duality
+- [x] 033. Poitou–Tate Duality
 - [x] 034. Rigid Analytic Curves and Formal Models
 - [ ] 035. Rigid Uniformization of Abelian Varieties
 - [x] 036. Relative Picard Schemes and Jacobians
