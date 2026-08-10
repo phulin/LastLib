@@ -233,7 +233,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 166. One-Prime Nonminimal Patching and R=T
 - [x] 167. Hilbert Irreducibility and Arithmetic Approximation
 - [x] 168. Moret–Bailly’s Theorem
-- [ ] 169. Moduli Constructions for Potential Modularity
+- [x] 169. Moduli Constructions for Potential Modularity
 - [ ] 170. Potential Modularity of Two-Dimensional Representations
 - [x] 171. Galois and Solvable Refinements of Arithmetic Approximation
 - [x] 172. Hilbert–Blumenthal Moduli and Two-Prime Level Covers

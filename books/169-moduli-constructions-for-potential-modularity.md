@@ -55,33 +55,31 @@
    - [Semistable reduction](#103-semistable-reduction)
    - [Constancy of finite-flat comparison](#104-constancy-of-finite-flat-comparison)
    - [The finite local set](#105-the-finite-local-set)
-11. [Constructing the auxiliary representation](#11-constructing-the-auxiliary-representation)
-   - [Why the second prime must be known](#111-why-the-second-prime-must-be-known)
-   - [Irreducibility and oddness](#112-irreducibility-and-oddness)
-   - [Determinant engineering](#113-determinant-engineering)
-   - [Controlling local behavior](#114-controlling-local-behavior)
-   - [Auxiliary automorphy and its exact use](#115-auxiliary-automorphy-and-its-exact-use)
-   - [A dihedral counterexample](#116-a-dihedral-counterexample)
-12. [Disjointness and preservation of images](#12-disjointness-and-preservation-of-images)
-   - [Why the output field must avoid fixed fields](#121-why-the-output-field-must-avoid-fixed-fields)
-   - [What linear disjointness proves](#122-what-linear-disjointness-proves)
-   - [Root fields are not Galois closures](#123-root-fields-are-not-galois-closures)
-   - [Local splitting and global avoidance together](#124-local-splitting-and-global-avoidance-together)
-13. [Applying the arithmetic existence theorem](#13-applying-the-arithmetic-existence-theorem)
-   - [The verification ledger](#131-the-verification-ledger)
-   - [Moving presentations](#132-moving-presentations)
-   - [The global point](#133-the-global-point)
-   - [Pulling back the universal family](#134-pulling-back-the-universal-family)
-   - [What has not been concluded](#135-what-has-not-been-concluded)
-14. [Three examples revisited](#14-three-examples-revisited)
-   - [A twisted full-level modular curve](#141-a-twisted-full-level-modular-curve)
-   - [A two-prime Hilbert modular surface](#142-a-two-prime-hilbert-modular-surface)
-   - [Conditions at the two residual primes](#143-conditions-at-the-two-residual-primes)
-15. [The moduli theorem for potential modularity](#15-the-moduli-theorem-for-potential-modularity)
-   - [Admissible realization data](#151-admissible-realization-data)
-   - [Main theorem](#152-main-theorem)
-   - [The elliptic specialization](#153-the-elliptic-specialization)
-   - [The exact handoff to potential modularity](#154-the-exact-handoff-to-potential-modularity)
+11. [Explicit local seeds](#11-explicit-local-seeds)
+   - [The Serre tensor construction](#111-the-serre-tensor-construction)
+   - [Real and good seeds](#112-real-and-good-seeds)
+   - [Ordinary and nonordinary seeds](#113-ordinary-and-nonordinary-seeds)
+   - [Semistable seeds from Tate curves](#114-semistable-seeds-from-tate-curves)
+12. [Persistence and simultaneous local conditions](#12-persistence-and-simultaneous-local-conditions)
+   - [Persistence under finite extension](#121-persistence-under-finite-extension)
+   - [Intersections must have a witness](#122-intersections-must-have-a-witness)
+   - [Components and degeneracy loci](#123-components-and-degeneracy-loci)
+   - [The simultaneous-neighborhood theorem](#124-the-simultaneous-neighborhood-theorem)
+13. [The complete geometric package](#13-the-complete-geometric-package)
+   - [Admissible two-prime moduli data](#131-admissible-two-prime-moduli-data)
+   - [The smooth connected cover theorem](#132-the-smooth-connected-cover-theorem)
+   - [The local-open theorem](#133-the-local-open-theorem)
+   - [Examples and counterexamples](#134-examples-and-counterexamples)
+14. [Disjointness and the exact handoff](#14-disjointness-and-the-exact-handoff)
+   - [The avoidance datum](#141-the-avoidance-datum)
+   - [What disjointness would preserve](#142-what-disjointness-would-preserve)
+   - [Root fields and normal closures](#143-root-fields-and-normal-closures)
+   - [The output boundary](#144-the-output-boundary)
+15. [Failure audit](#15-failure-audit)
+   - [Empty twists and false components](#151-empty-twists-and-false-components)
+   - [Generic frames and integral models](#152-generic-frames-and-integral-models)
+   - [Separate local solutions](#153-separate-local-solutions)
+   - [Smoothness, nonemptiness, and automorphy](#154-smoothness-nonemptiness-and-automorphy)
 16. [Conclusion](#16-conclusion)
 
 ## 1. The realization problem
@@ -96,9 +94,9 @@ $$
 
 be continuous and absolutely irreducible. Potential modularity begins with a reversal of the usual direction of thought. Torsion on an abelian variety gives a Galois representation; here the representation is given first, and one asks for an abelian variety whose torsion is that representation.
 
-The desired construction must do much more than match two abstract vector spaces. It must preserve the alternating form forced by a polarization, behave correctly at places above $p$, meet specified reduction conditions at other places, and coexist with a second torsion representation whose automorphic origin is already understood. Finally, all these requirements must define open local conditions on one smooth geometrically connected variety, for only then can the existence theorem of Book 168 turn local models into a global point over a finite totally real extension.
+The desired construction must do much more than match two abstract vector spaces. It must preserve the alternating form forced by a polarization, behave correctly at places above $p$, meet specified reduction conditions at other places, and coexist with a second torsion representation. Finally, all these requirements must define open local conditions on one smooth geometrically connected variety, for only then can a later arithmetic approximation theorem turn local models into a global point over a finite totally real extension.
 
-This book constructs precisely that variety. It does not prove that the resulting abelian variety is modular. The passage from its two torsion representations to modularity lifting belongs to Book 170. Our task is geometric and arithmetic at once: design a moduli problem that remembers enough information to realize both representations, but remains large and connected enough to have points.
+This book constructs precisely that variety and its local-open package. It does not produce the global point and does not prove modularity. Our task is geometric and local-arithmetic at once: design a moduli problem that remembers enough information to realize both representations conditionally at a future point, but remains smooth and connected enough for later approximation.
 
 ### 1.2 The determinant obstruction comes first
 
@@ -362,7 +360,7 @@ Often it is clearest to arrange residue degree one and identify $k_\lambda=\math
 
 The field $M$ is auxiliary. It may be chosen so that $p$ and $q$ are unramified, the polarization ideal is prime to $pq$, and sufficiently many other primes support neat level. These are finite splitting and avoidance conditions. They do not assert that every prescribed $M$ works.
 
-One convenient construction prescribes separable local factorization patterns at $p$ and $q$ and a real coefficient neighborhood in which all roots remain real. Weak approximation makes these local boxes simultaneous, and the Hilbert irreducibility method of Book 167 selects within them a polynomial irreducible over $\mathbf Q$. Its root field is a totally real field $M$ with the selected residue degrees. By keeping the local discriminants nonzero, one also makes $p$ and $q$ unramified. This argument explains the flexibility but does not canonically determine $M$; different coefficient fields produce different Hilbert modular varieties.
+The existence of a coefficient field with selected residue degrees is an arithmetic input to the present construction. Once such an $M$ is fixed, all residue-field identifications and unramifiedness hypotheses are recorded explicitly. Different valid choices of $M$ produce different Hilbert modular varieties; none is canonical.
 
 There is no advantage in making $M$ unnecessarily large. Its degree is the dimension of the moduli space and the dimension of the resulting abelian variety. A larger degree supplies more analytic room but also enlarges the polarization and component bookkeeping. The smallest degree compatible with the residue fields and local construction is usually the most transparent choice.
 
@@ -418,7 +416,7 @@ The choice of generator is part of a fixed-pairing component. Changing it by $u\
 
 ### 5.4 Neat auxiliary level
 
-To obtain a scheme carrying a universal family, choose an ideal $\mathfrak n\subset\mathcal O_M$, prime to $pq\mathfrak c\mathfrak d_M$, and impose a sufficiently deep level structure at $\mathfrak n$. We require the corresponding arithmetic subgroup to be neat: the subgroup generated by eigenvalues of each element has no nontrivial torsion. A principal congruence level of sufficiently large depth is a familiar geometric way to ensure this, but its descent datum is part of the choice.
+To obtain a scheme carrying a universal family, choose an ideal $\mathfrak n\subset\mathcal O_M$, prime to $pq\mathfrak c\mathfrak d_M$, and impose a sufficiently deep level structure at $\mathfrak n$. In the unconditional form used below, take $\mathfrak n=N\mathcal O_M$ with $N\geq3$ and its principal congruence type. More general levels are allowed only when their neatness, representability, and descent form have been verified separately. Neatness means that the subgroup generated by eigenvalues of each element has no nontrivial torsion.
 
 This last qualification is essential over a totally real field. A constant full basis of odd order on an abelian variety over $\mathbf R$ would force complex conjugation to act trivially on that torsion, and therefore can make the real locus empty. One may instead use a neat level orbit, a suitable one-sided level, or a twist of a principal frame whose real involution agrees with that of the comparison abelian varieties. What is required below is a neat auxiliary level problem defined over $F$, with the selected component and universal family, and with points on every local comparison object. Neatness alone does not prove this local solvability.
 
@@ -491,7 +489,7 @@ The pairing hypotheses are what make (6.4) land in the component-preserving grou
 - $M$ is totally real of degree $g$;
 - $\lambda\mid p$ and $\lambda'\mid q$ are distinct, unramified in the datum, and prime to $\mathfrak c\mathfrak n$;
 - the determinant condition (5.1) and pairing identifications (6.1) hold;
-- the auxiliary level is neat;
+- the auxiliary level is principal of type $N\geq3$, or is another level for which neat fine representability and the required descent form have been verified;
 - a geometrically connected polarization-orientation component has been fixed.
 
 Then $\mathcal X$ is represented by a smooth quasi-projective $F$-scheme $X$ of pure dimension $g$. It carries a universal tuple (6.2). After a finite separable extension, $X$ is isomorphic to the corresponding fixed-pairing full-level scheme over the selected Hilbert modular component. Its geometric connectedness is a separate monodromy question treated in Chapter 8.
@@ -572,7 +570,7 @@ For a variety over $F$, the following are different:
 2. it is geometrically connected;
 3. a selected analytic component is stable under $G_F$.
 
-A union of conjugate geometric components can be connected over $F$ without being geometrically connected. Book 168 requires geometric connectedness. Selecting a complex component without checking its field of definition does not produce an $F$-variety at all.
+A union of conjugate geometric components can be connected over $F$ without being geometrically connected. Later arithmetic approximation requires geometric connectedness. Selecting a complex component without checking its field of definition does not produce an $F$-variety at all.
 
 Hilbert modular components are governed by polarization ideal classes, orientations, and determinant or similitude quotients. Full prime level adds pairing coordinates. Our construction first fixes the polarization-orientation component, then fixes the pairing values, and only then twists by cocycles that preserve them.
 
@@ -608,11 +606,36 @@ For the standard Hilbert modular datum, the analytic component is a quotient of 
 - the chosen determinant and positivity conditions do not shrink the derived group;
 - no accidental common quotient couples the two residual factors.
 
-For small primes or special coefficient fields, surjectivity must be checked rather than asserted. If its image is a proper subgroup $H$, the frame cover has several geometric components indexed by $H$-orbits. One may still select a component, determine its field of definition, and twist only by a cocycle landing in its stabilizer. Book 168 must then be applied to that geometrically connected component over its field of definition. If this requires replacing the original base field, that replacement is made before the final realization datum is declared, and the residual images and all local conditions are rechecked there. In the theorem below, the selected twisted component is required to be defined over the displayed base field $F$.
+For small primes or special coefficient fields, surjectivity must be checked rather than asserted. If its image is a proper subgroup $H$, the frame cover has several geometric components indexed by $H$-orbits. One may still select a component, determine its field of definition, and twist only by a cocycle landing in its stabilizer. Any later arithmetic approximation must use that geometrically connected component over its actual field of definition. If this requires replacing the original base field, that replacement is made before the final datum is declared, and the residual images and all local conditions are rechecked there.
 
 Surjectivity onto each factor separately is not always enough for surjectivity onto the product. A subgroup of $G_1\times G_2$ can project onto both factors while being the graph of an isomorphism between quotients. Here the distinct residue characteristics usually rule out such a coupling: the nonabelian simple quotients of the two special linear groups have different characteristics and, outside small exceptional coincidences, are nonisomorphic. Any remaining common abelian quotient is eliminated by working in the derived, fixed-determinant group and checking the small primes directly. This product check is the precise reason for the last bullet of Section 8.3.
 
 The analytic picture gives the same conclusion. Reduction modulo $\lambda\lambda'$ maps the relevant congruence group to the product of the two finite groups by the Chinese remainder theorem, provided the global derived group has strong approximation and the determinant condition has already been separated off. The kernel defines a connected quotient of $\mathfrak H^g$. Twisting changes its descent action but not this geometric analytic space.
+
+Here is the concrete congruence argument that verifies the product assertion in the standard datum. Let $\Gamma\subset\operatorname{SL}_2(M)$ be the arithmetic group of the selected component. After choosing coordinates on its projective lattice, there are an ideal $\mathfrak a$ and a finite set $\Sigma_0$ of denominator primes such that, away from $\Sigma_0$, $\Gamma$ contains the principal congruence subgroup
+
+$$
+\Gamma(\mathfrak a)=
+\ker\bigl(\operatorname{SL}_2(\mathcal O_M)	o
+\operatorname{SL}_2(\mathcal O_M/\mathfrak a)\bigr).
+$$
+
+Suppose $\lambda$ and $\lambda'$ are distinct and avoid $\mathfrak a\Sigma_0$. Given $x\in k_\lambda$, the Chinese remainder theorem chooses $\widetilde x\in\mathcal O_M$ satisfying
+
+$$
+\widetilde x\equiv x\pmod\lambda,qquad
+\widetilde x\equiv0\pmod{\mathfrak a\lambda'}.
+$$
+
+Then the upper and lower elementary matrices with parameter $\widetilde x$ lie in $\Gamma(\mathfrak a)$, reduce to the desired elementary matrix at $\lambda$, and reduce to the identity at $\lambda'$. Reversing the roles of the primes gives elementary matrices in the second factor. Upper and lower elementary matrices generate $\operatorname{SL}_2$ over a finite field: Gaussian elimination reduces any determinant-one matrix to a diagonal one, and a diagonal determinant-one matrix is a product of elementary matrices. Hence
+
+$$
+\Gamma\longrightarrow
+\operatorname{SL}_2(k_\lambda)\times
+\operatorname{SL}_2(k_{\lambda'})
+$$
+
+is surjective. There are finitely many component lattices, so enlarging $\Sigma_0$ once makes the argument uniform over all selected components. Thus “monodromy-admissible” means precisely that the two primes avoid the discriminant, polarization and lattice denominators, auxiliary level, and this finite congruence set. Under that check, the hypothesis of Theorem 8.1 is proved rather than assumed.
 
 ### 8.4 Determinants and component stability
 
@@ -646,7 +669,7 @@ This is an input protocol, not a universal local existence theorem. The represen
 
 Suppose $v\nmid pq\mathfrak n\mathfrak c\mathfrak d_M$ and both target modules are unramified at $v$. A local comparison point may be obtained from a Hilbert--Blumenthal abelian variety with good reduction and the desired Frobenius actions on the two torsion factors. When a global seed variety is available, its base change gives such a point immediately. Another method starts with a smooth special-fiber point carrying precisely the prescribed finite étale levels and lifts it through the smooth integral PEL model. Unramifiedness by itself does not prove that such a special-fiber point exists: arbitrary pairs of Frobenius matrices need not come from one polarized abelian variety. Existence of the seed or special-fiber point remains part of the local datum.
 
-Only finitely many places need to be placed in the local set for Book 168. Outside that set, no local point is prescribed. The eventual global abelian variety, being defined over a number field, automatically has good reduction away from finitely many places. Thus there is no need to solve infinitely many local moduli problems.
+Only finitely many places enter the local package. Outside that set, no local point is prescribed. A future global abelian variety would automatically have good reduction away from finitely many places, so there is no reason to solve infinitely many local moduli problems here.
 
 A standard source of a comparison point is the tensor construction. If $E/F_v$ is an elliptic curve and $P$ is a projective $\mathbf Z$-module equipped with an $\mathcal O_M$-action of rank $g$, the sheaf $E\otimes P$ is, in the split cases used here, an abelian variety isogenous to $E^g$ with real multiplication. A positive trace form on $P$ supplies a compatible polarization. Its $\mathfrak l$-torsion is obtained from $E[\ell]$ by the corresponding residue factor. Thus a local elliptic curve whose $p$-torsion realizes the desired local target can seed a local HBAV.
 
@@ -688,7 +711,7 @@ $$
 
 The target $\lambda$-torsion is prime to the residue characteristic and may be matched as an étale generic level. If the comparison abelian variety has good reduction, this module is unramified; under semistable reduction its actual inertia action must be matched rather than discarded. This separation is one benefit of $p\ne q$, but it removes integral connectedness issues only for the prime-to-residue-characteristic level.
 
-A common error is to say that finite flatness of the representation uniquely determines (9.2) or (9.3). It does not in general. Our local datum names the model and the comparison. Books 46--48 justify the language of finite locally free group schemes, Cartier duality, pairings, and generic fibers; nothing here invokes a general classification or an unproved deformation theorem.
+A common error is to say that finite flatness of the representation uniquely determines (9.2) or (9.3). It does not in general. Our local datum names the model and the comparison. Nothing here invokes a classification that would turn an abstract generic representation into a unique integral model.
 
 ### 9.6 Ramified primes and primes of the datum
 
@@ -720,7 +743,7 @@ As a counterexample, a wildly ramified generic $V|_{G_{F_v}}$ that admits no fin
 
 ### 10.1 From a point to a neighborhood
 
-Book 168 accepts nonempty open subsets $\Omega_v\subset X(F_v)$, not isolated local points. Once a comparison point $x_v$ has been constructed, we must show that the arithmetic properties needed later persist in a neighborhood.
+Later approximation uses nonempty open subsets $\Omega_v\subset X(F_v)$, not isolated local points. Once a comparison point $x_v$ has been constructed, we must show that the arithmetic properties needed later persist in a neighborhood.
 
 Because $X$ is smooth, $X(F_v)$ is an analytic manifold near $x_v$. The universal abelian scheme and its level structures vary over this neighborhood. After shrinking, finite étale torsion local systems are locally constant. Integral properties are handled by extending the universal object over a suitable integral neighborhood or, equivalently, by choosing a residue tube inside an integral model.
 
@@ -756,344 +779,357 @@ Let $S$ contain:
 
 For each $v\in S$, choose a nonempty open $\Omega_v\subset X(F_v)$ around the constructed comparison point. Several requirements at the same place are combined by intersection only after checking that the chosen point satisfies all of them. An empty intersection is not repaired by the global theorem.
 
-## 11. Constructing the auxiliary representation
+## 11. Explicit local seeds
 
-### 11.1 Why the second prime must be known
+### 11.1 The Serre tensor construction
 
-The moduli variety can accommodate any compatible second module, but the later modularity argument needs one whose automorphic origin is already established. A dihedral representation is ideal: it is induced from a character of a quadratic CM extension, so its irreducibility, determinant, ramification, and automorphy can all be controlled from rank-one data.
-
-Choose a totally imaginary quadratic extension $K/F$ with nontrivial automorphism $c$, an algebraic Hecke character $\psi$ of $K$, and an odd coefficient prime $q\ne p$. Let
+Local openness begins with a point, so we need a systematic source of polarized real-multiplication abelian varieties. Let $K$ be a field of characteristic zero, let $E/K$ be an elliptic curve, and let $I$ be an invertible fractional $\mathcal O_M$-ideal. Choosing a $\mathbf Z$-basis identifies $I$ with $\mathbf Z^g$ and suggests
 
 $$
-\chi:G_K\longrightarrow \overline{\mathbf Q}_q^\times
+A=E\otimes_{\mathbf Z}I\simeq E^g. \tag{11.1}
 $$
 
-be the $q$-adic avatar in an integral arithmetic normalization, and let
+Changing the basis by a matrix in $\operatorname{GL}_g(\mathbf Z)$ gives the evident integral isomorphism between the two products. Thus (11.1) is independent of the temporary basis and carries an $\mathcal O_M$-action through multiplication on $I$.
+
+Trace duality computes the dual lattice:
 
 $$
-\theta:G_K\longrightarrow \overline{\mathbf F}_q^\times
+I^\dagger=\operatorname{Hom}_{\mathbf Z}(I,\mathbf Z)
+=\mathfrak d_M^{-1}I^{-1}. \tag{11.2}
 $$
 
-be its reduction with respect to the evident stable rank-one lattice. Set
+Using the canonical principal polarization of $E$, an $\mathcal O_M$-linear homomorphism $A\to A^\vee$ is therefore multiplication by an element of
 
 $$
-\bar\rho_{\mathrm{aux}}=\operatorname{Ind}_{G_K}^{G_F}\theta. \tag{11.1}
+\mathfrak c_I=\mathfrak d_M^{-1}I^{-2}. \tag{11.3}
 $$
 
-Book 95 supplies the corresponding automorphic induction of $\psi$ and the induced stable lattice whose reduction is (11.1).
+It is a polarization exactly when that element is totally positive. Hence the ordered polarization module of $A$ is $(\mathfrak c_I,\mathfrak c_I^+)$. This calculation has two consequences. It identifies the component reached by the tensor construction, and it warns that tensor seeds do not automatically reach every prescribed polarization class. If $\mathfrak c$ is not in the square class (11.3), one needs another PEL seed or an explicitly controlled isogeny.
 
-### 11.2 Irreducibility and oddness
-
-The induced representation (11.1) is absolutely irreducible precisely when
+The determinant condition is equally concrete. Since
 
 $$
-\theta\ne\theta^c. \tag{11.2}
+\operatorname{Lie}(A)=\operatorname{Lie}(E)\otimes_{\mathbf Z}I,
 $$
 
-after reduction, not merely before reduction. We choose a prime and character for which the quotient $\theta/\theta^c$ remains nontrivial modulo $q$. A complex conjugation $s$ lies outside $G_K$ and satisfies $s^2=1$. In the two-coset induction basis it therefore acts by the exchange matrix, with eigenvalues $1$ and $-1$. Hence its determinant is $-1$: the representation is odd.
+the characteristic polynomial of $a\in\mathcal O_M$ on the Lie algebra is the characteristic polynomial of multiplication by $a$ on $I\otimes K$, namely $\operatorname N_{M/\mathbf Q}(T-a)$. Thus every tensor seed has Hilbert--Blumenthal Hodge type.
 
-This calculation also explains why a totally real quadratic inducing field is unsuitable. Complex conjugation would lie in the subgroup at some real places and need not exchange the two induced lines, so oddness would not be forced.
-
-### 11.3 Determinant engineering
-
-For quadratic induction the determinant is the product of the character contribution with the quadratic permutation character $\epsilon_{K/F}$. If
+At a prime $\mathfrak r\mid r$ unramified in $M$, tensoring commutes with taking $r$-torsion and projecting by the idempotent for $\mathfrak r$. The result is a rank-two $k_{\mathfrak r}$-module. The Weil pairing on $E[r]$, trace duality (11.2), and the polarization module (11.3) recover precisely the determinant line
 
 $$
-\operatorname{Ver}:G_F^{\mathrm{ab}}\longrightarrow G_K^{\mathrm{ab}}
+(\mathfrak d_M^{-1}\mathfrak c_I^{-1}\otimes k_{\mathfrak r})(1).
 $$
 
-is transfer, then the exact formula is
+Thus the tensor construction respects the same pairing convention as the global frame cover; it is not merely an unpolarized source of abelian varieties.
+
+### 11.2 Real and good seeds
+
+Over $\mathbf R$, choose an elliptic curve and form $E\otimes I$. For any odd $r$, complex conjugation acts on $E[r]$ with one $+1$ eigenline and one $-1$ eigenline. Conversely an involution on a two-dimensional vector space over a field of odd characteristic has this shape exactly when its determinant is $-1$. Once the $+1$ lines are identified, there is a unique scaling of the $-1$ line that makes the frame preserve the chosen alternating pairing.
+
+**Proposition 11.1 (real frame criterion).** Let $V_{\mathfrak r}$ be a paired rank-two $k_{\mathfrak r}$-representation of $G_{\mathbf R}$, with $r$ odd. It admits a paired frame to the $\mathfrak r$-torsion of a real polarized tensor seed if and only if complex conjugation has determinant $-1$. Simultaneous frames at $\mathfrak p$ and $\mathfrak q$ exist when this condition holds at both primes and the tensor seed, polarization orientation, auxiliary level, and both frames lie on the selected real component.
+
+**Proof.** Since $c^2=1$ and $2$ is invertible, $V_{\mathfrak r}=V^+\oplus V^-$. The determinant is $-1$ precisely when both eigenspaces are lines. The same is true for $E[r]$. Choose any nonzero map $V^+\to E[r]^+$. Perfectness pairs $V^+$ with $V^-$ and $E[r]^+$ with $E[r]^-$, so there is a unique map on the negative line making the total map pairing-preserving. The converse follows because a paired isomorphism preserves the action and therefore the determinant. The final clause records the independent component and auxiliary-level conditions. $\square$
+
+Oddness is necessary, but it is not a real-point theorem by itself. It does not select a narrow polarization class, descend a geometric component, or produce the required auxiliary rigidification. An actual point on the selected real component remains part of the local input.
+
+Now let $K$ be a finite extension of $\mathbf Q_r$ with valuation ring $R$ and residue field $k$. Suppose $r$ is prime to the discriminant, polarization degree, auxiliary level, $p$, and $q$. The integral Hilbert moduli scheme and its two frame covers are smooth and finite étale at $r$. If a point $\bar y$ of the chosen twisted special fiber exists over $k$, formal smoothness lifts it successively through $R/\pi^n$, and completeness gives $y\in X(K)$. Its universal abelian scheme has good reduction.
+
+The full residue tube of $\bar y$ is open. In étale coordinates, fixing reduction modulo $\pi$ fixes each coordinate in a congruence ball. Every point in that ball extends to the same smooth integral chart and therefore has good reduction. Since the frame cover is finite étale, its chosen sheet is locally constant there. If the special fiber has no $k$-point but is geometrically nonempty, a closed point over some finite $k'/k$ gives a good seed over the corresponding unramified extension of $K$. This proves local solvability after that extension, not over the original field.
+
+### 11.3 Ordinary and nonordinary seeds
+
+At a place of residue characteristic $p$, a geometric frame on generic $p$-torsion is insufficient. The integral group scheme distinguishes ordinary and local--local behavior. Assume that $p>2$, $K/\mathbf Q_p$ and $M_{\mathfrak p}/\mathbf Q_p$ are unramified, and the polarization degree is prime to $p$.
+
+For an ordinary elliptic scheme $E/R$, the connected--étale sequence has the shape
 
 $$
-\det\operatorname{Ind}_{G_K}^{G_F}\theta
-=\epsilon_{K/F}\cdot(\theta\circ\operatorname{Ver}). \tag{11.3}
+0\longrightarrow\mu_p\longrightarrow E[p]
+\longrightarrow\mathbf Z/p\mathbf Z\longrightarrow0 \tag{11.4}
 $$
 
-Indeed, on $h\in G_K$ the determinant is $\theta(h)\theta^c(h)$, while on a coset representative $s\notin G_K$ it is $-\theta(s^2)$. Thus determinant compatibility at $\lambda'$ is an actual global condition on $\theta$, not a consequence of oddness. There is no free choice of an extension of $\theta\theta^c$ across the other coset: transfer and the permutation sign determine it.
+after a harmless unramified extension that trivializes the étale quotient. Tensoring with $I$ and taking the $\mathfrak p$-factor gives the corresponding multiplicative-by-étale sequence for $A[\mathfrak p]$. The ordinary deformation space is a formal torus: the extension class in (11.4) is the Serre--Tate coordinate, while the real-multiplication idempotents separate one such coordinate for each $p$-adic embedding. Ordinary special fibers therefore lift, and the nonvanishing of the relevant Hasse invariants makes the ordinary good locus open.
 
-We choose the Hecke character underlying $\theta$ so that the mod-$q$ reduction of (11.3) equals the multiplier $L_{\lambda'}(1)$ of the PEL datum. Class field theory translates this into a transfer and central-character condition. Compatible finite-order local prescriptions can be globalized by the ray-class construction of Book 95 after the global-unit obstruction has been cancelled, possibly using auxiliary conductor primes. Behavior at places above $q$, especially existence of the required finite locally free model, is an additional condition and is not supplied by that character construction alone. If a correcting character is needed, it must be chosen before induction and checked in (11.3). An arbitrary twist after the fact changes the determinant by a square and may destroy local behavior.
-
-### 11.4 Controlling local behavior
-
-Choose $K/F$ and $\theta$ so that:
-
-- $K$ has prescribed split, inert, or ramified behavior at the finite set $S$;
-- $\theta/\theta^c$ remains nontrivial modulo $q$;
-- the determinant is the required cyclotomic-polarization character;
-- at places above $q$, the residual induced module has the finite-flat model used in Section 9.5;
-- away from a controlled conductor set it is unramified;
-- its coefficient field admits a prime inducing the selected residue field $k_{\lambda'}$.
-
-These requirements cannot be arbitrary independently. For example, an unramified character at both places above a split prime forces an unramified induced representation there. Likewise, determinant values on $F_v^\times$ must agree with the prescribed central character. Subject to these compatibility constraints, the local-to-global construction of Hecke characters gives the needed freedom.
-
-One practical order of choices is important. First choose a CM extension and characteristic-zero Hecke character with the required determinant pattern and with the desired behavior at the places fixed independently of $q$. Next choose a coefficient prime $q$ outside the finite exceptional set where the character and its conjugate become equal, while also imposing the required residue field and splitting conditions on the coefficient field $M$. Then inspect the resulting places above $q$ and verify, by an explicit local calculation, the finite-flat model and comparison required in Section 9.5. If that calculation fails, the auxiliary character or prime must be changed; it cannot be repaired by asserting finite flatness afterward. Finally fix $q$, $M$, $\lambda'$, and all $q$-adic local data before constructing the moduli space. This order avoids both a circular choice of $q$ and an unsupported residual local condition.
-
-At a split place $v=ww^c$ of $K/F$, induction restricts as $\theta_w\oplus\theta_{w^c}$. At an inert place it remains locally induced, and is irreducible when the two conjugate characters differ in the relevant decomposition group. These formulas allow ordinary reducible behavior at selected residual places while retaining global irreducibility: local reducibility at one decomposition group does not imply reducibility over $G_F$.
-
-### 11.5 Auxiliary automorphy and its exact use
-
-Automorphic induction of the Hecke character gives a cuspidal automorphic representation because (11.2) rules out norm descent. Its associated residual representation is (11.1), after choosing a stable lattice and reducing at the chosen prime. Therefore $\bar\rho_{\mathrm{aux}}$ has known automorphic origin before the moduli construction begins.
-
-No lifting theorem is applied here. Nor do we conclude that the abelian variety constructed later is automorphic. The auxiliary module is one input that Book 170 will combine with modularity lifting at $q$ and then at $p$.
-
-### 11.6 A dihedral counterexample
-
-Suppose the inducing Hecke character descends through the norm, say it is $\mu\circ N_{K/F}$. Then its Galois avatar and its residual character are conjugation-invariant, so $\theta=\theta^c$. The induction splits as two characters differing by $\epsilon_{K/F}$, and the automorphic induction is not cuspidal. It may still be odd and may even have the desired determinant, but it does not supply an absolutely irreducible auxiliary residual representation. Determinant, oddness, irreducibility, and automorphy must therefore be checked separately.
-
-## 12. Disjointness and preservation of images
-
-### 12.1 Why the output field must avoid fixed fields
-
-Let $L_{\bar\rho}$ be the fixed field of $\ker\bar\rho$, and define $L_{\mathrm{aux}}$ similarly. Restricting a representation from $G_F$ to $G_{F'}$ replaces its image by the subgroup corresponding to
+A supersingular elliptic curve instead has local--local $E[p]$: neither its geometric special fiber nor its Cartier dual has a nonzero étale quotient. Tensoring produces a nonordinary Hilbert--Blumenthal seed with a local--local $\mathfrak p$-factor. The nonordinary locus in the special fiber is closed, so it would be false to call it a Zariski-open condition. The correct open is the residue tube
 
 $$
-F'\cap L_{\bar\rho}.
+]\bar y[=\{y\in\mathcal X(R):y\bmod\pi=\bar y\}. \tag{11.5}
 $$
 
-If $F'$ is linearly disjoint from $L_{\bar\rho}$ over $F$, the image is unchanged. If not, absolute irreducibility can fail. For example, a dihedral representation induced from $K/F$ becomes a sum of two characters after restriction to $G_K$. Thus allowing $F'$ to contain $K$ destroys the very auxiliary irreducibility that made induction useful.
+Every point of (11.5) has the fixed special fiber $\bar y$ and hence the same local--local type. The tube is open in the $p$-adic topology and full-dimensional in étale coordinates.
 
-The fields $L_{\bar\rho}$ and $L_{\mathrm{aux}}$ are already Galois over $F$, because they are fixed fields of normal subgroups. Choose a finite Galois avoidance field
-
-$$
-D/F
-$$
-
-containing $L_{\bar\rho}$ and $L_{\mathrm{aux}}$, the fields needed to detect any other residual images, and all finite descent or component fields whose intersection must be avoided. Applying Book 168 with linear disjointness from $D$ gives, equivalently because $D/F$ is Galois, the condition
+In either case a prescribed $G_K$-module $V_{\mathfrak p}$ must be the generic fiber of a named finite locally free paired $k_{\mathfrak p}$-module scheme $\mathcal G$. One must then exhibit a pairing-preserving isomorphism
 
 $$
-F'\cap D=F \tag{12.1}
+\mathcal G\xrightarrow{\sim}A[\mathfrak p] \tag{11.6}
 $$
 
-preserves both residual images and prevents the output point from descending through an unwanted constant-field intersection.
+for the seed, or a generic paired frame together with the claimed finite-flat type on the chosen integral chart. Finite flatness of $V_{\mathfrak p}$ alone does not prove that it is realized by the torsion of this PEL seed. Nor is its finite-flat model unique in general. At the other level prime $\mathfrak q$, the generic torsion is étale because $q\ne p$, but its actual Galois action still has to match the second prescribed representation.
 
-### 12.2 What linear disjointness proves
+### 11.4 Semistable seeds from Tate curves
 
-**Lemma 12.1.** Let $r:G_F\to G$ have finite image and fixed field $L/F$. If $F'/F$ is linearly disjoint from $L/F$, then
+Let $E_{q_0}/K$ be the Tate curve with $0<|q_0|<1$. It has split multiplicative reduction and uniformization
 
 $$
-r(G_{F'})=r(G_F).
+E_{q_0}(\overline K)=\overline K^\times/q_0^{\mathbf Z}.
 $$
 
-In particular, every property depending only on the finite image, such as absolute irreducibility or projective image, is preserved. If sensitive local places also split completely, their local representations and inertia images are preserved separately.
+For an odd prime $s$, choosing an $s$th root of $q_0$ gives an exact sequence
 
-**Proof strategy.** Translate restriction into restriction of automorphisms of the compositum $F'L$ and use the intersection formula for linearly disjoint extensions.
+$$
+0\longrightarrow\mu_s\longrightarrow E_{q_0}[s]
+\longrightarrow\mathbf Z/s\mathbf Z\longrightarrow0, \tag{11.7}
+$$
 
-**Proof.** The extension $L/F$ is finite Galois, and linear disjointness gives
+whose extension class is the Kummer class of $q_0$ in $K^\times/K^{\times s}$. Thus valuations and unit classes can be used to prescribe the residual extension. Tensoring with $I$ produces an HBAV with split toric reduction of rank $g$ and corresponding sequences at every coefficient factor.
+
+Near a smooth toroidal boundary point, degeneration parameters $t_1,\ldots,t_g$ control the torus. Requiring each $v(t_i)$ to lie in a fixed positive range and keeping the remaining parameters units defines a nonempty analytic open. On that open the semiabelian torus has the same split character lattice and the same toric rank. Deeper intersections of boundary divisors must be avoided, because toric rank changes there.
+
+When $s$ equals the residue characteristic and $K/\mathbf Q_s$ is unramified, the canonical sequence (11.7) is the generic fiber of the finite flat Tate-torsion model used here precisely under the divisibility condition
+
+$$
+s\mid v_K(q_0). \tag{11.8}
+$$
+
+The valuation component of the Kummer class explains necessity. Sufficiency follows from the finite flat Kummer extension attached to a decomposition $q_0=\pi^{sm}u$. This criterion concerns the canonical Tate extension under the stated unramified, odd-prime hypotheses; it does not say that every finite-flat representation comes from a Tate curve.
+
+Semistable does not mean good. Even when (11.7) is finite flat, $E_{q_0}$ retains multiplicative reduction. This example cleanly separates a property of one torsion layer from a property of the whole abelian variety.
+
+## 12. Persistence and simultaneous local conditions
+
+### 12.1 Persistence under finite extension
+
+Suppose $L/K$ is a finite extension of local fields, with valuation rings $S/R$. An abelian scheme over $R$ remains an abelian scheme over $S$, so good reduction persists. The special fiber is obtained by scalar extension; nonvanishing of Hasse invariants, and hence ordinarity, persists. Likewise the local--local condition is geometric: Frobenius and Verschiebung remain nilpotent after extending the residue field.
+
+A semiabelian scheme remains semiabelian after base change. Toric rank is geometric and remains unchanged. A split torus stays split, while a nonsplit torus may become split. For a Tate parameter,
+
+$$
+v_L(q_0)=e(L/K)v_K(q_0), \tag{12.1}
+$$
+
+so exact normalized valuations do not remain constant. The divisibility in (11.8) persists, although it may become true only after a ramified extension and therefore need not descend.
+
+Finite flatness is preserved for the simplest possible reason: if $V$ is the generic fiber of $\mathcal G/R$, then $V|_{G_L}$ is the generic fiber of $\mathcal G\times_RS$. Coefficient actions, pairings, connected--étale sequences, and Cartier duality all base-change. Exact generic frames restrict to $G_L$, but a frame that appears over $L$ need not descend to $K$.
+
+| datum | behavior after finite extension |
+|---|---|
+| good reduction | persists |
+| ordinary or local--local type | persists |
+| semistability and toric rank | persist |
+| split torus | remains split |
+| nonsplit torus | may split |
+| finite-flat model | base-changes to a model |
+| paired frame | restricts, need not descend |
+| normalized valuation | multiplied by ramification index |
+| Kummer class | may become trivial |
+
+This ledger matters because a later field construction may prescribe an extension of $K$, rather than $K$ itself, as a completion. Only the persistent conclusions may be carried across such an extension without further control.
+
+### 12.2 Intersections must have a witness
+
+Several nonempty open subsets of $X(K)$ can have empty intersection. An ordinary tube and a supersingular tube are disjoint, and two determinant components are open and closed. Therefore simultaneous local conditions are not assembled by proving their separate nonemptiness.
+
+The safe order is point-centered. First construct one tuple
+
+$$
+x=(A,\iota,\lambda_A,\eta_{\mathfrak n},\alpha,\alpha')\in X(K) \tag{12.2}
+$$
+
+satisfying every desired condition. Then give each condition an open neighborhood of $x$ and intersect the finitely many neighborhoods. The intersection remains nonempty because it contains $x$.
+
+This is especially important for the two frames. A point realizing $V$ on one HBAV and another point realizing $V'$ on a second HBAV do not define a point of the simultaneous cover. The common seed (12.2) must carry both frames. Likewise finite flatness and a Tate Kummer class must be verified on the same semistable seed before shrinking begins.
+
+### 12.3 Components and degeneracy loci
+
+Let $X^\circ$ be the $K$-defined open-and-closed component selected globally. Every local seed must lie in $X^\circ(K)$. A point on a conjugate geometric component is not a substitute. If the component exists only after an extension, that extension changes the base datum and all representation restrictions must be reconsidered.
+
+Often one must avoid a proper closed locus $Z\subsetneq X^\circ$, such as a locus with extra endomorphisms. If the seed lies outside $Z$, then $X^\circ(K)\setminus Z(K)$ is open near it. If the seed lies in $Z$, shrinking cannot remove it; one needs a different seed.
+
+Positive dimension helps only after this logical point is respected. In étale coordinates a proper closed subset has empty interior on a local irreducible branch unless it contains that branch. After a finite residue extension, one can choose a residue point outside the first nonzero reduction of its defining equation and lift it. This produces a new seed outside $Z$; it does not move the old seed.
+
+### 12.4 The simultaneous-neighborhood theorem
+
+**Theorem 12.1.** Let $K$ be $\mathbf R$ or a finite extension of $\mathbf Q_r$. Let $X^\circ$ be a smooth $K$-defined component of the determinant-compatible two-prime twist, and let $Z\subsetneq X^\circ$ be closed. Suppose
+
+$$
+x\in(X^\circ\setminus Z)(K)
+$$
+
+is a common seed carrying both paired frames and one of the following verified structures: a real component, a good integral model, an ordinary good model, a nonordinary local--local good model, or a semiabelian model with fixed boundary stratum. Then there is a nonempty open
+
+$$
+\Omega_x\subset(X^\circ\setminus Z)(K) \tag{12.3}
+$$
+
+on which both paired torsion representations, the auxiliary level, the ordered polarization type, the component, and the named local condition all persist. Any finite list of valuation-shell, Kummer, or splitness conditions that is locally constant at $x$ may be retained after further shrinking.
+
+**Proof strategy.** Each property is controlled by a different local mechanism. We construct all neighborhoods around the same point and intersect them only at the end.
+
+**Proof.** At a real place, use the connected component of $x$ in the real manifold. At a good place, take an integral residue tube. In the ordinary case intersect that tube with the nonvanishing loci of the partial Hasse invariants. In the nonordinary case keep the entire fixed special point, so the residue tube retains its local--local group. In the semistable case use valuation shells in a boundary chart and avoid deeper strata. The two generic frame conditions are locally constant because their isomorphism schemes are finite étale over the characteristic-zero generic fiber. The component is already open and closed, and the complement of $Z(K)$ is open. Finitely many valuation or Kummer constraints give further open neighborhoods at points where they are locally constant. Their intersection contains $x$. $\square$
+
+The theorem does not assert that an arbitrary determinant-compatible local representation has a seed. It starts after PEL realization has been exhibited. This boundary between representation theory and local geometry is essential.
+
+## 13. The complete geometric package
+
+### 13.1 Admissible two-prime moduli data
+
+An **admissible two-prime moduli datum** over a totally real number field $F$ consists of:
+
+1. a totally real coefficient field $M$ of degree $g$, an ordered invertible polarization module $(\mathfrak c,\mathfrak c^+)$, an auxiliary principal level $N\geq3$ with its compatible descent form (or a separately verified neat fine level), and a polarization-orientation component defined over $F$;
+2. distinct odd rational primes $p\ne q$ and primes $\lambda\mid p$, $\lambda'\mid q$ of $M$, unramified and prime to the discriminant, polarization degree, and auxiliary level wherever good integral geometry is used;
+3. rank-two local systems $V$ over $k_\lambda$ and $V'$ over $k_{\lambda'}$, together with specified Galois-equivariant isomorphisms
+   $$
+   \bigwedge^2V\simeq
+   (\mathfrak d_M^{-1}\mathfrak c^{-1}\otimes k_\lambda)(1),
+   \qquad
+   \bigwedge^2V'\simeq
+   (\mathfrak d_M^{-1}\mathfrak c^{-1}\otimes k_{\lambda'})(1); \tag{13.1}
+   $$
+4. full product geometric monodromy
+   $$
+   \operatorname{SL}_2(k_\lambda)\times
+   \operatorname{SL}_2(k_{\lambda'}) \tag{13.2}
+   $$
+   on the selected base component, or an explicitly named geometric component with its field of definition and a proof that the twisting cocycle stabilizes it.
+
+For local conclusions one adds a finite set $S$ and, for each $v\in S$, a common seed on the same component carrying both exact generic frames and the requested real, good, ordinary, nonordinary finite-flat, or semistable structure. At residue-characteristic level primes, the seed datum includes a named finite locally free model and the required pairing comparison. The hypotheses do not call mere abstract finite flatness a realization.
+
+### 13.2 The smooth connected cover theorem
+
+**Theorem 13.1 (two-prime geometric realization space).** From an admissible two-prime moduli datum without the local additions, the functor of tuples
+
+$$
+(A,\iota,\lambda_A,\eta_{\mathfrak n},
+\alpha:V\xrightarrow{\sim}A[\lambda],
+\alpha':V'\xrightarrow{\sim}A[\lambda']) \tag{13.3}
+$$
+
+with pairing-preserving frames is represented by a smooth quasi-projective fine $F$-scheme $X$ of pure dimension $g$. It carries a universal tuple. Under the full product-monodromy hypothesis (13.2), $X$ is geometrically connected. More generally, the explicitly selected component alternative is geometrically connected by definition and is an $F$-scheme only when its descent condition has been verified.
+
+**Proof strategy.** The determinant condition gives the correct Hodge type, the ordered polarization module fixes duality and component data, and neat level removes automorphisms. Paired frames form two independent special-linear torsors. Smoothness comes from lifting one Hodge line for each embedding, and connectedness comes from transitive product monodromy.
+
+**Proof.** The fine Hilbert--Blumenthal moduli theorem gives a smooth quasi-projective scheme of relative dimension $g$ with universal quadruple $(A,\iota,\lambda_A,\eta_{\mathfrak n})$. The coefficient primes are invertible on the generic fiber, so each paired frame scheme is a finite étale torsor under the appropriate special linear group. Their fiber product is a torsor under the product in (13.2). The pairing identifications (13.1) make the descent cocycle determinant one in each factor, so twisting preserves the fixed-pairing cover and its universal object.
+
+Infinitesimally, de Rham cohomology splits into $g$ symplectic planes and the Hodge filtration chooses one line in each. Every line lifts across a square-zero thickening, with a one-dimensional space of choices, while finite étale levels lift uniquely. Hence the twist is smooth of dimension $g$. Finally, geometric monodromy acts on one fiber as the full deck group. This action is transitive, so the finite étale cover is geometrically connected. A twist becomes the original cover after algebraic closure, and is therefore geometrically connected as well. $\square$
+
+The proof separates four assertions often conflated: representability uses rigidification; smoothness uses Hodge deformation theory; nonemptiness is supplied by a seed or by geometric fibers; geometric connectedness uses monodromy. None implies all the others.
+
+### 13.3 The local-open theorem
+
+**Theorem 13.2 (complete local package).** Add to the datum of Theorem 13.1 a finite set $S$ and verified common seeds as described in Section 13.1. Assume all coefficient, polarization, and auxiliary-level primes are unramified wherever a good integral statement is made, and all residue-characteristic coefficient primes are odd. At a real place require the seed over $F_v=\mathbf R$ itself; no passage to $\mathbf C$ is allowed when total reality is intended. Then, after only the finite nonarchimedean local extensions explicitly included in the seed data, there is for every $v\in S$ a nonempty open
+
+$$
+\Omega_v\subset X(F_v') \tag{13.4}
+$$
+
+such that every point in $\Omega_v$ carries both prescribed paired torsion modules, lies on the selected component, and has the requested real, good, ordinary, nonordinary finite-flat, or semistable behavior. The persistent conclusions of Section 12.1 survive further finite local extension. If a proper closed degeneracy locus is to be avoided, every seed must first be chosen outside it.
+
+**Proof.** Real seeds and their neighborhoods are given by Proposition 11.1. Away from the level characteristics, smooth special-fiber lifting supplies good seeds and residue tubes. At a level characteristic, ordinary tensor seeds use (11.4) and Hasse-invariant openness; nonordinary seeds use the fixed tube (11.5). Semistable seeds use Tate uniformization, the Kummer sequence (11.7), and boundary valuation shells; when finite flatness of canonical residual Tate torsion is required, (11.8) is imposed before taking the neighborhood. Theorem 12.1 makes each neighborhood simultaneous and component-correct. Section 12.1 proves persistence. $\square$
+
+This theorem is the last existence theorem proved here. Its output is a variety and local open subsets. It does not produce a number-field point.
+
+### 13.4 Examples and counterexamples
+
+For $M=\mathbf Q$, the construction is a fixed-pairing twist of a fine modular curve. If $V$ has determinant $\bar\chi_p$, its quotient cocycle lies in $\operatorname{SL}_2(\mathbf F_p)$ and preserves one Weil-pairing component. If the pairing is forgotten, twisting the union of all full-level components can give a scheme connected over $F$ but geometrically disconnected.
+
+For real quadratic $M$ with split degree-one primes $\lambda\mid p$ and $\lambda'\mid q$, the realization space is a surface. Under product monodromy its deck group is
+
+$$
+\operatorname{SL}_2(\mathbf F_p)\times
+\operatorname{SL}_2(\mathbf F_q).
+$$
+
+A point gives one abelian surface carrying both modules. It is not a pair of points on two modular curves, and the surface need not be a product. At a $p$-adic place the $\lambda$-factor may be ordinary or local--local while the prime-to-$p$ $\lambda'$-factor remains a finite étale generic local system.
+
+Three counterexamples summarize the hypotheses. A wrong determinant makes the paired frame functor empty. Separate surjectivity of monodromy to the two factors does not exclude a diagonal subgroup when the factors share a quotient. A finite-flat generic representation need not equal the torsion of a prescribed PEL seed. Each failure occurs before global specialization and must be repaired geometrically.
+
+## 14. Disjointness and the exact handoff
+
+### 14.1 The avoidance datum
+
+Although this book does not construct a global point, it must state what a later field construction has to preserve. Let $L_V/F$ and $L_{V'}/F$ be the finite Galois extensions fixed by the kernels of the two representations. Let $D/F$ be a finite Galois extension containing both, together with every finite field used to define a component, detect an image, or carry descent data that must remain independent.
+
+The geometric construction neither chooses $D$ nor proves the existence of a field disjoint from it. It exports $D$ as an avoidance input alongside the variety $X$ and the local opens $\Omega_v$. This ordering matters: all component and image fields must be entered before specialization, not discovered afterward.
+
+### 14.2 What disjointness would preserve
+
+**Lemma 14.1.** Let $r:G_F\to G$ have finite image, and let $L/F$ be the fixed field of its kernel. If a finite extension $F'/F$ satisfies $F'\cap L=F$, then
+
+$$
+r(G_{F'})=r(G_F). \tag{14.1}
+$$
+
+**Proof.** Since $L/F$ is Galois, the intersection condition gives
 
 $$
 \operatorname{Gal}(F'L/F')\simeq\operatorname{Gal}(L/F).
 $$
 
-Restriction $G_{F'}\to\operatorname{Gal}(F'L/F')$ is surjective. Composing the displayed isomorphism with the faithful realization of $\operatorname{Gal}(L/F)$ as $r(G_F)$ shows that every element of the original image is attained by an element of $G_{F'}$. The reverse inclusion is automatic. $\square$
+The restriction map from $G_{F'}$ onto the group on the left is surjective. Identifying the group on the right with $r(G_F)$ proves that every element of the original image is attained after restriction. The reverse inclusion is immediate. $\square$
 
-Local behavior needs a second observation. If a place $v$ of $F$ splits completely in $F'$, then for each $w\mid v$ there is an identification $F'_w=F_v$. Hence restriction at $w$ changes neither the local representation nor its chosen finite-flat model. Global disjointness preserves images; complete local splitting preserves the exact local field.
+Consequently disjointness from $D$ would preserve the two residual images, hence absolute irreducibility and any projective-image property determined by those finite images. It would not by itself preserve a chosen local field. If a place $v$ splits completely in $F'$, every completion above it equals $F_v$ and the exact local representation and finite-flat model remain unchanged. More general completion extensions use the persistence ledger of Section 12.1.
 
-### 12.3 Root fields are not Galois closures
+### 14.3 Root fields and normal closures
 
-Book 168 produces $F'$ as the residue field of a closed point. It is generally not Galois over $F$. The assertion $F'\cap D=F$ concerns this root field. Its Galois closure $\widetilde F'$ can intersect $D$ nontrivially even when $F'$ does not.
+A closed point has a residue field $F'$ that need not be Galois over $F$. The condition $F'\cap D=F$ concerns that root field. Its normal closure $\widetilde F'$ may intersect $D$ even when $F'$ does not. Therefore (14.1) over $F'$ cannot be carried automatically to $\widetilde F'$.
 
-This distinction prevents two invalid deductions. First, total reality of $F'$ says that every embedding $F'\hookrightarrow\mathbf C$ is real; it does not say the Galois closure has any prescribed group. Second, residual image preservation over $F'$ does not automatically imply preservation after passing to $\widetilde F'$. If Book 170 later replaces $F'$ by a Galois closure, it must redo the disjointness and image analysis, or choose a stronger construction designed for that closure.
+Likewise, total reality of $F'$ says that every embedding of $F'$ is real; it gives no prescribed Galois group for the normal closure. Any later demand for a Galois or solvable extension is a stronger arithmetic problem, not an unnoticed consequence of the present moduli construction.
 
-### 12.4 Local splitting and global avoidance together
+### 14.4 The output boundary
 
-There is no conflict between requiring every $v\in S$ to split completely in $F'$ and requiring (12.1), provided the local and global data are compatible. The totally real version of Book 168 incorporates both conditions through a moving presentation and a Hilbert condition. We therefore put all sensitive places into $S$ and all image fields into $D$ before invoking the theorem. Adding either after the point is chosen is too late.
-
-## 13. Applying the arithmetic existence theorem
-
-### 13.1 The verification ledger
-
-We now have the precise inputs required by Book 168:
-
-| Requirement | Verification in this construction |
-|---|---|
-| quasi-projective variety | the fine PEL realization in Theorem 6.1 |
-| smoothness | the Hodge-filtration calculation of Proposition 7.1 |
-| geometric connectedness | Theorem 8.1, or an explicitly selected geometric component |
-| nonempty local opens | comparison objects and neighborhoods in Sections 9--10 |
-| real local opens | actual comparison points with odd residual involutions, compatible polarization orientation, and compatible auxiliary level in Sections 5.4 and 9.3 |
-| finite avoidance field | the field $D$ of Section 12.1 |
-| universal abelian scheme | neatness and fine representability in Theorem 6.1 |
-
-This ledger is not ceremonial. Omitting any row changes the conclusion: a coarse point may not give an abelian variety; an arithmetically connected variety may fail the theorem's geometric hypothesis; one local point without an open neighborhood is insufficient for approximation; and a totally real base does not force a totally real residue field.
-
-### 13.2 Moving presentations
-
-The proof in Book 168 replaces local points by reduced configurations of one common degree, moves them through étale coordinates, and uses irreducibility to force the global finite algebra to be a field. For our split local-open application, the simultaneous moving-family lemma of Book 168 applies because $X$ is smooth, geometrically connected, and positive-dimensional.
-
-Indeed, each $\Omega_v$ is a nonempty open in the analytic manifold $X(F_v)$. Around any point there is an étale map to affine $g$-space. Because $g\geq1$, one can choose arbitrarily many distinct nearby points in the same open and avoid the diagonals. This produces the local reduced split cycles, and at real places they can all be kept in the chosen real open. Local coordinates alone do not globalize those cycles. The moving-family lemma supplies one sufficiently large common degree and one global presentation interpolating all the local configurations; the split formulation is precisely the case in which that lemma makes the compatibility automatic.
-
-### 13.3 The global point
-
-Apply the totally real, disjoint form of Book 168 to $X/F$, the set $S$, the opens $\Omega_v$, and the avoidance field $D$. It gives a closed point $x\in X$ with residue field
-
-$$
-F'=\kappa(x)
-$$
-
-such that:
-
-1. $F'/F$ is finite and totally real;
-2. $F'$ is linearly disjoint from $D$ over $F$;
-3. every $v\in S$ splits completely in $F'$;
-4. for every $v\in S$ and every $F$-embedding $\sigma:F'\hookrightarrow F_v$, the conjugate point $x^\sigma$ belongs to $\Omega_v$.
-
-The fourth clause is stronger than choosing one good place above $v$. Since $F'_w=F_v$ for every $w\mid v$, it guarantees the desired local condition at every place of $F'$ above $v$.
-
-### 13.4 Pulling back the universal family
-
-Pull the universal tuple on $X$ back along $x:\operatorname{Spec}F'\to X$. We obtain
-
-$$
-(A,\iota,\lambda_A,\eta_{\mathfrak n},\alpha,\alpha')/F'. \tag{13.1}
-$$
-
-By the moduli interpretation, not merely by geometric isomorphism,
-
-$$
-\alpha:V|_{G_{F'}}\xrightarrow{\sim}A[\lambda],
-\qquad
-\alpha':V'|_{G_{F'}}\xrightarrow{\sim}A[\lambda'] \tag{13.2}
-$$
-
-preserve the polarization pairings. Consequently
-
-$$
-\det A[\lambda]=\det V|_{G_{F'}},
-\qquad
-\det A[\lambda']=\det V'|_{G_{F'}}.
-$$
-
-At each $w\mid v$ with $v\in S$, membership in $\Omega_v$ gives the chosen reduction property. At $p$- and $q$-adic places it gives the named finite locally free model; at selected good places it gives good reduction; at selected semistable places it gives the chosen toric type. Linear disjointness and Lemma 12.1 preserve both residual images.
-
-### 13.5 What has not been concluded
-
-We have constructed an abelian variety with two prescribed torsion factors. We have not shown that an arbitrary lift of $\bar\rho$ occurs in the Tate module of $A$, nor that $A$ is automorphic, nor that automorphy transfers from $\lambda'$ to $\lambda$. Those are representation-theoretic conclusions requiring modularity lifting. The geometric output (13.1)--(13.2) is exactly the bridge on which Book 170 will operate.
-
-## 14. Three examples revisited
-
-### 14.1 A twisted full-level modular curve
-
-Let $F=\mathbf Q$, $p=7$, and let $V$ be an odd absolutely irreducible module with determinant $\bar\chi_7$. Fix $\delta:\bigwedge^2V\simeq\mu_7$. Over the splitting field of $V$, select the component of $Y(7)$ on which the Weil pairing of the universal ordered basis equals the value prescribed by $\delta$. The quotient between the Galois action on $V$ and the universal cyclotomic action has determinant one, so it defines a cocycle in $\operatorname{SL}_2(\mathbf F_7)$.
-
-The twist $Y_V$ is a smooth geometrically connected affine curve over $\mathbf Q$ with a universal elliptic curve $\mathcal E$. A closed point $y$ with residue field $L$ gives
-
-$$
-\mathcal E_y[7]\simeq V|_{G_L}.
-$$
-
-If one instead twists the union of all pairing components and forgets $\delta$, the result can be connected over $\mathbf Q$ while splitting geometrically into six components. That larger twist does not satisfy the geometric hypothesis needed for the arithmetic existence theorem without further component selection.
-
-### 14.2 A two-prime Hilbert modular surface
-
-Let $M$ be real quadratic, and choose split primes $p,q$ with degree-one factors $\lambda\mid p$ and $\lambda'\mid q$. Fix a narrow polarization class $\mathfrak c$, a compatible orientation, and a neat auxiliary level $\mathfrak n$ whose descent form has the required local points. Let $V$ and $V'$ be paired modules over $\mathbf F_p$ and $\mathbf F_q$ with cyclotomic determinants.
-
-The resulting variety $X(V,V')$ is a surface. Over a splitting field it is a simultaneous fixed-pairing frame cover of a Hilbert modular surface, with deck group
-
-$$
-\operatorname{SL}_2(\mathbf F_p)\times\operatorname{SL}_2(\mathbf F_q)
-$$
-
-under the monodromy hypotheses. A point gives one abelian surface $A$ with both $A[\lambda]\simeq V$ and $A[\lambda']\simeq V'$. It is not a product of the two modular curves of Section 4.1, and $A$ need not split into elliptic curves.
-
-The two dimensions can be used locally in different ways. Near a $p$-adic ordinary point, one direction may vary a Serre--Tate parameter while the other maintains a prescribed residue condition; near a bad auxiliary place, an open may select a semistable stratum. These are local analytic freedoms, not independent global coordinates, but they illustrate why a higher-dimensional moduli problem is robust.
-
-### 14.3 Conditions at the two residual primes
-
-Suppose at every $v\mid p$ the target $V$ has a chosen ordinary finite locally free model and $V'$ is unramified, while at every $w\mid q$ the auxiliary $V'$ has a chosen finite-flat model and $V$ is unramified. Choose local HBAVs realizing these pairs. Let $\Omega_v$ and $\Omega_w$ be integral residue tubes on which the corresponding kernels retain those models.
-
-After applying Book 168, $p$- and $q$-adic places split completely in $F'$. Therefore, for every $v'\mid v\mid p$,
-
-$$
-F'_{v'}=F_v,
-$$
-
-and the finite locally free model of $A[\lambda]$ is the chosen $\mathcal G_v$. Likewise every $w'\mid w\mid q$ carries the chosen model of $A[\lambda']$. This “every place above” statement is what permits later local lifting hypotheses to be checked uniformly.
-
-If the theorem had supplied only one completion over each residual prime, another conjugate place could have had the wrong reduction type. The split formulation is therefore not an aesthetic strengthening; it closes a genuine logical gap.
-
-## 15. The moduli theorem for potential modularity
-
-### 15.1 Admissible realization data
-
-We package the construction in a form intended for direct use. An **admissible two-prime realization datum** over a totally real field $F$ consists of:
-
-1. odd absolutely irreducible representations
-   $$
-   \bar\rho:G_F\to\operatorname{GL}_2(k_\lambda),
-   \qquad
-   \bar\rho_{\mathrm{aux}}:G_F\to\operatorname{GL}_2(k_{\lambda'}),
-   $$
-   of distinct odd residual characteristics $p$ and $q$;
-2. a totally real coefficient field $M$, primes $\lambda\mid p$, $\lambda'\mid q$, a polarization ideal $\mathfrak c$, a determinant condition, an orientation component, and a neat auxiliary level $\mathfrak n$ with its $F$-descent form, with all indicated coprimality assumptions;
-3. pairing identifications (6.1), so both determinants equal the appropriate PEL multiplier characters;
-4. full product geometric monodromy at $\lambda$ and $\lambda'$, or a named twisted geometrically connected component defined over $F$, together with its stabilizer and a check that the descent cocycle lands in it;
-5. a finite set $S$ containing all archimedean, level, residual-characteristic, ramified, and prescribed-reduction places;
-6. for each $v\in S$, a point of the same selected component, represented by a local HBAV comparison object realizing both generic torsion modules, the auxiliary rigidifying level, and all desired reduction properties;
-7. at $v\mid p$ and $v\mid q$, explicit paired finite locally free models and comparison isomorphisms as in (9.2) and (9.3), together with integral neighborhoods on which their type persists, and at every prescribed reduction place a verified nonempty analytic neighborhood on which the named good or semistable condition persists;
-8. an auxiliary representation obtained from cuspidal dihedral automorphic induction, with residual irreducibility, oddness, determinant, and local conditions checked after reduction;
-9. a finite Galois avoidance field $D$ containing the residual fixed fields and every finite descent, component, or image-detecting field whose intersection must be excluded.
-
-This definition is intentionally demanding. Its purpose is to expose every hypothesis consumed by the proof. In an application, most entries are constructed from a smaller set of choices, but none may simply be omitted.
-
-### 15.2 Main theorem
-
-**Theorem 15.1 (two-prime moduli realization).** Given an admissible two-prime realization datum over $F$, there exist:
-
-- a smooth geometrically connected quasi-projective $F$-variety
-  $$
-  X=X(\bar\rho,\bar\rho_{\mathrm{aux}})
-  $$
-  of dimension $[M:\mathbf Q]$, carrying a universal fine PEL tuple;
-- nonempty opens $\Omega_v\subset X(F_v)$ for all $v\in S$;
-- a finite totally real extension $F'/F$, linearly disjoint from $D$;
-- and a Hilbert--Blumenthal abelian variety $(A,\iota,\lambda_A)/F'$ of the chosen polarization type,
-
-such that:
-
-$$
-A[\lambda]\simeq\bar\rho|_{G_{F'}},
-\qquad
-A[\lambda']\simeq\bar\rho_{\mathrm{aux}}|_{G_{F'}} \tag{15.1}
-$$
-
-as paired Galois modules; every $v\in S$ splits completely in $F'$; the prescribed good, semistable, and finite-flat local conditions hold at every place above $S$; and both residual images are unchanged after restriction to $G_{F'}$.
-
-**Proof strategy.** Construct the fine PEL component and twist its simultaneous frame cover. Prove smoothness by Hodge-filtration deformation theory and geometric connectedness by product monodromy. Build local points from the named local abelian varieties, enlarge them to analytic opens, and apply the totally real disjoint form of Book 168. Pull back the universal family and use disjointness to preserve images.
-
-**Proof.** The data in items 2--4 define the functor (6.2). Theorem 6.1 represents it by a quasi-projective fine scheme of pure dimension $g=[M:\mathbf Q]$, and Proposition 7.1 proves smoothness. The monodromy clause and Theorem 8.1 prove geometric connectedness; in the component-selection alternative, $X$ means the selected twisted component, which is defined over $F$ by item 4.
-
-For every $v\in S$, item 6 gives a point $x_v\in X(F_v)$. Sections 9.4--9.6 ensure that at residual and ramified places this is a point of the actual generic moduli problem together with the required integral model, not merely an abstract torsion representation. Item 7 and Section 10 give a nonempty open neighborhood $\Omega_v$ on which the desired properties persist. At real places, item 6 includes an actual point with compatible orientation and auxiliary level; oddness verifies the involution type on the two residual factors but is not used as a substitute for that point. The split moving-family lemma applies as explained in Section 13.2.
-
-Apply the totally real theorem of Book 168 with the avoidance field $D$. It produces $F'$ and $x\in X(F')$ satisfying all-embedding local membership, complete splitting at $S$, and linear disjointness from $D$. Pulling back the universal tuple gives $A$ and the isomorphisms (15.1). The local conclusions follow because every completion over $S$ equals the original $F_v$ and the conjugate point lies in $\Omega_v$. Lemma 12.1 gives equality of both residual images. $\square$
-
-### 15.3 The elliptic specialization
-
-When a one-dimensional moduli space already has all required local points, one may take the elliptic construction instead. A fixed-pairing twist of a fine full-level modular curve at $p$—or simultaneous full $pq$-level with a separate neat rigidification—produces an elliptic curve over a finite totally real extension realizing the prescribed modules. The rigidification must use a descent form compatible with the real and finite local comparison points; a constant full auxiliary frame cannot be inserted without checking this. The same determinant, component, local-model, and disjointness hypotheses remain necessary.
-
-This specialization is economical but not formally stronger. The Hilbert--Blumenthal construction is preferred when two-prime local conditions are easier to realize with real multiplication or when a higher-dimensional smooth space supplies the required local flexibility.
-
-### 15.4 The exact handoff to potential modularity
-
-The theorem supplies four objects needed next:
+The exact output of this book is
 
 $$
 \boxed{
-F'/F\text{ totally real and disjoint},\quad
-A/F',\quad
-A[\lambda]\simeq\bar\rho,
+X/F\text{ smooth, quasi-projective, geometrically connected, fine};
 \quad
-A[\lambda']\simeq\bar\rho_{\mathrm{aux}}.}
-\tag{15.2}
+\Omega_v\subset X(F_v')\text{ nonempty and condition-correct};
+\quad
+D/F\text{ recorded for avoidance}.}
+\tag{14.2}
 $$
 
-It also supplies the local reduction conditions under which later lifting theorems may be invoked. The auxiliary representation has automorphic origin by induction. What remains is to transport modularity through the $\lambda'$-adic representation of $A$, use the compatible structure supplied by real multiplication, and return at $\lambda$ to the target representation. Those are the tasks of Book 170.
+It does not output a finite totally real extension, a rational point on $X$, an auxiliary representation of automorphic origin, an abelian variety over a global extension, an automorphic representation, or a modularity-lifting conclusion. If a later arithmetic theorem supplies a closed point $x$ with residue field $F'$ satisfying the prescribed local-algebra and avoidance conditions, pulling back the universal family would give
+
+$$
+A[\lambda]\simeq V|_{G_{F'}},
+\qquad
+A[\lambda']\simeq V'|_{G_{F'}}. \tag{14.3}
+$$
+
+Equation (14.3) is a conditional interpretation of a future point, not an existence assertion made here. Even then, it identifies residual torsion only. It does not identify an arbitrary lift of $V$ with a Tate module and does not transfer automorphy between primes.
+
+## 15. Failure audit
+
+### 15.1 Empty twists and false components
+
+The paired twist is empty if either determinant line in (13.1) is wrong. Equality of characters without a chosen line isomorphism does not specify a paired frame. If the cocycle has nontrivial determinant relative to the universal multiplier, it permutes pairing components and cannot twist a single one.
+
+Arithmetic connectedness is not geometric connectedness. A Galois orbit of geometric components may descend to a connected $F$-scheme. The cure is full product monodromy or an explicitly descended geometric component. Separate surjections to each special-linear factor do not suffice until common quotient couplings have been excluded.
+
+### 15.2 Generic frames and integral models
+
+In characteristic zero, $A[\lambda]$ and $A[\lambda']$ are finite étale, including over $p$-adic and $q$-adic fields. Their integral closures over the valuation ring need not be étale, and a generic basis does not determine a finite flat model. Ordinary, local--local, and Tate-extension claims must therefore be stated for actual finite locally free group schemes.
+
+Finite flatness of a representation is also not a PEL realization theorem. One needs a polarized RM abelian variety of the selected component whose torsion has the named model and pairing. The tensor seeds prove this on their reachable polarization classes; other classes require separate seeds.
+
+### 15.3 Separate local solutions
+
+One HBAV realizing $V$ and another realizing $V'$ do not give a point of the two-prime cover. An ordinary seed and a separate nonordinary seed do not prove a common neighborhood. Nonempty opens on different components do not intersect. Every conjunction of local requirements must first be witnessed by one point carrying the whole tuple.
+
+Local solvability after an unramified extension is not solvability over the original field. A later completion datum must contain the extension actually used. Exact valuations rescale under ramification, Kummer classes may split, and nonsplit tori may become split. These changes are limits on persistence, not defects in openness.
+
+### 15.4 Smoothness, nonemptiness, and automorphy
+
+Smoothness says infinitesimal deformations lift. It does not produce a rational point. Positive dimension supplies local room around an existing point; it does not prove that the selected twist has a point over a given completion. Geometric connectedness controls components of the cover; it does not establish local nonemptiness.
+
+Finally, none of these geometric properties implies automorphy. The moduli space relates two residual torsion factors on one future abelian variety. Constructing auxiliary arithmetic data, producing the global point, applying modularity lifting, and transporting automorphy are later tasks. Keeping this boundary explicit is part of the theorem's correctness.
 
 ## 16. Conclusion
 
-The realization problem is solved not by choosing equations for an abelian variety but by arranging a descent problem with the correct geometry. A residual representation specifies a twisted frame torsor. Its determinant specifies the Weil-pairing component on which that torsor can live. A polarization and the Hilbert--Blumenthal determinant condition turn the ambient classification problem into a smooth $g$-dimensional variety, while neat auxiliary level removes automorphisms and supplies a universal family.
+A residual representation enters the construction as a twisted paired-frame torsor. Its determinant identifies the Weil-pairing line on which the torsor can live. The Hilbert determinant condition, ordered polarization module, and neat auxiliary level then turn the ambient classification problem into a fine smooth variety with a universal abelian scheme.
 
-Two primes can then be imposed on the same abelian variety without consuming deformation dimension. Product monodromy proves that the fixed-pairing cover is geometrically connected; merely knowing arithmetic connectedness would not suffice. At places dividing the two residual characteristics, generic Galois modules are replaced by explicit comparisons with finite locally free torsion models. Good and semistable reduction are recorded by nonempty analytic opens around chosen local abelian varieties. At real places, actual comparison points combine odd residual involutions, polarization orientation, and the descent form of the auxiliary level; the split real opens then keep every conjugate of the eventual point real.
+Distinct coefficient primes provide two rank-two torsion factors on the same abelian variety without consuming deformation dimension. Full product monodromy, rather than two unrelated factorwise surjections, makes the simultaneous cover geometrically connected. Twisting changes arithmetic descent but leaves that geometric connectedness intact.
 
-With smoothness, geometric connectedness, local opens, moving presentations, and avoidance all verified, the theorem of Book 168 produces a closed point whose residue field is finite, totally real, and disjoint from the residual fixed fields. The universal family at that point carries both prescribed torsion identifications and all selected local reduction behavior. The root field is kept distinct from its Galois closure, and residual images survive because disjointness was imposed before specialization.
+The local theory begins only after a common seed has been found. Real seeds encode odd involutions and orientation. Smooth integral seeds produce good tubes. Ordinary points are controlled by Hasse invariants and Serre--Tate coordinates; nonordinary finite-flat points by fixed local--local residue tubes. Tate curves and boundary parameters supply semistable neighborhoods. Generic paired frames are locally constant, while integral group schemes record the finer finite-flat information that a characteristic-zero basis cannot see.
 
-The geometric bridge is therefore complete. On one side lies the target residual representation; on the other lies a dihedral residual representation of known automorphic origin. Between them stands one polarized abelian variety with real multiplication, defined over a well-controlled totally real field. The next book may now cross that bridge by modularity lifting; no part of that crossing has been hidden inside the moduli construction.
+The final package is deliberately geometric: one smooth geometrically connected fine variety, its universal two-prime tuple, and component-correct nonempty local opens with precise persistence properties. Avoidance fields and completion requirements are exported as inputs to a later arithmetic construction. No global point, automorphy statement, or lifting conclusion has been smuggled across that boundary.
