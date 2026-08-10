@@ -237,7 +237,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 170. Potential Modularity of Two-Dimensional Representations
 - [x] 171. Galois and Solvable Refinements of Arithmetic Approximation
 - [x] 172. Hilbert–Blumenthal Moduli and Two-Prime Level Covers
-- [ ] 173. Local Geometry of Hilbert–Blumenthal Moduli
+- [x] 173. Local Geometry of Hilbert–Blumenthal Moduli
 - [ ] 174. Auxiliary Dihedral Data and Residual Potential Modularity
 - [ ] 175. Compatible Systems of Galois Representations
 - [ ] 176. Brauer Induction and Descent of Automorphy
