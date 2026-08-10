@@ -4,7 +4,7 @@ namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05
 
 noncomputable section
 
-open scoped BigOperators
+open scoped BigOperators Pointwise
 
 /-! ## 5.6. Counting branches before completion -/
 
@@ -12,47 +12,65 @@ open scoped BigOperators
 theorem galois_group_order_eq_branch_count_mul_decomposition_order
     {F E Γ : Type*} [Field F] [Field E] [Algebra F E]
     [LinearOrderedCommGroupWithZero Γ] [FiniteDimensional F E] [IsGalois F E]
-    (v : Valuation F Γ) (w : Valuation E Γ)
-    (hw : w ∈ chapter05ValuationsAbove v)
+    (v : Valuation F Γ) (A : ValuationSubring E)
+    (hA : A ∈ chapter05ValuationsAbove v)
     (hbranches : (chapter05ValuationsAbove (E := E) v).Finite)
     (htrans :
-      ∀ ⦃w₁ w₂ : Valuation E Γ⦄,
-        w₁ ∈ chapter05ValuationsAbove v → w₂ ∈ chapter05ValuationsAbove v →
-          ∃ σ : Gal(E / F), chapter05ValuationAction σ w₁ = w₂) :
+      ∀ ⦃A₁ A₂ : ValuationSubring E⦄,
+        A₁ ∈ chapter05ValuationsAbove v → A₂ ∈ chapter05ValuationsAbove v →
+          ∃ σ : Gal(E / F), σ • A₁ = A₂) :
     Nat.card (Gal(E / F)) =
       chapter05BranchCount (E := E) v *
-        Nat.card (chapter05DecompositionGroup F w.valuationSubring) := by
-  sorry
+        Nat.card (chapter05DecompositionGroup F A) := by
+  calc
+    Nat.card (Gal(E / F)) =
+        (chapter05DecompositionGroup F A).index *
+          Nat.card (chapter05DecompositionGroup F A) :=
+      (chapter05DecompositionGroup F A).index_mul_card.symm
+    _ = chapter05BranchCount (E := E) v *
+          Nat.card (chapter05DecompositionGroup F A) := by
+      rw [branch_count_eq_decomposition_index v A hA hbranches htrans]
 
 /-- The selected completed branch has the order of its decomposition group as degree. -/
 theorem selected_completion_galois_order_eq_degree
     {F E Γ : Type*} [Field F] [Field E] [Algebra F E]
     [LinearOrderedCommGroupWithZero Γ] [FiniteDimensional F E] [IsGalois F E]
     (v : Valuation F Γ) (w : Valuation E Γ)
-    (hw : w ∈ chapter05ValuationsAbove v)
+    (hw : w.valuationSubring ∈ chapter05ValuationsAbove v)
     [Algebra (v.Completion) (w.Completion)]
     [FiniteDimensional (v.Completion) (w.Completion)]
-    [IsGalois (v.Completion) (w.Completion)] :
+    [MulSemiringAction (chapter05DecompositionGroup F w.valuationSubring)
+      (w.Completion)]
+    [Finite (chapter05DecompositionGroup F w.valuationSubring)]
+    (hD : IsGaloisGroup (chapter05DecompositionGroup F w.valuationSubring)
+      (v.Completion) (w.Completion)) :
     Nat.card (chapter05DecompositionGroup F w.valuationSubring) =
       Module.finrank (v.Completion) (w.Completion) := by
-  sorry
+  letI := hD
+  exact IsGaloisGroup.card_eq_finrank
+    (chapter05DecompositionGroup F w.valuationSubring)
+    (v.Completion) (w.Completion)
 
 /-- The completed local degree is `e f` once the local group order is so identified. -/
 theorem selected_completion_degree_is_ef
     {F E Γ : Type*} [Field F] [Field E] [Algebra F E]
     [LinearOrderedCommGroupWithZero Γ] [FiniteDimensional F E] [IsGalois F E]
     (v : Valuation F Γ) (w : Valuation E Γ)
-    (hw : w ∈ chapter05ValuationsAbove v)
+    (hw : w.valuationSubring ∈ chapter05ValuationsAbove v)
     [Algebra (v.Completion) (w.Completion)]
     [FiniteDimensional (v.Completion) (w.Completion)]
-    [IsGalois (v.Completion) (w.Completion)]
+    [MulSemiringAction (chapter05DecompositionGroup F w.valuationSubring)
+      (w.Completion)]
+    [Finite (chapter05DecompositionGroup F w.valuationSubring)]
+    (hDgroup : IsGaloisGroup (chapter05DecompositionGroup F w.valuationSubring)
+      (v.Completion) (w.Completion))
     (e f : ℕ)
     (hD : Nat.card (chapter05DecompositionGroup F w.valuationSubring) = e * f) :
     Module.finrank (v.Completion) (w.Completion) = e * f := by
   calc
     Module.finrank (v.Completion) (w.Completion) =
         Nat.card (chapter05DecompositionGroup F w.valuationSubring) :=
-      (selected_completion_galois_order_eq_degree v w hw).symm
+      (selected_completion_galois_order_eq_degree v w hw hDgroup).symm
     _ = e * f := hD
 
 /-- A finite residue exact sequence accounts for the local factors `e` and `f`. -/
@@ -72,26 +90,62 @@ theorem finite_galois_degree_eq_branch_count_mul_ef
     {F E Γ : Type*} [Field F] [Field E] [Algebra F E]
     [LinearOrderedCommGroupWithZero Γ] [FiniteDimensional F E] [IsGalois F E]
     (v : Valuation F Γ) (w : Valuation E Γ)
-    (hw : w ∈ chapter05ValuationsAbove v)
+    (hw : w.valuationSubring ∈ chapter05ValuationsAbove v)
     (hbranches : (chapter05ValuationsAbove (E := E) v).Finite)
     (htrans :
-      ∀ ⦃w₁ w₂ : Valuation E Γ⦄,
-        w₁ ∈ chapter05ValuationsAbove v → w₂ ∈ chapter05ValuationsAbove v →
-          ∃ σ : Gal(E / F), chapter05ValuationAction σ w₁ = w₂)
+      ∀ ⦃A₁ A₂ : ValuationSubring E⦄,
+        A₁ ∈ chapter05ValuationsAbove v → A₂ ∈ chapter05ValuationsAbove v →
+          ∃ σ : Gal(E / F), σ • A₁ = A₂)
     (e f : ℕ)
     (hD : Nat.card (chapter05DecompositionGroup F w.valuationSubring) = e * f) :
     Module.finrank F E = chapter05BranchCount (E := E) v * e * f := by
-  sorry
+  calc
+    Module.finrank F E = Nat.card (Gal(E / F)) :=
+      (finite_galois_group_order_eq_degree (K := F) (L := E)).symm
+    _ = chapter05BranchCount (E := E) v *
+          Nat.card (chapter05DecompositionGroup F w.valuationSubring) :=
+      galois_group_order_eq_branch_count_mul_decomposition_order v
+        w.valuationSubring hw hbranches htrans
+    _ = chapter05BranchCount (E := E) v * (e * f) := by rw [hD]
+    _ = chapter05BranchCount (E := E) v * e * f :=
+      (Nat.mul_assoc _ _ _).symm
 
 /-- Conjugate branch ideals have the same ramification and residue labels. -/
 theorem galois_conjugate_branch_profiles_have_equal_ef
     {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
-    (P Q : Ideal B) (τ : B ≃ₐ[A] B)
+    (P Q : Ideal B) [P.IsPrime] [P.IsMaximal] [Q.IsPrime] [Q.IsMaximal]
+    (τ : B ≃ₐ[A] B)
     (hPQ : Ideal.map τ.toRingHom P = Q)
     (pP : Chapter05LocalEFProfile A B P)
     (pQ : Chapter05LocalEFProfile A B Q) :
     pP.e = pQ.e ∧ pP.f = pQ.f := by
-  sorry
+  constructor
+  · calc
+      pP.e = P.ramificationIdx A := pP.e_eq
+      _ = (τ • P).ramificationIdx A :=
+        (Ideal.ramificationIdx_smul A P τ).symm
+      _ = Q.ramificationIdx A := by
+        rw [Ideal.pointwise_smul_def]
+        have hτ :
+            MulSemiringAction.toRingHom (B ≃ₐ[A] B) B τ =
+              τ.toRingEquiv.toRingHom := by
+          ext x
+          rfl
+        rw [hτ, hPQ]
+      _ = pQ.e := pQ.e_eq.symm
+  · calc
+      pP.f = P.inertiaDeg A := pP.f_eq
+      _ = (τ • P).inertiaDeg A :=
+        (Ideal.inertiaDeg_smul A P τ).symm
+      _ = Q.inertiaDeg A := by
+        rw [Ideal.pointwise_smul_def]
+        have hτ :
+            MulSemiringAction.toRingHom (B ≃ₐ[A] B) B τ =
+              τ.toRingEquiv.toRingHom := by
+          ext x
+          rfl
+        rw [hτ, hPQ]
+      _ = pQ.f := pQ.f_eq.symm
 
 /-- If the base is complete and there is one branch, the local index is one. -/
 theorem complete_branch_decomposition_index_eq_one

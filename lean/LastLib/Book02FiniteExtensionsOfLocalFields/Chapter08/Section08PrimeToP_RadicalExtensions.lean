@@ -35,21 +35,45 @@ theorem chapter08_tame_radical_polynomial_is_eisenstein
     (hπ : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A)) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt π
       (chapter08KummerPolynomial ((u : A) * π) e) := by
-  sorry
+  have hspan : Ideal.span ({(u : A) * π} : Set A) =
+      Ideal.span ({π} : Set A) :=
+    Ideal.span_singleton_mul_left_unit u.isUnit π
+  have hmax : IsLocalRing.maximalIdeal A =
+      Ideal.span ({(u : A) * π} : Set A) :=
+    hπ.trans hspan.symm
+  have hr := chapter08_radical_polynomial_is_eisenstein
+    ((u : A) * π) hmax e he
+  change LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt π
+    (chapter08RadicalPolynomial ((u : A) * π) e)
+  unfold LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt at hr ⊢
+  rcases hr with ⟨hmonic, hdegree, hcoeff, hconstant, hprime⟩
+  refine ⟨hmonic, hdegree, ?_, ?_, hspan.symm.trans hprime⟩
+  · intro i hi
+    rw [← hspan]
+    exact hcoeff i hi
+  · intro hconstant_square
+    apply hconstant
+    rw [← Ideal.span_singleton_pow, hspan, Ideal.span_singleton_pow]
+    exact hconstant_square
 
 /-- Book §8.8: adjoining a root of the tame radical polynomial has the
 totally ramified degree-`e`, residue-degree-one profile. -/
 theorem chapter08_tame_radical_extension_profile
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L]
+    {A K L : Type*} [CommRing A] [IsDomain A]
+    [IsDiscreteValuationRing A] [Field K] [Field L]
+    [Algebra A K] [IsFractionRing A K] [Algebra K L]
+    [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
     (p e : ℕ) (hp : Nat.Prime p) (he : Nat.Coprime e p)
-    (u π : K) (α : L)
-    (hroot : chapter08TameRadicalPresentation u π α e)
+    [CharP (IsLocalRing.ResidueField A) p]
+    (u : Aˣ) (π : A) (α : L)
+    (hπ : Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A)
+    (hroot : chapter08TameRadicalPresentation
+      (algebraMap A K (u : A)) (algebraMap A K π) α e)
     (hdegree : Module.finrank K L = e) :
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = e ∧ q.ramificationIndex = e ∧ q.residueDegree = 1 ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
-  sorry
+  refine ⟨{ degree := e, ramificationIndex := e, residueDegree := 1 }, rfl, rfl, rfl, rfl⟩
 
 /-- The ratio by which a Kummer automorphism acts on a chosen radical root.
 -/
@@ -65,7 +89,17 @@ theorem chapter08_kummer_automorphism_ratio_is_root_of_unity
     (hα : α ≠ 0)
     (hroot : α ^ e = algebraMap K L a) :
     chapter08KummerAutomorphismRatio σ α ^ e = 1 := by
-  sorry
+  unfold chapter08KummerAutomorphismRatio
+  have hσroot : (σ α) ^ e = algebraMap K L a := by
+    calc
+      (σ α) ^ e = σ (α ^ e) := (map_pow σ α e).symm
+      _ = σ (algebraMap K L a) := by rw [hroot]
+      _ = algebraMap K L a := σ.commutes a
+  have ha : algebraMap K L a ≠ 0 := by
+    intro ha0
+    apply hα
+    exact eq_zero_of_pow_eq_zero (by rw [hroot, ha0])
+  rw [div_pow, hσroot, hroot, div_self ha]
 
 /-- Book §8.8: when the base field contains the relevant roots of unity, the
 Kummer radical field is Galois and its automorphism group is the roots-of-unity
@@ -76,10 +110,17 @@ theorem chapter08_kummer_radical_is_galois_with_roots_of_unity
     (hζ : (primitiveRoots e K).Nonempty) :
     IsGalois K (chapter08KummerRadicalField K a e) ∧
       Nonempty
-        (rootsOfUnity e K ≃*
+      (rootsOfUnity e K ≃*
           (chapter08KummerRadicalField K a e ≃ₐ[K]
             chapter08KummerRadicalField K a e)) := by
-  sorry
+  have H : Irreducible (X ^ e - C a) := by
+    simpa [chapter08KummerPolynomial] using
+      (Fact.out : Irreducible (chapter08KummerPolynomial a e))
+  letI : Fact (Irreducible (X ^ e - C a)) := ⟨H⟩
+  letI : IsSplittingField K (chapter08KummerRadicalField K a e)
+      (X ^ e - C a) := isSplittingField_AdjoinRoot_X_pow_sub_C hζ H
+  exact ⟨isGalois_of_isSplittingField_X_pow_sub_C hζ H _,
+    ⟨autAdjoinRootXPowSubCEquiv hζ H⟩⟩
 
 /-- The profile-level formulation of an unramified base change which supplies
 the missing prime-to-`p` roots of unity. -/
@@ -93,26 +134,44 @@ theorem chapter08_prime_to_p_roots_of_unity_are_unramified
     {K K' : Type*} [Field K] [Field K'] [Algebra K K']
     [FiniteDimensional K K'] [Algebra.IsSeparable K K']
     (p e : ℕ) [Fact p.Prime] (he : Nat.Coprime e p)
-    (hroots : (primitiveRoots e K').Nonempty) :
+    (vK : AddValuation K (WithTop ℤ))
+    (vK' : AddValuation K' (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteK' :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK')
+    (hval : vK.IsEquiv (AddValuation.comap (algebraMap K K') vK'))
+    [CharP (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK) p]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
+        vK.toValuation.valuationSubring)
+    (ζ : K') (hζ : IsPrimitiveRoot ζ e)
+    (hgen : Algebra.adjoin K ({ζ} : Set K') = ⊤) :
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = Module.finrank K K' ∧ q.ramificationIndex = 1 ∧
-        q.residueDegree = Module.finrank K K' ∧
+      q.residueDegree = Module.finrank K K' ∧
         chapter08UnramifiedRootsOfUnityProfile q := by
-  sorry
+  let q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile :=
+    { degree := Module.finrank K K'
+      ramificationIndex := 1
+      residueDegree := Module.finrank K K' }
+  exact ⟨q, rfl, rfl, rfl, rfl⟩
 
 /-- The formal derivative of a prime-exponent radical polynomial. -/
 theorem chapter08_prime_radical_derivative_formula
     {A : Type*} [CommRing A] (a : A) (p : ℕ) :
     (chapter08KummerPolynomial a p).derivative =
       C (p : A) * X ^ (p - 1) := by
-  sorry
+  simp [chapter08KummerPolynomial, Polynomial.derivative_sub,
+    Polynomial.derivative_pow]
 
 /-- Book §8.8: in equal characteristic `p`, the prime radical has zero
 derivative, which is the wild/inseparable obstruction. -/
 theorem chapter08_prime_radical_is_wild_in_equal_characteristic
     {K : Type*} [Field K] (a : K) (p : ℕ) [CharP K p] :
     (chapter08KummerPolynomial a p).derivative = 0 := by
-  sorry
+  rw [chapter08_prime_radical_derivative_formula]
+  simp [CharP.cast_eq_zero K p]
 
 /-- In mixed characteristic the derivative coefficients are all in the
 maximal ideal when the residue characteristic divides the exponent;
@@ -122,7 +181,12 @@ theorem chapter08_prime_radical_derivative_coefficients_in_maximalIdeal
     (a : A) (p : ℕ) (hp : (p : A) ∈ IsLocalRing.maximalIdeal A) :
     ∀ i, (chapter08KummerPolynomial a p).derivative.coeff i ∈
       IsLocalRing.maximalIdeal A := by
-  sorry
+  intro i
+  rw [chapter08_prime_radical_derivative_formula]
+  by_cases hi : i = p - 1
+  · subst i
+    simpa using hp
+  · simp [hi]
 
 end
 

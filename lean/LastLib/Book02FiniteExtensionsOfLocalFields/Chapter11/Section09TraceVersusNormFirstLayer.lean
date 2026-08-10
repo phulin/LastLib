@@ -41,12 +41,16 @@ theorem chapter11_tame_total_first_layer_trace_formula
     (e : ℕ) (hext : chapter11ValuationExtension vK vL)
     (hscale : chapter11ValuationScaling vK vL e)
     (hres : chapter11TotallyRamifiedResidueAgreement vK vL)
+    (hdegree : Module.finrank K L = e)
+    (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
+    (hcompleteK : chapter11ValuationComplete vK)
+    (hcompleteL : chapter11ValuationComplete vL)
     (x : chapter11ValuationRing vL) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.trace K L (x : L) ∧
         ρK y = (e : k) * ρL x := by
   exact chapter11_totally_ramified_trace_residue_formula
-    K L k vK vL ρK ρL e hext hscale hres x
+    K L k vK vL ρK ρL e hext hscale hres hdegree hred hcompleteK hcompleteL x
 
 /- The totally ramified norm formula on residue units. -/
 theorem chapter11_tame_total_first_layer_norm_formula
@@ -58,21 +62,30 @@ theorem chapter11_tame_total_first_layer_norm_formula
     (e : ℕ) (hext : chapter11ValuationExtension vK vL)
     (hscale : chapter11ValuationScaling vK vL e)
     (hres : chapter11TotallyRamifiedResidueAgreement vK vL)
+    (hdegree : Module.finrank K L = e)
+    (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
+    (hcompleteK : chapter11ValuationComplete vK)
+    (hcompleteL : chapter11ValuationComplete vL)
     (u : chapter11ValuationRing vL) (hu : IsUnit u) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧ ρK y = (ρL u) ^ e := by
   exact chapter11_totally_ramified_norm_residue_formula
-    K L k vK vL ρK ρL e hext hscale hres u hu
+    K L k vK vL ρK ρL e hext hscale hres hdegree hred hcompleteK hcompleteL u hu
 
 /- In the unramified case the reductions of trace and norm are the residue
    trace and residue norm, respectively. -/
 theorem chapter11_unramified_first_layer_trace_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     [Algebra (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [FiniteDimensional (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)]
+    (hdegree : Module.finrank K L =
+      Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL))
+    (hred : chapter11ResidueReductionCompatible vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL))
     (x : chapter11ValuationRing vL) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.trace K L (x : L) ∧
@@ -83,11 +96,16 @@ theorem chapter11_unramified_first_layer_trace_formula
 
 theorem chapter11_unramified_first_layer_norm_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     [Algebra (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [FiniteDimensional (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)]
+    (hdegree : Module.finrank K L =
+      Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL))
+    (hred : chapter11ResidueReductionCompatible vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL))
     (u : chapter11ValuationRing vL) (hu : IsUnit u) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧
@@ -111,7 +129,12 @@ theorem chapter11_tame_first_layer_additive_multiplicative_asymmetry
     (hpower : ¬Function.Surjective (chapter11TameFirstLayerMultiplicativeMap k e)) :
     Function.Surjective (chapter11TameFirstLayerAdditiveMap k e) ∧
       ¬Function.Surjective (chapter11TameFirstLayerMultiplicativeMap k e) := by
-  sorry
+  constructor
+  · intro y
+    refine ⟨(e : k)⁻¹ * y, ?_⟩
+    change (e : k) * ((e : k)⁻¹ * y) = y
+    rw [mul_assoc, mul_inv_cancel₀ he, one_mul]
+  · exact hpower
 
 /- Unramifiedness alone does not force residue norm surjectivity over arbitrary
    residue fields; finiteness (or another explicit residue hypothesis) is an
@@ -120,7 +143,11 @@ theorem chapter11_residue_norm_surjectivity_not_formal_for_arbitrary_fields :
     ¬ (∀ (k l : Type*) [Field k] [Field l] [Algebra k l]
       [FiniteDimensional k l] [Algebra.IsSeparable k l],
       Function.Surjective (Algebra.norm k (S := l))) := by
-  sorry
+  intro h
+  obtain ⟨z, hz⟩ := h ℝ ℂ (-1 : ℝ)
+  rw [Algebra.norm_complex_apply] at hz
+  have hznonneg : 0 ≤ Complex.normSq z := Complex.normSq_nonneg z
+  linarith
 
 /- The higher-unit profile remains the data needed after a first-layer
    calculation; the source deliberately makes no claim that `e` and `f` alone

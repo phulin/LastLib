@@ -41,6 +41,10 @@ structure Chapter09Corollary92Data
 
 /- Corollary 9.2: separable residue extensions allocate all residue degree to
 the unramified stage and all ramification index to the remainder. -/
+-- SOURCE_ISSUE: The source's degree equalities under only a separable residue
+-- extension are false for separable defect extensions over imperfect residue
+-- fields.  The minimal correction here is to assume a perfect base residue
+-- field (an explicit defectless hypothesis would also suffice).
 theorem chapter09_corollary_92
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
@@ -52,6 +56,7 @@ theorem chapter09_corollary_92
     [FaithfulSMul A B] [IsIntegralClosure B A L]
     [Module.Finite (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)]
+    [PerfectField (chapter09BaseResidueField A)]
     [Chapter09FiniteLocalExtension A B K L]
     (hseparable : Algebra.IsSeparable (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)) :
@@ -102,7 +107,11 @@ theorem chapter09_finite_residue_field_clean_decomposition
     [Finite (chapter09BaseResidueField A)]
     [Chapter09FiniteLocalExtension A B K L] :
     Nonempty (Chapter09Corollary92Data A B K L) := by
-  sorry
+  letI : PerfectField (chapter09BaseResidueField A) :=
+    chapter09_finite_field_is_perfect (chapter09BaseResidueField A)
+  exact chapter09_corollary_92 A B K L
+    (chapter09_perfect_residue_field_gives_separable_extension
+      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B))
 
 /-- A clean unramified-then-totally-ramified decomposition exists exactly for
 separable residue extensions. -/
@@ -138,7 +147,20 @@ theorem chapter09_clean_two_stage_decomposition_iff_residue_separable
     chapter09CleanTwoStageDecomposition A B K L ↔
       Algebra.IsSeparable (chapter09BaseResidueField A)
         (chapter09ExtensionResidueField B) := by
-  sorry
+  constructor
+  · rintro ⟨K₀, hK₀, ⟨r, hr⟩⟩
+    exact (chapter09_remainder_totally_ramified_iff_residue_separable
+      A B K L K₀ hK₀).mp ⟨r, hr⟩
+  · intro hseparable
+    obtain ⟨K₀, hK₀, _⟩ := chapter09_maximal_unramified_subextension
+      A B K L
+    obtain ⟨r⟩ := chapter09_remainder_invariants A B K L K₀ hK₀
+    refine ⟨K₀, hK₀, ⟨r, ?_⟩⟩
+    rw [r.residue_degree_eq]
+    rw [((chapter09_separable_residue_part_eq_top_iff
+      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)).mpr
+      hseparable)]
+    exact IntermediateField.finrank_top
 
 
 /-! ### Galois and nongalois interpretations -/
@@ -149,6 +171,36 @@ noncomputable def chapter09InertiaFixedField
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (I : Subgroup (L ≃ₐ[K] L)) : IntermediateField K L :=
   IntermediateField.fixedField I
+
+/-- The residue action attached to a Galois local extension.  The action is
+kept as explicit data because the abstract `A`/`B` package does not itself
+choose a valuation-subring presentation for the reduction map. -/
+structure Chapter09ResidueActionData
+    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
+    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
+    [IsScalarTower A K L] [IsScalarTower A B L]
+    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
+    [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
+    [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
+    [FaithfulSMul A B] [IsIntegralClosure B A L]
+    [Module.Finite (chapter09BaseResidueField A)
+      (chapter09ExtensionResidueField B)]
+    [Chapter09FiniteLocalExtension A B K L] [IsGalois K L] where
+  action : (L ≃ₐ[K] L) →* RingAut (chapter09ExtensionResidueField B)
+  fixes_base : ∀ σ : L ≃ₐ[K] L, ∀ x : chapter09BaseResidueField A,
+    action σ (algebraMap (chapter09BaseResidueField A)
+      (chapter09ExtensionResidueField B) x) =
+      algebraMap (chapter09BaseResidueField A)
+        (chapter09ExtensionResidueField B) x
+  action_surjective_over_base :
+    ∀ φ : RingAut (chapter09ExtensionResidueField B),
+      (∀ x : chapter09BaseResidueField A,
+        φ (algebraMap (chapter09BaseResidueField A)
+          (chapter09ExtensionResidueField B) x) =
+          algebraMap (chapter09BaseResidueField A)
+            (chapter09ExtensionResidueField B) x) →
+      ∃ σ : L ≃ₐ[K] L, action σ = φ
 
 /-- Data expressing the Galois identification `K₀ = L^I`.  The subgroup is
 named as inertia by the field `inertia_order`; its fixed-field equality is the
@@ -169,6 +221,8 @@ structure Chapter09GaloisInertiaIdentification
   K₀ : IntermediateField K L
   maximal : chapter09MaximalUnramifiedSubextension A B K L K₀
   fixed_field_eq : chapter09InertiaFixedField K L I = K₀
+  residue_action : Chapter09ResidueActionData A B K L
+  inertia_eq_kernel : I = MonoidHom.ker residue_action.action
   inertia_order : Nat.card I =
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B
       (IsLocalRing.maximalIdeal B)
@@ -186,9 +240,9 @@ theorem chapter09_galois_inertia_fixed_field
     [Module.Finite (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)]
     [Chapter09FiniteLocalExtension A B K L] [IsGalois K L]
-    [PerfectField (chapter09BaseResidueField A)]
-    (I : Subgroup (L ≃ₐ[K] L)) :
-    Nonempty (Chapter09GaloisInertiaIdentification A B K L I) := by
+    [PerfectField (chapter09BaseResidueField A)] :
+    ∃ I : Subgroup (L ≃ₐ[K] L),
+      Nonempty (Chapter09GaloisInertiaIdentification A B K L I) := by
   sorry
 
 end

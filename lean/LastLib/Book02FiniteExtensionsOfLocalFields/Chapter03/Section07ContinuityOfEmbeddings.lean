@@ -64,7 +64,10 @@ theorem chapter03_algebraic_embedding_is_isometric_and_continuous
     (σ : L →ₐ[K] Ω)
     (hnorm : chapter03IsometricEmbedding σ) :
     Isometry σ ∧ Continuous σ := by
-  sorry
+  have hisometry : Isometry σ := by
+    intro x y
+    simpa only [dist_eq_norm, map_sub] using hnorm (x - y)
+  exact ⟨hisometry, hisometry.continuous⟩
 
 /-- Galois automorphisms are continuous for the extending local absolute value. -/
 theorem chapter03_galois_action_is_continuous
@@ -72,15 +75,27 @@ theorem chapter03_galois_action_is_continuous
     (σ : L ≃ₐ[K] L)
     (hnorm : ∀ x : L, ‖σ x‖ = ‖x‖) :
     Continuous σ := by
-  sorry
+  have hisometry : Isometry σ := by
+    intro x y
+    simpa only [dist_eq_norm, map_sub] using hnorm (x - y)
+  exact hisometry.continuous
 
 /-- Trace and norm are continuous finite algebraic operations. -/
 theorem chapter03_trace_and_norm_are_continuous
     {K L : Type*} [NormedField K] [NormedField L] [Algebra K L]
+    [NormedAlgebra K L]
     [FiniteDimensional K L] :
     Continuous (fun x : L => Algebra.trace K L x) ∧
       Continuous (fun x : L => Algebra.norm K x) := by
-  sorry
+  classical
+  let b := Module.finBasis K L
+  have hleft : Continuous (fun x : L => Algebra.leftMulMatrix b x) :=
+    (Algebra.leftMulMatrix b).toLinearMap.continuous_of_finiteDimensional
+  constructor
+  · rw [Algebra.trace_eq_matrix_trace b]
+    exact hleft.matrix_trace
+  · rw [Algebra.norm_eq_matrix_det b]
+    exact hleft.matrix_det
 
 /-- Finite sums and products commute with limits in a topological semiring. -/
 theorem chapter03_finite_sums_and_products_commute_with_limits
@@ -90,7 +105,11 @@ theorem chapter03_finite_sums_and_products_commute_with_limits
     (hlim : ∀ i, Tendsto (f i) atTop (𝓝 (x i))) :
     Tendsto (fun n => ∑ i, f i n) atTop (𝓝 (∑ i, x i)) ∧
       Tendsto (fun n => ∏ i, f i n) atTop (𝓝 (∏ i, x i)) := by
-  sorry
+  constructor
+  · simpa using
+      (tendsto_finsetSum (Finset.univ : Finset ι) (fun i _ => hlim i))
+  · simpa using
+      (tendsto_finsetProd (Finset.univ : Finset ι) (fun i _ => hlim i))
 
 /-- The same limit statement applies to a finite family of embeddings. -/
 theorem chapter03_finite_embedding_products_preserve_limits

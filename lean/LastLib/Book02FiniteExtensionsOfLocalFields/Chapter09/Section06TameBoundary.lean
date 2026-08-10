@@ -37,7 +37,9 @@ theorem chapter09_wild_iff_prime_dvd
     (k : Type*) [Field k] (p e : ℕ) [Fact p.Prime] [CharP k p]
     (hchar : ringExpChar k = p) :
     (¬ chapter09Tame k e) ↔ p ∣ e := by
-  sorry
+  have hp : p.Prime := Fact.out
+  simpa [chapter09Tame, hchar, Nat.coprime_comm] using
+    (hp.dvd_iff_not_coprime (n := e)).symm
 
 /-- Group-theoretic content of the finite-Galois assertion: inertia has order
 e, wild inertia is the maximal normal p-subgroup, and the quotient is cyclic
@@ -46,17 +48,17 @@ structure Chapter09WildInertiaStructure
     (G : Type*) [Group G] [Finite G] (p e : ℕ) where
   inertia : Subgroup G
   inertia_order : Nat.card inertia = e
-  wild_inertia : Subgroup G
+  wild_inertia : Subgroup inertia
   wild_normal : wild_inertia.Normal
   wild_is_p_group : IsPGroup p wild_inertia
   wild_maximal :
-    ∀ H : Subgroup G, H.Normal → IsPGroup p H → H ≤ wild_inertia
+    ∀ H : Subgroup inertia, H.Normal → IsPGroup p H → H ≤ wild_inertia
   quotient_cyclic :
     letI : wild_inertia.Normal := wild_normal
-    IsCyclic (G ⧸ wild_inertia)
+    IsCyclic (inertia ⧸ wild_inertia)
   quotient_prime_to_p :
     letI : wild_inertia.Normal := wild_normal
-    Nat.Coprime (Nat.card (G ⧸ wild_inertia)) p
+    Nat.Coprime (Nat.card (inertia ⧸ wild_inertia)) p
 
 /-- Finite-Galois ramification data over a perfect residue field. -/
 structure Chapter09FiniteGaloisRamificationData
@@ -77,6 +79,9 @@ structure Chapter09FiniteGaloisRamificationData
     (ringExpChar (chapter09BaseResidueField A))
     (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B
       (IsLocalRing.maximalIdeal B))
+  residue_action : Chapter09ResidueActionData A B K L
+  inertia_eq_kernel : group_data.inertia =
+    MonoidHom.ker residue_action.action
 
 /-- The finite-Galois perfect-residue theorem in the form consumed by later
 proofs. -/
@@ -98,31 +103,21 @@ theorem chapter09_finite_galois_inertia_and_wild_quotient
   sorry
 
 /-- A post-base-change Kummer presentation of a totally tamely ramified
-extension.  The fields in this structure are the fields after adjoining the
+extension.  The coefficient ring is the valuation ring after adjoining the
 needed roots of unity or making the suitable unramified base change. -/
 structure Chapter09TameKummerPresentation
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    (e : ℕ) (π : K) where
-  tame : chapter09Tame K e
+    (A K L : Type*) [CommRing A] [IsDomain A] [IsLocalRing A]
+    [IsDiscreteValuationRing A] [Field K] [Field L]
+    [Algebra A K] [Algebra K L] [Algebra A L]
+    [IsScalarTower A K L] [IsFractionRing A K]
+    (e : ℕ) (π : A) where
+  tame : chapter09Tame (chapter09BaseResidueField A) e
+  uniformizer :
+    Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A
   alpha : L
-  alpha_pow_eq_uniformizer : alpha ^ e = algebraMap K L π
+  alpha_pow_eq_uniformizer : alpha ^ e = algebraMap A L π
   generates : Algebra.adjoin K ({alpha} : Set L) = ⊤
   degree : Module.finrank K L = e
-
-/-- The elementary prime-to-p power-map interface on principal units. -/
-structure Chapter09TamePrincipalUnitNormData
-    (U V : Type*) [Group U] [Group V] (e : ℕ) where
-  power_map_bijective : Function.Bijective (fun u : U => u ^ e)
-  norm : U →* V
-  norm_surjective : Function.Surjective norm
-
-/-- Tameness is the exact interface used in the chapter for invertibility of
-the principal-unit power map and the well-behaved norm map. -/
-theorem chapter09_tame_principal_unit_interface
-    (U V : Type*) [Group U] [Group V] (e : ℕ)
-    (d : Chapter09TamePrincipalUnitNormData U V e) :
-    Function.Bijective (fun u : U => u ^ e) ∧ Function.Surjective d.norm := by
-  exact ⟨d.power_map_bijective, d.norm_surjective⟩
 
 /- The chapter deliberately stops before introducing higher ramification
 filtrations, jumps, different ideals, or discriminants. -/

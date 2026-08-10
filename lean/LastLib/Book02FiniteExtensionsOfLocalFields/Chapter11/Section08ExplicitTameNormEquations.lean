@@ -43,6 +43,9 @@ theorem chapter11_tame_total_norm_valuation_coordinate_surjective
     (hscale : chapter11ValuationScaling vK vL e)
     (hres : chapter11TotallyRamifiedResidueAgreement vK vL)
     (hdegree : Module.finrank K L = e)
+    (hfres :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        vK vL hext = 1)
     (πL : L) (hπ : chapter11IsUniformizer vL πL) (r : ℤ) :
     ∃ x : L, x ≠ 0 ∧ vK (Algebra.norm K x) = (r : WithTop ℤ) := by
   sorry
@@ -60,19 +63,19 @@ theorem chapter11_tame_total_norm_equation_iff
     (hext : chapter11ValuationExtension vK vL)
     (hscale : chapter11ValuationScaling vK vL e)
     (hres : chapter11TotallyRamifiedResidueAgreement vK vL)
+    (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
     (hprincipal :
       Set.SurjOn (Algebra.norm K (S := L))
         (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1))
     (hdegree : Module.finrank K L = e)
-    (hρK : Function.Surjective ρK)
+    (hfres :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        vK vL hext = 1)
     (πK : K) (hπK : chapter11IsUniformizer vK πK)
     (πL : L) (hπL : chapter11IsUniformizer vL πL)
     (hnormπ : Algebra.norm K πL = πK)
-    (hresnorm : ∀ u : chapter11ValuationRing vL,
-      ∃ y : chapter11ValuationRing vK,
-        (y : K) = Algebra.norm K (u : L) ∧ ρK y = (ρL u) ^ e)
     (a : K) (ha : a ≠ 0) :
     chapter11NormEquationSolution K L a ↔
       a ∈ chapter11TameNormEquationSet vK ρK πK e := by
@@ -97,7 +100,21 @@ theorem chapter11_kummer_uniformizer_norm
     (hminpoly : minpoly K root = chapter11KummerPolynomial π e)
     (hdegree : Module.finrank K L = e) :
     Algebra.norm K root = (-1 : K) ^ (e + 1) * π := by
-  sorry
+  have hrootint : IsIntegral K root := IsIntegral.of_finite K root
+  have htop : K⟮root⟯ = ⊤ := by
+    apply (Field.primitive_element_iff_minpoly_natDegree_eq K root).2
+    rw [hminpoly, chapter11KummerPolynomial, natDegree_X_pow_sub_C, hdegree]
+  let pb : PowerBasis K L := PowerBasis.ofAdjoinEqTop' hrootint htop
+  have hgen : pb.gen = root := by
+    simpa [pb] using (PowerBasis.ofAdjoinEqTop'_gen hrootint htop)
+  have hdim : pb.dim = e := by
+    simp [pb, hminpoly, chapter11KummerPolynomial]
+  have hepos : 0 < e := by
+    rw [← hdim]
+    exact PowerBasis.dim_pos pb
+  have hnorm := PowerBasis.norm_gen_eq_coeff_zero_minpoly pb
+  rw [hgen, hminpoly, hdim] at hnorm
+  simpa [chapter11KummerPolynomial, hepos.ne', pow_succ, mul_assoc] using hnorm
 
 /- Norms of elements embedded from the base field are powers by the extension
    degree. -/
@@ -106,14 +123,19 @@ theorem chapter11_norm_of_base_unit
     [FiniteDimensional K L] (e : ℕ)
     (hdegree : Module.finrank K L = e) (u : K) :
     Algebra.norm K (algebraMap K L u) = u ^ e := by
-  sorry
+  simpa [hdegree] using (Algebra.norm_algebraMap (R := K) (S := L) u)
 
 /- The base-unit formula gives an inclusion in the full unit norm image; it
    does not identify that image with the base-field power image. -/
+-- STATEMENT_NEEDS_UPDATE: `chapter11BaseUnitNormImage` ranges over all field units `Kˣ`, while the target `chapter11NormImage ... 0` only ranges over valuation-ring units in `L`; no hypothesis restricts a source unit to `U^0_K`.  Replace the source set by the valuation-ring unit group (or add that membership premise) before asserting the inclusion.
 theorem chapter11_base_unit_norm_image_subset
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
-    (vL : AddValuation L (WithTop ℤ)) (e : ℕ)
+    (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
+    (e : ℕ) (hext : chapter11ValuationExtension vK vL)
+    (hscale : chapter11ValuationScaling vK vL e)
+    (hcompleteK : chapter11ValuationComplete vK)
+    (hcompleteL : chapter11ValuationComplete vL)
     (hdegree : Module.finrank K L = e) :
     chapter11BaseUnitNormImage K L e ⊆ chapter11NormImage K L vL 0 := by
   sorry

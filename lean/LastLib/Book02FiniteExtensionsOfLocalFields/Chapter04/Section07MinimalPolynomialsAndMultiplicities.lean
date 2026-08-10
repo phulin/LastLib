@@ -14,8 +14,8 @@ theorem chapter04_trace_minpoly_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (x : L) :
     Algebra.trace K L x =
-      Module.finrank K K⟮x⟯ * -(minpoly K x).nextCoeff := by
-  sorry
+      Module.finrank (K⟮x⟯) L * -(minpoly K x).nextCoeff := by
+  exact trace_eq_finrank_mul_minpoly_nextCoeff K x
 
 /- The norm formula records the same multiplicity (§4.7). -/
 theorem chapter04_norm_minpoly_formula
@@ -23,8 +23,11 @@ theorem chapter04_norm_minpoly_formula
     [FiniteDimensional K L] (x : L) :
     Algebra.norm K x =
       (((-1 : K) ^ (minpoly K x).natDegree * (minpoly K x).coeff 0) ^
-        Module.finrank K K⟮x⟯) := by
-  sorry
+        Module.finrank (K⟮x⟯) L) := by
+  rw [Algebra.norm_eq_norm_adjoin K x]
+  rw [← IntermediateField.adjoin.powerBasis_gen (Algebra.IsIntegral.isIntegral x)]
+  rw [Algebra.PowerBasis.norm_gen_eq_coeff_zero_minpoly]
+  simp only [PowerBasis.dim, IntermediateField.adjoin.powerBasis, minpoly_gen]
 
 /- Purely inseparable minimal polynomials are Frobenius powers (§4.7). -/
 theorem chapter04_purely_inseparable_minpoly_shape
@@ -32,7 +35,7 @@ theorem chapter04_purely_inseparable_minpoly_shape
     [IsPurelyInseparable K L] (p : ℕ) [ExpChar K p] (x : L) :
     ∃ r : ℕ, ∃ a : K,
       minpoly K x = (Polynomial.X : K[X]) ^ (p ^ r) - Polynomial.C a := by
-  sorry
+  exact IsPurelyInseparable.minpoly_eq_X_pow_sub_C K p x
 
 /- The trace vanishes for the purely inseparable minimal-polynomial shapes
 from §4.7, while the norm retains the constant term. -/
@@ -43,7 +46,37 @@ theorem chapter04_purely_inseparable_generator_norm
     (hgen : Algebra.adjoin K ({α} : Set L) = ⊤)
     (hdegree : Module.finrank K L = p) :
     Algebra.norm K α = (-1 : K) ^ (p + 1) * a := by
-  sorry
+  have hp0 : p ≠ 0 := (Fact.out : Nat.Prime p).ne_zero
+  have hp_pos : 0 < p := (Fact.out : Nat.Prime p).pos
+  have hgen' : K⟮α⟯ = (⊤ : IntermediateField K L) :=
+    IntermediateField.adjoin_eq_top_of_algebra K ({α} : Set L) hgen
+  have hminpoly_degree : (minpoly K α).natDegree = p := by
+    rw [← IntermediateField.adjoin.finrank (Algebra.IsIntegral.isIntegral α), hgen']
+    simpa using hdegree
+  have hminpoly : minpoly K α =
+      (Polynomial.X : K[X]) ^ p - Polynomial.C a := by
+    symm
+    apply minpoly.unique
+    · exact Polynomial.monic_X_pow_sub_C _ hp0
+    · simp [Polynomial.aeval_def, hpower]
+    · intro q hq hqroot
+      rw [Polynomial.degree_X_pow_sub_C hp_pos,
+        Polynomial.degree_eq_natDegree hq.ne_zero]
+      have hmin := minpoly.min K α hq hqroot
+      rw [Polynomial.degree_eq_natDegree (minpoly.ne_zero
+        (Algebra.IsIntegral.isIntegral α)),
+        Polynomial.degree_eq_natDegree hq.ne_zero] at hmin
+      have hmin' : p ≤ q.natDegree := by simpa [hminpoly_degree] using hmin
+      exact_mod_cast hmin'
+  rw [chapter04_norm_minpoly_formula K L α, hminpoly]
+  have hfinrank : Module.finrank (K⟮α⟯) L = 1 := by
+    rw [hgen']
+    exact IntermediateField.finrank_top
+  rw [hfinrank]
+  simp only [Polynomial.natDegree_X_pow_sub_C, pow_one, Polynomial.coeff_sub,
+    Polynomial.coeff_X_pow, if_neg hp0.symm, Polynomial.coeff_C_zero, sub_zero,
+    zero_sub, pow_succ]
+  ring
 
 /- Coefficients of the minimal polynomial of an integral element lie in the
 integrally closed base ring (§4.7). -/
@@ -58,7 +91,10 @@ theorem chapter04_integral_minpoly_coefficients_in_base
     (x : B) :
     ∀ i : ℕ, ∃ a : A,
       algebraMap A K a = (minpoly K (algebraMap B L x)).coeff i := by
-  sorry
+  intro i
+  refine ⟨(minpoly A x).coeff i, ?_⟩
+  rw [minpoly.isIntegrallyClosed_eq_field_fractions (R := A) (S := B) K L
+    (Algebra.IsIntegral.isIntegral (R := A) x), Polynomial.coeff_map]
 
 /- A unit has a unit constant coefficient in its minimal polynomial (§4.7). -/
 theorem chapter04_integral_unit_minpoly_constant_coefficient_is_unit
@@ -73,7 +109,39 @@ theorem chapter04_integral_unit_minpoly_constant_coefficient_is_unit
     ∃ u : Aˣ,
       algebraMap A K (u : A) =
         (minpoly K (algebraMap B L x)).coeff 0 := by
-  sorry
+  rcases chapter04_integral_minpoly_coefficients_in_base A B K L x 0 with
+    ⟨a, ha⟩
+  rcases chapter04_norm_of_integral_unit_is_base_unit A B K L
+      hx.unit with ⟨u, hu⟩
+  rw [hx.unit_spec] at hu
+  let m := Module.finrank (K⟮algebraMap B L x⟯) L
+  have hm : m ≠ 0 := Module.finrank_pos.ne'
+  have hnorm := chapter04_norm_minpoly_formula K L (algebraMap B L x)
+  have heqK : algebraMap A K (((-1 : A) ^
+      (minpoly K (algebraMap B L x)).natDegree * a) ^ m) =
+      algebraMap A K (u : A) := by
+    calc
+      algebraMap A K (((-1 : A) ^
+          (minpoly K (algebraMap B L x)).natDegree * a) ^ m) =
+          ((-1 : K) ^ (minpoly K (algebraMap B L x)).natDegree *
+            algebraMap A K a) ^ m := by simp
+      _ = Algebra.norm K (algebraMap B L x) := by
+        rw [ha]
+        exact hnorm.symm
+      _ = algebraMap A K (u : A) := hu.symm
+  have heqA : ((-1 : A) ^
+      (minpoly K (algebraMap B L x)).natDegree * a) ^ m = (u : A) :=
+    IsFractionRing.injective A K heqK
+  have hpow : IsUnit (((-1 : A) ^
+      (minpoly K (algebraMap B L x)).natDegree * a) ^ m) := by
+    rw [heqA]
+    exact u.isUnit
+  have hbase : IsUnit ((-1 : A) ^
+      (minpoly K (algebraMap B L x)).natDegree * a) :=
+    (isUnit_pow_iff hm).mp hpow
+  have haunit : IsUnit a := (IsUnit.mul_iff.mp hbase).2
+  refine ⟨haunit.unit, ?_⟩
+  rw [haunit.unit_spec, ha]
 
 /-
 The totally ramified uniformizer case has Eisenstein shape (§4.7).  The

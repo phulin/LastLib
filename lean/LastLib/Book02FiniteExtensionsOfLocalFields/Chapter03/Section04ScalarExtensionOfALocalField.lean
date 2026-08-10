@@ -39,7 +39,11 @@ theorem chapter03_separable_scalar_extension_is_finite_reduced
     [FiniteDimensional K K']
     [Algebra.IsSeparable K L] :
     chapter03FiniteReducedScalarExtension K L K' := by
-  sorry
+  change Algebra.Etale K' (L ⊗[K] K')
+  letI : Algebra.Etale K L :=
+    { formallyEtale := Algebra.FormallyEtale.of_isSeparable K L
+      finitePresentation := Algebra.FinitePresentation.of_finiteType.mp inferInstance }
+  infer_instance
 
 /-- The product-of-fields characterization supplied by Mathlib's étale API. -/
 theorem chapter03_separable_scalar_extension_has_field_factors
@@ -63,18 +67,19 @@ extension of the local valuation.  The completeness/rank-one hypotheses are
 made explicit because a bare field factor does not carry a canonical
 valuation.
 -/
--- SOURCE_ISSUE: “each factor carries the unique local valuation” in §3.4
--- needs completeness (or henselianity) and a specified rank-one valuation;
--- it is not true for an arbitrary noncomplete valued base.
+/- The source chapter works in the complete local-field setting.  Completeness
+and rank-one discreteness are explicit here because a bare field factor does
+not carry a canonical valuation outside that setting. -/
 theorem chapter03_complete_factor_has_unique_local_valuation
     {K' F Γ : Type u} [Field K'] [Field F]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K' F]
-    [FiniteDimensional K' F] (v : Valuation K' Γ)
-    [CompleteSpace (WithVal v)] (w : Valuation F Γ)
-    [Valuation.IsRankOneDiscrete v] [Valuation.IsRankOneDiscrete w]
-    (hext : v.IsEquiv (w.comap (algebraMap K' F))) :
+    (v : Valuation K' Γ) [Valuation.IsRankOneDiscrete v]
+    [Algebra.IsAlgebraic K' F]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal v.valuationSubring) v.valuationSubring) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension v F := by
-  sorry
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_theorem_1_1
+    v hcomplete
 
 /-- Inseparable scalar extension may have nilpotents rather than field factors. -/
 def chapter03ScalarExtensionHasNilpotents
@@ -106,44 +111,65 @@ theorem chapter03_separable_residue_extension_is_stable_under_base_change
     [FiniteDimensional k k']
     [Algebra.IsSeparable k l] :
     chapter03ResidueScalarExtensionIsFiniteEtale k l k' := by
-  sorry
+  change Algebra.Etale k' (l ⊗[k] k')
+  letI : Algebra.Etale k l :=
+    { formallyEtale := Algebra.FormallyEtale.of_isSeparable k l
+      finitePresentation := Algebra.FinitePresentation.of_finiteType.mp inferInstance }
+  infer_instance
 
 /--
 The e/f bookkeeping for a base-change theorem.  The first argument is the
 field upstairs and the second is the chosen base inside the common overfield.
 -/
-structure Chapter03BaseChangeInvariantData
+def chapter03BaseChangeCompositum
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
-    (e f : IntermediateField K Ω → IntermediateField K Ω → ℕ) where
-  L : IntermediateField K Ω
-  K' : IntermediateField K Ω
-  compositum : IntermediateField K Ω := L ⊔ K'
-  compositum_is_sup : compositum = L ⊔ K'
-  linearly_disjoint : L ⊓ K' = ⊥
-  source_total : f L ⊥ = 1
-  base_unramified : e K' ⊥ = 1
-  compositum_over_base : f compositum K' = 1
-  compositum_over_source : e compositum L = 1
+    (L K' : IntermediateField K Ω) : IntermediateField K Ω :=
+  L ⊔ K'
 
-/--
-Unramified base change preserves the expected total/unramified split.  This
-records both conclusions and the linear-disjointness assertion.
--/
+noncomputable instance chapter03BaseChangeCompositumLeftAlgebra
+    {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
+    (L K' : IntermediateField K Ω) :
+    Algebra (↥L) (↥(chapter03BaseChangeCompositum L K')) :=
+  (IntermediateField.inclusion le_sup_left).toAlgebra
+
+noncomputable instance chapter03BaseChangeCompositumRightAlgebra
+    {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
+    (L K' : IntermediateField K Ω) :
+    Algebra (↥K') (↥(chapter03BaseChangeCompositum L K')) :=
+  (IntermediateField.inclusion le_sup_right).toAlgebra
+
+/-- Unramified base change preserves the expected total/unramified split. -/
 theorem chapter03_totally_ramified_extension_after_unramified_base_change
-    {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
-    (e f : IntermediateField K Ω → IntermediateField K Ω → ℕ)
-    (D : Chapter03BaseChangeInvariantData e f) :
-    (D.L ⊓ D.K' = ⊥) ∧ f D.compositum D.K' = 1 ∧
-      e D.compositum D.L = 1 := by
-  exact ⟨D.linearly_disjoint, D.compositum_over_base, D.compositum_over_source⟩
-
-/-- The compositum used in the base-change statement is the field LK'. -/
-theorem chapter03_base_change_compositum_is_sup
-    {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
-    (e f : IntermediateField K Ω → IntermediateField K Ω → ℕ)
-    (D : Chapter03BaseChangeInvariantData e f) :
-    D.compositum = D.L ⊔ D.K' :=
-  D.compositum_is_sup
+    {K Ω Γ : Type*} [Field K] [Field Ω]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K Ω]
+    (L K' : IntermediateField K Ω)
+    [FiniteDimensional K L] [FiniteDimensional K K']
+    [IsGalois K K']
+    (vK : Valuation K Γ)
+    (vL : Valuation (↥L) Γ)
+    (vK' : Valuation (↥K') Γ)
+    (vC : Valuation (↥(chapter03BaseChangeCompositum L K')) Γ)
+    [vK.HasExtension vL] [vK.HasExtension vK']
+    [vK.HasExtension vC] [vL.HasExtension vC]
+    [vK'.HasExtension vC]
+    [IsScalarTower K (↥L) (↥(chapter03BaseChangeCompositum L K'))]
+    [IsScalarTower K (↥K') (↥(chapter03BaseChangeCompositum L K'))]
+    [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL]
+    [Valuation.IsRankOneDiscrete vK']
+    [Valuation.IsRankOneDiscrete vC]
+    [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
+    [FiniteDimensional (↥L) (↥(chapter03BaseChangeCompositum L K'))]
+    [FiniteDimensional (↥K') (↥(chapter03BaseChangeCompositum L K'))]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+    (hL_total : chapter03ResidueDegree vK vL = 1)
+    (hK'_unramified : chapter03RamificationIndex vK vK' = 1) :
+    (L ⊓ K' = ⊥) ∧
+      L.LinearDisjoint K' ∧
+      chapter03ResidueDegree vK' vC = 1 ∧
+      chapter03RamificationIndex vL vC = 1 := by
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03

@@ -74,7 +74,11 @@ theorem chapter06_unramified_arithmetic_frobenius_generates
     [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
     (D : Chapter06UnramifiedGaloisReduction K L k l) (σ : Gal(L/K)) :
     ∃ n : ℤ, (chapter06UnramifiedArithmeticFrobenius D) ^ n = σ := by
-  sorry
+  obtain ⟨n, hn⟩ :=
+    chapter06_arithmetic_frobenius_generates k l (D.reduction σ)
+  refine ⟨n, ?_⟩
+  apply D.reduction.injective
+  simpa [chapter06UnramifiedArithmeticFrobenius] using hn
 
 /- Geometric Frobenius upstairs is the inverse of arithmetic Frobenius. -/
 theorem chapter06_unramified_geometric_frobenius_is_inverse
@@ -111,7 +115,10 @@ theorem chapter06_arithmetic_frobenius_coset_nonempty
     {G H : Type*} [Group G] [Group H] (I : Subgroup G) [I.Normal]
     (D : Chapter06RamifiedGaloisReduction G H I) (φ : H) :
     (chapter06ArithmeticFrobeniusCoset I D φ).Nonempty := by
-  sorry
+  obtain ⟨g, hg⟩ := QuotientGroup.mk'_surjective I (D.quotientEquiv.symm φ)
+  refine ⟨g, ?_⟩
+  change D.quotientEquiv (QuotientGroup.mk' I g) = φ
+  rw [hg, D.quotientEquiv.apply_symm_apply]
 
 /- Two lifts of the same residue automorphism differ by an inertia element. -/
 theorem chapter06_frobenius_lifts_differ_by_inertia
@@ -120,7 +127,14 @@ theorem chapter06_frobenius_lifts_differ_by_inertia
     {g h : G} (hg : g ∈ chapter06ArithmeticFrobeniusCoset I D φ)
     (hh : h ∈ chapter06ArithmeticFrobeniusCoset I D φ) :
     ∃ i : I, h = g * i := by
-  sorry
+  change D.quotientEquiv (QuotientGroup.mk' I g) = φ at hg
+  change D.quotientEquiv (QuotientGroup.mk' I h) = φ at hh
+  have hq : QuotientGroup.mk' I g = QuotientGroup.mk' I h := by
+    apply D.quotientEquiv.injective
+    rw [hg, hh]
+  obtain ⟨i, hi, hih⟩ := (QuotientGroup.mk'_eq_mk' I).mp hq
+  refine ⟨⟨i, hi⟩, ?_⟩
+  exact hih.symm
 
 /- If inertia is nontrivial, the Frobenius coset has no unique lift. -/
 theorem chapter06_ramified_frobenius_has_no_distinguished_lift
@@ -128,7 +142,19 @@ theorem chapter06_ramified_frobenius_has_no_distinguished_lift
     (D : Chapter06RamifiedGaloisReduction G H I) (φ : H)
     (hI : ∃ i : I, (i : G) ≠ 1) :
     ¬ ∃! g : G, g ∈ chapter06ArithmeticFrobeniusCoset I D φ := by
-  sorry
+  rintro ⟨g, hg, hunique⟩
+  change D.quotientEquiv (QuotientGroup.mk' I g) = φ at hg
+  obtain ⟨i, hi⟩ := hI
+  have hqi : QuotientGroup.mk' I (i : G) = 1 := by
+    simpa only [QuotientGroup.mk'_apply] using
+      (QuotientGroup.eq_one_iff (i : G)).2 i.property
+  have hgi : g * (i : G) ∈ chapter06ArithmeticFrobeniusCoset I D φ := by
+    change D.quotientEquiv (QuotientGroup.mk' I (g * (i : G))) = φ
+    rw [map_mul, hqi, mul_one, hg]
+  have heq := hunique (g * (i : G)) hgi
+  apply hi
+  apply (mul_left_cancel (a := g))
+  simpa using heq
 
 end
 

@@ -9,6 +9,10 @@ open Ideal IsLocalRing
 /-! ## 10.3. Higher quotients are additive residue fields -/
 
 /-- The canonical higher layer is an additive group viewed multiplicatively. -/
+-- STATEMENT_NEEDS_UPDATE: `Chapter10IdealLayer` quotients `I ^ n` by
+-- `I ^ (n + 1) • ⊤`, which is generally `I ^ (2*n+1)` rather than the
+-- intended `I ^ (n+1)` layer; the minimal correction is to quotient by the
+-- submodule induced by `I ^ (n + 1)` itself.
 theorem chapter10_higher_unit_layer_is_additive
     {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n) :
     Nonempty
@@ -25,7 +29,34 @@ theorem chapter10_higher_layer_multiplication_linearizes
     x * y ∈ (IsLocalRing.maximalIdeal A) ^ (n + 1) ∧
       (1 + x) * (1 + y) - (1 + (x + y)) ∈
         (IsLocalRing.maximalIdeal A) ^ (n + 1) := by
-  sorry
+  constructor
+  · have hpow :
+        (IsLocalRing.maximalIdeal A) ^ n *
+            (IsLocalRing.maximalIdeal A) ^ n ≤
+          (IsLocalRing.maximalIdeal A) ^ (n + 1) := by
+      calc
+        (IsLocalRing.maximalIdeal A) ^ n *
+            (IsLocalRing.maximalIdeal A) ^ n =
+          (IsLocalRing.maximalIdeal A) ^ (n + n) :=
+            (Ideal.IsTwoSided.pow_add
+              (I := IsLocalRing.maximalIdeal A) n n).symm
+        _ ≤ (IsLocalRing.maximalIdeal A) ^ (n + 1) :=
+          Ideal.pow_le_pow_right (by omega)
+    exact hpow (Ideal.mul_mem_mul hx hy)
+  · convert (show x * y ∈ (IsLocalRing.maximalIdeal A) ^ (n + 1) from by
+      have hpow :
+          (IsLocalRing.maximalIdeal A) ^ n *
+              (IsLocalRing.maximalIdeal A) ^ n ≤
+            (IsLocalRing.maximalIdeal A) ^ (n + 1) := by
+        calc
+          (IsLocalRing.maximalIdeal A) ^ n *
+              (IsLocalRing.maximalIdeal A) ^ n =
+            (IsLocalRing.maximalIdeal A) ^ (n + n) :=
+              (Ideal.IsTwoSided.pow_add
+                (I := IsLocalRing.maximalIdeal A) n n).symm
+          _ ≤ (IsLocalRing.maximalIdeal A) ^ (n + 1) :=
+            Ideal.pow_le_pow_right (by omega)
+      exact hpow (Ideal.mul_mem_mul hx hy)) using 1 <;> ring
 
 /-- Multiplication by a residue scalar on the `n`th additive layer. -/
 def chapter10ResiduePowerScaling

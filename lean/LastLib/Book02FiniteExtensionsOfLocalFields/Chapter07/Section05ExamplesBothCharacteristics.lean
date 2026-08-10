@@ -13,13 +13,14 @@ noncomputable section
 /-- A purely inseparable residue extension in characteristic `p`, written
 without imposing a perfectness typeclass on the base field. -/
 def Chapter07PurelyInseparableResidueExtension
-    (k k' : Type*) [Field k] [Field k'] [Algebra k k'] (p : ℕ) : Prop :=
+    (k k' : Type*) [Field k] [Field k'] [Algebra k k'] (p : ℕ)
+    [ExpChar k p] : Prop :=
   ∀ x : k', ∃ n : ℕ, ∃ y : k,
     x ^ (p ^ n) = algebraMap k k' y
 
 /-- An element witnessing that a characteristic-`p` field is imperfect. -/
 def Chapter07ImperfectElement
-    (k : Type*) [Field k] (p : ℕ) (a : k) : Prop :=
+    (k : Type*) [Field k] (p : ℕ) [ExpChar k p] (a : k) : Prop :=
   a ∉ Set.range (fun x : k => x ^ p)
 
 /-- Over `Q_p`, an irreducible separable residue polynomial produces the
@@ -83,22 +84,12 @@ theorem chapter07_purely_inseparable_residue_profile
     (hf : E.residueDegree = p)
     (hinsep : ¬Chapter07ResidueExtensionIsSeparable k k') :
     Chapter07FiercelyRamifiedExtension E ∧
-      ¬Chapter07UnramifiedExtension E := by
+      ¬Chapter07UnramifiedExtension E ∧ E.residueDegree = p := by
   constructor
   · exact ⟨he, hinsep⟩
+  constructor
   · exact chapter07_fierce_is_not_unramified E ⟨he, hinsep⟩
-
-/-- The equal-characteristic field notation behind the examples is the
-constant-field extension of Laurent series rings. -/
-theorem chapter07_laurent_series_unramified_profile
-    {k k' : Type*} [Field k] [Field k'] [Algebra k k']
-    [FiniteDimensional k k'] :
-    ∃ p : Chapter10FiniteExtensionProfile,
-      p.degree = Module.finrank k k' ∧ p.ramificationIndex = 1 ∧
-        p.residueDegree = Module.finrank k k' := by
-  rcases chapter10_constant_field_extension_profile (Module.finrank k k') rfl with
-    ⟨p, hpdegree, hpe, hpf, _⟩
-  exact ⟨p, hpdegree, hpe, hpf⟩
+  · exact hf
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

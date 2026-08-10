@@ -30,7 +30,18 @@ theorem chapter10_galois_unit_filtration_stable
     (hmax : Ideal.map σ.toRingHom (IsLocalRing.maximalIdeal A) =
       IsLocalRing.maximalIdeal A) :
     Chapter10UnitFiltrationStable A σ := by
-  sorry
+  intro n u hu
+  change σ.toRingHom ((u : Aˣ) : A) - 1 ∈
+    (IsLocalRing.maximalIdeal A) ^ n
+  have hmap : Ideal.map σ.toRingHom
+        ((IsLocalRing.maximalIdeal A) ^ n) =
+      (IsLocalRing.maximalIdeal A) ^ n := by
+    rw [Ideal.map_pow, hmax]
+  have hu' : (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n := by
+    exact hu
+  have hmem := Ideal.mem_map_of_mem σ.toRingHom hu'
+  rw [hmap] at hmem
+  simpa only [map_sub, map_one] using hmem
 
 /-- Compatibility data for the induced residue-field automorphism. -/
 def Chapter10ResidueAutomorphismCompatible
@@ -53,7 +64,11 @@ theorem chapter10_galois_first_quotient_residue_action
     ∀ u : Aˣ,
       chapter10UnitReduction A (chapter10GaloisUnitAction σ u) =
         Units.map σbar.toRingHom.toMonoidHom (chapter10UnitReduction A u) := by
-  sorry
+  intro u
+  apply Units.ext
+  change IsLocalRing.residue A (σ ((u : Aˣ) : A)) =
+    σbar (IsLocalRing.residue A ((u : Aˣ) : A))
+  exact (hcompat ((u : Aˣ) : A)).symm
 
 /-- Inertia acts trivially on the residue-unit quotient. -/
 theorem chapter10_inertia_trivial_on_first_unit_quotient
@@ -64,7 +79,10 @@ theorem chapter10_inertia_trivial_on_first_unit_quotient
     ∀ u : Aˣ,
       chapter10UnitReduction A (chapter10GaloisUnitAction σ u) =
         chapter10UnitReduction A u := by
-  sorry
+  intro u
+  rw [chapter10_galois_first_quotient_residue_action A σ σbar hcompat u,
+    hinertia]
+  rfl
 
 /-- The coordinate action on the `n`th layer, including the uniformizer ratio. -/
 def chapter10GaloisLayerCoordinateAction

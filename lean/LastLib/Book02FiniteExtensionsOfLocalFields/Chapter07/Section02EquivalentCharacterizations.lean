@@ -39,11 +39,17 @@ structure Chapter07MonogenicResiduePresentation
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L]
     [Algebra A L] [Algebra k l]
     [IsScalarTower A B L] [IsScalarTower A K L]
-    (res : A →+* k) where
+    [FiniteDimensional K L] [FiniteDimensional k l] [Module.Finite A B]
+    (P : Ideal B) (res : A →+* k) where
   theta : B
   residueTheta : l
   residueMap : B →+* l
   residue_theta_eq : residueMap theta = residueTheta
+  residueMap_compatible :
+    residueMap.comp (algebraMap A B) =
+      (algebraMap k l).comp res
+  residueMap_surjective : Function.Surjective residueMap
+  residueMap_kernel : RingHom.ker residueMap = P
   polynomial : A[X]
   polynomial_monic : polynomial.Monic
   generic_minpoly :
@@ -56,23 +62,13 @@ structure Chapter07MonogenicResiduePresentation
   residue_generates : Algebra.adjoin k ({residueTheta} : Set l) = ⊤
   ring_generates : Algebra.adjoin A ({theta} : Set B) = ⊤
 
-/-- A presentation remembers the unit-derivative condition explicitly. -/
-def Chapter07UnitDerivativePresentation
-    {A B K L k l : Type*} [CommRing A] [CommRing B]
-    [Field K] [Field L] [Field k] [Field l]
-    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L]
-    [Algebra A L] [Algebra k l]
-    [IsScalarTower A B L] [IsScalarTower A K L]
-    {res : A →+* k}
-    (p : Chapter07MonogenicResiduePresentation A B K L k l res) : Prop :=
-  IsUnit (eval₂ (algebraMap A B) p.theta p.polynomial.derivative)
-
 /-! Theorem 7.1.  The hypotheses identify the abstract profile from §7.1
 with one finite normalization branch.  Completeness/henselianity is expressed
 by `HenselianLocalRing A`, while the normalization and residue maps remain
 explicit interfaces for later proof passes. -/
 
 /-- The five field/ring/residue criteria for an unramified extension. -/
+-- STATEMENT_NEEDS_UPDATE: The forward data only constrain the numeric profile and the chosen map A →+* k; they do not supply a residue map B →+* l or the presentation data needed for the Nonempty monogenic clause, nor do they imply Algebra.Etale A B. Add those normalization/presentation hypotheses or weaken the equivalence conclusion.
 theorem chapter07_unramified_criteria
     {A B K L k l : Type*} [CommRing A] [IsDomain A]
     [CommRing B] [IsDomain B] [Field K] [Field L] [Field k] [Field l]
@@ -83,47 +79,50 @@ theorem chapter07_unramified_criteria
     [FiniteDimensional K L] [FiniteDimensional k l]
     [IsIntegralClosure B A L] [HenselianLocalRing A]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
+    [Module.Finite A B]
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (m : Ideal A) (P : Ideal B) (res : A →+* k)
     (hm : m = IsLocalRing.maximalIdeal A)
     (hP : P = IsLocalRing.maximalIdeal B)
+    (hres_surjective : Function.Surjective res)
+    (hres_kernel : RingHom.ker res = m)
     (hE : E.ramificationIndex =
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11RamificationIndex A B P)
+      P.ramificationIdx A)
     (hf : E.residueDegree =
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11InertiaDegree A B P) :
+      P.inertiaDeg A) :
     Chapter07UnramifiedExtension E ↔
       (E.ramificationIndex = 1 ∧
           Chapter07ResidueExtensionIsSeparable k l) ∧
         (Chapter07MaximalIdealExtension A B m P ∧
           Chapter07ResidueExtensionIsSeparable k l) ∧
-        Nonempty (Chapter07MonogenicResiduePresentation A B K L k l res) ∧
+        Nonempty (Chapter07MonogenicResiduePresentation A B K L k l P res) ∧
         Chapter07FiniteEtaleExtension A B := by
   sorry
 
-/-- In a monogenic unramified presentation, the derivative at the lifted root
-is a unit. -/
+/-- The monogenic criterion retains the unit-derivative clause explicitly. -/
 theorem chapter07_monogenic_presentation_has_unit_derivative
     {A B K L k l : Type*} [CommRing A] [CommRing B]
     [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L]
     [Algebra A L] [Algebra k l]
     [IsScalarTower A B L] [IsScalarTower A K L]
-    {res : A →+* k}
-    (p : Chapter07MonogenicResiduePresentation A B K L k l res)
-    (hp : Chapter07UnitDerivativePresentation p) :
+    [FiniteDimensional K L] [FiniteDimensional k l] [Module.Finite A B]
+    {P : Ideal B} {res : A →+* k}
+    (p : Chapter07MonogenicResiduePresentation A B K L k l P res) :
     IsUnit (eval₂ (algebraMap A B) p.theta p.polynomial.derivative) := by
-  exact hp
+  exact p.unit_derivative
 
-/-- The degree and unit-derivative clauses are the useful computational form
-of the monogenic criterion. -/
+/-- The separable-reduction clause is available directly from a monogenic
+presentation. -/
 theorem chapter07_unit_derivative_presentation_is_separable
     {A B K L k l : Type*} [CommRing A] [CommRing B]
     [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L]
     [Algebra A L] [Algebra k l]
     [IsScalarTower A B L] [IsScalarTower A K L]
-    {res : A →+* k}
-    (p : Chapter07MonogenicResiduePresentation A B K L k l res) :
+    [FiniteDimensional K L] [FiniteDimensional k l] [Module.Finite A B]
+    {P : Ideal B} {res : A →+* k}
+    (p : Chapter07MonogenicResiduePresentation A B K L k l P res) :
     (p.polynomial.map res).Separable := by
   exact p.residue_polynomial_separable
 

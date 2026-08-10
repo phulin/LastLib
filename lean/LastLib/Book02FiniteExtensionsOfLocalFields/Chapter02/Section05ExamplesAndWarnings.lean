@@ -29,15 +29,16 @@ def chapter2PowerRootPolynomial
 def chapter2HasDefect (degree e f : ℕ) : Prop :=
   degree ≠ e * f
 
-/-- The assertion that two fixed-valued valuations give distinct branches. -/
+/-- The assertion that two valuation subrings above the base give distinct
+branches. -/
 def chapter2HasSeveralValuationExtensions
     (vK : Valuation K ℤᵐ⁰) : Prop :=
-  ∃ w₁ w₂ : Valuation L ℤᵐ⁰,
-    vK.IsEquiv (w₁.comap (algebraMap K L)) ∧
-      vK.IsEquiv (w₂.comap (algebraMap K L)) ∧
-      ¬ w₁.IsEquiv w₂
+  ∃ W₁ W₂ : ValuationSubring L,
+    chapter2ValuationSubringExtends vK W₁ ∧
+      chapter2ValuationSubringExtends vK W₂ ∧ W₁ ≠ W₂
 
 /-- In an unramified extension the whole degree is residue degree. -/
+-- STATEMENT_NEEDS_UPDATE: The hypotheses allow a nontrivial defect, so `finrank K L = f` does not follow from `e = 1` and `hcomplete`. Add a defectless hypothesis (or a standard sufficient one), or weaken the conclusion to include the defect factor.
 theorem unramified_extension_degree_is_residue_degree
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -53,6 +54,7 @@ theorem unramified_extension_degree_is_residue_degree
   sorry
 
 /-- In a totally ramified extension the whole degree is ramification index. -/
+-- STATEMENT_NEEDS_UPDATE: The hypotheses allow a nontrivial defect, so `finrank K L = e` does not follow from `f = 1` and `hcomplete`. Add a defectless hypothesis (or a standard sufficient one), or weaken the conclusion to include the defect factor.
 theorem totally_ramified_extension_degree_is_ramification_index
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -74,8 +76,10 @@ theorem eisenstein_power_root_example
     [Algebra A L] [IsScalarTower A K L]
     [FiniteDimensional K L]
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
-    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vL]
+    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL]
     (π : A) (piRoot : L) (n : ℕ)
+    (hvaluationRing : (vK.valuationSubring : Set K) = Set.range (algebraMap A K))
     (hf : IsEisensteinAt π (chapter2PowerRootPolynomial π n))
     (hirreducible : Irreducible (chapter2PowerRootPolynomial π n))
     (hroot : aeval piRoot (chapter2PowerRootPolynomial π n) = 0)
@@ -89,14 +93,47 @@ theorem eisenstein_power_root_example
       chapterResidueDegree vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) = 1 ∧
       Module.finrank K L = n := by
-  sorry
+  have hdegreePoly :
+      (chapter2PowerRootPolynomial π n).natDegree = n := by
+    simpa [chapter2PowerRootPolynomial] using
+      (Polynomial.natDegree_X_pow_sub_C (R := A) (n := n) (r := π))
+  have hmain := eisenstein_root_is_uniformizer_and_totally_ramified
+    vK vL π (chapter2PowerRootPolynomial π n) piRoot hf hroot hdegreePoly
+      hgenerates hvaluation hbase
+  have hrootK :
+      Polynomial.aeval piRoot
+        ((chapter2PowerRootPolynomial π n).map (algebraMap A K)) = 0 := by
+    rw [Polynomial.aeval_map_algebraMap]
+    exact hroot
+  have hirreducibleK : Irreducible
+      ((chapter2PowerRootPolynomial π n).map (algebraMap A K)) :=
+    (hf.1.irreducible_iff_irreducible_map_fraction_map).mp hirreducible
+  have hminpoly :
+      (chapter2PowerRootPolynomial π n).map (algebraMap A K) = minpoly K piRoot :=
+    minpoly.eq_of_irreducible_of_monic hirreducibleK hrootK (hf.1.map _)
+  let pb : PowerBasis K L := PowerBasis.ofAdjoinEqTop
+    (IsIntegral.of_finite K piRoot) hgenerates
+  have hdegree : Module.finrank K L = n := by
+    calc
+      Module.finrank K L = pb.dim := pb.finrank
+      _ = (minpoly K piRoot).natDegree := by
+        dsimp [pb]
+      _ = ((chapter2PowerRootPolynomial π n).map (algebraMap A K)).natDegree := by
+        rw [hminpoly]
+      _ = (chapter2PowerRootPolynomial π n).natDegree := by
+        exact Polynomial.natDegree_map_eq_of_injective
+          (IsFractionRing.injective A K) _
+      _ = n := hdegreePoly
+  obtain ⟨_, he, hf'⟩ := hmain
+  exact ⟨he, hf', hdegree⟩
 
 /-- The fundamental equality still applies to purely inseparable examples. -/
+-- STATEMENT_NEEDS_UPDATE: Purely inseparable finite extensions can still have defect over an imperfect residue field, so pure inseparability does not imply the displayed equality. Add a defectless hypothesis (or a standard sufficient one), or weaken the conclusion to include the defect factor.
 theorem purely_inseparable_extension_still_satisfies_fundamental_equality
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L]
-    (hnotseparable : ¬ Algebra.IsSeparable K L)
+    [IsPurelyInseparable K L]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.finrank K L =
@@ -104,9 +141,10 @@ theorem purely_inseparable_extension_still_satisfies_fundamental_equality
           (IsLocalRing.maximalIdeal vL.valuationSubring) *
       chapterResidueDegree vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) := by
-  exact fundamental_equality vK vL hcomplete
+  sorry
 
 /-- Complete discrete extensions have no defect factor. -/
+-- STATEMENT_NEEDS_UPDATE: Complete discrete finite extensions need not be defectless when the residue field is imperfect, so the negated-defect conclusion is false. Add a defectless hypothesis (or a standard hypothesis implying it), or remove this conclusion.
 theorem complete_discrete_extension_has_no_defect
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -119,9 +157,7 @@ theorem complete_discrete_extension_has_no_defect
         (IsLocalRing.maximalIdeal vL.valuationSubring))
       (chapterResidueDegree vK.valuationSubring vL.valuationSubring
         (IsLocalRing.maximalIdeal vL.valuationSubring)) := by
-  intro hdefect
-  apply hdefect
-  exact fundamental_equality vK vL hcomplete
+  sorry
 
 end
 

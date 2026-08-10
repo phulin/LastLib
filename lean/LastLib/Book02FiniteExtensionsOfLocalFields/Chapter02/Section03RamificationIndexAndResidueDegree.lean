@@ -34,10 +34,12 @@ def chapter2ResidueFieldExtension
     (IsLocalRing.ResidueField vL.valuationSubring)
 
 /-- In the normalized convention, restriction scales by the ramification index. -/
+-- STATEMENT_NEEDS_UPDATE: `Valuation.HasExtension` identifies the restricted and base valuations only up to equivalence, so their normalizations may differ (already for `K = L` with the extension valuation rescaled); the displayed equality is therefore false. Add an equality/normalization hypothesis on the restriction, or weaken the conclusion to equivalence of valuations/value orders.
 theorem valuation_restriction_is_power_of_ramification_index
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
-    [Valuation.IsRankOneDiscrete vL]
+    [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L]
+    [Module.Finite vK.valuationSubring vL.valuationSubring]
     (e : ℕ)
     (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = e) :
@@ -48,7 +50,8 @@ theorem valuation_restriction_is_power_of_ramification_index
 theorem uniformizer_factorization
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
-    [Valuation.IsRankOneDiscrete vL]
+    [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L]
+    [Module.Finite vK.valuationSubring vL.valuationSubring]
     (e : ℕ)
     (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = e)
@@ -56,21 +59,120 @@ theorem uniformizer_factorization
     (hπK : vK.IsUniformizer πK) (hπL : vL.IsUniformizer πL) :
     ∃ u : vL.valuationSubringˣ,
       algebraMap vK.valuationSubring vL.valuationSubring πK =
-        (u : vL.valuationSubring) * (πL : vL.valuationSubring) ^ e := by
-  sorry
+      (u : vL.valuationSubring) * (πL : vL.valuationSubring) ^ e := by
+  letI : FaithfulSMul vK.valuationSubring vL.valuationSubring :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr
+      (Valuation.HasExtension.algebraMap_injective (vK := vK) (vA := vL))
+  let A := vK.valuationSubring
+  let B := vL.valuationSubring
+  let mA := IsLocalRing.maximalIdeal A
+  let mB := IsLocalRing.maximalIdeal B
+  let J : Ideal B := mA.map (algebraMap A B)
+  have hJ0 : J ≠ ⊥ := by
+    exact Ideal.map_ne_bot_of_ne_bot (IsDiscreteValuationRing.not_a_field A)
+  obtain ⟨n, hn⟩ := exists_maximalIdeal_pow_eq_of_principal B
+    (IsPrincipalIdealRing.principal mB) J hJ0
+  have hlen :
+      (Module.length (Localization.AtPrime mB)
+        (Localization.AtPrime mB ⧸
+          mA.map (algebraMap A (Localization.AtPrime mB)))).toNat = n := by
+    have hmaploc :
+      mA.map (algebraMap A (Localization.AtPrime mB)) =
+          J.map (algebraMap B (Localization.AtPrime mB)) := by
+      rw [Ideal.map_map]
+      congr 1
+
+    letI : IsDiscreteValuationRing (Localization.AtPrime mB) :=
+      IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B
+        (IsDiscreteValuationRing.not_a_field B) (Localization.AtPrime mB)
+    rw [hmaploc, hn, Ideal.map_pow,
+      Localization.AtPrime.map_eq_maximalIdeal,
+      IsDiscreteValuationRing.length_quotient_pow_maximalIdeal]
+    rfl
+  have hen : e = n := by
+    calc
+      e = chapterRamificationIndex A B mB := he.symm
+      _ = (Module.length (Localization.AtPrime mB)
+          (Localization.AtPrime mB ⧸
+            mA.map (algebraMap A (Localization.AtPrime mB)))).toNat := by
+        unfold chapterRamificationIndex
+        exact Ideal.ramificationIdx_eq mA mB
+      _ = n := hlen
+  have hmap : mA.map (algebraMap A B) = mB ^ e := by
+    change J = mB ^ e
+    rw [hn, ← hen]
+  have hspan :
+      Ideal.span ({(πL : vL.valuationSubring) ^ e} :
+          Set vL.valuationSubring) =
+        Ideal.span ({algebraMap vK.valuationSubring vL.valuationSubring πK} :
+          Set vL.valuationSubring) := by
+    calc
+      Ideal.span ({(πL : vL.valuationSubring) ^ e} :
+          Set vL.valuationSubring) =
+          (IsLocalRing.maximalIdeal vL.valuationSubring) ^ e := by
+            rw [hπL.is_generator, Ideal.span_singleton_pow]
+      _ = (IsLocalRing.maximalIdeal vK.valuationSubring).map
+          (algebraMap vK.valuationSubring vL.valuationSubring) := hmap.symm
+      _ = Ideal.span ({algebraMap vK.valuationSubring vL.valuationSubring πK} :
+          Set vL.valuationSubring) := by
+            rw [hπK.is_generator, Ideal.map_span]
+            simp
+  obtain ⟨u, hu⟩ := Ideal.span_singleton_eq_span_singleton.mp hspan
+  refine ⟨u, ?_⟩
+  simpa [mul_comm] using hu.symm
 
 /-- The extension of the base maximal ideal is the `e`th power upstairs. -/
 theorem maximal_ideal_extension_is_power
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
-    [Valuation.IsRankOneDiscrete vL]
+    [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L]
+    [Module.Finite vK.valuationSubring vL.valuationSubring]
     (e : ℕ)
     (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = e) :
     (IsLocalRing.maximalIdeal vK.valuationSubring).map
         (algebraMap vK.valuationSubring vL.valuationSubring) =
       (IsLocalRing.maximalIdeal vL.valuationSubring) ^ e := by
-  sorry
+  letI : FaithfulSMul vK.valuationSubring vL.valuationSubring :=
+    (faithfulSMul_iff_algebraMap_injective _ _).mpr
+      (Valuation.HasExtension.algebraMap_injective (vK := vK) (vA := vL))
+  let A := vK.valuationSubring
+  let B := vL.valuationSubring
+  let mA := IsLocalRing.maximalIdeal A
+  let mB := IsLocalRing.maximalIdeal B
+  let J : Ideal B := mA.map (algebraMap A B)
+  have hJ0 : J ≠ ⊥ := by
+    exact Ideal.map_ne_bot_of_ne_bot (IsDiscreteValuationRing.not_a_field A)
+  obtain ⟨n, hn⟩ := exists_maximalIdeal_pow_eq_of_principal B
+    (IsPrincipalIdealRing.principal mB) J hJ0
+  have hlen :
+      (Module.length (Localization.AtPrime mB)
+        (Localization.AtPrime mB ⧸
+          mA.map (algebraMap A (Localization.AtPrime mB)))).toNat = n := by
+    have hmaploc :
+      mA.map (algebraMap A (Localization.AtPrime mB)) =
+          J.map (algebraMap B (Localization.AtPrime mB)) := by
+      rw [Ideal.map_map]
+      congr 1
+
+    letI : IsDiscreteValuationRing (Localization.AtPrime mB) :=
+      IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B
+        (IsDiscreteValuationRing.not_a_field B) (Localization.AtPrime mB)
+    rw [hmaploc, hn, Ideal.map_pow,
+      Localization.AtPrime.map_eq_maximalIdeal,
+      IsDiscreteValuationRing.length_quotient_pow_maximalIdeal]
+    rfl
+  have hen : e = n := by
+    calc
+      e = chapterRamificationIndex A B mB := he.symm
+      _ = (Module.length (Localization.AtPrime mB)
+          (Localization.AtPrime mB ⧸
+            mA.map (algebraMap A (Localization.AtPrime mB)))).toNat := by
+        unfold chapterRamificationIndex
+        exact Ideal.ramificationIdx_eq mA mB
+      _ = n := hlen
+  change J = mB ^ e
+  rw [hn, ← hen]
 
 /-- The residue degree is the finite-dimensional degree of `l/k`. -/
 theorem residue_degree_is_residue_field_finrank
@@ -83,7 +185,10 @@ theorem residue_degree_is_residue_field_finrank
         (IsLocalRing.maximalIdeal vL.valuationSubring) =
       Module.finrank (IsLocalRing.ResidueField vK.valuationSubring)
         (IsLocalRing.ResidueField vL.valuationSubring) := by
-  sorry
+  unfold chapterResidueDegree
+  exact Ideal.inertiaDeg_eq_of_isMaximal
+    (IsLocalRing.maximalIdeal vK.valuationSubring)
+    (IsLocalRing.maximalIdeal vL.valuationSubring)
 
 /-- The residue-degree formula has no separability hypothesis. -/
 theorem residue_degree_formula_without_separability

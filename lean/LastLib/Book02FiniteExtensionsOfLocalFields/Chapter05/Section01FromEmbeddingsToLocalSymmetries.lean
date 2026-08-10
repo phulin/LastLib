@@ -1,6 +1,4 @@
 import Mathlib
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05
 
@@ -42,7 +40,7 @@ theorem finite_extension_embeddings_at_most_degree
     [Algebra K L] [Algebra K Ω] [FiniteDimensional K L]
     [IsAlgClosed Ω] [Algebra.IsAlgebraic K L] :
     Nat.card (L →ₐ[K] Ω) ≤ Module.finrank K L := by
-  sorry
+  exact card_algHom_le_finrank K L Ω
 
 /-- Equality in the embedding bound is equivalent to separability. -/
 theorem finite_extension_embeddings_eq_degree_iff_separable
@@ -50,7 +48,8 @@ theorem finite_extension_embeddings_eq_degree_iff_separable
     [Algebra K L] [Algebra K Ω] [FiniteDimensional K L]
     [IsAlgClosed Ω] [Algebra.IsAlgebraic K L] :
     Nat.card (L →ₐ[K] Ω) = Module.finrank K L ↔ Algebra.IsSeparable K L := by
-  sorry
+  rw [← Field.finSepDegree_eq_of_isAlgClosed K L Ω,
+    Field.finSepDegree_eq_finrank_iff K L]
 
 /-- The order of a finite Galois group is the field degree. -/
 theorem finite_galois_group_order_eq_degree
@@ -83,24 +82,26 @@ theorem purely_inseparable_galois_extension_is_trivial
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsPurelyInseparable K L] [IsGalois K L] :
     Module.finrank K L = 1 := by
-  sorry
+  exact Module.finrank_of_bijective_algebraMap
+    (IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L)
 
 /-- In the foundational convention, unramified includes separable residue extension. -/
 theorem unramified_condition_implies_residue_separable
     (e : ℕ) (residueSeparable : Prop)
-    (h : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.foundationalUnramified e residueSeparable) :
+    (h : e = 1 ∧ residueSeparable) :
     residueSeparable := by
   exact h.2
 
 /-- An equality `e = 1` alone does not imply unramifiedness. -/
 theorem ramification_index_one_without_separable_residue_is_not_unramified
-    (e : ℕ) (residueSeparable : Prop)
-    (he : e = 1) (hnot : ¬residueSeparable) :
-    ¬LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.foundationalUnramified e residueSeparable := by
+    (residueSeparable : Prop) (hnot : ¬residueSeparable) :
+    ¬(1 = 1 ∧ residueSeparable) := by
   intro h
   exact hnot h.2
 
 /-- Unique normalized extension forces every base-field automorphism to preserve `w`. -/
+-- STATEMENT_NEEDS_UPDATE: Add `v.IsEquiv (w.comap (algebraMap K L))` to the theorem hypotheses;
+-- without it, `chapter05UniqueNormalizedValuationExtension` can be vacuous and cannot force preservation of `w`.
 theorem galois_automorphism_preserves_unique_valuation
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]
@@ -121,6 +122,8 @@ theorem valuation_preservation_preserves_valuation_ring
   rw [hσ]
 
 /-- Automorphisms preserving a unique valuation preserve the full local bounded ring. -/
+-- STATEMENT_NEEDS_UPDATE: Add `v.IsEquiv (w.comap (algebraMap K L))` to the theorem hypotheses;
+-- without it, the preceding uniqueness predicate may be vacuous and the claimed conclusion is unsupported.
 theorem unique_local_valuation_gives_integral_symmetries
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]

@@ -20,8 +20,14 @@ theorem chapter08_uniformizer_generates_the_field
     (hfinite : Module.Finite A (integralClosure A L))
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
     (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     (htotal : chapter08TotallyRamified vK vL hval)
+    (hintegralK : ∀ x : K, IsIntegral A x ↔ 0 ≤ vK x)
+    (hintegralL : ∀ x : L, IsIntegral A x ↔ 0 ≤ vL x)
     (πL : L) (hπL : vL πL = 1) :
     Algebra.adjoin K ({πL} : Set L) = ⊤ := by
   sorry
@@ -37,8 +43,14 @@ theorem chapter08_uniformizer_minpoly_is_eisenstein
     (hfinite : Module.Finite A (integralClosure A L))
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
     (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     (htotal : chapter08TotallyRamified vK vL hval)
+    (hintegralK : ∀ x : K, IsIntegral A x ↔ 0 ≤ vK x)
+    (hintegralL : ∀ x : L, IsIntegral A x ↔ 0 ≤ vL x)
     (πK : A) (hπK : vK (algebraMap A K πK) = 1)
     (πL : L) (hπL : vL πL = 1)
     (g : A[X])
@@ -59,8 +71,14 @@ theorem chapter08_uniformizer_theorem
     (hfinite : Module.Finite A (integralClosure A L))
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
+    (hdiscreteK :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
+    (hdiscreteL :
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL)
     (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     (htotal : chapter08TotallyRamified vK vL hval)
+    (hintegralK : ∀ x : K, IsIntegral A x ↔ 0 ≤ vK x)
+    (hintegralL : ∀ x : L, IsIntegral A x ↔ 0 ≤ vL x)
     (πK : A) (hπK : vK (algebraMap A K πK) = 1)
     (πL : L) (hπL : vL πL = 1) :
     ∃ g : A[X],

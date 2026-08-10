@@ -5,6 +5,7 @@ namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 noncomputable section
 
 open Polynomial
+open scoped WithZero
 
 /-! ## 3.5. Mixed/equal characteristic -/
 
@@ -23,8 +24,16 @@ chosen normalized valuation with the p-adic one.
 -/
 theorem chapter03_mixed_characteristic_degree_and_prime_value
     (p : ℕ) (K : Type*) [Fact p.Prime] [Field K] [Algebra (ℚ_[p]) K]
-    [FiniteDimensional (ℚ_[p]) K] [NormedField K] [CompleteSpace K]
-    (vK : AddValuation K (WithTop ℤ)) (e f : ℕ)
+    [FiniteDimensional (ℚ_[p]) K]
+    (vK : AddValuation K (WithTop ℤ))
+    [(Padic.addValuation (p := p)).HasExtension vK]
+    [Valuation.IsRankOneDiscrete (Padic.addValuation (p := p))]
+    [Valuation.IsRankOneDiscrete vK] (e f : ℕ)
+    (he : chapter03RamificationIndex (Padic.addValuation (p := p)) vK = e)
+    (hf : chapter03ResidueDegree (Padic.addValuation (p := p)) vK = f)
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal (Padic.addValuation (p := p)).valuationSubring)
+      (Padic.addValuation (p := p)).valuationSubring)
     (hrestriction :
       ∀ x : ℚ_[p],
         vK (algebraMap (ℚ_[p]) K x) =
@@ -36,13 +45,14 @@ theorem chapter03_mixed_characteristic_degree_and_prime_value
 theorem chapter03_finite_residue_field_is_perfect
     (k : Type*) [Field k] [Fintype k] :
     PerfectField k := by
-  sorry
+  exact PerfectField.ofFinite k
 
 theorem chapter03_finite_residue_extensions_are_separable
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [FiniteDimensional k l] [Fintype k] [Fintype l] :
     Algebra.IsSeparable k l := by
-  sorry
+  letI : PerfectField k := PerfectField.ofFinite k
+  infer_instance
 
 /--
 The Laurent-series field is the canonical equal-characteristic model once a
@@ -53,8 +63,13 @@ abbrev chapter03EqualCharacteristicModel (k : Type*) [Field k] :=
 
 /-- A coefficient field is modeled as an injective section of constants. -/
 def chapter03HasCoefficientField
-    (k K : Type*) [Field k] [Field K] : Prop :=
-  ∃ s : k →+* K, Function.Injective s
+    (A k K : Type*) [CommRing A] [IsLocalRing A]
+    [Field k] [Field K] [Algebra A K] : Prop :=
+  ∃ s : k →+* A, Function.Injective s ∧
+    ∃ e : A ⧸ IsLocalRing.maximalIdeal A ≃+* k,
+      (e.toRingHom.comp
+          (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A))).comp s =
+        RingHom.id k
 
 /-- The parameter t in the Laurent-series model. -/
 def chapter03EqualCharacteristicUniformizer
@@ -81,6 +96,7 @@ def chapter03PurelyInseparableUniformizerPolynomial
 An imperfect residue element produces a purely inseparable residue extension
 with e=1 and f=p.
 -/
+-- STATEMENT_NEEDS_UPDATE: The field k and element a are not related to the residue field of vK or to a compatible unit lift in K, so the root and restriction hypotheses do not determine the residue degree; specify the residue-field identification and compatible residue/unit data (or state the theorem directly for the residue field of vK).
 theorem chapter03_purely_inseparable_residue_root_has_e_one
     (k K L : Type*) [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra K L] [Algebra k L] [IsScalarTower k K L]
@@ -92,8 +108,13 @@ theorem chapter03_purely_inseparable_residue_root_has_e_one
     [FiniteDimensional K L] (hdegree : Module.finrank K L = p)
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
+    [vK.HasExtension vL]
+    [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
     (hrestriction : chapter03ValuationRestrictionScale vK vL 1) :
-    ∃ data : Chapter03FiniteLocalExtensionData K L,
+    ∃ data : Chapter03FiniteLocalExtensionData K L _ vK vL,
       data.e = 1 ∧ data.f = p := by
   sorry
 
@@ -101,6 +122,7 @@ theorem chapter03_purely_inseparable_residue_root_has_e_one
 The analogous root of X^p-t is purely inseparable and totally ramified, with
 e=p and f=1.
 -/
+-- STATEMENT_NEEDS_UPDATE: The hypotheses do not identify vK with the canonical Laurent-series t-adic valuation or assert vK (chapter03EqualCharacteristicUniformizer k) = 1, so the root equation and restriction scale do not force e = p; add that valuation normalization/value-of-t hypothesis.
 theorem chapter03_purely_inseparable_uniformizer_root_has_e_p
     (k L : Type*) [Field k] [Field L]
     [Algebra (LaurentSeries k) L] [FiniteDimensional (LaurentSeries k) L]
@@ -112,8 +134,13 @@ theorem chapter03_purely_inseparable_uniformizer_root_has_e_p
     (hdegree : Module.finrank (LaurentSeries k) L = p)
     (vK : AddValuation (LaurentSeries k) (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
+    [vK.HasExtension vL]
+    [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
     (hrestriction : chapter03ValuationRestrictionScale vK vL p) :
-    ∃ data : Chapter03FiniteLocalExtensionData (LaurentSeries k) L,
+    ∃ data : Chapter03FiniteLocalExtensionData (LaurentSeries k) L _ vK vL,
       data.e = p ∧ data.f = 1 := by
   sorry
 
@@ -123,7 +150,18 @@ theorem chapter03_purely_inseparable_extension_is_not_separable
     [FiniteDimensional K L] [IsPurelyInseparable K L]
     (hdegree : Module.finrank K L ≠ 1) :
     ¬ Algebra.IsSeparable K L ∧ ¬ IsGalois K L := by
-  sorry
+  constructor
+  · intro hsep
+    letI : Algebra.IsSeparable K L := hsep
+    apply hdegree
+    exact Module.finrank_of_bijective_algebraMap
+      (IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L)
+  · intro hgal
+    letI : IsGalois K L := hgal
+    letI : Algebra.IsSeparable K L := inferInstance
+    apply hdegree
+    exact Module.finrank_of_bijective_algebraMap
+      (IsPurelyInseparable.bijective_algebraMap_of_isSeparable K L)
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03

@@ -4,6 +4,8 @@ namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05
 
 noncomputable section
 
+universe u
+
 open scoped BigOperators
 
 /-! ## 5.7. Three instructive Galois patterns -/
@@ -33,7 +35,12 @@ theorem chapter05Lifts_differ_by_inertia
     (h₁ : g₁ ∈ chapter05QuotientLiftSet ρ q)
     (h₂ : g₂ ∈ chapter05QuotientLiftSet ρ q) :
     g₂⁻¹ * g₁ ∈ MonoidHom.ker ρ := by
-  sorry
+  change ρ (g₂⁻¹ * g₁) = 1
+  rw [map_mul, map_inv]
+  change ρ g₁ = q at h₁
+  change ρ g₂ = q at h₂
+  rw [h₁, h₂]
+  simp
 
 /-- In an unramified Galois pattern, the residue action is an isomorphism. -/
 theorem unramified_residue_action_isomorphism
@@ -41,14 +48,27 @@ theorem unramified_residue_action_isomorphism
     (ρ : G →* Q) (hρ : Function.Surjective ρ)
     (hI : MonoidHom.ker ρ = ⊥) :
     Nonempty (G ≃* Q) := by
-  sorry
+  refine ⟨MulEquiv.ofBijective ρ ?_⟩
+  constructor
+  · intro g₁ g₂ h
+    have hker : g₂⁻¹ * g₁ ∈ MonoidHom.ker ρ := by
+      change ρ (g₂⁻¹ * g₁) = 1
+      rw [map_mul, map_inv, h]
+      simp
+    rw [hI] at hker
+    have : g₂⁻¹ * g₁ = 1 := hker
+    exact (eq_of_inv_mul_eq_one this).symm
+  · exact hρ
 
 /-- In a totally ramified pattern, reduction is trivial on every automorphism. -/
 theorem totally_ramified_residue_action_is_trivial
     {G Q : Type*} [Group G] [Group Q] (ρ : G →* Q)
     (hI : MonoidHom.ker ρ = ⊤) :
     ∀ g : G, ρ g = 1 := by
-  sorry
+  intro g
+  apply MonoidHom.mem_ker.mp
+  rw [hI]
+  exact Subgroup.mem_top g
 
 /-- Fixing every integral element is stronger than being invisible after reduction. -/
 def chapter05IntegralActionFixed
@@ -68,7 +88,12 @@ theorem integral_fixing_implies_residue_invisibility
     (A : ValuationSubring E) (σ : chapter05DecompositionGroup F A)
     (hσ : chapter05IntegralActionFixed A σ) :
     chapter05ResiduallyInvisible A σ := by
-  sorry
+  unfold chapter05ResiduallyInvisible
+  rw [inertia_mem_iff_residue_fixed]
+  intro y
+  rcases IsLocalRing.residue_surjective y with ⟨x, rfl⟩
+  rw [← residue_action_commutes_with_reduction]
+  rw [hσ]
 
 /-- A mixed pattern records nontrivial ramification and residue factors. -/
 def chapter05MixedGaloisPattern
@@ -90,12 +115,38 @@ def chapter05ZModFourToTwo : ZMod 4 →+ ZMod 2 :=
 /-- The concrete quotient map is surjective. -/
 theorem chapter05ZModFourToTwo_surjective :
     Function.Surjective chapter05ZModFourToTwo := by
-  sorry
+  simpa [chapter05ZModFourToTwo] using
+    (ZMod.castHom_surjective (show 2 ∣ 4 by norm_num))
 
 /-- This exact finite-group quotient has no additive section. -/
 theorem chapter05ZModFourToTwo_does_not_split :
     ¬chapter05AdditiveExtensionSplits chapter05ZModFourToTwo := by
-  sorry
+  rintro ⟨s, hs⟩
+  have horder : (2 : ℕ) • s (1 : ZMod 2) = 0 := by
+    rw [← s.map_nsmul]
+    rw [Nat.smul_one_eq_cast, ZMod.natCast_self]
+    exact s.map_zero
+  have hzero : chapter05ZModFourToTwo (s (1 : ZMod 2)) = 0 := by
+    change (ZMod.castHom (show 2 ∣ 4 by norm_num) (ZMod 2))
+      (s (1 : ZMod 2)) = 0
+    generalize hx : s (1 : ZMod 2) = x
+    fin_cases x
+    · simp [ZMod.castHom, ZMod.cast, ZMod.val]
+    · have hne : (2 : ℕ) • (1 : ZMod 4) ≠ 0 := by decide
+      rw [hx] at horder
+      change (2 : ℕ) • (1 : ZMod 4) = 0 at horder
+      exact (hne horder).elim
+    · simpa [chapter05ZModFourToTwo, ZMod.castHom, ZMod.cast, ZMod.val] using
+        (ZMod.natCast_self 2)
+    · have hne : (2 : ℕ) • (3 : ZMod 4) ≠ 0 := by decide
+      rw [hx] at horder
+      change (2 : ℕ) • (3 : ZMod 4) = 0 at horder
+      exact (hne horder).elim
+  have hone : chapter05ZModFourToTwo (s (1 : ZMod 2)) = 1 := by
+    have h := congrArg (fun f : ZMod 2 →+ ZMod 2 => f (1 : ZMod 2)) hs
+    simpa using h
+  rw [hzero] at hone
+  norm_num at hone
 
 /-- The normal closure of an intermediate field in a chosen ambient field. -/
 abbrev chapter05NormalClosure
@@ -114,7 +165,7 @@ theorem normal_closure_of_galois_ambient_is_galois
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
     (S : IntermediateField K Ω) [FiniteDimensional K S] [IsGalois K Ω] :
     IsGalois K (chapter05NormalClosure S) := by
-  sorry
+  infer_instance
 
 /-- The fixing subgroup in the ambient Galois group recovers the original field. -/
 theorem normal_closure_stabilizer_fixed_field_recovers_original
@@ -133,27 +184,28 @@ theorem normal_closure_tower_ramification_and_residue_multiplicativity
     r.ramificationIdx R = q.ramificationIdx R * r.ramificationIdx S ∧
       r.inertiaDeg R = q.inertiaDeg R * r.inertiaDeg S := by
   exact ⟨
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_ramification_indices_multiply_in_towers p q r,
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_inertia_degrees_multiply_in_towers p q r⟩
+    Ideal.ramificationIdx_tower q r,
+    Ideal.inertiaDeg_tower q r⟩
 
--- A valuation on a normal closure is not unique over an arbitrary valued field;
--- the local completeness hypothesis below records the needed uniqueness input.
-/-- Under the local uniqueness hypothesis, the valuation on a normal closure is unique. -/
+/-- The valuation on an algebraic normal closure is unique in the complete DVR case. -/
+-- SOURCE_ISSUE: The source's uniqueness claim needs the discrete local
+-- hypotheses.  Completeness alone is not a uniqueness theorem for arbitrary
+-- valued fields, so the corrected declaration uses a henselian local
+-- uniqueness interface and makes algebraicity and rank-one discreteness
+-- explicit.
 theorem normal_closure_valuation_extension_is_unique_under_local_hypothesis
-    {K Ω Γ : Type*} [Field K] [Field Ω] [Algebra K Ω]
+    {K Ω Γ : Type u} [Field K] [Field Ω] [Algebra K Ω]
     [LinearOrderedCommGroupWithZero Γ]
     (S : IntermediateField K Ω)
     (v : Valuation K Γ)
     (w : Valuation (chapter05NormalClosure S) Γ)
-    (hcomplete :
-      IsAdicComplete (IsLocalRing.maximalIdeal v.valuationSubring)
-        v.valuationSubring)
-    (hunique : chapter05UniqueNormalizedValuationExtension
-      v w) :
-    ∀ w' : Valuation (chapter05NormalClosure S) Γ,
-      v.IsEquiv (w'.comap (algebraMap K (chapter05NormalClosure S))) → w' = w := by
-  intro w' hw'
-  exact hunique w' hw'
+    (hwe : v.IsEquiv (w.comap
+      (algebraMap K (chapter05NormalClosure S))))
+    [HenselianLocalRing v.valuationSubring]
+    [Valuation.IsRankOneDiscrete v]
+    [Algebra.IsAlgebraic K (chapter05NormalClosure S)] :
+    chapter05UniqueNormalizedValuationExtension v w := by
+  sorry
 
 /-- A finite separable but non-normal extension is not Galois in its own right. -/
 theorem finite_separable_nonnormal_extension_is_not_galois

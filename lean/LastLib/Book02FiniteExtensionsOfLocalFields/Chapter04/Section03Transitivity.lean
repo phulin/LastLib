@@ -14,7 +14,7 @@ theorem chapter04_trace_transitive
     [FiniteDimensional M L] [FiniteDimensional K L] (x : L) :
     Algebra.trace K L x =
       Algebra.trace K M (Algebra.trace M L x) := by
-  sorry
+  simpa using (Algebra.trace_trace (R := K) (S := M) (T := L) x).symm
 
 /- Norm is transitive in a finite tower of fields (§4.3). -/
 theorem chapter04_norm_transitive
@@ -24,7 +24,7 @@ theorem chapter04_norm_transitive
     [FiniteDimensional M L] [FiniteDimensional K L] (x : L) :
     Algebra.norm K x =
       Algebra.norm K (Algebra.norm M x) := by
-  sorry
+  simpa using (Algebra.norm_norm (R := K) (S := M) (A := L) (a := x)).symm
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04

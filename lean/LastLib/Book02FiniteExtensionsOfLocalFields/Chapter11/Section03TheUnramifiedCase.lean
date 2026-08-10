@@ -13,7 +13,7 @@ open scoped BigOperators
    canonical valuation ring. -/
 def chapter11IsUniformizer {K : Type*} [Field K]
     (v : AddValuation K (WithTop ℤ)) (π : K) : Prop :=
-  π ≠ 0 ∧ ∃ p : chapter11ValuationRing v,
+  π ≠ 0 ∧ v π = (1 : WithTop ℤ) ∧ ∃ p : chapter11ValuationRing v,
     (p : K) = π ∧
       IsLocalRing.maximalIdeal (chapter11ValuationRing v) = Ideal.span {p}
 
@@ -45,18 +45,6 @@ def chapter11ResidueConditionSet
   {x | x ∈ chapter11UnitSet vK ∧
     ∃ y : chapter11ValuationRing vK, (y : K) = x ∧ ρK y ∈ S}
 
-/- Compatibility of the two residue reductions with the norm. -/
-def chapter11ResidueNormCompatibility
-    {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
-    [Algebra K L] [Algebra k l]
-    (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
-    (ρK : chapter11ValuationRing vK →+* k)
-    (ρL : chapter11ValuationRing vL →+* l) (e : ℕ) : Prop :=
-  ∀ x : chapter11ValuationRing vL,
-    ∃ y : chapter11ValuationRing vK,
-      (y : K) = Algebra.norm K (x : L) ∧
-        ρK y = Algebra.norm k (ρL x) ^ e
-
 /- The residue trace is the additive map on the graded layer. -/
 theorem chapter11_unramified_residue_trace_surjective
     (k l : Type*) [Field k] [Field l] [Algebra k l]
@@ -70,11 +58,14 @@ theorem chapter11_unramified_residue_trace_surjective
 theorem chapter11_unramified_norm_first_layer_congruence
     (K L k l : Type*) [Field K] [Field L] [Field k] [Field l]
     [Algebra K L] [Algebra k l] [FiniteDimensional K L]
+    [Algebra.IsSeparable K L]
     [FiniteDimensional k l] [Algebra.IsSeparable k l]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     (ρK : chapter11ValuationRing vK →+* k)
     (ρL : chapter11ValuationRing vL →+* l)
+    (hdegree : Module.finrank K L = Module.finrank k l)
+    (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (πK : K) (πL : L) (hπ : chapter11CommonUniformizer vK vL πK πL)
     (n : ℕ) (hn : 1 ≤ n) (a : chapter11ValuationRing vL) :
     ∃ c : chapter11ValuationRing vK,
@@ -88,11 +79,16 @@ theorem chapter11_unramified_norm_first_layer_congruence
    the norm onto on all positive principal-unit layers. -/
 theorem proposition_11_1_unramified_principal_unit_norm_surjective
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     [Algebra (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [FiniteDimensional (chapter11ResidueField vK) (chapter11ResidueField vL)]
-    [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)] :
+    [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)]
+    (hdegree : Module.finrank K L =
+      Module.finrank (chapter11ResidueField vK) (chapter11ResidueField vL))
+    (hred : chapter11ResidueReductionCompatible vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL)) :
     Set.SurjOn (Algebra.norm K (S := L))
       (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1) := by
   sorry
@@ -102,13 +98,14 @@ theorem proposition_11_1_unramified_principal_unit_norm_surjective
 theorem proposition_11_1_unramified_all_unit_norm_image
     (K L k l : Type*) [Field K] [Field L] [Field k] [Field l]
     [Algebra K L] [Algebra k l] [FiniteDimensional K L]
+    [Algebra.IsSeparable K L]
     [FiniteDimensional k l] [Algebra.IsSeparable k l]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     (ρK : chapter11ValuationRing vK →+* k)
     (ρL : chapter11ValuationRing vL →+* l)
-    (hρK : Function.Surjective ρK) (hρL : Function.Surjective ρL)
-    (hres : chapter11ResidueNormCompatibility vK vL ρK ρL 1)
+    (hdegree : Module.finrank K L = Module.finrank k l)
+    (hred : chapter11ResidueReductionCompatible vK vL ρK ρL)
     (hprincipal :
       Set.SurjOn (Algebra.norm K (S := L))
         (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1)) :
@@ -134,15 +131,21 @@ theorem chapter11_finite_residue_norm_is_exponent_map
    in the finite-residue unramified case. -/
 theorem chapter11_unramified_full_norm_image
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (πK : K) (f : ℕ)
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     (hπ : chapter11IsUniformizer vK πK)
     (hdegree : Module.finrank K L = f)
+    (hfres : f =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        vK vL hunram.1)
     [Finite (chapter11ResidueField vK)]
     [Algebra (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [FiniteDimensional (chapter11ResidueField vK) (chapter11ResidueField vL)]
-    [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)] :
+    [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)]
+    (hred : chapter11ResidueReductionCompatible vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL)) :
     {x : K | ∃ y : L, y ≠ 0 ∧ x = Algebra.norm K y} =
       chapter11ValueUnitProductSet vK πK f := by
   sorry
@@ -150,15 +153,21 @@ theorem chapter11_unramified_full_norm_image
 /- In the same hypotheses the norm subgroup has index `f` in `Kˣ`. -/
 theorem chapter11_unramified_norm_subgroup_index
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra.IsSeparable K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (πK : K) (f : ℕ)
     (hunram : chapter11UnramifiedValuedExtension vK vL)
     (hπ : chapter11IsUniformizer vK πK)
     (hdegree : Module.finrank K L = f)
+    (hfres : f =
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
+        vK vL hunram.1)
     [Finite (chapter11ResidueField vK)]
     [Algebra (chapter11ResidueField vK) (chapter11ResidueField vL)]
     [FiniteDimensional (chapter11ResidueField vK) (chapter11ResidueField vL)]
-    [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)] :
+    [Algebra.IsSeparable (chapter11ResidueField vK) (chapter11ResidueField vL)]
+    (hred : chapter11ResidueReductionCompatible vK vL
+      (chapter11ResidueMap vK) (chapter11ResidueMap vL)) :
     Nat.card (Kˣ ⧸ chapter11NormSubgroup K L) = f := by
   sorry
 

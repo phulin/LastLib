@@ -22,20 +22,29 @@ the ramification degree.  The coordinate fields record both uniqueness claims
 from the source, and basis makes the final displayed set a genuine linear
 basis. -/
 structure Chapter09TwoStageIntegralDescription
-    (A K K₀ L : Type*) [CommRing A] [IsLocalRing A]
+    (A B K K₀ L : Type*) [CommRing A] [CommRing B] [IsDomain A]
+    [IsLocalRing A]
     [Field K] [Field K₀] [Field L]
-    [Algebra A K] [Algebra K K₀] [Algebra A K₀] [Algebra K₀ L] [Algebra K L]
-    [Algebra A L]
+    [Algebra A B] [Algebra A K] [Algebra K K₀] [Algebra A K₀]
+    [Algebra K₀ L] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K K₀] [IsScalarTower K K₀ L]
-    [IsScalarTower A K L] [IsLocalRing K₀]
+    [IsScalarTower A K L] [IsScalarTower A K₀ L] [IsScalarTower A B L]
+    [IsLocalHom (algebraMap A B)] [IsFractionRing B L]
+    [IsDomain B] [IsLocalRing B] [IsDiscreteValuationRing B]
+    [IsDiscreteValuationRing A] [Module.Finite A B]
+    [Module.IsTorsionFree A B] [FaithfulSMul A B] [IsIntegralClosure B A L]
+    [FiniteDimensional K K₀] [FiniteDimensional K₀ L] [IsLocalRing K₀]
     (θ : K₀) (πL : L) (e f : ℕ) where
   O₀ : Subalgebra A K₀
-  O₁ : Subalgebra K₀ L
+  O₁ : Subalgebra A L
   O₀_eq_adjoin : O₀ = Algebra.adjoin A ({θ} : Set K₀)
-  O₁_eq_adjoin : O₁ = Algebra.adjoin K₀ ({πL} : Set L)
+  O₁_eq_adjoin : O₁ = Algebra.adjoin A
+    ({algebraMap K₀ L θ, πL} : Set L)
+  integral_ring_eq : Set.range (algebraMap B L) = (O₁ : Set L)
   theta_mem_O₀ : θ ∈ O₀
   piL_mem_O₁ : πL ∈ O₁
   O₁_local : IsLocalRing O₁
+  O₁_dvr : IsDiscreteValuationRing O₁
   piL_generates_maximal_ideal :
     Ideal.span ({⟨πL, piL_mem_O₁⟩} : Set O₁) = IsLocalRing.maximalIdeal O₁
   O₀_local : IsLocalRing O₀
@@ -56,7 +65,7 @@ structure Chapter09TwoStageIntegralDescription
   second_polynomial : O₀[X]
   second_polynomial_monic : second_polynomial.Monic
   second_polynomial_root :
-    aeval πL second_polynomial = 0
+    eval₂ ((algebraMap K₀ L).comp (algebraMap O₀ K₀)) πL second_polynomial = 0
   second_polynomial_eisenstein :
     letI : IsLocalRing O₀ := O₀_local
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt pi₀ second_polynomial
@@ -68,30 +77,38 @@ structure Chapter09TwoStageIntegralDescription
   coefficient_expansion :
     ∀ c : K₀, c ∈ O₀ → ∃! d : Fin f → A,
       c = ∑ j, algebraMap A K₀ (d j) * θ ^ (j : ℕ)
-  basis : Module.Basis (Fin f × Fin e) A L
+  field_degree : Module.finrank K L = e * f
+  basis : Module.Basis (Fin f × Fin e) A B
   basis_apply :
-    ∀ ji, basis ji =
+    ∀ ji, algebraMap B L (basis ji) =
       algebraMap K₀ L (θ ^ (ji.1 : ℕ)) * πL ^ (ji.2 : ℕ)
   basis_in_O₁ :
-    ∀ ji, basis ji ∈ O₁
+    ∀ ji, algebraMap B L (basis ji) ∈ O₁
 
 /-- The coordinate statements and the explicit monomial set extracted from a
 two-stage presentation. -/
 theorem chapter09_two_stage_coordinates
-    (A K K₀ L : Type*) [CommRing A] [IsLocalRing A]
+    (A B K K₀ L : Type*) [CommRing A] [CommRing B] [IsDomain A]
+    [IsLocalRing A]
     [Field K] [Field K₀] [Field L]
-    [Algebra A K] [Algebra K K₀] [Algebra A K₀] [Algebra K₀ L] [Algebra K L]
-    [Algebra A L]
+    [Algebra A B] [Algebra A K] [Algebra K K₀] [Algebra A K₀]
+    [Algebra K₀ L] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K K₀] [IsScalarTower K K₀ L]
-    [IsScalarTower A K L] [IsLocalRing K₀]
+    [IsScalarTower A K L] [IsScalarTower A K₀ L] [IsScalarTower A B L]
+    [IsLocalHom (algebraMap A B)] [IsFractionRing B L]
+    [IsDomain B] [IsLocalRing B] [IsDiscreteValuationRing B]
+    [IsDiscreteValuationRing A] [Module.Finite A B]
+    [Module.IsTorsionFree A B] [FaithfulSMul A B] [IsIntegralClosure B A L]
+    [FiniteDimensional K K₀] [FiniteDimensional K₀ L] [IsLocalRing K₀]
     (θ : K₀) (πL : L) (e f : ℕ)
-    (d : Chapter09TwoStageIntegralDescription A K K₀ L θ πL e f) :
+    (d : Chapter09TwoStageIntegralDescription A B K K₀ L θ πL e f) :
     (∀ x : L, x ∈ d.O₁ → ∃! c : Fin e → K₀,
       (∀ i, c i ∈ d.O₀) ∧
         x = ∑ i, algebraMap K₀ L (c i) * πL ^ (i : ℕ)) ∧
     (∀ c : K₀, c ∈ d.O₀ → ∃! q : Fin f → A,
       c = ∑ j, algebraMap A K₀ (q j) * θ ^ (j : ℕ)) ∧
-    ∀ ji, d.basis ji ∈ chapter09ExplicitIntegralBasis K₀ L θ πL f e := by
+    ∀ ji, algebraMap B L (d.basis ji) ∈
+      chapter09ExplicitIntegralBasis K₀ L θ πL f e := by
   refine ⟨d.coordinate_expansion, d.coefficient_expansion, ?_⟩
   intro ji
   exact ⟨ji.1, ji.2, d.basis_apply ji⟩
@@ -120,21 +137,14 @@ theorem chapter09_two_stage_integral_description_exists
     (hseparable : Algebra.IsSeparable (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)) :
     ∃ (θ : d.K₀) (πL : L) (e f : ℕ),
-      Nonempty (Chapter09TwoStageIntegralDescription A K d.K₀ L
+      Nonempty (Chapter09TwoStageIntegralDescription A B K d.K₀ L
         θ πL e f) := by
   sorry
 
 /-- The coordinate basis has e*f vectors, realizing the multiplicative
 degree allocation at the level of coordinates. -/
 theorem chapter09_two_stage_basis_cardinality
-    (A K K₀ L : Type*) [CommRing A] [IsLocalRing A]
-    [Field K] [Field K₀] [Field L]
-    [Algebra A K] [Algebra K K₀] [Algebra A K₀] [Algebra K₀ L] [Algebra K L]
-    [Algebra A L]
-    [IsScalarTower A K K₀] [IsScalarTower K K₀ L]
-    [IsScalarTower A K L] [IsLocalRing K₀]
-    (θ : K₀) (πL : L) (e f : ℕ)
-    (d : Chapter09TwoStageIntegralDescription A K K₀ L θ πL e f) :
+    (e f : ℕ) :
     Fintype.card (Fin f × Fin e) = f * e := by
   simp [Fintype.card_prod]
 

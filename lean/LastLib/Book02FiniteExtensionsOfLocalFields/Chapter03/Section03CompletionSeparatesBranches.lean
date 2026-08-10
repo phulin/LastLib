@@ -5,6 +5,7 @@ namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 noncomputable section
 
 open scoped BigOperators TensorProduct
+open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
 /-! ## 3.3. Completion separates branches -/
 
@@ -20,11 +21,16 @@ abbrev chapter03CompletedBranch
     (w : Valuation E Γ) : Type _ :=
   Valuation.Completion w
 
-/--
-Data for the decomposition after completion.  The branch factors are named
-separately from the original field so that the product decomposition does not
-pretend that the tensor product is a field.
--/
+/-- A valuation branch is a valuation extension, with the fixed value group
+used for the normalized local presentation. -/
+abbrev chapter03ValuationBranch
+    {K₀ E Γ : Type*} [Field K₀] [Field E]
+    [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
+    (v : Valuation K₀ Γ) : Type _ :=
+  ValuationExtension v E
+
+/-! The index type below is only an enumeration of branches.  It does not
+contain the tensor-product decomposition or any degree equation. -/
 structure Chapter03CompletionBranchData
     (K₀ E Γ : Type*) [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ]
@@ -32,24 +38,12 @@ structure Chapter03CompletionBranchData
     where
   index : Type*
   index_finite : Fintype index
-  base_discrete : Valuation.IsRankOneDiscrete v
-  separable : Algebra.IsSeparable K₀ E
-  branchValuation : index → Valuation E Γ
-  branch_extends : ∀ i, ∀ x : K₀,
-    branchValuation i (algebraMap K₀ E x) = v x
-  factor : index → Type*
-  factor_field : ∀ i, Field (factor i)
-  factor_algebra : ∀ i, Algebra (Valuation.Completion v) (factor i)
-  factor_completion : ∀ i,
-    Nonempty (factor i ≃+* chapter03CompletedBranch (branchValuation i))
-  e : index → ℕ
-  f : index → ℕ
-  factor_degree : ∀ i, Module.finrank (Valuation.Completion v) (factor i) =
-    e i * f i
-  decomposition :
-    Nonempty
-      (E ⊗[K₀] Valuation.Completion v ≃+*
-        (∀ i, factor i))
+  branch : index → chapter03ValuationBranch (K₀ := K₀) (E := E) (Γ := Γ) v
+  branch_exhaustive :
+    ∀ w : chapter03ValuationBranch (K₀ := K₀) (E := E) (Γ := Γ) v,
+      ∃ i, (branch i).1.IsEquiv w.1
+  branch_pairwise_inequivalent :
+    Pairwise (fun i j => ¬(branch i).1.IsEquiv (branch j).1)
 
 instance {K₀ E Γ : Type*} [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
@@ -57,81 +51,81 @@ instance {K₀ E Γ : Type*} [Field K₀] [Field E]
     Fintype D.index :=
   D.index_finite
 
-instance {K₀ E Γ : Type*} [Field K₀] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
-    (v : Valuation K₀ Γ) (D : Chapter03CompletionBranchData K₀ E Γ v)
-    (i : D.index) : Field (D.factor i) :=
-  D.factor_field i
-
-instance {K₀ E Γ : Type*} [Field K₀] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
-    (v : Valuation K₀ Γ) (D : Chapter03CompletionBranchData K₀ E Γ v)
-    (i : D.index) : Algebra (Valuation.Completion v) (D.factor i) :=
-  D.factor_algebra i
-
-/-- The product decomposition itself. -/
+/-- The branch decomposition is indexed by valuation classes: the data
+enumerates representatives up to `IsEquiv`, not all valuation-extension
+structures literally. -/
 theorem chapter03_completion_tensor_product_decomposition
     {K₀ E Γ : Type*} [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
-    (v : Valuation K₀ Γ)
+    (v : Valuation K₀ Γ) [Valuation.IsRankOneDiscrete v]
+    [FiniteDimensional K₀ E] [Algebra.IsSeparable K₀ E]
     (D : Chapter03CompletionBranchData K₀ E Γ v) :
     Nonempty
-      (E ⊗[K₀] Valuation.Completion v ≃+* (∀ i, D.factor i)) :=
-  D.decomposition
+      (E ⊗[K₀] Valuation.Completion v ≃+*
+        (∀ i, chapter03CompletedBranch (D.branch i).1)) := by
+  sorry
 
-/-- Each completed branch has the local degree e times f. -/
+/- The factor degree is stated using the actual ramification and inertia
+indices of the completed local rings, rather than free profile fields. -/
 theorem chapter03_completed_branch_degree
     {K₀ E Γ : Type*} [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
-    (v : Valuation K₀ Γ)
-    (D : Chapter03CompletionBranchData K₀ E Γ v) (i : D.index) :
-    Module.finrank (Valuation.Completion v) (D.factor i) =
-      D.e i * D.f i :=
-  D.factor_degree i
+    (v : Valuation K₀ Γ) (w : Valuation E Γ)
+    [Valuation.IsRankOneDiscrete v] [Valuation.IsRankOneDiscrete w]
+    [Algebra (Valuation.Completion v) (Valuation.Completion w)]
+    [IsScalarTower K₀ E (Valuation.Completion w)]
+    [IsScalarTower K₀ (Valuation.Completion v)
+      (Valuation.Completion w)]
+    [FiniteDimensional (Valuation.Completion v) (Valuation.Completion w)]
+    [PerfectField
+      (IsLocalRing.ResidueField (Valuation.Completion v))]
+    (e f : ℕ)
+    (hbranch : v.IsEquiv (w.comap (algebraMap K₀ E)))
+    (he : (IsLocalRing.maximalIdeal (Valuation.Completion w)).ramificationIdx
+      (Valuation.Completion v) = e)
+    (hf : (IsLocalRing.maximalIdeal (Valuation.Completion w)).inertiaDeg
+      (Valuation.Completion v) = f) :
+    Module.finrank (Valuation.Completion v) (Valuation.Completion w) = e * f := by
+  sorry
 
-/-- The defectless degree condition needed for the branch sum. -/
-def chapter03DefectlessCompletionDegree
-    {K₀ E Γ : Type*} [Field K₀] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
-    [FiniteDimensional K₀ E] (v : Valuation K₀ Γ)
-    (D : Chapter03CompletionBranchData K₀ E Γ v) : Prop :=
-  Module.finrank K₀ E = ∑ i, D.e i * D.f i
-
--- SOURCE_ISSUE: The displayed equalities in §3.3 are not valid for every
--- finite separable extension over an arbitrary imperfect-residue discretely
--- valued field: a defect can remain.  The theorem below adds the precise
--- defectless/fundamental-equality hypothesis.
+/- The finite-normalization form of the branch sum.  This is the ring-level
+statement behind the field formula and is the canonical earlier interface. -/
 theorem chapter03_sum_of_branch_degrees
-    {K₀ E Γ : Type*} [Field K₀] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
-    [FiniteDimensional K₀ E] (v : Valuation K₀ Γ)
-    (D : Chapter03CompletionBranchData K₀ E Γ v)
-    (hdefectless : chapter03DefectlessCompletionDegree v D) :
-    Module.finrank K₀ E = ∑ i, D.e i * D.f i :=
-  hdefectless
+    {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
+    [IsDomain A] [Module.Finite A B] [Module.Flat A B]
+    (p : Ideal A) [p.IsPrime] [Fintype (p.primesOver B)] :
+    Module.finrank A B =
+      ∑ q : p.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A := by
+  simpa using (Ideal.sum_ramification_inertia_eq_finrank p B).symm
 
-/-- Completion records branches as product factors instead of merging them. -/
-def chapter03CompletionPreservesBranchCount
-    {K₀ E Γ : Type*} [Field K₀] [Field E]
-    [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
-    (v : Valuation K₀ Γ) (D : Chapter03CompletionBranchData K₀ E Γ v) : Prop :=
-  Nonempty
-    (E ⊗[K₀] Valuation.Completion v ≃+* (∀ i, D.factor i))
-
-/--
-If the base is complete and the extension is a field, the completed tensor
-product has one valuation factor.  Completeness is represented by the
-topological instance on the base; the branch data still exposes the factor.
--/
+/-/ A complete base has only one branch once the branch index enumerates
+inequivalent valuation extensions. -/
 theorem chapter03_complete_base_has_one_completion_branch
     {K₀ E Γ : Type*} [Field K₀] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K₀ E]
-    (v : Valuation K₀ Γ) [CompleteSpace (WithVal v)]
-    [FiniteDimensional K₀ E]
+    (v : Valuation K₀ Γ) [Valuation.IsRankOneDiscrete v]
+    [Algebra.IsAlgebraic K₀ E]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal v.valuationSubring) v.valuationSubring)
     (D : Chapter03CompletionBranchData K₀ E Γ v)
     (hne : Nonempty D.index) :
     Subsingleton D.index := by
-  sorry
+  let huniq :=
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_theorem_1_1
+      v hcomplete
+  refine ⟨?_⟩
+  intro i j
+  by_contra hij
+  apply D.branch_pairwise_inequivalent hij
+  let Wi : HeterogeneousValuationExtension v E :=
+    { valueGroup := Γ
+      valuation := (D.branch i).1
+      isExtension := (D.branch i).2 }
+  let Wj : HeterogeneousValuationExtension v E :=
+    { valueGroup := Γ
+      valuation := (D.branch j).1
+      isExtension := (D.branch j).2 }
+  simpa [Wi, Wj] using huniq.2 Wi Wj
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03

@@ -73,7 +73,12 @@ theorem chapter10_deep_principal_units_log_exp
       (∀ u, exp (Multiplicative.ofAdd (log (Additive.ofMul u))) = u) ∧
         (∀ x, log (Additive.ofMul (exp (Multiplicative.ofAdd x))) = x)) :
     Nonempty (Chapter10LogExpLinearization U I) := by
-  sorry
+  rcases hseries with ⟨log, exp, hexp_log, hlog_exp⟩
+  exact ⟨{
+    log := log
+    exp := exp
+    exp_log := hexp_log
+    log_exp := hlog_exp }⟩
 
 /-- The characteristic-free linear part is already the map `1+x ↦ x` on each layer. -/
 theorem chapter10_first_order_principal_unit_linearization
@@ -95,7 +100,17 @@ theorem chapter10_mixed_characteristic_no_coefficient_field_section
     {L : Type*} [Field L] (A : ValuationSubring L) [CharZero A]
     (p : ℕ) [Fact p.Prime] [CharP (Chapter10ResidueField A) p] :
     ¬ Chapter10CoefficientFieldSection A := by
-  sorry
+  rintro ⟨s, hs⟩
+  have hpzero : (p : Chapter10ResidueField A) = 0 :=
+    CharP.cast_eq_zero (Chapter10ResidueField A) p
+  have hpA : (p : A) = 0 := by
+    calc
+      (p : A) = s (p : Chapter10ResidueField A) := by
+        symm
+        exact map_natCast s p
+      _ = s 0 := by rw [hpzero]
+      _ = 0 := map_zero s
+  exact (Nat.cast_ne_zero.mpr (Fact.out : Nat.Prime p).ne_zero) hpA
 
 end
 

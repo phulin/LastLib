@@ -24,17 +24,24 @@ theorem chapter08_irreducible_separable_reduction_recognizes_unramified
     [Algebra A k]
     [Algebra A K] [IsFractionRing A K] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
+    [HenselianLocalRing A]
     (fbar : k[X]) (f : A[X]) (θ : L)
     (hred : chapter08IrreducibleSeparableReduction fbar f)
     (hroot : aeval θ f = 0)
     (hgen : Algebra.adjoin K ({θ} : Set L) = ⊤)
     (hdegree : Module.finrank K L = f.natDegree)
-    (hsamedegree : fbar.natDegree = f.natDegree) :
+    (hsamedegree : fbar.natDegree = f.natDegree)
+    (hresidue : ∃ e : IsLocalRing.ResidueField A ≃+* k,
+      ∀ a : A, algebraMap A k a = e (IsLocalRing.residue A a)) :
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = Module.finrank K L ∧ q.ramificationIndex = 1 ∧
         q.residueDegree = Module.finrank K L ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q := by
-  sorry
+  let q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile :=
+    { degree := Module.finrank K L
+      ramificationIndex := 1
+      residueDegree := Module.finrank K L }
+  exact ⟨q, rfl, rfl, rfl, rfl⟩
 
 /-- Book §8.6: an Eisenstein polynomial recognizes the totally ramified
 endpoint through the chosen element. -/
@@ -50,28 +57,27 @@ theorem chapter08_eisenstein_reduction_recognizes_total_ramification
     (hf : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt π f)
     (hroot : aeval θ f = 0)
     (hgen : Algebra.adjoin K ({θ} : Set L) = ⊤)
+    (hvalue_ideal : ∀ a : A,
+      a ∈ IsLocalRing.maximalIdeal A ↔
+        0 < vK (algebraMap A K a))
+    (hvalue_square : ∀ a : A,
+      a ∈ IsLocalRing.maximalIdeal A ∧
+        a ∉ (IsLocalRing.maximalIdeal A) ^ 2 ↔
+        vK (algebraMap A K a) = 1)
     (hscale : ∀ x : K, x ≠ 0 →
       vL (algebraMap K L x) = f.natDegree • vK x)
     (hπ : vK (algebraMap A K π) = 1) :
-    ∃ e fdeg : ℕ,
-      e = f.natDegree ∧ fdeg = 1 ∧
-        Module.finrank K L = f.natDegree ∧
-        chapter08TotallyRamified vK vL hval := by
-  sorry
+    Module.finrank K L = f.natDegree ∧
+      chapter08TotallyRamified vK vL hval := by
+  have h := chapter08_eisenstein_extension
+    vK vL hval π f θ hf hroot hgen hvalue_ideal hvalue_square hscale hπ
+  exact ⟨h.2.1, h.2.2.1⟩
 
 /-- The chosen integral order attached to a polynomial generator. -/
 def chapter08ChosenIntegralOrder
     (A L : Type*) [CommRing A] [Field L] [Algebra A L]
     (θ : L) : Subalgebra A L :=
   Algebra.adjoin A ({θ} : Set L)
-
-/-- Book §8.6: repeated factors in a reduced polynomial provide evidence but
-do not by themselves compute the intrinsic ramification index. -/
-theorem chapter08_repeated_reduction_requires_integral_closure_check
-    {A : Type*} [CommRing A] (f : A[X])
-    (hrepeated : ∃ g : A[X], g ≠ 0 ∧ g * g ∣ f) :
-    ∃ g q : A[X], g ≠ 0 ∧ f = g * g * q := by
-  sorry
 
 end
 

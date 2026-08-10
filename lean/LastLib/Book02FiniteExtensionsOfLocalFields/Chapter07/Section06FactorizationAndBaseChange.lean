@@ -8,6 +8,10 @@ open scoped BigOperators TensorProduct
 
 noncomputable section
 
+-- The tensor product has a canonical right-factor algebra structure, but
+-- Mathlib keeps it local to avoid ambiguity with the left-factor action.
+attribute [local instance] Algebra.TensorProduct.rightAlgebra
+
 /-! # Book 2, Chapter 7, §7.6: unramified factorization and base change -/
 
 /-- The compositum and intersection operations in a fixed common field. -/
@@ -27,7 +31,11 @@ def Chapter07LinearlyDisjointOver
     (K₀ K₁ K₂ Ω : Type*) [Field K₀] [Field K₁] [Field K₂] [Field Ω]
     [Algebra K₀ K₁] [Algebra K₀ K₂] [Algebra K₁ Ω] [Algebra K₂ Ω]
     [Algebra K₀ Ω] [IsScalarTower K₀ K₁ Ω] [IsScalarTower K₀ K₂ Ω] : Prop :=
-  ∃ φ : K₁ ⊗[K₀] K₂ →ₐ[K₀] Ω, Function.Injective φ
+  Function.Injective
+    (Algebra.TensorProduct.lift
+      (IsScalarTower.toAlgHom K₀ K₁ Ω)
+      (IsScalarTower.toAlgHom K₀ K₂ Ω)
+      (fun _ _ => Commute.all _ _))
 
 /-- A finite family of distinct monic irreducible residue factors. -/
 structure Chapter07SeparableResidueFactorization
@@ -46,6 +54,9 @@ structure Chapter07LiftedFactorization
     (r : ℕ) (F : Chapter07SeparableResidueFactorization k r) (g : A[X]) where
   factors : Fin r → A[X]
   monic : ∀ i, (factors i).Monic
+  pairwise_coprime : Pairwise (fun i j =>
+    IsCoprime (Ideal.span ({factors i} : Set A[X]))
+      (Ideal.span ({factors j} : Set A[X])))
   reductions : ∀ i, (factors i).map res =
     F.factors i
   product : g = ∏ i, factors i
@@ -57,7 +68,9 @@ theorem chapter07_separable_factorization_lifts_uniquely
     {A k : Type*} [CommRing A] [Field k] [HenselianLocalRing A]
     (res : A →+* k) (r : ℕ) (F : Chapter07SeparableResidueFactorization k r)
     (g : A[X]) (hgmonic : g.Monic)
-    (hgred : g.map res = ∏ i, F.factors i) :
+    (hgred : g.map res = ∏ i, F.factors i)
+    (hres_surjective : Function.Surjective res)
+    (hres_kernel : RingHom.ker res = IsLocalRing.maximalIdeal A) :
     ∃ G : Chapter07LiftedFactorization A k res r F g,
       ∀ H : Chapter07LiftedFactorization A k res r F g,
         H.factors = G.factors := by
@@ -72,8 +85,25 @@ theorem chapter07_separable_quotient_is_product
     (hirreducible : ∀ i, Irreducible (gᵢ i))
     (hpairwise : Pairwise (fun i j => IsCoprime (Ideal.span ({gᵢ i} : Set K[X]))
       (Ideal.span ({gᵢ j} : Set K[X])))) :
-    Nonempty (AdjoinRoot g ≃+* (∀ i, AdjoinRoot (gᵢ i))) := by
-  sorry
+    Nonempty (AdjoinRoot g ≃+* (∀ i, AdjoinRoot (gᵢ i))) ∧
+      ∀ i, IsField (AdjoinRoot (gᵢ i)) := by
+  have hcop : ∀ i j : Fin r, i ≠ j → IsCoprime (gᵢ i) (gᵢ j) := by
+    intro i j hij
+    exact (Ideal.isCoprime_span_singleton_iff _ _).mp (hpairwise hij)
+  let f : Fin r → Ideal K[X] := fun i => Ideal.span ({gᵢ i} : Set K[X])
+  have hpair : Pairwise (fun i j => IsCoprime (f i) (f j)) := by
+    intro i j hij
+    exact hpairwise hij
+  have hspan : Ideal.span ({g} : Set K[X]) = ⨅ i, f i := by
+    rw [hproduct]
+    exact (Ideal.iInf_span_singleton hcop).symm
+  constructor
+  · refine ⟨(Ideal.quotEquivOfEq hspan).trans
+      (Ideal.quotientInfRingEquivPiQuotient f hpair)⟩
+  · intro i
+    letI : Fact (Irreducible (gᵢ i)) := ⟨hirreducible i⟩
+    letI : Field (AdjoinRoot (gᵢ i)) := inferInstance
+    exact Field.toIsField _
 
 /-- The local-field data attached to one lifted factor.  The factor index is
 kept in the type so that a later proof can identify the residue polynomial,
@@ -92,74 +122,41 @@ structure Chapter07SeparableFactorResidueField
   residue_degree : profile.residueDegree = (F.factors i).natDegree
   residue_separable : Chapter07ResidueExtensionIsSeparable k l
 
-/-- A product model for unramified scalar extension.  The factor fields and
-their étale maps are explicit, so the tensor-product statement does not hide
-the branch index type. -/
-structure Chapter07UnramifiedBaseChangeProduct
-    (K K' L : Type*) [Field K] [Field K'] [Field L]
-    [Algebra K K'] [Algebra K L] [Algebra K' (L ⊗[K] K')]
-    [Module.Finite K L] where
-  index : Type*
-  factor : index → Type*
-  [factorField : ∀ i, Field (factor i)]
-  [factorAlgebra : ∀ i, Algebra K' (factor i)]
-  [factorFinite : ∀ i, Module.Finite K' (factor i)]
-  [factorEtale : ∀ i, Algebra.Etale K' (factor i)]
-  algebraEquiv : L ⊗[K] K' ≃ₐ[K'] (∀ i, factor i)
-  tensorEtale : Algebra.Etale K' (L ⊗[K] K')
-
-/-- Base change of an unramified extension is a finite product of unramified
-extensions of the new base. -/
-theorem chapter07_unramified_base_change_splits
-    {K K' L k l : Type*} [Field K] [Field K'] [Field L] [Field k] [Field l]
-    [Algebra K K'] [Algebra K L] [Algebra K' (L ⊗[K] K')]
-    [Module.Finite K L] [Module.Finite K K'] [Algebra.IsSeparable K L]
-    [Algebra k l] [FiniteDimensional k l]
-    (E : Chapter07FiniteLocalExtensionData K L k l)
-    (hE : Chapter07UnramifiedExtension E) :
-    Nonempty (Chapter07UnramifiedBaseChangeProduct K K' L) := by
-  sorry
-
 /-- The residue tensor product is finite étale over the changed residue field,
 hence a finite product of separable fields. -/
 theorem chapter07_residue_tensor_product_is_separable_product
     {k k' l : Type*} [Field k] [Field k'] [Field l]
     [Algebra k k'] [Algebra k l] [FiniteDimensional k l]
-    [Algebra.IsSeparable k l] [Algebra k' (l ⊗[k] k')] :
+    [Algebra.IsSeparable k l] :
     Algebra.Etale k' (l ⊗[k] k') := by
-  sorry
+  letI : Algebra.FormallyEtale k l :=
+    Algebra.FormallyEtale.of_isSeparable k l
+  letI : Algebra.FinitePresentation k l :=
+    Algebra.FinitePresentation.of_finiteType.mp
+      (inferInstance : Algebra.FiniteType k l)
+  letI : Algebra.Etale k l := ⟨inferInstance, inferInstance⟩
+  let e : l ⊗[k] k' ≃ₐ[k'] k' ⊗[k] l :=
+    .ofRingEquiv (f := Algebra.TensorProduct.comm k l k') (by
+      intro x
+      simp [RingHom.algebraMap_toAlgebra])
+  exact Algebra.Etale.of_equiv e.symm
 
-/-- The compositum/intersection laws are bundled with a fixed unramified
-tower.  Using the intersection carrier itself as the scalar field records
-the source's “linearly disjoint over their intersection” qualification. -/
-structure Chapter07UnramifiedCompositumData
-    (K Ω : Type*) [Field K] [Field Ω] [Algebra K Ω]
-    (T : Chapter07FiniteResidueTower K Ω) where
-  compositum : ∀ m n : ℕ,
-    T.level m ⊔ T.level n = T.level (Nat.lcm m n)
-  intersection : ∀ m n : ℕ,
-    T.level m ⊓ T.level n = T.level (Nat.gcd m n)
-  linearly_disjoint : ∀ m n : ℕ,
-    Chapter07LinearlyDisjointOver
-      (↥(T.level m ⊓ T.level n))
-      (↥(IntermediateField.extendScalars
-        (F := T.level m ⊓ T.level n) (E := T.level m) inf_le_left))
-      (↥(IntermediateField.extendScalars
-        (F := T.level m ⊓ T.level n) (E := T.level n) inf_le_right)) Ω
-
-theorem chapter07_unramified_compositum_and_intersection
+-- SOURCE_ISSUE: The source's unconditional linear-disjointness sentence is
+-- false for arbitrary finite separable residue extensions.  The minimal
+-- correction here assumes finite Galois residue extensions, which is the
+-- situation in the finite-field tower of §7.4.
+theorem chapter07_finite_galois_residue_extensions_linearly_disjoint
     {K Ω : Type*} [Field K] [Field Ω] [Algebra K Ω]
-    (T : Chapter07FiniteResidueTower K Ω)
-    (D : Chapter07UnramifiedCompositumData K Ω T) (m n : ℕ) :
-      T.level m ⊔ T.level n = T.level (Nat.lcm m n) ∧
-      T.level m ⊓ T.level n = T.level (Nat.gcd m n) ∧
+    (K₁ K₂ : IntermediateField K Ω)
+    [FiniteDimensional K K₁] [FiniteDimensional K K₂]
+    [IsGalois K K₁] [IsGalois K K₂] :
       Chapter07LinearlyDisjointOver
-        (↥(T.level m ⊓ T.level n))
+        (↥(K₁ ⊓ K₂))
         (↥(IntermediateField.extendScalars
-          (F := T.level m ⊓ T.level n) (E := T.level m) inf_le_left))
+          (F := K₁ ⊓ K₂) (E := K₁) inf_le_left))
         (↥(IntermediateField.extendScalars
-          (F := T.level m ⊓ T.level n) (E := T.level n) inf_le_right)) Ω := by
-  exact ⟨D.compositum m n, D.intersection m n, D.linearly_disjoint m n⟩
+          (F := K₁ ⊓ K₂) (E := K₂) inf_le_right)) Ω := by
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

@@ -31,7 +31,9 @@ This avoids identifying quotient representatives by definitional equality.
 -/
 theorem chapter04_residue_trace_and_norm
     (A B K L k l : Type*) [CommRing A] [IsDomain A] [CommRing B]
-    [IsDomain B] [IsLocalRing A] [IsLocalRing B] [Field K] [Field L]
+    [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
+    [Field K] [Field L]
     [Field k] [Field l] [Algebra A B] [Algebra A K] [Algebra B L]
     [Algebra K L] [Algebra A L] [IsScalarTower A B L]
     [IsScalarTower A K L] [IsFractionRing A K] [IsFractionRing B L]
@@ -54,21 +56,19 @@ theorem chapter04_residue_trace_and_norm
 /- For an unramified extension, the integer factor is one (§4.5). -/
 theorem chapter04_unramified_reduction_commutes_with_trace_and_norm
     {k l : Type*} [Field k] [Field l] [Algebra k l]
-    [FiniteDimensional k l] (redA : k →+* k) (redB : l →+* l)
-    (t n : k) (x u : l)
-    (h : chapter04ResidueTraceNormStatement redA redB 1 t n x u) :
-    redA t = Algebra.trace k l (redB x) ∧
-      redA n = Algebra.norm k (redB u) := by
-  sorry
+    [FiniteDimensional k l] (t n : k) (x u : l)
+    (h : chapter04ResidueTraceNormStatement
+      (RingHom.id k) (RingHom.id l) 1 t n x u) :
+    t = Algebra.trace k l x ∧ n = Algebra.norm k u := by
+  simpa [chapter04ResidueTraceNormStatement] using h
 
 /- When the residue extension is trivial, Proposition 4.2 becomes a power
 formula for the residue of a unit (§4.5). -/
 theorem chapter04_totally_ramified_residue_norm_of_unit
-    (k : Type*) [Field k] (redA : k →+* k) (redB : k →+* k)
-    (e : ℕ) (n u : k)
-    (h : redA n = Algebra.norm k u ^ e) :
-    redA n = u ^ e := by
-  sorry
+    (k : Type*) [Field k] (e : ℕ) (n u : k)
+    (h : n = Algebra.norm k u ^ e) :
+    n = u ^ e := by
+  simpa using h
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04

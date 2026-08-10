@@ -15,7 +15,8 @@ noncomputable def chapter10PrecisionRingTransition
     {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
     Chapter10PrecisionQuotient A (n + 1) →+*
       Chapter10PrecisionQuotient A n := by
-  sorry
+  exact Ideal.Quotient.factor
+    (Ideal.pow_le_pow_right (Nat.le_succ n))
 
 /-- The induced transition map on finite-precision unit groups. -/
 def chapter10PrecisionUnitTransition
@@ -73,7 +74,27 @@ abbrev Chapter10AdicUnitInverseLimit
 noncomputable def chapter10UnitToAdicInverseLimit
     {L : Type*} [Field L] (A : ValuationSubring L) :
     Aˣ →* Chapter10AdicUnitInverseLimit A := by
-  sorry
+  let q : ∀ n : ℕ, Aˣ →* Chapter10PrecisionUnitGroup A n :=
+    fun n => Units.map
+      (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (n + 1))).toMonoidHom
+  have hcompat : ∀ (u : Aˣ) (n : ℕ),
+      chapter10AbstractPrecisionUnitTransition A n (q (n + 1) u) = q n u := by
+    intro u n
+    apply Units.ext
+    change (chapter10PrecisionRingTransition A (n + 1))
+        (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (n + 1 + 1))
+          (u : A)) =
+      Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ (n + 1)) (u : A)
+    rw [chapter10PrecisionRingTransition, Ideal.Quotient.factor_mk]
+  refine
+    { toFun := fun u => ⟨fun n => q n u, fun n => hcompat u n⟩
+      map_one' := by
+        ext n
+        exact (q n).map_one
+      map_mul' := by
+        intro u v
+        ext n
+        exact (q n).map_mul u v }
 
 /-- Completeness identifies ring units with the inverse limit of their reductions. -/
 theorem chapter10_complete_units_inverse_limit
@@ -94,7 +115,15 @@ noncomputable def chapter10PrincipalUnitTransition
     {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) :
     Chapter10PrincipalUnitPrecisionQuotient A (n + 1) →*
       Chapter10PrincipalUnitPrecisionQuotient A n := by
-  sorry
+  exact QuotientGroup.map
+    ((chapter10UnitFiltration A (n + 2)).subgroupOf
+      (chapter10UnitFiltration A 1))
+    ((chapter10UnitFiltration A (n + 1)).subgroupOf
+      (chapter10UnitFiltration A 1))
+    (MonoidHom.id _) (by
+      intro u hu
+      change (u : Aˣ) ∈ chapter10UnitFiltration A (n + 1)
+      exact (chapter10_unit_filtration_descending A (n + 1)) hu)
 
 /-- An opaque name for a principal-unit precision quotient. -/
 def Chapter10PrincipalUnitPrecisionGroup
@@ -157,7 +186,12 @@ theorem chapter10_finite_residue_finite_precision_quotients
     [Finite (Chapter10ResidueField A)] (n : ℕ)
     (hDVR : IsDiscreteValuationRing A) :
     Finite (Chapter10PrecisionQuotient A (n + 1)) := by
-  sorry
+  letI : IsDiscreteValuationRing A := hDVR
+  letI : Finite (A ⧸ IsLocalRing.maximalIdeal A) := by
+    change Finite (Chapter10ResidueField A)
+    infer_instance
+  exact Ideal.finite_quotient_pow
+    (IsPrincipalIdealRing.principal (IsLocalRing.maximalIdeal A)).fg (n + 1)
 
 /-- Under the adic topology, finite residue fields make the unit group compact. -/
 theorem chapter10_finite_residue_unit_group_compact
@@ -212,7 +246,36 @@ theorem chapter10_infinite_residue_prevents_unit_compactness
     (hresidue_surjective : Function.Surjective (chapter10UnitReduction A))
     (hresidue_continuous : Continuous (chapter10UnitReduction A)) :
     ¬ Chapter10CompactUnitGroup (G := Aˣ) := by
-  sorry
+  classical
+  intro hcompact
+  letI : CompactSpace Aˣ := ⟨hcompact⟩
+  letI : DiscreteTopology (Chapter10ResidueField A)ˣ :=
+    ⟨eq_bot_of_singletons_open (fun x => hquotient_discrete {x})⟩
+  have hrange : IsCompact (Set.range (chapter10UnitReduction A)) := by
+    simpa only [Set.image_univ, hresidue_surjective.range_eq] using
+      (isCompact_univ.image hresidue_continuous)
+  have hfinite : (Set.range (chapter10UnitReduction A)).Finite :=
+    hrange.finite_of_discrete
+  have huniv : (Set.univ : Set (Chapter10ResidueField A)ˣ).Finite := by
+    simpa only [hresidue_surjective.range_eq] using hfinite
+  letI : Finite (Chapter10ResidueField A)ˣ :=
+    Finite.of_finite_univ huniv
+  let f : Chapter10ResidueField A →
+      (Chapter10ResidueField A)ˣ ⊕ Unit :=
+    fun x => if hx : x = 0 then Sum.inr () else Sum.inl (Units.mk0 x hx)
+  have hf : Function.Injective f := by
+    intro x y hxy
+    by_cases hx : x = 0 <;> by_cases hy : y = 0
+    · simpa [hx, hy]
+    · simp [f, hx, hy] at hxy
+    · simp [f, hx, hy] at hxy
+    · have hunit : Units.mk0 x hx = Units.mk0 y hy := by
+        simpa [f, hx, hy] using hxy
+      exact congrArg Units.val hunit
+  have hfinite_residue : Finite (Chapter10ResidueField A) := by
+    exact Finite.of_injective f hf
+  letI : Finite (Chapter10ResidueField A) := hfinite_residue
+  exact not_finite (Chapter10ResidueField A)
 
 end
 

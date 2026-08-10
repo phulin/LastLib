@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section02TheSeparabilityMap
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section03ResidueActionAndInertia
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12
 
@@ -11,10 +12,10 @@ universe u
 /-! ## 12.3. The Galois picture -/
 
 /--
-The reduction datum behind the decomposition/inertia exact sequence.  The
-reduction homomorphism is kept explicit: constructing it from quotient
-valuation rings is a later compatibility theorem, while this interface
-records its kernel, surjectivity, and the normal inertia subgroup.
+The reduction homomorphism behind the decomposition/inertia exact sequence.
+The homomorphism is kept explicit because its construction from quotient
+valuation rings belongs to the earlier residue-action interface; exactness is
+proved separately from a surjectivity hypothesis.
 -/
 structure Chapter12GaloisReductionData
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
@@ -30,14 +31,34 @@ structure Chapter12GaloisReductionData
   reduction :
     Gal(L / K) →* Gal(IsLocalRing.ResidueField vL.valuationSubring /
       IsLocalRing.ResidueField vK.valuationSubring)
-  inertia : Subgroup (Gal(L / K))
-  inertia_normal : inertia.Normal
-  reduction_surjective : Function.Surjective reduction
-  reduction_kernel : reduction.ker = inertia
+  residue_normal :
+    Normal (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)
   valuation_unique :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension vK L
+  kernel_is_inertia :
+    reduction.ker =
+      LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05InertiaGroupInG
+        K vL.valuationSubring
 
-/-- The kernel/surjectivity form of the displayed exact sequence `1 → I → G → Gal(l/k) → 1`. -/
+/-- Inertia is the kernel of the actual residue-reduction homomorphism. -/
+def Chapter12GaloisReductionData.inertia
+    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ]
+    {vK : Valuation K Γ} {vL : Valuation L Γ}
+    [vK.HasExtension vL] [FiniteDimensional K L] [IsGalois K L]
+    [Algebra (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    [FiniteDimensional (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    (d : Chapter12GaloisReductionData vK vL) : Subgroup (Gal(L / K)) :=
+  d.reduction.ker
+
+/-- The kernel-exact part of the displayed sequence `1 → I → G → Gal(l/k)`.
+Surjectivity is kept separate so that it is not smuggled into a proof as a
+copy of the conclusion. -/
 def chapter12GaloisReductionExactSequence
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]
@@ -50,7 +71,7 @@ def chapter12GaloisReductionExactSequence
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
     (d : Chapter12GaloisReductionData vK vL) : Prop :=
-  d.reduction.ker = d.inertia ∧ Function.Surjective d.reduction
+  Function.MulExact (Subgroup.subtype d.inertia) d.reduction
 
 /-- Book 2, §12.3: the reduction datum is an exact sequence. -/
 theorem galois_reduction_is_exact
@@ -66,7 +87,9 @@ theorem galois_reduction_is_exact
       (IsLocalRing.ResidueField vL.valuationSubring)]
     (d : Chapter12GaloisReductionData vK vL) :
     chapter12GaloisReductionExactSequence vK vL d := by
-  exact ⟨d.reduction_kernel, d.reduction_surjective⟩
+  change Function.MulExact (Subgroup.subtype d.inertia) d.reduction
+  apply MonoidHom.mulExact_iff.mpr
+  simpa [Chapter12GaloisReductionData.inertia] using d.inertia.range_subtype.symm
 
 instance chapter12GaloisInertiaNormal
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
@@ -79,8 +102,9 @@ instance chapter12GaloisInertiaNormal
       (IsLocalRing.ResidueField vL.valuationSubring)]
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
-    (d : Chapter12GaloisReductionData vK vL) : d.inertia.Normal :=
-  d.inertia_normal
+    (d : Chapter12GaloisReductionData vK vL) : d.inertia.Normal := by
+  change d.reduction.ker.Normal
+  infer_instance
 
 /-- The fixed field of inertia, i.e. the maximal unramified intermediate field. -/
 noncomputable def inertiaFixedField
@@ -135,7 +159,68 @@ theorem complete_galois_extension_has_unique_valuation
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueValuationExtension vK L := by
+  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_theorem_1_1
+    vK hcomplete
+
+/-- Book 2, §12.3: uniqueness of the chosen normalized valuation makes the
+decomposition group equal to the full Galois group. -/
+theorem complete_decomposition_group_is_the_whole_galois_group
+    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) (vL : Valuation L Γ)
+    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
+    [FiniteDimensional K L] [IsGalois K L]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+    (hunique : LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05UniqueNormalizedValuationExtension
+      vK vL) :
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.chapter05DecompositionGroup
+        K vL.valuationSubring = ⊤ := by
+  exact
+    LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.complete_base_decomposition_group_eq_galois_group vK vL
+      Valuation.HasExtension.val_isEquiv_comap hcomplete hunique
+
+/-- Book 2, §12.3: under completeness and residue separability, reduction is onto. -/
+theorem complete_galois_reduction_is_surjective
+    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) (vL : Valuation L Γ)
+    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L] [IsGalois K L]
+    [Algebra (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    [FiniteDimensional (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
+    ∃ d : Chapter12GaloisReductionData vK vL,
+      Function.Surjective d.reduction := by
   sorry
+
+/-- Book 2, §12.3: in the complete case the reduction data realizes the full
+exact sequence, including surjectivity. -/
+theorem complete_galois_reduction_is_exact
+    {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) (vL : Valuation L Γ)
+    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL]
+    [FiniteDimensional K L] [IsGalois K L]
+    [Algebra (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    [FiniteDimensional (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring)]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
+    ∃ d : Chapter12GaloisReductionData vK vL,
+      chapter12GaloisReductionExactSequence vK vL d ∧
+        Function.Surjective d.reduction := by
+  rcases complete_galois_reduction_is_surjective vK vL hcomplete with ⟨d, hred⟩
+  exact ⟨d, galois_reduction_is_exact vK vL d, hred⟩
 
 /-- Book 2, §12.3: the decomposition/inertia reduction has the exact quotient. -/
 theorem galois_reduction_has_exact_quotient
@@ -149,12 +234,14 @@ theorem galois_reduction_has_exact_quotient
       (IsLocalRing.ResidueField vL.valuationSubring)]
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
-    (d : Chapter12GaloisReductionData vK vL) :
+    (d : Chapter12GaloisReductionData vK vL)
+    (hred : Function.Surjective d.reduction) :
     Nonempty
       (Gal(L / K) ⧸ d.inertia ≃*
         Gal(IsLocalRing.ResidueField vL.valuationSubring /
           IsLocalRing.ResidueField vK.valuationSubring)) := by
-  sorry
+  simpa [Chapter12GaloisReductionData.inertia] using
+    (QuotientGroup.quotientKerEquivOfSurjective d.reduction hred)
 
 /-- Book 2, §§12.2–12.3: the exact quotient has order equal to the residue degree. -/
 theorem galois_reduction_quotient_order_is_residue_degree
@@ -168,11 +255,25 @@ theorem galois_reduction_quotient_order_is_residue_degree
       (IsLocalRing.ResidueField vL.valuationSubring)]
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
-    (d : Chapter12GaloisReductionData vK vL) :
+    (d : Chapter12GaloisReductionData vK vL)
+    (hred : Function.Surjective d.reduction) :
     Nat.card (Gal(L / K) ⧸ d.inertia) =
       Module.finrank (IsLocalRing.ResidueField vK.valuationSubring)
         (IsLocalRing.ResidueField vL.valuationSubring) := by
-  sorry
+  letI : Normal (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring) := d.residue_normal
+  letI : IsGalois (IsLocalRing.ResidueField vK.valuationSubring)
+      (IsLocalRing.ResidueField vL.valuationSubring) :=
+    isGalois_iff.mpr ⟨inferInstance, inferInstance⟩
+  rcases galois_reduction_has_exact_quotient vK vL d hred with ⟨e⟩
+  calc
+    Nat.card (Gal(L / K) ⧸ d.inertia) =
+        Nat.card (Gal(IsLocalRing.ResidueField vL.valuationSubring /
+          IsLocalRing.ResidueField vK.valuationSubring)) :=
+      Nat.card_congr e.toEquiv
+    _ = Module.finrank (IsLocalRing.ResidueField vK.valuationSubring)
+        (IsLocalRing.ResidueField vL.valuationSubring) :=
+      IsGalois.card_aut_eq_finrank _ _
 
 /-- Book 2, §12.3: fixed field of inertia is maximal among unramified fields. -/
 theorem inertia_fixed_field_is_maximal_unramified
@@ -186,12 +287,18 @@ theorem inertia_fixed_field_is_maximal_unramified
       (IsLocalRing.ResidueField vL.valuationSubring)]
     [Algebra.IsSeparable (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
-    (d : Chapter12GaloisReductionData vK vL) :
+    (d : Chapter12GaloisReductionData vK vL)
+    (hred : Function.Surjective d.reduction) :
     chapter12UnramifiedIntermediateField vK vL d (inertiaFixedField vK vL d) ∧
       ∀ M : IntermediateField K L,
         chapter12UnramifiedIntermediateField vK vL d M →
           M ≤ inertiaFixedField vK vL d := by
-  sorry
+  constructor
+  · change d.inertia ≤ (IntermediateField.fixedField d.inertia).fixingSubgroup
+    exact (IntermediateField.le_iff_le _ _).mp le_rfl
+  · intro M hM
+    change M ≤ IntermediateField.fixedField d.inertia
+    exact (IntermediateField.le_iff_le _ _).mpr hM
 
 /-- Book 2, §12.3: the fixed-field diagram sits between the two endpoints. -/
 theorem inertia_fixed_field_has_field_inclusions
@@ -216,7 +323,13 @@ theorem arithmetic_frobenius_generates_finite_residue_galois_group
     [Fintype k] [Finite l] [Algebra.IsAlgebraic k l] :
     Subgroup.zpowers (arithmeticFrobenius (k := k) (l := l)) =
       (⊤ : Subgroup (Gal(l / k))) := by
-  sorry
+  letI := Fintype.ofFinite k
+  apply Subgroup.eq_top_iff'.2
+  intro σ
+  obtain ⟨n, hn⟩ :=
+    (FiniteField.bijective_frobeniusAlgEquivOfAlgebraic_pow k l).2 σ
+  apply Subgroup.mem_zpowers_iff.mpr
+  exact ⟨(n : ℤ), by simpa [arithmeticFrobenius] using hn⟩
 
 /-- Book 2, §12.3: a finite-residue Frobenius lift determines an inertia coset. -/
 theorem ramified_frobenius_lifts_to_a_coset
@@ -234,12 +347,13 @@ theorem ramified_frobenius_lifts_to_a_coset
     [Finite (IsLocalRing.ResidueField vL.valuationSubring)]
     [Algebra.IsAlgebraic (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
-    (d : Chapter12GaloisReductionData vK vL) :
+    (d : Chapter12GaloisReductionData vK vL)
+    (hred : Function.Surjective d.reduction) :
     ∃ σ : Gal(L / K),
       d.reduction σ = arithmeticFrobenius
         (k := IsLocalRing.ResidueField vK.valuationSubring)
         (l := IsLocalRing.ResidueField vL.valuationSubring) := by
-  sorry
+  exact hred _
 
 /-- Book 2, §12.3: any two such lifts represent the same quotient coset. -/
 theorem ramified_frobenius_lifts_have_the_same_inertia_coset
@@ -266,7 +380,12 @@ theorem ramified_frobenius_lifts_have_the_same_inertia_coset
       (k := IsLocalRing.ResidueField vK.valuationSubring)
       (l := IsLocalRing.ResidueField vL.valuationSubring)) :
     QuotientGroup.mk' d.inertia σ = QuotientGroup.mk' d.inertia τ := by
-  sorry
+  apply QuotientGroup.mk'_eq_mk'.mpr
+  refine ⟨σ⁻¹ * τ, ?_, ?_⟩
+  · change d.reduction (σ⁻¹ * τ) = 1
+    rw [map_mul, map_inv, hσ, hτ]
+    simp
+  · simp
 
 /-- Book 2, §12.3: when inertia is trivial, Frobenius is an actual generator. -/
 theorem unramified_frobenius_is_an_actual_generator
@@ -285,13 +404,35 @@ theorem unramified_frobenius_is_an_actual_generator
     [Algebra.IsAlgebraic (IsLocalRing.ResidueField vK.valuationSubring)
       (IsLocalRing.ResidueField vL.valuationSubring)]
     (d : Chapter12GaloisReductionData vK vL)
+    (hred : Function.Surjective d.reduction)
     (hinertia : d.inertia = ⊥) :
     ∃ σ : Gal(L / K),
       d.reduction σ = arithmeticFrobenius
         (k := IsLocalRing.ResidueField vK.valuationSubring)
         (l := IsLocalRing.ResidueField vL.valuationSubring) ∧
       Subgroup.zpowers σ = (⊤ : Subgroup (Gal(L / K))) := by
-  sorry
+  obtain ⟨σ, hσ⟩ := ramified_frobenius_lifts_to_a_coset vK vL d hred
+  have hgen := arithmetic_frobenius_generates_finite_residue_galois_group
+    (k := IsLocalRing.ResidueField vK.valuationSubring)
+    (l := IsLocalRing.ResidueField vL.valuationSubring)
+  have hinj : Function.Injective d.reduction := by
+    apply (MonoidHom.ker_eq_bot_iff d.reduction).mp
+    simpa [Chapter12GaloisReductionData.inertia] using hinertia
+  refine ⟨σ, hσ, ?_⟩
+  apply Subgroup.eq_top_iff'.2
+  intro τ
+  have hτ : d.reduction τ ∈
+      Subgroup.zpowers (arithmeticFrobenius
+        (k := IsLocalRing.ResidueField vK.valuationSubring)
+        (l := IsLocalRing.ResidueField vL.valuationSubring)) := by
+    rw [hgen]
+    exact Subgroup.mem_top
+  obtain ⟨n, hn⟩ := Subgroup.mem_zpowers_iff.mp hτ
+  apply Subgroup.mem_zpowers_iff.mpr
+  refine ⟨n, ?_⟩
+  apply hinj
+  rw [map_zpow, hσ]
+  exact hn
 
 /-- Book 2, §12.3: geometric Frobenius is the inverse convention. -/
 theorem geometric_frobenius_is_the_inverse

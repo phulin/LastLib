@@ -1,7 +1,5 @@
 import Mathlib
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 
@@ -29,10 +27,6 @@ structure Chapter07FiniteLocalExtensionData
   degree_eq_ramification_residue :
     Module.finrank K L = ramificationIndex * residueDegree
   residueDegree_eq : residueDegree = Module.finrank k l
-  /-- The local henselian lifting principle needed for the automatic
-  separability assertion in §7.1. -/
-  separability_of_residue_separable :
-    (∀ x : l, IsSeparable k x) → ∀ x : L, IsSeparable K x
 
 /-- Separability of a finite residue-field extension, without requiring a
 separability typeclass to be installed for the explicit residue algebra. -/
@@ -110,16 +104,28 @@ theorem chapter07_unramified_degree_eq_residue_degree
   rcases hE with ⟨he, _⟩
   rw [E.degree_eq_ramification_residue, he, one_mul, E.residueDegree_eq]
 
-/-- In the henselian local setting encoded by `E`, unramified implies generic
-separability, even when the residue field is imperfect. -/
+/-- In the complete discrete valuation setting, the separability assertion uses
+the actual residue fields and the defectless degree equality, rather than only
+the abstract numerical profile from this section. -/
 theorem chapter07_unramified_is_separable
-    {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
-    [Algebra K L] [Algebra k l]
-    [FiniteDimensional K L] [FiniteDimensional k l]
-    (E : Chapter07FiniteLocalExtensionData K L k l)
-    (hE : Chapter07UnramifiedExtension E) :
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
+    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
+    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL]
+    (hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
+    (hdegree : Module.finrank K L =
+      (IsLocalRing.maximalIdeal vL.valuationSubring).ramificationIdx
+          vK.valuationSubring *
+        (IsLocalRing.maximalIdeal vL.valuationSubring).inertiaDeg
+          vK.valuationSubring)
+    (he : (IsLocalRing.maximalIdeal vL.valuationSubring).ramificationIdx
+          vK.valuationSubring = 1)
+    (hresidue : ∀ x : IsLocalRing.ResidueField vL.valuationSubring,
+      IsSeparable (IsLocalRing.ResidueField vK.valuationSubring) x) :
     Chapter07FiniteExtensionIsSeparable K L := by
-  exact E.separability_of_residue_separable hE.2
+  sorry
 
 theorem chapter07_fierce_is_not_unramified
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
@@ -139,7 +145,14 @@ theorem chapter07_perfect_residue_unramified_iff_e_one
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hk : Chapter07PerfectResidueField k) :
     Chapter07UnramifiedExtension E ↔ E.ramificationIndex = 1 := by
-  sorry
+  constructor
+  · intro hE
+    exact hE.1
+  · intro he
+    refine ⟨he, ?_⟩
+    change ∀ x : l, IsSeparable k x
+    letI : PerfectField k := hk
+    exact Algebra.IsSeparable.isSeparable k
 
 /-- Every finite field is perfect; this statement deliberately has no
 characteristic-zero hypothesis. -/

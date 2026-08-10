@@ -56,7 +56,27 @@ theorem chapter01_equivalent_norms_have_same_cauchy_sequences
     {L : Type*} [AddGroup L] (N M : L → ℝ)
     (heq : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10EquivalentRealNorms N M) :
     chapter01SameCauchySequences N M := by
-  sorry
+  rcases heq with ⟨c, d, hc, hd, hNM, hMN⟩
+  intro s
+  constructor
+  · intro hs ε hε
+    obtain ⟨N₀, hN₀⟩ := hs (ε / d) (div_pos hε hd)
+    refine ⟨N₀, ?_⟩
+    intro m n hm hn
+    calc
+      M (s m - s n) ≤ d * N (s m - s n) := hMN _
+      _ < d * (ε / d) :=
+        mul_lt_mul_of_pos_left (hN₀ m n hm hn) hd
+      _ = ε := by field_simp
+  · intro hs ε hε
+    obtain ⟨N₀, hN₀⟩ := hs (ε / c) (div_pos hε hc)
+    refine ⟨N₀, ?_⟩
+    intro m n hm hn
+    calc
+      N (s m - s n) ≤ c * M (s m - s n) := hNM _
+      _ < c * (ε / c) :=
+        mul_lt_mul_of_pos_left (hN₀ m n hm hn) hc
+      _ = ε := by field_simp
 
 /-- Every finite extension of a complete nontrivially normed field is complete. -/
 theorem chapter01_theorem_1_2

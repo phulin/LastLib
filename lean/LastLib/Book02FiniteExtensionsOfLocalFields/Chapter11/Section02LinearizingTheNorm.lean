@@ -34,7 +34,12 @@ theorem chapter11_norm_determinant_has_trace_linear_coefficient
     (Matrix.det
         (1 + (Polynomial.X : K[X]) • (Algebra.leftMulMatrix b x).map Polynomial.C)).coeff 1 =
       Algebra.trace K L x := by
-  sorry
+  calc
+    (Matrix.det
+        (1 + (Polynomial.X : K[X]) • (Algebra.leftMulMatrix b x).map Polynomial.C)).coeff 1 =
+        Matrix.trace (Algebra.leftMulMatrix b x) :=
+      chapter11_det_one_add_has_trace_linear_coefficient K (Algebra.leftMulMatrix b x)
+    _ = Algebra.trace K L x := (Algebra.trace_eq_matrix_trace b x).symm
 
 /- The first-order norm expansion with its canonical higher-order remainder. -/
 theorem chapter11_norm_one_add_linearizes_to_trace
@@ -52,6 +57,8 @@ theorem chapter11_norm_remainder_has_depth
     (e : ℕ) (he : 0 < e)
     (hext : chapter11ValuationExtension vK vL)
     (hscale : chapter11ValuationScaling vK vL e)
+    (hcompleteK : chapter11ValuationComplete vK)
+    (hcompleteL : chapter11ValuationComplete vL)
     (n : ℕ) (hn : 1 ≤ n) (x : L)
     (hx : x ∈ chapter11ValuationIdealPowerSet vL n) :
     vK (chapter11NormRemainder K L x) ≥
@@ -64,7 +71,9 @@ theorem chapter11_trace_principal_ideal_depth_bound
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
     (e : ℕ) (he : 0 < e)
     (hext : chapter11ValuationExtension vK vL)
-    (hscale : chapter11ValuationScaling vK vL e) (n : ℕ) (hn : 1 ≤ n) :
+    (hscale : chapter11ValuationScaling vK vL e)
+    (hcompleteK : chapter11ValuationComplete vK)
+    (hcompleteL : chapter11ValuationComplete vL) (n : ℕ) (hn : 1 ≤ n) :
     chapter11TraceImage K L vL n ⊆
       chapter11ValuationIdealPowerSet vK (chapter11CeilDiv n e) := by
   sorry

@@ -24,7 +24,10 @@ theorem chapter04_integral_trace_and_norm
     ∃ a b : A,
       algebraMap A K a = Algebra.trace K L (algebraMap B L x) ∧
         algebraMap A K b = Algebra.norm K (algebraMap B L x) := by
-  sorry
+  rcases LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_integral_trace_and_norm_stay_integral
+      A B K L x with
+    ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
+  exact ⟨a, b, ha, hb⟩
 
 /- The characteristic polynomial of multiplication descends from the finite
 free integral basis to the fraction-field extension (§4.2). -/
@@ -39,7 +42,26 @@ theorem chapter04_integral_characteristic_polynomial
     Polynomial.map (algebraMap A K)
         (LinearMap.charpoly (Algebra.lmul A B x)) =
       LinearMap.charpoly (Algebra.lmul K L (algebraMap B L x)) := by
-  sorry
+  classical
+  letI : IsIntegralClosure B A L := IsIntegralClosure.of_isIntegrallyClosed B A L
+  let b := Module.Free.chooseBasis A B
+  let bK := b.localizationLocalization K (nonZeroDivisors A) L
+  calc
+    Polynomial.map (algebraMap A K)
+        (LinearMap.charpoly (Algebra.lmul A B x)) =
+        Polynomial.map (algebraMap A K)
+          (Matrix.charpoly (Algebra.leftMulMatrix b x)) := by
+      rw [← LinearMap.charpoly_toMatrix (Algebra.lmul A B x) b,
+        Algebra.leftMulMatrix_apply]
+    _ = Matrix.charpoly
+        ((algebraMap A K).mapMatrix (Algebra.leftMulMatrix b x)) := by
+      rw [← Matrix.charpoly_map]
+      congr 1
+    _ = Matrix.charpoly (Algebra.leftMulMatrix bK (algebraMap B L x)) := by
+      rw [Algebra.map_leftMulMatrix_localization (R := A) (Rₘ := K) (Sₘ := L)
+        (nonZeroDivisors A) b x]
+    _ = LinearMap.charpoly (Algebra.lmul K L (algebraMap B L x)) := by
+      rw [Algebra.leftMulMatrix_apply, LinearMap.charpoly_toMatrix]
 
 /- The norm of an integral unit is a unit of the base ring (§4.2). -/
 theorem chapter04_norm_of_integral_unit_is_base_unit
@@ -52,7 +74,9 @@ theorem chapter04_norm_of_integral_unit_is_base_unit
     (u : Bˣ) :
     ∃ a : Aˣ,
       algebraMap A K (a : A) = Algebra.norm K (algebraMap B L (u : B)) := by
-  sorry
+  refine ⟨Units.map (Algebra.intNorm A B) u, ?_⟩
+  simpa using (Algebra.algebraMap_intNorm (A := A) (B := B)
+    (K := K) (L := L) (u : B))
 
 /-
 Trace need not preserve units: a separable quadratic extension in
@@ -65,7 +89,14 @@ theorem chapter04_quadratic_trace_zero_unit
     ∃ u : Lˣ,
       Algebra.trace K L (u : L) = 0 ∧
         ¬IsUnit (Algebra.trace K L (u : L)) := by
-  sorry
+  have hker : LinearMap.ker (Algebra.trace K L) ≠ ⊥ := by
+    apply LinearMap.ker_ne_bot_of_finrank_lt
+    rw [Module.finrank_self, hdegree]
+    norm_num
+  rcases (Submodule.ne_bot_iff _).mp hker with ⟨z, hz, hz0⟩
+  refine ⟨Units.mk0 z hz0, ?_, ?_⟩
+  · exact (LinearMap.mem_ker.mp hz)
+  · simpa [LinearMap.mem_ker.mp hz]
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04
