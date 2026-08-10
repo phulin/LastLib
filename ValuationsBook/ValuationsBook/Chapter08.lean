@@ -235,6 +235,9 @@ private theorem chapter08_inverse_limit_ring_equiv
 
 /-! Theorem 8.1: the completion is canonically the inverse limit of its finite quotients,
 including the adic and inverse-limit topologies. -/
+-- STATEMENT_NEEDS_UPDATE: For an arbitrary ideal I, the inverse-limit topology defined here
+-- need not agree with the adic topology on AdicCompletion I A; add a finite-generation hypothesis
+-- such as I.FG (or redefine the completion topology using the kernels of all evaluation maps).
 theorem chapter08_theorem_8_1_inverse_limit_description
     {A : Type*} [CommRing A] (I : Ideal A) :
     ∃ e : Chapter08TopologicalRingEquiv (AdicCompletion I A)
@@ -938,6 +941,9 @@ private theorem chapter08_mixed_characteristic_additive_section_obstruction
     exact (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).2 habI
   exact hnoembed ⟨f, hf_inj⟩
 
+-- STATEMENT_NEEDS_UPDATE: The assumptions allow I = ⊤ (for example A = ℚ and p viewed as a
+-- unit), making the residue and digit data trivial while the asserted obstruction can fail; add
+-- I ≠ ⊤ (equivalently, a nontrivial residue-ring hypothesis in this setting).
 theorem chapter08_mixed_characteristic_digit_carries_obstruct_coefficientwise_addition
     {A : Type*} [CommRing A] [CharZero A] (I : Ideal A) (S : Set A)
     (p : ℕ) [Fact p.Prime]
@@ -1022,7 +1028,145 @@ abbrev Chapter08Qp (p : ℕ) [Fact p.Prime] := Chapter08PadicNumbers p
 theorem chapter08_padic_integer_inverse_limit
     (p : ℕ) [Fact p.Prime] :
     Nonempty (Chapter08PadicIntegers p ≃+* Chapter08Zp p) := by
-  sorry
+  classical
+  let I : Ideal ℤ := Ideal.span {(p : ℤ)}
+  have hpow : ∀ n : ℕ, I ^ n = Ideal.span {((p ^ n : ℕ) : ℤ)} := by
+    intro n
+    simp [I, Ideal.span_singleton_pow, Nat.cast_pow]
+  let q (n : ℕ) : (ℤ ⧸ I ^ n) ≃+* ZMod (p ^ n) :=
+    (Ideal.quotientEquivAlgOfEq ℤ (hpow n)).toRingEquiv.trans
+      (Int.quotientSpanNatEquivZMod (p ^ n))
+  have q_mk (n : ℕ) (z : ℤ) :
+      q n (Ideal.Quotient.mk (I ^ n) z) = (z : ZMod (p ^ n)) := by
+    simp [q, hpow]
+  have hfactor_q : ∀ {m n : ℕ} (hmn : m ≤ n) (z : ℤ ⧸ I ^ n),
+      (ZMod.cast (q n z) : ZMod (p ^ m)) =
+        q m (Ideal.Quotient.factorPow I hmn z) := by
+    intro m n hmn z
+    refine Submodule.Quotient.induction_on (I ^ n) z ?_
+    intro z
+    simpa [q, Ideal.Quotient.factorPow] using
+      (ZMod.cast_intCast (pow_dvd_pow p hmn) z)
+  have hcoord : ∀ {m n : ℕ} (hmn : m ≤ n) (z : Chapter08Zp p),
+      Ideal.Quotient.factorPow I (Nat.succ_le_succ hmn) (z.1 n) = z.1 m := by
+    intro m n hmn z
+    have hlong :=
+      Ideal.Quotient.eq_factor_of_eq_factor_succ
+        (I := fun i : ℕ => I ^ (i + 1))
+        (fun i j hij => Ideal.pow_le_pow_right (Nat.succ_le_succ hij))
+        (fun i => z.1 i)
+        (fun i => by
+          simpa [Ideal.Quotient.factorPow] using (z.2 i).symm)
+        hmn
+    simpa [Ideal.Quotient.factorPow] using hlong.symm
+  let coord (n : ℕ) : Chapter08Zp p →+* ℤ ⧸ I ^ (n + 1) :=
+    { toFun := fun z => z.1 n
+      map_one' := rfl
+      map_mul' := by intro x y; rfl
+      map_zero' := rfl
+      map_add' := by intro x y; rfl }
+  let f0 : Chapter08Zp p →+* ZMod (p ^ 0) :=
+    { toFun := fun _ => 0
+      map_one' := by
+        letI : Subsingleton (ZMod (p ^ 0)) :=
+          ZMod.subsingleton_iff.2 (pow_zero p)
+        exact Subsingleton.elim _ _
+      map_mul' := by
+        letI : Subsingleton (ZMod (p ^ 0)) :=
+          ZMod.subsingleton_iff.2 (pow_zero p)
+        intros
+        exact Subsingleton.elim _ _
+      map_zero' := rfl
+      map_add' := by
+        letI : Subsingleton (ZMod (p ^ 0)) :=
+          ZMod.subsingleton_iff.2 (pow_zero p)
+        intros
+        exact Subsingleton.elim _ _ }
+  let f : ∀ n : ℕ, Chapter08Zp p →+* ZMod (p ^ n) :=
+    fun n => Nat.casesOn n f0 (fun k => (q (k + 1)).toRingHom.comp (coord k))
+  have hfcompat : ∀ (m n : ℕ) (hmn : m ≤ n),
+      (ZMod.castHom (pow_dvd_pow p hmn) (ZMod (p ^ m))).comp (f n) = f m := by
+    intro m n hmn
+    cases m with
+    | zero =>
+        apply RingHom.ext
+        intro z
+        letI : Subsingleton (ZMod (p ^ 0)) :=
+          ZMod.subsingleton_iff.2 (pow_zero p)
+        exact Subsingleton.elim _ _
+    | succ m =>
+        cases n with
+        | zero => omega
+        | succ n =>
+            apply RingHom.ext
+            intro z
+            change (ZMod.cast (q (n + 1) (z.1 n)) : ZMod (p ^ (m + 1))) =
+              q (m + 1) (z.1 m)
+            rw [hfactor_q (m := m + 1) (n := n + 1)
+              hmn (z.1 n), hcoord (Nat.le_of_succ_le_succ hmn) z]
+  let fromFamily : Chapter08Zp p →+* Chapter08PadicIntegers p :=
+    PadicInt.lift (f_compat := hfcompat)
+  let toFamilyFun : Chapter08PadicIntegers p → Chapter08Zp p := fun x =>
+    ⟨fun n => (q (n + 1)).symm (PadicInt.toZModPow (n + 1) x), by
+      intro n
+      apply (q (n + 1)).injective
+      rw [RingEquiv.apply_symm_apply]
+      rw [← hfactor_q (m := n + 1) (n := n + 2)
+        (Nat.le_succ (n + 1)) ((q (n + 2)).symm (PadicInt.toZModPow (n + 2) x))]
+      simp only [RingEquiv.apply_symm_apply]
+      exact PadicInt.cast_toZModPow (n + 1) (n + 2) (Nat.le_succ (n + 1)) x⟩
+  let toFamily : Chapter08PadicIntegers p →+* Chapter08Zp p :=
+    { toFun := toFamilyFun
+      map_one' := by
+        apply Subtype.ext
+        funext n
+        simp [toFamilyFun]
+      map_mul' := by
+        intro x y
+        apply Subtype.ext
+        funext n
+        simp [toFamilyFun]
+      map_zero' := by
+        apply Subtype.ext
+        funext n
+        simp [toFamilyFun]
+      map_add' := by
+        intro x y
+        apply Subtype.ext
+        funext n
+        simp [toFamilyFun] }
+  have hfrom : ∀ x : Chapter08PadicIntegers p, fromFamily (toFamily x) = x := by
+    intro x
+    apply PadicInt.ext_of_toZModPow.mp
+    intro n
+    cases n with
+    | zero =>
+        letI : Subsingleton (ZMod (p ^ 0)) :=
+          ZMod.subsingleton_iff.2 (pow_zero p)
+        exact Subsingleton.elim _ _
+    | succ n =>
+        have hspec := RingHom.congr_fun
+          (PadicInt.lift_spec (f := f) hfcompat (n + 1)) (toFamily x)
+        simpa [fromFamily, toFamily, toFamilyFun, f, coord] using hspec
+  have hto : ∀ z : Chapter08Zp p, toFamily (fromFamily z) = z := by
+    intro z
+    apply Subtype.ext
+    funext n
+    apply (q (n + 1)).injective
+    have hspec := RingHom.congr_fun
+      (PadicInt.lift_spec (f := f) hfcompat (n + 1)) z
+    simpa [toFamily, toFamilyFun, f, coord, fromFamily] using hspec
+  let e : Chapter08PadicIntegers p ≃+* Chapter08Zp p :=
+    RingEquiv.ofBijective toFamily
+      ⟨by
+        intro x y hxy
+        have h := congrArg fromFamily hxy
+        rw [hfrom x, hfrom y] at h
+        exact h
+       , by
+        intro z
+        exact ⟨fromFamily z, hto z⟩⟩
+  exact ⟨e⟩
 
 -- Z_p is a complete DVR with uniformizer p and residue field F_p. -/
 theorem chapter08_padic_integers_are_a_complete_dvr
@@ -1322,7 +1466,134 @@ theorem chapter08_padic_valuation_is_first_nonzero_digit
     (ha : Chapter08PadicLaurentExpansion p x N a)
     (hnonzero : ∃ i : ℕ, a i ≠ 0) :
     Padic.addValuation x = Chapter08FirstNonzeroExponent N a := by
-  sorry
+  classical
+  let j := Nat.find hnonzero
+  have hj : a j ≠ 0 := Nat.find_spec hnonzero
+  have hzero_before : ∀ i : ℕ, i < j → a i = 0 := by
+    intro i hi
+    by_contra hne
+    exact (Nat.find_min hnonzero hi) hne
+  let term : ℕ → Chapter08PadicNumbers p := fun i =>
+    (a i : Chapter08PadicNumbers p) *
+      (p : Chapter08PadicNumbers p) ^ (N + (i : ℤ))
+  let lead := term j
+  have hlead_ne : lead ≠ 0 := by
+    dsimp [lead, term]
+    exact mul_ne_zero (by exact_mod_cast hj)
+      (zpow_ne_zero _ (by exact_mod_cast (Fact.out : Nat.Prime p).ne_zero))
+  have hcop : p.Coprime (a j) := by
+    apply (Fact.out : Nat.Prime p).coprime_iff_not_dvd.mpr
+    exact Nat.not_dvd_of_pos_of_lt (Nat.pos_of_ne_zero hj) (ha.1 j)
+  have hcoef_lead : ‖(a j : Chapter08PadicNumbers p)‖ = 1 :=
+    (Padic.norm_natCast_eq_one_iff).2 hcop
+  have hlead_norm : ‖lead‖ =
+      ‖(p : Chapter08PadicNumbers p) ^ (N + (j : ℤ))‖ := by
+    dsimp [lead, term]
+    rw [norm_mul, hcoef_lead, one_mul]
+  let bound : ℝ := ‖(p : Chapter08PadicNumbers p) ^ (N + (j : ℤ) + 1)‖
+  have hterm : ∀ r : ℕ, ‖term (j + 1 + r)‖ ≤ bound := by
+    intro r
+    have hcoef : ‖(a (j + 1 + r) : Chapter08PadicNumbers p)‖ ≤ 1 := by
+      simpa using (Padic.norm_int_le_one (p := p) (a (j + 1 + r) : ℤ))
+    have hexp : -(N + ((j + 1 + r : ℕ) : ℤ)) ≤ -(N + (j : ℤ) + 1) := by
+      push_cast
+      omega
+    have hpow :
+        ‖(p : Chapter08PadicNumbers p) ^ (N + ((j + 1 + r : ℕ) : ℤ))‖ ≤
+          bound := by
+      dsimp [bound]
+      rw [Padic.norm_p_zpow, Padic.norm_p_zpow]
+      apply zpow_le_zpow_right₀
+        (by exact_mod_cast (Fact.out : Nat.Prime p).one_lt.le)
+      exact hexp
+    calc
+      ‖term (j + 1 + r)‖ =
+          ‖(a (j + 1 + r) : Chapter08PadicNumbers p)‖ *
+            ‖(p : Chapter08PadicNumbers p) ^
+              (N + ((j + 1 + r : ℕ) : ℤ))‖ := by
+        simp [term, norm_mul]
+      _ ≤ 1 * ‖(p : Chapter08PadicNumbers p) ^
+            (N + ((j + 1 + r : ℕ) : ℤ))‖ :=
+        mul_le_mul_of_nonneg_right hcoef (norm_nonneg _)
+      _ = ‖(p : Chapter08PadicNumbers p) ^
+            (N + ((j + 1 + r : ℕ) : ℤ))‖ := by simp
+      _ ≤ bound := hpow
+  have hsum_bound : ∀ r : ℕ,
+      ‖∑ i ∈ Finset.range r, term (j + 1 + i)‖ ≤ bound := by
+    intro r
+    induction r with
+    | zero =>
+        simpa [bound] using
+          (norm_nonneg ((p : Chapter08PadicNumbers p) ^ (N + (j : ℤ) + 1)))
+    | succ r ihr =>
+        rw [Finset.sum_range_succ]
+        exact (Padic.nonarchimedean _ _).trans (max_le ihr (hterm r))
+  have hbefore : ∑ i ∈ Finset.range j, term i = 0 := by
+    apply Finset.sum_eq_zero
+    intro i hi
+    simp [term, hzero_before i (Finset.mem_range.mp hi)]
+  have hfirst : ∑ i ∈ Finset.range (j + 1), term i = lead := by
+    rw [Finset.sum_range_succ, hbefore]
+    simp [lead]
+  have hbound_lt : bound < ‖lead‖ := by
+    rw [hlead_norm]
+    dsimp [bound]
+    rw [Padic.norm_p_zpow, Padic.norm_p_zpow]
+    apply zpow_lt_zpow_right₀ (by exact_mod_cast (Fact.out : Nat.Prime p).one_lt)
+    omega
+  have hpartial_bound {m : ℕ} (hm : j + 1 ≤ m) :
+      ‖Chapter08PadicFieldPartialSum p N a m - lead‖ ≤ bound := by
+    obtain ⟨r, rfl⟩ := Nat.exists_eq_add_of_le hm
+    calc
+      ‖Chapter08PadicFieldPartialSum p N a ((j + 1) + r) - lead‖ =
+          ‖∑ i ∈ Finset.range r, term (j + 1 + i)‖ := by
+        dsimp [Chapter08PadicFieldPartialSum]
+        rw [Finset.sum_range_add, hfirst]
+        congr 1
+        ring
+      _ ≤ bound := hsum_bound r
+  have hlead_pos : 0 < ‖lead‖ := norm_pos_iff.mpr hlead_ne
+  obtain ⟨M, hM⟩ := (Metric.tendsto_atTop.1 ha.2) ‖lead‖ hlead_pos
+  let m := max M (j + 1)
+  have hmM : M ≤ m := le_max_left _ _
+  have hmj : j + 1 ≤ m := le_max_right _ _
+  have hnear : ‖x - Chapter08PadicFieldPartialSum p N a m‖ < ‖lead‖ := by
+    simpa [dist_eq_norm, norm_sub_rev] using hM m hmM
+  have htail : ‖Chapter08PadicFieldPartialSum p N a m - lead‖ < ‖lead‖ :=
+    (hpartial_bound hmj).trans_lt hbound_lt
+  have hxl : ‖x - lead‖ < ‖lead‖ := by
+    calc
+      ‖x - lead‖ =
+          ‖(x - Chapter08PadicFieldPartialSum p N a m) +
+            (Chapter08PadicFieldPartialSum p N a m - lead)‖ := by
+        congr 1
+        ring
+      _ ≤ max ‖x - Chapter08PadicFieldPartialSum p N a m‖
+          ‖Chapter08PadicFieldPartialSum p N a m - lead‖ :=
+        Padic.nonarchimedean _ _
+      _ < ‖lead‖ := max_lt hnear htail
+  have hnorm : ‖x‖ = ‖lead‖ := Padic.norm_eq_of_norm_sub_lt_right hxl
+  have hxne : x ≠ 0 := by
+    intro hx
+    rw [hx, norm_zero] at hnorm
+    exact (ne_of_gt hlead_pos) hnorm.symm
+  have hpoweq : (p : ℝ) ^ (-x.valuation) =
+      (p : ℝ) ^ (-lead.valuation) := by
+    simpa [Padic.norm_eq_zpow_neg_valuation hxne,
+      Padic.norm_eq_zpow_neg_valuation hlead_ne] using hnorm
+  have hval : x.valuation = lead.valuation := by
+    have hneg :=
+      (zpow_right_strictMono₀
+        (by exact_mod_cast (Fact.out : Nat.Prime p).one_lt)).injective hpoweq
+    exact neg_injective hneg
+  calc
+    Padic.addValuation x = (x.valuation : WithTop ℤ) :=
+      Padic.addValuation.apply hxne
+    _ = (lead.valuation : WithTop ℤ) := by rw [hval]
+    _ = Padic.addValuation lead := (Padic.addValuation.apply hlead_ne).symm
+    _ = Chapter08FirstNonzeroExponent N a := by
+      simpa [lead, term, j] using
+        (chapter08_padic_leading_term_valuation p x N a ha hnonzero)
 
 theorem chapter08_rationals_are_dense_in_Qp
     (p : ℕ) [Fact p.Prime] :

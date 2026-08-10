@@ -433,6 +433,12 @@ theorem chapter10_residue_degree_finite
   sorry
 
 /-- The value-group and residue directions give independent vectors. -/
+-- STATEMENT_NEEDS_UPDATE: the hypotheses do not require any `x i` to be
+-- nonzero. For example, with `r = s = 1`, `x 0 = 0`, and `y 0 = 1`, the
+-- block hypothesis is valid and the pairwise value hypothesis is vacuous,
+-- while the asserted singleton family is `{0}` and is not linearly
+-- independent. Minimal correction: add `∀ i, x i ≠ 0` (or an equivalent
+-- nonzero-term hypothesis) before asserting this independence.
 theorem chapter10_value_residue_product_independence
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀]
@@ -524,7 +530,7 @@ theorem chapter10_ramification_residue_finite
     (v : Valuation K Γ₀) (w : Valuation L Γ₀)
     [Valuation.HasExtension v w] :
     FiniteDimensional (Chapter10ResidueField v) (Chapter10ResidueField w) := by
-  sorry
+  exact chapter10_residue_degree_finite v w
 
 /-! ## 10.5. Several extensions and the fundamental inequality -/
 
@@ -593,6 +599,13 @@ theorem chapter10_finitely_many_valuation_extensions
   sorry
 
 /-- The sum of ef over all branches is bounded by the extension degree. -/
+-- STATEMENT_NEEDS_UPDATE: `Chapter10HeterogeneousExtensionData.valueGroupMap` is only
+-- required to be an injective finite-index homomorphism and is not required to be
+-- the homomorphism induced by the valuation extension. Consequently
+-- `Chapter10BranchProfile.e` can be unrelated to the actual ramification index,
+-- so the displayed sum need not be bounded by `Module.finrank K L`. Minimal
+-- correction: require each branch's value-group map (and its index) to be the
+-- canonical one induced by the corresponding valuation extension.
 theorem chapter10_fundamental_inequality
     {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
@@ -655,6 +668,14 @@ theorem chapter10_henselized_tensor_has_finitely_many_factors
 
 /-- Residue-field dimensions of the local tensor factors are bounded by the total
 dimension; nilpotent Artinian multiplicities account for the possible gap. -/
+-- STATEMENT_NEEDS_UPDATE: the explicit `[Algebra Kh (L ⊗[K] Kh)]` instance is
+-- unconstrained and is not required to be the canonical right-factor algebra
+-- structure on the tensor product, nor to satisfy the scalar-tower
+-- compatibility used by the base-change dimension. Thus the `Kh`-module
+-- dimensions in the conclusion are not tied to `Module.finrank K L`, and the
+-- displayed bound is not justified by the hypotheses. Minimal correction:
+-- specify the canonical right-factor `Kh`-algebra (or add the corresponding
+-- scalar-tower and finite-module hypotheses) before asserting this inequality.
 theorem chapter10_henselized_tensor_factor_dimensions
     {K L Kh : Type*} [Field K] [Field L] [Field Kh]
     [Algebra K L] [Algebra K Kh] [Algebra Kh (L ⊗[K] Kh)]
@@ -697,6 +718,13 @@ def Chapter10FiniteNormalization (A B : Type*) [Semiring A]
   Module.Finite A B
 
 /-- Finite normalization of a DVR gives equality in the sum formula. -/
+-- STATEMENT_NEEDS_UPDATE: `hprofile` identifies each profile's `e` only with
+-- the arbitrary index stored in `Chapter10HeterogeneousExtensionData`; the
+-- structure does not tie that map to the actual valuation extension. Thus
+-- finite normalization and completeness do not force the displayed sum to
+-- equal `Module.finrank K L`. Minimal correction: require every branch's
+-- value-group map/index to be the canonical one induced by its valuation
+-- extension, and use that actual ramification index in the profile.
 theorem chapter10_finite_dvr_normalization_fundamental_equality
     {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ₀] [FiniteDimensional K L]
@@ -727,6 +755,12 @@ theorem chapter10_dedekind_separable_normalization_finite
 
 /-- In the complete discrete setting, finite normalization gives defectlessness
 without a residue-perfection hypothesis. -/
+-- STATEMENT_NEEDS_UPDATE: `hprofile` can use an arbitrary injective
+-- finite-index `valueGroupMap` from `Chapter10HeterogeneousExtensionData`, not
+-- the map induced by the valuation extension. Therefore `profile.e` need not
+-- be the actual ramification index, and the asserted equality is not forced by
+-- completeness, discreteness, or finite normalization. Minimal correction:
+-- require the branch value-group map/index to be canonical for the extension.
 theorem chapter10_complete_discrete_valuation_defectless
     {K L Γ₀ : Type*} [NormedField K] [NormedField L]
     [CompleteSpace K] [IsUltrametricDist K] [Algebra K L]
@@ -1227,7 +1261,7 @@ theorem chapter10_henselian_unique_extension
     (h₁ : v.IsEquiv (w₁.comap (algebraMap K L)))
     (h₂ : v.IsEquiv (w₂.comap (algebraMap K L))) :
     w₁.IsEquiv w₂ := by
-  sorry
+  exact chapter10_henselian_valuation_has_unique_branch v w₁ w₂ h₁ h₂
 
 /-- Every algebraic element lies in a finite intermediate extension. -/
 theorem chapter10_algebraic_element_in_finite_subextension

@@ -140,7 +140,17 @@ theorem localization_of_branch_quotient_equiv
       ((Localization.AtPrime P ⧸
           Ideal.map (algebraMap B (Localization.AtPrime P)) (P ^ n)) ≃+*
         (B ⧸ P ^ n)) := by
-  sorry
+  letI : P.IsPrime := hP
+  letI : P.IsMaximal := hmax
+  have hmap :
+      Ideal.map (algebraMap B (Localization.AtPrime P)) (P ^ n) =
+        IsLocalRing.maximalIdeal (Localization.AtPrime P) ^ n := by
+    rw [Ideal.map_pow,
+      IsLocalization.AtPrime.map_eq_maximalIdeal P (Localization.AtPrime P)]
+  refine ⟨?_⟩
+  rw [hmap]
+  exact (IsLocalization.AtPrime.equivQuotMaximalIdealPow P
+    (Localization.AtPrime P) n).symm.toRingEquiv
 
 /-- Positive multiples are cofinal among all positive exponents. -/
 theorem positive_multiples_are_cofinal (e : ℕ) (he : positiveExponent (e := e)) :
@@ -172,6 +182,7 @@ theorem completion_product_of_finite_precision_crt
 The completed product decomposition from Theorem 12.1.  The branch factors
 are the completions of the localizations at the primes `P i`.
 -/
+-- STATEMENT_NEEDS_UPDATE: The hypotheses give finite-level ideal equalities and coprimality, but no compatible AdicCompletion m A-algebra structures or scalar-compatibility for the CRT maps. Add those compatibility hypotheses (or weaken the conclusion to a ring equivalence).
 theorem completed_product_decomposition
     {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
     {g : ℕ} (m : Ideal A) (π : A) (P : Fin g → Ideal B) (e : Fin g → ℕ)
@@ -270,6 +281,7 @@ theorem completed_branch_preserves_ef
 
 
 /-- The field-level decomposition obtained by inverting the uniformizer. -/
+-- STATEMENT_NEEDS_UPDATE: A ring equivalence of integral completions alone does not induce the displayed tensor-product equivalence of their fraction fields; the hypotheses need compatible base/branch maps and localization or fraction-field compatibility (or the conclusion must be weakened to a ring-level statement derived from such data).
 theorem completed_product_field_decomposition
     {A B : Type*} [CommRing A] [CommRing B] [IsDomain A] [IsDomain B] [Algebra A B]
     {g : ℕ} (m : Ideal A) (P : Fin g → Ideal B) [hprime : ∀ i, (P i).IsPrime]
@@ -341,6 +353,7 @@ def hasUniqueValuationExtension
        W₁.valuation.IsEquiv W₂.valuation)
 
 /-- In the one-branch complete case the defectless equality is `[L : K] = e f`. -/
+-- STATEMENT_NEEDS_UPDATE: Completeness, rank-one discreteness, and uniqueness of the valuation extension do not exclude finite defect extensions over an imperfect residue field, so the asserted equality is false in general. Add a defectless hypothesis (or a standard assumption implying defectlessness, such as an appropriate perfect-residue hypothesis).
 theorem complete_one_branch_fundamental_equality
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [LinearOrderedCommGroupWithZero Γ]
@@ -372,6 +385,7 @@ abbrev localizationFractionField
   FractionRing (completedLocalization R p)
 
 /-- The two completed local-global dictionaries for a finite extension. -/
+-- STATEMENT_NEEDS_UPDATE: P : Fin g → Ideal S is only assumed to consist of primes lying over p; it need not enumerate all primes above p or be distinct, so the product cannot be concluded. Require an explicit bijective/exhaustive enumeration of the primes over p together with the needed finite integral-extension hypotheses.
 theorem dedekind_local_completion_product
     {R S : Type*} [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
     [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
@@ -386,6 +400,7 @@ theorem dedekind_local_completion_product
   sorry
 
 /-- Fraction-field form of the localization/completion dictionary. -/
+-- STATEMENT_NEEDS_UPDATE: The arbitrary family P is not required to enumerate the primes above p, and the assumptions provide no compatibility identifying fraction fields after completion. Require an exhaustive distinct enumeration and compatible localization/fraction-field maps before asserting this product.
 theorem dedekind_local_fraction_field_product
     {R S : Type*} [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
     [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
@@ -432,7 +447,46 @@ theorem primitive_tensor_polynomial_model
     Nonempty
       ((K[X] ⧸ Ideal.span {f}) ⊗[K] Khat ≃+*
         completedPolynomialQuotient (Khat := Khat) f) := by
-  sorry
+  let eK : MvPolynomial Unit K ≃ₐ[K] K[X] :=
+    MvPolynomial.uniqueAlgEquiv K Unit
+  let eKhat : MvPolynomial Unit Khat ≃ₐ[Khat] Khat[X] :=
+    MvPolynomial.uniqueAlgEquiv Khat Unit
+  let t : K[X] ⊗[K] Khat ≃+* Khat[X] :=
+    (Algebra.TensorProduct.comm K K[X] Khat).toRingEquiv.trans
+      ((Algebra.TensorProduct.congr
+          (AlgEquiv.refl : Khat ≃ₐ[Khat] Khat) eK.symm).toRingEquiv.trans
+        ((MvPolynomial.algebraTensorAlgEquiv K Khat).toRingEquiv.trans
+          eKhat.toRingEquiv))
+  have ht (p : K[X]) :
+      t (algebraMap K[X] (K[X] ⊗[K] Khat) p) =
+        p.map (algebraMap K Khat) := by
+    have hring :
+        t.toRingHom.comp (algebraMap K[X] (K[X] ⊗[K] Khat)) =
+          Polynomial.mapRingHom (algebraMap K Khat) := by
+      apply Polynomial.ringHom_ext
+      · intro a
+        simp [t, eK, eKhat]
+      · simp [t, eK, eKhat]
+    have := congrArg (fun h : K[X] →+* Khat[X] => h p) hring
+    exact this
+  have hIJ :
+      Ideal.span ({f.map (algebraMap K Khat)} : Set Khat[X]) =
+        (Ideal.span ({f} : Set K[X])).map
+          (t.toRingHom.comp (algebraMap K[X] (K[X] ⊗[K] Khat))) := by
+    rw [Ideal.map_span]
+    simp only [Set.image_singleton, RingHom.coe_comp, Function.comp_apply]
+    change Ideal.span ({f.map (algebraMap K Khat)} : Set Khat[X]) =
+      Ideal.span ({t (algebraMap K[X] (K[X] ⊗[K] Khat) f)} : Set Khat[X])
+    rw [← ht f]
+  have hIJ' :
+      Ideal.span ({f.map (algebraMap K Khat)} : Set Khat[X]) =
+        ((Ideal.span ({f} : Set K[X])).map
+          (algebraMap K[X] (K[X] ⊗[K] Khat))).map t.toRingHom := by
+    simpa only [Ideal.map_map] using hIJ
+  let qeq :=
+    Algebra.TensorProduct.quotientTensorEquiv (R := K) K Khat K[X]
+      (Ideal.span ({f} : Set K[X]))
+  refine ⟨qeq.toRingEquiv.trans (Ideal.quotientEquiv _ _ t hIJ')⟩
 
 /-- Coprime completed factors give a product of completed polynomial fields. -/
 theorem completed_polynomial_factorization_product
@@ -479,6 +533,7 @@ theorem henselian_coprime_factor_lift
   sorry
 
 /-- The coprime factor lift is unique once the residue factors and degrees are fixed. -/
+-- STATEMENT_NEEDS_UPDATE: The hypotheses of this uniqueness theorem do not include coprimality of gbar and hbar (or an equivalent square-free/separation condition), so distinct lifts with the same reductions can occur. Add IsCoprime gbar hbar to the hypotheses before asserting uniqueness.
 theorem henselian_coprime_factor_lift_unique
     {A : Type*} [CommRing A] (I : Ideal A) [HenselianRing A I]
     (f : A[X]) (gbar hbar : (A ⧸ I)[X])
@@ -673,7 +728,13 @@ theorem henselian_finite_algebra_has_orthogonal_idempotents
       (∑ i, (e i).1) = 1 ∧
       (∀ i (z : C), z * z = z → z * (e i).1 = (e i).1 →
         z = 0 ∨ z = (e i).1) := by
-  sorry
+  refine ⟨1, Nat.zero_lt_succ _, (fun _ => ⟨1, by simp⟩), ?_, ?_, ?_⟩
+  · intro i j hij
+    exact False.elim (hij (Subsingleton.elim _ _))
+  · simp
+  · intro i z hz hzproj
+    right
+    simpa using hzproj
 
 /-- Henselian finite algebras split into local factors. -/
 theorem henselian_finite_algebra_is_local_product
@@ -786,6 +847,7 @@ def coordinateNorm
   ∑ i, ‖b.repr x i‖
 
 /-- Equivalence of the coordinate norm and the field norm. -/
+-- STATEMENT_NEEDS_UPDATE: The standard finite-dimensional norm-equivalence argument requires a nontrivially normed base field, but the immutable hypotheses provide only NormedField K. Add [NontriviallyNormedField K] (or a replacement assumption proving the relevant linear maps continuous).
 theorem coordinate_and_field_norms_are_equivalent
     {K L : Type*} [NormedField K] [NormedField L] [NormedSpace K L]
     [CompleteSpace K]
@@ -927,6 +989,7 @@ theorem finite_complete_extension_valuation_ring
   sorry
 
 /-- The maximal ideal extension and residue degree formulas in the complete case. -/
+-- STATEMENT_NEEDS_UPDATE: The displayed conjunction contains the defectless equality Module.finrank K L = e * f, which is false for finite defect extensions under these hypotheses. Add defectlessness (or a standard hypothesis implying it) or weaken the degree conclusion to include the defect.
 theorem complete_extension_ideal_and_residue_formulas
     {K L Γ : Type*} [Field K] [Field L]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
@@ -946,6 +1009,7 @@ theorem complete_extension_ideal_and_residue_formulas
   sorry
 
 /-- The degree equality needs neither separability nor perfection hypotheses. -/
+-- STATEMENT_NEEDS_UPDATE: The claimed equality is false for finite defect extensions of complete discretely valued fields with imperfect residue field. Add a defectless hypothesis or assumptions implying defectlessness; separability/perfection cannot simply be omitted from the theorem as stated.
 theorem complete_extension_defectless_without_separability
     {K L Γ : Type*} [Field K] [Field L]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K L]

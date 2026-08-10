@@ -120,6 +120,7 @@ structure Chapter11ValuationBranchCorrespondence
         embedding x
 
 /-- A branch supplies a place of `L` extending the original place of `K`. -/
+-- STATEMENT_NEEDS_UPDATE: `vK` is arbitrary and is not required to have `A` as its valuation ring or `m` as its center, so a branch over `m` need not be the center of an extension of `vK`; add a hypothesis identifying the center of `vK` on `A` with `m` (and compatibility of the `A → B → L` embedding).
 theorem chapter11_branch_labels_valuation_extensions
     (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [CommRing B] [IsDomain B] [Field K] [Field L]
@@ -136,6 +137,7 @@ theorem chapter11_branch_labels_valuation_extensions
   sorry
 
 /-- Conversely, a valuation ring containing the normalization has a center at a branch. -/
+-- STATEMENT_NEEDS_UPDATE: neither `W` nor the arbitrary embedding `ι` is required to be compatible with `A → B → L`, and no hypothesis says that the center of `W` on `A` is `m`; add those compatibility and center hypotheses (otherwise even the trivial valuation gives the wrong center).
 theorem chapter11_valuation_ring_converse
     (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [CommRing B] [IsDomain B] [Field K] [Field L]
@@ -165,6 +167,7 @@ def chapter11IsSemilocal (B : Type*) [CommRing B] : Prop :=
   ∃ s : Finset (Ideal B), ∀ P : Ideal B, P.IsMaximal ↔ P ∈ (s : Set (Ideal B))
 
 /-- Finite normalization of a DVR is a semilocal Dedekind domain. -/
+-- STATEMENT_NEEDS_UPDATE: the arbitrary `vK` need not have `A` as its valuation ring, so an extension of `vK` may be centered over a different prime instead of `IsLocalRing.maximalIdeal A`; add the hypothesis that the center of `vK` on `A` is exactly that maximal ideal.
 theorem chapter11_finite_normalization_is_semilocal_dedekind
     {ΓK : Type*} (A K L B : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] [Field K] [Field L] [CommRing B]
@@ -328,6 +331,7 @@ def chapter11DenominatorCleared (A B L : Type*) [CommRing A] [CommRing B] [CommR
   ∃ n : ℕ, ∃ b : B, (algebraMap A L π) ^ n * x = algebraMap B L b
 
 /-- Every element of the fraction field of the normalization is denominator-cleared. -/
+-- STATEMENT_NEEDS_UPDATE: `hπ` permits `m = ⊥` and `π = 0`, and the assumptions do not make `L` the fraction field of an integral normalization of `B`; add `m = IsLocalRing.maximalIdeal A` with `m ≠ ⊥`, together with `IsIntegralClosure B A L` and finite-dimensionality of `L/K`.
 theorem chapter11_denominators_are_powers_of_a_uniformizer
     (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [CommRing B] [Field K] [Field L] [Algebra A B] [Algebra A K]
@@ -371,6 +375,7 @@ structure Chapter11BranchData (A B : Type*) [CommRing A] [CommRing B] [Algebra A
   inertia_eq : ∀ i, inertia i = (prime i).inertiaDeg A
 
 /-- Every extension of the base valuation occurs uniquely from one branch. -/
+-- STATEMENT_NEEDS_UPDATE: `vK` is arbitrary and `m` is unused, so semilocality alone cannot force the center of an extension of `vK` to lie over `IsLocalRing.maximalIdeal A`; add the center hypothesis for `vK` (or state the result for the maximal ideal determined by `vK`).
 theorem chapter11_every_extension_is_one_of_the_branch_localizations
     (A B K L : Type*) [CommRing A] [CommRing B] [IsLocalRing A] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
@@ -512,7 +517,35 @@ theorem chapter11_residue_quotient_dimension_sum
     (m : Ideal A) [m.IsPrime] [m.IsMaximal] :
     Module.finrank (A ⧸ m) (B ⧸ Ideal.map (algebraMap A B) m) =
       ∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A := by
-  sorry
+  letI : Field (A ⧸ m) := Ideal.Quotient.field m
+  let eκ : (A ⧸ m) ≃ₐ[A ⧸ m] m.ResidueField :=
+    IsFractionRing.algEquivOfAlgEquiv (R := A ⧸ m) (A := A ⧸ m)
+      (K := A ⧸ m) (B := A ⧸ m) (L := m.ResidueField) .refl
+  calc
+    Module.finrank (A ⧸ m) (B ⧸ Ideal.map (algebraMap A B) m) =
+        Module.finrank (A ⧸ m) ((A ⧸ m) ⊗[A] B) :=
+      (Algebra.TensorProduct.quotIdealMapEquivQuotTensor B m).toLinearEquiv.finrank_eq
+    _ = Module.finrank (A ⧸ m) (m.Fiber B) :=
+      (Algebra.TensorProduct.congr eκ (AlgEquiv.refl : B ≃ₐ[A] B)).toLinearEquiv.finrank_eq
+    _ = Module.finrank m.ResidueField (m.Fiber B) := by
+      apply Algebra.finrank_eq_of_equiv_equiv (R₀ := A ⧸ m)
+        (S₀ := m.Fiber B) (R₁ := m.ResidueField) (S₁ := m.Fiber B)
+        eκ.toRingEquiv (RingEquiv.refl _)
+      ext a
+      have heκ : eκ (Ideal.Quotient.mk m a) =
+          algebraMap (A ⧸ m) m.ResidueField (Ideal.Quotient.mk m a) := by
+        change eκ (algebraMap (A ⧸ m) (A ⧸ m) (Ideal.Quotient.mk m a)) =
+          algebraMap (A ⧸ m) m.ResidueField (Ideal.Quotient.mk m a)
+        exact IsFractionRing.algEquivOfAlgEquiv_algebraMap
+          (h := (AlgEquiv.refl : (A ⧸ m) ≃ₐ[A ⧸ m] A ⧸ m))
+          (Ideal.Quotient.mk m a)
+      simp only [RingHom.comp_apply]
+      change algebraMap m.ResidueField (m.Fiber B) (eκ (Ideal.Quotient.mk m a)) =
+        algebraMap (A ⧸ m) (m.Fiber B) (Ideal.Quotient.mk m a)
+      rw [heκ, ← IsScalarTower.algebraMap_apply (A ⧸ m) m.ResidueField
+        (m.Fiber B)]
+    _ = ∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A :=
+      (Ideal.sum_ramification_inertia_eq_finrank_fiber m B).symm
 
 /-- Under finite freeness, the sum of `e_i f_i` is the field degree. -/
 theorem chapter11_sum_ramification_times_inertia_is_degree
@@ -531,6 +564,7 @@ theorem chapter11_sum_ramification_times_inertia_is_degree
     _ = Module.finrank K L := (IsFractionRing.finrank_eq A K B L).symm
 
 /-- Without finite normalization, the corresponding statement is only the fundamental inequality. -/
+-- STATEMENT_NEEDS_UPDATE: without finite flatness/integrality and an integral-closure relation between `B` and `L`, the selected branch ideals are unrelated to the finite field extension and their e-f sum is not bounded by `[L : K]`; add those normalization and finite-flat hypotheses and quantify over all primes over `m`.
 theorem chapter11_fundamental_inequality_without_finiteness
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
@@ -820,7 +854,189 @@ theorem chapter11_gaussian_five_residue_fields
         (chapter11GaussianOrder ⧸ chapter11GaussianIdealFivePlus ≃+* ZMod 5) ∧
       Nonempty
         (chapter11GaussianOrder ⧸ chapter11GaussianIdealFiveMinus ≃+* ZMod 5) := by
-  sorry
+  let f : Polynomial ℤ := chapter11GaussianPolynomial ℤ
+  have hf : f.Monic := by
+    simpa [f, chapter11GaussianPolynomial] using
+      (monic_X_pow_add_C (R := ℤ) (1 : ℤ) (n := 2) (by norm_num))
+  have hf_ne_one : f ≠ 1 := by
+    intro h
+    have hdeg := congrArg Polynomial.natDegree h
+    have hdeg' : f.natDegree = 2 := by
+      simpa [f, chapter11GaussianPolynomial] using
+        (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
+    have hzero : (2 : ℕ) = 0 := by simpa [hdeg'] using hdeg
+    omega
+  have hroot : (chapter11GaussianRoot : chapter11GaussianOrder) ^ 2 = -1 := by
+    change (AdjoinRoot.root (chapter11GaussianPolynomial ℤ)) ^ 2 = -1
+    have h := AdjoinRoot.eval₂_root (chapter11GaussianPolynomial ℤ)
+    rw [chapter11GaussianPolynomial, eval₂_add, eval₂_X_pow, eval₂_one] at h
+    exact eq_neg_of_add_eq_zero_left h
+  have hprod :
+      (2 + chapter11GaussianRoot) * (2 - chapter11GaussianRoot) =
+        (5 : chapter11GaussianOrder) := by
+    calc
+      (2 + chapter11GaussianRoot) * (2 - chapter11GaussianRoot) =
+          4 - chapter11GaussianRoot ^ 2 := by ring
+      _ = 5 := by rw [hroot]; norm_num
+  have hplus :
+      Nonempty (chapter11GaussianOrder ⧸ chapter11GaussianIdealFivePlus ≃+* ZMod 5) := by
+    have hroot5 : f.eval₂ (algebraMap ℤ (ZMod 5)) (3 : ZMod 5) = 0 := by
+      norm_num [f, chapter11GaussianPolynomial] <;> decide
+    let ePlus : chapter11GaussianOrder →+* ZMod 5 :=
+      AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 5)) (3 : ZMod 5) hroot5
+    have hkerPlus : RingHom.ker ePlus = chapter11GaussianIdealFivePlus := by
+      apply le_antisymm
+      · intro x hx
+        induction x using AdjoinRoot.induction_on with
+        | ih p =>
+          let r := p %ₘ f
+          have hmk : AdjoinRoot.mk f r = AdjoinRoot.mk f p := by
+            rw [AdjoinRoot.mk_eq_mk]
+            change f ∣ (p %ₘ f) - p
+            rw [modByMonic_eq_sub_mul_div]
+            have hd : f ∣ -(f * (p /ₘ f)) :=
+              dvd_neg.mpr (dvd_mul_right _ _)
+            convert hd using 1 <;> ring
+          have hrdeg : r.natDegree ≤ 1 := by
+            have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
+            have hfdeg : f.natDegree = 2 := by
+              simpa [f, chapter11GaussianPolynomial] using
+                (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
+            have hlt' : (p %ₘ f).natDegree < 2 := by
+              rw [← hfdeg]
+              exact hlt
+            dsimp [r]
+            omega
+          obtain ⟨a, b, hr⟩ :=
+            exists_eq_X_add_C_of_natDegree_le_one hrdeg
+          have hrker : ePlus (AdjoinRoot.mk f r) = 0 := by
+            change ePlus (AdjoinRoot.mk f p) = 0 at hx
+            rw [hmk]
+            exact hx
+          have hrker' : ((3 * a + b : ℤ) : ZMod 5) = 0 := by
+            rw [AdjoinRoot.lift_mk, hr] at hrker
+            simpa [add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm,
+              mul_assoc] using hrker
+          have hab : (5 : ℤ) ∣ 3 * a + b :=
+            (ZMod.intCast_zmod_eq_zero_iff_dvd (3 * a + b) 5).mp hrker'
+          obtain ⟨c, hc⟩ := hab
+          have hcA : 3 * (AdjoinRoot.of f) a + (AdjoinRoot.of f) b =
+              5 * (AdjoinRoot.of f) c := by
+            have hcA' := congrArg (AdjoinRoot.of f) hc
+            simpa [map_add, map_mul] using hcA'
+          have hEq :
+              AdjoinRoot.mk f r =
+                a * (2 + chapter11GaussianRoot) + (c - a) * (5 : chapter11GaussianOrder) := by
+            rw [hr]
+            simp only [map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
+            change (AdjoinRoot.of f) a * AdjoinRoot.root f + (AdjoinRoot.of f) b =
+              (AdjoinRoot.of f) a * (2 + AdjoinRoot.root f) +
+                ((AdjoinRoot.of f) c - (AdjoinRoot.of f) a) * 5
+            linear_combination hcA
+          change AdjoinRoot.mk f p ∈ chapter11GaussianIdealFivePlus
+          rw [← hmk, hEq]
+          exact (chapter11GaussianIdealFivePlus).add_mem
+            ((chapter11GaussianIdealFivePlus).mul_mem_left _
+              (Ideal.mem_span_singleton_self _))
+            ((chapter11GaussianIdealFivePlus).mul_mem_left _ <| by
+              rw [← hprod]
+              exact (chapter11GaussianIdealFivePlus).mul_mem_right _
+                (Ideal.mem_span_singleton_self _))
+      · rw [chapter11GaussianIdealFivePlus]
+        refine Ideal.span_le.2 ?_
+        rintro x (rfl : x ∈ ({2 + chapter11GaussianRoot} : Set chapter11GaussianOrder))
+        change ePlus (2 + AdjoinRoot.root f) = 0
+        have hrootmap : ePlus (AdjoinRoot.root f) = (3 : ZMod 5) := by
+          dsimp [ePlus]
+          exact AdjoinRoot.lift_root hroot5
+        calc
+          ePlus (2 + AdjoinRoot.root f) = ePlus 2 + ePlus (AdjoinRoot.root f) :=
+            map_add ePlus 2 (AdjoinRoot.root f)
+          _ = (2 : ZMod 5) + 3 := by
+            rw [map_ofNat, hrootmap]
+          _ = 0 := by decide
+    refine ⟨(Ideal.quotEquivOfEq hkerPlus.symm).trans
+      (RingHom.quotientKerEquivOfSurjective (ZMod.ringHom_surjective ePlus))⟩
+  have hminus :
+      Nonempty (chapter11GaussianOrder ⧸ chapter11GaussianIdealFiveMinus ≃+* ZMod 5) := by
+    have hroot5 : f.eval₂ (algebraMap ℤ (ZMod 5)) (2 : ZMod 5) = 0 := by
+      norm_num [f, chapter11GaussianPolynomial] <;> decide
+    let eMinus : chapter11GaussianOrder →+* ZMod 5 :=
+      AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 5)) (2 : ZMod 5) hroot5
+    have hkerMinus : RingHom.ker eMinus = chapter11GaussianIdealFiveMinus := by
+      apply le_antisymm
+      · intro x hx
+        induction x using AdjoinRoot.induction_on with
+        | ih p =>
+          let r := p %ₘ f
+          have hmk : AdjoinRoot.mk f r = AdjoinRoot.mk f p := by
+            rw [AdjoinRoot.mk_eq_mk]
+            change f ∣ (p %ₘ f) - p
+            rw [modByMonic_eq_sub_mul_div]
+            have hd : f ∣ -(f * (p /ₘ f)) :=
+              dvd_neg.mpr (dvd_mul_right _ _)
+            convert hd using 1 <;> ring
+          have hrdeg : r.natDegree ≤ 1 := by
+            have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
+            have hfdeg : f.natDegree = 2 := by
+              simpa [f, chapter11GaussianPolynomial] using
+                (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
+            have hlt' : (p %ₘ f).natDegree < 2 := by
+              rw [← hfdeg]
+              exact hlt
+            dsimp [r]
+            omega
+          obtain ⟨a, b, hr⟩ :=
+            exists_eq_X_add_C_of_natDegree_le_one hrdeg
+          have hrker : eMinus (AdjoinRoot.mk f r) = 0 := by
+            change eMinus (AdjoinRoot.mk f p) = 0 at hx
+            rw [hmk]
+            exact hx
+          have hrker' : ((2 * a + b : ℤ) : ZMod 5) = 0 := by
+            rw [AdjoinRoot.lift_mk, hr] at hrker
+            simpa [add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm,
+              mul_assoc] using hrker
+          have hab : (5 : ℤ) ∣ 2 * a + b :=
+            (ZMod.intCast_zmod_eq_zero_iff_dvd (2 * a + b) 5).mp hrker'
+          obtain ⟨c, hc⟩ := hab
+          have hcA : 2 * (AdjoinRoot.of f) a + (AdjoinRoot.of f) b =
+              5 * (AdjoinRoot.of f) c := by
+            have hcA' := congrArg (AdjoinRoot.of f) hc
+            simpa [map_add, map_mul] using hcA'
+          have hEq :
+              AdjoinRoot.mk f r =
+                (-a) * (2 - chapter11GaussianRoot) + c * (5 : chapter11GaussianOrder) := by
+            rw [hr]
+            simp only [map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
+            change (AdjoinRoot.of f) a * AdjoinRoot.root f + (AdjoinRoot.of f) b =
+              (-(AdjoinRoot.of f) a) * (2 - AdjoinRoot.root f) +
+                (AdjoinRoot.of f) c * 5
+            linear_combination hcA
+          change AdjoinRoot.mk f p ∈ chapter11GaussianIdealFiveMinus
+          rw [← hmk, hEq]
+          exact (chapter11GaussianIdealFiveMinus).add_mem
+            ((chapter11GaussianIdealFiveMinus).mul_mem_left _
+              (Ideal.mem_span_singleton_self _))
+            ((chapter11GaussianIdealFiveMinus).mul_mem_left _ <| by
+              rw [← hprod]
+              exact (chapter11GaussianIdealFiveMinus).mul_mem_left _
+                (Ideal.mem_span_singleton_self _))
+      · rw [chapter11GaussianIdealFiveMinus]
+        refine Ideal.span_le.2 ?_
+        rintro x (rfl : x ∈ ({2 - chapter11GaussianRoot} : Set chapter11GaussianOrder))
+        change eMinus (2 - AdjoinRoot.root f) = 0
+        have hrootmap : eMinus (AdjoinRoot.root f) = (2 : ZMod 5) := by
+          dsimp [eMinus]
+          exact AdjoinRoot.lift_root hroot5
+        calc
+          eMinus (2 - AdjoinRoot.root f) = eMinus 2 - eMinus (AdjoinRoot.root f) :=
+            map_sub eMinus 2 (AdjoinRoot.root f)
+          _ = (2 : ZMod 5) - 2 := by
+            rw [map_ofNat, hrootmap]
+          _ = 0 := by decide
+    refine ⟨(Ideal.quotEquivOfEq hkerMinus.symm).trans
+      (RingHom.quotientKerEquivOfSurjective (ZMod.ringHom_surjective eMinus))⟩
+  exact ⟨hplus, hminus⟩
 
 /-- The ideal above `3` has residue degree two. -/
 theorem chapter11_gaussian_three_inert_residue_degree
@@ -828,7 +1044,28 @@ theorem chapter11_gaussian_three_inert_residue_degree
     Nonempty
       (chapter11GaussianOrder ⧸ chapter11GaussianIdealThree ≃+*
         AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) := by
-  sorry
+  let f : Polynomial ℤ := chapter11GaussianPolynomial ℤ
+  let p : Ideal ℤ := Ideal.span {(3 : ℤ)}
+  let eZ : ℤ ⧸ p ≃+* ZMod 3 := Int.quotientSpanNatEquivZMod 3
+  have hmap : Ideal.map (AdjoinRoot.of f) p =
+      chapter11GaussianIdealThree := by
+    rw [chapter11GaussianIdealThree, Ideal.map_span]
+    simp [f, p]
+  have hpoly :
+      (f.map (Ideal.Quotient.mk p)).map eZ.toRingHom =
+        (X ^ 2 + 1 : Polynomial (ZMod 3)) := by
+    ext n
+    simp [f, chapter11GaussianPolynomial, eZ]
+  have hassoc : Associated
+      ((f.map (Ideal.Quotient.mk p)).map eZ.toRingHom)
+      (X ^ 2 + 1 : Polynomial (ZMod 3)) := by
+    rw [hpoly]
+  let eMap : AdjoinRoot (f.map (Ideal.Quotient.mk p)) ≃+*
+      AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3)) :=
+    AdjoinRoot.mapRingEquiv eZ (f.map (Ideal.Quotient.mk p))
+      (X ^ 2 + 1 : Polynomial (ZMod 3)) hassoc
+  refine ⟨(Ideal.quotEquivOfEq hmap.symm).trans ?_⟩
+  exact (AdjoinRoot.quotEquivQuotMap f p).toRingEquiv.trans eMap
 
 /-- The ideal above `2` is generated by `1+i`, with ramification index two. -/
 theorem chapter11_gaussian_two_ramification_data
@@ -836,7 +1073,148 @@ theorem chapter11_gaussian_two_ramification_data
     Ideal.span {(2 : chapter11GaussianOrder)} =
         chapter11GaussianIdealTwo ^ 2 ∧
       Nonempty (chapter11GaussianOrder ⧸ chapter11GaussianIdealTwo ≃+* ZMod 2) := by
-  sorry
+  let f : Polynomial ℤ := chapter11GaussianPolynomial ℤ
+  have hf : f.Monic := by
+    simpa [f, chapter11GaussianPolynomial] using
+      (monic_X_pow_add_C (R := ℤ) (1 : ℤ) (n := 2) (by norm_num))
+  have hf_ne_one : f ≠ 1 := by
+    intro h
+    have hdeg := congrArg Polynomial.natDegree h
+    have hdeg' : f.natDegree = 2 := by
+      simpa [f, chapter11GaussianPolynomial] using
+        (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
+    have hzero : (2 : ℕ) = 0 := by simpa [hdeg'] using hdeg
+    omega
+  have hroot : (chapter11GaussianRoot : chapter11GaussianOrder) ^ 2 = -1 := by
+    change (AdjoinRoot.root (chapter11GaussianPolynomial ℤ)) ^ 2 = -1
+    have h := AdjoinRoot.eval₂_root (chapter11GaussianPolynomial ℤ)
+    rw [chapter11GaussianPolynomial, eval₂_add, eval₂_X_pow, eval₂_one] at h
+    exact eq_neg_of_add_eq_zero_left h
+  have hprod2 :
+      (1 + chapter11GaussianRoot) * (1 - chapter11GaussianRoot) =
+        (2 : chapter11GaussianOrder) := by
+    calc
+      (1 + chapter11GaussianRoot) * (1 - chapter11GaussianRoot) =
+          1 - chapter11GaussianRoot ^ 2 := by ring
+      _ = 2 := by rw [hroot]; norm_num
+  have hsqgen :
+      (1 + chapter11GaussianRoot) ^ 2 =
+        (2 : chapter11GaussianOrder) * chapter11GaussianRoot := by
+    calc
+      (1 + chapter11GaussianRoot) ^ 2 =
+          1 + 2 * chapter11GaussianRoot + chapter11GaussianRoot ^ 2 := by ring
+      _ = (2 : chapter11GaussianOrder) * chapter11GaussianRoot := by
+        rw [hroot]
+        ring
+  have hback :
+      (1 + chapter11GaussianRoot) ^ 2 * (-chapter11GaussianRoot) =
+        (2 : chapter11GaussianOrder) := by
+    calc
+      (1 + chapter11GaussianRoot) ^ 2 * (-chapter11GaussianRoot) =
+          (2 * chapter11GaussianRoot) * (-chapter11GaussianRoot) := by rw [hsqgen]
+      _ = 2 := by
+        calc
+          (2 : chapter11GaussianOrder) * chapter11GaussianRoot * (-chapter11GaussianRoot) =
+              -2 * chapter11GaussianRoot ^ 2 := by ring
+          _ = 2 := by rw [hroot]; norm_num
+  have hsq :
+      Ideal.span {(2 : chapter11GaussianOrder)} =
+        chapter11GaussianIdealTwo ^ 2 := by
+    rw [chapter11GaussianIdealTwo, Ideal.span_singleton_pow]
+    apply le_antisymm
+    · refine Ideal.span_le.2 ?_
+      rintro x (rfl : x ∈ ({2} : Set chapter11GaussianOrder))
+      rw [← hback]
+      exact (Ideal.span {(1 + chapter11GaussianRoot) ^ 2}).mul_mem_right _
+        (Ideal.mem_span_singleton_self _)
+    · refine Ideal.span_le.2 ?_
+      rintro x (rfl : x ∈ ({(1 + chapter11GaussianRoot) ^ 2} : Set chapter11GaussianOrder))
+      rw [hsqgen]
+      simpa [mul_comm] using
+        (Ideal.span {(2 : chapter11GaussianOrder)}).mul_mem_left
+          chapter11GaussianRoot (Ideal.mem_span_singleton_self _)
+  have hresidue :
+      Nonempty (chapter11GaussianOrder ⧸ chapter11GaussianIdealTwo ≃+* ZMod 2) := by
+    have hroot2 : f.eval₂ (algebraMap ℤ (ZMod 2)) (1 : ZMod 2) = 0 := by
+      norm_num [f, chapter11GaussianPolynomial] <;> decide
+    let eTwo : chapter11GaussianOrder →+* ZMod 2 :=
+      AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 2)) (1 : ZMod 2) hroot2
+    have htwo_mem : (2 : chapter11GaussianOrder) ∈ chapter11GaussianIdealTwo := by
+      change (2 : chapter11GaussianOrder) ∈ Ideal.span {1 + chapter11GaussianRoot}
+      rw [← hprod2]
+      exact (Ideal.span {1 + chapter11GaussianRoot}).mul_mem_right _
+        (Ideal.mem_span_singleton_self _)
+    have hkerTwo : RingHom.ker eTwo = chapter11GaussianIdealTwo := by
+      apply le_antisymm
+      · intro x hx
+        induction x using AdjoinRoot.induction_on with
+        | ih p =>
+          let r := p %ₘ f
+          have hmk : AdjoinRoot.mk f r = AdjoinRoot.mk f p := by
+            rw [AdjoinRoot.mk_eq_mk]
+            change f ∣ (p %ₘ f) - p
+            rw [modByMonic_eq_sub_mul_div]
+            have hd : f ∣ -(f * (p /ₘ f)) :=
+              dvd_neg.mpr (dvd_mul_right _ _)
+            convert hd using 1 <;> ring
+          have hrdeg : r.natDegree ≤ 1 := by
+            have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
+            have hfdeg : f.natDegree = 2 := by
+              simpa [f, chapter11GaussianPolynomial] using
+                (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
+            have hlt' : (p %ₘ f).natDegree < 2 := by
+              rw [← hfdeg]
+              exact hlt
+            dsimp [r]
+            omega
+          obtain ⟨a, b, hr⟩ :=
+            exists_eq_X_add_C_of_natDegree_le_one hrdeg
+          have hrker : eTwo (AdjoinRoot.mk f r) = 0 := by
+            change eTwo (AdjoinRoot.mk f p) = 0 at hx
+            rw [hmk]
+            exact hx
+          have hrker' : ((a + b : ℤ) : ZMod 2) = 0 := by
+            rw [AdjoinRoot.lift_mk, hr] at hrker
+            simpa [add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm,
+              mul_assoc] using hrker
+          have hab : (2 : ℤ) ∣ a + b :=
+            (ZMod.intCast_zmod_eq_zero_iff_dvd (a + b) 2).mp hrker'
+          obtain ⟨c, hc⟩ := hab
+          have hcA : (AdjoinRoot.of f) a + (AdjoinRoot.of f) b =
+              2 * (AdjoinRoot.of f) c := by
+            have hcA' := congrArg (AdjoinRoot.of f) hc
+            simpa [map_add, map_mul] using hcA'
+          have hEq :
+              AdjoinRoot.mk f r =
+                a * (1 + chapter11GaussianRoot) + (c - a) * (2 : chapter11GaussianOrder) := by
+            rw [hr]
+            simp only [map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
+            change (AdjoinRoot.of f) a * AdjoinRoot.root f + (AdjoinRoot.of f) b =
+              (AdjoinRoot.of f) a * (1 + AdjoinRoot.root f) +
+                ((AdjoinRoot.of f) c - (AdjoinRoot.of f) a) * 2
+            linear_combination hcA
+          change AdjoinRoot.mk f p ∈ chapter11GaussianIdealTwo
+          rw [← hmk, hEq]
+          exact (chapter11GaussianIdealTwo).add_mem
+            ((chapter11GaussianIdealTwo).mul_mem_left _
+              (Ideal.mem_span_singleton_self _))
+            ((chapter11GaussianIdealTwo).mul_mem_left _ htwo_mem)
+      · rw [chapter11GaussianIdealTwo]
+        refine Ideal.span_le.2 ?_
+        rintro x (rfl : x ∈ ({1 + chapter11GaussianRoot} : Set chapter11GaussianOrder))
+        change eTwo (1 + AdjoinRoot.root f) = 0
+        have hrootmap : eTwo (AdjoinRoot.root f) = (1 : ZMod 2) := by
+          dsimp [eTwo]
+          exact AdjoinRoot.lift_root hroot2
+        calc
+          eTwo (1 + AdjoinRoot.root f) = eTwo 1 + eTwo (AdjoinRoot.root f) :=
+            map_add eTwo 1 (AdjoinRoot.root f)
+          _ = (1 : ZMod 2) + 1 := by
+            rw [map_one, hrootmap]
+          _ = 0 := by decide
+    refine ⟨(Ideal.quotEquivOfEq hkerTwo.symm).trans
+      (RingHom.quotientKerEquivOfSurjective (ZMod.ringHom_surjective eTwo))⟩
+  exact ⟨hsq, hresidue⟩
 
 /-- The Gaussian examples satisfy `∑ e_i f_i = 2`. -/
 theorem chapter11_gaussian_sum_e_f_is_two :
@@ -857,21 +1235,142 @@ def chapter11TensorInert (K L C E : Type*) [CommRing K] [CommRing L] [CommRing C
 theorem chapter11_gaussian_completed_tensor_at_five [Fact (Nat.Prime 5)]
     :
     chapter11TensorSplit ℚ chapter11GaussianField ℚ_[5] := by
-  sorry
+  have hderiv :
+      (chapter11GaussianPolynomial ℤ).derivative.aeval (2 : ℤ_[5]) = (4 : ℤ_[5]) := by
+    simp [chapter11GaussianPolynomial, Polynomial.aeval_def]
+  have hval :
+      (chapter11GaussianPolynomial ℤ).aeval (2 : ℤ_[5]) = (5 : ℤ_[5]) := by
+    norm_num [chapter11GaussianPolynomial, Polynomial.aeval_def]
+  have hnorm :
+      ‖(chapter11GaussianPolynomial ℤ).aeval (2 : ℤ_[5])‖ <
+        ‖(chapter11GaussianPolynomial ℤ).derivative.aeval (2 : ℤ_[5])‖ ^ 2 := by
+    rw [hval, hderiv]
+    have hfour : ‖(4 : ℤ_[5])‖ = 1 := by
+      exact (PadicInt.norm_intCast_eq_one_iff).2 (by norm_num)
+    change ‖(5 : ℤ_[5])‖ < ‖(4 : ℤ_[5])‖ ^ 2
+    rw [hfour]
+    simpa using
+      (PadicInt.norm_intCast_lt_one_iff (p := 5) (z := (5 : ℤ))).2 (by norm_num)
+  obtain ⟨z, hz, _, _, _⟩ :=
+    hensels_lemma (p := 5) (F := chapter11GaussianPolynomial ℤ)
+      (a := (2 : ℤ_[5])) hnorm
+  let u : ℚ_[5] := z
+  have hu : u ^ 2 = -1 := by
+    have hz' := congrArg (fun x : ℤ_[5] => (x : ℚ_[5])) hz
+    have hz'' : u ^ 2 + 1 = 0 := by
+      simpa [u, chapter11GaussianPolynomial, Polynomial.aeval_def] using hz'
+    exact eq_neg_of_add_eq_zero_left hz''
+  have hu0 : u ≠ 0 := by
+    intro hu0
+    rw [hu0] at hu
+    norm_num at hu
+  let g : ℚ_[5][X] := X - C u
+  let h : ℚ_[5][X] := X - C (-u)
+  have hfactor : chapter11GaussianPolynomial ℚ_[5] = g * h := by
+    have hcalc : (X : ℚ_[5][X]) ^ 2 + 1 = (X - C u) * (X + C u) := by
+      have hcu : (C u : ℚ_[5][X]) ^ 2 = -(1 : ℚ_[5][X]) := by
+        rw [← C_pow, hu]
+        simp
+      calc
+        X ^ 2 + 1 = X ^ 2 - (C u) ^ 2 := by rw [hcu]; ring
+        _ = (X - C u) * (X + C u) := by rw [sq_sub_sq]; ring
+    simpa [chapter11GaussianPolynomial, g, h] using hcalc
+  have hcop_elem : IsCoprime g h := by
+    have h2u0 : (2 : ℚ_[5]) * u ≠ 0 := mul_ne_zero (by norm_num) hu0
+    have hC2 : (C (2 : ℚ_[5]) : ℚ_[5][X]) = 2 := by
+      change C ((2 : ℕ) : ℚ_[5]) = ((2 : ℕ) : ℚ_[5][X])
+      exact C_eq_natCast 2
+    refine ⟨-C ((2 * u)⁻¹), C ((2 * u)⁻¹), ?_⟩
+    calc
+      -C ((2 * u)⁻¹) * g + C ((2 * u)⁻¹) * h =
+          C ((2 * u)⁻¹) * C (2 * u) := by
+            simp [g, h, sub_eq_add_neg, map_neg]
+            ring_nf
+            rw [hC2]
+      _ = 1 := by
+        rw [← map_mul, inv_mul_cancel₀ h2u0]
+        simp
+  let I : Ideal ℚ_[5][X] := Ideal.span {g}
+  let J : Ideal ℚ_[5][X] := Ideal.span {h}
+  have hcop : IsCoprime I J := by
+    exact Ideal.isCoprime_span_singleton_iff g h |>.2 hcop_elem
+  have hprod : I * J = Ideal.span {chapter11GaussianPolynomial ℚ_[5]} := by
+    dsimp [I, J]
+    rw [Ideal.span_singleton_mul_span_singleton, ← hfactor]
+  let ePlus : (ℚ_[5][X] ⧸ I) ≃+* ℚ_[5] := by
+    simpa [I, g] using (Polynomial.quotientSpanXSubCAlgEquiv u).toRingEquiv
+  let eMinus : (ℚ_[5][X] ⧸ J) ≃+* ℚ_[5] := by
+    simpa [J, h] using (Polynomial.quotientSpanXSubCAlgEquiv (-u)).toRingEquiv
+  let eSplit : AdjoinRoot (chapter11GaussianPolynomial ℚ_[5]) ≃+*
+      ℚ_[5] × ℚ_[5] :=
+    (Ideal.quotEquivOfEq hprod.symm).trans <|
+      (Ideal.quotientMulEquivQuotientProd I J hcop).trans (ePlus.prodCongr eMinus)
+  let q : Polynomial (ℚ_[5] ⊗[ℚ] ℚ) :=
+    (chapter11GaussianPolynomial ℚ).map Algebra.TensorProduct.includeRight.toRingHom
+  let eRid : ℚ_[5] ⊗[ℚ] ℚ ≃ₐ[ℚ_[5]] ℚ_[5] :=
+    Algebra.TensorProduct.rid ℚ ℚ_[5] ℚ_[5]
+  have hpoly :
+      q.map eRid.toRingHom = chapter11GaussianPolynomial ℚ_[5] := by
+    ext n
+    simp [q, eRid, chapter11GaussianPolynomial]
+  have hassoc : Associated (q.map eRid.toRingHom)
+      (chapter11GaussianPolynomial ℚ_[5]) := by
+    rw [hpoly]
+  let eMap : AdjoinRoot q ≃+*
+      AdjoinRoot (chapter11GaussianPolynomial ℚ_[5]) :=
+    AdjoinRoot.mapRingEquiv eRid.toRingEquiv q
+      (chapter11GaussianPolynomial ℚ_[5]) hassoc
+  refine ⟨(Algebra.TensorProduct.comm ℚ chapter11GaussianField ℚ_[5]).toRingEquiv.trans
+    ((AdjoinRoot.tensorAlgEquiv (chapter11GaussianPolynomial ℚ)
+      q rfl).toRingEquiv.trans (eMap.trans eSplit))⟩
 
 /-- The Gaussian tensor product at `3` is one inert quadratic factor. -/
 theorem chapter11_gaussian_completed_tensor_at_three [Fact (Nat.Prime 3)]
     :
     chapter11TensorInert ℚ chapter11GaussianField ℚ_[3]
       (AdjoinRoot (chapter11GaussianPolynomial ℚ_[3])) := by
-  sorry
+  let q : Polynomial (ℚ_[3] ⊗[ℚ] ℚ) :=
+    (chapter11GaussianPolynomial ℚ).map Algebra.TensorProduct.includeRight.toRingHom
+  let eRid : ℚ_[3] ⊗[ℚ] ℚ ≃ₐ[ℚ_[3]] ℚ_[3] :=
+    Algebra.TensorProduct.rid ℚ ℚ_[3] ℚ_[3]
+  have hpoly :
+      q.map eRid.toRingHom = chapter11GaussianPolynomial ℚ_[3] := by
+    ext n
+    simp [q, eRid, chapter11GaussianPolynomial]
+  have hassoc : Associated (q.map eRid.toRingHom)
+      (chapter11GaussianPolynomial ℚ_[3]) := by
+    rw [hpoly]
+  let eMap : AdjoinRoot q ≃+*
+      AdjoinRoot (chapter11GaussianPolynomial ℚ_[3]) :=
+    AdjoinRoot.mapRingEquiv eRid.toRingEquiv q
+      (chapter11GaussianPolynomial ℚ_[3]) hassoc
+  refine ⟨(Algebra.TensorProduct.comm ℚ chapter11GaussianField ℚ_[3]).toRingEquiv.trans
+    ((AdjoinRoot.tensorAlgEquiv (chapter11GaussianPolynomial ℚ)
+      q rfl).toRingEquiv.trans eMap)⟩
 
 /-- The Gaussian tensor product at `2` is a single ramified quadratic factor. -/
 theorem chapter11_gaussian_completed_tensor_at_two [Fact (Nat.Prime 2)]
     :
     chapter11TensorInert ℚ chapter11GaussianField ℚ_[2]
       (AdjoinRoot (chapter11GaussianPolynomial ℚ_[2])) := by
-  sorry
+  let q : Polynomial (ℚ_[2] ⊗[ℚ] ℚ) :=
+    (chapter11GaussianPolynomial ℚ).map Algebra.TensorProduct.includeRight.toRingHom
+  let eRid : ℚ_[2] ⊗[ℚ] ℚ ≃ₐ[ℚ_[2]] ℚ_[2] :=
+    Algebra.TensorProduct.rid ℚ ℚ_[2] ℚ_[2]
+  have hpoly :
+      q.map eRid.toRingHom = chapter11GaussianPolynomial ℚ_[2] := by
+    ext n
+    simp [q, eRid, chapter11GaussianPolynomial]
+  have hassoc : Associated (q.map eRid.toRingHom)
+      (chapter11GaussianPolynomial ℚ_[2]) := by
+    rw [hpoly]
+  let eMap : AdjoinRoot q ≃+*
+      AdjoinRoot (chapter11GaussianPolynomial ℚ_[2]) :=
+    AdjoinRoot.mapRingEquiv eRid.toRingEquiv q
+      (chapter11GaussianPolynomial ℚ_[2]) hassoc
+  refine ⟨(Algebra.TensorProduct.comm ℚ chapter11GaussianField ℚ_[2]).toRingEquiv.trans
+    ((AdjoinRoot.tensorAlgEquiv (chapter11GaussianPolynomial ℚ)
+      q rfl).toRingEquiv.trans eMap)⟩
 
 /-! ### Equal-characteristic square covers -/
 
@@ -893,6 +1392,7 @@ theorem chapter11_square_cover_at_zero_is_totally_ramified
   simp [chapter11TotallyRamifiedPattern]
 
 /-- At t = 1, the two simple roots u = ±1 split after Hensel lifting. -/
+-- STATEMENT_NEEDS_UPDATE: `f` and its roots are not related to `L`, so the existence of two roots of `f` cannot imply a decomposition of `L ⊗[K] C`; add an algebra presentation of `L` by the relevant quadratic polynomial over `K` and the required compatibility of the `C`-base change.
 theorem chapter11_square_cover_at_one_hensel_splits
     (K L C : Type*) [Field K] [Field L] [Field C] [Algebra K L] [Algebra K C]
     [Algebra C (L ⊗[K] C)] [Algebra C (C × C)]
@@ -963,6 +1463,7 @@ def chapter11RootPresentsExtension
   ∃ α : L, Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0
 
 /-- A repeated factor can reflect genuine ramification or a nonmaximal root order. -/
+-- STATEMENT_NEEDS_UPDATE: repeatedness of the reduction and existence of some root do not connect `f` to the integral closure or to a prime over `p`; for example over `R = L = 𝔽₂` with `p = ⊥` and `f = X² + 1`, the root order is the full integral closure and no ramified branch is forced. Add a nonzero prime and a finite field-extension/minimal-generator hypothesis tying `f` to the normalization.
 theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
     (R L : Type*) [CommRing R] [IsDomain R] [Field L] [Algebra R L]
     (p : Ideal R) (f : R[X])
@@ -980,8 +1481,10 @@ theorem chapter11_intrinsic_integral_closure_controls_repeated_factors
     (hdef : chapter11RootPresentsExtension R L f) :
     ∃ α : L,
       Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
-        IsIntegral R α := by
-  sorry
+      IsIntegral R α := by
+  rcases hdef with ⟨α, hα⟩
+  refine ⟨α, hα, ?_⟩
+  exact ⟨f, hf, by simpa [aeval_def] using hα⟩
 
 /-! ## 11.6. Localization, residue fields, and lengths -/
 
@@ -1052,6 +1555,7 @@ theorem chapter11_length_value_of_base_uniformizer
   exact (Ideal.ramificationIdx_eq m P).symm
 
 /-- Computing the same length over A multiplies by the residue degree. -/
+-- STATEMENT_NEEDS_UPDATE: `A` is not assumed local and `m` is not required to be its maximal ideal, so the displayed A-length need not be the residue-degree-weighted local length; add `[IsLocalRing A]`, `m = IsLocalRing.maximalIdeal A`, and the corresponding local-algebra compatibility.
 theorem chapter11_length_as_base_module_is_e_f
     (A B : Type*) [CommRing A] [CommRing B] [IsDomain B] [IsDedekindDomain B]
     [Algebra A B]
@@ -1070,7 +1574,32 @@ theorem chapter11_length_value_is_a_discrete_valuation
     (x y : B) (hx : x ≠ 0) (hy : y ≠ 0) :
     chapter11LocalLengthValue B P (x * y) =
       chapter11LocalLengthValue B P x + chapter11LocalLengthValue B P y := by
-  sorry
+  let S := Localization.AtPrime P
+  have hS : Function.Injective (algebraMap B S) :=
+    IsLocalization.injective S P.primeCompl_le_nonZeroDivisors
+  have hyS : algebraMap B S y ≠ 0 := by
+    intro hyS
+    exact hy (hS (by simpa using hyS))
+  have hxS : algebraMap B S x ≠ 0 := by
+    intro hxS
+    exact hx (hS (by simpa using hxS))
+  have hxNzd : algebraMap B S x ∈ nonZeroDivisors S :=
+    mem_nonZeroDivisors_of_ne_zero hxS
+  have hyNzd : algebraMap B S y ∈ nonZeroDivisors S :=
+    mem_nonZeroDivisors_of_ne_zero hyS
+  have hxo : Ring.ord S (algebraMap B S x) ≠ ⊤ :=
+    Ring.ord_ne_top hxNzd
+  have hyo : Ring.ord S (algebraMap B S y) ≠ ⊤ :=
+    Ring.ord_ne_top hyNzd
+  have hmul := Ring.ord_mul (R := S) (a := algebraMap B S x)
+    (b := algebraMap B S y) hyNzd
+  change (Ring.ord S (algebraMap B S (x * y))).toNat =
+    (Ring.ord S (algebraMap B S x)).toNat +
+      (Ring.ord S (algebraMap B S y)).toNat
+  rw [map_mul]
+  have hmulNat := congrArg ENat.toNat hmul
+  rw [ENat.toNat_add hxo hyo] at hmulNat
+  simpa [chapter11LocalLengthValue, Ring.ord] using hmulNat
 
 /-! ## 11.7. Norms and the sum over branches -/
 
@@ -1112,6 +1641,7 @@ def chapter11CompleteNormalizedBranchFamily
         ∃ i, (w i).IsEquiv w'
 
 /-- The norm valuation formula v(N(x)) = Σ f_i w_i(x). -/
+-- STATEMENT_NEEDS_UPDATE: `hbranches` records only valuation equivalence, not the normalization of the value groups or finite residue-degree hypotheses; equivalent valuations can be rescaled while the right side changes. Add exact normalized extensions (and finite residue extensions) or formulate the identity after transporting values through the chosen order isomorphisms.
 theorem chapter11_norm_valuation_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     {ι : Type*} [Fintype ι] (v : AddValuation K (WithTop ℤ))
@@ -1124,6 +1654,7 @@ theorem chapter11_norm_valuation_formula
   sorry
 
 /-- For a base uniformizer, the branch values are e_i, so the norm sees Σ e_i f_i. -/
+-- STATEMENT_NEEDS_UPDATE: the hypotheses normalize only the `w i`, while `v` is still specified only up to equivalence, so the left side can be rescaled independently of the asserted degree sum; require an exact normalized restriction of each `w i` to `v`.
 theorem chapter11_norm_of_uniformizer
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     {ι : Type*} [Fintype ι] (v : AddValuation K (WithTop ℤ))
@@ -1147,6 +1678,7 @@ theorem chapter11_norm_valuation_on_fractions
   simp only [sub_eq_add_neg]
 
 /-- The uniformizer computation agrees with the degree formula. -/
+-- STATEMENT_NEEDS_UPDATE: `hdegree` does not fix the scale of the arbitrary equivalent base valuation `v`, so it cannot determine the value of the norm; add an exact normalization of `v` and the branch valuations.
 theorem chapter11_norm_uniformizer_consistency
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     {ι : Type*} [Fintype ι] (v : AddValuation K (WithTop ℤ))
@@ -1224,6 +1756,7 @@ theorem chapter11_separable_trace_pairing_nondegenerate
   exact sub_eq_zero.mp hzero
 
 /-- A common denominator embeds the integral trace pairing into the A-dual. -/
+-- STATEMENT_NEEDS_UPDATE: finite generation of `B` over `A` alone does not put the K-valued trace pairing in the fraction field of `A`; for example a finite integral `B/A` can map into a larger K where the trace is not a scalar multiple of an A-valued functional. Add `IsFractionRing A K`, `IsFractionRing B L`, and the integral-closure/torsion-free hypotheses.
 theorem chapter11_trace_pairing_has_common_denominator
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
@@ -1255,9 +1788,15 @@ theorem chapter11_different_records_trace_denominators
     ∃ d : A, d ≠ 0 ∧
       ∀ y : B, ∃ φ : B →ₗ[A] A,
         algebraMap A K (φ y) =
-          algebraMap A K d *
+            algebraMap A K d *
             Algebra.trace K L (algebraMap B L x * algebraMap B L y) := by
-  sorry
+  refine ⟨1, one_ne_zero, ?_⟩
+  intro y
+  let φ : B →ₗ[A] A := (Algebra.intTrace A B).comp (LinearMap.mulLeft A x)
+  refine ⟨φ, ?_⟩
+  simpa [φ, LinearMap.mulLeft, ← IsScalarTower.algebraMap_apply A B L,
+    mul_comm] using
+    (Algebra.algebraMap_intTrace (A := A) (B := B) (K := K) (L := L) (x * y))
 
 /-- The quadratic equation T² - Tr(x) T + N(x) proves integrality from trace and norm. -/
 def chapter11QuadraticTraceNormRelation

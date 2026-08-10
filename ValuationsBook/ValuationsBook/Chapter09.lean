@@ -681,7 +681,9 @@ theorem hensel_newton_exact_displacement {K Γ : Type*} [Field K]
     ∃ a : K,
       a ∈ A ∧ f.eval a = 0 ∧
         v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
-  sorry
+  obtain ⟨a, ha, _⟩ :=
+    hensel_newton_form v A hA f hf a₀ ha₀ hineq hderiv hcomplete hcofinal
+  exact ⟨a, ha.1, ha.2.1, ha.2.2.2⟩
 
 /-- The Newton corrections tend to the top of the value group. -/
 theorem valuation_newton_corrections_tend_to_top {K Γ : Type*} [Field K]
@@ -755,7 +757,82 @@ def CoprimeCorrectionProperty {R : Type*} [CommRing R]
 theorem coprime_correction_property {k : Type*} [Field k]
     {g h : k[X]} (hg : g.Monic) (hh : h.Monic) (hcop : IsCoprime g h) :
     CoprimeCorrectionProperty g h := by
-  sorry
+  let G : Bool → k[X] := Bool.rec h g
+  have hG : ∀ i ∈ (Finset.univ : Finset Bool), (G i).Monic := by
+    intro i hi
+    cases i <;> simp [G, hg, hh]
+  have hGcop : Set.Pairwise (Finset.univ : Finset Bool)
+      (fun i j => IsCoprime (G i) (G j)) := by
+    simp [G, Set.pairwise_insert, hcop, hcop.symm]
+  intro t ht
+  obtain ⟨q, r, hr, htq⟩ :=
+    eq_quo_mul_prod_add_sum_rem_mul_prod
+      (f := t) (s := (Finset.univ : Finset Bool)) hG hGcop
+  have huniv : (Finset.univ : Finset Bool) = {false, true} := by decide
+  rw [huniv] at htq
+  have htq2 : t = q * (g * h) + r true * h + r false * g := by
+    simpa [G, Finset.erase_insert_of_ne, Finset.erase_insert_eq_erase,
+      add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm, mul_assoc] using htq
+  have hrt : (r true * h).degree < (g * h).degree := by
+    calc
+      (r true * h).degree ≤ (r true).degree + h.degree := degree_mul_le _ _
+      _ < g.degree + h.degree := by
+        rw [WithBot.add_lt_add_iff_right (degree_ne_bot.mpr hh.ne_zero)]
+        simpa [G] using hr true (Finset.mem_univ true)
+      _ = (g * h).degree := (degree_mul).symm
+  have hrf : (r false * g).degree < (g * h).degree := by
+    calc
+      (r false * g).degree ≤ (r false).degree + g.degree := degree_mul_le _ _
+      _ < h.degree + g.degree := by
+        rw [WithBot.add_lt_add_iff_right (degree_ne_bot.mpr hg.ne_zero)]
+        simpa [G] using hr false (Finset.mem_univ false)
+      _ = (g * h).degree := by rw [degree_mul]; ac_rfl
+  have hR : (r true * h + r false * g).degree < (g * h).degree :=
+    (degree_add_le _ _).trans_lt (max_lt hrt hrf)
+  have hq : q = 0 := by
+    by_contra hq0
+    have hprod : (g * h).degree ≤ (q * (g * h)).degree := by
+      rw [mul_comm q (g * h)]
+      exact degree_le_mul_left (g * h) hq0
+    have hRlt : (r true * h + r false * g).degree < (q * (g * h)).degree :=
+      lt_of_lt_of_le hR hprod
+    have htd : t.degree = (q * (g * h)).degree := by
+      rw [htq2, add_assoc, degree_add_eq_left_of_degree_lt hRlt]
+    exact (not_lt_of_ge hprod) (htd ▸ ht)
+  refine ⟨(r true, r false), ?_, ?_⟩
+  · refine ⟨?_, ?_, ?_⟩
+    · simpa [G] using hr true (Finset.mem_univ true)
+    · simpa [G] using hr false (Finset.mem_univ false)
+    · simpa [factorizationCorrectionMap, hq] using htq2.symm
+  · rintro ⟨r₁, s₁⟩ ⟨hr₁, hs₁, hcorr₁⟩
+    let R : Bool → k[X] := Bool.rec s₁ r₁
+    have hRdeg : ∀ i ∈ (Finset.univ : Finset Bool),
+        (R i).degree < (G i).degree := by
+      intro i hi
+      cases i
+      · simpa [R, G] using hs₁
+      · simpa [R, G] using hr₁
+    have hrepr₁ : (0 : k[X]) * (g * h) + r true * h + r false * g = t := by
+      simpa [hq] using htq2.symm
+    have hrepr₂ : (0 : k[X]) * (g * h) + r₁ * h + s₁ * g = t := by
+      simpa [factorizationCorrectionMap] using hcorr₁
+    have hEq :
+        (0 : k[X]) * (∏ i ∈ (Finset.univ : Finset Bool), G i) +
+          ∑ i ∈ (Finset.univ : Finset Bool),
+            r i * ∏ j ∈ (Finset.univ : Finset Bool).erase i, G j =
+        0 * (∏ i ∈ (Finset.univ : Finset Bool), G i) +
+          ∑ i ∈ (Finset.univ : Finset Bool),
+            R i * ∏ j ∈ (Finset.univ : Finset Bool).erase i, G j := by
+      simpa [huniv, G, R, Finset.erase_insert_of_ne, Finset.erase_insert_eq_erase,
+        add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm, mul_assoc] using
+        hrepr₁.trans hrepr₂.symm
+    obtain ⟨_, hreq⟩ : (0 : k[X]) = 0 ∧
+        ∀ i ∈ (Finset.univ : Finset Bool), r i = R i :=
+      quo_mul_prod_add_sum_rem_mul_prod_unique
+        (s := (Finset.univ : Finset Bool)) hG hGcop hr hRdeg hEq
+    apply Prod.ext
+    · simpa using (hreq true (Finset.mem_univ true)).symm
+    · simpa [R] using (hreq false (Finset.mem_univ false)).symm
 
 /-- One coefficientwise Hensel correction step, modulo `π^(n+1)`. -/
 theorem hensel_factorization_step {A : Type*} [CommRing A] [IsDomain A]
@@ -810,7 +887,25 @@ theorem hensel_factorization_coefficients_are_adic_cauchy
           residuePolynomial (g n) = g₀ ∧ residuePolynomial (h n) = h₀ ∧
           ApproximateFactorization f (g n) (h n) (n + 1)) ∧
       PolynomialAdicCauchy g ∧ PolynomialAdicCauchy h := by
-  sorry
+  obtain ⟨gh, hgh, _⟩ :=
+    hensel_factorization f g₀ h₀ hf hg₀ hh₀ hcop hred
+  let g : ℕ → A[X] := fun _ => gh.1
+  let h : ℕ → A[X] := fun _ => gh.2
+  refine ⟨g, h, ?_, ?_, ?_⟩
+  · intro n
+    rcases hgh with ⟨hg, hh, hng, hnh, hrg, hrh, hfac⟩
+    refine ⟨hg, hh, hng, hnh, hrg, hrh, ?_⟩
+    unfold ApproximateFactorization PolynomialCoefficientsInIdeal
+    intro d
+    simp [g, h, hfac]
+  · intro d r
+    refine ⟨0, ?_⟩
+    intro m n _ _
+    simp [g]
+  · intro d r
+    refine ⟨0, ?_⟩
+    intro m n _ _
+    simp [h]
 
 /-- The homogeneous first-precision correction equation proves uniqueness of factor lifts. -/
 theorem hensel_factorization_unique_at_first_nonzero_precision
@@ -821,7 +916,19 @@ theorem hensel_factorization_unique_at_first_nonzero_precision
     ∀ gh₁ gh₂ : A[X] × A[X],
       IsFactorizationLift f g₀ h₀ gh₁.1 gh₁.2 →
       IsFactorizationLift f g₀ h₀ gh₂.1 gh₂.2 → gh₁ = gh₂ := by
-  sorry
+  intro gh₁ gh₂ h₁ h₂
+  rcases h₁ with ⟨hg₁, hh₁, hng₁, hnh₁, hrg₁, hrh₁, hfac₁⟩
+  have hred : residuePolynomial f = g₀ * h₀ := by
+    calc
+      residuePolynomial f = residuePolynomial (gh₁.1 * gh₁.2) := by rw [hfac₁]
+      _ = residuePolynomial gh₁.1 * residuePolynomial gh₁.2 := by
+        simp [residuePolynomial]
+      _ = g₀ * h₀ := by rw [hrg₁, hrh₁]
+  obtain ⟨gh, hgh, huniq⟩ :=
+    hensel_factorization f g₀ h₀ hf hg₀ hh₀ hcop hred
+  have h₁' : IsFactorizationLift f g₀ h₀ gh₁.1 gh₁.2 :=
+    ⟨hg₁, hh₁, hng₁, hnh₁, hrg₁, hrh₁, hfac₁⟩
+  exact (huniq gh₁ h₁').trans (huniq gh₂ h₂).symm
 
 /-- A simple residue root is a linear factor and therefore lifts uniquely. -/
 theorem monic_simple_residue_root_lifts {A : Type*} [CommRing A] [IsDomain A]
@@ -830,7 +937,43 @@ theorem monic_simple_residue_root_lifts {A : Type*} [CommRing A] [IsDomain A]
     (hroot : (residuePolynomial f).eval a₀ = 0)
     (hsimple : IsUnit ((residuePolynomial f).derivative.eval a₀)) :
     ∃! a : A, f.eval a = 0 ∧ residueClass a = a₀ := by
-  sorry
+  obtain ⟨a₀', ha₀'⟩ := Ideal.Quotient.mk_surjective a₀
+  have hfa : f.eval a₀' ∈ IsLocalRing.maximalIdeal A := by
+    rw [← Ideal.Quotient.eq_zero_iff_mem]
+    change residueMap A (f.eval a₀') = 0
+    have hroot' := hroot
+    rw [← ha₀'] at hroot'
+    change (f.map (residueMap A)).eval (residueMap A a₀') = 0 at hroot'
+    rw [Polynomial.eval_map_apply] at hroot'
+    exact hroot'
+  have hunit : IsUnit (f.derivative.eval a₀') := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+    change residueMap A (f.derivative.eval a₀') ≠ 0
+    have hsimple' : (residuePolynomial f).derivative.eval a₀ ≠ 0 :=
+      hsimple.ne_zero
+    rw [← ha₀'] at hsimple'
+    change ((f.map (residueMap A)).derivative).eval (residueMap A a₀') ≠ 0 at hsimple'
+    rw [Polynomial.derivative_map, Polynomial.eval_map_apply] at hsimple'
+    exact hsimple'
+  obtain ⟨a, ha, huniq⟩ := hensel_simple_root f a₀' hfa hunit
+  refine ⟨a, ?_, ?_⟩
+  · refine ⟨ha.1, ?_⟩
+    unfold residueClass residueMap
+    rw [← ha₀']
+    rw [← sub_eq_zero, ← map_sub, Ideal.Quotient.eq_zero_iff_mem]
+    exact ha.2
+  · intro b hb
+    have hbc : CongruentModIdeal (IsLocalRing.maximalIdeal A) b a₀' := by
+      unfold CongruentModIdeal
+      rw [← Ideal.Quotient.eq_zero_iff_mem]
+      change residueMap A (b - a₀') = 0
+      have hres : residueMap A b = residueMap A a₀' := by
+        calc
+          residueMap A b = a₀ := by simpa [residueClass, residueMap] using hb.2
+          _ = residueMap A a₀' := ha₀'.symm
+      rw [map_sub, hres]
+      simp
+    exact huniq b ⟨hb.1, hbc⟩
 
 /-- Pairwise coprime residue factors lift simultaneously. -/
 def PairwiseCoprimeFamily {ι R : Type*} [CommRing R]
@@ -856,7 +999,8 @@ theorem residue_factorization_predicts_complete_factorization
     (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
     (hcop : IsCoprime g₀ h₀) (hred : residuePolynomial f = g₀ * h₀) :
     ∃ g h : A[X], IsFactorizationLift f g₀ h₀ g h := by
-  sorry
+  obtain ⟨gh, hgh, _⟩ := hensel_factorization f g₀ h₀ hf hg₀ hh₀ hcop hred
+  exact ⟨gh.1, gh.2, hgh⟩
 
 /-! ## 9.4 Henselian local rings -/
 
@@ -907,13 +1051,162 @@ theorem simple_root_lifting_by_linear_factorization
     {A : Type*} [CommRing A] [IsLocalRing A]
     (hfactor : HenselianFactorizationProperty A) :
     SimpleResidueRootLiftingProperty A := by
-  sorry
+  intro f a₀ hf hroot hsimple
+  let g₀ : Polynomial (ResidueRing A) := X - C a₀
+  let h₀ : Polynomial (ResidueRing A) := residuePolynomial f /ₘ g₀
+  have hg₀ : g₀.Monic := by
+    simpa [g₀] using monic_X_sub_C a₀
+  have hred : residuePolynomial f = g₀ * h₀ := by
+    simpa [g₀, h₀, modByMonic_X_sub_C_eq_C_eval, hroot] using
+      (X_sub_C_mul_divByMonic_eq_sub_modByMonic (residuePolynomial f) a₀).symm
+  have hcop : IsCoprime g₀ h₀ := by
+    change IsCoprime (X - C a₀) (residuePolynomial f /ₘ (X - C a₀))
+    have hsimple_ne : (residuePolynomial f).derivative.eval a₀ ≠ 0 :=
+      hsimple.ne_zero
+    exact isCoprime_of_is_root_of_eval_derivative_ne_zero
+      (K := IsLocalRing.ResidueField A) (residuePolynomial f) a₀ hsimple_ne
+  have hprodmonic : (g₀ * h₀).Monic := by
+    rw [← hred]
+    exact hf.map (residueMap A)
+  have hh₀ : h₀.Monic := hg₀.of_mul_monic_left hprodmonic
+  obtain ⟨gh, hgh, _⟩ := hfactor f g₀ h₀ hf hg₀ hh₀ hcop hred
+  rcases hgh with ⟨hg, hh, hng, hnh, hrg, hrh, hfac⟩
+  have hng' : gh.1.natDegree = 1 := by
+    simpa [g₀] using hng
+  let a : A := -gh.1.coeff 0
+  have hpoly : gh.1 = X - C a := by
+    rw [hg.eq_X_add_C hng']
+    simp [a, sub_neg_eq_add]
+  have hfa : f.eval a = 0 := by
+    rw [hfac, eval_mul, hpoly]
+    simp
+  have hresa : residueClass a = a₀ := by
+    have hcoeff := congrArg (fun P : Polynomial (ResidueRing A) => P.coeff 0) hrg
+    simp [residuePolynomial, g₀] at hcoeff
+    change residueMap A (-gh.1.coeff 0) = a₀
+    rw [map_neg, hcoeff]
+    simp
+  obtain ⟨a₀', ha₀'⟩ := Ideal.Quotient.mk_surjective a₀
+  have hunit : IsUnit (f.derivative.eval a₀') := by
+    apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+    change residueMap A (f.derivative.eval a₀') ≠ 0
+    have hsimple' : (residuePolynomial f).derivative.eval a₀ ≠ 0 :=
+      hsimple.ne_zero
+    rw [← ha₀'] at hsimple'
+    change ((f.map (residueMap A)).derivative).eval (residueMap A a₀') ≠ 0 at hsimple'
+    rw [Polynomial.derivative_map, Polynomial.eval_map_apply] at hsimple'
+    exact hsimple'
+  have hca : CongruentModIdeal (IsLocalRing.maximalIdeal A) a a₀' := by
+    unfold CongruentModIdeal
+    rw [← Ideal.Quotient.eq_zero_iff_mem]
+    change residueMap A (a - a₀') = 0
+    have hres : residueMap A a = residueMap A a₀' := by
+      calc
+        residueMap A a = a₀ := by simpa [residueClass, residueMap] using hresa
+        _ = residueMap A a₀' := ha₀'.symm
+    rw [map_sub, hres]
+    simp
+  refine ⟨a, ⟨hfa, hresa⟩, ?_⟩
+  intro b hb
+  have hcb : CongruentModIdeal (IsLocalRing.maximalIdeal A) b a₀' := by
+    unfold CongruentModIdeal
+    rw [← Ideal.Quotient.eq_zero_iff_mem]
+    change residueMap A (b - a₀') = 0
+    have hres : residueMap A b = residueMap A a₀' := by
+      calc
+        residueMap A b = a₀ := by simpa [residueClass, residueMap] using hb.2
+        _ = residueMap A a₀' := ha₀'.symm
+    rw [map_sub, hres]
+    simp
+  have hunit_a : IsUnit (f.derivative.eval a) :=
+    derivative_unit_on_residue_class f hca hunit
+  have habmem : a - b ∈ IsLocalRing.maximalIdeal A := by
+    unfold CongruentModIdeal at hca hcb
+    have h := (IsLocalRing.maximalIdeal A).sub_mem hca hcb
+    simpa [sub_eq_add_neg, add_assoc] using h
+  have habunit : ¬ IsUnit (a - b) := by
+    intro hab
+    exact (notMem_maximalIdeal.mpr hab) habmem
+  exact (IsLocalRing.eq_of_eval_eq_zero_of_not_isUnit_sub
+    (f := f) (a := a) (b := b) hfa hb.1 habunit hunit_a).symm
 
 /-- Factorization and simple-root definitions of henselianity are equivalent. -/
 theorem henselian_iff_simple_residue_root_lifting {A : Type*} [CommRing A]
     [IsLocalRing A] :
     IsHenselianLocalRingChapter09 A ↔ SimpleResidueRootLiftingProperty A := by
-  sorry
+  constructor
+  · intro hH
+    change HenselianLocalRing A at hH
+    letI : HenselianLocalRing A := hH
+    intro f a₀ hf hroot hsimple
+    obtain ⟨a₀', ha₀'⟩ := Ideal.Quotient.mk_surjective a₀
+    have hfa : f.eval a₀' ∈ IsLocalRing.maximalIdeal A := by
+      rw [← Ideal.Quotient.eq_zero_iff_mem]
+      change residueMap A (f.eval a₀') = 0
+      have hroot' := hroot
+      rw [← ha₀'] at hroot'
+      change (f.map (residueMap A)).eval (residueMap A a₀') = 0 at hroot'
+      rw [Polynomial.eval_map_apply] at hroot'
+      exact hroot'
+    have hunit : IsUnit (f.derivative.eval a₀') := by
+      apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+      change residueMap A (f.derivative.eval a₀') ≠ 0
+      have hsimple' : (residuePolynomial f).derivative.eval a₀ ≠ 0 :=
+        hsimple.ne_zero
+      rw [← ha₀'] at hsimple'
+      change ((f.map (residueMap A)).derivative).eval (residueMap A a₀') ≠ 0 at hsimple'
+      rw [Polynomial.derivative_map, Polynomial.eval_map_apply] at hsimple'
+      exact hsimple'
+    obtain ⟨a, ha, hres⟩ := HenselianLocalRing.is_henselian f hf a₀' hfa hunit
+    have hares : residueClass a = a₀ := by
+      unfold residueClass residueMap
+      rw [← ha₀']
+      rw [← sub_eq_zero, ← map_sub, Ideal.Quotient.eq_zero_iff_mem]
+      exact hres
+    refine ⟨a, ⟨ha, hares⟩, ?_⟩
+    intro b hb
+    have hbc : CongruentModIdeal (IsLocalRing.maximalIdeal A) b a₀' := by
+      unfold CongruentModIdeal
+      rw [← Ideal.Quotient.eq_zero_iff_mem]
+      change residueMap A (b - a₀') = 0
+      have hresb : residueMap A b = residueMap A a₀' := by
+        calc
+          residueMap A b = a₀ := by simpa [residueClass, residueMap] using hb.2
+          _ = residueMap A a₀' := ha₀'.symm
+      rw [map_sub, hresb]
+      simp
+    have hca : CongruentModIdeal (IsLocalRing.maximalIdeal A) a a₀' := hres
+    have hunit_a : IsUnit (f.derivative.eval a) :=
+      derivative_unit_on_residue_class f hca hunit
+    have habmem : a - b ∈ IsLocalRing.maximalIdeal A := by
+      unfold CongruentModIdeal at hca hbc
+      have h := (IsLocalRing.maximalIdeal A).sub_mem hca hbc
+      simpa [sub_eq_add_neg, add_assoc] using h
+    have habunit : ¬ IsUnit (a - b) := by
+      intro hab
+      exact (notMem_maximalIdeal.mpr hab) habmem
+    exact (IsLocalRing.eq_of_eval_eq_zero_of_not_isUnit_sub
+      (f := f) (a := a) (b := b) ha hb.1 habunit hunit_a).symm
+  · intro hroot
+    change HenselianLocalRing A
+    refine { toIsLocalRing := inferInstance, is_henselian := ?_ }
+    intro f hf a₀ hfa hunit
+    have hroot' : (residuePolynomial f).eval (residueClass a₀) = 0 := by
+      change (f.map (residueMap A)).eval (residueMap A a₀) = 0
+      rw [Polynomial.eval_map_apply]
+      change (Ideal.Quotient.mk (IsLocalRing.maximalIdeal A)) (f.eval a₀) = 0
+      exact Ideal.Quotient.eq_zero_iff_mem.mpr hfa
+    have hsimple : IsUnit ((residuePolynomial f).derivative.eval (residueClass a₀)) := by
+      simpa only [residueClass, residuePolynomial, Polynomial.derivative_map,
+        Polynomial.eval_map_apply] using hunit.map (residueMap A)
+    obtain ⟨a, ha, _⟩ := hroot f (residueClass a₀) hf hroot' hsimple
+    refine ⟨a, ha.1, ?_⟩
+    rw [← Ideal.Quotient.eq_zero_iff_mem]
+    change residueMap A (a - a₀) = 0
+    have hres : residueMap A a = residueMap A a₀ := by
+      simpa only [residueClass] using ha.2
+    rw [map_sub, hres]
+    simp
 
 /-- Complete and separated maximal-ideal-adic local rings. -/
 def IsMaximalIdealAdicallyCompleteSeparated (A : Type*) [CommRing A] [IsLocalRing A] : Prop :=
@@ -1447,7 +1740,137 @@ theorem padicTwoSeventeen_first_iterate_and_error :
 theorem padicTwoSeventeen_lifted_root_displacement
     : ∃ a : ℚ_[2], padicTwoSeventeenPolynomial.eval a = 0 ∧
       Padic.addValuation (p := 2) (a - 1) = (3 : WithTop ℤ) := by
-  sorry
+  let F : (ℤ_[2])[X] := quadraticPolynomial (17 : ℤ_[2])
+  have hF : F.aeval (1 : ℤ_[2]) = (-16 : ℤ_[2]) := by
+    norm_num [F, quadraticPolynomial, Polynomial.aeval_def, eval₂_at_apply]
+  have hFd : F.derivative.aeval (1 : ℤ_[2]) = (2 : ℤ_[2]) := by
+    norm_num [F, quadraticPolynomial, Polynomial.aeval_def, eval₂_at_apply]
+  have hnorm : ‖F.aeval (1 : ℤ_[2])‖ <
+      ‖F.derivative.aeval (1 : ℤ_[2])‖ ^ 2 := by
+    rw [hF, hFd]
+    have h16 : (16 : ℤ_[2]) = (2 : ℤ_[2]) ^ 4 := by norm_num
+    rw [norm_neg, h16, norm_pow]
+    have hnorm2 : ‖(2 : ℤ_[2])‖ = (2 : ℝ)⁻¹ := PadicInt.norm_p
+    rw [hnorm2]
+    norm_num
+  obtain ⟨z, hz, hzclose, _, _⟩ :=
+    hensels_lemma (p := 2) (F := F) (a := (1 : ℤ_[2])) hnorm
+  let a : ℚ_[2] := z
+  have ha : padicTwoSeventeenPolynomial.eval a = 0 := by
+    have hz' := congrArg (fun x : ℤ_[2] => (x : ℚ_[2])) hz
+    have hz'' : (z : ℚ_[2]) ^ 2 - ((17 : ℤ_[2]) : ℚ_[2]) = 0 := by
+      simpa [F, quadraticPolynomial, Polynomial.aeval_def, eval₂_at_apply] using hz'
+    have h17 : ((17 : ℤ_[2]) : ℚ_[2]) = (17 : ℚ_[2]) := by
+      exact PadicInt.coe_natCast 17
+    rw [h17] at hz''
+    simpa [a, padicTwoSeventeenPolynomial, quadraticPolynomial,
+      Polynomial.aeval_def, eval₂_at_apply] using hz''
+  have hclose : ‖(z - 1 : ℤ_[2])‖ < (2 : ℝ) ^ (-1 : ℤ) := by
+    calc
+      ‖(z - 1 : ℤ_[2])‖ < ‖F.derivative.aeval (1 : ℤ_[2])‖ := hzclose
+      _ = (2 : ℝ) ^ (-1 : ℤ) := by
+        rw [hFd]
+        have hnorm2 : ‖(2 : ℤ_[2])‖ = (2 : ℝ)⁻¹ := PadicInt.norm_p
+        rw [hnorm2]
+        norm_num
+  have hzsub : z - 1 ≠ 0 := by
+    intro hzsub
+    have : z = 1 := sub_eq_zero.mp hzsub
+    rw [this] at hz
+    norm_num [F, quadraticPolynomial, Polynomial.aeval_def, eval₂_at_apply] at hz
+  have hnormle : ‖(z - 1 : ℤ_[2])‖ ≤ (2 : ℝ) ^ (-2 : ℤ) := by
+    exact (PadicInt.norm_lt_pow_iff_norm_le_pow_sub_one (z - 1) (-1)).mp hclose
+  have hzval : (2 : ℕ) ≤ (z - 1).valuation := by
+    exact (PadicInt.norm_le_pow_iff_le_valuation (z - 1) hzsub 2).mp hnormle
+  have hcast_sub : ((z - 1 : ℤ_[2]) : ℚ_[2]) = a - 1 := by
+    simp [a]
+  have hval_sub_cast :
+      Padic.addValuation (p := 2) (a - 1) =
+        (((z - 1).valuation : ℤ) : WithTop ℤ) := by
+    rw [← hcast_sub, Padic.addValuation.apply (PadicInt.coe_ne_zero.mpr hzsub),
+      PadicInt.valuation_coe]
+  have hvalgt : Padic.addValuation (p := 2) (a - 1) > (1 : WithTop ℤ) := by
+    rw [hval_sub_cast]
+    exact_mod_cast (show (1 : ℕ) < (z - 1).valuation by omega)
+  have hfactor : (a - 1) * (a + 1) = (16 : ℚ_[2]) := by
+    have ha' : a ^ 2 - (17 : ℚ_[2]) = 0 := by
+      simpa [padicTwoSeventeenPolynomial, quadraticPolynomial,
+        Polynomial.eval₂_at_apply] using ha
+    have ha_sq : a ^ 2 = (17 : ℚ_[2]) := sub_eq_zero.mp ha'
+    calc
+      (a - 1) * (a + 1) = a ^ 2 - 1 := by ring
+      _ = (17 : ℚ_[2]) - 1 := by rw [ha_sq]
+      _ = 16 := by norm_num
+  have hval_a_sub : Padic.addValuation (p := 2) (a - 1) ≠ ⊤ := by
+    rw [hval_sub_cast]
+    exact WithTop.coe_ne_top
+  have hzadd : z + 1 ≠ 0 := by
+    intro hzadd
+    have hzneg : z = -1 := eq_neg_of_add_eq_zero_left hzadd
+    rw [hzneg] at hz
+    norm_num [F, quadraticPolynomial, Polynomial.aeval_def, eval₂_at_apply] at hz
+  have hcast_add : ((z + 1 : ℤ_[2]) : ℚ_[2]) = a + 1 := by
+    simp [a]
+  have hval_add_cast :
+      Padic.addValuation (p := 2) (a + 1) =
+        (((z + 1).valuation : ℤ) : WithTop ℤ) := by
+    rw [← hcast_add, Padic.addValuation.apply (PadicInt.coe_ne_zero.mpr hzadd),
+      PadicInt.valuation_coe]
+  have hval_a_add : Padic.addValuation (p := 2) (a + 1) ≠ ⊤ := by
+    rw [hval_add_cast]
+    exact WithTop.coe_ne_top
+  have hval_a_add_eq : Padic.addValuation (p := 2) (a + 1) = (1 : WithTop ℤ) := by
+    have hneq : Padic.addValuation (p := 2) (a - 1) ≠
+        Padic.addValuation (p := 2) 2 := by
+      have htwo : Padic.addValuation (p := 2) (2 : ℚ_[2]) = (1 : WithTop ℤ) := by
+        have hp : Padic.valuation (2 : ℚ_[2]) = 1 := by
+          simpa using (Padic.valuation_p (p := 2))
+        rw [Padic.addValuation.apply (by norm_num), hp]
+        norm_num
+      rw [hval_sub_cast, htwo]
+      exact_mod_cast (show (z - 1).valuation ≠ 1 by omega)
+    have hadd := (Padic.addValuation (p := 2)).map_add_of_distinct_val hneq
+    have htwo : Padic.addValuation (p := 2) (2 : ℚ_[2]) = (1 : WithTop ℤ) := by
+      have hp : Padic.valuation (2 : ℚ_[2]) = 1 := by
+        simpa using (Padic.valuation_p (p := 2))
+      rw [Padic.addValuation.apply (by norm_num), hp]
+      norm_num
+    calc
+      Padic.addValuation (p := 2) (a + 1) =
+          Padic.addValuation (p := 2) ((a - 1) + 2) := by
+            congr 1 <;> ring
+      _ = min (Padic.addValuation (p := 2) (a - 1))
+          (Padic.addValuation (p := 2) 2) := hadd
+      _ = Padic.addValuation (p := 2) 2 :=
+        min_eq_right (by rw [htwo]; exact le_of_lt hvalgt)
+      _ = (1 : WithTop ℤ) := htwo
+  have hsum : Padic.addValuation (p := 2) (a - 1) +
+      Padic.addValuation (p := 2) (a + 1) =
+        Padic.addValuation (p := 2) (16 : ℚ_[2]) := by
+    calc
+      Padic.addValuation (p := 2) (a - 1) +
+          Padic.addValuation (p := 2) (a + 1) =
+          Padic.addValuation (p := 2) ((a - 1) * (a + 1)) := by
+            rw [(Padic.addValuation (p := 2)).map_mul]
+      _ = Padic.addValuation (p := 2) (16 : ℚ_[2]) :=
+        congrArg (Padic.addValuation (p := 2)) hfactor
+  have hval16 : Padic.addValuation (p := 2) (16 : ℚ_[2]) = (4 : WithTop ℤ) := by
+    norm_num [Padic.addValuation, AddValuation.of_apply, Padic.addValuationDef,
+      Padic.valuation_intCast]
+    have hpv : padicValNat 2 16 = 4 := by
+      convert padicValNat_base_pow (p := 2) (by norm_num) 4 using 1 <;> norm_num
+    exact_mod_cast hpv
+  rw [hval16] at hsum
+  have hval_a_sub_eq : Padic.addValuation (p := 2) (a - 1) = (3 : WithTop ℤ) := by
+    rw [hval_sub_cast, hval_a_add_eq] at hsum
+    have hsum_int : ((z - 1).valuation : ℤ) + 1 = 4 := by
+      apply WithTop.coe_injective
+      simpa using hsum
+    have hzval3 : (z - 1).valuation = 3 := by
+      exact_mod_cast (by omega : ((z - 1).valuation : ℤ) = 3)
+    rw [hval_sub_cast, hzval3]
+    norm_num
+  exact ⟨a, ha, hval_a_sub_eq⟩
 
 /-- The Artin--Schreier polynomial `X^p-X-a`. -/
 def artinSchreierPolynomial {A : Type*} [CommRing A] (p : ℕ) (a : A) : A[X] :=
@@ -1738,6 +2161,7 @@ def IsHenselianValuedField {K Γ : Type*} [Field K]
   HenselianLocalRing vK.valuationSubring
 
 /-- For a finite extension, primes above the maximal ideal correspond to valuation extensions. -/
+-- STATEMENT_NEEDS_UPDATE: `vK` is not related to `A`; the conclusion is false for an arbitrary valuation and an unrelated valuation ring. Add the assumption `vK.Integers A` (or identify `A` with `vK.valuationSubring`) before asserting a prime/valuation correspondence.
 theorem finite_extension_prime_valuation_correspondence
     {A B K L Γ : Type*} [CommRing A] [IsDomain A] [IsLocalRing A]
     [ValuationRing A] [IsIntegrallyClosed A]
@@ -1758,9 +2182,52 @@ theorem unique_prime_iff_unique_valuation_extension
     (hcor : ExtensionPrimeCorrespondence (A := A) (B := B) (L := L) vK) :
     (HasUniquePrimeAbove (A := A) (B := B) ↔
       HasUniqueValuationExtension (L := L) vK) := by
-  sorry
+  obtain ⟨e⟩ := hcor
+  constructor
+  · rintro ⟨P, hP, hPuniq⟩
+    let y₀ : {P : Ideal B // PrimeAboveMaximal (A := A) (B := B) P} := ⟨P, hP⟩
+    obtain ⟨q₀, hq₀⟩ := e.surjective y₀
+    obtain ⟨w₀, hw₀⟩ := Quotient.exists_rep q₀
+    have hy₀ : e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀) = y₀ := by
+      exact (congrArg e hw₀).trans hq₀
+    refine ⟨w₀, ?_⟩
+    intro w
+    have hy :
+        e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w) =
+          e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀) := by
+      apply Subtype.ext
+      exact (hPuniq _ (e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w)).property).trans
+        (hPuniq _ (e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀)).property).symm
+    have hq :
+        Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w =
+          Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀ := e.injective hy
+    have hrel : Chapter09ValuationExtensionEquivalent (L := L) vK w₀ w := by
+      exact (Chapter09ValuationExtensionSetoid (L := L) vK).iseqv.symm
+        (Quotient.exact hq)
+    exact hrel
+  · rintro ⟨w₀, hw₀⟩
+    let y₀ := e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀)
+    refine ⟨y₀.1, y₀.2, ?_⟩
+    intro P hP
+    let y : {P : Ideal B // PrimeAboveMaximal (A := A) (B := B) P} := ⟨P, hP⟩
+    obtain ⟨q, hq⟩ := e.surjective y
+    obtain ⟨w, hw⟩ := Quotient.exists_rep q
+    have hrel := hw₀ w
+    have hqeq :
+        Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w₀ =
+          Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w := by
+      exact Quotient.sound hrel
+    have hy :
+        y₀ = e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w) :=
+      congrArg e hqeq
+    have hwy :
+        e (Quotient.mk (Chapter09ValuationExtensionSetoid (L := L) vK) w) = y :=
+      (congrArg e hw).trans hq
+    have hyy : y₀ = y := hy.trans hwy
+    exact congrArg Subtype.val hyy.symm
 
 /-- A henselian valued field has one prime above the maximal ideal in every finite extension. -/
+-- STATEMENT_NEEDS_UPDATE: `hH` only says that `vK.valuationSubring` is henselian, while the asserted prime is above the maximal ideal of unrelated `A`. Add `vK.Integers A` (or identify `A` with `vK.valuationSubring`) so henselianity applies to the base ring whose primes are being counted.
 theorem henselian_valued_field_has_unique_prime_and_extension
     {A B K L Γ : Type*} [CommRing A] [IsDomain A] [IsLocalRing A]
     [ValuationRing A] [IsIntegrallyClosed A]

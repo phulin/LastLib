@@ -132,7 +132,360 @@ theorem chapter07_completion_unique_up_to_unique_isometric_field_equiv
     [Valued K Γ₀] [Valued F Γ₀] [Valued G Γ₀]
     (A : Chapter07CompletionData K F Γ₀) (B : Chapter07CompletionData K G Γ₀) :
     ∃! e : F ≃+* G, chapter07IsometricFieldEquiv A B e := by
-  sorry
+  have hAui : IsUniformInducing A.embedding := by
+    rw [Filter.HasBasis.isUniformInducing_iff
+      (Valued.hasBasis_uniformity K Γ₀) (Valued.hasBasis_uniformity F Γ₀)]
+    constructor
+    · intro γ _
+      obtain ⟨y, hy⟩ :=
+        MonoidWithZeroHom.ValueGroup₀.restrict₀_surjective
+          (.ofClass (Valued.v (R := F))) γ.1
+      have hy0 : y ≠ 0 := by
+        intro hyzero
+        have hzero : (0 : MonoidWithZeroHom.ValueGroup₀
+            (.ofClass (Valued.v (R := F)))) = γ.1 := by
+          simpa [hyzero] using hy
+        exact γ.ne_zero hzero.symm
+      have hvaly0 : Valued.v (R := F) y ≠ 0 :=
+        (Valuation.ne_zero_iff (Valued.v (R := F))).2 hy0
+      obtain ⟨x, hxy⟩ := A.dense.mem_nhds (Valued.locally_const hvaly0)
+      have hvalx : Valued.v (R := K) x = Valued.v (R := F) y := by
+        calc
+          Valued.v (R := K) x = Valued.v (R := F) (A.embedding x) :=
+            (A.isometric x).symm
+          _ = Valued.v (R := F) y := hxy
+      have hvalx0 : Valued.v (R := K) x ≠ 0 := by
+        intro hzero
+        exact hvaly0 (hvalx.symm.trans hzero)
+      have hx0 : x ≠ 0 :=
+        (Valuation.ne_zero_iff (Valued.v (R := K))).mp hvalx0
+      have hrestrictx0 : (Valued.v (R := K)).restrict x ≠ 0 :=
+        (Valued.v (R := K)).restrict.ne_zero_iff.mpr hx0
+      let δ : (MonoidWithZeroHom.ValueGroup₀
+          (.ofClass (Valued.v (R := K))))ˣ :=
+        Units.mk0 ((Valued.v (R := K)).restrict x) hrestrictx0
+      have hyemb : Valued.v (R := F) y =
+          MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
+        simpa using congrArg MonoidWithZeroHom.ValueGroup₀.embedding hy
+      have hbound : MonoidWithZeroHom.ValueGroup₀.embedding δ.1 =
+          MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
+        calc
+          MonoidWithZeroHom.ValueGroup₀.embedding δ.1 = Valued.v (R := K) x := by
+            simp [δ]
+          _ = Valued.v (R := F) (A.embedding x) := (A.isometric x).symm
+          _ = Valued.v (R := F) y := hxy
+          _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hyemb
+      refine ⟨δ, trivial, ?_⟩
+      intro x₁ x₂ h₁₂
+      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
+      have hmap : Valued.v (R := F) (A.embedding x₂ - A.embedding x₁) =
+          Valued.v (R := K) (x₂ - x₁) := by
+        rw [← A.embedding.map_sub, A.isometric]
+      calc
+        Valued.v (R := F) (A.embedding x₂ - A.embedding x₁) =
+            Valued.v (R := K) (x₂ - x₁) := hmap
+        _ < MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := h₁₂
+        _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hbound
+    · intro δ _
+      obtain ⟨x, hx⟩ :=
+        MonoidWithZeroHom.ValueGroup₀.restrict₀_surjective
+          (.ofClass (Valued.v (R := K))) δ.1
+      have hrestrictx0 : (Valued.v (R := K)).restrict x ≠ 0 := by
+        simpa [Valuation.restrict_def] using
+          (show MonoidWithZeroHom.ValueGroup₀.restrict₀
+              (.ofClass (Valued.v (R := K))) x ≠ 0 by
+            rw [hx]
+            exact δ.ne_zero)
+      have hx0 : x ≠ 0 :=
+        (Valuation.ne_zero_iff (Valued.v (R := K))).mp (by
+          intro hzero
+          apply hrestrictx0
+          exact (Valuation.restrict_eq_zero_iff (Valued.v (R := K))).2 hzero)
+      have hAx0 : A.embedding x ≠ 0 := by
+        intro hzero
+        apply hx0
+        exact A.injective (by simpa using hzero)
+      have hrestrictAx0 : (Valued.v (R := F)).restrict (A.embedding x) ≠ 0 :=
+        (Valued.v (R := F)).restrict.ne_zero_iff.mpr hAx0
+      let γ : (MonoidWithZeroHom.ValueGroup₀
+          (.ofClass (Valued.v (R := F))))ˣ :=
+        Units.mk0 ((Valued.v (R := F)).restrict (A.embedding x)) hrestrictAx0
+      have hbound : MonoidWithZeroHom.ValueGroup₀.embedding γ.1 =
+          MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := by
+        calc
+          MonoidWithZeroHom.ValueGroup₀.embedding γ.1 =
+              Valued.v (R := F) (A.embedding x) := by simp [γ]
+          _ = Valued.v (R := K) x := A.isometric x
+          _ = MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := by
+            simpa using congrArg MonoidWithZeroHom.ValueGroup₀.embedding hx
+      refine ⟨γ, trivial, ?_⟩
+      intro x₁ x₂ h₁₂
+      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
+      have hmap : Valued.v (R := F) (A.embedding x₂ - A.embedding x₁) =
+          Valued.v (R := K) (x₂ - x₁) := by
+        rw [← A.embedding.map_sub, A.isometric]
+      calc
+        Valued.v (R := K) (x₂ - x₁) =
+            Valued.v (R := F) (A.embedding x₂ - A.embedding x₁) := hmap.symm
+        _ < MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := h₁₂
+        _ = MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := hbound
+  have hBui : IsUniformInducing B.embedding := by
+    rw [Filter.HasBasis.isUniformInducing_iff
+      (Valued.hasBasis_uniformity K Γ₀) (Valued.hasBasis_uniformity G Γ₀)]
+    constructor
+    · intro γ _
+      obtain ⟨y, hy⟩ :=
+        MonoidWithZeroHom.ValueGroup₀.restrict₀_surjective
+          (.ofClass (Valued.v (R := G))) γ.1
+      have hy0 : y ≠ 0 := by
+        intro hyzero
+        have hzero : (0 : MonoidWithZeroHom.ValueGroup₀
+            (.ofClass (Valued.v (R := G)))) = γ.1 := by
+          simpa [hyzero] using hy
+        exact γ.ne_zero hzero.symm
+      have hvaly0 : Valued.v (R := G) y ≠ 0 :=
+        (Valuation.ne_zero_iff (Valued.v (R := G))).2 hy0
+      obtain ⟨x, hxy⟩ := B.dense.mem_nhds (Valued.locally_const hvaly0)
+      have hvalx : Valued.v (R := K) x = Valued.v (R := G) y := by
+        calc
+          Valued.v (R := K) x = Valued.v (R := G) (B.embedding x) :=
+            (B.isometric x).symm
+          _ = Valued.v (R := G) y := hxy
+      have hvalx0 : Valued.v (R := K) x ≠ 0 := by
+        intro hzero
+        exact hvaly0 (hvalx.symm.trans hzero)
+      have hx0 : x ≠ 0 :=
+        (Valuation.ne_zero_iff (Valued.v (R := K))).mp hvalx0
+      have hrestrictx0 : (Valued.v (R := K)).restrict x ≠ 0 :=
+        (Valued.v (R := K)).restrict.ne_zero_iff.mpr hx0
+      let δ : (MonoidWithZeroHom.ValueGroup₀
+          (.ofClass (Valued.v (R := K))))ˣ :=
+        Units.mk0 ((Valued.v (R := K)).restrict x) hrestrictx0
+      have hyemb : Valued.v (R := G) y =
+          MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
+        simpa using congrArg MonoidWithZeroHom.ValueGroup₀.embedding hy
+      have hbound : MonoidWithZeroHom.ValueGroup₀.embedding δ.1 =
+          MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
+        calc
+          MonoidWithZeroHom.ValueGroup₀.embedding δ.1 = Valued.v (R := K) x := by
+            simp [δ]
+          _ = Valued.v (R := G) (B.embedding x) := (B.isometric x).symm
+          _ = Valued.v (R := G) y := hxy
+          _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hyemb
+      refine ⟨δ, trivial, ?_⟩
+      intro x₁ x₂ h₁₂
+      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
+      have hmap : Valued.v (R := G) (B.embedding x₂ - B.embedding x₁) =
+          Valued.v (R := K) (x₂ - x₁) := by
+        rw [← B.embedding.map_sub, B.isometric]
+      calc
+        Valued.v (R := G) (B.embedding x₂ - B.embedding x₁) =
+            Valued.v (R := K) (x₂ - x₁) := hmap
+        _ < MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := h₁₂
+        _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hbound
+    · intro δ _
+      obtain ⟨x, hx⟩ :=
+        MonoidWithZeroHom.ValueGroup₀.restrict₀_surjective
+          (.ofClass (Valued.v (R := K))) δ.1
+      have hrestrictx0 : (Valued.v (R := K)).restrict x ≠ 0 := by
+        simpa [Valuation.restrict_def] using
+          (show MonoidWithZeroHom.ValueGroup₀.restrict₀
+              (.ofClass (Valued.v (R := K))) x ≠ 0 by
+            rw [hx]
+            exact δ.ne_zero)
+      have hx0 : x ≠ 0 :=
+        (Valuation.ne_zero_iff (Valued.v (R := K))).mp (by
+          intro hzero
+          apply hrestrictx0
+          exact (Valuation.restrict_eq_zero_iff (Valued.v (R := K))).2 hzero)
+      have hBx0 : B.embedding x ≠ 0 := by
+        intro hzero
+        apply hx0
+        exact B.injective (by simpa using hzero)
+      have hrestrictBx0 : (Valued.v (R := G)).restrict (B.embedding x) ≠ 0 :=
+        (Valued.v (R := G)).restrict.ne_zero_iff.mpr hBx0
+      let γ : (MonoidWithZeroHom.ValueGroup₀
+          (.ofClass (Valued.v (R := G))))ˣ :=
+        Units.mk0 ((Valued.v (R := G)).restrict (B.embedding x)) hrestrictBx0
+      have hbound : MonoidWithZeroHom.ValueGroup₀.embedding γ.1 =
+          MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := by
+        calc
+          MonoidWithZeroHom.ValueGroup₀.embedding γ.1 =
+              Valued.v (R := G) (B.embedding x) := by simp [γ]
+          _ = Valued.v (R := K) x := B.isometric x
+          _ = MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := by
+            simpa using congrArg MonoidWithZeroHom.ValueGroup₀.embedding hx
+      refine ⟨γ, trivial, ?_⟩
+      intro x₁ x₂ h₁₂
+      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
+      have hmap : Valued.v (R := G) (B.embedding x₂ - B.embedding x₁) =
+          Valued.v (R := K) (x₂ - x₁) := by
+        rw [← B.embedding.map_sub, B.isometric]
+      calc
+        Valued.v (R := K) (x₂ - x₁) =
+            Valued.v (R := G) (B.embedding x₂ - B.embedding x₁) := hmap.symm
+        _ < MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := h₁₂
+        _ = MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := hbound
+  letI : CompleteSpace F := A.complete
+  letI : CompleteSpace G := B.complete
+  let pF := AbstractCompletion.mk F A.embedding (inferInstance : UniformSpace F)
+    A.complete A.hausdorff hAui A.dense
+  let pG := AbstractCompletion.mk G B.embedding (inferInstance : UniformSpace G)
+    B.complete B.hausdorff hBui B.dense
+  let eFG : F → G := pF.extend B.embedding
+  let eGF : G → F := pG.extend A.embedding
+  have hBuc : UniformContinuous B.embedding := hBui.uniformContinuous
+  have hAuc : UniformContinuous A.embedding := hAui.uniformContinuous
+  have hFGcont : Continuous eFG := by
+    exact pF.continuous_extend
+  have hGFcont : Continuous eGF := by
+    exact pG.continuous_extend
+  have hFG_coe : ∀ x : K, eFG (A.embedding x) = B.embedding x := by
+    intro x
+    exact pF.extend_coe hBuc x
+  have hGF_coe : ∀ x : K, eGF (B.embedding x) = A.embedding x := by
+    intro x
+    exact pG.extend_coe hAuc x
+  have hprodA : DenseRange (Prod.map A.embedding A.embedding) :=
+    A.dense.prodMap A.dense
+  have heq_add :
+      (fun z : F × F => eFG (z.1 + z.2)) =
+        (fun z : F × F => eFG z.1 + eFG z.2) := by
+    apply DenseRange.equalizer hprodA
+    · exact hFGcont.comp (continuous_fst.add continuous_snd)
+    · exact (hFGcont.comp continuous_fst).add (hFGcont.comp continuous_snd)
+    · funext z
+      rcases z with ⟨x, y⟩
+      change eFG (A.embedding x + A.embedding y) =
+        eFG (A.embedding x) + eFG (A.embedding y)
+      rw [← A.embedding.map_add]
+      change pF.extend B.embedding (A.embedding (x + y)) =
+        pF.extend B.embedding (A.embedding x) + pF.extend B.embedding (A.embedding y)
+      rw [pF.extend_coe hBuc, pF.extend_coe hBuc, pF.extend_coe hBuc]
+      exact B.embedding.map_add x y
+  have heq_mul :
+      (fun z : F × F => eFG (z.1 * z.2)) =
+        (fun z : F × F => eFG z.1 * eFG z.2) := by
+    apply DenseRange.equalizer hprodA
+    · exact hFGcont.comp (continuous_fst.mul continuous_snd)
+    · exact (hFGcont.comp continuous_fst).mul (hFGcont.comp continuous_snd)
+    · funext z
+      rcases z with ⟨x, y⟩
+      change eFG (A.embedding x * A.embedding y) =
+        eFG (A.embedding x) * eFG (A.embedding y)
+      rw [← A.embedding.map_mul]
+      change pF.extend B.embedding (A.embedding (x * y)) =
+        pF.extend B.embedding (A.embedding x) * pF.extend B.embedding (A.embedding y)
+      rw [pF.extend_coe hBuc, pF.extend_coe hBuc, pF.extend_coe hBuc]
+      exact B.embedding.map_mul x y
+  have hFG_one : eFG 1 = 1 := by
+    calc
+      eFG 1 = eFG (A.embedding 1) := by rw [A.embedding.map_one]
+      _ = B.embedding 1 := hFG_coe 1
+      _ = 1 := B.embedding.map_one
+  have hGF_one : eGF 1 = 1 := by
+    calc
+      eGF 1 = eGF (B.embedding 1) := by rw [B.embedding.map_one]
+      _ = A.embedding 1 := hGF_coe 1
+      _ = 1 := A.embedding.map_one
+  have hleft : Function.LeftInverse eGF eFG := by
+    intro x
+    simpa [eFG, eGF, AbstractCompletion.compare, Function.comp_def] using
+      congrFun (pG.inverse_compare pF) x
+  have hright : Function.RightInverse eGF eFG := by
+    intro x
+    simpa [eFG, eGF, AbstractCompletion.compare, Function.comp_def] using
+      congrFun (pF.inverse_compare pG) x
+  let e : F ≃+* G :=
+    { toFun := eFG
+      invFun := eGF
+      left_inv := hleft
+      right_inv := hright
+      map_mul' := fun x y => congrFun heq_mul (x, y)
+      map_add' := fun x y => congrFun heq_add (x, y) }
+  have he_isometric : ∀ y : F, Valued.v (R := G) (e y) = Valued.v (R := F) y := by
+    intro y
+    rcases eq_or_ne y 0 with rfl | hy
+    · simp
+    · have hey : e y ≠ 0 := by
+        intro hey
+        exact hy (e.injective (by simpa using hey))
+      have hyval0 : Valued.v (R := F) y ≠ 0 :=
+        (Valuation.ne_zero_iff (Valued.v (R := F))).2 hy
+      have heval0 : Valued.v (R := G) (e y) ≠ 0 :=
+        (Valuation.ne_zero_iff (Valued.v (R := G))).2 hey
+      have hFset : {z : F | Valued.v (R := F) z = Valued.v (R := F) y} ∈ 𝓝 y :=
+        Valued.locally_const hyval0
+      have hGset : {z : G | Valued.v (R := G) z = Valued.v (R := G) (e y)} ∈
+          𝓝 (e y) := Valued.locally_const heval0
+      have hepre : e ⁻¹' {z : G |
+          Valued.v (R := G) z = Valued.v (R := G) (e y)} ∈ 𝓝 y :=
+        hFGcont.continuousAt.preimage_mem_nhds hGset
+      obtain ⟨x, hxF, hxG⟩ := A.dense.mem_nhds (inter_mem hFset hepre)
+      calc
+        Valued.v (R := G) (e y) = Valued.v (R := G) (e (A.embedding x)) := hxG.symm
+        _ = Valued.v (R := G) (B.embedding x) := by
+          simpa [e] using congrArg (Valued.v (R := G)) (hFG_coe x)
+        _ = Valued.v (R := K) x := B.isometric x
+        _ = Valued.v (R := F) (A.embedding x) := (A.isometric x).symm
+        _ = Valued.v (R := F) y := hxF
+  refine ⟨e, ?_, ?_⟩
+  · exact ⟨he_isometric, hFG_coe⟩
+  · intro e' he'
+    have he'uc : UniformContinuous (e' : F → G) := by
+      rw [Filter.HasBasis.uniformContinuous_iff
+        (Valued.hasBasis_uniformity F Γ₀) (Valued.hasBasis_uniformity G Γ₀)]
+      intro γ _
+      obtain ⟨y, hy⟩ :=
+        MonoidWithZeroHom.ValueGroup₀.restrict₀_surjective
+          (.ofClass (Valued.v (R := G))) γ.1
+      have hy0 : y ≠ 0 := by
+        intro hyzero
+        have hzero : (0 : MonoidWithZeroHom.ValueGroup₀
+            (.ofClass (Valued.v (R := G)))) = γ.1 := by
+          simpa [hyzero] using hy
+        exact γ.ne_zero hzero.symm
+      have hyinv0 : (e'.symm y : F) ≠ 0 := by
+        simpa using hy0
+      have hδ0 : (Valued.v (R := F)).restrict (e'.symm y) ≠ 0 :=
+        (Valued.v (R := F)).restrict.ne_zero_iff.mpr hyinv0
+      let δ : (MonoidWithZeroHom.ValueGroup₀
+          (.ofClass (Valued.v (R := F))))ˣ :=
+        Units.mk0 ((Valued.v (R := F)).restrict (e'.symm y)) hδ0
+      have hyemb : Valued.v (R := G) y =
+          MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
+        simpa using congrArg MonoidWithZeroHom.ValueGroup₀.embedding hy
+      have hbound : MonoidWithZeroHom.ValueGroup₀.embedding δ.1 =
+          MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
+        calc
+          MonoidWithZeroHom.ValueGroup₀.embedding δ.1 =
+              Valued.v (R := F) (e'.symm y) := by simp [δ]
+          _ = Valued.v (R := G) (e' (e'.symm y)) := (he'.1 (e'.symm y)).symm
+          _ = Valued.v (R := G) y := by simp
+          _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hyemb
+      refine ⟨δ, trivial, ?_⟩
+      intro x₁ x₂ h₁₂
+      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
+      calc
+        Valued.v (R := G) (e' x₂ - e' x₁) =
+            Valued.v (R := F) (x₂ - x₁) := by
+          rw [← e'.map_sub, he'.1]
+        _ < MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := h₁₂
+        _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hbound
+    have he'cont : Continuous (e' : F → G) := he'uc.continuous
+    have hfun : eFG = (e' : F → G) := by
+      apply DenseRange.equalizer A.dense hFGcont he'cont
+      funext x
+      exact (hFG_coe x).trans (he'.2 x).symm
+    apply RingEquiv.ext
+    intro y
+    change e' y = eFG y
+    exact congrFun hfun.symm y
 
 -- The standard Mathlib completion package for a valued field.
 noncomputable def chapter07StandardValuedCompletionData
@@ -640,6 +993,7 @@ structure Chapter07CauchyCompletionModel
 theorem chapter07_cauchy_quotient_complete
     {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K] :
     Nonempty (Chapter07CauchyCompletionModel K) := by
+  -- STATEMENT_NEEDS_UPDATE: A quotient of Cauchy sequences is not a completion for an arbitrary uniform space; without a countable uniformity basis (or a first-countability hypothesis), Cauchy filters need not be represented by sequences. Add such a hypothesis or define the quotient using Cauchy filters, and state completeness for the resulting uniformity.
   sorry
 
 -- The diagonal representative assertion used to prove completeness.
@@ -1059,7 +1413,34 @@ theorem chapter07_completion_extension_preserves_valuation
     ∀ x : UniformSpace.Completion K,
       Valued.v (R := F) (chapter07UniversalCompletionRingHom f hf x) =
         chapter07CompletionValuation K Γ₀ x := by
-  sorry
+  intro x
+  rcases eq_or_ne x 0 with rfl | hx
+  · simp [chapter07UniversalCompletionRingHom, chapter07CompletionValuation]
+  · let g := chapter07UniversalCompletionRingHom f hf
+    have hgx : g x ≠ 0 := by
+      intro hgx
+      apply hx
+      exact (RingHom.injective g) (by simpa using hgx)
+    have hxc : chapter07CompletionValuation K Γ₀ x ≠ 0 :=
+      (Valuation.ne_zero_iff (chapter07CompletionValuation K Γ₀)).2 hx
+    have hvalC : {y : UniformSpace.Completion K |
+        chapter07CompletionValuation K Γ₀ y = chapter07CompletionValuation K Γ₀ x} ∈ 𝓝 x :=
+      Valued.locally_const hxc
+    have hvalF : {y : F | Valued.v (R := F) y = Valued.v (R := F) (g x)} ∈ 𝓝 (g x) :=
+      Valued.locally_const ((Valuation.ne_zero_iff (Valued.v (R := F))).2 hgx)
+    have hgval : g ⁻¹' {y : F |
+        Valued.v (R := F) y = Valued.v (R := F) (g x)} ∈ 𝓝 x :=
+      (UniformSpace.Completion.continuous_extension (f := f)).continuousAt.preimage_mem_nhds hvalF
+    obtain ⟨r, hrC, hrF⟩ := UniformSpace.Completion.denseRange_coe.mem_nhds
+      (inter_mem hvalC hgval)
+    calc
+      Valued.v (R := F) (g x) = Valued.v (R := F) (g (r : UniformSpace.Completion K)) := hrF.symm
+      _ = Valued.v (R := F) (f r) := by
+        rw [chapter07_universal_extension_ringHom_coe]
+      _ = Valued.v (R := K) r := hcompat r
+      _ = chapter07CompletionValuation K Γ₀ (r : UniformSpace.Completion K) :=
+        (chapter07_completion_valuation_apply_coe r).symm
+      _ = chapter07CompletionValuation K Γ₀ x := hrC
 
 /-! ### 7.4. Completion of a valuation ring -/
 
@@ -1183,7 +1564,63 @@ theorem chapter07_completed_dvr_value_group_is_integer
     [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete] :
     Nonempty
       (ValueGroup₀ (.ofClass (chapter07CompletionValuation K Γ₀)) ≃*o ℤᵐ⁰) := by
-  sorry
+  let vK : Valuation K Γ₀ := Valued.v
+  let vC : Valuation (UniformSpace.Completion K) Γ₀ :=
+    chapter07CompletionValuation K Γ₀
+  have hvalueGroup : valueGroup (.ofClass vC) = valueGroup (.ofClass vK) := by
+    apply le_antisymm
+    · intro γ hγ
+      have hγ' : (γ : Γ₀) ∈ Set.range (MonoidWithZeroHom.ofClass vC) \ {0} := by
+        rw [← MonoidWithZeroHom.valueGroup_eq_range (.ofClass vC)]
+        exact ⟨γ, hγ, rfl⟩
+      obtain ⟨⟨x, hx⟩, _hx0⟩ := hγ'
+      obtain ⟨r, hr⟩ := Valued.exists_coe_eq_v x
+      have hval : (γ : Γ₀) = vK r := by
+        calc
+          (γ : Γ₀) = vC x := hx.symm
+          _ = vK r := by
+            change Valued.extensionValuation x = Valued.v r
+            exact hr
+      have hr0 : r ≠ 0 := by
+        intro hr0
+        subst r
+        exact γ.ne_zero (by simpa [vK] using hval)
+      have hvr0 : vK r ≠ 0 := by
+        intro hvr0
+        exact γ.ne_zero (hval.trans hvr0)
+      have hγeq : Units.mk0 (vK r) hvr0 = γ := by
+        apply Units.ext
+        exact hval.symm
+      rw [← hγeq]
+      exact MonoidWithZeroHom.mem_valueGroup (.ofClass vK) ⟨r, rfl⟩
+    · intro γ hγ
+      have hγ' : (γ : Γ₀) ∈ Set.range (MonoidWithZeroHom.ofClass vK) \ {0} := by
+        rw [← MonoidWithZeroHom.valueGroup_eq_range (.ofClass vK)]
+        exact ⟨γ, hγ, rfl⟩
+      obtain ⟨⟨r, hr⟩, hr0⟩ := hγ'
+      have hval : (γ : Γ₀) = vK r := by
+        simpa [vK] using hr.symm
+      have hvr0 : vK r ≠ 0 := by
+        intro hvr0
+        exact γ.ne_zero (hval.trans hvr0)
+      have hvcval : vC ((r : K) : UniformSpace.Completion K) = vK r := by
+        change chapter07CompletionValuation K Γ₀
+            ((r : K) : UniformSpace.Completion K) = Valued.v r
+        rw [chapter07_completion_valuation_apply_coe]
+      have hvc0 : vC ((r : K) : UniformSpace.Completion K) ≠ 0 := by
+        simpa [hvcval] using hvr0
+      have hγeq : Units.mk0 (vC ((r : K) : UniformSpace.Completion K)) hvc0 = γ := by
+        apply Units.ext
+        exact hvcval.trans hval.symm
+      rw [← hγeq]
+      exact MonoidWithZeroHom.mem_valueGroup (.ofClass vC)
+        ⟨(r : UniformSpace.Completion K), rfl⟩
+  letI : vC.IsRankOneDiscrete := by
+    refine ⟨⟨Valuation.IsRankOneDiscrete.generator vK, ?_, ?_⟩⟩
+    · rw [hvalueGroup]
+      exact Valuation.IsRankOneDiscrete.generator_zpowers_eq_valueGroup vK
+    · exact Valuation.IsRankOneDiscrete.generator_lt_one vK
+  exact ⟨chapter07DiscreteValueGroupEquiv vC⟩
 
 -- The completed valuation ring is a DVR.
 theorem chapter07_completed_valuation_ring_is_dvr
