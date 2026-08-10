@@ -11,15 +11,19 @@
    - [Evaluation and biduality](#22-evaluation-and-biduality)
    - [Exactness and variance](#23-exactness-and-variance)
    - [Coefficient rings](#24-coefficient-rings)
+   - [Cartier duality and finite étale coefficients](#25-cartier-duality-and-finite-étale-coefficients)
+   - [A twist calculus](#26-a-twist-calculus)
 3. [Products, boundaries, and signs](#3-products-boundaries-and-signs)
    - [Why cochain-level control matters](#31-why-cochain-level-control-matters)
    - [Graded interchange](#32-graded-interchange)
    - [Compatibility with connecting maps](#33-compatibility-with-connecting-maps)
    - [Restriction, corestriction, and projection](#34-restriction-corestriction-and-projection)
+   - [Bocksteins and the sign ledger](#35-bocksteins-and-the-sign-ledger)
 4. [The Brauer coordinate](#4-the-brauer-coordinate)
    - [Why degree two needs a number](#41-why-degree-two-needs-a-number)
    - [Finite-level invariants](#42-finite-level-invariants)
    - [Behavior under extension](#43-behavior-under-extension)
+   - [Relative fundamental classes](#44-relative-fundamental-classes)
 5. [Construction of the local Tate pairing](#5-construction-of-the-local-tate-pairing)
    - [The only possible construction](#51-the-only-possible-construction)
    - [What perfectness means](#52-what-perfectness-means)
@@ -28,6 +32,7 @@
    - [Why the first detector is reciprocity](#61-why-the-first-detector-is-reciprocity)
    - [Perfectness in the middle cyclic case](#62-perfectness-in-the-middle-cyclic-case)
    - [The endpoint cyclic calculation](#63-the-endpoint-cyclic-calculation)
+   - [Continuous Hilbert 90](#64-continuous-hilbert-90)
 7. [The descent engine behind perfectness](#7-the-descent-engine-behind-perfectness)
    - [Why cyclic groups do not suffice by themselves](#71-why-cyclic-groups-do-not-suffice-by-themselves)
    - [The local class formation](#72-the-local-class-formation)
@@ -36,12 +41,14 @@
    - [From lattices to arbitrary finite modules](#75-from-lattices-to-arbitrary-finite-modules)
    - [Passage to the absolute Galois group](#76-passage-to-the-absolute-galois-group)
    - [The exact-sequence audit](#77-the-exact-sequence-audit)
+   - [The finite-module Tate--Nakayama form](#78-the-finite-module-tate--nakayama-form)
 8. [Proof and exact forms of Tate local duality](#8-proof-and-exact-forms-of-tate-local-duality)
    - [Finiteness before duality](#81-finiteness-before-duality)
    - [Nondegeneracy in both variables](#82-nondegeneracy-in-both-variables)
    - [Degree zero and degree two](#83-degree-zero-and-degree-two)
    - [The middle-degree theorem](#84-the-middle-degree-theorem)
    - [Exact-sequence devissage as a reusable corollary](#85-exact-sequence-devissage-as-a-reusable-corollary)
+   - [Euler--Poincaré formulas in dual form](#86-euler--poincaré-formulas-in-dual-form)
 9. [Functoriality in fields and modules](#9-functoriality-in-fields-and-modules)
    - [Restriction and corestriction are adjoint](#91-restriction-and-corestriction-are-adjoint)
    - [Kernels and images under extension](#92-kernels-and-images-under-extension)
@@ -51,6 +58,8 @@
     - [The unramified condition away from $p$](#102-the-unramified-condition-away-from-p)
     - [Failure of unramified self-complementarity at $p$](#103-failure-of-unramified-self-complementarity-at-p)
     - [Image, quotient, and norm conditions](#104-image-quotient-and-norm-conditions)
+    - [Finite and singular local quotients](#105-finite-and-singular-local-quotients)
+    - [Residual conditions and saturation](#106-residual-conditions-and-saturation)
 11. [Kummer classes and Hilbert symbols](#11-kummer-classes-and-hilbert-symbols)
     - [From cup products to symbols](#111-from-cup-products-to-symbols)
     - [Cyclic algebras and norms](#112-cyclic-algebras-and-norms)
@@ -64,12 +73,16 @@
     - [Coefficients in a finite extension of $\mathbf Q_\ell$](#124-coefficients-in-a-finite-extension-of-mathbf-q_ell)
     - [Vector-space duality](#125-vector-space-duality)
     - [What breaks in equal characteristic $p$](#126-what-breaks-in-equal-characteristic-p)
+    - [Exact triples and integral orthogonals](#127-exact-triples-and-integral-orthogonals)
+    - [Unramified conditions for lattices](#128-unramified-conditions-for-lattices)
 13. [Dimension formulas and deformation-theoretic consequences](#13-dimension-formulas-and-deformation-theoretic-consequences)
     - [Removing the mysterious $H^2$](#131-removing-the-mysterious-h2)
     - [Self-dual modules and parity](#132-self-dual-modules-and-parity)
     - [Adjoint representations](#133-adjoint-representations)
     - [Tangent spaces and their dual conditions](#134-tangent-spaces-and-their-dual-conditions)
     - [Framed dimensions](#135-framed-dimensions)
+    - [The local correction term used in Selmer theory](#136-the-local-correction-term-used-in-selmer-theory)
+    - [Changing coefficient rings](#137-changing-coefficient-rings)
 14. [Five families of examples](#14-five-families-of-examples)
     - [Trivial and cyclotomic lines away from $p$](#141-trivial-and-cyclotomic-lines-away-from-p)
     - [An unramified character](#142-an-unramified-character)
@@ -79,7 +92,9 @@
 15. [The local-duality dictionary](#15-the-local-duality-dictionary)
     - [A calculation protocol](#151-a-calculation-protocol)
     - [Formula table](#152-formula-table)
-    - [Boundaries of the dictionary](#153-boundaries-of-the-dictionary)
+    - [Normalization ledger for Selmer structures](#153-normalization-ledger-for-selmer-structures)
+    - [Counterexamples that fix the hypotheses](#154-counterexamples-that-fix-the-hypotheses)
+    - [Boundaries of the dictionary](#155-boundaries-of-the-dictionary)
 16. [Conclusion](#16-conclusion)
     - [Detection rather than numerical coincidence](#161-detection-rather-than-numerical-coincidence)
     - [The reusable local endpoint](#162-the-reusable-local-endpoint)
@@ -245,6 +260,80 @@ $$
 
 The canonical theorem, however, is the underlying finite-abelian-group theorem with target $\mathbf Q/\mathbf Z$. An $R$-valued perfect pairing requires an additional choice of a generator for the dualizing rank-one $R$-module. Keeping the invariant $\mathbf Q/\mathbf Z$-valued avoids a false canonical identification.
 
+### 2.5 Cartier duality and finite étale coefficients
+
+The notation $M^*(1)$ has a geometric origin. It is not an artificial correction inserted after ordinary duality fails. If $G$ is a finite commutative group scheme over $K$, its **Cartier dual** is
+
+$$
+G^D=\operatorname{Hom}(G,\mathbf G_m),
+$$
+
+with evaluation $G\times G^D\to\mathbf G_m$. When $G$ is killed by $n$, every character has image in $\mu_n$, so evaluation factors through
+
+$$
+G\times G^D\longrightarrow\mu_n. \tag{2.7}
+$$
+
+Assume $n$ is invertible in $K$ and $G$ is finite étale. Taking geometric points gives a finite $G_K$-module $M=G(K^s)$. A character of $G$ over $K^s$ is exactly a homomorphism $M\to\mu_n(K^s)$, and descent acts by
+
+$$
+(g\lambda)(m)=g\bigl(\lambda(g^{-1}m)\bigr).
+$$
+
+Consequently
+
+$$
+G^D(K^s)=\operatorname{Hom}(M,\mu_n)=M^*(1). \tag{2.8}
+$$
+
+Thus Cartier duality on finite étale coefficients becomes Tate duality on geometric points. Biduality is also the same statement on both sides: evaluation identifies $G$ with $G^{DD}$ and $M$ with $M^{**}$ after the twists cancel.
+
+This perspective explains the characteristic restriction sharply. In characteristic $p$, the Cartier dual of the constant group $\mathbf Z/p\mathbf Z$ is $\mu_p$. The first is étale and the second is connected; its group of geometric points is trivial. Cartier duality remains nontrivial, but the category of finite étale groups is not closed under it. A theorem formulated only with discrete geometric points has therefore thrown away the correct dual. The finite-module theorem in this book excludes that case; a flat-cohomological theorem would retain the whole finite group object and use (2.7).
+
+Two examples fix the convention. The Cartier dual of $\mathbf Z/n\mathbf Z$ is $\mu_n$, while the Cartier dual of $\mu_n$ is $\mathbf Z/n\mathbf Z$. For an elliptic curve $A$ and $n$ invertible in $K$, the Weil pairing identifies the Cartier dual of $A[n]$ with the $n$-torsion of the dual elliptic curve; a principal polarization then gives a self-duality. These are exactly the coefficient pairings that later induce local pairings on first cohomology.
+
+### 2.6 A twist calculus
+
+Twists are easiest to control by recording what evaluation is required to produce. For an $\ell$-primary module, write
+
+$$
+M^\vee=\operatorname{Hom}(M,\mathbf Q_\ell/\mathbf Z_\ell),
+\qquad M^\vee(1)=M^*(1).
+$$
+
+For finite free coefficients over a field $F$ of characteristic $\ell$, one may instead use $M^\vee=\operatorname{Hom}_F(M,F)$ and then tensor by the cyclotomic line $F(1)$. The following identities are canonical whenever the objects are defined:
+
+$$
+(M(r))^*(1)\simeq M^*(1)(-r), \tag{2.9}
+$$
+
+$$
+(M^*(1))^*(1)\simeq M, \tag{2.10}
+$$
+
+$$
+(M\otimes N)^*(1)
+\simeq M^*\otimes N^*(1)
+$$
+
+when the coefficients are finite free over a common ring and one of the two displayed stars is interpreted as the untwisted linear dual. The safe rule is to count cyclotomic powers in the target rather than manipulate stars by typography.
+
+For a character $\psi:G_K\to F^\times$, the Tate dual of $F(\psi)$ is
+
+$$
+F(\psi^{-1}\bar\chi_\ell). \tag{2.11}
+$$
+
+If $\psi$ is unramified and arithmetic Frobenius acts by $\alpha$, then it acts on the dual by $q\alpha^{-1}$. This exchanges the exceptional eigenvalues $1$ and $q$ in local cohomology. An untwisted dual would send $\alpha$ merely to $\alpha^{-1}$ and would miss the degree-two cyclotomic class.
+
+For $W$ finite free, the trace form identifies $\operatorname{End}(W)$ with its untwisted linear dual. Its Tate dual is therefore
+
+$$
+\operatorname{End}(W)^*(1)\simeq\operatorname{End}(W)(1). \tag{2.12}
+$$
+
+If $W$ has rank $d$ and the coefficient characteristic does not divide $d$, the same holds for trace-zero endomorphisms. When the characteristic divides $d$, scalar matrices have trace zero and the trace form becomes degenerate on that subspace. This is a useful counterexample: a familiar-looking self-duality can fail because a coefficient-theoretic hypothesis, not a Galois-theoretic one, has been omitted.
+
 ## 3. Products, boundaries, and signs
 
 ### 3.1 Why cochain-level control matters
@@ -322,6 +411,35 @@ $$
 
 These identities will turn restriction in one variable into corestriction in the other. They also explain why the normalization of the Brauer invariant cannot be chosen independently over each field.
 
+### 3.5 Bocksteins and the sign ledger
+
+Selmer calculations frequently compare two adjacent torsion levels. The connecting map then is a Bockstein, and its adjoint must be known exactly. Consider
+
+$$
+0\longrightarrow M[\ell]
+\longrightarrow M[\ell^{a+1}]
+\xrightarrow{\ell}M[\ell^a]\longrightarrow0. \tag{3.9}
+$$
+
+Dualizing reverses (3.9). If $\beta$ is its connecting map and $\beta^\vee$ is the connecting map for the dual sequence, equation (3.5) gives
+
+$$
+\langle\beta x,y\rangle
+=(-1)^{\deg x+1}\langle x,\beta^\vee y\rangle. \tag{3.10}
+$$
+
+The exponent depends on whether the connecting map is placed before or after the cup. Rather than memorize an isolated sign, one should use the differential identity (3.2). Orthogonal complements are unaffected by multiplying a functional by $-1$, but symmetry assertions are not.
+
+Here is the complete middle-degree sign ledger. Suppose $b:M\times M\to\mu_n$ is an equivariant perfect coefficient pairing and let $\varepsilon=1$ if $b$ is symmetric and $\varepsilon=-1$ if it is alternating, so $b(y,x)=\varepsilon b(x,y)$. Then the induced pairing on $H^1(K,M)$ satisfies
+
+$$
+\langle y,x\rangle=-\varepsilon\langle x,y\rangle. \tag{3.11}
+$$
+
+Thus a symmetric coefficient pairing produces a skew-symmetric middle pairing, while an alternating coefficient pairing produces a symmetric one. If $2$ is invertible, skew-symmetric implies alternating. At exponent two it does not: $2\langle x,x\rangle=0$ is automatic and says nothing about the diagonal. Quadratic Hilbert symbols and two-torsion on elliptic curves provide concrete instances where ignoring this distinction gives a false parity claim.
+
+Finally, switching from arithmetic to geometric Frobenius replaces $\varphi$ by $\varphi^{-1}$ and the reciprocity map by its inverse. If the invariant normalization is held fixed, all cyclic-symbol formulas acquire a minus sign. We fix arithmetic Frobenius, arithmetic reciprocity, and (4.2) together; no one of these conventions may be changed independently of the other two.
+
 ## 4. The Brauer coordinate
 
 ### 4.1 Why degree two needs a number
@@ -380,6 +498,45 @@ $$
 Formula (4.4) follows on the normalized cyclic algebra (4.2): unramified degree raises Frobenius to the residue-degree power, while ramification multiplies the valuation of $\pi_K$ by the ramification index. Formula (4.5) then agrees with $\operatorname{cor}\operatorname{res}=d$.
 
 This asymmetry is exactly right. Restricting both inputs of a local pairing multiplies its value by $[L:K]$; restricting one and corestricting the other preserves it.
+
+### 4.4 Relative fundamental classes
+
+Let $L/K$ be finite Galois with group $\Delta$ and degree $d$. Inflation identifies
+
+$$
+H^2(\Delta,L^\times)
+\simeq\ker\bigl(\operatorname{Br}(K)\to\operatorname{Br}(L)\bigr).
+$$
+
+By (4.4), the kernel corresponds under $\operatorname{inv}_K$ to the subgroup of elements killed by $d$. The **fundamental class** is the unique element
+
+$$
+u_{L/K}\in H^2(\Delta,L^\times)
+$$
+
+whose image in $\operatorname{Br}(K)$ has invariant $1/d$. This normalization includes an orientation. Replacing the chosen reciprocity isomorphism by its inverse replaces $u_{L/K}$ by $-u_{L/K}$.
+
+Three compatibilities will drive the proof of duality. If $J\leq\Delta$ and $E=L^J$, then
+
+$$
+\operatorname{res}^{\Delta}_{J}(u_{L/K})=u_{L/E}. \tag{4.6}
+$$
+
+Indeed restriction multiplies the invariant by $[E:K]=d/|J|$, leaving $1/|J|$. If $K\subset E\subset L$ with $E/K$ Galois and quotient group $\Delta/J$, then deflation followed by the norm on coefficients sends the appropriate relative class to $u_{E/K}$; this is the transitivity behind local reciprocity. Finally, if $L'/K$ is a larger finite Galois extension containing $L$ and $e=[L':L]$, inflation satisfies
+
+$$
+\operatorname{inf}(u_{L/K})=e\,u_{L'/K}. \tag{4.7}
+$$
+
+Both sides have invariant $1/[L:K]=e/[L':K]$. The factor $e$ is indispensable. Fundamental classes are compatible in a normalized system, not literally constant under inflation.
+
+For the unramified extension $K_d/K$, arithmetic Frobenius $\varphi$ generates its Galois group and
+
+$$
+u_{K_d/K}=[(K_d/K,\varphi,\pi_K)]. \tag{4.8}
+$$
+
+The crossed-product generator has $d$th power $\pi_K$, so its invariant is $1/d$. This example fixes simultaneously the sign of the class, the direction of Frobenius, and the numerator used later in Tate--Nakayama.
 
 ## 5. Construction of the local Tate pairing
 
@@ -521,6 +678,46 @@ $$
 is less visible. If $K$ contains $\mu_n$, a chosen primitive root reduces it to the degree-zero calculation above. In general one may adjoin $\mu_n$, but descent is not obtained merely by taking invariants on one side and coinvariants on the other: the higher terms in the inflation--restriction sequences and their boundary maps must also be controlled. The class-formation and mapping-cone argument in Chapter 7 supplies exactly that control and proves (6.6) as the cup-and-invariant adjoint map. We record the formula here as the endpoint that the descent argument must reach, not as an input to that argument.
 
 For example, if $n$ is prime to $p$ and $g=\gcd(n,q-1)$, then $|\mu_n(K)|=g$ and (6.6) says $|H^2(K,\mathbf Z/n\mathbf Z)|=g$. If $K/\mathbf Q_p$ and $n=p^a$, the same statement holds with $g$ replaced by $|\mu_n(K)|$.
+
+### 6.4 Continuous Hilbert 90
+
+The descent argument will use the multiplicative group of the separable closure, not merely one finite extension. We therefore prove the continuous form of Hilbert 90.
+
+**Theorem 6.1 (continuous Hilbert 90).** For every algebraic extension $F/K$ inside $K^s$,
+
+$$
+H^1(G_F,(K^s)^\times)=0. \tag{6.7}
+$$
+
+Here $(K^s)^\times$ has the discrete topology and its natural continuous action.
+
+**Proof strategy.** A continuous cocycle from a profinite group to a discrete algebraic group contains only finite information. We force that information into one finite Galois extension and then apply the finite theorem.
+
+Let $c:G_F\to(K^s)^\times$ be a continuous cocycle. Its image is finite because $G_F$ is compact and the target is discrete. Choose a finite Galois extension $L/F$ inside $K^s$ containing every value of $c$. Continuity at the identity supplies an open subgroup on which $c$ is $1$. After intersecting its finitely many conjugates and the subgroup fixing $L$, we obtain an open normal subgroup $U\trianglelefteq G_F$ such that $U$ fixes $L$ and $c(u)=1$ for $u\in U$.
+
+For $g\in G_F$ and $u\in U$,
+
+$$
+c(gu)=c(g)\,g(c(u))=c(g),
+$$
+
+so $c$ factors through the finite group $\Gamma=G_F/U$. If $E=(K^s)^U$, then all its values lie in $E^\times$ and it is a $1$-cocycle of $\Gamma=\operatorname{Gal}(E/F)$ with coefficients in $E^\times$. The finite multiplicative theorem gives $b\in E^\times$ with
+
+$$
+c(g)=b^{-1}g(b).
+$$
+
+Hence $c$ is a continuous coboundary, proving (6.7).
+
+For completeness, the finite multiplicative theorem itself follows from one linear-independence argument. Given a cocycle $c:\Gamma\to E^\times$, choose $x\in E$ such that
+
+$$
+b=\sum_{\sigma\in\Gamma}c(\sigma)^{-1}\sigma(x)\neq0.
+$$
+
+Such an $x$ exists because distinct field embeddings are linearly independent. Changing index and using the cocycle identity gives $\tau(b)=c(\tau)b$, so $c(\tau)=b^{-1}\tau(b)$. This also shows exactly where the field structure is used.
+
+The topology matters. A discontinuous cocycle need not factor through any finite quotient, so the proof would not apply. The algebraic closure also matters: replacing $(K^s)^\times$ by the multiplicative group of a fixed infinite extension without checking where cocycle values lie would leave a gap. The compact-to-discrete argument closes it.
 
 ## 7. The descent engine behind perfectness
 
@@ -721,6 +918,33 @@ For a final check, consider $0\to A\to B\to C\to0$ and its reversed Tate-dual se
 
 This two-of-three statement agrees with the lattice-resolution proof: a permutation module is handled by Shapiro and the class-formation calculation for its stabilizer, while successive kernels are handled by the long exact ladder. The proof never assumes that a Sylow subgroup is cyclic, and it never requires a tower of fixed fields whose steps are all cyclic Galois in a prescribed orientation.
 
+### 7.8 The finite-module Tate--Nakayama form
+
+The proof can now be packaged in the form needed for repeated use.
+
+**Theorem 7.1 (finite-module Tate--Nakayama).** Let $F$ be a nonarchimedean local field, let $n$ be prime to $\operatorname{char}F$, and let $A$ be a finite continuous $G_F$-module killed by $n$. Put
+
+$$
+A'=\operatorname{Hom}(A,\mu_n).
+$$
+
+Then the normalized local fundamental classes produce a functorial quasi-isomorphism
+
+$$
+R\Gamma(F,A)\longrightarrow
+R\operatorname{Hom}\bigl(R\Gamma(F,A'),\mathbf Q/\mathbf Z\bigr)[-2], \tag{7.18}
+$$
+
+whose map on cohomology is $x\mapsto(y\mapsto\operatorname{inv}_F(x\smile y))$. It is compatible with short exact sequences, restriction, corestriction, and change of $n$.
+
+**Proof.** Choose a finite Galois extension through which the action on $A$ factors and resolve $A$ by (7.10). For every lattice in the resolution, the comparison of Sections 7.3--7.4 is the cup-product isomorphism furnished by the fundamental class. Continuous Hilbert 90 supplies the required first-cohomology vanishing for every stabilizer, while (4.6) supplies the normalized generator in degree two. Passing over larger splitting fields is legitimate because (4.7) matches inflation with the adjoint norm transition.
+
+The group $(K^s)^\times$ is $n$-divisible under the stated characteristic hypothesis. Applying $\operatorname{Hom}(-,(K^s)^\times)$ to the lattice resolution is therefore exact at the finite quotient, and its left term is $A'$. Evaluation identifies the two resolutions term by term. The boundary identity (3.5) identifies their connecting maps up to the required Koszul sign. The two-of-three argument in Section 7.7 gives (7.18). Finally, tracing the fundamental class through the chain map gives cup product, and (4.2) gives precisely $\operatorname{inv}_F$, not its negative. This proves every asserted compatibility.
+
+The characteristic condition is used at one decisive point: surjectivity of the $n$th-power map on $(K^s)^\times$. In characteristic $p$ it fails for $p\mid n$, and $\operatorname{Hom}(A,\mu_n)$ may lose the Cartier dual entirely. Thus the hypothesis is structural rather than a convenience of the proof.
+
+The theorem is stronger than the statement that complementary groups have equal orders. It identifies complexes, so connecting maps, local conditions defined by images, and restriction--corestriction adjunction all descend from the same construction. The perfect pairings are its degreewise shadow.
+
 ## 8. Proof and exact forms of Tate local duality
 
 ### 8.1 Finiteness before duality
@@ -796,6 +1020,79 @@ $$
 $$
 
 By exactness, the right side is the image from $H^{2-r}(K,M''^*(1))$. Formula (8.6) is the exact annihilator statement attached to a short exact sequence. It is often more useful than the bare assertion of perfectness because local deformation conditions frequently arise as images of extension problems.
+
+### 8.6 Euler--Poincaré formulas in dual form
+
+Duality detects classes, while the Euler characteristic measures their total imbalance. We record both normalizations because later local conditions use dimensions and integral lengths interchangeably.
+
+Let $M$ be a finite $\ell$-primary module. When $\ell\neq p$, or when $K/\mathbf Q_p$ and $\ell=p$, all three cohomology groups are finite. Define
+
+$$
+\chi_K^\times(M)=
+\frac{|H^0(K,M)|\,|H^2(K,M)|}{|H^1(K,M)|}. \tag{8.7}
+$$
+
+Then
+
+$$
+\chi_K^\times(M)=
+\begin{cases}
+1,&\ell\neq p,\\
+|M|^{-[K:\mathbf Q_p]},&\ell=p\text{ and }M\text{ is measured over }\mathbf F_p.
+\end{cases} \tag{8.8}
+$$
+
+The second line means the following invariant statement. If $M$ has finite length over the integers $\mathcal O$ of a finite extension of $\mathbf Q_p$, with residue field $F$, then
+
+$$
+\sum_{i=0}^2(-1)^i
+\operatorname{length}_{\mathcal O}H^i(K,M)
+=-[K:\mathbf Q_p]\operatorname{length}_{\mathcal O}M. \tag{8.9}
+$$
+
+**Proof strategy.** Additivity reduces the calculation to simple coefficients. Away from $p$, the two rows supplied by inertia cancel kernel against cokernel. At $p$, the multiplicative group of $K$ supplies the basic calculation and finite-group induction removes the action.
+
+For $\ell\neq p$, put $N=M^{I_K}$ and $P=H^1(I_K,M)$. The residue quotient is procyclic, and the two-row calculation expresses the three orders as
+
+$$
+|H^0|=|\ker(\varphi-1\mid N)|,
+$$
+
+$$
+|H^1|=|\operatorname{coker}(\varphi-1\mid N)|
+|\ker(\varphi-1\mid P)|,
+$$
+
+$$
+|H^2|=|\operatorname{coker}(\varphi-1\mid P)|.
+$$
+
+Kernel and cokernel of an endomorphism of a finite group have equal order, so both ratios cancel.
+
+Now let $K/\mathbf Q_p$ and first take $M=\mathbf F_p(1)$ after a prime-to-$p$ extension containing $\mu_p$. Kummer theory, the structure of $K^\times$, and (4.3) give dimensions
+
+$$
+(h^0,h^1,h^2)=(1,[K:\mathbf Q_p]+2,1).
+$$
+
+Thus the Euler characteristic is $-[K:\mathbf Q_p]$. For a general module killed by $p$, choose a finite quotient controlling the action. Restriction to a Sylow $p$-subgroup gives a filtration with trivial simple factors; the complementary quotient is semisimple by averaging. Shapiro's lemma and additivity then reduce to the trivial calculation over finite extensions. Since $[L:\mathbf Q_p]=[L:K][K:\mathbf Q_p]$, division by the induction degree gives the displayed formula over $K$. Devissage along powers of the coefficient uniformizer proves (8.9). This proof uses no perfectness assertion, so the Euler formula is an independent numerical check on duality.
+
+Using degree-two duality, (8.7) becomes the particularly useful identity
+
+$$
+|H^1(K,M)|=
+|H^0(K,M)|\,|H^0(K,M^*(1))|\,
+\chi_K^\times(M)^{-1}. \tag{8.10}
+$$
+
+For a finite-dimensional coefficient field $F$, this reads
+
+$$
+h^1_K(M)=h^0_K(M)+h^0_K(M^*(1))
++\delta_{\ell,p}[K:\mathbf Q_p]\dim_FM, \tag{8.11}
+$$
+
+where the last term occurs only in mixed characteristic. In equal characteristic $p$ with $p$-primary coefficients, $H^1$ can be infinite and neither (8.7) nor (8.9) is asserted.
 
 ## 9. Functoriality in fields and modules
 
@@ -947,6 +1244,78 @@ $$
 $$
 
 Thus coming by norm from $L$ is exactly orthogonal to becoming trivial over $L$.
+
+### 10.5 Finite and singular local quotients
+
+At a place away from the coefficient prime, Selmer theory separates a class into an unramified part and its ramified residue. For finite $\ell$-primary $M$ with $\ell\neq p$, set
+
+$$
+H^1_f(K,M)=H^1_{\mathrm{ur}}(K,M),
+\qquad
+H^1_s(K,M)=H^1(K,M)/H^1_f(K,M). \tag{10.9}
+$$
+
+The letters $f$ and $s$ mean **finite** and **singular**. They do not denote finite cardinality: both groups here are already finite. The terminology records the local condition and its quotient.
+
+Equation (10.4) yields two induced perfect pairings:
+
+$$
+H^1_f(K,M)\times H^1_s(K,M^*(1))
+\longrightarrow\mathbf Q/\mathbf Z, \tag{10.10}
+$$
+
+$$
+H^1_s(K,M)\times H^1_f(K,M^*(1))
+\longrightarrow\mathbf Q/\mathbf Z. \tag{10.11}
+$$
+
+To prove (10.10), pair a representative in the second factor with the first. Changing the representative by an unramified dual class changes the value by zero. Nondegeneracy follows because the annihilator of $H^1_f(K,M)$ is exactly $H^1_f(K,M^*(1))$. The proof of (10.11) is identical with the variables reversed.
+
+These pairings make localization sequences numerically transparent. For finite-field coefficients,
+
+$$
+\dim H^1_f(K,M)=h^0_K(M),
+\qquad
+\dim H^1_s(K,M)=h^0_K(M^*(1)). \tag{10.12}
+$$
+
+The second equality uses both the Euler characteristic away from $p$ and duality. Thus the singular quotient measures the twisted invariant space. A Frobenius eigenvalue $q$ creates a singular direction; an eigenvalue $1$ creates a finite direction.
+
+The definition must not be transported unchanged to a $p$-adic place. There, the annihilator of the unramified subgroup is much larger than the unramified subgroup on the dual. A condition denoted $H^1_f$ at $p$ must be specified by its arithmetic origin—such as local points or an integral comparison condition—and its duality theorem must be proved for that condition.
+
+### 10.6 Residual conditions and saturation
+
+Let $F$ be a finite coefficient field, let $M$ be an $F$-module, and let
+
+$$
+\mathcal L\subseteq H^1(K,M)
+$$
+
+be a local condition. Fix a nonzero additive character
+
+$$
+\psi_F:F\xrightarrow{\operatorname{Tr}_{F/\mathbf F_\ell}}
+\mathbf F_\ell\longrightarrow\tfrac1\ell\mathbf Z/\mathbf Z.
+$$
+
+Composing the canonical pairing with $\psi_F$ identifies its Pontryagin dual with the ordinary $F$-linear dual. The **dual local condition** is, by definition,
+
+$$
+\mathcal L^*=\mathcal L^\perp
+\subseteq H^1(K,M^*(1)). \tag{10.13}
+$$
+
+Changing the nonzero character $\psi_F$ rescales the scalar pairing and leaves the zero locus (10.13) unchanged. Hence the orthogonal condition is canonical even when an $F$-valued pairing is not.
+
+If $M$ is the reduction of a lattice $T$, two operations must be distinguished. A condition on $T$ has a **residual image**, the image of its reduction in $H^1(K,M)$; a condition on the associated vector space has an **integral preimage**, its inverse image in $H^1(K,T)$. Torsion in $H^2(K,T)$ can make reduction on $H^1$ fail to be surjective, so these operations are not inverse in general.
+
+A submodule $L\subseteq H^1(K,T)$ is saturated if $H^1(K,T)/L$ is torsion-free. Equivalently,
+
+$$
+L=H^1(K,T)\cap(L\otimes E)
+$$
+
+inside $H^1(K,T)\otimes E$, provided $H^1(K,T)$ is torsion-free. Saturation is what allows a vector-space orthogonal equality to descend integrally without an unnoticed finite error. When saturation fails, the orthogonal contains information about the finite quotient; replacing $L$ by its saturation changes the residual local condition. This is why a Selmer structure must record its condition at the actual coefficient object, rather than only at the vector-space level.
 
 ## 11. Kummer classes and Hilbert symbols
 
@@ -1200,6 +1569,106 @@ Thus three assertions must be kept distinct:
 
 If $\operatorname{char}K=p$ and $\ell=p$, then $\mathbf Z_p(1)=\varprojlim\mu_{p^m}(K^s)$ is zero, not a rank-one lattice. Finite $p$-primary $H^1$ can be infinite, the Mittag--Leffler finiteness argument above is unavailable, and (12.12) has no usual Galois-module meaning. One must change the coefficient theory, for example to flat finite group schemes or logarithmic dualizing objects. None of the displayed $p$-adic limit statements is asserted in that setting.
 
+### 12.7 Exact triples and integral orthogonals
+
+The coefficient triple used in Selmer theory is
+
+$$
+0\longrightarrow T\longrightarrow V\longrightarrow A\longrightarrow0,
+\qquad
+V=T\otimes_{\mathbf Z_\ell}\mathbf Q_\ell,
+\quad A=V/T. \tag{12.14}
+$$
+
+Put
+
+$$
+T'=\operatorname{Hom}_{\mathbf Z_\ell}(T,\mathbf Z_\ell)(1),
+\quad V'=T'\otimes\mathbf Q_\ell,
+\quad A'=V'/T'. \tag{12.15}
+$$
+
+Evaluation gives compatible perfect pairings
+
+$$
+H^1(K,T)\times H^1(K,A')\to\mathbf Q_\ell/\mathbf Z_\ell,
+$$
+
+$$
+H^1(K,A)\times H^1(K,T')\to\mathbf Q_\ell/\mathbf Z_\ell,
+$$
+
+and
+
+$$
+H^1(K,V)\times H^1(K,V')\to\mathbf Q_\ell. \tag{12.16}
+$$
+
+Let $L_V\subseteq H^1(K,V)$ and $L_{V'}\subseteq H^1(K,V')$ be exact orthogonal complements. Propagate them by
+
+$$
+L_T=\{x\in H^1(K,T):x_V\in L_V\},
+\qquad
+L_A=\operatorname{im}(L_V\to H^1(K,A)), \tag{12.17}
+$$
+
+and similarly on the primed side. Then
+
+$$
+L_T^\perp=L_{A'},
+\qquad
+L_A^\perp=L_{T'}. \tag{12.18}
+$$
+
+**Proof strategy.** Orthogonality over $\mathbf Q_\ell$ first proves containment. Exactness of the long cohomology sequences accounts for the classes that die on passage between $T,V,A$; boundary adjointness proves that those kernels are paired with the corresponding images on the dual side. The quotient pairings left after removing those kernels are the vector-space pairing (12.16). Hence any class annihilating $L_T$ differs by an appropriate boundary from the image of a class in $L_{V'}$, which puts it in $L_{A'}$. This proves the first equality; reversing the triple proves the second. Equivalently, place the two long exact sequences in an adjoint diagram and apply exactness at the four middle terms.
+
+The image and preimage in (12.17) are part of the theorem. Replacing both by raw reduction modulo $\ell^m$ can change the condition when adjacent cohomology has torsion. Likewise, an arbitrary lattice $T'\subset V'$ that is merely commensurable with the evaluation dual of $T$ introduces a finite index into (12.18). Exact integral orthogonality requires the actual dual lattice.
+
+For coefficients in the integers $\mathcal O$ of a finite extension of $\mathbf Q_\ell$, one may use the $\mathcal O$-linear dual provided the scalar character and inverse different are normalized as in Section 12.4. Working first over $\mathbf Z_\ell$ keeps (12.18) canonical.
+
+### 12.8 Unramified conditions for lattices
+
+Assume $\ell\neq p$. On the vector space define
+
+$$
+H^1_f(K,V)=H^1_{\mathrm{ur}}(K,V)
+=\ker\bigl(H^1(K,V)\to H^1(I_K,V)\bigr). \tag{12.19}
+$$
+
+Define the integral and discrete conditions by propagation:
+
+$$
+H^1_f(K,T)=\operatorname{preim}\bigl(H^1_f(K,V)\bigr),
+$$
+
+$$
+H^1_f(K,A)=\operatorname{im}\bigl(H^1_f(K,V)\to H^1(K,A)\bigr). \tag{12.20}
+$$
+
+Vector-space local duality and the finite-level unramified calculation give
+
+$$
+H^1_f(K,V)^\perp=H^1_f(K,V'). \tag{12.21}
+$$
+
+Applying (12.18) yields the exact integral statements
+
+$$
+H^1_f(K,T)^\perp=H^1_f(K,A'),
+\qquad
+H^1_f(K,A)^\perp=H^1_f(K,T'). \tag{12.22}
+$$
+
+There is a subtle but useful distinction between (12.20) and the raw kernel
+
+$$
+\ker\bigl(H^1(K,T)\to H^1(I_K,T)\bigr).
+$$
+
+The latter maps into $H^1_f(K,T)$, but equality can fail if a ramified integral class becomes unramified after division by a power of $\ell$. The propagated condition is saturated by construction and is the one compatible with (12.22). At finite torsion level, one must likewise specify whether the condition is the intrinsic unramified kernel or the image propagated from $A$; they agree under additional torsion-freeness hypotheses but not by notation alone.
+
+For an unramified rank-one lattice on which arithmetic Frobenius acts by $\alpha$, the vector-space condition vanishes if $\alpha\neq1$, while the raw integral quotient $\mathbf Z_\ell/(\alpha-1)$ may be nonzero. This finite congruence is exactly the phenomenon that saturation separates from the rational local condition.
+
 ## 13. Dimension formulas and deformation-theoretic consequences
 
 ### 13.1 Removing the mysterious $H^2$
@@ -1347,6 +1816,64 @@ $$
 $$
 
 The centralizer term cancels. The remaining twisted invariant is the genuine local obstruction contribution.
+
+### 13.6 The local correction term used in Selmer theory
+
+For a finite-dimensional $F$-module $M$ and a local condition $L_K\subseteq H^1(K,M)$, define the normalized local correction
+
+$$
+c_K(M,L_K)=\dim_F L_K-h^0_K(M). \tag{13.14}
+$$
+
+Subtracting $h^0$ is not cosmetic. Degree zero measures infinitesimal automorphisms, and this normalization is the one that makes an unramified condition away from $\ell$ contribute zero:
+
+$$
+c_K(M,H^1_{\mathrm{ur}})=0 \qquad(\ell\neq p). \tag{13.15}
+$$
+
+Let $L_K^\perp$ be the orthogonal condition on $M^*(1)$. Perfectness and (8.11) give the exact identity
+
+$$
+c_K(M,L_K)+c_K(M^*(1),L_K^\perp)
+=\delta_{\ell,p}[K:\mathbf Q_p]\dim_FM. \tag{13.16}
+$$
+
+**Proof.** Since the middle pairing is perfect,
+
+$$
+\dim L_K^\perp=h^1_K(M)-\dim L_K.
+$$
+
+Subtract $h^0_K(M^*(1))$ and insert (8.11). The remaining terms are $h^0_K(M)-\dim L_K$ and the mixed-characteristic field term, which gives (13.16).
+
+Away from the coefficient prime, the two normalized corrections are negatives of one another. At a place above the coefficient prime, their sum is the full principal-unit contribution. This is the local numerical identity used when a Selmer condition and its dual are compared globally. It also catches a common sign error: defining the correction as $h^0-\dim L_K$ would reverse every away-from-$\ell$ contribution.
+
+For finite-length $\mathcal O$-modules, define
+
+$$
+c_K(M,L_K)=\operatorname{length}_{\mathcal O}L_K
+-\operatorname{length}_{\mathcal O}H^0(K,M).
+$$
+
+The same proof gives (13.16) with lengths and with the right side $[K:\mathbf Q_p]\operatorname{length}_{\mathcal O}M$. For vector spaces, use $E$-dimensions. These three versions agree under passage through a stable lattice when the local conditions are propagated as in (12.17).
+
+### 13.7 Changing coefficient rings
+
+Let $F\subseteq F'$ be a finite extension of finite coefficient fields and put $M'=M\otimes_FF'$. Flatness and finite-dimensionality give
+
+$$
+H^i(K,M')\simeq H^i(K,M)\otimes_FF'. \tag{13.17}
+$$
+
+If $L_K' = L_K\otimes_FF'$, then orthogonals commute with scalar extension:
+
+$$
+(L_K')^\perp=L_K^\perp\otimes_FF'. \tag{13.18}
+$$
+
+To prove this, choose $a\in F'$ with $\operatorname{Tr}_{F'/F}(a)=1$ and use the additive character $x\mapsto\psi_F(\operatorname{Tr}_{F'/F}(ax))$; its restriction to $F$ is $\psi_F$. Evaluation and cup product commute with scalar extension, so the right side is contained in the left. Their dimensions agree by perfectness, proving equality. In particular $c_K(M',L_K')=c_K(M,L_K)$ as a dimension, even though the underlying finite cardinalities change.
+
+For a quotient $\mathcal O\to\mathcal O/\varpi^a$, scalar change is no longer flat and (13.17) can acquire adjacent torsion terms. The safe construction is to propagate the local condition through the exact coefficient sequence and use boundary adjointness. If $L_T$ is saturated, its reduction is well behaved; without saturation, reduction can gain classes from the $\varpi$-torsion of the quotient. Thus residual Selmer conditions should be defined by an explicit image or preimage, not by the phrase “the same condition modulo $\varpi$.”
 
 ## 14. Five families of examples
 
@@ -1602,7 +2129,40 @@ $$
 
 where the last term occurs only in mixed characteristic with coefficient characteristic $p$.
 
-### 15.3 Boundaries of the dictionary
+### 15.3 Normalization ledger for Selmer structures
+
+A Selmer structure on a coefficient module $M$ assigns a subgroup $L_K\subseteq H^1(K,M)$ at each relevant local field. The local input furnished by this book is normalized as follows.
+
+1. Arithmetic Frobenius acts on the residue closure by $x\mapsto x^q$.
+2. Arithmetic reciprocity sends a uniformizer to arithmetic Frobenius on the maximal unramified extension.
+3. The cyclic algebra $(K_m/K,\varphi,\pi_K)$ has invariant $1/m$.
+4. The local pairing is $\operatorname{inv}_K(x\smile y)$, with $x$ written first.
+5. The coefficient dual is $M^*(1)=\operatorname{Hom}(M,\mu_n)$, not the untwisted character group.
+6. The dual condition is the exact zero locus $L_K^\perp$ under that pairing.
+7. Away from the coefficient prime, $H^1_f=H^1_{\mathrm{ur}}$ and $H^1_s=H^1/H^1_f$.
+8. At the coefficient prime, the symbol $H^1_f$ carries no meaning until an arithmetic condition is specified and its orthogonal theorem is proved.
+9. For $0\to T\to V\to A\to0$, integral conditions are preimages from $V$ and discrete conditions are images from $V$ when propagation is intended.
+10. The normalized numerical correction is $\dim L_K-h^0_K(M)$.
+
+Every item affects a later sign, quotient, or dimension. For example, replacing arithmetic reciprocity by its inverse negates all symbol pairings but does not change orthogonal subgroups; replacing $M^*(1)$ by $M^*$ changes the subgroup itself. Replacing a propagated lattice condition by the raw inertia kernel can alter a finite index even when the rational subspace is unchanged.
+
+At finite-field level a trace character is needed to display an $F$-valued pairing, but the subgroup $L_K^\perp$ is independent of that choice. At lattice level the evaluation-dual lattice, including the inverse different for general coefficient rings, is needed for an exact integral statement. At vector-space level commensurable lattices give the same pairing after scalar extension.
+
+### 15.4 Counterexamples that fix the hypotheses
+
+The hypotheses are best remembered through their failures.
+
+* In characteristic $p$, the geometric points of $\mu_p$ are trivial, although $\mu_p$ is the Cartier dual of $\mathbf Z/p\mathbf Z$. The discrete-module Tate dual therefore cannot express the correct $p$-primary theorem.
+* For $K=\mathbf F_q((t))$, $H^1(K,\mathbf F_p)$ is infinite. A finite-cardinality Euler product is meaningless even though higher cohomology vanishes.
+* At a $p$-adic place containing $\mu_p$, the unramified line in $H^1(K,\mathbf F_p)$ has an annihilator of dimension $[K:\mathbf Q_p]+1$. It is not self-complementary.
+* For the quadratic Hilbert symbol with $q\equiv3\pmod4$, the valuation line is not isotropic because $(\pi_K,\pi_K)_2=-1$. Skew-symmetry language at exponent two cannot be replaced by alternation.
+* If the coefficient characteristic divides $d$, the trace pairing on $\operatorname{ad}^0$ is degenerate because the identity matrix has trace zero. The usual trace-zero self-duality fails.
+* An unramified lattice with Frobenius eigenvalue $\alpha\neq1$ can have the finite group $\mathcal O/(\alpha-1)$ in integral unramified cohomology while its vector-space unramified cohomology is zero. Rational and integral local conditions are not interchangeable.
+* If $\ell\mid[L:K]$, restriction can have a kernel and corestriction can fail to be onto. The adjunction formulas remain valid, but injectivity cannot be inferred from them.
+
+Each counterexample singles out a precise repair: retain the full Cartier dual, impose the characteristic range, include the principal-unit term, distinguish alternating from skew-symmetric, use the correct dual quotient, saturate integral conditions, or retain kernel--image formulas.
+
+### 15.5 Boundaries of the dictionary
 
 Three limitations are part of the theorem, not editorial cautions.
 
