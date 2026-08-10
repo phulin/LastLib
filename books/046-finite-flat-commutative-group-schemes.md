@@ -13,6 +13,7 @@
    - [Images and coimages](#23-images-and-coimages)
    - [Quotients and torsors](#24-quotients-and-torsors)
    - [Exact sequences and rank multiplicativity](#25-exact-sequences-and-rank-multiplicativity)
+   - [Admissible maps and categorical boundaries](#26-admissible-maps-and-categorical-boundaries)
 3. [Standard families](#3-standard-families)
    - [Constant groups](#31-constant-groups)
    - [Diagonalizable groups](#32-diagonalizable-groups)
@@ -20,29 +21,34 @@
    - [Additive infinitesimal groups](#34-additive-infinitesimal-groups)
    - [A family changing from étale to connected](#35-a-family-changing-from-étale-to-connected)
    - [Mixed products and extensions](#36-mixed-products-and-extensions)
+   - [A comparison ledger](#37-a-comparison-ledger)
 4. [Multiplication and torsion kernels](#4-multiplication-and-torsion-kernels)
    - [Why multiplication by an integer is geometric](#41-why-multiplication-by-an-integer-is-geometric)
    - [Elementary computations](#42-elementary-computations)
    - [Prime-power decomposition](#43-prime-power-decomposition)
    - [When order kills the group](#44-when-order-kills-the-group)
-   - [Tangent space as a diagnostic, not a classifier](#45-tangent-space-as-a-diagnostic-not-a-classifier)
-   - [Exact sequences among the standard groups](#46-exact-sequences-among-the-standard-groups)
+   - [Order invertible implies étale](#45-order-invertible-implies-étale)
+   - [Tangent space as a diagnostic, not a classifier](#46-tangent-space-as-a-diagnostic-not-a-classifier)
+   - [Exact sequences among the standard groups](#47-exact-sequences-among-the-standard-groups)
 5. [Fibers over fields](#5-fibers-over-fields)
    - [Artinian geometry at the identity](#51-artinian-geometry-at-the-identity)
    - [Reduced, smooth, and étale](#52-reduced-smooth-and-étale)
    - [The connected-étale sequence over a perfect field](#53-the-connected-étale-sequence-over-a-perfect-field)
    - [Frobenius as a separator](#54-frobenius-as-a-separator)
    - [Three rank-$p$ fibers](#55-three-rank-p-fibers)
+   - [The role of perfection](#56-the-role-of-perfection)
 6. [Finite étale groups and Galois modules](#6-finite-étale-groups-and-galois-modules)
    - [Why geometric points work in the étale case](#61-why-geometric-points-work-in-the-étale-case)
    - [The equivalence over a field](#62-the-equivalence-over-a-field)
    - [Unramified modules from a henselian DVR](#63-unramified-modules-from-a-henselian-dvr)
    - [Specialization of points](#64-specialization-of-points)
+   - [Exact sequences under the Galois correspondence](#65-exact-sequences-under-the-galois-correspondence)
 7. [Henselian local bases and connected-étale structure](#7-henselian-local-bases-and-connected-étale-structure)
    - [Lifting the special-fiber decomposition](#71-lifting-the-special-fiber-decomposition)
    - [The local connected-étale sequence](#72-the-local-connected-étale-sequence)
    - [Maximality and rank](#73-maximality-and-rank)
    - [Base change and completion](#74-base-change-and-completion)
+   - [What fails without henselianity](#75-what-fails-without-henselianity)
 8. [Schematic closure over a DVR](#8-schematic-closure-over-a-dvr)
    - [The extension problem](#81-the-extension-problem)
    - [Finiteness and flatness of the closure](#82-finiteness-and-flatness-of-the-closure)
@@ -50,6 +56,7 @@
    - [Intersections, sums, and generated subgroups](#84-intersections-sums-and-generated-subgroups)
    - [Extending generic morphisms](#85-extending-generic-morphisms)
    - [Images over a DVR](#86-images-over-a-dvr)
+   - [Closure and exact sequences](#87-closure-and-exact-sequences)
 9. [Local models and their generic fibers](#9-local-models-and-their-generic-fibers)
    - [Finite flat groups over a local ring](#91-finite-flat-groups-over-a-local-ring)
    - [The DVR lattice picture](#92-the-dvr-lattice-picture)
@@ -58,6 +65,7 @@
    - [Constant and multiplicative models in mixed characteristic](#95-constant-and-multiplicative-models-in-mixed-characteristic)
    - [Criteria that restore uniqueness](#96-criteria-that-restore-uniqueness)
    - [Beyond DVRs](#97-beyond-dvrs)
+   - [Models as ordered Hopf lattices](#98-models-as-ordered-hopf-lattices)
 10. [Torsion on abelian schemes](#10-torsion-on-abelian-schemes)
     - [Why a proper smooth group enters a finite theory](#101-why-a-proper-smooth-group-enters-a-finite-theory)
     - [Why multiplication is finite flat](#102-why-multiplication-is-finite-flat)
@@ -70,6 +78,7 @@
     - [Elliptic cyclic subgroups](#113-elliptic-cyclic-subgroups)
     - [Intersections of torsion subgroup schemes](#114-intersections-of-torsion-subgroup-schemes)
     - [Good reduction and torsion](#115-good-reduction-and-torsion)
+    - [Base change and descent of closed subgroups](#116-base-change-and-descent-of-closed-subgroups)
 12. [Exact calculus over arithmetic bases](#12-exact-calculus-over-arithmetic-bases)
     - [Subobjects](#121-subobjects)
     - [Quotients](#122-quotients)
@@ -78,6 +87,7 @@
     - [Homomorphisms and base change](#125-homomorphisms-and-base-change)
     - [Internal linear constructions](#126-internal-linear-constructions)
     - [Rank bookkeeping](#127-rank-bookkeeping)
+    - [The admissible exact structure](#128-the-admissible-exact-structure)
 13. [Models of finite Galois modules](#13-models-of-finite-galois-modules)
     - [From a generic group to a representation](#131-from-a-generic-group-to-a-representation)
     - [The category of models of a fixed module](#132-the-category-of-models-of-a-fixed-module)
@@ -85,13 +95,15 @@
     - [Extensions and exact models](#134-extensions-and-exact-models)
     - [Scalar extension](#135-scalar-extension)
     - [A precise finite-flat model category](#136-a-precise-finite-flat-model-category)
+    - [Unramified generic modules and étale models](#137-unramified-generic-modules-and-étale-models)
 14. [Structural synthesis](#14-structural-synthesis)
     - [The three layers of a finite-flat object](#141-the-three-layers-of-a-finite-flat-object)
     - [A safe construction protocol](#142-a-safe-construction-protocol)
     - [Hypotheses and what they buy](#143-hypotheses-and-what-they-buy)
     - [What exactness means](#144-what-exactness-means)
     - [The boundary with duality](#145-the-boundary-with-duality)
-    - [Conclusion](#146-conclusion)
+    - [A failure atlas](#146-a-failure-atlas)
+    - [Conclusion](#147-conclusion)
 
 ## 1. The finite-flat category
 
@@ -192,6 +204,10 @@ Faithfully flat base change also detects the structure. A morphism of finite loc
 The resulting principle will govern the whole book: construct scheme-theoretically, prove flatness on coordinate algebras, and only then use fibers to interpret the result.
 
 ## 2. Basic constructions and their limits
+
+The purpose of this chapter is not merely to list constructions. It is to decide which familiar operations actually stay inside finite flat geometry. Products are harmless, kernels are representable but may lose flatness, and quotients are well behaved only after the subgroup and torsor hypotheses have been secured. That asymmetry is the first major difference from ordinary finite abelian groups.
+
+The guiding distinction is among three assertions that are often compressed into the word “exact.” A closed subscheme may exist without being flat; a quotient sheaf may exist without being represented by the intended scheme; and a represented quotient may fail to be surjective on sections over the original test ring. Keeping these assertions separate will make the later closure constructions over valuation rings almost mechanical.
 
 ### 2.1 Products and fiber products
 
@@ -306,7 +322,7 @@ $$
 0\longrightarrow G'\xrightarrow{i}G\xrightarrow{q}G''\longrightarrow0
 $$
 
-is **exact** when $i$ identifies $G'$ with the scheme-theoretic kernel of $q$ and $q$ is faithfully flat, equivalently when $G''$ represents the faithfully flat sheaf quotient $G/G'$. Then $G\to G''$ is a $G'$-torsor, and arbitrary base change preserves exactness.
+is **fppf exact**, or simply **exact**, when $i$ identifies $G'$ with the scheme-theoretic kernel of $q$ and $q$ is faithfully flat, equivalently when $G''$ represents the fppf sheaf quotient $G/G'$. The map $q$ is finite locally free and hence an fppf cover. Thus $G\to G''$ is a $G'$-torsor, and arbitrary base change preserves exactness. In this finite locally free setting the fppf and fpqc sheaf quotients agree.
 
 If the orders are constant on a connected component, torsor descent gives
 
@@ -318,7 +334,31 @@ This is the finite-flat form of Lagrange's theorem. Its proof does not count poi
 
 Exactness has useful two-out-of-three consequences. If $G'$ and $G''$ are finite locally free and $G\to G''$ is a torsor under $G'$, then $G$ is finite locally free. If $G$ and $G'$ are finite locally free and the quotient theorem applies, then $G''$ is finite locally free. None of these conclusions follows from exactness of abstract groups of geometric points.
 
+### 2.6 Admissible maps and categorical boundaries
+
+The preceding results suggest the right replacement for an abelian-category reflex. Call a closed immersion $i:H\hookrightarrow G$ **admissible** when $H$ is finite locally free; its represented quotient $G/H$ is then finite locally free. Call a morphism $q:G\to Q$ an **admissible quotient** when it is faithfully flat; then its scheme-theoretic kernel is finite locally free and $q$ is the quotient by that kernel. A short sequence is exact precisely when its two nonzero arrows are admissible in these senses and identify kernel with quotient.
+
+This language makes the asymmetry visible. An arbitrary morphism $f:G\to H$ has a scheme-theoretic kernel and a schematic image as finite schemes, but either can leave the finite-flat category. Therefore one cannot define an admissible image merely by writing $G/\ker f$: the kernel may not be flat. Nor can one define an admissible coimage by taking the raw schematic image: its coordinate algebra may not be flat, and the induced map onto a flat closure need not be faithfully flat.
+
+When an admissible factorization does exist,
+
+$$
+G\twoheadrightarrow I\hookrightarrow H,
+$$
+
+the first map is the quotient by a finite-flat kernel and the second is a finite-flat closed immersion. Then the usual first-isomorphism conclusion holds:
+
+$$
+G/\ker f\simeq I.
+$$
+
+The proof is the universal property of the faithfully flat sheaf quotient. This is a theorem about the displayed factorization, not a theorem that every morphism possesses one.
+
+There is nevertheless a genuine exact calculus. Pulling an exact sequence back along a morphism to its quotient again gives an exact sequence, because torsors and kernels survive arbitrary base change. Pushing an exact sequence out along an admissible quotient of its kernel is represented by a successive finite-flat quotient. These two stability statements, together with closure under extensions, are the operations later required of the exact structure. They do not manufacture kernels or cokernels for arbitrary maps.
+
 ## 3. Standard families
+
+Examples in this subject are not ornaments: they are the quickest way to detect which invariant is being used. Constant groups isolate discrete behavior, diagonalizable groups turn finite abelian groups into characters, and additive kernels supply connected infinitesimal behavior. By placing them over varying bases, one sees étaleness disappear while rank remains fixed. These examples will serve as local test cases for every structural theorem that follows.
 
 ### 3.1 Constant groups
 
@@ -443,7 +483,40 @@ $$
 
 Even when $G'$ and $G''$ are constant or diagonalizable, $G$ need not be their product. Exactness supplies the rank $|G'||G''|$, not a splitting. A splitting is a homomorphism $G''\to G$ right inverse to the quotient, and its existence is a separate descent question.
 
+### 3.7 A comparison ledger
+
+The smallest examples already display four independent invariants. Over an algebraically closed field $k$ of characteristic $p$, they compare as follows.
+
+| Group | Order | Geometric points | Identity component | Cotangent dimension |
+|---|---:|---:|---|---:|
+| $\underline{\mathbf Z/p\mathbf Z}$ | $p$ | $p$ | identity point | $0$ |
+| $\mu_p$ | $p$ | $1$ | all of the group | $1$ |
+| $\alpha_p$ | $p$ | $1$ | all of the group | $1$ |
+| $\mu_p\times\underline{\mathbf Z/p\mathbf Z}$ | $p^2$ | $p$ | $\mu_p$ | $1$ |
+| $\alpha_p\times\mu_p$ | $p^2$ | $1$ | all of the group | $2$ |
+
+The table is deliberately redundant. Equal order does not imply equal point count; equal point count does not imply the same group law; equal connectedness and tangent dimension still do not distinguish $\alpha_p$ from $\mu_p$. The coordinate coproduct is the final invariant in these comparisons.
+
+Two exact sequences give complementary mixed examples. In characteristic $p$,
+
+$$
+0\longrightarrow\mu_p\longrightarrow\mu_{p^2}
+\xrightarrow{[p]}\mu_p\longrightarrow0
+$$
+
+is connected throughout, while
+
+$$
+0\longrightarrow\underline{\mathbf Z/p\mathbf Z}
+\longrightarrow\underline{\mathbf Z/p^2\mathbf Z}
+\longrightarrow\underline{\mathbf Z/p\mathbf Z}\longrightarrow0
+$$
+
+is étale throughout. Both have the same rank pattern $p,p^2,p$. A product such as $\mu_p\times\underline{\mathbf Z/p\mathbf Z}$ lies between these poles. Later, ordinary elliptic-curve torsion will produce an extension with connected kernel and étale quotient that need not come with a chosen splitting over the base.
+
 ## 4. Multiplication and torsion kernels
+
+Multiplication by an integer converts the abstract group law into a geometric endomorphism. Its kernel is where arithmetic applications find their finite groups, but the notation $G[n]$ hides two questions: is the kernel finite, and is it flat? This chapter answers those questions in the situations used later, proves that the order annihilates every finite flat commutative group, and isolates the prime-to-characteristic region where infinitesimal behavior disappears.
 
 ### 4.1 Why multiplication by an integer is geometric
 
@@ -550,13 +623,39 @@ Hence $Na=0$. This holds naturally for every $T$ and every $a\in G(T)$, so the Y
 
 If rank varies on a disconnected base, $G$ is killed on each clopen rank stratum by the corresponding order, and one common multiple kills it globally. In applications to abelian schemes we will usually retain an explicitly chosen annihilator $n$, since that identifies the particular ambient kernel $A[n]$ in which closure is taken.
 
-### 4.5 Tangent space as a diagnostic, not a classifier
+### 4.5 Order invertible implies étale
+
+The order theorem has an important geometric consequence which is often used informally and deserves a proof.
+
+**Theorem 4.1.** Let $G$ be finite locally free and killed by an integer $n$ which is invertible on $S$. Then $G$ is finite étale. In particular, if $G$ has constant order $N$, it is finite étale over the open subset $S[1/N]$; over a field it is étale whenever the characteristic does not divide its order.
+
+**Proof strategy.** Since $[n]_G$ is the zero homomorphism, its differential at the identity is zero. On the other hand the differential of $[n]$ is multiplication by $n$. Since $n$ is invertible, this forces the cotangent space at the identity to vanish. Translation then propagates the vanishing over the whole group.
+
+More explicitly, let $I$ be the augmentation ideal of the coordinate algebra. The endomorphism induced by $[n]$ on $I/I^2$ is multiplication by $n$: modulo quadratic terms, adding a first-order displacement $n$ times adds its class $n$ times. Because $[n]$ factors through the identity, that endomorphism is also zero. We obtain
+
+$$
+I/I^2=0.
+$$
+
+For every point $g$ after any field extension, translation by $g$ identifies its cotangent space with the cotangent space at the identity. Thus every geometric fiber has zero relative cotangent spaces. Since $G$ is finite locally free, it is finitely presented and flat; vanishing of relative differentials makes it unramified. Finite, flat, finitely presented, and unramified is finite étale. $\square$
+
+For a group of constant order $N$, §4.4 supplies the annihilator $n=N$, proving the stated consequence over $S[1/N]$. The conclusion is stronger than a point-counting argument and is stable under arbitrary base change. It applies, for example, to every finite flat group of order prime to the residue characteristic over a local ring. All genuinely connected finite-flat phenomena over such a ring are therefore concentrated in the residue-characteristic primary part.
+
+Combining this theorem with the primary decomposition gives a useful local form. If a finite flat group over a local base of residue characteristic $p$ is killed by $N=p^rm$ with $(m,p)=1$, then
+
+$$
+G\simeq G[p^r]\times G[m],
+$$
+
+and $G[m]$ is finite étale. Only $G[p^r]$ can carry a connected special fiber. No classification of the $p$-primary factor is implied.
+
+### 4.6 Tangent space as a diagnostic, not a classifier
 
 Let $I_e=\ker(\varepsilon:\mathcal O(G)\to R)$. The conormal module at the identity is $I_e/I_e^2$, and its dual is the tangent module $\operatorname{Lie}(G)$. For $G[n]$, the differential of $[n]$ is multiplication by $n$ on $\operatorname{Lie}(G)$. Thus, where $n$ is invertible, an $n$-torsion kernel of a smooth group has zero tangent space and is étale when it is finite flat.
 
 In characteristic dividing $n$, the differential may vanish and infinitesimal torsion becomes possible. Yet the tangent space is only first order: $\alpha_p$ and $\mu_p$ have the same tangent dimension. Rank, full coordinate algebra, and coproduct remain indispensable.
 
-### 4.6 Exact sequences among the standard groups
+### 4.7 Exact sequences among the standard groups
 
 Concrete exact sequences show how the abstract definitions behave when the order is not invertible. For positive integers $a,b$, raising to the $a$th power gives
 
@@ -584,6 +683,10 @@ $$
 On coordinate rings the map sends the target coordinate to $T^p$, and $k[T]/(T^{p^r})$ is free of rank $p$ over $k[T^p]/(T^{p^r})$. The sequence is faithfully flat exact although every group in it has only one geometric point. It is a compact demonstration that the torsor and rank definitions, rather than pointwise exactness, are indispensable.
 
 ## 5. Fibers over fields
+
+Over a field flatness ceases to be the obstacle: every finite-dimensional vector space is flat. The geometry is instead governed by the Artinian decomposition, separability, and connectedness. This chapter establishes the precise point at which a finite group may be replaced by a finite Galois module, and the precise point at which that replacement loses the connected infinitesimal part.
+
+The connected–étale sequence is the central result. Its clean form uses a perfect ground field. That hypothesis will remain visible, because later residue fields are often finite and hence perfect, while arbitrary arithmetic bases need not enjoy the same simplification.
 
 ### 5.1 Artinian geometry at the identity
 
@@ -655,7 +758,37 @@ The first is étale, has $p$ points, and has trivial identity component. The las
 
 This hierarchy is essential when a generic étale representation specializes. The special fiber may become any mixture of étale components and connected local structure while preserving total rank.
 
+### 5.6 The role of perfection
+
+It is useful to isolate exactly where perfection entered. The Artinian product decomposition and the existence of $G^0$ did not use it. Nor did the quotient theorem. Perfection was used to turn a reduced finite algebra into a geometrically reduced one, hence to identify the component quotient as finite étale by inspecting reducedness over the original field.
+
+The warning is already visible without a group law. If $k$ is imperfect of characteristic $p$ and $a\in k$ is not a $p$th power, then
+
+$$
+k[T]/(T^p-a)
+$$
+
+is a field and therefore reduced, but after adjoining $a^{1/p}$ it becomes
+
+$$
+\bar k[T]/((T-a^{1/p})^p),
+$$
+
+which is nonreduced. Ordinary reducedness is therefore not a geometric criterion over an imperfect field. A connected–étale assertion over such a field must be proved using geometric reducedness or a specific theorem about the group in question; it cannot be recovered by deleting the word “perfect” from the result of §5.3.
+
+Three safe tests will be used later:
+
+- over any field, finite étale is equivalent to geometrically reduced;
+- over a perfect field, reduced is equivalent to geometrically reduced for finite schemes;
+- for a finite group scheme over any field, vanishing of the cotangent space after extending to an algebraic closure is equivalent to étaleness.
+
+Thus the usual connected–étale picture is not a convention about notation. It is a theorem whose descent and separability inputs must be checked.
+
 ## 6. Finite étale groups and Galois modules
+
+Once a finite group is étale, its scheme structure is completely separated into geometric points, and descent is the only remaining information. Absolute Galois groups encode that descent. The purpose of this chapter is to state the equivalence with finite continuous modules in a form compatible with kernels, quotients, and passage from a henselian valuation ring to its fraction and residue fields.
+
+Nothing in this chapter identifies a nonétale group with its points. The equivalence is a boundary theorem: it becomes available only after étaleness has been established by order, differentials, or geometric reducedness.
 
 ### 6.1 Why geometric points work in the étale case
 
@@ -725,7 +858,39 @@ $$
 
 which preserves rank and all Hopf operations. Only after proving $G_k$ étale may one replace that fiber by its geometric points. This order of operations prevents the common but false inference that constant generic rank implies constant point count.
 
+### 6.5 Exact sequences under the Galois correspondence
+
+The equivalence of Theorem 6.1 preserves more than objects. Suppose
+
+$$
+0\longrightarrow G'\longrightarrow G\longrightarrow G''\longrightarrow0
+$$
+
+is an exact sequence of finite étale commutative groups over $k$. After passing to $k^s$, all three become constant, the quotient map becomes surjective on points, and one obtains an exact sequence
+
+$$
+0\longrightarrow G'(k^s)\longrightarrow G(k^s)
+\longrightarrow G''(k^s)\longrightarrow0
+$$
+
+of finite $\Gamma_k$-modules. Conversely, an exact sequence of finite continuous modules descends from the corresponding exact sequence of constant groups over a finite Galois extension. Thus kernels, quotients, images, and ranks in the étale subcategory agree with their ordinary module counterparts.
+
+The use of $k^s$ is essential. Exactness on $k$-rational points can fail at the right because a quotient point may represent a nontrivial torsor. Exactness on geometric points succeeds here because the separably closed field trivializes finite étale torsors. It would still miss a connected kernel: the sequence
+
+$$
+0\longrightarrow\mu_p\longrightarrow\mathbf G_m
+\xrightarrow{[p]}\mathbf G_m\longrightarrow0
+$$
+
+in characteristic $p$ has a nontrivial finite-flat kernel, but the kernel contributes only the identity to geometric points.
+
+For a henselian DVR, an exact sequence of finite étale models therefore corresponds exactly to an exact sequence of unramified generic modules. By contrast, an exact sequence of finite flat models whose special fibers are not étale contains additional integral extension data. Passing to generic geometric points preserves exactness but forgets how sections collide in the special fiber.
+
 ## 7. Henselian local bases and connected-étale structure
+
+The field decomposition becomes arithmetically useful only if it can be lifted from the residue field. A henselian local ring is precisely a base over which finite idempotent decompositions lift uniquely. When the residue field is perfect, this turns the special-fiber identity component into a canonical finite-flat subgroup and produces an étale quotient over the whole local base.
+
+This lifted subgroup is defined by its special fiber, not by connectedness of its total space or generic fiber. That distinction is crucial in mixed characteristic, where $\mu_p$ has connected special fiber but étale generic fiber.
 
 ### 7.1 Lifting the special-fiber decomposition
 
@@ -748,7 +913,7 @@ Here $G^0$ is finite locally free with connected special fiber, and $G^{\mathrm{
 
 To justify the last assertion, first reduce the quotient sequence modulo $\mathfrak m$. Its quotient is $(G_k)^{\mathrm{et}}$, hence étale over the perfect field $k$. The quotient $G^{\mathrm{et}}$ is finite locally free. Its module of relative differentials is finite, and its reduction modulo $\mathfrak m$ vanishes. Nakayama's lemma gives vanishing over $R$, so the quotient is unramified; finite locally free plus unramified is finite étale.
 
-This sequence is functorial. A homomorphism $G\to H$ sends $G^0$ into $H^0$ because the special-fiber identity component maps into the identity component. It therefore induces a map on étale quotients. The construction also commutes with local homomorphisms of henselian local rings that preserve the relevant perfect-residue setting.
+This sequence is functorial. A homomorphism $G\to H$ sends $G^0$ into $H^0$ because the special-fiber identity component maps into the identity component. It therefore induces a map on étale quotients. It also commutes with base change between henselian local rings when the induced residue-field extension preserves the geometric connected components; extensions between perfect residue fields are the case used here.
 
 ### 7.3 Maximality and rank
 
@@ -770,7 +935,33 @@ Passing from a noetherian local ring to its completion is faithfully flat. A fin
 
 Completion can simplify coefficients, but it does not turn a generic-fiber morphism into an integral one automatically. Nor does an isomorphism after passing only to the fraction field descend. Faithful flatness helps when the objects and morphisms already exist before base change; it does not manufacture descent data for a morphism defined solely upstairs.
 
+### 7.5 What fails without henselianity
+
+Henselianity cannot be replaced by locality alone. Let
+
+$$
+R=\mathbf Q[t]_{(t)},
+\qquad
+B=R[X]/(X^2-X-t).
+$$
+
+The discriminant $1+4t$ is a unit, so $B$ is finite étale of rank $2$ over $R$. Its special fiber is
+
+$$
+B/tB\simeq\mathbf Q\times\mathbf Q,
+$$
+
+but $X^2-X-t$ has no root in $R$: a root in $R$ would give a square root of $1+4t$ in the rational function field, which does not exist. Thus the two special-fiber idempotents do not lift to $B$. The base is local but not henselian.
+
+This is already enough to invalidate any argument that lifts $G_k^0$ by locality alone. The same obstruction occurs for group schemes, not only for schemes. For example, assume the residue characteristic is different from $2$ and $3$, use the quadratic étale algebra above as a torsor, and descend the constant group $\mathbf Z/3\mathbf Z$ while the nontrivial deck transformation acts by inversion. The special fiber of the descended group is split, but its two nonidentity special components need not lift separately over $R$.
+
+Passing to the henselization removes the obstruction: finite étale algebras and their idempotents are then determined by the residue field. The example explains why the local connected–étale sequence is naturally a henselian theorem rather than a theorem for arbitrary local rings.
+
 ## 8. Schematic closure over a DVR
+
+A generic subgroup is often easy to identify from a Galois representation, while its integral equations are not. Schematic closure turns that generic datum into an integral subgroup inside a fixed finite-flat ambient model. The one-dimensional base is decisive: contraction makes the quotient torsion-free, and finite torsion-free modules over a DVR are free.
+
+This chapter proves not only existence but uniqueness, base-change compatibility, and the limits of image and intersection constructions. These results are the mechanism by which generic submodules become integral subgroup schemes later in the book.
 
 ### 8.1 The extension problem
 
@@ -852,7 +1043,7 @@ $$
 |H_1+H_2|\,|H_1\cap H_2|=|H_1|\,|H_2|
 $$
 
-requires the relevant intersection and image to mean their finite-flat versions and follows by applying rank multiplicativity to the kernel and image of $H_1\times H_2\to G$.
+requires the relevant intersection and sum to mean the closures of their generic counterparts. It follows by applying the ordinary finite-group-scheme rank formula on the generic fiber and observing that closure preserves rank. The natural integral map $H_1\times H_2\to H_1+H_2$ need not be faithfully flat: its raw kernel can contain extra special-fiber structure. Thus the numerical formula does not by itself assert an integral exact sequence. If the raw kernel is already the flat intersection and the induced map to the flat sum is faithfully flat, then the expected integral exact sequence does hold.
 
 ### 8.5 Extending generic morphisms
 
@@ -876,7 +1067,44 @@ $$
 
 with faithfully flat first arrow exists precisely when the induced map to $I$ is faithfully flat; equivalently, its coordinate algebra is faithfully flat over $\mathcal O(I)$. This holds for admissible quotient maps and after quotienting by a finite-flat kernel when the resulting map is known to identify with the closure. It does not hold for every morphism. The distinction is why finite flat group schemes over a DVR do not form an abelian category under all morphisms.
 
+### 8.7 Closure and exact sequences
+
+Closure behaves especially well with subquotients of a fixed model. Let $G$ be finite flat over $R$, let $H_K\subseteq G_K$, and let $H'_K\subseteq H_K$. Write $H$ and $H'$ for their closures in $G$. Since $H'_K\subseteq H_K$, contraction of ideals gives $H'\subseteq H$. The quotient theorem then produces an exact sequence
+
+$$
+0\longrightarrow H'\longrightarrow H\longrightarrow H/H'\longrightarrow0,
+$$
+
+and its generic fiber is
+
+$$
+0\longrightarrow H'_K\longrightarrow H_K
+\longrightarrow H_K/H'_K\longrightarrow0.
+$$
+
+Consequently $H/H'$ is a finite-flat model of the generic quotient and
+
+$$
+|H|=|H'|\,|H/H'|.
+$$
+
+This is the safe route from a generic exact sequence to an integral one: first close the subobject inside an existing middle model, then take the represented quotient. Starting with independently chosen models of all three generic terms need not produce an exact integral sequence, because the prescribed quotient model may not equal $H/H'$.
+
+Kernels require the same discipline. Suppose $f:G\to Q$ is an integral morphism and let $K_K=\ker(f_K)$. Its closure $K$ in $G$ is finite flat. The scheme-theoretic kernel $\ker f$ contains $K$, but it may contain additional special-fiber structure and fail to be flat. If $\ker f$ is finite flat, uniqueness of closure forces
+
+$$
+\ker f=K.
+$$
+
+The morphism $G_1\to G_t$ shows the alternative: its generic kernel is trivial, whose closure is the identity section, whereas its raw integral kernel has an extra nonflat special fiber.
+
+These observations also explain the base-change statement. Under a flat extension of DVRs $R\to R'$, the exact sequence defining a saturated quotient stays exact, so the extended ideal remains saturated and has the expected generic fiber. By uniqueness it is the closure after base change. Under a nonflat base change, such as reduction to the residue field, saturation can be lost; the special fiber of a closure is not the closure of a generic object in any literal sense because the generic object has disappeared.
+
 ## 9. Local models and their generic fibers
+
+Closure extends subgroups inside a chosen model, but arithmetic applications also ask how many models a generic group can have. Over a DVR this becomes a lattice problem with nonlinear compatibility: the lattice must contain the unit, be an algebra, and be stable under all Hopf operations. Valuation depth can change those lattices without changing the generic group.
+
+The examples in this chapter make nonuniqueness explicit in equal and mixed characteristic. They also identify three distinct rigidity statements—uniqueness of closure in a fixed ambient group, uniqueness of extension of a morphism between fixed models, and uniqueness inside the finite étale subcategory—which should never be merged into a blanket uniqueness claim.
 
 ### 9.1 Finite flat groups over a local ring
 
@@ -964,7 +1192,33 @@ Let $S$ be a Dedekind scheme. At every closed point, the local ring is a DVR, so
 
 Over a higher-dimensional normal base, a finite torsion-free module need not be locally free. The schematic closure of a generic subgroup is still finite and torsion-free, but may fail to be flat along codimension at least two. Reflexive hulls can repair module-theoretic depth while destroying algebra or Hopf compatibility. Thus the clean closure theorem is genuinely one-dimensional unless stronger hypotheses are supplied.
 
+### 9.8 Models as ordered Hopf lattices
+
+Fix a finite commutative $K$-group $G_K$. A model is more than an abstract $R$-group: it includes an identification of its generic fiber with $G_K$. Between two such models there is at most one morphism inducing the identity on $G_K$, because the generic-fiber functor is faithful. Write
+
+$$
+G_1\preceq G_2
+$$
+
+when that morphism exists. If morphisms exist in both directions, their composites are generically the identity and hence are the identity integrally; the models are isomorphic. Thus isomorphism classes of identified models form a partially ordered set.
+
+On coordinates the order is reversed. If $A_1,A_2\subseteq\mathcal O(G_K)$ are the corresponding Hopf lattices, then
+
+$$
+G_1\preceq G_2
+\quad\Longleftrightarrow\quad
+A_2\subseteq A_1.
+$$
+
+The order remembers valuation depth that the generic fiber has erased. In the equal-characteristic example, the map $G_1\to G_t$ makes the étale-special-fiber model lie below the connected-special-fiber model for the chosen generic identification. It is not an isomorphism because the inclusion of Hopf lattices is strict.
+
+This order need not have all meets and joins inside finite-flat models. The module intersection and module sum of two lattices are again lattices, but the intersection need not send under coproduct into the tensor square of the intersection, and the sum need not be closed under multiplication. Thus neither module operation automatically produces a Hopf lattice. Embedding all subgroup models into one fixed finite-flat ambient group restores the controlled operations of schematic intersection, group-scheme sum, and saturation. This is another reason ambient torsion groups such as $A[n]$ are so valuable.
+
 ## 10. Torsion on abelian schemes
+
+Finite flat groups become central in arithmetic geometry because they occur as multiplication kernels on abelian schemes. The ambient abelian scheme is smooth, proper, and positive-dimensional, but multiplication is an isogeny and its kernel is finite locally free in every characteristic. This supplies the canonical ambient groups in which generic torsion subgroups can be closed.
+
+Only the finite-flat consequences are developed here. The broader theory of polarizations, dual abelian schemes, and isogenies belongs to the later treatment of abelian schemes; we prove the particular multiplication and quotient facts required for integral subgroup models.
 
 ### 10.1 Why a proper smooth group enters a finite theory
 
@@ -992,9 +1246,39 @@ is exact for the faithfully flat topology.
 
 ### 10.2 Why multiplication is finite flat
 
-The proof has several geometric ingredients. Fiberwise, $[n]$ is an isogeny of abelian varieties: it is proper, has finite kernel, and is surjective. Proper and quasi-finite implies finite. Translation makes the local behavior uniform, and the standard degree calculation for an abelian variety gives degree $n^{2g}$ on every geometric fiber.
+The proof has several geometric ingredients, and it is worth seeing how they fit. Choose a relatively ample line bundle $L$ on $A$ and replace it by $L\otimes[-1]^*L$ with its natural rigidification. It is then symmetric. The theorem of the square, obtained by applying the cube relation to the addition law, gives
 
-Flatness follows from the fiberwise constant degree together with the Cohen–Macaulay regularity supplied by smooth source and target, or equivalently from the standard isogeny theorem for abelian schemes. Once $[n]$ is finite locally free, its kernel is the base change along the identity section and is therefore finite locally free of the same degree. This proof does not require $n$ invertible on $S$.
+$$
+[n]^*L\simeq L^{\otimes n^2}
+$$
+
+up to a line bundle pulled back from $S$, which is irrelevant on every fiber. The restriction of $L^{\otimes n^2}$ to a positive-dimensional closed subscheme of a geometric fiber is ample. If a fiber of $[n]$ were positive-dimensional, its restriction there would also be pulled back from a point and hence trivial, a contradiction. Therefore $[n]$ is quasi-finite on every fiber and hence quasi-finite. It is proper because $A$ is proper over $S$, so it is finite. On a geometric fiber, the finite image has the same dimension $g$ as the source; since the target abelian variety is irreducible of dimension $g$, the image is the whole target. Thus every fiber map is surjective.
+
+On a geometric fiber $A_s$ of dimension $g$, intersection numbers calculate the degree. If $c_1(L_s)^g$ denotes the top self-intersection, then
+
+$$
+([n]^*c_1(L_s))^g=n^{2g}c_1(L_s)^g.
+$$
+
+For this finite surjective self-map the left side is also $\deg([n]_s)c_1(L_s)^g$. Positivity of the last intersection gives
+
+$$
+\deg([n]_s)=n^{2g}.
+$$
+
+It remains to justify flatness rather than infer it from degree alone. On every geometric fiber, $[n]_s$ is a finite surjective map between smooth $g$-dimensional varieties. The target local rings are regular, the source local rings are Cohen–Macaulay, and the dimensions agree; the finite form of the miracle-flatness criterion therefore makes $[n]_s$ flat. The total morphism is finitely presented, and both source and target are flat over $S$. The fiberwise flatness criterion now makes $[n]$ flat. A finite, flat, finitely presented morphism is finite locally free. Its rank is the common fiber degree $n^{2g}$, and positive rank makes it faithfully flat.
+
+Finally, the kernel square
+
+$$
+\begin{array}{ccc}
+A[n]&\longrightarrow&A\\
+\downarrow&&\downarrow [n]\\
+S&\xrightarrow{e}&A
+\end{array}
+$$
+
+is cartesian. Thus $A[n]\to S$ is the base change of $[n]$ and is finite locally free of rank $n^{2g}$. No step required $n$ to be invertible on $S$.
 
 If $n$ is invertible on $S$, the differential of $[n]$ is multiplication by $n$ and is an isomorphism. Hence $A[n]$ is finite étale. When a residue characteristic divides $n$, the kernel may have connected nonreduced fibers, but its order remains $n^{2g}$.
 
@@ -1032,7 +1316,15 @@ $$
 \deg(A\to A/H)=|H|.
 $$
 
-The theorem uses representability of quotients by finite locally free subgroup schemes in the abelian-scheme setting. A mere finite closed subgroup that is not flat does not meet its hypotheses.
+Here representability is a theorem, not a consequence of the affine quotient result because $A$ is proper rather than affine. A concise construction uses the finite locally free relation
+
+$$
+H\times_SA\rightrightarrows A
+$$
+
+given by projection and translation. Choose a relatively ample line bundle $L$ on $A$. Taking the norm of the translated bundle along the finite locally free projection $H\times A\to A$ is the scheme-theoretic version of tensoring all $H$-translates of $L$. Translation on the $H$-factor supplies invariant descent data; after a fixed positive tensor power, it gives compatible projective embeddings for the quotient relation. Effective descent then constructs a proper $S$-scheme $B$ representing the sheaf quotient. The group law descends because $H$ is normal, and smoothness descends along the torsor $A\to B$. Fibers are quotients of abelian varieties by finite subgroup schemes, hence geometrically connected. Thus $B$ is an abelian scheme.
+
+After pulling back along $A\to B$, the quotient map becomes the projection $A\times H\to A$. It follows by descent that $A\to B$ is finite locally free of rank $|H|$ and has kernel $H$. Conversely, an isogeny of abelian schemes is finite locally free by the same fiberwise flatness argument, and its identity fiber is a finite locally free kernel. A mere finite closed subgroup that is not flat does not meet any of these hypotheses.
 
 ### 10.5 Rational subgroups versus subgroup schemes
 
@@ -1041,6 +1333,10 @@ Over a field where $n$ is invertible, a Galois-stable subgroup of $A[n](k^s)$ co
 Therefore “a rational subgroup” has two possible meanings. It may mean a Galois-stable subgroup of geometric points in the étale case, or it may mean a subgroup scheme defined over the field. Only the second meaning is safe in arbitrary characteristic. The passage between them requires an étaleness hypothesis.
 
 ## 11. Closing generic subgroups in abelian schemes
+
+The multiplication kernels of the preceding chapter turn the abstract DVR closure theorem into a practical theorem about abelian varieties with good reduction. Every finite generic subgroup is annihilated by some integer, hence lies in a finite ambient torsion group. Closing it there preserves the rank and the group law and produces an integral isogeny kernel.
+
+The fixed ambient abelian scheme is essential. The theorem constructs the unique subgroup model inside that scheme; it does not assert uniqueness among all abstract models of the generic finite group.
 
 ### 11.1 Reduction to a finite ambient torsion group
 
@@ -1057,6 +1353,8 @@ By Theorem 8.1 the closure $H$ is finite flat over $R$. Because $A[n]\hookrighta
 **Theorem 11.1.** A finite generic-fiber subgroup of an abelian scheme over a DVR, together with an integer annihilating it, extends uniquely to a finite flat closed subgroup of the abelian scheme.
 
 This proof is stronger and cleaner than trying to show directly that a closure in a proper scheme is quasi-finite. The multiplication kernel supplies finiteness before closure is taken.
+
+The qualifier about an annihilator is harmless but useful. A finite flat commutative group of order $N$ is killed by $N$, so one may take $n=N$. If $H'\subset A$ is any other finite-flat extension of $H_K$, the equality $[n]_{H'_K}=0$ extends over $R$ because two maps out of the flat scheme $H'$ that agree generically agree everywhere. Thus $H'\subset A[n]$, and uniqueness of saturated closure inside $A[n]$ gives $H'=H$.
 
 ### 11.2 Closure and quotient isogenies
 
@@ -1080,18 +1378,19 @@ The quotient $E/C$ is again an elliptic scheme, and the map $E\to E/C$ is an iso
 
 If $H_K\subset A_K[m]$ and $J_K\subset A_K[n]$, both may be placed in $A_K[\operatorname{lcm}(m,n)]$. Their closures can then be intersected and saturated inside one finite flat ambient group. The resulting flat intersection is the closure of $H_K\cap J_K$. Their flat sum is the closure of the image under addition.
 
-This common-ambient method is important: uniqueness of closure applies only after the ambient integral model has been fixed. It also gives clean rank identities from the exact sequence
+This common-ambient method is important: uniqueness of closure applies only after the ambient integral model has been fixed. On the generic fiber there is an exact sequence
 
 $$
-0\to H\cap J\to H\times J\to H+J\to0,
+0\to H_K\cap J_K\to H_K\times J_K\to H_K+J_K\to0.
 $$
 
-where intersection and sum mean the saturated finite-flat constructions. Hence
+Closure preserves the four ranks, so
 
 $$
 |H\cap J|\,|H+J|=|H|\,|J|.
-
 $$
+
+The analogous integral sequence is exact only when the scheme-theoretic kernel is flat and the map onto the flat sum is faithfully flat. Saturation alone supplies the subgroup models and the rank identity, not that additional torsor statement.
 
 ### 11.5 Good reduction and torsion
 
@@ -1099,7 +1398,19 @@ An elliptic curve over $K$ with an elliptic scheme model over $R$ has good reduc
 
 This is the bridge from the torsion theory of elliptic curves to integral representation theory: the generic fiber supplies a Galois module, while the finite flat closure supplies the permitted behavior at the residue characteristic.
 
+### 11.6 Base change and descent of closed subgroups
+
+Let $R\to R'$ be a flat extension of DVRs and let $A'=A_{R'}$. If $H$ is the closure of $H_K$ in $A[n]$, then $H_{R'}$ is the closure of the scalar-extended generic subgroup in $A'[n]$. This follows from flat base change for saturated closure. Hence extending the valuation ring does not create a different closure inside the pulled-back abelian model.
+
+The reverse direction is descent, not contraction by fiat. Suppose a subgroup $H'\subset A'[n]$ is finite flat and is equipped with compatible descent data over $R'\otimes_RR'$. Effective descent produces a finite flat closed subgroup $H\subset A[n]$. If only the generic subgroup descends, the integral subgroup need not: the Hopf lattice may fail the cocycle even when its generic fiber has one. Thus descent of the generic Galois module is weaker than descent of its model.
+
+At prime-to-residue-characteristic level the distinction disappears in the unramified étale subcategory. There finite étale models and their morphisms are determined by the residue representation. At residue-characteristic level different closures can occur in different ambient abelian schemes, and connected special fibers record the difference.
+
 ## 12. Exact calculus over arithmetic bases
+
+Arithmetic arguments rarely manipulate one group in isolation. They pass to subgroups, quotients, extensions, primary parts, and scalar extensions. The purpose of this chapter is to collect the operations that are legitimate over general bases and to label the ones that require a DVR, a flatness proof, or a representability theorem.
+
+The result is an exact calculus rather than an abelian category. Admissible short exact sequences behave well under base change and extension, but arbitrary morphisms may have nonflat kernels or images. Every rank identity below is therefore attached to a torsor statement.
 
 ### 12.1 Subobjects
 
@@ -1143,7 +1454,7 @@ The middle term is not determined by the end terms. A split extension is their p
 
 If $G$ is killed by $N$, every subgroup, quotient, and extension constructed above is killed by $N$ or by a controlled product of annihilators. Coprime primary decompositions commute with base change and exact sequences. Therefore the full category of $N$-torsion objects decomposes as a product of its prime-power subcategories.
 
-Over a local base of residue characteristic $p$, the prime-to-$p$ subcategory is finite étale when the groups arise as kernels in smooth groups or, more generally, when multiplication by the relevant prime is étale. The $p$-primary subcategory retains the connected phenomena. One should prove étaleness from the cotangent criterion or a structural theorem, not merely from the order being prime to a point count.
+Over a local base of residue characteristic $p$, every finite flat group of order prime to $p$ is finite étale by Theorem 4.1: its order is a unit on the base. The $p$-primary subcategory retains the connected phenomena. The proof uses annihilation and the cotangent criterion, not a comparison between order and point count.
 
 ### 12.5 Homomorphisms and base change
 
@@ -1187,13 +1498,53 @@ $$
 |H+J|\,|H\cap J|=|H|\,|J|.
 $$
 
-Every formula follows from a torsor rank calculation. None should be proved by counting geometric points unless all groups involved have first been shown étale.
+The first four formulas follow from torsor rank calculations. The subgroup-sum formula over a DVR may instead be checked on the generic fiber, because saturated closure preserves generic rank; it need not arise from an integral torsor unless the relevant map is admissible. None of the formulas should be proved by counting geometric points unless all groups involved have first been shown étale.
+
+### 12.8 The admissible exact structure
+
+The category of finite flat commutative group schemes is additive: the trivial group is a zero object, products are also coproducts, and homomorphisms can be added. Declare the admissible short sequences to be the faithfully flat exact sequences of §2.5. These sequences satisfy the usual exact-category stability rules.
+
+Split sequences are admissible. Composites of admissible closed immersions remain finite-flat closed immersions. Composites of admissible quotients are faithfully flat; their kernels are extensions of finite-flat kernels and are therefore finite flat. Successive quotient gives
+
+$$
+(G/H)/(J/H)\simeq G/J
+$$
+
+for $H\subseteq J\subseteq G$. Pulling an admissible quotient $G\twoheadrightarrow Q$ back along $Q'\to Q$ gives
+
+$$
+G\times_QQ'\twoheadrightarrow Q',
+$$
+
+the base change of the original torsor; its kernel is the pulled-back kernel and it is again admissible.
+
+For the dual stability operation, let $H\hookrightarrow G$ be admissible and let $u:H\to H'$ be any homomorphism. Inside $G\times H'$, map
+
+$$
+h\longmapsto (h,-u(h)).
+$$
+
+This is a finite-flat closed subgroup because its first projection is the given closed immersion. The quotient
+
+$$
+G'=(G\times H')/H
+$$
+
+is finite flat, and $H'\hookrightarrow G'$ is admissible. It represents the pushout of $H\hookrightarrow G$ along $u$. These pullback and pushout constructions are exactly what is required for admissible kernels and quotients to behave like short exact sequences.
+
+What fails is equally important. The exact structure does not declare every scheme-theoretic kernel admissible, and it does not provide an admissible image for every morphism. The map $G_1\to G_t$ has a nonflat kernel; its generic image closure is the whole target, but the map onto that closure is not faithfully flat. Hence the ordinary identity “coimage equals image” cannot even be formed inside the category for this map.
+
+Over a field the flatness obstruction disappears: closed subgroup schemes are finite flat, their quotients are finite, and every morphism has the usual kernel–quotient–image factorization. Over a DVR only the chosen admissible sequences enjoy that behavior. This boundary is the reason later representation-theoretic conditions are required to be stable under finite-flat subobjects, quotients, and extensions rather than under arbitrary algebraic kernels and cokernels.
 
 ## 13. Models of finite Galois modules
 
+The generic fiber of a residue-characteristic finite flat group over a mixed-characteristic DVR is étale and therefore a Galois module. The integral model is extra structure: it specifies a Hopf lattice and a special fiber. This chapter organizes that extra structure without assuming that a generic module has a unique model or that every generic extension extends integrally.
+
+The key direction is inheritance. Once a middle term has a finite-flat model, every generic submodule acquires a closure and every quotient acquires a represented model. Constructing a middle term from separately chosen end models is a different and genuinely harder existence problem.
+
 ### 13.1 From a generic group to a representation
 
-Let $R$ be a DVR with fraction field $K$, and assume that a positive integer $N$ is invertible in $K$. Every finite $K$-group scheme killed by $N$ that is finite étale corresponds to a finite discrete $\Gamma_K$-module. In mixed characteristic $(0,p)$, this applies in particular to all finite group schemes of $p$-power order over $K$, since characteristic zero makes them étale.
+Let $R$ be a DVR with fraction field $K$, and assume that a positive integer $N$ is invertible in $K$. Every finite $K$-group scheme killed by $N$ is finite étale by Theorem 4.1 and therefore corresponds to a finite discrete $\Gamma_K$-module. In mixed characteristic $(0,p)$, this applies in particular to all finite group schemes of $p$-power order over $K$, since characteristic zero makes every positive integer invertible in $K$.
 
 If $G$ is a finite flat $R$-group killed by $N$, its generic fiber therefore yields
 
@@ -1263,7 +1614,7 @@ Descent in the other direction requires data. A model over $R'$ descends only wh
 
 ### 13.6 A precise finite-flat model category
 
-For a fixed DVR $R$ and integer $N$, define $\mathcal M_R(N)$ as follows:
+For a fixed DVR $R$ and integer $N$ invertible in its fraction field $K$, define $\mathcal M_R(N)$ as follows:
 
 - objects are finite locally free commutative $R$-group schemes killed by $N$;
 - morphisms are homomorphisms of $R$-group schemes;
@@ -1275,16 +1626,38 @@ When $R$ is a DVR, schematic closure ensures that generic subgroups of a fixed o
 
 $$
 \mathcal M_R(N)\longrightarrow
-\{\text{finite étale }K\text{-groups killed by }N\}
+\{\text{finite étale commutative }K\text{-groups killed by }N\}
 $$
 
-is faithful and exact, though not generally full or essentially injective. If $N$ is invertible in $K$, composing with geometric points lands in finite continuous $\Gamma_K$-modules killed by $N$.
+is faithful and exact, though not generally full or essentially injective. Composing with geometric points lands in finite continuous $\Gamma_K$-modules killed by $N$.
+
+The exact structure here consists only of short exact sequences whose three terms lie in $\mathcal M_R(N)$. The subcategory is not closed under every extension formed in the larger finite-flat category: an extension of two groups killed by $N$ can be killed only by $N^2$. For example, the constant sequence with middle term $\mathbf Z/p^2\mathbf Z$ extends two groups killed by $p$ but does not itself lie in $\mathcal M_R(p)$. This is compatible with the exact-category axioms of §12.8, which concern stability of the admitted sequences, not inclusion of every ambient extension.
 
 This is the precise environment in which finite-flat models of residual representations live: not as bare Galois modules, and not as arbitrary finite schemes, but as finite projective Hopf lattices with a controlled exact structure.
 
 We stop at that categorical boundary. Deciding whether a representation admits a model, comparing all of its possible models, and turning existence into a deformation condition require additional representation-theoretic input. The present theory supplies the geometric objects and the exact operations those later questions are allowed to use.
 
+### 13.7 Unramified generic modules and étale models
+
+There are two implications here, and only one is automatic. If a model $G/R$ is finite étale, then its generic Galois module is unramified. Conversely, if a finite generic module is unramified, it has a unique **finite étale** model over a henselian DVR. This follows from the equivalence with finite étale residue groups.
+
+It does not follow that every finite-flat model of an unramified module is étale. Suppose $R$ has mixed characteristic $(0,p)$ and contains a primitive $p$th root of unity. The generic fiber of $\mu_p$ is the split constant group, so its Galois module is trivial and unramified. That same generic group has both the finite étale model
+
+$$
+\underline{\mathbf Z/p\mathbf Z}_R
+$$
+
+and the nonétale model $\mu_p$. The special fibers have respectively $p$ components and one connected point. Unramifiedness is therefore a property of the generic representation, while étaleness is a property of the chosen integral model.
+
+The local connected–étale quotient has a similarly model-dependent meaning. For a chosen $G$, the quotient $G^{\mathrm{et}}$ is maximal among étale quotients of that integral model. Its generic module is unramified. It need not be the maximal unramified quotient of the abstract generic module: in the example $G=\mu_p$, the integral étale quotient is trivial even though the whole split generic module is unramified. The connected special-fiber part records a choice of lattice, not merely inertia invariants.
+
+This distinction is indispensable when finite-flatness is imposed as a local condition. The condition asks for the existence of an integral model with prescribed exact behavior, not simply for an unramified Galois action.
+
 ## 14. Structural synthesis
+
+The subject can now be compressed without losing its hypotheses. A finite flat commutative group has a generic representation-theoretic face, a special connected–étale face, and an integral Hopf lattice relating them. Exactness, closure, and rank work only when those three faces are kept synchronized.
+
+This final chapter records a decision procedure and a failure atlas. Its purpose is not to introduce new constructions, but to make the preceding theorems reusable without turning their one-dimensional, henselian, or perfectness hypotheses into invisible conventions.
 
 ### 14.1 The three layers of a finite-flat object
 
@@ -1334,7 +1707,26 @@ Finite projective coordinate algebras admit module duals, convolution, determina
 
 In particular, constant and diagonalizable examples stand opposite one another, and torsion on abelian schemes carries natural pairings, but no argument here depends on identifying one as the dual of the other. Keeping this boundary explicit ensures that closure, exactness, and rank have been proved directly rather than borrowed from an undeveloped duality theorem.
 
-### 14.6 Conclusion
+### 14.6 A failure atlas
+
+The most useful counterexamples can be organized by the invalid inference they prevent.
+
+| Invalid inference | Counterexample | Correct repair |
+|---|---|---|
+| finite closed subgroup implies finite flat subgroup | $\ker(G_1\to G_t)$ | prove quotient algebra flat; over a DVR, prove torsion-free |
+| generic isomorphism extends integrally | $(G_1)_K\simeq (G_t)_K$ | test whether the graph closure projects isomorphically |
+| generic fiber determines a model | $\mu_p$ and the constant group over a suitable mixed-characteristic DVR | specify an ambient model or an étaleness condition |
+| pointwise surjectivity expresses exactness | $[n]:\mathbf G_m\to\mathbf G_m$ | use faithfully flat local lifting and the torsor identity |
+| geometric points determine a finite group | $\mu_p$ and $\alpha_p$ | retain the full coordinate algebra and coproduct |
+| equal rank implies equal fiber type | constant, multiplicative, and additive groups of order $p$ | distinguish étale, connected, and infinitesimal structure |
+| a local base lifts special components | $R[X]/(X^2-X-t)$ over $\mathbf Q[t]_{(t)}$ | require henselianity |
+| reduced over a field means étale | $k[T]/(T^p-a)$ over an imperfect field | require geometric reducedness or perfection |
+| torsion-free closure is flat in every dimension | finite torsion-free modules on higher-dimensional normal bases | retain the DVR or Dedekind hypothesis, or prove flatness separately |
+| unramified generic module forces an étale model | $\mu_p$ with split generic fiber | distinguish the representation from its chosen integral lattice |
+
+The repairs fall into four patterns. Replace points by functors and Hopf algebras; replace cardinality by rank; replace raw closed subschemes by flat or saturated ones; and replace pointwise quotients by represented faithfully flat sheaf quotients. Henselianity, perfection, and one-dimensionality then appear exactly where the relevant repair needs them.
+
+### 14.7 Conclusion
 
 Finite flat commutative group schemes are the integral form of finite arithmetic symmetry. Their generic fibers can look like ordinary finite Galois modules, while their special fibers may condense those points into connected infinitesimal groups. The finite projective Hopf algebra is the object that holds both pictures together: it preserves order through specialization, carries the law on every test ring, and makes base change exact and visible.
 
