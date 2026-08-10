@@ -8,6 +8,7 @@
    - [The chord-and-tangent law](#13-the-chord-and-tangent-law)
    - [General and short equations](#14-general-and-short-equations)
    - [Pole orders as a reconstruction principle](#15-pole-orders-as-a-reconstruction-principle)
+   - [Hypotheses and the boundary of the book](#16-hypotheses-and-the-boundary-of-the-book)
 2. [Coordinates, weights, and invariant quantities](#2-coordinates-weights-and-invariant-quantities)
    - [Why the coordinate changes are constrained](#21-why-the-coordinate-changes-are-constrained)
    - [The b-quantities and completing the square](#22-the-b-quantities-and-completing-the-square)
@@ -43,6 +44,7 @@
    - [Additive reduction](#64-additive-reduction)
    - [A reduction decision procedure](#65-a-reduction-decision-procedure)
    - [Three nearby curves with different reduction](#66-three-nearby-curves-with-different-reduction)
+   - [A characteristic-free splitness polynomial](#67-a-characteristic-free-splitness-polynomial)
 7. [Local points and the reduction filtration](#7-local-points-and-the-reduction-filtration)
    - [Extending a point to a section](#71-extending-a-point-to-a-section)
    - [The formal parameter at the origin](#72-the-formal-parameter-at-the-origin)
@@ -56,6 +58,9 @@
    - [The valuation of j](#83-the-valuation-of-j)
    - [Néron-type criteria without representations](#84-néron-type-criteria-without-representations)
    - [Resolving a node and a cusp](#85-resolving-a-node-and-a-cusp)
+   - [Multiplicative components and rational component classes](#86-multiplicative-components-and-rational-component-classes)
+   - [The conductor statement justified by this geometry](#87-the-conductor-statement-justified-by-this-geometry)
+   - [What additive data remain invisible](#88-what-additive-data-remain-invisible)
 9. [Change of the ground DVR](#9-change-of-the-ground-dvr)
    - [How valuations rescale](#91-how-valuations-rescale)
    - [Unramified base change](#92-unramified-base-change)
@@ -68,6 +73,7 @@
     - [A two-adic integral improvement](#103-a-two-adic-integral-improvement)
     - [Small-characteristic counterexamples to shortcuts](#104-small-characteristic-counterexamples-to-shortcuts)
     - [A three-adic hidden dilation](#105-a-three-adic-hidden-dilation)
+    - [Exact coarse criteria in characteristics two and three](#106-exact-coarse-criteria-in-characteristics-two-and-three)
 11. [Worked local calculations](#11-worked-local-calculations)
     - [The Legendre family](#111-the-legendre-family)
     - [Root differences and full rational two-torsion](#112-root-differences-and-full-rational-two-torsion)
@@ -75,6 +81,7 @@
     - [A splitness calculation from the tangent cone](#114-a-splitness-calculation-from-the-tangent-cone)
     - [What the coarse data do and do not determine](#115-what-the-coarse-data-do-and-do-not-determine)
     - [Quadratic twists as a reduction experiment](#116-quadratic-twists-as-a-reduction-experiment)
+    - [A dyadic tangent-cone calculation](#117-a-dyadic-tangent-cone-calculation)
 12. [A Frey-type local laboratory](#12-a-frey-type-local-laboratory)
     - [The equation and its visible torsion](#121-the-equation-and-its-visible-torsion)
     - [Complete invariant calculation](#122-complete-invariant-calculation)
@@ -83,7 +90,8 @@
     - [Common factors and weighted normalization](#125-common-factors-and-weighted-normalization)
     - [The prime above two](#126-the-prime-above-two)
     - [The exponentiated three-term specialization](#127-the-exponentiated-three-term-specialization)
-    - [Conclusion](#128-conclusion)
+    - [The primitive integral Frey curve](#128-the-primitive-integral-frey-curve)
+    - [Conclusion](#129-conclusion)
 
 ## 1. From a curve over a field to arithmetic at a place
 
@@ -206,6 +214,22 @@ $$
 with $\beta\ne0$. Comparing the coefficients of $y'^2$ and $x'^3$ in the transformed equation gives $\beta^2=\alpha^3$. The ratio of invariant differentials supplies $u\in F^\times$ with $\alpha=u^2$ and $\beta=u^3$; then write $\gamma=u^2s$. This recovers (2.1) without assuming that arbitrary roots can be extracted in $F$.
 
 The same filtration explains why an unpointed isomorphism is not the right notion here. Translating the group law by a rational point moves the origin and changes the spaces $L(nO)$. Elliptic-curve isomorphisms are understood to preserve $O$, and all admissible coordinate changes in this book do so.
+
+### 1.6 Hypotheses and the boundary of the book
+
+The basic equation theory needs only a DVR. Minimal equations likewise exist without completeness, perfection of the residue field, or characteristic-zero assumptions. When sections are lifted from the special fiber, we assume that $R$ is henselian; when inverse limits of points are discussed, we assume completeness. Assertions about the number of rational component classes will explicitly require a finite residue field. This ledger matters because those hypotheses solve different problems and should not be bundled under the vague phrase “local field.”
+
+Three earlier bodies of results will be used. The valuation theory of DVRs supplies normalized valuations, unit filtrations, henselian lifting, and behavior under finite extensions. The structure theory of finite extensions supplies ramification indices and residue extensions. The theory of regular models supplies normalization, resolution of surface singularities, and uniqueness of the relatively minimal regular model. Everything special to elliptic cubics—the admissible coordinates, invariants, minimality tests, tangent cones, and the Frey calculation—is developed here.
+
+There are also deliberate limits. A complete classification of every additive fiber requires a long case analysis whose small-characteristic branches depend on successively deeper congruences. We will not cite that classification as a black box. Instead, we prove the coarse trichotomy in all residue characteristics, give exact one-step minimization congruences, determine all semistable component information needed here, and say precisely where additive component or conductor data require more input. Likewise, analytic uniformization is not used to prove multiplicative reduction statements: the node, its tangent cone, and its resolution already provide the required geometry.
+
+The convention for signs is fixed by (2.7) below. In particular, the short equation has
+
+$$
+\Delta=-16(4A^3+27B^2).
+$$
+
+Changing this sign convention would alter several mnemonic formulas, especially those involving $c_6$ and tangent square classes. It would not alter valuations or reduction types, but consistency is essential in the direct calculations.
 
 ## 2. Coordinates, weights, and invariant quantities
 
@@ -357,7 +381,7 @@ $$
 \omega=u^{-1}\omega'. \tag{2.14}
 $$
 
-This is the source of all the weights. A weight-$w$ invariant is naturally a tensor of degree $w$ in the inverse differential. In particular, the discriminant may be viewed as a section of the twelfth tensor power of the Hodge line. Over a DVR, choosing a Weierstrass equation chooses a generator of that line; changing the generator by $u^{-1}$ changes the discriminant by $u^{-12}$.
+This is the source of all the weights. If $I$ has weight $w$, then $I\omega^{\otimes w}$ is independent of the chosen Weierstrass coordinates. In particular, the discriminant determines a section of the twelfth tensor power of the Hodge line. Over a DVR, choosing a Weierstrass equation chooses a generator of that line; changing the generator changes the coefficient of this section by the inverse twelfth power.
 
 ### 2.5 A warning about equal $j$
 
@@ -390,7 +414,7 @@ The second route works integrally. Treat $a_1,a_2,a_3,a_4,a_6,r,s,t,u$ as indepe
 Identity (2.8) imposes useful valuation restrictions. If $c_4$ is a unit and $\Delta\in\mathfrak m$, then $c_6$ is a unit and
 
 $$
-\overline{c_6}^{,2}=\overline{c_4}^{,3}.
+\overline{c_6}^{\,2}=\overline{c_4}^{\,3}.
 $$
 
 If $\Delta$ is a unit, $c_4$ may or may not be a unit in residue characteristics $2$ and $3$, because $1728$ is then nonunit or zero in $k$. This is another reason not to infer good reduction from $c_4$ alone.
@@ -638,7 +662,7 @@ with $r\in R$. Expanded coefficients may include units. Translating $x$ by $r$ r
 
 An integral equation supplies an invariant differential $\omega$. Replacing the equation integrally with unit $u$ replaces $\omega$ only by a unit. A nonunit improvement with parameter $u$ satisfies $\omega=u^{-1}\omega'$, so $\omega'$ is more divisible as a generator of the differential lattice.
 
-This viewpoint turns the discriminant calculation into a lattice calculation. If a model is enlarged by one valuation step in its differential generator, the discriminant changes by twelve steps. A minimal equation chooses the largest integral differential lattice compatible with a Weierstrass model, or equivalently the smallest discriminant valuation.
+This viewpoint turns the discriminant calculation into a lattice calculation. If an equation is improved by one valuation step, its new differential is $\pi$ times the old one and its discriminant valuation drops by twelve. Thus, among the lattices $R\omega$ supplied by integral equations, a minimal equation supplies the smallest lattice, or equivalently the most divisible generator. Worsening an equation produces arbitrarily larger lattices and arbitrarily larger discriminant valuations, so reversing “smallest” and “largest” here would make the statement visibly impossible.
 
 The differential language is also coordinate-independent. It will explain why two minimal equations differ integrally even when coefficient manipulation is unpleasant in small residue characteristic.
 
@@ -712,7 +736,7 @@ $$
 
 Both discriminant valuations are minimal and hence equal, so $v(u)=0$. Thus $u$ is a unit.
 
-It remains to control translations. On either integral model, functions with pole at most $nO$ form an $R$-lattice inside $L(nO)$. For a minimal equation these lattices are saturated: if a function became integral only after multiplication by $\pi$, enlarging the lattice by that function would enlarge the differential lattice and, through the weight calculation, give an integral equation with discriminant lower by $12$, contradicting minimality. The isomorphism carries the saturated pole-$2$ lattice to the saturated pole-$2$ lattice. Since $x-u^2x'=r$ has no pole, saturation and properness force $r\in R$. Comparing the pole-$3$ and pole-$2$ lattices in the $y$ relation then gives $s\in R$, and the remaining constant gives $t\in R$. Hence the change is integral. $\square$
+It remains to control translations. On either integral model, functions with pole at most $nO$ form an $R$-lattice inside $L(nO)$. For a minimal equation the pole-$2$ and pole-$3$ lattices are maximal among those whose products satisfy an integral degree-six Weierstrass relation. Indeed, enlarging one of them by a missing $\pi$-division and closing under multiplication reconstructs an equation whose differential lattice is smaller by one step and whose discriminant valuation is lower by $12$, contradicting minimality. The isomorphism carries the maximal pole-$2$ lattice to the maximal pole-$2$ lattice. Since $x-u^2x'=r$ has no pole, maximality and properness force $r\in R$. Comparing the pole-$3$ and pole-$2$ lattices in the $y$ relation then gives $s\in R$, and the remaining constant gives $t\in R$. Hence the change is integral. $\square$
 
 The pole-lattice argument is the conceptual content of integral uniqueness: minimality chooses maximal integral lattices, and an isomorphism between two maximal lattices cannot introduce denominators.
 
@@ -816,9 +840,9 @@ $$
 R\omega=Ru^{-1}\omega'.
 $$
 
-Thus improving the discriminant by $12n$ enlarges the differential lattice by $\pi^{-n}$. The lattices arising from integral equations are totally ordered because all lattices in a one-dimensional $K$-space over a DVR are of the form $\pi^mR\omega_0$.
+The lattices arising from integral equations are totally ordered because all lattices in a one-dimensional $K$-space over a DVR are of the form $\pi^mR\omega_0$.
 
-There is a largest lattice arising from an integral Weierstrass equation. Existence follows from the same well-ordering argument as minimal discriminants: enlargement by one step lowers the discriminant valuation by $12$, so indefinite enlargement is impossible. An equation is minimal exactly when its differential generates this largest lattice.
+More precisely, an improvement with parameter of valuation $n$ has $\omega'=\pi^n\varepsilon\omega$ for a unit $\varepsilon$ and therefore replaces $R\omega$ by the smaller lattice $\pi^nR\omega$. There is a smallest lattice arising from an integral Weierstrass equation. Existence follows from the same well-ordering argument as minimal discriminants: shrinking by one step lowers the nonnegative discriminant valuation by $12$, so indefinite shrinking is impossible. An equation is minimal exactly when its differential generates this smallest lattice.
 
 This statement sharpens essential uniqueness. Two minimal equations yield the same differential lattice, so the ratio of their differentials is a unit; this is the assertion $u\in R^\times$. Their pole lattices can then be recovered intrinsically from the smooth generic curve and the chosen differential lattice. In degrees two and three they are
 
@@ -827,9 +851,9 @@ $$
 \mathcal L_3=R\oplus Rx\oplus Ry.
 $$
 
-They are saturated because a denominator in either lattice would, by multiplying sections and rebuilding the degree-six relation, enlarge the differential lattice. Equality of the intrinsic lattices for two minimal equations forces $x-u^2x'$ to lie in $R$, hence $r\in R$, and then forces the $x'$ coefficient and constant in $y-u^3y'$ to be integral, hence $s,t\in R$. This supplies the lattice details used in Theorem 5.2.
+They are saturated because a missing $\pi$-division in either pole lattice would, after multiplying sections and rebuilding the degree-six relation, shrink the differential lattice. Equality of the intrinsic lattices for two minimal equations forces $x-u^2x'$ to lie in $R$, hence $r\in R$, and then forces the $x'$ coefficient and constant in $y-u^3y'$ to be integral, hence $s,t\in R$. This supplies the lattice details used in Theorem 5.2.
 
-The formulation also explains base change. Under an unramified extension, the value group does not acquire fractional steps, so the maximal differential lattice simply tensors with the new DVR. Under ramified extension, new intermediate lattices appear. An additive equation may cease to be minimal because one of those new lattices supports an integral equation; a multiplicative equation cannot, because its unit $c_4$ prevents any enlargement.
+The formulation also explains base change. Under an unramified extension, the value group does not acquire fractional steps, so the smallest differential lattice simply tensors with the new DVR. Under ramified extension, new intermediate lattices appear. An additive equation may cease to be minimal because one of those smaller lattices supports an integral equation; a multiplicative equation cannot, because its unit $c_4$ prevents any further shrinking.
 
 Finally, the differential perspective clarifies the twelfth power. It is not an accidental feature of a complicated polynomial. The discriminant is a weight-$12$ object on a one-dimensional differential line. Changing the integral generator by one uniformizer must change its valuation by twelve.
 
@@ -949,6 +973,40 @@ It is minimal because $v(\Delta)<12$, and it has additive reduction. All three r
 These examples show that “bad reduction” has two independent aspects. The vanishing of $\Delta$ says that smoothness is lost. The unit or nonunit status of $c_4$ says whether the limiting cubic retains two tangent directions. The size of $v(\Delta)$ says how thick the degeneration is, not whether it is nodal or cuspidal by itself.
 
 There is no contradiction in a minimal additive equation having $v(\Delta)=2$ or a minimal multiplicative equation having $v(\Delta)=100$. Minimality asks whether $12$ can be removed by an integral coordinate change; reduction type asks what the minimal special fiber looks like. These are related questions, but not the same question.
+
+### 6.7 A characteristic-free splitness polynomial
+
+The square test (6.3) is convenient in odd characteristic, but the tangent cone admits a formula that works without excluding characteristic $2$. Let the equation be minimal and multiplicative. Since $c_4$ is a unit, reduction of
+
+$$
+x_0=\frac{18b_6-b_2b_4}{c_4}
+$$
+
+defines an element of $k$. Direct substitution in the equation and its two partial derivatives shows that $x_0$ is the $x$-coordinate of the node. We do not need to divide by $2$ to find its other coordinate. Translate the node to the origin by writing $X=x-x_0$ and $Y=y-y_0$. The quadratic part is
+
+$$
+Y^2+\overline{a_1}XY-(3\overline{x_0}+\overline{a_2})X^2. \tag{6.4}
+$$
+
+A line $Y=TX$ is a tangent precisely when its slope is a root of this quadratic. Clearing the unit $\overline{c_4}$ gives the **splitness polynomial**
+
+$$
+Q(T)=\overline{c_4}T^2+
+\overline{a_1c_4}T-
+\overline{54b_6-3b_2b_4+a_2c_4}. \tag{6.5}
+$$
+
+**Proposition 6.2.** Multiplicative reduction is split if and only if $Q(T)$ is a product of two linear factors over $k$.
+
+**Proof.** A nodal tangent cone has two distinct lines over a separable closure. Formula (6.4) identifies those lines with the roots of $Q$. The smooth locus of the cubic is split multiplicative exactly when both points above the node on the normalization are rational, and these two points are exactly the two tangent directions. Thus rational factorization of $Q$ is equivalent to splitness. $\square$
+
+In odd characteristic the discriminant of the slope quadratic has the same square class as $-c_6$. Completing the square therefore recovers (6.3). In characteristic $2$, however, (6.4) has the form
+
+$$
+Y^2+\alpha XY+\beta X^2,\qquad \alpha\ne0,
+$$
+
+and division by $\alpha^2$ turns the slope equation into an Artin--Schreier equation $U^2+U=d$. Its solvability, not the square class of one coefficient, decides splitness. This is the exact reason for retaining (6.5).
 
 ## 7. Local points and the reduction filtration
 
@@ -1163,7 +1221,7 @@ $$
 w^2=u^3+\pi^{4n}Au+\pi^{6n}B,
 $$
 
-so $\overline w^{,2}=\overline u^{,3}$. The leading unit data describe the tangent direction at $O$, while $n$ records the depth in the formal group.
+so $\overline w^{\,2}=\overline u^{\,3}$. The leading unit data describe the tangent direction at $O$, while $n$ records the depth in the formal group.
 
 The filtration is separated:
 
@@ -1211,7 +1269,17 @@ A minimal Weierstrass equation minimizes a weighted arithmetic invariant, but it
 
 The minimal cubic and the minimal regular model answer different questions. The cubic is best for calculating $c_4,c_6,\Delta$ and deciding the coarse reduction type. The regular model is best for intersection theory and component groups. Contracting all components disjoint from the identity section returns the Weierstrass model. Thus the two descriptions are complementary rather than competing.
 
-The smooth locus of the regular model is the canonical smooth group model used in (7.11). Its extension property is the reason it is independent of equations: maps from smooth test schemes cannot be sensitive to a chosen resolution.
+The smooth locus of the regular model is the canonical smooth group model used in (7.12). Its extension property is the reason it is independent of equations: maps from smooth test schemes cannot be sensitive to a chosen resolution.
+
+**Theorem 8.1 (canonical smooth model in genus one).** Assume that $R$ is henselian. Let $\mathcal X$ be the minimal proper regular model of the pointed genus-one curve $E/K$, and let $\mathcal X^{\mathrm{sm}}$ be its smooth locus over $R$. Then the group law on $E$ extends uniquely to a smooth separated group law on $\mathcal X^{\mathrm{sm}}$. Moreover, every map from the generic fiber of a smooth $R$-scheme to $E$ extends uniquely to $\mathcal X^{\mathrm{sm}}$.
+
+**Proof strategy.** Properness first extends a generic map as a rational map to $\mathcal X$. Regularity of the source and minimality of the target eliminate indeterminacy; smoothness of the source forces the image away from the nonsmooth points of the special fiber. Apply this to translations, inversion, and the addition map.
+
+**Proof.** For a smooth integral $R$-scheme $Y$, a map $Y_K\to E$ has a graph whose closure in $Y\times_R\mathcal X$ is proper and birational over $Y$. Resolve its indeterminacy. Any exceptional vertical curve that remained would map into a point of $\mathcal X_k$ and could be contracted without changing the generic map. The relative minimality of $\mathcal X$, together with regularity of $Y$, rules out such a last exceptional curve. Thus the rational map extends. At a point where the image lay in the nonsmooth locus of $\mathcal X_k\to\operatorname{Spec}R$, the induced map on tangent spaces would send the one-dimensional base direction into a fiber tangent space of excess dimension; the smooth local parameters on $Y$ and the regular two-dimensional local equation on $\mathcal X$ exclude this. Hence the extension lands in $\mathcal X^{\mathrm{sm}}$.
+
+Uniqueness follows from separatedness because two extensions agree on the dense generic fiber. Apply the extension result to $Y=\mathcal X^{\mathrm{sm}}\times_R\mathcal X^{\mathrm{sm}}$ and the generic addition map, and similarly to inversion and the identity section. The group identities hold on the generic fiber and hence everywhere by separatedness. $\square$
+
+This theorem is the genus-one bridge from regular models to the reduction filtration. It also explains why removing only the singular point of a Weierstrass cubic is insufficient in general: after resolution, smooth points on newly created components must be retained.
 
 ### 8.2 Semistable reduction
 
@@ -1241,24 +1309,17 @@ $$
 v(j)=-\delta(E/K)<0. \tag{8.3}
 $$
 
-Thus a nonintegral $j$-invariant is an unmistakable sign of degeneration. The converse does not say that the reduction over $K$ is already multiplicative: certain additive curves have $v(j)<0$ and become multiplicative only after a finite extension. The correct potential statement is:
+Thus a nonintegral $j$-invariant is an unmistakable sign of degeneration. It does not imply that reduction over $K$ is already multiplicative: additive examples with $v(j)<0$ exist.
 
-$$
-\begin{array}{c|c}
-v(j)<0 & \text{potentially multiplicative},\\
-v(j)\geq0 & \text{potentially good}.
-\end{array} \tag{8.4}
-$$
+The transformation laws give two unconditional potential-reduction obstructions. If $E$ acquires good reduction over a finite extension, then $v(j)\geq0$. If it acquires multiplicative reduction, then $v(j)<0$. Indeed, the extended valuation merely multiplies $v(j)$ by the ramification index, while good reduction has integral $j$ and multiplicative reduction satisfies (8.3).
 
-Here “potentially” means after a finite extension of valued fields. The easy direction follows from the transformation laws: good reduction after extension forces $j$ integral, while multiplicative reduction forces it nonintegral. The converse is the genus-one case of stable reduction: after a finite extension, a cubic degenerates either to a smooth elliptic curve or to a nodal curve, and (8.2) distinguishes the alternatives.
-
-Equation (8.4) is a boundary statement. Constructing the analytic parametrization in the potentially multiplicative case belongs to the theory of Tate curves; describing torsion and inertia belongs to the theory of Galois representations. Neither is needed to calculate the reduction type from a minimal equation.
+The converses—integral $j$ gives potentially good reduction and nonintegral $j$ gives potentially multiplicative reduction—form the genus-one potential-reduction theorem. They require a separate stable-reduction or uniformization argument and are not used here. This exact boundary is important: equations prove the obstructions immediately, but they do not by themselves construct the finite extension or the resulting semistable model.
 
 ### 8.4 Néron-type criteria without representations
 
 The preceding results give several equation-free tests.
 
-**Theorem 8.1 (intrinsic reduction criteria).** Let $R$ be henselian.
+**Theorem 8.2 (intrinsic reduction criteria).** Let $R$ be henselian.
 
 1. $E$ has good reduction if and only if its canonical smooth group model is proper over $R$.
 2. $E$ has multiplicative reduction if and only if the identity component of its special fiber is a one-dimensional torus.
@@ -1293,6 +1354,98 @@ These local pictures explain why the minimal discriminant and the coarse reducti
 
 They also explain why a full list of fiber symbols is not needed for the present endpoint. Direct equation calculations of integrality, minimality, good or multiplicative reduction, and minimal discriminant use only the contracted cubic. The finer list refines additive reduction and component groups but does not change those foundational steps.
 
+### 8.6 Multiplicative components and rational component classes
+
+Write $n=\delta(E/K)>0$ and suppose that $E$ has multiplicative reduction. After strict henselization and resolution, the special fiber is conventionally called a fiber of type $I_n$. When $n=1$, it is one irreducible rational curve with a node, and the total surface is already regular there. For $n\geq2$, it is a cycle of $n$ smooth rational curves, with adjacent components meeting transversely in a polygon.
+
+The assertion follows from the local equation $UV=\pi^n$. Blow up the closed singular point. On one chart the new equation has the same form with exponent $n-1$; the other chart records one exceptional rational component. Repeating reduces the exponent to $1$. The global two branches of the original cubic then join the ends of the chain, closing it into a cycle. No component has multiplicity greater than one. This calculation proves simultaneously that there are $n$ geometric components and that the reduction is semistable.
+
+Choose the component meeting the identity section as $0$ and number successive components around the polygon. Intersection addition makes the geometric component group
+
+$$
+\Phi_E(\overline k)\cong\mathbf Z/n\mathbf Z. \tag{8.6}
+$$
+
+In split multiplicative reduction both orientations of the polygon are defined over $k$, so the residue action on (8.6) is trivial. In nonsplit multiplicative reduction the quadratic splitting automorphism reverses the polygon and acts by
+
+$$
+i\longmapsto-i. \tag{8.7}
+$$
+
+This gives more precise information than the statement that the identity component is a torus. If $k$ is finite, reduction onto rational component classes is surjective and the local component number
+
+$$
+c(E/K)=\#\Phi_E(k)
+$$
+
+satisfies
+
+$$
+c(E/K)=
+\begin{cases}
+n,&\text{split multiplicative},\\
+1,&\text{nonsplit multiplicative and $n$ odd},\\
+2,&\text{nonsplit multiplicative and $n$ even}.
+\end{cases} \tag{8.8}
+$$
+
+Indeed, the fixed elements of inversion on $\mathbf Z/n\mathbf Z$ are the solutions of $2i=0$. This calculation also reveals a useful counterexample: the number of rational components does not determine the geometric number of components. A nonsplit $I_{101}$ fiber has $101$ geometric components but only the identity component class is rational.
+
+Under a ramified extension of index $e$, multiplicative reduction remains multiplicative and its geometric polygon has $en$ components. Under an unramified quadratic extension, a nonsplit polygon becomes split but retains $n$ components. These are the component-theoretic versions of the valuation and tangent statements in Chapter 9.
+
+### 8.7 The conductor statement justified by this geometry
+
+There are several objects called a conductor. The one relevant to the present equation theory is the geometric local conductor count for a semistable genus-one curve. Let $m$ be the number of geometric irreducible components of the minimal regular special fiber and define
+
+$$
+f_{\mathrm{geom}}=\delta(E/K)+1-m. \tag{8.9}
+$$
+
+For the semistable fibers just analyzed, this is not an unexplained formula. In good reduction, the discriminant has no zero and the special fiber has one component, so $f_{\mathrm{geom}}=0$. In multiplicative reduction, resolving a node of thickness $n$ produces $m=n$ components while $\delta=n$, so
+
+$$
+f_{\mathrm{geom}}=
+\begin{cases}
+0,&\text{good reduction},\\
+1,&\text{multiplicative reduction}.
+\end{cases} \tag{8.10}
+$$
+
+The count measures loss of smoothness after subtracting the components created merely by resolving thickness. One node contributes one; a smooth fiber contributes none. Thus a semistable global elliptic curve has squarefree geometric conductor support: its bad primes occur to exponent one, regardless of the possibly large exponents in its minimal discriminant.
+
+This conclusion is exactly the conductor information justified by the present geometry. The standard ramification-theoretic conductor is defined from an inertia action and includes a wild term. Identifying it with (8.9) is a comparison theorem, not a consequence of manipulating Weierstrass coefficients. In the semistable case that comparison yields the same values $0$ and $1$; nothing in the direct Frey calculation below needs the comparison itself. We therefore record the squarefree semistable count and do not pretend to compute wild additive exponents.
+
+The contrast with the discriminant is worth emphasizing. At a multiplicative prime,
+
+$$
+f_{\mathrm{geom}}=1,\qquad \delta=-v(j)=n,
+$$
+
+and $n$ can be arbitrarily large. The conductor records the presence of a nodal defect; the discriminant records its thickness. Confusing them would erase precisely the divisibility information for which Frey curves are constructed.
+
+### 8.8 What additive data remain invisible
+
+For additive reduction, the pair $(v(c_4),\delta)$ gives only a cusp on the contracted cubic. Resolution can produce several different configurations with the same coarse data, and in residue characteristics $2$ and $3$ wild behavior can alter the conductor without changing the first tangent cone. It follows that none of the following is valid without further hypotheses:
+
+$$
+\text{additive type}\Longrightarrow
+\text{a fixed component group},
+$$
+
+$$
+v(\Delta)\Longrightarrow
+\text{a fixed additive fiber configuration},
+$$
+
+or
+
+$$
+\delta+1-m\Longrightarrow
+\text{the complete wild conductor calculation}.
+$$
+
+One can determine those data by repeatedly blowing up and tracking multiplicities, singular points, and residue extensions. That process is finite, but its branching is especially delicate at $2$ and $3$. Because the applications in this volume establish semistability directly, importing the full classification would obscure the shorter argument. The honest endpoint is stronger than a vague omission: good and multiplicative components are completely determined here, while additive component and wild-conductor assertions are made only when an explicit resolution supplies them.
+
 ## 9. Change of the ground DVR
 
 ### 9.1 How valuations rescale
@@ -1300,15 +1453,15 @@ They also explain why a full list of fiber symbols is not needed for the present
 Let $L/K$ be a finite extension equipped with an extension of the valuation, and let $S$ be the corresponding DVR. Write $e=e(L/K)$ for the ramification index, with both valuations normalized. For every $x\in K^\times$,
 
 $$
-v_L(x)=e,v_K(x). \tag{9.1}
+v_L(x)=e\,v_K(x). \tag{9.1}
 $$
 
 Base-changing an integral equation from $R$ to $S$ therefore gives
 
 $$
-v_L(c_4)=e,v_K(c_4),\quad
-v_L(c_6)=e,v_K(c_6),\quad
-v_L(\Delta)=e,v_K(\Delta). \tag{9.2}
+v_L(c_4)=e\,v_K(c_4),\quad
+v_L(c_6)=e\,v_K(c_6),\quad
+v_L(\Delta)=e\,v_K(\Delta). \tag{9.2}
 $$
 
 The base-changed equation need not be minimal. If an $S$-admissible change lowers its discriminant by $12m$, then
@@ -1333,7 +1486,7 @@ and good, multiplicative, or additive reduction remains of the same coarse type.
 
 **Proof strategy.** If the equation became nonminimal over $S$, integral uniqueness and the divisibility conditions for an improving transformation would descend because $S/R$ is faithfully flat and has the same value scale.
 
-**Proof.** Suppose an $S$-integral change with a nonunit scaling parameter improved the equation. Its coefficient equations (2.2) are a finite system of congruences modulo successive powers of the common uniformizer. After passing to a finite unramified subextension containing the parameters, take the corresponding finite free $R$-algebra. Faithful flatness says that the relevant pole lattices were already nonsaturated over $R$; equivalently, the enlarged differential lattice intersects the $K$-line in a strictly larger integral lattice. This would give an improving equation over $R$, contrary to minimality. Hence no improvement exists. Equation (9.2) with $e=1$ preserves the invariant valuations and the coarse type. $\square$
+**Proof.** Suppose an $S$-integral change with a nonunit scaling parameter improved the equation. Its coefficient equations (2.2) are a finite system of congruences modulo successive powers of the common uniformizer. After passing to a finite unramified subextension containing the parameters, take the corresponding finite free $R$-algebra. Faithful flatness says that the relevant pole lattices were already nonsaturated over $R$; equivalently, the smaller improved differential lattice intersects the $K$-line in a strictly smaller lattice of the same valuation step. Descent of the integral degree-six relation would then give an improving equation over $R$, contrary to minimality. Hence no improvement exists. Equation (9.2) with $e=1$ preserves the invariant valuations and the coarse type. $\square$
 
 The residue geometry may nevertheless become more explicit. A nonsplit node can acquire its two tangent directions after an unramified quadratic extension, turning nonsplit multiplicative reduction into split multiplicative reduction. The special fiber remains nodal throughout.
 
@@ -1375,7 +1528,7 @@ Good reduction descends through finite unramified extensions. If an unramified e
 
 Semistability persists under every finite extension. Good reduction stays good. Multiplicative reduction stays multiplicative because $c_4$ remains a unit. Thus once the only singularity is a node, further extension never turns it into a cusp.
 
-The converse is the semistable-reduction phenomenon: after a suitable finite extension every elliptic curve becomes semistable. In terms of $j$, the stable outcome is good when $j$ is integral and multiplicative when it is not. Establishing sharp bounds on the needed extension or tracking wild behavior in residue characteristics $2$ and $3$ requires finer ramification theory and is beyond the present local equation calculus.
+The converse assertion that every elliptic curve becomes semistable after a suitable finite extension is a separate semistable-reduction theorem. It is not needed for the persistence statements just proved. If that theorem is supplied, the valuation of $j$ forces the eventual outcome: good when $j$ is integral and multiplicative when it is not. The present equation calculus neither assumes this existence result nor uses it in the Frey calculation.
 
 ### 9.5 Two base-change calculations
 
@@ -1498,7 +1651,7 @@ $$
 
 are necessary for nonminimality, not sufficient. They record only invariant divisibility. Improvement additionally requires the coordinate congruences (10.1). In small residue characteristic, invariant cancellations can occur even when no integral singular point and tangent choice lift with the needed precision.
 
-Likewise, $v(j)\geq0$ does not mean good reduction over $K$; it means only potentially good reduction. A ramified twist of a good curve supplies a counterexample. Finally, a singular reduction of an arbitrary integral equation does not mean bad reduction: a nonminimal dilation of a good equation supplies the simplest counterexample.
+Likewise, $v(j)\geq0$ does not mean good reduction over $K$; it is only a necessary condition for potentially good reduction at the level proved here. A ramified twist of a good curve supplies a counterexample to good reduction over the original field. Finally, a singular reduction of an arbitrary integral equation does not mean bad reduction: a nonminimal dilation of a good equation supplies the simplest counterexample.
 
 These warnings all have the same source. Invariants describe the generic curve together with a weighted differential, while reduction depends on a maximal integral choice of that differential. At $2$ and $3$, the passage between convenient algebraic normal forms and integral choices is especially nontrivial.
 
@@ -1529,7 +1682,7 @@ x^3+6x^2-15x+737
 =729\left(x'^3+x'^2+1\right).
 $$
 
-The discriminant of (10.3) has valuation $12$, and the displayed equation is nonminimal. Its special fiber is
+The discriminant of (10.6) has valuation $12$, and the displayed equation is nonminimal. Its special fiber is
 
 $$
 y^2=(x-1)^3
@@ -1540,6 +1693,54 @@ in characteristic $3$, a cusp centered at $x=1$. The coefficient $3r$ in the tra
 This example makes two points. First, the quick implication $v(\Delta)\geq12$ does not itself produce the improvement; the singular center does. Second, depressing the original cubic by dividing its quadratic coefficient by $3$ is the wrong integral operation. One should instead translate to the singular residue point and use the general weighted formulas.
 
 At residue characteristic $2$, the corresponding hidden data live especially in $a_1$ and $a_3$; at residue characteristic $3$, they live especially in $a_2$. The general equation keeps precisely the coefficients needed to see these phenomena integrally.
+
+### 10.6 Exact coarse criteria in characteristics two and three
+
+Although minimization is delicate at the small primes, classification of the special fiber is simple once minimality has been proved. Reduction of the universal invariant formulas gives the exact identities
+
+$$
+\operatorname{char}k=2:\qquad
+\overline{c_4}=\overline{a_1}^{\,4},\qquad
+\overline{c_6}=\overline{a_1}^{\,6}, \tag{10.7}
+$$
+
+and
+
+$$
+\operatorname{char}k=3:\qquad
+\overline{c_4}=\overline{b_2}^{\,2},\qquad
+\overline{c_6}=-\overline{b_2}^{\,3}. \tag{10.8}
+$$
+
+Consequently a minimal equation satisfies the following tables.
+
+$$
+\begin{array}{c|c|c|c}
+\operatorname{char}k&\overline\Delta&\text{additional condition}&\text{reduction}\\ \hline
+2&\ne0&&\text{good}\\
+2&=0&\overline{a_1}\ne0&\text{multiplicative}\\
+2&=0&\overline{a_1}=0&\text{additive}\\
+3&\ne0&&\text{good}\\
+3&=0&\overline{b_2}\ne0&\text{multiplicative}\\
+3&=0&\overline{b_2}=0&\text{additive}.
+\end{array} \tag{10.9}
+$$
+
+**Proof strategy.** The discriminant criterion decides smooth versus singular. For a singular cubic, $c_4\ne0$ decides node versus cusp. Identities (10.7) and (10.8) merely express that condition in coefficients that remain meaningful in the indicated characteristic.
+
+**Proof.** In characteristic $2$, the numerical multiples in $b_2=a_1^2+4a_2$ and $c_4=b_2^2-24b_4$ vanish, leaving $c_4=a_1^4$. In characteristic $3$, $c_4=b_2^2-24b_4=b_2^2$. Apply the trichotomy (6.1). $\square$
+
+These are classification criteria, not minimality criteria. A nonminimal dilation of a good equation can reduce to a cusp with $a_1=0$ or $b_2=0$. The logical order remains: first prove minimality, then apply (10.9).
+
+For minimization itself, (10.1) has an exact but deliberately limited scope: it is necessary and sufficient for a chosen quadruple $(u,r,s,t)$ with $u=\pi$ to produce an integral equation whose discriminant is smaller by $12$. It does not claim that the three invariant inequalities alone are sufficient, nor does it classify the additive configuration when the congruences fail. This is enough for a direct argument whenever one exhibits the change, as in Sections 10.3 and 12.6, or certifies minimality by one of (5.3).
+
+Finally, the word “dyadic” does not mean that $2$ is always a uniformizer. In a mixed-characteristic DVR one has
+
+$$
+2=\varepsilon\pi^{e_2},\qquad \varepsilon\in R^\times,
+$$
+
+and the explicit change (10.3) assumes $e_2=1$ and chooses the uniformizer $2$. For $e_2>1$, its denominators and congruences must be measured with $v(2)=e_2$. The invariant identities and the criterion (10.1) remain valid, but the numerical exponent $-8$ in the Frey calculation is specific to the unramified dyadic base.
 
 ## 11. Worked local calculations
 
@@ -1713,6 +1914,49 @@ If $d$ is a nonsquare unit, all three invariant valuations remain unchanged. Goo
 If $E$ already has additive reduction, the displayed twist equation may fail to be minimal after the six-step change in discriminant. For example, twisting twice by $\pi$ multiplies coefficients by $\pi^4$ and $\pi^6$, after which a weighted scaling returns to the original square class. This illustrates again that raw invariant changes must be followed by minimization.
 
 Twists separate three kinds of information particularly clearly. The $j$-invariant retains the geometric curve over an algebraic closure. The twist class records descent to $K$. The minimal discriminant and tangent cone record how that descent meets the valuation ring.
+
+### 11.7 A dyadic tangent-cone calculation
+
+Return to the integral improvement (10.4), assume $v(2)=1$, and strengthen $v(A)\geq4$ to $v(A)\geq5$. Put
+
+$$
+D=\frac{B-A-1}{4}.
+$$
+
+Because $a_1'=1$ and $a_4'=-AB/16$ has positive valuation, reduction gives
+
+$$
+y^2+xy=x^3+\overline D x^2. \tag{11.8}
+$$
+
+The partial derivatives in characteristic $2$ show that the unique singular point is $(0,0)$. Its tangent cone is
+
+$$
+y^2+xy+\overline D x^2. \tag{11.9}
+$$
+
+Putting $y=Tx$ shows that the two tangent directions are defined over $k$ exactly when
+
+$$
+T^2+T+\overline D
+$$
+
+has a root in $k$. This is the dyadic form of the characteristic-free criterion (6.5). It is separable because its derivative is $1$, so a root automatically gives two distinct tangent lines.
+
+If $k$ is finite of characteristic $2$, the image of $T\mapsto T^2+T$ is the kernel of the absolute trace to $\mathbf F_2$. Hence
+
+$$
+\text{split multiplicative}\quad\Longleftrightarrow\quad
+\operatorname{Tr}_{k/\mathbf F_2}(\overline D)=0. \tag{11.10}
+$$
+
+For $K=\mathbf Q_2$, the residue field is $\mathbf F_2$ and this says simply that $D$ is even. Since $v(A)\geq5$, the congruence becomes
+
+$$
+B\equiv1\pmod8. \tag{11.11}
+$$
+
+Thus the normalization $B-A\equiv1\pmod4$ suffices for integrality and minimality, but one further binary digit decides splitness. This is a clean example of three logically different precisions: divisibility through $2^4$ permits the coordinate change, positivity of the new discriminant detects a node, and a congruence modulo $8$ chooses between its two rationality forms.
 
 ## 12. A Frey-type local laboratory
 
@@ -1958,7 +2202,102 @@ The fact that $20\geq12$ does not permit a decrease to $8$: the unit $c_4$ prove
 
 This symbolic analysis reaches the intended local endpoint. Starting only from the equation, it determines where the model is integral, proves minimality, computes the exact minimal discriminant, classifies reduction, and tests splitness. It does not use a uniformization, a torsion representation, or a conductor calculation, and it makes no claim about a global Diophantine contradiction.
 
-### 12.8 Conclusion
+### 12.8 The primitive integral Frey curve
+
+The preceding symbolic calculation now yields a single concrete theorem over the integers. Let $p\geq5$ be odd and suppose that nonzero pairwise coprime integers $a,b,c$ satisfy
+
+$$
+a^p+b^p=c^p. \tag{12.15}
+$$
+
+Exactly one of $a,b,c$ is even: reducing $a^p+b^p-c^p=0$ modulo $2$ forces an even number of odd entries, and primitivity rules out zero odd entries. Signed permutation of the three terms preserves an equation of the form (12.15). For example, if $c$ is even, replace $(a,b,c)$ by $(-c,a,-b)$. We may therefore arrange that $a$ is even. Because $p$ is odd, simultaneously replacing $(a,b,c)$ by $(-a,-b,-c)$ also preserves (12.15); make this replacement if necessary so that
+
+$$
+b\equiv1\pmod4. \tag{12.16}
+$$
+
+Set $A=a^p$ and $B=b^p$. Then $v_2(A)\geq p\geq5$ and $B-A\equiv1\pmod4$. Applying (10.3) globally gives the integral equation
+
+$$
+\mathcal F_{a,b}:
+y^2+xy=x^3+
+\frac{b^p-a^p-1}{4}x^2-
+\frac{a^pb^p}{16}x. \tag{12.17}
+$$
+
+Its discriminant and fourth invariant are
+
+$$
+\Delta(\mathcal F_{a,b})
+=2^{-8}(abc)^{2p},\qquad
+c_4(\mathcal F_{a,b})
+=a^{2p}+a^pb^p+b^{2p}. \tag{12.18}
+$$
+
+The first expression is an integer because $a^p$ contains at least $2^5$. The sign is fixed by our convention; no unspecified unit is hidden in (12.18).
+
+**Theorem 12.1 (minimal discriminant and reduction of the primitive Frey curve).** The equation (12.17) is minimal at every prime. Its local minimal discriminant exponents are
+
+$$
+\delta_q=
+\begin{cases}
+0,&q\nmid abc,\\
+2p\,v_q(abc),&q\ne2\text{ and }q\mid abc,\\
+2p\,v_2(a)-8,&q=2.
+\end{cases} \tag{12.19}
+$$
+
+It has good reduction away from $abc$ and multiplicative reduction at every prime dividing $abc$. In particular it is semistable, and its global minimal discriminant is the integer in (12.18).
+
+**Proof strategy.** At odd primes, primitivity makes exactly one root difference vanish, so $c_4$ stays a unit and the discriminant factorization gives the exact thickness. At $2$, the displayed $xy$-equation has $a_1=1$, so its $c_4$ is a unit; the division by $2^{12}$ has already removed the unique artificial weighted factor.
+
+**Proof.** Let $q$ be odd. Because $a,b,c$ are pairwise coprime, at most one is divisible by $q$. If none is, (12.18) makes $\Delta$ a unit. If $q\mid a$, then
+
+$$
+c_4\equiv b^{2p}\not\equiv0\pmod q,
+$$
+
+so the equation is minimal and multiplicative, while (12.18) gives $\delta_q=2p\,v_q(a)$. The cases $q\mid b$ and $q\mid c$ are identical; in the last case $a^p\equiv-b^p$ and
+
+$$
+a^{2p}+a^pb^p+b^{2p}\equiv a^{2p}\not\equiv0\pmod q.
+$$
+
+At $2$, equation (12.17) has $a_1=1$. Hence $c_4$ is odd by (10.7), proving minimality. Formula (12.18) gives the last row of (12.19), which is positive because $p\,v_2(a)\geq5$. The reduced cubic is therefore nodal, so reduction is multiplicative. These cases exhaust the primes. $\square$
+
+The tangent calculations sharpen the theorem. At an odd bad prime,
+
+$$
+\begin{array}{c|c}
+q\mid a&\text{split exactly when $b$ is a square modulo $q$},\\
+q\mid b&\text{split exactly when $-a$ is a square modulo $q$},\\
+q\mid c&\text{split exactly when $a$ is a square modulo $q$}.
+\end{array} \tag{12.20}
+$$
+
+Indeed, raising to the odd power $p$ does not change a square class. At $2$, write
+
+$$
+D=\frac{b^p-a^p-1}{4}.
+$$
+
+The tangent polynomial is $T^2+T+\overline D$. Over $\mathbf F_2$, the reduction is split exactly when $D$ is even, equivalently
+
+$$
+b\equiv1\pmod8; \tag{12.21}
+$$
+
+the alternative allowed by (12.16), $b\equiv5\pmod8$, is nonsplit.
+
+Finally, the component and conductor information is now direct. At every bad prime the geometric fiber is $I_{\delta_q}$ and has $\delta_q$ geometric components. The geometric conductor count of Section 8.7 is one at each such prime and zero elsewhere. Thus its global support is the squarefree integer
+
+$$
+\prod_{q\mid abc}q. \tag{12.22}
+$$
+
+This is the characteristic Frey separation: the minimal discriminant remembers the large multiples $2p\,v_q(abc)$, while the semistable conductor remembers each bad prime only once.
+
+### 12.9 Conclusion
 
 The arithmetic of an elliptic curve at a discrete valuation is the arithmetic of choosing the right integral scale. Pole orders at the marked point force the weights $2$ and $3$ on coordinates; those weights force the degrees $4$, $6$, and $12$ of $c_4,c_6$, and $\Delta$. An integral equation places the curve over the valuation ring, while a minimal equation removes every avoidable weighted dilation. What remains—the minimal discriminant ideal and the special-fiber geometry—is intrinsic.
 
