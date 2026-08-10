@@ -83,11 +83,11 @@
     - [The ambient upper bound and exceptional invariants](#135-the-ambient-upper-bound-and-exceptional-invariants)
     - [Characteristic two](#136-characteristic-two)
 14. [Low-ramification rigidity and integral classification](#14-low-ramification-rigidity-and-integral-classification)
-    - [The decisive range and the two inputs](#141-the-decisive-range-and-the-two-inputs)
+    - [The decisive range and the three inputs](#141-the-decisive-range-and-the-three-inputs)
     - [Raynaud full faithfulness](#142-raynaud-full-faithfulness)
     - [Why roots of unity do not contradict rigidity](#143-why-roots-of-unity-do-not-contradict-rigidity)
     - [The covariant divided Fontaine--Laffaille category](#144-the-covariant-divided-fontaine--laffaille-category)
-    - [The integral classification package](#145-the-integral-classification-package)
+    - [The coefficient-normal-form theorem](#145-the-coefficient-normal-form-theorem)
     - [Why the classification has the stated compatibilities](#146-why-the-classification-has-the-stated-compatibilities)
     - [Coefficient enhancement and coefficient quotients](#147-coefficient-enhancement-and-coefficient-quotients)
     - [Cyclotomic determinant forces type $(0,1)$](#148-cyclotomic-determinant-forces-type-01)
@@ -104,7 +104,7 @@
     - [The residual centralizer table](#163-the-residual-centralizer-table)
     - [Irreducible self-twists and the case $\ell=3$](#164-irreducible-self-twists-and-the-case-ell3)
     - [Why equal-character semisimplification is impossible](#165-why-equal-character-semisimplification-is-impossible)
-    - [Ordinary Kummer classes: units and valuation](#166-ordinary-kummer-classes-units-and-valuation)
+    - [Ordinary Kummer classes: hardly ramified and valuation](#166-ordinary-kummer-classes-hardly-ramified-and-valuation)
     - [Stable-line enhancements are not components](#167-stable-line-enhancements-are-not-components)
 17. [The finite-flat local ring package](#17-the-finite-flat-local-ring-package)
     - [The low-weight theorem](#171-the-low-weight-theorem)
@@ -159,6 +159,19 @@ $$
 $$
 
 and let $\bar V=k^d$ with its induced action. A lift over $A$ is a free $A$-module $V_A$ of rank $d$, equipped with a continuous $A$-linear $G_K$-action and an identification $V_A\otimes_Ak\simeq\bar V$. In the fixed residual basis this is a homomorphism $\rho_A:G_K\to\operatorname{GL}_d(A)$ reducing exactly to $\bar\rho$.
+
+The preceding theory enters in five precise forms. Book 48 supplies marked
+finite-flat models, saturated closure of a generic subgroup in a fixed
+model, represented quotients, coefficient actions, and Cartier duality.
+Book 30 supplies finiteness and Euler characteristics for local Galois
+cohomology. Book 64 supplies strict equivalence, adjoint tangent spaces, and
+the complete matrix obstruction across a small extension. Book 65 supplies
+the fiber-product criteria for hulls and universal rings. In the
+unramified low-weight range, Book 59 supplies the exact contravariant
+Fontaine--Laffaille anti-equivalence, unramified base change, and the
+admissible-annihilator construction for nonflat coefficient quotients. The
+chapters below recall each hypothesis at its point of use and prove the new
+finite-flat deformation statements from these inputs.
 
 The adjoint module is
 
@@ -715,6 +728,13 @@ H^1(K,M)\times H^1(K,M^*(1))
 $$
 
 for every finite-dimensional $k[G_K]$-module $M$, after choosing the usual coefficient-valued evaluation. It follows formally that every subspace has an orthogonal complement. It does not follow formally that the orthogonal complement of an integral condition is another integral condition. That assertion needs Cartier duality on models and compatibility between integral and generic cup products.
+
+The perfectness, twist, and restriction--corestriction adjunction used here
+are the finite-module local duality theorem established in Book 31. Book 30
+supplies the finiteness and Euler characteristic used in the numerical
+formulas below. Neither source identifies an arbitrary integral extension
+condition with its annihilator; that additional comparison is exactly the
+issue isolated in this chapter.
 
 This distinction is especially important at $\ell$. The unramified subspace is not generally self-complementary for $\ell$-primary modules, and the finite-flat subspace is not the unramified subspace. An Euler characteristic computes the dimension of ambient $H^1$ but cannot locate the integral subspace inside it.
 
@@ -1846,9 +1866,10 @@ $$
 not automatically $H^1_{\mathrm{fl}}(K,\operatorname{ad}^0\bar\rho)$. Scalar infinitesimal automorphisms can lie in the trace-zero module, and subtraction of one from a centralizer dimension can be wrong.
 
 The representability theorems of Chapter 9 remain available for framed problems in characteristic two, and for unframed problems under the usual scalar-centralizer hypothesis. What is unavailable is the simplified trace splitting and every dimension conclusion derived from it. No power-series theorem in this book silently includes $\ell=2$.
+
 ## 14. Low-ramification rigidity and integral classification
 
-### 14.1 The decisive range and the two inputs
+### 14.1 The decisive range and the three inputs
 
 The general theory deliberately allowed a generic representation to have
 several integral models. That caution remains indispensable over a ramified
@@ -1861,25 +1882,33 @@ K/\mathbf Q_\ell\text{ is unramified of degree }f,
 \qquad \ell>2. \tag{14.1}
 $$
 
-Thus the absolute ramification index is $e(K)=1<\ell-1$. Two established
-integral theorems become available:
+Thus the absolute ramification index is $e(K)=1<\ell-1$. Three integral
+ingredients become available:
 
 - Raynaud full faithfulness identifies every morphism between finite-flat
   $\ell$-power group schemes with the corresponding morphism of generic
   fibers;
 - the torsion Fontaine--Laffaille--Raynaud classification identifies the
-  entire finite-flat category with exact filtered divided-Frobenius linear
-  algebra of weights $0$ and $1$.
+  entire finite-flat category contravariantly with exact filtered
+  divided-Frobenius linear algebra of weights $0$ and $1$;
+- Matlis duality for a finite coefficient algebra converts that
+  contravariant description into free coefficient-linear coordinates.
 
 These inputs do different jobs. Raynaud's theorem removes model ambiguity
 and extends coefficient endomorphisms. The classification theorem supplies
-normal forms, exactness, duality, and compatibility with coefficient
-quotients. Neither theorem will be reconstructed here. They are deep
-integral classification results, and presenting a few period equations as a
-proof would conceal precisely the issues that matter at torsion level. We
-will instead state the complete package, explain the constructions behind
-it and every compatibility we use, and prove all deformation-theoretic
-consequences from it.
+exactness, duality, and the admissible-annihilator operation representing a
+nonflat coefficient quotient. Matlis duality reverses the arrows a second
+time. It is this last step, rather than naive tensoring of the
+contravariant module, that produces the free modules and line charts used
+below.
+
+The first two ingredients are the deep integral theorems established in the
+preceding classification theory. Reproducing their crystalline and
+syntomic constructions would duplicate that theory. We do prove the
+coefficient-normal-form theorem deduced from them, because that deduction
+is precisely where variance and nonflat coefficient reduction can
+otherwise be lost. All subsequent tangent and lifting arguments are then
+carried out directly in those coordinates.
 
 The strict inequality in (14.1) matters twice. It is the hypothesis in the
 Raynaud theorem, and it puts the weight interval $[0,1]$ inside the
@@ -2056,13 +2085,53 @@ Tate twisting shifts both filtration indices and generic realization, giving
 the corresponding categories with weights in an interval $[a,b]$; only the
 interval length $b-a$ enters the full-faithfulness bound below.
 
-We use a covariant normalization. It can be obtained from the standard
-contravariant crystalline convention by composing with Cartier duality and
-normalizing the generic realization accordingly. In this convention a map
-of group schemes induces a map in the same direction on $\mathcal M$, the
-rank-one cyclotomic object has weight one, and coefficient quotients satisfy
-ordinary tensor base change. These three normalizations will prevent any
-change of variance later.
+The word **covariant** here conceals a step which must be made explicit. Let
+
+$$
+\omega_A=\operatorname{Hom}_{\mathbf Z_\ell}
+(A,\mathbf Q_\ell/\mathbf Z_\ell)
+$$
+
+be the coefficient Matlis module and put
+
+$$
+\omega_{S_A}=R\otimes_{\mathbf Z_\ell}\omega_A.
+$$
+
+The trace pairing for the finite unramified algebra
+$R/\mathbf Z_\ell$ identifies $\omega_{S_A}$ with the Matlis module of
+$S_A$. Therefore
+
+$$
+N\longmapsto N^\dagger
+=\operatorname{Hom}_{S_A}(N,\omega_{S_A}) \tag{14.8}
+$$
+
+is an exact duality on finite-length $S_A$-modules. If $B=A/I$, then
+
+$$
+\omega_B=\omega_A[I]. \tag{14.9}
+$$
+
+This identity is the algebraic reason a quotient of the generic
+representation becomes ordinary tensor reduction after the contravariant
+classified object has been dualized. Before dualizing, the correct object
+is the admissible annihilator, not a tensor product.
+
+Dualizing the strict Hodge sequence and its normal divided-Frobenius map
+transports the established contravariant structure to triples
+$(M,L,\Phi)$. In rank two with one Hodge direction, the dual Hodge quotient
+and the dual Hodge submodule are both lines. In an adapted normal
+decomposition, the new divided-Frobenius matrix is the transpose inverse of
+the old normal matrix, with the Frobenius indices shifted. This makes the
+arrow covariant and preserves invertibility. Formula (14.4) is the
+coordinate-free record of the transported divided map.
+
+This construction fixes the normalization used below: a map of finite-flat
+groups induces a map in the same direction on $\mathcal M$, the trivial
+line has weight zero, and the cyclotomic line has weight one. Ordinary
+tensor reduction on the covariant module will be a theorem, not a
+convention.
 
 If a finite unramified coefficient extension splits $S_A$, its factors are
 indexed by embeddings $\tau:k_K\hookrightarrow k'$ and
@@ -2082,134 +2151,173 @@ $$
 is the filtration rank at $\tau$. Frobenius cyclically permutes these
 factors.
 
-### 14.5 The integral classification package
+### 14.5 The coefficient-normal-form theorem
 
-We now state the deep input in the exact coefficient-enhanced form required
-by deformation theory.
+The following theorem is the precise bridge needed for deformation theory.
+Its rank-two hypothesis is intentional. The general contravariant
+anti-equivalence is already available; the free covariant chart is needed
+here only in height two.
 
-**Theorem 14.3 (torsion Fontaine--Laffaille--Raynaud classification).**
-Assume (14.1). For every $A\in\operatorname{Art}_{\mathcal O}$ there is an
-exact covariant equivalence
+**Theorem 14.3 (rank-two coefficient normal form).** Assume (14.1), fix a
+finite-flat residual representation $\bar V$ of dimension two over $k$, and
+suppose its unique residual filtered object has one Hodge direction at every
+residue embedding. For every $A\in\operatorname{Art}_{\mathcal O}$, the
+following groupoids are equivalent:
 
-$$
-\mathbf M_A:
-\left\{
-\begin{array}{c}
-\text{finite flat commutative $\ell$-power group schemes over $R$}\\
-\text{with $A$-action and generic points free over $A$}
-\end{array}
-\right\}
-\xrightarrow{\ \sim\ }
-\mathsf{MF}^{[0,1],\mathrm{cf}}_A, \tag{14.8}
-$$
+1. finite-flat $A[G_K]$-modules $V_A$ free of rank two and reducing to
+   $\bar V$, with their generic markings;
+2. coefficient-flat triples $(M,L,\Phi)$ of §14.4, with $M$ projective of
+   rank two over $S_A$, $L$ and $M/L$ projective of rank one on every
+   factor, and a fixed identification with the residual triple.
 
-where the right side is the coefficient-flat category of §14.4. It has a
-covariant generic realization
+The equivalence is covariant and generically fully faithful. If $B=A/I$,
+then
 
 $$
-T_A:\mathsf{MF}^{[0,1],\mathrm{cf}}_A
-\longrightarrow A[G_K]\text{-modules} \tag{14.9}
+\mathcal M_B\simeq\mathcal M_A\otimes_A B. \tag{14.10}
 $$
 
-and a natural identification
+It commutes with finite unramified ground-field extension, finite étale
+coefficient extension, and their descent data. Conversely every triple in
+(2) has generic realization free of rank two over $A$ and gives a unique
+marked finite-flat model. Write $T_A(\mathcal M)$ for that covariant generic
+realization.
+
+For such a triple, the internal coefficient-linear dual is
 
 $$
-T_A(\mathbf M_A(\mathcal G))
-\simeq \mathcal G(K^s). \tag{14.10}
+\mathcal M^D=
+\operatorname{Hom}_{S_A}(M,S_A(1)) \tag{14.11}
 $$
 
-The following assertions are part of the theorem.
+with annihilator filtration and inverse-adjoint divided Frobenius. Its
+generic realization is
 
-1. **All torsion levels.** The equivalence applies to objects killed by
-   $\ell^n$ for every $n\geq1$ and is compatible as $n$ varies. It is not
-   merely a mod-$\ell$ classification.
-2. **All finite-flat shapes.** Étale, multiplicative, connected, and mixed
-   group schemes all occur in (14.8), with no ordinarity or connectedness
-   hypothesis.
-3. **Exactness.** Admissible fppf exact sequences correspond to sequences
-   exact on $M$ and $L$ with coefficient-flat quotients; the generic
-   realization is exact.
-4. **Duality.** Ordinary Cartier duality on the underlying torsion category
-   corresponds to the usual torsion crystalline duality. The
-   coefficient-flat category also has an internal coefficient-linear dual
+$$
+T_A(\mathcal M^D)
+\simeq\operatorname{Hom}_A(T_A(\mathcal M),A)(1), \tag{14.12}
+$$
 
-   $$
-   \mathcal M^D=
-   \operatorname{Hom}_{S_A}(M,S_A(1))
-   \quad\text{with its induced filtration and divided Frobenius},
-   \qquad
-   T_A(\mathcal M^D)
-   \simeq\operatorname{Hom}_A(T_A(\mathcal M),A)(1). \tag{14.11}
-   $$
+and its filtration rank is $2-r_\tau$. This internal dual is not the
+ordinary Cartier dual when $A$ is non-Gorenstein.
 
-   Under the inverse equivalence, write $\mathcal G^{D_A}$ for the model
-   corresponding to this internal dual. For a general Artinian ring $A$,
-   $\mathcal G^{D_A}$ is not being identified with the ordinary Cartier
-   dual $\mathcal G^D$. The latter realizes the Pontryagin dual of the
-   underlying finite abelian group, which need not be free of rank $d$
-   over a non-Gorenstein $A$. The internal dual is the one used for
-   determinants and coefficient-linear self-duality below. If $M$ has rank
-   $d$, it changes the filtration rank by
+**Proof strategy.** Begin with the established contravariant torsion
+classification, use its admissible annihilators for coefficient quotients,
+and then apply the exact Matlis duality (14.8). Freeness is proved by a
+Nakayama-and-length argument. Finally dualize the strict normal map to
+obtain the divided map (14.5).
 
-   $$
-   r_\tau(\mathcal M^D)=d-r_\tau(\mathcal M). \tag{14.12}
-   $$
-5. **Generic full faithfulness.** For objects whose weights lie in any
-   interval of length at most $\ell-2$, generic realization induces a Hom
-   isomorphism. In particular,
+**Proof.** Let $C_A$ be the contravariant divided filtered object attached to
+a model of $V_A$. The $A$-action on the model gives a commuting $A$-action
+on $C_A$. Put
 
-   $$
-   \operatorname{Hom}_{\mathsf{MF}}(\mathcal M,\mathcal N)
-   \xrightarrow{\ \sim\ }
-   \operatorname{Hom}_{A[G_K]}(T_A(\mathcal M),T_A(\mathcal N)) \tag{14.13}
-   $$
+$$
+M_A=\operatorname{Hom}_{S_A}(C_A,\omega_{S_A}). \tag{14.13}
+$$
 
-   for weights $[0,1]$.
-6. **Coefficient quotients.** If $I\subset A$, if $B=A/I$, and if
-   $\mathcal G_B$ denotes the coefficient quotient constructed by saturated
-   closure and represented quotient as in Chapter 2, then
+The torsion classification is exact and its realization is fully faithful.
+For $B=A/I$, it represents $V_A/IV_A$ not by a naive tensor product of
+$C_A$, but by the terminal admissible $I$-killed subobject
+$C_A[I]_{\mathrm{adm}}$. Restriction of Matlis-dual functionals gives a
+natural comparison
 
-   $$
-   \mathbf M_B(\mathcal G_B)
-   \simeq \mathbf M_A(\mathcal G)\otimes_A B, \tag{14.14}
-   $$
+$$
+\operatorname{Hom}_{S_B}
+(C_A[I]_{\mathrm{adm}},\omega_{S_B})
+\longleftarrow M_A/IM_A. \tag{14.14}
+$$
 
-   and the same formula holds for generic realization.
-7. **Coefficient-flatness.** If the generic module is free of rank $d$ over
-   $A$, then $M$ is finite projective of rank $d$ over $S_A$, while $L$ and
-   $M/L$ are projective on every factor. Conversely, every such linear
-   object has generic realization free of rank $d$ over $A$.
-8. **Descent.** The equivalence and all the preceding structures commute
-   with finite unramified extension and faithfully flat descent of the
-   coefficient ring.
+We prove simultaneously that $M_A$ is projective and that (14.14) is an
+isomorphism. Factor $A\twoheadrightarrow k$ into principal small
+extensions and induct on the length of $A$. For one step
+$A\twoheadrightarrow B$ with kernel $J$, the free representation has the
+coefficient exact sequence
 
-For rank two of type $(0,1)$, the determinant is a rank-one weight-one
-object. Under a normal decomposition its divided-Frobenius scalar is the
-determinant of the $2\times2$ divided-Frobenius matrix, and
+$$
+0\longrightarrow J\otimes_k\bar V
+\longrightarrow V_A\longrightarrow V_B\longrightarrow0. \tag{14.14a}
+$$
+
+The classification turns it into a strict exact sequence with arrows
+reversed; Matlis duality reverses them again. Full faithfulness identifies
+the first arrow with multiplication by $J$. Consequently the kernel of
+$M_A\to M_B$ is exactly $J\otimes_k\bar M$, and the local flatness
+criterion gives
+
+$$
+M_A\otimes_A B\xrightarrow{\sim}M_B. \tag{14.14b}
+$$
+
+For completeness, choose a basis of the free $B$-module $M_B$ supplied by
+the induction hypothesis and lift it to $M_A$. Any relation among the
+lifts has coefficients in $J$. Its image in the first term of the dual of
+(14.14a) is the corresponding relation among a residual basis, so every
+coefficient is zero. The lifts are therefore a basis of $M_A$. This proves
+freeness at the small step. Iteration proves (14.14) and (14.10) for every
+ideal $I$.
+
+After a finite étale coefficient extension splitting $S_A$, the argument
+applies on each factor and gives rank two. Faithfully flat descent makes
+$M_A$ projective of rank two over $S_A$ before splitting. Notice that the
+proof used the admissible annihilator and the exact coefficient sequence;
+it never identified $C_A[I]_{\mathrm{adm}}$ with the raw annihilator
+$C_A[I]$.
+
+The strict Hodge sequence for $C_A$ and its strict normal
+divided-Frobenius isomorphism dualize exactly. The residual Hodge ranks are
+one by hypothesis. Exactness, (14.14), and Nakayama show that the transported
+Hodge term and quotient are projective of rank one at every Artinian level.
+Writing the transported structure using the quotient (14.4) gives an
+isomorphism $\Phi$ as in (14.5). A normal decomposition verifies directly
+that the two constructions are inverse: dualizing twice recovers $C_A$, and
+the transpose-inverse normal matrix recovers the original strong-divisibility
+map.
+
+Conversely, start with $(M,L,\Phi)$. Matlis duality reconstructs an
+admissible contravariant torsion object. The integral classification
+represents it by a finite-flat group. The same length calculation and
+Nakayama show that its generic realization is free of rank two over $A$.
+Full faithfulness on the contravariant side and exactness of Matlis duality
+give full faithfulness and covariance here. Ground-field and finite étale
+coefficient descent commute with every construction used. This proves the
+equivalence and all stated compatibilities.
+
+For the internal dual, projectivity of $M$ makes (14.11) exact. The
+annihilator filtration and inverse-adjoint matrix give another
+coefficient-flat triple, with complementary filtration ranks. The generic
+comparison follows from tensor--Hom adjunction and full faithfulness.
+Ordinary Cartier duality instead uses the Pontryagin dualizing module
+$\omega_A$; replacing it by $A$ is legitimate only after a Gorenstein
+self-duality has been chosen. This proves the final assertions. $\square$
+
+For type $(0,1)$, exterior multiplication gives a rank-one weight-one
+object. Under a normal decomposition its divided-Frobenius scalar is
+$\det\Phi$, and
 
 $$
 T_A(\det\mathcal M)\simeq\det_A T_A(\mathcal M). \tag{14.15}
 $$
 
-The last assertion is part of the exterior-power compatibility in the
-range where the resulting weights remain in the full-faithfulness interval.
-It is also forced in rank two by the perfect alternating pairing and
-Cartier duality.
+This rank-two assertion needs no general exterior-power theory. The
+alternating map $M\times M\to\det M$ is perfect, its generic realization is
+the ordinary determinant pairing, and full faithfulness identifies the
+rank-one target.
 
 ### 14.6 Why the classification has the stated compatibilities
 
-Theorem 14.3 is established integral infrastructure, but its proof
-architecture explains why each clause is trustworthy and why simpler
-substitutes fail.
+Theorem 14.3 is a consequence of established integral infrastructure, but
+its proof architecture explains why each clause is trustworthy and why
+simpler substitutes fail.
 
-The construction from a group scheme begins with its crystalline
+The contravariant construction from a group scheme begins with its crystalline
 Dieudonné object, evaluated on the canonical divided-power thickenings of
 the unramified base. The Hodge sequence cuts out $L$, while Frobenius and
 Verschiebung supply the two adjacent divided maps. Their integral relation
-is encoded by $D_L(M)$ and the isomorphism (14.5). Composing the usual
-contravariant construction with Cartier duality produces the covariant
-normalization used here. This is why duality changes $r_\tau$ to
-$d-r_\tau$ and why the cyclotomic object has weight one.
+is encoded by the usual strict normal map. Matlis duality then reverses the
+arrow without choosing a self-duality of the coefficient ring. In rank two,
+the transported Hodge quotient and Hodge submodule both have rank one;
+$D_L(M)$ and (14.5) record the resulting covariant structure. This is why
+the chart remains valid over non-Gorenstein test rings.
 
 The reverse construction associates a finite flat group sheaf to a torsion
 filtered module by the integral Fontaine--Laffaille syntomic construction.
@@ -2238,22 +2346,23 @@ Ordinary Cartier duality is visible on the crystalline object through its
 evaluation pairing into roots of unity. Separately, dualizing a finite
 projective coefficient-flat module into the weight-one coefficient object
 gives the internal $A$-linear dual in (14.11). Its annihilator filtration
-gives (14.12), and inverse-adjoint divided Frobenius gives the dual
-structure. Exactness of ordinary Cartier duality is inherited from Book 47;
-exactness and generic compatibility of the internal coefficient-linear dual
-are clauses of the classification package. Determinants in rank two are
+gives complementary ranks, and inverse-adjoint divided Frobenius gives the
+dual structure. Exactness of ordinary Cartier duality is inherited from
+Book 47; generic compatibility of the internal coefficient-linear dual was
+proved in Theorem 14.3. Determinants in rank two are
 then exterior pairings into a rank-one weight-one object; the determinant
 of a divided-Frobenius matrix is therefore the correct scalar, not a formal
 analogy with ordinary semilinear algebra.
 
 Finally, coefficient actions are endomorphisms in the classified category.
 A quotient $A\to A/I$ is implemented integrally on group schemes by the
-saturated coefficient quotient of Chapter 2 and linearly by tensoring with
-$A/I$. Exact torsion comparison proves (14.14), including the absence of a
-hidden $\operatorname{Tor}$ term. Freeness of generic points translates to
-projectivity of $M$, $L$, and $M/L$ by the integral length and Nakayama
-criteria inside the classification. This is the coefficient-flatness that
-allows line and matrix coordinates below.
+saturated coefficient quotient of Chapter 2. On the contravariant filtered
+object it is the admissible annihilator, not tensor product. Equation
+(14.14) proves that Matlis duality converts precisely that object into
+$M/IM$. Thus the absence of a hidden $\operatorname{Tor}$ term is proved,
+not assumed. The length and Nakayama argument then gives projectivity of
+$M$, $L$, and $M/L$. This is the coefficient-flatness that allows line and
+matrix coordinates below.
 
 This overview names the essential constructions and the reason for every
 compatibility used later. The deep representability and comparison theorems
@@ -2268,12 +2377,14 @@ classification.
 **Lemma 14.4 (coefficient enhancement and uniqueness).** Let $A$ be an
 Artinian coefficient ring and let $V_A$ be a finite free $A[G_K]$-module.
 If the underlying finite $G_K$-module has a finite-flat model $\mathcal G$,
-then:
+then assertions 1 and 2 below hold in every rank. If $V_A$ has rank two and
+its residual object has one Hodge direction at each embedding, all four
+assertions hold:
 
 1. every scalar $a\in A$ extends uniquely to an endomorphism of $\mathcal G$;
 2. these extensions give the unique $A$-action on $\mathcal G$ compatible
    with the generic action;
-3. $\mathcal M_A=\mathbf M_A(\mathcal G)$ is an $S_A$-linear
+3. $\mathcal M_A$ is an $S_A$-linear
    coefficient-flat object, functorial under all coefficient quotients;
 4. for $B=A/I$,
 
@@ -2299,11 +2410,11 @@ $[a]_{\mathcal G}[b]_{\mathcal G}$. The extensions of $0$ and $1$ are the
 zero and identity maps for the same reason. Generic faithfulness therefore
 proves all ring laws. It also proves uniqueness of the action.
 
-Apply the covariant equivalence (14.8). Functoriality carries the $A$-action
-to an $S_A$-module structure, and coefficient-flatness follows from the
-freeness of $V_A$. For a quotient $B=A/I$, Theorem 14.3 identifies the
-saturated coefficient quotient of $\mathcal G$ with ordinary tensor
-reduction of its classified module, giving (14.16). $\square$
+Apply Theorem 14.3. Functoriality carries the $A$-action to an $S_A$-module
+structure, and its length--Nakayama argument gives coefficient-flatness.
+For a quotient $B=A/I$, the admissible-annihilator calculation (14.14)
+identifies the saturated coefficient quotient of $\mathcal G$ with ordinary
+tensor reduction on the covariant module, giving (14.16). $\square$
 
 In the range (14.1), this lemma is stronger than the general
 coefficient-saturation construction of §2.1: it does not replace the model
@@ -2317,14 +2428,17 @@ The normal form in the next chapter uses a line in every unramified factor.
 That line is a consequence of the determinant condition, not an additional
 Hodge-type hypothesis.
 
-**Lemma 14.5 (type forced by the determinant).** Let $V_A$ be free of rank
-two, finite flat, and satisfy
+**Lemma 14.5 (type forced by the determinant).** Let $\bar V$ be
+two-dimensional, finite flat, and satisfy
 
 $$
-\det V_A= A(1). \tag{14.17}
+\det\bar V=k(1). \tag{14.17}
 $$
 
-Then its classified object $\mathcal M_A$ has
+Then its residual filtered object has one Hodge direction at every
+embedding, so Theorem 14.3 applies to its rank-two finite-flat deformations.
+If $V_A$ is such a deformation with $\det V_A=A(1)$, its classified object
+$\mathcal M_A$ has
 
 $$
 \operatorname{rank}_{S_A}M=2,
@@ -2333,58 +2447,38 @@ r_\tau=\operatorname{rank}L_\tau=1
 \quad\text{for every }\tau. \tag{14.18}
 $$
 
-**Proof.** Exterior multiplication and the fixed determinant identification
+**Proof.** Exterior multiplication and the residual determinant identification
 give a perfect alternating $G_K$-equivariant pairing
 
 $$
-V_A\times V_A\longrightarrow A(1), \tag{14.19}
+\bar V\times\bar V\longrightarrow k(1), \tag{14.19}
 $$
 
 or equivalently an isomorphism
 
 $$
-V_A\xrightarrow{\ \sim\ }V_A^*(1). \tag{14.20}
+\bar V\xrightarrow{\ \sim\ }\bar V^*(1). \tag{14.20}
 $$
 
-Here $V_A^*=\operatorname{Hom}_A(V_A,A)$; this is the coefficient-linear
-dual in (14.11).
-
-Let $\mathcal G_A$ be the unique finite-flat model, and let
-$\mathcal G_A^{D_A}$ be the model supplied by the internal coefficient-linear
-dual in (14.11), not the ordinary Cartier dual unless an additional
-coefficient-dualizing identification has been supplied. By Raynaud full
-faithfulness, the map (14.20) extends uniquely to
-
-$$
-\mathcal G_A\xrightarrow{\ \sim\ }\mathcal G_A^{D_A}.
-$$
-
-The inverse extends as well, so the map is an isomorphism. The compatible
-internal evaluation pairing is perfect and alternating because these
-identities hold on the generic fiber and generic realization is faithful.
-
-Under Theorem 14.3 this becomes
-
-$$
-\mathcal M_A\simeq\mathcal M_A^D.
-$$
-
-If $r_\tau$ is the filtration rank of $\mathcal M_A$, formula (14.12) says
-that the dual rank is $2-r_\tau$. Isomorphic filtered objects have equal
-ranks, hence
+Compose the pairing with the nonzero field trace
+$k\to\mathbf F_\ell$. Nondegeneracy of the trace pairing makes the result a
+perfect pairing of the underlying $\mathbf F_\ell$-spaces into
+$\mathbf F_\ell(1)$. Raynaud full faithfulness extends its adjoint generic
+isomorphism to the ordinary Cartier dual of the unique residual model. The
+torsion classification carries Cartier duality to the
+Cartier-normalized filtered dual, whose Hodge rank is $2-r_\tau$. Hence
+self-duality gives
 
 $$
 r_\tau=2-r_\tau.
 $$
 
-Therefore $r_\tau=1$ for every embedding. Coefficient-flatness gives the
-rank assertion for $M$, and (14.16) shows that the conclusion is preserved
-at every coefficient quotient. Equivalently, one may first reduce to $k$,
-use the field trace $k\to\mathbf F_\ell$ to identify the $k$-linear dual
-with ordinary Cartier duality, obtain residual rank one, and then lift that
-rank through the direct-summand filtration. This gives the same conclusion
-without confusing the $A$-linear dual with the Pontryagin dual of the
-underlying abelian group. $\square$
+Therefore $r_\tau=1$ for every embedding at the residual level. Theorem
+14.3 now applies and makes the transported Hodge term of every lift a
+direct-summand line. If the lifted determinant is cyclotomic, the perfect
+$A$-linear alternating pairing identifies the covariant object with its
+internal dual (14.11), so the same rank equation holds at the lifted level.
+Coefficient reduction (14.10) preserves the conclusion. $\square$
 
 The same argument works for residual, Artinian, and higher $\ell^n$ levels.
 It treats ordinary and supersingular objects uniformly.
@@ -2401,8 +2495,10 @@ $$
 \det\bar\rho=\bar\chi_\ell, \tag{15.1}
 $$
 
-assumed finite flat. Raynaud rigidity and Theorem 14.3 attach to it one
-residual object $\bar{\mathcal M}$ up to unique isomorphism.
+assumed finite flat. Raynaud rigidity and the integral torsion
+classification attach to it one residual object $\bar{\mathcal M}$ up to
+unique isomorphism. Lemma 14.5 verifies the Hodge-rank hypothesis needed to
+apply Theorem 14.3 to its deformations.
 
 Choose once and for all a finite unramified extension of the coefficient
 ring large enough to contain every residue embedding of $k_K$. Faithfully
@@ -2617,7 +2713,7 @@ $$
 
 The product telescopes, proving directly that (15.11) is gauge-invariant.
 The stabilizer of a point is its automorphism group in the classified
-category. By (14.13),
+category. By generic full faithfulness in Theorem 14.3,
 
 $$
 \operatorname{Aut}_{\mathsf{MF}}(\mathcal M)
@@ -2853,7 +2949,7 @@ Its reduction is unchanged, its determinant is multiplied by $u$, and
 
 Finally suppose the original deformation was framed. The generic
 realization of the lifted coefficient-flat object is free of rank two over
-$B$ and reduces to the original generic module by (14.14). Lift the two
+$B$ and reduces to the original generic module by (14.10). Lift the two
 vectors of the generic frame. Nakayama's lemma makes them a basis, or
 equivalently the surjection
 
@@ -3026,8 +3122,9 @@ $$
 
 allowing either the split or nonsplit case. Close the stable line in the
 unique finite-flat model. Raynaud identifies both rank-one endpoint models
-with the unique model of $\psi$. Exactness of Theorem 14.3 turns (16.11)
-into an exact sequence of filtered modules.
+with the unique model of $\psi$. Exactness of the underlying torsion
+Fontaine--Laffaille anti-equivalence turns (16.11) into an exact sequence of
+filtered modules; Matlis duality reverses it back on the covariant side.
 
 Let $s_\tau\in\{0,1\}$ be the filtration rank of that rank-one object at
 $\tau$. Exactness on $L$ makes the filtration rank of the middle object
@@ -3046,7 +3143,7 @@ This argument uses filtration multiplicity and exactness, so it remains
 valid after enlarging the coefficient field. It does not rely on a list of
 tame inertia exponents.
 
-### 16.6 Ordinary Kummer classes: units and valuation
+### 16.6 Ordinary Kummer classes: hardly ramified and valuation
 
 Consider the standard ordinary orientation
 
@@ -3107,9 +3204,12 @@ $$
 
 an $f$-dimensional subspace.
 
-The unit subspace is the **peu ramifiée** subspace in this orientation. A
-class with nonzero valuation coordinate is **très ramifiée** and is not a
-finite-flat residual base point. For the standard
+The unit subspace is the **hardly ramified**, or **peu ramifiée**, subspace
+in this orientation. The terminology means exactly that the Kummer class
+has zero valuation coordinate; it does not mean unramified, since principal
+units can give ramified extensions. A class with nonzero valuation
+coordinate is **très ramifiée** and is not a finite-flat residual base
+point. For the standard
 $\Lambda_n=\mathbf Z/\ell^n\mathbf Z$ endpoints, the higher-level statement
 is
 
