@@ -182,7 +182,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 115. Twisted Orbital Matching and the Cyclic Fundamental Lemma
 - [x] 116. Generalized Elliptic Curves and Level Structures
 - [x] 117. Compactified Modular Stacks and Coarse Modular Curves
-- [ ] 118. Deligne–Rapoport Integral Models of Modular Curves
+- [x] 118. Deligne–Rapoport Integral Models of Modular Curves
 - [ ] 119. Integral Modular Forms and q-Expansion
 - [ ] 120. Modular and Shimura Curves
 - [ ] 121. Modular Jacobians, Néron Models, and Hecke Correspondences
