@@ -29,8 +29,8 @@
    - [A first explicit calculation over the rationals](#54-a-first-explicit-calculation-over-the-rationals)
 6. [The global existence theorem](#6-the-global-existence-theorem)
    - [Why reciprocity does not yet give existence](#61-why-reciprocity-does-not-yet-give-existence)
-   - [The global Kummer pairing](#62-the-global-kummer-pairing)
-   - [Descent when roots of unity are missing](#63-descent-when-roots-of-unity-are-missing)
+   - [The finite local--global character sequence](#62-the-finite-local--global-character-sequence)
+   - [Constructing the global character](#63-constructing-the-global-character)
    - [Classification by open subgroups](#64-classification-by-open-subgroups)
 7. [Moduli and ray class fields](#7-moduli-and-ray-class-fields)
    - [Why a modulus has a finite and an infinite part](#71-why-a-modulus-has-a-finite-and-an-infinite-part)
@@ -45,7 +45,6 @@
    - [Imaginary and real quadratic examples](#83-imaginary-and-real-quadratic-examples)
    - [Cyclotomic fields as ray class fields](#84-cyclotomic-fields-as-ray-class-fields)
    - [Quadratic reciprocity as a product formula](#85-quadratic-reciprocity-as-a-product-formula)
-   - [Frobenius distribution in an abelian extension](#86-frobenius-distribution-in-an-abelian-extension)
 9. [Norm principles and their limits](#9-norm-principles-and-their-limits)
    - [The knot between local and global norms](#91-the-knot-between-local-and-global-norms)
    - [The Hasse norm theorem for cyclic extensions](#92-the-hasse-norm-theorem-for-cyclic-extensions)
@@ -64,6 +63,7 @@
     - [The ell-adic avatar](#115-the-ell-adic-avatar)
     - [Norms, restriction, and conjugation of characters](#116-norms-restriction-and-conjugation-of-characters)
     - [Dirichlet and CM character models](#117-dirichlet-and-cm-character-models)
+    - [The quadratic induction interface](#118-the-quadratic-induction-interface)
 12. [The global reciprocity dictionary](#12-the-global-reciprocity-dictionary)
     - [Fields, subgroups, and quotients](#121-fields-subgroups-and-quotients)
     - [Local multiplicative data and global Galois data](#122-local-multiplicative-data-and-global-galois-data)
@@ -134,6 +134,14 @@ $$
 
 with a negative number mapping to complex conjugation. Thus the connected component $\mathbf R_{>0}$ is always killed. Infinite ramification means precisely that a real place becomes complex; complex places never ramify. A modulus may include a real place, but never needs a complex place.
 
+At a finite place we use the filtration
+
+$$
+U_v^0=\mathcal O_v^\times,
+\qquad
+U_v^n=1+\mathfrak p_v^n\quad(n\geq1).
+$$
+
 We use $N_{L/K}\mathbf I_L$ for the image of the componentwise idele norm and $N_{L/K}C_L$ for its image in $C_K$. The latter is
 
 $$
@@ -168,7 +176,7 @@ $$
 
 forces the product of the local actions of a principal element to be one. The sum, rather than any individual invariant, is the global mechanism.
 
-For a finite Galois extension, the same invariant sequence supplies a fundamental class in $H^2(G,C_L)$. Capping with it identifies $G^{\mathrm{ab}}$ with $C_K/N C_L$. Finally, the existence argument proves that the norm subgroups obtained this way exhaust all open finite-index subgroups of $C_K$. This last step uses global Kummer duality, roots-of-unity descent, and finite character duality; it cannot be replaced by merely counting extensions already known to exist.
+For a finite Galois extension, the same invariant sequence supplies a fundamental class in $H^2(G,C_L)$. Capping with it identifies $G^{\mathrm{ab}}$ with $C_K/N C_L$. Finally, the existence argument proves that the norm subgroups obtained this way exhaust all open finite-index subgroups of $C_K$. This last step uses the finite local--global duality sequence for the Cartier-dual pair $\mathbf Z/n\mathbf Z$ and $\mu_n$; it cannot be replaced by merely counting extensions already known to exist.
 
 ## 2. Local symbols and the global Artin map
 
@@ -207,7 +215,7 @@ If $L/K$ is Galois but not abelian, local reciprocity still maps to $D_w^{\mathr
 
 ### 2.2 Unramified and ramified Artin symbols
 
-Suppose $v$ is finite and unramified in $L$. Then $I_w=1$, and the local norm is surjective on units. Hence $\operatorname{Art}_{L/K,v}(x)$ depends only on $\operatorname{ord}_v(x)$:
+Assume throughout this subsection that $L/K$ is abelian. Suppose $v$ is finite and unramified in $L$. Then $I_w=1$, and the local norm is surjective on units. Hence $\operatorname{Art}_{L/K,v}(x)$ depends only on $\operatorname{ord}_v(x)$:
 
 $$
 \operatorname{Art}_{L/K,v}(x)
@@ -226,7 +234,7 @@ For example, in a quadratic extension and at a finite unramified prime, the symb
 
 ### 2.3 Multiplying the local maps
 
-For $x=(x_v)\in\mathbf I_K$, define
+Continue with $L/K$ finite abelian. For $x=(x_v)\in\mathbf I_K$, define
 
 $$
 \operatorname{Art}_{L/K}(x)
@@ -235,7 +243,7 @@ $$
 
 This product is finite. Only finitely many places ramify; outside those and outside the finite support of the valuation vector of $x$, the extension is unramified and $x_v$ is a unit, so the local factor is $1$. Since $G$ is abelian, the order of the factors does not matter.
 
-The map is continuous. Its restriction to each local factor is continuous, and its kernel contains a standard open subgroup: take local norm groups at the finitely many ramified places and local units elsewhere. It is also surjective. Indeed, a local map has image $D_w$, and Chebotarev will later show directly that unramified Frobenius elements fill every element of $G$; before invoking that theorem, finite reciprocity itself supplies surjectivity.
+The map is continuous. Its restriction to each local factor is continuous, and its kernel contains a standard open subgroup: take local norm groups at the finitely many ramified places and local units elsewhere. Surjectivity is not assumed at this stage. It will follow in Theorem 5.1 from the global class-formation calculation, without using a prime-distribution theorem.
 
 If $v$ splits completely, then $D_w=1$, so the entire factor $K_v^\times$ is killed. Conversely, for a Galois extension, triviality of $D_w$ is equivalent to complete splitting. This turns splitting into a kernel condition.
 
@@ -301,7 +309,7 @@ with the normalized absolute values used in the adelic volume. This identity is 
 
 The local norm group is open at every place and equals the full unit group for almost every unramified place. Consequently $N_{L/K}\mathbf I_L$ contains a basic open subgroup of $\mathbf I_K$ and is open. Its image $N_{L/K}C_L$ is therefore open in $C_K$.
 
-Finite index is subtler: openness alone does not imply finite index in a noncompact group. The module identity shows that norms cover the positive real module direction. The quotient may therefore be computed inside the compact group $C_K^1$, the kernel of the idele module. An open subgroup of a compact group has finite index. Hence
+Finite index is subtler: openness alone does not imply finite index in a noncompact group. The norm map is surjective on the positive real module direction: at one archimedean coordinate its restriction is either a positive power map on $\mathbf R_{>0}$ or the map $z\mapsto |z|^2$, and both have image $\mathbf R_{>0}$. Combined with the module identity, this shows that every class modulo $N_{L/K}C_L$ has a representative in the compact group $C_K^1$. The quotient is therefore a quotient of $C_K^1$ by an open subgroup. An open subgroup of a compact group has finite index. Hence
 
 $$
 [C_K:N_{L/K}C_L]<\infty.
@@ -381,19 +389,101 @@ $$
 
 Here $\operatorname{Br}(\mathbf C)=0$, $\operatorname{Br}(\mathbf R)=\frac12\mathbf Z/\mathbf Z$, and $\operatorname{Br}(F_u)\cong\mathbf Q/\mathbf Z$ at a finite place. Only finitely many localizations of a global class are nonzero.
 
-**Proof strategy and proof.** We use two elementary index-reduction facts. First, if a central simple algebra $A/F$ has local indices $d_u$, then a separable extension $E/F$ of degree divisible by every $d_u$, with local degree divisible by $d_u$ at each of the finitely many nonsplit places, splits $A$ locally everywhere. Such an $E$ is produced by weak approximation on the coefficients of separable polynomials. Second, if a prime $p$ divides the global index of $A$, one can choose a cyclic degree-$p$ extension with prescribed behavior at those places where the $p$-primary local index is maximal; scalar extension then lowers the $p$-primary index. The second fact follows by adjoining $p$th roots of unity, choosing one Kummer class by weak approximation, and descending the conjugate product. Induction on the index constructs a cyclic tower splitting $A$ and shows that the global index is the least common multiple of the local indices.
+**Proof strategy.** We first prove the finite arithmetic-duality calculation from which the invariant sequence is the degree-two row. This avoids hiding a cyclic local-prescription theorem inside the proof; such a theorem, stated without its $2$-primary obstruction, would be false.
 
-Now associate to the $p$-primary part of $A$ the fractions $r_u/d_u$ determined by the local cyclic presentations. Restriction to a degree-$p$ index-reducing field multiplies every local invariant by the local degree. Induction down the tower shows two facts simultaneously: the fractions determine $A$, and their sum is zero. If all local fractions vanish, the index is one, proving injectivity.
+We will use one elementary separation fact. For every number field $F$, its Dedekind zeta function has a simple pole at $s=1$. Indeed, choose by Minkowski's bound an integral ideal $\mathfrak a_c$ in the inverse of each ideal class $c$. An integral ideal $\mathfrak b$ in $c$ is characterized by
 
-Conversely, prescribe finitely many fractions with sum zero. Choose a common denominator $n$ and a cyclic extension whose local degrees contain the prescribed denominators; the cyclic approximation just described supplies it, with the $2$-power descent carried out before removing fourth roots of unity. Local cyclic-algebra theory chooses parameters having the required invariants. Weak approximation chooses one global parameter with all those local norm cosets. Its cyclic algebra realizes the prescribed family. Finally $r$ at one finite place and $-r$ at another shows that the sum map is onto. $\square$
+$$
+\mathfrak b\mathfrak a_c=(\alpha),
+\qquad
+\alpha\in\mathfrak a_c,
+$$
 
-The approximation lemma used here is constructive: adjoining roots of unity reduces a cyclic extension of prime-power degree to a Kummer equation $T^n-a$; weak approximation chooses $a$ in the desired local Kummer classes, and averaging its conjugates descends the construction. The exceptional $2$-power case is handled by first adjoining the fourth roots of unity and descending the pair of conjugate Kummer extensions. This is also the correction that later appears in the Grunwald--Wang phenomenon; the invariant sequence itself remains exact.
+with $\alpha$ determined up to a unit. The image of $\mathfrak a_c$ in Minkowski space is a lattice. Quotient the logarithms of the archimedean absolute values by a fundamental parallelepiped for the unit lattice. Lattice-point counting in the resulting expanding norm region, summed over the finitely many classes, gives
+
+$$
+A_F(X)=\#\{\mathfrak a\subseteq\mathcal O_F:
+N\mathfrak a\leq X\}
+=\kappa_FX+O_F(X^{1-1/[F:\mathbf Q]})
+$$
+
+for a constant $\kappa_F>0$, with $O_F(1)$ in degree one. Partial summation gives
+
+$$
+\zeta_F(s)
+=s\int_1^\infty A_F(X)X^{-s-1}\,dX
+=\frac{\kappa_F}{s-1}+h_F(s),
+$$
+
+where $h_F$ is bounded as $s\to1^+$. Thus the pole is simple. Consequently, a nontrivial finite extension cannot split at every completion: if $E/F$ of degree $d$ did so, then away from finitely many factors $\zeta_E(s)$ would equal $\zeta_F(s)^d$, whose pole has order $d$ rather than one.
+
+Fix $n\geq1$ and a finite set $S$ containing the archimedean places and the places above $n$. Let $G_{F,S}$ be the Galois group of the maximal extension of $F$ unramified outside $S$. Put $A_n=\mathbf Z/n\mathbf Z$ and $A_n^\vee=\mu_n$. For either member $A$ of this dual pair, define the compact-support cochain complex
+
+$$
+C_{S,c}^\bullet(A)=
+\operatorname{Cone}\left(
+C^\bullet(G_{F,S},A)\longrightarrow
+\bigoplus_{u\in S}C^\bullet(G_{F_u},A)
+\right)[-1],
+$$
+
+using Tate cochains at real places. Cup product, followed locally by the invariant, gives
+
+$$
+H^i(C_{S,c}^\bullet(A_n))\times
+H^{3-i}(G_{F,S},\mu_n)
+\longrightarrow \tfrac1n\mathbf Z/\mathbf Z.
+\tag{4.1}
+$$
+
+This pairing is perfect. We prove that assertion at finite level. First, the diagonal global classes annihilate one another. On cocycles this is the norm-residue product calculation: the explicit local cup-product formula from local duality is bilinear in unit and valuation classes, the valuation terms cancel by the principal-divisor relation, and the unit terms cancel by the finite-residue-field norm relation. The real terms are the signs left by the same calculation. Only finitely many terms occur. One may compute after a finite Galois extension containing $\mu_n$; the calculation is equivariant under its Galois group, so the cocycle identity descends without dividing by the degree. Thus no roots-of-unity hypothesis is being inserted.
+
+The Kummer sequence and the valuation sequence give
+
+$$
+0\longrightarrow
+\mathcal O_{F,S}^\times/\mathcal O_{F,S}^{\times n}
+\longrightarrow H^1(G_{F,S},\mu_n)
+\longrightarrow \operatorname{Cl}(\mathcal O_{F,S})[n]
+\longrightarrow0,
+\tag{4.2}
+$$
+
+and the analogous local sequences. Weak approximation realizes any prescribed finite collection of local unit classes. Prescribed valuations define an $S$-ideal divisor; its only further obstruction to coming from a global element is its class in $\operatorname{Cl}(\mathcal O_{F,S})$, which is exactly the last term of (4.2).
+
+We next check nondegeneracy. For $\mu_n$, a global class trivial everywhere becomes, after adjoining $\mu_n$, a Kummer extension split at every completion. For $A_n$, the same is true of the cyclic extension cut out by the character. The separation fact just proved makes either extension trivial. Thus both global localization maps have trivial kernel.
+
+It remains only to compare finite orders. Suppose first that $\mu_n\subset F$ and choose a primitive root to identify $A_n$ with $\mu_n$. Filter the global and local cochain groups by units, valuation divisors, and ideal classes as in (4.2). On the free unit part, the one relation among normalized finite and archimedean valuations is the ordinary product formula, and its kernel has the rank supplied by the unit theorem. On torsion units, ordinary finite character duality pairs roots of unity modulo $n$ with their cyclic characters. On the ideal part, evaluation pairs $\operatorname{Cl}(\mathcal O_{F,S})/n$ perfectly with the $n$-torsion of its character group. The local factors have the orders given by local duality. Multiplying the orders on the associated graded groups, the class-group factors cancel and the remaining equality is precisely the unit-rank formula. Hence each annihilator has the same order as the corresponding image. The already proved inclusion and nondegeneracy give equality, and the five lemma lifts perfectness from the associated graded groups to the cohomology groups.
+
+For general $F$, pass to $F'=F(\mu_n)$. The Hochschild--Serre complexes for $F'/F$ on $A_n$ and $\mu_n$ are dual: restriction and corestriction are adjoint under the local pairings. Choose a complete resolution of $\operatorname{Gal}(F'/F)$, apply the roots-of-unity calculation in every row, and use the five lemma successively on the filtration by total degree. This descends perfectness without dividing by $[F':F]$, even when that degree shares a factor with $n$. At real places the complete resolution is the Tate resolution; retaining its degree-zero term is exactly what preserves the exceptional $2$-primary condition. Degrees zero and three are the ordinary product formula and its finite dual. This proves (4.1) without reciprocity, a prime-distribution theorem, or an exact-degree Grunwald assertion.
+
+The same argument applies with $A_n$ and $\mu_n$ interchanged. The long exact sequence of that cone, followed by the directed limit as $S$ grows, contains the exact row
+
+$$
+H^2(F,\mu_n)\longrightarrow
+\bigoplus_u H^2(F_u,\mu_n)\longrightarrow
+\operatorname{Hom}(H^0(F,A_n),\mathbf Q/\mathbf Z)
+\longrightarrow0.
+\tag{4.3}
+$$
+
+The direct sum is legitimate because an unramified degree-two class vanishes at almost every finite place. Hilbert 90 and the Kummer sequence identify
+
+$$
+H^2(F,\mu_n)=\operatorname{Br}(F)[n],
+\qquad
+H^2(F_u,\mu_n)=\operatorname{Br}(F_u)[n].
+$$
+
+Since $H^0(F,A_n)=A_n$, the middle arrow in (4.3) is exactly the sum of the local invariants. Perfectness also says that its left kernel is zero. We have therefore proved the theorem on $n$-torsion. Every Brauer class and every finitely supported family of local invariants has finite exponent, so taking the directed union over $n$ proves exactness of the displayed sequence. Finally, two finite places carrying $r$ and $-r$ show directly that the sum map is onto. $\square$
+
+The same calculation in degree one will be used in the existence theorem. It retains, rather than suppresses, the extra orthogonality condition responsible for the exceptional $2$-primary Grunwald--Wang cases.
 
 ### 4.3 Construction of the fundamental class
 
 For $L/K$ finite Galois, the local fundamental classes do not simply form a direct sum and descend. When $G$ is noncyclic, their denominators can have least common multiple smaller than $|G|$. The missing information lies one degree farther along the cohomology sequence. A correct construction must retain both local invariants and the global divisor relation.
 
-Choose a finite $G$-stable set $S_L$ of places of $L$ containing the archimedean places, all places ramified over $K$, and at least one place above every ideal class of $L$. The last condition makes the ring of $S_L$-integers have trivial class group. Put
+Choose a finite $G$-stable set $S_L$ of places of $L$ containing the archimedean places, all places ramified over $K$, and finite primes whose classes generate $\operatorname{Cl}(L)$. Such primes can be obtained without a prime-distribution theorem: choose finitely many integral ideals generating the class group and include all their prime divisors. Also require that the decomposition groups of the places in $S_L$ generate $G$. This is possible because the subgroup generated by all decomposition groups has a fixed field that splits at every completion of $K$; the separation argument of Section 4.2 makes that fixed field equal to $K$, and finiteness of $G$ leaves a finite generating set of places. The ideal-class condition makes the ring of $S_L$-integers have trivial class group. Put
 
 $$
 Y_S=\mathbf Z[S_L],
@@ -422,7 +512,14 @@ $$
 
 Its two-extension class is characterized by the following local condition: after restriction to a decomposition group $D_w$ and projection to the summand generated by $w$, it is the local fundamental class of $L_w/K_v$. Enlarging $S_L$ carries this sequence to the corresponding sequence for the larger set.
 
-**Proof.** Begin with the direct sum over $v\in S_K$ of modules induced from complete resolutions of the local groups $L_w^\times$. Hilbert 90 kills degree one in every decomposition group, while the local invariant identifies degree two with the cyclic group generated by $1/|D_w|$. The augmentation map $Y_S\to\mathbf Z$ asks that these local generators have total invariant zero. Theorem 4.1 says this is the only relation among them. Taking the kernel of augmentation and splicing the local resolutions therefore gives a two-extension of $X_S$ by $U_{L,S}$.
+**Proof.** For each $v\in S_K$, choose $w\mid v$ and represent the local fundamental class by a two-extension with cohomologically trivial middle terms. Induce it from $D_w$ to $G$ and sum over $v$. The terminal modules sum to
+
+$$
+\bigoplus_{v\in S_K}\operatorname{Ind}_{D_w}^G\mathbf Z
+=\mathbf Z[S_L]=Y_S.
+$$
+
+Pull back along $X_S\hookrightarrow Y_S$. At the left end, take the mapping cone of the diagonal localization of $L^\times$ and the valuation map outside $S_L$. The exact valuation sequence above shows that its only homology is $U_{L,S}$; this is exactly where vanishing of the $S_L$-class group is used. Hilbert 90 kills degree one in every decomposition group, while the local invariant identifies degree two with the cyclic group generated by $1/|D_w|$. The augmentation $Y_S\to\mathbf Z$ asks that these local generators have total invariant zero, and Theorem 4.1 says this is their only relation. The pullback cone is therefore the asserted two-extension of $X_S$ by $U_{L,S}$.
 
 The middle terms are built from induced modules and kernels between two consecutive induced resolutions. Shapiro's lemma makes their Tate cohomology vanish for every subgroup, so they are cohomologically trivial. If another sequence has the same local classes, their Baer difference has zero localization everywhere; injectivity in Theorem 4.1 makes that difference split. This proves uniqueness. Adding a place adds an induced acyclic summand, which proves compatibility as $S_L$ grows. $\square$
 
@@ -542,6 +639,8 @@ $$
 
 ### 5.2 Frobenius, decomposition, and inertia
 
+Assume in this section that $L/K$ is finite abelian. Then the decomposition and inertia groups are actual subgroups of the global Artin target, rather than only images in an abelianization.
+
 Embed $K_v^\times$ in $\mathbf I_K$ at the $v$-coordinate. Finite reciprocity and local compatibility give
 
 $$
@@ -550,7 +649,7 @@ $$
 \operatorname{Art}_{L/K}(\mathcal O_v^\times)=I_w
 $$
 
-at a finite place. More deeply, if $U_v^n=1+\mathfrak p_v^n$, then
+at a finite place. More deeply, for the filtration fixed in Section 1.2,
 
 $$
 \operatorname{Art}_{L/K}(U_v^n)=D_w^n
@@ -651,82 +750,106 @@ Theorem 5.1 begins with $L$ and identifies its norm subgroup. The converse begin
 
 Since $C_K/H$ is finite abelian, its characters separate its points. It is therefore enough to realize every finite-order continuous character of $C_K$ as a Galois character. Taking the compositum of the resulting cyclic fields then recovers the intersection of their kernels, which is $H$.
 
-### 6.2 The global Kummer pairing
+### 6.2 The finite local--global character sequence
 
-Assume first that $\mu_n\subset K$. For $a\in K^\times$ and $x=(x_v)\in\mathbf I_K$, form the product of local Hilbert symbols
-
-$$
-\langle a,x\rangle_n=\prod_v(a,x_v)_{v,n}\in\mu_n.
-$$
-
-Only finitely many factors are nontrivial. The Hilbert product formula makes this product $1$ when $x$ is principal, so it defines a character of $C_K$. Kummer theory identifies the corresponding extension as $K(\sqrt[n]{a})$ after replacing $n$ by the exact order of the class of $a$.
-
-**Lemma 6.1 (global Kummer duality).** If $\mu_n\subset K$, the pairing
+The clean existence argument does not assume that $K$ contains roots of unity. Fix $n\geq1$, let
 
 $$
-K^\times/K^{\times n}\times C_K/C_K^n\longrightarrow\mu_n
+A_n=\mathbf Z/n\mathbf Z
 $$
 
-is nondegenerate in each variable. Equivalently, every continuous character $C_K\to\mu_n$ is $x\mapsto\langle a,x\rangle_n$ for a unique $a\bmod K^{\times n}$.
-
-**Proof.** Local Kummer duality says that $K_v^\times/K_v^{\times n}$ is perfectly paired with itself by the Hilbert symbol. Suppose first that $a$ pairs trivially with every idele class. Testing ideles supported at one place shows that $a\in K_v^{\times n}$ for every $v$. If $K(\sqrt[n]{a})/K$ were nontrivial, every unramified prime would nevertheless split completely, since one local $n$th root and $\mu_n\subset K_v$ give all the roots. This is impossible by the prime-separation lemma: a nontrivial finite extension has a finite prime that does not split completely. One proof of that lemma compares Euler products. If all unramified primes split into $d>1$ degree-one primes, then $\zeta_E(s)/\zeta_K(s)^d$ has only finitely many Euler factors and is nonzero at $s=1$, while the numerator has a simple pole and the denominator a pole of order $d$. Hence $a\in K^{\times n}$.
-
-Conversely, let $\chi:C_K\to\mu_n$ be continuous. Its local restrictions are Hilbert-symbol characters $x_v\mapsto(a_v,x_v)_{v,n}$ for classes $a_v\in K_v^\times/K_v^{\times n}$. For almost all $v$, this class lies in the distinguished unramified subgroup dual to the valuation quotient; it need not be the trivial local class. Triviality of $\chi$ on $K^\times$ says
+with trivial Galois action, and let its Cartier dual be $A_n^\vee=\mu_n$. Local cup product and the local Brauer invariant give a perfect pairing
 
 $$
-\sum_v\operatorname{inv}_v(a_v,b)=0
-\qquad(b\in K^\times).
+H^1(K_v,A_n)\times H^1(K_v,\mu_n)
+\longrightarrow \tfrac1n\mathbf Z/\mathbf Z,
+\qquad
+(c,a)\longmapsto\operatorname{inv}_v(c\smile a).
 $$
 
-For a finite set $S$ containing the archimedean places, the primes over $n$, and the ramified local characters, the exact Brauer sequence and weak approximation give an exact duality segment
+Here $H^1(K_v,\mu_n)=K_v^\times/K_v^{\times n}$ by Kummer theory, whether or not $\mu_n\subset K_v$. At a real place the same formula uses Tate cohomology; at a complex place both groups vanish. At almost every finite place there are distinguished unramified subgroups. We write
 
 $$
-K^\times/K^{\times n}
-\longrightarrow
-\prod_{v\in S}K_v^\times/K_v^{\times n}
-\longrightarrow
-\operatorname{Hom}(K(S,n),\mu_n),
+\prod_v' H^1(K_v,A_n)
 $$
 
-where $K(S,n)$ consists of global Kummer classes unramified outside $S$. The second arrow pairs a local family with global classes by summing local Hilbert invariants. Exactness follows as follows. A family coming from a global element is orthogonal by the Hilbert product formula. Conversely, an orthogonal family defines local cyclic algebras whose total invariant is zero against every parameter; Theorem 4.1 glues them to a global cyclic algebra, and changing its parameter by weak approximation produces one global Kummer class with the prescribed localizations. Local perfectness proves uniqueness modulo a global $n$th power.
+for the restricted product with respect to them.
 
-Apply this segment to $(a_v)$. Enlarging $S$ does not alter the class, because the newly added components are forced into the distinguished unramified subgroup. Thus the family is the localization of one $a\in K^\times/K^{\times n}$. Local perfectness then gives $\chi(x)=\prod_v(a,x_v)_{v,n}$. $\square$
-
-### 6.3 Descent when roots of unity are missing
-
-For general $K$, put $K'=K(\mu_n)$. Pull a character $\chi:C_K\to\mu_n$ back along the norm:
+**Theorem 6.1 (finite local--global duality).** The sequence
 
 $$
-\chi'=\chi\circ N_{K'/K}:C_{K'}\to\mu_n.
+H^1(K,A_n)
+\xrightarrow{\operatorname{loc}}
+\prod_v' H^1(K_v,A_n)
+\xrightarrow{\lambda}
+\operatorname{Hom}\bigl(H^1(K,\mu_n),\mathbf Q/\mathbf Z\bigr)
 $$
 
-Lemma 6.1 realizes $\chi'$ by a Kummer extension $M/K'$. Because $\chi'$ came by norm, its Kummer class satisfies the twisted invariance needed under $\operatorname{Gal}(K'/K)$: if $\tau(\zeta)=\zeta^{c(\tau)}$, then
+is exact at the middle term, where
 
 $$
-\tau(a)\equiv a^{c(\tau)}\pmod{K'^{\times n}}.
+\lambda((c_v))(a)
+=\sum_v\operatorname{inv}_v(c_v\smile a_v).
 $$
 
-Choose $b_\tau$ with $\tau(a)=a^{c(\tau)}b_\tau^n$. The failure of the $b_\tau$ to satisfy the cocycle law is a $2$-cocycle in $\mu_n$. Its local invariants are exactly the failures of the local characters to descend. Those failures vanish because the local characters are restrictions of $\chi$. The Brauer invariant sequence therefore kills the global cocycle. Modifying the $b_\tau$ by a $1$-cochain makes them satisfy the cocycle law, and descent produces a cyclic extension $L/K$ whose Galois character pulls back to $\chi'$ and whose idele character is $\chi$.
+The sum is finite. The localization map on the left is injective.
 
-Concretely, if $\alpha^n=a$, the corrected descent datum has the form
+**Proof.** Choose a finite set $S$ containing the archimedean places, the places above $n$, and the ramified places of the local family under consideration. Apply the finite arithmetic-duality calculation (4.1) to the degree-one portion of the long exact compact-support sequence. Perfectness says that the annihilator of the image of the global group is exactly the kernel of the dual localization functional. Written out, this is
 
 $$
-\widetilde\tau(\alpha)=b_\tau\alpha^{c(\tau)}.
+\operatorname{im}\left(
+H^1(G_{K,S},A_n)\longrightarrow
+\prod_{v\in S}H^1(K_v,A_n)
+\right)
+=\ker\lambda_S.
 $$
 
-The cocycle law makes the $\widetilde\tau$ into genuine semilinear automorphisms of $M$. Their fixed field supplies the descended extension, while the prescribed action on $\alpha$ supplies a quotient character of its Galois group. If the pullback $\chi'$ has smaller order, the part of $\chi$ already visible on $\operatorname{Gal}(K'/K)$ is retained by the descent datum; it must not be discarded merely because the Kummer extension over $K'$ becomes smaller. Decomposing $n$ into prime powers and taking the compositum shows that the final image has exactly the order of $\chi$.
+Enlarging $S$ adds the unramified local terms on both sides. Passing to the directed limit gives the displayed restricted-product sequence. This step is why the target is a restricted product rather than an unrestricted product.
 
-This argument explains the roots-of-unity subtlety. One may not simply write every cyclic extension as $K(\sqrt[n]{a})$ unless $\mu_n\subset K$. For $2$-power degrees, arbitrary local specifications can have the Wang exception; passing through $K(\mu_{2^r})$, retaining the twisting action, and using the global invariant condition is essential. A global idele class character already satisfies that condition, so no exception remains here.
+It remains to prove injectivity on the left. If a global character is trivial in every completion, the cyclic extension $E/K$ that it cuts out has every decomposition group trivial. The split-everywhere separation fact proved in Section 4.2 gives $E=K$. Hence the character is trivial and localization is injective. $\square$
 
-We record the conclusion.
+The theorem is the exact safe replacement for an unrestricted Grunwald assertion. A family of local cyclic characters globalizes if and only if it is orthogonal to every global Kummer class. In the special $2$-primary situation discovered by Wang, that orthogonality contains an extra nonzero global class; dropping it gives a false local-prescription theorem. Our existence argument starts with an idele class character, for which orthogonality is automatic, so it encounters no exceptional case.
 
-**Lemma 6.2 (character existence).** Every continuous finite-order character $\chi:C_K\to\mathbf C^\times$ is obtained uniquely from a continuous character $G_K\to\mathbf C^\times$ through global reciprocity. Its fixed field is a finite cyclic extension of degree $|\operatorname{im}\chi|$, and
+### 6.3 Constructing the global character
+
+Let $\chi:C_K\to\mathbf C^\times$ be continuous of finite order, and choose $n$ annihilating its image. After fixing an identification of that image with a subgroup of $A_n$, its local restriction and local reciprocity give
+
+$$
+c_v\in H^1(K_v,A_n).
+$$
+
+Continuity of $\chi$ says that $c_v$ is unramified for almost every $v$, so $(c_v)$ belongs to the restricted product in Theorem 6.1.
+
+For $a\in H^1(K,\mu_n)=K^\times/K^{\times n}$, compatibility of local reciprocity with the cup-product definition of the local norm-residue symbol gives
+
+$$
+\exp\left(2\pi i\operatorname{inv}_v(c_v\smile a_v)\right)
+=\chi_v(a).
+$$
+
+Multiplying over all places yields $1$, because $\chi$ is trivial on the principal idele $a$. Hence $\lambda((c_v))=0$. Theorem 6.1 supplies a unique global class
+
+$$
+c\in H^1(K,A_n)=\operatorname{Hom}_{\mathrm{cont}}(G_K,A_n)
+$$
+
+whose localization is every $c_v$. Let $L$ be the fixed field of $\ker c$, and let $\bar c:\operatorname{Gal}(L/K)\hookrightarrow A_n$ be the induced faithful character. The field $L/K$ is cyclic, and its degree is $|\operatorname{im}c|=|\operatorname{im}\chi|$ because the local restrictions of the two characters agree at every place. The product of those local restrictions is $\chi$, so
+
+$$
+\chi=\bar c\circ\operatorname{Art}_{L/K}.
+$$
+
+Finite reciprocity for the constructed field gives
 
 $$
 \ker\chi=N_{L/K}C_L.
 $$
 
-The kernel statement follows from finite reciprocity after the construction of $L$; the degree statement prevents a proper quotient from producing the same character.
+We have proved the needed character form of existence:
+
+**Lemma 6.2 (character existence).** Every continuous finite-order character of $C_K$ comes from a unique finite-image character of $G_K$. Its fixed field is cyclic of degree equal to the order of its image, and its kernel is the idele-class norm subgroup of that field.
+
+When $\mu_n\subset K$, the dual sequence is self-dual after choosing a primitive $n$th root of unity. The construction then reduces to the familiar product of local Hilbert symbols and produces Kummer fields $K(\sqrt[n]{a})$. Without roots of unity, the dual module is genuinely $\mu_n$ and the cyclic field need not admit one radical equation over $K$. The formulation above retains the twisting automatically rather than hiding it in an informal descent.
 
 ### 6.4 Classification by open subgroups
 
@@ -834,6 +957,14 @@ $$
 
 This character formula follows because the intersection of all character kernels is trivial. It also makes roots of unity visible: global units, including torsion units, impose relations among local characters, so arbitrary local conductor data need not define a global character.
 
+For a ramified one-dimensional local character, if $b_v$ is its largest upper-numbering break, then
+
+$$
+n_v=b_v+1.
+$$
+
+Indeed, local reciprocity sends $U_v^r$ onto the upper ramification group $D_w^r$, and the character becomes trivial at the first integer strictly beyond its last nontrivial break. The unramified convention is $n_v=0$. Thus a global ray-conductor bound is exactly an upper-break cutoff at each finite place, with the shift by one made explicit.
+
 ### 7.4 Existence and maximality of ray class fields
 
 The subgroup $K^\times U(\mathfrak m)/K^\times$ is open of finite index in $C_K$. The existence theorem therefore supplies a unique finite abelian extension $K_{\mathfrak m}/K$ such that
@@ -853,6 +984,8 @@ N_{K_{\mathfrak m}/K}C_{K_{\mathfrak m}}
 $$
 
 Inclusion reversal yields $L\subseteq K_{\mathfrak m}$. Conversely every subextension has conductor dividing $\mathfrak m$. Thus the ray class field is not merely one extension satisfying congruence restrictions; it contains all finite abelian extensions satisfying them.
+
+The local subgroups are visible in the ray quotient itself. For a place $w$ of $K_{\mathfrak m}$ above a finite $v$, the image of $K_v^\times$ in $\operatorname{Cl}_{\mathfrak m}(K)$ is $D_w$, the image of $\mathcal O_v^\times$ is $I_w$, and the image of $U_v^r$ is the upper ramification group $D_w^r$. In particular, $v\nmid\mathfrak m_0$ has trivial inertia, while $U_v^{n_v}$ is killed when $\mathfrak p_v^{n_v}\mid\mathfrak m_0$. This is the exact local interface used when ray-group computations impose ramification cutoffs.
 
 ### 7.5 The ray exact sequence and the role of units
 
@@ -970,6 +1103,21 @@ $$
 
 and the ray class field is $\mathbf Q(\zeta_m)$. The positivity condition removes the ambiguity between a rational generator and its negative. If infinity is omitted, the quotient also identifies $a$ with $-a$ and the corresponding field is the maximal real subfield $\mathbf Q(\zeta_m)^+$, subject to the familiar small-modulus coincidences.
 
+Here is the field identification rather than only a comparison of group orders. The extension $\mathbf Q(\zeta_m)/\mathbf Q$ is abelian, is unramified away from primes dividing $m$, and its local Artin map at a prime $p\mid m$ is trivial on $1+p^{v_p(m)}\mathbf Z_p$. Its real place complexifies, so its conductor divides $m\infty$. Ray-field maximality gives
+
+$$
+\mathbf Q(\zeta_m)\subseteq\mathbf Q_{m\infty}.
+$$
+
+The left degree is $\varphi(m)$, while the ray group calculation gives
+
+$$
+[\mathbf Q_{m\infty}:\mathbf Q]
+=|(\mathbf Z/m\mathbf Z)^\times|=\varphi(m).
+$$
+
+The inclusion is therefore equality. If infinity is omitted, the same argument uses the quotient by $\{\pm1\}$ and the fixed field of complex conjugation. This proof also covers the cases $m\equiv2\pmod4$, where the written modulus need not be the minimal conductor.
+
 This example recovers the congruence splitting law
 
 $$
@@ -1013,52 +1161,6 @@ $$
 $$
 
 Taking one entry to be $-1$ or $2$ gives the supplementary laws. This calculation is the smallest nontrivial model of global reciprocity: every local factor is explicit, and the global theorem is exactly their product relation.
-
-### 8.6 Frobenius distribution in an abelian extension
-
-Splitting criteria are most useful when one knows that every allowed criterion is actually met by infinitely many primes.
-
-**Theorem 8.1 (abelian Chebotarev).** Let $L/K$ be finite abelian with group $G$. For every $\sigma\in G$, the unramified primes with arithmetic Frobenius $\sigma$ have natural density $1/|G|$. In particular, every ray class contains infinitely many prime ideals away from the modulus.
-
-**Proof strategy.** Character orthogonality isolates one Frobenius value. The logarithms of Hecke $L$-functions determine the density.
-
-**Proof.** For a character $\chi$ of $G$, define, for $\Re(s)>1$,
-
-$$
-L(s,\chi)=\prod_{\mathfrak p\nmid\mathfrak f}
-\left(1-\chi(\operatorname{Frob}_{\mathfrak p})
-N\mathfrak p^{-s}\right)^{-1},
-$$
-
-with the usual finite local factors at ramified primes omitted, since they do not affect density. Expanding the logarithm gives
-
-$$
-\log L(s,\chi)
-=\sum_{\mathfrak p}
-\chi(\operatorname{Frob}_{\mathfrak p})N\mathfrak p^{-s}+O(1)
-$$
-
-as $s\to1^+$. The trivial character has a simple pole because its $L$-function differs from $\zeta_K(s)$ by finitely many factors. A nontrivial finite-order Hecke $L$-function is holomorphic at $1$. The standard positivity argument, applied simultaneously to the character powers, shows that it has no zero on the line $\Re(s)=1$: a zero would force, through the factorization of the Dedekind zeta function of the corresponding cyclic field, a pole or zero order incompatible with its simple positive pole. This is the same de la Vallée Poussin argument used for primes in arithmetic progressions.
-
-Character orthogonality gives
-
-$$
-1_{\{g=\sigma\}}
-=\frac1{|G|}\sum_{\chi\in\widehat G}
-\overline{\chi(\sigma)}\chi(g).
-$$
-
-Insert $g=\operatorname{Frob}_{\mathfrak p}$ and sum with weight $N\mathfrak p^{-s}$. Only the trivial character contributes the divergent term $\log\frac1{s-1}$; every other term stays bounded. Thus
-
-$$
-\sum_{\operatorname{Frob}_{\mathfrak p}=\sigma}
-N\mathfrak p^{-s}
-\sim\frac1{|G|}\log\frac1{s-1}.
-$$
-
-The absence of zeros on $\Re(s)=1$ permits the Wiener--Ikehara Tauberian argument; partial summation then converts the weighted asymptotic to natural density $1/|G|$. $\square$
-
-For a ray class field, the theorem says that every ray class is represented by infinitely many primes. This strengthens the algebraic existence of an ideal representative and makes Frobenius symbols a genuinely abundant source of Galois elements.
 
 ## 9. Norm principles and their limits
 
@@ -1111,16 +1213,42 @@ The proof includes ramified places, infinite places, and arbitrary cyclic degree
 
 ### 9.3 Why cyclicity cannot be dropped
 
-For a general Galois extension, there is no single cyclic algebra whose splitting is equivalent to being a norm. The obstruction group $\mathfrak K(L/K)$ can be nontrivial; already biquadratic extensions furnish examples. Cohomologically, for a Galois extension with group $G$, the obstruction is a quotient of
+For a general Galois extension, there is no single cyclic algebra whose splitting is equivalent to being a norm. The obstruction group $\mathfrak K(L/K)$ can be nontrivial; already biquadratic extensions furnish examples. The precise cohomological relation, for $G=\operatorname{Gal}(L/K)$, is Pontryagin duality
 
 $$
+\mathfrak K(L/K)^\vee
+\cong
 \ker\left(H^3(G,\mathbf Z)\longrightarrow
 \prod_v H^3(D_w,\mathbf Z)\right).
+\tag{9.1}
 $$
 
-For cyclic $G$, periodic cohomology and the presence of suitable decomposition groups force this kernel to vanish. For $G\cong(\mathbf Z/2\mathbf Z)^2$, $H^3(G,\mathbf Z)$ has a nonzero alternating class, and if all decomposition groups are cyclic its restriction is zero everywhere. Global biquadratic extensions with that decomposition behavior exist by prescribing finitely many local square classes. Their knot group is nonzero, so some $a\in K^\times$ is a norm everywhere locally but not globally.
+To derive it, apply Tate cohomology to
 
-This construction is an actual counterexample mechanism, not merely a failure of proof: local conditions cannot see the alternating global class. Extra hypotheses can restore a norm principle, but “finite Galois” or even “finite abelian” is not enough.
+$$
+1\longrightarrow L^\times\longrightarrow\mathbf I_L
+\longrightarrow C_L\longrightarrow1.
+$$
+
+Hilbert 90 identifies the degree-one local terms, Shapiro changes the cohomology of $\mathbf I_L$ into the product of the cohomology of the decomposition groups, and the global fundamental class shifts the cohomology of $C_L$ by two degrees. The kernel measuring failure of a principal idele norm to be an element norm is then dual to the displayed localization kernel. Every arrow is the localization or norm arrow already used in the class-formation proof, so (9.1) is independent of choices of places.
+
+This gives a concrete counterexample. Put
+
+$$
+L=\mathbf Q(\sqrt{13},\sqrt{17}).
+$$
+
+Its Galois group is $(\mathbf Z/2\mathbf Z)^2$. The quadratic discriminants are $13$, $17$, and $13\cdot17$, so only $13$ and $17$ can ramify. At every unramified prime the decomposition group is generated by one Frobenius element and is cyclic. At $13$, the congruence $17\equiv4\pmod {13}$ and Hensel's lemma show that $17$ is a square in $\mathbf Q_{13}$. At $17$, the congruence $8^2\equiv13\pmod {17}$ gives the corresponding square in $\mathbf Q_{17}$. At $2$, the criterion that an odd $2$-adic unit is a square exactly when it is $1$ modulo $8$ also shows directly that $17$ is a square in $\mathbf Q_2$. Both radicands are positive at infinity. Hence the local degree is at most two at every place where it is not already forced to be cyclic, proving the claim about decomposition groups.
+
+For $G=(\mathbf Z/2\mathbf Z)^2$, the Kunneth calculation gives
+
+$$
+H^3(G,\mathbf Z)\cong\mathbf Z/2\mathbf Z,
+$$
+
+whereas $H^3(C,\mathbf Z)=0$ for every cyclic subgroup $C\subseteq G$. The kernel in (9.1) is therefore nonzero, so $\mathfrak K(L/\mathbf Q)$ has order two. In particular, some rational number is a norm from $L\otimes\mathbf Q_v$ at every place but is not a norm from $L$ itself. The cohomology proves existence of the element; no unsupported choice of a purported explicit norm is being made.
+
+Thus cyclicity in Theorem 9.1 is essential. Even “finite abelian” is not enough. This counterexample also differs from the Grunwald--Wang issue: Wang concerns globalization of prescribed cyclic local characters in a special $2$-primary situation, while the present obstruction concerns an element norm from an already fixed biquadratic field.
 
 ### 9.4 Norm limitation, correctly stated
 
@@ -1142,10 +1270,10 @@ Third, at each completion, local norm limitation gives
 
 $$
 N_{L_w/K_v}L_w^\times
-=N_{M_v/K_v}M_v^\times
+=N_{M_w^{\mathrm{loc}}/K_v}(M_w^{\mathrm{loc}})^\times
 $$
 
-when the local extension is Galois and $M_v$ denotes its maximal abelian subextension. These do not combine into a general equality of global element norm groups. The diagonal condition connecting the places is precisely where the knot group lives.
+when the local extension is Galois and $M_w^{\mathrm{loc}}=L_w^{[D_w,D_w]}$ is its maximal abelian subextension. This local field need not be the completion of the global maximal abelian subextension $M=L^{[G,G]}$. These statements do not combine into a general equality of global element norm groups. The diagonal condition connecting the places is precisely where the knot group lives.
 
 For a non-Galois extension there is no canonical “maximal abelian subextension” that controls its norm group. Passing to a Galois closure changes both the field norm and its degree. Any norm-limitation claim in that setting requires a separate hypothesis and proof.
 
@@ -1181,7 +1309,14 @@ This follows directly by taking inverse limits of the finite isomorphisms. Unlik
 
 ### 10.2 The connected component of the idele class group
 
-Let $C_K^0$ be the identity component. Every map from a connected group to a finite discrete group is trivial, so $C_K^0$ lies in every open finite-index subgroup. Conversely, the quotient $C_K/C_K^0$ is compact and totally disconnected. Compactness follows from compactness of the norm-one idele class group after removing the positive real module direction; dividing by its connected component removes the remaining real tori. A compact totally disconnected group is profinite, because its open normal subgroups form a neighborhood basis at the identity.
+Let $C_K^0$ be the identity component. Every map from a connected group to a finite discrete group is trivial, so $C_K^0$ lies in every open finite-index subgroup. Conversely, choose one archimedean coordinate and a continuous positive one-parameter subgroup on which the idele module is the identity. It splits the exact sequence
+
+$$
+1\longrightarrow C_K^1\longrightarrow C_K
+\xrightarrow{|\cdot|}\mathbf R_{>0}\longrightarrow1.
+$$
+
+Thus $C_K$ is topologically a product of the compact group $C_K^1$ and the connected group $\mathbf R_{>0}$. The latter lies in $C_K^0$, so $C_K/C_K^0$ is a quotient of $C_K^1$ and is compact. The quotient of a locally compact group by its identity component is totally disconnected. A compact totally disconnected group is profinite, because its open normal subgroups form a neighborhood basis at the identity.
 
 This proves the converse containment in the kernel of completion. If $c\notin C_K^0$, its image in the profinite group $C_K/C_K^0$ is nontrivial. Some finite continuous quotient of that profinite group detects it. Pulling the kernel back to $C_K$ gives an open finite-index subgroup that does not contain $c$. Therefore
 
@@ -1189,7 +1324,7 @@ $$
 \bigcap_{H\subset C_K\text{ open, finite index}}H=C_K^0.
 $$
 
-Moreover, a compact profinite group is already complete for the topology of its finite quotients. Hence the natural map from $C_K/C_K^0$ onto $\widehat{C_K}$ is an isomorphism, not merely a dense embedding.
+Moreover, a compact profinite group is already complete for the topology of its finite quotients. The map from $C_K/C_K^0$ to $\widehat{C_K}$ has dense image because the completion map does, and its image is closed because its source is compact. It is therefore onto; the intersection formula makes it injective. Hence it is an isomorphism, not merely a dense embedding.
 
 It follows that
 
@@ -1249,7 +1384,7 @@ $$
 K^{\mathrm{ab}}=\bigcup_{\mathfrak m}K_{\mathfrak m}.
 $$
 
-Every finite extension in the union already occurs at its conductor modulus.
+Every finite abelian extension is contained in the ray class field of its conductor modulus.
 
 ## 11. Hecke characters
 
@@ -1273,7 +1408,7 @@ $$
 \alpha_v=\chi_v(\pi_v)
 $$
 
-is then independent of the choice of uniformizer and is the unramified parameter. With arithmetic reciprocity it is the value of the corresponding Galois character on arithmetic Frobenius. Under geometric normalization it would be the inverse Frobenius value.
+is then independent of the choice of uniformizer and is the unramified parameter. Whenever $\chi$ has a finite-order or $\ell$-adic Galois avatar, arithmetic reciprocity identifies this with its value on arithmetic Frobenius. Under geometric normalization it would be the inverse Frobenius value.
 
 The condition of being trivial on $K^\times$ is global and strong. One cannot choose the $\chi_v$ independently: for every $a\in K^\times$,
 
@@ -1401,7 +1536,17 @@ $$
 =\iota(\chi_v(\pi_v)),
 $$
 
-with the correction factor absent away from $\ell$. Conversely, a continuous one-dimensional $\ell$-adic Galois character comes from an algebraic Hecke character precisely when it is unramified outside finitely many places and locally algebraic at every $v\mid\ell$. Arbitrary continuous $\ell$-adic characters can fail either condition. The assertion also depends on the chosen $\iota$, although its compatible algebraic data do not.
+with the correction factor absent away from $\ell$.
+
+Conversely, let
+
+$$
+\rho:G_K\longrightarrow\overline{\mathbf Q}_\ell^\times
+$$
+
+be continuous, unramified outside finitely many places, and locally algebraic at every $v\mid\ell$. Compose $\rho$ with global reciprocity. At a place above $\ell$, local algebraicity writes its restriction on an open subgroup of units as a product of integral powers of the embeddings $K_v\hookrightarrow\overline{\mathbf Q}_\ell$. Divide by those algebraic factors. At $v\nmid\ell$, continuity and finite ramification make the residual character trivial on some $U_v^{n_v}$, and it is trivial on $\mathcal O_v^\times$ for almost every $v$. The principal-idèle relation for $\rho\circ\operatorname{Art}_K$ gives exactly the unit relations needed for the chosen integral exponents. The residual character therefore factors through one finite ray class group and has finite image. Transport that finite character through $\iota^{-1}$ and restore the archimedean monomial. This constructs an algebraic Hecke character whose avatar is $\rho$.
+
+Thus a continuous one-dimensional $\ell$-adic Galois character comes from an algebraic Hecke character precisely under these two conditions. Arbitrary continuous $\ell$-adic characters can fail either one. The assertion also depends on the chosen $\iota$, although its compatible algebraic data do not.
 
 For finite-order characters all $n_\tau$ are zero, the correction disappears, and this construction reduces to the finite reciprocity dictionary. Under our arithmetic Artin convention, the adelic module character $|\cdot|$ takes a prime uniformizer to $q_v^{-1}$ and therefore corresponds to the inverse of the $\ell$-adic cyclotomic character; $|\cdot|^{-1}$ corresponds to the cyclotomic character itself.
 
@@ -1415,6 +1560,16 @@ $$
 
 corresponds on the Galois side to restriction from $G_K$ to $G_M$. Its local component at $w\mid v$ is $\chi_v\circ N_{M_w/K_v}$, and its conductor is bounded by the local conductor-discriminant transformation; equality need not hold under ramified base change.
 
+The exact local statement behind that bound is
+
+$$
+a_w(\chi\circ N_{M/K})
+=\min\left\{r\geq0:
+N_{M_w/K_v}(U_w^r)\subseteq\ker\chi_v\right\}.
+$$
+
+For an unramified local extension, norms are onto on every unit layer and this equals $a_v(\chi)$. In a ramified extension, the Herbrand norm theorem converts the displayed minimum into the corresponding upper-numbering bound; cancellation can make a naive equality false.
+
 If $M/K$ is Galois and $\theta$ is a character of $C_M$, define
 
 $$
@@ -1422,7 +1577,7 @@ $$
 \qquad(\sigma\in\operatorname{Gal}(M/K)).
 $$
 
-The stabilizer of $\theta$ measures descent. In a quadratic extension, a character with $\theta\ne\theta^\sigma$ gives, after induction, an irreducible two-dimensional representation with dihedral projective image; if $\theta=\theta^\sigma$, it descends, subject to the usual extension character, and the induction splits. This is the precise character-theoretic input later used for automorphic induction and dihedral representations. No construction of those induced automorphic objects is needed here.
+The stabilizer of $\theta$ measures descent. The exact quadratic induction, conductor, and Frobenius formulas are recorded in Section 11.8.
 
 ### 11.7 Dirichlet and CM character models
 
@@ -1448,7 +1603,102 @@ $$
 
 This rule is well defined only if every unit congruent to $1$ modulo $\mathfrak f$ satisfies $u^p\bar u^q=1$. Since the unit group of an imaginary quadratic field is finite, enlarging $\mathfrak f$ removes the obstruction. Extending from principal ray ideals to all ray ideals amounts to extending a character from a subgroup of a finite abelian ray class group, which is always possible because $\mathbf C^\times$ is divisible. The resulting ideal character is the finite description of an algebraic Hecke character whose adelic infinity component is $z^{-p}\bar z^{-q}$.
 
-If $p\ne q$, complex conjugation changes the infinity type and therefore $\theta\ne\theta^\sigma$. Its $\ell$-adic avatar and its conjugate are distinct, so induction from $G_M$ is irreducible. If $p=q$ and the finite part is conjugation-invariant, the character is a norm pullback up to a finite-order ambiguity, and induction is reducible. These two models explain why finite ray characters and algebraic infinity types are both needed in later dihedral constructions.
+If $p\ne q$, complex conjugation changes the infinity type and therefore $\theta\ne\theta^\sigma$. Its $\ell$-adic avatar and its conjugate are distinct, so induction from $G_M$ is irreducible. If $p=q$ and the finite part is conjugation-invariant, the character is the norm pullback of either of two extensions to $K$, and induction is reducible. These two models explain why finite ray characters and algebraic infinity types are both needed in later dihedral constructions.
+
+### 11.8 The quadratic induction interface
+
+Let $M/K$ be quadratic, let $s$ denote its nontrivial automorphism, and let $\theta$ be a finite-order or algebraic Hecke character of $M$. Fix an $\ell$-adic avatar $\theta_\ell$, which exists automatically in the finite-order case. Put
+
+$$
+\rho=\operatorname{Ind}_{G_M}^{G_K}\theta_\ell.
+$$
+
+Restriction to $G_M$ and the index-two coset decomposition give
+
+$$
+\rho|_{G_M}\cong\theta_\ell\oplus\theta_\ell^s.
+\tag{11.1}
+$$
+
+If the two characters in (11.1) are distinct, their two eigenspaces are the only $G_M$-stable lines and an element outside $G_M$ exchanges them; hence no line is $G_K$-stable and $\rho$ is irreducible. If they are equal, choose a lift $t\in G_K\setminus G_M$. An extension of $\theta_\ell$ to $G_K$ is obtained by choosing a square root of $\theta_\ell(t^2)$ for its value at $t$. There are exactly two choices, differing by the quadratic character $\varepsilon_{M/K}$, and
+
+$$
+\rho\cong\widetilde\theta_\ell
+\oplus\widetilde\theta_\ell\varepsilon_{M/K}.
+\tag{11.2}
+$$
+
+This proves both the irreducibility criterion and the descent assertion; no unstated extension obstruction remains over the algebraically closed coefficient field.
+
+The finite conductor ideal is
+
+$$
+\mathfrak f_0(\rho)
+=\mathfrak d_{M/K}\,
+N_{M/K}\bigl(\mathfrak f_0(\theta_\ell)\bigr).
+\tag{11.3}
+$$
+
+Indeed, at a place $v$ the local induction formula from the ramification theory gives
+
+$$
+a_v(\rho)
+=\sum_{w\mid v}f(w/v)a_w(\theta_\ell)
++v(\mathfrak d_{M/K}).
+$$
+
+The first term is the exponent of the normed conductor, and the second is the discriminant exponent. This includes split, inert, tame, and wild places.
+
+There are equally explicit unramified Euler factors. If $v=ww^s$ splits and neither local character is ramified, then
+
+$$
+\det\!\left(X-\rho(\operatorname{Frob}_v^{\mathrm{arith}})\right)
+=
+\bigl(X-\theta_\ell(\operatorname{Frob}_w^{\mathrm{arith}})\bigr)
+\bigl(X-\theta_\ell(\operatorname{Frob}_{w^s}^{\mathrm{arith}})\bigr).
+\tag{11.4}
+$$
+
+If $v$ is inert and unramified, then $\operatorname{Frob}_v^{\mathrm{arith}}\notin G_M$ and its square is $\operatorname{Frob}_w^{\mathrm{arith}}$. In the two coset basis it acts off-diagonally, so
+
+$$
+\operatorname{tr}\rho(\operatorname{Frob}_v^{\mathrm{arith}})=0,
+\qquad
+\det\!\left(X-\rho(\operatorname{Frob}_v^{\mathrm{arith}})\right)
+=X^2-\theta_\ell(\operatorname{Frob}_w^{\mathrm{arith}}).
+\tag{11.5}
+$$
+
+Finally, norm pullback and Galois restriction agree:
+
+$$
+\eta\circ N_{M/K}
+\quad\longleftrightarrow\quad
+\eta_\ell|_{G_M}.
+\tag{11.6}
+$$
+
+Such a character is $s$-invariant. Conversely, an $s$-invariant finite-order character, or an $s$-invariant algebraic avatar, has the two extensions just constructed; on the Hecke side these are the two characters of $K$ whose norm pullback is $\theta$.
+
+Two further identities prevent the norm and diagonal maps from being confused. If $\eta$ is a character of $K$, then
+
+$$
+\operatorname{Ind}_{G_M}^{G_K}
+\bigl(\theta_\ell\cdot(\eta_\ell|_{G_M})\bigr)
+\cong \rho\otimes\eta_\ell.
+\tag{11.7}
+$$
+
+On the other hand, the determinant uses the diagonal inclusion $C_K\to C_M$, or equivalently transfer on Galois groups:
+
+$$
+\det\rho
+\quad\longleftrightarrow\quad
+\varepsilon_{M/K}\,\theta|_{C_K}.
+\tag{11.8}
+$$
+
+For an element of $G_M$, this follows from the two diagonal entries $\theta_\ell$ and $\theta_\ell^s$; for an element in the other coset, the induction matrix has determinant $-\theta_\ell(t^2)$, producing the quadratic sign. Together, equations (11.1)--(11.8) are the precise global interface needed for quadratic dihedral induction.
 
 ## 12. The global reciprocity dictionary
 
@@ -1525,7 +1775,7 @@ In towers, norm on idele classes corresponds to inclusion of Galois groups, scal
 
 Finite-order Hecke characters are exactly finite-image one-dimensional complex Galois characters. Their local conductor exponents equal their Galois conductor exponents, and their unramified local values are arithmetic Frobenius eigenvalues. General continuous Hecke characters also have an archimedean module direction and need not be Galois characters with finite image.
 
-Algebraic Hecke characters have integral infinity types. After choosing a complex-to-$\ell$-adic identification and applying the local algebraic correction at primes above $\ell$, they correspond exactly to one-dimensional $\ell$-adic Galois characters that are unramified outside finitely many places and locally algebraic above $\ell$. Norm pullback of Hecke characters matches restriction of Galois characters. Conjugation and stabilizers over a quadratic field determine whether later induction is irreducible and dihedral.
+Algebraic Hecke characters have integral infinity types. After choosing a complex-to-$\ell$-adic identification and applying the local algebraic correction at primes above $\ell$, they correspond exactly to one-dimensional $\ell$-adic Galois characters that are unramified outside finitely many places and locally algebraic above $\ell$. Norm pullback of Hecke characters matches restriction of Galois characters. Over a quadratic field, conjugation determines irreducibility of induction; its conductor is discriminant times normed character conductor, its split and inert Frobenius polynomials are (11.4) and (11.5), and its determinant uses diagonal restriction rather than norm pullback.
 
 ### 12.6 Conclusion
 
