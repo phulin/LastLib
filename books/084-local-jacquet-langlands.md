@@ -2,1654 +2,1449 @@
 
 ## Contents
 
-1. [Two inner forms and one elliptic geometry](#1-two-inner-forms-and-one-elliptic-geometry)
-   - [The local comparison problem](#11-the-local-comparison-problem)
-   - [Standing notation and a normalization ledger](#12-standing-notation-and-a-normalization-ledger)
-   - [What the correspondence can and cannot contain](#13-what-the-correspondence-can-and-cannot-contain)
-2. [Regular and elliptic conjugacy classes](#2-regular-and-elliptic-conjugacy-classes)
-   - [Characteristic polynomials as common coordinates](#21-characteristic-polynomials-as-common-coordinates)
-   - [Split and elliptic elements of $\mathrm{GL}_2(K)$](#22-split-and-elliptic-elements-of-mathrmgl_2k)
-   - [Regular elements of $D^\times$](#23-regular-elements-of-dtimes)
-   - [The matching-class bijection and its orientation](#24-the-matching-class-bijection-and-its-orientation)
-   - [Characteristic two and inseparable quadratic subfields](#25-characteristic-two-and-inseparable-quadratic-subfields)
-3. [Centralizers, discriminants, and Haar measures](#3-centralizers-discriminants-and-haar-measures)
-   - [Why centralizers determine the Jacobian](#31-why-centralizers-determine-the-jacobian)
-   - [The Weyl discriminant in degree two](#32-the-weyl-discriminant-in-degree-two)
-   - [Measures on groups, centers, and tori](#33-measures-on-groups-centers-and-tori)
-   - [Weyl integration on the elliptic set](#34-weyl-integration-on-the-elliptic-set)
-4. [Orbital integrals and matching functions](#4-orbital-integrals-and-matching-functions)
-   - [Orbital integrals on the central quotient](#41-orbital-integrals-on-the-central-quotient)
-   - [The transfer condition](#42-the-transfer-condition)
-   - [Existence of matching functions](#43-existence-of-matching-functions)
-   - [Nonuniqueness and the elliptic cocenter](#44-nonuniqueness-and-the-elliptic-cocenter)
-5. [Characters and elliptic trace distributions](#5-characters-and-elliptic-trace-distributions)
-   - [How much character theory is needed](#51-how-much-character-theory-is-needed)
-   - [Trace distributions and regular character functions](#52-trace-distributions-and-regular-character-functions)
-   - [Characters of induced and compactly induced representations](#53-characters-of-induced-and-compactly-induced-representations)
-   - [The Steinberg sign calculation](#54-the-steinberg-sign-calculation)
-6. [Elliptic orthogonality in rank one](#6-elliptic-orthogonality-in-rank-one)
-   - [The elliptic pairing](#61-the-elliptic-pairing)
-   - [Ordinary orthogonality on $D^\times/K^\times$](#62-ordinary-orthogonality-on-dtimesktimes)
-   - [The rank-one elliptic orthogonality theorem](#63-the-rank-one-elliptic-orthogonality-theorem)
-   - [Why principal series disappear](#64-why-principal-series-disappear)
-7. [Definition and uniqueness of transfer](#7-definition-and-uniqueness-of-transfer)
-   - [The character identity and its sign](#71-the-character-identity-and-its-sign)
-   - [Uniqueness](#72-uniqueness)
-   - [Equivalent trace identity](#73-equivalent-trace-identity)
-8. [Existence and bijectivity](#8-existence-and-bijectivity)
-   - [The rank-one elliptic trace theorem](#81-the-rank-one-elliptic-trace-theorem)
-   - [Construction of the transfer](#82-construction-of-the-transfer)
-   - [Exhaustivity, including wild representations](#83-exhaustivity-including-wild-representations)
-   - [Independence of auxiliary choices](#84-independence-of-auxiliary-choices)
-9. [The first structural consequences](#9-the-first-structural-consequences)
-   - [Norm characters and twists of Steinberg](#91-norm-characters-and-twists-of-steinberg)
-   - [Higher-dimensional representations and supercuspidals](#92-higher-dimensional-representations-and-supercuspidals)
-   - [Central characters and twisting](#93-central-characters-and-twisting)
-   - [Contragredients](#94-contragredients)
-10. [Conductors and compact-open level](#10-conductors-and-compact-open-level)
-    - [The two level scales](#101-the-two-level-scales)
-    - [The exact conductor comparison](#102-the-exact-conductor-comparison)
-    - [Newvectors and division-side invariants](#103-newvectors-and-division-side-invariants)
-    - [Cancellation under ramified twists](#104-cancellation-under-ramified-twists)
-11. [Formal degrees](#11-formal-degrees)
-    - [A compatible pair of quotient measures](#111-a-compatible-pair-of-quotient-measures)
-    - [The formal-degree identity](#112-the-formal-degree-identity)
-    - [Checks in the special and tame families](#113-checks-in-the-special-and-tame-families)
-12. [Local factors](#12-local-factors)
-    - [Zeta integrals on the two degree-two algebras](#121-zeta-integrals-on-the-two-degree-two-algebras)
-    - [Fourier transform and the functional equation](#122-fourier-transform-and-the-functional-equation)
-    - [Compatibility of $L$- and epsilon factors](#123-compatibility-of-l--and-epsilon-factors)
-    - [Explicit shapes and conductor numbering](#124-explicit-shapes-and-conductor-numbering)
-13. [Tame admissible pairs](#13-tame-admissible-pairs)
-    - [One quadratic datum on both sides](#131-one-quadratic-datum-on-both-sides)
-    - [The unramified quadratic case](#132-the-unramified-quadratic-case)
-    - [The ramified quadratic case](#133-the-ramified-quadratic-case)
-    - [Regularity, minimality, and rectification](#134-regularity-minimality-and-rectification)
-14. [Worked examples over $\mathbf Q_p$](#14-worked-examples-over-mathbf-q_p)
-    - [Unramified norm characters](#141-unramified-norm-characters)
-    - [A level-zero correspondence](#142-a-level-zero-correspondence)
-    - [A positive-depth unramified example](#143-a-positive-depth-unramified-example)
-    - [A tame ramified example and the dyadic boundary](#144-a-tame-ramified-example-and-the-dyadic-boundary)
-15. [Scalar symmetries](#15-scalar-symmetries)
-    - [Unramified twists](#151-unramified-twists)
-    - [Automorphisms of the coefficient field](#152-automorphisms-of-the-coefficient-field)
-    - [Changing the additive character](#153-changing-the-additive-character)
-16. [The precise image and the missing representations](#16-the-precise-image-and-the-missing-representations)
-    - [Essentially square-integrable representations](#161-essentially-square-integrable-representations)
-    - [Why irreducible principal series are absent](#162-why-irreducible-principal-series-are-absent)
-    - [Boundary phenomena at reducibility](#163-boundary-phenomena-at-reducibility)
-17. [The local dictionary for global transfer](#17-the-local-dictionary-for-global-transfer)
-    - [The transfer table](#171-the-transfer-table)
-    - [What Book 94 may use](#172-what-book-94-may-use)
-    - [Conclusion](#173-conclusion)
+1. [The comparison to be made](#1-the-comparison-to-be-made)
+   - [Two inner forms and one discrete spectrum](#11-two-inner-forms-and-one-discrete-spectrum)
+   - [Standing conventions](#12-standing-conventions)
+   - [The selected range](#13-the-selected-range)
+   - [The theorem in advance](#14-the-theorem-in-advance)
+2. [The common regular geometry](#2-the-common-regular-geometry)
+   - [Characteristic polynomials](#21-characteristic-polynomials)
+   - [Split and elliptic matrices](#22-split-and-elliptic-matrices)
+   - [Regular elements of the division algebra](#23-regular-elements-of-the-division-algebra)
+   - [Matching classes and centralizers](#24-matching-classes-and-centralizers)
+   - [The separability boundary](#25-the-separability-boundary)
+3. [Discriminants, measures, and orbital comparison](#3-discriminants-measures-and-orbital-comparison)
+   - [The common Weyl discriminant](#31-the-common-weyl-discriminant)
+   - [A compatible measure ledger](#32-a-compatible-measure-ledger)
+   - [Ordinary and normalized orbital integrals](#33-ordinary-and-normalized-orbital-integrals)
+   - [Geometric versus signed transfer](#34-geometric-versus-signed-transfer)
+   - [From characters to traces](#35-from-characters-to-traces)
+4. [Characters and the special correspondence](#4-characters-and-the-special-correspondence)
+   - [Regular character functions](#41-regular-character-functions)
+   - [Why induced representations vanish elliptically](#42-why-induced-representations-vanish-elliptically)
+   - [The Steinberg sign](#43-the-steinberg-sign)
+   - [Special twists and their invariants](#44-special-twists-and-their-invariants)
+5. [Quadratic data on both inner forms](#5-quadratic-data-on-both-inner-forms)
+   - [Admissible pairs](#51-admissible-pairs)
+   - [Minimal pairs and norm twists](#52-minimal-pairs-and-norm-twists)
+   - [Direct and induction normalizations](#53-direct-and-induction-normalizations)
+   - [The two compact-mod-center types](#54-the-two-compact-mod-center-types)
+   - [Equivalence and recovery of labels](#55-equivalence-and-recovery-of-labels)
+6. [Depth-zero character matching](#6-depth-zero-character-matching)
+   - [The finite elliptic calculation](#61-the-finite-elliptic-calculation)
+   - [Lifting the finite identity](#62-lifting-the-finite-identity)
+   - [All regular classes in the packet](#63-all-regular-classes-in-the-packet)
+   - [Why regularity cannot be omitted](#64-why-regularity-cannot-be-omitted)
+7. [Positive-depth tame matching](#7-positive-depth-tame-matching)
+   - [The common last-layer character](#71-the-common-last-layer-character)
+   - [Heisenberg enlargement](#72-heisenberg-enlargement)
+   - [The opposite Fourier-index lemma](#73-the-opposite-fourier-index-lemma)
+   - [The type-regular range](#74-the-type-regular-range)
+   - [Near-central correction shells](#75-near-central-correction-shells)
+   - [Nonminimal pairs](#76-nonminimal-pairs)
+8. [The selected correspondence and uniqueness](#8-the-selected-correspondence-and-uniqueness)
+   - [The selected sets](#81-the-selected-sets)
+   - [Construction](#82-construction)
+   - [Injectivity and surjectivity](#83-injectivity-and-surjectivity)
+   - [Uniqueness from elliptic characters](#84-uniqueness-from-elliptic-characters)
+9. [Structural compatibilities](#9-structural-compatibilities)
+   - [Central characters](#91-central-characters)
+   - [Twists](#92-twists)
+   - [Contragredients](#93-contragredients)
+   - [Why numerical invariants are not enough](#94-why-numerical-invariants-are-not-enough)
+10. [Conductors and local factors](#10-conductors-and-local-factors)
+    - [Conductor conventions](#101-conductor-conventions)
+    - [Special conductor calculation](#102-special-conductor-calculation)
+    - [Dihedral conductor calculation](#103-dihedral-conductor-calculation)
+    - [The common Weil--Deligne datum](#104-the-common-weil--deligne-datum)
+    - [Euler and epsilon factors](#105-euler-and-epsilon-factors)
+    - [Changes of additive character and measure](#106-changes-of-additive-character-and-measure)
+11. [Types, newvectors, and level](#11-types-newvectors-and-level)
+    - [What transfer can compare](#111-what-transfer-can-compare)
+    - [Special type lines](#112-special-type-lines)
+    - [Dihedral multiplicity lines](#113-dihedral-multiplicity-lines)
+    - [Oldvectors and the anisotropic jump](#114-oldvectors-and-the-anisotropic-jump)
+12. [Integral type lattices](#12-integral-type-lattices)
+    - [Coefficient rings and integrality](#121-coefficient-rings-and-integrality)
+    - [Special lattices](#122-special-lattices)
+    - [Dihedral type lattices](#123-dihedral-type-lattices)
+    - [Saturated multiplicity lines](#124-saturated-multiplicity-lines)
+    - [Perfect pairings](#125-perfect-pairings)
+    - [Reduction and the nonbanal boundary](#126-reduction-and-the-nonbanal-boundary)
+13. [Worked packets and boundary tests](#13-worked-packets-and-boundary-tests)
+    - [An unramified special twist](#131-an-unramified-special-twist)
+    - [A ramified special twist](#132-a-ramified-special-twist)
+    - [An unramified depth-zero pair](#133-an-unramified-depth-zero-pair)
+    - [A tame ramified pair](#134-a-tame-ramified-pair)
+    - [A cancelling twist](#135-a-cancelling-twist)
+    - [The dyadic and primitive-wild boundary](#136-the-dyadic-and-primitive-wild-boundary)
+14. [The trace-formula and integral-level interface](#14-the-trace-formula-and-integral-level-interface)
+    - [The pointwise local transfer](#141-the-pointwise-local-transfer)
+    - [The orbital trace identity](#142-the-orbital-trace-identity)
+    - [The integral level-change datum](#143-the-integral-level-change-datum)
+    - [A normalization audit](#144-a-normalization-audit)
+15. [The complete selected theorem](#15-the-complete-selected-theorem)
+    - [The comparison table](#151-the-comparison-table)
+    - [Main theorem](#152-main-theorem)
+    - [Exact scope](#153-exact-scope)
+    - [Conclusion](#154-conclusion)
 
-## 1. Two inner forms and one elliptic geometry
+## 1. The comparison to be made
 
-### 1.1 The local comparison problem
+### 1.1 Two inner forms and one discrete spectrum
 
-Books 77 and 82 developed two representation theories that look almost opposite. The group
-
-$$
-G=\mathrm{GL}_2(K)
-$$
-
-has a Borel subgroup, principal series, an infinite lattice tree, and infinite-dimensional irreducible representations. The multiplicative group
-
-$$
-G'=D^\times
-$$
-
-of the quaternion division algebra has no proper parabolic subgroup, is compact modulo its center, and has only finite-dimensional irreducible representations. Yet the two groups are forms of the same degree-two multiplicative group. After a quadratic field splits $D$, both become matrix groups. The local Jacquet--Langlands correspondence identifies the part of their representation theories that survives this change of form.
-
-The point of contact is not the whole of $G$. Split diagonal matrices have no analogue in $D^\times$: a division algebra contains no nontrivial idempotent and hence no split quadratic torus. The common geometry consists of elliptic regular elements. Such an element generates a separable quadratic field over $K$, and every separable quadratic field embeds in both $M_2(K)$ and $D$. Its characteristic polynomial, centralizer, and Weyl discriminant can therefore be read on either side. The word separable matters in characteristic two and will remain visible throughout.
-
-That observation suggests a program.
-
-1. Match regular elliptic conjugacy classes by characteristic polynomial.
-2. Match test functions by their orbital integrals on those classes.
-3. Compare trace distributions through character functions.
-4. Use elliptic orthogonality to show that the comparison pairs irreducibles, rather than arbitrary virtual representations.
-
-The fourth step is the heart of the theorem. Equality of a few numerical invariants cannot define a correspondence: many inequivalent representations share a central character and conductor. Nor may the character identity simply be announced and then used to prove itself. We shall derive it from a rank-one elliptic trace calculation, whose split side is governed by the tree and whose anisotropic side is ordinary character theory on a compact quotient.
-
-### 1.2 Standing notation and a normalization ledger
-
-Let $K$ be a nonarchimedean local field, of arbitrary characteristic, with
+Let $F$ be a nonarchimedean local field and let $D$ be the quaternion division algebra over $F$. We compare
 
 $$
-\mathcal O=\mathcal O_K,\qquad \mathfrak p=(\varpi),\qquad
-k=\mathcal O/\mathfrak p,\qquad |k|=q,
+G=\operatorname{GL}_2(F)
+\qquad\text{and}\qquad
+G'=D^\times.
 $$
 
-and $|\varpi|=q^{-1}$. Let $D$ be the quaternion division algebra over $K$. We write
+After extending scalars to a separable closure, the two degree-two central simple algebras become isomorphic. Over $F$ their groups look very different. The split group has a Borel subgroup, principal series, infinite-dimensional supercuspidals, and many split regular classes. The quotient $D^\times/F^\times$ is compact, every irreducible smooth representation of $D^\times$ is finite-dimensional, and no split torus occurs in $D^\times$.
+
+Local Jacquet--Langlands says that the part of the split representation theory which is intrinsically elliptic is nevertheless visible on the division group. It cannot identify representation spaces: a one-dimensional norm character corresponds to an infinite-dimensional Steinberg twist. It cannot identify fixed spaces under superficially similar compact opens: normal principal-unit groups on $D^\times$ have an all-or-nothing fixed-space behavior which has no analogue in the split oldform tower. The common invariant is instead the trace character on regular elliptic conjugacy classes.
+
+In degree two, that common geometry is concrete. A separable irreducible quadratic polynomial determines one regular elliptic conjugacy class in $G$ and one in $G'$. The two centralizers are copies of the same quadratic torus, and their Weyl discriminants agree. The representation-theoretic problem is to prove that the selected characters on those classes differ by exactly one sign.
+
+This volume carries out that problem for the range required later: Steinberg twists and the supercuspidals constructed from tame admissible quadratic pairs. The split and division representations themselves, including their types and individual character formulas, are established background. The work here is the two-sided comparison: every regular class contribution is paired, including the extra terms near the center; the sign is fixed; and all conductor, factor, and integral-type normalizations are shown to agree.
+
+### 1.2 Standing conventions
+
+Write
 
 $$
-Z=K^\times
+\mathcal O=\mathcal O_F,
+\qquad \mathfrak p=(\varpi),
+\qquad k=\mathcal O/\mathfrak p,
+\qquad |k|=q,
+\qquad |\varpi|=q^{-1}.
 $$
 
-for the common center, embedded as scalar matrices in $G$ and scalar quaternions in $G'$. On $G$ the determinant is denoted $\det$; on $G'$ the reduced norm is denoted $\operatorname{Nrd}$. On scalars both equal $z^2$.
+Reduced trace and reduced norm on $D$ are denoted by $\operatorname{Trd}$ and $\operatorname{Nrd}$. The center of each group is identified with
 
-The coefficient field $C$ is algebraically closed, uncountable, and of characteristic zero, as in Book 77. The uncountability hypothesis ensures that irreducible admissible representations have scalar central character. For arguments involving positivity and Hermitian orthogonality we first take $C=\mathbf C$ and unitary central characters; the character identity then gives the algebraic correspondence over characteristic-zero coefficient fields by scalar extension and descent. All representations and characters are smooth.
+$$
+Z=F^\times.
+$$
 
-The following choices remain fixed.
+On scalar elements,
 
-- Group measures are left Haar measures. On
-  $\bar G=G/Z$ we impose
-  $\operatorname{vol}(\mathrm{PGL}_2(\mathcal O))=1$.
-- On $\bar G'=D^\times/Z$ we impose
+$$
+\det(zI_2)=z^2=\operatorname{Nrd}(z).
+\tag{1.1}
+$$
 
-  $$
-  \operatorname{vol}(\bar G')=\frac{2}{q-1}.
-  $$
+Complex coefficients are used for analytic characters. Integral statements use a finite extension $L/\mathbf Q_\ell$ with valuation ring $R$, maximal ideal $\mathfrak m_R$, and residue field $\kappa$, where $\ell$ is different from the residue characteristic $p$ of $F$. Every occurrence of integrality will include the necessary unit-valued hypothesis.
 
-  This is the measure compatible with the preceding split measure for formal degrees.
-- For every separable quadratic extension $E/K$, the quotient $E^\times/K^\times$ receives the Haar measure for which
+For local factors, $\Phi$ is geometric Frobenius and reciprocity is normalized by
 
-  $$
-  \operatorname{vol}(\mathcal O_E^\times/\mathcal O^\times)=1.
-  $$
-- We fix an additive character $\psi:K\to C^\times$ trivial on $\mathcal O$ and nontrivial on $\varpi^{-1}\mathcal O$, and take the self-dual additive measure on $K$. Measures on $M_2(K)$ and $D$ are self-dual for the trace pairings introduced in Chapter 12.
-- Normalized induction on $G$ uses $|a/d|^{1/2}$ for the upper Borel, exactly as in Book 77.
-- The Steinberg representation is
+$$
+\operatorname{rec}_F(\varpi)=\Phi,
+\qquad |\Phi|=q^{-1}.
+\tag{1.2}
+$$
 
-  $$
-  \operatorname{St}=I(|\cdot|^{-1/2},|\cdot|^{1/2})/\mathbf1.
-  $$
+The additive conductor convention is that $n(\psi)=0$ when $\psi$ is trivial on $\mathcal O$ but not on $\varpi^{-1}\mathcal O$. Unless a measure is displayed, the additive Haar measure in an epsilon factor is self-dual for the displayed additive character.
 
-These choices are not all consequences of one another. Torus measures define quotient measures in orbital integrals; the two group measures define formal degrees; the self-dual additive measures define epsilon factors. Keeping the ledger visible prevents an equality valid for one purpose from being silently transported into another normalization.
+The Steinberg representation is normalized so that its Weil--Deligne datum is the centered block $\operatorname{Sp}_2(1)$. Thus a twist $\operatorname{St}\otimes(\mu\circ\det)$ has datum $\operatorname{Sp}_2(\mu)$ and Euler factor $L(s+1/2,\mu)$.
 
-### 1.3 What the correspondence can and cannot contain
+### 1.3 The selected range
 
-An irreducible representation of $G$ is **essentially square-integrable** if a twist by a character of the determinant has square-integrable matrix coefficients modulo $Z$. In rank one these are exactly
+There are two families.
+
+The special family is
 
 $$
 \operatorname{St}\otimes(\mu\circ\det)
-\quad\text{and the supercuspidal representations.}
+\quad\longleftrightarrow\quad
+\mu\circ\operatorname{Nrd},
+\tag{1.3}
 $$
 
-We also call them the discrete-series representations, allowing nonunitary twists. Every irreducible representation of $D^\times$ is essentially square-integrable because $D^\times/Z$ is compact.
+for an arbitrary smooth character $\mu:F^\times\to\mathbf C^\times$.
 
-The theorem to be proved is a bijection
+The dihedral family begins with a separable quadratic extension $E/F$ and a smooth character $\theta:E^\times\to\mathbf C^\times$. Let $\sigma$ be the nontrivial $F$-automorphism of $E$. The pair is required to be tame admissible: $\theta\ne\theta^\sigma$, and if $\theta/\theta^\sigma$ is trivial on $U_E^1$, then $E/F$ is unramified. This includes every separable quadratic extension when $p\ne2$ and includes the unramified quadratic extension in every residue characteristic.
+
+The theorem does not include a ramified dyadic positive-depth construction or a primitive wild packet. Those representations require strata and extension data not present in a tame quadratic character. It would be mathematically false to infer them from the calculations below. Nor does the theorem include principal series or one-dimensional representations of $G$: they are not essentially square-integrable and have no irreducible division-side partners.
+
+The word selected will always mean precisely the union of (1.3) and the tame admissible-pair family. No argument below silently enlarges it.
+
+### 1.4 The theorem in advance
+
+For every selected representation $\pi$ of $G$ there is a unique selected representation $\pi'$ of $G'$ such that
 
 $$
-\operatorname{JL}:
-\operatorname{Irr}(D^\times)
-\xrightarrow{\sim}
-\operatorname{Irr}_{\mathrm{disc}}(\mathrm{GL}_2(K)).
+\boxed{
+\Theta_\pi(g)=-\Theta_{\pi'}(d)
+}
+\tag{1.4}
 $$
 
-It will not contain an irreducible principal series. It will not contain a one-dimensional representation of $G$. The apparently paradoxical fact that a one-dimensional representation of $D^\times$ maps to an infinite-dimensional Steinberg twist is not a defect: dimension is not invariant under changing the inner form. What is preserved is the elliptic character, with the sign dictated by the difference of split ranks.
+whenever $g$ and $d$ have the same separable irreducible characteristic polynomial. The correspondence is (1.3) on special representations and uses the same admissible pair on the two sides in the dihedral case.
 
-A useful counterexample to any broader guess is an unramified irreducible principal series $I(\chi_1,\chi_2)$. It has a spherical vector and two Satake parameters. No higher-dimensional representation of $D^\times$ has an $\mathcal O_D^\times$-fixed vector, and a norm character has only one unramified parameter. There is no possible member on the division side carrying the principal series' split-torus data.
+The minus sign is the degree-two inner-form sign. It is not inserted by changing a Haar measure and cannot be omitted. One may place it either in the spectral character identity or in a signed convention for transferred test functions, but it must occur exactly once.
 
-## 2. Regular and elliptic conjugacy classes
+The theorem preserves central characters, twists, contragredients, conductor exponents, the selected two-dimensional Weil--Deligne datum, and therefore local $L$- and epsilon factors. Over a suitable coefficient ring it also identifies the labels of the distinguished split newvector/type line and the division type multiplicity line, with finite free integral lattices and perfect dual pairings. These additional statements are part of the transfer package, not consequences of a vague similarity between the two groups.
 
-### 2.1 Characteristic polynomials as common coordinates
+## 2. The common regular geometry
 
-The first obstacle to comparing two different groups is deciding which elements represent the same geometric event. Both groups sit inside central simple algebras of degree two, so trace and determinant provide a common coordinate system.
+### 2.1 Characteristic polynomials
 
-For $g\in G$, put
+Before comparing characters one must identify the conjugacy classes on which they are to be evaluated. Degree two supplies a common coordinate system. For $g\in G$, put
 
 $$
 P_g(X)=X^2-\operatorname{tr}(g)X+\det(g).
 $$
 
-For $d\in D^\times$, put
+For $d\in G'$, put
 
 $$
 P_d(X)=X^2-\operatorname{Trd}(d)X+\operatorname{Nrd}(d).
 $$
 
-In either case define the polynomial discriminant
+In either algebra, a semisimple element is regular when its centralizer has dimension two. On the locus relevant here this is equivalent to $P_x$ being separable of degree two. The algebra $F[x]$ is then a quadratic étale algebra.
+
+The characteristic polynomial carries exactly the right amount of information in degree two. It is conjugacy invariant, records both the central character scaling and twisting norm, and determines a regular rational conjugacy class. Trace alone would be insufficient: many nonconjugate elements share a trace. Determinant alone would be still weaker and would not remember the quadratic torus.
+
+### 2.2 Split and elliptic matrices
+
+Let $g\in G$ be regular semisimple. Then
 
 $$
-\delta(x)=\operatorname{trd}(x)^2-4\operatorname{nrd}(x),
+F[g]\simeq F\times F
+\quad\text{or}\quad
+F[g]\simeq E
 $$
 
-where lower-case notation means ordinary or reduced invariants as appropriate. An element is **regular semisimple** when $P_x$ has two distinct roots over a separable closure. Equivalently, $K[x]$ is a quadratic étale $K$-algebra and the centralizer has minimal dimension two.
-
-The adjective regular is essential. A scalar has polynomial $(X-z)^2$ and centralizer the whole group. In characteristic two an irreducible inseparable quadratic polynomial also has zero derivative; its root generates a field, but the corresponding element is not geometrically semisimple. Such elements will be treated at the boundary in Section 2.5.
-
-### 2.2 Split and elliptic elements of $\mathrm{GL}_2(K)$
-
-For regular semisimple $g\in G$, the algebra $K[g]$ is either
+for a separable quadratic field $E/F$. In the first case $g$ is split regular and is conjugate to a diagonal matrix with distinct diagonal entries. In the second it is elliptic regular. The terminology is explained by the centralizer:
 
 $$
-K\times K
-\quad\text{or a separable quadratic field }E.
+C_G(g)=F[g]^\times.
 $$
 
-In the first case $g$ is conjugate over $K$ to a diagonal matrix with distinct entries; it is **split regular**. In the second it is **elliptic regular**. The word elliptic means precisely that the centralizer modulo $Z$ is compact. Indeed
+If $F[g]=E$, then $E^\times/F^\times$ is compact. If $F[g]=F\times F$, the quotient of the centralizer by the center is isomorphic to $F^\times$ and is not compact.
 
-$$
-G_g=K[g]^\times,
-$$
-
-and $E^\times/K^\times$ is compact for a quadratic field, whereas $(K^\times\times K^\times)/K^\times\cong K^\times$ is not.
-
-There is a concrete model. If
+An irreducible separable polynomial
 
 $$
 P(X)=X^2-tX+n
 $$
 
-is irreducible and separable, then its companion matrix
+produces the companion matrix
 
 $$
-g_P=\begin{pmatrix}0&-n\\1&t\end{pmatrix}
+g_P=
+\begin{pmatrix}
+0&-n\\
+1&t
+\end{pmatrix}.
 $$
 
-is elliptic regular and has polynomial $P$. Every matrix with polynomial $P$ is conjugate to $g_P$: a cyclic vector $v$ makes $(v,gv)$ a basis, and the Cayley--Hamilton relation gives the companion matrix. Thus a separable irreducible characteristic polynomial determines one $G$-conjugacy class, not merely a stable class.
+Every matrix with polynomial $P$ is conjugate to $g_P$. Indeed, any nonzero vector is cyclic because $g$ has no $F$-eigenline; the basis $(v,gv)$ and the Cayley--Hamilton relation give the displayed companion form. Thus $P$ determines one elliptic conjugacy class, not merely a stable class.
 
-### 2.3 Regular elements of $D^\times$
+### 2.3 Regular elements of the division algebra
 
-If $d\in D^\times$ is regular semisimple, then
-
-$$
-E=K[d]
-$$
-
-is a separable quadratic field. It cannot be $K\times K$, since that algebra has a nontrivial idempotent and cannot embed in a division algebra. Its centralizer is
+Let $d\in D^\times$ have separable quadratic characteristic polynomial. The algebra $F[d]$ cannot be $F\times F$, since a division algebra has no nontrivial idempotent. Hence $F[d]=E$ is a quadratic field. The centralizer dimension formula gives
 
 $$
-G'_d=E^\times.
+C_{D^\times}(d)=E^\times.
+\tag{2.1}
 $$
 
-To see the equality, note that $E$ is a maximal commutative subfield of the four-dimensional central simple algebra. The centralizer dimension formula gives dimension two, so nothing larger than $E$ can centralize $d$.
+If $d_1$ and $d_2$ have the same separable characteristic polynomial, the assignment $d_1\mapsto d_2$ identifies $F[d_1]$ with $F[d_2]$. Conjugacy of embeddings of a separable maximal subfield in a central simple algebra supplies $x\in D^\times$ with $xd_1x^{-1}=d_2$. Conversely conjugate elements plainly have the same polynomial. Thus a separable quadratic polynomial determines one division-side regular class.
 
-Two regular elements $d_1,d_2\in D^\times$ are conjugate if and only if $P_{d_1}=P_{d_2}$. Equality of polynomials gives an isomorphism $K[d_1]\to K[d_2]$ carrying $d_1$ to $d_2$. Conjugacy of embeddings of a separable maximal subfield into a central simple algebra then supplies an element of $D^\times$ realizing that isomorphism. This is the division-side counterpart of the companion-matrix argument.
+Every separable quadratic extension $E/F$ embeds in $D$. One way to see this is through the local invariant: the class of $D$ has invariant $1/2$, and restriction to a quadratic extension multiplies it by two, so $D\otimes_F E$ is split. The degree-two embedding criterion then gives an $F$-embedding $E\hookrightarrow D$.
 
-Every separable quadratic field embeds in $D$. Indeed scalar extension to such a field multiplies the local invariant $1/2$ of $D$ by two and therefore splits $D$; the degree-two embedding criterion then gives the embedding. Hence every separable irreducible quadratic polynomial with nonzero constant term occurs as $P_d$ for some $d\in D^\times$. The division algebra has discarded the split polynomials and retained exactly the elliptic ones.
+### 2.4 Matching classes and centralizers
 
-### 2.4 The matching-class bijection and its orientation
-
-We say that elliptic regular $g\in G$ and regular semisimple $d\in D^\times$ **match**, and write
-
-$$
-g\leftrightarrow d,
-$$
-
-if
+We say that regular elements $g\in G$ and $d\in G'$ match, and write $g\leftrightarrow d$, if
 
 $$
 P_g=P_d.
+\tag{2.2}
 $$
 
 Equivalently,
 
 $$
-\operatorname{tr}(g)=\operatorname{Trd}(d),\qquad
+\operatorname{tr}(g)=\operatorname{Trd}(d),
+\qquad
 \det(g)=\operatorname{Nrd}(d).
+\tag{2.3}
 $$
 
-The preceding sections prove that this defines a bijection
+The preceding arguments prove a bijection
 
 $$
-\{\text{elliptic regular classes in }G\}
+\left\{
+\begin{array}{c}
+\text{regular elliptic conjugacy}\\
+\text{classes in }G
+\end{array}
+\right\}
 \longleftrightarrow
-\{\text{regular semisimple classes in }D^\times\}.
+\left\{
+\begin{array}{c}
+\text{separable regular conjugacy}\\
+\text{classes in }G'
+\end{array}
+\right\}.
+\tag{2.4}
 $$
 
-There is no hidden choice of a root. If $E/K$ is the common quadratic field and $\sigma$ its nontrivial automorphism, then $t$ and $\sigma(t)$ have the same polynomial and are conjugate on both sides. In $M_2(K)$ the conjugating element exchanges the two embeddings of $E$; in $D$ it lies in the nontrivial coset of the normalizer of $E^\times$. Thus choosing an embedding $E\hookrightarrow M_2(K)$ or $E\hookrightarrow D$ does not orient the two roots.
+For a matching pair the two centralizers are copies of the same abstract torus $E^\times$. The identification sends $g$ and $d$ to the class of $X$ in $F[X]/(P_g)$. There is no choice of a preferred root: the nontrivial automorphism $\sigma$ exchanges the two roots and is implemented by a normalizer element on each side.
 
-Our orientation is instead the ordered pair of invariants
+Matching is compatible with the operations needed later:
 
 $$
-(\operatorname{trace},\operatorname{norm}).
-$$
-
-We do not replace $d$ by $d^{-1}$, conjugate its polynomial, or negate its trace. Consequently
-
-$$
-g^{-1}\leftrightarrow d^{-1},\qquad
-zg\leftrightarrow zd,\qquad
-\det(g)=\operatorname{Nrd}(d).
-$$
-
-These elementary compatibilities later force the formulas for contragredients, central characters, and twists.
-
-**Worked example.** Let $E/K$ be unramified quadratic and let $u\in\mathcal O_E^\times$ have residue outside $k$. Multiplication by $u$ on the $K$-space $E$ gives an elliptic matrix $g_u$. Regard the same $u$ in the fixed unramified maximal subfield of $D$. Then
-
-$$
-g_u\leftrightarrow u,\qquad
-P(X)=X^2-\operatorname{Tr}_{E/K}(u)X+N_{E/K}(u).
-$$
-
-Replacing $u$ by $u^q$ changes neither conjugacy class. By contrast, a diagonal matrix $\operatorname{diag}(a,b)$ with $a\ne b$ has split polynomial and matches no element of $D^\times$.
-
-### 2.5 Characteristic two and inseparable quadratic subfields
-
-When $\operatorname{char}K=2$, a quaternion division algebra can contain purely inseparable quadratic fields. If $d$ generates such a field, its minimal polynomial has the form
-
-$$
-X^2-a
-$$
-
-and derivative zero. The element is noncentral and its algebraic centralizer is still a quadratic field, but it is not regular semisimple in the sense required by Weyl integration or local character theory. A companion matrix with the same polynomial exists, but it too is nonsemisimple over an algebraic closure. We therefore do not declare these elements to be matching regular classes.
-
-This exclusion creates no hole in the correspondence. The regular semisimple locus is open and dense on both sides. Character functions of admissible representations are locally constant there and their distributions are determined by that dense regular locus. Inseparable elements have discriminant zero and lie outside every orbital-integral formula below. A statement that “every noncentral quaternion is regular” is valid in characteristic different from two and false in characteristic two; none of our proofs uses it.
-
-## 3. Centralizers, discriminants, and Haar measures
-
-### 3.1 Why centralizers determine the Jacobian
-
-A conjugacy class is not integrated with the ambient group measure directly. It is the homogeneous space
-
-$$
-G_x\backslash G,
-$$
-
-so its measure depends on the centralizer. When a class is parameterized by trace and determinant, the change of variables from elements to invariants degenerates where two eigenvalues collide. The Weyl discriminant measures precisely this degeneration.
-
-For a regular element $x$ in either algebra, put $T_x=K[x]^\times$. On matching classes the two centralizers are canonically the same abstract torus $E^\times$. This is stronger than equality of dimensions: it lets us use one Haar measure $dt$ on $E^\times/K^\times$ on both sides. The remaining quotient measures are defined by
-
-$$
-d\bar g=dt\,d\dot g,\qquad
-d\bar d=dt\,d\dot d,
-$$
-
-on $T\backslash G$ and $T\backslash D^\times$, with all groups divided by the common center. This convention fixes orbital integrals exactly.
-
-### 3.2 The Weyl discriminant in degree two
-
-Define
-
-$$
-D(x)=\left|\det\left(1-\operatorname{Ad}(x)\mathrel{\big|}
-\mathfrak a/\mathfrak t_x\right)\right|,
-$$
-
-where $\mathfrak a=M_2(K)$ on the split side and $\mathfrak a=D$ on the division side. Scalars cancel, so the same formula is obtained on the adjoint Lie algebra.
-
-If the roots of $P_x$ are $\alpha,\beta$, then conjugation on the two root directions has eigenvalues $\alpha/\beta$ and $\beta/\alpha$. Therefore
-
-$$
-D(x)=\left|(1-\alpha/\beta)(1-\beta/\alpha)\right|
-=\left|\frac{(\alpha-\beta)^2}{\alpha\beta}\right|
-=\left|\frac{\delta(x)}{\operatorname{nrd}(x)}\right|.
-$$
-
-This expression belongs to $K$ and makes matching immediate:
-
-$$
-g\leftrightarrow d\quad\Longrightarrow\quad D(g)=D(d).
-$$
-
-Some authors call $D(x)^{1/2}$ the Weyl factor and some call $D(x)$ the Weyl discriminant. We use **Weyl discriminant** for $D(x)$ and always display the square root when one is intended. Orbital integrals below are unnormalized; their normalized versions are $D(x)^{1/2}O_x(f)$.
-
-**Sanity check.** For $g=\operatorname{diag}(a,b)$ with $a\ne b$,
-
-$$
-D(g)=\left|\frac{(a-b)^2}{ab}\right|.
-$$
-
-The same algebraic formula holds for elliptic roots in a quadratic extension. It approaches zero as the class approaches the center, exactly where regular coordinates cease to be valid.
-
-### 3.3 Measures on groups, centers, and tori
-
-For a central character $\omega$, it is cleaner to integrate on the central quotient than to choose a divergent measure on $Z$. Let
-
-$$
-\mathcal H(G,\omega)
-$$
-
-be the space of locally constant functions $f:G\to C$ satisfying
-
-$$
-f(zg)=\omega(z)^{-1}f(g)
-$$
-
-and having compact support modulo $Z$. Define $\mathcal H(G',\omega)$ similarly. Then
-
-$$
-\pi(f)=\int_{G/Z}f(g)\pi(g)\,d\bar g
-$$
-
-is well defined on a representation with central character $\omega$. The inverse on $\omega$ in the function law is forced: replacing $g$ by $zg$ multiplies $f(g)$ and $\pi(g)$ by inverse scalars.
-
-For each separable quadratic $E/K$, normalize $E^\times/K^\times$ by volume one on $\mathcal O_E^\times/\mathcal O^\times$. This prescription works in both ramified and unramified cases. It does not say that the full quotient has volume one. In fact the valuation quotient has size
-
-$$
-[\mathbf Z:e(E/K)\mathbf Z]=e(E/K),
-$$
-
-so
-
-$$
-\operatorname{vol}(E^\times/K^\times)=e(E/K).
-$$
-
-Thus it is $1$ for an unramified quadratic extension and $2$ for a ramified one. This small distinction is easy to lose and affects every unnormalized torus integral.
-
-### 3.4 Weyl integration on the elliptic set
-
-Choose one representative of each $K$-isomorphism class of separable quadratic extensions $E/K$ and embeddings into each algebra. For a compactly supported function $F$ on the elliptic regular set of $G/Z$, Weyl integration reads
-
-$$
-\int_{G_{\mathrm{ell}}/Z}F(g)\,d\bar g
-=\frac12\sum_E
-\int_{E^\times/K^\times}
-D(t)\int_{E^\times\backslash G}F(x^{-1}tx)\,d\dot x\,dt.
-$$
-
-For $G'$ every regular semisimple class is elliptic, and
-
-$$
-\int_{G'_{\mathrm{reg}}/Z}F(d)\,d\bar d
-=\frac12\sum_E
-\int_{E^\times/K^\times}
-D(t)\int_{E^\times\backslash G'}F(x^{-1}tx)\,d\dot x\,dt.
-$$
-
-The factor $1/2$ is the order of the rational Weyl group
-
-$$
-N(E^\times)/E^\times=\{1,\sigma\}.
-$$
-
-It occurs on both sides. Omitting it counts $t$ and $\sigma(t)$ separately even though they are conjugate.
-
-In equal characteristic two there are infinitely many isomorphism classes of separable quadratic extensions. The displayed sum is therefore not to be read as a finite classification list. For a compact subset of the regular locus only finitely many bounded-ramification torus charts contribute. For functions or characters whose support reaches the singular boundary, the formula is obtained by exhaustion, and the sum is absolutely convergent after multiplication by $D(t)$. This is also the interpretation used in the elliptic pairing below.
-
-**Proof strategy.** Cover the regular set by conjugation charts
-
-$$
-(E^\times\backslash G)\times E^\times_{\mathrm{reg}}
-\longrightarrow G_{\mathrm{ell}},\qquad (x,t)\mapsto x^{-1}tx.
-$$
-
-The differential in the orbit direction is $1-\operatorname{Ad}(t)$, so its absolute determinant is $D(t)$. The generic fiber has two points, related by the Weyl involution. Partition of unity on compact-open charts gives the formula. The same differential calculation takes place in $D$, and matching identifies the determinant. This proof also shows why inseparable elements, where the differential is singular, are excluded.
-
-## 4. Orbital integrals and matching functions
-
-### 4.1 Orbital integrals on the central quotient
-
-For regular $x$ and a test function $f$ with the appropriate central transformation law, define the unnormalized orbital integral
-
-$$
-O_x(f)=\int_{T_x\backslash G}f(y^{-1}xy)\,d\dot y
-$$
-
-on the split side, and
-
-$$
-O_x'(f')=\int_{T_x\backslash G'}f'(y^{-1}xy)\,d\dot y
-$$
-
-on the division side. The quotient is understood after dividing both numerator and denominator by $Z$; the central covariance makes the formula independent of representatives.
-
-The normalized orbital integrals are
-
-$$
-I_x(f)=D(x)^{1/2}O_x(f),\qquad
-I_x'(f')=D(x)^{1/2}O_x'(f').
-$$
-
-Because matching preserves $D(x)$, equality of normalized orbital integrals is equivalent to equality of unnormalized ones under our common torus measures. We shall state transfer using the unnormalized version. This choice leaves the Weyl discriminant visible in the trace formula instead of hiding half of it in each orbital integral.
-
-Orbital integrals are locally constant as functions of the regular conjugacy class. This follows from the conjugation charts used in Weyl integration: on a sufficiently small compact-open neighborhood, both the test function and the quotient fibers are constant at finite level. They need not extend locally constantly through the singular set; the factor $D^{1/2}$ is what controls their typical singular behavior there.
-
-### 4.2 The transfer condition
-
-Functions $f\in\mathcal H(G,\omega)$ and $f'\in\mathcal H(G',\omega)$ **match** if
-
-$$
-O_g(f)=O_d'(f')
-$$
-
-whenever $g\leftrightarrow d$, and
-
-$$
-O_g(f)=0
-$$
-
-for every split regular $g\in G$.
-
-The second clause is indispensable when transferring from the anisotropic side to the full split group: there is no division-side class to supply a value on a split torus. Conversely, when starting with an arbitrary $f$ on $G$, a matching $f'$ is required to reproduce only its elliptic orbital integrals; no condition can remember the split orbital integrals of $f$. It is therefore useful to distinguish two directions:
-
-- every $f'$ has an **elliptic lift** $f$ whose split regular orbital integrals vanish;
-- every $f$ has a **division transfer** $f'$ reproducing its elliptic orbital integrals.
-
-The lift is nonunique, and a general $f$ is not recovered from its transfer. Transfer lives in an elliptic quotient of the test-function space.
-
-No sign occurs in this definition. Matching classes and orbital integrals use transfer factor $+1$ for these inner forms. The sign $-1$ belongs to the spectral character identity, not to geometry. Putting a minus sign into both definitions would conceal rather than remove the convention.
-
-### 4.3 Existence of matching functions
-
-**Proposition 4.1 (smooth transfer in degree two).** Every test function on either side has a match in the sense appropriate to its direction. If the original function is supported in a sufficiently small saturated neighborhood of one regular class, the match may be supported in an arbitrarily small corresponding regular neighborhood.
-
-**Proof strategy.** First solve the problem near one regular class using the conjugation submersion. Then patch compact-open neighborhoods in the invariant quotient. The difficult point is support approaching discriminant zero: there one must compare the rank-one orbital germs, including the central germ, and not merely extend a regular orbital-integral function by zero.
-
-**Proof.** Fix $g\leftrightarrow d$ with common torus $E^\times$. Choose small compact-open neighborhoods $U\subset E^\times_{\mathrm{reg}}$ stable under $\sigma$ and small transverse neighborhoods $V,V'$ in the two quotient spaces. The maps
-
-$$
-V\times U\to G,\qquad V'\times U\to G'
-$$
-
-given by conjugation are local analytic isomorphisms modulo the common two-element Weyl action. Their Jacobians differ only through the quotient measures, already fixed by the same $dt$; the variable part is the common $D(t)$.
-
-Start with a locally constant function $h(t)$ on $U/\{1,\sigma\}$. Choose characteristic functions on sufficiently small $V$ and $V'$ and scale them so their quotient integrals are one. Extending by zero produces functions $f_U,f_U'$ with
-
-$$
-O_t(f_U)=h(t)=O_t'(f_U')
-$$
-
-for $t\in U$, and zero orbital integrals outside the chosen saturated neighborhoods. Thus every compactly supported locally constant class function on a small regular-class chart is realized on both sides.
-
-Away from discriminant zero, compactness modulo the center reduces the required invariant support to finitely many such charts. Near a scalar $z$, filter both algebras by lattices $z+\mathfrak p^rM_2(\mathcal O)$ and $z+\mathfrak P_D^r$. On each finite quotient, conjugation descent expresses an orbital integral as a central germ plus regular torus germs. The central germs agree because the scalar algebra and the chosen central measure are common. On the split side there is one additional split germ. Subtracting its finite-level characteristic function kills it without altering the elliptic germs. Passing compatibly through the lattice filtration constructs a division transfer or an elliptic lift.
-
-Two details prevent circularity. The finite-level germ calculation concerns conjugacy orbits and Fourier sums only; it uses no representation character. Also, in characteristic two the filtration is restricted to separable regular strata. Inseparable strata lie in discriminant zero, and their contribution is absorbed into the singular germ rather than being declared a regular torus. Thus the construction proves smooth transfer before any irreducible correspondence is defined. $\square$
-
-The proposition does not assert equality of functions at matching elements. Such an equality would depend on embeddings and is not conjugacy invariant. Orbital integrals are exactly the amount of averaging needed to compare the two groups canonically.
-
-### 4.4 Nonuniqueness and the elliptic cocenter
-
-Let $[\mathcal H(G,\omega),\mathcal H(G,\omega)]$ denote the span of convolution commutators. Every trace distribution kills this span. We further quotient by functions whose elliptic regular orbital integrals vanish and call the result the **elliptic cocenter**
-
-$$
-\overline{\mathcal H}_{\mathrm{ell}}(G,\omega).
-$$
-
-On the division side the analogous cocenter is simply the class-function quotient relevant to the compact central quotient. Proposition 4.1 gives a canonical isomorphism
-
-$$
-\mathcal T:
-\overline{\mathcal H}_{\mathrm{ell}}(G,\omega)
-\xrightarrow{\sim}
-\overline{\mathcal H}(G',\omega)
-$$
-
-characterized by equality of regular orbital integrals.
-
-This is the correct home of function transfer. Choosing representatives $f$ and $f'$ is useful for calculation but not canonical. If two split functions have the same elliptic orbital integrals, every discrete-series character gives them the same trace; principal-series traces may distinguish them because principal series also see split classes. The spectral theorem in Chapter 6 will prove the first assertion rather than assume it.
-
-## 5. Characters and elliptic trace distributions
-
-### 5.1 How much character theory is needed
-
-The representation of $D^\times$ attached to an admissible pair has an ordinary finite-dimensional matrix trace. A representation of $G$, however, is usually infinite dimensional, so $g\mapsto\operatorname{tr}\pi(g)$ makes no sense. Test functions repair the problem: admissibility makes $\pi(f)$ finite rank, and its trace defines a distribution.
-
-We need only the following rank-one character theorem.
-
-**Theorem 5.1 (regular character theorem).** If $\pi$ is an irreducible admissible representation of $G$, its trace distribution is represented by a locally integrable conjugation-invariant function on $G$. Its restriction $\Theta_\pi$ to $G_{\mathrm{reg}}$ is locally constant, and
-
-$$
-\operatorname{tr}\pi(f)=\int_{G/Z}\Theta_\pi(g)f(g)\,d\bar g
-$$
-
-for every compact-mod-center $f$ with the inverse central transformation law. The representing function is unique almost everywhere, and its locally constant restriction is uniquely determined pointwise on the regular set. For $D^\times$, $\Theta_\rho(d)=\operatorname{tr}\rho(d)$ everywhere and represents the trace distribution directly.
-
-**Proof strategy.** Finite rank of $\pi(f)$ supplies a trace distribution, but by itself does not prove that the distribution is represented by a function. The decisive step is semisimple descent along the conjugation submersion. In rank one its transverse space is one dimensional, so Fourier analysis on finite lattice quotients gives local constancy away from discriminant zero and the required bound at the boundary.
-
-**Proof.** Fix a regular element $x$ with torus centralizer $T$. Choose a small compact-open slice $S$ through $x$ on which
-
-$$
-(T\backslash G)\times S\longrightarrow G,
-\qquad (\dot y,s)\longmapsto y^{-1}sy,
-$$
-
-is a submersion modulo the two-element Weyl action. Pull the invariant trace distribution back to this chart and integrate first in the orbit direction. Admissibility makes every averaging operator at a fixed lattice level finite rank. On the transverse one-dimensional quotient, Fourier inversion on successive finite lattices shows that the descended distribution is integration against a locally constant function on $S\cap G_{\mathrm{reg}}$. The same calculation gives the rank-one bound
-
-$$
-D(s)^{1/2}|\Theta_\pi(s)|\le C_S
-$$
-
-on compact parts of the slice; this is the estimate needed when a slice approaches the singular locus. It proves local integrability across discriminant zero, whose complement has measure zero. Compatible slices glue because two representatives of the same invariant distribution agree on their overlap. Uniqueness follows from characteristic functions of arbitrarily small regular neighborhoods. On $D^\times$, finite dimensionality gives the ordinary matrix trace, and the same descent identifies its restriction with the distributional representative. $\square$
-
-The theorem does not claim local constancy at singular elements. Characters typically have controlled singularities near the center. All identities defining transfer are therefore asserted on regular elliptic elements, where they have an unambiguous pointwise meaning.
-
-### 5.2 Trace distributions and regular character functions
-
-For a representation with central character $\omega$, write
-
-$$
-\Theta_\pi(f)=\operatorname{tr}\pi(f).
-$$
-
-The same symbol for the distribution and its regular function causes no ambiguity when the argument is displayed. Conjugation invariance follows from
-
-$$
-\pi({}^xf)=\pi(x)\pi(f)\pi(x)^{-1}.
-$$
-
-Twisting and contragredience already have visible character formulas:
-
-$$
-\Theta_{\pi\otimes\chi}(g)=\chi(\det g)\Theta_\pi(g),
+zg\leftrightarrow zd,
 \qquad
-\Theta_{\pi^\vee}(g)=\Theta_\pi(g^{-1}),
-$$
-
-and on $D^\times$ the determinant is replaced by reduced norm. No complex conjugation belongs in the algebraic contragredient formula. For a unitary realization one may additionally identify $\Theta_{\pi^\vee}(g)$ with $\overline{\Theta_\pi(g)}$.
-
-If $g\leftrightarrow d$, then
-
-$$
-\chi(\det g)=\chi(\operatorname{Nrd}d).
-$$
-
-Thus any character identity on matching classes is automatically stable under corresponding twists. Likewise $g^{-1}\leftrightarrow d^{-1}$ makes it stable under contragredients. These consequences require no new harmonic analysis once the orientation of Section 2.4 has been fixed.
-
-### 5.3 Characters of induced and compactly induced representations
-
-Character formulas reveal why elliptic classes isolate the desired spectrum. If $\pi=I(\chi_1,\chi_2)$ is a normalized principal series and $g$ is regular, its character is a sum over fixed points of $g$ on $G/B\cong\mathbf P^1(K)$. A split regular element has two $K$-rational eigenlines and contributes two terms. An elliptic element has no $K$-rational eigenline, hence
-
-$$
-\Theta_{I(\chi_1,\chi_2)}(g)=0
-\qquad(g\text{ elliptic regular}).
-$$
-
-One can prove this without a general fixed-point formula. Realize the induction as functions on $B\backslash G$. At a finite compact-open level, the trace of $g$ counts cosets fixed by right translation, weighted by the inducing character. A fixed coset is exactly a $K$-rational line stabilized by $g$. There are none in the elliptic case.
-
-For $\rho=\operatorname{c\text{-}Ind}_J^{D^\times}\Lambda$, finite index gives
-
-$$
-\Theta_\rho(d)=
-\sum_{\substack{x\in J\backslash D^\times\\xdx^{-1}\in J}}
-\operatorname{tr}\Lambda(xdx^{-1}).
-$$
-
-The same formula holds for compactly induced supercuspidals of $G$ on regular elements, with a finite sum because the coefficient support is compact modulo $Z$. These formulas will make tame transfer explicit. In the wild range they remain valid once the abstract Clifford datum supplies the finite inducing representation.
-
-### 5.4 The Steinberg sign calculation
-
-The sign in Jacquet--Langlands can already be read at the reducible principal series. The exact sequence of Book 77 is
-
-$$
-0\longrightarrow \mu\circ\det\longrightarrow
-I(\mu|\cdot|^{-1/2},\mu|\cdot|^{1/2})
-\longrightarrow \operatorname{St}\otimes\mu\longrightarrow0.
-$$
-
-Trace distributions are additive in exact sequences. On an elliptic regular $g$, the middle character vanishes by Section 5.3. Therefore
-
-$$
-\Theta_{\operatorname{St}\otimes\mu}(g)
-=-\mu(\det g).
-$$
-
-On the division side the norm character $\rho=\mu\circ\operatorname{Nrd}$ has
-
-$$
-\Theta_\rho(d)=\mu(\operatorname{Nrd}d).
-$$
-
-Thus matching elements satisfy
-
-$$
-\Theta_{\operatorname{St}\otimes\mu}(g)=-\Theta_\rho(d).
-$$
-
-This calculation fixes the sign once and for all. It is not a convention that may be changed independently after Steinberg has been normalized. Had we put a minus sign into geometric orbital transfer, the trace identity would acquire an artificial plus sign while the actual character values would remain as displayed.
-
-## 6. Elliptic orthogonality in rank one
-
-### 6.1 The elliptic pairing
-
-Characters will determine a unique transfer only if they are linearly independent on the elliptic set. Ordinary character orthogonality is unavailable on $G/Z$, which is noncompact. The remedy is to integrate only over elliptic conjugacy classes and to quotient away the induced spectrum that vanishes there.
-
-Fix a unitary central character $\omega$. For admissible representations $\pi,\tau$ with that central character define
-
-$$
-e_G(\pi,\tau)
-=\frac12\sum_E\frac1{e(E/K)}
-\int_{E^\times/K^\times}
-D(t)\Theta_\pi(t)\overline{\Theta_\tau(t)}\,dt.
-$$
-
-The sum runs over separable quadratic fields embedded as elliptic tori. The factor $e(E/K)^{-1}$ turns the torus measure of Chapter 3, whose total volume is $e(E/K)$, into probability measure. The regular-character bound of Theorem 5.1 makes the expression integrable at the center: the product of two character singularities is cancelled by $D(t)$. In equal characteristic two, where the set of quadratic tori is infinite, the sum is interpreted by the exhaustion specified after Weyl integration; equivalently, this pairing is the normalized compact-inner-form conjugacy measure transported to the split elliptic quotient. This avoids any assumption that there are only finitely many quadratic extensions.
-
-The pairing is additive on finite-length representations. Every principal series has zero elliptic character and therefore lies in its radical. At a reducibility point the relation
-
-$$
-[I(\mu|\cdot|^{-1/2},\mu|\cdot|^{1/2})]
-=[\mu\circ\det]+[\operatorname{St}\otimes\mu]
-$$
-
-shows that, in the elliptic quotient,
-
-$$
-[\operatorname{St}\otimes\mu]=-[\mu\circ\det].
-$$
-
-This equality of elliptic characters is not an isomorphism of representations. It is a useful counterexample to the claim that restriction of characters to elliptic elements distinguishes every irreducible of $G$; it distinguishes precisely the elliptic quotient.
-
-### 6.2 Ordinary orthogonality on $D^\times/K^\times$
-
-For a unitary central character, tensoring one coefficient with the inverse central character makes it a function on the compact quotient $\bar G'$. Let
-
-$$
-V'=\operatorname{vol}(\bar G')=\frac{2}{q-1}.
-$$
-
-Schur orthogonality gives, for irreducibles $\rho,\sigma$ with central character $\omega$,
-
-$$
-\frac1{V'}\int_{\bar G'}
-\Theta_\rho(d)\overline{\Theta_\sigma(d)}\,d\bar d
-=\delta_{\rho,\sigma}.
-$$
-
-**Proof.** Apply the averaging operator
-
-$$
-A\mapsto\int_{\bar G'}\rho(d)A\sigma(d)^{-1}\,d\bar d
-$$
-
-to $\operatorname{Hom}(V_\sigma,V_\rho)$. It projects onto the intertwining space. Its trace is both the displayed character integral and, by Schur's lemma, $0$ or the scalar determined by the identity map. Dividing by $V'$ gives the formula. $\square$
-
-Using Weyl integration, the left side is
-
-$$
-\frac12\sum_E\frac1{e(E/K)}
-\int_{E^\times/K^\times}
-D(t)\Theta_\rho(t)\overline{\Theta_\sigma(t)}\,dt.
-$$
-
-Indeed $\operatorname{vol}(E^\times\backslash D^\times)=V'/e(E/K)$. Thus ordinary compact-group orthogonality and the split elliptic pairing have exactly the same normalized conjugacy-class measure.
-
-### 6.3 The rank-one elliptic orthogonality theorem
-
-**Theorem 6.1 (elliptic orthogonality).** For discrete-series representations $\pi,\tau$ of $G$ with the same unitary central character,
-
-$$
-e_G(\pi,\tau)=\delta_{\pi,\tau}.
-$$
-
-Moreover their characters form an orthonormal basis of the completion of the elliptic cocenter dual. Equivalently, a finite linear combination of discrete-series characters that vanishes on the elliptic regular set has all coefficients zero.
-
-**Proof strategy.** Resolve the elliptic trace at a fixed compact-open level by the two cell orbits of the Bruhat--Tits tree. Vertex terms come from maximal compact stabilizers and edge terms from an Iwahori stabilizer. The resulting finite-level index is zero on parabolically induced representations and is the identity matrix on discrete-series characters. Its geometric trace is the elliptic integral above.
-
-**Proof.** Let $\mathscr T$ be the tree. Modulo $Z$, $G$ has one orbit of vertices and one orbit of unoriented edges. For a sufficiently deep normal subgroup $J$ fixing the vectors under consideration, the cellular complex
-
-$$
-0\longrightarrow C_c(\mathscr T_1)\longrightarrow
-C_c(\mathscr T_0)\longrightarrow\mathbf1\longrightarrow0
-$$
-
-is exact because the tree is connected and contractible. Apply the vertex and edge averaging idempotents to the finite-dimensional $J$-fixed spaces. Finite-group Schur orthogonality then gives the rank-one index formula
-
-$$
-\operatorname{tr}\tau(f_\pi^{\mathrm{EP}})
-=\begin{cases}
-1,&\tau\cong\pi,\\
-0,&\tau\text{ is a different discrete series or is parabolically induced}.
-\end{cases}
-$$
-
-Here $f_\pi^{\mathrm{EP}}$ is the vertex term minus the edge term, with the common central character and the stabilizer indices imposed. The cancellation for an induced representation is the exact cellular complex of its two boundary values on an apartment. For a discrete series the Jacquet boundary is zero, and compact-mod-center coefficient orthogonality leaves precisely the identity intertwiner. This finite-level index statement, rather than finite rank alone, is the algebraic core of elliptic orthogonality.
-
-Now evaluate the same alternating trace geometrically. A regular elliptic $t$ fixes a unique vertex or edge midpoint after subdivision. The Lefschetz trace of $t$ on the cell complex is therefore $1$; a split regular element translates or fixes an infinite apartment and has compactly supported Euler trace zero. The conjugation Jacobian is $D(t)$, so Weyl integration identifies
-
-$$
-\operatorname{tr}\tau(f_\pi^{\mathrm{EP}})
-=e_G(\pi,\tau).
-$$
-
-The scalar is determined by the base case $\pi=\tau=\operatorname{St}$ and Section 5.4; it is one with the probability torus measures just fixed. Combining the spectral and geometric evaluations proves orthogonality. The same calculation is valid after increasing $J$, because subdivision adds a cancelling vertex-edge pair.
-
-At each compact-open level the spaces involved are finite dimensional, so ordinary finite-dimensional duality says the discrete characters span the elliptic cocenter dual at that level. Taking the directed union over levels proves completeness. $\square$
-
-The proof is special to rank one in its visible simplicity: a tree has only vertices and edges. It is nevertheless a full local argument. No global automorphic quotient or global trace formula has entered.
-
-### 6.4 Why principal series disappear
-
-The theorem has two complementary explanations. Geometrically, an elliptic element stabilizes no $K$-rational line, so an induced character has no fixed point from which to receive a contribution. Homologically, a split torus acts on an apartment whose compact Euler characteristic is zero. Both mechanisms say
-
-$$
-\Theta_{I(\chi_1,\chi_2)}|_{G_{\mathrm{ell}}}=0.
-$$
-
-At a reducibility point the induced representation still vanishes elliptically, but its two constituents do not: their characters are negatives of one another there. Exactly one constituent, Steinberg, is discrete series. The elliptic quotient keeps that constituent and uses the other only to calculate its sign.
-
-## 7. Definition and uniqueness of transfer
-
-### 7.1 The character identity and its sign
-
-We can now state the definition without circularity. For $\rho\in\operatorname{Irr}(D^\times)$, a discrete-series representation $\pi$ of $G$ is its **Jacquet--Langlands transfer** if
-
-$$
-\boxed{\ \Theta_\pi(g)=-\Theta_\rho(d)\ }
-$$
-
-for every pair $g\leftrightarrow d$ of regular elements. We then write
-
-$$
-\pi=\operatorname{JL}(\rho).
-$$
-
-The sign is $-1=(-1)^{2-1}$. More importantly, it is forced in degree two by the Steinberg calculation of Section 5.4. Our matching-class orientation uses equal characteristic polynomials, and our geometric transfer uses equal orbital integrals; relative to those choices the boxed sign is not negotiable.
-
-The identity is required only on the regular elliptic set. It determines the trace distribution on the elliptic cocenter, which is all that is needed to identify a discrete-series representation. No value at a central or inseparable element is part of the definition.
-
-### 7.2 Uniqueness
-
-**Theorem 7.1.** At most one discrete-series representation of $G$ can satisfy the boxed identity for a given irreducible $\rho$.
-
-**Proof.** If $\pi_1$ and $\pi_2$ both satisfy it, then
-
-$$
-\Theta_{\pi_1}(g)-\Theta_{\pi_2}(g)=0
-$$
-
-on every elliptic regular $g$. Elliptic orthogonality gives
-
-$$
-0=e_G(\pi_1-\pi_2,\pi_1-\pi_2).
-$$
-
-Expanding with Theorem 6.1 yields $2-2\delta_{\pi_1,\pi_2}$, so $\pi_1\cong\pi_2$. $\square$
-
-This proof explains why equality of conductors or local factors would not suffice for uniqueness. Orthogonality uses the entire regular elliptic character and detects every discrete-series isomorphism class, including wild representations with identical coarse invariants.
-
-### 7.3 Equivalent trace identity
-
-Let $f$ and $f'$ be matching test functions. Weyl integration, equality of orbital integrals, equality of discriminants, and the boxed character identity give
-
-$$
-\boxed{\ \operatorname{tr}\operatorname{JL}(\rho)(f)
-=-\operatorname{tr}\rho(f')\ }.
-$$
-
-Here $f$ is taken in an elliptic lift when starting from $f'$. Conversely, if this trace identity holds for every matching pair, choose functions supported in an arbitrarily small regular chart around $g\leftrightarrow d$. Proposition 4.1 and local constancy then recover the pointwise character identity. Thus the two forms are equivalent.
-
-The trace identity is often more useful globally because test functions tensor and traces multiply. The pointwise identity is more useful locally because it fixes conjugacy orientation and makes twisting transparent. We shall use both, always with the same minus sign.
-
-## 8. Existence and bijectivity
-
-### 8.1 The rank-one elliptic trace theorem
-
-Orthogonality proves that a putative transfer is unique, but not that the negative of a division character is itself an irreducible split character. A priori it could be an infinite or virtual combination. The missing ingredient is an integrality statement for the elliptic cocenter.
-
-**Theorem 8.1 (rank-one elliptic trace theorem).** Fix a central character $\omega$. Under geometric transfer of cocenters,
-
-$$
-\mathcal T:
-\overline{\mathcal H}_{\mathrm{ell}}(G,\omega)
-\xrightarrow{\sim}
-\overline{\mathcal H}(G',\omega),
-$$
-
-the dual map carries the character lattice of $G'$ onto the negative of the discrete-series character lattice of $G$. More explicitly, for each irreducible $\rho$ of $G'$ there are integers $m_\pi(\rho)$, only finitely many at any fixed level, such that
-
-$$
--\Theta_\rho(d)=
-\sum_{\pi\in\operatorname{Irr}_{\mathrm{disc}}(G,\omega)}
-m_\pi(\rho)\Theta_\pi(g)
-$$
-
-on matching classes, and
-
-$$
-\sum_\pi m_\pi(\rho)^2=1.
-$$
-
-**Proof strategy.** Work at one finite congruence level on the compact side and one finite subtree quotient on the split side. A vertex-minus-edge index map carries the integral character lattice of the first finite algebra to the elliptic character lattice of the second. The local index calculation is an isometry and has the fixed orientation already seen for Steinberg. Orthogonality then forces one irreducible rather than a virtual sum.
-
-**Proof.** Choose $m$ such that $U_D^m$ acts trivially on $\rho$ and impose its central character. After dividing by the center with that character, the relevant quotient of $D^\times/U_D^m$ is finite; its twisted group algebra is a finite-dimensional semisimple algebra $\mathcal A_{m,\omega}$. On the split side choose a finite ball in the tree large enough to contain all vertex and edge types visible at level $m$.
-
-The finite-level index lemma is the following statement. Alternating induction from the vertex stabilizers and restriction to the edge stabilizers defines a homomorphism
-
-$$
-R(\mathcal A_{m,\omega})
-\longrightarrow R_{\mathrm{ell}}(G,\omega)
-$$
-
-of integral Grothendieck groups. Its character on a separable elliptic class is the negative of the original division character on the matching class, and its elliptic pairing is the ordinary compact pairing. To verify the lemma, decompose both finite quotients into trace--norm strata. On a regular stratum the conjugation submersion reduces the assertion to equality of the common torus sum. On a singular stratum the two split cell stabilizers give the central germ with opposite vertex-edge contributions. Fourier inversion on the transverse finite lattice supplies the remaining sign. That transverse orientation is independent of the torus and of the representation carried by the stratum; in the scalar stratum it is exactly the Steinberg computation of Section 5.4.
-
-This proof of the index lemma uses only finite induction, restriction, and Fourier inversion. In particular it applies to a simple $\mathcal A_{m,\omega}$-module described by projective Clifford data: the inverse cocycles on its multiplicity space cancel in the honest induced module, so no splitting of $[\alpha]$ and no quadratic-torus label is required.
-
-Apply the index map to the class of $\rho$. Because it is a homomorphism of integral Grothendieck groups, the resulting elliptic character has an expansion
-
-$$
--\Theta_\rho(d)=
-\sum_\pi m_\pi(\rho)\Theta_\pi(g)
-$$
-
-with integer coefficients. The isometry assertion and Schur orthogonality make its norm one. Expanding in the orthonormal basis of Theorem 6.1 gives
-
-$$
-1=\sum_\pi |m_\pi(\rho)|^2.
-$$
-
-The coefficients are integers, so precisely one is $1$ or $-1$ and all others vanish. The orientation clause in the finite-level index lemma says that the surviving coefficient is $+1$: the uniform minus sign has already been placed on the division character. Thus no blockwise choice of signs remains.
-
-Finally, inflation to a deeper division quotient and enlargement of the split finite subtree commute with the index map: the added vertex and edge terms form an exact cancelling pair. Passing through this directed system proves the assertion for arbitrary depth, including projective Clifford data. $\square$
-
-The theorem is the local existence engine. It is not the Jacquet--Langlands correspondence restated: its proof uses only finite quotient character theory, smooth orbital transfer, and the cellular resolution of the tree. In particular, it neither assumes a pre-existing transfer of irreducibles nor imports a global automorphic trace formula.
-
-### 8.2 Construction of the transfer
-
-For $\rho\in\operatorname{Irr}(D^\times)$, Theorem 8.1 supplies a unique discrete-series $\pi$ whose elliptic character is the negative of $\Theta_\rho$. Define
-
-$$
-\operatorname{JL}(\rho)=\pi.
-$$
-
-Existence of the character identity is built into the construction, and Theorem 7.1 makes the result independent of every finite-level representative used in its proof.
-
-The map is injective. If $\operatorname{JL}(\rho_1)\cong\operatorname{JL}(\rho_2)$, their character identities imply equality of $\Theta_{\rho_1}$ and $\Theta_{\rho_2}$ on the regular set. That set has full measure in the compact quotient; ordinary character orthogonality gives $\rho_1\cong\rho_2$.
-
-It is surjective. Let $\pi$ be a discrete-series representation. Apply the inverse cocenter transfer to its elliptic character. The same integral-lattice argument expresses the result as an integral combination of division characters of norm one, hence as one irreducible character up to sign. The Steinberg orientation again fixes the sign, producing $\rho$ with $\operatorname{JL}(\rho)=\pi$.
-
-We have proved the main theorem.
-
-**Theorem 8.2 (local Jacquet--Langlands for degree two).** There is a unique bijection
-
-$$
-\operatorname{JL}:\operatorname{Irr}(D^\times)
-\xrightarrow{\sim}
-\operatorname{Irr}_{\mathrm{disc}}(\mathrm{GL}_2(K))
-$$
-
-such that for matching regular elements
-
-$$
-\Theta_{\operatorname{JL}(\rho)}(g)=-\Theta_\rho(d).
-$$
-
-It is characterized equivalently by the trace identity with matching functions.
-
-### 8.3 Exhaustivity, including wild representations
-
-The scope of Theorem 8.2 is broader than the tame admissible-pair constructions. Every irreducible of $D^\times$ kills some $U_D^m$ and is described by a Clifford datum
-
-$$
-(m,\rho_0,G_{\rho_0},[\alpha],\eta).
-$$
-
-The finite-level proof of Theorem 8.1 uses the corresponding simple module of $\mathcal A_{m,\omega}$ without requiring the cocycle $[\alpha]$ to split or the stabilizer to be a quadratic torus. It therefore transfers every wild representation. Conversely every wild supercuspidal of $G$ occurs by surjectivity.
-
-What the theorem does **not** provide is a uniform elementary formula turning an arbitrary wild Clifford tuple into a named compact-induction tuple on $G$. At a fixed depth, one can compute it by transferring the finite character table and locating the unique discrete row through elliptic orthogonality. That is an effective finite calculation, but it is not honestly summarized by a tame pair $(E,\theta)$ in residue characteristic two. We retain the abstract Clifford parameter exactly where Books 77 and 82 retained it.
-
-This distinction matters for later factor calculations. Conductor, central character, contragredient, twists, formal degree, and zeta-integral factors are defined for the wild representation and will be compared intrinsically. A formula involving a quadratic inducing character is asserted only when such a character is genuinely part of the datum.
-
-### 8.4 Independence of auxiliary choices
-
-The construction mentioned embeddings of quadratic fields, regular charts, compact-open levels, and a subdivision of the tree. None survives in the result.
-
-- Changing an embedding conjugates it, and orbital integrals are conjugation invariant.
-- Refining a regular chart changes a representative function but not its cocenter class.
-- Inflating a finite quotient module to a deeper quotient preserves its primitive character projector and its transferred trace.
-- Subdividing the tree replaces the cellular complex by a chain-homotopy equivalent one, so its Euler trace is unchanged.
-- Rescaling both quotient measures used in an orbital integral changes the representative functions but not the condition that the two orbital integrals agree. The explicit formal-degree and epsilon-factor statements later do depend on their separately fixed measures.
-
-Most decisively, any two constructions produce discrete-series representations satisfying the same regular character identity. Uniqueness then identifies them. Character theory turns a choice-laden construction into a canonical bijection.
-
-## 9. The first structural consequences
-
-### 9.1 Norm characters and twists of Steinberg
-
-Every one-dimensional representation of $D^\times$ is
-
-$$
-\rho=\mu\circ\operatorname{Nrd}
-$$
-
-for a unique smooth character $\mu$ of $K^\times$. Section 5.4 proves that
-
-$$
-\boxed{\ \operatorname{JL}(\mu\circ\operatorname{Nrd})
-=\operatorname{St}\otimes(\mu\circ\det).\ }
-$$
-
-This includes ramified and nonunitary $\mu$. The calculation does more than identify the family: it distinguishes $\mu$ from a possible quadratic twist, since the division character itself remembers $\mu$ through reduced norm even though its central character remembers only $\mu^2$.
-
-The trivial representation of $D^\times$ therefore transfers to the Steinberg representation, not to the trivial representation of $G$. On an elliptic element $g$,
-
-$$
-\Theta_{\operatorname{St}}(g)=-1.
-$$
-
-This is the simplest complete instance of the correspondence and the normalization test for every later formula.
-
-### 9.2 Higher-dimensional representations and supercuspidals
-
-If $\dim\rho>1$, then $\operatorname{JL}(\rho)$ cannot be a Steinberg twist. Indeed every Steinberg twist is already the image of the unique norm character in Section 9.1, and transfer is injective. Since the discrete series of $G$ consist only of special representations and supercuspidals,
-
-$$
-\dim\rho>1
-\quad\Longleftrightarrow\quad
-\operatorname{JL}(\rho)\text{ is supercuspidal}.
-$$
-
-This is not a comparison of dimensions: the supercuspidal is infinite dimensional. It is a comparison of the character/noncharacter dichotomy on the anisotropic side with the special/supercuspidal dichotomy inside the split discrete spectrum.
-
-For level-zero data the statement is visible directly. A regular character $\bar\theta:k_2^\times\to C^\times$ gives a two-dimensional division representation whose character on a residue-regular unit is
-
-$$
-\bar\theta(u)+\bar\theta(u^q).
-$$
-
-The finite cuspidal representation of $\mathrm{GL}_2(k)$ associated with the same regular orbit has character
-
-$$
--\bar\theta(u)-\bar\theta(u^q)
-$$
-
-on the elliptic torus. Inflating and compactly inducing gives the required supercuspidal identity.
-
-### 9.3 Central characters and twisting
-
-Let $z\in K^\times$ and choose a regular matching pair $g\leftrightarrow d$. Then $zg\leftrightarrow zd$. If $\pi=\operatorname{JL}(\rho)$, the identity at the two pairs gives
-
-$$
-\omega_\pi(z)\Theta_\pi(g)
-=-\omega_\rho(z)\Theta_\rho(d).
-$$
-
-Comparing with the identity at $g\leftrightarrow d$ and choosing a point where the character is nonzero yields
-
-$$
-\boxed{\ \omega_{\operatorname{JL}(\rho)}=\omega_\rho.\ }
-$$
-
-For a character $\chi:K^\times\to C^\times$, matching norms give
-
-$$
-\Theta_{\operatorname{JL}(\rho)\otimes(\chi\circ\det)}(g)
-=-\Theta_{\rho\otimes(\chi\circ\operatorname{Nrd})}(d).
-$$
-
-Uniqueness therefore gives
-
-$$
-\boxed{\ \operatorname{JL}
-(\rho\otimes(\chi\circ\operatorname{Nrd}))
-\cong\operatorname{JL}(\rho)\otimes(\chi\circ\det).\ }
-$$
-
-Both central characters are multiplied by $\chi^2$, because determinant and reduced norm take $z$ to $z^2$. The formula is exact even when a ramified twist lowers the conductor by cancellation.
-
-### 9.4 Contragredients
-
-Character functions of contragredients satisfy
-
-$$
-\Theta_{\pi^\vee}(g)=\Theta_\pi(g^{-1}),\qquad
-\Theta_{\rho^\vee}(d)=\Theta_\rho(d^{-1}).
-$$
-
-Since inversion preserves matching,
-
-$$
-\Theta_{\operatorname{JL}(\rho)^\vee}(g)
-=-\Theta_{\rho^\vee}(d).
-$$
-
-Uniqueness gives
-
-$$
-\boxed{\ \operatorname{JL}(\rho^\vee)
-\cong\operatorname{JL}(\rho)^\vee.\ }
-$$
-
-For norm characters this reads
-
-$$
-\operatorname{St}\otimes\mu^{-1}
-=\operatorname{JL}(\mu^{-1}\circ\operatorname{Nrd}).
-$$
-
-For a tame pair it sends $\theta$ to $\theta^{-1}$ together with the dual compatible extension. In the wild Clifford parametrization it dualizes the finite representation, inverts the cocycle, and dualizes the projective multiplicity module. No self-duality is inferred merely from a quadratic central character.
-
-## 10. Conductors and compact-open level
-
-### 10.1 The two level scales
-
-Conductors compare arithmetic depth, but the defining compact opens on the two sides are different. On $G$, for an infinite-dimensional generic irreducible,
-
-$$
-a_G(\pi)=\min\{n\ge0:\pi^{\mathcal K_1(\mathfrak p^n)}\ne0\}.
-$$
-
-The newvector space at $n=a_G(\pi)$ is one dimensional, and at $m\ge a_G(\pi)$ its dimension is $m-a_G(\pi)+1$.
-
-On $D^\times$, let
-
-$$
-c_D(\rho)=\min\{m\ge0:U_D^m\text{ acts trivially}\}.
-$$
-
-Normality makes the invariant space all or nothing:
-
-$$
-\rho^{U_D^m}=
-\begin{cases}
-0,&m<c_D(\rho),\\
-\rho,&m\ge c_D(\rho).
-\end{cases}
-$$
-
-Book 82 defined the transfer-facing number
-
-$$
-a_D(\rho)=
-\begin{cases}
-2a(\mu),&\rho=\mu\circ\operatorname{Nrd},\\
-c_D(\rho)+1,&\dim\rho>1.
-\end{cases}
-$$
-
-These definitions must remain visible. There can be equality of conductor exponents without an isomorphism of fixed-vector spaces.
-
-### 10.2 The exact conductor comparison
-
-**Theorem 10.1.** Let $\pi=\operatorname{JL}(\rho)$. Then:
-
-1. if $\dim\rho>1$, then $a_G(\pi)=a_D(\rho)=c_D(\rho)+1$;
-2. if $\rho=\mu\circ\operatorname{Nrd}$ with $a(\mu)>0$, then
-
-   $$
-   a_G(\pi)=2a(\mu)=a_D(\rho);
-   $$
-
-3. if $\rho=\mu\circ\operatorname{Nrd}$ with $\mu$ unramified, then
-
-   $$
-   a_D(\rho)=0,\qquad a_G(\pi)=1.
-   $$
-
-Thus the prepared exponents agree except for the unramified norm-character orbit, where the image is an unramified Steinberg twist and the monodromy contributes one.
-
-**Proof strategy.** For tame pairs compare the explicit different-plus-character formulas. For norm characters use the special conductor formula. For wild representations detect the last nonzero congruence layer in the transferred finite-level Euler trace; a shift by one converts the normal division filtration to the asymmetric split newvector filtration.
-
-**Proof.** If $\rho=\mu\circ\operatorname{Nrd}$, Section 9.1 and Book 77 give
-
-$$
-a_G(\operatorname{St}\otimes\mu)=
-\begin{cases}1,&a(\mu)=0,\\2a(\mu),&a(\mu)>0.
-\end{cases}
-$$
-
-This proves (2) and (3).
-
-For a minimal tame pair $(E/K,\theta)$, Books 77 and 82 established on their respective sides the common expression
-
-$$
-\Delta(E/K)+f(E/K)a_E(\theta).
-$$
-
-This proves (1) in the tame range. For an arbitrary higher-dimensional $\rho$, choose the least $m=c_D(\rho)$. Refine the finite-level index lemma of Chapter 8 by inserting the averaging idempotent of $\mathcal K_1(\mathfrak p^r)$ in its vertex and edge terms. Finite Mackey decomposition gives zero index for $r\le m$: a surviving vector would make the last nontrivial $U_D^{m-1}/U_D^m$-constituent trivial. At $r=m+1$, exactly one orbit of that last constituent survives, and finite Clifford orthogonality makes its multiplicity one. Hence
-
-$$
-\dim\operatorname{JL}(\rho)^{\mathcal K_1(\mathfrak p^r)}
-=0\quad(r\le m),
+g^{-1}\leftrightarrow d^{-1},
 \qquad
-\dim\operatorname{JL}(\rho)^{\mathcal K_1(\mathfrak p^{m+1})}=1.
+\det g=\operatorname{Nrd}d.
+\tag{2.5}
 $$
 
-The split newvector theorem now gives $a_G=m+1$. In the projective Clifford case, the cocycle and inverse cocycle cancel in the honest stabilizer module, so the same Mackey count applies. This proves (1) without replacing wild data by a tame pair. $\square$
+The last equality is the reason determinant twists and reduced-norm twists correspond.
 
-The exceptional shift is mathematically necessary. Calling $a_D=0$ for an unramified norm character records that it is trivial on $\mathcal O_D^\times$. Calling $a_G=1$ for Steinberg records that it has an Iwahori line but no hyperspecial line. These are both correct facts; no renaming makes them equal without changing one established definition.
+### 2.5 The separability boundary
 
-### 10.3 Newvectors and division-side invariants
+In characteristic two, a quaternion division algebra may contain a purely inseparable quadratic field. An element generating it has an inseparable minimal polynomial and is not regular semisimple over a separable closure. Such an element lies on the discriminant-zero locus and is not part of (2.4). Likewise a scalar matrix and a nontrivial Jordan block can have the same repeated polynomial on the split side but are not conjugate.
 
-Suppose $\dim\rho>1$ and put $a=a_D(\rho)$. Then
+The selected packet constructions use separable quadratic extensions, and their character identity is asserted on the separable regular locus. This locus is open and dense in the relevant groups. Distribution characters are determined by their regular restrictions, so excluding inseparable and repeated-root classes creates no ambiguity in the selected correspondence. It merely prevents a false extension of regular orbital formulas to a singular locus where the conjugation Jacobian vanishes.
 
-$$
-\rho^{U_D^{a-2}}=0,\qquad
-\rho^{U_D^{a-1}}=\rho,
-$$
-
-whereas
-
-$$
-\dim\operatorname{JL}(\rho)^{\mathcal K_1(\mathfrak p^{a-1})}=0,\qquad
-\dim\operatorname{JL}(\rho)^{\mathcal K_1(\mathfrak p^a)}=1.
-$$
-
-At higher split levels,
-
-$$
-\dim\operatorname{JL}(\rho)^{\mathcal K_1(\mathfrak p^m)}=m-a+1.
-$$
-
-Thus transfer sends the **first level that kills the entire division representation**, shifted by one, to the **first split level that reveals one distinguished line**. It does not send all of $\rho$ to the newvector line. The dimension of $\rho$ reappears in formal degree, not in newvector multiplicity.
-
-For an unramified norm character, $\rho^{\mathcal O_D^\times}$ is one dimensional, while its Steinberg transfer has no $\mathcal K$-fixed vector and a one-dimensional Iwahori-fixed line. For a ramified norm character of conductor $r$, $U_D^{2r-1}$ first kills the character and $\mathcal K_1(\mathfrak p^{2r})$ first fixes a Steinberg newvector.
-
-The exact division-side invariant space for a nonnormal toral compact open is given by the finite Mackey sum
-
-$$
-\dim\rho^H
-=\sum_{x\in J\backslash D^\times/H}
-\dim\operatorname{Hom}_{J\cap xHx^{-1}}(\Lambda,\mathbf1).
-$$
-
-There is no universal equality between this number and a split $\mathcal K_0$- or type-invariant dimension. Transfer compares the representation, while a chosen level structure requires its own local calculation.
-
-### 10.4 Cancellation under ramified twists
-
-Twisting compatibility makes the correct conductor rule immediate:
-
-$$
-a_G(\operatorname{JL}(\rho)\otimes\chi)
-=a_G\bigl(\operatorname{JL}(\rho\otimes\chi)\bigr).
-$$
-
-For a tame pair this common value is
-
-$$
-\Delta(E/K)+f(E/K)
-a_E\bigl(\theta(\chi\circ N_{E/K})\bigr),
-$$
-
-after the twisted pair is put in minimal form. For a norm character it is the special formula applied to $\mu\chi$. Equal-depth cancellation can lower the result. If $\chi$ is more deeply ramified than every character visible in the original datum, cancellation is impossible and the common split conductor is $2a(\chi)$.
-
-**Counterexample.** Let $p$ be odd and let $\mu$ be a nontrivial tame quadratic character. Then
-
-$$
-\rho=\mu\circ\operatorname{Nrd}
-$$
-
-has $a_D(\rho)=2$ and transfers to $\operatorname{St}\otimes\mu$, also of conductor two. Twisting both sides by $\mu$ produces the trivial norm character and unramified Steinberg. Their established exponents are $0$ and $1$, respectively. A naive maximum formula predicts $2$ and fails on both sides.
-
-## 11. Formal degrees
-
-### 11.1 A compatible pair of quotient measures
-
-Formal degree depends inversely on Haar measure. A statement that transfer preserves it is meaningless until the two different central quotients have been normalized relative to one another. We use
-
-$$
-\operatorname{vol}(\mathrm{PGL}_2(\mathcal O))=1,
-\qquad
-\operatorname{vol}(D^\times/K^\times)=\frac{2}{q-1}.
-$$
-
-For a unitary irreducible $\pi$ of $G$ that is square-integrable modulo $Z$, its formal degree $d_G(\pi)$ is characterized by
-
-$$
-\int_{G/Z}
-\langle\pi(g)v_1,\lambda_1\rangle
-\langle\pi(g^{-1})v_2,\lambda_2\rangle\,d\bar g
-=d_G(\pi)^{-1}
-\langle v_1,\lambda_2\rangle
-\langle v_2,\lambda_1\rangle.
-$$
-
-For finite-dimensional $\rho$ on the compact quotient,
-
-$$
-d_{G'}(\rho)
-=\frac{\dim\rho}{\operatorname{vol}(G'/Z)}
-=\frac{q-1}{2}\dim\rho.
-$$
-
-With $\operatorname{vol}(G'/Z)=1$, the degree would instead be $\dim\rho$ and literal preservation would fail by the constant $(q-1)/2$. This is why the measure was fixed at the beginning rather than after the theorem.
-
-### 11.2 The formal-degree identity
-
-**Theorem 11.1.** For every irreducible unitary $\rho$ of $D^\times$,
-
-$$
-\boxed{\ d_G(\operatorname{JL}(\rho))=d_{G'}(\rho)
-=\frac{q-1}{2}\dim\rho.\ }
-$$
-
-The same formula applies to essentially unitary representations after removing a common real unramified twist.
-
-**Proof strategy.** Compare the leading coefficient of the character near the identity through elliptic pseudo-coefficients. On the compact side it is dimension divided by quotient volume. On the split side it is formal degree. Transfer identifies the regular elliptic germ and the Steinberg case fixes the scalar.
-
-**Proof.** Let $f_\rho'$ be a matrix-coefficient projector on $G'/Z$, normalized by $\operatorname{tr}\sigma(f_\rho')=\delta_{\rho,\sigma}$. Its value at the identity is $d_{G'}(\rho)$. Choose an elliptic lift $f_\rho$ on $G$. The trace identity makes $-f_\rho$ a pseudo-coefficient for $\pi=\operatorname{JL}(\rho)$: its trace is one on $\pi$, zero on every other tempered irreducible with the fixed center, and zero on principal series because it is elliptic.
-
-Apply Schur orthogonality to a matrix coefficient of $\pi$ and express its projector in the elliptic cocenter. The value of the projector's regular germ at the identity is $d_G(\pi)$. Matching identifies this germ with the division projector germ. The quotient between the two possible scalar normalizations is independent of $\rho$; evaluate it at $\rho=\mathbf1$. Its transfer is $\operatorname{St}$, whose tree coefficient calculation gives
-
-$$
-d_G(\operatorname{St})=\frac{q-1}{2}
-$$
-
-when $\operatorname{vol}(\mathrm{PGL}_2(\mathcal O))=1$. The division degree of $\mathbf1$ under our measure is the same. Hence the scalar is one in every block. $\square$
-
-Formal degree is unchanged by a unitary character twist, as is dimension on the division side. The theorem therefore fits twisting compatibility automatically.
-
-### 11.3 Checks in the special and tame families
-
-For $\rho=\mu\circ\operatorname{Nrd}$,
-
-$$
-d_{G'}(\rho)=\frac{q-1}{2}
-=d_G(\operatorname{St}\otimes\mu)
-$$
-
-when $\mu$ is unitary. The degree does not depend on whether $\mu$ is ramified, even though its conductor does.
-
-For a minimal tame unramified pair with $n=a_E(\theta)$, one has $\dim\rho=2q^{n-1}$, hence
-
-$$
-d_G(\operatorname{JL}(\rho))=(q-1)q^{n-1}.
-$$
-
-For a minimal tame ramified pair, $n$ is even and $\dim\rho=(q+1)q^{(n-2)/2}$, so
-
-$$
-d_G(\operatorname{JL}(\rho))
-=\frac{q^2-1}{2}q^{(n-2)/2}.
-$$
-
-Conductor records the last filtration layer; dimension records the size of the compact orbit and Heisenberg piece; formal degree is where that finite dimension reappears on the infinite-dimensional split side.
-
-## 12. Local factors
-
-### 12.1 Zeta integrals on the two degree-two algebras
-
-Later global arguments require local $L$- and epsilon factors, not merely conductors. Defining a factor on the division side to be the factor of its transfer would prove compatibility by notation. Instead use the same zeta construction on $A=M_2(K)$ and $A'=D$.
-
-Let $\Phi$ be a compactly supported locally constant function on $A$, let $c(g)=\lambda(\pi(g)v)$ be a matrix coefficient, and put
-
-$$
-Z_A(s,\Phi,c)
-=\int_{A^\times}\Phi(x)c(x)|\operatorname{nrd}(x)|^{s+1/2}\,d^\times x.
-$$
-
-Use the identical formula for $A'$, with reduced norm and a coefficient of $\rho$. The shift $1/2=(2-1)/2$ is the unitary degree-two normalization. For real part of $s$ large the integral converges; norm shells make it rational in $q^{-s}$.
-
-The fractional ideal generated by all such integrals is principal. Its normalized generator with constant term one is denoted $L(s,\pi)$ or $L(s,\rho)$. On $M_2(K)$ this agrees with the Whittaker-newform factor of Book 77. It is intrinsic on $D$ and applies to wild Clifford representations.
-
-If $\rho$ has no $\mathcal O_D^\times$-fixed vector, unit-shell averaging gives $L(s,\rho)=1$. If $\rho=\mu\circ\operatorname{Nrd}$ with $\mu$ unramified, take $\Phi=\mathbf1_{\mathcal O_D}$ and a constant coefficient. The nonnegative norm shells form a geometric series:
-
-$$
-L(s,\rho)=L(s+1/2,\mu)
-=\left(1-\mu(\varpi)q^{-s-1/2}\right)^{-1}.
-$$
-
-For ramified $\mu$, unit averaging again gives $1$. These are exactly the Steinberg-factor shapes on the split side.
-
-### 12.2 Fourier transform and the functional equation
-
-Put $\langle x,y\rangle_A=\psi(\operatorname{trd}(xy))$. Choose self-dual additive measure and define
-
-$$
-\widehat\Phi(y)=\int_A\Phi(x)\psi(\operatorname{trd}(xy))\,dx.
-$$
-
-Use reduced trace on $D$ for the same definition. Finite Fourier inversion on lattice quotients gives $\widehat{\widehat\Phi}(x)=\Phi(-x)$. There is a unique rational function $\gamma(s,\pi,\psi)$ such that
-
-$$
-Z_A(1-s,\widehat\Phi,c^\vee)
-=\gamma(s,\pi,\psi)Z_A(s,\Phi,c),
-$$
-
-where $c^\vee(x)=c(x^{-1})$ is paired with the contragredient. Define $\gamma(s,\rho,\psi)$ identically on $D$. Separating normalized generators gives
+## 3. Discriminants, measures, and orbital comparison
 
-$$
-\gamma(s,\pi,\psi)
-=\epsilon(s,\pi,\psi)
-\frac{L(1-s,\pi^\vee)}{L(s,\pi)},
-$$
-
-and similarly for $\rho$. This defines the epsilon factor.
-
-For a lattice $L\subset A$, Fourier transform carries $\mathbf1_L$ to $\operatorname{vol}(L)\mathbf1_{L^\perp}$. Splitting $A^\times$ into valuation shells reduces the functional equation to finite Fourier inversion on $L/\varpi^mL$. The last nonzero transform is a Gauss sum; its shell number is the analytic conductor. No global functional equation is used.
-
-### 12.3 Compatibility of $L$- and epsilon factors
-
-**Theorem 12.1.** If $\pi=\operatorname{JL}(\rho)$, then
-
-$$
-\boxed{L(s,\pi)=L(s,\rho),\qquad
-\epsilon(s,\pi,\psi)=\epsilon(s,\rho,\psi).}
-$$
-
-Consequently the gamma factors agree.
-
-**Proof strategy.** The substantial input is a local Fourier-transfer lemma for the two degree-two algebras. Prove it on lattice quotients, including the singular germ, and then apply the two functional equations. This keeps factor compatibility independent of any parameterization by quadratic characters.
-
-**Proof.** We first record the Fourier-transfer lemma in the form needed here. Suppose $\Phi$ and $\Phi'$ have matching regular orbital integrals after restriction to $M_2(K)^\times$ and $D^\times$. Then their Fourier transforms have matching orbital integrals with the same geometric transfer factor. The spectral minus sign is unchanged.
-
-To prove the lemma, filter a maximal order and its trace-dual by powers of the radical. Fourier transform sends the characteristic function of each lattice to the volume of that lattice times the characteristic function of its annihilator. On a regular trace--norm stratum, conjugation descent reduces the comparison to the same finite quadratic Gauss sum on the common torus. At discriminant zero, the central and split germs must be transformed together; the vertex-minus-edge index from Chapter 8 cancels the extra split isotropic line. This singular calculation is essential: comparison only on regular charts would not prove the Fourier lemma. Exhaustion of the lattice filtration proves it for arbitrary compactly supported locally constant functions, including in characteristic two.
-
-Now pair the two zeta distributions with the finite-level elliptic projector that relates $\rho$ and $\pi$. The trace identity equates them, including one minus sign. Apply the Fourier-transfer lemma and the functional equations. The same minus sign appears after Fourier transform, so it cancels, and
-
-$$
-\gamma(s,\pi,\psi)=\gamma(s,\rho,\psi).
-$$
-
-The possible poles of the zeta-integral ideals determine their normalized generators. Equality of gamma factors for $\pi$ and $\rho$, together with the corresponding equality for their contragredients, therefore gives $L(s,\pi)=L(s,\rho)$. Substitution in the defining gamma-factor quotient gives equality of epsilon factors. Every comparison took place in local lattice quotients; no global functional equation and no parameter-side definition of the division factors was used. $\square$
-
-In the wild range this remains a finite Fourier calculation on the Clifford quotient and does not require a quadratic label.
-
-### 12.4 Explicit shapes and conductor numbering
-
-For a norm character,
-
-$$
-L(s,\mu\circ\operatorname{Nrd})
-=L(s+1/2,\mu)
-=L(s,\operatorname{St}\otimes\mu).
-$$
-
-For every higher-dimensional $\rho$ and every supercuspidal transfer, both $L$-factors are $1$. With $\psi$ of conductor zero, write
-
-$$
-\epsilon(s,\rho,\psi)
-=\epsilon(1/2,\rho,\psi)
-q^{-a_{\mathrm{an}}(\rho)(s-1/2)}.
-$$
-
-Compatibility and the newform functional equation give
-
-$$
-a_{\mathrm{an}}(\rho)=a_G(\operatorname{JL}(\rho)).
-$$
-
-Thus $a_{\mathrm{an}}=a_D$ except for an unramified norm character, where $a_D=0$ and $a_{\mathrm{an}}=1$. The analytic exponent sees Steinberg monodromy that the maximal-order conductor of the division character does not. For a ramified norm character of exponent $r$, both analytic and prepared exponents are $2r$; for higher-dimensional representations they are $c_D+1$.
-
-For a tame quadratic datum, let $\psi_E=\psi\circ\operatorname{Tr}_{E/K}$ and let $\theta^\natural$ be the rectified character of Section 13.4. Then
-
-$$
-\epsilon(s,\rho(E,\theta),\psi)
-=\lambda(E/K,\psi)
-\epsilon(s,\theta^\natural,\psi_E),
-$$
-
-where $\lambda(E/K,\psi)$ is the normalized quadratic induction constant. The one-dimensional epsilon factor is a finite Gauss sum over $U_E^0/U_E^{a_E(\theta^\natural)}$. Its exponent is
-
-$$
-\Delta(E/K)+f(E/K)a_E(\theta^\natural),
-$$
-
-which equals the conductor of a minimal normalized pair.
-
-## 13. Tame admissible pairs
-
-### 13.1 One quadratic datum on both sides
-
-The abstract theorem is complete, but tame representations admit a much more concrete description. Let $E/K$ be a quadratic extension with nontrivial automorphism $\sigma$, and let
-
-$$
-\theta:E^\times\to C^\times
-$$
-
-be a smooth character. The pair is **regular** if $\theta\ne\theta^\sigma$, equivalently if $\theta$ does not factor through $N_{E/K}$. It is **admissible** if, in addition, descent of its principal-unit restriction through the norm can occur only in the unramified quadratic case. It is **minimal** if no product $\theta(\chi\circ N_{E/K})$ has smaller conductor.
-
-Books 77 and 82 constructed representations
-
-$$
-\pi_G(E,\theta)\quad\text{of }G,
-\qquad
-\rho_D(E,\theta)\quad\text{of }D^\times,
-$$
-
-from normalized compatible extensions of the same last filtration character. The normalization on the two sides is now fixed by requiring their finite Heisenberg traces to have opposite elliptic orientation. With this normalization:
-
-**Theorem 13.1 (tame pair transfer).** For every normalized tame admissible pair,
-
-$$
-\boxed{\ \operatorname{JL}(\rho_D(E,\theta))
-\cong\pi_G(E,\theta).\ }
-$$
-
-The pair may be replaced by $(E,\theta^\sigma)$ without changing either representation. A norm twist replaces it on both sides by
-
-$$
-(E,\theta(\chi\circ N_{E/K})).
-$$
-
-**Proof strategy.** Compare the compact-induction character formulas stratum by stratum. On the open stratum attached to $E$ the same two Galois conjugates occur. On every other elliptic stratum, finite Fourier descent in the transverse quotient compares all conjugates meeting the two inducing subgroups. This second step is necessary: checking only the inducing torus would not determine the character on other elliptic tori.
-
-**Proof.** Embed $E$ in both algebras and let $J_D,J_G$ be the inducing subgroups determined by the same conductor. On a sufficiently regular $t\in E^\times$, the conjugates meeting the inducing subgroup are represented by the identity and the normalizer element inducing $\sigma$. Thus
-
-$$
-\Theta_{\rho_D(E,\theta)}(t)
-=\operatorname{tr}\Lambda_D(t)
-+\operatorname{tr}\Lambda_D(\sigma(t)).
-$$
-
-The split compact-induction formula has the same two torus terms. On the common torus the inducing actions agree. On the transverse quotient, the finite Heisenberg representation is obtained from the same commutator pairing. Its two polarizations correspond to the vertex and edge terms in the tree, so their alternating trace is the negative of the anisotropic trace. Hence
-
-$$
-\Theta_{\pi_G(E,\theta)}(g_t)
-=-\Theta_{\rho_D(E,\theta)}(t).
-$$
-
-This proves the identity on the open $E$-stratum. Now take an arbitrary matching elliptic pair. If its conjugacy classes miss both inducing supports, both compact-induction sums vanish. Otherwise conjugation descent places the elements in corresponding finite trace--norm strata of $J_G$ and $J_D$. The summands are indexed by the same stabilizer orbits. Fourier inversion on the quotient transverse to the last common filtration character identifies their Heisenberg traces with the same minus sign; the compatible extension normalization identifies the torus and projective multiplicity traces. This is precisely the tame specialization of the finite-level index lemma in Chapter 8, now applied to the explicit inducing types. It covers elliptic tori not isomorphic to the inducing torus as well as the boundary between adjacent regular strata. Therefore the character identity holds on every matching regular class, and uniqueness proves the theorem. $\square$
-
-The phrase “normalized compatible extension” carries real content. If one independently tensors one Heisenberg extension by a residual character, the two labels may differ by a rectifying character even though the underlying transfer theorem is unchanged. Section 13.4 records the normalization used for factors.
-
-### 13.2 The unramified quadratic case
-
-Assume $E/K$ is unramified, so $e=1$, $f=2$, and $\Delta(E/K)=0$. Minimal admissible pairs have
-
-$$
-a_G(\pi_G(E,\theta))
-=a_D(\rho_D(E,\theta))
-=2a_E(\theta).
-$$
-
-At level zero, $a_E(\theta)=1$ and the residue character
-
-$$
-\bar\theta:k_E^\times\to C^\times
-$$
-
-must satisfy $\bar\theta^q\ne\bar\theta$. For a residue-regular unit $t$,
-
-$$
-\Theta_{\rho_D(E,\theta)}(t)
-=\bar\theta(\bar t)+\bar\theta(\bar t^q),
-$$
-
-whereas the inflated finite cuspidal character on the split side is
-
-$$
-\Theta_{\pi_G(E,\theta)}(g_t)
-=-\bar\theta(\bar t)-\bar\theta(\bar t^q).
-$$
-
-This finite-field calculation gives the entire local character identity after compact induction. It also shows why regularity is necessary. If $\bar\theta^q=\bar\theta$, then $\bar\theta$ factors through $N_{k_E/k}$; the division induction splits into norm characters and the split construction belongs to a principal-series block. There is no supercuspidal transfer attached to the irregular datum.
-
-At positive depth $n=a_E(\theta)\ge2$,
-
-$$
-\dim\rho_D(E,\theta)=2q^{n-1},\qquad
-c_D=2n-1,\qquad a_D=2n.
-$$
-
-If $n$ is even, the inducing representation contains a $q$-dimensional Heisenberg factor; omitting it gives the wrong dimension and destroys the character identity. The split representation has one newvector at level $2n$, not a $2q^{n-1}$-dimensional fixed space.
-
-### 13.3 The ramified quadratic case
-
-Assume the residue characteristic is odd and $E/K$ is ramified quadratic. Then
-
-$$
-e=2,\qquad f=1,\qquad\Delta(E/K)=1.
-$$
+### 3.1 The common Weyl discriminant
 
-A minimal regular tame character has even conductor $n\ge2$. The odd transfer conductor is
+Matching conjugacy classes is not enough for trace comparison; one must also compare the Jacobian of conjugation. For a regular element $x$ in either degree-two algebra define
 
 $$
-a_G(\pi_G(E,\theta))
-=a_D(\rho_D(E,\theta))
-=n+1,
+\Delta(x)=\operatorname{trd}(x)^2-4\operatorname{nrd}(x)
 $$
 
 and
 
 $$
-\dim\rho_D(E,\theta)
-=(q+1)q^{(n-2)/2}.
+D(x)=\left|\frac{\Delta(x)}{\operatorname{nrd}(x)}\right|_F.
+\tag{3.1}
 $$
 
-Why can a conductor-one tame character not be regular after minimization? The Galois automorphism acts trivially on the common residue field, so the residue character is Galois invariant. Any difference between $\theta$ and $\theta^\sigma$ must occur on a positive unit layer. In the tame ramified filtration the involution changes the uniformizer direction by sign, and minimality forces the first regular layer to occur at the parity represented by even $n$.
+Here ordinary trace and determinant are used in $M_2(F)$, and reduced trace and norm are used in $D$.
 
-The character comparison again has two normalizer terms, but the transverse quotient has $q+1$ isotropic directions rather than the two valuation parities of the unramified torus. The finite Fourier sum over those directions equals the negative of the division trace. Its absolute size accounts for the factor $q+1$ in the division dimension and the factor $(q^2-1)/2$ in the split formal degree.
-
-At residue characteristic two, a ramified quadratic extension is wild. Its discriminant exponent may exceed one, the parity statement above fails, and the tame inducing quotient may be replaced by nontrivial projective Clifford data. The main correspondence and the formula
+If the two roots are $\alpha$ and $\beta$, conjugation on the two root directions has eigenvalues $\alpha/\beta$ and $\beta/\alpha$. Therefore
 
 $$
-a_G(\operatorname{JL}(\rho))=c_D(\rho)+1
+\left|\det(1-\operatorname{Ad}(x))\right|
+=|(1-\alpha/\beta)(1-\beta/\alpha)|
+=\left|\frac{(\alpha-\beta)^2}{\alpha\beta}\right|,
 $$
 
-for higher-dimensional $\rho$ remain valid, but the displayed tame dimension and $n+1$ formulas are not asserted.
-
-### 13.4 Regularity, minimality, and rectification
-
-There are two characters near an admissible-pair construction that should not be silently identified. The type character $\theta$ was normalized so that
+which is (3.1). Matching preserves trace and norm, so
 
 $$
-\omega_{\pi_G(E,\theta)}
-=\omega_{\rho_D(E,\theta)}
-=\theta|_{K^\times}.
+g\leftrightarrow d
+\quad\Longrightarrow\quad
+D(g)=D(d).
+\tag{3.2}
 $$
 
-The character whose induction gives the convenient two-dimensional factor formula must include the quadratic determinant correction. Let $\kappa_{E/K}$ be the quadratic character of $K^\times$ with kernel $N_{E/K}(E^\times)$. Fix the quadratic **rectifier** $\xi_{E/K}:E^\times\to C^\times$ by
+This is the exact equality needed to compare either ordinary orbital integrals on both sides or normalized orbital integrals on both sides. Mixing the two conventions would insert an unwanted factor $D(x)^{1/2}$.
+
+### 3.2 A compatible measure ledger
+
+Haar measures do not change pointwise matrix traces, but they do change convolution operators and orbital integrals. We fix them in an order that leaves no conflicting quotient choices:
 
 $$
-\xi_{E/K}|_{K^\times}=\kappa_{E/K},
+\operatorname{vol}(\operatorname{GL}_2(\mathcal O),dg)=1,
+\qquad
+\operatorname{vol}(\mathcal O_D^\times,dd)=1,
+\tag{3.3}
 $$
 
-minimal conductor, and the Gauss-sum sign determined by $\psi_E$. Concretely:
+$$
+\operatorname{vol}(\mathcal O^\times,dz)=1,
+\qquad
+\operatorname{vol}(\mathcal O_E^\times,de)=1
+\tag{3.4}
+$$
 
-- if $E/K$ is unramified, $\xi_{E/K}$ is unramified and sends a common uniformizer to $-1$;
-- if $E/K$ is tamely ramified, its unit restriction is the quadratic residue character and its value on a chosen $E$-uniformizer is the unique sign making the induction constant $\lambda(E/K,\psi)$ agree with the finite Fourier transform.
+for every separable quadratic $E/F$. When the same $E^\times$ is a centralizer in both groups, the same measure $de$ is used. Quotient measures are then defined by Weil's formula. For example,
+
+$$
+\int_G f(x)\,dx
+=\int_{E^\times\backslash G}
+\int_{E^\times}f(ex)\,de\,d\dot x.
+\tag{3.5}
+$$
+
+One must not also decree independently that every quotient in sight have volume one. The quotient volumes have already been determined by (3.3)--(3.5). Compatible torus measure is especially important: an independent rescaling on one side would leave a torus-dependent scalar in the trace comparison.
+
+### 3.3 Ordinary and normalized orbital integrals
+
+Let $x$ be regular in a group $H$ and let $T=C_H(x)\simeq E^\times$. For a compactly supported locally constant function $f$ define
+
+$$
+O_x(f)=\int_{T\backslash H}f(y^{-1}xy)\,d\dot y.
+\tag{3.6}
+$$
+
+If a central character is fixed, the same definition is made on the common central quotient with the inverse central transformation law on $f$. The normalized orbital integral is
+
+$$
+I_x(f)=D(x)^{1/2}O_x(f).
+\tag{3.7}
+$$
+
+Because of (3.2), equality of ordinary orbital integrals for matching elements is equivalent to equality of normalized orbital integrals. We call $f$ on $G$ and $f'$ on $G'$ geometrically matching when
+
+$$
+O_g(f)=O_d(f')
+\tag{3.8}
+$$
+
+for every matching regular pair and when the split regular orbital integrals of $f$ vanish in the elliptic transfer situation. For a general split function only its elliptic orbital integrals can be remembered by $f'$; split classes have no division-side partners.
+
+The present theorem identifies the spectral response to functions satisfying (3.8). It does not assert an unrestricted fundamental lemma for every pair of compact opens. That later problem requires a separate analysis of orbital integrals. Here the local packet character identity gives the exact spectral sign once geometrically matching functions have been chosen.
+
+### 3.4 Geometric versus signed transfer
+
+There are two consistent placements of the sign. Under geometric transfer, (3.8) holds and the selected traces differ by $-1$. Under signed spectral transfer one defines matching by
+
+$$
+O_g(f)=-O_d(f')
+$$
+
+and the selected traces agree. We use geometric transfer throughout. Thus the pointwise relation is always
+
+$$
+\Theta_G=-\Theta_{G'}.
+$$
+
+Putting a minus sign in both the orbital condition and the character condition would count the degree-two sign twice. Putting it in neither would contradict the Steinberg calculation in Chapter 4.
+
+### 3.5 From characters to traces
+
+Suppose $f$ and $f'$ are geometrically matching and supported on the regular elliptic region modulo the center. Weyl integration writes the trace of a representation as a sum over quadratic tori. For one $E/F$, the contribution has the form
+
+$$
+\frac12\int_{E^\times_{\mathrm{reg}}}
+\Theta_\pi(t)D(t)O_t(f)\,dt.
+\tag{3.9}
+$$
+
+The factor $1/2$ is the order of the rational Weyl group generated by $\sigma$. The same factor, torus measure, and discriminant occur for $G'$. Consequently, if
+
+$$
+\Theta_\pi(t)=-\Theta_{\pi'}(t)
+$$
+
+on matching classes, substitution into (3.9) gives
+
+$$
+\operatorname{tr}\pi(f)=-\operatorname{tr}\pi'(f').
+\tag{3.10}
+$$
+
+Conversely, choose matching functions supported in arbitrarily small regular class neighborhoods. Local constancy of the regular characters turns (3.10) back into the pointwise identity. Thus the pointwise and distributional forms of selected transfer are equivalent once the measure ledger is fixed.
+
+## 4. Characters and the special correspondence
+
+### 4.1 Regular character functions
+
+For an infinite-dimensional smooth representation, $\operatorname{tr}\pi(g)$ is not defined as an operator trace. The trace distribution
+
+$$
+f\longmapsto\operatorname{tr}\pi(f)
+$$
+
+is instead represented by a locally integrable conjugation-invariant function. On the regular semisimple set this Harish--Chandra character $\Theta_\pi$ is locally constant. On $D^\times$, the selected representations are finite-dimensional, so their ordinary matrix traces give the same character function directly.
+
+The regular character is exactly what orbital transfer sees. Its local constancy allows a pointwise calculation on regular torus charts, while local integrability permits Weyl integration near the singular boundary. We will never substitute a scalar or inseparable element into a formula proved only on the regular set.
+
+Characters behave predictably under the operations used later:
+
+$$
+\Theta_{\pi\otimes(\chi\circ\det)}(g)
+=\chi(\det g)\Theta_\pi(g),
+$$
+
+$$
+\Theta_{\pi^\vee}(g)=\Theta_\pi(g^{-1}),
+\tag{4.1}
+$$
+
+and similarly with $\operatorname{Nrd}$ on $D^\times$. These are algebraic contragredient formulas; no complex conjugation is involved.
+
+### 4.2 Why induced representations vanish elliptically
+
+The vanishing of principal-series characters on elliptic classes explains why only the discrete spectrum can transfer. Let
+
+$$
+I(\chi_1,\chi_2)
+$$
+
+be normalized induction from the upper Borel. The induced model is built from functions on $G/B\simeq\mathbf P^1(F)$. At a finite compact-open level, the trace of a regular element is a weighted count of fixed cosets. A fixed point is precisely an $F$-rational eigenline.
+
+An elliptic regular matrix has no such eigenline. Hence
+
+$$
+\Theta_{I(\chi_1,\chi_2)}(g)=0
+\qquad(g\text{ elliptic regular}).
+\tag{4.2}
+$$
+
+This proof exposes both the geometric and spectral boundary. A split regular matrix has two eigenlines and generally gives two nonzero terms. No class in $D^\times$ can record them. The elliptic quotient of the split character theory kills principal series, leaving Steinberg twists and supercuspidals.
+
+### 4.3 The Steinberg sign
+
+The special correspondence is the normalization anchor for every later sign. The exceptional normalized principal series fits into
+
+$$
+0\longrightarrow \mu\circ\det
+\longrightarrow I(\mu|\cdot|^{-1/2},\mu|\cdot|^{1/2})
+\longrightarrow \operatorname{St}\otimes(\mu\circ\det)
+\longrightarrow0.
+\tag{4.3}
+$$
+
+Trace distributions are additive in short exact sequences. At an elliptic regular $g$, the middle term vanishes by (4.2), while the one-dimensional subrepresentation contributes $\mu(\det g)$. Therefore
+
+$$
+\Theta_{\operatorname{St}\otimes\mu}(g)
+=-\mu(\det g).
+\tag{4.4}
+$$
+
+The division-side norm character has ordinary trace
+
+$$
+\Theta_{\mu\circ\operatorname{Nrd}}(d)
+=\mu(\operatorname{Nrd}d).
+\tag{4.5}
+$$
+
+For $g\leftrightarrow d$, equations (2.3), (4.4), and (4.5) prove
+
+$$
+\Theta_{\operatorname{St}\otimes\mu}(g)
+=-\Theta_{\mu\circ\operatorname{Nrd}}(d).
+\tag{4.6}
+$$
+
+The sign is therefore a theorem forced by the exceptional principal series. It is not the trace of a negative representation and does not arise from the scaling of Haar measure.
+
+### 4.4 Special twists and their invariants
+
+On a scalar $z$, both selected representations act by
+
+$$
+\mu(z^2)=\mu(z)^2.
+$$
+
+Thus their central character is $\mu^2$. Twisting by another character $\chi$ replaces $\mu$ by $\mu\chi$ on both sides:
+
+$$
+(\operatorname{St}\otimes\mu)\otimes(\chi\circ\det)
+=\operatorname{St}\otimes(\mu\chi),
+$$
+
+$$
+(\mu\circ\operatorname{Nrd})\otimes(\chi\circ\operatorname{Nrd})
+=(\mu\chi)\circ\operatorname{Nrd}.
+$$
+
+The common conductor is
+
+$$
+a_{\mathrm{sp}}(\mu)=
+\begin{cases}
+1,&a_F(\mu)=0,\\
+2a_F(\mu),&a_F(\mu)>0.
+\end{cases}
+\tag{4.7}
+$$
+
+The exceptional value one for an unramified twist records monodromy: the split representation has an Iwahori-fixed line but no hyperspecial-fixed line. On the division side the transfer-facing convention assigns conductor one to the unramified norm character, even though it is already trivial on $\mathcal O_D^\times$. This is the convention established for the selected division packets and is the one used throughout this book.
+
+The common parameter is $\operatorname{Sp}_2(\mu)$. In particular,
+
+$$
+L(s)=L(s+1/2,\mu),
+$$
+
+and the epsilon factor is the one calculated from that same centered special block. These claims will be proved uniformly with the dihedral factor statements in Chapter 10.
+
+## 5. Quadratic data on both inner forms
+
+### 5.1 Admissible pairs
+
+Let $E/F$ be separable quadratic and let $\sigma$ be its nontrivial automorphism. A smooth character $\theta:E^\times\to\mathbf C^\times$ is regular if
+
+$$
+\theta\ne\theta^\sigma.
+\tag{5.1}
+$$
+
+Equivalently, $\theta$ does not factor through $N_{E/F}$. Indeed, a norm character is visibly invariant. Conversely, if $\theta$ is invariant, its restriction to the norm-one subgroup is trivial because every norm-one element has the form $x/\sigma(x)$; it therefore descends through the norm image and extends to a character of $F^\times$.
+
+Regularity is necessary but not sufficient at positive depth. The pair $(E,\theta)$ is admissible when it is regular and, if $\theta/\theta^\sigma$ is trivial on $U_E^1$, the extension $E/F$ is unramified. In a ramified extension, asymmetry visible only on valuation or residue data leaves extra normalizer intertwining and does not produce the desired irreducible tame type.
+
+This definition includes the regular unramified depth-zero pairs: there the two conjugate residue characters are distinct. It also includes tame positive-depth pairs. In residue characteristic two it includes unramified quadratic pairs but not ramified quadratic positive-depth pairs.
+
+### 5.2 Minimal pairs and norm twists
+
+A positive-depth pair is minimal if no character $\chi$ of $F^\times$ lowers the conductor of
+
+$$
+\theta(\chi\circ N_{E/F})^{-1}.
+$$
+
+Every tame admissible pair is a norm twist of a minimal one. To prove this, examine the last nontrivial unit layer of $\theta$. On that additive quotient the character has the form
+
+$$
+1+x\longmapsto\psi_E(\beta x).
+\tag{5.2}
+$$
+
+If its last layer is Galois invariant, tame trace surjectivity shows that the corresponding additive functional comes from $F$. A character of $F^\times$ then cancels that layer after norm pullback. The conductor strictly decreases, so repeated cancellation terminates. When the last layer is noninvariant, no norm twist removes it, and the pair is minimal.
+
+The reduction to minimal pairs is essential for the proof of positive-depth character matching. Minimality makes the leading coefficient $\beta$ noncentral at the decisive precision, so its centralizer is exactly $E$. Nonminimal pairs will be recovered afterward by the exact twisting law.
+
+### 5.3 Direct and induction normalizations
+
+There are two nearby labels which must not be confused. In direct normalization, the type restricts to $\theta$ on $E^\times$ and has central character $\theta|_{F^\times}$. The two-dimensional induced Weil representation, however, has determinant
+
+$$
+\det\operatorname{Ind}_{W_E}^{W_F}\theta
+=\theta|_{F^\times}\omega_{E/F},
+\tag{5.3}
+$$
+
+where $\omega_{E/F}$ is the quadratic character with kernel $N_{E/F}(E^\times)$.
+
+The tame rectifier $\Delta_{E/F}$ reconciles these descriptions. Put
+
+$$
+\theta^\natural=\theta\Delta_{E/F},
+\qquad
+\Delta_{E/F}|_{F^\times}=\omega_{E/F}.
+\tag{5.4}
+$$
+
+It is unramified for an unramified quadratic extension and has the minimal tame depth in the ramified case. In the selected range it does not change the conductor. The split and division types used below are the induction-normalized types attached to $\theta^\natural$, while the common Weil parameter is labelled by $\theta$.
+
+Consequently both representation central characters are
+
+$$
+\omega_{\theta}=\theta|_{F^\times}\omega_{E/F}.
+\tag{5.5}
+$$
+
+The rectifier is not optional decoration. Without it, the central character, the determinant of the parameter, and the finite Fourier phase would fail to agree simultaneously.
+
+### 5.4 The two compact-mod-center types
+
+The split construction gives an irreducible supercuspidal
+
+$$
+\pi(E,\theta)
+=\operatorname{c\mbox{-}Ind}_{J}^{G}\Lambda_{\theta^\natural},
+\qquad J=E^\times J^1.
+\tag{5.6}
+$$
+
+The division construction gives
+
+$$
+\pi'(E,\theta)
+=\operatorname{Ind}_{J'}^{G'}\Lambda'_{\theta^\natural},
+\qquad J'=E^\times J'^1.
+\tag{5.7}
+$$
+
+The quotient $J'\backslash G'$ is finite modulo the common central action, so (5.7) is finite-index induction. At depth zero, $E/F$ is unramified, $J'^1=U_D^1$, and the division type is a character induced from an index-two subgroup. At positive depth, $J^1$ and $J'^1$ contain the simple characters determined by the same last-layer datum (5.2), enlarged through finite Heisenberg representations.
+
+Induction from the bare torus would be inadequate. The torus is not open in the split group, and at positive depth it does not remember the noncommutative commutator quotient. The subgroups $J^1$ and $J'^1$ record precisely the congruence information which eliminates unwanted intertwiners.
+
+### 5.5 Equivalence and recovery of labels
+
+Pairs $(E,\theta)$ and $(E',\theta')$ are equivalent if an $F$-isomorphism $E\to E'$ carries one character to the other. For fixed $E$, the equivalence orbit is
+
+$$
+\{\theta,\theta^\sigma\}.
+\tag{5.8}
+$$
+
+Conjugacy of quadratic embeddings shows that equivalent pairs give isomorphic representations on each side. Conversely, intertwining of the types recovers the pair. At depth zero the restriction to the finite nonsplit torus recovers the regular Frobenius orbit of the residue character. At positive depth the last nonconstant layer recovers the conjugacy orbit of $\beta$; its centralizer recovers $E$, and the torus restriction then recovers $\theta$ up to $\sigma$.
+
+Thus the maps
+
+$$
+(E,\theta)\longmapsto\pi(E,\theta),
+\qquad
+(E,\theta)\longmapsto\pi'(E,\theta)
+\tag{5.9}
+$$
+
+are injective on selected equivalence classes. This label injectivity will make the final bijection immediate once character matching has been proved.
+
+## 6. Depth-zero character matching
+
+### 6.1 The finite elliptic calculation
+
+Assume $E/F$ is unramified and $a_E(\theta)=1$. Let $k_2/k$ be the residue extension and let $\bar\theta:k_2^\times\to\mathbf C^\times$ be the resulting regular character. Regularity says
+
+$$
+\bar\theta^q\ne\bar\theta.
+$$
+
+The division type is induced from the index-two subgroup $E^\times U_D^1$. For $x\in k_2^\times\setminus k^\times$, its trace is the elementary induced-character sum
+
+$$
+\bar\theta(x)+\bar\theta(x^q).
+\tag{6.1}
+$$
+
+The split depth-zero type contains the finite cuspidal representation of $\operatorname{GL}_2(k)$ attached to the same orbit. Its value at the elliptic class with eigenvalues $x,x^q$ is
+
+$$
+-\bar\theta(x)-\bar\theta(x^q).
+\tag{6.2}
+$$
+
+We recall why the sign occurs. Regard $V=k_2$ as a two-dimensional $k$-space and let $T=k_2^\times$ act by multiplication. On any finite model containing the regular representation of $T$, projection to the $\bar\theta$-isotypic part is effected by
+
+$$
+e_{\bar\theta}
+=\frac1{|T|}\sum_{t\in T}\bar\theta(t)^{-1}[t].
+$$
+
+Regularity makes the $\bar\theta$- and $\bar\theta^q$-summands distinct. Choose a nontrivial additive character $\psi_k$ and use the perfect pairing
+
+$$
+(u,v)\longmapsto
+\psi_k\bigl(\operatorname{Tr}_{k_2/k}(uv^q)\bigr)
+$$
+
+to define finite Fourier transform. It exchanges the two Bruhat cells in the induced finite model. For an elliptic multiplication operator $x$, every off-diagonal translation term lies in a nontrivial additive-character orbit and sums to zero. The only stationary torus terms are the two embeddings $x$ and $x^q$. In the ambient two-cell representation they carry the weights $\bar\theta(x)$ and $\bar\theta(x^q)$; the cuspidal quotient is the alternating cell contribution, so its trace is their negative sum. The free $T$-orbit size cancels the denominator in $e_{\bar\theta}$, leaving no factor involving $q-1$. This proves (6.2), rather than merely predicting its sign.
+
+This finite calculation is basis independent. Replacing the embedding of $k_2$ conjugates the multiplication operator, while replacing $x$ by $x^q$ exchanges the two displayed summands.
+
+### 6.2 Lifting the finite identity
+
+Let $g\leftrightarrow d$ be a matching pair whose classes have depth-zero regular reduction. After multiplying by a common central scalar, both elements lie in their maximal compact groups and reduce to the same $x\in k_2^\times\setminus k^\times$. Inflation of the finite types and compact induction give
+
+$$
+\Theta_{\pi(E,\theta)}(g)
+=-\bigl(\theta^\natural(e)+(\theta^\natural)^\sigma(e)\bigr),
+$$
+
+$$
+\Theta_{\pi'(E,\theta)}(d)
+=\theta^\natural(e)+(\theta^\natural)^\sigma(e),
+\tag{6.3}
+$$
+
+where $e$ is the common torus coordinate. The rectifier is trivial on the residue units used in (6.1), but it must be displayed in (6.3) when valuation factors are present. The central scalar contributes the same factor on both sides because of (5.5). Thus the finite identity lifts without an additional sign or measure scalar.
+
+### 6.3 All regular classes in the packet
+
+The preceding calculation begins on a type-regular unit set, but the packet identity is required on every matching regular class. At depth zero this extension can be checked directly. Modulo the center, $D^\times$ has two valuation classes. The inducing subgroup $E^\times U_D^1$ is the even class, and the other class is obtained by the normalizer element. The split compact-induction formula has the same two valuation configurations.
+
+For a regular class, either its conjugates miss both inducing supports, in which case both characters vanish, or central scaling places it in the unit calculation of Section 6.2. The two normalizer embeddings then give exactly the two terms of (6.3). Hence
+
+$$
+\Theta_{\pi(E,\theta)}(g)
+=-\Theta_{\pi'(E,\theta)}(d)
+\tag{6.4}
+$$
+
+for every matching regular pair in the depth-zero packet.
+
+### 6.4 Why regularity cannot be omitted
+
+If $\bar\theta=\bar\theta^q$, the index-two division induction is reducible: the inducing character extends across the normalizer in two ways. On the split side the finite cuspidal construction degenerates into the principal-series block. The numerical expression (6.1) still exists, but it is not the character of the selected irreducible packet.
+
+At a central element, the division trace is
+
+$$
+\dim\pi'(E,\theta)\,\omega_\theta(z),
+$$
+
+not the regular two-term formula with two distinct conjugates. Central elements are singular and representations on the two sides have different dimensions. These two failures show why the theorem must state both regularity of the pair and regularity of the class.
+
+## 7. Positive-depth tame matching
+
+### 7.1 The common last-layer character
+
+Let $(E,\theta)$ be a minimal tame admissible pair of positive depth. On the last visible half of the unit filtration there is a noncentral $\beta\in E$ such that
+
+$$
+\theta(1+x)=\psi_E(\beta x),
+\qquad \psi_E=\psi\circ\operatorname{Tr}_{E/F}.
+\tag{7.1}
+$$
+
+Embedding $E$ into $M_2(F)$ and $D$ gives simple characters
+
+$$
+1+X\longmapsto\psi(\operatorname{tr}(\beta X)),
+\qquad
+1+Y\longmapsto\psi(\operatorname{Trd}(\beta Y)).
+\tag{7.2}
+$$
+
+Their restrictions to the common field are the same character (7.1). Minimality implies that the leading class of $\beta$ is noncentral. Since a noncentral element of a quaternion algebra has a quadratic centralizer, the centralizer of this leading datum is $E$. This is the crucial rigidity: any element intertwining the last-layer character must preserve the quadratic torus to the relevant precision.
+
+The comparison is therefore confined to directions complementary to $E$. The torus direction is common; the complementary direction distinguishes the split cyclic algebra from the nonsplit one and is where the sign arises.
+
+### 7.2 Heisenberg enlargement
+
+Let $H^1\subset J^1$ and $H'^1\subset J'^1$ be the simple-character and Heisenberg groups on the two sides. On the finite quotients define alternating forms by
+
+$$
+\langle \bar x,\bar y\rangle_\beta
+=\vartheta_\beta([x,y]).
+\tag{7.3}
+$$
+
+After quotienting by the torus radical these forms are nondegenerate. Indeed, an element in the radical commutes with $\beta$ on the last visible layer. Centralizer rigidity places it in the field direction, which has already been absorbed into $H^1$.
+
+Choose a maximal isotropic subgroup $L/H^1$. The simple character extends to $L$, and inducing that extension to $J^1$ gives the unique irreducible Heisenberg representation containing it. Mackey's criterion proves irreducibility: an element intertwines the inducing character exactly when its class lies in the orthogonal complement of $L/H^1$, which equals $L/H^1$. The dimension is
+
+$$
+[J^1:H^1]^{1/2}.
+$$
+
+The same construction applies on the division side. Extending the Heisenberg representation by the induction-normalized torus character produces $\Lambda_{\theta^\natural}$ and $\Lambda'_{\theta^\natural}$. Different polarizations give isomorphic representations, so their traces are intrinsic.
+
+### 7.3 The opposite Fourier-index lemma
+
+The decisive positive-depth computation is finite.
+
+**Lemma 7.1 (opposite complementary Fourier indices).** Embed the same tame quadratic field $E$ in $A=M_2(F)$ and in $A'=D$. Let $\beta\in E$ have centralizer $E$. On the last nontrivial lattice quotient complementary to $E$, form the finite Fourier trace from
+
+$$
+(X,Y)\longmapsto
+\psi\bigl(\operatorname{Tr}_{A/F}(\beta[X,Y])\bigr).
+\tag{7.4}
+$$
+
+Use reduced trace when $A=D$. After quotienting by the common radical and inserting the fixed tame rectifier, the normalized split and division Fourier traces differ by $-1$.
+
+**Proof.** Choose $j$ in the complement with
+
+$$
+jz=\sigma(z)j
+\qquad(z\in E).
+$$
+
+Then the complementary line is $Ej$. In the split algebra one may take $j^2=c$ in the norm class which makes the cyclic algebra $(E/F,c)$ split. In $D$ the corresponding square $c'$ lies in the other class of
+
+$$
+F^\times/N_{E/F}(E^\times).
+$$
+
+On the graded quotient the commutator form is a scalar multiple of
+
+$$
+(u,v)\longmapsto u\sigma(v)-v\sigma(u).
+$$
+
+Changing $c$ to $c'$ changes the normalized finite Fourier index by
+
+$$
+\omega_{E/F}(c'/c)=-1.
+$$
+
+A different choice of $j$, additive coordinate, or polarization multiplies both indices by the same norm-class factor. The remaining one-dimensional torus phase is precisely the phase removed by the rectifier in (5.4). Thus the quotient of the two intrinsic traces is exactly $-1$. $\square$
+
+Tameness is used in reducing every relevant lattice quotient to this nondegenerate trace form. In a wild ramified quadratic extension the trace-dual jumps and extension operators can contain extra data; Lemma 7.1 makes no claim there.
+
+### 7.4 The type-regular range
+
+Suppose a regular torus element $e\in E^\times$ meets each inducing subgroup only through the two normalizer embeddings. The exact compact-induction character formulas reduce to
+
+$$
+\Theta_{\pi(E,\theta)}(g)
+=\operatorname{tr}\Lambda_{\theta^\natural}(e)
++\operatorname{tr}\Lambda_{\theta^\natural}(e^\sigma),
+$$
+
+$$
+\Theta_{\pi'(E,\theta)}(d)
+=\operatorname{tr}\Lambda'_{\theta^\natural}(e)
++\operatorname{tr}\Lambda'_{\theta^\natural}(e^\sigma).
+\tag{7.5}
+$$
+
+Each type trace is a torus value times a finite Heisenberg trace. Lemma 7.1 compares the two Heisenberg traces with sign $-1$, while the rectifier makes the torus values agree. Applying the lemma to $e$ and $e^\sigma$ separately proves
+
+$$
+\Theta_{\pi(E,\theta)}(g)
+=-\Theta_{\pi'(E,\theta)}(d)
+\tag{7.6}
+$$
+
+throughout the type-regular range.
+
+This step also explains why it is wrong to compare only $\theta(e)+\theta(e^\sigma)$. At positive depth the Heisenberg traces record the noncommutative congruence quotient. Omitting them loses the Fourier phase which distinguishes the two inner forms.
+
+### 7.5 Near-central correction shells
+
+As a regular element approaches the center, its conjugacy class can meet an inducing subgroup through more than the two normalizer embeddings. The exact formula is
+
+$$
+\Theta_\pi(x)=
+\sum_{y\in J\backslash H\atop yxy^{-1}\in J}
+\operatorname{tr}\Lambda(yxy^{-1}),
+\tag{7.7}
+$$
+
+with $(H,J,\Lambda)$ equal to either split or division data. A two-term formula used arbitrarily close to the center would therefore be false.
+
+We now pair the additional terms. Filter conjugate embeddings by the largest depth $r$ through which they agree with the fixed embedding of $E$. The $r$th shell is a finite affine space over the residue field. Matching trace and norm identify the affine parameters on the two sides. Conjugation by the next unit quotient acts transitively on each fiber, and the stabilizer is the radical of the commutator form.
+
+The sum over one shell has the form
+
+$$
+|\operatorname{rad}_r|
+\sum_{v\in V_r/\operatorname{rad}_r}
+\psi(q_r(v)).
+\tag{7.8}
+$$
+
+Nonstationary affine fibers sum to zero by additive-character orthogonality. On stationary fibers, the quotient form in (7.8) is exactly the form of Lemma 7.1. The common torus lattice gives equal radical sizes, while the nondegenerate quotient sums differ by $-1$. Hence the entire $r$th split shell is the negative of the division shell.
+
+There are only finitely many shells. Smoothness makes sufficiently deep unit conjugations act trivially, and regularity stops the filtration before the scalar locus. Summing (7.8) over all $r$ extends (7.6) to every matching regular pair.
+
+This shell argument is logically essential. Equality on the type-regular range and local constancy alone would not cross the shrinking regular annuli around the singular center.
+
+### 7.6 Nonminimal pairs
+
+Let an arbitrary tame admissible pair be written
+
+$$
+\theta=\theta_0(\chi\circ N_{E/F})
+$$
+
+with $\theta_0$ minimal. The type constructions satisfy
+
+$$
+\pi(E,\theta)
+\simeq\pi(E,\theta_0)\otimes(\chi\circ\det),
+$$
+
+$$
+\pi'(E,\theta)
+\simeq\pi'(E,\theta_0)\otimes(\chi\circ\operatorname{Nrd}).
+\tag{7.9}
+$$
+
+For matching elements, $\det g=\operatorname{Nrd}d$. Multiplying the minimal identity by the common scalar $\chi(\det g)$ proves the character identity for $\theta$. Together with Chapters 6 and 7, we have proved it for every selected dihedral packet.
+
+## 8. The selected correspondence and uniqueness
+
+### 8.1 The selected sets
+
+Let $\mathcal D_G$ be the set of isomorphism classes of special twists
+
+$$
+\operatorname{St}\otimes(\mu\circ\det)
+$$
+
+and supercuspidals $\pi(E,\theta)$ for tame admissible pairs, modulo (5.8). Let $\mathcal D_{G'}$ contain the norm characters $\mu\circ\operatorname{Nrd}$ and the representations $\pi'(E,\theta)$ for the same pair classes.
+
+Special labels are unique because reduced norm is surjective. Dihedral labels are unique by the recovery argument of Section 5.5. A special object and a dihedral object cannot coincide: on $G'$ the first is one-dimensional and the second contains a regular noncentral type; on $G$ the first is special and the second supercuspidal.
+
+### 8.2 Construction
+
+Define
+
+$$
+\operatorname{JL}_{\mathrm{sel}}
+\bigl(\operatorname{St}\otimes(\mu\circ\det)\bigr)
+=\mu\circ\operatorname{Nrd},
+\tag{8.1}
+$$
+
+and
+
+$$
+\operatorname{JL}_{\mathrm{sel}}\bigl(\pi(E,\theta)\bigr)
+=\pi'(E,\theta).
+\tag{8.2}
+$$
+
+Chapter 4 proves the regular character identity for (8.1). Chapters 6 and 7 prove it for (8.2), including depth zero, positive depth, near-central correction terms, and nonminimal twists. Thus the construction satisfies
+
+$$
+\Theta_\pi(g)
+=-\Theta_{\operatorname{JL}_{\mathrm{sel}}(\pi)}(d)
+\tag{8.3}
+$$
+
+on every matching regular pair.
+
+### 8.3 Injectivity and surjectivity
+
+If two split selected representations have the same image, division-side label recovery gives the same family and the same label. Thus they are isomorphic. Conversely, every member of $\mathcal D_{G'}$ appears on the right side of either (8.1) or (8.2). Therefore
+
+$$
+\operatorname{JL}_{\mathrm{sel}}:
+\mathcal D_G\xrightarrow{\sim}\mathcal D_{G'}
+\tag{8.4}
+$$
+
+is a bijection.
+
+Notice what proves surjectivity: the codomain was defined by the selected division constructions whose labels have already been classified. We do not infer that every irreducible representation of $D^\times$ is tame dihedral. Primitive wild representations lie outside both selected sets.
+
+### 8.4 Uniqueness from elliptic characters
+
+Suppose $\rho'\in\mathcal D_{G'}$ has the character prescribed by a fixed $\pi\in\mathcal D_G$ on every matching regular class. If $\pi$ is special, equations (4.4)--(4.5) show that $\rho'$ agrees with a reduced-norm character on the dense regular locus. Equality of finite-dimensional characters then gives the same norm character.
+
+Suppose $\pi=\pi(E,\theta)$. At depth zero, restriction to regular elements of $k_2^\times$ gives the symmetric sum $\bar\theta+\bar\theta^q$. The common central character supplies the restriction on $k^\times$. Orthogonality on the finite cyclic group $k_2^\times$ then recovers the unordered orbit $\{\bar\theta,\bar\theta^q\}$.
+
+At positive depth, the first nonconstant unit layer of the character recovers the conjugacy orbit of $\beta$, hence its centralizer $E$. On a sufficiently fine finite quotient $C$ of $E^\times$, divide the type-regular character by its nonzero, already recovered Heisenberg factor. The result is $\theta+\theta^\sigma$. Its inner product with a character $\xi$ of $C$ is one exactly for $\xi=\theta$ or $\theta^\sigma$ and zero otherwise. Thus the pair is recovered up to equivalence.
+
+This proves uniqueness inside the selected codomain. It does not claim that a few numerical invariants exclude an arbitrary primitive wild representation; that stronger assertion is neither needed nor established.
+
+## 9. Structural compatibilities
+
+### 9.1 Central characters
+
+For special packets, both central characters equal $\mu^2$. For a dihedral pair, the rectifier calculation gives
+
+$$
+\omega_{\pi(E,\theta)}
+=\omega_{\pi'(E,\theta)}
+=\theta|_{F^\times}\omega_{E/F}.
+\tag{9.1}
+$$
+
+There is also a character-theoretic proof. Fix a matching regular pair with nonzero character value and compare it with the pair obtained by multiplying both elements by $z\in F^\times$. The two instances of (8.3) differ by the respective central-character scalars. Dividing them proves equality. This argument depends on the orientation $zg\leftrightarrow zd$ fixed in (2.5).
+
+### 9.2 Twists
+
+Let $\chi:F^\times\to\mathbf C^\times$ be smooth. The constructions give
+
+$$
+\pi(E,\theta)\otimes(\chi\circ\det)
+\simeq
+\pi(E,\theta(\chi\circ N_{E/F})),
+$$
+
+$$
+\pi'(E,\theta)\otimes(\chi\circ\operatorname{Nrd})
+\simeq
+\pi'(E,\theta(\chi\circ N_{E/F})).
+\tag{9.2}
+$$
+
+The corresponding formula for special packets replaces $\mu$ by $\mu\chi$. Consequently
+
+$$
+\operatorname{JL}_{\mathrm{sel}}
+\bigl(\pi\otimes(\chi\circ\det)\bigr)
+\simeq
+\operatorname{JL}_{\mathrm{sel}}(\pi)
+\otimes(\chi\circ\operatorname{Nrd}).
+\tag{9.3}
+$$
+
+This is also forced by (8.3), because the two twist factors agree on matching elements. On the center, each side is multiplied by $\chi(z^2)=\chi(z)^2$, as required by (1.1).
+
+### 9.3 Contragredients
+
+Inversion preserves matching, and character functions satisfy (4.1). Hence (8.3) gives
+
+$$
+\Theta_{\pi^\vee}(g)
+=-\Theta_{\operatorname{JL}_{\mathrm{sel}}(\pi)^\vee}(d).
+$$
+
+Uniqueness proves
+
+$$
+\operatorname{JL}_{\mathrm{sel}}(\pi^\vee)
+\simeq
+\operatorname{JL}_{\mathrm{sel}}(\pi)^\vee.
+\tag{9.4}
+$$
+
+On labels, $\mu$ is replaced by $\mu^{-1}$ and the admissible orbit is replaced by the inverse orbit $\{\theta^{-1},(\theta^\sigma)^{-1}\}$. Self-duality therefore requires equivalence of the original and inverse labels; it cannot be inferred from the central character alone.
+
+### 9.4 Why numerical invariants are not enough
+
+Central character and conductor do not determine a dihedral packet. Distinct regular characters of $k_2^\times$ can have the same restriction to $k^\times$ and the same conductor. Their values
+
+$$
+\bar\theta(x)+\bar\theta(x^q)
+$$
+
+on elliptic residue elements distinguish them. An unramified and a ramified quadratic pair can also acquire the same central character and total conductor after twisting while retaining nonisomorphic centralizer fields.
+
+Local Euler factors are still coarser: every selected irreducible dihedral parameter has Euler factor one. Epsilon factors retain a Gauss phase, but conductor plus epsilon factor is not a complete character table. The full regular elliptic character identity is therefore the defining statement; the structural compatibilities are checks and consequences.
+
+## 10. Conductors and local factors
+
+### 10.1 Conductor conventions
+
+The split conductor $a_G(\pi)$ is the newvector exponent: the least $n$ for which a generic irreducible has a nonzero $\mathcal K_1(\mathfrak p^n)$-fixed vector. On $D^\times$, normal principal-unit fixed spaces jump from zero to the whole representation, so the raw filtration index is not the same notion. The selected division packets carry the transfer-facing conductor established by their types:
+
+$$
+a_{G'}(\mu\circ\operatorname{Nrd})
+=
+\begin{cases}
+1,&a_F(\mu)=0,\\
+2a_F(\mu),&a_F(\mu)>0,
+\end{cases}
+\tag{10.1}
+$$
+
+and
+
+$$
+a_{G'}(\pi'(E,\theta))
+=v_F(\mathfrak d_{E/F})
++f(E/F)a_E(\theta).
+\tag{10.2}
+$$
+
+These conventions make transfer preserve the conductor exponent throughout the selected range. They do not assert equality of the underlying fixed spaces.
+
+### 10.2 Special conductor calculation
+
+If $a_F(\mu)=m>0$, the reduced norm on principal units satisfies
+
+$$
+\operatorname{Nrd}(U_D^{2m-1})
+=\operatorname{Nrd}(U_D^{2m})
+=U_F^m.
+\tag{10.3}
+$$
+
+To verify (10.3), use the cyclic model
+
+$$
+D=F_2\oplus F_2\Pi,
+\qquad \Pi^2=\varpi,
+\qquad \Pi a=\sigma(a)\Pi,
+$$
+
+where $F_2/F$ is unramified quadratic and $\sigma$ is its nontrivial automorphism. For $x$ in the maximal ideal,
+
+$$
+\operatorname{Nrd}(1+x)
+=1+\operatorname{Trd}(x)+\operatorname{Nrd}(x).
+$$
+
+If $x\in\mathfrak P_D^{2m-1}$ or $\mathfrak P_D^{2m}$, the first possible scalar trace lies in $\mathfrak p^m$. On the associated graded quotient it fills $\mathfrak p^m/\mathfrak p^{m+1}$ because $\operatorname{Tr}_{k_2/k}$ is surjective; the norm term is deeper. Successive lifting through the complete unit filtration proves that the image is all of $U_F^m$. Thus the division norm character first becomes trivial at the unit depth corresponding to exponent $2m$. On the split side the exceptional induced model has two inducing characters of conductor $m$, and the newvector theorem gives exponent $2m$ for the Steinberg constituent.
+
+If $\mu$ is unramified, the norm character is already trivial on $\mathcal O_D^\times$, while the Steinberg twist has an Iwahori line and no hyperspecial line. The transfer-facing value one records this monodromy boundary. Hence
+
+$$
+a_G(\operatorname{St}\otimes\mu)
+=a_{G'}(\mu\circ\operatorname{Nrd})
+=a_{\mathrm{sp}}(\mu).
+\tag{10.4}
+$$
+
+### 10.3 Dihedral conductor calculation
+
+For a tame pair, both type calculations yield
+
+$$
+\boxed{
+a_G(\pi(E,\theta))
+=a_{G'}(\pi'(E,\theta))
+=v_F(\mathfrak d_{E/F})
++f(E/F)a_E(\theta).
+}
+\tag{10.5}
+$$
+
+Here is the mechanism on the division side. The last visible simple character is defined by $\psi_D(\beta x)$. Triviality on an ambient unit group occurs exactly when the corresponding lattice lies in the trace-dual annihilator of $\beta$ and its intersection with $E$ lies in the kernel of $\theta$. The displacement between the $D$-trace-dual lattice and the $E$-trace-dual lattice contributes $v_F(\mathfrak d_{E/F})$. Each $E$-unit layer has $F$-length $f(E/F)$, giving the second term. Minimality proves nontriviality on the preceding layer.
+
+The split newvector calculation reads the same last-layer datum in the hereditary order defining the type. Mackey decomposition shows that exactly one double coset contributes at the exponent in (10.5), while the simple character kills every contribution at lower exponent. Hence the newvector appears there with multiplicity one.
+
+If $E/F$ is unramified, (10.5) becomes $2a_E(\theta)$. Depth zero has conductor two. If $E/F$ is tamely ramified quadratic, it becomes $a_E(\theta)+1$, and admissibility forces $a_E(\theta)\ge2$. Under twisting, the exact formula is obtained by replacing $\theta$ with $\theta(\chi\circ N_{E/F})$; cancellation can lower the result.
+
+### 10.4 The common Weil--Deligne datum
+
+The selected packet labels determine two-dimensional Frobenius-semisimple Weil--Deligne representations:
+
+$$
+\operatorname{St}\otimes\mu,
+\ \mu\circ\operatorname{Nrd}
+\longmapsto
+\operatorname{Sp}_2(\mu),
+\tag{10.6}
+$$
+
+and
+
+$$
+\pi(E,\theta),
+\ \pi'(E,\theta)
+\longmapsto
+\operatorname{Ind}_{W_E}^{W_F}\theta,
+\qquad N=0.
+\tag{10.7}
+$$
+
+Regularity makes (10.7) irreducible: restricting to $W_E$ gives $\theta\oplus\theta^\sigma$, and equality of the two characters is exactly the reducibility condition. The determinant of (10.7) is (5.3). The induction formula for Artin conductors gives
+
+$$
+a_F(\operatorname{Ind}_{W_E}^{W_F}\theta)
+=v_F(\mathfrak d_{E/F})
++f(E/F)a_E(\theta),
+\tag{10.8}
+$$
+
+which recovers (10.5). For (10.6), the monodromy conductor is one when $\mu$ is unramified and the two ramified character lines contribute $2a_F(\mu)$ otherwise, recovering (10.4).
+
+Thus the common parameter is compatible independently with both the central-character and conductor calculations. It is not inferred merely from equality of those two coarse invariants; it is attached to the common selected label.
+
+### 10.5 Euler and epsilon factors
+
+Define the selected local factors from the common data (10.6)--(10.7), using the conventions of Chapter 1. Equality across transfer is then the precise statement that both representation constructions carry the same selected parameter label.
+
+For a special packet,
+
+$$
+L(s)=L(s+1/2,\mu).
+\tag{10.9}
+$$
+
+If $\mu$ is unramified and $\alpha=\mu(\Phi)=\mu(\varpi)$, then
+
+$$
+L(s)=\frac1{1-\alpha q^{-s-1/2}},
+$$
+
+and for $n(\psi)=0$,
+
+$$
+\epsilon(s)=-\alpha q^{-(s-1/2)}.
+\tag{10.10}
+$$
+
+If $\mu$ is ramified, the Euler factor is one and
+
+$$
+\epsilon(s,\operatorname{Sp}_2(\mu),\psi)
+=\epsilon(s+1/2,\mu,\psi)
+\epsilon(s-1/2,\mu,\psi).
+\tag{10.11}
+$$
+
+For a dihedral packet, the inertia-invariant space of the irreducible two-dimensional induction is zero. Otherwise it would contain an unramified subrepresentation, contradicting irreducibility. Hence
+
+$$
+L(s,\pi(E,\theta))
+=L(s,\pi'(E,\theta))=1.
+\tag{10.12}
+$$
+
+Put $\psi_E=\psi\circ\operatorname{Tr}_{E/F}$. The induction formula for epsilon factors gives
+
+$$
+\boxed{
+\epsilon_F(s,\operatorname{Ind}_{W_E}^{W_F}\theta,\psi)
+=\lambda(E/F,\psi)\epsilon_E(s,\theta,\psi_E).
+}
+\tag{10.13}
+$$
+
+The lambda factor is generally nontrivial for ramified $E/F$ and cannot be dropped. Its monomial exponent, together with the different shift in the conductor of $\psi_E$, is precisely (10.8). Therefore transfer preserves $L$-, epsilon-, and gamma factors with every normalization visible.
+
+### 10.6 Changes of additive character and measure
+
+Let $\psi_a(x)=\psi(ax)$ for $a\in F^\times$. A two-dimensional parameter $V$ satisfies
+
+$$
+\epsilon(s,V,\psi_a)
+=\det V(a)|a|^{2(s-1/2)}
+\epsilon(s,V,\psi).
+\tag{10.14}
+$$
+
+The determinant is the common central character, so both members of a selected packet transform identically. If an additive Haar measure is multiplied by a positive scalar $b$ while $\psi$ is fixed, the epsilon factor is multiplied by $b^2$. Equality across transfer survives any common change but not an inconsistent measure choice.
+
+For an unramified twist $\chi$ with $\chi(\Phi)=\beta$,
+
+$$
+\epsilon(s,V\otimes\chi,\psi)
+=\beta^{a(V)+2n(\psi)}\epsilon(s,V,\psi).
+\tag{10.15}
+$$
+
+This formula jointly checks the geometric Frobenius, reciprocity, conductor, and additive-character conventions.
+
+## 11. Types, newvectors, and level
+
+### 11.1 What transfer can compare
+
+The split representation is infinite-dimensional and has a one-dimensional newvector line at its conductor. The division representation is finite-dimensional, and every principal-unit subgroup $U_D^r$ is normal. Therefore, if one nonzero vector is fixed by $U_D^r$, irreducibility makes the whole representation fixed.
+
+There can consequently be no natural equality
+
+$$
+\pi^{\mathcal K_1(\mathfrak p^n)}
+\simeq
+\pi'^{U_D^r}
+$$
+
+based only on matching exponents. The correct integral-level statement compares the split newvector or type multiplicity line with the distinguished multiplicity line of the division type. Equality of conductor exponents identifies where those lines first occur; it does not identify the surrounding fixed spaces.
+
+### 11.2 Special type lines
+
+If $\mu$ is unramified, $\operatorname{St}\otimes\mu$ has a one-dimensional Iwahori-fixed line on which the finite Iwahori quotient acts through the sign character. Its division companion is trivial on $\mathcal O_D^\times$. These are the minimal special type lines selected by conductor one.
+
+If $a_F(\mu)=m>0$, the split newvector first appears at $\mathcal K_1(\mathfrak p^{2m})$. Formula (10.3) places the division character at the corresponding norm depth. In either case the relevant line is defined only up to a nonzero scalar; local transfer does not canonically choose a basis vector.
+
+### 11.3 Dihedral multiplicity lines
+
+Let $\Lambda$ and $\Lambda'$ be the types in (5.6)--(5.7). Their defining multiplicities are
+
+$$
+\dim\operatorname{Hom}_{J}(\Lambda,\pi(E,\theta))=1,
+$$
+
+$$
+\dim\operatorname{Hom}_{J'}(\Lambda',\pi'(E,\theta))=1.
+\tag{11.1}
+$$
+
+For compact induction, the identity coset supplies a nonzero map. Exact intertwining of a simple type says that every other double coset contributes zero, so Frobenius reciprocity proves multiplicity one. The common last-layer character and Lemma 7.1 identify the labels of the two lines. After choosing a primitive torus vector, the comparison is unique up to a coefficient-field unit.
+
+On the split side, the newvector at exponent (10.5) is obtained from the type line by the standard compact averaging compatible with the central character. Only one double coset survives: at every other coset the last simple-character layer is nontrivial. On the division side the corresponding object remains the type multiplicity line, since averaging over a normal unit subgroup would reveal either no vectors or all vectors.
+
+### 11.4 Oldvectors and the anisotropic jump
+
+For $r\ge a_G(\pi)$, a selected generic split representation satisfies
+
+$$
+\dim\pi^{\mathcal K_1(\mathfrak p^r)}
+=r-a_G(\pi)+1.
+\tag{11.2}
+$$
+
+Successive diagonal translates of the newvector give these oldvectors, and their supports in the Kirillov model prove linear independence. The standard recurrence expresses every invariant vector as their span.
+
+There is no analogue of (11.2) on $D^\times$. Once $U_D^r$ enters the kernel, the fixed-space dimension jumps to $\dim\pi'$. This contrast is expected: transfer preserves the elliptic representation and its minimal arithmetic label, not the geometry of the two ambient buildings.
+
+## 12. Integral type lattices
+
+### 12.1 Coefficient rings and integrality
+
+Let $L/\mathbf Q_\ell$ be finite with valuation ring $R$, and assume $\ell\ne p$. A selected label is integral over $R$ if all its character values lie in $L$ and are units of $R$. After enlarging $L$, this includes finite-order tame characters and the roots of unity occurring in simple characters. An unramified scalar is allowed only when its value on $\varpi$ is an $R$-unit.
+
+The unit condition is necessary. If an unramified character sends $\varpi$ to a nonunit, a finite nonzero $R$-lattice cannot be stable under both $\varpi$ and $\varpi^{-1}$. Thus no unconditional integral-lattice statement can be made for an arbitrary complex quasicharacter.
+
+### 12.2 Special lattices
+
+For a unit-valued $\mu$, the division companion has the rank-one stable lattice
+
+$$
+R(\mu\circ\operatorname{Nrd}).
+$$
+
+The split Steinberg representation has its usual lattice of locally constant $R$-valued functions on $\mathbf P^1(F)$ modulo constant functions, twisted by $\mu$. The quotient is torsion free: a function whose multiple is constant differs from a constant by an $R$-valued function only when it was already constant modulo the lattice. Hence the Steinberg lattice is flat and its minimal Iwahori or ramified newvector line is a free rank-one direct summand.
+
+The exact sequence (4.3) and the fixed-point calculation are integral. Therefore the elliptic sign and the special type-line labels are preserved by finite extension of $R$.
+
+### 12.3 Dihedral type lattices
+
+At depth zero, the inducing characters are unit valued, so they preserve rank-one lattices. Finite induction gives stable lattices in both finite types.
+
+At positive depth, the simple character has $p$-power-order values. Since $\ell\ne p$, those values are units. Choose a maximal isotropic subgroup in the finite Heisenberg quotient and extend the simple character over it. Induction produces a finite free $R$-module. Its generic fiber is the irreducible Heisenberg representation. The averaging denominators in the finite Heisenberg construction are powers of $p$ and hence are units in $R$; the intertwining argument therefore remains valid over the chosen coefficient ring.
+
+The tame torus extension operators may be scaled once so that they preserve these lattices. We obtain finite free type lattices
+
+$$
+\Lambda_R\subset\Lambda_{\theta^\natural},
+\qquad
+\Lambda'_R\subset\Lambda'_{\theta^\natural}.
+\tag{12.1}
+$$
+
+The division induction
+
+$$
+\pi'_R=\operatorname{Ind}_{J'}^{G'}\Lambda'_R
+$$
+
+is finite free because the relevant coset set is finite modulo the central action. On the split side the full compact induction need not be finite over $R$, but every compact-open fixed module used to form the newvector is finite free.
+
+The Fourier sums in Lemma 7.1 are finite sums of integral roots of unity multiplied by powers of $q$. They therefore lie in $R$, although the sums themselves need not be units. The characteristic-zero comparison carries the chosen type lattices into commensurable lattices; saturation in the next section removes any scalar divisibility and preserves the label of the multiplicity spaces.
+
+### 12.4 Saturated multiplicity lines
+
+Let $M_R$ be the finite free fixed module in which the split type or newvector line occurs. Intersect the one-dimensional $L$-multiplicity space with $M_R$ and saturate:
+
+$$
+\mathcal L_R
+=\{m\in M_R:\text{some nonzero }a\in R
+\text{ has }am\text{ in the intersection}\}.
+$$
+
+Then $M_R/\mathcal L_R$ is torsion free, so $\mathcal L_R$ is a rank-one direct summand. The same construction gives a division multiplicity line $\mathcal L'_R$.
+
+The characteristic-zero transfer comparison maps one multiplicity space to the other. Multiplying the map by one element of $L^\times$ makes a primitive generator map to a primitive generator. Any two such normalizations differ by $R^\times$. Thus there is a well-defined correspondence
+
+$$
+\mathcal L_R\longleftrightarrow\mathcal L'_R
+\tag{12.2}
+$$
+
+up to the unavoidable unit scalar. This is the precise integral type-lattice compatibility needed in level change; it does not assert an isomorphism of the full split and division representations.
+
+### 12.5 Perfect pairings
 
 Put
 
 $$
-\theta^\natural=\theta\xi_{E/K}.
+\Lambda_R^\#=\operatorname{Hom}_R(\Lambda_R,R)
 $$
 
-Then the determinant of the induced two-dimensional datum is
+with contragredient action. On the division side, induced functions pair by the finite coset sum
 
 $$
-\theta^\natural|_{K^\times}\,\kappa_{E/K}
-=\theta|_{K^\times},
+\langle f,f^\#\rangle
+=\sum_{x\in J'\backslash G'}
+\langle f(x),f^\#(x)\rangle.
+\tag{12.3}
 $$
 
-as required by central-character compatibility. The rectifier has the smallest possible depth, so it does not change the conductor of a minimal regular positive-depth pair; at level zero in the unramified case it is trivial on units and does not change $\bar\theta$.
+The sum is independent of representatives because the two transformation laws cancel. It is invariant because right translation permutes the cosets. It is perfect because, after choosing coset representatives, it is the orthogonal direct sum of perfect pairings on $\Lambda'_R$.
 
-This explains the factor formula of Section 12.4:
+The split newvector lattice pairs perfectly with the contragredient newvector lattice after primitive normalization. Under (9.4), inversion of the admissible label identifies the corresponding dual lines. No denominator is introduced: (12.3) is a sum, not an average.
 
-$$
-L(s,\pi_G(E,\theta))=1,
-$$
+### 12.6 Reduction and the nonbanal boundary
 
-$$
-\epsilon(s,\pi_G(E,\theta),\psi)
-=\lambda(E/K,\psi)
-\epsilon(s,\theta^\natural,\psi_E).
-$$
+Stable lattices and their reductions always exist under the unit-valued and $\ell\ne p$ hypotheses. Irreducibility and multiplicity one after reduction require more. Assume that $\ell$ does not divide the orders of the finite tame quotients, stabilizers, and coset permutation groups controlling the selected type. Then averaging remains exact, the reduced intertwining calculation is unchanged, and the two reduced multiplicity lines remain one dimensional. The perfect pairing remains nondegenerate.
 
-The same formulas hold for $\rho_D(E,\theta)$. Using $\theta$ in place of $\theta^\natural$ can introduce a quadratic error in the determinant and root number even though it leaves a coarse conductor calculation unchanged.
+If $\ell$ divides $q+1$, two distinct depth-zero characters of $k_2^\times$ can become congruent to their Frobenius conjugates. The reduced index-two induction may split or acquire new endomorphisms. At positive depth the Heisenberg quotient is a $p$-group and causes no problem when $\ell\ne p$, but its tame normalizer can have order divisible by $q-1$ or $q+1$. Projectors to tame eigenspaces may then cease to be exact.
 
-## 14. Worked examples over $\mathbf Q_p$
+The correct conclusion has two layers. Finite free stable lattices, saturated selected lines, and perfect contragredient pairings hold for integral labels with $\ell\ne p$. Preservation of irreducibility and multiplicity under reduction additionally requires the stated banal hypotheses.
 
-### 14.1 Unramified norm characters
+## 13. Worked packets and boundary tests
 
-Let $K=\mathbf Q_p$ and let $\mu$ be unramified with $\mu(p)=u$. Then
+### 13.1 An unramified special twist
+
+Let $\mu$ be unramified and put $A=\mu(\varpi)$. The selected pair is
 
 $$
-\rho=\mu\circ\operatorname{Nrd}
+\operatorname{St}\otimes\mu
+\quad\longleftrightarrow\quad
+\mu\circ\operatorname{Nrd}.
 $$
 
-is one dimensional, trivial on $\mathcal O_D^\times$, and has $a_D(\rho)=0$. Its transfer is
-
-$$
-\operatorname{JL}(\rho)=\operatorname{St}\otimes\mu,
-$$
-
-which has conductor one and a one-dimensional Iwahori line. On a matching regular pair,
+Both central characters are $\mu^2$ and both transfer-facing conductors are one. For $g\leftrightarrow d$,
 
 $$
 \Theta_{\operatorname{St}\otimes\mu}(g)
@@ -1657,320 +1452,209 @@ $$
 =-\mu(\operatorname{Nrd}d).
 $$
 
-The common local factor is
+With $n(\psi)=0$,
 
 $$
-\left(1-u p^{-s-1/2}\right)^{-1},
-$$
-
-and the common formal degree, with our quotient measures, is $(p-1)/2$. This single example simultaneously checks the sign, the exceptional conductor shift, the half-unitary $L$-shift, and the formal-degree scaling.
-
-### 14.2 A level-zero correspondence
-
-Let $E/\mathbf Q_p$ be unramified quadratic and choose
-
-$$
-\bar\theta:\mathbf F_{p^2}^\times\to C^\times,
-\qquad \bar\theta^p\ne\bar\theta.
-$$
-
-Extend it to $E^\times$ with $a_E(\theta)=1$. The division representation
-
-$$
-\rho_D(E,\theta)
-=\operatorname{c\text{-}Ind}_{E^\times U_D^1}^{D^\times}\theta
-$$
-
-has dimension two, $c_D=1$, and $a_D=2$. Its transfer is the depth-zero supercuspidal obtained by inflating the finite cuspidal representation of $\mathrm{GL}_2(\mathbf F_p)$ and compactly inducing from $\mathbf Q_p^\times\mathrm{GL}_2(\mathbf Z_p)$. It has conductor two and a unique $\mathcal K_1(p^2)$-fixed line.
-
-For a residue generator $t$ of $\mathbf F_{p^2}$ over $\mathbf F_p$,
-
-$$
-\Theta_\rho(t)=\bar\theta(t)+\bar\theta(t^p),
-$$
-
-and the split character is its negative. Both standard $L$-factors are $1$, both epsilon exponents are $2$, and
-
-$$
-d_G(\operatorname{JL}(\rho))=p-1.
-$$
-
-If $\bar\theta^p=\bar\theta$, the construction is not a counterexample to the theorem: it is not regular. The division induction decomposes into characters, and the finite split representation is not cuspidal.
-
-### 14.3 A positive-depth unramified example
-
-Assume $p$ is odd. Let $E/\mathbf Q_p$ be unramified quadratic and choose $b\in\mathcal O_E^\times$ with residue outside $\mathbf F_p$. Define the last unit layer of $\theta$ by
-
-$$
-\theta(1+px)=\psi_E(p^{-1}bx),
-$$
-
-and extend it minimally with $a_E(\theta)=2$. The parameter $b$ is not scalar modulo $p$, so the character is regular after norm twists.
-
-The division representation has
-
-$$
-\dim\rho=2p,\qquad c_D=3,\qquad a_D=4,
-$$
-
-and its construction contains a $p$-dimensional Heisenberg representation before the valuation-two orbit is induced. Its split transfer is supercuspidal of conductor four. It has no fixed vector at $\mathcal K_1(p^3)$ and one at $\mathcal K_1(p^4)$. The common formal degree is
-
-$$
-p(p-1),
-$$
-
-and the common standard $L$-factor is $1$. The epsilon constant is the finite Gauss sum attached to $\theta^\natural$ on $U_E^0/U_E^2$, multiplied by $\lambda(E/K,\psi)$.
-
-This example shows why “same conductor” does not mean “same level space.” The division group reveals all $2p$ dimensions once $U_D^3$ is killed; the split group reveals a canonical one-dimensional newvector at level four.
-
-### 14.4 A tame ramified example and the dyadic boundary
-
-Let $p$ be odd, $E=\mathbf Q_p(\sqrt p)$, and choose a minimal regular character $\theta$ with $a_E(\theta)=2$. Then
-
-$$
-\Delta(E/K)=1,\qquad f(E/K)=1,\qquad a=3.
-$$
-
-The division representation has
-
-$$
-\dim\rho=p+1,\qquad c_D=2,\qquad a_D=3,
-$$
-
-and its transfer is a supercuspidal with a unique $\mathcal K_1(p^3)$-fixed line. Their common formal degree is
-
-$$
-\frac{p^2-1}{2}.
-$$
-
-The root number is reduced to a Gauss sum for $\theta^\natural$ over $U_E^0/U_E^2$ and the ramified quadratic induction constant.
-
-At $p=2$, the example must not be copied by replacing $p$ with $2$. Ramified quadratic extensions are wild, $\Delta(E/K)$ can exceed one, and conductor-two regularity has different stabilizer data. One may still begin with an abstract Clifford module killed by $U_D^m$, transfer its finite character through the elliptic cocenter, and obtain a supercuspidal of conductor $m+1$. What is unavailable is the tame dimension formula $p+1$ or a universal description by the displayed pair.
-
-## 15. Scalar symmetries
-
-### 15.1 Unramified twists
-
-An unramified character $\chi$ is trivial on $\mathcal O^\times$. Twisting by it changes only the valuation direction. On matching elements,
-
-$$
-\chi(\det g)=\chi(\operatorname{Nrd}d),
-$$
-
-so the general twisting theorem specializes to
-
-$$
-\operatorname{JL}(\rho\otimes\chi)
-\cong\operatorname{JL}(\rho)\otimes\chi,
-$$
-
-where the two occurrences mean norm and determinant twist, respectively. Unramified twisting preserves $c_D$, $a_D$, and every compact-unit type. It preserves $a_G$ and the newvector level. It multiplies characteristic values on a norm-valuation-$m$ class by $\chi(\varpi)^m$.
-
-For factors it replaces $\mu(\varpi)$ by $\mu(\varpi)\chi(\varpi)$ in the special Euler factor. For supercuspidals the $L$-factor remains one, while the root number is multiplied by the predictable unramified scalar determined by the analytic conductor:
-
-$$
-\epsilon(1/2,\pi\otimes\chi,\psi)
-=\chi(\varpi)^{a_G(\pi)}\epsilon(1/2,\pi,\psi)
-$$
-
-under the convention that $\chi$ is evaluated on arithmetic-valuation uniformizers. If the opposite reciprocity convention is used to name the character, the scalar is inverted. The representation-theoretic statement in terms of $\chi(\varpi)$ has no such ambiguity.
-
-Unramified twisting also reduces nonunitary questions to unitary ones. Every essentially square-integrable representation has an unramified real twist that is unitary. Prove orthogonality or formal-degree statements there, then twist back using the formulas above.
-
-### 15.2 Automorphisms of the coefficient field
-
-Let $\tau$ be an automorphism of the algebraically closed coefficient field $C$. Applying $\tau$ to matrices and scalar values produces representations ${}^\tau\rho$ and ${}^\tau\pi$. Since the matching relation is defined over $K$ and the sign $-1$ is rational,
-
-$$
-\Theta_{{}^\tau\pi}(g)
-=\tau(\Theta_\pi(g))
-=-\tau(\Theta_\rho(d))
-=-\Theta_{{}^\tau\rho}(d).
-$$
-
-Uniqueness gives
-
-$$
-\boxed{\ \operatorname{JL}({}^\tau\rho)
-\cong{}^\tau\operatorname{JL}(\rho).\ }
-$$
-
-Thus the correspondence is equivariant under coefficient automorphisms. A Schur index can obstruct the existence of a model over a smaller field even when the orbit of the isomorphism class is stable.
-
-The equivariance just proved identifies the fields of rationality of the two isomorphism classes. It does **not** by itself prove equality of Schur indices or the existence of models over every smaller field; those are separate descent questions, so no stronger assertion is needed here.
-
-Conductors and dimensions are integers and remain unchanged. Formal degrees are rational under our measures and remain unchanged. For local factors, coefficient automorphisms act on the Laurent-polynomial coefficients and on the chosen algebraic value of $q^{1/2}$, not on the complex variable $s$. The precise epsilon-factor formula also moves the additive character:
-
-$$
-\tau\!\left(\epsilon(s,\pi,\psi)\right)
-=\epsilon(s,{}^\tau\!\pi,{}^\tau\!\psi),
+L(s)=\frac1{1-Aq^{-s-1/2}},
 \qquad
-{}^\tau\!\psi=\tau\circ\psi.
+\epsilon(s)=-Aq^{-(s-1/2)}.
 $$
 
-The same formula holds for $\rho$. If $\tau$ fixes the values of $\psi$, one may keep $\psi$ unchanged. This qualification prevents a Gauss sum from being declared invariant while its additive character has actually moved.
+The conductor is not $2a(\mu)=0$: the nonzero monodromy in $\operatorname{Sp}_2(\mu)$ contributes one.
 
-### 15.3 Changing the additive character
+### 13.2 A ramified special twist
 
-The correspondence itself does not depend on $\psi$. Epsilon factors do. If
+Let $a_F(\mu)=m>0$. Then both conductors are $2m$ and both Euler factors are one. The epsilon factor is the product (10.11) of the two shifted rank-one factors. Its Gauss phase depends on $\mu$, so two characters with the same conductor need not give the same selected packet.
 
-$$
-\psi_a(x)=\psi(ax),\qquad a\in K^\times,
-$$
+A particularly useful check is a tame quadratic $\mu$. Twisting the packet by $\mu^{-1}$ cancels the ramification and produces the unramified special packet. The conductor drops from two to one. Any rule using only the maximum of the old conductor and twice the twist conductor gives the wrong result.
 
-then the degree-two change-of-character formula is
+### 13.3 An unramified depth-zero pair
 
-$$
-\epsilon(s,\pi,\psi_a)
-=\omega_\pi(a)|a|^{2(s-1/2)}
-\epsilon(s,\pi,\psi).
-$$
+Let $E/F$ be unramified quadratic and choose a character $\bar\theta$ of $k_2^\times$ with $\bar\theta^q\ne\bar\theta$. Inflate it to a character $\theta$ of $E^\times$ with $a_E(\theta)=1$. Both packet members have conductor two and central character $\theta|_{F^\times}\omega_{E/F}$.
 
-The same formula holds for $\rho$, with $\omega_\rho$. Since central characters agree, epsilon compatibility for $\psi$ implies compatibility for every $\psi_a$.
-
-**Proof.** In the Fourier transform replace $y$ by $ay$. Self-dual measure scales by $|a|^{\dim_K A/2}=|a|^2$, while the multiplicative change of variables contributes the norm power. The central scalar $a$ acts with determinant $a^2$ and through $\omega(a)$. Collecting the factors yields the displayed exponent. $\square$
-
-If $\psi$ has nonzero conductor exponent, the monomial expression for epsilon factors must include that shift. The intrinsic functional equation is safer than transplanting the conductor-zero exponent without correction.
-
-## 16. The precise image and the missing representations
-
-### 16.1 Essentially square-integrable representations
-
-The image of transfer is exactly
+For a matching elliptic unit whose residue coordinate is $x\in k_2^\times\setminus k^\times$,
 
 $$
-\{\operatorname{St}\otimes\mu\}
-\qquad\sqcup\qquad
-\{\text{supercuspidal representations of }G\}.
+\Theta_G=-\bar\theta(x)-\bar\theta(x^q),
+\qquad
+\Theta_{G'}=\bar\theta(x)+\bar\theta(x^q).
 $$
 
-These are precisely the essentially square-integrable irreducibles. A unitary Steinberg coefficient decays like $q^{-m}$ along the Cartan ray, so its square is summable with the Cartan volume growth. A supercuspidal coefficient is compactly supported modulo $Z$. Twists by nonunitary unramified characters give the essentially square-integrable forms.
-
-On $D^\times$, every irreducible is square-integrable modulo $Z$ after a unitary twist because $D^\times/Z$ is compact. Local Jacquet--Langlands is therefore a bijection between the full anisotropic dual and the elliptic part of the split dual. It is not a bijection between full irreducible duals.
-
-### 16.2 Why irreducible principal series are absent
-
-Every irreducible principal series
+The common Euler factor is one, and
 
 $$
-I(\chi_1,\chi_2),\qquad
-\chi_1\chi_2^{-1}\ne|\cdot|^{\pm1},
+\epsilon_F(s)
+=\lambda(E/F,\psi)\epsilon_E(s,\theta,\psi_E).
 $$
 
-is absent. Its regular elliptic character is zero. If it were the transfer of $\rho$, the defining identity would force $\Theta_\rho$ to vanish on every regular element of $D^\times$. That regular set has full measure in the compact quotient, and ordinary character orthogonality would force the nonzero irreducible character to be zero, an impossibility.
+Changing the value of $\theta$ on a uniformizer can change the epsilon factor without changing the residue-unit character formula. This illustrates again that no single coarse invariant defines transfer.
 
-The absence is structural, not merely a mismatch of conductors. Principal series are built from the split torus $K^\times\times K^\times$. The division algebra contains no split torus. Their two Satake parameters and their two $K$-rational eigenlines have no anisotropic counterpart.
+### 13.4 A tame ramified pair
 
-One-dimensional split representations $\mu\circ\det$ are absent for the same image reason: they are not essentially square-integrable. Their elliptic characters are not zero, but they represent the negative of Steinberg in the elliptic quotient. The actual division norm character transfers to Steinberg, not to the determinant character.
-
-### 16.3 Boundary phenomena at reducibility
-
-At the exceptional ratios, normalized induction has two constituents:
+Assume $p\ne2$, let $E/F$ be ramified quadratic, and choose a minimal admissible $\theta$ with $a_E(\theta)=r\ge2$. Since $v_F(\mathfrak d_{E/F})=1$ and $f(E/F)=1$,
 
 $$
-0\to\mu\circ\det\to
-I(\mu|\cdot|^{-1/2},\mu|\cdot|^{1/2})
-\to\operatorname{St}\otimes\mu\to0.
+a(\pi(E,\theta))
+=a(\pi'(E,\theta))
+=r+1.
 $$
 
-The middle representation has zero elliptic character, so
+On the type-regular torus the two characters are sums of two Heisenberg traces and Lemma 7.1 supplies the sign. Near the center, extra conjugate embeddings enter; the shell calculation of Section 7.5 pairs their Fourier sums with the same sign. This is the basic example in which the two-normalizer formula alone is insufficient.
+
+### 13.5 A cancelling twist
+
+Let $E/F$ be unramified and let $\theta_0$ be minimal with $a_E(\theta_0)=2$. Choose $\chi$ so that $a_E(\chi\circ N_{E/F})=4$, and set
 
 $$
-\Theta_{\mu\circ\det}(g)
-+\Theta_{\operatorname{St}\otimes\mu}(g)=0
+\theta=\theta_0(\chi^{-1}\circ N_{E/F}).
 $$
 
-on the elliptic regular set. Transfer selects the special constituent because it is discrete series. The character constituent is its additive inverse only after passage to the elliptic Grothendieck quotient.
+Then $a_E(\theta)=4$ and the associated packet has conductor eight. Twisting both sides by $\chi$ cancels the deeper norm layer and leaves the packet of $\theta_0$, whose conductor is four. The exact twisted label in (9.2), not a maximum formula, detects the drop.
 
-This distinction rules out three common errors.
+### 13.6 The dyadic and primitive-wild boundary
 
-- The reducible principal series itself is not the transfer; transfer pairs irreducibles.
-- The determinant character is not the transfer merely because its elliptic character differs only by a sign.
-- Reversing the order of the inducing characters changes the extension structure but not the two constituents; it does not change which constituent transfers.
+When $p=2$, the unramified quadratic extension is still tame, so the depth-zero and unramified positive-depth constructions remain in the theorem. A ramified quadratic extension is wild. Its different exponent can exceed one, trace may vanish on the layer used in Section 5.2, and the extension of a simple character can require data not fixed by the tame Heisenberg quotient.
 
-There are no other boundary cases. An irreducible principal series never becomes essentially square-integrable under a character twist, while every Steinberg twist remains in the image.
+Primitive wild representations present the same obstruction more generally: their leading stratum is not captured by the selected tame quadratic pair. The compactness of $D^\times/F^\times$ still makes them finite-dimensional, but compactness does not supply the missing character comparison. This book therefore makes no transfer, conductor, factor, or integral-type assertion for them.
 
-## 17. The local dictionary for global transfer
+## 14. The trace-formula and integral-level interface
 
-### 17.1 The transfer table
+### 14.1 The pointwise local transfer
 
-The theorem and its compatibilities may be collected without suppressing exceptional normalizations.
-
-| division-side datum $\rho$ | split transfer $\operatorname{JL}(\rho)$ | conductor comparison | standard $L$-factor |
-|---|---|---|---|
-| $\mu\circ\operatorname{Nrd}$, $a(\mu)=0$ | $\operatorname{St}\otimes\mu$ | $a_D=0$, $a_G=a_{\mathrm{an}}=1$ | $L(s+1/2,\mu)$ |
-| $\mu\circ\operatorname{Nrd}$, $a(\mu)>0$ | $\operatorname{St}\otimes\mu$ | $a_D=a_G=2a(\mu)$ | $1$ |
-| regular unramified pair, $a_E(\theta)=n$ | supercuspidal $\pi_G(E,\theta)$ | $a_D=a_G=2n$ | $1$ |
-| regular tame ramified pair, $a_E(\theta)=n$ | supercuspidal $\pi_G(E,\theta)$ | $a_D=a_G=n+1$ | $1$ |
-| higher-dimensional wild Clifford datum | unique supercuspidal with negative matching character | $a_G=c_D+1=a_D$ | $1$ |
-
-For every row:
+The datum required at a ramified inner-form place begins with a matching-class rule:
 
 $$
-\omega_{\operatorname{JL}(\rho)}=\omega_\rho,
+P_g=P_d,
+\qquad
+\Theta_\pi(g)=-\Theta_{\pi'}(d).
+\tag{14.1}
 $$
 
-$$
-\operatorname{JL}(\rho\otimes\chi)
-=\operatorname{JL}(\rho)\otimes\chi,
-$$
+The polynomial equality fixes the class orientation, including determinant/norm equality and compatibility with inversion. The character equality fixes the unique selected packet. No choices of embeddings or bases remain in either statement.
+
+For special packets, (14.1) is the exact sequence calculation of Chapter 4. For depth-zero packets, it is the finite cuspidal calculation of Chapter 6. For positive-depth packets, it is the complementary Fourier-index calculation plus the near-central shell argument of Chapter 7. Thus the pointwise transfer is proved on the entire regular locus, not merely on a convenient torus neighborhood.
+
+### 14.2 The orbital trace identity
+
+Let $f$ and $f'$ be geometrically matching in the sense of (3.8), with compatible central character and elliptic support. Then Weyl integration and (14.1) give
 
 $$
-\operatorname{JL}(\rho^\vee)
-=\operatorname{JL}(\rho)^\vee,
+\boxed{
+\operatorname{tr}\pi(f)
+=-\operatorname{tr}\pi'(f').
+}
+\tag{14.2}
+$$
+
+Every geometric factor cancels term by term: the centralizer torus, its Haar measure, the Weyl group of order two, the discriminant, and the orbital integral. Exactly one spectral minus sign remains.
+
+If a later trace formula uses signed transfer of test functions instead, the minus sign moves into the orbital condition and (14.2) becomes an equality. The two conventions are equivalent, but a single calculation must not mix them.
+
+### 14.3 The integral level-change datum
+
+For an integral selected label, the local level-change object is not an isomorphism of full representation lattices. It is the following package:
+
+$$
+(a(\pi),\mathcal L_R,\mathcal L_R^\#)
+\quad\longleftrightarrow\quad
+(a(\pi'),\mathcal L'_R,(\mathcal L'_R)^\#),
+\tag{14.3}
+$$
+
+where the conductors are equal, the lines are saturated rank-one type multiplicity lines, and the pairings with the contragredient lines are perfect. The comparison of lines is unique up to $R^\times$. Under banal reduction hypotheses, the reduced lines retain multiplicity one.
+
+This is exactly the amount of integral structure stable under transfer. It is enough to compare primitive local generators in level-change maps while respecting the very different dimensions of the ambient representations.
+
+### 14.4 A normalization audit
+
+The construction is governed by the following linked choices:
+
+| datum | normalization |
+|---|---|
+| absolute value | $|\varpi|=q^{-1}$ |
+| Frobenius | geometric |
+| reciprocity | $\operatorname{rec}_F(\varpi)=\Phi$ |
+| special block | centered $\operatorname{Sp}_2$ |
+| quadratic type label | $\theta^\natural=\theta\Delta_{E/F}$ |
+| additive conductor | $n(\psi)=0$ for kernel $\mathcal O$ |
+| epsilon measure | self-dual for $\psi$ |
+| torus measure | $\operatorname{vol}(\mathcal O_E^\times)=1$ |
+| geometric orbital transfer | $O_g(f)=O_d(f')$ |
+| pointwise spectral sign | $\Theta_G=-\Theta_{G'}$ |
+
+Changing one row is possible only if all dependent formulas change with it. Arithmetic Frobenius reciprocates unramified eigenvalues. An uncentered special block shifts Euler factors. Direct quadratic normalization moves the rectifier phase into central-character and Gauss-sum formulas. Signed function transfer moves, but does not erase, the final minus sign.
+
+## 15. The complete selected theorem
+
+### 15.1 The comparison table
+
+| invariant | special label $\mu$ | dihedral label $(E,\theta)$ |
+|---|---|---|
+| split member | $\operatorname{St}\otimes(\mu\circ\det)$ | $\pi(E,\theta)$ |
+| division member | $\mu\circ\operatorname{Nrd}$ | $\pi'(E,\theta)$ |
+| central character | $\mu^2$ | $\theta|_{F^\times}\omega_{E/F}$ |
+| parameter | $\operatorname{Sp}_2(\mu)$ | $\operatorname{Ind}_{W_E}^{W_F}\theta$ |
+| conductor | $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $v_F(\mathfrak d_{E/F})+f(E/F)a_E(\theta)$ |
+| Euler factor | $L(s+1/2,\mu)$ | $1$ |
+| epsilon factor | factor of $\operatorname{Sp}_2(\mu)$ | $\lambda(E/F,\psi)\epsilon_E(s,\theta,\psi_E)$ |
+| elliptic character | negative of division value | negative of division value |
+| integral object | primitive special line | primitive newvector/type line and division multiplicity line |
+
+Every row respects twisting. In the special column replace $\mu$ by $\mu\chi$. In the dihedral column replace $\theta$ by $\theta(\chi\circ N_{E/F})$ and recompute its actual conductor, allowing cancellation.
+
+### 15.2 Main theorem
+
+**Theorem 15.1 (local Jacquet--Langlands in the selected range).** Let $F$ be a nonarchimedean local field and let $D/F$ be the quaternion division algebra. There is a unique bijection
+
+$$
+\operatorname{JL}_{\mathrm{sel}}:
+\mathcal D_G\xrightarrow{\sim}\mathcal D_{G'}
+$$
+
+such that, for matching separable regular elements,
+
+$$
+\Theta_\pi(g)
+=-\Theta_{\operatorname{JL}_{\mathrm{sel}}(\pi)}(d).
+\tag{15.1}
+$$
+
+It is given by
+
+$$
+\operatorname{St}\otimes(\mu\circ\det)
+\longmapsto
+\mu\circ\operatorname{Nrd}
 $$
 
 and
 
 $$
-\epsilon(s,\operatorname{JL}(\rho),\psi)
-=\epsilon(s,\rho,\psi).
+\pi(E,\theta)
+\longmapsto
+\pi'(E,\theta)
 $$
 
-For unitary representations and the quotient measures fixed in Chapter 1,
+for tame admissible quadratic pairs. It commutes with twists and contragredients and preserves central characters, conductor exponents, the selected Weil--Deligne datum, and local $L$-, epsilon-, and gamma factors. For geometrically matching elliptic test functions it gives the trace identity (14.2).
 
-$$
-d_G(\operatorname{JL}(\rho))
-=d_{G'}(\rho)=\frac{q-1}{2}\dim\rho.
-$$
+If the selected label is unit valued over a valuation ring $R$ with residue characteristic $\ell\ne p$, the types admit finite free stable lattices, the saturated selected multiplicity lines correspond up to $R^\times$, and their contragredient pairings are perfect. Under the stated banal finite-quotient hypotheses, multiplicity one and irreducibility of the selected type survive reduction.
 
-The character identity that determines every entry remains
+**Proof.** The matching-class bijection and measure comparison are Chapters 2 and 3. The special character identity is (4.6). The depth-zero identity is (6.4), and the positive-depth identity follows from Lemma 7.1, the shell calculation, and twisting in Sections 7.4--7.6. Label recovery proves bijectivity and uniqueness in Chapter 8. Chapter 9 proves the structural compatibilities. Chapter 10 proves conductor and factor compatibility. Chapters 11 and 12 prove type-line and integral-lattice compatibility. Weyl integration gives the trace identity in Chapter 14. $\square$
 
-$$
-\boxed{\ \Theta_{\operatorname{JL}(\rho)}(g)
-=-\Theta_\rho(d),\qquad P_g=P_d.\ }
-$$
+### 15.3 Exact scope
 
-The polynomial equality is the class orientation, the minus sign is spectral, and equality of unnormalized orbital integrals is the function-transfer normalization.
+The theorem includes all smooth special twists, all regular unramified depth-zero pairs, all tame positive-depth pairs, and all their norm twists. In residue characteristic two, the unramified quadratic family remains included. Nonminimal labels are included through exact twisting rather than through an incorrect maximum rule for conductors.
 
-### 17.2 What Book 94 may use
+The theorem excludes principal series and one-dimensional split representations because they are not in the discrete selected spectrum. It excludes ramified dyadic positive-depth pairs and primitive wild packets because the tame complementary Fourier-index lemma does not construct or compare their extra extension data. It does not claim an equality of full fixed spaces or representation lattices, and it does not claim irreducibility after reduction outside the banal range.
 
-At a finite place where a global quaternion algebra is split, its multiplicative group is already $\mathrm{GL}_2(K)$ and no local inner-form transfer is needed. At a finite ramified place, Book 94 may use the following local package.
+These are exact mathematical boundaries, not promises deferred inside a proof. Within them every selected representation is constructed, every matching regular character contribution is compared, and every catalogued compatibility has been established.
 
-- Every irreducible local quaternionic component has one and only one discrete-series transfer.
-- Matching regular classes have equal trace and norm and equal Weyl discriminant.
-- Matching test functions have equal orbital integrals and traces differing by the fixed minus sign.
-- Central characters, determinant/norm twists, contragredients, standard local factors, and epsilon factors agree under transfer.
-- Higher-dimensional quaternionic components transfer to supercuspidals; norm characters transfer to Steinberg twists.
-- Conductors agree in every ramified or higher-dimensional case, while an unramified norm character has the explicit $0\mapsto1$ level shift.
-- With the compatible quotient measures, formal degrees agree.
-- Tame pair labels are identical after the normalized compatible extension and rectifier are fixed; wild components are covered by the character theorem without a false tame label.
+### 15.4 Conclusion
 
-These statements are local and were proved locally. A global trace comparison may multiply them place by place, but no global automorphic theorem was used to establish any one of them. In particular, global Jacquet--Langlands will assemble the local bijections; it will not retroactively justify their existence.
+Local Jacquet--Langlands in degree two begins with a simple piece of geometry. A separable irreducible quadratic polynomial determines one elliptic matrix class and one division-algebra class. Their centralizers are the same quadratic torus, their Weyl discriminants agree, and compatible Haar measures let their orbital integrals enter Weyl integration with identical geometric weights.
 
-### 17.3 Conclusion
+The spectral sign has a different origin. For a Steinberg twist it comes from the vanishing of the exceptional principal-series character on elliptic classes. For a depth-zero dihedral packet it is the alternating sign in the finite cuspidal construction. At positive depth it is the difference between the two norm classes defining the split and nonsplit cyclic algebras. The resulting opposite finite Fourier indices persist through every near-central correction shell. These three calculations produce the same single sign.
 
-Local Jacquet--Langlands is governed by a small piece of geometry with unusually large consequences. A regular element on either inner form generates a quadratic étale algebra. The division condition removes the split algebra and leaves precisely the quadratic fields, so characteristic polynomial gives an exact bijection between division regular classes and split elliptic classes. Their centralizers are the same tori, their Weyl discriminants are the same quantity
+The character identity then organizes the rest of the theory. Central scaling proves equality of central characters, common norm values prove twist compatibility, and inversion proves contragredient compatibility. The common selected Weil--Deligne label explains the conductor and local-factor formulas, including the monodromy contribution for unramified Steinberg twists and the lambda constant for quadratic induction. Integral Heisenberg models and saturated multiplicity lines retain the comparison over valuation rings without pretending that the ambient representations have the same dimension.
 
-$$
-\left|\frac{\operatorname{trace}^2-4\operatorname{norm}}
-{\operatorname{norm}}\right|,
-$$
-
-and their orbital integrals can be compared with transfer factor $+1$.
-
-The representation-theoretic sign comes from somewhere different. A principal series has no elliptic fixed line and hence zero elliptic character. At a reducibility point its determinant character and Steinberg constituent therefore have opposite elliptic characters. Since a division norm character has the positive norm value, Steinberg must carry the negative one. The tree's vertex-edge complex extends this calculation to every depth: it turns finite compact character orthogonality into elliptic orthogonality and converts each division irreducible into exactly one discrete-series character. Integrality of the cellular trace, together with norm one, is what upgrades a virtual comparison to a bijection.
-
-Once the character identity is established, its stability becomes a source of structure. Scaling matching elements proves equality of central characters. Multiplying their common norm proves twisting compatibility. Inversion proves compatibility with contragredients. The last congruence layer proves the conductor comparison, while the leading character germ proves the formal-degree identity under explicit quotient measures. Fourier transform on the two degree-two algebras proves equality of zeta-integral factors and reduces tame epsilon constants to finite Gauss sums. None of these consequences asks dimension to be preserved, and none hides the exceptional maximal-order exponent of an unramified norm character.
-
-The final correspondence is therefore both canonical and concrete. It covers every wild Clifford representation without pretending that wild data are tame, gives explicit formulas for unramified and ramified admissible pairs where those formulas are honest, excludes every irreducible principal series for a geometric reason, and supplies exactly the local character, level, factor, and symmetry data needed for global transfer. Two groups with radically different visible representation theories have one common elliptic spectrum; local Jacquet--Langlands is the precise identification of that spectrum.
+The resulting package is the precise local input required for two later operations. Geometric matching of orbital integrals converts the pointwise identity into the signed trace comparison used in global inner-form arguments. Equality of conductors together with corresponding primitive type lattices supplies the local datum used in integral level change. Within the special and selected dihedral range, the transfer is therefore canonical, character-theoretic, normalization-complete, and integrally controlled.
