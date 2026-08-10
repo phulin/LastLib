@@ -30,6 +30,7 @@
    - [Why quotients require a new scale](#42-why-quotients-require-a-new-scale)
    - [Real lower indices and continuity convention](#43-real-lower-indices-and-continuity-convention)
    - [The Herbrand function](#44-the-herbrand-function)
+   - [Upper reindexing for a subgroup](#45-upper-reindexing-for-a-subgroup)
 5. [Upper numbering](#5-upper-numbering)
    - [A numbering designed for quotients](#51-a-numbering-designed-for-quotients)
    - [Herbrand's quotient theorem](#52-herbrands-quotient-theorem)
@@ -87,11 +88,19 @@
     - [Normal closures and overcounting](#142-normal-closures-and-overcounting)
     - [Purely inseparable extensions](#143-purely-inseparable-extensions)
     - [A hypothesis map](#144-a-hypothesis-map)
-15. [A working synthesis](#15-a-working-synthesis)
-    - [The ramification dictionary](#151-the-ramification-dictionary)
-    - [A calculation protocol](#152-a-calculation-protocol)
-    - [Consequences for two-dimensional arithmetic](#153-consequences-for-two-dimensional-arithmetic)
-    - [Final perspective](#154-final-perspective)
+15. [From local depth to arithmetic fields](#15-from-local-depth-to-arithmetic-fields)
+    - [Fields cut out by finite actions](#151-fields-cut-out-by-finite-actions)
+    - [Faithfulness, Swan conductor, and the last break](#152-faithfulness-swan-conductor-and-the-last-break)
+    - [The elliptic-curve and torsion-field interface](#153-the-elliptic-curve-and-torsion-field-interface)
+    - [The finite-flat interface](#154-the-finite-flat-interface)
+    - [The local-to-global discriminant ledger](#155-the-local-to-global-discriminant-ledger)
+    - [Fontaine-style estimates as a ramification theorem](#156-fontaine-style-estimates-as-a-ramification-theorem)
+    - [Numerical checks and failure modes](#157-numerical-checks-and-failure-modes)
+16. [A working synthesis](#16-a-working-synthesis)
+    - [The ramification dictionary](#161-the-ramification-dictionary)
+    - [A calculation protocol](#162-a-calculation-protocol)
+    - [Consequences for two-dimensional arithmetic](#163-consequences-for-two-dimensional-arithmetic)
+    - [Final perspective](#164-final-perspective)
 
 ## 1. From inertia to depth
 
@@ -198,7 +207,7 @@ $$
 k(a^{1/p})((t))/k((t))
 $$
 
-has $e=1$ but purely inseparable residue extension. Calling it tame merely because $\gcd(e,p)=1$ would erase genuine inseparable ramification.
+has $e=1$ but purely inseparable residue extension; it is not even a separable field extension. More subtly, Section 14.3 constructs a *separable* extension with $e=1$ and purely inseparable residue extension. Calling either phenomenon tame merely because $\gcd(e,p)=1$ would erase exactly the residue-theoretic defect that the separability clause records.
 
 ### 1.5 The maximal tame stage
 
@@ -703,6 +712,40 @@ Empty sums are zero. Thus the slope on $(m,m+1)$ is $|G_{m+1}|/|G_0|$. As groups
 
 The function depends only on inertia and its positive filtration. Unramified automorphisms in $G/G_0$ do not affect it. For a tame totally ramified extension, $G_1=1$, so $\varphi(u)=u/|G_0|$ for $u>0$. For the Artin--Schreier example with one break $m$, $\varphi(u)=u$ up to $m$ and then has slope $1/p$.
 
+### 4.5 Upper reindexing for a subgroup
+
+Lower numbering passes to a subgroup without changing indices, but upper numbering does not. It is useful to record the exact correction before turning to quotients. Let $H\subseteq G$, put $M=L^H$, and write
+
+$$
+\varphi_G=\varphi_{L/K},
+\qquad \varphi_H=\varphi_{L/M}.
+$$
+
+Since $H_t=H\cap G_t$, the definition gives, for every $v\geq0$,
+
+$$
+\boxed{
+H^v
+=H\cap G^{\,\varphi_G(\psi_H(v))}.}
+\tag{4.1}
+$$
+
+Indeed,
+
+$$
+H^v=H_{\psi_H(v)}
+=H\cap G_{\psi_H(v)}
+=H\cap G^{\varphi_G(\psi_H(v))}.
+$$
+
+Thus upper groups do pass to subgroups, but only after the transition map
+
+$$
+v\longmapsto\varphi_G(\psi_H(v)).
+$$
+
+This formula works even when $H$ is not normal. If $H$ is normal, the field $M/K$ is Galois and tower transitivity rewrites the transition map as $\varphi_{M/K}$. In that case (4.1) becomes the subgroup face of the same tower identity whose quotient face is Herbrand's theorem. Keeping both faces visible prevents the common but false assertion $H^v=H\cap G^v$ without a change of scale.
+
 ## 5. Upper numbering
 
 ### 5.1 A numbering designed for quotients
@@ -865,7 +908,26 @@ Upper breaks are generally rational numbers. The central integrality theorem is 
 
 No finiteness of the residue field is required, but perfection rules out the imperfect-residue refinements for which the classical statement is not the correct one. For nonabelian extensions, fractional upper breaks can occur. Lower breaks remain integers by definition, but they are not quotient-compatible.
 
-The proof will be completed in Section 11.2 after Artin's integrality theorem is established. Briefly, a one-dimensional character with largest upper break $r$ has conductor $r+1$, hence $r$ is integral. If $G$ is abelian and $G^r\ne G^{r+}$, a character of the finite abelian quotient can be chosen trivial on $G^{r+}$ and nontrivial on $G^r$; its largest break is exactly $r$. Thus character-conductor integrality detects every abelian upper jump. This does not substitute for the stronger Artin-character theorem, which also proves integrality of the total Swan conductor for nonabelian representations with fractional breaks.
+The arithmetic heart is the following cyclic congruence. Let $C$ be a cyclic totally ramified Galois group, let $b$ be its last lower break, and let $C_i$ be its lower groups. Then
+
+$$
+\boxed{
+\frac1{|C|}\sum_{i=1}^{b}|C_i|\in\mathbf Z.}
+\tag{5.2}
+$$
+
+To see why this is deep, the summands are certainly integers but divisibility by $|C|$ is not termwise. The proof proceeds down the unique chain of subgroups of each prime-power part of $C$. At one step, apply the coset displacement identity (5.1) to the quotient by the last subgroup in the chain. It expresses the displacement downstairs as the average of the displacements in one coset upstairs. The exact trace-ideal formula proved independently in Section 7.5, applied to the corresponding orbit polynomial, shows that the change in the averaged displacement is an integral valuation downstairs. Induction up the subgroup chain proves that each newly exposed block of lower-break lengths has precisely the divisibility required for (5.2). The prime-to-$p$ part contributes only the break at $0$. This norm-and-trace calculation is usually called the cyclic Hasse--Arf lemma.
+
+Now let $\chi$ be a one-dimensional character of an abelian ramification group, quotient by its kernel, and discard the unramified stage, which contributes nothing to the conductor. The resulting cyclic inertial action is faithful. If its last lower break is $b$, then its conductor, written in lower numbering, is
+
+$$
+a(\chi)
+=1+\frac1{|C|}\sum_{i=1}^{b}|C_i|.
+$$
+
+The cyclic lemma makes this an integer. On the other hand, the upper-integral form of the same conductor is $1+r$, where $r=\varphi_C(b)$ is its largest upper break. Hence $r$ is an integer.
+
+Finally suppose $G$ itself is abelian and $G^r\ne G^{r+}$. Characters separate points of the finite abelian quotient $G^r/G^{r+}$, so there is a character trivial on $G^{r+}$ and nontrivial on $G^r$. Its largest break is exactly $r$, and the preceding paragraph proves $r\in\mathbf Z$. This proves the theorem. The same cyclic input will be used in Chapter 11, together with induction of characters, to prove integrality of the total Swan conductor even when individual breaks of a nonabelian representation are fractional.
 
 ## 6. Ramification in infinite Galois extensions
 
@@ -920,7 +982,7 @@ $$
 \operatorname{Sw}(V)=\sum_{r>0}r\dim V(r).
 $$
 
-For an abelian representation the breaks are integral by Hasse--Arf. For a general representation, rational breaks can occur, yet the total Swan conductor is still an integer. That stronger fact is a consequence of Artin's character theorem rather than of breakwise integrality.
+When the residue field is perfect, an abelian representation has integral breaks by Hasse--Arf. A general representation can have rational breaks, yet its total Swan conductor is still an integer; that stronger fact follows from Artin's character theorem rather than from breakwise integrality. With only separability of one chosen residue extension, the decomposition and the rational conductor formula remain valid, but this book does not claim the same integrality theorem.
 
 ## 7. The complementary module and the different
 
@@ -934,7 +996,7 @@ $$
 
 Over fields this pairing is perfect when $L/K$ is separable. Over valuation rings, however, the dual lattice of $B$ need not equal $B$. The discrepancy is the different.
 
-Let $L/K$ be finite separable. The **complementary module** or **codifferent** is
+Let $L/K$ be finite separable. The **complementary module**, also called the **codifferent** or **inverse different**, is
 
 $$
 \mathfrak D_{L/K}^{-1}
@@ -1664,7 +1726,7 @@ which is precisely the conductor formula.
 
 ### 11.2 Artin's integrality theorem
 
-**Theorem 11.1 (integrality).** Under the preceding hypotheses, $A_G$ is the character of a finite-dimensional characteristic-zero representation of $G$. Consequently, for every finite-dimensional characteristic-zero representation $V$,
+**Theorem 11.1 (integrality).** Under the preceding hypotheses, assume in addition that the residue field of $K$ is perfect. Then $A_G$ is the character of a finite-dimensional characteristic-zero representation of $G$. Consequently, for every finite-dimensional characteristic-zero representation $V$,
 
 $$
 a_K(V),\ \operatorname{Sw}_K(V)\in\mathbf Z_{\geq0}.
@@ -1683,22 +1745,26 @@ $$
 
 Indeed, both sides vanish at nonidentity elements outside $I$; at $\sigma\in I\setminus\{1\}$ the induction sum contains $[G:I]=f$ equal contributions $-i_G(\sigma)$, and the values at $1$ agree by summing.
 
-We use the following finite ramification-character lemma.
-
-**Ramification-character lemma.** Let $J$ be the inertia group of a finite totally ramified Galois extension with separable residue extension. Put
+It remains to prove that every irreducible coefficient of $A_G$ is integral. The induction theorem for finite-group characters writes the character of an irreducible $W$ as an integral linear combination
 
 $$
-b_J(1)=\sum_{\tau\ne1}i_J(\tau),
-\qquad b_J(\sigma)=-i_J(\sigma)\quad(\sigma\ne1).
+\chi_W=\sum_j n_j\operatorname{Ind}_{H_j}^G\lambda_j,
+\qquad n_j\in\mathbf Z,
+\tag{11.2}
 $$
 
-Then $b_J$ is an integral virtual character.
+where each $\lambda_j$ is one-dimensional. Let $M_j=L^{H_j}$. Frobenius reciprocity and the restriction identity for the Artin character give
 
-**Proof of the lemma.** For a cyclic subgroup $C\subseteq J$, intersect the lower filtration with $C$. The groups obtained are nested cyclic groups. Group the elements of $C$ according to the kernel of the character by which they act on a chosen uniformizer. The tame layer contributes the augmentation character of the prime-to-$p$ quotient. On the positive layers, apply the coset displacement identity (5.1) successively to the quotients of $C$. Start with the last nontrivial group and quotient by it. The new final break is an integer displacement downstairs; (5.1) says that its pullback is the preceding break length divided by the relevant group index. Repeating upward shows that, if consecutive surviving cyclic groups have orders $c$ and $c'$, the difference of their lower break lengths is divisible by $c/c'$ after conversion to the quotient scale. Hence the restriction of $b_J$ to $C$ is an integral sum of augmentation characters of the cyclic quotients $C/C'$. All coefficients are integers; this is the cyclic Hasse--Arf calculation, now obtained directly from (5.1).
+$$
+\left\langle A_G,
+\operatorname{Ind}_{H_j}^G\lambda_j\right\rangle_G
+=\delta(M_j/K)+f(M_j/K)a_{M_j}(\lambda_j).
+\tag{11.3}
+$$
 
-For completeness, the cyclic character criterion used here is obtained as follows. For a class function with rational integer values, order cyclic subgroups by decreasing order. On a maximal cyclic subgroup, subtract the required integral multiples of the characters induced from its one-dimensional characters so as to kill the values on its generators. The same subtraction kills all conjugate generators. Continue downward. Möbius inversion on the divisor lattice of a cyclic group shows that the required multiples are integral exactly when every cyclic restriction has the integral augmentation decomposition just obtained. At the end only the value at $1$ remains, and total sum zero makes it an integral multiple of the regular character. Thus the original class function is an integral virtual character. Applying this criterion to $b_J$ proves the lemma. $\square$
+The identity is the one proved in full in Section 12.2: away from the identity, both Artin characters are the same displacement function with residue-degree scaling; at the identity, transitivity of the different contributes $\delta(M_j/K)$ times the regular character. The first term of (11.3) is an integer. The character $\lambda_j$ factors through a cyclic quotient, and the cyclic Hasse--Arf calculation in Section 5.6 says that $a_{M_j}(\lambda_j)$ is an integer. Thus every pairing in (11.3), and hence the pairing with (11.2), is integral.
 
-The lemma and (11.1) show that $A_G$ is an integral virtual character. If $W$ is irreducible, its multiplicity in that virtual character is
+It follows that $A_G$ is an integral virtual character. If $W$ is irreducible, its coefficient in that virtual character is
 
 $$
 \langle A_G,\chi_W\rangle_G=a_K(W),
@@ -1712,9 +1778,7 @@ $$
 
 is integral as well; its defining sum proves nonnegativity. $\square$
 
-We can now finish the proof of Hasse--Arf promised in Section 5.6. If $G$ is abelian and $r$ is an upper break, choose a one-dimensional character of $G/G^{r+}$ that is nontrivial on the image of $G^r$. Such a character exists because characters separate points of a finite abelian group. It has largest upper break $r$, so Section 10.4 gives $a(\chi)=r+1$. Artin integrality makes this an integer, hence $r\in\mathbf Z$.
-
-The exact hypotheses matter. The coefficient field must have characteristic zero, or one must replace ordinary characters by an appropriate modular theory. The local extension used for the classical $i_G$ formula is taken with separable residue extension. Neither the residue field nor the coefficient field needs to be finite.
+The exact hypotheses matter. The coefficient field must have characteristic zero, or one must replace ordinary characters by an appropriate modular theory. Perfectness of the residue field is the standing hypothesis for the Hasse--Arf input in this proof; it implies separability of every finite residue extension. Neither the residue field nor the coefficient field needs to be finite.
 
 ### 11.3 Additivity and exact sequences
 
@@ -1780,6 +1844,29 @@ a_K\bigl(\operatorname{Ind}_{M}^{K}W\bigr)
 $$
 
 The first term is the cost of permuting the embeddings of $M$; the second transfers the ramification already present in $W$. The residue-degree factor converts an exponent normalized over $M$ into one normalized over $K$.
+
+The corresponding Swan formula separates off the tame baseline:
+
+$$
+\boxed{
+\operatorname{Sw}_K\bigl(\operatorname{Ind}_M^K W\bigr)
+=f(M/K)\left(
+\operatorname{Sw}_M(W)
++\bigl(d(M/K)-e(M/K)+1\bigr)\dim W
+\right).}
+$$
+
+Indeed, inertia has $f(M/K)$ orbits on the embeddings of $M$, and on each orbit its fixed vectors are the fixed vectors of inertia over $M$. Hence
+
+$$
+\operatorname{codim}
+\bigl(\operatorname{Ind}_M^K W\bigr)^{I_K}
+=f(M/K)\left(
+e(M/K)\dim W-\dim W^{I_M}
+\right).
+$$
+
+Subtracting this tame term from the Artin induction formula gives the Swan formula. The correction $d-e+1$ is exactly the wild excess of the different. It vanishes for tame $M/K$ and is positive for a wild extension with separable residue extension.
 
 ### 12.2 Strategy of the induction formula
 
@@ -2036,7 +2123,7 @@ $$
 The polynomial is separable over $K$ because its derivative is $t\ne0$. Its reduction is $X^p-a$, the irreducible purely inseparable polynomial of $a^{1/p}$ over $k$, so the polynomial is irreducible over $K$. The residue of $\alpha$ generates a degree-$p$ purely inseparable residue extension. Since $[K(\alpha):K]=p$, the fundamental equality forces
 
 $$
-e=1,qquad f=p.
+e=1,\qquad f=p.
 $$
 
 Moreover $B=A[\alpha]$: reduction gives an isomorphism $A[\alpha]/tA[\alpha]\cong B/tB=l$, so $B=A[\alpha]+tB$, and Nakayama's lemma applied to the finite $A$-module $B/A[\alpha]$ identifies the two rings. The derivative formula is therefore available and gives
@@ -2057,15 +2144,413 @@ It is useful to collect the logical boundaries.
 - Galois symmetry defines ramification groups on the field itself.
 - Separability of $l/k$ gives $|G_0|=e$, local monogenicity in the form used above, and the clean classical Hilbert formula.
 - The Artin and Swan formulas in Chapters 10--13 require the finite Galois realization to have separable residue extension; perfection of $k$ guarantees this for every realization.
+- The integrality theorem and Hasse--Arf are asserted here under the stronger hypothesis that $k$ is perfect. The rational fixed-space formulas still make sense under the preceding separable-residue hypothesis.
 - Perfection of $k$ implies separability of every finite residue extension, but is stronger than needed in any one theorem.
 - Finiteness of $k$ adds canonical Frobenius, cyclic residue multiplicative groups, and local compactness; it is irrelevant to the definitions of ramification groups, the different, and conductors.
 - Characteristic zero for representation coefficients gives semisimplicity and ordinary-character formulas; it is unrelated to the characteristic of $K$.
 
 Keeping these hypotheses separate allows equal- and mixed-characteristic arguments to share one theory without silently treating every residue field as finite.
 
-## 15. A working synthesis
+## 15. From local depth to arithmetic fields
 
-### 15.1 The ramification dictionary
+### 15.1 Fields cut out by finite actions
+
+The preceding chapters attach numerical invariants to an extension or to a characteristic-zero representation. Arithmetic applications often begin instead with a finite set or finite module on which an absolute Galois group acts. The first interface is therefore field-theoretic and does not require semisimplicity.
+
+Let $K$ be any field with separable closure $K^s$, and let $X$ be a finite set with continuous $G_K=\operatorname{Gal}(K^s/K)$-action. Continuity means that every stabilizer is open. The kernel of the action is open and normal, so
+
+$$
+K(X):=(K^s)^{\ker(G_K\to\operatorname{Perm}(X))}
+$$
+
+is a finite Galois extension and
+
+$$
+\operatorname{Gal}(K(X)/K)
+\simeq\operatorname{im}(G_K\to\operatorname{Perm}(X)).
+$$
+
+It is the smallest extension over which every element of $X$ is fixed. If $X$ is the underlying set of a finite module $M$, we write $K(M)$. A chosen basis may express the action by matrices, but the kernel and the field do not depend on that basis.
+
+The construction is contravariant in the amount of information retained. If $N$ is a stable submodule or quotient of $M$, then
+
+$$
+K(N)\subseteq K(M).
+$$
+
+For two modules,
+
+$$
+K(M\oplus N)=K(M)K(N),
+$$
+
+because the kernel on the direct sum is the intersection of the two kernels. By contrast, an exact sequence
+
+$$
+0\longrightarrow M'\longrightarrow M\longrightarrow M''\longrightarrow0
+$$
+
+need not give $K(M)=K(M')K(M'')$. Over the latter compositum the two constituents are trivial, but the middle term can still carry a nontrivial unipotent action
+
+$$
+\begin{pmatrix}1&c(\sigma)\\0&1\end{pmatrix}.
+$$
+
+This warning matters whenever a torsion representation is studied through a filtration: semisimplification can lose the field cut out by extension classes.
+
+Now let $K$ be complete discretely valued with perfect residue field. If $L=K(M)$, then quotient compatibility gives the exact translation
+
+$$
+G_K^u\text{ acts trivially on }M
+\quad\Longleftrightarrow\quad
+\operatorname{Gal}(L/K)^u=1.
+\tag{15.1}
+$$
+
+The forward direction uses faithfulness of the image on the full module; the reverse direction is immediate. Thus any theorem proving an upper-depth cutoff for a finite action becomes, without further loss, a last-break cutoff for its field.
+
+There is a coefficient warning. A module killed by a prime may have coefficient characteristic dividing the order of its image, so its representation need not be semisimple and the characteristic-zero fixed-space definition of Chapter 10 is not automatically its conductor. The field $K(M)$ nevertheless has a canonical characteristic-zero regular representation, whose conductor is its discriminant exponent. Hence the safe route from a finite torsion module to a discriminant is
+
+$$
+\text{upper groups acting on }M
+\longrightarrow K(M)
+\longrightarrow\text{regular representation}
+\longrightarrow\delta(K(M)/K).
+$$
+
+No modular character theory is hidden in that route.
+
+### 15.2 Faithfulness, Swan conductor, and the last break
+
+When a faithful characteristic-zero representation is available, its Swan conductor itself controls depth. Let $V$ be faithful on a finite quotient $G$, and let
+
+$$
+R(V)=\sup\{u>0:G^u\ne1\}.
+$$
+
+Whenever $G^u\ne1$, faithfulness implies that $G^u$ cannot fix every vector. Therefore
+
+$$
+1\leq\operatorname{codim}V^{G^u}\leq\dim V
+$$
+
+on every positive interval on which $G^u$ is nontrivial. Integration gives
+
+$$
+\boxed{
+R(V)\leq\operatorname{Sw}_K(V)
+\leq R(V)\dim V.}
+\tag{15.2}
+$$
+
+Combining the first inequality with Section 9.5 yields the degree-free estimate
+
+$$
+\frac{d(K(V)/K)}{e(K(V)/K)}
+<1+\operatorname{Sw}_K(V)
+\leq1+a_K(V).
+\tag{15.3}
+$$
+
+Faithfulness is indispensable. Inflate a representation through a fixed quotient and enlarge the extension by an arbitrarily deep wild extension in its kernel. The conductor of the representation does not change, while the different of the enlarged field is unbounded. Formula (15.3) concerns exactly the field cut out by the faithful action, not an unspecified field through which that action happens to factor.
+
+For a family $V_1,\ldots,V_s$ whose direct sum is faithful, one has
+
+$$
+R(G)\leq\sum_{j=1}^s\operatorname{Sw}(V_j).
+$$
+
+If separate cutoff theorems say that $G_K^u$ acts trivially on $V_j$ for $u>R_j$, the sharper statement is
+
+$$
+R(G)\leq\max_jR_j.
+\tag{15.4}
+$$
+
+The maximum, rather than a sum, is a principal advantage of upper-numbered cutoffs. It explains why a class of finite modules closed under direct sums can yield one discriminant ceiling for all finite composita of their cutout fields.
+
+### 15.3 The elliptic-curve and torsion-field interface
+
+Let $E/K$ be an elliptic curve and let $n$ be prime to the characteristic of $K$. Its geometric $n$-torsion $E[n]$ is a finite module of rank two over $\mathbf Z/n\mathbf Z$, and
+
+$$
+K(E[n])=(K^s)^{\ker(G_K\to\operatorname{Aut}(E[n]))}.
+$$
+
+At a nonarchimedean place, later reduction theory determines how inertia acts on this module. The present book receives that information in one of three exact forms.
+
+First, if inertia acts trivially, the torsion field is unramified. Second, if the action is tame, then its local different has
+
+$$
+d=e-1,
+\qquad \frac de=1-\frac1e.
+$$
+
+Third, if one proves that $G_K^u$ acts trivially on $E[n]$ for $u>R$, then (15.1) and Section 9.5 give
+
+$$
+\boxed{
+d(K(E[n])/K)\leq(e-1)+eR,
+\qquad
+\frac de\leq1-\frac1e+R<1+R.}
+\tag{15.5}
+$$
+
+These statements require no comparison between a field discriminant and the discriminant of a Weierstrass equation. The latter is a geometric invariant of a chosen model, minimized by later reduction theory; the former is the trace discriminant of the field generated by torsion points. Reduction theorems connect them indirectly by determining the inertial action, but they must never be identified.
+
+There is also a conductor interface. For a characteristic-zero, finite-image two-dimensional representation, the tame term is $0$, $1$, or $2$ according as inertia fixes two, one, or no dimensions. Its wild contribution is the upper-depth area. An actual Tate-module representation can have infinite tame image, for example through unipotent monodromy. Extending the conductor to that setting requires the later theory of continuous $\ell$-adic representations; nothing in the finite-image definition silently covers it. Its finite torsion quotients and their cutout fields, however, are already governed by (15.1) and (15.5).
+
+### 15.4 The finite-flat interface
+
+Finite flatness is integral geometric structure, not a numerical ramification invariant defined in this book. Its role here can nevertheless be isolated exactly. Let $K$ have residue characteristic $\ell$, let $M$ be a finite $G_K$-module, and suppose a later geometric theorem proves
+
+$$
+G_K^u\text{ acts trivially on }M
+\qquad(u>R_{K,M}).
+\tag{15.6}
+$$
+
+If $L=K(M)$, then the only input this ramification theory needs is the number $R_{K,M}$. It returns
+
+$$
+\frac{d(L/K)}{e(L/K)}
+\leq1-\frac1{e(L/K)}+R_{K,M}
+<1+R_{K,M}.
+\tag{15.7}
+$$
+
+In common mixed-characteristic applications, $K$ is a finite extension of $\mathbf Q_\ell$ and one writes
+
+$$
+e_K=v_K(\ell).
+$$
+
+If an integral theorem for a module killed by $\ell^n$ supplies the cutoff
+
+$$
+R_{K,M}\leq
+e_K\left(n+\frac1{\ell-1}\right)-1,
+\tag{15.8}
+$$
+
+then substitution into (15.7), and nothing more, gives
+
+$$
+\boxed{
+d(L/K)\leq
+e(L/K)e_K\left(n+\frac1{\ell-1}\right)-1,}
+\tag{15.9}
+$$
+
+and
+
+$$
+\boxed{
+\frac{d(L/K)}{e(L/K)}
+\leq e_K\left(n+\frac1{\ell-1}\right)
+-\frac1{e(L/K)}
+<e_K\left(n+\frac1{\ell-1}\right).}
+\tag{15.10}
+$$
+
+The $-1$ in the upper-break cutoff cancels the $+1$ from the coarse tame baseline. This is the decisive normalization in Fontaine-style discriminant estimates. The geometric cutoff (15.8) is not proved here: it belongs to the later study of finite-flat group schemes and their torsion points. Equations (15.9) and (15.10) are the exact interface by which that theorem enters ramification theory.
+
+At level $\ell$ over an unramified base, $e_K=1$ and the cutoff is $R\leq1/(\ell-1)$. The resulting degree-free local estimate is
+
+$$
+\frac de<1+\frac1{\ell-1}=\frac\ell{\ell-1}.
+\tag{15.11}
+$$
+
+The exponent $\ell/(\ell-1)$ is not itself the last upper break. It is the sum of a tame contribution strictly below $1$ and the positive-depth cutoff $1/(\ell-1)$.
+
+The exponent hypothesis cannot be discarded. For $\mu_{\ell^n}$, all levels have finite integral models, but the cyclotomic fields have growing wild depth as $n$ grows. Formula (15.10) correctly grows linearly with $n$. Thus finite flatness at all levels does not by itself give a uniform bound for an entire $\ell$-power tower; a uniform exponent or an additional descent mechanism is needed.
+
+### 15.5 The local-to-global discriminant ledger
+
+Fontaine-style arguments compare a local upper bound with a global lower bound. The conversion is elementary once every normalization is retained. Let $F$ be a number field and let $L/F$ be finite Galois. For a finite place $v$ of $F$, choose $w\mid v$ and put
+
+$$
+e_v=e(L_w/F_v),
+\qquad d_v=d(L_w/F_v).
+$$
+
+Absolute discriminant transitivity gives
+
+$$
+|D_L|=|D_F|^{[L:F]}
+N_{F/\mathbf Q}(\mathfrak d_{L/F}).
+$$
+
+Writing $\operatorname{rd}(F)=|D_F|^{1/[F:\mathbf Q]}$ and using the equality of local invariants at conjugate primes yields
+
+$$
+\boxed{
+\operatorname{rd}(L)
+=\operatorname{rd}(F)
+\prod_{v<\infty}(Nv)^{d_v/(e_v[F:\mathbf Q])}.}
+\tag{15.12}
+$$
+
+Here $Nv=|\mathcal O_F/v|$. To verify the exponent, if there are $g_v$ primes above $v$ and their common residue degree is $f_v$, then the exponent of $v$ in $\mathfrak d_{L/F}$ is $g_vf_vd_v$, while
+
+$$
+[L:F]=g_ve_vf_v.
+$$
+
+Division by the global degree leaves $d_v/e_v$. This check is the safest way to prevent the local residue degree from being counted twice or omitted.
+
+If $L/F$ is not Galois, the exact formula is instead a sum over $w\mid v$:
+
+$$
+v(\mathfrak d_{L/F})
+=\sum_{w\mid v}f(w/v)d(L_w/F_v).
+\tag{15.13}
+$$
+
+One may use (15.13) directly or pass to a normal closure and the permutation conductor. Replacing it by the regular conductor of the normal closure generally overcounts.
+
+For a Galois extension unramified outside a finite set $S$, with last upper break at most $R_v$ at $v\in S$, equations (15.7) and (15.12) give
+
+$$
+\boxed{
+\operatorname{rd}(L)
+<\operatorname{rd}(F)
+\prod_{v\in S}(Nv)^{(1+R_v)/[F:\mathbf Q]}.}
+\tag{15.14}
+$$
+
+At a tame place the exact replacement is
+
+$$
+(Nv)^{(1-1/e_v)/[F:\mathbf Q]},
+$$
+
+and at an unramified place the factor is $1$. A list of ramified primes alone never implies (15.14); one also needs a depth bound at every wild prime.
+
+### 15.6 Fontaine-style estimates as a ramification theorem
+
+Suppose $M$ is a finite global module killed by $\ell^n$, $L=F(M)$, and $L/F$ is unramified away from places above $\ell$. At every $v\mid\ell$, write
+
+$$
+e_v^0=v(\ell)=e(F_v/\mathbf Q_\ell),
+\qquad Nv=\ell^{f_v^0}.
+$$
+
+Assume a local integral theorem supplies (15.8) with $e_K=e_v^0$. Then (15.10) and (15.12) show that the exponent of $\ell$ in the relative root-discriminant factor is strictly less than
+
+$$
+\frac1{[F:\mathbf Q]}
+\sum_{v\mid\ell}f_v^0e_v^0
+\left(n+\frac1{\ell-1}\right).
+$$
+
+The local degree identity
+
+$$
+\sum_{v\mid\ell}e_v^0f_v^0=[F:\mathbf Q]
+$$
+
+therefore gives the clean global estimate
+
+$$
+\boxed{
+\operatorname{rd}(F(M))
+<\operatorname{rd}(F)\,
+\ell^{\,n+1/(\ell-1)}.}
+\tag{15.15}
+$$
+
+For a module killed by $\ell$, this specializes to
+
+$$
+\boxed{
+\operatorname{rd}(F(M))
+<\operatorname{rd}(F)\,
+\ell^{\ell/(\ell-1)}.}
+\tag{15.16}
+$$
+
+The formula is independent of the rank of $M$ and of the splitting of $\ell$ in $F$. Rank independence comes from bounding the support of the upper filtration before counting moved dimensions. Splitting independence comes from the displayed sum of local degrees. The base root discriminant remains: ramification already present in $F/\mathbf Q$ is not canceled by the local calculation.
+
+If auxiliary ramification occurs at a finite set $S$ away from $\ell$, with last upper break at most $R_v$, then the correct extension of (15.15) is
+
+$$
+\operatorname{rd}(F(M))
+<\operatorname{rd}(F)\,
+\ell^{\,n+1/(\ell-1)}
+\prod_{v\in S}(Nv)^{(1+R_v)/[F:\mathbf Q]}.
+\tag{15.17}
+$$
+
+Known tame inertia of order $e_v$ improves its factor to exponent $(1-1/e_v)/[F:\mathbf Q]$. These auxiliary factors are not cosmetic: even shallow ramification at a large prime can consume more of a root-discriminant budget than wild ramification at a small prime.
+
+The logical division is now exact. Integral geometry proves a cutoff such as (15.8). Ramification theory converts it to (15.9) and (15.10), then global discriminant transitivity converts those to (15.15)--(15.17). Analytic lower bounds for root discriminants, and the deductions about possible field degrees, lie beyond this book.
+
+### 15.7 Numerical checks and failure modes
+
+Several recomputations test the constants.
+
+For $F=\mathbf Q$, $n=1$, and no auxiliary ramification, (15.16) gives
+
+$$
+\ell=2:\quad \operatorname{rd}(L)<2^2=4,
+$$
+
+$$
+\ell=3:\quad \operatorname{rd}(L)<3^{3/2}=3\sqrt3\approx5.196,
+$$
+
+$$
+\ell=5:\quad \operatorname{rd}(L)<5^{5/4}\approx7.477.
+$$
+
+These are universal ceilings obtained from the stated cutoff input, not predictions that equality occurs. The cyclotomic first level $\mathbf Q(\mu_\ell)$ is tame of degree $\ell-1$, so its exact root discriminant is
+
+$$
+\ell^{(\ell-2)/(\ell-1)},
+$$
+
+well below the universal level-$\ell$ ceiling.
+
+For $\mathbf Q_2(\sqrt2)$, Section 3.4 gave $e=2$ and $d=3$, hence
+
+$$
+\text{the local factor at }2\text{ is }2^{d/e}=2^{3/2}.
+$$
+
+The upper filtration has last break $R=2$. The exact formula gives
+
+$$
+\frac de
+=1-\frac12+2\left(1-\frac12\right)
+=\frac32,
+$$
+
+whereas the degree-free cutoff gives only $d/e<3$. The loss comes from replacing the integrand $1-1/|G^u|=1/2$ by $1$.
+
+For the equal-characteristic Artin--Schreier extension of Section 3.3,
+
+$$
+\frac de
+=\frac{(m+1)(p-1)}p
+=(m+1)\left(1-\frac1p\right).
+$$
+
+Its unique upper break is $m$, so the coarse bound is $d/e<1+m$. Letting $m$ grow while the group remains cyclic of order $p$ confirms again that image size alone cannot supply a Fontaine-style estimate.
+
+Finally, add one tame quadratic auxiliary prime $q$ over $\mathbf Q$ to a level-$\ell$ situation. The exact tame cost is $q^{1/2}$, so
+
+$$
+\operatorname{rd}(L)
+<\ell^{\ell/(\ell-1)}q^{1/2}.
+$$
+
+This example exposes three common errors at once: omitting the auxiliary prime, charging it a full factor $q$, or adding local exponents before dividing by the global degree.
+
+## 16. A working synthesis
+
+### 16.1 The ramification dictionary
 
 For a finite Galois extension with separable residue extension, all of the main invariants can now be read from one filtration:
 
@@ -2085,7 +2570,7 @@ $$
 
 Lower numbering measures actual valuation displacement and survives passage to a subgroup. The Herbrand function converts it into upper numbering, which survives passage to a quotient and therefore extends to profinite Galois groups. The different turns total displacement into an ideal upstairs; the norm turns that ideal into the discriminant downstairs. A conductor replaces the count $|G_i|-1$ by the codimension actually moved in a representation.
 
-### 15.2 A calculation protocol
+### 16.2 A calculation protocol
 
 For a concrete finite local extension, the following order is reliable.
 
@@ -2099,7 +2584,7 @@ $$
 
 Finally, for a representation compute fixed spaces on each nontrivial group. The tame codimension and the positive-depth area give Artin and Swan conductors. For a nongalois field use its embedding permutation representation. Each step has an independent normalization check, making errors detectable before they propagate.
 
-### 15.3 Consequences for two-dimensional arithmetic
+### 16.3 Consequences for two-dimensional arithmetic
 
 In a two-dimensional representation, inertia can be invisible, move one line, or move the entire space. Tame cases are therefore controlled by a codimension $0$, $1$, or $2$. Wild inertia adds a weighted depth, the Swan conductor. Upper numbering makes these statements stable when the representation is replaced by its finite quotient or when a normal subfield is removed.
 
@@ -2107,7 +2592,7 @@ For torsion fields, a faithful finite representation determines a finite Galois 
 
 For elliptic curves, later reduction theory will identify the shape of inertia on torsion and Tate modules. The conductor formalism will turn fixed subspaces and wild action into local exponents. The discriminant theory developed here concerns field extensions and trace lattices; it must not be confused with the discriminant of a Weierstrass equation, though later the two kinds of discriminant will interact through ramification and reduction.
 
-### 15.4 Final perspective
+### 16.4 Final perspective
 
 Ramification begins where reduction stops. Inertia records automorphisms lost modulo the maximal ideal; the lower filtration asks how many further digits are needed before each automorphism appears. Its first quotient is multiplicative and prime to the residue characteristic, while every deeper quotient is additive and residue-characteristic primary. This is the structural division between tame and wild behavior.
 
