@@ -190,9 +190,9 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 123. Reductive Groups, Inner Forms, and Corestriction in Rank Two
 - [x] 124. CM Abelian Varieties, Types, and Reflex Norms
 - [x] 125. Complex Multiplication, Reciprocity, and Reduction
-- [x] 126. Shimura Data and Canonical Models in the FLT Cases
+- [ ] 126. Shimura Data and Canonical Models in the FLT Cases
 - [x] 127. Quaternionic PEL Functors and Representability
-- [ ] 128. Uniformization, Components, and Hecke Descent for Shimura Curves
+- [x] 128. Uniformization, Components, and Hecke Descent for Shimura Curves
 - [ ] 129. Unitary Shimura Surfaces and the Modèles Étranges Construction
 - [ ] 130. Good Integral Models of Shimura Curves and Surfaces
 - [ ] 131. Semistable Models and Monodromy of Shimura Varieties
