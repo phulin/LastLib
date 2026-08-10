@@ -35,14 +35,15 @@
    - [Symmetric-group specializations](#56-symmetric-group-specializations)
    - [Factorization, orbits, and intermediate fields](#57-factorization-orbits-and-intermediate-fields)
 6. [Local constancy and arithmetic approximation](#6-local-constancy-and-arithmetic-approximation)
-   - [Why local conditions are open](#61-why-local-conditions-are-open)
-   - [Krasner's lemma and factor stability](#62-krasners-lemma-and-factor-stability)
-   - [From local algebras to global fields](#63-from-local-algebras-to-global-fields)
-   - [Splitting, inertness, and ramification avoidance](#64-splitting-inertness-and-ramification-avoidance)
-   - [Prescribed decomposition behavior](#65-prescribed-decomposition-behavior)
-   - [Worked local factorization in a symmetric-group family](#66-worked-local-factorization-in-a-symmetric-group-family)
-   - [Hilbert density versus thin-set density](#67-hilbert-density-versus-thin-set-density)
-   - [Why this is not an unrestricted local-global theorem](#68-why-this-is-not-an-unrestricted-local-global-theorem)
+   - [Weak approximation](#61-weak-approximation)
+   - [Why local conditions are open](#62-why-local-conditions-are-open)
+   - [Krasner's lemma and factor stability](#63-krasners-lemma-and-factor-stability)
+   - [From local algebras to global fields](#64-from-local-algebras-to-global-fields)
+   - [Splitting, inertness, and ramification avoidance](#65-splitting-inertness-and-ramification-avoidance)
+   - [Prescribed decomposition behavior](#66-prescribed-decomposition-behavior)
+   - [Worked local factorization in a symmetric-group family](#67-worked-local-factorization-in-a-symmetric-group-family)
+   - [Hilbert density versus thin-set density](#68-hilbert-density-versus-thin-set-density)
+   - [Why this is not an unrestricted local-global theorem](#69-why-this-is-not-an-unrestricted-local-global-theorem)
 7. [Linear disjointness and avoidance](#7-linear-disjointness-and-avoidance)
    - [Why irreducibility after base change is the right test](#71-why-irreducibility-after-base-change-is-the-right-test)
    - [Descent of a Hilbert condition from L to K](#72-descent-of-a-hilbert-condition-from-l-to-k)
@@ -71,17 +72,26 @@
     - [Prescribing several local partitions](#103-prescribing-several-local-partitions)
     - [A ramified local prescription](#104-a-ramified-local-prescription)
     - [An infinite sequence of independent fields](#105-an-infinite-sequence-of-independent-fields)
-11. [A simultaneous-conditions theorem](#11-a-simultaneous-conditions-theorem)
-    - [Setting up compatible data](#111-setting-up-compatible-data)
-    - [The packaged theorem](#112-the-packaged-theorem)
-    - [Reading the local conclusions](#113-reading-the-local-conclusions)
-    - [Finite and infinite avoidance in the package](#114-finite-and-infinite-avoidance-in-the-package)
-    - [Existential and effective content](#115-existential-and-effective-content)
-12. [The arithmetic freedom of specialization](#12-the-arithmetic-freedom-of-specialization)
-    - [The hierarchy of conditions](#121-the-hierarchy-of-conditions)
-    - [The roles of decomposition and inertia](#122-the-roles-of-decomposition-and-inertia)
-    - [The roles of regularity and normality](#123-the-roles-of-regularity-and-normality)
-    - [Conclusion](#124-conclusion)
+11. [Specializing finite étale covers](#11-specializing-finite-étale-covers)
+    - [From a rational point to a finite algebra](#111-from-a-rational-point-to-a-finite-algebra)
+    - [Local constancy in families](#112-local-constancy-in-families)
+    - [The cover-specialization theorem](#113-the-cover-specialization-theorem)
+    - [Galois covers and specialization homomorphisms](#114-galois-covers-and-specialization-homomorphisms)
+    - [Prescribed decomposition and inertia](#115-prescribed-decomposition-and-inertia)
+    - [Several covers and one point](#116-several-covers-and-one-point)
+    - [Bounded-degree local data](#117-bounded-degree-local-data)
+    - [Examples and boundary cases](#118-examples-and-boundary-cases)
+12. [A simultaneous-conditions theorem](#12-a-simultaneous-conditions-theorem)
+    - [Setting up compatible data](#121-setting-up-compatible-data)
+    - [The packaged theorem](#122-the-packaged-theorem)
+    - [Reading the local conclusions](#123-reading-the-local-conclusions)
+    - [Finite and infinite avoidance in the package](#124-finite-and-infinite-avoidance-in-the-package)
+    - [Existential and effective content](#125-existential-and-effective-content)
+13. [The arithmetic freedom of specialization](#13-the-arithmetic-freedom-of-specialization)
+    - [The hierarchy of conditions](#131-the-hierarchy-of-conditions)
+    - [The roles of decomposition and inertia](#132-the-roles-of-decomposition-and-inertia)
+    - [The roles of regularity and normality](#133-the-roles-of-regularity-and-normality)
+    - [Conclusion](#134-conclusion)
 
 ## 1. Specialization as an arithmetic problem
 
@@ -413,7 +423,29 @@ with group $G$. After inverting finitely many primes of $\mathcal O_K$, the cove
 
 Suppose $v$ splits completely in the constant field $C$. Then the reduction of the geometric component has constant field exactly $k_v$ for all but finitely many $v$; geometric connectedness is preserved by good reduction. Theorem 4.2 therefore realizes every desired conjugacy class in $N=\operatorname{Gal}(E/C(T))$ once $|k_v|$ is large enough.
 
-There are infinitely many suitable split places. Here is a proof of the special splitting fact needed. The prime ideal theorem for the finite Galois extension $C/K$ says that prime ideals of $C$ of norm at most $x$ are asymptotic to $x/\log x$. Those with residue degree at least two over $K$ lie over primes of norm at most $x^{1/2}$ and contribute $O(x^{1/2})$. Thus infinitely many primes of $C$ have residue degree one over $K$. In a Galois extension, one residue-degree-one unramified prime above $v$ forces every prime above $v$ to have residue degree one and ramification index one; hence $v$ splits completely. Removing the finite bad set and requiring arbitrarily large norm still leaves infinitely many choices.
+There are infinitely many suitable split places, and the special case needed here has an
+elementary proof. Choose an integral primitive element $\theta$ for the Galois extension $C/K$
+and let $h\in\mathcal O_K[X]$ be its monic minimal polynomial. A nonconstant polynomial over
+$\mathcal O_K$ has values divisible by infinitely many prime ideals. Indeed, suppose a finite
+list contained all prime divisors of its nonzero values. Choose $b$ with $d=h(b)\ne0$, enlarging
+the list so that it contains every prime divisor of $d$. For $a=b+d^2t$ one has
+
+$$
+h(a)=d(1+dq_t)
+$$
+
+with $q_t\in\mathcal O_K$, because $h(a)-h(b)$ is divisible by $a-b$. By choosing an ordinary
+integer $t$ of sufficiently large absolute value, the second factor is a nonunit and is
+congruent to $1$ modulo every prime dividing $d$. It therefore has a prime divisor outside the
+list, a contradiction.
+
+Discard the finitely many primes dividing the discriminant of $h$ or the index of
+$\mathcal O_K[\theta]$ in $\mathcal O_C$. If such a remaining prime $v$ divides a value $h(a)$,
+then $h$ has a simple linear factor modulo $v$, so there is a prime of $C$ above $v$ with residue
+degree one. Because $C/K$ is Galois and $v$ is unramified, all primes above $v$ have the same
+residue degree and ramification index. They therefore all have $e=f=1$, and $v$ splits
+completely. This supplies infinitely many split places outside every prescribed finite set, with
+arbitrarily large residue fields.
 
 Now choose $\bar a\in U(k_v)$ having Frobenius class $\mathcal C$. Every $a\in K$ sufficiently close to a chosen lift of $\bar a$ has the same reduction. The specialized finite étale algebra then has an unramified local factor whose arithmetic Frobenius is in $\mathcal C$. In valuation language, the coefficients are integral, the discriminant is a unit, and Hensel lifting identifies the factorization of the residue polynomial with the unramified factors upstairs. Thus a residue class modulo $v$ is an open **congruence tube** on which the required Frobenius witness persists.
 
@@ -484,7 +516,12 @@ The fiber of the Galois cover is therefore connected, and the specialized action
 
 **Corollary 4.4.** Every number field is Hilbertian. More strongly, every basic Hilbert subset of affine space over a number field is dense in the product of any finitely many local nonempty opens.
 
-For several parameters, apply the one-parameter argument successively while retaining the specified local boxes, or restrict to a carefully chosen affine line through a local box on which none of the generic irreducibilities degenerates. The exceptional choices of line form a proper closed subset. This proves the stated affine-space form.
+**Proof.** The one-parameter assertion is Theorem 4.3, and allowing a further nonzero polynomial
+to vanish on any finite set of old parameters makes the good set infinite. For several
+parameters, apply the one-parameter argument successively while retaining the specified local
+boxes, or restrict to a carefully chosen affine line through a local box on which none of the
+generic irreducibilities degenerates. The exceptional choices of line form a proper closed
+subset. Applying Theorem 4.3 on the selected line proves the stated affine-space form. $\square$
 
 ### 4.7 What the proof actually gives
 
@@ -508,6 +545,13 @@ Y_i\longrightarrow U\qquad(1\le i\le r)
 $$
 
 be dominant generically finite maps with $Y_i$ integral and $K(Y_i)/K(U)$ separable. After restricting to their common finite étale locus, the set of $u\in U(K)$ for which every fiber $(Y_i)_u$ is connected is a Hilbert subset. It is dense in every finite product of nonempty local opens contained in $U(K_v)$.
+
+**Proof.** Shrink $U$ so that all maps are finite étale. On a further dense affine open, choose a
+primitive element for each field extension $K(Y_i)/K(U)$. Its minimal polynomial is irreducible
+and separable over $K(U)$, and the fiber of $Y_i$ is connected exactly when its specialization is
+irreducible. The simultaneous connectedness locus is therefore a basic Hilbert subset, up to the
+proper closed set removed while choosing the presentations. The several-parameter form of
+Theorem 4.3 makes it dense in every stated local box. $\square$
 
 The total spaces need not be geometrically integral. If they are, their regularity becomes useful for disjointness, but connected specialization alone requires only integrality. The fiber product $Y_1\times_UY_2$ may be disconnected because the two generic fields can intersect; simultaneous connectedness of the two individual fibers does not assert that their compositum has product degree.
 
@@ -556,6 +600,13 @@ $$
 This is a convenient criterion, though stronger than necessary: irreducibility of every resolvent asks for transitivity on each coset space, whereas merely having no fixed point would already rule out containment. The auxiliary-Frobenius proof of Chapter 4 uses the weaker and more flexible condition.
 
 **Theorem 5.2 (preservation of the full Galois group).** Outside a thin subset of $K^m$, a separable polynomial has specialized Galois group isomorphic, in its given permutation action, to its generic Galois group. The same conclusion holds for finitely many polynomials at once and inside any finite product of prescribed nonempty local opens.
+
+**Proof.** Remove the degeneration locus and choose the finitely many maximal-subgroup resolvents
+above. Each resolvent is generically irreducible. Theorem 4.3 supplies a Hilbert subset on which
+all of them remain irreducible, so the specialized group lies in no maximal proper subgroup and
+equals $G$. The complement of that basic Hilbert subset is thin by Proposition 2.1. For finitely
+many polynomials, take all their resolvents at once; Theorem 4.3 also retains the prescribed local
+opens. $\square$
 
 The qualification “in its given permutation action” prevents an ambiguity. Two abstractly isomorphic groups can act differently on the roots, and factorization data depends on the action, not only on the abstract group.
 
@@ -627,7 +678,95 @@ Resolvents perform the same orbit bookkeeping on coset spaces $G/M$. If a maxima
 
 ## 6. Local constancy and arithmetic approximation
 
-### 6.1 Why local conditions are open
+### 6.1 Weak approximation
+
+Hilbert conditions are global and algebraic. Completion conditions are local and topological.
+Weak approximation is the mechanism that lets one parameter carry finitely many local
+instructions, and its finiteness hypothesis is the first boundary to remember.
+
+**Theorem 6.1 (weak approximation for a number field).** Let $K$ be a number field and let $S$ be
+a finite set of pairwise distinct places. The diagonal map
+
+$$
+K\longrightarrow\prod_{v\in S}K_v
+$$
+
+has dense image. Equivalently, for $a_v\in K_v$ and $\epsilon_v>0$, there is $a\in K$ such that
+
+$$
+|a-a_v|_v<\epsilon_v\qquad(v\in S).
+$$
+
+The same assertion holds coordinatewise for $K^m$.
+
+**Proof strategy.** At the finite places, neighborhoods contain congruence classes modulo powers
+of distinct prime ideals, so the Chinese remainder theorem produces one global congruence
+class. The elements in that class form a translate of a fractional ideal. After division by a
+large integer that is a unit at the selected finite places, the embedded ideal becomes a lattice
+with arbitrarily fine archimedean mesh. A lattice point then supplies the remaining real and
+complex approximations without changing the finite congruences.
+
+**Proof.** Shrink each prescribed neighborhood. At a finite place $v$ corresponding to a prime
+$\mathfrak p_v$, it is enough to require
+
+$$
+a-a_v'\in\mathfrak p_v^{n_v}\mathcal O_{K_v}
+$$
+
+for some $a_v'\in K$ close to $a_v$ and some integer $n_v$. After multiplying all data by one
+nonzero element of $K$, these become congruences in a common fractional ideal. The Chinese
+remainder theorem for the pairwise coprime powers $\mathfrak p_v^{n_v}$ gives $c\in K$ satisfying
+all of them. There is a nonzero fractional ideal $I$ such that every element of $c+I$ satisfies
+the same finite-place requirements.
+
+Embed $K$ diagonally in
+
+$$
+K_\infty=\prod_{v\mid\infty}K_v.
+$$
+
+The image of $I$ is a full lattice $\Lambda$ in the finite-dimensional real vector space
+$K_\infty$. Choose a bounded fundamental parallelepiped $P$ for $\Lambda$. Let $M$ be the product
+of the rational primes below the finite places in $S$, with repeated factors omitted. There are
+arbitrarily large positive integers $N$ satisfying $N\equiv1\pmod M$; every such $N$ is a unit in
+$\mathcal O_{K_v}$ for $v\in S$ finite. Therefore every element of
+
+$$
+c+N^{-1}I
+$$
+
+still satisfies the finite congruences.
+
+Let $t\in K_\infty$ be the tuple of desired archimedean targets, with arbitrary coordinates at
+archimedean places not in $S$. Choose $\lambda\in\Lambda$ so that
+
+$$
+N(t-c)-\lambda\in P.
+$$
+
+Then $a=c+\lambda/N$ satisfies
+
+$$
+t-a\in N^{-1}P.
+$$
+
+Since $P$ is bounded, $N^{-1}P$ lies in every prescribed archimedean neighborhood of zero once
+$N$ is large. This gives all required approximations. Repeating the argument in each coordinate
+proves the assertion for $K^m$. $\square$
+
+Two useful refinements are immediate. Every nonempty finite local box contains infinitely many
+diagonal points, and one may avoid any prescribed finite subset of $K^m$. To prove both claims at
+once, choose a finite place $w\notin S$ and a small $w$-adic open ball containing none of the
+finitely many points to be avoided. Apply the theorem with this extra place. Repeating after
+enlarging the forbidden finite set constructs as many distinct points as desired. This justifies
+the repeated removal of branch points, denominator zeros, and previously chosen parameters.
+
+The theorem fails for an unrestricted infinite product. A nonzero number field element has
+nonzero valuation at only finitely many primes, so one cannot independently prescribe positive
+valuation at infinitely many distinct primes. Every later approximation statement is therefore
+explicitly finite.
+
+### 6.2 Why local conditions are open
 
 Weak approximation can combine local conditions only after they have been expressed as open subsets. A statement such as “the polynomial has the same factorization over $K_v$” is not visibly open from its wording. Its openness rests on the rigidity of finite separable algebras over a complete field.
 
@@ -642,9 +781,9 @@ be separable. Put $A=k[X]/(p)$. The claim is that every coefficient vector suffi
 
 The separability hypothesis is the whole reason for stability. At $X^2$ the arbitrarily close polynomials $X^2-\epsilon$ can split, remain irreducible, or become ramified in different ways. Multiple roots sit precisely on the boundary across which the algebra changes.
 
-### 6.2 Krasner's lemma and factor stability
+### 6.3 Krasner's lemma and factor stability
 
-**Lemma 6.1 (Krasner).** Let $k$ be complete with a nonarchimedean absolute value, let $\alpha$ be separable over $k$, and let $\beta$ be algebraic over $k$. If
+**Lemma 6.2 (Krasner).** Let $k$ be complete with a nonarchimedean absolute value, let $\alpha$ be separable over $k$, and let $\beta$ be algebraic over $k$. If
 
 $$
 |\beta-\alpha|<|\alpha-\sigma(\alpha)|
@@ -666,13 +805,22 @@ The strict hypothesis forces $\sigma(\alpha)=\alpha$. Thus the stabilizer of $\b
 
 Roots of a separable polynomial vary continuously, as an unordered multiset, with its coefficients. Choose disjoint small neighborhoods around the roots of $p$ in a splitting field. Hensel's lemma, or a Newton estimate applied in each neighborhood, shows that a nearby polynomial has exactly one root in each neighborhood. Krasner's lemma then identifies the fields generated by corresponding roots. Comparing degrees forces equality rather than just inclusion. Grouping conjugate roots proves the following.
 
-**Proposition 6.2 (local constancy of finite étale algebras).** The isomorphism class of $k[X]/(p)$ is locally constant on the open coefficient locus where the discriminant is nonzero.
+**Proposition 6.3 (local constancy of finite étale algebras).** The isomorphism class of $k[X]/(p)$ is locally constant on the open coefficient locus where the discriminant is nonzero.
+
+**Proof.** Factor $p$ into distinct irreducibles and choose one root of every factor. Put disjoint
+small balls around all conjugate roots in one finite splitting field. The simple-root stability
+argument places exactly one root of every nearby polynomial in each ball. If $\beta$ is matched
+with $\alpha$, Lemma 6.2 gives $k(\alpha)\subseteq k(\beta)$. Every $k$-conjugate of $\beta$ lies in
+the ball attached to a $k$-conjugate of $\alpha$, because field automorphisms preserve distance
+and the nearby polynomial has coefficients in $k$. Hence $[k(\beta):k]\le[k(\alpha):k]$, so the
+inclusion is equality. Conjugacy groups the matched roots into the same factor blocks, and the
+product of all factor fields is unchanged. $\square$
 
 Over $\mathbf R$, the corresponding statement says that the number of real roots of a separable polynomial is locally constant. Complex conjugate pairs cannot become real without first colliding on the discriminant locus. Over $\mathbf C$, every separable degree-$n$ algebra is $\mathbf C^n$.
 
-### 6.3 From local algebras to global fields
+### 6.4 From local algebras to global fields
 
-Let $F(\mathbf T,X)$ be a polynomial family and choose $b_v\in K_v^m$ at finitely many places such that $F(b_v,X)$ is separable. Proposition 6.2 gives a neighborhood $\Omega_v$ on which
+Let $F(\mathbf T,X)$ be a polynomial family and choose $b_v\in K_v^m$ at finitely many places such that $F(b_v,X)$ is separable. Proposition 6.3 gives a neighborhood $\Omega_v$ on which
 
 $$
 K_v[X]/(F(\mathbf t,X))
@@ -689,7 +837,7 @@ $$
 
 This tensor product is generally a product over the places of $M$ above $v$. It is a field exactly when there is one place above $v$. Calling it “the completion of $M$ at $v$” when it is a product would obscure the splitting data.
 
-### 6.4 Splitting, inertness, and ramification avoidance
+### 6.5 Splitting, inertness, and ramification avoidance
 
 For a degree-$n$ field $M/K$, the following local patterns have precise algebraic meanings.
 
@@ -714,7 +862,7 @@ with the quotient generated by arithmetic Frobenius. Further tame and wild restr
 
 For a nonarchimedean local field with finite residue field, these restrictions are already substantial: wild inertia is a $p$-group, tame inertia is cyclic of order prime to $p$, and the residue quotient is cyclic. In particular, every finite local Galois group is solvable. A nonsolvable subgroup of $G$ can therefore never be a decomposition group at a finite place, even though it may occur as the global Galois group.
 
-### 6.5 Prescribed decomposition behavior
+### 6.6 Prescribed decomposition behavior
 
 Suppose a regular Galois cover $V\to U$ has group $G$, and at $b_v\in U(K_v)$ its fiber contains a Galois field factor $L_v/K_v$ with decomposition group $D_v$ and inertia $I_v$. Finite étale local constancy over the field preserves the $K_v$-algebra $L_v$ in a small neighborhood. Therefore a global specialization in that neighborhood has a completion isomorphic to $L_v$ and realizes the same $D_v$ and $I_v$, up to conjugacy in $G$.
 
@@ -722,7 +870,7 @@ The words “up to conjugacy” are unavoidable: changing the chosen prime above
 
 This local method can prescribe ramification rather than merely avoid it, but only on an open Krasner neighborhood of an existing separable local extension. Integral discriminant exponent and higher ramification filtration are then preserved because the local field algebra itself is preserved. Merely staying off the field discriminant locus would not suffice.
 
-### 6.6 Worked local factorization in a symmetric-group family
+### 6.7 Worked local factorization in a symmetric-group family
 
 Fix distinct finite places $v_1,\ldots,v_s$ of $K$ and partitions
 
@@ -737,13 +885,13 @@ Apply weak approximation to the coefficients in the universal family of Section 
 
 There is one group-theoretic compatibility hidden in this statement: every partition of $n$ is a cycle type in $S_n$, so it can occur. For a proper generic group $G\subset S_n$, a partition whose cycle type misses $G$ cannot occur at an unramified good place of a full-$G$ specialization.
 
-### 6.7 Hilbert density versus thin-set density
+### 6.8 Hilbert density versus thin-set density
 
 The complement of a thin set is dense in every finite product of local opens over a number field. This does not imply that the thin set is topologically small. Squares in $\mathbf Q$ are dense in $\mathbf R_{>0}$ and, in suitable $p$-adic square-class opens, fill the rational points that happen to be squares. Both a thin set and its Hilbertian complement may meet the same large real interval densely.
 
 The correct conclusion is an avoidance theorem: no finite local box can force a rational point to lie in a given thin set unless the box is incompatible with the Hilbert condition through an algebraic degeneration already built into the family. Hilbert subsets supply arithmetic freedom inside local topology; they are not complements of measure-zero sets in every completion.
 
-### 6.8 Why this is not an unrestricted local-global theorem
+### 6.9 Why this is not an unrestricted local-global theorem
 
 The universal polynomial family can realize arbitrary degree-$n$ finite étale algebras at finitely many completions, because its parameters are all coefficients and every such algebra is monogenic over a local field. The resulting global object is a degree-$n$ field, usually non-Galois. This flexibility should not be confused with the assertion that arbitrary local **Galois** extensions can be assembled into a global Galois extension with a preassigned group.
 
@@ -800,6 +948,17 @@ To see this concretely, for each possible factor degree $d$ construct over $L$ t
 Theorem 4.3 therefore gives the following.
 
 **Theorem 7.1 (disjoint specialization).** Let $f(T,X)\in K(T)[X]$ be irreducible and separable of degree $n$, and let $L/K$ be finite. If $f$ remains irreducible over $L(T)$, then the parameters $a\in K$ for which $f(a,X)$ is irreducible over $L$ form a Hilbert subset of $K$. They are dense in every finite product of local opens. For each such $a$, the root field $M_a/K$ is linearly disjoint from $L/K$.
+
+**Proof.** Section 7.2 shows that failure of irreducibility over $L$ on a $K$-parameter is thin
+over $K$; equivalently, its complement contains a basic Hilbert subset. Theorem 4.3 makes that
+subset dense in every finite local box. If $\alpha_a$ is a root, irreducibility over $L$ gives
+
+$$
+[L(\alpha_a):L]=n=[K(\alpha_a):K].
+$$
+
+The degree criterion of Section 7.1 then says that $K(\alpha_a)$ and $L$ are linearly disjoint.
+$\square$
 
 ### 7.3 Galois closures and regular generic splitting fields
 
@@ -1092,6 +1251,14 @@ If $X$ has a dense open $W$ isomorphic to a dense open of $\mathbf A^m$, Theorem
 
 **Theorem 9.1 (rational-variety form).** Let $X$ be a $K$-rational geometrically integral variety over a number field. For finitely many integral generically finite separable covers of $X$, their common connected-fiber locus is a Hilbert subset. On a common rational chart it is dense in products of finitely many local nonempty opens.
 
+**Proof.** Choose dense opens $W\subset X$ and $W'\subset\mathbf A^m_K$ that are isomorphic.
+Restrict every cover to $W$ and transport it to $W'$. The function fields have not changed, so
+integrality and separability of every generic cover remain true. After removing the finite and
+branch loci, Theorem 5.1 gives a Hilbert subset of $W'(K)$ with connected fibers and makes it
+dense in each local box contained in the chart. Transporting back proves the assertion on $W$.
+All discarded points lie in a proper closed subset of $X$, which is allowed in the definition of
+a Hilbert subset. $\square$
+
 If $X$ is smooth, a proper closed subset has empty interior in $X(K_v)$ at every local smooth point. Thus any local open containing a smooth point may be shrunk to meet the rational chart. For singular spaces or opens supported on exceptional local loci, it is safer to state explicitly that the chosen local opens meet the chart.
 
 ### 9.3 What geometric irreducibility buys
@@ -1213,9 +1380,412 @@ This yields $M_{r+1}$ with the same local conditions and with Galois closure dis
 
 The distinction is more than logical. Each new field is selected after the previous finite compositum is known. No uniform bound on the heights of the defining polynomials follows from this recursive existential construction.
 
-## 11. A simultaneous-conditions theorem
+## 11. Specializing finite étale covers
 
-### 11.1 Setting up compatible data
+### 11.1 From a rational point to a finite algebra
+
+The polynomial language is efficient when a single primitive element has already been chosen.
+Many arithmetic constructions, however, begin with a cover whose sheets carry symmetries and
+whose defining equations change from chart to chart. The intrinsic specialization problem is
+therefore the following. Given a finite étale cover over a rational parameter space, can one
+choose a rational parameter for which the fiber is connected while its fibers over selected
+completions have prescribed, already realizable forms?
+
+Let $X$ be a connected $K$-variety and let
+
+$$
+\pi:Y\longrightarrow X
+$$
+
+be finite étale of constant degree $n$. For $x\in X(K)$, the Cartesian fiber is
+
+$$
+Y_x=Y\times_X\operatorname{Spec}K=\operatorname{Spec}A_x,
+$$
+
+where $A_x$ is a finite étale $K$-algebra of dimension $n$. Thus
+
+$$
+A_x\cong F_{x,1}\times\cdots\times F_{x,r}
+$$
+
+for finite separable fields $F_{x,j}/K$ whose degrees sum to $n$. The fiber is connected exactly
+when $r=1$, or equivalently when $A_x$ is a field. After completing at a place $v$,
+
+$$
+A_x\otimes_KK_v
+\cong\prod_{w\mid v}(F_x)_w
+$$
+
+when $A_x=F_x$ is a field. Consequently the local fiber records all places above $v$ and all
+their completions at once. A single chosen factor records only one place.
+
+The generic hypothesis needed for connected specialization is equally exact. Since $X$ is
+connected, $Y$ is connected if and only if its generic fiber is the spectrum of a field. If $Y$
+is disconnected, every fiber inherits a nontrivial open-and-closed decomposition after shrinking
+$X$ if necessary, so no theorem can make all of $Y_x$ connected. We shall therefore assume that
+each cover whose fiber is required to be connected has integral total space.
+
+For a generically finite separable map that is not everywhere étale, one first removes the
+branch locus and the locus where finiteness fails. This is not a loss of information: the
+discarded parameters are precisely those at which degree, reducedness, or the covering
+interpretation can degenerate.
+
+### 11.2 Local constancy in families
+
+Weak approximation can preserve a local fiber only if its isomorphism class is open in the
+parameter. Chapter 6 proved this for one polynomial. The same phenomenon is intrinsic to finite
+étale covers.
+
+**Proposition 11.1 (local constancy of fibers).** Let $k$ be a completion of a number field, let
+$X$ be a $k$-variety, and let $\pi:Y\to X$ be finite étale. For every $b\in X(k)$ there is an
+open neighborhood $\Omega$ of $b$ in $X(k)$ such that
+
+$$
+Y_x\cong Y_b
+$$
+
+as finite étale $k$-schemes for every $x\in\Omega$. If a finite group acts on $Y$ over $X$, the
+isomorphisms may be required to respect that action.
+
+**Proof strategy.** Near $b$, choose one element that generates the fiber algebra and lift it to
+the finite locally free algebra of the cover. Generation is detected by a determinant. Once that
+determinant stays nonzero, the cover is described by the characteristic polynomial of the lifted
+element, so the polynomial form of local constancy applies.
+
+**Proof.** Work after base change to $k$ and replace $X$ by an affine neighborhood of $b$. Write
+$X=\operatorname{Spec}R$ and $Y=\operatorname{Spec}B$, with $B$ finite locally free over $R$.
+The fiber
+
+$$
+B_b=B\otimes_{R,b}k
+$$
+
+is a product of finite separable extensions of the infinite field $k$. Such a product has a
+primitive element. Indeed, choose primitive elements in the field factors and translate them by
+distinct scalars of $k$ so that their minimal polynomials are pairwise coprime; the tuple of the
+translated elements then generates the product.
+
+Lift a primitive element $\bar z\in B_b$ to a section $z$ of $B$ after shrinking the affine
+neighborhood. The powers $1,z,\ldots,z^{n-1}$ form a basis at $b$. The determinant comparing these
+powers with a local basis of $B$ is nonzero at $b$, so it remains invertible on a Zariski
+neighborhood. There
+
+$$
+B\cong R[Z]/(p),
+$$
+
+where $p$ is the characteristic polynomial of multiplication by $z$. Its discriminant is
+invertible because $B/R$ is étale. Evaluation of the coefficients of $p$ is continuous on
+$X(k)$. At a nonarchimedean place, Proposition 6.3 gives a neighborhood on which the specialized
+algebra is constant. At a real place, the numbers of real and complex factors are constant away
+from the discriminant; over the complex numbers every finite étale algebra of rank $n$ is a
+product of $n$ copies of the base field.
+
+If a finite group acts, choose in a splitting field disjoint small balls around all roots of
+$p_b$. Match each root of $p_x$ with the unique root in the corresponding ball. Every given group
+element permutes the roots of every fiber. For $x$ sufficiently close to $b$, its image of the
+root in one labeled ball must lie in the ball labeled by the image at $b$, because the finitely
+many balls have positive mutual distance and the action maps are continuous. The resulting root
+matching therefore intertwines every group element. Galois descent turns that equivariant root
+matching into an equivariant isomorphism of the finite étale $k$-algebras. $\square$
+
+The proposition preserves more than factor degrees. At a nonarchimedean place it preserves each
+field factor up to $k$-isomorphism, hence its ramification index, residue degree, discriminant
+exponent, normal closure, and ramification filtration. Reduction modulo the maximal ideal would
+preserve only the unramified shadow; constancy of the full local algebra preserves the ramified
+information as well.
+
+### 11.3 The cover-specialization theorem
+
+We can now state the intrinsic form of Hilbert irreducibility with local conditions. Its
+hypotheses separate the global source of connectedness from the local source of the prescribed
+fibers.
+
+**Theorem 11.2 (finite-cover specialization with local conditions).** Let $K$ be a number field,
+let $X$ be a nonempty open subvariety of $\mathbf A^m_K$, and let
+
+$$
+\pi_i:Y_i\longrightarrow X\qquad(1\le i\le r)
+$$
+
+be finite étale covers with each $Y_i$ integral. Let $S$ be a finite set of places. For every
+$v\in S$, choose $b_v\in X(K_v)$ and an open neighborhood $\Omega_v$ of $b_v$ on which every
+fiber $(Y_i)_x$ is isomorphic to $(Y_i)_{b_v}$ over $K_v$. Let $Z\subset X(K)$ be thin. Then
+there exists $x\in X(K)\setminus Z$ such that
+
+1. $x\in\Omega_v$ for every $v\in S$;
+2. every global fiber $(Y_i)_x$ is connected;
+3. for every $i$ and $v$,
+   $$
+   (Y_i)_x\times_KK_v\cong(Y_i)_{b_v}
+   $$
+   as finite étale $K_v$-schemes.
+
+The set of such $x$ is dense in $\prod_{v\in S}\Omega_v$ and is not thin in $X(K)$.
+
+**Proof strategy.** Connectedness of each generic cover gives one Hilbert condition. Avoidance of
+$Z$ gives finitely many more. Local constancy has already converted every desired local fiber
+into an ordinary open condition. The simultaneous Hilbert theorem then meets all of them at one
+rational point.
+
+**Proof.** Choose primitive elements on dense affine charts of the $Y_i$ and remove the finitely
+many loci on which their denominators, leading coefficients, or discriminants vanish. The
+condition that $(Y_i)_x$ be connected is the irreducibility of the resulting primitive-element
+polynomial. Since $Y_i$ is integral, that polynomial is irreducible over $K(X)$. Thus the common
+connected-fiber locus is a Hilbert subset of $X(K)$.
+
+By Proposition 2.1, there is a basic Hilbert subset disjoint from the given thin set $Z$.
+Intersect it with the finitely many connected-fiber conditions. Theorem 4.3 in $m$ parameters
+meets this intersection inside the local box $\prod_v\Omega_v$. Proposition 11.1 gives the local
+fiber isomorphisms. Repeating the argument in every smaller local box proves density.
+
+If the resulting set were thin, Proposition 2.1 would provide a further basic Hilbert subset
+disjoint from it. Intersecting that further condition with all the preceding ones and applying
+Theorem 4.3 would produce a point both in and outside the resulting set, a contradiction. Hence
+the set is not thin. $\square$
+
+The same theorem holds on a $K$-rational geometrically integral variety after restricting to a
+rational chart. The local neighborhoods must meet that chart. On an arbitrary variety, local
+points and Hilbert conditions do not themselves create a rational point; this is exactly the
+boundary described in Section 9.5.
+
+### 11.4 Galois covers and specialization homomorphisms
+
+When a cover has a group of deck transformations, connectedness of a fiber admits a sharper
+description. It becomes surjectivity of a homomorphism, and local fibers become restrictions of
+that homomorphism.
+
+Let $Y\to X$ be a connected finite étale Galois cover with deck group $G$. Choose a right action
+of $G$ on $Y$. For $x\in X(K)$, choose a geometric point $y$ of $Y_x$. The absolute Galois group
+of $K$ acts on the geometric fiber and commutes with the right $G$-action. There is therefore a
+unique continuous homomorphism
+
+$$
+\rho_x:G_K\longrightarrow G
+$$
+
+such that
+
+$$
+\sigma(y)=y\cdot\rho_x(\sigma).
+$$
+
+Replacing $y$ by $y\cdot g$ conjugates $\rho_x$ by $g$. Thus its conjugacy class is intrinsic.
+The image $D_x=\rho_x(G_K)$ is the specialization group introduced in Section 4.5.
+
+**Proposition 11.3.** With this notation, the following are equivalent.
+
+1. $Y_x$ is connected.
+2. The action of $G_K$ on the geometric fiber is transitive.
+3. $\rho_x$ is surjective.
+
+If these conditions hold, $Y_x=\operatorname{Spec}F_x$ for a finite Galois extension $F_x/K$
+whose group is identified with $G$ up to the chosen left-right convention.
+
+**Proof.** Connected components of a finite étale $K$-scheme correspond to orbits of $G_K$ on
+its geometric points. The geometric fiber of a Galois cover is a simply transitive $G$-set.
+Starting at $y$, the $G_K$-orbit is
+
+$$
+\{y\cdot\rho_x(\sigma):\sigma\in G_K\}=y\cdot D_x.
+$$
+
+It is the whole fiber exactly when $D_x=G$. In that case the connected finite étale algebra is
+a field. Its automorphisms arise from the deck transformations, and their number is its degree,
+so the extension is Galois with group $G$. $\square$
+
+For a place $v$ and an embedding of a separable closure of $K$ into one of $K_v$, restriction
+gives
+
+$$
+\rho_{x,v}:G_{K_v}\longrightarrow G.
+$$
+
+Changing the embedding conjugates its image. If $F_x/K$ is the connected specialization, then
+the image is the decomposition group $D_w$ of the corresponding place $w\mid v$. At a finite
+place, the image of inertia is $I_w$, and the quotient $D_w/I_w$ is generated by arithmetic
+Frobenius. Hence the global specialization homomorphism stores all local decomposition data by
+restriction.
+
+### 11.5 Prescribed decomposition and inertia
+
+The preceding description makes the exact local theorem almost tautological, but it is worth
+stating because it prevents a common loss of information between a local algebra and an abstract
+subgroup.
+
+**Theorem 11.4 (Galois specialization with prescribed local fibers).** Let $K$, $X$, and $S$ be
+as in Theorem 11.2, and let $Y\to X$ be a connected finite étale Galois cover with group $G$.
+For each $v\in S$, choose $b_v\in X(K_v)$ and let
+
+$$
+\rho_{b_v}:G_{K_v}\longrightarrow G
+$$
+
+be the homomorphism attached to the local fiber, defined up to conjugacy. Then there exists
+$x\in X(K)$, arbitrarily close to all the $b_v$, such that
+
+1. $\rho_x:G_K\to G$ is surjective;
+2. for every $v\in S$, the restriction $\rho_x|_{G_{K_v}}$ is conjugate to $\rho_{b_v}$.
+
+One may simultaneously avoid a thin subset and impose finitely many further connected-cover
+conditions.
+
+**Proof.** Proposition 11.1, with the $G$-action retained, gives an open neighborhood $\Omega_v$
+of $b_v$ on which the local fibers are isomorphic as $G$-torsors. Such an isomorphism identifies
+the associated local homomorphisms up to the conjugacy caused by choosing a point of the torsor.
+Apply Theorem 11.2 to the cover $Y\to X$ and the neighborhoods $\Omega_v$. Connectedness of the
+global fiber makes $\rho_x$ surjective by Proposition 11.3, and equivariant local constancy gives
+the restrictions. $\square$
+
+At a nonarchimedean $v$, write $D_v$ and $I_v$ for the image of $G_{K_v}$ and its inertia
+subgroup under $\rho_{b_v}$. The resulting Galois field satisfies
+
+$$
+F_x\otimes_KK_v\cong\prod_{G/D_v}L_v,
+$$
+
+where every factor is a conjugate of one finite Galois extension $L_v/K_v$ with group $D_v$ and
+inertia $I_v$. In particular, the theorem prescribes the pair
+
+$$
+I_v\triangleleft D_v\subseteq G
+$$
+
+only when that pair is realized by the chosen local fiber. This hypothesis automatically
+contains the conditions that $D_v/I_v$ be cyclic and that the ramification be possible in the
+residue characteristic. An abstract pair of subgroups is not enough.
+
+At a real place, the local group has order at most two. Its nontrivial element is the conjugacy
+class of complex conjugation. Prescribing a real local fiber therefore prescribes the orbit
+structure of a complex conjugation element on every permutation representation of $G$. At a
+complex place the local group is trivial.
+
+For a connected non-Galois cover of degree $n$, pass on a dense open to a connected Galois
+closure $\widetilde Y\to X$. A connected specialization of $\widetilde Y$ preserves the full
+generic monodromy group. The original local algebra is obtained by taking the associated coset
+set, so its field factors are the orbits of each local decomposition group. This recovers the
+factorization--orbit dictionary of Section 5.7 without choosing a global polynomial.
+
+### 11.6 Several covers and one point
+
+Applications often require one parameter to specialize several covers, preserve a Galois group,
+and keep a different fiber disjoint from a fixed extension. These are not separate approximation
+problems. Each is a connectedness demand on a finite cover, so they belong in one finite
+intersection.
+
+Let $Y_i\to X$ be connected finite étale covers. Their fiber product need not be connected: two
+generic function fields may intersect. Requiring each $(Y_i)_x$ to be connected is therefore
+weaker than requiring the whole fiber product to be connected, and it is usually the intended
+condition. If independence is intended, take a connected component of the generic fiber product
+corresponding to the compositum and explicitly require that component to have the product degree.
+
+For disjointness from a finite extension $L/K$, base change a regular generic cover to $L$ and
+descend the resulting connectedness condition to $K$ as in Chapter 7. For preservation of several
+finite Galois images, take the compositum of their fixed fields. For prescribed local behavior,
+intersect the equivariant constancy neighborhoods supplied by Proposition 11.1. All of these
+operations remain finite, so Theorem 11.2 applies.
+
+This explains why the theorem is robust under adding conditions but not under taking an
+uncontrolled infinite list. Every new cover contributes finitely much monodromy data. Infinitely
+many covers can have infinitely many independent finite quotients, and no one application of
+weak approximation can encode them all.
+
+### 11.7 Bounded-degree local data
+
+Some applications do not name one local extension. They ask that every local field arising in a
+construction of bounded degree belong to an allowed class, or that a condition be checked after
+all extensions of bounded degree. At first sight this is an infinite list. Over a
+nonarchimedean completion of a number field, local finiteness turns it into a finite problem.
+
+**Proposition 11.5 (finite reduction of bounded local conditions).** Let $k$ be a finite
+extension of $\mathbf Q_p$ and let $n\ge1$.
+
+1. There are only finitely many $k$-isomorphism classes of field extensions of degree at most
+   $n$.
+2. There are only finitely many $k$-isomorphism classes of finite étale $k$-algebras of dimension
+   $n$.
+3. If $Y\to X$ is finite étale of degree $n$, any condition on $Y_x$ that depends only on its
+   $k$-algebra isomorphism class cuts out an open-and-closed subset of $X(k)$.
+
+**Proof.** The first assertion is the bounded-degree finiteness theorem for characteristic-zero
+local fields: write an extension as its unique unramified stage followed by a totally ramified
+stage, parameterize the latter by Eisenstein polynomials, and use compactness together with
+Krasner local constancy. For the second assertion, a finite étale algebra is a product of finite
+separable fields. There are finitely many partitions of $n$, and the first assertion gives only
+finitely many choices for every factor in a fixed partition.
+
+For the third assertion, Proposition 11.1 says that the map
+
+$$
+X(k)\longrightarrow
+\{\text{isomorphism classes of rank-$n$ finite étale $k$-algebras}\}
+$$
+
+is locally constant. The target is finite by part 2. The inverse image of any collection of its
+points is therefore open, and so is its complement; hence it is open and closed. $\square$
+
+For a finite set of places and one common degree bound, the union of all local isomorphism types
+is still finite. A simultaneous demand quantified over those types may therefore be expanded
+into finitely many local clauses before Theorem 11.2 is applied. This is the precise use of
+bounded-degree local finiteness: it reduces the number of conditions, but it does not say that
+one fiber can have mutually incompatible types.
+
+The characteristic-zero hypothesis is decisive. Over $\mathbf F_q((t))$ there are infinitely
+many separable extensions of degree $p$ in characteristic $p$, supplied by Artin--Schreier
+equations with different pole breaks. A bounded-degree quantifier there need not collapse to a
+finite list. The present global theory concerns number fields, so all their nonarchimedean
+completions lie in the finite regime.
+
+### 11.8 Examples and boundary cases
+
+The power cover gives the simplest model. Over
+
+$$
+X=\mathbf G_m,
+$$
+
+the equation
+
+$$
+Z^n=T
+$$
+
+defines a finite étale cover in characteristic zero. Its fiber at $a\in K^\times$ is
+$K[Z]/(Z^n-a)$. Connectedness means that $Z^n-a$ is irreducible. A local neighborhood of
+$b_v\in K_v^\times$ preserves the entire local algebra, not merely whether $b_v$ is an $n$th
+power. If $K$ contains the $n$th roots of unity, the Galois closure is visible directly through
+the multiplicative deck action; otherwise the constant cyclotomic extension must be tracked.
+
+For the double cover
+
+$$
+Z^2=T(T-1)
+$$
+
+of $\mathbf A^1\setminus\{0,1\}$, a real interval among the three components
+$(-\infty,0)$, $(0,1)$, and $(1,\infty)$ fixes the real splitting type. At an odd finite place,
+a sufficiently small neighborhood fixes the square class of $b_v(b_v-1)$ and hence the local
+quadratic algebra. Theorem 11.2 chooses one rational $a$ meeting all these local choices while
+keeping the global quadratic fiber a field.
+
+Four failures delineate the theorem.
+
+First, if the generic cover is disconnected, connected specializations cannot be demanded.
+Second, a prescribed local algebra must occur at some local point of the given family; local
+constancy preserves an existing fiber but does not invent one. Third, points on the branch locus
+are excluded because their fibers need not be reduced or have the generic degree. Fourth, if the
+base is not rational and has no suitable rational points, a Hilbert condition supplies no point
+from which to start.
+
+These are exact failures, not technical blemishes. Once generic connectedness, local
+realizability, the good locus, and a rational parameter space are present, specialization of a
+finite cover is as flexible as specialization of one polynomial: its global monodromy can remain
+maximal while finitely many local fibers remain fixed.
+
+## 12. A simultaneous-conditions theorem
+
+### 12.1 Setting up compatible data
 
 We now package the book's tools in the form most useful for choosing auxiliary fields. Let $K$ be a number field, let $n\ge2$, and write $\mathcal P_n\cong\mathbf A^n_K$ for the coefficient space of monic degree-$n$ polynomials. Its universal polynomial is
 
@@ -1244,9 +1814,9 @@ with $r_v\equiv n\pmod 2$. If total reality is demanded, $K$ must be totally rea
 
 Finally, let $L/K$ be a finite extension, let $Z\subset\mathcal P_n(K)$ be thin, and let $H_1,\ldots,H_r$ be finitely many additional Hilbert conditions arising from integral generically finite separable covers of open subsets of $\mathcal P_n$. All data are finite.
 
-### 11.2 The packaged theorem
+### 12.2 The packaged theorem
 
-**Theorem 11.1 (simultaneous arithmetic specialization).** With the data of Section 11.1, there exists a coefficient vector
+**Theorem 12.1 (simultaneous arithmetic specialization).** With the data of Section 12.1, there exists a coefficient vector
 
 $$
 \mathbf a\in\mathcal P_n(K)\setminus Z
@@ -1280,7 +1850,7 @@ so $\widetilde M\cap L'=K$ and condition 5 follows. Add the finitely many covers
 
 Theorem 4.3 makes this Hilbert subset dense in the product of the local opens. To prove the stronger assertion, suppose that the set of coefficient vectors satisfying all seven conclusions were thin. Proposition 2.1 would supply finitely many further Hilbert conditions avoiding that thin set. Appending them to the conditions already imposed and applying Theorem 4.3 inside the same local box would produce a coefficient vector satisfying all seven conclusions but lying outside the alleged set of all such vectors, a contradiction. Thus the set is not thin. $\square$
 
-### 11.3 Reading the local conclusions
+### 12.3 Reading the local conclusions
 
 The theorem contains several familiar prescriptions as choices of $A_v$.
 
@@ -1292,23 +1862,23 @@ The theorem contains several familiar prescriptions as choices of $A_v$.
 
 In the $S_n$ Galois closure, an unramified local partition must be read as one cycle type. For ramified models, decomposition and inertia are determined only up to conjugacy. No incompatible abstract data are asserted to exist: the local algebra $A_v$ is the certificate that the desired condition is realizable.
 
-### 11.4 Finite and infinite avoidance in the package
+### 12.4 Finite and infinite avoidance in the package
 
 To avoid finitely many prescribed extensions, take $L$ to be the compositum of their normal closures. If an infinite Galois extension $\Omega/K$ has only finitely many subfields of degree at most $n!$, include their normal closures in $L$. Since $[\widetilde M:K]=n!$, any nontrivial intersection $\widetilde M\cap\Omega$ would be among these bounded-degree subfields, contradicting disjointness from $L$.
 
 The bound $n!$ is needed when avoiding intersection with the Galois closure. If only the degree-$n$ root field matters, degree $n$ bounds its intersection, but trivial intersection may still be weaker than linear disjointness unless a Galois hypothesis is present. Using the closure produces the cleanest statement at the cost of the larger bound.
 
-For an arbitrary infinite extension with infinitely many bounded-degree subfields, Theorem 11.1 makes no avoidance promise. That exact limit prevents a finite Hilbert argument from being mistaken for an infinite approximation theorem.
+For an arbitrary infinite extension with infinitely many bounded-degree subfields, Theorem 12.1 makes no avoidance promise. That exact limit prevents a finite Hilbert argument from being mistaken for an infinite approximation theorem.
 
-### 11.5 Existential and effective content
+### 12.5 Existential and effective content
 
 The proof identifies all exceptional conditions algebraically: discriminants and denominators define closed loci, factorization and subgroup failures define finite covers, and local algebras define explicit Krasner neighborhoods. In that qualitative sense the construction is concrete.
 
 It is not accompanied by a bound for the height of $\mathbf a$ or the discriminant of $M$. The proof of number-field Hilbert irreducibility used large split auxiliary primes and a finite-field point estimate; an effective version would have to bound those primes and then quantify simultaneous approximation. Such refinements are possible only after supplying analytic and height estimates absent from the present argument. Every theorem above should therefore be read as existential unless an explicit example has actually been calculated.
 
-## 12. The arithmetic freedom of specialization
+## 13. The arithmetic freedom of specialization
 
-### 12.1 The hierarchy of conditions
+### 13.1 The hierarchy of conditions
 
 The theory assembled here has a useful order. First remove degeneration: denominators, leading coefficients, and branch discriminants. Next translate each desired completion into a nonempty local open through Hensel lifting or Krasner's lemma. Then express global requirements—irreducibility, full Galois group, connected fibers after base change—as Hilbert conditions. Finally combine the finite local opens by weak approximation while auxiliary Frobenius congruences keep the parameter in the Hilbert subset.
 
@@ -1328,22 +1898,30 @@ $$
 
 Hilbert irreducibility does not repair an empty local open, an impossible inertia quotient, a parity-violating signature, or a constant field already shared with an extension to be avoided. Once these obstructions are removed, it says that finitely many remaining demands do not compete for a scarce set of rational parameters.
 
-### 12.2 The roles of decomposition and inertia
+### 13.2 The roles of decomposition and inertia
 
 At a good unramified finite place, one Frobenius conjugacy class records the residue factorization. Arithmetic Frobenius acts by $x\mapsto x^{|k_v|}$, in agreement with the global convention. In a ramified specialization, inertia records what reduction loses and Frobenius lives canonically only in $D/I$. Local constancy of the entire completion, rather than reduction alone, is what preserves a prescribed ramified structure.
 
 Globally, specialization groups are decomposition groups for the valuation $T-a$ in a function-field Galois extension. This is the conceptual hinge of the proof: local Frobenius elements at auxiliary arithmetic primes lie inside one global specialization subgroup. Choosing enough of them rules out every proper maximal subgroup.
 
-### 12.3 The roles of regularity and normality
+### 13.3 The roles of regularity and normality
 
 Normality makes a cover recoverable from its function field and makes specialization groups honest decomposition groups. Geometric irreducibility removes hidden constant extensions. Regularity of a generic splitting field then permits base change to every prescribed finite extension without losing connectedness. These properties solve different problems and none may silently substitute for another.
 
 For a nonregular cover, Hilbert irreducibility remains valid, but the constant quotient must survive every specialization. For a regular cover, disjointness from fixed constant extensions becomes available. For a non-Galois specialized root field, full generic monodromy describes its Galois closure and does not turn the root field itself into a Galois extension.
 
-### 12.4 Conclusion
+### 13.4 Conclusion
 
 Specialization begins with a moving equation and ends with an arithmetic field. Between those endpoints lie two kinds of rigidity. Finite étale geometry keeps degree and separability stable away from the branch locus; local field rigidity keeps a chosen completion unchanged in a sufficiently small neighborhood. Hilbert irreducibility supplies the complementary freedom: after those rigid local neighborhoods are fixed, rational parameters retaining generic connectedness and monodromy remain dense.
 
 For number fields this freedom is not mysterious. A finite list of auxiliary reductions places carefully chosen Frobenius classes inside the specialization group. Derangements ensure that those classes escape every possible proper maximal subgroup, and weak approximation merges their congruences with the local conditions that arithmetic applications actually care about. The same mechanism preserves several covers, detects full Galois groups through resolvents, and enforces irreducibility after base change.
 
-The resulting toolkit has exact boundaries. It handles finitely many local and global conditions; infinite avoidance requires a separate finite-subextension argument. It preserves only locally realizable decomposition and inertia data. Total reality requires a totally real base and complete real splitting at every archimedean place. Disjointness requires regularity or an explicit generic intersection calculation. Within those boundaries, one may construct extensions of prescribed degree and signature, with controlled completions, full symmetric Galois closure, and no unwanted finite-field intersection. That is the arithmetic strength of Hilbert irreducibility: generic behavior can be made concrete without surrendering finite local control.
+In the intrinsic language, a rational point turns a finite étale cover into a finite algebra and
+a Galois cover into a specialization homomorphism. Connectedness is surjectivity of that
+homomorphism; restriction to a completion gives its decomposition and inertia groups. Equivariant
+local constancy therefore preserves prescribed local torsors exactly, while bounded-degree
+finiteness over nonarchimedean completions reduces quantified local requirements to a finite list.
+This is why polynomial equations, field extensions, and finite covers obey one specialization
+theorem rather than three parallel principles.
+
+The resulting toolkit has exact boundaries. It handles finitely many local and global conditions; infinite avoidance requires a separate finite-subextension argument. It preserves only locally realizable decomposition and inertia data. Total reality requires a totally real base and complete real splitting at every archimedean place. Disjointness requires regularity or an explicit generic intersection calculation. Within those boundaries, one may construct extensions of prescribed degree and signature, with controlled completions, full symmetric Galois closure, and no unwanted intersection with a prescribed finite extension. That is the arithmetic strength of Hilbert irreducibility: generic behavior can be made concrete without surrendering finite local control.
