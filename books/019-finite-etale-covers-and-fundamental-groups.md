@@ -10,12 +10,14 @@
    - [Unramified, flat, and finitely presented](#21-unramified-flat-and-finitely-presented)
    - [Differentials and the diagonal](#22-differentials-and-the-diagonal)
    - [Standard étale algebras and the Jacobian criterion](#23-standard-étale-algebras-and-the-jacobian-criterion)
-   - [Finite criteria and counterexamples](#24-finite-criteria-and-counterexamples)
+   - [Why standard charts exist](#24-why-standard-charts-exist)
+   - [Finite criteria and counterexamples](#25-finite-criteria-and-counterexamples)
 3. [Finite étale algebras and schemes](#3-finite-étale-algebras-and-schemes)
    - [Fields](#31-fields)
    - [Local and henselian rings](#32-local-and-henselian-rings)
-   - [Trace, discriminant, and idempotents](#33-trace-discriminant-and-idempotents)
-   - [Operations and degree](#34-operations-and-degree)
+   - [Henselizations and pointed neighborhoods](#33-henselizations-and-pointed-neighborhoods)
+   - [Trace, discriminant, and idempotents](#34-trace-discriminant-and-idempotents)
+   - [Operations and degree](#35-operations-and-degree)
 4. [Geometric fibers](#4-geometric-fibers)
    - [Why geometric points are necessary](#41-why-geometric-points-are-necessary)
    - [The fiber functor](#42-the-fiber-functor)
@@ -49,28 +51,37 @@
     - [Finite étale algebras over a field](#111-finite-étale-algebras-over-a-field)
     - [Recovering the absolute Galois group](#112-recovering-the-absolute-galois-group)
     - [Arithmetic and geometric Frobenius conventions](#113-arithmetic-and-geometric-frobenius-conventions)
+    - [Function fields and arithmetic schemes](#114-function-fields-and-arithmetic-schemes)
 12. [The fundamental exact sequence](#12-the-fundamental-exact-sequence)
     - [Statement and basepoints](#121-statement-and-basepoints)
     - [Proof by finite sets](#122-proof-by-finite-sets)
     - [Arithmetic and geometric monodromy](#123-arithmetic-and-geometric-monodromy)
+    - [The relative homotopy sequence](#124-the-relative-homotopy-sequence)
+    - [Exactness criteria and failure modes](#125-exactness-criteria-and-failure-modes)
 13. [Changing the ground field](#13-changing-the-ground-field)
     - [Separable extensions](#131-separable-extensions)
     - [Algebraic extensions and exact images](#132-algebraic-extensions-and-exact-images)
     - [Purely inseparable invariance](#133-purely-inseparable-invariance)
+    - [Extension of algebraically closed fields](#134-extension-of-algebraically-closed-fields)
 14. [Specialization over henselian discrete valuation rings](#14-specialization-over-henselian-discrete-valuation-rings)
     - [The direction of specialization](#141-the-direction-of-specialization)
     - [Smooth families](#142-smooth-families)
     - [Proper smooth families](#143-proper-smooth-families)
     - [What fails without the hypotheses](#144-what-fails-without-the-hypotheses)
+    - [Boundaries, tame quotients, and semistable curves](#145-boundaries-tame-quotients-and-semistable-curves)
 15. [Curves and explicit covers](#15-curves-and-explicit-covers)
     - [Affine and projective lines](#151-affine-and-projective-lines)
     - [Kummer covers of the punctured line](#152-kummer-covers-of-the-punctured-line)
     - [Artin–Schreier covers](#153-artinschreier-covers)
     - [Elliptic isogenies and inseparable maps](#154-elliptic-isogenies-and-inseparable-maps)
+    - [Compactification, inertia, and tame covers](#155-compactification-inertia-and-tame-covers)
+    - [Arithmetic curves and good reduction](#156-arithmetic-curves-and-good-reduction)
 16. [Locally constant finite sheaves](#16-locally-constant-finite-sheaves)
     - [From descent data to monodromy](#161-from-descent-data-to-monodromy)
     - [Finite modules and representations](#162-finite-modules-and-representations)
     - [Lisse finite-coefficient sheaves](#163-lisse-finite-coefficient-sheaves)
+    - [Permutation representations from covers](#164-permutation-representations-from-covers)
+    - [Integral and rational adic representations](#165-integral-and-rational-adic-representations)
 17. [The covering–monodromy dictionary](#17-the-coveringmonodromy-dictionary)
     - [The dictionary](#171-the-dictionary)
     - [A construction protocol](#172-a-construction-protocol)
@@ -174,7 +185,38 @@ with $\sum_i x_iy_i=1$ and $(b\otimes1)e=(1\otimes b)e$ for every $b\in B$. Mult
 
 For several equations the square Jacobian presentation is only a local normal form, not a demand that every global finite étale algebra be monogenic or globally a complete intersection in prescribed coordinates. Étale localization is what permits equations and variables to be adjusted. Confusing a local Jacobian criterion with a global presentation theorem is a frequent source of unjustified primitive-element claims over rings.
 
-### 2.4 Finite criteria and counterexamples
+### 2.4 Why standard charts exist
+
+The preceding charts are useful only if every étale morphism can be reached by them. The local structure theorem says precisely this. Let $A\to B$ be finitely presented, let $\mathfrak q\subset B$ lie over $\mathfrak p\subset A$, and suppose the map is étale at $\mathfrak q$. After localizing $A$ away from $\mathfrak p$ and $B$ away from $\mathfrak q$, there are a monic polynomial $f\in A[T]$ and an element $g$ in $A[T]/(f)$ such that
+
+$$
+B_g\cong (A[T]/(f))_g,
+\qquad f'\text{ is invertible in }(A[T]/(f))_g.
+$$
+
+Such an algebra is called **standard étale**. One may replace the one-variable form by a square system of equations with invertible Jacobian determinant. The one-variable form emphasizes simple roots; the square form is often easier to extract from a given presentation.
+
+Here is the proof mechanism. Choose a finite presentation
+
+$$
+B=A[T_1,\ldots,T_m]/I.
+$$
+
+At $\mathfrak q$, the conormal sequence
+
+$$
+I/I^2\longrightarrow
+\bigoplus_{j=1}^m B\,dT_j
+\longrightarrow \Omega_{B/A}\longrightarrow0
+$$
+
+ends in zero. Thus finitely many relations have differentials spanning the free module after localization. Flatness prevents hidden relations among the chosen equations. By adjoining harmless variables and eliminating the complementary ones, one obtains a square Jacobian matrix whose determinant is a unit. The adjugate matrix then solves every square-zero lifting problem uniquely. A further elementary elimination packages the resulting chart into one polynomial with simple derivative. Every operation is performed after inverting an element outside $\mathfrak q$, which explains why the theorem is local on both source and target rather than a global monogenicity statement.
+
+The chart also proves that an étale morphism is open. In a standard chart, a point with residue-field root $a$ persists after sufficiently small base localization because $f'(a)$ stays invertible; the image contains a neighborhood of the base point. Passing through the local charts proves openness in general. Consequently an étale morphism that is also a monomorphism is an open immersion: its diagonal is an isomorphism, and each standard chart maps injectively onto an open subset.
+
+Standard charts give a practical point-lifting principle. Given $s'\rightsquigarrow s$ in the base and a point $x$ over $s$ in an étale chart, a lift over $s'$ exists after a finite separable extension of the residue field whenever the simple-root equation acquires a root there; if it exists, henselianity later makes the lift unique in the chosen branch. Thus standard charts form the bridge between Jacobian algebra and henselian neighborhoods.
+
+### 2.5 Finite criteria and counterexamples
 
 Fiberwise reducedness alone needs care. For a finite locally free $A$-algebra $B$, $B$ is étale if and only if every geometric fiber $B\otimes_A\overline{\kappa(s)}$ is reduced. Finite presentation is built into finite local freeness, and the fiber condition detects vanishing of differentials. Without flatness, reduced fibers do not control the family.
 
@@ -236,7 +278,40 @@ This does not assert that the fraction field has the same absolute Galois group.
 
 The word henselian cannot be omitted. Let $A=k[t]_{(t)}$ with $\operatorname{char}k\ne2$. The polynomial $X^2-X-t$ has two distinct roots modulo $t$, but those roots need not lie in $A$; the corresponding finite étale algebra near the closed point does not split as $A\times A$. Passing to the henselization supplies the roots and the splitting.
 
-### 3.3 Trace, discriminant, and idempotents
+### 3.3 Henselizations and pointed neighborhoods
+
+Henselian rings are most useful when attached canonically to an ordinary local ring. Let $(A,\mathfrak m,k)$ be local. Consider pairs $(B,\mathfrak n)$ in which $B$ is an étale $A$-algebra of finite presentation, $\mathfrak n$ lies over $\mathfrak m$, and the induced residue extension $k\to\kappa(\mathfrak n)$ is an isomorphism. Pointed maps between such pairs form a filtered system. Its filtered colimit is the **henselization** $A^h$.
+
+The construction solves a universal problem: every local map $A\to C$ to a henselian local ring extends uniquely to a local map $A^h\to C$. To see existence, write each pointed neighborhood by a standard étale equation. Its distinguished residue root is simple, so Hensel's lemma gives a unique lift in $C$. Uniqueness on each chart makes the lifts compatible in the filtered system. Conversely the same simple-root argument proves that $A^h$ is henselian. The residue field remains $k$, and $A\to A^h$ is flat and local.
+
+To retain all separable residue directions, choose a separable closure $k^s/k$ and allow pointed étale neighborhoods whose distinguished point has residue field inside $k^s$. Their filtered colimit is the **strict henselization** $A^{\mathrm{sh}}$. It is henselian with residue field $k^s$, hence strictly henselian. Different choices of $k^s$ yield noncanonical isomorphic rings; fixing a geometric point fixes the choice relevant to fundamental groups.
+
+For a scheme $X$ and geometric point $\bar x$ above $x$, the affine schemes of the pointed étale neighborhoods form a cofiltered system, and
+
+$$
+\operatorname{Spec}\mathcal O^{\mathrm{sh}}_{X,\bar x}
+\simeq
+\varprojlim_{(U,\bar u)} U
+$$
+
+in the sense that maps from the limit into a finitely presented affine scheme factor through one neighborhood. This is the **strict local neighborhood** of $\bar x$. It is not usually an open subscheme of $X$; it is a limit of increasingly accurate étale neighborhoods. That distinction matters whenever one informally says “shrink around a geometric point.”
+
+Every finite étale cover $Y\to X$ splits over this strict local neighborhood:
+
+$$
+Y\times_X\operatorname{Spec}\mathcal O^{\mathrm{sh}}_{X,\bar x}
+\cong
+\coprod_{y\in Y_{\bar x}}
+\operatorname{Spec}\mathcal O^{\mathrm{sh}}_{X,\bar x}.
+$$
+
+Indeed, the base is strictly henselian, so its finite étale algebras are products of copies of the base. The factors are labeled by their geometric special-fiber points. Because $Y$ is finitely presented, the finitely many idempotents defining this decomposition already occur over one pointed étale neighborhood. Thus a finite étale cover is not merely split on a formal limit: it becomes a disjoint union after one sufficiently small étale neighborhood of the chosen point.
+
+This result gives the exact local intuition for the fiber functor used later. A point of $Y_{\bar x}$ chooses one local sheet, and uniqueness over a strictly henselian neighborhood prevents that sheet from merging with another. The global fundamental group measures the failure to label those local sheets compatibly while moving through all neighborhoods of $X$.
+
+Henselization and completion should not be confused. For an excellent local ring the completion is often henselian and receives a map from the henselization, but completion carries additional infinitesimal limiting information. Finite étale covers are already controlled by the henselian property; no completeness hypothesis is needed. Nor does a strictly henselian local ring have to be algebraically closed as a ring or have algebraically closed fraction field. Its trivial fundamental group concerns covers of its spectrum, not finite separable extensions ramified away from the closed point.
+
+### 3.4 Trace, discriminant, and idempotents
 
 For a finite locally free algebra $B/A$, multiplication defines the trace pairing
 
@@ -254,7 +329,7 @@ The trace criterion also distinguishes reducedness from separability. For $L=K(\
 
 Not every finite étale algebra has constant rank on a disconnected base. If $A=A_1\times A_2$ and $B=B_1\times B_2$ with $B_i/A_i$ of ranks $n_i$, then the rank function equals $n_i$ on $\operatorname{Spec}A_i$. The locally constant rank function, rather than one global integer, is the invariant preserved by arbitrary base change.
 
-### 3.4 Operations and degree
+### 3.5 Operations and degree
 
 Finite étale morphisms are stable under arbitrary base change and composition. Finite disjoint unions are finite étale, as are fiber products over the base. If $Y\to X$ and $Z\to X$ have locally constant degrees $m$ and $n$, then $Y\times_XZ$ has degree $mn$, while $Y\amalg Z$ has degree $m+n$. A composition of constant degrees $m$ and $n$ has degree $mn$.
 
@@ -408,7 +483,7 @@ This is a **descent datum**. The cocycle condition says that comparing the first
 
 ### 6.2 Affine faithfully flat descent
 
-We prove the effective statement in the affine case, which suffices because finite morphisms are affine. Write $S=\operatorname{Spec}A$, $S'=\operatorname{Spec}A'$, with $A\to A'$ faithfully flat, and $Y'=\operatorname{Spec}B'$. Put $A''=A'\otimes_AA'$. A descent datum is an isomorphism between the two $A''$-algebras obtained from $B'$ through the two maps $A'\rightrightarrows A''$, satisfying the cocycle equation.
+Book 13 established effective faithfully flat descent for modules, finite projective algebras, affine schemes, general schemes, and their morphisms. The finite étale case is a particularly clean application, but it is worth displaying the equalizer because the same formula later becomes finite-set invariance. Write $S=\operatorname{Spec}A$, $S'=\operatorname{Spec}A'$, with $A\to A'$ faithfully flat, and $Y'=\operatorname{Spec}B'$. Put $A''=A'\otimes_AA'$. A descent datum is an isomorphism between the two $A''$-algebras obtained from $B'$ through the two maps $A'\rightrightarrows A''$, satisfying the cocycle equation.
 
 The strategy is to recover the elements that agree under the two comparisons. Use the descent isomorphism to identify the two pullback algebras, and let $d_0,d_1$ be the resulting maps from $B'$ to that common algebra. Set
 
@@ -435,7 +510,7 @@ and faithful flatness forces $\Omega_{B/A}=0$. Hence $B/A$ is finite étale. Uni
 
 ### 6.3 Gluing covers and morphisms
 
-For a general fpqc cover, apply the affine argument over an affine cover of $S$. The descended finite algebras agree on overlaps because descent of morphisms is fully faithful, and relative spectra glue. Thus the pullback functor identifies $\operatorname{FEt}(S)$ with finite étale covers over $S'$ equipped with descent data.
+For a general fpqc cover, apply the affine argument over an affine cover of $S$. The finite-reduction theorem of Book 13 permits a set-indexed covering family without replacing it by a possibly non-quasi-compact infinite coproduct. The descended finite algebras agree on overlaps because descent of morphisms is fully faithful, and relative spectra glue. Thus the pullback functor identifies $\operatorname{FEt}(S)$ with finite étale covers over $S'$ equipped with descent data.
 
 Morphisms descend by an analogous equalizer. If $Y',Z'$ carry descent data, a map $Y'\to Z'$ descends exactly when its two pullbacks commute with those data. Faithful flatness ensures uniqueness. This fully faithful part is as important as existence: it is what permits a permutation of a split geometric fiber to descend when and only when it commutes with monodromy.
 
@@ -692,6 +767,48 @@ The extension $\mathbf F_{q^n}/\mathbf F_q$ corresponds to the transitive $n$-el
 
 For a closed point $x$ on a scheme over $\mathbf F_q$, a choice of geometric point above $x$ and a path to the global basepoint embeds its decomposition group only up to conjugacy. Consequently its Frobenius in the global fundamental group is a conjugacy class. This is the group-theoretic source of the conjugacy invariance of Frobenius characteristic polynomials.
 
+### 11.4 Function fields and arithmetic schemes
+
+The comparison with an absolute Galois group extends from fields to integral schemes, but now one must impose the condition “unramified everywhere on the scheme.” Let $X$ be a connected normal integral scheme with function field $K$, and choose a separable closure $K^s$ and a geometric generic point $\bar\eta$. Restriction to the generic point sends a connected finite étale cover $Y\to X$ to a finite separable field extension $L/K$ inside $K^s$. Normality makes $Y$ the normalization of $X$ in $L$: a finite birational map between normal schemes is an isomorphism.
+
+It follows that the structural map from the geometric generic point induces a continuous surjection
+
+$$
+G_K\longrightarrow\pi_1(X,\bar\eta).
+$$
+
+Its finite quotients are exactly the finite Galois extensions $L/K$ for which the normalization of $X$ in $L$ is finite étale over $X$. Surjectivity follows because every connected Galois cover supplies such an extension, and those covers are cofinal. Thus
+
+$$
+\pi_1(X,\bar\eta)
+\cong
+G_K/N_X,
+$$
+
+where $N_X$ is the intersection of the open normal subgroups corresponding to all finite extensions that extend étale over $X$. This formulation is valid without pretending that codimension-one valuations always detect every branch phenomenon. Finiteness of normalization, when not automatic, must be assumed or supplied by the usual finiteness hypotheses on $X$.
+
+For a connected regular Dedekind scheme $S$ the quotient becomes concrete. For each closed point $v$, choose an extension of its discrete valuation to $K^s$. Let $D_v\subset G_K$ be the decomposition group and
+
+$$
+1\longrightarrow I_v\longrightarrow D_v
+\longrightarrow G_{\kappa(v)}\longrightarrow1
+$$
+
+its inertia sequence. A finite separable extension of $K$ extends étale over $v$ exactly when every relevant inertia group acts trivially. Hence, for a nonempty open $U\subseteq S$,
+
+$$
+\pi_1(U,\bar\eta)
+\cong
+G_K\Big/
+\overline{\left\langle I_v:\ v\in U\text{ closed}\right\rangle}^{\mathrm{normal}}.
+$$
+
+The bar means topological closure and the brackets mean normal generation. Inertia at a removed point is not killed: covers of $U$ may ramify there. For $S=\operatorname{Spec}\mathcal O_K$ of a number field, this says that finite quotients of $\pi_1(U)$ are precisely finite extensions unramified at every finite prime retained in $U$. Archimedean places are not points of this scheme and require separate conventions in arithmetic applications.
+
+There are two proof directions. Given a finite étale cover of $U$, its generic extension is unramified at every closed point by base change to the corresponding DVR, so all $I_v$ act trivially. Conversely, if inertia is trivial at every retained point, the integral closure is a finite product of unramified extensions over each DVR and therefore is étale there. Since a finite morphism to a Dedekind scheme is tested at its generic and closed points, the normalization is finite étale over $U$. Passing over all finite Galois extensions identifies the profinite quotient.
+
+For a smooth connected curve $U$ over a field, the same description applies after choosing its smooth proper compactification $C$ and using the valuations at closed points. A cover of $U$ is a separable function-field extension unramified at every point of $U$; ramification is permitted only at $C\setminus U$. The distinction between an arithmetic and a geometric curve then becomes visible in the quotient: over a nonclosed ground field the absolute Galois group of constants survives, while after separable closure only geometric function-field ramification remains.
+
 ## 12. The fundamental exact sequence
 
 ### 12.1 Statement and basepoints
@@ -765,6 +882,55 @@ $$
 
 relative to that section. Different rational points or paths can give nonconjugate sections; no splitting should be asserted without such data.
 
+### 12.4 The relative homotopy sequence
+
+The field exact sequence is one instance of a relative principle. Let $f:X\to S$ be a proper smooth morphism of connected locally noetherian schemes with geometrically connected fibers. Choose a geometric point $\bar x$ of $X$, let $\bar s=f(\bar x)$, and write $X_{\bar s}$ for the geometric fiber. Then
+
+$$
+\pi_1(X_{\bar s},\bar x)
+\longrightarrow
+\pi_1(X,\bar x)
+\xrightarrow{f_*}
+\pi_1(S,\bar s)
+\longrightarrow1
+$$
+
+is exact. Unlike the exact sequence over a field, no $1$ is placed at the left: the fiber map need not be injective in this general relative statement.
+
+Surjectivity on the right has a transparent cover criterion. If $S'\to S$ is connected finite étale, then $X\times_SS'\to S'$ is proper smooth with geometrically connected fibers. Since $S'$ is connected and the morphism is open and surjective, its total space is connected: any decomposition into two open-and-closed pieces would give, fiber by fiber, a decomposition of a geometrically connected fiber, and openness would propagate the contradiction over $S'$. Thus every connected cover of $S$ remains connected on $X$, so $f_*$ is surjective.
+
+For exactness in the middle, one direction is immediate: a loop lying in a geometric fiber acts trivially on every cover pulled back from $S$. Conversely, let $Y\to X$ be a connected finite étale cover on which the image of $\pi_1(X_{\bar s})$ acts trivially. Then
+
+$$
+Y_{\bar s}\cong\coprod_{a\in A}X_{\bar s}
+$$
+
+for a finite set $A$. Properness makes the relative connected-component functor finite étale over $S$, while smoothness makes geometric fibers reduced and keeps components from colliding. Denote that finite étale scheme by $T\to S$. The natural map $Y\to X\times_ST$ is an isomorphism on the chosen geometric fiber. Both sides are finite étale over $X$, so the isomorphism locus is open and closed; connectedness and fiberwise degree show it is an isomorphism everywhere. Hence $Y$ is pulled back from $S$. In the language of finite actions, every finite $\pi_1(X)$-set on which the fiber subgroup acts trivially factors through $\pi_1(S)$, which is exactly middle exactness.
+
+The argument works more generally for proper flat morphisms with geometrically connected and geometrically reduced fibers under hypotheses ensuring that relative components form a finite étale scheme. The proper smooth statement is the reusable version here: its geometric inputs are explicit and stable under base change.
+
+A section $e:S\to X$ splits $f_*$ after compatible basepoints, but it does not generally make the first arrow injective. It gives
+
+$$
+\pi_1(X,\bar x)
+\cong
+\ker(f_*)\rtimes\pi_1(S,\bar s),
+$$
+
+while exactness identifies $\ker(f_*)$ only as the image, hence a quotient, of $\pi_1(X_{\bar s})$. The distinction is essential in a general base family.
+
+### 12.5 Exactness criteria and failure modes
+
+The relative proof isolates three separate conditions. Geometric connectedness of the fibers gives surjectivity onto the base group. Geometric reducedness prevents infinitesimal multiplicity from corrupting components. Properness ensures that a component visible in one fiber extends across the base rather than escaping through a boundary. Smoothness conveniently supplies flatness, geometric reducedness, and openness all at once.
+
+If fibers are merely connected over their residue fields, surjectivity can fail after a separable extension disconnects them. The finite-field example $X=\operatorname{Spec}L\to\operatorname{Spec}k$ for a nontrivial finite separable $L/k$ already shows the issue: the source is connected, but the geometric fiber is a finite disconnected set, and $G_L\to G_k$ has proper image.
+
+If properness is removed, a cover can have trivial monodromy on one fiber without descending from the base because its behavior changes at infinity. Families of punctured curves exhibit precisely this phenomenon. Adding a relative normal-crossings compactification repairs part of the statement only after one controls ramification at the boundary, usually through tame or prime-to-residue-characteristic quotients.
+
+If geometric reducedness is removed, connected components can merge through nilpotents. The relative component object need no longer be étale over the base, so the descent step in the proof breaks. Flatness by itself does not rule this out.
+
+Finally, exactness is not the same as local constancy of the fiber group. The sequence identifies the kernel of $\pi_1(X)\to\pi_1(S)$ as an image, but comparing fundamental groups of two different geometric fibers requires a specialization or transport theorem. That further question is the subject of Chapter 14.
+
 ## 13. Changing the ground field
 
 ### 13.1 Separable extensions
@@ -824,6 +990,26 @@ $$
 for every $k$-scheme $X$, and hence an isomorphism of fundamental groups after compatible basepoints. More generally, finite étale covers are invariant under universal homeomorphisms.
 
 This does not make purely inseparable maps étale. It says the opposite sort of thing: radicial changes are invisible to étale covering theory. The Frobenius map on a characteristic-$p$ scheme can be a universal homeomorphism while having zero differential and being very far from étale.
+
+### 13.4 Extension of algebraically closed fields
+
+Algebraic extensions and purely inseparable extensions are not the only base changes encountered in geometry. Suppose $k\subset K$ is an extension of algebraically closed fields and $X$ is a connected proper scheme of finite type over $k$. Then pullback induces an equivalence
+
+$$
+\operatorname{FEt}(X)\xrightarrow{\sim}\operatorname{FEt}(X_K)
+$$
+
+and therefore an isomorphism
+
+$$
+\pi_1(X_K,\bar x_K)\xrightarrow{\sim}\pi_1(X,\bar x).
+$$
+
+The point is not merely that a cover over $K$ uses finitely many coefficients and hence descends to a finitely generated $k$-subalgebra. Such a descent initially lives in a family over a positive-dimensional parameter space, and a chosen special fiber might acquire extra components. Properness supplies the missing rigidity. After spreading out the cover and its finite étale structure, the relative component argument shows that connectedness and morphisms remain constant on a suitable connected parameter neighborhood. Specializing to a $k$-point there produces a cover of $X$; the relative homotopy sequence and finite étale descent identify its pullback with the original cover. The same argument descends morphisms, proving full faithfulness as well as essential surjectivity.
+
+Properness cannot simply be deleted in positive characteristic. On an open variety, wild ramification at a boundary can depend on transcendental parameters introduced by the larger algebraically closed field. The full fundamental group may therefore change. For smooth curves, prime-to-$p$ covers are much more rigid: after compactification their ramification is tame, and the prime-to-$p$ quotient is invariant under algebraically closed extension. The full wild quotient requires separate hypotheses and is not claimed invariant here.
+
+This theorem clarifies terminology. If $X/k$ is geometrically connected, one may compute its **geometric fundamental group** after any chosen algebraic closure of $k$; algebraic closures differ only by noncanonical field isomorphism, and purely inseparable changes are invisible. For proper $X$, even enlarging that algebraically closed field transcendently does not alter the group. For nonproper $X$ in positive characteristic, the chosen algebraically closed base must remain visible whenever the wild quotient matters.
 
 ## 14. Specialization over henselian discrete valuation rings
 
@@ -887,6 +1073,39 @@ Dropping smoothness permits branch points or singularities to appear. The family
 Dropping properness permits ramification to move to the boundary. Kummer covers of $\mathbf G_m$ and Artin–Schreier covers of $\mathbf A^1$ show that affine curves, especially in characteristic $p$, possess covers governed by behavior at infinity that a naive specialization can lose.
 
 Dropping henselianity prevents unique extension from the closed fiber. Henselization is therefore not a cosmetic completion of the base: it is what turns a simple special-fiber factorization into actual disjoint étale sheets near that fiber.
+
+### 14.5 Boundaries, tame quotients, and semistable curves
+
+For a nonproper smooth curve, the correct replacement for properness is a compactification together with a ramification condition. Let $R$ be a strictly henselian DVR with residue characteristic $p\ge0$. Suppose $\overline X\to\operatorname{Spec}R$ is a smooth proper relative curve with geometrically connected fibers and $D\subset\overline X$ is a relative divisor that is finite étale over $R$. Put $X=\overline X\setminus D$. Then the points at infinity remain disjoint sections after an étale base change, so ramification orders along them can be compared from one fiber to the other.
+
+A finite étale cover of $X_{\bar\eta}$ is **tame along $D_{\bar\eta}$** if, after normalizing $\overline X_{\bar\eta}$, every inertia group at a point over $D_{\bar\eta}$ has order prime to the residue characteristic there. Define the tame group $\pi_1^t(X_{\bar\eta})$ by retaining only such covers, and similarly on the special fiber. Specialization gives
+
+$$
+\pi_1^t(X_{\bar\eta})^{(p')}
+\xrightarrow{\sim}
+\pi_1^t(X_{\bar s})^{(p')}.
+$$
+
+Since every group of order prime to $p$ has only prime-to-$p$ inertia, the superscript may equally be read as the prime-to-$p$ fundamental group of the open curve. The proof uses Kummer charts at the boundary. After a strict henselian localization and a parameter $t$ for a boundary section, a tamely ramified cover is dominated by one obtained from $u^n=t$ with $(n,p)=1$ and an unramified cover. The derivative $nu^{n-1}$ is invertible away from the divisor, and the exponent $n$ is unchanged under specialization. These local extensions glue because their descent data are finite; properness of $\overline X$ controls the complement. Applying the proper smooth prime-to-$p$ theorem to the unramified pieces yields the isomorphism.
+
+No full tame isomorphism is asserted in residue characteristic $p$. A $p$-group cover unramified at the boundary is tame there but can still vary, just as the étale $p$-power torsion of a proper elliptic curve varies between ordinary and supersingular fibers. “Tame at infinity” excludes wild boundary inertia; it does not turn every finite group into one of order prime to $p$.
+
+Semistable reduction lies on another boundary. If $\overline X/R$ has a nodal special fiber rather than a smooth one, vanishing cycles at the nodes change the geometric fundamental group. There is still a specialization theory for suitable tame quotients, described through the normalization of the special fiber, its marked preimages of nodes, and its dual graph, but it is not the smooth-proper isomorphism above. In particular, one must not conclude that the full or prime-to-$p$ group of a smooth generic curve equals that of the singular special curve. A loop pinched to a node can enter the specialization kernel.
+
+For arithmetic schemes this gives a practical hierarchy:
+
+$$
+\begin{array}{c|c}
+\text{family} & \text{safe specialization statement}\\
+\hline
+\text{proper smooth, residue characteristic }0 & \text{full geometric group is unchanged}\\
+\text{proper smooth, residue characteristic }p>0 & \text{prime-to-}p\text{ geometric group is unchanged}\\
+\text{smooth open with smooth relative boundary} & \text{prime-to-}p\text{ tame group is unchanged}\\
+\text{semistable or singular special fiber} & \text{use a separate tame/vanishing-cycle analysis.}
+\end{array}
+$$
+
+The hypotheses record actual geometry: properness controls escape, smoothness prevents nodes and collisions, tame conditions control the boundary, and the prime-to-$p$ restriction removes the covers most sensitive to characteristic $p$.
 
 ## 15. Curves and explicit covers
 
@@ -953,7 +1172,7 @@ $$
 
 defines a finite étale cover of any affine scheme on which $f$ is regular. As a polynomial in $y$, its derivative is $-1$, a unit. The constant group $\mathbf Z/p\mathbf Z$ acts by $y\mapsto y+a$ for $a\in\mathbf F_p$.
 
-For $f(x)=x$ on $\mathbf A^1_k$, the cover is connected: $x$ is not of the form $g^p-g$ in $k(x)$. It is therefore a Galois degree-$p$ cover of the affine line. Its normalization over $\mathbf P^1$ is ramified wildly at infinity. This explains simultaneously why it does not contradict the triviality of $\pi_1(\mathbf P^1_{\bar k})$ and why arguments based only on the number of branch points fail in wild characteristic.
+For $f(x)=x$ on $\mathbf A^1_k$, the cover is connected: $x$ is not of the form $g^p-g$ in $k(x)$. Indeed, if $g$ has a pole, the pole order of $g^p-g$ is divisible by $p$, whereas $x$ has a pole of order one at infinity; if $g$ has no pole, it is constant. It is therefore a Galois degree-$p$ cover of the affine line. Its normalization over $\mathbf P^1$ is ramified wildly at infinity. This explains simultaneously why it does not contradict the triviality of $\pi_1(\mathbf P^1_{\bar k})$ and why arguments based only on the number of branch points fail in wild characteristic.
 
 Two equations $y^p-y=f$ and $y^p-y=f'$ define isomorphic torsors when $f-f'=g^p-g$. This concrete quotient is the first glimpse of a cohomological classification, but the cohomology itself belongs to the next book.
 
@@ -970,6 +1189,71 @@ is finite étale of degree $n^2$. Over a separable closure its deck transformati
 In characteristic $p$, $[p]$ is never étale: its differential on the tangent space is multiplication by $p$, hence zero. The relative Frobenius $F\colon E\to E^{(p)}$ is finite and purely inseparable, so it too is not étale. For an ordinary elliptic curve the dual Verschiebung $V\colon E^{(p)}\to E$ is finite étale of degree $p$; for a supersingular curve it is inseparable, and the $p$-torsion has no nontrivial geometric étale points. These examples show why rank alone cannot measure sheets in characteristic $p$.
 
 The affine map $x\mapsto x^p$ gives the simplest parallel counterexample. It is finite flat of degree $p$ over a perfect field, bijective on algebraically closed points, and has zero derivative. It is a universal homeomorphism, not a cover.
+
+### 15.5 Compactification, inertia, and tame covers
+
+Let $U$ be a smooth geometrically connected curve over an algebraically closed field $k$, and let $C$ be its smooth proper compactification. Write $D=C\setminus U$. Every connected finite étale cover $V\to U$ determines a finite separable extension $k(V)/k(U)$. Normalizing $C$ in this field gives a finite map $\overline V\to C$ that is étale over $U$ and may ramify only over $D$. Conversely every such generically separable map restricts to a finite étale cover of $U$. This is the function-field form of the covering theory of a curve.
+
+Choose $x\in D$, a geometric point above it in $\overline V$, and a separable closure of the completed or henselian local field $k(C)_x$. The stabilizer in a Galois closure is the decomposition group $D_x$. Because $k$ is algebraically closed, the residue extension is trivial and $D_x=I_x$ is inertia. If $p=\operatorname{char}k>0$, inertia fits into
+
+$$
+1\longrightarrow P_x\longrightarrow I_x
+\longrightarrow I_x^t\longrightarrow1,
+$$
+
+where $P_x$ is the wild inertia, a pro-$p$ group, and $I_x^t$ has all finite quotients of order prime to $p$. A cover is tame at $x$ precisely when $P_x$ acts trivially. In characteristic zero, all finite inertia is tame.
+
+Locally, tame covers have a simple form. Over the strict henselization at $x$, choose a uniformizer $t$. A connected tamely ramified extension of degree $n$ prime to $p$ becomes, after an unramified change that is trivial here, a Kummer extension
+
+$$
+u^n=t.
+$$
+
+This statement follows by choosing a uniformizer upstairs, comparing valuations, and using Hensel's lemma to absorb the unit discrepancy into an $n$th power. It explains why tame inertia is procyclic away from $p$ and why compatible roots of a local parameter supply generators only up to inversion and conjugacy.
+
+For $U=C\setminus D$, the tame fundamental group is the quotient of $\pi_1(U)$ obtained by killing every $P_x$ for $x\in D$. The proper group $\pi_1(C)$ is obtained by killing all of $I_x$. Thus there are natural surjections
+
+$$
+\pi_1(U)\twoheadrightarrow\pi_1^t(U)
+\twoheadrightarrow\pi_1(C),
+$$
+
+and each step has a distinct meaning: the first forgets wild ramification at the boundary, while the second forgets tame ramification there as well.
+
+The Riemann–Hurwitz formula gives a useful global check in the tame case. For a finite separable map $\overline V\to C$ of degree $n$ with tame ramification indices $e_y$,
+
+$$
+2g(\overline V)-2
+=n(2g(C)-2)+\sum_y(e_y-1).
+$$
+
+The correction terms are nonnegative and record exactly the failure of the restriction to extend étale across $D$. In wild characteristic additional different exponents exceed $e_y-1$; substituting the tame formula for an Artin–Schreier cover would therefore give a false genus calculation.
+
+### 15.6 Arithmetic curves and good reduction
+
+Let $R$ be a henselian DVR with fraction field $K$ and residue field $k$, and let $X/R$ be a smooth proper relative curve with geometrically connected fibers. Good reduction means precisely that one has such a smooth proper model. The specialization theorem then identifies the prime-to-$p$ geometric covering theories of $X_{\bar K}$ and $X_{\bar k}$, where $p=\operatorname{char}k$.
+
+This statement is geometric. The arithmetic groups sit in two exact rows,
+
+$$
+\begin{array}{ccccccccc}
+1&\to&\pi_1(X_{\bar K})&\to&\pi_1(X_K)&\to&G_K&\to&1\\
+ &&\downarrow&&\downarrow&&\downarrow\\
+1&\to&\pi_1(X_{\bar k})&\to&\pi_1(X_k)&\to&G_k&\to&1,
+\end{array}
+$$
+
+only after choosing compatible decomposition and specialization data. The right vertical map is not a homomorphism $G_K\to G_k$ on all of $G_K$ without qualification. One first chooses the decomposition group attached to the valuation; for a henselian field it is all of $G_K$, and then takes the quotient
+
+$$
+G_K\twoheadrightarrow G_k
+$$
+
+whose kernel is inertia. On prime-to-$p$ geometric groups, inertia acts through the outer action induced by the upper exact sequence. Good reduction gives constancy of the geometric group. A cover or sheaf that extends over the smooth proper model has the corresponding unramified specialization behavior, but an arbitrary representation on the generic fiber need not extend; unramifiedness must be checked for the particular arithmetic object.
+
+For an open curve $U=X\setminus D$ with $D$ finite étale over $R$, the same comparison holds for prime-to-$p$ tame quotients. If marked points collide, if the model acquires nodes, or if $D$ is not relatively étale, the hypothesis fails exactly where new inertia can appear. A semistable model still organizes the change through its components and nodes, but good-reduction invariance no longer applies.
+
+Connectedness also needs its geometric adjective. A smooth proper curve over $K$ may be connected while its scalar extension to $\bar K$ is not; then the arithmetic exact sequence ends in the stabilizer of a chosen geometric component rather than all of $G_K$. In arithmetic geometry “a curve with good reduction” is therefore normally required to be geometrically connected before its geometric fundamental group is compared across fibers.
 
 ## 16. Locally constant finite sheaves
 
@@ -1063,6 +1347,113 @@ At this stage “lisse” is purely categorical and monodromic. We do not define
 
 One can nevertheless see the future shape. A tower of finite coefficient sheaves may produce a representation on a profinite module, and scalar extension may produce an $\ell$-adic representation. The continuity and inverse-limit issues then require the topological coefficient conventions developed for profinite representations; they are not automatic consequences of the finite-level equivalence.
 
+### 16.4 Permutation representations from covers
+
+A cover first gives a finite set, but any coefficient ring turns that set into a linear representation. Let $Y\to X$ be finite étale, let $T=Y_{\bar x}$, and let $\Lambda$ be a commutative ring. The free module
+
+$$
+\Lambda[T]=\bigoplus_{t\in T}\Lambda[t]
+$$
+
+carries the permutation action
+
+$$
+g\left(\sum_ta_t[t]\right)
+=\sum_ta_t[g t].
+$$
+
+If $\Lambda$ is finite, continuity follows because the action factors through the finite monodromy image in $\operatorname{Sym}(T)$. If $X=\operatorname{Spec}k$, this is a continuous Galois representation of $G_k$. For general $X/k$, it is a representation of $\pi_1(X)$; pulling back along a rational point, or requiring geometric monodromy to be trivial, produces a representation of $G_k$ as explained in Section 16.2.
+
+The vector
+
+$$
+\mathbf 1_T=\sum_{t\in T}[t]
+$$
+
+is invariant. The augmentation map
+
+$$
+\varepsilon:\Lambda[T]\longrightarrow\Lambda,
+\qquad \sum_ta_t[t]\longmapsto\sum_ta_t
+$$
+
+is equivariant, and its kernel is the augmentation representation. If the degree $n=|T|$ is invertible in $\Lambda$, averaging splits the sequence
+
+$$
+0\longrightarrow\ker\varepsilon
+\longrightarrow\Lambda[T]
+\xrightarrow{\varepsilon}\Lambda\longrightarrow0.
+$$
+
+If $n$ is not invertible, the sequence need not split. This is a first example of how a perfectly semisimple permutation of a set can yield a nonsemisimple modular representation.
+
+For a connected Galois cover with group $G$, choosing a point of the fiber identifies $T$ with a regular $G$-set, up to the left/right convention. Thus $\Lambda[T]$ is the regular representation. For a non-Galois connected cover attached to an open subgroup $H\subset\Pi$, it is the induced permutation module $\Lambda[\Pi/H]$. Changing the chosen lift conjugates $H$ and produces an isomorphic module.
+
+Conversely, not every linear representation comes from a single permutation set. It may be a subquotient of a permutation representation, or require several covers and linear relations. A lisse sheaf captures precisely the resulting finite module with monodromy, regardless of whether a basis is permuted. Covers and lisse sheaves therefore yield related but genuinely different kinds of representations.
+
+A tower of covers can already produce an infinite representation. For an elliptic curve $E/k$ and a prime $\ell\ne\operatorname{char}k$, the covers $[\ell^n]:E\to E$ have kernels $E[\ell^n](k^s)$ and compatible transition maps. Their inverse limit
+
+$$
+T_\ell E=\varprojlim_n E[\ell^n](k^s)
+$$
+
+is a free $\mathbf Z_\ell$-module of rank $2$, and the finite Galois actions are compatible. They therefore define
+
+$$
+\rho_{E,\ell}:G_k\longrightarrow
+\operatorname{GL}(T_\ell E)\cong\operatorname{GL}_2(\mathbf Z_\ell).
+$$
+
+Continuity is checked modulo every $\ell^n$: the stabilizer of the finite torsion field is open, and these congruence kernels form a neighborhood basis of the identity in the target.
+
+### 16.5 Integral and rational adic representations
+
+Fix a prime $\ell$. A **lisse $\mathbf Z_\ell$-sheaf of rank $r$** on connected $X$ can be described at this level as a compatible inverse system $(\mathcal F_n)_{n\ge1}$ in which $\mathcal F_n$ is lisse finite free over $\mathbf Z/\ell^n\mathbf Z$ and
+
+$$
+\mathcal F_{n+1}\otimes_{\mathbf Z/\ell^{n+1}\mathbf Z}
+\mathbf Z/\ell^n\mathbf Z
+\cong\mathcal F_n.
+$$
+
+Taking stalks gives finite free modules $M_n$ with compatible continuous actions. Their inverse limit
+
+$$
+M=\varprojlim_nM_n
+$$
+
+is finite free over $\mathbf Z_\ell$, and the actions assemble to a homomorphism
+
+$$
+\rho:\pi_1(X,\bar x)\longrightarrow\operatorname{GL}_r(\mathbf Z_\ell).
+$$
+
+It is continuous because reduction modulo $\ell^n$ has open kernel for every $n$, while the congruence subgroups
+
+$$
+1+\ell^nM_r(\mathbf Z_\ell)
+$$
+
+form a neighborhood basis at the identity. Conversely, a continuous representation on a finite free $\mathbf Z_\ell$-module reduces modulo $\ell^n$ to a finite continuous representation and hence to a lisse $\mathbf Z/\ell^n\mathbf Z$-sheaf. Compatibility of reduction reconstructs the inverse system. Thus
+
+$$
+\{\text{lisse }\mathbf Z_\ell\text{-sheaves of rank }r\}
+\simeq
+\{\text{continuous rank-}r\ \mathbf Z_\ell\text{-representations of }\pi_1(X)\}.
+$$
+
+Tensoring with $\mathbf Q_\ell$ produces a continuous $\mathbf Q_\ell$-representation. Conversely every continuous finite-dimensional $\mathbf Q_\ell$-representation of a profinite group admits a stable $\mathbf Z_\ell$-lattice. Indeed, begin with any lattice $L$. Its stabilizer in $\operatorname{GL}(V)$ is open; compactness of the image gives only finitely many translates of $L$. Their sum is again a lattice and is stable under the image. After choosing a basis of that stable lattice, the representation takes values in $\operatorname{GL}_r(\mathbf Z_\ell)$. A lisse $\mathbf Q_\ell$-sheaf may therefore be described by a lisse integral lattice up to isogeny. Different stable lattices give the same rational representation but can have different reductions modulo $\ell$.
+
+Over $X=\operatorname{Spec}k$ these are continuous $\ell$-adic Galois representations. Over a variety $X/k$ they are initially representations of $\pi_1(X)$. There are three legitimate ways a $G_k$-representation arises:
+
+1. pull the sheaf back along a chosen $k$-rational point $x:\operatorname{Spec}k\to X$;
+2. prove that geometric monodromy is trivial, so the action factors through $G_k$;
+3. start with a geometric object over $k$, such as the compatible torsion of an abelian variety, whose geometric points already form a $G_k$-module.
+
+These constructions should not be conflated. A section in the arithmetic exact sequence lets one restrict a representation of $\pi_1(X)$ to $G_k$, but the result can depend on the section. Factorization through $G_k$ is a stronger, section-independent assertion.
+
+Lisse adic sheaves constructed here are monodromy objects. Their cohomology, derived inverse limits, weights, and base-change theorems require additional machinery. None of those later results is needed to justify the continuous representation itself: it is already forced by compatible finite monodromy.
+
 ## 17. The covering–monodromy dictionary
 
 ### 17.1 The dictionary
@@ -1082,9 +1473,13 @@ The theory can now be summarized without collapsing its qualifications:
 | fiber product or disjoint union | product or disjoint union of sets |
 | finite locally constant sheaf | finite continuous monodromy set |
 | lisse finite $\Lambda$-sheaf | finite $\Lambda$-module with continuous action |
+| lisse $\mathbf Z_\ell$-sheaf | finite free $\mathbf Z_\ell$-module with continuous action |
 | object over $\operatorname{Spec}k$ | finite continuous $G_k$-set or module |
 | geometric base change $X_{k^s}$ | restriction to geometric monodromy |
 | arithmetic descent from $k^s$ | compatible $G_k$-descent data |
+| normal arithmetic scheme with function field $K$ | quotient of $G_K$ by extensions ramified on the scheme |
+| deletion of boundary points on a curve | permission for inertia at those points |
+| tame quotient of an open curve | wild boundary inertia killed |
 
 The entries involving subgroups require $X$ connected and a geometric basepoint. Removing the point replaces subgroups by conjugacy classes. The field and family exact sequences require the hypotheses stated in Chapters 12–14, not merely connectedness of the underlying topological space.
 
@@ -1094,12 +1489,12 @@ Suppose a geometric construction is expected to yield a finite Galois representa
 
 Then identify which group is actually acting. Over a field it is $G_k$. Over $X/k$ it is initially $\pi_1(X)$, with geometric restriction to $\pi_1(X_{k^s})$ and arithmetic quotient $G_k$. A $G_k$-representation follows only from factorization through the quotient or from a chosen section. Finally, record all basepoint choices: changing them conjugates the action, so invariant conclusions should be phrased accordingly.
 
-For a tower, check compatibility at every finite level before taking an inverse limit. Profinite continuity means precisely that each finite quotient has open kernel. For specialization, reverse the geometric functor when determining the group arrow, and distinguish full, prime-to-$p$, and tame statements.
+For a tower, check compatibility at every finite level before taking an inverse limit. Profinite continuity means precisely that each finite quotient has open kernel. A $\mathbf Z_\ell$-representation is continuous when all reductions modulo $\ell^n$ are continuous, and a rational representation should be supplied with, or proved to possess, a stable lattice. For specialization, reverse the geometric functor when determining the group arrow, and distinguish full, prime-to-$p$, and tame statements.
 
 ### 17.3 Conclusion
 
 Finite étale geometry turns algebraic covering problems into finite permutation theory without discarding arithmetic descent. Flatness keeps sheets from appearing or colliding, unramifiedness separates them infinitesimally, and finite presentation keeps the geometry controllable. Effective descent then makes a geometric fiber, together with all of its compatible symmetries, sufficient to reconstruct the cover.
 
-The resulting fundamental group is not an auxiliary invariant placed beside the geometry. It is the automorphism group of the operation of taking every geometric fiber at once. Its open subgroups are connected covers, its normal open subgroups are Galois covers, and its finite modules are locally constant sheaves. Over a field it is the absolute Galois group; over a geometrically connected variety it contains geometric monodromy as the kernel of arithmetic monodromy. Basepoint paths explain the inevitable inner ambiguity, while henselian and proper-smooth specialization show exactly how the theory behaves in arithmetic families.
+The resulting fundamental group is not an auxiliary invariant placed beside the geometry. It is the automorphism group of the operation of taking every geometric fiber at once. Its open subgroups are connected covers, its normal open subgroups are Galois covers, and its finite modules are locally constant sheaves. Over a field it is the absolute Galois group; over a normal arithmetic scheme it is the quotient that kills ramification retained on the scheme; over a geometrically connected variety it contains geometric monodromy as the kernel of arithmetic monodromy. Basepoint paths explain the inevitable inner ambiguity, while henselian and proper-smooth specialization show exactly how the theory behaves in arithmetic families.
 
 This dictionary is the entry point to étale cohomology. The next stage replaces a single stalk and its monodromy by global derived invariants, but the finite covering theory developed here remains the structural foundation beneath every resulting Galois action.
