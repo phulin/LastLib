@@ -181,7 +181,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 114. Twisted Cuspidal Trace Kernels and Spectral Expansion
 - [x] 115. Twisted Orbital Matching and the Cyclic Fundamental Lemma
 - [x] 116. Generalized Elliptic Curves and Level Structures
-- [ ] 117. Compactified Modular Stacks and Coarse Modular Curves
+- [x] 117. Compactified Modular Stacks and Coarse Modular Curves
 - [ ] 118. Deligne–Rapoport Integral Models of Modular Curves
 - [ ] 119. Integral Modular Forms and q-Expansion
 - [ ] 120. Modular and Shimura Curves
