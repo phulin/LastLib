@@ -33,10 +33,11 @@
    - [Linear algebra over the adele ring](#47-linear-algebra-over-the-adele-ring)
 5. [Diagonal arithmetic and approximation](#5-diagonal-arithmetic-and-approximation)
    - [The diagonal embedding](#51-the-diagonal-embedding)
-   - [Density in the finite adeles](#52-density-in-the-finite-adeles)
+   - [Strong approximation in the finite adeles](#52-strong-approximation-in-the-finite-adeles)
    - [Discreteness in the full adeles](#53-discreteness-in-the-full-adeles)
    - [A local--global warning](#54-a-local--global-warning)
    - [Weak approximation at arbitrary places](#55-weak-approximation-at-arbitrary-places)
+   - [Strong and weak approximation compared](#56-strong-and-weak-approximation-compared)
 6. [The compact additive quotient](#6-the-compact-additive-quotient)
    - [Why compactness is the central additive theorem](#61-why-compactness-is-the-central-additive-theorem)
    - [Principal parts at finite places](#62-principal-parts-at-finite-places)
@@ -50,7 +51,7 @@
    - [Why nonzero adeles are not enough](#71-why-nonzero-adeles-are-not-enough)
    - [The idele group](#72-the-idele-group)
    - [Additive and multiplicative information](#73-additive-and-multiplicative-information)
-   - [Open subgroups and local factorization](#74-open-subgroups-and-local-factorization)
+   - [Open and maximal compact subgroups](#74-open-and-maximal-compact-subgroups)
    - [Principal ideles](#75-principal-ideles)
    - [Convergence of ideles](#76-convergence-of-ideles)
 8. [Ideals inside ideles](#8-ideals-inside-ideles)
@@ -62,7 +63,7 @@
    - [Ordinary and narrow ideal classes](#86-ordinary-and-narrow-ideal-classes)
    - [The divisor sequence in one view](#87-the-divisor-sequence-in-one-view)
 9. [The idele module and compactness](#9-the-idele-module-and-compactness)
-   - [The global module](#91-the-global-module)
+   - [The global module and degree](#91-the-global-module-and-degree)
    - [Dirichlet's unit lattice](#92-dirichlets-unit-lattice)
    - [Compactness of the norm-one class group](#93-compactness-of-the-norm-one-class-group)
    - [Structure of the full idele class group](#94-structure-of-the-full-idele-class-group)
@@ -141,6 +142,29 @@ $$
 
 The localization $\mathcal O_{K,\mathfrak p}$ is a discrete valuation ring with this valuation. Its completion has fraction field $K_{\mathfrak p}$ and valuation ring $\mathcal O_{\mathfrak p}$. We denote its maximal ideal by $\mathfrak p\mathcal O_{\mathfrak p}$, often simply $\mathfrak p_v$, and its residue field still by $k(\mathfrak p)$. The compactness of $\mathcal O_{\mathfrak p}$ follows from completeness, discreteness, and finiteness of the residue field.
 
+Here is the global algebra behind those assertions. By the primitive-element theorem, after multiplying a generator by a nonzero integer one may write $K=\mathbf Q(\theta)$ with $\theta$ integral. The order $\mathbf Z[\theta]$ is free of rank $n$. If $x\in\mathcal O_K$, then
+
+$$
+\operatorname{Tr}_{K/\mathbf Q}(x\mathbf Z[\theta])\subseteq\mathbf Z,
+$$
+
+because products of algebraic integers are integral and the trace of an algebraic integer is an integer. The trace pairing is nondegenerate in characteristic zero, so the trace dual of $\mathbf Z[\theta]$ is another rank-$n$ lattice. Consequently
+
+$$
+\mathbf Z[\theta]\subseteq\mathcal O_K
+\subseteq\mathbf Z[\theta]^\vee,
+$$
+
+which proves that $\mathcal O_K$ is free of rank $n$ over $\mathbf Z$. It is Noetherian and integrally closed. Every nonzero prime quotient is finite: if $0\ne x$ lies in the prime, the constant term of the minimal polynomial of $x$ shows that the prime contains a nonzero rational integer. Hence every nonzero prime is maximal, and the one-dimensional normal Noetherian domain $\mathcal O_K$ is Dedekind. The ideal-factorization theorem for Dedekind domains now gives the displayed factorization.
+
+These observations also justify the norm formulas used below. Every nonzero ideal contains a nonzero integer and therefore has finite index. Multiplication by $a\in\mathcal O_K\setminus\{0\}$ on the lattice $\mathcal O_K$ has determinant $N_{K/\mathbf Q}(a)$, so
+
+$$
+[\mathcal O_K:a\mathcal O_K]=|N_{K/\mathbf Q}(a)|.
+$$
+
+Localizing an ideal factorization and counting residue-field layers proves multiplicativity of ideal norm; extending by quotients gives the same result for fractional ideals. Thus the global properties used in this book follow from the trace lattice, elementary dimension theory, and the Dedekind ideal theorem rather than being additional hypotheses.
+
 Two finiteness results will be used throughout.
 
 We first recall the geometric lemma behind them. If $\Lambda\subset\mathbf R^n$ is a full lattice of covolume $\Delta$ and $B$ is a convex, centrally symmetric measurable set with volume greater than $2^n\Delta$, then $B$ contains a nonzero point of $\Lambda$. Indeed, the half-sized set $\frac12B$ has volume greater than one fundamental parallelotope. Translating its pieces into that parallelotope forces two distinct points $x,y\in\frac12B$ to have the same image modulo $\Lambda$. Then $0\ne x-y\in\Lambda$, and convexity plus central symmetry gives $x-y\in B$. This is Minkowski's convex-body theorem in the form needed below.
@@ -192,7 +216,14 @@ $$
 \quad(\mathfrak p\in S),
 $$
 
-and $a$ is integral at every finite prime outside $S$ at which a denominator has not explicitly been allowed. More precisely, one may choose a fractional ideal $\mathfrak d$ supported on $S$ with $a\in\mathfrak d^{-1}$.
+and
+
+$$
+\operatorname{ord}_{\mathfrak q}(a)\geq0
+\quad(\mathfrak q\notin S).
+$$
+
+More precisely, the allowed denominator can be bounded in advance by a fractional ideal supported on $S$, chosen large enough to contain the targets locally.
 
 **Proof.** Choose integers $r_{\mathfrak p}\geq0$ so large that every target belongs locally to $\mathfrak p^{-r_{\mathfrak p}}\mathcal O_{\mathfrak p}$, and set
 
@@ -200,7 +231,13 @@ $$
 M=\prod_{\mathfrak p\in S}\mathfrak p^{-r_{\mathfrak p}}.
 $$
 
-This fractional ideal is integral at every prime outside $S$. Inside the lattice $M$, the required neighborhoods are cosets modulo $M\cap\mathfrak p^{m_{\mathfrak p}}\mathcal O_{K,\mathfrak p}$. After multiplying all modules by one nonzero integer, the ordinary Chinese remainder theorem for pairwise coprime prime powers supplies an element $a\in M$ in all prescribed cosets. Membership in $M$ gives the asserted integrality away from $S$. $\square$
+This fractional ideal is integral at every prime outside $S$. Inside the lattice $M$, the required neighborhood at $\mathfrak p$ is a coset modulo
+
+$$
+M\cap\mathfrak p^{m_{\mathfrak p}}\mathcal O_{K,\mathfrak p}.
+$$
+
+The target defines such a coset because the map from $M$ to the corresponding local finite quotient is surjective: localization does not change a quotient supported at $\mathfrak p$, and completion does not change a finite quotient. After multiplying all modules by one nonzero integer, these are congruences modulo powers of distinct primes. The Chinese remainder theorem supplies one $a\in M$ in all prescribed cosets. Membership in $M$ gives the asserted integrality away from $S$. $\square$
 
 A particularly important form concerns a finite adele $(x_v)$: there exists $a\in K$ with
 
@@ -250,6 +287,8 @@ Two absolute values are equivalent if they define the same topology, equivalentl
 - a complex place for each conjugate pair of nonreal embeddings.
 
 We write $v<\infty$ and $v\mid\infty$ for the two kinds. The completion at $v$ is $K_v$. At a complex place the two conjugate embeddings give canonically isomorphic topological fields, so choosing one causes no arithmetic ambiguity.
+
+For completeness, the list is exhaustive. Restrict an absolute value of $K$ to $\mathbf Q$. A nontrivial absolute value cannot become trivial there: a finite algebraic extension of a trivially valued field has no nontrivial extension of the value group, since an ordered abelian group has no torsion. If the restriction is archimedean, completion and finite-dimensional extension place $K$ in $\mathbf C$; the resulting embedding is real or belongs to one conjugate pair, and conjugation does not change the absolute value. If the restriction is $p$-adic, the center of the valuation on $\mathcal O_K$ is a prime $\mathfrak p$ above $p$. Extension and localization of valuations identify the given place with the $\mathfrak p$-adic one. Conversely, every embedding and every nonzero prime produces the displayed absolute value. Thus no additional places are being suppressed.
 
 ### 2.2 The global normalization
 
@@ -580,7 +619,7 @@ $$
 L\otimes_K\mathbf A_K\cong\mathbf A_L.
 $$
 
-To justify a tensor product statement that appears infinite, choose a $K$-basis of $L$. Both sides are then finite-dimensional $\mathbf A_K$-modules. Locally, $L\otimes_KK_v$ is the product of the $L_w$ over $v$. At almost every finite $v$, integral closure is unramified and the chosen integral lattice identifies with the product of the $\mathcal O_w$; only finitely many primes divide the discriminant or denominators of the basis. Therefore the local isomorphisms preserve the distinguished compact subgroups almost everywhere and assemble by restricted-product functoriality.
+To justify a tensor product statement that appears infinite, choose a $K$-basis of $L$. Both sides are then finite-dimensional $\mathbf A_K$-modules. Locally, $L\otimes_KK_v$ is the product of the $L_w$ over $v$. At almost every finite $v$, integral closure is unramified and the chosen integral lattice identifies with the product of the $\mathcal O_w$. Indeed, the trace discriminant of a full integral lattice is nonzero; away from its finitely many prime divisors the localized trace pairing is perfect, so the local different is trivial and the extension is unramified. A chosen field basis introduces only finitely many additional denominator primes. Therefore the local isomorphisms preserve the distinguished compact subgroups almost everywhere and assemble by restricted-product functoriality.
 
 This formula says that forming all completions commutes with finite extension, provided all branches over every place are retained. It is the adelic version of the completed product theorem.
 
@@ -605,6 +644,8 @@ $$
 K/\mathcal O_K\cong
 \mathbf A_{K,f}/\widehat{\mathcal O}_K.
 $$
+
+This is an isomorphism of abstract additive groups, or a topological isomorphism if the left side is given the transported discrete topology. It is not the quotient topology obtained from the dense subspace $K\subset\mathbf A_{K,f}$; that topology is not discrete. Keeping this distinction explicit prevents density from being confused with the discrete principal-parts quotient.
 
 This identity is the additive counterpart of the idele-to-ideal exact sequence, but its right side is not an ideal group. Addition permits cancellation among principal parts, and $K/\mathcal O_K$ is generally a torsion group rather than a free abelian group on primes.
 
@@ -665,11 +706,11 @@ $$
 
 It is injective because every completion map is injective. We henceforth identify $K$ with its diagonal image. The same map into $\mathbf A_{K,f}$ is also injective, but it behaves topologically very differently: $K$ is dense in the finite adeles and discrete in the full adeles.
 
-The contrast is not paradoxical. Finite approximation can meet any finite collection of nonarchimedean conditions, so the finite diagonal is dense. Adding even one archimedean factor supplies a size constraint that prevents denominators and numerators from escaping simultaneously.
+The contrast is not paradoxical. Finite approximation can meet any finite collection of nonarchimedean conditions, so the finite diagonal is dense. Adding the full Minkowski space bounds every archimedean conjugate simultaneously and prevents denominators and numerators from escaping. A proper subset of the archimedean places need not suffice: powers of a global unit can shrink at one embedding while growing at another.
 
-### 5.2 Density in the finite adeles
+### 5.2 Strong approximation in the finite adeles
 
-**Theorem 5.1.** The diagonal image of $K$ is dense in $\mathbf A_{K,f}$.
+**Theorem 5.1 (strong approximation away from infinity).** The diagonal image of $K$ is dense in $\mathbf A_{K,f}$.
 
 **Proof.** Let $x=(x_v)$ and let $U=\prod U_v$ be a basic neighborhood of $x$. There is a finite set $S$ such that $U_v=x_v+\mathcal O_v$ outside $S$, while for $v\in S$ the set $U_v$ contains $x_v+\mathfrak p_v^{m_v}$ for some integer $m_v$. Finite approximation supplies $a\in K$ satisfying these finitely many congruences and integral-difference conditions elsewhere. Then the diagonal adele $a$ belongs to $U$. $\square$
 
@@ -695,7 +736,7 @@ $$
 
 is an open neighborhood of zero in $\mathbf A_K$. If a diagonal $a\in K$ lies in $U$, its finite components are integral at every prime, so $a\in\mathcal O_K$; its infinite component lies in $U_\infty$, so $a=0$. Translates show that every point of $K$ is isolated in $K$.
 
-A discrete subgroup of a Hausdorff topological group need not always be closed without additional care, but here closure follows directly. Choose a smaller symmetric neighborhood $V$ with $V-V\subseteq U$. If a point lay in the closure of $K$, the set of its nearby translates would give two distinct elements of $K$ whose difference lies in $U$, impossible. $\square$
+The same identity neighborhood proves closedness, as it does for every discrete subgroup of a Hausdorff topological group. Choose a smaller symmetric neighborhood $V$ with $V-V\subseteq U$. Every translate $x+V$ contains at most one element of $K$, since two such elements would have a difference in $U\cap K=\{0\}$. If $x$ lies in the closure of $K$, choose $a\in(x+V)\cap K$. Were $x\ne a$, a smaller neighborhood of $x$ contained in $x+V$ and avoiding $a$ would miss $K$, a contradiction. Hence $x=a\in K$. $\square$
 
 The full set of places is essential. In $\mathbf A_{K,f}$, the neighborhood $\widehat{\mathcal O}_K$ meets $K$ in $\mathcal O_K$, an infinite set.
 
@@ -715,9 +756,17 @@ $$
 
 **Proof strategy.** Construct approximate coordinate selectors: global elements close to $1$ at one chosen place and close to $0$ at all the others. A linear combination then approximates arbitrary targets.
 
-**Proof.** Inequivalence of two absolute values supplies an element that is small in one and large in the other. Indeed, if every element small for one were bounded for the other, the two induced topologies would be comparable and hence, for absolute values on a field, equivalent. Taking a suitable power and replacing $z$ by $z/(1+z)$ produces an element close to $1$ at one place and close to $0$ at the other.
+**Proof.** We use the elementary independence lemma for absolute values: if $|\cdot|_1,\ldots,|\cdot|_r$ are pairwise inequivalent nontrivial absolute values and $0<\varepsilon<1$, then for each $i$ there is $e_i\in K$ such that
 
-For finitely many places, multiply pairwise separators and raise them to large powers to obtain $e_i\in K$ with $e_i$ arbitrarily close to $1$ at $v_i$ and to $0$ at every $v_j$, $j\ne i$. First approximate each desired local target $x_i\in K_{v_i}$ by some $a_i\in K$, using the definition of completion. Then
+$$
+|e_i-1|_i<\varepsilon,
+\qquad
+|e_i|_j<\varepsilon\quad(j\ne i).
+$$
+
+For two places, inequivalence supplies $z$ that is large at one and small at the other; a large power of $z/(1+z)$ has the required limiting behavior. The finite-family lemma follows by induction: adjoin one absolute value at a time, take sufficiently large powers so that all previously obtained strict inequalities persist, and apply the same transform to correct the new coordinate. Because only finitely many inequalities occur at each step, one power works for all of them. This proves the independence lemma without any completeness assumption.
+
+First approximate each desired local target $x_i\in K_{v_i}$ by some $a_i\in K$, using the definition of completion. Apply the lemma with $\varepsilon$ small enough that
 
 $$
 a=\sum_{i=1}^r e_i a_i
@@ -726,6 +775,34 @@ $$
 is as close to $x_i$ at $v_i$ as desired. The errors from the other summands are small, and the $i$th summand differs from $a_i$ by the small factor $e_i-1$. $\square$
 
 Weak approximation permits archimedean and nonarchimedean targets together, but it says nothing about uncontrolled places. Adelic density additionally demands an almost-everywhere tail condition. In the finite adeles that condition can be preserved; in the full adeles discreteness prevents density.
+
+### 5.6 Strong and weak approximation compared
+
+The two theorems are often conflated, so it is useful to record their exact quantifiers. Weak approximation prescribes arbitrary open conditions at a finite list of places and makes no assertion elsewhere. Theorem 5.1 prescribes conditions at finitely many finite places **and** requires integral error at every remaining finite place. That uniform tail condition is the source of the word “strong.”
+
+More generally, let $S$ be a finite set of places containing every archimedean place, and put
+
+$$
+\mathbf A_K^S=
+\prod_{v\notin S}'(K_v,\mathcal O_v).
+$$
+
+Projection from the finite adeles and Theorem 5.1 give
+
+$$
+\overline{K}^{\,\mathbf A_K^S}=\mathbf A_K^S.
+$$
+
+Equivalently, for a finite set $T$ disjoint from $S$, local targets $x_v\in K_v$, and prescribed neighborhoods $W_v$ of $0$ for $v\in T$, there is $a\in K$ such that
+
+$$
+a-x_v\in W_v\quad(v\in T),
+\qquad
+a\in\mathcal O_v\quad
+(v\notin S\cup T).
+$$
+
+This is the strong-approximation form established and used in this book. The requirement $S\supseteq S_\infty$ is part of the statement: it is what reduces the proof to controlled denominators and the Chinese remainder theorem. With no places omitted, density is false because $K$ is discrete in $\mathbf A_K$. Strong approximation with a different omitted set is a distinct theorem and should not be inferred merely by changing notation.
 
 ## 6. The compact additive quotient
 
@@ -804,6 +881,8 @@ $$
 
 The topology on the right is the quotient topology for the diagonal action $a:(x,u)\mapsto(x+a,u+a)$. It is compact even though $K_\infty\times\widehat{\mathcal O}_K$ is not: reduction modulo the lattice bounds the first factor, while the second was compact from the start.
 
+The displayed isomorphism is topological, not merely algebraic. The subgroup $K_\infty\times\widehat{\mathcal O}_K$ is open in $\mathbf A_K$, and the quotient map $\mathbf A_K\to\mathbf A_K/K$ is open. Its restricted surjection is therefore open, so the induced continuous bijection from the quotient by $\mathcal O_K$ is a homeomorphism.
+
 This model also shows why the quotient is not a direct product $(K_\infty/\mathcal O_K)\times\widehat{\mathcal O}_K$. The same algebraic integer translates both factors. Splitting that diagonal action would require a noncanonical and generally discontinuous choice of representatives.
 
 ### 6.5 The rational fundamental domain
@@ -826,7 +905,7 @@ $$
 \mu_v(\mathcal O_v)=1.
 $$
 
-Use Lebesgue measure at real places and twice ordinary planar measure or ordinary planar measure at complex places according to the desired discriminant normalization. The restricted product measure exists because the distinguished compact opens have measure $1$ almost everywhere.
+Use Lebesgue measure at real places and ordinary planar measure at complex places, consistently with the covolume convention of Section 1.5. The restricted product measure exists because the distinguished compact opens have measure $1$ almost everywhere. Rescaling a complex local measure by $2$ gives another common convention and changes the global covolume by $2^{r_2}$, but it does not change the local module $|z|_v=|z|_{\mathrm{usual}}^2$.
 
 Multiplication by $a\in K_v^\times$ scales local additive measure by $|a|_v$. At a finite place this follows by decomposing $a$ into a unit and a uniformizer; a uniformizer maps $\mathcal O_v$ onto an index-$q_v$ subgroup. At real and complex places it is the usual Jacobian computation. Globally, diagonal multiplication by $a\in K^\times$ scales by
 
@@ -846,7 +925,7 @@ K\subset\mathbf A_K\text{ discrete},
 \mathbf A_K/K\text{ compact}
 $$
 
-is the additive local--global compactness theorem. It remains true for global function fields after replacing the archimedean lattice step by the geometry of a projective curve, but the proof and the role of constants change.
+is the additive local--global compactness theorem for number fields. There is an analogous theorem for global function fields, but it uses the geometry of a complete curve and is not asserted or used here. In particular, the archimedean lattice step in the present proof has no function-field counterpart.
 
 It is false if one omits the archimedean factors for a number field: $K$ is then dense, so the quotient is not Hausdorff. It is also false for the unrestricted product in the intended locally compact sense, because the infinite noncompact tail destroys local compactness. Both failures confirm that the adelic definition has exactly the right size and topology.
 
@@ -930,7 +1009,7 @@ This vector is invisible if one retains only the additive topology near zero, bu
 
 Neither construction contains the other as a topological group in a harmless way. The idele group embeds continuously into the additive adele ring, but the induced topology is coarser. The additive group cannot be recovered by adjoining a zero to the ideles: zeros may occur in arbitrary local coordinates, and addition interacts with them in a way no one-point compactification captures.
 
-### 7.4 Open subgroups and local factorization
+### 7.4 Open and maximal compact subgroups
 
 At a finite place choose a uniformizer $\pi_v$. Then
 
@@ -958,6 +1037,25 @@ $$
 
 A simultaneous choice of uniformizers splits it as abstract and topological groups, but the splitting is noncanonical. The quotient is discrete; its compact kernel stores all residue and higher-unit information.
 
+The same decomposition identifies the maximal compact subgroup at each place. At a finite place, every compact subgroup of $K_v^\times$ has finite image under
+
+$$
+\operatorname{ord}_v:K_v^\times\longrightarrow\mathbf Z.
+$$
+
+Since $\mathbf Z$ has no nontrivial finite subgroup, that image is zero; hence $\mathcal O_v^\times$ is the unique maximal compact subgroup of $K_v^\times$. At a real place the unique maximal compact subgroup is $\{\pm1\}$, and at a complex place it is $S^1$.
+
+It follows that
+
+$$
+\mathcal K_K=
+\prod_{v\text{ real}}\{\pm1\}
+\times\prod_{v\text{ complex}}S^1
+\times\widehat{\mathcal O}_K^\times
+$$
+
+is the unique maximal compact subgroup of $\mathbf A_K^\times$. It is compact by the product theorem. Any compact subgroup of the ideles projects into the maximal compact subgroup at every place and is therefore contained in $\mathcal K_K$. The finite factor $\widehat{\mathcal O}_K^\times$ is also the unique maximal compact subgroup of $\mathbf A_{K,f}^\times$. These canonical compact groups are the multiplicative analogues of the standard compact open additive subgroup $\widehat{\mathcal O}_K$, although $\mathcal K_K$ is not open in the full idele group because its archimedean factors are not open.
+
 ### 7.5 Principal ideles
 
 A nonzero $a\in K$ gives the **principal idele** $(a)_v$. Since $a$ is a local unit almost everywhere, the diagonal map
@@ -966,7 +1064,7 @@ $$
 K^\times\longrightarrow\mathbf A_K^\times
 $$
 
-is defined. Its image is discrete. One proof uses the graph embedding and discreteness of $K$ in $\mathbf A_K$: a sufficiently small additive adelic neighborhood of $1$ meets $K^\times$ only in $1$. It is therefore closed.
+is defined. Its image is discrete. One proof uses the graph embedding and discreteness of $K$ in $\mathbf A_K$: a sufficiently small additive adelic neighborhood of $1$ meets $K^\times$ only in $1$. To see closedness explicitly, shrink that identity neighborhood $U$ to a symmetric $V$ with $V^{-1}V\subseteq U$. A translate of $V$ contains at most one principal idele; if a point in the closure were not that principal idele, a still smaller neighborhood would avoid the diagonal, a contradiction. Thus $K^\times$ is a closed discrete subgroup.
 
 The finite diagonal $K^\times\subset\mathbf A_{K,f}^\times$ is not dense. Valuation vectors of principal ideles are constrained to be principal divisors, and even within the unit kernel residue conditions can encounter global-unit restrictions. This differs sharply from additive finite approximation.
 
@@ -1018,6 +1116,15 @@ $$
 
 Some sources insert a minus sign so that an idele acts on a lattice by inverse scaling. Both conventions are legitimate, but formulas for ideal norms must follow the choice.
 
+With the convention used here, finite idele size and ideal norm satisfy the exact reciprocal formula
+
+$$
+\prod_{v<\infty}|x_v|_v
+=N(\mathfrak a(x))^{-1}.
+$$
+
+Indeed, both sides are $\prod_{\mathfrak p}(N\mathfrak p)^{-\operatorname{ord}_{\mathfrak p}(x_{\mathfrak p})}$. Thus the finite contribution to the degree map introduced in Section 9.1 is $\log N(\mathfrak a(x))$; the archimedean contribution supplies the balancing real term.
+
 Surjectivity does not assert that every ideal is principal. Given $\prod\mathfrak p^{n_{\mathfrak p}}$, choose $x_{\mathfrak p}=\pi_{\mathfrak p}^{n_{\mathfrak p}}$ at its finite support and $1$ elsewhere. The components need not arise from one global element; that is precisely why ideles see nonprincipal ideals.
 
 ### 8.2 Recovering the ideal class group
@@ -1045,7 +1152,7 @@ C_K/(K_\infty^\times\widehat{\mathcal O}_K^\times)
 \cong\operatorname{Cl}(K).
 $$
 
-In the first display, the numerator notation means the product group $K_\infty^\times\times\widehat{\mathcal O}_K^\times$ modulo the diagonal global units; there is no unintended identification between the two factors.
+In the second display, $K_\infty^\times\widehat{\mathcal O}_K^\times$ means its image in $C_K$. In the first display, the numerator notation means the product group $K_\infty^\times\times\widehat{\mathcal O}_K^\times$ modulo the diagonal global units; there is no unintended identification between the two factors.
 
 Thus the ideal class group is the coarsest discrete quotient of the idele class group obtained by discarding all archimedean magnitude and all local unit data. Ideles refine ideals in two directions: archimedean components retain continuous geometry, while finite units retain congruence information.
 
@@ -1125,7 +1232,7 @@ One can add archimedean real coefficients $-\log|x_v|_v$ and regard the product 
 
 ## 9. The idele module and compactness
 
-### 9.1 The global module
+### 9.1 The global module and degree
 
 For an idele $x=(x_v)$ define its **module** or **idele norm** by
 
@@ -1140,6 +1247,22 @@ $$
 $$
 
 Continuity follows because on a restricted-product stage only finitely many factors vary outside groups on which the absolute value is $1$. Surjectivity follows by varying one real absolute value; if $K$ is totally imaginary, vary the ordinary modulus at one complex place, whose normalized value ranges over all positive reals.
+
+The additive logarithmic version is the **idele degree map**
+
+$$
+\deg_K:\mathbf A_K^\times\longrightarrow\mathbf R,
+\qquad
+\deg_K(x)=-\log|x|_{\mathbf A}.
+$$
+
+The minus sign makes a finite idele that is a uniformizer at $v$ and $1$ elsewhere have positive degree $\log q_v$. With this convention $\deg_K$ is a continuous surjective homomorphism and
+
+$$
+\ker(\deg_K)=\ker(|\cdot|_{\mathbf A})=\mathbf A_K^1.
+$$
+
+The product formula says $\deg_K(a)=0$ for $a\in K^\times$, so degree also descends to $C_K$. Over a number field its image is all of $\mathbf R$, because an archimedean magnitude varies continuously. In the separate theory of a global function field with constant field $\mathbf F_q$, one instead normalizes $-\log_q|x|_{\mathbf A}$ and obtains an integer-valued degree. That function-field assertion depends on the product formula for a complete curve and is mentioned only to prevent the continuous number-field degree from being confused with it; this book uses only the number-field map displayed above.
 
 The **unit ideles** or **norm-one ideles** form
 
@@ -1296,6 +1419,8 @@ $$
 
 The exact sequence is canonical; the splitting is not. It isolates the sole noncompact direction of the idele class group. In logarithmic coordinates this direction is the sum of all local logarithmic sizes, while the product formula kills it on principal ideles.
 
+It also identifies the maximal compact subgroup without choices. The group $\mathbf R_{>0}$ has no nontrivial compact subgroup, since its logarithm is the additive group $\mathbf R$. Therefore every compact subgroup of $C_K$ lies in $C_K^1$. Theorem 9.2 says that $C_K^1$ itself is compact, so it is the unique maximal compact subgroup of the idele class group.
+
 ### 9.5 The compact kernel over the ideal class group
 
 The ideal-class map restricts to a surjection
@@ -1403,6 +1528,14 @@ $$
 =|x|_{\mathbf A_K}^{[L:K]}.
 $$
 
+Equivalently, for the degree convention of Section 9.1,
+
+$$
+\deg_K(N_{L/K}y)=\deg_L(y),
+\qquad
+\deg_L(x\text{ viewed over }L)=[L:K]\deg_K(x).
+$$
+
 Confusing norm with scalar extension is another common source of erroneous exponents.
 
 ### 10.3 Compatibility with principal ideles
@@ -1440,7 +1573,31 @@ The adelic norm therefore refines both the field norm and the ideal norm and mak
 
 Suppose $b\in K^\times$ is a global norm from $L^\times$. Then $b$ is a norm from $L_w$ after passing to every completion and multiplying over $w\mid v$. Thus local norm conditions are necessary.
 
-They are not sufficient in arbitrary extensions. The assertion
+The adelic norm packages those local conditions exactly. If
+
+$$
+N_v:\prod_{w\mid v}L_w^\times\longrightarrow K_v^\times,
+\qquad
+N_v((y_w))=\prod_{w\mid v}N_{L_w/K_v}(y_w),
+$$
+
+then
+
+$$
+N_{L/K}(\mathbf A_L^\times)
+=\{x\in\mathbf A_K^\times:x_v\in N_v(\textstyle\prod_{w\mid v}L_w^\times)
+\text{ for every }v\}.
+$$
+
+Only the reverse inclusion needs explanation. Choose a local preimage at every place. Outside finitely many places the extension is unramified, $x_v$ is a unit, and the norm on the units of each unramified local factor is surjective by the successive-unit calculation for finite residue fields established in the preceding volume; one may therefore choose unit preimages there. The resulting family is an idele of $L$. In particular,
+
+$$
+K^\times\cap N_{L/K}(\mathbf A_L^\times)
+$$
+
+is precisely the group of elements of $K^\times$ that are norms from the completed $K_v$-algebra at every place.
+
+These conditions need not force one global preimage in $L^\times$. The assertion
 
 $$
 b\in N_{L/K}(L^\times)
@@ -1449,9 +1606,14 @@ b\in N_{L\otimes_KK_v/K_v}((L\otimes_KK_v)^\times)
 \text{ for every }v
 $$
 
-is a local--global norm principle, not a formal consequence of adelic language. It holds under important additional hypotheses, most famously for cyclic extensions, but fails for general noncyclic extensions. Proving such theorems belongs to global class field theory and its cohomological consequences, not to the construction developed here.
+is a local--global norm principle, not a formal consequence of adelic language. Its obstruction is measured by the quotient
 
-The safe adelic statement is instead that the local norm conditions describe membership of the diagonal idele $(b)_v$ in the subgroup $N_{L/K}(\mathbf A_L^\times)$. Whether this adelic membership lifts to one element of $L^\times$ is a separate global question.
+$$
+\frac{K^\times\cap N_{L/K}(\mathbf A_L^\times)}
+{N_{L/K}(L^\times)}.
+$$
+
+No vanishing of this quotient is asserted under the bare hypotheses “finite,” “separable,” or “Galois.” Theorems that make it vanish require additional hypotheses and belong to the later reciprocity theory. Thus the result proved here is exactly the equivalence between componentwise local norms and adelic norms, not a local--global theorem for field elements.
 
 ### 10.5 Examples of norm behavior
 
@@ -1568,13 +1730,34 @@ $$
 \cong I_K(\mathfrak m_0)/P_{K,1}(\mathfrak m).
 $$
 
-**Proof strategy.** Move all valuations at primes dividing the modulus to zero by a principal idele, then apply the ideal map. The ambiguity in this adjustment is exactly a ray-principal ideal.
+**Proof strategy.** Normalize not only the valuations at primes dividing the modulus, but the entire prescribed unit cosets and real signs. Weak approximation makes that simultaneous normalization possible. Its ambiguity is then exactly a ray-principal ideal.
 
-**Proof.** Given an idele $x$, finite approximation supplies $a\in K^\times$ such that $ax$ is a unit at every prime dividing $\mathfrak m_0$. The ideal $\mathfrak a(ax)$ is then prime to $\mathfrak m_0$. Changing $x$ by an element of $U(\mathfrak m)$ does not change this ideal. Changing it by a principal idele changes the ideal by a principal factor whose generator, after comparing the two local normalizations, is congruent to $1$ at the finite modulus and positive at the specified real places. This defines the map to the ideal quotient.
+**Proof.** Let $x$ be an idele. For every $\mathfrak p\mid\mathfrak m_0$, the set
 
-Conversely, represent an ideal prime to $\mathfrak m_0$ by local uniformizer powers away from the modulus and by $1$ at its primes. This constructs an idele. Two such representatives have the same idele class precisely when their quotient is generated by an element satisfying the ray conditions. The constructions are inverse. $\square$
+$$
+x_{\mathfrak p}^{-1}U_{\mathfrak p}^{(n_{\mathfrak p})}
+$$
 
-This proof also explains why one cannot simply apply the ideal map to an arbitrary idele and demand an ideal prime to $\mathfrak m_0$: the idele may have nonzero valuation at a modulus prime. A preliminary principal adjustment is essential.
+is an open neighborhood of $x_{\mathfrak p}^{-1}$ in $K_{\mathfrak p}^\times$. At every real place in $\mathfrak m_\infty$, require $a$ to have the sign of $x_v^{-1}$. Weak approximation supplies $a\in K^\times$ satisfying all these conditions. Hence
+
+$$
+(ax)_{\mathfrak p}\in U_{\mathfrak p}^{(n_{\mathfrak p})}
+\quad(\mathfrak p\mid\mathfrak m_0),
+\qquad
+(ax)_v>0\quad(v\in\mathfrak m_\infty).
+$$
+
+In particular, $\mathfrak a(ax)$ is prime to $\mathfrak m_0$. If $b$ is a second normalizing element, then $b/a$ lies in $1+\mathfrak p^{n_{\mathfrak p}}\mathcal O_{K,\mathfrak p}$ at every finite modulus prime and is positive at every specified real place. Thus
+
+$$
+\mathfrak a(bx)=(b/a)\mathfrak a(ax)
+$$
+
+differs by an element of $P_{K,1}(\mathfrak m)$. The class of $\mathfrak a(ax)$ is therefore independent of the normalizer. Multiplying $x$ by a principal idele or by an element of $U(\mathfrak m)$ leaves this class unchanged, so we obtain a map from the adelic quotient to the ideal quotient.
+
+Conversely, represent an ideal prime to $\mathfrak m_0$ by local uniformizer powers away from the modulus and by $1$ at every modulus prime and every archimedean place. This constructs an idele mapping to that ideal. If its ideal class is ray-principal, say represented by $(c)$ with $c$ satisfying the congruence and positivity conditions, division by the principal idele $c$ leaves an element of $U(\mathfrak m)$. This proves both injectivity and surjectivity, and the two constructions are inverse. $\square$
+
+This proof also explains why one cannot simply apply the ideal map to an arbitrary idele and demand an ideal prime to $\mathfrak m_0$: the idele may have nonzero valuation or the wrong unit residue at a modulus prime. A preliminary principal adjustment satisfying the full ray condition is essential.
 
 ### 11.4 Finiteness of ray class groups
 
@@ -1642,7 +1825,7 @@ This is the elementary content of conductors: they measure the smallest local un
 
 ### 11.7 Computing elementary ray quotients
 
-For $K=\mathbf Q$ and modulus $N\infty$, every ideal prime to $N$ has a unique positive generator up to multiplication by a positive rational congruent to $1$ modulo $N$. Sending that generator to its residue gives
+For $K=\mathbf Q$ and modulus $N\infty$, every fractional ideal is principal and has a unique positive generator. If the ideal is prime to $N$, that generator is a unit in $\mathbf Z_p$ for every $p\mid N$ and therefore has a well-defined class in $(\mathbf Z/N\mathbf Z)^\times$ after clearing numerator and denominator modulo $N$. Two such ideals determine the same ray class exactly when the quotient of their positive generators is congruent to $1$ modulo $N$. Hence
 
 $$
 \operatorname{Cl}_{N\infty}(\mathbf Q)
@@ -1860,12 +2043,13 @@ The principal conclusions for a number field $K$ are:
 - the diagonal $K$ is discrete and cocompact in $\mathbf A_K$;
 - the diagonal $K^\times$ is discrete in $\mathbf A_K^\times$;
 - the product formula makes $K^\times$ lie in $\mathbf A_K^1$;
-- $C_K^1$ is compact, while $C_K/C_K^1\cong\mathbf R_{>0}$;
+- the module and degree maps have common kernel $\mathbf A_K^1$, and they descend through principal ideles;
+- $C_K^1$ is compact and is the unique maximal compact subgroup of $C_K$, while $C_K/C_K^1\cong\mathbf R_{>0}$;
 - finite idele valuations recover fractional ideals, and quotienting by principal ideles recovers the ideal class group after discarding infinite and unit data;
-- every ray class group for a finite modulus is finite;
+- every ray class group for a modulus with finite support, including its prescribed real places, is finite;
 - extension norms are defined coordinatewise, preserve the idele module, respect principal ideles, and refine ideal norms.
 
-The number-field hypothesis enters through finite residue fields, the archimedean decomposition, Minkowski's lattice theory, ideal-class finiteness, and Dirichlet's unit theorem. Restricted products exist far more generally, but these compactness and finiteness conclusions should not be transported without replacing those inputs.
+The number-field hypothesis enters through finite residue fields, the archimedean decomposition, Minkowski's lattice theory, ideal-class finiteness, and Dirichlet's unit theorem. Restricted products exist far more generally, but these compactness and finiteness conclusions should not be transported without replacing those inputs. In particular, this book proves no function-field approximation or compactness theorem. For a number field the degree image is the continuous group $\mathbf R$ and $C_K/C_K^1\cong\mathbf R_{>0}$; the discrete degree familiar for global function fields is a differently normalized statement with a different proof.
 
 ### 13.3 What has not been asserted
 
