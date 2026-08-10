@@ -34,6 +34,7 @@
    - [The determinant computes both lengths](#63-the-determinant-computes-both-lengths)
    - [Hypersurfaces in detail](#64-hypersurfaces-in-detail)
    - [A two-variable calculation](#65-a-two-variable-calculation)
+   - [Rectangular Jacobians and Fitting control](#66-rectangular-jacobians-and-fitting-control)
 7. [The fundamental inequality and the converse theorem](#7-the-fundamental-inequality-and-the-converse-theorem)
    - [The sign of the inequality](#71-the-sign-of-the-inequality)
    - [A determinant proof of the inequality](#72-a-determinant-proof-of-the-inequality)
@@ -45,11 +46,15 @@
    - [Proof: conormal information](#83-proof-conormal-information)
    - [Proof: comparison of relation lattices](#84-proof-comparison-of-relation-lattices)
    - [What the equality proves](#85-what-the-equality-proves)
+   - [The classical complete-intersection-source criterion](#86-the-classical-complete-intersection-source-criterion)
 9. [Finite modules with ring actions](#9-finite-modules-with-ring-actions)
    - [Why a module can reveal the congruence ideal](#91-why-a-module-can-reveal-the-congruence-ideal)
    - [Self-dual lattices and orthogonal branches](#92-self-dual-lattices-and-orthogonal-branches)
    - [A matrix-action calculation](#93-a-matrix-action-calculation)
    - [Faithfulness and cyclicity hypotheses](#94-faithfulness-and-cyclicity-hypotheses)
+   - [Cyclicity, multiplicity one, and primitive eigenvectors](#95-cyclicity-multiplicity-one-and-primitive-eigenvectors)
+   - [The branch-saturation quotient](#96-the-branch-saturation-quotient)
+   - [A faithful-module numerical refinement](#97-a-faithful-module-numerical-refinement)
 10. [Defect modules and quantitative failure](#10-defect-modules-and-quantitative-failure)
     - [From a difference of lengths to an object](#101-from-a-difference-of-lengths-to-an-object)
     - [The intrinsic complete-intersection defect](#102-the-intrinsic-complete-intersection-defect)
@@ -60,6 +65,8 @@
     - [Extension of coefficient discrete valuation rings](#112-extension-of-coefficient-discrete-valuation-rings)
     - [Ramification and numerical lengths](#113-ramification-and-numerical-lengths)
     - [Quotients by regular sequences](#114-quotients-by-regular-sequences)
+    - [Local criteria at several augmented points](#115-local-criteria-at-several-augmented-points)
+    - [Faithfully flat ascent and descent](#116-faithfully-flat-ascent-and-descent)
 12. [A gallery of examples](#12-a-gallery-of-examples)
     - [A smooth point and an isolated branch](#121-a-smooth-point-and-an-isolated-branch)
     - [Tangential branches](#122-tangential-branches)
@@ -78,7 +85,26 @@
     - [The self-dual-module lemma](#143-the-self-dual-module-lemma)
     - [The base-change lemma](#144-the-base-change-lemma)
     - [A disciplined verification protocol](#145-a-disciplined-verification-protocol)
-    - [Conclusion](#146-conclusion)
+    - [The compact core](#146-the-compact-core)
+15. [Gorenstein consequences and their limits](#15-gorenstein-consequences-and-their-limits)
+    - [Why duality appears in a numerical criterion](#151-why-duality-appears-in-a-numerical-criterion)
+    - [Relative dualizing modules](#152-relative-dualizing-modules)
+    - [Complete intersections are self-dual](#153-complete-intersections-are-self-dual)
+    - [Numerical equality forces Gorenstein duality](#154-numerical-equality-forces-gorenstein-duality)
+    - [The annihilator line under a perfect pairing](#155-the-annihilator-line-under-a-perfect-pairing)
+    - [Gorenstein is not complete intersection](#156-gorenstein-is-not-complete-intersection)
+16. [From deformation rings to Hecke rings](#16-from-deformation-rings-to-hecke-rings)
+    - [The comparison map](#161-the-comparison-map)
+    - [Choosing the augmentation](#162-choosing-the-augmentation)
+    - [Exact hypotheses for the ring isomorphism](#163-exact-hypotheses-for-the-ring-isomorphism)
+    - [Where the cotangent upper bound comes from](#164-where-the-cotangent-upper-bound-comes-from)
+    - [Computing the Hecke congruence number](#165-computing-the-hecke-congruence-number)
+    - [Equality, strict inequality, and failure of the test](#166-equality-strict-inequality-and-failure-of-the-test)
+    - [The full proof strategy in one diagram](#167-the-full-proof-strategy-in-one-diagram)
+17. [Equality as rigidity](#17-equality-as-rigidity)
+    - [The four faces of the determinant](#171-the-four-faces-of-the-determinant)
+    - [What has been proved](#172-what-has-been-proved)
+    - [Final perspective](#173-final-perspective)
 
 ## 1. The numerical bridge
 
@@ -871,6 +897,94 @@ $$
 
 need not equal $(ab)$. The determinant, not the exponent, combines independent congruence directions.
 
+### 6.6 Rectangular Jacobians and Fitting control
+
+The square Jacobian belongs to the equality case. Before complete-intersection structure is known,
+a presentation may have more relations than variables:
+
+$$
+A\simeq
+\mathcal O[[X_1,\ldots,X_n]]/(f_1,\ldots,f_m),
+\qquad m\geq n.
+$$
+
+Evaluation at the augmentation gives a right-exact presentation
+
+$$
+\mathcal O^m\xrightarrow{J_\lambda}
+\mathcal O^n\longrightarrow\Phi_A\longrightarrow0.
+$$
+
+There is no determinant of a rectangular matrix. The correct replacement is the ideal of all
+$n\times n$ minors:
+
+$$
+\operatorname{Fitt}_{\mathcal O}^0(\Phi_A)=I_n(J_\lambda).
+$$
+
+This ideal is independent of the chosen presentation. Row and column operations replace maximal
+minors by invertible linear combinations, and adding a redundant relation adds a column already in
+the span of the old columns. More generally, stabilization by a generator together with a relation
+having unit coefficient inserts an identity block and leaves the indexed ideal unchanged.
+
+Three properties make the Fitting ideal the correct numerical object. First, it commutes with
+arbitrary scalar change:
+
+$$
+\operatorname{Fitt}_0(M\otimes_{\mathcal O}\mathcal O')
+=\operatorname{Fitt}_0(M)\mathcal O'.
+$$
+
+Flatness is not needed for this identity because a tensor product of a finite presentation remains
+a presentation. Flatness is needed for separate kernel or length comparisons.
+
+Second, it detects the whole elementary-divisor sum. If
+
+$$
+M\simeq\bigoplus_i\mathcal O/(\varpi^{a_i}),
+$$
+
+then
+
+$$
+\operatorname{Fitt}_0(M)
+=(\varpi^{\sum_i a_i}),
+\qquad
+\operatorname{length}M=\sum_i a_i.
+$$
+
+The annihilator is only $(\varpi^{\max_i a_i})$. It detects the largest exponent, not the total
+numerical size.
+
+Third, exact sequences are numerically exact over a discrete valuation ring. If
+
+$$
+0\longrightarrow M'\longrightarrow M\longrightarrow M''\longrightarrow0
+$$
+
+is a short exact sequence of finite-length modules, then length additivity gives
+
+$$
+\operatorname{Fitt}_0(M)
+=\operatorname{Fitt}_0(M')\operatorname{Fitt}_0(M'').
+$$
+
+Over a general ring only a containment is automatic; the equality here uses that every nonzero
+ideal is principal and its valuation is length.
+
+The rectangular case already predicts the numerical inequality. Every maximal minor supplies a
+candidate determinant clearing the selected idempotent, so all of them lie in $\eta_A$. Their ideal
+therefore satisfies
+
+$$
+I_n(J_\lambda)\subseteq\eta_A.
+$$
+
+If the inclusion is strict, no choice of $n$ relations captures all relations without determinant
+loss. If equality holds, the converse theorem shows that the presentation ideal actually needs
+only $n$ generators and the rectangular matrix can be replaced by a square Jacobian of a regular
+sequence.
+
 ## 7. The fundamental inequality and the converse theorem
 
 ### 7.1 The sign of the inequality
@@ -973,7 +1087,7 @@ Then the determinant ideal of the full-rank lattice $d_\lambda(J)\subseteq\mathc
 **Proof.** The image $d_\lambda(J)$ has rank $n$: its cokernel is $\Phi_A$, which is torsion. Its determinant ideal is precisely
 
 $$
-\bigwedge^n d_\lambda(J)subseteq
+\bigwedge^n d_\lambda(J)\subseteq
 \bigwedge^n\mathcal O^n\simeq\mathcal O,
 $$
 
@@ -984,7 +1098,7 @@ For the equality case, it is useful to spell out the standard reduction argument
 The sequence $\varpi,g_1,\ldots,g_n$ is a system of parameters of the regular local ring $S$. In a Cohen--Macaulay ring every system of parameters is regular, in every order. Consequently $g_1,\ldots,g_n$ is regular, $\varpi$ is regular on $B$, and $B$ is finite flat over $\mathcal O$. Complete-intersection duality gives
 
 $$
-\eta_B=operatorname{Fitt}_{\mathcal O}^0(\Phi_B)
+\eta_B=\operatorname{Fitt}_{\mathcal O}^0(\Phi_B)
 =\operatorname{Fitt}_{\mathcal O}^0(\Phi_A).
 $$
 
@@ -1003,7 +1117,7 @@ $$
 This implication is often called the determinant-defect step. Notice that it compares actual ideals, not a signed Euler characteristic. If
 
 $$
-\eta_A=operatorname{Fitt}_{\mathcal O}^0(\Phi_A)=\eta_B,
+\eta_A=\operatorname{Fitt}_{\mathcal O}^0(\Phi_A)=\eta_B,
 $$
 
 the implication forces $J=Q$, so $J$ has $n$ generators. Conversely, if $J$ has $n$ generators, its height is $n$ and those generators are a regular sequence in the Cohen--Macaulay ring $S$; the Jacobian congruence formula gives equality. Faithfully flat descent removes the auxiliary ramification-index-one coefficient extension. $\square$
@@ -1230,6 +1344,61 @@ The conclusion has three parts and their order matters. The intrinsic equality f
 
 Conversely, if $R\simeq T$ and this common ring is a finite flat complete intersection, then the numerical equality follows automatically. Thus the theorem is both an isomorphism test and a structural test. The stronger formulation is especially useful when $R$ begins life only as a complete local ring with a finite cotangent module: no premature torsion-freeness or relation-count claim is required.
 
+### 8.6 The classical complete-intersection-source criterion
+
+The historically first form assumes more about the source and therefore has a shorter structural
+interpretation.
+
+**Theorem (complete-intersection-source numerical criterion).** Let
+$R\twoheadrightarrow T$ be a compatible surjection of augmented finite flat local
+$\mathcal O$-algebras. Assume $R$ is a complete intersection, the selected generic point of $R$ is
+isolated, and
+
+$$
+\operatorname{length}\Phi_R
+\leq\operatorname{length}\Psi_T.
+$$
+
+Then $R\to T$ is an isomorphism, and $T$ is a complete intersection.
+
+**Proof strategy.** Complete-intersection duality gives equality on the source. A quotient can only
+shorten the cotangent module and can only enlarge the congruence ideal. The assumed inequality
+forces both changes to have zero length. The determinant-defect step then eliminates the full
+kernel, including relations hidden in $I_R^2$.
+
+**Proof.** The source equality is
+
+$$
+\operatorname{length}\Phi_R
+=\operatorname{length}\Psi_R.
+$$
+
+For a compatible quotient, $\eta_R\subseteq\eta_T$, hence
+
+$$
+\operatorname{length}\Psi_R
+\geq\operatorname{length}\Psi_T.
+$$
+
+Together with the assumed opposite inequality, this yields
+
+$$
+\operatorname{length}\Psi_R
+=\operatorname{length}\Psi_T
+=\operatorname{length}\Phi_R.
+$$
+
+Thus the branch defect $\eta_T/\eta_R$ vanishes. The complete-intersection-source
+determinant-defect step says that a nonzero kernel would contribute a positive branch defect;
+hence the kernel is zero. The target is isomorphic to the source and inherits its structure.
+$\square$
+
+This form is useful when a square presentation of $R$ has already been proved. The stronger theorem
+of Section 8.2 does not assume it. There equality first proves that $T$ is a complete intersection,
+and the target regular sequence then eliminates the kernel. Calling both results “the numerical
+criterion” is harmless only if one records which source hypotheses have been assumed and which
+have been deduced.
+
 ## 9. Finite modules with ring actions
 
 ### 9.1 Why a module can reveal the congruence ideal
@@ -1419,6 +1588,165 @@ $$
 
 The module supplies the right-hand number; the ring theorem supplies the conclusion. The two roles should remain separate.
 
+### 9.5 Cyclicity, multiplicity one, and primitive eigenvectors
+
+The rank-one hypothesis deserves a more intrinsic formulation. Suppose $M$ is finite free over
+$\mathcal O$, $A$ acts on $M$, and the selected factor of $A_K$ acts on $e_\lambda M_K$ through
+$\lambda_K$. Three statements that sound similar are in fact different.
+
+1. The $K$-space $e_\lambda M_K$ has dimension one.
+2. The localized module $M_K$ is cyclic over $A_K$ at the selected factor.
+3. The lattice $M_\lambda=M\cap e_\lambda M_K$ is generated by one primitive vector of $M$.
+
+The first two are equivalent at the selected field factor, but the third is integral and stronger.
+Every rank-one saturated sublattice of a free module over a discrete valuation ring is generated by
+a primitive vector, so the third does hold for $M_\lambda$: saturation follows because
+$e_\lambda M_K$ is a $K$-subspace. What does not follow is that the projected lattice
+$P_\lambda=e_\lambda M$ has the same primitive generator. In general there are integers $a\leq b$
+and a basis vector $v$ of the line such that
+
+$$
+P_\lambda=\varpi^a\mathcal Ov,
+\qquad
+M_\lambda=\varpi^b\mathcal Ov,
+$$
+
+and then
+
+$$
+\Psi(M)\simeq\mathcal O/(\varpi^{b-a}).
+$$
+
+The difference $b-a$ is an index of lattices, not a dimension of a generic eigenspace. A perfect
+pairing can calculate it, but generic multiplicity one alone cannot.
+
+There is a useful cyclicity criterion. Assume that $M$ is finite free over $\mathcal O$, that the
+$A$-action is faithful, and that some $m\in M$ generates $M_K$ over $A_K$. The map
+
+$$
+A\longrightarrow M,
+\qquad a\longmapsto am,
+$$
+
+is injective after tensoring with $K$. It is therefore injective over $\mathcal O$, but its cokernel
+may be a nonzero finite torsion module. Thus $M$ contains a copy of the regular lattice without
+necessarily being the regular lattice. Equality follows precisely when the cokernel vanishes, or
+equivalently when the determinant of this inclusion is a unit. This is an effective way to verify
+integral multiplicity one: generic cyclicity provides a full-rank inclusion, and one residual or
+determinantal calculation proves it is saturated.
+
+### 9.6 The branch-saturation quotient
+
+The equality $M_\lambda=\eta_AP_\lambda$ has a quantitative weakening. Since
+$\eta_AP_\lambda\subseteq M_\lambda$, define
+
+$$
+Q_\lambda(M)=M_\lambda/\eta_AP_\lambda.
+$$
+
+This is a finite-length module when the selected eigenspace has rank one. It measures failure of
+branch saturation. There is a natural short exact sequence
+
+$$
+0\longrightarrow Q_\lambda(M)
+\longrightarrow P_\lambda/\eta_AP_\lambda
+\longrightarrow P_\lambda/M_\lambda
+\longrightarrow0.
+$$
+
+Because $P_\lambda$ is free of rank one over $\mathcal O$, the middle term is
+$\mathcal O/\eta_A$ after a choice of basis. Since the last term is $\Psi(M)$, one obtains
+
+$$
+\operatorname{length}\Psi_A
+=\operatorname{length}Q_\lambda(M)
++\operatorname{length}\Psi(M).
+$$
+
+Equivalently,
+
+$$
+\eta_A\subseteq\eta(M),
+\qquad
+\operatorname{length}\Psi(M)
+\leq\operatorname{length}\Psi_A,
+$$
+
+and equality holds exactly when $Q_\lambda(M)=0$. This formula fixes the direction of every
+module estimate: an unsaturated module can only make the observed congruence quotient smaller
+than the intrinsic one. It can therefore fail to provide a sufficiently large right-hand side for
+the numerical criterion. An unexplained module congruence number must never be substituted for
+the ring congruence number in the favorable direction.
+
+For a selected eigenspace of rank $r$, the same construction gives
+
+$$
+Q_\lambda(M)=M_\lambda/\eta_AP_\lambda,
+$$
+
+but now $P_\lambda/\eta_AP_\lambda\simeq(\mathcal O/\eta_A)^r$. Hence
+
+$$
+r\,\operatorname{length}\Psi_A
+=\operatorname{length}Q_\lambda(M)
++\operatorname{length}\Psi(M).
+$$
+
+If $Q_\lambda(M)=0$, then
+$\operatorname{Fitt}_{\mathcal O}^0\Psi(M)=\eta_A^r$. This is the correct higher-multiplicity
+formula. Taking an $r$th root of a principal ideal or dividing a length by $r$ is justified only
+after saturation has been proved.
+
+### 9.7 A faithful-module numerical refinement
+
+We can now state the module-fed version with no hidden implication.
+
+**Theorem (faithful-module refinement).** Let $R\twoheadrightarrow T$ be a compatible surjection
+of augmented complete Noetherian local $\mathcal O$-algebras. Assume:
+
+1. $T$ is finite flat over $\mathcal O$;
+2. $\Phi_R$ has finite length;
+3. $T$ acts faithfully on a finite free $\mathcal O$-module $M$;
+4. the distinguished generic eigenspace has rank one;
+5. $M$ has a perfect pairing for which $T$ is self-adjoint; and
+6. the branch is saturated: $M_\lambda=\eta_TP_\lambda$.
+
+If
+
+$$
+\operatorname{length}\Phi_R
+\leq\operatorname{length}\Psi(M),
+$$
+
+then $R\to T$ is an isomorphism, both rings are finite flat complete intersections, and
+
+$$
+\operatorname{length}\Phi_R
+=\operatorname{length}\Phi_T
+=\operatorname{length}\Psi_T
+=\operatorname{length}\Psi(M).
+$$
+
+**Proof strategy.** The module hypotheses have only one task: identify the observed lattice index
+with the intrinsic congruence ideal. Once this is done, the ring comparison theorem applies.
+
+**Proof.** Projection identifies $\Psi(M)$ with $P_\lambda/M_\lambda$. Saturation and rank one
+identify this quotient with $P_\lambda/\eta_TP_\lambda\simeq\mathcal O/\eta_T$. Thus the displayed
+upper bound is exactly
+
+$$
+\operatorname{length}\Phi_R
+\leq\operatorname{length}\Psi_T.
+$$
+
+The Wiles--Lenstra comparison theorem gives the isomorphism and the structural conclusions. The
+chain of inequalities in its proof gives the stated equalities. $\square$
+
+Faithfulness is logically prior to this application. Without it the action and the pairing may
+factor through a proper quotient $T'$, and the module computation concerns $\eta_{T'}$, not
+$\eta_T$. Perfectness is also not a substitute for saturation: it identifies the projected lattice
+with a dual lattice, but it does not prescribe the index of the integral eigenlattice inside it.
+
 ## 10. Defect modules and quantitative failure
 
 ### 10.1 From a difference of lengths to an object
@@ -1540,16 +1868,37 @@ The rigorous kernel-elimination statements used in this book are more precise. I
 
 ### 11.1 Localization and completion
 
-Although the main rings are local, they often arise by localizing a finite algebra at the maximal ideal selected by an augmentation. If $A$ is finite flat over $\mathcal O$ and $\mathfrak m=\lambda^{-1}((\varpi))$, then localization preserves the augmentation kernel, annihilators, and Fitting ideals:
+Although the main rings are local, they often arise by localizing a finite algebra at the maximal
+ideal selected by an augmentation. Let $B$ be a finite flat, not necessarily local,
+$\mathcal O$-algebra with augmentation $\lambda$, and put
+$\mathfrak m=\lambda^{-1}((\varpi))$. Then $\lambda$ extends to $B_{\mathfrak m}$ because every
+element outside $\mathfrak m$ has unit augmentation. If $I=\ker\lambda$, localization gives
 
 $$
-\Phi_{A_{\mathfrak m}}
-\simeq(\Phi_A)_{\mathfrak m},
-\qquad
-\eta_{A_{\mathfrak m}}=\eta_A
+\Phi_{B_{\mathfrak m}}
+\simeq (I/I^2)_{\mathfrak m}.
 $$
 
-after discarding factors on which the augmentation is unavailable. One must localize at the distinguished maximal ideal, not at an unrelated prime.
+Fitting ideals localize without qualification. Congruence ideals require more care. Localization
+can discard generic branches whose integral closures meet a different maximal ideal. Removing a
+branch removes a denominator condition, so in general one has only
+
+$$
+\eta_B\subseteq\eta_{B_{\mathfrak m}}.
+$$
+
+Equality holds when $B$ was already local at $\mathfrak m$, or more generally when localization
+does not enlarge the intersection of the distinguished idempotent line with the order:
+
+$$
+B\cap Ke_\lambda
+=B_{\mathfrak m}\cap Ke_\lambda.
+$$
+
+This equality is the exact branch-preservation hypothesis. It should be checked when passing from
+a global finite algebra to one local factor. One must localize at the distinguished maximal ideal,
+not at an unrelated prime, and one must not retain congruence contributions from branches that the
+localization has removed.
 
 Completion is faithfully flat. For a Noetherian local augmented algebra,
 
@@ -1559,31 +1908,64 @@ $$
 
 evaluated at the augmented point, and finite-module Fitting ideals extend. If $A$ is already finite over complete $\mathcal O$, it is complete, so no change occurs. Complete-intersection structure is equivalent before and after completion.
 
-Annihilators do not commute with arbitrary flat base change for arbitrary modules. Here finite presentation and faithful flatness give the needed compatibility. This qualification is important: the congruence ideal should be transported through its branch-lattice description or through a finite presentation, not through a blanket assertion about annihilators.
+Annihilators do not commute with arbitrary scalar change for arbitrary modules. Here finite
+presentation and flatness give the needed compatibility, and faithful flatness reflects equality.
+This qualification is important: the congruence ideal should be transported through its
+branch-lattice description or through a finite presentation, not through a blanket assertion about
+annihilators.
 
 ### 11.2 Extension of coefficient discrete valuation rings
 
-Let $\mathcal O\to\mathcal O'$ be a finite extension of complete DVRs, with fraction fields $K\subseteq K'$ and ramification index $e$. Form
+Let $\mathcal O\to\mathcal O'$ be a finite extension of complete DVRs, with fraction fields
+$K\subseteq K'$ and ramification index $e$. Form
 
 $$
-A'=A\otimes_{\mathcal O}\mathcal O'
+B=A\otimes_{\mathcal O}\mathcal O'.
 $$
 
-and localize at the maximal ideal selected by the extended augmentation if the tensor product is semilocal. Flat base change gives
+Flat base change gives
 
 $$
-\Phi_{A'}\simeq\Phi_A\otimes_{\mathcal O}\mathcal O'.
+\Phi_B\simeq\Phi_A\otimes_{\mathcal O}\mathcal O'.
 $$
 
-If the distinguished factor remains isolated, the idempotent is $e_\lambda\otimes1$ and
+If $B$ is local at the maximal ideal selected by the extended augmentation, then the distinguished
+idempotent is $e_\lambda\otimes1$ and flatness of $\mathcal O'$ gives the exact intersection formula
 
 $$
-\eta_{A'}=\eta_A\mathcal O'.
+B\cap K'(e_\lambda\otimes1)
+=(\eta_A\mathcal O')(e_\lambda\otimes1).
 $$
 
-Consequently $D_{A'}\simeq D_A\otimes\mathcal O'$. Complete-intersection structure ascends under this flat base change and descends under faithful flatness.
+Consequently
 
-If new generic factors split after extending $K$, only the localization containing the extended distinguished augmentation is retained. The formula still holds for that factor because the distinguished idempotent itself is unchanged. Combining several new maximal factors without localization can destroy locality and change the interpretation of the congruence module.
+$$
+\eta_B=\eta_A\mathcal O',
+\qquad
+D_B\simeq D_A\otimes_{\mathcal O}\mathcal O'.
+$$
+
+Complete-intersection structure ascends under this flat base change and descends under faithful
+flatness.
+
+If $B$ is semilocal and one replaces it by the selected localization $B_{\mathfrak m'}$, then
+
+$$
+\eta_A\mathcal O'\subseteq\eta_{B_{\mathfrak m'}},
+$$
+
+but equality is not automatic: the localization may discard branches and enlarge the denominator
+ideal. Equality holds under the branch-preservation condition
+
+$$
+B\cap K'(e_\lambda\otimes1)
+=B_{\mathfrak m'}\cap K'(e_\lambda\otimes1).
+$$
+
+This is automatic if $B$ is local. If new generic factors split after extending $K$, the selected
+idempotent itself is unchanged, but the integral order surrounding it may change after localization;
+that is why the extra condition is stated. Combining several maximal factors without localization
+destroys locality and changes the interpretation of the congruence module.
 
 ### 11.3 Ramification and numerical lengths
 
@@ -1611,14 +1993,18 @@ $$
 The residue degree does not appear when length is measured over the new DVR. It would appear if one converted both sides to dimensions over the original residue field. Thus
 
 $$
-\operatorname{length}_{\mathcal O'}\Phi_{A'}
+\operatorname{length}_{\mathcal O'}\Phi_B
 =e\operatorname{length}_{\mathcal O}\Phi_A,
 \qquad
-\operatorname{length}_{\mathcal O'}\Psi_{A'}
+\operatorname{length}_{\mathcal O'}\Psi_B
 =e\operatorname{length}_{\mathcal O}\Psi_A.
 $$
 
-Both the inequality and equality survive. Forgetting the factor $e$ is harmless for the truth of equality but wrong for every quantitative statement.
+Both the inequality and equality survive when the base-changed algebra is local, or after a selected
+localization satisfying branch preservation. Without that condition the cotangent and congruence
+lengths can change by different branch-discarding terms, so one must recompute them. Forgetting the
+factor $e$ is harmless for the truth of equality in the preserved case but wrong for every
+quantitative statement.
 
 For instance, base-changing $A_m$ to $\mathcal O'$ changes the separation $\varpi^m$ to one of $\mathcal O'$-valuation $em$. Both the evaluated derivative and the denominator of the branch idempotent acquire that valuation. The residue degree does not change this length calculation; it appears only if one converts the underlying residue spaces to dimensions over the original field $k$.
 
@@ -1660,6 +2046,81 @@ I_{A^+}/I_{A^+}^2
 $$
 
 has a free part and therefore no finite length. Quotienting removes exactly those formal directions and leaves the torsion module $\Phi_{A_m}$. This is the clean situation in which a regular quotient transports the numerical problem. A relation such as $\varpi Z_1=0$ would make $Z_1$ nonregular and introduce a vertical defect instead.
+
+### 11.5 Local criteria at several augmented points
+
+A finite flat algebra may admit several $\mathcal O$-valued augmentations. The numerical theorem is
+pointed: each augmentation $\lambda_i$ has its own kernel $I_i$, cotangent module $\Phi_i$, generic
+idempotent $e_i$, and congruence ideal $\eta_i$. Even when the whole generic algebra is étale, the
+numbers need not agree. In a split monogenic algebra
+
+$$
+A=\mathcal O[X]/\left(\prod_{j=1}^d(X-a_j)\right),
+$$
+
+the augmentation at $a_i$ has
+
+$$
+\operatorname{length}\Phi_i
+=\sum_{j\ne i}v(a_i-a_j)
+$$
+
+in the complete-intersection case. Different roots can have different total contact with the
+others.
+
+Suppose now that $R\twoheadrightarrow T$ is compatible with several augmentations
+$\lambda_1,\ldots,\lambda_s$ of $T$, and that the corresponding augmentations exist on $R$. The
+comparison theorem can be applied independently at every point. One sharp point is enough to prove
+the ring map an isomorphism, because the conclusion concerns the whole kernel. Several nonsharp
+points do not automatically combine: inequalities
+
+$$
+\operatorname{length}\Phi_{R,i}
+>\operatorname{length}\Psi_{T,i}
+$$
+
+may have defects supported by the same extra relation, and adding them can count that relation more
+than once. A multi-point criterion therefore requires a separate determinant statement for the
+direct sum of branch lattices; it is not obtained by summing one-point inequalities.
+
+Localization at a prime of a higher-dimensional algebra behaves similarly. Before a regular
+sequence cuts the algebra to relative dimension zero, the conormal module may have a free part.
+The pointwise invariant is the torsion module remaining after the chosen regular directions have
+been removed. Fitting ideals localize, regular sequences localize when their final quotient remains
+nonzero, and complete-intersection structure localizes. Length, however, is available only after
+the localized quotient is supported at the coefficient maximal ideal. Thus the safe order is:
+localize, remove verified regular directions, prove finite flatness of the quotient, and only then
+take numerical lengths.
+
+### 11.6 Faithfully flat ascent and descent
+
+Faithfully flat scalar extension is often used to enlarge a residue field or split a generic
+algebra. The numerical argument descends only if every ingredient does.
+
+Let $\mathcal O\to\mathcal O'$ be faithfully flat and local, with $\mathcal O'$ again a complete
+discrete valuation ring, and assume the base-changed augmented algebra remains local and finite
+flat. Then:
+
+- exactness gives $\Phi_{A'}\simeq\Phi_A\otimes\mathcal O'$;
+- finite presentation gives extension of the zeroth Fitting ideal;
+- the idempotent-line intersection gives $\eta_{A'}=\eta_A\mathcal O'$;
+- vanishing of the defect ascends and descends;
+- a regular sequence remains regular, and faithful flatness reflects regularity;
+- an isomorphism after scalar extension descends because the scalar-extended kernel and cokernel
+  vanish.
+
+The final item is worth proving. If $f:R\to T$ is a map of finite modules over $\mathcal O$ and
+$f\otimes\mathcal O'$ is an isomorphism, flatness identifies its kernel after extension and right
+exactness identifies its cokernel after extension. Faithfulness then forces both original modules
+to vanish. For complete Noetherian algebras that are not finite over $\mathcal O$, the same argument
+applies to a known surjection: its finitely generated kernel extends exactly under flat base change,
+and faithful flatness kills it if its extension is zero.
+
+By contrast, a nonfaithful scalar change can erase the obstruction. Passing from $\mathcal O$ to
+$K$ kills every finite-length module and turns every congruence ideal into the unit ideal; the
+generic fiber cannot distinguish different integral congruence lengths. Passing to the residue
+field is nonflat and can kill relations or create new kernels. Neither operation can be used to
+descend the numerical equality without a separate integral argument.
 
 ## 12. A gallery of examples
 
@@ -2021,27 +2482,34 @@ The lemma deliberately displays faithfulness, rank, and saturation. The perfect 
 
 ### 14.4 The base-change lemma
 
-**Lemma (coefficient extension).** Let $\mathcal O'/\mathcal O$ be a finite extension of complete DVRs of ramification index $e$. Under finite flat base change and localization at the extended augmentation,
+**Lemma (coefficient extension).** Let $\mathcal O'/\mathcal O$ be a finite extension of complete
+DVRs of ramification index $e$, and put $B=A\otimes_{\mathcal O}\mathcal O'$. Assume either that
+$B$ is local at the extended augmentation, or that the selected localization is branch preserving
+in the sense of Section 11.2. Then
 
 $$
-\Phi_{A'}\simeq\Phi_A\otimes\mathcal O',
+\Phi_B\simeq\Phi_A\otimes\mathcal O',
 \qquad
-\eta_{A'}=\eta_A\mathcal O',
+\eta_B=\eta_A\mathcal O',
 \qquad
-D_{A'}\simeq D_A\otimes\mathcal O'.
+D_B\simeq D_A\otimes\mathcal O'.
 $$
 
 In particular,
 
 $$
-\operatorname{length}_{\mathcal O'}\Phi_{A'}
+\operatorname{length}_{\mathcal O'}\Phi_B
 =e\operatorname{length}_{\mathcal O}\Phi_A,
 \qquad
-\operatorname{length}_{\mathcal O'}\Psi_{A'}
+\operatorname{length}_{\mathcal O'}\Psi_B
 =e\operatorname{length}_{\mathcal O}\Psi_A.
 $$
 
-The fundamental inequality, its equality case, and the numerical isomorphism criterion are invariant under such extension. Faithful flatness also permits descent of isomorphism and complete-intersection structure.
+The fundamental inequality, its equality case, and the numerical isomorphism criterion are invariant
+under such extension. Faithful flatness also permits descent of isomorphism and
+complete-intersection structure. If a localization discards branches, only the inclusion
+$\eta_A\mathcal O'\subseteq\eta_{B_{\mathfrak m'}}$ is automatic, and the numerical invariants must
+be recomputed at that local factor.
 
 ### 14.5 A disciplined verification protocol
 
@@ -2060,7 +2528,7 @@ The reusable lemmas are short because their hypotheses carry the real work. A re
 
 This order catches the most common errors: using an absolute cotangent space, calling $\eta$ a module, replacing a Fitting ideal by an annihilator, forgetting flatness, or claiming that first-order vanishing alone kills a kernel.
 
-### 14.6 Conclusion
+### 14.6 The compact core
 
 The numerical method compresses a remarkable amount of local algebra into two finite modules. The cotangent module
 
@@ -2086,4 +2554,538 @@ and the excess is the complete-intersection defect.
 
 For a compatible surjection $R\twoheadrightarrow T$, an estimate in the opposite direction closes a chain of inequalities. Conormal exactness removes the visible kernel, the determinant-defect theorem makes the target a complete intersection, and equality of the source and target relation lattices makes the change-of-generators matrix a unit. The source is therefore identified with the target before finite flatness or complete-intersection structure is claimed for it.
 
-The final lesson is not merely that two lengths happen to agree. It is that infinitesimal tangency, integral branch separation, duality, and regular sequences are four views of one determinant. When the determinant loses no valuation between source and target, there is no algebraic room for a proper quotient. That is the durable numerical mechanism behind $R=T$.
+The final lesson of the compact package is not merely that two lengths happen to agree. It is that
+infinitesimal tangency, integral branch separation, duality, and regular sequences are four views
+of one determinant. When the determinant loses no valuation between source and target, there is no
+algebraic room for a proper quotient. The remaining chapters develop the duality consequences and
+state the exact comparison theorem in the deformation--Hecke setting.
+
+## 15. Gorenstein consequences and their limits
+
+### 15.1 Why duality appears in a numerical criterion
+
+The numerical method begins with two constructions that look asymmetric. The cotangent module is
+a quotient of an ideal, whereas the congruence ideal comes from an annihilator. In a
+complete-intersection algebra they are governed by one determinant because the algebra is
+self-dual over the coefficient ring. Gorenstein duality is the name for this self-duality.
+
+The implication relevant here is
+
+$$
+\text{finite flat complete intersection over }\mathcal O
+\Longrightarrow
+\text{Gorenstein over }\mathcal O.
+$$
+
+It explains why the equality case produces perfect pairings and cyclic dual modules. Its converse
+is false: a cyclic dual module does not force the defining ideal to be generated by a regular
+sequence. The distinction matters because the numerical equality detects the stronger property.
+
+### 15.2 Relative dualizing modules
+
+Let $A$ be finite flat over $\mathcal O$. Its relative dualizing module is simply
+
+$$
+\omega_{A/\mathcal O}=A^\vee
+=\operatorname{Hom}_{\mathcal O}(A,\mathcal O),
+$$
+
+with $A$-action
+
+$$
+(a\cdot\ell)(b)=\ell(ab).
+$$
+
+The algebra is **Gorenstein over $\mathcal O$** if $A^\vee$ is free of rank one as an
+$A$-module. Choosing a generator $\ell$ gives the associative bilinear form
+
+$$
+\langle a,b\rangle=\ell(ab).
+$$
+
+It is perfect over $\mathcal O$: the adjoint map
+
+$$
+A\longrightarrow A^\vee,
+\qquad a\longmapsto(b\mapsto\ell(ab))
+$$
+
+is the chosen isomorphism. Conversely every perfect associative pairing arises this way. Thus
+Gorenstein duality is an integral statement; a perfect trace pairing only after inverting
+$\varpi$ is not enough.
+
+There is a useful special-fiber test.
+
+**Proposition (special-fiber criterion).** Let $A$ be finite flat and local over $\mathcal O$.
+Then $A$ is Gorenstein over $\mathcal O$ if and only if the Artinian local algebra
+$\overline A=A/\varpi A$ has one-dimensional socle over $k$.
+
+**Proof strategy.** Reduce the dual module modulo $\varpi$, use finite flatness to identify it with
+the $k$-dual of the special fiber, and apply the Artinian characterization of a cyclic dual.
+
+**Proof.** Because $A$ is finite free,
+
+$$
+A^\vee/\varpi A^\vee
+\simeq\operatorname{Hom}_k(\overline A,k).
+$$
+
+For an Artinian local $k$-algebra $C$, its $k$-dual is cyclic as a $C$-module exactly when
+$\operatorname{Soc}(C)=0:_C\mathfrak m_C$ is one-dimensional. Indeed, the minimal number of
+generators of $C^\vee$ is the dimension of
+$C^\vee/\mathfrak m_CC^\vee$, whose dual is the socle of $C$. Thus one-dimensional socle is
+equivalent to cyclicity of $A^\vee/\varpi A^\vee$. Nakayama lifts a generator to a surjection
+$A\twoheadrightarrow A^\vee$. Both sides are free $\mathcal O$-modules of the same rank, so the
+surjection is an isomorphism. The converse follows by reduction. $\square$
+
+### 15.3 Complete intersections are self-dual
+
+Suppose
+
+$$
+A=S/(f_1,\ldots,f_n),
+\qquad S=\mathcal O[[X_1,\ldots,X_n]],
+$$
+
+and the $f_i$ form an $S$-regular sequence. The Koszul complex is a finite free resolution of
+$A$ over $S$. Its exterior pairing identifies its dual with a shift of itself, so
+
+$$
+\operatorname{Ext}_S^n(A,S)\simeq A,
+\qquad
+\operatorname{Ext}_S^i(A,S)=0\quad(i\ne n).
+$$
+
+Relative duality for the regular coefficient algebra identifies the top Ext module with
+$A^\vee$. Consequently $A^\vee\simeq A$. At the level of matrices, the top exterior differential
+is the determinant of the relation matrix; at the augmented point it becomes $\det J_\lambda$.
+This is why the same determinant presents $\Phi_A$ and supplies a generator of the branch line in
+the dual.
+
+The proof also describes the special-fiber socle. Reduce the regular sequence modulo $\varpi$.
+The resulting zero-dimensional complete intersection has a one-dimensional socle. In a monogenic
+algebra $\mathcal O[X]/(f)$, a socle generator at the distinguished special point is represented by
+the complementary factor $g(X)$ in $f=Xg$; its augmentation is $f'(0)$. In several variables the
+Jacobian determinant plays the same role.
+
+### 15.4 Numerical equality forces Gorenstein duality
+
+The equality characterization immediately strengthens its own conclusion.
+
+**Corollary (duality in the equality case).** Let $A$ be finite flat and local over $\mathcal O$,
+with augmentation $\lambda$ and finite $\Phi_A$. If
+
+$$
+\operatorname{length}\Phi_A
+=\operatorname{length}\Psi_A,
+$$
+
+then:
+
+1. $A$ is a finite flat complete intersection over $\mathcal O$;
+2. $A$ is Cohen--Macaulay and Gorenstein;
+3. $A^\vee$ is free of rank one as an $A$-module;
+4. the special fiber has one-dimensional socle; and
+5. $\eta_A=\operatorname{Fitt}_{\mathcal O}^0(\Phi_A)$.
+
+**Proof.** The numerical characterization gives the complete-intersection presentation. The
+Koszul self-duality of Section 15.3 gives the Gorenstein and socle assertions, and the Jacobian
+congruence formula gives the ideal equality. $\square$
+
+For a compatible surjection $R\twoheadrightarrow T$ satisfying the numerical isomorphism theorem,
+the same conclusions hold for both rings because they are isomorphic. Thus the method proves more
+than equality of rings: it supplies the duality needed to construct perfect Hecke pairings, to
+identify congruence ideals with scalar evaluations of dual generators, and to control socles of
+special fibers.
+
+### 15.5 The annihilator line under a perfect pairing
+
+Let $A$ be finite flat, augmented, generically isolated, and Gorenstein. Choose a perfect
+associative pairing. Put $I=\ker\lambda$. Orthogonality gives
+
+$$
+\operatorname{Ann}_A(I)=I^\perp.
+$$
+
+This equality has a short proof. If $aI=0$, then $\langle a,I\rangle=0$. Conversely, if
+$\langle a,I\rangle=0$, then for $i\in I$ and $b\in A$,
+
+$$
+\langle ai,b\rangle=\langle a,ib\rangle=0.
+$$
+
+Perfectness forces $ai=0$. Since $A/I\simeq\mathcal O$, duality identifies
+$I^\perp$ with $\operatorname{Hom}_{\mathcal O}(A/I,\mathcal O)$, a free rank-one
+$\mathcal O$-module. Hence $\operatorname{Ann}_A(I)$ has an $\mathcal O$-basis $t_\lambda$ and
+
+$$
+\eta_A=(\lambda(t_\lambda)).
+$$
+
+This scalar formula is often the easiest way to compute the congruence ideal from a pairing. It is
+independent of the chosen basis up to a unit. It does not, by itself, identify the scalar with a
+Jacobian determinant. That final identification is automatic for a complete intersection and can
+fail for a general Gorenstein algebra.
+
+### 15.6 Gorenstein is not complete intersection
+
+The converse to Section 15.3 fails already for Artinian local algebras. Let
+
+$$
+C=k[x,y,z]/(xy,xz,yz,x^2-y^2,x^2-z^2,x^3).
+$$
+
+The residue classes of
+
+$$
+1,x,y,z,s=x^2=y^2=z^2
+$$
+
+form a $k$-basis. One has $\mathfrak m_C^2=ks$, $\mathfrak m_C^3=0$, and every nonzero linear
+combination of $x,y,z$ multiplies one of $x,y,z$ to a nonzero multiple of $s$. Thus
+
+$$
+\operatorname{Soc}(C)=ks
+$$
+
+is one-dimensional, so $C$ is Gorenstein. Its embedding dimension is three and its dimension is
+zero, so a complete-intersection presentation would require three equations in a three-variable
+regular local ring. The displayed kernel needs more than three minimal quadratic generators; in
+particular its degree-two relation space has dimension five. Hence $C$ is not a complete
+intersection.
+
+This example marks the exact limit of duality. A perfect pairing can make the annihilator line
+principal and the special-fiber socle one-dimensional while extra equations still remain. In the
+finite-flat isolated-branch setting, those extra equations contribute a positive defect
+
+$$
+\delta(A)=\operatorname{length}\Phi_A-
+\operatorname{length}\Psi_A.
+$$
+
+Therefore Gorenstein duality is a consequence of numerical equality, but it is not a replacement
+for the equality hypothesis in the complete-intersection converse.
+
+## 16. From deformation rings to Hecke rings
+
+### 16.1 The comparison map
+
+The numerical criterion becomes an $R=T$ theorem only after a comparison map has been constructed.
+Let $R_{\mathcal D}$ be a complete Noetherian local $\mathcal O$-algebra representing a fixed
+deformation problem, and let $\mathbf T$ be a local Hecke algebra acting on a finite integral
+module. A family of representations valued in $\mathbf T$ and satisfying the conditions defining
+$\mathcal D$ gives a local $\mathcal O$-homomorphism
+
+$$
+\theta:R_{\mathcal D}\longrightarrow\mathbf T.
+$$
+
+The direction is forced by universality: the universal coefficient ring maps to every coefficient
+ring carrying an admissible family. None of the numerical theory constructs this map or proves that
+the family satisfies the required local conditions. Those are prior inputs.
+
+The map must then be shown surjective. A common proof is a generator argument: the Hecke algebra is
+topologically generated over $\mathcal O$ by specified trace or characteristic-polynomial values,
+and the universal family maps the corresponding universal values to those generators. Another
+proof uses the relative cotangent surjectivity criterion, provided completeness, a common residue
+field, and surjectivity on relative cotangent spaces have been established. Equality of residual
+representations alone does not imply surjectivity.
+
+### 16.2 Choosing the augmentation
+
+The comparison must be pointed. Choose an $\mathcal O$-valued eigencharacter
+
+$$
+\lambda_{\mathbf T}:\mathbf T\longrightarrow\mathcal O.
+$$
+
+Composing with $\theta$ gives
+
+$$
+\lambda_R=\lambda_{\mathbf T}\circ\theta.
+$$
+
+This is the augmentation used to define
+
+$$
+I_R=\ker\lambda_R,
+\qquad
+I_{\mathbf T}=\ker\lambda_{\mathbf T}.
+$$
+
+Compatibility is now an identity, not a comparison of isomorphic residue points. It gives
+$\ker\theta\subseteq I_R$ and the conormal surjection
+
+$$
+I_R/I_R^2\twoheadrightarrow I_{\mathbf T}/I_{\mathbf T}^2.
+$$
+
+Using a different eigencharacter on one side destroys this sequence. Congruence and cotangent
+lengths attached to different generic branches cannot be compared by the numerical theorem.
+
+### 16.3 Exact hypotheses for the ring isomorphism
+
+The ring-theoretic conclusion can now be stated without any arithmetic shorthand.
+
+**Theorem (deformation--Hecke numerical criterion).** Let $\mathcal O$ be a complete discrete
+valuation ring. Let $R_{\mathcal D}$ and $\mathbf T$ be complete Noetherian local
+$\mathcal O$-algebras with the same residue field. Assume:
+
+1. there is a continuous local surjection
+   $\theta:R_{\mathcal D}\twoheadrightarrow\mathbf T$;
+2. $\mathbf T$ has an $\mathcal O$-algebra augmentation
+   $\lambda_{\mathbf T}:\mathbf T\to\mathcal O$, and
+   $\lambda_R=\lambda_{\mathbf T}\circ\theta$;
+3. $\mathbf T$ is finite and torsion-free over $\mathcal O$;
+4. the relative cotangent module
+
+   $$
+   \Phi_R=I_R/I_R^2
+   $$
+
+   has finite $\mathcal O$-length; and
+5. one has the sharp upper bound
+
+   $$
+   \operatorname{length}_{\mathcal O}\Phi_R
+   \leq
+   \operatorname{length}_{\mathcal O}
+   \frac{\mathcal O}
+   {\lambda_{\mathbf T}(\operatorname{Ann}_{\mathbf T}I_{\mathbf T})}.
+   $$
+
+Then $\theta$ is an isomorphism. Both rings are finite flat complete intersections over
+$\mathcal O$, are Cohen--Macaulay and Gorenstein, and their common special fiber has
+one-dimensional socle. Moreover all three numerical lengths are equal:
+
+$$
+\operatorname{length}\Phi_R
+=\operatorname{length}\Phi_{\mathbf T}
+=\operatorname{length}
+\frac{\mathcal O}
+{\lambda_{\mathbf T}(\operatorname{Ann}_{\mathbf T}I_{\mathbf T})}.
+$$
+
+**Proof.** Finite torsion-free is finite flat over a discrete valuation ring. The cotangent module
+of $\mathbf T$ is a quotient of the finite-length module $\Phi_R$, so the selected generic point is
+isolated. The Wiles--Lenstra theorem applies and proves the isomorphism and complete-intersection
+conclusions. Chapter 15 supplies the duality and socle consequences. $\square$
+
+No finite-flat or complete-intersection assumption on $R_{\mathcal D}$ appears. Those properties
+are conclusions. By contrast, target torsion-freeness cannot be dropped: vertical torsion is
+invisible on the generic branch and gives explicit counterexamples to kernel elimination.
+
+### 16.4 Where the cotangent upper bound comes from
+
+The relative cotangent module is dual to first-order deformations of the selected integral point.
+An arithmetic calculation commonly gives a finite module or finite group that receives its dual,
+or gives a presentation whose Fitting ideal bounds that of $\Phi_R$. The local algebra needs the
+conclusion in one of two exact forms:
+
+$$
+\operatorname{length}\Phi_R\leq c,
+$$
+
+or equivalently
+
+$$
+(\varpi^c)\subseteq
+\operatorname{Fitt}_{\mathcal O}^0(\Phi_R).
+$$
+
+The second direction follows because a module of length $a$ has Fitting ideal $(\varpi^a)$.
+An injection of tangent spaces modulo $\varpi$ is insufficient: it bounds only the number of
+elementary divisors and not their exponents. The input must control integral length, or the full
+zeroth Fitting ideal.
+
+If a Selmer calculation is used, the exact local conditions, coefficient lattice, and duality
+normalization must match the deformation problem represented by $R_{\mathcal D}$. A vector-space
+dimension formula at the residual level does not by itself produce the integral bound. The
+numerical criterion begins only after the required integral inequality has been proved.
+
+### 16.5 Computing the Hecke congruence number
+
+There are three legitimate routes to the right-hand side.
+
+First, compute the ring annihilator directly:
+
+$$
+\eta_{\mathbf T}
+=\lambda_{\mathbf T}
+(\operatorname{Ann}_{\mathbf T}I_{\mathbf T}).
+$$
+
+Second, identify the selected generic idempotent $e$ and compute the denominator lattice
+
+$$
+\mathbf T\cap Ke=\eta_{\mathbf T}e.
+$$
+
+Third, use a Hecke module $M$. For the third route one must prove, not merely expect:
+
+- the $\mathbf T$-action on $M$ is faithful;
+- $M$ is finite free over $\mathcal O$;
+- the selected generic eigenspace has the stated rank;
+- a perfect integral pairing makes the action self-adjoint; and
+- the branch-saturation equality
+  $M_\lambda=\eta_{\mathbf T}eM$ holds.
+
+In rank one these hypotheses give
+
+$$
+M/(M_\lambda+M^c)
+\simeq\mathcal O/\eta_{\mathbf T}.
+$$
+
+If saturation is not known, the module quotient has length at most the intrinsic congruence length.
+It can still give a valid lower number, but substituting it into the desired upper bound is harder,
+not easier. If the selected eigenspace has rank $r$, saturation gives length
+$r\,\operatorname{length}(\mathcal O/\eta_{\mathbf T})$; normalization by $r$ is legitimate only
+after this formula is established.
+
+### 16.6 Equality, strict inequality, and failure of the test
+
+Under hypotheses 1--4 of the theorem, there is an unavoidable chain
+
+$$
+\operatorname{length}\Phi_R
+\geq
+\operatorname{length}\Phi_{\mathbf T}
+\geq
+\operatorname{length}\Psi_{\mathbf T}.
+$$
+
+This chain gives a useful diagnostic.
+
+If a calculation claims
+
+$$
+\operatorname{length}\Phi_R
+<\operatorname{length}\Psi_{\mathbf T},
+$$
+
+then at least one structural hypothesis or one calculation is wrong. Strict inequality in that
+direction is impossible.
+
+If the desired upper bound gives equality, the criterion proves both the isomorphism and the
+complete-intersection property. Equality is not merely consistent with the conclusion; it is the
+rigidity point at which every intermediate loss vanishes.
+
+If
+
+$$
+\operatorname{length}\Phi_R
+>\operatorname{length}\Psi_{\mathbf T},
+$$
+
+the criterion is inconclusive. The map may be a proper quotient, as in Chapter 12. It may also be
+an isomorphism onto a finite flat algebra that is not a complete intersection, in which case the
+strictness is the intrinsic defect of the common ring. Thus strictness does not prove
+$R\ne\mathbf T$; it says only that this sharp numerical route does not prove equality and, in the
+isomorphic case, that the common ring is not a complete intersection.
+
+### 16.7 The full proof strategy in one diagram
+
+The logical dependencies are compact enough to display:
+
+$$
+\begin{array}{ccccc}
+R_{\mathcal D}&\twoheadrightarrow&\mathbf T
+&\xrightarrow{\lambda_{\mathbf T}}&\mathcal O\\
+\downarrow&&\downarrow&&\Vert\\
+\Phi_R&\twoheadrightarrow&\Phi_{\mathbf T}
+&&\Psi_{\mathbf T}.
+\end{array}
+$$
+
+The bottom row is not an exact sequence from $\Phi_{\mathbf T}$ to $\Psi_{\mathbf T}$. Its two
+comparisons come from different theorems:
+
+$$
+\operatorname{length}\Phi_R
+\geq\operatorname{length}\Phi_{\mathbf T}
+$$
+
+comes from conormal exactness, while
+
+$$
+\operatorname{length}\Phi_{\mathbf T}
+\geq\operatorname{length}\Psi_{\mathbf T}
+$$
+
+comes from the determinant--annihilator inequality. The external cotangent estimate points in the
+opposite direction. Equality first makes $\mathbf T$ a complete intersection, then identifies the
+source and target relation lattices, and finally makes the relation change-of-basis matrix a unit.
+Only after that last step is the kernel zero.
+
+This ordering prevents three recurrent mistakes: treating the two bottom modules as if one were a
+quotient of the other, inferring kernel vanishing from first-order conormal vanishing, or assuming
+source flatness in order to prove source flatness.
+
+## 17. Equality as rigidity
+
+### 17.1 The four faces of the determinant
+
+The theory can now be read from four directions. A presentation gives a Jacobian determinant. The
+cotangent module interprets its valuation as total infinitesimal tangency. The generic idempotent
+interprets the same valuation as integral branch separation. Koszul self-duality interprets it as
+a generator of the relative dualizing module. In a complete intersection these are not parallel
+analogies; they are the same top exterior map.
+
+For an arbitrary finite flat augmented algebra, the cotangent Fitting ideal can only be smaller
+than the congruence ideal:
+
+$$
+\operatorname{Fitt}_{\mathcal O}^0(\Phi_A)
+\subseteq\eta_A.
+$$
+
+The quotient between them is the complete-intersection defect. Equality means that no determinant
+valuation was lost to surplus relations. This is why a one-dimensional number can detect a
+structural property of the entire local algebra.
+
+### 17.2 What has been proved
+
+For a finite flat local augmented algebra with isolated selected generic point, we proved:
+
+$$
+\operatorname{length}\Phi_A
+\geq\operatorname{length}\Psi_A,
+$$
+
+with equality exactly for complete intersections. The equality case is Cohen--Macaulay and
+Gorenstein, has a cyclic relative dualizing module, and has one-dimensional special-fiber socle.
+
+For a compatible surjection from a complete Noetherian local source to such a target, finite source
+cotangent length and the opposite numerical estimate force an isomorphism. No prior source
+flatness, finiteness, or complete-intersection presentation is required. The proof first detects the
+target's structure and then eliminates the kernel by a unit comparison of relation lattices.
+
+For a faithful self-dual module, a module congruence quotient recovers the ring invariant only under
+rank and branch-saturation hypotheses. Without saturation it underestimates the intrinsic
+congruence length by an explicit finite quotient. Under scalar extension, both lengths scale by
+the ramification index only when the augmented local branch is preserved; localization that
+discards branches must be recomputed.
+
+### 17.3 Final perspective
+
+The phrase $R=T$ conceals two logically independent achievements. One must first produce a
+surjection from the ring governing deformations to the ring generated by Hecke operators. One must
+then prove injectivity. Numerical criteria address the second achievement, and they do so with
+unusual economy: a cotangent length computed on the source is compared with a congruence length
+computed on the target.
+
+That economy is reliable only because every hypothesis has a visible role. Completeness turns
+first-order generators into a presentation. Target finite flatness excludes vertical torsion and
+places the ring inside its generic fiber. The augmentation selects one branch. Finite cotangent
+length isolates it. Fitting ideals add elementary divisors rather than merely count directions.
+The congruence ideal measures the denominator of its idempotent. The determinant inequality orders
+the two numbers. Equality turns height into a regular sequence, and the relation-lattice argument
+kills the kernel that cotangent information alone cannot see.
+
+The result is a precise rigidity principle. Infinitesimal motion cannot be smaller than integral
+branch contact. If an independent calculation says it is no larger, all loss disappears: the
+target is a complete intersection, duality becomes perfect, the comparison map is an isomorphism,
+and the source inherits the same finite flat structure. Numerical equality is therefore not an
+accidental count. It is the point at which tangent geometry, congruence, duality, and equations are
+forced to coincide.
