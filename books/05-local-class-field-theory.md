@@ -282,19 +282,32 @@ $$
 
 **Proof strategy.** Far enough down the filtration, the multiplicative norm is controlled by the additive trace. The trace image is a nonzero fractional ideal of $K$, hence contains a deep power of $\mathfrak m_K$. Successive approximation then corrects a desired norm one layer at a time.
 
-Choose $a\in L$ with $\operatorname{Tr}_{L/K}(a)=1$, possible because $L/K$ is separable. Multiplying by a sufficiently large power of $\pi_K$ shows that for some $r$,
+Choose $b\in L$ with $\operatorname{Tr}_{L/K}(b)=1$, possible because $L/K$ is separable, and consider the one-variable polynomial
 
 $$
-\mathfrak m_K^r\subseteq \operatorname{Tr}_{L/K}(\mathfrak m_L).
+F(T)=N_{L/K}(1+bT)-1\in K[T].
 $$
 
-More generally, after increasing depths linearly, every sufficiently small target $y$ has a preimage $x$ small enough that all quadratic terms in
+Its constant term is $0$ and its linear coefficient is $\operatorname{Tr}(b)=1$. Choose $c$ so large that $b\mathfrak m_K^c\subseteq\mathfrak m_L$ and, for every coefficient $a_i$ of $F(T)-T$, one has
 
 $$
-N(1+x)=1+\operatorname{Tr}(x)+O(x^2)
+v_K(a_i)+(i-1)c\geq1\qquad(i\geq2).
 $$
 
-lie at strictly greater depth than $y$. Start with $z\in U_K^c$ and choose $x_1$ so that $N(1+x_1)\equiv z$ modulo a deeper unit group. Divide the remaining error by this norm and repeat. The error depth tends to infinity, while the product $\prod_i(1+x_i)$ converges in $U_L^1$. Continuity of the norm gives norm $z$. $\square$
+We claim that $F$ maps $\mathfrak m_K^c$ onto itself. Given $s\in\mathfrak m_K^c$, start with $t_0=s$ and define
+
+$$
+t_{j+1}=t_j+s-F(t_j).
+$$
+
+For $t,t'\in\mathfrak m_K^c$, factoring $t^i-(t')^i$ and using the choice of $c$ gives
+
+$$
+v_K\bigl((F(t)-t)-(F(t')-t')\bigr)
+\geq v_K(t-t')+1.
+$$
+
+Thus the displayed iteration is a strict contraction of the complete ball $\mathfrak m_K^c$. It converges to the unique $t\in\mathfrak m_K^c$ with $F(t)=s$. Since $bt\in\mathfrak m_L$, the element $1+bt$ lies in $U_L^1$ and has norm $1+s$. Hence $U_K^c\subseteq N(U_L^1)$. $\square$
 
 For a finite inseparable extension, pass through the maximal separable subextension and use the explicit power form of a purely inseparable norm. Local reciprocity itself concerns separable extensions, so the proposition above is the form needed later.
 
@@ -526,7 +539,26 @@ $$
 w_D(x)=\frac1d\,v_K(\operatorname{Nrd}(x)).
 $$
 
-The multiplicativity of reduced norm makes $w_D$ additive. The characteristic polynomial identities for $x+y$ imply the ultrametric inequality, so $w_D$ is a valuation on the skew field $D$. Its valuation ring
+Here is the noncommutative triangle argument. For $a\in D$, the subalgebra $E=K(a)$ is a commutative field. If $m=[E:K]$, the reduced characteristic polynomial of $a$ is its field characteristic polynomial raised to the power $d/m$; after passing to a splitting field this follows by grouping the $d$ eigenvalues into the $m$ conjugates of $a$. Hence
+
+$$
+\operatorname{Nrd}_{D/K}(a)=N_{E/K}(a)^{d/m},
+$$
+
+and the norm-valuation formula for the finite local extension $E/K$ gives
+
+$$
+w_D(a)=\frac1m v_K(N_{E/K}(a))
+=\frac1{e(E/K)}v_E(a).
+$$
+
+In particular, $w_D(a)\geq0$ exactly when $a$ is integral over $\mathcal O$. Now suppose $w_D(x)\leq w_D(y)$. Multiplicativity of reduced norm gives $w_D(x^{-1}y)\geq0$, so $x^{-1}y$ is integral. The element $1+x^{-1}y$ is integral in the same commutative field, and therefore has nonnegative $w_D$-value. Thus
+
+$$
+w_D(x+y)=w_D(x)+w_D(1+x^{-1}y)\geq w_D(x).
+$$
+
+This proves the ultrametric inequality; multiplicativity of reduced norm gives additivity. Thus $w_D$ is a valuation on the skew field $D$. Its valuation ring
 
 $$
 \mathcal O_D=\{x:w_D(x)\geq0\}
@@ -538,7 +570,7 @@ $$
 \overline D=\mathcal O_D/\mathfrak P_D
 $$
 
-is a finite division ring. Wedderburn's theorem makes it a finite field.
+is a division ring. The absolute value defined by $w_D$ is a nonarchimedean $K$-norm on the finite-dimensional vector space $D$. Equivalence of finite-dimensional norms over the complete field $K$ makes $\mathcal O_D$ compact, while $\mathfrak P_D$ is open. Hence the quotient is finite. Wedderburn's theorem makes it a finite field.
 
 The value group $w_D(D^\times)$ is a subgroup of $\frac1d\mathbf Z$ containing $\mathbf Z$. Let its index over $\mathbf Z$ be $e_D$, and let
 
@@ -561,20 +593,28 @@ $$
 
 then terms belonging to different $i$ have values in different cosets modulo $\mathbf Z$. Among the terms in the least coset, scaling to value zero and reducing gives a $k$-linear relation among the residues of the $y_j$. Hence every coefficient in that coset vanishes; induction proves independence. Conversely, subtracting an appropriate $K$-linear combination of the $x_iy_j$ cancels the leading residue of any $z\in D$. Iteration raises the value without bound, and completeness gives a convergent expansion. Thus the $e_Df_D$ products form a $K$-basis and $[D:K]=e_Df_D$.
 
-Centrality sharpens the equality. Conjugation by a value-coset representative preserves $\mathcal O_D$ and induces an automorphism of the finite field $\overline D$. This gives an injective homomorphism
+Centrality sharpens the equality. Conjugation by a value-coset representative preserves $\mathcal O_D$ and induces an automorphism of the finite field $\overline D$. If two representatives have the same value modulo $\mathbf Z$, their quotient differs by a central scalar and a unit; conjugation by the residue of a unit is trivial because $\overline D$ is commutative. Thus there is a well-defined homomorphism
 
 $$
 w_D(D^\times)/\mathbf Z
 \longrightarrow\operatorname{Gal}(\overline D/k).
 $$
 
-For injectivity, an element acting trivially on $\overline D$ can be corrected successively by value-zero units until it commutes with every lift of $\overline D$; completeness makes the correction converge, and the resulting element lies in $K^\times$, so its value coset is trivial. The fixed field of the image is $k$. Indeed, a fixed residue element lifts by Hensel's lemma to an element commuting with the value-zero lifts and with a value parameter; these generate $D$, so the lift is central and belongs to $K$. Since $\operatorname{Gal}(\overline D/k)$ is cyclic, an image with fixed field $k$ is the whole group. Hence
+The fixed field of its image is $k$. To prove this, let $\bar z\in\overline D$ be fixed and lift its minimal polynomial over $k$ to a monic polynomial over $\mathcal O$. Hensel iteration in $\mathcal O_D$ gives a root $z$ reducing to $\bar z$, unique among roots with that residue. Conjugation by a unit of $\mathcal O_D$ preserves the polynomial and the residue of $z$, because $\overline D$ is commutative, so it fixes $z$. Conjugation by a representative of a value coset also preserves the residue by the fixedness of $\bar z$, and therefore fixes $z$ by the same uniqueness. The products used in the basis count above show that units and value representatives span $D$, so $z$ is central. Hence $z\in K$ and $\bar z\in k$.
+
+The image consequently has fixed field $k$, so it is all of the cyclic group $\operatorname{Gal}(\overline D/k)$. Thus $f_D\leq e_D$. On the other hand,
+
+$$
+w_D(D^\times)\subseteq\frac1d\mathbf Z
+$$
+
+gives $e_D\leq d$, while $d^2=e_Df_D$ gives $f_D\geq d$. Therefore
 
 $$
 e_D=f_D.
 $$
 
-Together with $d^2=e_Df_D$, this gives
+In fact all intervening inequalities are equalities, so
 
 $$
 e_D=f_D=d.
@@ -582,23 +622,33 @@ $$
 
 Choose a primitive element of $\overline D/k$ and lift its separable minimal polynomial to $\mathcal O[T]$. Newton iteration takes place inside the complete ring $\mathcal O_D$ because the derivative is a unit and the coefficients are central. It produces a root whose field $E\subset D$ is unramified of degree $d$. Since $[E:K]=d$ equals the degree of $D$, $E$ is a maximal commutative subfield and its centralizer in $D$ is $E$.
 
-A parameter $\Pi_D$ of least positive $D$-value normalizes $E$ and conjugates it by a generator of $\operatorname{Gal}(E/K)$, hence by $F^s$ for some $s$ prime to $d$, where $F$ is arithmetic Frobenius. Since this conjugation has order $d$, $\Pi_D^d$ centralizes $E$; it also commutes with $\Pi_D$, so it is central. Its value is one, and therefore $\Pi_D^d=c\pi$ for $c\in\mathcal O^\times$. Replacing $\Pi_D$ by $b\Pi_D$, with $b\in E^\times$, multiplies its $d$th power by $N_{E/K}(b)$. The unramified unit norm is surjective, so choose $b$ with norm $c^{-1}$. Then
+The residue-conjugation homomorphism is now a surjection between groups of the same order $d$, hence an isomorphism. Hensel uniqueness shows that conjugation carries each distinguished lift in $E$ to the distinguished lift of its residue conjugate, so every value representative normalizes $E$. A parameter $\Pi_D$ of least positive $D$-value therefore conjugates $E$ by a generator of $\operatorname{Gal}(E/K)$, hence by $F^s$ for some $s$ prime to $d$, where $F$ is arithmetic Frobenius. The elements
+
+$$
+1,\Pi_D,\ldots,\Pi_D^{d-1}
+$$
+
+are linearly independent over $E$ because their values lie in distinct cosets modulo $\mathbf Z$. They account for $d^2$ dimensions over $K$, so $E$ and $\Pi_D$ generate all of $D$. Since conjugation by $\Pi_D$ has order $d$, the element $\Pi_D^d$ commutes with $E$; it also commutes with $\Pi_D$ and is therefore central. Its value is one, so $\Pi_D^d=c\pi$ for $c\in\mathcal O^\times$. Replacing $\Pi_D$ by $b\Pi_D$, with $b\in E^\times$, multiplies its $d$th power by $N_{E/K}(b)$. The unramified unit norm is surjective, so choose $b$ with norm $c^{-1}$. Then
 
 $$
 \Pi_D^d=\pi.
 $$
 
-The elements $1,\Pi_D,\ldots,\Pi_D^{d-1}$ are linearly independent over $E$ by their distinct value cosets and already account for dimension $d^2$. Consequently
-
-$$
-D\cong(E/K,F^s,\pi).
-$$
+Consequently $D\cong(E/K,F^s,\pi)$.
 
 If $r$ is inverse to $s$ modulo $d$, the same Brauer class is represented as $(E/K,F,\pi^r)$; replacing the crossed-product generator verifies this, with any extra factor $\pi^d$ absorbed as a norm. This is the local cyclic presentation of every central division algebra.
 
 ### 4.3 Unramified splitting and the invariant
 
-Every central division algebra over $K$ is split by some finite unramified extension. To see this from the preceding structure, enlarge the residue field until it contains a maximal subfield of the residue division algebra and until the Frobenius conjugation cycle closes. The unramified lift then gives a maximal commutative subfield of degree $d$; a central simple algebra containing such a separable field is split after scalar extension to it.
+Every central division algebra over $K$ is split by a finite unramified extension. Indeed, the field $E$ just constructed is a maximal subfield of degree $d$. The action
+
+$$
+D\otimes_KE\longrightarrow\operatorname{End}_E(D),
+\qquad
+(a\otimes b)(x)=axb,
+$$
+
+where $D$ is viewed as a right $E$-vector space, is a nonzero homomorphism between central simple $E$-algebras of the same dimension $d^2$. It is therefore an isomorphism, and $D\otimes_KE\cong M_d(E)$.
 
 Let $K_d/K$ be the unramified extension of degree $d$, with arithmetic Frobenius $F$. For $r\in\mathbf Z$, put
 
@@ -652,14 +702,28 @@ $$
 
 Now suppose $L/K$ is totally ramified of degree $e$. It is linearly disjoint from $K_d$, so $LK_d/L$ remains unramified of degree $d$ with the same Frobenius. Write $\pi=u\pi_L^e$. The unit $u$ is a norm from the unramified extension $LK_d/L$, so the restricted cyclic algebra has parameter equivalent to $\pi_L^{er}$. Its invariant is $er/d$. Every finite extension is an unramified stage followed by a totally ramified stage, and multiplication of the two factors gives $[L:K]r/d$. $\square$
 
-The proof also gives the corestriction formula
+For a finite separable extension $L/K$, the proof also gives the corestriction formula
 
 $$
 \operatorname{inv}_K(\operatorname{cor}_{L/K}\beta)
 =\operatorname{inv}_L(\beta).
 $$
 
-Indeed, restriction followed by corestriction is multiplication by $[L:K]$ on $\operatorname{Br}(K)$, and the displayed formulas agree on the generators $A_{r,d}$.
+Multiplication by $[L:K]$ on $\mathbf Q/\mathbf Z$ is surjective. The restriction formula therefore shows that every $\beta\in\operatorname{Br}(L)$ has the form $\operatorname{res}_{L/K}(\alpha)$ for some $\alpha\in\operatorname{Br}(K)$. The defining restriction--corestriction identity gives
+
+$$
+\operatorname{cor}_{L/K}(\beta)
+=\operatorname{cor}_{L/K}\operatorname{res}_{L/K}(\alpha)
+=[L:K]\alpha,
+$$
+
+whose invariant is
+
+$$
+[L:K]\operatorname{inv}_K(\alpha)
+=\operatorname{inv}_L(\operatorname{res}\alpha)
+=\operatorname{inv}_L(\beta).
+$$
 
 ### 4.4 Relative Brauer groups and the norm index
 
@@ -695,6 +759,40 @@ Let $L/K$ now be finite Galois with group $G$ and degree $n$, not necessarily ab
 $$
 \operatorname{Br}(L/K)\cong H^2(G,L^\times).
 $$
+
+We recall the construction so that this identification carries no hidden convention. A normalized two-cocycle
+
+$$
+c:G\times G\longrightarrow L^\times
+$$
+
+defines the crossed product
+
+$$
+A_c=\bigoplus_{g\in G}Lu_g,
+$$
+
+with multiplication
+
+$$
+u_gx=g(x)u_g,
+\qquad
+u_gu_h=c(g,h)u_{gh}.
+$$
+
+The cocycle identity is exactly associativity. Replacing $c$ by the coboundary of a one-cochain amounts to rescaling the basis elements $u_g$, so the Brauer class depends only on $[c]$. Multiplication of cocycles corresponds to tensor product after matrix factors are removed, giving a homomorphism
+
+$$
+H^2(G,L^\times)\longrightarrow\operatorname{Br}(L/K).
+$$
+
+Conversely, let $A$ be central simple over $K$ and split by $L$. Choose an isomorphism $A\otimes_KL\cong\operatorname{End}_L(V)$. For each $g\in G$, the two $g$-semilinear actions on this matrix algebra differ by conjugation by an element $T_g\in\operatorname{GL}_L(V)$; this is the elementary fact that every automorphism of a full matrix algebra is inner, proved by carrying a complete system of matrix units to its image. The products satisfy
+
+$$
+T_g,g(T_h)=c(g,h)T_{gh}
+$$
+
+for unique scalars $c(g,h)\in L^\times$. Associativity makes $c$ a cocycle, changing the $T_g$ changes it by a coboundary, and the fixed algebra reconstructed from these semilinear operators is Brauer equivalent to $A_c$. The two constructions are inverse. This proves the displayed identification and fixes its crossed-product convention.
 
 Under the invariant map it is cyclic of order $n$. The unique class
 
@@ -899,7 +997,14 @@ $$
 \operatorname{rec}_{L/K}(\pi)=\operatorname{Frob}_{L/K}.
 $$
 
-This verifies, rather than merely declares, the arithmetic convention.
+Here is the sign check hidden in that sentence. For $G=\langle\sigma\rangle$, use the periodic resolution whose differentials alternate $\sigma-1$ and $1+\sigma+\cdots+\sigma^{n-1}$, identify the homology class of $[\sigma]$ with $1\in\mathbf Z/n\mathbf Z$, and represent the fundamental class by the crossed product
+
+$$
+(L/K,\sigma,a),
+\qquad zx=\sigma(x)z,\qquad z^n=a.
+$$
+
+With these conventions, capping sends $[\sigma]$ to the class of $a$ in $K^\times/NL^\times$: on the periodic resolution the last relation is exactly multiplication by $a$. Taking $\sigma$ to be arithmetic Frobenius and $a=\pi$ therefore makes the inverse cap-product map send $\pi$ to arithmetic Frobenius. Reversing the crossed-product relation, or using $[\sigma^{-1}]$ as the homology generator, inverts reciprocity. Thus the convention is fixed at the chain level rather than by an ambiguous phrase about a lift of Frobenius.
 
 The map is continuous because its kernel is an open norm group and its target is finite discrete. It is surjective because the induced map on the quotient is an isomorphism. Thus at every finite level there is genuine surjectivity; only at the infinite level will surjectivity become density.
 
@@ -925,7 +1030,7 @@ $$
 [K^\times:N_{L/K}(L^\times)]=[M:K]=|G^{\mathrm{ab}}|.
 $$
 
-The statement would be false with $[L:K]$ on the right when $G$ is nonabelian. For example, if $G$ is perfect, then $M=K$ and every element of $K^\times$ is a norm from $L$, despite $L\ne K$. This is a useful counterexample to the tempting claim that every finite extension has norm index equal to its degree.
+The statement would be false with $[L:K]$ on the right when $G$ is nonabelian. For example, for a local Galois extension with group $S_3$, the maximal abelian subextension is the quadratic field fixed by $A_3$. Its norm group has index $2$, not $6$. This is a useful counterexample to the tempting claim that every finite extension has norm index equal to its degree.
 
 For a finite separable extension $E/K$ that is not Galois, one may take a Galois closure $L$. The norm group of $E$ is not determined by an abelian subextension of $E$ through so simple a formula; norm limitation is a theorem about a Galois extension and its commutator fixed field.
 
@@ -1076,6 +1181,14 @@ This is the Lubin–Tate formal-module construction. Here it is not an excursion
 
 ### 6.3 Torsion points and Eisenstein polynomials
 
+For the rest of the existence construction fix the explicit choice
+
+$$
+f(T)=\pi T+T^q.
+$$
+
+The general formal module of the preceding section explains why the construction is intrinsic, but this polynomial choice lets us prove every assertion about its torsion without invoking a separate preparation theorem for power series.
+
 For $n\geq1$, define the $\pi^n$-torsion set
 
 $$
@@ -1091,46 +1204,32 @@ S_n(T)\equiv T^{q^n}\pmod\pi,
 S_n'(0)=\pi^n.
 $$
 
-Formal Weierstrass preparation applies because the first coefficient of $S_n$ that is a unit is the coefficient of $T^{q^n}$. It gives a unique factorization
+Each $S_n$ is a monic polynomial of degree $q^n$, and
 
 $$
-S_n(T)=P_n(T)V_n(T),
+S_n(T)=S_{n-1}(T)\bigl(\pi+S_{n-1}(T)^{q-1}\bigr).
 $$
 
-where $V_n\in\mathcal O[[T]]^\times$ and $P_n$ is monic of degree $q^n$, with every lower coefficient in $\mathfrak m$. Since
+Define the primitive division polynomial directly by
 
 $$
-S_n=f(S_{n-1})
-=S_{n-1}\left(\pi+\text{terms divisible by }S_{n-1}\right),
+Q_n(T)=\frac{S_n(T)}{S_{n-1}(T)}
+=\pi+S_{n-1}(T)^{q-1}.
 $$
 
-Weierstrass division gives $P_{n-1}\mid P_n$. Define
+It is monic of degree
 
 $$
-Q_n(T)=P_n(T)/P_{n-1}(T).
+q^{n-1}(q-1)=|(\mathcal O/\pi^n)^\times|.
 $$
 
-This primitive division polynomial is monic of degree
+Since $S_{n-1}(T)\equiv T^{q^{n-1}}\pmod\pi$, reduction gives
 
 $$
-q^{n-1}(q-1)=|(\mathcal O/\pi^n)^\times|,
+Q_n(T)\equiv T^{q^{n-1}(q-1)}\pmod\pi,
 $$
 
-and its reduction is $T^{q^n-q^{n-1}}$. Thus every nonleading coefficient lies in $\mathfrak m$. Comparing the linear terms in $S_n=S_{n-1}(\pi+\cdots)$, or equivalently differentiating at zero before removing the Weierstrass units, shows
-
-$$
-v(Q_n(0))=v(S_n'(0))-v(S_{n-1}'(0))=1.
-$$
-
-Hence $Q_n$ is Eisenstein.
-
-For the explicit existence tower we now choose $f(T)=\pi T+T^q$. Then $S_n$ itself is a monic polynomial, so $P_n=S_n$, and
-
-$$
-Q_n(T)=\pi+S_{n-1}(T)^{q-1}.
-$$
-
-In particular, $Q_n(0)=\pi$ exactly.
+while $Q_n(0)=\pi$. Thus every nonleading coefficient lies in $\mathfrak m$ and the constant coefficient has valuation exactly one. Hence $Q_n$ is Eisenstein.
 
 Choose a primitive point $\omega_n$, meaning
 
@@ -1154,13 +1253,13 @@ $$
 
 $K_n/K$ is totally ramified, and $\omega_n$ is a uniformizer of $K_n$.
 
-Every root of $P_n$ is simple. For $x\in\mathfrak m_{\overline K}$, the term $\pi$ in
+Every root of $S_n$ is simple. For $x\in\mathfrak m_{\overline K}$, the term $\pi$ in
 
 $$
 f'(x)=\pi+q x^{q-1}
 $$
 
-has strictly smaller valuation than the second term; in equal characteristic the second term is zero. The chain rule makes $S_n'(x)$ nonzero at every torsion point. Thus $P_n$ has exactly $q^n$ roots.
+has strictly smaller valuation than the second term; in equal characteristic the second term is zero. The chain rule makes $S_n'(x)$ nonzero at every torsion point. Thus $S_n$ has exactly $q^n$ roots.
 
 Every residue class $a\in\mathcal O/\pi^n$ gives a torsion point $[a]_f(\omega_n)$. If it is zero, write $a=\pi^ru$ with $u$ a unit and $0\leq r<n$. Applying $[u^{-1}]_f$ would give $[\pi^r]_f(\omega_n)=0$, contradicting primitivity. The map
 
@@ -1219,7 +1318,7 @@ $$
 
 gives $K_n\subset K_{n+1}$, and restriction of Galois groups is reduction modulo $\pi^n$.
 
-The inverse convention often appears here. Under our arithmetic reciprocity normalization, a unit $a\in\mathcal O^\times$ will act on torsion as $[a^{-1}]_f$. The direct torsion parametrization above labels the automorphism $\sigma_a$ by $[a]_f$; consequently reciprocity sends $a$ to $\sigma_{a^{-1}}$. This inversion is not a contradiction. It is the price of choosing arithmetic rather than geometric Frobenius.
+The direct torsion parametrization above is an algebraic labeling of the Galois group. It should not be silently identified with the reciprocity labeling: the latter is fixed by the fundamental class and the arithmetic-Frobenius convention. The existence argument below needs the norm subgroup, not an unproved comparison of these two labelings.
 
 ### 6.5 The norm group of the torsion extension
 
@@ -1229,17 +1328,17 @@ $$
 N_{K_n/K}(K_n^\times)=\pi^{\mathbf Z}U^n.
 $$
 
-We give the mechanism rather than infer it from the desired classification. For the existence proof we take $f(T)=\pi T+T^q$ as above. The monic primitive division polynomial $Q_n$ has constant term $\pi$ and degree $(q-1)q^{n-1}$. That degree is even except in the trivial case $q=2,n=1$. The product of its roots therefore shows
+We give the mechanism rather than infer it from the desired classification. For the existence proof we take $f(T)=\pi T+T^q$ as above. The monic primitive division polynomial $Q_n$ has constant term $\pi$ and degree $(q-1)q^{n-1}$. That degree is even except in the trivial case $q=2,n=1$. Outside that case, the product of its roots therefore shows
 
 $$
 N_{K_n/K}(\omega_n)=\pi;
 $$
 
-in the exceptional case $K_1=K$ and the assertion is immediate. Thus $\pi^{\mathbf Z}$ lies in the norm group. This is stronger than mere surjectivity of norm valuations: it identifies the chosen uniformizer itself as a norm.
+In the exceptional case $K_1=K$, the element $\pi$ is still trivially a norm, although $N_{K/K}(\omega_1)=\omega_1=-\pi$. Thus $\pi^{\mathbf Z}$ lies in the norm group. This is stronger than mere surjectivity of norm valuations: it identifies the chosen uniformizer itself as a norm.
 
 The needed unit calculation is a special case of the following valuation lemma. We state it here because it is also the engine behind the full unit–ramification theorem.
 
-**Lemma 6.4 (norm-depth index).** Let $M/K$ be a finite totally ramified abelian extension with group $G$. At a ramification break, take the value before the drop, as in the convention $G_t=G_{\lceil t\rceil}$ for nonintegral lower indices. For an integer $m\geq0$, put
+**Lemma 6.4 (norm-depth index).** Let $M/K$ be a finite abelian extension with group $G$. At a ramification break, take the value before the drop, as in the convention $G_t=G_{\lceil t\rceil}$ for nonintegral lower indices. For an integer $m\geq0$, put
 
 $$
 C_m=N_{M/K}(U_M^0)U_K^m.
@@ -1269,54 +1368,58 @@ $$
 
 where $\psi=\varphi^{-1}$. These conventions put inertia at index $0$ and make a lower break $b$ occur at the upper index $\varphi(b)$.
 
-Let $r\geq1$ and $x\in\mathfrak m_M^r$. In
+The unramified residue part contributes no unit obstruction: norm on finite residue-field units and trace on finite residue-field additive groups are both surjective. The remaining direct norm calculation is therefore organized one inertia break at a time. We use two ramification facts proved in the preceding volume. At a positive lower break $b$, the map
+
+Write $l$ for the residue field of $M$. At a positive lower break $b$, the map
 
 $$
-N(1+x)-1
-=\sum_{\varnothing\ne S\subseteq G}\prod_{\sigma\in S}\sigma(x),
-$$
-
-group terms into orbits under $G_t$. If $t<r$ and $G_t$ fixes the residue of $x/\pi_M^r$, an orbit sum acquires one extra unit of $M$-valuation; if it does not, the orbit has size $[G_0:G_t]$. Moving from $t$ to $t+dt$ therefore consumes $[G_0:G_t]$ units of $M$-valuation for one unit of $K$-valuation. Summing these contributions gives the exact estimate
-
-$$
-N(U_M^r)\subseteq
-U_K^{\lfloor\varphi(r-1)\rfloor+1}.
-$$
-
-At a positive lower break $b$, divide the expression by the predicted power of $\pi_K$ and reduce. The only surviving orbit sums are linear, and the induced map is
-
-$$
-\mathfrak m_M^{b+1}/\mathfrak m_M^{b+2}
-\longrightarrow
-\mathfrak m_K^{\varphi(b)+1}/
-\mathfrak m_K^{\varphi(b)+2},
+c_b:G_b/G_{b+1}\hookrightarrow l^+,
 \qquad
-\bar x\longmapsto
-\sum_{\sigma\in G_b/G_{b+1}}\overline{\sigma(x)}.
+c_b(\sigma)=
+\overline{\frac{\sigma(\pi_M)-\pi_M}{\pi_M^{b+1}}}
 $$
 
-Its kernel is the image of the injective ramification map
+is injective; at $b=0$ its multiplicative analogue embeds $G_0/G_1$ in $l^\times$. Because $G$ is abelian, conjugation by residue Frobenius is trivial on these ramification quotients. Its semilinear action on the displayed residue coordinates therefore fixes their images after multiplication by a nonzero residue scalar. Finite-field Hilbert 90 supplies that scalar, so the relevant image may be identified with a subgroup of the one-dimensional $k$-layer. The change from the lower label $b$ to the upper label is $\varphi(b)$. Since $G$ is abelian and $k$ is perfect, Hasse--Arf says that every such upper label is an integer.
+
+We now justify the one-step calculation used below. Expand $N(1+x)$ as the product of the conjugates of $1+x$, retain the first term at the relevant lower depth, and group the factors first by $G_{b+1}$ and then by $G_b/G_{b+1}$. Away from a break, the first nonzero term is linear with nonzero coefficient, so the induced map between the corresponding residue layers is bijective. At a positive break, conjugation changes the leading coefficient by translation through the finite additive subgroup
 
 $$
-G_b/G_{b+1}\longrightarrow k^+,
-\qquad
-\sigma\longmapsto
-\overline{\frac{\sigma(\pi_M)-\pi_M}{\pi_M^{b+1}}},
+C_b=c_b(G_b/G_{b+1})\subseteq k.
 $$
 
-and hence its image has index $|G_b/G_{b+1}|$ in the relevant additive residue layer. At $b=0$ the quotient $G_0/G_1$ instead injects into $k^\times$ by $\sigma\mapsto\overline{\sigma(\pi_M)/\pi_M}$; the residue of a unit norm is the corresponding power map, whose cokernel has order $|G_0/G_1|$. Consequently, as $m$ increases through the integer upper indices,
+After multiplying the source and target coordinates by nonzero residue scalars, the surviving polynomial is
+
+$$
+P_{C_b}(X)=\prod_{c\in C_b}(X+c).
+$$
+
+This is an additive polynomial. Indeed, for fixed $y$ the polynomial
+
+$$
+P_{C_b}(X+y)-P_{C_b}(X)-P_{C_b}(y)
+$$
+
+has degree less than $|C_b|$ in $X$ and vanishes at every $X\in C_b$, because translation by an element of $C_b$ permutes the factors. It is therefore zero. The kernel of $P_{C_b}$ on $k$ is exactly $C_b$. Because $k$ is finite, its image has index $|C_b|=|G_b/G_{b+1}|$. This is the point at which the finiteness of the residue field is essential; replacing $P_{C_b}$ by an ordinary trace sum would give the wrong kernel. At the tame break, the corresponding residue map is, up to nonzero scalars, the $|G_0/G_1|$th-power map on the cyclic group $k^\times$, and its image has index $|G_0/G_1|$.
+
+The valuation retained in this expansion changes by one precisely after $[G_0:G_t]$ units of lower depth. Summing over the intervals between lower breaks is exactly the integral defining $\varphi$. Consequently the preceding residue calculations say, for every integer $m\geq0$,
 
 $$
 [C_m:C_{m+1}]=[G^m:G^{m+1}].
 $$
 
-If no ramification jump occurs in $[m,m+1)$, both sides are $1$. At a jump the displayed residue calculation also shows that $\varphi(b)$ is an integer; this is the abelian integrality assertion needed here. Multiplication from $0$ to $m-1$ yields
+If no ramification jump occurs in $[m,m+1)$, both sides are $1$; if a jump occurs, Hasse--Arf places it at the integer endpoint and the additive or multiplicative polynomial above gives its exact order. Multiplication from $0$ to $m-1$ yields
 
 $$
 [U_K^0:C_m]=[G^0:G^m].
 $$
 
-Finally, the norm-index theorem gives $[U_K^0:N(U_M^0)]=|G^0|$. If $G^m=1$, the two subgroups $C_m$ and $N(U_M^0)$ have the same index and one contains the other, so they are equal. $\square$
+Finally, finite reciprocity gives $[K^\times:N(M^\times)]=|G|$. The valuation of a norm is a multiple of the residue degree $f=|G/G^0|$, so the valuation coordinate contributes index $f$ and therefore
+
+$$
+[U_K^0:N(U_M^0)]=|G|/f=|G^0|.
+$$
+
+If $G^m=1$, the two subgroups $C_m$ and $N(U_M^0)$ have the same index and one contains the other, so they are equal. $\square$
 
 We apply the lemma by computing the ramification of $K_n/K$. If $a\in U_K^r\setminus U_K^{r+1}$ with $1\leq r<n$, write $a-1=\pi^ru$ with $u$ a unit. Formal subtraction gives
 
@@ -1324,13 +1427,25 @@ $$
 [a]_f(T)-_{F_f}T=[a-1]_f(T)=[u]_f([\pi^r]_f(T)).
 $$
 
-Ordinary subtraction and formal subtraction differ by a power-series unit, because $F_f(X,[-1]_f(Y))=(X-Y)$ times a unit. Hence $[a]_f(T)-T$ has Weierstrass degree $q^r$, and its zeros are exactly the $\pi^r$-torsion points. Since $\omega_n$ is a uniformizer,
+Ordinary subtraction and formal subtraction differ by a power-series unit, because $F_f(X,[-1]_f(Y))=(X-Y)$ times a unit. With the compatible choice of torsion points,
+
+$$
+[\pi^r]_f(\omega_n)=\omega_{n-r}.
+$$
+
+The series $[u]_f(T)$ has unit linear coefficient, so it preserves the positive valuation of its argument. Moreover $K_n/K_{n-r}$ is totally ramified of degree $q^r$, and $\omega_{n-r}$ is a uniformizer of $K_{n-r}$. Therefore
 
 $$
 v_{K_n}([a]_f(\omega_n)-\omega_n)=q^r.
 $$
 
-If $a\not\equiv1\pmod\pi$, the value is $1$. It follows directly from the definition of $\varphi$ that
+If $a\not\equiv1\pmod\pi$, the value is $1$. Thus the positive lower breaks are $q^r-1$ for $1\leq r<n$. Between $q^{r-1}-1$ and $q^r-1$, both the interval length and the index $[G_0:G_t]$ are $q^{r-1}(q-1)$. Each interval therefore contributes exactly $1$ to the Herbrand integral, so
+
+$$
+\varphi(q^r-1)=r.
+$$
+
+It follows that
 
 $$
 G^r=\{\sigma_a:a\in U_K^r/U_K^n\}
@@ -1351,49 +1466,7 @@ $$
 =[K_n:K].
 $$
 
-The norm group has the same index, forcing equality. This use is not circular: $K_n$ has already been constructed independently, and the norm-index theorem was proved from the Brauer invariant.
-
-There remains an orientation check. Let $\chi$ be a character of $(\mathcal O/\pi^n)^\times$ with cyclic image, let $E$ be the fixed field of its kernel, and choose $\tau$ with $\chi(\tau)=1/d$ in $\mathbf Q/\mathbf Z$, where $d=[E:K]$. The cyclic-algebra description of the fundamental class says that $\operatorname{rec}_{E/K}(u)=\tau^j$ precisely when
-
-$$
-\operatorname{inv}_K(E/K,\tau,u)=j/d.
-$$
-
-Here is the sign calculation. At the first level,
-
-$$
-Q_1(T)=T^{q-1}+\pi.
-$$
-
-For a cyclic quotient of order $d\mid q-1$, the defining relation $z^d=u$ in the cyclic algebra and the factorization of $Q_1$ give
-
-$$
-\operatorname{inv}_K(E/K,\tau,u)
-=\chi(u^{-1}).
-$$
-
-The minus sign comes from moving a coefficient past $z$ in the relation $zx=\tau(x)z$. For the passage from level $r-1$ to $r$, use
-
-$$
-Q_r(T)=\pi+S_{r-1}(T)^{q-1}
-$$
-
-and multiply its values at $T+_{F_f}[a]_f(\omega_r)$ over one coset modulo $\pi^{r-1}$. Adjacent formal translates cancel because
-
-$$
-[a+b]_f(\omega_r)
-=[a]_f(\omega_r)+_{F_f}[b]_f(\omega_r),
-$$
-
-and the remaining endpoint is $[u^{-1}]_f(\omega_r)$. Induction on $r$ therefore gives the same invariant formula for every character $\chi$. Characters separate the finite abelian group, so
-
-$$
-\operatorname{rec}_{K_n/K}(u)=\sigma_{u^{-1}},
-\qquad
-\operatorname{rec}_{K_n/K}(\pi)=1.
-$$
-
-Replacing arithmetic Frobenius by geometric Frobenius reverses the crossed-product relation and removes the inverse on units. This verifies that the torsion action, the Brauer invariant, and the convention of Chapter 1 agree.
+The norm group has the same index, forcing equality. This use is not circular: $K_n$ has already been constructed independently, and the norm-index theorem was proved from the Brauer invariant. Notice also what has, and has not, been normalized. The equality of norm groups canonically identifies the kernel of finite reciprocity, while the arithmetic-Frobenius convention fixes reciprocity on the unramified tower. No formula identifying $\operatorname{rec}_{K_n/K}(u)$ with one of the auxiliary labels $\sigma_a$ is needed for existence, so no unsupported sign convention is imported from the torsion coordinates.
 
 ### 6.6 Adding the unramified direction
 
@@ -1752,31 +1825,12 @@ $$
 
 For $n=0$ this is the inertia statement just proved. For $n\geq1$ it says that successive principal-unit depth is exactly upper ramification depth after abelianization.
 
-**Proof.** The case $n=0$ is Section 8.2. Assume $n\geq1$, let $I=G^0$, and let $K_0=L^I$ be the maximal unramified subextension. Norms from $K_0/K$ are surjective on every unit layer: on $U^r/U^{r+1}$ the norm is the finite-field trace, and successive approximation lifts a prescribed class. Thus Lemma 6.4, applied to the totally ramified extension $L/K_0$, gives
+**Proof.** The case $n=0$ is Section 8.2. For $n\geq1$, Lemma 6.4 applied directly to $L/K$ gives
 
 $$
 [U_K^0:N_{L/K}(U_L^0)U_K^n]
 =[G^0:G^n]. \tag{8.1}
 $$
-
-This is the required product of graded indices. To see it directly from the real indexing, let $b_1<\cdots<b_s$ be the lower breaks with upper values $c_j=\varphi(b_j)$. The residue calculation in Lemma 6.4 gives
-
-$$
-\frac{[U_K^0:N(U_L^0)U_K^{m+1}]}
-{[U_K^0:N(U_L^0)U_K^m]}
-=[G^m:G^{m+1}].
-$$
-
-The quotient is $1$ if $[m,m+1)$ contains no $c_j$. At a positive break it is the order of the image of
-
-$$
-G_{b_j}/G_{b_j+1}\hookrightarrow k^+,
-\qquad
-\sigma\longmapsto
-\overline{(\sigma(\pi_L)-\pi_L)/\pi_L^{b_j+1}}.
-$$
-
-At the tame break $b=0$, the analogous map is $G_0/G_1\hookrightarrow k^\times$ and the residue norm supplies the same index equality. In an abelian extension the norm expansion forces every $c_j$ to be integral, so no jump is split between two unit layers. Multiplying from $m=0$ to $n-1$ gives (8.1).
 
 It remains to identify the subgroup, not only its order. Put $E=L^{G^n}$. Quotient compatibility of upper numbering gives
 
@@ -1784,7 +1838,7 @@ $$
 \operatorname{Gal}(E/K)^n=1.
 $$
 
-Apply the last assertion of Lemma 6.4 to the totally ramified part of $E/K$, and use surjectivity of unramified norms on $U_K^n$. We obtain
+Lemma 6.4 applied to $E/K$ therefore gives
 
 $$
 U_K^n\subseteq N_{E/K}(E^\times).
@@ -1853,7 +1907,7 @@ where the symbol $\sim$ suppresses the choice of Teichmüller representatives an
 
 ### 9.1 Why directions are easy to reverse accidentally
 
-Let $L/K$ be finite and place $K^s$ and $L^s$ in a common algebraic closure. Then
+Let $L/K$ be finite separable and choose a separable closure containing $L$. Then the same field is a separable closure of $L$, and
 
 $$
 G_L=\operatorname{Gal}(K^s/L)\subseteq
@@ -1977,16 +2031,25 @@ Its kernel corresponds to $\operatorname{Gal}(M/L)$. This is the precise reason 
 
 ### 9.5 Base change and norm subgroups
 
-Let $E/K$ be finite abelian and let $L/K$ be any finite extension. The compositum $EL/L$ is abelian. Norm–inclusion compatibility shows that the reciprocity character cutting out $EL/L$ is the restriction, along $K^\times\hookrightarrow L^\times$ and transfer on Galois groups, of the one cutting out $E/K$.
+Let $E/K$ be finite abelian and let $L/K$ be finite separable. The compositum $EL/L$ is abelian. Norm–inclusion compatibility shows that the reciprocity character cutting out $EL/L$ is obtained from the one cutting out $E/K$ by restriction to $G_L$; on multiplicative groups this is precomposition with $N_{L/K}:L^\times\to K^\times$.
 
 At the level of norm groups,
 
 $$
 N_{EL/L}((EL)^\times)
-=\operatorname{rec}_L^{-1}(G_{EL}^{\mathrm{ab}})
+=\ker\!\left(
+L^\times\xrightarrow{\operatorname{rec}_L}G_L^{\mathrm{ab}}
+\longrightarrow\operatorname{Gal}(EL/L)
+\right).
 $$
 
-is best computed through the transfer square rather than through a naive scalar extension of $N_{E/K}(E^\times)$. Arbitrary base change may absorb ramification or split the extension; equality with a simple inverse image of the old norm subgroup is not automatic.
+Equivalently, it is the inverse image under reciprocity of the image of $G_{EL}$ in $G_L^{\mathrm{ab}}$; the abstract group $G_{EL}^{\mathrm{ab}}$ is not canonically a subgroup of $G_L^{\mathrm{ab}}$. In multiplicative terms the same kernel is
+
+$$
+\{x\in L^\times:N_{L/K}(x)\in N_{E/K}(E^\times)\}.
+$$
+
+This exact inverse-image formula follows from Theorem 9.1. It also explains why arbitrary base change may absorb ramification or split the extension: one must apply the old norm condition after the field norm $N_{L/K}$, not after the inclusion $K^\times\hookrightarrow L^\times$.
 
 For unramified base change the picture is clean. Total ramification is preserved, and upper ramification groups are compatible with the Herbrand reindexing. The exact diagrams above remain valid without special cases and are safer than informal rules.
 
@@ -2137,13 +2200,19 @@ $$
 H=\langle\pi^m a\rangle\,V,
 $$
 
-where $V\subseteq\mathcal O^\times$ is open and $a\in\mathcal O^\times$. Choose $n$ with $U^n\subseteq V$. The quotient $K^\times/H$ is computed from the finite group
+where $V\subseteq\mathcal O^\times$ is open and $a\in\mathcal O^\times$. Choose $n$ with $U^n\subseteq V$, and choose a positive multiple $m'=rm$ for which $a^r\in V$. Then
+
+$$
+\pi^{m'\mathbf Z}U^n\subseteq H.
+$$
+
+The quotient $K^\times/H$ is computed from the finite group
 
 $$
 (\mathbf Z/m'\mathbf Z)\times(\mathcal O/\pi^n)^\times
 $$
 
-after imposing the single relation determined by $\pi^m a$; here $m'$ is any multiple large enough to contain the valuation relation. The field corresponding to $H$ is the fixed field of the resulting subgroup in $E_{m',n}$.
+after imposing the single relation determined by $\pi^m a$. The field corresponding to $H$ is the fixed field of the resulting subgroup in $E_{m',n}$.
 
 This procedure is usable: finite congruence arithmetic determines the subgroup, the unramified and torsion fields provide an explicit ambient abelian extension, and ordinary finite Galois theory extracts the desired field. The construction also shows that every finite abelian extension has finite conductor.
 
@@ -2229,7 +2298,7 @@ For a continuous $\ell$-adic character with infinite image on $U^1$, there may b
 
 ### 11.5 Characters in towers
 
-Let $L/K$ be finite. If $\chi:G_K\to A$ corresponds to $\chi_K:K^\times\to A$, then restriction to $G_L$ corresponds to precomposition with the norm:
+Let $L/K$ be finite separable. If $\chi:G_K\to A$ corresponds to $\chi_K:K^\times\to A$, then restriction to $G_L$ corresponds to precomposition with the norm:
 
 $$
 \chi|_{G_L}
@@ -2339,7 +2408,7 @@ $$
 
 ### 12.4 Functoriality at a glance
 
-For every finite $L/K$, with $i_*$ induced by $G_L\subset G_K$ and $\operatorname{Ver}$ the transfer,
+For every finite separable $L/K$, with $i_*$ induced by $G_L\subset G_K$ and $\operatorname{Ver}$ the transfer,
 
 $$
 \operatorname{rec}_K(N_{L/K}x)=i_*(\operatorname{rec}_L(x))
