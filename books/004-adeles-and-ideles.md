@@ -92,11 +92,32 @@
     - [A nonprincipal ideal as an idele](#124-a-nonprincipal-ideal-as-an-idele)
     - [Split places and norm components](#125-split-places-and-norm-components)
     - [Quadratic splitting as an adelic product](#126-quadratic-splitting-as-an-adelic-product)
-13. [The local--global architecture](#13-the-local--global-architecture)
-    - [Two restricted products, two kinds of gluing](#131-two-restricted-products-two-kinds-of-gluing)
-    - [Exact hypotheses and durable consequences](#132-exact-hypotheses-and-durable-consequences)
-    - [What has not been asserted](#133-what-has-not-been-asserted)
-    - [Conclusion](#134-conclusion)
+13. [Adelic characters and duality](#13-adelic-characters-and-duality)
+    - [Why characters belong here](#131-why-characters-belong-here)
+    - [Assembling multiplicative characters](#132-assembling-multiplicative-characters)
+    - [Unitary characters and modulus twists](#133-unitary-characters-and-modulus-twists)
+    - [Finite-order characters and conductors](#134-finite-order-characters-and-conductors)
+    - [The standard additive character](#135-the-standard-additive-character)
+    - [Self-duality and the diagonal annihilator](#136-self-duality-and-the-diagonal-annihilator)
+14. [The grammar of global reciprocity](#14-the-grammar-of-global-reciprocity)
+    - [Why the idele class group is the source](#141-why-the-idele-class-group-is-the-source)
+    - [Finite levels and ray neighborhoods](#142-finite-levels-and-ray-neighborhoods)
+    - [Local components and normalization](#143-local-components-and-normalization)
+    - [Norms and functoriality](#144-norms-and-functoriality)
+    - [The exact boundary of the norm principle](#145-the-exact-boundary-of-the-norm-principle)
+    - [What reciprocity adds](#146-what-reciprocity-adds)
+15. [From ideles to automorphic quotients](#15-from-ideles-to-automorphic-quotients)
+    - [Matrices over the adeles](#151-matrices-over-the-adeles)
+    - [Diagonal rational points and the determinant module](#152-diagonal-rational-points-and-the-determinant-module)
+    - [Compact open level](#153-compact-open-level)
+    - [Double quotients and local data](#154-double-quotients-and-local-data)
+    - [Automorphic functions in adelic form](#155-automorphic-functions-in-adelic-form)
+    - [The rank-one meeting point](#156-the-rank-one-meeting-point)
+16. [The local--global architecture](#16-the-local--global-architecture)
+    - [Two restricted products, two kinds of gluing](#161-two-restricted-products-two-kinds-of-gluing)
+    - [Exact hypotheses and durable consequences](#162-exact-hypotheses-and-durable-consequences)
+    - [What has not been asserted](#163-what-has-not-been-asserted)
+    - [Conclusion](#164-conclusion)
 
 ## 1. One field, all of its local shadows
 
@@ -108,7 +129,11 @@ The first temptation is to take the product of all completions. That product is 
 
 This book develops that construction first additively and then multiplicatively. The additive object makes approximation and compact quotients transparent. The multiplicative object remembers valuations, ideals, units, and norms. Their resemblance is useful, but their topologies are not interchangeable. A recurring theme will be that the chosen compact local subgroups are part of the construction, not cosmetic constraints.
 
-We assume the valuation, completion, and nonarchimedean topology developed in the preceding volume. We briefly recall the notation needed here and supply the global algebraic-number-theoretic framework.
+We assume the valuation, completion, and nonarchimedean topology developed in Book 1, together
+with the local extension, trace, norm, and unit-filtration results of Book 2. We briefly recall the
+notation needed here and supply the global algebraic-number-theoretic framework. The finer
+ramification invariants of Book 3 enter only when we explain why norm-congruence depths can depend
+on the different.
 
 ### 1.2 Number fields and their integers
 
@@ -913,7 +938,21 @@ $$
 \prod_v|a|_v=1.
 $$
 
-Thus the product formula is exactly the assertion that principal scalars preserve adelic additive volume. No later argument in this book depends on a particular numerical covolume, so we will not impose a global measure normalization beyond these local statements.
+Thus the product formula is exactly the assertion that principal scalars preserve adelic
+additive volume. With the choices just made, the measurable fundamental region
+$D\times\widehat{\mathcal O}_K$ is unique away from the boundary of $D$, and therefore
+
+$$
+\operatorname{vol}(\mathbf A_K/K)
+=2^{-r_2}|d_K|^{1/2}.
+$$
+
+This formula uses ordinary planar measure $dx\,dy$ on a complex factor. A second important
+normalization appears with the standard additive character in Chapter 13: the self-dual complex
+measure is $2\,dx\,dy$, and the self-dual finite measures need not give
+$\mathcal O_v$ volume $1$ at primes dividing the different. Those simultaneous rescalings make
+$\mathbf A_K/K$ have volume $1$. Neither normalization is more correct; the stated volume is
+meaningless unless the local choices are recorded with it.
 
 ### 6.7 Consequences and boundaries
 
@@ -1589,7 +1628,11 @@ N_{L/K}(\mathbf A_L^\times)
 \text{ for every }v\}.
 $$
 
-Only the reverse inclusion needs explanation. Choose a local preimage at every place. Outside finitely many places the extension is unramified, $x_v$ is a unit, and the norm on the units of each unramified local factor is surjective by the successive-unit calculation for finite residue fields established in the preceding volume; one may therefore choose unit preimages there. The resulting family is an idele of $L$. In particular,
+Only the reverse inclusion needs explanation. Choose a local preimage at every place. Outside
+finitely many places the extension is unramified, $x_v$ is a unit, and the norm on the units of
+each unramified local factor is surjective by the successive-unit calculation for finite residue
+fields established in Book 2; one may therefore choose unit preimages there. The resulting family
+is an idele of $L$. In particular,
 
 $$
 K^\times\cap N_{L/K}(\mathbf A_L^\times)
@@ -1614,6 +1657,34 @@ $$
 $$
 
 No vanishing of this quotient is asserted under the bare hypotheses “finite,” “separable,” or “Galois.” Theorems that make it vanish require additional hypotheses and belong to the later reciprocity theory. Thus the result proved here is exactly the equivalence between componentwise local norms and adelic norms, not a local--global theorem for field elements.
+
+There is a fourth notion after passing to classes. The image
+
+$$
+N_{L/K}(C_L)
+=K^\times N_{L/K}(\mathbf A_L^\times)/K^\times
+\subseteq C_K
+$$
+
+allows an adelic norm to be multiplied by an arbitrary principal idele. It is therefore a
+different object from
+$K^\times\cap N_{L/K}(\mathbf A_L^\times)$, where the principal idele itself must be an adelic
+norm. In summary, one must keep separate:
+
+$$
+\begin{array}{c|c}
+\text{condition}&\text{meaning}\\ \hline
+b\in N_{L/K}(L^\times)&\text{one global preimage}\\
+b\in K^\times\cap N_{L/K}(\mathbf A_L^\times)&
+\text{a compatible family of local preimages}\\
+[x]\in N_{L/K}(C_L)&
+x\in K^\times N_{L/K}(\mathbf A_L^\times).
+\end{array}
+$$
+
+The first implies the second, and the second is exactly local normicity of $b$. Neither comparison
+with the third can be reduced to moving $K^\times$ formally through an intersection or a
+quotient.
 
 ### 10.5 Examples of norm behavior
 
@@ -2011,9 +2082,698 @@ At a split prime the right side contributes two independent $p$-adic coordinates
 
 At infinity, $d>0$ gives two real factors and $d<0$ one complex factor. The normalized complex absolute value counts the latter with degree two, so the product formula is uniform across both signs of $d$. This example is a compact model of the entire adelic philosophy: decomposition varies place by place, while restricted products assemble every local outcome without forcing a global choice of branch.
 
-## 13. The local--global architecture
+## 13. Adelic characters and duality
 
-### 13.1 Two restricted products, two kinds of gluing
+### 13.1 Why characters belong here
+
+The preceding chapters built quotients; characters are the most economical probes of those
+quotients. An additive character turns translation into multiplication by a phase and is the
+entry point to Fourier analysis. A multiplicative character turns products into scalars and can
+record valuation, residue, sign, and archimedean size in one expression. In either case, being
+trivial on the diagonal is precisely what permits a local family to descend to a global
+quotient.
+
+This point is conceptual, not merely terminological. Suppose one writes down unrelated local
+characters at every place. Their product need not make sense, and even when it does, it need not
+be trivial on $K$ or $K^\times$. Restricted products solve the first problem: almost every local
+factor must be invisible on the distinguished integral subgroup. The product formula and its
+additive analogue solve the second: the local phases of a principal element must cancel.
+
+We develop only the structural facts needed to recognize the common language of reciprocity and
+automorphic forms. Classification of local characters and harmonic analysis on general adelic
+groups are later subjects.
+
+### 13.2 Assembling multiplicative characters
+
+Let
+
+$$
+\chi_v:K_v^\times\longrightarrow\mathbf C^\times
+$$
+
+be a continuous character for every place $v$. Assume that
+
+$$
+\chi_v|_{\mathcal O_v^\times}=1
+$$
+
+at almost every finite place. Then
+
+$$
+\chi(x)=\prod_v\chi_v(x_v)
+$$
+
+is defined for every idele: all but finitely many factors equal $1$. It is a continuous character
+of $\mathbf A_K^\times$. To prove continuity, choose a finite set containing the archimedean
+places, all places where $\chi_v$ is nontrivial on $\mathcal O_v^\times$, and all exceptional
+coordinates of the idele under consideration. On the remaining compact-open tail the character
+is identically $1$, so continuity reduces to a finite product of local statements.
+
+Conversely, every continuous character $\chi:\mathbf A_K^\times\to\mathbf C^\times$ arises in
+this way. Restriction along the embedding of a single local factor gives $\chi_v$. Choose a
+neighborhood $W$ of $1$ in $\mathbf C^\times$ containing no nontrivial subgroup; a sufficiently
+small disk about $1$ works. Continuity gives a basic identity neighborhood $U$ whose image lies in
+$W$. Away from the finite exceptional set defining $U$, the whole subgroup
+$\mathcal O_v^\times$ lies in $U$. Its image under $\chi$ is a subgroup contained in $W$, hence is
+trivial. Thus almost all local restrictions are unramified in the elementary sense of being
+trivial on local units.
+
+The character descends to the idele class group exactly when
+
+$$
+\prod_v\chi_v(a)=1\qquad(a\in K^\times).
+$$
+
+This is the multiplicative compatibility condition. A character of $C_K$ is traditionally called
+an **idele class character** or a **Hecke character**. The terminology includes continuous
+characters of infinite order; it is not limited to the finite characters of ray class groups.
+
+Two examples separate the available information. The idele module is the product of the local
+absolute-value characters:
+
+$$
+|x|_{\mathbf A}=\prod_v|x_v|_v.
+$$
+
+It descends because of the product formula and has infinite image. By contrast, a character of a
+ray class group has finite image, is trivial on a prescribed open congruence subgroup, and detects
+only finitely much local unit and sign data.
+
+### 13.3 Unitary characters and modulus twists
+
+A character $\chi:C_K\to\mathbf C^\times$ is **unitary** if $|\chi(x)|=1$ for every $x$. General
+characters have one possible direction of growth, and it is exactly the idele module.
+
+Indeed, the absolute value of a character is a continuous homomorphism
+
+$$
+|\chi|:C_K\longrightarrow\mathbf R_{>0}.
+$$
+
+Its restriction to the compact group $C_K^1$ is trivial: a compact subgroup of
+$\mathbf R_{>0}$ becomes a compact subgroup of $\mathbf R$ under the logarithm, and the additive
+group $\mathbf R$ has no nonzero compact subgroup. Hence $|\chi|$ factors through
+
+$$
+C_K/C_K^1\cong\mathbf R_{>0}.
+$$
+
+Every continuous homomorphism $\mathbf R_{>0}\to\mathbf R_{>0}$ is $t\mapsto t^\sigma$ for a
+unique real number $\sigma$. Therefore
+
+$$
+|\chi(x)|=|x|_{\mathbf A}^{\sigma},
+$$
+
+and
+
+$$
+\chi^{\mathrm{un}}(x)=\chi(x)|x|_{\mathbf A}^{-\sigma}
+$$
+
+is unitary. This decomposition is canonical because $\sigma$ is determined by the absolute value
+of $\chi$. One also uses the complex powers
+
+$$
+|x|_{\mathbf A}^{s}=\exp(s\log|x|_{\mathbf A}),\qquad s\in\mathbf C.
+$$
+
+Their imaginary parts are already unitary. Twisting by such powers moves a character along the
+one noncompact direction of $C_K$ without changing its behavior on $C_K^1$.
+
+For $K=\mathbf Q$, the decomposition of Section 12.1 makes this concrete. A continuous character
+of $C_{\mathbf Q}$ is a product of a character of $\widehat{\mathbf Z}^\times$ and a character of
+$\mathbf R_{>0}$. Finite-order characters of the profinite factor are ordinary Dirichlet
+characters after passage to some finite quotient $(\mathbf Z/N\mathbf Z)^\times$; the second
+factor contributes $t^s$. This is the rank-one prototype for separating finite level from
+archimedean spectral variation.
+
+### 13.4 Finite-order characters and conductors
+
+Section 11.6 attached a conductor to every finite-order idele class character. We can now explain
+why that construction is exhaustive. If $\chi$ has finite image, its kernel is open: the finite
+image is discrete, so continuity at the identity gives an open subgroup on which $\chi$ is
+trivial. A basic open subgroup contains $U(\mathfrak m)$ for some modulus $\mathfrak m$. Hence
+$\chi$ factors through
+
+$$
+C_K/\operatorname{im}(U(\mathfrak m))
+\cong\operatorname{Cl}_{\mathfrak m}(K),
+$$
+
+where $U(\mathfrak m)$ is mapped into $C_K$ and quotienting by $K^\times$ is already built into
+$C_K$. Minimizing the local exponents and
+the set of real sign places gives the conductor $\mathfrak f(\chi)$.
+
+Conversely, every character of a ray class group pulls back to a continuous finite-order
+character of $C_K$. Thus
+
+$$
+\{\text{finite-order continuous characters of }C_K\}
+=\bigcup_{\mathfrak m}
+\widehat{\operatorname{Cl}_{\mathfrak m}(K)},
+$$
+
+where a character at one level is identified with its pullback to every divisible modulus. This
+is a directed union, not a direct product: every individual finite-order character has finite
+conductor.
+
+The archimedean clause matters. Over a real field, a sign character is invisible to every purely
+finite modulus. It factors only after the corresponding real place is included in
+$\mathfrak m_\infty$. At a complex place no finite-order local contribution survives, because
+$\mathbf C^\times$ is connected. These facts explain exactly why infinite parts of moduli consist
+of real places with exponent at most one.
+
+Finite order is stronger than unitarity. The character $x\mapsto|x|_{\mathbf A}^{it}$ is unitary
+for real $t$ and usually has infinite image. Likewise an archimedean angular character can have
+infinite order. Ray class groups capture all continuous finite-order characters, not all unitary
+idele class characters.
+
+### 13.5 The standard additive character
+
+There is an additive cancellation law parallel to the multiplicative product formula. Begin over
+$\mathbf Q$. At the real place put
+
+$$
+\psi_\infty(x)=e^{2\pi i x}.
+$$
+
+For $x\in\mathbf Q_p$, write its finite negative-power part as a rational number modulo
+$\mathbf Z$ and let $\{x\}_p\in\mathbf Q/\mathbf Z$ denote the resulting $p$-primary class. Define
+
+$$
+\psi_p(x)=e^{-2\pi i\{x\}_p}.
+$$
+
+The character $\psi_p$ is trivial on $\mathbf Z_p$ and nontrivial on $p^{-1}\mathbf Z_p$. For a
+finite adele only finitely many $\{x_p\}_p$ are nonzero, so
+
+$$
+\psi_{\mathbf Q}(x)=\psi_\infty(x_\infty)\prod_p\psi_p(x_p)
+$$
+
+is well defined and continuous on $\mathbf A_{\mathbf Q}$.
+
+For $a\in\mathbf Q$, the sum of its $p$-primary principal parts differs from $a$ by an integer.
+The minus sign in the finite definition therefore gives
+
+$$
+\psi_{\mathbf Q}(a)=1.
+$$
+
+Thus $\psi_{\mathbf Q}$ descends to a character of the compact group
+$\mathbf A_{\mathbf Q}/\mathbf Q$. Reversing every sign would give an equally valid convention;
+changing only the real or only the finite sign would destroy diagonal triviality.
+
+For a number field $K$, use the adelic trace of Section 4.6:
+
+$$
+\psi_K(x)=\psi_{\mathbf Q}
+\bigl(\operatorname{Tr}^{\mathbf A}_{K/\mathbf Q}(x)\bigr).
+$$
+
+If $a\in K$, its adelic trace is the principal rational adele associated to
+$\operatorname{Tr}_{K/\mathbf Q}(a)$, so $\psi_K(a)=1$. Locally, at a finite place $v$ over $p$,
+
+$$
+\psi_{K,v}(x)=\psi_p(\operatorname{Tr}_{K_v/\mathbf Q_p}(x)).
+$$
+
+Its annihilator of $\mathcal O_v$ is the inverse different
+
+$$
+\mathfrak D_v^{-1}
+=\{y\in K_v:\operatorname{Tr}_{K_v/\mathbf Q_p}(y\mathcal O_v)
+\subseteq\mathbf Z_p\}.
+$$
+
+This is where ramification enters the apparently harmless choice of an additive character. Using
+a character declared trivial on $\mathcal O_v$ at every finite place would require compensating
+scalars at the ramified places; the trace construction records the compensation canonically.
+
+The associated self-dual Haar measures differ from those of Section 6.6 by explicit factors.
+Write $\mathfrak D_v=\mathfrak p_v^{d_v}$ and retain the measure $\mu_v$ for which
+$\mu_v(\mathcal O_v)=1$. Since the annihilator of $\mathcal O_v$ is
+$\mathfrak D_v^{-1}$, self-duality requires
+
+$$
+\mu_v^{\mathrm{sd}}(\mathcal O_v)=q_v^{-d_v/2}.
+$$
+
+At a real place, $dx$ is self-dual for $e^{2\pi ixy}$. At a complex place the trace pairing is
+$2\operatorname{Re}(zw)$, so the self-dual measure is $2\,dx\,dy$, not ordinary planar measure.
+The product of the finite scaling factors is $|d_K|^{-1/2}$, while the complex factors contribute
+$2^{r_2}$. Applied to the covolume in Section 6.6, these give
+
+$$
+\operatorname{vol}_{\mathrm{sd}}(\mathbf A_K/K)=1.
+$$
+
+This calculation is a useful normalization check: the discriminant appearing in the finite trace
+duals cancels the discriminant of the archimedean lattice.
+
+### 13.6 Self-duality and the diagonal annihilator
+
+Fix $\psi_K$ as above and pair two adeles by
+
+$$
+\langle x,y\rangle=\psi_K(xy).
+$$
+
+For fixed $y$, this is a continuous additive character in $x$. The local trace pairing is
+nondegenerate, and the standard characters of $\mathbf R$, $\mathbf C$, and finite extensions of
+$\mathbf Q_p$ identify each local additive group with its character group. The annihilator of the
+distinguished local integer ring is the inverse different, which equals the integer ring at all
+but finitely many places. These local identifications therefore assemble into an adelic one:
+
+$$
+\mathbf A_K\xrightarrow{\sim}\widehat{\mathbf A_K},
+\qquad
+y\longmapsto(x\mapsto\psi_K(xy)).
+$$
+
+The decisive global statement is that the annihilator of the diagonal $K$ is again the diagonal
+$K$. One inclusion follows from $\psi_K(K)=1$: if $a,b\in K$, then $ab\in K$, so
+$\psi_K(ab)=1$.
+
+For the reverse inclusion, recall the global inverse different
+
+$$
+\mathfrak D_K^{-1}
+=\{c\in K:\operatorname{Tr}_{K/\mathbf Q}(c\mathcal O_K)\subseteq\mathbf Z\}.
+$$
+
+Its localization at $v$ is $\mathfrak D_v^{-1}$. Let $y$ annihilate $K$.
+Principal-parts approximation, applied to the fractional ideal $\mathfrak D_K^{-1}$, supplies
+$b\in K$ such that
+
+$$
+y_v-b\in\mathfrak D_v^{-1}
+\qquad(v<\infty).
+$$
+
+Put $z=y-b$. For every $a\in\mathcal O_K$, all finite local factors of
+$\psi_K(za)$ are $1$. Since the global product is also $1$, the archimedean component $z_\infty$
+belongs to the trace-dual lattice of $\mathcal O_K$ in $K_\infty$. That dual lattice is the
+diagonal image of $\mathfrak D_K^{-1}$. Choose $c\in\mathfrak D_K^{-1}$ with archimedean image
+$z_\infty$, and put $w=z-c$. Then
+
+$$
+w_\infty=0,\qquad w_v\in\mathfrak D_v^{-1}\quad(v<\infty),
+$$
+
+and $w$ still annihilates $K$.
+
+Fix a finite place $v$. Given $t\in K_v$, finite approximation produces elements $a\in K$ that
+approach $t$ at $v$ and are integral at every other finite place. For such $a$, every local factor
+of $\psi_K(wa)$ except the $v$th is $1$: the infinite factor is $1$ because $w_\infty=0$, and at
+$u\ne v$ the inclusion
+$w_u a\in\mathfrak D_u^{-1}$ makes the finite character trivial. Hence
+$\psi_{K,v}(w_v a)=1$. Passing to the limit gives
+$\psi_{K,v}(w_vt)=1$ for all $t\in K_v$. Nondegeneracy of the local pairing forces $w_v=0$.
+This holds at every finite place, so $w=0$ and $y=b+c$ is diagonal.
+
+Equivalently, dualizing the closed inclusion $K\subset\mathbf A_K$ gives the paired statements
+
+$$
+\widehat{\mathbf A_K/K}\cong K,
+\qquad
+\widehat K\cong\mathbf A_K/K,
+$$
+
+where $K$ is discrete in the first display and is given the discrete topology in the second.
+Compactness of $\mathbf A_K/K$ and discreteness of $K$ are thus dual aspects of the same lattice
+theorem. This is the harmonic-analytic reason that global sums over $K$ and integrals over
+$\mathbf A_K$ transform into one another.
+
+## 14. The grammar of global reciprocity
+
+### 14.1 Why the idele class group is the source
+
+Abelian extensions are built locally from the multiplicative groups $K_v^\times$. A global
+statement cannot use their unrestricted product: it must admit principal elements, retain unit
+tails, and identify local data that come from one $a\in K^\times$. Those three requirements lead
+in order to
+
+$$
+\prod_v'(K_v^\times,\mathcal O_v^\times),
+\qquad
+\mathbf A_K^\times,
+\qquad
+C_K=\mathbf A_K^\times/K^\times.
+$$
+
+The idele class group is therefore not an ornamental reformulation of the ideal class group. The
+latter has forgotten inertia-level unit data and archimedean signs, exactly the information needed
+to describe ramification. Ray class groups recover finite pieces of that information, while
+$C_K$ retains all depths at once.
+
+The global reciprocity theorem developed later identifies the profinite completion of $C_K$ with
+the Galois group of the maximal abelian extension:
+
+$$
+C_K^{\mathrm{prof}}
+=\varprojlim_{U}C_K/U
+\cong\operatorname{Gal}(K^{\mathrm{ab}}/K),
+$$
+
+Equivalently, it gives compatible surjections at every finite abelian level and identifies their
+kernels; the limit ranges over open finite-index subgroups $U\subset C_K$. We use the superscript
+$\mathrm{prof}$ to distinguish profinite completion from the character-group hat in Section 13.6.
+We do not construct or prove that homomorphism here. The purpose of this chapter is to show that
+every term appearing in its formulation has already been forced by topology, approximation, and
+the product formula.
+
+### 14.2 Finite levels and ray neighborhoods
+
+Let $U\subset\mathbf A_K^\times$ be an open subgroup containing the full positive magnitude
+directions at infinity and containing $\mathcal O_v^\times$ at almost every finite place. If the
+quotient
+
+$$
+\mathbf A_K^\times/K^\times U
+$$
+
+is finite, it is a finite local--global invariant assembled from finitely many places. Every ray
+subgroup $U(\mathfrak m)$ is of this form, and Chapter 11 proved the quotient finite. Conversely,
+every open neighborhood of $1$ in the finite unit tail contains principal-unit groups of some
+depth at the finitely many restricted primes. After archimedean connected components are included,
+it therefore contains a ray subgroup for a suitable modulus.
+
+This cofinality has an important consequence. Any continuous finite quotient of $C_K$ factors
+through a ray class group. Indeed, the kernel is open, so its inverse image in
+$\mathbf A_K^\times$ contains some $U(\mathfrak m)$. Thus ray class groups are not merely a
+convenient family of examples: they are cofinal among the finite continuous quotients relevant to
+abelian arithmetic.
+
+The role of real signs is now unavoidable. If a real place is allowed to use all of
+$\mathbf R^\times$, the quotient forgets whether a local element is positive. Replacing it by
+$\mathbf R_{>0}$ retains the two connected components. Complex places contribute no analogous
+finite quotient. This topological fact is the source of the infinite part of a modulus.
+
+### 14.3 Local components and normalization
+
+A global reciprocity map is required to recover a local reciprocity map from each embedded factor
+$K_v^\times\subset\mathbf A_K^\times$. The uniformizer convention must therefore be fixed. With
+**arithmetic Frobenius**, a uniformizer at an unramified finite place corresponds to the
+automorphism $x\mapsto x^{q_v}$ on residue fields. With **geometric Frobenius**, it corresponds to
+the inverse automorphism. Both conventions are consistent, but every Euler factor, norm diagram,
+and character formula must use the same one.
+
+Our absolute values do not choose between arithmetic and geometric Frobenius. They choose a
+different normalization:
+
+$$
+|\pi_v|_v=q_v^{-1},
+$$
+
+and at a complex place $|z|_v=|z|_{\mathrm{usual}}^2$. This is the normalization that makes the
+product formula and the module identity for norms exact. A reciprocity convention must be stated
+in addition; it cannot be inferred from the sign in the absolute value.
+
+At a finite place the filtration
+
+$$
+K_v^\times\supset\mathcal O_v^\times\supset
+1+\mathfrak p_v\supset1+\mathfrak p_v^2\supset\cdots
+$$
+
+separates the unramified valuation coordinate, residue-unit information, and deeper ramification
+information. At a real place the quotient
+$\mathbf R^\times/\mathbf R_{>0}$ records a sign. Ray subgroups choose a finite depth in exactly
+these filtrations. This is why a global finite abelian quotient can have a conductor with finite
+prime powers and real places, but no complex-place exponent.
+
+### 14.4 Norms and functoriality
+
+For $L/K$, Chapter 10 constructed
+
+$$
+N_{L/K}:C_L\longrightarrow C_K
+$$
+
+directly from local field norms. Any reciprocity law compatible with extension must intertwine
+this map with the homomorphism on abelian Galois groups induced by viewing an automorphism over
+$L$ as one over $K$ and then passing to abelian quotients. The direction is important: the idele
+map from $L$ down to $K$ is a norm, matching the Galois map from the subgroup over $L$ into the
+group over $K$.
+
+At finite level, compatible congruence depths from Section 10.6 let the norm induce maps between
+ray quotients. The source modulus generally has to be deeper at ramified places. There is no
+uniform rule saying that equal exponents suffice, and there is no general surjectivity statement.
+The different and higher unit filtrations govern the local loss of depth.
+
+The module identity
+
+$$
+|N_{L/K}y|_{\mathbf A_K}=|y|_{\mathbf A_L}
+$$
+
+also shows that norms preserve the norm-one class groups. Thus the compact part of the idele class
+group is functorial under extension even though the induced map need not be onto.
+
+### 14.5 The exact boundary of the norm principle
+
+For a finite extension $L/K$, define the **knot group**
+
+$$
+\mathfrak K(L/K)=
+\frac{K^\times\cap N_{L/K}(\mathbf A_L^\times)}
+{N_{L/K}(L^\times)}.
+$$
+
+The numerator consists exactly of elements of $K^\times$ that are norms from the completed
+$K_v$-algebra at every place. The denominator consists of actual field norms. Hence
+$\mathfrak K(L/K)$ is not a heuristic obstruction: it is the exact defect of the local--global
+norm principle.
+
+The adelic construction by itself proves only that local norm data assemble to an adelic norm,
+as in Section 10.4. It gives no reason for the resulting idele preimage to be principal. That last
+step asks whether a point of $\mathbf A_L^\times$ can be modified by local norm-one elements until
+it lies in $L^\times$, and it is a genuinely global problem.
+
+There is one major positive theorem: if $L/K$ is cyclic, the Hasse norm theorem says
+
+$$
+\mathfrak K(L/K)=1.
+$$
+
+Its proof requires substantially more than approximation and is not supplied here. Cyclicity is
+essential. There are biquadratic extensions of number fields for which
+$\mathfrak K(L/K)\ne1$: some $b\in K^\times$ is a norm from every completed algebra but is not a
+norm from $L^\times$. Thus neither “finite Galois” nor “abelian” may replace “cyclic” in the Hasse
+norm theorem.
+
+Even when the knot group vanishes, this does not say that every element of $K^\times$ is a norm.
+It says only that the local conditions are sufficient. Local valuation, unit, and sign
+obstructions remain. For $\mathbf C/\mathbf R$, positivity is still required; for an unramified
+local extension, norm valuations still satisfy a divisibility condition. The theorem removes the
+global defect after all local obstructions have been passed, not the local obstructions
+themselves.
+
+### 14.6 What reciprocity adds
+
+The structures established so far provide the domain, topology, finite levels, and functorial norm
+maps for reciprocity. They do not provide its central arithmetic assertion. Global reciprocity
+adds the following content:
+
+- a canonical map from idele classes to an abelian Galois group, compatible with every local map;
+- an existence theorem identifying finite-index open subgroups of $C_K$ with norm groups from
+  finite abelian extensions;
+- identification of ray quotients with Galois groups of extensions having controlled
+  ramification;
+- compatibility of conductors, Frobenius elements, and local unit filtrations.
+
+Without those theorems, a ray class group is an explicit finite quotient, not yet the Galois group
+of a ray class field. A finite-order idele class character is a character of an adelic quotient,
+not yet a Galois character. Maintaining that distinction prevents the language from silently
+assuming the theorem it is designed to state.
+
+## 15. From ideles to automorphic quotients
+
+### 15.1 Matrices over the adeles
+
+The same restricted-product mechanism works for matrix groups. For $n\geq1$, define
+
+$$
+\operatorname{GL}_n(\mathbf A_K)
+=\prod_v'
+\bigl(\operatorname{GL}_n(K_v),\operatorname{GL}_n(\mathcal O_v)\bigr),
+$$
+
+with no restriction at the archimedean places. Thus $g=(g_v)$ is adelic when
+$g_v\in\operatorname{GL}_n(\mathcal O_v)$ for almost every finite $v$. Equivalently, both the
+entries of $g$ and those of $g^{-1}$ form adelic matrices. This last condition is the matrix
+analogue of the graph topology on ideles: controlling entries of $g$ alone would not make
+inversion continuous.
+
+The group is locally compact. Its standard finite compact open subgroup is
+
+$$
+\operatorname{GL}_n(\widehat{\mathcal O}_K)
+=\prod_{v<\infty}\operatorname{GL}_n(\mathcal O_v).
+$$
+
+At a finite place $\operatorname{GL}_n(\mathcal O_v)$ consists exactly of matrices with integral
+entries and unit determinant. Compactness follows because it is a closed subset of the compact
+space $M_n(\mathcal O_v)$; openness follows from continuity of the determinant and openness of
+$\mathcal O_v^\times$.
+
+The case $n=1$ recovers $\mathbf A_K^\times$. This is more than a check on notation. Every feature
+of the general construction already appears in rank one: integral models define the restricted
+tail, rational points embed diagonally, compact opens define level, and a central module controls
+one source of noncompactness.
+
+### 15.2 Diagonal rational points and the determinant module
+
+Every matrix in $\operatorname{GL}_n(K)$ is integral with unit determinant at almost every finite
+place, so there is a diagonal embedding
+
+$$
+\operatorname{GL}_n(K)\longrightarrow\operatorname{GL}_n(\mathbf A_K).
+$$
+
+It is discrete. To see this without a new approximation theorem, choose an additive adelic
+neighborhood of the identity matrix whose intersection with $M_n(K)$ contains only the identity.
+Intersect it with the adelic general linear group. The resulting open neighborhood meets
+$\operatorname{GL}_n(K)$ only at the identity.
+
+The determinant produces a continuous map
+
+$$
+\operatorname{GL}_n(\mathbf A_K)\longrightarrow\mathbf A_K^\times.
+$$
+
+Composing with the idele module gives
+
+$$
+g\longmapsto|\det g|_{\mathbf A}.
+$$
+
+For $g\in\operatorname{GL}_n(K)$, the determinant lies in $K^\times$, so the product formula makes
+this value $1$. It is therefore natural to define
+
+$$
+\operatorname{GL}_n(\mathbf A_K)^1
+=\{g:|\det g|_{\mathbf A}=1\}.
+$$
+
+Removing this one determinant-size direction is often necessary before a quotient can have finite
+volume. It does not make the quotient compact when $n>1$; other escape directions remain. The
+compactness of $C_K^1$ is a special rank-one theorem, not a template that may be copied verbatim
+to every reductive group.
+
+### 15.3 Compact open level
+
+At the finite places, a **level subgroup** is a compact open subgroup
+
+$$
+K_f\subset\operatorname{GL}_n(\mathbf A_{K,f}).
+$$
+
+The standard choice is $\operatorname{GL}_n(\widehat{\mathcal O}_K)$. Congruence choices replace
+it at finitely many primes by smaller open subgroups. For example, requiring
+$g_v\equiv I\pmod{\mathfrak p_v^m}$ gives a principal congruence subgroup. Taking the inverse
+image of the upper-triangular subgroup under reduction
+$\operatorname{GL}_n(\mathcal O_v)\to\operatorname{GL}_n(k_v)$ gives another familiar compact
+open level. The exact names are secondary here; the decisive topological fact is that only
+finitely many local factors differ from the standard compact open.
+
+This is the matrix counterpart of $U_f(\mathfrak m_0)$ for ideles. In rank one, a principal
+congruence condition is $x_v\in1+\mathfrak p_v^m$. In higher rank it is
+$g_v\in I+M_n(\mathfrak p_v^m)$. Both are kernels of reduction maps to finite groups and therefore
+compact open.
+
+Different levels isolate different amounts of integral information. Enlarging $K_f$ forgets
+local structure and passes to a coarser quotient; shrinking it remembers more residue and
+higher-congruence data. This is why the word “level” plays the same organizing role for
+automorphic forms that “modulus” plays for ray class characters.
+
+### 15.4 Double quotients and local data
+
+The basic global parameter space is the double quotient
+
+$$
+\operatorname{GL}_n(K)\backslash
+\operatorname{GL}_n(\mathbf A_K)/K_f.
+$$
+
+The left quotient identifies adelic matrices related by one rational change of basis. The right
+quotient forgets changes of integral basis prescribed by the level. Archimedean coordinates
+remain, so this quotient is generally a continuous space rather than a finite set.
+
+The finite-adelic quotient has a concrete lattice interpretation. Given
+$g_f=(g_v)$, impose
+
+$$
+\Lambda(g_f)=\{x\in K^n:g_v^{-1}x\in\mathcal O_v^n
+\text{ for every finite }v\}.
+$$
+
+This is a full $\mathcal O_K$-lattice in $K^n$. Right multiplication by
+$\operatorname{GL}_n(\widehat{\mathcal O}_K)$ changes only the chosen local integral bases and
+does not change the lattice. Left multiplication by $\operatorname{GL}_n(K)$ changes the global
+basis. Thus finite double cosets organize global lattices together with whatever extra structure a
+smaller level retains.
+
+For $n=1$, $\Lambda(g_f)$ is the inverse fractional ideal of Section 8.4, and the double quotient
+by $K^\times$ and $\widehat{\mathcal O}_K^\times$ is the ideal class group. Higher rank therefore
+extends rather than replaces the idelic picture: fractional ideals are rank-one projective
+lattices, and matrix adeles treat all ranks uniformly.
+
+### 15.5 Automorphic functions in adelic form
+
+An automorphic function on $\operatorname{GL}_n$ is, at the most basic level, a function on
+
+$$
+\operatorname{GL}_n(K)\backslash\operatorname{GL}_n(\mathbf A_K)
+$$
+
+satisfying suitable regularity, growth, finiteness, and often cuspidality conditions. Right
+invariance under a compact open $K_f$ gives finite level. Conditions at the archimedean factors
+replace ordinary smoothness and spectral conditions on real or complex Lie groups. Translation
+on the right lets the adelic group act on the resulting space of functions.
+
+The advantage of this formulation is simultaneous locality. A single right translation can be
+supported at one place, while the restricted tail remains integral everywhere else. Changing the
+level at one finite prime changes only one local factor. Tensor-product descriptions of
+representations then reflect the same almost-everywhere unramified condition that made the
+restricted product locally compact.
+
+No assertion about decomposition into irreducible representations, multiplicity, cuspidal
+spectrum, or trace formulas is made here. Those require analysis well beyond the topology of
+adeles. What has been justified is the ambient quotient and the meaning of its level structure.
+
+### 15.6 The rank-one meeting point
+
+For $n=1$, the automorphic quotient is exactly
+
+$$
+K^\times\backslash\mathbf A_K^\times=C_K.
+$$
+
+Its continuous characters are the Hecke characters of Chapter 13. Thus one and the same object
+has two future interpretations:
+
+- in global reciprocity, its finite continuous quotients and finite-order characters describe
+  abelian Galois data;
+- in automorphic theory, its characters are the irreducible one-dimensional automorphic
+  representations of $\operatorname{GL}_1(\mathbf A_K)$.
+
+This overlap must be stated with its limits. A general unitary Hecke character can have infinite
+archimedean image and does not correspond to a finite abelian extension. Finite-order characters
+do factor through ray class groups and are the ones directly visible in finite abelian
+reciprocity. Attaching higher-dimensional Galois representations to special higher-rank
+automorphic representations is a separate, much deeper theory.
+
+The shared grammar is nevertheless already complete: local factors, restricted integral tails,
+diagonal rational points, compact open levels, central characters, norms, and Haar measures. This
+is why the adelic language passes unchanged from class field theory to automorphic forms even
+though the theorems proved in the two subjects are very different.
+
+## 16. The local--global architecture
+
+### 16.1 Two restricted products, two kinds of gluing
 
 The additive and multiplicative constructions solve related but different gluing problems. Additive adeles allow local quantities with integral tails. Their diagonal quotient is compact because principal parts can be removed at finitely many primes and the remaining archimedean vector can be reduced modulo the lattice of algebraic integers.
 
@@ -2035,7 +2795,7 @@ $$
 
 The analogy is structural, not literal. In particular the idele topology must control inversion, and its compactness theorem needs both ideal-class finiteness and the unit theorem.
 
-### 13.2 Exact hypotheses and durable consequences
+### 16.2 Exact hypotheses and durable consequences
 
 The principal conclusions for a number field $K$ are:
 
@@ -2047,17 +2807,31 @@ The principal conclusions for a number field $K$ are:
 - $C_K^1$ is compact and is the unique maximal compact subgroup of $C_K$, while $C_K/C_K^1\cong\mathbf R_{>0}$;
 - finite idele valuations recover fractional ideals, and quotienting by principal ideles recovers the ideal class group after discarding infinite and unit data;
 - every ray class group for a modulus with finite support, including its prescribed real places, is finite;
-- extension norms are defined coordinatewise, preserve the idele module, respect principal ideles, and refine ideal norms.
+- extension norms are defined coordinatewise, preserve the idele module, respect principal ideles, and refine ideal norms;
+- finite-order idele class characters factor through ray class groups, while general characters
+  separate into a unitary part and a real power of the idele module;
+- the standard trace character makes $\mathbf A_K$ self-dual and makes the annihilator of the
+  diagonal $K$ equal to $K$;
+- $\operatorname{GL}_n(\mathbf A_K)$ is a restricted product with compact open finite levels,
+  and rank one recovers both idele class characters and the common source of reciprocity and
+  automorphic language.
 
 The number-field hypothesis enters through finite residue fields, the archimedean decomposition, Minkowski's lattice theory, ideal-class finiteness, and Dirichlet's unit theorem. Restricted products exist far more generally, but these compactness and finiteness conclusions should not be transported without replacing those inputs. In particular, this book proves no function-field approximation or compactness theorem. For a number field the degree image is the continuous group $\mathbf R$ and $C_K/C_K^1\cong\mathbf R_{>0}$; the discrete degree familiar for global function fields is a differently normalized statement with a different proof.
 
-### 13.3 What has not been asserted
+### 16.3 What has not been asserted
 
-No reciprocity homomorphism has been defined. Ray class groups have been constructed as explicit finite adelic quotients, but they have not been identified with Galois groups. Local norm subgroups and the adelic norm have been described, but no general local--global norm principle has been claimed. These are substantive theorems, not consequences hidden in notation.
+No reciprocity homomorphism has been defined. Ray class groups have been constructed as explicit
+finite adelic quotients, but they have not been identified with Galois groups. Local norm
+subgroups and the adelic norm have been described, and the cyclic Hasse norm theorem has been
+stated to mark the boundary, but no unconditional local--global norm principle has been claimed.
+These are substantive theorems, not consequences hidden in notation.
 
-Likewise, the existence of Haar measure was used only to explain the module and volume scaling. Harmonic analysis on $\mathbf A_K$, Fourier duality, and automorphic representation theory require further structures. What is established here is the topological and algebraic platform on which those theories can be stated without ambiguity.
+Likewise, additive self-duality identifies the correct global character pairing, but no Fourier
+inversion or Poisson summation theorem has been proved. Spectral decomposition and automorphic
+representation theory require further analytic structures. What is established here is the
+topological and algebraic platform on which those theories can be stated without ambiguity.
 
-### 13.4 Conclusion
+### 16.4 Conclusion
 
 A number field cannot be reconstructed by treating its completions as unrelated approximations. The arithmetic relation among them is encoded by two restrictions: additive components are integral almost everywhere, and multiplicative components are units almost everywhere. With precisely those restrictions, the local spaces assemble into locally compact global objects.
 
