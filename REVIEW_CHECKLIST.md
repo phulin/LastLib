@@ -103,7 +103,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 036. Relative Picard Schemes and Jacobians
 - [x] 037. Jacobians and (H^1) of Curves
 - [x] 038. Abelian Schemes, Isogenies, and Polarizations
-- [ ] 039. Néron Models and Component Groups
+- [x] 039. Néron Models and Component Groups
 - [ ] 040. Semistable Abelian Varieties and Monodromy
 - [ ] 041. Integral Correspondences on Curves and Jacobians
 - [x] 042. Descent and Weak Mordell–Weil for Abelian Varieties
