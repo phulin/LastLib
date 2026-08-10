@@ -17,6 +17,7 @@
    - [Commutators and norm-one elements](#32-commutators-and-norm-one-elements)
    - [Classification of smooth characters](#33-classification-of-smooth-characters)
    - [Central characters of one-dimensional representations](#34-central-characters-of-one-dimensional-representations)
+   - [The special packet in the selected normalization](#35-the-special-packet-in-the-selected-normalization)
 4. [Congruence layers](#4-congruence-layers)
    - [Why the filtration is the main coordinate system](#41-why-the-filtration-is-the-main-coordinate-system)
    - [The associated graded quotients](#42-the-associated-graded-quotients)
@@ -56,6 +57,7 @@
     - [Dimension and central character](#104-dimension-and-central-character)
     - [Conductor formulas](#105-conductor-formulas)
     - [The tame ramified and unramified shapes](#106-the-tame-ramified-and-unramified-shapes)
+    - [Direct and quadratic-induction normalizations](#107-direct-and-quadratic-induction-normalizations)
 11. [The wild range and abstract exhaustivity](#11-the-wild-range-and-abstract-exhaustivity)
     - [What tame pairs do not cover](#111-what-tame-pairs-do-not-cover)
     - [An exhaustive Clifford parameter](#112-an-exhaustive-clifford-parameter)
@@ -74,16 +76,32 @@
     - [The needed normalization](#141-the-needed-normalization)
     - [Schur orthogonality on the central quotient](#142-schur-orthogonality-on-the-central-quotient)
     - [Compact induction and degree](#143-compact-induction-and-degree)
-15. [Examples over $\mathbf Q_p$](#15-examples-over-mathbf-q_p)
-    - [Norm characters](#151-norm-characters)
-    - [A level-zero representation](#152-a-level-zero-representation)
-    - [A positive-depth unramified example](#153-a-positive-depth-unramified-example)
-    - [A tame ramified example and the dyadic warning](#154-a-tame-ramified-example-and-the-dyadic-warning)
-16. [The transfer-facing dictionary](#16-the-transfer-facing-dictionary)
-    - [The classification table](#161-the-classification-table)
-    - [Regular-character values](#162-regular-character-values)
-    - [What is ready for comparison](#163-what-is-ready-for-comparison)
-    - [Conclusion](#164-conclusion)
+15. [Type vectors and the newvector question](#15-type-vectors-and-the-newvector-question)
+    - [Why normal congruence groups do not select a line](#151-why-normal-congruence-groups-do-not-select-a-line)
+    - [The canonical type multiplicity space](#152-the-canonical-type-multiplicity-space)
+    - [Toric lines and test vectors](#153-toric-lines-and-test-vectors)
+    - [The selected split-side newvector interface](#154-the-selected-split-side-newvector-interface)
+16. [Integral lattices and integral pairings](#16-integral-lattices-and-integral-pairings)
+    - [Coefficient fields and the existence criterion](#161-coefficient-fields-and-the-existence-criterion)
+    - [Lattices in special and dihedral types](#162-lattices-in-special-and-dihedral-types)
+    - [Finite free induction and base change](#163-finite-free-induction-and-base-change)
+    - [Perfect duality and self-dual lattices](#164-perfect-duality-and-self-dual-lattices)
+    - [Reduction and the nonbanal boundary](#165-reduction-and-the-nonbanal-boundary)
+17. [Measures, orbital normalization, and transfer data](#17-measures-orbital-normalization-and-transfer-data)
+    - [A compatible system of Haar measures](#171-a-compatible-system-of-haar-measures)
+    - [Centralizers, discriminants, and orbital integrals](#172-centralizers-discriminants-and-orbital-integrals)
+    - [Pointwise characters versus distributions](#173-pointwise-characters-versus-distributions)
+    - [The selected comparison package](#174-the-selected-comparison-package)
+18. [Examples over $\mathbf Q_p$](#18-examples-over-mathbf-q_p)
+    - [Norm characters](#181-norm-characters)
+    - [A level-zero representation](#182-a-level-zero-representation)
+    - [A positive-depth unramified example](#183-a-positive-depth-unramified-example)
+    - [A tame ramified example and the dyadic warning](#184-a-tame-ramified-example-and-the-dyadic-warning)
+19. [The transfer-facing dictionary](#19-the-transfer-facing-dictionary)
+    - [The classification table](#191-the-classification-table)
+    - [Regular-character values](#192-regular-character-values)
+    - [What is ready for comparison](#193-what-is-ready-for-comparison)
+    - [Conclusion](#194-conclusion)
 
 ## 1. The anisotropic local group
 
@@ -106,6 +124,8 @@ $$
 This convention fixes every inverse in the later Mackey and character formulas.
 
 We write $\operatorname{Trd}$ and $\operatorname{Nrd}$ for reduced trace and reduced norm. Book 87 established their intrinsic meaning. Here the norm is more than a quadratic form: it supplies the valuation and eventually the entire abelianization of $D^\times$.
+
+The argument has three movements. First, the valuation filtration and compact central quotient reduce every irreducible representation to finite data. Second, Clifford theory and compact induction turn regular residue characters and tame quadratic characters into the special and dihedral packets required in the selected route, while an abstract finite-quotient classification keeps the primitive wild boundary honest. Third, conductors, type multiplicities, pairings, lattices, characters, and compatible measures prepare those packets for comparison with their selected split companions. General harmonic analysis is used from Book 76, and the quaternionic algebra and tame type inputs are used in precisely this range; all consequences peculiar to $D^\times$ are proved here.
 
 ### 1.2 The unramified cyclic model
 
@@ -353,6 +373,43 @@ Hence the central character is $\mu^2$. Its conductor can be smaller than that o
 
 As a worked example, an unramified character is determined by $c=\mu(\varpi)$. Its quaternionic norm character is trivial on $\mathcal O_D^\times$ and sends $\Pi$ to $\mu(-\varpi)$. A ramified $\mu$ is already nontrivial on $\mathcal O_K^\times$, and the resulting character of $D^\times$ is nontrivial on a corresponding principal congruence layer.
 
+### 3.5 The special packet in the selected normalization
+
+Why call a one-dimensional representation a special packet? The terminology records its role, not its dimension. In the selected route, a character $\mu$ of $K^\times$ labels a special representation on the split degree-two group. Its division-algebra member is
+
+$$
+\operatorname{Sp}_D(\mu)=\mu\circ\operatorname{Nrd}.
+$$
+
+There is one member on the division side. The word packet packages the common parameter, central character, twist law, and conductor convention. They are
+
+$$
+\omega_{\operatorname{Sp}_D(\mu)}=\mu^2,
+\qquad
+\operatorname{Sp}_D(\mu)\otimes(\chi\circ\operatorname{Nrd})
+=\operatorname{Sp}_D(\mu\chi),
+$$
+
+and
+
+$$
+a_D(\operatorname{Sp}_D(\mu))=
+\begin{cases}
+1,&a(\mu)=0,\\
+2a(\mu),&a(\mu)>0.
+\end{cases}
+$$
+
+The exceptional value $1$ for an unramified character is essential: the companion special representation has a single monodromy contribution even though the division-side character is trivial on the maximal compact subgroup. Thus congruence depth alone cannot define the selected conductor for this family. This is the only exceptional clause; ramified special packets and every higher-dimensional packet are read from their last nontrivial unit layer.
+
+At a regular element $d$, the value is simply
+
+$$
+\Theta_{\operatorname{Sp}_D(\mu)}(d)=\mu(\operatorname{Nrd}d).
+$$
+
+This elementary formula later anchors the sign and normalization of the special comparison.
+
 ## 4. Congruence layers
 
 ### 4.1 Why the filtration is the main coordinate system
@@ -509,13 +566,13 @@ $$
 c_D(\pi)=\min\{m\ge0\mid U_D^m\text{ acts trivially on }\pi\}.
 $$
 
-Here $U_D^0=\mathcal O_D^\times$. Its **level** is
+Here $U_D^0=\mathcal O_D^\times$. Its **nonnegative filtration level** is
 
 $$
 \ell_D(\pi)=\max\{c_D(\pi)-1,0\}.
 $$
 
-Thus unramified norm characters have exponent and level zero; a genuine level-zero representation is trivial on $U_D^1$ but not on $U_D^0$, so $c_D=1$ and $\ell_D=0$.
+Thus unramified norm characters have exponent and filtration level zero; a genuine higher-dimensional level-zero representation is trivial on $U_D^1$ but not on $U_D^0$, so $c_D=1$ and $\ell_D=0$. In the special-packet convention one instead assigns level $-1$ to an unramified norm character. We keep the filtration level nonnegative and display the exceptional conductor explicitly, so the two conventions cannot be confused.
 
 For a smooth character $\mu$ of $K^\times$, put $U_K^0=\mathcal O_K^\times$, $U_K^r=1+\mathfrak p_K^r$ for $r\ge1$, and
 
@@ -551,12 +608,13 @@ The **transfer-facing conductor exponent** is defined by
 $$
 a_D(\pi)=
 \begin{cases}
-2a(\mu),&\pi=\mu\circ\operatorname{Nrd},\\
+1,&\pi=\mu\circ\operatorname{Nrd}\text{ and }a(\mu)=0,\\
+2a(\mu),&\pi=\mu\circ\operatorname{Nrd}\text{ and }a(\mu)>0,\\
 \ell_D(\pi)+2,&\dim\pi>1.
 \end{cases}
 $$
 
-This convention assigns conductor two to a higher-dimensional level-zero representation. It is designed for the character comparisons of the next book, but it is an intrinsic definition here. For a ramified norm character, the preceding calculation shows that $\ell_D+2=2a(\mu)$ as well. The separate clause is needed for unramified norm characters: they have level and conductor zero, whereas the noncharacter rule would incorrectly assign two.
+This convention assigns conductor one to the unramified special packet and conductor two to a higher-dimensional level-zero packet. For a ramified norm character, the preceding calculation shows that $\ell_D+2=2a(\mu)$ as well. Congruence exponent alone does not see the monodromy carried by the selected special parameter, which is why its unramified member requires the exceptional clause.
 
 ### 5.2 Central conductor constraints
 
@@ -593,7 +651,11 @@ Unramified twists preserve $c_D$, $\ell_D$, and $a_D$. Ramified twists need not 
 
 $$
 a_D((\mu\circ\operatorname{Nrd})\otimes\chi)
-=2a(\mu\chi).
+=
+\begin{cases}
+1,&a(\mu\chi)=0,\\
+2a(\mu\chi),&a(\mu\chi)>0.
+\end{cases}
 $$
 
 The right side can be smaller than both naive maxima.
@@ -951,6 +1013,8 @@ $$
 \omega_{\pi_\theta}=\theta|_{K^\times}.
 $$
 
+This is the direct normalization of the inducing character. In the quadratic-induction normalization of Section 10.7, the same parameter label gives central character $\theta|_{K^\times}\omega_{L/K}$.
+
 For a unit $u\in\mathcal O_D^\times$ whose residue generates $k_D$ over $k$, the character is
 
 $$
@@ -1115,7 +1179,7 @@ $$
 \omega_{\pi(E,\theta)}=\theta|_{K^\times},
 $$
 
-since the center lies in the inducing subgroup and acts there through $\theta$.
+since the center lies in the inducing subgroup and acts there through $\theta$. This is again the direct normalization; Section 10.7 inserts the rectifier for the selected quadratic-induction label.
 
 ### 10.5 Conductor formulas
 
@@ -1192,13 +1256,62 @@ $$
 
 This parity diagnostic is useful but not a universal classification in residue characteristic two: wild quadratic extensions have larger discriminant exponent, and nonquadratic filtration data can share the same numerical invariants.
 
+### 10.7 Direct and quadratic-induction normalizations
+
+There are two honest ways to name the torus character, and confusing them changes the central character. In the **direct normalization** used in the construction above, the inducing type restricts to the stated character $\theta$ on $E^\times$. We write the result as
+
+$$
+\pi_D^{\mathrm{dir}}(E,\theta),
+\qquad
+\omega_{\pi_D^{\mathrm{dir}}}=\theta|_{K^\times}.
+$$
+
+The selected quadratic-induction representation on the split group is naturally labelled by a character whose induced two-dimensional parameter has determinant
+
+$$
+\theta|_{K^\times}\omega_{E/K},
+$$
+
+where $\omega_{E/K}$ is the quadratic character of $K^\times$ attached to $E/K$. To use the same symbol $\theta$ on both sides, fix the tame rectifying character $\Delta_{E/K}$ of $E^\times$ characterized by the selected type normalization and, in particular, by
+
+$$
+\Delta_{E/K}|_{K^\times}=\omega_{E/K}.
+$$
+
+Put $\theta^\natural=\theta\Delta_{E/K}$ and define the **quadratic-induction normalization** by
+
+$$
+\pi_D(E,\theta)=\pi_D^{\mathrm{dir}}(E,\theta^\natural).
+$$
+
+The rectifier has conductor small enough not to change any conductor formula in the selected tame range. It does change the central-character formula to
+
+$$
+\omega_{\pi_D(E,\theta)}
+=\theta|_{K^\times}\omega_{E/K}.
+$$
+
+This is not a cosmetic convention. If one writes $\theta|_{K^\times}\omega_{E/K}$ while inducing a type whose actual restriction is $\theta$, one has asserted two incompatible central actions. Direct normalization is best for constructing and evaluating the type; quadratic-induction normalization is best for placing it beside the selected split representation. We will display both whenever the distinction matters.
+
+The rectifier is fixed coherently under conjugation and norm twists. Consequently
+
+$$
+\pi_D(E,\theta)\otimes(\chi\circ\operatorname{Nrd})
+\cong
+\pi_D(E,\theta(\chi\circ N_{E/K})),
+$$
+
+and the right-hand central character changes by $\chi^2$, exactly as the left-hand side does. At depth zero, the rectifier places the Frobenius orbit in the chosen parameter normalization. At positive depth, it aligns the one-dimensional torus phase after the two Heisenberg models have been fixed. Establishing the inner-form sign and the full character identity belongs to local transfer; choosing the normalization does not assume that theorem.
+
 ## 11. The wild range and abstract exhaustivity
 
 ### 11.1 What tame pairs do not cover
 
-When the residue characteristic is two, quadratic extensions may be wildly ramified, trace-pairing lattices have larger discriminant shifts, and a leading congruence character can have a stabilizer whose extension data are not captured by the preceding tame formulas. Even in odd residue characteristic, a construction stated only with one-dimensional extensions would omit Heisenberg steps.
+The selected quadratic range has an exact boundary. It contains every norm character; every regular depth-zero packet from the unramified quadratic field; and every positive-depth packet whose minimal first noncentral stratum has a tame quadratic centralizer. Thus for odd residue characteristic both ramification types of quadratic field occur. In residue characteristic two, the quadratic part retained here is the unramified type. Ramified quadratic fields are wild and are not put into the tame formulas.
 
-It would therefore be false to claim that the elementary tame admissible pairs, as developed above, label every irreducible in all residue characteristics. What remains true is stronger than a mere existence assertion: the normal filtration gives an abstract finite, exhaustive parametrization.
+Outside this boundary lie two phenomena. First, in residue characteristic two a ramified quadratic extension has a larger and extension-dependent discriminant shift, and the stabilizer extension need not be the tame one used above. Second, a primitive wild representation can have a first noncentral leading stratum not recovered from any tame quadratic character. Such a representation may still contain Heisenberg data, but its filtration jumps and projective extension are not determined by the pair $(E,\theta)$ used in Chapter 10.
+
+It would therefore be false to claim that the elementary tame admissible pairs label every irreducible in all residue characteristics. None of the tame dimension, parity, rectifier, type-line, or integral-reduction assertions is extended to the primitive wild range. What remains true for all irreducibles is the abstract finite, exhaustive parametrization below. It proves that the omitted range is bounded by explicit finite data at each congruence exponent, without pretending to give those data a tame quadratic name.
 
 ### 11.2 An exhaustive Clifford parameter
 
@@ -1489,9 +1602,283 @@ $$
 
 This is the exact amount of formal-degree theory needed to compare character normalizations later.
 
-## 15. Examples over $\mathbf Q_p$
+## 15. Type vectors and the newvector question
 
-### 15.1 Norm characters
+### 15.1 Why normal congruence groups do not select a line
+
+On the split degree-two group, a conductor is often detected by the first compact subgroup fixing a one-dimensional newspace. It is tempting to seek the same object inside $D^\times$. The normality of $U_D^m$ immediately shows why that temptation is misleading. For irreducible $\pi$,
+
+$$
+\pi^{U_D^m}=0
+\quad\text{or}\quad
+\pi^{U_D^m}=\pi.
+$$
+
+At the first exponent $m=c_D(\pi)$ the invariant space therefore jumps from zero to dimension $\dim\pi$, not to dimension one. For a depth-zero dihedral packet that jump is from zero to dimension two. For a positive-depth unramified packet of conductor $2n$, it is from zero to dimension $2q^{n-1}$. Calling this whole space a newvector line would erase the most characteristic feature of the division group.
+
+The replacement is a **type vector**: not usually a preferred vector of $\pi$, but a preferred copy of the inducing representation inside $\pi|_{J_\theta}$. This formulation behaves well under conjugation, coefficient extension, and integral structures. It also distinguishes the representation when principal-unit invariants alone do not.
+
+A counterexample makes the point sharp. Two distinct regular characters of $k_D^\times$ can have the same restriction to $k^\times$. Their depth-zero representations have identical dimensions for invariants under every $U_D^m$ and under every $\mathcal O_K^\times U_D^m$, yet their two residue-character orbits are different. The congruence fixed spaces do not recover the packet; the type does.
+
+### 15.2 The canonical type multiplicity space
+
+Let $\pi=\mathrm{c\text{-}Ind}_J^{D^\times}\Lambda$ be one of the regular tame constructions, with exact self-intertwining set $J$. Frobenius reciprocity gives
+
+$$
+\operatorname{Hom}_J(\Lambda,\pi|_J)
+\cong
+\operatorname{End}_{D^\times}(\pi).
+$$
+
+The displayed isomorphism uses the inducing map. Since $\pi$ is irreducible over $C$, the right side is $C$. Hence
+
+$$
+\dim_C\operatorname{Hom}_J(\Lambda,\pi)=1.
+$$
+
+This one-dimensional multiplicity space is the quaternionic new line. Its nonzero elements embed the full type space $\Lambda$ into $\pi$; scaling an embedding does not change its image. In the induced-function model, the copy supported on the identity coset realizes it concretely. Translating that copy gives the conjugate type spaces supported on the other cosets.
+
+The self-intertwining hypothesis is decisive. If $\bar\theta$ at depth zero is Frobenius-invariant, the induced representation splits into two characters and the endomorphism algebra has dimension two. There is then no unique type embedding. Thus type multiplicity one is another form of regularity, not a consequence of finite index alone.
+
+For a special packet the inducing subgroup is all of $D^\times$ and the type multiplicity line is simply the representation itself. This degenerate case fits the formalism and explains why its distinguished lattice will have rank one.
+
+### 15.3 Toric lines and test vectors
+
+The quadratic field used in a dihedral construction supplies a finer distinguished functional. In direct normalization, restriction of $\Lambda_\theta$ to the decisive part of $E^\times$ contains $\theta$ with multiplicity one. Evaluation on the identity coset therefore gives a nonzero $E^\times$-equivariant functional on the induced model, with the inverse character if the functional is viewed on vectors rather than on the dual.
+
+The relevant multiplicity-one statement is
+
+$$
+\dim\operatorname{Hom}_{E^\times}(\pi,\Omega)\le1
+$$
+
+whenever $\Omega|_{K^\times}=\omega_\pi$ with the compatible variance. Here is the proof idea. Choose an element implementing the nontrivial automorphism of $E/K$ and combine its conjugation with canonical quaternion conjugation. The resulting anti-involution fixes $E$ pointwise. Reduced trace and norm show that it preserves every double coset $E^\times dE^\times$. A matrix coefficient transforming by $\Omega$ on the left and $\Omega^{-1}$ on the right is therefore fixed by that anti-involution. Applying this symmetry to two toric functionals makes their two compositions proportional; irreducibility then forces the product of the two multiplicities to be at most one. Duality identifies the two multiplicities and proves the claim.
+
+For the inducing torus and its prescribed character, existence was built into $\Lambda_\theta$, so the Hom space is exactly one dimensional. A generator is a **toric test vector functional**. There need not be such a functional for every character of every other quadratic torus. Multiplicity one proves uniqueness when a functional exists; it does not prove existence.
+
+The invariant pairing between $\pi$ and $\pi^\vee$ identifies the $\theta$-functional with the dual of the $\theta^{-1}$-functional. If $\theta^\sigma=\theta^{-1}$, a normalizer element exchanges the two lines. Its square is central, so the central character determines the scalar square while the induced pairing determines whether the self-dual form is symmetric or alternating.
+
+### 15.4 The selected split-side newvector interface
+
+For each selected parameter there are therefore two different but corresponding minimal objects. On the split side, the conductor subgroup cuts out a one-dimensional newvector line. On the division side, the normal congruence subgroup cuts out the entire representation, while the compact-mod-center type has a one-dimensional multiplicity space. The correct interface is
+
+$$
+\text{split newvector line}
+\quad\longleftrightarrow\quad
+\operatorname{Hom}_{J_\theta}(\Lambda_\theta,\pi_D(E,\theta)).
+$$
+
+For special packets, both sides are labelled by $\mu$ and the division multiplicity space has rank one. For depth-zero packets, the division type is the Frobenius pair $\bar\theta\oplus\bar\theta^q$ and its multiplicity is one. At positive depth, the Heisenberg type replaces that pair, again with multiplicity one.
+
+This dictionary is parameter-theoretic and integral: it identifies which minimal line and which lattice should be compared. It does not by itself prove the character identity between the two groups. That later theorem must still match regular classes and verify the inner-form sign. The distinction prevents a circular argument in which a chosen newvector is treated as proof of transfer.
+
+## 16. Integral lattices and integral pairings
+
+### 16.1 Coefficient fields and the existence criterion
+
+Arithmetic applications need more than a complex representation: they need a lattice stable under the group. Let $L_\lambda$ be a finite extension of $\mathbf Q_\ell$, with valuation ring $R$, maximal ideal $\mathfrak m_R$, and fraction field $L_\lambda$. Assume $\ell$ differs from the residue characteristic $p$ of $K$ when using the tame Heisenberg constructions.
+
+An $R$-lattice in an $L_\lambda$-representation $V$ is a finite free $R$-submodule spanning $V$. Stability under both $g$ and $g^{-1}$ forces every central scalar to be a unit. In particular, if $\varpi$ acts by $c$, a stable lattice can exist only when
+
+$$
+c\in R^\times.
+$$
+
+This condition is sharp for the representations at hand. Once the central scalar is a unit, the remaining action factors through a finite quotient after the center is imposed. A finite set of matrices and their inverses preserves some common lattice: start with any lattice, add its images under representatives of the finite quotient, and use unit central scalars for the omitted central powers. Thus an irreducible selected packet has a stable lattice exactly when its finite-order type values are defined over $L_\lambda$ and its unramified central scalar is integral and invertible, after enlarging the coefficient field if necessary.
+
+The unit condition cannot be dropped. A one-dimensional unramified special packet with $\mu(\varpi)$ of positive $\ell$-adic valuation sends $\Pi$ to a nonunit. Stability under $\Pi^{-1}$ would require multiplication by its inverse, so no nonzero finite lattice survives.
+
+### 16.2 Lattices in special and dihedral types
+
+For $\operatorname{Sp}_D(\mu)$ with unit-valued $\mu$, take the rank-one lattice $R$ with action through $\mu\circ\operatorname{Nrd}$. For a depth-zero datum whose character values lie in $R^\times$, the rank-one lattice in $\Lambda_\theta$ induces the desired model.
+
+At positive depth, begin with the simple character on the last unit layer. Its values have $p$-power order and therefore lie in units when $\ell\ne p$. Choose a maximal isotropic subgroup for the finite commutator pairing and induce its rank-one character lattice. This produces a finite free lattice in the Heisenberg representation. The tame torus extension acts through a finite quotient modulo the prescribed central scalar; after one finite coefficient extension, its operators preserve the lattice.
+
+Changing the polarization changes the model but not the representation. When the finite quotient order is a unit in $R$, the Fourier intertwiners comparing two polarizations are integral isomorphisms after the standard unit normalization. If that order is not invertible, stable lattices still exist, but different choices can yield nonisomorphic reductions. Existence and canonical reduction are separate assertions.
+
+The rectifier is finite order in the selected tame range. Its values are units, so passing from direct normalization to quadratic-induction normalization does not disturb integrality. It only tensors the torus lattice by a rank-one unit-valued lattice.
+
+### 16.3 Finite free induction and base change
+
+Let $\Lambda_R$ be a stable finite free lattice in a selected type on $J$. Define
+
+$$
+\pi_R=\operatorname{Ind}_J^{D^\times}\Lambda_R.
+$$
+
+Because $J\backslash D^\times$ is finite, evaluation on coset representatives gives
+
+$$
+\pi_R\cong\bigoplus_{J\backslash D^\times}\Lambda_R
+$$
+
+as an $R$-module. Hence $\pi_R$ is finite free of rank
+
+$$
+[D^\times:J]\operatorname{rank}_R\Lambda_R,
+$$
+
+and
+
+$$
+\pi_R\otimes_RL_\lambda\cong\pi.
+$$
+
+No completion or infinite-support argument is hidden here. Compactness modulo the center has turned the entire representation, not merely one fixed-vector space, into a finite module.
+
+If $R\to R'$ is a finite extension of valuation rings, the same finite direct-sum model gives a canonical isomorphism
+
+$$
+\pi_R\otimes_RR'
+\cong
+\operatorname{Ind}_J^{D^\times}(\Lambda_R\otimes_RR').
+$$
+
+Thus coefficient enlargement used to acquire character values commutes with construction, twists, and the type multiplicity line. This is the precise integral compatibility needed when the selected split representation and its division companion are placed over one coefficient field.
+
+### 16.4 Perfect duality and self-dual lattices
+
+Put $\Lambda_R^\#=\operatorname{Hom}_R(\Lambda_R,R)$ with contragredient action. For induced functions define
+
+$$
+\langle f,f^\#\rangle
+=\sum_{x\in J\backslash D^\times}
+\langle f(x),f^\#(x)\rangle_\Lambda.
+$$
+
+The covariance laws cancel when $x$ is replaced by $jx$, and right translation permutes the finite coset set. The pairing is therefore well defined and $D^\times$-invariant. It is perfect because it is the orthogonal direct sum of perfect evaluation pairings on finitely many copies of $\Lambda_R$. In particular,
+
+$$
+\pi_R^\#\cong\operatorname{Ind}_J^{D^\times}\Lambda_R^\#.
+$$
+
+No denominator appears: this is a sum, not an average. That fact is crucial at primes dividing $[D^\times:J]$.
+
+If $\pi$ is self-dual, the rational pairing may be symmetric or alternating. A stable lattice $M$ and its dual $M^\#$ are commensurable, so scaling and intersection produce an almost self-dual stable lattice. A genuinely self-dual lattice requires the corresponding unimodular form over $R$; it follows under the usual unit hypotheses on $2$ and the relevant finite quotient, but is not automatic at a dyadic coefficient prime. The perfect pairing between $\pi_R$ and its contragredient lattice is unconditional and is the form used for the selected comparison.
+
+The one-dimensional type multiplicity spaces inherit dual rank-one lattices. Their pairing is perfect after choosing primitive generators, unique up to multiplication by reciprocal units. This is the integral version of the division-side new line in Chapter 15.
+
+### 16.5 Reduction and the nonbanal boundary
+
+Let $\bar R=R/\mathfrak m_R$. If $\ell$ does not divide the orders of the finite quotients controlling the type, the coset permutation action, and the relevant stabilizers, averaging remains exact after reduction. In this banal range, reduction preserves irreducibility, the one-dimensional type multiplicity, the toric functional when present, and the perfect pairing with the contragredient.
+
+Outside that range, only the lattice and its reduction are automatic. For example, if $\ell$ divides $q+1$, two distinct regular characters of $k_D^\times$ can become congruent to their Frobenius conjugates. The reduced index-two induction can split or acquire extra endomorphisms. If $\ell$ divides a finite symplectic quotient order, polarization projectors need not remain exact. These are genuine congruences, not failures of the characteristic-zero construction.
+
+Accordingly the integral package has two layers. Stable finite free lattices and perfect dual-lattice pairings hold for unit-valued selected data. Irreducible reduction and preservation of distinguished lines require the explicitly stated banal hypotheses. Primitive wild types are outside both selected assertions because their integral extension operators have not been constructed here.
+
+## 17. Measures, orbital normalization, and transfer data
+
+### 17.1 A compatible system of Haar measures
+
+Pointwise finite-dimensional characters do not depend on Haar measure, but distributions, orbital integrals, and formal degrees do. We therefore fix a compatible system rather than renormalizing each quotient independently.
+
+Choose multiplicative Haar measures by
+
+$$
+\operatorname{vol}(\mathcal O_K^\times,d^\times z)=1,
+\qquad
+\operatorname{vol}(\mathcal O_D^\times,d^\times d)=1.
+$$
+
+For every embedded quadratic field $E$, choose $d^\times e$ with $\operatorname{vol}(\mathcal O_E^\times)=1$. The same $d^\times e$ is used when $E^\times$ is viewed as a centralizer on either inner form. All quotient measures are then defined by Weil's formula. For example,
+
+$$
+\int_{D^\times}\Phi(d)\,d^\times d
+=\int_{E^\times\backslash D^\times}
+\int_{E^\times}\Phi(ed)\,d^\times e\,d\dot d.
+$$
+
+One must not separately decree that each quotient compact subgroup has volume one; doing so can contradict this formula. With the two central unit normalizations above, the image of $\mathcal O_D^\times$ in $D^\times/K^\times$ has volume one. The two valuation parities are disjoint and equipotent, so
+
+$$
+\operatorname{vol}(D^\times/K^\times)=2.
+$$
+
+Thus the formal degree in this normalization is $\dim\pi/2$. If instead the total central quotient is normalized to volume one, every formal degree doubles. Both conventions are legitimate; the conversion factor must be shown.
+
+### 17.2 Centralizers, discriminants, and orbital integrals
+
+Let $d\in D^\times$ be regular and put $E=K[d]$. Its reduced characteristic polynomial has discriminant
+
+$$
+\Delta(d)=\operatorname{Trd}(d)^2-4\operatorname{Nrd}(d).
+$$
+
+The Weyl discriminant used for degree two is
+
+$$
+D_D(d)=\left|\frac{\Delta(d)}{\operatorname{Nrd}(d)}\right|_K.
+$$
+
+If a degree-two matrix $g$ has the same characteristic polynomial, then its elliptic centralizer is the same abstract field $E^\times$ and
+
+$$
+D_{\mathrm{split}}(g)=D_D(d).
+$$
+
+Using the common centralizer measure, define
+
+$$
+O_d(f)=\int_{E^\times\backslash D^\times}
+f(x^{-1}dx)\,d\dot x.
+$$
+
+The normalized orbital integral is $D_D(d)^{1/2}O_d(f)$. A transfer statement must use either ordinary orbital integrals on both groups or normalized orbital integrals on both. Mixing the two conventions inserts the unwanted factor $D_D(d)^{1/2}$.
+
+Trace and norm do three jobs at once: they determine the regular conjugacy class in $D^\times$, identify its matching elliptic characteristic polynomial, and determine the Weyl discriminant. This is why their normalization was fixed before representation theory began.
+
+### 17.3 Pointwise characters versus distributions
+
+For a compactly supported locally constant function $f$, use the action
+
+$$
+\pi(f)=\int_{D^\times}f(d)\pi(d)\,d^\times d.
+$$
+
+Since $\pi$ is finite dimensional and smooth, subdivision by a sufficiently small compact open subgroup turns the integral into a finite sum. Therefore
+
+$$
+\operatorname{tr}\pi(f)
+=\int_{D^\times}f(d)\Theta_\pi(d)\,d^\times d.
+$$
+
+The pointwise function $\Theta_\pi$ is the ordinary matrix trace and does not change when Haar measure is rescaled. The distribution $f\mapsto\operatorname{tr}\pi(f)$ is represented relative to the chosen measure; changing the measure changes the convolution operator and its integral description together.
+
+Likewise, the finite compact-induction formula contains no volume factor. Volumes enter only after one integrates that pointwise formula or groups it into orbital integrals. This separation is the safest normalization check in the subject.
+
+### 17.4 The selected comparison package
+
+The selected parameter table now has two rows. A character $\mu$ gives the special packet $\operatorname{Sp}_D(\mu)$. A tame regular quadratic pair $(E,\theta)$ gives the quadratic-induction-normalized packet $\pi_D(E,\theta)$. Their central characters and conductors agree with those of the correspondingly labelled selected split representations:
+
+$$
+\mu^2,
+\qquad
+a_D=
+\begin{cases}1,&a(\mu)=0,\\2a(\mu),&a(\mu)>0,
+\end{cases}
+$$
+
+and
+
+$$
+\theta|_{K^\times}\omega_{E/K},
+\qquad
+a_D=\Delta(E/K)+f(E/K)a_E(\theta).
+$$
+
+For matching regular elliptic elements, the transfer normalization to be proved later is the pointwise identity
+
+$$
+\Theta_{\mathrm{split}}(g)=-\Theta_D(d).
+$$
+
+The minus sign is the degree-two inner-form sign. At depth zero it is visible in the negative finite cuspidal sum on the split side versus the positive Frobenius sum on the division side. At positive depth it is carried by the compatible rectifier and finite Heisenberg traces. Near the center, the full finite double-coset formula must be used on both sides; a two-term torus approximation is not sufficient.
+
+This chapter has fixed every normalization appearing in that assertion: characteristic polynomials, centralizer measures, quotient measures, Weyl discriminants, rectifiers, and pointwise character conventions. It has not assumed the identity. The remaining proof is a comparison theorem, not part of the classification of $D^\times$.
+
+## 18. Examples over $\mathbf Q_p$
+
+### 18.1 Norm characters
 
 Let $D$ be the quaternion division algebra over $\mathbf Q_p$. For any smooth $\mu:\mathbf Q_p^\times\to C^\times$,
 
@@ -1499,7 +1886,7 @@ $$
 \pi=\mu\circ\operatorname{Nrd}
 $$
 
-has dimension one and central character $\mu^2$. If $\mu$ is unramified, then $c_D(\pi)=0$ and $a_D(\pi)=0$. If $a(\mu)=r>0$, then
+has dimension one and central character $\mu^2$. If $\mu$ is unramified, then $c_D(\pi)=0$ while the selected special conductor is $a_D(\pi)=1$. If $a(\mu)=r>0$, then
 
 $$
 a_D(\pi)=2r.
@@ -1507,7 +1894,7 @@ $$
 
 For example a tamely ramified character inflated from $\mathbf F_p^\times$ has $r=1$ and gives a norm character of conductor two. It is not a level-zero higher-dimensional representation even though the same conductor number occurs; dimension separates the families.
 
-### 15.2 A level-zero representation
+### 18.2 A level-zero representation
 
 Assume first that $p$ is arbitrary and let $L/\mathbf Q_p$ be unramified quadratic. Choose a generator $\zeta$ of $\mathbf F_{p^2}^\times$ and a root of unity $\xi\in C^\times$ of order $p^2-1$. Define
 
@@ -1530,7 +1917,7 @@ $$
 
 and on odd-valuation elements its character is zero.
 
-### 15.3 A positive-depth unramified example
+### 18.3 A positive-depth unramified example
 
 Assume $p$ is odd. Choose an additive character of $L$ of conductor zero and choose $b\in\mathcal O_L^\times$ whose residue is not in $\mathbf F_p$. Define the last unit layer of a character $\theta$ by
 
@@ -1552,9 +1939,9 @@ c_D(\pi)=3,
 \dim\pi=2p.
 $$
 
-Its central character is $\theta|_{\mathbf Q_p^\times}$. The construction uses a nontrivial finite Heisenberg step; writing the inducing representation as a character trivial on all extra principal units would give the wrong dimension and generally fail the intersection compatibility.
+In direct normalization its central character is $\theta|_{\mathbf Q_p^\times}$; in quadratic-induction normalization it is $\theta|_{\mathbf Q_p^\times}\omega_{L/\mathbf Q_p}$. The construction uses a nontrivial finite Heisenberg step; writing the inducing representation as a character trivial on all extra principal units would give the wrong dimension and generally fail the intersection compatibility.
 
-### 15.4 A tame ramified example and the dyadic warning
+### 18.4 A tame ramified example and the dyadic warning
 
 Let $p$ be odd and $E=\mathbf Q_p(\sqrt p)$. Its discriminant exponent is one. Choose a character $\theta$ of $E^\times$ of conductor two whose nontrivial character on
 
@@ -1576,18 +1963,18 @@ $$
 
 At $p=2$, the statement “ramified quadratic means discriminant exponent one” is false, sign no longer separates a character from its inverse on a two-element residue layer, and tame parity arguments disappear. The abstract Clifford classification remains exhaustive, but the displayed tame dimension and conductor formulas must not be transplanted unchanged.
 
-## 16. The transfer-facing dictionary
+## 19. The transfer-facing dictionary
 
-### 16.1 The classification table
+### 19.1 The classification table
 
 The following table collects intrinsic data without asserting a correspondence with another group.
 
 | family | parameter | dimension | $a_D$ | central character | contragredient |
 |---|---|---:|---:|---|---|
-| norm character | $\mu:K^\times\to C^\times$ | $1$ | $2a(\mu)$ | $\mu^2$ | $\mu^{-1}\circ\operatorname{Nrd}$ |
-| level zero | regular $\theta$ on unramified $L^\times$, $a_L(\theta)=1$ | $2$ | $2$ | $\theta|_{K^\times}$ | $\pi(L,\theta^{-1})$ |
-| tame unramified positive depth | normalized minimal regular $(L/K,\theta,[\Lambda_\theta])$, $a_L(\theta)=n\ge2$ | $2q^{n-1}$ | $2n$ | $\theta|_{K^\times}$ | dual normalized datum |
-| tame ramified | normalized minimal regular $(E/K,\theta,[\Lambda_\theta])$, $a_E(\theta)=n\ge2$ even | $(q+1)q^{(n-2)/2}$ | $n+1$ | $\theta|_{K^\times}$ | dual normalized datum |
+| special norm character | $\mu:K^\times\to C^\times$ | $1$ | $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $\mu^2$ | $\mu^{-1}\circ\operatorname{Nrd}$ |
+| level zero | regular $\theta$ on unramified $L^\times$, $a_L(\theta)=1$ | $2$ | $2$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{L/K}$ | inverse normalized datum |
+| tame unramified positive depth | normalized minimal regular $(L/K,\theta,[\Lambda_\theta])$, $a_L(\theta)=n\ge2$ | $2q^{n-1}$ | $2n$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{L/K}$ | dual normalized datum |
+| tame ramified | normalized minimal regular $(E/K,\theta,[\Lambda_\theta])$, $a_E(\theta)=n\ge2$ even | $(q+1)q^{(n-2)/2}$ | $n+1$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{E/K}$ | dual normalized datum |
 | wild/general | Clifford datum $(m,\rho,G_\rho,[\alpha],\eta)$ | orbit size $\times\dim\rho\times\dim\eta$ | from minimal killed $U_D^m$; $m+1$ for noncharacters | prescribed $\omega$ | dual Clifford datum |
 
 For every higher-dimensional row,
@@ -1600,7 +1987,7 @@ $$
 
 For characters, use the separate first row. Twisting sends $\omega$ to $\omega\chi^2$, sends $\theta$ to $\theta(\chi\circ N_{E/K})$, and may lower conductor by cancellation. Unramified twists preserve every displayed depth.
 
-### 16.2 Regular-character values
+### 19.2 Regular-character values
 
 For downstream comparison it is useful to keep three character rules together:
 
@@ -1615,7 +2002,7 @@ $$
 \operatorname{tr}\Lambda(xgx^{-1}),
 $$
 
-and, on torus-regular elements in the clean quadratic range,
+and, on torus-regular elements in the regular quadratic range,
 
 $$
 \Theta_{\pi(E,\theta)}(t)
@@ -1625,7 +2012,7 @@ $$
 
 At level zero the last line is simply $\theta(t)+\theta(\sigma(t))$. At positive depth the extension trace must be retained. Contragredience replaces $g$ by $g^{-1}$ in the character, and a norm twist multiplies the value at $g$ by $\chi(\operatorname{Nrd}g)$.
 
-### 16.3 What is ready for comparison
+### 19.3 What is ready for comparison
 
 Every irreducible smooth representation of $D^\times$ now enters later theory with the following data defined:
 
@@ -1638,13 +2025,16 @@ Every irreducible smooth representation of $D^\times$ now enters later theory wi
 - exact compact-induction and isomorphism criteria;
 - matrix-character values on regular elements through a finite conjugacy sum;
 - maximal and Eichler-like compact-open invariant dimensions through finite Mackey theory.
+- a one-dimensional type multiplicity space replacing the split newvector line;
+- stable finite free lattices and perfect contragredient pairings for unit-valued selected data;
+- compatible centralizer, quotient, orbital-integral, and formal-degree measures.
 
 No representation has yet been matched with a representation of $\mathrm{GL}_2(K)$. In particular, equality of conductors, signs in a character identity, and the placement of one-dimensional norm characters relative to special representations remain theorems to be established in Book 84. The present conductor normalization is a prepared interface, not a proof of those statements.
 
-### 16.4 Conclusion
+### 19.4 Conclusion
 
 The apparent simplicity of $D^\times/K^\times$ hides a remarkably structured finite theory. The reduced norm fixes the valuation, doubles the center's depth, and identifies every one-dimensional representation. The maximal order supplies a canonical normal filtration whose residue layer is $\mathbf F_{q^2}^\times$ and whose positive layers are additive copies of $\mathbf F_{q^2}$. Frobenius conjugation and commutator pairings then determine which characters descend, which travel in nontrivial orbits, and which require Heisenberg or projective extensions.
 
 Compactness modulo the center turns those filtration calculations into a complete classification. Every irreducible is finite dimensional; every one kills a congruence subgroup; and every one is recovered from a finite representation of the maximal compact together with the action of a division uniformizer. Regular residue characters give the two-dimensional level-zero family. Minimal regular characters of embedded quadratic fields give the tame positive-depth families, with explicit dimensions, centers, conductors, duals, and twists. Where wild ramification prevents a uniform elementary label, the Clifford datum remains exact and exhaustive rather than hiding the missing cases.
 
-The resulting representation is visible through several compatible shadows: its inducing orbit, its first nontrivial congruence layer, its central character, its finite matrix character on regular classes, its compact-open fixed spaces, and its formal degree. These shadows now form one coherent local object. The next stage may compare that object with discrete-series representation theory on the split inner form; the division-algebra side itself is complete.
+The resulting representation is visible through several compatible shadows: its inducing orbit, its first nontrivial congruence layer, its central character, its finite matrix character on regular classes, its type multiplicity line, its integral lattice, and its formal degree. Compatible centralizer measures and rectifiers make these shadows one coherent local object. The next stage may compare that object with discrete-series representation theory on the split inner form; the division-algebra side itself is complete in the selected special and tame dihedral range, while the primitive wild boundary remains explicit.
