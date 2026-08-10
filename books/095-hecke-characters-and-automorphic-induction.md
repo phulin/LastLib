@@ -13,6 +13,7 @@
    - [The central modulus direction](#23-the-central-modulus-direction)
    - [Algebraic infinity types](#24-algebraic-infinity-types)
    - [Ideals, units, and a first obstruction](#25-ideals-units-and-a-first-obstruction)
+   - [Existence from ray data and coefficient values](#26-existence-from-ray-data-and-coefficient-values)
 3. [Reciprocity and one-dimensional Galois characters](#3-reciprocity-and-one-dimensional-galois-characters)
    - [Arithmetic reciprocity without inversions](#31-arithmetic-reciprocity-without-inversions)
    - [Algebraic characters and $\ell$-adic avatars](#32-algebraic-characters-and-ell-adic-avatars)
@@ -24,22 +25,27 @@
    - [The determinant and the missing sign](#43-the-determinant-and-the-missing-sign)
    - [When the character descends](#44-when-the-character-descends)
    - [A useful counterexample](#45-a-useful-counterexample)
+   - [Projective image and recovery of the quadratic field](#46-projective-image-and-recovery-of-the-quadratic-field)
 5. [Local automorphic induction](#5-local-automorphic-induction)
    - [The local problem as an étale quadratic algebra](#51-the-local-problem-as-an-étale-quadratic-algebra)
    - [Split places](#52-split-places)
    - [Inert and ramified field places](#53-inert-and-ramified-field-places)
    - [Why special representations do not occur](#54-why-special-representations-do-not-occur)
    - [Archimedean places](#55-archimedean-places)
+   - [A direct local model and the wild boundary](#56-a-direct-local-model-and-the-wild-boundary)
 6. [Local invariants and exceptional behavior](#6-local-invariants-and-exceptional-behavior)
    - [Central characters and twists](#61-central-characters-and-twists)
    - [Exact conductor formulas](#62-exact-conductor-formulas)
    - [Local $L$- and epsilon factors](#63-local-l--and-epsilon-factors)
    - [Unramified local polynomials](#64-unramified-local-polynomials)
+   - [Inertia, ramification, and a complete finite-place table](#65-inertia-ramification-and-a-complete-finite-place-table)
+   - [Newvectors and the meaning of the conductor](#66-newvectors-and-the-meaning-of-the-conductor)
 7. [An explicit global construction](#7-an-explicit-global-construction)
    - [Why a restricted tensor product is insufficient](#71-why-a-restricted-tensor-product-is-insufficient)
    - [Schwartz data and local Whittaker functions](#72-schwartz-data-and-local-whittaker-functions)
    - [The global Whittaker series](#73-the-global-whittaker-series)
    - [Factorization and irreducibility](#74-factorization-and-irreducibility)
+   - [Convergence, constant terms, and the automorphy audit](#75-convergence-constant-terms-and-the-automorphy-audit)
 8. [Cuspidality and descent through the norm](#8-cuspidality-and-descent-through-the-norm)
    - [The constant term detects conjugation](#81-the-constant-term-detects-conjugation)
    - [The descended case and isobaric decomposition](#82-the-descended-case-and-isobaric-decomposition)
@@ -55,6 +61,7 @@
     - [The inert-prime calculation](#102-the-inert-prime-calculation)
     - [Ramified primes and what the polynomial omits](#103-ramified-primes-and-what-the-polynomial-omits)
     - [Ideal-theoretic coefficients](#104-ideal-theoretic-coefficients)
+    - [Prime powers and the full Euler identity](#105-prime-powers-and-the-full-euler-identity)
 11. [Infinity types and cohomological weights](#11-infinity-types-and-cohomological-weights)
     - [Why infinity type becomes weight](#111-why-infinity-type-becomes-weight)
     - [Purity and the common central weight](#112-purity-and-the-common-central-weight)
@@ -73,25 +80,20 @@
     - [Stable lattices in the induced representation](#133-stable-lattices-in-the-induced-representation)
     - [Residual dihedral representations](#134-residual-dihedral-representations)
     - [A practical residual irreducibility test](#135-a-practical-residual-irreducibility-test)
+    - [What reduction preserves in the automorphic data](#136-what-reduction-preserves-in-the-automorphic-data)
 14. [Twists, conjugation, and controlled ramification](#14-twists-conjugation-and-controlled-ramification)
     - [Global twists](#141-global-twists)
     - [Conjugating coefficients and conjugating the field](#142-conjugating-coefficients-and-conjugating-the-field)
     - [Preserving prescribed local ramification after reduction](#143-preserving-prescribed-local-ramification-after-reduction)
     - [Building a character with chosen local behavior](#144-building-a-character-with-chosen-local-behavior)
     - [Minimality under norm twists](#145-minimality-under-norm-twists)
-15. [Cyclic induction in general degree](#15-cyclic-induction-in-general-degree)
-    - [The pattern behind the quadratic case](#151-the-pattern-behind-the-quadratic-case)
-    - [The local construction for cyclic étale algebras](#152-the-local-construction-for-cyclic-étale-algebras)
-    - [The global cyclic induction theorem](#153-the-global-cyclic-induction-theorem)
-    - [Stabilizers and intermediate fields](#154-stabilizers-and-intermediate-fields)
-    - [Central characters and the permutation determinant](#155-central-characters-and-the-permutation-determinant)
-    - [What has and has not been used](#156-what-has-and-has-not-been-used)
-16. [Examples and the final dictionary](#16-examples-and-the-final-dictionary)
-    - [A finite dihedral example](#161-a-finite-dihedral-example)
-    - [A norm-descended counterexample](#162-a-norm-descended-counterexample)
-    - [Reading a splitting prime in both languages](#163-reading-a-splitting-prime-in-both-languages)
-    - [The complete quadratic dictionary](#164-the-complete-quadratic-dictionary)
-    - [Conclusion: rank two without losing rank-one control](#165-conclusion-rank-two-without-losing-rank-one-control)
+    - [A dihedral starting-point theorem](#146-a-dihedral-starting-point-theorem)
+15. [Examples and the final dictionary](#15-examples-and-the-final-dictionary)
+    - [A finite dihedral example](#151-a-finite-dihedral-example)
+    - [A norm-descended counterexample](#152-a-norm-descended-counterexample)
+    - [Reading a splitting prime in both languages](#153-reading-a-splitting-prime-in-both-languages)
+    - [The complete quadratic dictionary](#154-the-complete-quadratic-dictionary)
+    - [Conclusion: rank two without losing rank-one control](#155-conclusion-rank-two-without-losing-rank-one-control)
 
 ## 1. The induction problem
 
@@ -275,6 +277,37 @@ This is the unit compatibility condition. Enlarging the conductor removes the ob
 
 This example explains why infinity type and finite conductor cannot be chosen entirely independently. The adelic definition packages their compatibility automatically; the ideal description is convenient only after the unit condition has been checked.
 
+### 2.6 Existence from ray data and coefficient values
+
+The definitions become useful only after one knows exactly which ideal characters occur. Fix a modulus $\mathfrak m=\mathfrak m_0\mathfrak m_\infty$ of $M$. Let $I(\mathfrak m_0)$ be the group of fractional ideals prime to $\mathfrak m_0$, and let $P_{\mathfrak m,1}$ be generated by $(a)$ with $a\equiv1\pmod{\mathfrak m_0}$ and positive at the real places in $\mathfrak m_\infty$. The ray class group
+
+$$
+\operatorname{Cl}_{\mathfrak m}(M)
+=I(\mathfrak m_0)/P_{\mathfrak m,1}
+$$
+
+is finite. Finite-order Hecke characters of conductor dividing $\mathfrak m$ are therefore precisely the characters of this finite group, together with the equivalent local description on the compact quotient of $C_M$ cut out by the modulus. Their values are roots of unity, and their exact conductor is the smallest modulus through which the character factors.
+
+For algebraic characters the principal-ideal rule is not trivial but prescribed. Given integers $(n_\tau)$, define on sufficiently positive ray-principal ideals
+
+$$
+\lambda((a))=\prod_\tau\tau(a)^{n_\tau}.
+$$
+
+This is well defined exactly when every ray unit $u$ satisfies $\prod_\tau\tau(u)^{n_\tau}=1$. Assume this unit condition. The rule is then a character of $P_{\mathfrak m,1}$. We claim that it extends to $I(\mathfrak m_0)$.
+
+To prove the claim, choose generators $c_1,\ldots,c_r$ adapted to an invariant-factor decomposition of the finite quotient $I/P$. Lift them to ideals $\mathfrak c_i$. After ordering the generators, the relations have the form
+
+$$
+\mathfrak c_i^{d_i}\prod_{j<i}\mathfrak c_j^{e_{ij}}\in P.
+$$
+
+Suppose values have been chosen for the earlier generators. The relation prescribes the $d_i$th power of the value on $\mathfrak c_i$. Since $\mathbf C^\times$ contains every $d_i$th root, choose such a root and proceed by induction. The resulting multiplicative function extends $\lambda$. Conversely, any extension restricts to the prescribed principal rule, so the unit condition is necessary. Two extensions differ by a character of the ray class group and therefore by a finite-order Hecke character.
+
+This proof gives more than existence. The values of an algebraic character on ideals lie in a number field. Indeed, choose finitely many ray-class generators. Their powers have prescribed values that are algebraic numbers built from embeddings of elements of $M$; the chosen roots are algebraic as well. Every ideal value is a monomial in this finite list and a prescribed principal value. Thus there is a finite extension $E_\psi/\mathbf Q$ containing all ideal values. If the principal values are algebraic integers only after multiplying by controlled denominators, the same finite list controls all denominators. In the arithmetic normalization used later, one chooses the exponents and finite part so that integral ideals prime to the conductor have algebraic-integral values.
+
+The extension argument also clarifies prescribed local conditions. Local characters at a finite set $S$ define a character on the image of the corresponding local unit groups in a ray class group. They globalize if and only if their product is trivial on the diagonal ray units. If this holds, the same finite-group extension argument produces a global character. If it fails, merely declaring a larger modulus does not logically solve the problem; one must add auxiliary local data whose restriction cancels the unit character. This exact obstruction will reappear when dihedral starting points are engineered.
+
 ## 3. Reciprocity and one-dimensional Galois characters
 
 ### 3.1 Arithmetic reciprocity without inversions
@@ -327,6 +360,21 @@ $$
 $$
 
 The avatar depends on $\iota_\ell$. The algebraic ideal values and infinity type are the invariant data; an $\ell$-adic realization is one incarnation of them.
+
+Here is the construction in a form that checks continuity. On the finite ideles define
+
+$$
+\psi_\ell(x_f)
+=\iota_\ell(\psi_f(x_f))
+\prod_{\tau:M\hookrightarrow\mathbf C}
+(\iota_\ell\tau)(x_{v(\tau)})^{-n_\tau}.
+$$
+
+The second factor is present only at places above $\ell$. For $a\in M^\times$, the defining identity for the archimedean component says that the product is one, so $\psi_\ell$ descends from $\mathbf A_{M,f}^\times$ to the profinite quotient obtained after dividing by $M^\times$. On sufficiently small units above $\ell$, it is a product of integral powers of field embeddings and hence continuous. Away from $\ell$, the finite component is smooth and kills a compact open subgroup. It therefore factors through global reciprocity to give $\chi_{\psi,\ell}$.
+
+The Frobenius formula follows without an additional sign. Represent a prime $\mathfrak p_w\nmid\ell\mathfrak f(\psi)$ by the idele that is a uniformizer at $w$ and one elsewhere. The correction factor is one and arithmetic reciprocity sends this idele to arithmetic Frobenius. Thus the displayed eigenvalue is exactly $\iota_\ell(\psi(\mathfrak p_w))$. With geometric Frobenius it would be the inverse.
+
+At a place above $\ell$, the labeled integral exponents of the local character are $-n_\tau$ in the displayed multiplicative convention. Equivalently, after translating to the convention in which the cyclotomic character has Hodge--Tate weight $-1$, the labeled Hodge--Tate numbers are the $n_\tau$. We will state comparisons through the explicit infinity type or through Frobenius away from $\ell$, so a silent change of Hodge--Tate sign cannot enter later arguments.
 
 ### 3.3 Norm pullback, restriction, and conjugation
 
@@ -478,6 +526,50 @@ $$
 
 The extension supplies the permutation action; it does not supply distinct eigencharacters on the subgroup. This counterexample foreshadows the automorphic cuspidality criterion: the inducing character, not merely the inducing field, must have a full conjugacy orbit.
 
+### 4.6 Projective image and recovery of the quadratic field
+
+The word **dihedral** carries more information than irreducibility. Put
+
+$$
+\delta=\chi/\chi^\sigma.
+$$
+
+On $G_M$, projectivizing the coset-basis matrices identifies the image with the cyclic group generated by the values of $\delta$:
+
+$$
+h\longmapsto
+\begin{bmatrix}\delta(h)&0\\0&1\end{bmatrix}.
+$$
+
+For $s\notin G_M$, conjugation by $\rho(s)$ interchanges the two diagonal entries and therefore sends $\delta(h)$ to $\delta(h)^{-1}$. If the image of $\delta$ has finite order $m$, the projective image is generated by elements $r,j$ satisfying
+
+$$
+r^m=1,\qquad j^2=1,\qquad jrj^{-1}=r^{-1}.
+$$
+
+For $m>2$ this is the dihedral group of order $2m$. When $m=2$ it is the Klein four group; when $m=1$ the induction is reducible. These small cases must be separated whenever a later argument needs a unique cyclic subgroup of index two.
+
+Suppose $m>2$. The rotation subgroup $\langle r\rangle$ is the unique cyclic subgroup of index two in the projective image. Its inverse image in $G_F$ is therefore intrinsically determined by the projective representation, and it is exactly $G_M$. Thus the projective representation recovers the quadratic field $M$. This proves a useful uniqueness statement: if
+
+$$
+\operatorname{Ind}_{G_M}^{G_F}\chi
+\cong
+\operatorname{Ind}_{G_{M'}}^{G_F}\chi'
+$$
+
+and the common projective image is genuinely dihedral with rotation order greater than two, then $M=M'$. Restricting the linear isomorphism to this common subgroup gives the same unordered pair of characters, so $\chi'=\chi$ or $\chi^\sigma$.
+
+For finite-order $\chi$, the representation has finite image. The converse needs qualification: a projectively finite induction can still have an infinite scalar character. Twisting by a character of $G_F$ removes that scalar direction exactly when the common determinant factor admits the required square root. For algebraic $\ell$-adic characters, the projective image is often infinite but remains contained in the normalizer of a torus and not in the torus itself. This normalizer condition, rather than literal finiteness, is the durable meaning of dihedral in arithmetic families.
+
+Complex conjugation supplies one more check when $F$ is totally real and $M$ is CM. At a real place, a complex conjugation $c$ lies outside $G_M$ and satisfies $c^2=1$. In the induced basis,
+
+$$
+\rho(c)\sim
+\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+
+so $\operatorname{tr}\rho(c)=0$ and $\det\rho(c)=-1$. Hence every finite-image induction from a CM quadratic extension is totally odd. The minus sign is again the quadratic permutation factor; it is the Galois shadow of the parity condition at infinity.
+
 ## 5. Local automorphic induction
 
 ### 5.1 The local problem as an étale quadratic algebra
@@ -531,13 +623,13 @@ For example, suppose both local characters are unramified with values $\alpha$ a
 
 ### 5.3 Inert and ramified field places
 
-Now let $E=M_w$ be a quadratic field over $K=F_v$, with nontrivial automorphism $\tau$. A character $\theta:E^\times\to\mathbf C^\times$ gives a character of $W_E$ by local reciprocity. If $\theta\ne\theta^\tau$, the induced Weil representation is irreducible. Its local automorphic induction is the unique supercuspidal representation whose parameter is that induction:
+Now let $E=M_w$ be a quadratic field over $K=F_v$, with nontrivial automorphism $\tau$. A character $\theta:E^\times\to\mathbf C^\times$ gives a character of $W_E$ by local reciprocity. If $\theta\ne\theta^\tau$, the induced Weil representation is irreducible. In the tame range, the established local correspondence attaches the unique supercuspidal representation with that parameter:
 
 $$
 \operatorname{AI}_{E/K}(\theta)=\pi(\theta).
 $$
 
-This representation can be constructed from the elliptic torus $E^\times\subset\mathrm{GL}_2(K)$, but the phrase “compactly induce $\theta$” suppresses real work. In depth zero, $E/K$ is unramified and the reduction of a suitably rectified torus character is a regular character of $k_E^\times$; the associated cuspidal representation of $\mathrm{GL}_2(k_K)$ is inflated and compactly induced from $K^\times\mathrm{GL}_2(\mathcal O_K)$. At positive depth the torus character must be extended, sometimes through a finite Heisenberg representation, across a compact subgroup supplied by an $E$-stable lattice chain. In wild residue characteristic the construction requires the corresponding simple-type machinery. Regularity of the Weil character is what makes the parameter irreducible, while a rectifying character reconciles a chosen torus parameterization with the local correspondence. We therefore define $\pi(\theta)$ by its Weil parameter; this avoids silently identifying the raw character in one compact-induction convention with the character in another.
+This representation can be constructed from the elliptic torus $E^\times\subset\mathrm{GL}_2(K)$, but the phrase “compactly induce $\theta$” suppresses real work. In depth zero, $E/K$ is unramified and the reduction of a suitably rectified torus character is a regular character of $k_E^\times$; the associated cuspidal representation of $\mathrm{GL}_2(k_K)$ is inflated and compactly induced from $K^\times\mathrm{GL}_2(\mathcal O_K)$. At positive tame depth the torus character must be extended, sometimes through a finite Heisenberg representation, across a compact subgroup supplied by an $E$-stable lattice chain. Regularity of the Weil character is what makes the parameter irreducible, while a rectifying character reconciles a chosen torus parameterization with the local correspondence. At wild places we use the direct theta quotient of Section 5.6, whose Fourier calculation supplies the same parameter invariants. Thus no raw, unrectified compact induction is being silently identified with automorphic induction.
 
 The ramified case uses a period-two lattice chain rather than the hyperspecial lattice. This difference accounts for the discriminant term in the conductor. It does not change the basic dichotomy: regular character data give a supercuspidal representation.
 
@@ -586,11 +678,60 @@ $$
 k=|p-q|+1.
 $$
 
-If $p=q$, the character is conjugation invariant and factors through the norm $z\mapsto |z|^2$; induction splits into two real Weil characters. The local correspondence packages them as the irreducible real principal series $I(\mu,\mu\operatorname{sgn})$, with the common modulus twist understood. The parity of $k$ in the regular case and the sign of the central character are linked by the action of $-1$.
+If $p=q$, the character is conjugation invariant and factors through the norm $z\mapsto |z|^2$; induction splits into two real Weil characters. This is the principal-series boundary, with the integral endpoint giving a limit-of-discrete-series realization. It is safest to name it by its exact parameter
 
-In particular, for $p=q=0$ one obtains the limit-type principal series that occurs at infinity for finite-image weight-one theta series. The direct sum belongs to the parameter side; it must not be confused with a direct sum of two representations of $\mathrm{GL}_2(\mathbf R)$.
+$$
+\mu\oplus\mu\operatorname{sgn}
+$$
+
+rather than to force every endpoint into one formula for real normalized induction. In particular, $p=q=0$ is the weight-one limit case. The corresponding irreducible representation of the full group $\mathrm{GL}_2(\mathbf R)$ restricts to the identity component with holomorphic and antiholomorphic limit pieces; the choice of an archimedean Schwartz function selects the holomorphic vector used in a classical theta series. The direct sum remains on the parameter side and is not a direct sum of global automorphic representations. The parity of $k$ in the regular case and the sign of the central character are linked by the action of $-1$.
 
 This archimedean dichotomy is the analytic reflection of the same regularity condition seen at finite field places.
+
+### 5.6 A direct local model and the wild boundary
+
+The preceding parameter descriptions must not be read as importing a classification beyond the available local theory. There is a direct model that also explains what the words “local induction” mean at a dyadic or wildly ramified place. Regard the quadratic étale algebra $E/K$ as the two-dimensional quadratic space
+
+$$
+(E,Q),\qquad Q(x)=N_{E/K}(x).
+$$
+
+Fix a nontrivial additive character $\Psi$ of $K$. The Fourier transform associated with the bilinear form
+
+$$
+B(x,y)=\operatorname{Tr}_{E/K}(x\tau(y))
+$$
+
+acts on $\mathcal S(E)$. Translation, dilation, and this Fourier transform satisfy the Bruhat relations for $\mathrm{GL}_2(K)$ after the usual Weil-index scalar is inserted. Multiplication by $t\in E^\times$ acts on $E$ with similitude ratio $N(t)$. On the group of matching similitudes one therefore has a representation on $\mathcal S(E)$. Projecting its $E^\times$-action to the $\theta$-isotypic quotient produces a smooth $\mathrm{GL}_2(K)$-module $\Theta_K(E,\theta)$.
+
+The quotient is nonzero. Indeed, choose a compact open subgroup $U\subset E^\times$ on which $\theta$ is trivial and a small additive ball $L\subset E$ stable under $U$. Averaging $1_L$ against $E^\times/U$ with the character $\theta^{-1}$ gives a nonzero isotypic vector after its support is restricted to finitely many valuation classes. Its Whittaker coefficient at $a\in K^\times$ is an orbital integral over the norm fiber $N(x)=a$:
+
+$$
+W_{\phi,\theta}
+\left(\begin{pmatrix}a&0\\0&1\end{pmatrix}\right)
+=|a|^{1/2}
+\int_{E^1}\phi(x_a t)\theta(x_a t)\,dt,
+$$
+
+whenever $x_a\in E^\times$ has norm $a$, and it is zero if $a$ is not a norm. Changing $x_a$ only translates the compact group $E^1$, so the expression is well defined. In the split algebra the two norm coordinates separate and the formula unfolds to the Kirillov model of $I(\theta_1,\theta_2)$.
+
+In the field case, varying $\phi$ on a small norm fiber and translating by the diagonal torus produces every compactly supported locally constant Kirillov function. The upper unipotent acts by the nontrivial characters $a\mapsto\Psi(ax)$, so a nonzero invariant subspace contains one such compactly supported function after averaging over a sufficiently small additive subgroup. Diagonal translations move its support through all valuation shells, and the Weyl Fourier transform moves between a ball and its annihilator. These operations generate the whole compactly supported Kirillov space. Thus the regular theta quotient is irreducible. It has no nonzero Jacquet quotient: a hypothetical torus exponent would define a boundary functional, and comparing the two open norm orbits would force $\theta=\theta^\tau$. Hence it is supercuspidal. If $\theta=\mu\circ N$, the two boundary functionals survive and give the principal datum $\mu\oplus\mu\eta_{E/K}$.
+
+Fourier transformation gives the local functional equation. Applying the rank-one equation over $E$ to the Mellin transform of the displayed orbital integral yields
+
+$$
+\gamma(s,\Theta_K(E,\theta),\Psi)
+=\lambda(E/K,\Psi)\gamma(s,\theta,\Psi\circ\operatorname{Tr}_{E/K}).
+$$
+
+The central action is $\eta_{E/K}\theta|_{K^\times}$, and the trace-dual lattice is $\mathfrak D_{E/K}^{-1}$. Comparing the first lattice on which the orbital integral is fixed with its trace dual gives
+
+$$
+a_K(\Theta_K(E,\theta))
+=d(E/K)+f(E/K)a_E(\theta).
+$$
+
+These three invariants—central character, gamma factor, and conductor—agree with induction of the rank-one Weil character. In the tame range this identifies $\Theta_K(E,\theta)$ with the dihedral representation established by the local theory. In the wild range the same theta quotient is the definition used here; the Fourier calculation proves exactly the local identities needed globally. No unproved assertion about a raw compact induction from $E^\times$ is being made. The construction also shows why rectifying constants appear in type-theoretic descriptions: they are the Weil indices needed for the Bruhat relations and for the displayed lambda factor.
 
 ## 6. Local invariants and exceptional behavior
 
@@ -710,6 +851,81 @@ $$
 
 Thus the trace is zero and the determinant is $-\psi_w(\varpi_w)$. The minus sign agrees with $\eta_v(\varpi_v)=-1$. These formulas will become explicit Hecke eigenvalues after globalization.
 
+### 6.5 Inertia, ramification, and a complete finite-place table
+
+Good-prime polynomials see only inertia invariants. To calculate a ramified component one must retain the restriction of the parameter to inertia. Let $E/K$ be a quadratic field extension, let $H=W_E$, and let $I=I_K$. Mackey decomposition gives
+
+$$
+\left.\operatorname{Ind}_{H}^{W_K}\theta\right|_I
+\cong
+\bigoplus_{g\in I\backslash W_K/H}
+\operatorname{Ind}_{I\cap gHg^{-1}}^I\theta^g.
+$$
+
+There are two useful specializations. If $E/K$ is unramified, then $I_E=I_K$ and
+
+$$
+\Phi|_{I_K}=\theta|_{I_E}\oplus\theta^\tau|_{I_E}.
+$$
+
+Thus the two inertial characters are directly visible. When $\theta$ is unramified, both are trivial and the representation is spherical. Such a character is conjugation invariant, so the full Weil induction diagonalizes as two unramified extensions; it is not a supercuspidal parameter. When $\theta$ is ramified and regular, no inertial line survives and the local $L$-factor is one.
+
+If $E/K$ is ramified quadratic, then $I_E=I_K\cap W_E$ has index two in $I_K$, and the restriction is induced from $I_E$. Even an unramified $\theta$ then gives a ramified permutation action: the quadratic character $\eta_{E/K}$ is ramified, the conductor contains $d(E/K)$, and no spherical vector exists. This is the local mechanism behind the discriminant factor. The higher ramification filtration may be wild when the residue characteristic is two, but the index-two statement remains exact.
+
+The possibilities may be read from the following table. Here “regular” means $\theta\ne\theta^\tau$ and $d$ is the exponent of the discriminant in $K$.
+
+| Local algebra and character | Parameter | $\mathrm{GL}_2(K)$ component | Conductor | Standard factor |
+|---|---|---|---|---|
+| $K\times K$, $\theta_1\boxtimes\theta_2$ | $\theta_1\oplus\theta_2$ | $I(\theta_1,\theta_2)$ | $a(\theta_1)+a(\theta_2)$ | $L(s,\theta_1)L(s,\theta_2)$ |
+| unramified $E/K$, unramified $\theta$ | two unramified extensions $\mu\oplus\mu\eta$ | spherical principal component | $0$ | $(1-\theta(\varpi_E)q_K^{-2s})^{-1}$ |
+| unramified $E/K$, regular ramified $\theta$ | irreducible, ramified | supercuspidal | $2a_E(\theta)$ | $1$ |
+| ramified $E/K$, regular $\theta$ | irreducible induction | supercuspidal | $d+ a_E(\theta)$ | $1$ |
+| field $E/K$, $\theta=\mu\circ N$ | $\mu\oplus\mu\eta$ | principal datum $I(\mu,\mu\eta)$ | $a(\mu)+a(\mu\eta)$ | $L(s,\mu)L(s,\mu\eta)$ |
+
+The second row deserves emphasis. An unramified character of an unramified quadratic field is conjugation invariant, so its Weil induction is the sum of two unramified characters after choosing the two extensions to $W_K$. The off-diagonal Frobenius matrix in a coset basis can be diagonalized and does not imply irreducibility. Accordingly the automorphic component is the spherical principal datum predicted by the invariant case. There is no unramified supercuspidal representation of $\mathrm{GL}_2(K)$.
+
+The table also settles every edge case relevant to the global induction. Split components may be ramified on one or both branches. Nonsplit regular components are supercuspidal, whether tame or wild, through the theta model of Section 5.6. Nonsplit invariant components are principal. Special representations never occur. At a dyadic ramified place the different exponent may exceed one; the same formula with the actual $d(E/K)$ remains valid.
+
+### 6.6 Newvectors and the meaning of the conductor
+
+For an irreducible generic representation $\pi$ of $\mathrm{GL}_2(K)$, the conductor exponent is the least integer $n$ for which
+
+$$
+\pi^{K_1(\mathfrak p^n)}\ne0,
+$$
+
+where
+
+$$
+K_1(\mathfrak p^n)=
+\left\{
+\begin{pmatrix}a&b\\c&d\end{pmatrix}\in\mathrm{GL}_2(\mathcal O_K):
+c\in\mathfrak p^n, d\equiv1\pmod{\mathfrak p^n}
+\right\}.
+$$
+
+At this first level the fixed space is one dimensional. This line is the local newvector line. For a split principal series the Kirillov model has two asymptotic character tails; imposing $K_1(\mathfrak p^n)$-invariance forces one tail to begin at depth $a(\theta_1)$ and the other at depth $a(\theta_2)$, so the first common level is their sum. For a nonsplit theta lift, the trace pairing identifies the dual of a lattice $L\subset E$ with
+
+$$
+L^\vee=\{x:\operatorname{Tr}_{E/K}(x\tau(L))\subseteq\mathcal O_K\}.
+$$
+
+For $L=\mathcal O_E$, this is $\mathfrak D_{E/K}^{-1}$. Fourier transformation therefore shifts the invariant lattice by the discriminant exponent, while Mellin projection through $U_E^{a_E(\theta)}$ contributes $f(E/K)a_E(\theta)$. The first level stable under the upper unipotent, diagonal units, and Weyl transform is exactly
+
+$$
+d(E/K)+f(E/K)a_E(\theta).
+$$
+
+This gives a representation-theoretic proof of the conductor formula, not merely a comparison of epsilon-factor exponents. It also explains the uniqueness of the first fixed line: at the threshold there is one characteristic function of the relevant lattice shell modulo the one-dimensional character projection, while below it either the character is still nontrivial on the stabilizer or Fourier transform leaves the allowed lattice range.
+
+Globally, the tensor product of these local newvector lines is the newvector of $\operatorname{AI}_{M/F}(\psi)$. Its level ideal is
+
+$$
+\mathfrak d_{M/F}N_{M/F}(\mathfrak f(\psi)).
+$$
+
+Thus the conductor formula has three simultaneous meanings: it is the Artin conductor of the induced Galois parameter, the monomial degree of the epsilon factor, and the first automorphic level at which a newvector exists.
+
 ## 7. An explicit global construction
 
 ### 7.1 Why a restricted tensor product is insufficient
@@ -812,7 +1028,44 @@ V(\psi)\cong\bigotimes_v'
 \operatorname{AI}_{M_v/F_v}(\psi_v^M).
 $$
 
-The boundary calculation shows that $V(\psi)$ lies in the cuspidal spectrum. Multiplicity one for generic cuspidal representations then makes it irreducible. In the invariant case, the completed series described above realizes the Eisenstein representation $\mu\boxplus\mu\eta$. Thus neither global representation is inferred from almost-everywhere Hecke data: the regular one is generated by explicit cusp forms, while the descended one is supplied by its explicit Eisenstein completion, and both are then identified locally.
+The boundary calculation shows that $V(\psi)$ lies in the cuspidal spectrum. The displayed factorization also proves irreducibility directly: a nonzero invariant subspace contains a pure tensor after applying finitely many local idempotents, and irreducibility of each local factor lets the local group actions generate every pure tensor that differs at finitely many places; these tensors span the restricted product. In the invariant case, the completed series described above realizes the Eisenstein representation $\mu\boxplus\mu\eta$. Thus neither global representation is inferred from almost-everywhere Hecke data: the regular one is generated by explicit cusp forms, while the descended one is supplied by its explicit Eisenstein completion, and both are then identified locally.
+
+### 7.5 Convergence, constant terms, and the automorphy audit
+
+Because the global construction is the logical center of the book, we isolate the analytic justifications that are easily hidden in theta notation. Fix a compact subset $C\subset\mathrm{GL}_2(\mathbf A_F)$. The finite Schwartz factors restrict the index $a\in F^\times$ in the Whittaker series to a finite union of fractional ideals. Under the Minkowski embedding these are lattices in $F_\infty$. At each archimedean place, a Whittaker function obtained from Schwartz data decreases faster than every power in one cusp direction; after applying a fixed differential operator it satisfies the same estimate. Hence for every $N$ there is a constant $C_{N,C}$ with
+
+$$
+\left|W_\varphi
+\left(\begin{pmatrix}a&0\\0&1\end{pmatrix}g\right)\right|
+\le C_{N,C}(1+\|a\|)^{-N}
+$$
+
+for $g\in C$ and for the allowed lattice points $a$. Choosing $N>[F:\mathbf Q]$ proves absolute and locally uniform convergence. Choosing larger $N$ after differentiating proves smoothness and permits termwise application of archimedean differential operators.
+
+Finite level is equally concrete. Each finite Schwartz function is fixed by some compact open subgroup of the relevant local Weil action. Intersecting these subgroups over the finitely many nonstandard places and taking the hyperspecial group elsewhere gives a compact open subgroup fixing the global form. The center acts through $\eta\psi|_{C_F}$ by the local calculation. Since this character is trivial on $F^\times$, rational scalar matrices cause no conflict with automorphy.
+
+The unipotent constant term can be calculated termwise after the same estimates:
+
+$$
+\int_{F\backslash\mathbf A_F}
+\Theta_{\varphi,\psi}(n(x)g)\,dx.
+$$
+
+Every nonzero Whittaker term contains $\Psi(ax)$ with $a\in F^\times$, and its integral is zero by orthogonality. What remains are precisely the zero-orbit terms that were separated before the Whittaker series was written. In the theta-kernel model they form an integral over
+
+$$
+M^1\backslash\mathbf A_M^1,
+$$
+
+the adelic norm-one torus quotient. This quotient is compact. The character on it is the restriction of $\psi/\psi^\sigma$: for $t$ of norm one, Hilbert 90 gives $t=x/\sigma x$, and
+
+$$
+\psi(t)=\psi(x)/\psi^\sigma(x).
+$$
+
+The integral of a nontrivial character over a compact group is zero. Conversely, if the ratio is trivial on the norm-one quotient, the character descends through the norm and both zero orbits survive. This proves the cusp criterion without interchanging a divergent integral or silently deleting a boundary term.
+
+Finally, rational invariance follows from three generators. Invariance under $n(u)$ for $u\in F$ is additive-character orthogonality, invariance under diagonal rational elements is reindexing together with the product formula, and invariance under the Weyl element is Poisson summation on the self-dual lattice $M\subset\mathbf A_M$. Bruhat decomposition then gives invariance under all of $\mathrm{GL}_2(F)$. The Schwartz bounds imply moderate growth after the standard reduction to a Siegel set. Thus the construction supplies a genuine smooth, finite-level, moderate-growth automorphic form, and in the regular case the constant-term calculation puts it in the cuspidal subspace.
 
 ## 8. Cuspidality and descent through the norm
 
@@ -1091,6 +1344,53 @@ $$
 
 The formula gives both a computational method and an intuitive picture: a coefficient counts norm fibers, weighted by the character.
 
+### 10.5 Prime powers and the full Euler identity
+
+Equality at prime coefficients is not yet equality of Dirichlet series. At a good split prime $v=ww^\sigma$, put $\alpha=\psi(w)$ and $\beta=\psi(w^\sigma)$. Expanding the local factor gives
+
+$$
+\frac1{(1-\alpha T)(1-\beta T)}
+=\sum_{r\ge0}A(v^r)T^r,
+$$
+
+where
+
+$$
+A(v^r)=\sum_{i=0}^r\alpha^i\beta^{r-i}.
+$$
+
+These are exactly the ideals of $M$ with norm $v^r$, namely $w^i(w^\sigma)^{r-i}$. They satisfy the Hecke recursion
+
+$$
+A(v^{r+2})=a_vA(v^{r+1})-b_vA(v^r),
+$$
+
+with $A(1)=1$ and $A(v)=a_v$.
+
+At a good inert prime there is one prime $w$ with $N_{M/F}(w)=v^2$. Hence no ideal has norm $v^{2r+1}$ and
+
+$$
+A(v^{2r+1})=0,\qquad
+A(v^{2r})=\psi(w)^r.
+$$
+
+This agrees with
+
+$$
+\frac1{1-\psi(w)T^2}
+=\sum_{r\ge0}\psi(w)^rT^{2r}.
+$$
+
+Because every ideal factors uniquely into prime ideals and $\psi$ is multiplicative, the coefficient $A(\mathfrak a)$ is multiplicative for coprime ideals. The split and inert calculations therefore prove coefficient by coefficient that
+
+$$
+L(s,\operatorname{AI}_{M/F}\psi)=L(s,\psi)
+$$
+
+away from the ramified set. At a conductor prime both sides use inertia invariants, and the local induction identity of Section 6.3 proves equality there as well. At infinity the Fourier calculation uses the trace-pulled additive character and produces the same gamma factors. Thus the equality is an identity of completed $L$-functions, including conductor powers and root numbers, not only an agreement of almost all Euler polynomials.
+
+The prime-power calculation is also a normalization test. In arithmetic normalization $b_v=\omega_\pi(\varpi_v)$; in the classical weight-$k$ normalization over $\mathbf Q$ it becomes $\varepsilon(v)q_v^{k-1}$. Replacing arithmetic Frobenius by geometric Frobenius in the Galois polynomial inverts both $\alpha$ and $\beta$ but does not change the analytic Euler series. Keeping the analytic variable $T=q_v^{-s}$ separate from the named Frobenius prevents these conventions from being mixed.
+
 ## 11. Infinity types and cohomological weights
 
 ### 11.1 Why infinity type becomes weight
@@ -1289,7 +1589,7 @@ Inert primes have zero coefficient, split primes have a sum of conjugate charact
 
 ### 13.1 The field generated by a character
 
-Let $\psi$ be algebraic. Its **coefficient field** $E_\psi$ is generated over $\mathbf Q$ by its values on ideals prime to the conductor, together with the finite roots of unity needed for its finite local components. Under the usual algebraicity hypotheses this is a number field. The Hecke field of $\pi=\operatorname{AI}(\psi)$ is contained in the subfield of $E_\psi$ generated by the symmetric good-prime data, because good split Hecke traces are sums
+Let $\psi$ be algebraic. Its **coefficient field** $E_\psi$ is generated over $\mathbf Q$ by its values on ideals prime to the conductor, together with the finite roots of unity needed for its finite local components. Section 2.6 proved that this is a number field: finitely many ray-class ideals generate all ideal values, and each generator satisfies a power equation over the field generated by principal values. The Hecke field of $\pi=\operatorname{AI}(\psi)$ is contained in the subfield of $E_\psi$ generated by the symmetric good-prime data, because good split Hecke traces are sums
 
 $$
 \psi(\mathfrak P)+\psi(\mathfrak P^\sigma).
@@ -1298,6 +1598,17 @@ $$
 It can be strictly smaller than $E_\psi$. For example, a character may take values in a cyclotomic field while all its conjugate sums lie in the maximal real subfield. There need not be a coefficient-field automorphism carrying every value of $\psi$ to the corresponding value of $\psi^\sigma$, so describing the Hecke field as a fixed field requires an additional hypothesis and is avoided here.
 
 The field of rationality and a field of definition should be distinguished. The former fixes the isomorphism class under coefficient automorphisms; the latter supports a chosen model. For a two-dimensional induced representation, any field containing the character values supports the coset-basis model of Chapter 4: the off-diagonal entry is $\chi(s^2)$, so no square root is needed. A square root enters only if one tries to split an invariant induction into its two extensions. The characteristic polynomials themselves already lie in the field generated by traces and determinants.
+
+Define the **Hecke coefficient field** of the induction by
+
+$$
+E_\pi=\mathbf Q\bigl(a_v,b_v:
+v\nmid\mathfrak d_{M/F}\mathfrak f(\psi)\bigr),
+$$
+
+where $1-a_vX+b_vX^2$ is the arithmetic spherical polynomial. Every generator lies in $E_\psi$: at a split prime it is a symmetric polynomial in two ideal values, and at an inert prime $a_v=0$ and $b_v=-\psi(\mathfrak P)$. Hence $E_\pi\subseteq E_\psi$ and is automatically a number field. This is already the coefficient control needed for congruences. It makes no claim that $E_\pi$ equals a fixed field under an automorphism that exchanges $\psi$ and $\psi^\sigma$; such an automorphism of $E_\psi$ need not exist.
+
+Conversely, the full induced pair can be defined over a finite extension of $E_\pi$. Indeed $E_\psi/E_\pi$ is finite, and the coset-basis matrices of the Galois induction lie in $E_\psi$. The local split principal series are defined by the two characters over that field. At nonsplit places the theta quotient is obtained from Schwartz functions and finitely many character values at a fixed level; adjoining the finitely many Weil-index roots of unity defines the corresponding finite-level newvector line. Thus coefficient control is uniform: good Hecke data live in $E_\pi$, while a concrete model of every labeled inducing line lives over a finite extension contained in the chosen character-value field with finitely many roots of unity adjoined.
 
 ### 13.2 Integrality of good Hecke data
 
@@ -1375,6 +1686,50 @@ $$
 $$
 
 Only finitely many $\lambda$ divide a fixed nonzero difference. Hence if $\psi\ne\psi^\sigma$, residual induction is irreducible for all but finitely many coefficient primes. This finiteness conclusion is much stronger than checking a separate matrix calculation for every $\lambda$.
+
+### 13.6 What reduction preserves in the automorphic data
+
+Reduction is most reliable when phrased through polynomials. Choose the arithmetic lattice of Section 13.3. At every good place $v$, the integral polynomial
+
+$$
+P_v(X)=1-a_vX+b_vX^2
+$$
+
+reduces to
+
+$$
+\overline P_v(X)
+=\det(1-\bar\rho(\operatorname{Frob}_v)X).
+$$
+
+At a split prime this is the product of the reductions of the two character roots. At an inert prime it remains
+
+$$
+1-\overline{\psi(w)}X^2.
+$$
+
+Thus inert-prime trace zero survives at every coefficient prime, while the distinction between the two split roots may collapse at exceptional primes.
+
+If $\bar\chi\ne\bar\chi^\sigma$, the residual representation is absolutely irreducible, so its semisimplification already determines it. The good polynomials then form a non-Eisenstein dihedral eigensystem. If $\bar\chi=\bar\chi^\sigma$, the same characteristic-zero cusp form may reduce to an Eisenstein semisimplification
+
+$$
+\bar\mu\oplus\bar\mu\bar\eta.
+$$
+
+There is no contradiction: characteristic-zero cuspidality is the inequality $\chi\ne\chi^\sigma$, whereas residual irreducibility asks whether that inequality remains after reduction. Congruence can erase it.
+
+Conductors can also drop. If a finite inertial value is a root of unity of $\ell$-power order, it becomes one modulo $\lambda\mid\ell$. More generally, the residual conductor is obtained by applying the Artin conductor formula to $\bar\chi$, not by reducing the integer $a(\chi)$. It is bounded above by the characteristic-zero conductor, because reduction can enlarge invariant spaces, but equality requires a surviving element on every last nontrivial ramification layer. The tests in Section 14.3 are designed precisely to certify equality where it is needed.
+
+The determinant behaves better: since determinant is polynomial in matrix entries,
+
+$$
+\det\bar\rho=\overline{\det\rho}
+=\bar\eta\,(\bar\chi\circ\operatorname{Ver}).
+$$
+
+In residual characteristic two, $\bar\eta$ is trivial, so the quadratic sign disappears even when the induction remains irreducible. Projective image terminology must then be based on the surviving conjugate ratio, not on the visibly reduced determinant.
+
+These statements are independent of the chosen stable lattice after semisimplification. The explicit induced lattice is nevertheless valuable: it identifies the reduction with $\operatorname{Ind}\bar\chi$ before semisimplification and exhibits any reducible exceptional case as a concrete extension. This is the precise bridge from algebraic Hecke data to residual automorphic starting points.
 
 ## 14. Twists, conjugation, and controlled ramification
 
@@ -1483,122 +1838,50 @@ $$
 
 Minimality is local and need not be achieved simultaneously by a single global twist at arbitrarily prescribed places, because a global Hecke character $\mu$ must satisfy its own class-group and unit relations. This is another instance where independent local optimization can fail to globalize.
 
-## 15. Cyclic induction in general degree
+### 14.6 A dihedral starting-point theorem
 
-### 15.1 The pattern behind the quadratic case
+We now collect the choices into the form used when an explicit automorphic residual representation is required. The point is not merely that dihedral representations exist; it is that their determinant, local inertia, coefficient prime, and irreducibility can be arranged and checked before they are used.
 
-Let $L/F$ be cyclic of degree $n$, with group generated by $\sigma$, and let $\psi$ be a Hecke character of $L$. The conjugacy orbit
+**Theorem 14.1 (controlled dihedral starting point).** Let $M/F$ be a CM quadratic extension of a totally real field. Fix:
 
-$$
-\psi,\psi^\sigma,\ldots,\psi^{\sigma^{n-1}}
-$$
+- a finite set $S$ of finite places of $F$;
+- for each $v\in S$, compatible finite-order characters on the unit groups at the places of $M$ above $v$;
+- a pure regular infinity type $(p_w,q_w)$ with $p_w\ne q_w$ at every archimedean place;
+- a finite-order Hecke character $\nu$ of $F$ that is intended to be the finite part of the determinant.
 
-suggests an $n$-dimensional parameter
-
-$$
-\operatorname{Ind}_{G_L}^{G_F}\chi_\psi.
-$$
-
-At a split prime it is the direct sum of $n$ characters; at an inert unramified prime arithmetic Frobenius cyclically permutes $n$ lines, so most low traces vanish. The quadratic zero at inert primes is the first instance of this cyclic-permutation phenomenon.
-
-### 15.2 The local construction for cyclic étale algebras
-
-At a place $v$, write
+Assume the local characters and infinity type are trivial on the diagonal ray-unit subgroup, and assume the determinant compatibility
 
 $$
-L\otimes_FF_v=\prod_{w\mid v}L_w.
+\eta_{M/F}\psi|_{C_F}=\nu\,|\cdot|^{-W}
 $$
 
-Local class field theory turns the characters $\psi_w$ into characters of $W_{L_w}$. The local induced parameter is
+can be met on that subgroup, where $W=p_w+q_w$ is independent of $w$. Then, after allowing finitely many auxiliary conductor places, there is an algebraic Hecke character $\psi$ of the prescribed infinity type and local behavior satisfying that determinant identity. It may be chosen with $\psi\ne\psi^\sigma$. For every coefficient prime $\lambda$ outside a finite set, the representation
 
 $$
-\Phi_v=
-\bigoplus_{w\mid v}
-\operatorname{Ind}_{W_{L_w}}^{W_{F_v}}\psi_w,
+\bar\rho_{\psi,\lambda}
+=\operatorname{Ind}_{G_M}^{G_F}\bar\chi_{\psi,\lambda}
 $$
 
-of total dimension $n$. The local correspondence for general linear groups assigns an irreducible admissible representation of $\mathrm{GL}_n(F_v)$ to $\Phi_v$. In the completely split case this is the irreducible Langlands constituent of normalized induction from the $n$ characters, in the order determined by their real exponents. For a field place and a character with full local orbit, the parameter is irreducible and the representation is supercuspidal.
+is absolutely irreducible, has determinant $\bar\nu\,\bar\epsilon_\ell^{\,W}$ in the arithmetic convention, and retains every prescribed prime-to-$\ell$ inertial distinction. Its automorphic source $\operatorname{AI}_{M/F}(\psi)$ is cuspidal and has the explicitly calculated local components of Chapters 5 and 6.
 
-Character induction still has zero monodromy. If normalized parabolic induction reaches a reducibility boundary, the local correspondence selects the constituent with the prescribed semisimple parameter and $N=0$. A generalized Steinberg constituent has $N\ne0$ and is never created by inducing a one-dimensional Weil representation.
+**Proof strategy.** Solve one finite character-extension problem, force noninvariance at one auxiliary prime, and then exclude the coefficient primes at which one of finitely many witnessing differences vanishes.
 
-The exact local conductor formula is
+**Proof.** Choose a modulus containing $S$, the primes needed for the infinity-type unit condition, and provisional auxiliary primes. The prescribed local data and the desired restriction to $C_F$ define a character on a subgroup of the finite ray group, precisely because of the two compatibility assumptions. Section 2.6 extends it to the whole ray group. If its conjugate ratio is still trivial, choose a finite place $v\notin S$ that splits as $w w^\sigma$ in $M$, with residue field large enough to admit a nontrivial character of order prime to the eventual coefficient characteristic. Enlarge the modulus at $w$ and $w^\sigma$, and prescribe a unit character $\xi$ at $w$ and $\xi^{-1}$ at $w^\sigma$. Their product is trivial on diagonally embedded local units, so the determinant restriction is unchanged, while conjugation interchanges two unequal characters. After adding further auxiliary data if necessary to cancel the global ray-unit restriction, the finite-group extension argument globalizes them. The resulting $\psi/\psi^\sigma$ is nontrivial, so automorphic induction is cuspidal.
 
-$$
-a_{F_v}(\Phi_v)=
-\sum_{w\mid v}
-\left(d(L_w/F_v)+f(L_w/F_v)a_w(\psi)\right),
-$$
-
-Here $d(L_w/F_v)$ denotes the exponent in $F_v$ of the local discriminant ideal; for a split degree-one factor both $d$ and the extension correction vanish. Local $L$-factors satisfy
+The determinant formula of Chapter 4 gives
 
 $$
-L(s,\Phi_v)=\prod_{w\mid v}L(s,\psi_w).
+\det\rho_{\psi,\lambda}
+=\eta_{M/F}(\chi_{\psi,\lambda}\circ\operatorname{Ver}).
 $$
 
-### 15.3 The global cyclic induction theorem
+Under reciprocity this is the $\ell$-adic avatar of $\eta\psi|_{C_F}$. Since arithmetic $|\cdot|^{-1}$ corresponds to the cyclotomic character, the factor $|\cdot|^{-W}$ becomes $\epsilon_\ell^W$, proving the asserted determinant normalization. Choose one Frobenius $h$ at which $\chi_\psi(h)-\chi_\psi^\sigma(h)$ is nonzero, and for every prescribed inertia condition choose an element $t$ witnessing the required nontrivial value or conjugate ratio. These are finitely many nonzero algebraic numbers. Only finitely many coefficient primes divide any of them. Outside that finite set, the Frobenius difference proves absolute irreducibility and the inertial differences prove survival of all local conditions. The local automorphic statements follow from the all-place compatibility theorem. $\square$
 
-The quadratic Whittaker--Poisson argument is special to rank two. For $n>2$, Poisson summation on the additive space $L$ does not by itself verify the several independent Weyl relations, nor do the functional equations of character twists alone supply a general higher-rank converse theorem. Claiming that one can simply iterate the preceding calculation would therefore leave a genuine automorphy gap. The correct higher-degree interface is the global cyclic automorphic-induction theorem.
+The hypotheses are deliberately exact. If the ray-unit condition fails, no global character with the proposed local restrictions exists. If the determinant condition fails on $C_F$, a later twist can change it only by a square, because a determinant twist multiplies the central character by $\mu^2$. If $\lambda$ divides the order of an imposed local character, reduction may erase the ramification. Each apparent technicality is therefore a genuine obstruction, not bookkeeping.
 
-**Theorem 15.1 (cyclic automorphic induction).** Let $L/F$ be cyclic of degree $n$ and $\psi$ a Hecke character of $L$. There is an isobaric automorphic representation
+## 15. Examples and the final dictionary
 
-$$
-\operatorname{AI}_{L/F}(\psi)
-$$
-
-of $\mathrm{GL}_n(\mathbf A_F)$ whose local parameter at every $v$ is $\Phi_v$. It satisfies
-
-$$
-L(s,\operatorname{AI}_{L/F}\psi)=L(s,\psi)
-$$
-
-and is compatible with twists, contragredients, conductors, and coefficient conjugation. It is cuspidal exactly when the stabilizer of $\psi$ in $\operatorname{Gal}(L/F)$ is trivial.
-
-This theorem is recorded here with its exact local and cuspidality assertions, but its higher-rank global proof is not a formal extension of Chapter 7 and is not reproduced. It requires a separate global transfer argument strong enough to prove automorphy of the prescribed local tensor. The quadratic case above remains the complete explicit construction used in this book. No restriction of a $\mathrm{GL}_2$ parameter to $L$, no descent criterion for a pre-existing automorphic representation, and no base-change theorem is being asserted or used here.
-
-### 15.4 Stabilizers and intermediate fields
-
-Let $H$ be the stabilizer of $\psi$ in $\operatorname{Gal}(L/F)$, and let $K=L^H$. Then $\psi$ descends through $N_{L/K}$ to a character $\psi_K$ of $K$, with the expected ambiguity by characters of $K$ that are trivial after norm pullback. The extensions across $H$ are obtained by multiplying one choice by the characters of $H$. Induction in stages therefore decomposes $\operatorname{AI}_{L/F}(\psi)$ isobarically into the automorphic inductions from $K$ of those extensions. Each constituent has degree $[K:F]$, the orbit size of $\psi$. In the extreme case $H=\operatorname{Gal}(L/F)$, one obtains a sum of $n$ characters of $F$.
-
-Thus the degree of a cuspidal constituent is the orbit size of the inducing character. Quadratic induction has only the two extremes: orbit size two gives a cusp form, and orbit size one gives $\mu\boxplus\mu\eta$.
-
-### 15.5 Central characters and the permutation determinant
-
-Let
-
-$$
-\delta_{L/F}=\det\operatorname{Ind}_{G_L}^{G_F}1.
-$$
-
-This is the sign character of the permutation action on the $n$ cosets. The determinant formula is
-
-$$
-\det\operatorname{Ind}_{G_L}^{G_F}\chi
-=\delta_{L/F}(\chi\circ\operatorname{Ver}),
-$$
-
-and hence
-
-$$
-\omega_{\operatorname{AI}_{L/F}(\psi)}
-=\delta_{L/F}\psi|_{C_F}.
-$$
-
-For odd $n$, an $n$-cycle has positive sign and $\delta_{L/F}$ is trivial. For even $n$, it is the quadratic character cutting out the unique quadratic subextension of $L/F$. The quadratic formula with $\eta_{M/F}$ is exactly the case $n=2$.
-
-The global conductor formula becomes
-
-$$
-\mathfrak f(\operatorname{AI}_{L/F}\psi)
-=\mathfrak d_{L/F}N_{L/F}(\mathfrak f(\psi)).
-$$
-
-### 15.6 What has and has not been used
-
-The theorem moves a character upward from $L$ to a representation over $F$. No construction here starts with a representation over $F$ and restricts its parameter to $L$. The degree-two construction is proved directly above, and the degree-$n$ statement is isolated as a higher-rank global input. The restriction operation and its descent or image criterion belong to the subsequent theory and are not developed here.
-
-## 16. Examples and the final dictionary
-
-### 16.1 A finite dihedral example
+### 15.1 A finite dihedral example
 
 Let $M/F$ be quadratic and let $\psi$ be a ray class character of order $m$ such that $\psi/\psi^\sigma$ also has order $m>2$. Then $\pi=\operatorname{AI}(\psi)$ is cuspidal, has finite-order central character
 
@@ -1626,7 +1909,7 @@ $$
 
 It equals $2$ when $\mathfrak p$ is principal and $-1$ when its class is nontrivial. Thus the Hecke eigenvalues distinguish splitting completely in the Hilbert class field: inertness in $M$ gives $0$, while the two split Frobenius classes above $M$ give $2$ or $-1$.
 
-### 16.2 A norm-descended counterexample
+### 15.2 A norm-descended counterexample
 
 Let $\mu$ be any Hecke character of $F$ and put $\psi=\mu\circ N$. Then the character may be highly ramified and algebraic, but
 
@@ -1636,7 +1919,7 @@ $$
 
 is never cuspidal. Its split-prime coefficients still look like sums of two character values, and its local principal series can be irreducible everywhere. Neither elaborate ramification nor local irreducibility repairs the failure of the global orbit condition.
 
-### 16.3 Reading a splitting prime in both languages
+### 15.3 Reading a splitting prime in both languages
 
 Suppose $v=ww^\sigma$ is good. The entire correspondence can be read in one line:
 
@@ -1654,7 +1937,7 @@ $$
 
 Thus the Hecke trace, Frobenius trace, and ideal-theoretic norm-fiber sum are the same number. At an inert prime the diagonal picture is replaced by a permutation matrix, explaining trace zero.
 
-### 16.4 The complete quadratic dictionary
+### 15.4 The complete quadratic dictionary
 
 For quick use, the construction may be summarized as follows.
 
@@ -1684,12 +1967,12 @@ $$
 
 and at a split place it is the sum of the two character conductors. No special representation occurs because the induced character parameter has zero monodromy.
 
-### 16.5 Conclusion: rank two without losing rank-one control
+### 15.5 Conclusion: rank two without losing rank-one control
 
 Automorphic induction preserves the explicit nature of a character while adding genuinely nonabelian structure. Conjugation turns one local eigenline into two; an element outside the quadratic subgroup exchanges them; the sign of that exchange produces the quadratic determinant factor. The same exchange makes inert-prime traces vanish and gives the projective image its dihedral shape.
 
 In quadratic degree, Poisson summation is the mechanism that turns the local induced models into automorphic forms. The constant term then reads the conjugacy orbit exactly: a full orbit gives cuspidality, while a descended character gives an Eisenstein isobaric sum. Conductors split into a discriminant contribution from the extension and a normed conductor contribution from the character. Infinity-type differences become cohomological weights, and arithmetic reciprocity makes good-prime Hecke polynomials identical to Frobenius characteristic polynomials.
 
-Because every part of the construction remains visible, one can choose coefficient fields, integral lattices, and reductions with precision. Residual irreducibility is the survival of the conjugate ratio; prescribed ramification is the survival of selected inertia values; semisimplification records exactly what remains when those distinctions collapse. In higher cyclic degree the same ideas persist: conjugacy orbits determine rank and cuspidality, permutation signs determine the extra central factor, and stabilizers explain isobaric decomposition.
+Because every part of the construction remains visible, one can choose coefficient fields, integral lattices, and reductions with precision. Residual irreducibility is the survival of the conjugate ratio; prescribed ramification is the survival of selected inertia values; semisimplification records exactly what remains when those distinctions collapse. The complete package is quadratic: every rank-two object has been constructed from the original rank-one data and checked at every place.
 
 The resulting dictionary is more than a source of examples. It is a reusable bridge from class-field-theoretic characters to explicit cuspidal automorphic representations and irreducible Galois representations, with every local invariant accounted for and every normalization exposed.
