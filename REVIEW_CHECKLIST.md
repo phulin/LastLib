@@ -101,7 +101,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 034. Rigid Analytic Curves and Formal Models
 - [x] 035. Rigid Uniformization of Abelian Varieties
 - [x] 036. Relative Picard Schemes and Jacobians
-- [ ] 037. Jacobians and (H^1) of Curves
+- [x] 037. Jacobians and (H^1) of Curves
 - [x] 038. Abelian Schemes, Isogenies, and Polarizations
 - [ ] 039. Néron Models and Component Groups
 - [ ] 040. Semistable Abelian Varieties and Monodromy

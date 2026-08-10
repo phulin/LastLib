@@ -83,7 +83,7 @@
     - [Limits of the integral picture](#164-limits-of-the-integral-picture)
 17. [From a geometric correspondence to a Galois representation](#17-from-a-geometric-correspondence-to-a-galois-representation)
     - [The commuting actions](#171-the-commuting-actions)
-    - [Hecke-type algebras without special curves](#172-hecke-type-algebras-without-special-curves)
+    - [The modular and Shimura correspondence pattern](#172-the-modular-and-shimura-correspondence-pattern)
     - [Extracting finite-dimensional representations](#173-extracting-finite-dimensional-representations)
     - [Conclusion](#174-conclusion)
 
@@ -98,6 +98,10 @@ $$
 $$
 
 and let $G_k$ act arithmetically. Thus over a finite field arithmetic Frobenius acts on roots of unity by $\zeta\mapsto\zeta^q$; geometric Frobenius is its inverse. Cohomology always means étale cohomology when that qualification matters. A prime $\ell$ used for torsion or cohomology is different from $\operatorname{char}k$.
+
+If an argument requires all closed points to be rational, we pass further from $k^s$ to an algebraic closure $\Omega$. The extension $\Omega/k^s$ is purely inseparable. It is a universal homeomorphism on base-changed schemes and therefore changes neither prime-to-characteristic étale cohomology nor the $G_k$-action; geometric properties such as properness, smoothness, dimension, and ampleness may also be checked after this faithfully flat extension. This small distinction matters over an imperfect separably closed field.
+
+Three bodies of earlier theory are used with their full hypotheses. For smooth proper curves, the relative Picard theorem supplies representability, base change, degree components, the Abel--Jacobi and Albanese constructions, norms, and the canonical theta polarization. The theory of abelian schemes supplies dual abelian varieties, Poincaré bundles, finite flat torsion, isogenies, and Weil pairings. The cohomology of curves supplies Kummer sequences, trace maps, smooth proper base change, Poincaré duality, and the fact that geometric $H^1$ with $\mathbf Z/\ell^m\mathbf Z$-coefficients is free of rank $2g$. We recall the constructions needed to compare these theories, but we do not silently enlarge their hypotheses. In particular, torsion is treated scheme-theoretically until $\ell$ is assumed invertible, and correspondence normalizations are assumed smooth whenever pullback and norm are used through an intermediate curve.
 
 We use a covariant Tate-module convention:
 
@@ -197,13 +201,13 @@ $$
 
 Its kernel is denoted $\operatorname{Pic}^0(C)$ at the level of actual line bundles. Over a nonclosed field the image need not be all of $\mathbf Z$: the positive generator of the image is the index of the curve. Thus a geometrically connected curve may have no divisor of degree one and no rational point.
 
-After base change to $k^s$, every closed point is rational and the degree map is surjective. The fibers
+After base change to the algebraic closure $\Omega$, every closed point is rational and the degree map is surjective. The geometric fibers
 
 $$
-\operatorname{Pic}^d(\bar C)=\{[L]:\deg L=d\}
+\operatorname{Pic}^d(C_\Omega)=\{[L]:\deg L=d\}
 $$
 
-are torsors under $\operatorname{Pic}^0(\bar C)$. There is no preferred identification of $\operatorname{Pic}^d$ with $\operatorname{Pic}^0$ until a degree-$d$ class is chosen. This elementary observation will later explain both the basepoint dependence of Abel--Jacobi and the surprising canonicity of the theta polarization.
+are torsors under $\operatorname{Pic}^0(C_\Omega)$. There is no preferred identification of $\operatorname{Pic}^d$ with $\operatorname{Pic}^0$ until a degree-$d$ class is chosen. This elementary observation will later explain both the basepoint dependence of Abel--Jacobi and the surprising canonicity of the theta polarization.
 
 ### 2.4 Riemann--Roch as the engine
 
@@ -277,7 +281,7 @@ The last two agree for the represented Picard functor, while the first maps into
 $$
 0\longrightarrow\operatorname{Pic}(C)\longrightarrow
 \operatorname{Pic}(\bar C)^{G_k}
-\xrightarrow{\delta}\operatorname{Br}(k)longrightarrow\operatorname{Br}(C). \tag{3.2}
+\xrightarrow{\delta}\operatorname{Br}(k)\longrightarrow\operatorname{Br}(C). \tag{3.2}
 $$
 
 Thus the image consists exactly of invariant geometric classes with zero Brauer obstruction. If $C$ has a $k$-point, pullback $\operatorname{Br}(k)\to\operatorname{Br}(C)$ is injective, so $\delta=0$ and the distinction disappears. In general it does not.
@@ -329,7 +333,7 @@ We now state the construction theorem in the form used throughout.
 
 **Picard representability theorem.** The fppf sheaf $\operatorname{Pic}_{C/k}$ is represented by a separated scheme locally of finite type over $k$. It is a disjoint union of open-and-closed degree components $\operatorname{Pic}^d_{C/k}$. Each component is smooth of dimension $g$ and is a torsor under the identity component $\operatorname{Pic}^0_{C/k}$.
 
-**Proof strategy.** Use $C^{(d)}$ for $d\geq2g-1$ as a smooth projective presentation of the already defined Picard sheaf. Linear equivalence is represented by the projective-space fibers described above. The substantive quotient theorem says that this fppf quotient is a separated scheme; it is not legitimate to assume a universal bundle on an already represented $\operatorname{Pic}^d$ in order to prove representability. Tensor product and duality then transport the construction from one high-degree component to every degree.
+**Proof strategy.** This is the field case of the relative Picard theorem recalled in Section 1.1. We indicate how its construction specializes, both to identify the resulting points and to record where the nontrivial quotient theorem enters. Use $C^{(d)}$ for $d\geq2g-1$ as a smooth projective presentation of the already defined Picard sheaf. Linear equivalence is represented by the projective-space fibers described above. The relative theorem proves that this fppf quotient is a separated scheme; it is not legitimate to assume a universal bundle on an already represented $\operatorname{Pic}^d$ in order to prove representability. Tensor product and duality then transport the construction from one high-degree component to every degree.
 
 More explicitly, begin on the known scheme $C^{(d)}$. The relation sheaf
 
@@ -337,13 +341,13 @@ $$
 R_d=C^{(d)}\times_{\operatorname{Pic}^d}C^{(d)}
 $$
 
-records pairs of effective divisors differing by a principal divisor. Divisor theory represents this relation, and the vanishing of $H^1(L)$ makes both projections locally projective-space bundles of constant dimension. Effective faithfully flat descent for these local quotients produces a scheme representing the quotient sheaf. The same construction identifies the pullback over every local line-bundle representative with $\mathbf P(E)$, so it proves rather than presupposes the description in Section 4.2. The valuative criterion for the quotient, using extension of line-bundle classes on the proper curve and cancellation of the unique base twist, gives separatedness. This is the nontrivial representability step; the later tangent-space calculation supplies smoothness rather than being used to manufacture the quotient.
+records pairs of effective divisors whose rigidified line bundles are isomorphic. The isomorphism functor is represented because rigidification removes scalar stabilizers. In high degree both projections are locally projective-space bundles of constant dimension. Affine invariant neighborhoods give local quotients; uniqueness of rigidified isomorphisms gives their descent cocycle; and properness makes the isomorphism relation closed after scalars have been fixed. These local quotients glue to the separated representing scheme. The same construction identifies the pullback over every local line-bundle representative with $\mathbf P(E)$, so it proves rather than presupposes the description in Section 4.2. This is the nontrivial representability step. The later tangent-space calculation supplies smoothness rather than being used to manufacture the quotient.
 
-The theorem is stronger than a bijection on algebraically closed points. It says that a morphism $T\to\operatorname{Pic}_{C/k}$ is a family of line-bundle classes on $C_T$, with its necessary descent data, and that this statement survives arbitrary extension of the ground field.
+The theorem is stronger than a bijection on geometric points. It says that a morphism $T\to\operatorname{Pic}_{C/k}$ is a family of line-bundle classes on $C_T$, with its necessary descent data, and that this statement survives arbitrary extension of the ground field.
 
 ### 4.4 Tangent spaces and unobstructed deformations
 
-The geometry of the Picard scheme can also be read infinitesimally. Let $L$ be a geometric line bundle and let $R=k^s[\varepsilon]/(\varepsilon^2)$. A lift of $L$ to $C_R$ is obtained by changing transition functions $g_{ij}$ to
+The geometry of the Picard scheme can also be read infinitesimally. Let $L$ be a line bundle after a separably closed or algebraically closed extension $K/k$, and let $R=K[\varepsilon]/(\varepsilon^2)$. A lift of $L$ to $C_R$ is obtained by changing transition functions $g_{ij}$ to
 
 $$
 g_{ij}(1+\varepsilon a_{ij}).
@@ -396,9 +400,9 @@ Smooth connected group schemes need not be proper: the additive and multiplicati
 
 **Theorem.** The Jacobian $J$ is proper over $k$, hence is an abelian variety of dimension $g$.
 
-**Proof strategy.** First prove properness after extending to $k^s$; properness descends. Choose a line bundle $M$ of large degree $d\geq2g-1$. Translation by $M$ identifies $J_{k^s}$ with $\operatorname{Pic}^d_{\bar C}$. The Abel map $C^{(d)}\to\operatorname{Pic}^d$ is a surjective projective bundle. Since the source is proper, the target is proper.
+**Proof strategy.** First prove properness after extending to the algebraic closure $\Omega$; properness descends. Choose a line bundle $M$ of large degree $d\geq2g-1$. Translation by $M$ identifies $J_\Omega$ with $\operatorname{Pic}^d_{C_\Omega}$. The Abel map $C_\Omega^{(d)}\to\operatorname{Pic}^d_{C_\Omega}$ is a surjective projective bundle. Since the source is proper, the target is proper.
 
-For the last implication, the morphism $C^{(d)}\to\operatorname{Spec}k^s$ is proper and factors through the separated finite-type scheme $\operatorname{Pic}^d$. A surjective proper morphism is universally closed; after any base change, a closed subset of $\operatorname{Pic}^d$ pulls back to a closed subset and its image is closed. Thus $\operatorname{Pic}^d$ is universally closed, separated, and of finite type, hence proper. Translation transfers properness to $J_{k^s}$, and faithfully flat descent returns it to $k$.
+For the last implication, the morphism $C_\Omega^{(d)}\to\operatorname{Spec}\Omega$ is proper and factors through the separated finite-type scheme $\operatorname{Pic}^d_{C_\Omega}$. A surjective proper morphism is universally closed; after any base change, a closed subset of $\operatorname{Pic}^d$ pulls back to a closed subset and its image is closed. Thus $\operatorname{Pic}^d$ is universally closed, separated, and of finite type, hence proper. Translation transfers properness to $J_\Omega$, and faithfully flat descent returns it to $k$.
 
 The proof exposes the role of every hypothesis. Smoothness identifies divisors with line bundles and controls symmetric powers. Properness of $C$ makes $C^{(d)}$ proper. Geometric connectedness gives a single identity component with constant genus.
 
@@ -540,6 +544,14 @@ $$
 $$
 
 for the rational function obtained from the line through $P,Q$ and the appropriate vertical line in a plane cubic model. It is nonconstant between smooth proper genus-one curves and has degree one, hence is an isomorphism.
+
+Here the last assertion deserves a scheme-theoretic check in positive characteristic. If $\mathcal O_E(P-O)$ is trivial, then either $P=O$ or a rational function has the single simple pole $O$; the latter would give a degree-one map $E\to\mathbf P^1$ and force $E$ to have genus zero. Thus the geometric kernel has only the identity. The differential of (7.1) is the Abel-map differential
+
+$$
+T_OE\longrightarrow H^1(E,\mathcal O_E),
+$$
+
+which is dual under Serre duality to evaluation of an invariant differential at $O$ and is therefore nonzero. The homomorphism is separable, so its kernel is étale; an étale kernel with one geometric point is trivial. A homomorphism of elliptic curves with trivial kernel is a degree-one isogeny and hence an isomorphism.
 
 Under (7.1), the abstract tensor law on line bundles becomes the chord-and-tangent law. The example is more than reassurance: every construction below—torsion, Weil pairing, dual isogeny, and polarization—specializes to the familiar elliptic-curve construction.
 
@@ -943,13 +955,13 @@ $$
 
 The second identity is the mechanism by which choices of origins will disappear. Moreover $\lambda_L^\vee=\lambda_L$ under biduality: homomorphisms arising from line bundles are symmetric.
 
-Not every line bundle gives an isogeny. If $L$ is pulled back from a quotient, translations along the connected kernel leave it unchanged and $\lambda_L$ has positive-dimensional kernel. Ample line bundles are exactly those for which $\lambda_L$ is an isogeny. Positivity, not merely symmetry, is what produces a polarization.
+Not every line bundle gives an isogeny. If $L$ is pulled back from a quotient, translations along the connected kernel leave it unchanged and $\lambda_L$ has positive-dimensional kernel. An ample line bundle makes $\lambda_L$ an isogeny, but the converse without a positivity condition is false: the inverse of an ample line bundle is anti-ample and induces $-\lambda_L$, still an isogeny. A line bundle with finite $\lambda_L$ is called nondegenerate. A polarization requires the positive, ample component among such symmetric isogenies; finiteness alone does not supply positivity.
 
 ## 12. Polarizations and theta
 
 ### 12.1 Positive self-duality
 
-A **polarization** of $A$ is a homomorphism $\lambda:A\to A^\vee$ that becomes $\lambda_L$ for an ample line bundle $L$ after extension to $k^s$. It is **principal** if it is an isomorphism. Its degree is the rank of its finite kernel. If $\lambda_L$ has finite kernel, abelian Riemann--Roch gives
+A **polarization** of $A$ is a homomorphism $\lambda:A\to A^\vee$ that becomes $\lambda_L$ for an ample line bundle $L$ after extension to an algebraic closure. It is **principal** if it is an isomorphism. Its degree is the rank of its finite kernel. If $\lambda_L$ has finite kernel, abelian Riemann--Roch gives
 
 $$
 \deg\lambda_L=\chi(L)^2
@@ -962,17 +974,17 @@ Polarizations also control complements and adjoints. They turn a map into a tran
 
 ### 12.2 The theta divisor
 
-Assume first that $g\geq1$ and work over $k^s$. The Abel image
+Assume first that $g\geq1$ and work over the algebraic closure $\Omega$. The Abel image
 
 $$
 W_{g-1}=\{[\mathcal O(E)]:E\geq0,\ \deg E=g-1\}
-\subset\operatorname{Pic}^{g-1}_{\bar C} \tag{12.2}
+\subset\operatorname{Pic}^{g-1}_{C_\Omega} \tag{12.2}
 $$
 
 is an effective divisor. Indeed $C^{(g-1)}$ has dimension $g-1$, while $\operatorname{Pic}^{g-1}$ has dimension $g$, and the Abel map is generically finite onto its image. Equivalently,
 
 $$
-W_{g-1}=\{[L]:h^0(\bar C,L)>0\}.
+W_{g-1}=\{[L]:h^0(C_\Omega,L)>0\}.
 $$
 
 Choose a line bundle $M$ of degree $g-1$. Translation by $M^{-1}$ identifies $\operatorname{Pic}^{g-1}$ with $J$, and transports $W_{g-1}$ to a divisor $\Theta_M$ on $J$. Different choices of $M$ translate this divisor:
@@ -993,7 +1005,25 @@ $$
 
 Equation (12.3) makes this independent of $M$. It is called the **canonical principal polarization** of the Jacobian.
 
-We now explain principality rather than treating it as a label. Pull the theta class back along the addition map from $C^g$ obtained from an Abel--Jacobi map over $k^s$. The intersection of $g$ general theta translates counts ordered ways of successively imposing $g$ independent point conditions. The Abel map $C^{(g)}\to\operatorname{Pic}^g$ is generically a single point over a general class, while $C^g\to C^{(g)}$ has degree $g!$. The resulting top intersection is
+We now explain principality rather than treating it as a label. Write $W_d$ for the image of $C^{(d)}$ in $\operatorname{Pic}^d$ and translate every $W_d$ into $J$. Adding one point gives an incidence map
+
+$$
+C\times W_{d-1}\longrightarrow W_d.
+$$
+
+Over a general reduced effective divisor of degree $d$, this map has exactly $d$ points, according to which point is distinguished. Intersecting $W_d$ with a general theta translate imposes one independent point condition. The divisor exact sequence
+
+$$
+0\longrightarrow L(-p)\longrightarrow L\longrightarrow L|_p\longrightarrow0
+$$
+
+shows that the local intersection multiplicity is the length of the corresponding evaluation cokernel. Away from diagonals that length is one; specialization across a diagonal preserves the total length. Inducting on $d$ therefore gives the equality of intersection cycles
+
+$$
+\Theta_M^{\,g-d}\cdot[J]=(g-d)![W_d].
+$$
+
+At $d=0$, $W_0$ is the reduced origin. Equivalently, the Abel map $C^{(g)}\to\operatorname{Pic}^g$ is generically a single point over a general line bundle, while $C^g\to C^{(g)}$ has degree $g!$. Both calculations give
 
 $$
 c_1(\Theta_M)^g=g!. \tag{12.5}
@@ -1080,9 +1110,37 @@ $$
 \qquad \operatorname{div}(g)=nE.
 $$
 
-The Kummer torsor of $x$ is obtained by adjoining an $n$th root of $f$ away from $D$ and gluing across its support; similarly for $y$. A Čech cup-product computation reduces the trace of their cup product to the product of tame symbols of $f$ and $g$ along the two divisors. Weil reciprocity makes this product independent of all chosen functions and representatives.
+The Kummer torsor of $x$ is obtained by taking local $n$th roots of a rational trivialization of $\mathcal O(D)$ whose $n$th power is $f$; similarly for $y$. Choose an étale cover on which both roots exist and write their transition functions as $\mu_n$-valued Čech $1$-cocycles $(a_{ij})$ and $(b_{ij})$. The cup cocycle is $(a_{ij}\otimes b_{jk})$. Resolving it at the codimension-one points in the supports of $D$ and $E$, then applying the curve trace, gives the ratio
 
-On the Picard side, translate the theta bundle around the $n$-torsion parallelogram with vertices $0,x,y,x+y$. The commutator of the four canonical identifications is computed by the same product of tame symbols: the theta bundle records when a divisor acquires a section, and moving $D$ past $E$ contributes evaluation of the local defining functions. With our order—$x$ first and $\lambda_C(y)$ second—the product is the cup product above, not its inverse. This proves (13.6) for divisor classes. Every prime-to-characteristic torsion class admits such a divisor representative after moving supports, so bilinearity completes the proof.
+$$
+\frac{f(E)}{g(D)}\in\mu_n,\qquad
+f(E)=\prod_P f(P)^{\operatorname{ord}_P(E)},
+$$
+
+with the analogous convention for $g(D)$. Weil reciprocity gives
+
+$$
+f(\operatorname{div}g)=g(\operatorname{div}f),
+\qquad f(E)^n=g(D)^n,
+$$
+
+so the displayed ratio is indeed an $n$th root of unity. Scaling $f$ or $g$ has no effect because $D$ and $E$ have degree zero. Replacing, for example, $D$ by $D+\operatorname{div}h$ replaces $f$ by $fh^n$; Weil reciprocity gives $g(\operatorname{div}h)=h(\operatorname{div}g)=h(E)^n$, so numerator and denominator acquire the same factor. The other changes are identical. Thus the cohomological value is well defined and is computed entirely by these local commutators.
+
+It remains to identify the geometric commutator with the same calculation. Pull the normalized Poincaré bundle on $J\times J^\vee$ back along
+
+$$
+u_{D_0}\times\lambda_C:C\times J\longrightarrow J\times J^\vee
+$$
+
+after making a geometric degree-one choice. In the notation of the Albanese theorem, the identity factorization of $u_{D_0}$ says
+
+$$
+(u_{D_0}^*)^\vee\lambda_C=1_J.
+$$
+
+Dualizing and using the symmetry of $\lambda_C$ gives $u_{D_0}^*\lambda_C=1_J$. The see-saw principle therefore identifies the displayed pullback with the normalized universal degree-zero bundle on $C\times J$: both are trivial along the chosen base point and, on a slice indexed by $[E]$, both represent $\mathcal O(E)$ with its normalization. Translation of the degree-one choice changes both sides by a base pullback and leaves their commutators unchanged. Hence the Poincaré commutator of $x$ and $\lambda_C(y)$ can be computed on $C$ itself. Trivializing the pulled-back universal bundle off the supports of $D$ and $E$ gives exactly the transition cocycles $(a_{ij})$ and $(b_{ij})$ above. Going around the torsion parallelogram with vertices $0,x,y,x+y$ therefore gives the same ratio $f(E)/g(D)$. With our order—$x$ first and $\lambda_C(y)$ second—the ratio is the cup product above, not its inverse.
+
+This proves (13.6) for divisor representatives with disjoint support. The moving lemma on a smooth curve supplies such representatives for any pair of degree-zero classes, and every prime-to-characteristic torsion class is a degree-zero divisor class. Bilinearity then proves the theorem. Notice that the argument proves compatibility, not merely that two perfect alternating forms exist: perfect alternating forms of rank $2g$ are not unique without a chosen symplectic basis.
 
 This proof also diagnoses convention changes. Reversing the Poincaré commutator or defining $\lambda_L(a)=L\otimes t_a^*L^{-1}$ replaces both $e_{\lambda,n}$ and the displayed comparison by their inverses. The mathematical pairing is unchanged; the written sign is not.
 
@@ -1316,7 +1374,7 @@ $$
 \operatorname{End}_{\mathbf Z_\ell[G_k]}(T_\ell A). \tag{15.1}
 $$
 
-The map is injective. If an endomorphism kills $T_\ell A$, it kills $A[\ell^m](k^s)$ for every $m$. Its kernel then contains finite sets of unbounded order and is Zariski dense in $A$, forcing the endomorphism to be zero. We do not assert that (15.1) is surjective over an arbitrary field; that is a much deeper arithmetic statement and is not needed here.
+The map is injective. If an endomorphism kills $T_\ell A$, it kills $A[\ell^m](k^s)$ for every $m$. The union $A[\ell^\infty](k^s)$ is Zariski dense. Indeed, its Zariski closure is a closed subgroup $H$; if $A/H$ had positive dimension, its prime-to-characteristic $\ell^m$-torsion would have order $\ell^{2m\dim(A/H)}$. Multiplication by $\ell^m$ is surjective on $H$, so every such quotient torsion point lifts, after correcting by a point of $H$, to an $\ell^m$-torsion point of $A$. Its image would be both nonzero and zero, a contradiction. Hence $H=A$. The kernel of our endomorphism is closed and contains this dense union, so the endomorphism is zero. We do not assert that (15.1) is surjective over an arbitrary field; that is a much deeper arithmetic statement and is not needed here.
 
 For a Jacobian, correspondences defined over $k$ supply a distinguished subalgebra of $\operatorname{End}_k(J)$. Vertical and horizontal cycle components lie in its kernel. Different cycles can induce the same endomorphism, so the correspondence ring and the endomorphism ring should not be identified.
 
@@ -1380,7 +1438,13 @@ $$
 =\ell^{v_\ell(\deg\varphi)}. \tag{15.6}
 $$
 
-Consequently $V_\ell\varphi$ is an isomorphism, and $T_\ell\varphi$ is an isomorphism when $\ell\nmid\deg\varphi$. This is why objects considered only up to isogeny have identical rational Tate representations.
+To see the formula, factor the finite kernel into its $\ell$-primary and prime-to-$\ell$ parts. The prime-to-$\ell$ part induces an isomorphism on every $\ell^m$-torsion group. If the $\ell$-primary part has rank $\ell^a$, the exact sequences of finite étale $\ell$-power torsion show, for all sufficiently large $m$, that the index of
+
+$$
+T_\ell\varphi(T_\ell A)\subseteq T_\ell B
+$$
+
+is $\ell^a$. Since finite flat kernel rank is the isogeny degree, $a=v_\ell(\deg\varphi)$, proving (15.6). Consequently $V_\ell\varphi$ is an isomorphism, and $T_\ell\varphi$ is an isomorphism when $\ell\nmid\deg\varphi$. This is why objects considered only up to isogeny have identical rational Tate representations.
 
 ### 15.4 Semisimplicity up to isogeny
 
@@ -1506,9 +1570,23 @@ $$
 
 Transpose correspondence is adjoint for the Weil form and cup product. Composition of correspondences is composition of operators in the same order. These two facts are the indispensable bookkeeping behind geometric operator algebras.
 
-### 17.2 Hecke-type algebras without special curves
+### 17.2 The modular and Shimura correspondence pattern
 
-Call any commutative algebra generated by finite self-correspondences on $C$ a **Hecke-type correspondence algebra** for the purposes of this abstract discussion. We do not construct any particular modular or quaternionic curve, nor any of its special correspondences. The point here is only the formal output once such cycles exist.
+Call any associative algebra generated by finite self-correspondences on $C$ a **Hecke-type correspondence algebra** for the purposes of this abstract discussion. The algebra need not be commutative in general; in the standard arithmetic applications one singles out a commuting subalgebra generated by correspondences away from the level and residue characteristic. We do not construct a particular modular or quaternionic curve here. The point is to make the geometric output completely explicit once its finite maps have been constructed.
+
+The basic pattern already captures the correspondences used on modular and Shimura curves. Suppose a second smooth proper curve $C_r$ comes with two finite maps
+
+$$
+\alpha,\beta:C_r\rightrightarrows C.
+$$
+
+The cycle obtained by mapping $C_r$ to $C\times C$ through $(\alpha,\beta)$ acts by
+
+$$
+T_r=\beta_*\alpha^*:J_C\longrightarrow J_C. \tag{17.3a}
+$$
+
+Its transpose acts by $\alpha_*\beta^*$ and is the Rosati adjoint of $T_r$. On a modular curve, $\alpha$ and $\beta$ are the two degeneracy maps that forget or quotient the auxiliary cyclic subgroup. On a quaternionic Shimura curve, the analogous pair changes the local lattice or level structure at the auxiliary place. Once smooth proper models and finite maps are available, no new comparison theorem is required: (14.5) identifies (17.3a) with the pull--trace action on $H^1$. If the two maps and their moduli interpretation are defined over $k$, the operator commutes with $G_k$; if only their sum or double-coset cycle descends, it is that descended cycle which gives the $G_k$-equivariant operator.
 
 If $\mathbb T\subset\operatorname{Corr}(C,C)$ is defined over $k$, there are compatible homomorphisms
 
@@ -1544,7 +1622,7 @@ $$
 e\in\mathbb T\otimes\mathbf Q_\ell
 $$
 
-cuts out a finite-dimensional $G_k$-stable summand $eV_\ell J$. More generally, after extending scalars to a finite extension $E/\mathbf Q_\ell$, the simultaneous generalized eigenspace attached to a character of a commutative quotient of $\mathbb T$ is $G_k$-stable because the two actions commute. Its Galois action is continuous as the restriction of the action on a finite-dimensional $E$-space.
+cuts out a finite-dimensional $G_k$-stable summand $eV_\ell J$. More generally, after extending scalars to a finite extension $E/\mathbf Q_\ell$, the simultaneous generalized eigenspace attached to a character of a commutative quotient of $\mathbb T$ is $G_k$-stable because the two actions commute. Its Galois action is continuous as the restriction of the action on a finite-dimensional $E$-space. In particular, for a commuting family of modular or Shimura correspondences, localizing the rational correspondence algebra at an eigensystem and projecting to its generalized eigenspace produces the desired finite-dimensional $\ell$-adic representation. Geometry supplies its Galois stability; determining that it has dimension two, or identifying its Frobenius polynomials, requires arithmetic analysis of the particular curve and eigensystem.
 
 At finite level, reduction of (17.3) gives
 
@@ -1570,4 +1648,4 @@ $$
 
 The theta divisor supplies more than an isomorphism with the dual: it supplies the canonical positive principal polarization. Its Weil pairing is cup product followed by the curve trace, with exactly one surviving Tate twist. Consequently transpose cycles are simultaneously Rosati adjoints on $J$ and Poincaré adjoints on $H^1$.
 
-This compatibility completes the geometric passage to representation theory. A correspondence defined over the ground field acts on $J$, on every torsion level, on $T_\ell J$, and on $H^1$, and all these actions agree and commute with $G_k$. A Hecke-type algebra of such cycles can therefore cut finite-dimensional continuous Galois representations out of the cohomology of a curve. Constructing the special curves is the next geometric task; constructing their particular Hecke cycles comes after that. The bridge itself is now complete: divisors have become abelian geometry, abelian geometry has become cohomology, and cohomology has become arithmetic representation.
+This compatibility completes the geometric passage to representation theory. A correspondence defined over the ground field acts on $J$, on every torsion level, on $T_\ell J$, and on $H^1$, and all these actions agree and commute with $G_k$. A Hecke-type algebra of such cycles can therefore cut finite-dimensional continuous Galois representations out of the cohomology of a curve. In modular and Shimura settings, the moduli construction of the curves and their finite degeneracy maps supplies exactly the geometric input to this theorem. The bridge is complete: divisors have become abelian geometry, abelian geometry has become cohomology, and cohomology has become arithmetic representation.
