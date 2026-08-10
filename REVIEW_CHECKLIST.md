@@ -120,7 +120,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 053. Divided Powers and Crystalline Sites
 - [ ] 054. Crystalline Cohomology of Curves and Abelian Schemes
 - [ ] 055. Syntomic Cohomology and Integral Period Maps
-- [ ] 056. Finite-Flat Group Schemes of Small Height
+- [x] 056. Finite-Flat Group Schemes of Small Height
 - [ ] 057. Dieudonné Theory and Raynaud Full Faithfulness
 - [ ] 058. Fontaine–Laffaille Modules and Torsion Representations
 - [ ] 059. Integral Fontaine–Laffaille Equivalence and Base Change
