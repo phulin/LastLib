@@ -105,21 +105,55 @@
     - [Fiber products and functorial gluing](#147-fiber-products-and-functorial-gluing)
     - [Products of coefficient problems](#148-products-of-coefficient-problems)
     - [Presentations as generators and relations for functors](#149-presentations-as-generators-and-relations-for-functors)
-    - [The boundary with later theory](#1410-the-boundary-with-later-theory)
-15. [The reusable coefficient-ring dictionary](#15-the-reusable-coefficient-ring-dictionary)
-    - [Residue and locality](#151-residue-and-locality)
-    - [Artinian diagnostics](#152-artinian-diagnostics)
-    - [Tangent and differential translations](#153-tangent-and-differential-translations)
-    - [Small-extension protocol](#154-small-extension-protocol)
-    - [Fiber products and variance](#155-fiber-products-and-variance)
-    - [Completeness checklist](#156-completeness-checklist)
-    - [Continuity checklist](#157-continuity-checklist)
-    - [Presentation checklist](#158-presentation-checklist)
-    - [Finite-module topology checklist](#159-finite-module-topology-checklist)
-    - [Completed tensor checklist](#1510-completed-tensor-checklist)
-    - [Map-detection checklist](#1511-map-detection-checklist)
-    - [Pro-representation checklist](#1512-pro-representation-checklist)
-    - [Conclusion](#1513-conclusion)
+    - [What the pro-object viewpoint leaves open](#1410-what-the-pro-object-viewpoint-leaves-open)
+15. [Pseudocompact rings and modules](#15-pseudocompact-rings-and-modules)
+    - [Why finite generation is not the whole story](#151-why-finite-generation-is-not-the-whole-story)
+    - [Linear topologies and finite-length quotients](#152-linear-topologies-and-finite-length-quotients)
+    - [Pseudocompact modules as inverse limits](#153-pseudocompact-modules-as-inverse-limits)
+    - [Continuous maps and strict maps](#154-continuous-maps-and-strict-maps)
+    - [Products, closed submodules, and quotients](#155-products-closed-submodules-and-quotients)
+    - [Exactness at inverse limit](#156-exactness-at-inverse-limit)
+    - [Topological generation](#157-topological-generation)
+    - [Topological Nakayama for pseudocompact modules](#158-topological-nakayama-for-pseudocompact-modules)
+    - [Completed tensor products of modules](#159-completed-tensor-products-of-modules)
+    - [Finite modules inside the pseudocompact category](#1510-finite-modules-inside-the-pseudocompact-category)
+    - [Counterexamples at the boundary](#1511-counterexamples-at-the-boundary)
+16. [Closed subalgebras and their topology](#16-closed-subalgebras-and-their-topology)
+    - [Algebraic generation versus closed generation](#161-algebraic-generation-versus-closed-generation)
+    - [Finite shadows of a closed subalgebra](#162-finite-shadows-of-a-closed-subalgebra)
+    - [Locality of closed coefficient subalgebras](#163-locality-of-closed-coefficient-subalgebras)
+    - [Induced topology versus maximal-ideal topology](#164-induced-topology-versus-maximal-ideal-topology)
+    - [Topologically finite generation](#165-topologically-finite-generation)
+    - [A cotangent criterion for closed generation](#166-a-cotangent-criterion-for-closed-generation)
+    - [Images, kernels, and strict quotient maps](#167-images-kernels-and-strict-quotient-maps)
+    - [Closed subalgebras under coefficient change](#168-closed-subalgebras-under-coefficient-change)
+    - [Examples and failures](#169-examples-and-failures)
+17. [Trace rings](#17-trace-rings)
+    - [Why traces define a smaller coefficient ring](#171-why-traces-define-a-smaller-coefficient-ring)
+    - [Definition and finite-level description](#172-definition-and-finite-level-description)
+    - [Topology, locality, and residue](#173-topology-locality-and-residue)
+    - [Independence of presentation and cofinal systems](#174-independence-of-presentation-and-cofinal-systems)
+    - [Finite trace generation and power-series presentations](#175-finite-trace-generation-and-power-series-presentations)
+    - [Determinants and characteristic-polynomial coefficient rings](#176-determinants-and-characteristic-polynomial-coefficient-rings)
+    - [Change of basis, scalar extension, and quotients](#177-change-of-basis-scalar-extension-and-quotients)
+    - [Trace rings of inverse-limit representations](#178-trace-rings-of-inverse-limit-representations)
+    - [What traces do not determine by themselves](#179-what-traces-do-not-determine-by-themselves)
+    - [The coefficient-algebra package for deformation functors](#1710-the-coefficient-algebra-package-for-deformation-functors)
+18. [Synthesis: the coefficient-ring dictionary](#18-synthesis-the-coefficient-ring-dictionary)
+    - [Residue and locality](#181-residue-and-locality)
+    - [Artinian diagnostics](#182-artinian-diagnostics)
+    - [Tangent and differential translations](#183-tangent-and-differential-translations)
+    - [Small-extension protocol](#184-small-extension-protocol)
+    - [Fiber products and variance](#185-fiber-products-and-variance)
+    - [Completeness checklist](#186-completeness-checklist)
+    - [Continuity checklist](#187-continuity-checklist)
+    - [Presentation checklist](#188-presentation-checklist)
+    - [Finite and pseudocompact module checklist](#189-finite-and-pseudocompact-module-checklist)
+    - [Completed tensor checklist](#1810-completed-tensor-checklist)
+    - [Closed subalgebra and trace-ring checklist](#1811-closed-subalgebra-and-trace-ring-checklist)
+    - [Map-detection checklist](#1812-map-detection-checklist)
+    - [Pro-representation checklist](#1813-pro-representation-checklist)
+    - [Conclusion](#1814-conclusion)
 
 ## 1. The coefficient problem
 
@@ -223,6 +257,8 @@ k[[x_1,\ldots,x_r]],\qquad
 $$
 
 Their Artinian shadows are their quotients by powers of the maximal ideal. The central theme is that a map from a complete ring into an Artinian test ring sees only a finite shadow, while the complete ring itself remembers the compatible totality of those shadows.
+
+The development follows this change of scale. Chapters 2--5 analyze finite local rings, fiber products, small extensions, and first-order linearization. Chapters 6--10 build completeness, continuous mapping properties, formal coordinates, and the topology of finite modules. Chapters 11--14 explain completed products and the inverse-limit interpretation of represented functors over equal- and mixed-characteristic coefficient bases. The last three technical chapters remove finite-generation assumptions long enough to treat pseudocompact modules and closed subalgebras, then recover complete Noetherian structure from finite topological generation and apply the result to trace rings. Chapter 18 gathers the hypotheses into a final working dictionary.
 
 ## 2. The anatomy of an Artinian local ring
 
@@ -1511,9 +1547,9 @@ $$
 
 The variables give possible infinitesimal choices and the equations give compatibility conditions. Across a small extension, linearizing these equations produces the Jacobian map of Chapter 5. This does not assert that every naturally occurring functor admits such a presentation; it explains exactly what a presentation means once a representing ring is known.
 
-### 14.10 The boundary with later theory
+### 14.10 What the pro-object viewpoint leaves open
 
-The coefficient platform now provides:
+The concrete pro-object viewpoint now provides:
 
 - finite local test objects and their fiber products;
 - principal small extensions for induction;
@@ -1523,11 +1559,888 @@ The coefficient platform now provides:
 - completed tensor products for combining coefficient systems;
 - concrete pro-representing functors.
 
-What it deliberately does not provide is a particular deformation assignment, a cohomological formula for its tangent or obstruction spaces, criteria guaranteeing a hull or universal ring, or a treatment of automorphisms of deformed objects. Those questions require additional structure. The present book ensures they can be asked without rebuilding the coefficient algebra each time.
+So far, however, the complete objects have generally been assumed Noetherian and their modules finite. A closed subalgebra defined by invariant coefficients may arise before either finiteness statement is known. One must first control it as an inverse limit, distinguish dense generation from closed generation, and prove a version of Nakayama that concludes topological generation without silently assuming Artin--Rees. Chapters 15 and 16 develop that larger pseudocompact setting, and Chapter 17 applies it to trace rings.
 
-## 15. The reusable coefficient-ring dictionary
+Even after that enlargement, coefficient algebra alone will not provide a particular deformation assignment, a cohomological formula for tangent or obstruction spaces, criteria guaranteeing a hull or universal ring, or a theorem descending matrices from invariant traces. Those questions require additional structure. The purpose here is to ensure they can be asked without rebuilding the topological algebra each time.
 
-### 15.1 Residue and locality
+## 15. Pseudocompact rings and modules
+
+### 15.1 Why finite generation is not the whole story
+
+Finite modules over complete Noetherian local rings already cover many coefficient arguments, but inverse-limit constructions naturally produce modules that are not finite. A product of infinitely many finite coefficient modules, a module of continuous functions into a complete ring, or the limit of modules whose ranks grow with the level may be too large for ordinary Nakayama and Artin--Rees. It still has a controlled topology: every finite observation factors through a finite-length quotient.
+
+The word **pseudocompact** isolates this control. It does not mean merely “complete,” and it does not mean compact as a topological space when the residue field is infinite. Its content is algebraic: the neighborhoods of zero are submodules and the corresponding discrete quotients have finite length. This is the module-theoretic analogue of viewing a complete coefficient ring through Artinian shadows.
+
+There are two reasons to keep this larger category available. First, kernels and products occurring before a Noetherianity theorem may be pseudocompact even when finite generation is unknown. Second, a closed coefficient subalgebra inherits an inverse-limit topology before one knows that this topology is generated by powers of a finitely generated maximal ideal. The pseudocompact language lets us make correct statements at that preliminary stage.
+
+### 15.2 Linear topologies and finite-length quotients
+
+A topology on an $R$-module $M$ is **linear** if zero has a basis of neighborhoods consisting of submodules. It is enough to name a directed family $\mathcal U$ of submodules such that for $U,V\in\mathcal U$ some $W\in\mathcal U$ lies in $U\cap V$. The topology is Hausdorff precisely when
+
+$$
+\bigcap_{U\in\mathcal U}U=0.
+$$
+
+It is complete and Hausdorff precisely when the canonical map
+
+$$
+M\longrightarrow\varprojlim_{U\in\mathcal U}M/U
+$$
+
+is an isomorphism. This formulation works for arbitrary directed neighborhood bases and does not presuppose that the topology is adic.
+
+A topological ring $R$ is **pseudocompact** if it is complete and Hausdorff, zero has a basis of open ideals $J$, and each discrete ring $R/J$ is Artinian. A topological $R$-module $M$ is **pseudocompact** if it is complete and Hausdorff, zero has a basis of open $R$-submodules $U$, and each $M/U$ has finite length over $R$. The action is required to be continuous; equivalently for linear topologies, for every open $U\subseteq M$ there are open $J\subseteq R$ and open $V\subseteq M$ with $JV\subseteq U$. In the standard inverse-limit situation one can take $V=M$ after shrinking $J$, because the action on the finite-length quotient factors through an Artinian quotient of $R$.
+
+The ring definition is the module definition applied to $M=R$: an open ideal quotient has finite length as a module over itself exactly when it is Artinian. A complete Noetherian local ring with its maximal-adic topology is pseudocompact, since $R/\mathfrak m^n$ is Artinian. The converse is false: a pseudocompact local ring can have infinitely generated maximal ideal and need not be Noetherian.
+
+The adjective **pro-Artinian local** will mean a pseudocompact ring presented as an inverse limit of Artinian local rings with surjective local transition maps and a common specified residue field $k$. Such a limit is local. Indeed an element whose image in $k$ is nonzero is a unit at every finite stage, and the compatible inverses define its inverse in the limit. Its maximal ideal is the kernel of the residue map.
+
+### 15.3 Pseudocompact modules as inverse limits
+
+The definition immediately yields a reconstruction theorem, but spelling it out clarifies which topology is present.
+
+**Theorem (finite-shadow reconstruction).** Let $R$ be pseudocompact and $M$ a linearly topologized $R$-module. Then $M$ is pseudocompact if and only if, for a cofinal basis $\mathcal U$ of open submodules with finite-length quotients, the map
+
+$$
+M\xrightarrow{\sim}\varprojlim_{U\in\mathcal U}M/U
+$$
+
+is an isomorphism. Conversely, an inverse limit of discrete finite-length modules with surjective transition maps, endowed with the inverse-limit topology, is pseudocompact.
+
+**Proof strategy.** The forward implication is exactly completeness and separation. Conversely, kernels of the projections to finite-length stages form a linear neighborhood basis. The limit is Hausdorff because the intersection of these kernels is zero, and it is complete because a compatible family in all discrete quotients is, by definition, an element of the inverse limit. $\square$
+
+Different cofinal systems give the same topological module. For example, if $(R,\mathfrak m)$ is complete Noetherian local and $M$ finite, either tower
+
+$$
+(M/\mathfrak m^nM)_n
+\qquad\text{or}\qquad
+(M/U)_U
+$$
+
+over all open submodules recovers $M$. Cofinality, not the displayed indexing set, is the invariant datum.
+
+There is a useful but one-sided local refinement. Let $R=\varprojlim R_i$ be pro-Artinian local with maximal ideal $\mathfrak m$. For every open ideal $J$, the image of $\mathfrak m$ in the Artinian local ring $R/J$ is nilpotent. Hence some $\mathfrak m^n\subseteq J$. It follows that the $\mathfrak m$-adic topology is at least as fine as the given pro-Artinian topology. Equality requires the converse comparison: every $\mathfrak m^n$ must contain an open ideal. That can fail when $\mathfrak m/\mathfrak m^2$ is infinite-dimensional. Thus a pro-Artinian local ring is not automatically an adic ring in the usual Noetherian sense.
+
+### 15.4 Continuous maps and strict maps
+
+A homomorphism $f:M\to N$ of linearly topologized modules is continuous if for every open $V\subseteq N$ the inverse image $f^{-1}(V)$ is open. At finite level this means that each composite $M\to N/V$ factors through some discrete quotient $M/U$. Therefore
+
+$$
+\operatorname{Hom}_{\mathrm{cts},R}(M,N)
+\cong
+\varprojlim_V\varinjlim_U
+\operatorname{Hom}_R(M/U,N/V)
+$$
+
+when $M$ and $N$ are pseudocompact and $U,V$ run through open submodules. The order of the two operations has the same meaning as in Section 14.2: the source precision may depend on the requested target precision.
+
+Continuity alone does not say that the image carries the quotient topology. A continuous map is **strict** if the induced bijection
+
+$$
+M/\ker f\longrightarrow f(M)
+$$
+
+is a homeomorphism, where the source has the quotient topology and the image has the subspace topology. For a surjection, strictness says exactly that a subset of the target is open when its inverse image is open. For an injection, it says the topology on the source is the one induced from the target.
+
+Strictness is the topological condition needed for exact sequences. An algebraically exact sequence
+
+$$
+0\longrightarrow M'\longrightarrow M\longrightarrow M''\longrightarrow0
+$$
+
+is **strict exact** if both maps are strict. Then $M'$ is identified with a closed submodule of $M$, and $M''$ has the quotient topology. In the finite Noetherian adic setting, Artin--Rees supplies strictness automatically. In the general pseudocompact setting it should be stated rather than guessed.
+
+### 15.5 Products, closed submodules, and quotients
+
+Arbitrary products of pseudocompact modules are pseudocompact. If $M=\prod_{\lambda}M_\lambda$, basic open submodules restrict only finitely many coordinates. The corresponding quotient is a finite product of finite-length modules and therefore has finite length. Completeness and Hausdorffness are coordinatewise.
+
+This example is important because products, rather than direct sums, are native to inverse-limit algebra. The product
+
+$$
+\prod_{n\geq1}k
+$$
+
+with the product topology is pseudocompact over the discrete field $k$. The direct sum $\bigoplus_{n\geq1}k$ is dense in it and is not complete for the induced topology.
+
+**Proposition.** If $M$ is pseudocompact and $N\subseteq M$ is closed, then $N$ with the induced topology and $M/N$ with the quotient topology are pseudocompact. The sequence
+
+$$
+0\longrightarrow N\longrightarrow M\longrightarrow M/N\longrightarrow0
+$$
+
+is strict exact.
+
+**Proof.** The module $N$ is complete because a Cauchy family in a closed subspace of a complete Hausdorff module has its limit in that subspace. Its open quotients embed into finite-length quotients of $M$, hence have finite length. For the quotient, the images $(U+N)/N$ of open submodules form a basis, and
+
+$$
+(M/N)/((U+N)/N)\cong M/(U+N)
+$$
+
+has finite length. Completeness of $M/N$ follows by lifting a compatible system modulo these neighborhoods to a compatible system in $M$; equivalently, it follows from the inverse-limit description. Closedness makes the quotient Hausdorff. The topology statements are built into the constructions. $\square$
+
+A nonclosed submodule gives the warning. The quotient by a dense proper submodule is not Hausdorff: every element lies in the closure of zero. In general the separated quotient by a submodule $N$ is the quotient by $\overline N$, not by $N$ itself.
+
+### 15.6 Exactness at inverse limit
+
+Inverse limits are left exact, but surjectivity on the right requires a hypothesis. The form used throughout coefficient algebra is the following.
+
+**Theorem (surjective-tower exactness).** Suppose for every $n$ there is an exact sequence
+
+$$
+0\longrightarrow M'_n\longrightarrow M_n\longrightarrow M''_n\longrightarrow0
+$$
+
+of finite-length modules, the transition maps form a commuting inverse system, and the transition maps $M'_{n+1}\to M'_n$ are surjective. Then
+
+$$
+0\longrightarrow\varprojlim_nM'_n
+\longrightarrow\varprojlim_nM_n
+\longrightarrow\varprojlim_nM''_n
+\longrightarrow0
+$$
+
+is exact.
+
+**Proof strategy.** Only the last surjectivity is at issue. Lift a compatible element of the right-hand limit one stage at a time. At stage $n+1$ an arbitrary lift may disagree with the chosen stage-$n$ lift by an element of $M'_n$; surjectivity of $M'_{n+1}\to M'_n$ supplies a correction without changing its image in $M''_{n+1}$. $\square$
+
+Finite length also gives the more general Mittag--Leffler mechanism: descending images in a fixed finite-length module stabilize, so inverse systems of finite-length modules satisfy the condition needed to kill the first derived obstruction to taking limits. The elementary tower proof above is usually all that is required.
+
+Consequently a strict exact sequence of pseudocompact modules can be recovered from compatible strict exact sequences of finite quotients. This is the dependable meaning of “pass to the inverse limit.” Without strictness or a Mittag--Leffler condition, an algebraically exact family need not remain right exact at the limit.
+
+### 15.7 Topological generation
+
+For a subset $X\subseteq M$, write
+
+$$
+\langle X\rangle_R^{\mathrm{cl}}
+=\overline{\sum_{x\in X}Rx}.
+$$
+
+The set $X$ **topologically generates** $M$ if this closed submodule is all of $M$. This is weaker than algebraic generation: an element may be only a convergent limit of finite $R$-linear combinations. For finite $X=\{x_1,\ldots,x_r\}$, topological generation is equivalent to the continuous map
+
+$$
+R^r\longrightarrow M,qquad(a_i)\longmapsto\sum_i a_ix_i
+$$
+
+having dense image. If that map is known to have closed image, density upgrades to algebraic surjectivity. Over a complete Noetherian ring with $M$ finite, closedness follows from Chapter 10, so the topological and algebraic notions agree.
+
+At finite level there is a precise test:
+
+$$
+X\text{ topologically generates }M
+\quad\Longleftrightarrow\quad
+X\text{ generates every }M/U.
+$$
+
+The forward direction follows by reducing a dense submodule to a discrete quotient. Conversely, if the image is all of every $M/U$, its closure meets every coset of every open submodule and is therefore all of $M$.
+
+### 15.8 Topological Nakayama for pseudocompact modules
+
+Let $R$ be pro-Artinian local with maximal ideal $\mathfrak m$ and residue field $k$, and let $M$ be pseudocompact. Since $\mathfrak mM$ need not be visibly closed, the safe residual quotient is
+
+$$
+M/\overline{\mathfrak mM}.
+$$
+
+It is a topological $k$-vector space. When it is finite-dimensional, its topology is discrete.
+
+**Theorem (pseudocompact Nakayama).** If
+
+$$
+M=\overline{\mathfrak mM},
+$$
+
+then $M=0$. More generally, if $x_1,\ldots,x_r$ map to a basis, or merely a spanning family, of $M/\overline{\mathfrak mM}$, then they topologically generate $M$.
+
+**Proof strategy.** Reduce to each finite-length quotient, where ordinary Nakayama applies, and then use separation.
+
+**Proof.** Let $U$ be an open submodule. The image of $\overline{\mathfrak mM}$ in the discrete module $M/U$ equals the image of $\mathfrak mM$. If $M=\overline{\mathfrak mM}$, then
+
+$$
+M/U=\mathfrak m(M/U).
+$$
+
+The action of $R$ on $M/U$ factors through an Artinian local quotient with maximal ideal the image of $\mathfrak m$. Ordinary Nakayama gives $M/U=0$. This holds for every $U$, so Hausdorffness gives $M=0$.
+
+For the second assertion, let $N=\langle x_1,\ldots,x_r\rangle_R^{\mathrm{cl}}$. The quotient $M/N$ is pseudocompact by Section 15.5, and the spanning hypothesis says
+
+$$
+M/N=\overline{\mathfrak m(M/N)}.
+$$
+
+The first assertion makes $M/N=0$. Hence $N=M$. $\square$
+
+This theorem detects **topological** generation. To conclude that $M$ is an algebraically finite module, one still needs the image of $R^r\to M$ to be closed. That is automatic in the finite Noetherian situation, but not part of the abstract statement. Confusing these two conclusions is one of the main hazards of informal inverse-limit arguments.
+
+### 15.9 Completed tensor products of modules
+
+Let $R$ be pseudocompact, and let $M,N$ be pseudocompact $R$-modules. Their algebraic tensor product generally has the wrong topology and need not be complete. Define
+
+$$
+M\widehat\otimes_RN
+=\varprojlim_{U,V}
+(M/U)\otimes_R(N/V),
+$$
+
+where $U,V$ range over open submodules and the tensor product at a given stage may be taken over a sufficiently small Artinian quotient of $R$ acting on both factors. Equivalently, complete $M\otimes_RN$ for the submodules generated by
+
+$$
+U\otimes_RN+M\otimes_RV.
+$$
+
+Under the stated finite-length quotient conditions these descriptions agree. The result represents continuous balanced bilinear maps: a continuous $R$-balanced map $M\times N\to P$ into a complete Hausdorff module, which becomes zero on $U\times N$ and $M\times V$ at each requested precision, factors uniquely through $M\widehat\otimes_RN$.
+
+The construction is right exact for strict quotient maps under the same surjective inverse-system hypotheses as Section 15.6. It is not left exact without a flatness condition. If $M$ is finite over a complete Noetherian local ring and $N$ is complete, then familiar finite-presentation arguments often identify
+
+$$
+M\widehat\otimes_RN
+\cong M\otimes_RN,
+$$
+
+provided the ordinary tensor product is already complete in the relevant topology. For example, $R^r\widehat\otimes_RN\cong N^r$. The completion symbol should be removed only after such a verification.
+
+### 15.10 Finite modules inside the pseudocompact category
+
+Let $(R,\mathfrak m)$ be complete Noetherian local. The functor sending a finite $R$-module to itself with its $\mathfrak m$-adic topology embeds finite modules into pseudocompact modules. Chapter 10 proves the decisive extra properties:
+
+1. every submodule is finite and closed;
+2. every homomorphism between finite modules is strict;
+3. algebraic and topological finite generation coincide;
+4. completion is exact;
+5. the topology is intrinsic and recovered from powers of $\mathfrak m$.
+
+Thus pseudocompact algebra is not a replacement for finite Noetherian algebra. It is a larger holding category in which inverse limits, products, and closed objects exist. Once finite generation is proved, Artin--Rees and ordinary Nakayama sharpen the conclusions.
+
+An instructive example is $M=R[[T]]$ regarded as an $R$-module. With the $(\mathfrak m,T)$-adic topology it is pseudocompact and is topologically generated by $1,T,T^2,\ldots$, but it is not finite over $R$. As an algebra it is topologically generated by the single element $T$. Module generation and algebra generation are different finiteness questions.
+
+### 15.11 Counterexamples at the boundary
+
+Three failures summarize why the definitions carry so many qualifiers.
+
+First, completeness without finite quotients is too weak. A Banach space over a nondiscrete field is complete and linearly topologized in an analytic sense, but its small quotients need not have finite length and it does not belong to the coefficient category considered here.
+
+Second, a dense submodule need not be the whole module. The direct sum $\bigoplus_{n\geq1}k$ is dense and proper in $\prod_{n\geq1}k$. Hence reduction to every fixed finite set of coordinates cannot distinguish it from the whole product. Closedness is what turns finite-level surjectivity into an equality of inverse-limit objects.
+
+Third, residual finite-dimensionality does not by itself give algebraic finite generation. Pseudocompact Nakayama produces a dense image of a finite free module. A separate closed-image theorem is needed to make that image equal to the target as an abstract module. In complete Noetherian algebra that theorem is available; before Noetherianity is known, the correct conclusion is topological generation and no more.
+
+These boundaries are constructive rather than merely cautionary. They tell us the exact route for a closed coefficient subalgebra: first prove it is an inverse limit of finite shadows, then prove topological finite generation, and only then invoke a power-series presentation to obtain Noetherianity and maximal-adic control.
+
+## 16. Closed subalgebras and their topology
+
+### 16.1 Algebraic generation versus closed generation
+
+Let $\mathcal O\to A$ be a continuous map of topological rings and let $S\subseteq A$. The algebraic $\mathcal O$-subalgebra $\mathcal O[S]$ contains finite $\mathcal O$-linear combinations of finite products of elements of $S$. It need not contain limits of such expressions. The **closed $\mathcal O$-subalgebra generated by $S$** is
+
+$$
+\mathcal O\langle S\rangle_A
+=\overline{\mathcal O[S]}\subseteq A.
+$$
+
+The ambient subscript matters because closure depends on the topology of $A$. This notation is descriptive; when $S$ is finite it should not be confused with a restricted or convergent power-series algebra from analytic geometry. Here the closure is taken in a linearly topologized coefficient ring.
+
+Why is closure forced? Suppose $A=k[[t]]$ and $S=\{t\}$. The algebraic subalgebra $k[t]$ misses $\sum_{n\geq0}t^{n!}$, whereas the closed subalgebra it generates is all of $k[[t]]$. A formal coefficient ring must contain the limit whenever it contains every truncation compatibly. Algebraic generation sees expressions; closed generation sees finite-precision determination.
+
+The closure of a subring is again a subring because addition and multiplication are continuous. More explicitly, if $x_i\to x$ and $y_i\to y$ with all $x_i,y_i$ in the subring, then $x_i+y_i\to x+y$ and $x_iy_i\to xy$. If the subring contains the image of $\mathcal O$, so does its closure. Thus $\mathcal O\langle S\rangle_A$ is the smallest closed $\mathcal O$-subalgebra of $A$ containing $S$.
+
+### 16.2 Finite shadows of a closed subalgebra
+
+Assume
+
+$$
+A\cong\varprojlim_i A_i
+$$
+
+is pseudocompact, with surjective transition maps and open kernels $J_i$. Let $B\subseteq A$ be a closed subalgebra. Put
+
+$$
+B_i=\operatorname{im}(B\longrightarrow A_i)
+\cong B/(B\cap J_i).
+$$
+
+Then the induced topology on $B$ has the ideals $B\cap J_i$ as a neighborhood basis, and
+
+$$
+B\xrightarrow{\sim}\varprojlim_i B_i.
+$$
+
+**Proof strategy.** Injectivity is inherited from the Hausdorff ambient ring. A compatible family in the $B_i$ determines an element of $A$; every neighborhood of that element meets $B$, so closedness places the limit back in $B$.
+
+**Proof.** The map is injective because
+
+$$
+\bigcap_i(B\cap J_i)=B\cap\bigcap_iJ_i=0.
+$$
+
+Let $(b_i)$ be compatible. Its images in the $A_i$ determine $a\in A$. For every $i$, the congruence class $a+J_i$ contains an element of $B$, because $b_i$ lies in the image of $B$. Hence $a$ lies in the closure of $B$. Since $B$ is closed, $a\in B$, and it maps to the given family. $\square$
+
+If $A_i$ are Artinian local $\mathcal O$-algebras and $B$ contains the image of $\mathcal O$, then each $B_i$ is Artinian under the standard coefficient hypothesis that $A_i$ is finite as an $\mathcal O$-module. Indeed $B_i$ is an $\mathcal O$-submodule of the finite $\mathcal O$-module $A_i$; Noetherianity of $\mathcal O$ makes it finite, and finite length of $A_i$ as an $\mathcal O$-module passes to $B_i$. Every descending chain of ideals of $B_i$ is then a descending chain of $\mathcal O$-submodules and stabilizes. Thus $B$ is pseudocompact.
+
+In equal characteristic, the same conclusion is simpler: if $A_i$ is finite-dimensional over the fixed coefficient field $k$ and $B_i$ contains $k$, then $B_i$ is a finite-dimensional $k$-algebra. The explicit coefficient hypothesis is what excludes pathological subrings of Artinian rings that are not controlled as modules over a fixed Noetherian base.
+
+For a generated algebra there is a still more concrete formula. If $B=\mathcal O\langle S\rangle_A$, then
+
+$$
+B_i=\operatorname{im}(\mathcal O[S]\longrightarrow A_i).
+$$
+
+Closure disappears after passing to the discrete quotient $A_i$: a dense subring and its closure have the same image in every finite shadow.
+
+### 16.3 Locality of closed coefficient subalgebras
+
+Let $(A,\mathfrak m_A)$ be either maximal-adically complete local or pro-Artinian local, let $\mathcal O\to A$ be local with the same residue field $k$, and let $B\subseteq A$ be a closed $\mathcal O$-subalgebra. Then $B$ is local with
+
+$$
+\mathfrak m_B=B\cap\mathfrak m_A,
+\qquad B/\mathfrak m_B\cong k.
+$$
+
+The residue statement is immediate: $B$ contains $\mathcal O$, whose image surjects onto $k$, while the kernel of $B\to k$ is the displayed intersection. The subtle point is that an element of $B$ which is a unit in $A$ must have its inverse in $B$.
+
+Take $b\in B\setminus\mathfrak m_A$. Choose $o\in\mathcal O$ having the same nonzero residue as $b$. Then $o$ is a unit and
+
+$$
+b=o(1-u),\qquad u=1-o^{-1}b\in B\cap\mathfrak m_A.
+$$
+
+The element $u$ is topologically nilpotent. This is immediate in the maximal-adic case. In the pro-Artinian case, its image in every Artinian local quotient is nilpotent. Therefore the partial geometric sums $1+u+\cdots+u^n$ converge in $A$ to $(1-u)^{-1}$. Every partial sum lies in $B$, and $B$ is closed, so the inverse lies in $B$. Hence $b$ is a unit in $B$. All elements outside $B\cap\mathfrak m_A$ are units, proving locality.
+
+This proof explains why closedness is not cosmetic. The polynomial subring $k[t]\subset k[[t]]$ is local only after localization at $(t)$, and even $k[t]_{(t)}$ does not contain the inverse of every series from its completion. A dense coefficient subalgebra can fail to be complete and can have a different unit theory from its closure.
+
+### 16.4 Induced topology versus maximal-ideal topology
+
+The closed subalgebra $B$ inherits the topology with neighborhoods $B\cap J_i$. It also has a maximal ideal $\mathfrak m_B$. These two facts do **not** by themselves prove that $B$ is Noetherian or complete for the $\mathfrak m_B$-adic topology. One must compare the filtrations.
+
+There is always one useful containment. If $A$ is maximal-adic, then
+
+$$
+\mathfrak m_B^n\subseteq B\cap\mathfrak m_A^n.
+$$
+
+Thus the induced topology is no finer than the $\mathfrak m_B$-adic topology in the direction dictated by these neighborhoods. The reverse cofinal containment
+
+$$
+B\cap\mathfrak m_A^N\subseteq\mathfrak m_B^n
+$$
+
+for suitable $N$ is a genuine theorem, not a formal identity. It follows when $B$ is Noetherian and the induced topology is defined by an ideal with radical $\mathfrak m_B$, or when $B$ has a finite power-series presentation whose quotient topology is known.
+
+The distinction can be seen in infinitely generated situations. Let
+
+$$
+A=k[[x_1,x_2,\ldots]]
+$$
+
+mean the inverse limit of the Artinian rings
+
+$$
+k[x_1,\ldots,x_n]/(x_1,\ldots,x_n)^n
+$$
+
+with the transition maps described in Section 7.3. Its maximal ideal has infinitely many independent cotangent classes. The topology is pro-Artinian, but no finite list generates the maximal ideal and no quotient of a finite-variable power-series ring can present $A$. Familiar Noetherian equivalences among closed, adic, and finite-type properties cannot be imported.
+
+### 16.5 Topologically finite generation
+
+A closed $\mathcal O$-subalgebra $B\subseteq A$ is **topologically generated over $\mathcal O$** by $b_1,\ldots,b_r$ if
+
+$$
+B=\mathcal O\langle b_1,\ldots,b_r\rangle_A.
+$$
+
+Assume $\mathcal O$ is complete Noetherian local and $b_i\in\mathfrak m_B$. Substitution gives a continuous local map
+
+$$
+\Phi:\mathcal O[[X_1,\ldots,X_r]]\longrightarrow B,
+\qquad X_i\longmapsto b_i.
+$$
+
+Its image contains the algebraic subalgebra $\mathcal O[b_1,\ldots,b_r]$ and is contained in its closure. Density alone is not enough to prove surjectivity, so one needs the following complete-local lemma.
+
+**Lemma (descending-ideal or Chevalley lemma).** Let $(P,\mathfrak n)$ be complete Noetherian local and let
+
+$$
+K_1\supseteq K_2\supseteq\cdots
+$$
+
+be ideals with intersection $K$. For every $q$ there is an $i$ such that
+
+$$
+K_i\subseteq K+\mathfrak n^q.
+$$
+
+**Proof.** Replace $P$ by $P/K$ and $K_i$ by $K_i/K$, so that $\bigcap_iK_i=0$. For each $q$, the images of the $K_i$ form a descending chain in the Artinian ring $P/\mathfrak n^q$, hence stabilize; call the stable image $L_q$. The natural maps $L_{q+1}\to L_q$ are surjective: choose one index beyond the stabilization indices at both levels and reduce the image of that $K_i$.
+
+If some $L_q$ were nonzero, surjectivity would let us choose a compatible nonzero class at level $q$ and lift it through all higher levels. Completeness would give $x\in P$ whose residue at every level belongs to the stable image. For each fixed $i$ this says
+
+$$
+x\in\bigcap_q(K_i+\mathfrak n^q)=K_i,
+$$
+
+because ideals of a complete Noetherian local ring are closed. Hence $x\in\bigcap_iK_i=0$, contradicting its nonzero residue at level $q$. Thus every $L_q$ is zero, which is exactly the desired eventual containment. $\square$
+
+Apply the lemma to $P=\mathcal O[[\mathbf X]]$ and to the kernels $K_i$ of the surjections from $P$ to a countable cofinal tower of finite quotients of $B$. Their intersection is $K=\ker\Phi$. The lemma says the topology on $P/K$ defined by the $K_i/K$ is cofinal with its maximal-adic topology. Therefore
+
+$$
+P/K\xrightarrow{\sim}\varprojlim_iP/K_i
+\xrightarrow{\sim}\varprojlim_iB_i=B.
+$$
+
+This proves both surjectivity and compatibility of the topologies.
+
+We obtain the structural result that closes the gap left in Section 16.4.
+
+**Theorem (closed finite-generation theorem).** Let $\mathcal O$ be complete Noetherian local, let $A$ be a pseudocompact local $\mathcal O$-algebra with the same residue field and a countable cofinal system of open ideals, and let $B\subseteq A$ be a closed $\mathcal O$-subalgebra. If $B$ is topologically generated over $\mathcal O$ by finitely many elements, then
+
+$$
+B\cong\mathcal O[[X_1,\ldots,X_r]]/I
+$$
+
+for a closed ideal $I$. In particular $B$ is complete Noetherian local, and its induced topology agrees with its maximal-ideal-adic topology.
+
+**Proof strategy.** At each Artinian shadow the substitution map is surjective. The descending-ideal lemma identifies the limit of these finite quotients with the quotient by the intersection of their kernels. The kernel is closed, the quotient is complete Noetherian local, and the cofinality statement identifies its maximal-adic topology with the topology induced on $B$. $\square$
+
+This theorem is often the decisive passage from a trace-generated topological ring to an ordinary complete Noetherian local ring. The logical order matters: closedness gives completeness; finite topological generation gives the power-series quotient; the quotient gives Noetherianity and adicity.
+
+### 16.6 A cotangent criterion for closed generation
+
+Finite topological generation can itself be detected in the first infinitesimal layer, provided the topology is pro-Artinian local. Let $B$ be as in Section 16.5 and put $\mathfrak m=\mathfrak m_B$. Suppose $b_1,\ldots,b_r$ map to a spanning family of the relative cotangent space
+
+$$
+\frac{\mathfrak m}{\overline{\mathfrak m^2+\mathfrak m_{\mathcal O}B}}.
+$$
+
+Let $C=\mathcal O\langle b_1,\ldots,b_r\rangle_B$. It is a closed local $\mathcal O$-subalgebra. We prove $C=B$ in every finite shadow. Write $C_i\subseteq B_i$ for their images and $\mathfrak m_{C_i},\mathfrak m_{B_i}$ for the maximal ideals. The spanning hypothesis descends to
+
+$$
+\mathfrak m_{B_i}
+=\mathfrak m_{C_i}+\mathfrak m_{B_i}^2
++\mathfrak m_{\mathcal O_i}B_i.
+$$
+
+Since $\mathfrak m_{\mathcal O_i}\subseteq\mathfrak m_{C_i}$, iteration through the nilpotent powers of $\mathfrak m_{B_i}$ gives
+
+$$
+\mathfrak m_{B_i}
+\subseteq C_i+\mathfrak m_{C_i}B_i.
+$$
+
+The two rings have the same residue field, so $B_i=C_i+\mathfrak m_{B_i}$ and hence
+
+$$
+B_i=C_i+\mathfrak m_{C_i}B_i.
+$$
+
+Regard the finite-length $B_i$ as a finite $C_i$-module. Nakayama applied to $B_i/C_i$ now gives $B_i=C_i$. Since this equality holds in every finite quotient, closed reconstruction gives $B=C$. Thus the $b_i$ topologically generate $B$ over $\mathcal O$.
+
+The closure in the denominator is deliberate. Before Noetherianity has been established, the sum $\mathfrak m^2+\mathfrak m_{\mathcal O}B$ need not be closed. After the closed finite-generation theorem applies, the closure can be omitted, and the space becomes the familiar finite-dimensional relative cotangent space
+
+$$
+\mathfrak m/(\mathfrak m^2+\mathfrak m_{\mathcal O}B).
+$$
+
+Consequently, finite-dimensional relative cotangent space gives a useful two-step criterion: choose finitely many lifts of a basis; topological Nakayama gives closed generation; the power-series theorem then gives Noetherianity. What it does not give without the pseudocompact and closedness hypotheses is a statement about an arbitrary abstract local subring.
+
+### 16.7 Images, kernels, and strict quotient maps
+
+Let $f:A\to C$ be a continuous homomorphism of pseudocompact rings. The kernel is closed because $C$ is Hausdorff. The image need not be closed in complete generality; the correct coefficient ring attached to the map is often
+
+$$
+\overline{f(A)}\subseteq C.
+$$
+
+If $f$ is a strict surjection, then
+
+$$
+C\cong A/\ker f
+$$
+
+as topological rings. If $A$ is complete Noetherian and $f$ is a surjective local map into a Hausdorff local ring with its quotient topology, the kernel is a closed finitely generated ideal and $C$ is complete Noetherian. This is the setting in which one may safely move between “image,” “quotient,” and “closed image.”
+
+For generated subalgebras, a useful finite-level statement avoids ambiguity. If $B=\mathcal O\langle S\rangle_A$ and $A\to A/J$ is a continuous quotient to a discrete Artinian ring, then
+
+$$
+\operatorname{im}(B\to A/J)
+=\operatorname{im}(\mathcal O[S]\to A/J).
+$$
+
+No limit remains on the right. Hence equalities of closed generated subalgebras can be proved by checking their images in every member of a cofinal family of finite quotients.
+
+### 16.8 Closed subalgebras under coefficient change
+
+Let $\mathcal O\to\mathcal O'$ be a continuous local map of complete Noetherian coefficient rings, and let $B\subseteq A$ be a closed $\mathcal O$-subalgebra. Completed scalar extension produces
+
+$$
+B'=B\widehat\otimes_{\mathcal O}\mathcal O',
+\qquad
+A'=A\widehat\otimes_{\mathcal O}\mathcal O'.
+$$
+
+There is a natural continuous map $B'\to A'$. It need not be injective without a flatness hypothesis on $\mathcal O'$, so one should distinguish the abstract base change $B'$ from its closed image in $A'$. If $\mathcal O'$ is flat over $\mathcal O$ and the relevant modules are finite, exactness of completed base change identifies $B'$ with that image.
+
+Closed generation behaves well at the level of images. If $B=\mathcal O\langle b_s:s\in S\rangle_A$, then the closed image of $B'$ in $A'$ is generated over $\mathcal O'$ by the elements $b_s\widehat\otimes1$. This follows first in every finite quotient from the ordinary tensor-product universal property and then by inverse limits. Flatness is required only for identifying the source with its image, not for identifying the closed image's generators.
+
+Quotients are similar. For a closed ideal $I\subseteq A$, the image of $B$ in $A/I$ has closure
+
+$$
+\overline{(B+I)/I},
+$$
+
+which is naturally $B/(B\cap I)$ when the map is strict. In the complete Noetherian finite-type setting all ideals involved are closed and the familiar algebraic formula is valid.
+
+### 16.9 Examples and failures
+
+**One formal parameter.** In $A=k[[t]]$, the closed subalgebra generated by $t^2$ and $t^3$ is
+
+$$
+k[[t^2,t^3]]\cong k[[X,Y]]/(Y^2-X^3).
+$$
+
+It is complete Noetherian local. Its maximal ideal $(t^2,t^3)$ induces a topology equivalent to the topology inherited from $k[[t]]$: for example $t^{2n}k[[t]]\cap B$ lies deep in powers of $(t^2,t^3)$, and finite generation guarantees cofinality. The element $t$ is integral over $B$ but does not lie in $B$, so closedness is not the same as integral closure.
+
+**A proper closed coefficient subring.** Let $\mathcal O\subseteq\mathcal O'$ be a finite extension of complete discrete valuation rings and take $A=\mathcal O'[[x]]$. The closed $\mathcal O$-subalgebra generated by $x$ is $\mathcal O[[x]]$, generally proper in $A$. The residue field and coefficient base determine which constants are permitted; topology alone does not enlarge them to $\mathcal O'$.
+
+**Infinite cotangent dimension.** The pro-Artinian ring with countably many independent variables from Section 16.4 is the closed $k$-algebra generated by all $x_i$, but by no finite subset. Its cotangent space contains the linearly independent classes of all the $x_i$ and is therefore not finite-dimensional. It is pseudocompact and local but not Noetherian. This shows exactly why “closed subalgebra of a complete local ring” does not imply “complete Noetherian local ring.”
+
+**Dense is not closed.** The inclusion $k[t]_{(t)}\subset k[[t]]$ has dense image and induces isomorphisms on every quotient by $(t^n)$, but the source is not complete and the image is not closed. Finite shadows determine the closure, not a dense algebraic subring. Any coefficient construction defined by generators inside a complete ambient ring must therefore take the closure explicitly.
+
+## 17. Trace rings
+
+### 17.1 Why traces define a smaller coefficient ring
+
+Suppose a group acts through matrices with entries in a large complete local ring $A$. The matrix entries depend on a basis, but traces do not. It is therefore natural to ask for the smallest closed coefficient subring over which all traces are defined. This ring measures the scalar information visible to conjugacy-invariant observations, and it often remains meaningful before one can descend the matrices themselves.
+
+The word “smallest” has a topological meaning. If traces determine elements to arbitrary finite precision, their compatible limits must also be admitted. Thus the correct object is a closed, not merely algebraic, subalgebra. Chapters 15 and 16 were arranged to answer the three questions that immediately follow:
+
+1. Is the resulting ring an inverse limit of finite local coefficient rings?
+2. When is its induced topology the topology of a complete Noetherian local ring?
+3. How does it behave under quotients, inverse limits, and change of coefficients?
+
+No assertion that matrices descend from $A$ to the trace ring is needed to answer these topological questions. Such a descent statement requires additional irreducibility and matrix-algebra arguments. Keeping the two issues separate prevents trace invariance from being mistaken for a choice of basis over the smaller ring.
+
+### 17.2 Definition and finite-level description
+
+Fix a complete Noetherian local coefficient ring $(\mathcal O,\mathfrak m_{\mathcal O},k)$. Let $A$ be a pseudocompact local $\mathcal O$-algebra with residue field $k$, let $G$ be a group, and let
+
+$$
+\rho:G\longrightarrow\operatorname{GL}_d(A)
+$$
+
+be a homomorphism. If $G$ is topological, we assume $\rho$ is continuous, where matrices have the topology induced from $A$. The **trace ring** of $\rho$ relative to $\mathcal O$ is
+
+$$
+T_\rho
+=\mathcal O\langle\operatorname{tr}\rho(g):g\in G\rangle_A
+=\overline{\mathcal O[\operatorname{tr}\rho(g):g\in G]}.
+$$
+
+Changing the coefficient base changes the object: the closure generated over $\mathcal O$ can be smaller than the closure generated over a larger $\mathcal O'$. We therefore regard the base as part of the notation even when it is suppressed.
+
+Choose a cofinal family of open ideals $J_i\subseteq A$, put $A_i=A/J_i$, and let $\rho_i$ be the reduction. Let $\mathcal O_i$ denote the image of $\mathcal O$ in $A_i$. Define the ordinary finite-level algebra
+
+$$
+T_i=\mathcal O_i[\operatorname{tr}\rho_i(g):g\in G]\subseteq A_i.
+$$
+
+Then
+
+$$
+T_\rho\xrightarrow{\sim}\varprojlim_iT_i.
+$$
+
+**Proof.** The image of the algebraic trace algebra in a discrete quotient is already equal to the image of its closure. Hence $T_i$ is the image of $T_\rho$ in $A_i$. Section 16.2 reconstructs a closed subalgebra as the inverse limit of its images. $\square$
+
+The transition maps $T_j\to T_i$ are surjective whenever $A_j\to A_i$ belongs to the chosen quotient system: every generator $\operatorname{tr}\rho_i(g)$ is the image of the corresponding generator at level $j$, and the coefficient images are compatible. Thus trace rings form a particularly well-behaved pro-Artinian system.
+
+Two representations of the infinite cyclic group show both extremes. Let $A=k[[X]]$ and let $\gamma$ be a generator. If
+
+$$
+\rho(\gamma)=
+\begin{pmatrix}1&0\\0&1+X\end{pmatrix},
+$$
+
+then $\operatorname{tr}\rho(\gamma)-2=X$, so $T_\rho=A$. One trace already recovers the ambient parameter.
+
+Now put $u=1+X$ and take
+
+$$
+\rho(\gamma)=
+\begin{pmatrix}u&0\\0&u^{-1}\end{pmatrix}.
+$$
+
+Set
+
+$$
+s=u+u^{-1}-2=X^2-X^3+X^4-\cdots.
+$$
+
+The traces of all powers are polynomials in $u+u^{-1}$, because the recurrence
+
+$$
+P_{n+1}(Z)=ZP_n(Z)-P_{n-1}(Z),
+\qquad P_0=2,quad P_1=Z,
+$$
+
+gives $P_n(u+u^{-1})=u^n+u^{-n}$. Hence
+
+$$
+T_\rho=k[[s]]\subsetneq k[[X]].
+$$
+
+The inclusion is proper because every nonconstant series in $s$ has $X$-adic order at least two, while $X$ has order one. Thus even a diagonal representation can have a trace ring strictly smaller than its entry ring. This example also makes the finite-level formula visible: modulo $X^n$, the trace algebra is exactly the image of $k[s]$, and the inverse limit of those images is $k[[s]]$.
+
+### 17.3 Topology, locality, and residue
+
+Assume the Artinian quotients $A_i$ are finite over the images of the Noetherian coefficient base. Then each $T_i$ is Artinian by Section 16.2. It is local: its maximal ideal is
+
+$$
+\mathfrak m_{T_i}=T_i\cap\mathfrak m_{A_i},
+$$
+
+and its residue field is $k$, because it contains the image of $\mathcal O_i$ and hence maps onto $k$. Equivalently, an element with nonzero residue has an inverse obtained by a finite geometric series in the nilpotent maximal ideal.
+
+Passing to the limit gives the basic trace-ring theorem.
+
+**Theorem (topological structure of a trace ring).** Under the preceding hypotheses, $T_\rho$ is a pseudocompact local $\mathcal O$-algebra with residue field $k$. Its topology is the inverse-limit topology from the Artinian local rings $T_i$, and
+
+$$
+\mathfrak m_{T_\rho}=T_\rho\cap\mathfrak m_A.
+$$
+
+It is the smallest closed local $\mathcal O$-subalgebra of $A$ containing every trace.
+
+The last assertion follows from the defining closure. Locality can be proved either by taking the inverse limit of the $T_i$ or by the convergent inverse argument of Section 16.3. Notice what is not asserted: $T_\rho$ need not yet be Noetherian. If infinitely many trace directions survive independently in the cotangent space, it may require infinitely many topological generators.
+
+The topology on $T_\rho$ has the concrete neighborhood basis
+
+$$
+T_\rho\cap J_i=\ker(T_\rho\to T_i).
+$$
+
+When $A$ is maximal-adic one may take $J_i=\mathfrak m_A^i$. These intersections need not equal $\mathfrak m_{T_\rho}^i$. Equality or cofinality follows after topological finite generation, not before.
+
+### 17.4 Independence of presentation and cofinal systems
+
+The definition of $T_\rho$ uses only a subset of the topological ring $A$, so it is plainly independent of a chosen inverse-limit presentation. The finite-level formula makes the same fact less tautological and more useful.
+
+Suppose $(J_i)$ and $(J'_j)$ are two cofinal families of open ideals of $A$. For every $i$ some $J'_j\subseteq J_i$, and conversely. The two systems of finite trace algebras therefore map cofinally to one another. Their inverse limits are canonically isomorphic, and both identify with the same closed subalgebra of $A$.
+
+Likewise, replacing the generating set $G$ by a subset $S\subseteq G$ gives the same trace ring exactly when, in every finite quotient,
+
+$$
+\mathcal O_i[\operatorname{tr}\rho_i(s):s\in S]
+=T_i.
+$$
+
+This criterion is often easier to verify than an equality of closures. It also shows that one may enlarge $S$, repeat elements, or replace it with any collection having the same finite-level generated algebras without changing the result.
+
+If $G$ is topologically generated by a subset $S$, it does not automatically follow that the traces of elements of $S$ generate the trace ring. Trace of a product is not, in arbitrary dimension, a polynomial in the traces of the individual factors. One needs trace identities appropriate to the dimension or a separate finite-generation argument. Topological generation of the group and topological generation of its trace algebra are distinct statements.
+
+### 17.5 Finite trace generation and power-series presentations
+
+Suppose there exist $g_1,\ldots,g_r\in G$ such that
+
+$$
+T_\rho
+=\mathcal O\langle
+\operatorname{tr}\rho(g_1),\ldots,
+\operatorname{tr}\rho(g_r)
+\rangle_A.
+$$
+
+Assume also that the ambient topology has a countable cofinal system of open ideals. This is automatic when $A$ is a complete Noetherian local ring with its maximal-adic topology, which is the principal deformation-theoretic case.
+
+Choose $o_i\in\mathcal O$ lifting the residue of $\operatorname{tr}\rho(g_i)$ and put
+
+$$
+t_i=\operatorname{tr}\rho(g_i)-o_i\in\mathfrak m_{T_\rho}.
+$$
+
+The same closed algebra is generated by the $t_i$. The closed finite-generation theorem gives a surjection
+
+$$
+\mathcal O[[X_1,\ldots,X_r]]\twoheadrightarrow T_\rho,
+\qquad X_i\longmapsto t_i.
+$$
+
+Hence $T_\rho$ is complete Noetherian local, and its induced topology from $A$ agrees with its own maximal-adic topology. The constants $o_i$ are used only to send the variables into the maximal ideal; different lifts alter the presentation but not the ring.
+
+Finite trace generation can be detected infinitesimally. If finitely many $t_i$ span
+
+$$
+\frac{\mathfrak m_{T_\rho}}
+{\overline{\mathfrak m_{T_\rho}^2+
+\mathfrak m_{\mathcal O}T_\rho}},
+$$
+
+then Section 16.6 proves that they topologically generate $T_\rho$. The power-series presentation then removes the closure from the denominator and shows that this relative cotangent space is finite-dimensional.
+
+There are two logically different finiteness statements:
+
+- finitely many trace **values** topologically generate the algebra;
+- the trace ring is finite as an $\mathcal O$-module.
+
+The first gives a quotient of a formal power-series ring and hence Noetherianity. It does not give module-finiteness. For example, the trace-generated algebra could be $\mathcal O[[X]]$. Module-finiteness requires an additional integrality or dimension argument.
+
+### 17.6 Determinants and characteristic-polynomial coefficient rings
+
+Trace is the first coefficient of a characteristic polynomial. In dimension $d$, write
+
+$$
+\det(XI-\rho(g))
+=X^d-c_1(g)X^{d-1}+c_2(g)X^{d-2}
+-\cdots+(-1)^dc_d(g),
+$$
+
+so $c_1(g)=\operatorname{tr}\rho(g)$ and $c_d(g)=\det\rho(g)$. The **characteristic-coefficient ring** is
+
+$$
+T_\rho^{\mathrm{char}}
+=\mathcal O\langle c_j(g):g\in G, 1\leq j\leq d\rangle_A.
+$$
+
+It contains $T_\rho$. If all determinant and higher characteristic coefficients already lie in $\mathcal O$, then it equals the trace ring. In dimension two it is enough that all determinants lie in $\mathcal O$.
+
+One should not recover the $c_j(g)$ from traces by division unless the relevant integers are units. Newton identities express multiples such as $j c_j$ in terms of power sums. In residue characteristics dividing $j$, division can lose information. Defining the characteristic-coefficient ring directly is valid in every characteristic.
+
+For two-dimensional invertible matrices there is a particularly useful integral identity. Cayley--Hamilton gives
+
+$$
+h+(\det h)h^{-1}=(\operatorname{tr}h)I.
+$$
+
+Multiplying by $g$ and taking trace yields
+
+$$
+\operatorname{tr}(g)\operatorname{tr}(h)
+=\operatorname{tr}(gh)+\det(h)\operatorname{tr}(gh^{-1}).
+$$
+
+No division occurs. If determinants lie in the coefficient base, this identity keeps products of traces inside the algebra generated by traces of group elements, as of course the definition already requires, and it permits concrete reductions of generating sets. It also illustrates why determinant data often accompanies trace data in rank two.
+
+### 17.7 Change of basis, scalar extension, and quotients
+
+If $u\in\operatorname{GL}_d(A)$ and $\rho^u(g)=u\rho(g)u^{-1}$, then
+
+$$
+\operatorname{tr}\rho^u(g)=\operatorname{tr}\rho(g)
+$$
+
+for every $g$. Thus $T_{\rho^u}=T_\rho$ as closed subrings of $A$. This basis independence is the first reason trace rings are useful.
+
+Now let $A\to B$ be a continuous local $\mathcal O$-algebra map and let $\rho_B$ be the resulting representation. The trace ring $T_{\rho_B}$ is the closed $\mathcal O$-subalgebra of $B$ generated by the image of $T_\rho$:
+
+$$
+T_{\rho_B}=\overline{\operatorname{im}(T_\rho\to B)}.
+$$
+
+This follows because traces commute with applying a ring homomorphism. If $A\twoheadrightarrow B=A/J$ is a quotient and $B$ is Artinian, then
+
+$$
+T_{\rho_B}
+=\operatorname{im}(T_\rho\to A/J)
+\cong T_\rho/(T_\rho\cap J),
+$$
+
+with the quotient topology. The image is already closed because it is a finite-level algebra.
+
+For a non-Artinian complete quotient, the always valid statement is
+
+$$
+T_{\rho_B}=\overline{\operatorname{im}(T_\rho\to A/J)}.
+$$
+
+The algebraic image is $T_\rho/(T_\rho\cap J)$, but it identifies topologically with the trace ring only when the restricted map from $T_\rho$ is strict, equivalently when that image is closed and carries the quotient topology. Strictness of the ambient map $A\to A/J$ alone does not automatically prove strictness on an arbitrary closed subalgebra.
+
+For a coefficient extension $\mathcal O\to\mathcal O'$ and completed scalar extension $A'=A\widehat\otimes_{\mathcal O}\mathcal O'$, the trace ring of $\rho\widehat\otimes1$ is the closed image of
+
+$$
+T_\rho\widehat\otimes_{\mathcal O}\mathcal O'
+\longrightarrow A'.
+$$
+
+If $\mathcal O'$ is flat and $T_\rho$ is finite over $\mathcal O$, the map has the expected injectivity and the source identifies with its image. Without flatness, kernel can appear, so “base-changed trace ring” should mean the closed image unless injectivity has been proved.
+
+### 17.8 Trace rings of inverse-limit representations
+
+Let
+
+$$
+A\cong\varprojlim_nA_n
+$$
+
+be a pro-Artinian local coefficient ring with surjective transitions, and suppose compatible homomorphisms
+
+$$
+\rho_n:G\longrightarrow\operatorname{GL}_d(A_n)
+$$
+
+are given. Entrywise inverse limits define
+
+$$
+\rho:G\longrightarrow\operatorname{GL}_d(A).
+$$
+
+If $G$ is topological and every $\rho_n$ is continuous, then $\rho$ is continuous because the inverse-limit topology on the matrix ring is initial with respect to its projections.
+
+Let $T_n$ be the finite trace algebra of $\rho_n$. Compatibility gives surjections $T_{n+1}\twoheadrightarrow T_n$, and
+
+$$
+T_\rho\cong\varprojlim_nT_n.
+$$
+
+This formula is stronger than the statement that traces have compatible values. It identifies the topology: a sequence of trace polynomials converges in $T_\rho$ precisely when it stabilizes in every $T_n$.
+
+Two useful consequences follow.
+
+First, if $T_n=A_n$ for every $n$, then $T_\rho=A$. Indeed both are the same inverse limit. Thus finite-level trace generation at every order proves complete trace generation.
+
+Second, suppose finite sets $S_n\subseteq G$ generate $T_n$ but their sizes grow with $n$. One may conclude $T_\rho=\varprojlim T_n$, but not that $T_\rho$ is Noetherian. A uniform finite set $S$ generating every $T_n$ does imply that the traces indexed by $S$ topologically generate $T_\rho$, and hence gives a power-series presentation.
+
+This uniformity distinction is decisive in deformation arguments: generation separately at each finite stage is a pro-Artinian statement; generation by one finite family across all stages is a Noetherian statement.
+
+### 17.9 What traces do not determine by themselves
+
+Trace rings deliberately forget basis-dependent matrix entries. That economy has limits.
+
+**Matrix entries need not descend.** The fact that every trace lies in a closed subring $T\subseteq A$ does not imply that some $A$-basis makes every matrix have entries in $T$. Such a conclusion is a descent theorem and normally needs an absolute irreducibility hypothesis on the residual representation, together with a theorem that traces generate a sufficiently large matrix algebra.
+
+**Equal traces need not give isomorphic representations.** Over fields, trace determines a semisimple representation under suitable finite-dimensional and characteristic hypotheses, but nonsplit extensions can have the same trace as their split semisimplification. Over rings with nilpotents, further pathologies occur. Trace data should therefore be understood as invariant coefficient data, not as a complete classification of representations.
+
+**Trace may be too small in small characteristic.** Characteristic-polynomial coefficients can carry information not integrally recoverable from traces when division by small integers is unavailable. This is why Section 17.6 separated $T_\rho$ from $T_\rho^{\mathrm{char}}$.
+
+**The induced topology is not automatically adic Noetherian.** Even though $T_\rho$ is closed and pro-Artinian, infinitely many independent trace directions can keep its cotangent space infinite-dimensional. One must prove finite topological generation before using finite presentations, Artin--Rees, Krull dimension, or the ordinary Noetherian form of topological Nakayama.
+
+These are not defects of trace rings. They locate exactly where invariant scalar information ends and stronger representation-theoretic input begins.
+
+### 17.10 The coefficient-algebra package for deformation functors
+
+The topological algebra developed in this book can now be assembled into the form used by deformation functors. Fix $\mathcal O$ and $k$ as above.
+
+At finite level, work in $\operatorname{Art}_{\mathcal O}$. Fiber products with a surjective leg remain in the category, and every surjection factors through principal small extensions. Square-zero kernels are $k$-linear, so lifting equations has a tangent part, an obstruction part, and an ambiguity measured by derivations.
+
+At complete level, a ring $R$ is read through $R/\mathfrak m_R^n$, and maps into Artinian rings factor through a finite stage. Formal power-series rings supply parameters; closed ideals supply relations. Completed tensor products combine independent coefficient problems while preserving the common base and topology.
+
+Before Noetherianity is known, pseudocompact modules and algebras provide the stable inverse-limit category. Closed submodules give Hausdorff quotients, strict maps preserve exactness, and pseudocompact Nakayama turns residual generators into topological generators.
+
+For an invariantly defined family of matrices, the trace ring is
+
+$$
+T_\rho=\varprojlim_i
+\mathcal O_i[\operatorname{tr}\rho_i(g):g\in G].
+$$
+
+It is local and pseudocompact. If finitely many trace differences span its relative cotangent space, they topologically generate it; hence
+
+$$
+T_\rho\cong\mathcal O[[X_1,\ldots,X_r]]/I,
+$$
+
+so it is complete Noetherian and its induced and maximal-adic topologies agree. Only after this passage is it legitimate to apply the full finite-module topology of Chapter 10 without further qualification.
+
+This package is exactly topological and algebraic. It neither asserts that a particular deformation functor is representable nor descends matrices from their traces. It ensures that when those later theorems supply a universal ring or a descent mechanism, all limits, closures, coefficient changes, and finite-stage reductions have a precise and compatible meaning.
+
+## 18. Synthesis: the coefficient-ring dictionary
+
+### 18.1 Residue and locality
 
 The distinguished point of $(A,\mathfrak m_A)$ is $A\to k_A=A/\mathfrak m_A$. A map $A\to B$ is local exactly when the inverse image of $\mathfrak m_B$ is $\mathfrak m_A$. It then induces $k_A\to k_B$. In a fixed-residue category this induced map must agree with the chosen identity on $k$.
 
@@ -1539,7 +2452,7 @@ $$
 
 A residue-field identification is not a coefficient-field embedding. The former is always part of the category; the latter is extra equal-characteristic structure.
 
-### 15.2 Artinian diagnostics
+### 18.2 Artinian diagnostics
 
 For an Artinian local ring,
 
@@ -1555,7 +2468,7 @@ $$
 
 Every finite $A$-module has a terminating maximal-ideal filtration. Morphisms respect all layers. The cotangent space $\mathfrak m_A/\mathfrak m_A^2$ detects the minimal number of generators of $\mathfrak m_A$, but not higher relations or length.
 
-### 15.3 Tangent and differential translations
+### 18.3 Tangent and differential translations
 
 For an augmented local $k$-algebra,
 
@@ -1579,7 +2492,7 @@ $$
 
 turns equations into linear differential relations. It is right exact; the left arrow is not generally injective.
 
-### 15.4 Small-extension protocol
+### 18.4 Small-extension protocol
 
 A small extension $A'\twoheadrightarrow A$ has kernel $I$ with
 
@@ -1591,7 +2504,7 @@ so $I$ is a finite-dimensional $k$-space and $I^2=0$. It is principal when $\dim
 
 Square-zero alone is weaker than smallness. Across a square-zero extension, differences of lifts are derivations. Across a small extension, polynomial errors linearize over $k$. These are the two facts used in induction on Artinian thickness.
 
-### 15.5 Fiber products and variance
+### 18.5 Fiber products and variance
 
 If $A'\to A\leftarrow A''$ has one surjective leg, then $A'\times_AA''$ is again an Artinian local $k$-ring, with
 
@@ -1602,7 +2515,7 @@ $$
 
 Coefficient change $A\to B$ acts forward on objects over coefficients, so test-ring functors are covariant. A representing ring $R$ gives $h_R(A)=\operatorname{Hom}(R,A)$, covariant in $A$ and contravariant in $R$.
 
-### 15.6 Completeness checklist
+### 18.6 Completeness checklist
 
 For an ideal $I$, the statements
 
@@ -1628,7 +2541,7 @@ $$
 
 Noetherianity and finite generation are the standard safeguards behind these reconstructions.
 
-### 15.7 Continuity checklist
+### 18.7 Continuity checklist
 
 For $I$-adic $R$ and $J$-adic $S$, a map $f:R\to S$ is continuous exactly when for every $n$ some $m$ satisfies $f(I^m)\subseteq J^n$. A local map between maximal-adic local rings satisfies the stronger relation
 
@@ -1638,7 +2551,7 @@ $$
 
 A local map to an Artinian target is automatically continuous and factors through a finite quotient of the source. Maps between complete rings are determined by compatible maps to all finite quotients of the target.
 
-### 15.8 Presentation checklist
+### 18.8 Presentation checklist
 
 If $R$ is a complete Noetherian local $k$-algebra with coefficient field $k$ and embedding dimension $r$, then
 
@@ -1654,13 +2567,21 @@ $$
 
 to count variables. A tuple in a target maximal ideal defines a unique map out of a power-series ring; it factors through a quotient precisely when the defining relations vanish.
 
-### 15.9 Finite-module topology checklist
+### 18.9 Finite and pseudocompact module checklist
 
 Over a Noetherian ring, Artin--Rees identifies the topology induced on a finite submodule with its intrinsic adic topology. Completion is exact on finite modules, finite submodules of complete modules are closed, and finite quotients remain complete. None of these conclusions should be transferred without hypotheses to arbitrary modules or nonnoetherian rings.
 
 Topological Nakayama lifts a finite list of generators from $M/IM$ by successive approximation when $R$ and $M$ are complete and separated in their $I$-adic topologies. Finite generation of $M$ is a standard sufficient setting, but the stated topological form requires only the finite list modulo $I$ and the completeness hypotheses.
 
-### 15.10 Completed tensor checklist
+For a pseudocompact module, open finite-length quotients replace one fixed adic filtration. Closed submodules and Hausdorff quotients stay pseudocompact; strict maps are the maps compatible with subspace and quotient topologies. The equality
+
+$$
+M=\overline{\mathfrak mM}
+$$
+
+forces $M=0$ over a pro-Artinian local ring. Lifts of a basis of $M/\overline{\mathfrak mM}$ topologically generate $M$, but algebraic finite generation requires a separate closed-image argument.
+
+### 18.10 Completed tensor checklist
 
 The ordinary tensor product solves an algebraic universal problem; the completed tensor product solves its continuous analogue. In the complete Noetherian topologically finite-type setting,
 
@@ -1672,7 +2593,29 @@ $$
 
 Residue compatibility keeps the result local with residue field $k$. Associativity, symmetry, base change, and quotient formulas hold in the fixed complete category under the stated Noetherian and finite-type hypotheses. Closures must be retained when finite generation is absent.
 
-### 15.11 Map-detection checklist
+### 18.11 Closed subalgebra and trace-ring checklist
+
+For a subset $S$ of a pseudocompact $\mathcal O$-algebra $A$, the notation
+
+$$
+\mathcal O\langle S\rangle_A=\overline{\mathcal O[S]}
+$$
+
+means closed algebraic generation. Its image in every Artinian quotient is the ordinary algebra generated by the image of $S$. A closed coefficient subalgebra is reconstructed from these finite images and is local with maximal ideal obtained by intersecting the ambient maximal ideal.
+
+Closedness gives completeness for the induced topology, not Noetherianity. Finite topological generation gives a quotient of a finite-variable power-series ring and thereby proves Noetherianity and equality of the induced and maximal-adic topologies.
+
+For a matrix-valued homomorphism $\rho$, the trace ring is
+
+$$
+T_\rho=\mathcal O\langle\operatorname{tr}\rho(g):g\in G\rangle_A
+=\varprojlim_i
+\mathcal O_i[\operatorname{tr}\rho_i(g):g\in G].
+$$
+
+It is basis-independent, local, and pseudocompact. A uniform finite family of trace generators makes it complete Noetherian. Matrix descent from the trace ring is a further theorem and is not a consequence of this definition.
+
+### 18.12 Map-detection checklist
 
 For maps of complete Noetherian local rings with the same residue field:
 
@@ -1683,7 +2626,7 @@ For maps of complete Noetherian local rings with the same residue field:
 
 The first layer detects generators. Every layer together detects the filtered ring.
 
-### 15.12 Pro-representation checklist
+### 18.13 Pro-representation checklist
 
 The tower $(R/\mathfrak m_R^n)_n$ gives
 
@@ -1694,10 +2637,12 @@ $$
 
 Natural transformations $h_S\to h_R$ correspond contravariantly to continuous maps $R\to S$. Fiber products of Artinian targets are carried to fiber products of sets, while completed tensor products of representing rings correspond to products of represented functors. This is the exact categorical infrastructure needed before any specific deformation problem is introduced.
 
-### 15.13 Conclusion
+### 18.14 Conclusion
 
 Local algebra organizes infinitesimal information around one closed point. Artinian rings reveal that point in finitely many nilpotent layers, small extensions isolate one linear step, and derivations explain how choices vary across that step. Complete Noetherian local rings gather every finite layer into a single separated object; continuity guarantees that maps respect this gathering rather than merely the underlying abstract rings.
 
 Formal power-series presentations then turn parameters into coordinates and ideals into relations. Topological Nakayama and Artin--Rees make the passage between finite algebra and infinite limits dependable. Completed tensor products combine compatible formal coefficient systems without discarding convergent infinite expressions. Equal and mixed characteristic fit the same architecture once residue identifications are distinguished from coefficient fields and a coefficient base is fixed where necessary.
+
+Pseudocompact algebra extends this architecture to limits and closed subobjects whose Noetherianity is not yet known. There, strictness replaces casual exactness and closure replaces algebraic generation. Finite topological generation then returns a closed subalgebra to the Noetherian world through a power-series presentation. Trace rings exemplify the whole passage: they begin as inverse limits of finite invariant coefficient algebras, inherit a precise local topology, and become complete Noetherian once a uniform finite family of trace parameters is proved to suffice.
 
 The result is a coherent two-scale language. At finite scale, one can induct through principal small extensions and calculate first-order change. At complete scale, one can reconstruct rings and maps from compatible Artinian quotients. The two scales meet in the functor $A\mapsto\operatorname{Hom}_{\mathrm{cts,loc}}(R,A)$: each test is finite, while the representing ring remembers all tests at once. That is the coefficient-ring foundation on which deformation theory can build.
