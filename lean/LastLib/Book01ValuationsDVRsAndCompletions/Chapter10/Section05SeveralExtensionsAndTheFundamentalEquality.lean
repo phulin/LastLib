@@ -1,0 +1,333 @@
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section04RamificationIndexAndResidueDegree
+
+namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
+
+universe u10K u10L u10Γ
+
+open scoped BigOperators TensorProduct WithZero PowerSeries
+open Polynomial
+
+noncomputable section
+
+/-!
+# Chapter 10: Extensions of valuations
+
+This file is a statement-generation formalization of Sections 10.1--10.7 of
+Book 1.  The declarations deliberately keep the valuation-theoretic data
+explicit: this makes the extension, residue, and ramification assertions
+usable independently of the other generated chapters.
+-/
+
+/-! # Book 1, Chapter 10, Section 10.5: Several Extensions and the Fundamental Equality
+-/
+
+/-! ## 10.5. Several extensions and the fundamental inequality -/
+
+/-- The numerical data attached to one branch. -/
+structure Chapter10BranchInvariant where
+  degree : ℕ
+  e : ℕ
+  f : ℕ
+
+/-- The contribution ef of one branch. -/
+def Chapter10BranchContribution (p : Chapter10BranchInvariant) : ℕ :=
+  p.e * p.f
+
+/-- A valuation branch together with its numerical profile. -/
+structure Chapter10ValuationBranch {K L ΓK : Type*} [Field K] [Field L]
+    [Algebra K L] [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
+    (v : Valuation K ΓK) where
+  valueGroup : Type*
+  [orderedValueGroup : LinearOrderedCommGroupWithZero valueGroup]
+  w : Valuation L valueGroup
+  isExtension : v.IsEquiv (w.comap (algebraMap K L))
+  extensionData : Chapter10HeterogeneousExtensionData v w isExtension
+  profile : Chapter10BranchInvariant
+  profile_e : profile.e = extensionData.ramificationIndex
+  profile_f : profile.f = extensionData.residueDegree
+
+/-- A finite list of branches containing every inequivalent extension. -/
+def Chapter10CompleteBranchFamily
+    {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
+    (v : Valuation K ΓK)
+    (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v)) : Prop :=
+  ∀ (ΓL : Type*) [LinearOrderedCommGroupWithZero ΓL]
+      (w : Valuation L ΓL),
+    v.IsEquiv (w.comap (algebraMap K L)) ↔
+      ∃ b, b ∈ S ∧
+        (letI : LinearOrderedCommGroupWithZero b.valueGroup := b.orderedValueGroup
+         b.w.IsEquiv w)
+
+/-- A branch profile is its ramification index and residue degree. -/
+def Chapter10BranchProfileCorrect
+    {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
+    (v : Valuation K ΓK)
+    (b : Chapter10ValuationBranch (K := K) (L := L) v) : Prop :=
+  letI : LinearOrderedCommGroupWithZero b.valueGroup := b.orderedValueGroup
+  b.profile.degree = Module.finrank K L ∧
+    b.profile.e = b.extensionData.ramificationIndex ∧
+    b.profile.f = b.extensionData.residueDegree
+
+/-- Residue degree as a function of the explicit extension equivalence. -/
+noncomputable def Chapter10ResidueDegreeOfExtension
+    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ₀]
+    [FiniteDimensional K L]
+    (v : Valuation K Γ₀) (w : Valuation L Γ₀)
+    (h : v.IsEquiv (w.comap (algebraMap K L))) : ℕ := by
+  let : Valuation.HasExtension v w := ⟨h⟩
+  exact Chapter10ResidueDegree v w
+
+/-- There are only finitely many inequivalent extensions of a finite extension. -/
+theorem chapter10_finitely_many_valuation_extensions
+    {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
+    (v : Valuation K ΓK) :
+    ∃ S : Finset (Chapter10ValuationBranch (K := K) (L := L) v),
+      Chapter10CompleteBranchFamily v S := by
+  sorry
+
+/-- The sum of ef over all branches is bounded by the extension degree. -/
+theorem chapter10_fundamental_inequality
+    {K L ΓK : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero ΓK] [FiniteDimensional K L]
+    (v : Valuation K ΓK) :
+    ∃ S : Finset (Chapter10ValuationBranch (K := K) (L := L) v),
+      Chapter10CompleteBranchFamily v S ∧
+        Finset.sum S (fun b => Chapter10BranchContribution b.profile) ≤
+          Module.finrank K L := by
+  sorry
+
+/-- An immediate valuation extension has unchanged value group and induced residue field. -/
+def Chapter10ImmediateValuationExtension
+    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ₀]
+    (v : Valuation K Γ₀) (w : Valuation L Γ₀)
+    (h : v.IsEquiv (w.comap (algebraMap K L))) : Prop := by
+  letI : Valuation.HasExtension v w := ⟨h⟩
+  exact Chapter10ValueGroup v = Chapter10ValueGroup w ∧
+    Function.Bijective (Chapter10ResidueFieldMap v w)
+
+/-- Tensoring a finite extension with a field extension preserves its dimension. -/
+theorem chapter10_henselized_tensor_dimension
+    {K L Kh : Type*} [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh] [Algebra Kh (L ⊗[K] Kh)]
+    [FiniteDimensional K L] :
+    Module.finrank Kh (Kh ⊗[K] L) = Module.finrank K L := by
+  exact Module.finrank_baseChange (R := Kh) (S := K) (M' := L)
+
+/-- The base-change tensor product used to separate the branches. -/
+abbrev Chapter10HenselizedTensor (K L Kh : Type*) [CommRing K] [CommRing L]
+    [CommRing Kh] [Algebra K L] [Algebra K Kh] : Type _ := L ⊗[K] Kh
+
+/-- Maximal ideals of an algebra are the local-factor indices. -/
+def Chapter10TensorMaximalIdeals {C : Type*} [CommRing C] : Set (Ideal C) :=
+  {P | P.IsMaximal}
+
+/-- The finite base-change tensor product has finitely many maximal local factors. -/
+theorem chapter10_henselized_tensor_has_finitely_many_factors
+    {K L Kh : Type*} [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh] [FiniteDimensional K L]
+    [Algebra Kh (L ⊗[K] Kh)] [Module.Finite Kh (L ⊗[K] Kh)]
+    : Set.Finite (Chapter10TensorMaximalIdeals (C := L ⊗[K] Kh)) := by
+  let : IsArtinianRing (L ⊗[K] Kh) :=
+    IsArtinianRing.of_finite Kh (L ⊗[K] Kh)
+  exact IsArtinianRing.setOfPred_isMaximal_finite (L ⊗[K] Kh)
+
+/-- Residue-field dimensions of the local base-change tensor factors are bounded by the total
+dimension; nilpotent Artinian multiplicities account for the possible gap. -/
+theorem chapter10_henselized_tensor_factor_dimensions
+    {K L Kh : Type*} [Field K] [Field L] [Field Kh]
+    [Algebra K L] [Algebra K Kh]
+    [FiniteDimensional K L]
+    (factors : Finset (Ideal (L ⊗[K] Kh)))
+    (hmax : ∀ P ∈ factors, P.IsMaximal)
+    (hexhaustive : ∀ P, P.IsMaximal ↔ P ∈ factors) :
+    (letI : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+     Finset.sum factors
+         (fun P => Module.finrank Kh ((L ⊗[K] Kh) ⧸ P)) ≤
+       Module.finrank K L) := by
+  let : Algebra Kh (Kh ⊗[K] L) := Algebra.TensorProduct.leftAlgebra
+  let : Algebra Kh (L ⊗[K] Kh) := Algebra.TensorProduct.rightAlgebra
+  let : Module.Finite Kh (Kh ⊗[K] L) :=
+    Module.Finite.base_change (R := K) (A := Kh) (M := L)
+  let : Module.Finite Kh (L ⊗[K] Kh) :=
+    Module.Finite.equiv (Algebra.TensorProduct.commRight K Kh L).toLinearEquiv
+  let : IsArtinianRing (L ⊗[K] Kh) :=
+    IsArtinianRing.of_finite Kh (L ⊗[K] Kh)
+  let : Finite (PrimeSpectrum (L ⊗[K] Kh)) := inferInstance
+  let : Fintype (PrimeSpectrum (L ⊗[K] Kh)) := Fintype.ofFinite _
+  have hdim := IsArtinianRing.finrank_eq_sum_primeSpectrum
+    (L ⊗[K] Kh) Kh
+  have hquot (p : PrimeSpectrum (L ⊗[K] Kh)) :
+      Module.finrank Kh ((L ⊗[K] Kh) ⧸ p.asIdeal) ≤
+        Module.finrank Kh (Localization.AtPrime p.asIdeal) := by
+    let : p.asIdeal.IsMaximal := by
+      rw [← IsArtinianRing.isPrime_iff_isMaximal]
+      exact p.isPrime
+    let f : (L ⊗[K] Kh) →ₐ[Kh] ((L ⊗[K] Kh) ⧸ p.asIdeal) :=
+      Ideal.Quotient.mkₐ Kh p.asIdeal
+    have hf : ∀ y : p.asIdeal.primeCompl, IsUnit (f y) := by
+      intro y
+      let : Field ((L ⊗[K] Kh) ⧸ p.asIdeal) := Ideal.Quotient.field p.asIdeal
+      change IsUnit (Ideal.Quotient.mk p.asIdeal y)
+      rw [isUnit_iff_ne_zero, ne_eq, Ideal.Quotient.eq_zero_iff_mem]
+      exact Ideal.mem_primeCompl_iff.mp y.property
+    let g : Localization.AtPrime p.asIdeal →ₐ[Kh]
+        ((L ⊗[K] Kh) ⧸ p.asIdeal) :=
+      IsLocalization.liftAlgHom hf
+    have hg : Function.Surjective g := by
+      intro z
+      obtain ⟨x, rfl⟩ := Ideal.Quotient.mkₐ_surjective Kh p.asIdeal z
+      refine ⟨algebraMap (L ⊗[K] Kh) (Localization.AtPrime p.asIdeal) x, ?_⟩
+      rw [IsLocalization.liftAlgHom_apply]
+      simp [f]
+    let : Module.Finite Kh (Localization.AtPrime p.asIdeal) :=
+      Module.Finite.of_surjective
+        (IsScalarTower.toAlgHom Kh (L ⊗[K] Kh)
+          (Localization.AtPrime p.asIdeal)).toLinearMap
+        (IsArtinianRing.localization_surjective p.asIdeal.primeCompl
+          (Localization.AtPrime p.asIdeal))
+    exact LinearMap.finrank_le_finrank_of_surjective (f := g.toLinearMap) hg
+  let e : {P // P ∈ factors} ≃ PrimeSpectrum (L ⊗[K] Kh) :=
+    { toFun := fun P =>
+        ⟨P.1, (IsArtinianRing.isPrime_iff_isMaximal P.1).mpr
+          (hmax P.1 P.2)⟩
+      invFun := fun p =>
+        ⟨p.asIdeal, (hexhaustive p.asIdeal).mp
+          ((IsArtinianRing.isPrime_iff_isMaximal p.asIdeal).mp p.isPrime)⟩
+      left_inv := by
+        intro P
+        rfl
+      right_inv := by
+        intro p
+        change (⟨p.asIdeal, _⟩ : PrimeSpectrum (L ⊗[K] Kh)) = p
+        rfl }
+  have hsum0 : Finset.sum factors (fun P =>
+      Module.finrank Kh ((L ⊗[K] Kh) ⧸ P)) =
+      ∑ P : {P // P ∈ factors},
+        Module.finrank Kh ((L ⊗[K] Kh) ⧸ P.1) := by
+    rw [Finset.sum_subtype factors (p := fun P => P ∈ factors)
+      (fun P => Iff.rfl)]
+  have hsum1 : (∑ P : {P // P ∈ factors},
+      Module.finrank Kh ((L ⊗[K] Kh) ⧸ P.1)) =
+      ∑ p : PrimeSpectrum (L ⊗[K] Kh),
+        Module.finrank Kh ((L ⊗[K] Kh) ⧸ p.asIdeal) := by
+    apply Fintype.sum_equiv e
+    intro P
+    rfl
+  rw [hsum0, hsum1]
+  calc
+    (∑ p : PrimeSpectrum (L ⊗[K] Kh),
+        Module.finrank Kh ((L ⊗[K] Kh) ⧸ p.asIdeal)) ≤
+        ∑ p : PrimeSpectrum (L ⊗[K] Kh),
+          Module.finrank Kh (Localization.AtPrime p.asIdeal) :=
+      Finset.sum_le_sum (fun p _ => hquot p)
+    _ = Module.finrank Kh (L ⊗[K] Kh) := hdim.symm
+    _ = Module.finrank K L := by
+      rw [← Module.finrank_baseChange (R := Kh) (S := K) (M' := L)]
+      exact (Algebra.TensorProduct.commRight K Kh L).toLinearEquiv.finrank_eq.symm
+
+/-- The defect records the possible loss in a local tensor factor. -/
+def Chapter10Defect (degree e f : ℕ) : ℚ :=
+  (degree : ℚ) / ((e * f : ℕ) : ℚ)
+
+/-- Defect one is exactly equality in the fundamental inequality. -/
+theorem chapter10_defect_eq_one_iff
+    (degree e f : ℕ) (hpos : 0 < e * f) (hdiv : e * f ∣ degree) :
+    Chapter10Defect degree e f = 1 ↔ degree = e * f := by
+  constructor
+  · intro h
+    unfold Chapter10Defect at h
+    have hne : (e * f : ℚ) ≠ 0 := by
+      exact_mod_cast (Nat.ne_of_gt hpos)
+    field_simp [hne] at h
+    exact_mod_cast h
+  · intro h
+    subst degree
+    unfold Chapter10Defect
+    field_simp [show (e * f : ℚ) ≠ 0 by exact_mod_cast (Nat.ne_of_gt hpos)]
+
+/-- A numerical profile is defectless when its degree is ef. -/
+def Chapter10DefectlessProfile (p : Chapter10BranchInvariant) : Prop :=
+  p.degree = p.e * p.f
+
+/-- The finite normalization hypothesis in the DVR equality theorem. -/
+def Chapter10FiniteNormalization (A B : Type*) [Semiring A]
+    [AddCommMonoid B] [Module A B] : Prop :=
+  Module.Finite A B
+
+/-- Finite normalization of a DVR gives equality in the sum formula. -/
+theorem chapter10_finite_dvr_normalization_fundamental_equality
+    {A K L ΓK : Type*} [CommRing A] [IsDomain A]
+    [IsDiscreteValuationRing A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    [Field L] [Algebra K L] [FiniteDimensional K L]
+    [Algebra A L] [IsScalarTower A K L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    (v : Valuation K ΓK) (hA : v.Integers A)
+    (hfinite : Module.Finite A (integralClosure A L))
+    (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
+    (hcomplete : Chapter10CompleteBranchFamily v S)
+    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
+    Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
+  sorry
+
+/-- The normalization of a ring in an algebra, named for the Dedekind case. -/
+noncomputable def Chapter10Normalization (A L : Type*) [CommRing A] [CommRing L]
+    [Algebra A L] : Subalgebra A L :=
+  integralClosure A L
+
+/-- Finite separable extensions of Dedekind domains have finite normalization. -/
+theorem chapter10_dedekind_separable_normalization_finite
+    {A K L : Type*} [CommRing A] [IsDedekindDomain A]
+    [Field K] [Field L] [Algebra A K] [Algebra A L] [Algebra K L]
+    [IsFractionRing A K] [IsScalarTower A K L]
+    [FiniteDimensional K L]
+    (hseparable : Algebra.IsSeparable K L) :
+    Module.Finite A (Chapter10Normalization A L) := by
+  exact IsIntegralClosure.finite A K L (integralClosure A L)
+
+/-- In the discrete setting, finite normalization gives the same equality. -/
+theorem chapter10_complete_discrete_valuation_defectless
+    {K L Γ₀ : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [LinearOrderedCommGroupWithZero Γ₀]
+    (v : Valuation K Γ₀)
+    [IsDiscreteValuationRing v.valuationSubring]
+    (hfinite : Module.Finite v.valuationSubring
+      (integralClosure v.valuationSubring L))
+    (S : Finset (Chapter10ValuationBranch (K := K) (L := L) v))
+    (hcomplete : Chapter10CompleteBranchFamily v S)
+    (hprofile : ∀ b ∈ S, Chapter10BranchProfileCorrect v b) :
+    Finset.sum S (fun b => Chapter10BranchContribution b.profile) = Module.finrank K L := by
+  let : IsFractionRing v.valuationSubring K :=
+    (Valuation.valuationSubring.integers v).isFractionRing
+  exact chapter10_finite_dvr_normalization_fundamental_equality
+    (A := v.valuationSubring) (K := K) (L := L) v
+    (Valuation.valuationSubring.integers v) hfinite S hcomplete hprofile
+
+/-- Henselian valuation rings have one branch over an algebraic extension. -/
+theorem chapter10_henselian_valuation_has_unique_branch
+    {K L Γ₀ Γ₁ Γ₂ : Type*} [Field K] [Field L] [Algebra K L]
+    [LinearOrderedCommGroupWithZero Γ₀]
+    [LinearOrderedCommGroupWithZero Γ₁]
+    [LinearOrderedCommGroupWithZero Γ₂] [Algebra.IsAlgebraic K L]
+    (v : Valuation K Γ₀) [HenselianLocalRing v.valuationSubring]
+    (w₁ : Valuation L Γ₁) (w₂ : Valuation L Γ₂)
+    (h₁ : v.IsEquiv (w₁.comap (algebraMap K L)))
+    (h₂ : v.IsEquiv (w₂.comap (algebraMap K L))) :
+    w₁.IsEquiv w₂ := by
+  sorry
+
+/-- Complete nonarchimedean fields are henselian. -/
+theorem chapter10_complete_nonarchimedean_is_henselian
+    (K : Type*) [NontriviallyNormedField K] [CompleteSpace K]
+    [IsUltrametricDist K] :
+    HenselianLocalRing K := by
+  infer_instance
+
+end
+
+end LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
