@@ -71,7 +71,7 @@ A suitable guarded pattern is:
 while ! awk '/^MemAvailable:/ { ok = ($2 >= 20971520) } END { exit !ok }' /proc/meminfo; do sleep 30; done && awk '/^MemAvailable:/ { ok = ($2 >= 20971520) } END { exit !ok }' /proc/meminfo && lake build +LastLib.Book01ValuationsDVRsAndCompletions.<CHAPTER>
 ```
 
-A successful build may emit warnings for remaining placeholders, plus unrelated linter, deprecation, unused-variable, unused-simp-argument, unnecessary-`simpa`, `letI`, reducibility, or style warnings. Do not repair unrelated declarations merely to silence them.
+A successful build must emit no warnings except the expected warnings for deliberate remaining `sorry` placeholders. Repair linter, deprecation, unused-variable, unused-simp-argument, unnecessary-`simpa`, `letI`, reducibility, style, and all other warnings within the assigned file before finishing.
 
 ## Completion checks
 
@@ -93,5 +93,6 @@ Report one chapter-level summary, not a statement-by-statement JSON value. Inclu
 - Any ordinary unresolved proof obligations that are difficult but do not justify a statement update.
 - The exact guarded build command and its result, run after the final edit.
 - Forbidden-token and `git diff --check` results.
-- Remaining compiler or linter warnings.
+- Confirmation that the final build emitted no warnings other than expected `sorry` warnings, with
+  each exception listed.
 - Confirmation that declaration headers and imports were preserved, only the assigned chapter file was modified by your work, and temporary files were removed.

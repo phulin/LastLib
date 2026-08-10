@@ -19,6 +19,8 @@ Enforce these project-wide rules:
 - Do not use or leave `aesop` anywhere. Existing `aesop` invocations must be replaced by explicit Mathlib-based proofs and focused ordinary tactics.
 - Do not introduce axioms, unsafe declarations, or other proof loopholes.
 - Use `lake build` exclusively for compilation and testing; never use `lake env lean`.
+- Require every chapter target and the aggregate target to build without warnings, except for warnings
+  caused by deliberate `sorry` placeholders while such placeholders are expected at that stage.
 - Immediately before every Lake build, check that `/proc/meminfo` reports `MemAvailable >= 20971520` kB and join the successful check to the Lake command with `&&`. If the check fails, wait 30 seconds and retry.
 - Preserve unrelated changes and do not commit.
 - If a declaration is false, unprovable from its assumptions, or inaccurately formalizes the book, correct it as closely as possible to the book and require the worker to report the exact change and justification.
@@ -34,6 +36,6 @@ The final report must include:
 - The final forbidden-token audit result.
 - Confirmation that all workers shared the same `.lake` cache.
 - Every theorem, definition, or interface correction reported by the workers, with its reason.
-- Remaining nonfatal warnings.
+- Confirmation that the final builds emitted no warnings other than any expected `sorry` warnings,
+  with each exception listed.
 - The exact files modified and confirmation that scratch files were removed.
-
