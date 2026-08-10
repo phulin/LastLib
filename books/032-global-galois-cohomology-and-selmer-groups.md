@@ -20,6 +20,7 @@
    - [Cohomological dimension and the real-place exception](#33-cohomological-dimension-and-the-real-place-exception)
    - [Inflation back to the absolute group](#34-inflation-back-to-the-absolute-group)
    - [Finite fields, lattices, and vector spaces](#35-finite-fields-lattices-and-vector-spaces)
+   - [Euler accounting at the present stage](#36-euler-accounting-at-the-present-stage)
 4. [Localization](#4-localization)
    - [Why a global class has local shadows](#41-why-a-global-class-has-local-shadows)
    - [Construction and independence of choices](#42-construction-and-independence-of-choices)
@@ -40,6 +41,8 @@
    - [Built-in conditions outside $S$](#64-built-in-conditions-outside-s)
    - [Varying the local conditions](#65-varying-the-local-conditions)
    - [Basic exact sequences from the definition](#66-basic-exact-sequences-from-the-definition)
+   - [Exact change of local conditions](#67-exact-change-of-local-conditions)
+   - [Strict, relaxed, and one-place control](#68-strict-relaxed-and-one-place-control)
 7. [Morphisms and exact coefficient sequences](#7-morphisms-and-exact-coefficient-sequences)
    - [Compatibility is extra data](#71-compatibility-is-extra-data)
    - [Functoriality of Selmer groups](#72-functoriality-of-selmer-groups)
@@ -83,6 +86,10 @@
     - [The tangent space is a Selmer group](#133-the-tangent-space-is-a-selmer-group)
     - [Fixed determinant and the trace-zero adjoint](#134-fixed-determinant-and-the-trace-zero-adjoint)
     - [The dual tangent condition](#135-the-dual-tangent-condition)
+    - [The unramified deformation condition](#136-the-unramified-deformation-condition)
+    - [A two-character calculation away from $\ell$](#137-a-two-character-calculation-away-from-ell)
+    - [Framed tangent spaces](#138-framed-tangent-spaces)
+    - [Obstructions and the limit of the tangent calculation](#139-obstructions-and-the-limit-of-the-tangent-calculation)
 14. [The reusable global dictionary](#14-the-reusable-global-dictionary)
     - [A construction protocol](#141-a-construction-protocol)
     - [Dictionary of objects and maps](#142-dictionary-of-objects-and-maps)
@@ -178,7 +185,7 @@ The set $S$ is the bookkeeping device that separates finitely many exceptional p
 * every finite place at which the $G_K$-action on $M$ is ramified;
 * every place at which a later local condition is not the unramified one.
 
-If $M$ is a vector space over a finite field $k$ of characteristic $\ell$, “coefficient-characteristic places” means the places above $\ell$. For an $\ell$-adic lattice the same convention applies. A theorem may require fewer places, but this enlarged $S$ is stable under the standard constructions and makes finiteness and cohomological-dimension statements clean.
+If $M$ is a vector space over a finite field $k$ of characteristic $\ell$, “coefficient-characteristic places” means the places above $\ell$. For an $\ell$-adic lattice the same convention applies. A theorem may require fewer places, but this enlarged $S$ is stable under the standard constructions and gives uncluttered finiteness and cohomological-dimension statements.
 
 There is no mathematical virtue in taking $S$ minimal. Enlarging $S$ allows more ramification globally and transfers a formerly automatic unramified condition into an explicit local choice. A correct Selmer group is unchanged if the transferred condition is imposed at the new place. We will prove this independence rather than treat it as a notational slogan.
 
@@ -295,7 +302,7 @@ The global theory is useful because restricted ramification turns finite coeffic
 
 **Finiteness theorem.** Let $K$ be a number field, let $M$ be a finite discrete $G_{K,S}$-module, and suppose that $S$ is finite, contains the archimedean places, and contains every finite place whose residue characteristic divides $|M|$. Then $H^i(G_{K,S},M)$ is finite for every $i\geq0$.
 
-The inclusion of coefficient-characteristic places is a clean sufficient hypothesis. Specialized finiteness results sometimes omit some of them, but no such sharpening will be used without being stated.
+The inclusion of coefficient-characteristic places is a convenient sufficient hypothesis. Specialized finiteness results sometimes omit some of them, but no such sharpening will be used without being stated.
 
 Here is the mechanism. After a finite extension unramified outside $S$, the action on $M$ becomes trivial. Inflation--restriction then reduces degree one to continuous homomorphisms into a finite group. Restricted ramification and bounded exponent allow only finitely many such abelian extensions; global class field theory expresses them through a finite ray-class quotient together with a finitely generated $S$-unit group. Higher degrees are controlled by finite cohomological dimension away from the real $2$-primary tail and by finite-group cohomology at that tail. Devissage through the prime-primary parts of $M$ completes the argument.
 
@@ -353,6 +360,82 @@ H^i(G_{K,S},T)\otimes_{\mathcal O}E
 $$
 
 in the standard finite range. These assertions are not licenses to treat $T$, $V$, and $V/T$ as the same topological coefficient object. Their cochains and duals live in different categories.
+
+### 3.6 Euler accounting at the present stage
+
+Euler characteristics are useful here, but only if one is precise about which characteristic has actually been proved. There are three different numerical statements in circulation.
+
+First, the local Euler--Poincaré formulas are already available. Let $k$ be a finite field of characteristic $\ell$, let $M$ be a finite-dimensional $k$-representation of $G_{K_v}$, and write
+
+$$
+h_v^i(M)=\dim_k H^i(K_v,M),
+\qquad m=\dim_k M.
+$$
+
+At a finite place $v\nmid\ell$,
+
+$$
+h_v^0(M)-h_v^1(M)+h_v^2(M)=0. \tag{3.3}
+$$
+
+At a place $v\mid\ell$,
+
+$$
+h_v^0(M)-h_v^1(M)+h_v^2(M)
+=-[K_v:\mathbf Q_\ell]m. \tag{3.4}
+$$
+
+Both formulas apply to arbitrary finite-dimensional $M$, not merely to unramified or semisimple representations. They were proved locally by devissage, the structure of local units, and the Brauer calculation. Solving for the middle term gives
+
+$$
+h_v^1(M)=h_v^0(M)+h_v^2(M)
++[K_v:\mathbf Q_\ell]m
+$$
+
+at $v\mid\ell$, with the last summand omitted at $v\nmid\ell$. Since
+
+$$
+\sum_{v\mid\ell}[K_v:\mathbf Q_\ell]=[K:\mathbf Q], \tag{3.5}
+$$
+
+the total coefficient-characteristic contribution over a number field is $[K:\mathbf Q]m$. Formula (3.5) follows by decomposing $K\otimes_{\mathbf Q}\mathbf Q_\ell$ as the product of the $K_v$ for $v\mid\ell$ and taking dimensions. This is the only global summation of local Euler terms needed before global duality.
+
+Second, the definition of a Selmer group gives an exact rank formula involving the *actual image* of localization. Put
+
+$$
+I_{\mathcal L}
+=\operatorname{im}\left(
+H^1(G_{K,S},M)\longrightarrow
+\bigoplus_{v\in S}H^1(K_v,M)/\mathcal L_v
+\right).
+$$
+
+For finite-dimensional $k$-coefficients, the defining exact sequence will give
+
+$$
+\dim_k H^1_{\mathcal L}(K,M)
+=\dim_kH^1(G_{K,S},M)-\dim_k I_{\mathcal L}. \tag{3.6}
+$$
+
+This is an exact formula, and it immediately yields
+
+$$
+\dim_kH^1(G_{K,S},M)-
+\sum_{v\in S}\bigl(h_v^1(M)-\dim_k\mathcal L_v\bigr)
+\leq \dim_k H^1_{\mathcal L}(K,M)
+\leq \dim_kH^1(G_{K,S},M). \tag{3.7}
+$$
+
+The left side may be negative, in which case the inequality is merely a harmless lower bound. What matters is that no surjectivity of localization has been inserted.
+
+Third, one can ask for a formula for
+
+$$
+\frac{|H^0(G_{K,S},M)|\,|H^2(G_{K,S},M)|}
+{|H^1(G_{K,S},M)|}
+$$
+
+or for the difference between the dimensions of a Selmer group and its dual Selmer group. Such formulas require the global duality theorem: they identify the localization defect rather than merely naming it. They are not consequences of (3.3)--(3.7), and no global Euler ratio is asserted in this book. In particular, the real $2$-primary periodic tail prevents even the displayed three-term ratio from being the correct unmodified invariant in full generality. Keeping this boundary explicit prevents a local Euler calculation from being promoted into an unproved global surjectivity statement.
 
 ## 4. Localization
 
@@ -426,6 +509,32 @@ $$
 because a global class has only finitely many nonzero quotient components. Replacing (4.2) by an unrestricted product changes the object and is generally wrong.
 
 For finite coefficients every local $H^1$ is given the discrete topology, and (4.1) carries the restricted-product topology in which $\prod_{v\notin T}H^1_{\mathrm{ur}}(K_v,M)$ is an open subgroup for every finite $T$. This topology matters when Pontryagin duality is later applied. The direct sum (4.2), by contrast, is being used here as an algebraic target with finite support.
+
+The topology can be described without choosing one exceptional set. For every finite set $T$ containing the archimedean and ramified places, let
+
+$$
+P_T(M)=
+\prod_{v\in T}H^1(K_v,M)
+\times\prod_{v\notin T}H^1_{\mathrm{ur}}(K_v,M).
+$$
+
+Then
+
+$$
+\prod_v'H^1(K_v,M)=\bigcup_TP_T(M), \tag{4.3}
+$$
+
+and a subset is open when its intersection with every $P_T(M)$ is open for the product topology. Because the factors are finite for finite $M$, each tail $\prod_{v\notin T}H^1_{\mathrm{ur}}(K_v,M)$ is compact. Thus the restricted product is locally compact and totally disconnected. It is usually neither compact nor discrete: allowing unrestricted coordinates at more and more places creates infinitely many open compact pieces.
+
+Why does a global class have restricted support? Represent it by a cocycle and pass to a finite extension that trivializes both the coefficient action and the torsor represented by the cocycle. A finite extension of number fields ramifies at only finitely many places. At every other finite place, inertia acts trivially on the coefficient module and on the torsor, so the restricted cocycle vanishes on inertia. Its localization is therefore unramified. This proof also shows that the finite exceptional set may depend on the class when one starts in $H^1(K,M)$, whereas every class in $H^1(G_{K,S},M)$ has the uniform exceptional set $S$.
+
+There is a useful quotient calculation. If $\mathcal L_v=H^1_{\mathrm{ur}}(K_v,M)$ outside a finite set $T$, the coordinatewise quotient map from the restricted product has image
+
+$$
+\bigoplus_vH^1(K_v,M)/\mathcal L_v. \tag{4.4}
+$$
+
+Indeed every restricted tuple has a zero quotient coordinate outside a finite set, and conversely a finitely supported family of quotient classes can be lifted coordinate by coordinate. This proves, rather than merely motivates, the direct-sum target used in every Selmer kernel below.
 
 ### 4.5 The archimedean modification
 
@@ -592,7 +701,7 @@ No global class need realize every element of this discrepancy. Selmer theory re
 
 We now have a finite global group and a family of local tests. The central construction should retain precisely those global classes whose localization belongs to every allowed subgroup. A kernel does exactly this and also exposes which exactness statements are formal.
 
-There are two equivalent styles. One can work over all places, requiring the unramified condition almost everywhere, or choose a controlling finite set $S$ and regard the outside conditions as already enforced by $G_{K,S}$. The second is leaner in calculations; the first makes independence of $S$ visible.
+There are two equivalent styles. One can work over all places, requiring the unramified condition almost everywhere, or choose a controlling finite set $S$ and regard the outside conditions as already enforced by $G_{K,S}$. The second is more economical in calculations; the first makes independence of $S$ visible.
 
 ### 6.2 Definition of a Selmer structure
 
@@ -711,6 +820,89 @@ $$
 This four-term sequence and the comparison sequence (6.5) are the basic global-to-local exact sequences available from definitions and ordinary cohomology. Connecting maps from coefficient sequences provide further exact fragments in Chapter 7.
 
 Nothing here identifies $\operatorname{coker}(\rho_{\mathcal L})$ with the dual of another Selmer group. Nothing asserts that the sum of local invariants is the only obstruction. Those are global duality statements reserved for the next stage.
+
+### 6.7 Exact change of local conditions
+
+The comparison map in (6.5) becomes more informative when its image is named. Suppose $\mathcal L_v\subseteq\mathcal L'_v$ at every place and equality holds almost everywhere. Define
+
+$$
+J(\mathcal L,\mathcal L')
+=\operatorname{im}\left(
+H^1_{\mathcal L'}(K,M)longrightarrow
+\bigoplus_v\mathcal L'_v/\mathcal L_v
+\right). \tag{6.7}
+$$
+
+Then the definition gives a short exact sequence
+
+$$
+0\longrightarrow H^1_{\mathcal L}(K,M)
+\longrightarrow H^1_{\mathcal L'}(K,M)
+\longrightarrow J(\mathcal L,\mathcal L')
+\longrightarrow0. \tag{6.8}
+$$
+
+There is no arithmetic theorem hidden here: $J$ is the actual localization image. For finite groups,
+
+$$
+\frac{|H^1_{\mathcal L'}(K,M)|}
+{|H^1_{\mathcal L}(K,M)|}
+=|J(\mathcal L,\mathcal L')|
+\leq\prod_v\frac{|\mathcal L'_v|}{|\mathcal L_v|}. \tag{6.9}
+$$
+
+For finite-dimensional $k$-coefficients,
+
+$$
+\dim_kH^1_{\mathcal L'}-
+\dim_kH^1_{\mathcal L}
+=\dim_kJ(\mathcal L,\mathcal L')
+\leq\sum_v
+\bigl(\dim_k\mathcal L'_v-\dim_k\mathcal L_v\bigr). \tag{6.10}
+$$
+
+These are the exact order and dimension formulas available before global duality. Equality with the full local product occurs precisely when the comparison localization map is surjective. A later theorem will express the failure of surjectivity through a dual Selmer group; at present it must remain the named subgroup $J$.
+
+Changing one place makes the geometry transparent. Suppose the conditions agree away from $w$. Then $J$ is a subspace of $\mathcal L'_w/\mathcal L_w$. The dimension can rise by any integer from zero to the dimension of that quotient. It rises by zero when every class satisfying the weaker conditions already satisfies the stronger condition at $w$. It rises maximally exactly when every newly permitted local direction at $w$ is realized by a global class satisfying all the unchanged conditions. Local dimension alone cannot distinguish these cases.
+
+There is also a useful lattice of conditions. For two $k$-linear Selmer structures $\mathcal L$ and $\mathcal M$, define pointwise
+
+$$
+(\mathcal L\cap\mathcal M)_v=\mathcal L_v\cap\mathcal M_v,
+\qquad
+(\mathcal L+\mathcal M)_v=\mathcal L_v+\mathcal M_v.
+$$
+
+Then
+
+$$
+H^1_{\mathcal L\cap\mathcal M}(K,M)
+=H^1_{\mathcal L}(K,M)\cap H^1_{\mathcal M}(K,M) \tag{6.11}
+$$
+
+inside $H^1(K,M)$. The analogous equality with sums is generally false: the sum of two global classes satisfying separate local conditions lies in the pointwise sum condition, but a class whose localization lies in every $\mathcal L_v+\mathcal M_v$ need not admit one globally compatible decomposition. This is another form of the local--global defect.
+
+### 6.8 Strict, relaxed, and one-place control
+
+Fix a background structure away from a finite set $T$. Write $\mathcal L^{T}$ for relaxation at every $v\in T$ and $\mathcal L_T$ for strictness there. Repeated application of (6.5) gives
+
+$$
+0\longrightarrow H^1_{\mathcal L_T}(K,M)
+\longrightarrow H^1_{\mathcal L}(K,M)
+\longrightarrow\bigoplus_{v\in T}\mathcal L_v, \tag{6.12}
+$$
+
+and
+
+$$
+0\longrightarrow H^1_{\mathcal L}(K,M)
+\longrightarrow H^1_{\mathcal L^{T}}(K,M)
+\longrightarrow\bigoplus_{v\in T}H^1(K_v,M)/\mathcal L_v. \tag{6.13}
+$$
+
+In (6.12) the last map is localization; in (6.13) it is localization followed by quotient. Neither arrow is declared surjective. These two sequences distinguish the jobs of auxiliary places. A strict condition tests whether a global class is locally zero. A relaxed condition permits a local direction that was previously forbidden. The first kills classes detected by localization; the second creates classes only when the permitted local directions globalize.
+
+As a counterexample to naive subtraction, take a nonzero class $x\in H^1_{\mathcal L}(K,M)$ whose localization at $w$ is zero. Making the condition strict at $w$ does not lower the Selmer dimension at all, although the local condition may have positive dimension. Conversely, if localization maps the Selmer group onto $\mathcal L_w$, strictness lowers the dimension by exactly $\dim\mathcal L_w$. The local subgroup is the space of possible tests; the localization image records which tests actually occur globally.
 
 ## 7. Morphisms and exact coefficient sequences
 
@@ -1041,6 +1233,33 @@ H^1(K_v,M)^\perp=0. \tag{9.5}
 $$
 
 Thus strict and relaxed conditions exchange. Away from the residue characteristic, unramified conditions on unramified dual modules exchange with unramified conditions. Kummer images for dual isogenies are orthogonal when the local connecting maps and the relevant geometric pairing satisfy the compatibility proved by local duality. Integral finite-flat-shaped conditions have the expected orthogonal only when the integral dual models establish it; generic-fiber duality alone is insufficient.
+
+Here is the proof of the unramified assertion, including its exact scope. Let $v$ have residue characteristic $p$, let $M$ be $\ell$-primary with $\ell\ne p$, and suppose both $M$ and $M^*(1)$ are unramified. If $x$ and $y$ are unramified degree-one classes, their cup product inflates from a degree-two class of the procyclic residue group. That group has $\ell$-cohomological dimension one, so
+
+$$
+\langle x,y\rangle_v=0.
+$$
+
+Thus the unramified subgroup on the dual is contained in the annihilator. Local Euler--Poincaré gives
+
+$$
+\dim H^1(K_v,M)=h_v^0(M)+h_v^2(M).
+$$
+
+Local duality identifies $h_v^2(M)$ with $h_v^0(M^*(1))$. On the other hand, kernel--cokernel equality for Frobenius gives
+
+$$
+\dim H^1_{\mathrm{ur}}(K_v,M)=h_v^0(M),
+$$
+
+and the same equality for the dual. Hence the two unramified dimensions add to the dimension of the ambient $H^1(K_v,M)$. Perfectness upgrades containment to equality:
+
+$$
+H^1_{\mathrm{ur}}(K_v,M)^\perp
+=H^1_{\mathrm{ur}}(K_v,M^*(1)). \tag{9.6}
+$$
+
+The hypothesis $\ell\ne p$ is decisive. At $v\mid\ell$, principal units enlarge $H^1$ by $[K_v:\mathbf Q_\ell]\dim M$, so the two unramified subspaces usually do not have complementary dimensions. For example, if $M=\mathbf F_\ell$ is trivial and $\mu_\ell\subset K_v$, both unramified lines have dimension one, while the ambient $H^1$ has dimension $[K_v:\mathbf Q_\ell]+2$. Their orthogonal complements are therefore much larger than unramified lines.
 
 Restriction and corestriction are adjoint:
 
@@ -1498,6 +1717,143 @@ $$
 is the **dual tangent Selmer group**.
 
 It models the dual local directions that later measure failure of global lifting and the need for auxiliary primes. At this stage (13.5) is a well-defined Selmer kernel assembled from local orthogonals. No dimension formula comparing (13.3) and (13.5) has yet been established.
+
+### 13.6 The unramified deformation condition
+
+Let $v\nmid\ell$ and suppose $\overline\rho$ is unramified at $v$. A first-order lift
+
+$$
+\rho_\varepsilon(g)=(1+\varepsilon c(g))\overline\rho(g)
+$$
+
+remains unramified exactly when $c|_{I_v}=0$. Indeed $\overline\rho(\tau)=1$ for $\tau\in I_v$, so
+
+$$
+\rho_\varepsilon(\tau)=1+\varepsilon c(\tau),
+$$
+
+and this is the identity for every $\tau$ precisely when the restricted cocycle vanishes. After quotienting by infinitesimal conjugacy, the local tangent condition is therefore
+
+$$
+\mathcal L_v^{\mathrm{ur}}
+=H^1_{\mathrm{ur}}(K_v,\operatorname{ad}(\overline\rho)). \tag{13.6}
+$$
+
+Because $\operatorname{ad}(\overline\rho)$ is unramified, Frobenius gives
+
+$$
+\mathcal L_v^{\mathrm{ur}}
+\simeq
+\operatorname{ad}(\overline\rho)/
+(\operatorname{Frob}_v-1)\operatorname{ad}(\overline\rho). \tag{13.7}
+$$
+
+Kernel--cokernel equality for the Frobenius endomorphism yields
+
+$$
+\dim_k\mathcal L_v^{\mathrm{ur}}
+=\dim_kH^0(K_v,\operatorname{ad}(\overline\rho)). \tag{13.8}
+$$
+
+Thus the unramified tangent dimension is the dimension of the Frobenius centralizer. If Frobenius has distinct eigenvalues on a two-dimensional residual space, its centralizer consists of diagonal matrices and has dimension two; the fixed-determinant centralizer has dimension one when $\ell\ne2$. If Frobenius is scalar, the centralizer has dimension four and the unramified framed problem has a corresponding jump. This jump is real arithmetic information, not a defect of the parameterization.
+
+The same calculation covers a representation that is ramified but whose *new extension data* are required to be unramified: replace the coefficient module in (13.7) by its inertia invariants. What it does not cover is a minimal ramification condition that permits a fixed nontrivial inertial action. Such a condition must be linearized from its own local deformation problem; it need not equal the kernel of restriction to inertia on the whole adjoint module.
+
+### 13.7 A two-character calculation away from $\ell$
+
+Suppose $\ell\ne2$, $v\nmid\ell$, and
+
+$$
+\overline\rho=\chi_1\oplus\chi_2
+$$
+
+with both characters unramified. Put $\psi=\chi_1\chi_2^{-1}$ and let $\alpha=\psi(\operatorname{Frob}_v)$. The trace-zero adjoint decomposes as
+
+$$
+\operatorname{ad}^0(\overline\rho)
+\simeq k\oplus k(\psi)\oplus k(\psi^{-1}). \tag{13.9}
+$$
+
+The first summand is the trace-zero diagonal direction; the other two are upper- and lower-triangular extension directions. Let $q_v$ be the residue-field cardinality, viewed in $k$. For an unramified line with Frobenius eigenvalue $\beta$, the local calculation gives
+
+$$
+\begin{array}{c|ccc}
+&h^0&h^1&h^2\\ \hline
+\beta\ne1,q_v&0&0&0\\
+\beta=1\ne q_v&1&1&0\\
+\beta=q_v\ne1&0&1&1\\
+\beta=1=q_v&1&2&1.
+\end{array} \tag{13.10}
+$$
+
+Consequently the diagonal line always supplies one unramified tangent direction, and it supplies an additional tame direction when $q_v=1$ in $k$. The upper-right line acquires an invariant and unramified direction at $\alpha=1$, while it acquires a tame direction and a degree-two obstruction at $\alpha=q_v$. The lower-left line obeys the same rule with $\alpha^{-1}$.
+
+This example explains the exceptional eigenvalue ratios that occur in deformation theory. Away from
+
+$$
+\alpha\in\{1,q_v,q_v^{-1}\},
+$$
+
+the off-diagonal local cohomology vanishes. At one of those values a tangent or obstruction direction appears. A phrase such as “generic Frobenius” is therefore shorthand for the explicit avoidance of these ratios; it should never be used without recording the coefficient field and arithmetic Frobenius normalization.
+
+### 13.8 Framed tangent spaces
+
+A global frame retains the chosen basis and forbids quotienting by infinitesimal conjugation. Let
+
+$$
+Z^1_{\mathcal L}(G_{K,S},\operatorname{ad}(\overline\rho))
+$$
+
+be the cocycles whose cohomology classes satisfy the local conditions. Coboundaries automatically map to zero in cohomology and hence satisfy every condition. Therefore
+
+$$
+0\longrightarrow B^1(G_{K,S},\operatorname{ad}(\overline\rho))
+\longrightarrow Z^1_{\mathcal L}(G_{K,S},\operatorname{ad}(\overline\rho))
+\longrightarrow H^1_{\mathcal L}(K,\operatorname{ad}(\overline\rho))
+\longrightarrow0. \tag{13.11}
+$$
+
+The last arrow is onto by the definition of $Z^1_{\mathcal L}$. Since the kernel of
+
+$$
+\operatorname{ad}(\overline\rho)\longrightarrow B^1,
+\qquad X\longmapsto(g\mapsto gX-X),
+$$
+
+is $H^0(K,\operatorname{ad}(\overline\rho))$, taking dimensions gives
+
+$$
+\dim_k Z^1_{\mathcal L}
+=\dim_k H^1_{\mathcal L}
++\dim_k\operatorname{ad}(\overline\rho)
+-\dim_kH^0(K,\operatorname{ad}(\overline\rho)). \tag{13.12}
+$$
+
+Formula (13.12) is the precise framed correction for one retained global basis. Several independent local framings produce a different quotient of local change-of-basis directions and require their own diagonal automorphism calculation. Merely adding $d^2$ once for each framed place double-counts global scalar and centralizer directions.
+
+For fixed determinant, replace the adjoint module by $\operatorname{ad}^0$ throughout (13.11)--(13.12). This remains valid when $\ell$ divides $\dim W$; what changes is the invariant space, because scalar matrices may then be trace zero.
+
+### 13.9 Obstructions and the limit of the tangent calculation
+
+Let $R'\twoheadrightarrow R$ be a small square-zero extension of coefficient rings with kernel $I$, and suppose a global deformation over $R$ has been chosen. Choosing set-theoretic matrix lifts to $R'$ produces a multiplicative defect
+
+$$
+c(g,h)=\widetilde\rho(g)\widetilde\rho(h)
+\widetilde\rho(gh)^{-1}.
+$$
+
+Associativity makes $c$ a $2$-cocycle with values in $\operatorname{ad}(\overline\rho)\otimes_k I$. Changing the provisional lifts changes $c$ by a coboundary. Hence there is a well-defined obstruction class
+
+$$
+o(\rho,R'/R)\in
+H^2(G_{K,S},\operatorname{ad}(\overline\rho))\otimes_k I. \tag{13.13}
+$$
+
+It vanishes exactly when a global lift exists before local deformation conditions are imposed. If local lifts are required, the global class must vanish and the chosen lift must then be adjustable into every local condition; Chapter 7 shows that this second requirement is a separate lifting defect. Thus even vanishing of the ambient $H^2$ does not automatically prove that an arbitrarily prescribed local deformation problem is unobstructed.
+
+For a fixed determinant, determinant-compatible provisional lifts make (13.13) take values in $H^2(G_{K,S},\operatorname{ad}^0(\overline\rho))\otimes I$. Without determinant-compatible lifts, projecting an arbitrary adjoint obstruction onto a trace-zero direct summand is invalid when the trace sequence does not split.
+
+The dual tangent Selmer group (13.5) is expected to measure the global relations among locally allowable lifts. That expectation is deliberately not turned into an equality here. Establishing it requires identifying the cokernel of localization by a global perfect pairing. The present book supplies both sides of that later theorem—the tangent kernel and its locally orthogonal dual—but does not use the desired conclusion as part of their construction.
 
 ## 14. The reusable global dictionary
 
