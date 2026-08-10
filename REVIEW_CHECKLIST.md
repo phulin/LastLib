@@ -206,7 +206,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 139. Modular Curves (X_0(N)) and (X_1(N))
 - [ ] 140. Jacobians of Modular Curves
 - [ ] 141. The Eisenstein Ideal
-- [ ] 142. Eisenstein Series, Congruences, and the Eisenstein Ideal
+- [x] 142. Eisenstein Series, Congruences, and the Eisenstein Ideal
 - [ ] 143. Cuspidal Divisors and Specialization on Modular Jacobians
 - [ ] 144. Mazur–Raynaud Admissible Group Schemes
 - [ ] 145. Completed Hecke Pieces and Eisenstein p-divisible Groups
