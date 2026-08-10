@@ -1,4 +1,25 @@
-import Mathlib
+import Mathlib.Algebra.Module.DedekindDomain
+import Mathlib.Algebra.Module.PID
+import Mathlib.LinearAlgebra.Dimension.Finite
+import Mathlib.RingTheory.DedekindDomain.Dvr
+import Mathlib.RingTheory.DedekindDomain.Factorization
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.FractionalIdeal.Basic
+import Mathlib.RingTheory.FractionalIdeal.Inverse
+import Mathlib.RingTheory.FractionalIdeal.Operations
+import Mathlib.RingTheory.Filtration
+import Mathlib.RingTheory.HopkinsLevitzki
+import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+import Mathlib.RingTheory.Ideal.Int
+import Mathlib.RingTheory.LocalRing.Length
+import Mathlib.RingTheory.Localization.AtPrime.Basic
+import Mathlib.RingTheory.Localization.AtPrime.Extension
+import Mathlib.RingTheory.OrderOfVanishing.Noetherian
+import Mathlib.RingTheory.Polynomial.Basic
+import Mathlib.RingTheory.RamificationInertia.Ramification
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Order
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter05
 

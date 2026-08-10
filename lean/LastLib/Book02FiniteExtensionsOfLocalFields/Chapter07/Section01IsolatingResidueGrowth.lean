@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.GroupTheory.Index
+import Mathlib.LinearAlgebra.Dimension.Finite
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

@@ -1,6 +1,5 @@
-import Mathlib
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section01TheLocalExtensionProblem
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section04TheFundamentalEquality
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 

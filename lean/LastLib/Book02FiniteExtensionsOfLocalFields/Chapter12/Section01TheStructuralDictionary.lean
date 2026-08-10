@@ -1,4 +1,3 @@
-import Mathlib
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section03RamificationIndexAndResidueDegree
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section01WhyTowerFormulasMatter

@@ -18,6 +18,9 @@ Enforce these project-wide rules:
 - Eliminate every `sorry` and `admit`.
 - Do not use or leave `aesop` anywhere. Existing `aesop` invocations must be replaced by explicit Mathlib-based proofs and focused ordinary tactics.
 - Do not introduce axioms, unsafe declarations, or other proof loopholes.
+- Workers may add any focused Mathlib or stable LastLib imports their proofs require. They must not
+  introduce the exact umbrella imports `import Mathlib` or `import LastLib`, or a book/chapter
+  aggregator when a focused module supplies the API.
 - Give proof workers the Lean MCP when available and have them use whole-file diagnostics, goals, and batched tactic trials for their interactive loop. Use `lake build` exclusively for final compilation and acceptance testing; never use `lake env lean`.
 - Require every chapter target and the aggregate target to build without warnings, except for warnings
   caused by deliberate `sorry` placeholders while such placeholders are expected at that stage.

@@ -73,6 +73,17 @@ Keep existing proofs when they still elaborate against faithful statements. When
 
 Run a targeted Lake build if practical, but do not spend the review budget chasing long proof failures caused by corrected statements. Run `git diff --check` on the assigned file. Before finishing, verify that you changed only the assigned file.
 
+Perform the final review workflow in this order:
+
+1. Check source coverage and mathematical fidelity.
+2. Check proof readiness and missing reusable interfaces.
+3. Make the smallest principled statement/interface repairs.
+4. Obtain clean diagnostics for the assigned file.
+5. Audit imports. Focused imports may be added freely and do not need to be minimized. Replace the
+   exact umbrella imports `import Mathlib` and `import LastLib`, and replace any broad aggregator
+   import with focused Mathlib or stable LastLib modules. Do not add later-chapter or cyclic edges.
+6. Run the targeted final build and `git diff --check`.
+
 ## Final report
 
 Report:

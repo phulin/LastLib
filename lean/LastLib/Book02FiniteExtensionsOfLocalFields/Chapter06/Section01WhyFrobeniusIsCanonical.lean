@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.FieldTheory.Finite.GaloisField
+import Mathlib.FieldTheory.Galois.Basic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06
 

@@ -6,7 +6,11 @@ Work only in this worktree and edit only your assigned chapter file, except for 
 
 Your assignment is the entire chapter, not one isolated declaration. Read the complete target Lean file and the corresponding material for Chapter `<CHAPTER_NUMBER>` in `books/01-valuations-dvrs-and-completions.md`. Treat the book as the mathematical blueprint, but verify all formal facts and exact APIs from the pinned Lean sources. Inspect Mathlib under `lean/.lake/packages/mathlib` freely and use declarations from earlier chapter files. Within the assigned chapter, a proof may use only declarations occurring textually before it; never use a later declaration to prove an earlier one.
 
-Prove every `sorry` or `admit` in the assigned file that can be proved from its statement and the permitted earlier declarations. Statements are immutable during this proof pass: do not change a declaration's kind, name, namespace, binders, assumptions, typeclasses, result type, section-variable behavior, attributes, or imports, and do not replace it with an easier declaration. Do not introduce axioms, unsafe declarations, contradictory artificial assumptions, diagnostic-suppression tricks, or any other proof or kernel-checking loophole. The `aesop` tactic is banned: do not add or invoke it, and replace every existing `aesop` invocation in the assigned file with an explicit proof using concrete Mathlib lemmas and ordinary focused tactics.
+Prove every `sorry` or `admit` in the assigned file that can be proved from its statement and the permitted earlier declarations. Statements are immutable during this proof pass: do not change a declaration's kind, name, namespace, binders, assumptions, typeclasses, result type, section-variable behavior, or attributes, and do not replace it with an easier declaration. You may add focused Mathlib or LastLib imports required by valid proofs. Do not introduce axioms, unsafe declarations, contradictory artificial assumptions, diagnostic-suppression tricks, or any other proof or kernel-checking loophole. The `aesop` tactic is banned: do not add or invoke it, and replace every existing `aesop` invocation in the assigned file with an explicit proof using concrete Mathlib lemmas and ordinary focused tactics.
+
+Adding focused imports is allowed and expected when a proof needs them. Do not introduce the exact
+umbrella imports `import Mathlib` or `import LastLib`, or a book/chapter aggregator when a focused
+module supplies the needed API.
 
 ## Chapter workflow
 
@@ -41,7 +45,7 @@ For existential, `Nonempty`, equivalence, structure, and class goals, construct 
 - For an equivalence between quotient rings, normalize the source and target ideals, identify an ideal as the kernel of a known surjective homomorphism, and compose quotient/kernel equivalences before defining manual forward and inverse maps.
 - For a negated structural property, assume it and apply its simplest universal consequence to a canonical low-complexity object, then transport through an invariant. Try a low power or parity obstruction before constructing a custom polynomial or structure.
 
-Use local `have`, `let`, and genuine local instances inside proof bodies as needed. Do not add global helper declarations merely to evade a target, and do not repeatedly compile guesses at unverified identifiers.
+Use local `have`, `let`, and genuine local instances inside proof bodies as needed. You may also add new chapter-level helper definitions or lemmas before their first use when they express genuine reusable mathematics or supply infrastructure that the book's argument needs and that is absent from earlier declarations. Keep such helpers narrowly scoped, accurately stated, and proved without loopholes. They must not merely restate a target, assume all or part of its conclusion, duplicate a later declaration to create a circular shortcut, or otherwise make the target vacuous. Existing declaration headers remain immutable. Do not repeatedly compile guesses at unverified identifiers.
 
 ## Statements that genuinely need correction
 
@@ -80,7 +84,8 @@ Before finishing:
 1. Run a fresh guarded build after the final edit and confirm the assigned chapter target succeeds.
 2. Confirm the assigned file contains no `admit`, `aesop`, `axiom`, `unsafe`, `sorryAx`, or equivalent loophole, except for statements you failed to prove or needing update.
 3. Account for every remaining `sorry`: each must be either attached to a precise `STATEMENT_NEEDS_UPDATE` marker or reported as an unresolved proof obligation. Never claim completion merely because the file builds with placeholders.
-4. Inspect the diff to verify that declaration headers and imports are unchanged and that only proof bodies and `STATEMENT_NEEDS_UPDATE` comments were edited.
+4. Inspect the diff to verify that declaration headers are unchanged and that any import edits add
+   only focused modules required by the proofs.
 5. Run `git diff --check` for the assigned file.
 6. Remove all scratch, backup, and log files you created.
 
@@ -95,4 +100,5 @@ Report one chapter-level summary, not a statement-by-statement JSON value. Inclu
 - Forbidden-token and `git diff --check` results.
 - Confirmation that the final build emitted no warnings other than expected `sorry` warnings, with
   each exception listed.
-- Confirmation that declaration headers and imports were preserved, only the assigned chapter file was modified by your work, and temporary files were removed.
+- Confirmation that declaration headers were preserved, any imports added were focused rather than
+  umbrella imports, only the assigned chapter file was modified, and temporary files were removed.

@@ -10,7 +10,7 @@ and the chapter aggregator:
 
 `lean/LastLib/Book02FiniteExtensionsOfLocalFields/Chapter{chapter_number_padded}.lean`.
 
-Use namespace `LastLib.Book02FiniteExtensionsOfLocalFields.Chapter{chapter_number_padded}`. Create one sensibly named Lean file per numbered section, in section order, using valid Lean module-name components such as `Section01TheLocalExtensionProblem.lean`. The chapter aggregator must import every section file. A later section may import the immediately preceding section, thereby receiving the earlier section chain. Do not edit the project-wide `LastLib.lean` or any other chapter; the orchestrator will assemble the whole book after all parallel workers finish.
+Use namespace `LastLib.Book02FiniteExtensionsOfLocalFields.Chapter{chapter_number_padded}`. Create one sensibly named Lean file per numbered section, in section order, using valid Lean module-name components such as `Section01TheLocalExtensionProblem.lean`. The chapter aggregator must import every section file. Keep sections as sibling leaves whenever possible: do not make a later section import the immediately preceding section merely to inherit a prose-order chain. Import another section only when its declarations are genuinely used, and put interfaces shared by several sections in a chapter-local `Dependencies.lean` or `Core.lean`. Do not edit the project-wide `LastLib.lean` or any other chapter; the orchestrator will assemble the whole book after all parallel workers finish.
 
 ## Goal
 
@@ -64,6 +64,10 @@ Keep guesses inside the assigned chapter namespace, use a distinctive but meanin
 
 ## Mathematical and Lean quality
 
+- Add whatever focused Mathlib or stable LastLib imports the file needs; there is no requirement to
+  minimize their number. Never use the exact umbrella imports `import Mathlib` or `import LastLib`,
+  and never import a Book 2 chapter aggregator from a section. Aggregators may import leaves; leaves
+  must not import aggregators.
 - Use pinned Mathlib APIs whenever possible. Search locally under `lean/.lake/packages/mathlib/Mathlib` before inventing an interface. If Mathlib already defines an object, reuse it and formalize the book's result as a theorem about that object; do not duplicate the definition.
 - Model the book's actual hypotheses. Carefully distinguish finite, algebraic, separable, normal, Galois, complete, henselian, unramified, totally ramified, perfect-residue-field, finite-residue-field, and characteristic assumptions. Do not silently assume characteristic zero or residue-field finiteness.
 - Preserve normalization factors in valuation, norm, and absolute-value formulas. Avoid collapsing `v_L|_K = e v_K` into literal equality of normalized valuations.

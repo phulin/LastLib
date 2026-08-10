@@ -1,4 +1,21 @@
-import Mathlib
+import Mathlib.Algebra.Polynomial.Div
+import Mathlib.Algebra.Polynomial.RingDivision
+import Mathlib.FieldTheory.RatFunc.Basic
+import Mathlib.FieldTheory.RatFunc.AsPolynomial
+import Mathlib.RingTheory.DedekindDomain.AdicValuation
+import Mathlib.RingTheory.DedekindDomain.Dvr
+import Mathlib.RingTheory.DedekindDomain.Factorization
+import Mathlib.RingTheory.FractionalIdeal.Basic
+import Mathlib.RingTheory.Localization.Basic
+import Mathlib.RingTheory.LaurentSeries
+import Mathlib.RingTheory.HahnSeries.Basic
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.NumberTheory.Padics.PadicNorm
+import Mathlib.NumberTheory.Padics.PadicNumbers
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter01
 
