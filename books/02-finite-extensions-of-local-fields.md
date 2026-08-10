@@ -198,7 +198,8 @@ $$
 Since $q_L=q_K^f$, restriction gives
 
 $$
-|x|_L^{\mathrm{can}}=|x|_K^{\mathrm{can},[L:K]}.
+|x|_L^{\mathrm{can}}=
+\left(|x|_K^{\mathrm{can}}\right)^{[L:K]}.
 $$
 
 Thus canonical Haar-measure normalization does not literally extend across fields. Both conventions are correct; a formula must reveal which one it uses.
@@ -467,9 +468,15 @@ $$
 
 If $L/K$ is separable, this is a finite reduced $K'$-algebra, hence a product of finite field extensions of $K'$. Each factor carries the unique local valuation. If $L/K$ is inseparable, nilpotents can occur after scalar extension, so it is wrong to speak automatically of field factors.
 
-Unramified extensions have especially stable base change. If $L/K$ is finite unramified and $K'/K$ finite, every field factor of $L\otimes_KK'$ is unramified over $K'$. On residue fields this is the statement that a finite separable extension remains finite étale after scalar extension, though it may split into a product.
+Unramified extensions have especially stable base change. If $L/K$ is finite unramified and $K'/K$ finite, every field factor of $L\otimes_KK'$ is unramified over $K'$. On residue fields this is the statement that a finite separable extension remains finite étale after scalar extension, though it may split into a product. Section 7.6 proves the assertion by lifting the resulting residue-field factors.
 
-Total ramification behaves differently under arbitrary base change because the new base may absorb some or all of the value-group enlargement. It is preserved under unramified base change: if $L/K$ is totally ramified and $K'/K$ is unramified, then $L$ and $K'$ are linearly disjoint, $LK'/K'$ is totally ramified, and $LK'/L$ is unramified. The square separates the two independent directions of local degree.
+Total ramification behaves differently under arbitrary base change because the new base may absorb some or all of the value-group enlargement. It is preserved under unramified base change: if $L/K$ is totally ramified and $K'/K$ is unramified, then $L$ and $K'$ are linearly disjoint, $LK'/K'$ is totally ramified, and $LK'/L$ is unramified. Indeed, their intersection is both unramified and totally ramified, hence is $K$. More decisively, the residue field of $LK'/L$ contains the residue field of $K'$, so
+
+$$
+[LK':L]\geq f(K'/K)=[K':K].
+$$
+
+The reverse inequality is automatic, giving equality and linear disjointness. The tower formulas then give the two asserted ramification types. The square separates the two independent directions of local degree.
 
 ### 3.5 Mixed and equal characteristic
 
@@ -483,7 +490,7 @@ $$
 
 and $v_K(p)=e(K/\mathbf Q_p)$. The residue field is finite, hence perfect, so every finite residue extension is separable.
 
-In equal characteristic $p$, a complete discretely valued field need not be a Laurent-series field unless a coefficient field is available, but $k((t))$ is the central model. Imperfect $k$ introduces genuinely new behavior. For $a\in k$ not a $p$th power, adjoining a root of $X^p-a$ enlarges the residue field purely inseparably with $e=1$, while adjoining a root of $X^p-t$ is purely inseparable and totally ramified with $e=p$. Both are finite local extensions; neither is Galois in the usual separable sense.
+In equal characteristic $p$, the field $k((t))$ is the central model; a choice of coefficient field and uniformizer is what makes such a Laurent-series description literal. Imperfect $k$ introduces genuinely new behavior. For $a\in k$ not a $p$th power, adjoining a root of $X^p-a$ enlarges the residue field purely inseparably with $e=1$, while adjoining a root of $X^p-t$ is purely inseparable and totally ramified with $e=p$. Both are finite local extensions; neither is Galois in the usual separable sense.
 
 This is why later equivalences involving embeddings, Frobenius, or inertia require explicit separability hypotheses, even though the valuation and degree theory does not.
 
@@ -505,7 +512,7 @@ $$
 
 are Eisenstein, so the corresponding extensions are totally ramified quadratic extensions.
 
-These are all the quadratic extensions inside a fixed separable closure. Indeed, Proposition 10.1 applied to $m=2$ shows that every principal unit is a square. Hence
+These are all the quadratic extensions inside a fixed separable closure. Indeed, every principal unit $a\in1+\mathfrak m_K$ is a square: for $h(T)=T^2-a$, the approximation $T=1$ satisfies $h(1)\in\mathfrak m_K$ and $h'(1)=2\in A^\times$, so Hensel's lemma supplies a square root in $1+\mathfrak m_K$. Hence
 
 $$
 K^\times/(K^\times)^2
@@ -518,17 +525,31 @@ The finite cyclic group $k^\times$ has two square classes, so $K^\times$ has fou
 
 This example also illustrates base change. After extending scalars to the unramified quadratic field $K(\sqrt u)$, the two ramified fields $K(\sqrt\pi)$ and $K(\sqrt{u\pi})$ become isomorphic because $u$ becomes a square. Conversely, adjoining $\sqrt\pi$ does not turn the unramified quadratic extension into a ramified one; the compositum has an unramified quadratic stage and a totally ramified quadratic stage.
 
-Residue characteristic $2$ is different. The map $u\mapsto u^2$ is not invertible on principal units, and more unit square classes appear. The simple three-extension picture fails for exactly the filtration-theoretic reason explained in Chapter 10.
+Residue characteristic $2$ is different. The map $u\mapsto u^2$ is not invertible on principal units, and more unit square classes appear. The simple three-extension picture fails for exactly the filtration-theoretic reason that Chapter 10 will make explicit.
 
 ### 3.7 Continuity of embeddings
 
-Every $K$-embedding $\sigma:L\hookrightarrow\Omega$ into an algebraic extension with the uniquely extended valuation preserves value:
+Every $K$-embedding $\sigma:L\hookrightarrow\Omega$ into an algebraic extension preserves the uniquely extended place. The formula depends on normalization. If $w$ is the extension scaled so that $w|_{K^\times}=v_K$, then
 
 $$
-v_\Omega(\sigma x)=v_L(x).
+w(\sigma x)=w(x).
 $$
 
-Indeed, pulling the valuation on $\Omega$ back along $\sigma$ gives another extension of $v_K$ to $L$, so uniqueness identifies it with $v_L$. Thus algebraic embeddings of finite extensions of $K$ are automatically continuous and isometric for an extending absolute value.
+If $\Omega/K$ is finite and every field instead carries its own normalized integer-valued valuation, then
+
+$$
+v_\Omega(\sigma x)
+=e(\Omega/\sigma(L))v_L(x),
+$$
+
+or, in a form independent of the intermediate normalization,
+
+$$
+\frac{v_\Omega(\sigma x)}{e(\Omega/K)}
+=\frac{v_L(x)}{e(L/K)}.
+$$
+
+Indeed, pulling the valuation on $\Omega$ back along $\sigma$ gives another extension of the place of $K$ to $L$, so uniqueness identifies it with the given one; the displayed factor then comes from the tower law. Thus algebraic embeddings of finite extensions of $K$ are automatically continuous and isometric for an absolute value that literally extends the one on $K$.
 
 This observation removes a common hidden hypothesis. In archimedean analysis, a field embedding need not be topologically harmless. In the present local setting, no separate continuity condition is required for finite algebraic embeddings over $K$. Consequently traces, norms, and Galois actions are continuous, and passage to limits commutes with every finite sum or product over embeddings.
 
@@ -628,7 +649,7 @@ $$
 \operatorname{length}_A(B/xB)=rf,
 $$
 
-because it has $r$ successive $l$-layers. On the other hand, the determinant of multiplication by $x$ generates the zeroth Fitting ideal of this quotient, whose valuation is its length over the DVR $A$. Hence
+because it has $r$ successive $l$-layers. On the other hand, put a matrix for multiplication by $x$ into Smith normal form over the DVR $A$. If its nonzero diagonal entries are $d_1,\dots,d_{[L:K]}$, then its cokernel has length $\sum_i v_K(d_i)$, while its determinant has valuation $\sum_i v_K(d_i)$. Thus the valuation of the determinant equals the length of $B/xB$, and
 
 $$
 v_K(N(x))=rf=fv_L(x).
@@ -639,7 +660,7 @@ The same conclusion for negative $r$ follows by inversion. $\square$
 Since $[L:K]=ef$, the formula also gives
 
 $$
-\frac{v_L(x)}e=rac{v_K(Nx)}{[L:K]}.
+\frac{v_L(x)}e=\frac{v_K(Nx)}{[L:K]}.
 $$
 
 This proves the norm expression for the extending absolute value from Section 1.4.
@@ -791,7 +812,7 @@ It follows that $\sigma$ preserves $B$, $\mathfrak m_L$, every power $\mathfrak 
 
 Over a complete base there is only one prime upstairs, so every automorphism preserves it. The term **decomposition group** looks redundant locally. It is retained because it identifies the local group that appears when a global extension is completed at one chosen prime.
 
-Let $E/F$ be finite Galois, let $v$ be a valuation on $F$, and choose an extension $w$ to $E$. The Galois group acts on extended valuations by
+Let $E/F$ be finite Galois, let $v$ be a nontrivial discrete valuation on $F$, and choose an extension $w$ to $E$. The Galois group acts on extended valuations by
 
 $$
 (\sigma w)(x)=w(\sigma^{-1}x).
@@ -810,6 +831,21 @@ Completion turns the stabilizer into an actual local Galois group:
 $$
 D_w\cong\operatorname{Gal}(E_w/F_v).
 $$
+
+Here is the degree argument behind this identification. Every element of $D_w$ is continuous for $w$ and therefore extends uniquely to $E_w$, giving an injection into $\operatorname{Aut}_{F_v}(E_w)$. The completed product decomposition from Book 1 has one factor for every valuation above $v$. The global Galois group permutes these factors transitively, with stabilizer $D_w$. If there are $g$ factors, conjugacy makes their degrees equal, so the product decomposition and orbit–stabilizer give
+
+$$
+[E:F]=g[E_w:F_v],\qquad
+|\operatorname{Gal}(E/F)|=g|D_w|.
+$$
+
+The two left sides are equal. Therefore
+
+$$
+[E_w:F_v]=|D_w|.
+$$
+
+The injection supplies $[E_w:F_v]$ distinct automorphisms, so $E_w/F_v$ is Galois and the injection is the displayed isomorphism. In particular, completion neither loses nor creates automorphisms that preserve the chosen branch.
 
 For a finite Galois extension $L/K$ of complete discretely valued fields, there is one valuation above $v_K$, hence
 
@@ -854,7 +890,9 @@ $$
 |G/I|=f,\qquad |I|=e.
 $$
 
-**Proof strategy for surjectivity.** Take a residue automorphism and encode it by its action on a primitive residue element. Separability makes the relevant residue root simple, Hensel lifting produces a corresponding root upstairs, and normality extends the resulting embedding to an automorphism of $L$. The exactness at $G$ is the definition of inertia; the order formulas then follow from $|G|=ef$.
+**Proof of surjectivity.** Choose a primitive element $\bar\theta$ for the finite separable extension $l/k$, let $\bar g$ be its minimal polynomial, and choose a monic lift $g\in A[T]$. Hensel's lemma gives a root $\theta\in B$ reducing to $\bar\theta$. The polynomial $g$ is separable and, because $L/K$ is normal, all its roots lie in $L$. They are integral, and their residues are distinct by uniqueness of a Hensel lift of a simple root. Thus $\bar g$ splits in $l$, proving first that $l/k$ is normal and hence Galois.
+
+For $\tau\in\operatorname{Gal}(l/k)$, the element $\tau(\bar\theta)$ is another simple root of $\bar g$, so it has a unique lift $\theta_\tau\in B$ satisfying $g(\theta_\tau)=0$. The assignment $\theta\mapsto\theta_\tau$ defines a $K$-embedding $K(\theta)\hookrightarrow L$. It extends to a $K$-embedding of $L$ into a normal closure, and normality of $L/K$ makes the image equal to $L$. The resulting element of $G$ induces $\tau$ on the residue generator and hence on all of $l$. This proves surjectivity. Exactness at $G$ is the definition of inertia, and $|G|=[L:K]=ef$ gives $|G/I|=f$ and $|I|=e$. $\square$
 
 The separability hypothesis on $l/k$ is essential to the displayed target. If $l/k$ is inseparable, its automorphism group can have order strictly smaller than $f$. The map to $\operatorname{Aut}_k(l)$ still exists and inertia is still its kernel, but the quotient cannot account for the full residue degree. Perfect residue fields, and in particular finite residue fields, eliminate this complication.
 
@@ -872,13 +910,13 @@ $$
 [L_0:K]=|G/I|=f(L/K),\qquad [L:L_0]=|I|=e(L/K).
 $$
 
-Tower multiplicativity then forces
+To identify the ramification type, reuse the lifted residue generator from the surjectivity proof. The element $\theta$ generates an unramified subextension $E=K(\theta)$ of degree $f(L/K)$. Every $\sigma\in I$ fixes $\theta$: both $\sigma(\theta)$ and $\theta$ are roots of $g$ with the same residue, so Henselian uniqueness makes them equal. Hence $E\subseteq L^I=L_0$. Since both fields have degree $f(L/K)$ over $K$, they are equal. It follows that
 
 $$
 e(L_0/K)=1,\quad f(L_0/K)=f(L/K),
 $$
 
-and
+and, by the tower formulas,
 
 $$
 e(L/L_0)=e(L/K),\quad f(L/L_0)=1.
@@ -1070,7 +1108,7 @@ $$
 
 The trace is surjective because it is a nonzero $k$-linear map to a one-dimensional space. The norm is surjective because $l^\times$ is cyclic and the displayed exponent maps a generator to an element of order $q-1$.
 
-For an unramified extension $L/K$ with these residue fields, the same conjugate pattern holds upstairs modulo $\mathfrak m_L$. If $[\bar a]$ is a Teichmüller lift, Frobenius acts literally by
+For an unramified extension $L/K$ with these residue fields, the same conjugate pattern holds upstairs modulo $\mathfrak m_L$. For $\bar a\ne0$, let $[\bar a]$ denote its **Teichmüller lift**: the unique root of $T^{q^f-1}-1$ in $B$ reducing to $\bar a$. This root exists and is unique by Hensel's lemma, since $q^f-1$ is invertible in $B$. Frobenius acts literally by
 
 $$
 \mathrm{Frob}([\bar a])=[\bar a]^q=[\bar a^q].
@@ -1106,7 +1144,7 @@ $$
 
 The first formula concerns restriction to a smaller field over the same base; the second changes the base field. Keeping those operations distinct prevents an easy exponent error.
 
-For a finite Galois extension $L/K$ that may be ramified, the same statements hold in the quotient $G/I$. Restriction and quotient maps carry arithmetic Frobenius cosets to arithmetic Frobenius cosets. A chosen lift need not be compatible because it can change by inertia at each level.
+For a compatible tower of finite Galois extensions that may be ramified, the same statements hold in the relevant quotients by inertia. When restriction between the Galois groups is defined, it carries the arithmetic Frobenius coset for a fixed base to the corresponding Frobenius coset downstairs; changing the base field replaces Frobenius by the appropriate residue-degree power, exactly as above. A chosen lift in a ramified Galois group need not be compatible because it can change by inertia at each level.
 
 ## 7. Unramified extensions
 
@@ -1120,7 +1158,7 @@ $$
 e(L/K)=1
 $$
 
-and $l/k$ is separable. By the fundamental equality, $[L:K]=[l:k]$. In fact such an $L/K$ is automatically separable. A finite extension with $e=1$ but inseparable residue extension is sometimes called **fiercely** or **ferociously ramified** in broader literature; we need only the warning that it is not unramified.
+and $l/k$ is separable. By the fundamental equality, $[L:K]=[l:k]$. In fact such an $L/K$ is automatically separable. A finite extension with $e=1$ but inseparable residue extension is not unramified; we will describe it explicitly rather than introduce additional terminology.
 
 If $k$ is perfect, every finite residue extension is separable, so unramified is equivalent simply to $e=1$. Finite fields are perfect. No characteristic-zero assumption is involved.
 
@@ -1139,9 +1177,33 @@ The point of the definition is that it can be recognized in the field, in the va
    $$
 5. $B$ is finite étale over $A$.
 
-The fifth condition is ring-theoretic shorthand for finite, flat, and unramified in the algebraic sense; in this DVR setting it means precisely that the derivative of a monogenic presentation is a unit. The equivalence supplies the intuition: no new value step appears, and the residue extension has no infinitesimal multiplicity.
+The fifth condition is ring-theoretic shorthand for finite, flat, and unramified in the algebraic sense. In the present one-field situation it can be checked from a monogenic presentation $B\cong A[T]/(g)$ by asking that $g'(T)$ be invertible in the quotient. The equivalence supplies the intuition: no new value step appears, and the residue extension has no infinitesimal multiplicity.
 
-**Proof strategy.** The equality of maximal ideals is equivalent to $e=1$. A finite separable residue extension is simple, so choose $\bar\theta$ generating $l/k$ and lift its separable minimal polynomial. Hensel lifting gives an integral element upstairs. The degree formula shows that its field already has full degree, and reduction plus Nakayama's lemma gives $B=A[\theta]$. Conversely such a presentation has unit derivative, so the residue polynomial is separable and no ramification can occur.
+**Proof.** Conditions 1 and 2 agree by definition. Since $\mathfrak m_KB=\mathfrak m_L^e$, conditions 2 and 3 agree as well.
+
+Assume condition 2. Choose a primitive element $\bar\theta$ of the finite separable extension $l/k$, let $\bar g$ be its minimal polynomial, and lift $\bar g$ monically to $g\in A[T]$. Starting from any lift of $\bar\theta$ in $B$, Hensel's lemma produces a root $\theta\in B$ of $g$ reducing to $\bar\theta$. The polynomial $g$ is irreducible because its reduction is irreducible, so
+
+$$
+[K(\theta):K]=\deg g=[l:k]=[L:K].
+$$
+
+Thus $L=K(\theta)$. Put $C=A[\theta]$. Because $e=1$, the element $\pi_K$ is a uniformizer of $B$, and reduction gives an isomorphism
+
+$$
+C/\pi_KC\cong k[T]/(\bar g)\cong l\cong B/\pi_KB.
+$$
+
+Hence $B=C+\pi_KB$. Applying Nakayama's lemma to the finite $A$-module $B/C$ gives $B=C$, proving condition 4.
+
+Conversely, condition 4 gives
+
+$$
+B/\pi_KB\cong k[T]/(\bar g)=l,
+$$
+
+a field separable over $k$. The quotient has no nonzero nilpotent maximal ideal, whereas $B/\pi_KB=B/\mathfrak m_L^e$ would have such an ideal if $e>1$. Therefore $e=1$, and condition 2 follows.
+
+Under condition 4, separability of $\bar g$ says that $g'(\theta)$ is a unit, so the derivative criterion makes $B$ finite étale over $A$. Conversely, if $B/A$ is finite étale, its special fiber $B/\pi_KB$ is a finite étale $k$-algebra and is therefore reduced. Since this special fiber is local and equals $B/\mathfrak m_L^e$, reducedness forces $e=1$; it is then the residue field $l$, finite separable over $k$. Thus condition 5 implies condition 2 and completes the circle of equivalences. $\square$
 
 In condition 4, it is not enough merely to choose any lift of a residue generator, even one that generates the full integral ring. In a ramified monogenic extension, a generator can reduce to a separable element while its own minimal polynomial acquires repeated factors modulo $\mathfrak m_K$. The decisive requirement is that $g$ itself reduce to the separable minimal polynomial of $\bar\theta$, equivalently that $g'(\theta)$ be a unit and $\deg g=[l:k]$.
 
@@ -1161,9 +1223,11 @@ $$
 
 Moreover $B=A[\theta]$. Both are free $A$-modules of the same rank, and reduction shows that $1,\theta,\dots,\theta^{f-1}$ span $B/\mathfrak m_L$; Nakayama's lemma completes the argument.
 
-Different monic lifts of $\bar g$ produce isomorphic extensions. To see why, compare their roots modulo the maximal ideal in a common algebraic closure. The residue roots match, and the derivative is a unit, so Hensel's lemma supplies a unique matching root. Thus the construction depends only on $k'/k$, not on the chosen polynomial.
+Different monic lifts of $\bar g$ produce isomorphic extensions. Indeed, let $L_2$ be produced from a second lift. Inside $\mathcal O_{L_2}$, the first lifted polynomial has a unique root reducing to the chosen $\bar\theta$, because that residue root is simple. Sending the first construction's root to this root gives a $K$-embedding into $L_2$; both fields have degree $[k':k]$, so it is an isomorphism. Thus the construction depends only on $k'/k$, not on the chosen polynomial.
 
 **Theorem 7.2 (classification).** Reduction gives an equivalence between finite unramified extensions of $K$ inside a fixed separable closure and finite separable extensions of $k$ inside a fixed separable closure. It preserves degrees, inclusions, composita, intersections, and Galois groups.
+
+**Proof.** The construction above produces an unramified lift of every finite separable residue extension, and the comparison of two monic lifts proves uniqueness up to the unique isomorphism inducing the prescribed residue identification. More generally, a $K$-embedding between two unramified extensions reduces to a $k$-embedding of their residue fields. Conversely, choose a primitive residue element in the source. A given residue embedding sends it to a simple root of the same residue polynomial in the target, and Hensel's lemma lifts that root uniquely; this defines the unique $K$-embedding inducing the prescribed residue map. Reduction is therefore essentially surjective and fully faithful. Degrees and Galois groups are preserved, and the assertions about inclusions, composita, and intersections follow by applying this correspondence to the associated residue subfields. $\square$
 
 This theorem is the precise sense in which unramified extensions are residue-field extensions lifted without distortion.
 
@@ -1259,9 +1323,9 @@ $$
 \mu_m(K^{\mathrm{nr}})\longrightarrow\mu_m(k^{\mathrm{sep}}).
 $$
 
-For a finite extension $L/K$, every $m$th root of unity in $l$ lifts uniquely to an $m$th root of unity in the maximal unramified subextension of $L$. Conversely, reduction of an $m$th root of unity is still of exact order $m$: if its residue had smaller order, Henselian uniqueness would force the original root to have smaller order.
+For a finite extension $L/K$, every $m$th root of unity $\bar\zeta\in l$ lifts uniquely in $B$ by Hensel's lemma. The classification theorem places the lift in the unramified intermediate field corresponding to the separable residue subfield $k(\bar\zeta)\subseteq l$. Conversely, reduction preserves the exact order of a root of unity whose order is prime to the residue characteristic. Indeed, if $\zeta$ has exact order $m$ but $\bar\zeta$ has order $d<m$, then $\zeta^d$ is a root of $T^{m/d}-1$ reducing to $1$. That residue root is simple, so its unique lift is $1$, contradicting the order of $\zeta$.
 
-When $k=\mathbf F_q$, the extension generated by a primitive $m$th root of unity, with $\gcd(m,\operatorname{char}k)=1$, is unramified of degree equal to the multiplicative order of $q$ modulo $m$. Indeed, the smallest finite residue field containing such a root is $\mathbf F_{q^d}$ with
+When $k=\mathbf F_q$ and $m\geq2$, the extension generated by a primitive $m$th root of unity, with $\gcd(m,\operatorname{char}k)=1$, is unramified of degree equal to the multiplicative order of $q$ modulo $m$. Indeed, the smallest finite residue field containing such a root is $\mathbf F_{q^d}$ with
 
 $$
 m\mid q^d-1.
@@ -1361,7 +1425,7 @@ $$
 x=\sum_{i=0}^{n-1}a_i\alpha^i,
 $$
 
-the nonzero terms have values $nv_K(a_i)+i$, lying in distinct congruence classes modulo $n$. The least term cannot cancel. Hence $x$ is integral exactly when every $a_i\in A$, proving $B=A[\alpha]$.
+the nonzero terms have values $nv_K(a_i)+i$, lying in distinct congruence classes modulo $n$. The least term cannot cancel. Hence $x$ is integral exactly when every $a_i\in A$, proving $B=A[\alpha]$. $\square$
 
 ### 8.3 Every total extension comes from a uniformizer
 
@@ -1375,9 +1439,23 @@ $$
 
 and the minimal polynomial of $\pi_L$ over $K$ is Eisenstein of degree $[L:K]$.
 
-**Proof strategy.** Put $M=K(\pi_L)$. The value of $\pi_L$ shows that the value group of $M$ already realizes the full index $e(L/K)=[L:K]$. Thus $[M:K]\geq[L:K]$, forcing $M=L$. The conjugates or the coefficients of the minimal polynomial are integral; reduction shows all nonleading coefficients vanish, while the norm valuation formula makes the constant coefficient have valuation one.
+**Proof strategy.** Put $M=K(\pi_L)$. The value of $\pi_L$ shows that the value group of $M$ already realizes the full index $e(L/K)=[L:K]$. The roots of its minimal polynomial then control the coefficients, while the norm valuation formula controls the constant term.
 
-More explicitly, $\pi_L$ is integral, so its minimal polynomial is monic over $A$. Since its residue is $0$, every conjugate has positive valuation, and all nonleading elementary symmetric functions lie in $\mathfrak m_K$. Its constant term is, up to sign, $N_{L/K}(\pi_L)$; because $f=1$, Theorem 4.1 gives valuation $1$. Thus it is Eisenstein. The integral-ring assertion then follows from Theorem 8.1.
+**Proof.** Restriction of normalized valuations gives
+
+$$
+v_L|_{M^\times}=e(L/M)v_M.
+$$
+
+Since $v_L(\pi_L)=1$, the positive integer $e(L/M)$ divides $1$ and is therefore $1$. The tower law now gives $e(M/K)=e(L/K)=[L:K]$. Hence
+
+$$
+[L:K]=e(M/K)\leq[M:K]\leq[L:K],
+$$
+
+so equality holds and $M=L$.
+
+The element $\pi_L$ is integral, so its minimal polynomial is monic over $A$. In a splitting field, every root of that polynomial has positive valuation by uniqueness of the extended valuation; in the inseparable case the repeated roots are counted with their multiplicities. Every nonleading coefficient, being an elementary symmetric sum of products of positive-valued roots, therefore lies in $\mathfrak m_K$. The constant term is, up to sign, $N_{L/K}(\pi_L)$; because $f=1$, Theorem 4.1 gives it valuation $1$. Thus the polynomial is Eisenstein. Theorem 8.1 then gives $B=A[\pi_L]$. $\square$
 
 This theorem remains valid for inseparable total extensions. The proof by values and degrees does not count embeddings.
 
@@ -1410,7 +1488,7 @@ Two local situations give clean monogenicity:
 - If $L/K$ is unramified, a henselian lift of a primitive residue element generates $B$.
 - If $L/K$ is totally ramified, every uniformizer generates $B$.
 
-More generally, suppose the residue extension $l/k$ is separable. Let $K_0/K$ be the maximal unramified subextension constructed in Chapter 9, choose a lifted residue generator $\theta$ for $\mathcal O_{K_0}/A$, and choose a uniformizer $\pi_L$. Then
+More generally, suppose the residue extension $l/k$ is separable. Choose a primitive element $\bar\theta$ of $l/k$ and use Hensel's lemma to lift it to an element $\theta\in B$ satisfying a monic lift of its separable minimal polynomial. Then $E=K(\theta)$ is unramified over $K$ with residue field $l$. The tower formulas show that $L/E$ is totally ramified. Consequently, for any uniformizer $\pi_L$ of $L$, the unramified and Eisenstein generation theorems give
 
 $$
 B=A[\theta,\pi_L].
@@ -1424,7 +1502,21 @@ $$
 B=A[\alpha].
 $$
 
-**Proof strategy.** Combine a residue generator with a uniformizer, and then recover the two ingredients from their sum by Hensel lifting. Choose $\theta$ and $\pi_L$ as above and put $\alpha=\theta+\pi_L$. The residue of $\alpha$ is $\bar\theta$. Let $g$ be the lifted separable polynomial defining $\theta$. Since $g'(\alpha)$ is a unit and $g(\alpha)\in\mathfrak m_L$, Hensel's lemma inside the finite local algebra generated by $\alpha$ recovers the unique root $\theta$ congruent to $\alpha$. Hence $\theta\in A[\alpha]$, and then $\pi_L=\alpha-\theta\in A[\alpha]$. The two-generator presentation gives $B=A[\alpha]$.
+**Proof.** Combine the residue generator and the uniformizer just constructed by putting
+
+$$
+\alpha=\theta+\pi_L,\qquad C=A[\alpha]\subseteq B.
+$$
+
+The finite $A$-algebra $C$ is local. Indeed, $B$ is integral over $C$, so every maximal ideal of $C$ has a maximal ideal of $B$ above it; the only possibility is $\mathfrak m_L$, and therefore the unique maximal ideal of $C$ is $\mathfrak n=C\cap\mathfrak m_L$. Because $C$ is finite over the complete DVR $A$, it is complete for the $\pi_K$-adic topology. The radical of $\pi_KC$ is $\mathfrak n$, so this is also the $\mathfrak n$-adic topology. Thus Hensel's lemma applies in $C$.
+
+Let $g\in A[T]$ be the lifted separable polynomial satisfied by $\theta$. Since $\bar\alpha=\bar\theta$, one has
+
+$$
+g(\alpha)\in\mathfrak n,\qquad g'(\alpha)\notin\mathfrak n.
+$$
+
+Hensel's lemma in $C$ produces a root $\theta'\in C$ of $g$ congruent to $\alpha$ modulo $\mathfrak n$. Both $\theta'$ and $\theta$ are roots in $B$ reducing to $\bar\theta$; uniqueness in the henselian ring $B$ gives $\theta'=\theta$. Hence $\theta\in C$, and then $\pi_L=\alpha-\theta\in C$. Since $B=A[\theta,\pi_L]$, this proves $B=C=A[\alpha]$. $\square$
 
 In particular, every finite extension of a $p$-adic field is integrally monogenic over its base valuation ring, because finite residue fields are perfect. The theorem is stronger than the field-level primitive element theorem and uses the henselian topology essentially.
 
@@ -1490,9 +1582,9 @@ $$
 
 via $\sigma(\alpha)/\alpha$. This is the basic Kummer model of a totally tamely ramified Galois extension.
 
-If $K$ does not contain $\mu_e$, adjoining those roots of unity is an unramified operation after a suitable finite unramified extension, because $e$ is prime to $p$. Thus a totally tamely ramified extension acquires the simple radical form after unramified base change. This statement explains the elementary structure of tame inertia without developing its full filtration.
+If $K$ does not contain $\mu_e$, those roots of unity lie in a suitable finite unramified extension, because $e$ is prime to $p$. After that base change, the particular Eisenstein extension defined by $T^e-u\pi_K$ becomes Galois with the radical description above. This family is the basic model for tame total ramification; a classification of all tame extensions requires additional argument and is not being assumed here.
 
-The hypothesis $p\nmid e$ is decisive. For $e=p$, the derivative of $T^p-u\pi_K$ is divisible by the maximal ideal in mixed characteristic and is zero in equal characteristic $p$. Roots of unity no longer lift through a separable residue equation, and radical extensions may be inseparable or wildly ramified.
+In positive residue characteristic, the hypothesis $p\nmid e$ is decisive. For $e=p$, the derivative of $T^p-u\pi_K$ is divisible by the maximal ideal in mixed characteristic and is zero in equal characteristic $p$. Roots of unity no longer lift through a separable residue equation, and radical extensions may be inseparable or wildly ramified.
 
 ### 8.9 A mixed extension in coordinates
 
@@ -1606,11 +1698,17 @@ of $B$ over $A$. It realizes $[L:K]=ef$ at the level of coordinates.
 
 ### 9.6 The tame boundary
 
-Let $p$ denote the characteristic exponent of $k$: $p=\operatorname{char}k$ if that characteristic is positive, and $p=1$ in residue characteristic zero. A finite extension with separable residue extension is **tamely ramified** if $p\nmid e(L/K)$. It is **wildly ramified** when $p\mid e$ in the separable setting.
+Let $p$ denote the characteristic exponent of $k$: $p=\operatorname{char}k$ if that characteristic is positive, and $p=1$ in residue characteristic zero. A finite extension with separable residue extension is **tamely ramified** if
 
-For a finite Galois extension with perfect residue field, inertia has order $e$. Its maximal normal subgroup of $p$-power order is wild inertia, and the quotient is cyclic of order prime to $p$. At the elementary level, a totally tamely ramified extension becomes, after adjoining suitable roots of unity or after a suitable unramified base change, an extension obtained by adjoining an $e$th root of a uniformizer.
+$$
+\gcd(e(L/K),p)=1.
+$$
 
-We will not develop the filtration of wild inertia, its jumps, or the comparison between lower and upper numbering. Nor will we derive different or discriminant formulas. The role of tameness here is only to mark where prime-to-$p$ power maps on principal units become invertible and norm maps become especially well behaved.
+In positive residue characteristic this says $p\nmid e(L/K)$. It is **wildly ramified** when $p>1$ and $p\mid e$ in the separable-residue setting. Thus every finite extension with separable residue extension is tame when the residue field has characteristic zero.
+
+For a finite Galois extension with perfect residue field, inertia has order $e$. Consequently the extension is tame exactly when the inertia group has order prime to $p$; when $p>1$, the divisibility $p\mid |I|$ signals wild ramification. The Kummer extensions in Section 8.8 give the elementary radical model when the needed roots of unity and equation are present.
+
+We will not define the wild inertia subgroup here, nor develop its filtration, its jumps, or the comparison between lower and upper numbering. We also will not derive different or discriminant formulas. The role of tameness here is only to mark where prime-to-$p$ power maps on principal units become invertible and norm maps become especially well behaved.
 
 ## 10. Units and successive approximation
 
@@ -1716,7 +1814,7 @@ $$
 
 ### 10.4 Multiplication, powers, and the residue characteristic
 
-The filtration makes power maps visible one layer at a time. For an integer $m$ and $x\in\mathfrak m_L^n$,
+The filtration makes power maps visible one layer at a time. For a positive integer $m$ and $x\in\mathfrak m_L^n$,
 
 $$
 (1+x)^m\equiv1+mx\pmod{\mathfrak m_L^{2n}}.
@@ -1724,7 +1822,7 @@ $$
 
 On $U_L^n/U_L^{n+1}$, the $m$th-power map is multiplication by the residue of $m$ in $l$. If $m$ is prime to the residue characteristic, this is an isomorphism on every graded layer. Completeness then lets one correct layer after layer.
 
-**Proposition 10.1.** If $m$ is invertible in $B$, the map
+**Proposition 10.1.** If the positive integer $m$ is invertible in $B$, the map
 
 $$
 U_L^1\longrightarrow U_L^1,\qquad u\longmapsto u^m
@@ -1791,7 +1889,7 @@ $$
 the action is the usual residue action, so inertia acts trivially. On a higher layer, after choosing a uniformizer,
 
 $$
-\sigma(1+a\pi_L^n)equiv
+\sigma(1+a\pi_L^n)\equiv
 1+\sigma(a)\left(\frac{\sigma(\pi_L)}{\pi_L}\right)^n\pi_L^n
 \pmod{U_L^{n+1}}.
 $$
@@ -1876,13 +1974,13 @@ So principal units have no nontrivial $p$-power roots of unity. Mixed characteri
 
 The norm is continuous because it is a polynomial in the coordinates of an element. Since it sends $B^\times$ into $A^\times$ and $1$ to $1$, sufficiently deep principal units map to deep principal units. Valuation theory makes the first bounds explicit.
 
-For a finite separable extension, write the norm in a normal closure as a product of conjugates. If $x\in\mathfrak m_L^n$, every conjugate of $x$ has the same valuation. Expanding
+For a finite separable extension, write the norm in a normal closure $\Omega$. Scale the unique extended valuation $w$ on $\Omega$ so that $w|_L=v_L$. If $x\in\mathfrak m_L^n$, uniqueness gives $w(\sigma x)=v_L(x)\geq n$ for every $K$-embedding $\sigma$. Expanding
 
 $$
 N_{L/K}(1+x)=\prod_\sigma(1+\sigma x)
 $$
 
-shows that each nonconstant symmetric sum has $L$-valuation at least $n$. Because the sum lies in $K$, its $K$-valuation is at least $\lceil n/e\rceil$. Purely inseparable norms give the same bound by taking powers, and transitivity handles the general finite extension. Hence
+shows that each nonconstant symmetric sum has $w$-value at least $n$. Because the sum lies in $K$ and $w|_K=e(L/K)v_K$, its $K$-valuation is at least $\lceil n/e\rceil$. Purely inseparable norms give the same bound by taking powers, and transitivity handles the general finite extension. Hence
 
 $$
 N_{L/K}(U_L^n)\subseteq U_K^{\lceil n/e\rceil}\qquad(n\geq1).
@@ -1912,7 +2010,7 @@ $$
 \det(1+m_x)=1+\operatorname{tr}(m_x)+\cdots.
 $$
 
-In the separable case it is also the expansion of the product over embeddings. If $x\in\mathfrak m_L^n$, the omitted terms have $L$-valuation at least $2n$, and therefore $K$-valuation at least $\lceil2n/e\rceil$.
+In the separable case it is also the expansion of the product over embeddings. With the scaled valuation $w$ used in the preceding section, if $x\in\mathfrak m_L^n$ the omitted terms have $w$-value at least $2n$, and therefore $K$-valuation at least $\lceil2n/e\rceil$. Purely inseparable powers and transitivity give the same bound for a general finite extension.
 
 The slogan “the derivative of norm at $1$ is trace” explains much of the unit theory. Surjectivity questions for norms on successive infinitesimal layers become surjectivity questions for trace maps on residue fields.
 
@@ -1948,6 +2046,14 @@ Because $l/k$ is finite separable, its trace map is a nonzero $k$-linear functio
 $$
 N_{L/K}:U_L^1\twoheadrightarrow U_K^1.
 $$
+
+**Proof.** Let $u\in U_K^1$. Starting with $y_1=1$, suppose $y_n\in U_L^1$ has been chosen so that
+
+$$
+uN(y_n)^{-1}\in U_K^n.
+$$
+
+Surjectivity of the norm on the $n$th graded layer supplies $z_n\in U_L^n$ whose norm agrees with this error modulo $U_K^{n+1}$. Put $y_{n+1}=y_nz_n$. Then the error lies in $U_K^{n+1}$. Since $z_n\to1$, the products $y_n$ converge in $U_L^1$ to an element $y$, and continuity of norm gives $N(y)=u$. $\square$
 
 On all units, the remaining obstruction is the residue norm:
 
@@ -1988,13 +2094,21 @@ $$
 \overline{\operatorname{Tr}_{L/K}(x)}=e\bar x,
 $$
 
-and multiplication by $e$ is invertible in the residue field. Successive approximation then gives:
+and multiplication by $e$ is invertible in the residue field. The corresponding norm statement has a particularly direct proof.
 
 **Proposition 11.2.** If $L/K$ is finite, totally ramified, and $e$ is prime to the residue characteristic, then
 
 $$
 N_{L/K}:U_L^1\twoheadrightarrow U_K^1.
 $$
+
+**Proof.** Since $e$ is invertible in $A$, Proposition 10.1 says that the $e$th-power map is an automorphism of $U_K^1$. Given $u\in U_K^1$, choose $y\in U_K^1$ with $y^e=u$ and view $y$ as an element of $L$. Scalar multiplication by $y$ on the $e$-dimensional $K$-space $L$ has determinant $y^e$, so
+
+$$
+N_{L/K}(y)=y^e=u.
+$$
+
+Thus every principal unit is a norm. $\square$
 
 The image on all units has residue classes $(k^\times)^e$:
 
@@ -2003,9 +2117,11 @@ N_{L/K}(U_L^0)
 =\{u\in U_K^0:\bar u\in(k^\times)^e\}.
 $$
 
+The containment follows from the residue formula. For the reverse containment, first choose a unit of $L$ with the desired residue; its norm has the prescribed residue class, and Proposition 11.2 corrects the quotient by a principal unit.
+
 If $k$ is finite of order $q$, the index of this unit norm subgroup is $\gcd(e,q-1)$. The valuation coordinate contributes no further index.
 
-When the residue characteristic divides $e$, multiplication by $e$ vanishes or becomes noninvertible on the first residue layer. The iterative argument breaks precisely where wild ramification begins. Norms still map deep units to deep units, but their exact image depends on higher ramification and the different. No uniform formula using only $e$ and $f$ can recover it.
+When the positive residue characteristic divides $e$, multiplication by $e$ vanishes on the first residue layer. The first-order argument breaks precisely where wild ramification begins. Norms still map deep units to deep units, but their exact image depends on higher ramification and the different. No uniform formula using only $e$ and $f$ can recover it.
 
 ### 11.5 Norms in towers
 
@@ -2082,13 +2198,25 @@ This constructive proof shows exactly where finiteness of the residue field was 
 
 Now let $L/K$ be totally tamely ramified of degree $e$ with finite residue field $k=\mathbf F_q$. Since the norm of a uniformizer has valuation $1$, there is no valuation obstruction. Principal units are norms, so only the first residue unit matters.
 
-Given $a=\pi_K^r u$, choose a power of $\pi_L$ and a correcting unit so that the norm has valuation $r$. The remaining unit equation is solvable exactly when the appropriate residue class belongs to $(k^\times)^e$. Consequently the elementary obstruction group has order
+The criterion can be written without hiding the unit contributed by the chosen uniformizer. Put
+
+$$
+c=\frac{N_{L/K}(\pi_L)}{\pi_K}\in A^\times.
+$$
+
+For $a=\pi_K^r u$ with $u\in A^\times$, an equation $N_{L/K}(x)=a$ is solvable exactly when
+
+$$
+\bar u\,\bar c^{-r}\in(k^\times)^e.
+$$
+
+Indeed, write $x=\pi_L^r y$ with $y\in B^\times$. Then the remaining equation is $N(y)=uc^{-r}$, and the unit norm description in Section 11.4 gives precisely the displayed condition. Consequently the norm quotient has order
 
 $$
 |k^\times/(k^\times)^e|=\gcd(e,q-1).
 $$
 
-This formula does not say that the norm quotient of every totally ramified extension has that order. It uses tameness to obtain surjectivity on principal units. In a wild extension, higher unit layers contribute additional obstructions.
+This formula does not say that the norm quotient of every totally ramified extension has that order. It uses tameness to obtain surjectivity on principal units. In a wild extension, higher unit layers contribute additional obstructions. The factor $c^{-r}$ also shows why one should not split valuation and unit obstructions without recording the chosen uniformizer's norm.
 
 As an example, let $L=K(\Pi)$ with $\Pi^e=\pi_K$ and assume $\mu_e\subset K$. Up to the sign dictated by the constant coefficient,
 
