@@ -50,7 +50,11 @@
    - [Pullback to deeper level](#91-pullback-to-deeper-level)
    - [Trace and averaging](#92-trace-and-averaging)
    - [Finite covering fibers](#93-finite-covering-fibers)
-   - [Elementary old-level maps](#94-elementary-old-level-maps)
+   - [Translated degeneracy maps](#94-translated-degeneracy-maps)
+   - [The standard pair at one new prime](#95-the-standard-pair-at-one-new-prime)
+   - [Old images and their integral defects](#96-old-images-and-their-integral-defects)
+   - [Adjoints and the preliminary new kernel](#97-adjoints-and-the-preliminary-new-kernel)
+   - [The Gram criterion for splitting](#98-the-gram-criterion-for-splitting)
 10. [Pairings and integral models](#10-pairings-and-integral-models)
     - [Pairings on weights](#101-pairings-on-weights)
     - [Finite-sum pairings](#102-finite-sum-pairings)
@@ -73,9 +77,16 @@
     - [The character subspace and its complement](#133-the-character-subspace-and-its-complement)
     - [What definiteness does and does not say](#134-what-definiteness-does-and-does-not-say)
 14. [The exact finite module](#14-the-exact-finite-module)
-    - [A construction checklist](#141-a-construction-checklist)
-    - [The final dictionary](#142-the-final-dictionary)
-    - [Conclusion](#143-conclusion)
+   - [A construction checklist](#141-a-construction-checklist)
+   - [A specified arithmetic datum](#142-a-specified-arithmetic-datum)
+   - [The base-level module used later](#143-the-base-level-module-used-later)
+   - [One-prime level modules](#144-one-prime-level-modules)
+   - [Paired and dual modules](#145-paired-and-dual-modules)
+   - [The coefficient-change ledger](#146-the-coefficient-change-ledger)
+   - [A finite-matrix realization](#147-a-finite-matrix-realization)
+   - [Scope boundaries for the next stages](#148-scope-boundaries-for-the-next-stages)
+   - [The final dictionary](#149-the-final-dictionary)
+   - [Conclusion](#1410-conclusion)
 
 ## 1. From compactness to finite algebra
 
@@ -140,6 +151,26 @@ $$
 $$
 
 and its restriction to central scalars is $z\mapsto z^2$. Modulo the center, every archimedean component may therefore be placed on the norm-one sphere. At finite places a compact open level bounds all denominators except for a finite ideal-class ambiguity. The norm-one idele class group is compact, and the finite ideal-class quotient contributes only finitely many components. These observations assemble a compact fundamental set for the projective adelic quotient.
+
+More precisely, fix a compact open $U\subset G_f$ and use finiteness of the order class set to choose
+
+$$
+G_f=\coprod_{i=1}^hG(F)g_iU.
+$$
+
+Let $\overline U$ and $\overline g_i$ denote the images in $PG(\mathbf A_{F,f})$. Every projective adelic class has a representative in one of the sets
+
+$$
+\{\overline g_i\}\,\overline U\times PG(F_\infty).
+$$
+
+Indeed, lift its finite component to $G_f$, use the displayed decomposition, and remove the rational factor on the left. Now $\overline U$ is compact, while
+
+$$
+PG(F_\infty)=\prod_{\tau}D_\tau^\times/\mathbf R^\times
+$$
+
+is compact by total definiteness. The quotient is therefore the image of a finite union of compact sets and is compact. This proof gives the exact hypothesis: compactness uses ramification at every real place. Finiteness of the finite class set alone would not control a split archimedean factor.
 
 There is a useful counterpoint. For $M_2(F)$, the diagonal matrices
 
@@ -1042,6 +1073,8 @@ S(U,W_A)\otimes_AB
 \xrightarrow{\sim}S(U,W_A\otimes_AB).
 $$
 
+**Proof strategy.** Use the same averaging idempotent before and after scalar extension. Images of idempotents commute with arbitrary base change even when kernels of general maps do not.
+
 **Proof.** The invariant summand is the image of the averaging idempotent $e_i$. Idempotent images commute with arbitrary scalar extension:
 
 $$
@@ -1216,11 +1249,350 @@ unless all relevant stabilizer actions on $U/U'$ are free.
 
 If $U'$ is normal in $U$, the finite group $U/U'$ acts on $X_{U'}$ on the right and $X_U$ is its orbit set. Fixed points again arise from arithmetic stabilizers.
 
-### 9.4 Elementary old-level maps
+### 9.4 Translated degeneracy maps
 
-Right translation can give several embeddings of a shallower-level function space into a deeper-level one. At this stage these are only maps of finite function spaces. Their linear span may be called an elementary old-level submodule, but no assertion is yet made about orthogonal complements, newness, eigenvectors, or local representation type.
+Pullback is only the first way that a lower level can contribute to a deeper one. The second is to change the position of the lower level before forgetting structure. This is the source of the two familiar maps when one prime is newly inserted into the level.
 
-That restraint is important. A systematic old/new theory depends on the algebra of double-coset correspondences and on relations among its operators. Here we have established only the underlying pullback, trace, and translation maps from which such a theory can later be built.
+Let $a\in G_f$. Right translation gives
+
+$$
+R_a:S(U,W,\chi_f)\xrightarrow{\sim}
+S(aUa^{-1},W,\chi_f),
+\qquad
+(R_af)(g)=f(ga).
+$$
+
+The central character is unchanged because $a$ commutes with $Z_f$. If
+
+$$
+U'\subseteq aUa^{-1},
+$$
+
+we may follow translation by pullback and obtain the **degeneracy map attached to $a$**
+
+$$
+\boxed{
+\delta_a=
+\operatorname{res}_{aUa^{-1}}^{U'}\circ R_a:
+S(U,W,\chi_f)\longrightarrow S(U',W,\chi_f).}
+$$
+
+The inclusion is the exact well-definedness condition. A vague assertion that $U'$ is deeper than $U$ is not enough: conjugation by $a$ can deepen one matrix entry while making the opposite entry shallower.
+
+The formula is integral. It contains no division by an index or a stabilizer order. On finite class coordinates, if
+
+$$
+g_i'a=\gamma_{i,r}g_{j(i,r)}u_{i,r}
+$$
+
+for target representatives $g_i'$ and source representatives $g_j$, then the relevant component of $\delta_a$ is obtained from $\rho(\gamma_{i,r})$. A target class may admit several descriptions, but the source stabilizer invariance makes the resulting value independent of all choices. This is the same descent argument as in Theorem 6.1.
+
+Degeneracy maps compose in the expected but order-sensitive way. Suppose
+
+$$
+U''\subseteq bU'b^{-1},
+\qquad
+U'\subseteq aUa^{-1}.
+$$
+
+Then $U''\subseteq baU(ba)^{-1}$ and
+
+$$
+\delta_b\circ\delta_a=\delta_{ba}.
+$$
+
+Indeed, $R_bR_a=R_{ba}$ under our convention, because
+
+$$
+(R_bR_af)(g)=f(gba).
+$$
+
+This order is easily reversed if right translation is treated as though it were a left action.
+
+### 9.5 The standard pair at one new prime
+
+The local matrix model makes the abstract inclusion concrete. Let $\mathfrak q$ be a finite place at which $D$ is split, choose
+
+$$
+D_{\mathfrak q}^{\times}\cong
+\operatorname{GL}_2(F_{\mathfrak q}),
+$$
+
+and write $\mathcal O_{\mathfrak q}$ for the local integers, $\varpi_{\mathfrak q}$ for a uniformizer, and
+
+$$
+K_{\mathfrak q}=\operatorname{GL}_2(\mathcal O_{\mathfrak q}).
+$$
+
+The one-step Eichler subgroup is
+
+$$
+I_{\mathfrak q}=K_0(\mathfrak q)
+=\left\{
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\in K_{\mathfrak q}:c\in\mathfrak q\mathcal O_{\mathfrak q}
+\right\}.
+$$
+
+Assume that the original level has factor $K_{\mathfrak q}$ and write
+
+$$
+U=U^{\mathfrak q}K_{\mathfrak q},
+\qquad
+U_0(\mathfrak q)=U^{\mathfrak q}I_{\mathfrak q}.
+$$
+
+Put
+
+$$
+\beta_{\mathfrak q}
+=\begin{pmatrix}1&0\\0&\varpi_{\mathfrak q}\end{pmatrix}
+$$
+
+at $\mathfrak q$ and $1$ elsewhere. A direct matrix calculation gives
+
+$$
+I_{\mathfrak q}\subseteq
+\beta_{\mathfrak q}K_{\mathfrak q}\beta_{\mathfrak q}^{-1}.
+$$
+
+Indeed,
+
+$$
+\beta_{\mathfrak q}
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\beta_{\mathfrak q}^{-1}
+=
+\begin{pmatrix}
+a&\varpi_{\mathfrak q}^{-1}b\\
+\varpi_{\mathfrak q}c&d
+\end{pmatrix},
+$$
+
+so an integral matrix whose lower-left entry is divisible by $\varpi_{\mathfrak q}$ lies in the displayed conjugate. We therefore obtain two maps
+
+$$
+\delta_0,\delta_1:
+S(U,W,\chi_f)\longrightarrow
+S(U_0(\mathfrak q),W,\chi_f),
+$$
+
+$$
+\delta_0=\operatorname{res}_{U}^{U_0(\mathfrak q)},
+\qquad
+\delta_1=\delta_{\beta_{\mathfrak q}}.
+$$
+
+The diagonal choice matters. If one instead starts from
+$\operatorname{diag}(\varpi_{\mathfrak q},1)$, the appropriate map involves the inverse translation or a central multiple, depending on convention. The two descriptions can be reconciled, but their subgroup inclusions cannot be mixed line by line.
+
+This pair is already meaningful without a theory of local eigenvectors. It comes from the two endpoints of the oriented edge fixed by $I_{\mathfrak q}$ in the local lattice tree: one endpoint is remembered by ordinary pullback, the other by translating the hyperspecial vertex before pullback. That geometric picture explains why there are two maps rather than one.
+
+### 9.6 Old images and their integral defects
+
+Let $a_1,\ldots,a_r$ be elements satisfying
+$U'\subseteq a_jUa_j^{-1}$. Package the corresponding maps as
+
+$$
+\Delta_{U}^{U'}:
+S(U,W,\chi_f)^{\oplus r}\longrightarrow
+S(U',W,\chi_f),
+$$
+
+$$
+\Delta_{U}^{U'}(f_1,\ldots,f_r)
+=\sum_{j=1}^r\delta_{a_j}f_j.
+$$
+
+The **old image contributed by $U$ through this degeneracy family** is
+
+$$
+\boxed{
+S(U',W,\chi_f)^{\mathrm{old},U}
+=\operatorname{im}(\Delta_U^{U'}).}
+$$
+
+For the one-prime level $U_0(\mathfrak q)$, the standard family is
+$a_1=1$, $a_2=\beta_{\mathfrak q}$. The adjective “old” always depends on a specified collection of lower levels and maps. If several divisors of a level are admitted, the full old image is the sum of their specified degeneracy images.
+
+This definition is robust over an arbitrary coefficient ring, but three stronger statements are not part of it:
+
+1. $\Delta_U^{U'}$ need not be injective;
+2. its image need not be a direct summand;
+3. over a domain, its image need not be saturated in the target lattice.
+
+The third failure is already visible in the map
+
+$$
+A\longrightarrow A,
+\qquad x\longmapsto\varpi x,
+$$
+
+over a discrete valuation ring. Its image is $\varpi A$, while its generic image is the whole line. The saturation is $A$, and the quotient $A/\varpi A$ measures the lost integral index. Degeneracy images can display exactly this behavior: the generic old subspace may be a direct summand even though its natural integral image sits inside that summand with nonunit index.
+
+It is therefore useful to distinguish
+
+$$
+S^{\mathrm{old}}
+=\operatorname{im}(\Delta),
+$$
+
+$$
+S^{\mathrm{old,sat}}
+=S(U',W,\chi_f)\cap
+\bigl(S^{\mathrm{old}}\otimes_AE\bigr)
+$$
+
+when $A$ is a domain with fraction field $E$. Saturating produces a torsion-free quotient but erases the finite quotient
+$S^{\mathrm{old,sat}}/S^{\mathrm{old}}$, which can carry precisely the congruence information one wants to retain.
+
+### 9.7 Adjoints and the preliminary new kernel
+
+Old images are defined without a pairing. Newness requires a direction back to lower level, and the trace maps provide it. Suppose $W$ and $W'$ have an invariant perfect pairing, the central characters are inverse, and the mass normalizations of Chapter 10 are in force. Then the adjoint of
+
+$$
+\delta_a:
+S(U,W,\chi_f)\longrightarrow S(U',W,\chi_f)
+$$
+
+is
+
+$$
+\boxed{
+\delta_a^\dagger
+=R_{a^{-1}}\circ
+\operatorname{Tr}_{U'}^{aUa^{-1}}.}
+$$
+
+The target of the trace is the translated level; the final inverse translation returns to $U$. With one Haar measure fixed simultaneously at both levels, a factor equal to the relevant volume ratio must be inserted. We use $\dagger$ rather than an unqualified star to emphasize that the formula includes the stated pairing and measure normalization.
+
+**Proposition 9.1 (adjoint formula).** Under the hypotheses just stated,
+
+$$
+\langle\delta_af,h\rangle_{U'}
+=\langle f,\delta_a^\dagger h\rangle_U.
+$$
+
+**Proof strategy.** First use adjointness of pullback and trace. Then move the translation from one argument to the other by replacing $a$ with $a^{-1}$.
+
+**Proof.** Write $V=aUa^{-1}$. By definition,
+$\delta_a=\operatorname{res}_{V}^{U'}R_a$. Hence
+
+$$
+\langle\delta_af,h\rangle_{U'}
+=\langle R_af,\operatorname{Tr}_{U'}^Vh\rangle_V.
+$$
+
+The invariant weight pairing and inverse central characters give
+
+$$
+\langle R_af,k\rangle_V
+=\langle f,R_{a^{-1}}k\rangle_U.
+$$
+
+Substituting $k=\operatorname{Tr}_{U'}^Vh$ proves the formula. Every sum is finite, so no convergence argument is hidden. $\square$
+
+For the family $a_1,\ldots,a_r$, set
+
+$$
+\Delta^\dagger h
+=\bigl(\delta_{a_1}^\dagger h,\ldots,
+\delta_{a_r}^\dagger h\bigr).
+$$
+
+The **preliminary new kernel relative to this family** is
+
+$$
+\boxed{
+S(U',W',\chi_f^{-1})^{\mathrm{new},U}_{\ker}
+=\ker(\Delta^\dagger)
+=\bigcap_{j=1}^r\ker(\delta_{a_j}^\dagger).}
+$$
+
+When source and target coefficient systems have been identified self-dually, this is a submodule of the same form space. Under perfectness it is exactly the orthogonal complement of the old image:
+
+$$
+\ker(\Delta^\dagger)
+=(\operatorname{im}\Delta)^\perp.
+$$
+
+Without perfectness, the two definitions can differ: orthogonality says only that $\Delta^\dagger h$ lies in the radical of the lower-level pairing. This is why an integral “new submodule” must record its pairing and its adjoint maps rather than being introduced as an unexplained orthogonal complement.
+
+### 9.8 The Gram criterion for splitting
+
+The old and new modules need not form a direct sum. The obstruction can be concentrated in one finite map. Assume now that all relevant modules are finite projective over $A$, that the pairings are perfect, and that chosen self-dual identifications carry the inverse-character partner back to the original coefficient system. Only under this last hypothesis is the adjoint a map between the same named modules. Define the **degeneracy Gram operator**
+
+$$
+\mathcal G=\Delta^\dagger\Delta
+\in\operatorname{End}_A\bigl(S(U,W,\chi_f)^{\oplus r}\bigr).
+$$
+
+Its $(i,j)$ entry is
+
+$$
+\delta_{a_i}^\dagger\delta_{a_j},
+$$
+
+an explicit finite correspondence at the lower level. In the two-map case,
+
+$$
+\mathcal G=
+\begin{pmatrix}
+\delta_0^\dagger\delta_0&
+\delta_0^\dagger\delta_1\\
+\delta_1^\dagger\delta_0&
+\delta_1^\dagger\delta_1
+\end{pmatrix}.
+$$
+
+The diagonal entries measure the indices of the two forgetful maps; the off-diagonal entries are the finite correspondences connecting the two endpoints. Their more familiar names and local relations belong to the systematic operator theory that follows this book.
+
+**Theorem 9.2 (old--new splitting criterion).** If $\mathcal G$ is an automorphism, then
+
+$$
+S(U',W,\chi_f)
+=\operatorname{im}(\Delta)
+\oplus\ker(\Delta^\dagger),
+$$
+
+after making the stated self-dual identifications. The projector onto the old summand is
+
+$$
+e_{\mathrm{old}}
+=\Delta\mathcal G^{-1}\Delta^\dagger.
+$$
+
+**Proof strategy.** The inverse Gram operator constructs a left inverse to $\Delta$ and an idempotent on the target. Its kernel is forced to be the common adjoint kernel.
+
+**Proof.** Since
+
+$$
+\mathcal G^{-1}\Delta^\dagger\Delta=1,
+$$
+
+the map $\Delta$ is split injective. Moreover,
+
+$$
+e_{\mathrm{old}}^2
+=\Delta\mathcal G^{-1}
+(\Delta^\dagger\Delta)
+\mathcal G^{-1}\Delta^\dagger
+=e_{\mathrm{old}}.
+$$
+
+Its image is $\operatorname{im}(\Delta)$. If $\Delta^\dagger h=0$, then $e_{\mathrm{old}}h=0$. Conversely, if $e_{\mathrm{old}}h=0$, apply $\Delta^\dagger$ and use
+
+$$
+\Delta^\dagger e_{\mathrm{old}}
+=\mathcal G\mathcal G^{-1}\Delta^\dagger
+=\Delta^\dagger
+$$
+
+to obtain $\Delta^\dagger h=0$. Thus the kernel of the idempotent is the new kernel, proving the direct sum. $\square$
+
+If $\mathcal G$ becomes invertible only after passing to a fraction field, the same decomposition holds generically but need not hold integrally. Denominators in $\mathcal G^{-1}$ measure the failure of the old lattice to split. If $\mathcal G$ is singular even generically, the chosen degeneracy maps are dependent on some characteristic-zero constituents. These three cases—unit determinant, nonzero nonunit determinant, and zero determinant—must not be conflated.
+
+This is the appropriate endpoint here. Old images, adjoint traces, new kernels, and the exact splitting criterion are defined. Identifying the entries of $\mathcal G$, proving local relations, and deciding when it is invertible require the next layer of the theory.
 
 ## 10. Pairings and integral models
 
@@ -1555,7 +1927,7 @@ Changing representatives conjugates this matrix by the block-diagonal changes $\
 
 ### 12.3 The boundary with the next theory
 
-We stop before naming or organizing these endomorphisms. Their systematic theory requires local double-coset algebras, convolution normalizations, relations at unramified and level places, commutativity statements, and compatibility among many choices. Those belong to the next book.
+We stop before naming or organizing the general fixed-level double-coset endomorphisms. Chapter 9 named the particular level-changing maps needed to define old images and adjoint new kernels, but it did not identify the fixed-level entries of their Gram operators. The systematic theory requires local double-coset algebras, convolution normalizations, relations at unramified and level places, commutativity statements, and compatibility among many choices. Those belong to the next book.
 
 The present preparation is exact but deliberately elementary:
 
@@ -1571,6 +1943,8 @@ No eigenform, eigenvalue system, or operator algebra is needed to define the mod
 ### 13.1 No rational parabolics and no continuous spectrum
 
 Constant terms in the usual automorphic theory are integrals along unipotent radicals of proper rational parabolic subgroups. For $G=D^\times$ with $D$ a division algebra, there is no proper rational parabolic subgroup. Equivalently, $PG$ is anisotropic over $F$.
+
+In degree two this can be seen without a classification theorem. A proper parabolic after passing to a splitting field stabilizes a line in the two-dimensional simple module. If such a subgroup were defined over $F$, the corresponding projective homogeneous space would have an $F$-rational point. That point is the same as a nonzero proper right ideal of $D$, or equivalently a nontrivial idempotent in $D$. A division algebra has neither. Thus the only $F$-parabolic is the whole group.
 
 Thus the parabolic constant-term condition is vacuous. After fixing the center, the automorphic quotient is compact, so there is no continuous spectrum produced by Eisenstein series and no analytic growth problem at cusps. The finite algebraic model captures the entire fixed-weight, fixed-level space.
 
@@ -1689,7 +2063,332 @@ $$
 
 At coefficient primes not dividing the relevant projective stabilizer and central quotient orders, this module is finite projective, commutes with arbitrary scalar extension, and is free when $A$ is local or a principal ideal domain.
 
-### 14.2 The final dictionary
+### 14.2 A specified arithmetic datum
+
+Later arguments must be able to refer to one module without silently changing its normalization. The minimum reusable datum is the following collection.
+
+- $F$ is a totally real number field with ring of integers $R$.
+- $D/F$ is a totally definite quaternion algebra, with finite ramification ideal $\mathfrak d$.
+- $U=\prod_{v<\infty}U_v\subset D_f^\times$ is a compact open subgroup.
+- $E$ is a characteristic-zero coefficient field, $A\subset E$ is a chosen coefficient ring, and $W_A$ is a finite projective stable weight lattice.
+- $\chi_f:Z_f\to A^\times$ is the finite part of a compatible central character.
+- $\Sigma$ is a finite set of finite places containing every place at which $D$ is ramified, $U_v$ is not maximal hyperspecial, $W_A$ or $\chi_f$ is ramified, or the chosen coefficient theory requires exclusion.
+
+The set $\Sigma$ does not alter the form space. It records which local places will later be omitted from a uniform family of finite correspondences. Including it now prevents two common ambiguities: changing the module when only the operator family was meant to change, and comparing modules with different central or lattice ramification under the same notation.
+
+For order level, one may specify an Eichler order $\mathcal O$ of level $\mathfrak N$ prime to $\mathfrak d$ and take
+
+$$
+U=\widehat{\mathcal O}^{\times}.
+$$
+
+Then $\Sigma$ contains the places dividing $\mathfrak d\mathfrak N$ and the coefficient place. At a finite place outside $\Sigma$, a chosen splitting identifies
+
+$$
+D_v^\times\cong\operatorname{GL}_2(F_v),
+\qquad
+U_v\cong\operatorname{GL}_2(R_v).
+$$
+
+The splitting is auxiliary. Replacing it conjugates the local compact subgroup and transports every finite correspondence, leaving the global module canonically isomorphic.
+
+The weight datum is not merely the tuple $(k_\tau)$. It consists of integers
+
+$$
+n_\tau=k_\tau-2\ge0,
+\qquad m_\tau\in\mathbf Z,
+$$
+
+a field of definition for
+
+$$
+W_E=\bigotimes_\tau
+\operatorname{Sym}^{n_\tau}V_\tau\otimes\det^{m_\tau},
+$$
+
+and the actual lattice $W_A\subset W_E$. Two commensurable lattices give the same generic space but may give different reductions. Likewise, a central character is part of the datum, not a decoration attached after the space has been formed.
+
+### 14.3 The base-level module used later
+
+For the specified datum, write
+
+$$
+\boxed{
+M_A(U;W,\chi)
+=S(U,W_A,\chi_f).}
+$$
+
+This is the finite integral carrier for the Hecke action constructed in the next stage. Once a specified family of finite double-coset correspondences is allowed to act, it is the corresponding finite Hecke module; the underlying module and lattice do not change when that operator family is named.
+
+Explicitly,
+
+$$
+M_A(U;W,\chi)
+=\left\{
+f:D_f^\times\to W_A:
+f(\gamma guz)=\rho(\gamma)\chi_f(z)f(g)
+\right\},
+$$
+
+where $\gamma\in D^\times$, $u\in U$, and $z\in Z_f$. The definition presupposes
+
+$$
+\chi_f(a)=\rho(a_\infty)quad(a\in F^\times),
+\qquad
+\chi_f|_{U\cap Z_f}=1.
+$$
+
+These two equations are not later lemmas: they are the descent conditions that make the displayed transformation law consistent.
+
+Choose representatives $g_1,\ldots,g_h$ for $X_U$. Then $M_A(U;W,\chi)$ is the submodule of
+
+$$
+\bigoplus_{i=1}^hW_A^{\Gamma_i},
+\qquad
+\Gamma_i=D^\times\cap g_iUg_i^{-1},
+$$
+
+cut out by the finitely many central equations of Section 6.4. This is the **exact finite model**. In particular, it is not the whole direct sum unless no central character has been imposed or the relevant eigenspace conditions are automatic.
+
+When $A$ is a discrete valuation ring and $W_A$ is finite free, the module $M_A(U;W,\chi)$ is finite free. To see this without averaging, realize every stabilizer invariant and every central equation as the kernel of a map between finite free modules. The resulting module is a finite torsion-free $A$-module and hence free. This statement does not imply clean reduction: a kernel can be free and still acquire extra solutions after reducing its defining equations.
+
+For the algebraic weight-two normalization,
+
+$$
+n_\tau=m_\tau=0
+\quad\text{for all }\tau,
+$$
+
+and with trivial central character,
+
+$$
+M_A(U;2,1)=\operatorname{Map}(X_U,A).
+$$
+
+This scalar module is often the cleanest arithmetic lattice. If norm characters must be excluded, one must separately specify the character submodule, its saturation, and whether the object retained is a quotient or an orthogonal complement. The bare notation $M_A(U;2,1)$ includes those characters.
+
+### 14.4 One-prime level modules
+
+The base module is accompanied by two standard refinements at a split place $\mathfrak q\notin\Sigma$. Keep the notation of Section 9.5. Besides
+$I_{\mathfrak q}=K_0(\mathfrak q)$, define
+
+$$
+K_1(\mathfrak q)
+=\left\{
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\in K_0(\mathfrak q):
+d\equiv1\pmod{\mathfrak q}
+\right\}.
+$$
+
+Reduction of the lower-right entry gives an exact sequence
+
+$$
+1\longrightarrow K_1(\mathfrak q)
+\longrightarrow K_0(\mathfrak q)
+\longrightarrow k_{\mathfrak q}^{\times}
+\longrightarrow1.
+$$
+
+The map is multiplicative because lower-left entries vanish modulo $\mathfrak q$. Its kernel is exactly $K_1(\mathfrak q)$, and diagonal matrices show surjectivity.
+
+Define global levels
+
+$$
+U_0(\mathfrak q)=U^{\mathfrak q}K_0(\mathfrak q),
+\qquad
+U_1(\mathfrak q)=U^{\mathfrak q}K_1(\mathfrak q),
+$$
+
+and finite modules
+
+$$
+M_{0,A}(\mathfrak q)
+=M_A(U_0(\mathfrak q);W,\chi),
+$$
+
+$$
+M_{1,A}(\mathfrak q)
+=M_A(U_1(\mathfrak q);W,\chi).
+$$
+
+The same central character can be used because its triviality on $U\cap Z_f$ implies triviality on the smaller central intersections. Conversely, a central character ramified through
+$R_{\mathfrak q}^\times/(1+\mathfrak qR_{\mathfrak q})$ can be compatible with $U_1(\mathfrak q)$ even when it is incompatible with the larger level, because a scalar matrix lies in $K_1(\mathfrak q)$ only when its residue is $1$. Such a character must be inserted into the datum explicitly. A character of the noncentral diamond quotient is instead selected as an eigenspace for the action described next.
+
+Since $U_1(\mathfrak q)$ is normal in $U_0(\mathfrak q)$, the quotient
+$k_{\mathfrak q}^{\times}$ acts on $M_{1,A}(\mathfrak q)$ by right translation. These are the **diamond translations** at $\mathfrak q$. Pullback identifies
+
+$$
+\boxed{
+M_{0,A}(\mathfrak q)
+=M_{1,A}(\mathfrak q)^{k_{\mathfrak q}^{\times}}.}
+$$
+
+This equality is an equality of invariant submodules, with no need to divide by
+$|k_{\mathfrak q}^{\times}|$. If that order is invertible in $A$ and $A$ contains the values of the relevant characters, averaging gives a direct decomposition into diamond-character summands. If the order is not invertible, the invariant equality remains true but a character decomposition may fail after reduction.
+
+The two standard degeneracy maps assemble as
+
+$$
+\Delta_{\mathfrak q}:
+M_A(U;W,\chi)^{\oplus2}
+\longrightarrow M_{0,A}(\mathfrak q),
+$$
+
+$$
+\Delta_{\mathfrak q}(x,y)
+=\delta_0x+\delta_1y.
+$$
+
+Thus the base module, the one-prime $K_0$ module, the $K_1$ module with its finite diamond action, and the integral degeneracy map are all defined before any eigenvalue or local newvector is mentioned. This is the finite package needed for later level comparison.
+
+### 14.5 Paired and dual modules
+
+Let
+
+$$
+W_A^\vee=\operatorname{Hom}_A(W_A,A)
+$$
+
+with contragredient action, and use the inverse central character $\chi_f^{-1}$. The natural partner of $M_A(U;W,\chi)$ is
+
+$$
+M_A^\vee(U)
+=M_A(U;W^\vee,\chi^{-1}).
+$$
+
+Evaluation on the weight fibers gives the finite-sum pairing
+
+$$
+M_A(U;W,\chi)\times M_A^\vee(U)
+\longrightarrow A.
+$$
+
+At good stabilizer and central-character primes it is perfect. Equivalently, the natural map
+
+$$
+M_A^\vee(U)
+\longrightarrow
+\operatorname{Hom}_A(M_A(U;W,\chi),A)
+$$
+
+is an isomorphism. At a bad stabilizer prime it need not be: the right-hand side is always the abstract dual of the finite free module, while the left-hand side is formed by taking invariants in the dual coefficient system. Those operations can disagree under reduction.
+
+The mass pairing is obtained from the same fiberwise evaluation by inserting reciprocal effective stabilizer orders. It is the correct pairing for unscaled adjoint formulas once quotient measures are normalized as in Section 10.3. The finite-sum pairing is the safer integral lattice when those orders are not units. A later assertion that a correspondence is self-adjoint must therefore state which pairing is used and whether the coefficient system has been identified with its dual.
+
+At the one-prime level, the adjoint of $\Delta_{\mathfrak q}$ is
+
+$$
+\Delta_{\mathfrak q}^\dagger:
+M_{0,A}^\vee(\mathfrak q)
+\longrightarrow M_A^\vee(U)^{\oplus2},
+$$
+
+and the relative new kernel is $\ker(\Delta_{\mathfrak q}^\dagger)$. This is an exact finite submodule. Calling it a direct complement to the old image requires the Gram criterion of Theorem 9.2.
+
+### 14.6 The coefficient-change ledger
+
+Let $A$ be a discrete valuation ring with fraction field $E$, uniformizer $\varpi$, and residue field $k$. Three modules must be kept distinct:
+
+$$
+M_A=M_A(U;W,\chi),
+$$
+
+$$
+M_E^{\mathrm{lat}}=M_A\otimes_AE,
+$$
+
+$$
+\overline M_A=M_A/\varpi M_A.
+$$
+
+Because $E$ is flat over $A$, the generic module agrees with the form space formed directly over $E$:
+
+$$
+M_E^{\mathrm{lat}}
+\xrightarrow{\sim}
+M_E(U;W_E,\chi_E).
+$$
+
+There is also a natural injection
+
+$$
+\overline M_A
+\hookrightarrow
+M_k(U;W_A/\varpi W_A,\overline\chi).
+$$
+
+Injectivity follows from saturation of the simultaneous kernel defining $M_A$. Surjectivity is the subtle point: the module formed directly over $k$ can contain new stabilizer invariants or new solutions of central-character equations. At good stabilizer and central quotient primes, averaging proves that the injection is an isomorphism.
+
+Consequently a phrase such as “the residual automorphic module” is ambiguous unless one specifies which of the following is meant:
+
+- reduction $\overline M_A$ of the chosen integral lattice;
+- the directly formed module $M_k$;
+- the image of $\overline M_A$ inside $M_k$ when base change fails.
+
+The same ledger applies to $M_{0,A}(\mathfrak q)$ and
+$M_{1,A}(\mathfrak q)$. Even if the base-level module reduces cleanly, a newly introduced diamond group can have order divisible by the residue characteristic, so its character summands may not. Clean coefficient change must be checked at every level actually used.
+
+For a localization $A_{\mathfrak p}$ of a number ring, flatness gives
+
+$$
+M_A(U;W,\chi)\otimes_AA_{\mathfrak p}
+\cong M_{A_{\mathfrak p}}(U;W_{A_{\mathfrak p}},\chi).
+$$
+
+This makes localization harmless at the level of the finite form module. Reduction after localization remains nonflat and returns to the preceding distinction.
+
+### 14.7 A finite-matrix realization
+
+For actual comparison, the preceding objects can be stored as a finite collection of matrices. The construction is mathematical, not dependent on any special presentation.
+
+1. Choose class representatives $g_i$ and determine their stabilizers $\Gamma_i$.
+2. Compute bases, or projective decompositions, of $W_A^{\Gamma_i}$.
+3. Impose the finite central equations and choose a basis of the resulting module when it is free.
+4. At a deeper level repeat the process with representatives $g_j'$ and stabilizers $\Gamma_j'$.
+5. Rewrite every translated point $g_j'a$ as $\gamma g_i u$; insert the weight matrix $\rho(\gamma)$ in the corresponding block.
+6. Sum repeated contributions with their multiplicities. Do not replace them by set-theoretic fiber counts when stabilizers are present.
+
+The output for one-prime change of level is a pair of matrices
+
+$$
+[\delta_0],\ [\delta_1],
+$$
+
+their combined matrix $[\Delta_{\mathfrak q}]$, and, when perfect pairings are fixed, the adjoint and Gram matrices
+
+$$
+[\Delta_{\mathfrak q}^\dagger],
+\qquad
+[\mathcal G_{\mathfrak q}]
+=[\Delta_{\mathfrak q}^\dagger]
+[\Delta_{\mathfrak q}].
+$$
+
+Changing class representatives conjugates these matrices by block changes of coordinates; changing bases conjugates them in the usual linear-algebraic sense. Ranks, kernels, images, cokernels, saturation indices, and the invertibility of the Gram operator are intrinsic.
+
+For trivial weight the entries of the translation matrices are nonnegative integers counting finite incidences with stabilizer multiplicity. For nontrivial weight the integer counts are replaced by sums of weight transformations. This is the precise sense in which the later modules are finite: every map is a finite matrix between explicitly described finite coefficient modules.
+
+### 14.8 Scope boundaries for the next stages
+
+The finite modules are now completely defined, including the level maps needed to speak safely about old and new parts. Several stronger structures have intentionally not been smuggled into the definitions.
+
+- No commutative operator algebra has yet been selected.
+- No local double-coset relation or polynomial normalization has been imposed.
+- No assertion of simultaneous diagonalizability or multiplicity one has been made.
+- No old/new direct sum is claimed unless the Gram operator is invertible.
+- No direct residual module is identified with reduction without a base-change theorem.
+- No norm-character quotient is called cuspidal without specifying the quotient or complement.
+
+These are not gaps in the finite construction. They separate the stable input from the theorems that later act on it. The durable object is the module
+
+$$
+M_A(U;W,\chi),
+$$
+
+together with its class-set decomposition, central constraints, integral pairing, prescribed deeper-level companions, diamond translations, and degeneracy maps.
+
+### 14.9 The final dictionary
 
 | Input | Automorphic meaning | Finite model |
 |---|---|---|
@@ -1704,13 +2403,18 @@ At coefficient primes not dividing the relevant projective stabilizer and centra
 | stable lattice $W_A$ | integral coefficient system | invariant summands $W_A^{\Gamma_i}$ |
 | class representatives | coordinates for forms | $S(U,W_A)\cong\bigoplus_iW_A^{\Gamma_i}$ |
 | deeper level $U'\subset U$ | more finite level structure | pullback and trace along $X_{U'}\to X_U$ |
+| admissible $a$ with $U'\subset aUa^{-1}$ | translated lower-level contribution | degeneracy map $\delta_a$ |
+| family of degeneracy maps | old contribution from specified lower levels | image of $\Delta$ |
+| adjoint traces | vanishing back at lower level | preliminary new kernel $\ker(\Delta^\dagger)$ |
+| degeneracy Gram operator | obstruction to integral splitting | $\mathcal G=\Delta^\dagger\Delta$ |
+| $U_1(\mathfrak q)\triangleleft U_0(\mathfrak q)$ | one-prime character level | action of $k_{\mathfrak q}^\times$ by diamond translations |
 | invariant weight pairing | duality of coefficient systems | finite sum, optionally weighted by stabilizer masses |
 | admissible bases | integral coordinates | block bases of the invariant summands |
 | reduced norm | abelian automorphic characters | norm-character subspace |
 
 Every arrow in this table has variance. Right ideals correspond to a left rational quotient and a right level quotient. Their left orders give stabilizers. The weight acts on the left of values, while the archimedean transformation law uses its inverse on the right. Central character factors multiply on the right. These directions are not notational choices that can be changed independently.
 
-### 14.3 Conclusion
+### 14.10 Conclusion
 
 Total definiteness turns an adelic automorphic problem into finite algebra because the projective group has no noncompact archimedean direction. The finite adeles retain the arithmetic that matters: compact-open level, right ideal classes, their varying left orders, and the finite stabilizers modulo central units. An algebraic weight places a representation in the fiber above every class, and an automorphic form is exactly a compatible section of those fibers.
 
