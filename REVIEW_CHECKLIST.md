@@ -226,7 +226,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 159. Integral Level Change and Jacquet–Langlands Comparison
 - [ ] 160. Deep-Level Quaternionic Modules and Diamond Actions
 - [ ] 161. Hecke-Valued Galois Representations and Nonminimal Reciprocity
-- [ ] 162. Dickson Classification and Adequate Residual Image
+- [x] 162. Dickson Classification and Adequate Residual Image
 - [ ] 163. The Minimal Totally-Real Deformation–Hecke Problem
 - [ ] 164. Minimal Patching and R=T over Totally Real Fields
 - [ ] 165. One-Prime Type Complexes and Component Support
