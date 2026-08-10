@@ -94,7 +94,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 027. Betti, de Rham, and Étale Comparison for Curves
 - [x] 028. fppf Cohomology and Kummer Theory
 - [x] 029. Continuous Cohomology of Profinite Groups
-- [ ] 030. Local Galois Cohomology
+- [x] 030. Local Galois Cohomology
 - [x] 031. Tate Local Duality
 - [x] 032. Global Galois Cohomology and Selmer Groups
 - [x] 033. Poitou–Tate Duality

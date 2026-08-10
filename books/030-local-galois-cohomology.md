@@ -13,6 +13,7 @@
    - [Tate twists with exact characteristic restrictions](#23-tate-twists-with-exact-characteristic-restrictions)
    - [Dual modules, without invoking duality](#24-dual-modules-without-invoking-duality)
    - [One-dimensional notation](#25-one-dimensional-notation)
+   - [Galois and flat Kummer theory](#26-galois-and-flat-kummer-theory)
 3. [Degrees zero and one](#3-degrees-zero-and-one)
    - [Fixed vectors are the first arithmetic calculation](#31-fixed-vectors-are-the-first-arithmetic-calculation)
    - [Cocycles and changes of origin](#32-cocycles-and-changes-of-origin)
@@ -41,6 +42,7 @@
    - [The mixed-characteristic $p$ ramification lemma](#64-the-mixed-characteristic-p-ramification-lemma)
    - [Vanishing for arbitrary finite torsion modules](#65-vanishing-for-arbitrary-finite-torsion-modules)
    - [Why torsion in the Galois group is not a contradiction](#66-why-torsion-in-the-galois-group-is-not-a-contradiction)
+   - [Uniform bounds and finite extensions](#67-uniform-bounds-and-finite-extensions)
 7. [The Brauer group and degree two](#7-the-brauer-group-and-degree-two)
    - [Why the Brauer group is the local obstruction group](#71-why-the-brauer-group-is-the-local-obstruction-group)
    - [Restriction and corestriction of invariants](#72-restriction-and-corestriction-of-invariants)
@@ -68,7 +70,9 @@
     - [Euler characteristic for vector spaces](#103-euler-characteristic-for-vector-spaces)
     - [Unramified $\ell$-adic cohomology](#104-unramified-ell-adic-cohomology)
     - [One-dimensional $\ell$-adic calculations away from $p$](#105-one-dimensional-ell-adic-calculations-away-from-p)
-    - [Finiteness and its limits](#106-finiteness-and-its-limits)
+    - [Two basic $p$-adic lines](#106-two-basic-p-adic-lines)
+    - [Finiteness and its limits](#107-finiteness-and-its-limits)
+    - [Discrete divisible quotients](#108-discrete-divisible-quotients)
 11. [Ramification-shaped local classes](#11-ramification-shaped-local-classes)
     - [Why cohomology needs local subspaces](#111-why-cohomology-needs-local-subspaces)
     - [The unramified subgroup as an extension condition](#112-the-unramified-subgroup-as-an-extension-condition)
@@ -87,6 +91,7 @@
     - [The unramified tangent space](#126-the-unramified-tangent-space)
     - [A split two-character calculation](#127-a-split-two-character-calculation)
     - [Obstructions stop in degree two](#128-obstructions-stop-in-degree-two)
+    - [Tangent and relation ledgers](#129-tangent-and-relation-ledgers)
 13. [A reusable local formula collection](#13-a-reusable-local-formula-collection)
     - [The calculation protocol](#131-the-calculation-protocol)
     - [Vanishing and finiteness table](#132-vanishing-and-finiteness-table)
@@ -105,7 +110,7 @@
 
 Continuous cohomology becomes arithmetic when the profinite group is an absolute Galois group. For a general profinite group, the groups $H^i$ can be large and opaque. For a nonarchimedean local field, valuation theory separates the Galois group into a procyclic residue-field quotient and a ramified kernel, local reciprocity describes its abelianization, and the Brauer invariant supplies the unique degree-two obstruction. Those three facts force most cohomology into degrees zero, one, and two and make its Euler characteristic numerical.
 
-This book carries out that calculation. The continuous-cohomology constructions of Book 29 are assumed: cochains, long exact sequences, restriction, corestriction, inflation–restriction, cup products, and inverse limits. The local-field and reciprocity conventions are those of Books 2, 3, and 5. We recall them where a sign or topology matters. The aim is not merely to list dimensions. It is to explain why inertia contributes one direction, Frobenius another, and—in mixed characteristic at the coefficient prime—the additive topology of the field contributes $[K:\mathbf Q_p]$ further directions.
+This book carries out that calculation. The continuous-cohomology constructions of Book 29 are assumed: cochains, long exact sequences, restriction, corestriction, inflation–restriction, cup products, and inverse limits. The local-field and reciprocity conventions are those of Books 2, 3, and 5, while the flat Kummer comparison and the language of finite-flat torsors come from Book 28. We recall each input where a sign, topology, or coefficient category matters. The aim is not merely to list dimensions. It is to explain why inertia contributes one direction, Frobenius another, and—in mixed characteristic at the coefficient prime—the additive topology of the field contributes $[K:\mathbf Q_p]$ further directions.
 
 The perfect pairings that ultimately identify $H^2(K,M)$ with the dual of a twisted invariant group belong to the next book. Here we establish their inputs: finiteness, cohomological dimension, the Brauer invariant, cup products into it, Euler characteristics, functoriality, and exact low-degree calculations.
 
@@ -265,6 +270,34 @@ $$
 
 The value $\alpha$ refers to arithmetic Frobenius. Replacing it by geometric Frobenius replaces $\alpha$ by $\alpha^{-1}$ throughout.
 
+### 2.6 Galois and flat Kummer theory
+
+The phrase “Kummer theory” hides a coefficient choice that becomes visible in residue
+characteristic. Over a field $K$, the finite flat group scheme $\mu_n$ is the kernel of the
+$n$th-power map on $\mathbf G_m$, and flat cohomology gives, for every $n\geq1$,
+
+$$
+H^1_{\mathrm{fppf}}(K,\mu_n)\simeq K^\times/(K^\times)^n. \tag{2.1}
+$$
+
+Indeed, the power map is surjective after the finite faithfully flat extension
+$K[T]/(T^n-a)$, and every line bundle over a field is trivial. If $n$ is invertible in $K$,
+then $\mu_n$ is finite etale, its geometric points form a finite discrete $G_K$-module, and
+comparison identifies (2.1) with ordinary Galois cohomology. If
+$\operatorname{char}K=p$ and $p\mid n$, the group scheme $\mu_n$ is not etale. Its geometric
+$p$-power torsion consists only of the identity, while its flat torsors can be nontrivial.
+
+Consequently there are two coefficient-uniform statements, and they must not be merged:
+
+1. flat Kummer theory computes $K^\times/(K^\times)^n$ for every $n$;
+2. Galois Kummer theory computes $H^1(K,\mu_n(K^s))$ by that quotient only when
+   $n$ is prime to $\operatorname{char}K$.
+
+The present book concerns absolute Galois groups, so all unqualified groups $H^i(K,M)$ use
+discrete Galois modules. We nevertheless keep (2.1) beside the Galois calculation. It explains
+exactly where the characteristic-$p$ coefficient fails and prevents the misleading conclusion
+that $K^\times/(K^\times)^{p^r}$ vanishes merely because $\mu_{p^r}(K^s)=1$.
+
 ## 3. Degrees zero and one
 
 ### 3.1 Fixed vectors are the first arithmetic calculation
@@ -366,6 +399,28 @@ $$
 
 Indeed, the valuation contributes $n$, the prime-to-$p$ roots contribute $\gcd(m,q-1)$, and multiplication by $p^r$ on the $d_K$-dimensional $p$-adic Lie group of deep units has cokernel-to-kernel ratio $p^{r d_K}$. Its kernel is precisely the $p$-power roots of unity in the principal units.
 
+Here is the group-theoretic detail behind the last sentence. Choose $s$ deep enough that
+logarithm gives an isomorphism
+
+$$
+\log:U^s\xrightarrow{\sim}\mathfrak m_K^s.
+$$
+
+The additive group on the right is free of rank $d_K$ over $\mathbf Z_p$, so multiplication by
+$p^r$ has cokernel of order $p^{rd_K}$ and no kernel. The quotient $U^1/U^s$ is finite. For
+any endomorphism $f$ of a finite abelian group $A$,
+$|\operatorname{coker}f|=|\ker f|$; applying this to the $p^r$th-power map on the finite
+quotient shows that its finite-layer contribution is exactly the size of the kernel that was
+removed on passing to $U^s$. That kernel is $\mu_{p^r}(K)$. Hence
+
+$$
+|U^1/(U^1)^{p^r}|=p^{rd_K}|\mu_{p^r}(K)|.
+$$
+
+Multiplication by $m$ is an automorphism of $U^1$, while the Teichmuller group of order $q-1$
+contributes $\gcd(m,q-1)$. Combining these factors with the valuation quotient proves (3.1)
+without choosing a noncanonical global decomposition of $U^1$.
+
 ### 3.5 Trivial coefficients and reciprocity
 
 If $C$ is a finite abelian group with trivial action, then
@@ -392,7 +447,8 @@ One factor records the image of a uniformizer and the other a character of the c
 
 A finite-order character $G_K\to A^\times$ corresponds to a character $K^\times\to A^\times$. It is unramified exactly when it is trivial on $\mathcal O_K^\times$, tamely ramified exactly when it is trivial on $U^1$ but not on all units, and wildly ramified when its restriction to $U^1$ is nontrivial. The conductor is the least $a\geq0$ such that the character is trivial on $U^a$.
 
-If $L/K$ is finite, restriction of a Galois character corresponds to precomposition with the norm:
+If $L/K$ is finite separable, restriction of a Galois character corresponds to precomposition
+with the norm:
 
 $$
 \chi|_{G_L}\quad\longleftrightarrow\quad
@@ -529,6 +585,27 @@ $$
 
 Combining (4.1), (4.2), and (4.8) gives a complete algorithm: compute inertia invariants, compute the first inertia cohomology, and then take Frobenius kernels or cokernels. No choice of ramified splitting is involved.
 
+It also gives uniform bounds away from $p$. If $M$ is an $r$-dimensional vector space over a
+finite field of characteristic $\ell\ne p$, then $M^{I_K}$ has dimension at most $r$, and the
+one-pro-$\ell$-direction calculation gives
+
+$$
+\dim H^1(I_K,M)\leq r.
+$$
+
+Consequently
+
+$$
+h^0(K,M)\leq r,\qquad h^2(K,M)\leq r,
+\qquad h^1(K,M)\leq2r. \tag{4.11}
+$$
+
+The same argument bounds lengths by the length of $M$ over a finite local coefficient ring.
+These estimates are independent of the finite Galois quotient through which the action factors
+and of its ramification depth. They are deliberately stated only away from $p$; in mixed
+characteristic the principal units add the $d_Kr$ term, and the Euler formula is the correct
+uniform statement.
+
 ### 4.6 Unramified is not the same as minimally ramified
 
 If inertia acts trivially on $M$, every coefficient vector is unramified, but not every cohomology class is. Formula (4.1) has a second term
@@ -567,6 +644,31 @@ $$
 
 The two summands in $H^1$ have different origins: the first is unramified and the second is tame. If $q=1$ in $F$ and $\alpha=1$, the dimensions are $(1,2,1)$. If $\alpha$ equals neither $1$ nor $q$, every cohomology group vanishes.
 
+The same computation is useful in arbitrary rank. Let $M$ be an unramified finite-dimensional
+$F$-representation and let $A$ be arithmetic Frobenius. Then
+
+$$
+h^0(K,M)=\dim_F\ker(A-1),
+$$
+
+$$
+h^2(K,M)=\dim_F\operatorname{coker}(q^{-1}A-1)
+=\dim_F\ker(A-q),
+$$
+
+and the exact sequence (4.1) gives
+
+$$
+h^1(K,M)=\dim_F\ker(A-1)+\dim_F\ker(A-q).
+$$
+
+The last equality between a cokernel and a kernel uses only that an endomorphism of a finite
+dimensional vector space has equal kernel and cokernel dimensions. These formulas do not require
+$A$ to be semisimple. For a nontrivial Jordan block with eigenvalue $1$, the contribution is
+the dimension of the eigenspace, not the algebraic multiplicity; likewise at eigenvalue $q$.
+Thus local cohomology detects the ends of the two exceptional generalized eigenspaces rather than
+the full characteristic polynomial.
+
 Now suppose $\chi|_{I_K}$ is nontrivial. Its finite image in $F^\times$ has order prime to $\ell$. Taking invariants under that image is exact, and both $M^{I_K}$ and the descended $H^1(I_K,M)$ vanish. Therefore
 
 $$
@@ -584,8 +686,8 @@ H^0(K,M)=\ker(a:M\to M),
 $$
 
 $$
-0\to\operatorname{coker}(a)\to H^1(K,M)
-\to\ker(b)\to0,
+0\longrightarrow\operatorname{coker}(a)\longrightarrow H^1(K,M)
+\longrightarrow\ker(b)\longrightarrow0,
 $$
 
 $$
@@ -601,6 +703,27 @@ $$
 $$
 
 The exact sequence for $H^1$ need not split canonically. A dimension formula should not be mistaken for a decomposition of classes.
+
+For example, take $R=\mathbf Z/\ell^r\mathbf Z$ and write
+
+$$
+s=\min\{r,v_\ell(\alpha-1)\},\qquad
+t=\min\{r,v_\ell(\alpha-q)\}.
+$$
+
+Because $q$ is a unit in $R$, multiplication by $b=\alpha q^{-1}-1$ has the same kernel and
+cokernel length as multiplication by $\alpha-q$. Hence
+
+$$
+\operatorname{length}H^0=s,qquad
+\operatorname{length}H^2=t,qquad
+\operatorname{length}H^1=s+t.
+$$
+
+This refines the residual eigenvalue test. A Frobenius eigenvalue merely congruent to $1$ or
+$q$ modulo a high power of $\ell$ creates finite integral cohomology even if it is not equal to
+either value in characteristic zero. Such congruence classes disappear after inverting $\ell$
+but matter at every finite coefficient level.
 
 ### 5.3 Roots of unity
 
@@ -622,7 +745,7 @@ When $(n,p)=1$, their orders are therefore
 
 $$
 \bigl(|H^0|,|H^1|,|H^2|\bigr)
-=\bigl(\gcd(n,q-1),,n\gcd(n,q-1),,n\bigr). \tag{5.7}
+=\bigl(\gcd(n,q-1),\ n\gcd(n,q-1),\ n\bigr). \tag{5.7}
 $$
 
 The alternating quotient is one. In mixed characteristic, formula (3.1) replaces the middle term and produces the $p$-adic Euler factor.
@@ -637,7 +760,8 @@ H^0(K,C_n)=C_n,
 H^1(K,C_n)=\operatorname{Hom}_{\mathrm{cts}}(K^\times,C_n).
 $$
 
-The prime-to-$p$ inertia calculation and, for the mixed-characteristic $p$-part, the Euler calculation below give
+The prime-to-$p$ inertia calculation and, for the mixed-characteristic $p$-part, the
+prime-to-$p$ descent calculation of Section 8.4 give
 
 $$
 |H^2(K,C_n)|=|\mu_n(K)|. \tag{5.8}
@@ -648,7 +772,7 @@ This equality of orders does not yet assert a perfect pairing or a canonical ide
 For $(n,p)=1$ the three orders are
 
 $$
-\bigl(n,,n\gcd(n,q-1),,\gcd(n,q-1)\bigr). \tag{5.9}
+\bigl(n,\ n\gcd(n,q-1),\ \gcd(n,q-1)\bigr). \tag{5.9}
 $$
 
 If $\mu_n\subset K$, then a choice of primitive root identifies $C_n$ with $\mu_n$, and (5.6) gives $H^2(K,C_n)\simeq C_n$. Without that choice—and especially when not all roots lie in $K$—one must not identify the two coefficient modules.
@@ -720,6 +844,28 @@ For $\ell\ne p$, Section 4 already contains the proof. Wild inertia has $\ell$-c
 $$
 \operatorname{cd}_\ell(G_K)\leq2.
 $$
+
+To make the two occurrences of “one” precise, pass first through wild inertia. Since every finite
+quotient of $P_K$ is a $p$-group, averaging kills its higher cohomology on an
+$\ell$-primary module. Next write the tame quotient as
+
+$$
+\prod_{r\ne p}\mathbf Z_r(1)
+=\mathbf Z_\ell(1)\times\prod_{r\ne p,\ell}\mathbf Z_r(1).
+$$
+
+The second factor again has exact invariants on $\ell$-primary modules, while
+$\mathbf Z_\ell$ has the two-term continuous complex
+
+$$
+N\xrightarrow{\tau-1}N.
+$$
+
+Thus inertia contributes rows $j=0,1$ and no others. The residue quotient has the analogous
+two-term complex $P\xrightarrow{\varphi-1}P$, so it contributes columns $i=0,1$. The
+Hochschild--Serre page is literally a two-by-two square, and total degree cannot exceed two.
+This argument works for every finite $\ell$-primary action, not merely an unramified or
+semisimple one.
 
 The bound is sharp. Take $M=\mu_\ell$ if necessary after replacing $K$ by a finite extension containing it. The Brauer calculation gives
 
@@ -802,6 +948,39 @@ If $\operatorname{char}K=p$ and $M$ is $p$-primary, the stronger vanishing $H^i(
 
 A profinite group containing an element of order $\ell$ has infinite $\ell$-cohomological dimension. Formula (6.1) therefore implies that $G_K$ has no element of order $\ell$ when its $\ell$-dimension is finite. This is consistent even when finite Galois quotients have elements of order $\ell$: a quotient element need not lift to an element of the same finite order. Finite quotient cohomology can be periodic, but its high-degree classes die after inflation to finer quotients. Continuous cohomology records the direct limit, not one quotient in isolation.
 
+### 6.7 Uniform bounds and finite extensions
+
+Cohomological dimension is stable under the finite field changes used in explicit calculations,
+but the precise statement has an index condition. If $L/K$ is finite separable, then $G_L$ is open in
+$G_K$, and Shapiro's lemma gives
+
+$$
+\operatorname{cd}_\ell(G_L)\leq\operatorname{cd}_\ell(G_K).
+$$
+
+If $[L:K]$ is prime to $\ell$, restriction followed by corestriction is multiplication by an
+$\ell$-adic unit on every $\ell$-primary cohomology group. Restriction is then injective, and
+the reverse inequality follows. Thus
+
+$$
+\operatorname{cd}_\ell(G_L)=\operatorname{cd}_\ell(G_K)
+\qquad\text{if }\ell\nmid[L:K]. \tag{6.3}
+$$
+
+This justifies two reductions used above. For $\ell\ne p$, adjoining $\mu_\ell$ has degree
+dividing $\ell-1$, so it does not change $\ell$-cohomological dimension. Over the resulting
+field $H^2(\mu_\ell)$ is nonzero by the Brauer invariant, proving sharpness. In mixed
+characteristic the same argument adjoins $\mu_p$ through an extension of degree dividing
+$p-1$; for $p=2$ the root $-1$ is already present. Nonvanishing of $H^2(\mu_p)$ then proves
+that the upper bound two is sharp over the original field as well.
+
+The vanishing bound is also uniform in the coefficient exponent. If $M$ is killed by
+$\ell^r$, no constant in Theorem 6.1 depends on $r$, on the size of the finite quotient through
+which the action factors, or on the ramification break of that quotient. Ramification changes
+the groups in degrees one and two, sometimes dramatically, but cannot create a degree-three
+class. This is the form required when one passes through all quotients $T/\varpi^rT$ of a
+lattice.
+
 ## 7. The Brauer group and degree two
 
 ### 7.1 Why the Brauer group is the local obstruction group
@@ -828,7 +1007,7 @@ has invariant $a/m$. This convention is compatible with arithmetic reciprocity.
 
 ### 7.2 Restriction and corestriction of invariants
 
-For a finite extension $L/K$ of degree $d$,
+For a finite separable extension $L/K$ of degree $d$,
 
 $$
 \operatorname{inv}_L(\operatorname{res}_{L/K}\beta)
@@ -849,13 +1028,6 @@ These formulas determine the direction of every later functorial statement. Rest
 Assume $n$ is prime to $\operatorname{char}K$. Continue the Kummer long exact sequence past degree one:
 
 $$
-0\to K^\times/(K^\times)^n
-\to H^1(K,\mu_n)	o0,
-$$
-
-and
-
-$$
 0\longrightarrow H^2(K,\mu_n)
 \longrightarrow\operatorname{Br}(K)
 \xrightarrow{n}\operatorname{Br}(K).
@@ -872,15 +1044,32 @@ Sending $a/n$ to $a$ identifies the last group with $\mathbf Z/n\mathbf Z$, but 
 
 If $\operatorname{char}K=p$ and $p\mid n$, there is no such statement for the Galois module of roots of unity: its $p$-primary part is trivial and the Kummer sequence is not exact. Flat cohomology can restore a Kummer sequence for the group scheme $\mu_{p^r}$, but that is a different cohomology theory and is not being used here.
 
+For comparison, flat Kummer theory over the field $K$ has no characteristic restriction.
+Because $\operatorname{Pic}(K)=0$, its degree-two segment is
+
+$$
+H^2_{\mathrm{fppf}}(K,\mu_n)\simeq\operatorname{Br}(K)[n]
+\simeq\frac1n\mathbf Z/\mathbf Z \tag{7.5}
+$$
+
+for every $n\geq1$. Thus in characteristic $p$, the flat group
+$H^2_{\mathrm{fppf}}(K,\mu_{p^r})$ is cyclic of order $p^r$, whereas the discrete Galois
+module $\mu_{p^r}(K^s)$ is trivial and has zero positive-degree Galois cohomology. This is the
+degree-two counterpart of Section 2.6 and completes the coefficient-uniform Kummer comparison.
+
 ### 7.4 Symbols and cyclic algebras
 
-Suppose $\mu_n\subset K$. A Kummer class $a\in K^\times/(K^\times)^n$ and a character $\chi\in H^1(K,\mathbf Z/n\mathbf Z)$ have a cup product
+Assume $n$ is prime to $\operatorname{char}K$. A Kummer class
+$a\in K^\times/(K^\times)^n$ and a character
+$\chi\in H^1(K,\mathbf Z/n\mathbf Z)$ have a cup product, using the canonical scalar-action
+pairing $\mu_n\otimes\mathbf Z/n\mathbf Z\to\mu_n$,
 
 $$
 (a)\smile\chi\in H^2(K,\mu_n).
 $$
 
-If $L/K$ is the cyclic extension cut out by $\chi$ and $\sigma$ corresponds to $1\in\mathbf Z/n\mathbf Z$, this cup product is represented by the cyclic algebra
+If $\chi$ has exact order $n$, if $L/K$ is the cyclic extension it cuts out, and if $\sigma$
+corresponds to $1\in\mathbf Z/n\mathbf Z$, this cup product is represented by the cyclic algebra
 
 $$
 (L/K,\sigma,a).
@@ -902,7 +1091,7 @@ The element of invariant $1/d$ is the local fundamental class. In the unramified
 
 ### 7.6 Finiteness in low degrees
 
-If $K$ has characteristic zero, $H^i(K,M)$ is finite for every finite $G_K$-module $M$ and every $i$. If $\ell\ne p$, this follows directly from the inertia calculation: invariants, coinvariants, and cohomology of the relevant finite cyclic quotients are finite. For $p$-primary $M$, choose a finite Galois extension $L/K$ acting trivially on $M$. Kummer theory and the structure of $L^\times$ give finiteness for trivial modules over $L$; devissage handles all finite abelian $p$-groups. The Hochschild–Serre spectral sequence has finite group cohomology on its remaining axis and therefore descends finiteness to $K$. Vanishing above degree two completes the argument.
+If $K$ has characteristic zero, $H^i(K,M)$ is finite for every finite $G_K$-module $M$ and every $i$. If $\ell\ne p$, this follows directly from the inertia calculation: invariants, coinvariants, and cohomology of the relevant finite cyclic quotients are finite. For $p$-primary $M$, choose a finite Galois extension $L/K$ acting trivially on $M$ and containing all roots of unity whose orders divide the exponent of $M$. Over $L$, every cyclic composition factor may be identified with a root-of-unity module. Kummer theory gives finite $H^1$, the Brauer calculation gives finite $H^2$, and devissage handles every finite abelian $p$-group. The Hochschild–Serre spectral sequence for $L/K$ has finite group cohomology on its remaining axis and therefore descends finiteness to $K$. Vanishing above degree two completes the argument.
 
 If $K$ has characteristic $p$, the same finiteness holds for modules of order prime to $p$, but not in general for $p$-primary modules. This is the exact boundary needed before defining Euler characteristics.
 
@@ -944,11 +1133,12 @@ $$
 \chi_K^\times(M)=
 \begin{cases}
 1,&\ell\ne p,\\
-|M|^{-d_K},&\ell=p\text{ and }M\text{ is measured as an }\mathbf F_p\text{-module},
+|M|^{-d_K},&\ell=p\text{ and }\operatorname{char}K=0,
 \end{cases} \tag{8.4}
 $$
 
-where the second line means more invariantly that a module of $\mathcal O$-length $r$ contributes $|F|^{-d_Kr}$. Formula (8.3), rather than the shorthand in (8.4), avoids confusion when the coefficient field has nontrivial residue degree.
+Indeed, a module of $\mathcal O$-length $r$ has order $|F|^r$, so the two versions are identical
+even when the residue degree of the coefficient field is greater than one.
 
 There is no finite-cardinality formula for $p$-primary modules when $\operatorname{char}K=p$; $H^1$ can be infinite. For $\ell\ne p$, formula (8.3) remains valid in either characteristic.
 
@@ -1004,53 +1194,113 @@ This proof works for arbitrary ramified action. It also reveals the mechanism: t
 
 ### 8.4 The mixed-characteristic calculation for the basic module
 
-Assume $K/\mathbf Q_p$ is finite. Begin after a prime-to-$p$ extension with $\mu_p\subset K$. The module $\mathbf F_p(1)=\mu_p$ is then trivial. Kummer theory and the Brauer calculation give
+Assume $K/\mathbf Q_p$ is finite and put $u=|\mu_p(K)|$, so $u$ is either $1$ or $p$.
+Kummer theory, the structure of $K^\times$, and the Brauer calculation give
+
+$$
+|H^0(K,\mu_p)|=u,
+$$
+
+$$
+|H^1(K,\mu_p)|=|K^\times/(K^\times)^p|=p^{d_K+1}u,
+$$
+
+$$
+|H^2(K,\mu_p)|=p.
+$$
+
+The middle equality comes from one valuation direction, $d_K$ deep-unit directions, and the
+roots in the kernel of the $p$th-power map. Therefore
+
+$$
+\chi_K^\times(\mu_p)=\frac{up}{p^{d_K+1}u}=p^{-d_K}. \tag{8.6}
+$$
+
+This calculation neither assumes that $\mu_p\subset K$ nor identifies $\mu_p$ with a constant
+module. It explains both the sign and the field-degree factor. The extra $d_K$ dimensions live
+in the principal units, not in the unramified quotient.
+
+For the finite-group reduction it is useful to compute the constant module as well, without
+using the Euler formula we are trying to prove. Reciprocity and (3.1) give
 
 $$
 |H^0(K,\mathbf F_p)|=p,
+\qquad
+|H^1(K,\mathbf F_p)|=p^{d_K+1}u.
 $$
 
-$$
-|H^1(K,\mathbf F_p)|=|K^\times/(K^\times)^p|=p^{d_K+2},
-$$
+To calculate degree two, put $L=K(\mu_p)$ and $\Delta=\operatorname{Gal}(L/K)$. The order of
+$\Delta$ divides $p-1$, so taking $\Delta$-invariants is exact on $p$-groups and
+Hochschild--Serre gives
 
 $$
-|H^2(K,\mathbf F_p)|=p.
+H^2(K,\mathbf F_p)\simeq H^2(L,\mathbf F_p)^\Delta.
 $$
 
-The middle equality comes from one valuation direction, $d_K$ deep-unit directions, and the root $\mu_p$ in the kernel of the $p$th-power map. Therefore
+A choice of primitive $p$th root identifies $\mathbf F_p$ with $\mu_p$ over $L$, and hence
+identifies $H^2(L,\mathbf F_p)$ with the one-dimensional Brauer group
+$\operatorname{Br}(L)[p]$. If $\omega:\Delta\to\mathbf F_p^\times$ is the cyclotomic
+character, changing the chosen root by $\delta$ multiplies this coefficient identification by
+$\omega(\delta)$. Therefore $\Delta$ acts on $H^2(L,\mathbf F_p)$ through
+$\omega^{-1}$. Its invariant space has dimension one exactly when $\omega$ is trivial, that is,
+exactly when $\mu_p\subset K$. Consequently
 
 $$
-\chi_K(\mathbf F_p)=1-(d_K+2)+1=-d_K. \tag{8.6}
+|H^2(K,\mathbf F_p)|=u.
 $$
 
-This calculation explains both the sign and the field-degree factor. The extra $d_K$ dimensions live in the principal units, not in the unramified quotient.
+We have proved directly that
+
+$$
+\chi_K^\times(\mathbf F_p)
+=\frac{p\,u}{p^{d_K+1}u}=p^{-d_K}. \tag{8.6a}
+$$
+
+The same argument works over every finite extension of $K$, a fact needed in the induction
+below.
 
 ### 8.5 Proof for every mixed-characteristic finite module
 
-We now explain why the basic calculation determines all finite $p$-primary modules. The required reduction is sometimes called the finite-group Euler lemma. We spell out its mechanism because the action must not simply be ignored.
+We now explain why the constant calculation determines all finite $p$-primary modules. The
+required finite-group Euler lemma says that an additive Euler characteristic compatible with
+Shapiro is determined by its value on the trivial $\mathbf F_p$-module over every open
+subgroup. Here is the proof in the form needed locally.
 
-First, Euler characteristics are additive by (8.5), so it suffices to treat modules killed by $p$ and then their simple constituents. Second, for a finite extension $L/K$ and a finite $G_L$-module $N$, Shapiro's lemma gives
-
-$$
-\chi_K(\operatorname{Ind}_{G_L}^{G_K}N)=\chi_L(N). \tag{8.7}
-$$
-
-Third, let a finite quotient $G$ control the action and choose a $p$-Sylow subgroup. On restriction to that subgroup, every simple $\mathbf F_p$-module is trivial: the center of a nontrivial finite $p$-group has an element of order $p$, whose operator has nonzero fixed vectors, and induction on the group and module dimension finishes the claim. The complementary prime-to-$p$ quotient is semisimple by averaging. Induction from the Sylow fixed field, Shapiro's lemma, and the restriction–corestriction identity therefore express the Euler characteristic as the sum of trivial-module Euler characteristics, with multiplicities equal to composition-factor dimensions. This is the finite-group Euler lemma. Its proof is an induction on $|G|$; at each step the $p$-part is handled by the invariant filtration and the prime-to-$p$ part by the averaging idempotent. In particular, it preserves total vector-space dimension.
-
-Apply the lemma after a finite Galois extension cutting out the action. Since
-
-$$
-[L:\mathbf Q_p]=[L:K]d_K,
-$$
-
-equations (8.6) and (8.7) give
+Choose a finite Galois extension through which the action on a module $N$ killed by $p$ factors,
+and call the finite quotient $G$. Induct simultaneously on $|G|$ and $\dim N$. If $P$ is a
+$p$-Sylow subgroup, the restriction of $N$ to $P$ has a filtration with trivial one-dimensional
+factors: a central element of order $p$ acts unipotently and supplies a fixed vector, and
+induction supplies the rest. Subgroups of order prime to $p$ are semisimple by averaging.
+Applying these facts successively to $P$, its normalizer, and the proper subgroups met in the
+process expresses the Euler value of $N$ as a sum of Euler values of trivial lines over fixed
+fields, divided by the same subgroup indices that occur in the dimension count. Shapiro turns
+each induced term over $K$ into the corresponding trivial term over that fixed field. Since
 
 $$
-\chi_K(M)=-d_K\dim_{\mathbf F_p}M
+[F:\mathbf Q_p]=[F:K]d_K
 $$
 
-for every module killed by $p$. Devissage along powers of a uniformizer of $\mathcal O$ proves (8.3) in general. This proof uses only Kummer theory, the local Brauer invariant, finite-group induction, Shapiro, and exact sequences; perfect cohomological pairings play no role.
+for every such field $F$, the index factors cancel and the direct computation (8.6a) yields
+
+$$
+\chi_K(N)=-d_K\dim_{\mathbf F_p}N. \tag{8.7}
+$$
+
+This is the finite-group Euler lemma. The two induction parameters decrease at every step; the
+$p$-part is controlled by the fixed-vector filtration and the prime-to-$p$ part by the averaging
+idempotent. Thus no filtration of the original $G$-module by trivial $G$-modules has been
+assumed.
+
+For local cohomology, additivity is (8.5), vanishing is Theorem 6.1, and Shapiro's lemma gives
+
+$$
+\chi_K(\operatorname{Ind}_{G_L}^{G_K}N)=\chi_L(N).
+$$
+
+Taking the base-$p$ logarithm of the multiplicative Euler characteristic makes it an integer
+with precisely these properties. Devissage along powers of a uniformizer of $\mathcal O$ proves
+(8.3) in general. This proof uses only Kummer theory, the local Brauer invariant, finite-group
+induction, Shapiro, and exact sequences; perfect cohomological pairings play no role.
 
 ### 8.6 Dimension and length consequences
 
@@ -1094,13 +1344,14 @@ $$
 \frac{u\cdot n}{n^{d_K+1}u}=n^{-d_K},
 $$
 
-as required. For the constant module $C_n$, reciprocity gives $|H^1|=n^{d_K+1}u$, while $|H^0|=n$; the same Euler formula forces $|H^2|=u$, proving the $p$-primary part of (5.8) without local duality.
+as required. For the constant module $C_n$, reciprocity gives $|H^1|=n^{d_K+1}u$, while $|H^0|=n$; the same Euler formula gives $|H^2|=u$, agreeing with the independent descent calculation for $n=p$ in Section 8.4 and then with devissage for general $p$-power exponent.
 
 ## 9. Changing the local field
 
 ### 9.1 Restriction and corestriction
 
-Let $L/K$ be finite and regard $G_L$ as an open subgroup of $G_K$. Restriction is induced by restricting cochains:
+Let $L/K$ be finite separable, choose compatible separable closures, and regard $G_L$ as an
+open subgroup of $G_K$. Restriction is induced by restricting cochains:
 
 $$
 \operatorname{res}_{L/K}:H^i(K,M)\to H^i(L,M).
@@ -1221,6 +1472,20 @@ $$
 
 These groups are finitely generated $\mathcal O$-modules for $i=0,1,2$ and vanish for $i>2$. Finite generation follows by choosing finitely many generators modulo $\varpi$, lifting compatibly, and applying the topological Nakayama argument. The hypotheses matter: equal-characteristic $p$-primary finite levels need not be finite, so this proof does not apply.
 
+More explicitly, the coefficient sequence
+
+$$
+0\longrightarrow T\xrightarrow{\varpi}T\longrightarrow T/\varpi T\longrightarrow0
+$$
+
+shows that $H^i(K,T)/\varpi$ injects into the finite group $H^i(K,T/\varpi T)$.
+The inverse-limit description makes $H^i(K,T)$ separated and complete for its
+$\varpi$-adic topology. Choose lifts of a finite generating set of the quotient modulo
+$\varpi$. Successively subtracting their $\mathcal O$-linear combinations pushes any class
+into $\varpi^nH^i$ for every $n$; completeness sums the coefficients and separatedness makes
+the remaining class zero. This proves finite generation rather than merely finite generation of
+each finite quotient.
+
 ### 10.2 Vector spaces and stable lattices
 
 Put $V=T\otimes_{\mathcal O}E$. Under the same standard local-field hypotheses,
@@ -1250,6 +1515,21 @@ $$
 -d_K\dim_EV,&\ell=p\text{ and }K/\mathbf Q_p\text{ finite}.
 \end{cases} \tag{10.4}
 $$
+
+Here is why no hidden torsion term survives. The long exact sequence for multiplication by
+$\varpi^n$ on $T$ gives
+
+$$
+0\longrightarrow H^i(K,T)/\varpi^n
+\longrightarrow H^i(K,T/\varpi^nT)
+\longrightarrow H^{i+1}(K,T)[\varpi^n]
+\longrightarrow0.
+$$
+
+If $H^i(K,T)$ has rank $r_i$, the first term has length $nr_i+O(1)$, while the last term has
+bounded length because the torsion subgroup of a finitely generated $\mathcal O$-module is
+finite. Divide the finite-level Euler identity by $n$ and let $n$ tend to infinity. The bounded
+terms vanish, and $r_i=\dim_EH^i(K,V)$ by (10.3). This proves (10.4).
 
 Thus
 
@@ -1298,7 +1578,12 @@ when $T^{I_K}=T$. This finite congruence group disappears after tensoring with $
 
 ### 10.5 One-dimensional $\ell$-adic calculations away from $p$
 
-Let $V=E(\chi)$ with $\ell\ne p$. If $\chi$ has nontrivial finite inertia image, averaging shows $H^i(K,V)=0$ in every degree. If $\chi$ is unramified and $\alpha=\chi(\varphi)$, then
+Let $V=E(\chi)$ with $\ell\ne p$. If $\chi$ has nontrivial finite inertia image, then
+$H^i(K,V)=0$ in every degree. Indeed, a prime-to-$\ell$ part is removed by averaging. If the
+nontrivial part has $\ell$-power order, it lies on the $\mathbf Z_\ell$ tame direction; a tame
+generator acts by a root of unity $\zeta\ne1$, and $\zeta-1$ is a nonzero, hence invertible,
+scalar in the field $E$. The two-term inertia complex is therefore acyclic. If $\chi$ is
+unramified and $\alpha=\chi(\varphi)$, then
 
 $$
 h^0=[\alpha=1],
@@ -1310,11 +1595,102 @@ $$
 
 The equality $\alpha=q$ means that $V$ is the unramified cyclotomic line $E(1)$; it is the unique unramified rank-one situation contributing the tame obstruction direction. A character with infinite inertia image requires direct analysis of its inertia cohomology; finite-image averaging no longer applies.
 
-### 10.6 Finiteness and its limits
+### 10.6 Two basic $p$-adic lines
+
+The trivial and cyclotomic lines show concretely where the $p$-adic bulk in the Euler formula
+lives. Assume $K/\mathbf Q_p$ is finite and let $E/\mathbf Q_p$ be a finite coefficient field.
+For the trivial line $E$, continuous reciprocity gives
+
+$$
+H^1(K,E)=\operatorname{Hom}_{\mathrm{cts}}(K^\times,E).
+$$
+
+The valuation factor $\mathbf Z$ supplies one dimension, the finite roots of unity supply none,
+and a sufficiently deep principal-unit group is isomorphic to the additive group of
+$\mathcal O_K$, which supplies $d_K$ dimensions. Hence
+
+$$
+h^0(K,E)=1,\qquad h^1(K,E)=d_K+1.
+$$
+
+The Euler formula forces $h^2(K,E)=0$. Thus the trivial $p$-adic line has dimensions
+
+$$
+(h^0,h^1,h^2)=(1,d_K+1,0). \tag{10.9}
+$$
+
+For the cyclotomic line $E(1)$, inverse-limit Kummer theory identifies
+
+$$
+H^1(K,E(1))\simeq
+\left(\varprojlim_nK^\times/(K^\times)^{p^n}\right)\otimes_{\mathbf Z_p}E.
+$$
+
+The pro-$p$ completion of $K^\times$ has one valuation direction and $d_K$ principal-unit
+directions; finite torsion disappears after tensoring with $E$. Therefore $h^1=d_K+1$ again.
+There is no nonzero compatible system of $p$-power roots of unity inside a fixed finite extension
+$K/\mathbf Q_p$, so $H^0(K,E(1))=0$. The Euler formula now gives $h^2=1$:
+
+$$
+(h^0,h^1,h^2)=(0,d_K+1,1). \tag{10.10}
+$$
+
+The identical middle dimensions conceal different arithmetic. On the trivial line the valuation
+character coexists with fixed vectors; on the cyclotomic line a Brauer direction replaces those
+fixed vectors in degree two. No perfect pairing was used: the computation follows from
+reciprocity, Kummer theory, and Euler--Poincare.
+
+### 10.7 Finiteness and its limits
 
 For $K/\mathbf Q_p$ finite and any finite-dimensional $E$-representation $V$, the groups $H^i(K,V)$ are finite-dimensional and vanish above degree two. The same holds in equal characteristic when $\ell\ne p$. For $T$, the groups are finitely generated over $\mathcal O$.
 
 In equal characteristic with $\ell=p$, neither the standard $p$-adic Tate twist nor the blanket finiteness theorem is available. One may study continuous $p$-adic representations by other methods, but the finite-module theory already shows that no analogue of (10.4) can be asserted without additional restrictive hypotheses.
+
+### 10.8 Discrete divisible quotients
+
+Many arithmetic representations are presented not by a lattice $T$ or a vector space $V$ but
+by the discrete quotient
+
+$$
+A=V/T\simeq(E/\mathcal O)^d.
+$$
+
+This coefficient is neither finite nor compact, yet it is assembled from finite coefficients:
+$A[\varpi^n]\simeq T/\varpi^nT$. The multiplication sequence
+
+$$
+0\longrightarrow T/\varpi^nT\longrightarrow A
+\xrightarrow{\varpi^n}A\longrightarrow0
+$$
+
+is exact as a sequence of discrete $G_K$-modules. Its long exact sequence gives, for every
+$i\geq0$,
+
+$$
+0\longrightarrow H^{i-1}(K,A)/\varpi^n
+\longrightarrow H^i(K,T/\varpi^nT)
+\longrightarrow H^i(K,A)[\varpi^n]
+\longrightarrow0, \tag{10.11}
+$$
+
+where the first term is omitted for $i=0$. Formula (10.11) is often the safest way to pass
+between a torsion representation and its finite layers: it records both torsion in the previous
+degree and $\varpi^n$-torsion in the current degree.
+
+Under the finiteness hypotheses of Section 10.1, the middle group is finite, so every
+$H^i(K,A)[\varpi^n]$ is finite. Moreover $H^i(K,A)=0$ for $i>2$. To see the latter assertion,
+write $A$ as the filtered union of its finite submodules $A[\varpi^n]$ and use the finite-module
+vanishing theorem together with commutation of continuous cohomology with filtered unions of
+discrete torsion modules. The low-degree groups are cofinitely generated over $\mathcal O$:
+(10.11), finite generation of $H^i(K,T)$, and the long exact sequence of
+$0\to T\to V\to A\to0$ reduce the assertion to the structure theorem for finitely generated
+$\mathcal O$-modules.
+
+There is a useful warning in degree zero. Although $H^0(K,A)=A^{G_K}$, it need not equal
+$H^0(K,V)/H^0(K,T)$: the next boundary map can contribute torsion coming from $H^1(K,T)$.
+Similarly, corank formulas for $A$ must be read from the long exact sequence, not obtained by
+blindly replacing dimensions of $V$ with coranks. The finite-level exact sequence (10.11) keeps
+that boundary visible.
 
 ## 11. Ramification-shaped local classes
 
@@ -1364,7 +1740,15 @@ H^1_{\mathrm{tame}}(K,M)
 =\ker\bigl(H^1(K,M)\to H^1(P_K,M)\bigr).
 $$
 
-Since higher $P_K$-cohomology vanishes, inflation identifies this with cohomology of $G_K/P_K$ acting on $M^{P_K}$. It contains the unramified subgroup. The quotient is controlled by the tame generator:
+Since higher $P_K$-cohomology vanishes, inflation identifies this with cohomology of $G_K/P_K$ acting on $M^{P_K}$. It contains the unramified subgroup.
+
+In fact $H^1(P_K,M)=0$ for $\ell\ne p$, so every class in $H^1(K,M)$ is tame in this
+cohomological sense. This does not say that wild inertia acts trivially on $M$; it says that the
+restriction of an extension class to the pro-$p$ group can be killed by changing its splitting.
+The distinction between the action on the coefficient and the ramification of the class is the
+same distinction already encountered for unramified cohomology.
+
+The quotient by the unramified subgroup is controlled by the tame generator:
 
 $$
 H^1_{\mathrm{tame}}(K,M)/H^1_{\mathrm{ur}}(K,M)
@@ -1386,12 +1770,13 @@ Let $F$ have characteristic $\ell\ne p$, and consider
 $$
 \rho(g)=
 \begin{pmatrix}
-1&c(g)\\
+1&c(g)\bar\chi_\ell(g)\\
 0&\bar\chi_\ell(g)
 \end{pmatrix},
 $$
 
-where $\bar\chi_\ell$ is the mod-$\ell$ cyclotomic character. The upper-right entry represents a class in
+where $\bar\chi_\ell$ is the mod-$\ell$ cyclotomic character. With this normalization the
+upper-right block represents a class in
 
 $$
 H^1(K,F(\bar\chi_\ell^{-1})).
@@ -1401,9 +1786,13 @@ With arithmetic Frobenius, the coefficient eigenvalue is $q^{-1}$. Formula (5.2)
 
 ### 11.5 Kummer classes and valuation conditions
 
-For $n$ prime to $\operatorname{char}K$, Kummer theory identifies $H^1(K,\mu_n)$ with $K^\times/(K^\times)^n$. The unramified subgroup is generated by the class of a uniformizer when $(n,p)=1$: adjoining an $n$th root of $\pi_K$ is usually ramified, so why is this not a contradiction?
+For $n$ prime to $\operatorname{char}K$, Kummer theory identifies $H^1(K,\mu_n)$ with
+$K^\times/(K^\times)^n$. A tempting but false analogy with constant characters says that the
+unramified subgroup should be generated by a uniformizer. Adjoining an $n$th root of $\pi_K$ is
+usually ramified: the analogy has confused $\mu_n$ with $\mathbf Z/n\mathbf Z$.
 
-The point is that “unramified class” refers to the torsor class restricting trivially to inertia, and $\mu_n$ itself carries a Frobenius action. A direct calculation corrects the naive slogan. From (4.3),
+An “unramified class” is a torsor class restricting trivially to inertia, and $\mu_n$ itself
+carries a Frobenius action. From (4.3),
 
 $$
 H^1_{\mathrm{ur}}(K,\mu_n)simeq
@@ -1411,6 +1800,26 @@ H^1_{\mathrm{ur}}(K,\mu_n)simeq
 $$
 
 whose order is $\gcd(n,q-1)$. Under Kummer theory this subgroup is represented by **unit** classes whose residue is compatible with the unramified extension, not in general by $\pi_K$. The class of $\pi_K$ cuts out a totally ramified radical extension when $\mu_n\subset K$.
+
+For $(n,p)=1$ this description can be made exact. The power map is an automorphism of $U^1$,
+so reduction gives
+
+$$
+\mathcal O_K^\times/(\mathcal O_K^\times)^n
+\simeq k^\times/(k^\times)^n,
+$$
+
+a group of order $\gcd(n,q-1)$. Every unit becomes an $n$th power over $K^{\mathrm{nr}}$:
+its residue acquires an $n$th root in $\overline k$, and Hensel's lemma lifts that root. Hence
+the unit quotient lies in $H^1_{\mathrm{ur}}$. Equality of orders proves
+
+$$
+H^1_{\mathrm{ur}}(K,\mu_n)
+=\mathcal O_K^\times(K^\times)^n/(K^\times)^n.
+$$
+
+By contrast, the valuation of an $n$th power in $K^{\mathrm{nr}}$ is still divisible by $n$,
+so the uniformizer class cannot become trivial on inertia.
 
 For constant coefficients $C_n$, by contrast, the valuation character
 
@@ -1425,7 +1834,7 @@ is the canonical unramified class and has order $n$. This comparison is an impor
 The images
 
 $$
-U^a(K^\times)^n/(K^\times)^n
+\frac{U^a(K^\times)^n}{(K^\times)^n}
 \subseteq H^1(K,\mu_n)
 $$
 
@@ -1435,7 +1844,7 @@ When $K/\mathbf Q_p$ and $n=p^r$, principal units contribute the $p^{rd_K}$ fact
 
 ### 11.7 Finite-flat-shaped classes
 
-Suppose $K/\mathbf Q_p$ and a finite $p$-primary $G_K$-module $M$ is the generic fiber of a finite flat commutative group scheme over $\mathcal O_K$. An extension of such group schemes gives, on generic fibers, a class in $H^1(K,\operatorname{Hom}(M_2,M_1))$. We call such a class **finite-flat-shaped** only as a reminder of its origin; the intrinsic local condition is the image of the relevant extension group of integral models.
+Suppose $K/\mathbf Q_p$ and a finite $p$-primary $G_K$-module $M$ is the generic fiber of a finite flat commutative group scheme over $\mathcal O_K$. An extension of such group schemes whose generic-fiber coefficient sequence is split—for example, an extension of finite-dimensional vector-space representations—gives, after choosing a coefficient splitting, a class in $H^1(K,\operatorname{Hom}(M_2,M_1))$. Changing the splitting changes the cocycle by a coboundary. Without an underlying coefficient splitting, the generic fiber belongs to an $\operatorname{Ext}^1$ group and need not be encoded by this $H^1$ alone. We call a class obtained in the split setting **finite-flat-shaped** only as a reminder of its origin; the intrinsic local condition is the image of the relevant extension group of integral models.
 
 Two cautions are essential. First, a generic-fiber module can have more than one finite flat model, so the image may depend on the chosen integral data unless a uniqueness theorem applies. Second, not every Galois extension class between finite-flat generic fibers extends over $\mathcal O_K$. Cohomological dimension and Euler characteristic calculate the ambient $H^1$, not this integral subspace.
 
@@ -1512,7 +1921,7 @@ and, when $K/\mathbf Q_p$ and $\ell=p$,
 $$
 h^1_K(\operatorname{ad}\bar\rho)=
 h^0_K(\operatorname{ad}\bar\rho)+h^2_K(\operatorname{ad}\bar\rho)
-d_Kd^2. \tag{12.3}
++d_Kd^2. \tag{12.3}
 $$
 
 For an absolutely irreducible two-dimensional representation over $K=\mathbf Q_p$, this becomes
@@ -1593,7 +2002,7 @@ The tangent space to the unramified condition is
 
 $$
 H^1_{\mathrm{ur}}(K,\operatorname{ad}\bar\rho)
-=\operatorname{coker}\bigl(\varphi-1:(\operatorname{ad}\bar\rho)^{I_K}	o
+=\operatorname{coker}\bigl(\varphi-1:(\operatorname{ad}\bar\rho)^{I_K}\to
 (\operatorname{ad}\bar\rho)^{I_K}\bigr).
 $$
 
@@ -1633,6 +2042,78 @@ A first-order class lies in $H^1$; attempting to lift it across a small extensio
 
 Book 31 will relate this obstruction space to twisted invariants through a perfect pairing. Everything required to formulate that pairing is now present: the Tate dual, cup product, $H^2(K,\mu_n)$, the invariant map, finiteness, and restriction/corestriction compatibility.
 
+### 12.9 Tangent and relation ledgers
+
+The Euler formula becomes most useful in deformation theory when it is rearranged as a balance
+between parameters and possible relations. Let $M$ be a finite-dimensional $F$-representation
+and put
+
+$$
+\epsilon_K(M)=
+\begin{cases}
+0,&\ell\ne p,\\
+d_K\dim_FM,&\ell=p\text{ and }K/\mathbf Q_p\text{ is finite}.
+\end{cases}
+$$
+
+Then
+
+$$
+h^1(K,M)-h^2(K,M)=h^0(K,M)+\epsilon_K(M). \tag{12.11}
+$$
+
+For $M=\operatorname{ad}\bar\rho$, $h^1$ counts unframed ambient tangent directions and
+$h^2$ is the canonical receptacle for lifting obstructions. Thus the number of tangent
+directions left after subtracting the largest cohomologically visible relation count is not
+mysterious: it is the centralizer dimension, plus the $p$-adic bulk when the coefficient prime
+is the residue prime. For framed deformations, (12.7) gives
+
+$$
+\dim_F Z^1(K,\operatorname{ad}\bar\rho)-h^2(K,\operatorname{ad}\bar\rho)
+=d^2+\epsilon_K(\operatorname{ad}\bar\rho). \tag{12.12}
+$$
+
+The centralizer has disappeared because framing restores the directions lost to conjugation.
+For a two-dimensional representation at a $p$-adic place, (12.12) is
+$4+4d_K$; with fixed determinant and $p\ne2$, its trace-zero analogue is
+$3+3d_K$.
+
+Now let $L_K\subseteq H^1(K,M)$ be a linear local condition, such as the unramified subgroup or
+a tangent space obtained from specified integral models. Its **local tangent deficit** is
+
+$$
+c_K(L_K)=h^1(K,M)-\dim_FL_K. \tag{12.13}
+$$
+
+This is the number of ambient first-order directions excluded by the condition. Combining
+(12.11) and (12.13) gives the identity
+
+$$
+\dim_FL_K-h^0(K,M)
+=h^2(K,M)+\epsilon_K(M)-c_K(L_K). \tag{12.14}
+$$
+
+Every term here has already been defined and computed or bounded in this book. Formula (12.14)
+is therefore safe even for a hardly ramified condition specified only by a small subspace of
+$H^1$: one inserts its actual dimension rather than assuming formal smoothness. In particular,
+for the unramified condition,
+$\dim H^1_{\mathrm{ur}}=h^0$, so its left side is zero and
+
+$$
+c_K(H^1_{\mathrm{ur}})=h^2(K,M)+\epsilon_K(M). \tag{12.15}
+$$
+
+Away from $p$, an unramified condition removes exactly the degree-two contribution; at a
+$p$-adic coefficient place it additionally removes the $d_K\dim M$ principal-unit directions.
+This is the numerical mechanism behind local relation ledgers in minimally or hardly ramified
+deformation problems.
+
+These identities do not claim that every element of $H^2$ occurs as an independent equation,
+nor that a chosen local condition is representable. Cohomology provides a canonical obstruction
+space and hence a bound; equality with a minimal number of defining relations requires a
+separate deformation-theoretic argument. Keeping “possible relations” distinct from “actual
+minimal relations” prevents a common circular dimension count.
+
 ## 13. A reusable local formula collection
 
 ### 13.1 The calculation protocol
@@ -1666,6 +2147,10 @@ For a nonarchimedean local field $K$ with residue characteristic $p$:
 | finite $p$-primary, $\operatorname{char}K=p$ | $1$ | $H^1$ can be infinite |
 
 In every row $H^i=0$ for $i>2$; in the last row it already vanishes for $i>1$. For lattices and vector spaces, inverse-limit finiteness follows in the first two rows but not automatically in the last.
+
+For an $r$-dimensional finite-field module away from $p$, the uniform bounds are
+$h^0,h^2\leq r$ and $h^1\leq2r$. At $p$ in mixed characteristic, the exact replacement is
+$h^1=h^0+h^2+d_Kr$.
 
 ### 13.3 Euler dimension formulas
 
@@ -1796,7 +2281,7 @@ At the residue characteristic in mixed characteristic, principal units add $[K:\
 
 ### 14.2 What has been established for the next stage
 
-We now have a complete low-degree local toolkit: fixed vectors, cocycles and torsors, Kummer and reciprocity calculations, unramified and tame restriction, cohomological dimensions, vanishing above degree two, the Brauer invariant, $H^2(K,\mu_n)$, finite and $\ell$-adic coefficient passage, Euler–Poincaré formulas, field-extension functoriality, and adjoint tangent dimensions. Every topology, twist, Frobenius direction, and residue-characteristic exception has been kept explicit.
+We now have a complete low-degree local toolkit: fixed vectors, cocycles and torsors, Kummer and reciprocity calculations, unramified and tame restriction, cohomological dimensions, vanishing above degree two, the Brauer invariant, $H^2(K,\mu_n)$, finite and $\ell$-adic coefficient passage, Euler–Poincaré formulas, field-extension functoriality, and adjoint tangent dimensions. The flat and Galois Kummer theories have been compared without conflating them in equal characteristic, and the tangent formulas have been rearranged into the parameter–relation ledgers used by restricted ramification conditions. Every topology, twist, Frobenius direction, and residue-characteristic exception has been kept explicit.
 
 The remaining step is not another size calculation. Evaluation and cup product already give pairings
 
