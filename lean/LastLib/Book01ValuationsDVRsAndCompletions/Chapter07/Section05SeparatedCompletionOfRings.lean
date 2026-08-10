@@ -117,6 +117,7 @@ theorem chapter07_noetherian_local_domain_is_adically_separated
   exact hM.ne_top hmax
 
 -- The canonical uniformity pulled back from the DVR valuation on its fraction field.
+@[instance_reducible]
 noncomputable def chapter07DvrUniformSpace
     (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] :
     UniformSpace A :=
