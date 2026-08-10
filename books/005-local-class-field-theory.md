@@ -73,6 +73,7 @@
     - [Unramified characters](#113-unramified-characters)
     - [Ramified characters and conductor](#114-ramified-characters-and-conductor)
     - [Characters in towers](#115-characters-in-towers)
+    - [Coefficient fields and standard characters](#116-coefficient-fields-and-standard-characters)
 12. [The local reciprocity dictionary](#12-the-local-reciprocity-dictionary)
     - [Fields and subgroups](#121-fields-and-subgroups)
     - [Multiplicative pieces and Galois pieces](#122-multiplicative-pieces-and-galois-pieces)
@@ -106,6 +107,22 @@ $$
 An algebraic closure $\overline K$ and a separable closure $K^s\subseteq\overline K$ are fixed. Since finite fields are perfect, every finite extension of $K$ has separable residue extension; every finite separable extension is an unramified extension followed by a totally ramified one. Purely inseparable finite extensions can occur when $K$ has equal characteristic, but class field theory concerns finite separable, and ultimately finite abelian, extensions.
 
 The finiteness of $k$ is not decorative. It makes $\mathcal O$ compact, gives a canonical Frobenius on every finite residue extension, and forces finite-index subgroups of $K^\times$ to interact well with the topology. A complete discretely valued field with infinite residue field has much of the valuation theory developed earlier, but the reciprocity theorem in the form proved here is not a theorem about that broader class.
+
+The valuation-theoretic foundations are those of Books 1 and 2. In particular, we use the unique-extension and finite-completeness theorem of Book 1, Theorem 10.3, the fundamental equality of Book 2, Theorem 2.3,
+
+$$
+[L:K]=e(L/K)f(L/K),
+$$
+
+the norm-valuation formula of Book 2, Theorem 4.1,
+
+$$
+v_K(N_{L/K}x)=f(L/K)v_L(x),
+$$
+
+and the classification of unramified extensions in Book 2, Theorem 7.2. We also retain Book 2's arithmetic convention that $x\mapsto x^q$ is arithmetic Frobenius. These references fix notation and prevent us from rebuilding finite-extension theory inside class field theory. Everything genuinely new here—the norm-index theorem, the local invariant, the Artin map, existence, functoriality, the ramification match, and the character classification—is proved below.
+
+One boundary deserves emphasis. Book 3 develops ramification theory systematically, but it is not a prerequisite for this book. When upper numbering is needed to calculate the image of the unit filtration, we recall its definition and prove the precise norm-filtration statement required here. No theorem from the later ramification volume is silently imported.
 
 ### 1.2 The classification one hopes for
 
@@ -178,6 +195,8 @@ The theorem joins topology, field extensions, and group cohomology, so no single
 First, compactness shows that norm images are closed and helps identify their topology. Second, cyclic cohomology explains why a norm quotient is the natural degree-zero cohomology group and why Hilbert's Theorem 90 removes a neighboring obstruction. Third, the Brauer group of a local field supplies a canonical fundamental class of every finite Galois extension. Capping with that class turns the abstract abelianization of the Galois group into a norm quotient. Finally, explicit unramified and formal-module extensions show that enough abelian extensions exist to realize every open finite-index subgroup.
 
 The order matters. Norm computations suggest reciprocity but cannot classify wild extensions by themselves. Cohomology produces the finite reciprocity maps but, without an existence construction, would not prove that all open subgroups arise. The explicit construction supplies that missing half rather than hiding it behind the name “existence theorem.”
+
+There is also a logical danger in the opposite direction. It would be circular to define the field belonging to an open subgroup by reciprocity and then use that field to prove reciprocity. Our proof avoids this in two independent moves. The local invariant and the fundamental class first construct the Artin isomorphism for an already given finite Galois extension. Lubin–Tate division fields are then constructed directly from power series and Eisenstein polynomials. Only after their degrees and norm groups have been computed do we use them to realize an arbitrary open subgroup. Keeping these two halves separate is the central proof discipline of the book.
 
 ## 2. The topology of the multiplicative group and its norm subgroups
 
@@ -321,7 +340,7 @@ $$
 [K^\times:N_{L/K}(L^\times)]=[L:K]
 $$
 
-is in fact false for arbitrary nonabelian $L/K$: the correct degree is that of its maximal abelian subextension. Even for a cyclic wildly ramified extension, direct calculation on all unit layers is possible only after developing substantial ramification machinery.
+is false outside the abelian case. If $L/K$ is finite Galois, the correct index is the degree of its maximal abelian subextension; for a finite separable nonnormal extension there is no comparable formula obtained merely by naming a maximal abelian intermediate field. Even for a cyclic wildly ramified extension, direct calculation on all unit layers is possible only after developing substantial ramification machinery.
 
 The way forward is to recognize $K^\times/NL^\times$ as a cohomology group and then compute it through a canonical invariant. This shifts the problem from tracking every unit norm separately to understanding one two-dimensional obstruction.
 
@@ -1175,7 +1194,24 @@ Finally, $[a]_f(F_f(X,Y))$ and $F_f([a]_f(X),[a]_f(Y))$ have the same linear par
 
 Everything here is a formal identity; no convergence of a logarithm has been assumed. In either equal or mixed characteristic the series may be evaluated on elements of positive valuation in a finite extension $E/K$, because monomials of increasing degree tend to zero. Completeness of $E$ gives convergence. Evaluation on elements of valuation zero is not asserted: the formal group naturally lives on $\mathfrak m_E$.
 
-Different choices of $f$ produce isomorphic towers of fields, although not canonically without auxiliary choices. The uniformizer enters the construction; the resulting maximal totally ramified abelian extension will be intrinsic.
+The construction is independent of the chosen Lubin–Tate series in the precise sense needed later. Let $f$ and $g$ satisfy the two congruences for the same uniformizer, and let $h_{f,g}$ be the series supplied by Lemma 6.2 with linear coefficient $1$. Construct $h_{g,f}$ in the other direction. The composites
+
+$$
+h_{g,f}\circ h_{f,g}
+\quad\text{and}\quad
+h_{f,g}\circ h_{g,f}
+$$
+
+commute with the relevant Lubin–Tate series and have linear term $T$. Uniqueness in the recursion makes both composites the identity. Hence $h_{f,g}$ is an invertible integral power series and
+
+$$
+h_{f,g}([a]_f(T))=[a]_g(h_{f,g}(T))
+\qquad(a\in\mathcal O).
+$$
+
+The displayed identity follows by observing that both sides intertwine $f$ and $g$ and have linear term $aT$. Evaluation therefore carries $\pi^n$-torsion bijectively to $\pi^n$-torsion and primitive torsion to primitive torsion. Thus different choices of $f$ produce isomorphic finite-level towers, compatibly in $n$. The isomorphism depends on the chosen linear coefficient of the intertwiner, so no false canonical equality is asserted.
+
+Changing the uniformizer changes the splitting of the unramified direction and hence changes the coordinate description of reciprocity. What will be intrinsic is the compositum of all totally ramified abelian extensions and, after adjoining the unramified tower, the full maximal abelian extension. The construction has coordinates; the resulting classification does not.
 
 This is the Lubin–Tate formal-module construction. Here it is not an excursion: its torsion fields provide the cofinal ramified extensions needed in the proof of local existence.
 
@@ -1338,7 +1374,7 @@ In the exceptional case $K_1=K$, the element $\pi$ is still trivially a norm, al
 
 The needed unit calculation is a special case of the following valuation lemma. We state it here because it is also the engine behind the full unit–ramification theorem.
 
-**Lemma 6.4 (norm-depth index).** Let $M/K$ be a finite abelian extension with group $G$. At a ramification break, take the value before the drop, as in the convention $G_t=G_{\lceil t\rceil}$ for nonintegral lower indices. For an integer $m\geq0$, put
+**Lemma 6.4 (norm filtration and abelian upper breaks).** Let $M/K$ be a finite abelian extension with group $G$. At a ramification break, take the value before the drop, as in the convention $G_t=G_{\lceil t\rceil}$ for nonintegral lower indices. For an integer $m\geq0$, put
 
 $$
 C_m=N_{M/K}(U_M^0)U_K^m.
@@ -1350,9 +1386,9 @@ $$
 [U_K^0:C_m]=[G^0:G^m].
 $$
 
-In particular, if $G^m=1$, then $U_K^m\subseteq N_{M/K}(U_M^0)$.
+Every upper ramification break of $G$ is an integer. In particular, if $G^m=1$, then $U_K^m\subseteq N_{M/K}(U_M^0)$.
 
-**Proof.** We record the norm calculation, including its indexing. For $\sigma\ne1$ put
+**Proof.** We record the norm calculation, including the two facts often concealed under the names “Herbrand's theorem” and “abelian integrality.” For $\sigma\ne1$ put
 
 $$
 i(\sigma)=v_M(\sigma(\pi_M)-\pi_M),
@@ -1368,9 +1404,7 @@ $$
 
 where $\psi=\varphi^{-1}$. These conventions put inertia at index $0$ and make a lower break $b$ occur at the upper index $\varphi(b)$.
 
-The unramified residue part contributes no unit obstruction: norm on finite residue-field units and trace on finite residue-field additive groups are both surjective. The remaining direct norm calculation is therefore organized one inertia break at a time. We use two ramification facts proved in the preceding volume. At a positive lower break $b$, the map
-
-Write $l$ for the residue field of $M$. At a positive lower break $b$, the map
+The unramified residue part contributes no unit obstruction: norm on finite residue-field units and trace on finite residue-field additive groups are both surjective. We may therefore perform the calculation on inertia and restore the residue-degree factor at the end. Write $l$ for the residue field of $M$. At a positive integral lower break $b$, the map
 
 $$
 c_b:G_b/G_{b+1}\hookrightarrow l^+,
@@ -1379,9 +1413,24 @@ c_b(\sigma)=
 \overline{\frac{\sigma(\pi_M)-\pi_M}{\pi_M^{b+1}}}
 $$
 
-is injective; at $b=0$ its multiplicative analogue embeds $G_0/G_1$ in $l^\times$. Because $G$ is abelian, conjugation by residue Frobenius is trivial on these ramification quotients. Its semilinear action on the displayed residue coordinates therefore fixes their images after multiplication by a nonzero residue scalar. Finite-field Hilbert 90 supplies that scalar, so the relevant image may be identified with a subgroup of the one-dimensional $k$-layer. The change from the lower label $b$ to the upper label is $\varphi(b)$. Since $G$ is abelian and $k$ is perfect, Hasse--Arf says that every such upper label is an integer.
+is injective. Indeed, vanishing of $c_b(\sigma)$ is exactly the stronger congruence $\sigma(\pi_M)\equiv\pi_M\pmod{\mathfrak m_M^{b+2}}$, which says $\sigma\in G_{b+1}$. The identity
 
-We now justify the one-step calculation used below. Expand $N(1+x)$ as the product of the conjugates of $1+x$, retain the first term at the relevant lower depth, and group the factors first by $G_{b+1}$ and then by $G_b/G_{b+1}$. Away from a break, the first nonzero term is linear with nonzero coefficient, so the induced map between the corresponding residue layers is bijective. At a positive break, conjugation changes the leading coefficient by translation through the finite additive subgroup
+$$
+\sigma\tau(\pi_M)-\pi_M
+=\sigma(\tau(\pi_M)-\pi_M)+(\sigma(\pi_M)-\pi_M)
+$$
+
+shows that $c_b$ is additive, because inertia acts trivially on residues. At $b=0$, the same argument with $\overline{\sigma(\pi_M)/\pi_M}$ gives an injection $G_0/G_1\hookrightarrow l^\times$. Thus the tame quotient is cyclic of order prime to $p$, and every positive quotient is an elementary abelian $p$-group. These elementary ramification facts have now been proved inside the present argument.
+
+Because $G$ is abelian, a residue Frobenius lift centralizes every ramification quotient. On the coordinates $c_b$ it acts semilinearly. If the resulting scalar is $\lambda\in l^\times$, the relation over one residue-Frobenius orbit has norm $1$; finite-field Hilbert 90 gives $\mu\in l^\times$ with $\lambda=\mu^{q-1}$. Replacing $c_b$ by $\mu c_b$ makes its image Frobenius-fixed. We may therefore regard that image as an additive subgroup of $k$, and similarly normalize the tame coordinate. This is the only descent from $l$ to $k$ used below.
+
+We next justify the one-step norm calculation. For $x$ of positive valuation, expand
+
+$$
+N(1+x)=\prod_{\sigma\in G}(1+\sigma x),
+$$
+
+retain the first term at the relevant depth, and group the factors first by $G_{b+1}$ and then by $G_b/G_{b+1}$. Away from a break, the first nonzero term is linear with nonzero coefficient, so the induced map between the corresponding residue layers is bijective. At a positive break, conjugation changes the leading coefficient by translation through the finite additive subgroup
 
 $$
 C_b=c_b(G_b/G_{b+1})\subseteq k.
@@ -1401,13 +1450,26 @@ $$
 
 has degree less than $|C_b|$ in $X$ and vanishes at every $X\in C_b$, because translation by an element of $C_b$ permutes the factors. It is therefore zero. The kernel of $P_{C_b}$ on $k$ is exactly $C_b$. Because $k$ is finite, its image has index $|C_b|=|G_b/G_{b+1}|$. This is the point at which the finiteness of the residue field is essential; replacing $P_{C_b}$ by an ordinary trace sum would give the wrong kernel. At the tame break, the corresponding residue map is, up to nonzero scalars, the $|G_0/G_1|$th-power map on the cyclic group $k^\times$, and its image has index $|G_0/G_1|$.
 
-The valuation retained in this expansion changes by one precisely after $[G_0:G_t]$ units of lower depth. Summing over the intervals between lower breaks is exactly the integral defining $\varphi$. Consequently the preceding residue calculations say, for every integer $m\geq0$,
+We now do the indexing rather than appeal to it. Suppose the lower group is constant and equal to $H$ on an interval of lower length $d$. Traversing that interval consumes $d$ source layers. The norm reaches one new target layer after $[G_0:H]$ source layers, so the number of target layers traversed is
+
+$$
+\frac d{[G_0:H]}.
+$$
+
+Adding over all constant intervals from $0$ to a lower index $u$ gives exactly $\varphi(u)$. The residue calculation says that ordinary source layers contribute index $1$, while a break contributes the exact factor $|G_b/G_{b+1}|$. Induction through the finitely many lower layers therefore gives, away from integral endpoints,
+
+$$
+\left[U_K^0:N(U_M^0)U_K^{\lceil s\rceil}\right]
+=\left[G^0:G^s\right]. \tag{6.1}
+$$
+
+The left side is constant when $s$ varies inside an interval $(m,m+1)$. Hence the right side is constant there as well: an upper break of the abelian group cannot lie strictly between consecutive integers. This proves the integrality assertion rather than assuming it. Taking the left limit at an integer endpoint, in accordance with our convention that a group is retained at the break, gives
 
 $$
 [C_m:C_{m+1}]=[G^m:G^{m+1}].
 $$
 
-If no ramification jump occurs in $[m,m+1)$, both sides are $1$; if a jump occurs, Hasse--Arf places it at the integer endpoint and the additive or multiplicative polynomial above gives its exact order. Multiplication from $0$ to $m-1$ yields
+If there is no jump at $m$, both sides are $1$; if there is one, the additive or multiplicative polynomial above gives its exact order. Multiplication from $0$ to $m-1$ yields
 
 $$
 [U_K^0:C_m]=[G^0:G^m].
@@ -1717,6 +1779,25 @@ m\mid v(x).
 $$
 
 No unit condition remains.
+
+For the particular Lubin–Tate tower attached to $\pi$, the complementary calculation is
+
+$$
+\operatorname{rec}_K(\pi)|_{K_n}=1,
+\qquad
+\operatorname{rec}_K(u)(\omega_n)=[u^{-1}]_f(\omega_n).
+$$
+
+The first equality follows because $\pi$ is a norm from every $K_n$; the second is proved in Proposition 10.1 by comparing the fundamental-class and torsion labelings. Thus, after choosing $\pi$ and the compatible division points, the two coordinates of the Artin map are completely explicit:
+
+$$
+\pi^ru
+\longmapsto
+\left(\operatorname{Frob}_{\mathrm{arith}}^r,
+\;\omega_n\mapsto[u^{-1}]_f(\omega_n)\right).
+$$
+
+This product description depends on the chosen uniformizer, but the resulting automorphism of each finite abelian extension does not.
 
 ### 8.2 Units are the abelian inertia group
 
@@ -2158,6 +2239,56 @@ $$
 
 Thus the construction is not merely a source of fields of the right degrees. Its Galois tower reproduces the entire unit filtration, one finite quotient at a time.
 
+The auxiliary torsion labeling can now be compared with the Artin labeling. This is where the inverse forced by the arithmetic-Frobenius convention appears.
+
+**Proposition 10.1 (Artin action on Lubin–Tate torsion).** For $u\in\mathcal O^\times$ and a primitive level-$n$ point $\omega_n$,
+
+$$
+\operatorname{rec}_{K_n/K}(u)(\omega_n)
+=[u^{-1}]_f(\omega_n),
+$$
+
+where $u^{-1}$ is reduced modulo $\pi^n$. Moreover
+
+$$
+\operatorname{rec}_{K_n/K}(\pi)=1.
+$$
+
+**Proof.** The second formula follows from the direct norm calculation $\pi\in N_{K_n/K}(K_n^\times)$. For the first, let
+
+$$
+\theta_n:(\mathcal O/\pi^n)^\times
+\xrightarrow{\sim}\operatorname{Gal}(K_n/K),
+\qquad
+\theta_n(a)(\omega_n)=[a]_f(\omega_n).
+$$
+
+Finite reciprocity and the equality of norm groups give another isomorphism from $\mathcal O^\times/U^n$ to the same Galois group. It remains to compare these two isomorphisms, not merely their kernels.
+
+At level $1$, the equation for a nonzero torsion point is
+
+$$
+\omega_1^{q-1}=-\pi.
+$$
+
+The cyclic-algebra description of the fundamental class says that a residue unit $\bar u$ acts on this radical through $\bar u^{-1}$. Concretely, choose the cyclic quotient of $k^\times$ generated by the class of $\bar u$. In the crossed product, moving the radical generator past the residue-unit lift uses the relation $zx=F(x)z$; the carry cocycle representing invariant $1/d$ contributes $-1$ on the Kummer exponent. Thus the Artin and torsion labelings differ by inversion on $U^0/U^1=k^\times$.
+
+Now suppose the comparison is known modulo $U^r$. On the next quotient
+
+$$
+U^r/U^{r+1}\cong k^+,
+$$
+
+formal multiplication gives $[1+a\pi^r]_f(T)-T$ with leading coefficient $a\pi^rT$. The boundary map defined by the fundamental cocycle sends this leading translation to its negative. Equivalently, in the norm polynomial $P_{C_r}$ from Lemma 6.4, the Artin action is the character dual to translation by $C_r$, and passing from an element to the corresponding character changes $a$ to $-a$. But inversion on principal units also sends
+
+$$
+1+a\pi^r\longmapsto1-a\pi^r\pmod{U^{r+1}}.
+$$
+
+Hence the two maps, already equal modulo $U^r$, differ trivially on $U^r/U^{r+1}$. Induction through $r=1,\ldots,n-1$ proves that the difference is inversion on all of $\mathcal O^\times/U^n$. $\square$
+
+The inverse in this formula is not a second normalization choice. If reciprocity were normalized by geometric Frobenius, the entire Artin map would be inverted and the formula would become $\omega_n\mapsto[u]_f(\omega_n)$. This finite-level calculation is a reliable way to translate between the two conventions.
+
 ### 10.5 Composita and intersections
 
 If $L_1,L_2/K$ are finite abelian with norm groups $H_1,H_2$, then
@@ -2242,6 +2373,24 @@ are exactly continuous characters $K^\times\to\mathcal O_E^\times$.
 
 For a general Hausdorff abelian target $A$, not every continuous character of $K^\times$ comes from Galois. The exact condition is that it extend continuously to the profinite completion. Equivalently, for every identity neighborhood in the closure of its image, its inverse image contains an open finite-index subgroup of $K^\times$. A character $K^\times\to\mathbf C^\times$ sending $\pi$ to $2$ is continuous because $\pi^{\mathbf Z}$ is discrete, but it cannot come from $G_K$: its image is not relatively compact. This counterexample is why the coefficient topology must be stated.
 
+After choosing $\pi$, every continuous character into a profinite abelian group is described by a pair
+
+$$
+(\alpha,\eta),
+\qquad
+\alpha\in A,
+\qquad
+\eta:\mathcal O^\times\to A\text{ continuous},
+$$
+
+through
+
+$$
+\chi(\pi^ru)=\alpha^r\eta(u).
+$$
+
+There is no compatibility condition because $K^\times=\pi^{\mathbf Z}\times\mathcal O^\times$. The pair depends on $\pi$: replacing it by $a\pi$ replaces $\alpha$ by $\alpha\eta(a)$. The character itself is intrinsic. It has finite image precisely when $\alpha$ has finite order and $\eta$ has finite image.
+
 ### 11.2 Finite-order characters and cyclic extensions
 
 Let $A$ be a finite cyclic group and let
@@ -2320,6 +2469,54 @@ $$
 $$
 
 This dictionary is especially useful when changing the base local field of a one-dimensional representation.
+
+### 11.6 Coefficient fields and standard characters
+
+The preceding classification becomes especially concrete when the target is the multiplicative group of a local coefficient field $E$. A continuous character
+
+$$
+\rho:G_K\longrightarrow E^\times
+$$
+
+has compact image because $G_K$ is compact. The valuation map $E^\times\to\mathbf Z$ sends that image to a finite subgroup of $\mathbf Z$, hence to zero. Therefore
+
+$$
+\rho(G_K)\subseteq\mathcal O_E^\times.
+$$
+
+Conversely, every continuous character $K^\times\to\mathcal O_E^\times$ extends uniquely across the profinite completion. Thus
+
+$$
+\operatorname{Hom}_{\mathrm{cont}}(G_K,E^\times)
+\cong
+\operatorname{Hom}_{\mathrm{cont}}(K^\times,\mathcal O_E^\times).
+$$
+
+This is the usual classification of continuous one-dimensional $E$-valued Galois representations. It includes infinite-image characters when $E$ is nonarchimedean. By contrast, a continuous character $G_K\to\mathbf C^\times$ has finite image: its compact image lies in the circle, and a closed totally disconnected subgroup of the circle is finite. Hence the complex-valued Galois characters are exactly the finite-order multiplicative characters of $K^\times$. Continuous complex quasicharacters with a factor such as $|x|^s$ belong to the multiplicative or Weil-group theory, not to continuous characters of the profinite group $G_K$.
+
+Two standard calculations test all normalizations. First suppose $\ell\ne p$ and let $\chi_\ell$ be the $\ell$-adic cyclotomic character. The extensions generated by $\ell$-power roots of unity are unramified over $K$, and arithmetic Frobenius raises those roots to the $q$th power. Consequently
+
+$$
+\chi_\ell(\operatorname{rec}_K(\pi^ru))=q^r.
+$$
+
+Second take $K=\mathbf Q_p$ and the $p$-adic cyclotomic character. Its extension is totally ramified, $p$ acts trivially on the Lubin–Tate cyclotomic tower, and Proposition 10.1 gives
+
+$$
+\chi_p(\operatorname{rec}_{\mathbf Q_p}(p^ru))=u^{-1}
+\qquad(u\in\mathbf Z_p^\times).
+$$
+
+For a finite extension $K/\mathbf Q_p$, norm–inclusion compatibility gives the corresponding formula
+
+$$
+\chi_p(\operatorname{rec}_K(x))
+=\left\langle N_{K/\mathbf Q_p}(x)\right\rangle^{-1},
+$$
+
+where $\langle y\rangle$ denotes the unit part of $y\in\mathbf Q_p^\times$. The unramified and $p$-adic formulas look different because prime-to-$p$ roots of unity lift from the residue field, whereas $p$-power roots of unity live in the deeply ramified unit tower.
+
+Finally, a finite-order character $\chi$ cuts out the fixed field of the kernel of its Galois counterpart. Its degree is $|\operatorname{im}\chi|$, its norm group is $\ker\chi$, its residue degree is the order of the image of $\pi$ modulo the image of units, and its ramification groups are read from the successive images $\chi(U^n)$. Thus the pair $(\alpha,\eta)$ is not merely a parametrization: it recovers the unramified degree, inertia, conductor, and wild depth of the corresponding cyclic extension.
 
 ## 12. The local reciprocity dictionary
 
