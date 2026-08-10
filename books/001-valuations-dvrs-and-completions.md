@@ -13,7 +13,7 @@
    - [Additive valuations](#22-additive-valuations)
    - [The decisive equality](#23-the-decisive-equality)
    - [Equivalence and normalization](#24-equivalence-and-normalization)
-   - [From additive to multiplicative size](#25-from-additive-to-multiplicative-size)
+   - [Absolute values and multiplicative size](#25-absolute-values-and-multiplicative-size)
    - [The trivial valuation and failure modes](#26-the-trivial-valuation-and-failure-modes)
    - [Gauss valuations and two-stage measurement](#27-gauss-valuations-and-two-stage-measurement)
 3. [Valuation rings and divisibility](#3-valuation-rings-and-divisibility)
@@ -31,6 +31,7 @@
    - [Successive precision](#51-successive-precision)
    - [Leading terms and digits](#52-leading-terms-and-digits)
    - [Fractional ideals and precision](#53-fractional-ideals-and-precision)
+   - [Filtered modules and elementary divisors](#54-filtered-modules-and-elementary-divisors)
 6. [Nonarchimedean topology and analysis](#6-nonarchimedean-topology-and-analysis)
    - [Balls and the strong triangle inequality](#61-balls-and-the-strong-triangle-inequality)
    - [Continuity of algebraic operations](#62-continuity-of-algebraic-operations)
@@ -290,9 +291,25 @@ For a discrete valuation, its value group is isomorphic to $\mathbf Z$. Choosing
 
 A **coarsening** deliberately forgets some distinctions. If $H\subset\Gamma$ is a convex subgroup, meaning that $0\leq\gamma\leq h\in H$ implies $\gamma\in H$, the ordered quotient $\Gamma/H$ is defined and the composite valuation is a coarsening. For lexicographic $\mathbf Z^2$, quotienting by $\{0\}\times\mathbf Z$ remembers only the first coordinate. Coarsenings clarify higher-rank valuations, but discrete rank-one valuations have no nontrivial proper coarsenings.
 
-### 2.5 From additive to multiplicative size
+### 2.5 Absolute values and multiplicative size
 
-Analysis usually describes smallness by an absolute value: smaller numbers have smaller positive real size. A valuation describes greater divisibility by a larger value. Fix a real number $c$ with $0<c<1$. For a real-valued valuation define
+Analysis usually describes smallness by a real number rather than by an element of an ordered group. An **absolute value** on a field $K$ is a function $|\cdot|:K\to\mathbf R_{\geq0}$ such that
+
+$$
+|x|=0\Longleftrightarrow x=0,
+\qquad |xy|=|x||y|,
+\qquad |x+y|\leq |x|+|y|.
+$$
+
+It is **nonarchimedean** when it satisfies the stronger inequality
+
+$$
+|x+y|\leq\max\{|x|,|y|\}.
+$$
+
+The ordinary absolute value is archimedean; prime-adic and order-of-vanishing absolute values are nonarchimedean. This distinction controls the geometry of balls, the criterion for convergence of series, and the algebraic meaning of the closed unit ball.
+
+An additive valuation describes greater divisibility by a larger value, so its direction is opposite to that of size. Fix a real number $c$ with $0<c<1$. For a real-valued valuation define
 
 $$
 |x|_v=c^{v(x)},\qquad c^\infty=0.
@@ -314,6 +331,23 @@ v(x)=\log_c|x|
 $$
 
 so that $c^{v(x)}=|x|$. Because $c<1$, small absolute values correspond to large positive valuations. Different choices of $c$ rescale the valuation by a positive constant and give the same topology.
+
+Two nontrivial absolute values are **equivalent** when they define the same topology. For nonarchimedean absolute values this happens exactly when there is a real $r>0$ such that
+
+$$
+|x|_2=|x|_1^r
+$$
+
+for all $x\in K$. One way to see the rigidity is to compare the elements whose powers tend to zero. Topological equivalence gives the same order comparisons between the logarithmic valuations, and an order-preserving homomorphism between subgroups of $\mathbf R$ is multiplication by a positive scalar. Thus the topology remembers the valuation up to a harmless choice of scale. For a normalized prime-adic valuation, the customary condition $|p|_p=p^{-1}$ fixes that scale.
+
+There is also a useful algebraic test for the strong inequality. An absolute value is nonarchimedean if and only if $|n|\leq1$ for every integer $n$ mapped into $K$. The forward implication follows by adding $1$ repeatedly. Conversely, the binomial theorem gives
+
+$$
+|x+y|^m\leq \sum_{i=0}^m\binom mi |x|^i|y|^{m-i}
+\leq (m+1)\max\{|x|,|y|\}^m.
+$$
+
+Taking $m$th roots and letting $m$ grow yields the ultrametric inequality. This criterion explains why every absolute value on a field of positive characteristic is nonarchimedean: the image of the integers is finite.
 
 Not every valuation has real values. Higher-rank ordered groups have no faithful real scale, and their natural topology must be expressed through value inequalities rather than one real metric. Our analytic chapters concentrate on rank-one valuations, especially discrete ones, where an ultrametric captures the topology completely.
 
@@ -372,6 +406,8 @@ is the residue field.
 The names “bounded” and “infinitesimal” are useful. Under a multiplicative absolute value with $c<1$, $V$ consists of $|x|\leq1$ and $\mathfrak m_V$ of $|x|<1$. Reduction to the residue field forgets infinitesimal differences. Two bounded elements have the same residue exactly when their difference is strictly smaller than $1$.
 
 For $v_p$ on $\mathbf Q$, the ring is $\mathbf Z_{(p)}$, the maximal ideal is $p\mathbf Z_{(p)}$, and the residue field is $\mathbf F_p$. For $\operatorname{ord}_t$ on $k(t)$, the ring is $k[t]_{(t)}$, maximal ideal is generated by $t$, and residue field is $k$, via evaluation at $t=0$.
+
+The characteristic of $\kappa(v)$ is the **residue characteristic**. If it equals $\operatorname{char}(K)$, the valued field has **equal characteristic**; otherwise $K$ has characteristic $0$ and the residue field has characteristic some prime $p$, and one speaks of **mixed characteristic $(0,p)$**. The models are respectively $k((t))$ and $\mathbf Q_p$. This distinction does not change the elementary valuation laws, but it changes how residue representatives multiply and how derivatives behave in lifting arguments.
 
 ### 3.2 The intrinsic characterization
 
@@ -595,6 +631,56 @@ $$
 
 Thus units preserve precision, maximal-ideal elements gain it, and negative-valued elements lose digits. Ramification indices will measure this shift between two valuation filtrations.
 
+### 5.4 Filtered modules and elementary divisors
+
+The ideal filtration becomes more powerful when several coordinates must be controlled at once. A lattice is the integral shadow of a finite-dimensional vector space, and elementary divisors say that two lattices differ by finitely many independent shifts of valuation. This is the mechanism behind length formulas, determinant valuations, and later comparisons between integral closures and coordinate lattices.
+
+Let $M$ be a free $A$-module of finite rank. Its filtration is
+
+$$
+M\supset \pi M\supset \pi^2M\supset\cdots.
+$$
+
+Each layer $\pi^nM/\pi^{n+1}M$ is naturally isomorphic to the $k$-vector space $M/\pi M$. In particular, if $M$ has rank $r$, then
+
+$$
+\operatorname{length}_A(M/\pi^nM)=nr.
+$$
+
+The intersection of all $\pi^nM$ is zero: in coordinates, a vector divisible by every power of $\pi$ has every coordinate equal to zero. Thus the filtration is separated. A congruence $x\equiv y\pmod{\pi^nM}$ means that the two vectors agree to precision $n$; applying an $A$-linear map cannot decrease that precision.
+
+A full **lattice** in a finite-dimensional $K$-vector space $E$ is a finitely generated $A$-submodule $M\subset E$ whose $K$-span is $E$. Any two full lattices $M,N$ are commensurable: there is an integer $r\geq0$ with
+
+$$
+\pi^rM\subseteq N\subseteq\pi^{-r}M.
+$$
+
+To prove this, express a basis of each lattice in a basis of the other and clear the finitely many denominators. The assertion is elementary but conceptually important: changing an integral model changes boundedness only by a finite shift.
+
+The structure theorem over the PID $A$ sharpens commensurability. After multiplying one lattice by a scalar, it is enough to consider $N\subseteq M$. There is a basis $e_1,\ldots,e_r$ of $M$ and integers $a_i\geq0$ such that
+
+$$
+N=A\pi^{a_1}e_1\oplus\cdots\oplus A\pi^{a_r}e_r.
+$$
+
+Consequently
+
+$$
+M/N\cong\bigoplus_{i=1}^r A/(\pi^{a_i}),
+\qquad
+\operatorname{length}_A(M/N)=\sum_i a_i.
+$$
+
+If $T:M\to M$ is injective, apply this description to $T(M)\subseteq M$. Elementary row and column operations over $A$ diagonalize the matrix of $T$ up to units. Taking determinants gives the decisive identity
+
+$$
+\operatorname{length}_A(M/TM)=v(\det T).
+$$
+
+This turns a multiplicative invariant into the size of a filtered quotient. For multiplication by an element $x$ on an integral lattice in a finite field extension, $\det T$ is the field norm. For multiplication by the base uniformizer on a rank-$r$ free module, the length is $r$. These two readings will account for residue degrees and ramification indices in Chapters 10 and 11.
+
+Not every torsion-free module over an arbitrary valuation ring behaves this cleanly. The diagonal decomposition and finite-length calculation use both discreteness and finite generation. This is another reason DVRs, rather than general valuation rings, are the natural integral objects for finite-dimensional local arithmetic.
+
 ## 6. Nonarchimedean topology and analysis
 
 ### 6.1 Balls and the strong triangle inequality
@@ -745,7 +831,7 @@ $$
 
 Its class is the inverse of $(x_n)$. Thus the completion of a valued field, unlike the completion of an arbitrary domain at an ideal, is automatically a field.
 
-The additive valuation also extends. For a discrete valuation, any nonzero Cauchy class has representatives of eventually constant valuation, and that integer is its value. For a general rank-one valuation, extending the absolute value and taking logarithms gives a valuation whose value group may enlarge only in its closure; for the metric completion the attained nonzero norms are limits of norms from $K$.
+The additive valuation also extends. For a discrete valuation, any nonzero Cauchy class has representatives of eventually constant valuation, and that integer is its value. The same local constancy holds for every rank-one valuation: a representative sufficiently close to a nonzero limit has exactly the limit's absolute value. Thus metric completion preserves the value group, even when that group is dense in $\mathbf R$.
 
 ### 7.3 Universal property
 
@@ -764,6 +850,16 @@ The Hausdorff condition prevents distinct candidate limits; completeness supplie
 Completing the field should not obscure which elements are integral. The closed unit ball survives completion exactly, and in the discrete case every finite quotient remains unchanged.
 
 Let $A$ be the valuation ring of a rank-one valued field $K$. The closure of $A$ in $\widehat K$ is the valuation ring $\widehat A$ of the extended valuation. One inclusion follows because $|x|\leq1$ is a closed condition. Conversely, if $x\in\widehat K$ has $|x|\leq1$, approximate it by $x_n\in K$ close enough that $|x-x_n|\leq1$; then $|x_n|\leq1$, so $x_n\in A$.
+
+In fact completion is an **immediate extension**: it changes neither the value group nor the residue field. If $0\ne x\in\widehat K$, choose $a\in K$ with
+
+$$
+|x-a|<|x|.
+$$
+
+Then $|a|=|x|$, so every nonzero absolute value attained in the completion was already attained in $K$. If $x\in\widehat A^\times$, choose $a\in K$ with $|x-a|<1$. Then $|a|=1$, hence $a\in A^\times$, and $x$ and $a$ have the same residue. Thus $A/\mathfrak m_A\to\widehat A/\mathfrak m_{\widehat A}$ is both injective and surjective. Completion supplies missing limits without inserting a new value scale or new leading coefficients.
+
+This statement also corrects a tempting misconception in the nondiscrete case. The set of real values may be dense, but metric completion still does not fill gaps in that set: closeness to a nonzero limit forces eventual equality of absolute values. What can fail outside the discrete case is the description of completion by powers of the maximal ideal, not immediacy of the completed valued-field extension.
 
 For a DVR the picture is sharper.
 
@@ -987,7 +1083,7 @@ $$
 s=v(f'(a_0)),\qquad r=v(f(a_0)),\qquad q_0=r-2s>0.
 $$
 
-The derivative is nonzero, and because $f\in A[X]$ and $a_0\in A$, we have $s\geq0$. Define $a_{n+1}=a_n+h_n$, where
+If $f(a_0)=0$, take $a=a_0$; the asserted displacement has value $\infty$ and uniqueness follows from the divided-difference argument below. We therefore assume $f(a_0)\ne0$. The derivative is nonzero, and because $f\in A[X]$ and $a_0\in A$, we have $s\geq0$. Define $a_{n+1}=a_n+h_n$, where
 
 $$
 h_n=-\frac{f(a_n)}{f'(a_n)}.
@@ -1351,9 +1447,9 @@ $$
 |x|_L=|N_{L/K}(x)|_K^{1/[L:K]}.
 $$
 
-**Proof roadmap.** Completeness gives Hensel factor lifting, and henselianity is exactly the condition that an absolute value have one algebraic extension. We prove that equivalence in full in Theorem 12.2, independently of the norm formula. After uniqueness is established, automorphisms preserve the value automatically. Norm transitivity separates the separable and purely inseparable cases and yields the formula. Finite-dimensional norm equivalence then identifies the valuation topology with the complete vector-space topology just constructed.
+**Proof roadmap.** Completeness gives Hensel factor lifting, and the henselian uniqueness criterion converts that lifting property into uniqueness of the algebraic extension of the valuation. Theorem 12.2 proves this criterion from the extension-center lemma; it is independent of the norm formula used here. After uniqueness is established, automorphisms preserve the value automatically. Norm transitivity separates the separable and purely inseparable cases and yields the formula. Finite-dimensional norm equivalence then identifies the valuation topology with the complete vector-space topology constructed above.
 
-**Proof.** For the trivial absolute value, the valuation ring is the field $K$ itself and henselianity is immediate. In the nontrivial case, the coefficient correction in Section 9.4 proves that the valuation ring of every complete rank-one nonarchimedean field is henselian. By Theorem 12.2—whose proof uses polynomial factorization and centers of valuations, not the norm formula—the valuation extends uniquely to every algebraic field. Existence can alternatively be taken from Theorem 10.1.
+**Proof.** For the trivial absolute value, algebraicity forces the only extension to remain trivial. In the nontrivial case, Section 9.4 proves that the valuation ring is henselian. The henselian uniqueness criterion, Theorem 12.2, therefore gives a unique extension to every algebraic field; existence also follows independently from Theorem 10.1. The forward reference is only to the algebraic equivalence between factor lifting and unique extension, not to any assertion about norms or completeness of finite-dimensional spaces.
 
 Let $M/K$ be a finite normal extension containing the normal closure of the maximal separable subextension of $L/K$. Uniqueness implies that every $K$-automorphism $\sigma$ of $M$ preserves the extended absolute value: $x\mapsto|\sigma x|_M$ is another extension of $|\cdot|_K$. If $L/K$ is separable, the norm is the product over its $K$-embeddings into $M$, so
 
@@ -1614,6 +1710,8 @@ $$
 \operatorname{Tr}_{L/K}(x),\ N_{L/K}(x)\in A.
 $$
 
+There is a second proof of the integrality of trace and norm that does not presuppose that $B$ is finite. In a normal field containing all conjugates of $x$, every conjugate is integral over $A$. The coefficients of the characteristic polynomial are symmetric polynomials in these conjugates, with the appropriate inseparable multiplicities, so they are integral over $A$. They also lie in $K$; since the DVR $A$ is integrally closed in $K$, they belong to $A$. This observation is what allows the trace pairing itself to prove finiteness in the separable case, rather than assuming the desired conclusion.
+
 When $L/K$ is separable, the trace pairing is nondegenerate over $K$. Since $\operatorname{Tr}_{L/K}(xy)\in A$ for $x,y\in B$, it gives an injection
 
 $$
@@ -1621,7 +1719,13 @@ B\longrightarrow\operatorname{Hom}_A(B,A),
 \qquad x\longmapsto\bigl(y\mapsto\operatorname{Tr}_{L/K}(xy)\bigr).
 $$
 
-After choosing any $K$-basis in $L$, multiplying its elements by a common denominator places a full $A$-lattice $M$ inside $B$. Nondegeneracy identifies $L$ with its $K$-dual, and the condition $\operatorname{Tr}(xM)\subseteq A$ places $B$ inside the dual lattice $M^\vee$. Thus $M\subseteq B\subseteq M^\vee$, and Noetherianity makes $B$ finite over $A$. This proves the separable finiteness claim used in Section 11.2 and later leads to the different. We do not develop that finer invariant here, but the boundedness principle is already important: integral elements have integral symmetric functions of their conjugates.
+Choose a $K$-basis of $L$ and multiply its elements by a common denominator so that the resulting full $A$-lattice $M$ lies inside $B$. For $x\in B$ and $m\in M$, the product $xm$ is integral, so the preceding conjugate argument gives $\operatorname{Tr}_{L/K}(xm)\in A$. Nondegeneracy identifies $L$ with its $K$-dual, and this trace condition places $B$ inside the dual lattice
+
+$$
+M^\vee=\{z\in L:\operatorname{Tr}_{L/K}(zM)\subseteq A\}.
+$$
+
+The dual lattice is finite free over $A$. Thus $M\subseteq B\subseteq M^\vee$, and Noetherianity makes $B$ finite over $A$. This proves the separable finiteness claim used in Section 11.2 without circularity. The same pairing later leads to the different, but the boundedness principle needed here is already clear: integral elements have integral symmetric functions of their conjugates.
 
 The converse “integral trace and norm imply integral” holds for quadratic elements because their monic characteristic polynomial is $T^2-\operatorname{Tr}(x)T+N(x)$. In higher degree, trace and norm alone omit the intermediate coefficients and do not suffice.
 
@@ -1729,7 +1833,7 @@ This is the exact local-global dictionary needed later. A prime $\mathfrak p$ of
 
 ### 12.4 An example of splitting after completion
 
-A primitive element turns the abstract tensor product into polynomial factorization. This makes branching computable: irreducible completed factors are the local fields, and their idempotents are projectors onto the branches.
+A primitive element turns the abstract tensor product into polynomial factorization. This makes branching computable: irreducible completed factors are the local fields, and their idempotents are projectors onto the branches. Throughout this section we retain the finite-normalization hypotheses of Theorem 12.1.
 
 Let $L=K(\alpha)$ with minimal polynomial $f\in K[X]$, and suppose $f$ is integral at a DVR $A$. Then
 
