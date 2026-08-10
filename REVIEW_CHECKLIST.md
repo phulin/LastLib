@@ -130,7 +130,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 063. Pseudocompact Trace Algebras and Carayol Descent
 - [x] 064. Deformation Functors of Representations
 - [x] 065. Representability of Deformation Problems
-- [ ] 066. Local Deformation Conditions Away from (\ell)
+- [x] 066. Local Deformation Conditions Away from (\ell)
 - [ ] 067. Finite-Flat Deformation Conditions at (\ell)
 - [ ] 068. Global Deformation Problems
 - [x] 069. Complete Local Algebra for Deformation Theory

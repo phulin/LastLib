@@ -6,62 +6,80 @@
    - [Why away from $\ell$ is a structural simplification](#11-why-away-from-ell-is-a-structural-simplification)
    - [Standing notation](#12-standing-notation)
    - [What a local condition must accomplish](#13-what-a-local-condition-must-accomplish)
+   - [Hypotheses that will not be suppressed](#14-hypotheses-that-will-not-be-suppressed)
 2. [Inertia seen by $\ell$-adic coefficients](#2-inertia-seen-by-ell-adic-coefficients)
    - [Wild rigidity and tame flexibility](#21-wild-rigidity-and-tame-flexibility)
    - [Arithmetic Frobenius and the tame relation](#22-arithmetic-frobenius-and-the-tame-relation)
    - [Finite inertial image and its limits](#23-finite-inertial-image-and-its-limits)
+   - [The wild rigidity lemma](#24-the-wild-rigidity-lemma)
+   - [Continuity and the two-generator presentation](#25-continuity-and-the-two-generator-presentation)
 3. [Local deformation conditions as formal subspaces](#3-local-deformation-conditions-as-formal-subspaces)
    - [The ambient functors](#31-the-ambient-functors)
    - [A definition designed for base change](#32-a-definition-designed-for-base-change)
    - [Closedness, enhancement, and representability](#33-closedness-enhancement-and-representability)
    - [Tangent and obstruction modules](#34-tangent-and-obstruction-modules)
+   - [A relative representability test](#35-a-relative-representability-test)
 4. [Unramified deformations](#4-unramified-deformations)
    - [The intrinsic condition](#41-the-intrinsic-condition)
    - [The universal Frobenius matrix](#42-the-universal-frobenius-matrix)
    - [Unframed conjugacy and the cyclic-vector hypothesis](#43-unframed-conjugacy-and-the-cyclic-vector-hypothesis)
    - [Fixed determinant](#44-fixed-determinant)
    - [Tangent spaces and smoothness](#45-tangent-spaces-and-smoothness)
+   - [Characters, scalar Frobenius, and exact boundary cases](#46-characters-scalar-frobenius-and-exact-boundary-cases)
 5. [Fixed finite inertial type](#5-fixed-finite-inertial-type)
    - [Why an inertial type needs an integral model](#51-why-an-inertial-type-needs-an-integral-model)
    - [The elementary prime-to-$\ell$ condition](#52-the-elementary-prime-to-ell-condition)
    - [Independence, closedness, and lifting](#53-independence-closedness-and-lifting)
    - [The tangent condition](#54-the-tangent-condition)
+   - [The fixed-type smoothness and dimension theorem](#55-the-fixed-type-smoothness-and-dimension-theorem)
+   - [Two finite-type calculations](#56-two-finite-type-calculations)
 6. [Tame matrix deformation problems](#6-tame-matrix-deformation-problems)
    - [Generators and equations](#61-generators-and-equations)
    - [Linearizing the tame relation](#62-linearizing-the-tame-relation)
    - [A deformation complex and smoothness criterion](#63-a-deformation-complex-and-smoothness-criterion)
    - [Two-dimensional examples](#64-two-dimensional-examples)
+   - [The small-extension defect of the tame relation](#65-the-small-extension-defect-of-the-tame-relation)
+   - [Exact dimensions at trivial residual inertia](#66-exact-dimensions-at-trivial-residual-inertia)
 7. [Minimal ramification, case by case](#7-minimal-ramification-case-by-case)
    - [Why there is no universal minimum](#71-why-there-is-no-universal-minimum)
    - [Unramified and finite semisimple residual inertia](#72-unramified-and-finite-semisimple-residual-inertia)
    - [Nontrivial tame unipotent residual inertia](#73-nontrivial-tame-unipotent-residual-inertia)
    - [Scalar twists and reducible inertia](#74-scalar-twists-and-reducible-inertia)
+   - [The liftability theorem for nonzero residual monodromy](#75-the-liftability-theorem-for-nonzero-residual-monodromy)
 8. [Special or Steinberg-shaped deformations](#8-special-or-steinberg-shaped-deformations)
    - [The shape and its arithmetic meaning](#81-the-shape-and-its-arithmetic-meaning)
    - [The closed special condition](#82-the-closed-special-condition)
    - [Nonzero monodromy is open](#83-nonzero-monodromy-is-open)
    - [Enhanced lines, uniqueness, and tangent directions](#84-enhanced-lines-uniqueness-and-tangent-directions)
+   - [The generic special component in coordinates](#85-the-generic-special-component-in-coordinates)
+   - [Exceptional special points](#86-exceptional-special-points)
 9. [Fixed determinant and characteristic two](#9-fixed-determinant-and-characteristic-two)
    - [Determinant as a condition in every construction](#91-determinant-as-a-condition-in-every-construction)
    - [Trace-zero tangent modules](#92-trace-zero-tangent-modules)
    - [What fails in characteristic two](#93-what-fails-in-characteristic-two)
-10. [Obstructions, dimensions, and dual local conditions](#10-obstructions-dimensions-and-dual-local-conditions)
+   - [Determinant fibers inside constrained problems](#94-determinant-fibers-inside-constrained-problems)
+10. [Obstructions, dimensions, and exceptional loci](#10-obstructions-dimensions-and-exceptional-loci)
    - [Ambient obstruction spaces](#101-ambient-obstruction-spaces)
-   - [Euler characteristic and Tate duality](#102-euler-characteristic-and-tate-duality)
-   - [Orthogonals](#103-orthogonals)
+   - [Euler characteristic and the top-degree calculation](#102-euler-characteristic-and-the-top-degree-calculation)
+   - [Unramified classes and relation obstructions](#103-unramified-classes-and-relation-obstructions)
    - [Why smoothness can jump](#104-why-smoothness-can-jump)
+   - [Trace-zero dual coefficients](#105-trace-zero-dual-coefficients)
+   - [Three obstruction calculations](#106-three-obstruction-calculations)
 11. [Conductors and exact minimality](#11-conductors-and-exact-minimality)
    - [What conductor constancy really requires](#111-what-conductor-constancy-really-requires)
    - [Finite type and tame unipotent preservation](#112-finite-type-and-tame-unipotent-preservation)
    - [Counterexamples to naive semicontinuity claims](#113-counterexamples-to-naive-semicontinuity-claims)
+   - [Twists and higher ramification data](#114-twists-and-higher-ramification-data)
 12. [Functoriality](#12-functoriality)
    - [Extension of coefficient fields](#121-extension-of-coefficient-fields)
    - [Changing and forgetting frames](#122-changing-and-forgetting-frames)
    - [Unramified base change of local fields](#123-unramified-base-change-of-local-fields)
+   - [What changes under ramified base change](#124-what-changes-under-ramified-base-change)
 13. [A menu for global deformation problems](#13-a-menu-for-global-deformation-problems)
    - [Representable conditions and tangent spaces](#131-representable-conditions-and-tangent-spaces)
    - [Two-dimensional selection table](#132-two-dimensional-selection-table)
    - [The decision procedure](#133-the-decision-procedure)
+   - [The local package theorem](#134-the-local-package-theorem)
 14. [Conclusion](#14-conclusion)
    - [Local equations with global consequences](#141-local-equations-with-global-consequences)
 
@@ -99,7 +117,7 @@ $$
 
 of $G_K/I_K$; a chosen lift to $G_K$ is denoted by the same letter. Thus geometric Frobenius is $\varphi^{-1}$. This convention is decisive in the tame relation and in every cyclotomic twist.
 
-Let $k$ be a finite field of characteristic $\ell\ne p$. Let $\mathcal O$ be either the ring of integers in a finite extension of $\mathbf Q_\ell$ with residue field $k$, or more generally a complete Noetherian local ring with residue field $k$. Its maximal ideal is $\mathfrak m_{\mathcal O}$. The coefficient category $\mathcal C_{\mathcal O}$ consists of local Artinian $\mathcal O$-algebras $A$ equipped with an identification $A/\mathfrak m_A\simeq k$.
+Let $k$ be a finite field of characteristic $\ell\ne p$. Let $\mathcal O$ be a complete Noetherian local $\mathbf Z_\ell$-algebra with residue field $k$; the principal example is the ring of integers in a finite extension of $\mathbf Q_\ell$. Its maximal ideal is $\mathfrak m_{\mathcal O}$. The coefficient category $\mathcal C_{\mathcal O}$ consists of local Artinian $\mathcal O$-algebras $A$ equipped with an identification $A/\mathfrak m_A\simeq k$. The $\mathbf Z_\ell$-algebra structure is what allows the $\ell$-adic cyclotomic character to be viewed as $A$-valued later.
 
 Fix a continuous representation
 
@@ -135,6 +153,8 @@ H^1_{\mathrm{ur}}(K,N)
 =\ker\bigl(H^1(K,N)\to H^1(I_K,N)\bigr).
 $$
 
+We write $N^*=\operatorname{Hom}_k(N,k)$ with the contragredient action and $N(1)=N\otimes_k k(\bar\chi_\ell)$ for the mod-$\ell$ cyclotomic twist. Thus $N^*(1)$ is the twisted linear dual. This notation is used only for the elementary top-degree calculation of Chapter 10; no general local-duality theorem is assumed.
+
 ### 1.3 What a local condition must accomplish
 
 A useful local deformation condition has three jobs. First, it must express the intended arithmetic shape intrinsically, without depending on a generator or basis that has no arithmetic meaning. Second, it must survive every coefficient map $A\to B$. Third, it must define a manageable formal subspace: preferably a quotient of the ambient universal ring, with a tangent space and obstruction theory that can be computed.
@@ -151,6 +171,23 @@ The recurring proof architecture will be:
 6. pass to unframed classes only under a stated descent or centralizer hypothesis.
 
 This order prevents an attractive matrix normal form from being mistaken for a basis-independent deformation condition.
+
+### 1.4 Hypotheses that will not be suppressed
+
+Several assumptions recur often enough that it is useful to explain their separate jobs. The field $K$ is always a nonarchimedean local field with **finite** residue field. Finiteness supplies a Frobenius generator and the integer $q$ in the tame relation. The coefficient residue characteristic satisfies $p\ne\ell$. This makes finite $p$-groups linearly reductive over every coefficient ring in sight and removes the $[K:\mathbf Q_p]\dim N$ term from the $\ell$-primary local Euler characteristic.
+
+These two assumptions do not imply any of the following stronger properties:
+
+- inertia need not act trivially;
+- the inertial image of a characteristic-zero lift need not be finite;
+- the residual local representation need not be irreducible;
+- its centralizer need not consist of scalars;
+- $q-1$, $q+1$, or $2$ need not be units in $\mathcal O$;
+- a determinant character need not admit a square root.
+
+Every theorem below that needs one of these extra properties states it. In particular, there are three logically independent prime-to conditions. The inequality $p\ne\ell$ concerns the residue characteristic of $K$. The condition $\ell\nmid |H|$ concerns rigidity of a chosen finite inertial quotient. The condition $q\not\equiv1\pmod\ell$ separates the two residual characters of a special representation. None can replace another.
+
+We use four pieces of earlier theory. Ramification theory supplies $P_K$, tame inertia, higher ramification groups, and conductor formulas for finite-image representations. Local Galois cohomology supplies inflation--restriction, the Frobenius description of unramified $H^1$, the two-step calculation of $H^2$, and the Euler characteristic. General deformation theory supplies the cocycle and obstruction constructions. Formal representability supplies universal framed rings and the closed-subfunctor criterion. Whenever a more specialized assertion is needed, such as rigidity of a finite inertial action, the top-degree adjoint calculation, or smoothness of a special normal form, it is proved here rather than hidden inside one of those general inputs.
 
 ## 2. Inertia seen by $\ell$-adic coefficients
 
@@ -226,6 +263,89 @@ $$
 may acquire an infinite pro-$\ell$ image at the inverse limit even though every Artinian reduction has finite image. Thus “fixed inertial type” and “tame” are not synonyms. The first usually freezes a finite prime-to-$\ell$ action; the second permits the pro-$\ell$ tame direction to vary.
 
 There is also a reduction trap. A nonzero characteristic-zero tame parameter can become zero modulo $\ell$. Consequently an $\ell$-adic special representation can have unramified residual representation. This is not a contradiction: residual conductor can be smaller than characteristic-zero conductor.
+
+### 2.4 The wild rigidity lemma
+
+The slogan that wild inertia is rigid should be converted into a lemma that can actually be used in a lifting argument.
+
+**Lemma 2.1 (prime-to-$\ell$ conjugacy lifting).** Let $H$ be a finite group whose order is a unit in a local Artinian $\mathcal O$-algebra $A'$, and let $A'\twoheadrightarrow A$ have square-zero kernel $J$. Suppose
+
+$$
+r_1,r_2:H\longrightarrow\operatorname{GL}_d(A')
+$$
+
+have strictly equivalent reductions over $A$ and have the same residual representation. After strictly conjugating $r_2$, assume their reductions are equal. Then $r_1$ and $r_2$ are strictly equivalent over $A'$. Moreover every representation of $H$ over $A$ lifts across $A'\twoheadrightarrow A$, and any two lifts are strictly equivalent.
+
+**Proof strategy.** A square-zero congruence kernel is additive. Consequently the difference of two lifts is a $1$-cocycle and the multiplication defect of provisional lifts is a $2$-cocycle. Both cohomology groups vanish because averaging by $|H|^{-1}$ contracts positive-degree cochains.
+
+**Proof.** Write
+
+$$
+r_2(h)=(1+c(h))r_1(h),\qquad c(h)\in M_d(J).
+$$
+
+Since $J^2=0$, comparison at $hh'$ gives
+
+$$
+c(hh')=c(h)+h\cdot c(h'),
+$$
+
+so $c$ is a $1$-cocycle for the adjoint action of the common reduction. Put
+
+$$
+X=-\frac1{|H|}\sum_{h\in H}c(h).
+$$
+
+The cocycle identity and a permutation of the summation index give $c(h)=hX-X$. Conjugation by $1-X$ therefore carries one lift to the other.
+
+For existence, choose arbitrary matrix lifts $\widetilde r(h)$ of the matrices $r_A(h)$. Their multiplication defect is a $2$-cocycle with values in $M_d(J)$. Averaging on the standard finite-group cochain complex makes every positive-degree cocycle a coboundary. Correcting the provisional matrices by a $1$-cochain kills the defect. The correction is strict because it lies in $M_d(J)\subseteq M_d(\mathfrak m_{A'})$. $\square$
+
+For $H$ a finite $p$-group, $|H|$ is a unit because $p\ne\ell$. A continuous residual action of the pro-$p$ group $P_K$ factors through such an $H$. The lemma therefore proves rigidity at each small extension. It does not canonically choose a lift, and it does not say that Frobenius normalizes an arbitrarily chosen lift. Frobenius compatibility is a separate intertwining equation.
+
+There is also a cohomological formulation. For every finite $\ell$-primary discrete module $N$ with continuous $P_K$-action,
+
+$$
+H^i(P_K,N)=0\qquad(i>0).
+$$
+
+Continuous cochains reduce to finite $p$-group quotients, where averaging applies. Inflation--restriction then identifies all deformation freedom with the quotient acting on $P_K$-invariants. Wild inertia may act nontrivially on the residual representation, but a deformation cocycle becomes cohomologically trivial when restricted to it.
+
+### 2.5 Continuity and the two-generator presentation
+
+The two matrices $F$ and $T$ are useful only if they really determine a continuous representation. Let
+
+$$
+G_K^{\mathrm t}=G_K/P_K.
+$$
+
+Its inertia subgroup is $I_K/P_K\simeq\widehat{\mathbf Z}^{(p')}(1)$, where
+
+$$
+\widehat{\mathbf Z}^{(p')}=\prod_{r\ne p}\mathbf Z_r.
+$$
+
+Choose a compatible topological generator $\tau$ and an arithmetic Frobenius lift $\varphi$. Then $G_K^{\mathrm t}$ is the profinite group generated by $\tau$ and $\varphi$ with relation (2.1), understood through all finite quotients. This is not a discrete two-generator presentation: continuity retains the profinite orders of both directions.
+
+**Proposition 2.2.** Let $A$ be Artinian and suppose $F,T\in\operatorname{GL}_d(A)$ reduce to the matrices of a residual tame representation and satisfy
+
+$$
+FTF^{-1}=T^q.
+$$
+
+Then there is a unique continuous representation of $G_K^{\mathrm t}$ carrying $\varphi$ to $F$ and $\tau$ to $T$.
+
+**Proof.** The finite ring $A$ has finite matrix group. The order of $T$ is prime to $p$: its residual order is prime to $p$, while the kernel of reduction on $\langle T\rangle$ is an $\ell$-group and $\ell\ne p$. Thus tame inertia maps continuously to $\langle T\rangle$. The matrix $F$ also has finite order. After passing to a sufficiently large finite quotient, the displayed relation makes these maps combine on the semidirect product. Uniqueness follows from density of the subgroup generated by $\varphi$ and $\tau$. $\square$
+
+For a complete coefficient ring $R$, a compatible system of Artinian pairs $(F_n,T_n)$ over $R/\mathfrak m_R^n$ gives a continuous representation into $\operatorname{GL}_d(R)$ because inverse images of congruence subgroups are open. One should not instead give $\operatorname{GL}_d(R)$ the discrete topology; an infinite pro-$\ell$ tame image would then cease to be continuous.
+
+If wild inertia has a fixed finite image $W$, the presentation gains finitely many matrices $R(w)$, the multiplication equations for $W$, and normalization equations
+
+$$
+FR(w)F^{-1}=R(\varphi w\varphi^{-1}),\qquad
+TR(w)T^{-1}=R(\tau w\tau^{-1}).
+$$
+
+The wild rigidity lemma shows that these matrices add orbit directions but no new unframed tangent classes. This is the precise reduction from a general away-from-$\ell$ local problem to a tame matrix problem with a rigid wild background.
 
 ## 3. Local deformation conditions as formal subspaces
 
@@ -309,6 +429,24 @@ L_{\mathcal D}\subseteq H^1(K,M).
 $$
 
 The tangent space alone does not determine the condition. The equation $xy=0$ has no linear term but produces a singular closed subspace. Smoothness requires lifting every object across every small extension. An obstruction space $O_{\mathcal D}$ is useful only when an actual construction puts each failed lift into it and proves that zero is equivalent to liftability. Vanishing of an ambient $H^2$ is a sufficient criterion for the unconstrained problem; constrained problems can have smaller, different, or equation-theoretic obstruction spaces.
+
+### 3.5 A relative representability test
+
+The following criterion is the workhorse behind the conditions in later chapters.
+
+**Proposition 3.1.** Suppose the ambient framed functor $D^\square$ is represented by $R^\square$, and suppose a rule $\mathcal D$ on framed lifts has the following properties.
+
+1. Membership is invariant under coefficient isomorphism and is preserved by arbitrary maps in $\mathcal C_{\mathcal O}$.
+2. For every pair $A'\to A\leftarrow A''$, a lift over $A'\times_AA''$ belongs to $\mathcal D$ exactly when both projections do.
+3. There is a collection of matrix-valued natural functions $f_\lambda$ on the universal family such that a lift belongs to $\mathcal D$ exactly when all $f_\lambda$ vanish.
+
+Then $\mathcal D$ is represented by $R^\square/I$, where $I$ is the closed ideal generated by all entries of the $f_\lambda$. If $R^\square$ is Noetherian, finitely many elements generate $I$, although the intrinsic definition may quantify over infinitely many group elements.
+
+**Proof.** A map $x:R^\square\to A$ classifies an ambient lift. It factors through $R^\square/I$ precisely when every generator of $I$ maps to zero, equivalently when every $f_\lambda(x)$ vanishes. By the assumed characterization this is exactly $x\in\mathcal D(A)$. The equivalence is natural in $A$, so the quotient mapping functor is $\mathcal D$. Closure is needed because maps from a complete ring to Artinian rings see the completed quotient. $\square$
+
+The criterion applies immediately to trivial inertia, factorization through a specified finite quotient, fixed determinant, and literal tame matrix equations. It does **not** automatically apply to statements containing the words “there exists a line” or “is conjugate to.” Those are images of enhanced functors. To use the proposition one must retain the enhancement, prove the choice unique, or replace existence by intrinsic equations whose equivalence has been proved.
+
+Representability and smoothness should also remain separate. If $R^\square/I$ represents the condition, formal smoothness asks whether every map from it to $A$ lifts to every small extension $A'\twoheadrightarrow A$. Matrix equations answer the first question merely by existing; their derivative and higher defects answer the second. Later proofs will always identify which of these two jobs is being performed.
 
 ## 4. Unramified deformations
 
@@ -449,6 +587,37 @@ When $\ell\nmid d$, this is $H^1_{\mathrm{ur}}(K,M^0)$. When $\ell\mid d$, (4.6)
 
 The contrast is worth retaining: the framed unramified problem is always smooth; the cyclic unframed problem is smooth; a naive unframed quotient at scalar Frobenius need not even be representable. These are three different statements about the same residual inertia condition.
 
+### 4.6 Characters, scalar Frobenius, and exact boundary cases
+
+Dimension one is a useful normalization check. Let $d=1$ and let $\bar\chi$ be unramified. Every unramified lift is determined by the unit $u=\chi(\varphi)$ reducing to $\bar\chi(\varphi)$. Choosing a lift $\widetilde u\in\mathcal O^\times$ gives
+
+$$
+R^{\mathrm{ur}}_{\bar\chi}\simeq\mathcal O[[X]],
+\qquad \chi^{\mathrm{univ}}(\varphi)=\widetilde u(1+X).
+$$
+
+Framing has no effect because $\operatorname{GL}_1$ is abelian. Fixing determinant in dimension one fixes the entire character, so the fixed-determinant quotient is $\mathcal O$ when the determinant is the prescribed unramified lift and is empty when it is ramified. This agrees with the formulas $d^2=1$ and $d^2-1=0$.
+
+In dimension two with nonscalar $\bar F$, cyclicity says that trace and determinant classify strict conjugacy classes. If the determinant is not fixed, choose lifts $\widetilde t$ and $\widetilde d$ of $\operatorname{tr}\bar F$ and $\det\bar F$. Then the companion matrix
+
+$$
+\begin{pmatrix}
+0&-(\widetilde d+Y)\\
+1&\widetilde t+X
+\end{pmatrix}
+$$
+
+is a universal unframed normal form after transporting the chosen residual cyclic basis. Fixing determinant sets $Y$ equal to the prescribed constant and leaves the single trace parameter $X$. This is the local origin of many one-variable unramified components.
+
+At scalar Frobenius there is no analogous normal form. It is worth seeing the failure beyond the first-order counterexample. Put $\bar F=\lambda I_2$ and consider lifts over $A=k[\varepsilon]/(\varepsilon^2)$. Every lift is $\lambda I_2+\varepsilon X$. Strict conjugation by $1+\varepsilon Z$ fixes it because the commutator is divisible by $\varepsilon^2$. Thus the unframed tangent has dimension four, not the two parameters trace and determinant would suggest. The characteristic polynomial records only $\operatorname{tr}X$ at first order; the first-order determinant variation is $\lambda\operatorname{tr}X$, so even those two coefficients collapse to one linear functional at a scalar point. Nilpotent and semisimple directions remain distinct deformation classes.
+
+This phenomenon does not contradict smoothness of the framed ring. The four matrix entries lift freely, but the orbit relation has zero differential at the scalar special fiber and becomes nontrivial at higher order. The safe conclusions are therefore exact:
+
+- the framed unramified ring is always a $d^2$-variable power-series ring;
+- its fixed-determinant quotient is always smooth of relative dimension $d^2-1$;
+- the unframed unramified ring is proved here to be smooth only under cyclicity, or in dimension one;
+- scalar Frobenius should be handled by a frame or by additional structure, not by characteristic-polynomial coordinates.
+
 ## 5. Fixed finite inertial type
 
 ### 5.1 Why an inertial type needs an integral model
@@ -554,6 +723,94 @@ $$
 For the rigidified framed condition, cocycles vanish literally on inertia. For the intrinsic framed condition, they may restrict to coboundaries because the conjugating matrix is allowed to vary. These two framed tangent spaces differ by infinitesimal changes of the inertial rigidification; their unframed images agree.
 
 Fixed determinant replaces (5.2) by the kernel of the determinant derivative inside it. When $\ell\nmid d$, this is $H^1_{\mathrm{ur}}(K,M^0)$. The finite-group averaging argument is compatible with determinant because trace commutes with conjugation, but the characteristic-$\ell\mid d$ warning still applies to unframed ambiguity.
+
+### 5.5 The fixed-type smoothness and dimension theorem
+
+We now isolate the exact theorem implicit in the preceding construction and prove its dimension assertion without appealing to a vague orbit count.
+
+Let
+
+$$
+C_{\mathcal O}=\operatorname{End}_{\mathcal O[H]}(\mathcal O^d),
+\qquad C_k=M^{I_K}.
+$$
+
+Because $|H|$ is a unit, the averaging operator
+
+$$
+\pi(X)=\frac1{|H|}\sum_{h\in H}\theta(h)X\theta(h)^{-1}
+$$
+
+is an idempotent on $M_d(\mathcal O)$. Hence $C_{\mathcal O}$ is a direct summand of a finite free module and is itself free, since $\mathcal O$ is local. Its group of units is the open subscheme of the affine space underlying $C_{\mathcal O}$ on which the determinant is invertible; it is formally smooth of relative dimension $\dim_k C_k$.
+
+**Theorem 5.1.** Assume the data of Section 5.1: $H$ has order prime to $\ell$, $\theta$ is an integral lift of residual inertia, and $F_0$ is an integral Frobenius intertwiner. Then the intrinsic framed fixed-$\theta$ functor is formally smooth over $\mathcal O$ of relative dimension $d^2$. If a compatible determinant $\delta$ is imposed and
+
+$$
+\operatorname{tr}:C_k\longrightarrow k
+$$
+
+is surjective, the fixed-determinant functor is formally smooth of relative dimension $d^2-1$.
+
+**Proof strategy.** A lift of the inertial representation is a point in the strict conjugacy orbit of $\theta$. After choosing a conjugacy, every Frobenius intertwiner is $CF_0$ with $C$ in the inertia centralizer. The choice of conjugacy is redundant precisely by the centralizer. We verify lifting directly and then count the tangent variables as orbit plus centralizer.
+
+**Proof.** Let $A'\twoheadrightarrow A$ be a small extension and let $\rho_A$ be of type $\theta$. Choose $U_A\equiv1$ that identifies its inertia with $\theta_A$. Lift $U_A$ arbitrarily to $U_{A'}$. In that provisional frame, lift the inertia action as the literal $\theta_{A'}$. By Lemma 2.1 this loses no possible object and creates no obstruction.
+
+Write the Frobenius matrix of $\rho_A$ as $C_AF_{0,A}$ with $C_A\in(C_{\mathcal O}\otimes A)^\times$. Since the unit group of $C_{\mathcal O}$ is smooth, $C_A$ lifts to a unit $C_{A'}$. Then $C_{A'}F_{0,A'}$ intertwines the lifted inertia action. Conjugating back by $U_{A'}$ produces the required lift of $\rho_A$. Thus every small-extension problem is solvable.
+
+At the residual point, strict conjugation moves $\theta$ through the quotient
+
+$$
+M/C_k,
+$$
+
+of dimension $d^2-\dim C_k$. With inertia fixed, the Frobenius multiplier moves through $C_k$, of dimension $\dim C_k$. The sum is $d^2$. Equivalently, the tangent cocycles whose inertial restriction is a coboundary have this dimension before quotienting by global coboundaries.
+
+For fixed determinant, the inertial determinant is already fixed. The remaining equation is
+
+$$
+\det(CF_0)=\delta(\varphi).
+$$
+
+Its derivative in the $C$-direction is, up to multiplication by a unit, $X\mapsto\operatorname{tr}X$. Surjectivity makes the determinant fiber formally smooth of codimension one. This proves the final assertion. $\square$
+
+If $\ell\nmid d$, scalar endomorphisms lie in $C_k$ and have traces $d a$, so the trace map is onto. If $\ell\mid d$, surjectivity may still hold because $C_k$ can contain a nonscalar invariant of nonzero trace; it must be checked rather than guessed. Failure of surjectivity does not by itself prove that the determinant fiber is singular, but it invalidates the smooth codimension-one conclusion.
+
+The unframed tangent is obtained by quotienting the framed dimension by the actual orbit dimension
+
+$$
+d^2-h^0_K(M).
+$$
+
+It therefore has dimension $h^0_K(M)$, in agreement with (5.3). This numerical subtraction is a tangent statement. An unframed universal ring still requires the scalar-centralizer hypothesis or another exact descent theorem.
+
+### 5.6 Two finite-type calculations
+
+**A pair of distinct inertial characters.** Suppose $d=2$ and
+
+$$
+\theta=\eta_1\oplus\eta_2,
+\qquad \eta_1\ne\eta_2,
+$$
+
+where the characters have finite order prime to $\ell$. If Frobenius preserves both characters, then
+
+$$
+C_k=ke_{11}\oplus ke_{22}.
+$$
+
+The framed fixed-type ring is smooth of dimension four. Its two inertia-orbit directions are the off-diagonal changes of basis; its two Frobenius directions vary the diagonal entries. Fixing determinant removes the sum of the diagonal Frobenius directions and gives dimension three. The unframed tangent has dimension two if Frobenius acts trivially on this centralizer, and can be smaller only when Frobenius permutes or otherwise acts nontrivially on its summands; the exact answer is the cokernel in (5.3).
+
+If Frobenius interchanges the two characters, then $q$ carries $\eta_1$ to $\eta_2$ on tame inertia and conversely. The inertia centralizer is still diagonal, but Frobenius swaps its two basis idempotents. Hence
+
+$$
+h^0_K(M)=1,
+$$
+
+and the unframed fixed-type tangent has dimension one. The framed dimension remains four: the loss of an unframed Frobenius direction is exactly compensated by an additional coboundary direction.
+
+**An irreducible finite inertial type.** Suppose $\theta_k$ is absolutely irreducible as a $k[H]$-module. Then $C_k=k$. Every Frobenius intertwiner is a scalar multiple of $F_0$ after rigidifying inertia. The framed ring is again smooth of dimension $d^2$, while the unframed tangent has dimension one. If $\ell\nmid d$ and determinant is fixed, the scalar multiplier is infinitesimally determined, so the unframed fixed-determinant tangent is zero and the framed fixed-determinant ring has dimension $d^2-1$.
+
+These examples show why the uniform framed dimension does not mean all fixed-type problems have the same quotient geometry. The inertia orbit and the Frobenius centralizer trade dimensions, while the residual global centralizer controls what survives after strict conjugacy.
 
 ## 6. Tame matrix deformation problems
 
@@ -690,6 +947,93 @@ This is the infinitesimal special relation. A lower-left tame motion exists when
 
 **Scalar residual Frobenius.** If $\bar F$ is scalar and $q\not\equiv1\pmod\ell$, (6.4) forces $Y=0$, so the framed tame tangent is unramified even though the full tame functor was allowed. If $q\equiv1\pmod\ell$, every $Y\in M$ is an infinitesimal tame direction. The dramatic jump is real and warns against quoting a uniform smooth dimension without residue congruence hypotheses.
 
+### 6.5 The small-extension defect of the tame relation
+
+The cokernel in (6.7) is not merely suggested by the number of equations. It receives a canonical lifting defect.
+
+Let $A'\twoheadrightarrow A$ be a small extension with kernel $J$, and let $(F_A,T_A)$ satisfy (6.1). Choose arbitrary invertible lifts $\widetilde F,\widetilde T$ to $A'$. The matrix
+
+$$
+\widetilde F\widetilde T\widetilde F^{-1}\widetilde T^{-q}
+$$
+
+reduces to $1$, so it has the form $1+E$ with $E\in M\otimes_kJ$, after using the residual representation to identify the square-zero congruence kernel. Replacing the provisional lifts by
+
+$$
+((1+X)\widetilde F,(1+Y)\widetilde T),
+\qquad X,Y\in M\otimes_kJ,
+$$
+
+changes $E$ by $d^1(X,Y)$. Consequently the class
+
+$$
+[E]\in\operatorname{coker}(d^1)\otimes_kJ \tag{6.8}
+$$
+
+is independent of provisional lifts.
+
+It vanishes if and only if the pair lifts. Necessity is immediate from a genuine lifted relation. If the class vanishes, choose $X,Y$ with $d^1(X,Y)=-E$; the corrected pair has zero defect because products of two $J$-valued matrices vanish. This proves that (6.7) is a complete obstruction space for the single tame relation.
+
+The same calculation proves the smoothness criterion of Section 6.3. If $d^1$ is onto at the residual point, it remains onto after every Artinian thickening: a maximal minor that is nonzero over $k$ is a unit. The defect can therefore be corrected at every small extension. Conversely, if $d^1$ is not onto, (6.8) identifies the possible obstruction directions, but not every direction need occur from a given deformation. Failure of the Jacobian criterion is a warning, not a proof that all lifts are obstructed.
+
+Strict conjugation changes $(X,Y)$ by $d^0(Z)$ and leaves the defect unchanged because $d^1d^0=0$. Thus the full complex (6.6) has its expected deformation-theoretic meanings:
+
+$$
+H^0=\text{infinitesimal stabilizers},\qquad
+H^1=\text{unframed tangent classes},\qquad
+H^2=\text{relation obstructions}.
+$$
+
+This description is exact for the tame quotient with trivial wild action. If a fixed wild action is present, its normalization equations contribute additional terms to degrees one and two. Averaging makes the pure wild part acyclic, but the Frobenius and tame normalizer constraints must still be included before claiming a smoothness result.
+
+### 6.6 Exact dimensions at trivial residual inertia
+
+Assume $\bar T=1$ and write
+
+$$
+c_F=\dim_k\operatorname{Cent}_M(\bar F),
+\qquad
+s_F=\dim_k\ker(\operatorname{Ad}_{\bar F}-q).
+$$
+
+Formula (6.4) gives
+
+$$
+\dim_k\ker d^1=d^2+s_F. \tag{6.9}
+$$
+
+The image of $d^0$ has dimension $d^2-c_F$, because the $T$-component of $d^0$ is zero and the kernel of $Z\mapsto Z-\operatorname{Ad}_{\bar F}Z$ is the Frobenius centralizer. Therefore
+
+$$
+\boxed{\dim_kH^1(C^\bullet_{\mathrm{tame}})=c_F+s_F.} \tag{6.10}
+$$
+
+The obstruction space has dimension
+
+$$
+\dim_kH^2(C^\bullet_{\mathrm{tame}})=s_F, \tag{6.11}
+$$
+
+because kernel and cokernel of the endomorphism $\operatorname{Ad}_{\bar F}-q$ have equal dimension. Equations (6.10)--(6.11) are the matrix-presentation version of the away-from-$p$ Euler formula: the centralizer supplies unramified tangent classes, while the $q$-eigenspace supplies both tame tangent and dual obstruction directions.
+
+**Theorem 6.1 (generic tame smoothness).** If $q$ is not an eigenvalue of $\operatorname{Ad}_{\bar F}$, the framed tame deformation functor killing wild inertia is formally smooth of relative dimension $d^2$. If in addition a compatible unramified determinant is fixed, the fixed-determinant tame functor is formally smooth of relative dimension $d^2-1$.
+
+**Proof.** The eigenvalue hypothesis says $s_F=0$, so $d^1$ is onto and Section 6.5 gives formal smoothness. Equation (6.9) gives framed tangent dimension $d^2$. Since scalar matrices are always $1$-eigenvectors of $\operatorname{Ad}_{\bar F}$, the hypothesis forces $q\ne1$ in $k$. The relation then forces $\operatorname{tr}Y=0$, because taking trace in $(\operatorname{Ad}_{\bar F}-q)Y=0$ gives $(1-q)\operatorname{tr}Y=0$. Fixing determinant adds the independent equation $\operatorname{tr}X=0$, lowering the dimension by one. More explicitly, the combined derivative consisting of the tame defect and the determinant of $F$ is onto: solve the tame defect uniquely in the $Y$-variable, then choose the otherwise free $X$ with any prescribed trace. The determinant of $T$ is automatically $1$ near the residual point, since the tame relation gives $(\det T)^{q-1}=1$ and $q-1$ is a unit. The small-extension correction argument therefore works with determinant fixed. $\square$
+
+For $d=2$ with $\bar F=\operatorname{diag}(\alpha,\beta)$, the adjoint eigenvalues are
+
+$$
+1,\quad1,\quad\alpha\beta^{-1},\quad\beta\alpha^{-1}.
+$$
+
+Hence Theorem 6.1 applies exactly when
+
+$$
+q\notin\{1,\alpha\beta^{-1},\beta\alpha^{-1}\}.
+$$
+
+At either special ratio, $s_F\ge1$ and the full tame functor gains a ramified tangent direction. At $q=1$, it gains at least the two diagonal tame directions. These are precisely the loci on which a more refined component condition, rather than the unrestricted tame equation, is needed.
+
 ## 7. Minimal ramification, case by case
 
 ### 7.1 Why there is no universal minimum
@@ -768,6 +1112,54 @@ If $\eta$ has finite order prime to $\ell$, it has a rigid integral lift. Minima
 For reducible residual inertia with two distinct prime-to-$\ell$ characters, Case F is appropriate. For a nonsplit residual extension between those characters, one must distinguish two situations. If the extension is carried by a finite group of order prime to $\ell$, semisimplicity says it actually splits, so the supposed nonsplit case cannot occur. If it is carried by the pro-$\ell$ tame direction, it is unipotent after twisting and belongs to Case N. This dichotomy is one of the concrete benefits of $p\ne\ell$.
 
 If residual inertia is scalar and the full residual representation is reducible, minimality does **not** mean preserving a chosen residual line unless that line is part of the deformation datum. The scalar inertial action sees every line. A line-preserving condition may be useful, but it is an ordinary or reducible condition, not forced by minimal ramification.
+
+### 7.5 The liftability theorem for nonzero residual monodromy
+
+Case N admits a sharper theorem under the generic hypotheses used most often. Twist away the fixed prime-to-$\ell$ scalar character. Assume $d=2$, $\ell\ne2$, $q\not\equiv1\pmod\ell$, and choose a basis in which
+
+$$
+\bar N=e_{12},\qquad
+\bar F=
+\begin{pmatrix}q\bar a&\bar b\\0&\bar a\end{pmatrix}.
+$$
+
+The scalar $\bar a$ is nonzero. The relation with $\bar N$ forces precisely this upper-triangular shape.
+
+**Theorem 7.1 (minimal nonzero-monodromy condition).** Under these hypotheses, the intrinsic framed condition preserving one nonzero rank-one tame block is formally smooth of relative dimension four when its unramified scalar character is allowed to vary. If a compatible determinant is fixed, it is formally smooth of relative dimension three. The residual centralizer of the pair $(\bar F,\bar N)$ is scalar, so the corresponding unframed functors are represented; they are formally smooth of dimensions one and zero, respectively.
+
+**Proof strategy.** Nonzero residual monodromy forces every lifted $N$ to remain a rank-one nilpotent. Such matrices form one smooth strict-conjugacy orbit near $e_{12}$. After normalizing $N$, the Frobenius equation has an elementary upper-triangular solution set. We count the orbit and the normalizer fiber, then impose determinant.
+
+**Proof.** Let $A$ be Artinian and let $N_A^2=0$ reduce to $e_{12}$. The image of $N_A$ is generated by a vector reducing to $e_1$, and the kernel is a direct summand of rank one containing that image. Nakayama's lemma makes them equal. Choose $v_1$ generating this line and choose $v_2$ with $N_Av_2=v_1$. The resulting basis reduces to the chosen residual basis after multiplying by a strict matrix, and in it $N_A=e_{12}$.
+
+Now solve
+
+$$
+F e_{12}F^{-1}=q e_{12}.
+$$
+
+A direct multiplication shows that every solution is uniquely of the form
+
+$$
+F=
+\begin{pmatrix}qa&b\\0&a\end{pmatrix},
+\qquad a\in A^\times,\quad b\in A. \tag{7.3}
+$$
+
+Both $a$ and $b$ lift freely across a small extension. The conjugacy orbit of $e_{12}$ has relative dimension
+
+$$
+4-\dim\operatorname{Cent}(e_{12})=4-2=2.
+$$
+
+For fixed $N$, formula (7.3) supplies two more parameters, so the intrinsic framed condition is smooth of dimension four.
+
+Its determinant is $qa^2$. Because $2qa$ is a unit, the equation $qa^2=\delta(\varphi)$ determines the chosen lift of $a$ smoothly and cuts one dimension. The tame determinant is already one, and the fixed scalar twist supplies the prescribed inertial determinant. This gives framed dimension three.
+
+Finally, a matrix commuting with $e_{12}$ has the form $xI+ye_{12}$. Commuting also with $\bar F$ forces $(q-1)y=0$, hence $y=0$. The residual centralizer is therefore scalar. Forgetting the frame is formally smooth of relative dimension $4-1=3$. Subtracting these orbit directions gives unframed dimensions one and zero, and the scalar-centralizer theorem supplies universal rings. $\square$
+
+The theorem explains a common minimality phenomenon. With determinant fixed, an already ramified nonzero special residual representation has no unframed infinitesimal freedom at all, even though its framed ring has three variables. Those variables only move the frame. Without fixed determinant, the remaining unframed parameter is the unramified scalar character $a$.
+
+Each hypothesis has a visible role. Nonzero $\bar N$ makes the rank-one condition closed near the residual point. The condition $q\ne1$ reduces the centralizer to scalars. The condition $\ell\ne2$ makes the determinant equation transverse. If any fails, the defining equations remain valid, but the smooth dimensions in Theorem 7.1 are no longer asserted.
 
 ## 8. Special or Steinberg-shaped deformations
 
@@ -892,7 +1284,14 @@ $$
 H^1\bigl(K,k(\bar\chi_\ell)\bigr).
 $$
 
-Arithmetic Frobenius acts on this coefficient line by $q$. It has no invariants because $q\ne1$, while its Tate-dual has one invariant. The local Euler formula therefore gives
+Arithmetic Frobenius acts on this coefficient line by $q$, so it has no invariants because $q\ne1$. On the other hand, the explicit top-degree formula for an inertia-trivial module gives
+
+$$
+H^2\bigl(K,k(\bar\chi_\ell)\bigr)
+\simeq k(\bar\chi_\ell)(-1)/(\varphi-1)=k.
+$$
+
+The local Euler formula therefore gives
 
 $$
 \dim_kH^1\bigl(K,k(\bar\chi_\ell)\bigr)=1. \tag{8.6}
@@ -901,6 +1300,69 @@ $$
 The unique direction is the tame monodromy direction; there is no unramified extension direction because $\varphi-1$ is invertible on the coefficient line. If $\psi$ is allowed to vary unramified, one further scalar direction appears. If the determinant is fixed and $\ell\ne2$, the equation $\delta=\psi^2\chi_\ell$ removes that scalar direction, leaving the one-dimensional special tangent. When $q=1$ or $\ell=2$, this count must be replaced by the trace-kernel and relation calculation because diagonal characters or the squaring map cease to be transverse.
 
 For residual nonzero monodromy, the tangent condition also requires preservation of the rank-one nilpotent orbit. In an adapted frame the allowed $Y$ is tangent to that orbit plus scaling of $N$, and (8.5) couples it to $X=c(\varphi)$. The exact dimension is the kernel dimension of the derivative of (8.5), minus the permitted change-of-basis directions in the unframed problem. It should be computed from those equations in exceptional characteristics rather than imported from a generic formula.
+
+### 8.5 The generic special component in coordinates
+
+We now prove a smoothness theorem when residual monodromy is zero but the special orientation is visible in Frobenius. Assume
+
+$$
+\ell\ne2,\qquad q\not\equiv1\pmod\ell,
+$$
+
+and, after the fixed common twist, assume
+
+$$
+\bar\rho(\varphi)=
+\begin{pmatrix}q\bar a&0\\0&\bar a\end{pmatrix},
+\qquad \bar\rho(I_K)=1.
+$$
+
+Fix unramified characters $\psi\chi_\ell$ and $\psi$ lifting the two diagonal characters. The fixed standard line normal form is
+
+$$
+T=
+\begin{pmatrix}1&t\\0&1\end{pmatrix},\qquad
+F=
+\begin{pmatrix}q a&b\\0&a\end{pmatrix}, \tag{8.7}
+$$
+
+where $a=\psi(\varphi)$ is fixed and $b,t\in\mathfrak m_A$. Every such pair satisfies the tame relation. Conversely, every special-shaped pair in a basis adapted to the distinguished line has this form.
+
+Thus the normal-form functor with the line identified with the standard summand is represented by
+
+$$
+\mathcal O[[B,T]], \tag{8.8}
+$$
+
+and is formally smooth of dimension two. The parameter $T$ is monodromy; $B$ is the unramified upper extension entry. Since $q-1$ is a unit, strict upper-unipotent conjugation changes $b$ by an arbitrary element while leaving the first-order monodromy parameter unchanged. Consequently only the $t$-direction survives in the unframed tangent space, agreeing with (8.6).
+
+**Theorem 8.1 (generic closed special condition).** Under the displayed hypotheses and with the two diagonal characters fixed, the line-enhanced framed special condition is closedly represented and formally smooth of relative dimension three. Its tangent space consists of the one special extension class together with the two change-of-frame directions of the residual split representation. If an unramified character $\psi$ is allowed to vary, the dimension is four. If instead a compatible determinant is fixed, the fixed branch of $\psi$ is unique and the dimension remains three.
+
+**Proof.** The residual Frobenius eigenvalues are distinct, so the line on which Frobenius acts by $q\bar a$ is unique and lifts uniquely as a direct summand. A framed representation determines that line, while moving it inside the fixed ambient frame contributes one smooth parameter. After choosing a generator of the line and a complementary vector, the matrices take the form (8.7). Changing the complementary vector is the upper-unipotent frame direction recorded by $b$; changing the line is the lower change-of-frame direction; and $t$ is the genuine extension direction. These three parameters lift independently. Equivalently, the unframed special tangent has dimension one and the residual centralizer has dimension two, so adding
+
+$$
+\dim B^1=4-2=2
+$$
+
+framing directions gives dimension three. The explicit normal form proves actual lifting, not merely the tangent count.
+
+Allowing $\psi$ to vary adds its one smooth unramified parameter. If determinant is fixed, (8.4) becomes $\psi^2=\delta\chi_\ell^{-1}$. On the chosen residual branch, the derivative of squaring is multiplication by $2\bar\psi$, a unit, so there is a unique lift of $\psi$ at every Artinian level. $\square$
+
+The theorem concerns the **closed** special-shaped component, including $t=0$. Its genuine special generic locus is $t\ne0$, an open sublocus. Smoothness of the closed component does not turn that open condition into an Artinian deformation subfunctor.
+
+There is deliberately no assertion here that the ordinary unframed set of special representations is represented. The residual split representation has a two-dimensional diagonal centralizer, so the general scalar-centralizer theorem does not apply. The enhanced or framed ring is the correct universal local object unless some additional rigidification is retained.
+
+### 8.6 Exceptional special points
+
+The hypotheses of Theorem 8.1 isolate two independent degeneracies.
+
+If $q\equiv1\pmod\ell$, the two residual diagonal characters coincide. The line is no longer recoverable from Frobenius, diagonal tame characters can appear, and the squaring relation for a fixed determinant may be inseparable when $\ell=2$. Even the tangent space changes: for the trivial coefficient line, $H^1(K,k)$ has both unramified and tame directions when $q=1$ in $k$. A one-dimensional “special tangent” statement is therefore false at such a point.
+
+If $\ell=2$ but $q\ne1$ in $k$ cannot occur, because every odd integer reduces to $1$ in characteristic two. Thus all away-from-two special residual points lie in the coincident-character case. The line-enhanced equations still define a framed quotient, and nonzero residual monodromy can still recover a unique kernel line, but the generic dimension-three fixed-determinant theorem does not apply. One must use the full derivative of (8.5), the trace-kernel formulation, and the actual automorphism group.
+
+There is a third exceptional situation even when $q\ne1$: the residual representation may already be a nonsplit unramified extension with the special diagonal characters. Its Frobenius matrix is upper triangular with nonzero upper entry. Because $q-1$ is a unit, a strict upper-unipotent conjugation removes that entry, so it is strictly equivalent to the split residual normal form. This reduction is harmless and explains why Theorem 8.1 chose a diagonal residual matrix. When $q=1$, the same conjugation cannot remove the extension entry, and separate residual extension classes lead to genuinely different local geometries.
+
+These cases are not defects in the theory. They are the precise places where eigenlines collide, determinant ceases to be transverse, or stabilizers grow. Framing and enhancement retain a representable problem; only the uniform smoothness and dimension formulas must be withheld.
 
 ## 9. Fixed determinant and characteristic two
 
@@ -965,11 +1427,52 @@ $$
 
 Hence scalar matrices lie inside $M^0$. The trace pairing restricted to $M^0$ is degenerate, and there is no equivariant direct-sum decomposition of $M$ into scalars and trace zero. Three consequences follow.
 
-First, fixing determinant does not remove scalar infinitesimal changes. Second, the unframed tangent cannot be obtained by subtracting one from a dimension formula unless surjectivity of the trace map on the relevant $H^1$ has separately been proved. Third, the Tate dual of $M^0$ is naturally related to the quotient $M/kI$, not automatically to $M^0$ itself.
+First, fixing determinant does not remove scalar infinitesimal changes. Second, the unframed tangent cannot be obtained by subtracting one from a dimension formula unless surjectivity of the trace map on the relevant $H^1$ has separately been proved. Third, the linear dual of $M^0$ under the trace pairing is naturally the quotient $M/kI$, not automatically $M^0$ itself.
 
 The framed determinant equation remains smooth even in characteristic two. The problem lies in decomposing conjugation directions and dual modules, not in differentiating determinant on $\operatorname{GL}_2$. For this reason framed fixed-determinant rings are often the cleanest local objects at $\ell=2$, even though the residue characteristic $p$ of $K$ is different from two.
 
-## 10. Obstructions, dimensions, and dual local conditions
+### 9.4 Determinant fibers inside constrained problems
+
+The smoothness of determinant on the full general linear group is elementary but should be distinguished from its restriction to a local condition. If $F\in\operatorname{GL}_d(A)$ and $A'\twoheadrightarrow A$ has square-zero kernel $J$, choose any lift $\widetilde F$. Replacing it by $(1+X)\widetilde F$ changes its determinant by
+
+$$
+\det(1+X)=1+\operatorname{tr}X,
+\qquad X\in M_d(J).
+$$
+
+Since $X=j e_{11}$ realizes any $j\in J$, every prescribed determinant lift can be attained. This proves that
+
+$$
+\det:\operatorname{GL}_d\longrightarrow\mathbf G_m
+$$
+
+is formally smooth in every characteristic.
+
+Now let $\mathcal D$ be a formally smooth framed local condition with tangent subspace
+
+$$
+Z^1_{\mathcal D}(K,M)\subseteq Z^1(K,M).
+$$
+
+The determinant-fixed fiber is formally smooth of codimension one if the derivative
+
+$$
+Z^1_{\mathcal D}(K,M)\longrightarrow Z^1(K,k),
+\qquad c\longmapsto\operatorname{tr}c,
+$$
+
+is onto the determinant variations allowed in the ambient determinant family and if this surjectivity persists at every Artinian point. For conditions described by a smooth group torsor, such as fixed finite type, persistence follows from a unit minor in the trace map on the relevant centralizer. For the generic tame problem it follows from the combined derivative calculated in Theorem 6.1. For the generic special problem it is the transversality of the squaring map on $\psi$.
+
+This yields a practical determinant test.
+
+1. Determine which parameter actually changes determinant inside the constrained normal form.
+2. Differentiate determinant with respect to that parameter.
+3. Check that the derivative is a unit at the residual point.
+4. Only then subtract one from the smooth dimension.
+
+The test explains the different exceptional hypotheses encountered earlier. In fixed type, the derivative is trace on the inertia centralizer. In a two-dimensional special family, it is multiplication by $2\bar\psi$. In an unramified framed family, all matrix directions are available, so $e_{11}$ always works. The phrase “determinant cuts one equation” is therefore true scheme-theoretically but does not by itself say that the equation cuts transversely.
+
+## 10. Obstructions, dimensions, and exceptional loci
 
 ### 10.1 Ambient obstruction spaces
 
@@ -979,13 +1482,7 @@ $$
 H^2(K,M).
 $$
 
-Tate local duality identifies its dual with
-
-$$
-H^0(K,M^*(1)).
-$$
-
-The trace pairing gives $M^*\simeq M$, so
+For away-from-$p$ coefficients, the two-step tame-inertia calculation identifies its dimension with a twisted invariant space. More precisely, the top-degree lemma proved in Section 10.2 gives
 
 $$
 h^2_K(M)=h^0_K(M(1)). \tag{10.1}
@@ -1003,19 +1500,57 @@ When $\ell\mid d$, one must use the actual determinant-preserving obstruction co
 
 Constrained conditions can be smoother than the ambient problem. Unramified framed lifts are smooth because a Frobenius matrix always lifts. A compatible fixed prime-to-$\ell$ inertial type is smooth because finite-group cohomology is killed by averaging and its Frobenius intertwiners form a torsor under the smooth inertia-centralizer group. If one imposes further equations on that intertwiner—fixed determinant when the centralizer trace is not onto, fixed characteristic polynomial, or a special eigenvalue relation—new obstructions can appear. For the unrestricted tame two-generator problem, the explicit cokernel (6.7) is the relevant first obstruction detector.
 
-### 10.2 Euler characteristic and Tate duality
+### 10.2 Euler characteristic and the top-degree calculation
 
-Because $p\ne\ell$, the local Euler characteristic has no field-degree term. For every finite-dimensional $k[G_K]$-module $N$,
+We first justify the top-degree equality used above without invoking a general duality theorem.
+
+**Lemma 10.1 (elementary top-degree formula).** For every finite-dimensional $k[G_K]$-module $N$ with $p\ne\ell$,
+
+$$
+\dim_kH^2(K,N)=\dim_kH^0(K,N^*(1)).
+$$
+
+**Proof strategy.** The Hochschild--Serre calculation expresses degree two as Frobenius coinvariants of $H^1(I_K,N)$. The one pro-$\ell$ tame direction identifies the linear dual of this inertia cohomology with inertial invariants of $N^*(1)$. Dualizing Frobenius coinvariants then gives Frobenius invariants.
+
+**Proof.** Cohomology of wild inertia vanishes in positive degree, and averaging removes the prime-to-$\ell$ factors of tame inertia. After taking the corresponding invariant direct summand $W$, the remaining pro-$\ell$ group is generated by $\tau$ and its cochain complex in degrees zero and one is
+
+$$
+W\xrightarrow{\tau-1}W.
+$$
+
+Thus $H^1(I_K,N)$ is the relevant coinvariant space. The linear dual of a cokernel of $\tau-1$ is the kernel of the transpose operator $\tau^{-1}-1$ on $W^*$, which is precisely the corresponding summand of $H^0(I_K,N^*)$. Since the cyclotomic character is unramified at $p\ne\ell$, twisting does not change inertia invariants. Evaluation on a compatible tame generator therefore gives a perfect pairing
+
+$$
+H^1(I_K,N)\times H^0(I_K,N^*(1))\longrightarrow k. \tag{10.3}
+$$
+
+Frobenius acts on the value of an inertia cocycle with the factor $q^{-1}$ coming from $\varphi^{-1}\tau\varphi=\tau^{q^{-1}}$. Dualizing contributes the inverse factor, while the twist $(1)$ contributes $q$. Hence (10.3) is Frobenius invariant. The two-row Hochschild--Serre calculation and the fact that the residue Galois group is procyclic give
+
+$$
+H^2(K,N)\simeq
+H^1\bigl(G_K/I_K,H^1(I_K,N)\bigr)
+\simeq \frac{H^1(I_K,N)}{(\varphi-1)H^1(I_K,N)}.
+$$
+
+The dual of the final cokernel is the $\varphi$-fixed subspace of $H^1(I_K,N)^*$. By (10.3), that subspace is
+
+$$
+H^0(I_K,N^*(1))^{\varphi=1}=H^0(K,N^*(1)).
+$$
+
+Taking dimensions proves the lemma. $\square$
+
+Because $p\ne\ell$, the local Euler characteristic has no field-degree term. Combining it with the lemma gives
 
 $$
 h^1_K(N)=h^0_K(N)+h^2_K(N)
-=h^0_K(N)+h^0_K(N^*(1)). \tag{10.3}
+=h^0_K(N)+h^0_K(N^*(1)). \tag{10.4}
 $$
 
 Applied to $M$, this gives
 
 $$
-h^1_K(M)=h^0_K(M)+h^0_K(M(1)). \tag{10.4}
+h^1_K(M)=h^0_K(M)+h^0_K(M(1)). \tag{10.5}
 $$
 
 The framed ambient tangent dimension is
@@ -1023,7 +1558,7 @@ The framed ambient tangent dimension is
 $$
 \dim_k Z^1(K,M)
 =h^1_K(M)+d^2-h^0_K(M)
-=d^2+h^0_K(M(1)). \tag{10.5}
+=d^2+h^0_K(M(1)). \tag{10.6}
 $$
 
 Thus the centralizer cancels in the framed dimension, while the twisted centralizer remains as the obstruction contribution.
@@ -1031,7 +1566,7 @@ Thus the centralizer cancels in the framed dimension, while the twisted centrali
 For unramified or fixed-type conditions,
 
 $$
-\dim_kL_{\mathrm{ur}}=\dim_kL_\theta=h^0_K(M). \tag{10.6}
+\dim_kL_{\mathrm{ur}}=\dim_kL_\theta=h^0_K(M). \tag{10.7}
 $$
 
 This equality does not assert ambient smoothness. It says that the permitted unframed tangent directions are exactly as numerous as global centralizer elements. The explicit Frobenius description proves smoothness only in the framed or cyclic-matrix situations already stated.
@@ -1050,48 +1585,116 @@ $$
 
 The upper-right line contributes invariants when $\alpha=1$ and obstructions when $\alpha=q$; the lower-left line uses $\alpha^{-1}$. Therefore ratios $1,q,q^{-1}$ are precisely the exceptional values. If $q=1$ in $k$, even the diagonal lines acquire tame obstruction partners. This calculation explains both reducible tangent jumps and the special eigenvalue relation.
 
-### 10.3 Orthogonals
+### 10.3 Unramified classes and relation obstructions
 
-For any tangent condition
-
-$$
-L\subseteq H^1(K,N),
-$$
-
-Tate local duality defines its exact orthogonal
+The same two-row calculation separates the unramified and tame parts of degree one. Inflation--restriction gives an exact sequence
 
 $$
-L^\perp\subseteq H^1(K,N^*(1)).
+0\longrightarrow H^1_{\mathrm{ur}}(K,N)
+\longrightarrow H^1(K,N)
+\longrightarrow H^1(I_K,N)^{\varphi=1}
+\longrightarrow0. \tag{10.8}
 $$
 
-Perfectness gives
+The first term is
 
 $$
-\dim L+\dim L^\perp=h^1_K(N). \tag{10.7}
+N^{I_K}/(\varphi-1)N^{I_K},
 $$
 
-When $p\ne\ell$, the unramified condition is orthogonal to the unramified condition on the Tate-dual module:
+and therefore has dimension $h^0_K(N)$. The last term measures tame extension classes. Its dimension equals $h^2_K(N)$ by the Euler formula, although the two spaces have different variance: one is a Frobenius kernel and the other a Frobenius cokernel.
+
+For $N=M$ and trivial residual inertia, this exact sequence is reproduced by the tame matrix complex. The unramified quotient is the free $X$-direction modulo Frobenius coboundaries. The tame term is the $q$-eigenspace of $\operatorname{Ad}_{\bar F}$ in the $Y$-direction. The relation obstruction is the cokernel of the same endomorphism. Thus
 
 $$
-H^1_{\mathrm{ur}}(K,N)^\perp
-=H^1_{\mathrm{ur}}(K,N^*(1)). \tag{10.8}
+\dim(\text{tame tangent quotient})
+=\dim(\text{relation obstruction}),
 $$
 
-Consequently the tangent spaces of fixed prime-to-$\ell$ inertial type, which equal unramified cohomology, have the same orthogonal description. This is an exact theorem, not a dimension guess.
+but there is no assertion that an arbitrary tangent subspace determines a deformation condition, or that every obstruction vector is realized. The equality comes from finite-dimensional kernel--cokernel balance.
 
-For a tame or special tangent space, the safe definition of the dual local condition is simply the annihilator under the pairing. In favorable two-character cases one can compute it by decomposing $M$ into character lines and pairing the upper-right line with the oppositely directed twisted line. There is no general reason for a special condition to be self-orthogonal, and representability of $L^\perp$ as a deformation condition does not follow merely from its being a subspace.
-
-If $\ell\nmid d$, the trace pairing identifies $(M^0)^*(1)$ with $M^0(1)$, so fixed-determinant orthogonals live in $H^1(K,M^0(1))$. In characteristic dividing $d$, the dual coefficient is the appropriate quotient; using $M^0(1)$ without correction would give the wrong annihilator.
+This is all the degree-one comparison needed in the present book. Perfect pairings and global annihilator formulas require additional duality theory and are not used as proof inputs here.
 
 ### 10.4 Why smoothness can jump
 
 There are three distinct sources of singularity.
 
-1. **Ambient dual invariants:** $H^0(K,M(1))\ne0$ supplies possible $H^2$ obstructions.
+1. **Top-degree twisted invariants:** $H^0(K,M(1))\ne0$ supplies possible $H^2$ obstructions.
 2. **Relation degeneracy:** the derivative $d^1$ of the tame equation can fail to be surjective, especially when Frobenius eigenvalue ratios equal $q$.
 3. **Orbit degeneracy:** a scalar residual matrix has a large centralizer, so an unframed coarse quotient can fail gluing even if every framed lift exists.
 
 These phenomena can coincide but should not be conflated. For example, at trivial residual inertia with distinct Frobenius eigenvalues in special ratio $q$, the tame relation gains an upper-right direction because the same character line contributes a twisted invariant. At scalar Frobenius with $q\not\equiv1$, no tame tangent exists, yet the unframed conjugacy problem still has a large stabilizer. Smoothness is a statement about lifting in a specified functor, not a property of the residual representation in isolation.
+
+### 10.5 Trace-zero dual coefficients
+
+The trace pairing
+
+$$
+M\times M\longrightarrow k,
+\qquad (X,Y)\longmapsto\operatorname{tr}(XY),
+$$
+
+is perfect in every characteristic and identifies $M^*$ with $M$ as a $G_K$-module. Its restriction to $M^0$ behaves differently. The annihilator of $M^0$ inside $M$ consists exactly of scalar matrices: off-diagonal test matrices kill the opposite off-diagonal entries, and diagonal trace-zero tests force all diagonal entries to agree. Hence
+
+$$
+(M^0)^*\simeq M/kI. \tag{10.9}
+$$
+
+If $\ell\nmid d$, the trace-zero projection identifies $M/kI$ with $M^0$, recovering the familiar self-duality. If $\ell\mid d$, the scalar line lies inside $M^0$ and the two modules have different submodule structures even though they have the same dimension.
+
+Applying Lemma 10.1 to $M^0$ gives the numerical identity
+
+$$
+\dim_kH^2(K,M^0)
+=\dim_kH^0\bigl(K,(M/kI)(1)\bigr). \tag{10.10}
+$$
+
+The right side is not automatically $h^0_K(M^0(1))$. This identity concerns the framed determinant-preserving obstruction coefficient. The ordinary unframed fixed-determinant tangent is the quotient
+
+$$
+Z^1(K,M^0)/dM,
+$$
+
+so even its tangent calculation must remember that the coboundaries come from all of $M$, not just $M^0$. One should use the actual trace-kernel quotient rather than replace it by $H^1(K,M^0)$.
+
+This is more than a characteristic-two technicality. Replacing $M/kI$ by $M^0$ when no splitting exists can change the invariant subspace and therefore the predicted obstruction dimension.
+
+### 10.6 Three obstruction calculations
+
+The general formulas become clearer in three residual examples.
+
+**Trivial two-dimensional representation with $q\ne1$.** Here $M$ is a four-dimensional trivial module. Thus
+
+$$
+h^0_K(M)=4,\qquad h^0_K(M(1))=0,\qquad h^1_K(M)=4.
+$$
+
+Every first-order class is unramified. The ambient $H^2$ vanishes, so both the unrestricted framed problem and the full tame framed problem are formally smooth of dimension four. The latter assertion also follows from Theorem 6.1 because $q$ is not an eigenvalue of the identity action $\operatorname{Ad}_{\bar F}$.
+
+**A special eigenvalue ratio.** Let
+
+$$
+\bar F=\operatorname{diag}(q\bar a,\bar a),
+\qquad q\ne1.
+$$
+
+On $ke_{12}$, $\operatorname{Ad}_{\bar F}$ has eigenvalue $q$. This line contributes one tame tangent direction and one dimension to the relation obstruction space (6.11). The full tame scheme can therefore be singular or have excess dimension at this point. Nevertheless Theorem 8.1 cuts out a smooth three-dimensional framed special component by retaining the eigenline and the diagonal characters. A constrained component can be smooth at a point where the ambient tame equation has a nonzero obstruction space.
+
+**Scalar Frobenius with $q=1$ in $k$.** Again take trivial residual inertia in dimension two. Now every element of $M$ is both a $1$-eigenvector and a $q$-eigenvector. Thus
+
+$$
+c_F=4,\qquad s_F=4,
+$$
+
+and the full tame complex has
+
+$$
+\dim H^1=8,\qquad \dim H^2=4.
+$$
+
+The four unramified and four tame tangent directions coexist. At the same time the residual centralizer is all of $M_2(k)$. Relation degeneracy and orbit degeneracy are both maximal. No dimension theorem from the generic rows may be specialized to this point.
+
+These calculations illustrate the correct use of $H^2$. Its vanishing proves ambient liftability because the general obstruction theory is complete. Its nonvanishing merely identifies possible failures. An explicitly solved constrained normal form can still lift smoothly because its obstruction map into the ambient group is identically zero.
 
 ## 11. Conductors and exact minimality
 
@@ -1172,6 +1775,25 @@ At every characteristic-zero point with $x\ne0$, the conductor is one. At $x=0$,
 Reduction modulo $\ell$ creates the same phenomenon. If $x=\ell$, the characteristic-zero representation has conductor one but its residual inertia is trivial. Thus equality of residual and lifted conductors is a substantive minimality requirement, not an automatic consequence of $p\ne\ell$.
 
 There is a complementary warning for finite inertia of order divisible by $\ell$. Averaging is unavailable, invariant submodules need not be direct summands, and their ranks can jump under reduction. This is why the finite-type theorem required $\ell\nmid|H|$. The present book does not disguise the missing modular representation theory by calling such a type fixed.
+
+### 11.4 Twists and higher ramification data
+
+A fixed prime-to-$\ell$ scalar twist changes the numerical conductor in a controlled but not always trivial way. Let $\eta$ be a finite-order character of $G_K$ and let $V$ have finite inertial image. The inertia invariants of $V\otimes\eta$ are the $\eta^{-1}$-isotypic vectors of $V|_{I_K}$, not generally the same as $V^{I_K}$. Thus twisting preserves **variation** of the conductor inside a fixed-type family, because the entire twisted type remains fixed, but it need not preserve the numerical value of the conductor.
+
+For the minimal cases this distinction causes no ambiguity. If one first twists the residual representation by a chosen rigid lift $\eta^{-1}$, applies Case U, F, or N, and then twists back, the final inertial representation is fixed by construction. Every higher ramification subgroup has a constant invariant direct summand in Case F. In Case N the scalar twist is fixed and the only moving non-scalar part is the rank-one tame operator, so wild breaks remain those of the scalar type and the additional tame codimension is constant.
+
+**Proposition 11.1.** In a fixed finite-type family with quotient $H$ of order prime to $\ell$, the following data are constant after passage to any characteristic-zero coefficient field:
+
+- the dimensions of invariants under every upper or lower ramification subgroup whose image lies in $H$;
+- the multiset of breaks of the representation;
+- the Swan conductor;
+- the Artin conductor.
+
+**Proof.** Every relevant ramification subgroup has finite image $H_u\le H$. The averaging idempotent for $H_u$ gives a direct-summand invariant module commuting with scalar extension. Its rank is therefore constant. Break multiplicities are differences of these ranks, and both conductor formulas are weighted sums of the same differences. $\square$
+
+The proposition is stronger than constancy of the total conductor and is exactly what “no new ramification” means for a finite inertial type. By contrast, the closed special family with parameter $x$ has a jump already at the tame level: $\ker(xe_{12})$ has rank one where $x$ is invertible and rank two at $x=0$. No higher-ramification formalism can repair that failure of constant rank.
+
+One must also distinguish the conductor of a representation from that of its adjoint. Even if a two-dimensional type is fixed, $\operatorname{ad}\theta$ may have more inertia invariants than $\theta$, and special ratios can create adjoint cyclotomic invariants. The deformation tangent and obstruction formulas use the adjoint representation; minimality of $\rho$ does not imply that $H^0(K,\operatorname{ad}\bar\rho(1))$ vanishes.
 
 ## 12. Functoriality
 
@@ -1261,6 +1883,35 @@ $$
 
 on Frobenius values. This can have a kernel in characteristic $\ell$ when $\ell\mid f$; equality of inertia does not make the restriction map on $H^1_{\mathrm{ur}}$ an isomorphism.
 
+### 12.4 What changes under ramified base change
+
+Ramified extensions behave differently enough that no blanket invariance statement is appropriate. Let $K'/K$ be finite with ramification index $e$ and residue degree $f$. On tame inertia, after compatible choices and up to a wild factor,
+
+$$
+\tau_{K'}\longmapsto\tau_K^e. \tag{12.2}
+$$
+
+Arithmetic Frobenius maps to an element of the coset $\varphi_K^fI_K$. The inertial correction in that coset depends on choices, but the relation over $K'$ is intrinsically
+
+$$
+\varphi_{K'}\tau_{K'}\varphi_{K'}^{-1}
+=\tau_{K'}^{q^f}.
+$$
+
+Restriction of an unramified representation is still unramified. Restriction of a fixed finite type is the restricted type; its image can become smaller, so its centralizer and tangent dimension can increase. If $K'$ kills the entire finite inertial quotient, the restricted type becomes unramified even though the original representation was ramified.
+
+For square-zero tame monodromy,
+
+$$
+(1+N)^e=1+eN.
+$$
+
+Thus restriction sends $N$ to $eN$. If $e$ is a unit in the coefficient ring, nonzero rank-one monodromy remains nonzero and the special condition retains its shape. If $\ell\mid e$, the residual restricted monodromy can vanish even when the original residual monodromy was nonzero. This is a second mechanism, besides reduction of a characteristic-zero parameter, by which a special representation can become residually unramified.
+
+Conductors under ramified base change require the Herbrand reindexing of ramification groups. It is false that the Artin or Swan conductor is always unchanged. The safe conclusions needed here are narrower: a fixed finite type restricts to a fixed finite type, and a rank-one tame block remains rank one when $e$ is invertible. Any numerical conductor transformation beyond these statements must be calculated from the ramification filtration of $K'/K$.
+
+Corestriction does not define an inverse operation on representations. Even on tangent cohomology, restriction followed by corestriction is multiplication by $[K':K]$, which may vanish in $k$. Therefore field base change can merge components, enlarge centralizers, or kill tangent classes. Local conditions are functorial under restriction, but their smooth dimensions need not be invariant.
+
 ## 13. A menu for global deformation problems
 
 ### 13.1 Representable conditions and tangent spaces
@@ -1275,8 +1926,8 @@ The following table records only conclusions proved under explicit hypotheses. H
 | Same, fixed determinant | cyclic $\bar F$ | unframed ring | dimension $d-1$ | smooth of dimension $d-1$ |
 | Fixed finite type $\theta$ | $|H|$ prime to $\ell$ and compatible integral $\theta$ | framed quotient; unframed with descent | $H^1_{\mathrm{ur}}(K,M)$, dimension $c$ | framed smooth of dimension $d^2$; fixed determinant gives $d^2-1$ when the centralizer trace is onto |
 | Full tame | wild action killed | framed matrix quotient | $H^1(C^\bullet_{\mathrm{tame}})$ | smooth if $d^1$ is surjective |
-| Minimal unipotent | nonzero residual rank-one $\bar N$ and fixed scalar type | framed quotient; the line enhancement is redundant because $\ker N$ recovers it | derivative kernel modulo allowed conjugacy | nonvanishing automatic; smooth if the derivative of all defining equations is surjective |
-| Closed special | compatible fixed or represented variable diagonal data | line-enhanced framed quotient; descended quotient only when the line is unique and ambient unframed descent holds | special relation subspace; dimension $1$ with fixed diagonal characters in the generic case (8.6) | contains the special-shaped $N=0$ locus; no blanket smoothness claim |
+| Minimal unipotent | nonzero residual rank-one $\bar N$, fixed scalar type | framed quotient; unframed under scalar descent | derivative kernel modulo conjugacy | if $d=2$, $\ell\ne2$, and $q\ne1$: framed dimensions $4$, or $3$ with fixed determinant; unframed dimensions $1$, or $0$ |
+| Closed special | trivial residual inertia, ratio $q\ne1$, fixed diagonal characters | line-enhanced framed quotient | special extension line, dimension $1$ | framed smooth of dimension $3$; variable $\psi$ adds one; includes the $N=0$ locus |
 
 For every row, fixed determinant means intersection with the kernel of the determinant derivative. When $\ell\nmid d$, one may replace $M$ by $M^0$ in the standard cohomological formulas. When $\ell\mid d$, use the trace-kernel and dual-quotient formulations instead.
 
@@ -1338,19 +1989,37 @@ For the special condition, also include the stable-line and diagonal-character e
 
 **Step 8: verify conductor claims.** Fixed prime-to-$\ell$ type preserves all ramification-group invariant ranks. Nonzero rank-one tame monodromy has conductor one. The closed enhanced special condition need not have constant conductor.
 
-**Step 9: record the Tate-dual tangent condition.** For unramified and fixed-type tangents it is unramified on the dual. Otherwise take the exact annihilator and refrain from assigning it an arithmetic name until proved.
+**Step 9: record the obstruction calculation.** For unramified and fixed-type conditions use the explicit smooth normal forms rather than ambient $H^2$. For tame and special conditions record the cokernel of the derivative and say whether the explicit lifting argument kills it.
 
-**Step 10: check functoriality needed later.** Extend coefficients, change frames, and restrict to unramified field extensions using the formulas of Chapter 12. Recheck cyclicity and centralizers after field extension.
+**Step 10: check functoriality needed later.** Extend coefficients, change frames, and restrict to local field extensions using Chapter 12. Recheck cyclicity, centralizers, tame-generator scaling, and conductor behavior after field extension.
 
 This procedure produces not merely a label but a package:
 
 $$
 \bigl(\text{intrinsic condition},\ \text{representing object},
 \ \text{tangent space},\ \text{obstructions},
-\ \text{determinant},\ \text{dual},\ \text{conductor}\bigr).
+\ \text{determinant},\ \text{conductor}\bigr).
 $$
 
 That is the unit of local information needed in a global deformation problem.
+
+### 13.4 The local package theorem
+
+We conclude the construction with a theorem that collects exactly what has been proved. It is intentionally divided by residual shape because a single uniform statement would conceal the exceptional loci.
+
+**Theorem 13.1 (local conditions away from $\ell$).** Let $K$ have residue characteristic $p\ne\ell$, let $\bar\rho:G_K\to\operatorname{GL}_d(k)$ be continuous, and let the coefficient and determinant data be as in Section 1.2.
+
+1. If $\bar\rho$ is unramified, the framed unramified condition is represented by a power-series ring of relative dimension $d^2$. With compatible fixed determinant it is smooth of dimension $d^2-1$. Its unframed tangent is $H^1_{\mathrm{ur}}(K,M)$, of dimension $h^0_K(M)$. If $\bar F$ is cyclic, the unframed condition is represented and smooth of dimension $d$, or $d-1$ with determinant fixed.
+2. If residual inertia has a compatible integral model $\theta$ through a finite quotient $H$ with $\ell\nmid|H|$, the framed fixed-type condition is represented and smooth of dimension $d^2$. Its unframed tangent is again $H^1_{\mathrm{ur}}(K,M)$. With fixed determinant it is smooth of dimension $d^2-1$ whenever trace on the inertia centralizer is onto.
+3. If wild inertia is killed, the full framed tame condition is represented by the matrix relation $FTF^{-1}=T^q$. Its tangent and complete relation obstruction spaces are the first and second cohomology of (6.6). At trivial residual inertia it is smooth of dimension $d^2$ whenever $q$ is not an adjoint Frobenius eigenvalue; the compatible fixed-determinant fiber is then smooth of dimension $d^2-1$.
+4. In dimension two, fixed prime-to-$\ell$ finite inertia gives the minimal finite-type condition. A nonzero residual rank-one tame block gives the minimal unipotent condition. Under $\ell\ne2$ and $q\ne1$ the latter has smooth framed dimensions four without fixed determinant and three with fixed determinant; its represented unframed dimensions are one and zero.
+5. If residual inertia is trivial but the Frobenius eigenvalue ratio is $q\ne1$, the line-enhanced closed special condition with fixed diagonal characters is represented and smooth of framed dimension three. It contains the monodromy-zero locus; nonzero monodromy is an open generic condition, not an Artinian subfunctor. Allowing the common unramified character adds one dimension, while a compatible fixed determinant with $\ell\ne2$ fixes its chosen square-root branch.
+
+In every row, a stated unframed universal ring requires either the explicit cyclic classification, the scalar-centralizer theorem, or another descent result named in that row. At scalar Frobenius, coincident special characters, $\ell=2$ in dimension two, modular finite inertia with $\ell\mid|H|$, or a degenerate tame derivative, the framed equations remain available but no generic smooth dimension is asserted.
+
+**Proof.** Parts (1)--(5) are respectively the universal Frobenius construction of Chapter 4, the averaging and centralizer-torsor argument of Chapter 5, the defect calculation of Chapter 6, Theorem 7.1, and Theorem 8.1. Closed relative representability follows in each case from Proposition 3.1 after retaining every required enhancement. The tangent identifications follow by linearizing the same defining equations, and the determinant dimensions follow from the transversality tests of Chapter 9. $\square$
+
+The theorem supplies the promised local input for global deformation theory without importing any global conclusion. In particular, it does not say that arbitrary prescribed tangent subspaces are representable, that all components are smooth, or that conductor equality alone defines a closed condition. It says precisely which arithmetic shapes have been turned into formal local spaces and exactly where their dimensions are controlled.
 
 ## 14. Conclusion
 
@@ -1368,6 +2037,6 @@ The formal geometry is as important as the matrix shapes. Framing cures orbit pr
 
 Minimality has consequently acquired an exact meaning rather than a slogan. Trivial residual inertia leads to the unramified condition. Finite prime-to-$\ell$ inertia leads to a fixed integral type. Existing nonzero rank-one tame monodromy leads to the minimal special condition. Each preserves conductor for a proved reason: an averaging idempotent in the finite case, and a constant-rank kernel in the unipotent case.
 
-Finally, tangent spaces now come paired with their duals and with honest obstruction tests. Unramified and fixed-type tangents are $H^1_{\mathrm{ur}}$ and are orthogonal to the corresponding unramified dual spaces. Tame and special tangents arise by differentiating their defining equations. Local Euler characteristic and Tate duality explain the exceptional eigenvalue ratios but never substitute for a lifting proof.
+Finally, tangent spaces now come with honest obstruction tests. Unramified and fixed-type tangents are $H^1_{\mathrm{ur}}$, while their smoothness is proved by lifting Frobenius matrices and finite group actions. Tame and special tangents arise by differentiating their defining equations. The local Euler characteristic and the elementary top-degree calculation explain the exceptional eigenvalue ratios but never substitute for a lifting proof.
 
-The result is a finite, rigorous menu of local conditions. Each entry says what ramification is retained, which choices are remembered, what ring represents the condition, what its tangent directions are, when it is smooth, how determinant and duality modify it, and under which hypotheses its conductor remains constant. These local packages are now ready to be assembled, without ambiguity, into global deformation problems.
+The result is a finite, rigorous menu of local conditions. Each entry says what ramification is retained, which choices are remembered, what ring represents the condition, what its tangent directions are, when it is smooth, how determinant modifies it, and under which hypotheses its conductor remains constant. These local packages are now ready to be assembled, without ambiguity, into global deformation problems.
