@@ -201,7 +201,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 134. Galois Representations from Weight-Two Shimura Cohomology
 - [ ] 135. Galois Representations Attached to Weight-Two Automorphic Forms
 - [x] 136. Local–Global Compatibility for Weight-Two Galois Representations
-- [ ] 137. Compatible Coefficient Systems and Purity
+- [x] 137. Compatible Coefficient Systems and Purity
 - [ ] 138. Canonical Galois Lattices and Finite-Flat Quotients
 - [x] 139. Modular Curves (X_0(N)) and (X_1(N))
 - [ ] 140. Jacobians of Modular Curves
