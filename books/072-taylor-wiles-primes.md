@@ -13,11 +13,13 @@
    - [What a dual class looks like at an unramified prime](#23-what-a-dual-class-looks-like-at-an-unramified-prime)
    - [The global numerical identity retained from the original problem](#24-the-global-numerical-identity-retained-from-the-original-problem)
    - [Determinant and characteristic-two cautions](#25-determinant-and-characteristic-two-cautions)
+   - [Changing the controlling set without changing the problem](#26-changing-the-controlling-set-without-changing-the-problem)
 3. [The residual image hypothesis](#3-the-residual-image-hypothesis)
    - [What the image must accomplish](#31-what-the-image-must-accomplish)
    - [Split Taylor–Wiles adequacy](#32-split-taylorwiles-adequacy)
    - [The classical two-dimensional large-image case](#33-the-classical-two-dimensional-large-image-case)
    - [Small images and exceptional cases](#34-small-images-and-exceptional-cases)
+   - [From semisimple spanning to the projector detector](#35-from-semisimple-spanning-to-the-projector-detector)
 4. [Cohomology extensions and compatible composita](#4-cohomology-extensions-and-compatible-composita)
    - [The extension cut out by a cocycle](#41-the-extension-cut-out-by-a-cocycle)
    - [Why a nonzero class gives a nontrivial extension](#42-why-a-nonzero-class-gives-a-nontrivial-extension)
@@ -25,6 +27,7 @@
    - [Residual and cyclotomic disjointness](#44-residual-and-cyclotomic-disjointness)
    - [Cohomology and cyclotomic disjointness](#45-cohomology-and-cyclotomic-disjointness)
    - [Several cohomology classes and the independence trap](#46-several-cohomology-classes-and-the-independence-trap)
+   - [A compatibility ledger for one cocycle](#47-a-compatibility-ledger-for-one-cocycle)
 5. [Regular semisimple detection](#5-regular-semisimple-detection)
    - [The local linear-algebra quotient](#51-the-local-linear-algebra-quotient)
    - [Selecting a Galois element that detects one class](#52-selecting-a-galois-element-that-detects-one-class)
@@ -35,12 +38,14 @@
    - [The one-class prime-selection theorem](#62-the-one-class-prime-selection-theorem)
    - [Additional splitting and avoidance conditions](#63-additional-splitting-and-avoidance-conditions)
    - [Diagnostic example: one dual Selmer class](#64-diagnostic-example-one-dual-selmer-class)
+   - [Density, conjugacy, and Frobenius normalization](#65-density-conjugacy-and-frobenius-normalization)
 7. [The local Taylor–Wiles condition](#7-the-local-taylorwiles-condition)
    - [Tame generators and the chosen residual branch](#71-tame-generators-and-the-chosen-residual-branch)
    - [Why the tame relation is satisfied](#72-why-the-tame-relation-is-satisfied)
    - [The complete first-order calculation](#73-the-complete-first-order-calculation)
    - [The pairing in coordinates](#74-the-pairing-in-coordinates)
    - [What fails at scalar or nonsplit Frobenius](#75-what-fails-at-scalar-or-nonsplit-frobenius)
+   - [Why every permitted extension splits](#76-why-every-permitted-extension-splits)
 8. [Universal local deformation rings](#8-universal-local-deformation-rings)
    - [The unrestricted unramified branch](#81-the-unrestricted-unramified-branch)
    - [The finite diamond quotient](#82-the-finite-diamond-quotient)
@@ -48,6 +53,7 @@
    - [Framed rings and eigenline coordinates](#84-framed-rings-and-eigenline-coordinates)
    - [Components and the augmentation map](#85-components-and-the-augmentation-map)
    - [Diagnostic example: a split-Frobenius prime](#86-diagnostic-example-a-split-frobenius-prime)
+   - [The representing problem and its base changes](#87-the-representing-problem-and-its-base-changes)
 9. [Diamond symmetry for a finite set](#9-diamond-symmetry-for-a-finite-set)
    - [Product groups and their completed group algebras](#91-product-groups-and-their-completed-group-algebras)
    - [The diamond character](#92-the-diamond-character)
@@ -59,11 +65,13 @@
     - [Augmentation recovers the original problem](#103-augmentation-recovers-the-original-problem)
     - [The new Selmer structures](#104-the-new-selmer-structures)
     - [The five-term comparison sequence](#105-the-five-term-comparison-sequence)
+    - [The global augmentation isomorphism in detail](#106-the-global-augmentation-isomorphism-in-detail)
 11. [Killing the dual Selmer group](#11-killing-the-dual-selmer-group)
     - [The exact one-prime drop](#111-the-exact-one-prime-drop)
     - [The inductive construction](#112-the-inductive-construction)
     - [Diagnostic example: two independent classes](#113-diagnostic-example-two-independent-classes)
     - [Why the cardinality is dual, not primal](#114-why-the-cardinality-is-dual-not-primal)
+    - [The localization matrix criterion](#115-the-localization-matrix-criterion)
 12. [Taylor–Wiles sets at every level](#12-taylorwiles-sets-at-every-level)
     - [Existence with prescribed cardinality](#121-existence-with-prescribed-cardinality)
     - [What simultaneous prescriptions can be retained](#122-what-simultaneous-prescriptions-can-be-retained)
@@ -74,6 +82,7 @@
     - [Unframed and framed generators](#132-unframed-and-framed-generators)
     - [The free pro-$\ell$ diamond variables](#133-the-free-pro-ell-diamond-variables)
     - [The complete finite-level ledger](#134-the-complete-finite-level-ledger)
+    - [What dual-Selmer vanishing does and does not imply](#135-what-dual-selmer-vanishing-does-and-does-not-imply)
 14. [The theorem package](#14-the-theorem-package)
     - [Precise hypotheses](#141-precise-hypotheses)
     - [Existence and local-structure theorem](#142-existence-and-local-structure-theorem)
@@ -395,6 +404,40 @@ At real places, $2$-primary modified cohomology is periodic and cannot be remove
 
 The local framed determinant equation remains smooth in characteristic two: determinant is a smooth map on $\operatorname{GL}_2$. The failure occurs in trace splitting, duality, and unframed gauge bookkeeping. Accordingly, the explicit framed local rings below remain meaningful after suitable hypotheses, but the clean global theorem is stated for odd $\ell$.
 
+### 2.6 Changing the controlling set without changing the problem
+
+Auxiliary primes are initially outside $S$, whereas a deformation that is allowed to ramify at them is naturally represented using the larger quotient $G_{K,S\cup Q}$. It is therefore important to separate two operations that are often denoted by the same enlarged set: enlarging the ambient Galois group, and relaxing a local condition.
+
+Let $v\notin S$, suppose that a finite $k[G_{K,S}]$-module $A$ is unramified at $v$, and put $S'=S\cup\{v\}$. Inflation gives
+
+$$
+H^1(G_{K,S},A)\longrightarrow H^1(G_{K,S'},A).
+\tag{2.10}
+$$
+
+Its image is exactly the set of classes whose localization at $v$ is unramified. To see this, let $N$ be the closed normal subgroup of $G_{K,S'}$ generated by inertia at $v$. The quotient by $N$ is $G_{K,S}$. Inflation--restriction gives
+
+$$
+0\longrightarrow H^1(G_{K,S},A)
+\longrightarrow H^1(G_{K,S'},A)
+\longrightarrow H^1(N,A)^{G_{K,S}}.
+\tag{2.11}
+$$
+
+Because $A$ is unramified, a cocycle restricts trivially to $N$ precisely when its local restriction is trivial on inertia, which is precisely the unramified condition. This proves the assertion. Repeating the argument one prime at a time treats a finite set $Q$.
+
+The same distinction appears on representing functors. Merely replacing $G_{K,S}$ by $G_{K,S'}$ permits all ramification allowed by the larger quotient. Imposing the unramified local subfunctor at $v$ cuts the functor back to the original one. Imposing the Taylor--Wiles subfunctor instead makes one controlled relaxation. Consequently the comparison throughout this book is not between two arbitrary ambient Galois groups. It is between two deformation conditions inside the same enlarged ambient group:
+
+$$
+\begin{array}{ccc}
+\text{unramified at }v&\subset&\text{Taylor--Wiles at }v,\\
+H^1_{\mathrm{ur}}(K_v,M)&\subset&H^1(K_v,M).
+\end{array}
+\tag{2.12}
+$$
+
+This observation justifies both the Selmer comparison in Chapter 10 and the statement that augmentation recovers the original problem. It also prevents a circular count: the extra tangent direction comes from the local relaxation, not from the notational act of adding $v$ to $S$.
+
 ## 3. The residual image hypothesis
 
 Chebotarev distributes conjugacy classes, but it does not prove that a useful conjugacy class exists. The residual image must first force a nonzero global class to remain visible on a residual kernel and then supply a regular semisimple element that sees its image. This chapter states those jobs as exact algebraic hypotheses, explains their relation to adequacy, and marks the small-image cases in which absolute irreducibility alone is insufficient.
@@ -499,6 +542,41 @@ There is also a residue-field issue. Distinct eigenvalues in an algebraic closur
 At $\ell=2$ the field $\mathbf F_2$ has only one nonzero scalar, so a two-dimensional invertible matrix cannot have two distinct eigenvalues in $\mathbf F_2$. Larger fields of characteristic two may contain such elements, but the determinant and duality issues of Section 2.5 remain. Split regular Frobenius alone does not repair them.
 
 The correct procedure in every exceptional case is therefore finite and testable: compute $H^1(\Gamma,M)$, list the stable submodules of $M$, test for trivial quotients, and test the functionals (3.1) on split regular elements. If one of these checks fails, either strengthen the image hypothesis, change coefficients, or use a different auxiliary-prime method. Chebotarev cannot cure the failure.
+
+### 3.5 From semisimple spanning to the projector detector
+
+The residual-image theory naturally produces a trace pairing with a semisimple matrix, whereas the local cohomology calculation naturally uses an eigenprojector. In dimension two these are the same detector on trace-zero matrices. Making this conversion explicit closes an otherwise easy-to-miss gap between image theory and prime selection.
+
+Let $\gamma$ have distinct eigenvalues $a,b$ in $k$. Its projector onto the $a$-eigenline is the polynomial
+
+$$
+e_{\gamma,a}=\frac{\gamma-bI_2}{a-b}.
+\tag{3.4}
+$$
+
+For $w\in M=\operatorname{ad}^0(V)$, one therefore has
+
+$$
+\lambda_{\gamma,a}(w)
+=\operatorname{tr}(e_{\gamma,a}w)
+=\frac{\operatorname{tr}(\gamma w)}{a-b},
+\tag{3.5}
+$$
+
+because $\operatorname{tr}(w)=0$. Hence
+
+$$
+\operatorname{tr}(\gamma w)\ne0
+\quad\Longleftrightarrow\quad
+\lambda_{\gamma,a}(w)\ne0.
+\tag{3.6}
+$$
+
+Suppose semisimple elements of $\Gamma$ span $\operatorname{End}_k(V)$. If $0\ne w\in M$, nondegeneracy of the trace pairing supplies a semisimple $\gamma\in\Gamma$ with $\operatorname{tr}(\gamma w)\ne0$. Such a $\gamma$ cannot be scalar, because a scalar pairs with $w$ through $\operatorname{tr}(w)=0$. In dimension two, a nonscalar semisimple matrix is regular semisimple. After a finite coefficient extension its eigenvalues lie in the residue field, and (3.6) gives the desired projector detector.
+
+There are two qualifications. First, enlarging coefficients only makes the detector split; it does not enlarge the finite matrix image. The deformation coefficient ring, residual representation, local conditions, and duality pairings must all be extended together. Second, semisimple spanning detects each individual nonzero $w$. Condition 4 of Section 3.2 asks that some $w$ in every actual prime-field stable subspace be detected by a split element over the chosen $k$. This is automatic after one common finite coefficient extension because the image and the collection of stable subspaces are finite. If coefficients are not enlarged, split detection remains an additional hypothesis.
+
+This calculation also explains why the projector, rather than merely the trace of $\gamma$, is the right local object. The quotient $M/(\operatorname{Ad}(\gamma)-1)M$ remembers the diagonal trace-zero direction relative to the two eigenlines. Formula (3.5) says that the residual-image trace pairing lands on exactly that quotient.
 
 ## 4. Cohomology extensions and compatible composita
 
@@ -714,6 +792,49 @@ The exact object is the $\Gamma$-stable image $W_{\mathbf z}$ of (4.11). A trans
 
 The inductive prime-selection argument avoids this trap. At each stage it chooses one surviving class and one prime. The next stage works inside the kernel imposed by the preceding prime. No simultaneous prescription of arbitrary translations in several possibly intersecting cohomology extensions is required.
 
+### 4.7 A compatibility ledger for one cocycle
+
+The construction can now be summarized without suppressing any intersection. Fix a nonzero class $x$, a representative $z$, and a level $N$. The fields and the jobs they perform are
+
+$$
+\begin{array}{c|c|c}
+\text{field}&\text{Galois datum}&\text{condition at }v\\ \hline
+K_N=K(\zeta_{\ell^N})&\epsilon_{\ell^N}&q_v\equiv1\pmod{\ell^N}\\
+L=K(\bar\rho,\zeta_\ell)&\Gamma&\bar\rho(\varphi_v)=\gamma\\
+E_z/L&W_z=z(G_L)&\lambda_{\gamma,a}(z(\varphi_v))\ne0.
+\end{array}
+\tag{4.12}
+$$
+
+The required automorphism is assembled over $L$, not by choosing three unrelated entries. The no-$\ell$-quotient condition proves
+
+$$
+L\cap K_N=K_1,
+\tag{4.13}
+$$
+
+so every $\gamma\in\Gamma$ can be lifted while acting trivially on $K_N$. The no-trivial-quotient condition for $W_z$ proves
+
+$$
+E_z\cap LK_N=L,
+\tag{4.14}
+$$
+
+so any required translation can be added without disturbing either the residual image or the cyclotomic value. Equations (4.13) and (4.14) are different disjointness statements proved from different image hypotheses.
+
+Changing the cocycle representative does not alter this ledger. If $z'=z+\partial m$, then $z'|_{G_L}=z|_{G_L}$, so $E_{z'}=E_z$. At an element $g$ with residual part $\gamma$, the values differ by
+
+$$
+z'(g)-z(g)=(\operatorname{Ad}(\gamma)-1)m.
+\tag{4.15}
+$$
+
+The projector functional kills the right side. Thus the nonvanishing condition is a property of the cohomology class and the residual conjugacy class, not of a representative.
+
+Nor does changing the chosen lift of $\gamma$ cause trouble. Two lifts that agree on $LK_N$ differ by an element of the relevant translation group; Section 5.2 deliberately varies through precisely those translations. The affine variation of the detector is the freedom that avoids cancellation.
+
+The ledger is also a practical test for extra requirements. If a further finite Galois extension $A/K$ is introduced, one appends a row and checks the intersection of $A$ with the full field already assembled. Pairwise checks with the three individual fields are not enough. This is why later splitting and avoidance assertions are always formulated through the full compatible fiber.
+
 ## 5. Regular semisimple detection
 
 The value of a cocycle is not itself a local cohomology class: one must quotient by Frobenius coboundaries. Regular semisimple linear algebra provides a canonical one-dimensional detector for that quotient. Combining it with the translation extension will produce the exact Galois element that Chebotarev is later asked to realize.
@@ -891,32 +1012,227 @@ $$
 \operatorname{Gal}(F_{z,N}/K).
 $$
 
-The required nonabelian existence statement follows from the abelian Chebotarev theorem already available.
+We now prove the distribution statement needed for this finite quotient. This is included here because global reciprocity by itself identifies Frobenius elements but does not prove that primes realizing them exist.
 
-**Chebotarev reduction lemma.** Let $F/K$ be a finite Galois extension, let $\sigma\in\operatorname{Gal}(F/K)$, and let $C$ be its conjugacy class. Infinitely many primes of $K$, unramified in $F$, have arithmetic Frobenius class $C$.
-
-**Proof.** Put $H=\langle\sigma\rangle$ and $E=F^H$. The extension $F/E$ is cyclic. Abelian Chebotarev over $E$ gives a positive-density set of primes $w$ of $E$ whose Frobenius in $H$ is exactly $\sigma$. Discard the finitely many $w$ lying over primes ramified in $F/K$.
-
-Among primes of $E$, those of relative residue degree at least two over $K$ have density zero. Write $\mathrm N$ for absolute norm. If $w$ lies over $v$ with relative residue degree at least two and $\mathrm Nw\le X$, then $\mathrm Nv\le X^{1/2}$. For any fixed $0<\varepsilon<1$, convergence of $\zeta_K(1+\varepsilon)$ bounds the number of ideals of $K$ of norm at most $X^{1/2}$ by
+For a set $\mathcal P$ of finite primes of a number field, its **Dirichlet density**, when the limit exists, is
 
 $$
-O\bigl(X^{(1+\varepsilon)/2}\bigr)
-=o\bigl(X/\log X\bigr).
+\delta(\mathcal P)
+=\lim_{s\to1^+}
+\frac{\sum_{v\in\mathcal P}q_v^{-s}}
+{\log(1/(s-1))}.
+\tag{6.1}
 $$
 
-Thus infinitely many of the selected $w$ have relative residue degree one over $K$. For such a $w$ above $v$, choose a prime $u$ of $F$ above $w$. The elements $\operatorname{Frob}(u/w)$ and $\operatorname{Frob}(u/v)$ lie in the same unramified decomposition group and induce the same map on $k(u)$ because $k(w)=k(v)$. The decomposition group acts faithfully on the residue extension, so the two elements are equal. The first is $\sigma$; changing $u$ conjugates it. Hence the Frobenius class at $v$ is $C$. $\square$
+A positive lower limit in (6.1) already implies infinitude and survives deletion of finitely many primes.
 
-Apply the lemma to $F_{z,N}/K$ and the class constructed above. Removing finitely many further primes does not change infinitude. As always, Chebotarev is being applied only after the conjugacy class has been proved nonempty; it distributes existing compatible elements and does not resolve incompatible prescriptions.
+**Lemma 6.1 (the analytic ray-class estimate).** Let $B$ be a number field and $\mathfrak m$ a modulus. If $c$ ranges over the narrow ray class group $\operatorname{Cl}_{\mathfrak m}(B)$, then there are constants $a_{\mathfrak m}>0$ and $\eta>0$, independent of $c$, such that
+
+$$
+A_c(X)
+=\#\{\mathfrak a\subseteq\mathcal O_B:
+(\mathfrak a,\mathfrak m)=1,
+[\mathfrak a]=c,
+\mathrm N\mathfrak a\le X\}
+=a_{\mathfrak m}X+O_{B,\mathfrak m}(X^{1-\eta}).
+\tag{6.2}
+$$
+
+Consequently, if $\chi$ is a nontrivial character of this ray class group, its ideal series
+
+$$
+L(s,\chi)=
+\sum_{(\mathfrak a,\mathfrak m)=1}
+\frac{\chi(\mathfrak a)}{(\mathrm N\mathfrak a)^s}
+\tag{6.3}
+$$
+
+extends holomorphically to a neighborhood of $s=1$.
+
+**Proof.** We recall the geometry-of-numbers argument because the cancellation at $s=1$ is the analytic point on which prime selection depends. Put $n=[B:\mathbf Q]$. For a ray class $c$, choose an integral ideal $\mathfrak b_c$, prime to $\mathfrak m$, in its inverse ordinary ideal class. Then an integral ideal $\mathfrak a$ in the underlying ordinary class satisfies
+
+$$
+\mathfrak a\mathfrak b_c=(\alpha),
+\qquad
+\mathrm N\mathfrak a
+=\frac{|N_{B/\mathbf Q}(\alpha)|}{\mathrm N\mathfrak b_c}.
+\tag{6.2a}
+$$
+
+The ray condition on $\mathfrak a$ is a fixed congruence condition on $\alpha$ modulo the finite part of $\mathfrak m$, together with fixed signs at its real part. Two such generators determine the same ideal precisely when they differ by a ray unit. The ray-unit group has finite index in the full unit group and the same logarithmic rank.
+
+Embed $\mathfrak b_c$ as a lattice in Minkowski space. Choose a bounded fundamental parallelepiped for the logarithms of the ray units in the hyperplane supplied by the product formula. Requiring the logarithmic ratios of the archimedean absolute values to lie in this parallelepiped chooses one generator from every ray-unit orbit. Within it, the condition in (6.2a) with $\mathrm N\mathfrak a\le X$ cuts out a fixed finite union of Lipschitz regions expanded by the linear factor $X^{1/n}$. Its volume is
+
+$$
+v_{\mathfrak m}(\mathrm N\mathfrak b_c)X.
+$$
+
+The permitted finite congruence is a translate of a sublattice of $\mathfrak b_c$ whose index depends only on $\mathfrak m$, and each permitted sign sector has the same archimedean volume. The covolume of the ambient ideal lattice is a fixed field constant times $\mathrm N\mathfrak b_c$. Thus the factor $\mathrm N\mathfrak b_c$ in the region volume cancels the same factor in the lattice covolume. The leading constant is consequently independent of $c$.
+
+The elementary Lipschitz lattice-point estimate in real dimension $n$ gives an error $O(X^{(n-1)/n})$ for each bounded piece. A dyadic decomposition along the finitely many faces of the logarithmic parallelepiped gives the same estimate with at most a power of $\log X$; this is $O(X^{1-\eta})$ for some $\eta>0$. There are only finitely many ideal classes, congruence translates, and sign sectors, so the constants are uniform in $c$. This proves (6.2). It is precisely the ray-class refinement of the ideal-counting proof of the simple pole of a Dedekind zeta function.
+
+Put
+
+$$
+A_\chi(X)=
+\sum_{\substack{\mathrm N\mathfrak a\le X\\
+(\mathfrak a,\mathfrak m)=1}}
+\chi(\mathfrak a).
+$$
+
+Summing (6.2) with weights $\chi(c)$ and using
+
+$$
+\sum_{c\in\operatorname{Cl}_{\mathfrak m}(B)}\chi(c)=0
+$$
+
+gives $A_\chi(X)=O(X^{1-\eta})$. Partial summation now gives, initially for $\operatorname{Re}(s)>1$,
+
+$$
+L(s,\chi)
+=s\int_1^\infty A_\chi(X)X^{-s-1}\,dX.
+\tag{6.4}
+$$
+
+The integral converges locally uniformly for $\operatorname{Re}(s)>1-\eta$, and hence defines the required holomorphic continuation. $\square$
+
+The estimate proves holomorphy, but the logarithmic prime argument also needs nonvanishing at $1$. For the finite-order characters arising from a finite abelian extension, this follows without a separate zero-free-region theorem.
+
+**Lemma 6.2 (nonvanishing and prime sums in an abelian extension).** Let $D/B$ be a finite abelian extension with group $A$. For $\chi\in\widehat A$, let $L(s,\chi)$ be the finite-order Hecke series obtained from global reciprocity, using at every prime the invariant-line local factor described in the proof below. Equivalently, this is the ray-class ideal series for the conductor of $\chi$. Then every nontrivial $L(s,\chi)$ is holomorphic and nonzero at $s=1$, and, as $s\to1^+$,
+
+$$
+\sum_{w\text{ unramified in }D}
+\frac{\chi(\operatorname{Frob}_w)}{(\mathrm Nw)^s}
+=
+\begin{cases}
+\log(1/(s-1))+O(1),&\chi=1,\\
+O(1),&\chi\ne1.
+\end{cases}
+\tag{6.5}
+$$
+
+**Proof.** A finite-order character of $A$ factors, by global reciprocity, through a narrow ray class group, so Lemma 6.1 gives holomorphy at $1$ when $\chi\ne1$. We next compare all characters at once. Away from the finite ramified set, if $g=\operatorname{Frob}_w$ has order $f$, the characters of $A$ take every $f$th root of unity on $g$, each $|A|/f$ times. Therefore
+
+$$
+\prod_{\chi\in\widehat A}
+\left(1-\chi(g)(\mathrm Nw)^{-s}\right)^{-1}
+=\left(1-(\mathrm Nw)^{-fs}\right)^{-|A|/f}.
+\tag{6.6}
+$$
+
+The right side is exactly the product of the local zeta factors of the primes of $D$ over $w$. The same calculation also treats ramification rather than hiding it in an unspecified correction. If $I_w\subseteq A$ is inertia and $\bar g_w\in A/I_w$ is residue Frobenius of order $f_w$, the local factor for $\chi$ is $1$ unless $\chi|_{I_w}=1$, and otherwise it is
+
+$$
+\left(1-\chi(\bar g_w)(\mathrm Nw)^{-s}\right)^{-1}.
+$$
+
+The characters trivial on $I_w$ are the characters of $A/I_w$. Their values on $\bar g_w$ run through the $f_w$th roots of unity, each $|A|/(|I_w|f_w)$ times, so their product is
+
+$$
+\left(1-(\mathrm Nw)^{-f_ws}\right)^{-|A|/(|I_w|f_w)}.
+$$
+
+There are $|A|/(|I_w|f_w)$ primes of $D$ above $w$, each of residue degree $f_w$, so this is exactly the full local zeta factor. Multiplying over all primes gives the abelian factorization
+
+$$
+\zeta_D(s)=\prod_{\chi\in\widehat A}L(s,\chi).
+\tag{6.7}
+$$
+
+The factor for the trivial character is exactly $\zeta_B(s)$. Both Dedekind zeta functions have simple poles at $1$ with positive residues. Hence
+
+$$
+\prod_{\chi\ne1}L(1,\chi)
+$$
+
+is finite and nonzero. Since every factor is holomorphic there, none can vanish.
+
+For $\operatorname{Re}(s)>1$, take the logarithm of the absolutely convergent Euler product. The terms of prime-power exponent at least two are bounded uniformly as $s\to1^+$, because
+
+$$
+\sum_w\sum_{r\ge2}
+\frac1{r(\mathrm Nw)^{rs}}
+$$
+
+converges already at $s=1$. Thus
+
+$$
+\log L(s,\chi)
+=\sum_{w\text{ unramified}}
+\frac{\chi(\operatorname{Frob}_w)}{(\mathrm Nw)^s}
++O(1).
+\tag{6.8}
+$$
+
+For $\chi\ne1$, holomorphy and nonvanishing make the logarithm bounded near $1$. For $\chi=1$, the simple pole of $\zeta_B$ gives $\log L(s,1)=\log(1/(s-1))+O(1)$. This proves (6.5). $\square$
+
+**Proposition 6.3 (abelian Frobenius distribution).** If $D/B$ is finite abelian with group $A$ and $a\in A$, the unramified primes $w$ satisfying
+
+$$
+\operatorname{Frob}_w=a
+$$
+
+have Dirichlet density $1/|A|$.
+
+**Proof.** Character orthogonality gives
+
+$$
+\mathbf1_{\{g=a\}}
+=\frac1{|A|}\sum_{\chi\in\widehat A}
+\chi(ga^{-1}).
+\tag{6.9}
+$$
+
+Sum (6.9) over unramified primes with weight $(\mathrm Nw)^{-s}$ and apply (6.5). Only the trivial character contributes an unbounded term, with coefficient $1/|A|$. Division by $\log(1/(s-1))$ proves the assertion. $\square$
+
+We can now pass from the abelian statement to exactly the nonabelian form used here.
+
+**Theorem 6.4 (finite Galois Frobenius selection).** Let $F/K$ be a finite Galois extension, let $\sigma\in\operatorname{Gal}(F/K)$, and let $C$ be its conjugacy class. The primes of $K$, unramified in $F$, whose arithmetic Frobenius class is $C$ have positive lower Dirichlet density. In particular, there are infinitely many of them after any finite set of primes is removed.
+
+**Proof.** Put $H=\langle\sigma\rangle$ and $E=F^H$. The extension $F/E$ is cyclic. Proposition 6.3 gives a set $\mathcal W$ of primes $w$ of $E$, of density $1/|H|$, whose Frobenius in $H$ is $\sigma$. Discard primes lying over the finite set ramified in $F/K$.
+
+The primes $w$ having relative residue degree at least two over $K$ have Dirichlet density zero. Indeed, for $s>1$,
+
+$$
+\sum_{\substack{w\text{ of }E\\f(w/v)\ge2}}
+(\mathrm Nw)^{-s}
+\le [E:K]\sum_v(\mathrm Nv)^{-2s},
+\tag{6.10}
+$$
+
+and the right side remains bounded as $s\to1^+$. Hence the degree-one part $\mathcal W_1$ still has density $1/|H|$ among the primes of $E$.
+
+For $w\in\mathcal W_1$ above $v$, choose $u$ of $F$ above $w$. Since $k(w)=k(v)$, arithmetic Frobenius in $F/E$ and arithmetic Frobenius in $F/K$ induce the same automorphism of $k(u)$; the unramified decomposition group acts faithfully on that residue field. Thus
+
+$$
+\operatorname{Frob}(u/v)=\operatorname{Frob}(u/w)=\sigma.
+$$
+
+Changing $u$ conjugates this element, so the Frobenius class at $v$ is $C$. A prime $v$ has at most $[E:K]$ primes of $E$ above it. Since norms agree for degree-one primes,
+
+$$
+\sum_{\substack{v:\operatorname{Frob}_v\in C}}
+(\mathrm Nv)^{-s}
+\ge\frac1{[E:K]}
+\sum_{w\in\mathcal W_1}(\mathrm Nw)^{-s}.
+\tag{6.11}
+$$
+
+The right side has a positive logarithmic leading term. This proves positive lower Dirichlet density and hence infinitude. $\square$
+
+There is a useful simultaneous version. Let $F_1,\ldots,F_r$ be finite Galois extensions of $K$, let $B=F_1\cdots F_r$, and let $\Omega\subseteq\operatorname{Gal}(B/K)$ be a nonempty conjugacy-stable subset. Then the primes unramified in $B$ with Frobenius in $\Omega$ have positive lower Dirichlet density: choose one conjugacy class contained in $\Omega$ and apply Theorem 6.4. By Lemma 4.1, nonemptiness of $\Omega$ is equivalent to the successive agreement-on-intersections conditions for the desired restrictions. Thus the same theorem simultaneously realizes residual conjugacy, cyclotomic identity, cocycle translation, complete splitting in auxiliary fields, and every compatible avoidance condition. The distribution argument has no additional disjointness hypothesis; all such hypotheses enter only in proving that $\Omega$ is nonempty.
+
+Apply Theorem 6.4 to $F_{z,N}/K$ and the class constructed in Lemma 5.2. Removing finitely many further primes preserves positive lower density. The theorem is being applied only after the conjugacy class has been proved nonempty: it distributes compatible elements and does not repair incompatible prescriptions.
 
 ### 6.2 The one-class prime-selection theorem
 
-**Theorem 6.1 (prime detecting a dual class).** Under the hypotheses of Lemma 5.2, let $T$ be any finite set of places containing $S$, the places above $\ell$, and all places ramified in any additionally specified finite extensions. For every nonzero
+**Theorem 6.5 (prime detecting a dual class).** Under the hypotheses of Lemma 5.2, let $T$ be any finite set of places containing $S$, the places above $\ell$, and all places ramified in any additionally specified finite extensions. For every nonzero
 
 $$
 x\in H^1_{\mathcal L^\perp}(K,M(1))
 $$
 
-and every $N\ge1$, there are infinitely many finite places $v\notin T$ such that:
+and every $N\ge1$, there is a positive-lower-Dirichlet-density set of finite places $v\notin T$ such that:
 
 1. $q_v\equiv1\pmod{\ell^N}$;
 2. $\bar\rho$ is unramified at $v$ and $\bar\rho(\varphi_v)$ is split regular semisimple;
@@ -929,7 +1245,7 @@ and every $N\ge1$, there are infinitely many finite places $v\notin T$ such that
    is nonzero;
 4. the residual Frobenius class may be required to lie in any detecting family allowed by Section 5.3.
 
-**Proof.** Choose the element $g$ of Lemma 5.2 and apply Chebotarev to its conjugacy class in $F_{z,N}/K$. For every resulting unramified prime,
+**Proof.** Choose the element $g$ of Lemma 5.2 and apply Theorem 6.4 to its conjugacy class in $F_{z,N}/K$. For every resulting unramified prime,
 
 $$
 \epsilon_{\ell^N}(\varphi_v)=q_v\equiv1\pmod{\ell^N},
@@ -953,14 +1269,16 @@ for a conjugacy-stable subset $C_A$. Form $F_{z,N}A$. By Lemma 4.1, the desired 
 
 $$
 F_{z,N}\cap A.
-\tag{6.1}
+\tag{6.12}
 $$
 
 If the two extensions are linearly disjoint over $K$, every pair is compatible. If not, the restrictions must be compared. Requiring $v$ to split completely in $A$ means choosing the identity, so the detecting element must act trivially on the intersection. Requiring $v$ not to split completely means choosing a nonidentity element in a compatible fiber; such an element need not exist.
 
 For several auxiliary extensions, apply the fiber-product criterion successively. If the compatible fiber contains several elements and finitely many unwanted conjugacy subsets are to be avoided, it suffices that their union not exhaust the fiber. This elementary nonexhaustion check is the exact hypothesis behind simultaneous avoidance.
 
-One particularly useful harmless condition is pairwise disjointness of the chosen prime sets as $N$ varies. At each finite stage, all primes selected earlier form a finite set. Adding them to $T$ in Theorem 6.1 produces a new set avoiding every earlier prime.
+Once that check has produced one allowed element in the Galois group of the full compositum, its conjugacy class lies in the allowed locus. The simultaneous form following Theorem 6.4 then gives a positive-lower-density set of primes satisfying every condition at once. Thus complete splitting, prescribed nontrivial Frobenius, and avoidance do not consume density one condition at a time; their only possible obstruction is emptiness of the combined fiber.
+
+One particularly useful harmless condition is pairwise disjointness of the chosen prime sets as $N$ varies. At each finite stage, all primes selected earlier form a finite set. Adding them to $T$ in Theorem 6.5 produces a new set avoiding every earlier prime.
 
 ### 6.4 Diagnostic example: one dual Selmer class
 
@@ -990,6 +1308,40 @@ c\ne0.
 $$
 
 The entries $u$ and $w$ are irrelevant to unramified local cohomology: they can be changed by a local coboundary. This is the simplest concrete reason that the matrix value $z(\varphi_v)\ne0$ is not enough. Chebotarev is asked to realize a finite-quotient element for which the diagonal coefficient $c$, not merely the entire matrix, is nonzero.
+
+### 6.5 Density, conjugacy, and Frobenius normalization
+
+Three normalizations are worth checking before passing from a Galois element to a local deformation condition.
+
+First, Frobenius at a prime of $K$ is a conjugacy class, not a distinguished element of the global Galois group. If $z$ is a cocycle and $g$ is replaced by $ugu^{-1}$, a direct use of the cocycle identity gives
+
+$$
+z(ugu^{-1})
+=u\cdot z(g)+(1-ugu^{-1})z(u),
+\tag{6.13}
+$$
+
+after identifying the coefficient action in the usual way. The second term is a coboundary for the action of $ugu^{-1}$, while the first transports the class by $u$. Therefore the class of $z(g)$ in the Frobenius coinvariant quotient is nonzero if and only if the corresponding class at $ugu^{-1}$ is nonzero. The detector used in Theorem 6.5 is consequently conjugacy invariant even though a cocycle itself is not a class function.
+
+Second, the density theorem excludes primes ramified in the finite selection field. That exclusion automatically removes every place at which the residual representation, the cyclotomic extension, or the cocycle quotient used in the selection is ramified. Adding the original set $S$ and any prescribed finite avoidance set changes a set of positive lower Dirichlet density by only finitely many places. Hence the conclusion is not merely that one prime exists: each inductive step retains infinitely many choices after all earlier choices have been excluded.
+
+Third, throughout this book arithmetic Frobenius acts on a residue field by $x\mapsto x^{q_v}$. With the arithmetic normalization of local reciprocity, a uniformizer maps to arithmetic Frobenius. Thus
+
+$$
+\epsilon_{\ell^N}(\varphi_v)=q_v\pmod{\ell^N}
+\tag{6.14}
+$$
+
+and the tame relation is
+
+$$
+\varphi_v\tau_v\varphi_v^{-1}=\tau_v^{q_v}.
+\tag{6.15}
+$$
+
+If geometric Frobenius were used instead, both the cyclotomic value and the reciprocity character would be inverted. The congruence $q_v\equiv1\pmod{\ell^N}$ is invariant under inversion, but eigenvalue labels and universal characters would be reversed. Fixing the arithmetic convention makes the local and global formulas literally compatible rather than compatible only up to inverses.
+
+The exact density $|C|/|G|$ is not needed in the induction; positivity is enough. Nevertheless density matters conceptually. It says that the auxiliary conditions do not identify an accidental isolated prime. Once compatibility has produced a nonempty conjugacy class, the arithmetic primes realizing it form a robust supply from which finite avoidance and successive choices may be made.
 
 ## 7. The local Taylor–Wiles condition
 
@@ -1175,6 +1527,49 @@ If residual Frobenius is scalar, $r=1$ and every element of $M$ is fixed. Both u
 If the characteristic polynomial is irreducible over $k$, Frobenius is regular semisimple only after a quadratic residue-field extension. There is then no rank-one residual eigenspace over $k$. One may formulate a nonsplit torus condition, but its diamond symmetry and local coordinates differ from (7.3)–(7.5). The theorem below deliberately selects split Frobenius instead.
 
 If $q_v\not\equiv1\pmod\ell$, the diagonal tame direction vanishes. The residue-field unit group also has no nontrivial $\ell$-quotient. Such a prime cannot provide a Taylor–Wiles variable.
+
+### 7.6 Why every permitted extension splits
+
+The direct-sum normal form in Section 7.1 should not be accepted merely because the residual Frobenius has two eigenlines. Over a nonreduced coefficient ring, distinct residual characters can in principle admit extensions. Here the tame relation rules them out. We prove the needed vanishing uniformly over small extensions.
+
+Let $\bar\chi_1,\bar\chi_2$ be the two unramified residual characters and put
+
+$$
+\bar\psi=\bar\chi_1\bar\chi_2^{-1},
+\qquad
+\bar\psi(\varphi_v)=r\ne1.
+\tag{7.12}
+$$
+
+An extension of $\bar\chi_2$ by $\bar\chi_1$ is governed to first order by $H^1(K_v,k(\bar\psi))$. For an unramified one-dimensional module on which Frobenius acts by $r$, a tame cocycle has values $X$ on $\varphi_v$ and $Y$ on $\tau_v$. Linearizing the tame relation gives
+
+$$
+(r-q_v)Y=0,
+\tag{7.13}
+$$
+
+while changing the splitting changes $X$ by an element of $(r-1)k$. At a Taylor--Wiles prime, $q_v=1$ in $k$, so both $r-q_v$ and $r-1$ are nonzero. Hence $Y=0$ and $X$ is a coboundary:
+
+$$
+H^1(K_v,k(\bar\psi))=0.
+\tag{7.14}
+$$
+
+The same calculation with $\bar\psi^{-1}$ proves vanishing in the opposite extension direction.
+
+Now let $A'\twoheadrightarrow A$ be a small surjection of local Artinian $\mathcal O$-algebras with kernel $J$, and suppose a representation satisfying the chosen stable-line formulation over $A'$ reduces over $A$ to a split one. Choose lifts of the two summands. The off-diagonal failure of the lifted matrices to preserve them is a cocycle with coefficients in
+
+$$
+J\otimes_k k(\bar\psi)
+\quad\text{or}\quad
+J\otimes_k k(\bar\psi^{-1}).
+$$
+
+By (7.14) it is a coboundary. Conjugating by an off-diagonal matrix congruent to the identity kills it. Induction on the length of $A$ gives a splitting at every Artinian level. Uniqueness follows from $H^0(K_v,k(\bar\psi))=H^0(K_v,k(\bar\psi^{-1}))=0$: two splittings differ by an invariant off-diagonal homomorphism, hence agree up to the diagonal automorphisms already divided out in the unframed problem.
+
+There is an equivalent idempotent proof. The characteristic polynomial of Frobenius factors modulo the maximal ideal as two coprime linear factors. Hensel lifting produces unique orthogonal Frobenius projectors. The vanishing above says inertia preserves those projectors; otherwise its off-diagonal entry would give a nonzero tame extension class. Thus the two methods establish the same ordered stable decomposition.
+
+This proof uses both hypotheses. If $r=1$, unramified extensions survive. If $r=q_v$ or $r=q_v^{-1}$, a tame extension survives in one direction. At a Taylor--Wiles prime $q_v=1$ modulo $\ell$, distinct eigenvalues exclude all three equalities simultaneously.
 
 ## 8. Universal local deformation rings
 
@@ -1395,6 +1790,54 @@ $$
 
 The determinant is unchanged. Augmentation sends $Y$ to zero. The local primal tangent gains precisely the $Y$-line, and the dual orthogonal loses precisely its unramified line. The example simultaneously checks the tame relation, determinant, tangent count, and group-algebra equation.
 
+### 8.7 The representing problem and its base changes
+
+For precision, fix the category $\mathcal C_{\mathcal O}$ of complete Noetherian local $\mathcal O$-algebras with residue field $k$, and first evaluate deformation functors on its Artinian objects. At level $N$, the enhanced unframed Taylor--Wiles functor assigns to $A$ the strict-equivalence classes of triples
+
+$$
+(\rho_A,L_{\alpha,A},L_{\beta,A})
+\tag{8.11}
+$$
+
+with fixed determinant, ordered stable direct summands lifting the residual eigenlines, and tame character killed by $\ell^N$. Strict equivalence is conjugacy by a matrix congruent to the identity carrying each ordered summand to its counterpart. Section 7.6 shows that the summands are uniquely determined by the representation inside this branch, but retaining them in the definition makes base change transparent.
+
+To prove (8.5), associate to a triple its chosen Frobenius eigenvalue
+
+$$
+a\in\widetilde\alpha_v(1+\mathfrak m_A)
+\tag{8.12}
+$$
+
+and its tame character
+
+$$
+\theta:I_v\longrightarrow1+\mathfrak m_A.
+\tag{8.13}
+$$
+
+The latter is trivial on wild inertia and principal units and is killed by $\ell^N$, so local reciprocity makes it factor uniquely through $\Delta_v(N)$. Thus (8.12) is represented by $\mathcal O[[X]]$ and (8.13) by $\mathcal O[\Delta_v]$. Fixed determinant determines the second character. Conversely these two data construct the diagonal representation, and the congruence $\ell^N\mid q_v-1$ verifies the tame relation. The two constructions commute with every morphism $A\to B$. This proves representability, not just a bijection on tangent spaces.
+
+For the framed functor, a frame is an identification of the underlying free module with $A^2$ reducing to the chosen residual basis. Relative to the ordered stable summands, frames form the formal neighborhood of the identity in
+
+$$
+\operatorname{GL}_2/\operatorname{GL}_1^2.
+$$
+
+The two coordinates $U,V$ of Section 8.4 represent that quotient. Diagonal changes act trivially on the diagonal characters and account for the quotient by $\operatorname{GL}_1^2$. This proves (8.8) functorially.
+
+All displayed rings behave correctly under finite extension of coefficients. If $\mathcal O\to\mathcal O'$ is a finite local extension with residue field $k'$, and the residual data are scalar-extended, then
+
+$$
+R_v^{\mathrm{TW}}\widehat\otimes_{\mathcal O}\mathcal O'
+\simeq
+\mathcal O'[\Delta_v][[X]],
+\tag{8.14}
+$$
+
+and similarly in the framed case. This is the coefficient enlargement used when a regular semisimple detector splits only over $k'$. It is harmless because the group $\Delta_v$ is arithmetic and unchanged, while the eigenline branch becomes defined over the larger residue field.
+
+Base change along augmentation has a different meaning. It is not a coefficient extension; it specializes the universal tame character to the trivial character. The functorial proof above then leaves exactly the unramified Frobenius eigenvalue, giving (8.9) and (8.10). Confusing these two base changes would conflate enlarging the field of eigenvalues with removing auxiliary ramification.
+
 ## 9. Diamond symmetry for a finite set
 
 One auxiliary prime produces one cyclic group-algebra direction; a global auxiliary set requires their product and the completed tensor product of all local rings. This chapter assembles those factors without confusing finite diamond variables with formal eigenvalue or framing coordinates. It also fixes the distinction between maximal and exact-level residue-field quotients.
@@ -1426,7 +1869,7 @@ $$
 \tag{9.3}
 $$
 
-Its cotangent space has dimension $|Q|$ over $k$. Indeed, each cyclic factor contributes the class of $[d_v]-1$ modulo the square of the augmentation ideal and the coefficient maximal ideal.
+Its **relative augmentation cotangent space over $\mathcal O$** has dimension $|Q|$ over $k$. Indeed, each cyclic factor contributes the class of $[d_v]-1$ modulo the square of the augmentation ideal and the coefficient maximal ideal. The absolute cotangent space of the local ring also contains the coefficient direction when that direction is counted; throughout the diamond ledger, cotangent dimensions are relative to $\mathcal O$.
 
 ### 9.2 The diamond character
 
@@ -1662,6 +2105,43 @@ Every local quotient in the middle is one-dimensional. The middle map is given b
 
 This exact sequence is stronger than a dimension formula. It identifies which dual classes disappear, whether the primal Selmer group grows, and how the two effects share the same local quotient.
 
+### 10.6 The global augmentation isomorphism in detail
+
+Equation (10.4) is stronger than the existence of a surjection between tangent spaces, so it deserves a proof on arbitrary coefficient rings. Let $A$ be an Artinian object of $\mathcal C_{\mathcal O}$. An $A$-point of
+
+$$
+R_{\mathcal D_Q}
+\widehat\otimes_{\mathcal O[\Delta_Q],\operatorname{aug}_Q}
+\mathcal O
+\tag{10.10}
+$$
+
+is an enhanced $\mathcal D_Q$-deformation for which every universal diamond element acts as $1$. At $v\in Q$, the tame character is therefore trivial. The representation is unramified and its ordered summands are the two lifted Frobenius eigenspaces.
+
+Forget those summands. By Section 2.6, a deformation of $G_{K,S\cup Q}$ unramified at all places of $Q$ descends uniquely to $G_{K,S}$. Its determinant and its local conditions at $S$ are unchanged, so it is an $A$-point of $\mathcal D$.
+
+Conversely, take a deformation in $\mathcal D(A)$. Inflate it to $G_{K,S\cup Q}$. At every $v\in Q$, residual Frobenius has distinct eigenvalues, so its characteristic polynomial has two coprime residual factors. Hensel lifting produces two unique Frobenius-stable rank-one direct summands reducing to the chosen ordered eigenlines. Inertia is trivial, so the summands are $G_{K_v}$-stable. Giving them the trivial tame character makes an augmented enhanced Taylor--Wiles object.
+
+The two operations are inverse. Forgetting and then reconstructing returns the same summands by uniqueness; inflating and then descending returns the same representation because $G_{K,S}$ is the quotient obtained by killing the normal closures of the new inertia groups. Both operations commute with $A\to B$, so they give an isomorphism of deformation functors. Representability then gives (10.4).
+
+The argument also explains why the ring map points from the enlarged ring to the original ring. An inclusion of functors
+
+$$
+\mathcal D\simeq\mathcal D_Q|_{\operatorname{aug}}
+\longrightarrow\mathcal D_Q
+$$
+
+is represented contravariantly by the quotient
+
+$$
+R_{\mathcal D_Q}\longrightarrow R_{\mathcal D}.
+\tag{10.11}
+$$
+
+Its kernel contains the augmentation ideal generated by every $[d]-1$. The functorial argument proves that after quotienting by that ideal there are no further equations and no extra enhanced choices. A tangent-space isomorphism alone would not prove this integral statement.
+
+For partial framings away from $Q$, the same proof carries the frames unchanged. If frames at $Q$ are included in the local base, augmentation replaces the enhanced framed local factors by their unramified framed factors; it does not delete the framing coordinates $U_v,V_v$. This is the precise framed form of (10.5).
+
 ## 11. Killing the dual Selmer group
 
 The selection theorem detects one class, while the goal is to annihilate an entire finite-dimensional space. The key is to update the space after every choice: each prime cuts out the kernel of one nonzero functional, and the next prime is chosen against that kernel. This chapter proves the exact dimension drop and makes the independence mechanism visible in dimensions one and two.
@@ -1678,7 +2158,7 @@ H^1_{\mathrm{ur}}(K_v,M')
 \tag{11.1}
 $$
 
-The target is one-dimensional. If $v$ is chosen by Theorem 6.1 to detect some nonzero $x\in V$, then the localization map is nonzero and hence surjective. Therefore
+The target is one-dimensional. If $v$ is chosen by Theorem 6.5 to detect some nonzero $x\in V$, then the localization map is nonzero and hence surjective. Therefore
 
 $$
 \boxed{\dim_kV'=\dim_kV-1.}
@@ -1708,7 +2188,7 @@ V_0=H^1_{\mathcal L^\perp}(K,M'),
 \qquad \dim_kV_0=q.
 $$
 
-If $q=0$, take $Q=\varnothing$. Otherwise choose $0\ne x_0\in V_0$. Theorem 6.1 supplies a level-$N$ prime $v_1$ detecting it. Put
+If $q=0$, take $Q=\varnothing$. Otherwise choose $0\ne x_0\in V_0$. Theorem 6.5 supplies a level-$N$ prime $v_1$ detecting it. Put
 
 $$
 V_1=\ker(\operatorname{loc}_{v_1}|_{V_0}).
@@ -1716,7 +2196,7 @@ $$
 
 Then $\dim V_1=q-1$.
 
-If $V_1\ne0$, choose any nonzero $x_1\in V_1$. Apply Theorem 6.1 again, adding $v_1$ to the finite avoidance set, and obtain $v_2$. Continue. After $i$ steps,
+If $V_1\ne0$, choose any nonzero $x_1\in V_1$. Apply Theorem 6.5 again, adding $v_1$ to the finite avoidance set, and obtain $v_2$. Continue. After $i$ steps,
 
 $$
 V_i=\left\{
@@ -1815,6 +2295,40 @@ $$
 
 not $|P|+q$ by default. This is the precisely adjusted defect relevant to that enlarged starting problem.
 
+### 11.5 The localization matrix criterion
+
+The induction has a useful basis-free reformulation. For a finite set $Q$ of split regular primes, define
+
+$$
+\operatorname{loc}_Q:
+V_0=H^1_{\mathcal L^\perp}(K,M')
+\longrightarrow
+\bigoplus_{v\in Q}H^1_{\mathrm{ur}}(K_v,M').
+\tag{11.8}
+$$
+
+Each target summand is one-dimensional. By (10.8), the enlarged dual Selmer group is exactly $\ker(\operatorname{loc}_Q)$. Hence $Q$ kills dual Selmer if and only if $\operatorname{loc}_Q$ is injective.
+
+If $|Q|=q=\dim V_0$, source and target have the same dimension. In this minimal-cardinality case the following conditions are equivalent:
+
+1. $Q$ kills dual Selmer;
+2. $\operatorname{loc}_Q$ is injective;
+3. $\operatorname{loc}_Q$ is an isomorphism;
+4. after choosing bases, its $q\times q$ localization matrix has nonzero determinant.
+
+The induction constructs bases in which this matrix is triangular with nonzero diagonal. Indeed, choose $x_i$ in the kernel of the preceding $i$ localization rows and select $v_{i+1}$ so that the new row does not vanish on $x_i$. Reordering the resulting basis of $V_0$ gives the triangular form displayed in (11.6). Thus the proof establishes independence of the local functionals, rather than merely showing that every original basis vector is detected somewhere.
+
+This criterion gives a sharp lower bound on cardinality. Since the target of $\operatorname{loc}_Q$ has dimension $|Q|$, injectivity requires
+
+$$
+|Q|\ge q.
+\tag{11.9}
+$$
+
+Theorem 12.1 attains equality. Consequently the unpadded Taylor--Wiles set is not just one convenient choice: among primes with the one-dimensional local quotient used here, it has the smallest possible size.
+
+For a padded set $|Q|>q$, injectivity remains the criterion, but surjectivity is impossible. The cokernel has dimension $|Q|-q$ and, through the five-term sequence, becomes exactly the new primal tangent contribution of the padding primes. This is the linear-algebra core of formulas (12.2) and (13.4).
+
 ## 12. Taylor–Wiles sets at every level
 
 The inductive argument can be run with an arbitrary cyclotomic precision $N$. This chapter packages the result as a set of prescribed cardinality, distinguishes compatible extra conditions from wishful simultaneous prescriptions, and explains why sets at increasing levels are naturally nonnested. It also records the exact numerical price of padding the cardinality.
@@ -1849,7 +2363,7 @@ For every integer $N\ge1$ and every finite avoidance set $T$, there exists a set
 
 If $M$ is irreducible under $\Gamma$, any fixed split regular residual conjugacy class may be used at every selected prime. In the general adequate case, the class at each step may be prescribed inside a detecting family for the current stable subspace.
 
-**Proof.** If $q=0$, the empty set has all the stated properties. If $q>0$, apply the induction of Section 11.2. Theorem 6.1 supplies the congruence, split regular Frobenius, allowed residual conjugacy class, and avoidance at every step. Equation (11.2) proves that the dimension falls exactly once per prime, so the process stops after exactly $q$ distinct primes. The local reciprocity construction gives the exact-level diamond quotient, and (10.8) gives the final vanishing. $\square$
+**Proof.** If $q=0$, the empty set has all the stated properties. If $q>0$, apply the induction of Section 11.2. Theorem 6.5 supplies the congruence, split regular Frobenius, allowed residual conjugacy class, and avoidance at every step. Equation (11.2) proves that the dimension falls exactly once per prime, so the process stops after exactly $q$ distinct primes. The local reciprocity construction gives the exact-level diamond quotient, and (10.8) gives the final vanishing. $\square$
 
 ### 12.2 What simultaneous prescriptions can be retained
 
@@ -1892,7 +2406,7 @@ The last comparison is algebraic, not a nesting of primes or local fields.
 
 ### 12.4 Cardinality padding
 
-Sometimes a later construction asks for a constant cardinality $r\ge q$. After selecting $q$ primes that kill dual Selmer, choose $r-q$ further split regular level-$N$ primes by Chebotarev, avoiding all existing places. Impose the same Taylor–Wiles local condition at them.
+Sometimes a later construction asks for a constant cardinality $r\ge q$. After selecting $q$ primes that kill dual Selmer, choose $r-q$ further split regular level-$N$ primes by Theorem 6.4, avoiding all existing places. Impose the same Taylor–Wiles local condition at them.
 
 The new dual local conditions are stricter than before. Since the dual Selmer group is already zero, it remains zero:
 
@@ -2088,6 +2602,59 @@ $$
 
 The global generator counts are (13.5) and (13.7), while the local framed coordinates are already contained in the displayed local ring. This ledger is sufficient for the next algebraic stage. No compatibility between different levels has been asserted beyond the standard abstract diamond quotients.
 
+### 13.5 What dual-Selmer vanishing does and does not imply
+
+Dual-Selmer vanishing has three immediate consequences in the present finite-level problem. It makes the localization tests imposed by $Q$ independent, turns the Wiles dimension identity into an exact formula for the primal tangent dimension, and removes the absolute dual term from the five-term comparison sequence. These are substantial conclusions, but they should not be strengthened without further hypotheses.
+
+First, tangent dimension counts generators, not equations. If
+
+$$
+R_{\mathcal D_Q}\simeq
+\mathcal O[[Z_1,\ldots,Z_g]]/J,
+\tag{13.12}
+$$
+
+then $g$ is determined by the tangent space only when the presentation is minimal. Vanishing of the dual Selmer group does not by itself show $J=0$. Obstructions may live in a global $H^2$, in a constrained local obstruction theory, or in a relative condition not measured by the absolute Selmer structure used for prime selection.
+
+Second, a presentation over a framed local base changes the cohomological problem. Strict tangent conditions at the framed places have relaxed Tate orthogonals. The relative dual Selmer group can therefore be nonzero even when
+
+$$
+H^1_{\mathcal L_Q^\perp}(K,M')=0.
+$$
+
+This is why (13.7) records the exact relative tangent, and why a relation bound over $R_{\mathrm{loc},S,Q}$ must use the corresponding relative obstruction group. Absolute vanishing cannot simply be inserted into a relative presentation formula.
+
+Third, the finite group algebra is not a regular power-series base over $\mathcal O$. For one cyclic factor it has the equation
+
+$$
+(1+T)^{\ell^N}-1=0.
+\tag{13.13}
+$$
+
+The equation belongs to the chosen finite-level diamond base; it is not a global deformation relation. Passing to $\Lambda_m$ separates these roles: $\Lambda_m$ is a regular pro-$\ell$ group algebra, while (13.11) imposes the exact finite level. Counts made relative to $\mathcal O[\Delta_Q]$ and counts made relative to $\Lambda_m$ differ by these $m$ level equations.
+
+Finally, nothing in the prime-selection theorem produces an arithmetic module, proves that such a module is free over the diamond algebra, or compares the deformation ring with an algebra of operators. The output is the Galois-theoretic half of a later system: controlled local rings, augmentation, and vanishing dual Selmer. Keeping this boundary exact prevents freeness or faithfulness from entering the existence proof circularly.
+
+The reliable implication chain is therefore
+
+$$
+\begin{array}{c}
+\text{regular detecting primes}
+\\ \Downarrow
+\\
+\text{injective dual localization}
+\\ \Downarrow
+\\
+\text{dual Selmer }=0
+\\ \Downarrow
+\\
+\text{exact tangent and generator counts},
+\end{array}
+\tag{13.14}
+$$
+
+with every statement about equations, complete intersections, or module freeness requiring an additional argument.
+
 ## 14. The theorem package
 
 The preceding arguments used several hypotheses at different moments: representability for the global rings, image conditions for detection, disjointness for compatibility, and regular local structure for the diamond algebra. Collecting them prevents a conclusion proved under one layer from being used under another. The final theorem states the full finite-level package and then records only those variants whose numerical adjustments have been proved.
@@ -2240,7 +2807,7 @@ $$
 
 If the original problem is balanced, the common value in (14.6) is $q$. Partial framing generator counts are given by (13.7), with all local framed variables retained in the local base.
 
-**Proof.** The restriction and disjointness lemmas of Chapter 4 reduce the cyclotomic, residual, and cocycle requirements to a compatible element in a finite Galois quotient. The regular semisimple image lemma of Chapter 5 constructs that element, and Theorem 6.1 realizes it at infinitely many primes. The induction of Chapter 11 selects exactly $q$ distinct primes and proves (14.4).
+**Proof.** The restriction and disjointness lemmas of Chapter 4 reduce the cyclotomic, residual, and cocycle requirements to a compatible element in a finite Galois quotient. The regular semisimple image lemma of Chapter 5 constructs that element, and Theorem 6.5 realizes it at infinitely many primes. The induction of Chapter 11 selects exactly $q$ distinct primes and proves (14.4).
 
 Chapters 7–9 construct the local functors, rings, group-algebra structures, tangent spaces, and augmentation maps. Global assembly gives (14.5). The local tangent quotient has dimension one at each prime, so the global numerical identity gives the first equality in (14.6); dual Selmer vanishing gives the second. The comparison sequence shows that the primal dimension is unchanged during the $q$ detecting steps. $\square$
 
