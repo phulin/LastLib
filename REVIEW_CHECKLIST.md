@@ -123,7 +123,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 056. Finite-Flat Group Schemes of Small Height
 - [x] 057. Dieudonné Theory and Raynaud Full Faithfulness
 - [x] 058. Fontaine–Laffaille Modules and Torsion Representations
-- [ ] 059. Integral Fontaine–Laffaille Equivalence and Base Change
+- [x] 059. Integral Fontaine–Laffaille Equivalence and Base Change
 - [ ] 060. p-divisible Groups and Serre–Tate Theory
 - [ ] 061. Ramification and Discriminants of Finite-Flat Representations
 - [x] 062. Artinian and Complete Local Coefficient Rings
