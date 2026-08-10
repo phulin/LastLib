@@ -91,7 +91,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 024. Nearby Cycles and Monodromy in Dimensions One and Two
 - [x] 025. Lefschetz Trace Formulas for Curves and Surfaces
 - [x] 026. Weights, Hard Lefschetz, and Weil Bounds in Low Dimension
-- [ ] 027. Betti, de Rham, and Étale Comparison for Curves
+- [x] 027. Betti, de Rham, and Étale Comparison for Curves
 - [x] 028. fppf Cohomology and Kummer Theory
 - [x] 029. Continuous Cohomology of Profinite Groups
 - [x] 030. Local Galois Cohomology
