@@ -138,7 +138,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 071. Numerical Criteria for (R=T)
 - [ ] 072. Taylor–Wiles Primes
 - [ ] 073. Taylor–Wiles Systems
-- [ ] 074. Patching Modules and Rings
+- [x] 074. Patching Modules and Rings
 - [ ] 075. The Abstract (R=T) Argument
 - [x] 076. Smooth Representations of (p)-adic Groups
 - [ ] 077. Representations of (GL_2(K))

@@ -43,8 +43,10 @@
 8. [Balanced modules and perfect complexes](#8-balanced-modules-and-perfect-complexes)
    - [What balancedness actually patches](#81-what-balancedness-actually-patches)
    - [The correct depth statements](#82-the-correct-depth-statements)
-   - [Criteria that really upgrade to freeness](#83-criteria-that-really-upgrade-to-freeness)
-   - [A balanced but nonfree finite-level module](#84-a-balanced-but-nonfree-finite-level-module)
+   - [Patching bounded perfect complexes](#83-patching-bounded-perfect-complexes)
+   - [Amplitude, homology, and specialization](#84-amplitude-homology-and-specialization)
+   - [Criteria that really upgrade to freeness](#85-criteria-that-really-upgrade-to-freeness)
+   - [A balanced but nonfree finite-level module](#86-a-balanced-but-nonfree-finite-level-module)
 9. [Dimension bookkeeping and the Taylor--Wiles cancellation](#9-dimension-bookkeeping-and-the-taylor--wiles-cancellation)
    - [Dimensions of the source rings](#91-dimensions-of-the-source-rings)
    - [Relations and lower bounds](#92-relations-and-lower-bounds)
@@ -61,7 +63,8 @@
     - [The exact support](#111-the-exact-support)
     - [A union of components versus every component](#112-a-union-of-components-versus-every-component)
     - [Faithful and nearly faithful actions](#113-faithful-and-nearly-faithful-actions)
-    - [A patched module on one component](#114-a-patched-module-on-one-component)
+    - [Nilpotent-sensitive faithfulness criteria](#114-nilpotent-sensitive-faithfulness-criteria)
+    - [Two failures: a missed component and a killed thickening](#115-two-failures-a-missed-component-and-a-killed-thickening)
 12. [Perfect pairings and adjoints after patching](#12-perfect-pairings-and-adjoints-after-patching)
     - [Pairing-compatible finite shadows](#121-pairing-compatible-finite-shadows)
     - [Passage of perfectness to the limit](#122-passage-of-perfectness-to-the-limit)
@@ -330,7 +333,13 @@ $$
 \tag{2.10}
 $$
 
-Terms with $j\geq d$ lie in $\mathfrak n_\infty^d$. For each of the finitely many $1\leq j<d$, the $\varpi$-adic valuation of $\binom{\ell^N}{j}$ tends to infinity with $N$. Hence the corresponding term eventually lies in $\varpi^{d-j}z^j\subseteq\mathfrak n_\infty^d$. The same bound may be chosen for all $q$ generators. $\square$
+If $\mathcal O$ has equal characteristic $\ell$, then
+
+$$
+(1+z)^{\ell^N}-1=z^{\ell^N},
+$$
+
+which belongs to $\mathfrak n_\infty^d$ once $\ell^N\geq d$. Suppose instead that $\mathcal O$ has mixed characteristic. Terms in (2.10) with $j\geq d$ already lie in $\mathfrak n_\infty^d$. For each of the finitely many $1\leq j<d$, the $\varpi$-adic valuation of $\binom{\ell^N}{j}$ tends to infinity with $N$. Hence the corresponding term eventually lies in $\varpi^{d-j}z^j\subseteq\mathfrak n_\infty^d$. The same bound may be chosen for all $q$ generators. $\square$
 
 The lemma does not say that the ideals $\mathfrak c_N$ are nested after transport to the arithmetic group rings. It says that each separately chosen level equation becomes invisible at every fixed finite precision. That is exactly what diagonal patching needs.
 
@@ -1273,7 +1282,23 @@ A^d\longrightarrow A^d\longrightarrow X\longrightarrow0.
 \tag{8.2}
 $$
 
-Suppose the $M_N$ are balanced over $S_N$ with square sizes bounded by one integer $d$. Enlarge a presentation of smaller size by direct summing copies of the contractible presentation $S_N\xrightarrow{1}S_N$; this makes its size exactly $d$ without changing its cokernel. Padding by zero blocks would instead add free summands and is not equivalent. Choose these actual presentation matrices and include them in the finite shadows. Diagonal compactness gives compatible matrices
+There are two different padding operations, and both are needed at different moments. Begin with a minimal presentation
+
+$$
+A^{d_1}\longrightarrow A^{d_0}\longrightarrow X\longrightarrow0.
+\tag{8.3}
+$$
+
+Balancedness says $d_1\leq d_0$. To make this presentation square, enlarge only its source from $A^{d_1}$ to $A^{d_0}$ and send the new basis vectors to zero. This adds zero columns to the relation matrix and leaves the cokernel unchanged. Once a square presentation of size $e$ has been obtained, it can be enlarged to any size $d\geq e$ by taking its direct sum with
+
+$$
+A^{d-e}\xrightarrow{1}A^{d-e}.
+\tag{8.4}
+$$
+
+These identity blocks are contractible generator--relation pairs and again leave the cokernel unchanged. They do not create balancedness: adding them to a genuinely rectangular presentation preserves the difference between its source and target ranks. Conversely, adding zero rows on the target would add a free summand to the cokernel and would change the module. Keeping these three operations distinct prevents a surprisingly common presentation error.
+
+Suppose now that the $M_N$ are balanced over $S_N$ and admit square presentations of size at most one integer $d$. Use (8.4) to make every chosen square size exactly $d$. Include the resulting actual matrices, including all zero columns and identity blocks, in the finite shadows. Diagonal compactness gives compatible matrices
 
 $$
 \Phi_e:C_e^d\longrightarrow C_e^d.
@@ -1283,7 +1308,6 @@ Taking inverse limits gives a matrix
 
 $$
 \Phi_\infty:S_\infty^d\longrightarrow S_\infty^d
-\tag{8.3}
 $$
 
 and a right-exact sequence
@@ -1291,16 +1315,16 @@ and a right-exact sequence
 $$
 S_\infty^d\xrightarrow{\Phi_\infty}
 S_\infty^d\longrightarrow M_\infty\longrightarrow0.
-\tag{8.4}
+\tag{8.5}
 $$
 
-Right exactness follows from Lemma 5.1 applied to the finite cokernel systems. There is no zero at the left of (8.4): balancedness does not say that $\Phi_\infty$ is injective. Consequently it does not by itself give a length-one free resolution.
+Right exactness follows from Lemma 5.1 applied to the finite cokernel systems. There is no zero at the left of (8.5): balancedness does not say that $\Phi_\infty$ is injective. Consequently it does not by itself give a length-one free resolution. Nor does it say that the displayed matrix is minimal. Identity blocks deliberately make it nonminimal; they are harmless because the cokernel, rather than the determinant of this stabilized matrix, is the object being patched.
 
 The construction still gives a finite complete $S_\infty$-module, compatible actions, and ordinary augmentation recovery if the relevant finite control sequences were included. What it does not give is (6.4).
 
 ### 8.2 The correct depth statements
 
-Balancedness alone supplies no maximal-depth theorem. A square presentation can define a hypersurface module of depth $d_S-1$, and when the left kernel of (8.4) is complicated it can give still less control. Therefore the universally valid conclusion from (8.4) is finite presentation, not freeness and not maximal Cohen--Macaulayness.
+Balancedness alone supplies no maximal-depth theorem. A square presentation can define a hypersurface module of depth $d_S-1$, and when the left kernel of (8.5) is complicated it can give still less control. Therefore the universally valid conclusion from (8.5) is finite presentation, not freeness and not maximal Cohen--Macaulayness.
 
 If $\Phi_\infty$ is injective and $M_\infty\ne0$, then
 
@@ -1312,30 +1336,155 @@ Since $S_\infty$ is regular of depth $d_S$, Auslander--Buchsbaum gives
 
 $$
 \operatorname{depth}_{S_\infty}M_\infty=d_S-1.
-\tag{8.5}
+\tag{8.6}
 $$
 
-This is the exact conclusion, not freeness. If the map in (8.3) is not injective, (8.5) cannot be invoked.
+Here projective dimension is exactly one, rather than merely at most one. Indeed $S_\infty$ is a domain and an injective square matrix has a torsion cokernel; a nonzero finite free module cannot have rank zero. This is the exact conclusion, not freeness. If the map in (8.5) is not injective, (8.6) cannot be invoked.
 
 Coefficient torsion-freeness is also insufficient in dimensions greater than one. Since $S_\infty$ is a domain, a finite torsion-free module has depth at least one, but it need not have depth $q+1$. An ordinary perfect pairing with another torsion-free module likewise gives a duality statement, not the missing regular sequence.
 
 A perfect complex of amplitude $[a,b]$ gives a controlled finite free resolution at the complex level. It should be patched as a complex, with differentials, actions, and derived pairings included in the shadows. Its amplitude controls homological complexity, but a complex of positive amplitude does not become a free module merely because its Euler characteristic has the expected value.
 
-### 8.3 Criteria that really upgrade to freeness
+### 8.3 Patching bounded perfect complexes
+
+Balancedness remembers only generators and first relations. When classes occupy several adjacent degrees, truncating to one cohomology module throws away precisely the higher syzygies that govern specialization. The stable object is then a bounded perfect complex. Patching it requires no new compactness principle, but it requires more marked data.
+
+Fix integers $a\leq b$. Suppose that at level $N$ there is a strict bounded complex
+
+$$
+C_N^\bullet:
+0\longrightarrow C_N^a\longrightarrow\cdots
+\longrightarrow C_N^b\longrightarrow0
+\tag{8.7}
+$$
+
+of finite free $S_N$-modules, with
+
+$$
+C_N^i\simeq S_N^{r_i}
+\qquad(a\leq i\leq b),
+\tag{8.8}
+$$
+
+where the ranks $r_i$ are independent of $N$. Choose actual bases and actual differentials. If actions are meant to survive, choose strict chain actions; an action known only after passing to cohomology is not enough to define action matrices on (8.7). If pairings are meant to survive, retain the companion complex, the degree shift, the signs in the transpose differential, and a chain-level representative of the pairing.
+
+For $N$ large relative to $d$, base change along $S_N\to C_d$ gives a bounded complex of the fixed finite modules $C_d^{r_i}$. Its finitely many differential matrices satisfy the finitely many equations
+
+$$
+d^{i+1}d^i=0.
+\tag{8.9}
+$$
+
+Thus complexes with these marked ranks form a finite set at precision $d$. Add their reduction maps and all named chain data to the finite tree. A coherent path yields differentials
+
+$$
+d_\infty^i:S_\infty^{r_i}\longrightarrow S_\infty^{r_{i+1}}
+$$
+
+whose composites vanish because they vanish modulo every $\mathfrak b_d$. Hence
+
+$$
+C_\infty^\bullet
+=\varprojlim_d\mathscr C_d^\bullet
+\tag{8.10}
+$$
+
+is a bounded complex of finite free $S_\infty$-modules in the same degree interval. It is therefore perfect. This proof patches the chosen strict representative. If two representatives are to be identified, compatible chain maps and homotopies must also be placed in the shadows; equality of cohomology dimensions does not produce a limiting quasi-isomorphism.
+
+**Theorem 8.1 (perfect-complex patching).** Under the fixed-amplitude, fixed-rank, marked-basis, and chain-compatibility hypotheses above, diagonal patching produces a perfect complex $C_\infty^\bullet$ over $S_\infty$. Suppose in addition that there is a bounded complex $C_0^\bullet$ of finite free $\mathcal O$-modules and that, at precision $d$, the marked shadow contains chain maps and chain homotopies exhibiting an equivalence
+
+$$
+(\mathcal O/\varpi^d)\otimes_{C_d}\mathscr C_d^\bullet
+\simeq
+(\mathcal O/\varpi^d)\otimes_{\mathcal O}C_0^\bullet,
+$$
+
+compatibly under reduction in $d$. Then
+
+$$
+\mathcal O\otimes_{S_\infty}^{\mathbf L}C_\infty^\bullet
+\simeq C_0^\bullet.
+\tag{8.11}
+$$
+
+**Proof strategy.** Termwise freeness makes derived tensoring ordinary tensoring on the chosen complex. Marking the comparison maps and homotopies makes them compatible. Their inverse limits are chain maps whose two composites differ from the identity by the limiting homotopies. This proves (8.11). If the finite input supplies only quasi-isomorphisms, one must first choose uniformly bounded finite free representatives and compatible comparison data; without that additional uniform choice, the stated finite-shadow theorem does not apply. $\square$
+
+The theorem distinguishes derived control from degree-zero control. An isomorphism
+
+$$
+H^j(C_N^\bullet)/\mathfrak a_NH^j(C_N^\bullet)
+\simeq H^j(C_0^\bullet)
+$$
+
+does not imply (8.11): differentials can acquire new kernels after specialization, and adjacent cohomology can contribute through Tor. Derived augmentation is the statement that controls all those contributions at once.
+
+### 8.4 Amplitude, homology, and specialization
+
+The amplitude of a perfect complex is useful because it bounds projective dimension whenever the complex resolves a single module. Suppose
+
+$$
+C_\infty^\bullet\simeq L[-j]
+\tag{8.12}
+$$
+
+for one nonzero finite module $L$. Shifting degrees, the finite free complex gives
+
+$$
+\operatorname{pd}_{S_\infty}L\leq b-a.
+\tag{8.13}
+$$
+
+Auslander--Buchsbaum then yields the quantitative depth bound
+
+$$
+\operatorname{depth}_{S_\infty}L
+\geq d_S-(b-a).
+\tag{8.14}
+$$
+
+This is often the honest output before a concentration theorem is proved. A two-term complex can yield depth at least $d_S-1$; it does not yield depth $d_S$ merely because its two free terms have equal rank.
+
+Minimal complexes make specialization especially transparent. Every bounded perfect complex over the local ring $S_\infty$ is isomorphic to a direct sum of a minimal complex and contractible identity blocks. In a minimal complex all differential entries lie in $\mathfrak n_\infty$, so tensoring with $k$ kills every differential. Consequently the number of free summands in degree $i$ is
+
+$$
+\dim_k H^i(k\otimes_{S_\infty}^{\mathbf L}C_\infty^\bullet).
+\tag{8.15}
+$$
+
+Derived closed-fiber cohomology therefore detects the entire minimal complex, not just its Euler characteristic.
+
+This observation also handles shifts correctly. If
+
+$$
+\mathcal O\otimes_{S_\infty}^{\mathbf L}C_\infty^\bullet
+\simeq L_0[-j]
+\tag{8.16}
+$$
+
+with $L_0$ finite free of rank $r$ over $\mathcal O$, then tensoring further with $k$ and using (8.15) shows
+
+$$
+C_\infty^\bullet\simeq S_\infty^{\oplus r}[-j].
+\tag{8.17}
+$$
+
+If $L_0$ has coefficient torsion, further tensoring with $k$ can have cohomology in two degrees, and (8.17) need not hold. If the derived specialization occupies several degrees, the minimal patched complex has corresponding terms and must remain a complex.
+
+### 8.5 Criteria that really upgrade to freeness
 
 There are two reliable upgrades.
 
-**Proposition 8.1 (derived coinvariant criterion).** Let $L$ be a nonzero finite $S_\infty$-module. Suppose
+**Proposition 8.2 (derived coinvariant criterion).** Let $L$ be a nonzero finite $S_\infty$-module. Suppose
 
 $$
 \operatorname{Tor}^{S_\infty}_i(\mathcal O,L)=0
 \qquad(i>0)
-\tag{8.6}
+\tag{8.18}
 $$
 
 and $L/\mathfrak a_\infty L$ is torsion-free over $\mathcal O$. Then $L$ is finite free over $S_\infty$.
 
-**Proof.** The Koszul criterion applied to the regular sequence $z_1,\ldots,z_q$ identifies the groups in (8.6) with its positive homology. Their vanishing makes this sequence $L$-regular. The quotient is a nonzero finite torsion-free module over the DVR $\mathcal O$, so $\varpi$ is regular on it. Hence
+**Proof.** The Koszul criterion applied to the regular sequence $z_1,\ldots,z_q$ identifies the groups in (8.18) with its positive homology. Their vanishing makes this sequence $L$-regular. The quotient is a nonzero finite torsion-free module over the DVR $\mathcal O$, so $\varpi$ is regular on it. Hence
 
 $$
 \varpi,z_1,\ldots,z_q
@@ -1349,14 +1498,14 @@ $$
 
 Every finite module over the regular local ring $S_\infty$ has finite projective dimension. Auslander--Buchsbaum gives projective dimension zero, and finite projective modules over a local ring are free. $\square$
 
-Thus balancedness can be upgraded when a separate theorem proves derived coinvariant concentration and torsion-free minimal-level cohomology. Ordinary coinvariant control alone gives only degree-zero base change and does not imply (8.6).
+Thus balancedness can be upgraded when a separate theorem proves derived coinvariant concentration and torsion-free minimal-level cohomology. Ordinary coinvariant control alone gives only degree-zero base change and does not imply (8.18).
 
-**Proposition 8.2 (perfect-complex concentration criterion).** Let $C_\infty$ be a perfect complex over $S_\infty$. Suppose
+**Proposition 8.3 (perfect-complex concentration criterion).** Let $C_\infty$ be a perfect complex over $S_\infty$. Suppose
 
 $$
 \mathcal O\otimes_{S_\infty}^{\mathbf L}C_\infty
 \simeq L_0[0]
-\tag{8.7}
+\tag{8.19}
 $$
 
 for a finite free $\mathcal O$-module $L_0$. Then
@@ -1364,21 +1513,21 @@ for a finite free $\mathcal O$-module $L_0$. Then
 $$
 C_\infty\simeq S_\infty^{\oplus r}[0],
 \qquad r=\operatorname{rank}_{\mathcal O}L_0.
-\tag{8.8}
+\tag{8.20}
 $$
 
-**Proof.** Tensor (8.7) further with $k$. Then
+**Proof.** Tensor (8.19) further with $k$. Then
 
 $$
 k\otimes_{S_\infty}^{\mathbf L}C_\infty
 \simeq k^r[0].
 $$
 
-Represent $C_\infty$ by a bounded minimal complex of finite free modules. Every differential has entries in the maximal ideal, so tensoring with $k$ makes every differential zero. The resulting graded vector space can be concentrated in degree zero only if the minimal complex has a single nonzero term there, of rank $r$. This proves (8.8). $\square$
+Represent $C_\infty$ by a bounded minimal complex of finite free modules. Every differential has entries in the maximal ideal, so tensoring with $k$ makes every differential zero. The resulting graded vector space can be concentrated in degree zero only if the minimal complex has a single nonzero term there, of rank $r$. This proves (8.20). $\square$
 
-The hypotheses in (8.7) include all higher derived coinvariants and coefficient torsion. If the derived specialization has several nonzero degrees, the correct output remains a perfect complex. Selecting one cohomology module and calling it free would discard the other degrees.
+The hypotheses in (8.19) include all higher derived coinvariants and coefficient torsion. If the derived specialization has several nonzero degrees, the correct output remains a perfect complex. Selecting one cohomology module and calling it free would discard the other degrees.
 
-### 8.4 A balanced but nonfree finite-level module
+### 8.6 A balanced but nonfree finite-level module
 
 Let $G=C_{\ell^N}$ with generator $g$, put
 
@@ -1403,7 +1552,7 @@ Multiplication by $t$ maps $A$ onto $I$, and its kernel is $A\mathcal N$. Hence
 
 $$
 A\xrightarrow{\mathcal N}A\xrightarrow{t}I\longrightarrow0
-\tag{8.9}
+\tag{8.21}
 $$
 
 is a square presentation. The relation entry $\mathcal N$ lies in the maximal ideal of $A$, since its augmentation is $\ell^N$, while $t$ is a minimal generator of $I$. Thus the presentation is minimal, and $I$ is balanced with one generator and one first relation.
@@ -1418,7 +1567,7 @@ one obtains
 
 $$
 I/tI\simeq\mathcal O/\ell^N\mathcal O,
-\tag{8.10}
+\tag{8.22}
 $$
 
 If $\mathcal O$ has mixed characteristic and $\ell=u\varpi^e$, then the right side is $\mathcal O/\varpi^{eN}\mathcal O$, so augmentation introduces coefficient torsion. In equal characteristic $\ell$, the element $\ell$ is zero in $\mathcal O$ and the right side is $\mathcal O$; this particular specialization is torsion-free, but the periodic resolution obtained from multiplication by $t$ and $\mathcal N$ still has nonzero higher derived coinvariants. Thus the example rules out the shortcuts in their correct scope: balanced does not mean free, coefficient torsion-freeness before augmentation does not control derived coinvariants, and a square presentation does not justify a maximal-depth conclusion.
@@ -1873,13 +2022,89 @@ It does not show that nilpotents act nontrivially. Dimension equality is even we
 
 Perfect pairings do not repair this gap by themselves. They can identify the support of a module with that of a companion module and constrain adjoints, but two self-dual modules can still live on one component. Faithfulness or component coverage must be established through the action.
 
-### 11.4 A patched module on one component
+### 11.4 Nilpotent-sensitive faithfulness criteria
 
-Let $S=S_\infty$ and form
+Component coverage is topological. Faithfulness is scheme-theoretic. To pass from the first to the second without assuming that the ring is reduced, one needs information at every associated prime or an exact saturation statement for the annihilator. This section gives three criteria that do not erase nilpotents.
+
+**Proposition 11.1 (associated-prime criterion).** Let $B$ be Noetherian and let $L$ be a finite $B$-module. Then $L$ is faithful if and only if
+
+$$
+\operatorname{Ann}_{B_{\mathfrak p}}(L_{\mathfrak p})=0
+\qquad
+\text{for every }\mathfrak p\in\operatorname{Ass}_B(B).
+\tag{11.9}
+$$
+
+It is enough, in particular, that $L_{\mathfrak p}$ be a nonzero free $B_{\mathfrak p}$-module at every associated prime.
+
+**Proof strategy.** A nonzero ideal cannot disappear at every associated prime of the ring. Rather than replacing the ring by its reduction, detect a nonzero element of the annihilator inside a cyclic submodule of $B$.
+
+**Proof.** Necessity follows by localization. Conversely, put $J=\operatorname{Ann}_B(L)$ and suppose $J\ne0$. Choose $0\ne x\in J$. The nonzero cyclic submodule $Bx\subseteq B$ has an associated prime $\mathfrak p$, and associated primes of a submodule of $B$ belong to $\operatorname{Ass}_B(B)$. The element $x/1$ is nonzero in $B_{\mathfrak p}$: otherwise some $s\notin\mathfrak p$ would kill $x$, contradicting that $\mathfrak p$ is the annihilator of a suitable nonzero element of $Bx$. Hence $J_{\mathfrak p}\ne0$, contrary to (11.9). Thus $J=0$. $\square$
+
+If $B$ is Cohen--Macaulay, it has no embedded associated primes and
+
+$$
+\operatorname{Ass}_B(B)=\operatorname{Min}(B).
+\tag{11.10}
+$$
+
+In that case scheme-theoretic generic faithfulness on every irreducible component implies faithfulness, even when $B$ is nonreduced. The adjective “scheme-theoretic” is essential: merely knowing $L_{\mathfrak p}\ne0$ at each minimal prime proves component coverage, not that its annihilator over the zero-dimensional local ring $B_{\mathfrak p}$ vanishes.
+
+**Corollary 11.2 (finite-projective-dimension criterion).** Let $(B,\mathfrak m)$ be Cohen--Macaulay, and let $L$ be a nonzero maximal Cohen--Macaulay $B$-module of finite projective dimension. Then $L$ is finite free of positive rank and hence faithful.
+
+**Proof.** Auslander--Buchsbaum gives
+
+$$
+\operatorname{pd}_BL
+=\operatorname{depth}B-\operatorname{depth}_BL=0.
+$$
+
+Thus $L$ is finite projective, hence free because $B$ is local. Its positive rank follows from $L\ne0$, and a positive-rank free module has zero annihilator. $\square$
+
+This criterion simultaneously gives freeness and faithfulness and makes no reducedness assumption. Its price is the finite-projective-dimension hypothesis, which cannot be inferred from maximal depth over a singular complete intersection.
+
+**Proposition 11.3 (augmentation-saturation criterion).** Let $(B,\mathfrak m)$ be Noetherian local, let $\mathfrak a\subseteq\mathfrak m$, let $L$ be a finite $B$-module, and put $J=\operatorname{Ann}_B(L)$. Suppose $L/\mathfrak aL$ is faithful over $B/\mathfrak a$. Then
+
+$$
+J\subseteq\mathfrak a.
+\tag{11.11}
+$$
+
+If, in addition, the annihilator is saturated along augmentation in the precise sense
+
+$$
+J\cap\mathfrak a=\mathfrak aJ,
+\tag{11.12}
+$$
+
+then $L$ is faithful over $B$.
+
+**Proof.** Base-level faithfulness first gives (11.11): the class of every $x\in J$ annihilates $L/\mathfrak aL$, so $x$ belongs to $\mathfrak a$. Consequently $J=J\cap\mathfrak a$. Under (11.12), this says $J=\mathfrak aJ$. The ideal $J$ is finite because $B$ is Noetherian, and $\mathfrak a\subseteq\mathfrak m$, so Nakayama gives $J=0$. $\square$
+
+The proof exposes the role of (11.12). Saturation says that an annihilator lying in the specialization ideal was already an augmentation multiple of an annihilator. Iteration and completeness are not needed. Without (11.12), a nilpotent thickening can lie inside $\mathfrak a$ and vanish on the specialized module without being an augmentation multiple of the annihilator.
+
+Applied with
+
+$$
+B=R_\infty,
+\qquad
+\mathfrak a=\mathfrak a_\infty R_\infty,
+\qquad
+L=M_\infty,
+\tag{11.13}
+$$
+
+this gives a second route from a faithful minimal action to a faithful patched action. It is different from augmentation saturation for the acting algebra in (7.10). Equation (7.10) controls which endomorphisms survive in $A_\infty/\mathfrak a_\infty A_\infty$; equation (11.12) controls the kernel of $R_\infty\to A_\infty$. Neither condition implies the other formally.
+
+Finally, faithfulness is automatic if a prior argument proves that $M_\infty$ is a nonzero free $R_\infty$-module. This is why the homological freeness criterion of Section 10.5 is stronger than a component calculation. It controls every infinitesimal layer at once.
+
+### 11.5 Two failures: a missed component and a killed thickening
+
+The first example shows why maximal depth does not give component coverage. Let $S=S_\infty$ and form
 
 $$
 B=S[[u]]/(u(u-\varpi)).
-\tag{11.9}
+\tag{11.14}
 $$
 
 The polynomial is monic, so $B$ is finite free of rank two over $S$ and
@@ -1894,7 +2119,7 @@ Take
 
 $$
 L=B/(u)\simeq S.
-\tag{11.10}
+\tag{11.15}
 $$
 
 Then $L$ is free of rank one over $S$ and
@@ -1912,6 +2137,31 @@ $$
 and its support is only the component $V(u)$. Because $B$ is reduced, the module is not even nearly faithful. A perfect $S$-valued pairing on $L\simeq S$ changes none of these facts.
 
 This example is the diagnostic for component arguments. Freeness over $S_\infty$, equality of Krull dimensions, maximal Cohen--Macaulayness, reducedness of the ring, and self-duality can all hold while full support fails.
+
+The second example has full support but kills a nilpotent direction. Put
+
+$$
+B'=S[\epsilon]/(\epsilon^2),
+\qquad
+L'=B'/(\epsilon)\simeq S.
+\tag{11.16}
+$$
+
+The extension is finite free of rank two over $S$, so $\dim B'=\dim S$. The module $L'$ is $S$-free of rank one and has depth $\dim S$ over $B'$. The ring $B'$ has a single minimal prime $(\epsilon)$, so
+
+$$
+\operatorname{Supp}_{B'}L'=\operatorname{Spec}B'.
+\tag{11.17}
+$$
+
+Nevertheless
+
+$$
+\operatorname{Ann}_{B'}(L')=(\epsilon)\ne0.
+\tag{11.18}
+$$
+
+Thus the action is nearly faithful but not faithful. Localizing at the unique associated prime does not fix the problem: $B'$ is already a zero-dimensional thickening in the transverse direction, and $L'$ is not faithful there. A perfect $S$-valued pairing on $L'$ sees its scalar lattice perfectly while remaining blind to the killed element $\epsilon$. This is the diagnostic for every argument that passes from full support to faithfulness: unless reducedness, associated-prime faithfulness, annihilator saturation, or target-ring freeness has been proved, the nilpotent kernel remains.
 
 ## 12. Perfect pairings and adjoints after patching
 
@@ -2320,7 +2570,7 @@ When (15.3) holds for a finite module over the local ring $\Lambda_N$, flatness 
 
 Coefficient torsion contradicts diamond freeness because $\Lambda_N$ is $\mathcal O$-flat. It also prevents an ordinary perfect $\mathcal O$-valued self-duality: the dual into the torsion-free ring $\mathcal O$ cannot recover a nonzero torsion submodule. Reducing modulo torsion before patching changes the augmentation module and can change the Hecke algebra; it is not an innocent simplification.
 
-Balancedness accommodates some nonfree modules but supplies only the square presentation (8.4). In mixed characteristic, the augmentation-ideal example of Section 8.4 shows that even an $\mathcal O$-torsion-free balanced module can acquire coefficient torsion in its coinvariants. In equal characteristic its ordinary coinvariants remain $\mathcal O$-free, but its higher derived coinvariants are still nonzero. The honest remedies in either case are to prove derived coinvariant concentration and torsion-freeness, or to retain a perfect complex.
+Balancedness accommodates some nonfree modules but supplies only the square presentation (8.5). In mixed characteristic, the augmentation-ideal example of Section 8.6 shows that even an $\mathcal O$-torsion-free balanced module can acquire coefficient torsion in its coinvariants. In equal characteristic its ordinary coinvariants remain $\mathcal O$-free, but its higher derived coinvariants are still nonzero. The honest remedies in either case are to prove derived coinvariant concentration and torsion-freeness, or to retain a perfect complex.
 
 ### 15.3 Bad limits and incompatible structures
 
@@ -2415,7 +2665,7 @@ Before using a patched pair, every row of the following ledger should have a def
 | depth | the acting ring named and finite-map hypotheses checked | transferring depth without cause |
 | projective dimension | finite when target-ring freeness is claimed | false freeness over a singular ring |
 | support | component coverage proved | dimension mistaken for full support |
-| annihilator | reducedness or direct vanishing proved | near faithfulness mistaken for faithfulness |
+| annihilator | reducedness, associated-prime faithfulness, saturation, or direct vanishing proved | near faithfulness mistaken for faithfulness |
 | pairings | correct quotient, involution, companion, and torsion hypotheses | false self-duality |
 | frame descent | module is a genuine scalar extension | zero variables called regular |
 | uniqueness | pro-isomorphism or genuine transitions supplied | a chosen limit called canonical |
@@ -2601,6 +2851,8 @@ $$
 
 If $R_\infty$ is catenary and equidimensional of dimension $q+1$, this support is a union of irreducible components. It is all of $\operatorname{Spec}R_\infty$ exactly when the action is nearly faithful. Full support plus reducedness gives faithfulness; without reducedness only a nilpotent annihilator follows.
 
+Faithfulness without reducedness follows under any of the following stronger hypotheses: $M_\infty$ is nonzero free over $R_\infty$; the localized action is faithful at every associated prime of $R_\infty$; or the minimal action is faithful and the annihilator satisfies the augmentation saturation (11.12). These tests retain the nilpotent structure of the ring.
+
 **(h) Pairings.** If compatible projective group-ring-valued perfect pairings were included, they patch to a perfect $S_\infty$-valued pairing with the diamond involution. It descends perfectly to the minimal-level modules and carries the named Hecke adjoints. It identifies a module with itself only when compatible finite-level self-identifications were also supplied.
 
 **Proof.** Lemma 2.1 makes the level equations vanish in every fixed shadow. Proposition 3.1 and Lemma 4.1 produce coherent marked diagrams. Proposition 5.2 patches the relation tuple and proves (16.4). Lemma 6.1 proves (16.5), and faithfulness of scalar multiplication gives the injections from $S_\infty$. The action images give (16.6), their embedding in a finite free endomorphism module makes them finite over $S_\infty$, and integrality gives (16.7).
@@ -2630,9 +2882,9 @@ $$
 \tag{16.16}
 $$
 
-and $M_\infty$ is maximal Cohen--Macaulay over $R_\infty$. If $P_\infty$ is Cohen--Macaulay and the sharp codimension is $b$, the patched relations form a regular sequence and $R_\infty$ is Cohen--Macaulay. If $P_\infty$ is regular, $R_\infty$ is a complete intersection. If $R_\infty$ is regular, or if $M_\infty$ separately has finite projective dimension over the Cohen--Macaulay ring $R_\infty$, then $M_\infty$ is $R_\infty$-free.
+and $M_\infty$ is maximal Cohen--Macaulay over $R_\infty$. If $P_\infty$ is Cohen--Macaulay and the sharp codimension is $b$, the patched relations form a regular sequence and $R_\infty$ is Cohen--Macaulay. If $P_\infty$ is regular, $R_\infty$ is a complete intersection. If $R_\infty$ is regular, or if $M_\infty$ separately has finite projective dimension over the Cohen--Macaulay ring $R_\infty$, then $M_\infty$ is $R_\infty$-free of positive rank and therefore faithful, with no reducedness hypothesis.
 
-No clause of the corollary supplies component coverage. If every minimal component is separately known to occur in the support, the action is nearly faithful; it is faithful when $R_\infty$ is reduced.
+Before this final freeness clause is invoked, the dimension and depth clauses alone supply no component coverage. If every minimal component is separately known to occur in the support, the action is nearly faithful. It is faithful when $R_\infty$ is reduced, when the action is faithful at every associated prime, or when the annihilator saturation criterion of Section 11.4 applies.
 
 ### 16.2 The balanced and derived theorem
 
@@ -2660,9 +2912,37 @@ $$
 \quad(i>0)
 $$
 
-and proves that the augmented module is $\mathcal O$-torsion-free, then Proposition 8.1 upgrades $M_\infty$ to a finite free $S_\infty$-module. At that point all free-module conclusions of Theorem 16.1 apply.
+and proves that the augmented module is $\mathcal O$-torsion-free, then Proposition 8.2 upgrades $M_\infty$ to a finite free $S_\infty$-module. At that point all free-module conclusions of Theorem 16.1 apply.
 
-If the natural finite-level objects are perfect complexes, retain them as such. A bounded perfect patched complex whose derived augmentation is a finite free $\mathcal O$-module in one degree is itself a finite free $S_\infty$-module in that degree by Proposition 8.2. If derived augmentation has more than one nonzero degree, the exported object remains a perfect complex with its actual amplitude; no single cohomology module inherits freeness without another concentration theorem.
+If the natural finite-level objects are perfect complexes, retain them as such. A bounded perfect patched complex whose derived augmentation is a finite free $\mathcal O$-module in one degree is itself a finite free $S_\infty$-module in that degree by Proposition 8.3. If derived augmentation has more than one nonzero degree, the exported object remains a perfect complex with its actual amplitude; no single cohomology module inherits freeness without another concentration theorem.
+
+**Theorem 16.4 (perfect-complex patching).** Retain the ring, presentation, action, and augmentation hypotheses of Theorem 16.1. Replace the modules $M_N$ by strict complexes $C_N^\bullet$ of finite free $\Lambda_N$-modules, all supported in one interval $[a,b]$ and having one fixed rank $r_i$ in each degree. Assume chosen bases, differential matrices, strict chain actions, and derived augmentation comparisons are included in the marked shadows. If a duality is desired, assume companion complexes and chain-level perfect pairings, including their shifts, signs, and adjoints, are also included.
+
+Then diagonal patching produces a perfect complex $C_\infty^\bullet$ of finite free $S_\infty$-modules, supported in $[a,b]$, with the patched action and with exact derived augmentation
+
+$$
+\mathcal O\otimes_{S_\infty}^{\mathbf L}C_\infty^\bullet
+\simeq C^\bullet.
+\tag{16.19}
+$$
+
+Compatible perfect chain pairings pass to the limit and specialize to the stated pairing on $C^\bullet$. If $C^\bullet\simeq\mathcal O^{\oplus r}[-j]$, then
+
+$$
+C_\infty^\bullet\simeq S_\infty^{\oplus r}[-j].
+\tag{16.20}
+$$
+
+If instead $C_\infty^\bullet\simeq L[-j]$ for one finite module $L$, then
+
+$$
+\operatorname{pd}_{S_\infty}L\leq b-a,
+\qquad
+\operatorname{depth}_{S_\infty}L\geq q+1-(b-a).
+\tag{16.21}
+$$
+
+**Proof.** Theorem 8.1 patches the strict complexes and proves derived augmentation. Compatible pairing matrices patch degree by degree, and perfectness is detected after reduction to the residue field. Proposition 8.3 gives (16.20). A single surviving homology module is resolved by a shift of the patched complex, giving the projective-dimension bound; Auslander--Buchsbaum gives the depth bound. $\square$
 
 ### 16.3 The exact interface for the next argument
 
@@ -2680,12 +2960,12 @@ M_\infty/\mathfrak a_\infty M_\infty\simeq M,\\
 \operatorname{depth}_{R_\infty}M_\infty=q+1,\\
 \dim R_\infty\geq d_{\mathrm{loc}}+q+G-b.
 \end{array}
-\tag{16.19}
+\tag{16.22}
 $$
 
-Under the sharp numerical and dimension hypotheses, $R_\infty$ has dimension $q+1$ and the module is maximal Cohen--Macaulay. Under component coverage it is nearly faithful, and under reducedness as well it is faithful. These last implications remain visibly conditional.
+Under the sharp numerical and dimension hypotheses, $R_\infty$ has dimension $q+1$ and the module is maximal Cohen--Macaulay. Under component coverage it is nearly faithful. Faithfulness then follows from reducedness, from the associated-prime criterion, from annihilator saturation, or from positive-rank $R_\infty$-freeness. Each strengthening remains conditional on its stated hypothesis.
 
-The next commutative-algebra step may use (16.19), a complete-intersection conclusion when proved, the exact annihilator or near-faithfulness statement actually available, and, when augmentation saturation has been established, the augmented square (7.12). It may not replace a nearly faithful action by a faithful one, a union of components by the entire spectrum, a maximal Cohen--Macaulay module by a free module over a singular ring, or an underived quotient by a Tor-independent specialization.
+The next commutative-algebra step may use (16.22), a complete-intersection conclusion when proved, the exact annihilator or near-faithfulness statement actually available, and, when augmentation saturation has been established, the augmented square (7.12). It may not replace a nearly faithful action by a faithful one, a union of components by the entire spectrum, a maximal Cohen--Macaulay module by a free module over a singular ring, or an underived quotient by a Tor-independent specialization.
 
 In particular, patching has not identified $R$ with $\mathbb T$. It has constructed the large regular auxiliary environment in which the remaining comparison becomes a precise question about annihilators, components, and descent.
 
