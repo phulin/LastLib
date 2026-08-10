@@ -20,6 +20,7 @@
    - [Residual representations and invariant lines](#33-residual-representations-and-invariant-lines)
    - [Rational points versus rational subgroups](#34-rational-points-versus-rational-subgroups)
    - [Traces, determinants, and characteristic polynomials](#35-traces-determinants-and-characteristic-polynomials)
+   - [Changing the ground and coefficient fields](#36-changing-the-ground-and-coefficient-fields)
 4. [The Weil pairing](#4-the-weil-pairing)
    - [Why torsion carries an alternating form](#41-why-torsion-carries-an-alternating-form)
    - [Divisors and the construction](#42-divisors-and-the-construction)
@@ -27,6 +28,7 @@
    - [Nondegeneracy](#44-nondegeneracy)
    - [Galois equivariance](#45-galois-equivariance)
    - [Compatibility as the level varies](#46-compatibility-as-the-level-varies)
+   - [The group-scheme pairing in every characteristic](#47-the-group-scheme-pairing-in-every-characteristic)
 5. [Tate modules and their topology](#5-tate-modules-and-their-topology)
    - [The inverse-limit idea](#51-the-inverse-limit-idea)
    - [Freeness of rank two](#52-freeness-of-rank-two)
@@ -44,12 +46,14 @@
    - [Maps on torsion and Tate modules](#73-maps-on-torsion-and-tate-modules)
    - [Pairing compatibility and contravariance](#74-pairing-compatibility-and-contravariance)
    - [A degree-two isogeny in coordinates](#75-a-degree-two-isogeny-in-coordinates)
+   - [Integral lattices at primes dividing the degree](#76-integral-lattices-at-primes-dividing-the-degree)
 8. [Cyclic isogenies and reducibility](#8-cyclic-isogenies-and-reducibility)
    - [Why invariant lines are geometric](#81-why-invariant-lines-are-geometric)
    - [The equivalence for prime degree](#82-the-equivalence-for-prime-degree)
    - [Composite cyclic kernels](#83-composite-cyclic-kernels)
    - [Rational torsion is stronger](#84-rational-torsion-is-stronger)
    - [The dual isogeny and the two characters](#85-the-dual-isogeny-and-the-two-characters)
+   - [The scheme-theoretic boundary](#86-the-scheme-theoretic-boundary)
 9. [Good reduction and specialization](#9-good-reduction-and-specialization)
    - [Why prime-to-residue torsion survives](#91-why-prime-to-residue-torsion-survives)
    - [The specialization theorem](#92-the-specialization-theorem)
@@ -65,10 +69,12 @@
     - [What additive reduction does not imply](#105-what-additive-reduction-does-not-imply)
 11. [At the residue characteristic](#11-at-the-residue-characteristic)
     - [Why $\ell=p$ is a different problem](#111-why-ellp-is-a-different-problem)
-    - [The formal multiplication series](#112-the-formal-multiplication-series)
-    - [Ordinary and supersingular special fibers](#113-ordinary-and-supersingular-special-fibers)
-    - [Mixed characteristic](#114-mixed-characteristic)
-    - [Equal characteristic](#115-equal-characteristic)
+    - [Torsion on a good integral model](#112-torsion-on-a-good-integral-model)
+    - [Connected and étale directions](#113-connected-and-étale-directions)
+    - [The formal multiplication series](#114-the-formal-multiplication-series)
+    - [Mixed characteristic and finite-flat representations](#115-mixed-characteristic-and-finite-flat-representations)
+    - [Multiplicative reduction at the coefficient prime](#116-multiplicative-reduction-at-the-coefficient-prime)
+    - [Equal characteristic](#117-equal-characteristic)
 12. [From a curve to a residual representation](#12-from-a-curve-to-a-residual-representation)
     - [The global package](#121-the-global-package)
     - [Local statements away from $\ell$](#122-local-statements-away-from-ell)
@@ -304,7 +310,7 @@ $$
 \psi_{2m+1}&=\psi_{m+2}\psi_m^3-\psi_{m-1}\psi_{m+1}^3,\\
 \psi_{2m}&=\frac{\psi_m}{2y}
 \left(\psi_{m+2}\psi_{m-1}^2-\psi_{m-2}\psi_{m+1}^2\right).
-\end{aligned} \tag{2.5}
+\end{aligned} \tag{2.6}
 $$
 
 Put
@@ -316,7 +322,7 @@ $$
 For $P$ away from the poles of the displayed expression,
 
 $$
-x([n]P)=\frac{\phi_n(P)}{\psi_n(P)^2}. \tag{2.6}
+x([n]P)=\frac{\phi_n(P)}{\psi_n(P)^2}. \tag{2.7}
 $$
 
 If $n$ is odd, $\psi_n$ is a polynomial in $x$ of degree $(n^2-1)/2$; its roots are exactly the $x$-coordinates of nonzero $n$-torsion when $n$ is prime to the characteristic. If $n$ is even, $\psi_n/(2y)$ has degree $(n^2-4)/2$ in $x$, and the factor $2y$ accounts for nonzero two-torsion.
@@ -462,6 +468,34 @@ The converse using one element is useful but asymmetric. If the characteristic p
 
 At good finite-residue places, Chapter 9 will produce a canonical polynomial independent not only of the basis but, after lifting to integers, of the coefficient prime $\ell$. That compatibility turns elementary point counts into information about an entire family of representations.
 
+### 3.6 Changing the ground and coefficient fields
+
+Two scalar changes occur in applications and answer different questions. If $L/K$ is an algebraic extension inside $K^s$, then
+
+$$
+G_L\subseteq G_K
+$$
+
+and the torsion representation over $L$ is the restriction of the representation over $K$. A line that is not $G_K$-stable can become stable under $G_L$. Geometrically, an isogeny absent over $K$ can descend over $L$. Thus irreducibility over $K$ need not persist after ground-field extension.
+
+If instead one extends the coefficient field from $\mathbf F_\ell$ to a finite field $k'/\mathbf F_\ell$, the Galois group does not change and one forms
+
+$$
+E[\ell]\otimes_{\mathbf F_\ell}k'.
+$$
+
+The original representation is **absolutely irreducible** when this module remains irreducible over an algebraic closure of $\mathbf F_\ell$. Reducibility over $\mathbf F_\ell$ means a rational $\ell$-isogeny by Theorem 8.1. Reducibility only after coefficient extension instead gives a Galois-stable eigenline in the scalar extension, not necessarily a subgroup of $E[\ell]$ of order $\ell$ defined over $K$.
+
+Finite extension of the ground field also interacts with torsion fields in a controlled way:
+
+$$
+L(E[n])=L\,K(E[n])
+$$
+
+inside a common separable closure. Therefore the image over $L$ is the subgroup of the image over $K$ corresponding to the intersection $L\cap K(E[n])$. In particular, base extension cannot enlarge the Galois image; coefficient extension can change the visibility of invariant subspaces without changing the image as an abstract group.
+
+Finally, separability hypotheses remain attached to the field characteristic. A purely inseparable extension in characteristic $p$ does not create new prime-to-$p$ torsion points, because those points are already separable. It can change equations and Frobenius twists, but it cannot repair the missing geometric $p$-torsion of a supersingular curve. This is another reason to separate base change from coefficient change.
+
 ## 4. The Weil pairing
 
 ### 4.1 Why torsion carries an alternating form
@@ -574,15 +608,32 @@ $$
 
 is an isomorphism.
 
-**Proof strategy.** The polarization $P\mapsto[(P)-(O)]$ identifies $E$ with its dual elliptic curve. Restricting this isomorphism to $n$-torsion identifies a torsion point with the character of $E[n]$ obtained from the commutator of translations on the corresponding line bundle. Formula (4.3) is exactly that commutator. Since the polarization is an isomorphism, the restricted character map has trivial kernel.
+**Proof strategy.** A character of the kernel of an isogeny is the descent datum on a trivial line bundle along the quotient isogeny. It therefore gives a point in the kernel of the dual isogeny. Applying this kernel-duality principle to $[n]$, and then identifying $E$ with its dual by the origin polarization, proves perfectness. The divisor formula (4.3) is the resulting evaluation pairing.
 
-**Proof.** Let $\lambda:E\to E^\vee$ be the map
+**Proof.** Let $E^\vee=\operatorname{Pic}^0(E)$ and let
 
 $$
+\lambda:E\longrightarrow E^\vee,\qquad
 P\longmapsto[t_P^*\mathcal O_E(O)\otimes\mathcal O_E(O)^{-1}].
 $$
 
-On a genus-one curve this is an isomorphism: under $E\cong\operatorname{Pic}^0(E)$ it is the identity up to the sign fixed by the convention (4.3). For an $n$-torsion point $P$, the restriction of $\lambda(P)$ to the finite group $E[n]$ has a canonical character obtained by comparing translation trivializations. Evaluating those trivializations with divisors yields $Q\mapsto e_n(P,Q)$. Therefore the kernel of (4.6) is the kernel of $\lambda$ on $E[n]$, hence is zero. Both sides of (4.6) have $n^2$ elements, so the injection is an isomorphism. $\square$
+Under $E\simeq\operatorname{Pic}^0(E)$, this map sends $P$ to the class of $(P)-(O)$, up to the sign fixed by choosing $t_P$ instead of $t_{-P}$. It is therefore an isomorphism.
+
+We recall the kernel-duality argument. Let $\varphi:A\to B=A/H$ be an isogeny with finite kernel scheme $H$. A rigidified degree-zero line bundle $L$ on $B$ belongs to $\ker(\varphi^\vee)$ precisely when $\varphi^*L$ is trivial. Choose a trivialization after a faithfully flat base change. Translation by $h\in H$ changes it by a unit $\chi(h)$, and compatibility of two translations gives
+
+$$
+\chi(h+h')=\chi(h)\chi(h').
+$$
+
+Thus $\chi$ is a character $H\to\mathbf G_m$. Conversely, such a character twists the descent datum on the trivial line bundle over $A$ and descends it to a rigidified line bundle on $B$ whose pullback is trivial. These constructions are inverse and commute with base change. Hence
+
+$$
+(\ker\varphi)^D\simeq\ker(\varphi^\vee),
+$$
+
+with Cartier evaluation as the perfect pairing between the two kernels.
+
+For $\varphi=[n]_E$, pullback of degree-zero line bundles shows that $\varphi^\vee=[n]_{E^\vee}$. The polarization $\lambda$ therefore gives an isomorphism $E[n]^D\simeq E[n]$. Its evaluation pairing is obtained by comparing translation trivializations of $\mathcal O_E(O)$; expressing those trivializations by $D_P$ and $f_P$ gives exactly (4.3). This proves that (4.6) is an isomorphism. Since $n$ is invertible, both group schemes are finite étale, so the scheme-theoretic isomorphism is the asserted perfect pairing on geometric points. $\square$
 
 Choose a point $P$ of exact order $n$. Perfectness supplies $Q$ such that $e_n(P,Q)$ has exact order $n$: otherwise $e_n(P,Q)^{n/d}=1$ for every $Q$ for some proper divisor $d$, and nondegeneracy would force $(n/d)P=0$. Thus one can choose a basis $(P,Q)$ satisfying
 
@@ -641,6 +692,35 @@ $$
 This exact exponent is what permits passage to an inverse limit. Omitting it would confuse the transition map $\mu_{\ell^{r+1}}\to\mu_{\ell^r}$ with an inclusion.
 
 When the characteristic divides $n$, a canonical group-scheme pairing still exists and expresses the principal polarization. Its perfectness is schematic. The pairing on geometric points alone can be degenerate simply because there are too few points; for instance $\mu_p(\overline K)$ is trivial in characteristic $p$. All point-level perfectness statements in this chapter therefore retain the hypothesis $p\nmid n$.
+
+### 4.7 The group-scheme pairing in every characteristic
+
+The preceding final sentence deserves a theorem, because it is the form needed at the residue characteristic. Let $E/S$ be an elliptic scheme. Multiplication by $n$ is finite locally free of degree $n^2$, so $E[n]$ is a finite locally free commutative group scheme even where $n$ is not invertible. The origin defines a principal polarization
+
+$$
+\lambda:E\xrightarrow{\sim}E^\vee.
+$$
+
+The kernel-duality argument used in Theorem 4.2 works over the base $S$ and without a separability assumption. Applied to $[n]$, it gives
+
+$$
+E[n]^D\xrightarrow{\sim}E^\vee[n]
+\xrightarrow[\lambda^{-1}]{\sim}E[n]. \tag{4.14}
+$$
+
+Cartier evaluation under (4.14) is a bilinear pairing
+
+$$
+e_n:E[n]\times_SE[n]\longrightarrow\mu_n. \tag{4.15}
+$$
+
+It is alternating because the origin polarization is symmetric: the commutator biextension changes to its inverse when the variables are exchanged and is canonically trivial on the diagonal. It is perfect because (4.14) is an isomorphism. All of this commutes with arbitrary base change.
+
+**Theorem 4.3 (schematic Weil duality).** For every elliptic scheme $E/S$ and every $n\geq1$, (4.15) is a perfect alternating pairing of finite locally free group schemes. If $n$ is invertible on $S$, taking geometric points recovers Theorems 4.1 and 4.2. If $n$ is not invertible, perfectness means the isomorphism (4.14), not a nondegenerate pairing on point sets.
+
+**Proof.** The construction of the dual elliptic scheme and its Poincaré line bundle identifies the Cartier dual of the kernel of an isogeny with the kernel of the dual isogeny, by the descent calculation in Theorem 4.2. Since $[n]^\vee=[n]$ after the origin polarization, evaluation gives (4.15) and makes its adjoint the isomorphism (4.14). Symmetry of the polarization gives alternation. Base change preserves the Poincaré bundle, the multiplication kernels, and the descent construction. $\square$
+
+This theorem explains the ordinary characteristic-$p$ picture. The Cartier dual of the étale group $\mathbf Z/p^r\mathbf Z$ is $\mu_{p^r}$, so a visible étale direction and an invisible multiplicative direction are paired. In the supersingular case both the torsion group and its dual are connected. A perfect schematic pairing can therefore have a trivial pairing on all geometric points without any contradiction.
 
 ## 5. Tate modules and their topology
 
@@ -1026,6 +1106,38 @@ $$
 
 The stable line generated by $(0,0)$ is the representation-theoretic shadow of the isogeny. Notice that $E[2]$ may contain two other points only over an extension; a rational kernel of order two does not imply full rational two-torsion.
 
+### 7.6 Integral lattices at primes dividing the degree
+
+The phrase “isogenous curves have the same Tate module” is true only after tensoring with $\mathbf Q_\ell$ when $\ell$ divides the isogeny degree. The integral defect can be described exactly. Let
+
+$$
+M=T_\ell\varphi:T_\ell E\longrightarrow T_\ell E'.
+$$
+
+Choose bases and take the Smith normal form
+
+$$
+UMV=\begin{pmatrix}\ell^a&0\\0&\ell^b\end{pmatrix},
+\qquad 0\leq a\leq b,
+$$
+
+with $U,V$ invertible over $\mathbf Z_\ell$. Pairing compatibility gives $\det(M)$ equal to the degree $d$ up to a unit, so
+
+$$
+a+b=v_\ell(d),\qquad
+\operatorname{coker}M\cong
+\mathbf Z/\ell^a\mathbf Z\oplus
+\mathbf Z/\ell^b\mathbf Z. \tag{7.10}
+$$
+
+This proves the index formula (7.4) and also records the possible shapes of the defect. For a separable cyclic isogeny of degree $\ell$, the pair is $(0,1)$: one primitive Tate direction survives integrally and the other is multiplied by $\ell$. For multiplication $[\ell]$, whose degree is $\ell^2$, the pair is $(1,1)$.
+
+The reduction modulo $\ell$ explains why residual representations may change. In the cyclic case, $M$ has rank one modulo $\ell$; its kernel is the line corresponding to the isogeny kernel and its image is related to the dual-isogeny line on $E'[\ell]$. Although $V_\ell E$ and $V_\ell E'$ are the same rational representation, the two lattices sit at adjacent vertices in the lattice graph of that representation. Their mod-$\ell$ extensions can point in opposite directions.
+
+Semisimplification removes this lattice dependence. The characteristic polynomial of every Galois element on the common rational representation is integral and has the same reduction for both lattices. The semisimplifications of the two reductions therefore agree. In the degree-$\ell$ situation, their constituents are precisely the kernel character $\psi$ and the forced quotient character $\overline\chi_\ell\psi^{-1}$ from (6.8). What can change is the extension class joining them.
+
+This lattice calculation is also the reason one must not invert the degree too early. Rationalizing makes functoriality simple, but it erases the kernel line that detects a rational isogeny and the finite index that controls residual congruences.
+
 ## 8. Cyclic isogenies and reducibility
 
 ### 8.1 Why invariant lines are geometric
@@ -1066,7 +1178,7 @@ such a subgroup is generated by a primitive vector, equivalently it is a rank-on
 
 Thus cyclic degree-$N$ isogenies correspond to stable rank-one direct summands of $E[N]$. Merely finding a stable subgroup of order dividing $N$ is insufficient, and over the nonfield ring $\mathbf Z/N\mathbf Z$ the word “line” can be misleading. For example, the subgroup generated by $(2,0)$ in $(\mathbf Z/4\mathbf Z)^2$ has order two and is not a direct summand of rank one over $\mathbf Z/4\mathbf Z$.
 
-Primary decomposition reduces the condition to compatible cyclic subgroups in $E[\ell^{v_\ell(N)}]$. The quotient isogeny has degree $N$, and its dual has cyclic kernel only under an additional condition; duality guarantees the same degree but not an identical abstract kernel in inseparable settings.
+Primary decomposition reduces the condition to compatible cyclic subgroups in $E[\ell^{v_\ell(N)}]$. The quotient isogeny has degree $N$. Under the standing prime-to-characteristic hypothesis its dual kernel is also geometrically cyclic, because it is the Cartier dual of the original cyclic kernel; its Galois character is the cyclotomic twist of the inverse kernel character. When the characteristic divides the degree, “cyclic” must instead be defined scheme-theoretically and this point-set conclusion is unavailable.
 
 ### 8.4 Rational torsion is stronger
 
@@ -1103,12 +1215,32 @@ This is also a direct consequence of the pairing compatibility (7.5): the kernel
 The extension entries for $E[\ell]$ and $E'[\ell]$ need not agree. An isogeny of degree $\ell$ is not an isomorphism on integral $\ell$-torsion, and it can exchange which of two extensions is visible. On $V_\ell$ the two curves are isomorphic, but reduction of different stable lattices can yield nonisomorphic residual extensions. Semisimplifications retain the same two characters:
 
 $$
-E[\ell]^{\mathrm{ss}}cong E'[\ell]^{\mathrm{ss}}
+E[\ell]^{\mathrm{ss}}\cong E'[\ell]^{\mathrm{ss}}
 \cong\mathbf F_\ell(\psi)\oplus
 \mathbf F_\ell(\overline\chi_\ell\psi^{-1}). \tag{8.4}
 $$
 
 Thus rational isogeny preserves the residual constituents but may alter the way they are glued.
+
+### 8.6 The scheme-theoretic boundary
+
+Theorem 8.1 assumes $\ell\ne\operatorname{char}K$ for a structural reason, not merely to simplify notation. When $\ell=\operatorname{char}K$, an isogeny of degree $\ell$ may have a connected kernel with no nonzero geometric point. It then produces no invariant line in a two-dimensional point representation, because that point representation does not exist.
+
+Relative Frobenius is the basic example. For an elliptic curve in characteristic $p$,
+
+$$
+F:E\longrightarrow E^{(p)}
+$$
+
+has degree $p$ and connected kernel. On geometric points its kernel consists only of the origin. Its dual Verschiebung may have an étale cyclic kernel in the ordinary case and a connected kernel in the supersingular case. The two degree-$p$ isogenies are equally genuine even though only one may be visible as a subgroup of points.
+
+The right all-characteristic statement is therefore:
+
+**Theorem 8.2 (subgroup-scheme form).** Isogenies $E\to E'$ of degree $n$ over $K$, up to isomorphism of the target, correspond to finite subgroup schemes $C\subset E$ of rank $n$ defined over $K$. The quotient is $E/C$, and the dual kernel is $C^D$ under the canonical kernel pairing.
+
+**Proof.** The kernel of an isogeny is finite locally free of rank equal to its degree. Conversely, the faithfully flat quotient of an elliptic curve by a finite subgroup scheme is represented by an elliptic curve, and the quotient map has kernel $C$ and degree $\operatorname{rank}C$. A morphism with the same kernel factors uniquely through the quotient and induces a degree-one map of the targets, hence an isomorphism. Kernel duality identifies the kernel of the dual isogeny with $C^D$. $\square$
+
+When $n$ is prime to the characteristic, finite locally free groups of rank $n$ killed by $n$ are étale, so Galois-stable geometric subgroups recover the same theorem. At the characteristic, only the subgroup-scheme formulation survives. This distinction also clarifies the phrase “rational subgroup”: it means a subgroup scheme defined over $K$ in arbitrary characteristic, while a Galois-stable set of geometric points is an equivalent description only in the étale case.
 
 ## 9. Good reduction and specialization
 
@@ -1208,30 +1340,56 @@ $$
 \deg(1-\pi)=|\widetilde E(\mathbf F_q)|. \tag{9.7}
 $$
 
-Let $\widehat\pi$ be the dual isogeny. Since $\deg\pi=q$, duality gives $\widehat\pi\pi=[q]$. The endomorphism $\pi+\widehat\pi$ is fixed by duality and has degree behavior forcing it to be multiplication by an integer; call that integer $a$. Expanding the quadratic degree form gives
+Let $\widehat\pi$ be the dual isogeny. Since $\deg\pi=q$, duality gives $\widehat\pi\pi=[q]$. To identify $\pi+\widehat\pi$, recall that homomorphisms $E\to E^\vee$ fixed by duality correspond to divisor classes in the Néron--Severi group. For an elliptic curve, degree induces
+
+$$
+\operatorname{NS}(E)=\operatorname{Pic}(E)/\operatorname{Pic}^0(E)
+\xrightarrow{\sim}\mathbf Z,
+$$
+
+because a divisor class has degree zero exactly when it lies in $\operatorname{Pic}^0(E)$. Under the origin polarization, the symmetric endomorphism associated with degree $a$ is $[a]$. Hence there is a unique integer $a$ such that
+
+$$
+\pi+\widehat\pi=[a]. \tag{9.8}
+$$
+
+Now duality of homomorphisms and distributivity of composition give
+
+$$
+(1-\widehat\pi)(1-\pi)
+=[1]-[a]+[q]=[q+1-a].
+$$
+
+The dual of $1-\pi$ is $1-\widehat\pi$. By the defining property of a dual isogeny, the left side is $[\deg(1-\pi)]$. Equality of multiplication endomorphisms therefore gives
 
 $$
 \deg(1-\pi)=1-a+q.
 $$
 
-Comparison with (9.5) and (9.7) gives $a=a_q$, while
+Comparison with (9.5) and (9.7) gives $a=a_q$, while multiplying (9.8) by $\pi$ gives
 
 $$
-\pi^2-[a_q]\pi+[q]=0. \tag{9.8}
+\pi^2-[a_q]\pi+[q]=0. \tag{9.9}
 $$
 
-Applying $T_\ell$ yields the polynomial in (9.6). Its determinant is also forced to be $q$ by the cyclotomic determinant, since arithmetic Frobenius sends every prime-to-$p$ root of unity to its $q$th power. $\square$
-
-The positivity of degrees applied to $[m]-[n]\pi$ gives
+Apply $T_\ell$ and write $A=T_\ell(\pi)$. The determinant of $A$ is $q$, either from $\widehat\pi\pi=[q]$ or from the cyclotomic determinant, since arithmetic Frobenius raises prime-to-$p$ roots of unity to the $q$th power. For a $2\times2$ invertible matrix,
 
 $$
-m^2-a_qmn+qn^2\ge0
+A+(\det A)A^{-1}=(\operatorname{tr}A)I.
 $$
 
-for all integers $m,n$. Approximating the real ratio $m/n$ to the minimum of this quadratic yields
+The relation $A+qA^{-1}=a_qI$, obtained from (9.8), therefore gives $\operatorname{tr}A=a_q$. This proves the exact characteristic polynomial (9.6), not merely a polynomial that annihilates $A$. $\square$
+
+The same degree form proves the Hasse bound without an analytic estimate. For integers $m,n$, duality gives
 
 $$
-|a_q|\le2\sqrt q. \tag{9.9}
+\deg([m]-[n]\pi)=m^2-a_qmn+qn^2\ge0
+$$
+
+for all integers $m,n$. If $a_q^2>4q$, the real quadratic $X^2-a_qX+q$ is negative on a nonempty open interval. Choose a rational number $m/n$ in that interval and multiply by $n^2$; the displayed degree would be negative, a contradiction. Hence
+
+$$
+|a_q|\le2\sqrt q. \tag{9.10}
 $$
 
 Thus the Frobenius eigenvalues have product $q$, sum $a_q$, and complex absolute value $\sqrt q$.
@@ -1253,7 +1411,7 @@ $$
 For every $\ell\ne5$, inertia at $5$ acts trivially and arithmetic Frobenius has characteristic polynomial
 
 $$
-X^2+2X+5. \tag{9.10}
+X^2+2X+5. \tag{9.11}
 $$
 
 Modulo $\ell$, the same polynomial describes Frobenius on $E[\ell]$. For $\ell=3$ it becomes $X^2-X+2$, irreducible over $\mathbf F_3$; this local irreducibility of one Frobenius element implies that the restricted representation cannot have a Frobenius-stable line over $\mathbf F_3$, though it says nothing by itself about representations at other curves or primes.
@@ -1269,7 +1427,7 @@ $$
 It follows that
 
 $$
-|\widetilde E(\mathbf F_q)|=|\widetilde E'(\mathbf F_q)|. \tag{9.11}
+|\widetilde E(\mathbf F_q)|=|\widetilde E'(\mathbf F_q)|. \tag{9.12}
 $$
 
 This conclusion can also be seen by reducing an isogeny of degree prime to the residue characteristic and comparing its finite kernel and cokernel on rational points, but the Tate-module argument treats all degrees uniformly after choosing an auxiliary $\ell$ not dividing the relevant characteristics.
@@ -1303,7 +1461,7 @@ On inertia, both $\eta$ and $\chi_\ell$ are trivial, and
 $$
 \rho_{E,\ell}(\sigma)=
 \begin{pmatrix}
-1&m,t_\ell(\sigma)\\0&1
+1&m\,t_\ell(\sigma)\\0&1
 \end{pmatrix}. \tag{10.2}
 $$
 
@@ -1334,7 +1492,7 @@ The $\ell$-adic inertia invariants have dimension one, wild inertia is trivial, 
 
 ### 10.3 A Tate-curve example
 
-Take $K=\mathbf Q_5$ and $q_E=5^6\cdot2$. The Tate curve has split multiplicative reduction and
+Take $K=\mathbf Q_7$ and $q_E=7^6\cdot2$. The Tate curve has split multiplicative reduction and
 
 $$
 v(\Delta_{\min})=6.
@@ -1352,15 +1510,17 @@ $$
 0\to\mu_3\to E[3]\to\mathbf Z/3\mathbf Z\to0
 $$
 
-does not split over $\mathbf Q_5$ merely from this divisibility: splitting requires $q_E$ to be a cube. Its valuation is divisible by three, but its residue unit $2$ is not a cube in $\mathbf F_5^\times$. This separates unramifiedness, reducibility, and splitting in one calculation.
+does not split over $\mathbf Q_7$ merely from this divisibility: splitting requires $q_E$ to be a cube. Its valuation is divisible by three, but its residue unit $2$ is not a cube in $\mathbf F_7^\times$, whose cubes are $1$ and $-1$. This separates unramifiedness, reducibility, and splitting in one calculation.
 
 ### 10.4 What additive reduction does imply
 
-Additive reduction is not a single representation-theoretic shape. If $j(E)$ is integral, the curve has potentially good reduction: after a finite extension it acquires good reduction. For $\ell\ne p$, Theorem 9.1 then shows that an open subgroup of inertia acts trivially, so the inertia image on $T_\ell E$ is finite.
+Additive reduction is not a single representation-theoretic shape. Two conditional statements, whose hypotheses are often established by a separate potential-reduction argument, are immediate from the theory already proved here.
 
-If $v(j(E))<0$, the curve is potentially multiplicative. It becomes a Tate curve after a finite extension and is a quadratic twist of a Tate curve over $K^s$. At an additive, potentially multiplicative place the twisting character is ramified. The inertial action is therefore a ramified quadratic scalar multiplied by a unipotent Tate action.
+If $E$ acquires good reduction over a finite extension $L/K$, then Theorem 9.1 makes $T_\ell E$ unramified over $L$ for every $\ell\ne p$. Hence an open subgroup of $I_K$ acts trivially and the inertia image on $T_\ell E$ is finite. This conclusion uses potential good reduction as a hypothesis; integrality of $j(E)$ is a necessary numerical sign of that possibility, but the construction of the good model is a separate theorem and is not being assumed silently.
 
-These two alternatives are useful qualitative information. They show that additive reduction is potentially controlled either by a smooth elliptic fiber or by a multiplicative period. They do not give a universal integral matrix, conductor exponent, or residual inertia criterion from $v(\Delta_{\min})$ alone.
+If $v(j(E))<0$, the converse Tate-uniformization theorem from the preceding book does apply: $E$ is a quadratic twist of a Tate curve. When the reduction over $K$ is additive rather than multiplicative, the twisting character is ramified. After restricting to the splitting field, inertia has the unipotent Tate shape; over $K$ it is multiplied by the ramified quadratic scalar.
+
+These alternatives give useful qualitative control once the relevant potential-reduction hypothesis has been proved. They do not give a universal integral matrix, conductor exponent, or residual inertia criterion from $v(\Delta_{\min})$ alone. In particular, this book never infers potential good reduction merely by reversing the easy implication that good reduction makes $j$ integral.
 
 ### 10.5 What additive reduction does not imply
 
@@ -1384,12 +1544,72 @@ $$
 
 If $\operatorname{char}K=p$, the geometric-point inverse limit has rank one for an ordinary curve and rank zero for a supersingular curve. Calling it a two-dimensional $p$-adic representation would be false.
 
-### 11.2 The formal multiplication series
+The correct replacement for prime-to-$p$ specialization is finite-flat geometry. A finite locally free group scheme keeps its rank when points collide, and Cartier duality keeps the Weil pairing perfect even when the geometric-point pairing becomes trivial. This is why finite-flat groups and their duality are indispensable parts of the present theory.
+
+### 11.2 Torsion on a good integral model
+
+Suppose $E/K$ has good reduction, and let $\mathcal E/R$ be its smooth proper elliptic model. Multiplication by every positive integer $n$ is finite locally free of degree $n^2$. To recall the argument, a symmetric relatively ample line bundle $L$ satisfies
+
+$$
+[n]^*L\simeq L^{\otimes n^2}
+$$
+
+up to a line bundle from the base. Thus $[n]$ is fiberwise finite of degree $n^2$. Properness makes it finite, and fiberwise flatness between smooth curves makes it finite locally free. Therefore
+
+$$
+\mathcal E[n]=\ker([n]:\mathcal E\to\mathcal E)
+$$
+
+is finite locally free of rank $n^2$ over $R$. No invertibility hypothesis on $n$ is used.
+
+For $n=p^r$, the generic fiber in mixed characteristic is finite étale, while the special fiber can be nonreduced. They are nevertheless fibers of one rank-$p^{2r}$ group. The origin polarization extends over $R$, and Theorem 4.3 gives a perfect alternating pairing
+
+$$
+e_{p^r}:\mathcal E[p^r]\times_R\mathcal E[p^r]
+\longrightarrow\mu_{p^r}. \tag{11.2}
+$$
+
+Thus good reduction supplies more than a generic Galois representation: it supplies a canonical finite-flat model of every finite torsion layer, compatible with multiplication, duality, and base change.
+
+This model explains why reduction of point sets fails. Specialization is the base change of group schemes
+
+$$
+\mathcal E[p^r]\longmapsto\widetilde E[p^r],
+$$
+
+and preserves rank. It is not generally a bijection between generic and special geometric points. Distinct generic points may meet in a connected infinitesimal subgroup of the special fiber. Their lost separation is recorded by nilpotents in the special coordinate algebra.
+
+### 11.3 Connected and étale directions
+
+Assume that $R$ is henselian and that the residue field $k$ is perfect. Every finite locally free commutative group $G/R$ then has a functorial connected--étale sequence
+
+$$
+0\longrightarrow G^0\longrightarrow G
+\longrightarrow G^{\mathrm{et}}\longrightarrow0, \tag{11.3}
+$$
+
+where $G^0$ has connected special fiber and $G^{\mathrm{et}}$ is finite étale. Henselianity lifts the special-fiber idempotents; perfection identifies the reduced component quotient as geometrically étale.
+
+Apply this to $G=\mathcal E[p^r]$. Over an algebraic closure of $k$, an ordinary special fiber has
+
+$$
+0\longrightarrow\mu_{p^r}\longrightarrow
+\widetilde E[p^r]\longrightarrow
+\mathbf Z/p^r\mathbf Z\longrightarrow0. \tag{11.4}
+$$
+
+The sequence records the connected multiplicative part and the étale quotient. A splitting is not canonical and is not implicit. The geometric points see only the quotient, giving $\widetilde E[p^r](\overline k)\cong\mathbf Z/p^r\mathbf Z$. Cartier duality reverses (11.4), and the principal polarization makes the full sequence self-dual in this reversed sense.
+
+For a supersingular special fiber, $\widetilde E[p^r]$ is connected, and its Cartier dual is connected as well. It is local-local rather than multiplicative or étale. Its group of geometric points is trivial although its rank is $p^{2r}$. In particular, it is generally false to replace it by $\alpha_{p^r}\times\alpha_{p^r}$: rank, connectedness, and tangent dimension do not determine the Hopf law.
+
+These alternatives can be seen from $[p]=V\circ F$. Relative Frobenius has purely inseparable degree $p$, while Verschiebung has degree $p$. If $V$ is separable, its kernel has $p$ geometric points and the curve is ordinary. If $V$ is inseparable, $[p]$ has separable degree one and the curve is supersingular. Iteration gives separable degree $p^r$ in the ordinary case and one in the supersingular case. In the ordinary case multiplication by $p$ maps the visible $p^r$-torsion onto the visible $p^{r-1}$-torsion with kernel of order $p$, so the visible group is cyclic of order $p^r$. This supplies the detailed proof of the point assertions in Chapter 2.
+
+### 11.4 The formal multiplication series
 
 Let $E/K$ have an integral Weierstrass equation and let $T=-x/y$ be the formal parameter at the origin. Its formal group has a multiplication series
 
 $$
-[p](T)=pT+c_2T^2+c_3T^3+\cdots. \tag{11.2}
+[p](T)=pT+c_2T^2+c_3T^3+\cdots. \tag{11.8}
 $$
 
 If $p$ is invertible, the linear coefficient makes $[p]$ locally invertible. In residue characteristic $p$, that coefficient vanishes after reduction, so the first nonzero higher term controls the kernel near the origin.
@@ -1397,32 +1617,14 @@ If $p$ is invertible, the linear coefficient makes $[p]$ locally invertible. In 
 For a good special fiber in characteristic $p$, after a suitable parameter the reduced series begins
 
 $$
-[p](T)=uT^{p^h}+\text{higher terms},\qquad u\ne0, \tag{11.3}
+[p](T)=uT^{p^h}+\text{higher terms},\qquad u\ne0, \tag{11.9}
 $$
 
 where $h=1$ for ordinary reduction and $h=2$ for supersingular reduction. This **height** explains the point counts. Height one leaves an étale direction outside the connected formal kernel; height two uses the full degree $p^2$ in the connected direction, leaving no nonzero geometric $p$-torsion.
 
 The formula also explains why the reduction map on $p$-torsion cannot be treated by the proof of Theorem 9.1. The kernel of $[p]$ on the integral model is not étale. Distinct generic points can specialize to the same special point, with their separation retained in infinitesimal structure.
 
-### 11.3 Ordinary and supersingular special fibers
-
-Over an algebraically closed field of characteristic $p$, an ordinary elliptic curve has a connected multiplicative part and an étale cyclic part in its $p^r$-torsion. At the level of geometric points only the latter is seen:
-
-$$
-E[p^r](\overline k)\cong\mathbf Z/p^r\mathbf Z.
-$$
-
-For a supersingular elliptic curve the entire $p^r$-torsion is connected and
-
-$$
-E[p^r](\overline k)=0.
-$$
-
-The words **connected** and **étale** refer here to the two qualitative directions of the special-fiber kernel. A systematic theory of their integral models, extensions, and duals is deliberately postponed. For present purposes the essential lesson is negative as well as positive: geometric special-fiber points do not recover the rank-two generic torsion.
-
-The Weil pairing remains compatible with this picture schematically. The connected multiplicative direction is dual to the étale direction in the ordinary case, while a supersingular kernel is self-dual in a connected sense. On geometric points alone, the target $\mu_{p^r}(\overline k)$ is trivial, so no perfect point pairing can exist.
-
-### 11.4 Mixed characteristic
+### 11.5 Mixed characteristic and finite-flat representations
 
 Suppose $\operatorname{char}K=0$ and the residue characteristic is $p$. Then $E[p^r](K^s)\cong(\mathbf Z/p^r)^2$ and $T_pE$ is free of rank two. The Weil pairing gives
 
@@ -1432,19 +1634,63 @@ $$
 
 exactly as before. What changes is local ramification. The character $\chi_p$ is ramified, and even good reduction does not imply that $T_pE$ is unramified.
 
+At finite level, however, good reduction gives the canonical model $\mathcal E[p^r]$ of Section 11.2. In particular $E[p]$ is **finite flat over $R$**: its finite étale generic group scheme is the generic fiber of a finite locally free commutative group over $R$. This does not mean unramified. The group $\mu_p$ is finite flat over $R$, while its generic points carry the ramified mod-$p$ cyclotomic character.
+
+The connected--étale sequence of $\mathcal E[p^r]$ provides an integral filtration in the ordinary-reduction case. Supersingular reduction has no étale special-fiber quotient. These integral alternatives should not be inferred merely from reduction of a chosen matrix: different lattices in one rational representation can have different special fibers.
+
 For a Tate curve there is still an exact sequence
 
 $$
 0\longrightarrow\mathbf Z_p(1)
 \longrightarrow T_pE_q
-\longrightarrow\mathbf Z_p\longrightarrow0, \tag{11.4}
+\longrightarrow\mathbf Z_p\longrightarrow0, \tag{11.10}
 $$
 
 whose extension class is the $p$-adic Kummer class of $q$. Both the cyclotomic line and roots of the unit part of $q$ can be ramified. The tame inertia matrix from Chapter 10 is therefore unavailable.
 
 For good reduction, the formal group controls those generic $p$-power points that approach the origin. Ordinary and supersingular reduction lead to genuinely different connected--étale behavior. Describing the resulting representation with complete precision requires theories beyond the elementary specialization argument. The safe conclusions at this stage are rank two in mixed characteristic, cyclotomic determinant, failure of prime-to-$p$ unramifiedness, and sensitivity to the formal group.
 
-### 11.5 Equal characteristic
+### 11.6 Multiplicative reduction at the coefficient prime
+
+Finite flatness can occur even when the curve itself has multiplicative reduction and hence has no smooth proper elliptic model. Let $K$ have mixed characteristic $(0,p)$, let $E/K$ have multiplicative reduction, and put
+
+$$
+m=v(\Delta_{\min}).
+$$
+
+After the unramified splitting extension, Tate uniformization gives
+
+$$
+0\longrightarrow\mu_p\longrightarrow E[p]
+\longrightarrow\mathbf Z/p\mathbf Z\longrightarrow0. \tag{11.5}
+$$
+
+Its extension class is the Kummer class of the Tate parameter $q$, with $v(q)=m$. This class comes from an integral $\mu_p$-torsor exactly when it has a unit representative modulo $p$th powers. Writing $q=\pi^m u$ gives
+
+$$
+[q]\text{ has a unit representative}
+\quad\Longleftrightarrow\quad p\mid m. \tag{11.6}
+$$
+
+When $m=ps$, write $q=(\pi^s)^pa$ with $a\in R^\times$. For each $i\in\mathbf Z/p\mathbf Z$, take
+
+$$
+\mathcal G_i=\operatorname{Spec}R[T_i]/(T_i^p-a^i)
+$$
+
+and form their disjoint union. Multiplication uses $T_iT_j$ and divides by $a$ whenever $i+j$ crosses $p$. Since $a$ is a unit, this defines a finite locally free group of rank $p^2$. Its kernel over the zero component is $\mu_p$, its component label gives the constant quotient, and on the generic fiber $T_i=z$ corresponds to the Tate parameter $(\pi^s)^iz$. This proves sufficiency in (11.6). Conversely, pulling an integral extension back along $1\in\mathbf Z/p\mathbf Z$ gives a $\mu_p$-torsor over $R$, so its generic Kummer class must be represented by a unit. This proves necessity for the displayed canonical extension.
+
+For an unramified extension of $\mathbf Q_p$ with $p$ odd, the two residual inertia characters $\overline\chi_p$ and $1$ are distinct. The cyclotomic line is then intrinsic, and schematic closure forces any finite-flat model to extend (11.5) in the displayed order. Under these hypotheses,
+
+$$
+E[p]\text{ is finite flat over }R
+\quad\Longleftrightarrow\quad
+p\mid v(\Delta_{\min}). \tag{11.7}
+$$
+
+An unramified quadratic twist changes both characters by the same finite étale sign and does not alter the criterion. At $p=2$ the residual cyclotomic character is trivial, so the intrinsic-line argument fails; (11.6) still classifies the canonical extension, but abstract necessity requires additional classification. On ramified bases, intermediate finite-flat models can occur, so the unramified hypothesis in (11.7) cannot be dropped.
+
+### 11.7 Equal characteristic
 
 If $K$ itself has characteristic $p$, define the geometric-point $p$-adic inverse limit by the same formula. For an ordinary curve,
 
@@ -1490,7 +1736,7 @@ $$
 If the residue field has size $q_v$, arithmetic Frobenius satisfies
 
 $$
-\det\left(X-overline\rho_{E,\ell}(\operatorname{Frob}_v)\right)
+\det\left(X-\overline\rho_{E,\ell}(\operatorname{Frob}_v)\right)
 \equiv X^2-a_vX+q_v\pmod\ell, \tag{12.4}
 $$
 
@@ -1529,7 +1775,7 @@ j&=256\frac{(A^2+AB+B^2)^3}{A^2B^2C^2}.
 \end{aligned} \tag{12.7}
 $$
 
-These formulas connect the representation to the local equation theory. Suppose $v$ has odd residue characteristic and exactly one of $A,B,C$ has positive valuation. Then the displayed equation is minimal, $c_4$ is a unit, and the curve has multiplicative reduction. If, for example, $v(A)>0$, then
+These formulas connect the representation to the local equation theory. Suppose $A,B,C$ are integral at a place $v$ of odd residue characteristic and exactly one has positive valuation, so the other two are units. Then the displayed equation is integral and minimal, $c_4$ is a unit, and the curve has multiplicative reduction. If, for example, $v(A)>0$, then
 
 $$
 v(\Delta_{\min})=2v(A). \tag{12.8}
@@ -1576,7 +1822,17 @@ $$
 
 when $v(A)>4$. Only after this calculation may the multiplicative inertia criterion be applied. Different parity patterns require their own verified coordinate changes.
 
-At a place $v\mid\ell$, the coefficient prime equals the residue characteristic. The representation remains two-dimensional because the number field has characteristic zero, and its determinant remains cyclotomic. But good reduction does not imply unramifiedness, and the tame multiplicative formula does not apply. Formal groups and connected--étale behavior supply the first structural distinctions; a full integral local condition requires the finite-flat theory developed in later volumes.
+At a place $v\mid\ell$, the coefficient prime equals the residue characteristic. The representation remains two-dimensional because the number field has characteristic zero, and its determinant remains cyclotomic, but good reduction does not imply unramifiedness and the tame multiplicative formula does not apply.
+
+There is nevertheless an exact finite-level conclusion. If $E$ has good reduction at $v$, the group $E[\ell]$ is the generic fiber of the finite locally free group $\mathcal E[\ell]$ over $\mathcal O_{F_v}$. Thus $\overline\rho_{E,\ell}|_{G_{F_v}}$ is finite flat. If $E$ has multiplicative reduction, $F_v/\mathbf Q_\ell$ is unramified, and $\ell$ is odd, criterion (11.7) gives
+
+$$
+E[\ell]\text{ is finite flat over }\mathcal O_{F_v}
+\quad\Longleftrightarrow\quad
+\ell\mid v(\Delta_{\min}). \tag{12.12}
+$$
+
+For the exponentiated Frey curve at a place $v\mid abc$ above $\ell$, formula (12.10) supplies this divisibility. Hence, under the unramified odd-prime hypothesis, its residual representation is finite flat there even though the curve has multiplicative reduction. If $v\nmid abc$ and the curve has good reduction, finite flatness follows from the good model instead. Ramified coefficient fields and the dyadic case require the qualifications stated in Section 11.6; no stronger criterion is asserted here.
 
 ### 12.5 Reducibility as the remaining geometric branch
 
@@ -1588,7 +1844,7 @@ $$
 \overline\rho_{E,\ell}\sim
 \begin{pmatrix}
 \psi&*\\0&\overline\chi_\ell\psi^{-1}
-\end{pmatrix}. \tag{12.12}
+\end{pmatrix}. \tag{12.13}
 $$
 
 Determining whether such a rational $\ell$-isogeny can exist is not settled by the local torsion theory alone. It becomes a problem about rational points on modular curves and the arithmetic of their Jacobians. The achievement of the present theory is to isolate that remaining branch exactly: all representation-theoretic ambiguity has been translated into a concrete geometric subgroup.
@@ -1606,8 +1862,9 @@ e_\ell&\det\overline\rho_{E,\ell}=\overline\chi_\ell\\
 \text{multiplicative reduction at }v\nmid\ell&\text{unipotent inertia controlled by }v(\Delta_{\min})\\
 \ell\mid v(\Delta_{\min})&\text{trivial residual inertia at that multiplicative place}\\
 \text{a stable line in }E[\ell]&\text{a rational cyclic }\ell\text{-isogeny}\\
-\text{a place above }\ell&\text{formal-group and connected--étale constraints}.
-\end{array} \tag{12.13}
+\text{good reduction at }v\mid\ell&\text{the finite-flat model }\mathcal E[\ell]\\
+\text{multiplicative }v\mid\ell&\text{the criterion (11.7) under its stated hypotheses}.
+\end{array} \tag{12.14}
 $$
 
 Every row has an exact hypothesis. Prime-to-characteristic separability is what makes geometric torsion rank two. The Weil pairing is what forces the cyclotomic determinant. Smooth proper reduction is what kills inertia away from the residue characteristic. Tate uniformization is what turns multiplicative degeneration into a Kummer extension. Subgroup descent is what turns reducibility into an isogeny.
@@ -1618,6 +1875,6 @@ Torsion is the finite shadow of multiplication on an elliptic curve, and the Tat
 
 The Weil pairing supplies the organizing symmetry. It is alternating, perfect at levels prime to the characteristic, compatible through the tower, and equivariant under Galois. From it come the cyclotomic determinant and the twisted self-duality of every elliptic-curve Tate module. Isogenies respect that duality; away from their degree they preserve torsion exactly, and at their degree they change the integral lattice in a measured way. A rational cyclic kernel becomes a stable line, so reducibility acquires a geometric meaning.
 
-Reduction then turns geometry into local Galois behavior. Good reduction preserves prime-to-residue torsion point for point and makes inertia trivial. Frobenius on the special fiber records both point counts and the characteristic polynomial of the representation. Multiplicative reduction contributes one Kummer-theoretic unipotent direction, whose residual survival is governed by the divisibility of the minimal discriminant exponent. Additive reduction admits no comparable one-line formula, and the residue-characteristic Tate module demands formal and connected--étale information.
+Reduction then turns geometry into local Galois behavior. Good reduction preserves prime-to-residue torsion point for point and makes inertia trivial. Frobenius on the special fiber records both point counts and the characteristic polynomial of the representation. Multiplicative reduction contributes one Kummer-theoretic unipotent direction, whose residual survival is governed by the divisibility of the minimal discriminant exponent. Additive reduction admits no comparable one-line formula. At the residue characteristic, pointwise specialization is replaced by a finite-flat torsion model, its connected--étale sequence, and schematic Weil duality.
 
-For a Frey-type curve these principles assemble into a precise two-dimensional residual representation: its determinant is cyclotomic, it is unramified at good places away from $\ell$, its multiplicative inertia is explicitly controlled, and its possible reducibility is exactly the existence of a rational $\ell$-isogeny. The arithmetic curve has thereby been converted into a linear object without losing the geometry that governs it. That conversion is the essential role of torsion and Tate modules in the arithmetic of elliptic curves.
+For a Frey-type curve these principles assemble into a precise two-dimensional residual representation: its determinant is cyclotomic, it is unramified at good places away from $\ell$, its multiplicative inertia is explicitly controlled, and under the stated coefficient-prime hypotheses its local representation at $\ell$ is finite flat. Its possible reducibility is exactly the existence of a rational $\ell$-isogeny. The arithmetic curve has thereby been converted into a linear object without losing the geometry that governs it. That conversion is the essential role of torsion and Tate modules in the arithmetic of elliptic curves.
