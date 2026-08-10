@@ -24,6 +24,8 @@
    - [Building local reduced cycles](#43-building-local-reduced-cycles)
    - [Degree, repetition, and compatibility](#44-degree-repetition-and-compatibility)
    - [Archimedean cycle types](#45-archimedean-cycle-types)
+   - [Weil restriction and finite local packets](#46-weil-restriction-and-finite-local-packets)
+   - [Arithmetic neighborhoods at finite and real places](#47-arithmetic-neighborhoods-at-finite-and-real-places)
 5. [The irreducible-cycle approximation theorem](#5-the-irreducible-cycle-approximation-theorem)
    - [Statement of the engine](#51-statement-of-the-engine)
    - [Étale coordinates near finitely many cycles](#52-étale-coordinates-near-finitely-many-cycles)
@@ -48,7 +50,8 @@
    - [Archimedean neighborhoods](#82-archimedean-neighborhoods)
    - [Proof of the totally real variant](#83-proof-of-the-totally-real-variant)
    - [Reality, disjointness, and finite local behavior together](#84-reality-disjointness-and-finite-local-behavior-together)
-   - [What changes when the base is not totally real](#85-what-changes-when-the-base-is-not-totally-real)
+   - [Constructing the auxiliary field itself](#85-constructing-the-auxiliary-field-itself)
+   - [What changes when the base is not totally real](#86-what-changes-when-the-base-is-not-totally-real)
 9. [Finite étale covers, twists, and monodromy](#9-finite-étale-covers-twists-and-monodromy)
    - [Lifting local conditions through a cover](#91-lifting-local-conditions-through-a-cover)
    - [Connected components and twists](#92-connected-components-and-twists)
@@ -67,7 +70,7 @@
 12. [A practical package for arithmetic geometry](#12-a-practical-package-for-arithmetic-geometry)
    - [Local inputs from a moduli problem](#121-local-inputs-from-a-moduli-problem)
    - [Auxiliary primes and residue-characteristic primes](#122-auxiliary-primes-and-residue-characteristic-primes)
-   - [The black-box theorem](#123-the-black-box-theorem)
+   - [The reusable theorem](#123-the-reusable-theorem)
    - [A verification checklist](#124-a-verification-checklist)
    - [Conclusion](#125-conclusion)
 
@@ -83,7 +86,7 @@ $$
 
 and, more precisely, nonempty open neighborhoods $\Omega_v\subset X(K_v)$. The arithmetic problem is to turn these separate local choices into one algebraic point. The word *open* is essential. A point in a completion usually carries more information than the application truly needs: integrality, a nonsingular reduction, a prescribed isomorphism class, or inequalities at a real place are stable under a small perturbation. Encoding the requirement by $\Omega_v$ records exactly that stability.
 
-It is generally unreasonable to ask for a point of $X(K)$. Rational points can be empty for global reasons even when every completion has a point. A conic may fail the Hasse principle only in more elaborate settings than conics themselves, but higher-dimensional varieties, torsors, and curves supply abundant local-to-global failures. Even when $X(K)$ is nonempty, it need not be dense in a product of the $X(K_v)$. Thus weak approximation on affine space cannot simply be transferred to an arbitrary $X$.
+It is generally unreasonable to ask for a point of $X(K)$. Rational points can be empty for global reasons even when every completion has a point. Smooth conics over number fields obey the local-to-global principle, but already genus-one torsors, higher-genus curves, and higher-dimensional varieties exhibit failures of existence; failures of weak approximation are more common still. Even when $X(K)$ is nonempty, it need not be dense in a product of the $X(K_v)$. Thus weak approximation on affine space cannot simply be transferred to an arbitrary $X$.
 
 The theorem of this book changes the output rather than weakening the local input. It produces a finite extension $L/K$ and a point
 
@@ -134,6 +137,8 @@ The proof has four conceptual stages.
 First, local points are expanded into reduced effective zero-cycles of one common degree. Second, these cycles are placed in the smooth configuration locus of a symmetric power. Third, local coordinates and weak approximation globalize the cycle parameters. Fourth, Hilbert irreducibility is imposed on the universal degree-$d$ family so that the resulting finite étale algebra is connected. A connected finite étale algebra over $K$ is a field, and therefore the global cycle is one closed point rather than a sum of smaller closed points.
 
 The last step is decisive. Approximation alone naturally produces zero-cycles. Hilbert irreducibility is what turns an unordered collection into the conjugates of a single field-valued point. Book 167 established the simultaneous local and Hilbert machinery; here it is applied to a geometric parameter space whose universal fiber is the desired point.
+
+The geometric inputs have equally precise roles. Book 8 supplies symmetric powers, configuration spaces, and their universal finite étale families. Book 13 supplies the effective descent used for finite free families and quotients by the free permutation action. Book 18 supplies the passage from completed local intersection patterns to algebraic marked curves and divisors once properness and an ample line bundle are present. In the moving argument below we use the finite-order form of that passage: prescribe a sufficiently long jet in a completed smooth neighborhood, lift it by a positive line bundle, and then use openness to retain its geometry. These ingredients are not alternate proofs of the arithmetic step; together they construct the family to which the arithmetic step applies.
 
 ## 2. Closed points and finite extensions
 
@@ -385,6 +390,110 @@ The pair $(r,s)$ is locally constant in a reduced family. A cycle supported enti
 
 This is the source of signature control. If $K$ is totally real and the local algebra at every real place is $\mathbf R^d$, then every embedding of the global residue field into $\mathbf C$ has real image. It is not enough to choose one real point at each real place: all $d$ local sheets must remain real.
 
+### 4.6 Weil restriction and finite local packets
+
+Symmetric powers forget labels, which is exactly right for a closed point. A prescribed nonsplit local packet is initially easier to describe with labels: one names a finite étale algebra and one point over each of its factors. Weil restriction converts that extension-valued description into ordinary rational points on a variety over the smaller field.
+
+Let $A/k$ be a finite locally free algebra of rank $d$ and let $Y$ be a quasi-projective $A$-scheme. The Weil restriction $\operatorname{Res}_{A/k}Y$, when it exists, represents the functor
+
+$$
+T\longmapsto Y(T\times_k\operatorname{Spec}A).
+$$
+
+In particular,
+
+$$
+(\operatorname{Res}_{A/k}Y)(k)=Y(A).
+$$
+
+For the application $Y=X_A$, this reads
+
+$$
+(\operatorname{Res}_{A/k}X_A)(k)=X(A).
+$$
+
+We recall the construction because it explains exactly which hypotheses are being used. Suppose first that $Y=\operatorname{Spec}B$ is affine and choose a $k$-basis $e_1,\ldots,e_d$ of $A$. Present
+
+$$
+B=A[z_1,\ldots,z_m]/(f_1,\ldots,f_s).
+$$
+
+Write a prospective image of $z_j$ as
+
+$$
+z_j\longmapsto \sum_{a=1}^d z_{ja}e_a.
+$$
+
+Expanding each $f_i$ in the basis $e_a$ gives $d$ polynomial equations over $k$. Their common zero scheme represents the desired functor. A change of basis gives a canonically isomorphic representing scheme, since both represent the same functor. For a quasi-projective $Y$, choose a locally closed immersion into projective space over $A$. The same coefficient construction produces the restriction of the ambient projective space; the equations and nonvanishing conditions defining $Y$ produce a locally closed subvariety. Uniqueness of representing objects glues the affine constructions. Thus finite locally free restriction exists for the quasi-projective spaces used here.
+
+The construction commutes with extension of the ground field. If $A/k$ is finite étale, then over a separable closure $\bar k$ one has
+
+$$
+A\otimes_k\bar k\simeq\bar k^d,
+$$
+
+and therefore
+
+$$
+(\operatorname{Res}_{A/k}X_A)_{\bar k}
+\simeq \prod_{\tau:A\to\bar k}X_{\bar k}.
+$$
+
+This identity proves the properties needed below. If $X/k$ is smooth, the restriction is smooth, because after the faithfully flat extension to $\bar k$ it is a product of smooth varieties. If $X$ is geometrically connected, the restriction is geometrically connected. Its dimension is $d\dim X$. For a product $A=\prod_iE_i$, restriction is the product of the restrictions from the factors.
+
+There is also a useful topological statement. When $k$ is a completion of a number field, the displayed identification on rational points is a homeomorphism
+
+$$
+(\operatorname{Res}_{A/k}X_A)(k)
+\simeq \prod_iX(E_i).
+$$
+
+This follows on affine charts because both topologies are induced by finitely many coordinate functions, and it then glues. Hence a product of local neighborhoods in the $X(E_i)$ is an ordinary open subset on a smooth $k$-variety. This is the precise device behind the notation $\Xi\subset X(A)$.
+
+To pass from a labeled packet to an unordered cycle, base change a point $\xi\in X(A)$ to $\bar k$. It gives $d$ geometric points indexed by the embeddings of the field factors of $A$. The condition that these points be pairwise distinct is open: equality of two points is a closed diagonal condition. On this injective locus, forgetting the labels gives a morphism
+
+$$
+(\operatorname{Res}_{A/k}X_A)^{\mathrm{inj}}
+\longrightarrow Q_d(X).
+$$
+
+Its image consists exactly of reduced cycles whose finite étale algebra is isomorphic to $A$. Locally on $k$-points this image is open. Indeed, the universal family over $Q_d(X)$ is finite étale, and the isomorphism class of a finite étale algebra over a local field is locally constant. Thus restriction of scalars organizes the input, while the reduced symmetric power organizes the output.
+
+Two warnings matter. First, $X(A)\ne\varnothing$ does not imply that the injective locus is nonempty: a tuple may factor through one geometric point. Second, restriction of scalars does not globalize an arbitrarily chosen local algebra. It only expresses the local datum as a rational point of a parameter variety. The moving and irreducibility arguments must still place compatible packets into one global family.
+
+### 4.7 Arithmetic neighborhoods at finite and real places
+
+The existence theorem consumes open subsets, whereas arithmetic geometry usually produces conditions described by reduction, integrality, or sign. We therefore record how those conditions become neighborhoods.
+
+Let $k$ be a nonarchimedean completion, let $x\in X(k)$, and suppose $X/k$ is smooth of dimension $r$. There is an open neighborhood $U$ of $x$ and an étale map
+
+$$
+u:U\longrightarrow\mathbf A_k^r.
+$$
+
+After shrinking, $u$ induces a homeomorphism from a neighborhood of $x$ onto a polydisc about $u(x)$. Choose coordinates so that a basic neighborhood has the form
+
+$$
+|u_i(y)-u_i(x)|_k<\epsilon_i
+\qquad(1\le i\le r).
+$$
+
+If $X$ extends to a smooth scheme over the valuation ring and $x$ extends to an integral point, one may take congruence tubes
+
+$$
+u_i(y)\equiv u_i(x)\pmod{\mathfrak m_k^{n_i}}.
+$$
+
+The multivariable Hensel lemma identifies sufficiently small tubes upstairs and downstairs. Consequently, smooth reduction to a chosen special-fiber point is open. Nonvanishing of a regular function is open. A determinant being a unit is open after an integral model has been fixed. More elaborate structures that are classified by a finite étale fiber are locally constant, by the rigidity theorem for finite étale algebras.
+
+One must distinguish these cases from conditions that are not open. Equality with one exact point is not open in positive dimension. Being singular is usually closed rather than open. A valuation inequality such as $v(a)\ge n$ is open, while equality $v(a)=n$ is the difference of two open-and-closed valuation balls inside $k^\times$ and is still open there; by contrast, a condition involving an unbounded limiting valuation need not define a neighborhood useful for finite approximation. The arithmetic claim must be translated before the global theorem is invoked.
+
+At a real place, $X(\mathbf R)$ is a smooth real manifold. A regular function has locally constant sign away from its zero locus, and a finite collection of strict inequalities defines an open semialgebraic neighborhood. Connected components of $X(\mathbf R)$ are open and closed. For a finite étale family, the number of real sheets is locally constant: a real sheet can become nonreal only after meeting another sheet on the discriminant locus. Thus a configuration of $d$ distinct real points has a neighborhood throughout which the associated algebra remains $\mathbf R^d$.
+
+At a complex place there is no signature choice: every rank-$d$ finite étale algebra is $\mathbf C^d$. Complex neighborhoods can still impose ordinary analytic inequalities, but they cannot contribute to total reality.
+
+These descriptions explain the phrase **arithmetic neighborhood** used later: it is an open subset of local points chosen small enough that every arithmetic property required by the application is constant on it. The theorem preserves membership in that neighborhood; the prior local analysis is what converts membership back into good reduction, a level condition, a sign, or a prescribed local algebra.
+
 ## 5. The irreducible-cycle approximation theorem
 
 ### 5.1 Statement of the engine
@@ -441,23 +550,71 @@ The same construction applies to nonsplit packet conditions when enlargement by 
 
 This presentation, rather than rationality of $Q_d(X)$, is the crucial geometric assertion. Symmetric powers of curves of positive genus already show why one must not claim that $Q_d(X)$ itself is an open of affine space. The affine space $H$ parametrizes fibers of one carefully constructed finite map; it need not dominate the whole symmetric power.
 
-Here is the geometric construction and, equally importantly, its boundary. Embed $X$ in a projective variety and choose a sufficiently high power of an ample line bundle. Values and first jets of its sections can then be prescribed independently at a finite reduced subscheme. Over each $K_v$, choose sections cutting out the desired reduced cycle together with auxiliary points that are permitted by the local datum. Transversality of the cuts is an open condition, so all intersection points remain distinct and remain in the chosen local open under small perturbations.
+Here is the construction in six steps. Its purpose is not to prove that a symmetric power is rational; that assertion is false in general. It constructs one rational parameter space carrying the local configurations that were chosen.
 
-The local sections do not yet define one global family. Weak approximation in their finite-dimensional coefficient spaces produces global sections close to all of them. Successive Bertini arguments, with the prescribed jets held fixed, arrange that the intermediate complete intersections are geometrically integral. On the last resulting curve, a sufficiently positive linear system supplies a pencil whose selected local members have precisely the prescribed reduced zero-dimensional fibers. After removing the base locus, poles, branch values, and any unwanted residual intersections, the incidence scheme of a point on a member of the pencil is finite étale over an open in the coefficient space. Taking a suitable affine slice through the selected local parameters gives $H$ and $\mathcal T$.
-
-There are two distinct approximation steps here. Approximation of section coefficients constructs one $K$-defined moving family with the correct local models. Approximation of the final parameter in $H$, used in Section 5.3, chooses one fiber of that family. Collapsing these into the assertion that unrelated local étale charts glue to a global map would leave a gap.
-
-At $q_v$, the symmetric locus is smooth of dimension $d\dim X$. Choose an étale coordinate map
+**Step 1: projective placement and jet interpolation.** Choose an immersion $X\hookrightarrow\bar X$ into a projective variety and replace the boundary by a closed subset. Let $\mathcal L$ be very ample on $\bar X$. For every finite reduced subscheme $D$ contained in the smooth locus, the exact sequence
 
 $$
-\phi_v:W_v\longrightarrow\mathbf A_{K_v}^{d\dim X}
+0\longrightarrow\mathcal I_D^2\otimes\mathcal L^n
+\longrightarrow\mathcal L^n
+\longrightarrow\mathcal L^n|_{2D}\longrightarrow0
 $$
 
-from a neighborhood $W_v\subset Q_d(X)$. Jet-surjectivity says that the coefficient-to-cycle map is a submersion at the selected local coefficient vector. After taking a transverse affine slice, its map to this symmetric-power chart is étale. Thus closeness of parameters controls the entire unordered fiber, not only one selected branch.
+shows, once $n$ is large enough, that global sections prescribe values and first derivatives independently along $D$. Indeed, the first cohomology of the left term vanishes for large $n$, so the right-hand restriction map is surjective. Only finitely many local configurations are involved; after increasing $n$ once, the same conclusion holds for all of them after scalar extension to every $K_v$.
 
-Geometric integrality of $\mathcal T$ is also built before specialization. On the auxiliary geometrically integral curve, the incidence variety of a point together with a divisor in a base-point-free linear system is geometrically integral. Passing to a sufficiently general affine slice preserves geometric integrality; deleting the discriminant and boundary leaves a geometrically integral finite étale cover. Its degree is $d$ because its selected local fibers have $d$ geometric points and finite étale rank is locally constant.
+Choose many pairwise distinct points inside each $\Omega_v$. In local coordinates, prescribe sections whose common zero set passes through the selected points and whose differentials have full rank there. Surjectivity to $2D$ realizes these conditions. Full rank is the nonvanishing of a Jacobian minor, hence persists on a local neighborhood of the section tuple.
 
-Finally, finite étale local constancy gives neighborhoods $V_v$ on which the algebra and evaluated support remain in $\mathcal U_v$. The universal property of $Q_d(X)$ supplies $\Psi$ and the Cartesian identification. This proves the lemma.
+We also need to concentrate an entire intersection, not just some of its points, in the chosen open. Around $a_v\in\Omega_v$, choose étale coordinates $z_1,\ldots,z_r$. On the completed local neighborhood the equations
+
+$$
+z_2=\cdots=z_r=0,
+\qquad
+\prod_{j=1}^d(z_1-c_j)=0
+$$
+
+cut out $d$ distinct points in $\Omega_v$ when the $c_j$ are sufficiently small and distinct. Begin with $z_1^d,z_2,\ldots,z_r$, which define a length-$d$ complete intersection supported at $a_v$. For sufficiently positive sections, restriction to the necessary finite-order neighborhood is surjective, so these completed equations lift to projective hypersurface sections over $K_v$. Choose their remaining coefficients so that no common component lies in the boundary. Intersection length is constant in the resulting flat complete-intersection family and is already exhausted at $a_v$, so no residual zero-dimensional component occurs elsewhere. Perturbing $z_1^d$ to the split product and applying the inverse function theorem gives the desired reduced split intersection. This is the local concentration argument used below.
+
+**Step 2: descending the local section tuples.** The required sections at different places lie in the finite-dimensional $K_v$-spaces obtained from the same global section space. Weak approximation in that coefficient space gives one tuple of sections over $K$ simultaneously close to all local tuples. The values and Jacobian minors therefore retain the desired local behavior. This is the first, geometric use of weak approximation.
+
+**Step 3: geometric integrality of the successive cuts.** We also choose the tuple outside the bad Bertini loci. For completeness, the relevant form of Bertini says: if $V$ is geometrically integral and smooth on a dense open and a finite-dimensional linear system has no fixed component and separates tangent directions there, then the members whose intersection with $V$ is not geometrically integral and generically smooth lie in a proper closed subset of the coefficient projective space. To see this, form the universal hyperplane section. It is integral over the generic point because the generic linear equation is irreducible in the function field, and generic smoothness follows from surjectivity of the differential of the evaluation map. Openness of geometric integrality and smoothness in a flat family then removes a proper closed subset. Prescribed first jets impose a linear subspace; taking $n$ larger ensures that this subspace still separates points and tangents away from $D$, so the same argument applies within it.
+
+Apply this statement successively. After $\dim X-1$ cuts, we obtain a geometrically integral curve $C\subset X$ on a dense open, smooth at every selected local point. Boundary components and unwanted singular points are avoided by including them in the proper closed exceptional locus at each stage. When $X$ is already a curve, this step simply takes $C=X$.
+
+**Step 4: a moving divisor on the curve.** Include the last equation of the local concentration construction in the coefficient approximation of Step 2. The resulting global complete intersection gives a geometrically integral curve $C$ and a global section $s_0$ on the smooth projective curve obtained by normalizing its projective closure. Its divisor, after scalar extension to every $K_v$, is reduced, split, disjoint from the boundary, and supported in $\Omega_v$. The curve and divisor have been constructed simultaneously; fixing an arbitrary curve and divisor class first could introduce a genuine Picard-class obstruction.
+
+Choose a second global section $s_\infty$ with no common zero with $s_0$ and with no forbidden boundary behavior. These conditions define a nonempty open in a sufficiently positive section space. The ratio
+
+$$
+f=[s_0:s_\infty]:\bar C\longrightarrow\mathbf P^1
+$$
+
+is finite of degree $d=\deg\operatorname{div}(s_0)$, and its fiber over $0$ is $\operatorname{div}(s_0)$. Remove the branch values, the images of singular and boundary points, and $\infty$. Over the resulting open $H_0\subset\mathbf A^1_K$, the map
+
+$$
+\mathcal T_0=f^{-1}(H_0)\longrightarrow H_0
+$$
+
+is finite étale of degree $d$. Its total space is geometrically integral because $C$ is geometrically integral and only finitely many points have been removed. For every $v$, parameters sufficiently close to $0$ have all $d$ inverse images in $\Omega_v$ and split over $K_v$, by simple-root stability at the reduced fiber over $0$.
+
+**Step 5: an affine parameter space and local submersivity.** Choose local parameters $h_v\in H_0(K_v)$ sufficiently close to $0$ and small neighborhoods on which the entire fiber remains in $\Omega_v$. Set $H=H_0$ after shrinking around the finitely many forbidden values; it is a nonempty open of the affine line. If further transverse coefficient directions are needed for nonsplit packets, retain several coefficient directions instead of a pencil and take a sufficiently general affine linear slice through the relevant local coefficient neighborhoods. Jet-surjectivity makes the coefficient-to-cycle map a submersion at the chosen points, so a general slice retains the needed local directions and geometric integrality.
+
+The universal divisor defines
+
+$$
+\Psi:H\longrightarrow Q_d(X),
+$$
+
+and the incidence scheme over $H$ is the pullback of $\mathcal Z_d$. Its evaluation map to $C\subset X$ is the first projection. The total space remains geometrically integral after restricting to $H$.
+
+**Step 6: stabilizing the arithmetic data.** Finite étale local constancy now gives neighborhoods $V_v$ of the local parameters on which the fiber algebra and evaluated support remain in $\mathcal U_v$. In the split case this says that all $d$ roots remain $K_v$-rational and inside $\Omega_v$. In the fixed-packet case it says that the specified finite étale algebra and the point in its restriction-of-scalars space remain unchanged. The universal property of the reduced symmetric locus supplies the Cartesian identity
+
+$$
+\mathcal T\simeq\mathcal Z_d\times_{Q_d(X),\Psi}H.
+$$
+
+This proves the lemma.
+
+There are two distinct approximation steps in the full argument. Approximation of section coefficients constructs one $K$-defined moving family with the correct local models. Approximation of the final parameter in $H$, used in Section 5.3, chooses one fiber of that family. Keeping them separate prevents unrelated local coordinate charts from being mistaken for one global morphism.
 
 High degree has now been accounted for: it supplies enough sections to interpolate values and first jets, enough room for Bertini and boundary avoidance, and enough permitted auxiliary points to make the incidence family geometrically integral. It is geometric room, not a hidden assertion that every integer is an allowed degree. This proof also explains why the exact-rank form must assume the presentation rather than infer it from local realizability alone.
 
@@ -757,7 +914,35 @@ The archimedean conditions, finite local algebra prescriptions, and Hilbert disj
 
 Thus Theorems 7.1 and 8.1 combine verbatim, subject to a common degree, local realizability, and one compatible moving presentation. This simultaneous statement is stronger and safer than first constructing a totally real field and then enlarging it to meet finite-place conditions: a later extension may introduce complex embeddings, destroy splitting, or meet $E$.
 
-### 8.5 What changes when the base is not totally real
+### 8.5 Constructing the auxiliary field itself
+
+The theorem also gives a clean field-existence result with no moduli variety in view.
+
+**Corollary 8.2 (totally real split fields with avoidance).** Let $K$ be totally real, let $S$ be a finite set of finite places of $K$, let $E/K$ be finite, and let $N\ge1$. There exists a finite extension $L/K$ such that
+
+$$
+[L:K]\ge N,
+$$
+
+$L$ is totally real, every $v\in S$ splits completely in $L$, and $L$ is linearly disjoint from $E$. There are infinitely many such fields. More strongly, they may be chosen successively so that their Galois closures are pairwise linearly disjoint after the corresponding stronger resolvent conditions have been included.
+
+**Proof strategy.** Use the affine line as the variety. Small split packets at every prescribed completion and at every real place determine the local conditions. The moving construction permits the degree to be made arbitrarily large, and the base-changed incidence condition enforces avoidance.
+
+**Proof.** Take $X=\mathbf A^1_K$. At each $v\in S$, choose a small open ball in $K_v$; at each real place choose a bounded real interval. In the split moving lemma, begin with at least $N$ distinct points in every one of these opens. Increasing the interpolation degree preserves those chosen points and yields a common degree $d\ge N$. Apply Theorem 8.1 with avoidance field $E$. The output satisfies
+
+$$
+L\otimes_KK_v\simeq K_v^d\quad(v\in S),
+\qquad
+L\otimes_{K,v}\mathbf R\simeq\mathbf R^d\quad(v\mid\infty),
+$$
+
+and $L\otimes_KE$ is a field. These identities are respectively complete splitting, total reality, and linear disjointness.
+
+To obtain infinitely many fields, after constructing $L_1,\ldots,L_m$, enlarge the avoidance field by the compositum of their normal closures and apply the result again. The new field cannot equal any previous one. For the stronger assertion about normal closures, use on $\mathbf A^1$ the universal monic degree-$d$ polynomial family with $d\ge\max\{N,2\}$. At the listed finite and real places choose coefficient neighborhoods of split polynomials with all roots in the selected balls or intervals. Its generic splitting field is regular with group $S_d$. The full-group and base-changed resolvent conditions from Book 167 then produce a totally real degree-$d$ root field whose normal closure is disjoint from the previous compositum. Induction gives pairwise linearly disjoint normal closures. At each stage only finitely many local and resolvent conditions are added. $\square$
+
+This corollary quantifies exactly what is and is not controlled. The lower bound $N$ is arbitrary, but no prescribed exact degree, discriminant bound, solvability, or normality is asserted. Complete splitting is forced only at the listed places. Ramification elsewhere is finite but uncontrolled.
+
+### 8.6 What changes when the base is not totally real
 
 If $K$ has a complex place, no finite extension $L/K$ is a totally real number field, because an embedding $K\hookrightarrow\mathbf C$ with nonreal image extends to an embedding of $L$. One may instead prescribe the signature of $L$ above each archimedean place through local algebras $\mathbf R^r\times\mathbf C^s$; above a complex place the algebra is necessarily $\mathbf C^d$.
 
@@ -773,7 +958,7 @@ $$
 \pi:Y\longrightarrow X
 $$
 
-be finite étale, with $X$ smooth and geometrically connected. Suppose that at every designated place $v$ one has a nonempty open $\Theta_v\subset Y(K_v)$. If a geometrically connected component $Y^\circ$ meets every $\Theta_v$, then Theorem 6.1 applied to $Y^\circ$ gives $y\in Y^\circ(L)$; its image $x=\pi(y)$ has the desired local lifts.
+be finite étale, with $X$ smooth and geometrically connected. Suppose that at every designated place $v$ one has a nonempty open $\Theta_v\subset Y(K_v)$. If there is a $K$-defined open-and-closed subscheme $Y^\circ\subset Y$ that is geometrically connected and whose local points meet every $\Theta_v$, then Theorem 6.1 applied to $Y^\circ$ gives $y\in Y^\circ(L)$; its image $x=\pi(y)$ has the desired local lifts.
 
 The connected-component hypothesis matters. A connected finite étale cover over $K$ can become disconnected over $\overline K$. Its components may be permuted through a constant extension. Applying the theorem to such a cover without choosing a geometrically connected component can force the residue field to contain that constant field and can contradict a requested disjointness condition.
 
@@ -954,7 +1139,7 @@ At a finite place, an integral model may provide a smooth special-fiber point. H
 
 At an archimedean place, topology may select a connected component, sign, polarization type, or ordering. These are encoded by a nonempty open subset of the real manifold. For a totally real conclusion, such an open must be supplied at every real place of the base.
 
-The theorem does not construct these local points and does not prove smoothness or geometric connectedness of the moduli variety. Those are the geometric inputs. Its role is to globalize all of them without losing control of the residue field. The specific moduli spaces, twists, representability arguments, and local-solvability proofs used in potential modularity belong to Book 169 and are not developed here.
+The theorem does not construct these local points and does not prove smoothness or geometric connectedness of the moduli variety. Those are the geometric inputs. Its role is to globalize all of them without losing control of the residue field. The specific moduli spaces, twists, representability arguments, and local-solvability proofs used in potential modularity are developed in the subsequent volume and are not assumed here.
 
 ### 12.2 Auxiliary primes and residue-characteristic primes
 
@@ -966,9 +1151,9 @@ At auxiliary primes, one may impose a Frobenius pattern, a splitting condition, 
 
 At all real places, one supplies real points and neighborhoods ensuring the intended component and total reality. Omitting even one real place permits complex embeddings above it.
 
-All these places form one finite set. Add to it any places used to force complete splitting. Choose the field $E$ containing every finite extension that the output must avoid, preferably the compositum of normal closures. Finally remove from $X$ every closed degeneracy locus. These preparations convert the application into one invocation of the black-box theorem.
+All these places form one finite set. Add to it any places used to force complete splitting. Choose the field $E$ containing every finite extension that the output must avoid, preferably the compositum of normal closures. Finally remove from $X$ every closed degeneracy locus. These preparations convert the application into one invocation of the reusable theorem.
 
-### 12.3 The black-box theorem
+### 12.3 The reusable theorem
 
 The following formulation is designed for later potential-modularity arguments while remaining independent of any particular moduli space.
 
