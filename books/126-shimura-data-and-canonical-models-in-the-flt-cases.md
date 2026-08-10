@@ -869,37 +869,48 @@ Inner twisting changes matrices but not the determinant character: reduced norm 
 For $G=\operatorname{Res}_{F/\mathbf Q}B^\times$, reduced norm gives the abelian quotient. An element of $B^\times$ preserves $X^+$ exactly when its reduced norm is positive at every $\tau\in\Sigma$. Put
 
 $$
-F_{\Sigma,+}^\times=
-\{a\in F^\times:\tau(a)>0\text{ for every }\tau\in\Sigma\}.        \tag{8.5}
+F_{B,+}^\times=
+\{a\in F^\times:\tau(a)>0\text{ at every real place where }
+B\text{ is Hamiltonian}\}.                                         \tag{8.5}
 $$
 
-Strong approximation for $B^1$ at the noncompact factor gives
+The rational reduced-norm theorem says
 
 $$
-\pi_0(\operatorname{Sh}_K(G,X)(\mathbf C))
-\simeq
-F_{\Sigma,+}^\times\backslash
-\operatorname{Nrd}(B^\times(\mathbf A_f))/\operatorname{Nrd}(K).    \tag{8.6}
+\operatorname{Nrd}(B^\times)=F_{B,+}^\times.
 $$
 
-At every finite local field, reduced norm from a quaternion algebra is surjective. Therefore the middle group is $\mathbf A_{F,f}^\times$, and
+A Hamiltonian reduced norm is positive definite, which proves the necessary sign condition. Conversely, let $c\in F^\times$ satisfy those signs and consider the five-variable quadratic form $\operatorname{Nrd}(x)-ct^2$ on $B\oplus F$. It is isotropic at every finite place by local surjectivity of reduced norm, at every split real place because determinant is surjective, and at every Hamiltonian place by the sign assumption. The Hasse principle makes it isotropic over $F$; weak approximation on the resulting smooth quadric permits an isotropic point with $t\ne0$, and then $\operatorname{Nrd}(x/t)=c$. Thus rational reduced norms already impose positivity at every ramified real place; this condition is independent of preservation of the chosen domain component.
+
+For the basic datum every split real place belongs to $\Sigma$ and is active. Preservation of $X^+$ adds positivity at those split places. Since the split and Hamiltonian real places partition the real embeddings, the exact rational image is therefore
 
 $$
-\pi_0\simeq F_{\Sigma,+}^\times\backslash
+\operatorname{Nrd}(G(\mathbf Q)_+)
+=F_{B,+}^\times\cap
+\{a:\tau(a)>0\text{ for every }\tau\in\Sigma\}
+=F_+^\times,                                                        \tag{8.6}
+$$
+
+where $F_+^\times$ denotes the totally positive elements. Strong approximation for $B^1$ at a noncompact factor and surjectivity of reduced norm at every finite local field now give
+
+$$
+\pi_0\bigl(\operatorname{Sh}_K(G,X)(\mathbf C)\bigr)
+\simeq F_+^\times\backslash
 \mathbf A_{F,f}^\times/\operatorname{Nrd}(K).                        \tag{8.7}
 $$
 
-The positivity group in (8.5) imposes signs only at active places. At ramified real places the adjoint group is compact and no orientation can be reversed. In the curve case $\Sigma=\{\tau_0\}$, (8.7) is a ray-type class quotient with positivity at $\tau_0$ alone.
+Thus (8.7) is a narrow ray-type quotient. The two sources of its signs must not be conflated: orientation of $X^+$ imposes positivity at split active places, while the rational reduced-norm image imposes positivity at Hamiltonian places even though those compact factors carry no orientation.
 
-For example, let $F$ be real quadratic and let $B$ be ramified at one real place and one finite place. Its ramification set has even cardinality. It is split at the other real place and gives a compact Shimura curve. The reflex field is the embedded copy of $F$ singled out by that split place. Components are measured by fractional ideals modulo reduced norms of the level and principal generators positive at the split place; no sign condition is imposed at the Hamiltonian place.
+For example, let $F$ be real quadratic and let $B$ be ramified at one real place and one finite place. Its ramification set has even cardinality. It is split at the other real place and gives a compact Shimura curve. The reflex field is the embedded copy of $F$ singled out by that split place. Positivity at the split place comes from orientation, and positivity at the Hamiltonian place is automatic for every rational reduced norm. Components are therefore narrow ideal classes modulo the reduced norms of the level.
 
-If the Hodge map lifts to $G^\star$, the multiplier $\nu:G^\star\to\mathbf G_m$ is the abelian quotient up to a finite central isogeny. Its component set is consequently a quotient of
+For a connected central modification $G^\natural$ with maximal abelian quotient $\nu^\natural:G^\natural\to T^\natural$, the exact formula remains
 
 $$
-\mathbf Q_{>0}^\times\backslash\mathbf A_f^\times/\nu(K),           \tag{8.8}
+T^\natural(\mathbf Q)^\dagger\backslash
+\nu^\natural(G^\natural(\mathbf A_f))/\nu^\natural(K^\natural).     \tag{8.8}
 $$
 
-with any finite correction from the disconnected kernel of the central norm map retained. One may not substitute (8.7) for (8.8): the common-norm condition deliberately collapses the $F$-valued multiplier to a rational one.
+For the common-norm group $G^\star$, its rational multiplier can project (8.8) toward a quotient of $\mathbf Q_{>0}^\times\backslash\mathbf A_f^\times$; a finite kernel or cokernel coming from the central isogeny must be retained unless separately shown to vanish. One may neither substitute the basic narrow quotient (8.7) for (8.8) nor replace (8.8) by the multiplier quotient without proving the relevant rational and finite-adelic images. The common-norm condition deliberately changes the abelianized label set.
 
 ### 8.5 CM tori in a quaternion algebra
 
@@ -1081,7 +1092,7 @@ r_{(G,X)}:\mathbf G_m\longrightarrow
 \operatorname{Res}_{F/\mathbf Q}\mathbf G_m
 $$
 
-is the diagonal embedding. On finite ideles, a rational idele is extended to every place of $F$. For the quaternionic datum, the exponent vector of the abelianized cocharacter is the characteristic vector of $\Sigma$; its Galois orbit sum defines a monomial map from the reflex-field torus to $\operatorname{Res}_{F/\mathbf Q}\mathbf G_m$. For the unitary datum, the exponents are the signature multiplicities $r_\varphi$ and $2-r_\varphi$, followed by the determinant--multiplier torus (9.8). These descriptions show directly why the same labels compute both the reflex field and the component action.
+is the diagonal embedding. On finite ideles, a rational idele is extended to every place of $F$. For the quaternionic datum, the exponent vector of the abelianized cocharacter is the characteristic vector of $\Sigma$; its Galois orbit sum defines a monomial map from the reflex-field torus to $\operatorname{Res}_{F/\mathbf Q}\mathbf G_m$. For the basic group this monomial acts on the narrow quotient (8.7): the cocharacter labels determine the translating idele, while the Hamiltonian sign restrictions enter separately through the exact rational subgroup $\operatorname{Nrd}(G(\mathbf Q)_+)=F_+^\times$. A central modification uses its own target torus and the quotient (8.8). For the unitary datum, the exponents are the signature multiplicities $r_\varphi$ and $2-r_\varphi$, followed by the determinant--multiplier torus (9.8). Thus the Hodge labels compute the reciprocity multiplier, while the exact abelianized quotient determines where that multiplier acts.
 
 The ambient map generally contains less information than $r_h$ for a special point. Abelianization forgets the position of the CM torus inside the derived group. It is nevertheless exactly the information needed for connected components, because strong approximation has already erased the derived finite adelic coordinate there.
 
@@ -1326,7 +1337,7 @@ The component formula (6.5) now has a geometric interpretation. Let $C$ be a geo
 
 **Proof.** Every component contains a special point by Lemma 11.1. For such a point, projection of special reciprocity to $G^{\mathrm{ab}}$ is (6.5) by (10.4). Hence an automorphism fixes the component exactly when its reciprocity element fixes the class in (6.3). The stabilizer is open, so its fixed field is finite. Since the component is open and closed after base change, its idempotent in the finite étale algebra of components is fixed by that stabilizer and descends to $E_C$. $\square$
 
-For Hilbert data this recovers an action on narrow ideal classes. For quaternionic data it gives the $F_{\Sigma,+}^\times$ class quotient. For unitary data it gives the torus quotient subject to determinant--multiplier relation (9.8). In each case the connected canonical model over $E_C$ is obtained by selecting one idempotent, not by pretending the component was already defined over $E$.
+For Hilbert data this recovers an action on narrow ideal classes. For the basic quaternionic group it gives the narrow quotient $F_+^\times\backslash\mathbf A_{F,f}^\times/\operatorname{Nrd}(K)$: orientation supplies the split-place signs and the rational norm theorem supplies the Hamiltonian signs. A quaternionic central modification instead uses its own exact quotient (8.8). For unitary data it gives the torus quotient subject to determinant--multiplier relation (9.8). In each case the connected canonical model over $E_C$ is obtained by selecting one idempotent, not by pretending the component was already defined over $E$.
 
 ## 13. The FLT package
 
@@ -1363,7 +1374,7 @@ Assume in cases 2 and 3 that the selected rational group carries the polarized w
 - its reflex field is respectively $\mathbf Q$, the stabilizer field of $\Sigma$, or the stabilizer field of the signature function;
 - every compact open contains a neat normal compact open of finite index;
 - at neat level the complex quotient is a smooth quasi-projective variety, and at arbitrary level it is a normal quasi-projective variety with finite quotient singularities;
-- connected components are given by (6.3), with the explicit Hilbert formula (7.5), quaternionic formula (8.7), and unitary torus formula (9.9);
+- connected components are given by (6.3), with the explicit Hilbert formula (7.5), the basic quaternionic narrow formula (8.7), the exact central-modification formula (8.8), and the unitary torus formula (9.9);
 - for every level there is a unique canonical model over the reflex field, characterized by
 
   $$
@@ -1389,6 +1400,7 @@ The central statements depend on different hypotheses, and none should be carrie
 | unitary dimension formula | nondegenerate Hermitian form and fixed signatures | the domain and cocharacter are undefined |
 | symplectic algebraization | faithful polarized weight-one representation, directly or through a compatible central modification | no map to polarized abelian moduli is available |
 | component reduction | strong approximation for the simply connected derived group | the torus quotient may miss a derived obstruction |
+| basic quaternionic narrow formula | rational reduced-norm theorem and every split real place active | Hamiltonian sign restrictions are lost, producing a false one-sign quotient |
 | manifold at level $K$ | neatness, including the center | finite arithmetic stabilizers remain |
 | special reciprocity | arithmetic Artin convention and the CM comparison theorem | the Galois action or its inverse is undetermined |
 | canonical descent | algebraization, density, reciprocity, effective finite descent | a rule on CM points alone is not a variety over $E$ |
@@ -1402,7 +1414,7 @@ The dependency chain is now closed. Adèles and ray quotients provide the topolo
 
 A Shimura datum is the precise interface between Hodge theory and arithmetic groups. The Deligne torus turns a complex structure into a cocharacter; the three Shimura axioms turn its real conjugacy class into a Hermitian symmetric domain. Finite adèles add level, and neatness turns arithmetic orbifolds into manifolds without changing the cofinal tower.
 
-For the Hilbert datum every real embedding is active, so the domain is $(\mathfrak H^\pm)^d$, the reflex field is $\mathbf Q$, and components form a narrow class quotient. A quaternion algebra suppresses the ramified real factors: the active set $\Sigma$ determines both the dimension and the reflex field, while reduced norm computes components. A rank-two unitary group replaces the active-set indicator by a signature function; its $(1,1)$ places contribute dimension, and its definite orientations can still enlarge the reflex field. In all three families, strong approximation transfers the component problem from the derived group to an explicit torus quotient.
+For the Hilbert datum every real embedding is active, so the domain is $(\mathfrak H^\pm)^d$, the reflex field is $\mathbf Q$, and components form a narrow class quotient. A quaternion algebra suppresses the ramified real factors in the domain: the active set $\Sigma$ determines the dimension and reflex field, while reduced norm computes the basic group’s components as a narrow quotient. The signs have two sources—orientation at split active places and positivity of rational reduced norms at Hamiltonian places. A quaternionic central modification retains its own abelianized quotient. A rank-two unitary group replaces the active-set indicator by a signature function; its $(1,1)$ places contribute dimension, and its definite orientations can still enlarge the reflex field. In all three families, strong approximation transfers the component problem from the derived group to an explicit torus quotient.
 
 The arithmetic structure is fixed by one normalization. With arithmetic Artin reciprocity and the left adelic convention,
 
