@@ -1,4 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter04.Section02EquivalentCharacterizations
+import Mathlib.Data.ZMod.QuotientRing
+import Mathlib.RingTheory.Ideal.Int
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter04
 

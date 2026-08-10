@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section03IdealsAreOrdered
+import Mathlib.RingTheory.Valuation.RankOne
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter03
 
@@ -470,6 +471,20 @@ theorem rankOne_power_divisibility
 /- The two-scale lexicographic example. -/
 
 abbrev LexicographicIntegerPair := Lex (ℤ × ℤ)
+
+instance : IsOrderedAddMonoid LexicographicIntegerPair where
+  add_le_add_left a b hab c := by
+    rw [Prod.Lex.le_iff] at hab ⊢
+    rcases hab with hab | ⟨hfirst, hsecond⟩
+    · apply Or.inl
+      change (ofLex a).1 + (ofLex c).1 < (ofLex b).1 + (ofLex c).1
+      simpa [add_comm] using add_lt_add_right hab (ofLex c).1
+    · apply Or.inr
+      constructor
+      · change (ofLex a).1 + (ofLex c).1 = (ofLex b).1 + (ofLex c).1
+        exact congrArg (fun x => x + (ofLex c).1) hfirst
+      · change (ofLex a).2 + (ofLex c).2 ≤ (ofLex b).2 + (ofLex c).2
+        simpa [add_comm] using add_le_add_right hsecond (ofLex c).2
 
 def lexicographicPair (a b : ℤ) : LexicographicIntegerPair :=
   toLex (a, b)

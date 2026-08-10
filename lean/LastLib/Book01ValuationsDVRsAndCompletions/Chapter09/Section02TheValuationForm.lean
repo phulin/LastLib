@@ -10,8 +10,8 @@ open Ideal IsLocalRing Polynomial
 
 noncomputable section
 
-local instance chapter09FactPrime7 : Fact (Nat.Prime 7) := ⟨by norm_num⟩
-local instance chapter09FactPrime2 : Fact (Nat.Prime 2) := ⟨by norm_num⟩
+local instance chapter09Section02FactPrime7 : Fact (Nat.Prime 7) := ⟨by norm_num⟩
+local instance chapter09Section02FactPrime2 : Fact (Nat.Prime 2) := ⟨by norm_num⟩
 
 /-! # Chapter 9: Hensel lifting
 

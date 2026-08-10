@@ -1,4 +1,10 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section04FactorizationOfTheMaximalIdeal
+import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+import Mathlib.Algebra.Polynomial.FieldDivision
+import Mathlib.NumberTheory.LegendreSymbol.Basic
+import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+import Mathlib.RingTheory.Conductor
+import Mathlib.RingTheory.UniqueFactorizationDomain.NormalizedFactors
 
 universe u v
 
@@ -1239,7 +1245,7 @@ theorem chapter11_gaussian_completed_tensor_at_five [Fact (Nat.Prime 5)]
         ‖(chapter11GaussianPolynomial ℤ).derivative.aeval (2 : ℤ_[5])‖ ^ 2 := by
     rw [hval, hderiv]
     have hfour : ‖(4 : ℤ_[5])‖ = 1 := by
-      exact (PadicInt.norm_intCast_eq_one_iff).2 (by norm_num)
+      exact (PadicInt.norm_intCast_eq_one_iff).2 ⟨-1, 1, by norm_num⟩
     change ‖(5 : ℤ_[5])‖ < ‖(4 : ℤ_[5])‖ ^ 2
     rw [hfour]
     simpa using
@@ -1469,8 +1475,7 @@ theorem chapter11_gaussian_completed_tensor_at_two_is_a_field
         have hzval := congrArg ZMod.val hz
         rw [pow_two, ZMod.val_mul] at hzval
         have hzneg : (-1 : ZMod 8).val = 7 := by
-          have hone : (1 : ZMod 8) ≠ 0 := one_ne_zero
-          simp [ZMod.neg_val, ZMod.val_one_eq_one_mod, hone]
+          norm_num
         rw [hzneg] at hzval
         have hzlt : z.val < 8 := z.val_lt
         interval_cases h : z.val <;> norm_num [h] at hzval
@@ -1732,7 +1737,11 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
       change Algebra.adjoin R ({α} : Set L) =
         Subalgebra.map (integralClosure R L).val ⊤
       rw [horder']
-      rfl
+      apply le_antisymm
+      · rintro x hx
+        exact ⟨⟨x, hx⟩, Set.mem_univ _, rfl⟩
+      · rintro x ⟨y, _, rfl⟩
+        exact y.property
     have hcon : conductor R αB = ⊤ :=
       conductor_eq_top_of_adjoin_eq_top hadjoinB
     have hcon' :
@@ -1741,21 +1750,28 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
     have hirrR : Irreducible f :=
       hf.irreducible_iff_irreducible_map_fraction_map.mpr hirreducible
     have hrootB : Polynomial.aeval αB f = 0 := by
-      apply (FaithfulSMul.algebraMap_injective B L)
-      simpa [aeval_def, eval₂_at_apply,
-        ← IsScalarTower.algebraMap_apply R B L] using hα
+      apply Subtype.val_injective
+      change B.val.toRingHom (Polynomial.aeval αB f) = 0
+      rw [map_aeval_eq_aeval_map (φ := RingHom.id R) (ψ := B.val.toRingHom) (by ext; simp)]
+      simpa [Polynomial.aeval_def] using hα
+    letI : IsDedekindDomain B := integralClosure.isDedekindDomain R K L
+    letI : Module.IsTorsionFree R L := .trans_faithfulSMul R K L
+    have hαBint : IsIntegral R αB :=
+      (isIntegral_algHom_iff B.val Subtype.val_injective (x := αB)).mp hαint
     have hmin : f = minpoly R αB := by
-      apply Polynomial.eq_of_monic_of_associated hf (minpoly.monic hαint)
+      apply Polynomial.eq_of_monic_of_associated hf (minpoly.monic hαBint)
       exact
         (Irreducible.associated_of_dvd
-          (minpoly.prime_of_isIntegrallyClosed hαint).irreducible hirrR
-          (minpoly.isIntegrallyClosed_dvd hαint hrootB)).symm
+          (minpoly.prime_of_isIntegrallyClosed hαBint).irreducible hirrR
+          (minpoly.isIntegrallyClosed_dvd hαBint hrootB)).symm
     letI : Module.Finite R B := hfinite
-    letI : IsDedekindDomain B := integralClosure.isDedekindDomain R K L
+    letI : Field (R ⧸ p) := Ideal.Quotient.field p
+    letI : StrongNormalizationMonoid (R ⧸ p)[X] :=
+      UniqueFactorizationMonoid.strongNormalizationMonoid
     have hbar0 : chapter11Reduction R p f ≠ 0 := hrep.1.ne_zero
     rcases hrep with ⟨hbarMonic, _, g, hg, hgdiv⟩
     obtain ⟨q, hqmem, hgq⟩ :=
-      exists_mem_normalizedFactors_of_dvd hbar0 hg.irreducible
+      UniqueFactorizationMonoid.exists_mem_normalizedFactors_of_dvd hbar0 hg
         (dvd_trans (dvd_pow_self g (by norm_num)) hgdiv)
     have hqmem' :
         q ∈ normalizedFactors (Polynomial.map (Ideal.Quotient.mk p) (minpoly R αB)) := by

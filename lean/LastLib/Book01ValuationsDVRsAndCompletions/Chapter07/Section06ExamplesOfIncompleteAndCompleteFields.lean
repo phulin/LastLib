@@ -1,4 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter07.Section05SeparatedCompletionOfRings
+import Mathlib.NumberTheory.Padics.RingHoms
+import Mathlib.SetTheory.Cardinal.Continuum
+import Mathlib.Topology.Algebra.Module.Cardinality
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter07
 
@@ -59,7 +62,7 @@ theorem chapter07_rationals_are_padic_incomplete
     Set.range_eq_univ.mp hrange
   have hunc : Uncountable (chapter07PAdicField p) := by
     rw [← Cardinal.aleph0_lt_mk_iff]
-    exact Cardinal.aleph0_lt_continuum.trans_le
+    exact lt_of_lt_of_le Cardinal.aleph0_lt_continuum
       (continuum_le_cardinal_of_nontriviallyNormedField (chapter07PAdicField p))
   let : Uncountable (chapter07PAdicField p) := hunc
   exact (hsurj.uncountable).not_countable inferInstance

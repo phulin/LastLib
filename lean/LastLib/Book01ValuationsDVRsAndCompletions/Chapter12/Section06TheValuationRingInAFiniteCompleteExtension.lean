@@ -1,4 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section05UniqueExtensionAndHenselianity
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.Analysis.Normed.Operator.BoundedLinearMaps
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 

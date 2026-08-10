@@ -12,6 +12,7 @@ import Mathlib.RingTheory.DiscreteValuationRing.Basic
 import Mathlib.RingTheory.KrullDimension.LocalRing
 import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.Data.ZMod.QuotientRing
+import Mathlib.RingTheory.Ideal.Int
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum

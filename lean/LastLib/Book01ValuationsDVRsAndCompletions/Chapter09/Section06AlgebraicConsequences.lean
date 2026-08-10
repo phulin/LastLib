@@ -1,4 +1,9 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section05WorkedLifts
+import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+import Mathlib.RingTheory.Polynomial.IsIntegral
+import Mathlib.RingTheory.Valuation.Integers
+import Mathlib.Topology.Algebra.Valued.WithVal
+import Mathlib.Algebra.Polynomial.Eval.Irreducible
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions
 namespace Chapter09
@@ -10,8 +15,8 @@ open Ideal IsLocalRing Polynomial
 
 noncomputable section
 
-local instance chapter09FactPrime7 : Fact (Nat.Prime 7) := ⟨by norm_num⟩
-local instance chapter09FactPrime2 : Fact (Nat.Prime 2) := ⟨by norm_num⟩
+local instance chapter09Section06FactPrime7 : Fact (Nat.Prime 7) := ⟨by norm_num⟩
+local instance chapter09Section06FactPrime2 : Fact (Nat.Prime 2) := ⟨by norm_num⟩
 
 /-! # Chapter 9: Hensel lifting
 

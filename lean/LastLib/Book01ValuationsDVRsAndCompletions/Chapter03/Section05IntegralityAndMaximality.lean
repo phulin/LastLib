@@ -1,4 +1,7 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section04PrimeIdealsAndRank
+import Mathlib.Algebra.BigOperators.Field
+import Mathlib.RingTheory.Valuation.Integers
+import Mathlib.RingTheory.Valuation.Integral
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter03
 

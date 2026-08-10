@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.Section01ALocalQuestion
+import Mathlib.Tactic.NormNum.Prime
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter01
 

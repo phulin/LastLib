@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08.Section02InfiniteDigits
+import Mathlib.Analysis.SpecificLimits.Normed
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
 

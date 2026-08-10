@@ -99,6 +99,22 @@ theorem chapter02_archimedean_values_embed_in_reals
 /-- A convenient name for the lexicographically ordered copy of `ℤ × ℤ`. -/
 abbrev Chapter02LexicographicIntegers := ℤ ×ₗ ℤ
 
+instance {α β : Type*} [AddCommMonoid α] [LinearOrder α] [IsOrderedAddMonoid α]
+    [AddCommMonoid β] [LinearOrder β] [IsOrderedAddMonoid β] :
+    IsOrderedAddMonoid (α ×ₗ β) where
+  add_le_add_left a b hab c := by
+    rw [Prod.Lex.le_iff] at hab ⊢
+    rcases hab with hab | ⟨hfirst, hsecond⟩
+    · apply Or.inl
+      change (ofLex a).1 + (ofLex c).1 < (ofLex b).1 + (ofLex c).1
+      simpa [add_comm] using add_lt_add_right hab (ofLex c).1
+    · apply Or.inr
+      constructor
+      · change (ofLex a).1 + (ofLex c).1 = (ofLex b).1 + (ofLex c).1
+        exact congrArg (fun x => x + (ofLex c).1) hfirst
+      · change (ofLex a).2 + (ofLex c).2 ≤ (ofLex b).2 + (ofLex c).2
+        simpa [add_comm] using add_le_add_right hsecond (ofLex c).2
+
 theorem chapter02_lexicographic_order_formula (a b c d : ℤ) :
     toLex (a, b) < toLex (c, d) ↔
       a < c ∨ (a = c ∧ b < d) := by
