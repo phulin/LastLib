@@ -122,7 +122,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 055. Syntomic Cohomology and Integral Period Maps
 - [x] 056. Finite-Flat Group Schemes of Small Height
 - [x] 057. Dieudonné Theory and Raynaud Full Faithfulness
-- [ ] 058. Fontaine–Laffaille Modules and Torsion Representations
+- [x] 058. Fontaine–Laffaille Modules and Torsion Representations
 - [ ] 059. Integral Fontaine–Laffaille Equivalence and Base Change
 - [ ] 060. p-divisible Groups and Serre–Tate Theory
 - [ ] 061. Ramification and Discriminants of Finite-Flat Representations
