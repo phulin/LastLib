@@ -222,7 +222,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 155. Minimal Modularity Lifting
 - [ ] 156. Nonminimal Modularity Lifting
 - [x] 157. Integral Local Types and Type Lattices
-- [ ] 158. Ihara Theory and Saturated Degeneracy Maps on Shimura Curves
+- [x] 158. Ihara Theory and Saturated Degeneracy Maps on Shimura Curves
 - [ ] 159. Integral Level Change and Jacquet–Langlands Comparison
 - [ ] 160. Deep-Level Quaternionic Modules and Diamond Actions
 - [ ] 161. Hecke-Valued Galois Representations and Nonminimal Reciprocity
