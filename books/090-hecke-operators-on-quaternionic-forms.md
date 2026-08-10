@@ -7,11 +7,13 @@
    - [Finite right-coset sums](#12-finite-right-coset-sums)
    - [Independence and equivariance](#13-independence-and-equivariance)
    - [A convention audit](#14-a-convention-audit)
+   - [Standing data and the central constraint](#15-standing-data-and-the-central-constraint)
 2. [The double-coset algebra](#2-the-double-coset-algebra)
    - [Haar measure and convolution](#21-haar-measure-and-convolution)
    - [Integral and finite-sum formulas](#22-integral-and-finite-sum-formulas)
    - [Composition and structure constants](#23-composition-and-structure-constants)
    - [Semigroups and coefficient lattices](#24-semigroups-and-coefficient-lattices)
+   - [Degree, augmentation, and inversion](#25-degree-augmentation-and-inversion)
 3. [The finite class-set calculation](#3-the-finite-class-set-calculation)
    - [Transition data](#31-transition-data)
    - [The block-matrix algorithm](#32-the-block-matrix-algorithm)
@@ -37,11 +39,14 @@
    - [Commuting at distinct places](#72-commuting-at-distinct-places)
    - [The Hecke algebra away from bad places](#73-the-hecke-algebra-away-from-bad-places)
    - [Elementary eigensystems](#74-elementary-eigensystems)
+   - [A commutativity ledger](#75-a-commutativity-ledger)
 8. [Primes in the level](#8-primes-in-the-level)
    - [$K_0$ and Iwahori geometry](#81-k_0-and-iwahori-geometry)
    - [The $U_v$ decomposition](#82-the-u_v-decomposition)
    - [Opposite operators and adjoints](#83-opposite-operators-and-adjoints)
    - [What fails beyond hyperspecial level](#84-what-fails-beyond-hyperspecial-level)
+   - [Diamond operators at $K_1$-level](#85-diamond-operators-at-k_1-level)
+   - [$U_v$ and diamond relations](#86-u_v-and-diamond-relations)
 9. [Ramified quaternionic places](#9-ramified-quaternionic-places)
    - [The valuation filtration](#91-the-valuation-filtration)
    - [Uniformizers and the maximal compact](#92-uniformizers-and-the-maximal-compact)
@@ -57,21 +62,34 @@
     - [Degeneracy maps](#112-degeneracy-maps)
     - [Intertwining relations](#113-intertwining-relations)
     - [The elementary old submodule](#114-the-elementary-old-submodule)
+    - [Adjoint degeneracy maps and the new kernel](#115-adjoint-degeneracy-maps-and-the-new-kernel)
+    - [The exact two-by-two Gram matrix](#116-the-exact-two-by-two-gram-matrix)
+    - [The level operator on the old image](#117-the-level-operator-on-the-old-image)
+    - [Old, saturated old, and new](#118-old-saturated-old-and-new)
+    - [Several new primes](#119-several-new-primes)
 12. [Coefficients, reduction, and torsion](#12-coefficients-reduction-and-torsion)
     - [When the action is integral](#121-when-the-action-is-integral)
     - [Base change](#122-base-change)
     - [Bad stabilizer primes](#123-bad-stabilizer-primes)
     - [Reduction of eigendata](#124-reduction-of-eigendata)
-13. [Examples over $\mathbf Q$](#13-examples-over-mathbf-q)
-    - [The one-class Hurwitz order](#131-the-one-class-hurwitz-order)
-    - [A two-class level-three model](#132-a-two-class-level-three-model)
-    - [General Brandt matrices](#133-general-brandt-matrices)
-    - [A non-self-adjoint level operator](#134-a-non-self-adjoint-level-operator)
-14. [The canonical action](#14-the-canonical-action)
-    - [The exact module and its operators](#141-the-exact-module-and-its-operators)
-    - [An operator dictionary](#142-an-operator-dictionary)
-    - [Boundaries of the present theory](#143-boundaries-of-the-present-theory)
-    - [Conclusion](#144-conclusion)
+    - [Stable lattices for an operator family](#125-stable-lattices-for-an-operator-family)
+    - [The base-change obstruction](#126-the-base-change-obstruction)
+    - [Abstract and acting algebras under base change](#127-abstract-and-acting-algebras-under-base-change)
+13. [A ledger of relations](#13-a-ledger-of-relations)
+    - [Why every relation carries hypotheses](#131-why-every-relation-carries-hypotheses)
+    - [Local relations in one table](#132-local-relations-in-one-table)
+    - [Global polynomial families](#133-global-polynomial-families)
+    - [Relations in the abstract and acting algebras](#134-relations-in-the-abstract-and-acting-algebras)
+14. [Examples over $\mathbf Q$](#14-examples-over-mathbf-q)
+    - [The one-class Hurwitz order](#141-the-one-class-hurwitz-order)
+    - [A two-class level-three model](#142-a-two-class-level-three-model)
+    - [General Brandt matrices](#143-general-brandt-matrices)
+    - [A non-self-adjoint level operator](#144-a-non-self-adjoint-level-operator)
+15. [The canonical action](#15-the-canonical-action)
+    - [The exact module and its operators](#151-the-exact-module-and-its-operators)
+    - [An operator dictionary](#152-an-operator-dictionary)
+    - [Boundaries of the present theory](#153-boundaries-of-the-present-theory)
+    - [Conclusion](#154-conclusion)
 
 ## 1. From translations to operators
 
@@ -212,6 +230,62 @@ $$
 
 This composite is $T_{UaU}$. Indeed, representatives for $U/U_a$ turn the trace into $\sum_u f(gua)$, and the elements $ua$ represent $UaU/U$. Thus the right-coset formula and the finite-span construction are the same correspondence written in two languages.
 
+### 1.5 Standing data and the central constraint
+
+The operator formula is short enough to hide which hypotheses make it meaningful. We therefore fix the standing datum once, and later weaken it only explicitly. Let $F$ be totally real, let $D/F$ be totally definite, and put
+
+$$
+G=D_f^\times,\qquad \Gamma=D^\times,\qquad Z_f=\mathbf A_{F,f}^\times.
+$$
+
+Let $A$ be a commutative coefficient ring, let $W_A$ be a finite $A$-module with the rational weight action $\rho$, and let $U\subset G$ be compact open. If a finite central character is prescribed, it is a homomorphism
+
+$$
+\chi_f:Z_f\longrightarrow A^\times
+$$
+
+satisfying the two descent conditions
+
+$$
+\chi_f(a)=\rho(a)\quad(a\in F^\times),
+\qquad
+\chi_f|_{U\cap Z_f}=1,
+$$
+
+where $\rho(a)$ is scalar on the weight. The form module is
+
+$$
+M_A(U,\chi_f)=
+\{f:G\to W_A:f(\gamma guz)=\rho(\gamma)\chi_f(z)f(g)\}.
+$$
+
+The first condition reconciles rational scalar multiplication on the left with finite scalar multiplication on the right; the second reconciles the level and character laws. Without them the displayed rule may force the space to vanish or, over a ring with torsion, may leave a misleading torsion submodule.
+
+**Proposition 1.3.** Every double-coset operator $T_{UaU}$ preserves $M_A(U,\chi_f)$ whenever its finite sums preserve the lattice $W_A$.
+
+**Proof strategy.** Proposition 1.2 already gives rational covariance and level invariance. The only additional point is the central equation, and centrality lets the scalar pass through every summand.
+
+**Proof.** For $z\in Z_f$,
+
+$$
+(T_{UaU}f)(gz)
+=\sum_r f(gza_r)
+=\sum_r f(ga_rz)
+=\chi_f(z)(T_{UaU}f)(g).
+$$
+
+All other transformation laws were proved in Proposition 1.2. The stated lattice hypothesis ensures that the sum lies in $W_A$, rather than merely in $W_A\otimes_A\operatorname{Frac}(A)$ when a fraction field is available. $\square$
+
+This formulation separates existence from integrality. Over a field every finite sum is defined. Over a lattice, the correspondence may carry a value through rational weight matrices with denominators. The group-theoretic double coset still exists, but it belongs to the chosen integral operator family only after lattice preservation has been checked.
+
+There is also a useful variance test. If one replaces $a$ by $u_1au_2$ with $u_1,u_2\in U$, the double coset and its operator do not change. If one replaces $a$ by $z a$ with $z\in Z_f$, then
+
+$$
+T_{UzaU}=R_zT_{UaU},
+$$
+
+and hence on $M_A(U,\chi_f)$ it becomes $\chi_f(z)T_{UaU}$. Thus a central multiple is generally not the same operator before a central character is imposed and is generally a nontrivial scalar multiple afterward.
+
 ## 2. The double-coset algebra
 
 ### 2.1 Haar measure and convolution
@@ -319,6 +393,85 @@ Often one uses only double cosets drawn from a subsemigroup $\Delta\subset G$ co
 Over a field $E$, the action above is automatic. Over a ring $A$ with lattice $W_A\subset W_E$, integrality requires more: after rewriting translated class representatives, the rational weight matrices that occur must preserve $W_A$, or their total sums must preserve the automorphic lattice. Book 89 guaranteed stability under the class stabilizers; that alone does not guarantee stability under every Hecke transition. An **integral Hecke datum** therefore consists of $U$, $W_A$, and a double-coset semigroup for which all correspondence maps preserve $S(U,W_A)$.
 
 For the standard operators away from the coefficient characteristic, natural polynomial lattices have this stability. At a coefficient place or for a lattice with denominators, it must be checked rather than inferred from the characteristic-zero action.
+
+### 2.5 Degree, augmentation, and inversion
+
+Three elementary maps on the double-coset algebra anticipate later spectral and adjoint formulas. They are best isolated now because each uses a different operation: counting right cosets, multiplying kernels, and reversing a correspondence.
+
+For a double coset $C=UaU$, define its right degree by
+
+$$
+\deg_R(C)=|C/U|=[U:U\cap aUa^{-1}].
+$$
+
+The constant function $1$ satisfies
+
+$$
+T_C1=\deg_R(C)\,1.
+$$
+
+Consequently the map
+
+$$
+\varepsilon_R:H(G,U;A)\longrightarrow A,
+\qquad
+\varepsilon_R(\phi)=\sum_{xU\subset\operatorname{supp}(\phi)}\phi(x)
+$$
+
+is an algebra homomorphism. Indeed, applying $T_\phi T_\psi=T_{\phi*\psi}$ to the constant function gives
+
+$$
+\varepsilon_R(\phi*\psi)
+=\varepsilon_R(\phi)\varepsilon_R(\psi).
+$$
+
+For a nonunimodular group, right and left degrees need not agree, and inversion carries one to the other with a modular factor. Here $G$ is unimodular, so inversion preserves the normalized Haar measure and
+
+$$
+\deg_R(UaU)=\deg_R(Ua^{-1}U).
+$$
+
+One may also prove this by comparing indices:
+
+$$
+[U:U\cap aUa^{-1}]
+=[U:U\cap a^{-1}Ua],
+$$
+
+because conjugation by $a^{-1}$ identifies the first intersection with $a^{-1}Ua\cap U$, while the two indices are related by the equal Haar volumes of $U$ and $aUa^{-1}$.
+
+Define the linear reversal
+
+$$
+\phi^\iota(x)=\phi(x^{-1}).
+$$
+
+**Proposition 2.2.** Reversal is an involutive anti-automorphism:
+
+$$
+(\phi*\psi)^\iota=\psi^\iota*\phi^\iota,
+\qquad
+(\phi^\iota)^\iota=\phi.
+$$
+
+**Proof strategy.** Invert the product variable in convolution and use unimodularity to avoid a modular correction.
+
+**Proof.** At $x$ the left side is
+
+$$
+\int_G\phi(y)\psi(y^{-1}x^{-1})\,dy.
+$$
+
+Put $z=xy$. Then $y=x^{-1}z$, and left translation preserves measure. The integral becomes
+
+$$
+\int_G\psi(z^{-1})\phi(x^{-1}z)\,dz
+=\int_G\psi^\iota(z)\phi^\iota(z^{-1}x)\,dz,
+$$
+
+which is $(\psi^\iota*\phi^\iota)(x)$. The second identity is immediate. $\square$
+
+Thus degree is the eigencharacter seen by constants, while reversal is the algebraic precursor of adjunction. They should not be conflated: a correspondence can have the same degree as its reverse without being equal to it. The level-prime operators below give the basic counterexample.
 
 ## 3. The finite class-set calculation
 
@@ -890,6 +1043,33 @@ For any finite set of commuting operators on a nonzero finite-dimensional space 
 
 This elementary statement is all we need. Generalized eigenspaces may occur because commuting matrices need not be semisimple. Over a non-algebraically closed field, eigenvectors may appear only after scalar extension. Over an integral ring, an eigensystem is not the same as a direct summand. Localization, congruences, residual systems, and integral generalized eigenspaces belong to Book 91.
 
+### 7.5 A commutativity ledger
+
+The word “commutative” enters at several logically different levels. Recording the source of each instance prevents a spherical theorem from being applied at a level prime.
+
+**Theorem 7.1.** Let $\mathcal P$ be a set of finite places. For each $v\in\mathcal P$, let $\mathcal A_v\subset H(D_v^\times,U_v;A)$ be a commutative subalgebra. Then the subalgebra of the global convolution algebra generated by the embedded $\mathcal A_v$ is commutative. If $\mathcal P$ is infinite, every element still involves only finitely many nonidentity local factors.
+
+**Proof strategy.** Elements at one place commute by hypothesis; elements at different places commute because their coordinates live in different direct factors. Bilinearity then handles finite sums.
+
+**Proof.** It is enough to compare pure local generators. Two from the same $\mathcal A_v$ commute by assumption. If $x_v$ is supported only at $v$ and $y_w$ only at $w\ne v$, then $x_vy_w=y_wx_v$ componentwise, product Haar measure separates their convolutions, and their global kernels commute. Every product contains only finitely many such generators, so reordering is legitimate. $\square$
+
+At a split hyperspecial place we may take
+
+$$
+\mathcal A_v=A[T_v,S_v,S_v^{-1}].
+$$
+
+At a ramified quaternionic place with maximal compact level we may take the Laurent algebra generated by the valuation step. At a $K_0$-place the entire local algebra is generally unavailable for this theorem because it need not be commutative; one must select and prove commutativity for the particular subalgebra being used.
+
+There are four useful consequences.
+
+1. The spherical operators away from a finite bad set form a commuting family.
+2. Any chosen level operator commutes with every operator supported at a different place.
+3. Central translations commute with every local algebra, whether or not that algebra itself is commutative.
+4. Commutativity in the acting algebra can be larger than commutativity in the abstract algebra, because a commutator may act by zero on a particular module.
+
+The last point is a warning rather than a shortcut. If two noncommuting Iwahori kernels happen to act by commuting matrices on a one-dimensional invariant space, that does not turn the local convolution algebra into a commutative algebra. Abstract relations are proved before passing to an action; extra relations in the action are recorded as kernel relations.
+
 ## 8. Primes in the level
 
 ### 8.1 $K_0$ and Iwahori geometry
@@ -996,6 +1176,128 @@ but $Q_0Q_1$ and $Q_1Q_0$ correspond to different directed galleries. The affine
 This provides a counterexample to the careless slogan “Hecke operators commute.” Operators at distinct places commute. The spherical algebra at one hyperspecial split place is commutative. A selected subalgebra at level may also happen to commute. But the entire local algebra attached to $K_0(\mathfrak p^r)$ need not.
 
 Self-adjointness also changes. Spherical reversal uses an element of $K$ that exchanges endpoints. Iwahori level excludes that element, so reversal produces another operator. Finally, $U_v$ depends more sensitively on orientation and on whether $\alpha$ or $\alpha^{-1}$ was chosen. These are structural changes caused by level, not inconsistent notation.
+
+For $r=1$, the displayed quadratic relation admits a direct count. Let $s$ be either simple affine reflection and put $Q=\mathbf1_{IsI}$. The double coset $IsI$ has $q$ right $I$-cosets. On reducing the finite reflection calculation modulo $\mathfrak p$, multiplication by a second reflection either backtracks or remains in the same nontrivial cell. For a prescribed identity coset there are $q$ backtracking pairs. For a prescribed right coset in $IsI$, there are $q-1$ pairs: all choices except the unique one that backtracks. Therefore
+
+$$
+Q^2=q\mathbf1_I+(q-1)Q,
+$$
+
+or equivalently
+
+$$
+\boxed{(Q+1)(Q-q)=0.}
+$$
+
+The reduction is legitimate because the relevant quotient of $I$ is the upper triangular subgroup of $\operatorname{GL}_2(k)$, and the two-cell decomposition consists of that subgroup and its reflection cell. Lifting representatives preserves the number of right cosets. The same count applies to the other affine wall after conjugating the edge and retaining its orientation. The relation does not imply that the two reflection generators commute; alternating products record distinct directed galleries.
+
+### 8.5 Diamond operators at $K_1$-level
+
+The $K_0$ subgroup remembers an oriented residue line but not a chosen generator of its quotient. To retain a residue character one passes to
+
+$$
+K_1(\mathfrak p^r)
+=\left\{
+\begin{pmatrix}a&b\\c&d\end{pmatrix}\in K_0(\mathfrak p^r):
+d\equiv1\pmod{\mathfrak p^r}
+\right\}.
+$$
+
+For $r=1$, which is the case used below, lower-right reduction gives an exact sequence
+
+$$
+1\longrightarrow K_1(\mathfrak p)
+\longrightarrow I
+\xrightarrow{\ d\bmod\mathfrak p\ }
+k^\times
+\longrightarrow1.
+$$
+
+Multiplicativity follows because the lower-left entry of either factor vanishes modulo $\mathfrak p$; surjectivity follows from diagonal matrices. The kernel is exactly the displayed $K_1$ subgroup. In particular $K_1(\mathfrak p)$ is normal in $I$.
+
+For $a\in k^\times$, choose a lift $\widetilde a\in\mathcal O^\times$ and set
+
+$$
+h_a=\begin{pmatrix}1&0\\0&\widetilde a\end{pmatrix}.
+$$
+
+**Definition 8.1.** On forms of local level $K_1(\mathfrak p)$, the diamond operator in our right-translation convention is
+
+$$
+\boxed{\langle a\rangle=R_{h_a}.}
+$$
+
+This does not depend on the lift. Two lifts differ by an element congruent to $1$ in the lower-right entry, hence by right multiplication with an element of $K_1(\mathfrak p)$. Normality shows that $R_{h_a}$ preserves the level.
+
+**Proposition 8.2.** The diamond operators give a genuine action of $k^\times$:
+
+$$
+\langle a\rangle\langle b\rangle=\langle ab\rangle,
+\qquad
+\langle1\rangle=1,
+\qquad
+\langle a\rangle^{-1}=\langle a^{-1}\rangle.
+$$
+
+They commute with every operator away from $v$, and their mass adjoints are
+
+$$
+\langle a\rangle^*=\langle a^{-1}\rangle.
+$$
+
+**Proof.** The products $h_ah_b$ and $h_{ab}$ have the same class modulo $K_1(\mathfrak p)$, so the first identity follows from the composition law for right translations. The next two follow formally. Disjoint-place commutativity is Theorem 7.1. The adjoint formula is the inverse-translation theorem of Chapter 4. $\square$
+
+The quotient also explains the relation with central character. The class of $h_a$ modulo $K_1(\mathfrak p)$ is the same as the class of the central matrix $\widetilde a I$, because
+
+$$
+h_a^{-1}(\widetilde a I)
+=\begin{pmatrix}\widetilde a&0\\0&1\end{pmatrix}
+\in K_1(\mathfrak p).
+$$
+
+Thus on a fixed central-character space,
+
+$$
+\langle a\rangle=\chi_v(\widetilde a)\operatorname{id}.
+$$
+
+If no such local character has been imposed, the diamonds retain the finite $k^\times$-action. When $q-1$ is invertible in $A$ and $A$ contains the values of a character $\eta:k^\times\to A^\times$, its eigensummand is cut out by
+
+$$
+e_\eta=\frac1{q-1}
+\sum_{a\in k^\times}\eta(a)^{-1}\langle a\rangle.
+$$
+
+At a coefficient prime dividing $q-1$, this idempotent need not exist; invariants still make sense, but a direct diamond-character decomposition can fail.
+
+### 8.6 $U_v$ and diamond relations
+
+The level operator should preserve every diamond-character block. That assertion depends on our diagonal representatives and is therefore proved, not assumed.
+
+At $K_1(\mathfrak p)$ level retain
+
+$$
+\alpha=\begin{pmatrix}\pi&0\\0&1\end{pmatrix}
+$$
+
+and define $U_v$ by the double coset $K_1\alpha K_1$. Conjugation by $\alpha$ preserves the lower-right residue, and the same upper-right index calculation as for $I$ gives $q$ right cosets. Moreover $\alpha$ commutes with every $h_a$. Hence
+
+$$
+\boxed{U_v\langle a\rangle=\langle a\rangle U_v.}
+$$
+
+To verify the equality at kernel level, multiply the support $K_1\alpha K_1$ on either side by $h_a$. Normality gives
+
+$$
+h_aK_1\alpha K_1
+=K_1h_a\alpha K_1
+=K_1\alpha h_aK_1
+=K_1\alpha K_1h_a,
+$$
+
+and the right-coset multiplicities agree term by term. Consequently $U_v$ restricts to every diamond eigensummand whenever that summand exists.
+
+This commutation does not make the entire $K_1$ algebra commutative. Reflection operators still remember oriented galleries, and coefficient characters can permit some double cosets while excluding others through the intersection compatibility condition. What has been proved is the precise commutative family normally retained at this level: diamonds, the chosen forward $U_v$, central translations, and all operators away from $v$.
 
 ## 9. Ramified quaternionic places
 
@@ -1291,6 +1593,405 @@ For one newly introduced $K_0(\mathfrak p)$ condition, the standard choice is th
 
 No direct-sum claim is automatic. The two degeneracy images may intersect, their sum may fail to be saturated over an integral ring, and the mass-orthogonal complement may fail to split at primes dividing the determinant of the degeneracy Gram matrix. Defining a new quotient or proving an old/new decomposition requires more algebra than the elementary correspondence construction. The present result is the canonical old **image**, which is all that later integral control arguments may safely use before Book 91.
 
+### 11.5 Adjoint degeneracy maps and the new kernel
+
+An old image points from lower level to higher level. To define newness one needs maps in the reverse direction. A pairing supplies them, but only after its coefficient and measure hypotheses have been fixed.
+
+Let $W_A'$ be paired perfectly with $W_A$ by a $\Gamma$-invariant bilinear form, and pair central characters $\chi_f^{-1}$ and $\chi_f$. Normalize the mass pairing independently at every level, as in Chapter 4. If
+
+$$
+U'\subset aUa^{-1},
+$$
+
+define
+
+$$
+\delta_a^\dagger
+=R_{a^{-1}}\circ
+\operatorname{Tr}_{U'}^{aUa^{-1}}.
+$$
+
+Its domain is the level-$U'$ space with coefficient system $W_A'$ and character $\chi_f^{-1}$; its target is the corresponding level-$U$ space. With one fixed Haar measure at every level, this formula must be multiplied by the relevant volume ratio. The separately normalized mass convention is what makes the displayed formula unscaled.
+
+**Theorem 11.1 (degeneracy adjunction).** Under the preceding hypotheses,
+
+$$
+\langle\delta_af,h\rangle_{U'}
+=\langle f,\delta_a^\dagger h\rangle_U.
+$$
+
+**Proof strategy.** First move pullback across the pairing as trace. Then move translation across as inverse translation.
+
+**Proof.** Put $V=aUa^{-1}$. Since $\delta_a=\operatorname{res}_V^{U'}R_a$, level adjunction gives
+
+$$
+\langle\delta_af,h\rangle_{U'}
+=\langle R_af,\operatorname{Tr}_{U'}^Vh\rangle_V.
+$$
+
+The inverse-translation theorem gives
+
+$$
+\langle R_af,k\rangle_V
+=\langle f,R_{a^{-1}}k\rangle_U.
+$$
+
+Substitution proves the formula. The inverse central characters ensure that central factors cancel in both changes of variables. $\square$
+
+For a family $a_1,\ldots,a_m$, let
+
+$$
+\Delta(f_1,\ldots,f_m)=\sum_j\delta_{a_j}f_j,
+$$
+
+and define
+
+$$
+\Delta^\dagger h
+=(\delta_{a_1}^\dagger h,\ldots,
+\delta_{a_m}^\dagger h).
+$$
+
+The **new kernel relative to this degeneracy family** is
+
+$$
+\boxed{M(U')^{\mathrm{new},U}_{\ker}
+=\ker(\Delta^\dagger)
+=\bigcap_j\ker(\delta_{a_j}^\dagger).}
+$$
+
+It lies naturally in the dual coefficient system. If a self-duality identifies the two systems, it is a submodule of the same named form space. Perfectness then gives
+
+$$
+\ker(\Delta^\dagger)=(\operatorname{im}\Delta)^\perp.
+$$
+
+Without perfectness, orthogonality only forces $\Delta^\dagger h$ into the radical of the lower-level pairing; equality can fail. This is why “new” must name either an adjoint kernel, an orthogonal complement, or a quotient, rather than leaving the choice implicit.
+
+Every operator supported away from the changed places preserves the new kernel. Indeed it commutes with every $\delta_{a_j}$ and with their adjoints, so it carries their common kernel into itself. This conclusion uses only disjoint-place commutativity and therefore remains valid even when the local algebra at the changed place is noncommutative.
+
+### 11.6 The exact two-by-two Gram matrix
+
+The standard one-prime pair is rigid enough that every entry of its Gram matrix can be calculated. Let $v$ be split, let
+
+$$
+K=\operatorname{GL}_2(\mathcal O),
+\qquad I=K_0(\mathfrak p),
+\qquad \beta=\begin{pmatrix}1&0\\0&\pi\end{pmatrix},
+$$
+
+and write $q=|k|$. Globally the levels agree away from $v$. Let
+
+$$
+\delta_0=\operatorname{res}_K^I,
+\qquad
+\delta_1=\operatorname{res}_{\beta K\beta^{-1}}^I R_\beta.
+$$
+
+To regard adjoints as endomorphisms of the same modules, assume now that $A$ carries an involution, that the weight lattice has a perfect invariant Hermitian pairing, and that the central character is unitary. These hypotheses identify each coefficient system with its Hermitian dual. The mass pairings are again normalized separately at the two levels.
+
+Let $T=T_v$ and $S=S_v$ at the hyperspecial level. Then
+
+$$
+T^*=S^{-1}T,
+\qquad S^*=S^{-1}.
+$$
+
+**Theorem 11.2 (one-prime Gram matrix).** For
+
+$$
+\Delta=(\delta_0,\delta_1):M(K)^{\oplus2}\longrightarrow M(I),
+$$
+
+one has
+
+$$
+\boxed{
+\Delta^*\Delta
+=
+\begin{pmatrix}
+q+1&T\\
+S^{-1}T&q+1
+\end{pmatrix}.}
+$$
+
+**Proof strategy.** The diagonal entries are covering degrees. Each off-diagonal composition traces one translated endpoint of the local edge back to the hyperspecial vertex, producing the spherical double coset or its inverse.
+
+**Proof.** Since $[K:I]=q+1$,
+
+$$
+\delta_0^*\delta_0
+=\operatorname{Tr}_I^K\operatorname{res}_K^I
+=(q+1)\operatorname{id}.
+$$
+
+Translation identifies $K$ with $\beta K\beta^{-1}$, and $[\beta K\beta^{-1}:I]=q+1$, so the same calculation gives
+
+$$
+\delta_1^*\delta_1=(q+1)\operatorname{id}.
+$$
+
+For the first cross term,
+
+$$
+\delta_0^*\delta_1
+=\operatorname{Tr}_I^K R_\beta.
+$$
+
+Representatives for $K/I$ give the $q+1$ right $K$-cosets of $K\beta K$, because
+
+$$
+K\cap\beta K\beta^{-1}=I.
+$$
+
+Thus $\delta_0^*\delta_1=T_{K\beta K}=T$. Taking adjoints gives
+
+$$
+\delta_1^*\delta_0=T^*=S^{-1}T.
+$$
+
+These are the four entries. $\square$
+
+On a simultaneous lower-level eigenspace with $T=t$ and $S=s$, the Gram matrix specializes to
+
+$$
+\begin{pmatrix}
+q+1&t\\s^{-1}t&q+1
+\end{pmatrix}
+$$
+
+and has determinant
+
+$$
+\boxed{d_v=(q+1)^2-s^{-1}t^2.}
+$$
+
+If $d_v$ is a unit, the old map is split injective on that eigensummand and the old projector is
+
+$$
+e_{\mathrm{old}}
+=\Delta(\Delta^*\Delta)^{-1}\Delta^*.
+$$
+
+The inverse Gram matrix is
+
+$$
+(\Delta^*\Delta)^{-1}
+=d_v^{-1}
+\begin{pmatrix}
+q+1&-t\\-s^{-1}t&q+1
+\end{pmatrix}.
+$$
+
+If $d_v$ is nonzero but not a unit, the generic old space splits while the integral old image need not. If $d_v=0$ on a characteristic-zero eigenspace, the two degeneracy maps are dependent there. These are three different phenomena, detected by the same exact matrix.
+
+When the central scalar acts trivially, $S=1$ and the Gram matrix becomes the familiar symmetric matrix
+
+$$
+\begin{pmatrix}q+1&T\\T&q+1\end{pmatrix}.
+$$
+
+Removing $S^{-1}$ without that hypothesis is an error, not a harmless simplification.
+
+### 11.7 The level operator on the old image
+
+The Gram matrix controls splitting. A different two-by-two matrix explains the local Hecke polynomial. Retain the same $K$, $I$, and $\beta$, and put
+
+$$
+\alpha=\begin{pmatrix}\pi&0\\0&1\end{pmatrix}.
+$$
+
+Let $U_v=[I\alpha I]$ be the forward level operator of Chapter 8. The spherical double coset has right-coset decomposition
+
+$$
+K\alpha K
+=\coprod_{u\in k}
+\begin{pmatrix}\pi&u\\0&1\end{pmatrix}K
+\;\coprod\;\beta K.
+$$
+
+The first $q$ representatives are exactly those of $I\alpha I$.
+
+**Theorem 11.3 (old-space companion matrix).** The intertwining identity
+
+$$
+\boxed{
+U_v\Delta
+=\Delta
+\begin{pmatrix}
+T&qS\\
+-1&0
+\end{pmatrix}}
+$$
+
+holds as an equality of maps $M(K)^{\oplus2}\to M(I)$. Equivalently,
+
+$$
+U_v\delta_0=\delta_0T-\delta_1,
+\qquad
+U_v\delta_1=q\delta_0S.
+$$
+
+**Proof strategy.** The first identity separates the missing backward coset from the spherical sum. In the second, multiplying every forward representative by $\beta$ collapses it to the same central translation modulo $K$.
+
+**Proof.** For $f\in M(K)$, the spherical decomposition gives
+
+$$
+\delta_0Tf
+=U_v\delta_0f+\delta_1f,
+$$
+
+which is the first formula. Write
+
+$$
+r_u=\begin{pmatrix}\pi&u\\0&1\end{pmatrix}.
+$$
+
+Then
+
+$$
+r_u\beta
+=\begin{pmatrix}\pi&u\pi\\0&\pi\end{pmatrix}
+=\pi I\begin{pmatrix}1&u\\0&1\end{pmatrix}.
+$$
+
+The final matrix lies in $K$. Since $f$ has right level $K$, every one of the $q$ summands in $U_v\delta_1f$ equals $Sf$. Hence
+
+$$
+U_v\delta_1f=q\delta_0Sf.
+$$
+
+Combining the two column identities gives the matrix formula. $\square$
+
+Because $T$ and $S$ commute, the companion matrix satisfies
+
+$$
+\begin{pmatrix}T&qS\\-1&0\end{pmatrix}^2
+-T\begin{pmatrix}T&qS\\-1&0\end{pmatrix}
++qS I_2=0.
+$$
+
+Consequently
+
+$$
+\boxed{U_v^2\Delta-U_v\Delta T+q\Delta S=0,}
+$$
+
+where $T$ and $S$ act diagonally on the two source copies.
+
+This formula is well typed precisely because $T$ and $S$ act on the two lower-level source copies, while $U_v$ acts on the higher-level target. For a lower-level eigenvector $f$ with eigenvalues $t,s$, the span of $\delta_0f$ and $\delta_1f$ is $U_v$-stable. If those two vectors are independent, the characteristic polynomial on that two-dimensional span is
+
+$$
+X^2-tX+qs.
+$$
+
+More generally, if the simultaneous $(t,s)$-eigenspace has dimension $d$ and $\Delta$ is injective on its double copy, the characteristic polynomial is $(X^2-tX+qs)^d$.
+
+Thus the same polynomial that encodes the unramified spherical data becomes the actual companion polynomial for the two old directions at Iwahori level. No classification theorem is needed; it is a finite double-coset calculation.
+
+The sign $-1$ and the position $qS$ depend on the chosen forward operator $\alpha$, the second degeneracy element $\beta$, and right translation. Replacing either diagonal matrix by its inverse conjugates or rescales the matrix and changes these entries. The theorem is therefore a convention anchor, not a formula to transplant into another convention unchanged.
+
+### 11.8 Old, saturated old, and new
+
+Over a field, image and span cause few difficulties. Over an integral ring they separate into several objects, each answering a different question. Let $A$ be a domain with fraction field $E$, let $L=M_A(U)$, let $M=M_A(U')$, and let
+
+$$
+\Delta:L^{\oplus m}\longrightarrow M.
+$$
+
+Define
+
+$$
+O=\operatorname{im}(\Delta),
+\qquad
+O^{\mathrm{sat}}=M\cap(O\otimes_AE),
+$$
+
+where the intersection is taken in $M\otimes_AE$. Then $O^{\mathrm{sat}}/O$ is torsion and $M/O^{\mathrm{sat}}$ is torsion-free. The first quotient measures the integral defect of the natural degeneracy lattice; replacing $O$ by its saturation removes precisely that information.
+
+Assume now that $M$ is paired perfectly with its dual partner and let
+
+$$
+N=\ker(\Delta^\dagger).
+$$
+
+Then $N=O^\perp$. If $A$ is a discrete valuation ring and all modules are finite free, $N$ is saturated because it is the kernel of a map between torsion-free modules. Perfectness identifies $N$ with the dual of $M/O^{\mathrm{sat}}$: a functional represented by $n\in N$ vanishes on $O$, hence on $O^{\mathrm{sat}}$, and every functional on the torsion-free quotient extends after choosing a free splitting. Thus the adjoint kernel is the dual of the saturated new quotient, not generally a complement to the unsaturated old image.
+
+**Theorem 11.4 (integral splitting criterion).** Suppose $L^{\oplus m}$ and $M$ are finite projective, the pairings are perfect, the coefficient systems are self-dually identified, and
+
+$$
+\mathcal G=\Delta^*\Delta
+$$
+
+is an automorphism. Then
+
+$$
+M=O\oplus N,
+$$
+
+$O$ is saturated, and
+
+$$
+e_O=\Delta\mathcal G^{-1}\Delta^*
+$$
+
+is the projector onto $O$.
+
+**Proof.** The map $\mathcal G^{-1}\Delta^*$ is a left inverse to $\Delta$, so $\Delta$ is split injective and $O$ is a direct summand, hence saturated. The displayed endomorphism is idempotent because
+
+$$
+e_O^2
+=\Delta\mathcal G^{-1}(\Delta^*\Delta)
+\mathcal G^{-1}\Delta^*=e_O.
+$$
+
+Its image is $O$. Its kernel is $N$: one inclusion is immediate, and if $e_Om=0$, applying $\Delta^*$ gives $\Delta^*m=0$. $\square$
+
+The converse need not hold in this form: an old summand may admit some complement even when the complement is not the adjoint kernel, and the chosen Gram operator may fail to be invertible because the restricted pairing on the old summand is imperfect. The theorem characterizes the canonical orthogonal splitting supplied by the chosen pairing.
+
+### 11.9 Several new primes
+
+Adding several pairwise distinct split primes produces no new variance, but it amplifies the bookkeeping. Let $Q=\{v_1,\ldots,v_r\}$ be disjoint from the original level and ramification, and impose $I_{v_i}=K_0(\mathfrak p_{v_i})$ at every $v_i$. For each function
+
+$$
+\epsilon:Q\longrightarrow\{0,1\},
+$$
+
+take the product of the local degeneracy elements $1$ and $\beta_v$. Distinct local factors commute, so this product is independent of ordering. The resulting $2^r$ maps assemble into
+
+$$
+\Delta_Q:M(U)^{\oplus2^r}\longrightarrow M(U_0(Q)).
+$$
+
+Every entry of $\Delta_Q^*\Delta_Q$ factors as the product of its one-prime entries. More precisely, if $\epsilon,\eta\in\{0,1\}^Q$, then
+
+$$
+(\Delta_Q^*\Delta_Q)_{\epsilon,\eta}
+=\prod_{v\in Q}g_v(\epsilon(v),\eta(v)),
+$$
+
+where
+
+$$
+g_v=
+\begin{pmatrix}
+q_v+1&T_v\\
+S_v^{-1}T_v&q_v+1
+\end{pmatrix}.
+$$
+
+**Proof strategy.** Compose the two global degeneracy correspondences, then reorder all local factors so that equal places are adjacent. Disjoint-place commutativity separates the result into the product of the one-prime compositions of Theorem 11.2.
+
+**Proof.** The $(\epsilon,\eta)$ entry is $\delta_\epsilon^*\delta_\eta$. Both maps are products of their local factors. Inversion reverses the product in the adjoint, but factors at distinct places commute, so they may be reordered place by place. The factor at $v$ is exactly the $(\epsilon(v),\eta(v))$ entry of the one-prime Gram matrix. Multiplying these commuting factors gives the displayed formula. $\square$
+
+The same factorization gives commuting companion matrices for the $U_v$ on the multi-prime old image. On a simultaneous eigensystem, the possible old refinements are obtained by choosing, at each $v\in Q$, one root of
+
+$$
+X^2-t_vX+q_vs_v.
+$$
+
+Repeated roots or zero Gram determinants can make the $2^r$ degeneracy directions dependent. Thus the expected count $2^r$ is a generic conclusion under the injectivity hypotheses, not part of the definition of the old image.
+
 ## 12. Coefficients, reduction, and torsion
 
 ### 12.1 When the action is integral
@@ -1373,9 +2074,247 @@ If $q_v=0$ in $k$, the reduced polynomial loses its quadratic term. This does no
 
 These observations locate the boundary of this book. We have a well-defined reduced action and can compare it with integral reduction. Organizing residual eigensystems into maximal ideals, localizing the Hecke algebra, and studying congruences among different characteristic-zero systems are the subject of Book 91.
 
-## 13. Examples over $\mathbf Q$
+### 12.5 Stable lattices for an operator family
 
-### 13.1 The one-class Hurwitz order
+One stable operator is not the same as a stable algebra. Powers and mixed products can introduce unbounded denominators even when a finite initial list has been cleared individually. The right criterion is boundedness of the whole generated orbit.
+
+Let $A$ be a discrete valuation ring with fraction field $E$, let $V$ be finite-dimensional over $E$, and let $\mathcal B\subset\operatorname{End}_E(V)$ be an $A$-subalgebra. Fix one lattice $L_0\subset V$.
+
+**Proposition 12.1 (stable-lattice criterion).** The following are equivalent.
+
+1. There is an $A$-lattice $L\subset V$ stable under $\mathcal B$.
+2. The $A$-module $\mathcal B L_0$ is contained in $\varpi^{-N}L_0$ for some $N$.
+3. The $A$-module generated by every word in any fixed generating set of $\mathcal B$, applied to a basis of $L_0$, is bounded in $V$.
+
+When these conditions hold, $L=L_0+\mathcal B L_0$ is a stable lattice.
+
+**Proof strategy.** Commensurability of lattices turns stability into a uniform denominator bound. Conversely, a bounded submodule of a finite-dimensional space over a DVR lies in a finite lattice and is therefore finite.
+
+**Proof.** If $L$ is stable, choose integers $r,s$ with
+
+$$
+\varpi^rL_0\subset L\subset\varpi^{-s}L_0.
+$$
+
+Then
+
+$$
+\mathcal BL_0
+\subset\varpi^{-r}\mathcal BL
+\subset\varpi^{-r}L
+\subset\varpi^{-r-s}L_0,
+$$
+
+proving boundedness. Conditions 2 and 3 are the same statement after expanding $\mathcal B$ in words. Conversely, if $\mathcal BL_0\subset\varpi^{-N}L_0$, then
+
+$$
+L=L_0+\mathcal BL_0
+$$
+
+lies between $L_0$ and $\varpi^{-N}L_0$, so it is a lattice. Since $\mathcal B$ is an algebra, $\mathcal B L\subset L$. $\square$
+
+For the away-from-$\Sigma$ quaternionic action, the natural integral weight model supplies this uniform bound simultaneously at all permitted places. Merely checking the first few Hecke matrices does not. At a coefficient place, a spectral normalization involving $q^{-1/2}$ can fail the criterion even though the unnormalized characteristic-coset action satisfies it.
+
+If two stable lattices $L,L'$ are chosen in the same generic module, they are commensurable. Their reductions can nevertheless differ. The operator algebra therefore acts on a specified lattice, not on an abstract generic vector space with a unique integral structure.
+
+### 12.6 The base-change obstruction
+
+Flat scalar extension behaves well because it preserves the simultaneous kernels defining stabilizer invariants. Reduction does not, and the failure has an exact measure.
+
+Let $A$ be a discrete valuation ring with uniformizer $\varpi$, let $\Gamma_0$ be a finite effective stabilizer, and let $W_A$ be finite free. From
+
+$$
+0\longrightarrow W_A
+\xrightarrow{\ \varpi\ }W_A
+\longrightarrow W_A/\varpi W_A
+\longrightarrow0
+$$
+
+one obtains
+
+$$
+\boxed{
+0\longrightarrow
+W_A^{\Gamma_0}/\varpi W_A^{\Gamma_0}
+\longrightarrow
+(W_A/\varpi W_A)^{\Gamma_0}
+\longrightarrow
+H^1(\Gamma_0,W_A)[\varpi]
+\longrightarrow0.}
+$$
+
+The connecting map sends a residual invariant $\bar w$ to the cocycle
+
+$$
+\gamma\longmapsto
+\frac{\gamma w-w}{\varpi},
+$$
+
+for any lift $w$. Changing the lift changes this cocycle by a coboundary. Its class vanishes exactly when $\bar w$ lifts, after correction, to an integral invariant. This proves exactness and identifies every new residual invariant.
+
+Summing over class representatives and adjoining the finite central equations gives the same description for the automorphic module. In particular, the cokernel of
+
+$$
+M_A/\varpi M_A\longrightarrow M_k
+$$
+
+is assembled from stabilizer and central-relation cohomology. If all relevant finite group orders are units in $A$, averaging annihilates positive-degree cohomology and the obstruction vanishes.
+
+Hecke operators act on this exact sequence. They commute with the defining group actions and carry lifts to lifts, so they induce maps on the cohomology terms. A residual eigensystem supported only in the rightmost term is a genuinely new residual system for the chosen lattice; it cannot be declared the reduction of a generic eigenvector.
+
+### 12.7 Abstract and acting algebras under base change
+
+Coefficient change affects the carrier module and the image algebra in different ways. Let $\mathcal H_A$ be an abstract integral double-coset algebra acting on a finite $A$-module $M_A$, and let
+
+$$
+\mathbb T_A=\operatorname{im}
+(\mathcal H_A\to\operatorname{End}_A(M_A)).
+$$
+
+For an $A$-algebra $B$, first consider the base-changed module $M_A\otimes_AB$, whether or not it equals the module formed directly over $B$. The same kernels act, and there is a natural surjection
+
+$$
+\mathbb T_A\otimes_AB
+\twoheadrightarrow
+\operatorname{im}
+(\mathcal H_A\otimes_AB
+\to\operatorname{End}_B(M_A\otimes_AB)).
+$$
+
+It is an isomorphism if $B$ is flat and $M_A$ is finite projective. Flatness preserves the injection $\mathbb T_A\hookrightarrow\operatorname{End}_A(M_A)$, while finite projectivity gives
+
+$$
+\operatorname{End}_A(M_A)\otimes_AB
+\cong\operatorname{End}_B(M_A\otimes_AB).
+$$
+
+Thus no additional kernel appears after extension. For nonflat $B$, a relation among matrices can acquire torsion, so injectivity may fail. Without finite projectivity, scalar extension of the endomorphism module itself requires a separate hypothesis; flatness alone is not being asserted to settle it.
+
+Now compare with the directly formed module $M_B$. If
+
+$$
+M_A\otimes_AB\xrightarrow{\sim}M_B,
+$$
+
+the preceding statement describes its acting algebra. If this comparison is not an isomorphism, the direct module may contain extra invariant vectors. An abstract kernel that annihilated $M_A$ can act nontrivially on those new vectors, so there need not be a map from $\mathbb T_A\otimes_AB$ onto the direct acting algebra at all. The common abstract double-coset algebra still maps to both, and it is the safe object through which they are compared.
+
+This distinction explains why polynomial identities proved in the abstract local algebra survive every coefficient change, whereas accidental matrix identities on one lattice need not survive passage to a larger residual module.
+
+## 13. A ledger of relations
+
+### 13.1 Why every relation carries hypotheses
+
+The theory now contains several kinds of relation: group-theoretic relations among translations, convolution relations among kernels, matrix relations on old images, and scalar relations after choosing an eigensystem. They are compatible, but they are not interchangeable.
+
+A relation in an abstract local convolution algebra acts on every module of that level. A relation in the global restricted tensor algebra follows from local relations and disjoint supports. A relation in an acting algebra may be stronger because the representation has a kernel. Finally, a scalar eigenvalue relation is only the specialization of one of these operator relations on a simultaneous eigenspace.
+
+The hypotheses attached to a relation answer four questions:
+
+1. Is the place split or division?
+2. Is the level hyperspecial, $K_0$, $K_1$, or smaller?
+3. Is the operator unnormalized, averaged, or spectrally rescaled?
+4. Has a central character already replaced $S_v$ by a scalar?
+
+Changing any answer changes at least one displayed coefficient. The ledger below consolidates the exact versions proved in this book.
+
+### 13.2 Local relations in one table
+
+| Local setting | Generators retained | Exact unnormalized relations | Source of the relation |
+|---|---|---|---|
+| split, hyperspecial $K$ | $T,S,S^{-1}$ | $SS^{-1}=1$, $T^2=A_2+(q+1)S$, $TA_n=A_{n+1}+qSA_{n-1}$ for $n\ge2$ | lattice distance and path counting |
+| split, hyperspecial $K$ | $T,S,S^{-1}$ | $H(G,K;A)=A[T,S,S^{-1}]$ | triangular Cartan support |
+| split, Iwahori $I$ | a simple reflection $Q$ | $(Q+1)(Q-q)=0$ | two-cell reflection count |
+| split, $K_0(\mathfrak p^r)$ | forward $U$ | $\deg(U)=q$, $U^*=V$ | oriented-chain cosets and inversion |
+| split, $K_1(\mathfrak p)$ | $U,\langle a\rangle$ | $\langle a\rangle\langle b\rangle=\langle ab\rangle$, $U\langle a\rangle=\langle a\rangle U$ | normal quotient and diagonal commutation |
+| division, maximal $K_D$ | $R_\Pi,R_\Pi^{-1}$ | $R_\Pi R_\Pi^{-1}=1$, $R_\Pi^2=S$ | normality of $K_D$ and valuation |
+
+Every row has a boundary. The spherical polynomial algebra does not describe an Iwahori algebra. The reflection quadratic does not assert commutativity between the two affine reflections. The formula $R_\Pi^2=S$ uses maximal division level; a smaller nonnormal level can split the one-coset translation into a genuine correspondence.
+
+The adjoint ledger is similarly short:
+
+$$
+[UaU]^*=[Ua^{-1}U],
+\qquad
+T^*=S^{-1}T,
+\qquad
+U^*=V,
+\qquad
+\langle a\rangle^*=\langle a^{-1}\rangle.
+$$
+
+All four formulas use compatible mass measure. The first is universal in the unimodular setting; the remaining three are its specializations. Only after a self-dual Hermitian coefficient system has been fixed do they become adjoints on one named space.
+
+### 13.3 Global polynomial families
+
+At every split hyperspecial place outside $\Sigma$, define
+
+$$
+P_v(X)=1-T_vX+q_vS_vX^2.
+$$
+
+The coefficients for different $v$ commute, so for any finite set $Q$ the product
+
+$$
+P_Q(X)=\prod_{v\in Q}P_v(X)
+$$
+
+is unambiguous. This product is merely a convenient simultaneous package; it is not a claim that places share one root variable in a deeper local theory.
+
+On an eigensystem $\lambda$, one obtains
+
+$$
+P_{v,\lambda}(X)
+=1-\lambda(T_v)X
++q_v\lambda(S_v)X^2.
+$$
+
+If a central character is fixed, $\lambda(S_v)=\chi_f(z_v)$. If the eigensystem is twisted by an unramified character $\psi$, then
+
+$$
+\lambda(T_v)\mapsto\psi_v(\pi_v)\lambda(T_v),
+\qquad
+\lambda(S_v)\mapsto\psi_v(\pi_v)^2\lambda(S_v),
+$$
+
+so the reciprocal roots are both multiplied by $\psi_v(\pi_v)$. This verifies compatibility of the linear and quadratic coefficients with their respective degrees.
+
+At a newly imposed Iwahori level, Theorem 11.3 gives the well-typed correspondence relation
+
+$$
+U_v^2\Delta_v-U_v\Delta_vT_v
++q_v\Delta_vS_v=0.
+$$
+
+This is a relation of correspondences from the lower-level double copy to the higher-level space. It becomes a polynomial identity on the old image when the lower-level coefficients are specialized or when the commuting source action has been transported through an injective $\Delta_v$. It is not asserted on the entire higher-level space.
+
+### 13.4 Relations in the abstract and acting algebras
+
+Let
+
+$$
+\rho:\mathbb T_A^{\Sigma,\mathrm{abs}}
+\longrightarrow\operatorname{End}_A(M_A)
+$$
+
+be the canonical action. The abstract algebra has exactly the universal local and disjoint-place relations used in its construction. The acting algebra is
+
+$$
+\mathbb T_A^{\Sigma}=\rho(\mathbb T_A^{\Sigma,\mathrm{abs}})
+\cong
+\mathbb T_A^{\Sigma,\mathrm{abs}}/\ker\rho.
+$$
+
+Since $M_A$ is finite, the acting algebra is finite as an $A$-module whenever $A$ is Noetherian and $M_A$ is finite. The infinitely many abstract generators therefore satisfy additional relations in this particular action. Those relations may depend on the weight, level, central character, and coefficient ring.
+
+**Proposition 13.1.** Suppose $A$ is a domain, $M_A$ is torsion-free, and an abstract operator $h$ acts as zero on $M_A$. Then it acts as zero on the generic fiber. The converse holds if $M_A$ is an $A$-lattice in the generic module. It need not act as zero on a directly formed residual module when base change fails.
+
+**Proof.** The first statement follows by tensoring the zero map with the fraction field. For the converse, if $h$ vanishes after tensoring, then $h(m)$ is torsion for every $m\in M_A$; torsion-freeness forces $h(m)=0$. The final warning is the phenomenon of Section 12.7: a direct residual module may contain vectors outside the reduction of $M_A$. $\square$
+
+Thus a proof of commutativity or a polynomial identity should be placed as high as its evidence permits. A double-coset count proves an abstract relation. A finite matrix calculation proves an acting relation. An eigenvalue calculation proves only a scalar specialization. Keeping this hierarchy visible makes later congruence arguments dependable.
+
+## 14. Examples over $\mathbf Q$
+
+### 14.1 The one-class Hurwitz order
 
 Let
 
@@ -1416,7 +2355,7 @@ This factorization is an elementary consequence of neighbor counting. It also re
 
 For a nontrivial weight $W$, the space is $W^{\mathcal H^\times}$ rather than one-dimensional. Each of the $p+1$ returns carries a rational transition matrix, so $T_p$ need not act as $(p+1)$ times the identity. Class number one simplifies the class index, not the weight action.
 
-### 13.2 A two-class level-three model
+### 14.2 A two-class level-three model
 
 Keep the Hurwitz algebra, but at $3$ take the principal congruence subgroup
 
@@ -1457,7 +2396,7 @@ The vectors $(1,1)$ and $(1,-1)$ are simultaneous eigenvectors. For $\ell\equiv-
 
 The example also exposes what determinant data can and cannot do. Here determinant distinguishes all classes, so it determines the entire permutation. In a larger quaternionic class set, several ideal classes can have the same reduced-norm class. Norm then predicts only the central or abelian block structure; ideal-neighbor reduction is still needed inside each fiber.
 
-### 13.3 General Brandt matrices
+### 14.3 General Brandt matrices
 
 Let $\mathcal O$ be a maximal order in a definite rational quaternion algebra, with right ideal representatives $I_1,\ldots,I_h$. For a prime $p$ away from the discriminant, the $(i,j)$ entry of the scalar Brandt matrix may be computed as the number of index-$p$ right $\mathcal O$-sublattices in the local neighbor family of $I_i$ that are globally equivalent to $I_j$, with all automorphism-orbit sizes restored.
 
@@ -1513,7 +2452,7 @@ $$
 
 has row degree $3$ and satisfies $b'_{ij}/e_i=b'_{ji}/e_j$. The calculation shows why plausible-looking neighbor counts are not enough; stabilizer weights impose additional arithmetic constraints.
 
-### 13.4 A non-self-adjoint level operator
+### 14.4 A non-self-adjoint level operator
 
 At a split prime $p$ with $K_0(p)$ level, the operator
 
@@ -1531,9 +2470,9 @@ Although multiplication by $p$ converts the inverse diagonal matrix to $\operato
 
 On a finite class model, $U_p$ gives a directed $p$-regular correspondence and $V_p$ gives its mass-weighted reverse. A raw matrix can therefore be triangular or otherwise visibly nonsymmetric without error. Demanding ordinary symmetry would erase the orientation that $K_0(p)$ was introduced to remember.
 
-## 14. The canonical action
+## 15. The canonical action
 
-### 14.1 The exact module and its operators
+### 15.1 The exact module and its operators
 
 We now assemble the construction on precisely the modules produced in Book 89. Fix:
 
@@ -1568,7 +2507,7 @@ $$
 
 This formula is the promised endpoint. It defines the global Hecke action before eigenvectors are chosen and before the image algebra is localized. At unramified split hyperspecial places it supplies commuting $T_v,S_v$ and the polynomial $1-T_vX+q_vS_vX^2$. At level and division places it supplies exactly the double-coset operators permitted by the local group and compact open.
 
-### 14.2 An operator dictionary
+### 15.2 An operator dictionary
 
 | Symbol or construction | Exact correspondence | Essential convention | Later comparison datum |
 |---|---|---|---|
@@ -1582,15 +2521,18 @@ This formula is the promised endpoint. It defines the global Hecke action before
 | $P_v(X)$ | $1-T_vX+q_vS_vX^2$ | integral spherical normalization | unramified comparison polynomial |
 | $U_v$ | $K_0(\mathfrak p^r)\operatorname{diag}(\pi,1)K_0(\mathfrak p^r)$ | oriented, degree $q_v$ | level-prime operator |
 | $V_v$ | inverse double coset of $U_v$ | generally distinct from $U_v$ | mass adjoint |
+| $\langle a\rangle$ | right translation by $\operatorname{diag}(1,\widetilde a)$ at $K_1$-level | genuine $k_v^\times$-action | diamond character |
 | $R_\Pi$ | division-uniformizer coset | maximal compact, one coset | ramified-place valuation step |
 | $\operatorname{res}$ | forget some invariance | deeper group is smaller | level pullback |
 | $\operatorname{Tr}$ | sum over $U/U'$ | unnormalized right-coset trace | level corestriction |
 | $\delta_a$ | $R_a$ then pullback | require $U'\subset aUa^{-1}$ | degeneracy map and old image |
+| $\Delta^*\Delta$ | matrix of adjoint degeneracy compositions | mass pairing and self-duality fixed | old/new splitting obstruction |
+| old $U_v$ matrix | $\left(\begin{smallmatrix}T_v&q_vS_v\\-1&0\end{smallmatrix}\right)$ | $\alpha=\operatorname{diag}(\pi,1)$ and $\beta=\operatorname{diag}(1,\pi)$ | old refinement polynomial |
 | twist by $\psi$ | multiply by $\psi_f\circ\operatorname{Nrd}$ | adjust the infinite weight; trivial on level norm | $t_v\mapsto\psi_v(\pi_v)t_v$ |
 
 Several entries deliberately retain both an operator and its normalization. In deformation comparisons, $T_v$ and $S_v$ will be matched with two coefficients of a degree-two characteristic polynomial. The factor $q_v$ in $P_v$ is part of that dictionary. Changing $T_v$ by $q_v^{-1/2}$ without changing the polynomial would change the comparison problem.
 
-### 14.3 Boundaries of the present theory
+### 15.3 Boundaries of the present theory
 
 The construction gives simultaneous eigenvalues but does not classify the local objects they might encode. Principal series, special representations, supercuspidal representations, conductors, and newvectors require the local representation theory developed later. Likewise, the half-step at a division place has been described as a double coset, not classified through irreducible representations of $D_v^\times$.
 
@@ -1607,7 +2549,7 @@ What has been proved is independent of those later structures:
 - level and ramified places retain their genuine asymmetry;
 - central characters, twists, level change, and coefficient change obey explicit formulas.
 
-### 14.4 Conclusion
+### 15.4 Conclusion
 
 A Hecke operator is the algebraic shadow of a finite correspondence. Starting from a single right translation reveals why the correspondence is needed: translation usually changes level. The compact-open double coset collects every translate required to return to the original level, and its finite right-coset decomposition turns that collection into an integral sum. Haar convolution then records how correspondences compose, including the multiplicities that set-theoretic multiplication forgets.
 
@@ -1636,3 +2578,7 @@ $$
 A $K_0$ level remembers orientation, replacing $q+1$ undirected neighbors by $q$ forward ones and separating an operator from its adjoint. A ramified quaternionic place has no lattice tree at all: maximal level sees a valuation line and a one-coset uniformizer step. These differences are mathematical structure, not notational variation.
 
 Globally, restricted products make operators at distinct places commute. Central characters specialize scalar translations, norm twists rescale the two polynomial coefficients in the expected degrees, and pullback, trace, and translated degeneracy maps build old-level images by finite correspondences. The result is a canonical Hecke action on the exact integral quaternionic modules of Book 89, with every choice and normalization exposed. This is the operator language needed for the next comparison: a finite automorphic module, an integral commuting family away from bad places, precise operators at the remaining places, and a local polynomial whose coefficients can be placed beside deformation-theoretic trace and determinant data.
+
+At one new split prime, the two endpoints of the local edge produce a completely explicit old module. Its Gram matrix records whether the natural integral image splits, while the forward level operator acts through the companion matrix of $X^2-T_vX+q_vS_v$. Passing from $K_0$ to $K_1$ exposes the finite diamond action and its possible failure to decompose at primes dividing $q_v-1$. These facts connect the spherical algebra, level orientation, adjunction, and integral coefficient theory in one calculation.
+
+The final lesson is that no single adjective replaces the hypotheses. “Commuting” depends on the place and selected local subalgebra; “self-adjoint” depends on inversion, central scalars, pairing, and measure; “old” depends on a degeneracy family; “new” depends on a kernel, complement, or quotient; and “reduction” depends on whether invariants commute with base change. Once those choices are stated, every operator is a finite correspondence, every relation is a finite count, and every integral defect is visible in an explicit kernel, cokernel, or matrix determinant.
