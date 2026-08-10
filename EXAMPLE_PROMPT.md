@@ -1,8 +1,8 @@
 # Example Prompt for Book 2
 
-Work in `/home/phulin/LastLib`. Write only Book 2. Do not search or browse the internet under any circumstances. Read `BOOKS.md` and the completed Book 1, `books/01-valuations-dvrs-and-completions.md`, before writing. You may inspect the local Mathlib checkout, and you may assume the reader knows its mathematical results, but do not let that prevent a complete and pedagogically coherent treatment. The book text must never mention Lean, Mathlib, formalization, APIs, theorem identifiers from code, or proof assistants.
+Work in `/home/phulin/LastLib`. Write only Book 2. Do not search or browse the internet under any circumstances. Read `BOOKS.md` and the completed Book 1, `books/001-valuations-dvrs-and-completions.md`, before writing. You may inspect the local Mathlib checkout, and you may assume the reader knows its mathematical results, but do not let that prevent a complete and pedagogically coherent treatment. The book text must never mention Lean, Mathlib, formalization, APIs, theorem identifiers from code, or proof assistants.
 
-Create `books/02-finite-extensions-of-local-fields.md`. Do not alter Book 1, `BOOKS.md`, or the Mathlib checkout, and do not make a git commit.
+Create `books/002-finite-extensions-of-local-fields.md`. Do not alter Book 1, `BOOKS.md`, or the Mathlib checkout, and do not make a git commit.
 
 Write a polished graduate-level textbook titled “Finite Extensions of Local Fields,” following the second description in `BOOKS.md`. Aim for the substance and scale of roughly 100 typically typeset pages, but treat that as a soft editorial target rather than a word-count requirement. Completeness, explanatory depth, and logical coherence matter more than length.
 
