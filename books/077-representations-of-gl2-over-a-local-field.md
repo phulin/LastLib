@@ -78,7 +78,7 @@
 14. [Contragredients, pairings, and duality](#14-contragredients-pairings-and-duality)
     - [Smooth duals of the four families](#141-smooth-duals-of-the-four-families)
     - [The invariant principal-series pairing](#142-the-invariant-principal-series-pairing)
-15. [Local factors at the unramified boundary](#15-local-factors-at-the-unramified-boundary)
+15. [Local factors from Whittaker models](#15-local-factors-from-whittaker-models)
     - [Character and principal-series factors](#151-character-and-principal-series-factors)
     - [Special and supercuspidal factors](#152-special-and-supercuspidal-factors)
 16. [Worked examples over $\mathbf Q_p$](#16-worked-examples-over-mathbf-q_p)
@@ -95,7 +95,39 @@
     - [Interface with two-dimensional local Galois types](#173-interface-with-two-dimensional-local-galois-types)
     - [Scope of the classification](#174-scope-of-the-classification)
     - [Why characteristic zero is visible](#175-why-characteristic-zero-is-visible)
-18. [Conclusion: one local representation, many visible shadows](#18-conclusion-one-local-representation-many-visible-shadows)
+18. [Representation-side synthesis](#18-representation-side-synthesis)
+19. [Weil--Deligne parameters in dimension two](#19-weil--deligne-parameters-in-dimension-two)
+    - [Why a representation needs a second language](#191-why-a-representation-needs-a-second-language)
+    - [The definition and the monodromy relation](#192-the-definition-and-the-monodromy-relation)
+    - [Determinants, duals, and twists](#193-determinants-duals-and-twists)
+    - [Conductors and Euler factors](#194-conductors-and-euler-factors)
+20. [The selected local Langlands correspondence](#20-the-selected-local-langlands-correspondence)
+    - [The matching problem and the reducibility wall](#201-the-matching-problem-and-the-reducibility-wall)
+    - [Rectified quadratic induction](#202-rectified-quadratic-induction)
+    - [Bijectivity in the selected range](#203-bijectivity-in-the-selected-range)
+    - [Central characters, twists, and contragredients](#204-central-characters-twists-and-contragredients)
+21. [Conductors and local constants under the correspondence](#21-conductors-and-local-constants-under-the-correspondence)
+    - [Two conductor definitions become one](#211-two-conductor-definitions-become-one)
+    - [Rank-one Fourier constants](#212-rank-one-fourier-constants)
+    - [Epsilon factors of parameters](#213-epsilon-factors-of-parameters)
+    - [Principal and special functional equations](#214-principal-and-special-functional-equations)
+    - [Quadratic induction and the lambda factor](#215-quadratic-induction-and-the-lambda-factor)
+22. [Base change to a finite extension](#22-base-change-to-a-finite-extension)
+    - [Restriction is the organizing principle](#221-restriction-is-the-organizing-principle)
+    - [Principal, character, and special base change](#222-principal-character-and-special-base-change)
+    - [Mackey theory for a quadratic parameter](#223-mackey-theory-for-a-quadratic-parameter)
+    - [What base change preserves and what it transforms](#224-what-base-change-preserves-and-what-it-transforms)
+23. [Jacquet--Langlands and the preserved invariant package](#23-jacquet--langlands-and-the-preserved-invariant-package)
+    - [Why only the discrete series transfers](#231-why-only-the-discrete-series-transfers)
+    - [The invariant theorem](#232-the-invariant-theorem)
+    - [What is preserved, transformed, or not comparable](#233-what-is-preserved-transformed-or-not-comparable)
+24. [Worked parameter calculations and final synthesis](#24-worked-parameter-calculations-and-final-synthesis)
+    - [An unramified principal series](#241-an-unramified-principal-series)
+    - [The two objects at the reducibility wall](#242-the-two-objects-at-the-reducibility-wall)
+    - [An unramified quadratic dihedral representation](#243-an-unramified-quadratic-dihedral-representation)
+    - [A tamely ramified quadratic example](#244-a-tamely-ramified-quadratic-example)
+    - [The complete reusable dictionary](#245-the-complete-reusable-dictionary)
+    - [Conclusion](#246-conclusion)
 
 ## 1. The local representation problem
 
@@ -103,7 +135,7 @@
 
 Let $K$ be a nonarchimedean local field. The group $\mathrm{GL}_2(K)$ is the first reductive group for which induction, cuspidality, Fourier expansion, congruence level, and noncommutative harmonic analysis all interact. Rank one phenomena already appear in $K^\times$, but there is no unipotent subgroup there and hence no analogue of a Fourier coefficient. In rank two the upper triangular subgroup provides induction from characters, its unipotent radical provides Whittaker coefficients, and the two Bruhat cells make both constructions explicitly calculable.
 
-The aim of this book is to classify the irreducible smooth representations that are built from the Borel, isolate those that are genuinely cuspidal, and attach to every infinite-dimensional irreducible representation the local invariants needed later: central character, contragredient, conductor, newvector, Hecke parameters, and generic model. The theory is local throughout. Representations of a quaternion division group and the correspondence with them belong to the next two books; global automorphic representations belong after that.
+The aim of this book is to classify the irreducible smooth representations needed in the selected local theory: those built from the Borel, the special representations on the reducibility wall, and the depth-zero and tame dihedral supercuspidals built from quadratic tori. We attach central characters, contragredients, conductors, newvectors, Hecke parameters, Whittaker models, Weil--Deligne parameters, and local constants. Primitive wild supercuspidals are recognized intrinsically but are outside the construction-level classification. The final chapters prove compatibility with finite base change and isolate the invariant package preserved by Jacquet--Langlands.
 
 The classification has a visible fault line. A representation whose unipotent coinvariants are nonzero is detected by a character of the diagonal torus and comes from principal-series induction. A representation whose unipotent coinvariants vanish is supercuspidal; its matrix coefficients are compact modulo the center and it must be constructed by different means. Much of the book explains why these apparently different criteria agree.
 
@@ -1160,7 +1192,7 @@ Fixing a vector by $n(\mathfrak p^m)$ and enlarging to $n(\mathfrak p^{-r})$ red
 
 For generic irreducible $\pi$, the map $v\mapsto W_v$ is injective: its kernel is a subrepresentation and the functional is nonzero. Its image $\mathcal W(\pi,\psi)$ is the **Whittaker model**. Uniqueness makes this model canonical up to a scalar choice of $\lambda$.
 
-Changing the additive character to $\psi_a(x)=\psi(ax)$ does not change genericity. Indeed conjugation by $\operatorname{diag}(a,1)$ transports one Whittaker model to the other. Conductors defined using a fixed $\psi$ must nevertheless record its conductor if formulas involve Fourier transform; we keep $a(\psi)=0$ throughout.
+Changing the additive character to $\psi_a(x)=\psi(ax)$ does not change genericity. Indeed conjugation by $\operatorname{diag}(a,1)$ transports one Whittaker model to the other. Conductors defined using a fixed $\psi$ must nevertheless record its conductor if formulas involve Fourier transform; we keep $n(\psi)=0$ throughout.
 
 ### 11.4 The principal-series Jacquet integral in detail
 
@@ -1311,7 +1343,7 @@ This necessary compatibility is often useful when a prescribed central character
 
 The newvector theorem rests on a concrete rank-one calculation.
 
-**Lemma 13.1 (Kirillov filtration).** Let $\pi$ be infinite dimensional, irreducible, and generic, and take $a(\psi)=0$. Suppose $\pi^{\mathcal K_1(\mathfrak p^m)}$ is nonzero for at least one $m$, and let $n_0$ be the least such integer. Then
+**Lemma 13.1 (Kirillov filtration).** Let $\pi$ be infinite dimensional, irreducible, and generic, and take $n(\psi)=0$. Suppose $\pi^{\mathcal K_1(\mathfrak p^m)}$ is nonzero for at least one $m$, and let $n_0$ be the least such integer. Then
 
 $$
 \dim \pi^{\mathcal K_1(\mathfrak p^m)}=
@@ -1574,7 +1606,7 @@ $$
 
 pairs $\mathcal W(\pi,\psi)$ with $\mathcal W(\pi^\vee,\psi^{-1})$. For supercuspidals it is a finite sum over valuation shells; for principal series asymptotic tails require the usual algebraic regularization. Fixed-vector duality then identifies the newvector lines of $\pi$ and $\pi^\vee$.
 
-## 15. Local factors at the unramified boundary
+## 15. Local factors from Whittaker models
 
 ### 15.1 Character and principal-series factors
 
@@ -1620,7 +1652,7 @@ $$
 
 and if $\mu$ is ramified it is $1$. An algebraically normalized automorphic representation is often twisted by $\nu^{-1/2}$; that shifts $s$ and removes the visible $1/2$. Many apparent discrepancies in Steinberg Euler factors are only this twist.
 
-For a supercuspidal representation of $\mathrm{GL}_2(K)$, the standard local factor is $1$. The richer information is carried by its conductor, central character, and epsilon factor; the latter will be introduced only when a later transfer theorem needs it. No division-algebra representation is used in defining anything in this chapter.
+For a supercuspidal representation of $\mathrm{GL}_2(K)$, the standard local factor is $1$. The richer information is carried by its conductor, central character, and epsilon factor; Chapter 21 constructs the latter and proves its compatibility with quadratic induction. No division-algebra representation is used in defining anything in this chapter.
 
 ## 16. Worked examples over $\mathbf Q_p$
 
@@ -1721,13 +1753,13 @@ Twisting by $\chi\circ N_{L/K}$ replaces $\theta$ by $\theta(\chi\circ N_{L/K})$
 
 The principal-series, Steinberg, Whittaker, and newvector theorems are unchanged over $\mathbf Q_2$. The reducibility ratios remain $|\cdot|^{\pm1}$, and the depth-zero construction from regular characters of $\mathbf F_4^\times$ still gives conductor-two supercuspidals.
 
-What changes is the reach of the tame quadratic construction. Every ramified quadratic extension of $\mathbf Q_2$ is wildly ramified, so its different exponent need not be one and the simple tame lattice-chain formula $a_L(\theta)+1$ is unavailable. The general induction-shaped expression still suggests
+What changes is the reach of the tame quadratic construction. Every ramified quadratic extension of $\mathbf Q_2$ is wildly ramified, so its different exponent need not be one and the simple tame lattice-chain formula $a_L(\theta)+1$ is unavailable. For the induced Weil parameter, the exact conductor formula is still
 
 $$
 \Delta(L/K)+f(L/K)a_L(\theta),
 $$
 
-but constructing the representation and identifying the correct character may require wild type data. This is exactly the scope boundary of Section 8.6, not an exception to the intrinsic classification or newvector theorem.
+but constructing the matching representation and identifying the correct rectified character require wild type data not developed here. This is exactly the scope boundary of Section 8.6, not an exception to the intrinsic classification or newvector theorem.
 
 ## 17. The classification and invariant dictionary
 
@@ -1737,7 +1769,7 @@ For quick downstream use, the irreducible representations and their basic data a
 
 | family | condition | central character | conductor/newvector | contragredient |
 |---|---|---|---|---|
-| $\mu\circ\det$ | always irreducible, nongeneric | $\mu^2$ | level $0$ if $\mu$ is unramified; no $\mathcal K_1$-fixed vector if ramified | $\mu^{-1}\circ\det$ |
+| $\mu\circ\det$ | always irreducible, nongeneric | $\mu^2$ | epsilon-conductor $2a(\mu)$; $\mathcal K_1$-fixed only when $\mu$ is unramified | $\mu^{-1}\circ\det$ |
 | $I(\chi_1,\chi_2)$ | $\chi_1\chi_2^{-1}\ne\nu^{\pm1}$ | $\chi_1\chi_2$ | $a(\chi_1)+a(\chi_2)$ | $I(\chi_1^{-1},\chi_2^{-1})$ |
 | $\operatorname{St}\otimes\mu$ | generic special | $\mu^2$ | $1$ if $a(\mu)=0$, else $2a(\mu)$ | $\operatorname{St}\otimes\mu^{-1}$ |
 | supercuspidal $\pi$ | $r_N(\pi)=0$ | $\omega_\pi$ | unique at $a(\pi)$ | supercuspidal, central character $\omega_\pi^{-1}$ |
@@ -1763,7 +1795,7 @@ The discrete-series side of $G$ consists of special representations and supercus
 - Satake parameters and a Hecke polynomial in the spherical case;
 - tame admissible-pair data $(L/K,\theta)$ where available.
 
-No correspondence has been asserted. In particular, no representation of a division algebra has been constructed or assigned to a $G$-representation here. Book 82 develops that other representation theory, and Book 84 will state and prove the matching.
+At this representation-side stage no correspondence has yet been asserted, and no division-algebra representation was used to define these invariants. Chapters 19--23 now construct the selected parameter matching, prove its compatibility properties, and formulate the Jacquet--Langlands invariant package.
 
 ### 17.3 Interface with two-dimensional local Galois types
 
@@ -1803,7 +1835,7 @@ If the coefficient field has characteristic $p$, where $p$ is the residue charac
 
 Thus every classification, conductor, and one-dimensionality theorem in this book is a characteristic-zero statement unless its proof explicitly says otherwise. This is not merely a convenience for square roots of $q$; it is part of the mathematical content.
 
-## 18. Conclusion: one local representation, many visible shadows
+## 18. Representation-side synthesis
 
 The representation theory of $\mathrm{GL}_2(K)$ is governed by two geometries. The projective line has two Bruhat cells, and this makes normalized induction from the Borel almost completely explicit. The lattice tree has one Cartan distance, and this turns support modulo the center, congruence level, and Hecke action into one-dimensional calculations. Their intersection explains the exceptional reducibility ratios $|\cdot|^{\pm1}$ and fixes the exact placement of the character and Steinberg constituents.
 
@@ -1811,4 +1843,1048 @@ The Jacquet module draws the classification boundary. If it is nonzero, adjuncti
 
 Whittaker uniqueness gives every infinite-dimensional irreducible representation a canonical functional model. The Kirillov coordinate reduces that model to functions on $K^\times$; congruence invariance becomes an interval of valuation shells. From that elementary picture come the existence and uniqueness of the newvector, the exact oldvector growth formula, and the conductor calculations for principal, special, and constructed supercuspidal representations.
 
-The final dictionary is therefore coherent rather than merely classificatory. Central character records scalar action, contragredience inverts it, twisting changes both inducing characters together, the conductor identifies minimal integral level, and the spherical Hecke polynomial records the two unramified parameters with its Frobenius convention left explicit. These are exactly the stable shadows through which later local transfer, global automorphic representations, and two-dimensional Galois representations will recognize the same local object.
+The preceding dictionary is coherent rather than merely classificatory. Central character records scalar action, contragredience inverts it, twisting changes both inducing characters together, the conductor identifies minimal integral level, and the spherical Hecke polynomial records two unramified roots. We now prove that these are not merely analogous to Galois-theoretic data: in the selected range they are the invariants of a precise Weil--Deligne parameter.
+
+## 19. Weil--Deligne parameters in dimension two
+
+### 19.1 Why a representation needs a second language
+
+The group-theoretic classification answers the question “from which geometric source does $\pi$ come?” It does not by itself explain why the conductor found from congruence subgroups is also the exponent in a functional equation, why a Steinberg representation has only one Euler root, or how a representation should behave when $K$ is replaced by a finite extension. Weil--Deligne parameters put Frobenius, inertia, and monodromy in one finite-dimensional object and answer all three questions at once.
+
+This chapter develops only the two-dimensional objects needed here. The general theory, including the local monodromy theorem and the construction of epsilon factors for arbitrary finite-inertia representations, was established in Book 80. We recall every definition and specialize every formula, so that no normalization is hidden.
+
+Fix a separable closure $\overline K$. Let $W_K$ be the inverse image of the infinite cyclic subgroup generated by geometric Frobenius in the absolute Galois group. There is an exact sequence
+
+$$
+1\longrightarrow I_K\longrightarrow W_K
+\xrightarrow{\nu_K}\mathbf Z\longrightarrow0,
+\qquad \nu_K(\Phi)=1,
+$$
+
+where $I_K$ is inertia and $\Phi$ is a lift of geometric Frobenius. Give $I_K$ its profinite topology and $\mathbf Z$ the discrete topology. Put
+
+$$
+|w|=q^{-\nu_K(w)}.
+$$
+
+Local reciprocity is normalized throughout by
+
+$$
+\operatorname{rec}_K(\varpi)=\Phi.
+\tag{19.1}
+$$
+
+Thus a smooth character of $K^\times$ and its corresponding Weil character have the same value on $\varpi$ and $\Phi$. Arithmetic Frobenius would invert every displayed unramified root; (19.1) prevents that inversion from being performed silently.
+
+### 19.2 The definition and the monodromy relation
+
+A two-dimensional **Weil--Deligne representation** is a pair $D=(r,N)$ on a two-dimensional complex vector space $V$ such that
+
+1. $r:W_K\to\operatorname{GL}(V)$ is continuous and has finite image on inertia;
+2. $N\in\operatorname{End}(V)$ is nilpotent; and
+3. one has
+
+$$
+r(w)Nr(w)^{-1}=|w|N
+\qquad(w\in W_K).
+\tag{19.2}
+$$
+
+We work with Frobenius-semisimple parameters: the semisimple part of $r(\Phi)$ is retained and its commuting unipotent part is discarded. This operation does not discard $N$. That distinction is essential, because $N$ will separate the character and Steinberg constituents at the reducibility wall.
+
+The monodromy relation is forced by tame inertia. On a sufficiently small tame subgroup a potentially unipotent action has the form $\exp(t(\sigma)N)$, and geometric Frobenius changes the tame coordinate by $q^{-1}$. Conjugating the exponential therefore changes $N$ by $q^{-1}=|\Phi|$. This explains both the direction and the power in (19.2).
+
+There are three two-dimensional shapes in the selected range.
+
+- A **split parameter** is $\chi_1\oplus\chi_2$ with $N=0$.
+- A **special parameter** is $\operatorname{Sp}_2(\mu)=\mu\otimes\operatorname{Sp}_2$, where on a basis $e_0,e_1$,
+
+  $$
+  r(w)e_0=\mu(w)|w|^{1/2}e_0,
+  \qquad
+  r(w)e_1=\mu(w)|w|^{-1/2}e_1,
+  $$
+
+  $$
+  Ne_1=e_0,
+  \qquad Ne_0=0.
+  \tag{19.3}
+  $$
+
+- A **dihedral parameter** is $\operatorname{Ind}_{W_L}^{W_K}\theta$ with $L/K$ separable quadratic and $\theta\ne\theta^\tau$.
+
+The centered powers in (19.3) satisfy (19.2), because the eigenvalue on $e_0$ is $|w|$ times the eigenvalue on $e_1$. They also make $\det\operatorname{Sp}_2(\mu)=\mu^2$.
+
+**Proposition 19.1 (classification of the selected shapes).** Let $D=(r,N)$ be a two-dimensional Frobenius-semisimple parameter. If $r$ is reducible or is induced from a character of a quadratic subgroup, then exactly one of the following holds:
+
+1. $N=0$ and $D=\chi_1\oplus\chi_2$;
+2. $N\ne0$ and $D\simeq\operatorname{Sp}_2(\mu)$ for a unique $\mu$;
+3. $N=0$ and $r\simeq\operatorname{Ind}_{W_L}^{W_K}\theta$ with $\theta\ne\theta^\tau$.
+
+**Proof strategy.** Separate the cases $N=0$ and $N\ne0$. In dimension two, nonzero monodromy has rank one and its kernel supplies the centered character. In the induced case, the two conjugate character lines become visible after restriction to $W_L$.
+
+**Proof.** If $N=0$ and $r$ is reducible, Frobenius semisimplicity makes it a direct sum of characters. If $N\ne0$, choose $e_1$ with $Ne_1=e_0\ne0$. The stable line $\ker N=\mathbf Ce_0$ carries a character $\xi$. Relation (19.2) makes the quotient line carry $\xi|\cdot|^{-1}$. Setting $\mu=\xi|\cdot|^{-1/2}$ gives (19.3), and the character on $\ker N$ shows uniqueness.
+
+Finally, restrict $\operatorname{Ind}_{W_L}^{W_K}\theta$ to $W_L$. It becomes $\theta\oplus\theta^\tau$. If the two characters are distinct, the element outside $W_L$ exchanges their lines, so no line is $W_K$-stable and the induction is irreducible. If they coincide, the induction splits. An irreducible $r$ cannot have $N\ne0$, because $\ker N$ would be a nonzero proper $W_K$-stable line. The three cases are therefore disjoint. $\square$
+
+### 19.3 Determinants, duals, and twists
+
+The elementary operations on parameters are designed to match operations already visible on representations. One has
+
+$$
+(r,N)^\vee=(r^\vee,-{}^tN),
+\qquad
+(r,N)\otimes\chi=(r\otimes\chi,N\otimes1).
+$$
+
+The sign in the dual nilpotent operator is forced by differentiating the contragredient action. Up to isomorphism it does not change a two-dimensional special block. Direct calculation gives
+
+$$
+(\chi_1\oplus\chi_2)^\vee
+=\chi_1^{-1}\oplus\chi_2^{-1},
+$$
+
+$$
+\operatorname{Sp}_2(\mu)^\vee
+\simeq\operatorname{Sp}_2(\mu^{-1}),
+$$
+
+$$
+(\operatorname{Ind}_{W_L}^{W_K}\theta)^\vee
+\simeq\operatorname{Ind}_{W_L}^{W_K}\theta^{-1}.
+\tag{19.4}
+$$
+
+For quadratic induction the determinant contains a sign that must not be lost:
+
+**Proposition 19.2.** If $L/K$ is separable quadratic, then
+
+$$
+\det\operatorname{Ind}_{W_L}^{W_K}\theta
+=\theta|_{K^\times}\,\omega_{L/K},
+\tag{19.5}
+$$
+
+where characters are transported by reciprocity and $\omega_{L/K}$ is the quadratic character attached to $L/K$.
+
+**Proof.** In an induced basis, an element of $W_L$ acts diagonally through $\theta$ and $\theta^\tau$. Its determinant descends, under transfer and reciprocity, to $\theta|_{K^\times}$. An element in the other coset exchanges the two basis vectors and contributes the sign of the permutation representation of $W_K/W_L$. That sign is $\omega_{L/K}$. $\square$
+
+Formula (19.5) is the reason the direct tame type $\pi(L,\theta)$ from Chapter 8 cannot be matched naively with $\operatorname{Ind}\theta$: its central character is only $\theta|_{K^\times}$. The rectification in Chapter 20 will repair exactly this discrepancy.
+
+### 19.4 Conductors and Euler factors
+
+Let $a(r)$ be the Artin conductor of the finite-inertia Weil action. The conductor of $D=(r,N)$ is
+
+$$
+a(D)=a(r)+\dim V^{I_K}-\dim(\ker N)^{I_K}.
+\tag{19.6}
+$$
+
+The second term is the monodromy defect. It vanishes when $N=0$. For $\operatorname{Sp}_2(\mu)$ it gives one when $\mu$ is unramified and zero when $\mu$ is ramified. Consequently
+
+$$
+a(\chi_1\oplus\chi_2)=a(\chi_1)+a(\chi_2),
+$$
+
+$$
+a(\operatorname{Sp}_2(\mu))=
+\begin{cases}
+1,&a(\mu)=0,\\
+2a(\mu),&a(\mu)>0.
+\end{cases}
+\tag{19.7}
+$$
+
+Book 80 proves the induction formula
+
+$$
+a_K(\operatorname{Ind}_{W_L}^{W_K}\theta)
+=f(L/K)\bigl(a_L(\theta)+d(L/K)\bigr),
+\tag{19.8}
+$$
+
+where $d(L/K)=v_L(\mathfrak D_{L/K})$. Since
+
+$$
+v_K(\mathfrak d_{L/K})=f(L/K)d(L/K),
+$$
+
+(19.8) is exactly the conductor formula proved from types in Section 13.6.
+
+The Euler factor sees fewer directions than the conductor. Define
+
+$$
+L(s,D)=
+\det\left(1-q^{-s}r(\Phi)\mid(\ker N)^{I_K}\right)^{-1}.
+\tag{19.9}
+$$
+
+This is independent of the lift of $\Phi$, since inertia acts trivially on the displayed space. The basic calculations are
+
+$$
+L(s,\chi_1\oplus\chi_2)=L(s,\chi_1)L(s,\chi_2),
+$$
+
+$$
+L(s,\operatorname{Sp}_2(\mu))=L(s+1/2,\mu),
+\tag{19.10}
+$$
+
+and
+
+$$
+L_K(s,\operatorname{Ind}_{W_L}^{W_K}\theta)=L_L(s,\theta).
+\tag{19.11}
+$$
+
+For an admissible quadratic character the last factor is $1$. Indeed an inertia-fixed vector in the irreducible two-dimensional induction would make all of it unramified, but a semisimple representation of the cyclic quotient $W_K/I_K$ is a sum of characters. This parameter-side argument matches the compact Kirillov model of a supercuspidal representation.
+
+## 20. The selected local Langlands correspondence
+
+### 20.1 The matching problem and the reducibility wall
+
+The two classifications now have the same shapes, but a resemblance of lists is not yet a correspondence. We must specify the matching, account for the exceptional principal series, and prove that it preserves the invariants already constructed. The reducibility wall is the decisive test: a character and a Steinberg representation have the same two semisimple Weil characters, but only Steinberg has monodromy.
+
+Define the centered special block as in (19.3). For the principal and boundary classes set
+
+$$
+\operatorname{rec}_2(I(\chi_1,\chi_2))=\chi_1\oplus\chi_2
+\quad\text{if }\chi_1\chi_2^{-1}\ne\nu^{\pm1},
+\tag{20.1}
+$$
+
+$$
+\operatorname{rec}_2(\mu\circ\det)
+=\mu\nu^{1/2}\oplus\mu\nu^{-1/2},
+\qquad N=0,
+\tag{20.2}
+$$
+
+$$
+\operatorname{rec}_2(\operatorname{St}\otimes\mu)
+=\operatorname{Sp}_2(\mu).
+\tag{20.3}
+$$
+
+The unordered pair in (20.1) is intrinsic by Proposition 4.1. At the wall, the two exact sequences of Theorem 5.1 show why there must be two parameter objects: the nongeneric character gets zero monodromy, and the generic special constituent gets the unique nonzero monodromy compatible with the same two characters.
+
+This assignment immediately explains four observations made earlier. When $\mu$ is unramified, $\mu\circ\det$ is spherical but $\operatorname{St}\otimes\mu$ is only Iwahori-spherical. Their conductors are respectively $0$ and $1$. Their Euler factors have respectively two roots and one root. Finally, only the second is generic. Erasing $N$ would erase all four distinctions.
+
+### 20.2 Rectified quadratic induction
+
+For a tame admissible pair $(L/K,\theta)$, the direct type of Chapter 8 has central character $\theta|_{K^\times}$, whereas (19.5) has the extra factor $\omega_{L/K}$. A **tame rectifier** is a character
+
+$$
+\Delta_{L/K,\theta}:L^\times\longrightarrow\mathbf C^\times
+$$
+
+characterized by
+
+$$
+\Delta_{L/K,\theta}|_{K^\times}=\omega_{L/K}
+\tag{20.4}
+$$
+
+and by the quadratic Gauss-sum normalization that makes the induction formula for epsilon factors hold. Book 81 proves existence and uniqueness in the selected tame range. In the unramified quadratic case it is the unramified character with $\Delta(\varpi)=-1$. In the tamely ramified case it is tamely ramified, and its uniformizer value is fixed by the normalized quadratic Gauss sum.
+
+The rectifier obeys
+
+$$
+\Delta_{\theta^\tau}=\Delta_\theta^\tau,
+\qquad
+\Delta_{\theta(\chi\circ N_{L/K})}=\Delta_\theta,
+\qquad
+\Delta_{\theta^{-1}}=\Delta_\theta^{-1}.
+\tag{20.5}
+$$
+
+The first identity follows by changing the embedding of $L$. The second follows because a norm twist multiplies both sides of the quadratic induction equation by the same rank-one twist factor. The third follows by applying Fourier duality. These properties make the following definition independent of every auxiliary choice:
+
+$$
+\operatorname{AI}_{L/K}(\theta)
+=\pi(L,\theta\Delta_{L/K,\theta}).
+\tag{20.6}
+$$
+
+Now (20.4) gives
+
+$$
+\omega_{\operatorname{AI}_{L/K}(\theta)}
+=\theta|_{K^\times}\omega_{L/K},
+$$
+
+which agrees with (19.5). The rectifier has at most tame conductor. It is unramified in the unramified case, and admissibility forces $a_L(\theta)\ge2$ in the ramified tame case. It therefore does not change the conductor in the type formula.
+
+Define
+
+$$
+\operatorname{rec}_2(\operatorname{AI}_{L/K}(\theta))
+=\operatorname{Ind}_{W_L}^{W_K}\theta.
+\tag{20.7}
+$$
+
+Primitive wild supercuspidals and wildly ramified quadratic constructions in residue characteristic two are not included in (20.7). This is the scope boundary announced in the catalog, not an implicit claim that those representations do not exist.
+
+### 20.3 Bijectivity in the selected range
+
+**Theorem 20.1 (selected local Langlands correspondence).** Equations (20.1)--(20.3) and (20.7) give a bijection between
+
+- irreducible principal series, determinant characters, special representations, and tame dihedral supercuspidals of $G$; and
+- split, special, and tame quadratic-induced two-dimensional Frobenius-semisimple Weil--Deligne parameters.
+
+**Proof strategy.** Match structural classes before numerical invariants. Reducibility of the Weil action and vanishing of $N$ distinguish the three parameter shapes; Jacquet modules, genericity, and compact-mod-center coefficients distinguish the representation shapes.
+
+**Proof.** A split parameter $\chi_1\oplus\chi_2$ with ratio different from $\nu^{\pm1}$ comes from the irreducible principal series $I(\chi_1,\chi_2)$. The standard intertwiner and Proposition 4.1 make the unordered pair the exact isomorphism invariant. At an exceptional unordered pair there is a unique $\mu$ with
+
+$$
+\{\chi_1,\chi_2\}=\{\mu\nu^{1/2},\mu\nu^{-1/2}\}.
+$$
+
+Zero monodromy gives $\mu\circ\det$ by (20.2), while nonzero monodromy gives $\operatorname{St}\otimes\mu$ by (20.3). Proposition 19.1 shows that every nonzero-monodromy parameter occurs uniquely this way.
+
+For a regular quadratic induction, restriction to $W_L$ recovers the unordered pair $\{\theta,\theta^\tau\}$. The projective kernel recovers the quadratic extension inside the selected dihedral class. The equivalence theorem for tame types says that $\operatorname{AI}_{L/K}(\theta)$ has exactly the same ambiguity: $K$-isomorphism and Galois conjugation. Thus (20.7) is bijective on the dihedral class.
+
+The classes are disjoint. A principal or special representation has nonzero Jacquet module; a dihedral supercuspidal has zero Jacquet module. A determinant character is nongeneric; the infinite-dimensional selected representations are generic. On the parameter side, the corresponding distinctions are reducible with $N=0$, reducible with $N\ne0$, and irreducible. $\square$
+
+### 20.4 Central characters, twists, and contragredients
+
+**Theorem 20.2.** For every selected irreducible representation $\pi$ and smooth character $\chi$ of $K^\times$,
+
+$$
+\omega_\pi=\det\operatorname{rec}_2(\pi),
+\tag{20.8}
+$$
+
+$$
+\operatorname{rec}_2(\pi\otimes(\chi\circ\det))
+=\operatorname{rec}_2(\pi)\otimes\chi,
+\tag{20.9}
+$$
+
+$$
+\operatorname{rec}_2(\pi^\vee)
+=\operatorname{rec}_2(\pi)^\vee.
+\tag{20.10}
+$$
+
+**Proof.** For a principal series these identities reduce to multiplication or inversion of the two inducing characters. For a determinant character and a special representation, they follow from (20.2), (20.3), and the formulas of Chapter 14. For a dihedral representation, (20.8) is Proposition 19.2 together with rectification. Restriction of $\chi\circ\det$ to the elliptic torus is $\chi\circ N_{L/K}$, so (20.5) gives
+
+$$
+\operatorname{AI}_{L/K}(\theta)\otimes(\chi\circ\det)
+=\operatorname{AI}_{L/K}(\theta(\chi\circ N_{L/K})),
+$$
+
+matching tensor product of the induced parameter. Inversion in (20.5) and (19.4) proves duality. $\square$
+
+The proof reveals why the rectifier is structural rather than decorative. Without it, (20.8) would fail; without its twist and inverse compatibilities, (20.9) and (20.10) would fail.
+
+## 21. Conductors and local constants under the correspondence
+
+### 21.1 Two conductor definitions become one
+
+The representation conductor was defined by the first $\mathcal K_1$-fixed line, while the parameter conductor was defined by ramification and monodromy. Their equality is the most concrete test of the correspondence: it identifies a visible subgroup level with an apparently remote Galois invariant.
+
+For a nongeneric determinant character, literal $\mathcal K_1$-fixed vectors are not the right definition. If $\mu$ is ramified, the matrices $\operatorname{diag}(u,1)$ with $u\in\mathcal O^\times$ lie in every $\mathcal K_1(\mathfrak p^n)$ and act by $\mu(u)$, so no level has fixed vectors. Its standard conductor is instead the conductor of its two-dimensional parameter, namely $2a(\mu)$. The newvector statement below is therefore restricted, correctly, to infinite-dimensional representations.
+
+**Theorem 21.1 (conductor and newvector compatibility).** For every selected $\pi$,
+
+$$
+a(\pi)=a(\operatorname{rec}_2(\pi)),
+\tag{21.1}
+$$
+
+where the left side is the first newvector level for infinite-dimensional $\pi$ and the standard epsilon-conductor for $\mu\circ\det$. If $\pi$ is infinite dimensional and $n=a(\pi)$, then
+
+$$
+\dim\pi^{\mathcal K_1(\mathfrak p^r)}=
+\begin{cases}
+0,&r<n,\\
+r-n+1,&r\ge n.
+\end{cases}
+\tag{21.2}
+$$
+
+**Proof.** For an irreducible principal series, Theorem 13.3 and (19.6) both give $a(\chi_1)+a(\chi_2)$. For a determinant character, the split parameter in (20.2) has conductor $2a(\mu)$. For Steinberg, Theorem 13.4 and (19.7) agree.
+
+For a tame admissible pair, the type calculation gives
+
+$$
+v_K(\mathfrak d_{L/K})+f(L/K)a_L(\theta)
+=f(L/K)\bigl(d(L/K)+a_L(\theta)\bigr),
+$$
+
+which is (19.8). Rectification does not change the conductor, as explained after (20.6). This proves (21.1). Formula (21.2) is the local newvector theorem, Theorem 13.2; its Kirillov proof shows that the conductor is precisely the displacement between the support bound of a function and the support bound of its Weyl transform. $\square$
+
+This equality also explains conductor cancellation under twists. There is no formula depending only on $a(\pi)$ and $a(\chi)$. The exact formulas are
+
+$$
+a(I(\chi_1,\chi_2)\otimes\chi)
+=a(\chi_1\chi)+a(\chi_2\chi),
+$$
+
+$$
+a(\operatorname{St}\otimes\mu\chi)
+=\begin{cases}1,&a(\mu\chi)=0,\\2a(\mu\chi),&a(\mu\chi)>0,\end{cases}
+$$
+
+and
+
+$$
+a(\operatorname{AI}_{L/K}(\theta)\otimes\chi)
+=f(L/K)\left(a_L(\theta(\chi\circ N_{L/K}))+d(L/K)\right).
+\tag{21.3}
+$$
+
+Characters of equal depth can cancel on their last nontrivial unit quotient. Formula (21.3), not a maximum rule, retains that information.
+
+### 21.2 Rank-one Fourier constants
+
+Local constants originate in the one-dimensional Fourier equation. From this point coefficients are complex. Let $\psi:K\to\mathbf C^\times$ be nontrivial, and define its conductor exponent by
+
+Thus $\mathfrak p^{-n(\psi)}$ is the largest fractional ideal on which $\psi$ is trivial; equivalently, $\psi$ is trivial on $\mathfrak p^{-n(\psi)}$ and nontrivial on $\mathfrak p^{-n(\psi)-1}$.
+
+Use the self-dual additive Haar measure for $\psi$ and give $\mathcal O^\times$ multiplicative volume one. For a Schwartz--Bruhat function $\Phi$ and a quasicharacter $\chi$, set
+
+$$
+Z(s,\chi,\Phi)=
+\int_{K^\times}\Phi(x)\chi(x)|x|^s\,d^\times x.
+$$
+
+Book 78 proves rationality in $q^{-s}$ and the functional equation
+
+$$
+Z(1-s,\chi^{-1},\widehat\Phi)
+=\gamma(s,\chi,\psi)Z(s,\chi,\Phi),
+\tag{21.4}
+$$
+
+where $\widehat\Phi(y)=\int_K\Phi(x)\psi(xy)\,dx$. Writing
+
+$$
+\gamma(s,\chi,\psi)
+=\epsilon(s,\chi,\psi)
+\frac{L(1-s,\chi^{-1})}{L(s,\chi)}
+\tag{21.5}
+$$
+
+defines the rank-one epsilon factor. If $a(\chi)=a>0$ and $n(\psi)=0$, choosing $c$ with $v(c)=a$ reduces it to a primitive finite Gauss sum on $\mathcal O^\times/(1+\mathfrak p^a)$. Orthogonality shows that its absolute value at $s=1/2$ is one for unitary $\chi$ and that its monomial degree is $a$.
+
+Two transformations will be used repeatedly. For $b\in K^\times$, put $\psi_b(x)=\psi(bx)$ and use its self-dual measure. Then
+
+$$
+\epsilon(s,\chi,\psi_b)
+=\chi(b)|b|^{s-1/2}\epsilon(s,\chi,\psi).
+\tag{21.6}
+$$
+
+Fourier inversion gives
+
+$$
+\gamma(s,\chi,\psi)
+\gamma(1-s,\chi^{-1},\psi^{-1})=1.
+\tag{21.7}
+$$
+
+Using $\psi$ in both factors replaces the right side by $\chi(-1)$. The distinction is the reflection in the square of the Fourier transform.
+
+### 21.3 Epsilon factors of parameters
+
+For a parameter $D=(r,N)$ on $V$, Book 80 constructs $\epsilon(s,r,\psi)$ from rank-one constants by induction and multiplicativity. Monodromy adds the determinant correction
+
+$$
+\epsilon(s,D,\psi)
+=\epsilon(s,r,\psi)
+\det\left(-q^{-s}r(\Phi)\mid
+V^{I_K}/(\ker N)^{I_K}\right).
+\tag{21.8}
+$$
+
+This correction is forced: monodromy removes invariant directions from the Euler factor, and (21.8) restores their contribution to the functional equation. One obtains
+
+$$
+\epsilon(s,D,\psi)
+=W(D,\psi)
+q^{-[a(D)+n(\psi)\dim V](s-1/2)}.
+\tag{21.9}
+$$
+
+Define
+
+$$
+\gamma(s,D,\psi)
+=\epsilon(s,D,\psi)
+\frac{L(1-s,D^\vee)}{L(s,D)}.
+\tag{21.10}
+$$
+
+The determinant in (21.8) also gives the change-of-character formula
+
+$$
+\epsilon(s,D,\psi_b)
+=\det D(b)|b|^{\dim V(s-1/2)}
+\epsilon(s,D,\psi).
+\tag{21.11}
+$$
+
+For two-dimensional $D$ the exponent is $2s-1$. Duality reads
+
+$$
+\gamma(s,D,\psi)
+\gamma(1-s,D^\vee,\psi^{-1})=1.
+\tag{21.12}
+$$
+
+The root number $W(D,\psi)=\epsilon(1/2,D,\psi)$ has absolute value one when $D$ is unitary. It is not an invariant of $D$ alone: (21.11) changes it by $\det D(b)$. Calling it a sign is justified only under additional self-duality and determinant hypotheses.
+
+### 21.4 Principal and special functional equations
+
+For a generic $\pi$ define the Whittaker zeta integral
+
+$$
+Z(s,W)=\int_{K^\times}
+W\left(\begin{pmatrix}y&0\\0&1\end{pmatrix}\right)
+|y|^{s-1/2}\,d^\times y.
+\tag{21.13}
+$$
+
+The half-power makes a principal-series tail $|y|^{1/2}\chi(y)$ become the usual Tate integrand $\chi(y)|y|^s$. The transpose-inverse Whittaker function $\widetilde W$ belongs to the $\psi^{-1}$-model of $\pi^\vee$, and Whittaker uniqueness gives
+
+$$
+Z(1-s,\widetilde W)
+=\gamma(s,\pi,\psi)Z(s,W).
+\tag{21.14}
+$$
+
+**Theorem 21.2 (principal factorization).** If $I(\chi_1,\chi_2)$ is generic, then
+
+$$
+\gamma(s,I(\chi_1,\chi_2),\psi)
+=\gamma(s,\chi_1,\psi)\gamma(s,\chi_2,\psi),
+\tag{21.15}
+$$
+
+and the same product holds for epsilon factors.
+
+**Proof strategy.** Unfold the Jacquet integral over the open Bruhat cell. At finite level its two coordinates separate into products of one-dimensional Schwartz functions, so the two Tate functional equations apply independently.
+
+**Proof.** A locally constant section on a compact part of the two open-cell coordinates is a finite sum $\sum_j\Phi_{1,j}(x_1)\Phi_{2,j}(x_2)$. Inserting the Jacquet integral into (21.13), moving the two diagonal scalars through the induction covariance, and applying Fubini expresses the result as a finite sum of products
+
+$$
+Z(s,\chi_1,\Phi_{1,j})Z(s,\chi_2,\Phi_{2,j}).
+$$
+
+The Weyl transform replaces both Schwartz functions by their Fourier transforms. Equation (21.4) contributes the two gamma factors. Compact open-cell sections and their translates span the induction, and rationality extends the identity to all sections. Combining with the Euler-factor product proves the epsilon statement. $\square$
+
+At the reducibility wall the Whittaker functional kills the determinant constituent, so (21.15) specializes to $\operatorname{St}\otimes\mu$. If $\mu$ is unramified, $n(\psi)=0$, and $a=\mu(\varpi)$, (21.8) gives
+
+$$
+\epsilon(s,\operatorname{St}\otimes\mu,\psi)
+=-a q^{1/2-s}.
+\tag{21.16}
+$$
+
+The factor $-a$ is the root number and the power $q^{1/2-s}$ records conductor one. If $\mu$ is ramified, $V^{I_K}=0$ and the monodromy quotient in (21.8) vanishes; the epsilon factor is simply the product of the two ramified character factors. Together with (19.10), this proves equality of all local factors for principal, character, and special rows.
+
+### 21.5 Quadratic induction and the lambda factor
+
+Let $L/K$ be finite separable and put
+
+$$
+\psi_L=\psi\circ\operatorname{Tr}_{L/K}.
+$$
+
+If $d=d(L/K)$ and $e=e(L/K)$, trace duality gives
+
+$$
+n(\psi_L)=e\,n(\psi)+d.
+\tag{21.17}
+$$
+
+Define the induction constant
+
+$$
+\lambda(L/K,\psi)
+=\frac{\epsilon_K(s,\operatorname{Ind}_{W_L}^{W_K}1,\psi)}
+{\epsilon_L(s,1,\psi_L)}.
+\tag{21.18}
+$$
+
+The conductor induction formula and (21.17) show that numerator and denominator have the same degree in $q^{-s}$; hence $\lambda$ is independent of $s$.
+
+**Theorem 21.3 (induction of local constants).** For a Weil--Deligne representation $U$ of $W_L$,
+
+$$
+L_K(s,\operatorname{Ind}_{W_L}^{W_K}U)=L_L(s,U),
+\tag{21.19}
+$$
+
+$$
+\epsilon_K(s,\operatorname{Ind}_{W_L}^{W_K}U,\psi)
+=\lambda(L/K,\psi)^{\dim U}
+\epsilon_L(s,U,\psi_L).
+\tag{21.20}
+$$
+
+**Proof strategy.** Frobenius orbits on the cosets give (21.19). For epsilon factors, compare the finite Fourier transform on the induced space with the trace Fourier transform over $L$; the discrepancy for the trivial representation is exactly the constant in (21.18).
+
+**Proof.** On inertia invariants, an orbit of relative Frobenius of length $f(L/K)$ contributes the characteristic polynomial of $r(\Phi_L)$ with variable $q_L^{-s}=q^{-f(L/K)s}$. Multiplying the orbit contributions proves (21.19).
+
+For characters, the local functional equation over $L$ uses the pairing $\psi\circ\operatorname{Tr}_{L/K}$. Identifying the induced $K$-space with the underlying $K$-vector space of $L$ compares two self-dual measures and two finite Fourier transforms. Dividing by the same calculation for the trivial character leaves precisely (21.18), proving (21.20) in dimension one. Character induction and multiplicativity extend it to finite-inertia Weil representations; the monodromy determinant obeys the same orbit calculation as the Euler factor. $\square$
+
+For a tame admissible quadratic pair, Theorem 21.3 becomes
+
+$$
+\epsilon_K(s,\operatorname{AI}_{L/K}(\theta),\psi)
+=\lambda(L/K,\psi)\epsilon_L(s,\theta,\psi_L).
+\tag{21.21}
+$$
+
+On the representation side, unfolding the toric Whittaker function turns its Weyl transform into Fourier transform on $L$ with character $\psi_L$. The Gauss-sum condition defining the rectifier makes the remaining scalar exactly $\lambda$. This is the content of the dihedral matching theorem in Book 81, and it proves equality of epsilon and gamma factors in the last selected row.
+
+Combining the preceding results yields the full local-factor compatibility:
+
+**Corollary 21.4.** For every selected $\pi$,
+
+$$
+L(s,\pi)=L(s,\operatorname{rec}_2(\pi)),
+$$
+
+$$
+\epsilon(s,\pi,\psi)
+=\epsilon(s,\operatorname{rec}_2(\pi),\psi),
+$$
+
+$$
+\gamma(s,\pi,\psi)
+=\gamma(s,\operatorname{rec}_2(\pi),\psi).
+\tag{21.22}
+$$
+
+The additive-character scaling law on the representation side is therefore
+
+$$
+\epsilon(s,\pi,\psi_b)
+=\omega_\pi(b)|b|^{2s-1}\epsilon(s,\pi,\psi),
+\tag{21.23}
+$$
+
+which agrees with (21.11) by central-character compatibility.
+
+## 22. Base change to a finite extension
+
+### 22.1 Restriction is the organizing principle
+
+Base change asks how a representation of $\mathrm{GL}_2(K)$ should be transported to $\mathrm{GL}_2(M)$ for a finite separable extension $M/K$. Trying to move inducing subgroups directly obscures the answer: a quadratic torus may remain elliptic or may split after scalar extension. On parameters there is one canonical operation—restriction—and it automatically distinguishes the cases.
+
+If $D=(r,N)$ is a parameter over $K$, define
+
+$$
+D_M=(r|_{W_M},N).
+\tag{22.1}
+$$
+
+If $f=f(M/K)$, the degree maps satisfy $\nu_K(w)=f\nu_M(w)$ and $q_M=q^f$. Hence
+
+$$
+|w|_K=q^{-f\nu_M(w)}=q_M^{-\nu_M(w)}=|w|_M.
+$$
+
+Thus the same $N$ still satisfies the monodromy relation. Whenever $D_M$ remains in the selected range, define
+
+$$
+\operatorname{BC}_{M/K}(\pi)
+=\operatorname{rec}_{2,M}^{-1}
+(\operatorname{rec}_{2,K}(\pi)|_{W_M}).
+\tag{22.2}
+$$
+
+Rank-one reciprocity turns restriction into the norm:
+
+$$
+\chi|_{W_M}\longleftrightarrow\chi\circ N_{M/K}.
+\tag{22.3}
+$$
+
+This simple rule drives every explicit formula below.
+
+### 22.2 Principal, character, and special base change
+
+Put $\chi_{i,M}=\chi_i\circ N_{M/K}$ and $\mu_M=\mu\circ N_{M/K}$. Restriction of a direct sum gives
+
+$$
+\operatorname{BC}_{M/K}(I(\chi_1,\chi_2))
+=I(\chi_{1,M},\chi_{2,M})
+\tag{22.4}
+$$
+
+provided the right side is irreducible. If its ratio becomes $|\cdot|_M^{\pm1}$, restriction has not created monodromy. Therefore the base change is the determinant character $\eta\circ\det$ determined by
+
+$$
+\{\chi_{1,M},\chi_{2,M}\}
+=\{\eta|\cdot|_M^{1/2},\eta|\cdot|_M^{-1/2}\},
+\tag{22.5}
+$$
+
+not the Steinberg constituent.
+
+Similarly,
+
+$$
+\operatorname{BC}_{M/K}(\mu\circ\det)=\mu_M\circ\det,
+\tag{22.6}
+$$
+
+and
+
+$$
+\operatorname{BC}_{M/K}(\operatorname{St}_K\otimes\mu)
+=\operatorname{St}_M\otimes\mu_M.
+\tag{22.7}
+$$
+
+Equation (22.7) is more than a mnemonic. Restriction preserves the centered norm powers because $|w|_K=|w|_M$ on $W_M$, and it leaves $N$ unchanged. Thus $\operatorname{Sp}_{2,K}(\mu)|_{W_M}=\operatorname{Sp}_{2,M}(\mu_M)$.
+
+### 22.3 Mackey theory for a quadratic parameter
+
+Let $L/K$ be quadratic, let $\theta$ be admissible, and put
+
+$$
+D=\operatorname{Ind}_{W_L}^{W_K}\theta.
+$$
+
+There are two geometrically different outcomes.
+
+First suppose $L\not\subseteq M$ and put $R=LM$. Then $R/M$ is quadratic. Mackey decomposition gives
+
+$$
+D|_{W_M}
+\simeq\operatorname{Ind}_{W_R}^{W_M}
+(\theta\circ N_{R/L}).
+\tag{22.8}
+$$
+
+If the new character remains admissible in the tame selected range, then
+
+$$
+\operatorname{BC}_{M/K}(\operatorname{AI}_{L/K}(\theta))
+=\operatorname{AI}_{R/M}(\theta\circ N_{R/L}).
+\tag{22.9}
+$$
+
+If regularity is lost, the parameter in (22.8) splits and base change moves to the principal row.
+
+Now suppose $L\subseteq M$. Then the quadratic algebra splits after scalar extension, and restriction yields
+
+$$
+D|_{W_M}
+\simeq
+(\theta\circ N_{M/L})
+\oplus
+(\theta^\tau\circ N_{M/L}).
+\tag{22.10}
+$$
+
+Thus a dihedral supercuspidal can become a principal series after base change to a field containing its inducing quadratic extension.
+
+**Proof of (22.8) and (22.10).** Mackey decomposition is indexed by
+
+$$
+W_M\backslash W_K/W_L.
+$$
+
+If $L\not\subseteq M$, there is one double coset and $W_M\cap W_L=W_R$, which gives (22.8); reciprocity turns restriction of $\theta$ into composition with $N_{R/L}$. If $L\subseteq M$, there are two double cosets and restriction exposes the two conjugate character lines, giving (22.10). $\square$
+
+This calculation is the clearest reason to define base change by parameters. Cuspidality is not an invariant under arbitrary finite extension: it is the ellipticity of the torus after scalar extension that decides.
+
+### 22.4 What base change preserves and what it transforms
+
+Restriction commutes with determinants, tensor products, and duals. Therefore
+
+$$
+\omega_{\operatorname{BC}_{M/K}(\pi)}
+=\omega_\pi\circ N_{M/K},
+\tag{22.11}
+$$
+
+$$
+\operatorname{BC}_{M/K}(\pi\otimes\chi)
+=\operatorname{BC}_{M/K}(\pi)
+\otimes(\chi\circ N_{M/K}),
+\tag{22.12}
+$$
+
+$$
+\operatorname{BC}_{M/K}(\pi^\vee)
+=\operatorname{BC}_{M/K}(\pi)^\vee.
+\tag{22.13}
+$$
+
+Conductors require care. If $M/K$ is unramified, inertia and its upper filtration are unchanged, so
+
+$$
+a_M(D_M)=a_K(D).
+\tag{22.14}
+$$
+
+The first newvector exponent is consequently unchanged for generic selected representations. The newvector spaces are not literally the same: they live in different groups with different residue fields.
+
+For tame ramification index $e$, positive Swan depth is multiplied by $e$, while the tame fixed-space term must be recomputed because $I_M$ may kill a tame character. For wild base change the full Herbrand transition is needed. There is no formula depending only on $[M:K]$.
+
+Euler factors transform visibly under unramified base change. If $M/K$ has residue degree $f$, then
+
+$$
+L_M(s,D_M)=
+\det\left(1-q^{-fs}r(\Phi)^f
+\mid(\ker N)^{I_K}\right)^{-1}.
+\tag{22.15}
+$$
+
+Thus Frobenius roots are raised to the $f$th power; the Euler factor is generally transformed, not numerically preserved.
+
+When $M/K$ is cyclic, let
+
+$$
+X_{M/K}=\operatorname{Hom}
+(K^\times/N_{M/K}M^\times,\mathbf C^\times).
+$$
+
+Induction followed by restriction gives
+
+$$
+\operatorname{Ind}_{W_M}^{W_K}(D_M)
+\simeq\bigoplus_{\eta\in X_{M/K}}D\otimes\eta.
+\tag{22.16}
+$$
+
+Applying Theorem 21.3 yields the exact product identities
+
+$$
+L_M(s,D_M)=
+\prod_{\eta\in X_{M/K}}L_K(s,D\otimes\eta),
+\tag{22.17}
+$$
+
+and, for $\psi_M=\psi\circ\operatorname{Tr}_{M/K}$,
+
+$$
+\epsilon_M(s,D_M,\psi_M)
+=\lambda(M/K,\psi)^{-\dim D}
+\prod_{\eta\in X_{M/K}}
+\epsilon_K(s,D\otimes\eta,\psi).
+\tag{22.18}
+$$
+
+The same identities hold for selected representations by Corollary 21.4. Trace compatibility of the additive characters is essential in (22.18); unrelated conductor-zero characters introduce the scaling factor (21.23).
+
+Finally, restriction is transitive. Hence, whenever all intermediate parameters remain selected,
+
+$$
+\operatorname{BC}_{R/M}
+(\operatorname{BC}_{M/K}(\pi))
+=\operatorname{BC}_{R/K}(\pi).
+\tag{22.19}
+$$
+
+Norm transitivity proves this directly in the principal and special formulas, while Mackey theory proves it in the dihedral case.
+
+## 23. Jacquet--Langlands and the preserved invariant package
+
+### 23.1 Why only the discrete series transfers
+
+Let $D_K$ be the quaternion division algebra over $K$, write $D_K^\times$ for its multiplicative group, and write $\operatorname{Nrd}:D_K^\times\to K^\times$ for the reduced norm. The quotient $D_K^\times/K^\times$ is compact. It has no proper parabolic subgroup and hence no principal series. This immediately predicts the domain of local Jacquet--Langlands: the essentially square-integrable representations of $G$, namely special representations and supercuspidals.
+
+The purpose of this chapter is not to reconstruct the representation theory of $D_K^\times$. It is to isolate, with proofs, the invariant statement that Book 77 must hand to later transfer arguments. In the selected range, local Jacquet--Langlands is characterized by the regular-elliptic character identity
+
+$$
+\Theta_\pi(g)=-\Theta_{\operatorname{JL}(\pi)}(g_D)
+\tag{23.1}
+$$
+
+for matching regular elliptic elements, where $g$ and $g_D$ have the same reduced characteristic polynomial. The minus sign is $(-1)^{2-1}$. Equivalently in the selected range, the two representations carry the same two-dimensional Weil--Deligne parameter. The equivalence is proved by the explicit character formulas for special and tame dihedral types: (23.1) recovers the same torus character orbit and the same special-versus-supercuspidal shape.
+
+Thus the selected transfer has the form
+
+$$
+\operatorname{St}\otimes\mu
+\longleftrightarrow
+\mu\circ\operatorname{Nrd},
+\tag{23.2}
+$$
+
+and
+
+$$
+\operatorname{AI}_{L/K}(\theta)
+\longleftrightarrow
+\rho_{D}(L,\theta),
+\tag{23.3}
+$$
+
+where $\rho_D(L,\theta)$ denotes the quaternionic tame dihedral representation with parameter $\operatorname{Ind}_{W_L}^{W_K}\theta$. Primitive wild packets are outside the present scope.
+
+The equivalence between (23.1) and the displayed parameter matching can be checked directly in these two rows. On a regular elliptic element, the Steinberg character is the negative of the character $\mu\circ\operatorname{Nrd}$ after reduced characteristic polynomials are matched; twisting multiplies both values by $\mu$ of their common determinant. In the dihedral row, the compact-induction character formula has one contribution for each of the two embeddings of $L$ into the ambient algebra. The two contributions are exchanged by $\tau$ and recover the orbit $\{\theta,\theta^\tau\}$. The split and division groups have opposite rank sign, producing the minus sign in (23.1). Away from conjugacy classes meeting the inducing torus, both compact-induction characters vanish. Thus the regular-elliptic identity determines exactly the same quadratic field and character orbit, hence the same induced parameter. This is the selected, construction-level proof of the equivalence used below.
+
+### 23.2 The invariant theorem
+
+**Theorem 23.1 (Jacquet--Langlands invariant package).** Let $\pi$ be a selected discrete-series representation of $G$ and let $\rho=\operatorname{JL}(\pi)$. Then:
+
+1. $\omega_\rho=\omega_\pi$;
+2. $\operatorname{JL}(\pi\otimes(\chi\circ\det))
+   =\rho\otimes(\chi\circ\operatorname{Nrd})$;
+3. $\operatorname{JL}(\pi^\vee)=\rho^\vee$;
+4. $a(\rho)=a(\pi)$ when both conductors are defined through their common Weil--Deligne parameter;
+5. for every nontrivial $\psi$,
+
+   $$
+   L(s,\rho)=L(s,\pi),
+   \qquad
+   \epsilon(s,\rho,\psi)=\epsilon(s,\pi,\psi),
+   $$
+
+   and therefore their gamma factors and root numbers agree.
+
+**Proof strategy.** Use the common parameter. Each listed operation or invariant is intrinsic on that parameter, so equality is forced rather than checked case by case. Then verify that the two explicit selected rows really have the asserted common parameter.
+
+**Proof.** Put $D=\operatorname{rec}_2(\pi)$. Character matching for (23.2) assigns $\operatorname{Sp}_2(\mu)$ to both sides; character matching for (23.3) assigns $\operatorname{Ind}_{W_L}^{W_K}\theta$ to both sides. Thus $D$ is also the parameter of $\rho$.
+
+The central character is $\det D$, proving (1). Twisting by $\chi$ tensors $D$ with the corresponding Weil character, and dualizing replaces $D$ by $D^\vee$, proving (2) and (3). The Artin--monodromy conductor (19.6), Euler determinant (19.9), and epsilon factor (21.8) depend only on $D$, proving (4) and (5). $\square$
+
+The conductor statement needs its stated normalization. A congruence “level” on $D_K^\times$ is indexed by the filtration of a maximal order and need not equal the $\mathcal K_1$ index on $G$ without a shift. What is preserved is the Artin--monodromy conductor and hence the exponent in the epsilon factor. Likewise a newvector is not transported as a vector: the two representations live on different groups. What transfers is the integer controlling the first distinguished level after each side's conventions are translated to the common parameter.
+
+### 23.3 What is preserved, transformed, or not comparable
+
+The distinction among these three words prevents several common mistakes.
+
+Under Jacquet--Langlands, the base field and the parameter do not change. Central character, determinant twists, duality, conductor, Euler factors, epsilon factors, gamma factors, and root numbers are therefore preserved. Genericity is not preserved as a literal property: $D_K^\times$ has no unipotent subgroup and hence no Whittaker model. Spherical vectors are not preserved: the Steinberg representation has no $\mathrm{GL}_2(\mathcal O)$-fixed vector, while the character in (23.2) may be fixed by a maximal-order unit group. The regular-elliptic character relation replaces these missing comparisons.
+
+Under base change, the parameter is restricted. Central characters, twists, and duals are transported functorially by norms. Conductor is preserved for unramified extension but must otherwise be recomputed from ramification. Euler and epsilon factors transform by (22.15), (22.17), and (22.18); they are not usually numerically unchanged. Cuspidality can disappear when an elliptic torus splits.
+
+This is the precise conclusion promised in the catalog: Jacquet--Langlands preserves the parameter package, whereas base change applies the functorial restriction operation to that package.
+
+## 24. Worked parameter calculations and final synthesis
+
+### 24.1 An unramified principal series
+
+Let $K=\mathbf Q_p$, let $\chi_1,\chi_2$ be unramified, and put
+
+$$
+\alpha=\chi_1(p),
+\qquad
+\beta=\chi_2(p).
+$$
+
+If $\alpha/\beta\notin\{p,p^{-1}\}$, the principal series is irreducible, spherical, and has parameter $\chi_1\oplus\chi_2$. Its conductor is zero, its newvector is the spherical line, and
+
+$$
+L(s,\pi)=
+\frac1{(1-\alpha p^{-s})(1-\beta p^{-s})}.
+$$
+
+For conductor-zero $\psi$, its epsilon factor is one. Under the unramified extension of residue degree $f$, its roots become $\alpha^f,\beta^f$ and
+
+$$
+L_M(s,\operatorname{BC}_{M/K}\pi)
+=\frac1{(1-\alpha^f p^{-fs})(1-\beta^f p^{-fs})}.
+$$
+
+This example exhibits the difference between preservation and functorial transformation: base change preserves the rule, not the literal polynomial.
+
+### 24.2 The two objects at the reducibility wall
+
+Let $\mu$ be unramified and put $a=\mu(p)$. The character $\mu\circ\det$ and $\operatorname{St}\otimes\mu$ have the same semisimple Weil action
+
+$$
+\mu\nu^{1/2}\oplus\mu\nu^{-1/2}.
+$$
+
+For the character, $N=0$; its conductor is zero and it has two Euler roots. For Steinberg, $N\ne0$; its conductor is one and
+
+$$
+L(s,\operatorname{St}\otimes\mu)
+=(1-a p^{-s-1/2})^{-1},
+$$
+
+$$
+\epsilon(s,\operatorname{St}\otimes\mu,\psi)
+=-a p^{1/2-s}.
+$$
+
+Jacquet--Langlands sends the latter, but not the former, to the character $\mu\circ\operatorname{Nrd}$ of the division algebra. The example simultaneously tests reducibility, monodromy, conductor, local factors, and the discrete-series boundary.
+
+### 24.3 An unramified quadratic dihedral representation
+
+Let $L/K$ be unramified quadratic and let $\theta$ have conductor one with regular residue character. Then
+
+$$
+a_K(\operatorname{AI}_{L/K}(\theta))=2,
+\qquad
+L(s,\operatorname{AI}_{L/K}(\theta))=1.
+$$
+
+The first newvector is fixed by $\mathcal K_1(\mathfrak p^2)$ and has diagonal Kirillov function $\mathbf1_{\mathcal O^\times}$. Its parameter is $\operatorname{Ind}_{W_L}^{W_K}\theta$, and its determinant is
+
+$$
+\theta|_{K^\times}\omega_{L/K}.
+$$
+
+The rectifier in (20.6) is what makes this equal to the central character. For conductor-zero $\psi$, $\lambda(L/K,\psi)=1$, so
+
+$$
+\epsilon_K(s,\pi,\psi)
+=\epsilon_L(s,\theta,\psi\circ\operatorname{Tr}_{L/K}).
+$$
+
+Base change to $L$ splits the parameter into $\theta\oplus\theta^\tau$ and therefore turns the supercuspidal into a principal series. Jacquet--Langlands, by contrast, keeps the parameter unchanged and carries it to the corresponding quaternionic dihedral representation.
+
+### 24.4 A tamely ramified quadratic example
+
+Assume the residue characteristic is odd and let $L=K(\Pi)$ with $\Pi^2=u\varpi$ for a unit $u$. Then
+
+$$
+e(L/K)=2,
+\qquad f(L/K)=1,
+\qquad d(L/K)=1.
+$$
+
+Admissibility forces the genuinely quadratic information to occur on principal units. If $a_L(\theta)=2$, then
+
+$$
+a_K(\operatorname{AI}_{L/K}(\theta))=3.
+$$
+
+The Euler factor is one, but the epsilon factor is not trivial:
+
+$$
+\epsilon_K(s,\pi,\psi)
+=\lambda(L/K,\psi)
+\epsilon_L(s,\theta,\psi\circ\operatorname{Tr}_{L/K}).
+$$
+
+Here $\lambda$ is a normalized quadratic Gauss sum and can be a nontrivial fourth root of unity. The conductor records the size of the finite Fourier quotient; $\lambda$ records a phase invisible to that integer.
+
+### 24.5 The complete reusable dictionary
+
+The selected theory may now be summarized without suppressing any hypothesis.
+
+| representation $\pi$ | condition | $\operatorname{rec}_2(\pi)$ | conductor | Euler factor |
+|---|---|---|---|---|
+| $I(\chi_1,\chi_2)$ | $\chi_1\chi_2^{-1}\ne\nu^{\pm1}$ | $\chi_1\oplus\chi_2$, $N=0$ | $a(\chi_1)+a(\chi_2)$ | $L(s,\chi_1)L(s,\chi_2)$ |
+| $\mu\circ\det$ | nongeneric boundary | $\mu\nu^{1/2}\oplus\mu\nu^{-1/2}$, $N=0$ | $2a(\mu)$ | product of the two character factors |
+| $\operatorname{St}\otimes\mu$ | generic boundary | $\operatorname{Sp}_2(\mu)$ | $1$ if $a(\mu)=0$, else $2a(\mu)$ | $L(s+1/2,\mu)$ |
+| $\operatorname{AI}_{L/K}(\theta)$ | tame admissible quadratic pair | $\operatorname{Ind}_{W_L}^{W_K}\theta$ | $f(a_L(\theta)+d)$ | $1$ |
+
+In every row the central character is the parameter determinant; determinant twist is tensor product; contragredient is dual; conductor is Artin plus monodromy defect; and representation-theoretic local factors equal the parameter factors. For every infinite-dimensional row, the common conductor is the first $\mathcal K_1$-level and the first fixed space is a line.
+
+The classification boundary is now exact. Principal series, special representations, and tame dihedral supercuspidals are completely constructed and matched. Primitive wild supercuspidals are excluded, as are wild quadratic type constructions in residue characteristic two. No theorem in the selected correspondence silently includes them.
+
+### 24.6 Conclusion
+
+The representation theory of $\mathrm{GL}_2(K)$ begins with two elementary geometries. The two Bruhat cells control induction, Jacquet modules, reducibility, and Whittaker functionals. The one-dimensional apartment in the lattice tree controls spherical Hecke operators, compact-mod-center support, and congruence level. Those geometries divide the irreducible representations into principal, character, special, and supercuspidal families.
+
+Fourier analysis then makes the classification arithmetic. Whittaker uniqueness produces a canonical functional model. The Kirillov coordinate turns newvectors into a finite interval of valuation shells and turns the Weyl action into a local functional equation. The first nonempty interval gives the conductor; Mellin transforms of its tails give Euler factors; the reversal of the interval gives epsilon factors.
+
+Weil--Deligne parameters explain why these calculations agree. Split character lines give principal series. The same centered lines joined by a nilpotent arrow give Steinberg. Two conjugate lines visible only over a quadratic extension give a dihedral supercuspidal, with the rectifier correcting the sign of induction. Determinants, duals, twists, conductors, Euler factors, and epsilon factors then match because each is computed from the same finite-dimensional object.
+
+Finally, the parameter tells us exactly how local transfer behaves. Base change restricts it, so norms transport characters, quadratic tori may split, and local factors obey induction--restriction product formulas. Jacquet--Langlands leaves it unchanged while replacing the split group by its quaternionic inner form, so the entire parameter invariant package is preserved even though Whittaker and spherical models are not literally comparable.
+
+This is the durable content of the classification. A local representation is not merely assigned a family name. Its geometric origin, minimal level, Fourier equation, ramification, and transfer behavior are different visible shadows of one coherent local object.
