@@ -1,4 +1,5 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section08TraceAndBoundedness
+import Mathlib.RingTheory.RamificationInertia.Ramification
+import Mathlib.RingTheory.RamificationInertia.Inertia
 
 universe u v
 
@@ -92,9 +93,7 @@ theorem chapter11_extensions_transmit_liesOver_along_branch_chain
     (p : Ideal R) (q : Ideal S) (r : Ideal T) :
     q.LiesOver p ∧ r.LiesOver q → r.LiesOver p := by
   rintro ⟨hqp, hrq⟩
-  letI : q.LiesOver p := hqp
-  letI : r.LiesOver q := hrq
-  exact Ideal.LiesOver.trans r q p
+  exact ⟨by rw [hqp.over, hrq.over, Ideal.under_under]⟩
 
 /-- The tame/wild distinction is the later refinement of the e-data. -/
 def chapter11TameAtResidueCharacteristic (e p : ℕ) : Prop :=

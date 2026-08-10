@@ -92,7 +92,7 @@ theorem dedekind_principal_fractional_ideal_factorization {x : K} (hx : x ≠ 0)
 
 /-- Only finitely many height-one exponents of a nonzero principal fractional
 ideal are nonzero. -/
-theorem dedekindExponent_finite_support {x : K} (hx : x ≠ 0) :
+theorem dedekindExponent_finite_support {x : K} (_hx : x ≠ 0) :
     {P : IsDedekindDomain.HeightOneSpectrum A | dedekindExponent P x ≠ 0}.Finite := by
   have h := FractionalIdeal.finite_factors
     (FractionalIdeal.spanSingleton A⁰ x)
@@ -198,7 +198,7 @@ theorem dedekindExponent_add_of_ne (P : IsDedekindDomain.HeightOneSpectrum A)
 
 /-- The exponent of an inverse is the negative exponent. -/
 theorem dedekindExponent_inv (P : IsDedekindDomain.HeightOneSpectrum A)
-    {x : K} (hx : x ≠ 0) :
+    {x : K} (_hx : x ≠ 0) :
     dedekindExponent P x⁻¹ = -dedekindExponent P x := by
   unfold dedekindExponent
   rw [show FractionalIdeal.spanSingleton A⁰ x⁻¹ =

@@ -93,13 +93,14 @@ theorem chapter02_archimedean_values_embed_in_reals
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     (hΓ : Chapter02ArchimedeanValueGroup Γ) :
     ∃ f : Γ →+o ℝ, Function.Injective f := by
-  letI : Archimedean Γ := (chapter02_archimedean_value_group_iff).1 hΓ
+  let _ : Archimedean Γ := (chapter02_archimedean_value_group_iff).1 hΓ
   exact Archimedean.exists_orderAddMonoidHom_real_injective Γ
 
 /-- A convenient name for the lexicographically ordered copy of `ℤ × ℤ`. -/
 abbrev Chapter02LexicographicIntegers := ℤ ×ₗ ℤ
 
 instance {α β : Type*} [AddCommMonoid α] [LinearOrder α] [IsOrderedAddMonoid α]
+    [AddLeftStrictMono α]
     [AddCommMonoid β] [LinearOrder β] [IsOrderedAddMonoid β] :
     IsOrderedAddMonoid (α ×ₗ β) where
   add_le_add_left a b hab c := by

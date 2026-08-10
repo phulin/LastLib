@@ -40,7 +40,7 @@ structure PuiseuxValuationModel where
       (((f.order : ℚ) / (n : ℚ)) : WithTop ℚ)
 
 /-- The lowest exponent in the `n`th stage lies in `(1/n)ℤ`. -/
-def puiseuxStageExponent (n : ℕ) (hn : 0 < n) (f : LaurentSeries k) : ℚ :=
+def puiseuxStageExponent (n : ℕ) (_hn : 0 < n) (f : LaurentSeries k) : ℚ :=
   (f.order : ℚ) / (n : ℚ)
 
 /-- The `n`th Laurent-series stage has exponents in `1/n · ℤ`. -/
@@ -52,7 +52,7 @@ theorem puiseuxStageExponent_mem_one_div_n_z {n : ℕ} (hn : 0 < n)
 /-- Every rational exponent is realized by a nonzero single-term Laurent
 series in a suitable stage. -/
 theorem puiseuxStageExponent_surjective (q : ℚ) :
-    ∃ n : ℕ, ∃ hn : 0 < n, ∃ f : LaurentSeries k, f ≠ 0 ∧
+    ∃ n : ℕ, ∃ _hn : 0 < n, ∃ f : LaurentSeries k, f ≠ 0 ∧
       ((f.order : ℚ) / (n : ℚ)) = q := by
   let f : LaurentSeries k := HahnSeries.single q.num (1 : k)
   refine ⟨q.den, q.den_pos, f, ?_, ?_⟩
@@ -284,7 +284,7 @@ theorem puiseux_valuationRing_not_discrete_valuation_ring
     (M : PuiseuxValuationModel (k := k) (K := K)) :
     ¬IsDiscreteValuationRing (puiseuxValuationRing M) := by
   intro hD
-  letI : IsDiscreteValuationRing (puiseuxValuationRing M) := hD
+  let : IsDiscreteValuationRing (puiseuxValuationRing M) := hD
   obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible
     (puiseuxValuationRing M)
   apply puiseux_maximalIdeal_not_principal M
@@ -296,8 +296,8 @@ theorem puiseux_valuationRing_not_noetherian
     (M : PuiseuxValuationModel (k := k) (K := K)) :
     ¬IsNoetherianRing (puiseuxValuationRing M) := by
   intro hN
-  letI : IsNoetherianRing (puiseuxValuationRing M) := hN
-  letI : IsPrincipalIdealRing (puiseuxValuationRing M) :=
+  let : IsNoetherianRing (puiseuxValuationRing M) := hN
+  let : IsPrincipalIdealRing (puiseuxValuationRing M) :=
     ((IsBezout.TFAE (R := puiseuxValuationRing M)).out 0 1).mp hN
   obtain ⟨π, hπ⟩ := IsPrincipalIdealRing.principal (puiseuxMaximalIdeal M)
   exact puiseux_maximalIdeal_not_principal M ⟨π, hπ⟩

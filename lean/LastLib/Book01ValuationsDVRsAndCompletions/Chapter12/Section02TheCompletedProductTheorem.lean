@@ -67,7 +67,7 @@ theorem compatible_branch_projector_idempotents
     {R ι : Type*} [CommRing R] [Fintype ι] [DecidableEq ι]
     (I : Ideal R) (J : ι → Ideal R)
     (hcrt : Chapter12CompatibleCRTSystem I J)
-    (hcofinal : ∀ i, adicFiltrationsCofinal I (J i)) :
+    (_hcofinal : ∀ i, adicFiltrationsCofinal I (J i)) :
     ∃ e : ι → IdempotentElement (AdicCompletion I R),
       (∀ i j, i ≠ j → (e i).1 * (e j).1 = 0) ∧
         (∑ i, (e i).1) = 1 ∧

@@ -26,7 +26,7 @@ theorem is_discrete_valuation_ring_iff_chapter04_valuation_witness
     IsDiscreteValuationRing A ↔ IsValuationRingOfDiscreteValuation A K := by
   constructor
   · intro hA
-    letI := hA
+    let := hA
     exact ⟨{
       valuation := (IsDiscreteValuationRing.maximalIdeal A).valuation K
       surjective := by
@@ -36,9 +36,9 @@ theorem is_discrete_valuation_ring_iff_chapter04_valuation_witness
         exact (IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring
           (A := A) (K := K)).symm }⟩
   · rintro ⟨W⟩
-    letI : Valuation.IsRankOneDiscrete W.valuation :=
+    let : Valuation.IsRankOneDiscrete W.valuation :=
       surjective_integer_valuation_is_rank_one_discrete K W.valuation W.surjective
-    letI : IsDiscreteValuationRing W.valuation.valuationSubring := by
+    let : IsDiscreteValuationRing W.valuation.valuationSubring := by
       infer_instance
     let e₀ : A ≃+* Subring.map (algebraMap A K) (⊤ : Subring A) :=
       Subring.topEquiv.symm.trans
@@ -78,7 +78,7 @@ theorem dvr_nonzero_ideal_has_least_additive_value
     (I : Ideal A) (hI : I ≠ ⊥) :
     ∃ x : A, x ∈ I ∧
       ∀ y : A, y ∈ I → chapter04AdditiveValue A x ≤ chapter04AdditiveValue A y := by
-  letI : IsPrincipalIdealRing A := inferInstance
+  let : IsPrincipalIdealRing A := inferInstance
   let x : A := Submodule.IsPrincipal.generator I
   have hspan : Ideal.span ({x} : Set A) = I := by
     exact Ideal.span_singleton_generator I
@@ -95,7 +95,7 @@ theorem dvr_nonzero_ideal_has_least_additive_value
 /-- The least-valued element of a nonzero ideal generates that ideal. -/
 theorem dvr_least_value_element_generates_ideal
     (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-    (I : Ideal A) (hI : I ≠ ⊥) (x : A) (hx : x ∈ I)
+    (I : Ideal A) (_hI : I ≠ ⊥) (x : A) (hx : x ∈ I)
     (hmin : ∀ y : A, y ∈ I →
       chapter04AdditiveValue A x ≤ chapter04AdditiveValue A y) :
     I = Ideal.span ({x} : Set A) := by
@@ -111,8 +111,8 @@ theorem dvr_least_value_element_generates_ideal
 of its successive powers at a finite stage. -/
 theorem principal_maximal_ideal_has_finite_power_order
     (A : Type*) [CommRing A] [IsDomain A] [IsNoetherianRing A]
-    [IsLocalRing A] {π : A} (hπ : π ≠ 0)
-    (hmax : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A))
+    [IsLocalRing A] {π : A} (_hπ : π ≠ 0)
+    (_hmax : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A))
     {x : A} (hx : x ≠ 0) :
     ∃ n : ℕ,
       x ∈ IsLocalRing.maximalIdeal A ^ n ∧
@@ -123,7 +123,7 @@ theorem principal_maximal_ideal_has_finite_power_order
     simpa [m] using (IsLocalRing.maximalIdeal.isMaximal A).ne_top
   have h_exists : ∃ n : ℕ, x ∉ m ^ n := by
     by_contra h
-    push_neg at h
+    push Not at h
     have hxinf : x ∈ ⨅ n : ℕ, m ^ n := Ideal.mem_iInf.mpr h
     rw [Ideal.iInf_pow_eq_bot_of_isLocalRing m hmne] at hxinf
     exact hx (by simpa [m] using hxinf)
@@ -133,13 +133,13 @@ theorem principal_maximal_ideal_has_finite_power_order
     intro hzero
     subst N
     apply hN
-    simpa [hzero, m]
+    simp [hzero, m]
   obtain ⟨n, hN_eq⟩ := Nat.exists_eq_succ_of_ne_zero hN0
   refine ⟨n, ?_, ?_⟩
   · have hmin : x ∈ m ^ n := by
       by_contra hmem
       have hle : N ≤ n := Nat.find_min' h_exists hmem
-      exact (Nat.not_le_of_lt (by simpa [hN_eq] using Nat.lt_succ_self n)) hle
+      exact (Nat.not_le_of_lt (by simp [hN_eq])) hle
     exact hmin
   · simpa [hN_eq] using hN
 
@@ -162,7 +162,7 @@ theorem principal_maximal_ideal_gives_unique_unit_power_factorization
     exact Ideal.span_singleton_eq_bot.mp this
   have hprincipal : (IsLocalRing.maximalIdeal A).IsPrincipal := by
     exact ⟨π, hmax⟩
-  letI : IsDiscreteValuationRing A :=
+  let : IsDiscreteValuationRing A :=
     ((IsDiscreteValuationRing.TFAE A hfield).out 4 0).mp hprincipal
   have hπirr := IsDiscreteValuationRing.irreducible_of_span_eq_maximalIdeal π hπ hmax
   obtain ⟨n, u, hu⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hx hπirr
@@ -200,7 +200,7 @@ theorem principal_maximal_ideal_of_one_dimensional_integrally_closed_local_domai
     intro P hP hPprime
     obtain ⟨x, hxP, hx0⟩ : ∃ x : A, x ∈ P ∧ x ≠ 0 := by
       by_contra h
-      push_neg at h
+      push Not at h
       exact hP (eq_bot_iff.mpr h)
     have hdim' :=
       (ringKrullDim_eq_one_iff_of_isLocalRing_isDomain.mp hdim).2 x hx0
@@ -218,7 +218,7 @@ theorem principal_maximal_ideal_of_one_dimensional_integrally_closed_local_domai
   have hded : IsDedekindDomain A :=
     ((IsDiscreteValuationRing.TFAE A hfield).out 3 2).mp
       (And.intro hnormal huniq)
-  letI : IsDedekindDomain A := hded
+  let : IsDedekindDomain A := hded
   exact maximalIdeal_isPrincipal_of_isDedekindDomain A
 
 /-- The six conditions in Theorem 4.1, with the one-dimensional assertions
@@ -265,9 +265,9 @@ theorem theorem_4_1_characterizations_of_a_dvr
     fun h => (is_discrete_valuation_ring_iff_chapter04_valuation_witness A K).mp h
   have h1_to_dvr : Chapter04IsNoetherianValuationRing A → IsDiscreteValuationRing A := by
     rintro ⟨hN, hV⟩
-    letI : IsNoetherianRing A := hN
-    letI : ValuationRing A := hV
-    letI : IsLocalRing A := inferInstance
+    let : IsNoetherianRing A := hN
+    let : ValuationRing A := hV
+    let : IsLocalRing A := inferInstance
     exact ((IsDiscreteValuationRing.TFAE A hfield).out 1 0).mp
       (show ValuationRing A from inferInstance)
   have h2_to_dvr : Chapter04IsPIDWithUniqueNonzeroPrime A → IsDiscreteValuationRing A := by
@@ -276,8 +276,8 @@ theorem theorem_4_1_characterizations_of_a_dvr
   have h3_to_dvr :
       Chapter04IsOneDimensionalNoetherianLocalPrincipal A → IsDiscreteValuationRing A := by
     rintro ⟨hN, hL, hd, m, hm, hmp⟩
-    letI : IsNoetherianRing A := hN
-    letI : IsLocalRing A := hL
+    let : IsNoetherianRing A := hN
+    let : IsLocalRing A := hL
     have hm' : m = IsLocalRing.maximalIdeal A := IsLocalRing.eq_maximalIdeal hm
     have hmax : (IsLocalRing.maximalIdeal A).IsPrincipal := hm' ▸ hmp
     exact ((IsDiscreteValuationRing.TFAE A hfield).out 4 0).mp hmax
@@ -285,16 +285,16 @@ theorem theorem_4_1_characterizations_of_a_dvr
       Chapter04IsOneDimensionalNoetherianLocalIntegrallyClosed A →
         IsDiscreteValuationRing A := by
     rintro ⟨hN, hL, hnormal, hd⟩
-    letI : IsNoetherianRing A := hN
-    letI : IsLocalRing A := hL
+    let : IsNoetherianRing A := hN
+    let : IsLocalRing A := hL
     exact ((IsDiscreteValuationRing.TFAE A hfield).out 4 0).mp
       (principal_maximal_ideal_of_one_dimensional_integrally_closed_local_domain
         A hfield hd hnormal)
   have h5_to_dvr :
       Chapter04IsLocalWithUniqueIdealPowers A → IsDiscreteValuationRing A := by
     rintro ⟨hL, π, hπ, hpowers⟩
-    letI : IsLocalRing A := hL
-    letI : IsPrincipalIdealRing A :=
+    let : IsLocalRing A := hL
+    let : IsPrincipalIdealRing A :=
       { principal := fun I => by
           by_cases hI : I = ⊥
           · subst I
@@ -306,16 +306,16 @@ theorem theorem_4_1_characterizations_of_a_dvr
     exact hfield (IsLocalRing.isField_iff_maximalIdeal_eq.mpr hbot)
   have hdvr_to1 : IsDiscreteValuationRing A → Chapter04IsNoetherianValuationRing A := by
     intro h
-    letI := h
+    let := h
     exact ⟨inferInstance, inferInstance⟩
   have hdvr_to2 : IsDiscreteValuationRing A → Chapter04IsPIDWithUniqueNonzeroPrime A := by
     intro h
-    letI := h
+    let := h
     exact (IsDiscreteValuationRing.iff_pid_with_one_nonzero_prime A).mp h
   have hdvr_to3 :
       IsDiscreteValuationRing A → Chapter04IsOneDimensionalNoetherianLocalPrincipal A := by
     intro h
-    letI := h
+    let := h
     exact ⟨inferInstance, inferInstance, IsDiscreteValuationRing.ringKrullDim_eq_one A,
       IsLocalRing.maximalIdeal A, IsLocalRing.maximalIdeal.isMaximal A,
       IsPrincipalIdealRing.principal _⟩
@@ -323,13 +323,13 @@ theorem theorem_4_1_characterizations_of_a_dvr
       IsDiscreteValuationRing A →
         Chapter04IsOneDimensionalNoetherianLocalIntegrallyClosed A := by
     intro h
-    letI := h
+    let := h
     exact ⟨inferInstance, inferInstance, inferInstance,
       IsDiscreteValuationRing.ringKrullDim_eq_one A⟩
   have hdvr_to5 :
       IsDiscreteValuationRing A → Chapter04IsLocalWithUniqueIdealPowers A := by
     intro h
-    letI := h
+    let := h
     obtain ⟨⟨π, hπ, hπu⟩, hpowers⟩ :=
       dvr_maximal_ideal_and_unique_ideal_powers A
     refine ⟨inferInstance, π, hπ, ?_⟩
@@ -364,9 +364,9 @@ theorem normalized_integer_valuation_unique
     (hwA : w.valuationSubring.toSubring =
       Subring.map (algebraMap A K) (⊤ : Subring A)) :
     v = w := by
-  letI : Valuation.IsRankOneDiscrete v :=
+  let : Valuation.IsRankOneDiscrete v :=
     surjective_integer_valuation_is_rank_one_discrete K v hv
-  letI : Valuation.IsRankOneDiscrete w :=
+  let : Valuation.IsRankOneDiscrete w :=
     surjective_integer_valuation_is_rank_one_discrete K w hw
   have hsub : v.valuationSubring = w.valuationSubring := by
     apply ValuationSubring.ext
@@ -523,10 +523,12 @@ theorem dvr_fraction_field_unique_normal_form
     have hpow : WithZero.exp (-n : ℤ) = WithZero.exp (-m : ℤ) := by
       calc
         WithZero.exp (-n : ℤ) = WithZero.exp (-1 : ℤ) ^ n := by
-          simpa using (WithZero.exp_nsmul n (-1 : ℤ)).symm
+          rw [← WithZero.exp_zsmul]
+          simp
         _ = WithZero.exp (-1 : ℤ) ^ m := hval
         _ = WithZero.exp (-m : ℤ) := by
-          simpa using WithZero.exp_nsmul m (-1 : ℤ)
+          rw [← WithZero.exp_zsmul]
+          simp
     have hneg : (-n : ℤ) = -m := WithZero.exp_injective hpow
     exact (neg_injective hneg).symm
   have heqK :

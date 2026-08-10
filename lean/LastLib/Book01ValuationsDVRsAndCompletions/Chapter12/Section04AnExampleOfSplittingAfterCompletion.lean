@@ -81,7 +81,7 @@ theorem completed_polynomial_factorization_product
     {K : Type*} [Field K] {g : ℕ} (f : K[X]) (factors : Fin g → K[X])
     (hfactor : f = ∏ i, factors i)
     (hpair : Pairwise (fun i j => IsCoprime (factors i) (factors j)))
-    (hirr : ∀ i, Irreducible (factors i)) :
+    (_hirr : ∀ i, Irreducible (factors i)) :
     Nonempty
       ((K[X] ⧸ Ideal.span {f}) ≃+*
         (∀ i, K[X] ⧸ Ideal.span {factors i})) := by
@@ -194,7 +194,7 @@ theorem henselian_coprime_factor_lift_unique
     exact ⟨Subsingleton.elim _ _, Subsingleton.elim _ _⟩
 
 /-- The split quadratic algebra used for the explicit idempotent example. -/
-abbrev quadraticSplitAlgebra (R : Type*) [CommRing R] (a b : R) : Type _ :=
+abbrev quadraticSplitAlgebra (R : Type*) [CommRing R] (_a _b : R) : Type _ :=
   R × R
 
 /-- The polynomial quotient whose two distinct roots give the split factors. -/
@@ -207,21 +207,21 @@ def quadraticCoordinate (R : Type*) [CommRing R] (a b : R) :
   (a, b)
 
 /-- The two concrete projectors from the split quadratic algebra. -/
-def quadraticProjectorA {R : Type*} [Field R] (a b : R) (h : a ≠ b) :
+def quadraticProjectorA {R : Type*} [Field R] (a b : R) (_h : a ≠ b) :
     quadraticSplitAlgebra R a b :=
   (1, 0)
 
-def quadraticProjectorB {R : Type*} [Field R] (a b : R) (h : a ≠ b) :
+def quadraticProjectorB {R : Type*} [Field R] (a b : R) (_h : a ≠ b) :
     quadraticSplitAlgebra R a b :=
   (0, 1)
 
 /-- The quotient representative of `(X-b)/(a-b)`. -/
-def quadraticQuotientProjectorA {R : Type*} [Field R] (a b : R) (h : a ≠ b) :
+def quadraticQuotientProjectorA {R : Type*} [Field R] (a b : R) (_h : a ≠ b) :
     quadraticSplitQuotient R a b :=
   Ideal.Quotient.mk _ ((a - b)⁻¹ • (X - C b))
 
 /-- The quotient representative of `(X-a)/(b-a)`. -/
-def quadraticQuotientProjectorB {R : Type*} [Field R] (a b : R) (h : a ≠ b) :
+def quadraticQuotientProjectorB {R : Type*} [Field R] (a b : R) (_h : a ≠ b) :
     quadraticSplitQuotient R a b :=
   Ideal.Quotient.mk _ ((b - a)⁻¹ • (X - C a))
 
@@ -374,7 +374,8 @@ theorem branch_language_chain_preserves_ef
     (transport : Chapter12BranchInvariantTransport p P phat Phat) :
     chapterRamificationIndex Ahat Bhat Phat = chapterRamificationIndex A B P ∧
       chapterResidueDegree Ahat Bhat Phat = chapterResidueDegree A B P := by
-  sorry
+  exact completed_branch_preserves_ef p P phat Phat transport
+    (chapterRamificationIndex A B P) (chapterResidueDegree A B P) rfl rfl
 
 
 end

@@ -72,8 +72,8 @@ def Chapter08CommonLaurentLowerBound
 -- The coefficientwise construction gives a common lower-bounded Laurent series limit. -/
 theorem chapter08_laurent_series_cauchy_coefficient_construction
     (k : Type*) [Field k] (u : ℕ → Chapter08FormalLaurentSeries k)
-    (hu : Chapter08LaurentCoefficientwiseCauchy u)
-    (hL : Chapter08CommonLaurentLowerBound u)
+    (_hu : Chapter08LaurentCoefficientwiseCauchy u)
+    (_hL : Chapter08CommonLaurentLowerBound u)
     (hC : CauchySeq u) :
     ∃ x : Chapter08FormalLaurentSeries k,
       (∀ d : ℤ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → (u n).coeff d = x.coeff d) ∧

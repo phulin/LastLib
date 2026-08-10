@@ -1,4 +1,5 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section02AdditiveValuations
+import Mathlib.RingTheory.Valuation.Basic
+import Mathlib.Tactic.Push
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -14,8 +15,7 @@ chapter-local names for the constructions that are specific to the exposition.
 noncomputable section
 
 open Set Function
-open scoped BigOperators LaurentSeries
-open HahnSeries Polynomial
+open scoped BigOperators
 
 /-! # Book 1, Chapter 2, Section 2.3: The Decisive Equality
 -/
@@ -42,13 +42,13 @@ theorem chapter02_strictly_smallest_term_controls_finite_sum
       obtain ⟨i, hi⟩ := ht
       exact ne_of_lt <| (hmin i (Finset.mem_sdiff.mp hi).1 (by
         intro hij
-        exact (Finset.mem_sdiff.mp hi).2 (by simpa [hij]))).trans_le le_top
+        exact (Finset.mem_sdiff.mp hi).2 (by simp [hij]))).trans_le le_top
     apply v.map_add_eq_of_lt_left
     apply v.map_lt_sum hfjtop
     intro i hi
     exact hmin i (Finset.mem_sdiff.mp hi).1 (by
       intro hij
-      exact (Finset.mem_sdiff.mp hi).2 (by simpa [hij]))
+      exact (Finset.mem_sdiff.mp hi).2 (by simp [hij]))
   · have ht0 : t = ∅ := Finset.not_nonempty_iff_eq_empty.mp ht
     simp [t, ht0]
 
@@ -83,7 +83,7 @@ theorem chapter02_zero_finite_sum_has_repeated_minimum
     exfalso
     apply hfi_top
     simpa [hz] using hsum.symm
-  · push_neg at hstrict
+  · push Not at hstrict
     obtain ⟨j, hj, hji, hjnot⟩ := hstrict
     refine ⟨i, hi, j, hj, hji.symm, le_antisymm (himin j hj) hjnot, ?_⟩
     exact himin

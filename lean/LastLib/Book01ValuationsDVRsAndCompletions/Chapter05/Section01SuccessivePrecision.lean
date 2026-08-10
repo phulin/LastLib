@@ -143,6 +143,7 @@ theorem chapterLayerMultiplicationMap_apply (n : ℕ) (a : A) :
   apply Submodule.mem_comap.mpr
   simp [LinearMap.codRestrict_apply, LinearMap.mulLeft_apply, mul_comm]
 
+omit [IsDiscreteValuationRing A] in
 include hπ in
 /-- Book §5.1: cancellation proves injectivity on the layer map. -/
 theorem chapter_uniformizer_layer_cancellation (n : ℕ) {a : A}
@@ -370,7 +371,7 @@ theorem chapter_length_uniformizer_quotient (n : ℕ) :
   simpa using (IsDiscreteValuationRing.length_quotient_pow_maximalIdeal A n)
 
 /-- Book §5.1, second displayed length formula. -/
-theorem chapter_length_principal_quotient {x : A} (hx : x ≠ 0) :
+theorem chapter_length_principal_quotient {x : A} (_hx : x ≠ 0) :
     Module.length A (A ⧸ (Ideal.span {x} : Ideal A)) =
       IsDiscreteValuationRing.addVal A x := by
   simpa [Ring.ord] using (Ring.ord_eq_addVal x)

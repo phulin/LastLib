@@ -220,7 +220,7 @@ theorem completion_product_of_finite_precision_crt
     {R ι : Type*} [CommRing R] [Finite ι]
     (I : Ideal R) (J : ι → Ideal R)
     (hcrt : Chapter12CompatibleCRTSystem I J)
-    (hcofinal : ∀ i, adicFiltrationsCofinal I (J i)) :
+    (_hcofinal : ∀ i, adicFiltrationsCofinal I (J i)) :
     Nonempty
       (AdicCompletion I R ≃+* (∀ i, AdicCompletion (J i) R)) := by
   classical

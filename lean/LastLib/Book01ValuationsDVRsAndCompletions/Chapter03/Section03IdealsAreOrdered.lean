@@ -31,6 +31,7 @@ theorem ideals_comparable_from_principal_ideals (I J : Ideal R) :
     I ≤ J ∨ J ≤ I := by
   exact ideals_totally_ordered.total I J
 
+omit [IsDomain R] [ValuationRing R] in
 theorem noncomparable_ideals_choose_crossing_elements (I J : Ideal R)
     (hIJ : ¬ I ≤ J) (hJI : ¬ J ≤ I) :
     ∃ x ∈ I, x ∉ J ∧ ∃ y ∈ J, y ∉ I := by
@@ -70,7 +71,7 @@ theorem valuationRingOf_need_not_be_principal_ideal_ring (v : Valuation K Γ)
     (I : Ideal (valuationRingOf v)) (hI : ¬ I.IsPrincipal) :
     ¬ IsPrincipalIdealRing (valuationRingOf v) := by
   intro hPIR
-  letI : IsPrincipalIdealRing (valuationRingOf v) := hPIR
+  let : IsPrincipalIdealRing (valuationRingOf v) := hPIR
   exact hI (IsPrincipalIdealRing.principal I)
 
 /- Value sets of ideals, in the additive sign convention. -/
@@ -143,7 +144,7 @@ structure AdditiveValueCut (A : Type*) [AddCommGroup A] [LinearOrder A]
 
 noncomputable def idealOfValueCut (v : AddValuation K (WithTop A))
     (S : AdditiveValueCut A)
-    (hreal : ∀ {γ}, γ ∈ S.carrier → ∃ x : K, x ≠ 0 ∧
+    (_hreal : ∀ {γ}, γ ∈ S.carrier → ∃ x : K, x ≠ 0 ∧
       v x = (γ : WithTop A)) : Ideal (additiveValuationRingOf v) :=
   { carrier := {x : additiveValuationRingOf v | x = 0 ∨
         ∃ γ, γ ∈ S.carrier ∧ v (x : K) = (γ : WithTop A)}
@@ -296,7 +297,7 @@ theorem valueCut_without_least_gives_nonprincipal_ideal
 
 theorem integer_upward_closed_nonnegative_set_has_least (S : Set ℤ)
     (hne : S.Nonempty) (hnonneg : S ⊆ Set.Ici 0)
-    (hup : ∀ {a b : ℤ}, a ∈ S → a ≤ b → b ∈ S) :
+    (_hup : ∀ {a b : ℤ}, a ∈ S → a ≤ b → b ∈ S) :
     hasLeastValue S := by
   classical
   rcases Int.exists_least_of_bdd
@@ -318,10 +319,10 @@ theorem discrete_additive_valuation_nonzero_ideal_is_principal
       have hz0 : z = 0 := by
         by_contra hz0
         exact h ⟨z, hz, hz0⟩
-      simpa [hz0]
+      simp [hz0]
     · intro hz
       have hz0 : z = 0 := by simpa using hz
-      simpa [hz0]
+      simp [hz0]
   have hne : (additiveValueSet v I).Nonempty := by
     obtain ⟨x, hxI, hx0⟩ := hnonzero
     obtain ⟨γ, hγ⟩ := WithTop.ne_top_iff_exists.mp
@@ -345,7 +346,7 @@ theorem discrete_additive_valuation_nonzero_ideal_is_principal
   apply le_antisymm
   · intro z hzI
     by_cases hz0 : z = 0
-    · simpa [hz0]
+    · simp [hz0]
     obtain ⟨δ, hδ⟩ := WithTop.ne_top_iff_exists.mp
       (v.ne_top_iff.mpr (by
         intro hzK
@@ -383,7 +384,7 @@ def strictUpperValueCut (α : A) (hα : 0 ≤ α) : AdditiveValueCut A :=
       intro γ δ hγ hδ
       exact lt_of_lt_of_le hγ (le_add_of_nonneg_right hδ) }
 theorem dense_strict_cut_has_no_least {A : Type*} [LinearOrder A] [DenselyOrdered A]
-    (α : A) (hne : ({γ : A | α < γ}).Nonempty) :
+    (α : A) (_hne : ({γ : A | α < γ}).Nonempty) :
     ¬ hasLeastValue {γ : A | α < γ} := by
   rintro ⟨γ, hγ, hleast⟩
   obtain ⟨δ, hαδ, hδγ⟩ := exists_between hγ

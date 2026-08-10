@@ -32,7 +32,7 @@ def chapter06SeriesHasSum (v : AbsoluteValue K ℝ) (a : ℕ → K) : Prop :=
 /-- Finite tails of a nonarchimedean series are bounded by their largest term. -/
 theorem chapter06_series_tail_bound
     (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
-    {a : ℕ → K} {n m : ℕ} (hnm : n < m)
+    {a : ℕ → K} {n m : ℕ} (_hnm : n < m)
     (hs : (Finset.Ico n m).Nonempty) :
     v (Finset.sum (Finset.Ico n m) (fun i => a i)) ≤
       (Finset.Ico n m).sup' hs (fun i => v (a i)) := by
@@ -124,8 +124,8 @@ theorem chapter06_series_converges_iff_terms_tend_to_zero
 
 /-- The geometric series converges to `(1-x)⁻¹` when `|x| < 1`. -/
 theorem chapter06_geometric_series
-    (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
-    (hcomplete : chapter06CompleteValuedSpace v) {x : K} (hx : v x < 1) :
+    (v : AbsoluteValue K ℝ) (_hv : IsNonarchimedean v)
+    (_hcomplete : chapter06CompleteValuedSpace v) {x : K} (hx : v x < 1) :
     chapter06SeriesConverges v (fun n => x ^ n) (1 - x)⁻¹ := by
   have hpow : chapter06TendsToZero v (fun n => x ^ n) := by
     intro ε hε
@@ -155,7 +155,7 @@ theorem chapter06_geometric_series
     ring
   change v (chapter06PartialSums (fun n => x ^ n) n - (1 - x)⁻¹) < ε
   rw [hgeom]
-  simp only [chapter06Distance, v.map_neg, v.map_mul, v.map_pow]
+  simp only [v.map_neg, v.map_mul, v.map_pow]
   exact (lt_div_iff₀ hden).1 (hN n hn)
 
 /-- The principal-unit set of a local ring. -/
@@ -170,8 +170,9 @@ theorem chapter06_principal_units_are_units
   have hnot : (1 + y : A) ∉ IsLocalRing.maximalIdeal A := by
     intro hmem
     have hone : (1 : A) ∈ IsLocalRing.maximalIdeal A := by
-      have := (IsLocalRing.maximalIdeal A).sub_mem hmem hy
-      simpa using this
+      have hsub := (IsLocalRing.maximalIdeal A).sub_mem hmem hy
+      rw [add_sub_cancel_right] at hsub
+      exact hsub
     exact (IsLocalRing.maximalIdeal.isMaximal A).ne_top
       ((IsLocalRing.maximalIdeal A).eq_top_iff_one.mpr hone)
   have hu : IsUnit (1 + y : A) := IsLocalRing.notMem_maximalIdeal.mp hnot
@@ -282,7 +283,7 @@ private theorem chapter06_reindexed_series_converges
 /-- Reordering a nonarchimedean series with vanishing terms preserves its sum. -/
 theorem chapter06_series_reordering_invariant
     (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
-    (hcomplete : chapter06CompleteValuedSpace v) {a : ℕ → K}
+    (_hcomplete : chapter06CompleteValuedSpace v) {a : ℕ → K}
     (hzero : chapter06TendsToZero v a) {σ : ℕ → ℕ}
     (hσ : chapter06SeriesPermutation σ) {s : K}
     (hs : chapter06SeriesConverges v a s) :
@@ -393,7 +394,7 @@ theorem chapter06_padic_growing_geometric_series_diverges
     exact_mod_cast (Fact.out : p.Prime).one_lt
   have hterm := hN N le_rfl
   have hnorm : ‖(p : ℚ_[p]) ^ (-(N : ℤ))‖ = (p : ℝ) ^ N := by
-    simpa using (Padic.norm_p_zpow (p := p) (-(N : ℤ)))
+    simp
   change ‖(p : ℚ_[p]) ^ (-(N : ℤ))‖ < 1 at hterm
   rw [hnorm] at hterm
   exact (not_lt_of_ge (one_le_pow₀ (le_of_lt hp))) hterm

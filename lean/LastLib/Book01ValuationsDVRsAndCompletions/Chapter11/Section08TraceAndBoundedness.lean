@@ -1,4 +1,6 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section04FactorizationOfTheMaximalIdeal
+import Mathlib.LinearAlgebra.Charpoly.ToMatrix
+import Mathlib.RingTheory.DedekindDomain.Different
 
 universe u v
 
@@ -46,7 +48,7 @@ theorem chapter11_characteristic_polynomial_annihilates
 
 /-- Trace and norm of an integral element remain in the base ring. -/
 theorem chapter11_integral_trace_and_norm_stay_integral
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
     [Algebra K L] [Algebra A L] [IsScalarTower A B L] [IsScalarTower A K L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -139,7 +141,6 @@ theorem chapter11_trace_pairing_has_common_denominator
   let φ : B →ₗ[A] A :=
     e.symm.toLinearMap.comp (hscl.codRestrict _ hmem)
   have hφ (y : B) : algebraMap A K (φ y) = hscl y := by
-    change algebraMap A K (φ y) = (hscl y : K)
     rw [show algebraMap A K (φ y) = (e (φ y) : K) by rfl]
     simp [φ, e]
   have hdne : (d : A) ≠ 0 := by
@@ -155,7 +156,7 @@ theorem chapter11_trace_pairing_has_common_denominator
 
 /-- Mathlib's different ideal is the inverse of the trace dual. -/
 def chapter11DifferentIdeal
-    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Algebra A B] [IsIntegrallyClosed A] [IsDedekindDomain B]
     [Module.IsTorsionFree A B] : Ideal B :=
   differentIdeal A B
@@ -210,8 +211,7 @@ theorem chapter11_quadratic_field_trace_norm_implies_integral
       simpa [m, Algebra.trace_apply] using
         (LinearMap.trace_eq_matrix_trace K b (Algebra.lmul K L x)).symm
     have hdet' : m.det = Algebra.norm K x := by
-      simpa [m, Algebra.norm_apply] using
-        (LinearMap.det_toMatrix b (Algebra.lmul K L x))
+      simp [m, Algebra.norm_apply]
     rw [htr', hdet']
   have hroot := Algebra.aeval_self_charpoly_lmul (R := K) (M := L) x
   rw [hchar] at hroot
@@ -251,7 +251,9 @@ theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
   · simp [c, d, hjn']
   · intro hcd
     have hcdj := congrFun hcd j
-    have h01 : (0 : A) = 1 := by simpa [c, d] using hcdj
+    change (0 : A) = if j = j then 1 else 0 at hcdj
+    rw [if_pos rfl] at hcdj
+    have h01 : (0 : A) = 1 := hcdj
     exact zero_ne_one h01
 
 /-- In degree at least three, distinct monic polynomials can have the same
@@ -279,9 +281,9 @@ theorem chapter11_monic_polynomials_with_same_endpoint_coefficients
   have hneq : f ≠ g := by
     intro hfg
     have hc := congrArg (fun q : A[X] => q.coeff 1) hfg
-    simp [f, g, show n ≠ 1 by omega] at hc
+    simp [f, g] at hc
   refine ⟨f, g, by simp [f], hng, hfn, hgn, ?_, ?_, hneq⟩
-  · simp [f, g, hnpos]
+  · simp [f, g]
   · rw [coeff_add, coeff_X_pow, coeff_X]
     simp [show 1 ≠ n by omega]
 

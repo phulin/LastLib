@@ -49,7 +49,7 @@ noncomputable def normalizedElement (v : Valuation K ℤᵐ⁰) (π : K)
   apply (mem_valuationRingOf_iff v _).2
   rw [v.map_mul, map_zpow₀, hπ.2, ← WithZero.exp_zsmul,
     ← WithZero.exp_log hxv0]
-  simp [discreteUnitValue, WithZero.exp_add]
+  simp [discreteUnitValue]
 
 /-- The angular component, with zero sent to zero. -/
 noncomputable def angularComponent (v : Valuation K ℤᵐ⁰) (π : K)
@@ -231,7 +231,7 @@ noncomputable def leadingTermCoordinateSetoid (v : Valuation K ℤᵐ⁰) :
         change a = a' at ha
         change a' = a'' at ha'
         rw [hw, hu, ← ha]
-        simp [mul_zpow, mul_assoc, mul_comm, mul_left_comm]
+        simp [mul_zpow, mul_assoc, mul_comm]
   }
 
 abbrev intrinsicLeadingTermClass (v : Valuation K ℤᵐ⁰) :=
@@ -280,7 +280,7 @@ theorem associatedGradedSymbol_parameter_independent
   have hangle :
       angularComponent v π₂ hπ₂ (x : K) =
         angularComponent v (((u : valuationRingOf v) : K) * π₁) hπ₂' (x : K) := by
-    simpa only [hπrel]
+    simp only [hπrel]
   rw [hangle]
   simpa [hmk] using
     (angularComponent_parameter_change v π₁ hπ₁ u hπ₂' (x := (x : K)) x.ne_zero)
@@ -480,14 +480,14 @@ theorem padic_angularComponent_formula (p : ℕ) [Fact p.Prime]
           (((p : ℚ) ^ n) * (a : ℚ) / (b : ℚ))) =
       (a : ZMod p) * (b : ZMod p)⁻¹ := by
   classical
-  letI : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
-  letI : (pPrimeIdeal p).IsMaximal := by
+  let : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
+  let : (pPrimeIdeal p).IsMaximal := by
     change (Ideal.span ({(p : ℤ)} : Set ℤ)).IsMaximal
     infer_instance
   let e := pValuationRingEquiv p
   let q := IsLocalization.AtPrime.equivQuotMaximalIdeal
     (pPrimeIdeal p) (pLocalIntegers p)
-  letI : Field (ℤ ⧸ pPrimeIdeal p) := Ideal.Quotient.field _
+  let : Field (ℤ ⧸ pPrimeIdeal p) := Ideal.Quotient.field _
   have hres_int (z : ℤ) :
       padicResidueEquiv p
           (residueMapOf (pValuation p)
@@ -520,7 +520,7 @@ theorem padic_angularComponent_formula (p : ℕ) [Fact p.Prime]
               (algebraMap ℤ (pValuationRing p) z)) = _
           rw [IsLocalRing.ResidueField.map_residue]
           congr 1
-          simp [e, pValuationRingEquiv, AlgEquiv.commutes]
+          simp [e, pValuationRingEquiv]
           ]
     rw [hq]
     change (Int.quotientSpanNatEquivZMod p)
@@ -535,7 +535,7 @@ theorem padic_angularComponent_formula (p : ℕ) [Fact p.Prime]
   have hb0 : (b : ℚ) ≠ 0 := by
     exact_mod_cast hb
   have hvp : pValuation p (p : ℚ) = WithZero.exp (-1 : ℤ) := by
-    simpa [pValuation] using Rat.padicValuation_self p
+    simp [pValuation]
   have hva : pValuation p (a : ℚ) = 1 := by
     change Rat.padicValuation p (a : ℚ) = 1
     rw [Rat.padicValuation_cast]

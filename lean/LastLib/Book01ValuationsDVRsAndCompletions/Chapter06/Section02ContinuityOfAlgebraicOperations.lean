@@ -40,7 +40,7 @@ theorem chapter06_addition_uniform_estimate
   change v ((x + y) - (x' + y')) ≤ max (v (x - x')) (v (y - y'))
   calc
     v ((x + y) - (x' + y')) = v ((x - x') + (y - y')) := by
-      congr 1 <;> ring
+      congr 1; ring
     _ ≤ max (v (x - x')) (v (y - y')) := hv _ _
 
 /-- The algebraic difference identity used to control multiplication. -/
@@ -84,7 +84,7 @@ theorem chapter06_inversion_difference_formula
   have hxy : x⁻¹ - y⁻¹ = (y - x) / (x * y) := by
     field_simp [hx, hy]
   rw [hxy]
-  simp [div_eq_mul_inv, v.map_sub, v.map_mul, hx, hy]
+  simp [div_eq_mul_inv, v.map_sub, v.map_mul]
 
 /-- Inversion is continuous at every nonzero point, in epsilon form. -/
 theorem chapter06_inversion_continuous_away_from_zero
@@ -117,7 +117,7 @@ theorem chapter06_inversion_continuous_away_from_zero
 /-- Sufficient closeness to a nonzero point forces equality of absolute values. -/
 theorem chapter06_abs_value_locally_constant_at_nonzero
     (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
-    {x y : K} (hx : x ≠ 0)
+    {x y : K} (_hx : x ≠ 0)
     (hxy : chapter06Distance v y x < v x) :
     v y = v x := by
   change v (y - x) < v x at hxy
@@ -128,7 +128,7 @@ theorem chapter06_abs_value_locally_constant_at_nonzero
 /-- The absolute value is continuous for its induced topology. -/
 theorem chapter06_absolute_value_continuous (v : AbsoluteValue K ℝ) :
     @Continuous K ℝ v.uniformSpace.toTopologicalSpace inferInstance v := by
-  letI : UniformSpace K := v.uniformSpace
+  let : UniformSpace K := v.uniformSpace
   have huv : UniformContinuous v := by
     refine ((v.hasBasis_uniformity).uniformContinuous_iff
       Metric.uniformity_basis_dist).2 ?_
@@ -246,10 +246,8 @@ theorem chapter06_reduction_continuous
   have heq : chapter06AdicCoset (IsLocalRing.maximalIdeal A) a 1 =
       a +ᵥ ((IsLocalRing.maximalIdeal A : Ideal A) : Set A) := by
     ext x
-    simp only [chapter06AdicCoset, Set.mem_setOf_eq]
-    change x - a ∈ (((IsLocalRing.maximalIdeal A) ^ 1 : Ideal A) : Set A) ↔
-      x ∈ a +ᵥ ((IsLocalRing.maximalIdeal A : Ideal A) : Set A)
-    simpa [pow_one, mem_vadd_set_iff_neg_vadd_mem, sub_eq_neg_add, add_comm]
+    simp only [chapter06AdicCoset, Set.mem_ofPred_eq]
+    simp [pow_one, mem_vadd_set_iff_neg_vadd_mem, sub_eq_neg_add, add_comm]
   rw [heq]
   exact hm.left_addCoset a
 
@@ -280,10 +278,8 @@ theorem chapter06_reduction_mod_pow_continuous
   have heq : chapter06AdicCoset m a n =
       a +ᵥ ((m ^ n : Ideal A) : Set A) := by
     ext x
-    simp only [chapter06AdicCoset, Set.mem_setOf_eq]
-    change x - a ∈ ((m ^ n : Ideal A) : Set A) ↔
-      x ∈ a +ᵥ ((m ^ n : Ideal A) : Set A)
-    simpa [mem_vadd_set_iff_neg_vadd_mem, sub_eq_neg_add, add_comm]
+    simp only [chapter06AdicCoset, Set.mem_ofPred_eq]
+    simp [mem_vadd_set_iff_neg_vadd_mem, sub_eq_neg_add, add_comm]
   rw [heq]
   exact hmn.left_addCoset a
 

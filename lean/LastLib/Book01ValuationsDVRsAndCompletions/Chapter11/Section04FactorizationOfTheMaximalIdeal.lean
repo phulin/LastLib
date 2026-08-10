@@ -34,14 +34,14 @@ def chapter11InertiaDegree (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
 
 /-- The local factorization `π B_P = P_P^e`. -/
 theorem chapter11_local_uniformizer_factorization
-    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Algebra A B] [IsDedekindDomain B] (m : Ideal A) (π : A)
     (hπ : chapter11IsUniformizer A m π) (P : Ideal B) [P.IsPrime] [P.LiesOver m]
-    (hm0 : m ≠ ⊥) (hP0 : P ≠ ⊥)
+    (_hm0 : m ≠ ⊥) (hP0 : P ≠ ⊥)
     (hI0 : Ideal.map (algebraMap A (Localization.AtPrime P)) m ≠ ⊥) :
     Ideal.map (algebraMap A (Localization.AtPrime P)) (Ideal.span {π}) =
       (Ideal.map (algebraMap B (Localization.AtPrime P)) P) ^ P.ramificationIdx A := by
-  letI : IsDiscreteValuationRing (Localization.AtPrime P) :=
+  have : IsDiscreteValuationRing (Localization.AtPrime P) :=
     IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B hP0
       (Localization.AtPrime P)
   let I : Ideal (Localization.AtPrime P) :=
@@ -64,7 +64,7 @@ theorem chapter11_local_uniformizer_factorization
 
 /-- The global factorization `mB = ∏ P_i^{e_i}`. -/
 theorem chapter11_global_ideal_factorization
-    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Algebra A B] [IsDedekindDomain B] [Algebra.IsIntegral A B]
     [Module.IsTorsionFree A B] (m : Ideal A) [m.IsMaximal] (hm0 : m ≠ ⊥) :
     Ideal.map (algebraMap A B) m =
@@ -120,7 +120,7 @@ abbrev chapter11PrimePowerLayer (B : Type*) [CommRing B] (P : Ideal B) (i : ℕ)
 copy of the residue field. -/
 theorem chapter11_prime_power_layer_is_a_residue_line
     (B : Type*) [CommRing B] [IsDedekindDomain B] (P : Ideal B)
-    [P.IsPrime] [P.IsMaximal] [P.IsPrincipal] (e i : ℕ) (hi : i < e)
+    [P.IsPrime] [P.IsMaximal] [P.IsPrincipal] (e i : ℕ) (_hi : i < e)
     (hP0 : P ≠ ⊥) :
     Nonempty
       (chapter11PrimePowerLayer B P i ≃+
@@ -130,15 +130,15 @@ theorem chapter11_prime_power_layer_is_a_residue_line
 
 /-- The quotient `B / πB` has one `k`-dimension for every residue-degree layer. -/
 theorem chapter11_residue_quotient_dimension_sum
-    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Algebra A B] [Module.Finite A B] [Module.Free A B]
     [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [IsDedekindDomain B]
     (m : Ideal A) [m.IsPrime] [m.IsMaximal] :
     Module.finrank (A ⧸ m) (B ⧸ Ideal.map (algebraMap A B) m) =
       ∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A := by
-  letI : Field (A ⧸ m) := Ideal.Quotient.field m
-  let eκ : (A ⧸ m) ≃ₐ[A ⧸ m] m.ResidueField :=
-    IsFractionRing.algEquivOfAlgEquiv (R := A ⧸ m) (A := A ⧸ m)
+  let eκ : (A ⧸ m) ≃ₐ[A ⧸ m] m.ResidueField := by
+    letI : Field (A ⧸ m) := Ideal.Quotient.field m
+    exact IsFractionRing.algEquivOfAlgEquiv (R := A ⧸ m) (A := A ⧸ m)
       (K := A ⧸ m) (B := A ⧸ m) (L := m.ResidueField) .refl
   calc
     Module.finrank (A ⧸ m) (B ⧸ Ideal.map (algebraMap A B) m) =
@@ -155,9 +155,7 @@ theorem chapter11_residue_quotient_dimension_sum
           algebraMap (A ⧸ m) m.ResidueField (Ideal.Quotient.mk m a) := by
         change eκ (algebraMap (A ⧸ m) (A ⧸ m) (Ideal.Quotient.mk m a)) =
           algebraMap (A ⧸ m) m.ResidueField (Ideal.Quotient.mk m a)
-        exact IsFractionRing.algEquivOfAlgEquiv_algebraMap
-          (h := (AlgEquiv.refl : (A ⧸ m) ≃ₐ[A ⧸ m] A ⧸ m))
-          (Ideal.Quotient.mk m a)
+        exact eκ.commutes (Ideal.Quotient.mk m a)
       simp only [RingHom.comp_apply]
       change algebraMap m.ResidueField (m.Fiber B) (eκ (Ideal.Quotient.mk m a)) =
         algebraMap (A ⧸ m) (m.Fiber B) (Ideal.Quotient.mk m a)
@@ -168,7 +166,7 @@ theorem chapter11_residue_quotient_dimension_sum
 
 /-- Under finite freeness, the sum of `e_i f_i` is the field degree. -/
 theorem chapter11_sum_ramification_times_inertia_is_degree
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L] [Algebra A L]
     [Algebra K L]
     [IsScalarTower A B L] [IsScalarTower A K L] [IsFractionRing A K]
@@ -193,11 +191,11 @@ theorem chapter11_fundamental_inequality_for_branch_subfamily
     [IsIntegralClosure B A L] [Module.Finite A B] [Module.Free A B]
     [Algebra.IsIntegral A B] [Module.IsTorsionFree A B]
     {iota : Type*} [Fintype iota] (m : Ideal A) (P : iota → Ideal B)
-    [m.IsMaximal] (hm0 : m ≠ ⊥)
+    [m.IsMaximal] (_hm0 : m ≠ ⊥)
     (hbranch : ∀ i, chapter11Branch A B m (P i))
     (hinj : Function.Injective P) :
     ∑ i, (P i).ramificationIdx A * (P i).inertiaDeg A ≤ Module.finrank K L := by
-  letI : Fintype (m.primesOver B) :=
+  let : Fintype (m.primesOver B) :=
     Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver m)
   let g : iota → m.primesOver B := fun i =>
     ⟨P i, (hbranch i).1, (hbranch i).2.2⟩

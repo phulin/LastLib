@@ -166,7 +166,7 @@ private theorem chapter08_principal_unit_layer_equiv_with_formula
               I ^ (n + 1) :=
           hpow (Ideal.mul_mem_mul (Additive.toMul u).property
             (Additive.toMul v).property)
-        convert hprod using 1 <;> ring }
+        convert hprod using 1; ring }
   let ψ : Chapter08UnitLayer A I n →* Multiplicative (Chapter08IdealLayer A I n) :=
     AddMonoidHom.toMultiplicativeRight φ
   have hker : ψ.ker = Chapter08UnitLayerIn A I n := by
@@ -206,7 +206,7 @@ private theorem chapter08_principal_unit_layer_equiv_with_formula
       (IsLocalRing.mem_maximalIdeal (-r)).1 hnegmax
     have hu : IsUnit (1 + r) := by
       have h := IsLocalRing.isUnit_one_sub_self_of_mem_nonunits (-r) hneg
-      convert h using 1 <;> ring
+      convert h using 1; ring
     let w : Aˣ := hu.unit
     have hw : (w : A) - 1 = r := by
       dsimp [w]
@@ -275,8 +275,8 @@ def Chapter08PrincipalUnitProductConverges
 theorem chapter08_infinite_principal_unit_product_converges
     {A : Type*} [CommRing A] [IsLocalRing A]
     (I : Ideal A) (a : ℕ → A)
-    (hI : I = IsLocalRing.maximalIdeal A)
-    (ha : ∀ n : ℕ, a n ∈ I)
+    (_hI : I = IsLocalRing.maximalIdeal A)
+    (_ha : ∀ n : ℕ, a n ∈ I)
     (htends : Chapter08AdicTendsToZero I a) :
     ∃ x : AdicCompletion I A, Chapter08PrincipalUnitProductConverges I a x := by
   classical

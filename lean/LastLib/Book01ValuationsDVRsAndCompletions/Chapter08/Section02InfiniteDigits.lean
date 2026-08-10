@@ -84,7 +84,7 @@ theorem chapter08_truncated_digit_lemma
         w 0 + π * ∑ i : Fin r, w i.succ * π ^ (i : ℕ) := by
     intro r w
     rw [Fin.sum_univ_succ]
-    simp only [Fin.val_zero, Nat.cast_zero, pow_zero, mul_one]
+    simp only [Fin.val_zero, pow_zero, mul_one]
     congr 1
     calc
       (∑ i : Fin r, w i.succ * π ^ (i.succ : ℕ)) =
@@ -192,12 +192,12 @@ theorem chapter08_truncated_digit_lemma
           ring
         have hzero : u 0 - v 0 ∈ I := by
           have := I.sub_mem hsumI htailI
-          convert this using 1 <;> ring
+          convert this using 1; ring
         have hzero' : v 0 - u 0 ∈ I := by
           simpa [sub_eq_add_neg, add_comm] using I.neg_mem hzero
         have heq0 : u 0 = v 0 := by
           exact (hS (v 0)).unique ⟨hu 0, hzero'⟩
-            ⟨hv 0, by simpa using I.zero_mem⟩
+            ⟨hv 0, by simp⟩
         have htail : π * (U - V) ∈ I ^ (r + 1) := by
           convert htotal using 1
           rw [hsum_succ r u, hsum_succ r v, heq0]
@@ -288,7 +288,7 @@ theorem chapter08_truncated_digits_are_compatible
             ∑ i : Fin r, f (i : ℕ) := by
               apply Finset.sum_congr rfl
               intro i hi
-              simp [f, i.isLt, lt_of_lt_of_le i.isLt hrs]
+              simp [f, lt_of_lt_of_le i.isLt hrs]
         _ = ∑ i ∈ Finset.range r, f i := by
           rw [Fin.sum_univ_eq_sum_range f]
     rw [hsum_s, hsum_r, Finset.sum_range_sub_sum_range hrs]
@@ -628,7 +628,7 @@ obstruction behind the preceding set-theoretic, rather than coefficientwise-ring
 private theorem chapter08_mixed_characteristic_additive_section_obstruction
     {A : Type*} [CommRing A] [CharZero A] (I : Ideal A) (S : Set A)
     (p : ℕ) [Fact p.Prime]
-    (hI : I = Ideal.span {(p : A)})
+    (_hI : I = Ideal.span {(p : A)})
     (hS : Chapter08IsResidueRepresentativeSet A I S)
     (hnoembed : ¬ ∃ f : (A ⧸ I) →+ A, Function.Injective f)
     (e : AdicCompletion I A ≃ Chapter08DigitSequences A S)
@@ -669,7 +669,7 @@ private theorem chapter08_mixed_characteristic_additive_section_obstruction
       rw [← hmk a]
       exact Ideal.Quotient.eq_zero_iff_mem.mpr ha
     exact (hS 0).unique ⟨hdigit_mem a, by simpa using I.neg_mem hda⟩
-      ⟨h0S, by simpa using I.zero_mem⟩
+      ⟨h0S, by simp⟩
   let f0 : A →+ A :=
     { toFun := d0
       map_zero' := hzero
@@ -781,13 +781,13 @@ theorem chapter08_equal_characteristic_formal_series_model
     (sectionData : Chapter08CoefficientFieldSection A k I) :
     Nonempty (Chapter08FormalSeriesModel A k I π sectionData) := by
   classical
-  letI : WithIdeal A := ⟨I⟩
-  letI : TopologicalSpace k := ⊥
-  letI : UniformSpace k := ⊥
-  letI : DiscreteTopology k := discreteTopology_bot k
+  let : WithIdeal A := ⟨I⟩
+  let : TopologicalSpace k := ⊥
+  let : UniformSpace k := ⊥
+  let : DiscreteTopology k := discreteTopology_bot k
   have htop := (IsAdic.isAdicComplete_iff (I := I) (by rfl)).mp hcomplete
-  letI : CompleteSpace A := htop.1
-  letI : T2Space A := htop.2
+  let : CompleteSpace A := htop.1
+  let : T2Space A := htop.2
   have hres_surj : Function.Surjective sectionData.residue := by
     intro c
     refine ⟨sectionData.lift c, ?_⟩
@@ -823,7 +823,7 @@ theorem chapter08_equal_characteristic_formal_series_model
   have hmap :
       (Ideal.span ({PowerSeries.X} : Set (PowerSeries k))).map f = I := by
     rw [Ideal.map_span]
-    simpa [hfX, hI]
+    simp [hfX, hI]
   have hres : Function.Surjective
       ((Ideal.Quotient.mk ((Ideal.span ({PowerSeries.X} : Set (PowerSeries k))).map f)).comp f) := by
     intro q
@@ -840,11 +840,11 @@ theorem chapter08_equal_characteristic_formal_series_model
           congrArg (fun g => g (sectionData.residue a)) sectionData.residue_lift
       rw [map_sub, hleft, sub_self]
     simpa only [sectionData.kernel_residue] using hmem
-  letI : IsHausdorff
+  let : IsHausdorff
       ((Ideal.span ({PowerSeries.X} : Set (PowerSeries k))).map f) A := by
     rw [hmap]
     exact hcomplete.toIsHausdorff
-  letI : IsAdicComplete
+  let : IsAdicComplete
       (Ideal.span ({PowerSeries.X} : Set (PowerSeries k))) (PowerSeries k) := inferInstance
   have hf_surj : Function.Surjective f := by
     exact surjective_of_mk_map_comp_surjective f hres

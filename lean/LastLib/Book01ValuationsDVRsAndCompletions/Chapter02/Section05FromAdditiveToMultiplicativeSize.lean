@@ -1,3 +1,4 @@
+import Mathlib
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section04EquivalenceAndNormalization
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
@@ -23,7 +24,7 @@ open HahnSeries Polynomial
 /-! ## 2.5. From additive values to multiplicative absolute values -/
 
 def Chapter02RealSizeFromValuation
-    {K : Type*} [Field K] (c : ℝ) (hc : 0 < c) (hc1 : c < 1)
+    {K : Type*} [Field K] (c : ℝ) (_hc : 0 < c) (_hc1 : c < 1)
     (v : AddValuation K (WithTop ℝ)) (x : K) : ℝ :=
   if hx : v x = ⊤ then 0 else Real.rpow c ((v x).untop hx)
 
@@ -204,7 +205,7 @@ def Chapter02IsUltrametricAbsoluteValue {K : Type*} [Ring K]
   ∀ x y : K, f (x + y) ≤ max (f x) (f y)
 
 def Chapter02LogarithmicValueFromAbsoluteValue
-    {K : Type*} [Field K] (c : ℝ) (hc : 0 < c) (hc1 : c < 1)
+    {K : Type*} [Field K] (c : ℝ) (_hc : 0 < c) (_hc1 : c < 1)
     (f : K → ℝ) (x : K) : WithTop ℝ := by
   classical
   exact if hx : x = 0 then ⊤ else (Real.log (f x) / Real.log c : ℝ)
@@ -246,10 +247,10 @@ theorem chapter02_ultrametric_absolute_value_gives_additive_value
       exact le_top
     by_cases hx : x = 0
     · subst x
-      simp [Chapter02LogarithmicValueFromAbsoluteValue, hxy]
+      simp [Chapter02LogarithmicValueFromAbsoluteValue]
     by_cases hy : y = 0
     · subst y
-      simp [Chapter02LogarithmicValueFromAbsoluteValue, hxy]
+      simp [Chapter02LogarithmicValueFromAbsoluteValue]
     simp only [Chapter02LogarithmicValueFromAbsoluteValue, dif_neg hx, dif_neg hy,
       dif_neg hxy]
     rcases le_total (f x) (f y) with hxyf | hyxf
@@ -307,7 +308,7 @@ def Chapter02PositiveValueRescaling
 
 theorem chapter02_changing_the_base_rescales_values
     {K : Type*} [Field K] (f : AbsoluteValue K ℝ)
-    (hf : Chapter02IsUltrametricAbsoluteValue (f : K → ℝ))
+    (_hf : Chapter02IsUltrametricAbsoluteValue (f : K → ℝ))
     {c d : ℝ} (hc : 0 < c) (hc1 : c < 1) (hd : 0 < d) (hd1 : d < 1) :
     Chapter02PositiveValueRescaling
       (fun x => Chapter02LogarithmicValueFromAbsoluteValue c hc hc1 (f : K → ℝ) x)
@@ -341,7 +342,7 @@ theorem chapter02_positive_rescaling_preserves_comparisons
         | coe z =>
             rw [← WithTop.coe_mul]
             exact WithTop.coe_ne_top
-      simp [hx, hy, hw, hne]
+      simp [hx, hy, hne]
   · by_cases hy : v y = ⊤
     · simp [hw, hx, hy]
     · simp only [hw, dif_neg hx, dif_neg hy]

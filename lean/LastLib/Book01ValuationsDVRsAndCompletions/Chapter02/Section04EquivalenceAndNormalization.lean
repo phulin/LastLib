@@ -1,3 +1,5 @@
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section01WhyTheValuesFormAGroup
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section02AdditiveValuations
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section03TheDecisiveEquality
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
@@ -216,7 +218,7 @@ theorem chapter02_normalized_valuation_uses_unit_step
     {K Γ : Type*} [Field K]
     [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     (e : Γ ≃+o ℤ) (v : AddValuation K (WithTop Γ))
-    {x : K} {π : Γ} (hx : x ≠ 0)
+    {x : K} {π : Γ} (_hx : x ≠ 0)
     (hπ : 0 < π) (hleast : ∀ γ : Γ, 0 < γ → π ≤ γ)
     (hv : v x = (π : WithTop Γ)) :
     Chapter02NormalizedValuation e v x = (1 : WithTop ℤ) := by
@@ -251,11 +253,12 @@ noncomputable def Chapter02TwiceValuation
     (by simp)
     (by
       intro x y
-      simpa [smul_min_of_nonneg (by norm_num : (0 : ℕ) ≤ 2)] using
-        nsmul_le_nsmul_right (v.map_add x y) 2)
+      have h := nsmul_le_nsmul_right (v.map_add x y) 2
+      rw [smul_min_of_nonneg (by norm_num : (0 : ℕ) ≤ 2)] at h
+      exact h)
     (by
       intro x y
-      simp [v.map_mul, add_nsmul])
+      simp [v.map_mul])
 
 theorem chapter02_twice_valuation_formula
     {K : Type*} [Field K] (v : AddValuation K (WithTop ℤ)) (x : K) :
@@ -337,7 +340,7 @@ def Chapter02CoarsenedValuation
 theorem chapter02_convex_subgroup_gives_ordered_quotient
     {Γ Λ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     [AddCommGroup Λ] [LinearOrder Λ] [IsOrderedAddMonoid Λ]
-    (H : AddSubgroup Γ) (hH : Chapter02ConvexAddSubgroup H)
+    (H : AddSubgroup Γ) (_hH : Chapter02ConvexAddSubgroup H)
     (q : Γ →+o Λ) (hq : Function.Surjective q)
     (hker : ∀ γ : Γ, q γ = 0 ↔ γ ∈ H)
     (horder : ∀ a b : Γ, q a ≤ q b ↔
@@ -347,7 +350,7 @@ theorem chapter02_convex_subgroup_gives_ordered_quotient
   intro Ω _ _ _ f hfH
   have hwell : ∀ {a b : Γ}, q a = q b → f a = f b := by
     intro a b hab
-    have hqsub : q (a - b) = 0 := by simpa [map_sub, hab]
+    have hqsub : q (a - b) = 0 := by simp [map_sub, hab]
     have hmem : a - b ∈ H := (hker (a - b)).1 hqsub
     have hf0 := hfH (a - b) hmem
     have : f a - f b = 0 := by simpa [map_sub] using hf0
@@ -376,7 +379,7 @@ theorem chapter02_convex_subgroup_gives_ordered_quotient
               f (Classical.choose (hq t) + (h : Γ)) :=
                 (OrderHomClass.monotone f) hab
           _ = f (Classical.choose (hq t)) := by
-            simpa only [map_add, hfH (h : Γ) h.property, add_zero] }
+            simp only [map_add, hfH (h : Γ) h.property, add_zero] }
   have hfactor : f = g.comp q := by
     ext a
     have hz : q (Classical.choose (hq (q a))) = q a :=
@@ -396,15 +399,15 @@ theorem chapter02_coarsening_is_composition_with_quotient
     [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     [AddCommGroup Λ] [LinearOrder Λ] [IsOrderedAddMonoid Λ]
     (H : AddSubgroup Γ) (q : Γ →+o Λ)
-    (hQ : Chapter02ConvexQuotientInterface H q)
+    (_hQ : Chapter02ConvexQuotientInterface H q)
     (v : AddValuation K (WithTop Γ)) :
     ∀ x : K, Chapter02CoarsenedValuation q v x =
       (if h : v x = ⊤ then ⊤ else (q ((v x).untop h) : WithTop Λ)) := by
   intro x
   by_cases hx : v x = ⊤
   · have hx0 : x = 0 := (AddValuation.top_iff v).1 hx
-    simp [Chapter02CoarsenedValuation, hx, hx0]
-  · simp only [Chapter02CoarsenedValuation, dif_neg hx, AddValuation.map_apply]
+    simp [Chapter02CoarsenedValuation, hx0]
+  · simp only [Chapter02CoarsenedValuation, dif_neg hx]
     change (AddMonoidHom.withTopMap (q : Γ →+ Λ)) (v x) =
       (q ((v x).untop hx) : WithTop Λ)
     have hvx : v x = ((v x).untop hx : WithTop Γ) :=
@@ -533,7 +536,7 @@ theorem chapter02_discrete_rank_one_has_no_proper_coarsening
       refine ⟨-h, H.neg_mem hh, ?_⟩
       exact neg_pos.mpr hneg
     have : h = 0 := le_antisymm (le_of_not_gt hnotpos) (le_of_not_gt hnotneg)
-    simpa [this]
+    simp [this]
 
 end
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter02

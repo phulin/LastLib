@@ -54,7 +54,7 @@ theorem chapter08_padic_integer_inverse_limit
       (Int.quotientSpanNatEquivZMod (p ^ n))
   have q_mk (n : ℕ) (z : ℤ) :
       q n (Ideal.Quotient.mk (I ^ n) z) = (z : ZMod (p ^ n)) := by
-    simp [q, hpow]
+    simp [q]
   have hfactor_q : ∀ {m n : ℕ} (hmn : m ≤ n) (z : ℤ ⧸ I ^ n),
       (ZMod.cast (q n z) : ZMod (p ^ m)) =
         q m (Ideal.Quotient.factorPow I hmn z) := by
@@ -72,7 +72,7 @@ theorem chapter08_padic_integer_inverse_limit
         (fun i j hij => Ideal.pow_le_pow_right (Nat.succ_le_succ hij))
         (fun i => z.1 i)
         (fun i => by
-          simpa [Ideal.Quotient.factorPow] using (z.2 i).symm)
+          simp)
         hmn
     simpa [Ideal.Quotient.factorPow] using hlong.symm
   let coord (n : ℕ) : Chapter08Zp p →+* ℤ ⧸ I ^ (n + 1) :=
@@ -84,17 +84,17 @@ theorem chapter08_padic_integer_inverse_limit
   let f0 : Chapter08Zp p →+* ZMod (p ^ 0) :=
     { toFun := fun _ => 0
       map_one' := by
-        letI : Subsingleton (ZMod (p ^ 0)) :=
+        let : Subsingleton (ZMod (p ^ 0)) :=
           ZMod.subsingleton_iff.2 (pow_zero p)
         exact Subsingleton.elim _ _
       map_mul' := by
-        letI : Subsingleton (ZMod (p ^ 0)) :=
+        let : Subsingleton (ZMod (p ^ 0)) :=
           ZMod.subsingleton_iff.2 (pow_zero p)
         intros
         exact Subsingleton.elim _ _
       map_zero' := rfl
       map_add' := by
-        letI : Subsingleton (ZMod (p ^ 0)) :=
+        let : Subsingleton (ZMod (p ^ 0)) :=
           ZMod.subsingleton_iff.2 (pow_zero p)
         intros
         exact Subsingleton.elim _ _ }
@@ -107,7 +107,7 @@ theorem chapter08_padic_integer_inverse_limit
     | zero =>
         apply RingHom.ext
         intro z
-        letI : Subsingleton (ZMod (p ^ 0)) :=
+        let : Subsingleton (ZMod (p ^ 0)) :=
           ZMod.subsingleton_iff.2 (pow_zero p)
         exact Subsingleton.elim _ _
     | succ m =>
@@ -157,7 +157,7 @@ theorem chapter08_padic_integer_inverse_limit
     intro n
     cases n with
     | zero =>
-        letI : Subsingleton (ZMod (p ^ 0)) :=
+        let : Subsingleton (ZMod (p ^ 0)) :=
           ZMod.subsingleton_iff.2 (pow_zero p)
         exact Subsingleton.elim _ _
     | succ n =>
@@ -307,7 +307,7 @@ theorem chapter08_padic_digit_expansion_unique
     have hdiff : Chapter08PadicPartialSum p d n - (b n : Chapter08PadicIntegers p) ∈
         Ideal.span {((p : Chapter08PadicIntegers p) ^ n)} := by
       have h := (Ideal.span {((p : Chapter08PadicIntegers p) ^ n)}).sub_mem hxb hxd
-      convert h using 1 <;> ring
+      convert h using 1; ring
     have hker : Chapter08PadicPartialSum p d n - (b n : Chapter08PadicIntegers p) ∈
         RingHom.ker (PadicInt.toZModPow n) := by
       rw [PadicInt.ker_toZModPow]
@@ -456,10 +456,7 @@ theorem chapter08_every_padic_number_has_laurent_digit_expansion
         funext n
         simp [Chapter08PadicFieldPartialSum]
       rw [hzero]
-      simpa [hx] using
-        (tendsto_const_nhds :
-          Tendsto (fun _ : ℕ => (0 : Chapter08PadicNumbers p)) atTop
-            (𝓝 (0 : Chapter08PadicNumbers p)))
+      simp [hx]
   · have hp0 : (p : Chapter08PadicNumbers p) ≠ 0 := by
       exact_mod_cast (Fact.out : Nat.Prime p).ne_zero
     have hval :
@@ -732,7 +729,7 @@ theorem chapter08_Zp_is_uncountable
         exact add_left_cancel (a := z) (by simpa using hy')
       exact (pow_ne_zero N (by exact_mod_cast
         (Fact.out : Nat.Prime p).ne_zero)) hpzero
-  letI : Uncountable (ℕ → Bool) := huncBool
+  let : Uncountable (ℕ → Bool) := huncBool
   obtain ⟨f, hf_range, hf_cont, hf_inj⟩ :=
     Perfect.exists_nat_bool_injection hperfect ⟨0, Set.mem_univ 0⟩
   exact hf_inj.uncountable.not_countable
@@ -743,8 +740,8 @@ theorem chapter08_completion_adds_p_adic_elements
   classical
   have hZ : Uncountable (Chapter08PadicIntegers p) :=
     ⟨chapter08_Zp_is_uncountable p⟩
-  letI : Uncountable (Chapter08PadicIntegers p) := hZ
-  letI : Uncountable (Chapter08PadicNumbers p) :=
+  let : Uncountable (Chapter08PadicIntegers p) := hZ
+  let : Uncountable (Chapter08PadicNumbers p) :=
     (IsFractionRing.injective (Chapter08PadicIntegers p)
       (Chapter08PadicNumbers p)).uncountable
   exact not_surjective_countable_uncountable _

@@ -32,7 +32,7 @@ def chapter06ProductTail (a : ℕ → K) (n m : ℕ) : K :=
 /-- The product-tail analogue of the ultrametric maximum estimate. -/
 theorem chapter06_product_tail_minus_one_bound
     (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
-    {a : ℕ → K} {n m : ℕ} (hnm : n < m)
+    {a : ℕ → K} {n m : ℕ} (_hnm : n < m)
     (hsmall : ∀ i ∈ Finset.Ico n m, v (a i) < 1)
     (hs : (Finset.Ico n m).Nonempty) :
     v (chapter06ProductTail a n m - 1) ≤
@@ -88,7 +88,7 @@ theorem chapter06_product_tail_minus_one_bound
                   (fun j hj => Finset.mem_insert_of_mem hj) hsne))
         · have hse : s = ∅ := Finset.not_nonempty_iff_eq_empty.mp hsne
           subst s
-          simpa [Finset.prod_singleton, Finset.sup'_singleton]
+          simp [Finset.prod_singleton, Finset.sup'_singleton]
   simpa [chapter06ProductTail] using
     hmain (Finset.Ico n m) hs (Subset.rfl) hsmall
 

@@ -86,6 +86,7 @@ theorem Chapter08CompatibleFamily.compatible
     Ideal.Quotient.factorPow I (Nat.le_succ (n + 1)) (x.1 (n + 1)) = x.1 n := by
   exact x.2 n
 
+@[instance_reducible]
 def Chapter08FiniteQuotientTopology
     (A : Type*) [CommRing A] (I : Ideal A) (n : ℕ) :
     TopologicalSpace (A ⧸ I ^ (n + 1)) := ⊥
@@ -97,18 +98,21 @@ structure Chapter08TopologicalRingEquiv (R S : Type*)
   continuous_toFun : @Continuous R S tR tS ringEquiv
   continuous_invFun : @Continuous S R tS tR ringEquiv.symm
 
+@[instance_reducible]
 def Chapter08InverseLimitProductTopology
     (A : Type*) [CommRing A] (I : Ideal A) :
     TopologicalSpace (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
   @Pi.topologicalSpace ℕ (fun n : ℕ => A ⧸ I ^ (n + 1))
     (fun n => Chapter08FiniteQuotientTopology A I n)
 
+@[instance_reducible]
 def Chapter08InverseLimitTopology
     (A : Type*) [CommRing A] (I : Ideal A) :
     TopologicalSpace (Chapter08CompatibleFamily A I) :=
   TopologicalSpace.induced (fun x : Chapter08CompatibleFamily A I => x.1)
     (Chapter08InverseLimitProductTopology A I)
 
+@[instance_reducible]
 def Chapter08AdicCompletionTopology
     (A : Type*) [CommRing A] (I : Ideal A) :
     TopologicalSpace (AdicCompletion I A) :=
@@ -183,7 +187,7 @@ theorem chapter08_inverse_limit_ring_equiv
           (fun i j hij => Ideal.pow_le_pow_right (Nat.succ_le_succ hij))
           (fun i => z.1 i)
           (fun i => by
-            simpa [Ideal.Quotient.factorPow] using (z.2 i).symm)
+            simp)
           hmn
       simpa [Ideal.Quotient.factorPow] using hlong'
     calc
@@ -191,18 +195,10 @@ theorem chapter08_inverse_limit_ring_equiv
           (Ideal.Quotient.factorPow I (Nat.le_succ n) (z.1 n)) =
           Ideal.Quotient.factorPow I (Nat.le_trans hmn (Nat.le_succ n))
             (z.1 n) := by
-        simpa [Ideal.Quotient.factorPow] using
-          (Ideal.Quotient.factor_comp_apply
-            (S := I ^ (n + 1)) (T := I ^ n) (U := I ^ m)
-            (Ideal.pow_le_pow_right (Nat.le_succ n))
-            (Ideal.pow_le_pow_right hmn) (z.1 n))
+        simp [Ideal.Quotient.factorPow]
       _ = Ideal.Quotient.factorPow I (Nat.le_succ m)
           (Ideal.Quotient.factorPow I (Nat.succ_le_succ hmn) (z.1 n)) := by
-        simpa [Ideal.Quotient.factorPow] using
-          (Ideal.Quotient.factor_comp_apply
-            (S := I ^ (n + 1)) (T := I ^ (m + 1)) (U := I ^ m)
-            (Ideal.pow_le_pow_right (Nat.succ_le_succ hmn))
-            (Ideal.pow_le_pow_right (Nat.le_succ m)) (z.1 n))
+        simp [Ideal.Quotient.factorPow]
       _ = Ideal.Quotient.factorPow I (Nat.le_succ m) (z.1 m) := by
         exact congrArg (Ideal.Quotient.factorPow I (Nat.le_succ m)) hlong.symm
   let e : AdicCompletion I A →+* Chapter08CompatibleFamily A I :=
@@ -244,8 +240,6 @@ theorem chapter08_inverse_limit_ring_equiv
         infer_instance
       exact hsub.elim _ _
     | succ n =>
-      change AdicCompletion.evalₐ I (n + 1) (g (e x)) =
-        AdicCompletion.evalₐ I (n + 1) x
       change AdicCompletion.evalₐ I (n + 1)
           (AdicCompletion.liftRingHom I f hf (e x)) =
         AdicCompletion.evalₐ I (n + 1) x
@@ -275,25 +269,25 @@ theorem chapter08_theorem_8_1_inverse_limit_description
         (Chapter08InverseLimitTopology A I),
       ∀ x, e.ringEquiv x = Chapter08CompletionResidues I x := by
   classical
-  letI : TopologicalSpace (AdicCompletion I A) :=
+  let : TopologicalSpace (AdicCompletion I A) :=
     Chapter08AdicCompletionTopology A I
-  letI : ∀ n : ℕ, TopologicalSpace (A ⧸ I ^ (n + 1)) :=
+  let : ∀ n : ℕ, TopologicalSpace (A ⧸ I ^ (n + 1)) :=
     fun n => Chapter08FiniteQuotientTopology A I n
-  letI : ∀ n : ℕ, DiscreteTopology (A ⧸ I ^ (n + 1)) :=
+  let : ∀ n : ℕ, DiscreteTopology (A ⧸ I ^ (n + 1)) :=
     fun n => discreteTopology_bot _
-  letI : ∀ n : ℕ, IsTopologicalAddGroup (A ⧸ I ^ (n + 1)) :=
+  let : ∀ n : ℕ, IsTopologicalAddGroup (A ⧸ I ^ (n + 1)) :=
     fun n => by infer_instance
-  letI : ∀ n : ℕ, IsTopologicalRing (A ⧸ I ^ (n + 1)) :=
+  let : ∀ n : ℕ, IsTopologicalRing (A ⧸ I ^ (n + 1)) :=
     fun n => by infer_instance
-  letI : TopologicalSpace (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
+  let : TopologicalSpace (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
     Chapter08InverseLimitProductTopology A I
-  letI : IsTopologicalRing (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
+  let : IsTopologicalRing (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
     Pi.instIsTopologicalRing
-  letI : IsTopologicalAddGroup (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
+  let : IsTopologicalAddGroup (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
     IsTopologicalRing.to_topologicalAddGroup
-  letI : TopologicalSpace (Chapter08CompatibleFamily A I) :=
+  let : TopologicalSpace (Chapter08CompatibleFamily A I) :=
     Chapter08InverseLimitTopology A I
-  letI : IsTopologicalAddGroup (AdicCompletion I A) :=
+  let : IsTopologicalAddGroup (AdicCompletion I A) :=
     (RingSubgroupsBasis.toRingFilterBasis (Ideal.adic_basis
       (Ideal.map (algebraMap A (AdicCompletion I A)) I)).toRing_subgroups_basis).toAddGroupFilterBasis.isTopologicalAddGroup
   obtain ⟨er, her⟩ := chapter08_inverse_limit_ring_equiv I
@@ -338,7 +332,7 @@ theorem chapter08_theorem_8_1_inverse_limit_description
   have her_cont : Continuous er := by
     apply continuous_induced_rng.mpr
     simpa [Function.comp_def] using htoProd
-  letI : IsTopologicalAddGroup (Chapter08CompatibleFamily A I) := by
+  let : IsTopologicalAddGroup (Chapter08CompatibleFamily A I) := by
     exact topologicalAddGroup_induced
       (Chapter08CompatibleSubring A I).subtype.toAddMonoidHom
   have hker_eval (n : ℕ) :
@@ -351,7 +345,7 @@ theorem chapter08_theorem_8_1_inverse_limit_description
       change x ∈ ((Ideal.map (algebraMap A (AdicCompletion I A)) (I ^ n)).restrictScalars A :
         Set (AdicCompletion I A)) ↔ x ∈ (AdicCompletion.eval I A n).ker
       rw [← Ideal.smul_top_eq_map]
-      simpa [AdicCompletion.pow_smul_top_eq_ker_eval hI]
+      simp [AdicCompletion.pow_smul_top_eq_ker_eval hI]
     · change (AdicCompletion.eval I A n) x = 0 ↔
         AdicCompletion.evalₐ I n x = 0
       have heq : I ^ n * (⊤ : Ideal A) = I ^ n := by

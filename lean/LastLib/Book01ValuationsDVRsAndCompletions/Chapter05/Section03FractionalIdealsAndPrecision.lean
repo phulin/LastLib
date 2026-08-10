@@ -589,7 +589,7 @@ end FractionalIdealsAndPrecision
 
 section DedekindLocalizationProjection
 
-variable {R K : Type*} [CommRing R] [IsDomain R] [IsDedekindDomain R]
+variable {R K : Type*} [CommRing R] [IsDedekindDomain R]
   [Field K] [Algebra R K] [IsFractionRing R K]
 
 /-- The global exponent vector of a fractional ideal. -/
@@ -675,10 +675,11 @@ end DedekindLocalizationProjection
 
 section RamificationShift
 
-variable {R S : Type*} [CommRing R] [IsDomain R] [IsDedekindDomain R]
-  [CommRing S] [IsDomain S] [IsDedekindDomain S]
+variable {R S : Type*} [CommRing R] [IsDedekindDomain R]
+  [CommRing S] [IsDedekindDomain S]
   [Algebra R S] [Module.Finite R S]
 
+omit [IsDedekindDomain R] [IsDedekindDomain S] [Module.Finite R S] in
 /-- Book §5.3: ramification index as the length of the localized quotient. -/
 theorem chapter_ramification_index_length_formula
   (q : Ideal S) [q.IsPrime] :
@@ -688,6 +689,7 @@ theorem chapter_ramification_index_length_formula
         (Sq ⧸ (q.under R).map (algebraMap R Sq))).toNat := by
   exact Ideal.ramificationIdx_def q R
 
+omit [Module.Finite R S] in
 /-- Book §5.3: the ramification index is the shift between the two local filtrations. -/
 theorem chapter_ramification_index_is_filtration_shift
     (p : Ideal R) (q : Ideal S) [p.IsPrime] [q.IsPrime] [q.LiesOver p]

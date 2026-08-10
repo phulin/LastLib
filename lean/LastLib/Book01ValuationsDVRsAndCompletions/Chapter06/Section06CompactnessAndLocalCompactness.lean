@@ -47,7 +47,7 @@ theorem chapter06_subsequence_constant_mod_ideal
 theorem chapter06_dvr_power_quotient_finite
     [IsDomain A] [IsDiscreteValuationRing A] [Finite (IsLocalRing.ResidueField A)] (n : ℕ) :
     Finite (A ⧸ ((IsLocalRing.maximalIdeal A) ^ n)) := by
-  letI : Finite (A ⧸ IsLocalRing.maximalIdeal A) := by
+  let : Finite (A ⧸ IsLocalRing.maximalIdeal A) := by
     exact (inferInstance : Finite (IsLocalRing.ResidueField A))
   exact Ideal.finite_quotient_pow
     (IsPrincipalIdealRing.principal (IsLocalRing.maximalIdeal A)).fg n
@@ -61,7 +61,7 @@ theorem chapter06_dvr_diagonal_subsequence
         x (φ k) - a ∈ (IsLocalRing.maximalIdeal A) ^ n := by
   classical
   let m := IsLocalRing.maximalIdeal A
-  letI : Finite (A ⧸ m) := by
+  let : Finite (A ⧸ m) := by
     dsimp [m]
     exact (inferInstance : Finite (IsLocalRing.ResidueField A))
   let H (n : ℕ) (g : ℕ → ℕ) :
@@ -69,7 +69,7 @@ theorem chapter06_dvr_diagonal_subsequence
         ∀ k : ℕ,
           Ideal.Quotient.mk (m ^ (n + 1)) (x (g (ψ k))) = c :=
     by
-      letI : Finite (A ⧸ (m ^ (n + 1))) :=
+      let : Finite (A ⧸ (m ^ (n + 1))) :=
         chapter06_dvr_power_quotient_finite (n + 1)
       exact chapter06_subsequence_constant_mod_ideal
         (m := m ^ (n + 1)) (x := x ∘ g)
@@ -173,8 +173,8 @@ theorem chapter06_complete_dvr_integer_compact
   classical
   let m := IsLocalRing.maximalIdeal A
   let B := m.ringFilterBasis.toAddGroupFilterBasis
-  letI : UniformSpace A := B.uniformSpace
-  letI : IsUniformAddGroup A := B.isUniformAddGroup
+  let : UniformSpace A := B.uniformSpace
+  let : IsUniformAddGroup A := B.isUniformAddGroup
   have hbasis :
       (@uniformity A B.uniformSpace).HasBasis (fun _ : ℕ => True)
         (fun n => {p : A × A |
@@ -183,8 +183,8 @@ theorem chapter06_complete_dvr_integer_compact
   have htb : TotallyBounded (Set.univ : Set A) := by
     rw [hbasis.totallyBounded_iff]
     intro n _
-    letI : Finite (A ⧸ m ^ n) := chapter06_dvr_power_quotient_finite n
-    letI := Fintype.ofFinite (A ⧸ m ^ n)
+    let : Finite (A ⧸ m ^ n) := chapter06_dvr_power_quotient_finite n
+    let := Fintype.ofFinite (A ⧸ m ^ n)
     let rep : A ⧸ m ^ n → A := fun c => Classical.choose (Ideal.Quotient.mk_surjective c)
     have hrep (c : A ⧸ m ^ n) :
         Ideal.Quotient.mk (m ^ n) (rep c) = c :=
@@ -211,12 +211,12 @@ theorem chapter06_infinite_residue_field_integer_not_compact
     ¬ @CompactSpace A (IsLocalRing.maximalIdeal A).adicTopology := by
   classical
   let m := IsLocalRing.maximalIdeal A
-  letI : Infinite (A ⧸ m) := by
+  let : Infinite (A ⧸ m) := by
     dsimp [m]
     exact (inferInstance : Infinite (IsLocalRing.ResidueField A))
   let B := m.ringFilterBasis.toAddGroupFilterBasis
-  letI : UniformSpace A := B.uniformSpace
-  letI : IsUniformAddGroup A := B.isUniformAddGroup
+  let : UniformSpace A := B.uniformSpace
+  let : IsUniformAddGroup A := B.isUniformAddGroup
   have hm : @IsOpen A m.adicTopology (m : Set A) := by
     change @IsOpen A (IsLocalRing.maximalIdeal A).adicTopology
       (IsLocalRing.maximalIdeal A : Set A)
@@ -250,7 +250,7 @@ theorem chapter06_infinite_residue_field_integer_not_compact
       change Ideal.Quotient.mk m a = Ideal.Quotient.mk m a
       rfl⟩
   intro hcompact
-  letI : CompactSpace A := hcompact
+  let : CompactSpace A := hcompact
   obtain ⟨t, ht⟩ :=
     isCompact_univ.elim_finite_subcover
       (fun c : A ⧸ m => chapter06ResidueClassCover m c) hopen hcover
@@ -337,19 +337,19 @@ theorem chapter06_complete_dv_field_locallyCompact_iff_finite_residue
       Finite (IsLocalRing.ResidueField ((Valued.v : Valuation K Γ₀).valuationSubring)) := by
   constructor
   · intro _
-    letI : ProperSpace K :=
+    let : ProperSpace K :=
       ProperSpace.of_nontriviallyNormedField_of_weaklyLocallyCompactSpace K
     exact
       (Valued.integer.properSpace_iff_completeSpace_and_isDiscreteValuationRing_integer_and_finite_residueField
         (K := K) (Γ₀ := Γ₀)).mp (inferInstance : ProperSpace K) |>.2.2
   · intro hfinite
-    letI : Finite (IsLocalRing.ResidueField
+    let : Finite (IsLocalRing.ResidueField
         ((Valued.v : Valuation K Γ₀).valuationSubring)) := hfinite
     have hc : CompactSpace ((Valued.v : Valuation K Γ₀).valuationSubring) :=
       (chapter06_integer_compact_iff_complete_dvr_finite_residue).mpr
         ⟨inferInstance, inferInstance, hfinite⟩
-    letI : CompactSpace ((Valued.v : Valuation K Γ₀).valuationSubring) := hc
-    letI : ProperSpace K :=
+    let : CompactSpace ((Valued.v : Valuation K Γ₀).valuationSubring) := hc
+    let : ProperSpace K :=
       (Valued.integer.properSpace_iff_compactSpace_integer (K := K) (Γ₀ := Γ₀)).mpr
         hc
     infer_instance
@@ -374,12 +374,10 @@ theorem chapter06_field_is_union_fractional_dvr_balls
         (x := b) (nonZeroDivisors.ne_zero hb) hπ
       refine ⟨n, a * (↑u⁻¹ : A), ?_⟩
       rw [← hfrac, hu]
-      simp only [map_mul, map_inv₀, map_pow, Units.val_inv_eq_inv_val,
-        Algebra.smul_def]
+      simp only [map_mul, map_pow]
       rw [zpow_neg]
       field_simp [hπ.ne_zero]
-      simp [Subring.coe_mul, Units.val_inv_eq_inv_val,
-        mul_assoc, mul_comm, mul_left_comm]
+      simp [Subring.coe_mul, mul_assoc, mul_comm]
       change (π : K) ^ n * (a : K) =
         (a : K) * ((↑(u⁻¹) : K) * ((↑u : K) * (π : K) ^ n))
       have huinv : (↑(u⁻¹) : K) * (↑u : K) = 1 := by
@@ -519,17 +517,17 @@ theorem chapter06_laurentSeries_locally_compact_of_finite_residue
       (IsLocalRing.maximalIdeal
         ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring)).comap e :=
     chapter06LaurentUnitBallMaximalIdealComap k
-  letI : (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).IsRankOneDiscrete := by
+  let : (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).IsRankOneDiscrete := by
     change Valuation.IsRankOneDiscrete ((PowerSeries.idealX k).valuation (LaurentSeries k))
     infer_instance
-  letI : (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).RankOne :=
+  let : (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).RankOne :=
     Valuation.IsRankOneDiscrete.rankOne (v := Valued.v) (by norm_num : 1 < (2 : ℝ≥0))
-  letI : CompleteSpace (LaurentSeries k) := inferInstance
-  letI : CompleteSpace
+  let : CompleteSpace (LaurentSeries k) := inferInstance
+  let : CompleteSpace
       ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring) := by
     exact IsComplete.completeSpace_coe
       ((Valued.isClosed_valuationSubring (LaurentSeries k) (Γ₀ := ℤᵐ⁰)).isComplete)
-  letI : Finite ( (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring ⧸
+  let : Finite ( (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring ⧸
       IsLocalRing.maximalIdeal
         ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring)) := by
     apply Finite.of_surjective
@@ -555,7 +553,7 @@ theorem chapter06_laurentSeries_locally_compact_of_finite_residue
       exact e.apply_symm_apply F
     rw [← hF, ← hF', ← sub_eq_zero, ← map_sub]
     exact Ideal.Quotient.eq_zero_iff_mem.mpr (by simpa using hmem')
-  letI : Finite (IsLocalRing.ResidueField
+  let : Finite (IsLocalRing.ResidueField
       ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring)) := by
     change Finite ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring ⧸
       IsLocalRing.maximalIdeal
@@ -574,12 +572,12 @@ theorem chapter06_laurentSeries_not_locally_compact_of_infinite_residue
       (IsLocalRing.maximalIdeal
         ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring)).comap e :=
     chapter06LaurentUnitBallMaximalIdealComap k
-  letI : (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).IsRankOneDiscrete := by
+  let : (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).IsRankOneDiscrete := by
     change Valuation.IsRankOneDiscrete ((PowerSeries.idealX k).valuation (LaurentSeries k))
     infer_instance
-  letI : (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).RankOne :=
+  let : (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).RankOne :=
     Valuation.IsRankOneDiscrete.rankOne (v := Valued.v) (by norm_num : 1 < (2 : ℝ≥0))
-  letI : CompleteSpace
+  let : CompleteSpace
       ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring) := by
     exact IsComplete.completeSpace_coe
       ((Valued.isClosed_valuationSubring (LaurentSeries k) (Γ₀ := ℤᵐ⁰)).isComplete)
@@ -587,8 +585,8 @@ theorem chapter06_laurentSeries_not_locally_compact_of_infinite_residue
       ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring)) :=
     (chapter06_complete_dv_field_locallyCompact_iff_finite_residue
       (K := LaurentSeries k) (Γ₀ := ℤᵐ⁰)).mp hloc
-  letI : Finite (IsLocalRing.ResidueField k⟦X⟧) := by
-    letI : Finite (IsLocalRing.ResidueField
+  let : Finite (IsLocalRing.ResidueField k⟦X⟧) := by
+    let : Finite (IsLocalRing.ResidueField
         ((Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰).valuationSubring)) := hfin
     exact Finite.of_equiv
       (IsLocalRing.ResidueField
@@ -596,7 +594,7 @@ theorem chapter06_laurentSeries_not_locally_compact_of_infinite_residue
       (by
         simpa only [IsLocalRing.ResidueField] using
           (IsLocalRing.ResidueField.mapEquiv e).symm.toEquiv)
-  letI : Finite k := by
+  let : Finite k := by
     exact Finite.of_equiv (IsLocalRing.ResidueField k⟦X⟧)
       (PowerSeries.residueFieldOfPowerSeries (k := k)).toEquiv
   exact (not_finite_iff_infinite.mpr (inferInstance : Infinite k)) inferInstance

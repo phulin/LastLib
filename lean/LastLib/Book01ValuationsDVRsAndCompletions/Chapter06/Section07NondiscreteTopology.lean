@@ -61,7 +61,7 @@ theorem chapter06_rank_one_unit_ball_and_maximal_ball
     (v : Valuation K Γ₀) [v.RankOne] :
     (v.valuationSubring : Set K) = chapter06RankOneValuationRingSet v ∧
       chapter06RankOneMaximalIdealImage v = {x | v.norm x < 1} := by
-  letI : Valued K Γ₀ := Valued.mk' v
+  let : Valued K Γ₀ := Valued.mk' v
   constructor
   · ext x
     change x ∈ v.valuationSubring ↔ v.norm x ≤ 1
@@ -210,7 +210,7 @@ theorem chapter06_dense_value_range_and_idempotence_obstruct_power_cofinality
     (hid : IsLocalRing.maximalIdeal v.valuationSubring ^ 2 =
       IsLocalRing.maximalIdeal v.valuationSubring) :
     ¬ chapter06PowersCofinalAmongValuationNeighborhoods v := by
-  letI : Valued K Γ₀ := Valued.mk' v
+  let : Valued K Γ₀ := Valued.mk' v
   have hnot : ∃ r : ℝ, 0 < r ∧
       ¬ ((IsLocalRing.maximalIdeal v.valuationSubring : Set v.valuationSubring) ⊆
         chapter06RankOneValuationNeighborhood v r) := by
@@ -243,7 +243,7 @@ theorem chapter06_nondiscrete_madic_topology_can_be_coarser
     ext x
     change v.norm x < r ↔ v.norm (x - 0) < r
     simp
-  letI : TopologicalSpace v.valuationSubring :=
+  let : TopologicalSpace v.valuationSubring :=
     TopologicalSpace.induced ((↑) : v.valuationSubring → K)
       (chapter06RankOneAbsoluteValue v).uniformSpace.toTopologicalSpace
   have hopen' : @IsOpen v.valuationSubring
@@ -280,6 +280,7 @@ noncomputable def chapter06ValuationCompletion
     (UniformSpace.comap ((↑) : A → K) v.uniformSpace)
 
 /-- The inverse-limit topology on compatible families, with discrete coordinates. -/
+@[instance_reducible]
 def chapter06AdicCompletionTopology
     {A : Type*} [CommRing A] (m : Ideal A) :
     TopologicalSpace (AdicCompletion m A) :=
@@ -383,8 +384,8 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
             have hx' : v x ≤ 1 := by
               exact NNReal.coe_le_coe.1 hx
             exact ⟨⟨x, (hA x).2 hx'⟩, rfl⟩ }
-      letI : IsFractionRing A K := hw.isFractionRing
-      letI : IsDiscreteValuationRing A := hD.1
+      let : IsFractionRing A K := hw.isFractionRing
+      let : IsDiscreteValuationRing A := hD.1
       obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible A
       have hm_eq : m = IsLocalRing.maximalIdeal A :=
         IsLocalRing.eq_maximalIdeal hD.2
@@ -470,8 +471,8 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
             have hx' : v x ≤ 1 := by
               exact NNReal.coe_le_coe.1 hx
             exact ⟨⟨x, (hA x).2 hx'⟩, rfl⟩ }
-      letI : IsFractionRing A K := hw.isFractionRing
-      letI : IsDiscreteValuationRing A := hD.1
+      let : IsFractionRing A K := hw.isFractionRing
+      let : IsDiscreteValuationRing A := hD.1
       obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible A
       have hm_eq : m = IsLocalRing.maximalIdeal A :=
         IsLocalRing.eq_maximalIdeal hD.2
@@ -506,15 +507,15 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
       (Submodule.quotientRel (m ^ n • (⊤ : Submodule (↥A) (↥A))))
   let P := ∀ n, Q n
   let C := AdicCompletion m (↥A)
-  letI (n : ℕ) : TopologicalSpace (Q n) := ⊥
-  letI (n : ℕ) : UniformSpace (Q n) := ⊥
-  letI (n : ℕ) : DiscreteTopology (Q n) := by infer_instance
-  letI : TopologicalSpace P := inferInstance
+  let (n : ℕ) : TopologicalSpace (Q n) := ⊥
+  let (n : ℕ) : UniformSpace (Q n) := ⊥
+  let (n : ℕ) : DiscreteTopology (Q n) := by infer_instance
+  let : TopologicalSpace P := inferInstance
   let uP : UniformSpace P := Pi.uniformSpace Q
-  letI : UniformSpace P := uP
+  let : UniformSpace P := uP
   let uC : UniformSpace C := UniformSpace.comap (fun x : C => x.1) uP
-  letI : TopologicalSpace C := uC.toTopologicalSpace
-  letI : UniformSpace C := uC
+  let : TopologicalSpace C := uC.toTopologicalSpace
+  let : UniformSpace C := uC
   let uVal : UniformSpace A :=
     UniformSpace.comap ((↑) : A → K) v.uniformSpace
   let f : A → C := AdicCompletion.of m (↥A)
@@ -577,7 +578,7 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
     exact ⟨AdicCompletion.of m (↥A) a, ⟨haU, ⟨a, rfl⟩⟩⟩
   have hsmul (n : ℕ) :
       (m ^ n • (⊤ : Submodule A A)) = (m ^ n : Submodule A A) := by
-    simpa using (Ideal.smul_top_eq_map (m ^ n))
+    simp
   have hval :
       (@uniformity A uVal).HasBasis
         (fun r : ℝ => 0 < r)
@@ -617,7 +618,7 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
             ⋂ i ∈ I.1, {p : C × C | p.1.1 i = p.2.1 i}) := by
       funext I
       ext p
-      simp only [Set.mem_preimage, Set.mem_iInter, Set.mem_setOf_eq]
+      simp only [Set.mem_preimage, Set.mem_iInter, Set.mem_ofPred_eq]
       constructor
       · intro h i hi
         have hp := h i hi
@@ -637,7 +638,7 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
       obtain ⟨r, hr, hrball⟩ := hcof2 N
       refine ⟨r, hr, ?_⟩
       intro x y hxy
-      simp only [Set.mem_iInter, Set.mem_setOf_eq]
+      simp only [Set.mem_iInter, Set.mem_ofPred_eq]
       intro i hi
       have hiN : i ≤ N := Finset.le_sup (f := id) (hI.mem_toFinset.mpr hi)
       have hdiffN : y - x ∈ ((m ^ N : Ideal A) : Set A) := hrball hxy
@@ -656,7 +657,7 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
       let I : Set ℕ := {n}
       refine ⟨⟨I, fun _ => ()⟩, finite_singleton n, ?_⟩
       intro x y hxy
-      simp only [Set.mem_iInter, Set.mem_setOf_eq] at hxy
+      simp only [Set.mem_iInter, Set.mem_ofPred_eq] at hxy
       have hxy' : (AdicCompletion.of m (↥A) x).1 n =
           (AdicCompletion.of m (↥A) y).1 n := by
         exact hxy n (by simp [I])
@@ -669,7 +670,7 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
       have hmem := hn (by
         simpa [sub_eq_add_neg, add_comm] using (m ^ n).neg_mem hdiff')
       simpa [sub_eq_add_neg] using hmem
-  letI : T0Space C := by
+  let : T0Space C := by
     exact
       (isUniformEmbedding_subtype_val (α := P) (p := fun z : P => z ∈ S)).isEmbedding.t0Space
   let pkg : @AbstractCompletion A uVal :=
@@ -682,7 +683,7 @@ theorem chapter06_completion_is_inverse_limit_under_discrete_or_cofinal
       dense := hdense }
   let cpkg : @AbstractCompletion A uVal :=
     @UniformSpace.Completion.cPkg A uVal
-  letI : UniformSpace cpkg.space := cpkg.uniformStruct
+  let : UniformSpace cpkg.space := cpkg.uniformStruct
   let e : cpkg.space ≃ᵤ pkg.space := cpkg.compareEquiv pkg
   have htop : @UniformSpace.toTopologicalSpace C uC =
       chapter06AdicCompletionTopology m := by

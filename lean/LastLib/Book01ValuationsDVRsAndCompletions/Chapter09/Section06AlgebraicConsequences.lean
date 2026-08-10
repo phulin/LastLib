@@ -132,7 +132,7 @@ theorem padic_x_sq_sub_p_irreducible_but_reduction_repeated (p : ℕ) [Fact p.Pr
 
 /-- Henselianity is the hypothesis needed to lift a coprime residue factorization. -/
 theorem henselianity_lifts_coprime_residue_factorization
-    {A : Type*} [CommRing A] [IsLocalRing A] [HenselianLocalRing A]
+    {A : Type*} [CommRing A] [HenselianLocalRing A]
     (f : A[X]) (g₀ h₀ : Polynomial (ResidueRing A))
     (hf : f.Monic) (hg₀ : g₀.Monic) (hh₀ : h₀.Monic)
     (hcop : IsCoprime g₀ h₀) (hred : residuePolynomial f = g₀ * h₀) :
@@ -227,7 +227,7 @@ def IsHenselianValuedField {K Γ : Type*} [Field K]
 /-- For a finite extension, primes above the maximal ideal correspond to valuation extensions.
 The base ring is required to be the ring of integers of the chosen valuation. -/
 theorem finite_extension_prime_valuation_correspondence
-    {A B K L Γ : Type*} [CommRing A] [IsDomain A] [IsLocalRing A]
+    {A B K L Γ : Type*} [CommRing A] [IsDomain A]
     [ValuationRing A] [IsIntegrallyClosed A]
     [Field K] [Algebra A K] [IsFractionRing A K]
     [Field L] [Algebra K L] [FiniteDimensional K L]
@@ -294,7 +294,7 @@ theorem unique_prime_iff_unique_valuation_extension
 /-- A henselian valued field has one prime above the maximal ideal in every finite extension.
 The base ring is required to be the ring of integers of the chosen valuation. -/
 theorem henselian_valued_field_has_unique_prime_and_extension
-    {A B K L Γ : Type*} [CommRing A] [IsDomain A] [IsLocalRing A]
+    {A B K L Γ : Type*} [CommRing A] [IsDomain A]
     [ValuationRing A] [IsIntegrallyClosed A]
     [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     [Algebra A K] [IsFractionRing A K]

@@ -59,6 +59,7 @@ def chapter06DiscreteValueSet (v : AbsoluteValue K ℝ) : Prop :=
   ∀ r : ℝ, 0 < r → ∃ s : ℝ, r < s ∧ ∀ x : K, v x ≤ r ↔ v x < s
 
 /-- The metric structure induced by a bundled absolute value. -/
+@[instance_reducible]
 noncomputable def chapter06MetricSpace (v : AbsoluteValue K ℝ) : MetricSpace K :=
   letI : NormedField K := v.toNormedField
   inferInstance
@@ -73,7 +74,7 @@ theorem chapter06MetricSpace_dist (v : AbsoluteValue K ℝ) (x y : K) :
 theorem chapter06_openBall_isOpen
     (v : AbsoluteValue K ℝ) (a : K) (r : ℝ) :
     @IsOpen K v.uniformSpace.toTopologicalSpace (chapter06OpenBall v a r) := by
-  letI : UniformSpace K := v.uniformSpace
+  let _ : UniformSpace K := v.uniformSpace
   rw [isOpen_iff_mem_nhds]
   intro x hx
   change v (x - a) < r at hx
@@ -92,7 +93,7 @@ theorem chapter06_openBall_isOpen
 
 /-- A nontrivial absolute value gives the metric asserted at the start of §6.1. -/
 theorem chapter06_nontrivial_absolute_value_gives_metric
-    (v : AbsoluteValue K ℝ) (hv : chapter06AbsoluteValueIsNontrivial v) :
+    (v : AbsoluteValue K ℝ) (_hv : chapter06AbsoluteValueIsNontrivial v) :
     ∃ m : MetricSpace K,
       ∀ x y : K, @dist K m.toPseudoMetricSpace.toDist x y = chapter06Distance v x y := by
   refine ⟨chapter06MetricSpace v, ?_⟩
@@ -217,13 +218,13 @@ theorem chapter06_openBall_isClosed
     (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
     {a : K} {r : ℝ} (hr : 0 < r) :
     @IsClosed K v.uniformSpace.toTopologicalSpace (chapter06OpenBall v a r) := by
-  letI : UniformSpace K := v.uniformSpace
+  let _ : UniformSpace K := v.uniformSpace
   rw [← isOpen_compl_iff, chapter06_openBall_complement_iUnion v hv hr]
   exact isOpen_iUnion (fun x => chapter06_openBall_isOpen v (x : K) r)
 
 /-- Discreteness supplies the next radius and makes closed balls open. -/
 theorem chapter06_closedBall_isOpen_of_discrete_values
-    (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
+    (v : AbsoluteValue K ℝ) (_hv : IsNonarchimedean v)
     (hdisc : chapter06DiscreteValueSet v) {a : K} {r : ℝ} (hr : 0 < r) :
     @IsOpen K v.uniformSpace.toTopologicalSpace (chapter06ClosedBall v a r) := by
   obtain ⟨s, hrs, hs⟩ := hdisc r hr
@@ -239,7 +240,7 @@ theorem chapter06_connected_subset_is_singleton
     (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v) {s : Set K}
     (hs : @IsConnected K v.uniformSpace.toTopologicalSpace s) :
     ∀ x ∈ s, ∀ y ∈ s, x = y := by
-  letI : UniformSpace K := v.uniformSpace
+  let _ : UniformSpace K := v.uniformSpace
   intro x hx y hy
   by_contra hxy
   let r : ℝ := v (x - y)
@@ -255,7 +256,7 @@ theorem chapter06_connected_subset_is_singleton
   have hyU := hsub hy
   change v (y - x) < r at hyU
   have hxy' : v (x - y) < r := by simpa only [v.map_sub] using hyU
-  exact (lt_irrefl r) (by simpa [r] using hxy')
+  exact (lt_irrefl r) (by change v (x - y) < r; exact hxy')
 
 /-- The adic coset corresponding to a power of an ideal. -/
 def chapter06AdicCoset {A : Type*} [CommRing A]
@@ -263,6 +264,7 @@ def chapter06AdicCoset {A : Type*} [CommRing A]
   {x | x - a ∈ ((m ^ n : Ideal A) : Set A)}
 
 /-- The topology on a subring induced from a valuation topology on its fraction field. -/
+@[instance_reducible]
 def chapter06InducedValuationTopology (v : AbsoluteValue K ℝ) (A : Subring K) :
     TopologicalSpace A :=
   TopologicalSpace.induced ((↑) : A → K) v.uniformSpace.toTopologicalSpace
@@ -286,7 +288,7 @@ theorem chapter06_strict_ball_eq_adic_coset
     {x : A | v ((x : K) - (a : K)) < c ^ n} =
       chapter06AdicCoset m a (n + 1) := by
   ext x
-  simp only [Set.mem_setOf_eq, chapter06AdicCoset]
+  simp only [Set.mem_ofPred_eq, chapter06AdicCoset]
   change v ((x : K) - (a : K)) < c ^ n ↔
     x - a ∈ ((m ^ (n + 1) : Ideal A) : Set A)
   simpa [sub_eq_add_neg] using hball (x - a)
@@ -300,7 +302,7 @@ theorem chapter06_weak_ball_eq_adic_coset
     {x : A | v ((x : K) - (a : K)) ≤ c ^ n} =
       chapter06AdicCoset m a n := by
   ext x
-  simp only [Set.mem_setOf_eq, chapter06AdicCoset]
+  simp only [Set.mem_ofPred_eq, chapter06AdicCoset]
   change v ((x : K) - (a : K)) ≤ c ^ n ↔
     x - a ∈ ((m ^ n : Ideal A) : Set A)
   simpa [sub_eq_add_neg] using hball (x - a)
@@ -312,7 +314,7 @@ theorem chapter06_valuation_topology_eq_adic_topology
     (hball : ∀ n : ℕ, {x : A | v (x : K) < c ^ n} =
       ((m ^ (n + 1) : Ideal A) : Set A)) :
     chapter06InducedValuationTopology v A = m.adicTopology := by
-  letI : UniformSpace K := v.uniformSpace
+  let _ : UniformSpace K := v.uniformSpace
   apply TopologicalSpace.ext_nhds
   intro x
   have hval :
@@ -320,7 +322,7 @@ theorem chapter06_valuation_topology_eq_adic_topology
         (fun r : ℝ => 0 < r)
         (fun r => {y : A | v ((x : K) - (y : K)) < r}) := by
     rw [chapter06InducedValuationTopology, nhds_induced]
-    simpa only [Set.preimage_setOf_eq, Set.mem_preimage, Set.mem_setOf_eq] using
+    simpa only [Set.preimage_ofPred_eq, Set.mem_preimage, Set.mem_ofPred_eq] using
       ((nhds_basis_uniformity (x := (x : K)) v.hasBasis_uniformity).comap
         ((↑) : A → K))
   have hadic :

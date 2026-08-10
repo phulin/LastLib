@@ -52,7 +52,7 @@ theorem chapter11_every_extension_is_one_of_the_branch_localizations
     [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [FaithfulSMul A B]
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
-    (hbranches : chapter11IsSemilocal B)
+    (_hbranches : chapter11IsSemilocal B)
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     (hext : chapter11ValuationExtensionAt K L vK vL)
     (ιA : A →+* vK.valuationSubring)
@@ -142,8 +142,8 @@ theorem chapter11_every_extension_is_one_of_the_branch_localizations
   have hιA_W : ∀ a : A, (ιA_W a : L) = algebraMap A L a := by
     intro a
     rfl
-  letI : Algebra A W := ιA_W.toAlgebra
-  letI : IsScalarTower A W L := by
+  let : Algebra A W := ιA_W.toAlgebra
+  let : IsScalarTower A W L := by
     apply IsScalarTower.of_algebraMap_eq'
     apply RingHom.ext
     intro a

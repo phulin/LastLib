@@ -276,7 +276,7 @@ theorem pValuationRing_is_pLocal (p : ℕ) [Fact p.Prime] :
 theorem pValuationMaximalIdeal_is_generated_by_p (p : ℕ) [Fact p.Prime] :
     ∃ e : pValuationRing p ≃+* pLocalIntegers p,
       Ideal.map e.toRingHom (pValuationMaximalIdeal p) = pLocalPrincipalIdeal p := by
-  letI : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
+  let : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
   let e := pValuationRingEquiv p
   refine ⟨e, ?_⟩
   have hmax : Ideal.map e.toRingHom (pValuationMaximalIdeal p) =
@@ -293,8 +293,8 @@ abbrev pValuationResidueField (p : ℕ) [Fact p.Prime] :=
 
 theorem pValuationResidueField_equiv_finiteField (p : ℕ) [Fact p.Prime] :
     Nonempty (pValuationResidueField p ≃+* ZMod p) := by
-  letI : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
-  letI : (pPrimeIdeal p).IsMaximal := by
+  let : IsLocalRing (pValuationRing p) := valuationRingOf_isLocal (pValuation p)
+  let : (pPrimeIdeal p).IsMaximal := by
     change (Ideal.span ({(p : ℤ)} : Set ℤ)).IsMaximal
     infer_instance
   let e := pValuationRingEquiv p
@@ -385,8 +385,8 @@ theorem tValuationRing_is_tLocal (k : Type*) [Field k] :
       exact ⟨⟨y, hy⟩, rfl⟩
   have hP : tPrimeIdeal k = (Polynomial.idealX k).asIdeal := by
     rfl
-  letI : IsLocalization (tPrimeIdeal k).primeCompl A := by
-    letI : (Polynomial.idealX k).asIdeal.IsPrime :=
+  let : IsLocalization (tPrimeIdeal k).primeCompl A := by
+    let : (Polynomial.idealX k).asIdeal.IsPrime :=
       (Polynomial.idealX k).isPrime
     change IsLocalization
       ((Polynomial.idealX k).asIdeal.primeCompl)
@@ -435,14 +435,14 @@ theorem tLocalMaximalIdeal_is_generated_by_t (k : Type*) [Field k] :
     Ideal.span {tParameterInLocalPolynomialRing k}
   rw [← IsLocalization.AtPrime.map_eq_maximalIdeal
     (tPrimeIdeal k) (tLocalPolynomialRing k)]
-  simp [tPrimeIdeal, tLocalPrincipalIdeal, tParameterInLocalPolynomialRing,
+  simp [tPrimeIdeal, tParameterInLocalPolynomialRing,
     Ideal.map_span]
 
 theorem tValuationMaximalIdeal_is_generated_by_t (k : Type*) [Field k] :
     tValuationMaximalIdeal k =
       Ideal.span {tParameterInValuationRing k} := by
   classical
-  letI : IsLocalRing (tValuationRing k) := valuationRingOf_isLocal (tValuation k)
+  let : IsLocalRing (tValuationRing k) := valuationRingOf_isLocal (tValuation k)
   obtain ⟨e, heparam, _hepoly⟩ := tValuationRing_is_tLocal k
   have hmap : Ideal.map e.toRingHom (tValuationMaximalIdeal k) =
       Ideal.map e.toRingHom (Ideal.span {tParameterInValuationRing k}) := by
@@ -472,8 +472,8 @@ theorem tValuationMaximalIdeal_is_generated_by_t (k : Type*) [Field k] :
 theorem tValuationResidueField_is_the_coefficient_field (k : Type*) [Field k] :
     Nonempty (residueFieldOf (tValuation k) ≃+* k) := by
   classical
-  letI : IsLocalRing (tValuationRing k) := valuationRingOf_isLocal (tValuation k)
-  letI : (tPrimeIdeal k).IsMaximal := by
+  let : IsLocalRing (tValuationRing k) := valuationRingOf_isLocal (tValuation k)
+  let : (tPrimeIdeal k).IsMaximal := by
     change (Ideal.span ({Polynomial.X} : Set (Polynomial k))).IsMaximal
     refine (Ideal.Quotient.maximal_ideal_iff_isField_quotient
       (Ideal.span ({Polynomial.X} : Set (Polynomial k)))).mpr ?_
@@ -489,18 +489,18 @@ theorem tValuationResidueField_is_the_coefficient_field (k : Type*) [Field k] :
   have hX : tPrimeIdeal k =
       Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k)) := by
     simp [tPrimeIdeal]
-  letI : (Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))).IsMaximal :=
+  let : (Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))).IsMaximal :=
     hX ▸ (inferInstance : (tPrimeIdeal k).IsMaximal)
-  letI : Field (Polynomial k ⧸ tPrimeIdeal k) := Ideal.Quotient.field _
-  letI : Field (Polynomial k ⧸ Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))) :=
+  let : Field (Polynomial k ⧸ tPrimeIdeal k) := Ideal.Quotient.field _
+  let : Field (Polynomial k ⧸ Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))) :=
     Ideal.Quotient.field _
-  letI : (tPrimeIdeal k).IsPrime := inferInstance
-  letI : (Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))).IsMaximal :=
+  let : (tPrimeIdeal k).IsPrime := inferInstance
+  let : (Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))).IsMaximal :=
     hX ▸ (inferInstance : (tPrimeIdeal k).IsMaximal)
-  letI : (Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))).IsPrime :=
+  let : (Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))).IsPrime :=
     inferInstance
-  letI : Field (Polynomial k ⧸ tPrimeIdeal k) := Ideal.Quotient.field _
-  letI : Field (Polynomial k ⧸ Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))) :=
+  let : Field (Polynomial k ⧸ tPrimeIdeal k) := Ideal.Quotient.field _
+  let : Field (Polynomial k ⧸ Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))) :=
     Ideal.Quotient.field _
   let qpoly := Ideal.quotEquivOfEq hX
   let r := q.symm.trans
@@ -512,7 +512,7 @@ theorem tResidue_is_evaluation_at_zero (k : Type*) [Field k] :
       ∀ x : tLocalPolynomialRing k,
         e (IsLocalRing.residue (tLocalPolynomialRing k) x) = tEvaluationAtZero k x := by
   classical
-  letI : (tPrimeIdeal k).IsMaximal := by
+  let : (tPrimeIdeal k).IsMaximal := by
     change (Ideal.span ({Polynomial.X} : Set (Polynomial k))).IsMaximal
     refine (Ideal.Quotient.maximal_ideal_iff_isField_quotient
       (Ideal.span ({Polynomial.X} : Set (Polynomial k)))).mpr ?_
@@ -527,10 +527,10 @@ theorem tResidue_is_evaluation_at_zero (k : Type*) [Field k] :
   have hX : tPrimeIdeal k =
       Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k)) := by
     simp [tPrimeIdeal]
-  letI : (Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))).IsMaximal :=
+  let : (Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))).IsMaximal :=
     hX ▸ (inferInstance : (tPrimeIdeal k).IsMaximal)
-  letI : Field (Polynomial k ⧸ tPrimeIdeal k) := Ideal.Quotient.field _
-  letI : Field (Polynomial k ⧸ Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))) :=
+  let : Field (Polynomial k ⧸ tPrimeIdeal k) := Ideal.Quotient.field _
+  let : Field (Polynomial k ⧸ Ideal.span ({Polynomial.X - Polynomial.C 0} : Set (Polynomial k))) :=
     Ideal.Quotient.field _
   let qpoly := Ideal.quotEquivOfEq hX
   let e := q.symm.trans
@@ -568,7 +568,7 @@ theorem tResidue_is_evaluation_at_zero (k : Type*) [Field k] :
   rw [hqinv, hQinv, Ideal.quotEquivOfEq_mk,
     Polynomial.quotientSpanXSubCAlgEquiv_mk]
   rw [tEvaluationAtZero, IsLocalization.lift_mk']
-  simp [IsUnit.coe_liftRight, hs0]
+  simp [IsUnit.coe_liftRight]
 
 end BoundedElements
 

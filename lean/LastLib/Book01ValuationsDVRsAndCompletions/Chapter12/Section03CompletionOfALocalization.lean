@@ -36,7 +36,7 @@ abbrev localizationFractionField
 
 /-- The two completed local-global dictionaries for a finite extension. -/
 theorem dedekind_local_completion_product
-    {R S : Type*} [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
+    {R S : Type*} [CommRing R] [CommRing S]
     [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
     [Algebra (FractionRing R) (FractionRing S)]
     [Algebra.IsSeparable (FractionRing R) (FractionRing S)]
@@ -55,7 +55,7 @@ theorem dedekind_local_completion_product
 
 /-- Fraction-field form of the localization/completion dictionary. -/
 theorem dedekind_local_fraction_field_product
-    {R S : Type*} [CommRing R] [CommRing S] [IsDomain R] [IsDomain S]
+    {R S : Type*} [CommRing R] [CommRing S]
     [IsDedekindDomain R] [IsDedekindDomain S] [Algebra R S]
     {g : ℕ} (p : Ideal R) [p.IsPrime] (P : Fin g → Ideal S)
     (hp : p ≠ ⊥)

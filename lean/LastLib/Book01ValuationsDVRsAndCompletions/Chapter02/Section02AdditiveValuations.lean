@@ -1,4 +1,4 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section01WhyTheValuesFormAGroup
+import Mathlib
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
 
@@ -98,7 +98,7 @@ theorem chapter02_support_is_prime
     [Nontrivial (Multiplicative Γᵒᵈ)] [NoZeroDivisors (Multiplicative Γᵒᵈ)]
     (v : AddValuation R Γ) :
     (Chapter02Support v).IsPrime := by
-  letI : Nontrivial Γ := ‹Nontrivial (Multiplicative Γᵒᵈ)›
+  let _ : Nontrivial Γ := ‹Nontrivial (Multiplicative Γᵒᵈ)›
   have hzeroTop : (0 : Γ) ≠ ⊤ := by
     intro hzero
     obtain ⟨a, b, hab⟩ := exists_pair_ne Γ
@@ -124,7 +124,7 @@ theorem chapter02_field_support_is_zero
     {K Γ : Type*} [Field K] [LinearOrderedAddCommMonoidWithTop Γ]
     [Nontrivial (Multiplicative Γᵒᵈ)] [NoZeroDivisors (Multiplicative Γᵒᵈ)]
     (v : AddValuation K Γ) : Chapter02Support v = ⊥ := by
-  letI : Nontrivial Γ := ‹Nontrivial (Multiplicative Γᵒᵈ)›
+  let _ : Nontrivial Γ := ‹Nontrivial (Multiplicative Γᵒᵈ)›
   ext x
   constructor
   · intro hx
@@ -159,8 +159,8 @@ noncomputable def Chapter02FieldUnitValueHom
       intro u z
       apply congrArg Multiplicative.ofAdd
       apply WithTop.coe_injective
-      simpa [Chapter02FiniteValueOfNonzero, WithTop.coe_untop,
-        Units.val_mul] using v.map_mul (u : K) (z : K)
+      simp [Chapter02FiniteValueOfNonzero, WithTop.coe_untop,
+        Units.val_mul, v.map_mul]
   }
 
 def Chapter02UnitHomSumInequality
@@ -219,9 +219,7 @@ theorem chapter02_unit_hom_converse
         · simp [Chapter02ExtensionValue, hx]
         by_cases hy : y = 0
         · simp [Chapter02ExtensionValue, hy]
-        simpa [Chapter02ExtensionValue, hx, hy, Units.mk0_mul] using
-          congrArg Multiplicative.toAdd
-            (φ.map_mul (Units.mk0 x hx) (Units.mk0 y hy)))
+        simp [Chapter02ExtensionValue, hx, hy, Units.mk0_mul])
   refine ⟨v, by intro x; rfl, ?_⟩
   intro w hw
   apply AddValuation.ext
@@ -236,15 +234,15 @@ theorem chapter02_field_valuation_is_a_group_hom_on_nonzero_elements
       Chapter02FiniteValueOfNonzero v x hx +
         Chapter02FiniteValueOfNonzero v y hy := by
   apply WithTop.coe_injective
-  simpa [Chapter02FiniteValueOfNonzero, WithTop.coe_untop,
-    WithTop.coe_add] using v.map_mul x y
+  simp [Chapter02FiniteValueOfNonzero, WithTop.coe_untop,
+    WithTop.coe_add, v.map_mul]
 
 def Chapter02SupportQuotientValuation
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
     (v : AddValuation R Γ) :
     AddValuation (R ⧸ Chapter02Support v) Γ := by
   exact AddValuation.onQuot v (by
-    simpa [Chapter02Support])
+    simp [Chapter02Support])
 
 theorem chapter02_support_quotient_is_a_domain
     {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
@@ -273,7 +271,7 @@ theorem chapter02_fraction_field_extension
     (hsupp : AddValuation.supp v = ⊥) :
     ∃! w : AddValuation (FractionRing A) (WithTop Γ),
       (∀ a : A, w (algebraMap A (FractionRing A) a) = v a) ∧
-      (∀ (a b : A) (hb : b ≠ 0),
+      (∀ (a b : A) (_hb : b ≠ 0),
         w (algebraMap A (FractionRing A) a /
             algebraMap A (FractionRing A) b) = v a - v b) := by
   have hS : nonZeroDivisors A ≤ (v.toValuation).supp.primeCompl := by

@@ -62,13 +62,13 @@ private theorem rankOne_prime_bot_or_maximal
     (P : Ideal (valuationRingOf v)) (hP : P.IsPrime) :
     P = ⊥ ∨ P = maximalIdealOf v := by
   classical
-  letI : P.IsPrime := hP
+  let : P.IsPrime := hP
   have harch : MulArchimedean
       (MonoidWithZeroHom.ValueGroup₀ (MonoidWithZeroHom.ofClass v)) := by
-    letI : v.IsNontrivial := by
+    let : v.IsNontrivial := by
       exact hrank.some.toIsNontrivial
     exact (isRankOneValuation_iff_archimedean_valueGroup v).mp hrank
-  letI : MulArchimedean
+  let : MulArchimedean
       (MonoidWithZeroHom.ValueGroup₀ (MonoidWithZeroHom.ofClass v)) := harch
   by_cases hP0 : P = ⊥
   · exact Or.inl hP0
@@ -82,12 +82,12 @@ private theorem rankOne_prime_bot_or_maximal
       have hz0 : z = 0 := by
         by_contra hz0
         exact h ⟨z, hz, hz0⟩
-      simpa [hz0]
+      simp [hz0]
     · exact bot_le
   obtain ⟨x, hxP, hx0⟩ := hnonzero
   intro y hymax
   by_cases hy0 : y = 0
-  · simpa [hy0] using P.zero_mem
+  · simp [hy0]
   have hylt : v.restrict (y : K) < 1 := by
     rw [Valuation.restrict_lt_one_iff]
     exact (mem_maximalIdealOf_iff v y).mp hymax
@@ -277,7 +277,7 @@ private theorem nonarch_valuation_has_intermediate_prime
     (v : Valuation K Γ) (hnontrivial : v.IsNontrivial) :
     IsRankOneValuation v ↔ ringKrullDim (valuationRingOf v) = 1 := by
   classical
-  letI : v.IsNontrivial := hnontrivial
+  let : v.IsNontrivial := hnontrivial
   constructor
   · intro hrank
     have hradical_of_nonzero_proper : ∀ (I : Ideal (valuationRingOf v)),
@@ -296,12 +296,12 @@ private theorem nonarch_valuation_has_intermediate_prime
           apply le_antisymm
           · simpa [hbot] using hJ.1
           · exact bot_le
-        · simpa [hmax]
+        · simp [hmax]
       exact le_antisymm hle hge
     apply (ringKrullDim_eq_one_iff_of_isLocalRing_isDomain).2
     constructor
     · intro hfield
-      letI : IsField (valuationRingOf v) := hfield
+      let : IsField (valuationRingOf v) := hfield
       have hbot : maximalIdealOf v = ⊥ :=
         (IsLocalRing.isField_iff_maximalIdeal_eq).mp hfield
       obtain ⟨z, hz0, hz1⟩ := hnontrivial.exists_val_nontrivial
@@ -374,9 +374,9 @@ private theorem nonarch_valuation_has_intermediate_prime
       by_contra hnotarch
       obtain ⟨P, hP, hP0, hPmax⟩ :=
         nonarch_valuation_has_intermediate_prime v hnotarch
-      letI : Ring.KrullDimLE 1 (valuationRingOf v) := by
+      let : Ring.KrullDimLE 1 (valuationRingOf v) := by
         apply Ring.krullDimLE_iff.mpr
-        simpa [hdim]
+        simp [hdim]
       have hPm : P.IsMaximal := hP.isMaximal_of_ne_bot hP0
       have hPeq : P = maximalIdealOf v :=
         (maximalIdealOf_unique v P).mp hPm
@@ -386,7 +386,7 @@ private theorem nonarch_valuation_has_intermediate_prime
 theorem rankOne_valuationRing_only_prime_ideals
     {Γ : Type*} [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation K Γ) (hrank : IsRankOneValuation v)
-    (hnontrivial : v.IsNontrivial) (P : Ideal (valuationRingOf v))
+    (_hnontrivial : v.IsNontrivial) (P : Ideal (valuationRingOf v))
     (hP : P.IsPrime) :
     P = ⊥ ∨ P = maximalIdealOf v := by
   exact rankOne_prime_bot_or_maximal v hrank P hP
@@ -394,11 +394,11 @@ theorem rankOne_valuationRing_only_prime_ideals
 theorem rankOne_nonzero_proper_ideal_radical
     {Γ : Type*} [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation K Γ) (hrank : IsRankOneValuation v)
-    (hnontrivial : v.IsNontrivial) (I : Ideal (valuationRingOf v))
+    (_hnontrivial : v.IsNontrivial) (I : Ideal (valuationRingOf v))
     (hI0 : I ≠ ⊥) (hItop : I ≠ ⊤) :
     Ideal.radical I = maximalIdealOf v := by
   classical
-  letI : v.IsNontrivial := hnontrivial
+  let : v.IsNontrivial := _hnontrivial
   have hle : Ideal.radical I ≤ maximalIdealOf v := by
     apply (Ideal.IsPrime.radical_le_iff
       (IsLocalRing.maximalIdeal.isMaximal (valuationRingOf v)).isPrime).2
@@ -412,23 +412,23 @@ theorem rankOne_nonzero_proper_ideal_radical
       apply le_antisymm
       · simpa [hbot] using hJ.1
       · exact bot_le
-    · simpa [hmax]
+    · simp [hmax]
   exact le_antisymm hle hge
 
 theorem rankOne_power_divisibility
     {Γ : Type*} [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation K Γ) (hrank : IsRankOneValuation v)
     (a b : valuationRingOf v) (ha : a ≠ 0) (hb : b ≠ 0)
-    (ha_m : a ∈ maximalIdealOf v) (hb_m : b ∈ maximalIdealOf v) :
+    (ha_m : a ∈ maximalIdealOf v) (_hb_m : b ∈ maximalIdealOf v) :
     ∃ n : ℕ, v ((a : K) ^ n) ≤ v (b : K) ∧
       a ^ n ∈ Ideal.span ({b} : Set (valuationRingOf v)) := by
   classical
-  letI : v.IsNontrivial := by
+  let : v.IsNontrivial := by
     exact hrank.some.toIsNontrivial
   have harch : MulArchimedean
       (MonoidWithZeroHom.ValueGroup₀ (MonoidWithZeroHom.ofClass v)) := by
     exact (isRankOneValuation_iff_archimedean_valueGroup v).mp hrank
-  letI : MulArchimedean
+  let : MulArchimedean
       (MonoidWithZeroHom.ValueGroup₀ (MonoidWithZeroHom.ofClass v)) := harch
   have hav : v (a : K) < 1 := (mem_maximalIdealOf_iff v a).mp ha_m
   have hbv : 0 < v.restrict (b : K) := by

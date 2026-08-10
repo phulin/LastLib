@@ -107,11 +107,11 @@ theorem surjective_integer_valuation_is_rank_one_discrete
     obtain ⟨x, hx⟩ := hv (g : ℤᵐ⁰)
     apply MonoidWithZeroHom.mem_valueGroup f
     exact ⟨x, by simpa [f] using hx⟩
-  letI : IsCyclic (MonoidWithZeroHom.valueGroup f) := by
+  let : IsCyclic (MonoidWithZeroHom.valueGroup f) := by
     rw [hvg]
     exact (Subgroup.topEquiv.isCyclic :
       IsCyclic (⊤ : Subgroup ((ℤᵐ⁰)ˣ)) ↔ IsCyclic ((ℤᵐ⁰)ˣ)).mpr inferInstance
-  letI : Nontrivial (MonoidWithZeroHom.valueGroup f) := by
+  let : Nontrivial (MonoidWithZeroHom.valueGroup f) := by
     rw [hvg]
     infer_instance
   exact Valuation.IsRankOneDiscrete.mk' v

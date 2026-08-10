@@ -52,7 +52,7 @@ def pAdicMultiplicativeValuation (p : ℕ) [Fact p.Prime] :
 theorem exists_primeAdicDecomposition {p : ℕ} (hp : p.Prime) {x : ℚ}
     (hx : x ≠ 0) : Nonempty (PrimeAdicDecomposition p x) := by
   classical
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   have hn : x.num ≠ 0 := Rat.num_ne_zero.mpr hx
   have hd : (x.den : ℤ) ≠ 0 := by exact_mod_cast Rat.den_nz x
   have hprime : Prime (p : ℤ) := Nat.prime_iff_prime_int.1 hp
@@ -112,9 +112,9 @@ theorem exists_primeAdicDecomposition {p : ℕ} (hp : p.Prime) {x : ℚ}
 
 /-- The exponent in every `p`-free presentation is the `p`-adic order. -/
 theorem primeAdicDecomposition_exponent_eq_pAdicOrder {p : ℕ} (hp : p.Prime)
-    {x : ℚ} (hx : x ≠ 0) (d : PrimeAdicDecomposition p x) :
+    {x : ℚ} (_hx : x ≠ 0) (d : PrimeAdicDecomposition p x) :
     d.exponent = pAdicOrder p x := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   have hpa : pAdicOrder p (d.numerator : ℚ) = 0 := by
     simp [pAdicOrder, padicValRat.of_int_multiplicity hp.ne_one d.numerator_ne_zero,
       multiplicity_eq_zero.mpr d.numerator_p_free]
@@ -185,14 +185,15 @@ theorem primeAdicDecomposition_unique_exponent_and_unit {p : ℕ} (hp : p.Prime)
 theorem pAdicOrder_mul {p : ℕ} (hp : p.Prime) {x y : ℚ}
     (hx : x ≠ 0) (hy : y ≠ 0) :
     pAdicOrder p (x * y) = pAdicOrder p x + pAdicOrder p y := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   simpa [pAdicOrder] using (padicValRat.mul hx hy)
 
 /-- Inversion negates `p`-adic order. -/
-theorem pAdicOrder_inv {p : ℕ} (hp : p.Prime) {x : ℚ} (hx : x ≠ 0) :
+theorem pAdicOrder_inv {p : ℕ} (hp : p.Prime) {x : ℚ} (_hx : x ≠ 0) :
     pAdicOrder p x⁻¹ = -pAdicOrder p x := by
-  letI : Fact p.Prime := ⟨hp⟩
-  simpa [pAdicOrder] using (padicValRat.inv x)
+  let _ : Fact p.Prime := ⟨hp⟩
+  change padicValRat p x⁻¹ = -padicValRat p x
+  exact padicValRat.inv x
 
 /-- The additive valuation inequality for `p`-adic order. -/
 theorem pAdicOrderWithTop_add {p : ℕ} (hp : p.Prime) (x y : ℚ) :
@@ -206,7 +207,7 @@ theorem pAdicOrderWithTop_add {p : ℕ} (hp : p.Prime) (x y : ℚ) :
     simp [pAdicOrderWithTop]
   by_cases hxy : x + y = 0
   · simp [pAdicOrderWithTop, hx, hy, hxy]
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   have h := padicValRat.min_le_padicValRat_add (p := p) hxy
   simpa [pAdicOrderWithTop, pAdicOrder, hx, hy, hxy] using
     (WithTop.coe_le_coe.mpr h)
@@ -216,7 +217,7 @@ nonzero. -/
 theorem pAdicOrder_add {p : ℕ} (hp : p.Prime) {x y : ℚ}
     (hxy : x + y ≠ 0) :
     min (pAdicOrder p x) (pAdicOrder p y) ≤ pAdicOrder p (x + y) := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   simpa [pAdicOrder] using (padicValRat.min_le_padicValRat_add (p := p) hxy)
 
 /-- Unequal `p`-adic orders force equality with the lower order. -/
@@ -230,14 +231,15 @@ theorem pAdicOrder_add_of_ne {p : ℕ} (hp : p.Prime) {x y : ℚ}
     rw [eq_neg_of_add_eq_zero_right hxy]
     change padicValRat p x = padicValRat p (-x)
     rw [padicValRat.neg]
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   simpa [pAdicOrder] using (padicValRat.add_eq_min hxy hx hy hne)
 
 /-- The `p`-adic order of `p` itself is one. -/
 theorem pAdicOrder_self {p : ℕ} (hp : p.Prime) :
     pAdicOrder p (p : ℚ) = 1 := by
-  letI : Fact p.Prime := ⟨hp⟩
-  simpa [pAdicOrder] using padicValRat.self hp.one_lt
+  let _ : Fact p.Prime := ⟨hp⟩
+  change padicValRat p (p : ℚ) = 1
+  exact padicValRat.self hp.one_lt
 
 /-- The strict inequality in `v₃(1+2)` records cancellation modulo `3`. -/
 theorem pAdic_cancellation_at_three :
@@ -306,7 +308,7 @@ theorem pAdic_magnitude_unit_decomposition {p : ℕ} (hp : p.Prime)
 theorem pAdicUnitPart_order_zero {p : ℕ} (hp : p.Prime)
     {x : ℚ} (hx : x ≠ 0) :
     pAdicOrder p (pAdicUnitPart p x) = 0 := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   have hpq : (p : ℚ) ≠ 0 := by exact_mod_cast hp.ne_zero
   have hpow : (p : ℚ) ^ pAdicOrder p x ≠ 0 := zpow_ne_zero _ hpq
   rw [pAdicUnitPart]

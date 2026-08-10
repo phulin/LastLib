@@ -1,4 +1,8 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section02ExistenceByMaximalDomination
+import Mathlib.LinearAlgebra.Charpoly.BaseChange
+import Mathlib.LinearAlgebra.Eigenspace.Charpoly
+import Mathlib.LinearAlgebra.Eigenspace.Minpoly
+import Mathlib.RingTheory.Polynomial.IsIntegral
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
 
@@ -316,7 +320,68 @@ theorem chapter10_integral_element_characteristic_data
     {x : L} (hx : IsIntegral A x)
     (hAtoR : ∀ z : K, IsIntegral A z → z ∈ R) :
     Chapter10CharacteristicPolynomialIntegral x R := by
-  sorry
+  classical
+  let f : Module.End K L := Algebra.lmul K L x
+  let Ω := AlgebraicClosure K
+  let p : A[X] := minpoly A x
+  let pK : K[X] := p.map (algebraMap A K)
+  let pΩ : Ω[X] := pK.map (algebraMap K Ω)
+  have hpK : Polynomial.aeval x pK = 0 := by
+    dsimp [pK]
+    rw [Polynomial.aeval_map_algebraMap]
+    change Polynomial.aeval x (minpoly A x) = 0
+    exact minpoly.aeval A x
+  have hpf : Polynomial.aeval f pK = 0 := by
+    rw [Polynomial.aeval_algHom_apply (Algebra.lmul K L) x]
+    simp [hpK]
+  let F : Module.End Ω (Ω ⊗[K] L) := f.baseChange Ω
+  have hpfΩ : Polynomial.aeval F pΩ = 0 := by
+    have hcompat :
+        (algebraMap Ω (Module.End Ω (Ω ⊗[K] L))).comp (algebraMap K Ω) =
+          (Module.End.baseChangeHom K Ω L).toRingHom.comp
+            (algebraMap K (Module.End K L)) := by
+      ext z
+      simp [Module.End.baseChangeHom]
+    have hmap := Polynomial.map_aeval_eq_aeval_map hcompat pK f
+    have hbase :
+        (Module.End.baseChangeHom K Ω L).toRingHom f = f.baseChange Ω := rfl
+    change Polynomial.aeval (f.baseChange Ω) (pK.map (algebraMap K Ω)) = 0
+    rw [← hbase, ← hmap, hpf]
+    simp
+  have hcoeff : ∀ i, IsIntegral A ((LinearMap.charpoly f).coeff i) := by
+    intro i
+    let q : Ω[X] := (LinearMap.charpoly f).map (algebraMap K Ω)
+    have hqmonic : q.Monic := by
+      exact (LinearMap.charpoly_monic f).map _
+    have hqsplits : q.Splits := IsAlgClosed.splits q
+    have hqroot : ∀ y : Ω, q.IsRoot y → IsIntegral A y := by
+      intro y hy
+      have hyF : F.charpoly.IsRoot y := by
+        change (f.baseChange Ω).charpoly.IsRoot y
+        rw [LinearMap.charpoly_baseChange]
+        exact hy
+      have hyeig : F.HasEigenvalue y :=
+        (Module.End.hasEigenvalue_iff_isRoot_charpoly F y).mpr hyF
+      obtain ⟨v, hv⟩ := hyeig.exists_hasEigenvector
+      have hpy : pΩ.eval y = 0 := by
+        have hzero : pΩ.eval y • v = 0 := by
+          rw [← Module.End.aeval_apply_of_hasEigenvector hv]
+          rw [hpfΩ]
+          simp
+        exact (smul_eq_zero.mp hzero).resolve_right hv.2
+      refine ⟨p, minpoly.monic hx, ?_⟩
+      simpa [pΩ, pK, Polynomial.aeval_def, Polynomial.eval₂_map,
+        IsScalarTower.algebraMap_eq A K Ω] using hpy
+    have hiΩ : IsIntegral A (q.coeff i) :=
+      Polynomial.isIntegral_coeff_of_factors q
+        (by rw [hqmonic.leadingCoeff]; exact isIntegral_one) hqsplits hqroot i
+    apply (isIntegral_algebraMap_iff (algebraMap K Ω).injective).mp
+    simpa [q] using hiΩ
+  refine ⟨?_, ?_, ?_⟩
+  · intro i
+    exact hAtoR _ (hcoeff i)
+  · exact hAtoR _ (Algebra.isIntegral_trace (R := A) (L := K) (F := L) hx)
+  · exact hAtoR _ (Algebra.isIntegral_norm (R := A) K hx)
 
 /-- A cancellation example witnessing that the norm alone is not a converse. -/
 structure Chapter10NormCancellationExample

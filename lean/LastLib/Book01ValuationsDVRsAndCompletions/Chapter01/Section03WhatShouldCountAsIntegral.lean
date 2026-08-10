@@ -72,7 +72,7 @@ theorem originPrimeIdeal_isPrime : (originPrimeIdeal (k := k)).IsPrime := by
 /-- The integer ideal `(p)` is prime for a prime `p`. -/
 theorem integerPrimeIdeal_isPrime {p : ℕ} (hp : p.Prime) :
     (integerPrimeIdeal p).IsPrime := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let : Fact p.Prime := ⟨hp⟩
   exact inferInstance
 
 /-- Localization at a prime is local. -/
@@ -87,7 +87,7 @@ theorem polynomialLocalRingAtZero_isLocalRing :
   exact inferInstance
 
 /-- The arithmetic localization `ℤ_(p)` is a local ring for prime `p`. -/
-theorem integerLocalRingAtPrime_isLocalRing {p : ℕ} [Fact p.Prime] (hp : p.Prime) :
+theorem integerLocalRingAtPrime_isLocalRing {p : ℕ} [Fact p.Prime] (_hp : p.Prime) :
     IsLocalRing (integerLocalRingAtPrime p) := by
   exact inferInstance
 
@@ -104,7 +104,7 @@ prime to `p`. -/
 theorem integer_local_elements_iff_nonnegative_pAdicOrder {p : ℕ}
     (hp : p.Prime) {x : ℚ} :
     x ∈ integerLocalElementsAtPrime p ↔ 0 ≤ pAdicOrder p x := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let : Fact p.Prime := ⟨hp⟩
   constructor
   · rintro ⟨a, b, hb, hfree, hq⟩
     by_cases hx : x = 0
@@ -256,7 +256,7 @@ theorem polynomial_local_elements_iff_no_pole (x : RatFunc k) :
             (Polynomial.X : k[X]) 1 := by
           apply ordZeroRatFunc_eq_ordZeroFraction (f := Polynomial.X) (g := 1)
             one_ne_zero hX
-          simp [ratFuncCoordinate]
+          simp
         _ = 1 := by
           simp [ordZeroFraction, multiplicity_of_one_right
             Polynomial.prime_X.not_isUnit]
@@ -416,7 +416,7 @@ theorem pAdic_integral_factorization {p : ℕ} (hp : p.Prime) {x : ℚ}
     (hx : x ≠ 0) (hIntegral : 0 ≤ pAdicOrder p x) :
     ∃ n : ℕ, ∃ u : ℚ,
       pAdicOrder p u = 0 ∧ x = (p : ℚ) ^ n * u := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let : Fact p.Prime := ⟨hp⟩
   let d := Classical.choice (exists_primeAdicDecomposition hp hx)
   have hdexp : d.exponent = pAdicOrder p x :=
     primeAdicDecomposition_exponent_eq_pAdicOrder hp hx d
@@ -459,7 +459,7 @@ theorem zero_order_integral_factorization {x : RatFunc k}
           (Polynomial.X : k[X]) 1 := by
         apply ordZeroRatFunc_eq_ordZeroFraction (f := Polynomial.X) (g := 1)
           one_ne_zero hX
-        simp [ratFuncCoordinate]
+        simp
       _ = 1 := by
         simp [ordZeroFraction, multiplicity_of_one_right
           Polynomial.prime_X.not_isUnit]

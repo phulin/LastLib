@@ -1,4 +1,6 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section06LocalizationAndResidues
+import Mathlib.Data.ENat.BigOperators
+import Mathlib.RingTheory.Ideal.Norm.RelNorm
 
 universe u v
 
@@ -199,7 +201,7 @@ theorem chapter11_normalized_dvr_ord
     intro hb0
     have hz0 : z = 0 := by simpa [hb0] using hb.symm
     have hzero : v 0 = 1 := hz0 ▸ hz
-    simpa using hzero
+    simp at hzero
   obtain ⟨n, u, ha⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hb0 hπ
   have hpi_top : v (algebraMap A K π) ≠ ⊤ :=
     (v.ne_top_iff).2 (by
@@ -214,7 +216,7 @@ theorem chapter11_normalized_dvr_ord
     rw [← hb, ha] at hv
     rw [map_mul, AddValuation.map_mul, map_pow, AddValuation.map_pow] at hv
     rw [hunit, ← hm] at hv
-    simp only [zero_add, nsmul_eq_mul, Nat.cast_one, mul_one] at hv
+    simp at hv
     exact_mod_cast hv
   have hn1z : (n : ℤ) = 1 :=
     Int.eq_one_of_mul_eq_one_right (by exact_mod_cast (Nat.zero_le n)) hnm
@@ -231,7 +233,7 @@ theorem chapter11_normalized_dvr_ord
     _ = (n : WithTop ℤ) := by
       simp only [map_mul, AddValuation.map_mul, map_pow, AddValuation.map_pow]
       rw [hunit, hpi1]
-      simp [nsmul_eq_mul]
+      simp
     _ = (Ring.ord A a).toNat := by
       have hord : Ring.ord A a = n := by
         rw [Ring.ord_eq_addVal]
@@ -262,13 +264,13 @@ theorem chapter11_correspondence_valuationSubring
     exact (c.localizationEquiv s).property
 
 theorem chapter11_local_length_eq_emultiplicity
-    (B : Type*) [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    (B : Type*) [CommRing B] [IsDedekindDomain B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal] (hP0 : P ≠ (⊥ : Ideal B))
     (b : B) (hb0 : b ≠ 0) :
     chapter11LocalLengthValue B P b =
       (emultiplicity P (Ideal.span ({b} : Set B))).toNat := by
   let S := Localization.AtPrime P
-  letI : IsDiscreteValuationRing S :=
+  let : IsDiscreteValuationRing S :=
     IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B hP0 S
   have hbS : algebraMap B S b ≠ 0 := by
     exact (map_ne_zero_iff (algebraMap B S)
@@ -289,7 +291,7 @@ theorem chapter11_local_length_eq_emultiplicity
       Classical.choose_spec (IsDiscreteValuationRing.exists_prime S)
     rw [IsDiscreteValuationRing.addVal, multiplicity_addValuation_apply]
     rw [← Ideal.emultiplicity_eq_emultiplicity_span]
-    simpa only [hp.irreducible.maximalIdeal_eq]
+    simp only [hp.irreducible.maximalIdeal_eq]
   have hram : Ideal.ramificationIdx' P (IsLocalRing.maximalIdeal S) = 1 := by
     apply Ideal.ramificationIdx'_eq_one_of_map_localization
       (p := P) (P := IsLocalRing.maximalIdeal S)
@@ -322,8 +324,8 @@ grouping its normalized factors by the prime below them. -/
 open UniqueFactorizationMonoid
 
 theorem chapter11_norm_integral_emultiplicity
-    (A B K : Type*) [CommRing A] [IsDomain A] [IsDedekindDomain A]
-    [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    (A B K : Type*) [CommRing A] [IsDedekindDomain A]
+    [CommRing B] [IsDedekindDomain B]
     [Field K] [Algebra A K] [IsFractionRing A K] [PerfectField K]
     [Algebra A B] [Module.Finite A B] [Module.Free A B]
     [Module.IsTorsionFree A B] [Algebra.IsIntegral A B]
@@ -335,7 +337,7 @@ theorem chapter11_norm_integral_emultiplicity
         (q.1.inertiaDeg A : ℕ∞) *
           emultiplicity q.1 (Ideal.span ({y} : Set B)) := by
   classical
-  letI : PerfectField (FractionRing A) :=
+  let : PerfectField (FractionRing A) :=
     PerfectField.of_ringEquiv (FractionRing.algEquiv A K).symm.toRingEquiv
   let F := normalizedFactors (Ideal.span ({y} : Set B))
   have hI0 : Ideal.span ({y} : Set B) ≠ (⊥ : Ideal B) := by
@@ -374,7 +376,7 @@ theorem chapter11_norm_integral_emultiplicity
       Ideal.isPrime_of_prime (prime_of_normalized_factor Q hQ)
     have hQmax : Q.IsMaximal := Ring.DimensionLEOne.maximalOfPrime hQ0 hQprime
     by_cases hQo : Q.LiesOver m
-    · letI : Q.LiesOver m := hQo
+    · let : Q.LiesOver m := hQo
       simp only [dif_pos hQo]
       rw [Ideal.relNorm_eq_pow_of_isMaximal Q m]
       have hmp : Prime m := Ideal.prime_of_isPrime hm0
@@ -383,8 +385,8 @@ theorem chapter11_norm_integral_emultiplicity
     · simp only [dif_neg hQo]
       have hundermax : (Ideal.comap (algebraMap A B) Q).IsMaximal :=
         Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q
-      letI : (Ideal.comap (algebraMap A B) Q).IsMaximal := hundermax
-      letI : Q.LiesOver (Ideal.comap (algebraMap A B) Q) :=
+      let : (Ideal.comap (algebraMap A B) Q).IsMaximal := hundermax
+      let : Q.LiesOver (Ideal.comap (algebraMap A B) Q) :=
         Ideal.over_under (A := A) (P := Q)
       rw [Ideal.relNorm_eq_pow_of_isMaximal Q (Ideal.comap (algebraMap A B) Q)]
       apply emultiplicity_eq_zero.mpr
@@ -420,8 +422,6 @@ theorem chapter11_norm_integral_emultiplicity
         apply Finset.sum_congr rfl
         intro Q hQ
         by_cases hQo : Q.LiesOver m <;> simp [hQo]
-  letI : Fintype (m.primesOver B) :=
-    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver m)
   have hcount_q (q : m.primesOver B) :
       emultiplicity q.1 (Ideal.span ({y} : Set B)) =
         (F.count q.1 : ℕ∞) := by
@@ -469,9 +469,9 @@ theorem chapter11_norm_integral_emultiplicity
       have hQF : Q ∈ F :=
         Multiset.mem_toFinset.mp (Finset.mem_filter.mp hQ).1
       have hQo : Q.LiesOver m := Finset.mem_filter.mp hQ |>.2
-      letI : Q.IsPrime := Ideal.isPrime_of_prime
+      let : Q.IsPrime := Ideal.isPrime_of_prime
         (prime_of_normalized_factor Q hQF)
-      letI : Q.LiesOver m := hQo
+      let : Q.LiesOver m := hQo
       refine ⟨⟨Q, inferInstance, inferInstance⟩, ?_, rfl⟩
       exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,
         Multiset.mem_toFinset.mpr hQF⟩
@@ -482,7 +482,7 @@ theorem chapter11_norm_integral_emultiplicity
 
 set_option maxHeartbeats 1000000 in
 theorem chapter11_branch_value_eq_local_length
-    (B L : Type*) [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    (B L : Type*) [CommRing B] [IsDedekindDomain B]
     [Field L] [Algebra B L] [IsFractionRing B L]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal] (hP0 : P ≠ (⊥ : Ideal B))
     (vL : AddValuation L (WithTop ℤ))
@@ -494,8 +494,8 @@ theorem chapter11_branch_value_eq_local_length
   let S := Localization.AtPrime P
   let φ : S →+* L :=
     vL.toValuation.valuationSubring.subtype.comp c.localizationEquiv.toRingHom
-  letI : Algebra S L := φ.toAlgebra
-  letI : IsScalarTower B S L := by
+  let : Algebra S L := φ.toAlgebra
+  let : IsScalarTower B S L := by
     apply IsScalarTower.of_algebraMap_eq'
     apply RingHom.ext
     intro b
@@ -505,9 +505,9 @@ theorem chapter11_branch_value_eq_local_length
       Localization.mk b ⟨1, P.primeCompl.one_mem⟩ by rfl,
       c.localizationEquiv_on_B b]
     exact (c.embedding_compatible b).symm
-  letI : IsFractionRing S L :=
+  let : IsFractionRing S L :=
     IsFractionRing.isFractionRing_of_isDomain_of_isLocalization P.primeCompl S L
-  letI : IsDiscreteValuationRing S :=
+  let : IsDiscreteValuationRing S :=
     chapter11_branch_localization_is_dvr B P hP0
   have hφ : algebraMap S L = φ := RingHom.algebraMap_toAlgebra φ
   have hsub : vL.toValuation.valuationSubring.toSubring =
@@ -550,27 +550,27 @@ theorem chapter11_norm_valuation_formula
   classical
   let A := v.valuationSubring
   let B := chapter11IntegralClosure A L
-  letI : Algebra A K := by
+  let : Algebra A K := by
     dsimp [A]
     infer_instance
-  letI : IsFractionRing A K := inferInstance
-  letI : IsDomain A := inferInstance
-  letI : IsDiscreteValuationRing A := hdefectless.2.1
-  letI : IsDedekindDomain A :=
+  let : IsFractionRing A K := inferInstance
+  let : IsDomain A := inferInstance
+  let : IsDiscreteValuationRing A := hdefectless.2.1
+  let : IsDedekindDomain A :=
     ((IsDiscreteValuationRing.TFAE A (IsDiscreteValuationRing.not_isField A)).out 0 2).mp
       hdefectless.2.1
-  letI : IsIntegralClosure B A L := by
+  let : IsIntegralClosure B A L := by
     change IsIntegralClosure (integralClosure A L) A L
     infer_instance
-  letI : IsDomain B := (IsIntegralClosure.algebraMap_injective B A L).isDomain
-  letI : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
-  letI : Module.IsTorsionFree A B := IsIntegralClosure.isTorsionFree A L
-  letI : IsScalarTower A B L := inferInstance
-  letI : Module.Finite A B := hdefectless.2.2.1
-  letI : IsFractionRing B L :=
+  let : IsDomain B := (IsIntegralClosure.algebraMap_injective B A L).isDomain
+  let : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  let : Module.IsTorsionFree A B := IsIntegralClosure.isTorsionFree A L
+  let : IsScalarTower A B L := inferInstance
+  let : Module.Finite A B := hdefectless.2.2.1
+  let : IsFractionRing B L :=
     IsIntegralClosure.isFractionRing_of_finite_extension A K L B
-  letI : IsDedekindDomain B := integralClosure.isDedekindDomain A K L
-  letI : Module.Free A B :=
+  let : IsDedekindDomain B := integralClosure.isDedekindDomain A K L
+  let : Module.Free A B :=
     chapter11_finite_torsion_free_over_pid_is_free A B
   have corr_subring_of {P : Ideal B} [P.IsPrime]
       {vL : Valuation L (Multiplicative (WithTop ℤ)ᵒᵈ)}
@@ -592,10 +592,10 @@ theorem chapter11_norm_valuation_formula
       rw [← hs]
       exact (c.localizationEquiv s).property
   let m : Ideal A := IsLocalRing.maximalIdeal A
-  letI : m.IsMaximal := by
+  let : m.IsMaximal := by
     dsimp [m]
     exact IsLocalRing.maximalIdeal.isMaximal A
-  letI : m.IsPrime := (inferInstance : m.IsMaximal).isPrime
+  let : m.IsPrime := (inferInstance : m.IsMaximal).isPrime
   have hm0 : m ≠ (⊥ : Ideal A) := by
     dsimp [m]
     exact IsDiscreteValuationRing.not_a_field A
@@ -612,9 +612,9 @@ theorem chapter11_norm_valuation_formula
   let P : ι → Ideal B := fun i => Classical.choose (hiP i)
   have hPbranch (i : ι) : chapter11Branch A B m (P i) := by
     exact (Classical.choose_spec (hiP i)).1
-  letI (i : ι) : (P i).IsPrime := (hPbranch i).1
-  letI (i : ι) : (P i).IsMaximal := (hPbranch i).2.1
-  letI (i : ι) : (P i).LiesOver m := (hPbranch i).2.2
+  let (i : ι) : (P i).IsPrime := (hPbranch i).1
+  let (i : ι) : (P i).IsMaximal := (hPbranch i).2.1
+  let (i : ι) : (P i).LiesOver m := (hPbranch i).2.2
   let c : ∀ i : ι,
       Chapter11ValuationBranchCorrespondence B L (P i) (w i).toValuation :=
     fun i => Classical.choice (Classical.choose_spec (hiP i)).2
@@ -623,7 +623,7 @@ theorem chapter11_norm_valuation_formula
   have hlocal_on_base (i : ι) (b : B) :
       (c i).localizationEquiv (algebraMap B (Localization.AtPrime (P i)) b) =
         (c i).embedding b := by
-    letI : (P i).IsPrime := (hPbranch i).1
+    let : (P i).IsPrime := (hPbranch i).1
     rw [show algebraMap B (Localization.AtPrime (P i)) b =
       Localization.mk b ⟨1, (P i).primeCompl.one_mem⟩ by rfl,
       (c i).localizationEquiv_on_B]
@@ -662,8 +662,6 @@ theorem chapter11_norm_valuation_formula
         cast (by rw [hPij]) (c j)
       exact hval_eq_of_same_branch (c i) cj
     exact hbranches.2.2.2.1 hval
-  letI : Fintype (m.primesOver B) :=
-    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver m)
   have hg_surj : Function.Surjective g := by
     intro q
     have hqbranch : chapter11Branch A B m q.1 := by
@@ -688,15 +686,15 @@ theorem chapter11_norm_valuation_formula
   have hinertia (i : ι) :
       (g i).1.inertiaDeg A =
         chapter11AdditiveResidueDegree v (w i) (hbranches.1 i) := by
-    letI : (P i).IsPrime := (hPbranch i).1
-    letI : (P i).IsMaximal := (hPbranch i).2.1
-    letI : (P i).LiesOver m := (hPbranch i).2.2
+    let : (P i).IsPrime := (hPbranch i).1
+    let : (P i).IsMaximal := (hPbranch i).2.1
+    let : (P i).LiesOver m := (hPbranch i).2.2
     change (P i).inertiaDeg A =
       chapter11AdditiveResidueDegree v (w i) (hbranches.1 i)
     rw [Ideal.inertiaDeg_eq_of_isMaximal m (P i)]
-    letI : Valuation.HasExtension v.toValuation (w i).toValuation :=
+    let : Valuation.HasExtension v.toValuation (w i).toValuation :=
       ⟨hbranches.1 i⟩
-    letI : Algebra A (w i).toValuation.valuationSubring :=
+    let : Algebra A (w i).toValuation.valuationSubring :=
       Valuation.HasExtension.instAlgebra_valuationSubring
         v.toValuation (w i).toValuation
     let S := Localization.AtPrime (P i)
@@ -707,7 +705,7 @@ theorem chapter11_norm_valuation_formula
       IsLocalRing.ResidueField.mapEquiv (c i).localizationEquiv
     let eTarget : B ⧸ P i ≃+* chapter11AdditiveResidueField (w i) :=
       eQ.trans eRes
-    letI : m.IsTwoSided := by
+    let : m.IsTwoSided := by
       dsimp [m]
       infer_instance
     let eBase : A ⧸ m ≃+* chapter11AdditiveResidueField v := by
@@ -763,9 +761,9 @@ theorem chapter11_norm_valuation_formula
       w i (algebraMap B L b) =
         ((emultiplicity (g i).1 (Ideal.span ({b} : Set B))).toNat :
           WithTop ℤ) := by
-    letI : (P i).IsPrime := (hPbranch i).1
-    letI : (P i).IsMaximal := (hPbranch i).2.1
-    letI : (P i).LiesOver m := (hPbranch i).2.2
+    let : (P i).IsPrime := (hPbranch i).1
+    let : (P i).IsMaximal := (hPbranch i).2.1
+    let : (P i).LiesOver m := (hPbranch i).2.2
     have hP0 : P i ≠ (⊥ : Ideal B) :=
       Ideal.ne_bot_of_liesOver_of_ne_bot hm0 (P i)
     have hnorm : ∃ z : L, w i z = (1 : WithTop ℤ) := by
@@ -788,7 +786,6 @@ theorem chapter11_norm_valuation_formula
       exact ⟨⟨z, hz⟩, Subring.mem_top _, rfl⟩
     · intro hz
       rcases Subring.mem_map.mp hz with ⟨a, -, ha⟩
-      change z ∈ A.toSubring
       rw [← ha]
       exact a.property
   have hintegral (b : B) (hb : b ≠ 0) :
@@ -856,7 +853,7 @@ theorem chapter11_norm_valuation_formula
           Classical.choose_spec (IsDiscreteValuationRing.exists_prime A)
         rw [IsDiscreteValuationRing.addVal, multiplicity_addValuation_apply]
         rw [← Ideal.emultiplicity_eq_emultiplicity_span]
-        simpa [m, hp.irreducible.maximalIdeal_eq]
+        simp [m, hp.irreducible.maximalIdeal_eq]
       calc
         v (algebraMap A K a) = ((Ring.ord A a).toNat : WithTop ℤ) := hord
         _ = ((emultiplicity m (Ideal.span ({a} : Set A))).toNat : WithTop ℤ) := by
@@ -1064,7 +1061,6 @@ theorem chapter11_norm_of_uniformizer
     (hbranches : chapter11CompleteNormalizedBranchFamily v w)
     (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranches.1 i))
     (hdefectless : chapter11DefectlessNormBranchData v w f)
-    (hscaling : chapter11RamificationScaling v w e)
     (hπ : ∀ i, w i (algebraMap K L π) = (e i : WithTop ℤ))
     (hπ_ne : π ≠ 0) :
     v (Algebra.norm K (algebraMap K L π)) =
@@ -1078,7 +1074,7 @@ theorem chapter11_norm_of_uniformizer
 /-- The same formula extends from integral elements to fractions by division. -/
 theorem chapter11_norm_valuation_on_fractions
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
-  (v : AddValuation K (WithTop ℤ)) (x y : L) (hx : x ≠ 0) (hy : y ≠ 0) :
+  (v : AddValuation K (WithTop ℤ)) (x y : L) :
     v (Algebra.norm K (x / y)) =
       v (Algebra.norm K x) - v (Algebra.norm K y) := by
   rw [div_eq_mul_inv, map_mul, Algebra.norm_inv,
@@ -1094,14 +1090,13 @@ theorem chapter11_norm_uniformizer_consistency
     (hbranches : chapter11CompleteNormalizedBranchFamily v w)
     (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranches.1 i))
     (hdefectless : chapter11DefectlessNormBranchData v w f)
-    (hscaling : chapter11RamificationScaling v w e)
     (hπ : ∀ i, w i (algebraMap K L π) = (e i : WithTop ℤ))
     (hdegree : Module.finrank K L = ∑ i, e i * f i) :
     v (Algebra.norm K (algebraMap K L π)) =
       (Module.finrank K L : WithTop ℤ) := by
   have hι : Nonempty ι := by
     by_contra hι
-    letI : IsEmpty ι := ⟨fun i => hι ⟨i⟩⟩
+    let : IsEmpty ι := ⟨fun i => hι ⟨i⟩⟩
     have hzero : Module.finrank K L = 0 := by simpa using hdegree
     exact (Nat.ne_of_gt Module.finrank_pos) hzero
   let i : ι := Classical.choice hι
@@ -1109,17 +1104,16 @@ theorem chapter11_norm_uniformizer_consistency
     intro hzero
     have hi := hπ i
     rw [hzero, map_zero] at hi
-    simpa using hi
+    simp at hi
   calc
     v (Algebra.norm K (algebraMap K L π)) =
         ∑ i, (f i : WithTop ℤ) * (e i : WithTop ℤ) :=
-      chapter11_norm_of_uniformizer K L v w e f π hbranches hf hdefectless hscaling hπ
+      chapter11_norm_of_uniformizer K L v w e f π hbranches hf hdefectless hπ
         hπ_ne
     _ = ((∑ i, e i * f i : ℕ) : WithTop ℤ) := by
       rw [Nat.cast_sum]
       apply Finset.sum_congr rfl
       intro i hi
-      norm_cast
       exact mul_comm _ _
     _ = (Module.finrank K L : WithTop ℤ) := by
       rw [← hdegree]

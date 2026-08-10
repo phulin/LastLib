@@ -1,3 +1,4 @@
+import Mathlib
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter02.Section06TheTrivialValuationAndFailureModes
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter02
@@ -220,7 +221,7 @@ theorem chapter02_gauss_valuation_is_multiplicative
       simp [s]
     have hex : ∃ p ∈ s, f.coeff p.1 * g.coeff p.2 ≠ 0 := by
       by_contra h
-      push_neg at h
+      push Not at h
       apply hn
       rw [Polynomial.coeff_mul]
       apply Finset.sum_eq_zero
@@ -426,7 +427,7 @@ theorem chapter02_gauss_valuation_is_multiplicative
           apply WithTop.coe_injective
           rw [hvkl, map_add]
           simp only [add_nsmul]
-          abel
+          abel_nf
         _ ≤ (e ((v (f.coeff i * g.coeff j)).untop hsel) +
             (i + j) • α : Λ) := htotal'
         _ = W f i + W g j := by
@@ -435,7 +436,7 @@ theorem chapter02_gauss_valuation_is_multiplicative
           apply WithTop.coe_injective
           rw [hvij, map_add]
           simp only [add_nsmul]
-          abel
+          abel_nf
     have hsumW' : W f i + W g j ≤ W f k + W g l := by
       exact add_le_add
         (by rw [hi_eq]; exact hG f k)
@@ -518,7 +519,7 @@ theorem chapter02_gauss_valuation_is_multiplicative
   have hprodS : (f * g).support.Nonempty :=
     Polynomial.support_nonempty.mpr (by
       intro hzero
-      exact hsel_coeff (by simpa [hzero]))
+      exact hsel_coeff (by simp [hzero]))
   have hlower : Chapter02GaussValuationFunction v e α f +
       Chapter02GaussValuationFunction v e α g ≤
         Chapter02GaussValuationFunction v e α (f * g) := by
@@ -577,7 +578,7 @@ theorem chapter02_gauss_valuation_is_multiplicative
           apply WithTop.coe_injective
           rw [hvij, map_add]
           simp only [add_nsmul]
-          abel
+          abel_nf
         _ = W (f * g) (i + j) := by
           rw [hWprod]
           apply WithTop.coe_injective
@@ -638,7 +639,7 @@ theorem chapter02_gauss_valuation_on_quotients
           change ((a + b - (a + c) : Λ) : WithTop Λ) =
             ((b - c : Λ) : WithTop Λ)
           exact congrArg (fun z : Λ => (z : WithTop Λ))
-            (show a + b - (a + c) = b - c by abel)
+            (show a + b - (a + c) = b - c by abel_nf)
   have hG_ne_top {p : Polynomial K} (hp : p ≠ 0) : G p ≠ ⊤ := by
     have hs : p.support.Nonempty := Polynomial.support_nonempty.mpr hp
     obtain ⟨i, hi⟩ := hs
@@ -940,7 +941,7 @@ theorem chapter02_gauss_residue_remembers_scaled_polynomial
   · intro j hj
     rw [hgcoeff]
     have hfj : f.coeff j ≠ 0 := Polynomial.mem_support_iff.mp hj
-    simp [r, hj, hfj]
+    simp [r, hfj]
 
 theorem chapter02_gauss_residue_construction_requires_a_unit_coefficient
     {K Γ : Type*} [Field K] [AddCommGroup Γ] [LinearOrder Γ]
@@ -948,7 +949,7 @@ theorem chapter02_gauss_residue_construction_requires_a_unit_coefficient
     (v : AddValuation K (WithTop Γ)) {a : K} (ha : a ≠ 0) :
     ∃ s : K, s ≠ 0 ∧ v (s * a) = 0 ∧ v s + v a = 0 := by
   refine ⟨a⁻¹, inv_ne_zero ha, ?_, ?_⟩
-  · simp [v.map_mul, ha]
+  · simp [ha]
   · rw [v.map_inv]
     exact LinearOrderedAddCommGroupWithTop.neg_add_cancel_of_ne_top
       ((AddValuation.ne_top_iff v).2 ha)
@@ -1234,7 +1235,7 @@ theorem chapter02_two_stage_is_a_higher_rank_value_group
   obtain ⟨γ, hγ⟩ : ∃ γ : Γ, 0 < γ := by
     by_cases h : ∃ γ : Γ, 0 < γ
     · exact h
-    · push_neg at h
+    · push Not at h
       have hneg : ∀ γ : Γ, γ ≤ 0 := fun γ => h γ
       obtain ⟨a, b, hab⟩ := exists_pair_ne Γ
       let γ : Γ := a - b

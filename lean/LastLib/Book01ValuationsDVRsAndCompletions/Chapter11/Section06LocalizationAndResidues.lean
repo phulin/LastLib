@@ -72,16 +72,12 @@ def chapter11LocalLengthValue (B : Type*) [CommRing B] (P : Ideal B) [P.IsPrime]
 /-- The length value of a base element is its ramification index. -/
 theorem chapter11_length_value_of_base_uniformizer
     (A B : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-    [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    [CommRing B] [IsDedekindDomain B]
     [Algebra A B]
     (m : Ideal A) (π : A) (hπ : chapter11IsUniformizer A m π)
-    (hm : m = IsLocalRing.maximalIdeal A) (hm0 : m ≠ ⊥)
     (P : Ideal B) [P.IsPrime] [P.IsMaximal] [P.LiesOver m] :
     chapter11LocalLengthValue B P (algebraMap A B π) = P.ramificationIdx A := by
   rw [chapter11LocalLengthValue]
-  change (Module.length (Localization.AtPrime P)
-      (Localization.AtPrime P ⧸
-        Ideal.span {algebraMap B (Localization.AtPrime P) (algebraMap A B π)})).toNat = _
   rw [← IsScalarTower.algebraMap_apply A B (Localization.AtPrime P)]
   have hspan :
       Ideal.map (algebraMap A (Localization.AtPrime P)) (Ideal.span ({π} : Set A)) =
@@ -92,13 +88,13 @@ theorem chapter11_length_value_of_base_uniformizer
 
 /-- Computing the same length over A multiplies by the residue degree. -/
 theorem chapter11_length_as_base_module_is_e_f
-    (A B : Type*) [CommRing A] [IsDomain A] [IsLocalRing A]
+    (A B : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A]
-    [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    [CommRing B] [IsDedekindDomain B]
     [Algebra A B] [Algebra.IsIntegral A B] [Module.Finite A B]
     [Module.IsTorsionFree A B]
     (m : Ideal A) (π : A) (hπ : chapter11IsUniformizer A m π)
-    (hm : m = IsLocalRing.maximalIdeal A) (hm0 : m ≠ ⊥)
+    (hm : m = IsLocalRing.maximalIdeal A)
     (P : Ideal B) [P.IsPrime] [P.IsMaximal] [P.LiesOver m] :
     (Module.length A
         (Localization.AtPrime P ⧸
@@ -106,17 +102,17 @@ theorem chapter11_length_as_base_module_is_e_f
       P.ramificationIdx A * P.inertiaDeg A := by
   let S := Localization.AtPrime P
   let M := S ⧸ Ideal.span {algebraMap A S π}
-  letI : m.IsPrime := by
+  let _ : m.IsPrime := by
     rw [hm]
     exact (IsLocalRing.maximalIdeal.isMaximal A).isPrime
-  letI : m.IsMaximal := by
+  let _ : m.IsMaximal := by
     rw [hm]
     exact IsLocalRing.maximalIdeal.isMaximal A
-  letI : P.LiesOver (IsLocalRing.maximalIdeal A) := by
+  let _ : P.LiesOver (IsLocalRing.maximalIdeal A) := by
     rw [← hm]
     infer_instance
-  letI := Localization.AtPrime.algebraOfLiesOver m P
-  letI : IsLocalHom (algebraMap A S) := by
+  let _ := Localization.AtPrime.algebraOfLiesOver m P
+  let _ : IsLocalHom (algebraMap A S) := by
     apply ((IsLocalRing.local_hom_TFAE (algebraMap A S)).out 4 0).mp
     change (IsLocalRing.maximalIdeal S).under A = IsLocalRing.maximalIdeal A
     rw [← Ideal.under_under (B := B), Localization.AtPrime.under_maximalIdeal]
@@ -131,8 +127,8 @@ theorem chapter11_length_as_base_module_is_e_f
       IsLocalization.AtPrime.equivQuotMaximalIdeal P S
     let eA : (A ⧸ IsLocalRing.maximalIdeal A) ≃+*
         (IsLocalRing.ResidueField A) := RingEquiv.refl _
-    letI : Module.Finite (A ⧸ IsLocalRing.maximalIdeal A) (B ⧸ P) := inferInstance
-    letI : Module.Finite (IsLocalRing.ResidueField A)
+    let _ : Module.Finite (A ⧸ IsLocalRing.maximalIdeal A) (B ⧸ P) := inferInstance
+    let _ : Module.Finite (IsLocalRing.ResidueField A)
         (IsLocalRing.ResidueField S) := by
       apply Module.Finite.of_equiv_equiv eA e
       apply RingHom.ext
@@ -169,7 +165,7 @@ theorem chapter11_length_as_base_module_is_e_f
 /-- The localized length is additive on nonzero integral elements, as a
 normalized discrete valuation must be. -/
 theorem chapter11_length_value_is_a_discrete_valuation
-    (B : Type*) [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    (B : Type*) [CommRing B] [IsDedekindDomain B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal]
     (x y : B) (hx : x ≠ 0) (hy : y ≠ 0) :
     chapter11LocalLengthValue B P (x * y) =

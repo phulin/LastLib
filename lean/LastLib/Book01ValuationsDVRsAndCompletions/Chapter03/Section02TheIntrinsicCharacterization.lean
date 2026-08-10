@@ -48,7 +48,7 @@ theorem principalFractionalSet_le_iff (V : Subring K) {x y : K} (hy : y ≠ 0) :
   · intro h
     have hmem : x ∈ principalFractionalSet V y := by
       apply h
-      exact ⟨1, by simp [principalFractionalSet]⟩
+      exact ⟨1, by simp⟩
     rcases hmem with ⟨a, ha⟩
     change x = (a : K) * y at ha
     have hxy : x / y = (a : K) := by
@@ -90,7 +90,7 @@ theorem valuationRingCriterion_tfae (V : Subring K) :
       · exact Or.inr (by simpa [div_eq_mul_inv] using h)
     · intro hC x
       by_cases hx : x = 0
-      · exact Or.inl (by simpa [hx] using V.zero_mem)
+      · exact Or.inl (by simp [hx])
       rcases hC x 1 hx one_ne_zero with h | h
       · exact Or.inl (by simpa using
           (principalFractionalSet_le_iff V one_ne_zero).1 h)
@@ -211,7 +211,7 @@ theorem criterionValueGroup_is_quotient_by_units (V : Subring K)
   let e := QuotientGroup.quotientKerEquivOfSurjective φ hφ
   exact ⟨e.symm.trans (QuotientGroup.quotientMulEquivOfEq hker)⟩
 
-def criterionComparison (V : Subring K) (hV : HasValuationSubringCriterion V)
+def criterionComparison (V : Subring K) (_hV : HasValuationSubringCriterion V)
     (x y : K) : Prop :=
   x / y ∈ V
 

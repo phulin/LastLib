@@ -38,7 +38,7 @@ theorem element_outside_valuationRing_has_inverse_in_maximalIdeal
   have hx0 : x ≠ 0 := by
     intro hx
     apply hxV
-    simpa [hx]
+    simp [hx]
   obtain hxinv | hxinv := Valuation.val_le_one_or_val_inv_le_one v x
   · exact False.elim (hxV ((mem_valuationRingOf_iff v x).2 hxinv))
   · refine ⟨(mem_valuationRingOf_iff v x⁻¹).2 hxinv, ?_⟩
@@ -73,8 +73,8 @@ theorem monic_relation_divide_by_top_power
 
 theorem monic_relation_divided_tail_is_infinitesimal
     (v : Valuation K Γ) (p : Polynomial (valuationRingOf v)) {x : K}
-    (hx : x ≠ 0) (hp : p.Monic) (hxV : x ∉ valuationRingOf v)
-    (hroot : p.eval₂ (algebraMap (valuationRingOf v) K) x = 0) :
+    (hx : x ≠ 0) (_hp : p.Monic) (hxV : x ∉ valuationRingOf v)
+    (_hroot : p.eval₂ (algebraMap (valuationRingOf v) K) x = 0) :
     ∀ i ∈ Finset.range p.natDegree,
       (algebraMap (valuationRingOf v) K (p.coeff i) * x ^ i) / x ^ p.natDegree ∈
         maximalIdealImageOf v := by
@@ -108,7 +108,9 @@ theorem local_sum_of_maximal_ideal_terms_ne_neg_one
   have hneg := (IsLocalRing.maximalIdeal R).neg_mem hmem
   rw [hsum] at hneg
   exact (Ideal.ne_top_iff_one _).mp
-      (IsLocalRing.maximalIdeal.isMaximal R).ne_top (by simpa using hneg)
+      (IsLocalRing.maximalIdeal.isMaximal R).ne_top (by
+        rw [neg_neg] at hneg
+        exact hneg)
 
 theorem integral_element_outside_valuationRing_contradiction
     (v : Valuation K Γ) {x : K} (hx : IsIntegral (valuationRingOf v) x)
@@ -138,7 +140,7 @@ theorem local_subring_inverse_obstruction
   have hx0 : x ≠ 0 := by
     intro hx
     apply hxV
-    simpa [hx]
+    simp [hx]
   obtain ⟨hxiV, ⟨y, hyM, hyx⟩⟩ :=
     element_outside_valuationRing_has_inverse_in_maximalIdeal v hxV
   have hxiM : (⟨x⁻¹, hxiV⟩ : valuationRingOf v) ∈ maximalIdealOf v := by

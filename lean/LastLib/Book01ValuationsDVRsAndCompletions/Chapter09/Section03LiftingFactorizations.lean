@@ -1154,7 +1154,7 @@ theorem hensel_lift_pairwise_coprime_factors {A : Type*} {ι : Type uI}
   have hP : P ι := by
     apply Fintype.induction_empty_option (P := fun ι _ => P ι)
     · intro α β inst e IH
-      letI : Fintype α := Fintype.ofEquiv β e.symm
+      let : Fintype α := Fintype.ofEquiv β e.symm
       intro f f₀ hf hmonic hpair hred
       let f₀' : α → Polynomial (ResidueRing A) := fun a => f₀ (e a)
       have hmonic' : ∀ a, (f₀' a).Monic := by

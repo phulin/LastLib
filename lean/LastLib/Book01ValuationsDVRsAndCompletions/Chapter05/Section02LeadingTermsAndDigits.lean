@@ -82,7 +82,7 @@ def chapterUniformizerLayerClass (π : A) (hπ : Irreducible π) :
   exact chapterLayerRepresentative (A := A) π hπ 1 1
 
 /-- The initial form of the uniformizer in the polynomial realization. -/
-def chapterInitialFormUniformizer (π : A) (hπ : Irreducible π) :
+def chapterInitialFormUniformizer (π : A) (_hπ : Irreducible π) :
     chapterAssociatedGradedRing (A := A) := by
   exact Polynomial.X
 
@@ -740,7 +740,7 @@ def chapterInfiniteDigitPrefix (S : Set A) (digits : ℕ → S) (n : ℕ) : A :=
 include hπ in
 /-- Book §5.2: in an adically complete ring, every infinite digit string converges. -/
 theorem chapter_infinite_digit_expansion_exists
-    (S : Set A) (hS : chapterIsResidueRepresentativeSet A S)
+    (S : Set A) (_hS : chapterIsResidueRepresentativeSet A S)
     [IsAdicComplete (IsLocalRing.maximalIdeal A) A] (digits : ℕ → S) :
     ∃ x : A, ∀ n : ℕ,
       x - chapterInfiniteDigitPrefix (A := A) π S digits n ∈
@@ -1178,6 +1178,7 @@ theorem chapter_quotient_ideals_are_uniformizer_powers (n : ℕ) :
     _ = Ideal.span {q (π ^ i)} := by rw [Ideal.map_span]; simp
     _ = Ideal.span {(q π) ^ i} := by rw [map_pow]
 
+omit [IsDiscreteValuationRing A] in
 include hπ in
 /-- Book §5.2: `π̄` has nilpotence index exactly `n` for `n > 0`. -/
 theorem chapter_quotient_uniformizer_nilpotence_index

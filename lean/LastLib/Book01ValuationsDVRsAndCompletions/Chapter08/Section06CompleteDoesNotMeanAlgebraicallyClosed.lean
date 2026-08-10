@@ -37,7 +37,7 @@ def Chapter08NonsquareResidueUnit
 /-- A nonsquare residue unit cannot be a square in the local ring. -/
 theorem chapter08_nonsquare_residue_unit_not_square
     (A : Type*) [CommRing A] [IsLocalRing A] (u : A)
-    (hu : IsUnit u)
+    (_hu : IsUnit u)
     (hns : ¬ ∃ y : IsLocalRing.ResidueField A,
       y ^ 2 = IsLocalRing.residue A u) :
     ¬ ∃ x : A, x ^ 2 = u := by
@@ -71,11 +71,11 @@ theorem chapter08_complete_padic_field_not_algebraically_closed
   classical
   refine ⟨inferInstance, ?_⟩
   intro hclosed
-  letI : IsAlgClosed (Chapter08PadicNumbers p) := hclosed
   have hdeg : (Polynomial.X ^ 2 - Polynomial.C (p : Chapter08PadicNumbers p)).degree ≠ 0 := by
     rw [Polynomial.degree_X_pow_sub_C (by decide)]
     norm_num
-  obtain ⟨z, hz⟩ := IsAlgClosed.exists_root
+  obtain ⟨z, hz⟩ := @IsAlgClosed.exists_root
+    (Chapter08PadicNumbers p) inferInstance hclosed
     (Polynomial.X ^ 2 - Polynomial.C (p : Chapter08PadicNumbers p)) hdeg
   have hz' : z ^ 2 = (p : Chapter08PadicNumbers p) := by
     exact sub_eq_zero.mp (by
@@ -94,7 +94,7 @@ theorem chapter08_simple_root_lifts_in_complete_local_ring
         aeval a₀ f.derivative ≠ 0 →
         ∃ a : A, f.IsRoot a ∧ IsLocalRing.residue A a = a₀ := by
   classical
-  letI : HenselianLocalRing A := {
+  have hHenselian : HenselianLocalRing A := {
     toIsLocalRing := inferInstance
     is_henselian := by
       intro g hg b hb hunit
@@ -116,7 +116,7 @@ theorem chapter08_simple_root_lifts_in_complete_local_ring
       simpa [ha₀'] using hfderiv
     simpa [aeval_def, IsLocalRing.ResidueField.algebraMap_eq, eval₂_at_apply] using
       hfderiv'
-  obtain ⟨a, ha, hmem⟩ := HenselianLocalRing.is_henselian f hf a₀' hroot hderiv
+  obtain ⟨a, ha, hmem⟩ := hHenselian.is_henselian f hf a₀' hroot hderiv
   refine ⟨a, ha, ?_⟩
   rw [← sub_eq_zero]
   calc

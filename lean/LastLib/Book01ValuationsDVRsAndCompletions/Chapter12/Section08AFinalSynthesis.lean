@@ -1,4 +1,5 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section05UniqueExtensionAndHenselianity
+import Mathlib.Topology.Algebra.InfiniteSum.Nonarchimedean
 
 namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
@@ -149,7 +150,29 @@ theorem complete_or_henselian_base_has_one_branch
         (letI : LinearOrderedCommGroupWithZero W.valueGroup := W.orderedValueGroup
          letI : LinearOrderedCommGroupWithZero W'.valueGroup := W'.orderedValueGroup
         W'.valuation.IsEquiv W.valuation) := by
-  sorry
+  have hhenselian : HenselianLocalRing v.valuationSubring := by
+    rcases hbase with hh | hc
+    · exact hh
+    · have hring : HenselianRing v.valuationSubring
+          (IsLocalRing.maximalIdeal v.valuationSubring) :=
+        @IsAdicComplete.henselianRing v.valuationSubring _
+          (IsLocalRing.maximalIdeal v.valuationSubring) hc
+      exact {
+        is_henselian := by
+          intro f hf a₀ hfa hunit
+          have hmap : IsUnit
+              (Ideal.Quotient.mk (IsLocalRing.maximalIdeal v.valuationSubring)
+                (f.derivative.eval a₀)) :=
+            IsUnit.map (Ideal.Quotient.mk (IsLocalRing.maximalIdeal v.valuationSubring)) hunit
+          obtain ⟨a, ha, hres⟩ := hring.is_henselian f hf a₀ hfa hmap
+          exact ⟨a, ha, hres⟩ }
+  have hUnique : hasUniqueExtensionToEveryAlgebraicField v :=
+    ((henselian_uniqueness_criterion v).out 0 1).mp hhenselian
+  have hunique : hasUniqueValuationExtension v E := hUnique E
+  rcases hunique with ⟨⟨W⟩, hW⟩
+  refine ⟨W, ?_⟩
+  intro W'
+  exact hW W' W
 
 /-- Concrete data for the final local arithmetic dictionary. -/
 structure Chapter12LocalArithmeticDictionary

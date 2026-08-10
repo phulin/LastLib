@@ -33,6 +33,7 @@ def valuationExcess {K Γ : Type*} [Field K]
   v (f.eval a) - (s + s)
 
 /- The uniformity canonically induced by an additive valuation. -/
+@[instance_reducible]
 noncomputable def Chapter09ValuationUniformSpace
     {K Γ : Type*} [Field K]
     [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ) : UniformSpace K :=
@@ -52,6 +53,11 @@ def TendsToTop {Γ : Type*} [Preorder Γ] (s : ℕ → Γ) : Prop :=
 def Chapter09DoublingCofinal {Γ : Type*}
     [LinearOrderedAddCommGroupWithTop Γ] (q : Γ) : Prop :=
   ∀ γ : Γ, ∃ n : ℕ, γ ≤ (2 ^ n) • q
+
+/- Cofinality restricted to values represented by nonzero field elements. -/
+private def Chapter09ImageDoublingCofinal {K Γ : Type*} [Field K]
+    [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ) (q : Γ) : Prop :=
+  ∀ γ : Γ, (∃ x : K, x ≠ 0 ∧ v x = γ) → ∃ n : ℕ, γ ≤ (2 ^ n) • q
 
 /-- The strong triangle inequality for an additive valuation. -/
 theorem valuation_strong_triangle {K Γ : Type*} [Ring K]
@@ -356,8 +362,11 @@ private theorem hensel_cauchy_of_top {K Γ : Type*} [Field K]
     [LinearOrderedAddCommGroupWithTop Γ] (v : AddValuation K Γ)
     (hcomplete : Chapter09NonarchimedeanComplete v)
     (u : ℕ → K) (q₀ : Γ) (hq₀ : 0 < q₀)
-    (htop : ∀ γ : Γ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
-      γ ≤ v (u (n + 1) - u n)) :
+    (htop : ∀ γ : (MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation))ˣ,
+      ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
+        (OrderDual.ofDual (Multiplicative.toAdd
+          (MonoidWithZeroHom.ValueGroup₀.embedding γ.1)) + q₀) ≤
+          v (u (n + 1) - u n)) :
       @CauchySeq K ℕ (Chapter09ValuationUniformSpace v) inferInstance u := by
   have _hcomplete := hcomplete
   let hvalued : Valued K (Multiplicative Γᵒᵈ) := Valued.mk' v.toValuation
@@ -397,7 +406,7 @@ private theorem hensel_cauchy_of_top {K Γ : Type*} [Field K]
         ∀ᵉ (x ∈ M) (y ∈ M), v.toValuation.restrict (y - x) < γ.1 := by
     intro γ
     let t : Γ := hfoo γ
-    obtain ⟨N, hN⟩ := htop (t + q₀)
+    obtain ⟨N, hN⟩ := htop γ
     refine ⟨u '' Set.Ici N, ?_, ?_⟩
     · rw [Filter.mem_map']
       exact Filter.mem_of_superset (Filter.eventually_ge_atTop N)
@@ -468,7 +477,7 @@ private theorem hensel_newton_data {K Γ : Type*} [Field K]
     (hineq : v (f.eval a₀) > v (f.derivative.eval a₀) + v (f.derivative.eval a₀))
     (hderiv : v (f.derivative.eval a₀) ≠ ⊤)
     (hcomplete : Chapter09NonarchimedeanComplete v)
-    (hcofinal : Chapter09DoublingCofinal
+    (hcofinal : Chapter09ImageDoublingCofinal v
       (valuationExcess v f (v (f.derivative.eval a₀)) a₀)) :
     ∃ a : K, a ∈ A ∧ f.eval a = 0 ∧
       v (a - a₀) = v (f.derivative.eval a₀) +
@@ -545,28 +554,119 @@ private theorem hensel_newton_data {K Γ : Type*} [Field K]
         rw [hrec]
         exact A.sub_mem ih hcorrmem
   let u : ℕ → K := newtonIterate f a₀
-  have htop : ∀ γ : Γ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
-      γ ≤ v (u (n + 1) - u n) := by
-    intro γ
-    obtain ⟨N, hN⟩ := hcofinal (γ - s)
-    refine ⟨N, fun n hn => ?_⟩
-    have hpow : 2 ^ N ≤ 2 ^ n := by
-      exact Nat.pow_le_pow_right (by norm_num) hn
-    have hsmul : (2 ^ N) • q₀ ≤ (2 ^ n) • q₀ :=
-      nsmul_le_nsmul_left hq₀pos.le hpow
-    have hγ : γ ≤ s + (2 ^ n) • q₀ := by
+  let hfoo (γ : (MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation))ˣ) : Γ :=
+    OrderDual.ofDual (Multiplicative.toAdd
+      (MonoidWithZeroHom.ValueGroup₀.embedding γ.1))
+  have hval_lt_iff (x : K)
+      (γ : (MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation))ˣ) :
+      (v.toValuation.restrict x < γ.1) ↔ hfoo γ < v x := by
+    rw [Valuation.restrict_lt_iff_lt_embedding]
+    change Multiplicative.ofAdd (OrderDual.toDual (v x)) <
+      MonoidWithZeroHom.ValueGroup₀.embedding γ.1 ↔ _
+    change OrderDual.toDual (v x) < Multiplicative.toAdd
+      (MonoidWithZeroHom.ValueGroup₀.embedding γ.1) ↔ _
+    change _ ↔ OrderDual.ofDual (Multiplicative.toAdd
+      (MonoidWithZeroHom.ValueGroup₀.embedding γ.1)) < v x
+    exact OrderDual.toDual_lt
+  have himage_add_sub : ∀ {r₁ r₂ r₃ : Γ},
+      (∃ x : K, x ≠ 0 ∧ v x = r₁) →
+      (∃ y : K, y ≠ 0 ∧ v y = r₂) →
+      (∃ z : K, z ≠ 0 ∧ v z = r₃) →
+      ∃ w : K, w ≠ 0 ∧ v w = r₁ + r₂ - r₃ := by
+    intro r₁ r₂ r₃ hx hy hz
+    rcases hx with ⟨x, hx0, hxr⟩
+    rcases hy with ⟨y, hy0, hyr⟩
+    rcases hz with ⟨z, hz0, hzr⟩
+    refine ⟨x * y * z⁻¹, by simp [hx0, hy0, hz0], ?_⟩
+    rw [v.map_mul, v.map_mul, v.map_inv, hxr, hyr, hzr]
+    simp [sub_eq_add_neg, add_assoc]
+  have hfoo_image (γ : (MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation))ˣ) :
+      ∃ x : K, x ≠ 0 ∧ v x = hfoo γ := by
+    obtain ⟨x, hx⟩ :=
+      MonoidWithZeroHom.ValueGroup₀.restrict₀_surjective
+        (.ofClass v.toValuation) γ.1
+    have hx0 : x ≠ 0 := by
+      intro hx0
+      have hzero : (γ.1 : MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation)) = 0 := by
+        simpa [hx0] using hx.symm
+      exact (Units.ne_zero γ) hzero
+    refine ⟨x, hx0, ?_⟩
+    have hxeq : v.toValuation x =
+        MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
       calc
-        γ = s + (γ - s) := by
-          simpa [sub_eq_add_neg, add_comm, add_left_comm, add_assoc] using
-            (LinearOrderedAddCommGroupWithTop.add_neg_cancel_left_of_ne_top hs γ).symm
-        _ ≤ s + (2 ^ N) • q₀ := by
-          simpa [valuationExcess, add_comm] using add_le_add_left hN s
-        _ ≤ s + (2 ^ n) • q₀ := by
-          simpa [add_comm] using add_le_add_left hsmul s
-    have hnstep := valuation_newton_induction v A hA f hf a₀ ha₀ hineq hderiv n
-    rw [hnstep.2.2]
-    apply hγ.trans
-    simpa [s, q₀, valuationExcess, add_comm] using add_le_add_left hnstep.2.1 s
+        v.toValuation x =
+            MonoidWithZeroHom.ValueGroup₀.embedding
+              (v.toValuation.restrict x) :=
+          (Valuation.embedding_restrict v.toValuation x).symm
+        _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by
+          rw [Valuation.restrict_def, hx]
+    simpa [hfoo, AddValuation.toValuation_apply] using congrArg
+      (fun z : Multiplicative Γᵒᵈ =>
+        OrderDual.ofDual (Multiplicative.toAdd z)) hxeq
+  have hqimage : q₀ ≠ ⊤ →
+      ∃ z : K, z ≠ 0 ∧ v z = q₀ := by
+    intro hqtop
+    have heval_top : v (f.eval a₀) ≠ ⊤ := by
+      intro heval_top
+      apply hqtop
+      dsimp [q₀]
+      rw [sub_eq_add_neg, heval_top, top_add]
+    have heval0 : f.eval a₀ ≠ 0 := (AddValuation.ne_top_iff v).mp heval_top
+    have hderiv0 : f.derivative.eval a₀ ≠ 0 :=
+      (AddValuation.ne_top_iff v).mp hderiv
+    refine ⟨f.eval a₀ * (f.derivative.eval a₀)⁻¹ *
+      (f.derivative.eval a₀)⁻¹, by simp [heval0, hderiv0], ?_⟩
+    rw [v.map_mul, v.map_mul, AddValuation.map_inv]
+    simp [q₀, s, sub_eq_add_neg, add_assoc]
+  have hpowtop : ∀ j : ℕ, (2 ^ j) • (⊤ : Γ) = ⊤ := by
+    intro j
+    induction j with
+    | zero => simp
+    | succ j ih =>
+        rw [pow_succ, show 2 ^ j * 2 = 2 ^ j + 2 ^ j by omega,
+          add_nsmul, ih]
+        simp
+  have htop : ∀ γ : (MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation))ˣ,
+      ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
+        hfoo γ + q₀ ≤ v (u (n + 1) - u n) := by
+    intro γ
+    let t : Γ := hfoo γ
+    have hqtop : q₀ = ⊤ ∨ q₀ ≠ ⊤ := eq_or_ne q₀ ⊤
+    rcases hqtop with hqtop | hqtop
+    · refine ⟨0, fun n _ => ?_⟩
+      have hnstep := valuation_newton_induction v A hA f hf a₀ ha₀ hineq hderiv n
+      have hqn : valuationExcess v f s (u n) = ⊤ := by
+        apply top_unique
+        have hnineq := hnstep.2.1
+        rw [show (2 ^ n) • q₀ = ⊤ by rw [hqtop, hpowtop n]] at hnineq
+        simpa [u, s, q₀] using hnineq
+      have hcorr : v (u (n + 1) - u n) = ⊤ := by
+        rw [hnstep.2.2, hqn]
+        simp
+      rw [hqtop, add_top, hcorr]
+    · obtain ⟨N, hN⟩ := hcofinal (t + q₀ - s) (by
+        obtain ⟨x, hx0, hxt⟩ := hfoo_image γ
+        exact (himage_add_sub ⟨x, hx0, hxt⟩ (hqimage hqtop)
+          ⟨f.derivative.eval a₀, (AddValuation.ne_top_iff v).mp hderiv, rfl⟩))
+      refine ⟨N, fun n hn => ?_⟩
+      have hpow : 2 ^ N ≤ 2 ^ n := by
+        exact Nat.pow_le_pow_right (by norm_num) hn
+      have hsmul : (2 ^ N) • q₀ ≤ (2 ^ n) • q₀ :=
+        nsmul_le_nsmul_left hq₀pos.le hpow
+      have hγ : t + q₀ ≤ s + (2 ^ n) • q₀ := by
+        calc
+          t + q₀ = s + (t + q₀ - s) := by
+            simpa [sub_eq_add_neg, add_comm, add_left_comm, add_assoc] using
+              (LinearOrderedAddCommGroupWithTop.add_neg_cancel_left_of_ne_top hs
+                (t + q₀)).symm
+          _ ≤ s + (2 ^ N) • q₀ := by
+            simpa [valuationExcess, add_comm] using add_le_add_left hN s
+          _ ≤ s + (2 ^ n) • q₀ := by
+            simpa [add_comm] using add_le_add_left hsmul s
+      have hnstep := valuation_newton_induction v A hA f hf a₀ ha₀ hineq hderiv n
+      rw [hnstep.2.2]
+      apply hγ.trans
+      simpa [s, q₀, valuationExcess, add_comm] using add_le_add_left hnstep.2.1 s
   have hCauchy : @CauchySeq K ℕ (Chapter09ValuationUniformSpace v) inferInstance u :=
     hensel_cauchy_of_top v hcomplete u q₀ hq₀pos htop
   obtain ⟨a, ha_lim⟩ := @cauchySeq_tendsto_of_complete K ℕ
@@ -595,20 +695,6 @@ private theorem hensel_newton_data {K Γ : Type*} [Field K]
       simpa [AddValuation.toValuation_apply] using hh
     have hnonneg : 0 ≤ v (u N) := (hA _).mp (hmem N)
     exact (not_lt_of_ge (hEq' ▸ hnonneg)) hneg
-  let hfoo (γ : (MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation))ˣ) : Γ :=
-    OrderDual.ofDual (Multiplicative.toAdd
-      (MonoidWithZeroHom.ValueGroup₀.embedding γ.1))
-  have hval_lt_iff (x : K)
-      (γ : (MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation))ˣ) :
-      (v.toValuation.restrict x < γ.1) ↔ hfoo γ < v x := by
-    rw [Valuation.restrict_lt_iff_lt_embedding]
-    change Multiplicative.ofAdd (OrderDual.toDual (v x)) <
-      MonoidWithZeroHom.ValueGroup₀.embedding γ.1 ↔ _
-    change OrderDual.toDual (v x) < Multiplicative.toAdd
-      (MonoidWithZeroHom.ValueGroup₀.embedding γ.1) ↔ _
-    change _ ↔ OrderDual.ofDual (Multiplicative.toAdd
-      (MonoidWithZeroHom.ValueGroup₀.embedding γ.1)) < v x
-    exact OrderDual.toDual_lt
   have hbound : ∀ n : ℕ,
       s + s + (2 ^ n) • q₀ ≤ v (f.eval (u n)) := by
     intro n
@@ -628,84 +714,122 @@ private theorem hensel_newton_data {K Γ : Type*} [Field K]
   have hEval : Filter.Tendsto (fun n : ℕ => f.eval (u n)) Filter.atTop (nhds (0 : K)) := by
     rw [(@Valued.hasBasis_nhds_zero K _ (Multiplicative Γᵒᵈ) _ hvalued).tendsto_right_iff]
     intro γ _
-    let t : Γ := hfoo γ
-    have ht_top : t ≠ ⊤ := by
-      intro htop
-      change OrderDual.ofDual (Multiplicative.toAdd
-        (MonoidWithZeroHom.ValueGroup₀.embedding γ.1)) = (⊤ : Γ) at htop
-      have hdual : Multiplicative.toAdd
-          (MonoidWithZeroHom.ValueGroup₀.embedding γ.1) = (⊥ : Γᵒᵈ) :=
-        (OrderDual.ofDual_eq_top Γ).mp htop
-      have heq : MonoidWithZeroHom.ValueGroup₀.embedding γ.1 = 0 := by
-        exact congrArg Multiplicative.ofAdd hdual
-      have hγzero : (γ.1 : MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation)) = 0 := by
-        apply MonoidWithZeroHom.ValueGroup₀.embedding_injective
-        exact heq
-      exact (Units.ne_zero γ) hγzero
-    have hss : s + s ≠ ⊤ := by simp [hs]
-    let ss : Γ := s + s
-    have hss : ss ≠ ⊤ := by simp [ss, hs]
-    let r : Γ := t - ss
-    have hr_top : r ≠ ⊤ := by
-      dsimp [r]
-      intro hr
-      apply ht_top
-      calc
-        t = ss + (t - ss) := by
-          rw [sub_eq_add_neg]
-          symm
-          calc
-            ss + (t + -ss) = (ss + -ss) + t := by
-              calc
-                ss + (t + -ss) = (ss + t) + -ss :=
-                  (add_assoc ss t (-ss)).symm
-                _ = ss + (t + -ss) :=
-                  add_assoc ss t (-ss)
-                _ = ss + (-ss + t) :=
-                  congrArg (fun z : Γ => ss + z) (add_comm t (-ss))
-                _ = (ss + -ss) + t :=
-                  (add_assoc ss (-ss) t).symm
-            _ = t := by
-              rw [LinearOrderedAddCommGroupWithTop.add_neg_cancel_of_ne_top hss,
-                zero_add]
-        _ = ⊤ := by rw [hr]; simp
-    obtain ⟨N, hN⟩ := hcofinal (r + q₀)
-    refine Filter.eventually_atTop.2 ⟨N, fun n hn => ?_⟩
-    have hpow : 2 ^ N ≤ 2 ^ n := by
-      exact Nat.pow_le_pow_right (by norm_num) hn
-    have hsmul : (2 ^ N) • q₀ ≤ (2 ^ n) • q₀ :=
-      nsmul_le_nsmul_left hq₀pos.le hpow
-    have hrpow : r + q₀ ≤ (2 ^ n) • q₀ :=
-      hN.trans hsmul
-    have hrstrict : r < r + q₀ := by
-      simpa only [add_zero] using (add_lt_add_iff_right_of_ne_top hr_top).2 hq₀pos
-    have hstrict : t < ss + (2 ^ n) • q₀ := by
-      calc
-        t = ss + (t - ss) := by
-          rw [sub_eq_add_neg]
-          symm
-          calc
-            ss + (t + -ss) = (ss + -ss) + t := by
-              calc
-                ss + (t + -ss) = (ss + t) + -ss :=
-                  (add_assoc ss t (-ss)).symm
-                _ = ss + (t + -ss) :=
-                  add_assoc ss t (-ss)
-                _ = ss + (-ss + t) :=
-                  congrArg (fun z : Γ => ss + z) (add_comm t (-ss))
-                _ = (ss + -ss) + t :=
-                  (add_assoc ss (-ss) t).symm
-            _ = t := by
-              rw [LinearOrderedAddCommGroupWithTop.add_neg_cancel_of_ne_top hss,
-                zero_add]
-        _ < ss + ((t - ss) + q₀) := by
-          exact (add_lt_add_iff_right_of_ne_top hss).2 hrstrict
-        _ ≤ ss + (2 ^ n) • q₀ := add_le_add_right hrpow _
-    apply hval_lt_iff _ γ |>.mpr
-    have hb : ss + (2 ^ n) • q₀ ≤ v (f.eval (u n)) := by
-      dsimp [ss]
-      exact hbound n
-    exact lt_of_lt_of_le hstrict hb
+    by_cases hqtop : q₀ = ⊤
+    · filter_upwards [] with n
+      have hnstep := valuation_newton_induction v A hA f hf a₀ ha₀ hineq hderiv n
+      have hqn : valuationExcess v f s (u n) = ⊤ := by
+        apply top_unique
+        have hnineq := hnstep.2.1
+        rw [show (2 ^ n) • q₀ = ⊤ by rw [hqtop, hpowtop n]] at hnineq
+        simpa [u, s, q₀] using hnineq
+      have hve : v (f.eval (u n)) = ⊤ := by
+        by_contra hve
+        have hqne : valuationExcess v f s (u n) ≠ ⊤ := by
+          intro hqne
+          have hss : s + s ≠ ⊤ := by simp [hs]
+          have hcancel : valuationExcess v f s (u n) + (s + s) =
+              v (f.eval (u n)) := by
+            dsimp [valuationExcess]
+            rw [sub_eq_add_neg]
+            calc
+              (v (f.eval (u n)) + -(s + s)) + (s + s) =
+                  v (f.eval (u n)) + (-(s + s) + (s + s)) := by ac_rfl
+              _ = v (f.eval (u n)) := by
+                rw [LinearOrderedAddCommGroupWithTop.neg_add_cancel_of_ne_top hss,
+                  add_zero]
+          rw [hqne] at hcancel
+          have hve' : v (f.eval (u n)) = ⊤ := by
+            simpa using hcancel.symm
+          exact hve hve'
+        exact hqne hqn
+      rw [(AddValuation.top_iff v).mp hve]
+      simp
+    · let t : Γ := hfoo γ
+      have ht_top : t ≠ ⊤ := by
+        intro htop
+        change OrderDual.ofDual (Multiplicative.toAdd
+          (MonoidWithZeroHom.ValueGroup₀.embedding γ.1)) = (⊤ : Γ) at htop
+        have hdual : Multiplicative.toAdd
+            (MonoidWithZeroHom.ValueGroup₀.embedding γ.1) = (⊥ : Γᵒᵈ) :=
+          (OrderDual.ofDual_eq_top Γ).mp htop
+        have heq : MonoidWithZeroHom.ValueGroup₀.embedding γ.1 = 0 := by
+          exact congrArg Multiplicative.ofAdd hdual
+        have hγzero : (γ.1 : MonoidWithZeroHom.ValueGroup₀ (.ofClass v.toValuation)) = 0 := by
+          apply MonoidWithZeroHom.ValueGroup₀.embedding_injective
+          exact heq
+        exact (Units.ne_zero γ) hγzero
+      have hss : s + s ≠ ⊤ := by simp [hs]
+      let ss : Γ := s + s
+      have hss : ss ≠ ⊤ := by simp [ss, hs]
+      let r : Γ := t - ss
+      have hr_top : r ≠ ⊤ := by
+        dsimp [r]
+        intro hr
+        apply ht_top
+        calc
+          t = ss + (t - ss) := by
+            rw [sub_eq_add_neg]
+            symm
+            calc
+              ss + (t + -ss) = (ss + -ss) + t := by
+                calc
+                  ss + (t + -ss) = (ss + t) + -ss :=
+                    (add_assoc ss t (-ss)).symm
+                  _ = ss + (t + -ss) :=
+                    add_assoc ss t (-ss)
+                  _ = ss + (-ss + t) :=
+                    congrArg (fun z : Γ => ss + z) (add_comm t (-ss))
+                  _ = (ss + -ss) + t :=
+                    (add_assoc ss (-ss) t).symm
+              _ = t := by
+                rw [LinearOrderedAddCommGroupWithTop.add_neg_cancel_of_ne_top hss,
+                  zero_add]
+          _ = ⊤ := by rw [hr]; simp
+      obtain ⟨N, hN⟩ := hcofinal (r + q₀) (by
+        obtain ⟨x, hx0, hxt⟩ := hfoo_image γ
+        have hss_image : ∃ z : K, z ≠ 0 ∧ v z = ss := by
+          refine ⟨f.derivative.eval a₀ * f.derivative.eval a₀,
+            mul_ne_zero ((AddValuation.ne_top_iff v).mp hderiv)
+              ((AddValuation.ne_top_iff v).mp hderiv), ?_⟩
+          rw [v.map_mul]
+        simpa [r, ss, sub_eq_add_neg, add_assoc, add_comm, add_left_comm] using
+          himage_add_sub ⟨x, hx0, hxt⟩ (hqimage hqtop) hss_image)
+      refine Filter.eventually_atTop.2 ⟨N, fun n hn => ?_⟩
+      have hpow : 2 ^ N ≤ 2 ^ n := by
+        exact Nat.pow_le_pow_right (by norm_num) hn
+      have hsmul : (2 ^ N) • q₀ ≤ (2 ^ n) • q₀ :=
+        nsmul_le_nsmul_left hq₀pos.le hpow
+      have hrpow : r + q₀ ≤ (2 ^ n) • q₀ :=
+        hN.trans hsmul
+      have hrstrict : r < r + q₀ := by
+        simpa only [add_zero] using (add_lt_add_iff_right_of_ne_top hr_top).2 hq₀pos
+      have hstrict : t < ss + (2 ^ n) • q₀ := by
+        calc
+          t = ss + (t - ss) := by
+            rw [sub_eq_add_neg]
+            symm
+            calc
+              ss + (t + -ss) = (ss + -ss) + t := by
+                calc
+                  ss + (t + -ss) = (ss + t) + -ss :=
+                    (add_assoc ss t (-ss)).symm
+                  _ = ss + (t + -ss) :=
+                    add_assoc ss t (-ss)
+                  _ = ss + (-ss + t) :=
+                    congrArg (fun z : Γ => ss + z) (add_comm t (-ss))
+                  _ = (ss + -ss) + t :=
+                    (add_assoc ss (-ss) t).symm
+              _ = t := by
+                rw [LinearOrderedAddCommGroupWithTop.add_neg_cancel_of_ne_top hss,
+                  zero_add]
+          _ < ss + ((t - ss) + q₀) := by
+            exact (add_lt_add_iff_right_of_ne_top hss).2 hrstrict
+          _ ≤ ss + (2 ^ n) • q₀ := add_le_add_right hrpow _
+      apply hval_lt_iff _ γ |>.mpr
+      have hb : ss + (2 ^ n) • q₀ ≤ v (f.eval (u n)) := by
+        dsimp [ss]
+        exact hbound n
+      exact lt_of_lt_of_le hstrict hb
   have hbase : v (u 1 - u 0) = s + q₀ := by
     have hn0 := valuation_newton_induction v A hA f hf a₀ ha₀ hineq hderiv 0
     have hh := hn0.2.2
@@ -885,7 +1009,8 @@ theorem hensel_newton_form_of_doubling_cofinal {K Γ : Type*} [Field K]
     dsimp [q₀, s]
     exact LinearOrderedAddCommGroupWithTop.sub_pos.mpr (Or.inl hineq)
   obtain ⟨a, haA, hfa, hdisp, hderivA⟩ :=
-    hensel_newton_data v A hA f hf a₀ ha₀ hineq hderiv hcomplete hcofinal
+    hensel_newton_data v A hA f hf a₀ ha₀ hineq hderiv hcomplete
+      (fun γ _ => hcofinal γ)
   have hdisp' : v (a - a₀) = s + q₀ := by
     simpa [s, q₀] using hdisp
   have hstrict : s < v (a - a₀) := by
@@ -1002,7 +1127,7 @@ theorem hensel_newton_form {K Γ : Type*} [Field K]
     ∃! a : K,
       f.eval a = 0 ∧
         v (a - a₀) > v (f.derivative.eval a₀) ∧
-          v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
+        v (a - a₀) = v (f.eval a₀) - v (f.derivative.eval a₀) := by
   sorry
 
 /-- The exact displacement in the valuation Newton form under explicit cofinality. -/

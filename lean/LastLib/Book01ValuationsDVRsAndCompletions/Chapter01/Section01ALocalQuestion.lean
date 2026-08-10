@@ -113,13 +113,13 @@ theorem ordZeroPolynomial_characterization {f : k[X]} (hf : f ≠ 0) (n : ℕ) :
   simpa [ordZeroPolynomial] using hfin.multiplicity_eq_iff
 
 /-- A nonzero polynomial has positive order exactly when it vanishes at the origin. -/
-theorem ordZeroPolynomial_pos_iff_eval_zero {f : k[X]} (hf : f ≠ 0) :
+theorem ordZeroPolynomial_pos_iff_eval_zero {f : k[X]} (_hf : f ≠ 0) :
     0 < ordZeroPolynomial f ↔ Polynomial.eval 0 f = 0 := by
   simp [ordZeroPolynomial, Nat.pos_iff_ne_zero, multiplicity_ne_zero,
     Polynomial.X_dvd_iff, Polynomial.coeff_zero_eq_eval_zero]
 
 /-- The order of a nonvanishing polynomial at the origin is zero. -/
-theorem ordZeroPolynomial_eq_zero_iff_eval_ne_zero {f : k[X]} (hf : f ≠ 0) :
+theorem ordZeroPolynomial_eq_zero_iff_eval_ne_zero {f : k[X]} (_hf : f ≠ 0) :
     ordZeroPolynomial f = 0 ↔ Polynomial.eval 0 f ≠ 0 := by
   simp [ordZeroPolynomial, multiplicity_eq_zero, Polynomial.X_dvd_iff,
     Polynomial.coeff_zero_eq_eval_zero]
@@ -688,7 +688,7 @@ theorem ordZeroRatFunc_sign_classification {x : RatFunc k} (hx : x ≠ 0) :
       multiplicity_ne_zero.mp h.2
     have hu : IsUnit (Polynomial.X : k[X]) :=
       (RatFunc.isCoprime_num_denom x).isUnit_of_dvd' hmx hnx
-    exact Polynomial.prime_X.not_unit hu
+    exact Polynomial.prime_X.not_isUnit hu
   have hpos : (0 < (m : ℤ) - (n : ℤ)) ↔ m ≠ 0 := by
     constructor
     · intro hmn hm0

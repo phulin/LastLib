@@ -3,6 +3,7 @@ import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 import Mathlib.Algebra.Polynomial.FieldDivision
 import Mathlib.NumberTheory.LegendreSymbol.Basic
 import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+import Mathlib.NumberTheory.KummerDedekind
 import Mathlib.RingTheory.Conductor
 import Mathlib.RingTheory.UniqueFactorizationDomain.NormalizedFactors
 
@@ -12,7 +13,7 @@ namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
 
 noncomputable section
 
-open Ideal IsLocalRing
+open Ideal IsLocalRing UniqueFactorizationMonoid
 open Polynomial
 open scoped BigOperators TensorProduct WithZero Polynomial nonZeroDivisors
 
@@ -63,7 +64,7 @@ theorem chapter11_quadratic_patterns_exhaustive
     have he_le : e 0 ≤ 2 := by
       exact (Nat.le_of_dvd (by omega) ⟨f 0, rfl⟩).trans_eq hi
     have hf_le : f 0 ≤ 2 := by
-      exact (Nat.le_of_dvd (by omega) ⟨e 0, by simpa [Nat.mul_comm]⟩).trans_eq hi
+      exact (Nat.le_of_dvd (by omega) ⟨e 0, by simp [Nat.mul_comm]⟩).trans_eq hi
     interval_cases he : e 0 <;> interval_cases hf : f 0 <;>
       simp_all [chapter11SplitPattern, chapter11InertPattern,
         chapter11TotallyRamifiedPattern]
@@ -152,7 +153,7 @@ theorem chapter11_unit_discriminant_gives_separable_reduction
           ((-1 : R) ^ (f.natDegree * (f.natDegree - 1) / 2))) :=
         (isUnit_neg_one.pow _).map (Ideal.Quotient.mk p)
       have h₂ : IsUnit ((Ideal.Quotient.mk p) f.leadingCoeff) := by
-        simpa [hf.leadingCoeff]
+        simp [hf.leadingCoeff]
       exact (h₁.mul h₂).mul hdisc
     have hres_map :
         Polynomial.resultant g g.derivative g.natDegree (g.natDegree - 1) =
@@ -238,7 +239,7 @@ theorem chapter11_gaussian_field_is_quadratic :
       have hx' : x ^ 2 + 1 = 0 := by
         simpa [chapter11GaussianPolynomial] using hx
       nlinarith [sq_nonneg x]
-  letI : Fact (Irreducible (chapter11GaussianPolynomial ℚ)) := ⟨hirr⟩
+  let _ : Fact (Irreducible (chapter11GaussianPolynomial ℚ)) := ⟨hirr⟩
   constructor
   · exact Field.toIsField _
   · calc
@@ -273,7 +274,7 @@ theorem chapter11_gaussian_odd_prime_one_mod_four_has_two_roots
     (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     chapter11SimpleResidueRoots (ZMod p)
       (chapter11GaussianPolynomial (ZMod p)) := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   have hpnot3 : p % 4 ≠ 3 := by omega
   obtain ⟨a, ha⟩ := (ZMod.exists_sq_eq_neg_one_iff (p := p)).mpr hpnot3
   have ha' : a ^ 2 = (-1 : ZMod p) := by
@@ -313,7 +314,7 @@ theorem chapter11_gaussian_odd_prime_three_mod_four_is_inert
     (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3) :
     chapter11IrreducibleResiduePolynomial (ZMod p)
   (chapter11GaussianPolynomial (ZMod p)) := by
-  letI : Fact p.Prime := ⟨hp⟩
+  let _ : Fact p.Prime := ⟨hp⟩
   refine ⟨by
       simpa [chapter11GaussianPolynomial] using
         (monic_X_pow_add_C (R := ZMod p) (1 : ZMod p) (n := 2) (by norm_num)),
@@ -400,7 +401,7 @@ theorem chapter11_gaussian_five_prime_data :
       chapter11GaussianIdealFiveMinus.LiesOver
         (Ideal.span ({(5 : ℤ)} : Set ℤ)) := by
   classical
-  letI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
+  let _ : Fact (Nat.Prime 5) := ⟨by norm_num⟩
   let f : Polynomial ℤ := chapter11GaussianPolynomial ℤ
   have hf : f.Monic := by
     simpa [f, chapter11GaussianPolynomial] using
@@ -411,7 +412,9 @@ theorem chapter11_gaussian_five_prime_data :
     have hdeg' : f.natDegree = 2 := by
       simpa [f, chapter11GaussianPolynomial] using
         (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
-    have hzero : (2 : ℕ) = 0 := by simpa [hdeg'] using hdeg
+    have hzero : (2 : ℕ) = 0 := by
+      norm_num at hdeg
+      omega
     omega
   have hroot : (chapter11GaussianRoot : chapter11GaussianOrder) ^ 2 = -1 := by
     change (AdjoinRoot.root (chapter11GaussianPolynomial ℤ)) ^ 2 = -1
@@ -426,7 +429,7 @@ theorem chapter11_gaussian_five_prime_data :
           4 - chapter11GaussianRoot ^ 2 := by ring
       _ = 5 := by rw [hroot]; norm_num
   have hroot5 : f.eval₂ (algebraMap ℤ (ZMod 5)) (3 : ZMod 5) = 0 := by
-    norm_num [f, chapter11GaussianPolynomial] <;> decide
+    norm_num [f, chapter11GaussianPolynomial]; decide
   let ePlus : chapter11GaussianOrder →+* ZMod 5 :=
     AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 5)) (3 : ZMod 5) hroot5
   have hkerPlus : RingHom.ker ePlus = chapter11GaussianIdealFivePlus := by
@@ -441,7 +444,7 @@ theorem chapter11_gaussian_five_prime_data :
           rw [modByMonic_eq_sub_mul_div]
           have hd : f ∣ -(f * (p /ₘ f)) :=
             dvd_neg.mpr (dvd_mul_right _ _)
-          convert hd using 1 <;> ring
+          convert hd using 1; ring
         have hrdeg : r.natDegree ≤ 1 := by
           have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
           have hfdeg : f.natDegree = 2 := by
@@ -500,7 +503,7 @@ theorem chapter11_gaussian_five_prime_data :
           rw [map_ofNat, hrootmap]
         _ = 0 := by decide
   have hroot5' : f.eval₂ (algebraMap ℤ (ZMod 5)) (2 : ZMod 5) = 0 := by
-    norm_num [f, chapter11GaussianPolynomial] <;> decide
+    norm_num [f, chapter11GaussianPolynomial]; decide
   let eMinus : chapter11GaussianOrder →+* ZMod 5 :=
     AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 5)) (2 : ZMod 5) hroot5'
   have hkerMinus : RingHom.ker eMinus = chapter11GaussianIdealFiveMinus := by
@@ -515,7 +518,7 @@ theorem chapter11_gaussian_five_prime_data :
           rw [modByMonic_eq_sub_mul_div]
           have hd : f ∣ -(f * (p /ₘ f)) :=
             dvd_neg.mpr (dvd_mul_right _ _)
-          convert hd using 1 <;> ring
+          convert hd using 1; ring
         have hrdeg : r.natDegree ≤ 1 := by
           have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
           have hfdeg : f.natDegree = 2 := by
@@ -641,7 +644,9 @@ theorem chapter11_gaussian_five_residue_fields
     have hdeg' : f.natDegree = 2 := by
       simpa [f, chapter11GaussianPolynomial] using
         (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
-    have hzero : (2 : ℕ) = 0 := by simpa [hdeg'] using hdeg
+    have hzero : (2 : ℕ) = 0 := by
+      norm_num at hdeg
+      omega
     omega
   have hroot : (chapter11GaussianRoot : chapter11GaussianOrder) ^ 2 = -1 := by
     change (AdjoinRoot.root (chapter11GaussianPolynomial ℤ)) ^ 2 = -1
@@ -658,7 +663,7 @@ theorem chapter11_gaussian_five_residue_fields
   have hplus :
       Nonempty (chapter11GaussianOrder ⧸ chapter11GaussianIdealFivePlus ≃+* ZMod 5) := by
     have hroot5 : f.eval₂ (algebraMap ℤ (ZMod 5)) (3 : ZMod 5) = 0 := by
-      norm_num [f, chapter11GaussianPolynomial] <;> decide
+      norm_num [f, chapter11GaussianPolynomial]; decide
     let ePlus : chapter11GaussianOrder →+* ZMod 5 :=
       AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 5)) (3 : ZMod 5) hroot5
     have hkerPlus : RingHom.ker ePlus = chapter11GaussianIdealFivePlus := by
@@ -673,7 +678,7 @@ theorem chapter11_gaussian_five_residue_fields
             rw [modByMonic_eq_sub_mul_div]
             have hd : f ∣ -(f * (p /ₘ f)) :=
               dvd_neg.mpr (dvd_mul_right _ _)
-            convert hd using 1 <;> ring
+            convert hd using 1; ring
           have hrdeg : r.natDegree ≤ 1 := by
             have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
             have hfdeg : f.natDegree = 2 := by
@@ -737,7 +742,7 @@ theorem chapter11_gaussian_five_residue_fields
   have hminus :
       Nonempty (chapter11GaussianOrder ⧸ chapter11GaussianIdealFiveMinus ≃+* ZMod 5) := by
     have hroot5 : f.eval₂ (algebraMap ℤ (ZMod 5)) (2 : ZMod 5) = 0 := by
-      norm_num [f, chapter11GaussianPolynomial] <;> decide
+      norm_num [f, chapter11GaussianPolynomial]; decide
     let eMinus : chapter11GaussianOrder →+* ZMod 5 :=
       AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 5)) (2 : ZMod 5) hroot5
     have hkerMinus : RingHom.ker eMinus = chapter11GaussianIdealFiveMinus := by
@@ -752,7 +757,7 @@ theorem chapter11_gaussian_five_residue_fields
             rw [modByMonic_eq_sub_mul_div]
             have hd : f ∣ -(f * (p /ₘ f)) :=
               dvd_neg.mpr (dvd_mul_right _ _)
-            convert hd using 1 <;> ring
+            convert hd using 1; ring
           have hrdeg : r.natDegree ≤ 1 := by
             have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
             have hfdeg : f.natDegree = 2 := by
@@ -828,7 +833,7 @@ theorem chapter11_gaussian_three_inert_residue_degree
   have hmap : Ideal.map (AdjoinRoot.of f) p =
       chapter11GaussianIdealThree := by
     rw [chapter11GaussianIdealThree, Ideal.map_span]
-    simp [f, p]
+    simp [f]
   have hpoly :
       (f.map (Ideal.Quotient.mk p)).map eZ.toRingHom =
         (X ^ 2 + 1 : Polynomial (ZMod 3)) := by
@@ -853,11 +858,11 @@ theorem chapter11_gaussian_three_is_inert_field :
     Nonempty
           (chapter11GaussianOrder ⧸ chapter11GaussianIdealThree ≃+*
           AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) := by
-  letI : Fact (Nat.Prime 3) := ⟨by norm_num⟩
+  let _ : Fact (Nat.Prime 3) := ⟨by norm_num⟩
   have hres := chapter11_gaussian_odd_prime_three_mod_four_is_inert 3
     (by norm_num) (by norm_num)
   have hfield : IsField (AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) := by
-    letI : Fact (Irreducible (X ^ 2 + 1 : Polynomial (ZMod 3))) :=
+    let _ : Fact (Irreducible (X ^ 2 + 1 : Polynomial (ZMod 3))) :=
       ⟨hres.2.2⟩
     exact Field.toIsField _
   refine ⟨hfield, ?_, chapter11_gaussian_three_inert_residue_degree⟩
@@ -886,7 +891,9 @@ theorem chapter11_gaussian_two_ramification_data
     have hdeg' : f.natDegree = 2 := by
       simpa [f, chapter11GaussianPolynomial] using
         (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
-    have hzero : (2 : ℕ) = 0 := by simpa [hdeg'] using hdeg
+    have hzero : (2 : ℕ) = 0 := by
+      norm_num at hdeg
+      omega
     omega
   have hroot : (chapter11GaussianRoot : chapter11GaussianOrder) ^ 2 = -1 := by
     change (AdjoinRoot.root (chapter11GaussianPolynomial ℤ)) ^ 2 = -1
@@ -939,7 +946,7 @@ theorem chapter11_gaussian_two_ramification_data
   have hresidue :
       Nonempty (chapter11GaussianOrder ⧸ chapter11GaussianIdealTwo ≃+* ZMod 2) := by
     have hroot2 : f.eval₂ (algebraMap ℤ (ZMod 2)) (1 : ZMod 2) = 0 := by
-      norm_num [f, chapter11GaussianPolynomial] <;> decide
+      norm_num [f, chapter11GaussianPolynomial]; decide
     let eTwo : chapter11GaussianOrder →+* ZMod 2 :=
       AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 2)) (1 : ZMod 2) hroot2
     have htwo_mem : (2 : chapter11GaussianOrder) ∈ chapter11GaussianIdealTwo := by
@@ -959,7 +966,7 @@ theorem chapter11_gaussian_two_ramification_data
             rw [modByMonic_eq_sub_mul_div]
             have hd : f ∣ -(f * (p /ₘ f)) :=
               dvd_neg.mpr (dvd_mul_right _ _)
-            convert hd using 1 <;> ring
+            convert hd using 1; ring
           have hrdeg : r.natDegree ≤ 1 := by
             have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
             have hfdeg : f.natDegree = 2 := by
@@ -1031,7 +1038,7 @@ theorem chapter11_gaussian_two_is_unique_totally_ramified :
         Q.IsPrime ∧ Q.LiesOver (Ideal.span ({(2 : ℤ)} : Set ℤ)) →
           Q = chapter11GaussianIdealTwo := by
   classical
-  letI : Fact (Nat.Prime 2) := ⟨by norm_num⟩
+  let _ : Fact (Nat.Prime 2) := ⟨by norm_num⟩
   let p : Ideal ℤ := Ideal.span ({(2 : ℤ)} : Set ℤ)
   have hdata := chapter11_gaussian_two_ramification_data
   rcases hdata with ⟨hsq, hres⟩
@@ -1087,7 +1094,7 @@ theorem chapter11_gaussian_two_is_unique_totally_ramified :
       simpa using h
   let eGauss : chapter11GaussianOrder ≃+* GaussianInt :=
     RingEquiv.ofBijective fwd hfwd_bij
-  letI : IsDomain chapter11GaussianOrder :=
+  let _ : IsDomain chapter11GaussianOrder :=
     eGauss.toMulEquiv.isDomain GaussianInt
   have hrev_surj : Function.Surjective rev := by
     intro x
@@ -1095,16 +1102,16 @@ theorem chapter11_gaussian_two_is_unique_totally_ramified :
     have h := congrArg (fun φ : chapter11GaussianOrder →+* chapter11GaussianOrder => φ x)
       hcomp₁
     simpa using h
-  letI : IsPrincipalIdealRing chapter11GaussianOrder :=
+  let _ : IsPrincipalIdealRing chapter11GaussianOrder :=
     IsPrincipalIdealRing.of_surjective rev hrev_surj
-  letI : IsDedekindDomain chapter11GaussianOrder := by
+  let _ : IsDedekindDomain chapter11GaussianOrder := by
     infer_instance
   have hfmonic : (chapter11GaussianPolynomial ℤ).Monic := by
     simpa [chapter11GaussianPolynomial] using
       (monic_X_pow_add_C (R := ℤ) (1 : ℤ) (n := 2) (by norm_num))
-  letI : Module.Finite ℤ chapter11GaussianOrder :=
+  let _ : Module.Finite ℤ chapter11GaussianOrder :=
     hfmonic.finite_adjoinRoot
-  letI : Algebra.IsIntegral ℤ chapter11GaussianOrder := by
+  let _ : Algebra.IsIntegral ℤ chapter11GaussianOrder := by
     infer_instance
   have hover : chapter11GaussianIdealTwo.LiesOver p := by
     constructor
@@ -1128,8 +1135,8 @@ theorem chapter11_gaussian_two_is_unique_totally_ramified :
       rw [Ideal.mem_span_singleton]
       exact (ZMod.intCast_zmod_eq_zero_iff_dvd z 2).mp hzmod
   have hram : chapter11GaussianIdealTwo.ramificationIdx ℤ = 2 := by
-    letI : chapter11GaussianIdealTwo.IsPrime := hprime
-    letI : chapter11GaussianIdealTwo.LiesOver p := hover
+    let _ : chapter11GaussianIdealTwo.IsPrime := hprime
+    let _ : chapter11GaussianIdealTwo.LiesOver p := hover
     have hp0 : p ≠ (⊥ : Ideal ℤ) := by
       dsimp [p]
       rw [Ideal.span_singleton_eq_bot]
@@ -1155,7 +1162,7 @@ theorem chapter11_gaussian_two_is_unique_totally_ramified :
       exact (Ideal.map_eq_bot_iff_of_injective hof).mp hbot
     rw [Ideal.IsDedekindDomain.ramificationIdx_eq_multiplicity p
       chapter11GaussianIdealTwo hpmap, hmap]
-    letI : FaithfulSMul ℤ chapter11GaussianOrder :=
+    let _ : FaithfulSMul ℤ chapter11GaussianOrder :=
       (faithfulSMul_iff_algebraMap_injective ℤ chapter11GaussianOrder).2 hof
     have hP0 : chapter11GaussianIdealTwo ≠ (⊥ : Ideal chapter11GaussianOrder) :=
       Ideal.ne_bot_of_liesOver_of_ne_bot hp0 chapter11GaussianIdealTwo
@@ -1163,8 +1170,8 @@ theorem chapter11_gaussian_two_is_unique_totally_ramified :
       (Ideal.prime_of_isPrime hP0 hprime) 2
   refine ⟨hprime, hmax, hover, hram, ?_⟩
   intro Q hQ
-  letI : Q.IsPrime := hQ.1
-  letI : Q.LiesOver p := hQ.2
+  let _ : Q.IsPrime := hQ.1
+  let _ : Q.LiesOver p := hQ.2
   have h2Q : (2 : chapter11GaussianOrder) ∈ Q := by
     exact (Ideal.mem_of_liesOver Q p 2).mp (Ideal.mem_span_singleton_self _)
   have hprodQ :
@@ -1179,7 +1186,7 @@ theorem chapter11_gaussian_two_is_unique_totally_ramified :
           Set chapter11GaussianOrder))
         exact hgen)
     have hQmax : Q.IsMaximal := by
-      letI : Algebra.IsIntegral ℤ chapter11GaussianOrder := by infer_instance
+      let _ : Algebra.IsIntegral ℤ chapter11GaussianOrder := by infer_instance
       apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ)
         (S := chapter11GaussianOrder) Q
       change (Q.under ℤ).IsMaximal
@@ -1198,7 +1205,7 @@ theorem chapter11_gaussian_two_is_unique_totally_ramified :
           Set chapter11GaussianOrder))
         exact hgen)
     have hQmax : Q.IsMaximal := by
-      letI : Algebra.IsIntegral ℤ chapter11GaussianOrder := by infer_instance
+      let _ : Algebra.IsIntegral ℤ chapter11GaussianOrder := by infer_instance
       apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ)
         (S := chapter11GaussianOrder) Q
       change (Q.under ℤ).IsMaximal
@@ -1381,7 +1388,7 @@ theorem chapter11_gaussian_completed_tensor_at_three_is_a_field
       rw [AddValuation.map_pow, hneg, Padic.addValuation.apply hx0] at hv
       have hv' : 2 • x.valuation = 0 := by
         exact_mod_cast hv
-      simp [two_nsmul] at hv'
+      simp at hv'
       have hxval : x.valuation = 0 := by omega
       have hxnorm : ‖x‖ = 1 := by
         rw [Padic.norm_eq_zpow_neg_valuation hx0, hxval]
@@ -1396,7 +1403,7 @@ theorem chapter11_gaussian_completed_tensor_at_three_is_a_field
         rintro ⟨z, hz⟩
         exact (ZMod.mod_four_ne_three_of_sq_eq_neg_one (p := 3) hz) (by norm_num)
       exact hno ⟨PadicInt.toZMod y, by simpa using hmod⟩
-  letI : Fact (Irreducible f) := ⟨hirr⟩
+  let _ : Fact (Irreducible f) := ⟨hirr⟩
   change IsField (AdjoinRoot f)
   exact Field.toIsField _
 
@@ -1459,7 +1466,7 @@ theorem chapter11_gaussian_completed_tensor_at_two_is_a_field
       rw [AddValuation.map_pow, hneg, Padic.addValuation.apply hx0] at hv
       have hv' : 2 • x.valuation = 0 := by
         exact_mod_cast hv
-      simp [two_nsmul] at hv'
+      simp at hv'
       have hxval : x.valuation = 0 := by omega
       have hxnorm : ‖x‖ = 1 := by
         rw [Padic.norm_eq_zpow_neg_valuation hx0, hxval]
@@ -1480,7 +1487,7 @@ theorem chapter11_gaussian_completed_tensor_at_two_is_a_field
         have hzlt : z.val < 8 := z.val_lt
         interval_cases h : z.val <;> norm_num [h] at hzval
       exact hno ⟨PadicInt.toZModPow 3 y, by simpa using hmod⟩
-  letI : Fact (Irreducible f) := ⟨hirr⟩
+  let _ : Fact (Irreducible f) := ⟨hirr⟩
   change IsField (AdjoinRoot f)
   exact Field.toIsField _
 
@@ -1499,7 +1506,7 @@ theorem chapter11_square_cover_at_zero_is_totally_ramified
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (t : K) (u : L) (hrel : algebraMap K L t = u ^ 2)
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
-    (hext : chapter11ValuationExtensionAt K L vK vL) (ht : vK t < 1) :
+    (_hext : chapter11ValuationExtensionAt K L vK vL) (ht : vK t < 1) :
     chapter11TotallyRamifiedPattern 1 (fun _ : Fin 1 => 2) (fun _ : Fin 1 => 1) ∧
       algebraMap K L t = u ^ 2 ∧ vK t < 1 := by
   exact ⟨by simp [chapter11TotallyRamifiedPattern], hrel, ht⟩
@@ -1586,11 +1593,10 @@ theorem chapter11_square_cover_at_nonsquare_is_unramified_quadratic
     simpa [f, chapter11SquareCoverPolynomial] using
       (monic_X_pow_sub_C (R := k) c (n := 2) (by norm_num))
   have hdeg : f.natDegree = 2 := by
-    simpa [f, chapter11SquareCoverPolynomial] using
-      (natDegree_X_pow_sub_C (R := k) (n := 2) (r := c))
+    simp [f, chapter11SquareCoverPolynomial]
   have hirr : Irreducible f := by
     apply Polynomial.irreducible_of_degree_le_three_of_not_isRoot
-    · simpa [hdeg]
+    · simp [hdeg]
     · intro x hx
       apply hnonsquare
       refine ⟨x, ?_⟩
@@ -1632,7 +1638,7 @@ theorem chapter11_mixed_characteristic_unramified_quadratic_at_two :
         norm_num [h, ZMod.val_one_eq_one_mod] at hxval
   refine ⟨by simp [chapter11InertPattern], ?_, ?_⟩
   · exact ⟨hdata.monic, hdata.natDegree_eq, hirr⟩
-  · letI : PerfectField (ZMod 2) := PerfectField.ofFinite
+  · let _ : PerfectField (ZMod 2) := PerfectField.ofFinite
     exact PerfectField.separable_of_irreducible hirr
 
 /-- X²-2 is Eisenstein at 2, hence totally ramified quadratic. -/
@@ -1701,7 +1707,7 @@ The Dedekind and finite-normalization hypotheses make the ramification index in
 the first alternative an invariant of the normalized integral closure.
 -/
 theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
-    (R K L : Type*) [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    (R K L : Type*) [CommRing R] [IsDedekindDomain R]
     [Field K] [Field L]
     [Algebra R K] [IsFractionRing R K] [Algebra K L] [Algebra R L]
     [IsScalarTower R K L] [FiniteDimensional K L] [Algebra.IsSeparable K L]
@@ -1713,13 +1719,14 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
       Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
         Algebra.adjoin K ({α} : Set L) = ⊤)
     (hrep : chapter11RepeatedResidueFactor (R ⧸ p)
-      (chapter11Reduction R p f)) (hdef : chapter11RootPresentsExtension R L f) :
+      (chapter11Reduction R p f)) (_hdef : chapter11RootPresentsExtension R L f) :
     (∃ P : Ideal (integralClosure R L), P.IsPrime ∧ P.LiesOver p ∧
         1 < P.ramificationIdx R) ∨
       (∃ α : L,
         Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
           Algebra.adjoin K ({α} : Set L) = ⊤ ∧
           ¬chapter11RootOrderIsIntegralClosure R L α) := by
+  classical
   rcases hprimitive with ⟨α, hα, hgen⟩
   by_cases horder : chapter11RootOrderIsIntegralClosure R L α
   · left
@@ -1746,7 +1753,7 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
       conductor_eq_top_of_adjoin_eq_top hadjoinB
     have hcon' :
         (conductor R αB).comap (algebraMap R B) ⊔ p = ⊤ := by
-      simpa [hcon]
+      simp [hcon]
     have hirrR : Irreducible f :=
       hf.irreducible_iff_irreducible_map_fraction_map.mpr hirreducible
     have hrootB : Polynomial.aeval αB f = 0 := by
@@ -1754,8 +1761,8 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
       change B.val.toRingHom (Polynomial.aeval αB f) = 0
       rw [map_aeval_eq_aeval_map (φ := RingHom.id R) (ψ := B.val.toRingHom) (by ext; simp)]
       simpa [Polynomial.aeval_def] using hα
-    letI : IsDedekindDomain B := integralClosure.isDedekindDomain R K L
-    letI : Module.IsTorsionFree R L := .trans_faithfulSMul R K L
+    let _ : IsDedekindDomain B := integralClosure.isDedekindDomain R K L
+    let _ : Module.IsTorsionFree R L := .trans_faithfulSMul R K L
     have hαBint : IsIntegral R αB :=
       (isIntegral_algHom_iff B.val Subtype.val_injective (x := αB)).mp hαint
     have hmin : f = minpoly R αB := by
@@ -1764,10 +1771,8 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
         (Irreducible.associated_of_dvd
           (minpoly.prime_of_isIntegrallyClosed hαBint).irreducible hirrR
           (minpoly.isIntegrallyClosed_dvd hαBint hrootB)).symm
-    letI : Module.Finite R B := hfinite
-    letI : Field (R ⧸ p) := Ideal.Quotient.field p
-    letI : StrongNormalizationMonoid (R ⧸ p)[X] :=
-      UniqueFactorizationMonoid.strongNormalizationMonoid
+    let _ : Module.Finite R B := hfinite
+    let instField : Field (R ⧸ p) := Ideal.Quotient.field p
     have hbar0 : chapter11Reduction R p f ≠ 0 := hrep.1.ne_zero
     rcases hrep with ⟨hbarMonic, _, g, hg, hgdiv⟩
     obtain ⟨q, hqmem, hgq⟩ :=
@@ -1779,7 +1784,7 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
     let eKD :=
       KummerDedekind.normalizedFactorsMapEquivNormalizedFactorsMinPolyMk
         (R := R) (S := B) (x := αB) (I := p)
-        (inferInstance : p.IsMaximal) hp0 hcon' hαint
+        (inferInstance : p.IsMaximal) hp0 hcon' hαBint
     let qsub : {d : (R ⧸ p)[X] |
         d ∈ normalizedFactors (Polynomial.map (Ideal.Quotient.mk p) (minpoly R αB))} :=
       ⟨q, hqmem'⟩
@@ -1792,7 +1797,7 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
     have hK :=
       KummerDedekind.emultiplicity_factors_map_eq_emultiplicity
         (R := R) (S := B) (I := p) (x := αB)
-        (inferInstance : p.IsMaximal) hp0 hcon' hαint hJmem
+        (inferInstance : p.IsMaximal) hp0 hcon' hαBint hJmem
     change emultiplicity J (p.map (algebraMap R B)) =
       emultiplicity (↑(eKD ⟨J, hJmem⟩))
         (Polynomial.map (Ideal.Quotient.mk p) (minpoly R αB)) at hK
@@ -1815,24 +1820,20 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
           (FaithfulSMul.algebraMap_injective R B)]
         exact hp0)
     have hmap0 : p.map (algebraMap R B) ≠ ⊥ := by
-      rw [← bot_eq_zero, Ne, map_eq_bot_iff_of_injective
+      rw [Ne, map_eq_bot_iff_of_injective
         (FaithfulSMul.algebraMap_injective R B)]
       exact hp0
     have hJIsPrime : J.IsPrime := Ideal.isPrime_of_prime hJprime
-    letI : J.IsPrime := hJIsPrime
+    let _ : J.IsPrime := hJIsPrime
     have hJdiv : J ∣ p.map (algebraMap R B) :=
       dvd_of_mem_normalizedFactors hJmem
-    letI : J.LiesOver p :=
+    let _ : J.LiesOver p :=
       (Ideal.liesOver_iff_dvd_map hJIsPrime.ne_top).2 hJdiv
     have hram : J.ramificationIdx R = multiplicity q (chapter11Reduction R p f) := by
       rw [IsDedekindDomain.ramificationIdx_eq_multiplicity p J hmap0]
-      calc
-        multiplicity J (p.map (algebraMap R B)) =
-            emultiplicity J (p.map (algebraMap R B)) :=
-          hJfinite.emultiplicity_eq_multiplicity.symm
-        _ = emultiplicity q (chapter11Reduction R p f) := hK'
-        _ = multiplicity q (chapter11Reduction R p f) :=
-          hqfinite.emultiplicity_eq_multiplicity
+      exact_mod_cast
+        (hJfinite.emultiplicity_eq_multiplicity.symm.trans
+          (hK'.trans hqfinite.emultiplicity_eq_multiplicity))
     have hgt : 1 < J.ramificationIdx R := by
       rw [hram]
       exact lt_of_lt_of_le (by norm_num) hqmult
@@ -1843,7 +1844,7 @@ theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
 /-- The intrinsic replacement for the polynomial test is the integral closure and its local DVRs. -/
 theorem chapter11_intrinsic_integral_closure_controls_repeated_factors
     (R L : Type*) [CommRing R] [IsDomain R] [Field L] [Algebra R L]
-    (p : Ideal R) (f : R[X]) (hf : f.Monic)
+    (_p : Ideal R) (f : R[X]) (hf : f.Monic)
     (hdef : chapter11RootPresentsExtension R L f) :
     ∃ α : L,
       Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
