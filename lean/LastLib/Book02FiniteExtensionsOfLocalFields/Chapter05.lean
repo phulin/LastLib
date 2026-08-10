@@ -1,0 +1,13 @@
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section01FromEmbeddingsToLocalSymmetries
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section02DecompositionGroups
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section03ResidueActionAndInertia
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section04FixedFieldsOfInertia
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section05HigherRamificationBoundary
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section06CountingBranchesBeforeCompletion
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section07ThreeGaloisPatterns
+
+namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05
+
+/-! Aggregator for Book 2, Chapter 5: Automorphisms, decomposition, and inertia. -/
+
+end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05

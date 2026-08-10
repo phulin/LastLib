@@ -1,10 +1,10 @@
 # Book 1 Lean Proof Orchestrator Prompt
 
-Work only in `/home/phulin/LastLib-book1`. This repository contains one Lean file for each chapter of Book 1. Using `books/01-valuations-dvrs-and-completions.md` as the mathematical blueprint, complete every chapter file under `ValuationsBook/ValuationsBook/Chapter01.lean` through `Chapter12.lean`.
+Work only in `/home/phulin/LastLib-book1`. This repository contains one Lean file for each chapter of Book 1. Using `books/01-valuations-dvrs-and-completions.md` as the mathematical blueprint, complete every chapter file under `lean/LastLib/Book01ValuationsDVRsAndCompletions/Chapter01.lean` through `Chapter12.lean`.
 
 Act only as the orchestrator. All substantive proof development and Lean repair work must be performed by `codex exec` workers using `gpt-5.6-luna` with maximum reasoning effort. Start one worker per chapter and run all chapter workers in parallel. Give every worker full filesystem access with no approval requests (`danger-full-access` and approval policy `never`). Each worker must edit only its assigned chapter file, apart from temporary worktree-local scratch files that it removes before finishing.
 
-Before launching workers, prepare the project cache serially from `/home/phulin/LastLib-book1/ValuationsBook`:
+Before launching workers, prepare the project cache serially from `/home/phulin/LastLib-book1/lean`:
 
 1. Run `lake exe cache get` and confirm the pinned Mathlib executable cache is present.
 2. Run one full `lake build` to warm the project cache. Before starting it, require at least 20 GiB of available RAM using a `/proc/meminfo` predicate joined directly to the build with `&&`. If less memory is available, wait 30 seconds and retry.

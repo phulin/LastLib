@@ -1,10 +1,10 @@
 # Book 1 Chapter Luna Worker Prompt
 
-You are the sole implementation agent for `ValuationsBook/ValuationsBook/<CHAPTER>.lean` in `/home/phulin/LastLib-book1`. Use `gpt-5.6-luna` with maximum reasoning effort throughout. You are running with full filesystem access and approval policy `never`.
+You are the sole implementation agent for `lean/LastLib/Book01ValuationsDVRsAndCompletions/<CHAPTER>.lean` in `/home/phulin/LastLib-book1`. Use `gpt-5.6-luna` with maximum reasoning effort throughout. You are running with full filesystem access and approval policy `never`.
 
-Work only in this worktree and edit only your assigned chapter file, except for temporary scratch files inside the worktree that you must remove before finishing. Preserve unrelated changes and do not commit. Do not inspect Git history, Git objects, reflogs, remotes, the internet, parent repositories, or completed ValuationsBook build artifacts.
+Work only in this worktree and edit only your assigned chapter file, except for temporary scratch files inside the worktree that you must remove before finishing. Preserve unrelated changes and do not commit. Do not inspect Git history, Git objects, reflogs, remotes, the internet, parent repositories, or completed LastLib build artifacts.
 
-Your assignment is the entire chapter, not one isolated declaration. Read the complete target Lean file and the corresponding material for Chapter `<CHAPTER_NUMBER>` in `books/01-valuations-dvrs-and-completions.md`. Treat the book as the mathematical blueprint, but verify all formal facts and exact APIs from the pinned Lean sources. Inspect Mathlib under `ValuationsBook/.lake/packages/mathlib` freely and use declarations from earlier chapter files. Within the assigned chapter, a proof may use only declarations occurring textually before it; never use a later declaration to prove an earlier one.
+Your assignment is the entire chapter, not one isolated declaration. Read the complete target Lean file and the corresponding material for Chapter `<CHAPTER_NUMBER>` in `books/01-valuations-dvrs-and-completions.md`. Treat the book as the mathematical blueprint, but verify all formal facts and exact APIs from the pinned Lean sources. Inspect Mathlib under `lean/.lake/packages/mathlib` freely and use declarations from earlier chapter files. Within the assigned chapter, a proof may use only declarations occurring textually before it; never use a later declaration to prove an earlier one.
 
 Prove every `sorry` or `admit` in the assigned file that can be proved from its statement and the permitted earlier declarations. Statements are immutable during this proof pass: do not change a declaration's kind, name, namespace, binders, assumptions, typeclasses, result type, section-variable behavior, attributes, or imports, and do not replace it with an easier declaration. Do not introduce axioms, unsafe declarations, contradictory artificial assumptions, diagnostic-suppression tricks, or any other proof or kernel-checking loophole. The `aesop` tactic is banned: do not add or invoke it, and replace every existing `aesop` invocation in the assigned file with an explicit proof using concrete Mathlib lemmas and ordinary focused tactics.
 
@@ -61,14 +61,14 @@ Continue proving all independent declarations in the rest of the chapter. The ma
 
 ## Compilation and resource rules
 
-Use only Lake builds for compilation and testing. Never run `lake env lean`, raw `lean`, another compiler, a scratch module, or an alternate target. Run builds from `/home/phulin/LastLib-book1/ValuationsBook` so all workers share the project `.lake` cache. Do not override `LAKE_HOME`, `LEAN_PATH`, the package cache, or the build directory.
+Use only Lake builds for compilation and testing. Never run `lake env lean`, raw `lean`, another compiler, a scratch module, or an alternate target. Run builds from `/home/phulin/LastLib-book1/lean` so all workers share the project `.lake` cache. Do not override `LAKE_HOME`, `LEAN_PATH`, the package cache, or the build directory.
 
-Before every Lake build, immediately check `/proc/meminfo` and start the build only if `MemAvailable` is at least `20971520` kB. Join the successful memory predicate directly to the Lake command with shell `&&`. If insufficient memory is available, wait 30 seconds and retry. Build the assigned target `+ValuationsBook.<CHAPTER>`; use a full `lake build` only when necessary.
+Before every Lake build, immediately check `/proc/meminfo` and start the build only if `MemAvailable` is at least `20971520` kB. Join the successful memory predicate directly to the Lake command with shell `&&`. If insufficient memory is available, wait 30 seconds and retry. Build the assigned target `+LastLib.Book01ValuationsDVRsAndCompletions.<CHAPTER>`; use a full `lake build` only when necessary.
 
 A suitable guarded pattern is:
 
 ```sh
-while ! awk '/^MemAvailable:/ { ok = ($2 >= 20971520) } END { exit !ok }' /proc/meminfo; do sleep 30; done && awk '/^MemAvailable:/ { ok = ($2 >= 20971520) } END { exit !ok }' /proc/meminfo && lake build +ValuationsBook.<CHAPTER>
+while ! awk '/^MemAvailable:/ { ok = ($2 >= 20971520) } END { exit !ok }' /proc/meminfo; do sleep 30; done && awk '/^MemAvailable:/ { ok = ($2 >= 20971520) } END { exit !ok }' /proc/meminfo && lake build +LastLib.Book01ValuationsDVRsAndCompletions.<CHAPTER>
 ```
 
 A successful build may emit warnings for remaining placeholders, plus unrelated linter, deprecation, unused-variable, unused-simp-argument, unnecessary-`simpa`, `letI`, reducibility, or style warnings. Do not repair unrelated declarations merely to silence them.

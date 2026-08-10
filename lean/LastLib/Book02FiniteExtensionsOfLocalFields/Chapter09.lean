@@ -1,0 +1,12 @@
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section01TheStructuralQuestion
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section02ConstructionAndMaximality
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section03CleanDecomposition
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section04ImperfectResidueFields
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section05TwoStageIntegralDescription
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section06TameBoundary
+
+namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
+
+/-! Aggregator for Book 2, Chapter 9. -/
+
+end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
