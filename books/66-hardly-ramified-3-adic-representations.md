@@ -4,8 +4,8 @@
 
 1. [The classification problem](#1-the-classification-problem)
    - [Why the prime $3$ is both favorable and dangerous](#11-why-the-prime-3-is-both-favorable-and-dangerous)
-   - [The strict hardly ramified datum](#12-the-strict-hardly-ramified-datum)
-   - [The controlled auxiliary-prime datum](#13-the-controlled-auxiliary-prime-datum)
+   - [The exact prime-$2$ hardly ramified datum](#12-the-exact-prime-2-hardly-ramified-datum)
+   - [The strict specialization and general auxiliary primes](#13-the-strict-specialization-and-general-auxiliary-primes)
    - [The three conclusions that must not be conflated](#14-the-three-conclusions-that-must-not-be-conflated)
    - [The proof architecture](#15-the-proof-architecture)
 2. [Lattices, finite quotients, and their fields](#2-lattices-finite-quotients-and-their-fields)
@@ -107,12 +107,16 @@
     - [Coefficient and lattice failures](#176-coefficient-and-lattice-failures)
     - [A full-tower misuse](#177-a-full-tower-misuse)
 18. [Final theorem package and the Frey interface](#18-final-theorem-package-and-the-frey-interface)
-    - [Strict residual classification theorem](#181-strict-residual-classification-theorem)
-    - [Congruence and line-lifting theorem](#182-congruence-and-line-lifting-theorem)
-    - [Characteristic-zero classification](#183-characteristic-zero-classification)
-    - [Controlled ramification theorem schema](#184-controlled-ramification-theorem-schema)
-    - [Interface theorem for the Frey-compatible system](#185-interface-theorem-for-the-frey-compatible-system)
-    - [What has been proved](#186-what-has-been-proved)
+    - [The exact local condition at $2$](#181-the-exact-local-condition-at-2)
+    - [Torsion fields and the unconditional degree-$20$ cutoff](#182-torsion-fields-and-the-unconditional-degree-20-cutoff)
+    - [Abelian fields and simple factors](#183-abelian-fields-and-simple-factors)
+    - [Multiplicative--constant devissage](#184-multiplicative--constant-devissage)
+    - [The residual extension and its Kummer class](#185-the-residual-extension-and-its-kummer-class)
+    - [Integral line lifting and the $3$-adic character](#186-integral-line-lifting-and-the-3-adic-character)
+    - [Coefficient extension and changing the prime](#187-coefficient-extension-and-changing-the-prime)
+    - [The unconditional Frey interface](#188-the-unconditional-frey-interface)
+    - [Strict specialization and the remaining general boundary](#189-strict-specialization-and-the-remaining-general-boundary)
+    - [What has been proved](#1810-what-has-been-proved)
 
 ## 1. The classification problem
 
@@ -142,7 +146,7 @@ The two orientations of a residual extension therefore have the same abstract co
 
 The purpose of this book is to navigate that corridor without using any of those shortcuts. We first state the exact input, then classify the residual image, then decide whether its invariant lines lift. Analytic discriminant bounds restrict field size; finite group theory restricts group shape; class field theory controls one-dimensional quotients; and saturated finite-flat difference modules turn lifting obstructions into forbidden cubic fields.
 
-### 1.2 The strict hardly ramified datum
+### 1.2 The exact prime-$2$ hardly ramified datum
 
 Let $E/\mathbf Q_3$ be a finite extension, let $\mathcal O$ be its valuation ring, let $\varpi$ be a uniformizer, and let
 
@@ -150,7 +154,7 @@ $$
 k=\mathcal O/\varpi\mathcal O\simeq\mathbf F_{3^f}.
 $$
 
-A **strict hardly ramified $3$-adic datum over $\mathbf Q$** consists of
+An **exact prime-$2$ hardly ramified $3$-adic datum over $\mathbf Q$** consists of
 
 $$
 (E,\mathcal O,\varpi,k,V,T,\rho,\{\mathcal G_n\}_{n\geq1})
@@ -169,7 +173,7 @@ with the following properties.
    $$
    \det\rho=\chi_3,
    $$
-   after any finite-order twist from the prime-switching construction has been explicitly removed. If such a factor has not been removed, its conductor, cutout field, and values must be added to the controlled datum; none of the strict conclusions below then applies without that new calculation.
+   after any finite-order twist from the prime-switching construction has been explicitly removed. If such a factor has not been removed, its conductor, cutout field, and values must be added to the controlled datum; none of the classification conclusions below then applies without that new calculation.
 5. The representation is odd: for complex conjugation $c$,
    $$
    \det\rho(c)=-1.
@@ -179,7 +183,31 @@ with the following properties.
    \mathcal G_n/\mathbf Z_3.
    $$
    No compatibility or uniqueness of these witnesses is included in this clause.
-7. The action is unramified at every finite prime $p\ne3$.
+7. The action is unramified at every finite prime outside $\{2,3\}$.
+8. Over $G_{\mathbf Q_2}$ there is an exact sequence of free rank-one
+   $\mathcal O$-modules
+   $$
+   0\longrightarrow T_2^+
+   \longrightarrow T
+   \longrightarrow T_2^-\longrightarrow0, \tag{1.1}
+   $$
+   and the character $\eta_2$ on $T_2^-$ is unramified and satisfies
+   $$
+   \eta_2^2=1. \tag{1.2}
+   $$
+
+Clause 8 is the exact local condition, not a slogan about small conductor. The two copies of
+$\mathcal O$ in (1.1) describe their module ranks; they are not both being declared trivial
+representations. Since the determinant is $\chi_3$ and $\eta_2^{-1}=\eta_2$, the character on
+the submodule is
+
+$$
+\chi_3\eta_2. \tag{1.3}
+$$
+
+Both diagonal characters are unramified at $2$. The extension between them is allowed to be
+ramified. In particular, (1.1)--(1.2) neither assert that inertia is trivial nor assert that the
+sequence splits.
 
 Clause 6 is deliberately only an existence assertion. It is genuine integral input and is supplied, for example, by a good-reduction torsion tower or by one integral low-weight object; rational crystallinity alone does not supply it for an arbitrary stable lattice. The argument below neither chooses transition maps between the $\mathcal G_n$ nor identifies an independently chosen $\mathcal G_n$ with a coefficient quotient of $\mathcal G_{n+1}$. When a coefficient action is needed, it is installed on a replacement witness by a product-and-saturated-closure construction. When two congruent lifts must be compared, their generic fiber product is closed inside the product of two witnesses. These constructions prove existence of the exact models used in the argument; they assert no uniqueness of integral models.
 
@@ -195,11 +223,32 @@ $$
 \bar\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(k).
 $$
 
-Its full isomorphism class belongs to the named lattice. Its semisimplification is independent of the stable lattice. Both will be used, and they will never be identified without proof.
+Its full isomorphism class belongs to the named lattice. Its semisimplification is independent
+of the stable lattice. Both will be used, and they will never be identified without proof.
 
-### 1.3 The controlled auxiliary-prime datum
+The local sequence is integral for a reason. Since its quotient is free, it is split as a
+sequence of underlying $\mathcal O$-modules. Tensoring with a finite coefficient extension or
+reducing modulo any coefficient ideal therefore preserves exactness. The quotient character
+remains unramified and continues to square to one. This elementary observation is what lets the
+same local condition pass to every torsion quotient used below.
 
-Some prime-switching constructions leave a finite effective residual ramification set
+### 1.3 The strict specialization and general auxiliary primes
+
+The original **strict datum** consists of clauses 1--2 and 4--6, with clause 3 optional, and
+unramifiedness at every finite prime away from $3$. It does not need a chosen filtration at
+$2$: once inertia there is trivial, the strict argument developed in Chapters 7--13 proves
+actual splitting by its own residual and affine-cocycle calculation. An exact prime-$2$ datum
+which is also unramified at $2$ is a strict datum, but the strict theorem is not narrowed by
+requiring clause 8.
+
+The exact prime-$2$ datum is not merely the controlled-set schema with $S_0=\{2\}$. It carries
+the additional filtration (1.1)--(1.2) at every coefficient level. That extra structure makes
+the inertia image at $2$ a cyclic $3$-group, makes wild inertia trivial, determines the exact
+tame different, and puts every finite quotient in one finite-flat category over
+$\mathbf Z[1/2]$. Chapter 18 uses those facts to close the prime-$2$ case completely.
+
+For comparison, some prime-switching constructions leave a genuinely general finite effective
+residual ramification set
 
 $$
 S_0=\{p_1,\ldots,p_s\},
@@ -215,7 +264,10 @@ For each $p\in S_0$, fix either an upper-break cutoff $R_p\geq0$ or an exact tam
 
 At a conductor-one special prime, rational monodromy can be nonzero while its reduction vanishes. The prime belongs to $S_0$ only when the actual residual inertia is nontrivial. Conversely, a small Artin conductor is not used as a substitute for a break bound unless the represented module is faithful on the local field being measured.
 
-The strict theorem will use $S_0=\varnothing$. The controlled form is retained for diagnosis and for later applications whose extra local factors remain below a legitimate analytic threshold. No conclusion for a nonempty $S_0$ will be presented as though it followed from the strict theorem.
+For an arbitrary nonempty $S_0$, this is only a numerical and local record. It does not include
+the prime-$2$ filtration unless that filtration is stated separately. The strict theorem uses
+$S_0=\varnothing$, and the theorem needed by the Frey route uses the exact prime-$2$ datum.
+Other auxiliary sets remain subject to the finite-search boundary of Section 18.9.
 
 ### 1.4 The three conclusions that must not be conflated
 
@@ -230,79 +282,116 @@ $$
 
 This statement is independent of the stable lattice. It says nothing about whether a chosen reduction is split or which character occurs as a submodule.
 
-The second concerns the chosen residual module $M$. It asks for an exact sequence such as
+The second concerns the chosen residual module $M$. In the exact prime-$2$ category the correct
+conclusion is an exact sequence
 
 $$
 0\longrightarrow k(1)\longrightarrow M
 \longrightarrow k\longrightarrow0.
 $$
 
-Its extension class and orientation depend a priori on $T$. At the prime $3$ the two orientations have isomorphic generic coefficient characters, so one cannot distinguish them by notation. The proof below instead uses the finite-flat upper-break cutoff on the whole middle module and eliminates every nonzero class in either orientation.
+Its extension class and orientation depend a priori on $T$. The allowed nonsplit class is not an
+error: it is a scalar multiple of the Kummer class of $2$. At the prime $3$ the two coefficient
+characters are inverses and hence equal, but the finite-flat connected--étale order still forces
+the displayed orientation. In the strict specialization the Kummer line disappears and the
+sequence splits.
 
-The third concerns $V$ in characteristic zero. A residual invariant line does not automatically lift to an $E$-line. At each higher level there is an obstruction class, and an inverse system of residual lines exists only when those obstructions vanish compatibly. Even if $V$ is reducible, a nonsemisimple extension and a split sum have the same characteristic-zero semisimplification.
-
-The final theorem will therefore have three stages:
-
-$$
-\bar\rho^{\mathrm{ss}}\simeq1\oplus\bar\chi_3
-$$
-
-from residual field theory,
-
-$$
-\bar\rho\simeq1\oplus\bar\chi_3
-$$
-
-after the two residual extension orientations are calculated, and
+The third concerns $V$ in characteristic zero. In the exact prime-$2$ category a saturated
+cyclotomic line lifts integrally and the quotient is trivial, but the extension need not split.
+The Kummer class of $2$ supplies genuine nonsplit examples. What is independent of that class is
+the character identity
 
 $$
-\rho\simeq1\oplus\chi_3
+\operatorname{tr}\rho(g)=1+\chi_3(g) \tag{1.4}
 $$
 
-from an integral lifting argument. Each arrow uses more integral information than the one before it.
+for every $g$. Thus
+
+$$
+\rho^{\mathrm{ss}}\simeq1\oplus\chi_3. \tag{1.5}
+$$
+
+When $\rho$ is semisimple, as a member of the compatible system is, (1.5) is an actual split
+decomposition. Without semisimplicity the extension class must be retained.
+
+The final theorem therefore has three controlled prime-$2$ stages:
+
+$$
+0\longrightarrow k(1)\longrightarrow M\longrightarrow k\longrightarrow0,
+\qquad [M]=a[2],
+$$
+
+from residual field theory and the finite-flat orientation,
+
+$$
+0\longrightarrow\mathcal O(1)\longrightarrow T
+\longrightarrow\mathcal O\longrightarrow0,
+$$
+
+after finite-level devissage and saturation, and
+
+$$
+\rho^{\mathrm{ss}}\simeq1\oplus\chi_3
+$$
+
+from the character identity. The strict case strengthens both extension statements to split
+ones. Confusing the strict strengthening with the exact prime-$2$ theorem would discard the
+admissible Kummer example.
 
 ### 1.5 The proof architecture
 
 The dependencies can be displayed without hiding any implication.
 
 ```text
-levelwise finite-flat witnesses at 3
-              |
-              v
- upper break <= 1/2 -----> local different < 3/2
-              |                         |
-              +-------------------------+
-                            |
-                            v
-       residual field rd < 3^(3/2), degree <= 52
-                            |
-             +--------------+--------------+
-             |                             |
-             v                             v
-   subgroup classification       class and ray fields
-             |                             |
-             +--------------+--------------+
-                            |
-                            v
-          residual module 1 direct-sum cyclotomic
-                            |
-                            v
-       common-ambient dual-number difference module
-                            |
-                            v
-          every nonzero class gives a forbidden cubic ray layer
-                            |
-                            v
-              characteristic-zero line lifts
+finite flat at 3 + the exact quotient at 2
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+  3-cost < 3/2       tame 2-cost = 0 or 2/3
+          |                   |
+          +---------+---------+
+                    |
+                    v
+ rd < 3^(3/2) 2^(2/3), unconditional degree <= 20
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+  abelian-field lemma   degree-capped group theory
+          |                   |
+          +---------+---------+
+                    |
+                    v
+ simple factors are multiplicative or constant
+                    |
+                    v
+      sorted finite-level filtration
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+ residual class a[2]    trace = 1 + determinant
+          |                   |
+          +---------+---------+
+                    |
+                    v
+ integral cyclotomic line and purity contradiction
 ```
 
-The analytic bound supplies a finite arena, not the answer. The upper-break cutoff eliminates fields that the coarse root-discriminant inequality still permits. The group ledger produces abelian, cubic, or dihedral subquotients. Class field theory eliminates those subquotients. Finally, a product, saturated closure, and coefficient quotient put each infinitesimal difference back in the exponent-three category; the same ray calculation makes it a coboundary. Each arrow has a distinct input.
+The new degree-$20$ bound is unconditional and is calculated directly from the explicit formula
+of Book 65. It is not an imported field table. The residual Kummer field of $2$ survives that
+bound and is retained rather than eliminated. The decisive higher-level step is instead a
+finite-flat devissage over $\mathbf Z[1/2]$: simple factors are classified, adjacent factors
+are reordered, and the resulting canonical cross relation gives (1.4) at every coefficient
+level. The strict affine-cocycle proof remains valid as the specialization in which the
+Kummer direction is absent.
 
 ## 2. Lattices, finite quotients, and their fields
 
 ### 2.1 The chosen integral tower
 
-Fix a strict or controlled datum. For $n\geq1$, put
+Fix a strict datum, an exact prime-$2$ datum, or a general controlled datum. For $n\geq1$, put
 
 $$
 T_n=T/\varpi^nT,
@@ -957,7 +1046,7 @@ $$
 8\pi e^{\gamma+\alpha_0\pi/2}.
 $$
 
-These constants may sharpen a controlled-set argument whose upper ceiling lies between the unconditional and conditional thresholds. They are never used in the strict theorem or in the final FLT interface. A conditional asymptotic constant also does not furnish an unstated finite-degree cap. One must choose an admissible test function, evaluate its integrals in the required signature range, and verify the numerical inequality.
+These constants may sharpen a controlled-set argument whose upper ceiling lies between the unconditional and conditional thresholds. They are never used in the strict theorem, the exact prime-$2$ theorem, or the final Frey interface. A conditional asymptotic constant also does not furnish an unstated finite-degree cap. One must choose an admissible test function, evaluate its integrals in the required signature range, and verify the numerical inequality.
 
 The division of labor in this book is therefore exact:
 
@@ -2774,6 +2863,12 @@ Outside the strict datum, only the conclusion justified by the available hypothe
 - a lifted line plus characteristic-zero semisimplicity gives the second;
 - finite-flat witnesses at every level plus affine-cocycle rigidity give the third.
 
+The exact prime-$2$ datum is the additional case proved in Chapter 18. Its finite-flat
+devissage gives an integral cyclotomic line with trivial quotient and hence the second line;
+the integral extension can be the Kummer class $b[2]$. Semisimplicity then makes it split. Thus
+the phrase ``outside the strict datum'' is not a claim that controlled ramification can never
+be treated; it says that its local category must first be calculated.
+
 ### 14.5 Purity as the final incompatibility
 
 Let $\rho$ be a member of a pure compatible system of weight one. At every good prime $p\ne3$, the roots of its Frobenius polynomial have complex absolute value
@@ -3145,7 +3240,9 @@ Thus coefficient residue degree two changes the finite-group ledger substantiall
 
 ## 17. Boundaries and failure modes
 
-The strict theorem is intentionally narrow. Each hypothesis removes a concrete obstruction. Weakening a hypothesis should therefore be accompanied by a new calculation, not by an appeal to the same conclusion.
+The strict theorem and the exact prime-$2$ theorem have different local hypotheses. Each
+hypothesis removes a concrete obstruction. Weakening either package should therefore be
+accompanied by a new calculation, not by an appeal to the same conclusion.
 
 ### 17.1 An additional ramified prime
 
@@ -3212,7 +3309,13 @@ U(\{2\})=3^{3/2}2^{2/3}
 <4\pi e^\gamma.
 $$
 
-The analytic theorem still bounds the degree, but the nonsplit $S_3$ representation actually exists. This is a useful separation of roles: a strict discriminant comparison creates a finite search, while the Selmer and ray computations decide which members of that search survive.
+The analytic theorem still bounds the degree, but the nonsplit $S_3$ representation actually
+exists. A discriminant comparison alone therefore cannot prove splitting. Chapter 18 performs
+the extra calculation specific to $q=2$: the degree is at most $20$, the simple factors are
+constant or multiplicative, the surviving residual class is exactly $a[2]$, and finite-level
+devissage lifts its cyclotomic line. Thus $q=2$ with the exact local sequence is completely
+resolved, while an arbitrary additional prime without such a sequence remains within the
+general controlled-set boundary.
 
 ### 17.2 Absence of levelwise finite-flat models
 
@@ -3292,7 +3395,7 @@ $$
 
 after division by the relevant power of $\varpi$.
 
-The strict proof kills the whole cocycle by constructing its affine exponent-three field and excluding every cubic quotient over $\mathbf Q(\zeta_3)$. If an auxiliary prime is allowed, if the local finite-flat condition is removed, or if the ray-class calculation changes, that affine field can survive. The residual line can then fail to lift even though the residual semisimplification remains $1\oplus\overline\chi_3$.
+The strict proof kills the whole cocycle by constructing its affine exponent-three field and excluding every cubic quotient over $\mathbf Q(\zeta_3)$. For an arbitrary auxiliary prime, if the local finite-flat condition is removed, or if the ray-class calculation changes, that affine field can survive. The residual line can then fail to lift even though the residual semisimplification remains $1\oplus\overline\chi_3$. The exact prime-$2$ category is the calculated exception: Chapter 18 retains its Kummer class $a[2]$ and lifts the cyclotomic line by finite-flat devissage rather than by forcing that class to vanish.
 
 No theorem in this book infers characteristic-zero reducibility from residual reducibility alone. The lift in the strict case is supplied by the explicit vanishing and the induction of Chapter 13.
 
@@ -3334,165 +3437,808 @@ One must instead isolate the fixed-determinant difference from the cyclotomic di
 
 We now collect the exact outputs. Each theorem records the hypotheses needed at its own stage, so that a later application cannot silently exchange a residual assertion for a characteristic-zero one.
 
-### 18.1 Strict residual classification theorem
+### 18.1 The exact local condition at $2$
 
-**Theorem 18.1 (strict residual classification).** Let $E/\mathbf Q_3$ be finite, with ring of integers $\mathcal O$, uniformizer $\varpi$, and residue field $k=\mathbf F_{3^f}$. Let
-
-$$
-\overline\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(k)
-$$
-
-be the reduction of a $G_{\mathbf Q}$-stable lattice in a rank-two representation. Assume:
-
-1. $\det\overline\rho=\overline\chi_3$;
-2. $\overline\rho$ is odd;
-3. $\overline\rho$ is unramified at every finite prime other than $3$;
-4. its restriction to $G_{\mathbf Q_3}$ is the generic fiber of a finite-flat commutative group scheme over $\mathbf Z_3$.
-
-Section 3.1 supplies a coefficient-linear replacement witness by saturated closure. Because it is killed by $3$, the finite-flat ramification theorem of Book 64 supplies the upper-break cutoff and strict normalized-different bound used in Chapter 3; those bounds are consequences, not extra hypotheses.
-
-Then
+We begin with the clause that distinguishes the theorem from an arbitrary auxiliary-prime
+search. Let $A$ be a finite local $3$-primary ring, let $W$ be free of rank two over $A$, and
+let
 
 $$
-\overline\rho\simeq1\oplus\overline\chi_3.
+\tau:G_{\mathbf Q}\longrightarrow\operatorname{GL}_A(W)
 $$
 
-The isomorphism is an isomorphism of representations, not merely of semisimplifications. In particular, over $G_{\mathbf Q}$,
+have determinant equal to the reduction of $\chi_3$. The exact condition at $2$ is a stable
+sequence
 
 $$
-\overline\rho(G_{\mathbf Q})\simeq C_2,
+0\longrightarrow W_2^+\longrightarrow W
+\overset{\pi_2}{\longrightarrow}W_2^-\longrightarrow0, \tag{18.1}
+$$
+
+with both endpoints free of rank one, such that the character $\eta_2$ on $W_2^-$ is
+unramified and
+
+$$
+\eta_2^2=1. \tag{18.2}
+$$
+
+This is precisely the condition carried by the prime-$2$ hardly ramified deformation. It does
+not say that $\tau$ is unramified at $2$. The other diagonal character is
+$\chi_3\eta_2$, and $\chi_3$ is unramified at $2$.
+
+**Proposition 18.1 (exact inertia at $2$).** Suppose $A$ has characteristic dividing $3^m$.
+For every $\sigma\in I_2$,
+
+$$
+(\tau(\sigma)-1)^2=0,
 \qquad
-L_1=\mathbf Q(\zeta_3).
+\tau(\sigma)^{3^m}=1. \tag{18.3}
 $$
 
-After restriction to $G_{\mathbf Q(\zeta_3)}$, the determinant is trivial and the restricted residual representation is trivial.
-
-The theorem is unconditional. Its proof consists of the proved degree-capped subgroup theorem, the exact degree-$53$ discriminant comparison, and the ray-class exclusion of every residual cubic layer, including the affine layer of a nonsplit extension. No GRH lower bound or integral classification theorem is used.
-
-### 18.2 Congruence and line-lifting theorem
-
-**Theorem 18.2 (strict line lifting).** Let
+The wild inertia group acts trivially. The finite inertia image is therefore cyclic of order
+$3^a$ for some $0\leq a\leq m$, and the local extension is tame. Its normalized different
+contribution is exactly
 
 $$
-\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\mathcal O)
+\frac{d_2}{e_2}=
+\begin{cases}
+0,&a=0,\\[3pt]
+1-3^{-a},&a>0.
+\end{cases} \tag{18.4}
 $$
 
-have determinant $\chi_3$, be unramified outside $3$, and suppose every quotient $T/\varpi^nT$ admits a finite-flat model over $\mathbf Z_3$. No compatibility among the selected models is assumed. Suppose the residual representation satisfies the hypotheses of Theorem 18.1. Then a $G_{\mathbf Q}$-stable direct summand of rank one lifts through every $T/\varpi^nT$, and
+At residual level $m=1$, the only possibilities are
 
 $$
-\rho\simeq
-\begin{pmatrix}
-1&0\\
-0&\chi_3
-\end{pmatrix}
+e_2=1,\quad \frac{d_2}{e_2}=0,
+\qquad\text{or}\qquad
+e_2=3,\quad \frac{d_2}{e_2}=\frac23. \tag{18.5}
 $$
 
-after an integral change of basis.
-
-At the $n$th step, §12.4 closes the fiber product of the two congruent level-$(n+1)$ representations inside the product of arbitrary branch witnesses and takes its quotient to $k[\epsilon]/\epsilon^2$. The resulting module is killed by $3$ and cuts out the affine field of the trace-zero obstruction. Lemma 13.1 shows that a nonzero class would give a cyclic cubic extension of $\mathbf Q(\zeta_3)$ with lower-base break at least one, contradicting the finite-flat cutoff $1/2$. Thus every obstruction is a coboundary and the conjugations converge. The proof neither assumes that a residual invariant line lifts automatically nor requires characteristic-zero semisimplicity.
-
-### 18.3 Characteristic-zero classification
-
-**Theorem 18.3 (hardly ramified $3$-adic representation).** Under the hypotheses of Theorem 18.2, the representation is reducible over $E$ and in fact is the split sum
+**Proof.** Both diagonal characters in (18.1) are trivial on inertia. In a basis adapted to
+the sequence,
 
 $$
-\rho\simeq1\oplus\chi_3.
+\tau(\sigma)=
+\begin{pmatrix}1&c(\sigma)\\0&1\end{pmatrix}.
 $$
 
-Accordingly:
-
-- it is reducible, not merely potentially reducible;
-- it does not have a nontrivial finite image, because $\chi_3$ has infinite image;
-- its characteristic-zero semisimplification and the representation itself coincide with $1\oplus\chi_3$;
-- a residually irreducible dihedral case does not survive; its quadratic character and cyclic rotation layer are excluded before the lifting step.
-
-If one assumes only the residual hypotheses, the valid conclusion is Theorem 18.1. If levelwise finite-flat models are omitted, the common-ambient difference module cannot be constructed: even a split residual representation then gives no characteristic-zero invariant line. These logical levels are not interchangeable.
-
-### 18.4 Controlled ramification theorem schema
-
-For later variants it is useful to state exactly what remains true with an auxiliary set $S_0$ of ramified primes.
-
-**Theorem 18.4 (controlled finite search).** Let a rank-two residual representation have determinant $\overline\chi_3$, be odd, have a finite-flat model over $\mathbf Z_3$, and have specified local inertia and upper-break bounds at the primes of a finite auxiliary set $S_0$ disjoint from $\{3\}$. Form
+This proves the square-zero identity. Since the characteristic divides $3^m$,
 
 $$
-U(S_0)=3^{3/2}\prod_{q\in S_0\setminus\{3\}}q^{d_q/e_q}.
+(1+N)^{3^m}=1+3^mN=1
 $$
 
-If an unconditional lower-bound table gives a strict inequality
+when $N^2=0$. Thus every element of the finite inertia image has $3$-power order. Wild
+inertia at residue characteristic $2$ has $2$-power image in every finite quotient, so its
+image here has order dividing powers of both $2$ and $3$ and is trivial. Tame inertia is
+procyclic, giving the cyclic group of order $3^a$. A tame extension of ramification index
+$3^a$ has different exponent $3^a-1$, which gives (18.4)--(18.5). $\square$
+
+The exact sequence itself is preserved by scalar extension and coefficient quotient: it is
+split as a sequence of underlying $A$-modules because the quotient is free. The square-zero and
+$3$-power inertia conclusions are in turn preserved by stable subquotients and finite direct
+sums. For a direct sum of objects killed by $3$, the tame inertia image is still a quotient of
+the exponent-three part of tame inertia and hence is either trivial or cyclic of order three.
+
+The cost $2/3$ is attained. The Kummer cocycle of $2$ gives
 
 $$
-U(S_0)<L_N
+g\longmapsto
+\begin{pmatrix}overline\chi_3(g)&c_2(g)\\0&1\end{pmatrix}. \tag{18.6}
 $$
 
-for the actual signature class, then the residual field has degree less than $N$. Its image must therefore occur in the finite subgroup ledger subject simultaneously to:
-
-1. the determinant restriction;
-2. the scalar-field degree;
-3. the projective-image degree;
-4. the local inertia quotients;
-5. the ray and class groups of every intermediate base;
-6. the affine fields of residual and infinitesimal extension classes.
-
-If those computations leave only $1\oplus\overline\chi_3$, if finite-flat witnesses exist at every coefficient level, and if the corresponding affine obstruction fields are excluded, then the conclusion of Theorem 18.3 follows. This is a finite-search theorem, not a promise that every choice of $S_0$ has the strict conclusion.
-
-Under GRH one may replace the unconditional analytic lower bounds by their GRH counterparts in exactly the degrees and signatures for which they are valid. The asymptotic comparison constant then becomes $8\pi e^\gamma$. Such a replacement may shorten a candidate ledger, but it is not used below.
-
-### 18.5 Interface theorem for the Frey-compatible system
-
-**Theorem 18.5 (unconditional Frey interface).** Let $\{\rho_\lambda\}$ be the rank-two compatible system delivered to the final descent, and let $\rho_3$ be its member at a place above $3$. Assume the input theorem for that system supplies all of the following:
-
-1. the base field is $\mathbf Q$;
-2. $\det\rho_3=\chi_3$ and $\rho_3$ is odd;
-3. $\rho_3$ is unramified at every finite prime other than $3$;
-4. every quotient of a $G_{\mathbf Q}$-stable lattice admits a finite-flat model over $\mathbf Z_3$; coefficient actions may be installed on replacement witnesses by §3.1, and no compatibility of the selected witnesses is required;
-5. the common Frobenius polynomial at every good prime $p\neq3$ is
+It is finite flat at $3$, unramified outside $\{2,3\}$, and has tame inertia of order three
+at $2$. Thus a theorem claiming residual splitting in the exact prime-$2$ category would be
+false. The field in the nonsplit case is
 
 $$
-X^2-a_pX+p,
+\mathbf Q(\zeta_3,\sqrt[3]{2}),
 $$
 
-and the compatible system is pure of weight one.
+with Galois group $S_3$ and exact prime-$2$ contribution $2/3$.
 
-Then Theorems 18.1 and 18.2 give
+### 18.2 Torsion fields and the unconditional degree-$20$ cutoff
 
-$$
-\rho_3\simeq1\oplus\chi_3.
-$$
-
-There are two legitimate ways for the final descent to use this output. If the Frey-compatible system has already been proved to have an absolutely irreducible $3$-adic member, the reducibility alone is a contradiction. If the available irreducibility statement concerns a different member, or only a residual member at another prime, one instead uses the common Frobenius polynomials and the exact semisimplification just obtained. Reducibility of one member is not silently transported to another without that compatibility argument.
-
-For every good prime $p\neq3$, this forces
+Let $T_n=T/\varpi^nT$ and $K_n=\mathbf Q(T_n)$. Put
 
 $$
-a_p=1+p.
+e_{\mathcal O}=v_\varpi(3),
+\qquad
+m(n)=\left\lceil\frac{n}{e_{\mathcal O}}\right\rceil.
 $$
 
-This equality is first read in the completion at the chosen place above $3$, but that coefficient embedding is injective, so it is an equality in the common algebraic coefficient field. Under every complex embedding, purity, or equivalently the weight-one Frobenius bound, gives
+Then $T_n$ is killed by $3^{m(n)}$. The finite-flat estimate at $3$ and Proposition 18.1 at
+$2$ give the complete two-prime ledger
 
 $$
-|a_p|\leq2\sqrt p.
+\frac{d_3(K_n)}{e_3(K_n)}<m(n)+\frac12,
+\qquad
+\frac{d_2(K_n)}{e_2(K_n)}=1-3^{-a_n} \tag{18.7}
 $$
 
-Since
+when the inertia at $2$ has order $3^{a_n}>1$, with the second entry replaced by zero when it
+is unramified. Here $0\leq a_n\leq m(n)$. Hence
 
 $$
-p+1>2\sqrt p
+\boxed{
+\operatorname{rd}(K_n)
+<3^{m(n)+1/2}2^{1-3^{-a_n}}.
+} \tag{18.8}
 $$
 
-for every prime $p$, the two conclusions are incompatible. Therefore no Frey-compatible system satisfying these hypotheses exists.
+The exponent at $2$ is exact; the exponent at $3$ is the strict universal finite-flat bound.
+At residual level this becomes
 
-The compatible system has all but finitely many primes good, so one such prime is enough; no density estimate is involved. Using an arbitrary good prime also makes the coefficient-independence of the contradiction transparent.
+$$
+\boxed{
+\operatorname{rd}(K_1)
+<U_{2,3}:=3^{3/2}2^{2/3}
+=8.248377821991616\ldots .
+} \tag{18.9}
+$$
 
-The contradiction is unconditional. It uses neither the GRH lower bound nor a GRH finiteness theorem. If the preceding descent leaves an auxiliary ramified prime, produces only a rational crystalline representation without finite-flat models for every lattice quotient, or proves only residual reducibility, the interface is not yet available: that missing hypothesis must be repaired before this theorem is invoked.
+The old degree-$52$ Minkowski argument does not apply to (18.9): its unrestricted asymptotic
+constant is only $\pi e^2/4=5.803\ldots$. The replacement is the unconditional triangular
+test function already evaluated in Book 65. Take support $T=6$ and real proportion $\alpha=0$.
+That calculation proves
 
-### 18.6 What has been proved
+$$
+A_6=3,
+\qquad B_6<1.10356,
+$$
 
-The small-ramification problem has three layers, and each is now closed under the strict hypotheses.
+and for every degree $n$,
 
-First, the residual field has a strict local and global discriminant bound. The unconditional degree cap and the complete subgroup ledger reduce its possible image to solvable small groups; ray-class and extension-class calculations then force the actual split representation $1\oplus\overline\chi_3$.
+$$
+\log\operatorname{rd}(L)>
+\gamma+\log(8\pi)-\frac{12}{n}-1.10356. \tag{18.10}
+$$
 
-Second, the successive congruence differences are trace zero after the cyclotomic determinant direction is separated. Products, saturated closure, and a coefficient quotient construct each difference as an actual finite-flat dual-number module killed by $3$. Its affine field has the strict upper-break cutoff, while any nonzero class would expose a cubic ray layer with break at least one. Every difference class therefore vanishes immediately; the residual lines lift compatibly and the entire representation is $1\oplus\chi_3$.
+At $n=21$, the right side is
 
-Third, the common Frobenius polynomials of a pure Frey-compatible system cannot have roots $1$ and $p$. This supplies the unconditional contradiction required by the final descent.
+$$
+2.126398521002197\ldots,
+$$
 
-Every numerical inequality used in that route is strict, every field degree includes its scalar and determinant contribution, and every passage from residual to characteristic zero is supported by an obstruction calculation. Those are precisely the features that make the classification usable at the final interface.
+so
+
+$$
+\operatorname{rd}(L)>8.38461535304387\ldots
+>8.248377821991616\ldots=U_{2,3}. \tag{18.11}
+$$
+
+For a fixed test function the lower bound increases with $n$. Therefore (18.9)--(18.11) give
+the unconditional conclusion
+
+$$
+\boxed{[K_1:\mathbf Q]\leq20.} \tag{18.12}
+$$
+
+The logarithmic margin is
+
+$$
+2.126398521002197\ldots-2.110016553375461\ldots
+=0.016381967626735\ldots .
+$$
+
+No field table and no unperformed enumeration enter this cutoff. Under GRH one can obtain
+stronger lower bounds, but every result below uses (18.10) and is unconditional.
+
+Every simple subquotient of every finite level is killed by $3$. Its model is inherited by
+saturated closure and quotient at $3$, and its inertia at $2$ is trivial or cyclic of order
+three. Its cutout field therefore satisfies the same bound (18.9) and the same degree cap
+(18.12). More generally, finite direct sums of such exponent-three objects still satisfy
+(18.9); the product model at $3$ keeps the same upper cutoff, and tame inertia at $2$ remains
+cyclic of exponent three. This is the fixed-base finite arena used in the devissage. The full
+level bound (18.8) grows with $n$ and is never misused as a uniform tower bound.
+
+### 18.3 Abelian fields and simple factors
+
+The prime $2$ appears in the discriminant but disappears from every abelian quotient.
+
+**Lemma 18.2 (abelian-field lemma).** Let $F/\mathbf Q$ be an abelian subextension of an
+exponent-three cutout field occurring above. Then
+
+$$
+F=\mathbf Q
+\qquad\text{or}\qquad
+F=\mathbf Q(\zeta_3). \tag{18.13}
+$$
+
+**Proof.** Inertia at $2$ is a $3$-group. By the cyclotomic description of abelian extensions,
+an abelian field ramified only at $2$ and $3$ lies in a cyclotomic field of conductor
+$2^a3^b$. Its inertia at $2$ is a quotient of
+
+$$
+(\mathbf Z/2^a\mathbf Z)^\times,
+$$
+
+which is a $2$-group. It is simultaneously a $3$-group, so it is trivial. The conductor is
+therefore a power of $3$.
+
+At $3$, an abelian positive upper break is an integer. The finite-flat cutoff at $1/2$
+excludes every positive break. Only tame ramification remains, and the tame quotient of
+$(\mathbf Z/3^b\mathbf Z)^\times$ is the order-two group already present in
+$\mathbf Q(\zeta_3)$. This proves (18.13). $\square$
+
+We also need one ray calculation over
+
+$$
+K=\mathbf Q(\zeta_3).
+$$
+
+Its class number is one without appeal to a table: the Minkowski ideal-class bound is
+
+$$
+\frac{4}{\pi}\frac{2!}{2^2}\sqrt3
+=\frac{2\sqrt3}{\pi}<2,
+$$
+
+so every class contains an ideal of norm one. Let $\lambda=(1-\zeta_3)$ be the prime above
+$3$. The prime-to-$3$ part of
+
+$$
+(\mathcal O_K/\lambda^r)^\times
+$$
+
+is the residue group $\mathbf F_3^\times$ of order two, and the global unit $-1$ maps onto its
+generator. Consequently every ray class group supported only at $\lambda$ is a $3$-group.
+In particular it has no quotient of prime order different from three. This proof also shows
+why no hidden quadratic ray layer appears over $K$.
+
+**Proposition 18.3 (simple-factor classification).** Every simple generic factor of a finite
+object in the exact prime-$2$ category is one-dimensional over $\mathbf F_3$. Its character is
+either $1$ or $\overline\chi_3$. Its finite-flat model at $3$ is respectively the constant
+group of order three or the multiplicative group $\mu_3$.
+
+**Proof.** Let $S$ be a simple factor and let $G$ be its faithful finite image. Section 18.2
+gives
+
+$$
+|G|\leq20. \tag{18.14}
+$$
+
+Every group of order at most twenty is solvable. Here is the required short proof. If a prime
+$r\geq5$ divides the order, the number of Sylow $r$-subgroups is congruent to one modulo $r$
+and divides a number at most four, so the Sylow subgroup is normal. If only $2$ and $3$ occur,
+the only non-$r$-group orders at most twenty are $6$, $12$, and $18$. The Sylow $3$-subgroup is
+normal for orders $6$ and $18$. At order $12$, either it is normal or the four Sylow
+$3$-subgroups give a faithful conjugation action on four letters. Indeed, the kernel cannot
+have order three, since that would be a normal Sylow subgroup. The image is then an index-two
+subgroup of $S_4$, hence $A_4$, whose four-group of double transpositions is normal. Induction
+on the order proves solvability.
+
+If $G$ is nontrivial, a solvable perfect group would have a derived series that never reaches
+one, so $G^{\mathrm{ab}}$ is nontrivial. Lemma 18.2 makes it $C_2$. Put
+
+$$
+H=[G,G].
+$$
+
+Then $[G:H]=2$ and $|H|\leq10$. We claim that $H$ is a $3$-group. If a prime
+$r\ne3$ divided $H^{\mathrm{ab}}$, take a quotient of order $r$ and intersect its kernel with
+its conjugate under the order-two quotient $G/H$. This produces a nontrivial elementary
+abelian $r$-extension of $K$ which is Galois over $\mathbf Q$. At the prime above $2$ it is
+unramified because inertia there is a $3$-group. At $\lambda$ it is at most tame, and the ray
+calculation above shows that no prime-to-$3$ quotient exists. This contradiction proves that
+$H^{\mathrm{ab}}$ is a $3$-group.
+
+If $H\ne1$, solvability makes $H^{\mathrm{ab}}$ nontrivial. Since $|H|\leq10$, its order is
+$3$, $6$, or $9$. A group of order six is cyclic or has a normal subgroup of order three and
+quotient of order two; its abelianization is respectively $C_6$ or $C_2$, not a $3$-group.
+Thus $H$ has order three or nine and is a $3$-group.
+
+A normal $3$-subgroup acts trivially on every simple module in characteristic three. Indeed,
+a finite $3$-group has a nonzero fixed vector on every nonzero characteristic-three module;
+normality makes the fixed space $G$-stable, and simplicity makes it the whole module. Since the
+action defining $G$ is faithful, this forces $H=1$. Hence $G$ is trivial or $C_2$, and $S$ is
+one-dimensional with character $1$ or the unique nontrivial character
+$\overline\chi_3$.
+
+It remains to identify the order-three models. The rank-three finite-flat classification over
+the unramified DVR $\mathbf Z_3$ writes the two Hopf parameters as $a,b$ with
+$ab$ equal to $3$ times a unit. Their nonnegative valuations sum to one, so the only cases are
+$(0,1)$ and $(1,0)$. They are the constant and multiplicative endpoints. Their generic
+characters distinguish them: the first is trivial and the second is cyclotomic. $\square$
+
+This argument explains why the allowed $S_3$ Kummer field is harmless for simple factors. In
+characteristic three, its normal cubic subgroup acts trivially on every simple module; the two
+simple factors are still the trivial and sign characters.
+
+### 18.4 Multiplicative--constant devissage
+
+We now pass from simple factors to an arbitrary finite coefficient quotient. The construction
+is global and keeps the tame prime $2$ visible.
+
+First glue the local models. At every odd prime $q\ne3$, unramifiedness gives the unique finite
+étale model. At $3$, use the supplied finite-flat witness, enhanced with its coefficient action
+by Section 3.1. On the coordinate algebra of the generic finite étale group, intersect these
+Hopf orders inside the generic algebra. Over the Dedekind ring $\mathbf Z[1/2]$ the intersection
+is finite projective, and the coproduct, counit, and antipode preserve it because they preserve
+every localization. It therefore defines a finite locally free commutative group scheme over
+$\mathbf Z[1/2]$. The prime $2$ is omitted from the base, while Proposition 18.1 records its
+tame generic inertia.
+
+Stable generic subgroups are closed in this model and quotients are represented and finite
+flat. Thus a composition series exists inside the same category, and Proposition 18.3 labels
+each simple interval as **multiplicative** or **constant**.
+
+Two elementary extension calculations organize those labels.
+
+1. A block all of whose simple factors are constant has trivial Galois action. Indeed, choose
+   a composition series. Successive extensions of finite étale groups over $\mathbf Z_3$ are
+   finite étale, so the whole block is unramified at $3$. In a basis successively adapted to
+   its order-three factors, every Galois element acts upper unipotently on each exponent-three
+   layer. Induction on the exponent shows that the full finite image is a $3$-group: the kernel
+   on passing to the next exponent layer is an additive group killed by $3$, and the image on
+   the lower layer is a $3$-group. If the image were nontrivial, its abelianization would have
+   a quotient $C_3$. The corresponding cyclic cubic field would be unramified at every odd
+   prime and ramified at most at $2$. But an abelian field of conductor $2^a$ has Galois group
+   a quotient of $(\mathbf Z/2^a\mathbf Z)^\times$, a $2$-group. This contradiction makes the
+   block constant. Cartier duality gives the parallel statement: a block all of whose factors
+   are multiplicative is acted on by the determinant character.
+2. A multiplicative factor lying above a constant block can be moved below it. It is enough to
+   treat one constant factor at a time. A generic extension in the wrong order has the form
+   $$
+   0\longrightarrow\mathbf F_3
+   \longrightarrow X\longrightarrow\mathbf F_3(1)
+   \longrightarrow0. \tag{18.15}
+   $$
+   Saturate the constant line in the local model at $3$. Proposition 18.3 identifies its
+   closure with the constant group and the quotient with $\mu_3$. In the connected--étale
+   sequence of the rank-nine middle group, the connected component cannot have rank one,
+   since the quotient by the constant subgroup is connected, and it cannot have rank nine,
+   since the constant subgroup is étale. It therefore has rank three. Its map to the
+   multiplicative quotient is an isomorphism: its kernel is both connected and contained in
+   the constant subgroup, hence trivial, and the two groups have the same rank. This supplies
+   a multiplicative subgroup complementary to the constant subgroup, so (18.15) splits on
+   generic points at $3$. In particular the underlying extension of finite abelian groups is
+   split and $X$ is killed by $3$. It is therefore globally an $\mathbf F_3$-linear extension,
+   and its class lies in
+   $$
+   H^1(\mathbf Q,\mathbf F_3(1)).
+   $$
+   Here the coefficient character is correct because
+   $\overline\chi_3^{-1}=\overline\chi_3$.
+   Ramification outside $\{2,3\}$ restricts this group to the two Kummer classes of $2$ and
+   $3$. Their images in
+   $$
+   \mathbf Q_3^\times/\mathbf Q_3^{\times3}
+   $$
+   are independent: $3$ is the valuation direction and $2$ is the nonzero principal-unit
+   direction. For the last assertion, replace $2$ by the same Kummer class $-2=1-3$. If
+   $-2=u^3$, then $u\equiv1\pmod3$, while the cube of every $u\equiv1\pmod3$ is
+   $1\pmod9$; but $-2\equiv7\pmod9$. Local splitting therefore makes both coefficients zero.
+   Projecting onto each
+   constant simple quotient and inducting moves a multiplicative factor below an arbitrary
+   constant block.
+
+Repeatedly applying these two calculations sorts a composition series. For a finite local
+coefficient ring $A$, a free rank-two object $W$, and its representation $\tau$, there is an
+additive invariant cut $N_0$ such that the lower block is determinant-type and the quotient is
+constant. The cut need not be an $A$-direct summand. What is canonical is the $A$-submodule
+
+$$
+N=\sum_{g\in G_{\mathbf Q}}\sum_{x\in W}
+A\bigl(\tau(g)x-x\bigr). \tag{18.16}
+$$
+
+The sorted filtration gives the cross relation
+
+$$
+\bigl(\tau(h)-\det\tau(h)\bigr)
+\bigl(\tau(g)-1\bigr)=0
+\qquad(g,h\in G_{\mathbf Q}). \tag{18.17}
+$$
+
+Consequently $W/N$ is trivial and $G_{\mathbf Q}$ acts on $N$ through $\det\tau$. This
+description makes $N$ stable under the full coefficient ring even if the original sorted
+additive cut was not.
+
+The cross relation also proves the character identity without assuming that $N$ or $W/N$ is
+free. Put $f=\tau(g)$ and $d=\det f$. Taking $h=g$ in (18.17) gives
+
+$$
+f^2-(1+d)f+d=0. \tag{18.18}
+$$
+
+Cayley--Hamilton gives
+
+$$
+f^2-(\operatorname{tr}f)f+d=0.
+$$
+
+Subtracting and using the invertibility of $f$ on the faithful free $A$-module $W$ yields
+
+$$
+\boxed{
+\operatorname{tr}\tau(g)=1+\det\tau(g)
+\quad\text{for every }g.
+} \tag{18.19}
+$$
+
+This completes the finite-level argument. It used the degree-$20$ cap only to classify simple
+factors. It did not enumerate number fields, discard the Kummer field, or apply the residual
+root-discriminant bound to a higher-level torsion field.
+
+### 18.5 The residual extension and its Kummer class
+
+Apply Section 18.4 with $A=k$ and $W=M$. The canonical submodule $N$ in (18.16) is neither zero
+nor all of $M$. If $N=0$, the representation is trivial, contradicting its cyclotomic
+determinant. If $N=M$, (18.17) makes every element act on all of $M$ through the determinant,
+so its matrix determinant would be the square of that character. Complex conjugation gives
+$-1=1$, again a contradiction. Thus $N$ has $k$-dimension one. We obtain the exact sequence
+
+$$
+\boxed{
+0\longrightarrow k(1)\longrightarrow M
+\longrightarrow k\longrightarrow0.
+} \tag{18.20}
+$$
+
+The orientation in (18.20) is part of the conclusion. It is stronger than residual
+semisimplification and weaker than residual splitting.
+
+Its extension class lies in $H^1(\mathbf Q,k(1))$. The ramification record restricts the
+global Kummer group to
+
+$$
+\left(\mathbf Z[1/2,1/3]^\times/
+\mathbf Z[1/2,1/3]^{\times3}\right)
+\otimes_{\mathbf F_3}k
+=k[2]\oplus k[3]. \tag{18.21}
+$$
+
+The sign contributes nothing because $-1$ is a cube. At $3$, the closures of the two lines
+are the unique multiplicative and constant order-three models in the low-ramification range.
+The standard-endpoint Kummer calculation of Book 24 therefore identifies the finite-flat
+classes with the unit line and excludes the valuation direction. Therefore
+
+$$
+\boxed{[M]=a[2]\quad\text{for a unique }a\in k.} \tag{18.22}
+$$
+
+If $a=0$, the residual representation is split and its field is
+$\mathbf Q(\zeta_3)$. If $a\ne0$, rescaling the cyclotomic line normalizes $a$ to one; the
+image is $S_3$, the cubic inertia at $2$ is nontrivial, and the field is
+$\mathbf Q(\zeta_3,\sqrt[3]{2})$. This is the complete residual candidate ledger:
+
+| residual class | inertia at $2$ | image order | normalized $2$-cost |
+|---|---:|---:|---:|
+| $a=0$ | $1$ | $2$ | $0$ |
+| $a\ne0$ | $C_3$ | $6$ | $2/3$ |
+
+Both rows satisfy the unconditional degree-$20$ cap. No other Borel, Cartan-normalizer,
+exceptional, or defining-characteristic image survives the simple-factor argument.
+
+### 18.6 Integral line lifting and the $3$-adic character
+
+The finite-level relation does more than determine a residual semisimplification. It produces a
+single integral line without asking that the original representation be semisimple.
+
+**Theorem 18.4 (exact prime-$2$ character theorem).** Let $T$ and $\rho$ satisfy clauses
+1--2 and 4--8 of the exact prime-$2$ datum in Section 1.2. Then
+
+$$
+\operatorname{tr}\rho(g)=1+\chi_3(g)
+\qquad(g\in G_{\mathbf Q}), \tag{18.23}
+$$
+
+and there is an exact sequence of free $\mathcal O$-modules
+
+$$
+\boxed{
+0\longrightarrow\mathcal O(1)\longrightarrow T
+\longrightarrow\mathcal O\longrightarrow0.
+} \tag{18.24}
+$$
+
+After bases are chosen, the class of (18.24) is
+
+$$
+\boxed{[T]=b[2]\quad\text{for a unique }b\in\mathcal O.} \tag{18.25}
+$$
+
+In particular
+
+$$
+\rho^{\mathrm{ss}}\simeq1\oplus\chi_3. \tag{18.26}
+$$
+
+If $\rho$ is semisimple, then $b=0$ and the representation is the split sum
+$1\oplus\chi_3$.
+
+**Proof.** Apply Section 18.4 to $T/\varpi^nT$ for every $n$. The hypotheses survive
+coefficient quotient because the rank-one quotient in (18.1) is free. Thus (18.17) and
+(18.19) hold modulo $\varpi^n$ for every $n$. The intersection of the ideals
+$\varpi^n\mathcal O$ is zero,
+so passage to the separated inverse limit gives (18.23) and the integral cross relation
+
+$$
+\bigl(\rho(h)-\chi_3(h)\bigr)\bigl(\rho(g)-1\bigr)=0
+\qquad(g,h\in G_{\mathbf Q}). \tag{18.27}
+$$
+
+Let $N_T$ be the $\mathcal O$-submodule generated by all
+
+$$
+\rho(g)x-x,
+\qquad g\in G_{\mathbf Q},\quad x\in T,
+$$
+
+and let $L$ be its saturation in $T$. Since $\mathcal O$ is noetherian, $N_T$ is generated by
+finitely many such differences. Relation (18.27) says that $G_{\mathbf Q}$ acts on $N_T$
+through $\chi_3$. It acts in the same way on $L$: if $\varpi^r y\in N_T$, then
+
+$$
+\varpi^r\bigl(\rho(h)y-\chi_3(h)y\bigr)=0,
+$$
+
+and $T$ is torsion free.
+
+Put $N_E=N_T\otimes_{\mathcal O}E$. It is not zero, since otherwise $\rho$ would be trivial
+and could not have determinant $\chi_3$. It is not all of $V$, since then (18.27) would make
+every $\rho(h)$ the scalar $\chi_3(h)$; at complex conjugation its determinant would be
+$\chi_3(c)^2=1$ instead of $\chi_3(c)=-1$. Hence $N_E$ has dimension one. The saturation $L$
+is consequently free of rank one, with character $\chi_3$, and $T/L$ is torsion free of rank
+one. Every difference $\rho(g)x-x$ lies in $L$, so $G_{\mathbf Q}$ acts trivially on $T/L$.
+This proves (18.24).
+
+It remains to determine the extension class. At each $3^n$-level, the Kummer sequence and the
+class number one of $\mathbf Q$ identify the classes unramified outside $\{2,3\}$ with the
+$3^n$-power quotient of $\mathbf Z[1/6]^\times$. Taking the inverse limit and then extending
+coefficients from $\mathbf Z_3$ to $\mathcal O$ gives
+
+$$
+H^1_{\{2,3\}}(\mathbf Q,\mathcal O(1))
+\simeq\mathcal O[2]\oplus\mathcal O[3]. \tag{18.28}
+$$
+
+Here $[2]$ and $[3]$ are the compatible systems of their classes modulo all powers of three;
+$-1$ contributes nothing because it is already a cube. Write the class as
+$b_2[2]+b_3[3]$. For every $n$, reduce (18.24) modulo $\varpi^n$. Over $\mathbf Z_3$ the
+absolute ramification index is one, strictly smaller than $3-1$. The low-ramification
+full-faithfulness theorem of Book 24 therefore identifies the closures of its two endpoints
+with the unique coefficient multiplicative and constant models. The standard-endpoint Kummer
+calculation in the same book then says that the generic class of this finite-flat extension is
+in the coefficient span of the unit groups. Equivalently, after decomposing the finite additive
+coefficient module into cyclic $3^r$-constituents, every projected class lies in
+
+$$
+\mathbf Z_3^\times/(\mathbf Z_3^\times)^{3^r}.
+$$
+
+Thus its local class lies on the unit line generated by $[2]$. The class $[3]$ is the
+independent valuation line, so
+
+$$
+b_3\equiv0\pmod{\varpi^n}
+$$
+
+for every $n$. Separatedness gives $b_3=0$, proving (18.25). This all-level endpoint
+calculation is essential: residual finite flatness alone would show only
+$b_3\in\varpi\mathcal O$.
+
+Tensoring (18.24) with $E$ gives (18.26). If $\rho$ is semisimple, this rational extension
+splits. Under (18.28), the class $b[2]$ remains nonzero after tensoring with $E$ unless $b=0$,
+so semisimplicity forces $b=0$ and the integral extension splits as well. $\square$
+
+The theorem also determines the apparently possible unramified quadratic character in the
+local input. The two characters in the semisimplification of (18.24) restricted to
+$G_{\mathbf Q_2}$ are $1$ and $\chi_3$, while (18.1) gives $\eta_2$ and
+$\chi_3\eta_2$. Equality of these unordered pairs forces $\eta_2=1$: the other possible
+identification would make the infinite unramified character $\chi_3|_{G_{\mathbf Q_2}}$ have
+order at most two. The quadratic allowance in (18.2) was nevertheless essential in stating
+the local category before the global argument was run.
+
+The nonsplit alternative is attained when semisimplicity is omitted. The compatible Kummer
+classes of $2$ give a $\mathbf Z_3$-extension of the trivial line by the cyclotomic line; its
+$3^n$-level is finite flat at $3$ because $2$ is a unit, and at $2$ it has the tame unipotent
+sequence (18.1). Its class in (18.25) is $[2]$.
+
+### 18.7 Coefficient extension and changing the prime
+
+There are two different stability questions, and only one is formal.
+
+**Proposition 18.5 (stability of the local clause).** The exact sequence
+(1.1)--(1.2) is preserved by finite extension of the $3$-adic coefficient field and by every
+finite coefficient quotient. If a compatible system is obtained from a curve with split or
+nonsplit multiplicative reduction at $2$, its geometric lattice satisfies the same clause at
+every odd coefficient prime. Weak equality of good-prime Frobenius polynomials alone does not
+imply this integral assertion.
+
+**Proof.** Let $\mathcal O'/\mathcal O$ be the valuation ring of a finite coefficient
+extension. Since $T_2^-$ is free, (1.1) is split as a sequence of underlying
+$\mathcal O$-modules. Tensoring with $\mathcal O'$ is therefore exact, as is quotienting by
+any ideal of either coefficient ring. The quotient character is the scalar extension or
+reduction of $\eta_2$, so it remains unramified and still satisfies $\eta_2^2=1$.
+
+For the changing-prime assertion, let $q_E$ be a Tate parameter over a finite unramified
+extension of $\mathbf Q_2$. The geometric lattice at every odd coefficient prime $\ell$ has
+the exact Tate sequence
+
+$$
+0\longrightarrow\mathbf Z_\ell(1)\otimes\eta_2
+\longrightarrow T_\ell
+\longrightarrow\mathbf Z_\ell\otimes\eta_2
+\longrightarrow0, \tag{18.29}
+$$
+
+where $\eta_2=1$ in the split case and is the unramified quadratic character in the nonsplit
+case. Thus $\eta_2^2=1$, and the determinant of (18.29) is cyclotomic. Base change to the
+coefficient valuation ring gives exactly (1.1)--(1.3).
+
+More generally, a strongly compatible rank-one special local parameter gives the rational
+shape of (18.29), but an integral special lattice must still be supplied: a rational change of
+basis can alter the thickness of the upper-right entry. Equality of Frobenius polynomials at
+good primes records neither this lattice nor the finite-flat models at the new coefficient
+prime. Those two integral inputs must therefore be checked separately in a changing-prime
+construction. $\square$
+
+For the normalized Frey curve, the multiplicative reduction calculation supplies (18.29)
+directly. Its minimal-discriminant valuation controls whether inertia remains nontrivial after
+reduction, but nonvanishing is not required for Proposition 18.1: both the trivial and the
+cyclic cubic residual inertia rows occur in the exact category.
+
+### 18.8 The unconditional Frey interface
+
+We can now state the endpoint in the form needed by a prime-switched Frey-compatible system.
+
+**Theorem 18.6 (unconditional exact prime-$2$ Frey interface).** Let
+$\{\rho_\lambda\}$ be a rank-two compatible system over $\mathbf Q$, and choose a place above
+$3$. Write $\mathcal O$ for its coefficient valuation ring and $\varpi$ for a uniformizer,
+and choose a stable lattice $T$ in the corresponding representation $\rho_3$. Assume exactly
+the following.
+
+1. $\det\rho_3=\chi_3$, and $\rho_3$ is odd.
+2. The representation is unramified at every odd prime different from $3$.
+3. Over $G_{\mathbf Q_2}$ the lattice has an exact sequence
+   $$
+   0\longrightarrow T_2^+\longrightarrow T\longrightarrow T_2^-\longrightarrow0,
+   $$
+   with free rank-one endpoints, and the quotient character $\eta_2$ is unramified with
+   $\eta_2^2=1$.
+4. Every $T/\varpi^nT$ has a finite-flat model over $\mathbf Z_3$.
+5. At every prime $p\notin\{2,3\}$ the common polynomial is
+   $$
+   X^2-a_pX+p,
+   $$
+   and the system is pure of weight one.
+
+Then no such compatible system exists. This conclusion is unconditional. Semisimplicity of
+$\rho_3$ is not needed for the contradiction; if it is supplied, Theorem 18.4 additionally
+identifies $\rho_3$ itself with $1\oplus\chi_3$.
+
+**Proof.** The five hypotheses are exactly clauses 1--2 and 4--8 used in Theorem 18.4, together
+with the common-polynomial and purity statements. Hence
+
+$$
+\operatorname{tr}\rho_3(\operatorname{Frob}_p)=1+p
+$$
+
+at every $p\notin\{2,3\}$. Compatibility gives
+
+$$
+a_p=1+p \tag{18.30}
+$$
+
+in the common algebraic coefficient field: the equality first holds in its completion at the
+chosen place above $3$, and that embedding is injective.
+
+Take $p=5$. Hypotheses 2 and 5 make this a common good prime of the system. In the Frey
+application the system supplied to this theorem is the level-$2$ minimal companion, not the
+original Frey curve before its odd bad primes have been removed; hence $5$ is permitted even
+when it was bad for the original curve. Purity says that the two complex Frobenius roots have absolute value
+$\sqrt5$, so
+
+$$
+|a_5|\leq2\sqrt5. \tag{18.31}
+$$
+
+But (18.30) says $a_5=6$, while
+
+$$
+6>2\sqrt5.
+$$
+
+This contradiction proves the theorem. The proof uses the unconditional calculation
+(18.10)--(18.12), and it invokes neither GRH nor a field table. $\square$
+
+The theorem deliberately says ``unramified at every odd prime different from $3$,'' not
+``unramified outside $3$.'' At $2$ it uses the exact sequence in item 3, which permits the
+rank-one tame monodromy present in the Frey route.
+
+### 18.9 Strict specialization and the remaining general boundary
+
+The exact prime-$2$ result contains the old strict endpoint as a specialization.
+
+**Corollary 18.7 (strict theorem).** Let $T$ and $\rho$ satisfy clauses 1--2 and 4--6 of
+Section 1.2 and be unramified at every finite prime away from $3$. No local filtration at $2$
+and no characteristic-zero semisimplicity are required. Then
+
+$$
+T\simeq\mathcal O(1)\oplus\mathcal O,
+\qquad
+\rho\simeq\chi_3\oplus1.
+$$
+
+This is Theorem 13.2: the strict residual calculation removes both extension orientations, and
+the common-ambient congruence argument lifts the split lines integrally. If the strict datum
+also carries clause 8, there is a shorter verification from the new theorem: the class $b[2]$
+in (18.25) has nontrivial inertia at $2$ whenever $b\ne0$, so unramifiedness forces $b=0$;
+residually, (18.22) similarly forces $a=0$. The two routes agree without narrowing the old
+strict theorem or confusing it with the nonsplit controlled case.
+
+For a genuinely arbitrary auxiliary set, the boundary remains the following proved reduction,
+not a completed classification.
+
+**Theorem 18.8 (general controlled-set reduction).** Let a residual rank-two representation
+have determinant $\overline\chi_3$, be odd, have a finite-flat model over $\mathbf Z_3$, and
+have recorded normalized different contributions $d_q/e_q$ at a finite set $S_0$ disjoint
+from $3$. Put
+
+$$
+U(S_0)=3^{3/2}\prod_{q\in S_0}q^{d_q/e_q}. \tag{18.32}
+$$
+
+If an unconditional explicit-formula calculation gives $U(S_0)<L_N$ in the actual signature
+class, then its cutout field has degree less than $N$. Within that finite degree range, a full
+classification still requires the determinant and scalar degrees, every permitted local
+inertia quotient, the ray and class groups of intermediate fields, and the affine fields of
+extension classes. A characteristic-zero conclusion additionally requires levelwise
+finite-flat witnesses and vanishing of every infinitesimal obstruction field.
+
+**Proof.** The local--global discriminant formula gives
+$\operatorname{rd}(K)<U(S_0)$. The explicit-formula lower bound and the strict inequality then
+give the degree cutoff. Chapters 6--13 prove why each item in the remaining ledger is necessary
+and why, once all of them are eliminated, the line-lifting conclusion follows. None of those
+eliminations is implied by the degree cutoff alone. $\square$
+
+Under GRH the lower bound in this general reduction may be replaced by a proved GRH bound in
+the relevant degree and signature; its asymptotic constant is $8\pi e^\gamma$. That is the only
+GRH-dependent statement in this final package. It is not used in Theorems 18.4 or 18.6.
+
+The set $S_0=\{2\}$ with the exact local sequence is no longer part of this unresolved
+boundary: Sections 18.1--18.8 perform its different calculation, degree cutoff, group and ray
+eliminations, devissage, line lifting, and purity contradiction. What remains open in
+Theorem 18.8 is only an auxiliary prime for which no comparably exact local structure has been
+supplied.
+
+### 18.10 What has been proved
+
+The complete unconditional ledger for the exact prime-$2$ theorem is:
+
+| stage | exact output |
+|---|---|
+| inertia at $2$ on a level killed by $3^m$ | $C_{3^a}$, $0\leq a\leq m$, wild inertia trivial |
+| normalized different at $2$ | $0$ if $a=0$; $1-3^{-a}$ if $a>0$ |
+| residual $2$-cost | $0$ or $2/3$ |
+| normalized different at $3$ | strictly less than $3/2$ residually |
+| residual root-discriminant ceiling | $3^{3/2}2^{2/3}=8.248377821991616\ldots$ |
+| degree-$21$ unconditional lower bound | $8.38461535304387\ldots$ |
+| logarithmic margin | $0.016381967626735\ldots$ |
+| residual field degree | at most $20$ |
+| abelian subfields | $\mathbf Q$ and $\mathbf Q(\zeta_3)$ only |
+| simple finite-flat factors | constant order three or $\mu_3$ |
+| chosen residual representation | $0\to k(1)\to M\to k\to0$, class $a[2]$ |
+| every finite coefficient level | $\operatorname{tr}=1+\det$ and the cross relation (18.17) |
+| integral representation | $0\to\mathcal O(1)\to T\to\mathcal O\to0$, class $b[2]$ |
+| characteristic-zero semisimplification | $1\oplus\chi_3$ |
+| pure compatible system | impossible already at $p=5$ |
+
+The nonsplit residual row is real: it cuts out
+$\mathbf Q(\zeta_3,\sqrt[3]{2})$ and has group $S_3$. It is retained through the field
+classification and absorbed by the multiplicative--constant filtration; it is never
+incorrectly declared unramified or split. Likewise, a nonsplit integral class $b[2]$ is allowed
+when semisimplicity is omitted. What the global category forces in all cases is the cyclotomic
+line, the trivial quotient, and the character identity.
+
+Thus the exact theorem now proved is unconditional: every rank-two $3$-adic representation
+over $\mathbf Q$ with cyclotomic determinant, oddness, levelwise finite flatness at $3$,
+unramifiedness at all odd primes away from $3$, and the precise unramified-quadratic quotient
+condition at $2$ has (18.24)--(18.26). No pure weight-one compatible system can contain it. The
+local condition is stable under coefficient extension and coefficient quotient, and the Tate
+lattice supplies it after changing coefficient prime for split or nonsplit multiplicative
+reduction at $2$. No finite enumeration and no conditional hypothesis remain in this
+prime-$2$ route.
