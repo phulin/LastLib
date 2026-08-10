@@ -18,11 +18,33 @@ Turn every substantive mathematical declaration or assertion in the assigned sou
 
 - every explicitly labeled definition, theorem, proposition, lemma, and corollary;
 - displayed formulas and exact sequences that assert mathematical facts;
-- mathematically substantive claims made in prose, including hypotheses, compatibility statements, examples, and warnings when they have precise formal content.
+- mathematically substantive claims made in prose, including hypotheses, compatibility statements, examples, and warnings when they have precise formal content;
+- every additional mathematical lemma needed to make the planned proofs possible, even when the prose treats it as basic or leaves it implicit.
 
 Do not translate motivation, proof strategy, historical remarks, or repeated paraphrases into redundant declarations. Keep declarations in source order. Add concise doc comments identifying the corresponding Book 2 section and explaining any modeling choice that is not obvious.
 
 This is a statement-generation pass, not a proof pass. Theorems may end in `:= by sorry`. Definitions should have genuine bodies when the canonical construction is clear; a difficult noncomputable construction may temporarily use `by sorry`, but its declared type must accurately expose the intended object. All files must elaborate and build despite placeholders.
+
+## Proof-support completeness
+
+Source coverage alone is not enough. Read the source proofs and proof sketches, inspect the relevant
+Mathlib and earlier LastLib APIs, and design a plausible proof dependency route for every principal
+declaration. Add the genuine intermediate declarations that route requires when they are not already
+available. In particular, include basic `↔` lemmas and equivalences between the book's formulations
+and canonical Lean predicates or structures; constructor/eliminator and extensionality facts;
+membership, coercion, map, restriction, and normalization lemmas; closure and functoriality results;
+and small bridge lemmas connecting adjacent stages of an argument. The informal source may omit
+these as “clear,” use them only inside a proof, or move between equivalent formulations without
+naming the equivalence. They still belong in the formal API when later proofs need them.
+
+Search for an existing canonical theorem before adding a helper. Use it directly when its interface
+is adequate; otherwise add a mathematically meaningful chapter-facing bridge rather than repeatedly
+unfolding representations in downstream proofs. Put each helper before its first dependent result
+and give it the weakest natural assumptions under which it is true. A helper may use `by sorry` in
+this pass, but it must itself be accurately stated and independently provable from earlier material.
+Never create a helper that merely restates the target, assumes all or part of the target conclusion,
+depends on a later declaration, or otherwise hides circularity. Keep purely elaboration-only
+scaffolding private, but keep proof-relevant equivalences and reusable bridges public.
 
 ## Book 1 is an explicit dependency
 
@@ -55,7 +77,7 @@ Keep guesses inside the assigned chapter namespace, use a distinctive but meanin
 
 ## Workflow and boundaries
 
-1. Inventory the assigned source chapter section by section and inspect relevant Book 1 and Mathlib APIs.
+1. Inventory the assigned source chapter section by section, outline plausible proof dependencies for its principal results, and inspect relevant Book 1 and Mathlib APIs.
 2. Create the chapter-local dependency interface only if needed.
 3. Write all section files and the chapter aggregator. Cover the entire chapter before spending time on optional proof bodies.
 4. When the Lean MCP is available, request whole-file diagnostics for every assigned Lean source after the complete statement pass. Repair diagnostics in coherent batches and request fresh diagnostics after each batch; do not invoke Lake after every edit.
@@ -70,6 +92,7 @@ Report:
 
 - every file created;
 - the section-by-section declaration count and total declaration count;
+- every proof-support lemma added beyond explicit source declarations, grouped by the result or proof step it enables;
 - the exact successful Lake build command;
 - every `BOOK2_DEPENDENCY_GUESS`, naming the expected source chapter;
 - every `SOURCE_ISSUE` and its correction;
