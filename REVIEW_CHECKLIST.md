@@ -99,7 +99,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 032. Global Galois Cohomology and Selmer Groups
 - [x] 033. Poitou–Tate Duality
 - [x] 034. Rigid Analytic Curves and Formal Models
-- [ ] 035. Rigid Uniformization of Abelian Varieties
+- [x] 035. Rigid Uniformization of Abelian Varieties
 - [x] 036. Relative Picard Schemes and Jacobians
 - [ ] 037. Jacobians and (H^1) of Curves
 - [x] 038. Abelian Schemes, Isogenies, and Polarizations
