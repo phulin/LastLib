@@ -170,7 +170,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 103. Global Constant Terms and Eisenstein Contributions for GL₂
 - [x] 104. Global Whittaker Models and Rankin–Selberg Theory
 - [x] 105. Analytic Theory of Automorphic Rankin–Selberg L-functions
-- [ ] 106. Strong Multiplicity One and Global Newforms for GL₂
+- [x] 106. Strong Multiplicity One and Global Newforms for GL₂
 - [ ] 107. Algebraicity and Integral Structures of Weight-Two Packets
 - [x] 108. Cuspidal Trace-Formula Kernels for Rank Two
 - [x] 109. The Cuspidal Spectral Side of the GL₂ Trace Formula
