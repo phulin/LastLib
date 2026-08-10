@@ -195,7 +195,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 128. Uniformization, Components, and Hecke Descent for Shimura Curves
 - [x] 129. Unitary Shimura Surfaces and the Modèles Étranges Construction
 - [x] 130. Good Integral Models of Shimura Curves and Surfaces
-- [ ] 131. Semistable Models and Monodromy of Shimura Varieties
+- [x] 131. Semistable Models and Monodromy of Shimura Varieties
 - [ ] 132. Automorphic Decomposition of Shimura-Curve H¹
 - [ ] 133. Automorphic Decomposition of Unitary-Surface H²
 - [ ] 134. Galois Representations from Weight-Two Shimura Cohomology
