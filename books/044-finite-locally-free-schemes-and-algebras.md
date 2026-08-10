@@ -93,16 +93,57 @@
     - [Two integral models with the same generic rank](#153-two-integral-models-with-the-same-generic-rank)
     - [A closed subscheme that ceases to be flat](#154-a-closed-subscheme-that-ceases-to-be-flat)
     - [Recognizing a family after a faithfully flat cover](#155-recognizing-a-family-after-a-faithfully-flat-cover)
-16. [The finite locally free dictionary](#16-the-finite-locally-free-dictionary)
-    - [The four affine translations](#161-the-four-affine-translations)
-    - [What rank $n$ guarantees](#162-what-rank-n-guarantees)
-    - [The arithmetic of degrees](#163-the-arithmetic-of-degrees)
-    - [The base-change checklist](#164-the-base-change-checklist)
-    - [The locality and descent checklist](#165-the-locality-and-descent-checklist)
-    - [Local and DVR diagnostics](#166-local-and-dvr-diagnostics)
-    - [Trace and norm in reusable form](#167-trace-and-norm-in-reusable-form)
-    - [Common invalid shortcuts](#168-common-invalid-shortcuts)
-    - [Final synthesis](#169-final-synthesis)
+16. [Constant rank repairs finite flatness](#16-constant-rank-repairs-finite-flatness)
+   - [Why rank is the missing hypothesis](#161-why-rank-is-the-missing-hypothesis)
+   - [The constant-rank theorem](#162-the-constant-rank-theorem)
+   - [Locally constant rank and nonconnected bases](#163-locally-constant-rank-and-nonconnected-bases)
+   - [Criteria over local rings and valuation bases](#164-criteria-over-local-rings-and-valuation-bases)
+17. [The unramified and étale boundary](#17-the-unramified-and-étale-boundary)
+   - [Differentials measure infinitesimal motion](#171-differentials-measure-infinitesimal-motion)
+   - [Finite unramified and finite étale algebras](#172-finite-unramified-and-finite-étale-algebras)
+   - [Geometric fibers and separability](#173-geometric-fibers-and-separability)
+   - [The trace-pairing criterion](#174-the-trace-pairing-criterion)
+   - [Ramified boundary examples](#175-ramified-boundary-examples)
+18. [Quotients, kernels, and exactness](#18-quotients-kernels-and-exactness)
+   - [Why finite locally free objects do not form an abelian category](#181-why-finite-locally-free-objects-do-not-form-an-abelian-category)
+   - [Split exact sequences and rank bookkeeping](#182-split-exact-sequences-and-rank-bookkeeping)
+   - [Quotients of finite locally free algebras](#183-quotients-of-finite-locally-free-algebras)
+   - [Images, equalizers, and base change](#184-images-equalizers-and-base-change)
+   - [Fiberwise criteria for maps](#185-fiberwise-criteria-for-maps)
+19. [Schematic closure and saturation](#19-schematic-closure-and-saturation)
+   - [Closing a generic subscheme](#191-closing-a-generic-subscheme)
+   - [Saturation in modules and ideals](#192-saturation-in-modules-and-ideals)
+   - [The DVR closure theorem](#193-the-dvr-closure-theorem)
+   - [Dedekind bases and the limits of the theorem](#194-dedekind-bases-and-the-limits-of-the-theorem)
+   - [Closure of algebraic structure](#195-closure-of-algebraic-structure)
+20. [Weil restriction along a finite locally free map](#20-weil-restriction-along-a-finite-locally-free-map)
+   - [The functor and its variance](#201-the-functor-and-its-variance)
+   - [Restriction of affine space](#202-restriction-of-affine-space)
+   - [Equations and affine representability](#203-equations-and-affine-representability)
+   - [Base change, products, and open subfunctors](#204-base-change-products-and-open-subfunctors)
+   - [Quasi-projective gluing and its boundary](#205-quasi-projective-gluing-and-its-boundary)
+   - [Units, sections, and a norm example](#206-units-sections-and-a-norm-example)
+21. [Descent interfaces for group schemes and moduli](#21-descent-interfaces-for-group-schemes-and-moduli)
+   - [Finite locally free algebras form a descent category](#211-finite-locally-free-algebras-form-a-descent-category)
+   - [Descending morphisms, subobjects, and identities](#212-descending-morphisms-subobjects-and-identities)
+   - [Exactness after a faithfully flat cover](#213-exactness-after-a-faithfully-flat-cover)
+   - [Norms, determinants, and duals under descent](#214-norms-determinants-and-duals-under-descent)
+   - [A moduli-oriented descent protocol](#215-a-moduli-oriented-descent-protocol)
+22. [The stability theorem](#22-the-stability-theorem)
+   - [Statement with exact hypotheses](#221-statement-with-exact-hypotheses)
+   - [Proof by reduction to finite projective algebra](#222-proof-by-reduction-to-finite-projective-algebra)
+   - [Operations that require an extra hypothesis](#223-operations-that-require-an-extra-hypothesis)
+   - [Consequences for finite-flat families](#224-consequences-for-finite-flat-families)
+23. [The finite locally free dictionary](#23-the-finite-locally-free-dictionary)
+    - [The four affine translations](#231-the-four-affine-translations)
+    - [What rank $n$ guarantees](#232-what-rank-n-guarantees)
+    - [The arithmetic of degrees](#233-the-arithmetic-of-degrees)
+    - [The base-change checklist](#234-the-base-change-checklist)
+    - [The locality and descent checklist](#235-the-locality-and-descent-checklist)
+    - [Local and DVR diagnostics](#236-local-and-dvr-diagnostics)
+    - [Trace and norm in reusable form](#237-trace-and-norm-in-reusable-form)
+    - [Common invalid shortcuts](#238-common-invalid-shortcuts)
+    - [Final synthesis](#239-final-synthesis)
 
 ## 1. Why finite geometry is linear algebra
 
@@ -1736,9 +1777,684 @@ Trace and norm may be computed upstairs and descended. If $b\in B$, calculate th
 
 This pattern separates two roles of a cover. A cover may simplify coordinates enough to prove and calculate; faithful descent then guarantees that the coordinate-independent result belongs to the original base.
 
-## 16. The finite locally free dictionary
+## 16. Constant rank repairs finite flatness
 
-### 16.1 The four affine translations
+### 16.1 Why rank is the missing hypothesis
+
+The distinction between finite flat and finite locally free is not pedantry. A finite flat module over an arbitrary ring can fail to be finitely presented, and without finite presentation there need not be any neighborhood on which a finite set of generators becomes a basis. Chapter 8 exhibited this failure. Yet the finite-flat objects used in arithmetic geometry usually carry a degree. That numerical datum is precisely what rules out the pathology.
+
+Let $M$ be a finite flat $A$-module. For $\mathfrak p\in\operatorname{Spec}A$, set
+
+$$
+r_M(\mathfrak p)=\dim_{\kappa(\mathfrak p)}
+   (M\otimes_A\kappa(\mathfrak p)).
+$$
+
+This dimension is finite because $M$ is finite. For a finite projective module it is locally constant. For a merely finite flat module it need not be locally constant, and its discontinuity records exactly where finite presentation fails. Thus there are three statements, not two:
+
+* finite locally free implies finite flat and has locally constant finite rank;
+* finite flat need not be finite locally free;
+* finite flat with locally constant rank is finite locally free.
+
+On a connected base, “locally constant finite rank” is the same as “constant rank $n$” for one integer $n$. On a nonconnected base, a single integer is an additional condition and cannot be silently built into the phrase finite locally free.
+
+### 16.2 The constant-rank theorem
+
+**Theorem 16.1 (finite flat constant-rank criterion).** Let $M$ be a finitely generated flat $A$-module. If $r_M$ is locally constant on $\operatorname{Spec}A$, then $M$ is finite projective. More precisely, near every prime $\mathfrak p$ at which the rank is $n$, the module is free of rank $n$.
+
+The difficulty is that the kernel of a surjection from a finite free module onto $M$ need not initially be finite. The proof therefore uses constant rank to prove injectivity directly, rather than trying to apply the finite form of Nakayama's lemma to that kernel.
+
+**Proof.** Fix $\mathfrak p$. After replacing $A$ by a principal localization around $\mathfrak p$, local constancy lets us assume that every maximal fiber has dimension $n=r_M(\mathfrak p)$. Choose elements of $M$ whose images form a basis after localization at $\mathfrak p$. Clearing denominators and shrinking once more, they define a surjection
+
+$$
+q:A^n\twoheadrightarrow M.
+$$
+
+We show that $q$ is injective. Localize at a maximal ideal $\mathfrak m$. Flatness of $M_{\mathfrak m}$ and finiteness of $M$ imply that it is free over the local ring $A_{\mathfrak m}$; this local freeness theorem for finite flat modules over a local ring does not require a globally finite presentation. Its rank is the dimension of its residue fiber, hence is $n$. The localized map
+
+$$
+q_{\mathfrak m}:A_{\mathfrak m}^n\twoheadrightarrow M_{\mathfrak m}
+$$
+
+is consequently a surjection between free modules of the same finite rank. Its reduction modulo $\mathfrak m$ is a surjection between $n$-dimensional vector spaces and hence an isomorphism. Its determinant is therefore a unit, so $q_{\mathfrak m}$ is an isomorphism. A module map is injective when it is injective at every maximal localization. Hence $q$ is an isomorphism on the chosen neighborhood. These neighborhoods cover the spectrum, proving that $M$ is finite locally free, and therefore finite projective. $\square$
+
+The local input in this proof can itself be understood through equational flatness. Over a local ring $(A,\mathfrak m)$, lift a basis of $M/\mathfrak mM$ to a minimal finite generating family. Every relation among those generators becomes, by flatness, an $A$-linear combination of relations whose coefficients vanish appropriately. Minimality forces all coefficients to vanish, so the generators are independent. This is the finite-flat analogue of the familiar proof that a finitely generated projective module over a local ring is free.
+
+**Corollary 16.2.** A finite morphism $f:X\to S$ that is flat and whose fiber-length function is locally constant is finite locally free. If every fiber has length $n$, then it has constant degree $n$.
+
+Indeed, on an affine open $S=\operatorname{Spec}A$, write $X=\operatorname{Spec}B$. The fiber length is $r_B(\mathfrak p)$, so Theorem 16.1 applies.
+
+This is the formulation behind the common phrase “finite flat of degree $n$.” It is safe when degree $n$ is part of the data or has been proved. It is unsafe to infer local freeness from the two words finite and flat over an unrestricted base.
+
+### 16.3 Locally constant rank and nonconnected bases
+
+Suppose
+
+$$
+S=S_1\amalg S_2,
+\qquad
+X=X_1\amalg X_2,
+$$
+
+where $X_i\to S_i$ has constant degree $n_i$. Then $X\to S$ is finite locally free, with rank function equal to $n_i$ on $S_i$. There is no reason for $n_1=n_2$. For example, with $A=k\times k$ and
+
+$$
+B=k^2\times k^3,
+$$
+
+viewed as an $A$-algebra componentwise, $\operatorname{Spec}B\to\operatorname{Spec}A$ has degrees $2$ and $3$ on the two connected components.
+
+Every locally constant map from a quasi-compact space to the discrete set $\mathbb N$ has finite image. Hence a finite locally free morphism over a quasi-compact base has only finitely many occurring degrees, and the base decomposes into finitely many clopen rank strata
+
+$$
+S=\coprod_n S_n.
+$$
+
+All constant-rank constructions may be performed on these strata and then reassembled. Determinant lines, trace, and characteristic-polynomial coefficients are already global; only formulas that mention a single degree require this decomposition. For instance, the scalar formula
+
+$$
+\operatorname{Nm}_{B/A}(a)=a^n
+$$
+
+holds on the degree-$n$ stratum. Globally it is a family of such formulas, not an identity with an unspecified integer exponent.
+
+Faithful flatness has a similarly componentwise form. A finite locally free morphism is faithfully flat exactly when its rank is positive at every point of the base. If it has rank zero on a clopen union of components, its source is empty there. Thus nonempty source does not imply faithful flatness when the base is disconnected.
+
+### 16.4 Criteria over local rings and valuation bases
+
+Over a local ring, every finite flat module is free. Its rank is determined by its closed fiber, so no separate constancy check is needed after the base has been localized at one point. This statement is local in the ring-theoretic sense; it does not imply that a finite flat module on an arbitrary spectrum is locally free without controlling how the local ranks vary on neighborhoods.
+
+Over a DVR $R$, the criterion becomes especially concrete. For a finite $R$-module $M$, the following are equivalent:
+
+1. $M$ is flat;
+2. $M$ is torsion-free;
+3. multiplication by a uniformizer $\pi$ is injective on $M$;
+4. $M$ is finite free.
+
+If $K$ is the fraction field and $k$ the residue field, then in this case
+
+$$
+\operatorname{rank}_R M
+=\dim_K(M\otimes_RK)
+=\dim_k(M/\pi M).
+$$
+
+This equality is the most efficient degree test in one-parameter integral families. A proposed finite model whose special fiber has larger length than its generic fiber contains torsion and is not flat. If the lengths agree and the module is known finite, torsion-freeness still needs proof; equality of two selected fibers alone is not a general flatness criterion over higher-dimensional or nonreduced bases.
+
+Over a Dedekind domain, every finite torsion-free module is projective, though it need not be free. Consequently a finite algebra over a Dedekind domain is finite locally free exactly when it is torsion-free as a module. The possible failure of global freeness is measured by ideal classes, another reminder that locally free does not mean equipped with a global basis.
+
+## 17. The unramified and étale boundary
+
+### 17.1 Differentials measure infinitesimal motion
+
+Finite local freeness keeps fiber length constant but allows points to collide and thicken. To separate those behaviors one needs a test for infinitesimal motion. For a ring map $A\to B$, the module of relative differentials $\Omega_{B/A}$ is generated by symbols $db$ subject to
+
+$$
+d(b+b')=db+db',\qquad d(bb')=b\,db'+b'\,db,
+\qquad da=0\quad(a\in A).
+$$
+
+It represents $A$-derivations:
+
+$$
+\operatorname{Hom}_B(\Omega_{B/A},N)
+\cong\operatorname{Der}_A(B,N).
+$$
+
+Thus $\Omega_{B/A}=0$ means that $B$ admits no first-order motion relative to $A$. If
+
+$$
+B=A[x_1,\ldots,x_r]/(f_1,\ldots,f_m),
+$$
+
+then $\Omega_{B/A}$ is generated by $dx_j$ with relations
+
+$$
+df_i=\sum_j\frac{\partial f_i}{\partial x_j}dx_j.
+$$
+
+For a monogenic algebra $B=A[T]/(f)$, this reduces to
+
+$$
+\Omega_{B/A}\cong B\,dT/(f'(t)dT).
+$$
+
+Hence the differential vanishes exactly when $f'(t)$ is a unit in $B$. This calculation is the source of the derivative criterion for unramified points.
+
+Differentials commute with arbitrary base change when the evident tensor comparison is made:
+
+$$
+\Omega_{(B\otimes_AA')/A'}
+\cong\Omega_{B/A}\otimes_B(B\otimes_AA').
+$$
+
+Vanishing therefore ascends under every base change and descends under faithfully flat base change.
+
+### 17.2 Finite unramified and finite étale algebras
+
+A ring map $A\to B$ of finite type is **unramified** when $\Omega_{B/A}=0$. Geometrically, a morphism is unramified when it is locally of finite type and its diagonal is an open immersion; the differential criterion is equivalent to this statement on affine charts. No flatness is included. A finite morphism has a closed diagonal, so for a finite unramified morphism the diagonal is both open and closed.
+
+An algebra is **étale** over $A$ when it is finitely presented, flat, and unramified. Consequently:
+
+**Theorem 17.1.** For a finite locally free $A$-algebra $B$, the following are equivalent:
+
+1. $B$ is étale over $A$;
+2. $B$ is unramified over $A$;
+3. $\Omega_{B/A}=0$.
+
+Finite local freeness already supplies finite presentation and flatness, so only the infinitesimal condition remains. The theorem cleanly identifies the boundary: finite locally free geometry governs constant length, while finite étale geometry is the locus where that length consists geometrically of distinct reduced points.
+
+For $B=A[T]/(f)$ with $f$ monic, the algebra is finite free. It is finite étale precisely when the images of $f$ and $f'$ generate the unit ideal in $A[T]$, equivalently when $f'(t)$ is a unit in $B$. If $f=T^n-a$, the condition is that $nt^{n-1}$ be a unit in $B$. When $a$ is a unit this says that $n$ is a unit. Thus adjoining an $n$th root of a unit is finite étale away from residue characteristics dividing $n$, but may remain finite locally free and become ramified in those characteristics.
+
+### 17.3 Geometric fibers and separability
+
+Let $k$ be a field and $C$ a finite-dimensional commutative $k$-algebra. The following are equivalent:
+
+* $C$ is étale over $k$;
+* $C$ is a finite product of finite separable field extensions of $k$;
+* $C\otimes_k\bar k$ is a product of copies of $\bar k$;
+* $C\otimes_k\bar k$ is reduced.
+
+The last condition must use a geometric fiber. If $k$ is imperfect, a finite purely inseparable field extension is reduced as a $k$-algebra but becomes nonreduced after extending scalars to an algebraic closure. Over a perfect field, ordinary reducedness is enough because every finite field extension is separable.
+
+**Theorem 17.2 (fiber criterion).** A finite locally free morphism $X\to S$ is finite étale if and only if every geometric fiber is reduced.
+
+One direction follows from base change and the field classification. Conversely, geometric reducedness makes every fiber algebra separable, so the fiber of $\Omega_{X/S}$ vanishes at every point. The differential module is finite because the morphism is finitely presented. Nakayama's lemma then gives $\Omega_{X/S}=0$, and Theorem 17.1 applies.
+
+This criterion has no analogue with “every fiber has the right number of topological points” unless geometric residue fields and multiplicities are handled carefully. Purely inseparable extensions and nilpotent thickenings show the two distinct failures.
+
+### 17.4 The trace-pairing criterion
+
+The trace pairing from Chapter 10 detects exactly the same boundary.
+
+**Theorem 17.3 (trace criterion).** Let $B$ be a finite locally free commutative $A$-algebra. Then $B$ is finite étale over $A$ if and only if
+
+$$
+B\longrightarrow B^\vee,
+\qquad b\longmapsto(x\mapsto\operatorname{Tr}_{B/A}(bx))
+$$
+
+is an isomorphism. On a constant-rank stratum, this is equivalent to the discriminant being a unit.
+
+**Proof strategy.** Both the trace map and being an isomorphism commute with base change. The assertion may therefore be checked on geometric fibers. Over an algebraically closed field, a finite étale algebra is $k^n$, whose trace pairing is the standard dot product. Conversely, if a finite-dimensional commutative algebra has a nonzero nilpotent $z$, then every $zx$ is nilpotent and multiplication by it is nilpotent, so $\operatorname{Tr}(zx)=0$ for every $x$. The nilradical lies in the radical of the trace pairing. Perfectness forces the algebra to be reduced, and over an algebraically closed field it is then a product of copies of the field. The fiber criterion finishes the proof. $\square$
+
+This theorem justifies the qualification left open in §10.7. It also turns the étale locus into an explicit open subset: it is the complement of the vanishing locus of the discriminant section. For a finite locally free family, ramification is therefore a closed condition, although its detailed multiplicities require a theory of the different beyond the present scope.
+
+### 17.5 Ramified boundary examples
+
+The dual numbers $A[\epsilon]/(\epsilon^2)$ are free of rank $2$, but
+
+$$
+d(\epsilon^2)=2\epsilon\,d\epsilon
+$$
+
+does not kill $d\epsilon$ in general. Every geometric fiber is nonreduced, and the trace pairing is degenerate. This is the universal small example of finite locally free but non-étale behavior.
+
+For $B=A[T]/(T^2-a)$, the trace matrix in the basis $(1,t)$ is
+
+$$
+\begin{pmatrix}
+2&0\\
+0&2a
+\end{pmatrix},
+$$
+
+so its discriminant is $4a$. The étale locus is where $2a$ is invertible. If $a$ vanishes, two geometric points collide; if $2$ vanishes, separability can fail even when $a$ is a unit.
+
+Finally, $k\to k^{1/p}$ in characteristic $p$ is finite locally free as a field extension, but not étale when it is nontrivial and purely inseparable. Its source is reduced, demonstrating why reducedness before geometric base change is insufficient.
+
+## 18. Quotients, kernels, and exactness
+
+### 18.1 Why finite locally free objects do not form an abelian category
+
+Later constructions repeatedly take kernels, images, and quotients. The ambient category of modules has all of them, but finite projective modules are not closed under them. Over $A=\mathbb Z$, multiplication by $2$ gives
+
+$$
+\mathbb Z\xrightarrow{2}\mathbb Z
+$$
+
+between finite free modules, while its cokernel $\mathbb Z/2\mathbb Z$ is not flat. Over a ring with a nonprojective finitely generated ideal $I$, the inclusion $I\hookrightarrow A$ may have finite target and finite quotient without $I$ being projective. Exactness must therefore be accompanied by a flatness, projectivity, or splitting argument.
+
+The reliable principle is simple: kernels and cokernels exist in all modules; they remain finite locally free only when an additional hypothesis makes the relevant short exact sequence locally split.
+
+### 18.2 Split exact sequences and rank bookkeeping
+
+Consider an exact sequence
+
+$$
+0\longrightarrow P'\longrightarrow P\longrightarrow P''\longrightarrow0.
+$$
+
+If $P''$ is projective, the surjection splits and $P\cong P'\oplus P''$. It follows that if $P$ and $P''$ are finite projective, then $P'$ is finite projective. If $P'$ and $P''$ are finite projective, then $P$ is finite projective. By contrast, knowing $P'$ and $P$ are finite projective does not force $P''$ to be flat, as multiplication by $2$ shows.
+
+Whenever all three are finite locally free,
+
+$$
+\operatorname{rk}P
+=\operatorname{rk}P'+\operatorname{rk}P''
+$$
+
+pointwise, and the determinant-line isomorphism of §4.3 applies. These facts are stable under arbitrary base change because a split sequence remains split.
+
+A useful quotient criterion follows. If $P$ is finite projective and $Q$ is a finitely presented quotient, then $Q$ is finite projective exactly when it is flat. In that event the sequence splits and the kernel is finite projective. Over a DVR, “$Q$ is flat” can be replaced by “$Q$ is torsion-free.”
+
+### 18.3 Quotients of finite locally free algebras
+
+Let $B$ be a finite locally free $A$-algebra and $I\subseteq B$ an ideal. The quotient $C=B/I$ is always finite over $A$, but it is finite locally free precisely when its underlying $A$-module satisfies one of the equivalent projectivity criteria. Sufficient conditions include:
+
+* $C$ is finitely presented and flat over $A$;
+* $C$ is finite flat with locally constant fiber rank;
+* $A$ is a DVR and $C$ is torsion-free;
+* the $A$-module surjection $B\to C$ admits a splitting.
+
+If $C$ is finite projective, then
+
+$$
+0\longrightarrow I\longrightarrow B\longrightarrow C\longrightarrow0
+$$
+
+splits as $A$-modules, so $I$ is finite projective. The splitting need not respect multiplication, and $I$ generally has no identity; it should not be mistaken for a product decomposition of algebras. Such a decomposition occurs exactly when the ideal is generated by an idempotent and the quotient is an open-and-closed component.
+
+Geometrically, a closed subscheme of a finite locally free $S$-scheme is finite over $S$ but need not be flat. It is finite locally free if its quotient algebra passes one of the tests above. If it does, its fiber length is locally constant, and the complementary rank
+
+$$
+\operatorname{rk}_A I=\operatorname{rk}_A B-\operatorname{rk}_A C
+$$
+
+measures equations as an $A$-module, not a geometric complementary component.
+
+### 18.4 Images, equalizers, and base change
+
+For an $A$-algebra map $B\to C$ with $C$ finite over $A$, the scheme-theoretic image of
+
+$$
+\operatorname{Spec}C\longrightarrow\operatorname{Spec}B
+$$
+
+is $\operatorname{Spec}(B/\ker(B\to C))$. If $B$ is finite over $A$, this image is finite over $A$. It need not be finite locally free, because taking an image is taking a quotient module.
+
+Flat base change behaves well: for a flat $A$-algebra $A'$,
+
+$$
+\ker(B\to C)\otimes_AA'
+\cong
+\ker(B\otimes_AA'\to C\otimes_AA').
+$$
+
+Thus scheme-theoretic images of finite morphisms commute with flat base change. Without flatness, kernels can grow after tensoring and the assertion fails.
+
+Equalizers are governed by the same issue. The equalizer of two maps $u,v:P\to Q$ is $\ker(u-v)$. If $Q$ is flat and the cokernel of $u-v$ is finite projective, then the kernel is finite projective; without such a hypothesis it may not be. Algebra equalizers commute with flat base change because flat tensor products preserve kernels. These qualifications are essential when invariant subalgebras or fixed-point conditions are introduced later.
+
+### 18.5 Fiberwise criteria for maps
+
+Let $u:P\to Q$ be a map of finite projective $A$-modules. If every residue-field map
+
+$$
+u_{\mathfrak p}:P\otimes_A\kappa(\mathfrak p)
+\longrightarrow Q\otimes_A\kappa(\mathfrak p)
+$$
+
+is surjective, then $u$ is surjective: its finite cokernel has zero fiber at every prime and hence vanishes. Since $Q$ is projective, the map splits and the kernel is finite projective.
+
+If every fiber map is injective, injectivity of $u$ follows after localizing and choosing bases only when the ranks and cokernel behavior exclude hidden torsion. A clean sufficient condition is that the cokernel be flat; then tensoring the exact sequence with every residue field preserves the kernel. Equal-rank maps admit a determinant test. On a constant-rank-$n$ stratum,
+
+$$
+u\text{ is an isomorphism near }\mathfrak p
+\quad\Longleftrightarrow\quad
+\det(u)\notin\mathfrak p.
+$$
+
+The isomorphism locus is therefore open. If every fiber map is an isomorphism, the determinant is a unit and $u$ is an isomorphism globally. This last criterion is among the safest ways to descend identities and compare two proposed finite locally free models.
+
+## 19. Schematic closure and saturation
+
+### 19.1 Closing a generic subscheme
+
+Integral models are often specified first on a generic fiber and then extended across the base. Topological closure remembers which points specialize, but it does not determine nilpotents or equations. The correct construction is schematic closure.
+
+Let $j:U\hookrightarrow S$ be a schematically dense open immersion, let $X\to S$ be a scheme, and let $Z_U\hookrightarrow X_U$ be a closed subscheme. If $k:Z_U\to X$ is the composite, the **schematic closure** $\overline Z\hookrightarrow X$ is defined by the kernel
+
+$$
+\mathcal O_X\longrightarrow k_*\mathcal O_{Z_U}.
+$$
+
+It is the smallest closed subscheme through which $k$ factors. The same scheme-theoretic-image construction applies after a localization that is not literally an open immersion, notably passage from a domain to its fraction field. Concretely, let $S=\operatorname{Spec}A$, let $S_0\subseteq A$ be multiplicative, let $X=\operatorname{Spec}B$, and suppose the localized closed subscheme is
+
+$$
+Z_U=\operatorname{Spec}(S_0^{-1}B/J_U),
+$$
+
+the closure is $\operatorname{Spec}(B/J)$ with
+
+$$
+J=\ker(B\longrightarrow S_0^{-1}B/J_U)
+=B\cap J_U.
+$$
+
+The intersection is taken inside $S_0^{-1}B$. This formula immediately proves minimality: an ideal $I\subseteq B$ has localized closed subscheme containing $Z_U$ exactly when $S_0^{-1}I\subseteq J_U$, hence $I\subseteq J$.
+
+If $X\to S$ is finite, then $\overline Z\to S$ is finite because $B/J$ is a quotient of a finite module. Flatness is a separate question. Schematic closure preserves equations by contraction; it does not magically preserve projectivity.
+
+### 19.2 Saturation in modules and ideals
+
+Given a submodule $N\subseteq M$ and a multiplicative set $S_0$, its **$S_0$-saturation** is
+
+$$
+N^{\mathrm{sat}}
+=\{m\in M:\text{ some }s\in S_0\text{ satisfies }sm\in N\}.
+$$
+
+Equivalently,
+
+$$
+N^{\mathrm{sat}}
+=\ker(M\longrightarrow S_0^{-1}(M/N)).
+$$
+
+Thus $M/N^{\mathrm{sat}}$ is the image of $M/N$ in its localization and has no element killed by an element of $S_0$. Saturation is idempotent, contains $N$, and has the same localization as $N$. It is the unique largest submodule of $M$ with that localization.
+
+When $M=B$ and $N=I$ is an ideal, $I^{\mathrm{sat}}$ is again an ideal: if $si\in I$, then $s(bi)=b(si)\in I$. The affine schematic closure of the subscheme defined by $S_0^{-1}I$ is therefore defined by $I^{\mathrm{sat}}$. If one begins directly with an ideal $J_U\subseteq S_0^{-1}B$, its contraction is already saturated.
+
+For a domain $A$ with fraction field $K$, take $S_0=A\setminus\{0\}$. Then saturation removes precisely the $A$-torsion from the quotient:
+
+$$
+B/I^{\mathrm{sat}}
+\hookrightarrow (B/I)\otimes_AK.
+$$
+
+This injection is the basic flatness mechanism over a valuation base. Over a general domain, torsion-free need not mean flat, so it is only the beginning of the argument.
+
+### 19.3 The DVR closure theorem
+
+**Theorem 19.1.** Let $R$ be a DVR with fraction field $K$, let $B$ be a finite locally free $R$-algebra, and let $Z_K\hookrightarrow\operatorname{Spec}(B_K)$ be a closed subscheme. Its schematic closure $Z\hookrightarrow\operatorname{Spec}B$ is finite locally free over $R$. Its degree equals the $K$-dimension of the coordinate algebra of $Z_K$.
+
+**Proof.** Write $Z_K=\operatorname{Spec}(B_K/J_K)$ and let $J=B\cap J_K$. The contraction formula identifies $Z$ with $\operatorname{Spec}(B/J)$. By construction,
+
+$$
+B/J\hookrightarrow B_K/J_K,
+$$
+
+so $B/J$ is torsion-free over $R$. It is finite because it is a quotient of the finite $R$-module $B$. A finite torsion-free module over a DVR is free. Localization gives
+
+$$
+(B/J)\otimes_RK\cong B_K/J_K,
+$$
+
+so its rank is the displayed generic dimension. $\square$
+
+The same proof gives a frequently used module statement. If $P$ is finite free over a DVR and $N_K\subseteq P_K$, then
+
+$$
+N=P\cap N_K
+$$
+
+and $P/N$ are finite free; moreover $N\otimes_RK=N_K$. Indeed, $P/N$ injects into $P_K/N_K$, hence is torsion-free, and then $N$ is a submodule of a finite free module. This provides exact integral lattices from exact generic data.
+
+The saturation clause is essential. In $R^2$, the submodule generated by $(\pi,0)$ has the same generic span as the submodule generated by $(1,0)$, but the first quotient contains $\pi$-torsion. The schematic closure of the generic line uses the saturated second submodule, not the chosen nonsaturated lattice.
+
+### 19.4 Dedekind bases and the limits of the theorem
+
+Over a Dedekind domain, the proof remains valid with “finite free” replaced by “finite projective.” A finite torsion-free module is projective, so the schematic closure of a generic closed subscheme inside a finite locally free ambient scheme is finite locally free. Its rank is constant on each connected component and agrees with generic degree.
+
+Over an arbitrary domain, the conclusion can fail. Saturation guarantees only torsion-freeness of the quotient, and finite torsion-free modules need not be flat or projective. Over a nonnormal base, even a rank-one torsion-free module can fail to be invertible. Over a higher-dimensional normal domain, reflexive modules need not be locally free at codimension at least two. Therefore the closure theorem must always name the property of the base that turns finite torsion-free modules into projective ones; a DVR or Dedekind domain is sufficient, while “integral” by itself is not.
+
+Closure also need not commute with arbitrary base change. A nonflat base change can create new torsion and enlarge kernels. If the saturated quotient is finite flat and the pulled-back open remains schematically dense, then flat base change does preserve the closure: flatness preserves the defining kernel, and the pulled-back quotient remains torsion-free. By contrast, starting from a nonsaturated presentation and merely tensoring its equations can give something smaller than the closure; saturation must occur before this comparison.
+
+### 19.5 Closure of algebraic structure
+
+Suppose a generic closed subscheme $Z_K$ carries operations expressed by morphisms between finite schemes: a multiplication, identity, inverse, action, or endomorphism. To extend an operation to its closure, one first checks that the generic map sends the chosen integral coordinate lattice into the appropriate lattice. Density then gives uniqueness: two morphisms from a flat $R$-scheme to a separated $R$-scheme that agree on the generic fiber agree everywhere, because their equalizer is closed and contains a schematically dense open.
+
+Existence is not automatic from uniqueness. For a multiplication $Z_K\times_KZ_K\to Z_K$, one must show that the corresponding algebra map preserves the contracted ideals, or equivalently that the ambient multiplication carries the closure product into the closure. When $Z_K$ is a closed subgroup of a finite locally free group over a DVR, the contracted Hopf ideal is stable under the structural maps because the relevant containments hold after localization and the target quotients are torsion-free. The closure is then again finite locally free by Theorem 19.1. This is the algebraic mechanism that later permits generic finite subgroup data to acquire integral finite-flat models.
+
+The argument also explains its boundary. If a quotient introduced torsion, equality on the generic fiber would not detect maps into that torsion. Flatness of the closure is what makes the generic fiber schematically dense and turns generic identities into integral identities.
+
+## 20. Weil restriction along a finite locally free map
+
+### 20.1 The functor and its variance
+
+Changing the base of a scheme is easy: one forms a fiber product. Going in the opposite direction is subtler. Let $p:S'\to S$ be finite locally free and let $X'$ be an $S'$-scheme. The **Weil restriction**, when representable, is the $S$-functor
+
+$$
+\operatorname{Res}_{S'/S}(X')(T)
+=\operatorname{Hom}_{S'}(T\times_SS',X')
+$$
+
+for $S$-schemes $T$. It packages an $S'$-valued family as an object over $S$ by remembering all of its coordinates along the finite fibers of $S'/S$.
+
+The finite locally free hypothesis is exactly what makes those coordinates behave like a finite vector bundle. If $S'$ has degree $d$ over $S$, an affine line over $S'$ should restrict to an affine bundle of rank $d$ over $S$. Without finite projectivity, duals need not commute with base change and there is no uniform coordinate object.
+
+Variance deserves attention. A map $X'\to Y'$ induces
+
+$$
+\operatorname{Res}_{S'/S}(X')
+\longrightarrow\operatorname{Res}_{S'/S}(Y').
+$$
+
+A base change $S_1\to S$ changes both $S'$ and $X'$, and restriction is expected to commute with it. These properties follow directly from the defining Hom functor once representability is established.
+
+### 20.2 Restriction of affine space
+
+Work first with $S=\operatorname{Spec}A$, $S'=\operatorname{Spec}B$, where $B$ is finite projective over $A$. Let $P$ be a finite projective $B$-module and let
+
+$$
+\mathbf V_{S'}(P)=\underline{\operatorname{Spec}}_{S'}
+  (\operatorname{Sym}_B P^\vee)
+$$
+
+be its associated affine space. For an $A$-algebra $R$, an $R$-point of its restriction is an element of
+
+$$
+P\otimes_A R,
+$$
+
+where $P$ is regarded as an $A$-module. Since $P$ is finite projective over $B$ and $B$ finite projective over $A$, it is finite projective over $A$. Therefore this functor is represented by
+
+$$
+\mathbf V_S(P_A)
+=\operatorname{Spec}\big(\operatorname{Sym}_A(P_A^\vee)\big).
+$$
+
+In particular,
+
+$$
+\operatorname{Res}_{S'/S}(\mathbf A^1_{S'})
+\cong\mathbf V_S(B),
+$$
+
+an affine bundle of rank $d$. If $B$ is free with basis $e_1,\ldots,e_d$, a point of $R\otimes_AB$ has coordinates $x_1,\ldots,x_d$, and the restriction is ordinary $d$-dimensional affine space. A different basis acts by a linear change of coordinates; the vector-bundle formulation is what glues when $B$ is only locally free.
+
+### 20.3 Equations and affine representability
+
+Let $X'=\operatorname{Spec}_{S'}C$ be affine. Choose a presentation of the $B$-algebra $C$ by generators $x_i$ and relations $f_j$. An $S'$-map
+
+$$
+\operatorname{Spec}(R\otimes_AB)\longrightarrow X'
+$$
+
+is a choice of elements $c_i\in R\otimes_AB$ satisfying $f_j(c_i)=0$. Each $c_i$ is represented by a point of the vector bundle associated with $B$. Each value $f_j(c_i)$ lies in $R\otimes_AB$. It vanishes if and only if all its coordinates against the dual module $B^\vee$ vanish. Hence every $B$-valued relation becomes finitely many $A$-valued relations locally on $S$.
+
+This proves:
+
+**Theorem 20.1 (affine Weil restriction).** If $p:S'\to S$ is finite locally free and $X'\to S'$ is affine, then $\operatorname{Res}_{S'/S}(X')$ is represented by an affine $S$-scheme. If $X'$ is of finite type or finite presentation over $S'$, the representing scheme has the same respective finiteness property over $S$.
+
+The construction does not depend on the chosen generators. Two resulting affine schemes represent the same functor, so the Yoneda principle gives a unique isomorphism between them. On overlaps where $B$ becomes free, these unique isomorphisms satisfy the cocycle condition and glue. This is an instance where a functorial characterization removes all basis dependence.
+
+Closed immersions are preserved. If $Z'\hookrightarrow X'$ is cut out by equations, its restriction is cut out by all coordinate equations obtained through $B^\vee$. The result is a closed immersion
+
+$$
+\operatorname{Res}_{S'/S}(Z')
+\hookrightarrow\operatorname{Res}_{S'/S}(X').
+$$
+
+### 20.4 Base change, products, and open subfunctors
+
+For every $S_1\to S$, there is a canonical isomorphism
+
+$$
+\operatorname{Res}_{S'/S}(X')\times_SS_1
+\cong
+\operatorname{Res}_{S'\times_SS_1/S_1}
+   (X'\times_SS_1).
+$$
+
+It is proved by evaluating both sides on an $S_1$-scheme $T$: the two Hom sets are literally the same. This compatibility is one of the principal reasons for using finite locally free maps rather than a coordinate-dependent restriction construction.
+
+Weil restriction also preserves finite products and fiber products whenever the displayed functors are representable:
+
+$$
+\operatorname{Res}(X'\times_{Z'}Y')
+\cong\operatorname{Res}(X')
+\times_{\operatorname{Res}(Z')}\operatorname{Res}(Y').
+$$
+
+This follows because Hom into a fiber product is a fiber product of Hom sets. It will allow identities expressed by product diagrams to survive restriction.
+
+Open immersions require more geometry than closed equations. If $U'\hookrightarrow X'$ is an open immersion and $X'$ is affine, then $\operatorname{Res}(U')$ is an open subfunctor of $\operatorname{Res}(X')$. Its complement consists of maps for which the inverse image of the closed complement meets at least one point of the finite fiber. That incidence condition is closed because a finite morphism has closed image; its complement is open. In the principal case $U'=D(g)$, the condition is that $g(c)$ be a unit in $R\otimes_AB$, equivalently that
+
+$$
+\operatorname{Nm}_{(R\otimes_AB)/R}(g(c))
+$$
+
+be a unit. Thus the restricted open is the principal open defined by this norm.
+
+### 20.5 Quasi-projective gluing and its boundary
+
+Suppose $X'\to S'$ is quasi-projective and of finite presentation. Choose an immersion into a projective space over $S'$. Sections of the pulled-back projective bundle whose graphs satisfy the defining equations form an open subfunctor inside a suitable affine or projective parameter space, and the incidence argument above controls the domain on which a section lands in $X'$. This constructs a scheme representing $\operatorname{Res}_{S'/S}(X')$, and the representing scheme is quasi-projective over $S$. The finite-presentation condition keeps the parameter spaces and their equations finite.
+
+The quasi-projectivity hypothesis supplies enough common affine neighborhoods for several points in one finite fiber. Without such a hypothesis, the functor can fail to be a scheme even when it exists naturally as a more general geometric object. The affine theorem is unconditional within its stated scope; the nonaffine theorem must not be replaced by the claim that restriction along a finite locally free map always produces a scheme.
+
+Separatedness also matters in gluing local restrictions. Two maps that agree after pullback to a cover glue uniquely, but finding a single affine neighborhood containing the image of an entire finite fiber is a genuine geometric condition. Quasi-projective schemes have this property because finitely many points lie in a common affine open after working locally on the base.
+
+### 20.6 Units, sections, and a norm example
+
+Apply affine restriction to the multiplicative group over $S'$. For an $A$-algebra $R$,
+
+$$
+\operatorname{Res}_{B/A}(\mathbf G_m)(R)
+=(R\otimes_AB)^\times.
+$$
+
+Inside the vector bundle representing $R\otimes_AB$, this is the open locus where the norm is invertible. It is therefore represented by a principal open affine scheme. The norm itself defines a morphism
+
+$$
+\operatorname{Res}_{B/A}(\mathbf G_m)
+\longrightarrow\mathbf G_m,
+$$
+
+and its compatibility with arbitrary base change is exactly the base-change compatibility of determinants.
+
+At the other extreme, $\operatorname{Res}_{S'/S}(X')$ records sections of $X'$ after every base change. Its $S$-points are simply sections $S'\to X'$. Thus restriction converts a relative section problem over a finite base into an ordinary point problem over the original base. This is the interface used in moduli constructions: endomorphisms, trivializations, embeddings, and finite collections of marked data can often be realized as points of an affine or quasi-projective restriction.
+
+If $S'=\coprod_{i=1}^dS$ is split, then
+
+$$
+\operatorname{Res}_{S'/S}(X')
+\cong\prod_{i=1}^dX'_i.
+$$
+
+This formula gives the correct intuition for all preceding results. General finite locally free restriction is the twisted, base-independent version of taking one copy for each point of a finite fiber.
+
+## 21. Descent interfaces for group schemes and moduli
+
+### 21.1 Finite locally free algebras form a descent category
+
+Book 13 established effective faithfully flat descent for modules, algebras, affine schemes, and finite locally free objects. Here is the specialized package needed in finite geometry. Let $S'\to S$ be an fpqc cover. A finite locally free $\mathcal O_{S'}$-algebra $\mathcal B'$ equipped with an isomorphism between its two pullbacks to $S'\times_SS'$ satisfying the cocycle condition descends uniquely to a finite locally free $\mathcal O_S$-algebra $\mathcal B$.
+
+Effectivity occurs in stages. First the underlying module descends. Multiplication and the unit are morphisms between tensor constructions of that module, so full faithfulness descends them. Associativity, commutativity, and the unit laws are equalities of maps; faithful flatness detects those equalities. Finite projectivity descends because finite presentation and flatness descend. Taking relative spectra then gives effective descent for finite locally free schemes.
+
+Rank descends pointwise. If $S'$ has constant rank $n$ after pullback and the cover meets every component, the descended algebra has constant rank $n$. More generally a locally constant rank function upstairs descends exactly when it is compatible on the double overlap, in which case it determines a locally constant function downstairs.
+
+### 21.2 Descending morphisms, subobjects, and identities
+
+A compatible morphism of descended algebras descends uniquely. Its properties of being an isomorphism, injection, or surjection can be checked after faithfully flat base change because kernels and cokernels are detected there. On the geometric side, morphisms, closed immersions, and finite locally free morphisms descend.
+
+A closed subobject needs both equations and flatness. Compatible ideals descend as submodules when their inclusion maps and quotient data descend. If the quotient is finite locally free upstairs, that property descends, so the resulting closed subscheme is finite locally free downstairs. Merely descending an ideal inside a finite locally free algebra guarantees a finite closed subscheme, not a flat one.
+
+Algebraic structures specified by diagrams descend economically. A multiplication, inverse, pairing, action, or involution consists of morphisms among finite products and base changes. Descend the morphisms; then check each required identity after pulling back to the cover. This is the interface needed before the systematic theory of group objects: the finite locally free carrier and all of its structural arrows may be descended without changing category.
+
+### 21.3 Exactness after a faithfully flat cover
+
+For modules, a sequence is exact if and only if its pullback along a faithfully flat map is exact. For finite locally free modules, one must add that the descended kernel or quotient remains finite locally free when the later construction requires it. This is automatic if the corresponding module upstairs is finite locally free and is equipped with compatible descent data.
+
+For finite group objects, exactness is eventually interpreted in a sheaf topology: the first object is the kernel and the last map is locally surjective in the chosen topology. The present algebraic input is that kernels are fiber products, fiber products commute with base change, and faithful flatness descends the relevant finite locally free property. A pointwise exact sequence of abstract groups on geometric fibers is not a substitute; it can miss infinitesimal kernels and failure of flatness.
+
+An especially safe procedure for a proposed quotient is:
+
+1. construct the algebra quotient and verify compatibility of its descent datum;
+2. prove finite presentation and flatness, or prove constant fiber rank together with finite flatness;
+3. descend the quotient as a finite locally free object;
+4. verify the universal property after the cover, where maps are detected faithfully.
+
+This order prevents a set-theoretic orbit space from being mistaken for a scheme-theoretic quotient.
+
+### 21.4 Norms, determinants, and duals under descent
+
+Duals and tensor products of finite locally free modules commute with pullback. Therefore evaluation, coevaluation, exterior powers, determinant lines, trace maps, norm laws, characteristic polynomials, and trace pairings all inherit descent data. Their descended versions agree with those constructed directly downstairs because each is characterized by a universal map or by a basis-independent determinant.
+
+This compatibility is stronger than numerical invariance. For example, if a trivialization of a determinant line upstairs is compatible on overlaps, it descends to a trivialization downstairs. If a pairing is perfect upstairs, its determinant is a unit upstairs and hence downstairs; the descended pairing is perfect. If a finite locally free algebra becomes étale over a faithfully flat cover, the vanishing of its differential module descends, so it was already étale.
+
+Norm constructions and Weil restriction fit together particularly well. After pulling back to a cover that trivializes a rank-$d$ algebra as a module, norm is an ordinary determinant polynomial in $d$ coordinates. The change-of-basis invariance of determinant is precisely the overlap compatibility needed to descend that polynomial.
+
+### 21.5 A moduli-oriented descent protocol
+
+Finite-flat data in a moduli problem often become elementary only after an fpqc cover. The following protocol isolates what must be shown.
+
+First identify the carrier: a finite locally free algebra or scheme, with its rank function. Next list every structural map and express every axiom as an equality of morphisms. Then record any closed conditions as ideals or zero loci and any open conditions as invertibility loci, often detected by a determinant or norm. Verify the cocycle on the double and triple overlaps. Apply effective descent to the carrier and full faithfulness to the maps. Finally descend the properties—finite local freeness, constant degree, closedness, perfectness, or étaleness—rather than assuming that the descended object inherits them by notation.
+
+Representability questions can then be separated from descent. Homomorphisms between finite locally free modules form an affine bundle; algebra homomorphisms are a closed subscheme cut out by preservation of multiplication and unit. When source and target have the same rank, isomorphisms form the open locus where the determinant is invertible; unequal rank strata contribute nothing. Weil restriction converts the corresponding conditions over a finite locally free cover into conditions over the original base. These constructions provide the finite-dimensional parameter spaces that later moduli arguments repeatedly use.
+
+## 22. The stability theorem
+
+### 22.1 Statement with exact hypotheses
+
+We can now collect the principal structural result.
+
+**Theorem 22.1 (stability of finite flat morphisms of constant rank).** Let $f:X\to S$ be finite and flat, and suppose its fiber-length function is locally constant. Then $f$ is finite locally free. In particular, if every fiber has length $n$, it is finite locally free of constant degree $n$. The following operations preserve finite local freeness, with the indicated rank laws:
+
+1. arbitrary base change preserves rank by pullback;
+2. composition preserves finite local freeness, and multiplies degrees when the first morphism has constant degree over the relevant part of the intermediate scheme;
+3. fiber product over $S$ multiplies ranks pointwise;
+4. finite disjoint union adds ranks pointwise;
+5. restriction to an open or clopen subscheme of the base restricts the rank function;
+6. dual, tensor, internal Hom, symmetric power, exterior power, and determinant preserve finite local freeness with their usual rank formulas;
+7. faithfully flat descent recovers finite local freeness and constant degree;
+8. a quotient or closed subscheme does so when its quotient module is flat with locally constant finite rank, equivalently finite projective;
+9. over a DVR or Dedekind domain, schematic closure of a generic closed subscheme in a finite locally free ambient scheme is finite locally free;
+10. Weil restriction along a finite locally free map preserves affine representability and commutes with arbitrary base change.
+
+Items 8 and 9 state their extra hypotheses explicitly. Quotients and closures are not unconditional operations in the finite locally free category over arbitrary bases.
+
+### 22.2 Proof by reduction to finite projective algebra
+
+The proof is the accumulated dictionary. On $S=\operatorname{Spec}A$, finiteness writes $X=\operatorname{Spec}B$ with $B$ a finite $A$-module. Flatness and local constancy of fiber rank make $B$ finite projective by Theorem 16.1. This proves the first assertion.
+
+Base change sends $B$ to $B\otimes_AA'$. Composition regards a finite projective $C$ over $B$ as a finite projective $A$-module, locally with the product basis. Fiber product sends $(B,C)$ to $B\otimes_AC$. Disjoint union sends them to $B\times C$, which is $B\oplus C$ as a module. Every assertion follows locally from the corresponding operation on finite free modules and then glues because projectivity and rank are local.
+
+Tensor constructions use dual bases. Descent uses faithful exactness together with descent of finite presentation and flatness. Quotients use the projectivity criteria of Chapter 18. Closure over a one-dimensional regular base uses saturation to eliminate torsion. Weil restriction uses the finite dual $B^\vee$ to turn $B$-valued coordinates into finitely many scalar equations. The same finite-projective mechanism is therefore responsible for every item.
+
+### 22.3 Operations that require an extra hypothesis
+
+Several tempting extensions are false.
+
+* An arbitrary closed subscheme of a finite locally free scheme is finite but may not be flat.
+* The image of a morphism between finite locally free schemes is finite but may not be locally free.
+* The kernel or cokernel of a map of finite projective modules need not be projective.
+* A finite flat morphism over an arbitrary ring need not be finitely presented unless its rank is locally constant or another finiteness hypothesis is supplied.
+* Schematic closure in a finite locally free ambient scheme need not be flat over an arbitrary integral base.
+* Weil restriction of an arbitrary nonaffine scheme need not be representable by a scheme without a hypothesis such as quasi-projectivity.
+* Constancy of the number of geometric points does not imply flatness or constant length.
+
+These are not peripheral exceptions. Each marks a place where an exactness, finite-presentation, or affine-neighborhood argument is needed. The stability theorem is powerful because its hypotheses are stable and checkable, not because every finite construction automatically stays flat.
+
+### 22.4 Consequences for finite-flat families
+
+Once a family is known finite locally free, every fiber has a well-defined length equal to the rank at its base point, and this length survives arbitrary scalar extension. Trace, norm, determinant, characteristic polynomial, and duality specialize exactly. Positive rank gives a faithfully flat cover. Étaleness is detected by the vanishing of differentials, reduced geometric fibers, or perfectness of the trace pairing. Over a DVR, generic closed data acquire finite locally free closures after saturation.
+
+These consequences give a robust workflow for later finite-flat group schemes. One first proves that the coordinate algebra is finite and flat and that its rank is constant. All products needed for laws remain finite locally free; all identities may be checked after a faithfully flat cover; duals and determinants commute with base change; closed subgroup candidates require a flat quotient; and generic subgroup schemes over a DVR may be closed schematically without losing finite local freeness. The underlying geometry may develop nilpotents or collide in special fibers, but its degree and linear-algebraic invariants remain controlled.
+
+## 23. The finite locally free dictionary
+
+### 23.1 The four affine translations
 
 We now collect the theory into a form that can be used without reopening every definition. Let $A\to B$ be a ring map and let
 
@@ -1755,7 +2471,7 @@ There are four progressively stronger levels.
 
 If $A$ is noetherian, level 3 equals level 4 because every finite module is finitely presented. If $A$ is local, a finite flat $A$-module is free by Theorem 9.2, so level 3 again equals level 4. If $A$ is a DVR, level 3 is also equivalent to $B$ being torsion-free as an $A$-module. Without such hypotheses, the finite-presentation clause must remain visible.
 
-### 16.2 What rank $n$ guarantees
+### 23.2 What rank $n$ guarantees
 
 Suppose $B$ is finite projective of constant rank $n$. Then all of the following hold.
 
@@ -1768,13 +2484,13 @@ Suppose $B$ is finite projective of constant rank $n$. Then all of the following
 
 What rank $n$ does **not** guarantee is equally important. It does not say that fibers are reduced, that they contain $n$ points, that residue extensions are separable, that the trace pairing is perfect, or that a section is an open-and-closed component. Dual numbers supply a counterexample to all of these unwarranted conclusions.
 
-### 16.3 The arithmetic of degrees
+### 23.3 The arithmetic of degrees
 
 Whenever the relevant rank functions are constant, degree obeys a compact arithmetic.
 
 $$
 \begin{array}{c|c}
-\text{geometric operation}&\text{degree}\
+\text{geometric operation}&\text{degree}\\
 \hline
 X\amalg Y&\deg X+\deg Y\\
 X\times_SY&\deg X\,\deg Y\\
@@ -1787,7 +2503,7 @@ The composition formula assumes that $X\to Y$ has the stated constant degree on 
 
 A positive rank function makes the morphism faithfully flat and surjective. Rank zero records the empty piece. Hence the image of an arbitrary finite locally free morphism is precisely its positive-rank clopen locus.
 
-### 16.4 The base-change checklist
+### 23.4 The base-change checklist
 
 Given $A\to A'$, no flatness of $A'$ is required for the following statements when the modules shown on the left are finite projective where needed:
 
@@ -1807,7 +2523,7 @@ The first line holds for arbitrary modules $M,N$; the other lines use finite pro
 
 For a general finitely presented module $M$, Hom commutes with **flat** base change, but not necessarily arbitrary base change. For finite projective $M$, arbitrary base change is allowed because $\operatorname{Hom}(M,-)=M^\vee\otimes-$. Remembering which reason applies prevents an invalid exchange of Hom and fibers.
 
-### 16.5 The locality and descent checklist
+### 23.5 The locality and descent checklist
 
 Finite projectivity may be verified in any of the following ways.
 
@@ -1821,7 +2537,7 @@ The last method is recognition, not construction. If only an algebra $B'$ over $
 
 Finite generation, finite presentation, and flatness each descend faithfully flatly, as proved in Chapter 11. Constant rank descends because residue-field extension preserves dimension. Conversely, all of these properties are preserved by arbitrary base change once finite projectivity is known.
 
-### 16.6 Local and DVR diagnostics
+### 23.6 Local and DVR diagnostics
 
 Over a local ring $(A,\mathfrak m)$, a finite projective or finite flat module is free. To determine its rank, compute
 
@@ -1841,7 +2557,7 @@ $$
 
 For a finite $R$-algebra, one can therefore diagnose flatness by checking injection into the generic fiber. Equality of generic and special fiber lengths follows. If these lengths differ, the difference is witnessed by torsion; if the special fiber is nonreduced but the lengths agree, flatness may still hold.
 
-### 16.7 Trace and norm in reusable form
+### 23.7 Trace and norm in reusable form
 
 For a finite projective $A$-algebra $B$ of constant rank $n$, multiplication supplies
 
@@ -1864,13 +2580,15 @@ Trace is linear, norm is multiplicative, and $b$ is a unit precisely when its no
 
 The trace pairing $B\to B^\vee$ is always defined and base-change compatible, but need not be perfect. Its determinant is the discriminant, naturally valued in a square of the determinant line. A chosen basis turns it into the familiar determinant $\det(\operatorname{Tr}(e_ie_j))$, with change of basis multiplying by a square.
 
-### 16.8 Common invalid shortcuts
+### 23.8 Common invalid shortcuts
 
 The theory is robust largely because it identifies the shortcuts that are unsafe.
 
 **Finite is not finitely presented over every ring.** The quotient $A/I$ is finite for every ideal $I$, but is finitely presented only when $I$ is finitely generated.
 
 **Finite flat is not automatically finite locally free over every ring.** Add finite presentation, or assume a condition such as noetherianity that supplies it. The product-ring example of §8.2 is a concrete obstruction.
+
+**Constant rank changes the preceding conclusion.** A finite flat module whose fiber rank is locally constant is finite projective by Theorem 16.1. On a connected base, a specified constant degree therefore supplies the missing finite-presentation consequence.
 
 **Fiber dimension does not detect infinitesimal nonflatness.** Over a one-point nonreduced base, the dimensions are vacuously constant while torsion can remain. Use flatness, projectivity, or a valid local criterion.
 
@@ -1882,10 +2600,12 @@ The theory is robust largely because it identifies the shortcuts that are unsafe
 
 **Finite flat does not mean reduced or separable.** It preserves fiber length; it allows nilpotent fibers and inseparable residue phenomena.
 
-### 16.9 Final synthesis
+### 23.9 Final synthesis
 
 Finite locally free geometry is finite-dimensional linear algebra allowed to vary over a scheme. Its apparent complexity comes from three kinds of variation: bases need not be connected, specialization need not preserve point sets, and rings need not be noetherian. Rank functions, scheme-theoretic fiber length, and explicit finite-presentation hypotheses resolve these three difficulties.
 
-Once the coordinate algebra is finite projective, the whole structure becomes predictable. Localization produces genuine bases. Arbitrary base change preserves the object and all of its linear invariants. Composition and products multiply ranks; disjoint unions add them. Local rings turn projective modules into free modules, and DVRs turn flatness into torsion-freeness. Faithfully flat extensions detect the structure. Duals, traces, norms, characteristic polynomials, and discriminants then follow from one regular representation and remain compatible with every fiber.
+Once the coordinate algebra is finite projective, the whole structure becomes predictable. Localization produces genuine bases. Arbitrary base change preserves the object and all of its linear invariants. Composition preserves the class and multiplies degrees under the stated constant-rank hypothesis; fiber products multiply ranks and disjoint unions add them. Local rings turn finite flat modules into free modules, and DVRs turn flatness into torsion-freeness. Faithfully flat extensions detect the structure. Duals, traces, norms, characteristic polynomials, and discriminants then follow from one regular representation and remain compatible with every fiber.
 
-The result is more than a collection of equivalences. It is a stable language for zero-dimensional families: geometry can change from separated points to collided or nonreduced fibers, while rank and determinant data continue to make exact sense. That stability is precisely what makes finite locally free schemes suitable as the underlying spaces of finite group schemes and as integral models of finite arithmetic objects.
+The unramified boundary is now equally precise: differentials, reduced geometric fibers, and the trace pairing all detect when a finite locally free family is étale. Quotients remain in the category exactly when the requisite projectivity survives. Saturation produces the correct schematic closure and, over DVRs and Dedekind domains, preserves finite local freeness. Weil restriction converts objects and section problems over a finite locally free cover into finite-dimensional geometry over the original base, while effective descent carries their compatible structures back down.
+
+The result is more than a collection of equivalences. It is a stable language for zero-dimensional families: geometry can change from separated points to collided or nonreduced fibers, while rank and determinant data continue to make exact sense. That stability is precisely what makes finite locally free schemes suitable as the underlying spaces of finite group schemes, as integral closures of generic subgroup data, and as finite parameter objects in moduli theory.
