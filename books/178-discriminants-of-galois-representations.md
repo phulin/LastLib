@@ -46,7 +46,8 @@
    - [Chosen models and inherited models](#91-chosen-models-and-inherited-models)
    - [Cartier duals](#92-cartier-duals)
    - [Direct sums and exact extensions](#93-direct-sums-and-exact-extensions)
-   - [Existence warnings](#94-existence-warnings)
+   - [Change of coefficients](#94-change-of-coefficients)
+   - [Existence warnings](#95-existence-warnings)
 10. [Examples at the residue characteristic](#10-examples-at-the-residue-characteristic)
    - [Constant and multiplicative models](#101-constant-and-multiplicative-models)
    - [Cyclotomic modules](#102-cyclotomic-modules)
@@ -61,12 +62,19 @@
    - [Full level and successive kernels](#121-full-level-and-successive-kernels)
    - [What is uniform and what must grow](#122-what-is-uniform-and-what-must-grow)
    - [Composita of several torsion modules](#123-composita-of-several-torsion-modules)
-13. [A theorem package for small ramification](#13-a-theorem-package-for-small-ramification)
-   - [Local package](#131-local-package)
-   - [Global package](#132-global-package)
-   - [Tower package](#133-tower-package)
-   - [Boundary with discriminant lower bounds](#134-boundary-with-discriminant-lower-bounds)
-14. [Conclusion](#14-conclusion)
+13. [The three-adic torsion-field ledger](#13-the-three-adic-torsion-field-ledger)
+   - [The coefficient and exponent ledger](#131-the-coefficient-and-exponent-ledger)
+   - [The strict residual field](#132-the-strict-residual-field)
+   - [Tame ramification at two](#133-tame-ramification-at-two)
+   - [Higher coefficient levels](#134-higher-coefficient-levels)
+   - [Residual composita and obstruction fields](#135-residual-composita-and-obstruction-fields)
+   - [What the three-adic argument receives](#136-what-the-three-adic-argument-receives)
+14. [A theorem package for small ramification](#14-a-theorem-package-for-small-ramification)
+   - [Local package](#141-local-package)
+   - [Global package](#142-global-package)
+   - [Tower package](#143-tower-package)
+   - [Boundary with discriminant lower bounds](#144-boundary-with-discriminant-lower-bounds)
+15. [Conclusion](#15-conclusion)
 
 ## 1. From a finite action to a field
 
@@ -1297,7 +1305,120 @@ is faithfully flat exact and the middle group is killed by $\ell^n$, then its ge
 
 Suppose, for instance, that both endpoint modules are trivial of order $\ell$ but the middle term is a nontrivial extension. If an exact finite-flat middle model is given and is killed by $\ell$, Theorem 8.1 bounds the off-diagonal cocycle by the same $e_K(1+1/(\ell-1))-1$ cutoff as a split two-dimensional module. Without the middle model, cyclic degree-$\ell$ extensions of arbitrarily large break can occur. Integral exactness controls the extension class itself, not only its constituents.
 
-### 9.4 Existence warnings
+### 9.4 Change of coefficients
+
+Arithmetic representations rarely arrive over their final coefficient ring. One first chooses a
+lattice over a discrete valuation ring, then reduces modulo a power of its maximal ideal, enlarges
+the residue field, projects to a coefficient factor, or forgets extra scalars. The field cut out by
+the resulting module can change under these operations, so a discriminant argument needs more than
+the slogan that finite flatness is insensitive to coefficients. It needs a construction of the new
+model and an inclusion between the old and new cutout fields.
+
+Begin with restriction of scalars. Let $A_0\to A$ be a homomorphism of finite commutative rings and
+let $M$ be an $A$-module with continuous $G_K$-action. Viewing $M$ as an $A_0$-module changes neither
+the underlying finite abelian group nor its Galois action. Therefore
+
+$$
+K_{A_0}(M)=K_A(M).
+$$
+
+If a chosen finite-flat model carries the $A$-action, forgetting endomorphisms gives an
+$A_0$-linear model. No ramification invariant changes. This simple operation is important when a
+rank-two module over a large residue field is viewed as a higher-dimensional module over its prime
+field: the matrix size changes, but the represented field does not.
+
+Extension of coefficients has the opposite flavor. Let $A\to B$ be a homomorphism of finite
+commutative rings and form
+
+$$
+M_B=B\otimes_A M.
+$$
+
+Every element of $G_K$ acting trivially on $M$ acts trivially on $M_B$, so
+
+$$
+K(M_B)\subseteq K(M).
+\tag{9.1}
+$$
+
+The inclusion can be strict: tensoring may kill a coefficient component on which Galois acted
+faithfully. It can never reverse, because the new action is obtained functorially from the old one.
+
+The integral construction does not require $B$ to be flat over $A$. Choose a finite presentation
+
+$$
+A^s\longrightarrow A^r\longrightarrow B\longrightarrow0.
+$$
+
+Tensoring with $M$ presents $M_B$ as the cokernel of a map $M^s\to M^r$. If $\mathcal G$ is an
+$A$-linear finite-flat model of $M$, the product groups $\mathcal G^s$ and $\mathcal G^r$ model the
+two free terms. Take the schematic closure of the generic image of $M^s$ in $\mathcal G^r$ and
+then the represented finite-flat quotient. Its generic fiber is $M_B$. The endomorphisms of the
+free presentation defining the $B$-action preserve the generic relation subgroup, hence preserve
+its closure, and descend to the quotient. The ring identities hold on the generic fiber and
+therefore hold integrally because the coordinate algebras are torsion-free over the DVR. This
+constructs a $B$-linear finite-flat model.
+
+The exponent is preserved in the direction needed for discriminants. If $\ell^nM=0$, then
+$\ell^nM_B=0$. Theorem 8.1 therefore gives the same universal upper cutoff $c_n(K,\ell)$ for
+$M_B$, while (9.1) shows that every sharper cutoff already known for $M$ descends to the new
+field by upper-numbered quotient compatibility.
+
+Coefficient reduction is the most frequent special case. For an ideal $J\subseteq A$,
+
+$$
+M/JM\simeq(A/J)\otimes_A M,
+$$
+
+so it has a finite-flat model and
+
+$$
+K(M/JM)\subseteq K(M).
+\tag{9.2}
+$$
+
+One should use the actual exponent of $M/JM$. If $T$ is a lattice over the ring of integers
+$\mathcal O$ of a finite extension of $\mathbf Q_\ell$ and $J$ is open, let $a(J)$ be the least
+integer such that $\ell^{a(J)}\in J$. Then $T/JT$ is killed by $\ell^{a(J)}$, and the local cutoff
+is
+
+$$
+e_K\left(a(J)+\frac1{\ell-1}\right)-1.
+\tag{9.3}
+$$
+
+Choosing a larger power of $\ell$ merely because it also lies in $J$ gives a valid but weaker
+bound.
+
+Scalar enlargement and coefficient reduction commute with finite direct sums and with taking
+subquotients inside a chosen model. Thus a finite family of coefficient specializations at a fixed
+exponent can be modeled simultaneously by a product. Its joint field, the compositum of their
+cutout fields, receives one cutoff with the maximum exponent. This is stronger than multiplying
+separate discriminant bounds.
+
+It is useful to record the conclusion as a theorem because it is exactly the form used in a
+change-of-prime argument.
+
+**Theorem 9.1 (coefficient stability of the discriminant bound).** Let $M$ be a finite continuous
+$A[G_K]$-module killed by $\ell^n$, and suppose a chosen $A$-linear finite-flat model over
+$\mathcal O_K$ exists. Then restriction of coefficient scalars does not change $K(M)$. Extension
+along any homomorphism $A\to B$ of finite commutative rings and reduction by any ideal of $A$
+produce finite-flat modules whose cutout fields lie in $K(M)$. Each resulting module satisfies the
+Fontaine--Raynaud upper-break and different bounds with its actual $\ell$-power exponent. A finite
+direct sum of such modules satisfies the bound once, with the maximum exponent.
+
+**Proof.** Restriction merely forgets endomorphisms. The presentation, closure, and quotient
+construction above proves finite flatness after arbitrary extension of coefficients, including a
+nonflat quotient. Kernel inclusion proves the field inclusions. Annihilation by the relevant power
+of $\ell$ survives tensor products and quotients, so Theorem 8.1 applies. Finally, products model
+direct sums and intersections of kernels cut out composita. $\square$
+
+The theorem does not say that extending coefficients enlarges the represented field; it usually
+does not. Nor does it say that two unrelated generic coefficient specializations possess compatible
+models. Compatibility is obtained here because all of them are constructed from one chosen
+ambient model.
+
+### 9.5 Existence warnings
 
 Separate finite-flat models of $M'$ and $M''$ do not prove that every generic extension
 
@@ -1649,13 +1770,433 @@ Applying the generic compositum inequality separately would multiply $s$ relativ
 
 The same conclusion holds for any finite collection of subquotients of a single modeled module: their joint field is contained in the field of a finite direct sum, itself a subquotient of a finite product. What must remain fixed is an actual collection of models, not merely a list of generic modules asserted to be potentially finite flat.
 
-## 13. A theorem package for small ramification
+## 13. The three-adic torsion-field ledger
 
-### 13.1 Local package
+The general theorem becomes arithmetically useful only after the coefficient exponent, the base
+field, and every auxiliary prime have been inserted. The three-adic argument is especially
+sensitive to this bookkeeping. Its residual modules are killed by $3$, but its higher coefficient
+quotients need not be; tame inertia at $2$ has an exact cost smaller than a full factor of $2$;
+and auxiliary first-order modules arising at a high lifting stage may again be killed by $3$ even
+though the full quotient at that stage is not. This chapter derives all three bounds from the
+preceding theory and records precisely which hypotheses make each one valid.
+
+### 13.1 The coefficient and exponent ledger
+
+Let $E/\mathbf Q_3$ be a finite extension, let $\mathcal O$ be its ring of integers, choose a
+uniformizer $\varpi$, and put
+
+$$
+e_{\mathcal O}=v_\varpi(3).
+$$
+
+Thus $3=u\varpi^{e_{\mathcal O}}$ for a unit $u\in\mathcal O^\times$. Let $T$ be a finite free
+$\mathcal O$-module with continuous action of $G_F$, and set
+
+$$
+T_n=T/\varpi^nT,
+\qquad
+L_n=F(T_n).
+$$
+
+The first numerical question is not the $\varpi$-level but the exponent of the underlying finite
+abelian group. Define
+
+$$
+m(n)=\left\lceil\frac{n}{e_{\mathcal O}}\right\rceil.
+\tag{13.1}
+$$
+
+Then $3^{m(n)}T_n=0$. If $T\ne0$, this is the least such power: the inequality
+$e_{\mathcal O}(m(n)-1)<n$ shows that multiplication by $3^{m(n)-1}$ does not kill the class of
+a basis vector. Thus the finite-flat theorem must be applied with $m(n)$, not automatically with
+$n$. When $\mathcal O/\mathbf Z_3$ is unramified, $e_{\mathcal O}=1$ and $m(n)=n$; a ramified
+coefficient ring can package several $\varpi$-levels into one $3$-power exponent.
+
+Fix a place $u\mid3$ of $F$ and write
+
+$$
+e_u^0=e(F_u/\mathbf Q_3)=v_{F_u}(3).
+$$
+
+Assume $T_n|_{G_{F_u}}$ admits a finite-flat model over $\mathcal O_{F_u}$. Theorem 8.1, with
+$\ell=3$ and exponent $m(n)$, gives
+
+$$
+G_{F_u}^r\text{ acts trivially on }T_n
+\quad\text{for}\quad
+r>e_u^0\left(m(n)+\frac12\right)-1.
+\tag{13.2}
+$$
+
+If $L_{n,w}/F_u$ is the completion cut out by the local action, and $e_{u,n}$ and $d_{u,n}$ are
+its ramification index and different exponent, then
+
+$$
+d_{u,n}
+\leq e_{u,n}e_u^0\left(m(n)+\frac12\right)-1,
+\tag{13.3}
+$$
+
+and therefore
+
+$$
+\boxed{
+\frac{d_{u,n}}{e_{u,n}}
+<e_u^0\left(m(n)+\frac12\right).}
+\tag{13.4}
+$$
+
+The proof is worth recalling in one line because it checks the characteristic constant. The last
+upper break in (13.2) is at most $e_u^0(m(n)+1/2)-1$; adding the tame baseline
+$1-1/e_{u,n}$ gives the right side of (13.4) minus $1/e_{u,n}$. The $-1$ in the break cutoff has
+therefore canceled the first unit of the different.
+
+At residual level $n=1$, one always has $m(1)=1$, independently of ramification in the coefficient
+field. Consequently
+
+$$
+r>\frac{3e_u^0}{2}-1
+\quad\Longrightarrow\quad
+G_{F_u}^r\text{ fixes }T/\varpi T,
+\tag{13.5}
+$$
+
+and
+
+$$
+\frac{d_{u,1}}{e_{u,1}}<\frac{3e_u^0}{2}.
+\tag{13.6}
+$$
+
+When $F_u/\mathbf Q_3$ is unramified, the last upper break is at most $1/2$ and the normalized
+different is strictly less than $3/2$. The first number is a depth; the second is a
+root-discriminant exponent. Keeping them distinct prevents a recurrent half-unit error.
+
+### 13.2 The strict residual field
+
+Let
+
+$$
+M=T/\varpi T,
+\qquad L=F(M),
+$$
+
+and assume that $M$ has a finite-flat model at every $u\mid3$ and is unramified at every finite
+place not dividing $3$. The global localization formula and (13.6) give
+
+$$
+\operatorname{rd}(L)
+<\operatorname{rd}(F)\,3^{3/2}.
+\tag{13.7}
+$$
+
+Here is the complete calculation. Write
+
+$$
+f_u^0=f(F_u/\mathbf Q_3),
+\qquad N u=3^{f_u^0}.
+$$
+
+The total exponent of $3$ contributed by places above $3$ is strictly less than
+
+$$
+\frac1{[F:\mathbf Q]}
+\sum_{u\mid3}f_u^0\frac{3e_u^0}{2}
+=\frac32,
+$$
+
+because
+
+$$
+\sum_{u\mid3}e_u^0f_u^0=[F:\mathbf Q].
+$$
+
+This proves (13.7). Notice what cancels and what does not. Ramification of $3$ in the base field
+is absorbed by the local-degree identity, but ramification already present in $F/\mathbf Q$
+remains in $\operatorname{rd}(F)$. The finite-flat models must exist over the actual local rings;
+potential finite flatness over larger fields is not enough.
+
+For $F=\mathbf Q$ the bound is the explicit ceiling
+
+$$
+\boxed{
+\operatorname{rd}(\mathbf Q(M))<3^{3/2}
+=3\sqrt3
+=5.196152422706632\ldots .}
+\tag{13.8}
+$$
+
+The strict sign is genuine. It comes from the term $-1/e$ in the local normalized different, not
+from a claim that the upper group is trivial at the endpoint $1/2$.
+
+The matrix image supplies the complementary degree bound. If $M$ has rank two over
+$k=\mathbf F_{3^f}$, then
+
+$$
+[L:F]\leq|\operatorname{GL}_2(k)|
+=(3^{2f}-1)(3^{2f}-3^f).
+\tag{13.9}
+$$
+
+Indeed the first column of an invertible matrix can be any nonzero vector and the second any vector
+outside its span. For $k=\mathbf F_3$,
+
+$$
+[L:F]\leq(9-1)(9-3)=48.
+\tag{13.10}
+$$
+
+If $F=\mathbf Q$ and $\det M=\overline\chi_3$, then the determinant field is
+$\mathbf Q(\zeta_3)$ whenever the determinant is nontrivial. In the $\mathbf F_3$ case this gives
+
+$$
+[L:\mathbf Q(\zeta_3)]\leq|\operatorname{SL}_2(\mathbf F_3)|=24.
+$$
+
+These are image bounds, not discriminant bounds. The force of the three-adic package is that
+(13.8) and (13.10) hold simultaneously.
+
+No conclusion about the existence or classification of fields below the ceiling is drawn here.
+That requires global lower bounds and, after a degree reduction, group and ray-class arguments.
+The present result supplies their exact algebraic input.
+
+### 13.3 Tame ramification at two
+
+The controlled non-strict three-adic situation permits ramification at $2$. Because the residue
+characteristic there is $2$, every inertia group of odd order is tame. Suppose the completion of a
+Galois torsion field at $2$ has inertia of order $3^a$. Then its ramification index is $3^a$, its
+positive ramification groups are trivial, and Hilbert's formula gives
+
+$$
+d_2=3^a-1,
+\qquad
+\boxed{\frac{d_2}{e_2}=1-3^{-a}.}
+\tag{13.11}
+$$
+
+This remains true if an unramified part is present, because it changes the residue degree but not
+$e_2$ or $d_2$. Formula (13.11) is exact, not a cutoff estimate.
+
+At residual rank two over $\mathbf F_3$, the $3$-part of
+$|\operatorname{GL}_2(\mathbf F_3)|=48$ has order $3$. Thus a nontrivial odd inertia image has
+order exactly $3$ and contributes
+
+$$
+\frac{d_2}{e_2}=\frac23.
+\tag{13.12}
+$$
+
+If $M$ is finite flat at $3$, unramified outside $\{2,3\}$, and has this nontrivial tame inertia
+at $2$, then
+
+$$
+\boxed{
+\operatorname{rd}(\mathbf Q(M))
+<3^{3/2}2^{2/3}
+=8.248377821991616\ldots .}
+\tag{13.13}
+$$
+
+The factor at $3$ is the strict universal finite-flat bound; the factor at $2$ is the exact tame
+cost. If inertia at $2$ is trivial, it must be removed entirely, recovering (13.8).
+
+More generally, let $S_0$ be a finite set of places of a number field $F$, none above $3$, and
+suppose the inertia order at $v\in S_0$ is a known tame integer $h_v$. Then the residual field
+satisfies
+
+$$
+\operatorname{rd}(F(M))
+<\operatorname{rd}(F)3^{3/2}
+\prod_{v\in S_0}
+(Nv)^{(1-1/h_v)/[F:\mathbf Q]}.
+\tag{13.14}
+$$
+
+If a place is wild but its last upper break is at most $R_v$, the safe replacement is
+
+$$
+(Nv)^{(1+R_v)/[F:\mathbf Q]},
+$$
+
+or the exact upper-filtration integral when known. Merely naming the place does not bound its
+cost.
+
+The distinction between (13.8) and (13.13) is mathematical, not cosmetic. A tame cubic inertia
+class at $2$ can survive all the local conditions at $3$, and its factor $2^{2/3}$ is large enough
+to change a subsequent degree comparison. Any argument that calls both fields “hardly ramified”
+must retain the auxiliary-prime ledger.
+
+### 13.4 Higher coefficient levels
+
+Return to $T_n=T/\varpi^nT$. Assume that every $T_n$ has a finite-flat model at every place above
+$3$. If $L_n/F$ is unramified away from $3$, equations (13.1)--(13.4) globalize to
+
+$$
+\boxed{
+\operatorname{rd}(L_n)
+<\operatorname{rd}(F)3^{m(n)+1/2}.}
+\tag{13.15}
+$$
+
+The proof is the same local-degree sum as at residual level, with $3/2$ replaced by
+$m(n)+1/2$. If $F=\mathbf Q$, ramification is allowed at $2$, and the tame inertia there has order
+$3^{a_n}>1$, then
+
+$$
+\boxed{
+\operatorname{rd}(L_n)
+<3^{m(n)+1/2}2^{\,1-3^{-a_n}}.}
+\tag{13.16}
+$$
+
+When inertia is trivial the factor at $2$ is $1$. In applications where the local integral
+structure proves $0\leq a_n\leq m(n)$, (13.16) is the complete two-prime ledger. The inequality
+$a_n\leq m(n)$ is not a consequence of finite flatness at $3$; it is separate local information
+at $2$ and must be proved by the chosen representation.
+
+For $\mathcal O=\mathbf Z_3$, formula (13.15) reads
+
+$$
+\operatorname{rd}(\mathbf Q(T/3^nT))<3^{n+1/2}.
+$$
+
+The dependence on $n$ cannot be removed. The rank-one cyclotomic quotient gives
+
+$$
+\operatorname{rd}(\mathbf Q(\zeta_{3^n}))=3^{n-1/2},
+$$
+
+which already tends to infinity. Thus the residual ceiling $3^{3/2}$ is a fixed-exponent theorem,
+not a bound for the entire three-adic torsion tower.
+
+There is also no automatic uniform estimate for the relative steps $L_{n+1}/L_n$. The kernel of
+coefficient reduction is a finite $3$-group of bounded matrix rank, but bounded order does not
+bound its ramification depth. If a relative finite-flat group over the valuation ring of $L_n$ is
+independently supplied, the tower formula applies; otherwise one must use the full-level estimate
+(13.15).
+
+To see the tower normalization explicitly, let $K\subseteq L_n\subseteq L_{n+1}$ be local
+completions. Then
+
+$$
+\frac{d(L_{n+1}/K)}{e(L_{n+1}/K)}
+=\frac{d(L_n/K)}{e(L_n/K)}
++\frac1{e(L_n/K)}
+\frac{d(L_{n+1}/L_n)}{e(L_{n+1}/L_n)}.
+\tag{13.17}
+$$
+
+The top-stage cost is discounted by the ramification already present below. Adding two normalized
+bounds without this factor is incorrect, while applying a level-one bound to the top step without
+a relative model is unjustified.
+
+### 13.5 Residual composita and obstruction fields
+
+Although the full tower has growing cost, every finite collection of exponent-three modules can be
+controlled at the residual constant. Let $M_1,\ldots,M_s$ be finite $G_F$-modules killed by $3$,
+each supplied at every $u\mid3$ with a finite-flat model, and assume they are all unramified away
+from $3$. Their direct sum is killed by $3$, its product model is finite flat, and
+
+$$
+F(M_1\oplus\cdots\oplus M_s)
+=F(M_1)\cdots F(M_s).
+$$
+
+Consequently every finite compositum satisfies
+
+$$
+\operatorname{rd}\bigl(F(M_1)\cdots F(M_s)\bigr)
+<\operatorname{rd}(F)3^{3/2}.
+\tag{13.18}
+$$
+
+If all modules have the same tame inertia condition at $2$, the corresponding exact factor from
+(13.11) is inserted once, using the inertia order of the direct sum. One must not multiply the
+individual root-discriminant ceilings: that would count the same depth repeatedly.
+
+This fixed-exponent principle is particularly useful for first-order difference modules. Suppose
+two coefficient-level representations agree modulo an ideal and their difference is encoded over a
+finite coefficient algebra of characteristic $3$, for example a dual-number algebra
+$k[\epsilon]/(\epsilon^2)$. The underlying additive module is killed by $3$. If an actual
+finite-flat model of this full difference representation is constructed, its affine cutout field
+again satisfies (13.7), or (13.13) with the recorded tame inertia at $2$, regardless of the high
+level at which the difference arose.
+
+There are two indispensable qualifications. First, the diagonal residual constituents alone do
+not model the off-diagonal cocycle; the full difference module must have a finite-flat witness.
+Second, the conclusion concerns the field cut out by that faithful affine action, not an arbitrary
+larger field through which it factors. Under these hypotheses, however, one can repeatedly return
+to the residual discriminant ceiling while lifting through a high coefficient tower. This is the
+precise mechanism by which fixed-exponent discriminant arguments coexist with the unavoidable
+growth in (13.15).
+
+### 13.6 What the three-adic argument receives
+
+We can now package the numerical output without importing any global lower bound or classification
+theorem.
+
+**Theorem 13.1 (three-adic torsion-field package).** Let $F$ be a number field, let $T$ be a finite
+free module over the integers $\mathcal O$ of a finite extension of $\mathbf Q_3$, and put
+$T_n=T/\varpi^nT$ and $L_n=F(T_n)$. Let $m(n)$ be as in (13.1). Assume that $T_n$ admits a
+finite-flat model at every place above $3$ and is unramified away from those places and a finite
+set $S_0$. Partition $S_0=S_{\mathrm t}\sqcup S_{\mathrm b}$. Assume that inertia at
+$v\in S_{\mathrm t}$ is tame of known order $h_{v,n}$, and that the last upper break at
+$v\in S_{\mathrm b}$ is at most a known number $R_{v,n}$.
+
+Then
+
+$$
+\operatorname{rd}(L_n)
+<\operatorname{rd}(F)3^{m(n)+1/2}
+\prod_{v\in S_{\mathrm t}}
+(Nv)^{(1-1/h_{v,n})/[F:\mathbf Q]}
+\prod_{v\in S_{\mathrm b}}
+(Nv)^{(1+R_{v,n})/[F:\mathbf Q]}.
+\tag{13.19}
+$$
+
+At residual level $n=1$, the coefficient-prime factor is always $3^{3/2}$. For $F=\mathbf Q$,
+rank two over $\mathbf F_3$, and no auxiliary ramification, one has simultaneously
+
+$$
+[L_1:\mathbf Q]\leq48,
+\qquad
+\operatorname{rd}(L_1)<3^{3/2}.
+\tag{13.20}
+$$
+
+If the only auxiliary ramification is nontrivial tame inertia of order $3$ at $2$, then
+
+$$
+[L_1:\mathbf Q]\leq48,
+\qquad
+\operatorname{rd}(L_1)<3^{3/2}2^{2/3}.
+\tag{13.21}
+$$
+
+The same residual ceilings apply to every finite compositum of modeled exponent-three modules and
+to every modeled characteristic-three first-order difference module.
+
+**Proof.** The annihilator calculation gives the exponent $m(n)$. At a place above $3$, the local
+finite-flat theorem gives (13.4). Summing the local norm exponents uses
+$\sum_{u\mid3}e_u^0f_u^0=[F:\mathbf Q]$ and produces $3^{m(n)+1/2}$. At a tame auxiliary place,
+Hilbert's formula gives the exact exponent $1-1/h_{v,n}$; at a bounded-depth place, the upper
+integral gives the strict coarse exponent $1+R_{v,n}$. Multiplication of the local factors proves
+(13.19). The matrix count proves the degree bound in (13.20) and (13.21). Products of finite-flat
+models prove the final compositum assertion. $\square$
+
+The data handed to a later discriminant comparison must therefore include $F$, its root
+discriminant and signature, the actual residual image or degree bound, the coefficient exponent,
+the chosen local finite-flat models, and every auxiliary local contribution. The phrase “small
+discriminant” loses exactly the information that distinguishes (13.8), (13.13), and (13.15).
+
+## 14. A theorem package for small ramification
+
+### 14.1 Local package
 
 The preceding work can be assembled into a reusable local statement.
 
-**Theorem 13.1 (local discriminant package).** Let $K/\mathbf Q_\ell$ be finite, normalize $v_K(K^\times)=\mathbf Z$, and put $e_K=v_K(\ell)$. Let $M$ be a finite continuous $G_K$-module killed by $\ell^n$, admitting a finite-flat model over $\mathcal O_K$. Let $L=K(M)$, $e=e(L/K)$, $f=f(L/K)$, and $d=d(L/K)$. Then:
+**Theorem 14.1 (local discriminant package).** Let $K/\mathbf Q_\ell$ be finite, normalize $v_K(K^\times)=\mathbf Z$, and put $e_K=v_K(\ell)$. Let $M$ be a finite continuous $G_K$-module killed by $\ell^n$, admitting a finite-flat model over $\mathcal O_K$. Let $L=K(M)$, $e=e(L/K)$, $f=f(L/K)$, and $d=d(L/K)$. Then:
 
 1. $L/K$ is finite Galois with group $\operatorname{im}(G_K\to\operatorname{Aut}M)$.
 2. Its upper ramification groups satisfy
@@ -1679,9 +2220,29 @@ The preceding work can be assembled into a reusable local statement.
 
 The fifth clause does not assert that arbitrary generic extensions of finite-flat endpoints are finite flat.
 
-### 13.2 Global package
+**Proof.** The kernel of the finite action is open and normal, proving the first clause. Theorem
+8.1 and faithfulness of the action on $K(M)$ prove the upper cutoff. Substitution in the exact
+upper-numbered different formula gives
 
-**Theorem 13.2 (global root-discriminant package).** Let $F$ be a number field and $M$ a finite $G_F$-module killed by $\ell^n$. Assume:
+$$
+d\leq(e-1)+e\left(
+e_K\left(n+\frac1{\ell-1}\right)-1\right)
+=e\,e_K\left(n+\frac1{\ell-1}\right)-1.
+$$
+
+The identity $\delta=fd$ follows by norming the different, and division by $e$ gives the strict
+normalized bound. Schematic closure and represented quotients treat submodules and quotients,
+products treat direct sums, Cartier duality treats twisted duals, and the supplied integral middle
+group treats exact extensions. Each operation preserves its actual annihilating exponent.
+$\square$
+
+### 14.2 Global package
+
+The local theorem becomes a global statement only after the places above $\ell$ are summed with
+their residue degrees. This section packages that cancellation and keeps every auxiliary place
+visible.
+
+**Theorem 14.2 (global root-discriminant package).** Let $F$ be a number field and $M$ a finite $G_F$-module killed by $\ell^n$. Assume:
 
 - for every $v\mid\ell$, $M|_{G_{F_v}}$ admits a finite-flat model;
 - outside the places above $\ell$ and a finite set $S$, the module is unramified;
@@ -1713,9 +2274,35 @@ $$
 
 may replace $1+R_v$. Thus the theorem is a package, not an instruction to discard known local data.
 
-### 13.3 Tower package
+**Proof.** At $v\mid\ell$, Theorem 14.1 gives
 
-**Theorem 13.3 (level tower package).** Let $T$ be a rank-$r$ $\mathbf Z_\ell$-lattice with continuous $G_F$-action, put $M_n=T/\ell^nT$ and $F_n=F(M_n)$, and assume each $M_n$ satisfies the local finite-flat hypotheses at $v\mid\ell$. Then:
+$$
+\frac{d_v}{e_v}
+<e(F_v/\mathbf Q_\ell)
+\left(n+\frac1{\ell-1}\right).
+$$
+
+Since $Nv=\ell^{f(F_v/\mathbf Q_\ell)}$ and
+
+$$
+\sum_{v\mid\ell}
+e(F_v/\mathbf Q_\ell)f(F_v/\mathbf Q_\ell)
+=[F:\mathbf Q],
+$$
+
+the product of all coefficient-prime contributions is strictly less than
+$\ell^{n+1/(\ell-1)}$. At $v\in S$, the cutoff-to-different bound gives
+$d_v/e_v<1+R_v$. Insert these inequalities in the global localization formula. If $v$ is tame,
+Hilbert's formula gives the exact replacement $d_v/e_v=1-1/e_v$. Retaining the full upper
+integral instead of bounding its integrand by $1$ gives the final refinement. $\square$
+
+### 14.3 Tower package
+
+Coefficient towers mix two independent phenomena: bounded matrix kernels and increasing
+ramification depth. The next theorem records both without using the former as a substitute for the
+latter.
+
+**Theorem 14.3 (level tower package).** Let $T$ be a rank-$r$ $\mathbf Z_\ell$-lattice with continuous $G_F$-action, put $M_n=T/\ell^nT$ and $F_n=F(M_n)$, and assume each $M_n$ satisfies the local finite-flat hypotheses at $v\mid\ell$. Then:
 
 $$
 F_1\subseteq F_2\subseteq\cdots,
@@ -1739,7 +2326,21 @@ $$
 
 The degree step is uniform; the displayed full-level root bound grows with $n$. A uniform bound for a selected subtower requires an additional argument controlling its relative ramification, and the theorem deliberately does not conceal that requirement.
 
-### 13.4 Boundary with discriminant lower bounds
+**Proof.** Reduction $M_{n+1}\twoheadrightarrow M_n$ gives
+$F_n\subseteq F_{n+1}$. An element of the relative Galois group acts on $M_{n+1}$ by a matrix
+
+$$
+1+\ell^nA\pmod{\ell^{n+1}},
+\qquad A\in M_r(\mathbf F_\ell).
+$$
+
+The map to $A$ is injective and the target has $\ell^{r^2}$ elements, proving the step-degree
+bound. Theorem 8.1 applied to $M_n$ at $v\mid\ell$ gives the displayed last-break bound. Applying
+Theorem 14.2 at each fixed $n$ gives the root-discriminant inequality. Nothing in this proof
+constructs a relative finite-flat model over $F_n$, which is why no level-independent relative
+ramification conclusion is included. $\square$
+
+### 14.4 Boundary with discriminant lower bounds
 
 The results above are entirely algebraic. They turn finite image, local upper cutoffs, and finite-flat integral geometry into explicit upper bounds for root discriminants. They do not decide whether a number field of a given degree and root discriminant can exist. That is a different problem, involving global lower bounds and signature.
 
@@ -1754,12 +2355,32 @@ The package is designed so that such a comparison can begin without revisiting l
 
 No analytic lower bound is assumed or proved here.
 
-## 14. Conclusion
+## 15. Conclusion
 
 A finite representation becomes arithmetic when its kernel is read as a field. The discriminant of that field is exactly the Artin conductor of the regular representation of its finite image, while Hilbert's formula expresses the same quantity as accumulated ramification depth. Upper numbering is the indispensable scale: it passes to quotient fields and turns a last-break estimate into a degree-independent root-discriminant bound.
 
 Finite-flat geometry supplies the unusually strong estimate at the residue characteristic. The augmentation ideal sees multiplication by $\ell$ as a competition between the linear term $\ell x$ and terms of degree $\ell$. That competition creates the torsion-free congruence radius $e_K/(\ell-1)$. Converting integral congruence to upper numbering contributes $e_K-1$, and passing through the preceding $n-1$ multiplication layers adds $(n-1)e_K$. The resulting upper cutoff is $e_K(n+1/(\ell-1))-1$. Hilbert's formula adds the tame baseline, whose $1$ cancels that terminal $-1$. At level $\ell$ over $\mathbf Q_\ell$, the final normalized exponent is therefore $\ell/(\ell-1)$.
 
 The global formula preserves every normalization: residue degrees enter local discriminants, local ramification indices disappear only after division by total degree, primes above $\ell$ recombine through $\sum e_vf_v=[F:\mathbf Q]$, and the base field remains as $\operatorname{rd}(F)$. Auxiliary tame or bounded-depth ramification contributes its own explicit factor. Subfields improve root discriminants, composita require care, and compatible finite-flat products often give a maximum cutoff where a naive compositum estimate would add costs.
+
+For the three-adic argument this general mechanism has now been reduced to a concrete ledger. A
+modeled residual rank-two module over $\mathbf F_3$, unramified outside $3$, cuts out a field of
+degree at most $48$ and root discriminant strictly below
+
+$$
+3^{3/2}.
+$$
+
+If its only additional ramification is tame cubic inertia at $2$, the exact replacement is
+
+$$
+3^{3/2}2^{2/3}.
+$$
+
+At coefficient level $\varpi^n$, the exponent is governed by
+$m(n)=\lceil n/v_\varpi(3)\rceil$ and the coefficient-prime factor becomes
+$3^{m(n)+1/2}$. Residual direct sums and modeled characteristic-three difference modules return to
+the first ceiling, whereas the full torsion tower necessarily has growing root discriminant.
+These distinctions are the numerical content required from the phrase “hardly ramified.”
 
 The resulting theorem package is ready for towers arising from torsion and change-of-prime arguments. It states exactly which bounds are uniform, which grow with level, and which constructions preserve a chosen integral model. The next stage may compare these algebraic upper bounds with global lower bounds. Here the durable conclusion is already complete: integral geometry controls the last local break, ramification theory converts the break into a different, and the global product formula turns those local differents into an explicit bound on the field cut out by the representation.
