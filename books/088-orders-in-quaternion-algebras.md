@@ -83,18 +83,48 @@
     - [The global Eichler level subgroup](#142-the-global-eichler-level-subgroup)
     - [What the unit group remembers](#143-what-the-unit-group-remembers)
     - [Change of level](#144-change-of-level)
-15. [Explicit arithmetic over $\mathbf Q$](#15-explicit-arithmetic-over-mathbf-q)
-    - [The maximal matrix order has one class](#151-the-maximal-matrix-order-has-one-class)
-    - [Matrix Eichler level $N$](#152-matrix-eichler-level-n)
-    - [The Hurwitz maximal order](#153-the-hurwitz-maximal-order)
-    - [The Hurwitz class set](#154-the-hurwitz-class-set)
-    - [Adding odd Eichler level to the definite algebra](#155-adding-odd-eichler-level-to-the-definite-algebra)
-16. [The integral--adelic dictionary](#16-the-integral--adelic-dictionary)
-    - [One table of translations](#161-one-table-of-translations)
-    - [The discriminant dictionary](#162-the-discriminant-dictionary)
-    - [The ideal dictionary](#163-the-ideal-dictionary)
-    - [The finite input for the next book](#164-the-finite-input-for-the-next-book)
-    - [Conclusion](#165-conclusion)
+15. [Unit groups and integral norm maps](#15-unit-groups-and-integral-norm-maps)
+    - [Why the units deserve separate study](#151-why-the-units-deserve-separate-study)
+    - [The radical filtration of a local order](#152-the-radical-filtration-of-a-local-order)
+    - [Split maximal and Eichler units](#153-split-maximal-and-eichler-units)
+    - [Units in the division order](#154-units-in-the-division-order)
+    - [Surjectivity of the local reduced norm](#155-surjectivity-of-the-local-reduced-norm)
+    - [Global units, norm-one units, and positivity](#156-global-units-norm-one-units-and-positivity)
+16. [Explicit arithmetic over $\mathbf Q$](#16-explicit-arithmetic-over-mathbf-q)
+    - [The maximal matrix order has one class](#161-the-maximal-matrix-order-has-one-class)
+    - [Matrix Eichler level $N$](#162-matrix-eichler-level-n)
+    - [The Hurwitz maximal order](#163-the-hurwitz-maximal-order)
+    - [The Hurwitz class set](#164-the-hurwitz-class-set)
+    - [Adding odd Eichler level to the definite algebra](#165-adding-odd-eichler-level-to-the-definite-algebra)
+17. [Quadratic orders and optimal embeddings](#17-quadratic-orders-and-optimal-embeddings)
+    - [From field embeddings to integral embeddings](#171-from-field-embeddings-to-integral-embeddings)
+    - [Quadratic orders and conductors](#172-quadratic-orders-and-conductors)
+    - [Optimality as an intersection condition](#173-optimality-as-an-intersection-condition)
+    - [The split local lattice-pair normal form](#174-the-split-local-lattice-pair-normal-form)
+    - [The division-place criterion](#175-the-division-place-criterion)
+    - [Local--global optimality and selectivity](#176-local--global-optimality-and-selectivity)
+    - [Embedding classes as double quotients](#177-embedding-classes-as-double-quotients)
+    - [Examples and counterexamples](#178-examples-and-counterexamples)
+18. [Reduced-norm fibers and strong approximation](#18-reduced-norm-fibers-and-strong-approximation)
+    - [The norm quotient attached to a level](#181-the-norm-quotient-attached-to-a-level)
+    - [The norm map on an ideal class set](#182-the-norm-map-on-an-ideal-class-set)
+    - [Strong approximation for the norm-one group](#183-strong-approximation-for-the-norm-one-group)
+    - [The indefinite fiber theorem](#184-the-indefinite-fiber-theorem)
+    - [Approximation away from one split finite place](#185-approximation-away-from-one-split-finite-place)
+    - [Why total definiteness changes the answer](#186-why-total-definiteness-changes-the-answer)
+19. [Finite double-coset sets for definite quaternionic forms](#19-finite-double-coset-sets-for-definite-quaternionic-forms)
+    - [The finite arithmetic skeleton](#191-the-finite-arithmetic-skeleton)
+    - [Representatives, ideals, and stabilizers](#192-representatives-ideals-and-stabilizers)
+    - [Central quotients and effective stabilizers](#193-central-quotients-and-effective-stabilizers)
+    - [Norm packets](#194-norm-packets)
+    - [Changing level](#195-changing-level)
+    - [What is and is not canonical](#196-what-is-and-is-not-canonical)
+20. [The integral--adelic dictionary](#20-the-integral--adelic-dictionary)
+    - [One table of translations](#201-one-table-of-translations)
+    - [The discriminant dictionary](#202-the-discriminant-dictionary)
+    - [The ideal dictionary](#203-the-ideal-dictionary)
+    - [The finite input for the next book](#204-the-finite-input-for-the-next-book)
+    - [Conclusion](#205-conclusion)
 
 ## 1. From a rational algebra to integral arithmetic
 
@@ -340,6 +370,8 @@ $$
 $$
 
 where $G_v$ is the trace Gram matrix of any $R_v$-basis of $\mathcal O_v$. Only finitely many exponents are nonzero, and change of local basis by $\operatorname{GL}_4(R_v)$ does not change them.
+
+This construction parallels the discriminant of a finite field extension developed in Book 3, but the two invariants must not be identified. A field discriminant uses the ordinary field trace on an integral closure and is the norm of a different. Here the ambient object is already a four-dimensional central simple algebra, the pairing uses reduced trace, and the variable integral object is the order inside that fixed algebra. The common square-index behavior comes from change of lattice; it does not assert the existence of a commutative different for an arbitrary quaternion order.
 
 For a quaternion order every local exponent $v(\operatorname{disc}(\mathcal O))$ is even. This can be checked without assuming that $2$ is a unit. Choose a presentation $B=(a,b)_F$ and use the $F$-basis $1,i,j,ij$. Its trace Gram matrix is diagonal with entries
 
@@ -1721,9 +1753,278 @@ $$
 
 One should not assert such literal inclusions for arbitrarily chosen globally conjugate models; only after compatible choices do the local matrix conditions nest.
 
-## 15. Explicit arithmetic over $\mathbf Q$
+## 15. Unit groups and integral norm maps
 
-### 15.1 The maximal matrix order has one class
+### 15.1 Why the units deserve separate study
+
+An order is additive enough to carry discriminants and multiplicative enough to carry ideals. Its unit group is the part visible to finite-adelic quotients. Passing from an order to its units therefore loses information, but it retains exactly the invertible integral changes of coordinates. To use those changes safely, one must know how units reduce, how they are filtered near the identity, and which central units occur as reduced norms.
+
+Let $K$ be a nonarchimedean local field with valuation ring $A$, maximal ideal $\mathfrak p$, and finite residue field $k$. Let $C/K$ be a quaternion algebra and $\Lambda\subset C$ an $A$-order. An element $x\in\Lambda$ is a unit of $\Lambda$ if and only if
+
+$$
+\operatorname{Nrd}(x)\in A^\times.
+$$
+
+Indeed, a unit has unit reduced norm by multiplicativity. Conversely, every order is stable under canonical conjugation, so if the reduced norm is a unit then
+
+$$
+x^{-1}=\frac{\bar x}{\operatorname{Nrd}(x)}\in\Lambda.
+$$
+
+This criterion is stronger than invertibility in $C$. A matrix in $M_2(A)$ with determinant $\pi$ is invertible over $K$ but not in $M_2(A)$. The order remembers whether the inverse is integral.
+
+Globally the same argument gives
+
+$$
+\mathcal O^\times
+=\{x\in\mathcal O:\operatorname{Nrd}(x)\in R^\times\}.
+$$
+
+Thus the reduced norm maps local units to $A^\times$ and global units to $R^\times$. Surjectivity is a further assertion, not part of the criterion.
+
+### 15.2 The radical filtration of a local order
+
+Reduction of a maximal matrix order gives a full matrix algebra, while reduction of a positive-level Eichler order gives an upper triangular algebra and reduction of a division order gives a quadratic field. The Jacobson radical provides one language covering all three cases.
+
+Let $J=\operatorname{rad}(\Lambda)$. Since $\Lambda$ is finite over the complete local ring $A$, it is semilocal and complete for the $J$-adic topology. Reduction gives an exact sequence
+
+$$
+1\longrightarrow 1+J
+\longrightarrow\Lambda^\times
+\longrightarrow(\Lambda/J)^\times
+\longrightarrow1.
+$$
+
+The only point needing proof is surjectivity. If the class of $x\in\Lambda$ is invertible modulo $J$, choose $y$ whose class is its inverse. Then both $1-xy$ and $1-yx$ lie in $J$. By the defining property of the Jacobson radical, $xy$ and $yx$ are units. It follows that $x$ has both a left and a right inverse, which agree; hence $x\in\Lambda^\times$.
+
+The congruence subgroups
+
+$$
+U_\Lambda^m=1+J^m\qquad(m\ge1)
+$$
+
+measure successively finer motion near the identity. Multiplication linearizes on each layer:
+
+$$
+(1+x)(1+y)\equiv1+x+y\pmod{J^{m+1}}
+$$
+
+for $x,y\in J^m$, because $J^{2m}\subset J^{m+1}$. Therefore
+
+$$
+U_\Lambda^m/U_\Lambda^{m+1}
+\cong (J^m/J^{m+1},+).
+$$
+
+This is an isomorphism of groups, not usually of rings. It shows that every sufficiently small multiplicative question begins as a finite additive question. The layers need not all have the same dimension over $k$; the shape of the order controls them.
+
+### 15.3 Split maximal and Eichler units
+
+For the maximal split order $\Lambda=M_2(A)$,
+
+$$
+J=\pi M_2(A),
+\qquad
+\Lambda/J\cong M_2(k),
+$$
+
+and the reduction sequence becomes
+
+$$
+1\longrightarrow1+\pi M_2(A)
+\longrightarrow\operatorname{GL}_2(A)
+\longrightarrow\operatorname{GL}_2(k)
+\longrightarrow1.
+$$
+
+Surjectivity can also be seen by lifting the four entries of an invertible residue matrix: its determinant lifts to a unit.
+
+Now take the positive-level Eichler order
+
+$$
+\mathcal E_n=
+\begin{pmatrix}
+A&A\\
+\pi^nA&A
+\end{pmatrix},
+\qquad n\ge1.
+$$
+
+Its radical is
+
+$$
+J_n=
+\begin{pmatrix}
+\pi A&A\\
+\pi^nA&\pi A
+\end{pmatrix},
+$$
+
+and diagonal reduction identifies
+
+$$
+\mathcal E_n/J_n\cong k\times k.
+$$
+
+Consequently a matrix in $\mathcal E_n$ is a unit precisely when both diagonal entries are nonzero modulo $\pi$. Equivalently,
+
+$$
+\mathcal E_n^\times
+=\left\{
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\in\operatorname{GL}_2(A):c\in\pi^nA
+\right\}.
+$$
+
+The two residue characters $a\bmod\pi$ and $d\bmod\pi$ remember the two endpoints of the stabilized segment. For $n=1$ the entire order is hereditary, but this radical calculation alone does not extend heredity to $n>1$. It only describes units and their first congruence layer.
+
+The determinant supplies the reduced norm in both split models. It is surjective on units, because
+
+$$
+u\longmapsto
+\begin{pmatrix}u&0\\0&1\end{pmatrix}
+$$
+
+embeds $A^\times$ in $\mathcal E_n^\times$ for every $n\ge0$. This elementary diagonal lift is one reason Eichler level imposes no local obstruction on the norm of a unit.
+
+### 15.4 Units in the division order
+
+Let $D/K$ be the quaternion division algebra, with maximal order $\mathcal O_D$, radical $\mathfrak P_D=\Pi\mathcal O_D$, and unramified quadratic residue field $k_2$. Chapter 6 gives
+
+$$
+\mathcal O_D/\mathfrak P_D\cong k_2.
+$$
+
+The unit sequence is therefore
+
+$$
+1\longrightarrow1+\mathfrak P_D
+\longrightarrow\mathcal O_D^\times
+\longrightarrow k_2^\times
+\longrightarrow1.
+$$
+
+In cyclic coordinates $D=L\oplus L\Pi$, the image of $a+b\Pi$ modulo $\mathfrak P_D$ is the residue of $a$. The reduced norm has residue shadow
+
+$$
+\overline{\operatorname{Nrd}(a+b\Pi)}
+=N_{k_2/k}(\bar a).
+$$
+
+Since finite-field norm is surjective, every residue unit of $A$ is already the residue of a reduced norm. Deeper principal units also occur as norms, but their surjectivity is most cleanly deduced from the norm theorem for the whole division algebra in the next section.
+
+The valuation exact sequence reads
+
+$$
+1\longrightarrow\mathcal O_D^\times
+\longrightarrow D^\times
+\xrightarrow{\,2w_D\,}\mathbf Z
+\longrightarrow0,
+$$
+
+where $2w_D(\Pi)=1$. Thus $D^\times$ consists of radical powers multiplied by integral units. This is the division analogue of
+
+$$
+\operatorname{GL}_2(K)=
+\bigcup_{r\in\mathbf Z}
+\{g:v(\det g)=r\},
+$$
+
+but there is only one maximal order rather than a tree of them.
+
+### 15.5 Surjectivity of the local reduced norm
+
+The ambient local norm theorem from the preceding book states that for every nonarchimedean local field $K$ and every quaternion algebra $C/K$,
+
+$$
+\operatorname{Nrd}(C^\times)=K^\times.
+$$
+
+For the split algebra this is the surjectivity of determinant. For the division algebra it is a genuine theorem: norms from any one quadratic maximal subfield have index two, but allowing all elements of $D$ removes that obstruction.
+
+The integral consequence is exact.
+
+**Proposition 15.1 (local unit norms).** Let $\Lambda$ be either a maximal order or an Eichler order in a quaternion algebra over a nonarchimedean local field. Then
+
+$$
+\operatorname{Nrd}(\Lambda^\times)=A^\times.
+$$
+
+**Proof strategy.** Use an explicit diagonal matrix in the split case. In the division case, lift a prescribed unit using ambient norm surjectivity and observe that its norm valuation forces the lift to have division value zero.
+
+**Proof.** At a split place, conjugate $\Lambda$ to $\mathcal E_n$. The diagonal matrix $\operatorname{diag}(u,1)$ lies in $\mathcal E_n^\times$ and has determinant $u$.
+
+At a division place, an Eichler order is the maximal order $\mathcal O_D$. Given $u\in A^\times$, choose $x\in D^\times$ with $\operatorname{Nrd}(x)=u$. Then
+
+$$
+w_D(x)=\frac12v(u)=0,
+$$
+
+so $x\in\mathcal O_D^\times$. The reverse containment follows from the unit criterion. $\square$
+
+The Eichler hypothesis is important. An arbitrary suborder can have a smaller norm image on units. For example, extra congruence conditions on both diagonal entries of a split order can force its determinant into a proper subgroup of $A^\times$. Ambient norm surjectivity does not automatically preserve a chosen integral lattice.
+
+For a global Eichler order $\mathcal O$, Proposition 15.1 yields
+
+$$
+\operatorname{Nrd}(\widehat{\mathcal O}^{\times})
+=\widehat R^\times.
+$$
+
+This equality will simplify the norm quotient of its ideal class set. For a general compact open $K\subset\widehat B^\times$, the subgroup $\operatorname{Nrd}(K)\subset\mathbf A_{F,f}^\times$ must remain in the formulas.
+
+### 15.6 Global units, norm-one units, and positivity
+
+Define
+
+$$
+\mathcal O^1=\{u\in\mathcal O^\times:\operatorname{Nrd}(u)=1\}.
+$$
+
+The global reduced norm theorem says
+
+$$
+\operatorname{Nrd}(B^\times)=F_{B,+}^\times,
+$$
+
+where
+
+$$
+F_{B,+}^\times
+=\{a\in F^\times:a>0
+\text{ at every real place ramified in }B\}.
+$$
+
+Accordingly,
+
+$$
+\operatorname{Nrd}(\mathcal O^\times)
+\subset R^\times\cap F_{B,+}^\times.
+$$
+
+Equality need not follow from the global norm theorem: a global element of the required norm may fail to be integral in the chosen order. What is automatic is that every square of a central unit occurs, because $a\in R^\times$ lies in $\mathcal O^\times$ and has reduced norm $a^2$. Hence
+
+$$
+(R^\times)^2
+\subset\operatorname{Nrd}(\mathcal O^\times)
+\subset R^\times\cap F_{B,+}^\times.
+$$
+
+The quotient of the rightmost group by $(R^\times)^2$ is finite. Thus the possible failure of integral norm surjectivity on global units is finite.
+
+If $F$ is totally real and $B$ is totally definite, then $\mathcal O^1$ is finite. Under every real embedding the equation $\operatorname{Nrd}(u)=1$ places $u$ on a compact three-sphere, while $\mathcal O$ is a lattice in the product of the real quaternion spaces. A compact set meets that lattice in finitely many points. The same argument, combined with the finite quotient of totally positive units by squares, proves again that
+
+$$
+\mathcal O^\times/R^\times
+$$
+
+is finite.
+
+Without total definiteness, $\mathcal O^1$ can be infinite. For $M_2(\mathbf Z)$ it contains $\operatorname{SL}_2(\mathbf Z)$. This counterexample explains why later stabilizers are finite only after the archimedean anisotropy hypothesis is imposed.
+
+## 16. Explicit arithmetic over $\mathbf Q$
+
+### 16.1 The maximal matrix order has one class
 
 Let $B=M_2(\mathbf Q)$ and $\mathcal O=M_2(\mathbf Z)$. The adelic class set is
 
@@ -1749,7 +2050,7 @@ whence $b^{-1}g\in\operatorname{GL}_2(\widehat{\mathbf Z})$. Thus $g$ lies in th
 
 Under the ideal correspondence, every locally principal right $M_2(\mathbf Z)$-ideal is therefore principal up to left multiplication. This conclusion uses that every rank-two lattice over $\mathbf Z$ is free. It is not a declaration that arbitrary one-sided ideals in arbitrary matrix orders are principal.
 
-### 15.2 Matrix Eichler level $N$
+### 16.2 Matrix Eichler level $N$
 
 For
 
@@ -1789,7 +2090,7 @@ may again be interpreted through lattices equipped with the indicated cyclic loc
 
 For $N=p$, the extra datum is a line in $L/pL$. For $N=p^2$, it is a length-two cyclic filtration, not merely a line. This makes the squarefree/nonsquarefree distinction tangible.
 
-### 15.3 The Hurwitz maximal order
+### 16.3 The Hurwitz maximal order
 
 Return to
 
@@ -1822,7 +2123,7 @@ $$
 
 Every choice of signs occurs. Their norm is one. Definiteness ensures there are no further units, since an integral unit must have positive integral norm one and the unit sphere meets the Hurwitz lattice in exactly these points.
 
-### 15.4 The Hurwitz class set
+### 16.4 The Hurwitz class set
 
 The Hurwitz order has right ideal class number one:
 
@@ -1860,7 +2161,7 @@ $$
 
 has one element. The example is special. Definite quaternion orders can have class number greater than one, and maximal orders can have more than one global conjugacy type. Definiteness guarantees finiteness, not principality.
 
-### 15.5 Adding odd Eichler level to the definite algebra
+### 16.5 Adding odd Eichler level to the definite algebra
 
 Let $N$ be odd. Since $(N,\mathfrak d(B))=1$, choose an Eichler order $\mathcal H_0(N)$ whose local component is maximal at $2$, standard of level $p^{v_p(N)}$ at each $p\mid N$, and maximal elsewhere. Then
 
@@ -1883,9 +2184,655 @@ There is no Eichler level factor at $2$ because the algebra is division there. A
 
 The resulting double-coset set is finite. It need not remain a singleton as $N$ grows. Its elements are locally principal right ideal classes, and their left orders supply the stabilizers that appear in the finite model of the next book.
 
-## 16. The integral--adelic dictionary
+## 17. Quadratic orders and optimal embeddings
 
-### 16.1 One table of translations
+### 17.1 From field embeddings to integral embeddings
+
+A quadratic field inside $B$ supplies a commutative direction in a noncommutative algebra. The preceding book answered the rational existence question: a quadratic field $L/F$ embeds in $B$ exactly when no place ramified in $B$ splits in $L$. Integral arithmetic asks a finer question. Given an order $S\subset L$ and an order $\mathcal O\subset B$, can the rational embedding be chosen so that $S$ is exactly the part of $L$ visible inside $\mathcal O$?
+
+Merely requiring $S$ to map into $\mathcal O$ is too weak. If a larger quadratic order $S'\supsetneq S$ also maps into $\mathcal O$, then the embedding has silently forgotten the conductor of $S$. This matters whenever quadratic orders label special points, torus orbits, or arithmetic cycles: the conductor is part of the datum, not decoration.
+
+Throughout this chapter, $L$ is a quadratic étale $F$-algebra. Thus $L$ is either a quadratic field or $F\times F$. Write $\mathcal O_L$ for the integral closure of $R$ in $L$; in the split case this is $R\times R$. An $R$-order $S\subset L$ is a full unital $R$-subring. We consider only $F$-algebra embeddings
+
+$$
+\iota:L\hookrightarrow B.
+$$
+
+When $B$ is division, $L$ must be a field. When $B$ is split, both possibilities occur.
+
+### 17.2 Quadratic orders and conductors
+
+The conductor records how far a quadratic order lies below the maximal one. Define
+
+$$
+\mathfrak f(S)
+=\{a\in R:a\mathcal O_L\subset S\}.
+$$
+
+It is an integral ideal of $R$. Locally, if $A=R_v$ and
+
+$$
+\mathfrak f(S)A=(\pi^c),
+$$
+
+then every quadratic $A$-order has the form
+
+$$
+S_c=A+\pi^c\mathcal O_{L_v}.
+$$
+
+In the split case this means
+
+$$
+S_c
+=\{(x,y)\in A\times A:x\equiv y\pmod{\pi^c}\}.
+$$
+
+The exponent $c=0$ gives the maximal order. Increasing $c$ makes the order smaller. This direction is opposite to inclusion of conductor ideals as sets: a larger exponent gives a smaller ideal and a smaller order.
+
+The local normal form follows from the fact that $\mathcal O_{L_v}/A$ is cyclic as an $A$-module. Any intermediate full ring contains $A$ and corresponds to an $A$-submodule of this rank-one torsion-free quotient; over a DVR that submodule is generated by one power of $\pi$. Multiplication imposes no further restriction because
+
+$$
+(A+\pi^c\mathcal O_{L_v})^2
+\subset A+\pi^c\mathcal O_{L_v}.
+$$
+
+Globally the local exponents assemble into the conductor ideal, and
+
+$$
+S=\{x\in L:x\in S_v\text{ for every finite }v\}.
+$$
+
+Two quadratic orders can have the same fraction algebra but different conductors. Rational conjugacy of embeddings cannot distinguish them; optimality will.
+
+### 17.3 Optimality as an intersection condition
+
+An embedding $\iota:L\hookrightarrow B$ is an **optimal embedding of $S$ into $\mathcal O$** if
+
+$$
+\boxed{\iota(L)\cap\mathcal O=\iota(S).}
+$$
+
+The intersection is taken inside $B$. This single equation includes containment $\iota(S)\subset\mathcal O$ and asserts that no element of $L\setminus S$ becomes integral in $\mathcal O$.
+
+Optimality is local.
+
+**Proposition 17.1 (local detection of optimality).** Suppose $\iota(S)\subset\mathcal O$. Then $\iota$ is optimal if and only if
+
+$$
+\iota(L_v)\cap\mathcal O_v=\iota(S_v)
+$$
+
+for every finite place $v$.
+
+**Proof strategy.** Both sides are lattices in the same quadratic $F$-subspace. Equality of global lattices is equivalent to equality at every completion.
+
+**Proof.** Put $T=\iota(L)\cap\mathcal O$. It is an order in $\iota(L)$ containing $\iota(S)$. Intersection commutes with localization for lattices in finite-dimensional vector spaces, so
+
+$$
+T_v=\iota(L_v)\cap\mathcal O_v.
+$$
+
+Thus $T=\iota(S)$ if and only if $T_v=\iota(S_v)$ for every $v$, by the local--global lattice criterion. $\square$
+
+The containment hypothesis cannot be omitted from the phrasing, although it follows from the displayed local equalities. It makes clear that an optimal embedding is first an integral embedding and then a maximality statement within its quadratic fraction algebra.
+
+### 17.4 The split local lattice-pair normal form
+
+Let $K$ be nonarchimedean, $A$ its valuation ring, $C=M_2(K)=\operatorname{End}_K(V)$, and $L$ a quadratic étale $K$-algebra embedded in $C$. For an $A$-lattice $M\subset V$, define its multiplier order in $L$ by
+
+$$
+S(M)=\{x\in L:xM\subset M\}.
+$$
+
+Since $1\in M$ is not meaningful for a general lattice in $V$, one should not identify $M$ with an order. Nevertheless $S(M)$ is an $A$-order in $L$, and
+
+$$
+L\cap\operatorname{End}_A(M)=S(M).
+$$
+
+If $M_0$ and $M_n$ represent vertices at distance $n$, their endomorphism rings intersect in an Eichler order $\mathcal E$ of exponent $n$. The intersection with $L$ is then
+
+$$
+L\cap\mathcal E
+=S(M_0)\cap S(M_n).
+$$
+
+This yields a complete local criterion with no hidden parity or residue-characteristic assumption.
+
+**Theorem 17.2 (lattice-pair criterion).** An embedding of a quadratic $A$-order $S\subset L$ into a split Eichler order of exponent $n$ is optimal if and only if there are two $A$-lattices $M_0,M_n\subset V$, whose homothety classes have distance $n$, such that
+
+$$
+S(M_0)\cap S(M_n)=S.
+$$
+
+**Proof.** Conjugate the Eichler order into the form
+
+$$
+\operatorname{End}_A(M_0)\cap\operatorname{End}_A(M_n).
+$$
+
+Intersecting with the embedded copy of $L$ gives the displayed multiplier-order intersection. This equals $S$ exactly when the embedding is optimal. Conversely, a lattice pair satisfying the equation defines an Eichler order of exponent $n$ into which $S$ embeds optimally. $\square$
+
+The theorem is often visualized through the **branch** of $S$: the subtree consisting of vertices $[M]$ for which $S\subset S(M)$, equivalently maximal orders containing $S$. An optimal embedding into an Eichler order corresponds not merely to a length-$n$ segment in this branch, but to one whose two endpoint multiplier orders intersect in exactly $S$.
+
+Several clean cases build intuition.
+
+- If $L=K\times K$ and $S=A\times A$, the branch is an entire apartment. It contains segments of every length, so the maximal split quadratic order embeds optimally into $\mathcal E_n$ for every $n$.
+
+- If $L/K$ is unramified quadratic and $S=\mathcal O_L$, the branch has one vertex. Indeed, every $\mathcal O_L$-stable lattice is a fractional $\mathcal O_L$-ideal, hence principal, and an unramified uniformizer is central up to a unit. Thus $\mathcal O_L$ embeds optimally into a maximal order but not into a positive-level Eichler order.
+
+- If $L/K$ is ramified quadratic and $S=\mathcal O_L$, the branch consists of two adjacent vertices. Fractional $\mathcal O_L$-ideals have two homothety classes because a base uniformizer has even $L$-valuation. Hence an optimal embedding is possible at exponents $0$ and $1$, but not along a longer segment.
+
+For a nonmaximal order $S_c$, the branch thickens around the branch of $\mathcal O_L$. The precise endpoint count at dyadic places depends on the integral quadratic extension, so a slogan involving only $c$ and $n$ should not be used there without proof. The lattice-pair criterion remains exact in every residue characteristic and is the safe local normal form.
+
+There is one useful maximal-order construction valid for every $S$. Let $V=L$ and let $S$ act by left multiplication on the $A$-lattice $S\subset L$. Then
+
+$$
+S(S)=\{x\in L:xS\subset S\}=S,
+$$
+
+because $xS\subset S$ implies $x=x\cdot1\in S$. Therefore every quadratic local order embeds optimally into some split maximal order, namely $\operatorname{End}_A(S)$.
+
+### 17.5 The division-place criterion
+
+Let $D/K$ be the quaternion division algebra. A quadratic étale algebra embeds in $D$ only if it is a field. If $L/K$ is quadratic and $\iota:L\hookrightarrow D$, then
+
+$$
+\iota(L)\cap\mathcal O_D=\iota(\mathcal O_L).
+$$
+
+To see this, restrict the division valuation $w_D$ to $L$. For an unramified quadratic extension,
+
+$$
+w_D(x)=v_L(x),
+$$
+
+while for a ramified quadratic extension,
+
+$$
+w_D(x)=\frac12v_L(x).
+$$
+
+In either case $w_D(x)\ge0$ exactly when $v_L(x)\ge0$. Since $\mathcal O_D$ is the nonnegative-value ring, its intersection with $L$ is $\mathcal O_L$.
+
+We obtain a sharp conclusion.
+
+**Proposition 17.3 (optimality at a division place).** Let $S\subset L$ be a quadratic $A$-order and let $D/K$ be the quaternion division algebra. An optimal embedding $S\hookrightarrow\mathcal O_D$ exists if and only if $S=\mathcal O_L$. In that case every field embedding $L\hookrightarrow D$ is optimal.
+
+The field hypothesis and maximality of $S$ are independent. A split quadratic algebra fails to embed rationally. A nonmaximal order in a quadratic field embeds as a subring of $\mathcal O_D$, but never optimally, because the intersection automatically enlarges it to $\mathcal O_L$.
+
+For a global Eichler order, every finite ramified place of $B$ is a division place at which the order is maximal. Therefore a necessary condition for an optimal embedding of $S$ is
+
+$$
+v(\mathfrak f(S))=0
+\qquad(v\mid\mathfrak d(B)).
+$$
+
+This integral condition supplements the rational condition that $L_v$ be a field at those places.
+
+### 17.6 Local--global optimality and selectivity
+
+Suppose first that one global embedding $\iota:L\hookrightarrow B$ has been fixed. Proposition 17.1 says that its optimality in a fixed order is completely local. Existence is subtler because the local conjugating elements may not come from one element of $B^\times$.
+
+There are three distinct assertions:
+
+1. $L$ embeds in $B$ as an $F$-algebra;
+2. $S_v$ embeds optimally in $\mathcal O_v$ for every finite $v$;
+3. $S$ embeds optimally in this particular global order $\mathcal O$.
+
+The first is equivalent to nonsplitting of every ramified place of $B$ in $L$. The second adds the local conductor and level conditions of Sections 17.4 and 17.5. The third can still fail even when the first two hold. This remaining global phenomenon is called **selectivity**: a quadratic order may embed optimally into some, but not all, global conjugacy classes in one genus of quaternion orders.
+
+Local data do guarantee an order somewhere in the genus. Fix a rational embedding $\iota:L\hookrightarrow B$. Suppose that for every finite $v$ there is $g_v\in B_v^\times$ such that
+
+$$
+\iota(L_v)\cap g_v\mathcal O_vg_v^{-1}=\iota(S_v),
+$$
+
+with $g_v\in\mathcal O_v^\times$ almost everywhere. Put $g=(g_v)$ and reconstruct
+
+$$
+\mathcal O'=B\cap g\widehat{\mathcal O}g^{-1}.
+$$
+
+Then $\mathcal O'$ lies in the genus of $\mathcal O$, and localization shows
+
+$$
+\iota(L)\cap\mathcal O'=\iota(S).
+$$
+
+Thus $S$ embeds optimally into some order of that genus. Selectivity asks whether $\mathcal O'$ can be brought to the originally chosen $\mathcal O$ by rational conjugation. The answer is governed by a global conjugacy class, not by another local conductor inequality.
+
+### 17.7 Embedding classes as double quotients
+
+The exact quotient makes the rational-versus-local obstruction visible. Fix $\iota:L\hookrightarrow B$ and define
+
+$$
+Y(S,\mathcal O)
+=\{g\in B^\times:
+\iota(L)\cap g\mathcal Og^{-1}=\iota(S)\}.
+$$
+
+For $g\in Y(S,\mathcal O)$, the map
+
+$$
+x\longmapsto g^{-1}\iota(x)g
+$$
+
+is an optimal embedding of $S$ into $\mathcal O$. Left multiplication of $g$ by $\iota(L)^\times$ does not change this embedding, because $L$ centralizes itself. Right multiplication by $\mathcal O^\times$ conjugates the embedding by a unit of the target order. Consequently the set of optimal embeddings modulo $\mathcal O^\times$-conjugacy is
+
+$$
+\boxed{
+\iota(L)^\times\backslash
+Y(S,\mathcal O)/\mathcal O^\times.}
+$$
+
+The adelic analogue is obtained by replacing every object by its finite completion and imposing the intersection condition at every finite place. It packages all local optimal embeddings. The diagonal rational quotient maps into that adelic set. Failure to hit an adelic class is precisely a global selectivity obstruction.
+
+The centralizer in the left quotient must be $L^\times$, not $F^\times$. Two conjugating elements differing by a noncentral element of $L^\times$ still define the same embedding. On the right, using all of $B^\times$ would erase the chosen target order; the correct equivalence is conjugacy by $\mathcal O^\times$.
+
+### 17.8 Examples and counterexamples
+
+The regular representation gives the universal split example. Let $S$ be any quadratic $A$-order and act on the rank-two lattice $S$ by left multiplication. Then
+
+$$
+S\hookrightarrow\operatorname{End}_A(S)\cong M_2(A)
+$$
+
+is optimal. The same rational quadratic algebra may therefore have optimal embeddings of every conductor, but generally into different conjugates of the maximal matrix order.
+
+In Hamilton's rational algebra, the inclusion
+
+$$
+\mathbf Q(i)\hookrightarrow B
+$$
+
+meets the Hurwitz order in $\mathbf Z[i]$. Hence $\mathbf Z[i]\hookrightarrow\mathcal H$ is optimal. The smaller order $\mathbf Z[2i]$ is contained in $\mathcal H$, but that inclusion is not optimal:
+
+$$
+\mathbf Q(i)\cap\mathcal H=\mathbf Z[i]
+\supsetneq\mathbf Z[2i].
+$$
+
+This is the simplest counterexample to “contained” implying “optimal.”
+
+At the prime $2$, the algebra is division and the Hurwitz order is maximal. Proposition 17.3 explains the same example locally: only the maximal quadratic order in $\mathbf Q_2(i)$ can occur optimally. At a split prime dividing an Eichler level, the lattice-pair criterion replaces this rigid conclusion by a segment problem.
+
+Finally, rational embeddability does not imply integral embeddability at a chosen level. A quadratic field may be nonsplit at every ramified place of $B$ and therefore embed in $B$, while its maximal local order at an unramified quadratic place cannot embed into an Eichler order of positive exponent there. Rational ramification conditions and integral level conditions solve different problems and must both be checked.
+
+## 18. Reduced-norm fibers and strong approximation
+
+### 18.1 The norm quotient attached to a level
+
+Reduced norm sends quaternionic finite ideles to ordinary finite ideles. To understand what it remembers after taking double cosets, let $K\subset\widehat B^\times$ be a compact open subgroup and put
+
+$$
+H_K=\operatorname{Nrd}(K)\subset\mathbf A_{F,f}^\times.
+$$
+
+This is an open compact subgroup. Compactness follows from compactness of $K$; openness follows locally from the openness of reduced norm on the unit group and then from the restricted-product topology. Define
+
+$$
+F_{B,+}^\times
+=\{a\in F^\times:a>0
+\text{ at every real place ramified in }B\}
+$$
+
+and the finite norm-class quotient
+
+$$
+C_K
+=F_{B,+}^\times\backslash
+\mathbf A_{F,f}^\times/H_K.
+$$
+
+Its finiteness is a ray-class argument. The open subgroup $H_K$ contains a product of sufficiently deep principal-unit groups at finitely many places and all local units outside them. Modding out by $H_K$ therefore leaves a quotient of a ray class group, while the positivity condition accounts for the ramified real places.
+
+If $K=\widehat{\mathcal O}^\times$ for an Eichler order, Proposition 15.1 gives
+
+$$
+H_K=\widehat R^\times.
+$$
+
+When $B$ is totally definite over a totally real field, $F_{B,+}^\times=F_+^\times$, the totally positive elements, and hence
+
+$$
+C_K\cong\operatorname{Cl}^+(F),
+$$
+
+the narrow ideal class group. For a general quaternion algebra, positivity is imposed only at the ramified real places, so the quotient lies between the ordinary and narrow class quotients.
+
+### 18.2 The norm map on an ideal class set
+
+Reduced norm descends to double cosets:
+
+$$
+\nu_K:
+B^\times\backslash\widehat B^\times/K
+\longrightarrow C_K,
+\qquad
+[g]\longmapsto[\operatorname{Nrd}(g)].
+$$
+
+It is well defined because
+
+$$
+\operatorname{Nrd}(b g k)
+=\operatorname{Nrd}(b)\operatorname{Nrd}(g)\operatorname{Nrd}(k),
+$$
+
+with $\operatorname{Nrd}(b)\in F_{B,+}^\times$ by the global reduced norm theorem and $\operatorname{Nrd}(k)\in H_K$ by definition.
+
+**Proposition 18.1.** The map $\nu_K$ is surjective.
+
+**Proof strategy.** Lift a finite idele component by component using local reduced-norm surjectivity, choosing integral unit lifts almost everywhere.
+
+**Proof.** Let $a=(a_v)\in\mathbf A_{F,f}^\times$. For every finite $v$, choose $g_v\in B_v^\times$ with $\operatorname{Nrd}(g_v)=a_v$. At almost every place $a_v\in R_v^\times$ and $B_v$ is unramified with a fixed maximal integral model. Proposition 15.1 then permits $g_v$ to be chosen in the corresponding unit group. Thus $g=(g_v)$ belongs to $\widehat B^\times$ and $\operatorname{Nrd}(g)=a$. Its double coset maps to the class of $a$. $\square$
+
+For $K=\widehat{\mathcal O}^\times$, this is the norm-ideal map on locally principal right ideal classes. It sends $[I(g)]$ to the class of $\operatorname{nrd}(I(g))$, with principal generators restricted by positivity at ramified real places. The ordinary ideal-class invariant from Chapter 9 is its coarser shadow when signs are forgotten.
+
+Surjectivity does not imply injectivity. Two quaternionic ideals may have norm ideals in the same narrow class and still be inequivalent. The fibers are controlled by the norm-one group.
+
+### 18.3 Strong approximation for the norm-one group
+
+For every $F$-algebra $E$, let
+
+$$
+B^1(E)=\ker\bigl(\operatorname{Nrd}:
+(B\otimes_FE)^\times\to E^\times\bigr).
+$$
+
+Thus $B^1(F)$ is the group of rational norm-one quaternions and $B^1(F_v)=B_v^1$ is its local group. When $B_v$ is split this is $\operatorname{SL}_2(F_v)$; at a Hamiltonian real place it is the compact three-sphere. As an algebraic group, $B^1$ is connected, simply connected, and absolutely almost simple. These hypotheses are exactly those for which strong approximation has its cleanest form.
+
+**Theorem 18.2 (strong approximation).** Let $S$ be a finite nonempty set of places of $F$ containing all archimedean places. Suppose that $B$ splits at at least one place $v_0\in S$. Then the diagonal subgroup $B^1(F)$ is dense in the restricted product
+
+$$
+B^1(\mathbf A_F^S)=\prod_{v\notin S}'B_v^1.
+$$
+
+Equivalently, for every open compact $U^S\subset B^1(\mathbf A_F^S)$,
+
+$$
+B^1(\mathbf A_F^S)=B^1(F)U^S.
+$$
+
+The splitting hypothesis is a noncompactness hypothesis: $B_{v_0}^1\cong\operatorname{SL}_2(F_{v_0})$ is noncompact. If every factor in $S$ is compact, the conclusion can fail.
+
+**Proof architecture.** This is the strong-approximation input for the present theory. Its proof has two structural steps. First, simply connectedness removes the central obstruction that appears for the projective group. Second, isotropy at the split place supplies a noncompact local factor in which opposite unipotent groups move denominators.
+
+Over the split field $F_{v_0}$, the elementary subgroups
+
+$$
+u_+(t)=\begin{pmatrix}1&t\\0&1\end{pmatrix},
+\qquad
+u_-(t)=\begin{pmatrix}1&0\\t&1\end{pmatrix}.
+$$
+
+Their conjugates generate $B_{v_0}^1$. The denominator-moving lemma for simply connected groups uses this unconstrained $v_0$-coordinate to clear the finitely many bad denominators of a rational approximation while preserving prescribed neighborhoods away from $S$. Applied to a basic open set $W\subset B^1(\mathbf A_F^S)$, it produces an element of $B^1(F)\cap W$. Hence the diagonal image is dense. The lemma is the decisive strengthening of weak approximation: weak approximation alone controls finitely many places but does not guarantee integrality at every omitted place. No global rational unipotent subgroup is being asserted when $B$ is a division algebra over $F$.
+
+The simply connected covering is already $B^1$, so the denominator-moving argument leaves no spinor-norm or central-isogeny quotient. For the projective group that last sentence would be false; its covering obstruction is exactly why the theorem is stated for $B^1$.
+
+One should not replace $B^1$ by $B^\times$ in the theorem. The reduced norm of $B^\times$ has an idele-class quotient, and that abelian quotient is precisely what strong approximation cannot remove.
+
+### 18.4 The indefinite fiber theorem
+
+Assume that $B$ splits at some archimedean place. Taking $S$ to be all archimedean places in Theorem 18.2 gives
+
+$$
+B^1(F)\text{ dense in }\widehat B^1.
+$$
+
+This density collapses every norm fiber.
+
+**Theorem 18.3 (norm classification in the indefinite case).** If $B$ splits at an archimedean place, then for every compact open $K\subset\widehat B^\times$, reduced norm induces a bijection
+
+$$
+\boxed{
+B^\times\backslash\widehat B^\times/K
+\xrightarrow{\sim}
+F_{B,+}^\times\backslash
+\mathbf A_{F,f}^\times/\operatorname{Nrd}(K).}
+$$
+
+**Proof strategy.** Surjectivity is Proposition 18.1. For injectivity, adjust two representatives with equal norm class until their quotient has norm one, then use density of $B^1(F)$ modulo a suitable conjugate of $K\cap\widehat B^1$.
+
+**Proof.** Suppose $g_1$ and $g_2$ have the same norm class. There are $b\in B^\times$ and $k\in K$ such that
+
+$$
+\operatorname{Nrd}(g_2)
+=\operatorname{Nrd}(b)\operatorname{Nrd}(g_1)
+\operatorname{Nrd}(k).
+$$
+
+Set
+
+$$
+d=b^{-1}g_2k^{-1}g_1^{-1}\in\widehat B^1.
+$$
+
+The subgroup
+
+$$
+U=g_1(K\cap\widehat B^1)g_1^{-1}
+$$
+
+is open in $\widehat B^1$. Strong approximation gives $d=\gamma u$ with $\gamma\in B^1(F)$ and $u\in U$. Write $u=g_1k_1g_1^{-1}$ with $k_1\in K\cap\widehat B^1$. Then
+
+$$
+g_2=b\gamma g_1k_1k,
+$$
+
+so $g_1$ and $g_2$ define the same double coset. $\square$
+
+For $B=M_2(F)$ and $K=\operatorname{GL}_2(\widehat R)$, this recovers the determinant classification of rank-two lattices by their Steinitz class. Over $\mathbf Q$ the ideal class group is trivial, giving the one-class calculation of Section 16.1.
+
+### 18.5 Approximation away from one split finite place
+
+Total definiteness prevents us from taking only the archimedean places in Theorem 18.2. Nevertheless a totally definite quaternion algebra splits at all but finitely many finite places. Choose one split finite place $w$ and put
+
+$$
+S=\{v:v\mid\infty\}\cup\{w\}.
+$$
+
+Then
+
+$$
+B^1(F)\text{ is dense in }
+\prod_{v\ne w,\,v<\infty}'B_v^1.
+$$
+
+This is the strong-approximation interface used when one place is allowed to vary. Away from $w$, norm again classifies double cosets by the proof of Theorem 18.3. At $w$, the omitted split factor
+
+$$
+B_w^1\cong\operatorname{SL}_2(F_w)
+$$
+
+retains its lattice tree. Restoring a compact subgroup at $w$ turns that free local motion into vertices, edges, or finite segments according to the chosen level.
+
+The role of $w$ is therefore twofold. It supplies the noncompact factor needed for approximation, and it is the place where local combinatorics remain visible. Changing $w$ changes the presentation of the argument, not the global algebra.
+
+This theorem does not say that one rational element can satisfy arbitrary conditions at every place including $w$. The $w$-coordinate is deliberately left uncontrolled. Forgetting that omission leads to the false claim that strong approximation makes the definite class set a single norm class.
+
+### 18.6 Why total definiteness changes the answer
+
+If $F$ is totally real and $B$ is totally definite, every archimedean group $B_v^1$ is compact. There is no archimedean split place with which to prove density in all finite norm-one adeles. The norm map
+
+$$
+\nu_K:X_K\to C_K
+$$
+
+remains surjective, but its fibers can have more than one element.
+
+Those fibers are not a defect in the norm theorem. Reduced norm is abelian data; distinct ideal classes, left-order types, and lattice configurations can share it. Strong approximation away from a split finite place can compare them through local moves, but once a compact condition is restored at that place, a finite residual set remains.
+
+The Hurwitz order happens to have one ideal class, so its sole norm packet is a singleton. That example is exceptional, not evidence for a general norm classification. Definite maximal and Eichler orders of larger discriminant or level commonly have several ideal classes even over $\mathbf Q$, where the narrow class group itself is trivial. Thus every class then lies in the same norm packet, and the entire class number measures information invisible to reduced norm.
+
+## 19. Finite double-coset sets for definite quaternionic forms
+
+### 19.1 The finite arithmetic skeleton
+
+Let $F$ be totally real, let $B/F$ be totally definite, and let $K\subset\widehat B^\times$ be compact open. The fundamental finite set is
+
+$$
+X_K=B^\times\backslash\widehat B^\times/K.
+$$
+
+Chapter 13 proved finiteness. Total definiteness is not needed for the bare finiteness of an order class set, but it gives this quotient its later force: after the compact archimedean factor is suppressed, no continuous symmetric-space coordinate remains. The finite set $X_K$ is the arithmetic skeleton on which definite quaternionic forms are built.
+
+When $K=\widehat{\mathcal O}^\times$, the elements of $X_K$ are locally principal proper right $\mathcal O$-ideal classes. When $K$ is merely a compact open, the double quotient still makes sense, but there need not be one additive order whose unit group is exactly $K$. Order level is the principal arithmetic case, not the definition of the quotient.
+
+### 19.2 Representatives, ideals, and stabilizers
+
+Choose representatives
+
+$$
+\widehat B^\times
+=\bigsqcup_{i=1}^h B^\times g_iK.
+$$
+
+For order level, put
+
+$$
+I_i=B\cap g_i\widehat{\mathcal O}.
+$$
+
+Then $I_i$ is a locally principal right $\mathcal O$-ideal, and every class occurs exactly once. Its left order satisfies
+
+$$
+\widehat{\mathcal O_L(I_i)}
+=g_i\widehat{\mathcal O}g_i^{-1}.
+$$
+
+The arithmetic stabilizer of the representative is
+
+$$
+\Gamma_i
+=B^\times\cap g_iKg_i^{-1}.
+$$
+
+If $K=\widehat{\mathcal O}^\times$, this becomes
+
+$$
+\Gamma_i=\mathcal O_L(I_i)^\times.
+$$
+
+The formula explains why left orders vary while the right order stays fixed. Replacing $g_i$ by $b g_i k$ conjugates $\Gamma_i$ by $b$, replaces $I_i$ by the equivalent ideal $bI_i$, and leaves the point of $X_K$ unchanged. Thus no individual subgroup is canonical as a subset of $B^\times$, but its conjugacy class is attached to the double-coset point.
+
+### 19.3 Central quotients and effective stabilizers
+
+The stabilizer $\Gamma_i$ may be infinite because it contains central units. Define
+
+$$
+Z_K=F^\times\cap K.
+$$
+
+Since central elements commute with every $g_i$, this group is the same central stabilizer at every point. For order level,
+
+$$
+Z_K=R^\times.
+$$
+
+The **effective stabilizer** is
+
+$$
+\overline\Gamma_i=\Gamma_i/Z_K.
+$$
+
+It is finite. Indeed, finite components of $\Gamma_i$ lie in the compact set $g_iKg_i^{-1}$, while total definiteness makes the archimedean image compact modulo the center. After quotienting by $Z_K$, the diagonal arithmetic subgroup is discrete in a compact set and therefore finite.
+
+Over $\mathbf Q$, $R^\times=\{\pm1\}$ and even the full unit group of a definite order is finite. Over a larger totally real field, the distinction is essential: Dirichlet units make $R^\times$ infinite, although the effective stabilizer remains finite.
+
+These stabilizers are not incidental bookkeeping. Whenever one assigns data to the points of $X_K$, the datum at $[g_i]$ must be invariant under $\Gamma_i$ or under its effective action after a central character has been fixed. Different ideal classes can have stabilizers of different orders.
+
+### 19.4 Norm packets
+
+The surjective map
+
+$$
+\nu_K:X_K\twoheadrightarrow C_K
+$$
+
+partitions the finite class set into **norm packets**. For Eichler order level in the totally definite case,
+
+$$
+C_K\cong\operatorname{Cl}^+(F).
+$$
+
+Thus every ideal class has a narrow norm class, and every narrow class occurs. Inside one packet, reduced norm supplies no further distinction.
+
+This partition is useful but must not be mistaken for a classification. If $F=\mathbf Q$, then $\operatorname{Cl}^+(\mathbf Q)$ is trivial, so all points of every definite class set lie in one norm packet. Class numbers greater than one are therefore direct counterexamples to injectivity of $\nu_K$.
+
+At an archimedean-split algebra, Theorem 18.3 says every packet has one point. Total definiteness is exactly the setting in which nontrivial packet fibers survive. The contrast isolates the contribution of the norm-one group from the abelian ideal-class contribution.
+
+### 19.5 Changing level
+
+Suppose $K'\subset K$ are compact open subgroups. Forgetting part of the level gives a surjection
+
+$$
+p:X_{K'}\longrightarrow X_K,
+\qquad
+[g]_{K'}\longmapsto[g]_K.
+$$
+
+The fiber over the class of $g_i$ is not generally a set of cardinality $[K:K']$. Put
+
+$$
+\Delta_i=g_i^{-1}B^\times g_i\cap K.
+$$
+
+Then there is a natural bijection
+
+$$
+p^{-1}([g_i])
+\cong\Delta_i\backslash K/K'.
+$$
+
+**Proof.** Every point above $[g_i]$ has a representative $g_i k$ with $k\in K$. Two such representatives $g_ik_1$ and $g_ik_2$ define the same $K'$-class exactly when
+
+$$
+b g_i k_1K'=g_i k_2K'
+$$
+
+for some $b\in B^\times$. Rearranging says that $g_i^{-1}bg_i\in\Delta_i$ carries the right coset $k_1K'$ to $k_2K'$. This is precisely the displayed double quotient. $\square$
+
+Stabilizers can identify points in a fiber, so the fiber sizes may vary with $i$. Even if $K'$ is normal in $K$, the action of $\Delta_i$ can have different images at different classes. This is why a change-of-level map is not automatically a covering of constant degree.
+
+Reduced norm is compatible with change of level. Since $H_{K'}\subset H_K$, there is a natural map
+
+$$
+C_{K'}\longrightarrow C_K,
+$$
+
+and the square with $X_{K'}\to X_K$ commutes. Finer level can refine both the quaternionic fibers and the abelian norm quotient.
+
+### 19.6 What is and is not canonical
+
+The set $X_K$ is canonical once $B$ and the subgroup $K$ are fixed. The following auxiliary choices are not:
+
+- representatives $g_i$ of its points;
+- local matrix identifications at split places;
+- a particular global Eichler order within its genus;
+- bases of the associated ideals;
+- literal embeddings of the stabilizer groups into one coordinate model.
+
+Changing these choices conjugates the relevant orders and stabilizers and transports the corresponding ideals. Statements expressed through double cosets, multiplier orders, reduced norms, and conjugacy classes survive unchanged.
+
+For an Eichler order $\mathcal O$ of level $\mathfrak N$, the reusable finite package is therefore
+
+$$
+\left(
+X_{\widehat{\mathcal O}^\times},
+\{I_i\},
+\{\mathcal O_L(I_i)^\times/R^\times\},
+\nu_{\widehat{\mathcal O}^\times}
+\right).
+$$
+
+The ideals and groups in braces depend on representatives up to the equivalences already described; the package as a collection over the finite set does not. It records the class points, their integral stabilizers, and their narrow norm packets. That is exactly the finite arithmetic input needed before weights or correspondences are introduced.
+
+## 20. The integral--adelic dictionary
+
+### 20.1 One table of translations
 
 The theory can now be compressed without being obscured. For a quaternion algebra $B/F$ and an order $\mathcal O$, the principal translations are:
 
@@ -1896,14 +2843,17 @@ The theory can now be compressed without being obscured. For a quaternion algebr
 | units of an order | $\mathcal O_v^\times$ | compact open $\widehat{\mathcal O}^\times\subset\widehat B^\times$ |
 | maximal order | maximal at every finite $v$ | maximal compact factors locally |
 | Eichler order of level $\mathfrak N$ | $\mathcal E_{n_v}$ at split $v$, maximal at division $v$ | $K_0(\mathfrak p_v^{n_v})$ and $\mathcal O_{D_v}^\times$ factors |
+| local units | unit reduced norm; radical filtration near $1$ | compact open factor with norm image in $R_v^\times$ |
 | locally principal right ideal $I$ | $I_v=g_v\mathcal O_v$ | $g\widehat{\mathcal O}$ |
 | ideal equivalence $I\sim bI$ | one rational left multiplier | left quotient by $B^\times$ |
 | change of local generator | $g_v\mapsto g_vu_v$ | right quotient by $\widehat{\mathcal O}^\times$ |
 | right ideal class set | local generators modulo both changes | $B^\times\backslash\widehat B^\times/\widehat{\mathcal O}^\times$ |
+| optimal embedding $S\hookrightarrow\mathcal O$ | $L_v\cap\mathcal O_v=S_v$ | rational orbit inside a packet of local embedding orbits |
+| norm packet | local reduced-norm idele class | fiber of $X_K\to C_K$ |
 
-The left/right positions in the final row are not typography: they encode the convention that $g\widehat{\mathcal O}$ is a right ideal.
+The left/right positions in the ideal-class rows are not typography: they encode the convention that $g\widehat{\mathcal O}$ is a right ideal.
 
-### 16.2 The discriminant dictionary
+### 20.2 The discriminant dictionary
 
 Three related invariants must remain distinct:
 
@@ -1928,7 +2878,7 @@ $$
 
 At a split place, $v(\mathfrak d(\mathcal O))$ is the tree distance between the defining maximal orders. At a division place, it is one for the maximal order and does not represent level. Under inclusion, reduced discriminant changes by the index; under conjugation, it is unchanged.
 
-### 16.3 The ideal dictionary
+### 20.3 The ideal dictionary
 
 For a locally principal proper right ideal $I$:
 
@@ -1958,7 +2908,7 @@ $$
 
 This is the safe form of quaternionic ideal arithmetic.
 
-### 16.4 The finite input for the next book
+### 20.4 The finite input for the next book
 
 Suppose $F$ is totally real, $B$ is totally definite, and $\mathcal O$ is an Eichler order of level $\mathfrak N$ prime to $\mathfrak d(B)$. Set
 
@@ -1984,11 +2934,14 @@ Then:
    =\mathcal O_L(I_i)^\times;
    $$
 
-5. modulo central units, every $\Gamma_i$ is finite.
+5. modulo central units, every $\Gamma_i$ is finite;
+6. reduced norm partitions $X_K$ into packets indexed by the narrow ideal class group of $F$;
+7. a quadratic order embeds optimally only after both the rational ramification test and the local conductor--level tests have been passed;
+8. strong approximation away from any chosen split finite place relates global classes to the local lattice tree at that place.
 
 These statements are precisely the integral and finite-combinatorial input needed to define functions on $X_K$ with prescribed algebraic behavior at infinity. No automorphic form or Hecke operator has been defined here; the present endpoint is the arithmetic set on which those later structures will act.
 
-### 16.5 Conclusion
+### 20.5 Conclusion
 
 An order turns a quaternion algebra from a rational object into an arithmetic one. Its full lattice supplies denominators, its multiplicative closure supplies congruences, and its trace pairing measures the cost of enlargement. Maximal orders realize the minimum possible discriminant: unit at a split finite place and the prime itself at a division place. In a split algebra they are endomorphism rings of lattices; in a division algebra the valuation selects one unique maximal order.
 
@@ -2010,3 +2963,9 @@ B^\times\backslash\widehat B^\times/
 $$
 
 turns ideal arithmetic into a finite double-coset set. For totally definite $B$, compactness at infinity explains why this set and its stabilizers are especially concrete. The ambient algebra from Book 87, the restricted products from Book 4, and the integral structures developed here have therefore converged on one reusable object: a compact-open level inside $\widehat B^\times$ together with the finite arithmetic quotient it defines.
+
+Unit groups refine this quotient without replacing the orders behind them. Locally, radical filtrations linearize units and every Eichler unit group has full unit reduced norm. Globally, positivity at ramified real places survives in the norm-class quotient, while norm-one strong approximation explains exactly when norm classes already classify double cosets. It does so in the archimedean-split case; in the totally definite case nontrivial finite norm fibers remain and carry the genuinely quaternionic class information.
+
+Quadratic orders supply a complementary probe. Rational embedding is controlled by the ramification set of $B$, but optimal integral embedding is the sharper intersection equation $L\cap\mathcal O=S$. In split local algebras this becomes a problem about multiplier orders at the endpoints of a lattice segment. At division places it forces the quadratic order to be maximal. Local conditions construct an optimal embedding somewhere in the genus, while selectivity records the possible failure in one chosen global conjugacy class.
+
+The final object is therefore richer than a bare finite set. It is a finite collection of ideal classes equipped with left orders, effective unit stabilizers, norm packets, level-change maps, and quadratic embedding orbits. Those structures are all consequences of the integral theory developed here, and together they form the precise arithmetic foundation for definite quaternionic forms.
