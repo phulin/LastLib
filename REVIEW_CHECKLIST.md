@@ -116,7 +116,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 049. Elliptic Curves over DVRs
 - [x] 050. Tate Curves and Multiplicative Reduction
 - [x] 051. Torsion and Tate Modules of Elliptic Curves
-- [ ] 052. Algebraic de Rham Cohomology and Gauss–Manin Connections
+- [x] 052. Algebraic de Rham Cohomology and Gauss–Manin Connections
 - [x] 053. Divided Powers and Crystalline Sites
 - [ ] 054. Crystalline Cohomology of Curves and Abelian Schemes
 - [ ] 055. Syntomic Cohomology and Integral Period Maps
