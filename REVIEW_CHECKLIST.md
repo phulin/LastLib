@@ -247,7 +247,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 180. Hardly Ramified (3)-adic Representations
 - [ ] 181. Schoof's Finite-Flat Category over ℤ[1/2]
 - [x] 182. Local Conditions for Hardly-Ramified Minimal Deformations
-- [ ] 183. Supported Galois Cohomology and Selmer Calculations
+- [x] 183. Supported Galois Cohomology and Selmer Calculations
 - [ ] 184. Relation Obstructions and Poitou–Tate Corrections
 - [ ] 185. Finite Image and the Balanced Minimal-Lift Argument
 - [ ] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
