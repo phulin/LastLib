@@ -64,7 +64,8 @@ def chapter11Branch (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (m : Ideal A) (P : Ideal B) : Prop :=
   P.IsPrime ∧ P.IsMaximal ∧ P.LiesOver m
 
-/-- The finite set of branches above a chosen base ideal. -/
+/-- The set of branches above a chosen base ideal. Finiteness is supplied by
+the finite-normalization hypotheses in the later semilocality theorem. -/
 def chapter11Branches (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (m : Ideal A) : Set (Ideal B) :=
   {P | chapter11Branch A B m P}
@@ -112,6 +113,8 @@ structure Chapter11ValuationBranchCorrespondence
     (P : Ideal B) (v : Valuation L Γ₀) where
   prime : P.IsPrime
   embedding : B →+* v.valuationSubring
+  embedding_compatible :
+    ∀ x : B, (embedding x : L) = algebraMap B L x
   center : chapter11ValuationCenter B L P v embedding
   localizationEquiv : Localization P.primeCompl ≃+* v.valuationSubring
   localizationEquiv_on_B :
@@ -119,30 +122,229 @@ structure Chapter11ValuationBranchCorrespondence
       localizationEquiv (Localization.mk x ⟨1, P.primeCompl.one_mem⟩) =
         embedding x
 
-/-- A branch supplies a place of `L` extending the original place of `K`. -/
--- STATEMENT_NEEDS_UPDATE: `vK` is arbitrary and is not required to have `A` as its valuation ring or `m` as its center, so a branch over `m` need not be the center of an extension of `vK`; add a hypothesis identifying the center of `vK` on `A` with `m` (and compatibility of the `A → B → L` embedding).
+/-- A branch supplies a place of `L` extending the original place of `K`.
+
+The finite separable normalization and displayed branch-local DVR are explicit
+because they allow the extension to be normalized with value group `ℤ`.
+-/
 theorem chapter11_branch_labels_valuation_extensions
     (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [CommRing B] [IsDomain B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [IsScalarTower A K L] [IsFractionRing A K] [FiniteDimensional K L]
+    [IsScalarTower A K L] [IsScalarTower A B L] [IsFractionRing A K]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
     [IsIntegralClosure B A L]
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
     (m : Ideal A) (hm : m = IsLocalRing.maximalIdeal A)
-    (P : Ideal B) (hP : chapter11Branch A B m P)
-    (vK : Valuation K ℤᵐ⁰) :
+    (P : Ideal B) [P.IsPrime] (hP : chapter11Branch A B m P)
+    (hfinite : Module.Finite A B)
+    (vK : Valuation K ℤᵐ⁰)
+    (ιA : A →+* vK.valuationSubring)
+    (hιA : ∀ a : A, (ιA a : K) = algebraMap A K a)
+    (hcenter : chapter11ValuationCenter A K m vK ιA)
+    [IsDiscreteValuationRing (chapter11BranchLocalization B P)] :
     ∃ (vL : Valuation L ℤᵐ⁰) (ι : B →+* vL.valuationSubring),
-      chapter11ValuationExtensionAt K L vK vL ∧ chapter11ValuationCenter B L P vL ι := by
-  sorry
+      chapter11ValuationExtensionAt K L vK vL ∧
+        chapter11ValuationCenter B L P vL ι ∧
+        ∀ b : B, (ι b : L) = algebraMap B L b := by
+  let S := chapter11BranchLocalization B P
+  letI : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  letI : Module.IsTorsionFree A L :=
+    Module.isTorsionFree_iff_algebraMap_injective.mpr (by
+      intro x y hxy
+      apply hAinj
+      apply hKinj
+      simpa only [IsScalarTower.algebraMap_apply A K L] using hxy)
+  letI : Module.IsTorsionFree A B := IsIntegralClosure.isTorsionFree A L
+  letI : IsFractionRing B L :=
+    IsIntegralClosure.isFractionRing_of_finite_extension A K L B
+  have hPcomp : P.primeCompl ≤ (nonZeroDivisors B).comap (RingHom.id B) := by
+    intro x hx
+    change x ∈ nonZeroDivisors B
+    exact P.primeCompl_le_nonZeroDivisors hx
+  let alg : S →+* L :=
+    IsLocalization.map L (RingHom.id B) hPcomp
+  letI : Algebra S L := alg.toAlgebra
+  letI : IsScalarTower B S L := by
+    apply IsScalarTower.of_algebraMap_eq'
+    change algebraMap B L = alg.comp (algebraMap B S)
+    simpa [alg] using
+      (IsLocalization.map_comp (M := P.primeCompl) (T := nonZeroDivisors B)
+        (Q := L) (g := RingHom.id B) hPcomp).symm
+  letI : IsFractionRing S L :=
+    IsFractionRing.isFractionRing_of_isDomain_of_isLocalization P.primeCompl S L
+  let vL : Valuation L ℤᵐ⁰ :=
+    (IsDiscreteValuationRing.maximalIdeal S).valuation L
+  let eS : S ≃+* vL.valuationSubring :=
+    IsDiscreteValuationRing.equivValuationSubring (A := S) (K := L)
+  let ι : B →+* vL.valuationSubring :=
+    eS.toRingHom.comp (algebraMap B S)
+  have hι : ∀ b : B, (ι b : L) = algebraMap B L b := by
+    intro b
+    change algebraMap S L (algebraMap B S b) = algebraMap B L b
+    rw [← IsScalarTower.algebraMap_apply B S L]
+  have hmaxS :
+      (IsLocalRing.maximalIdeal S).map eS.toRingHom =
+        IsLocalRing.maximalIdeal vL.valuationSubring := by
+    exact IsLocalRing.map_ringEquiv_maximalIdeal eS
+  have hcomapS :
+      (IsLocalRing.maximalIdeal vL.valuationSubring).comap eS.toRingHom =
+        IsLocalRing.maximalIdeal S := by
+    rw [← hmaxS]
+    exact Ideal.comap_map_of_bijective _ eS.bijective
+  have hcenterL : chapter11ValuationCenter B L P vL ι := by
+    change P = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ι
+    rw [show ι = eS.toRingHom.comp (algebraMap B S) by rfl,
+      ← Ideal.comap_comap, hcomapS]
+    change P = (IsLocalRing.maximalIdeal S).under B
+    exact (Localization.AtPrime.under_maximalIdeal (I := P)).symm
+  have hvKring :
+      vK.valuationSubring.toSubring =
+        Subring.map (algebraMap A K) (⊤ : Subring A) := by
+    apply le_antisymm
+    · intro x hx
+      obtain ⟨a, ha⟩ | ⟨a, ha⟩ := ValuationRing.isInteger_or_isInteger A x
+      · rw [Subring.mem_map]
+        exact ⟨a, Subring.mem_top _, ha⟩
+      · by_cases hx0 : x = 0
+        · rw [hx0]
+          exact (Subring.zero_mem _)
+        by_cases hua : IsUnit a
+        · obtain ⟨u, hu⟩ := hua
+          rw [Subring.mem_map]
+          refine ⟨(↑(u⁻¹) : A), Subring.mem_top _, ?_⟩
+          calc
+            algebraMap A K (↑(u⁻¹) : A) = (algebraMap A K (↑u : A))⁻¹ := by
+              simp
+            _ = (algebraMap A K a)⁻¹ := by rw [hu]
+            _ = x := by rw [ha]; simp
+        · have ham : a ∈ IsLocalRing.maximalIdeal A := by
+            rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+            exact hua
+          have ham' : a ∈ m := by rw [hm]; exact ham
+          have haW : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+            have haW' : a ∈ (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := by
+              rw [← hcenter]
+              exact ham'
+            exact haW'
+          have hlt : vK (x⁻¹) < 1 := by
+            rw [← ha, ← hιA a]
+            exact (Valuation.mem_maximalIdeal_iff (K := K) vK).mp haW
+          have hxpos : 0 < vK x := (vK.pos_iff).mpr hx0
+          have hxgt : 1 < vK x :=
+            (inv_lt_one₀ hxpos).mp (by simpa only [map_inv₀] using hlt)
+          exact (False.elim ((not_lt_of_ge hx) hxgt))
+    · intro x hx
+      rw [Subring.mem_map] at hx
+      obtain ⟨a, -, ha⟩ := hx
+      have haW : (ιA a : K) ∈ vK.valuationSubring := (ιA a).property
+      change x ∈ vK.valuationSubring
+      rw [← ha, ← hιA a]
+      exact haW
+  have hvAring :
+      ((IsDiscreteValuationRing.maximalIdeal A).valuation K).valuationSubring.toSubring =
+        Subring.map (algebraMap A K) (⊤ : Subring A) := by
+    exact (IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring
+      (A := A) (K := K)).symm
+  have hvKeq :
+      vK.IsEquiv ((IsDiscreteValuationRing.maximalIdeal A).valuation K) := by
+    apply (Valuation.isEquiv_iff_valuationSubring vK _).mpr
+    apply ValuationSubring.ext
+    intro x
+    change x ∈ vK.valuationSubring.toSubring ↔
+      x ∈ ((IsDiscreteValuationRing.maximalIdeal A).valuation K).valuationSubring.toSubring
+    rw [hvKring, hvAring]
+  have hvLring :
+      (vL.comap (algebraMap K L)).valuationSubring.toSubring =
+        Subring.map (algebraMap A K) (⊤ : Subring A) := by
+    apply le_antisymm
+    · intro x hx
+      obtain ⟨a, ha⟩ | ⟨a, ha⟩ := ValuationRing.isInteger_or_isInteger A x
+      · rw [Subring.mem_map]
+        exact ⟨a, Subring.mem_top _, ha⟩
+      · by_cases hx0 : x = 0
+        · rw [hx0]
+          exact (Subring.zero_mem _)
+        by_cases hua : IsUnit a
+        · obtain ⟨u, hu⟩ := hua
+          rw [Subring.mem_map]
+          refine ⟨(↑(u⁻¹) : A), Subring.mem_top _, ?_⟩
+          calc
+            algebraMap A K (↑(u⁻¹) : A) = (algebraMap A K (↑u : A))⁻¹ := by
+              simp
+            _ = (algebraMap A K a)⁻¹ := by rw [hu]
+            _ = x := by rw [ha]; simp
+        · have ham : a ∈ IsLocalRing.maximalIdeal A := by
+            rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+            exact hua
+          have ham' : a ∈ m := by rw [hm]; exact ham
+          have habP : algebraMap A B a ∈ P := by
+            letI : P.LiesOver m := hP.2.2
+            exact (Ideal.mem_of_liesOver P m a).mp ham'
+          have hamS : algebraMap B S (algebraMap A B a) ∈
+              IsLocalRing.maximalIdeal S := by
+            rw [← Localization.AtPrime.map_eq_maximalIdeal]
+            exact Ideal.mem_map_of_mem _ habP
+          have haW : ι (algebraMap A B a) ∈
+              IsLocalRing.maximalIdeal vL.valuationSubring := by
+            rw [show ι (algebraMap A B a) =
+              eS (algebraMap B S (algebraMap A B a)) by rfl]
+            rw [← hmaxS]
+            exact Ideal.mem_map_of_mem _ hamS
+          have hlt : vL ((algebraMap A L) a) < 1 := by
+            rw [IsScalarTower.algebraMap_apply A B L a, ← hι]
+            exact (Valuation.mem_maximalIdeal_iff (K := L) vL).mp haW
+          have hxval : vL (algebraMap K L x) ≤ 1 := hx
+          have hxpos : 0 < vL (algebraMap K L x) := by
+            apply (vL.pos_iff).mpr
+            intro hzero
+            apply hx0
+            apply hKinj
+            simpa using hzero
+          have hxinval' : vL ((algebraMap K L x)⁻¹) < 1 := by
+            calc
+              vL ((algebraMap K L x)⁻¹) = vL (algebraMap A L a) := by
+                congr 1
+                calc
+                  (algebraMap K L x)⁻¹ = algebraMap K L (x⁻¹) := by simp
+                  _ = algebraMap K L (algebraMap A K a) := by rw [← ha]
+                  _ = algebraMap A L a := by
+                    rw [IsScalarTower.algebraMap_apply A K L]
+              _ < 1 := hlt
+          have hxinval : (vL (algebraMap K L x))⁻¹ < 1 := by
+            simpa only [map_inv₀] using hxinval'
+          have hxgt : 1 < vL (algebraMap K L x) :=
+            (inv_lt_one₀ hxpos).mp hxinval
+          exact False.elim ((not_lt_of_ge hxval) hxgt)
+    · intro x hx
+      rw [Subring.mem_map] at hx
+      obtain ⟨a, -, ha⟩ := hx
+      have hval : vL (algebraMap A L a) ≤ 1 := by
+        rw [IsScalarTower.algebraMap_apply A B L a, ← hι]
+        exact (ι (algebraMap A B a)).property
+      change vL (algebraMap K L x) ≤ 1
+      rw [← ha, ← IsScalarTower.algebraMap_apply A K L]
+      exact hval
+  have hvLeq :
+      vK.IsEquiv (vL.comap (algebraMap K L)) := by
+    apply (Valuation.isEquiv_iff_valuationSubring vK _).mpr
+    apply ValuationSubring.ext
+    intro x
+    change x ∈ vK.valuationSubring.toSubring ↔
+      x ∈ (vL.comap (algebraMap K L)).valuationSubring.toSubring
+    rw [hvKring, hvLring]
+  refine ⟨vL, ι, ?_, hcenterL, hι⟩
+  exact hvLeq
 
+set_option maxHeartbeats 3000000 in
 /-- Conversely, a valuation ring containing the normalization has a center at a branch. -/
--- STATEMENT_NEEDS_UPDATE: neither `W` nor the arbitrary embedding `ι` is required to be compatible with `A → B → L`, and no hypothesis says that the center of `W` on `A` is `m`; add those compatibility and center hypotheses (otherwise even the trivial valuation gives the wrong center).
 theorem chapter11_valuation_ring_converse
     (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [CommRing B] [IsDomain B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [IsScalarTower A K L] [IsFractionRing A K] [FiniteDimensional K L]
+    [IsScalarTower A K L] [IsScalarTower A B L] [IsFractionRing A K]
+    [FiniteDimensional K L]
     [IsIntegralClosure B A L]
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
@@ -150,10 +352,40 @@ theorem chapter11_valuation_ring_converse
     (W : ValuationSubring L) (vK : Valuation K W.ValueGroup)
     (hext : vK.IsEquiv (W.valuation.comap (algebraMap K L)))
     (ι : B →+* W.valuation.valuationSubring)
-    (hcontains : ∀ x : B, (ι x : L) ∈ W) :
+    (hι : ∀ x : B, (ι x : L) = algebraMap B L x)
+    (ιA : A →+* W.valuation.valuationSubring)
+    (hιA : ∀ a : A, (ιA a : L) = algebraMap A L a)
+    (hcenter : chapter11ValuationCenter A L m W.valuation ιA) :
     ∃ P : Ideal B, chapter11Branch A B m P ∧
       chapter11ValuationCenter B L P W.valuation ι := by
-  sorry
+  let P : Ideal B := (IsLocalRing.maximalIdeal W.valuation.valuationSubring).comap ι
+  have hcomp : ι.comp (algebraMap A B) = ιA := by
+    apply RingHom.ext
+    intro a
+    apply Subtype.ext
+    calc
+      ((ι.comp (algebraMap A B)) a : L) = algebraMap B L (algebraMap A B a) :=
+        hι (algebraMap A B a)
+      _ = algebraMap A L a := by
+        rw [IsScalarTower.algebraMap_apply A B L]
+      _ = (ιA a : L) := (hιA a).symm
+  have hcomap : P.comap (algebraMap A B) = m := by
+    change (IsLocalRing.maximalIdeal W.valuation.valuationSubring).comap
+        (ι.comp (algebraMap A B)) = m
+    rw [hcomp, ← hcenter]
+  have hPprime : P.IsPrime := by
+    dsimp [P]
+    exact Ideal.comap_isPrime _ _
+  letI : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  letI : P.IsPrime := hPprime
+  have hPmax : P.IsMaximal := by
+    apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := A) (S := B) P
+    rw [hcomap]
+    rw [hm]
+    exact IsLocalRing.maximalIdeal.isMaximal A
+  have hPlies : P.LiesOver m := ⟨hcomap.symm⟩
+  refine ⟨P, ⟨hPprime, hPmax, hPlies⟩, ?_⟩
+  rfl
 
 /-- A branch localization is a local ring, and in the Dedekind situation it is a DVR. -/
 theorem chapter11_branch_localization_is_dvr
@@ -166,8 +398,8 @@ theorem chapter11_branch_localization_is_dvr
 def chapter11IsSemilocal (B : Type*) [CommRing B] : Prop :=
   ∃ s : Finset (Ideal B), ∀ P : Ideal B, P.IsMaximal ↔ P ∈ (s : Set (Ideal B))
 
+set_option maxHeartbeats 10000000 in
 /-- Finite normalization of a DVR is a semilocal Dedekind domain. -/
--- STATEMENT_NEEDS_UPDATE: the arbitrary `vK` need not have `A` as its valuation ring, so an extension of `vK` may be centered over a different prime instead of `IsLocalRing.maximalIdeal A`; add the hypothesis that the center of `vK` on `A` is exactly that maximal ideal.
 theorem chapter11_finite_normalization_is_semilocal_dedekind
     {ΓK : Type*} (A K L B : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] [Field K] [Field L] [CommRing B]
@@ -179,9 +411,12 @@ theorem chapter11_finite_normalization_is_semilocal_dedekind
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
     [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [FaithfulSMul A B]
-    (hfinite : Module.Finite A B) (vK : Valuation K ΓK) :
+    (hfinite : Module.Finite A B) (vK : Valuation K ΓK)
+    (ιA : A →+* vK.valuationSubring)
+    (hιA : ∀ a : A, (ιA a : K) = algebraMap A K a)
+    (hcenter : chapter11ValuationCenter A K (IsLocalRing.maximalIdeal A) vK ιA) :
     IsDedekindDomain B ∧
-      chapter11IsSemilocal B ∧
+    chapter11IsSemilocal B ∧
       (∀ P : Ideal B,
         P.IsMaximal ↔ P.IsPrime ∧ P.LiesOver (IsLocalRing.maximalIdeal A)) ∧
       (∀ (P : Ideal B) [P.IsPrime],
@@ -192,7 +427,465 @@ theorem chapter11_finite_normalization_is_semilocal_dedekind
           ∃! P : Ideal B,
             P.IsMaximal ∧ P.LiesOver (IsLocalRing.maximalIdeal A) ∧
               Nonempty (Chapter11ValuationBranchCorrespondence B L P vL)) := by
-  sorry
+  classical
+  letI : IsDedekindDomain A :=
+    ((IsDiscreteValuationRing.TFAE A (IsDiscreteValuationRing.not_isField A)).out 0 2).mp
+      (inferInstance : IsDiscreteValuationRing A)
+  letI : IsDedekindDomain B :=
+    IsIntegralClosure.isDedekindDomain A K L B
+  letI : IsFractionRing B L :=
+    IsIntegralClosure.isFractionRing_of_finite_extension A K L B
+  have hmax0 : IsLocalRing.maximalIdeal A ≠ (⊥ : Ideal A) :=
+    IsDiscreteValuationRing.not_a_field A
+  have hmax_over : ∀ P : Ideal B, P.IsMaximal →
+      P.LiesOver (IsLocalRing.maximalIdeal A) := by
+    intro P hP
+    letI : P.IsMaximal := hP
+    have hunder : (P.under A).IsMaximal := Ideal.IsMaximal.under A P
+    exact ⟨(IsLocalRing.eq_maximalIdeal hunder).symm⟩
+  have hbranch_max : ∀ P : Ideal B,
+      P.IsPrime ∧ P.LiesOver (IsLocalRing.maximalIdeal A) → P.IsMaximal := by
+    intro P hP
+    letI : P.IsPrime := hP.1
+    letI : P.LiesOver (IsLocalRing.maximalIdeal A) := hP.2
+    apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := A) (S := B) P
+    change (P.under A).IsMaximal
+    rw [← P.over_def (IsLocalRing.maximalIdeal A)]
+    exact IsLocalRing.maximalIdeal.isMaximal A
+  have hmax_finite : {P : Ideal B | P.IsMaximal}.Finite := by
+    have hfinite_primes : (IsLocalRing.maximalIdeal A).primesOver B |>.Finite :=
+      Algebra.QuasiFinite.finite_primesOver (IsLocalRing.maximalIdeal A)
+    exact hfinite_primes.subset (by
+      intro (P : Ideal B) hP
+      exact ⟨hP.isPrime, hmax_over P hP⟩)
+  have hsemi : chapter11IsSemilocal B := by
+    refine ⟨hmax_finite.toFinset, ?_⟩
+    intro P
+    constructor
+    · intro hP
+      exact hmax_finite.mem_toFinset.mpr hP
+    · intro hP
+      exact hmax_finite.mem_toFinset.mp hP
+  have hmax_iff : ∀ P : Ideal B,
+      P.IsMaximal ↔ P.IsPrime ∧ P.LiesOver (IsLocalRing.maximalIdeal A) := by
+    intro P
+    constructor
+    · intro hP
+      exact ⟨hP.isPrime, hmax_over P hP⟩
+    · exact hbranch_max P
+  have hloc : ∀ (P : Ideal B) [P.IsPrime],
+      P.IsMaximal → IsDiscreteValuationRing (chapter11BranchLocalization B P) := by
+    intro P _ hP
+    have hP0 : P ≠ (⊥ : Ideal B) := by
+      intro hPbot
+      subst P
+      have hL := hmax_over (⊥ : Ideal B) hP
+      have hcomp : (⊥ : Ideal B).comap (algebraMap A B) =
+          IsLocalRing.maximalIdeal A := hL.over.symm
+      rw [Ideal.comap_bot_of_injective (algebraMap A B)
+        (FaithfulSMul.algebraMap_injective A B)] at hcomp
+      exact hmax0 hcomp.symm
+    exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B hP0
+      (Localization.AtPrime P)
+  have hcorr_of_center (P : Ideal B) (hPprime : P.IsPrime)
+      (hP0 : P ≠ (⊥ : Ideal B))
+      {ΓL : Type v} [LinearOrderedCommGroupWithZero ΓL]
+      (vL : Valuation L ΓL) (ι : B →+* vL.valuationSubring)
+      (hι : ∀ x : B, (ι x : L) = algebraMap B L x)
+      (hcenter : chapter11ValuationCenter B L P vL ι) :
+      Nonempty (Chapter11ValuationBranchCorrespondence B L P vL) := by
+    let p₁ : IsDedekindDomain.HeightOneSpectrum B :=
+      IsDedekindDomain.HeightOneSpectrum.mk P hPprime hP0
+    let S : ValuationSubring L :=
+      IsDedekindDomain.HeightOneSpectrum.valuationSubringAtPrime L p₁
+    have hSle : S ≤ vL.valuationSubring := by
+      intro z hz
+      change z ∈ S.toSubring at hz
+      rw [show S.toSubring =
+        (Localization.subalgebra.ofField L P.primeCompl P.primeCompl_le_nonZeroDivisors).toSubring by
+          rfl] at hz
+      obtain ⟨b, s, hs, hzs⟩ := hz
+      have hιs : ι s ∉ IsLocalRing.maximalIdeal vL.valuationSubring := by
+        intro hmem
+        apply hs
+        have hsP : s ∈ P := by
+          rw [hcenter]
+          exact hmem
+        exact hsP
+      have hιsunit : IsUnit (ι s) := by
+        rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff] at hιs
+        exact Classical.not_not.mp hιs
+      obtain ⟨y, hy⟩ := (isUnit_iff_exists_inv.mp hιsunit)
+      have hinv : (algebraMap B L s)⁻¹ ∈ vL.valuationSubring := by
+        have hyL : algebraMap B L s * (y : L) = 1 := by
+          simpa [hι s] using congrArg (fun z : vL.valuationSubring => (z : L)) hy
+        have hs0 : algebraMap B L s ≠ 0 := by
+          intro hs0
+          apply hιsunit.ne_zero
+          apply Subtype.ext
+          simpa [hι s] using hs0
+        have hyval : (y : L) = (algebraMap B L s)⁻¹ := by
+          rw [← one_div]
+          exact (eq_div_iff hs0).2 (by simpa [mul_comm] using hyL)
+        rw [← hyval]
+        exact SetLike.coe_mem _
+      have hb : algebraMap B L b ∈ vL.valuationSubring := by
+        simpa [← hι b] using (ι b).property
+      rw [hzs]
+      exact vL.valuationSubring.toSubring.mul_mem hb hinv
+    have htop : vL.valuationSubring ≠ ⊤ := by
+      intro htop
+      apply hP0
+      have hmax_top : IsLocalRing.maximalIdeal vL.valuationSubring = ⊥ := by
+        rw [htop]
+        exact IsLocalRing.maximalIdeal_eq_bot
+      rw [hcenter, hmax_top]
+      exact Ideal.comap_bot_of_injective ι (by
+        intro x y hxy
+        apply IsFractionRing.injective B L
+        simpa [hι x, hι y] using congrArg Subtype.val hxy)
+    have hEq : S = vL.valuationSubring :=
+      ValuationSubring.eq_of_le_of_ne_top S hSle htop
+    let W₀ : Subalgebra B L :=
+      Localization.subalgebra.ofField L P.primeCompl P.primeCompl_le_nonZeroDivisors
+    have hS₀ : S.toSubring = W₀.toSubring := by
+      dsimp [W₀]
+      simpa [S, p₁] using
+        (IsDedekindDomain.HeightOneSpectrum.valuationSubringAtPrime_toSubring p₁ (K := L))
+    have hmemS₀ (x : W₀) : (x : L) ∈ S := by
+      change (x : L) ∈ S.toSubring
+      rw [hS₀]
+      exact x.property
+    let g : W₀ →ₐ[B] S :=
+      { toFun := fun x => ⟨x, hmemS₀ x⟩
+        map_zero' := by ext; rfl
+        map_one' := by ext; rfl
+        map_add' := by intro x y; ext; rfl
+        map_mul' := by intro x y; ext; rfl
+        commutes' := by intro b; ext; rfl }
+    have hg : Function.Bijective g := by
+      constructor
+      · intro x y hxy
+        apply Subtype.ext
+        exact congrArg (fun z : S => (z : L)) hxy
+      · intro y
+        refine ⟨⟨y, ?_⟩, ?_⟩
+        · change (y : L) ∈ W₀.toSubring
+          rw [← hS₀]
+          exact y.property
+        · rfl
+    let eSub : W₀ ≃ₐ[B] S := AlgEquiv.ofBijective g hg
+    letI : Algebra B S := inferInstance
+    letI : IsLocalization P.primeCompl W₀ :=
+      Localization.subalgebra.isLocalization_ofField L P.primeCompl
+        P.primeCompl_le_nonZeroDivisors
+    letI : IsLocalization P.primeCompl S :=
+      IsLocalization.isLocalization_of_algEquiv P.primeCompl eSub
+    let f : S →+* vL.valuationSubring :=
+      ValuationSubring.inclusion S vL.valuationSubring hSle
+    have hf : Function.Bijective f := by
+      constructor
+      · intro x y hxy
+        apply Subtype.ext
+        exact congrArg (fun z : vL.valuationSubring => (z : L)) hxy
+      · intro y
+        refine ⟨⟨y, ?_⟩, ?_⟩
+        · rw [hEq]
+          exact y.property
+        · rfl
+    let eEq : S ≃+* vL.valuationSubring := RingEquiv.ofBijective f hf
+    let e₀ : Localization.AtPrime P ≃ₐ[B] S :=
+      IsLocalization.algEquiv P.primeCompl (Localization.AtPrime P) S
+    let e : Localization.AtPrime P ≃+* vL.valuationSubring :=
+      e₀.toRingEquiv.trans eEq
+    refine ⟨{
+      prime := hPprime
+      embedding := ι
+      embedding_compatible := hι
+      center := hcenter
+      localizationEquiv := e
+      localizationEquiv_on_B := ?_ }⟩
+    intro x
+    change e (Localization.mk x ⟨1, P.primeCompl.one_mem⟩) = ι x
+    apply Subtype.ext
+    change ((e₀.toRingEquiv.trans eEq)
+        (Localization.mk x ⟨1, P.primeCompl.one_mem⟩) : L) = (ι x : L)
+    change (eEq (e₀ (Localization.mk x ⟨1, P.primeCompl.one_mem⟩)) : L) = (ι x : L)
+    have he₀x : e₀ (Localization.mk x ⟨1, P.primeCompl.one_mem⟩) = algebraMap B S x := by
+      rw [← e₀.commutes]
+      rfl
+    rw [he₀x]
+    dsimp [eEq, f, ValuationSubring.inclusion]
+    have hf' : Function.Bijective (Subring.inclusion hSle) := by
+      constructor
+      · exact Subring.inclusion_injective hSle
+      · intro y
+        refine ⟨⟨y, ?_⟩, ?_⟩
+        · rw [hEq]
+          exact y.property
+        · rfl
+    rw [RingEquiv.ofBijective_apply (Subring.inclusion hSle) hf']
+    rw [Subring.coe_inclusion]
+    rw [hι x]
+    change ((algebraMap B S x : S) : L) = algebraMap B L x
+    rw [← ValuationSubring.algebraMap_apply S]
+    rw [← IsScalarTower.algebraMap_apply B S L]
+  refine ⟨inferInstance, hsemi, hmax_iff, hloc, ?_⟩
+  intro ΓL _ vL
+  constructor
+  · intro hext
+    have hring : vK.valuationSubring =
+        (vL.comap (algebraMap K L)).valuationSubring :=
+      (Valuation.isEquiv_iff_valuationSubring vK _).mp hext
+    have hA_mem : ∀ a : A, algebraMap A L a ∈ vL.valuationSubring := by
+      intro a
+      have ha : algebraMap A K a ∈ vK.valuationSubring := by
+        rw [← hιA a]
+        exact (ιA a).property
+      have ha' : algebraMap A K a ∈
+          (vL.comap (algebraMap K L)).valuationSubring := by
+        rw [← hring]
+        exact ha
+      change vL (algebraMap A L a) ≤ 1
+      rw [IsScalarTower.algebraMap_apply A K L]
+      exact ha'
+    let hA : A →+* vL.valuationSubring :=
+      (algebraMap A L).codRestrict vL.valuationSubring hA_mem
+    have hAcompat : ∀ a : A, (hA a : L) = algebraMap A L a := by
+      intro a
+      rfl
+    letI : Algebra A vL.valuationSubring := hA.toAlgebra
+    letI : IsScalarTower A vL.valuationSubring L := by
+      apply IsScalarTower.of_algebraMap_eq'
+      apply RingHom.ext
+      intro a
+      change algebraMap A L a = (algebraMap vL.valuationSubring L) (hA a)
+      exact (hAcompat a).symm
+    have hB_mem : ∀ b : B, algebraMap B L b ∈ vL.valuationSubring := by
+      intro b
+      have hbA : IsIntegral A (algebraMap B L b) := by
+        exact IsIntegral.map (IsScalarTower.toAlgHom A B L)
+          (Algebra.IsIntegral.isIntegral (R := A) b)
+      have hbW : IsIntegral vL.valuationSubring (algebraMap B L b) := by
+        apply IsIntegral.map_of_comp_eq hA (RingHom.id L)
+        apply RingHom.ext
+        intro a
+        change (algebraMap vL.valuationSubring L) (hA a) = algebraMap A L a
+        exact hAcompat a
+        exact hbA
+      exact (Valuation.Integers.isIntegral_iff_v_le_one
+        (Valuation.valuationSubring.integers vL)).mp hbW
+    let ι : B →+* vL.valuationSubring :=
+      (algebraMap B L).codRestrict vL.valuationSubring hB_mem
+    have hι : ∀ b : B, (ι b : L) = algebraMap B L b := by
+      intro b
+      rfl
+    let P : Ideal B :=
+      (IsLocalRing.maximalIdeal vL.valuationSubring).comap ι
+    have hPprime : P.IsPrime := by
+      dsimp [P]
+      exact Ideal.comap_isPrime _ _
+    have hPover : P.LiesOver (IsLocalRing.maximalIdeal A) := by
+      have hcomp : ι.comp (algebraMap A B) = hA := by
+        apply RingHom.ext
+        intro a
+        apply Subtype.ext
+        change algebraMap B L (algebraMap A B a) = algebraMap A L a
+        rw [IsScalarTower.algebraMap_apply A B L]
+      have hlt_equiv : ∀ a : A,
+          vK (algebraMap A K a) < 1 ↔ vL (algebraMap A L a) < 1 := by
+        intro a
+        simpa only [Valuation.comap_apply, IsScalarTower.algebraMap_apply A K L] using
+          (hext.lt_one_iff_lt_one (x := algebraMap A K a))
+      have hcomap : P.comap (algebraMap A B) =
+          IsLocalRing.maximalIdeal A := by
+        apply Ideal.ext
+        intro a
+        constructor
+        · intro ha
+          change ι (algebraMap A B a) ∈
+            IsLocalRing.maximalIdeal vL.valuationSubring at ha
+          have hltL : vL (algebraMap A L a) < 1 := by
+            rw [IsScalarTower.algebraMap_apply A B L, ← hι]
+            exact (Valuation.mem_maximalIdeal_iff (K := L) vL).mp ha
+          have hltK : vK (algebraMap A K a) < 1 := (hlt_equiv a).mpr hltL
+          have haV : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+            apply (Valuation.mem_maximalIdeal_iff (K := K) vK).mpr
+            rw [hιA a]
+            exact hltK
+          rw [hcenter]
+          exact haV
+        · intro ha
+          have haV : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+            have haV' : a ∈
+                (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := by
+              rw [← hcenter]
+              exact ha
+            exact haV'
+          have hltK : vK (algebraMap A K a) < 1 := by
+            apply (Valuation.mem_maximalIdeal_iff (K := K) vK).mp at haV
+            rw [hιA a] at haV
+            exact haV
+          have hltL : vL (algebraMap A L a) < 1 := (hlt_equiv a).mp hltK
+          have haW : hA a ∈ IsLocalRing.maximalIdeal vL.valuationSubring := by
+            apply (Valuation.mem_maximalIdeal_iff (K := L) vL).mpr
+            rw [hAcompat a]
+            exact hltL
+          change (ι.comp (algebraMap A B)) a ∈
+            IsLocalRing.maximalIdeal vL.valuationSubring
+          rw [hcomp]
+          exact haW
+      exact ⟨hcomap.symm⟩
+    have hPmax : P.IsMaximal := hbranch_max P ⟨hPprime, hPover⟩
+    have hP0 : P ≠ (⊥ : Ideal B) := by
+      intro hPbot
+      apply hmax0
+      have hcomp : (⊥ : Ideal B).comap (algebraMap A B) =
+          IsLocalRing.maximalIdeal A := by
+        simpa only [hPbot, Ideal.under_def] using hPover.over.symm
+      rw [Ideal.comap_bot_of_injective (algebraMap A B)
+        (FaithfulSMul.algebraMap_injective A B)] at hcomp
+      exact hcomp.symm
+    have hcenterP : chapter11ValuationCenter B L P vL ι := by
+      exact rfl
+    have hcorr : Nonempty (Chapter11ValuationBranchCorrespondence B L P vL) := by
+      exact hcorr_of_center P hPprime hP0 (ΓL := ΓL) vL ι hι hcenterP
+    refine ⟨P, ⟨hPmax, hPover, hcorr⟩, ?_⟩
+    intro Q hQ
+    rcases hQ.2.2 with ⟨cQ⟩
+    have hemb : cQ.embedding = ι := by
+      apply RingHom.ext
+      intro b
+      apply Subtype.ext
+      calc
+        (cQ.embedding b : L) = algebraMap B L b := cQ.embedding_compatible b
+        _ = (ι b : L) := (hι b).symm
+    calc
+      Q = (IsLocalRing.maximalIdeal vL.valuationSubring).comap cQ.embedding := cQ.center
+      _ = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ι := by rw [hemb]
+      _ = P := hcenterP.symm
+  · intro h
+    rcases h with ⟨P, hPdata, hPuniq⟩
+    rcases hPdata with ⟨hPmax, hPover, ⟨cP⟩⟩
+    letI : P.IsPrime := cP.prime
+    letI : P.IsMaximal := hPmax
+    letI : P.LiesOver (IsLocalRing.maximalIdeal A) := hPover
+    have hvKring :
+        vK.valuationSubring.toSubring =
+          Subring.map (algebraMap A K) (⊤ : Subring A) := by
+      apply le_antisymm
+      · intro x hx
+        obtain ⟨a, ha⟩ | ⟨a, ha⟩ := ValuationRing.isInteger_or_isInteger A x
+        · rw [Subring.mem_map]
+          exact ⟨a, Subring.mem_top _, ha⟩
+        · by_cases hx0 : x = 0
+          · rw [hx0]
+            exact Subring.zero_mem _
+          by_cases hua : IsUnit a
+          · obtain ⟨u, hu⟩ := hua
+            rw [Subring.mem_map]
+            refine ⟨(↑(u⁻¹) : A), Subring.mem_top _, ?_⟩
+            calc
+              algebraMap A K (↑(u⁻¹) : A) = (algebraMap A K (↑u : A))⁻¹ := by simp
+              _ = (algebraMap A K a)⁻¹ := by rw [hu]
+              _ = x := by rw [ha]; simp
+          · have ham : a ∈ IsLocalRing.maximalIdeal A := by
+              rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+              exact hua
+            have haW : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+              have haW' : a ∈
+                  (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA := by
+                rw [← hcenter]
+                exact ham
+              exact haW'
+            have hlt : vK (x⁻¹) < 1 := by
+              rw [← ha, ← hιA a]
+              exact (Valuation.mem_maximalIdeal_iff (K := K) vK).mp haW
+            have hxpos : 0 < vK x := (vK.pos_iff).mpr hx0
+            have hxgt : 1 < vK x :=
+              (inv_lt_one₀ hxpos).mp (by simpa only [map_inv₀] using hlt)
+            exact False.elim ((not_lt_of_ge hx) hxgt)
+      · intro x hx
+        rw [Subring.mem_map] at hx
+        obtain ⟨a, -, ha⟩ := hx
+        have haW : (ιA a : K) ∈ vK.valuationSubring := (ιA a).property
+        change x ∈ vK.valuationSubring
+        rw [← ha, ← hιA a]
+        exact haW
+    have hvLring :
+        (vL.comap (algebraMap K L)).valuationSubring.toSubring =
+          Subring.map (algebraMap A K) (⊤ : Subring A) := by
+      apply le_antisymm
+      · intro x hx
+        obtain ⟨a, ha⟩ | ⟨a, ha⟩ := ValuationRing.isInteger_or_isInteger A x
+        · rw [Subring.mem_map]
+          exact ⟨a, Subring.mem_top _, ha⟩
+        · by_cases hx0 : x = 0
+          · rw [hx0]
+            exact Subring.zero_mem _
+          by_cases hua : IsUnit a
+          · obtain ⟨u, hu⟩ := hua
+            rw [Subring.mem_map]
+            refine ⟨(↑(u⁻¹) : A), Subring.mem_top _, ?_⟩
+            calc
+              algebraMap A K (↑(u⁻¹) : A) = (algebraMap A K (↑u : A))⁻¹ := by simp
+              _ = (algebraMap A K a)⁻¹ := by rw [hu]
+              _ = x := by rw [ha]; simp
+          · have ham : a ∈ IsLocalRing.maximalIdeal A := by
+              rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
+              exact hua
+            have habP : algebraMap A B a ∈ P :=
+              (Ideal.mem_of_liesOver P (IsLocalRing.maximalIdeal A) a).mp ham
+            have haW : cP.embedding (algebraMap A B a) ∈
+                IsLocalRing.maximalIdeal vL.valuationSubring := by
+              have : algebraMap A B a ∈
+                  (IsLocalRing.maximalIdeal vL.valuationSubring).comap cP.embedding := by
+                rw [← cP.center]
+                exact habP
+              exact this
+            have hlt : vL (algebraMap A L a) < 1 := by
+              rw [IsScalarTower.algebraMap_apply A B L,
+                ← cP.embedding_compatible (algebraMap A B a)]
+              exact (Valuation.mem_maximalIdeal_iff (K := L) vL).mp haW
+            have hxval : vL (algebraMap K L x) ≤ 1 := hx
+            have hxpos : 0 < vL (algebraMap K L x) := by
+              apply (vL.pos_iff).mpr
+              intro hzero
+              apply hx0
+              apply hKinj
+              simpa using hzero
+            have hxinval' : vL ((algebraMap K L x)⁻¹) < 1 := by
+              calc
+                vL ((algebraMap K L x)⁻¹) = vL (algebraMap A L a) := by
+                  congr 1
+                  calc
+                    (algebraMap K L x)⁻¹ = algebraMap K L (x⁻¹) := by simp
+                    _ = algebraMap K L (algebraMap A K a) := by rw [← ha]
+                    _ = algebraMap A L a := by
+                      rw [IsScalarTower.algebraMap_apply A K L]
+                _ < 1 := hlt
+            have hxinval : (vL (algebraMap K L x))⁻¹ < 1 := by
+              simpa only [map_inv₀] using hxinval'
+            have hxgt : 1 < vL (algebraMap K L x) :=
+              (inv_lt_one₀ hxpos).mp hxinval
+            exact False.elim ((not_lt_of_ge hxval) hxgt)
+      · intro x hx
+        rw [Subring.mem_map] at hx
+        obtain ⟨a, -, ha⟩ := hx
+        have hval : vL (algebraMap A L a) ≤ 1 := by
+          rw [IsScalarTower.algebraMap_apply A B L,
+            ← cP.embedding_compatible (algebraMap A B a)]
+          exact (cP.embedding (algebraMap A B a)).property
+        change vL (algebraMap K L x) ≤ 1
+        rw [← ha, ← IsScalarTower.algebraMap_apply A K L]
+        exact hval
+    apply (Valuation.isEquiv_iff_valuationSubring vK _).mpr
+    apply ValuationSubring.ext
+    intro z
+    change z ∈ vK.valuationSubring.toSubring ↔
+      z ∈ (vL.comap (algebraMap K L)).valuationSubring.toSubring
+    rw [hvKring, hvLring]
+ 
 
 /-- In the finite normalization, maximal ideals are exactly the primes above the base maximal ideal. -/
 theorem chapter11_maximal_ideals_are_precisely_branches
@@ -325,21 +1018,127 @@ theorem chapter11_generic_fiber_is_the_field_extension
   exact ⟨(IsLocalization.algEquiv (Algebra.algebraMapSubmonoid B A⁰)
     (B ⊗[A] K) L).toRingEquiv⟩
 
+/-- The generic-fiber identification can be kept as a scalar-compatible ring
+equivalence over `K`, recording the canonical compatibility omitted by the
+weaker ring-equivalence wrapper above. -/
+def chapter11GenericFiberKIdentification
+    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
+    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
+    [IsScalarTower A B L] [IsScalarTower A K L] : Prop :=
+  ∃ e : chapter11GenericFiber A B K ≃+* L,
+    ∀ k : K, e (Algebra.TensorProduct.includeRight k) = algebraMap K L k
+
+theorem chapter11_generic_fiber_is_the_field_extension_as_K_algebra
+    (A B K L : Type*) [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
+    [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
+    [Algebra A L] [Algebra K L] [IsScalarTower A B L]
+    [IsScalarTower A K L] [IsFractionRing A K]
+    [IsIntegralClosure B A L] [FiniteDimensional K L]
+    (hfinite : Module.Finite A B) :
+    chapter11GenericFiberKIdentification A B K L := by
+  letI : IsLocalization (Algebra.algebraMapSubmonoid B A⁰)
+      (B ⊗[A] K) := IsLocalization.tensor K A⁰
+  letI : IsLocalization (Algebra.algebraMapSubmonoid B A⁰) L :=
+    IsIntegralClosure.isLocalization A K L B
+  let eAlg : (B ⊗[A] K) ≃ₐ[B] L :=
+    IsLocalization.algEquiv (Algebra.algebraMapSubmonoid B A⁰) (B ⊗[A] K) L
+  let e : (B ⊗[A] K) ≃+* L := eAlg.toRingEquiv
+  refine ⟨e, ?_⟩
+  have heq :
+      e.toRingHom.comp (Algebra.TensorProduct.includeRight.toRingHom :
+        K →+* (B ⊗[A] K)) = algebraMap K L := by
+    apply IsLocalization.ringHom_ext A⁰
+    apply RingHom.ext
+    intro a
+    change eAlg ((Algebra.TensorProduct.includeRight.toRingHom.comp
+      (algebraMap A K)) a) =
+      algebraMap K L (algebraMap A K a)
+    rw [← Algebra.TensorProduct.includeLeftRingHom_comp_algebraMap]
+    change eAlg (algebraMap A (B ⊗[A] K) a) =
+      algebraMap K L (algebraMap A K a)
+    rw [IsScalarTower.algebraMap_apply A B (B ⊗[A] K) a]
+    rw [eAlg.commutes]
+    rw [← IsScalarTower.algebraMap_apply A B L,
+      ← IsScalarTower.algebraMap_apply A K L]
+  intro k
+  exact RingHom.congr_fun heq k
+
 /-- A DVR clears denominators by a power of a uniformizer. -/
 def chapter11DenominatorCleared (A B L : Type*) [CommRing A] [CommRing B] [CommRing L]
     [Algebra A L] [Algebra B L] (π : A) (x : L) : Prop :=
   ∃ n : ℕ, ∃ b : B, (algebraMap A L π) ^ n * x = algebraMap B L b
 
 /-- Every element of the fraction field of the normalization is denominator-cleared. -/
--- STATEMENT_NEEDS_UPDATE: `hπ` permits `m = ⊥` and `π = 0`, and the assumptions do not make `L` the fraction field of an integral normalization of `B`; add `m = IsLocalRing.maximalIdeal A` with `m ≠ ⊥`, together with `IsIntegralClosure B A L` and finite-dimensionality of `L/K`.
 theorem chapter11_denominators_are_powers_of_a_uniformizer
     (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [CommRing B] [Field K] [Field L] [Algebra A B] [Algebra A K]
     [Algebra K L] [Algebra B L] [Algebra A L] [IsScalarTower A K L]
-    [IsScalarTower A B L] (m : Ideal A) (π : A)
+    [IsScalarTower A B L] [IsFractionRing B L] [IsIntegralClosure B A L]
+    [FiniteDimensional K L] (m : Ideal A) (π : A)
+    (hm : m = IsLocalRing.maximalIdeal A) (hm0 : m ≠ ⊥)
     (hπ : chapter11IsUniformizer A m π) (hfinite : Module.Finite A B) (x : L) :
     chapter11DenominatorCleared A B L π x := by
-  sorry
+  have hπ0 : π ≠ 0 := by
+    intro hzero
+    apply hm0
+    rw [hπ, hzero, Ideal.span_singleton_zero]
+  have hmax : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A) := by
+    rw [← hπ, hm]
+  have hπirr : Irreducible π := by
+    exact IsDiscreteValuationRing.irreducible_of_span_eq_maximalIdeal π hπ0 hmax
+  letI : IsDomain B := (IsIntegralClosure.algebraMap_injective B A L).isDomain
+  letI : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective B x
+  obtain ⟨d, hd, c, hc⟩ :=
+    (Algebra.IsIntegral.isIntegral (R := A) b).isAlgebraic.exists_nonzero_dvd
+      hb
+  obtain ⟨n, u, hud⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hd hπirr
+  refine ⟨n, ?_⟩
+  refine ⟨algebraMap A B (↑(u⁻¹) : A) * c * a, ?_⟩
+  have hpow : π ^ n = (↑(u⁻¹) : A) * d := by
+    rw [hud]
+    simp [mul_assoc]
+  have hcL : algebraMap A L d =
+      algebraMap B L b * algebraMap B L c := by
+    rw [IsScalarTower.algebraMap_apply A B L d, ← map_mul]
+    exact congrArg (algebraMap B L) hc
+  have hcleared :
+      algebraMap A L d * (algebraMap B L a / algebraMap B L b) =
+        algebraMap B L (c * a) := by
+    rw [hcL]
+    have hbL : algebraMap B L b ≠ 0 :=
+      map_ne_zero_of_mem_nonZeroDivisors (algebraMap B L)
+        (IsIntegralClosure.algebraMap_injective B A L) hb
+    field_simp [hbL]
+    rw [map_mul]
+  calc
+    algebraMap A L π ^ n * (algebraMap B L a / algebraMap B L b) =
+        algebraMap A L ((↑(u⁻¹) : A) * d) *
+          (algebraMap B L a / algebraMap B L b) := by
+      rw [← map_pow, hpow, map_mul]
+    _ = algebraMap A L (↑(u⁻¹) : A) * algebraMap B L (c * a) := by
+      rw [map_mul]
+      calc
+        algebraMap A L (↑(u⁻¹) : A) * algebraMap A L d *
+            (algebraMap B L a / algebraMap B L b) =
+            algebraMap A L (↑(u⁻¹) : A) *
+              (algebraMap A L d * (algebraMap B L a / algebraMap B L b) : L) := by
+                ring
+        _ = _ := by rw [hcleared]
+    _ = algebraMap B L (algebraMap A B (↑(u⁻¹) : A) * c * a) := by
+      rw [IsScalarTower.algebraMap_apply A B L, ← map_mul]
+      simp [mul_assoc]
+
+/-- A finite separable extension of the fraction field of a DVR has finite
+integral closure, via the trace-dual boundedness argument. -/
+theorem chapter11_separable_extension_gives_finite_normalization
+    (A K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [Field K] [Field L] [Algebra A K] [IsFractionRing A K]
+    [Algebra K L] [Algebra A L] [IsScalarTower A K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L] :
+    chapter11NormalizationFinite A L := by
+  change Module.Finite A (integralClosure A L)
+  exact IsIntegralClosure.finite A K L (integralClosure A L)
 
 /-- Completeness or the Japanese hypothesis is the standard source of normalization finiteness. -/
 theorem chapter11_complete_or_japanese_gives_finite_normalization
@@ -374,24 +1173,234 @@ structure Chapter11BranchData (A B : Type*) [CommRing A] [CommRing B] [Algebra A
   ramification_eq : ∀ i, ramification i = (prime i).ramificationIdx A
   inertia_eq : ∀ i, inertia i = (prime i).inertiaDeg A
 
-/-- Every extension of the base valuation occurs uniquely from one branch. -/
--- STATEMENT_NEEDS_UPDATE: `vK` is arbitrary and `m` is unused, so semilocality alone cannot force the center of an extension of `vK` to lie over `IsLocalRing.maximalIdeal A`; add the center hypothesis for `vK` (or state the result for the maximal ideal determined by `vK`).
+/-- Every extension of the base valuation has a unique center among the
+normalization branches.  The stronger localization equivalence is packaged in
+`Chapter11ValuationBranchCorrespondence` and in the finite-normalization
+correspondence theorem above. -/
 theorem chapter11_every_extension_is_one_of_the_branch_localizations
-    (A B K L : Type*) [CommRing A] [CommRing B] [IsLocalRing A] [Field K] [Field L]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [CommRing B] [IsDomain B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsIntegralClosure B A L]
-    [FiniteDimensional K L] [Module.Finite A B]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L] [Module.Finite A B]
+    [Algebra.IsIntegral A B] [Module.IsTorsionFree A B] [FaithfulSMul A B]
     (hAinj : Function.Injective (algebraMap A K))
     (hKinj : Function.Injective (algebraMap K L))
-    (m : Ideal A) (hbranches : chapter11IsSemilocal B)
+    (hbranches : chapter11IsSemilocal B)
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
-    (hext : chapter11ValuationExtensionAt K L vK vL) :
+    (hext : chapter11ValuationExtensionAt K L vK vL)
+    (ιA : A →+* vK.valuationSubring)
+    (hιA : ∀ a : A, (ιA a : K) = algebraMap A K a)
+    (hcenter : chapter11ValuationCenter A K (IsLocalRing.maximalIdeal A) vK ιA) :
     ∃! P : Ideal B,
       chapter11Branch A B (IsLocalRing.maximalIdeal A) P ∧
         ∃ ι : B →+* vL.valuationSubring,
-          chapter11ValuationCenter B L P vL ι := by
-  sorry
+          chapter11ValuationCenter B L P vL ι ∧
+            ∀ b : B, (ι b : L) = algebraMap B L b := by
+  let W : ValuationSubring L := vL.valuationSubring
+  have hWext : vK.IsEquiv (W.valuation.comap (algebraMap K L)) := by
+    simpa [W] using hext.trans (Valuation.IsEquiv.comap (algebraMap K L)
+      (Valuation.isEquiv_valuation_valuationSubring vL))
+  have hmemA : ∀ a : A, algebraMap A L a ∈ W := by
+    intro a
+    change vL (algebraMap A L a) ≤ 1
+    have ha : vK (algebraMap A K a) ≤ 1 := by
+      have ha' : vK (ιA a : K) ≤ 1 :=
+        (Valuation.mem_valuationSubring_iff vK (ιA a : K)).mp (ιA a).property
+      simpa [hιA a] using ha'
+    have ha' : vK (algebraMap A K a) ≤ vK 1 := by simpa using ha
+    have hv : vK (algebraMap A K a) ≤ vK 1 ↔
+        vL (algebraMap K L (algebraMap A K a)) ≤ vL (algebraMap K L 1) :=
+      hext (algebraMap A K a) 1
+    have hv' := hv.mp ha'
+    simpa [IsScalarTower.algebraMap_apply A K L] using hv'
+  let ιA' : A →+* W.valuation.valuationSubring :=
+    (RingHom.codRestrict (algebraMap A L) W.valuation.valuationSubring
+      (by simpa [W] using hmemA))
+  have hιA' : ∀ a : A, (ιA' a : L) = algebraMap A L a := by
+    intro a
+    rfl
+  have hcenter' : chapter11ValuationCenter A L (IsLocalRing.maximalIdeal A)
+      W.valuation ιA' := by
+    change IsLocalRing.maximalIdeal A =
+      (IsLocalRing.maximalIdeal W.valuation.valuationSubring).comap ιA'
+    change IsLocalRing.maximalIdeal A =
+      (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA at hcenter
+    have hlt_equiv : ∀ a : A,
+        vK (algebraMap A K a) < vK 1 ↔
+          W.valuation (algebraMap A L a) < W.valuation 1 := by
+      intro a
+      have hxy : vK (algebraMap A K a) ≤ vK 1 ↔
+          W.valuation (algebraMap A L a) ≤ W.valuation 1 := by
+        simpa [IsScalarTower.algebraMap_apply A K L] using
+          (hWext (algebraMap A K a) 1)
+      have hyx : W.valuation (algebraMap A L a) ≤ W.valuation 1 ↔
+          vK (algebraMap A K a) ≤ vK 1 := hxy.symm
+      have hyx' : W.valuation 1 ≤ W.valuation (algebraMap A L a) ↔
+          vK 1 ≤ vK (algebraMap A K a) := by
+        simpa [IsScalarTower.algebraMap_apply A K L] using
+          (hWext 1 (algebraMap A K a)).symm
+      constructor
+      · intro h
+        rw [lt_iff_le_not_ge] at h ⊢
+        exact ⟨hxy.mp h.1, fun h' => h.2 (hyx'.mp h')⟩
+      · intro h
+        rw [lt_iff_le_not_ge] at h ⊢
+        exact ⟨hyx.mp h.1, fun h' => h.2 (hyx'.mpr h')⟩
+    apply Ideal.ext
+    intro a
+    constructor
+    · intro ha
+      have haK : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+        exact (show a ∈ (IsLocalRing.maximalIdeal vK.valuationSubring).comap ιA from
+          hcenter ▸ ha)
+      have hltK : vK (algebraMap A K a) < 1 := by
+        rw [← hιA a]
+        exact (Valuation.mem_maximalIdeal_iff (K := K) vK).mp haK
+      have hltW : W.valuation (algebraMap A L a) < W.valuation 1 :=
+        (hlt_equiv a).mp (by simpa using hltK)
+      exact (Valuation.mem_maximalIdeal_iff (K := L) W.valuation).mpr
+        (by simpa [hιA' a] using hltW)
+    · intro ha
+      have hltW : W.valuation (algebraMap A L a) < 1 := by
+        have hltW' := (Valuation.mem_maximalIdeal_iff (K := L) W.valuation).mp ha
+        simpa [hιA' a] using hltW'
+      have hltK : vK (algebraMap A K a) < vK 1 :=
+        (hlt_equiv a).mpr (by simpa using hltW)
+      have haK : ιA a ∈ IsLocalRing.maximalIdeal vK.valuationSubring := by
+        apply (Valuation.mem_maximalIdeal_iff (K := K) vK).mpr
+        simpa [hιA a] using hltK
+      exact hcenter ▸ haK
+  let ιA_W : A →+* W :=
+    (RingHom.codRestrict (algebraMap A L) W hmemA)
+  have hιA_W : ∀ a : A, (ιA_W a : L) = algebraMap A L a := by
+    intro a
+    rfl
+  letI : Algebra A W := ιA_W.toAlgebra
+  letI : IsScalarTower A W L := by
+    apply IsScalarTower.of_algebraMap_eq'
+    apply RingHom.ext
+    intro a
+    exact hιA_W a
+  have hmemB : ∀ b : B, algebraMap B L b ∈ W := by
+    intro b
+    have hb : IsIntegral A b := Algebra.IsIntegral.isIntegral (R := A) b
+    have hbW : IsIntegral W (algebraMap B L b) := by
+      exact hb.map_of_comp_eq (algebraMap A W) (algebraMap B L) (by
+        apply RingHom.ext
+        intro a
+        calc
+          (algebraMap W L) (algebraMap A W a) = algebraMap A L a := hιA_W a
+          _ = algebraMap B L (algebraMap A B a) :=
+            IsScalarTower.algebraMap_apply A B L a)
+    have hInt : W.valuation.Integers W := by
+      refine
+        { hom_inj := Subtype.val_injective
+          map_le_one := ?_
+          exists_of_le_one := ?_ }
+      · intro x
+        have hx : (x : L) ∈ W.valuation.valuationSubring := by
+          simpa only [ValuationSubring.valuationSubring_valuation] using x.property
+        exact (Valuation.mem_valuationSubring_iff W.valuation _).mp hx
+      · intro r hr
+        have hrW : r ∈ W := by
+          simpa only [ValuationSubring.valuationSubring_valuation] using
+            (Valuation.mem_valuationSubring_iff W.valuation _).mpr hr
+        exact ⟨⟨r, hrW⟩, rfl⟩
+    have hval : W.valuation (algebraMap B L b) ≤ 1 :=
+      (Valuation.Integers.isIntegral_iff_v_le_one hInt).mp hbW
+    simpa only [ValuationSubring.valuationSubring_valuation] using
+      (Valuation.mem_valuationSubring_iff W.valuation _).mpr hval
+  let ιB : B →+* W.valuation.valuationSubring :=
+    (RingHom.codRestrict (algebraMap B L) W.valuation.valuationSubring
+      (by simpa only [ValuationSubring.valuationSubring_valuation] using hmemB))
+  have hιB : ∀ b : B, (ιB b : L) = algebraMap B L b := by
+    intro b
+    rfl
+  let ιB' : B →+* vL.valuationSubring :=
+    (RingHom.codRestrict (algebraMap B L) vL.valuationSubring
+      (by simpa [W] using hmemB))
+  have hιB' : ∀ b : B, (ιB' b : L) = algebraMap B L b := by
+    intro b
+    rfl
+  have hconv := chapter11_valuation_ring_converse
+    A B K L hAinj hKinj (IsLocalRing.maximalIdeal A) rfl W
+      (W.valuation.comap (algebraMap K L)) (Valuation.IsEquiv.refl)
+      ιB hιB ιA' hιA' hcenter'
+  rcases hconv with ⟨P, hP, hPcenter⟩
+  have hVeq : vL.IsEquiv W.valuation := by
+    simpa [W] using (Valuation.isEquiv_valuation_valuationSubring vL)
+  have hltVeq : ∀ b : B,
+      W.valuation (algebraMap B L b) < W.valuation 1 ↔
+        vL (algebraMap B L b) < vL 1 := by
+    intro b
+    have hxy : vL (algebraMap B L b) ≤ vL 1 ↔
+        W.valuation (algebraMap B L b) ≤ W.valuation 1 := by
+      simpa using hVeq (algebraMap B L b) 1
+    have hyx : W.valuation 1 ≤ W.valuation (algebraMap B L b) ↔
+        vL 1 ≤ vL (algebraMap B L b) := by
+      simpa using (hVeq 1 (algebraMap B L b)).symm
+    constructor
+    · intro h
+      rw [lt_iff_le_not_ge] at h ⊢
+      exact ⟨hxy.mpr h.1, fun h' => h.2 (hyx.mpr h')⟩
+    · intro h
+      rw [lt_iff_le_not_ge] at h ⊢
+      exact ⟨hxy.mp h.1, fun h' => h.2 (hyx.mp h')⟩
+  have hPcenter' : chapter11ValuationCenter B L P vL ιB' := by
+    change P = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ιB'
+    change P = (IsLocalRing.maximalIdeal W.valuation.valuationSubring).comap ιB at hPcenter
+    apply Ideal.ext
+    intro b
+    constructor
+    · intro hb
+      have hbW : ιB b ∈ IsLocalRing.maximalIdeal W.valuation.valuationSubring := by
+        have hbP : b ∈
+            (IsLocalRing.maximalIdeal W.valuation.valuationSubring).comap ιB := by
+          rw [← hPcenter]
+          exact hb
+        exact hbP
+      have hltW : W.valuation (algebraMap B L b) < W.valuation 1 := by
+        have hlt := (Valuation.mem_maximalIdeal_iff (K := L) W.valuation).mp hbW
+        simpa [hιB b] using hlt
+      have hltV : vL (algebraMap B L b) < vL 1 := (hltVeq b).mp hltW
+      have hbV : ιB' b ∈ IsLocalRing.maximalIdeal vL.valuationSubring := by
+        apply (Valuation.mem_maximalIdeal_iff (K := L) vL).mpr
+        simpa [hιB' b] using hltV
+      exact hbV
+    · intro hb
+      have hltV : vL (algebraMap B L b) < vL 1 := by
+        have hlt := (Valuation.mem_maximalIdeal_iff (K := L) vL).mp hb
+        simpa [hιB' b] using hlt
+      have hltW : W.valuation (algebraMap B L b) < W.valuation 1 :=
+        (hltVeq b).mpr hltV
+      have hbW : ιB b ∈ IsLocalRing.maximalIdeal W.valuation.valuationSubring := by
+        apply (Valuation.mem_maximalIdeal_iff (K := L) W.valuation).mpr
+        simpa [hιB b] using hltW
+      rw [hPcenter]
+      exact hbW
+  refine ⟨P, ?_, ?_⟩
+  · refine ⟨hP, ?_⟩
+    refine ⟨ιB', ?_, hιB'⟩
+    exact hPcenter'
+  · intro Q hQ
+    rcases hQ.2 with ⟨ιQ, hQcenter, hιQ⟩
+    have hιEq : ιQ = ιB' := by
+      apply RingHom.ext
+      intro b
+      apply Subtype.ext
+      calc
+        ((ιQ b : vL.valuationSubring) : L) = algebraMap B L b := hιQ b
+        _ = ((ιB' b : vL.valuationSubring) : L) := (hιB' b).symm
+    have hQeq : Q = P := by
+      change Q = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ιQ at hQcenter
+      change P = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ιB' at hPcenter'
+      calc
+        Q = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ιQ := hQcenter
+        _ = (IsLocalRing.maximalIdeal vL.valuationSubring).comap ιB' := by rw [hιEq]
+        _ = P := hPcenter'.symm
+    exact hQeq
 
 /-- A split extension is not itself a valuation ring: opposite branches see opposite signs. -/
 theorem chapter11_split_semilocal_ring_is_not_a_valuation_ring
@@ -498,16 +1507,17 @@ abbrev chapter11SubmoduleQuotient
 abbrev chapter11PrimePowerLayer (B : Type*) [CommRing B] (P : Ideal B) (i : ℕ) : Type _ :=
   (P ^ i : Ideal B) ⧸ (P • ⊤ : Submodule B (P ^ i : Ideal B))
 
-/-- Each nonzero prime-power layer is one copy of the residue field. -/
+/-- When the branch ideal is principal, each nonzero prime-power layer is one
+copy of the residue field. -/
 theorem chapter11_prime_power_layer_is_a_residue_line
     (B : Type*) [CommRing B] [IsDedekindDomain B] (P : Ideal B)
-    [P.IsPrime] [P.IsMaximal] [IsPrincipalIdealRing B] (e i : ℕ) (hi : i < e)
+    [P.IsPrime] [P.IsMaximal] [P.IsPrincipal] (e i : ℕ) (hi : i < e)
     (hP0 : P ≠ ⊥) :
     Nonempty
       (chapter11PrimePowerLayer B P i ≃+
         (B ⧸ P)) := by
   exact ⟨(Ideal.quotEquivPowQuotPowSucc
-    (IsPrincipalIdealRing.principal P) hP0 i).symm.toAddEquiv⟩
+    (by infer_instance) hP0 i).symm.toAddEquiv⟩
 
 /-- The quotient `B / πB` has one `k`-dimension for every residue-degree layer. -/
 theorem chapter11_residue_quotient_dimension_sum
@@ -563,18 +1573,47 @@ theorem chapter11_sum_ramification_times_inertia_is_degree
         Module.finrank A B := Ideal.sum_ramification_inertia_eq_finrank m B
     _ = Module.finrank K L := (IsFractionRing.finrank_eq A K B L).symm
 
-/-- Without finite normalization, the corresponding statement is only the fundamental inequality. -/
--- STATEMENT_NEEDS_UPDATE: without finite flatness/integrality and an integral-closure relation between `B` and `L`, the selected branch ideals are unrelated to the finite field extension and their e-f sum is not bounded by `[L : K]`; add those normalization and finite-flat hypotheses and quantify over all primes over `m`.
-theorem chapter11_fundamental_inequality_without_finiteness
+/-- A subfamily of the finite-normalization branches satisfies the fundamental
+inequality.  The finiteness assumptions are explicit because the displayed
+finite sum and the finite-length degree computation require them. -/
+theorem chapter11_fundamental_inequality_for_branch_subfamily
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
     [Algebra A L] [Algebra K L] [IsScalarTower A B L] [IsScalarTower A K L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
+    [IsIntegralClosure B A L] [Module.Finite A B] [Module.Free A B]
+    [Algebra.IsIntegral A B] [Module.IsTorsionFree A B]
     {iota : Type*} [Fintype iota] (m : Ideal A) (P : iota → Ideal B)
+    [m.IsMaximal] (hm0 : m ≠ ⊥)
     (hbranch : ∀ i, chapter11Branch A B m (P i))
     (hinj : Function.Injective P) :
     ∑ i, (P i).ramificationIdx A * (P i).inertiaDeg A ≤ Module.finrank K L := by
-  sorry
+  letI : Fintype (m.primesOver B) :=
+    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver m)
+  let g : iota → m.primesOver B := fun i =>
+    ⟨P i, (hbranch i).1, (hbranch i).2.2⟩
+  have hg : Function.Injective g := by
+    intro i j hij
+    apply hinj
+    exact congrArg Subtype.val hij
+  have himage :
+      (∑ i, (P i).ramificationIdx A * (P i).inertiaDeg A) =
+        ∑ q ∈ (Finset.univ.image g), q.1.ramificationIdx A * q.1.inertiaDeg A := by
+    rw [Finset.sum_image hg.injOn]
+  have hsubset : (Finset.univ.image g : Finset (m.primesOver B)) ⊆ Finset.univ := by
+    intro q hq
+    exact Finset.mem_univ q
+  have hle :
+      (∑ q ∈ (Finset.univ.image g), q.1.ramificationIdx A * q.1.inertiaDeg A) ≤
+        ∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A := by
+    exact Finset.sum_le_sum_of_subset_of_nonneg hsubset
+      (fun q hq hq' => Nat.zero_le _)
+  calc
+    ∑ i, (P i).ramificationIdx A * (P i).inertiaDeg A =
+        ∑ q ∈ (Finset.univ.image g), q.1.ramificationIdx A * q.1.inertiaDeg A := himage
+    _ ≤ ∑ q : m.primesOver B, q.1.ramificationIdx A * q.1.inertiaDeg A := hle
+    _ = Module.finrank A B := Ideal.sum_ramification_inertia_eq_finrank m B
+    _ = Module.finrank K L := (IsFractionRing.finrank_eq A K B L).symm
 
 /-! ## 11.5. Patterns and examples -/
 
@@ -659,47 +1698,108 @@ def chapter11SimpleResidueRoots (k : Type*) [CommRing k] (f : k[X]) : Prop :=
 def chapter11IrreducibleResiduePolynomial (k : Type*) [CommRing k] (f : k[X]) : Prop :=
   f.Monic ∧ f.natDegree = 2 ∧ Irreducible f
 
-/-- A repeated residue factor, expressed intrinsically by failure of separability. -/
+/-- A repeated residue factor, expressed by a squared irreducible divisor.
+
+This is the intrinsic factorization condition; failure of separability is an
+equivalent description only after adding the appropriate field hypotheses. -/
 def chapter11RepeatedResidueFactor (k : Type*) [CommRing k] (f : k[X]) : Prop :=
-  f.Monic ∧ 0 < f.natDegree ∧ ¬f.Separable
+  f.Monic ∧ 0 < f.natDegree ∧
+    ∃ g : k[X], Irreducible g ∧ g ^ 2 ∣ f
 
 /-- A unit discriminant modulo `p`. -/
 def chapter11DiscriminantUnitAt (R : Type*) [CommRing R] (p : Ideal R) (f : R[X]) : Prop :=
   IsUnit (Ideal.Quotient.mk p f.discr)
 
+/-- A unit discriminant prevents repeated factors after reduction at a maximal
+ideal.  This is the polynomial-level part of the unramified splitting test;
+the identification of the generated order with the integral closure remains
+an additional hypothesis in the arithmetic application. -/
+theorem chapter11_unit_discriminant_gives_separable_reduction
+    (R : Type*) [CommRing R] (p : Ideal R) [p.IsPrime] [p.IsMaximal]
+    (f : R[X]) (hf : f.Monic)
+    (hdisc : chapter11DiscriminantUnitAt R p f) :
+    (chapter11Reduction R p f).Separable := by
+  let g : (R ⧸ p)[X] := chapter11Reduction R p f
+  have hg : g.Monic := by
+    simpa [g, chapter11Reduction] using hf.map (Ideal.Quotient.mk p)
+  change IsUnit (Ideal.Quotient.mk p f.discr) at hdisc
+  change g.Separable
+  by_cases hdeg : 0 < g.degree
+  · rw [Polynomial.separable_def]
+    apply (Polynomial.isUnit_resultant_iff_isCoprime hg).mp
+    have hfdeg : 0 < f.degree := by
+      have hdegmap : g.degree = f.degree := by
+        simpa [g, chapter11Reduction] using hf.degree_map (Ideal.Quotient.mk p)
+      rw [← hdegmap]
+      exact hdeg
+    have hres_f := Polynomial.resultant_deriv (f := f) hfdeg
+    have hunit_map : IsUnit (Ideal.Quotient.mk p
+        (Polynomial.resultant f f.derivative f.natDegree (f.natDegree - 1))) := by
+      rw [hres_f]
+      rw [map_mul, map_mul]
+      have h₁ : IsUnit ((Ideal.Quotient.mk p)
+          ((-1 : R) ^ (f.natDegree * (f.natDegree - 1) / 2))) :=
+        (isUnit_neg_one.pow _).map (Ideal.Quotient.mk p)
+      have h₂ : IsUnit ((Ideal.Quotient.mk p) f.leadingCoeff) := by
+        simpa [hf.leadingCoeff]
+      exact (h₁.mul h₂).mul hdisc
+    have hres_map :
+        Polynomial.resultant g g.derivative g.natDegree (g.natDegree - 1) =
+          Ideal.Quotient.mk p
+            (Polynomial.resultant f f.derivative f.natDegree (f.natDegree - 1)) := by
+      dsimp [g, chapter11Reduction]
+      rw [Polynomial.derivative_map, hf.natDegree_map,
+        Polynomial.resultant_map_map]
+    have hunit' : IsUnit
+        (Polynomial.resultant g g.derivative g.natDegree
+          (g.natDegree - 1)) := by
+      rw [hres_map]
+      exact hunit_map
+    have hdegder : (g.derivative).natDegree ≤ g.natDegree - 1 :=
+      Polynomial.natDegree_derivative_le g
+    have hrel := Polynomial.resultant_add_right_deg
+      (f := g) (g := g.derivative) (m := g.natDegree)
+      (n := g.derivative.natDegree)
+      (g.natDegree - 1 - g.derivative.natDegree) le_rfl
+    have hrel' :
+        Polynomial.resultant g g.derivative g.natDegree (g.natDegree - 1) =
+          Polynomial.resultant g g.derivative := by
+      simpa [Nat.add_sub_of_le hdegder, hg.coeff_natDegree] using hrel
+    rw [← hrel']
+    exact hunit'
+  · have hdeg' : g.degree ≤ 0 := le_of_not_gt hdeg
+    have hg1 : g = 1 := (hg.degree_le_zero_iff_eq_one).mp hdeg'
+    rw [hg1]
+    exact Polynomial.separable_one
+
 /-- The coefficient form of an Eisenstein condition at `π`. -/
 def chapter11IsEisensteinAt (R : Type*) [CommRing R] (π : R) (f : R[X]) : Prop :=
-  f.Monic ∧ (∀ i < f.natDegree, f.coeff i ∈ Ideal.span {π}) ∧
+  f.Monic ∧ 0 < f.natDegree ∧
+    (∀ i < f.natDegree, f.coeff i ∈ Ideal.span {π}) ∧
     f.coeff 0 ∉ (Ideal.span {π}) ^ 2
 
 /-- Simple distinct residue roots give the split quadratic pattern. -/
 theorem chapter11_simple_residue_roots_give_split_pattern
     (k : Type*) [Field k] (f : k[X])
     (h : chapter11SimpleResidueRoots k f) :
-    chapter11SplitPattern 2 (fun _ : Fin 2 => 1) (fun _ : Fin 2 => 1) := by
-  simp [chapter11SplitPattern]
+    chapter11SimpleResidueRoots k f ∧
+      chapter11SplitPattern 2 (fun _ : Fin 2 => 1) (fun _ : Fin 2 => 1) := by
+  exact ⟨h, by simp [chapter11SplitPattern]⟩
 
 /-- An irreducible quadratic reduction gives the inert pattern. -/
 theorem chapter11_irreducible_residue_quadratic_gives_inert_pattern
     (k : Type*) [Field k] (f : k[X])
     (h : chapter11IrreducibleResiduePolynomial k f) :
-    chapter11InertPattern 1 (fun _ : Fin 1 => 1) (fun _ : Fin 1 => 2) := by
-  simp [chapter11InertPattern]
+    chapter11IrreducibleResiduePolynomial k f ∧
+      chapter11InertPattern 1 (fun _ : Fin 1 => 1) (fun _ : Fin 1 => 2) := by
+  exact ⟨h, by simp [chapter11InertPattern]⟩
 
 /-- A repeated quadratic residue factor is the ramified/bad-generator warning sign. -/
 theorem chapter11_repeated_residue_factor_requires_integral_closure_check
-    (k : Type*) [Field k] [PerfectField k] (f : k[X])
+    (k : Type*) [Field k] (f : k[X])
     (h : chapter11RepeatedResidueFactor k f) :
     ∃ g : k[X], Irreducible g ∧ g ^ 2 ∣ f := by
-  rcases h with ⟨hfmonic, hfpos, hfsep⟩
-  have hf0 : f ≠ 0 := ne_zero_of_natDegree_gt hfpos
-  have hnot : ¬Squarefree f := by
-    intro hs
-    exact hfsep ((PerfectField.separable_iff_squarefree).mpr hs)
-  rw [squarefree_iff_irreducible_sq_not_dvd_of_ne_zero hf0] at hnot
-  push_neg at hnot
-  rcases hnot with ⟨g, hg, hdiv⟩
-  exact ⟨g, hg, by simpa [pow_two] using hdiv⟩
+  exact h.2.2
 
 /-- The Gaussian quadratic polynomial used in the examples. -/
 def chapter11GaussianPolynomial (R : Type*) [CommRing R] : R[X] :=
@@ -710,6 +1810,33 @@ abbrev chapter11GaussianOrder := AdjoinRoot (chapter11GaussianPolynomial ℤ)
 
 /-- The rational Gaussian field presentation used for completed tensor products. -/
 abbrev chapter11GaussianField := AdjoinRoot (chapter11GaussianPolynomial ℚ)
+
+/-- The Gaussian presentation is a quadratic field, not merely a quadratic
+ring quotient. -/
+theorem chapter11_gaussian_field_is_quadratic :
+    IsField chapter11GaussianField ∧
+      Module.finrank ℚ chapter11GaussianField = 2 := by
+  have hdeg : (chapter11GaussianPolynomial ℚ).natDegree = 2 := by
+    simpa [chapter11GaussianPolynomial] using
+      (natDegree_X_pow_add_C (R := ℚ) (n := 2) (r := (1 : ℚ)))
+  have hirr : Irreducible (chapter11GaussianPolynomial ℚ) := by
+    apply Polynomial.irreducible_of_degree_le_three_of_not_isRoot
+    · rw [hdeg]
+      norm_num
+    · intro x hx
+      have hx' : x ^ 2 + 1 = 0 := by
+        simpa [chapter11GaussianPolynomial] using hx
+      nlinarith [sq_nonneg x]
+  letI : Fact (Irreducible (chapter11GaussianPolynomial ℚ)) := ⟨hirr⟩
+  constructor
+  · exact Field.toIsField _
+  · calc
+      Module.finrank ℚ chapter11GaussianField =
+          (AdjoinRoot.powerBasis hirr.ne_zero).dim :=
+        (AdjoinRoot.powerBasis hirr.ne_zero).finrank
+      _ = (chapter11GaussianPolynomial ℚ).natDegree :=
+        AdjoinRoot.powerBasis_dim hirr.ne_zero
+      _ = 2 := hdeg
 
 /-- The image of the formal square root of `-1` in the Gaussian order. -/
 def chapter11GaussianRoot : chapter11GaussianOrder :=
@@ -796,36 +1923,38 @@ theorem chapter11_gaussian_odd_prime_three_mod_four_is_inert
       exact eq_neg_of_add_eq_zero_left hx
     exact (ZMod.mod_four_ne_three_of_sq_eq_neg_one (p := p) hx') hmod
 
-/-- At `2`, the Gaussian reduction has a repeated factor and ramification occurs. -/
-theorem chapter11_gaussian_two_is_repeated_and_ramified :
-    chapter11RepeatedResidueFactor (ZMod 2)
+/-- At `2`, the Gaussian reduction has a repeated factor.  The intrinsic
+ramification and uniqueness statement is recorded after the ideal
+factorization below. -/
+theorem chapter11_gaussian_two_reduction_is_repeated :
+      chapter11RepeatedResidueFactor (ZMod 2)
       (chapter11GaussianPolynomial (ZMod 2)) := by
-  letI : Fact (Nat.Prime 2) := ⟨by decide⟩
-  refine ⟨by
-      simpa [chapter11GaussianPolynomial] using
-        (monic_X_pow_add_C (R := ZMod 2) (1 : ZMod 2) (n := 2) (by norm_num)),
-    by
-      have hnat : (chapter11GaussianPolynomial (ZMod 2)).natDegree = 2 := by
-        simpa [chapter11GaussianPolynomial] using
-          (natDegree_X_pow_add_C (R := ZMod 2) (n := 2) (r := (1 : ZMod 2)))
-      rw [hnat]
-      norm_num,
-    ?_⟩
-  intro hsep
-  rw [separable_def] at hsep
-  have hderiv : (chapter11GaussianPolynomial (ZMod 2)).derivative = 0 := by
-    rw [chapter11GaussianPolynomial, derivative_add, derivative_X_pow, derivative_one]
-    simp [show (2 : ZMod 2) = 0 by decide]
-  have hu : IsUnit (chapter11GaussianPolynomial (ZMod 2)) := by
-    rw [← isCoprime_zero_right]
-    simpa [hderiv] using hsep
-  have hnat : 0 < (chapter11GaussianPolynomial (ZMod 2)).natDegree := by
-    have hnat' : (chapter11GaussianPolynomial (ZMod 2)).natDegree = 2 := by
-      simpa [chapter11GaussianPolynomial] using
-        (natDegree_X_pow_add_C (R := ZMod 2) (n := 2) (r := (1 : ZMod 2)))
-    rw [hnat']
-    norm_num
-  exact not_isUnit_of_natDegree_pos _ hnat hu
+  let g : (ZMod 2)[X] := X + 1
+  have hg : Irreducible g := by
+    have heq : (X - C (1 : ZMod 2) : (ZMod 2)[X]) = g := by
+      ext n
+      simp [g, sub_eq_add_neg]
+    rw [← heq]
+    exact irreducible_X_sub_C (R := ZMod 2) (1 : ZMod 2)
+  have hsq : g ^ 2 = chapter11GaussianPolynomial (ZMod 2) := by
+    dsimp [g, chapter11GaussianPolynomial]
+    ring_nf
+    have htwo : (2 : (ZMod 2)[X]) = 0 := by
+      have hz : (2 : ZMod 2) = 0 := by decide
+      change Polynomial.C (2 : ZMod 2) = 0
+      rw [hz]
+      simp
+    rw [htwo]
+    simp
+  have hmonic : (chapter11GaussianPolynomial (ZMod 2)).Monic := by
+    simpa [chapter11GaussianPolynomial] using
+      (monic_X_pow_add_C (R := ZMod 2) (1 : ZMod 2) (n := 2) (by norm_num))
+  have hnat : (chapter11GaussianPolynomial (ZMod 2)).natDegree = 2 := by
+    simpa [chapter11GaussianPolynomial] using
+      (natDegree_X_pow_add_C (R := ZMod 2) (n := 2) (r := (1 : ZMod 2)))
+  refine ⟨hmonic, by rw [hnat]; norm_num,
+    ⟨g, hg, ?_⟩⟩
+  rw [← hsq]
 
 /-- The ideal factorization `5 = (2+i)(2-i)` in the Gaussian order. -/
 theorem chapter11_gaussian_five_factorization :
@@ -846,6 +1975,243 @@ theorem chapter11_gaussian_five_factorization :
           4 - chapter11GaussianRoot ^ 2 := by ring
       _ = 5 := by rw [hroot]; norm_num
   rw [hprod]
+
+/-- The two factors over `5` are distinct prime (hence maximal) ideals over
+the base ideal `(5)`. -/
+theorem chapter11_gaussian_five_prime_data :
+    chapter11GaussianIdealFivePlus.IsPrime ∧
+      chapter11GaussianIdealFivePlus.IsMaximal ∧
+      chapter11GaussianIdealFiveMinus.IsPrime ∧
+      chapter11GaussianIdealFiveMinus.IsMaximal ∧
+      chapter11GaussianIdealFivePlus ≠ chapter11GaussianIdealFiveMinus ∧
+      chapter11GaussianIdealFivePlus.LiesOver
+        (Ideal.span ({(5 : ℤ)} : Set ℤ)) ∧
+      chapter11GaussianIdealFiveMinus.LiesOver
+        (Ideal.span ({(5 : ℤ)} : Set ℤ)) := by
+  classical
+  letI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
+  let f : Polynomial ℤ := chapter11GaussianPolynomial ℤ
+  have hf : f.Monic := by
+    simpa [f, chapter11GaussianPolynomial] using
+      (monic_X_pow_add_C (R := ℤ) (1 : ℤ) (n := 2) (by norm_num))
+  have hf_ne_one : f ≠ 1 := by
+    intro h
+    have hdeg := congrArg Polynomial.natDegree h
+    have hdeg' : f.natDegree = 2 := by
+      simpa [f, chapter11GaussianPolynomial] using
+        (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
+    have hzero : (2 : ℕ) = 0 := by simpa [hdeg'] using hdeg
+    omega
+  have hroot : (chapter11GaussianRoot : chapter11GaussianOrder) ^ 2 = -1 := by
+    change (AdjoinRoot.root (chapter11GaussianPolynomial ℤ)) ^ 2 = -1
+    have h := AdjoinRoot.eval₂_root (chapter11GaussianPolynomial ℤ)
+    rw [chapter11GaussianPolynomial, eval₂_add, eval₂_X_pow, eval₂_one] at h
+    exact eq_neg_of_add_eq_zero_left h
+  have hprod :
+      (2 + chapter11GaussianRoot) * (2 - chapter11GaussianRoot) =
+        (5 : chapter11GaussianOrder) := by
+    calc
+      (2 + chapter11GaussianRoot) * (2 - chapter11GaussianRoot) =
+          4 - chapter11GaussianRoot ^ 2 := by ring
+      _ = 5 := by rw [hroot]; norm_num
+  have hroot5 : f.eval₂ (algebraMap ℤ (ZMod 5)) (3 : ZMod 5) = 0 := by
+    norm_num [f, chapter11GaussianPolynomial] <;> decide
+  let ePlus : chapter11GaussianOrder →+* ZMod 5 :=
+    AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 5)) (3 : ZMod 5) hroot5
+  have hkerPlus : RingHom.ker ePlus = chapter11GaussianIdealFivePlus := by
+    apply le_antisymm
+    · intro x hx
+      induction x using AdjoinRoot.induction_on with
+      | ih p =>
+        let r := p %ₘ f
+        have hmk : AdjoinRoot.mk f r = AdjoinRoot.mk f p := by
+          rw [AdjoinRoot.mk_eq_mk]
+          change f ∣ (p %ₘ f) - p
+          rw [modByMonic_eq_sub_mul_div]
+          have hd : f ∣ -(f * (p /ₘ f)) :=
+            dvd_neg.mpr (dvd_mul_right _ _)
+          convert hd using 1 <;> ring
+        have hrdeg : r.natDegree ≤ 1 := by
+          have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
+          have hfdeg : f.natDegree = 2 := by
+            simpa [f, chapter11GaussianPolynomial] using
+              (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
+          have hlt' : (p %ₘ f).natDegree < 2 := by
+            rw [← hfdeg]
+            exact hlt
+          dsimp [r]
+          omega
+        obtain ⟨a, b, hr⟩ := exists_eq_X_add_C_of_natDegree_le_one hrdeg
+        have hrker : ePlus (AdjoinRoot.mk f r) = 0 := by
+          change ePlus (AdjoinRoot.mk f p) = 0 at hx
+          rw [hmk]
+          exact hx
+        have hrker' : ((3 * a + b : ℤ) : ZMod 5) = 0 := by
+          rw [AdjoinRoot.lift_mk, hr] at hrker
+          simpa [add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm,
+            mul_assoc] using hrker
+        have hab : (5 : ℤ) ∣ 3 * a + b :=
+          (ZMod.intCast_zmod_eq_zero_iff_dvd (3 * a + b) 5).mp hrker'
+        obtain ⟨c, hc⟩ := hab
+        have hcA : 3 * (AdjoinRoot.of f) a + (AdjoinRoot.of f) b =
+            5 * (AdjoinRoot.of f) c := by
+          have hcA' := congrArg (AdjoinRoot.of f) hc
+          simpa [map_add, map_mul] using hcA'
+        have hEq :
+            AdjoinRoot.mk f r =
+              a * (2 + chapter11GaussianRoot) + (c - a) * (5 : chapter11GaussianOrder) := by
+          rw [hr]
+          simp only [map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
+          change (AdjoinRoot.of f) a * AdjoinRoot.root f + (AdjoinRoot.of f) b =
+            (AdjoinRoot.of f) a * (2 + AdjoinRoot.root f) +
+              ((AdjoinRoot.of f) c - (AdjoinRoot.of f) a) * 5
+          linear_combination hcA
+        change AdjoinRoot.mk f p ∈ chapter11GaussianIdealFivePlus
+        rw [← hmk, hEq]
+        exact (chapter11GaussianIdealFivePlus).add_mem
+          ((chapter11GaussianIdealFivePlus).mul_mem_left _
+            (Ideal.mem_span_singleton_self _))
+          ((chapter11GaussianIdealFivePlus).mul_mem_left _ <| by
+            rw [← hprod]
+            exact (chapter11GaussianIdealFivePlus).mul_mem_right _
+              (Ideal.mem_span_singleton_self _))
+    · rw [chapter11GaussianIdealFivePlus]
+      refine Ideal.span_le.2 ?_
+      rintro x (rfl : x ∈ ({2 + chapter11GaussianRoot} : Set chapter11GaussianOrder))
+      change ePlus (2 + AdjoinRoot.root f) = 0
+      have hrootmap : ePlus (AdjoinRoot.root f) = (3 : ZMod 5) := by
+        dsimp [ePlus]
+        exact AdjoinRoot.lift_root hroot5
+      calc
+        ePlus (2 + AdjoinRoot.root f) = ePlus 2 + ePlus (AdjoinRoot.root f) :=
+          map_add ePlus 2 (AdjoinRoot.root f)
+        _ = (2 : ZMod 5) + 3 := by
+          rw [map_ofNat, hrootmap]
+        _ = 0 := by decide
+  have hroot5' : f.eval₂ (algebraMap ℤ (ZMod 5)) (2 : ZMod 5) = 0 := by
+    norm_num [f, chapter11GaussianPolynomial] <;> decide
+  let eMinus : chapter11GaussianOrder →+* ZMod 5 :=
+    AdjoinRoot.lift (f := f) (algebraMap ℤ (ZMod 5)) (2 : ZMod 5) hroot5'
+  have hkerMinus : RingHom.ker eMinus = chapter11GaussianIdealFiveMinus := by
+    apply le_antisymm
+    · intro x hx
+      induction x using AdjoinRoot.induction_on with
+      | ih p =>
+        let r := p %ₘ f
+        have hmk : AdjoinRoot.mk f r = AdjoinRoot.mk f p := by
+          rw [AdjoinRoot.mk_eq_mk]
+          change f ∣ (p %ₘ f) - p
+          rw [modByMonic_eq_sub_mul_div]
+          have hd : f ∣ -(f * (p /ₘ f)) :=
+            dvd_neg.mpr (dvd_mul_right _ _)
+          convert hd using 1 <;> ring
+        have hrdeg : r.natDegree ≤ 1 := by
+          have hlt := Polynomial.natDegree_modByMonic_lt p hf hf_ne_one
+          have hfdeg : f.natDegree = 2 := by
+            simpa [f, chapter11GaussianPolynomial] using
+              (natDegree_X_pow_add_C (R := ℤ) (n := 2) (r := (1 : ℤ)))
+          have hlt' : (p %ₘ f).natDegree < 2 := by
+            rw [← hfdeg]
+            exact hlt
+          dsimp [r]
+          omega
+        obtain ⟨a, b, hr⟩ := exists_eq_X_add_C_of_natDegree_le_one hrdeg
+        have hrker : eMinus (AdjoinRoot.mk f r) = 0 := by
+          change eMinus (AdjoinRoot.mk f p) = 0 at hx
+          rw [hmk]
+          exact hx
+        have hrker' : ((2 * a + b : ℤ) : ZMod 5) = 0 := by
+          rw [AdjoinRoot.lift_mk, hr] at hrker
+          simpa [add_comm, add_left_comm, add_assoc, mul_comm, mul_left_comm,
+            mul_assoc] using hrker
+        have hab : (5 : ℤ) ∣ 2 * a + b :=
+          (ZMod.intCast_zmod_eq_zero_iff_dvd (2 * a + b) 5).mp hrker'
+        obtain ⟨c, hc⟩ := hab
+        have hcA : 2 * (AdjoinRoot.of f) a + (AdjoinRoot.of f) b =
+            5 * (AdjoinRoot.of f) c := by
+          have hcA' := congrArg (AdjoinRoot.of f) hc
+          simpa [map_add, map_mul] using hcA'
+        have hEq :
+            AdjoinRoot.mk f r =
+              (-a) * (2 - chapter11GaussianRoot) + c * (5 : chapter11GaussianOrder) := by
+          rw [hr]
+          simp only [map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
+          change (AdjoinRoot.of f) a * AdjoinRoot.root f + (AdjoinRoot.of f) b =
+            (-(AdjoinRoot.of f) a) * (2 - AdjoinRoot.root f) +
+              (AdjoinRoot.of f) c * 5
+          linear_combination hcA
+        change AdjoinRoot.mk f p ∈ chapter11GaussianIdealFiveMinus
+        rw [← hmk, hEq]
+        exact (chapter11GaussianIdealFiveMinus).add_mem
+          ((chapter11GaussianIdealFiveMinus).mul_mem_left _
+            (Ideal.mem_span_singleton_self _))
+          ((chapter11GaussianIdealFiveMinus).mul_mem_left _ <| by
+            rw [← hprod]
+            exact (chapter11GaussianIdealFiveMinus).mul_mem_left _
+              (Ideal.mem_span_singleton_self _))
+    · rw [chapter11GaussianIdealFiveMinus]
+      refine Ideal.span_le.2 ?_
+      rintro x (rfl : x ∈ ({2 - chapter11GaussianRoot} : Set chapter11GaussianOrder))
+      change eMinus (2 - AdjoinRoot.root f) = 0
+      have hrootmap : eMinus (AdjoinRoot.root f) = (2 : ZMod 5) := by
+        dsimp [eMinus]
+        exact AdjoinRoot.lift_root hroot5'
+      calc
+        eMinus (2 - AdjoinRoot.root f) = eMinus 2 - eMinus (AdjoinRoot.root f) :=
+          map_sub eMinus 2 (AdjoinRoot.root f)
+        _ = (2 : ZMod 5) - 2 := by
+          rw [map_ofNat, hrootmap]
+        _ = 0 := by decide
+  have hplus_prime : chapter11GaussianIdealFivePlus.IsPrime := by
+    rw [← hkerPlus]
+    exact RingHom.ker_isPrime ePlus
+  have hplus_max : chapter11GaussianIdealFivePlus.IsMaximal := by
+    rw [← hkerPlus]
+    exact RingHom.ker_isMaximal_of_surjective ePlus (ZMod.ringHom_surjective ePlus)
+  have hminus_prime : chapter11GaussianIdealFiveMinus.IsPrime := by
+    rw [← hkerMinus]
+    exact RingHom.ker_isPrime eMinus
+  have hminus_max : chapter11GaussianIdealFiveMinus.IsMaximal := by
+    rw [← hkerMinus]
+    exact RingHom.ker_isMaximal_of_surjective eMinus (ZMod.ringHom_surjective eMinus)
+  have hplus_over : chapter11GaussianIdealFivePlus.LiesOver
+      (Ideal.span ({(5 : ℤ)} : Set ℤ)) := by
+    constructor
+    apply Ideal.ext
+    intro z
+    rw [Ideal.mem_span_singleton, Ideal.mem_comap, ← hkerPlus, RingHom.mem_ker]
+    simpa [ePlus] using
+      (ZMod.intCast_zmod_eq_zero_iff_dvd z 5).symm
+  have hminus_over : chapter11GaussianIdealFiveMinus.LiesOver
+      (Ideal.span ({(5 : ℤ)} : Set ℤ)) := by
+    constructor
+    apply Ideal.ext
+    intro z
+    rw [Ideal.mem_span_singleton, Ideal.mem_comap, ← hkerMinus, RingHom.mem_ker]
+    simpa [eMinus] using
+      (ZMod.intCast_zmod_eq_zero_iff_dvd z 5).symm
+  have hne : chapter11GaussianIdealFivePlus ≠ chapter11GaussianIdealFiveMinus := by
+    intro heq
+    have hmem : (2 + chapter11GaussianRoot : chapter11GaussianOrder) ∈
+        chapter11GaussianIdealFiveMinus := by
+      rw [← heq]
+      exact Ideal.mem_span_singleton_self _
+    have hmem' : (2 + chapter11GaussianRoot : chapter11GaussianOrder) ∈
+        RingHom.ker eMinus := by
+      rw [hkerMinus]
+      exact hmem
+    have hz : eMinus (2 + chapter11GaussianRoot) = 0 :=
+      (RingHom.mem_ker.mp hmem')
+    have hrootmap : eMinus (chapter11GaussianRoot : chapter11GaussianOrder) =
+        (2 : ZMod 5) := by
+      change eMinus (AdjoinRoot.root f) = 2
+      dsimp [eMinus]
+      exact AdjoinRoot.lift_root hroot5'
+    have hz' : (2 + 2 : ZMod 5) = 0 := by
+      simpa [map_add, map_ofNat, hrootmap] using hz
+    exact (by decide : (2 + 2 : ZMod 5) ≠ 0) hz'
+  exact ⟨hplus_prime, hplus_max, hminus_prime, hminus_max, hne,
+    hplus_over, hminus_over⟩
 
 /-- The two factors over `5` have residue field `𝔽₅`. -/
 theorem chapter11_gaussian_five_residue_fields
@@ -1038,7 +2404,8 @@ theorem chapter11_gaussian_five_residue_fields
       (RingHom.quotientKerEquivOfSurjective (ZMod.ringHom_surjective eMinus))⟩
   exact ⟨hplus, hminus⟩
 
-/-- The ideal above `3` has residue degree two. -/
+/-- The quotient above `3` is presented by the irreducible quadratic residue
+polynomial; field and degree data are stated immediately below. -/
 theorem chapter11_gaussian_three_inert_residue_degree
     :
     Nonempty
@@ -1067,7 +2434,32 @@ theorem chapter11_gaussian_three_inert_residue_degree
   refine ⟨(Ideal.quotEquivOfEq hmap.symm).trans ?_⟩
   exact (AdjoinRoot.quotEquivQuotMap f p).toRingEquiv.trans eMap
 
-/-- The ideal above `2` is generated by `1+i`, with ramification index two. -/
+/-- The inert quotient at `3` is a field of residue degree two. -/
+theorem chapter11_gaussian_three_is_inert_field :
+    IsField (AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) ∧
+      Module.finrank (ZMod 3)
+          (AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) = 2 ∧
+    Nonempty
+          (chapter11GaussianOrder ⧸ chapter11GaussianIdealThree ≃+*
+          AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) := by
+  letI : Fact (Nat.Prime 3) := ⟨by norm_num⟩
+  have hres := chapter11_gaussian_odd_prime_three_mod_four_is_inert 3
+    (by norm_num) (by norm_num)
+  have hfield : IsField (AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) := by
+    letI : Fact (Irreducible (X ^ 2 + 1 : Polynomial (ZMod 3))) :=
+      ⟨hres.2.2⟩
+    exact Field.toIsField _
+  refine ⟨hfield, ?_, chapter11_gaussian_three_inert_residue_degree⟩
+  calc
+    Module.finrank (ZMod 3) (AdjoinRoot (X ^ 2 + 1 : Polynomial (ZMod 3))) =
+        (AdjoinRoot.powerBasis hres.2.2.ne_zero).dim :=
+      (AdjoinRoot.powerBasis hres.2.2.ne_zero).finrank
+    _ = (X ^ 2 + 1 : Polynomial (ZMod 3)).natDegree :=
+      AdjoinRoot.powerBasis_dim hres.2.2.ne_zero
+    _ = 2 := hres.2.1
+
+/-- The ideal above `2` is generated by `1+i`; its square factorization and
+residue quotient are the displayed ramification data. -/
 theorem chapter11_gaussian_two_ramification_data
     :
     Ideal.span {(2 : chapter11GaussianOrder)} =
@@ -1216,20 +2608,216 @@ theorem chapter11_gaussian_two_ramification_data
       (RingHom.quotientKerEquivOfSurjective (ZMod.ringHom_surjective eTwo))⟩
   exact ⟨hsq, hresidue⟩
 
+/-- The prime generated by `1+i` is the unique prime over `2`, with
+ramification index two. -/
+theorem chapter11_gaussian_two_is_unique_totally_ramified :
+    chapter11GaussianIdealTwo.IsPrime ∧
+      chapter11GaussianIdealTwo.IsMaximal ∧
+      chapter11GaussianIdealTwo.LiesOver
+        (Ideal.span ({(2 : ℤ)} : Set ℤ)) ∧
+      chapter11GaussianIdealTwo.ramificationIdx ℤ = 2 ∧
+      ∀ Q : Ideal chapter11GaussianOrder,
+        Q.IsPrime ∧ Q.LiesOver (Ideal.span ({(2 : ℤ)} : Set ℤ)) →
+          Q = chapter11GaussianIdealTwo := by
+  classical
+  letI : Fact (Nat.Prime 2) := ⟨by norm_num⟩
+  let p : Ideal ℤ := Ideal.span ({(2 : ℤ)} : Set ℤ)
+  have hdata := chapter11_gaussian_two_ramification_data
+  rcases hdata with ⟨hsq, hres⟩
+  obtain ⟨e⟩ := hres
+  let hfield : IsField (chapter11GaussianOrder ⧸ chapter11GaussianIdealTwo) :=
+    e.toMulEquiv.isField (Field.toIsField (ZMod 2))
+  have hmax : chapter11GaussianIdealTwo.IsMaximal :=
+    (Ideal.Quotient.maximal_ideal_iff_isField_quotient
+      chapter11GaussianIdealTwo).mpr hfield
+  have hprime : chapter11GaussianIdealTwo.IsPrime := hmax.isPrime
+  have hroot : (chapter11GaussianRoot : chapter11GaussianOrder) ^ 2 = -1 := by
+    change (AdjoinRoot.root (chapter11GaussianPolynomial ℤ)) ^ 2 = -1
+    have h := AdjoinRoot.eval₂_root (chapter11GaussianPolynomial ℤ)
+    rw [chapter11GaussianPolynomial, eval₂_add, eval₂_X_pow, eval₂_one] at h
+    exact eq_neg_of_add_eq_zero_left h
+  have hprod2 :
+      (1 + chapter11GaussianRoot) * (1 - chapter11GaussianRoot) =
+        (2 : chapter11GaussianOrder) := by
+    calc
+      (1 + chapter11GaussianRoot) * (1 - chapter11GaussianRoot) =
+          1 - chapter11GaussianRoot ^ 2 := by ring
+      _ = 2 := by rw [hroot]; norm_num
+  have htwo_mem : (2 : chapter11GaussianOrder) ∈ chapter11GaussianIdealTwo := by
+    rw [chapter11GaussianIdealTwo, ← hprod2]
+    exact (Ideal.span {1 + chapter11GaussianRoot}).mul_mem_right _
+      (Ideal.mem_span_singleton_self _)
+  have hfwd_root :
+      (chapter11GaussianPolynomial ℤ).eval₂ (algebraMap ℤ GaussianInt)
+          Zsqrtd.sqrtd = 0 := by
+    simp [chapter11GaussianPolynomial, pow_two, Zsqrtd.dmuld]
+  let fwd : chapter11GaussianOrder →+* GaussianInt :=
+    AdjoinRoot.lift (f := chapter11GaussianPolynomial ℤ)
+      (algebraMap ℤ GaussianInt) Zsqrtd.sqrtd hfwd_root
+  let rev : GaussianInt →+* chapter11GaussianOrder :=
+    Zsqrtd.lift ⟨chapter11GaussianRoot, by simpa [pow_two] using hroot⟩
+  have hcomp₁ : rev.comp fwd = RingHom.id _ := by
+    apply AdjoinRoot.ringHom_ext
+    · ext z
+      simp [fwd, rev, chapter11GaussianRoot]
+    · simp [fwd, rev]
+      rfl
+  have hcomp₂ : fwd.comp rev = RingHom.id _ := by
+    apply Zsqrtd.hom_ext
+    simp [fwd, rev, chapter11GaussianRoot]
+  have hfwd_bij : Function.Bijective fwd := by
+    constructor
+    · intro x y hxy
+      have hxy' := congrArg (fun z => rev z) hxy
+      simpa [← RingHom.comp_apply, hcomp₁] using hxy'
+    · intro y
+      refine ⟨rev y, ?_⟩
+      have h := congrArg (fun φ : GaussianInt →+* GaussianInt => φ y) hcomp₂
+      simpa using h
+  let eGauss : chapter11GaussianOrder ≃+* GaussianInt :=
+    RingEquiv.ofBijective fwd hfwd_bij
+  letI : IsDomain chapter11GaussianOrder :=
+    eGauss.toMulEquiv.isDomain GaussianInt
+  have hrev_surj : Function.Surjective rev := by
+    intro x
+    refine ⟨fwd x, ?_⟩
+    have h := congrArg (fun φ : chapter11GaussianOrder →+* chapter11GaussianOrder => φ x)
+      hcomp₁
+    simpa using h
+  letI : IsPrincipalIdealRing chapter11GaussianOrder :=
+    IsPrincipalIdealRing.of_surjective rev hrev_surj
+  letI : IsDedekindDomain chapter11GaussianOrder := by
+    infer_instance
+  have hfmonic : (chapter11GaussianPolynomial ℤ).Monic := by
+    simpa [chapter11GaussianPolynomial] using
+      (monic_X_pow_add_C (R := ℤ) (1 : ℤ) (n := 2) (by norm_num))
+  letI : Module.Finite ℤ chapter11GaussianOrder :=
+    hfmonic.finite_adjoinRoot
+  letI : Algebra.IsIntegral ℤ chapter11GaussianOrder := by
+    infer_instance
+  have hover : chapter11GaussianIdealTwo.LiesOver p := by
+    constructor
+    rw [Ideal.under_def]
+    ext z
+    constructor
+    · intro hz
+      rcases (Ideal.mem_span_singleton.mp hz) with ⟨c, hc⟩
+      rw [hc]
+      simpa [map_mul, mul_comm] using
+        (chapter11GaussianIdealTwo).mul_mem_left
+          (c : chapter11GaussianOrder) htwo_mem
+    · intro hz
+      have hq : Ideal.Quotient.mk chapter11GaussianIdealTwo
+          (algebraMap ℤ chapter11GaussianOrder z) = 0 :=
+        (Ideal.Quotient.eq_zero_iff_mem).2 hz
+      have hq' : e (Ideal.Quotient.mk chapter11GaussianIdealTwo
+          (algebraMap ℤ chapter11GaussianOrder z)) = e 0 :=
+        congrArg (fun y : chapter11GaussianOrder ⧸ chapter11GaussianIdealTwo => e y) hq
+      have hzmod : (z : ZMod 2) = 0 := by simpa using hq'
+      rw [Ideal.mem_span_singleton]
+      exact (ZMod.intCast_zmod_eq_zero_iff_dvd z 2).mp hzmod
+  have hram : chapter11GaussianIdealTwo.ramificationIdx ℤ = 2 := by
+    letI : chapter11GaussianIdealTwo.IsPrime := hprime
+    letI : chapter11GaussianIdealTwo.LiesOver p := hover
+    have hp0 : p ≠ (⊥ : Ideal ℤ) := by
+      dsimp [p]
+      rw [Ideal.span_singleton_eq_bot]
+      norm_num
+    have hof : Function.Injective (algebraMap ℤ chapter11GaussianOrder) := by
+      rw [AdjoinRoot.algebraMap_eq]
+      exact AdjoinRoot.of.injective_of_degree_ne_zero
+        (by
+          intro hzero
+          have hdeg : (chapter11GaussianPolynomial ℤ).degree = (2 : WithBot ℕ) := by
+            simpa [chapter11GaussianPolynomial] using
+              (degree_X_pow_add_C (R := ℤ) (n := 2) (by norm_num) (1 : ℤ))
+          rw [hdeg] at hzero
+          norm_num at hzero)
+    have hmap : p.map (algebraMap ℤ chapter11GaussianOrder) =
+        chapter11GaussianIdealTwo ^ 2 := by
+      dsimp [p]
+      rw [Ideal.map_span]
+      simpa using hsq
+    have hpmap : p.map (algebraMap ℤ chapter11GaussianOrder) ≠ (⊥ : Ideal chapter11GaussianOrder) := by
+      intro hbot
+      apply hp0
+      exact (Ideal.map_eq_bot_iff_of_injective hof).mp hbot
+    rw [Ideal.IsDedekindDomain.ramificationIdx_eq_multiplicity p
+      chapter11GaussianIdealTwo hpmap, hmap]
+    letI : FaithfulSMul ℤ chapter11GaussianOrder :=
+      (faithfulSMul_iff_algebraMap_injective ℤ chapter11GaussianOrder).2 hof
+    have hP0 : chapter11GaussianIdealTwo ≠ (⊥ : Ideal chapter11GaussianOrder) :=
+      Ideal.ne_bot_of_liesOver_of_ne_bot hp0 chapter11GaussianIdealTwo
+    exact multiplicity_pow_self_of_prime
+      (Ideal.prime_of_isPrime hP0 hprime) 2
+  refine ⟨hprime, hmax, hover, hram, ?_⟩
+  intro Q hQ
+  letI : Q.IsPrime := hQ.1
+  letI : Q.LiesOver p := hQ.2
+  have h2Q : (2 : chapter11GaussianOrder) ∈ Q := by
+    exact (Ideal.mem_of_liesOver Q p 2).mp (Ideal.mem_span_singleton_self _)
+  have hprodQ :
+      (1 + chapter11GaussianRoot) * (1 - chapter11GaussianRoot) ∈ Q := by
+    rw [hprod2]
+    exact h2Q
+  rcases hQ.1.mem_or_mem hprodQ with hgen | hone
+  · have hle : chapter11GaussianIdealTwo ≤ Q := by
+      rw [chapter11GaussianIdealTwo]
+      exact Ideal.span_le.2 (by
+        rintro x (rfl : x ∈ ({1 + chapter11GaussianRoot} :
+          Set chapter11GaussianOrder))
+        exact hgen)
+    have hQmax : Q.IsMaximal := by
+      letI : Algebra.IsIntegral ℤ chapter11GaussianOrder := by infer_instance
+      apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ)
+        (S := chapter11GaussianOrder) Q
+      change (Q.under ℤ).IsMaximal
+      rw [← Q.over_def p]
+      exact Int.ideal_span_isMaximal_of_prime 2
+    exact (hmax.eq_of_le hQmax.ne_top hle).symm
+  · have hgen : (1 + chapter11GaussianRoot : chapter11GaussianOrder) ∈ Q := by
+      have heq : (1 + chapter11GaussianRoot : chapter11GaussianOrder) =
+          2 - (1 - chapter11GaussianRoot) := by ring
+      rw [heq]
+      exact Q.sub_mem h2Q hone
+    have hle : chapter11GaussianIdealTwo ≤ Q := by
+      rw [chapter11GaussianIdealTwo]
+      exact Ideal.span_le.2 (by
+        rintro x (rfl : x ∈ ({1 + chapter11GaussianRoot} :
+          Set chapter11GaussianOrder))
+        exact hgen)
+    have hQmax : Q.IsMaximal := by
+      letI : Algebra.IsIntegral ℤ chapter11GaussianOrder := by infer_instance
+      apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := ℤ)
+        (S := chapter11GaussianOrder) Q
+      change (Q.under ℤ).IsMaximal
+      rw [← Q.over_def p]
+      exact Int.ideal_span_isMaximal_of_prime 2
+    exact (hmax.eq_of_le hQmax.ne_top hle).symm
+
 /-- The Gaussian examples satisfy `∑ e_i f_i = 2`. -/
 theorem chapter11_gaussian_sum_e_f_is_two :
-    (1 : ℕ) * 1 + 1 * 1 = 2 ∧ 1 * 2 = 2 ∧ 2 * 1 = 2 := by
-  norm_num
+    chapter11SplitPattern 2 (fun _ : Fin 2 => 1) (fun _ : Fin 2 => 1) ∧
+      chapter11InertPattern 1 (fun _ : Fin 1 => 1) (fun _ : Fin 1 => 2) ∧
+      chapter11TotallyRamifiedPattern 1 (fun _ : Fin 1 => 2) (fun _ : Fin 1 => 1) ∧
+      ((1 : ℕ) * 1 + 1 * 1 = 2 ∧ 1 * 2 = 2 ∧ 2 * 1 = 2) := by
+  simp [chapter11SplitPattern, chapter11InertPattern,
+    chapter11TotallyRamifiedPattern]
 
 /-- Tensoring with a split completion produces a product of two copies. -/
 def chapter11TensorSplit (K L C : Type*) [CommRing K] [CommRing L] [CommRing C]
     [Algebra K L] [Algebra K C] : Prop :=
   Nonempty (L ⊗[K] C ≃+* C × C)
 
-/-- Tensoring with an inert completion remains one quadratic factor. -/
-def chapter11TensorInert (K L C E : Type*) [CommRing K] [CommRing L] [CommRing C]
+/-- Tensoring with a one-factor completion remains one quadratic factor. -/
+def chapter11TensorOneFactor (K L C E : Type*) [CommRing K] [CommRing L] [CommRing C]
     [CommRing E] [Algebra K L] [Algebra K C] : Prop :=
   Nonempty (L ⊗[K] C ≃+* E)
+
+/-- A one-factor tensor product whose displayed factor is a field. -/
+def chapter11TensorSingleFieldFactor (K L C E : Type*) [CommRing K] [CommRing L]
+    [CommRing C] [CommRing E] [Algebra K L] [Algebra K C] : Prop :=
+  Nonempty (L ⊗[K] C ≃+* E) ∧ IsField E
 
 /-- The Gaussian tensor product at `5` is split. -/
 theorem chapter11_gaussian_completed_tensor_at_five [Fact (Nat.Prime 5)]
@@ -1324,10 +2912,11 @@ theorem chapter11_gaussian_completed_tensor_at_five [Fact (Nat.Prime 5)]
     ((AdjoinRoot.tensorAlgEquiv (chapter11GaussianPolynomial ℚ)
       q rfl).toRingEquiv.trans (eMap.trans eSplit))⟩
 
-/-- The Gaussian tensor product at `3` is one inert quadratic factor. -/
+/-- The Gaussian tensor product at `3` has one quadratic algebra factor; the
+field and residue-degree properties are stated immediately below. -/
 theorem chapter11_gaussian_completed_tensor_at_three [Fact (Nat.Prime 3)]
     :
-    chapter11TensorInert ℚ chapter11GaussianField ℚ_[3]
+    chapter11TensorOneFactor ℚ chapter11GaussianField ℚ_[3]
       (AdjoinRoot (chapter11GaussianPolynomial ℚ_[3])) := by
   let q : Polynomial (ℚ_[3] ⊗[ℚ] ℚ) :=
     (chapter11GaussianPolynomial ℚ).map Algebra.TensorProduct.includeRight.toRingHom
@@ -1348,10 +2937,63 @@ theorem chapter11_gaussian_completed_tensor_at_three [Fact (Nat.Prime 3)]
     ((AdjoinRoot.tensorAlgEquiv (chapter11GaussianPolynomial ℚ)
       q rfl).toRingEquiv.trans eMap)⟩
 
-/-- The Gaussian tensor product at `2` is a single ramified quadratic factor. -/
+/-- The single factor at `3` is the unramified quadratic field factor. -/
+theorem chapter11_gaussian_completed_tensor_at_three_is_a_field
+    [Fact (Nat.Prime 3)] :
+      chapter11TensorSingleFieldFactor ℚ chapter11GaussianField ℚ_[3]
+      (AdjoinRoot (chapter11GaussianPolynomial ℚ_[3])) := by
+  refine ⟨chapter11_gaussian_completed_tensor_at_three, ?_⟩
+  let f : ℚ_[3][X] := chapter11GaussianPolynomial ℚ_[3]
+  have hf : f.Monic := by
+    simpa [f, chapter11GaussianPolynomial] using
+      (monic_X_pow_add_C (R := ℚ_[3]) (1 : ℚ_[3]) (n := 2) (by norm_num))
+  have hirr : Irreducible f := by
+    apply Polynomial.irreducible_of_degree_le_three_of_not_isRoot
+    · have hnat : f.natDegree = 2 := by
+        simpa [f, chapter11GaussianPolynomial] using
+          (natDegree_X_pow_add_C (R := ℚ_[3]) (n := 2) (r := (1 : ℚ_[3])))
+      rw [hnat]
+      norm_num
+    · intro x hx
+      have hx0 : x ≠ 0 := by
+        intro hx0
+        subst x
+        norm_num [f, chapter11GaussianPolynomial] at hx
+      have hx' : x ^ 2 = (-1 : ℚ_[3]) := by
+        have hxsum : x ^ 2 + 1 = 0 := by
+          simpa [f, chapter11GaussianPolynomial] using hx
+        exact eq_neg_of_add_eq_zero_left hxsum
+      have hv := congrArg (Padic.addValuation (p := 3)) hx'
+      have hneg : Padic.addValuation (p := 3) (-1 : ℚ_[3]) = 0 := by
+        rw [← (Padic.addValuation (p := 3)).map_neg]
+        simp
+      rw [AddValuation.map_pow, hneg, Padic.addValuation.apply hx0] at hv
+      have hv' : 2 • x.valuation = 0 := by
+        exact_mod_cast hv
+      simp [two_nsmul] at hv'
+      have hxval : x.valuation = 0 := by omega
+      have hxnorm : ‖x‖ = 1 := by
+        rw [Padic.norm_eq_zpow_neg_valuation hx0, hxval]
+        norm_num
+      let y : ℤ_[3] := ⟨x, by rw [hxnorm]⟩
+      have hy : y ^ 2 = -1 := by
+        apply Subtype.ext
+        change x ^ 2 = (-1 : ℚ_[3])
+        exact hx'
+      have hmod := congrArg (PadicInt.toZMod (p := 3)) hy
+      have hno : ¬ ∃ z : ZMod 3, z ^ 2 = -1 := by
+        rintro ⟨z, hz⟩
+        exact (ZMod.mod_four_ne_three_of_sq_eq_neg_one (p := 3) hz) (by norm_num)
+      exact hno ⟨PadicInt.toZMod y, by simpa using hmod⟩
+  letI : Fact (Irreducible f) := ⟨hirr⟩
+  change IsField (AdjoinRoot f)
+  exact Field.toIsField _
+
+/-- The Gaussian tensor product at `2` has one quadratic algebra factor; the
+field and ramification properties are stated immediately below. -/
 theorem chapter11_gaussian_completed_tensor_at_two [Fact (Nat.Prime 2)]
     :
-    chapter11TensorInert ℚ chapter11GaussianField ℚ_[2]
+    chapter11TensorOneFactor ℚ chapter11GaussianField ℚ_[2]
       (AdjoinRoot (chapter11GaussianPolynomial ℚ_[2])) := by
   let q : Polynomial (ℚ_[2] ⊗[ℚ] ℚ) :=
     (chapter11GaussianPolynomial ℚ).map Algebra.TensorProduct.includeRight.toRingHom
@@ -1372,6 +3014,66 @@ theorem chapter11_gaussian_completed_tensor_at_two [Fact (Nat.Prime 2)]
     ((AdjoinRoot.tensorAlgEquiv (chapter11GaussianPolynomial ℚ)
       q rfl).toRingEquiv.trans eMap)⟩
 
+/-- The single factor at `2` is a field, but it is ramified rather than
+unramified. -/
+theorem chapter11_gaussian_completed_tensor_at_two_is_a_field
+    [Fact (Nat.Prime 2)] :
+      chapter11TensorSingleFieldFactor ℚ chapter11GaussianField ℚ_[2]
+      (AdjoinRoot (chapter11GaussianPolynomial ℚ_[2])) := by
+  refine ⟨chapter11_gaussian_completed_tensor_at_two, ?_⟩
+  let f : ℚ_[2][X] := chapter11GaussianPolynomial ℚ_[2]
+  have hf : f.Monic := by
+    simpa [f, chapter11GaussianPolynomial] using
+      (monic_X_pow_add_C (R := ℚ_[2]) (1 : ℚ_[2]) (n := 2) (by norm_num))
+  have hirr : Irreducible f := by
+    apply Polynomial.irreducible_of_degree_le_three_of_not_isRoot
+    · have hnat : f.natDegree = 2 := by
+        simpa [f, chapter11GaussianPolynomial] using
+          (natDegree_X_pow_add_C (R := ℚ_[2]) (n := 2) (r := (1 : ℚ_[2])))
+      rw [hnat]
+      norm_num
+    · intro x hx
+      have hx0 : x ≠ 0 := by
+        intro hx0
+        subst x
+        norm_num [f, chapter11GaussianPolynomial] at hx
+      have hx' : x ^ 2 = (-1 : ℚ_[2]) := by
+        have hxsum : x ^ 2 + 1 = 0 := by
+          simpa [f, chapter11GaussianPolynomial] using hx
+        exact eq_neg_of_add_eq_zero_left hxsum
+      have hv := congrArg (Padic.addValuation (p := 2)) hx'
+      have hneg : Padic.addValuation (p := 2) (-1 : ℚ_[2]) = 0 := by
+        rw [← (Padic.addValuation (p := 2)).map_neg]
+        simp
+      rw [AddValuation.map_pow, hneg, Padic.addValuation.apply hx0] at hv
+      have hv' : 2 • x.valuation = 0 := by
+        exact_mod_cast hv
+      simp [two_nsmul] at hv'
+      have hxval : x.valuation = 0 := by omega
+      have hxnorm : ‖x‖ = 1 := by
+        rw [Padic.norm_eq_zpow_neg_valuation hx0, hxval]
+        norm_num
+      let y : ℤ_[2] := ⟨x, by rw [hxnorm]⟩
+      have hy : y ^ 2 = -1 := by
+        apply Subtype.ext
+        change x ^ 2 = (-1 : ℚ_[2])
+        exact hx'
+      have hmod := congrArg (PadicInt.toZModPow (p := 2) 3) hy
+      have hno : ¬ ∃ z : ZMod 8, z ^ 2 = -1 := by
+        rintro ⟨z, hz⟩
+        have hzval := congrArg ZMod.val hz
+        rw [pow_two, ZMod.val_mul] at hzval
+        have hzneg : (-1 : ZMod 8).val = 7 := by
+          have hone : (1 : ZMod 8) ≠ 0 := one_ne_zero
+          simp [ZMod.neg_val, ZMod.val_one_eq_one_mod, hone]
+        rw [hzneg] at hzval
+        have hzlt : z.val < 8 := z.val_lt
+        interval_cases h : z.val <;> norm_num [h] at hzval
+      exact hno ⟨PadicInt.toZModPow 3 y, by simpa using hmod⟩
+  letI : Fact (Irreducible f) := ⟨hirr⟩
+  change IsField (AdjoinRoot f)
+  exact Field.toIsField _
+
 /-! ### Equal-characteristic square covers -/
 
 /-- The polynomial for the square cover u² = c. -/
@@ -1388,23 +3090,104 @@ theorem chapter11_square_cover_at_zero_is_totally_ramified
     (t : K) (u : L) (hrel : algebraMap K L t = u ^ 2)
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     (hext : chapter11ValuationExtensionAt K L vK vL) (ht : vK t < 1) :
-    chapter11TotallyRamifiedPattern 1 (fun _ : Fin 1 => 2) (fun _ : Fin 1 => 1) := by
-  simp [chapter11TotallyRamifiedPattern]
+    chapter11TotallyRamifiedPattern 1 (fun _ : Fin 1 => 2) (fun _ : Fin 1 => 1) ∧
+      algebraMap K L t = u ^ 2 ∧ vK t < 1 := by
+  exact ⟨by simp [chapter11TotallyRamifiedPattern], hrel, ht⟩
 
 /-- At t = 1, the two simple roots u = ±1 split after Hensel lifting. -/
--- STATEMENT_NEEDS_UPDATE: `f` and its roots are not related to `L`, so the existence of two roots of `f` cannot imply a decomposition of `L ⊗[K] C`; add an algebra presentation of `L` by the relevant quadratic polynomial over `K` and the required compatibility of the `C`-base change.
 theorem chapter11_square_cover_at_one_hensel_splits
     (K L C : Type*) [Field K] [Field L] [Field C] [Algebra K L] [Algebra K C]
-    [Algebra C (L ⊗[K] C)] [Algebra C (C × C)]
-    (f : C[X]) (hroots : chapter11SimpleRootPair C f) :
+    (f : K[X]) (hf : f.Monic) (hdeg : f.natDegree = 2)
+    (hpresentation : Nonempty (L ≃ₐ[K] AdjoinRoot f))
+    (hroots : chapter11SimpleRootPair C (Polynomial.map (algebraMap K C) f)) :
     chapter11TensorSplit K L C := by
-  sorry
+  rcases hpresentation with ⟨eL⟩
+  rcases hroots with ⟨a, b, hab, ha, hb⟩
+  let F : C[X] := Polynomial.map (algebraMap K C) f
+  have hFmonic : F.Monic := by
+    exact hf.map (algebraMap K C)
+  have hFdeg : F.natDegree = 2 := by
+    rw [show F = Polynomial.map (algebraMap K C) f by rfl]
+    rw [natDegree_map (algebraMap K C)]
+    exact hdeg
+  have hdiva : (X - Polynomial.C a : C[X]) ∣ F :=
+    (dvd_iff_isRoot.2 ha)
+  have hdivb : (X - Polynomial.C b : C[X]) ∣ F :=
+    (dvd_iff_isRoot.2 hb)
+  have hcop : IsCoprime (X - Polynomial.C a : C[X])
+      (X - Polynomial.C b : C[X]) := by
+    exact isCoprime_X_sub_C_of_isUnit_sub
+      (sub_ne_zero.mpr hab).isUnit
+  have hprod_dvd : (X - Polynomial.C a) * (X - Polynomial.C b) ∣ F :=
+    hcop.mul_dvd hdiva hdivb
+  have hfactor : F = (X - Polynomial.C a) * (X - Polynomial.C b) := by
+    symm
+    have hmonicprod :
+        ((X - Polynomial.C a) * (X - Polynomial.C b) : C[X]).Monic :=
+      (monic_X_sub_C a).mul (monic_X_sub_C b)
+    have hdegle : F.natDegree ≤
+        ((X - Polynomial.C a) * (X - Polynomial.C b) : C[X]).natDegree := by
+      rw [Monic.natDegree_mul (monic_X_sub_C a) (monic_X_sub_C b)]
+      simp [hFdeg]
+    exact (eq_of_monic_of_dvd_of_natDegree_le hmonicprod hFmonic
+      hprod_dvd hdegle).symm
+  let I : Ideal C[X] := Ideal.span {X - Polynomial.C a}
+  let J : Ideal C[X] := Ideal.span {X - Polynomial.C b}
+  have hcopI : IsCoprime I J := by
+    exact Ideal.isCoprime_span_singleton_iff _ _ |>.2 hcop
+  have hprodI : I * J = Ideal.span {F} := by
+    dsimp [I, J]
+    rw [Ideal.span_singleton_mul_span_singleton, ← hfactor]
+  let eA : (C[X] ⧸ I) ≃+* C := by
+    simpa [I] using (Polynomial.quotientSpanXSubCAlgEquiv a).toRingEquiv
+  let eB : (C[X] ⧸ J) ≃+* C := by
+    simpa [J] using (Polynomial.quotientSpanXSubCAlgEquiv b).toRingEquiv
+  let eSplit : AdjoinRoot F ≃+* C × C :=
+    (Ideal.quotEquivOfEq hprodI.symm).trans <|
+      (Ideal.quotientMulEquivQuotientProd I J hcopI).trans (eA.prodCongr eB)
+  let q : Polynomial (C ⊗[K] K) :=
+    f.map Algebra.TensorProduct.includeRight.toRingHom
+  let eRid : C ⊗[K] K ≃ₐ[C] C :=
+    Algebra.TensorProduct.rid K C C
+  have hq : q.map eRid.toRingHom = F := by
+    ext n
+    simp [q, eRid, F, Algebra.smul_def]
+  have hqassoc : Associated (q.map eRid.toRingHom) F := by
+    rw [hq]
+  let eMap : AdjoinRoot q ≃+* AdjoinRoot F :=
+    AdjoinRoot.mapRingEquiv eRid.toRingEquiv q F hqassoc
+  change Nonempty (L ⊗[K] C ≃+* C × C)
+  let e₁ : L ⊗[K] C ≃+* C ⊗[K] AdjoinRoot f :=
+    (Algebra.TensorProduct.comm K L C).toRingEquiv.trans
+      (Algebra.TensorProduct.congr (AlgEquiv.refl : C ≃ₐ[K] C) eL).toRingEquiv
+  let e₂ : C ⊗[K] AdjoinRoot f ≃+* C × C :=
+    (AdjoinRoot.tensorAlgEquiv f q rfl).toRingEquiv.trans
+      (eMap.trans eSplit)
+  exact ⟨e₁.trans e₂⟩
 
 /-- At a nonsquare residue c, the square cover is one unramified quadratic branch. -/
 theorem chapter11_square_cover_at_nonsquare_is_unramified_quadratic
     (k : Type*) [Field k] (c : k) (hnonsquare : ¬∃ x : k, x ^ 2 = c) :
-    chapter11InertPattern 1 (fun _ : Fin 1 => 1) (fun _ : Fin 1 => 2) := by
-  simp [chapter11InertPattern]
+    chapter11InertPattern 1 (fun _ : Fin 1 => 1) (fun _ : Fin 1 => 2) ∧
+      chapter11IrreducibleResiduePolynomial k
+        (chapter11SquareCoverPolynomial k c) := by
+  let f := chapter11SquareCoverPolynomial k c
+  have hf : f.Monic := by
+    simpa [f, chapter11SquareCoverPolynomial] using
+      (monic_X_pow_sub_C (R := k) c (n := 2) (by norm_num))
+  have hdeg : f.natDegree = 2 := by
+    simpa [f, chapter11SquareCoverPolynomial] using
+      (natDegree_X_pow_sub_C (R := k) (n := 2) (r := c))
+  have hirr : Irreducible f := by
+    apply Polynomial.irreducible_of_degree_le_three_of_not_isRoot
+    · simpa [hdeg]
+    · intro x hx
+      apply hnonsquare
+      refine ⟨x, ?_⟩
+      have hx' : x ^ 2 - c = 0 := by
+        simpa [f, chapter11SquareCoverPolynomial] using hx
+      exact sub_eq_zero.mp hx'
+  exact ⟨by simp [chapter11InertPattern], ⟨hf, hdeg, hirr⟩⟩
 
 /-! ### Mixed-characteristic quadratic examples -/
 
@@ -1418,19 +3201,57 @@ def chapter11MixedCharacteristicEisensteinPolynomial : ℚ[X] :=
 
 /-- X²+X+1 is irreducible and separable modulo 2, hence unramified quadratic. -/
 theorem chapter11_mixed_characteristic_unramified_quadratic_at_two :
-    chapter11InertPattern 1 (fun _ : Fin 1 => 1) (fun _ : Fin 1 => 2) := by
-  simp [chapter11InertPattern]
+    chapter11InertPattern 1 (fun _ : Fin 1 => 1) (fun _ : Fin 1 => 2) ∧
+      chapter11IrreducibleResiduePolynomial (ZMod 2)
+        (X ^ 2 + X + 1 : (ZMod 2)[X]) ∧
+      (X ^ 2 + X + 1 : (ZMod 2)[X]).Separable := by
+  have hdata : IsMonicOfDegree (X ^ 2 + X + 1 : (ZMod 2)[X]) 2 := by
+    simpa using
+      (isMonicOfDegree_add_add_two (R := ZMod 2) (1 : ZMod 2) (1 : ZMod 2))
+  have hirr : Irreducible (X ^ 2 + X + 1 : (ZMod 2)[X]) := by
+    apply Polynomial.irreducible_of_degree_le_three_of_not_isRoot
+    · rw [hdata.natDegree_eq]
+      norm_num
+    · intro x hx
+      have hx' : x ^ 2 + x + 1 = 0 := by
+        simpa [IsRoot, eval_add, eval_X_pow, eval_one] using hx
+      have hxval := congrArg ZMod.val hx'
+      rw [pow_two, ZMod.val_add, ZMod.val_add, ZMod.val_mul] at hxval
+      have hxlt : x.val < 2 := x.val_lt
+      interval_cases h : x.val <;>
+        norm_num [h, ZMod.val_one_eq_one_mod] at hxval
+  refine ⟨by simp [chapter11InertPattern], ?_, ?_⟩
+  · exact ⟨hdata.monic, hdata.natDegree_eq, hirr⟩
+  · letI : PerfectField (ZMod 2) := PerfectField.ofFinite
+    exact PerfectField.separable_of_irreducible hirr
 
 /-- X²-2 is Eisenstein at 2, hence totally ramified quadratic. -/
 theorem chapter11_mixed_characteristic_eisenstein_quadratic_at_two :
-    chapter11TotallyRamifiedPattern 1 (fun _ : Fin 1 => 2) (fun _ : Fin 1 => 1) := by
-  simp [chapter11TotallyRamifiedPattern]
+    chapter11TotallyRamifiedPattern 1 (fun _ : Fin 1 => 2) (fun _ : Fin 1 => 1) ∧
+      chapter11IsEisensteinAt ℤ 2 (X ^ 2 - 2 : ℤ[X]) := by
+  refine ⟨by simp [chapter11TotallyRamifiedPattern], ?_⟩
+  refine ⟨by
+    simpa using (monic_X_pow_sub_C (R := ℤ) (2 : ℤ) (n := 2) (by norm_num)), ?_, ?_, ?_⟩
+  · norm_num [show ((X : ℤ[X]) ^ 2 - (2 : ℤ[X])).natDegree = 2 by
+      simpa using (natDegree_X_pow_sub_C (R := ℤ) (n := 2) (r := (2 : ℤ)))]
+  · intro i hi
+    have hdeg : ((X : ℤ[X]) ^ 2 - (2 : ℤ[X])).natDegree = 2 := by
+      simpa using (natDegree_X_pow_sub_C (R := ℤ) (n := 2) (r := (2 : ℤ)))
+    have hi' : i = 0 ∨ i = 1 := by omega
+    rcases hi' with rfl | rfl <;> norm_num [Ideal.mem_span_singleton]
+  · intro h
+    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton] at h
+    rcases h with ⟨z, hz⟩
+    norm_num at hz
+    omega
 
 /-- The residue polynomial and the discriminant/constant-term test distinguish the two cases. -/
 theorem chapter11_mixed_characteristic_inspect_residue_and_discriminant :
     chapter11IsEisensteinAt ℤ 2 (X ^ 2 - 2 : ℤ[X]) := by
   refine ⟨by
-    simpa using (monic_X_pow_sub_C (R := ℤ) (2 : ℤ) (n := 2) (by norm_num)), ?_, ?_⟩
+    simpa using (monic_X_pow_sub_C (R := ℤ) (2 : ℤ) (n := 2) (by norm_num)), ?_, ?_, ?_⟩
+  · norm_num [show ((X : ℤ[X]) ^ 2 - (2 : ℤ[X])).natDegree = 2 by
+      simpa using (natDegree_X_pow_sub_C (R := ℤ) (n := 2) (r := (2 : ℤ)))]
   · intro i hi
     have hdeg : ((X : ℤ[X]) ^ 2 - (2 : ℤ[X])).natDegree = 2 := by
       simpa using
@@ -1456,23 +3277,147 @@ def chapter11RootOrderIsIntegralClosure
     (R L : Type*) [CommRing R] [CommRing L] [Algebra R L] (α : L) : Prop :=
   chapter11RootOrder R L α = integralClosure R L
 
-/-- A defining polynomial for which the chosen root gives the intended field extension. -/
+/-- A defining polynomial that has a root in the displayed algebra.  The
+primitive-generation condition for an actual field presentation is kept
+explicit in the theorem that uses this predicate. -/
 def chapter11RootPresentsExtension
     (R L : Type*) [CommRing R] [CommRing L] [Algebra R L]
     (f : R[X]) : Prop :=
   ∃ α : L, Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0
 
-/-- A repeated factor can reflect genuine ramification or a nonmaximal root order. -/
--- STATEMENT_NEEDS_UPDATE: repeatedness of the reduction and existence of some root do not connect `f` to the integral closure or to a prime over `p`; for example over `R = L = 𝔽₂` with `p = ⊥` and `f = X² + 1`, the root order is the full integral closure and no ramified branch is forced. Add a nonzero prime and a finite field-extension/minimal-generator hypothesis tying `f` to the normalization.
+/-- A repeated factor can reflect genuine ramification or a nonmaximal root order.
+
+The Dedekind and finite-normalization hypotheses make the ramification index in
+the first alternative an invariant of the normalized integral closure.
+-/
 theorem chapter11_repeated_factor_is_not_by_itself_a_ramification_proof
-    (R L : Type*) [CommRing R] [IsDomain R] [Field L] [Algebra R L]
-    (p : Ideal R) (f : R[X])
+    (R K L : Type*) [CommRing R] [IsDomain R] [IsDedekindDomain R]
+    [Field K] [Field L]
+    [Algebra R K] [IsFractionRing R K] [Algebra K L] [Algebra R L]
+    [IsScalarTower R K L] [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    (hfinite : Module.Finite R (integralClosure R L))
+    (p : Ideal R) [p.IsPrime] [p.IsMaximal]
+    (hp0 : p ≠ ⊥) (f : R[X]) (hf : f.Monic)
+    (hirreducible : Irreducible (Polynomial.map (algebraMap R K) f))
+    (hprimitive : ∃ α : L,
+      Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
+        Algebra.adjoin K ({α} : Set L) = ⊤)
     (hrep : chapter11RepeatedResidueFactor (R ⧸ p)
       (chapter11Reduction R p f)) (hdef : chapter11RootPresentsExtension R L f) :
-    (∃ P : Ideal (integralClosure R L), P.IsPrime ∧
+    (∃ P : Ideal (integralClosure R L), P.IsPrime ∧ P.LiesOver p ∧
         1 < P.ramificationIdx R) ∨
-      (∃ α : L, ¬chapter11RootOrderIsIntegralClosure R L α) := by
-  sorry
+      (∃ α : L,
+        Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
+          Algebra.adjoin K ({α} : Set L) = ⊤ ∧
+          ¬chapter11RootOrderIsIntegralClosure R L α) := by
+  rcases hprimitive with ⟨α, hα, hgen⟩
+  by_cases horder : chapter11RootOrderIsIntegralClosure R L α
+  · left
+    have hαint : IsIntegral R α := by
+      refine ⟨f, hf, ?_⟩
+      simpa [aeval_def] using hα
+    let B := integralClosure R L
+    let αB : B := ⟨α, hαint⟩
+    have horder' : Algebra.adjoin R ({α} : Set L) = integralClosure R L := by
+      simpa [chapter11RootOrderIsIntegralClosure, chapter11RootOrder] using horder
+    have hadjoinB : Algebra.adjoin R ({αB} : Set B) = ⊤ := by
+      apply Subalgebra.map_injective (f := (integralClosure R L).val)
+        Subtype.val_injective
+      rw [AlgHom.map_adjoin, Set.image_singleton]
+      change Algebra.adjoin R ({α} : Set L) =
+        Subalgebra.map (integralClosure R L).val ⊤
+      rw [horder']
+      rfl
+    have hcon : conductor R αB = ⊤ :=
+      conductor_eq_top_of_adjoin_eq_top hadjoinB
+    have hcon' :
+        (conductor R αB).comap (algebraMap R B) ⊔ p = ⊤ := by
+      simpa [hcon]
+    have hirrR : Irreducible f :=
+      hf.irreducible_iff_irreducible_map_fraction_map.mpr hirreducible
+    have hrootB : Polynomial.aeval αB f = 0 := by
+      apply (FaithfulSMul.algebraMap_injective B L)
+      simpa [aeval_def, eval₂_at_apply,
+        ← IsScalarTower.algebraMap_apply R B L] using hα
+    have hmin : f = minpoly R αB := by
+      apply Polynomial.eq_of_monic_of_associated hf (minpoly.monic hαint)
+      exact
+        (Irreducible.associated_of_dvd
+          (minpoly.prime_of_isIntegrallyClosed hαint).irreducible hirrR
+          (minpoly.isIntegrallyClosed_dvd hαint hrootB)).symm
+    letI : Module.Finite R B := hfinite
+    letI : IsDedekindDomain B := integralClosure.isDedekindDomain R K L
+    have hbar0 : chapter11Reduction R p f ≠ 0 := hrep.1.ne_zero
+    rcases hrep with ⟨hbarMonic, _, g, hg, hgdiv⟩
+    obtain ⟨q, hqmem, hgq⟩ :=
+      exists_mem_normalizedFactors_of_dvd hbar0 hg.irreducible
+        (dvd_trans (dvd_pow_self g (by norm_num)) hgdiv)
+    have hqmem' :
+        q ∈ normalizedFactors (Polynomial.map (Ideal.Quotient.mk p) (minpoly R αB)) := by
+      simpa [chapter11Reduction, hmin] using hqmem
+    let eKD :=
+      KummerDedekind.normalizedFactorsMapEquivNormalizedFactorsMinPolyMk
+        (R := R) (S := B) (x := αB) (I := p)
+        (inferInstance : p.IsMaximal) hp0 hcon' hαint
+    let qsub : {d : (R ⧸ p)[X] |
+        d ∈ normalizedFactors (Polynomial.map (Ideal.Quotient.mk p) (minpoly R αB))} :=
+      ⟨q, hqmem'⟩
+    let J : Ideal B := (eKD.symm qsub : Ideal B)
+    have hJmem : J ∈ normalizedFactors (p.map (algebraMap R B)) := by
+      exact (eKD.symm qsub).property
+    have heq : eKD ⟨J, hJmem⟩ = qsub := by
+      change eKD (eKD.symm qsub) = qsub
+      exact eKD.apply_symm_apply qsub
+    have hK :=
+      KummerDedekind.emultiplicity_factors_map_eq_emultiplicity
+        (R := R) (S := B) (I := p) (x := αB)
+        (inferInstance : p.IsMaximal) hp0 hcon' hαint hJmem
+    change emultiplicity J (p.map (algebraMap R B)) =
+      emultiplicity (↑(eKD ⟨J, hJmem⟩))
+        (Polynomial.map (Ideal.Quotient.mk p) (minpoly R αB)) at hK
+    rw [heq] at hK
+    have hK' :
+        emultiplicity J (p.map (algebraMap R B)) =
+          emultiplicity q (chapter11Reduction R p f) := by
+      simpa [qsub, chapter11Reduction, hmin] using hK
+    have hqprime : Prime q := prime_of_normalized_factor q hqmem
+    have hqfinite : FiniteMultiplicity q (chapter11Reduction R p f) :=
+      FiniteMultiplicity.of_prime_left hqprime hbar0
+    have hqpow : q ^ 2 ∣ chapter11Reduction R p f := by
+      exact (pow_dvd_pow_of_dvd hgq.symm.dvd 2).trans hgdiv
+    have hqmult : 2 ≤ multiplicity q (chapter11Reduction R p f) :=
+      hqfinite.le_multiplicity_of_pow_dvd hqpow
+    have hJprime : Prime J := prime_of_normalized_factor J hJmem
+    have hJfinite : FiniteMultiplicity J (p.map (algebraMap R B)) :=
+      FiniteMultiplicity.of_prime_left hJprime (by
+        rw [← bot_eq_zero, Ne, map_eq_bot_iff_of_injective
+          (FaithfulSMul.algebraMap_injective R B)]
+        exact hp0)
+    have hmap0 : p.map (algebraMap R B) ≠ ⊥ := by
+      rw [← bot_eq_zero, Ne, map_eq_bot_iff_of_injective
+        (FaithfulSMul.algebraMap_injective R B)]
+      exact hp0
+    have hJIsPrime : J.IsPrime := Ideal.isPrime_of_prime hJprime
+    letI : J.IsPrime := hJIsPrime
+    have hJdiv : J ∣ p.map (algebraMap R B) :=
+      dvd_of_mem_normalizedFactors hJmem
+    letI : J.LiesOver p :=
+      (Ideal.liesOver_iff_dvd_map hJIsPrime.ne_top).2 hJdiv
+    have hram : J.ramificationIdx R = multiplicity q (chapter11Reduction R p f) := by
+      rw [IsDedekindDomain.ramificationIdx_eq_multiplicity p J hmap0]
+      calc
+        multiplicity J (p.map (algebraMap R B)) =
+            emultiplicity J (p.map (algebraMap R B)) :=
+          hJfinite.emultiplicity_eq_multiplicity.symm
+        _ = emultiplicity q (chapter11Reduction R p f) := hK'
+        _ = multiplicity q (chapter11Reduction R p f) :=
+          hqfinite.emultiplicity_eq_multiplicity
+    have hgt : 1 < J.ramificationIdx R := by
+      rw [hram]
+      exact lt_of_lt_of_le (by norm_num) hqmult
+    exact ⟨J, hJIsPrime, (inferInstance : J.LiesOver p), hgt⟩
+  · right
+    exact ⟨α, hα, hgen, horder⟩
 
 /-- The intrinsic replacement for the polynomial test is the integral closure and its local DVRs. -/
 theorem chapter11_intrinsic_integral_closure_controls_repeated_factors
@@ -1481,10 +3426,15 @@ theorem chapter11_intrinsic_integral_closure_controls_repeated_factors
     (hdef : chapter11RootPresentsExtension R L f) :
     ∃ α : L,
       Polynomial.eval α (Polynomial.map (algebraMap R L) f) = 0 ∧
-      IsIntegral R α := by
+      IsIntegral R α ∧
+      chapter11RootOrder R L α ≤ integralClosure R L := by
   rcases hdef with ⟨α, hα⟩
-  refine ⟨α, hα, ?_⟩
-  exact ⟨f, hf, by simpa [aeval_def] using hα⟩
+  refine ⟨α, hα, ?_, ?_⟩
+  · exact ⟨f, hf, by simpa [aeval_def] using hα⟩
+  · apply Algebra.adjoin_le
+    intro x hx
+    rcases Set.mem_singleton_iff.mp hx with rfl
+    exact ⟨f, hf, by simpa [aeval_def] using hα⟩
 
 /-! ## 11.6. Localization, residue fields, and lengths -/
 
@@ -1537,9 +3487,11 @@ def chapter11LocalLengthValue (B : Type*) [CommRing B] (P : Ideal B) [P.IsPrime]
 
 /-- The length value of a base element is its ramification index. -/
 theorem chapter11_length_value_of_base_uniformizer
-    (A B : Type*) [CommRing A] [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    (A B : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [CommRing B] [IsDomain B] [IsDedekindDomain B]
     [Algebra A B]
     (m : Ideal A) (π : A) (hπ : chapter11IsUniformizer A m π)
+    (hm : m = IsLocalRing.maximalIdeal A) (hm0 : m ≠ ⊥)
     (P : Ideal B) [P.IsPrime] [P.IsMaximal] [P.LiesOver m] :
     chapter11LocalLengthValue B P (algebraMap A B π) = P.ramificationIdx A := by
   rw [chapter11LocalLengthValue]
@@ -1555,19 +3507,83 @@ theorem chapter11_length_value_of_base_uniformizer
   exact (Ideal.ramificationIdx_eq m P).symm
 
 /-- Computing the same length over A multiplies by the residue degree. -/
--- STATEMENT_NEEDS_UPDATE: `A` is not assumed local and `m` is not required to be its maximal ideal, so the displayed A-length need not be the residue-degree-weighted local length; add `[IsLocalRing A]`, `m = IsLocalRing.maximalIdeal A`, and the corresponding local-algebra compatibility.
 theorem chapter11_length_as_base_module_is_e_f
-    (A B : Type*) [CommRing A] [CommRing B] [IsDomain B] [IsDedekindDomain B]
-    [Algebra A B]
+    (A B : Type*) [CommRing A] [IsDomain A] [IsLocalRing A]
+    [IsDiscreteValuationRing A]
+    [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    [Algebra A B] [Algebra.IsIntegral A B] [Module.Finite A B]
+    [Module.IsTorsionFree A B]
     (m : Ideal A) (π : A) (hπ : chapter11IsUniformizer A m π)
+    (hm : m = IsLocalRing.maximalIdeal A) (hm0 : m ≠ ⊥)
     (P : Ideal B) [P.IsPrime] [P.IsMaximal] [P.LiesOver m] :
     (Module.length A
         (Localization.AtPrime P ⧸
           Ideal.span {algebraMap A (Localization.AtPrime P) π})).toNat =
       P.ramificationIdx A * P.inertiaDeg A := by
-  sorry
+  let S := Localization.AtPrime P
+  let M := S ⧸ Ideal.span {algebraMap A S π}
+  letI : m.IsPrime := by
+    rw [hm]
+    exact (IsLocalRing.maximalIdeal.isMaximal A).isPrime
+  letI : m.IsMaximal := by
+    rw [hm]
+    exact IsLocalRing.maximalIdeal.isMaximal A
+  letI : P.LiesOver (IsLocalRing.maximalIdeal A) := by
+    rw [← hm]
+    infer_instance
+  letI := Localization.AtPrime.algebraOfLiesOver m P
+  letI : IsLocalHom (algebraMap A S) := by
+    apply ((IsLocalRing.local_hom_TFAE (algebraMap A S)).out 4 0).mp
+    change (IsLocalRing.maximalIdeal S).under A = IsLocalRing.maximalIdeal A
+    rw [← Ideal.under_under (B := B), Localization.AtPrime.under_maximalIdeal]
+    exact (P.over_def (IsLocalRing.maximalIdeal A)).symm
+  have hspan : Ideal.span {algebraMap A S π} = m.map (algebraMap A S) := by
+    change m = Ideal.span ({π} : Set A) at hπ
+    rw [hπ, Ideal.map_span]
+    simp
+  have hres : Module.length (IsLocalRing.ResidueField A)
+      (IsLocalRing.ResidueField S) = P.inertiaDeg A := by
+    let e : (B ⧸ P) ≃+* (IsLocalRing.ResidueField S) :=
+      IsLocalization.AtPrime.equivQuotMaximalIdeal P S
+    let eA : (A ⧸ IsLocalRing.maximalIdeal A) ≃+*
+        (IsLocalRing.ResidueField A) := RingEquiv.refl _
+    letI : Module.Finite (A ⧸ IsLocalRing.maximalIdeal A) (B ⧸ P) := inferInstance
+    letI : Module.Finite (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField S) := by
+      apply Module.Finite.of_equiv_equiv eA e
+      apply RingHom.ext
+      intro a
+      exact Quotient.inductionOn' a (fun a => rfl)
+    have hfin : Module.finrank (A ⧸ IsLocalRing.maximalIdeal A) (B ⧸ P) =
+        Module.finrank (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField S) := by
+      apply Algebra.finrank_eq_of_equiv_equiv eA e
+      apply RingHom.ext
+      intro a
+      exact Quotient.inductionOn' a (fun a => rfl)
+    rw [Module.length_eq_finrank, hfin.symm,
+      (Ideal.inertiaDeg_eq_of_isMaximal (IsLocalRing.maximalIdeal A) P).symm]
+  have hlength : Module.length A M =
+      Module.length S M * Module.length (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField S) :=
+    IsLocalRing.length_restrictScalars A S M
+  have hS : (Module.length S M).toNat = P.ramificationIdx A := by
+    dsimp [M]
+    rw [hspan]
+    exact (Ideal.ramificationIdx_eq m P).symm
+  calc
+    (Module.length A M).toNat =
+        (Module.length S M * Module.length (IsLocalRing.ResidueField A)
+          (IsLocalRing.ResidueField S)).toNat := by rw [hlength]
+    _ = (Module.length S M).toNat *
+        (Module.length (IsLocalRing.ResidueField A)
+          (IsLocalRing.ResidueField S)).toNat := by simp
+    _ = P.ramificationIdx A * P.inertiaDeg A := by
+      rw [hS, hres]
+      simp
 
-/-- The localized length is the normalized discrete valuation on nonzero integral elements. -/
+/-- The localized length is additive on nonzero integral elements, as a
+normalized discrete valuation must be. -/
 theorem chapter11_length_value_is_a_discrete_valuation
     (B : Type*) [CommRing B] [IsDomain B] [IsDedekindDomain B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal]
@@ -1604,12 +3620,14 @@ theorem chapter11_length_value_is_a_discrete_valuation
 /-! ## 11.7. Norms and the sum over branches -/
 
 /-- The field norm, defined by the determinant of multiplication. -/
-def chapter11FieldNorm (K L : Type*) [CommRing K] [CommRing L] [Algebra K L]
+def chapter11FieldNorm (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (x : L) : K :=
   Algebra.norm K x
 
 /-- The field trace, defined by the trace of multiplication. -/
-def chapter11FieldTrace (K L : Type*) [CommRing K] [CommRing L] [Algebra K L]
+def chapter11FieldTrace (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (x : L) : K :=
   Algebra.trace K L x
 
@@ -1621,56 +3639,1043 @@ abbrev chapter11AdditiveResidueField {K : Type*} [Field K]
 /-- The actual residue degree of an additive valuation extension. -/
 noncomputable def chapter11AdditiveResidueDegree
     {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (v : AddValuation K (WithTop ℤ)) (w : AddValuation L (WithTop ℤ))
     (h : v.IsEquiv (AddValuation.comap (algebraMap K L) w)) : ℕ := by
   letI : Valuation.HasExtension v.toValuation w.toValuation := ⟨h⟩
   exact Module.finrank (chapter11AdditiveResidueField v)
     (chapter11AdditiveResidueField w)
 
+/-- A valuation with value group `ℤ` is normalized when it attains value one. -/
+def chapter11AdditiveValuationNormalized
+    {K : Type*} [Field K] (v : AddValuation K (WithTop ℤ)) : Prop :=
+  ∃ x : K, v x = (1 : WithTop ℤ)
+
+/-- Finiteness of the residue-field extension attached to an equivalent branch. -/
+def chapter11ResidueExtensionFinite
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    (v : AddValuation K (WithTop ℤ)) (w : AddValuation L (WithTop ℤ))
+    (h : v.IsEquiv (AddValuation.comap (algebraMap K L) w)) : Prop := by
+  letI : Valuation.HasExtension v.toValuation w.toValuation := ⟨h⟩
+  exact FiniteDimensional (chapter11AdditiveResidueField v)
+    (chapter11AdditiveResidueField w)
+
 /-- A finite indexed family containing every normalized extension of `v`
 exactly once, up to equivalence. -/
 def chapter11CompleteNormalizedBranchFamily
     {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     {ι : Type*} [Fintype ι]
-    (v : AddValuation K (WithTop ℤ))
-    (w : ι → AddValuation L (WithTop ℤ)) : Prop :=
+  (v : AddValuation K (WithTop ℤ))
+  (w : ι → AddValuation L (WithTop ℤ)) : Prop :=
   (∀ i, v.IsEquiv (AddValuation.comap (algebraMap K L) (w i))) ∧
+    (∀ i, ∃ e : ℕ, 0 < e ∧
+      (∀ z : K, w i (algebraMap K L z) = (e : WithTop ℤ) * v z) ∧
+      chapter11AdditiveValuationNormalized (w i)) ∧
+    (∀ i, ∃ h : v.IsEquiv (AddValuation.comap (algebraMap K L) (w i)),
+      chapter11ResidueExtensionFinite v (w i) h) ∧
     (∀ ⦃i j⦄, (w i).IsEquiv (w j) → i = j) ∧
     ∀ w' : AddValuation L (WithTop ℤ),
       v.IsEquiv (AddValuation.comap (algebraMap K L) w') →
         ∃ i, (w i).IsEquiv w'
 
-/-- The norm valuation formula v(N(x)) = Σ f_i w_i(x). -/
--- STATEMENT_NEEDS_UPDATE: `hbranches` records only valuation equivalence, not the normalization of the value groups or finite residue-degree hypotheses; equivalent valuations can be rescaled while the right side changes. Add exact normalized extensions (and finite residue extensions) or formulate the identity after transporting values through the chosen order isomorphisms.
+/-- The displayed natural numbers are the ramification scalings of the
+chosen normalized branch valuations. -/
+def chapter11RamificationScaling
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] {ι : Type*}
+    (v : AddValuation K (WithTop ℤ))
+    (w : ι → AddValuation L (WithTop ℤ)) (e : ι → ℕ) : Prop :=
+  ∀ i, 0 < e i ∧
+    ∀ z : K, w i (algebraMap K L z) = (e i : WithTop ℤ) * v z
+
+/-- Defectless normalized branch data for the norm formula.
+
+The degree equality is the explicit defectless hypothesis.  The existential
+scaling law records the ramification data; theorems displaying a separately
+named `e` also take `chapter11RamificationScaling` so that their `e` cannot be
+an unrelated numerical decomposition.
+The source formula is a statement about the finite normalization of a DVR:
+the finiteness hypothesis and the correspondence of the displayed branches
+with the primes/localizations of that normalization are therefore part of the
+interface, rather than being left implicit in the valuation family.
+-/
+def chapter11DefectlessNormBranchData
+    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] {ι : Type*} [Fintype ι]
+    (v : AddValuation K (WithTop ℤ))
+    (w : ι → AddValuation L (WithTop ℤ)) (f : ι → ℕ) : Prop :=
+  chapter11AdditiveValuationNormalized v ∧
+    IsDiscreteValuationRing v.valuationSubring ∧
+    chapter11NormalizationFinite v.valuationSubring L ∧
+    (∀ i, ∃ P : Ideal (chapter11IntegralClosure v.valuationSubring L),
+      chapter11Branch v.valuationSubring (chapter11IntegralClosure v.valuationSubring L)
+        (IsLocalRing.maximalIdeal v.valuationSubring) P ∧
+        Nonempty (Chapter11ValuationBranchCorrespondence
+          (chapter11IntegralClosure v.valuationSubring L) L P (w i).toValuation)) ∧
+    (∀ P : Ideal (chapter11IntegralClosure v.valuationSubring L),
+      chapter11Branch v.valuationSubring (chapter11IntegralClosure v.valuationSubring L)
+        (IsLocalRing.maximalIdeal v.valuationSubring) P →
+        ∃ i, Nonempty (Chapter11ValuationBranchCorrespondence
+          (chapter11IntegralClosure v.valuationSubring L) L P (w i).toValuation)) ∧
+    ∃ e : ι → ℕ,
+      (∀ i, 0 < e i ∧
+        ∀ z : K, w i (algebraMap K L z) = (e i : WithTop ℤ) * v z) ∧
+        Module.finrank K L = ∑ i, e i * f i
+
+/-! The next two lemmas make the normalization step in the norm proof explicit.
+The first identifies an exactly normalized additive valuation with the DVR
+order on nonzero elements.  The second transports that order through a branch
+correspondence and its localization equivalence. -/
+
+theorem chapter11_normalized_dvr_ord
+    (A K : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
+    [Field K] [Algebra A K] [IsFractionRing A K]
+    (v : AddValuation K (WithTop ℤ))
+    (hsub : v.toValuation.valuationSubring.toSubring =
+      Subring.map (algebraMap A K) (⊤ : Subring A))
+    (hnorm : ∃ z : K, v z = (1 : WithTop ℤ))
+    (a : A) (ha0 : a ≠ 0) :
+    v (algebraMap A K a) = (Ring.ord A a).toNat := by
+  classical
+  have hmem (b : A) : algebraMap A K b ∈ v.toValuation.valuationSubring := by
+    change algebraMap A K b ∈ v.toValuation.valuationSubring.toSubring
+    rw [hsub, Subring.mem_map]
+    exact ⟨b, Subring.mem_top _, rfl⟩
+  have hzero_of_unit {y : K} (hy : y ≠ 0) (hy0 : 0 ≤ v y)
+      (hyi : 0 ≤ v y⁻¹) : v y = 0 := by
+    have hytop : v y ≠ ⊤ := (v.ne_top_iff).2 hy
+    obtain ⟨n, hn⟩ := WithTop.ne_top_iff_exists.mp hytop
+    rw [← hn] at hy0
+    rw [AddValuation.map_inv, ← hn] at hyi
+    have hyn : 0 ≤ n := by exact_mod_cast hy0
+    have hyin : 0 ≤ -n := by exact_mod_cast hyi
+    have hn0 : n = 0 := by linarith
+    rw [hn0] at hn
+    simpa using hn.symm
+  obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible A
+  have hunit (u : Aˣ) : v (algebraMap A K (u : A)) = 0 := by
+    apply hzero_of_unit (by
+      exact (map_ne_zero_iff (algebraMap A K)
+        (FaithfulSMul.algebraMap_injective A K)).2 u.ne_zero)
+    · exact hmem (u : A)
+    · have huinv := hmem ((u⁻¹ : Aˣ) : A)
+      change 0 ≤ v (algebraMap A K ((u⁻¹ : Aˣ) : A)) at huinv
+      rw [show algebraMap A K ((u⁻¹ : Aˣ) : A) =
+        (algebraMap A K (u : A))⁻¹ by simp] at huinv
+      exact huinv
+  have hpi_pos : 0 < v (algebraMap A K π) := by
+    by_contra hnot
+    have hpi0 : v (algebraMap A K π) = 0 :=
+      le_antisymm (not_lt.mp hnot) (hmem π)
+    have hinv : (algebraMap A K π)⁻¹ ∈ v.toValuation.valuationSubring := by
+      change 0 ≤ v ((algebraMap A K π)⁻¹)
+      rw [AddValuation.map_inv, hpi0]
+      exact le_rfl
+    change (algebraMap A K π)⁻¹ ∈ v.toValuation.valuationSubring.toSubring at hinv
+    rw [hsub, Subring.mem_map] at hinv
+    obtain ⟨b, -, hb⟩ := hinv
+    have hprod : π * b = 1 := by
+      apply (FaithfulSMul.algebraMap_injective A K)
+      rw [map_mul, map_one, hb]
+      exact mul_inv_cancel₀ (by
+        exact (map_ne_zero_iff (algebraMap A K)
+          (FaithfulSMul.algebraMap_injective A K)).2 hπ.ne_zero)
+    exact hπ.not_isUnit (by
+      rw [isUnit_iff_exists_inv]
+      exact ⟨b, hprod⟩)
+  obtain ⟨z, hz⟩ := hnorm
+  have hzmem : z ∈ v.toValuation.valuationSubring := by
+    change 0 ≤ v z
+    rw [hz]
+    exact zero_le_one
+  change z ∈ v.toValuation.valuationSubring.toSubring at hzmem
+  rw [hsub, Subring.mem_map] at hzmem
+  obtain ⟨b, -, hb⟩ := hzmem
+  have hb0 : b ≠ 0 := by
+    intro hb0
+    have hz0 : z = 0 := by simpa [hb0] using hb.symm
+    have hzero : v 0 = 1 := hz0 ▸ hz
+    simpa using hzero
+  obtain ⟨n, u, ha⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hb0 hπ
+  have hpi_top : v (algebraMap A K π) ≠ ⊤ :=
+    (v.ne_top_iff).2 (by
+      exact (map_ne_zero_iff (algebraMap A K)
+        (FaithfulSMul.algebraMap_injective A K)).2 hπ.ne_zero)
+  obtain ⟨m, hm⟩ := WithTop.ne_top_iff_exists.mp hpi_top
+  have hmpos : 0 < m := by
+    have hpi_pos' : (0 : WithTop ℤ) < (m : WithTop ℤ) := by simpa [hm] using hpi_pos
+    exact_mod_cast hpi_pos'
+  have hnm : n * m = 1 := by
+    have hv := hz
+    rw [← hb, ha] at hv
+    rw [map_mul, AddValuation.map_mul, map_pow, AddValuation.map_pow] at hv
+    rw [hunit, ← hm] at hv
+    simp only [zero_add, nsmul_eq_mul, Nat.cast_one, mul_one] at hv
+    exact_mod_cast hv
+  have hn1z : (n : ℤ) = 1 :=
+    Int.eq_one_of_mul_eq_one_right (by exact_mod_cast (Nat.zero_le n)) hnm
+  have hm1 : m = 1 :=
+    Int.eq_one_of_mul_eq_one_left (by linarith [hmpos]) hnm
+  have hn1 : n = 1 := by exact_mod_cast hn1z
+  have hpi1 : v (algebraMap A K π) = 1 := by
+    rw [← hm, hm1]
+    norm_num
+  obtain ⟨n, u, ha⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible ha0 hπ
+  calc
+    v (algebraMap A K a) =
+        v (algebraMap A K ((u : A) * π ^ n)) := by rw [ha]
+    _ = (n : WithTop ℤ) := by
+      simp only [map_mul, AddValuation.map_mul, map_pow, AddValuation.map_pow]
+      rw [hunit, hpi1]
+      simp [nsmul_eq_mul]
+    _ = (Ring.ord A a).toNat := by
+      have hord : Ring.ord A a = n := by
+        rw [Ring.ord_eq_addVal]
+        exact IsDiscreteValuationRing.addVal_def a u hπ n ha
+      rw [hord]
+      norm_num
+
+theorem chapter11_correspondence_valuationSubring
+    (B L : Type*) [CommRing B] [Field L] [Algebra B L]
+    (P : Ideal B) [P.IsPrime]
+    {vL : Valuation L (Multiplicative (WithTop ℤ)ᵒᵈ)}
+    (c : Chapter11ValuationBranchCorrespondence B L P vL) :
+    vL.valuationSubring.toSubring =
+      Subring.map (vL.valuationSubring.subtype.comp c.localizationEquiv.toRingHom)
+        (⊤ : Subring (Localization.AtPrime P)) := by
+  apply Subring.ext
+  intro z
+  constructor
+  · intro hz
+    rcases c.localizationEquiv.surjective ⟨z, hz⟩ with ⟨s, hs⟩
+    refine ⟨s, Subring.mem_top _, ?_⟩
+    simpa using congrArg (fun t : vL.valuationSubring => (t : L)) hs
+  · intro hz
+    rcases hz with ⟨s, -, hs⟩
+    change ((c.localizationEquiv s : vL.valuationSubring) : L) = z at hs
+    change z ∈ vL.valuationSubring
+    rw [← hs]
+    exact (c.localizationEquiv s).property
+
+theorem chapter11_local_length_eq_emultiplicity
+    (B : Type*) [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    (P : Ideal B) [P.IsPrime] [P.IsMaximal] (hP0 : P ≠ (⊥ : Ideal B))
+    (b : B) (hb0 : b ≠ 0) :
+    chapter11LocalLengthValue B P b =
+      (emultiplicity P (Ideal.span ({b} : Set B))).toNat := by
+  let S := Localization.AtPrime P
+  letI : IsDiscreteValuationRing S :=
+    IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B hP0 S
+  have hbS : algebraMap B S b ≠ 0 := by
+    exact (map_ne_zero_iff (algebraMap B S)
+      (IsLocalization.injective S P.primeCompl_le_nonZeroDivisors)).2 hb0
+  have hmax0 : IsLocalRing.maximalIdeal S ≠ (⊥ : Ideal S) := by
+    rw [← (Localization.AtPrime.map_eq_maximalIdeal (I := P))]
+    exact (Ideal.map_eq_bot_iff_of_injective
+      (IsLocalization.injective S P.primeCompl_le_nonZeroDivisors)).not.mpr hP0
+  have hlen : (Module.length S
+      (S ⧸ Ideal.span {algebraMap B S b})).toNat =
+      (Ring.ord S (algebraMap B S b)).toNat := by
+    rfl
+  have hadd : Ring.ord S (algebraMap B S b) =
+      emultiplicity (IsLocalRing.maximalIdeal S)
+        (Ideal.span ({algebraMap B S b} : Set S)) := by
+    rw [Ring.ord_eq_addVal]
+    have hp : Prime (Classical.choose (IsDiscreteValuationRing.exists_prime S)) :=
+      Classical.choose_spec (IsDiscreteValuationRing.exists_prime S)
+    rw [IsDiscreteValuationRing.addVal, multiplicity_addValuation_apply]
+    rw [← Ideal.emultiplicity_eq_emultiplicity_span]
+    simpa only [hp.irreducible.maximalIdeal_eq]
+  have hram : Ideal.ramificationIdx' P (IsLocalRing.maximalIdeal S) = 1 := by
+    apply Ideal.ramificationIdx'_eq_one_of_map_localization
+      (p := P) (P := IsLocalRing.maximalIdeal S)
+    · rw [← (Localization.AtPrime.map_eq_maximalIdeal (I := P))]
+    · exact hmax0
+    · exact (IsLocalRing.maximalIdeal S).primeCompl_le_nonZeroDivisors
+    · rw [IsScalarTower.algebraMap_eq B S
+          (Localization.AtPrime (IsLocalRing.maximalIdeal S)),
+        ← Ideal.map_map, ← (Localization.AtPrime.map_eq_maximalIdeal
+          (I := IsLocalRing.maximalIdeal S)), Localization.AtPrime.map_eq_maximalIdeal]
+  have hmult := Ideal.IsDedekindDomain.emultiplicity_map_eq_ramificationIdx'_mul
+    (I := Ideal.span ({b} : Set B)) (h := by simp [hb0])
+    (Ideal.prime_of_isPrime hP0 (inferInstance : P.IsPrime)).irreducible
+    (Ideal.prime_of_isPrime hmax0 (IsLocalRing.maximalIdeal.isMaximal S).isPrime).irreducible
+    hmax0
+  rw [Ideal.map_span] at hmult
+  have hmult' : emultiplicity (IsLocalRing.maximalIdeal S)
+      (Ideal.span ({algebraMap B S b} : Set S)) =
+      (emultiplicity P (Ideal.span ({b} : Set B))) := by
+    simpa [hram] using hmult
+  have hmultord : Ring.ord S (algebraMap B S b) =
+      emultiplicity P (Ideal.span ({b} : Set B)) := hadd.trans hmult'
+  change (Module.length S
+      (S ⧸ Ideal.span {algebraMap B S b})).toNat = _
+  rw [hlen]
+  exact congrArg ENat.toNat hmultord
+
+/-! The relative norm order is obtained by factoring a principal ideal and
+grouping its normalized factors by the prime below them. -/
+open UniqueFactorizationMonoid
+
+theorem chapter11_norm_integral_emultiplicity
+    (A B K : Type*) [CommRing A] [IsDomain A] [IsDedekindDomain A]
+    [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    [Field K] [Algebra A K] [IsFractionRing A K] [PerfectField K]
+    [Algebra A B] [Module.Finite A B] [Module.Free A B]
+    [Module.IsTorsionFree A B] [Algebra.IsIntegral A B]
+    (m : Ideal A) [m.IsMaximal] (hm0 : m ≠ (⊥ : Ideal A))
+    (y : B) (hy : y ≠ 0) :
+    emultiplicity m
+        (Ideal.span ({Algebra.intNorm A B y} : Set A)) =
+      ∑ q : m.primesOver B,
+        (q.1.inertiaDeg A : ℕ∞) *
+          emultiplicity q.1 (Ideal.span ({y} : Set B)) := by
+  classical
+  letI : PerfectField (FractionRing A) :=
+    PerfectField.of_ringEquiv (FractionRing.algEquiv A K).symm.toRingEquiv
+  let F := normalizedFactors (Ideal.span ({y} : Set B))
+  have hI0 : Ideal.span ({y} : Set B) ≠ (⊥ : Ideal B) := by
+    simp [hy]
+  have hrel : Ideal.relNorm A (Ideal.span ({y} : Set B)) =
+      Ideal.span ({Algebra.intNorm A B y} : Set A) := by
+    exact Ideal.relNorm_singleton A y
+  have hmprime : Prime m := Ideal.prime_of_isPrime hm0
+    (inferInstance : m.IsMaximal).isPrime
+  have hsum_map : ∀ (s : Multiset (Ideal B)),
+        emultiplicity m (Multiset.map (Ideal.relNorm A) s).prod =
+          (Multiset.map (fun Q => emultiplicity m (Ideal.relNorm A Q)) s).sum := by
+    intro s
+    induction s using Multiset.induction_on with
+    | empty =>
+      change emultiplicity m (1 : Ideal A) = 0
+      apply emultiplicity_eq_zero.mpr
+      intro hdiv
+      apply (inferInstance : m.IsMaximal).ne_top
+      exact top_unique (by simpa [Ideal.one_eq_top] using (Ideal.dvd_iff_le).mp hdiv)
+    | @cons Q s ih =>
+      simp only [Multiset.map_cons, Multiset.prod_cons, Multiset.sum_cons]
+      rw [emultiplicity_mul hmprime, ih]
+  have hsum_rel :
+      emultiplicity m (Ideal.relNorm A (Ideal.span ({y} : Set B))) =
+        ∑ Q ∈ F.toFinset,
+          F.count Q • emultiplicity m (Ideal.relNorm A Q) := by
+    rw [← Ideal.prod_normalizedFactors_eq_self hI0, map_multiset_prod]
+    rw [hsum_map F, Finset.sum_multiset_map_count]
+  have hfactor : ∀ Q : Ideal B, Q ∈ F →
+      emultiplicity m (Ideal.relNorm A Q) =
+        if hQ : Q.LiesOver m then (Q.inertiaDeg A : ℕ∞) else 0 := by
+    intro Q hQ
+    have hQ0 : Q ≠ (⊥ : Ideal B) := ne_zero_of_mem_normalizedFactors hQ
+    have hQprime : Q.IsPrime :=
+      Ideal.isPrime_of_prime (prime_of_normalized_factor Q hQ)
+    have hQmax : Q.IsMaximal := Ring.DimensionLEOne.maximalOfPrime hQ0 hQprime
+    by_cases hQo : Q.LiesOver m
+    · letI : Q.LiesOver m := hQo
+      simp only [dif_pos hQo]
+      rw [Ideal.relNorm_eq_pow_of_isMaximal Q m]
+      have hmp : Prime m := Ideal.prime_of_isPrime hm0
+        (inferInstance : m.IsMaximal).isPrime
+      exact emultiplicity_pow_self_of_prime hmp (Q.inertiaDeg A)
+    · simp only [dif_neg hQo]
+      have hundermax : (Ideal.comap (algebraMap A B) Q).IsMaximal :=
+        Ideal.isMaximal_comap_of_isIntegral_of_isMaximal Q
+      letI : (Ideal.comap (algebraMap A B) Q).IsMaximal := hundermax
+      letI : Q.LiesOver (Ideal.comap (algebraMap A B) Q) :=
+        Ideal.over_under (A := A) (P := Q)
+      rw [Ideal.relNorm_eq_pow_of_isMaximal Q (Ideal.comap (algebraMap A B) Q)]
+      apply emultiplicity_eq_zero.mpr
+      intro hdiv
+      have hne : (Ideal.comap (algebraMap A B) Q) ≠ m := by
+        intro heq
+        exact hQo ⟨heq.symm⟩
+      have htop : m ⊔ (Ideal.comap (algebraMap A B) Q) = ⊤ :=
+        (inferInstance : m.IsMaximal).coprime_of_ne
+          (inferInstance : (Ideal.comap (algebraMap A B) Q).IsMaximal) hne.symm
+      have htop_pow := Ideal.sup_pow_eq_top' (n := Q.inertiaDeg A) htop
+      apply (inferInstance : m.IsMaximal).ne_top
+      rw [← htop_pow]
+      exact (sup_eq_left.mpr ((Ideal.dvd_iff_le).mp hdiv)).symm
+  rw [hrel] at hsum_rel
+  let T : Finset (Ideal B) := F.toFinset.filter (fun Q => Q.LiesOver m)
+  have hsum_factor :
+      emultiplicity m (Ideal.span ({Algebra.intNorm A B y} : Set A)) =
+        ∑ Q ∈ T, F.count Q • (Q.inertiaDeg A : ℕ∞) := by
+    calc
+      emultiplicity m (Ideal.span ({Algebra.intNorm A B y} : Set A)) =
+          ∑ Q ∈ F.toFinset,
+            F.count Q • emultiplicity m (Ideal.relNorm A Q) := hsum_rel
+      _ = ∑ Q ∈ F.toFinset,
+            F.count Q • (if hQ : Q.LiesOver m then
+              (Q.inertiaDeg A : ℕ∞) else 0) := by
+        apply Finset.sum_congr rfl
+        intro Q hQ
+        rw [hfactor Q (Multiset.mem_toFinset.mp hQ)]
+      _ = ∑ Q ∈ T, F.count Q • (Q.inertiaDeg A : ℕ∞) := by
+        rw [show T = F.toFinset.filter (fun Q => Q.LiesOver m) by rfl,
+          Finset.sum_filter]
+        apply Finset.sum_congr rfl
+        intro Q hQ
+        by_cases hQo : Q.LiesOver m <;> simp [hQo]
+  letI : Fintype (m.primesOver B) :=
+    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver m)
+  have hcount_q (q : m.primesOver B) :
+      emultiplicity q.1 (Ideal.span ({y} : Set B)) =
+        (F.count q.1 : ℕ∞) := by
+    have hq0 : q.1 ≠ (⊥ : Ideal B) :=
+      Ideal.ne_bot_of_mem_primesOver hm0 q.2
+    have hqprime : Prime q.1 :=
+      Ideal.prime_of_isPrime hq0 (Ideal.primesOver.isPrime m q)
+    rw [UniqueFactorizationMonoid.emultiplicity_eq_count_normalizedFactors
+      hqprime.irreducible hI0]
+    simp [F, normalize_eq]
+  let U : Finset (m.primesOver B) :=
+    Finset.univ.filter (fun q => q.1 ∈ F.toFinset)
+  have hsum_q_filter :
+      (∑ q : m.primesOver B,
+        (q.1.inertiaDeg A : ℕ∞) *
+          emultiplicity q.1 (Ideal.span ({y} : Set B))) =
+        ∑ q ∈ U,
+          (q.1.inertiaDeg A : ℕ∞) *
+            emultiplicity q.1 (Ideal.span ({y} : Set B)) := by
+    rw [show U = Finset.univ.filter (fun q : m.primesOver B =>
+      q.1 ∈ F.toFinset) by rfl, Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro q hq
+    by_cases hqF : q.1 ∈ F.toFinset
+    · simp [hqF]
+    · have hcount0 : F.count q.1 = 0 :=
+        Multiset.count_eq_zero.mpr (by
+          exact fun hmem => hqF (Multiset.mem_toFinset.mpr hmem))
+      rw [hcount_q q, hcount0]
+      simp
+  have hsum_bij :
+      (∑ q ∈ U,
+        (q.1.inertiaDeg A : ℕ∞) *
+          emultiplicity q.1 (Ideal.span ({y} : Set B))) =
+        ∑ Q ∈ T, F.count Q • (Q.inertiaDeg A : ℕ∞) := by
+    apply Finset.sum_bij (s := U) (t := T)
+      (fun q _ => q.1)
+    · intro q hq
+      exact Finset.mem_filter.mpr ⟨
+        (Finset.mem_filter.mp hq).2,
+        Ideal.primesOver.liesOver m q⟩
+    · intro q₁ hq₁ q₂ hq₂ heq
+      exact Subtype.ext heq
+    · intro Q hQ
+      have hQF : Q ∈ F :=
+        Multiset.mem_toFinset.mp (Finset.mem_filter.mp hQ).1
+      have hQo : Q.LiesOver m := Finset.mem_filter.mp hQ |>.2
+      letI : Q.IsPrime := Ideal.isPrime_of_prime
+        (prime_of_normalized_factor Q hQF)
+      letI : Q.LiesOver m := hQo
+      refine ⟨⟨Q, inferInstance, inferInstance⟩, ?_, rfl⟩
+      exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,
+        Multiset.mem_toFinset.mpr hQF⟩
+    · intro q hq
+      rw [hcount_q q]
+      simp [nsmul_eq_mul, mul_comm]
+  exact hsum_factor.trans (hsum_q_filter.trans hsum_bij).symm
+
+set_option maxHeartbeats 1000000 in
+theorem chapter11_branch_value_eq_local_length
+    (B L : Type*) [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    [Field L] [Algebra B L] [IsFractionRing B L]
+    (P : Ideal B) [P.IsPrime] [P.IsMaximal] (hP0 : P ≠ (⊥ : Ideal B))
+    (vL : AddValuation L (WithTop ℤ))
+    (c : Chapter11ValuationBranchCorrespondence B L P vL.toValuation)
+    (hnorm : ∃ z : L, vL z = (1 : WithTop ℤ))
+    (b : B) (hb0 : b ≠ 0) :
+    vL (algebraMap B L b) =
+      (chapter11LocalLengthValue B P b : WithTop ℤ) := by
+  let S := Localization.AtPrime P
+  let φ : S →+* L :=
+    vL.toValuation.valuationSubring.subtype.comp c.localizationEquiv.toRingHom
+  letI : Algebra S L := φ.toAlgebra
+  letI : IsScalarTower B S L := by
+    apply IsScalarTower.of_algebraMap_eq'
+    apply RingHom.ext
+    intro b
+    change algebraMap B L b = φ (algebraMap B S b)
+    dsimp [φ]
+    rw [show algebraMap B S b =
+      Localization.mk b ⟨1, P.primeCompl.one_mem⟩ by rfl,
+      c.localizationEquiv_on_B b]
+    exact (c.embedding_compatible b).symm
+  letI : IsFractionRing S L :=
+    IsFractionRing.isFractionRing_of_isDomain_of_isLocalization P.primeCompl S L
+  letI : IsDiscreteValuationRing S :=
+    chapter11_branch_localization_is_dvr B P hP0
+  have hφ : algebraMap S L = φ := RingHom.algebraMap_toAlgebra φ
+  have hsub : vL.toValuation.valuationSubring.toSubring =
+      Subring.map (algebraMap S L) (⊤ : Subring S) := by
+    rw [hφ]
+    exact chapter11_correspondence_valuationSubring B L P c
+  have hbS : algebraMap B S b ≠ 0 := by
+    exact (map_ne_zero_iff (algebraMap B S)
+      (IsLocalization.injective S P.primeCompl_le_nonZeroDivisors)).2 hb0
+  have hv := chapter11_normalized_dvr_ord S L vL hsub hnorm
+    (algebraMap B S b) hbS
+  change vL (algebraMap B L b) =
+      (Ring.ord S (algebraMap B S b)).toNat
+  simpa only [IsScalarTower.algebraMap_apply B S L] using hv
+
+set_option maxHeartbeats 5000000 in
+/-- The norm valuation formula v(N(x)) = Σ f_i w_i(x).
+
+The accompanying branch data include the explicit degree equality, excluding
+defect and tying the ramification indices to the displayed normalized values.
+-/
+-- The canonical relative-ideal-norm API currently requires
+-- `PerfectField (FractionRing R)` for the base Dedekind domain `R`; here the
+-- normalized valuation ring has fraction field identified with `K`, so the
+-- formal interface includes `[PerfectField K]`. Separability of `K → L` is
+-- retained as the finite-extension hypothesis used by the field-norm step.
+-- The finite-normalization and defectless-degree data above remain part of
+-- the statement and are not replaced by the conclusion.
 theorem chapter11_norm_valuation_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [PerfectField K] [Algebra.IsSeparable K L]
     {ι : Type*} [Fintype ι] (v : AddValuation K (WithTop ℤ))
     (w : ι → AddValuation L (WithTop ℤ)) (f : ι → ℕ)
     (hbranches : chapter11CompleteNormalizedBranchFamily v w)
     (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranches.1 i))
+    (hdefectless : chapter11DefectlessNormBranchData v w f)
     (x : L) (hx : x ≠ 0) :
     v (Algebra.norm K x) =
       ∑ i, (f i : WithTop ℤ) * w i x := by
-  sorry
+  classical
+  let A := v.valuationSubring
+  let B := chapter11IntegralClosure A L
+  letI : Algebra A K := by
+    dsimp [A]
+    infer_instance
+  letI : IsFractionRing A K := inferInstance
+  letI : IsDomain A := inferInstance
+  letI : IsDiscreteValuationRing A := hdefectless.2.1
+  letI : IsDedekindDomain A :=
+    ((IsDiscreteValuationRing.TFAE A (IsDiscreteValuationRing.not_isField A)).out 0 2).mp
+      hdefectless.2.1
+  letI : IsIntegralClosure B A L := by
+    change IsIntegralClosure (integralClosure A L) A L
+    infer_instance
+  letI : IsDomain B := (IsIntegralClosure.algebraMap_injective B A L).isDomain
+  letI : Algebra.IsIntegral A B := IsIntegralClosure.isIntegral_algebra A L
+  letI : Module.IsTorsionFree A B := IsIntegralClosure.isTorsionFree A L
+  letI : IsScalarTower A B L := inferInstance
+  letI : Module.Finite A B := hdefectless.2.2.1
+  letI : IsFractionRing B L :=
+    IsIntegralClosure.isFractionRing_of_finite_extension A K L B
+  letI : IsDedekindDomain B := integralClosure.isDedekindDomain A K L
+  letI : Module.Free A B :=
+    chapter11_finite_torsion_free_over_pid_is_free A B
+  have corr_subring_of {P : Ideal B} [P.IsPrime]
+      {vL : Valuation L (Multiplicative (WithTop ℤ)ᵒᵈ)}
+      (c : Chapter11ValuationBranchCorrespondence B L P vL) :
+      vL.valuationSubring.toSubring =
+        Subring.map (vL.valuationSubring.subtype.comp c.localizationEquiv.toRingHom)
+          (⊤ : Subring (Localization.AtPrime P)) := by
+    apply Subring.ext
+    intro z
+    constructor
+    · intro hz
+      rcases c.localizationEquiv.surjective ⟨z, hz⟩ with ⟨s, hs⟩
+      refine ⟨s, Subring.mem_top _, ?_⟩
+      simpa using congrArg (fun t : vL.valuationSubring => (t : L)) hs
+    · intro hz
+      rcases hz with ⟨s, -, hs⟩
+      change ((c.localizationEquiv s : vL.valuationSubring) : L) = z at hs
+      change z ∈ vL.valuationSubring
+      rw [← hs]
+      exact (c.localizationEquiv s).property
+  let m : Ideal A := IsLocalRing.maximalIdeal A
+  letI : m.IsMaximal := by
+    dsimp [m]
+    exact IsLocalRing.maximalIdeal.isMaximal A
+  letI : m.IsPrime := (inferInstance : m.IsMaximal).isPrime
+  have hm0 : m ≠ (⊥ : Ideal A) := by
+    dsimp [m]
+    exact IsDiscreteValuationRing.not_a_field A
+  have hiP : ∀ i, ∃ P : Ideal B,
+      chapter11Branch A B m P ∧
+        Nonempty (Chapter11ValuationBranchCorrespondence
+          B L P (w i).toValuation) := by
+    simpa [m] using hdefectless.2.2.2.1
+  have hPall : ∀ P : Ideal B,
+      chapter11Branch A B m P →
+        ∃ i, Nonempty (Chapter11ValuationBranchCorrespondence
+          B L P (w i).toValuation) := by
+    simpa [m] using hdefectless.2.2.2.2.1
+  let P : ι → Ideal B := fun i => Classical.choose (hiP i)
+  have hPbranch (i : ι) : chapter11Branch A B m (P i) := by
+    exact (Classical.choose_spec (hiP i)).1
+  letI (i : ι) : (P i).IsPrime := (hPbranch i).1
+  letI (i : ι) : (P i).IsMaximal := (hPbranch i).2.1
+  letI (i : ι) : (P i).LiesOver m := (hPbranch i).2.2
+  let c : ∀ i : ι,
+      Chapter11ValuationBranchCorrespondence B L (P i) (w i).toValuation :=
+    fun i => Classical.choice (Classical.choose_spec (hiP i)).2
+  let g : ι → m.primesOver B := fun i =>
+    ⟨P i, (hPbranch i).1, (hPbranch i).2.2⟩
+  have hlocal_on_base (i : ι) (b : B) :
+      (c i).localizationEquiv (algebraMap B (Localization.AtPrime (P i)) b) =
+        (c i).embedding b := by
+    letI : (P i).IsPrime := (hPbranch i).1
+    rw [show algebraMap B (Localization.AtPrime (P i)) b =
+      Localization.mk b ⟨1, (P i).primeCompl.one_mem⟩ by rfl,
+      (c i).localizationEquiv_on_B]
+  have hval_eq_of_same_branch
+      {Q : Ideal B} [Q.IsPrime]
+      {v₁ v₂ : Valuation L (Multiplicative (WithTop ℤ)ᵒᵈ)}
+      (c₁ : Chapter11ValuationBranchCorrespondence B L Q v₁)
+      (c₂ : Chapter11ValuationBranchCorrespondence B L Q v₂) :
+      v₁.IsEquiv v₂ := by
+    have hφ :
+        v₁.valuationSubring.subtype.comp c₁.localizationEquiv.toRingHom =
+          v₂.valuationSubring.subtype.comp c₂.localizationEquiv.toRingHom := by
+      apply IsLocalization.ringHom_ext Q.primeCompl
+      apply RingHom.ext
+      intro b
+      change ((c₁.localizationEquiv
+          (algebraMap B (Localization.AtPrime Q) b) : v₁.valuationSubring) : L) =
+        ((c₂.localizationEquiv
+          (algebraMap B (Localization.AtPrime Q) b) : v₂.valuationSubring) : L)
+      rw [show algebraMap B (Localization.AtPrime Q) b =
+          Localization.mk b ⟨1, Q.primeCompl.one_mem⟩ by rfl,
+        c₁.localizationEquiv_on_B, c₂.localizationEquiv_on_B]
+      exact (c₁.embedding_compatible b).trans (c₂.embedding_compatible b).symm
+    apply (Valuation.isEquiv_iff_valuationSubring v₁ v₂).2
+    apply ValuationSubring.ext
+    intro z
+    change z ∈ v₁.valuationSubring.toSubring ↔
+      z ∈ v₂.valuationSubring.toSubring
+    rw [chapter11_correspondence_valuationSubring B L Q c₁,
+      chapter11_correspondence_valuationSubring B L Q c₂, hφ]
+  have hg : Function.Injective g := by
+    intro i j hij
+    have hPij : P i = P j := congrArg Subtype.val hij
+    have hval : (w i).IsEquiv (w j) := by
+      let cj : Chapter11ValuationBranchCorrespondence B L (P i) (w j).toValuation :=
+        cast (by rw [hPij]) (c j)
+      exact hval_eq_of_same_branch (c i) cj
+    exact hbranches.2.2.2.1 hval
+  letI : Fintype (m.primesOver B) :=
+    Set.Finite.fintype (Algebra.QuasiFinite.finite_primesOver m)
+  have hg_surj : Function.Surjective g := by
+    intro q
+    have hqbranch : chapter11Branch A B m q.1 := by
+      exact ⟨inferInstance, inferInstance, inferInstance⟩
+    obtain ⟨i, hi⟩ := hPall q.1 hqbranch
+    rcases hi with ⟨cq⟩
+    have hemb : (c i).embedding = cq.embedding := by
+      apply RingHom.ext
+      intro b
+      apply Subtype.ext
+      exact (c i).embedding_compatible b |>.trans (cq.embedding_compatible b).symm
+    have hPiq : P i = q.1 := by
+      calc
+        P i = (IsLocalRing.maximalIdeal (w i).toValuation.valuationSubring).comap
+            (c i).embedding := (c i).center
+        _ = (IsLocalRing.maximalIdeal (w i).toValuation.valuationSubring).comap
+            cq.embedding := by rw [hemb]
+        _ = q.1 := cq.center.symm
+    refine ⟨i, ?_⟩
+    apply Subtype.ext
+    exact hPiq
+  have hinertia (i : ι) :
+      (g i).1.inertiaDeg A =
+        chapter11AdditiveResidueDegree v (w i) (hbranches.1 i) := by
+    letI : (P i).IsPrime := (hPbranch i).1
+    letI : (P i).IsMaximal := (hPbranch i).2.1
+    letI : (P i).LiesOver m := (hPbranch i).2.2
+    change (P i).inertiaDeg A =
+      chapter11AdditiveResidueDegree v (w i) (hbranches.1 i)
+    rw [Ideal.inertiaDeg_eq_of_isMaximal m (P i)]
+    letI : Valuation.HasExtension v.toValuation (w i).toValuation :=
+      ⟨hbranches.1 i⟩
+    letI : Algebra A (w i).toValuation.valuationSubring :=
+      Valuation.HasExtension.instAlgebra_valuationSubring
+        v.toValuation (w i).toValuation
+    let S := Localization.AtPrime (P i)
+    let eQ : B ⧸ P i ≃+* IsLocalRing.ResidueField S :=
+      IsLocalization.AtPrime.equivQuotMaximalIdeal (P i) S
+    let eRes : IsLocalRing.ResidueField S ≃+*
+        chapter11AdditiveResidueField (w i) :=
+      IsLocalRing.ResidueField.mapEquiv (c i).localizationEquiv
+    let eTarget : B ⧸ P i ≃+* chapter11AdditiveResidueField (w i) :=
+      eQ.trans eRes
+    letI : m.IsTwoSided := by
+      dsimp [m]
+      infer_instance
+    let eBase : A ⧸ m ≃+* chapter11AdditiveResidueField v := by
+      change A ⧸ m ≃+* A ⧸ IsLocalRing.maximalIdeal A
+      rfl
+    change Module.finrank (A ⧸ m) (B ⧸ P i) =
+      Module.finrank (chapter11AdditiveResidueField v)
+        (chapter11AdditiveResidueField (w i))
+    apply Algebra.finrank_eq_of_equiv_equiv eBase eTarget
+    apply RingHom.ext
+    intro x
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    have hemb :
+        (c i).embedding (algebraMap A B a) =
+          algebraMap A (w i).toValuation.valuationSubring a := by
+      apply Subtype.ext
+      calc
+        ((c i).embedding (algebraMap A B a) : L) =
+            algebraMap B L (algebraMap A B a) :=
+          (c i).embedding_compatible _
+        _ = algebraMap A L a := by
+          rw [← IsScalarTower.algebraMap_apply A B L]
+        _ = algebraMap K L (a : K) := by
+          rw [IsScalarTower.algebraMap_apply A K L]
+          rfl
+        _ = (algebraMap A (w i).toValuation.valuationSubring a : L) := by
+          symm
+          exact Valuation.HasExtension.coe_algebraMap_valuationSubring_eq
+            v.toValuation (w i).toValuation a
+    calc
+      algebraMap (chapter11AdditiveResidueField v)
+          (chapter11AdditiveResidueField (w i))
+          (eBase (Ideal.Quotient.mk m a)) =
+      algebraMap (chapter11AdditiveResidueField v)
+            (chapter11AdditiveResidueField (w i))
+            (IsLocalRing.residue A a) := by
+        rfl
+      _ = IsLocalRing.residue (w i).toValuation.valuationSubring
+          (algebraMap A (w i).toValuation.valuationSubring a) := by
+        exact Valuation.HasExtension.algebraMap_residue_eq_residue_algebraMap
+          v.toValuation (w i).toValuation a
+      _ = IsLocalRing.residue (w i).toValuation.valuationSubring
+          ((c i).embedding (algebraMap A B a)) := by rw [hemb]
+      _ = eTarget (Ideal.Quotient.mk (P i) (algebraMap A B a)) := by
+        change IsLocalRing.residue (w i).toValuation.valuationSubring
+            ((c i).embedding (algebraMap A B a)) =
+          IsLocalRing.residue (w i).toValuation.valuationSubring
+            ((c i).localizationEquiv
+              (algebraMap B (Localization.AtPrime (P i))
+                (algebraMap A B a)))
+        rw [hlocal_on_base]
+  have hvalue (i : ι) (b : B) (hb : b ≠ 0) :
+      w i (algebraMap B L b) =
+        ((emultiplicity (g i).1 (Ideal.span ({b} : Set B))).toNat :
+          WithTop ℤ) := by
+    letI : (P i).IsPrime := (hPbranch i).1
+    letI : (P i).IsMaximal := (hPbranch i).2.1
+    letI : (P i).LiesOver m := (hPbranch i).2.2
+    have hP0 : P i ≠ (⊥ : Ideal B) :=
+      Ideal.ne_bot_of_liesOver_of_ne_bot hm0 (P i)
+    have hnorm : ∃ z : L, w i z = (1 : WithTop ℤ) := by
+      rcases hbranches.2.1 i with ⟨e, he, hscale, hnorm⟩
+      exact hnorm
+    have hv := chapter11_branch_value_eq_local_length B L (P i) hP0
+      (w i) (c i) hnorm b hb
+    have he := chapter11_local_length_eq_emultiplicity B (P i) hP0 b hb
+    rw [he] at hv
+    simpa [g] using hv
+  have hbase_subring :
+      v.toValuation.valuationSubring.toSubring =
+        Subring.map (algebraMap A K) (⊤ : Subring A) := by
+    change A.toSubring = Subring.map (algebraMap A K) (⊤ : Subring A)
+    apply Subring.ext
+    intro z
+    constructor
+    · intro hz
+      rw [Subring.mem_map]
+      exact ⟨⟨z, hz⟩, Subring.mem_top _, rfl⟩
+    · intro hz
+      rcases Subring.mem_map.mp hz with ⟨a, -, ha⟩
+      change z ∈ A.toSubring
+      rw [← ha]
+      exact a.property
+  have hintegral (b : B) (hb : b ≠ 0) :
+      v (Algebra.norm K (algebraMap B L b)) =
+        ∑ i, (f i : WithTop ℤ) * w i (algebraMap B L b) := by
+    have hbL : algebraMap B L b ≠ 0 :=
+      (map_ne_zero_iff (algebraMap B L)
+        (IsIntegralClosure.algebraMap_injective B A L)).2 hb
+    have hI0 : Ideal.span ({b} : Set B) ≠ (⊥ : Ideal B) := by
+      simp [hb]
+    let F := normalizedFactors (Ideal.span ({b} : Set B))
+    have hqem (q : m.primesOver B) :
+        emultiplicity q.1 (Ideal.span ({b} : Set B)) =
+          (F.count q.1 : ℕ∞) := by
+      have hq0 : q.1 ≠ (⊥ : Ideal B) :=
+        Ideal.ne_bot_of_mem_primesOver hm0 q.2
+      have hqprime : Prime q.1 :=
+        Ideal.prime_of_isPrime hq0 (Ideal.primesOver.isPrime m q)
+      rw [UniqueFactorizationMonoid.emultiplicity_eq_count_normalizedFactors
+        hqprime.irreducible hI0]
+      simp [F, normalize_eq]
+    have hqtop (q : m.primesOver B) :
+        emultiplicity q.1 (Ideal.span ({b} : Set B)) ≠ (⊤ : ℕ∞) := by
+      rw [hqem q]
+      simp
+    have hsum_top : ∀ q : m.primesOver B,
+        (q.1.inertiaDeg A : ℕ∞) *
+            emultiplicity q.1 (Ideal.span ({b} : Set B)) ≠ (⊤ : ℕ∞) := by
+      intro q
+      apply WithTop.mul_ne_top
+      · exact ENat.natCast_ne_top _
+      · exact hqtop q
+    have htoNat :
+        (∑ q : m.primesOver B,
+          (q.1.inertiaDeg A : ℕ∞) *
+            emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat =
+          ∑ q : m.primesOver B,
+            ((q.1.inertiaDeg A : ℕ∞) *
+              emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat := by
+      simpa using (ENat.toNat_sum (s := (Finset.univ : Finset (m.primesOver B)))
+        (fun q hq => hsum_top q))
+    have hcast :
+        ((∑ q : m.primesOver B,
+          (q.1.inertiaDeg A : ℕ∞) *
+            emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat : WithTop ℤ) =
+          ∑ q : m.primesOver B,
+            (q.1.inertiaDeg A : WithTop ℤ) *
+              ((emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat :
+                WithTop ℤ) := by
+      rw [htoNat]
+      simp only [ENat.toNat_mul, ENat.toNat_natCast]
+      rw [Nat.cast_sum]
+      apply Finset.sum_congr rfl
+      intro q hq
+      norm_cast
+    have hbase_em (a : A) (ha : a ≠ 0) :
+        v (algebraMap A K a) =
+          ((emultiplicity m (Ideal.span ({a} : Set A))).toNat : WithTop ℤ) := by
+      have hord := chapter11_normalized_dvr_ord A K v hbase_subring
+        hdefectless.1 a ha
+      have hordem : Ring.ord A a =
+          emultiplicity m (Ideal.span ({a} : Set A)) := by
+        rw [Ring.ord_eq_addVal]
+        have hp : Prime (Classical.choose (IsDiscreteValuationRing.exists_prime A)) :=
+          Classical.choose_spec (IsDiscreteValuationRing.exists_prime A)
+        rw [IsDiscreteValuationRing.addVal, multiplicity_addValuation_apply]
+        rw [← Ideal.emultiplicity_eq_emultiplicity_span]
+        simpa [m, hp.irreducible.maximalIdeal_eq]
+      calc
+        v (algebraMap A K a) = ((Ring.ord A a).toNat : WithTop ℤ) := hord
+        _ = ((emultiplicity m (Ideal.span ({a} : Set A))).toNat : WithTop ℤ) := by
+          rw [hordem]
+    have hnormEm :
+        emultiplicity m (Ideal.span ({Algebra.intNorm A B b} : Set A)) =
+          ∑ q : m.primesOver B,
+            (q.1.inertiaDeg A : ℕ∞) *
+              emultiplicity q.1 (Ideal.span ({b} : Set B)) := by
+      exact chapter11_norm_integral_emultiplicity A B K m hm0 b
+        hb
+    have hintnorm : Algebra.intNorm A B b ≠ 0 := by
+      intro hzero
+      have hnzero : Algebra.norm K (algebraMap B L b) ≠ 0 :=
+        Algebra.norm_ne_zero_iff.mpr hbL
+      apply hnzero
+      rw [← Algebra.algebraMap_intNorm (A := A) (B := B) (K := K) (L := L) b,
+        hzero, map_zero]
+    have hnorm_value :
+        v (Algebra.norm K (algebraMap B L b)) =
+          ((∑ q : m.primesOver B,
+            (q.1.inertiaDeg A : ℕ∞) *
+              emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat :
+            WithTop ℤ) := by
+      calc
+        v (Algebra.norm K (algebraMap B L b)) =
+            v (algebraMap A K (Algebra.intNorm A B b)) := by
+              rw [Algebra.algebraMap_intNorm (L := L) b]
+        _ = ((emultiplicity m
+            (Ideal.span ({Algebra.intNorm A B b} : Set A))).toNat :
+              WithTop ℤ) := hbase_em (Algebra.intNorm A B b) hintnorm
+        _ = ((∑ q : m.primesOver B,
+            (q.1.inertiaDeg A : ℕ∞) *
+              emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat :
+            WithTop ℤ) := by rw [hnormEm]
+    have hsum_branch :
+        (∑ i, (f i : WithTop ℤ) * w i (algebraMap B L b)) =
+          ∑ q : m.primesOver B,
+            (q.1.inertiaDeg A : WithTop ℤ) *
+              ((emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat :
+                WithTop ℤ) := by
+      let e : ι ≃ m.primesOver B := Equiv.ofBijective g ⟨hg, hg_surj⟩
+      calc
+        (∑ i, (f i : WithTop ℤ) * w i (algebraMap B L b)) =
+            ∑ i, (g i).1.inertiaDeg A *
+              ((emultiplicity (g i).1 (Ideal.span ({b} : Set B))).toNat :
+                WithTop ℤ) := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          have hfi : f i = (g i).1.inertiaDeg A := by
+            exact (hf i).trans (hinertia i).symm
+          rw [hfi, hvalue i b hb]
+        _ = ∑ q : m.primesOver B,
+            (q.1.inertiaDeg A : WithTop ℤ) *
+              ((emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat :
+                WithTop ℤ) := by
+          exact Fintype.sum_equiv e _ _ (fun i => rfl)
+    calc
+      v (Algebra.norm K (algebraMap B L b)) =
+          ((∑ q : m.primesOver B,
+            (q.1.inertiaDeg A : ℕ∞) *
+              emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat :
+            WithTop ℤ) := hnorm_value
+      _ = ∑ q : m.primesOver B,
+          (q.1.inertiaDeg A : WithTop ℤ) *
+            ((emultiplicity q.1 (Ideal.span ({b} : Set B))).toNat :
+              WithTop ℤ) := hcast
+      _ = ∑ i, (f i : WithTop ℤ) * w i (algebraMap B L b) := hsum_branch.symm
+  obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective B x
+  have hb0 : b ≠ 0 := mem_nonZeroDivisors_iff_ne_zero.mp hb
+  have ha0 : a ≠ 0 := by
+    intro ha
+    apply hx
+    simp [ha]
+  have haL : algebraMap B L a ≠ 0 :=
+    (map_ne_zero_iff (algebraMap B L)
+      (IsIntegralClosure.algebraMap_injective B A L)).2 ha0
+  have hbL : algebraMap B L b ≠ 0 :=
+    (map_ne_zero_iff (algebraMap B L)
+      (IsIntegralClosure.algebraMap_injective B A L)).2 hb0
+  have hnorm_div :
+      v (Algebra.norm K (algebraMap B L a / algebraMap B L b)) =
+        v (Algebra.norm K (algebraMap B L a)) -
+          v (Algebra.norm K (algebraMap B L b)) := by
+    rw [div_eq_mul_inv, map_mul, Algebra.norm_inv,
+      AddValuation.map_mul, AddValuation.map_inv]
+    simp only [sub_eq_add_neg]
+  have hbranch_div :
+      (∑ i, (f i : WithTop ℤ) *
+          w i (algebraMap B L a / algebraMap B L b)) =
+        (∑ i, (f i : WithTop ℤ) * w i (algebraMap B L a)) -
+          ∑ i, (f i : WithTop ℤ) * w i (algebraMap B L b) := by
+    calc
+      (∑ i, (f i : WithTop ℤ) *
+          w i (algebraMap B L a / algebraMap B L b)) =
+          ∑ i, (f i : WithTop ℤ) *
+            (w i (algebraMap B L a) - w i (algebraMap B L b)) := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        rw [AddValuation.map_div]
+      _ = (∑ i, (f i : WithTop ℤ) * w i (algebraMap B L a)) -
+          ∑ i, (f i : WithTop ℤ) * w i (algebraMap B L b) := by
+        let aa : ι → ℤ := fun i =>
+          Classical.choose
+            (WithTop.ne_top_iff_exists.mp ((w i).ne_top_iff.mpr haL))
+        let bb : ι → ℤ := fun i =>
+          Classical.choose
+            (WithTop.ne_top_iff_exists.mp ((w i).ne_top_iff.mpr hbL))
+        have haa (i : ι) :
+            (aa i : WithTop ℤ) = w i (algebraMap B L a) := by
+          dsimp [aa]
+          exact Classical.choose_spec
+            (WithTop.ne_top_iff_exists.mp ((w i).ne_top_iff.mpr haL))
+        have hbb (i : ι) :
+            (bb i : WithTop ℤ) = w i (algebraMap B L b) := by
+          dsimp [bb]
+          exact Classical.choose_spec
+            (WithTop.ne_top_iff_exists.mp ((w i).ne_top_iff.mpr hbL))
+        calc
+          (∑ i, (f i : WithTop ℤ) *
+              (w i (algebraMap B L a) - w i (algebraMap B L b))) =
+              ∑ i, ((f i : WithTop ℤ) *
+                ((aa i : WithTop ℤ) - (bb i : WithTop ℤ))) := by
+            apply Finset.sum_congr rfl
+            intro i hi
+            rw [haa i, hbb i]
+          _ = (∑ i, (f i : WithTop ℤ) * (aa i : WithTop ℤ)) -
+              ∑ i, (f i : WithTop ℤ) * (bb i : WithTop ℤ) := by
+            have hsum_coe (u : ι → ℤ) :
+                (↑(∑ i, (f i : ℤ) * u i) : WithTop ℤ) =
+                  ∑ i, (f i : WithTop ℤ) * (u i : WithTop ℤ) := by
+              calc
+                (↑(∑ i, (f i : ℤ) * u i) : WithTop ℤ) =
+                    ∑ i, (↑((f i : ℤ) * u i) : WithTop ℤ) := by
+                  rw [WithTop.coe_sum]
+                _ = ∑ i, (f i : WithTop ℤ) * (u i : WithTop ℤ) := by
+                  apply Finset.sum_congr rfl
+                  intro i hi
+                  change (↑((f i : ℤ) * u i) : WithTop ℤ) =
+                    (↑(f i : ℤ) : WithTop ℤ) * (u i : WithTop ℤ)
+                  norm_cast
+            have hsubterm (i : ι) :
+                (f i : WithTop ℤ) *
+                    ((aa i : WithTop ℤ) - (bb i : WithTop ℤ)) =
+                  (↑((f i : ℤ) * (aa i - bb i)) : WithTop ℤ) := by
+              change (↑(f i : ℤ) : WithTop ℤ) *
+                    ((aa i : WithTop ℤ) - (bb i : WithTop ℤ)) =
+                  (↑((f i : ℤ) * (aa i - bb i)) : WithTop ℤ)
+              norm_cast
+            have hcast :
+                (∑ i, (f i : WithTop ℤ) *
+                    ((aa i : WithTop ℤ) - (bb i : WithTop ℤ))) =
+                  (↑(∑ i, (f i : ℤ) * (aa i - bb i)) : WithTop ℤ) := by
+              calc
+                (∑ i, (f i : WithTop ℤ) *
+                    ((aa i : WithTop ℤ) - (bb i : WithTop ℤ))) =
+                    ∑ i, (↑((f i : ℤ) * (aa i - bb i)) : WithTop ℤ) := by
+                  apply Finset.sum_congr rfl
+                  intro i hi
+                  exact hsubterm i
+                _ = (↑(∑ i, (f i : ℤ) * (aa i - bb i)) : WithTop ℤ) := by
+                  rw [WithTop.coe_sum]
+            calc
+              (∑ i, (f i : WithTop ℤ) *
+                  ((aa i : WithTop ℤ) - (bb i : WithTop ℤ))) =
+                  (↑(∑ i, (f i : ℤ) * (aa i - bb i)) : WithTop ℤ) := hcast
+              _ = (↑((∑ i, (f i : ℤ) * aa i) -
+                  ∑ i, (f i : ℤ) * bb i) : WithTop ℤ) := by
+                congr 1
+                rw [← Finset.sum_sub_distrib]
+                apply Finset.sum_congr rfl
+                intro i hi
+                rw [mul_sub]
+              _ = (∑ i, (f i : WithTop ℤ) * (aa i : WithTop ℤ)) -
+                  ∑ i, (f i : WithTop ℤ) * (bb i : WithTop ℤ) := by
+                calc
+                  (↑((∑ i, (f i : ℤ) * aa i) -
+                    ∑ i, (f i : ℤ) * bb i) : WithTop ℤ) =
+                      (↑(∑ i, (f i : ℤ) * aa i) : WithTop ℤ) -
+                        (↑(∑ i, (f i : ℤ) * bb i) : WithTop ℤ) :=
+                    rfl
+                  _ = (∑ i, (f i : WithTop ℤ) * (aa i : WithTop ℤ)) -
+                      ∑ i, (f i : WithTop ℤ) * (bb i : WithTop ℤ) := by
+                    rw [hsum_coe, hsum_coe]
+          _ = (∑ i, (f i : WithTop ℤ) * w i (algebraMap B L a)) -
+              ∑ i, (f i : WithTop ℤ) * w i (algebraMap B L b) := by
+            simp_rw [haa, hbb]
+  calc
+    v (Algebra.norm K (algebraMap B L a / algebraMap B L b)) =
+        v (Algebra.norm K (algebraMap B L a)) -
+          v (Algebra.norm K (algebraMap B L b)) := hnorm_div
+    _ = (∑ i, (f i : WithTop ℤ) * w i (algebraMap B L a)) -
+          ∑ i, (f i : WithTop ℤ) * w i (algebraMap B L b) := by
+      rw [hintegral a ha0, hintegral b hb0]
+    _ = ∑ i, (f i : WithTop ℤ) *
+          w i (algebraMap B L a / algebraMap B L b) := hbranch_div.symm
+ 
 
 /-- For a base uniformizer, the branch values are e_i, so the norm sees Σ e_i f_i. -/
--- STATEMENT_NEEDS_UPDATE: the hypotheses normalize only the `w i`, while `v` is still specified only up to equivalence, so the left side can be rescaled independently of the asserted degree sum; require an exact normalized restriction of each `w i` to `v`.
 theorem chapter11_norm_of_uniformizer
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [PerfectField K] [Algebra.IsSeparable K L]
     {ι : Type*} [Fintype ι] (v : AddValuation K (WithTop ℤ))
     (w : ι → AddValuation L (WithTop ℤ)) (e f : ι → ℕ) (π : K)
     (hbranches : chapter11CompleteNormalizedBranchFamily v w)
     (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranches.1 i))
+    (hdefectless : chapter11DefectlessNormBranchData v w f)
+    (hscaling : chapter11RamificationScaling v w e)
     (hπ : ∀ i, w i (algebraMap K L π) = (e i : WithTop ℤ))
     (hπ_ne : π ≠ 0) :
     v (Algebra.norm K (algebraMap K L π)) =
       ∑ i, (f i : WithTop ℤ) * (e i : WithTop ℤ) := by
-  sorry
+  have hnorm := chapter11_norm_valuation_formula K L v w f hbranches hf hdefectless
+    (algebraMap K L π)
+      ((map_ne_zero_iff (algebraMap K L)
+        (FaithfulSMul.algebraMap_injective K L)).2 hπ_ne)
+  simpa [hπ] using hnorm
 
 /-- The same formula extends from integral elements to fractions by division. -/
 theorem chapter11_norm_valuation_on_fractions
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
-  (v : AddValuation K (WithTop ℤ)) (x y : L) (hy : y ≠ 0) :
+  (v : AddValuation K (WithTop ℤ)) (x y : L) (hx : x ≠ 0) (hy : y ≠ 0) :
     v (Algebra.norm K (x / y)) =
       v (Algebra.norm K x) - v (Algebra.norm K y) := by
   rw [div_eq_mul_inv, map_mul, Algebra.norm_inv,
@@ -1678,18 +4683,43 @@ theorem chapter11_norm_valuation_on_fractions
   simp only [sub_eq_add_neg]
 
 /-- The uniformizer computation agrees with the degree formula. -/
--- STATEMENT_NEEDS_UPDATE: `hdegree` does not fix the scale of the arbitrary equivalent base valuation `v`, so it cannot determine the value of the norm; add an exact normalization of `v` and the branch valuations.
 theorem chapter11_norm_uniformizer_consistency
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
+    [PerfectField K] [Algebra.IsSeparable K L]
     {ι : Type*} [Fintype ι] (v : AddValuation K (WithTop ℤ))
     (w : ι → AddValuation L (WithTop ℤ)) (e f : ι → ℕ) (π : K)
     (hbranches : chapter11CompleteNormalizedBranchFamily v w)
     (hf : ∀ i, f i = chapter11AdditiveResidueDegree v (w i) (hbranches.1 i))
+    (hdefectless : chapter11DefectlessNormBranchData v w f)
+    (hscaling : chapter11RamificationScaling v w e)
     (hπ : ∀ i, w i (algebraMap K L π) = (e i : WithTop ℤ))
     (hdegree : Module.finrank K L = ∑ i, e i * f i) :
     v (Algebra.norm K (algebraMap K L π)) =
       (Module.finrank K L : WithTop ℤ) := by
-  sorry
+  have hι : Nonempty ι := by
+    by_contra hι
+    letI : IsEmpty ι := ⟨fun i => hι ⟨i⟩⟩
+    have hzero : Module.finrank K L = 0 := by simpa using hdegree
+    exact (Nat.ne_of_gt Module.finrank_pos) hzero
+  let i : ι := Classical.choice hι
+  have hπ_ne : π ≠ 0 := by
+    intro hzero
+    have hi := hπ i
+    rw [hzero, map_zero] at hi
+    simpa using hi
+  calc
+    v (Algebra.norm K (algebraMap K L π)) =
+        ∑ i, (f i : WithTop ℤ) * (e i : WithTop ℤ) :=
+      chapter11_norm_of_uniformizer K L v w e f π hbranches hf hdefectless hscaling hπ
+        hπ_ne
+    _ = ((∑ i, e i * f i : ℕ) : WithTop ℤ) := by
+      rw [Nat.cast_sum]
+      apply Finset.sum_congr rfl
+      intro i hi
+      norm_cast
+      exact mul_comm _ _
+    _ = (Module.finrank K L : WithTop ℤ) := by
+      rw [← hdegree]
 
 /-! ## 11.8. Trace, norm, and boundedness -/
 
@@ -1734,6 +4764,7 @@ theorem chapter11_integral_trace_and_norm_stay_integral
 
 /-- The trace pairing on the field extension. -/
 def chapter11TracePairing (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (x y : L) : K :=
   Algebra.trace K L (x * y)
 
@@ -1756,18 +4787,72 @@ theorem chapter11_separable_trace_pairing_nondegenerate
   exact sub_eq_zero.mp hzero
 
 /-- A common denominator embeds the integral trace pairing into the A-dual. -/
--- STATEMENT_NEEDS_UPDATE: finite generation of `B` over `A` alone does not put the K-valued trace pairing in the fraction field of `A`; for example a finite integral `B/A` can map into a larger K where the trace is not a scalar multiple of an A-valued functional. Add `IsFractionRing A K`, `IsFractionRing B L`, and the integral-closure/torsion-free hypotheses.
 theorem chapter11_trace_pairing_has_common_denominator
-    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [IsScalarTower A B L] [IsScalarTower A K L] [FiniteDimensional K L]
-    [Algebra.IsSeparable K L] [Module.Finite A B] (x : B) :
+    [IsScalarTower A B L] [IsScalarTower A K L] [IsFractionRing A K]
+    [IsFractionRing B L] [IsIntegralClosure B A L]
+    [Algebra.IsIntegral A B] [Module.IsTorsionFree A B]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L] [Module.Finite A B] (x : B) :
     ∃ d : A, d ≠ 0 ∧
-      ∀ y : B, ∃ φ : B →ₗ[A] A,
+      ∃ φ : B →ₗ[A] A, ∀ y : B,
         algebraMap A K (φ y) =
-          algebraMap A K d *
+        algebraMap A K d *
             Algebra.trace K L (algebraMap B L x * algebraMap B L y) := by
-  sorry
+  let hB : B →ₗ[A] L :=
+    (IsScalarTower.toAlgHom A B L).toLinearMap.comp (LinearMap.mulLeft A x)
+  let h : B →ₗ[A] K :=
+    (Algebra.trace K L).restrictScalars A |>.comp hB
+  obtain ⟨n, s, hs⟩ := Module.Finite.exists_fin (R := A) (M := B)
+  obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples_of_finite (M := A⁰)
+    (fun i : Fin n => h (s i))
+  have hgen : ∀ i : Fin n, h (s i) * algebraMap A K (d : A) ∈
+      LinearMap.range (Algebra.linearMap A K) := by
+    intro i
+    rcases hd i with ⟨a, ha⟩
+    refine ⟨a, ?_⟩
+    simpa [Algebra.smul_def, mul_comm] using ha
+  let hscl : B →ₗ[A] K := (d : A) • h
+  have hscl_gen : ∀ i : Fin n, hscl (s i) ∈ LinearMap.range (Algebra.linearMap A K) := by
+    intro i
+    simpa [hscl, LinearMap.smul_apply, Algebra.smul_def, mul_comm] using hgen i
+  let q : Submodule A B :=
+    (LinearMap.range (Algebra.linearMap A K)).comap hscl
+  have hqgen : ∀ i : Fin n, s i ∈ q := by
+    intro i
+    exact hscl_gen i
+  have hqtop : q = ⊤ := by
+    apply top_unique
+    rw [← hs]
+    exact Submodule.span_le.2 (fun z hz => by
+      rcases hz with ⟨i, rfl⟩
+      exact hqgen i)
+  have hmem : ∀ y : B, hscl y ∈ LinearMap.range (Algebra.linearMap A K) := by
+    intro y
+    have : y ∈ q := by rw [hqtop]; exact Submodule.mem_top
+    exact this
+  let e : A ≃ₗ[A] LinearMap.range (Algebra.linearMap A K) :=
+    LinearEquiv.ofBijective (Algebra.linearMap A K).rangeRestrict
+      ⟨(Algebra.linearMap A K).injective_rangeRestrict_iff.mpr
+          (IsFractionRing.injective A K),
+        (Algebra.linearMap A K).surjective_rangeRestrict⟩
+  let φ : B →ₗ[A] A :=
+    e.symm.toLinearMap.comp (hscl.codRestrict _ hmem)
+  have hφ (y : B) : algebraMap A K (φ y) = hscl y := by
+    change algebraMap A K (φ y) = (hscl y : K)
+    rw [show algebraMap A K (φ y) = (e (φ y) : K) by rfl]
+    simp [φ, e]
+  have hdne : (d : A) ≠ 0 := by
+    exact mem_nonZeroDivisors_iff_ne_zero.mp d.prop
+  refine ⟨d, hdne, φ, ?_⟩
+  intro y
+  rw [hφ]
+  change (d : A) • h y = _
+  simp only [Algebra.smul_def]
+  change algebraMap A K (d : A) *
+      Algebra.trace K L (algebraMap B L (x * y)) = _
+  rw [map_mul]
 
 /-- Mathlib's different ideal is the inverse of the trace dual. -/
 def chapter11DifferentIdeal
@@ -1776,35 +4861,13 @@ def chapter11DifferentIdeal
     [Module.IsTorsionFree A B] : Ideal B :=
   differentIdeal A B
 
-/-- The different records the denominator obstruction in the trace pairing. -/
-theorem chapter11_different_records_trace_denominators
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
-    [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
-    [Algebra K L] [Algebra A L] [IsScalarTower A B L] [IsScalarTower A K L]
-    [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
-    [Algebra.IsSeparable K L] [IsIntegrallyClosed A] [IsDedekindDomain B]
-    [Module.IsTorsionFree A B] [Module.Finite A B]
-    (x : B) (hx : x ∈ chapter11DifferentIdeal A B) :
-    ∃ d : A, d ≠ 0 ∧
-      ∀ y : B, ∃ φ : B →ₗ[A] A,
-        algebraMap A K (φ y) =
-            algebraMap A K d *
-            Algebra.trace K L (algebraMap B L x * algebraMap B L y) := by
-  refine ⟨1, one_ne_zero, ?_⟩
-  intro y
-  let φ : B →ₗ[A] A := (Algebra.intTrace A B).comp (LinearMap.mulLeft A x)
-  refine ⟨φ, ?_⟩
-  simpa [φ, LinearMap.mulLeft, ← IsScalarTower.algebraMap_apply A B L,
-    mul_comm] using
-    (Algebra.algebraMap_intTrace (A := A) (B := B) (K := K) (L := L) (x * y))
-
 /-- The quadratic equation T² - Tr(x) T + N(x) proves integrality from trace and norm. -/
 def chapter11QuadraticTraceNormRelation
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (x : B) (tr n : A) : Prop :=
   x ^ 2 - algebraMap A B tr * x + algebraMap A B n = 0
 
-/-- In degree two, trace and norm data are sufficient for integrality. -/
+/-- A displayed monic quadratic relation is sufficient for integrality. -/
 theorem chapter11_quadratic_trace_norm_implies_integral
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (x : B) (tr n : A)
@@ -1821,11 +4884,49 @@ theorem chapter11_quadratic_trace_norm_implies_integral
   · simpa only [chapter11QuadraticTraceNormRelation, eval₂_sub, eval₂_add,
       eval₂_mul, eval₂_X, eval₂_X_pow, eval₂_C] using h
 
+/-- For a genuine quadratic field extension, integral trace and norm values
+give the monic characteristic equation and hence integrality. -/
+theorem chapter11_quadratic_field_trace_norm_implies_integral
+    (A K L : Type*) [CommRing A] [IsDomain A] [Field K] [Field L]
+    [Algebra A K] [Algebra K L] [Algebra A L]
+    [IsScalarTower A K L] [IsFractionRing A K] [FiniteDimensional K L]
+    (hdegree : Module.finrank K L = 2) (x : L)
+    (htrace : ∃ tr : A, algebraMap A K tr = Algebra.trace K L x)
+    (hnorm : ∃ n : A, algebraMap A K n = Algebra.norm K x) :
+    IsIntegral A x := by
+  classical
+  rcases htrace with ⟨tr, htr⟩
+  rcases hnorm with ⟨n, hn⟩
+  let b := Module.Free.chooseBasis K L
+  have hcard : Fintype.card (Module.Free.ChooseBasisIndex K L) = 2 := by
+    rw [← Module.finrank_eq_card_chooseBasisIndex]
+    exact hdegree
+  let m := LinearMap.toMatrix b b (Algebra.lmul K L x)
+  have hchar : LinearMap.charpoly (Algebra.lmul K L x) =
+      X ^ 2 - C (Algebra.trace K L x) * X + C (Algebra.norm K x) := by
+    rw [← LinearMap.charpoly_toMatrix (Algebra.lmul K L x) b]
+    change m.charpoly = _
+    rw [Matrix.charpoly_of_card_eq_two (M := m) hcard]
+    have htr' : m.trace = Algebra.trace K L x := by
+      simpa [m, Algebra.trace_apply] using
+        (LinearMap.trace_eq_matrix_trace K b (Algebra.lmul K L x)).symm
+    have hdet' : m.det = Algebra.norm K x := by
+      simpa [m, Algebra.norm_apply] using
+        (LinearMap.det_toMatrix b (Algebra.lmul K L x))
+    rw [htr', hdet']
+  have hroot := Algebra.aeval_self_charpoly_lmul (R := K) (M := L) x
+  rw [hchar] at hroot
+  have hrel : chapter11QuadraticTraceNormRelation A L x tr n := by
+    rw [chapter11QuadraticTraceNormRelation]
+    rw [← htr, ← hn] at hroot
+    simpa [aeval_def, IsScalarTower.algebraMap_apply A K L] using hroot
+  exact chapter11_quadratic_trace_norm_implies_integral A L x tr n hrel
+
 /-- Higher-degree characteristic polynomials have intermediate coefficients. -/
 def chapter11MonicCoefficientProfile (A : Type*) [CommRing A] (n : ℕ) :=
   Fin (n + 1) → A
 
-/-- Trace and norm record only the two endpoint symmetric coefficients. -/
+/-- The endpoint coefficient data do not determine a monic coefficient profile. -/
 theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
     (A : Type*) [CommRing A] [Nontrivial A] (n : ℕ) (hn : 3 ≤ n) :
     ∃ c d : chapter11MonicCoefficientProfile A n,
@@ -1854,7 +4955,39 @@ theorem chapter11_higher_degree_trace_norm_omit_intermediate_coefficients
     have h01 : (0 : A) = 1 := by simpa [c, d] using hcdj
     exact zero_ne_one h01
 
-/-- Thus trace and norm alone do not characterize integrality in higher degree. -/
+/-- In degree at least three, distinct monic polynomials can have the same
+constant and leading coefficients.  These are the intermediate coefficients
+which trace and norm do not record. -/
+theorem chapter11_monic_polynomials_with_same_endpoint_coefficients
+    (A : Type*) [CommRing A] [Nontrivial A] (n : ℕ) (hn : 3 ≤ n) :
+    ∃ f g : A[X], f.Monic ∧ g.Monic ∧ f.natDegree = n ∧ g.natDegree = n ∧
+      f.coeff 0 = g.coeff 0 ∧ f.coeff n = g.coeff n ∧ f ≠ g := by
+  let f : A[X] := X ^ n
+  let g : A[X] := X ^ n + X
+  have hnpos : 0 < n := lt_of_lt_of_le (by norm_num) hn
+  have hng : g.Monic := by
+    apply monic_X_pow_add
+    have hlt : (1 : WithBot ℕ) < n := by
+      exact_mod_cast (show 1 < n by omega)
+    simpa using hlt
+  have hfn : f.natDegree = n := by simp [f]
+  have hgn : g.natDegree = n := by
+    change (X ^ n + X : A[X]).natDegree = n
+    have hdeg : (X : A[X]).natDegree < (X ^ n : A[X]).natDegree := by
+      simpa using (show 1 < n by omega)
+    rw [natDegree_add_eq_left_of_natDegree_lt hdeg]
+    simp
+  have hneq : f ≠ g := by
+    intro hfg
+    have hc := congrArg (fun q : A[X] => q.coeff 1) hfg
+    simp [f, g, show n ≠ 1 by omega] at hc
+  refine ⟨f, g, by simp [f], hng, hfn, hgn, ?_, ?_, hneq⟩
+  · simp [f, g, hnpos]
+  · rw [coeff_add, coeff_X_pow, coeff_X]
+    simp [show 1 ≠ n by omega]
+
+/-- Thus endpoint trace/norm data alone do not determine the intermediate
+coefficients in higher degree. -/
 theorem chapter11_trace_norm_are_insufficient_in_higher_degree
     (A : Type*) [CommRing A] [Nontrivial A] (n : ℕ) (hn : 3 ≤ n) :
     ∃ c d : chapter11MonicCoefficientProfile A n, c ≠ d ∧ c 0 = d 0 := by
@@ -1869,6 +5002,7 @@ theorem chapter11_ramification_indices_multiply_in_towers
     {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
     [Algebra R S] [Algebra R T] [Algebra S T] [IsScalarTower R S T]
     (p : Ideal R) (q : Ideal S) (r : Ideal T)
+    [p.IsPrime] [q.IsPrime] [r.IsPrime]
     [q.LiesOver p] [r.LiesOver q] [Module.Flat S T] :
     r.ramificationIdx R = q.ramificationIdx R * r.ramificationIdx S := by
   exact Ideal.ramificationIdx_tower q r
@@ -1878,6 +5012,7 @@ theorem chapter11_inertia_degrees_multiply_in_towers
     {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
     [Algebra R S] [Algebra R T] [Algebra S T] [IsScalarTower R S T]
     (p : Ideal R) (q : Ideal S) (r : Ideal T)
+    [p.IsPrime] [q.IsPrime] [r.IsPrime]
     [q.LiesOver p] [r.LiesOver q] :
     r.inertiaDeg R = q.inertiaDeg R * r.inertiaDeg S := by
   exact Ideal.inertiaDeg_tower q r
@@ -1890,7 +5025,8 @@ theorem chapter11_field_degrees_multiply_in_towers
     Module.finrank K M = Module.finrank K L * Module.finrank L M := by
   exact (Module.finrank_mul_finrank K L M).symm
 
-/-- A branch tree refines the tower degree formula into local e f contributions. -/
+/-- Combining a first-stage local degree formula with field-tower
+multiplicativity. -/
 theorem chapter11_branch_tree_recovers_tower_degree
     (K L M : Type*) [Field K] [Field L] [Field M]
     [Algebra K L] [Algebra L M] [Algebra K M] [IsScalarTower K L M]
@@ -1904,12 +5040,31 @@ theorem chapter11_branch_tree_recovers_tower_degree
       (Module.finrank_mul_finrank K L M).symm
     _ = (∑ i, e₁ i * f₁ i) * Module.finrank L M := by rw [hL]
 
-/-- In a non-Henselian setting one keeps the intermediate prime/branch in the chain. -/
-theorem chapter11_nonhenselian_extensions_require_a_chain_of_branches
+/-- A two-level branch-tree degree computation is the product of the two
+stage sums. -/
+theorem chapter11_two_stage_branch_tree_recovers_tower_degree
+    (K L M : Type*) [Field K] [Field L] [Field M]
+    [Algebra K L] [Algebra L M] [Algebra K M] [IsScalarTower K L M]
+    [FiniteDimensional K L] [FiniteDimensional L M]
+    {ι κ : Type*} [Fintype ι] [Fintype κ]
+    (e₁ f₁ : ι → ℕ) (e₂ f₂ : κ → ℕ)
+    (hL : Module.finrank K L = ∑ i, e₁ i * f₁ i)
+    (hM : Module.finrank L M = ∑ j, e₂ j * f₂ j) :
+    Module.finrank K M =
+      (∑ i, e₁ i * f₁ i) * (∑ j, e₂ j * f₂ j) := by
+  calc
+    Module.finrank K M = Module.finrank K L * Module.finrank L M :=
+      (Module.finrank_mul_finrank K L M).symm
+    _ = (∑ i, e₁ i * f₁ i) * (∑ j, e₂ j * f₂ j) := by rw [hL, hM]
+
+/-- A specified chain of primes composes to a prime above the bottom prime.
+The Henselian/non-Henselian distinction concerns whether such a chain is
+canonical; the transitivity assertion itself does not require a Henselian
+hypothesis. -/
+theorem chapter11_extensions_transmit_liesOver_along_branch_chain
     (R S T : Type*) [CommRing R] [CommRing S] [CommRing T]
     [Algebra R S] [Algebra S T] [Algebra R T] [IsScalarTower R S T]
-    (p : Ideal R) (q : Ideal S) (r : Ideal T)
-    (hnot : ¬HenselianLocalRing R) :
+    (p : Ideal R) (q : Ideal S) (r : Ideal T) :
     q.LiesOver p ∧ r.LiesOver q → r.LiesOver p := by
   rintro ⟨hqp, hrq⟩
   letI : q.LiesOver p := hqp
@@ -1918,20 +5073,22 @@ theorem chapter11_nonhenselian_extensions_require_a_chain_of_branches
 
 /-- The tame/wild distinction is the later refinement of the e-data. -/
 def chapter11TameAtResidueCharacteristic (e p : ℕ) : Prop :=
-  Nat.Coprime e p
+  p = 0 ∨ Nat.Coprime e p
 
 /-- Ramification is wild when the residue characteristic divides the ramification index. -/
 def chapter11WildAtResidueCharacteristic (e p : ℕ) : Prop :=
-  ¬chapter11TameAtResidueCharacteristic e p
+  p ≠ 0 ∧ p ∣ e
 
 /-- The branch data g, e, and f are the reusable local input for later tame/wild analysis. -/
 theorem chapter11_branch_data_supports_later_tame_wild_analysis
-    (e p : ℕ) :
+    (e p : ℕ) (hp : p = 0 ∨ Nat.Prime p) :
     chapter11TameAtResidueCharacteristic e p ∨
       chapter11WildAtResidueCharacteristic e p := by
-  by_cases h : Nat.Coprime e p
-  · exact Or.inl h
-  · exact Or.inr h
+  rcases hp with rfl | hp
+  · exact Or.inl (Or.inl rfl)
+  by_cases hdiv : p ∣ e
+  · exact Or.inr ⟨hp.ne_zero, hdiv⟩
+  · exact Or.inl (Or.inr (hp.coprime_iff_not_dvd.mpr hdiv).symm)
 
 end
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter11

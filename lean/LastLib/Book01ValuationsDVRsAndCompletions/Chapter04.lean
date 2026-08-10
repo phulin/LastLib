@@ -1414,7 +1414,7 @@ def chapter04CuspPowerSeriesT3 (k : Type*) [CommRing k] :
   simp
 
 /-- The maximal ideal `(t²,t³)` in the cusp power-series ring. -/
-def chapter04CuspPowerSeriesMaximalIdeal (k : Type*) [CommRing k] :
+def chapter04CuspPowerSeriesMaximalIdeal (k : Type*) [Field k] :
     Ideal (chapter04CuspPowerSeriesSubring k) := by
   exact Ideal.span
     ({chapter04CuspPowerSeriesT2 k, chapter04CuspPowerSeriesT3 k} :
@@ -1922,7 +1922,7 @@ theorem cusp_power_series_is_not_a_dvr
   exact (cusp_power_series_is_complete_one_dimensional_non_normal k).2.2.2.2 hnormal
 
 /-- The maximal ideal `(x,y)` in the two-variable polynomial ring. -/
-def chapter04TwoVariablePolynomialMaximalIdeal (k : Type*) [CommSemiring k] :
+def chapter04TwoVariablePolynomialMaximalIdeal (k : Type*) [Field k] :
     Ideal (MvPolynomial (Fin 2) k) :=
   Ideal.span ({MvPolynomial.X 0, MvPolynomial.X 1} :
     Set (MvPolynomial (Fin 2) k))

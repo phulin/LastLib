@@ -197,11 +197,11 @@ theorem chapter02_lexicographic_group_has_no_real_order_embedding :
 /-! ## 2.2. Additive valuations -/
 
 /-- Chapter 2's additive valuation interface, using Mathlib's definition. -/
-abbrev Chapter02AdditiveValuation (R Γ : Type*) [Ring R]
+abbrev Chapter02AdditiveValuation (R Γ : Type*) [CommRing R]
     [LinearOrderedAddCommMonoidWithTop Γ] := AddValuation R Γ
 
 theorem chapter02_additive_valuation_axioms
-    {R Γ : Type*} [Ring R] [LinearOrderedAddCommMonoidWithTop Γ]
+    {R Γ : Type*} [CommRing R] [LinearOrderedAddCommMonoidWithTop Γ]
     (v : AddValuation R Γ) :
     v 0 = (⊤ : Γ) ∧
       v 1 = 0 ∧
@@ -591,6 +591,9 @@ theorem chapter02_strictly_smallest_term_controls_finite_sum
   · have ht0 : t = ∅ := Finset.not_nonempty_iff_eq_empty.mp ht
     simp [t, ht0]
 
+/-- For a finite zero-sum of nonzero terms, the minimum valuation occurs at
+least twice. The nonzero condition makes explicit the usual convention that
+zero terms have first been discarded from the sum. -/
 theorem chapter02_zero_finite_sum_has_repeated_minimum
     {R Γ ι : Type*} [Ring R] [LinearOrderedAddCommMonoidWithTop Γ]
     [DecidableEq ι] (v : AddValuation R Γ) (s : Finset ι) (f : ι → R)
@@ -654,21 +657,21 @@ theorem chapter02_minimum_occurs_twice_in_zero_sum
 /-! ## 2.4. Equivalence and normalization -/
 
 def Chapter02EquivalentValuations
-    {R Γ Δ : Type*} [Ring R]
-    [LinearOrderedAddCommMonoidWithTop Γ]
-    [LinearOrderedAddCommMonoidWithTop Δ]
-    (v : AddValuation R Γ) (w : AddValuation R Δ) : Prop :=
+    {K Γ Δ : Type*} [Field K]
+    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
+    [AddCommGroup Δ] [LinearOrder Δ] [IsOrderedAddMonoid Δ]
+    (v : AddValuation K (WithTop Γ)) (w : AddValuation K (WithTop Δ)) : Prop :=
   AddValuation.IsEquiv v w
 
 theorem chapter02_equivalent_iff_same_comparisons
-    {R Γ Δ : Type*} [Ring R]
-    [LinearOrderedAddCommMonoidWithTop Γ]
-    [LinearOrderedAddCommMonoidWithTop Δ]
-    (v : AddValuation R Γ) (w : AddValuation R Δ) :
+    {K Γ Δ : Type*} [Field K]
+    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
+    [AddCommGroup Δ] [LinearOrder Δ] [IsOrderedAddMonoid Δ]
+    (v : AddValuation K (WithTop Γ)) (w : AddValuation K (WithTop Δ)) :
     Chapter02EquivalentValuations v w ↔
-      ∀ x y : R, v x ≤ v y ↔ w x ≤ w y := by
-  change (∀ x y : R, v y ≤ v x ↔ w y ≤ w x) ↔
-    ∀ x y : R, v x ≤ v y ↔ w x ≤ w y
+      ∀ x y : K, v x ≤ v y ↔ w x ≤ w y := by
+  change (∀ x y : K, v y ≤ v x ↔ w y ≤ w x) ↔
+    ∀ x y : K, v x ≤ v y ↔ w x ≤ w y
   constructor <;> intro h x y
   · exact h y x
   · exact h y x
@@ -1088,6 +1091,40 @@ theorem chapter02_lex_quotient_remembers_first_coordinate :
     exact ⟨toLex (z, (0 : ℤ)), rfl⟩
   · intro p
     rfl
+
+theorem chapter02_lex_quotient_is_an_ordered_convex_quotient :
+    Chapter02ConvexQuotientInterface Chapter02LexSecondCoordinateSubgroup
+      Chapter02LexFirstCoordinate := by
+  apply chapter02_convex_subgroup_gives_ordered_quotient
+    Chapter02LexSecondCoordinateSubgroup chapter02_lex_second_coordinate_is_convex
+    Chapter02LexFirstCoordinate
+    (chapter02_lex_quotient_remembers_first_coordinate).1
+    (chapter02_lex_quotient_remembers_first_coordinate).2
+  intro a b
+  change (ofLex a).1 ≤ (ofLex b).1 ↔
+    ∃ h : Chapter02LexSecondCoordinateSubgroup,
+      a ≤ b + (h : Chapter02LexicographicIntegers)
+  constructor
+  · intro hab
+    rcases hab.lt_or_eq with hablt | habeq
+    · refine ⟨0, ?_⟩
+      simpa using (Prod.Lex.toLex_le_toLex.mpr (Or.inl hablt))
+    · let h : Chapter02LexSecondCoordinateSubgroup :=
+        ⟨toLex ((0 : ℤ), (ofLex a).2 - (ofLex b).2), by
+          change (ofLex (toLex ((0 : ℤ), (ofLex a).2 - (ofLex b).2))).1 = 0
+          simp⟩
+      refine ⟨h, ?_⟩
+      dsimp [h]
+      change toLex ((ofLex a).1, (ofLex a).2) ≤
+        toLex ((ofLex b).1 + 0,
+          (ofLex b).2 + ((ofLex a).2 - (ofLex b).2))
+      rw [Prod.Lex.toLex_le_toLex]
+      exact Or.inr ⟨by omega, by omega⟩
+  · rintro ⟨h, hab⟩
+    have hle := Prod.Lex.monotone_fst a (b + (h : Chapter02LexicographicIntegers)) hab
+    have hh : (ofLex (h : Chapter02LexicographicIntegers)).1 = 0 := by
+      exact h.property
+    simpa [hh] using hle
 
 theorem chapter02_discrete_rank_one_has_no_proper_coarsening
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
@@ -2565,6 +2602,14 @@ theorem chapter02_two_stage_value_of_zero
     Chapter02TwoStageLaurentValuation v 0 = ⊤ := by
   simp [Chapter02TwoStageLaurentValuation]
 
+theorem chapter02_two_stage_value_of_one
+    {K Γ : Type*} [Field K]
+    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
+    [Nontrivial Γ] (v : AddValuation K (WithTop Γ)) :
+    Chapter02TwoStageLaurentValuation v 1 =
+      (0 : WithTop (Chapter02TwoStageValueGroup Γ)) := by
+  simp [Chapter02TwoStageLaurentValuation]
+
 theorem chapter02_two_stage_value_is_multiplicative
     {K Γ : Type*} [Field K]
     [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
@@ -2745,6 +2790,17 @@ theorem chapter02_two_stage_value_satisfies_sum_inequality
         have hfsumval := hvalue_le_of_order_lt hf hfg hstrict
         exact (min_le_left _ _).trans hfsumval
 
+noncomputable def Chapter02TwoStageAdditiveValuation
+    {K Γ : Type*} [Field K]
+    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
+    [Nontrivial Γ] (v : AddValuation K (WithTop Γ)) :
+    AddValuation (LaurentSeries K) (WithTop (Chapter02TwoStageValueGroup Γ)) :=
+  AddValuation.of (Chapter02TwoStageLaurentValuation v)
+    (chapter02_two_stage_value_of_zero v)
+    (chapter02_two_stage_value_of_one v)
+    (chapter02_two_stage_value_satisfies_sum_inequality v)
+    (chapter02_two_stage_value_is_multiplicative v)
+
 theorem chapter02_positive_T_order_outweighs_every_coefficient_value
     {Γ : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
     {n : ℤ} (hn : 0 < n) (γ : Γ) :
@@ -2846,16 +2902,6 @@ theorem chapter02_two_stage_is_a_higher_rank_value_group
     exact map_nsmul f n (toLex ((0 : ℤ), γ))
   rw [hmap] at hlt
   exact (not_lt_of_ge hn) hlt
-
-theorem chapter02_two_stage_constant_subfield_has_original_valuation
-    {K Γ : Type*} [Field K]
-    [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
-    [Nontrivial Γ] (v : AddValuation K (WithTop Γ)) {a : K} (ha : a ≠ 0) :
-    (ofLex
-      ((Chapter02TwoStageLaurentValuation v (Chapter02ConstantLaurentSeries a)).untop
-        (by simp [Chapter02TwoStageLaurentValuation, Chapter02ConstantLaurentSeries, ha]))).2 =
-      (v a).untop ((AddValuation.ne_top_iff v).2 ha) := by
-  exact chapter02_two_stage_constant_series_recovers_coefficient_value v ha
 
 end
 end LastLib.Book01ValuationsDVRsAndCompletions.Chapter02

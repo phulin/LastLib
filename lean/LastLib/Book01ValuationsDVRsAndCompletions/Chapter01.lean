@@ -103,6 +103,81 @@ theorem ordZeroPolynomial_eq_zero_iff_eval_ne_zero {f : k[X]} (hf : f ≠ 0) :
     ordZeroPolynomial f = 0 ↔ Polynomial.eval 0 f ≠ 0 := by
   simp [ordZeroPolynomial, multiplicity_eq_zero, Polynomial.X_dvd_iff,
     Polynomial.coeff_zero_eq_eval_zero]
+/-- The order of a product is the sum of the polynomial orders. -/
+theorem ordZeroPolynomial_mul {f g : k[X]} (hf : f ≠ 0) (hg : g ≠ 0) :
+    ordZeroPolynomial (f * g) = ordZeroPolynomial f + ordZeroPolynomial g := by
+  unfold ordZeroPolynomial
+  rw [multiplicity_mul Polynomial.prime_X
+    (FiniteMultiplicity.of_prime_left Polynomial.prime_X (mul_ne_zero hf hg))]
+
+/-- The polynomial order satisfies the additive valuation inequality when the
+sum is nonzero. -/
+theorem ordZeroPolynomial_add_lower {f g : k[X]} (hf : f ≠ 0) (hg : g ≠ 0)
+    (hfg : f + g ≠ 0) :
+    min (ordZeroPolynomial f) (ordZeroPolynomial g) ≤ ordZeroPolynomial (f + g) := by
+  have hff : FiniteMultiplicity (Polynomial.X : k[X]) f :=
+    FiniteMultiplicity.of_prime_left Polynomial.prime_X hf
+  have hgg : FiniteMultiplicity (Polynomial.X : k[X]) g :=
+    FiniteMultiplicity.of_prime_left Polynomial.prime_X hg
+  have hsum : FiniteMultiplicity (Polynomial.X : k[X]) (f + g) :=
+    FiniteMultiplicity.of_prime_left Polynomial.prime_X hfg
+  have hmin := min_le_emultiplicity_add
+    (p := (Polynomial.X : k[X])) (a := f) (b := g)
+  rw [hff.emultiplicity_eq_multiplicity, hgg.emultiplicity_eq_multiplicity,
+    hsum.emultiplicity_eq_multiplicity] at hmin
+  have hmin' : min (multiplicity (Polynomial.X : k[X]) f)
+      (multiplicity (Polynomial.X : k[X]) g) ≤
+      multiplicity (Polynomial.X : k[X]) (f + g) := by
+    rcases le_total (multiplicity (Polynomial.X : k[X]) f)
+        (multiplicity (Polynomial.X : k[X]) g) with hfg' | hgf'
+    · have hminTop :
+          (min (multiplicity (Polynomial.X : k[X]) f)
+            (multiplicity (Polynomial.X : k[X]) g) : WithTop ℕ) ≤
+          (multiplicity (Polynomial.X : k[X]) (f + g) : WithTop ℕ) := by
+        change min (multiplicity (Polynomial.X : k[X]) f : WithTop ℕ)
+            (multiplicity (Polynomial.X : k[X]) g : WithTop ℕ) ≤
+          (multiplicity (Polynomial.X : k[X]) (f + g) : WithTop ℕ) at hmin
+        exact hmin
+      have hfgTop :
+          (multiplicity (Polynomial.X : k[X]) f : WithTop ℕ) ≤
+            (multiplicity (Polynomial.X : k[X]) g : WithTop ℕ) :=
+        WithTop.coe_le_coe.mpr hfg'
+      rw [min_eq_left hfgTop] at hminTop
+      have hnat : multiplicity (Polynomial.X : k[X]) f ≤
+          multiplicity (Polynomial.X : k[X]) (f + g) :=
+        WithTop.coe_le_coe.mp hminTop
+      simpa [min_eq_left hfg'] using hnat
+    · have hminTop :
+          (min (multiplicity (Polynomial.X : k[X]) f)
+            (multiplicity (Polynomial.X : k[X]) g) : WithTop ℕ) ≤
+          (multiplicity (Polynomial.X : k[X]) (f + g) : WithTop ℕ) := by
+        change min (multiplicity (Polynomial.X : k[X]) f : WithTop ℕ)
+            (multiplicity (Polynomial.X : k[X]) g : WithTop ℕ) ≤
+          (multiplicity (Polynomial.X : k[X]) (f + g) : WithTop ℕ) at hmin
+        exact hmin
+      have hgfTop :
+          (multiplicity (Polynomial.X : k[X]) g : WithTop ℕ) ≤
+            (multiplicity (Polynomial.X : k[X]) f : WithTop ℕ) :=
+        WithTop.coe_le_coe.mpr hgf'
+      rw [min_eq_right hgfTop] at hminTop
+      have hnat : multiplicity (Polynomial.X : k[X]) g ≤
+          multiplicity (Polynomial.X : k[X]) (f + g) :=
+        WithTop.coe_le_coe.mp hminTop
+      simpa [min_eq_right hgf'] using hnat
+  simpa [ordZeroPolynomial] using hmin'
+
+/-- Unequal polynomial orders cannot cancel in a sum. -/
+theorem ordZeroPolynomial_add_of_ne {f g : k[X]} (hf : f ≠ 0) (hg : g ≠ 0)
+    (hne : ordZeroPolynomial f ≠ ordZeroPolynomial g) :
+    ordZeroPolynomial (f + g) = min (ordZeroPolynomial f) (ordZeroPolynomial g) := by
+  have hff : FiniteMultiplicity (Polynomial.X : k[X]) f :=
+    FiniteMultiplicity.of_prime_left Polynomial.prime_X hf
+  have hgg : FiniteMultiplicity (Polynomial.X : k[X]) g :=
+    FiniteMultiplicity.of_prime_left Polynomial.prime_X hg
+  have hne' : multiplicity (Polynomial.X : k[X]) f ≠
+      multiplicity (Polynomial.X : k[X]) g := by
+    simpa [ordZeroPolynomial] using hne
+  simpa [ordZeroPolynomial] using (multiplicity_add_eq_min hff hgg hne')
 
 /-- The regular factors at the origin, i.e. the candidates for local units. -/
 def IsRegularAtZero (u : k[X]) : Prop :=
@@ -447,9 +522,32 @@ theorem ordZeroRatFuncWithTop_add {x y : RatFunc k} :
 /-- If two nonzero rational functions have different orders, their sum has the
 smaller order; unequal orders cannot cancel. -/
 theorem ordZeroRatFunc_add_of_ne {x y : RatFunc k} (hx : x ≠ 0) (hy : y ≠ 0)
-    (hxy : x + y ≠ 0) (hne : ordZeroRatFunc x ≠ ordZeroRatFunc y) :
+    (hne : ordZeroRatFunc x ≠ ordZeroRatFunc y) :
     ordZeroRatFunc (x + y) = min (ordZeroRatFunc x) (ordZeroRatFunc y) := by
   classical
+  have hxy : x + y ≠ 0 := by
+    intro hxy
+    apply hne
+    have hyneg : y = -x := eq_neg_of_add_eq_zero_right hxy
+    have hone : ordZeroRatFunc (-1 : RatFunc k) = 0 := by
+      calc
+        ordZeroRatFunc (-1 : RatFunc k) =
+            ordZeroFraction (-1 : k[X]) 1 := by
+          apply ordZeroRatFunc_eq_ordZeroFraction
+            (f := (-1 : k[X])) (g := 1) (by simp) (by simp)
+          simp
+        _ = 0 := by simp [ordZeroFraction]
+    rw [hyneg]
+    calc
+      ordZeroRatFunc x = ordZeroRatFunc ((-1 : RatFunc k) * x) := by
+        rw [ordZeroRatFunc_mul (x := (-1 : RatFunc k)) (y := x) (by simp) hx,
+          hone, zero_add]
+      _ = ordZeroRatFunc (-1 : RatFunc k) + ordZeroRatFunc x :=
+        ordZeroRatFunc_mul (by simp) hx
+      _ = ordZeroRatFunc x := by rw [hone, zero_add]
+      _ = ordZeroRatFunc (-x) := by
+        rw [show -x = (-1 : RatFunc k) * x by ring,
+          ordZeroRatFunc_mul (by simp) hx, hone, zero_add]
   have hD : x.denom * y.denom ≠ 0 :=
     mul_ne_zero (RatFunc.denom_ne_zero x) (RatFunc.denom_ne_zero y)
   have hfrac : x + y =
@@ -664,7 +762,7 @@ theorem ordAtPolynomial_eq_ordZero_after_translation (a : k) (f : k[X]) :
 /-- A local parameter is a generator of the maximal ideal of a one-dimensional
 regular local ring. -/
 def IsLocalParameter {R : Type*} [CommRing R] (𝔪 : Ideal R) (t : R) : Prop :=
-  Ideal.span ({t} : Set R) = 𝔪
+  𝔪.IsMaximal ∧ Ideal.span ({t} : Set R) = 𝔪
 
 /-- Two local parameters differ by a local unit. -/
 theorem local_parameters_differ_by_unit {R : Type*} [CommRing R] [IsDomain R]
@@ -672,10 +770,10 @@ theorem local_parameters_differ_by_unit {R : Type*} [CommRing R] [IsDomain R]
     (hs : IsLocalParameter 𝔪 s) (ht : IsLocalParameter 𝔪 t) :
     ∃ u : Rˣ, s = (u : R) * t := by
   have hst : s ∈ Ideal.span ({t} : Set R) := by
-    rw [ht, ← hs]
+    rw [ht.2, ← hs.2]
     exact Ideal.mem_span_singleton_self s
   have hts : t ∈ Ideal.span ({s} : Set R) := by
-    rw [hs, ← ht]
+    rw [hs.2, ← ht.2]
     exact Ideal.mem_span_singleton_self t
   obtain ⟨a, ha⟩ := Ideal.mem_span_singleton'.mp hst
   obtain ⟨b, hb⟩ := Ideal.mem_span_singleton'.mp hts
@@ -842,7 +940,9 @@ theorem primeAdicDecomposition_exponent_eq_pAdicOrder {p : ℕ} (hp : p.Prime)
       ring
     _ = pAdicOrder p x := hxval'.symm
 
-/-- The exponent and the `p`-free rational unit are unique. -/
+/-- The exponent and the `p`-free rational unit are unique. The presentation
+by an integer numerator and denominator is understood up to their usual
+common rescaling, so the invariant unit is the rational fraction itself. -/
 theorem primeAdicDecomposition_unique_exponent_and_unit {p : ℕ} (hp : p.Prime)
     {x : ℚ} (hx : x ≠ 0) {d e : PrimeAdicDecomposition p x} :
     d.exponent = e.exponent ∧
@@ -912,9 +1012,15 @@ theorem pAdicOrder_add {p : ℕ} (hp : p.Prime) {x y : ℚ}
 
 /-- Unequal `p`-adic orders force equality with the lower order. -/
 theorem pAdicOrder_add_of_ne {p : ℕ} (hp : p.Prime) {x y : ℚ}
-    (hx : x ≠ 0) (hy : y ≠ 0) (hxy : x + y ≠ 0)
+    (hx : x ≠ 0) (hy : y ≠ 0)
     (hne : pAdicOrder p x ≠ pAdicOrder p y) :
     pAdicOrder p (x + y) = min (pAdicOrder p x) (pAdicOrder p y) := by
+  have hxy : x + y ≠ 0 := by
+    intro hxy
+    apply hne
+    rw [eq_neg_of_add_eq_zero_right hxy]
+    change padicValRat p x = padicValRat p (-x)
+    rw [padicValRat.neg]
   letI : Fact p.Prime := ⟨hp⟩
   simpa [pAdicOrder] using (padicValRat.add_eq_min hxy hx hy hne)
 
@@ -1077,13 +1183,6 @@ theorem polynomialLocalRingAtZero_isLocalRing :
 theorem integerLocalRingAtPrime_isLocalRing {p : ℕ} [Fact p.Prime] (hp : p.Prime) :
     IsLocalRing (integerLocalRingAtPrime p) := by
   exact inferInstance
-
-/-- In a Dedekind domain, localization at a nonzero prime is a DVR. -/
-theorem chapterLocalizationAtPrime_isDiscreteValuationRing {A : Type*} [CommRing A]
-    [IsDedekindDomain A] (P : Ideal A) [P.IsPrime] (hP : P ≠ ⊥) :
-    IsDiscreteValuationRing (chapterLocalizationAtPrime A P) := by
-  exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain
-    A hP (Localization P.primeCompl)
 
 /-- An affine-line denominator is a local unit precisely when it does not vanish
 at the chosen point. -/
@@ -1626,6 +1725,20 @@ theorem dedekindExponent_mul (P : IsDedekindDomain.HeightOneSpectrum A)
     (FractionalIdeal.spanSingleton_ne_zero_iff.mpr hx)
     (FractionalIdeal.spanSingleton_ne_zero_iff.mpr hy)
 
+/-- The exponent of an element that is a unit of the Dedekind domain is zero. -/
+theorem dedekindExponent_unit (P : IsDedekindDomain.HeightOneSpectrum A)
+    (u : Aˣ) :
+    dedekindExponent P (algebraMap A K (u : A)) = 0 := by
+  unfold dedekindExponent
+  rw [show FractionalIdeal.spanSingleton A⁰ (algebraMap A K (u : A)) =
+      FractionalIdeal.spanSingleton A⁰ (1 : K) by
+        apply FractionalIdeal.spanSingleton_eq_spanSingleton.mpr
+        refine ⟨u⁻¹, ?_⟩
+        rw [Units.smul_def, Algebra.smul_def]
+        simp,
+    FractionalIdeal.spanSingleton_one]
+  exact FractionalIdeal.count_one K P
+
 /-- The Dedekind exponent satisfies the valuation inequality under addition. -/
 theorem dedekindExponent_add (P : IsDedekindDomain.HeightOneSpectrum A)
     {x y : K} (hx : x ≠ 0) (hy : y ≠ 0) (hxy : x + y ≠ 0) :
@@ -1656,9 +1769,23 @@ theorem dedekindExponent_add (P : IsDedekindDomain.HeightOneSpectrum A)
 
 /-- Unequal Dedekind exponents cannot cancel in a sum. -/
 theorem dedekindExponent_add_of_ne (P : IsDedekindDomain.HeightOneSpectrum A)
-    {x y : K} (hx : x ≠ 0) (hy : y ≠ 0) (hxy : x + y ≠ 0)
+    {x y : K} (hx : x ≠ 0) (hy : y ≠ 0)
     (hne : dedekindExponent P x ≠ dedekindExponent P y) :
     dedekindExponent P (x + y) = min (dedekindExponent P x) (dedekindExponent P y) := by
+  have hxy : x + y ≠ 0 := by
+    intro hxy
+    apply hne
+    have hyneg : y = -x := eq_neg_of_add_eq_zero_right hxy
+    have hnegone : dedekindExponent P (-1 : K) = 0 := by
+      simpa using (dedekindExponent_unit (A := A) (K := K) P (-1 : Aˣ))
+    rw [hyneg]
+    calc
+      dedekindExponent P x =
+          dedekindExponent P ((-1 : K) * x) := by
+        rw [dedekindExponent_mul P (by simp) hx, hnegone, zero_add]
+      _ = dedekindExponent P (-x) := by
+        rw [show -x = (-1 : K) * x by ring,
+          dedekindExponent_mul P (by simp) hx, hnegone, zero_add]
   have hneval : P.valuation K x ≠ P.valuation K y := by
     intro hval
     rw [dedekindExponent_valuation P hx, dedekindExponent_valuation P hy] at hval
@@ -1680,13 +1807,6 @@ theorem dedekindExponent_add_of_ne (P : IsDedekindDomain.HeightOneSpectrum A)
       omega
     · simp only [WithZero.exp_le_exp]
       omega
-
-/-- The exponent of a unit is zero. -/
-theorem dedekindExponent_one (P : IsDedekindDomain.HeightOneSpectrum A) :
-    dedekindExponent P (1 : K) = 0 := by
-  unfold dedekindExponent
-  rw [show FractionalIdeal.spanSingleton A⁰ (1 : K) = 1 by simp]
-  exact FractionalIdeal.count_one K P
 
 /-- The exponent of an inverse is the negative exponent. -/
 theorem dedekindExponent_inv (P : IsDedekindDomain.HeightOneSpectrum A)
@@ -1762,13 +1882,6 @@ theorem dedekind_localization_at_nonzero_prime_isDVR (P : Ideal A) [P.IsPrime]
   exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain
     A hP (Localization P.primeCompl)
 
-/-- Localizing at one prime makes all other prime factors units, leaving one
-integer-valued exponent to govern the local ideal theory. -/
-theorem localization_keeps_only_one_dedekind_exponent
-    (P : IsDedekindDomain.HeightOneSpectrum A) (x : K) :
-    IsInChapterLocalizationAtPrime P.asIdeal x ↔ 0 ≤ dedekindExponent P x := by
-  exact localization_membership_iff_dedekindExponent_nonnegative P x
-
 end DedekindLocalizations
 
 /-! ## 1.5 Measurements that are not discrete -/
@@ -1777,25 +1890,22 @@ section PuiseuxValuation
 
 variable {k K : Type*} [Field k] [Field K] [Algebra k K]
 
-/-- A stage of the Puiseux tower is modeled by a Laurent series in the variable
-`t^(1/n)`.  The fields and transition maps are packaged as an interface since
-Mathlib does not select one concrete construction of the full Puiseux union. -/
+/-- A denominator stage of the Puiseux tower is modeled by a Laurent series in
+the variable `t^(1/n)`.  The stage embeddings, their nesting under divisibility,
+and the valuation are packaged as an interface since Mathlib does not select
+one concrete construction of the full Puiseux union. -/
 structure PuiseuxValuationModel where
-  stage : ∀ n : ℕ, 0 < n → LaurentSeries k →+* K
+  stage : ∀ n : ℕ, 0 < n → LaurentSeries k →ₐ[k] K
   stage_injective : ∀ (n : ℕ) (hn : 0 < n), Function.Injective (stage n hn)
+  stage_image_nested : ∀ {m n : ℕ} (hm : 0 < m) (hn : 0 < n), m ∣ n →
+    ∀ f : LaurentSeries k, ∃ g : LaurentSeries k,
+      stage n hn g = stage m hm f
   union : ∀ x : K, ∃ n : ℕ, ∃ hn : 0 < n, ∃ f : LaurentSeries k,
     stage n hn f = x
   valuation : AddValuation K (WithTop ℚ)
   stage_valuation : ∀ (n : ℕ) (hn : 0 < n) (f : LaurentSeries k), f ≠ 0 →
     valuation (stage n hn f) =
       (((f.order : ℚ) / (n : ℚ)) : WithTop ℚ)
-  overlap_order : ∀ (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
-    (f g : LaurentSeries k), f ≠ 0 → g ≠ 0 →
-    stage m hm f = stage n hn g →
-      (f.order : ℚ) / (m : ℚ) = (g.order : ℚ) / (n : ℚ)
-  value_surjective : ∀ q : ℚ, ∃ n : ℕ, ∃ hn : 0 < n,
-    ∃ f : LaurentSeries k, f ≠ 0 ∧
-      ((f.order : ℚ) / (n : ℚ)) = q
 
 /-- The lowest exponent in the `n`th stage lies in `(1/n)ℤ`. -/
 def puiseuxStageExponent (n : ℕ) (hn : 0 < n) (f : LaurentSeries k) : ℚ :=
@@ -1807,12 +1917,28 @@ theorem puiseuxStageExponent_mem_one_div_n_z {n : ℕ} (hn : 0 < n)
     puiseuxStageExponent n hn f ∈ Set.range (fun z : ℤ => (z : ℚ) / (n : ℚ)) := by
   exact ⟨f.order, rfl⟩
 
+/-- Every rational exponent is realized by a nonzero single-term Laurent
+series in a suitable stage. -/
+theorem puiseuxStageExponent_surjective (q : ℚ) :
+    ∃ n : ℕ, ∃ hn : 0 < n, ∃ f : LaurentSeries k, f ≠ 0 ∧
+      ((f.order : ℚ) / (n : ℚ)) = q := by
+  let f : LaurentSeries k := HahnSeries.single q.num (1 : k)
+  refine ⟨q.den, q.den_pos, f, ?_, ?_⟩
+  · dsimp [f]
+    exact HahnSeries.single_ne_zero one_ne_zero
+  · dsimp [f]
+    rw [HahnSeries.order_single one_ne_zero]
+    exact q.num_div_den
+
 /-- The valuation is well-defined on overlaps of the stages. -/
 theorem puiseux_overlap_valuation_well_defined (M : PuiseuxValuationModel (k := k) (K := K))
     {m n : ℕ} (hm : 0 < m) (hn : 0 < n) {f g : LaurentSeries k}
     (hf : f ≠ 0) (hg : g ≠ 0) (hfg : M.stage m hm f = M.stage n hn g) :
     puiseuxStageExponent m hm f = puiseuxStageExponent n hn g := by
-  exact M.overlap_order m n hm hn f g hf hg hfg
+  change ((f.order : ℚ) / (m : ℚ)) = ((g.order : ℚ) / (n : ℚ))
+  have hval := congrArg M.valuation hfg
+  rw [M.stage_valuation m hm f hf, M.stage_valuation n hn g hg] at hval
+  exact WithTop.coe_eq_coe.mp hval
 
 /-- The value group of the Puiseux valuation is represented by the rationals. -/
 def puiseuxValueSet (M : PuiseuxValuationModel (k := k) (K := K)) : Set ℚ :=
@@ -1826,7 +1952,7 @@ theorem puiseuxValueSet_eq_univ (M : PuiseuxValuationModel (k := k) (K := K)) :
   · intro _
     exact Set.mem_univ q
   · intro _
-    obtain ⟨n, hn, f, hf, hq⟩ := M.value_surjective q
+    obtain ⟨n, hn, f, hf, hq⟩ := puiseuxStageExponent_surjective (k := k) q
     refine ⟨M.stage n hn f, ?_, ?_⟩
     · intro hzero
       apply hf
@@ -1919,7 +2045,7 @@ theorem puiseux_exists_strictly_smaller_positive_element
       (0 : WithTop ℚ) < M.valuation (b : K) ∧
         M.valuation (b : K) < M.valuation (a : K) := by
   by_cases htop : M.valuation (a : K) = ⊤
-  · obtain ⟨n, hn, f, hf, hq⟩ := M.value_surjective 1
+  · obtain ⟨n, hn, f, hf, hq⟩ := puiseuxStageExponent_surjective (k := k) 1
     have hval : M.valuation (M.stage n hn f) = (1 : WithTop ℚ) := by
       rw [M.stage_valuation n hn f hf]
       simpa using hq
@@ -1937,7 +2063,7 @@ theorem puiseux_exists_strictly_smaller_positive_element
       apply WithTop.coe_lt_coe.mp
       simpa [hq] using ha
     obtain ⟨r, hr, hrq⟩ := exists_smaller_positive_rational hqpos
-    obtain ⟨n, hn, f, hf, hrf⟩ := M.value_surjective r
+    obtain ⟨n, hn, f, hf, hrf⟩ := puiseuxStageExponent_surjective (k := k) r
     have hval : M.valuation (M.stage n hn f) = (r : WithTop ℚ) := by
       rw [M.stage_valuation n hn f hf]
       simpa using hrf

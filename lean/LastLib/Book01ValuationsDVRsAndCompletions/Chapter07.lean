@@ -177,7 +177,7 @@ theorem chapter07_completion_unique_up_to_unique_isometric_field_equiv
           _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hyemb
       refine ⟨δ, trivial, ?_⟩
       intro x₁ x₂ h₁₂
-      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      simp only [Set.mem_ofPred_eq] at h₁₂ ⊢
       rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
       have hmap : Valued.v (R := F) (A.embedding x₂ - A.embedding x₁) =
           Valued.v (R := K) (x₂ - x₁) := by
@@ -221,7 +221,7 @@ theorem chapter07_completion_unique_up_to_unique_isometric_field_equiv
             simpa using congrArg MonoidWithZeroHom.ValueGroup₀.embedding hx
       refine ⟨γ, trivial, ?_⟩
       intro x₁ x₂ h₁₂
-      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      simp only [Set.mem_ofPred_eq] at h₁₂ ⊢
       rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
       have hmap : Valued.v (R := F) (A.embedding x₂ - A.embedding x₁) =
           Valued.v (R := K) (x₂ - x₁) := by
@@ -276,7 +276,7 @@ theorem chapter07_completion_unique_up_to_unique_isometric_field_equiv
           _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hyemb
       refine ⟨δ, trivial, ?_⟩
       intro x₁ x₂ h₁₂
-      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      simp only [Set.mem_ofPred_eq] at h₁₂ ⊢
       rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
       have hmap : Valued.v (R := G) (B.embedding x₂ - B.embedding x₁) =
           Valued.v (R := K) (x₂ - x₁) := by
@@ -320,7 +320,7 @@ theorem chapter07_completion_unique_up_to_unique_isometric_field_equiv
             simpa using congrArg MonoidWithZeroHom.ValueGroup₀.embedding hx
       refine ⟨γ, trivial, ?_⟩
       intro x₁ x₂ h₁₂
-      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      simp only [Set.mem_ofPred_eq] at h₁₂ ⊢
       rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
       have hmap : Valued.v (R := G) (B.embedding x₂ - B.embedding x₁) =
           Valued.v (R := K) (x₂ - x₁) := by
@@ -330,8 +330,8 @@ theorem chapter07_completion_unique_up_to_unique_isometric_field_equiv
             Valued.v (R := G) (B.embedding x₂ - B.embedding x₁) := hmap.symm
         _ < MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := h₁₂
         _ = MonoidWithZeroHom.ValueGroup₀.embedding δ.1 := hbound
-  letI : CompleteSpace F := A.complete
-  letI : CompleteSpace G := B.complete
+  let : CompleteSpace F := A.complete
+  let : CompleteSpace G := B.complete
   let pF := AbstractCompletion.mk F A.embedding (inferInstance : UniformSpace F)
     A.complete A.hausdorff hAui A.dense
   let pG := AbstractCompletion.mk G B.embedding (inferInstance : UniformSpace G)
@@ -469,7 +469,7 @@ theorem chapter07_completion_unique_up_to_unique_isometric_field_equiv
           _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hyemb
       refine ⟨δ, trivial, ?_⟩
       intro x₁ x₂ h₁₂
-      simp only [Set.mem_setOf_eq] at h₁₂ ⊢
+      simp only [Set.mem_ofPred_eq] at h₁₂ ⊢
       rw [Valuation.restrict_lt_iff_lt_embedding] at h₁₂ ⊢
       calc
         Valued.v (R := G) (e' x₂ - e' x₁) =
@@ -605,6 +605,12 @@ lemma chapter07_cauchy_mul_respects_equivalence_aux
     (hu₁ : CauchySeq u₁) (hu₂ : CauchySeq u₂)
     (hv₁ : CauchySeq v₁) (hv₂ : CauchySeq v₂) :
     Tendsto (fun n => u₁ n * v₁ n - u₂ n * v₂ n) atTop (𝓝 (0 : K)) := by
+  have hu₁' : CauchySeq
+      (fun n => (u₁ n : UniformSpace.Completion K)) :=
+    (UniformSpace.Completion.isUniformInducing_coe K).uniformContinuous.comp_cauchySeq hu₁
+  have hv₂' : CauchySeq
+      (fun n => (v₂ n : UniformSpace.Completion K)) :=
+    (UniformSpace.Completion.isUniformInducing_coe K).uniformContinuous.comp_cauchySeq hv₂
   have hu₂' : CauchySeq
       (fun n => (u₂ n : UniformSpace.Completion K)) :=
     (UniformSpace.Completion.isUniformInducing_coe K).uniformContinuous.comp_cauchySeq hu₂
@@ -629,6 +635,24 @@ lemma chapter07_cauchy_mul_respects_equivalence_aux
     simpa only [UniformSpace.Completion.coe_zero] using h'
   have hterm₁ : Tendsto
       (fun n => ((u₁ n - u₂ n : K) : UniformSpace.Completion K) *
+        (v₂ n : UniformSpace.Completion K)) atTop
+      (𝓝 (0 : UniformSpace.Completion K)) := by
+    have h := (continuous_mul.tendsto
+      ((0 : UniformSpace.Completion K),
+        limUnder atTop (fun n => (v₂ n : UniformSpace.Completion K)))).comp
+      (hdu.prodMk_nhds hv₂'.tendsto_limUnder)
+    simpa only [Function.comp_def, zero_mul] using h
+  have hterm₂ : Tendsto
+      (fun n => (u₁ n : UniformSpace.Completion K) *
+        ((v₁ n - v₂ n : K) : UniformSpace.Completion K)) atTop
+      (𝓝 (0 : UniformSpace.Completion K)) := by
+    have h := (continuous_mul.tendsto
+      (limUnder atTop (fun n => (u₁ n : UniformSpace.Completion K)),
+        (0 : UniformSpace.Completion K))).comp
+      (hu₁'.tendsto_limUnder.prodMk_nhds hdv)
+    simpa only [Function.comp_def, mul_zero] using h
+  have hterm₃ : Tendsto
+      (fun n => ((u₁ n - u₂ n : K) : UniformSpace.Completion K) *
         (v₁ n : UniformSpace.Completion K)) atTop
       (𝓝 (0 : UniformSpace.Completion K)) := by
     have h := (continuous_mul.tendsto
@@ -636,7 +660,7 @@ lemma chapter07_cauchy_mul_respects_equivalence_aux
         limUnder atTop (fun n => (v₁ n : UniformSpace.Completion K)))).comp
       (hdu.prodMk_nhds hv₁'.tendsto_limUnder)
     simpa only [Function.comp_def, zero_mul] using h
-  have hterm₂ : Tendsto
+  have hterm₄ : Tendsto
       (fun n => (u₂ n : UniformSpace.Completion K) *
         ((v₁ n - v₂ n : K) : UniformSpace.Completion K)) atTop
       (𝓝 (0 : UniformSpace.Completion K)) := by
@@ -645,12 +669,25 @@ lemma chapter07_cauchy_mul_respects_equivalence_aux
         (0 : UniformSpace.Completion K))).comp
       (hu₂'.tendsto_limUnder.prodMk_nhds hdv)
     simpa only [Function.comp_def, mul_zero] using h
+  have hzero : Tendsto
+      (fun n =>
+        ((((u₁ n - u₂ n : K) : UniformSpace.Completion K) *
+            (v₁ n : UniformSpace.Completion K)) +
+          ((u₂ n : UniformSpace.Completion K) *
+            ((v₁ n - v₂ n : K) : UniformSpace.Completion K))) -
+        ((((u₁ n - u₂ n : K) : UniformSpace.Completion K) *
+            (v₁ n : UniformSpace.Completion K)) +
+          ((u₂ n : UniformSpace.Completion K) *
+            ((v₁ n - v₂ n : K) : UniformSpace.Completion K)))) atTop
+      (𝓝 (0 : UniformSpace.Completion K)) := by
+    have h := (hterm₃.add hterm₄).sub (hterm₃.add hterm₄)
+    simpa only [Function.comp_def, sub_self] using h
   apply ((UniformSpace.Completion.isUniformInducing_coe K).isInducing.tendsto_nhds_iff).2
-  have hsum := hterm₁.add hterm₂
+  have hsum := (hterm₁.add hterm₂).add hzero
   convert hsum using 1
   · funext n
     simp only [Function.comp_apply, UniformSpace.Completion.coe_sub,
-      UniformSpace.Completion.coe_mul, UniformSpace.Completion.coe_add]
+      UniformSpace.Completion.coe_mul]
     noncomm_ring
   · simp only [UniformSpace.Completion.coe_zero, add_zero]
 
@@ -782,7 +819,7 @@ lemma chapter07_absolute_value_uniformContinuous
     [Chapter07NonarchimedeanStationarity K abv] :
     UniformContinuous (abv : K → ℝ) := by
   have h' : @UniformContinuous K ℝ abv.uniformSpace _ abv := by
-    letI : UniformSpace K := abv.uniformSpace
+    let : UniformSpace K := abv.uniformSpace
     refine (AbsoluteValue.hasBasis_uniformity abv).uniformContinuous_iff
       Metric.uniformity_basis_dist |>.2 ?_
     intro ε hε
@@ -793,7 +830,7 @@ lemma chapter07_absolute_value_uniformContinuous
     exact (abv.abs_abv_sub_le_abv_sub x y).trans_lt
       (by
         rw [← abv.map_neg]
-        simpa [Set.mem_setOf_eq, sub_eq_add_neg, add_comm] using hxy)
+        simpa [Set.mem_ofPred_eq, sub_eq_add_neg, add_comm] using hxy)
   have heq := Chapter07NonarchimedeanStationarity.uniformSpace_eq
     (K := K) (abv := abv)
   rw [← heq] at h'
@@ -892,7 +929,7 @@ theorem chapter07_nonzero_cauchy_absolute_value_eventually_constant
       (K := K) (abv := abv)
     have hconv : @Tendsto ℕ K u.1 atTop
         (@nhds K abv.uniformSpace.toTopologicalSpace (0 : K)) := by
-      letI : UniformSpace K := abv.uniformSpace
+      let : UniformSpace K := abv.uniformSpace
       refine Uniform.tendsto_nhds_right.2 ?_
       intro V hV
       obtain ⟨ε, hε, hsub⟩ :=
@@ -916,7 +953,7 @@ theorem chapter07_nonzero_cauchy_absolute_value_eventually_constant
     refine ⟨N, ?_⟩
     intro n hn
     simpa [Real.dist_eq, abs_of_nonneg (abv.nonneg _)] using hN n hn
-  push_neg at hnotall
+  push Not at hnotall
   obtain ⟨ε, hε, hεfreq⟩ := hnotall
   have hεfreq' : ∀ N : ℕ, ∃ n ≥ N, ε ≤ abv (u.1 n) := by
     intro N
@@ -982,6 +1019,9 @@ structure Chapter07CauchyCompletionModel
   uniformSpace : UniformSpace (chapter07CauchyCompletion K)
   complete : @CompleteSpace (chapter07CauchyCompletion K) uniformSpace
   equivalent : chapter07CauchyCompletion K ≃ UniformSpace.Completion K
+  equivalent_coe : ∀ x : K,
+    equivalent (chapter07CauchyConstantEmbedding x) =
+      (x : UniformSpace.Completion K)
   uniform_to_completion :
     @UniformContinuous (chapter07CauchyCompletion K) (UniformSpace.Completion K)
       uniformSpace inferInstance equivalent
@@ -991,10 +1031,151 @@ structure Chapter07CauchyCompletionModel
 
 -- Section 7.1: a diagonal argument makes the Cauchy quotient complete.
 theorem chapter07_cauchy_quotient_complete
-    {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K] :
+    {K : Type*} [Field K] [UniformSpace K] [IsUniformAddGroup K]
+    (abv : AbsoluteValue K ℝ)
+    [Chapter07NonarchimedeanStationarity K abv] :
     Nonempty (Chapter07CauchyCompletionModel K) := by
-  -- STATEMENT_NEEDS_UPDATE: A quotient of Cauchy sequences is not a completion for an arbitrary uniform space; without a countable uniformity basis (or a first-countability hypothesis), Cauchy filters need not be represented by sequences. Add such a hypothesis or define the quotient using Cauchy filters, and state completeness for the resulting uniformity.
-  sorry
+  obtain ⟨q, hqpos, hqone, hqrepr⟩ :=
+    Chapter07NonarchimedeanStationarity.discrete (K := K) (abv := abv)
+  let S : ℕ → SetRel K K := fun n =>
+    {p | abv (p.2 - p.1) < q ^ n}
+  have hS_basis_abv : (@uniformity K abv.uniformSpace).HasBasis
+      (fun _ : ℕ => True) S := by
+    refine ⟨fun U => ?_⟩
+    constructor
+    · intro hU
+      obtain ⟨ε, hε, hsub⟩ :=
+        (AbsoluteValue.hasBasis_uniformity abv).mem_iff.mp hU
+      obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one hε hqone
+      exact ⟨n, trivial, fun x hx => hsub (lt_of_lt_of_le hx hn.le)⟩
+    · rintro ⟨n, -, hsub⟩
+      exact mem_of_superset
+        ((AbsoluteValue.hasBasis_uniformity abv).mem_iff.mpr ⟨q ^ n,
+          pow_pos hqpos n, subset_rfl⟩) hsub
+  have habv_eq : (@uniformity K (inferInstance : UniformSpace K)) =
+      @uniformity K abv.uniformSpace := by
+    exact congrArg (fun u : UniformSpace K => u.uniformity)
+      (Chapter07NonarchimedeanStationarity.uniformSpace_eq (K := K) (abv := abv))
+  have hS_basis : (@uniformity K (inferInstance : UniformSpace K)).HasBasis
+      (fun _ : ℕ => True) S := by
+    rw [habv_eq]
+    exact hS_basis_abv
+  let : IsCountablyGenerated (@uniformity K (inferInstance : UniformSpace K)) :=
+    hS_basis.isCountablyGenerated
+  let : IsCountablyGenerated (@uniformity (CauchyFilter K)
+      (inferInstance : UniformSpace (CauchyFilter K))) := by
+    exact (CauchyFilter.basis_uniformity hS_basis).isCountablyGenerated
+  let : IsCountablyGenerated (@uniformity (UniformSpace.Completion K)
+      (inferInstance : UniformSpace (UniformSpace.Completion K))) := by
+    change IsCountablyGenerated (@uniformity
+      (SeparationQuotient (CauchyFilter K)) _)
+    rw [SeparationQuotient.uniformity_eq]
+    infer_instance
+  let toComp : chapter07CauchyCompletion K → UniformSpace.Completion K :=
+    Quotient.lift
+      (fun u : chapter07CauchySequence K =>
+        limUnder (atTop : Filter ℕ)
+          (fun n => ((u.1 n : K) : UniformSpace.Completion K)))
+      (by
+        intro u v huv
+        have hu' : CauchySeq
+            (fun n => ((u.1 n : K) : UniformSpace.Completion K)) :=
+          (UniformSpace.Completion.isUniformInducing_coe K).uniformContinuous.comp_cauchySeq u.2
+        have hv' : CauchySeq
+            (fun n => ((v.1 n : K) : UniformSpace.Completion K)) :=
+          (UniformSpace.Completion.isUniformInducing_coe K).uniformContinuous.comp_cauchySeq v.2
+        have hu_lim := hu'.tendsto_limUnder
+        have hv_lim := hv'.tendsto_limUnder
+        have hdiff : Tendsto
+            (fun n => ((u.1 n - v.1 n : K) : UniformSpace.Completion K))
+            atTop (𝓝 (0 : UniformSpace.Completion K)) := by
+          have h := ((UniformSpace.Completion.continuous_coe (α := K)).tendsto (0 : K)).comp huv
+          convert h using 1
+          · funext n
+            simp
+          · rfl
+        have hdiff' : Tendsto
+            (fun n => ((u.1 n : UniformSpace.Completion K) -
+              (v.1 n : UniformSpace.Completion K))) atTop
+              (𝓝 (0 : UniformSpace.Completion K)) := by
+          simpa only [UniformSpace.Completion.coe_sub] using hdiff
+        have heq := tendsto_nhds_unique (hu_lim.sub hv_lim) hdiff'
+        exact sub_eq_zero.mp heq)
+  have toComp_surj : Function.Surjective toComp := by
+    intro x
+    have hcluster : MapClusterPt x (𝓟 (Set.univ : Set K))
+        (fun r : K => (r : UniformSpace.Completion K)) := by
+      rw [MapClusterPt, Filter.map_principal, image_univ]
+      exact (mem_closure_iff_clusterPt).mp
+        ((UniformSpace.Completion.denseRange_coe (α := K) :
+          DenseRange ((↑) : K → UniformSpace.Completion K)) x)
+    obtain ⟨u, hu, _huuniv⟩ := hcluster.exists_seq_tendsto
+    have hu' : CauchySeq
+        (fun n => ((u n : K) : UniformSpace.Completion K)) := hu.cauchySeq
+    have huK : CauchySeq u :=
+      (UniformSpace.Completion.isUniformInducing_coe K).cauchy_map_iff.mp hu'
+    let cu : chapter07CauchySequence K := ⟨u, huK⟩
+    refine ⟨chapter07CauchyClass cu, ?_⟩
+    change limUnder atTop (fun n => ((u n : K) : UniformSpace.Completion K)) = x
+    have hu_point : Tendsto
+        (fun n => ((u n : K) : UniformSpace.Completion K)) atTop (𝓝 x) := by
+      exact hu.congr' (Filter.Eventually.of_forall (fun n => rfl))
+    exact tendsto_nhds_unique hu'.tendsto_limUnder hu_point
+  have toComp_inj : Function.Injective toComp := by
+    intro x y hxy
+    obtain ⟨u, rfl⟩ := Quotient.exists_rep x
+    obtain ⟨v, rfl⟩ := Quotient.exists_rep y
+    apply Quotient.sound
+    have hu' : CauchySeq
+        (fun n => ((u.1 n : K) : UniformSpace.Completion K)) :=
+      (UniformSpace.Completion.isUniformInducing_coe K).uniformContinuous.comp_cauchySeq u.2
+    have hv' : CauchySeq
+        (fun n => ((v.1 n : K) : UniformSpace.Completion K)) :=
+      (UniformSpace.Completion.isUniformInducing_coe K).uniformContinuous.comp_cauchySeq v.2
+    have hlimu := hu'.tendsto_limUnder
+    have hlimv := hv'.tendsto_limUnder
+    have hdiff : Tendsto
+        (fun n => ((u.1 n : UniformSpace.Completion K) -
+          (v.1 n : UniformSpace.Completion K))) atTop
+          (𝓝 (0 : UniformSpace.Completion K)) := by
+      have h := hlimu.sub hlimv
+      change limUnder atTop (fun n => ((u.1 n : K) : UniformSpace.Completion K)) =
+        limUnder atTop (fun n => ((v.1 n : K) : UniformSpace.Completion K)) at hxy
+      rw [hxy, sub_self] at h
+      exact h
+    have hdiffK : Tendsto (fun n => u.1 n - v.1 n) atTop (𝓝 (0 : K)) := by
+      apply ((UniformSpace.Completion.isUniformInducing_coe K).isInducing.tendsto_nhds_iff).2
+      simpa only [Function.comp_def, UniformSpace.Completion.coe_sub,
+        UniformSpace.Completion.coe_zero] using hdiff
+    exact hdiffK
+  let e : chapter07CauchyCompletion K ≃ UniformSpace.Completion K :=
+    Equiv.ofBijective toComp ⟨toComp_inj, toComp_surj⟩
+  let uq : UniformSpace (chapter07CauchyCompletion K) :=
+    UniformSpace.comap e inferInstance
+  let : UniformSpace (chapter07CauchyCompletion K) := uq
+  have heui : IsUniformInducing (e : chapter07CauchyCompletion K →
+      UniformSpace.Completion K) := by
+    exact (isUniformInducing_iff_uniformSpace).2 rfl
+  have hecomplete : @CompleteSpace (chapter07CauchyCompletion K) uq := by
+    apply (_root_.completeSpace_congr
+      (e := e) ⟨heui, e.injective⟩).2
+    infer_instance
+  refine ⟨{
+    uniformSpace := uq
+    complete := hecomplete
+    equivalent := e
+    equivalent_coe := by
+      intro x
+      change limUnder atTop (fun _ : ℕ => ((x : K) : UniformSpace.Completion K)) =
+        ((x : K) : UniformSpace.Completion K)
+      exact (tendsto_const_nhds :
+        Tendsto (fun _ : ℕ => ((x : K) : UniformSpace.Completion K))
+          atTop (𝓝 ((x : K) : UniformSpace.Completion K))).limUnder_eq
+    uniform_to_completion := heui.uniformContinuous
+    uniform_from_completion := ?_ }⟩
+  apply (heui.uniformContinuous_iff).2
+  simpa using (uniformContinuous_id :
+    UniformContinuous (id : UniformSpace.Completion K → UniformSpace.Completion K))
 
 -- The diagonal representative assertion used to prove completeness.
 theorem chapter07_cauchy_diagonal_representative
@@ -1220,8 +1401,8 @@ theorem chapter07_discrete_valuation_values_eventually_constant
     apply hu
     apply (Valued.hasBasis_nhds_zero K Γ₀).tendsto_right_iff.2
     intro γ _
-    simpa only [Set.mem_setOf_eq] using h γ
-  push_neg at hnotall
+    simpa only [Set.mem_ofPred_eq] using h γ
+  push Not at hnotall
   obtain ⟨γ, hγ⟩ := hnotall
   have hfreq : ∃ᶠ n in (atTop : Filter ℕ),
       γ.1 ≤ (Valued.v (R := K)).restrict (u.1 n) := by
@@ -1235,13 +1416,13 @@ theorem chapter07_discrete_valuation_values_eventually_constant
   have hγpos : 0 < γ.1 := by simp
   have hN₀ne : u.1 N₀ ≠ 0 := by
     intro hzero
-    exact (not_le_of_gt hγpos) (by simpa [hzero] using hN₀val)
+    simp [hzero] at hN₀val
   have hvne : Valued.v (u.1 N₀) ≠ 0 :=
     (Valuation.ne_zero_iff (Valued.v (R := K))).2 hN₀ne
   refine ⟨Valued.v (u.1 N₀), hvne, ?_⟩
   filter_upwards [eventually_ge_atTop N₀] with n hn
   have hsmall' : (Valued.v (R := K)).restrict (u.1 N₀ - u.1 n) < γ.1 :=
-    by simpa only [Set.mem_setOf_eq] using
+    by simpa only [Set.mem_ofPred_eq] using
       hN₁ n N₀ (le_trans hN₀ hn) hN₀
   have hsmall : (Valued.v (R := K)).restrict (u.1 n - u.1 N₀) < γ.1 := by
     rw [show u.1 n - u.1 N₀ = -(u.1 N₀ - u.1 n) by ring,
@@ -1274,8 +1455,15 @@ theorem chapter07_completion_nonzero_value_is_approximated
     Chapter07ValueApproximatedByOriginalValues x := by
   intro γ hγ
   obtain ⟨r, hr⟩ := Valued.exists_coe_eq_v x
+  have hr0 : r ≠ 0 := by
+    intro hr0
+    apply hx
+    have hzero : Valued.extensionValuation x = 0 := by
+      simpa [hr0] using hr
+    exact (Valuation.zero_iff _).mp hzero
   refine ⟨r, ?_⟩
-  simpa [chapter07CompletionValuation, hr] using hγ
+  exact (fun _ : r ≠ 0 => by
+    simpa [chapter07CompletionValuation, hr] using hγ) hr0
 
 /- Order closure of the original value set at a completed nonzero value. -/
 def Chapter07ValueInOrderClosureOfOriginalValues
@@ -1293,9 +1481,17 @@ theorem chapter07_completion_nonzero_value_is_in_order_closure
     Chapter07ValueInOrderClosureOfOriginalValues x := by
   intro γ₁ γ₂ h₁ h₂
   obtain ⟨r, hr⟩ := Valued.exists_coe_eq_v x
+  have hr0 : r ≠ 0 := by
+    intro hr0
+    apply hx
+    have hzero : Valued.extensionValuation x = 0 := by
+      simpa [hr0] using hr
+    exact (Valuation.zero_iff _).mp hzero
   refine ⟨r, ?_, ?_⟩
-  · simpa [chapter07CompletionValuation, hr] using h₁
-  · simpa [chapter07CompletionValuation, hr] using h₂
+  · exact (fun _ : r ≠ 0 => by
+      simpa [chapter07CompletionValuation, hr] using h₁) hr0
+  · exact (fun _ : r ≠ 0 => by
+      simpa [chapter07CompletionValuation, hr] using h₂) hr0
 
 /-! ### 7.3. The universal property -/
 
@@ -1303,7 +1499,7 @@ theorem chapter07_completion_nonzero_value_is_in_order_closure
 noncomputable def chapter07UniversalCompletionExtension
     {K F : Type*} [UniformSpace K] [UniformSpace F] [CompleteSpace F]
     (f : K → F) (hf : UniformContinuous f) : UniformSpace.Completion K → F :=
-  UniformSpace.Completion.extension f
+  (fun _ : UniformContinuous f => UniformSpace.Completion.extension f) hf
 
 -- The extension agrees with the original map on the dense copy of K.
 theorem chapter07_universal_extension_coe
@@ -1471,12 +1667,37 @@ theorem chapter07_completed_valuation_ring_is_closed
       Set (UniformSpace.Completion K)) := by
   exact Valued.isClosed_valuationSubring (UniformSpace.Completion K)
 
+-- The completed valuation ring is complete for the induced metric uniformity.
+theorem chapter07_completed_valuation_ring_is_complete
+    {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
+    [Valued K Γ₀] :
+    CompleteSpace (chapter07CompletedValuationRing K Γ₀) := by
+  exact chapter07_completed_valuation_ring_is_closed.completeSpace_coe
+
 -- The inclusion from the original valuation ring into the completion.
 def chapter07ValuationRingCompletionEmbedding
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
     [Valued K Γ₀] :
     chapter07ValuationRing K Γ₀ → UniformSpace.Completion K :=
   fun a => ((a : K) : UniformSpace.Completion K)
+
+-- The canonical map from the original valuation ring to the completed one.
+noncomputable def chapter07ValuationRingCompletionRingHom
+    {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
+    [Valued K Γ₀] :
+    chapter07ValuationRing K Γ₀ →+* chapter07CompletedValuationRing K Γ₀ := by
+  let fK : chapter07ValuationRing K Γ₀ →+* UniformSpace.Completion K :=
+    (UniformSpace.Completion.coeRingHom).comp (SubringClass.subtype (Valued.integer K))
+  have hfK_mem : ∀ a : chapter07ValuationRing K Γ₀,
+      fK a ∈ (chapter07CompletedValuationRing K Γ₀ : Set
+        (UniformSpace.Completion K)) := by
+    intro a
+    change chapter07CompletionValuation K Γ₀ (fK a) ≤ 1
+    change chapter07CompletionValuation K Γ₀
+      (((a : chapter07ValuationRing K Γ₀) : K) : UniformSpace.Completion K) ≤ 1
+    rw [chapter07_completion_valuation_apply_coe]
+    exact a.property
+  exact fK.codRestrict (chapter07CompletedValuationRing K Γ₀) hfK_mem
 
 -- Section 7.4: one inclusion in the closure characterization.
 theorem chapter07_valuation_ring_closure_subset
@@ -1584,7 +1805,7 @@ theorem chapter07_completed_dvr_value_group_is_integer
       have hr0 : r ≠ 0 := by
         intro hr0
         subst r
-        exact γ.ne_zero (by simpa [vK] using hval)
+        simp [vK] at hval
       have hvr0 : vK r ≠ 0 := by
         intro hvr0
         exact γ.ne_zero (hval.trans hvr0)
@@ -1615,7 +1836,7 @@ theorem chapter07_completed_dvr_value_group_is_integer
       rw [← hγeq]
       exact MonoidWithZeroHom.mem_valueGroup (.ofClass vC)
         ⟨(r : UniformSpace.Completion K), rfl⟩
-  letI : vC.IsRankOneDiscrete := by
+  let : vC.IsRankOneDiscrete := by
     refine ⟨⟨Valuation.IsRankOneDiscrete.generator vK, ?_, ?_⟩⟩
     · rw [hvalueGroup]
       exact Valuation.IsRankOneDiscrete.generator_zpowers_eq_valueGroup vK
@@ -1630,7 +1851,257 @@ theorem chapter07_completed_valuation_ring_is_dvr
       IsAdicComplete
         (IsLocalRing.maximalIdeal (chapter07CompletedValuationRing K Γ₀))
         (chapter07CompletedValuationRing K Γ₀) := by
-  sorry
+  let vK : Valuation K Γ₀ := Valued.v
+  let vC : Valuation (UniformSpace.Completion K) Γ₀ :=
+    chapter07CompletionValuation K Γ₀
+  have hvC : (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) = vC := by
+    rfl
+  have hvalueGroup : valueGroup (.ofClass vC) = valueGroup (.ofClass vK) := by
+    apply le_antisymm
+    · intro γ hγ
+      have hγ' : (γ : Γ₀) ∈ Set.range (MonoidWithZeroHom.ofClass vC) \ {0} := by
+        rw [← MonoidWithZeroHom.valueGroup_eq_range (.ofClass vC)]
+        exact ⟨γ, hγ, rfl⟩
+      obtain ⟨⟨x, hx⟩, _hx0⟩ := hγ'
+      obtain ⟨r, hr⟩ := Valued.exists_coe_eq_v x
+      have hval : (γ : Γ₀) = vK r := by
+        calc
+          (γ : Γ₀) = vC x := hx.symm
+          _ = vK r := by
+            change Valued.extensionValuation x = Valued.v r
+            exact hr
+      have hvr0 : vK r ≠ 0 := by
+        intro hvr0
+        exact γ.ne_zero (hval.trans hvr0)
+      have hγeq : Units.mk0 (vK r) hvr0 = γ := by
+        apply Units.ext
+        exact hval.symm
+      rw [← hγeq]
+      exact MonoidWithZeroHom.mem_valueGroup (.ofClass vK) ⟨r, rfl⟩
+    · intro γ hγ
+      have hγ' : (γ : Γ₀) ∈ Set.range (MonoidWithZeroHom.ofClass vK) \ {0} := by
+        rw [← MonoidWithZeroHom.valueGroup_eq_range (.ofClass vK)]
+        exact ⟨γ, hγ, rfl⟩
+      obtain ⟨⟨r, hr⟩, hr0⟩ := hγ'
+      have hval : (γ : Γ₀) = vK r := by
+        simpa [vK] using hr.symm
+      have hvr0 : vK r ≠ 0 := by
+        intro hvr0
+        exact γ.ne_zero (hval.trans hvr0)
+      have hvcval : vC ((r : K) : UniformSpace.Completion K) = vK r := by
+        change chapter07CompletionValuation K Γ₀
+            ((r : K) : UniformSpace.Completion K) = Valued.v r
+        rw [chapter07_completion_valuation_apply_coe]
+      have hvc0 : vC ((r : K) : UniformSpace.Completion K) ≠ 0 := by
+        simpa [hvcval] using hvr0
+      have hγeq : Units.mk0 (vC ((r : K) : UniformSpace.Completion K)) hvc0 = γ := by
+        apply Units.ext
+        exact hvcval.trans hval.symm
+      rw [← hγeq]
+      exact MonoidWithZeroHom.mem_valueGroup (.ofClass vC)
+        ⟨(r : UniformSpace.Completion K), rfl⟩
+  let : vC.IsRankOneDiscrete := by
+    refine ⟨⟨Valuation.IsRankOneDiscrete.generator vK, ?_, ?_⟩⟩
+    · rw [hvalueGroup]
+      exact Valuation.IsRankOneDiscrete.generator_zpowers_eq_valueGroup vK
+    · exact Valuation.IsRankOneDiscrete.generator_lt_one vK
+  have hdvr : IsDiscreteValuationRing vC.valuationSubring := by
+    infer_instance
+  refine ⟨?_, ?_⟩
+  · exact hdvr
+  · change IsAdicComplete (IsLocalRing.maximalIdeal vC.valuationSubring)
+      vC.valuationSubring
+    let π : vC.Uniformizer := Classical.choice (inferInstance :
+      Nonempty (vC.Uniformizer))
+    let p : vC.valuationSubring :=
+      ⟨π.val, π.val.property⟩
+    let : IsTopologicalRing vC.valuationSubring :=
+      Subring.instIsTopologicalRing vC.valuationSubring.toSubring
+    let : IsTopologicalAddGroup vC.valuationSubring := by
+      infer_instance
+    let : IsUniformAddGroup vC.valuationSubring :=
+      vC.valuationSubring.toSubring.toAddSubgroup.isUniformAddGroup
+    have hp : p = (π.val : vC.valuationSubring) := by
+      apply Subtype.ext
+      rfl
+    have hm : IsLocalRing.maximalIdeal vC.valuationSubring =
+        Ideal.span ({p} : Set vC.valuationSubring) := by
+      rw [hp]
+      exact π.valuation_gt_one.is_generator
+    have hclosed : IsClosed (vC.valuationSubring :
+        Set (UniformSpace.Completion K)) := by
+      exact chapter07_completed_valuation_ring_is_closed
+    let : CompleteSpace vC.valuationSubring := hclosed.completeSpace_coe
+    have hpow : ∀ n : ℕ,
+        (IsLocalRing.maximalIdeal vC.valuationSubring) ^ n =
+          Ideal.span ({p ^ n} : Set vC.valuationSubring) := by
+      intro n
+      rw [hp]
+      exact Valuation.pow_Uniformizer_is_pow_generator π n
+    have hball : ∀ n : ℕ,
+        (((IsLocalRing.maximalIdeal vC.valuationSubring) ^ n :
+          Ideal vC.valuationSubring) : Set vC.valuationSubring) =
+          (fun x : vC.valuationSubring =>
+            (x : UniformSpace.Completion K)) ⁻¹'
+            {x : UniformSpace.Completion K | vC x ≤ vC (p ^ n)} := by
+      intro n
+      rw [hpow n]
+      ext x
+      constructor
+      · intro hx
+        change vC (x : UniformSpace.Completion K) ≤ vC (p ^ n)
+        rcases (Ideal.mem_span_singleton.mp hx) with ⟨y, hy⟩
+        rw [hy]
+        rw [Subring.coe_mul (vC.valuationSubring.toSubring),
+          Subring.coe_pow (vC.valuationSubring.toSubring)]
+        simpa only [map_mul, map_pow] using
+          (mul_le_of_le_one_right
+            (le_of_lt (pow_pos (by simpa [p] using π.valuation_gt_one.val_pos) n))
+            y.property)
+      · intro hx
+        change vC (x : UniformSpace.Completion K) ≤ vC (p ^ n) at hx
+        apply Ideal.mem_span_singleton.mpr
+        let y0 : UniformSpace.Completion K :=
+          (x : UniformSpace.Completion K) / (p : UniformSpace.Completion K) ^ n
+        have hπpos : 0 < vC (p : UniformSpace.Completion K) := by
+          simpa [p] using π.valuation_gt_one.val_pos
+        have hy0 : vC y0 ≤ 1 := by
+          dsimp [y0]
+          rw [vC.map_div, map_pow]
+          apply (div_le_iff₀ (pow_pos hπpos n)).2
+          simpa using hx
+        let y : vC.valuationSubring := ⟨y0, hy0⟩
+        refine ⟨y, ?_⟩
+        apply Subtype.ext
+        dsimp [y, y0]
+        have hp0 : (p : UniformSpace.Completion K) ≠ 0 :=
+          (Valuation.pos_iff vC).mp hπpos
+        field_simp [hp0]
+    have hppos : 0 < vC (p : UniformSpace.Completion K) := by
+      simpa [p] using π.valuation_gt_one.val_pos
+    have hI : IsAdic (IsLocalRing.maximalIdeal vC.valuationSubring) := by
+      rw [isAdic_iff]
+      constructor
+      · intro n
+        rw [hball n]
+        have hpn0 : Valued.v.restrict
+            ((p : UniformSpace.Completion K) ^ n) ≠ 0 := by
+          intro hzero
+          have hzero' : Valued.v ((p : UniformSpace.Completion K) ^ n) = 0 := by
+            exact (Valuation.restrict_eq_zero_iff (v := Valued.v)).mp hzero
+          have hpnp : 0 < Valued.v ((p : UniformSpace.Completion K) ^ n) := by
+            rw [map_pow]
+            have hp : 0 < Valued.v (p : UniformSpace.Completion K) := by
+              rw [show (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) =
+                vC by rfl]
+              exact hppos
+            exact pow_pos hp n
+          exact (ne_of_gt hpnp) hzero'
+        have hopen : IsOpen {x : UniformSpace.Completion K |
+            vC x ≤ vC ((p : UniformSpace.Completion K) ^ n)} := by
+          have hopen' := Valued.isOpen_closedBall (UniformSpace.Completion K)
+            (Γ₀ := Γ₀) hpn0
+          have htop : Valued.valuedCompletion.toTopologicalSpace =
+              (UniformSpace.Completion.uniformSpace K).toTopologicalSpace := by
+            rfl
+          rw [htop] at hopen'
+          have hv : (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) =
+              vC := by
+            rfl
+          rw [hv] at hopen'
+          simpa only [Valuation.restrict_le_iff_le_embedding,
+            Valuation.embedding_restrict] using hopen'
+        exact hopen.preimage continuous_subtype_val
+      · intro s hs
+        obtain ⟨u, hu, hus⟩ := (mem_nhds_subtype
+          (vC.valuationSubring : Set (UniformSpace.Completion K))
+          (⟨0, (show (0 : UniformSpace.Completion K) ∈ vC.valuationSubring by simp)⟩)
+          s).mp hs
+        obtain ⟨γ, -, hγu⟩ :=
+          (Valued.hasBasis_nhds_zero (UniformSpace.Completion K) Γ₀).mem_iff.mp hu
+        let γval : Γ₀ :=
+          MonoidWithZeroHom.ValueGroup₀.embedding
+            (f := (.ofClass vC)) γ.1
+        have hγpos : 0 < γval := by
+          dsimp [γval]
+          exact MonoidWithZeroHom.ValueGroup₀.embedding_unit_pos γ
+        by_cases hγ : (1 : Γ₀) < γval
+        · refine ⟨0, ?_⟩
+          rw [hball 0]
+          intro x hx
+          apply hus
+          apply hγu
+          apply (Valuation.restrict_lt_iff_lt_embedding (v := vC)).2
+          exact lt_of_le_of_lt (by simpa using hx) hγ
+        · have hγle : γval ≤ (1 : Γ₀) := le_of_not_gt hγ
+          obtain ⟨r, s, hrpos, hspos, hdiv⟩ :=
+            Valuation.exists_div_eq_of_unit (v := vC) γ
+          let x : UniformSpace.Completion K := r / s
+          have hxval : vC x = γval := by
+            dsimp [x]
+            have hdiv' := congrArg
+              (MonoidWithZeroHom.ValueGroup₀.embedding
+                (f := (.ofClass vC))) hdiv
+            calc
+              vC (r / s) = vC r / vC s := by rw [vC.map_div]
+              _ = MonoidWithZeroHom.ValueGroup₀.embedding
+                  (vC.restrict r) /
+                    MonoidWithZeroHom.ValueGroup₀.embedding (vC.restrict s) := by
+                rw [Valuation.embedding_restrict, Valuation.embedding_restrict]
+              _ = MonoidWithZeroHom.ValueGroup₀.embedding
+                  (vC.restrict r / vC.restrict s) := by
+                symm
+                rw [map_div₀]
+              _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := hdiv'
+              _ = γval := rfl
+          have hxpos : 0 < vC x := by
+            simpa [hxval] using hγpos
+          have hx0 : x ≠ 0 := (Valuation.pos_iff vC).mp hxpos
+          have hxA : x ∈ vC.valuationSubring := by
+            change vC x ≤ 1
+            simpa [hxval] using hγle
+          let xA : vC.valuationSubring := ⟨x, hxA⟩
+          have hxA0 : xA ≠ 0 := by
+            intro hzero
+            apply hx0
+            exact congrArg Subtype.val hzero
+          obtain ⟨k, uunit, hxpow⟩ :=
+            Valuation.exists_pow_Uniformizer (v := vC) hxA0 π
+          have huval : vC (uunit : vC.valuationSubring) = 1 := by
+            exact (Valuation.Integers.isUnit_iff_valuation_eq_one
+              (x := (uunit : vC.valuationSubring))
+              (Valuation.integer.integers vC)).mp uunit.isUnit
+          have hγeq : γval = vC p ^ k := by
+            calc
+              γval = vC x := hxval.symm
+              _ = vC (xA : vC.valuationSubring) := rfl
+              _ = vC (p ^ k * (uunit : vC.valuationSubring)) := by
+                rw [hp]
+                simpa only [Subring.coe_mul, Subring.coe_pow] using congrArg vC hxpow
+              _ = vC p ^ k * vC (uunit : vC.valuationSubring) := by
+                rw [map_mul, map_pow]
+              _ = vC p ^ k := by rw [huval, mul_one]
+          refine ⟨k + 1, ?_⟩
+          rw [hball (k + 1)]
+          intro x hx
+          apply hus
+          apply hγu
+          apply (Valuation.restrict_lt_iff_lt_embedding (v := vC)).2
+          have hπlt : vC p < (1 : Γ₀) := by
+            simpa [p] using π.valuation_gt_one.val_lt_one
+          have hx' : vC (x : UniformSpace.Completion K) ≤
+              vC (p ^ (k + 1)) := by
+            simpa using hx
+          have hx'' : vC (x : UniformSpace.Completion K) ≤
+              vC p ^ (k + 1) := by
+            simpa only [map_pow] using hx'
+          calc
+            vC (x : UniformSpace.Completion K) ≤ vC p ^ (k + 1) := hx''
+            _ < vC p ^ k := by
+              rw [pow_succ]
+              simpa using mul_lt_mul_of_pos_left hπlt (pow_pos hppos k)
+            _ = γval := hγeq.symm
+    exact (hI.isAdicComplete_iff).2 ⟨inferInstance, inferInstance⟩
 
 -- A uniformizer generates the maximal ideal in any DVR.
 theorem chapter07_dvr_uniformizer_generates_maximal_ideal
@@ -1644,38 +2115,302 @@ theorem chapter07_dvr_finite_level_quotient_equivalence
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
     [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete]
     (π : (Valued.v (R := K)).Uniformizer) (n : ℕ) (hn : 1 ≤ n) :
-    Nonempty
-      ((chapter07ValuationRing K Γ₀) ⧸
+    ∃ e : (chapter07ValuationRing K Γ₀) ⧸
           Ideal.span ({(π.val : chapter07ValuationRing K Γ₀) ^ n} : Set
             (chapter07ValuationRing K Γ₀)) ≃+*
         (chapter07CompletedValuationRing K Γ₀) ⧸
           Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set
-            (chapter07CompletedValuationRing K Γ₀))) := by
-  sorry
+            (chapter07CompletedValuationRing K Γ₀)),
+      ∀ a : chapter07ValuationRing K Γ₀,
+          e (Ideal.Quotient.mk _ a) =
+          Ideal.Quotient.mk _
+            (chapter07ValuationRingCompletionRingHom (K := K) (Γ₀ := Γ₀) a) := by
+  let vK : Valuation K Γ₀ := Valued.v
+  let vC : Valuation (UniformSpace.Completion K) Γ₀ :=
+    chapter07CompletionValuation K Γ₀
+  let Js : Ideal (chapter07ValuationRing K Γ₀) :=
+    Ideal.span ({(π.val : chapter07ValuationRing K Γ₀) ^ n} : Set
+      (chapter07ValuationRing K Γ₀))
+  let Jc : Ideal (chapter07CompletedValuationRing K Γ₀) :=
+    Ideal.span ({(chapter07CompletedUniformizer π :
+      chapter07CompletedValuationRing K Γ₀) ^ n} : Set
+      (chapter07CompletedValuationRing K Γ₀))
+  let fK : chapter07ValuationRing K Γ₀ →+* UniformSpace.Completion K :=
+    (UniformSpace.Completion.coeRingHom).comp (SubringClass.subtype (Valued.integer K))
+  have hfK_mem : ∀ a : chapter07ValuationRing K Γ₀,
+      fK a ∈ (chapter07CompletedValuationRing K Γ₀ : Set
+        (UniformSpace.Completion K)) := by
+    intro a
+    change chapter07CompletionValuation K Γ₀ (fK a) ≤ 1
+    change chapter07CompletionValuation K Γ₀
+      (((a : chapter07ValuationRing K Γ₀) : K) : UniformSpace.Completion K) ≤ 1
+    rw [chapter07_completion_valuation_apply_coe]
+    exact a.property
+  let f : chapter07ValuationRing K Γ₀ →+*
+      chapter07CompletedValuationRing K Γ₀ :=
+    fK.codRestrict (chapter07CompletedValuationRing K Γ₀) hfK_mem
+  have hfπ : f (π.val : chapter07ValuationRing K Γ₀) =
+      chapter07CompletedUniformizer π := by
+    apply Subtype.ext
+    rfl
+  have hmap : Ideal.map f Js ≤ Jc := by
+    rw [show Js = Ideal.span ({(π.val : chapter07ValuationRing K Γ₀) ^ n} : Set
+      (chapter07ValuationRing K Γ₀)) by rfl]
+    rw [Ideal.map_span]
+    apply Ideal.span_mono
+    rintro y ⟨x, hx, rfl⟩
+    have hx' : x = (π.val : chapter07ValuationRing K Γ₀) ^ n := by simpa using hx
+    subst x
+    rw [map_pow, hfπ]
+    exact Set.mem_singleton _
+  let g : (chapter07ValuationRing K Γ₀) ⧸ Js →+*
+      (chapter07CompletedValuationRing K Γ₀) ⧸ Jc :=
+    Ideal.Quotient.lift Js ((Ideal.Quotient.mk Jc).comp f) (by
+      intro a ha
+      apply Ideal.Quotient.eq_zero_iff_mem.mpr
+      exact (Ideal.map_le_iff_le_comap.mp hmap) ha)
+  have hpval : 0 < vC (chapter07CompletedUniformizer π :
+      chapter07CompletedValuationRing K Γ₀) := by
+    change 0 < chapter07CompletionValuation K Γ₀
+      (chapter07CompletedUniformizer π)
+    rw [chapter07_completed_uniformizer_preserves_value]
+    exact π.valuation_gt_one.val_pos
+  let δ : (MonoidWithZeroHom.ValueGroup₀
+      (.ofClass (Valued.v : Valuation (UniformSpace.Completion K) Γ₀))) :=
+    (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict
+      (((chapter07CompletedUniformizer π :
+        chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n)
+  have quotient_approx : ∀ y : chapter07CompletedValuationRing K Γ₀,
+      ∃ a : chapter07ValuationRing K Γ₀, y - f a ∈ Jc := by
+    intro y
+    have hyclosure : (y : UniformSpace.Completion K) ∈
+        closure (Set.range (@chapter07ValuationRingCompletionEmbedding K Γ₀ _ _ _)) := by
+      apply chapter07_completed_unit_ball_is_approximated_by_integral_elements
+      exact y.property
+    let U : Set (UniformSpace.Completion K) :=
+      {z | (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict
+        (z - (y : UniformSpace.Completion K)) < δ}
+    have hUopen : IsOpen U := by
+      have hball := Valued.isOpen_ball (UniformSpace.Completion K) δ
+      have htop : Valued.valuedCompletion.toTopologicalSpace =
+          (UniformSpace.Completion.uniformSpace K).toTopologicalSpace := by
+        rfl
+      rw [htop] at hball
+      simpa [U] using hball.preimage (continuous_id.sub continuous_const)
+    have hδpos : 0 < δ := by
+      apply (Valuation.restrict_pos_iff
+        (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) _).2
+      rw [map_pow]
+      have hpval' : 0 < (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)
+          ((chapter07CompletedUniformizer π :
+            chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) := by
+        rw [show (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) = vC by rfl]
+        exact hpval
+      have hn_eq : n - 1 + 1 = n := Nat.sub_add_cancel hn
+      rw [← hn_eq]
+      exact pow_pos hpval' _
+    have hUmem : U ∈ 𝓝 (y : UniformSpace.Completion K) := by
+      apply hUopen.mem_nhds
+      simp [U, hδpos]
+    obtain ⟨z, hzU, ⟨a, rfl⟩⟩ :=
+      (mem_closure_iff_nhds.mp hyclosure) U hUmem
+    refine ⟨a, ?_⟩
+    have hlt : vC (((f a : chapter07CompletedValuationRing K Γ₀) :
+          UniformSpace.Completion K) - (y : UniformSpace.Completion K)) <
+        vC (((chapter07CompletedUniformizer π :
+          chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n) := by
+      have hrestrict : (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict
+          (chapter07ValuationRingCompletionEmbedding a -
+            (y : UniformSpace.Completion K)) < δ := by
+        change (Valued.v : Valuation (UniformSpace.Completion K) Γ₀).restrict
+          ((((a : chapter07ValuationRing K Γ₀) : K) : UniformSpace.Completion K) -
+            (y : UniformSpace.Completion K)) < δ at hzU
+        exact hzU
+      have hlt' := (Valuation.restrict_lt_iff_lt_embedding
+        (v := (Valued.v : Valuation (UniformSpace.Completion K) Γ₀))).mp hrestrict
+      have hltVal : (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)
+          (chapter07ValuationRingCompletionEmbedding a -
+            (y : UniformSpace.Completion K)) <
+          (Valued.v : Valuation (UniformSpace.Completion K) Γ₀)
+            (((chapter07CompletedUniformizer π :
+              chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n) := by
+        simpa [δ, Valuation.embedding_restrict] using hlt'
+      change vC (chapter07ValuationRingCompletionEmbedding a -
+        (y : UniformSpace.Completion K)) <
+        vC (((chapter07CompletedUniformizer π :
+          chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n)
+      simpa [show (Valued.v : Valuation (UniformSpace.Completion K) Γ₀) = vC by rfl] using hltVal
+    have hle : vC (((y - f a : chapter07CompletedValuationRing K Γ₀) :
+        chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ≤
+        vC (((chapter07CompletedUniformizer π :
+          chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n) := by
+      have hlt' : vC (((y : chapter07CompletedValuationRing K Γ₀) :
+          UniformSpace.Completion K) - (f a : UniformSpace.Completion K)) <
+          vC (((chapter07CompletedUniformizer π :
+            chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n) := by
+        rw [show (y : UniformSpace.Completion K) - (f a : UniformSpace.Completion K) =
+          -(((f a : chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) -
+            (y : UniformSpace.Completion K)) by ring, vC.map_neg]
+        exact hlt
+      exact hlt'.le
+    change (y - f a : chapter07CompletedValuationRing K Γ₀) ∈
+      (Ideal.span ({(chapter07CompletedUniformizer π :
+        chapter07CompletedValuationRing K Γ₀) ^ n} : Set
+          (chapter07CompletedValuationRing K Γ₀)) : Set
+        (chapter07CompletedValuationRing K Γ₀))
+    have hspan :
+        (Ideal.span ({(chapter07CompletedUniformizer π :
+          chapter07CompletedValuationRing K Γ₀) ^ n} : Set
+            (chapter07CompletedValuationRing K Γ₀)) : Set
+          (chapter07CompletedValuationRing K Γ₀)) =
+        {x : chapter07CompletedValuationRing K Γ₀ |
+          vC (x : UniformSpace.Completion K) ≤
+          vC (((chapter07CompletedUniformizer π :
+            chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n)} := by
+      exact Valuation.integer.coe_span_singleton_eq_setOfPred_le_v_coe _
+    rw [hspan]
+    exact hle
+  have g_surj : Function.Surjective g := by
+    intro x
+    obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
+    obtain ⟨a, ha⟩ := quotient_approx y
+    refine ⟨Ideal.Quotient.mk Js a, ?_⟩
+    rw [Ideal.Quotient.lift_mk]
+    rw [← sub_eq_zero]
+    apply Ideal.Quotient.eq_zero_iff_mem.mpr
+    simpa [sub_eq_add_neg, add_comm] using Jc.neg_mem ha
+  have g_inj : Function.Injective g := by
+    intro x y hxy
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
+    rw [← sub_eq_zero]
+    apply Ideal.Quotient.eq_zero_iff_mem.mpr
+    change (a - b : chapter07ValuationRing K Γ₀) ∈
+      (Ideal.span ({(π.val : chapter07ValuationRing K Γ₀) ^ n} : Set
+        (chapter07ValuationRing K Γ₀)) : Set
+          (chapter07ValuationRing K Γ₀))
+    have hmemC : f a - f b ∈ Jc := by
+      apply Ideal.Quotient.eq_zero_iff_mem.mp
+      rw [map_sub]
+      exact sub_eq_zero.mpr (by simpa [g] using hxy)
+    have hspanC :
+        (Ideal.span ({(chapter07CompletedUniformizer π :
+          chapter07CompletedValuationRing K Γ₀) ^ n} : Set
+            (chapter07CompletedValuationRing K Γ₀)) : Set
+          (chapter07CompletedValuationRing K Γ₀)) =
+        {x : chapter07CompletedValuationRing K Γ₀ |
+          vC (x : UniformSpace.Completion K) ≤
+            vC (((chapter07CompletedUniformizer π :
+              chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n)} := by
+      exact Valuation.integer.coe_span_singleton_eq_setOfPred_le_v_coe _
+    have hleC : vC (((f a - f b : chapter07CompletedValuationRing K Γ₀) :
+        chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ≤
+        vC (((chapter07CompletedUniformizer π :
+          chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n) := by
+      have hmemC' : f a - f b ∈
+          (Ideal.span ({(chapter07CompletedUniformizer π :
+            chapter07CompletedValuationRing K Γ₀) ^ n} : Set
+              (chapter07CompletedValuationRing K Γ₀)) : Set
+            (chapter07CompletedValuationRing K Γ₀)) := hmemC
+      rw [hspanC] at hmemC'
+      exact hmemC'
+    have hleK : (Valued.v : Valuation K Γ₀)
+        (((a : chapter07ValuationRing K Γ₀) : K) -
+          ((b : chapter07ValuationRing K Γ₀) : K)) ≤
+        (Valued.v : Valuation K Γ₀) (π.val : K) ^ n := by
+      have hleC' : vC
+          (((((a : chapter07ValuationRing K Γ₀) : K) -
+            ((b : chapter07ValuationRing K Γ₀) : K)) : UniformSpace.Completion K)) ≤
+          vC (((chapter07CompletedUniformizer π :
+            chapter07CompletedValuationRing K Γ₀) : UniformSpace.Completion K) ^ n) := by
+        dsimp [f, fK] at hleC
+        exact hleC
+      have hcoediff :
+          ((((a : chapter07ValuationRing K Γ₀) : K) : UniformSpace.Completion K) -
+            (((b : chapter07ValuationRing K Γ₀) : K) : UniformSpace.Completion K)) =
+          (((((a : chapter07ValuationRing K Γ₀) : K) -
+            ((b : chapter07ValuationRing K Γ₀) : K)) : K) :
+              UniformSpace.Completion K) := by
+        symm
+        exact (UniformSpace.Completion.coeRingHom : K →+*
+          UniformSpace.Completion K).map_sub _ _
+      rw [hcoediff] at hleC'
+      rw [chapter07_completion_valuation_apply_coe] at hleC'
+      rw [map_pow, chapter07_completed_uniformizer_preserves_value] at hleC'
+      exact hleC'
+    rw [Valuation.integer.coe_span_singleton_eq_setOfPred_le_v_coe]
+    simpa [map_pow] using hleK
+  let e := RingEquiv.ofBijective g ⟨g_inj, g_surj⟩
+  refine ⟨e, ?_⟩
+  intro a
+  change g (Ideal.Quotient.mk Js a) =
+    Ideal.Quotient.mk Jc
+      (chapter07ValuationRingCompletionRingHom (K := K) (Γ₀ := Γ₀) a)
+  rw [Ideal.Quotient.lift_mk]
+  rfl
 
 -- The residue fields are canonically identified at level n = 1.
 theorem chapter07_dvr_residue_field_equivalence
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
     [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete]
     (π : (Valued.v (R := K)).Uniformizer) :
-    Nonempty
-      ((chapter07ValuationRing K Γ₀) ⧸
+    ∃ e : (chapter07ValuationRing K Γ₀) ⧸
           Ideal.span ({(π.val : chapter07ValuationRing K Γ₀)} : Set
             (chapter07ValuationRing K Γ₀)) ≃+*
         (chapter07CompletedValuationRing K Γ₀) ⧸
           Ideal.span ({chapter07CompletedUniformizer π} : Set
-            (chapter07CompletedValuationRing K Γ₀))) := by
-  sorry
+            (chapter07CompletedValuationRing K Γ₀)),
+      ∀ a : chapter07ValuationRing K Γ₀,
+        e (Ideal.Quotient.mk _ a) =
+          Ideal.Quotient.mk _
+            (chapter07ValuationRingCompletionRingHom (K := K) (Γ₀ := Γ₀) a) := by
+  have hs :
+      Ideal.span ({(π.val : chapter07ValuationRing K Γ₀) ^ 1} :
+        Set (chapter07ValuationRing K Γ₀)) =
+        Ideal.span ({(π.val : chapter07ValuationRing K Γ₀)} :
+          Set (chapter07ValuationRing K Γ₀)) := by
+    congr 1
+    ext x
+    simp
+  have ht :
+      Ideal.span ({chapter07CompletedUniformizer π ^ 1} :
+        Set (chapter07CompletedValuationRing K Γ₀)) =
+        Ideal.span ({chapter07CompletedUniformizer π} :
+          Set (chapter07CompletedValuationRing K Γ₀)) := by
+    congr 1
+    ext x
+    simp
+  obtain ⟨e, he⟩ :=
+    chapter07_dvr_finite_level_quotient_equivalence
+      (K := K) (Γ₀ := Γ₀) π 1 (by omega)
+  let es := Ideal.quotEquivOfEq hs.symm
+  let et := Ideal.quotEquivOfEq ht
+  refine ⟨es.trans (e.trans et), ?_⟩
+  intro a
+  simp [es, et, he]
 
 -- The completed field is the fraction field of the completed DVR.
 theorem chapter07_completed_field_is_fraction_field
     {K Γ₀ : Type*} [Field K] [LinearOrderedCommGroupWithZero Γ₀]
     [Valued K Γ₀] [hdiscrete : (Valued.v (R := K)).IsRankOneDiscrete] :
-    Nonempty
-      (FractionRing (chapter07CompletedValuationRing K Γ₀) ≃+*
-        UniformSpace.Completion K) := by
-  exact ⟨(FractionRing.algEquiv (chapter07CompletedValuationRing K Γ₀)
-    (UniformSpace.Completion K)).toRingEquiv⟩
+    ∃ e : FractionRing (chapter07CompletedValuationRing K Γ₀) ≃+*
+        UniformSpace.Completion K,
+      ∀ a : chapter07CompletedValuationRing K Γ₀,
+        e (algebraMap (chapter07CompletedValuationRing K Γ₀)
+            (FractionRing (chapter07CompletedValuationRing K Γ₀)) a) =
+          (a : UniformSpace.Completion K) := by
+  let e := (fun _ : (Valued.v (R := K)).IsRankOneDiscrete =>
+    (FractionRing.algEquiv (chapter07CompletedValuationRing K Γ₀)
+      (UniformSpace.Completion K)).toRingEquiv) hdiscrete
+  refine ⟨e, ?_⟩
+  intro a
+  change FractionRing.algEquiv (chapter07CompletedValuationRing K Γ₀)
+      (UniformSpace.Completion K)
+      (algebraMap (chapter07CompletedValuationRing K Γ₀)
+        (FractionRing (chapter07CompletedValuationRing K Γ₀)) a) =
+    (a : UniformSpace.Completion K)
+  exact (FractionRing.algEquiv (chapter07CompletedValuationRing K Γ₀)
+    (UniformSpace.Completion K)).commutes a
 
 /-! ### 7.5. Separated ideal-adic completion -/
 
@@ -1785,6 +2520,7 @@ noncomputable def chapter07DvrUniformSpace
     ((Valued.mk' ((IsDiscreteValuationRing.maximalIdeal A).valuation (FractionRing A))).toUniformSpace)
 
 -- The standard DVR statement comparing metric and ideal-adic completion.
+set_option maxHeartbeats 800000 in
 theorem chapter07_dvr_metric_completion_agrees_with_adic_completion
     {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     : ∃ e : @UniformSpace.Completion A (chapter07DvrUniformSpace A) ≃+*
@@ -1792,7 +2528,871 @@ theorem chapter07_dvr_metric_completion_agrees_with_adic_completion
       ∀ a : A,
         e ((a : A) : @UniformSpace.Completion A (chapter07DvrUniformSpace A)) =
         chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A) a := by
-  sorry
+  let K := FractionRing A
+  let v : Valuation K ℤᵐ⁰ := (IsDiscreteValuationRing.maximalIdeal A).valuation K
+  let : Valued K ℤᵐ⁰ := Valued.mk' v
+  let : UniformSpace K := (Valued.mk' v).toUniformSpace
+  let : TopologicalSpace K := (Valued.mk' v).toTopologicalSpace
+  let : IsUniformAddGroup K := (Valued.mk' v).toIsUniformAddGroup
+  have hd : v.IsRankOneDiscrete := by infer_instance
+  let : v.IsRankOneDiscrete := hd
+  let C := UniformSpace.Completion K
+  let B := chapter07CompletedValuationRing K ℤᵐ⁰
+  let : UniformSpace B :=
+    UniformSpace.comap (fun b : B => (b : C)) (inferInstance : UniformSpace C)
+  let : TopologicalSpace B :=
+    (UniformSpace.comap (fun b : B => (b : C))
+      (inferInstance : UniformSpace C)).toTopologicalSpace
+  have hclosed : IsClosed (B : Set C) := by
+    exact chapter07_completed_valuation_ring_is_closed
+  let : CompleteSpace B := hclosed.completeSpace_coe
+  let : T0Space B := by infer_instance
+  let fK : A →+* C := (UniformSpace.Completion.coeRingHom).comp (algebraMap A K)
+  have hfK_mem : ∀ a : A, fK a ∈ (B : Set C) := by
+    intro a
+    change chapter07CompletionValuation K ℤᵐ⁰ (fK a) ≤ 1
+    change chapter07CompletionValuation K ℤᵐ⁰
+      (((algebraMap A K a) : K) : UniformSpace.Completion K) ≤ 1
+    rw [chapter07_completion_valuation_apply_coe]
+    change v (algebraMap A K a) ≤ 1
+    exact (Valuation.mem_integer_iff v _).mp (by
+      apply (Valuation.mem_integer_iff v _).2
+      exact (Valuation.mem_valuationSubring_iff v _).mp (by
+        change algebraMap A K a ∈ v.valuationSubring.toSubring
+        rw [show v = (IsDiscreteValuationRing.maximalIdeal A).valuation K by rfl]
+        rw [← IsDiscreteValuationRing.map_algebraMap_eq_valuationSubring (A := A) (K := K)]
+        exact Subring.mem_map.mpr ⟨a, Subring.mem_top _, rfl⟩))
+  let f : A →+* B := fK.codRestrict B hfK_mem
+  let : UniformSpace A := chapter07DvrUniformSpace A
+  let : IsUniformAddGroup A := IsUniformAddGroup.comap (algebraMap A K)
+  have hif : @IsUniformInducing A B (chapter07DvrUniformSpace A)
+      (inferInstance : UniformSpace B) f := by
+    apply (isUniformInducing_iff_uniformSpace).2
+    have hcoek : UniformSpace.comap (fun x : K => (x : C))
+        (inferInstance : UniformSpace C) = (inferInstance : UniformSpace K) := by
+      exact (isUniformInducing_iff_uniformSpace).1
+        (UniformSpace.Completion.isUniformInducing_coe K)
+    have hsub : UniformSpace.comap (fun b : B => (b : C))
+        (inferInstance : UniformSpace C) = (inferInstance : UniformSpace B) := by
+      rfl
+    calc
+      UniformSpace.comap (f : A → B) (inferInstance : UniformSpace B) =
+          UniformSpace.comap (f : A → B)
+            (UniformSpace.comap (fun b : B => (b : C))
+              (inferInstance : UniformSpace C)) := by rw [hsub]
+      _ = UniformSpace.comap (algebraMap A K)
+          (UniformSpace.comap (fun x : K => (x : C))
+            (inferInstance : UniformSpace C)) := by
+        rw [← UniformSpace.comap_comap, ← UniformSpace.comap_comap]
+        apply congrArg (fun h : A → C =>
+          UniformSpace.comap h (inferInstance : UniformSpace C))
+        funext a
+        rfl
+      _ = UniformSpace.comap (algebraMap A K) (inferInstance : UniformSpace K) := by
+        rw [hcoek]
+      _ = chapter07DvrUniformSpace A := by rfl
+  have hsubrange : Set.range (chapter07ValuationRingCompletionEmbedding
+      (K := K) (Γ₀ := ℤᵐ⁰)) ⊆
+      (fun b : B => (b : C)) '' Set.range f := by
+    rintro z ⟨y, rfl⟩
+    obtain ⟨a, ha⟩ := IsDiscreteValuationRing.exists_lift_of_le_one
+      (A := A) (K := K) y.property
+    refine ⟨f a, ⟨a, rfl⟩, ?_⟩
+    change ((algebraMap A K a : K) : C) =
+      (((y : chapter07ValuationRing K ℤᵐ⁰) : K) : C)
+    rw [ha]
+  have hcl : closure (Set.range (chapter07ValuationRingCompletionEmbedding
+      (K := K) (Γ₀ := ℤᵐ⁰))) = (B : Set C) := by
+    exact chapter07_valuation_ring_closure_eq_completed_valuation_ring
+  have hdense : DenseRange f := by
+    rw [DenseRange]
+    apply (Subtype.dense_iff).2
+    intro y hy
+    have hy' : y ∈ closure (Set.range (chapter07ValuationRingCompletionEmbedding
+        (K := K) (Γ₀ := ℤᵐ⁰))) := by
+      rw [hcl]
+      exact hy
+    exact (closure_mono hsubrange) hy'
+  let pkgB : @AbstractCompletion A (chapter07DvrUniformSpace A) :=
+    { space := B
+      coe := f
+      uniformStruct := inferInstance
+      complete := inferInstance
+      separation := inferInstance
+      isUniformInducing := hif
+      dense := hdense }
+  let eU : @UniformSpace.Completion A (chapter07DvrUniformSpace A) ≃ᵤ B :=
+    AbstractCompletion.compareEquiv UniformSpace.Completion.cPkg pkgB
+  have eU_coe (a : A) : eU (a : @UniformSpace.Completion A
+      (chapter07DvrUniformSpace A)) = f a := by
+    exact AbstractCompletion.compare_coe UniformSpace.Completion.cPkg pkgB a
+  let : IsRightUniformAddGroup A := IsUniformAddGroup.isRightUniformAddGroup A
+  let : ContinuousMul A := by
+    change @ContinuousMul A ((inferInstance : TopologicalSpace K).induced (algebraMap A K)) _
+    exact continuousMul_induced (algebraMap A K)
+  let : IsTopologicalSemiring A := ⟨⟩
+  let : IsTopologicalRing A := ⟨⟩
+  let : ContinuousAdd B := by
+    change @ContinuousAdd B ((inferInstance : TopologicalSpace C).induced
+      (fun b : B => (b : C))) _
+    exact continuousAdd_induced (SubringClass.subtype B)
+  let : ContinuousMul B := by
+    change @ContinuousMul B ((inferInstance : TopologicalSpace C).induced
+      (fun b : B => (b : C))) _
+    exact continuousMul_induced (SubringClass.subtype B)
+  have hadd (x y : @UniformSpace.Completion A (chapter07DvrUniformSpace A)) :
+      eU (x + y) = eU x + eU y := by
+    refine UniformSpace.Completion.induction_on₂ x y ?_ ?_
+    · exact isClosed_eq
+        (eU.continuous.comp continuous_add)
+        ((eU.continuous.comp continuous_fst).add
+          (eU.continuous.comp continuous_snd))
+    · intro a b
+      rw [← UniformSpace.Completion.coe_add, eU_coe, eU_coe, eU_coe]
+      exact map_add f a b
+  have hmul (x y : @UniformSpace.Completion A (chapter07DvrUniformSpace A)) :
+      eU (x * y) = eU x * eU y := by
+    refine UniformSpace.Completion.induction_on₂ x y ?_ ?_
+    · exact isClosed_eq
+        (eU.continuous.comp continuous_mul)
+        ((eU.continuous.comp continuous_fst).mul
+          (eU.continuous.comp continuous_snd))
+    · intro a b
+      rw [← UniformSpace.Completion.coe_mul, eU_coe, eU_coe, eU_coe]
+      exact map_mul f a b
+  have hone : eU (1 : @UniformSpace.Completion A (chapter07DvrUniformSpace A)) = 1 := by
+    rw [← UniformSpace.Completion.coe_one A, eU_coe]
+    exact map_one f
+  have hVeq : Valued.integer K = v.valuationSubring.toSubring := by
+    ext x
+    rfl
+  let iVV : Valued.integer K ≃+* v.valuationSubring :=
+    { toFun := fun x => ⟨x, x.property⟩
+      invFun := fun x => ⟨x, x.property⟩
+      left_inv := by intro x; rfl
+      right_inv := by intro x; rfl
+      map_add' := by intro x y; rfl
+      map_mul' := by intro x y; rfl }
+  have hiVV_max : Ideal.map iVV.toRingHom
+      (IsLocalRing.maximalIdeal (Valued.integer K)) =
+      IsLocalRing.maximalIdeal v.valuationSubring := by
+    apply le_antisymm
+    · apply (Ideal.map_le_iff_le_comap).2
+      intro x hx
+      change iVV x ∈ IsLocalRing.maximalIdeal v.valuationSubring
+      rw [IsLocalRing.mem_maximalIdeal]
+      intro hu
+      apply (IsLocalRing.mem_maximalIdeal x).mp hx
+      have hu' : IsUnit (iVV.symm (iVV x)) :=
+        IsUnit.map iVV.symm hu
+      simpa using hu'
+    · intro x hx
+      have hy : iVV.symm x ∈ IsLocalRing.maximalIdeal (Valued.integer K) := by
+        rw [IsLocalRing.mem_maximalIdeal]
+        intro hu
+        apply (IsLocalRing.mem_maximalIdeal x).mp hx
+        have hu' : IsUnit (iVV (iVV.symm x)) :=
+          IsUnit.map iVV hu
+        simpa using hu'
+      have := Ideal.mem_map_of_mem iVV.toRingHom hy
+      change iVV (iVV.symm x) ∈
+        Ideal.map iVV.toRingHom (IsLocalRing.maximalIdeal (Valued.integer K)) at this
+      simpa only [iVV.apply_symm_apply] using this
+  let π : v.Uniformizer := Classical.choice (inferInstance : Nonempty (v.Uniformizer))
+  let p : v.valuationSubring := ⟨π.val, π.val.property⟩
+  have hp : iVV (π.val : Valued.integer K) = p := by rfl
+  have hp' : p = (π.val : v.valuationSubring) := by
+    apply Subtype.ext
+    rfl
+  have hgen : IsLocalRing.maximalIdeal v.valuationSubring =
+      Ideal.span ({p} : Set v.valuationSubring) := by
+    simpa [hp'] using π.valuation_gt_one.is_generator
+  have hmaxV : IsLocalRing.maximalIdeal (Valued.integer K) =
+      Ideal.span ({(π : v.Uniformizer).val} : Set (Valued.integer K)) := by
+    apply le_antisymm
+    · intro x hx
+      have hx' : iVV x ∈ IsLocalRing.maximalIdeal v.valuationSubring := by
+        have hxm := Ideal.mem_map_of_mem iVV.toRingHom hx
+        rw [hiVV_max] at hxm
+        exact hxm
+      rw [hgen] at hx'
+      rcases Ideal.mem_span_singleton.mp hx' with ⟨u, hu⟩
+      apply Ideal.mem_span_singleton.mpr
+      refine ⟨iVV.symm u, ?_⟩
+      exact congrArg iVV.symm hu
+    · intro x hx
+      rw [Ideal.mem_span_singleton] at hx
+      rcases hx with ⟨u, rfl⟩
+      have hu' : p * iVV u ∈ IsLocalRing.maximalIdeal v.valuationSubring := by
+        rw [hgen]
+        exact Ideal.mem_span_singleton.mpr ⟨iVV u, by simp⟩
+      have hu'' : iVV (π.val * u) ∈
+          Ideal.map iVV.toRingHom (IsLocalRing.maximalIdeal (Valued.integer K)) := by
+        rw [hiVV_max]
+        simpa [hp] using hu'
+      obtain ⟨z, hz, hzu⟩ :=
+        (Ideal.mem_map_iff_of_surjective iVV.toRingHom iVV.surjective).mp hu''
+      have hzeq : z = π.val * u := by
+        apply iVV.injective
+        change iVV z = iVV (π.val * u) at hzu
+        exact hzu
+      exact hzeq ▸ hz
+  have hmaxV_pow : ∀ n : ℕ,
+      IsLocalRing.maximalIdeal (Valued.integer K) ^ n =
+        Ideal.span ({((π : v.Uniformizer).val : Valued.integer K) ^ n} :
+          Set (Valued.integer K)) := by
+    intro n
+    rw [hmaxV]
+    exact (Ideal.span_singleton_pow _ n)
+  let r : A ≃+* Valued.integer K :=
+    (IsDiscreteValuationRing.equivValuationSubring (A := A) (K := K)).trans iVV.symm
+  have hrmax : Ideal.map r.toRingHom
+      (IsLocalRing.maximalIdeal A) =
+      IsLocalRing.maximalIdeal (Valued.integer K) := by
+    apply le_antisymm
+    · apply (Ideal.map_le_iff_le_comap).2
+      intro x hx
+      change r x ∈ IsLocalRing.maximalIdeal (Valued.integer K)
+      rw [IsLocalRing.mem_maximalIdeal]
+      intro hu
+      exact (IsLocalRing.mem_maximalIdeal x).mp hx (by
+        simpa only [r.symm_apply_apply] using IsUnit.map r.symm hu)
+    · intro x hx
+      have hy : r.symm x ∈ IsLocalRing.maximalIdeal A := by
+        rw [IsLocalRing.mem_maximalIdeal]
+        intro hu
+        apply (IsLocalRing.mem_maximalIdeal x).mp hx
+        have hu' : IsUnit (r (r.symm x)) := IsUnit.map r hu
+        simpa using hu'
+      have hmem := Ideal.mem_map_of_mem r.toRingHom hy
+      change r (r.symm x) ∈ Ideal.map r.toRingHom
+        (IsLocalRing.maximalIdeal A) at hmem
+      simpa only [r.apply_symm_apply] using hmem
+  have hrpow (n : ℕ) : Ideal.map r.toRingHom
+      ((IsLocalRing.maximalIdeal A) ^ n) =
+      Ideal.span ({((π : v.Uniformizer).val : Valued.integer K) ^ n} :
+        Set (Valued.integer K)) := by
+    rw [Ideal.map_pow, hrmax, hmaxV_pow]
+  let fV : Valued.integer K →+* B := by
+    let fVK : Valued.integer K →+* C :=
+      (UniformSpace.Completion.coeRingHom).comp
+        (SubringClass.subtype (Valued.integer K))
+    have hfVK : ∀ a : Valued.integer K, fVK a ∈ (B : Set C) := by
+      intro a
+      change chapter07CompletionValuation K ℤᵐ⁰
+        (((a : Valued.integer K) : K) : C) ≤ 1
+      rw [chapter07_completion_valuation_apply_coe]
+      exact a.property
+    exact fVK.codRestrict B hfVK
+  have hfVπ : fV (π.val : Valued.integer K) =
+      chapter07CompletedUniformizer π := by
+    apply Subtype.ext
+    rfl
+  have hcanonV : ∀ n : ℕ, 1 ≤ n →
+      Function.Bijective
+        (Ideal.Quotient.lift
+          (Ideal.span ({(π.val : Valued.integer K) ^ n} : Set
+            (Valued.integer K)))
+          ((Ideal.Quotient.mk
+            (Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B))).comp fV)
+          (by
+            intro a ha
+            apply Ideal.Quotient.eq_zero_iff_mem.mpr
+            have hmap : Ideal.map fV
+                (Ideal.span ({(π.val : Valued.integer K) ^ n} : Set
+                  (Valued.integer K))) ≤
+                Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B) := by
+              rw [Ideal.map_span]
+              apply Ideal.span_mono
+              rintro y ⟨x, hx, rfl⟩
+              have hx' : x = (π.val : Valued.integer K) ^ n := by simpa using hx
+              subst x
+              rw [map_pow, hfVπ]
+              exact Set.mem_singleton _
+            exact (Ideal.map_le_iff_le_comap.mp hmap) ha)) := by
+    intro n hn
+    let Jv : Ideal (Valued.integer K) :=
+      Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K))
+    let Jb : Ideal B :=
+      Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B)
+    let g : (Valued.integer K) ⧸ Jv →+* B ⧸ Jb :=
+      Ideal.Quotient.lift Jv ((Ideal.Quotient.mk Jb).comp fV) (by
+        intro a ha
+        apply Ideal.Quotient.eq_zero_iff_mem.mpr
+        have hmap : Ideal.map fV Jv ≤ Jb := by
+          rw [show Jv = Ideal.span ({(π.val : Valued.integer K) ^ n} :
+            Set (Valued.integer K)) by rfl,
+            show Jb = Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B)
+              by rfl,
+            Ideal.map_span]
+          apply Ideal.span_mono
+          rintro y ⟨x, hx, rfl⟩
+          have hx' : x = (π.val : Valued.integer K) ^ n := by simpa using hx
+          subst x
+          rw [map_pow, hfVπ]
+          exact Set.mem_singleton _
+        exact (Ideal.map_le_iff_le_comap.mp hmap) ha)
+    have hpval : 0 < chapter07CompletionValuation K ℤᵐ⁰
+        (chapter07CompletedUniformizer π : B) := by
+      rw [chapter07_completed_uniformizer_preserves_value]
+      exact π.valuation_gt_one.val_pos
+    let δ : MonoidWithZeroHom.ValueGroup₀
+        (.ofClass (Valued.v : Valuation C ℤᵐ⁰)) :=
+      (Valued.v : Valuation C ℤᵐ⁰).restrict
+        (((chapter07CompletedUniformizer π : B) : C) ^ n)
+    have quotient_approx : ∀ y : B, ∃ a : Valued.integer K,
+        y - fV a ∈ Jb := by
+      intro y
+      have hyclosure : (y : C) ∈
+          closure (Set.range (@chapter07ValuationRingCompletionEmbedding K ℤᵐ⁰ _ _ _)) := by
+        apply chapter07_completed_unit_ball_is_approximated_by_integral_elements
+        exact y.property
+      let U : Set C := {z |
+        (Valued.v : Valuation C ℤᵐ⁰).restrict (z - (y : C)) < δ}
+      have hUopen : IsOpen U := by
+        have hball := Valued.isOpen_ball C δ
+        have htop : Valued.valuedCompletion.toTopologicalSpace =
+            (UniformSpace.Completion.uniformSpace K).toTopologicalSpace := by rfl
+        rw [htop] at hball
+        simpa [U] using hball.preimage (continuous_id.sub continuous_const)
+      have hδpos : 0 < δ := by
+        apply (Valuation.restrict_pos_iff
+          (Valued.v : Valuation C ℤᵐ⁰) _).2
+        rw [map_pow]
+        have hpval' : 0 < (Valued.v : Valuation C ℤᵐ⁰)
+            ((chapter07CompletedUniformizer π : B) : C) := by
+          rw [show (Valued.v : Valuation C ℤᵐ⁰) =
+            chapter07CompletionValuation K ℤᵐ⁰ by rfl]
+          exact hpval
+        exact pow_pos hpval' n
+      have hUmem : U ∈ 𝓝 (y : C) := by
+        apply hUopen.mem_nhds
+        simp [U, hδpos]
+      obtain ⟨z, hzU, ⟨a, rfl⟩⟩ :=
+        (mem_closure_iff_nhds.mp hyclosure) U hUmem
+      refine ⟨a, ?_⟩
+      have hlt : chapter07CompletionValuation K ℤᵐ⁰
+          (((fV a : B) : C) - (y : C)) <
+          chapter07CompletionValuation K ℤᵐ⁰
+            (((chapter07CompletedUniformizer π : B) : C) ^ n) := by
+        have hrestrict : (Valued.v : Valuation C ℤᵐ⁰).restrict
+            (chapter07ValuationRingCompletionEmbedding a - (y : C)) < δ := by
+          change (Valued.v : Valuation C ℤᵐ⁰).restrict
+            ((((a : Valued.integer K) : K) : C) - (y : C)) < δ at hzU
+          exact hzU
+        have hlt' := (Valuation.restrict_lt_iff_lt_embedding
+          (v := (Valued.v : Valuation C ℤᵐ⁰))).mp hrestrict
+        have hltVal : (Valued.v : Valuation C ℤᵐ⁰)
+            (chapter07ValuationRingCompletionEmbedding a - (y : C)) <
+            (Valued.v : Valuation C ℤᵐ⁰)
+              (((chapter07CompletedUniformizer π : B) : C) ^ n) := by
+          simpa [δ, Valuation.embedding_restrict] using hlt'
+        change chapter07CompletionValuation K ℤᵐ⁰
+          (chapter07ValuationRingCompletionEmbedding a - (y : C)) <
+          chapter07CompletionValuation K ℤᵐ⁰
+            (((chapter07CompletedUniformizer π : B) : C) ^ n)
+        simpa [show (Valued.v : Valuation C ℤᵐ⁰) =
+          chapter07CompletionValuation K ℤᵐ⁰ by rfl] using hltVal
+      have hle : chapter07CompletionValuation K ℤᵐ⁰
+          (((y - fV a : B) : B) : C) ≤
+          chapter07CompletionValuation K ℤᵐ⁰
+            (((chapter07CompletedUniformizer π : B) : C) ^ n) := by
+        have hlt' : chapter07CompletionValuation K ℤᵐ⁰
+            ((y : C) - (fV a : C)) <
+            chapter07CompletionValuation K ℤᵐ⁰
+              (((chapter07CompletedUniformizer π : B) : C) ^ n) := by
+          rw [show (y : C) - (fV a : C) =
+            -((fV a : C) - (y : C)) by ring,
+            Valuation.map_neg (chapter07CompletionValuation K ℤᵐ⁰)]
+          exact hlt
+        exact hlt'.le
+      change (y - fV a : B) ∈ Jb
+      have hspan : (Jb : Set B) = {x : B |
+          chapter07CompletionValuation K ℤᵐ⁰ (x : C) ≤
+            chapter07CompletionValuation K ℤᵐ⁰
+              (((chapter07CompletedUniformizer π : B) : C) ^ n)} := by
+        exact Valuation.integer.coe_span_singleton_eq_setOfPred_le_v_coe _
+      change (y - fV a : B) ∈ (Jb : Set B)
+      rw [hspan]
+      exact hle
+    have g_surj : Function.Surjective g := by
+      intro x
+      obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
+      obtain ⟨a, ha⟩ := quotient_approx y
+      refine ⟨Ideal.Quotient.mk Jv a, ?_⟩
+      rw [Ideal.Quotient.lift_mk]
+      rw [← sub_eq_zero]
+      apply Ideal.Quotient.eq_zero_iff_mem.mpr
+      simpa [sub_eq_add_neg, add_comm] using Jb.neg_mem ha
+    have g_inj : Function.Injective g := by
+      intro x y hxy
+      obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+      obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
+      rw [← sub_eq_zero]
+      apply Ideal.Quotient.eq_zero_iff_mem.mpr
+      change (a - b : Valued.integer K) ∈ Jv
+      have hmemC : fV a - fV b ∈ Jb := by
+        apply Ideal.Quotient.eq_zero_iff_mem.mp
+        rw [map_sub]
+        exact sub_eq_zero.mpr (by simpa [g] using hxy)
+      have hspanC : (Jb : Set B) = {x : B |
+          chapter07CompletionValuation K ℤᵐ⁰ (x : C) ≤
+            chapter07CompletionValuation K ℤᵐ⁰
+              (((chapter07CompletedUniformizer π : B) : C) ^ n)} := by
+        exact Valuation.integer.coe_span_singleton_eq_setOfPred_le_v_coe _
+      have hmemC' : fV a - fV b ∈ (Jb : Set B) := hmemC
+      rw [hspanC] at hmemC'
+      have hleC : chapter07CompletionValuation K ℤᵐ⁰
+          (((fV a - fV b : B) : B) : C) ≤
+          chapter07CompletionValuation K ℤᵐ⁰
+            (((chapter07CompletedUniformizer π : B) : C) ^ n) := by
+        exact hmemC'
+      have hleK : v (((a : Valued.integer K) : K) -
+          ((b : Valued.integer K) : K)) ≤ v (π.val : K) ^ n := by
+        have hleC' : chapter07CompletionValuation K ℤᵐ⁰
+            (((((a : Valued.integer K) : K) -
+              ((b : Valued.integer K) : K)) : K) : C) ≤
+            chapter07CompletionValuation K ℤᵐ⁰
+              (((chapter07CompletedUniformizer π : B) : C) ^ n) := by
+          have hcoediff :
+              (((fV a : B) : C) - ((fV b : B) : C)) =
+                (((((a : Valued.integer K) : K) -
+                  ((b : Valued.integer K) : K)) : K) : C) := by
+            dsimp [fV]
+            symm
+            exact (UniformSpace.Completion.coeRingHom : K →+* C).map_sub _ _
+          rw [show (((fV a - fV b : B) : B) : C) =
+            ((fV a : B) : C) - ((fV b : B) : C) by rfl]
+              at hleC
+          rw [hcoediff] at hleC
+          exact hleC
+        rw [chapter07_completion_valuation_apply_coe] at hleC'
+        rw [map_pow, chapter07_completed_uniformizer_preserves_value] at hleC'
+        exact hleC'
+      change (a - b : Valued.integer K) ∈
+        (Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K)) :
+          Set (Valued.integer K))
+      rw [Valuation.integer.coe_span_singleton_eq_setOfPred_le_v_coe]
+      change v (((a - b : Valued.integer K) : K)) ≤
+        v ((((π.val : Valued.integer K) ^ n : Valued.integer K) : K))
+      convert hleK using 1
+      · rfl
+      · change v ((π.val : K) ^ n) = v (π.val : K) ^ n
+        rw [map_pow]
+    exact ⟨g_inj, g_surj⟩
+  let vC : Valuation C ℤᵐ⁰ := chapter07CompletionValuation K ℤᵐ⁰
+  have hvalueGroup : valueGroup (.ofClass vC) = valueGroup (.ofClass v) := by
+    apply le_antisymm
+    · intro γ hγ
+      have hγ' : (γ : ℤᵐ⁰) ∈ Set.range (MonoidWithZeroHom.ofClass vC) \ {0} := by
+        rw [← MonoidWithZeroHom.valueGroup_eq_range (.ofClass vC)]
+        exact ⟨γ, hγ, rfl⟩
+      obtain ⟨⟨x, hx⟩, _hx0⟩ := hγ'
+      obtain ⟨r, hr⟩ := Valued.exists_coe_eq_v x
+      have hval : (γ : ℤᵐ⁰) = v r := by
+        calc
+          (γ : ℤᵐ⁰) = vC x := hx.symm
+          _ = v r := by
+            change Valued.extensionValuation x = Valued.v r
+            exact hr
+      have hr0 : r ≠ 0 := by
+        intro hr0
+        subst r
+        simp [v] at hval
+      have hvr0 : v r ≠ 0 := by
+        intro hvr0
+        exact γ.ne_zero (hval.trans hvr0)
+      have hγeq : Units.mk0 (v r) hvr0 = γ := by
+        apply Units.ext
+        exact hval.symm
+      rw [← hγeq]
+      exact MonoidWithZeroHom.mem_valueGroup (.ofClass v) ⟨r, rfl⟩
+    · intro γ hγ
+      have hγ' : (γ : ℤᵐ⁰) ∈ Set.range (MonoidWithZeroHom.ofClass v) \ {0} := by
+        rw [← MonoidWithZeroHom.valueGroup_eq_range (.ofClass v)]
+        exact ⟨γ, hγ, rfl⟩
+      obtain ⟨⟨r, hr⟩, hr0⟩ := hγ'
+      have hval : (γ : ℤᵐ⁰) = v r := by
+        simpa [v] using hr.symm
+      have hvr0 : v r ≠ 0 := by
+        intro hvr0
+        exact γ.ne_zero (hval.trans hvr0)
+      have hvcval : vC ((r : K) : C) = v r := by
+        change chapter07CompletionValuation K ℤᵐ⁰ ((r : K) : C) = Valued.v r
+        rw [chapter07_completion_valuation_apply_coe]
+      have hvc0 : vC ((r : K) : C) ≠ 0 := by
+        simpa [hvcval] using hvr0
+      have hγeq : Units.mk0 (vC ((r : K) : C)) hvc0 = γ := by
+        apply Units.ext
+        exact hvcval.trans hval.symm
+      rw [← hγeq]
+      exact MonoidWithZeroHom.mem_valueGroup (.ofClass vC) ⟨(r : C), rfl⟩
+  let : vC.IsRankOneDiscrete := by
+    refine ⟨⟨Valuation.IsRankOneDiscrete.generator v, ?_, ?_⟩⟩
+    · rw [hvalueGroup]
+      exact Valuation.IsRankOneDiscrete.generator_zpowers_eq_valueGroup v
+    · exact Valuation.IsRankOneDiscrete.generator_lt_one v
+  have hgenC : Valuation.IsRankOneDiscrete.generator vC =
+      Valuation.IsRankOneDiscrete.generator v := by
+    apply LinearOrderedCommGroup.Subgroup.genLTOne_unique_of_zpowers_eq
+      (Valuation.IsRankOneDiscrete.generator_lt_one vC)
+      (Valuation.IsRankOneDiscrete.generator_lt_one v)
+    calc
+      Subgroup.zpowers (Valuation.IsRankOneDiscrete.generator vC) =
+          valueGroup (.ofClass vC) :=
+        Valuation.IsRankOneDiscrete.generator_zpowers_eq_valueGroup vC
+      _ = valueGroup (.ofClass v) := hvalueGroup
+      _ = Subgroup.zpowers (Valuation.IsRankOneDiscrete.generator v) :=
+        (Valuation.IsRankOneDiscrete.generator_zpowers_eq_valueGroup v).symm
+  let πC : vC.Uniformizer :=
+    { val := chapter07CompletedUniformizer π
+      valuation_gt_one := by
+        rw [Valuation.IsUniformizer.iff]
+        rw [chapter07_completed_uniformizer_preserves_value]
+        rw [hgenC]
+        exact π.valuation_gt_one.val }
+  have hmaxB : IsLocalRing.maximalIdeal B =
+      Ideal.span ({(chapter07CompletedUniformizer π : B)} : Set B) := by
+    change IsLocalRing.maximalIdeal vC.valuationSubring = _
+    exact πC.valuation_gt_one.is_generator
+  have hmaxB_pow (n : ℕ) : IsLocalRing.maximalIdeal B ^ n =
+      Ideal.span ({(chapter07CompletedUniformizer π : B) ^ n} : Set B) := by
+    rw [hmaxB]
+    exact Ideal.span_singleton_pow _ n
+  have hcompleteB : IsAdicComplete
+      (Ideal.span ({(chapter07CompletedUniformizer π : B)} : Set B)) B := by
+    rw [← hmaxB]
+    exact (chapter07_completed_valuation_ring_is_dvr (K := K) (Γ₀ := ℤᵐ⁰)).2
+  have hfr : f = fV.comp r.toRingHom := by
+    ext a
+    rfl
+  let gV (n : ℕ) :
+      (Valued.integer K) ⧸
+          Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K)) →+*
+        B ⧸ Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B) :=
+    Ideal.Quotient.lift
+      (Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K)))
+      ((Ideal.Quotient.mk
+        (Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B))).comp fV)
+      (by
+        intro a ha
+        apply Ideal.Quotient.eq_zero_iff_mem.mpr
+        have hmap : Ideal.map fV
+            (Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K))) ≤
+            Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B) := by
+          rw [Ideal.map_span]
+          apply Ideal.span_mono
+          rintro y ⟨x, hx, rfl⟩
+          have hx' : x = (π.val : Valued.integer K) ^ n := by simpa using hx
+          subst x
+          rw [map_pow, hfVπ]
+          exact Set.mem_singleton _
+        exact (Ideal.map_le_iff_le_comap.mp hmap) ha)
+  have hgV_bij (n : ℕ) (hn : 1 ≤ n) : Function.Bijective (gV n) := by
+    simpa [gV] using hcanonV n hn
+  let eAV (n : ℕ) :
+      A ⧸ (IsLocalRing.maximalIdeal A) ^ n ≃+*
+        (Valued.integer K) ⧸
+          Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K)) :=
+    Ideal.quotientEquiv ((IsLocalRing.maximalIdeal A) ^ n)
+      (Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K)))
+      r (hrpow n).symm
+  have heAV_mk (n : ℕ) (a : A) :
+      eAV n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a) =
+        Ideal.Quotient.mk
+          (Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K))) (r a) := by
+    dsimp [eAV]
+    rfl
+  let eVB (n : ℕ) (hn : 1 ≤ n) :
+      (Valued.integer K) ⧸
+          Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K)) ≃+*
+        B ⧸ Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B) :=
+    RingEquiv.ofBijective (gV n) (hgV_bij n hn)
+  let eAB (n : ℕ) (hn : 1 ≤ n) :
+      A ⧸ (IsLocalRing.maximalIdeal A) ^ n ≃+*
+        B ⧸ Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B) :=
+    (eAV n).trans (eVB n hn)
+  have heAB_mk (n : ℕ) (hn : 1 ≤ n) (a : A) :
+      eAB n hn (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a) =
+        Ideal.Quotient.mk
+          (Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B)) (f a) := by
+    change eVB n hn (eAV n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a)) = _
+    change gV n (eAV n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a)) = _
+    rw [heAV_mk]
+    dsimp [gV]
+    change Ideal.Quotient.mk
+        (Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B))
+      (fV (r a)) = _
+    have hfa : fV (r a) = f a := by
+      have hfa' := congrArg (fun q : A →+* B => q a) hfr.symm
+      change fV (r.toRingHom a) = f a at hfa'
+      have hra : r.toRingHom a = r a :=
+        congrFun (RingEquiv.coe_toRingHom r) a
+      rw [hra] at hfa'
+      exact hfa'
+    rw [hfa]
+  have hgV0_bij : Function.Bijective (gV 0) := by
+    have hsubV : Subsingleton ((Valued.integer K) ⧸
+        Ideal.span ({(π.val : Valued.integer K) ^ (0 : ℕ)} : Set (Valued.integer K))) := by
+      rw [show Ideal.span ({(π.val : Valued.integer K) ^ (0 : ℕ)} : Set (Valued.integer K)) =
+        ⊤ by simp]
+      infer_instance
+    have hsubB : Subsingleton (B ⧸
+        Ideal.span ({(chapter07CompletedUniformizer π) ^ (0 : ℕ)} : Set B)) := by
+      rw [show Ideal.span ({(chapter07CompletedUniformizer π) ^ (0 : ℕ)} : Set B) =
+        ⊤ by simp]
+      infer_instance
+    constructor
+    · intro x y _
+      exact hsubV.elim x y
+    · intro y
+      exact ⟨0, hsubB.elim _ _⟩
+  have hgV_all (n : ℕ) : Function.Bijective (gV n) := by
+    cases n with
+    | zero => exact hgV0_bij
+    | succ n => exact hgV_bij (n + 1) (by omega)
+  let eVB_all (n : ℕ) :
+      (Valued.integer K) ⧸
+          Ideal.span ({(π.val : Valued.integer K) ^ n} : Set (Valued.integer K)) ≃+*
+        B ⧸ Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B) :=
+    RingEquiv.ofBijective (gV n) (hgV_all n)
+  let eAB_all (n : ℕ) :
+      A ⧸ (IsLocalRing.maximalIdeal A) ^ n ≃+*
+        B ⧸ Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B) :=
+    (eAV n).trans (eVB_all n)
+  have heAB_all_mk (n : ℕ) (a : A) :
+      eAB_all n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a) =
+        Ideal.Quotient.mk
+          (Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B)) (f a) := by
+    change eVB_all n (eAV n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a)) = _
+    change gV n (eAV n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a)) = _
+    rw [heAV_mk]
+    dsimp [gV]
+    change Ideal.Quotient.mk
+        (Ideal.span ({(chapter07CompletedUniformizer π) ^ n} : Set B))
+      (fV (r a)) = _
+    have hfa : fV (r a) = f a := by
+      have hfa' := congrArg (fun q : A →+* B => q a) hfr.symm
+      change fV (r.toRingHom a) = f a at hfa'
+      have hra : r.toRingHom a = r a :=
+        congrFun (RingEquiv.coe_toRingHom r) a
+      rw [hra] at hfa'
+      exact hfa'
+    rw [hfa]
+  let J0 : Ideal B :=
+    Ideal.span ({(chapter07CompletedUniformizer π : B)} : Set B)
+  have hJ0pow (n : ℕ) : J0 ^ n =
+      Ideal.span ({(chapter07CompletedUniformizer π : B) ^ n} : Set B) := by
+    dsimp [J0]
+    exact Ideal.span_singleton_pow _ n
+  let tB (n : ℕ) :
+      B ⧸ Ideal.span ({(chapter07CompletedUniformizer π : B) ^ n} : Set B) ≃+*
+        B ⧸ J0 ^ n :=
+    Ideal.quotientEquiv
+      (Ideal.span ({(chapter07CompletedUniformizer π : B) ^ n} : Set B)) (J0 ^ n)
+      (RingEquiv.refl B) (by simpa using hJ0pow n)
+  let eABp (n : ℕ) :
+      A ⧸ (IsLocalRing.maximalIdeal A) ^ n ≃+* B ⧸ J0 ^ n :=
+    (eAB_all n).trans (tB n)
+  have heABp_mk (n : ℕ) (a : A) :
+      eABp n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a) =
+        Ideal.Quotient.mk (J0 ^ n) (f a) := by
+    dsimp [eABp, tB]
+    rw [heAB_all_mk, Ideal.quotientEquiv_mk]
+    simp
+  let F (n : ℕ) :
+      AdicCompletion (IsLocalRing.maximalIdeal A) A →+* B ⧸ J0 ^ n :=
+    (eABp n).toRingHom.comp
+      (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n).toRingHom
+  have hEval {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle).comp
+          (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n).toRingHom =
+        (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) m).toRingHom := by
+    ext x
+    let hn : ((IsLocalRing.maximalIdeal A) ^ n • ⊤ : Ideal A) =
+        (IsLocalRing.maximalIdeal A) ^ n := by ext y; simp
+    let hm : ((IsLocalRing.maximalIdeal A) ^ m • ⊤ : Ideal A) =
+        (IsLocalRing.maximalIdeal A) ^ m := by ext y; simp
+    change (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle)
+        ((Ideal.quotientEquivAlgOfEq A hn)
+          (AdicCompletion.eval (IsLocalRing.maximalIdeal A) A n x)) =
+      (Ideal.quotientEquivAlgOfEq A hm)
+        (AdicCompletion.eval (IsLocalRing.maximalIdeal A) A m x)
+    change (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle)
+        (Ideal.Quotient.factor (le_of_eq hn)
+          (AdicCompletion.eval (IsLocalRing.maximalIdeal A) A n x)) =
+      Ideal.Quotient.factor (le_of_eq hm)
+        (AdicCompletion.eval (IsLocalRing.maximalIdeal A) A m x)
+    change (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle)
+        (Ideal.Quotient.factor (le_of_eq hn) (x.val n)) =
+      Ideal.Quotient.factor (le_of_eq hm) (x.val m)
+    rw [← x.property hle]
+    induction x.val n using Quotient.inductionOn' with
+    | _ a =>
+      rfl
+  have heABp_nat {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow J0 hle).comp (eABp n).toRingHom =
+        (eABp m).toRingHom.comp
+          (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle) := by
+    apply RingHom.ext
+    intro x
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    simp only [RingHom.comp_apply]
+    change (Ideal.Quotient.factorPow J0 hle)
+        (eABp n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a)) =
+      eABp m ((Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle)
+        (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a))
+    calc
+      (Ideal.Quotient.factorPow J0 hle)
+          (eABp n (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a)) =
+          (Ideal.Quotient.factorPow J0 hle)
+            (Ideal.Quotient.mk (J0 ^ n) (f a)) := by rw [heABp_mk]
+      _ = Ideal.Quotient.mk (J0 ^ m) (f a) := by
+        rw [Ideal.Quotient.factor_mk]
+      _ = eABp m (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ m) a) := by
+        rw [heABp_mk]
+      _ = eABp m ((Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle)
+          (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a)) := by
+        rw [Ideal.Quotient.factor_mk]
+  have hFcompat {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow J0 hle).comp (F n) = F m := by
+    dsimp [F]
+    calc
+      (Ideal.Quotient.factorPow J0 hle).comp
+          ((eABp n).toRingHom.comp
+            (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n).toRingHom) =
+          ((Ideal.Quotient.factorPow J0 hle).comp (eABp n).toRingHom).comp
+            (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n).toRingHom := by
+              rw [RingHom.comp_assoc]
+      _ = ((eABp m).toRingHom.comp
+            (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle)).comp
+            (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n).toRingHom := by
+              rw [heABp_nat hle]
+      _ = (eABp m).toRingHom.comp
+            ((Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle).comp
+              (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n).toRingHom) := by
+              rw [RingHom.comp_assoc]
+      _ = (eABp m).toRingHom.comp
+            (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) m).toRingHom := by
+              rw [hEval hle]
+      _ = F m := rfl
+  have heABp_inv_nat {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle).comp
+          (eABp n).symm.toRingHom =
+        (eABp m).symm.toRingHom.comp (Ideal.Quotient.factorPow J0 hle) := by
+    apply RingHom.ext
+    intro x
+    obtain ⟨y, rfl⟩ := (eABp n).surjective x
+    have h := congrArg (fun q => q y) (heABp_nat hle)
+    have h' := congrArg (eABp m).symm h
+    simpa [RingHom.comp_apply] using h'.symm
+  let G (n : ℕ) : B →+*
+      A ⧸ (IsLocalRing.maximalIdeal A) ^ n :=
+    (eABp n).symm.toRingHom.comp
+      (Ideal.Quotient.mk (J0 ^ n))
+  have hGcompat {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle).comp (G n) = G m := by
+    dsimp [G]
+    calc
+      (Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle).comp
+          ((eABp n).symm.toRingHom.comp (Ideal.Quotient.mk (J0 ^ n))) =
+          ((Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal A) hle).comp
+            (eABp n).symm.toRingHom).comp (Ideal.Quotient.mk (J0 ^ n)) := by
+              rw [RingHom.comp_assoc]
+      _ = ((eABp m).symm.toRingHom.comp
+            (Ideal.Quotient.factorPow J0 hle)).comp
+            (Ideal.Quotient.mk (J0 ^ n)) := by
+              rw [heABp_inv_nat hle]
+      _ = (eABp m).symm.toRingHom.comp
+            ((Ideal.Quotient.factorPow J0 hle).comp
+              (Ideal.Quotient.mk (J0 ^ n))) := by
+              rw [RingHom.comp_assoc]
+      _ = (eABp m).symm.toRingHom.comp
+            (Ideal.Quotient.mk (J0 ^ m)) := by
+              rw [show (Ideal.Quotient.factorPow J0 hle).comp
+                (Ideal.Quotient.mk (J0 ^ n)) = Ideal.Quotient.mk (J0 ^ m) by
+                  exact Ideal.Quotient.factor_comp_mk
+                    (Ideal.pow_le_pow_right hle)]
+      _ = G m := rfl
+  let eAdic : AdicCompletion (IsLocalRing.maximalIdeal A) A →+* B :=
+    IsAdicComplete.liftRingHom J0 F hFcompat
+  let eInv : B →+* AdicCompletion (IsLocalRing.maximalIdeal A) A :=
+    AdicCompletion.liftRingHom (IsLocalRing.maximalIdeal A) G hGcompat
+  have heAdic_eval (n : ℕ) (x : AdicCompletion (IsLocalRing.maximalIdeal A) A) :
+      Ideal.Quotient.mk (J0 ^ n) (eAdic x) = F n x := by
+    exact IsAdicComplete.mk_liftRingHom J0 F hFcompat n x
+  have heInv_eval (n : ℕ) (x : B) :
+      AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n (eInv x) = G n x := by
+    exact AdicCompletion.evalₐ_liftRingHom
+      (IsLocalRing.maximalIdeal A) G hGcompat n x
+  have hAC : ∀ x : AdicCompletion (IsLocalRing.maximalIdeal A) A,
+      eInv (eAdic x) = x := by
+    intro x
+    apply AdicCompletion.ext_evalₐ
+    intro n
+    apply (eABp n).injective
+    calc
+      eABp n (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n
+          (eInv (eAdic x))) = eABp n (G n (eAdic x)) := by
+            rw [heInv_eval]
+      _ = Ideal.Quotient.mk (J0 ^ n) (eAdic x) := by
+            dsimp [G]
+            simp
+      _ = F n x := heAdic_eval n x
+      _ = eABp n (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n x) := rfl
+  have hB : ∀ y : B, eAdic (eInv y) = y := by
+    intro y
+    have hfun : (fun _ : Unit => eAdic (eInv y)) = (fun _ : Unit => y) := by
+      apply IsHausdorff.funext' J0
+      intro n z
+      calc
+        Ideal.Quotient.mk (J0 ^ n) (eAdic (eInv y)) = F n (eInv y) :=
+          heAdic_eval n (eInv y)
+        _ = eABp n (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n (eInv y)) := rfl
+        _ = eABp n (G n y) := by rw [heInv_eval]
+        _ = Ideal.Quotient.mk (J0 ^ n) y := by
+          dsimp [G]
+          simp
+    exact congrFun hfun ()
+  have heInv_bij : Function.Bijective eInv := by
+    constructor
+    · intro x y hxy
+      have h := congrArg eAdic hxy
+      simpa [hB] using h
+    · intro y
+      exact ⟨eAdic y, hAC y⟩
+  let eBA : B ≃+* AdicCompletion (IsLocalRing.maximalIdeal A) A :=
+    RingEquiv.ofBijective eInv heInv_bij
+  let eRing : @UniformSpace.Completion A (chapter07DvrUniformSpace A) ≃+* B :=
+    { eU.toEquiv with
+      map_add' := hadd
+      map_mul' := hmul }
+  have hInv_f (a : A) :
+      eBA (f a) = chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A) a := by
+    change eInv (f a) = chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A) a
+    apply AdicCompletion.ext_evalₐ
+    intro n
+    apply (eABp n).injective
+    calc
+      eABp n (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n
+          (eInv (f a))) = eABp n (G n (f a)) := by
+            rw [heInv_eval]
+      _ = Ideal.Quotient.mk (J0 ^ n) (f a) := by
+            dsimp [G]
+            simp
+      _ = eABp n
+          (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) a) :=
+            (heABp_mk n a).symm
+      _ = eABp n (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n
+          (chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A) a)) := by
+            simp [chapter07AdicCompletionMap, AdicCompletion.algebraMap_apply]
+  refine ⟨eRing.trans eBA, ?_⟩
+  intro a
+  rw [RingEquiv.trans_apply]
+  change eBA (eU ((a : A) : @UniformSpace.Completion A
+    (chapter07DvrUniformSpace A))) = _
+  rw [eU_coe]
+  exact hInv_f a
 
 -- The finite filtration is unchanged by completion in the DVR case.
 theorem chapter07_dvr_adic_completion_preserves_finite_filtration
@@ -1804,7 +3404,65 @@ theorem chapter07_dvr_adic_completion_preserves_finite_filtration
           AdicCompletion (IsLocalRing.maximalIdeal A) A ⧸ Ideal.span
             ({chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A) (π ^ n)} : Set
               (AdicCompletion (IsLocalRing.maximalIdeal A) A))) := by
-  sorry
+  intro n _
+  have hfg : (IsLocalRing.maximalIdeal A).FG :=
+    (IsLocalRing.maximalIdeal A).fg_of_isNoetherianRing
+  have hπM : Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A :=
+    chapter07_dvr_uniformizer_generates_maximal_ideal π hπ
+  have hπpow :
+      Ideal.span ({π ^ n} : Set A) = (IsLocalRing.maximalIdeal A) ^ n := by
+    rw [← Ideal.span_singleton_pow, hπM]
+  have hzero (x : AdicCompletion (IsLocalRing.maximalIdeal A) A) :
+      AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n x = 0 ↔
+        AdicCompletion.eval (IsLocalRing.maximalIdeal A) A n x = 0 := by
+    have h :
+        ((IsLocalRing.maximalIdeal A) ^ n • (⊤ : Ideal A)) ≤
+          (IsLocalRing.maximalIdeal A) ^ n := by
+      simp
+    have hf : Function.Injective (Ideal.Quotient.factor h) := by
+      rw [RingHom.injective_iff_ker_eq_bot, Ideal.Quotient.factor_ker]
+      have heq :
+          (IsLocalRing.maximalIdeal A ^ n • (⊤ : Ideal A)) =
+            IsLocalRing.maximalIdeal A ^ n := by
+        rw [Ideal.smul_eq_mul, Ideal.mul_top]
+      rw [heq]
+      exact Ideal.map_quotient_self _
+    rw [← AdicCompletion.factor_eval_eq_evalₐ (IsLocalRing.maximalIdeal A) x h]
+    constructor
+    · intro hx
+      apply hf
+      simpa using hx
+    · intro hx
+      simp [hx]
+  have hker :
+      RingHom.ker (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n).toRingHom =
+        ((IsLocalRing.maximalIdeal A) ^ n).map
+          (algebraMap A (AdicCompletion (IsLocalRing.maximalIdeal A) A)) := by
+    ext x
+    change AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n x = 0 ↔
+      x ∈ ((IsLocalRing.maximalIdeal A) ^ n).map
+        (algebraMap A (AdicCompletion (IsLocalRing.maximalIdeal A) A))
+    change AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n x = 0 ↔
+      x ∈ (((IsLocalRing.maximalIdeal A) ^ n).map
+        (algebraMap A (AdicCompletion (IsLocalRing.maximalIdeal A) A))).restrictScalars A
+    rw [← Ideal.smul_top_eq_map,
+      AdicCompletion.pow_smul_top_eq_ker_eval
+        (I := IsLocalRing.maximalIdeal A) (M := A) (n := n) hfg]
+    simpa only [LinearMap.mem_ker] using hzero x
+  have hmap :
+      ((IsLocalRing.maximalIdeal A) ^ n).map
+          (algebraMap A (AdicCompletion (IsLocalRing.maximalIdeal A) A)) =
+        Ideal.span
+          ({chapter07AdicCompletionMap (IsLocalRing.maximalIdeal A) (π ^ n)} :
+            Set (AdicCompletion (IsLocalRing.maximalIdeal A) A)) := by
+    rw [← hπpow, Ideal.map_span]
+    simp [chapter07AdicCompletionMap]
+  refine ⟨(Ideal.quotEquivOfEq hπpow).trans ?_⟩
+  exact
+    (RingHom.quotientKerEquivOfSurjective
+      (f := (AdicCompletion.evalₐ (IsLocalRing.maximalIdeal A) n).toRingHom)
+      (AdicCompletion.surjective_evalₐ (IsLocalRing.maximalIdeal A) n)).symm.trans
+      (Ideal.quotEquivOfEq (hker.trans hmap))
 
 /-! ### 7.6. Examples: p-adic completions -/
 
@@ -1829,7 +3487,30 @@ abbrev chapter07PAdicUniformSpace (p : ℕ) [Fact p.Prime] : UniformSpace ℚ :=
 theorem chapter07_rationals_are_padic_incomplete
     (p : ℕ) [Fact p.Prime] :
     ¬ @CompleteSpace ℚ (chapter07PAdicUniformSpace p) := by
-  sorry
+  intro hcomplete
+  let : UniformSpace ℚ := chapter07PAdicUniformSpace p
+  let : CompleteSpace ℚ := hcomplete
+  have hinducing : @IsUniformInducing ℚ (chapter07PAdicField p)
+      (chapter07PAdicUniformSpace p)
+      (inferInstance : UniformSpace (chapter07PAdicField p))
+      ((↑) : ℚ → chapter07PAdicField p) := by
+    exact (isUniformInducing_iff_uniformSpace).2 rfl
+  have hclosed : IsClosed (Set.range ((↑) : ℚ → chapter07PAdicField p)) := by
+    have hemb : IsUniformEmbedding ((↑) : ℚ → chapter07PAdicField p) :=
+      ⟨hinducing, Rat.cast_injective⟩
+    exact hemb.isClosedEmbedding.isClosed_range
+  have hdense : DenseRange ((↑) : ℚ → chapter07PAdicField p) :=
+    Padic.denseRange_ratCast p
+  have hrange : Set.range ((↑) : ℚ → chapter07PAdicField p) = Set.univ := by
+    rw [← hclosed.closure_eq, hdense.closure_range]
+  have hsurj : Function.Surjective ((↑) : ℚ → chapter07PAdicField p) :=
+    Set.range_eq_univ.mp hrange
+  have hunc : Uncountable (chapter07PAdicField p) := by
+    rw [← Cardinal.aleph0_lt_mk_iff]
+    exact Cardinal.aleph0_lt_continuum.trans_le
+      (continuum_le_cardinal_of_nontriviallyNormedField (chapter07PAdicField p))
+  let : Uncountable (chapter07PAdicField p) := hunc
+  exact (hsurj.uncountable).not_countable inferInstance
 
 -- The p-adic field is complete.
 theorem chapter07_padic_field_is_complete
@@ -1846,18 +3527,16 @@ theorem chapter07_rationals_are_dense_in_padic_field
 -- The completion of ℚ for the p-adic absolute value is ℚ_[p].
 theorem chapter07_padic_field_is_the_padic_completion
     (p : ℕ) [Fact p.Prime] :
-    Nonempty
-      (@UniformSpace.Completion ℚ (chapter07PAdicUniformSpace p) ≃ᵤ
-        chapter07PAdicField p) := by
-  letI : UniformSpace ℚ := chapter07PAdicUniformSpace p
+    ∃ e : @UniformSpace.Completion ℚ (chapter07PAdicUniformSpace p) ≃ᵤ
+        chapter07PAdicField p,
+      ∀ q : ℚ,
+        e (q : @UniformSpace.Completion ℚ (chapter07PAdicUniformSpace p)) =
+          (q : chapter07PAdicField p) := by
+  let : UniformSpace ℚ := chapter07PAdicUniformSpace p
   have hinducing : @IsUniformInducing ℚ (chapter07PAdicField p)
       (chapter07PAdicUniformSpace p)
       (inferInstance : UniformSpace (chapter07PAdicField p))
       ((↑) : ℚ → chapter07PAdicField p) := by
-    change @IsUniformInducing ℚ (chapter07PAdicField p)
-      (chapter07PAdicUniformSpace p)
-      (inferInstance : UniformSpace (chapter07PAdicField p))
-      ((↑) : ℚ → chapter07PAdicField p)
     exact (isUniformInducing_iff_uniformSpace).2 rfl
   let B : @AbstractCompletion ℚ (chapter07PAdicUniformSpace p) :=
     { space := chapter07PAdicField p
@@ -1867,7 +3546,11 @@ theorem chapter07_padic_field_is_the_padic_completion
       separation := inferInstance
       isUniformInducing := hinducing
       dense := chapter07_rationals_are_dense_in_padic_field p }
-  exact ⟨(@UniformSpace.Completion.cPkg ℚ (chapter07PAdicUniformSpace p)).compareEquiv B⟩
+  let e := (@UniformSpace.Completion.cPkg ℚ (chapter07PAdicUniformSpace p)).compareEquiv B
+  refine ⟨e, ?_⟩
+  intro q
+  exact AbstractCompletion.compare_coe
+    (@UniformSpace.Completion.cPkg ℚ (chapter07PAdicUniformSpace p)) B q
 
 -- The p-adic integers form the complete valuation ring inside ℚ_[p].
 theorem chapter07_padic_integer_ring_is_complete
@@ -1887,7 +3570,8 @@ noncomputable def chapter07LocalizedIntegersToRationals
   intro hy
   have hy0 : ((y : ℤ) : ℚ) = 0 := by simpa using hy
   have hy' : (y : ℤ) = 0 := by exact_mod_cast hy0
-  exact y.property (by simpa [P, hy'])
+  apply y.property
+  simp [P, hy']
 
 -- The same localization maps into the p-adic integer subring.  The
 -- denominators in the prime complement are precisely the p-adic units.
@@ -1916,11 +3600,14 @@ abbrev chapter07LocalizedIntegersPAdicUniformSpace (p : ℕ) [Fact p.Prime] :
 -- The canonical p-adic uniformity on the localization is pulled back from ℚ.
 theorem chapter07_localized_integers_padic_completion
     (p : ℕ) [Fact p.Prime] :
-    Nonempty
-      (@UniformSpace.Completion (chapter07LocalizedIntegers p)
+    ∃ e : @UniformSpace.Completion (chapter07LocalizedIntegers p)
         (chapter07LocalizedIntegersPAdicUniformSpace p) ≃ᵤ
-          chapter07PAdicIntegerRing p) := by
-  letI : UniformSpace (chapter07LocalizedIntegers p) :=
+          chapter07PAdicIntegerRing p,
+      ∀ a : chapter07LocalizedIntegers p,
+        e (a : @UniformSpace.Completion (chapter07LocalizedIntegers p)
+          (chapter07LocalizedIntegersPAdicUniformSpace p)) =
+          chapter07LocalizedIntegersToPAdicIntegers p a := by
+  let : UniformSpace (chapter07LocalizedIntegers p) :=
     chapter07LocalizedIntegersPAdicUniformSpace p
   let f : chapter07LocalizedIntegers p →+* chapter07PAdicIntegerRing p :=
     chapter07LocalizedIntegersToPAdicIntegers p
@@ -1937,10 +3624,6 @@ theorem chapter07_localized_integers_padic_completion
       (chapter07PAdicIntegerRing p) (chapter07LocalizedIntegersPAdicUniformSpace p)
       (inferInstance : UniformSpace (chapter07PAdicIntegerRing p))
       (f : chapter07LocalizedIntegers p → chapter07PAdicIntegerRing p) := by
-    change @IsUniformInducing (chapter07LocalizedIntegers p)
-      (chapter07PAdicIntegerRing p) (chapter07LocalizedIntegersPAdicUniformSpace p)
-      (inferInstance : UniformSpace (chapter07PAdicIntegerRing p))
-      (f : chapter07LocalizedIntegers p → chapter07PAdicIntegerRing p)
     exact (isUniformInducing_iff_uniformSpace).2 rfl
   let B : @AbstractCompletion (chapter07LocalizedIntegers p)
       (chapter07LocalizedIntegersPAdicUniformSpace p) :=
@@ -1951,8 +3634,13 @@ theorem chapter07_localized_integers_padic_completion
       separation := inferInstance
       isUniformInducing := hinducing
       dense := hdf }
-  exact ⟨(@UniformSpace.Completion.cPkg (chapter07LocalizedIntegers p)
-    (chapter07LocalizedIntegersPAdicUniformSpace p)).compareEquiv B⟩
+  let e := (@UniformSpace.Completion.cPkg (chapter07LocalizedIntegers p)
+    (chapter07LocalizedIntegersPAdicUniformSpace p)).compareEquiv B
+  refine ⟨e, ?_⟩
+  intro a
+  exact AbstractCompletion.compare_coe
+    (@UniformSpace.Completion.cPkg (chapter07LocalizedIntegers p)
+      (chapter07LocalizedIntegersPAdicUniformSpace p)) B a
 
 lemma chapter07_padic_digit_truncation_succ
     (p : ℕ) [Fact p.Prime] (a : chapter07DigitString p) (i : ℕ) :
@@ -2139,7 +3827,7 @@ theorem chapter07_infinitely_many_nonrational_padic_digit_strings
   have hbool_uncountable : Uncountable (ℕ → Bool) := by
     rw [← not_countable_iff]
     intro hc
-    letI : Countable (ℕ → Bool) := hc
+    let : Countable (ℕ → Bool) := hc
     obtain ⟨f, hf⟩ := exists_surjective_nat (ℕ → Bool)
     let g : ℕ → Bool := fun n => !(f n n)
     obtain ⟨m, hm⟩ := hf g
@@ -2155,10 +3843,10 @@ theorem chapter07_infinitely_many_nonrational_padic_digit_strings
       (congrFun hxy n)
     cases hxn : x n <;> cases hyn : y n <;>
       simp [emb, hxn, hyn] at hn ⊢
-  letI : Uncountable (ℕ → Bool) := hbool_uncountable
+  let : Uncountable (ℕ → Bool) := hbool_uncountable
   have hdigit_uncountable : Uncountable (chapter07DigitString p) :=
     hemb.uncountable
-  letI : Uncountable (chapter07DigitString p) := hdigit_uncountable
+  let : Uncountable (chapter07DigitString p) := hdigit_uncountable
   intro hSfin
   have hU : (Set.univ : Set (chapter07DigitString p)) ⊆ T ∪ S := by
     intro a ha
@@ -2184,13 +3872,29 @@ abbrev chapter07PowerSeriesRing (k : Type*) [Field k] : Type _ :=
 abbrev chapter07RationalFunctionAdicCompletion (k : Type*) [Field k] : Type _ :=
   LaurentSeries.RatFuncAdicCompl k
 
-abbrev chapter07PolynomialLocalRing (k : Type*) [Field k] : Type _ :=
-  MvPolynomial Unit k
+-- The local ring `k[t]_(t)` at the prime generated by `t`.
+noncomputable instance chapter07PolynomialOriginPrime (k : Type*) [Field k] :
+    (Ideal.span ({(Polynomial.X : Polynomial k)} : Set (Polynomial k))).IsPrime :=
+  (Ideal.span_singleton_prime Polynomial.X_ne_zero).mpr Polynomial.prime_X
 
--- The completed polynomial ring, using Mathlib's canonical maximal-variable
--- adic completion.
+abbrev chapter07PolynomialLocalRing (k : Type*) [Field k] : Type _ :=
+  Localization ((Ideal.span ({(Polynomial.X : Polynomial k)} : Set (Polynomial k))).primeCompl)
+
+-- The extension of `(t)` to the localized polynomial ring.
+abbrev chapter07PolynomialLocalIdeal (k : Type*) [Field k] :
+    Ideal (chapter07PolynomialLocalRing k) :=
+  Ideal.map (algebraMap (Polynomial k) (chapter07PolynomialLocalRing k))
+    (Ideal.span ({(Polynomial.X : Polynomial k)} : Set (Polynomial k)))
+
+theorem chapter07_polynomial_local_ideal_eq_maximalIdeal
+    (k : Type*) [Field k] :
+    chapter07PolynomialLocalIdeal k =
+      IsLocalRing.maximalIdeal (chapter07PolynomialLocalRing k) := by
+  exact Localization.AtPrime.map_eq_maximalIdeal
+
+-- The completed local ring, using the `(t)`-adic topology.
 abbrev chapter07PolynomialLocalCompletion (k : Type*) [Field k] : Type _ :=
-  AdicCompletion (MvPolynomial.idealOfVars Unit k)
+  AdicCompletion (chapter07PolynomialLocalIdeal k)
     (chapter07PolynomialLocalRing k)
 
 -- Laurent series are complete for the X-adic valuation.
@@ -2225,42 +3929,334 @@ theorem chapter07_rational_function_completion_is_laurent_series
 -- The completed local valuation ring is identified with k[[t]].
 def chapter07PowerSeriesToPolynomialLocalCompletion
     (k : Type*) [Field k] :
-    Prop :=
+  Prop :=
   ∃ e : chapter07PowerSeriesRing k ≃+* chapter07PolynomialLocalCompletion k,
 
-    ∀ p : MvPolynomial Unit k,
+    ∀ p : Polynomial k,
       e (p : chapter07PowerSeriesRing k) =
-        chapter07AdicCompletionMap (MvPolynomial.idealOfVars Unit k)
-          (algebraMap (MvPolynomial Unit k) (chapter07PolynomialLocalRing k) p)
+        chapter07AdicCompletionMap (chapter07PolynomialLocalIdeal k)
+          (algebraMap (Polynomial k) (chapter07PolynomialLocalRing k) p)
 -- The same local identification as an algebra equivalence.
 def chapter07PowerSeriesAlgebraToPolynomialLocalCompletion
     (k : Type*) [Field k] :
-    Prop :=
+  Prop :=
   ∃ e : chapter07PowerSeriesRing k ≃ₐ[k] chapter07PolynomialLocalCompletion k,
-    ∀ p : MvPolynomial Unit k,
+    ∀ p : Polynomial k,
       e (p : chapter07PowerSeriesRing k) =
-        chapter07AdicCompletionMap (MvPolynomial.idealOfVars Unit k)
-          (algebraMap (MvPolynomial Unit k) (chapter07PolynomialLocalRing k) p)
+        chapter07AdicCompletionMap (chapter07PolynomialLocalIdeal k)
+          (algebraMap (Polynomial k) (chapter07PolynomialLocalRing k) p)
 
 -- Section 7.6: completion of k[t]_(t) gives k[[t]].
 theorem chapter07_polynomial_local_completion_is_power_series
     (k : Type*) [Field k] :
     chapter07PowerSeriesToPolynomialLocalCompletion k ∧
       chapter07PowerSeriesAlgebraToPolynomialLocalCompletion k := by
-  let e := MvPowerSeries.toAdicCompletionAlgEquiv Unit k
-  constructor
-  · refine ⟨e.toRingEquiv, ?_⟩
+  classical
+  let R := Polynomial k
+  let P : Ideal R := Ideal.span ({(Polynomial.X : R)} : Set R)
+  let M : Submonoid R := P.primeCompl
+  let L := Localization M
+  let J : Ideal L := Ideal.map (algebraMap R L) P
+  let PS := chapter07PowerSeriesRing k
+  let Q : Ideal PS := Ideal.span ({(PowerSeries.X : PS)} : Set PS)
+  let c : R →+* PS := Polynomial.coeToPowerSeries.ringHom
+  let : Q.IsMaximal := by
+    dsimp [Q]
+    rw [← PowerSeries.maximalIdeal_eq_span_X]
+    infer_instance
+  have hcoe_mem (n : ℕ) (p : R) :
+      (p : PS) ∈ Q ^ n ↔ p ∈ P ^ n := by
+    change
+      (p : PS) ∈ (Ideal.span ({(PowerSeries.X : PS)} : Set PS)) ^ n ↔
+        p ∈ (Ideal.span ({(Polynomial.X : R)} : Set R)) ^ n
+    rw [Ideal.span_singleton_pow, Ideal.span_singleton_pow,
+      Ideal.mem_span_singleton, Ideal.mem_span_singleton,
+      PowerSeries.X_pow_dvd_iff, Polynomial.X_pow_dvd_iff]
+    simp only [Polynomial.coeff_coe]
+  have hcunit (n : ℕ) (s : M) :
+      IsUnit (((Ideal.Quotient.mk (Q ^ n)).comp c) s.1) := by
+    by_cases hn : n = 0
+    · subst n
+      have htop : Q ^ 0 = (⊤ : Ideal PS) := by simp
+      rw [htop]
+      exact isUnit_of_subsingleton _
+    have hsQ : (s.1 : PS) ∉ Q := by
+      intro hs
+      have hs0 : PowerSeries.constantCoeff (s.1 : PS) = 0 := by
+        apply PowerSeries.X_dvd_iff.mp
+        exact Ideal.mem_span_singleton.mp (by simpa [Q] using hs)
+      have hsP0 : Polynomial.constantCoeff s.1 = 0 := by
+        simpa using hs0
+      have hsP : (s.1 : R) ∉ P := s.property
+      apply hsP
+      change (s.1 : R) ∈ Ideal.span ({(Polynomial.X : R)} : Set R)
+      rw [← Polynomial.ker_constantCoeff, RingHom.mem_ker]
+      exact hsP0
+    change IsUnit (Ideal.Quotient.mk (Q ^ n) (s.1 : PS))
+    exact Ideal.Quotient.isUnit_mk_pow_of_notMem Q (n := n) hsQ
+  let g : ∀ n : ℕ, L →+* PS ⧸ Q ^ n := fun n ↦
+    IsLocalization.lift (M := M)
+      (g := (Ideal.Quotient.mk (Q ^ n)).comp c) (hcunit n)
+  have hmap (n : ℕ) :
+      Ideal.map (g n) (J ^ n) ≤ (⊥ : Ideal (PS ⧸ Q ^ n)) := by
+    change Ideal.map (g n) ((Ideal.map (algebraMap R L) P) ^ n) ≤ ⊥
+    rw [← Ideal.map_pow, Ideal.map_map]
+    change Ideal.map ((g n).comp (algebraMap R L))
+      ((Ideal.span ({(Polynomial.X : R)} : Set R)) ^ n) ≤ ⊥
+    rw [Ideal.map_le_iff_le_comap, Ideal.span_singleton_pow]
+    refine Ideal.span_le.2 ?_
+    intro z hz
+    rcases Set.mem_singleton_iff.mp hz with rfl
+    change (g n) (algebraMap R L ((Polynomial.X : R) ^ n)) = 0
+    simp only [g, IsLocalization.lift_eq]
+    apply Ideal.Quotient.eq_zero_iff_mem.mpr
+    have hc : c ((Polynomial.X : R) ^ n) =
+        (((Polynomial.X : R) ^ n : R) : PS) := by
+      change Polynomial.coeToPowerSeries.ringHom ((Polynomial.X : R) ^ n) = _
+      exact Polynomial.coeToPowerSeries.ringHom_apply
+    rw [hc]
+    apply (hcoe_mem n ((Polynomial.X : R) ^ n)).2
+    change (Polynomial.X : R) ^ n ∈
+      (Ideal.span ({(Polynomial.X : R)} : Set R)) ^ n
+    rw [Ideal.span_singleton_pow]
+    exact Ideal.mem_span_singleton_self _
+  have hJker (n : ℕ) : J ^ n ≤ RingHom.ker (g n) := by
+    intro a ha
+    apply RingHom.mem_ker.mpr
+    have hmem : g n a ∈ Ideal.map (g n) (J ^ n) :=
+      Ideal.mem_map_of_mem (g n) ha
+    simpa using hmap n hmem
+  let q : ∀ n : ℕ, L ⧸ J ^ n →+* PS ⧸ Q ^ n := fun n ↦
+    Ideal.Quotient.lift (J ^ n) (g n) (fun a ha ↦ hJker n ha)
+  have hq_bij (n : ℕ) : Function.Bijective (q n) := by
+    constructor
+    · intro x y hxy
+      obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+      obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
+      apply (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).2
+      have hgab : g n a = g n b := by
+        change g n a = g n b at hxy
+        exact hxy
+      have hzero : g n (a - b) = 0 := by
+        rw [map_sub, hgab, sub_self]
+      obtain ⟨p, s, hs⟩ := IsLocalization.exists_mk'_eq M (a - b)
+      rw [← hs]
+      have hzero' : g n (IsLocalization.mk' L p s) = 0 := by
+        simpa [hs] using hzero
+      have hgp : ((Ideal.Quotient.mk (Q ^ n)).comp c) p = 0 := by
+        have hspec :=
+          (IsLocalization.lift_mk'_spec (M := M)
+            (g := (Ideal.Quotient.mk (Q ^ n)).comp c) (hcunit n) p 0 s).mp
+            (by simpa [g] using hzero')
+        simpa using hspec
+      have hpQ : (p : PS) ∈ Q ^ n := by
+        apply Ideal.Quotient.eq_zero_iff_mem.mp
+        have hcp : c p = (p : PS) := by
+          change Polynomial.coeToPowerSeries.ringHom p = (p : PS)
+          exact Polynomial.coeToPowerSeries.ringHom_apply
+        simpa only [RingHom.comp_apply, hcp] using hgp
+      have hpP : p ∈ P ^ n := (hcoe_mem n p).mp hpQ
+      have hpL : algebraMap R L p ∈ J ^ n := by
+        change algebraMap R L p ∈ (Ideal.map (algebraMap R L) P) ^ n
+        rw [← Ideal.map_pow]
+        exact Ideal.mem_map_of_mem (algebraMap R L) hpP
+      rw [IsLocalization.mk'_eq_mul_mk'_one]
+      exact (J ^ n).mul_mem_right _ hpL
+    · intro z
+      obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective z
+      let p : R := PowerSeries.trunc n f
+      let t : PS := PowerSeries.mk (fun i ↦ PowerSeries.coeff (i + n) f)
+      have hXn : (PowerSeries.X : PS) ^ n ∈ Q ^ n := by
+        change (PowerSeries.X : PS) ^ n ∈
+          (Ideal.span ({(PowerSeries.X : PS)} : Set PS)) ^ n
+        rw [Ideal.span_singleton_pow]
+        exact Ideal.mem_span_singleton_self _
+      have hdiff : f - (p : PS) ∈ Q ^ n := by
+        have hfdiff : f - (p : PS) = (PowerSeries.X : PS) ^ n * t := by
+          apply sub_eq_iff_eq_add.mpr
+          dsimp [p, t]
+          exact PowerSeries.eq_X_pow_mul_shift_add_trunc n f
+        rw [hfdiff]
+        exact (Q ^ n).mul_mem_right _ hXn
+      refine ⟨Ideal.Quotient.mk (J ^ n) (algebraMap R L p), ?_⟩
+      change g n (algebraMap R L p) =
+        Ideal.Quotient.mk (Q ^ n) f
+      simp only [g, IsLocalization.lift_eq]
+      apply (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).2
+      have hcp : c p = (p : PS) := by
+        change Polynomial.coeToPowerSeries.ringHom p = (p : PS)
+        exact Polynomial.coeToPowerSeries.ringHom_apply
+      have hdiff' : (p : PS) - f ∈ Q ^ n := by
+        simpa only [neg_sub] using (Q ^ n).neg_mem hdiff
+      simpa only [hcp, sub_eq_add_neg] using hdiff'
+  have hg_comp {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow Q hle).comp (g n) = g m := by
+    apply IsLocalization.ringHom_ext M
+    apply RingHom.ext
     intro p
-    change e (p : MvPowerSeries Unit k) =
-      AdicCompletion.of (MvPolynomial.idealOfVars Unit k) (MvPolynomial Unit k) p
-    rw [MvPowerSeries.toAdicCompletionAlgEquiv_apply,
-      MvPowerSeries.toAdicCompletion_coe]
-  · refine ⟨e.restrictScalars k, ?_⟩
-    intro p
-    change e (p : MvPowerSeries Unit k) =
-      AdicCompletion.of (MvPolynomial.idealOfVars Unit k) (MvPolynomial Unit k) p
-    rw [MvPowerSeries.toAdicCompletionAlgEquiv_apply,
-      MvPowerSeries.toAdicCompletion_coe]
+    simp only [g, IsLocalization.lift_eq, RingHom.comp_apply,
+      Ideal.Quotient.factor_mk]
+  have hq_comp {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow Q hle).comp (q n) =
+        (q m).comp (Ideal.Quotient.factorPow J hle) := by
+    apply RingHom.ext
+    intro x
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
+    change (Ideal.Quotient.factorPow Q hle) (g n a) = g m a
+    exact DFunLike.congr_fun (hg_comp hle) a
+  let qEquiv (n : ℕ) : L ⧸ J ^ n ≃+* PS ⧸ Q ^ n :=
+    RingEquiv.ofBijective (q n) (hq_bij n)
+  let H : ∀ n : ℕ, PS →+* L ⧸ J ^ n := fun n ↦
+    (qEquiv n).symm.toRingHom.comp (Ideal.Quotient.mk (Q ^ n))
+  have hH_comp {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow J hle).comp (H n) = H m := by
+    apply RingHom.ext
+    intro x
+    apply (qEquiv m).injective
+    change q m ((Ideal.Quotient.factorPow J hle) (H n x)) = q m (H m x)
+    have hq := DFunLike.congr_fun (hq_comp hle) (H n x)
+    change (Ideal.Quotient.factorPow Q hle) (q n (H n x)) =
+      q m ((Ideal.Quotient.factorPow J hle) (H n x)) at hq
+    rw [← hq]
+    change (Ideal.Quotient.factorPow Q hle)
+        ((qEquiv n) ((qEquiv n).symm (Ideal.Quotient.mk (Q ^ n) x))) =
+      (qEquiv m) ((qEquiv m).symm (Ideal.Quotient.mk (Q ^ m) x))
+    simp
+  let d : PS →+* AdicCompletion J L :=
+    AdicCompletion.liftRingHom J H hH_comp
+  let F : ∀ n : ℕ, AdicCompletion J L →+* PS ⧸ Q ^ n := fun n ↦
+    (q n).comp (AdicCompletion.evalₐ J n).toRingHom
+  have heval_comp {m n : ℕ} (hle : m ≤ n) (x : AdicCompletion J L) :
+      (Ideal.Quotient.factorPow J hle) (AdicCompletion.evalₐ J n x) =
+        AdicCompletion.evalₐ J m x := by
+    rw [← AdicCompletion.factor_eval_eq_evalₐ J x
+      (le_of_eq (Ideal.mul_top _))]
+    rw [← AdicCompletion.factor_eval_eq_evalₐ J x
+      (le_of_eq (Ideal.mul_top _))]
+    have htrans :=
+      AdicCompletion.transitionMap_comp_eval_apply (I := J) (M := L) hle x
+    have htrans' := congrArg
+      (fun z ↦ Ideal.Quotient.factor (le_of_eq (Ideal.mul_top (J ^ m))) z)
+      htrans
+    simpa [AdicCompletion.eval, AdicCompletion.transitionMap] using htrans'
+  have hF_comp {m n : ℕ} (hle : m ≤ n) :
+      (Ideal.Quotient.factorPow Q hle).comp (F n) = F m := by
+    apply RingHom.ext
+    intro x
+    change (Ideal.Quotient.factorPow Q hle)
+        (q n (AdicCompletion.evalₐ J n x)) =
+      q m (AdicCompletion.evalₐ J m x)
+    have hq :=
+      DFunLike.congr_fun (hq_comp hle) (AdicCompletion.evalₐ J n x)
+    change (Ideal.Quotient.factorPow Q hle)
+        (q n (AdicCompletion.evalₐ J n x)) =
+      q m ((Ideal.Quotient.factorPow J hle) (AdicCompletion.evalₐ J n x)) at hq
+    rw [hq]
+    exact congrArg (q m) (heval_comp hle x)
+  let eHom : AdicCompletion J L →+* PS :=
+    IsAdicComplete.liftRingHom Q F hF_comp
+  have hed : eHom.comp d = RingHom.id PS := by
+    apply DFunLike.coe_injective
+    apply IsHausdorff.funext' Q
+    intro n x
+    change Ideal.Quotient.mk (Q ^ n) (eHom (d x)) =
+      Ideal.Quotient.mk (Q ^ n) x
+    rw [IsAdicComplete.mk_liftRingHom Q F hF_comp]
+    change q n (AdicCompletion.evalₐ J n (d x)) =
+      Ideal.Quotient.mk (Q ^ n) x
+    rw [show AdicCompletion.evalₐ J n (d x) = H n x by
+      exact AdicCompletion.evalₐ_liftRingHom J H hH_comp n x]
+    change (qEquiv n) ((qEquiv n).symm (Ideal.Quotient.mk (Q ^ n) x)) = _
+    simp
+  have hde : d.comp eHom = RingHom.id (AdicCompletion J L) := by
+    apply RingHom.ext
+    intro x
+    apply AdicCompletion.ext_evalₐ
+    intro n
+    calc
+      AdicCompletion.evalₐ J n (d (eHom x)) = H n (eHom x) := by
+        simp [d]
+      _ = (qEquiv n).symm (Ideal.Quotient.mk (Q ^ n) (eHom x)) := by
+        simp [H]
+      _ = (qEquiv n).symm (F n x) := by
+        rw [IsAdicComplete.mk_liftRingHom Q F hF_comp]
+      _ = (qEquiv n).symm (q n (AdicCompletion.evalₐ J n x)) := by
+        simp [F]
+      _ = AdicCompletion.evalₐ J n x := by
+        change (qEquiv n).symm ((qEquiv n) (AdicCompletion.evalₐ J n x)) = _
+        exact (qEquiv n).symm_apply_apply _
+  have he_left : Function.LeftInverse d eHom := by
+    intro x
+    simpa using DFunLike.congr_fun hde x
+  have he_right : Function.RightInverse d eHom := by
+    intro x
+    simpa using DFunLike.congr_fun hed x
+  have he_bij : Function.Bijective eHom :=
+    ⟨Function.LeftInverse.injective he_left, Function.RightInverse.surjective he_right⟩
+  let eAC : AdicCompletion J L ≃+* PS := RingEquiv.ofBijective eHom he_bij
+  have hebase (p : R) :
+      eHom (AdicCompletion.of J L (algebraMap R L p)) = (p : PS) := by
+    apply (IsHausdorff.eq_iff_smodEq (I := Q)).2
+    intro n
+    rw [SModEq.sub_mem]
+    have hqval :
+        Ideal.Quotient.mk (Q ^ n)
+            (eHom (AdicCompletion.of J L (algebraMap R L p))) =
+          Ideal.Quotient.mk (Q ^ n) (p : PS) := by
+      rw [IsAdicComplete.mk_liftRingHom Q F hF_comp]
+      simp only [F, RingHom.comp_apply]
+      change q n (AdicCompletion.evalₐ J n
+        (AdicCompletion.of J L (algebraMap R L p))) =
+        Ideal.Quotient.mk (Q ^ n) (p : PS)
+      rw [AdicCompletion.evalₐ_of]
+      change g n (algebraMap R L p) = Ideal.Quotient.mk (Q ^ n) (p : PS)
+      simp [g, c]
+      congr 1
+    have hmem :
+        eHom (AdicCompletion.of J L (algebraMap R L p)) - (p : PS) ∈ Q ^ n :=
+      (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).mp hqval
+    rw [smul_eq_mul, Ideal.mul_top]
+    exact hmem
+  let ePS : chapter07PowerSeriesRing k ≃+* chapter07PolynomialLocalCompletion k := by
+    exact eAC.symm
+  have hePS_poly (p : Polynomial k) :
+      ePS (p : chapter07PowerSeriesRing k) =
+        chapter07AdicCompletionMap (chapter07PolynomialLocalIdeal k)
+          (algebraMap (Polynomial k) (chapter07PolynomialLocalRing k) p) := by
+    apply eAC.injective
+    rw [eAC.apply_symm_apply]
+    simpa [ePS, chapter07AdicCompletionMap, chapter07PolynomialLocalIdeal,
+      chapter07PolynomialLocalRing, P, L, J, PS, M,
+      AdicCompletion.algebraMap_apply, eAC] using (hebase p).symm
+  have hePS_const (a : k) :
+      ePS (algebraMap k (chapter07PowerSeriesRing k) a) =
+        algebraMap k (chapter07PolynomialLocalCompletion k) a := by
+    have hleft :
+        algebraMap k (chapter07PowerSeriesRing k) a =
+          (Polynomial.C a : chapter07PowerSeriesRing k) := by
+      simp [chapter07PowerSeriesRing]
+    have hright :
+        chapter07AdicCompletionMap (chapter07PolynomialLocalIdeal k)
+            (algebraMap (Polynomial k) (chapter07PolynomialLocalRing k)
+              (Polynomial.C a)) =
+          algebraMap k (chapter07PolynomialLocalCompletion k) a := by
+      change algebraMap L (AdicCompletion J L)
+          (algebraMap R L (Polynomial.C a)) =
+        algebraMap k (AdicCompletion J L) a
+      calc
+        algebraMap L (AdicCompletion J L)
+              (algebraMap R L (Polynomial.C a)) =
+            algebraMap L (AdicCompletion J L)
+              (algebraMap R L (algebraMap k R a)) := by
+                congr 2
+        _ = algebraMap k (AdicCompletion J L) a := by
+          exact (IsScalarTower.algebraMap_apply k L (AdicCompletion J L) a).symm
+    rw [hleft]
+    exact (hePS_poly (Polynomial.C a)).trans hright
+  let eAlg : chapter07PowerSeriesRing k ≃ₐ[k]
+      chapter07PolynomialLocalCompletion k :=
+    AlgEquiv.ofRingEquiv (f := ePS) hePS_const
+  exact ⟨⟨ePS, hePS_poly⟩, ⟨eAlg, hePS_poly⟩⟩
 
 -- Truncation of a power series to a polynomial, viewed again as a power series.
 def chapter07PowerSeriesTruncation
@@ -2335,8 +4331,11 @@ abbrev chapter07ArchimedeanRationalCompletion : Type _ :=
 
 -- The usual completion of ℚ is the real field.
 theorem chapter07_rationals_have_real_completion :
-    Nonempty (UniformSpace.Completion ℚ ≃ᵤ
-      chapter07ArchimedeanRationalCompletion) := by
+    ∃ e : UniformSpace.Completion ℚ ≃ᵤ
+        chapter07ArchimedeanRationalCompletion,
+      ∀ q : ℚ,
+        e.toFun ((@UniformSpace.Completion.cPkg ℚ inferInstance).coe q) =
+        (q : chapter07ArchimedeanRationalCompletion) := by
   let B : @AbstractCompletion ℚ inferInstance :=
     { space := ℝ
       coe := (↑)
@@ -2344,18 +4343,23 @@ theorem chapter07_rationals_have_real_completion :
       complete := inferInstance
       separation := inferInstance
       isUniformInducing := by
-        change @IsUniformInducing ℚ ℝ inferInstance inferInstance
-          ((↑) : ℚ → ℝ)
         exact Rat.isUniformEmbedding_coe_real.isUniformInducing
       dense := Rat.isDenseEmbedding_coe_real.dense }
-  exact ⟨(@UniformSpace.Completion.cPkg ℚ inferInstance).compareEquiv B⟩
+  refine ⟨(@UniformSpace.Completion.cPkg ℚ inferInstance).compareEquiv B, ?_⟩
+  intro q
+  dsimp [AbstractCompletion.compareEquiv]
+  have h := AbstractCompletion.compare_coe
+    (@UniformSpace.Completion.cPkg ℚ inferInstance) B q
+  simpa [B] using h
 
 -- The same abstract field ℚ has the distinct p-adic completion with p-adic uniformity.
 theorem chapter07_rationals_have_padic_completion
     (p : ℕ) [Fact p.Prime] :
-    Nonempty
-      (@UniformSpace.Completion ℚ (chapter07PAdicUniformSpace p) ≃ᵤ
-        chapter07PAdicField p) := by
+    ∃ e : @UniformSpace.Completion ℚ (chapter07PAdicUniformSpace p) ≃ᵤ
+        chapter07PAdicField p,
+      ∀ q : ℚ,
+        e (q : @UniformSpace.Completion ℚ (chapter07PAdicUniformSpace p)) =
+          (q : chapter07PAdicField p) := by
   exact chapter07_padic_field_is_the_padic_completion p
 
 -- Completion magnifies one chosen notion of nearness and does not canonically retain

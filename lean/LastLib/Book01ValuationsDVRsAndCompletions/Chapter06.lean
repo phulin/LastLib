@@ -74,6 +74,24 @@ theorem chapter06_nontrivial_absolute_value_gives_metric
   intro x y
   exact chapter06MetricSpace_dist v x y
 
+/-- A bundled absolute value, including the trivial one, supplies the metric used
+    in the chapter. -/
+theorem chapter06_absolute_value_gives_metric
+    (v : AbsoluteValue K ℝ) :
+    ∃ m : MetricSpace K,
+      ∀ x y : K, @dist K m.toPseudoMetricSpace.toDist x y = chapter06Distance v x y := by
+  refine ⟨chapter06MetricSpace v, ?_⟩
+  intro x y
+  exact chapter06MetricSpace_dist v x y
+
+/-- In the trivial case this metric is the discrete metric off the diagonal. -/
+theorem chapter06_trivial_absolute_value_is_discrete_distance
+    (v : AbsoluteValue K ℝ) (hv : ¬ chapter06AbsoluteValueIsNontrivial v)
+    {x y : K} (hxy : x ≠ y) :
+    chapter06Distance v x y = 1 := by
+  change v (x - y) = 1
+  exact v.not_isNontrivial_apply hv (sub_ne_zero.mpr hxy)
+
 /-- The strong triangle inequality in distance form. -/
 theorem chapter06_strong_triangle_inequality
     (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v) (x y z : K) :
@@ -494,11 +512,50 @@ theorem chapter06_valuation_subring_is_clopen
     IsClopen (((Valued.v : Valuation K Γ₀).valuationSubring : Set K)) := by
   exact Valued.isClopen_valuationSubring K
 
-/-- Mathlib's open-units interface records that the unit group is open. -/
+/-- The unit group of a valuation subring is open in its induced topology. -/
 theorem chapter06_unit_group_is_open
-    {A : Type*} [Monoid A] [TopologicalSpace A] [IsOpenUnits A] :
-    IsOpen (Set.range (Units.val : Aˣ → A)) := by
-  exact IsOpenUnits.isOpenEmbedding_unitsVal.isOpen_range
+    {K : Type*} [Field K]
+    {Γ₀ : Type*} [LinearOrderedCommGroupWithZero Γ₀] [Valued K Γ₀] :
+    IsOpen (Set.range (Units.val :
+      (Valued.v : Valuation K Γ₀).valuationSubringˣ →
+        (Valued.v : Valuation K Γ₀).valuationSubring)) := by
+  let A := (Valued.v : Valuation K Γ₀).valuationSubring
+  have hsphere : IsOpen {x : K | (Valued.v : Valuation K Γ₀) x = 1} := by
+    rw [isOpen_iff_mem_nhds]
+    intro x hx
+    change (Valued.v : Valuation K Γ₀) x = 1 at hx
+    have hx0 : (Valued.v : Valuation K Γ₀) x ≠ 0 := by
+      rw [hx]
+      exact one_ne_zero
+    simpa only [hx] using (Valued.locally_const (R := K) (Γ₀ := Γ₀) hx0)
+  have hunit : Set.range (Units.val : Aˣ → A) =
+      (fun a : A => (a : K)) ⁻¹' {x : K | (Valued.v : Valuation K Γ₀) x = 1} := by
+    ext a
+    constructor
+    · rintro ⟨u, rfl⟩
+      have hnot : (u : A) ∉ IsLocalRing.maximalIdeal A :=
+        IsLocalRing.notMem_maximalIdeal.mpr (Units.isUnit u)
+      have hnotlt : ¬ (Valued.v : Valuation K Γ₀) (u : K) < 1 := by
+        intro hlt
+        apply hnot
+        exact (Valuation.mem_maximalIdeal_iff
+          (K := K) (Valued.v : Valuation K Γ₀)).2 hlt
+      have hle : (Valued.v : Valuation K Γ₀) (u : K) ≤ 1 := by
+        exact (Valuation.mem_valuationSubring_iff
+          (Valued.v : Valuation K Γ₀) (u : K)).1 (u : A).property
+      exact le_antisymm hle (le_of_not_gt hnotlt)
+    · intro ha
+      change (Valued.v : Valuation K Γ₀) (a : K) = 1 at ha
+      have hnot : a ∉ IsLocalRing.maximalIdeal A := by
+        intro hmem
+        have hlt : (Valued.v : Valuation K Γ₀) (a : K) < 1 :=
+          (Valuation.mem_maximalIdeal_iff
+            (K := K) (Valued.v : Valuation K Γ₀)).1 hmem
+        exact (lt_irrefl (1 : Γ₀)) (ha ▸ hlt)
+      rcases IsLocalRing.notMem_maximalIdeal.mp hnot with ⟨u, hu⟩
+      exact ⟨u, hu⟩
+  rw [hunit]
+  exact hsphere.preimage continuous_subtype_val
 
 /-- The residue/reduction map of a local ring. -/
 def chapter06ReductionMap (A : Type*) [CommRing A] [IsLocalRing A] :
@@ -749,10 +806,9 @@ theorem chapter06_eventual_absolute_value_eq_of_converges_to_nonzero
   intro n hn
   exact chapter06_abs_value_locally_constant_at_nonzero v hv hl0 (hN n hn)
 
-/-- In the discrete-value case, the absolute value is locally constant on `Kˣ`. -/
+/-- The absolute value is locally constant on `Kˣ`; no discreteness is needed. -/
 theorem chapter06_absolute_value_locally_constant_on_nonzero
-    (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v)
-    (hdisc : chapter06DiscreteValueSet v) :
+    (v : AbsoluteValue K ℝ) (hv : IsNonarchimedean v) :
     ∀ x : K, x ≠ 0 →
       ∃ U : Set K, @IsOpen K v.uniformSpace.toTopologicalSpace U ∧ x ∈ U ∧
         ∀ y ∈ U, v y = v x := by
@@ -1709,10 +1765,38 @@ def chapter06FractionalDVRBall (A : Subring K) (π : A) (n : ℕ) : Set K :=
 
 /-- The usual `K = ⋃ₙ π⁻ⁿ A` description. -/
 theorem chapter06_field_is_union_fractional_dvr_balls
-    (A : Subring K) (π : A)
-    (hdecomp : ∀ x : K, ∃ n : ℕ, ∃ a : A,
-      x = (a : K) * (π : K) ^ (-(n : ℤ))) :
+    (A : Subring K) [IsDiscreteValuationRing A] [IsFractionRing A K]
+    (π : A) (hπ : Irreducible π) :
     (Set.univ : Set K) = ⋃ n : ℕ, chapter06FractionalDVRBall A π n := by
+  have hdecomp : ∀ x : K, ∃ n : ℕ, ∃ a : A,
+      x = (a : K) * (π : K) ^ (-(n : ℤ)) := by
+    intro x
+    by_cases hx : x = 0
+    · refine ⟨0, 0, ?_⟩
+      simp [hx]
+    · obtain ⟨a, b, hb, hfrac⟩ := IsFractionRing.div_surjective A x
+      obtain ⟨n, u, hu⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible
+        (x := b) (nonZeroDivisors.ne_zero hb) hπ
+      refine ⟨n, a * (↑u⁻¹ : A), ?_⟩
+      rw [← hfrac, hu]
+      simp only [map_mul, map_inv₀, map_pow, Units.val_inv_eq_inv_val,
+        Algebra.smul_def]
+      rw [zpow_neg]
+      field_simp [hπ.ne_zero]
+      simp [Subring.coe_mul, Units.val_inv_eq_inv_val,
+        mul_assoc, mul_comm, mul_left_comm]
+      change (π : K) ^ n * (a : K) =
+        (a : K) * ((↑(u⁻¹) : K) * ((↑u : K) * (π : K) ^ n))
+      have huinv : (↑(u⁻¹) : K) * (↑u : K) = 1 := by
+        change (↑u.inv : K) * (↑u.val : K) = 1
+        exact congrArg (fun q : A => (q : K)) u.inv_val
+      calc
+        (π : K) ^ n * (a : K) =
+            (a : K) * ((↑(u⁻¹) : K) * (↑u : K)) * (π : K) ^ n := by
+              rw [huinv]
+              ring
+        _ = (a : K) * ((↑(u⁻¹) : K) * ((↑u : K) * (π : K) ^ n)) := by
+              ring
   ext x
   constructor
   · intro _
@@ -1948,6 +2032,14 @@ noncomputable def chapter06RankOneAbsoluteValue
       exact (v.norm_add_le x y).trans
         (max_le_add_of_nonneg (v.norm_nonneg x) (v.norm_nonneg y)) }
 
+/-- The absolute value associated to a rank-one valuation is nonarchimedean. -/
+theorem chapter06_rank_one_absolute_value_is_nonarchimedean
+    (v : Valuation K Γ₀) [v.RankOne] :
+    IsNonarchimedean (chapter06RankOneAbsoluteValue v) := by
+  intro x y
+  change v.norm (x + y) ≤ max (v.norm x) (v.norm y)
+  exact v.norm_add_le x y
+
 /-- A dense range of radii for the rank-one norm. -/
 def chapter06DenseRankOneValueRange (v : Valuation K Γ₀) [v.RankOne] : Prop :=
   ∀ r s : ℝ, 0 < r → r < s →
@@ -2027,6 +2119,50 @@ def chapter06PositiveValueSplitting (v : Valuation K Γ₀) [v.RankOne] : Prop :
   ∀ x : K, 0 < v x → v x < 1 →
     ∃ y z : K, 0 < v y ∧ 0 < v z ∧ v y < 1 ∧ v z < 1 ∧ v x = v y * v z
 
+/-- Splitting positive values yields the factorization of maximal-ideal elements. -/
+theorem chapter06_positive_value_splitting_implies_maximalIdeal_factors
+    (v : Valuation K Γ₀) [v.RankOne]
+    (hsplit : chapter06PositiveValueSplitting v) :
+    chapter06MaximalIdealFactors v := by
+  intro x hx
+  by_cases hzero : (x : K) = 0
+  · have hx0 : x = 0 := Subtype.ext hzero
+    subst x
+    refine ⟨0, 0, ?_, ?_, ?_⟩
+    · exact (Valuation.mem_maximalIdeal_iff (K := K) v).2 (by simp)
+    · exact (Valuation.mem_maximalIdeal_iff (K := K) v).2 (by simp)
+    · simp
+  · have hxpos : 0 < v (x : K) := (v.pos_iff).2 hzero
+    have hxlt : v (x : K) < 1 :=
+      (Valuation.mem_maximalIdeal_iff (K := K) v).1 hx
+    obtain ⟨y, z, hypos, hzpos, hylt, hzlt, hval⟩ := hsplit (x : K) hxpos hxlt
+    have hy0 : y ≠ 0 := (v.pos_iff).mp hypos
+    let y' : v.valuationSubring :=
+      ⟨y, (Valuation.mem_valuationSubring_iff v y).2 hylt.le⟩
+    have hquotval : v ((x : K) / y) = v z := by
+      rw [map_div₀, hval]
+      field_simp [ne_of_gt hypos]
+    let z' : v.valuationSubring :=
+      ⟨(x : K) / y, (Valuation.mem_valuationSubring_iff v _).2
+        (by rw [hquotval]; exact hzlt.le)⟩
+    refine ⟨y', z', ?_, ?_, ?_⟩
+    · exact (Valuation.mem_maximalIdeal_iff (K := K) v).2 hylt
+    · exact (Valuation.mem_maximalIdeal_iff (K := K) v).2 (by
+        rw [hquotval]
+        exact hzlt)
+    · apply Subtype.ext
+      change y * ((x : K) / y) = (x : K)
+      field_simp [hy0]
+
+/-- In the value-splitting situation the maximal ideal is idempotent. -/
+theorem chapter06_positive_value_splitting_implies_maximalIdeal_idempotent
+    (v : Valuation K Γ₀) [v.RankOne]
+    (hsplit : chapter06PositiveValueSplitting v) :
+    IsLocalRing.maximalIdeal v.valuationSubring ^ 2 =
+      IsLocalRing.maximalIdeal v.valuationSubring := by
+  exact chapter06_maximalIdeal_idempotent_of_factors v
+    (chapter06_positive_value_splitting_implies_maximalIdeal_factors v hsplit)
+
 /-- Idempotent maximal ideals obstruct cofinality of powers in a dense valuation topology. -/
 theorem chapter06_idempotent_maximalIdeal_not_power_cofinal
     (v : Valuation K Γ₀) [v.RankOne]
@@ -2064,6 +2200,30 @@ theorem chapter06_idempotent_maximalIdeal_not_power_cofinal
       rw [hp n (Nat.pos_of_ne_zero hnzero)]
       exact hx
     exact hn this
+
+/- A dense value range supplies the obstruction required by the idempotence lemma. -/
+theorem chapter06_dense_value_range_and_idempotence_obstruct_power_cofinality
+    (v : Valuation K Γ₀) [v.RankOne]
+    (hdense : chapter06DenseRankOneValueRange v)
+    (hid : IsLocalRing.maximalIdeal v.valuationSubring ^ 2 =
+      IsLocalRing.maximalIdeal v.valuationSubring) :
+    ¬ chapter06PowersCofinalAmongValuationNeighborhoods v := by
+  letI : Valued K Γ₀ := Valued.mk' v
+  have hnot : ∃ r : ℝ, 0 < r ∧
+      ¬ ((IsLocalRing.maximalIdeal v.valuationSubring : Set v.valuationSubring) ⊆
+        chapter06RankOneValuationNeighborhood v r) := by
+    refine ⟨(1 / 2 : ℝ), by norm_num, ?_⟩
+    obtain ⟨x, _hx0, hlow, hhigh⟩ := hdense (1 / 2) 1 (by norm_num) (by norm_num)
+    let y : v.valuationSubring :=
+      ⟨x, (Valued.toNormedField.norm_le_one_iff (x := x)).mp hhigh.le⟩
+    have hy : y ∈ IsLocalRing.maximalIdeal v.valuationSubring := by
+      apply (Valuation.mem_maximalIdeal_iff (K := K) v).2
+      exact (Valued.toNormedField.norm_lt_one_iff (x := x)).1 hhigh
+    intro hsubset
+    have hy' := hsubset hy
+    change v.norm (y : K) < (1 / 2 : ℝ) at hy'
+    exact (not_lt_of_ge hlow.le) hy'
+  exact chapter06_idempotent_maximalIdeal_not_power_cofinal v hid hnot
 
 /-- The valuation topology may be strictly finer than the `𝔪`-adic topology. -/
 theorem chapter06_nondiscrete_madic_topology_can_be_coarser

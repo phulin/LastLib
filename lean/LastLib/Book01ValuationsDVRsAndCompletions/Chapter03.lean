@@ -61,6 +61,16 @@ theorem mem_maximalIdealOf_iff (v : Valuation K Γ) (x : valuationRingOf v) :
   rw [IsLocalRing.mem_maximalIdeal]
   exact Valuation.Integer.not_isUnit_iff_valuation_lt_one
 
+theorem mem_maximalIdealImageOf_iff (v : Valuation K Γ) (x : K) :
+    x ∈ maximalIdealImageOf v ↔ v x < 1 := by
+  constructor
+  · rintro ⟨y, hy, rfl⟩
+    exact (mem_maximalIdealOf_iff v y).mp hy
+  · intro hx
+    let y : valuationRingOf v :=
+      ⟨x, (mem_valuationRingOf_iff v x).2 hx.le⟩
+    exact ⟨y, (mem_maximalIdealOf_iff v y).2 hx, rfl⟩
+
 theorem valuationRingOf_isUnit_iff (v : Valuation K Γ) (x : valuationRingOf v) :
     IsUnit x ↔ v (x : K) = 1 := by
   exact (Valuation.integer.integers v).isUnit_iff_valuation_eq_one
@@ -1818,7 +1828,7 @@ theorem valuationRingOf_isIntegrallyClosed (v : Valuation K Γ) :
     IsIntegrallyClosed (valuationRingOf v) := by
   infer_instance
 
-theorem integral_element_outside_ring_has_inverse_in_maximalIdeal
+theorem element_outside_valuationRing_has_inverse_in_maximalIdeal
     (v : Valuation K Γ) {x : K} (hxV : x ∉ valuationRingOf v) :
     x⁻¹ ∈ valuationRingOf v ∧
       ∃ y : valuationRingOf v, y ∈ maximalIdealOf v ∧ (y : K) = x⁻¹ := by
@@ -1927,7 +1937,7 @@ theorem local_subring_inverse_obstruction
     apply hxV
     simpa [hx]
   obtain ⟨hxiV, ⟨y, hyM, hyx⟩⟩ :=
-    integral_element_outside_ring_has_inverse_in_maximalIdeal v hxV
+    element_outside_valuationRing_has_inverse_in_maximalIdeal v hxV
   have hxiM : (⟨x⁻¹, hxiV⟩ : valuationRingOf v) ∈ maximalIdealOf v := by
     convert hyM using 1
     apply Subtype.ext

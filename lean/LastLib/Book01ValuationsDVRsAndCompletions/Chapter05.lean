@@ -117,8 +117,7 @@ theorem chapterLayerMultiplicationMap_apply (n : ℕ) (a : A) :
   rw [Submodule.liftQ_apply]
   apply (Submodule.Quotient.eq (chapterGradedPieceDenominator A n)).2
   apply Submodule.mem_comap.mpr
-  simp [LinearMap.comp_apply, LinearMap.codRestrict_apply,
-    LinearMap.mulLeft_apply, chapterLayerRepresentative, mul_comm]
+  simp [LinearMap.codRestrict_apply, LinearMap.mulLeft_apply, mul_comm]
 
 include hπ in
 /-- Book §5.1: cancellation proves injectivity on the layer map. -/
@@ -403,17 +402,19 @@ variable (A : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 variable (π : A) (hπ : Irreducible π)
 
 /--
-The concrete polynomial model for the associated graded ring.
-
-Mathlib does not provide a multiplication on the dependent direct sum of the
-successive quotients used above.  In a DVR every layer is a copy of the
-residue field after a uniformizer is chosen, so the polynomial model is the
-concrete realization used in the rest of this section.
+The external associated-graded object is the direct sum of the successive
+quotients.  Mathlib does not provide the associated-graded ring construction
+for this filtration, so the polynomial ring below is retained as the concrete
+ring model used by the initial-form declarations.
 -/
+abbrev chapterAssociatedGradedObject : Type _ :=
+  ⨁ n : ℕ, chapterGradedPiece A n
+
+/- The concrete polynomial model for the associated graded ring. -/
 abbrev chapterAssociatedGradedRing : Type _ :=
   Polynomial (IsLocalRing.ResidueField A)
 
-/-- The associated graded object carries its usual graded commutative-ring structure. -/
+/-- The polynomial realization carries its usual commutative-ring structure. -/
 noncomputable instance chapterAssociatedGradedRing.commRing :
     CommRing (chapterAssociatedGradedRing (A := A)) := by
   dsimp [chapterAssociatedGradedRing]
@@ -426,7 +427,7 @@ noncomputable instance chapterAssociatedGradedRing.module :
       Polynomial (IsLocalRing.ResidueField A)).comp (IsLocalRing.residue A)
   exact Module.compHom (chapterAssociatedGradedRing (A := A)) f
 
-/-- The canonical inclusion of a graded piece into the associated graded ring. -/
+/-- The chosen inclusion of a graded piece into the polynomial realization. -/
 def chapterGradedInclusion (n : ℕ) :
     chapterGradedPiece A n →ₗ[A] chapterAssociatedGradedRing (A := A) := by
   classical
@@ -455,7 +456,7 @@ def chapterUniformizerLayerClass (π : A) (hπ : Irreducible π) :
     chapterGradedPiece A 1 := by
   exact chapterLayerRepresentative (A := A) π hπ 1 1
 
-/-- The initial form of the uniformizer in the associated graded ring. -/
+/-- The initial form of the uniformizer in the polynomial realization. -/
 def chapterInitialFormUniformizer (π : A) (hπ : Irreducible π) :
     chapterAssociatedGradedRing (A := A) := by
   exact Polynomial.X
@@ -464,7 +465,7 @@ def chapterInitialFormUniformizer (π : A) (hπ : Irreducible π) :
 def chapterInitialDegree (x : A) : ℕ :=
   (IsDiscreteValuationRing.addVal A x).toNat
 
-/-- Initial form of an element in its first nonzero graded piece. -/
+/-- The polynomial-model initial form of an element in its first nonzero graded piece. -/
 noncomputable def chapterInitialForm (π : A) (hπ : Irreducible π) (x : A) :
     chapterAssociatedGradedRing (A := A) := by
   classical
@@ -503,11 +504,148 @@ theorem chapterInitialForm_eq_factorization {x : A} (hx : x ≠ 0)
     Polynomial.C (IsLocalRing.residue A (u : A)) * Polynomial.X ^ n
   rw [hn, huu]
 
-/-- Book §5.2, displayed associated-graded identification `gr_𝔪(A) ≅ k[T]`. -/
+/-- Book §5.2, displayed associated-graded identification `gr_𝔪(A) ≅ k[T]`.
+
+The direct sum is the external associated-graded object; the componentwise
+condition records the chosen polynomial realization and sends the class of
+the uniformizer to `T`.
+-/
 theorem chapter_associated_graded_equiv_polynomial :
-    ∃ e : chapterAssociatedGradedRing (A := A) ≃+* Polynomial (IsLocalRing.ResidueField A),
-      e (chapterInitialFormUniformizer (A := A) π hπ) = Polynomial.X := by
-  exact ⟨RingEquiv.refl _, rfl⟩
+    ∃ e : chapterAssociatedGradedObject (A := A) ≃ₗ[IsLocalRing.ResidueField A]
+        chapterAssociatedGradedRing (A := A),
+      (∀ (n : ℕ) (x : chapterGradedPiece A n),
+        e (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) n x) =
+          chapterGradedInclusion (A := A) π hπ n x) ∧
+      e (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) 1
+          (chapterUniformizerLayerClass (A := A) π hπ)) =
+        chapterInitialFormUniformizer (A := A) π hπ := by
+  classical
+  let E : (n : ℕ) → chapterGradedPiece A n ≃ₗ[IsLocalRing.ResidueField A]
+      IsLocalRing.ResidueField A := fun n =>
+    (LinearEquiv.ofBijective
+      (chapterLayerResidueLinearMap (A := A) π hπ n) (by
+        change Function.Bijective
+          (chapterLayerMultiplicationMap (A := A) π hπ n)
+        exact chapterLayerMultiplicationMap_bijective (A := A) π hπ n)).symm
+  let e₀ := DirectSum.congrLinearEquiv E
+  let ePoly :
+      (⨁ n : ℕ, IsLocalRing.ResidueField A) ≃ₗ[IsLocalRing.ResidueField A]
+        chapterAssociatedGradedRing (A := A) :=
+    (finsuppLEquivDirectSum (IsLocalRing.ResidueField A)
+      (IsLocalRing.ResidueField A) ℕ).symm.trans
+      ((PolynomialModule.coeffLinearEquiv (IsLocalRing.ResidueField A)
+          (IsLocalRing.ResidueField A)).symm.trans
+        (PolynomialModule.equivPolynomial (R := IsLocalRing.ResidueField A)
+          (S := IsLocalRing.ResidueField A)))
+  let e := e₀.trans ePoly
+  have hE (n : ℕ) (a : A) :
+      E n (chapterLayerRepresentative (A := A) π hπ n a) =
+        IsLocalRing.residue A a := by
+    have hf : Function.Bijective
+        (chapterLayerResidueLinearMap (A := A) π hπ n) := by
+      change Function.Bijective
+        (chapterLayerMultiplicationMap (A := A) π hπ n)
+      exact chapterLayerMultiplicationMap_bijective (A := A) π hπ n
+    dsimp [E]
+    apply (LinearEquiv.ofBijective
+      (chapterLayerResidueLinearMap (A := A) π hπ n) hf).injective
+    rw [(LinearEquiv.ofBijective
+      (chapterLayerResidueLinearMap (A := A) π hπ n) hf).apply_symm_apply]
+    symm
+    change chapterLayerMultiplicationMap (A := A) π hπ n
+        (Ideal.Quotient.mk _ a) =
+      chapterLayerRepresentative (A := A) π hπ n a
+    exact chapterLayerMultiplicationMap_apply (A := A) π hπ n a
+  have hA (n : ℕ) (a : A) :
+      (chapterLayerMultiplicationEquiv (A := A) π hπ n).symm
+          (chapterLayerRepresentative (A := A) π hπ n a) =
+        Ideal.Quotient.mk _ a := by
+    apply (chapterLayerMultiplicationEquiv (A := A) π hπ n).injective
+    rw [(chapterLayerMultiplicationEquiv (A := A) π hπ n).apply_symm_apply]
+    symm
+    change chapterLayerMultiplicationMap (A := A) π hπ n
+        (Ideal.Quotient.mk _ a) =
+      chapterLayerRepresentative (A := A) π hπ n a
+    exact chapterLayerMultiplicationMap_apply (A := A) π hπ n a
+  have hIncl (n : ℕ) (a : A) :
+      chapterGradedInclusion (A := A) π hπ n
+          (chapterLayerRepresentative (A := A) π hπ n a) =
+        Polynomial.C (IsLocalRing.residue A a) * Polynomial.X ^ n := by
+    have hA' :
+        (↑((chapterLayerMultiplicationEquiv (A := A) π hπ n).symm
+          (chapterLayerRepresentative (A := A) π hπ n a)) :
+          A ⧸ (IsLocalRing.maximalIdeal A : Submodule A A)) =
+        Submodule.Quotient.mk a := by
+      exact congrArg (fun z : A ⧸ (IsLocalRing.maximalIdeal A : Ideal A) =>
+        (z : A ⧸ (IsLocalRing.maximalIdeal A : Submodule A A))) (hA n a)
+    simp only [chapterGradedInclusion, LinearMap.comp_apply]
+    change (Submodule.liftQ _ _ _)
+      (↑((chapterLayerMultiplicationEquiv (A := A) π hπ n).symm
+        (chapterLayerRepresentative (A := A) π hπ n a)) :
+        A ⧸ (IsLocalRing.maximalIdeal A : Submodule A A)) = _
+    rw [hA']
+    rfl
+  have hrep (n : ℕ) (x : chapterGradedPiece A n) :
+      ∃ a : A, x = chapterLayerRepresentative (A := A) π hπ n a := by
+    obtain ⟨z, rfl⟩ :=
+      Submodule.Quotient.mk_surjective (chapterGradedPieceDenominator A n) x
+    have hz : (z : A) ∈ Ideal.span {π ^ n} := by
+      rw [← chapter_maximalIdeal_pow_eq_uniformizer_span A π hπ n]
+      exact z.property
+    obtain ⟨a, ha⟩ := Ideal.mem_span_singleton.mp hz
+    refine ⟨a, ?_⟩
+    apply (Submodule.Quotient.eq (chapterGradedPieceDenominator A n)).2
+    change (z : A) - a * π ^ n ∈
+      (IsLocalRing.maximalIdeal A ^ (n + 1) : Ideal A)
+    rw [ha]
+    have hz : π ^ n * a - a * π ^ n = 0 := by ring
+    rw [hz]
+    exact Ideal.zero_mem _
+  have he₀ (n : ℕ) (x : chapterGradedPiece A n) :
+      e₀ (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) n x) =
+        DirectSum.of (fun _ : ℕ => IsLocalRing.ResidueField A) n (E n x) := by
+    simp [e₀, DirectSum.congrLinearEquiv, DirectSum.congrAddEquiv]
+  have hePoly (n : ℕ) (c : IsLocalRing.ResidueField A) :
+      ePoly (DirectSum.of (fun _ : ℕ => IsLocalRing.ResidueField A) n c) =
+        Polynomial.monomial n c := by
+    change PolynomialModule.equivPolynomial (R := IsLocalRing.ResidueField A)
+      (S := IsLocalRing.ResidueField A)
+      ((PolynomialModule.coeffLinearEquiv (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField A)).symm
+      ((finsuppLEquivDirectSum (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField A) ℕ).symm
+        (DirectSum.of (fun _ : ℕ => IsLocalRing.ResidueField A) n c))) = _
+    change PolynomialModule.equivPolynomial (R := IsLocalRing.ResidueField A)
+      (S := IsLocalRing.ResidueField A)
+      ((PolynomialModule.coeffLinearEquiv (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField A)).symm
+      ((finsuppLEquivDirectSum (IsLocalRing.ResidueField A)
+        (IsLocalRing.ResidueField A) ℕ).symm
+        (DirectSum.lof (IsLocalRing.ResidueField A) ℕ
+          (fun _ : ℕ => IsLocalRing.ResidueField A) n c))) = _
+    rw [finsuppLEquivDirectSum_symm_lof]
+    rfl
+  have hcomponent : ∀ (n : ℕ) (x : chapterGradedPiece A n),
+      e (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) n x) =
+        chapterGradedInclusion (A := A) π hπ n x := by
+    intro n x
+    obtain ⟨a, ha⟩ := hrep n x
+    rw [ha]
+    change ePoly (e₀ (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) n
+      (chapterLayerRepresentative (A := A) π hπ n a))) = _
+    rw [he₀, hePoly, hE, hIncl]
+    exact (Polynomial.C_mul_X_pow_eq_monomial).symm
+  refine ⟨e, hcomponent, ?_⟩
+  calc
+    e (DirectSum.of (fun i : ℕ => chapterGradedPiece A i) 1
+        (chapterUniformizerLayerClass (A := A) π hπ)) =
+        chapterGradedInclusion (A := A) π hπ 1
+          (chapterUniformizerLayerClass (A := A) π hπ) :=
+      hcomponent 1 (chapterUniformizerLayerClass (A := A) π hπ)
+    _ = Polynomial.C (IsLocalRing.residue A 1) * Polynomial.X ^ 1 := by
+      exact hIncl 1 1
+    _ = chapterInitialFormUniformizer (A := A) π hπ := by
+      simp [chapterInitialFormUniformizer]
 
 /-- Book §5.2: multiplication of successive quotient classes gives the graded product. -/
 def chapterGradedPieceMultiplication (i j : ℕ) :
@@ -556,6 +694,51 @@ def chapterGradedPieceMultiplication (i j : ℕ) :
         rw [eᵢ.symm.map_smul, ← eᵢⱼ.map_smul, hμ]
         rfl }
 
+/-- Book §5.2: the graded product sends uniformizer-layer representatives to
+the representative of the product. -/
+theorem chapterGradedPieceMultiplication_apply (i j : ℕ) (a b : A) :
+    chapterGradedPieceMultiplication (A := A) π hπ i j
+        (chapterLayerRepresentative (A := A) π hπ i a)
+        (chapterLayerRepresentative (A := A) π hπ j b) =
+      chapterLayerRepresentative (A := A) π hπ (i + j) (a * b) := by
+  classical
+  have hi :
+      (chapterLayerMultiplicationEquiv (A := A) π hπ i).symm
+          (chapterLayerRepresentative (A := A) π hπ i a) =
+        Ideal.Quotient.mk _ a := by
+    apply (chapterLayerMultiplicationEquiv (A := A) π hπ i).injective
+    rw [(chapterLayerMultiplicationEquiv (A := A) π hπ i).apply_symm_apply]
+    symm
+    change chapterLayerMultiplicationMap (A := A) π hπ i
+        (Ideal.Quotient.mk _ a) =
+      chapterLayerRepresentative (A := A) π hπ i a
+    exact chapterLayerMultiplicationMap_apply (A := A) π hπ i a
+  have hj :
+      (chapterLayerMultiplicationEquiv (A := A) π hπ j).symm
+          (chapterLayerRepresentative (A := A) π hπ j b) =
+        Ideal.Quotient.mk _ b := by
+    apply (chapterLayerMultiplicationEquiv (A := A) π hπ j).injective
+    rw [(chapterLayerMultiplicationEquiv (A := A) π hπ j).apply_symm_apply]
+    symm
+    change chapterLayerMultiplicationMap (A := A) π hπ j
+        (Ideal.Quotient.mk _ b) =
+      chapterLayerRepresentative (A := A) π hπ j b
+    exact chapterLayerMultiplicationMap_apply (A := A) π hπ j b
+  change (chapterLayerMultiplicationEquiv (A := A) π hπ (i + j))
+      (LinearMap.mul A (A ⧸ (IsLocalRing.maximalIdeal A : Ideal A))
+        ((chapterLayerMultiplicationEquiv (A := A) π hπ i).symm
+          (chapterLayerRepresentative (A := A) π hπ i a))
+        ((chapterLayerMultiplicationEquiv (A := A) π hπ j).symm
+          (chapterLayerRepresentative (A := A) π hπ j b))) =
+    chapterLayerRepresentative (A := A) π hπ (i + j) (a * b)
+  rw [hi, hj]
+  change (chapterLayerMultiplicationEquiv (A := A) π hπ (i + j))
+      (Ideal.Quotient.mk _ (a * b)) =
+    chapterLayerRepresentative (A := A) π hπ (i + j) (a * b)
+  change chapterLayerMultiplicationMap (A := A) π hπ (i + j)
+      (Ideal.Quotient.mk _ (a * b)) = _
+  exact chapterLayerMultiplicationMap_apply (A := A) π hπ (i + j) (a * b)
+
 /-- Book §5.2: initial forms multiply. -/
 theorem chapter_initial_form_mul {x y : A} (hx : x ≠ 0) (hy : y ≠ 0) :
     chapterInitialForm (A := A) π hπ (x * y) =
@@ -567,7 +750,7 @@ theorem chapter_initial_form_mul {x y : A} (hx : x ≠ 0) (hy : y ≠ 0) :
     IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hy hπ
   have hxy : x * y = ((ux * uy : Aˣ) : A) * π ^ (nx + ny) := by
     rw [hux, huy, pow_add]
-    simp [mul_assoc, mul_left_comm, mul_comm]
+    simp [mul_assoc, mul_left_comm]
   rw [chapterInitialForm_eq_factorization (A := A) π hπ (mul_ne_zero hx hy)
       (ux * uy) hxy,
     chapterInitialForm_eq_factorization (A := A) π hπ hx ux hux,
@@ -633,9 +816,10 @@ theorem chapter_initial_form_cancellation_strict_valuation
   have hxval : IsDiscreteValuationRing.addVal A x = nx :=
     IsDiscreteValuationRing.addVal_def x ux hπ nx hux
   rw [hxval]
-  exact lt_of_lt_of_le (ENat.coe_lt_coe.mpr (Nat.lt_succ_self nx)) hle
+  exact lt_of_lt_of_le (ENat.natCast_lt_natCast.mpr (Nat.lt_succ_self nx)) hle
 
-/-- Book §5.2: changing `π` to `uπ` rescales the degree-one generator by `ū`. -/
+/-- Book §5.2: relative to the original `π`-coordinate, replacing the
+uniformizer by `uπ` rescales the degree-one generator by `ū`. -/
 theorem chapter_initial_form_uniformizer_change
     (u : Aˣ) :
     chapterInitialForm (A := A) π hπ ((u : A) * π) =
@@ -665,7 +849,7 @@ theorem chapter_exists_residue_representative_set :
         (Classical.choose_spec (IsLocalRing.residue_surjective (R := A) r))
   let S : Set A := Set.range s
   refine ⟨S, ⟨?_, ?_⟩⟩
-  · exact ⟨0, by simp [S, s]⟩
+  · exact ⟨0, by simp [s]⟩
   · constructor
     · intro x y hxy
       rcases x.property with ⟨r, hr⟩
@@ -749,7 +933,7 @@ theorem chapter_unique_digit_expansion
         (d : A) + π * chapterDigitExpansion (A := A) π S k tail := by
     intro k d tail
     simp [chapterDigitExpansion, Fin.sum_univ_succ, pow_succ',
-      Fin.cons, mul_add, add_mul, mul_assoc, mul_comm, mul_left_comm]
+      Fin.cons, mul_comm, mul_left_comm]
     rw [Finset.mul_sum]
   have hrepr : ∀ (k : ℕ) (digits : Fin (k + 1) → S),
       Fin.cons (digits 0) (fun i => digits i.succ) = digits := by
@@ -999,7 +1183,95 @@ theorem chapter_infinite_digit_expansion_unique
           (y - chapterInfiniteDigitPrefix (A := A) π S digits n) ∈
         (IsLocalRing.maximalIdeal A) ^ n :=
     Ideal.sub_mem _ (hx n) (hy n)
-  convert hxy using 1 <;> ring
+  convert hxy using 1; ring
+
+include hπ in
+/-- Book §5.2: in an adically complete DVR, every element has a unique
+infinite digit expansion. -/
+theorem chapter_complete_element_unique_infinite_digit_expansion
+    (S : Set A) (hS : chapterIsResidueRepresentativeSet A S)
+    [IsAdicComplete (IsLocalRing.maximalIdeal A) A] (x : A) :
+    ∃! digits : ℕ → S, ∀ n : ℕ,
+      x - chapterInfiniteDigitPrefix (A := A) π S digits n ∈
+        IsLocalRing.maximalIdeal A ^ n := by
+  classical
+  let q : ℕ → A := Nat.rec x (fun _ y =>
+    chapterDigitQuotient (A := A) π hπ S hS y)
+  let digits : ℕ → S := fun n =>
+    chapterChosenResidueDigit A S hS (q n)
+  have hq (n : ℕ) : q (n + 1) =
+      chapterDigitQuotient (A := A) π hπ S hS (q n) := by
+    rfl
+  have hprefix : ∀ n : ℕ,
+      x - chapterInfiniteDigitPrefix (A := A) π S digits n =
+        π ^ n * q n := by
+    intro n
+    induction n with
+    | zero => simp [chapterInfiniteDigitPrefix, q]
+    | succ n ih =>
+      have hstep := chapter_digit_extraction_step
+        (A := A) (π := π) (hπ := hπ) S hS (q n)
+      have hstep' : q n - (digits n : A) = π * q (n + 1) := by
+        simpa [digits, hq n] using hstep
+      calc
+        x - chapterInfiniteDigitPrefix (A := A) π S digits (n + 1) =
+            (x - chapterInfiniteDigitPrefix (A := A) π S digits n) -
+              (digits n : A) * π ^ n := by
+                simp [chapterInfiniteDigitPrefix, Finset.sum_range_succ]
+                ring
+        _ = π ^ n * q n - (digits n : A) * π ^ n := by rw [ih]
+        _ = π ^ n * (q n - (digits n : A)) := by ring
+        _ = π ^ n * (π * q (n + 1)) := by rw [hstep']
+        _ = π ^ (n + 1) * q (n + 1) := by
+          rw [pow_succ']
+          ring
+  have hex : ∀ n : ℕ,
+      x - chapterInfiniteDigitPrefix (A := A) π S digits n ∈
+        IsLocalRing.maximalIdeal A ^ n := by
+    intro n
+    rw [hprefix n, hπ.maximalIdeal_eq, Ideal.span_singleton_pow]
+    simpa [mul_comm] using
+      (Ideal.mul_mem_left (Ideal.span {π ^ n}) (q n)
+        (Ideal.mem_span_singleton_self (π ^ n)))
+  refine ⟨digits, hex, ?_⟩
+  intro digits' hdigits'
+  funext n
+  apply Subtype.ext
+  have hprefix_eq (d : ℕ → S) (m : ℕ) :
+      chapterDigitExpansion (A := A) π S m (fun i => d i) =
+        chapterInfiniteDigitPrefix (A := A) π S d m := by
+    rw [chapterDigitExpansion, Finset.sum_fin_eq_sum_range]
+    apply Finset.sum_congr rfl
+    intro i hi
+    simp [Finset.mem_range.mp hi]
+  have hfinite : (fun i : Fin (n + 1) => digits' i) =
+      (fun i : Fin (n + 1) => digits i) := by
+    have hmem :
+        chapterDigitExpansion (A := A) π S (n + 1) (fun i => digits' i) -
+          chapterDigitExpansion (A := A) π S (n + 1) (fun i => digits i) ∈
+          Ideal.span {π ^ (n + 1)} := by
+      have hsub := Ideal.sub_mem (IsLocalRing.maximalIdeal A ^ (n + 1))
+        (hex (n + 1)) (hdigits' (n + 1))
+      have hsub' :
+          chapterInfiniteDigitPrefix (A := A) π S digits' (n + 1) -
+              chapterInfiniteDigitPrefix (A := A) π S digits (n + 1) ∈
+            IsLocalRing.maximalIdeal A ^ (n + 1) := by
+        simpa [sub_eq_add_neg, add_comm, add_left_comm, add_assoc] using hsub
+      rw [hprefix_eq digits' (n + 1), hprefix_eq digits (n + 1)]
+      simpa [hπ.maximalIdeal_eq, Ideal.span_singleton_pow] using hsub'
+    have hclass :
+        chapterDigitExpansionClass (A := A) π S (n + 1) (fun i => digits' i) =
+          chapterDigitExpansionClass (A := A) π S (n + 1) (fun i => digits i) := by
+      apply sub_eq_zero.mp
+      change Ideal.Quotient.mk (Ideal.span {π ^ (n + 1)})
+          (chapterDigitExpansion (A := A) π S (n + 1) (fun i => digits' i) -
+            chapterDigitExpansion (A := A) π S (n + 1) (fun i => digits i)) = 0
+      exact (Ideal.Quotient.eq_zero_iff_mem).2 hmem
+    exact (chapter_unique_digit_expansion
+      (A := A) (π := π) (hπ := hπ) S hS (n + 1)
+      (chapterDigitExpansionClass (A := A) π S (n + 1) (fun i => digits' i))).unique
+      rfl hclass.symm
+  simpa using congrArg Subtype.val (congrFun hfinite ⟨n, Nat.lt_succ_self n⟩)
 
 /-- The localization `ℤ_(p)` used in the base-`p` example. -/
 abbrev chapterZLocalizedAtPrime (p : ℕ) [Fact p.Prime] :=
@@ -1028,7 +1300,6 @@ theorem chapter_not_every_infinite_base_p_string_represents_a_localized_integer
     dsimp [P]
     exact Ideal.isPrime_span_singleton_of_prime
       (Nat.prime_iff_prime_int.mp (Fact.out : Nat.Prime p))
-  letI : P.IsPrime := hPprime
   have hprefix_succ (digits : ℕ → Fin p) (n : ℕ) :
       chapterBasePDigitPrefix p digits (n + 1) =
         chapterBasePDigitPrefix p digits n +
@@ -1076,7 +1347,7 @@ theorem chapter_not_every_infinite_base_p_string_represents_a_localized_integer
     have hdiff :
         chapterBasePDigitPrefix p digits₂ n -
             chapterBasePDigitPrefix p digits₁ n ∈ P ^ n :=
-      (Ideal.IsPrime.mul_mem_pow P hmprod').resolve_left hm
+      (Ideal.IsPrime.mul_mem_pow P (hI := hPprime) hmprod').resolve_left hm
     have hdiv :
         ((p : ℤ) ^ n) ∣
           chapterBasePDigitPrefix p digits₂ n -
@@ -1126,8 +1397,7 @@ theorem chapter_not_every_infinite_base_p_string_represents_a_localized_integer
         exact Fin.ext hval
   have hnotcount : ¬ Countable (ℕ → Fin p) := by
     intro hcount
-    letI : Countable (ℕ → Fin p) := hcount
-    obtain ⟨f, hf⟩ := exists_surjective_nat (ℕ → Fin p)
+    obtain ⟨f, hf⟩ := @exists_surjective_nat (ℕ → Fin p) inferInstance hcount
     let zero : Fin p := ⟨0, (Fact.out : Nat.Prime p).pos⟩
     let one : Fin p := ⟨1, (Fact.out : Nat.Prime p).one_lt⟩
     have hone : one ≠ zero := by
@@ -1167,8 +1437,9 @@ theorem chapter_not_every_infinite_base_p_string_represents_a_localized_integer
       (fun z : ℤ × P.primeCompl =>
         IsLocalization.mk' (chapterZLocalizedAtPrime p) z.1 z.2) :=
     IsLocalization.mk'_surjective P.primeCompl
-  letI : Countable (chapterZLocalizedAtPrime p) := hsurjective.countable
-  exact hnotcount hinjective.countable
+  exact hnotcount
+    (@Function.Injective.countable (ℕ → Fin p) (chapterZLocalizedAtPrime p)
+      hsurjective.countable representative hinjective)
 
 /-- The cardinality of the residue field. -/
 def chapterResidueCardinality : ℕ := Nat.card (IsLocalRing.ResidueField A)
@@ -1201,6 +1472,8 @@ def chapterQuotientUniformizer (n : ℕ) :
 
 include hπ in
 /-- Book §5.2: the truncated quotient is Artinian local. -/
+-- The truncation index is explicitly positive, as is conventional for
+-- quotients called truncated DVRs.
 theorem chapter_quotient_is_artinian_local (n : ℕ) (hn : 0 < n) :
     IsArtinianRing (A ⧸ (Ideal.span {π ^ n} : Ideal A)) ∧
       IsLocalRing (A ⧸ (Ideal.span {π ^ n} : Ideal A)) := by
@@ -1214,19 +1487,26 @@ theorem chapter_quotient_is_artinian_local (n : ℕ) (hn : 0 < n) :
     exact (Nat.ne_of_gt hn) hn0
   have hItop : I ≠ ⊤ := by
     exact Ideal.span_singleton_ne_top hunit
-  letI : Nontrivial Q := Ideal.Quotient.nontrivial_iff.mpr hItop
-  letI : IsLocalRing Q :=
+  have hQnontrivial : Nontrivial Q := Ideal.Quotient.nontrivial_iff.mpr hItop
+  have hQlocal : IsLocalRing Q :=
+    letI : Nontrivial Q := hQnontrivial
     IsLocalRing.of_surjective' (Ideal.Quotient.mk I) Ideal.Quotient.mk_surjective
-  have hnil : IsNilpotent (IsLocalRing.maximalIdeal Q) := by
-    refine ⟨n, ?_⟩
-    rw [← IsLocalRing.map_maximalIdeal_of_surjective
-      (Ideal.Quotient.mk I) Ideal.Quotient.mk_surjective, ← Ideal.map_pow,
-      hπ.maximalIdeal_eq, Ideal.span_singleton_pow]
-    apply (Ideal.map_eq_bot_iff_le_ker _).2
-    rw [Ideal.mk_ker]
+  have hnil :
+      IsNilpotent (@IsLocalRing.maximalIdeal Q _ hQlocal) :=
+    letI : Nontrivial Q := hQnontrivial
+    letI : IsLocalRing Q := hQlocal
+    by
+      refine ⟨n, ?_⟩
+      rw [← IsLocalRing.map_maximalIdeal_of_surjective
+        (Ideal.Quotient.mk I) Ideal.Quotient.mk_surjective, ← Ideal.map_pow,
+        hπ.maximalIdeal_eq, Ideal.span_singleton_pow]
+      apply (Ideal.map_eq_bot_iff_le_ker _).2
+      rw [Ideal.mk_ker]
   have hArt : IsArtinianRing Q :=
+    letI : Nontrivial Q := hQnontrivial
+    letI : IsLocalRing Q := hQlocal
     (isArtinianRing_iff_isNilpotent_maximalIdeal Q).2 hnil
-  exact ⟨by simpa [I, Q] using hArt, by simpa [I, Q] using (inferInstance : IsLocalRing Q)⟩
+  exact ⟨by simpa [I, Q] using hArt, by simpa [I, Q] using hQlocal⟩
 
 include hπ in
 /-- Book §5.2: all ideals of the truncated quotient are powers of `π̄`. -/
@@ -1243,7 +1523,8 @@ theorem chapter_quotient_ideals_are_uniformizer_powers (n : ℕ) :
     intro x hx
     change q x ∈ I
     have hqx : q x = 0 := (Ideal.Quotient.eq_zero_iff_mem).2 hx
-    simpa [hqx] using I.zero_mem
+    rw [hqx]
+    exact I.zero_mem
   have hJne : J ≠ ⊥ := by
     intro hJ
     have hmem : π ^ n ∈ J := by
@@ -1261,7 +1542,7 @@ theorem chapter_quotient_ideals_are_uniformizer_powers (n : ℕ) :
   have hin : i ≤ n := by
     have hval := (IsDiscreteValuationRing.addVal_le_iff_dvd).2 hdiv
     rw [hπ.addVal_pow, hπ.addVal_pow] at hval
-    exact ENat.coe_le_coe.mp hval
+    exact ENat.natCast_le_natCast.mp hval
   refine ⟨⟨i, Nat.lt_succ_of_le hin⟩, ?_⟩
   change I = Ideal.span {(q π) ^ i}
   calc
@@ -1751,7 +2032,7 @@ theorem chapter_fractional_filtration_shift
     _ = (algebraMap A K π) ^
           (n + chapterValuationValue (A := A) (K := K) π hπ v x hx) := by
       simp only [Units.smul_def, Algebra.smul_def, chapterMappedRingUnit,
-        chapterUniformizerUnit, Units.val_mk0, Units.val_inv, map_mul, map_pow]
+        chapterUniformizerUnit, Units.val_mk0]
       change (algebraMap A K (↑(u⁻¹) : A)) *
           ((algebraMap A K (↑u : A)) *
             (algebraMap A K π) ^
@@ -1795,7 +2076,6 @@ theorem chapter_mapped_ring_unit_has_value_zero
 
 /-- Book §5.3: multiplication by a unit preserves precision. -/
 theorem chapter_unit_preserves_precision
-    (v : ChapterIntegerValuation (A := A) (K := K) π hπ)
     (u : Aˣ) (n : ℤ) :
     chapterPrincipalFractionalIdeal (A := A) (K := K)
         (chapterMappedRingUnit (A := A) (K := K) u : K) *
@@ -1805,8 +2085,7 @@ theorem chapter_unit_preserves_precision
     FractionalIdeal.spanSingleton_mul_spanSingleton]
   apply (FractionalIdeal.spanSingleton_eq_spanSingleton).2
   refine ⟨u⁻¹, ?_⟩
-  simp [Units.smul_def, Algebra.smul_def, chapterMappedRingUnit,
-    chapterUniformizerUnit, mul_assoc]
+  simp [Units.smul_def, Algebra.smul_def, chapterMappedRingUnit]
 
 /-- Book §5.3: a nonzero maximal-ideal element gains positive precision. -/
 theorem chapter_maximalIdeal_element_gains_precision
@@ -1825,7 +2104,7 @@ theorem chapter_maximalIdeal_element_gains_precision
   have ha0 : a ≠ 0 := by
     intro ha0
     subst a
-    simpa using haK
+    simp at haK
   obtain ⟨m, u, hu⟩ :=
     IsDiscreteValuationRing.eq_unit_mul_pow_irreducible ha0 hπ
   have hval : chapterValuationValue (A := A) (K := K) π hπ v
@@ -1897,24 +2176,59 @@ def chapterLocalizeIdealAtPrime (v : HeightOneSpectrum R) (I : Ideal R) :
 
 /-- The local exponent of an ideal after localization at a height-one prime.
 
-The local DVR generator and its exponent are intentionally packaged as a small
-chapter-local interface; Mathlib exposes the corresponding valuation in several
-equivalent multiplicative forms. -/
+This is defined independently of the global exponent: it says that the
+localized ideal is a power of the local maximal ideal and records that power
+as an integer. -/
 def chapterLocalizedIdealExponentAtPrime (v : HeightOneSpectrum R)
     (J : Ideal (Localization.AtPrime v.asIdeal)) (n : ℤ) : Prop :=
-  ∃ I : Ideal R, I ≠ ⊥ ∧
-    J = chapterLocalizeIdealAtPrime (R := R) v I ∧
-    n = chapterGlobalIdealExponent (R := R) (K := K) v
-      (I : FractionalIdeal (nonZeroDivisors R) K)
+  ∃ m : ℕ, n = (m : ℤ) ∧
+    J = IsLocalRing.maximalIdeal (Localization.AtPrime v.asIdeal) ^ m
 
 /-- Book §5.3: localization at `𝔭` projects the global exponent vector to its `𝔭` coordinate. -/
 theorem chapter_localization_projects_global_exponent
     (v : HeightOneSpectrum R) (I : Ideal R) (hI : I ≠ ⊥) :
-    chapterLocalizedIdealExponentAtPrime (R := R) (K := K) v
+    chapterLocalizedIdealExponentAtPrime (R := R) v
         (chapterLocalizeIdealAtPrime (R := R) v I)
         (chapterGlobalIdealExponentVector (R := R) (K := K)
           (I : FractionalIdeal (nonZeroDivisors R) K) v) := by
-  exact ⟨I, hI, rfl, rfl⟩
+  classical
+  have hv0 : v.asIdeal ≠ ⊥ := v.ne_bot
+  let hvmax : v.asIdeal.IsMaximal := v.isPrime.isMaximal hv0
+  obtain ⟨J, hcop, hfactor⟩ :=
+    Ideal.eq_prime_pow_mul_coprime (hpm := hvmax) hI v.asIdeal
+  have hJnot : ¬ J ≤ v.asIdeal := by
+    intro hJ
+    have htop : v.asIdeal = ⊤ := by
+      calc
+        v.asIdeal = v.asIdeal ⊔ J := (sup_eq_left.mpr hJ).symm
+        _ = ⊤ := hcop
+    exact hvmax.ne_top htop
+  have hcount :
+      chapterGlobalIdealExponentVector (R := R) (K := K)
+          (I : FractionalIdeal (nonZeroDivisors R) K) v =
+        (Multiset.count v.asIdeal
+          (UniqueFactorizationMonoid.normalizedFactors I) : ℤ) := by
+    unfold chapterGlobalIdealExponentVector chapterGlobalIdealExponent
+    rw [FractionalIdeal.count_coe K v hI,
+      Ideal.count_associates_factors_eq hI v.isPrime v.ne_bot]
+  have hlocal :
+      chapterLocalizeIdealAtPrime (R := R) v I =
+        IsLocalRing.maximalIdeal (Localization.AtPrime v.asIdeal) ^
+          Multiset.count v.asIdeal
+            (UniqueFactorizationMonoid.normalizedFactors I) := by
+    let m : ℕ := Multiset.count v.asIdeal
+      (UniqueFactorizationMonoid.normalizedFactors I)
+    have hmap :
+        I.map (algebraMap R (Localization.AtPrime v.asIdeal)) =
+          IsLocalRing.maximalIdeal (Localization.AtPrime v.asIdeal) ^ m := by
+      rw [hfactor, Ideal.map_mul, Ideal.map_pow,
+        IsLocalization.AtPrime.map_eq_top_of_not_le
+          (S := Localization.AtPrime v.asIdeal) (p := v.asIdeal) hJnot,
+        Ideal.mul_top, Localization.AtPrime.map_eq_maximalIdeal]
+    simpa [chapterLocalizeIdealAtPrime, m] using hmap
+  refine ⟨Multiset.count v.asIdeal
+    (UniqueFactorizationMonoid.normalizedFactors I), hcount, ?_⟩
+  exact hlocal
 
 /-- The projection statement written directly as `val_𝔭(I)`. -/
 theorem chapter_localization_exponent_is_p_coordinate
@@ -1959,8 +2273,9 @@ theorem chapter_ramification_index_is_filtration_shift
   have hq0 : q ≠ ⊥ :=
     ne_bot_of_le_ne_bot hpS
       (Ideal.map_le_of_le_comap (q.over_def p).le)
-  letI : q.IsMaximal := (inferInstance : q.IsPrime).isMaximal hq0
-  obtain ⟨I, hqI, hfactor⟩ := Ideal.eq_prime_pow_mul_coprime hpS q
+  let hqmax : q.IsMaximal := (inferInstance : q.IsPrime).isMaximal hq0
+  obtain ⟨I, hqI, hfactor⟩ :=
+    Ideal.eq_prime_pow_mul_coprime (hpm := hqmax) hpS q
   replace hqI : ¬ I ≤ q := by
     contrapose! hqI
     rw [sup_of_le_left hqI]

@@ -4,7 +4,7 @@ namespace LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
 
 open Polynomial IsLocalRing
 open Filter
-open scoped BigOperators LaurentSeries Topology
+open scoped BigOperators LaurentSeries Topology PowerSeries.WithPiTopology
 
 noncomputable section
 
@@ -57,7 +57,7 @@ theorem Chapter08CompatibleFamily.compatible
 
 def Chapter08FiniteQuotientTopology
     (A : Type*) [CommRing A] (I : Ideal A) (n : ℕ) :
-    TopologicalSpace (A ⧸ I ^ (n + 1)) := ⊤
+    TopologicalSpace (A ⧸ I ^ (n + 1)) := ⊥
 
 /-- A small interface for the phrase topological-ring isomorphism. -/
 structure Chapter08TopologicalRingEquiv (R S : Type*)
@@ -234,18 +234,129 @@ private theorem chapter08_inverse_limit_ring_equiv
   exact ⟨er, by intro x; rfl⟩
 
 /-! Theorem 8.1: the completion is canonically the inverse limit of its finite quotients,
-including the adic and inverse-limit topologies. -/
--- STATEMENT_NEEDS_UPDATE: For an arbitrary ideal I, the inverse-limit topology defined here
--- need not agree with the adic topology on AdicCompletion I A; add a finite-generation hypothesis
--- such as I.FG (or redefine the completion topology using the kernels of all evaluation maps).
+including the adic and inverse-limit topologies. The finite-generation hypothesis identifies
+the adic powers with the kernels of the finite evaluation maps. -/
 theorem chapter08_theorem_8_1_inverse_limit_description
-    {A : Type*} [CommRing A] (I : Ideal A) :
-    ∃ e : Chapter08TopologicalRingEquiv (AdicCompletion I A)
+    {A : Type*} [CommRing A] (I : Ideal A) (hI : I.FG) :
+      ∃ e : Chapter08TopologicalRingEquiv (AdicCompletion I A)
         (Chapter08CompatibleFamily A I)
         (Chapter08AdicCompletionTopology A I)
         (Chapter08InverseLimitTopology A I),
       ∀ x, e.ringEquiv x = Chapter08CompletionResidues I x := by
-  sorry
+  classical
+  letI : TopologicalSpace (AdicCompletion I A) :=
+    Chapter08AdicCompletionTopology A I
+  letI : ∀ n : ℕ, TopologicalSpace (A ⧸ I ^ (n + 1)) :=
+    fun n => Chapter08FiniteQuotientTopology A I n
+  letI : ∀ n : ℕ, DiscreteTopology (A ⧸ I ^ (n + 1)) :=
+    fun n => discreteTopology_bot _
+  letI : ∀ n : ℕ, IsTopologicalAddGroup (A ⧸ I ^ (n + 1)) :=
+    fun n => by infer_instance
+  letI : ∀ n : ℕ, IsTopologicalRing (A ⧸ I ^ (n + 1)) :=
+    fun n => by infer_instance
+  letI : TopologicalSpace (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
+    Chapter08InverseLimitProductTopology A I
+  letI : IsTopologicalRing (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
+    Pi.instIsTopologicalRing
+  letI : IsTopologicalAddGroup (∀ n : ℕ, A ⧸ I ^ (n + 1)) :=
+    IsTopologicalRing.to_topologicalAddGroup
+  letI : TopologicalSpace (Chapter08CompatibleFamily A I) :=
+    Chapter08InverseLimitTopology A I
+  letI : IsTopologicalAddGroup (AdicCompletion I A) :=
+    (RingSubgroupsBasis.toRingFilterBasis (Ideal.adic_basis
+      (Ideal.map (algebraMap A (AdicCompletion I A)) I)).toRing_subgroups_basis).toAddGroupFilterBasis.isTopologicalAddGroup
+  obtain ⟨er, her⟩ := chapter08_inverse_limit_ring_equiv I
+  let J : Ideal (AdicCompletion I A) :=
+    Ideal.map (algebraMap A (AdicCompletion I A)) I
+  have hcoord_cont (n : ℕ) :
+      Continuous (fun x : AdicCompletion I A =>
+        AdicCompletion.evalₐ I (n + 1) x) := by
+    let f : AdicCompletion I A →+* A ⧸ I ^ (n + 1) :=
+      (AdicCompletion.evalₐ I (n + 1)).toRingHom
+    have hker : J ^ (n + 1) ≤ RingHom.ker f := by
+      rw [show J ^ (n + 1) =
+        Ideal.map (algebraMap A (AdicCompletion I A)) (I ^ (n + 1)) by
+          simp [J, Ideal.map_pow]]
+      refine Ideal.map_le_iff_le_comap.mpr ?_
+      intro a ha
+      change f (algebraMap A (AdicCompletion I A) a) = 0
+      rw [show f (algebraMap A (AdicCompletion I A) a) =
+          Ideal.Quotient.mk (I ^ (n + 1)) a by
+            simp [f, AdicCompletion.algebraMap_apply, AdicCompletion.evalₐ_of]]
+      exact Ideal.Quotient.eq_zero_iff_mem.mpr ha
+    have hnhds : ((J ^ (n + 1) : Ideal (AdicCompletion I A)) :
+        Set (AdicCompletion I A)) ∈
+        𝓝 (0 : AdicCompletion I A) := by
+      exact (Ideal.openAddSubgroup J (n + 1)).isOpen'.mem_nhds
+        (Ideal.zero_mem (J ^ (n + 1)))
+    have hzero : ContinuousAt f 0 := by
+      rw [ContinuousAt, map_zero, nhds_discrete (A ⧸ I ^ (n + 1)), tendsto_pure]
+      filter_upwards [hnhds] with x hx
+      exact RingHom.mem_ker.mp (hker hx)
+    exact continuous_of_continuousAt_zero f hzero
+  have htoProd : Continuous (fun x : AdicCompletion I A => (er x).1) := by
+    apply continuous_pi
+    intro n
+    have heq : (fun x : AdicCompletion I A => (er x).1 n) =
+        (fun x => AdicCompletion.evalₐ I (n + 1) x) := by
+      funext x
+      rw [her x]
+      rfl
+    rw [heq]
+    exact hcoord_cont n
+  have her_cont : Continuous er := by
+    apply continuous_induced_rng.mpr
+    simpa [Function.comp_def] using htoProd
+  letI : IsTopologicalAddGroup (Chapter08CompatibleFamily A I) := by
+    exact topologicalAddGroup_induced
+      (Chapter08CompatibleSubring A I).subtype.toAddMonoidHom
+  have hker_eval (n : ℕ) :
+      J ^ n = RingHom.ker ((AdicCompletion.evalₐ I n).toRingHom) := by
+    ext x
+    trans x ∈ (AdicCompletion.eval I A n).ker
+    · rw [show J ^ n =
+        Ideal.map (algebraMap A (AdicCompletion I A)) (I ^ n) by
+          simp [J, Ideal.map_pow]]
+      change x ∈ ((Ideal.map (algebraMap A (AdicCompletion I A)) (I ^ n)).restrictScalars A :
+        Set (AdicCompletion I A)) ↔ x ∈ (AdicCompletion.eval I A n).ker
+      rw [← Ideal.smul_top_eq_map]
+      simpa [AdicCompletion.pow_smul_top_eq_ker_eval hI]
+    · change (AdicCompletion.eval I A n) x = 0 ↔
+        AdicCompletion.evalₐ I n x = 0
+      have heq : I ^ n * (⊤ : Ideal A) = I ^ n := by
+        ext a
+        simp
+      have hinj : Function.Injective
+          (Ideal.Quotient.factor (le_of_eq heq)) := by
+        simpa [RingHom.injective_iff_ker_eq_bot, Ideal.Quotient.factor_ker]
+          using Ideal.map_mk_eq_bot_of_le (le_of_eq heq.symm)
+      simpa [← AdicCompletion.factor_eval_eq_evalₐ] using
+        (map_eq_zero_iff _ hinj).symm
+  have her_symm_cont : Continuous er.symm := by
+    apply continuous_of_continuousAt_zero
+    rw [ContinuousAt, map_zero]
+    refine J.hasBasis_nhds_zero_adic.tendsto_right_iff.mpr ?_
+    intro n _
+    let U : Set (Chapter08CompatibleFamily A I) := {y | y.1 n = 0}
+    have hUopen : IsOpen U := by
+      change IsOpen ((fun y : Chapter08CompatibleFamily A I => y.1 n) ⁻¹'
+        ({0} : Set (A ⧸ I ^ (n + 1))))
+      exact (isOpen_discrete ({0} : Set (A ⧸ I ^ (n + 1)))).preimage
+        ((continuous_apply n).comp continuous_induced_dom)
+    have hUmem : U ∈ 𝓝 (0 : Chapter08CompatibleFamily A I) := by
+      exact hUopen.mem_nhds (by simp [U])
+    filter_upwards [hUmem] with y hy
+    apply (Ideal.pow_le_pow_right (Nat.le_succ n))
+    rw [hker_eval (n + 1)]
+    apply RingHom.mem_ker.mpr
+    have heq : (er (er.symm y)).1 n = 0 := by
+      simpa [hy]
+    rw [her (er.symm y)] at heq
+    simpa [Chapter08CompletionResidues] using heq
+  refine ⟨{
+    ringEquiv := er
+    continuous_toFun := her_cont
+    continuous_invFun := her_symm_cont }, her⟩
 
 /-- Coordinatewise operations preserve compatibility, so there is no extra consistency datum. -/
 theorem chapter08_inverse_limit_coordinatewise_operations
@@ -668,7 +779,9 @@ theorem chapter08_digit_expansion_set_bijection
     (hI : I = Ideal.span {π})
     (hS : Chapter08IsResidueRepresentativeSet A I S) (hπ : π ≠ 0) :
     ∃ e : AdicCompletion I A ≃ Chapter08DigitSequences A S,
-      ∀ x, Chapter08DigitExpansion I π S x (e x).1 := by
+      ∀ x, Chapter08DigitExpansion I π S x (e x).1 ∧
+        ∀ d : ℕ → A,
+          Chapter08DigitExpansion I π S x d → d = (e x).1 := by
   classical
   have htail : ∀ {r s : ℕ} (hrs : r ≤ s) (w : ℕ → A),
       (∑ i ∈ Finset.range s, w i * π ^ i) -
@@ -836,7 +949,9 @@ theorem chapter08_digit_expansion_set_bijection
         exact (congr_fun h i).symm }
   refine ⟨e, ?_⟩
   intro x
-  exact hdigit_expansion x
+  refine ⟨hdigit_expansion x, ?_⟩
+  intro d hd
+  exact hexp_unique hd (hdigit_expansion x)
 
 /-- The raw coefficientwise addition suggested by a digit sequence. -/
 def Chapter08CoefficientwiseAdd {A : Type*} [Add A]
@@ -852,6 +967,40 @@ def Chapter08CoefficientwiseAdditiveCoding
     (e : AdicCompletion I A ≃ Chapter08DigitSequences A S) : Prop :=
   ∀ x y : AdicCompletion I A, ∀ n : ℕ,
     (e (x + y)).1 n = Chapter08CoefficientwiseAdd (e x).1 (e y).1 n
+
+private theorem chapter08_mixed_characteristic_no_additive_residue_section
+    {A : Type*} [CommRing A] [IsDomain A] [IsLocalRing A] [CharZero A]
+    (I : Ideal A) (p : ℕ) [Fact p.Prime]
+    (hI : I = Ideal.span {(p : A)})
+    (hImax : I = IsLocalRing.maximalIdeal A) :
+    ¬ ∃ f : (A ⧸ I) →+ A, Function.Injective f := by
+  classical
+  rintro ⟨f, hf⟩
+  have hp : (p : A) ≠ 0 :=
+    Nat.cast_ne_zero.mpr (Fact.out : Nat.Prime p).ne_zero
+  have hzero : ∀ q : A ⧸ I, f q = 0 := by
+    intro q
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective q
+    have hq : p • (Ideal.Quotient.mk I a) = 0 := by
+      rw [← map_nsmul]
+      apply Ideal.Quotient.eq_zero_iff_mem.mpr
+      rw [hI]
+      have hpI : (p : A) ∈ Ideal.span {(p : A)} :=
+        Ideal.mem_span_singleton_self (p : A)
+      simpa [nsmul_eq_mul, mul_comm] using
+        (Ideal.span {(p : A)}).mul_mem_left a hpI
+    have hpq' : p • f (Ideal.Quotient.mk I a) = 0 := by
+      calc
+        p • f (Ideal.Quotient.mk I a) =
+            f (p • Ideal.Quotient.mk I a) := (map_nsmul f p _).symm
+        _ = 0 := by rw [hq, map_zero]
+    have hpq : (p : A) * f (Ideal.Quotient.mk I a) = 0 := by
+      simpa [nsmul_eq_mul] using hpq'
+    exact (mul_eq_zero.mp hpq).resolve_left hp
+  have hItop : I ≠ (⊤ : Ideal A) := by
+    rw [hImax]
+    exact (IsLocalRing.maximalIdeal.isMaximal A).ne_top
+  exact (Ideal.Quotient.zero_ne_one_iff.mpr hItop) (hf (by simp [hzero]))
 
 /-! In mixed characteristic, the absence of a coefficient-field embedding is the carry
 obstruction behind the preceding set-theoretic, rather than coefficientwise-ring, model. -/
@@ -941,19 +1090,20 @@ private theorem chapter08_mixed_characteristic_additive_section_obstruction
     exact (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).2 habI
   exact hnoembed ⟨f, hf_inj⟩
 
--- STATEMENT_NEEDS_UPDATE: The assumptions allow I = ⊤ (for example A = ℚ and p viewed as a
--- unit), making the residue and digit data trivial while the asserted obstruction can fail; add
--- I ≠ ⊤ (equivalently, a nontrivial residue-ring hypothesis in this setting).
 theorem chapter08_mixed_characteristic_digit_carries_obstruct_coefficientwise_addition
-    {A : Type*} [CommRing A] [CharZero A] (I : Ideal A) (S : Set A)
+    {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A] [CharZero A]
+    (I : Ideal A) (S : Set A)
     (p : ℕ) [Fact p.Prime]
     (hI : I = Ideal.span {(p : A)})
     (hS : Chapter08IsResidueRepresentativeSet A I S)
-    (hnoembed : ¬ ∃ f : ZMod p →+* A, Function.Injective f)
+    (hImax : I = IsLocalRing.maximalIdeal A)
     (e : AdicCompletion I A ≃ Chapter08DigitSequences A S)
     (hdigits : ∀ x, Chapter08DigitExpansion I (p : A) S x (e x).1) :
     ¬ Chapter08CoefficientwiseAdditiveCoding I S e := by
-  sorry
+  have hnoembed :=
+    chapter08_mixed_characteristic_no_additive_residue_section I p hI hImax
+  exact chapter08_mixed_characteristic_additive_section_obstruction
+    I S p hI hS hnoembed e hdigits
 
 /-! Equal characteristic: a coefficient field gives literal formal-series coefficients. -/
 structure Chapter08CoefficientFieldSection
@@ -1009,7 +1159,117 @@ theorem chapter08_equal_characteristic_formal_series_model
     (hcomplete : IsAdicComplete I A)
     (sectionData : Chapter08CoefficientFieldSection A k I) :
     Nonempty (Chapter08FormalSeriesModel A k I π sectionData) := by
-  sorry
+  classical
+  letI : WithIdeal A := ⟨I⟩
+  letI : TopologicalSpace k := ⊥
+  letI : UniformSpace k := ⊥
+  letI : DiscreteTopology k := discreteTopology_bot k
+  have htop := (IsAdic.isAdicComplete_iff (I := I) (by rfl)).mp hcomplete
+  letI : CompleteSpace A := htop.1
+  letI : T2Space A := htop.2
+  have hres_surj : Function.Surjective sectionData.residue := by
+    intro c
+    refine ⟨sectionData.lift c, ?_⟩
+    simpa using congrArg (fun g => g c) sectionData.residue_lift
+  have hImax : I.IsMaximal := by
+    rw [← sectionData.kernel_residue]
+    exact RingHom.ker_isMaximal_of_surjective sectionData.residue hres_surj
+  have hInonbot : I ≠ (⊥ : Ideal A) :=
+    Ring.ne_bot_of_isMaximal_of_not_isField hImax
+      (IsDiscreteValuationRing.not_isField A)
+  have hπ : π ≠ 0 := by
+    intro hπ0
+    apply hInonbot
+    calc
+      I = Ideal.span {π} := hI
+      _ = (⊥ : Ideal A) := Ideal.span_singleton_eq_bot.mpr hπ0
+  have hπmem : π ∈ I := by
+    rw [hI]
+    exact Ideal.mem_span_singleton_self π
+  have hπeval : PowerSeries.HasEval π := by
+    exact WithIdeal.isTopologicallyNilpotent_of_mem hπmem
+  have hlift_cont : Continuous sectionData.lift := continuous_of_discreteTopology
+  let f : PowerSeries k →+* A :=
+    PowerSeries.eval₂Hom hlift_cont hπeval
+  have hfC (c : k) : f (PowerSeries.C c) = sectionData.lift c := by
+    dsimp [f]
+    rw [PowerSeries.coe_eval₂Hom]
+    simp
+  have hfX : f PowerSeries.X = π := by
+    dsimp [f]
+    rw [PowerSeries.coe_eval₂Hom]
+    simp
+  have hmap :
+      (Ideal.span ({PowerSeries.X} : Set (PowerSeries k))).map f = I := by
+    rw [Ideal.map_span]
+    simpa [hfX, hI]
+  have hres : Function.Surjective
+      ((Ideal.Quotient.mk ((Ideal.span ({PowerSeries.X} : Set (PowerSeries k))).map f)).comp f) := by
+    intro q
+    obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective q
+    refine ⟨PowerSeries.C (sectionData.residue a), ?_⟩
+    rw [RingHom.comp_apply, hfC, hmap]
+    apply (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).2
+    have hmem : sectionData.lift (sectionData.residue a) - a ∈
+        RingHom.ker sectionData.residue := by
+      apply RingHom.mem_ker.mpr
+      have hleft : sectionData.residue (sectionData.lift (sectionData.residue a)) =
+          sectionData.residue a := by
+        simpa [RingHom.comp_apply] using
+          congrArg (fun g => g (sectionData.residue a)) sectionData.residue_lift
+      rw [map_sub, hleft, sub_self]
+    simpa only [sectionData.kernel_residue] using hmem
+  letI : IsHausdorff
+      ((Ideal.span ({PowerSeries.X} : Set (PowerSeries k))).map f) A := by
+    rw [hmap]
+    exact hcomplete.toIsHausdorff
+  letI : IsAdicComplete
+      (Ideal.span ({PowerSeries.X} : Set (PowerSeries k))) (PowerSeries k) := inferInstance
+  have hf_surj : Function.Surjective f := by
+    exact surjective_of_mk_map_comp_surjective f hres
+  have hf_inj : Function.Injective f := by
+    intro p q hpq
+    by_contra hne
+    let r : PowerSeries k := p - q
+    have hr : r ≠ 0 := by
+      intro hr0
+      apply hne
+      exact sub_eq_zero.mp hr0
+    have hunit : IsUnit (PowerSeries.divXPowOrder r) :=
+      PowerSeries.isUnit_divided_by_X_pow_order hr
+    have hunit_map : IsUnit (f (PowerSeries.divXPowOrder r)) := hunit.map f
+    have hpow : f (PowerSeries.X ^ r.order.toNat) ≠ 0 := by
+      rw [map_pow, hfX]
+      exact pow_ne_zero _ hπ
+    have hprod : f (PowerSeries.X ^ r.order.toNat * PowerSeries.divXPowOrder r) ≠ 0 := by
+      rw [map_mul]
+      exact mul_ne_zero hpow hunit_map.ne_zero
+    apply hprod
+    rw [PowerSeries.X_pow_order_mul_divXPowOrder]
+    dsimp [r]
+    rw [map_sub, hpq, sub_self]
+  let e₀ : PowerSeries k ≃+* A := RingEquiv.ofBijective f ⟨hf_inj, hf_surj⟩
+  let eA : A ≃+* AdicCompletion I A := (AdicCompletion.ofAlgEquiv I).toRingEquiv
+  let e : AdicCompletion I A ≃+* PowerSeries k := eA.symm.trans e₀.symm
+  have heA (a : A) :
+      eA.symm (algebraMap A (AdicCompletion I A) a) = a := by
+    change (AdicCompletion.ofAlgEquiv I).symm (AdicCompletion.of I A a) = a
+    exact AdicCompletion.ofAlgEquiv_symm_of I a
+  have he₀C (c : k) : e₀ (PowerSeries.C c) = sectionData.lift c := by
+    change f (PowerSeries.C c) = sectionData.lift c
+    exact hfC c
+  have he₀X : e₀ PowerSeries.X = π := by
+    change f PowerSeries.X = π
+    exact hfX
+  refine ⟨{
+    equiv := e
+    maps_section := ?_
+    maps_uniformizer := ?_ }⟩
+  · intro c
+    apply e₀.injective
+    simpa [e, heA] using (he₀C c).symm
+  · apply e₀.injective
+    simpa [e, heA] using he₀X.symm
 
 /-! ### 8.3 The p-adic integers and numbers -/
 
@@ -1023,6 +1283,12 @@ abbrev Chapter08PadicIntegerInverseLimit (p : ℕ) [Fact p.Prime] :=
 
 abbrev Chapter08Zp (p : ℕ) [Fact p.Prime] := Chapter08PadicIntegerInverseLimit p
 abbrev Chapter08Qp (p : ℕ) [Fact p.Prime] := Chapter08PadicNumbers p
+
+/-- The p-adic numbers are the fraction field of the p-adic integers. -/
+theorem chapter08_padic_numbers_are_the_fraction_field_of_integers
+    (p : ℕ) [Fact p.Prime] :
+    IsFractionRing (Chapter08PadicIntegers p) (Chapter08PadicNumbers p) := by
+  infer_instance
 
 -- The inverse-limit ring is canonically the usual Mathlib p-adic integer ring. -/
 theorem chapter08_padic_integer_inverse_limit
@@ -1423,6 +1689,79 @@ def Chapter08PadicLaurentExpansion (p : ℕ) [Fact p.Prime]
     (x : Chapter08PadicNumbers p) (N : ℤ) (a : ℕ → ℕ) : Prop :=
   (∀ i : ℕ, a i < p) ∧
     Tendsto (Chapter08PadicFieldPartialSum p N a) atTop (𝓝 x)
+
+/-- Every p-adic number admits a Laurent expansion with base-p digits. -/
+theorem chapter08_every_padic_number_has_laurent_digit_expansion
+    (p : ℕ) [Fact p.Prime] (x : Chapter08PadicNumbers p) :
+    ∃ N : ℤ, ∃ a : ℕ → ℕ,
+      Chapter08PadicLaurentExpansion p x N a := by
+  classical
+  by_cases hx : x = 0
+  · refine ⟨0, fun _ => 0, ?_⟩
+    constructor
+    · intro i
+      exact (Fact.out : Nat.Prime p).pos
+    · have hzero : Chapter08PadicFieldPartialSum p 0 (fun _ => 0) =
+          (fun _ => (0 : Chapter08PadicNumbers p)) := by
+        funext n
+        simp [Chapter08PadicFieldPartialSum]
+      rw [hzero]
+      simpa [hx] using
+        (tendsto_const_nhds :
+          Tendsto (fun _ : ℕ => (0 : Chapter08PadicNumbers p)) atTop
+            (𝓝 (0 : Chapter08PadicNumbers p)))
+  · have hp0 : (p : Chapter08PadicNumbers p) ≠ 0 := by
+      exact_mod_cast (Fact.out : Nat.Prime p).ne_zero
+    have hval :
+        (x * (p : Chapter08PadicNumbers p) ^ (-x.valuation)).valuation = 0 := by
+      rw [Padic.valuation_mul hx (zpow_ne_zero _ hp0),
+        Padic.valuation_zpow, Padic.valuation_p]
+      ring
+    have hy_norm :
+        ‖x * (p : Chapter08PadicNumbers p) ^ (-x.valuation)‖ ≤ 1 := by
+      apply (Padic.norm_le_one_iff_val_nonneg _).2
+      rw [hval]
+    let y : Chapter08PadicIntegers p :=
+      ⟨x * (p : Chapter08PadicNumbers p) ^ (-x.valuation), hy_norm⟩
+    obtain ⟨a, ha, _⟩ := chapter08_padic_digit_expansion_unique p y
+    have hxy :
+        (y : Chapter08PadicNumbers p) * (p : Chapter08PadicNumbers p) ^ x.valuation = x := by
+      change (x * (p : Chapter08PadicNumbers p) ^ (-x.valuation)) *
+          (p : Chapter08PadicNumbers p) ^ x.valuation = x
+      rw [mul_assoc, ← zpow_add₀ hp0, neg_add_cancel, zpow_zero, mul_one]
+    have hpartial (n : ℕ) :
+        Chapter08PadicFieldPartialSum p x.valuation a n =
+          algebraMap (Chapter08PadicIntegers p) (Chapter08PadicNumbers p)
+              (Chapter08PadicPartialSum p a n) *
+            (p : Chapter08PadicNumbers p) ^ x.valuation := by
+      simp only [Chapter08PadicFieldPartialSum, Chapter08PadicPartialSum,
+        map_sum, map_mul, map_pow, PadicInt.algebraMap_apply]
+      rw [Finset.sum_mul]
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [zpow_add₀ hp0]
+      simp only [PadicInt.coe_natCast]
+      rw [zpow_natCast]
+      ring
+    have hcont : Continuous (fun z : Chapter08PadicIntegers p =>
+        (z : Chapter08PadicNumbers p) *
+          (p : Chapter08PadicNumbers p) ^ x.valuation) := by
+      fun_prop
+    have hlim := (hcont.tendsto y).comp ha.2
+    rw [hxy] at hlim
+    refine ⟨x.valuation, a, ?_⟩
+    change (∀ i : ℕ, a i < p) ∧
+      Tendsto (Chapter08PadicFieldPartialSum p x.valuation a) atTop (𝓝 x)
+    refine ⟨ha.1, ?_⟩
+    have hseq :
+        Chapter08PadicFieldPartialSum p x.valuation a =
+          (fun n => algebraMap (Chapter08PadicIntegers p) (Chapter08PadicNumbers p)
+              (Chapter08PadicPartialSum p a n) *
+            (p : Chapter08PadicNumbers p) ^ x.valuation) := by
+      funext n
+      exact hpartial n
+    rw [hseq]
+    exact hlim
 
 /-- The first exponent with a nonzero digit, or top for the zero series. -/
 def Chapter08FirstNonzeroExponent (N : ℤ) (a : ℕ → ℕ) : WithTop ℤ := by
