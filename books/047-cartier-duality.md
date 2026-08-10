@@ -18,6 +18,7 @@
    - [Contravariant functoriality](#33-contravariant-functoriality)
    - [Arbitrary base change](#34-arbitrary-base-change)
    - [Products](#35-products)
+   - [Descent and locality](#36-descent-and-locality)
 4. [Evaluation and biduality](#4-evaluation-and-biduality)
    - [The universal evaluation pairing](#41-the-universal-evaluation-pairing)
    - [The map to the bidual](#42-the-map-to-the-bidual)
@@ -29,6 +30,7 @@
    - [Dual of a diagonalizable group](#53-dual-of-a-diagonalizable-group)
    - [Roots of unity in every characteristic](#54-roots-of-unity-in-every-characteristic)
    - [A noncanonical pointwise shadow](#55-a-noncanonical-pointwise-shadow)
+   - [Twisted forms of the standard exchange](#56-twisted-forms-of-the-standard-exchange)
 6. [Additive infinitesimal duality](#6-additive-infinitesimal-duality)
    - [Why $\alpha_p$ is a decisive test](#61-why-alpha_p-is-a-decisive-test)
    - [Explicit calculation of the dual Hopf algebra](#62-explicit-calculation-of-the-dual-hopf-algebra)
@@ -41,6 +43,7 @@
    - [Double annihilators](#74-double-annihilators)
    - [Kernels and images under a morphism](#75-kernels-and-images-under-a-morphism)
    - [A worked cyclic sequence](#76-a-worked-cyclic-sequence)
+   - [Sums, intersections, and annihilator identities](#77-sums-intersections-and-annihilator-identities)
 8. [Bilinear pairings and perfectness](#8-bilinear-pairings-and-perfectness)
    - [Pairings as morphisms into duals](#81-pairings-as-morphisms-into-duals)
    - [Perfect pairings](#82-perfect-pairings)
@@ -62,18 +65,21 @@
     - [The connected–étale sequence and its dual](#113-the-connectedétale-sequence-and-its-dual)
     - [Henselian local bases](#114-henselian-local-bases)
     - [Order-$p$ comparison](#115-order-p-comparison)
+    - [The local-local remainder](#116-the-local-local-remainder)
 12. [Duality over DVRs and schematic closure](#12-duality-over-dvrs-and-schematic-closure)
     - [Generic and special fibers](#121-generic-and-special-fibers)
     - [Closure and annihilator commute](#122-closure-and-annihilator-commute)
     - [Quotients and closure](#123-quotients-and-closure)
     - [Henselian consequences](#124-henselian-consequences)
     - [Beyond DVRs](#125-beyond-dvrs)
+    - [Dual lattices and saturation](#126-dual-lattices-and-saturation)
 13. [Finite-flat models and Tate-twisted module duals](#13-finite-flat-models-and-tate-twisted-module-duals)
     - [From an étale generic fiber to a module](#131-from-an-étale-generic-fiber-to-a-module)
     - [Why the twist is unavoidable](#132-why-the-twist-is-unavoidable)
     - [Dual models over a DVR](#133-dual-models-over-a-dvr)
     - [Submodules, quotients, and exact models](#134-submodules-quotients-and-exact-models)
     - [Limits of the geometric-point formula](#135-limits-of-the-geometric-point-formula)
+    - [Determinants, similitudes, and orthogonal modules](#136-determinants-similitudes-and-orthogonal-modules)
 14. [Abelian schemes, torsion, and the Weil pairing](#14-abelian-schemes-torsion-and-the-weil-pairing)
     - [Why proper groups enter the story](#141-why-proper-groups-enter-the-story)
     - [Construction of the group-scheme Weil pairing](#142-construction-of-the-group-scheme-weil-pairing)
@@ -82,6 +88,7 @@
     - [Elliptic curves](#145-elliptic-curves)
     - [Isogenies and orthogonal kernels](#146-isogenies-and-orthogonal-kernels)
     - [Compatibility through levels](#147-compatibility-through-levels)
+    - [Determinants of elliptic torsion](#148-determinants-of-elliptic-torsion)
 15. [Worked structural patterns](#15-worked-structural-patterns)
     - [A cyclic homomorphism and its dual](#151-a-cyclic-homomorphism-and-its-dual)
     - [A split hyperbolic group](#152-a-split-hyperbolic-group)
@@ -130,7 +137,7 @@ There are several dualities nearby, and confusing them obscures the theorem. If 
 Suppose $k$ is algebraically closed of characteristic $p$. The group schemes
 
 $$
-\underline{\mathbf Z/p\mathbf Z},\qquad \mu_p,qquad \alpha_p
+\underline{\mathbf Z/p\mathbf Z},\qquad \mu_p,\qquad \alpha_p
 $$
 
 all have order $p$, but
@@ -156,7 +163,7 @@ The characteristic-dividing cases will therefore require no repair. Once the fun
 A duality is useful only if it comes with evaluation. For ordinary characters, evaluation is the bilinear map
 
 $$
-M\times M^*\longrightarrow K^\times,qquad (m,\chi)\longmapsto\chi(m).
+M\times M^*\longrightarrow K^\times,\qquad (m,\chi)\longmapsto\chi(m).
 $$
 
 Replacing $K^\times$ by $\mathbf G_m$ makes this formula natural over every base. Bilinearity means that evaluation is a homomorphism in each variable. It then converts a pairing into a map to a dual, which will be the organizing principle for perfect pairings and orthogonal subgroup schemes.
@@ -192,9 +199,9 @@ $$
 be a finite locally free commutative $R$-group scheme. Thus $A$ is a commutative, cocommutative Hopf $R$-algebra, finite projective as an $R$-module, with maps
 
 $$
-\Delta:A\to A\otimes_R A,qquad
-\varepsilon:A\to R,qquad
-S:A\to A,qquad
+\Delta:A\to A\otimes_R A,\qquad
+\varepsilon:A\to R,\qquad
+S:A\to A,\qquad
 u:R\to A.
 $$
 
@@ -207,7 +214,7 @@ $$
 Finite projectivity supplies the canonical isomorphisms
 
 $$
-A^\vee\otimes_R A^\vee\xrightarrow{\sim}(A\otimes_R A)^\vee,qquad
+A^\vee\otimes_R A^\vee\xrightarrow{\sim}(A\otimes_R A)^\vee,\qquad
 (A^\vee)^\vee\xrightarrow{\sim}A. \tag{2.1}
 $$
 
@@ -227,7 +234,7 @@ $$
 Define the unit $1_{A^\vee}$ to be the counit of $A$:
 
 $$
-1_{A^\vee}=\varepsilon,qquad
+1_{A^\vee}=\varepsilon,\qquad
 (r\cdot1_{A^\vee})(a)=r\varepsilon(a). \tag{2.3}
 $$
 
@@ -321,7 +328,7 @@ The unit compatibilities follow from $\Delta(1)=1\otimes1$ and $\varepsilon(1)=1
 
 **Theorem 2.1 (dual Hopf algebra).** If $A$ is a commutative, cocommutative Hopf $R$-algebra finite projective over $R$, then $A^\vee$ with (2.2)--(2.6) is again a commutative, cocommutative Hopf $R$-algebra finite projective over $R$.
 
-Finite projectivity of $A^\vee$ follows from the dual-basis theory of Book 44. Its rank equals that of $A$. The proof also shows exactly what fails outside the stated category: without finite projectivity the tensor-dual comparison can fail, and without cocommutativity the convolution algebra need not be commutative.
+Finite projectivity of $A^\vee$ follows from the finite-projective dual-basis theory recalled in Book 45. Its rank equals that of $A$. The proof also shows exactly what fails outside the stated category: without finite projectivity the tensor-dual comparison can fail, and without cocommutativity the convolution algebra need not be commutative.
 
 ## 3. The Cartier dual and the character functor
 
@@ -358,7 +365,7 @@ $$
 It is determined by the image $x$ of $T$. The Hopf conditions say
 
 $$
-\Delta(x)=x\otimes x,qquad \varepsilon(x)=1. \tag{3.2}
+\Delta(x)=x\otimes x,\qquad \varepsilon(x)=1. \tag{3.2}
 $$
 
 The antipode condition then says $S(x)=x^{-1}$, so invertibility is already forced by (3.2).
@@ -366,7 +373,7 @@ The antipode condition then says $S(x)=x^{-1}$, so invertibility is already forc
 Finite projectivity gives a natural identification
 
 $$
-A\otimes_R C\xrightarrow{\sim}\operatorname{Hom}_R(A^\vee,C),qquad
+A\otimes_R C\xrightarrow{\sim}\operatorname{Hom}_R(A^\vee,C),\qquad
 x\longmapsto(f\mapsto(f\otimes1)(x)). \tag{3.3}
 $$
 
@@ -402,7 +409,7 @@ $$
 On characters, $f^D$ is precomposition: $\chi\mapsto\chi\circ f$. Thus Cartier duality is contravariant, and
 
 $$
-(g\circ f)^D=f^D\circ g^D,qquad
+(g\circ f)^D=f^D\circ g^D,\qquad
 (\operatorname{id}_G)^D=\operatorname{id}_{G^D}. \tag{3.6}
 $$
 
@@ -461,6 +468,20 @@ $$
 
 Finite products are also finite coproducts in the category of commutative group objects, which explains why a contravariant duality can preserve their displayed form.
 
+### 3.6 Descent and locality
+
+The affine construction is enough to define the dual globally, but applications frequently recognize a duality only after extending the base. It is therefore important to separate construction from verification. Finite locally free modules, their duals, and homomorphisms between them descend effectively along faithfully flat maps. The Hopf identities are equalities of maps between finite locally free modules, so they descend as well. Consequently a dual computed after a faithfully flat cover carries canonical descent data and descends to the dual over the original base.
+
+This gives a useful recognition principle. Let $u:G\to H^D$ be a morphism of finite locally free commutative groups. If there is a faithfully flat cover $S'\to S$ for which
+
+$$
+u_{S'}:G_{S'}\xrightarrow{\sim}(H_{S'})^D
+$$
+
+is an isomorphism, then $u$ is already an isomorphism. In particular, perfectness of a pairing is local for the faithfully flat topology. The same conclusion holds if one checks over an open cover, over strict henselizations at all geometric points, or by another conservative faithfully flat base change.
+
+There is a related warning. An isomorphism $G_{S'}\simeq H_{S'}^D$ chosen after a cover need not descend: on the double overlap its two pullbacks may differ by an automorphism. What descends automatically is the canonical dual and any morphism already equipped with compatible descent data. This is the mechanism behind nonsplit finite étale groups and nonsplit groups of multiplicative type.
+
 ## 4. Evaluation and biduality
 
 ### 4.1 The universal evaluation pairing
@@ -468,7 +489,7 @@ Finite products are also finite coproducts in the category of commutative group 
 A character should be evaluated, not merely collected. The representing property produces a canonical bilinear morphism
 
 $$
-\operatorname{ev}_G:G\times_SG^D\longrightarrow\mathbf G_m,qquad
+\operatorname{ev}_G:G\times_SG^D\longrightarrow\mathbf G_m,\qquad
 (g,\chi)\longmapsto\chi(g). \tag{4.1}
 $$
 
@@ -483,7 +504,7 @@ $$
 is independent of the dual basis. The coordinate map of evaluation sends the standard coordinate $T$ of $\mathbf G_m$ to $\mathscr E_A$. The identities
 
 $$
-(\Delta_A\otimes1)(\mathscr E_A)=\mathscr E_{13}\mathscr E_{23},qquad
+(\Delta_A\otimes1)(\mathscr E_A)=\mathscr E_{13}\mathscr E_{23},\qquad
 (1\otimes\Delta^D)(\mathscr E_A)=\mathscr E_{12}\mathscr E_{13} \tag{4.3}
 $$
 
@@ -520,7 +541,7 @@ is an isomorphism, natural in $G$ and compatible with arbitrary base change.
 Work first over $S=\operatorname{Spec}R$. The canonical module map
 
 $$
-j_A:A\longrightarrow A^{\vee\vee},qquad
+j_A:A\longrightarrow A^{\vee\vee},\qquad
 j_A(a)(f)=f(a), \tag{4.6}
 $$
 
@@ -574,7 +595,7 @@ It also implies that either variable of evaluation determines the other. If two 
 Constant and diagonalizable groups were introduced in Books 45 and 46 as opposite standard families. Cartier duality explains that opposition. Let $M$ be a finite abelian group. Over $S=\operatorname{Spec}R$, write
 
 $$
-\underline M=\operatorname{Spec}(R^M),qquad
+\underline M=\operatorname{Spec}(R^M),\qquad
 D(M)=\operatorname{Spec}(R[M]).
 $$
 
@@ -585,7 +606,7 @@ Here $R^M$ is the algebra of functions $M\to R$, while $R[M]$ is the group algeb
 Let $e_m\in R^M$ be the characteristic function of $m$. The coproduct encoding addition on $M$ is
 
 $$
-\Delta(e_c)=\sum_{a+b=c}e_a\otimes e_b,qquad
+\Delta(e_c)=\sum_{a+b=c}e_a\otimes e_b,\qquad
 \varepsilon(e_c)=
 \begin{cases}1,&c=0,\\0,&c\ne0.\end{cases} \tag{5.1}
 $$
@@ -593,14 +614,14 @@ $$
 Let $x_m\in(R^M)^\vee$ be dual to $e_m$. Convolution gives
 
 $$
-x_ax_b=x_{a+b},qquad x_0=1. \tag{5.2}
+x_ax_b=x_{a+b},\qquad x_0=1. \tag{5.2}
 $$
 
 The transposed product of $R^M$ gives
 
 $$
-\Delta(x_m)=x_m\otimes x_m,qquad
-\varepsilon(x_m)=1,qquad
+\Delta(x_m)=x_m\otimes x_m,\qquad
+\varepsilon(x_m)=1,\qquad
 S(x_m)=x_{-m}. \tag{5.3}
 $$
 
@@ -657,7 +678,7 @@ $$
 and therefore
 
 $$
-\mu_n^D\simeq\underline{\mathbf Z/n\mathbf Z},qquad
+\mu_n^D\simeq\underline{\mathbf Z/n\mathbf Z},\qquad
 \underline{\mathbf Z/n\mathbf Z}^D\simeq\mu_n. \tag{5.7}
 $$
 
@@ -676,10 +697,30 @@ when $k$ is reduced, and would miss all nontrivial characters of the constant gr
 If $K$ is a field, $n$ is invertible in $K$, and a primitive $n$th root $\zeta_n$ has been chosen, then
 
 $$
-\mathbf Z/n\mathbf Z\xrightarrow{\sim}\mu_n(K),qquad a\mapsto\zeta_n^a.
+\mathbf Z/n\mathbf Z\xrightarrow{\sim}\mu_n(K),\qquad a\mapsto\zeta_n^a.
 $$
 
 This may make the constant group and $\mu_n$ appear identical. The identification depends on $\zeta_n$ and need not respect Galois action. Cartier duality itself uses no such choice. Later, the failure of Galois invariance will be recorded by the Tate twist.
+
+### 5.6 Twisted forms of the standard exchange
+
+The formulas for $\underline M$ and $D(M)$ are split formulas. Over a field $k$, a finite étale commutative group need not be constant: after passage to a separable closure it becomes $\underline M$, but descent is governed by a continuous action of $\Gamma_k$ on $M$. Its Cartier dual becomes $D(M)$ after the same extension, with descent action obtained by contragredience. Thus duality exchanges not only the split families but all their twisted forms:
+
+$$
+\{\text{finite étale commutative groups}\}
+\quad\xleftrightarrow{\ D\ }\quad
+\{\text{finite groups of multiplicative type}\}. \tag{5.8}
+$$
+
+Both sides are descent categories, not just lists of split examples. Concretely, if a finite étale group becomes $\underline M$ over a finite Galois extension $L/k$, then its dual becomes $D(M)$ over $L$, and the descent action on a character $\chi$ is
+
+$$
+(\sigma\chi)(m)=\sigma\bigl(\chi(\sigma^{-1}m)\bigr). \tag{5.9}
+$$
+
+The outer $\sigma$ acts on the value in $\mathbf G_m$. Formula (5.9) is the first appearance of the action that will become the Tate twist when $M$ is killed by $n$.
+
+For example, over $\mathbf R$ the group $\mu_3$ is finite étale but not constant: complex conjugation interchanges the two nonidentity geometric points. Its dual is the constant group $\underline{\mathbf Z/3\mathbf Z}$. Conversely, a constant cyclic group dualizes to $\mu_3$, whose geometric character module has the cyclotomic action. The split Hopf calculation remains valid; descent records why the resulting groups need not look alike over the ground field.
 
 ## 6. Additive infinitesimal duality
 
@@ -694,8 +735,8 @@ $$
 with primitive coproduct
 
 $$
-\Delta(t)=t\otimes1+1\otimes t,qquad
-\varepsilon(t)=0,qquad S(t)=-t. \tag{6.1}
+\Delta(t)=t\otimes1+1\otimes t,\qquad
+\varepsilon(t)=0,\qquad S(t)=-t. \tag{6.1}
 $$
 
 The characteristic-$p$ hypothesis is essential: the ideal $(t^p)$ is stable under the primitive coproduct precisely because the intermediate binomial coefficients vanish. Over a ring on which $p$ is not zero, this quotient with (6.1) is not a Hopf algebra in general.
@@ -775,7 +816,7 @@ The same basis computation for $R[t]/(t^{p^r})$ with primitive $t$ produces a di
 Likewise, equality of tangent-space dimensions does not imply duality or isomorphism. Both $\alpha_p$ and $\mu_p$ have one-dimensional tangent space, yet
 
 $$
-\alpha_p^D\simeq\alpha_p,qquad
+\alpha_p^D\simeq\alpha_p,\qquad
 \mu_p^D\simeq\underline{\mathbf Z/p\mathbf Z}.
 $$
 
@@ -912,7 +953,7 @@ $$
 Ranks satisfy
 
 $$
-|H^\perp|=\frac{|G|}{|H|},qquad
+|H^\perp|=\frac{|G|}{|H|},\qquad
 |H|\,|H^\perp|=|G| \tag{7.11}
 $$
 
@@ -953,7 +994,7 @@ $$
 It follows that
 
 $$
-\ker(f^D)\simeq(H/I)^D,qquad
+\ker(f^D)\simeq(H/I)^D,\qquad
 \operatorname{im}(f^D)\simeq I^D,\qquad
 \operatorname{coker}(f^D)\simeq K^D, \tag{7.14}
 $$
@@ -980,6 +1021,50 @@ $$
 
 The first map sends $1$ to $a$, and the second is reduction modulo $a$. This elementary sequence checks the arrow order. It remains exact in residue characteristics dividing $ab$, even though (7.15) then contains nonreduced groups. The proof through Cartier duality uses finite flat exactness, not surjectivity on roots in a chosen ring.
 
+### 7.7 Sums, intersections, and annihilator identities
+
+Annihilators do more than reverse a single inclusion: they reverse the entire admissible subgroup calculus. Let $H,J\subset G$ be finite locally free closed subgroups. Assume that their scheme-theoretic intersection and their sum are finite locally free, where the sum is the represented image of
+
+$$
+H\times J\longrightarrow G,\qquad(h,j)\longmapsto h+j. \tag{7.17}
+$$
+
+These hypotheses hold over a field. Over a DVR they hold for the saturated intersection and saturated generic sum inside a fixed finite-flat ambient group, but need not hold for the raw scheme-theoretic image over an arbitrary base. Under them,
+
+$$
+(H+J)^\perp=H^\perp\cap J^\perp, \tag{7.18}
+$$
+
+because a character is trivial on the sum exactly when it is trivial on each summand. Applying double annihilators gives the companion formula
+
+$$
+(H\cap J)^\perp=H^\perp+J^\perp. \tag{7.19}
+$$
+
+The second identity can also be proved from the exact sequence
+
+$$
+0\longrightarrow H\cap J\longrightarrow H\times J
+\xrightarrow{(h,j)\mapsto h-j}H+J\longrightarrow0. \tag{7.20}
+$$
+
+Dualizing (7.20) reverses the sequence, and the two maps become restriction and multiplication of characters. This proof makes clear why flatness of the intersection and the represented image cannot be hidden.
+
+There is also a quotient version. If $H\subset J\subset G$, then restriction gives an exact sequence
+
+$$
+0\longrightarrow J^\perp\longrightarrow H^\perp
+\longrightarrow(J/H)^D\longrightarrow0, \tag{7.21}
+$$
+
+and hence
+
+$$
+H^\perp/J^\perp\simeq(J/H)^D. \tag{7.22}
+$$
+
+Thus $H\mapsto H^\perp$ is an inclusion-reversing bijection between finite locally free subgroups of $G$ and finite locally free subgroups of $G^D$, wherever the admissible sum and intersection operations exist. It exchanges the identity with the whole group, products with intersections in the sense of (7.18), and subquotients with reversed dual subquotients. This is the precise finite-flat replacement for the annihilator lattice of a finite abelian group.
+
 ## 8. Bilinear pairings and perfectness
 
 ### 8.1 Pairings as morphisms into duals
@@ -993,7 +1078,7 @@ $$
 that is a group homomorphism in each variable. Fixing the first variable produces a character of $H$, hence a homomorphism
 
 $$
-b^\sharp:G\longrightarrow H^D,qquad
+b^\sharp:G\longrightarrow H^D,\qquad
 g\longmapsto(h\mapsto b(g,h)). \tag{8.2}
 $$
 
@@ -1036,14 +1121,14 @@ Evaluation $G\times G^D\to\mathbf G_m$ is perfect by biduality. Hence every fini
 The **left radical** and **right radical** of $b$ are
 
 $$
-\operatorname{rad}_L(b)=\ker(b^\sharp),qquad
+\operatorname{rad}_L(b)=\ker(b^\sharp),\qquad
 \operatorname{rad}_R(b)=\ker({}^\sharp b). \tag{8.7}
 $$
 
 They are always finite closed subgroup schemes. They need not be finite locally free over an arbitrary base unless the corresponding kernels are flat. When they are finite locally free and the maps admit flat image factorizations, duality shows that the quotient pair
 
 $$
-G/\operatorname{rad}_L(b),qquad
+G/\operatorname{rad}_L(b),\qquad
 H/\operatorname{rad}_R(b)
 $$
 
@@ -1210,6 +1295,8 @@ An alternating self-duality is more restrictive than an arbitrary one. A symmetr
 
 ### 10.4 Kernels of dual isogenies
 
+The dual abelian scheme and its Poincaré bundle are described and justified from their line-bundle construction in §14.1. We isolate their finite-kernel consequence here because it is the bridge from abstract multiplication kernels to Weil pairings.
+
 Let $A$ and $B$ be abelian schemes over $S$, and let
 
 $$
@@ -1358,6 +1445,35 @@ $$
 
 All six displayed occurrences have order $p$. Point sets distinguish only the constant group from the other two; tangent spaces distinguish the constant group but not $\mu_p$ from $\alpha_p$; Cartier duality distinguishes all three through the full Hopf structure.
 
+### 11.6 The local-local remainder
+
+Over a perfect field $k$ of characteristic $p$, a finite commutative $p$-group scheme is called **local-local** if both $G$ and $G^D$ are connected. The name isolates the part that is neither detected by the maximal étale quotient nor produced by dualizing such a quotient. The group $\alpha_p$ is local-local; $\mu_p$ is connected but not local-local because its dual is étale.
+
+There is a canonical three-step filtration
+
+$$
+0\subset G^{\mathrm{mult}}\subset G^0\subset G, \tag{11.9}
+$$
+
+where
+
+$$
+G^{\mathrm{mult}}=\bigl((G^D)^{\mathrm{et}}\bigr)^D. \tag{11.10}
+$$
+
+The first term is the maximal subgroup of multiplicative type, the last quotient $G/G^0$ is étale, and the middle quotient $G^0/G^{\mathrm{mult}}$ is local-local. To see maximality, dualize a multiplicative-type subgroup of $G$: it becomes an étale quotient of $G^D$ and hence factors through $(G^D)^{\mathrm{et}}$. To see that the middle quotient has connected dual, dualize its defining exact sequence and use maximality of the étale quotient on the dual side. The $p$-primary hypothesis ensures that a multiplicative-type group is connected, so $G^{\mathrm{mult}}\subset G^0$.
+
+Duality reverses the filtration. The étale quotient of $G$ corresponds to the multiplicative subgroup of $G^D$, the multiplicative subgroup of $G$ corresponds to the étale quotient of $G^D$, and the local-local middle part dualizes within the same class. It is important that this is a filtration, not usually a product decomposition. For instance, ordinary elliptic $p$-torsion over an algebraically closed field fits into
+
+$$
+0\longrightarrow\mu_p\longrightarrow E[p]
+\longrightarrow\underline{\mathbf Z/p\mathbf Z}\longrightarrow0, \tag{11.11}
+$$
+
+and the corresponding connected–étale extension over a more general base need not split in a family, even when its geometric fibers do. Supersingular elliptic $p$-torsion is local-local: it is connected, and the principal-polarization duality established in Chapter 14 makes its dual connected as well. Thus the connected–étale label alone does not measure the whole residue-characteristic structure.
+
+Outside the $p$-primary category the three adjectives overlap. A group of order prime to $p$ is étale, while a diagonalizable group of such order is also étale. The filtration (11.9) is therefore intended for the residue-characteristic primary part; the prime-to-$p$ part is already governed by finite étale descent.
+
 ## 12. Duality over DVRs and schematic closure
 
 ### 12.1 Generic and special fibers
@@ -1365,7 +1481,7 @@ All six displayed occurrences have order $p$. Point sets distinguish only the co
 Let $R$ be a DVR with fraction field $K$ and residue field $k$. For a finite flat commutative $R$-group $G$,
 
 $$
-(G^D)_K\simeq(G_K)^D,qquad
+(G^D)_K\simeq(G_K)^D,\qquad
 (G^D)_k\simeq(G_k)^D. \tag{12.1}
 $$
 
@@ -1416,7 +1532,7 @@ $$
 Consequently
 
 $$
-(G/H)^D\simeq H^\perp,qquad
+(G/H)^D\simeq H^\perp,\qquad
 (G^D/H^\perp)^D\simeq H. \tag{12.7}
 $$
 
@@ -1435,6 +1551,34 @@ If $R$ has mixed characteristic $(0,p)$ and contains the relevant generic roots 
 Cartier duality itself works over every base scheme for finite locally free commutative groups. The special strength of a DVR enters only when extending generic subgroups: torsion-free finite modules are free, so saturation produces finite flat closure. Over a Dedekind base, the same argument works locally and glues.
 
 Over a higher-dimensional normal base, a closure may be torsion-free without being locally free. In that setting its Cartier dual is not automatically an object of the finite locally free category. One must either prove flatness separately or restrict the claim. Duality does not repair a defective closure.
+
+### 12.6 Dual lattices and saturation
+
+The closure formula has a useful linear-algebraic explanation. If $V$ is a finite-dimensional $K$-vector space and $L\subset V$ is an $R$-lattice, define
+
+$$
+L^\#=\{\lambda\in V^\vee:\lambda(L)\subset R\}. \tag{12.8}
+$$
+
+Then $L^\#$ is a lattice and $(L^\#)^\#=L$. Moreover, for a saturated submodule $M\subset L$, restriction is surjective,
+
+$$
+L^\#\longrightarrow M^\#, \tag{12.9}
+$$
+
+because $L/M$ is torsion-free and hence free. Its kernel is
+
+$$
+M^0=\{\lambda\in L^\#:\lambda(M)=0\}, \tag{12.10}
+$$
+
+which is itself saturated. These are exactly the module facts behind integral annihilators.
+
+For a finite-flat group $G=\operatorname{Spec}A$, formula (12.2) says that the coordinate lattice of $G^D$ is $A^\#$. If the closure $H$ of $H_K$ has coordinate algebra $C$, then $C$ is the torsion-free image of $A$ in $C_K$. Thus $A\twoheadrightarrow C$ is a saturated quotient, and (12.9) embeds $C^\vee$ as a saturated Hopf submodule of $A^\vee$. Exactness of Hopf structures converts this embedded dual into the faithfully flat map $G^D\to H^D$; its kernel is the annihilator closure. The Hopf equations are essential, but saturation is what prevents a vertical torsion layer from appearing.
+
+This viewpoint also proves uniqueness in (12.5) without counting ranks. The closure of $H_K^\perp$ has a saturated coordinate quotient of $A^\vee$. The annihilator $H^\perp$ has the same generic quotient, and both are obtained by intersecting that generic quotient with the fixed lattice $A^\vee$. Hence their Hopf ideals coincide.
+
+The dual-lattice operation reverses inclusions but not indices naively. If $L'\subset L$ has finite index, then $L^\#\subset(L')^\#$, and the quotient records the same valuation length. This is the integral analogue of rank reversal for annihilators. It explains how dual models can have opposite-looking special fibers while retaining the same generic rank and the same total defect along the closed point.
 
 ## 13. Finite-flat models and Tate-twisted module duals
 
@@ -1551,6 +1695,63 @@ The assumption that $n$ is prime to $\operatorname{char}K$ ensures that the rele
 
 For example, in characteristic $p$ the group of geometric points of $\alpha_p$ is trivial, while $\alpha_p^D\simeq\alpha_p$ is nontrivial. There is no contradiction: the equivalence between finite étale groups and Galois modules never applied.
 
+### 13.6 Determinants, similitudes, and orthogonal modules
+
+Suppose $M$ is a free $\mathbf Z/n\mathbf Z$-module of rank $2g$ with continuous $\Gamma_K$-action and a perfect alternating equivariant pairing
+
+$$
+e:M\times M\longrightarrow\mu_n(K^s). \tag{13.8}
+$$
+
+Equivariance means
+
+$$
+e(\sigma x,\sigma y)=\sigma(e(x,y))
+=e(x,y)^{\chi_n(\sigma)}, \tag{13.9}
+$$
+
+where $\chi_n$ is the cyclotomic character modulo $n$. After choosing a symplectic basis and a primitive root of unity, the matrix $J$ of the pairing satisfies
+
+$$
+\rho(\sigma)^{\mathsf t}J\rho(\sigma)
+=\chi_n(\sigma)J. \tag{13.10}
+$$
+
+Thus the representation is symplectic up to the cyclotomic similitude factor. Taking determinants gives
+
+$$
+(\det\rho(\sigma))^2=\chi_n(\sigma)^{2g}. \tag{13.11}
+$$
+
+For a symplectic similitude the sharper identity is
+
+$$
+\det\rho(\sigma)=\chi_n(\sigma)^g. \tag{13.12}
+$$
+
+One way to see the sign is to observe that the symplectic similitude group is generated locally by the symplectic group, whose determinant is $1$, and the diagonal similitudes with determinant equal to the $g$th power of the multiplier. In rank two this becomes
+
+$$
+\det\rho=\chi_n. \tag{13.13}
+$$
+
+No primitive root is involved in the intrinsic assertion: changing the chosen root changes the displayed scalar coordinates but not the target $\mu_n$ or its Galois action.
+
+If $N\subset M$ is a Galois-stable submodule corresponding to a finite étale subgroup, its orthogonal
+
+$$
+N^\perp=\{m\in M:e(N,m)=1\} \tag{13.14}
+$$
+
+is Galois stable by (13.9), and perfectness gives
+
+$$
+N^\perp\simeq(M/N)^*(1),\qquad
+M/N^\perp\simeq N^*(1). \tag{13.15}
+$$
+
+Over a DVR, if the pairing comes from a perfect pairing of finite-flat models, the closure of $N^\perp$ is the schematic orthogonal of the closure of $N$. Formula (13.15) therefore survives integrally even when its special fiber ceases to be étale and can no longer be read from point modules.
+
 ## 14. Abelian schemes, torsion, and the Weil pairing
 
 ### 14.1 Why proper groups enter the story
@@ -1564,6 +1765,53 @@ $$
 is finite locally free of rank $n^{2g}$ when $A$ has relative dimension $g$. It therefore has a Cartier dual.
 
 The dual abelian scheme $A^\vee$ parametrizes algebraically trivial line bundles on $A$. Its universal Poincaré line bundle carries a biextension structure: it is multiplicative separately in the $A$- and $A^\vee$-variables. Restricting this structure to $n$-torsion produces the finite pairing that identifies the Cartier dual.
+
+We recall and justify exactly the part of abelian duality needed here. Rigidify a line bundle on $A_T$ along the zero section, and among such bundles take those whose restrictions to geometric fibers are algebraically equivalent to zero. The resulting sheaf is represented by a smooth proper group $A^\vee/S$ of the same relative dimension as $A$. There is a universal rigidified line bundle
+
+$$
+\mathcal P\quad\text{on}\quad A\times_SA^\vee,
+$$
+
+the **Poincaré bundle**. Its restriction to $A\times\{y\}$ is the line bundle represented by $y$, and its restrictions along either zero section are trivialized.
+
+Here is the construction in the amount needed for torsion. After choosing a relatively ample line bundle $L$ on $A$, translation defines
+
+$$
+\phi_L:A\longrightarrow \operatorname{Pic}_{A/S},\qquad
+x\longmapsto t_x^*L\otimes L^{-1}.
+$$
+
+The theorem of the square makes $\phi_L$ a homomorphism and shows that its image lies in the algebraically trivial component. Fiberwise, $\phi_L$ has finite kernel and projective image of dimension $g$. The relative Picard construction for a projective smooth family represents this component; descent from a projective cover and the fiberwise dimension calculation show that it is an abelian scheme. Rigidification removes scalar automorphisms and supplies the universal object $\mathcal P$. Applying the theorem of the cube to $\mathcal P$ gives canonical isomorphisms
+
+$$
+(m_A\times1)^*\mathcal P
+\simeq p_{13}^*\mathcal P\otimes p_{23}^*\mathcal P,
+\qquad
+(1\times m_{A^\vee})^*\mathcal P
+\simeq p_{12}^*\mathcal P\otimes p_{13}^*\mathcal P.
+$$
+
+The rigidifications make these isomorphisms unique and force their associativity compatibilities. This is the biextension law.
+
+Pullback of line bundles defines, for every homomorphism $f:A\to B$, a contravariant homomorphism
+
+$$
+f^\vee:B^\vee\longrightarrow A^\vee.
+$$
+
+The universal bundle also defines a biduality morphism $\delta_A:A\to A^{\vee\vee}$. To prove it is an isomorphism, one may work on geometric fibers. Over an algebraically closed field choose an ample $L$. The theorem of the cube gives
+
+$$
+\phi_L^\vee\circ\delta_A=\phi_L.
+$$
+
+Both $\phi_L$ and $\phi_L^\vee$ are isogenies, and the intersection-theoretic degree formula for $L$ gives $\deg\phi_L^\vee=\deg\phi_L$. Multiplicativity of degree forces $\deg\delta_A=1$, so $\delta_A$ is an isomorphism. Since this holds on every geometric fiber, the relative morphism is an isomorphism as well. Finally, pullback by $[n]_A$ sends a line bundle represented by $y$ to the one represented by $ny$, so
+
+$$
+([n]_A)^\vee=[n]_{A^\vee}.
+$$
+
+These facts prove the abelian-duality input used below; no duality for the positive-dimensional schemes is being conflated with Cartier duality. Cartier duality enters only after restricting to finite isogeny kernels.
 
 ### 14.2 Construction of the group-scheme Weil pairing
 
@@ -1581,7 +1829,7 @@ $$
 e_n^B(fx,y)=e_n^A(x,f^\vee y). \tag{14.2}
 $$
 
-This is the scheme-theoretic form of the contravariance familiar from Book 51.
+This identity follows directly by pulling the Poincaré bundle on $B\times B^\vee$ back along $f\times1$ and using its universal property. It is the scheme-theoretic adjointness relation for the pairing.
 
 ### 14.3 Perfectness in all characteristics
 
@@ -1647,7 +1895,7 @@ $$
 E[n]^D\simeq E[n]. \tag{14.8}
 $$
 
-When $n$ is prime to the characteristic of a field, taking geometric points recovers the pairing constructed in Book 51. A symplectic basis identifies its matrix with
+When $n$ is prime to the characteristic of a field, taking geometric points gives the classical alternating pairing on a free rank-two torsion module. A symplectic basis identifies its matrix with
 
 $$
 \begin{pmatrix}0&1\\-1&0\end{pmatrix},
@@ -1673,13 +1921,13 @@ If $C\subset E[n]$ is finite flat of rank $n$ and the Weil pairing restricts tri
 
 ### 14.7 Compatibility through levels
 
-For positive integers $m,n$, the Weil pairings satisfy the level compatibility
+For positive integers $m,n$, $P\in A[mn]$, and $Q\in A^\vee[mn]$, the Weil pairings satisfy the level compatibility
 
 $$
 e_{mn}(P,Q)^m=e_n(mP,mQ). \tag{14.11}
 $$
 
-On prime-to-characteristic geometric points this is the formula of Book 51. Scheme-theoretically it is an equality of morphisms obtained from the functoriality of the Poincaré biextension. For a prime $\ell$ invertible on the field, inverse limits yield
+On prime-to-characteristic geometric points this follows at once from bilinearity on compatible torsion bases. Scheme-theoretically it is an equality of morphisms obtained from the functoriality of the Poincaré biextension. For a prime $\ell$ invertible on the field, inverse limits yield
 
 $$
 T_\ell A\times T_\ell A^\vee\longrightarrow\mathbf Z_\ell(1), \tag{14.12}
@@ -1693,6 +1941,29 @@ $$
 
 Equations (14.12)--(14.13) are module-theoretic inverse-limit shadows of the finite group-scheme duality (14.3). They should not be used backwards to prove residue-characteristic group-scheme perfectness; inverse limits of geometric points have already discarded connected infinitesimal torsion there.
 
+### 14.8 Determinants of elliptic torsion
+
+Let $E/K$ be an elliptic curve and suppose $n$ is prime to $\operatorname{char}K$. The perfect pairing on geometric points is Galois equivariant:
+
+$$
+e_n(\sigma P,\sigma Q)=\sigma(e_n(P,Q)). \tag{14.14}
+$$
+
+Choose a basis $P,Q$ of $E[n](K^s)$ with $e_n(P,Q)$ primitive. If $\rho_n(\sigma)$ is the matrix of $\sigma$ in this basis, alternation and bilinearity give
+
+$$
+e_n(\sigma P,\sigma Q)
+=e_n(P,Q)^{\det\rho_n(\sigma)}. \tag{14.15}
+$$
+
+The right side of (14.14) is $e_n(P,Q)^{\chi_n(\sigma)}$. Primitivity therefore yields
+
+$$
+\det\rho_n=\chi_n. \tag{14.16}
+$$
+
+This conclusion is independent of the chosen symplectic basis. It is the rank-two instance of (13.12), now derived directly from the elliptic Weil pairing. At residue-characteristic level, the group-scheme pairing (14.7) remains the correct integral statement even when a two-element basis of geometric torsion does not exist.
+
 ## 15. Worked structural patterns
 
 ### 15.1 A cyclic homomorphism and its dual
@@ -1700,7 +1971,7 @@ Equations (14.12)--(14.13) are module-theoretic inverse-limit shadows of the fin
 Abstract variance becomes clearer in a calculation. Let $d,m\ge1$ and consider
 
 $$
-[d]:\mu_m\longrightarrow\mu_m,qquad z\longmapsto z^d. \tag{15.1}
+[d]:\mu_m\longrightarrow\mu_m,\qquad z\longmapsto z^d. \tag{15.1}
 $$
 
 Under $\mu_m^D=\underline{\mathbf Z/m\mathbf Z}$, its Cartier dual is multiplication by $d$ on the constant cyclic group. Indeed a character indexed by $a\in\mathbf Z/m\mathbf Z$ is $z\mapsto z^a$, and precomposition gives $z\mapsto z^{da}$.
@@ -1740,7 +2011,7 @@ $$
 Both factors are Lagrangian: each pairs trivially with itself, and each has rank $|M|$ inside a group of rank $|M|^2$. Thus
 
 $$
-\underline M^\perp=\underline M,qquad D(M)^\perp=D(M) \tag{15.3}
+\underline M^\perp=\underline M,\qquad D(M)^\perp=D(M) \tag{15.3}
 $$
 
 when they are viewed as the two coordinate factors of this hyperbolic pairing.
@@ -1797,7 +2068,7 @@ Every geometric point in (15.5) and (15.6) is the identity over an algebraically
 Let $R$ be a mixed-characteristic DVR with residue characteristic $p$, and suppose $K$ contains a primitive $p$th root of unity. The generic fibers
 
 $$
-(\mu_p)_K,qquad
+(\mu_p)_K,\qquad
 (\underline{\mathbf Z/p\mathbf Z})_K
 $$
 
