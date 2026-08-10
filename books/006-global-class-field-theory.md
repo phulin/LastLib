@@ -22,6 +22,10 @@
    - [The Brauer--idele exact sequence](#42-the-brauer--idele-exact-sequence)
    - [Construction of the fundamental class](#43-construction-of-the-fundamental-class)
    - [The two class-formation lemmas](#44-the-two-class-formation-lemmas)
+   - [Restriction, corestriction, and invariant normalizations](#45-restriction-corestriction-and-invariant-normalizations)
+   - [Cup products and the local trace](#46-cup-products-and-the-local-trace)
+   - [The global trace and the duality pairing](#47-the-global-trace-and-the-duality-pairing)
+   - [Norms, induction, and Shapiro compatibility](#48-norms-induction-and-shapiro-compatibility)
 5. [Finite global reciprocity](#5-finite-global-reciprocity)
    - [The reciprocity isomorphism](#51-the-reciprocity-isomorphism)
    - [Frobenius, decomposition, and inertia](#52-frobenius-decomposition-and-inertia)
@@ -64,6 +68,7 @@
     - [Norms, restriction, and conjugation of characters](#116-norms-restriction-and-conjugation-of-characters)
     - [Dirichlet and CM character models](#117-dirichlet-and-cm-character-models)
     - [The quadratic induction interface](#118-the-quadratic-induction-interface)
+    - [Induction through a general finite extension](#119-induction-through-a-general-finite-extension)
 12. [The global reciprocity dictionary](#12-the-global-reciprocity-dictionary)
     - [Fields, subgroups, and quotients](#121-fields-subgroups-and-quotients)
     - [Local multiplicative data and global Galois data](#122-local-multiplicative-data-and-global-galois-data)
@@ -436,7 +441,7 @@ H^{3-i}(G_{F,S},\mu_n)
 \tag{4.1}
 $$
 
-This pairing is perfect. We prove that assertion at finite level. First, the diagonal global classes annihilate one another. On cocycles this is the norm-residue product calculation: the explicit local cup-product formula from local duality is bilinear in unit and valuation classes, the valuation terms cancel by the principal-divisor relation, and the unit terms cancel by the finite-residue-field norm relation. The real terms are the signs left by the same calculation. Only finitely many terms occur. One may compute after a finite Galois extension containing $\mu_n$; the calculation is equivariant under its Galois group, so the cocycle identity descends without dividing by the degree. Thus no roots-of-unity hypothesis is being inserted.
+This pairing is perfect. We prove that assertion at finite level. First, the diagonal global classes annihilate one another. On cocycles this is the norm-residue product calculation: the explicit local cup-product formula obtained from cyclic algebras and local reciprocity is bilinear in unit and valuation classes, the valuation terms cancel by the principal-divisor relation, and the unit terms cancel by the finite-residue-field norm relation. The real terms are the signs left by the same calculation. Only finitely many terms occur. One may compute after a finite Galois extension containing $\mu_n$; the calculation is equivariant under its Galois group, so the cocycle identity descends without dividing by the degree. Thus no roots-of-unity hypothesis is being inserted.
 
 The Kummer sequence and the valuation sequence give
 
@@ -453,9 +458,9 @@ and the analogous local sequences. Weak approximation realizes any prescribed fi
 
 We next check nondegeneracy. For $\mu_n$, a global class trivial everywhere becomes, after adjoining $\mu_n$, a Kummer extension split at every completion. For $A_n$, the same is true of the cyclic extension cut out by the character. The separation fact just proved makes either extension trivial. Thus both global localization maps have trivial kernel.
 
-It remains only to compare finite orders. Suppose first that $\mu_n\subset F$ and choose a primitive root to identify $A_n$ with $\mu_n$. Filter the global and local cochain groups by units, valuation divisors, and ideal classes as in (4.2). On the free unit part, the one relation among normalized finite and archimedean valuations is the ordinary product formula, and its kernel has the rank supplied by the unit theorem. On torsion units, ordinary finite character duality pairs roots of unity modulo $n$ with their cyclic characters. On the ideal part, evaluation pairs $\operatorname{Cl}(\mathcal O_{F,S})/n$ perfectly with the $n$-torsion of its character group. The local factors have the orders given by local duality. Multiplying the orders on the associated graded groups, the class-group factors cancel and the remaining equality is precisely the unit-rank formula. Hence each annihilator has the same order as the corresponding image. The already proved inclusion and nondegeneracy give equality, and the five lemma lifts perfectness from the associated graded groups to the cohomology groups.
+It remains only to compare finite orders. Suppose first that $\mu_n\subset F$ and choose a primitive root to identify $A_n$ with $\mu_n$. Filter the global and local cochain groups by units, valuation divisors, and ideal classes as in (4.2). On the free unit part, the one relation among normalized finite and archimedean valuations is the ordinary product formula, and its kernel has the rank supplied by the unit theorem. On torsion units, ordinary finite character duality pairs roots of unity modulo $n$ with their cyclic characters. On the ideal part, evaluation pairs $\operatorname{Cl}(\mathcal O_{F,S})/n$ perfectly with the $n$-torsion of its character group. The local factors have matching orders because local reciprocity identifies $H^1(F_u,A_n)$ with the character group of $F_u^\times/F_u^{\times n}$, while Kummer theory identifies that quotient with $H^1(F_u,\mu_n)$. Multiplying the orders on the associated graded groups, the class-group factors cancel and the remaining equality is precisely the unit-rank formula. Hence each annihilator has the same order as the corresponding image. The already proved inclusion and nondegeneracy give equality, and the five lemma lifts perfectness from the associated graded groups to the cohomology groups.
 
-For general $F$, pass to $F'=F(\mu_n)$. The Hochschild--Serre complexes for $F'/F$ on $A_n$ and $\mu_n$ are dual: restriction and corestriction are adjoint under the local pairings. Choose a complete resolution of $\operatorname{Gal}(F'/F)$, apply the roots-of-unity calculation in every row, and use the five lemma successively on the filtration by total degree. This descends perfectness without dividing by $[F':F]$, even when that degree shares a factor with $n$. At real places the complete resolution is the Tate resolution; retaining its degree-zero term is exactly what preserves the exceptional $2$-primary condition. Degrees zero and three are the ordinary product formula and its finite dual. This proves (4.1) without reciprocity, a prime-distribution theorem, or an exact-degree Grunwald assertion.
+For general $F$, pass to $F'=F(\mu_n)$. The Hochschild--Serre complexes for $F'/F$ on $A_n$ and $\mu_n$ are dual: restriction and corestriction are adjoint under the local pairings. Choose a complete resolution of $\operatorname{Gal}(F'/F)$, apply the roots-of-unity calculation in every row, and use the five lemma successively on the filtration by total degree. This descends perfectness without dividing by $[F':F]$, even when that degree shares a factor with $n$. At real places the complete resolution is the Tate resolution; retaining its degree-zero term is exactly what preserves the exceptional $2$-primary condition. Degrees zero and three are the ordinary product formula and its finite dual. This proves (4.1) without global reciprocity, a prime-distribution theorem, or an exact-degree Grunwald assertion.
 
 The same argument applies with $A_n$ and $\mu_n$ interchanged. The long exact sequence of that cone, followed by the directed limit as $S$ grows, contains the exact row
 
@@ -598,6 +603,297 @@ with $A_0,A_1$ the cohomologically trivial modules just constructed. The connect
 
 This is a proof, not an invocation of “class formation” as an unexplained black box: the content is precisely the Brauer localization sequence, the two cohomological calculations, and dimension shifting.
 
+### 4.5 Restriction, corestriction, and invariant normalizations
+
+The preceding construction used Brauer invariants to produce the fundamental class. Duality arguments use the same invariants in a second role: they are the trace maps that turn cup products into numbers. That use is unforgiving about degrees. We therefore record the normalization, including archimedean places and products of local fields, before proceeding to reciprocity.
+
+For every place $v$ of a number field $F$, write
+
+$$
+\operatorname{inv}_v:\operatorname{Br}(F_v)\longrightarrow\mathbf Q/\mathbf Z.
+$$
+
+At a finite place this is the local invariant normalized in Book 5: an unramified cyclic algebra
+
+$$
+(E/F_v,\operatorname{Frob}^{\mathrm{arith}},\pi_v)
+$$
+
+of degree $d$ has invariant $1/d$. At a real place the nonsplit quaternion algebra has invariant $1/2$, so the image is $\frac12\mathbf Z/\mathbf Z$. At a complex place the Brauer group is zero. Thus the same target may be used everywhere, but the image depends on the place.
+
+Let $E/F_v$ be a finite extension of local fields. Restriction and corestriction satisfy
+
+$$
+\operatorname{inv}_E(\operatorname{res}_{E/F_v}\alpha)
+=[E:F_v]\operatorname{inv}_v(\alpha),
+\tag{4.4}
+$$
+
+and
+
+$$
+\operatorname{inv}_v(\operatorname{cor}_{E/F_v}\beta)
+=\operatorname{inv}_E(\beta).
+\tag{4.5}
+$$
+
+For nonarchimedean fields, (4.4) is the restriction formula for the local invariant. To prove (4.5), choose $\alpha\in\operatorname{Br}(F_v)$ restricting to $\beta$; such an $\alpha$ exists because multiplication by $[E:F_v]$ is onto on $\mathbf Q/\mathbf Z$. Then
+
+$$
+\operatorname{cor}_{E/F_v}(\beta)
+=\operatorname{cor}_{E/F_v}\operatorname{res}_{E/F_v}(\alpha)
+=[E:F_v]\alpha,
+$$
+
+and the two invariant formulas agree. At $\mathbf R$ and $\mathbf C$ the assertions follow directly from the two possible Brauer classes and the fact that restriction from $\mathbf R$ to $\mathbf C$ kills the quaternion class. Transitivity of restriction and corestriction proves the formulas in every local tower.
+
+A completion of a global extension is often a product rather than one field. If
+
+$$
+E=\prod_{i=1}^r E_i
+$$
+
+is a finite étale $F_v$-algebra, set
+
+$$
+\operatorname{Br}(E)=\bigoplus_i\operatorname{Br}(E_i),
+\qquad
+\operatorname{cor}_{E/F_v}(\beta_i)
+=\sum_i\operatorname{cor}_{E_i/F_v}(\beta_i).
+$$
+
+Then (4.5) becomes the indispensable sum formula
+
+$$
+\operatorname{inv}_v\!\left(
+\operatorname{cor}_{E/F_v}(\beta_i)_i
+\right)
+=\sum_i\operatorname{inv}_{E_i}(\beta_i).
+\tag{4.6}
+$$
+
+Likewise,
+
+$$
+\sum_i\operatorname{inv}_{E_i}
+(\operatorname{res}_{E_i/F_v}\alpha)
+=\left(\sum_i[E_i:F_v]\right)\operatorname{inv}_v(\alpha).
+\tag{4.7}
+$$
+
+For $E=L\otimes_FF_v$, the degree sum in (4.7) is $[L:F]$. These identities explain why one must sum over every $w\mid v$ in an adelic norm or trace. Selecting one completion would lose exactly the factors that make global restriction and corestriction compatible.
+
+The global invariant sequence of Theorem 4.1 now reads
+
+$$
+0\longrightarrow\operatorname{Br}(F)
+\longrightarrow\bigoplus_v\operatorname{Br}(F_v)
+\xrightarrow{(\alpha_v)\mapsto\sum_v\operatorname{inv}_v(\alpha_v)}
+\mathbf Q/\mathbf Z\longrightarrow0.
+\tag{4.8}
+$$
+
+The direct sum is literal: a global central simple algebra is split at all but finitely many places. Exactness says both that every global class has total invariant zero and that this is the only relation among finitely supported local classes. The real summands are part of (4.8). Omitting them can turn a true total-invariant-zero statement into a false one at the prime $2$.
+
+### 4.6 Cup products and the local trace
+
+Let $n\geq1$, let $M$ be a finite module for the absolute Galois group of a local field $F$, and suppose $nM=0$. Its Tate dual is
+
+$$
+M^D=\operatorname{Hom}(M,\mu_n),
+$$
+
+with the contragredient Galois action. Evaluation $M\otimes M^D\to\mu_n$ and cup product give
+
+$$
+H^r(F,M)\times H^{2-r}(F,M^D)
+\longrightarrow H^2(F,\mu_n)
+\longrightarrow\operatorname{Br}(F)[n].
+$$
+
+Composing with the local invariant gives the numerical pairing
+
+$$
+\langle x,y\rangle_F
+=\operatorname{inv}_F(x\smile y)
+\in\tfrac1n\mathbf Z/\mathbf Z.
+\tag{4.9}
+$$
+
+At a real place, Tate cohomology is used in every degree; at a complex place the pairing is zero. This convention is what permits one formula to include finite and infinite places.
+
+The compatibility needed in every descent argument is adjointness of restriction and corestriction. If $E/F$ is finite, $x\in H^r(F,M)$, and $y\in H^{2-r}(E,M^D)$, the projection formula for cup products says
+
+$$
+\operatorname{cor}_{E/F}
+(\operatorname{res}_{E/F}x\smile y)
+=x\smile\operatorname{cor}_{E/F}y.
+$$
+
+Taking invariants and using (4.5) proves
+
+$$
+\langle\operatorname{res}_{E/F}x,y\rangle_E
+=\langle x,\operatorname{cor}_{E/F}y\rangle_F.
+\tag{4.10}
+$$
+
+If $E$ is a product of fields, the left side is the sum over its factors. Formula (4.10), not a degree-adjusted variant of it, is the normalization used in global duality. The degree already appears in restriction of Brauer classes through (4.4); inserting another degree would count it twice.
+
+The case used in the existence theorem can be proved directly from local reciprocity. Take
+
+$$
+M=A_n=\mathbf Z/n\mathbf Z,
+\qquad M^D=\mu_n.
+$$
+
+Kummer theory gives
+
+$$
+H^1(F,\mu_n)=F^\times/F^{\times n},
+$$
+
+while local reciprocity identifies $H^1(F,A_n)$ with the continuous $\mathbf Z/n\mathbf Z$-valued characters of $F^\times$. We fix the cup-product sign by requiring
+
+$$
+\exp\!\left(2\pi i\operatorname{inv}_F(c\smile a)\right)
+=c(\operatorname{rec}_F(a)).
+\tag{4.11}
+$$
+
+For a cyclic character, both sides are the cyclic norm-residue symbol: they have the same kernel, namely the norm group of the cyclic extension cut out by $c$, and they send an unramified uniformizer to the chosen arithmetic Frobenius value. Cyclic decomposition and bilinearity prove (4.11) in general.
+
+This pairing is perfect. Indeed, local reciprocity identifies
+
+$$
+F^\times/F^{\times n}
+$$
+
+with a finite abelian quotient of exponent dividing $n$, and $H^1(F,A_n)$ is its full character group. Evaluation gives finite Pontryagin duality. Thus the special local duality used in Chapter 6 is already a consequence of local class field theory and Kummer theory; no global existence assertion enters its proof.
+
+### 4.7 The global trace and the duality pairing
+
+Now let $F$ be a number field and let $M$ be a finite $G_F$-module annihilated by $n$. For global classes
+
+$$
+x\in H^r(F,M),
+\qquad y\in H^{2-r}(F,M^D),
+$$
+
+the localized cup products vanish at almost every place. To see this, enlarge a finite set until both modules and both classes are unramified outside it and all primes dividing $n$ lie inside it. At a remaining finite place both classes inflate from the procyclic unramified quotient; that quotient has cohomological dimension one for finite torsion of order prime to the residue characteristic, so their degree-two cup product is zero. Hence the following sum is finite.
+
+The global Brauer reciprocity law gives
+
+$$
+\sum_v\langle\operatorname{loc}_v x,
+\operatorname{loc}_v y\rangle_{F_v}
+=\sum_v\operatorname{inv}_v
+(\operatorname{loc}_v(x\smile y))
+=0.
+\tag{4.12}
+$$
+
+This is the exact form in which global reciprocity enters Tate duality: two diagonal global classes are orthogonal under the sum of all local invariant pairings. It is stronger than the product formula for absolute values and more general than the quadratic Hilbert-symbol product formula, but both are shadows of the same total-trace-zero principle.
+
+It is useful to place the degree shift in plain view. Fix a finite set $S$ containing the archimedean places, the places above $n$, and the places where $M$ is ramified. Define the compact-support complex
+
+$$
+C_{S,c}^\bullet(M)=
+\operatorname{Cone}\!\left(
+C^\bullet(G_{F,S},M)
+\longrightarrow\bigoplus_{v\in S}C^\bullet(G_{F_v},M)
+\right)[-1],
+\tag{4.13}
+$$
+
+with Tate cochains at real places. The local invariant sum and (4.8) induce a trace
+
+$$
+\operatorname{tr}_F:H^3(C_{S,c}^\bullet(\mu_n))
+\longrightarrow\tfrac1n\mathbf Z/\mathbf Z.
+\tag{4.14}
+$$
+
+Why degree three? A local Brauer class has degree two, while the cone in (4.13) shifts the local term upward by one. Why is the trace well defined? Changing a representative by a localized global degree-two cocycle changes the proposed value by the sum of the invariants of one global Brauer class, which is zero by (4.8). Conversely, exactness of (4.8) shows that no further relation has been imposed.
+
+Cup product of a compactly supported cochain with an ordinary cochain, followed by (4.14), gives
+
+$$
+H^r(C_{S,c}^\bullet(M))
+\times H^{3-r}(G_{F,S},M^D)
+\longrightarrow\tfrac1n\mathbf Z/\mathbf Z.
+\tag{4.15}
+$$
+
+This is the trace-and-pairing layer used in Poitou--Tate arguments. The assertion that (4.15) is perfect for every finite module is a further global duality theorem; it is not needed to prove reciprocity here. For the pair $A_n,\mu_n$ used in Theorems 4.1 and 6.1, the finite units--divisors--ideal-classes calculation in Section 4.2 proves the required perfectness. Separating the trace construction from the perfectness theorem prevents global reciprocity and global duality from being used to prove one another.
+
+Restriction and corestriction preserve the global trace with no hidden degree. If $E/F$ is finite and $(z_w)_w$ is a family of local degree-two classes over $E$, then (4.6) gives
+
+$$
+\sum_v\operatorname{inv}_v
+\left(\sum_{w\mid v}\operatorname{cor}_{E_w/F_v}z_w\right)
+=\sum_w\operatorname{inv}_w(z_w).
+\tag{4.16}
+$$
+
+Together with the projection formula, this makes global restriction adjoint to global corestriction under (4.15). Formula (4.16) is the bookkeeping identity behind every norm-compatible local condition.
+
+### 4.8 Norms, induction, and Shapiro compatibility
+
+The same maps have three languages, and later arguments move among them quickly. We make the identifications explicit.
+
+For the multiplicative module, degree-zero corestriction is the field norm:
+
+$$
+H^0(E,\mathbf G_m)=E^\times
+\xrightarrow{\operatorname{cor}_{E/F}=N_{E/F}}
+F^\times=H^0(F,\mathbf G_m).
+\tag{4.17}
+$$
+
+In degree two it is Brauer corestriction. Locally, the square
+
+$$
+\begin{array}{ccc}
+\operatorname{Br}(E)&\xrightarrow{\operatorname{cor}_{E/F}}&\operatorname{Br}(F)\\
+\downarrow&&\downarrow\\
+\displaystyle\bigoplus_w\operatorname{Br}(E_w)&
+\xrightarrow{(\beta_w)\mapsto
+(\sum_{w\mid v}\operatorname{cor}_{E_w/F_v}\beta_w)_v}&
+\displaystyle\bigoplus_v\operatorname{Br}(F_v)
+\end{array}
+\tag{4.18}
+$$
+
+commutes. For crossed products this follows by inducing the semilinear algebra from $G_E$ to $G_F$; in general it follows after passage to a common splitting field and additivity in the Brauer group. Applying invariants to the bottom row is exactly (4.16).
+
+At the adelic degree-zero level, (4.17) becomes
+
+$$
+(y_w)_w\longmapsto
+\left(\prod_{w\mid v}N_{E_w/F_v}(y_w)\right)_v.
+\tag{4.19}
+$$
+
+Thus cohomological corestriction is the idele norm, including the product over all branches. On a diagonal element $y\in E^\times$, (4.19) is the diagonal idele of $N_{E/F}y$; principal ideles are therefore preserved. This is the precise compatibility that lets the norm descend from ideles to idele classes.
+
+For a finite $G_E$-module $A$, induction and coinduction agree because $G_E$ has finite index in $G_F$. Shapiro's isomorphism is
+
+$$
+H^r(F,\operatorname{Ind}_{E/F}A)
+\xrightarrow{\sim}H^r(E,A).
+\tag{4.20}
+$$
+
+Evaluation on coset representatives shows that the cup product of an induced class with a class over $F$ corresponds under (4.20) to the cup product after restriction to $E$. Taking the trace then gives the same adjointness as (4.10). Consequently the following four statements are one compatibility expressed at different levels:
+
+- norm on multiplicative groups is corestriction in degree zero;
+- norm on ideles is the product of all local corestrictions;
+- restriction is adjoint to corestriction under local and global invariant pairings;
+- Shapiro identifies induced cohomology with the cohomology over the extension field without changing the trace.
+
+The degree factors have now all been located: restriction of a local Brauer class multiplies its invariant by the local degree, while corestriction preserves the invariant and sums over branches. Norms therefore require no extra degree correction. This convention is the one used by the reciprocity diagrams in Section 5.3 and by the character-induction formulas in Chapter 11.
+
 ## 5. Finite global reciprocity
 
 ### 5.1 The reciprocity isomorphism
@@ -623,7 +919,7 @@ $$
 \widehat H^{-2}(G,\mathbf Z)=H_1(G,\mathbf Z)=G^{\mathrm{ab}},
 $$
 
-and the target is $\widehat H^0(G,C_L)=C_K/N C_L$. It remains to identify the inverse with the product of local maps. Localization of $u_{L/K}$ is the local fundamental class at every decomposition group. Naturality of cap product and Shapiro's lemma therefore make the restriction to $K_v^\times$ equal to local reciprocity followed by $D_w^{\mathrm{ab}}\to G^{\mathrm{ab}}$. These local factors generate the idele group, so the maps agree. $\square$
+and the target is $\widehat H^0(G,C_L)=C_K/N C_L$. It remains to identify the inverse with the product of local maps. Localization of $u_{L/K}$ is the local fundamental class at every decomposition group. Naturality of cap product and Shapiro's lemma therefore make the restriction to $K_v^\times$ equal to local reciprocity followed by $D_w^{\mathrm{ab}}\to G^{\mathrm{ab}}$. Outside the finite ramification set both maps kill the local unit group. Every idele is therefore congruent modulo their common unit tail to a finite product of single-coordinate ideles, on which the maps agree. $\square$
 
 This simultaneously proves surjectivity, the kernel formula, and the exact index statement
 
@@ -1326,7 +1622,7 @@ $$
 
 Moreover, a compact profinite group is already complete for the topology of its finite quotients. The map from $C_K/C_K^0$ to $\widehat{C_K}$ has dense image because the completion map does, and its image is closed because its source is compact. It is therefore onto; the intersection formula makes it injective. Hence it is an isomorphism, not merely a dense embedding.
 
-It follows that
+The dimension count can be upgraded to an irreducibility proof. If all conjugates are distinct, finitely many commuting diagonal actions of $G_M$ separate the coset lines. Interpolation in their eigenvalues produces the projector onto each line. Hence every $G_M$-stable subspace is a sum of coset lines. Since $G_K$ permutes those lines transitively, a $G_K$-stable sum is either zero or all of $R$. Conversely, if the stabilizer $\Gamma_\theta$ is nontrivial, induction from $G_M$ to its inverse image in $G_K$ is the regular module of a twisted group algebra of $\Gamma_\theta$. In characteristic zero that algebra is semisimple, and its regular module has a proper simple summand when $\Gamma_\theta\ne1$. Inducing that summand to $G_K$ gives a proper summand of $R$. Therefore
 
 $$
 \ker\operatorname{Art}_K=C_K^0
@@ -1635,7 +1931,7 @@ The finite conductor ideal is
 $$
 \mathfrak f_0(\rho)
 =\mathfrak d_{M/K}\,
-N_{M/K}\bigl(\mathfrak f_0(\theta_\ell)\bigr).
+N_{M/K}\bigl(\mathfrak f_0(\theta)\bigr).
 \tag{11.3}
 $$
 
@@ -1643,7 +1939,7 @@ Indeed, at a place $v$ the local induction formula from the ramification theory 
 
 $$
 a_v(\rho)
-=\sum_{w\mid v}f(w/v)a_w(\theta_\ell)
+=\sum_{w\mid v}f(w/v)a_w(\theta)
 +v(\mathfrak d_{M/K}).
 $$
 
@@ -1699,6 +1995,149 @@ $$
 $$
 
 For an element of $G_M$, this follows from the two diagonal entries $\theta_\ell$ and $\theta_\ell^s$; for an element in the other coset, the induction matrix has determinant $-\theta_\ell(t^2)$, producing the quadratic sign. Together, equations (11.1)--(11.8) are the precise global interface needed for quadratic dihedral induction.
+
+### 11.9 Induction through a general finite extension
+
+Quadratic induction is the most visible case, but norm and induction must remain compatible in arbitrary degree. Let $M/K$ be finite separable of degree $d$, let $\theta$ be a finite-order or algebraic Hecke character of $M$, and let $\theta_\ell$ be its avatar. Put
+
+$$
+R=\operatorname{Ind}_{G_M}^{G_K}\theta_\ell.
+$$
+
+This is a $d$-dimensional representation. Its definition uses a coset basis, but its isomorphism class and all formulas below do not.
+
+Norm pullback is Galois restriction:
+
+$$
+\eta\circ N_{M/K}
+\quad\longleftrightarrow\quad
+\eta_\ell|_{G_M}.
+\tag{11.9}
+$$
+
+The tensor identity for induction therefore becomes
+
+$$
+\operatorname{Ind}_{G_M}^{G_K}
+\bigl(\theta_\ell\cdot\eta_\ell|_{G_M}\bigr)
+\cong R\otimes\eta_\ell.
+\tag{11.10}
+$$
+
+On the Hecke side, the character inside the induction is $\theta(\eta\circ N_{M/K})$. This is why norms, rather than diagonal inclusions, occur when a twist is pulled from the base field.
+
+If $M/K$ is Galois with group $\Gamma$, Mackey decomposition gives
+
+$$
+R|_{G_M}\cong
+\bigoplus_{\sigma\in\Gamma}\theta_\ell^\sigma.
+\tag{11.11}
+$$
+
+Indeed, the cosets of $G_M$ in $G_K$ are indexed by $\Gamma$, and the $\sigma$-coset line is acted on through $\theta_\ell^\sigma$. The intertwining calculation gives
+
+$$
+\dim\operatorname{End}_{G_K}(R)
+=|\{\sigma\in\Gamma:\theta_\ell^\sigma=\theta_\ell\}|.
+$$
+
+It follows that
+
+$$
+R\text{ is irreducible}
+\quad\Longleftrightarrow\quad
+\theta_\ell^\sigma\ne\theta_\ell
+\text{ for every }1\ne\sigma\in\Gamma.
+\tag{11.12}
+$$
+
+The argument does not require $\theta_\ell$ to have finite image: the finite twisted group algebra comes from the finite stabilizer quotient, while a nonzero intertwiner between two one-dimensional characters exists exactly when the characters agree. When the stabilizer is nontrivial, induction is analyzed in stages through its fixed field; a quadratic two-summand formula does not extend unchanged to a larger stabilizer.
+
+The determinant uses the other idele map. Let
+
+$$
+j_{M/K}:C_K\longrightarrow C_M
+$$
+
+be diagonal scalar extension, and let
+
+$$
+\delta_{M/K}=\det\operatorname{Ind}_{G_M}^{G_K}\mathbf 1.
+$$
+
+The latter is the quadratic Galois character, possibly trivial, given by the sign of the permutation action on the $d$ embeddings of $M$; we use the same symbol for its finite-order Hecke character under reciprocity. Then
+
+$$
+\det R
+\quad\longleftrightarrow\quad
+\delta_{M/K}\,\bigl(\theta\circ j_{M/K}\bigr).
+\tag{11.13}
+$$
+
+To prove this, choose right coset representatives. An element $g\in G_K$ permutes the coset basis, contributing its permutation sign. The product of the nonzero matrix entries is $\theta_\ell(\operatorname{Ver}_{M/K}g)$ by the coset formula for transfer. Reciprocity identifies transfer with $j_{M/K}$. In degree two, $\delta_{M/K}=\varepsilon_{M/K}$ and this is (11.8). Thus determinants use diagonal inclusion and transfer, whereas twist pullbacks use norm and restriction.
+
+The local induction formula for the finite conductor gives
+
+$$
+a_v(R)=v(\mathfrak d_{M/K})
++\sum_{w\mid v}f(w/v)a_w(\theta).
+\tag{11.14}
+$$
+
+Here $a_w(\theta)$ is the conductor exponent of the finite local component of the Hecke character; away from $\ell$ it is also the Artin conductor of the avatar. To prove the formula, pass to a common finite Galois extension on which the relevant inertia characters factor and use
+
+$$
+a(V)=\sum_{i\geq0}\frac{|G_i|}{|G_0|}
+\operatorname{codim}V^{G_i}.
+$$
+
+For the induced coset representation, double-count the pairs consisting of a ramification element and a coset it fixes. The contribution with trivial character is the conductor of the permutation representation, which is the discriminant exponent. On the orbit belonging to $w$, the remaining character contribution is $f(w/v)a_w(\theta)$ after Herbrand reindexing. This proves (11.14), including the tame and wild terms. Multiplying over finite places yields
+
+$$
+\mathfrak f_0(R)
+=\mathfrak d_{M/K}\,
+N_{M/K}\bigl(\mathfrak f_0(\theta)\bigr).
+\tag{11.15}
+$$
+
+No Galois hypothesis on $M/K$ is required. Formula (11.3) is the quadratic specialization.
+
+There is also a uniform Frobenius formula. Suppose $v$ is unramified in $M$ and $\theta$ is unramified at every $w\mid v$. Arithmetic Frobenius permutes the coset basis in cycles indexed by the $w$. The cycle for $w$ has length $f(w/v)$, and the product of its matrix entries is $\theta_\ell(\operatorname{Frob}_w^{\mathrm{arith}})$. Therefore
+
+$$
+\det\!\left(X-R(\operatorname{Frob}_v^{\mathrm{arith}})\right)
+=\prod_{w\mid v}
+\left(
+X^{f(w/v)}-
+\theta_\ell(\operatorname{Frob}_w^{\mathrm{arith}})
+\right).
+\tag{11.16}
+$$
+
+The degrees add to $d$. At a split place this is a product of linear factors. At an inert unramified place it is one factor of degree $d$, so all intermediate coefficients vanish. Equations (11.4) and (11.5) are the degree-two cases.
+
+Induction and norms are both transitive. If $K\subseteq M\subseteq E$, then
+
+$$
+\operatorname{Ind}_{G_M}^{G_K}
+\operatorname{Ind}_{G_E}^{G_M}\vartheta
+\cong
+\operatorname{Ind}_{G_E}^{G_K}\vartheta,
+\qquad
+N_{E/K}=N_{M/K}\circ N_{E/M}.
+\tag{11.17}
+$$
+
+The twist, determinant, conductor, and Frobenius formulas respect these identities. Hence an induced term may be reorganized through intermediate fields without altering its local data.
+
+Finally, an integer combination
+
+$$
+\sum_i n_i\operatorname{Ind}_{G_{M_i}}^{G_K}\theta_{i,\ell}
+\tag{11.18}
+$$
+
+is initially a virtual character. Global reciprocity supplies every one-dimensional term from a Hecke character, and (11.9)--(11.17) control restriction, conjugation, determinants, conductors, and Frobenius values term by term. Class field theory alone does not prove that negative coefficients in (11.18) cancel to give an actual representation. It does provide the exact norm--transfer dictionary needed to test such an effectivity assertion without reversing any arrow.
 
 ## 12. The global reciprocity dictionary
 
@@ -1769,13 +2208,13 @@ $$
 
 for finite abelian $L/K$. Idele norms, class norms, local element norms, and global element norms should always be named rather than inferred from a bare symbol $N$.
 
-In towers, norm on idele classes corresponds to inclusion of Galois groups, scalar inclusion of ideles corresponds to transfer, and quotient fields correspond to restriction. These directions remain correct under either reciprocity normalization, but every isolated Frobenius is inverted if one switches from arithmetic to geometric convention.
+In towers, norm on idele classes corresponds to inclusion of Galois groups, scalar inclusion of ideles corresponds to transfer, and quotient fields correspond to restriction. On Brauer groups, corestriction preserves local invariants and sums over the places above a fixed place, while restriction multiplies an invariant by the local degree. These directions remain correct under either reciprocity normalization, but every isolated Frobenius is inverted if one switches from arithmetic to geometric convention.
 
 ### 12.5 Characters at a glance
 
 Finite-order Hecke characters are exactly finite-image one-dimensional complex Galois characters. Their local conductor exponents equal their Galois conductor exponents, and their unramified local values are arithmetic Frobenius eigenvalues. General continuous Hecke characters also have an archimedean module direction and need not be Galois characters with finite image.
 
-Algebraic Hecke characters have integral infinity types. After choosing a complex-to-$\ell$-adic identification and applying the local algebraic correction at primes above $\ell$, they correspond exactly to one-dimensional $\ell$-adic Galois characters that are unramified outside finitely many places and locally algebraic above $\ell$. Norm pullback of Hecke characters matches restriction of Galois characters. Over a quadratic field, conjugation determines irreducibility of induction; its conductor is discriminant times normed character conductor, its split and inert Frobenius polynomials are (11.4) and (11.5), and its determinant uses diagonal restriction rather than norm pullback.
+Algebraic Hecke characters have integral infinity types. After choosing a complex-to-$\ell$-adic identification and applying the local algebraic correction at primes above $\ell$, they correspond exactly to one-dimensional $\ell$-adic Galois characters that are unramified outside finitely many places and locally algebraic above $\ell$. Norm pullback of Hecke characters matches restriction of Galois characters. For induction through a finite extension, twists use norm pullback, determinants use diagonal inclusion and transfer, conductors acquire the relative discriminant, and Frobenius polynomials are assembled from residue-degree cycles. The quadratic split and inert formulas (11.4) and (11.5) are the first instances of this general interface.
 
 ### 12.6 Conclusion
 
@@ -1783,4 +2222,6 @@ Global class field theory begins with local actions that appear independent. A u
 
 The resulting correspondence is exact at every finite level. Finite abelian extensions are open finite-index subgroups of $C_K$; Galois groups are norm quotients; ramification is unit depth; conductors are moduli; and Frobenius turns prime ideals into congruence classes. The Hilbert class field converts ideal classes into automorphisms, while ray class fields organize every bounded-ramification abelian extension. Cyclic norm equations satisfy a local--global principle because a single Brauer class controls them, and the failure beyond cyclic extensions identifies precisely where global arithmetic contains more than its separate completions.
 
-Passing to all levels removes only the connected component of the idele class group and yields $G_K^{\mathrm{ab}}$. Passing to characters translates the same theorem into a language suited to representation theory: finite-order characters are Galois characters, algebraic infinity types produce locally algebraic $\ell$-adic characters, and norm pullback becomes Galois restriction. Global reciprocity therefore does more than enumerate abelian fields. It makes the abelianized Galois action of a number field readable in its ideals, congruences, local units, signs, and adelic characters as parts of one coherent arithmetic object.
+The invariant formalism retains the same coherence in cohomological degree two. Restriction multiplies local invariants by degree, corestriction preserves them and sums over branches, and the sum of all local invariants of a global class is zero. That single normalization produces the compact-support trace in degree three and the global pairing used in Tate and Poitou--Tate duality without importing duality into the proof of reciprocity.
+
+Passing to all levels removes only the connected component of the idele class group and yields $G_K^{\mathrm{ab}}$. Passing to characters translates the same theorem into a language suited to representation theory: finite-order characters are Galois characters, algebraic infinity types produce locally algebraic $\ell$-adic characters, norm pullback becomes Galois restriction, and induction is controlled by transfer, discriminants, and Frobenius cycles. Global reciprocity therefore does more than enumerate abelian fields. It makes the abelianized Galois action of a number field readable in its ideals, congruences, local units, signs, Brauer invariants, and adelic characters as parts of one coherent arithmetic object.
