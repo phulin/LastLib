@@ -100,7 +100,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 033. Poitou–Tate Duality
 - [x] 034. Rigid Analytic Curves and Formal Models
 - [ ] 035. Rigid Uniformization of Abelian Varieties
-- [ ] 036. Relative Picard Schemes and Jacobians
+- [x] 036. Relative Picard Schemes and Jacobians
 - [ ] 037. Jacobians and (H^1) of Curves
 - [x] 038. Abelian Schemes, Isogenies, and Polarizations
 - [ ] 039. Néron Models and Component Groups
