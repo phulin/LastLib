@@ -12,8 +12,8 @@ Prove every `sorry` or `admit` in the assigned file that can be proved from its 
 
 1. Read and understand the complete chapter file and its corresponding book material. Inventory every `sorry`, `admit`, and existing `STATEMENT_NEEDS_UPDATE` marker.
 2. Establish the local context of each target before proving it: imports, namespaces, section variables, notation, local instances, source definitions, and all relevant earlier declarations.
-3. Make a whole-file proof-writing pass before the first build. Write a coherent proof attempt for every target that appears mathematically sound; do not compile after each speculative identifier.
-4. Build the actual chapter module and repair errors in batches. Address the first relevant error, verify any uncertain API from source, make a meaningful correction, and rebuild.
+3. Make a whole-file proof-writing pass before the first diagnostic check. Write a coherent proof attempt for every target that appears mathematically sound; do not check after each speculative identifier.
+4. When the Lean MCP is available, request diagnostics for the entire assigned file and collect the complete error set. Classify failures into independent clusters, then repair only those clusters using proof goals, batched tactic attempts, code actions, declaration lookup, and fresh whole-file diagnostics.
 5. Continue through the entire chapter. One difficult declaration must not prevent you from proving independent later declarations.
 6. After the last source edit, run a fresh successful guarded chapter build. Any edit invalidates previous build results.
 
@@ -61,9 +61,9 @@ Continue proving all independent declarations in the rest of the chapter. The ma
 
 ## Compilation and resource rules
 
-Use only Lake builds for compilation and testing. Never run `lake env lean`, raw `lean`, another compiler, a scratch module, or an alternate target. Run builds from `/home/phulin/LastLib-book1/lean` so all workers share the project `.lake` cache. Do not override `LAKE_HOME`, `LEAN_PATH`, the package cache, or the build directory.
+Use the attached Lean MCP for the interactive edit/check loop and do not start another language server. Use only Lake builds for final compilation and acceptance testing. Never run `lake env lean`, raw `lean`, another compiler, a scratch module, or an alternate target. Run the final build from `/home/phulin/LastLib-book1/lean` so all workers share the project `.lake` cache. Do not override `LAKE_HOME`, `LEAN_PATH`, the package cache, or the build directory.
 
-Before every Lake build, immediately check `/proc/meminfo` and start the build only if `MemAvailable` is at least `20971520` kB. Join the successful memory predicate directly to the Lake command with shell `&&`. If insufficient memory is available, wait 30 seconds and retry. Build the assigned target `+LastLib.Book01ValuationsDVRsAndCompletions.<CHAPTER>`; use a full `lake build` only when necessary.
+Before the final Lake build, immediately check `/proc/meminfo` and start the build only if `MemAvailable` is at least `20971520` kB. Join the successful memory predicate directly to the Lake command with shell `&&`. If insufficient memory is available, wait 30 seconds and retry. Build the assigned target `+LastLib.Book01ValuationsDVRsAndCompletions.<CHAPTER>`; use a full `lake build` only when necessary.
 
 A suitable guarded pattern is:
 

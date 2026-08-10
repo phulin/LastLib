@@ -18,7 +18,7 @@ Enforce these project-wide rules:
 - Eliminate every `sorry` and `admit`.
 - Do not use or leave `aesop` anywhere. Existing `aesop` invocations must be replaced by explicit Mathlib-based proofs and focused ordinary tactics.
 - Do not introduce axioms, unsafe declarations, or other proof loopholes.
-- Use `lake build` exclusively for compilation and testing; never use `lake env lean`.
+- Give proof workers the Lean MCP when available and have them use whole-file diagnostics, goals, and batched tactic trials for their interactive loop. Use `lake build` exclusively for final compilation and acceptance testing; never use `lake env lean`.
 - Require every chapter target and the aggregate target to build without warnings, except for warnings
   caused by deliberate `sorry` placeholders while such placeholders are expected at that stage.
 - Immediately before every Lake build, check that `/proc/meminfo` reports `MemAvailable >= 20971520` kB and join the successful check to the Lake command with `&&`. If the check fails, wait 30 seconds and retry.
