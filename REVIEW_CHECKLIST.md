@@ -156,7 +156,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 089. Automorphic Forms on Definite Quaternion Algebras
 - [x] 090. Hecke Operators on Quaternionic Forms
 - [x] 091. Hecke Algebras and Congruences
-- [ ] 092. Automorphic Representations of (GL_2)
+- [x] 092. Automorphic Representations of (GL_2)
 - [ ] 093. Automorphic Representations of (D^\times)
 - [ ] 094. Global Jacquet–Langlands
 - [ ] 095. Hecke Characters and Automorphic Induction from (GL_1)
