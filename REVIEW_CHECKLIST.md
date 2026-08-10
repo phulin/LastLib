@@ -102,7 +102,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 035. Rigid Uniformization of Abelian Varieties
 - [ ] 036. Relative Picard Schemes and Jacobians
 - [ ] 037. Jacobians and (H^1) of Curves
-- [ ] 038. Abelian Schemes, Isogenies, and Polarizations
+- [x] 038. Abelian Schemes, Isogenies, and Polarizations
 - [ ] 039. Néron Models and Component Groups
 - [ ] 040. Semistable Abelian Varieties and Monodromy
 - [ ] 041. Integral Correspondences on Curves and Jacobians
