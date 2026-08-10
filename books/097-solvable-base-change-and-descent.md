@@ -6,7 +6,8 @@
    - [Why iteration is a theorem rather than notation](#11-why-iteration-is-a-theorem-rather-than-notation)
    - [Solvable towers and prime refinements](#12-solvable-towers-and-prime-refinements)
    - [The normalization ledger](#13-the-normalization-ledger)
-   - [Existence, uniqueness, cuspidality, and descent](#14-existence-uniqueness-cuspidality-and-descent)
+   - [The admissibility ledger](#14-the-admissibility-ledger)
+   - [Existence, uniqueness, cuspidality, and descent](#15-existence-uniqueness-cuspidality-and-descent)
 2. [Constructing solvable base change](#2-constructing-solvable-base-change)
    - [Base change of an isobaric representation](#21-base-change-of-an-isobaric-representation)
    - [Induction along a prime cyclic tower](#22-induction-along-a-prime-cyclic-tower)
@@ -42,7 +43,7 @@
    - [Higher cyclic induction and towers](#64-higher-cyclic-induction-and-towers)
    - [Conductors, weights, and twists under the comparison](#65-conductors-weights-and-twists-under-the-comparison)
 7. [Descent through one cyclic step](#7-descent-through-one-cyclic-step)
-   - [Invariance is the image condition for a cusp form](#71-invariance-is-the-image-condition-for-a-cusp-form)
+   - [Invariance is the admissible image condition for a cusp form](#71-invariance-is-the-admissible-image-condition-for-a-cusp-form)
    - [Descent of the central character](#72-descent-of-the-central-character)
    - [Fibers and the exact twisting group](#73-fibers-and-the-exact-twisting-group)
    - [Descent of a two-character isobaric sum](#74-descent-of-a-two-character-isobaric-sum)
@@ -138,10 +139,12 @@ F=F_0&\subset&F_1&\subset\cdots\subset&F_r=E,\\
 $$
 
 where every $F_i/F_{i-1}$ is cyclic and every arrow on the second line is cyclic
-base change. Upward arrows always exist. A downward arrow exists for a cuspidal
-representation precisely when it is invariant under the cyclic group belonging to
-that step. A downward path through the entire diagram exists only when the choices
-can be made compatibly.
+base change. Within the selected, trace-comparable range inherited from cyclic base
+change, upward arrows exist. A downward arrow for a cuspidal representation exists
+when it is invariant under the cyclic group, its local parameters have selected
+extensions, and the reverse comparison has the required cuspidal selector. A
+downward path through the entire diagram exists only when these hypotheses and the
+choices can be made compatibly.
 
 ### 1.2 Solvable towers and prime refinements
 
@@ -201,9 +204,10 @@ $$
 C_K=K^\times\backslash\mathbb A_K^\times.
 $$
 
-Reciprocity is arithmetically normalized: a uniformizer at an unramified finite place
-maps to arithmetic Frobenius. If $L/K$ is finite and $\chi$ is a Hecke character of
-$K$, restriction of its one-dimensional Weil character corresponds to norm pullback
+Reciprocity is geometrically normalized, as in the cyclic theorem: a uniformizer at
+an unramified finite place maps to geometric Frobenius. If $L/K$ is finite and
+$\chi$ is a Hecke character of $K$, restriction of its one-dimensional Weil
+character corresponds to norm pullback
 
 $$
 \chi_L=\chi\circ N_{L/K}:C_L\longrightarrow\mathbb C^\times.
@@ -227,10 +231,19 @@ e(w/v)=e_{w/v},\qquad f(w/v)=f_{w/v},\qquad
 [L_w:K_v]=e_{w/v}f_{w/v}.
 $$
 
-Arithmetic Frobenius over $L_w$ maps to the $f_{w/v}$-th power of arithmetic
-Frobenius over $K_v$, up to inertia. Thus unramified Satake roots are raised to
-$f_{w/v}$. They are not raised to $e_{w/v}f_{w/v}$, and geometric Frobenius would
-invert them.
+Geometric Frobenius over $L_w$ maps to the $f_{w/v}$-th power of geometric
+Frobenius over $K_v$, up to inertia. Thus the geometric-Frobenius Satake roots used
+here are raised to $f_{w/v}$. They are not raised to $e_{w/v}f_{w/v}$. Readers who
+use arithmetic Frobenius must invert every root consistently; the norm direction is
+unchanged.
+
+The quadratic automorphic-induction theory was formulated in an arithmetic
+reciprocity convention. Whenever we use it here, we translate by inverting the
+unramified Frobenius element. This inverts the displayed unramified character values
+but changes neither norm pullback, induction, the conjugation criterion for
+cuspidality, determinant characters, nor Artin conductors. Thus the induction and
+cyclic base-change inputs meet in one geometric-Frobenius ledger rather than in a
+mixture of conventions.
 
 We use normalized parabolic induction. If $I_K(\chi_1,\chi_2)$ denotes normalized
 induction from the upper triangular Borel, no unannounced factors of
@@ -245,11 +258,49 @@ $$
 These conventions will be recalled where a calculation is especially vulnerable to
 variance, but they will never be changed.
 
-### 1.4 Existence, uniqueness, cuspidality, and descent
+### 1.4 The admissibility ledger
+
+Iteration cannot enlarge the range of the cyclic theorem from which it starts. We
+therefore make the word **admissible** precise before stating any solvable result.
+For a prime cyclic step $L/K$ and a unitary cuspidal representation $\rho$ over
+$K$, the triple $(L/K,\rho)$ is **cyclically admissible** when all of the following
+hold:
+
+1. every finite component of $\rho$ and its restricted parameter belong to the
+   selected local range of the cyclic theorem: determinant characters, principal
+   series, special representations, and the constructed depth-zero or tame
+   dihedral packets, with the primitive wild and ramified dyadic boundaries
+   excluded;
+2. its archimedean components are among the cohomological parameters for which the
+   local twisted comparison is established;
+3. matching global test tensors can be chosen with a strongly cuspidal factor.
+
+An essentially unitary cohomological representation is admitted after a common real
+norm twist. A prime cyclic tower with source $\pi$ is **ascent-admissible** when each
+cyclically cuspidal intermediate representation satisfies these conditions at the
+next step. If a quadratic step produces a two-character isobaric sum, later steps
+are defined by norm pullback of the characters and need no further cuspidal trace
+comparison.
+
+For descent, a cyclically invariant cusp form is **descent-admissible** at a step if
+its local parameters possess selected extensions and the reverse trace comparison is
+available. A descent chain is admissible when this holds at every chosen step. When
+we describe an entire twisting fiber, we additionally assume **fiber saturation**:
+every norm-character twist that occurs remains selected and trace-comparable. Without
+saturation, the formulas describe the ambient parameter fiber, while the theorem
+constructs only its admissible members.
+
+These conditions are stable under changing a cyclic generator but need not be stable
+under changing a tower. Accordingly, “solvable base change exists” below always
+means that at least one ascent-admissible cyclic tower has been exhibited. Tower
+independence then compares any two admissible towers. We never infer a theorem for an
+excluded local packet merely from formal restriction of its parameter.
+
+### 1.5 Existence, uniqueness, cuspidality, and descent
 
 Four questions must be kept separate.
 
-**Existence upward.** Does iterating cyclic base change produce an automorphic object
+**Existence upward.** Does iterating admissible cyclic base change produce an automorphic object
 over $E$ even if an intermediate lift is no longer cuspidal? We shall extend cyclic
 base change to rank-two isobaric representations and prove that it does.
 
@@ -262,8 +313,9 @@ by a quadratic self-twist, equivalently by automorphic induction from a quadrati
 field exposed by that layer. Once the representation becomes isobaric, it never
 becomes cuspidal again under further base change.
 
-**Descent.** Which representations over $E$ come from $F$? For one cyclic step, a
-cuspidal representation descends exactly when it is Galois invariant. Through a
+**Descent.** Which representations over $E$ come from $F$? For one admissible cyclic
+step, a cuspidal representation descends exactly when it is Galois invariant and has
+the selected local extensions required by the cyclic theorem. Through a
 solvable tower, one must choose a descent at each stage that is invariant at the next
 stage. Full invariance of the top is necessary in the Galois case, but it need not by
 itself provide coherent choices for a noncyclic group.
@@ -312,8 +364,8 @@ $$
 
 and the component at $w$ is obtained by restricting the $K_v$-parameter to $W_{L_w}$.
 At a split place this merely repeats the old component. At a field place it is the
-local base-change representation. Thus the same rule covers cuspidal, Eisenstein,
-ramified, and archimedean data.
+local base-change representation. Thus the same rule covers cuspidal and Eisenstein
+data, and all ramified and archimedean data inside the selected range of Section 1.4.
 
 ### 2.2 Induction along a prime cyclic tower
 
@@ -323,8 +375,8 @@ $$
 \mathcal T:F=F_0\subset F_1\subset\cdots\subset F_r=E
 $$
 
-be a prime cyclic tower, and let $\pi_0=\pi$ be cuspidal automorphic on
-$\mathrm{GL}_2(\mathbb A_F)$. Define recursively
+be an ascent-admissible prime cyclic tower, and let $\pi_0=\pi$ be cuspidal
+automorphic on $\mathrm{GL}_2(\mathbb A_F)$. Define recursively
 
 $$
 \pi_i=\operatorname{BC}_{F_i/F_{i-1}}(\pi_{i-1}).
@@ -335,7 +387,7 @@ If $\pi_{i-1}$ is already an isobaric sum, the preceding section pulls its two
 characters through the norm. Induction on $i$ therefore proves existence of every
 $\pi_i$.
 
-**Proposition 2.1 (existence along a tower).** The endpoint
+**Proposition 2.1 (existence along an admissible tower).** The endpoint
 
 $$
 \operatorname{BC}_{\mathcal T}(\pi):=\pi_r
@@ -369,7 +421,8 @@ the endpoint.
 
 ### 2.3 Transitivity and independence of the tower
 
-Suppose $F\subset L\subset E$ and both pieces admit cyclic towers. Concatenating the
+Suppose $F\subset L\subset E$ and both pieces admit compatible admissible cyclic
+towers. Concatenating the
 towers and applying Proposition 2.1 gives
 
 $$
@@ -384,8 +437,8 @@ $$
 \operatorname{rec}_{F_v}(\pi_v)|_{W_{E_w}}.
 $$
 
-Now let $\mathcal T$ and $\mathcal T'$ be two cyclic towers from $F$ to the same
-field $E$. Proposition 2.1 shows that their endpoints have isomorphic local
+Now let $\mathcal T$ and $\mathcal T'$ be two ascent-admissible cyclic towers from
+$F$ to the same field $E$. Proposition 2.1 shows that their endpoints have isomorphic local
 components at every place. Even almost-everywhere equality would suffice: strong
 multiplicity one for isobaric representations of $\mathrm{GL}_2$ gives
 
@@ -400,10 +453,11 @@ $$
 \operatorname{BC}_{E/F}(\pi)
 $$
 
-is well defined for every exhibited tower-solvable extension $E/F$. It is independent
-of the cyclic tower, its prime refinement, the generators of the cyclic Galois
-groups, and the chosen paths of places. It is characterized by restriction of the
-full local parameter at every place.
+is well defined for every tower-solvable extension $E/F$ equipped with an
+ascent-admissible tower. It is independent of the admissible cyclic tower, its prime
+refinement, the generators of the cyclic Galois groups, and the chosen paths of
+places. It is characterized by restriction of the full local parameter at every
+place in the selected range.
 
 **Proof.** Existence comes from Proposition 2.1. Two constructions restrict the same
 parameter at every $w$, because both subgroup chains end at the intrinsic subgroup
@@ -413,8 +467,9 @@ the construction, not the isomorphism class characterized by its local component
 $\square$
 
 This theorem is the reason one may omit $\mathcal T$ from the notation on ascent. It
-does not say that intermediate representations or descent choices are independent of
-the tower.
+does not assert existence along a tower that leaves the proved local or
+trace-comparable range, and it does not say that intermediate representations or
+descent choices are independent of the tower.
 
 ### 2.4 Strong multiplicity one as the rigidity input
 
@@ -446,16 +501,18 @@ the cyclic local theorem supplies the exact component at a bad place.
 ### 2.5 Refinement across the isobaric boundary
 
 There is one subtle point in the refinement argument. Suppose $L/K$ is cyclic of
-composite degree and a prime refinement first crosses the cuspidal boundary at an
-intermediate field $M$. Direct cyclic base change from $K$ to $L$ and refined base
-change through $M$ must agree, even though the direct theorem describes one cyclic
-lift while the refined construction ends by pulling two characters.
+composite degree and two prime refinements cross the cuspidal boundary at possibly
+different intermediate fields. The prerequisite cyclic theorem is only a
+prime-degree theorem, so there is no unproved composite-degree transfer to invoke.
+Instead, each refinement is a construction, and the two constructions must be
+compared.
 
 At every place both constructions restrict the same parameter from $W_K$ to $W_L$.
 If the restriction is reducible, its two one-dimensional constituents are the
-characters displayed by the first bad prime step. Direct cyclic base change therefore
-has the same isobaric constituents at almost every place. Uniqueness of isobaric
-decomposition and strong multiplicity one identify the two global outputs.
+characters displayed by the first bad prime step in either refinement. Thus the two
+outputs have the same isobaric constituents at almost every place. Uniqueness of
+isobaric decomposition and strong multiplicity one identify them. This comparison,
+not a separate composite cyclic theorem, defines $\operatorname{BC}_{L/K}$.
 
 This proves that refining a cyclic step does not postpone or manufacture
 noncuspidality. It merely reveals the smallest layer at which an irreducible
@@ -568,7 +625,7 @@ norm power to one representation; it has repeated the same representation in sev
 local factors.
 
 Suppose that $E/F$ is Galois and $v$ is unramified and inert. There is one place $w$,
-$e_v=1$, and $f_v=[E:F]$. If $\pi_v$ is spherical with arithmetic-Frobenius Satake
+$e_v=1$, and $f_v=[E:F]$. If $\pi_v$ is spherical with geometric-Frobenius Satake
 pair $\{\alpha_v,\beta_v\}$, then
 
 $$
@@ -794,7 +851,7 @@ $$
 \longrightarrow\operatorname{Gal}(k_w/k_v)\longrightarrow1.
 $$
 
-The residue quotient is cyclic, generated by arithmetic Frobenius. Ramification can
+The residue quotient is cyclic, generated by geometric Frobenius. Ramification can
 make $D_w$ noncyclic even in a solvable global extension, but restriction along the
 chosen prime tower still defines the local transfer. Tower independence says that
 the result depends only on $W_{E_w}\subset W_{F_v}$, not on a composition series of
@@ -872,7 +929,8 @@ smaller than the product of the orders of the cyclic steps. It records one-dimen
 characters of the whole quotient, not all characters that appear temporarily at
 intermediate levels.
 
-Every $\chi\in X(E/F)$ becomes trivial after solvable base change. Indeed,
+Whenever $\pi\otimes\chi$ remains in the admissible range, every
+$\chi\in X(E/F)$ becomes trivial after solvable base change. Indeed,
 
 $$
 \operatorname{BC}_{E/F}(\pi\otimes\chi)
@@ -932,8 +990,9 @@ turns the local identities into global ones.
 ### 4.4 Fixed-central-character refinements
 
 Suppose a cuspidal representation $\Pi$ over $E$ has at least one descent $\pi_0$ to
-$F$, and assume for the moment that its complete descent fiber is a torsor under
-$X=X(E/F)$. Put $\omega_0=\omega_{\pi_0}$ and $\Omega=\omega_\Pi$. Every other
+$F$, and assume fiber saturation, so that its complete admissible descent fiber is a
+torsor under $X=X(E/F)$. Put $\omega_0=\omega_{\pi_0}$ and
+$\Omega=\omega_\Pi$. Every other
 descent is $\pi_0\otimes\chi$ and has central character
 
 $$
@@ -1031,7 +1090,8 @@ central character, and the other three norm antecedents do not occur at all. If
 $X\cong C_4\times C_2$, there are four square classes and four fixed-center descents
 above each attainable character.
 
-These counts assume the top representation is cuspidal, so the $X$-action is free.
+These counts assume fiber saturation and that the top representation is cuspidal, so
+the $X$-action is free.
 At an isobaric endpoint one must quotient by the source stabilizer and account for
 possible repeated-constituent extension data. The square map alone cannot perform
 that bookkeeping.
@@ -1128,7 +1188,7 @@ $$
 F=F_0\subset F_1\subset\cdots\subset F_r=E
 $$
 
-be a prime cyclic tower, and put
+be an ascent-admissible prime cyclic tower, and put
 $\pi_i=\operatorname{BC}_{F_i/F}(\pi)$. Then the following are equivalent:
 
 1. $\operatorname{BC}_{E/F}(\pi)$ is cuspidal;
@@ -1275,9 +1335,9 @@ a compatible global parameter makes it meaningful.
 ### 5.6 Odd order and the location of quadratic steps
 
 If $G$ has odd order, then $G^{\mathrm{ab}}$ has odd order and $X(E/F)$ contains no
-quadratic character. Hence every cuspidal $\mathrm{GL}_2$ representation remains
-cuspidal after base change to $E$. This applies even when the chosen composition tower
-has many steps: all of them have odd prime degree.
+quadratic character. Hence every cusp form admitting the required cyclic comparisons
+remains cuspidal after base change to $E$. This applies even when the chosen
+composition tower has many steps: all of them have odd prime degree.
 
 The converse numerical statement is false. Even order only says that a composition
 tower contains a quadratic step. It does not say that $G$ has an index-two quotient.
@@ -1357,7 +1417,9 @@ if $\theta=\theta^\tau$, both sides are interpreted isobarically.
 ### 6.2 Proof of the commuting formula
 
 **Proposition 6.1 (base change commutes with quadratic induction).** The two formulas
-above hold at every place and globally for every tower-solvable $E/F$.
+above hold at every place in the selected local range and globally for every
+ascent-admissible tower-solvable $E/F$ for which the displayed automorphic inductions
+belong to that range.
 
 **Proof strategy.** Prove the parameter identity for one cyclic step, translate it
 locally, and use strong multiplicity one. Iteration and tower independence then give
@@ -1499,10 +1561,12 @@ restriction of the function $\mu$ along an inclusion.
 
 ## 7. Descent through one cyclic step
 
-### 7.1 Invariance is the image condition for a cusp form
+### 7.1 Invariance is the admissible image condition for a cusp form
 
-Let $L/K$ be cyclic with group $\Gamma$, and let $\Pi$ be cuspidal automorphic on
-$\mathrm{GL}_2(\mathbb A_L)$. For $\sigma\in\Gamma$, define
+Let $L/K$ be cyclic of prime degree with group $\Gamma$, and let $\Pi$ be a selected,
+trace-comparable cuspidal automorphic representation on
+$\mathrm{GL}_2(\mathbb A_L)$ whose local parameters admit selected extensions to
+$K$. For $\sigma\in\Gamma$, define
 
 $$
 \Pi^\sigma(g)=\Pi(\sigma^{-1}g).
@@ -1510,10 +1574,10 @@ $$
 
 Every base change is invariant. The cyclic descent theorem proves the converse:
 
-**Theorem 7.1 (cyclic cuspidal descent).** The following are equivalent:
+**Theorem 7.1 (admissible cyclic cuspidal descent).** The following are equivalent:
 
 1. $\Pi^\sigma\cong\Pi$ for every $\sigma\in\Gamma$;
-2. there is a cuspidal automorphic representation $\pi$ on
+2. there is a selected, trace-comparable cuspidal automorphic representation $\pi$ on
    $\mathrm{GL}_2(\mathbb A_K)$ such that
    $\operatorname{BC}_{L/K}(\pi)\cong\Pi$.
 
@@ -1579,7 +1643,8 @@ character descent would still not settle representation descent.
 
 ### 7.3 Fibers and the exact twisting group
 
-If $\pi$ and $\pi'$ are cuspidal over $K$ and have isomorphic cyclic base changes,
+Assume the source fiber is saturated. If $\pi$ and $\pi'$ are admissible cuspidal
+representations over $K$ and have isomorphic cyclic base changes,
 then
 
 $$
@@ -1715,7 +1780,9 @@ $$
 F=F_0\subset F_1\subset\cdots\subset F_r=E
 $$
 
-and a cuspidal representation $\Pi_r$ over $E$. A **descent chain** is a sequence of
+and a cuspidal representation $\Pi_r$ over $E$. Throughout this chapter all cyclic
+descent steps are assumed descent-admissible in the sense of Section 1.4. A
+**descent chain** is a sequence of
 cuspidal representations $\Pi_i$ over $F_i$ such that
 
 $$
@@ -1767,8 +1834,9 @@ $$
 H=\operatorname{Gal}(M/L),\qquad Q=\operatorname{Gal}(L/K).
 $$
 
-Suppose $\Pi_M$ is cuspidal and stable under $\operatorname{Gal}(M/K)$. Its descents
-to $L$ form a torsor $D$ under
+Suppose $\Pi_M$ is cuspidal and stable under $\operatorname{Gal}(M/K)$, and suppose
+the $M/L$ source fiber is saturated. Its admissible descents to $L$ form a torsor
+$D$ under
 
 $$
 X_H=X(M/L)=\widehat{C_L/N_{M/L}(C_M)}.
@@ -1860,8 +1928,9 @@ the hypotheses of Section 8.2.
 
 ### 8.4 Twisting ambiguity after full descent
 
-Assume $E/F$ is solvable Galois, $\Pi$ is cuspidal over $E$, and at least one
-cuspidal descent $\pi_0$ to $F$ exists. Then the complete fiber is
+Assume $E/F$ is solvable Galois, $\Pi$ is cuspidal over $E$, at least one
+admissible cuspidal descent $\pi_0$ to $F$ exists, and the source fiber is saturated
+through the chosen towers. Then the complete admissible fiber is
 
 $$
 \{\pi_0\otimes\chi:\chi\in X(E/F)\},
@@ -2721,8 +2790,10 @@ from Frobenius data.
 ### 13.2 The automorphic ascent criterion
 
 **Theorem 13.1 (totally real solvable ascent).** Let $E/F$ be a finite solvable
-Galois extension of totally real number fields, and let $\pi$ be a regular algebraic
-cuspidal automorphic representation of $\mathrm{GL}_2(\mathbb A_F)$. Then
+Galois extension of totally real number fields equipped with an ascent-admissible
+composition tower, and let $\pi$ be a regular algebraic selected,
+trace-comparable cuspidal automorphic representation of
+$\mathrm{GL}_2(\mathbb A_F)$. Then
 $\operatorname{BC}_{E/F}(\pi)$ is regular algebraic automorphic and is characterized
 at every place by restriction of local parameters. Its weights are the pullbacks of
 those of $\pi$, its central character is $\omega_\pi\circ N_{E/F}$, and its finite
@@ -2734,7 +2805,7 @@ noncuspidal, Theorem 5.1 gives its explicit two-character decomposition from the
 first bad step. A bottom-field quadratic self-twist is one sufficient failure
 mechanism but is not the only one for a noncyclic Galois group.
 
-**Proof.** Choose a prime cyclic composition tower. Cyclic base change at the first
+**Proof.** Choose the given ascent-admissible prime cyclic composition tower. Cyclic base change at the first
 step preserves algebraicity and pulls back the archimedean weights. Iterate. The
 local parameter at the top is direct restriction, so the central character,
 conductor, and local-type assertions follow. Theorem 5.1 gives the exact stepwise cusp
@@ -2761,8 +2832,9 @@ $$
 be a continuous semisimple representation, and suppose $r|_{G_E}$ is irreducible.
 Assume a regular algebraic cuspidal representation $\Pi_E$ is associated with
 $r|_{G_E}$ in the sense that their characteristic polynomials agree at all but
-finitely many places. We also assume the standard compatibilities needed in this
-criterion: the arithmetic representations associated with regular algebraic cusp
+finitely many places. We also assume that the top representation and every downward
+cyclic step are descent-admissible, as well as the standard compatibilities needed
+in this criterion: the arithmetic representations associated with regular algebraic cusp
 forms commute with cyclic base change and finite-order twisting, and equality of
 their Frobenius polynomials implies equality after semisimplification.
 
@@ -2893,9 +2965,10 @@ coherence checks of Chapter 8.
 ### 14.1 Solvable base change: existence and normalization
 
 **Theorem 14.1 (solvable base change for $\mathrm{GL}_2$).** Let $F$ be a number
-field, let $E/F$ admit a tower of cyclic extensions, and let $\pi$ be a cuspidal
-automorphic representation of $\mathrm{GL}_2(\mathbb A_F)$. Use arithmetic
-reciprocity, arithmetic Frobenius, normalized parabolic induction, and the convention
+field, let $E/F$ admit an ascent-admissible tower of cyclic extensions, and let
+$\pi$ be a selected, trace-comparable cuspidal automorphic representation of
+$\mathrm{GL}_2(\mathbb A_F)$. Use geometric reciprocity, geometric Frobenius,
+normalized parabolic induction, and the convention
 that twists act through the determinant. Then there exists a unique automorphic
 isobaric representation
 
@@ -2914,10 +2987,11 @@ with the following properties.
 
    with the monodromy operator unchanged.
 
-2. The construction is independent of the cyclic tower, its prime refinement, local
-   paths of places, and cyclic generators. It is transitive in intermediate fields.
+2. The construction is independent of the admissible cyclic tower, its prime
+   refinement, local paths of places, and cyclic generators. It is transitive in
+   intermediate fields.
    Here transitivity means that for $F\subset L\subset E$ it applies whenever
-   $L/F$ and $E/L$ admit the cyclic towers needed to define both sides. If $E/F$ is
+   $L/F$ and $E/L$ admit compatible admissible cyclic towers defining both sides. If $E/F$ is
    Galois, $\Pi$ is invariant under $\operatorname{Gal}(E/F)$ as an isomorphism
    class.
 
@@ -2926,6 +3000,8 @@ with the following properties.
    $$
    \omega_\Pi=\omega_\pi\circ N_{E/F},
    $$
+
+   Whenever the twisted source remains admissible,
 
    $$
    \operatorname{BC}(\pi\otimes\mu)
@@ -2955,7 +3031,7 @@ with the following properties.
    In a non-Galois cyclic tower, the corresponding commuting statement requires the
    restricted parameter to remain discrete at every ramified place of $D_E$.
 
-**Proof.** Refine a cyclic tower to prime steps. Extend the cyclic operation to
+**Proof.** Refine the given admissible cyclic tower to prime steps. Extend the cyclic operation to
 two-character isobaric sums and iterate, proving existence. Transitivity of local
 parameter restriction gives the component in part 1. Strong multiplicity one gives
 uniqueness and tower independence. Determinants, tensor products, duals, conductors,
@@ -2965,7 +3041,9 @@ and the common local parameter for the split and inner forms prove part 6. $\squ
 ### 14.2 Cuspidality, isobaric failure, and fibers
 
 **Theorem 14.2 (cuspidality and ambiguity).** Assume in addition that $E/F$ is
-solvable Galois with group $G$, and put
+solvable Galois with group $G$, that the displayed composition towers are
+ascent-admissible, and, for assertions about complete fibers, that source fibers are
+saturated. Put
 
 $$
 X(E/F)=\widehat{C_F/N_{E/F}(C_E)}
@@ -2974,8 +3052,9 @@ $$
 
 Then:
 
-1. Along any prime cyclic composition tower, the endpoint is cuspidal if and only if
-   every intermediate cuspidal representation has no nontrivial self-twist belonging
+1. Along any ascent-admissible prime cyclic composition tower, the endpoint is
+   cuspidal if and only if every intermediate cuspidal representation has no
+   nontrivial self-twist belonging
    to the next step group. The first failure occurs at a quadratic step and gives
 
    $$
@@ -3038,8 +3117,10 @@ $$
 F=F_0\subset F_1\subset\cdots\subset F_r=E
 $$
 
-be a prime cyclic tower and let $\Pi$ be cuspidal automorphic over $E$. Then $\Pi$
-descends to $F$ if and only if there is a chain of cuspidal representations $\Pi_i$
+be a prime cyclic tower and let $\Pi$ be a selected, trace-comparable cuspidal
+automorphic representation over $E$. Assume every step under consideration is
+descent-admissible. Then $\Pi$ descends admissibly to $F$ if and only if there is a
+chain of admissible cuspidal representations $\Pi_i$
 with $\Pi_r=\Pi$ such that
 
 $$
@@ -3057,7 +3138,8 @@ $$
 at every step. Each invariant step has a nonempty cyclic descent fiber; the condition
 is that one can choose a member invariant at the next step.
 
-For two consecutive cyclic layers whose composite $M/K$ is Galois, the obstruction
+For two consecutive cyclic layers whose composite $M/K$ is Galois and whose first
+descent fiber is saturated, the obstruction
 to such a choice is the class
 
 $$
@@ -3077,13 +3159,15 @@ parameter makes this class vanish. For the automorphic representation alone, the
 unconditional criterion is recursive choice of a compatible chain. The displayed
 $H^1$ fixed-point class applies only when the stated quotient action on one torsor
 exists; a general subnormal tower need not provide such an action at every
-transition. Cyclic invariance is sufficient at one step, while full invariance under
+transition. Cyclic invariance together with the selected-extension and comparison
+hypotheses is sufficient at one step, while full invariance under
 a noncyclic solvable group should not be substituted for the compatible-chain
 condition.
 
-If one descent of a cuspidal $\Pi$ exists and $E/F$ is Galois, all descents form an
-$X(E/F)$-torsor. The existence statement is independent of the tower, although the
-recursive tests, and any obstruction classes that are defined, present it differently.
+If one descent of a cuspidal $\Pi$ exists, $E/F$ is Galois, and the source fiber is
+saturated, all admissible descents form an $X(E/F)$-torsor. The existence statement
+is independent of the tower, although the recursive tests, and any obstruction
+classes that are defined, present it differently.
 
 **Proof.** Apply cyclic descent recursively. Whenever the next quotient acts on a
 free cyclic descent fiber, that action produces the displacement cocycle and a fixed
@@ -3097,7 +3181,8 @@ of the endpoint abelianization. $\square$
 ### 14.4 Totally real and inner-form refinements
 
 **Theorem 14.4 (arithmetic refinements).** Let $E/F$ be solvable Galois and totally
-real.
+real, and impose the ascent- or descent-admissibility hypotheses of Section 1.4 on
+every cyclic step used below.
 
 1. Regular algebraic cuspidal automorphy ascends to $E$, with pulled-back weights and
    exact local restriction. Its exact cusp criterion is the stepwise condition of
@@ -3132,8 +3217,8 @@ The theory has a short list of precise failure modes.
 - **Wrong variance.** Characters pull back by $N_{E/F}$ while parameters restrict
   from $W_F$ to $W_E$. Scalar inclusion is not a replacement for the norm.
 
-- **Wrong Frobenius power.** At an unramified $w\mid v$, Satake roots are raised to
-  $f(w/v)$ using arithmetic Frobenius. Ramification index and total global degree do
+- **Wrong Frobenius power.** At an unramified $w\mid v$, the geometric-Frobenius
+  Satake roots are raised to $f(w/v)$. Ramification index and total global degree do
   not replace the residue degree.
 
 - **Hidden noncuspidality.** At the first bad quadratic tower step, a self-twist turns
@@ -3151,8 +3236,8 @@ The theory has a short list of precise failure modes.
   norm antecedents, only one square class of which may occur. Even the correct center
   does not remove a noncyclic coherence obstruction.
 
-- **Invariance mistaken for coherence.** Cyclic invariance is sufficient for one
-  descent step. For a noncyclic solvable group, compatible choices in the successive
+- **Invariance mistaken for coherence.** In the admissible cyclic range, invariance
+  is sufficient for one descent step. For a noncyclic solvable group, compatible choices in the successive
   descent fibers are additionally required. These are fixed points only at
   transitions where the next quotient acts on the same torsor.
 
@@ -3173,10 +3258,10 @@ Solvable base change is constructed from cyclic base change, but its final form 
 an arbitrary composite. At every place it restricts one Weil--Deligne parameter from
 $W_{F_v}$ to $W_{E_w}$. Restriction is transitive, norm pullback is transitive, and
 strong multiplicity one turns those local identities into a tower-independent global
-representation. This proves a canonical ascent through every cyclic tower.
+representation. This proves a canonical ascent through every admissible cyclic tower.
 
 The decomposition of places remains visible in the answer. Split places repeat a
-component. At an unramified field place arithmetic Frobenius raises Satake roots to
+component. At an unramified field place geometric Frobenius raises Satake roots to
 the residue degree. At ramified places the inertia group shrinks, breaks are
 reindexed, and monodromy persists. Real places either repeat real components or expose
 the two characters of a real parameter over $\mathbb C$. Conductors, levels, local
@@ -3193,7 +3278,7 @@ criterion is the exact automorphic formulation. The final isobaric decomposition
 explicit, and once this boundary is crossed no later base change returns to the
 cuspidal spectrum.
 
-Descent reverses the arrows but not the logic. A cyclic invariant cusp form descends,
+Descent reverses the arrows but not the logic. An admissible cyclic invariant cusp form descends,
 and its descents form a norm-character torsor. Through a solvable tower, one must pick
 a member of each cyclic descent fiber that is invariant at the next layer. When the
 next quotient acts on the same torsor, its displacement gives an $H^1$ obstruction;
