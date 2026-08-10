@@ -42,6 +42,7 @@
    - [Normalization of a finite Hecke algebra](#82-normalization-of-a-finite-hecke-algebra)
    - [Crossings in the special fiber](#83-crossings-in-the-special-fiber)
    - [Nilpotents and what they record](#84-nilpotents-and-what-they-record)
+   - [Exact criteria for reducedness](#85-exact-criteria-for-reducedness)
 9. [Pairings, adjoints, and dual Hecke modules](#9-pairings-adjoints-and-dual-hecke-modules)
    - [The pairing problem](#91-the-pairing-problem)
    - [Adjoint-stable Hecke algebras](#92-adjoint-stable-hecke-algebras)
@@ -77,12 +78,28 @@
     - [Two packets meeting modulo a prime](#152-two-packets-meeting-modulo-a-prime)
     - [A nonsemisimple special fiber](#153-a-nonsemisimple-special-fiber)
     - [A three-class weighted check](#154-a-three-class-weighted-check)
-16. [The complete local Hecke pair](#16-the-complete-local-hecke-pair)
-    - [Construction of the pair](#161-construction-of-the-pair)
-    - [Its exact formal properties](#162-its-exact-formal-properties)
-    - [What remains for later comparison](#163-what-remains-for-later-comparison)
-    - [The algebra--congruence--localization dictionary](#164-the-algebra-congruence-localization-dictionary)
-    - [Conclusion](#165-conclusion)
+16. [Augmentations, cotangent modules, and congruence ideals](#16-augmentations-cotangent-modules-and-congruence-ideals)
+    - [Why one branch must be distinguished](#161-why-one-branch-must-be-distinguished)
+    - [The congruence ideal of an augmentation](#162-the-congruence-ideal-of-an-augmentation)
+    - [The cotangent module at the branch](#163-the-cotangent-module-at-the-branch)
+    - [A complete-intersection determinant calculation](#164-a-complete-intersection-determinant-calculation)
+    - [Gorenstein duality and congruence functionals](#165-gorenstein-duality-and-congruence-functionals)
+    - [Several branches and nonprincipal congruence data](#166-several-branches-and-nonprincipal-congruence-data)
+17. [Comparison with deformation-theoretic numerical invariants](#17-comparison-with-deformation-theoretic-numerical-invariants)
+    - [The comparison problem without a constructed map](#171-the-comparison-problem-without-a-constructed-map)
+    - [The conormal comparison for a surjection](#172-the-conormal-comparison-for-a-surjection)
+    - [Tangent dimensions and relation bounds](#173-tangent-dimensions-and-relation-bounds)
+    - [The exact numerical chain](#174-the-exact-numerical-chain)
+    - [A safe numerical forcing theorem](#175-a-safe-numerical-forcing-theorem)
+    - [What equality does and does not prove](#176-what-equality-does-and-does-not-prove)
+    - [Old--new congruence numbers in the comparison](#177-old--new-congruence-numbers-in-the-comparison)
+18. [The complete local Hecke pair](#18-the-complete-local-hecke-pair)
+    - [Construction of the pair](#181-construction-of-the-pair)
+    - [Its exact structural properties](#182-its-exact-structural-properties)
+    - [Its augmented numerical package](#183-its-augmented-numerical-package)
+    - [What remains for later comparison](#184-what-remains-for-later-comparison)
+    - [The algebra--congruence--localization dictionary](#185-the-algebra--congruence--localization-dictionary)
+    - [Conclusion](#186-conclusion)
 
 ## 1. From operators to an integral algebra
 
@@ -984,6 +1001,51 @@ so its length is the congruence depth of the two characters. For more than two b
 
 One can also have branches that are distinct over $E$ but conjugate over the original coefficient field. If $\mathbb T_E$ contains a field factor $E_i/E$, normalization contributes its integer ring $\mathcal O_i$, not a product of copies of $\mathcal O$. Only after passing to a splitting extension does that field factor separate into embedding-indexed packets. Congruence between conjugate embeddings then depends on the selected primes above $\varpi$. “Branch” therefore refers first to a factor of the reduced generic algebra over the stated coefficient field.
 
+### 8.5 Exact criteria for reducedness
+
+Reducedness enters twice: it decides whether generic packets really are branches, and it decides whether nilpotents in the integral algebra carry information already present in characteristic zero. The coefficient-flatness established in Chapter 2 makes the first decision unusually clean.
+
+**Proposition 8.1 (generic detection of nilpotents).** Let $A$ be a finite torsion-free algebra over the DVR $\mathcal O$. Then
+
+$$
+A\text{ is reduced}
+\quad\Longleftrightarrow\quad
+A_E=A\otimes_{\mathcal O}E\text{ is reduced}.
+$$
+
+**Proof strategy.** Localization preserves reducedness in one direction. In the other, a nilpotent that vanishes after inverting $\varpi$ is coefficient torsion, which torsion-freeness excludes.
+
+**Proof.** If $A$ is reduced, every localization of $A$ is reduced, so $A_E$ is reduced. Conversely, let $a\in A$ be nilpotent. Its image in the reduced algebra $A_E$ is zero. Hence $\varpi^na=0$ for some $n$. Torsion-freeness gives $a=0$. $\square$
+
+Thus generic reducedness is enough for the integral Hecke algebra. It is not enough for the special fiber: the crossing algebra of Section 8.3 is reduced and finite flat, but its special fiber contains a nonzero nilpotent.
+
+There is a useful criterion in the opposite direction.
+
+**Proposition 8.2 (reduced special fiber).** Let $A$ be a finite flat algebra over the complete DVR $\mathcal O$. If $A/\varpi A$ is reduced, then $A$ and $A_E$ are reduced.
+
+**Proof strategy.** A nilpotent reduces to zero, hence is divisible by $\varpi$. Dividing and repeating places it in every coefficient power; completeness and separation then force it to vanish.
+
+**Proof.** If $a^N=0$, the image of $a$ in the reduced special fiber is zero, so $a=\varpi a_1$. Flatness gives $a_1^N=0$: from $\varpi^Na_1^N=0$ and absence of coefficient torsion, one gets $a_1^N=0$. Repeating shows $a\in\varpi^rA$ for every $r$. A finite module over the complete DVR is separated, so $\bigcap_r\varpi^rA=0$. Hence $a=0$. Proposition 8.1 then gives reducedness of $A_E$. $\square$
+
+The converse fails, again by the crossing algebra. Reduced special fiber is therefore a strong transversality condition: it says that generic branches neither carry nilpotents nor collide infinitesimally modulo $\varpi$.
+
+For the acting algebra, generic reducedness often comes from adjoints.
+
+**Normal-operator criterion.** Suppose there is a field extension $L/E$ and a positive-definite Hermitian form on $M_L$ such that every generator of $\mathbb T_L$ is normal and the generators commute. Then $\mathbb T_L$, hence $\mathbb T_E$, is reduced.
+
+Indeed commuting normal operators are simultaneously diagonalizable. The image algebra embeds into a finite product of copies of $L$ by recording their joint eigenvalues, and a subalgebra of a reduced product has no nonzero nilpotent. The positivity and normality hypotheses are essential. Commuting operators preserving a nondegenerate bilinear form can still have Jordan blocks, and a self-adjoint operator for an indefinite form need not be diagonalizable.
+
+A second test uses the trace form. Assume $A_E$ is a finite-dimensional commutative algebra over $E$, and define
+
+$$
+(x,y)_{\mathrm{tr}}
+=\operatorname{Tr}_{A_E/E}(xy).
+$$
+
+If $E$ is perfect, this form is nondegenerate exactly when $A_E$ is reduced. More generally, nondegeneracy is equivalent to $A_E$ being a product of finite separable field extensions of $E$. To see the obstruction, a nilpotent ideal acts by nilpotent multiplication and lies in the radical of the trace form. Conversely a product of separable fields has nondegenerate field-trace pairing. Over an imperfect field a reduced inseparable field extension can have degenerate trace form, so perfectness or separability cannot be omitted.
+
+Choose an $\mathcal O$-basis of the finite free algebra $A$. The determinant of its integral trace matrix is nonzero precisely when the generic trace form is nondegenerate. Its valuation measures failure of that particular integral pairing to be perfect; it does not by itself measure the Gorenstein defect, because a different generator of the dual module may give a perfect $A$-duality. Reducedness, trace self-duality, and Gorenstein duality are three distinct assertions.
+
 ## 9. Pairings, adjoints, and dual Hecke modules
 
 ### 9.1 The pairing problem
@@ -1214,6 +1276,25 @@ $$
 
 Each entry is an explicit lower-level correspondence. The diagonal terms often contain a level index, while the off-diagonal terms contain $T_{\mathfrak q}$ or its adjoint normalization. The abstract matrix is safer and more general than a memorized numerical version.
 
+For the standard one-prime convention fixed in the preceding volume, the calculation is exact. Put $q=q_{\mathfrak q}$, let $T=T_{\mathfrak q}$ and $S=S_{\mathfrak q}$ at the lower hyperspecial level, take the two degeneracy maps defined by $1$ and $\operatorname{diag}(1,\pi_{\mathfrak q})$, and use separately normalized perfect mass pairings. Then
+
+$$
+\boxed{
+G=
+\begin{pmatrix}
+q+1&T\\
+S^{-1}T&q+1
+\end{pmatrix}.}
+$$
+
+The upper-left and lower-right entries are the degree $q+1$ of the level covering. The upper-right composition is the spherical correspondence $T$, and adjunction gives the lower-left entry $T^*=S^{-1}T$. Since $S$ is a central unit and commutes with $T$, the determinant is
+
+$$
+\boxed{D_{\mathfrak q}=(q+1)^2-S^{-1}T^2.}
+$$
+
+This formula belongs to this convention. If the second degeneracy element, the forward level operator, the pairing measure, or the central normalization changes, the displayed matrix must be recomputed. The invariant construction is always $G=\delta^*\delta$.
+
 If $G$ becomes invertible after localization at $\mathfrak m$, then $\delta_{\mathfrak m}$ is split injective with retraction
 
 $$
@@ -1221,6 +1302,14 @@ G^{-1}\delta^*.
 $$
 
 Indeed $(G^{-1}\delta^*)\delta=1$. This is a formal linear-algebra criterion. Proving invertibility can require arithmetic information about residual eigenvalues.
+
+In the standard convention, $G_{\mathfrak m}$ is invertible exactly when $D_{\mathfrak q}\notin\mathfrak m$. One direction follows from the adjugate formula. For the other, the determinant of an invertible matrix is a unit. Hence a residual old--new congruence can occur only on the locus
+
+$$
+(q+1)^2\equiv S^{-1}T^2\pmod{\mathfrak m}.
+$$
+
+After evaluating a lower-level eigencharacter with $T\mapsto t$ and $S\mapsto s$, this becomes $(q+1)^2\equiv s^{-1}t^2$. It is a necessary degeneracy condition for the chosen one-prime old lattice. It is not, by itself, an existence theorem for a new characteristic-zero packet.
 
 Suppose for illustration that, under a chosen normalization, the localized Gram operator acts on a simultaneous lower-level eigenspace through a scalar matrix
 
@@ -1942,9 +2031,586 @@ The eigenvalue $3$ is rational, while the other two lie in the quadratic field c
 
 The last clause is the important audit: congruence for one Brandt matrix is only necessary for congruence of full Hecke eigensystems. Every other generator must also agree. A computed matrix can exhibit a possible congruence prime, but the image algebra decides whether the congruence actually occurs.
 
-## 16. The complete local Hecke pair
+## 16. Augmentations, cotangent modules, and congruence ideals
 
-### 16.1 Construction of the pair
+### 16.1 Why one branch must be distinguished
+
+The congruence modules of Chapter 13 compare two summands symmetrically. Numerical comparison with a deformation problem is usually asymmetric: one characteristic-zero eigensystem has been selected, and one wants to measure how that branch meets all the others. An augmentation is the algebraic device that singles out the branch while retaining the whole local algebra around it.
+
+Let $A$ be a finite flat local $\mathcal O$-algebra and let
+
+$$
+\lambda:A\longrightarrow\mathcal O
+$$
+
+be a surjective $\mathcal O$-algebra homomorphism. Since $\lambda$ is the identity on the structural copy of $\mathcal O$, it is automatically surjective. Put
+
+$$
+I_\lambda=\ker\lambda.
+$$
+
+The pair $(A,\lambda)$ is an **augmented local coefficient algebra**. In the Hecke setting, $\lambda$ is an integral eigencharacter on a chosen local factor. Such a character need not exist over the original coefficient ring. One may first enlarge $E$ to contain its values, replace $\mathcal O$ by the corresponding valuation ring, and choose the prime through which the residual system is obtained. Every invariant below is relative to that choice.
+
+After inverting $\varpi$, assume for intuition that $A_E$ is reduced and that $\lambda_E$ is one of its field-valued factors. Then
+
+$$
+A_E\cong E\times B,
+$$
+
+with $\lambda_E$ the first projection. The ideal $I_{\lambda,E}$ is $0\times B$. The integral algebra need not contain the projector $(1,0)$: a denominator may be required to separate the chosen branch from $B$. The size of that denominator is the congruence invariant.
+
+The local and augmentation hypotheses both matter. If $A$ were a product already, the chosen branch would be an integral direct factor and there would be no congruence. If $A_E$ were nonreduced, the complement would not be a product of genuine branches. If $\lambda$ took values only in a larger valuation ring, replacing it by a fictitious $\mathcal O$-valued map would change the ideal being measured.
+
+### 16.2 The congruence ideal of an augmentation
+
+The elements supported entirely on the chosen branch are exactly those annihilating its kernel. Define
+
+$$
+A[I_\lambda]
+=\operatorname{Ann}_A(I_\lambda)
+=\{a\in A:aI_\lambda=0\}.
+$$
+
+The **congruence ideal** and **congruence module** of the augmentation are
+
+$$
+\boxed{
+\eta_\lambda=\lambda(A[I_\lambda])\subseteq\mathcal O,
+\qquad
+\Psi_\lambda=\mathcal O/\eta_\lambda.}
+$$
+
+Because $\mathcal O$ is a DVR, $\eta_\lambda$ is principal, but no generator is canonical: multiplying a generator by a unit changes nothing. The quotient module, its Fitting ideal, and its length are canonical.
+
+Suppose $A_E$ is reduced. Then $A[I_\lambda]\otimes E$ is the one-dimensional $E$-space $E\times0$. Consequently $\eta_\lambda$ is nonzero. Indeed a nonzero element of that line can be cleared of denominators to lie in $A[I_\lambda]$, and its first coordinate is nonzero. Hence $\Psi_\lambda$ has finite length. The ideal is the denominator required to place a multiple of the generic projector $(1,0)$ inside $A$.
+
+Two extremes clarify the definition. If $A=\mathcal O\times B$ and $\lambda$ is first projection, then $(1,0)\in A[I_\lambda]$, so $\eta_\lambda=\mathcal O$ and $\Psi_\lambda=0$. The branch splits integrally. At the other extreme, take
+
+$$
+A_n=\{(x,y)\in\mathcal O^2:x\equiv y\pmod{\varpi^n}\}
+$$
+
+and let $\lambda(x,y)=x$. Then
+
+$$
+I_\lambda=0\times\varpi^n\mathcal O,
+\qquad
+A_n[I_\lambda]=\varpi^n\mathcal O\times0.
+$$
+
+Therefore
+
+$$
+\eta_\lambda=(\varpi^n),
+\qquad
+\Psi_\lambda\cong\mathcal O/(\varpi^n).
+$$
+
+This is exactly the pairwise congruence depth computed in Chapter 8. The augmented definition extends it to any number of complementary branches without first choosing them individually.
+
+### 16.3 The cotangent module at the branch
+
+The congruence ideal measures separation of branches. The first infinitesimal neighborhood of the chosen branch is measured by a different object:
+
+$$
+\boxed{\Phi_\lambda=I_\lambda/I_\lambda^2.}
+$$
+
+It is an $\mathcal O=A/I_\lambda$-module. It is the conormal module of the section defined by $\lambda$, or equivalently the pullback of relative differentials:
+
+$$
+\Phi_\lambda
+\cong
+\Omega_{A/\mathcal O}\otimes_{A,\lambda}\mathcal O.
+$$
+
+To prove the identity, use the conormal sequence for $A\twoheadrightarrow A/I_\lambda=\mathcal O$:
+
+$$
+I_\lambda/I_\lambda^2
+\longrightarrow
+\Omega_{A/\mathcal O}\otimes_{A,\lambda}\mathcal O
+\longrightarrow
+\Omega_{\mathcal O/\mathcal O}
+\longrightarrow0.
+$$
+
+The last term is zero, and the first arrow is an isomorphism because the quotient map is an $\mathcal O$-algebra retraction: every relative differential is generated by $da$ with $a-\lambda(a)\in I_\lambda$, and the only relations are precisely the square terms killed in $I_\lambda/I_\lambda^2$.
+
+If $A_E$ is a product of finite separable fields, then $\Omega_{A_E/E}=0$. It follows that $\Phi_\lambda\otimes E=0$, so $\Phi_\lambda$ is a finite torsion $\mathcal O$-module. Its zeroth Fitting ideal
+
+$$
+\mathfrak d_\lambda
+=\operatorname{Fitt}_{\mathcal O}(\Phi_\lambda)
+$$
+
+is the branchwise different or cotangent ideal. The length
+
+$$
+\ell_{\mathcal O}(\Phi_\lambda)
+=v_\varpi(\mathfrak d_\lambda)
+$$
+
+measures first-order ramification of the integral branch. It need not agree with the congruence length without a structural hypothesis on $A$.
+
+For the crossing algebra $A_n$, one has
+
+$$
+I_\lambda^2=0\times\varpi^{2n}\mathcal O,
+$$
+
+and hence
+
+$$
+\Phi_\lambda
+\cong\varpi^n\mathcal O/\varpi^{2n}\mathcal O
+\cong\mathcal O/(\varpi^n).
+$$
+
+Here cotangent and congruence modules have the same length. The equality is not an accident: $A_n$ is a hypersurface.
+
+### 16.4 A complete-intersection determinant calculation
+
+We now prove the equality that makes congruence ideals numerically useful. The theorem is local at the selected branch and retains every necessary hypothesis.
+
+**Theorem 16.1 (cotangent--congruence equality).** Let $(A,\lambda)$ be a finite flat augmented local $\mathcal O$-algebra. Assume:
+
+1. $A$ is a complete intersection over $\mathcal O$;
+2. $A_E$ is a product of finite separable field extensions of $E$.
+
+Then $\Phi_\lambda$ and $\Psi_\lambda$ have finite length and
+
+$$
+\boxed{
+\operatorname{Fitt}_{\mathcal O}(\Phi_\lambda)
+=\eta_\lambda,
+\qquad
+\ell_{\mathcal O}(\Phi_\lambda)
+=\ell_{\mathcal O}(\Psi_\lambda).}
+$$
+
+**Proof strategy.** Choose coordinates centered at the augmentation. Finiteness and the complete-intersection hypothesis give equally many variables and equations. The coefficient matrix expressing the equations in the augmentation ideal presents the cotangent module. Its determinant also generates the annihilator of the augmentation ideal, by the determinant transition lemma for two regular sequences.
+
+**Proof.** There is a presentation
+
+$$
+P=\mathcal O[[X_1,\ldots,X_r]]
+\twoheadrightarrow A=P/(f_1,\ldots,f_r)
+$$
+
+in which $X_j$ maps into $I_\lambda$ and $\lambda(X_j)=0$. The equality of the number of variables and equations follows because $A$ is finite flat of dimension one and the equations form a regular sequence in the regular ring $P$ of dimension $r+1$. Since every $f_i$ vanishes under $X_j\mapsto0$, write
+
+$$
+f_i=\sum_{j=1}^r a_{ij}X_j,
+\qquad a_{ij}\in P.
+$$
+
+Let $A_0=(\lambda(a_{ij}))\in M_r(\mathcal O)$. Reducing the conormal relations modulo $(X_1,\ldots,X_r)^2$ gives a presentation
+
+$$
+\mathcal O^r\xrightarrow{A_0}\mathcal O^r
+\longrightarrow\Phi_\lambda\longrightarrow0.
+$$
+
+Generic separability makes $\Phi_\lambda$ torsion, so $\det A_0\ne0$, and
+
+$$
+\operatorname{Fitt}_{\mathcal O}(\Phi_\lambda)
+=(\det A_0).
+$$
+
+It remains to identify the congruence ideal. Put $\Delta=\det(a_{ij})\in P$. The adjugate identity gives
+
+$$
+\Delta X_j\in(f_1,\ldots,f_r)
+$$
+
+for every $j$, so the image $\bar\Delta\in A$ annihilates $I_\lambda$. Hence $(\det A_0)\subseteq\eta_\lambda$.
+
+For the reverse inclusion use the determinant transition lemma: if two length-$r$ regular sequences $f_1,\ldots,f_r$ and $X_1,\ldots,X_r$ in a local Cohen--Macaulay ring satisfy $f_i=\sum_j a_{ij}X_j$, then
+
+$$
+((f_1,\ldots,f_r):(X_1,\ldots,X_r))
+=(f_1,\ldots,f_r,\Delta).
+$$
+
+Here is the decisive argument. The Koszul complexes of the two regular sequences resolve their quotients. The matrix $(a_{ij})$ gives a chain map between those complexes; on the top exterior power it is multiplication by $\Delta$. Dualizing the two resolutions and using exactness in every lower degree shows that an element carrying every $X_j$ into $(f_1,\ldots,f_r)$ differs modulo $(f_1,\ldots,f_r)$ from a multiple of $\Delta$. This is exactly the displayed colon identity.
+
+After quotienting by the $f_i$, the colon identity says
+
+$$
+\operatorname{Ann}_A(I_\lambda)=A\bar\Delta.
+$$
+
+Applying $\lambda$ gives
+
+$$
+\eta_\lambda=(\lambda(\bar\Delta))
+=(\det A_0).
+$$
+
+The Fitting-ideal identity follows, and equality of lengths follows by valuation in the DVR. $\square$
+
+The theorem is exact but one-directional. A complete intersection gives equality. Equality for one augmentation does not, by itself, prove that an arbitrary algebra is a complete intersection; that converse is a deeper numerical criterion requiring additional hypotheses and belongs to the later structural comparison theory.
+
+### 16.5 Gorenstein duality and congruence functionals
+
+Complete intersections are Gorenstein, so Theorem 16.1 has a dual interpretation. This interpretation is also useful when Gorensteinness is known by another route.
+
+Assume $A$ is finite flat local over $\mathcal O$ and
+
+$$
+A^\vee=\operatorname{Hom}_{\mathcal O}(A,\mathcal O)
+$$
+
+is free of rank one as an $A$-module. Choose a generator $\theta$. The augmentation $\lambda$ is an element of $A^\vee$, so there is a unique $c_\lambda\in A$ with
+
+$$
+\lambda=c_\lambda\theta.
+$$
+
+For $x\in I_\lambda$ and $a\in A$,
+
+$$
+(x\lambda)(a)=\lambda(xa)=\lambda(x)\lambda(a)=0.
+$$
+
+Thus $I_\lambda c_\lambda=0$, so $c_\lambda\in A[I_\lambda]$. Conversely, a functional in $A^\vee$ annihilated by $I_\lambda$ factors through $A/I_\lambda=\mathcal O$ and is therefore an $\mathcal O$-multiple of $\lambda$. Transporting this statement through the basis $\theta$ gives
+
+$$
+A[I_\lambda]=\mathcal O c_\lambda.
+$$
+
+Consequently
+
+$$
+\boxed{\eta_\lambda=(\lambda(c_\lambda)).}
+$$
+
+Changing $\theta$ by an $A$-unit changes $c_\lambda$ by the inverse unit and changes $\lambda(c_\lambda)$ only by an $\mathcal O$-unit. Hence the ideal is independent of the chosen duality generator.
+
+In an automorphic application, a perfect module pairing and rank-one Hecke freeness can supply $A^\vee\cong A$ by Theorem 9.2. A normalized coefficient functional then becomes a congruence functional. But every arrow is conditional:
+
+$$
+\text{perfect pairing + rank-one Hecke freeness}
+\Longrightarrow A\text{ Gorenstein}
+\Longrightarrow A[I_\lambda]\text{ is a line}.
+$$
+
+Generic multiplicity one alone gives neither integral freeness nor Gorensteinness. A perfect coefficient pairing on a higher-rank module gives neither statement. The dual formula is an interface, not an automatic feature of a Hecke algebra.
+
+### 16.6 Several branches and nonprincipal congruence data
+
+The augmentation ideal compares one branch with all others at once. If
+
+$$
+A_E\cong E\times E_2\times\cdots\times E_s,
+$$
+
+then $A[I_\lambda]\otimes E$ is the first coordinate line. The single ideal $\eta_\lambda$ measures the denominator of its projector against the union of the remaining branches. It generally does not decompose as the product of all pairwise difference ideals without additional transversality.
+
+Pairwise congruence depths can overlap. Three branches may meet at one residual point with relations that are not determined by the three pairwise valuations. A higher-dimensional generalized eigenspace can also carry extensions among the branches. The finite modules
+
+$$
+\widetilde A/A,
+\qquad
+I_\lambda/I_\lambda^2,
+\qquad
+\mathcal O/\eta_\lambda
+$$
+
+retain different parts of that structure: normalization records all gluing, the cotangent module records first-order ramification at the chosen branch, and the augmented congruence module records the denominator of its generic projector.
+
+Over the DVR every ideal is principal, but the full Hecke-valued congruence module need not be cyclic. Likewise the old--new congruence module of Chapter 13 may have several elementary divisors even when its Fitting ideal is principal. A single valuation records their sum, not their distribution. Numerical comparison should therefore begin with modules and Fitting ideals and pass to lengths only after finiteness has been proved.
+
+## 17. Comparison with deformation-theoretic numerical invariants
+
+### 17.1 The comparison problem without a constructed map
+
+The complete local Hecke algebra is intended to be compared with a ring representing a deformation problem. At this point no arithmetic construction supplies such a map. Nevertheless the algebraic comparison can be developed exactly in conditional form: if a continuous augmented surjection is later constructed, which modules compare, in which direction do the inequalities go, and which extra hypotheses turn equality into structure?
+
+Let $(R,\lambda_R)$ be a complete Noetherian local augmented $\mathcal O$-algebra and let $(A,\lambda_A)$ be a finite flat local augmented $\mathcal O$-algebra. Suppose there is a continuous surjection
+
+$$
+\phi:R\twoheadrightarrow A
+$$
+
+such that
+
+$$
+\lambda_A\circ\phi=\lambda_R.
+$$
+
+Put
+
+$$
+\mathfrak p_R=\ker\lambda_R,
+\qquad
+\mathfrak p_A=\ker\lambda_A,
+\qquad
+J=\ker\phi.
+$$
+
+The letter $\mathfrak p$ here denotes an augmentation ideal, not necessarily the maximal ideal; the local maximal ideal is generated by $\mathfrak p_R$ together with the coefficient maximal ideal. Since $\phi$ is augmented, $J\subseteq\mathfrak p_R$ and $\phi(\mathfrak p_R)=\mathfrak p_A$.
+
+### 17.2 The conormal comparison for a surjection
+
+The first exact comparison is elementary and fundamental.
+
+**Proposition 17.1 (augmentation conormal sequence).** Under the preceding hypotheses there is a short exact sequence of $\mathcal O$-modules
+
+$$
+\boxed{
+0\longrightarrow
+\frac{J}{J\cap\mathfrak p_R^2}
+\longrightarrow
+\frac{\mathfrak p_R}{\mathfrak p_R^2}
+\longrightarrow
+\frac{\mathfrak p_A}{\mathfrak p_A^2}
+\longrightarrow0.}
+$$
+
+**Proof strategy.** Surjectivity carries the augmentation ideal onto the augmentation ideal. The kernel on cotangent quotients consists exactly of classes represented by elements of $J$.
+
+**Proof.** The induced map on the two middle modules is surjective because $\phi(\mathfrak p_R)=\mathfrak p_A$. Its kernel is
+
+$$
+\frac{J+\mathfrak p_R^2}{\mathfrak p_R^2},
+$$
+
+which is canonically $J/(J\cap\mathfrak p_R^2)$. $\square$
+
+Write
+
+$$
+\Phi_R=\mathfrak p_R/\mathfrak p_R^2,
+\qquad
+\Phi_A=\mathfrak p_A/\mathfrak p_A^2.
+$$
+
+If these modules have finite length, then
+
+$$
+\ell_{\mathcal O}(\Phi_R)
+=\ell_{\mathcal O}(\Phi_A)
++\ell_{\mathcal O}\left(J/(J\cap\mathfrak p_R^2)\right).
+$$
+
+Thus the cotangent module of the source is at least as large as that of the target. The difference measures relation directions visible at the selected augmentation to first order. It does not measure every element of $J$: a kernel lying inside $\mathfrak p_R^2$ is invisible in this quotient.
+
+Dualizing after reduction gives the tangent-space injection
+
+$$
+\operatorname{Hom}_{\mathcal O}(\Phi_A,k)
+\hookrightarrow
+\operatorname{Hom}_{\mathcal O}(\Phi_R,k).
+$$
+
+This is the expected variance: a quotient ring imposes equations, so its space of first-order points embeds into that of the source.
+
+### 17.3 Tangent dimensions and relation bounds
+
+Suppose $R$ represents a deformation problem over $\mathcal O$. Then the dual of
+
+$$
+\frac{\mathfrak m_R}{\mathfrak m_R^2+\varpi R}
+$$
+
+is its residual tangent space. Its dimension is the exact number of variables in a minimal relative power-series presentation. If a complete, functorial, additive, effective obstruction theory takes values in a finite-dimensional space $V$, then a minimal presentation
+
+$$
+R\cong\mathcal O[[X_1,\ldots,X_g]]/(f_1,\ldots,f_s)
+$$
+
+may be chosen with
+
+$$
+g=\dim_k t_R,
+\qquad
+s\leq\dim_kV.
+$$
+
+This generator--relation information and the augmentation cotangent module answer different questions. The residual tangent dimension counts directions modulo both $\mathfrak m_R^2$ and $\varpi$. The finite module $\Phi_R=\mathfrak p_R/\mathfrak p_R^2$ measures the entire coefficient-adic thickness of the chosen characteristic-zero augmentation. Its length can be finite even when its reduction is nonzero, and it records more than the tangent dimension.
+
+In arithmetic applications the tangent space is often calculated by a Selmer condition and the effective obstruction bound by a dual condition. The exact algebraic export is therefore:
+
+$$
+\begin{array}{c|c}
+\text{deformation datum}&\text{local algebra datum}\\ \hline
+\dim_k t_R&\text{minimal relative variables}\\
+\dim_k V&\text{upper bound for minimal relations}\\
+\Phi_R&\text{cotangent thickness at a chosen lift}\\
+J/(J\cap\mathfrak p_R^2)&\text{first-order kernel of }R\twoheadrightarrow A.
+\end{array}
+$$
+
+No obstruction dimension is automatically the length of a congruence module. The two become numerically adjacent only after a comparison map and the complete-intersection identity on the target have both been established.
+
+### 17.4 The exact numerical chain
+
+Assume now that $A$ is a complete intersection and that $A_E$ is a product of finite separable fields. Theorem 16.1 gives
+
+$$
+\ell_{\mathcal O}(\Phi_A)
+=\ell_{\mathcal O}(\Psi_{\lambda_A}).
+$$
+
+Proposition 17.1 therefore gives the exact identity
+
+$$
+\boxed{
+\ell_{\mathcal O}(\Phi_R)
+=\ell_{\mathcal O}(\Psi_{\lambda_A})
++\ell_{\mathcal O}
+\left(J/(J\cap\mathfrak p_R^2)\right).}
+$$
+
+In particular,
+
+$$
+\ell_{\mathcal O}(\Psi_{\lambda_A})
+\leq\ell_{\mathcal O}(\Phi_R).
+$$
+
+This is the exact direction of the basic inequality. A deformation calculation that supplies the reverse inequality
+
+$$
+\ell_{\mathcal O}(\Phi_R)
+\leq\ell_{\mathcal O}(\Psi_{\lambda_A})
+$$
+
+forces equality everywhere and gives
+
+$$
+J\subseteq\mathfrak p_R^2.
+$$
+
+The reverse inequality is not a consequence of Hecke theory. It normally comes from a separate numerical calculation that compares a deformation cotangent module with an automorphic congruence ideal. The achievement of the present chapter is to identify the exact endpoints and the exact error term.
+
+The same statement can be phrased through Fitting ideals. If $C$ is a finite torsion $\mathcal O$-module, write $\operatorname{Fitt}(C)=(\varpi^{\ell(C)})$. The short exact sequence gives
+
+$$
+\operatorname{Fitt}(\Phi_R)
+=\operatorname{Fitt}(\Phi_A)\,
+\operatorname{Fitt}\left(J/(J\cap\mathfrak p_R^2)\right),
+$$
+
+and the complete-intersection theorem replaces $\operatorname{Fitt}(\Phi_A)$ by $\eta_{\lambda_A}$. The ideal formula is stable under finite flat coefficient extension; the numerical valuation scales with ramification.
+
+### 17.5 A safe numerical forcing theorem
+
+The following theorem states exactly what the elementary numerical comparison proves, and adds a transparent hypothesis when an isomorphism is desired.
+
+**Theorem 17.2 (numerical forcing with visible kernel).** Let
+
+$$
+\phi:(R,\lambda_R)\twoheadrightarrow(A,\lambda_A)
+$$
+
+be a surjective augmented map as above. Assume:
+
+1. $A$ is finite flat and a complete intersection over $\mathcal O$;
+2. $A_E$ is a product of finite separable fields;
+3. $\Phi_R$ has finite length;
+4. $\ell_{\mathcal O}(\Phi_R)\leq\ell_{\mathcal O}(\mathcal O/\eta_{\lambda_A})$.
+
+Then
+
+$$
+\Phi_R\xrightarrow{\sim}\Phi_A,
+\qquad
+\ell_{\mathcal O}(\Phi_R)
+=\ell_{\mathcal O}(\mathcal O/\eta_{\lambda_A}),
+\qquad
+J\subseteq\mathfrak p_R^2.
+$$
+
+If, in addition,
+
+$$
+J\cap\mathfrak p_R^2=\mathfrak p_RJ,
+$$
+
+then $\phi$ is an isomorphism.
+
+**Proof strategy.** The exact numerical identity of Section 17.4 forces the conormal error term to vanish. The final intersection hypothesis turns this vanishing into the Nakayama equation $J=\mathfrak p_RJ$.
+
+**Proof.** Theorem 16.1 and Proposition 17.1 give
+
+$$
+\ell(\Phi_R)
+=\ell(\mathcal O/\eta_{\lambda_A})
++\ell\left(J/(J\cap\mathfrak p_R^2)\right).
+$$
+
+Hypothesis 4 forces the last length to be zero and all preceding lengths to be equal. Hence the cotangent map is an isomorphism and $J\subseteq\mathfrak p_R^2$. Under the additional intersection identity,
+
+$$
+J=J\cap\mathfrak p_R^2=\mathfrak p_RJ.
+$$
+
+The ideal $J$ is finite over the Noetherian ring $R$, and $\mathfrak p_R$ lies in the Jacobson radical. Nakayama gives $J=0$. Since $\phi$ was surjective, it is an isomorphism. $\square$
+
+The extra intersection condition is deliberately visible. Stronger numerical criteria can derive kernel vanishing from complete-intersection and duality hypotheses without assuming this identity separately, but their proof requires the full structure theory of complete intersections, congruence modules, and finite maps. The present theorem records the portion that follows directly from the objects built in this volume.
+
+### 17.6 What equality does and does not prove
+
+An equality of two integers can carry substantial information only after their definitions and finiteness are secured. The comparison above requires an integral augmentation, a surjective augmented map, finite cotangent length, generic separability of the target, and the complete-intersection identity. Removing any hypothesis changes the conclusion.
+
+If the generic target is not separable, $\Phi_A$ can have positive rank and no finite length. If the target is not a complete intersection, cotangent and congruence lengths need not agree. If the comparison map is not surjective, the conormal sequence has a different form. If the characters take values in different valuation rings, their ideals must first be transported by a specified coefficient extension.
+
+Even an isomorphism on cotangent modules does not in general imply an isomorphism of complete local rings. The maps
+
+$$
+k[[X]]/(X^3)\twoheadrightarrow k[[X]]/(X^2)
+$$
+
+and
+
+$$
+k[[X,Y]]/(X^2,Y^3)\twoheadrightarrow
+k[[X,Y]]/(X^2,Y^2)
+$$
+
+are isomorphisms on suitable first-order cotangent spaces while having nonzero higher-order kernels. They fall outside the finite-flat generically separable setting above, but they show exactly why the last kernel argument cannot be replaced by the phrase “same tangent space.”
+
+Likewise equal Krull dimensions do not kill a height-zero kernel, and equal generic ranks do not produce a map. A valid ring equality needs separate mechanisms for existence of the map, surjectivity, and injectivity. Numerical congruence data are designed to supply one of those mechanisms, not all three by terminology alone.
+
+### 17.7 Old--new congruence numbers in the comparison
+
+The old--new Gram operator supplies a concrete automorphic source for the abstract ideal $\eta_\lambda$. At one new prime, localize the lower-level module at a maximal ideal and assume the standard Gram matrix
+
+$$
+G=
+\begin{pmatrix}
+q+1&T\\
+S^{-1}T&q+1
+\end{pmatrix}
+$$
+
+is generically invertible. On a lower-level eigencharacter $\lambda$ its determinant is
+
+$$
+D_{\mathfrak q}(\lambda)
+=(q+1)^2-\lambda(S)^{-1}\lambda(T)^2.
+$$
+
+If the localized lower-level eigenspace is free of rank one, the pairings are perfect, the degeneracy image is saturated on the generic fiber, and the old and new generic summands are complementary, then
+
+$$
+\operatorname{Fitt}_{\mathcal O}(\operatorname{coker}G_\lambda)
+=(D_{\mathfrak q}(\lambda)).
+$$
+
+Under the additional unimodularity identification from Section 13.4, this is also the Fitting ideal of the corresponding old--new congruence module. It therefore gives an explicit candidate for the augmented congruence ideal on that branch.
+
+Without those hypotheses one has only containment of supports: divisibility of $D_{\mathfrak q}(\lambda)$ is necessary for failure of integral orthogonal splitting, but $\operatorname{coker}G$ need not be the full congruence module. Higher multiplicity produces several elementary divisors; failure of saturation contributes another module; an imperfect pairing changes the dual lattice; and a deeper-level new packet need not exist merely because the old projector has a denominator.
+
+This is the precise interface with change of level. Correspondence calculations produce $G$ and its determinant. Level-injectivity and saturation theorems identify the relevant lattices. Perfect duality converts indices to congruence functionals. Only after those steps may the resulting ideal be placed beside the deformation cotangent module in Section 17.4.
+
+## 18. The complete local Hecke pair
+
+### 18.1 Construction of the pair
 
 We now assemble the endpoint in the exact form needed for later comparison. The input is:
 
@@ -2007,7 +2673,7 @@ $$
 
 If the central character has already made $S_v$ a scalar, that scalar is retained in the constant coefficient. These polynomials are the only local comparison data packaged here.
 
-### 16.2 Its exact formal properties
+### 18.2 Its exact structural properties
 
 The constructed pair has the following properties, with no hidden multiplicity or duality assumptions.
 
@@ -2031,7 +2697,44 @@ is the selected residual eigensystem. Every characteristic-zero eigensystem in t
 
 **Pairing and level structures.** If a perfect integral adjoint-compatible pairing has been proved, it localizes perfectly and supplies dual Hecke modules. If degeneracy maps have been chosen, their old images, adjoint-kernel new modules, Gram operators, and congruence modules all localize exactly. None is part of the bare pair unless included in the data.
 
-### 16.3 What remains for later comparison
+### 18.3 Its augmented numerical package
+
+Choose a characteristic-zero eigencharacter on this local factor and enlarge the coefficient DVR so that it becomes an augmentation
+
+$$
+\lambda:\mathbb T_{\mathfrak m}\longrightarrow\mathcal O.
+$$
+
+The complete local pair then carries three additional finite objects whenever the generic algebra is separable:
+
+$$
+I_\lambda=\ker\lambda,
+\qquad
+\Phi_\lambda=I_\lambda/I_\lambda^2,
+\qquad
+\Psi_\lambda=
+\mathcal O/\lambda(\operatorname{Ann}_{\mathbb T_{\mathfrak m}}I_\lambda).
+$$
+
+The first is the ideal of the selected branch, the second is its cotangent module, and the third is its congruence module against the complementary generic branches. Their Fitting ideals are invariant under changing generators of the Hecke algebra. Under finite flat coefficient extension they extend as ideals; their uniformizer-normalized lengths scale by the ramification index.
+
+If $\mathbb T_{\mathfrak m}$ is a complete intersection and its generic fiber is separable, then
+
+$$
+\operatorname{Fitt}_{\mathcal O}(\Phi_\lambda)
+=\lambda(\operatorname{Ann}I_\lambda),
+$$
+
+so cotangent and congruence lengths agree. If a future augmented surjection $R\twoheadrightarrow\mathbb T_{\mathfrak m}$ is constructed, its first-order kernel is exactly the error term
+
+$$
+\frac{\ker(R\to\mathbb T_{\mathfrak m})}
+{\ker(R\to\mathbb T_{\mathfrak m})\cap(\ker\lambda_R)^2}
+$$
+
+in the numerical identity of Chapter 17. This is the promised exact comparison interface: the Hecke side is fully defined before the map exists, while every conclusion about the source remains conditional on the later construction and its hypotheses.
+
+### 18.4 What remains for later comparison
 
 The notation $\mathbb T_{\mathfrak m}$ is now ready to be the target of a continuous local homomorphism from another complete local ring. The topology, residue field, distinguished closed point, and dense family of operator coefficients have all been fixed.
 
@@ -2046,7 +2749,7 @@ $$
 
 Later theory may construct a map by matching trace-like and determinant-like coefficients with $T_v$ and $q_vS_v$. Any equality of rings will require hypotheses and arguments beyond Hecke algebra and congruence theory.
 
-### 16.4 The algebra--congruence--localization dictionary
+### 18.5 The algebra--congruence--localization dictionary
 
 | Concept | Exact algebraic object | What it remembers | What it does not imply |
 |---|---|---|---|
@@ -2072,16 +2775,22 @@ Later theory may construct a map by matching trace-like and determinant-like coe
 | coefficient freeness | finite torsion-free over the DVR | a stable integral lattice | Hecke freeness |
 | Hecke freeness | $M_{\mathfrak m}\cong\mathbb T_{\mathfrak m}^{\oplus r}$ | constant integral multiplicity | automatic Gorenstein property |
 | relative Gorenstein duality | $\mathbb T_{\mathfrak m}^\vee\cong\mathbb T_{\mathfrak m}$ | rank-one dualizing module | automatic from a mass pairing |
+| augmentation ideal | $I_\lambda=\ker\lambda$ | functions vanishing on one chosen branch | a canonical branch over the original coefficient ring |
+| augmentation cotangent module | $I_\lambda/I_\lambda^2$ | infinitesimal thickness at that branch | equality with a congruence module without hypotheses |
+| augmented congruence ideal | $\lambda(\operatorname{Ann}I_\lambda)$ | denominator of the generic branch projector | a complete-intersection criterion by itself |
+| comparison conormal module | $J/(J\cap\mathfrak p_R^2)$ | first-order kernel of an augmented surjection | the entire higher-order kernel |
 
 The dictionary is a sequence of safeguards. Each row identifies an object by a construction, not by a slogan. In particular, “localized eigenform” can mean an ordinary eigenvector, a generalized eigenspace, or the entire localized module; these are different levels of information.
 
-### 16.5 Conclusion
+### 18.6 Conclusion
 
 An integral Hecke algebra is best understood as the coordinate ring of all eigensystems visible in one finite automorphic module. The abstract correspondence algebra supplies operators, but the faithful image supplies the actual arithmetic space: it is finite and torsion-free over the coefficient DVR, commutative for the specified spherical family, and supported exactly where its module is supported. Passing to a maximal ideal containing the uniformizer selects a residual system without discarding the characteristic-zero branches that meet there.
 
 This viewpoint explains congruence geometrically and algebraically. A characteristic-zero eigensystem is a generic branch. Reduction sends it to a closed residual point. Two branches are congruent when they meet at that point, and the valuation of their difference ideal measures how long they remain indistinguishable. Normalization pulls branches apart; the conductor measures the obstruction to putting them back together integrally. A nilpotent in the special fiber may be the first-order shadow of a perfectly reduced pair of generic branches crossing.
 
 The module is indispensable. It distinguishes a formal maximal ideal from an occurring eigensystem, retains generalized eigenvectors when semisimplicity fails, and makes faithfulness exact after localization. Pairings transport correspondences to adjoints, but perfectness and normalization must be stated. Old forms are an image of degeneracy maps; new forms are kernels of adjoint traces only after those adjoints exist; orthogonal decompositions require an integral inverse to the Gram operator. Congruence modules live precisely in the finite index between rational decomposition and integral splitting.
+
+Selecting one integral eigencharacter turns this geometry into an exact numerical package. Its augmentation ideal has cotangent module $I_\lambda/I_\lambda^2$, while the image of its annihilator is the congruence ideal measuring the denominator of the branch projector. For a generically separable complete intersection the two have the same Fitting ideal. A future augmented surjection onto the Hecke algebra then fits into a short exact conormal sequence, whose error term records the first-order kernel. This identifies, without anticipating the later comparison map, exactly where deformation-theoretic tangent and obstruction calculations must meet automorphic congruence data.
 
 The endpoint is therefore not merely a ring bearing the letter $\mathbb T$. It is the complete local pair
 
