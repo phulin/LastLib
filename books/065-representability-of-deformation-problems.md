@@ -102,10 +102,47 @@
     - [Hull versus universal object](#173-hull-versus-universal-object)
     - [Representation and cohomology entries](#174-representation-and-cohomology-entries)
     - [A representability checklist](#175-a-representability-checklist)
-18. [Conclusion](#18-conclusion)
-    - [The formal space assembled from finite tests](#181-the-formal-space-assembled-from-finite-tests)
-    - [The role of automorphisms](#182-the-role-of-automorphisms)
-    - [The endpoint](#183-the-endpoint)
+18. [Continuity and reconstruction on complete coefficient rings](#18-continuity-and-reconstruction-on-complete-coefficient-rings)
+    - [Why Artinian tests must be reassembled](#181-why-artinian-tests-must-be-reassembled)
+    - [Represented functors are continuous](#182-represented-functors-are-continuous)
+    - [Universal elements as one continuous object](#183-universal-elements-as-one-continuous-object)
+    - [Framed representation functors are continuous](#184-framed-representation-functors-are-continuous)
+    - [Unframed classes and compatible conjugators](#185-unframed-classes-and-compatible-conjugators)
+    - [Reconstructing a hull over a complete target](#186-reconstructing-a-hull-over-a-complete-target)
+    - [A discontinuous extension as a warning](#187-a-discontinuous-extension-as-a-warning)
+    - [Continuity of closed conditions](#188-continuity-of-closed-conditions)
+    - [The continuity protocol](#189-the-continuity-protocol)
+19. [Change of coefficient base](#19-change-of-coefficient-base)
+    - [Two different changes of coefficients](#191-two-different-changes-of-coefficients)
+    - [Universal rings under a same-residue base change](#192-universal-rings-under-a-same-residue-base-change)
+    - [Base-changing a presentation](#193-base-changing-a-presentation)
+    - [Tangent spaces after flat coefficient extension](#194-tangent-spaces-after-flat-coefficient-extension)
+    - [Enlarging the residual field](#195-enlarging-the-residual-field)
+    - [Cohomology after a finite residue extension](#196-cohomology-after-a-finite-residue-extension)
+    - [Fixed determinants under coefficient change](#197-fixed-determinants-under-coefficient-change)
+    - [What coefficient change preserves](#198-what-coefficient-change-preserves)
+20. [Local and global deformation rings](#20-local-and-global-deformation-rings)
+    - [Why localization is a fiber-product problem](#201-why-localization-is-a-fiber-product-problem)
+    - [The unrestricted local product](#202-the-unrestricted-local-product)
+    - [Closed local conditions](#203-closed-local-conditions)
+    - [The global functor with prescribed local conditions](#204-the-global-functor-with-prescribed-local-conditions)
+    - [Tangent spaces with local conditions](#205-tangent-spaces-with-local-conditions)
+    - [Obstructions with local conditions](#206-obstructions-with-local-conditions)
+    - [Framed global problems](#207-framed-global-problems)
+    - [The global restricted-ramification specialization](#208-the-global-restricted-ramification-specialization)
+    - [Local and global uniqueness](#209-local-and-global-uniqueness)
+21. [Exact existence and presentation theorems](#21-exact-existence-and-presentation-theorems)
+    - [Why the hypotheses should be collected](#211-why-the-hypotheses-should-be-collected)
+    - [The master representability theorem](#212-the-master-representability-theorem)
+    - [Minimal numbers of variables](#213-minimal-numbers-of-variables)
+    - [Relation bounds from representation obstructions](#214-relation-bounds-from-representation-obstructions)
+    - [The unobstructed case](#215-the-unobstructed-case)
+    - [Locally constrained presentation bounds](#216-locally-constrained-presentation-bounds)
+    - [Universal versus versal rings in applications](#217-universal-versus-versal-rings-in-applications)
+22. [Conclusion](#22-conclusion)
+    - [The formal space assembled from finite tests](#221-the-formal-space-assembled-from-finite-tests)
+    - [The role of automorphisms](#222-the-role-of-automorphisms)
+    - [The endpoint](#223-the-endpoint)
 
 ## 1. From infinitesimal answers to a formal space
 
@@ -117,11 +154,15 @@ A representing ring is valuable because it turns a family of classification prob
 
 This book develops the bridge from infinitesimal information to formal geometry. The bridge has three pillars: gluing over fiber products, induction across small extensions, and finite-dimensionality of the tangent space. The first controls compatibility, the second controls nilpotent thickness, and the third ensures that the limiting ring is Noetherian rather than an infinite-variable object.
 
+The development moves from the abstract criteria to their principal representation-theoretic applications. After constructing hulls and isolating the extra uniqueness condition for universality, we diagnose the automorphism obstruction, treat framed and scalar-centralizer problems, and impose determinants and other closed conditions. The final chapters reassemble finite-level data over complete coefficient rings, distinguish two kinds of coefficient change, construct global rings from local conditions by completed fiber products, and state finite-generation and relation bounds with every effectiveness hypothesis visible.
+
 ### 1.2 The coefficient categories
 
 Fix a complete Noetherian local ring $(\mathcal O,\mathfrak m_{\mathcal O},k)$ with a specified residue-field identification $\mathcal O/\mathfrak m_{\mathcal O}\simeq k$. We assume $k$ is finite when representations of profinite groups are discussed. Let $\mathcal C=\operatorname{Art}_{\mathcal O}$ be the category of local Artinian $\mathcal O$-algebras $A$ equipped with the prescribed identification $A/\mathfrak m_A\simeq k$. Morphisms are local $\mathcal O$-algebra maps inducing the identity on $k$.
 
 Let $\widehat{\mathcal C}=\operatorname{CNL}_{\mathcal O}$ consist of complete Noetherian local $\mathcal O$-algebras $R$ with residue field $k$, endowed with their maximal-ideal-adic topologies; morphisms are continuous local $\mathcal O$-maps inducing the identity on $k$. Equal characteristic is included by taking $\mathcal O=k$. Nothing in the abstract criteria requires a chosen embedding $k\hookrightarrow A$ in mixed characteristic.
+
+We use the continuous-cohomology conventions and finite-quotient arguments of Book 29, the coefficient categories and completed fiber products of Book 62, the deformation and obstruction calculations of Book 64, and the cotangent, completion, and presentation results of Book 69. Every additional hypothesis needed here will be stated where it enters.
 
 All functors in the main theory are covariant:
 
@@ -199,7 +240,7 @@ $$
 h_R\longrightarrow F,
 $$
 
-because a continuous $u:R\to A$ factors through some finite quotient and sends the appropriate $\xi_n$ to an element of $F(A)$. Independence of the chosen quotient follows from compatibility.
+because a continuous $u:R\to A$ factors through some finite quotient and sends the corresponding $\xi_n$ to an element of $F(A)$. Independence of the chosen quotient follows from compatibility.
 
 For representation functors, the compatible family is equivalent to a continuous representation into $\operatorname{GL}_d(R)$. Continuity is not an extra conclusion: it follows because reduction modulo every $\mathfrak m_R^n$ is continuous and the adic congruence subgroups form a neighborhood basis.
 
@@ -719,7 +760,7 @@ $$
 
 functorially under morphisms of extensions, such that $\operatorname{ob}_e(x)=0$ whenever $x$ lifts. It is **complete** if vanishing is also sufficient.
 
-For representation deformations, Book 64 constructed a complete theory with $V=H^2(G,\operatorname{ad}\bar\rho)$ for unrestricted lifts, and the appropriate trace-zero module after fixing determinant under the stated determinant-lifting hypotheses.
+For representation deformations, Book 64 constructed a complete theory with $V=H^2(G,\operatorname{ad}\bar\rho)$ for unrestricted lifts. If a continuous lift of $\det\bar\rho$ has been fixed and the fixed-determinant lifting calculation identifies infinitesimal determinant-one changes with $\operatorname{ad}^0\bar\rho$, the same construction uses $V=H^2(G,\operatorname{ad}^0\bar\rho)$. In residue characteristic dividing $d$, this statement does not identify fixed determinant with a direct summand of the unrestricted problem.
 
 ### 8.2 Obstructions, lift torsors, and gluing
 
@@ -814,7 +855,7 @@ $$
 
 Here $[Z,X]=Z\neq0$, so $C$ does not lift to an automorphism of the chosen branch representation.
 
-Choose the evident lift $Q=1+tZ$ of $C$ to $A'$. One gluing uses the pair $(M,M)$; another uses $(M,QMQ^{-1})$. Both pairs agree after passage to $A$, because $C$ centralizes the reduction, and hence define representations over $B$. On each branch their unframed classes agree. If the two $B$-representations were strictly equivalent, the two branch conjugators would express $C$ as a product of reductions of automorphisms of the branch representations. The leading $t$-term of every such automorphism commutes with $X$, whereas $Z$ does not. This is impossible.
+Choose the lift $Q=1+tZ$ of $C$ to $A'$. One gluing uses the pair $(M,M)$; another uses $(M,QMQ^{-1})$. Both pairs agree after passage to $A$, because $C$ centralizes the reduction, and hence define representations over $B$. On each branch their unframed classes agree. If the two $B$-representations were strictly equivalent, the two branch conjugators would express $C$ as a product of reductions of automorphisms of the branch representations. The leading $t$-term of every such automorphism commutes with $X$, whereas $Z$ does not. This is impossible.
 
 Thus
 
@@ -865,7 +906,7 @@ Thus the only remaining hypothesis for Schlessinger pro-representability is its 
 
 ### 10.2 Finiteness hypotheses on the profinite group
 
-A convenient standard condition, with $p=\operatorname{char}k$, is:
+A useful sufficient condition, with $p=\operatorname{char}k$, is:
 
 $$
 (\Phi_p)\qquad
@@ -1387,7 +1428,7 @@ This is the relative analogue of the framed/unframed distinction. Forgetting dat
 
 ### 15.1 The abstract package
 
-The preceding theory can be condensed into a theorem suitable for repeated use.
+The preceding theory can be condensed into a theorem for repeated use.
 
 **Universal deformation ring package.** Let $F:\mathcal C\to\mathbf{Sets}$ be covariant and suppose:
 
@@ -1512,7 +1553,7 @@ The two quotient maps $R\to k[[X]]$ and $R\to k[[Y]]$ describe the two smooth br
 
 ### 16.3 A character of a procyclic group
 
-Let $G=\mathbf Z_p$, let $k$ have characteristic $p$, and consider deformations of the trivial character with coefficient base $\mathcal O$. A character is determined by the image of a topological generator in $1+\mathfrak m_A$. Hence the functor is represented by $\mathcal O[[T]]$, with universal generator sent to $1+T$. Continuity holds because $1+\mathfrak m_A$ is a finite $p$-group for Artinian $A$ in the standard $p$-adic coefficient category.
+Let $G=\mathbf Z_p$, let $k$ have characteristic $p$, and consider deformations of the trivial character with coefficient base $\mathcal O$. A character is determined by the image of a topological generator in $1+\mathfrak m_A$. Hence the functor is represented by $\mathcal O[[T]]$, with universal generator sent to $1+T$. Continuity holds because the filtration of $1+\mathfrak m_A$ by the subgroups $1+\mathfrak m_A^n$ has successive quotients that are finite additive $k$-groups; consequently $1+\mathfrak m_A$ is a finite $p$-group.
 
 The tangent space is $H^1(\mathbf Z_p,k)\simeq k$, and $H^2$ vanishes, agreeing with the one-variable smooth ring. If this character is prescribed as the determinant of a one-dimensional representation, the fixed-determinant quotient sets $T$ equal to the chosen parameter and leaves no deformation direction.
 
@@ -1598,7 +1639,7 @@ For a residual representation $\bar\rho$:
 
 $$
 \begin{array}{c|c|c}
-\text{problem}&\text{tangent space}&\text{standard obstruction space}\\ \hline
+\text{problem}&\text{tangent space}&\text{factor-set obstruction space}\\ \hline
 \text{framed}&Z^1(G,\operatorname{ad}\bar\rho)&H^2(G,\operatorname{ad}\bar\rho)\\
 \text{unframed}&H^1(G,\operatorname{ad}\bar\rho)&H^2(G,\operatorname{ad}\bar\rho)\\
 \text{framed, fixed }\delta&Z^1(G,\operatorname{ad}^0\bar\rho)&H^2(G,\operatorname{ad}^0\bar\rho)\\
@@ -1627,22 +1668,1043 @@ For a new deformation problem, proceed in this order.
 
 This order separates categorical, cohomological, algebraic, and topological issues so that each conclusion uses exactly its hypotheses.
 
-## 18. Conclusion
+## 18. Continuity and reconstruction on complete coefficient rings
 
-### 18.1 The formal space assembled from finite tests
+### 18.1 Why Artinian tests must be reassembled
+
+The criterion is deliberately stated on Artinian rings. Small extensions exist there, induction
+terminates there, and every obstruction calculation is linear over the residue field there. The
+objects eventually used in arithmetic, however, often have coefficients in a complete local
+ring. One must therefore answer a question not contained in the word “representable”: when do
+compatible finite-order objects determine one complete object, and when do compatible
+finite-order equivalences determine one complete equivalence?
+
+Let $S$ be a complete Noetherian local $\mathcal O$-algebra with residue field $k$, and write
+
+$$
+S_n=S/\mathfrak m_S^n.
+$$
+
+For a functor $F$ defined only on $\mathcal C$, define its **continuous extension** to complete
+coefficient rings by
+
+$$
+\widehat F(S)=\varprojlim_n F(S_n).
+$$
+
+An element of $\widehat F(S)$ is not an arbitrary collection of finite-order objects. It is a
+compatible collection. The distinction is decisive: existence at each level does not choose
+transition-compatible objects, just as a nonempty inverse system of sets need not have a point
+without a lifting or compactness argument.
+
+If a deformation assignment $F^{\mathrm c}$ is already defined on complete rings as well as on
+Artinian rings, there is a natural reduction map
+
+$$
+F^{\mathrm c}(S)\longrightarrow \varprojlim_nF(S_n).
+$$
+
+We call $F^{\mathrm c}$ **continuous** when this map is bijective for every $S$ in its complete
+coefficient category. This is a property of the moduli problem, not merely of the topology on
+$S$.
+
+### 18.2 Represented functors are continuous
+
+The first reconstruction theorem shows that no extra complete-level choices appear for a
+represented functor.
+
+**Theorem (complete reconstruction of a mapping functor).** Let $R$ and $S$ be complete
+Noetherian local $\mathcal O$-algebras with the specified residue field. Then reduction induces a
+natural bijection
+
+$$
+\operatorname{Hom}_{\mathrm{cts,loc},\mathcal O}(R,S)
+\xrightarrow{\sim}
+\varprojlim_n
+\operatorname{Hom}_{\mathrm{loc},\mathcal O}(R,S_n).
+$$
+
+Consequently, if $F\simeq h_R$ on Artinian rings, then
+
+$$
+\widehat F(S)\simeq
+\operatorname{Hom}_{\mathrm{cts,loc},\mathcal O}(R,S).
+$$
+
+**Proof strategy.** A complete target is its inverse limit of Artinian quotients. Evaluate a
+compatible family of maps on each element of the source and reconstruct its value in that
+limit. Locality, the $\mathcal O$-structure, and multiplication can all be checked at finite
+level.
+
+**Proof.** A continuous local map $R\to S$ gives compatible maps $R\to S_n$. Conversely, let
+$(u_n)_n$ be compatible. For $r\in R$, the sequence $(u_n(r))_n$ is an element of
+$\varprojlim_nS_n=S$; call it $u(r)$. Addition, multiplication, the unit, and the
+$\mathcal O$-algebra property hold after every projection to $S_n$, hence hold in the separated
+ring $S$. The residue map shows that $u$ is local. Moreover
+
+$$
+u(\mathfrak m_R^n)\subseteq\mathfrak m_S^n,
+$$
+
+so $u$ is continuous. The constructions are inverse. Applying the Artinian representing
+bijections before taking the limit proves the final assertion. $\square$
+
+This theorem also reconstructs natural transformations. A transformation between represented
+functors on Artinian rings determines its reversed map of representing rings, and that one map
+governs the transformation on every complete coefficient ring.
+
+### 18.3 Universal elements as one continuous object
+
+The compatible universal classes over $R/\mathfrak m_R^n$ are often more useful when assembled
+into an actual object over $R$. Whether this assembly is automatic depends on the kind of object.
+
+For a represented abstract functor, the universal datum is intrinsically the compatible family
+
+$$
+\xi_n\in F(R/\mathfrak m_R^n).
+$$
+
+One should not write $\xi\in F(R)$ unless $F$ has been extended to complete rings. With the
+continuous extension just defined, the notation becomes legitimate:
+
+$$
+\xi=(\xi_n)_n\in\widehat F(R).
+$$
+
+For matrix representations, entrywise inverse limits turn this family into a continuous
+homomorphism
+
+$$
+\rho^{\mathrm{univ}}:G\longrightarrow\operatorname{GL}_d(R).
+$$
+
+Multiplicativity holds because it holds modulo every power of $\mathfrak m_R$. Continuity holds
+because the inverse image of the $n$th congruence subgroup is the kernel of the finite-level
+representation and is therefore open. This argument uses the adic topology essentially; an
+abstract matrix homomorphism into the underlying ring would not provide the same conclusion.
+
+### 18.4 Framed representation functors are continuous
+
+Framing makes complete reconstruction completely transparent.
+
+**Proposition.** For every complete Noetherian local coefficient ring $S$,
+
+$$
+D_{\bar\rho}^{\square}(S)
+\xrightarrow{\sim}
+\varprojlim_nD_{\bar\rho}^{\square}(S_n).
+$$
+
+The same statement holds with a fixed determinant.
+
+**Proof.** A complete lift gives its reductions. Conversely, a compatible family of framed
+lifts is a compatible family of matrices. Taking inverse limits entry by entry produces a
+matrix-valued homomorphism over $S$, and the preceding continuity argument applies. Determinant
+commutes with reduction and inverse limits, so a compatible family with determinant $\delta$
+has determinant $\delta$ over $S$. $\square$
+
+No finiteness assumption on the tangent space is needed for this proposition. Tangent finiteness
+is needed to obtain a Noetherian universal ring; it is not needed to reconstruct a given
+complete framed lift.
+
+### 18.5 Unframed classes and compatible conjugators
+
+For unframed objects, compatible classes need not arrive with compatible representatives. The
+missing arrows must be constructed.
+
+**Theorem (continuity of unframed representation classes).** Assume that $k$ is finite. For
+every complete Noetherian local coefficient ring $S$, reduction induces a natural bijection
+
+$$
+D_{\bar\rho}(S)
+\xrightarrow{\sim}
+\varprojlim_nD_{\bar\rho}(S_n).
+$$
+
+The same conclusion holds for fixed-determinant classes.
+
+**Proof strategy.** For existence, adjust representatives successively by lifted strict
+conjugators. For uniqueness, organize finite-level conjugators into a finitely branching tree
+and extract one compatible infinite branch.
+
+**Proof.** Given compatible classes $x_n$, choose a representative $\rho_1$. Suppose
+$\rho_n$ has been chosen. Any representative of $x_{n+1}$ reduces to something strictly
+equivalent to $\rho_n$. A strict conjugator over $S_n$ lifts to one over $S_{n+1}$ by lifting
+its entries; a matrix reducing to an invertible matrix is invertible. Conjugating by this lift
+produces $\rho_{n+1}$ reducing exactly to $\rho_n$. The inverse limit of the representatives is
+a complete lift.
+
+For injectivity, let $\rho$ and $\rho'$ be complete lifts which are strictly equivalent modulo
+every $\mathfrak m_S^n$. Let $C_n$ be the set of strict conjugators between their reductions.
+Each $C_n$ is finite because $S_n$ is finite, and it is nonempty by hypothesis. Reduction maps
+conjugators to conjugators. A conjugator at level $N$ and all its reductions form a branch of
+length $N$ in the resulting finitely branching tree. Since branches of arbitrary finite length
+exist, there is an infinite branch. Its inverse limit is a strict conjugator over $S$. The fixed
+determinant condition changes no conjugator and hence no part of the proof. $\square$
+
+Finiteness of $k$ is used exactly in the compactness argument. With an infinite residue field,
+one needs a replacement such as compactness of the relevant congruence groups or a direct
+surjectivity theorem for the sets of conjugators. It should not be deleted merely because the
+finite-level algebra looks identical.
+
+### 18.6 Reconstructing a hull over a complete target
+
+A hull need not classify Artinian objects uniquely, so it cannot become universal merely by
+passing to a limit. It nevertheless remains versal at complete level.
+
+**Proposition.** Let $q:h_R\to F$ be a hull. For every complete Noetherian local $S$, the map
+
+$$
+\operatorname{Hom}_{\mathrm{cts,loc},\mathcal O}(R,S)
+\longrightarrow\widehat F(S)
+$$
+
+is surjective. If $q$ is a pro-representation, it is bijective.
+
+**Proof strategy.** Choose a classifying map at the first level. Formal smoothness lets it be
+lifted compatibly whenever the prescribed object is lifted to the next level.
+
+**Proof.** Let $(x_n)_n\in\widehat F(S)$. The unique residue map $R\to k=S_1$ represents
+$x_1$. Suppose $u_n:R\to S_n$ represents $x_n$. Apply formal smoothness of $q$ to the
+surjection $S_{n+1}\twoheadrightarrow S_n$, the map $u_n$, and the object $x_{n+1}$. It gives
+$u_{n+1}$ lifting $u_n$ and representing $x_{n+1}$. The compatible maps reconstruct
+$R\to S$. If $q$ is a representation, finite-level uniqueness and the theorem of Section 18.2
+give uniqueness at the limit. $\square$
+
+Thus a versal ring supplies coordinates for every complete object, but those coordinates may
+not be unique. The universal-versus-versal distinction survives completion unchanged.
+
+### 18.7 A discontinuous extension as a warning
+
+Continuity is not forced if one invents values on complete rings independently of the Artinian
+restriction. Let $S=k[[T]]$ and consider the category whose objects are $S$ and
+$S_n=S/(T^n)$, with the quotient maps and identities as arrows. Define a covariant functor by
+giving every $S_n$ one point, giving $S$ two points, and sending both complete-level points to
+the unique point under every reduction. Then
+
+$$
+F(k[[T]])\longrightarrow\varprojlim_nF(k[[T]]/(T^n))
+$$
+
+is not injective. The second complete-level point is invisible at every finite order.
+
+Such phantom data cannot occur for a mapping functor represented by a separated complete ring.
+The example explains why the continuity axiom is substantive whenever a moduli problem is
+defined on complete rings before its Artinian representability has been established.
+
+### 18.8 Continuity of closed conditions
+
+Closed relative conditions are automatically compatible with complete reconstruction. Suppose
+$F=h_R$ and $E=h_{R/I}$ for a closed ideal $I$. Then for every complete target $S$,
+
+$$
+\widehat E(S)
+=\{u:R\to S\mid u(I)=0\}.
+$$
+
+Indeed, $u(I)$ vanishes in every $S_n$ exactly when it lies in
+$\bigcap_n\mathfrak m_S^n=0$. This elementary separation argument is the complete-level reason
+closed equations can be checked at every finite order.
+
+The conclusion can fail for a subfunctor not defined by a closed ideal. The earlier example
+$E(A)=\mathfrak m_A^2\subseteq\mathfrak m_A$ shows that functorial membership and even a simple
+finite-level description do not by themselves produce a formal closed subspace whose complete
+points are reconstructed by equations.
+
+### 18.9 The continuity protocol
+
+Whenever a complete coefficient ring occurs, the safe order is now clear. First reduce the
+object to every Artinian quotient. Next verify compatibility, including compatibility of arrows
+or conjugators rather than only of isomorphism classes. Then use completeness to construct the
+limit and separatedness to verify identities. Finally prove that the constructed action or
+homomorphism is continuous by testing the congruence quotients.
+
+For represented functors this protocol is a theorem. For framed matrices it is entrywise. For
+unframed classes over a finite residue field it uses the finite conjugator tree. For a general
+moduli problem it is an additional continuity assertion that must be proved rather than inferred
+from notation.
+
+## 19. Change of coefficient base
+
+### 19.1 Two different changes of coefficients
+
+Changing coefficients can mean either changing the complete base while retaining the same
+residual field, or enlarging the residual field and hence changing the special fiber. These
+operations have different universal properties. Conflating them is a reliable way to reverse a
+ring map or assert a false descent theorem.
+
+Let
+
+$$
+\mathcal O\longrightarrow\mathcal O'
+$$
+
+be a continuous local homomorphism of complete Noetherian local rings. We first assume that it
+induces the identity on the common residue field $k$. An Artinian local $\mathcal O'$-algebra is
+then also an object of $\operatorname{Art}_{\mathcal O}$ after forgetting part of its structure.
+For $F$ on $\operatorname{Art}_{\mathcal O}$ define
+
+$$
+F_{\mathcal O'}(A)=F(A_{\mathcal O}),
+$$
+
+where the subscript on the right means restriction of scalars. This is the **restricted-base
+extension** of $F$. It enlarges the allowed structural maps but does not alter the residual
+object.
+
+### 19.2 Universal rings under a same-residue base change
+
+The completed tensor product gives the exact answer for restricted-base extension.
+
+**Theorem (base change of a representing ring).** Suppose $F$ is represented over $\mathcal O$
+by $R$, and assume that
+
+$$
+R_{\mathcal O'}=R\widehat\otimes_{\mathcal O}\mathcal O'
+$$
+
+is a complete Noetherian local ring with residue field $k$; this holds, for example, in the
+residue-compatible topologically finite-type setting. Then $F_{\mathcal O'}$ is represented by
+$R_{\mathcal O'}$.
+
+**Proof.** For every $A\in\operatorname{Art}_{\mathcal O'}$, the universal property of the
+completed tensor product gives
+
+$$
+\begin{aligned}
+\operatorname{Hom}_{\mathcal O'}
+(R\widehat\otimes_{\mathcal O}\mathcal O',A)
+&\simeq\operatorname{Hom}_{\mathcal O}(R,A)\\
+&\simeq F(A_{\mathcal O}).
+\end{aligned}
+$$
+
+All maps are local and continuous; continuity into the Artinian target is automatic. Naturality
+in $A$ proves the representing statement. $\square$
+
+No flatness is needed for this universal property. Flatness becomes necessary when one wants
+old kernels, tangent spaces, or minimal relation modules to survive without acquiring torsion.
+
+The same proof applies to a hull: completed base change of its ring gives a hull for the
+restricted-base functor, provided the completed tensor product remains in the complete
+Noetherian local category. Formal smoothness is preserved because lifting an
+$\mathcal O'$-algebra map is a special case of lifting the underlying $\mathcal O$-algebra map,
+and both tangent maps are evaluated on the same dual-number ring $k[\epsilon]$. Thus tangent
+minimality is preserved even without flatness; the stronger module comparison in Section 19.4
+does require flatness.
+
+### 19.3 Base-changing a presentation
+
+Suppose
+
+$$
+R\simeq\mathcal O[[X_1,\ldots,X_r]]/I.
+$$
+
+Assume $\mathcal O'[[X_1,\ldots,X_r]]$ is complete Noetherian local and that the completed tensor product is the maximal-ideal-adic completion of the ordinary tensor product. Then
+
+$$
+R_{\mathcal O'}
+\simeq
+\mathcal O'[[X_1,\ldots,X_r]]/overline{I\mathcal O'[[\mathbf X]]}.
+$$
+
+The closure records the topology; it is redundant in the Noetherian target. This formula is
+always a presentation of the base-changed ring, but it need not remain minimal and the map
+
+$$
+I/\mathfrak m_PI
+\longrightarrow
+I'/\mathfrak m_{P'}I'
+$$
+
+need not preserve dimension after a nonflat change. For example, the one relation defining
+$\mathcal O/(\varpi)$ disappears after the coefficient change $\mathcal O\to k$.
+
+Thus “the same equations after base change” means extension of the closed ideal. It does not
+mean that the same list remains a minimal list of independent equations.
+
+### 19.4 Tangent spaces after flat coefficient extension
+
+The relative cotangent space is designed to ignore directions already contained in the base.
+Suppose $\mathcal O\to\mathcal O'$ is flat and induces a field extension $k\to k'$. Assume
+$R$ is topologically of finite type over $\mathcal O$ and
+$R'=R\widehat\otimes_{\mathcal O}\mathcal O'$ is complete Noetherian local with residue field
+$k'$. Then there is a natural isomorphism
+
+$$
+\frac{\mathfrak m_{R'}}
+{\mathfrak m_{R'}^2+\mathfrak m_{\mathcal O'}R'}
+\simeq
+\frac{\mathfrak m_R}
+{\mathfrak m_R^2+\mathfrak m_{\mathcal O}R}
+\otimes_k k'.
+$$
+
+Dualizing gives the corresponding scalar extension of tangent spaces when the spaces are
+finite-dimensional. Flatness prevents an old first-order direction from being killed by
+coefficient torsion. For a same-residue flat change, the tangent dimension is unchanged.
+
+If $P=\mathcal O[[\mathbf X]]\twoheadrightarrow R$ is minimal, flatness of
+$P\to P'=\mathcal O'[[\mathbf X]]$ and exact base change of the kernel imply
+
+$$
+\frac{I'}{\mathfrak m_{P'}I'}
+\simeq
+\frac{I}{\mathfrak m_PI}\otimes_k k'.
+$$
+
+Hence the minimal relation number is also unchanged. These hypotheses are exact: completion by
+itself is not an exact operation on arbitrary modules, and nonflat specialization can both
+destroy and create kernel.
+
+### 19.5 Enlarging the residual field
+
+Now suppose $\mathcal O'$ has residue field $k'$ strictly larger than $k$. The scalar extension
+
+$$
+\bar\rho_{k'}:G\longrightarrow\operatorname{GL}_d(k')
+$$
+
+is a new residual representation and has its own deformation functor. Base-changing the old
+universal representation gives a deformation of $\bar\rho_{k'}$ over
+$R\widehat\otimes_{\mathcal O}\mathcal O'$. If the new deformation functor is represented by
+$R_{\bar\rho_{k'}}$, universality therefore gives a canonical map
+
+$$
+R_{\bar\rho_{k'}}
+\longrightarrow
+R_{\bar\rho}\widehat\otimes_{\mathcal O}\mathcal O'.
+$$
+
+The arrow has this direction because the base-changed old family is one point of the new
+functor. It need not be an isomorphism. A $k'$-valued deformation may have coefficients that do
+not descend to $k$, and an isomorphism with all coefficient conjugates is not by itself
+effective descent data.
+
+An isomorphism follows under the strong and exact hypothesis that, for every Artinian
+$\mathcal O'$-algebra $A$, scalar extension induces a natural bijection between the relevant old
+deformations after restricted base change and all deformations of $\bar\rho_{k'}$ over $A$.
+This hypothesis is a descent theorem; it is not a consequence of tangent-space comparison.
+
+### 19.6 Cohomology after a finite residue extension
+
+Although individual deformations need not descend, their linear theories extend cleanly. Let
+$k'/k$ be finite and $M$ a finite-dimensional continuous $k[G]$-module. Then
+
+$$
+H^i(G,M)\otimes_k k'
+\xrightarrow{\sim}
+H^i(G,M\otimes_k k')
+$$
+
+for every $i\geq0$.
+
+**Proof.** Choose a $k$-basis of $k'$. A continuous cochain with values in
+$M\otimes_kk'$ is a finite tuple of continuous $M$-valued cochains, and the differential acts
+coordinatewise. Thus the cochain complexes are related by tensoring with $k'$. Since a field
+extension is flat, kernels, images, and quotients commute with that tensor product. $\square$
+
+Applying this to $\operatorname{ad}\bar\rho$ and $\operatorname{ad}^0\bar\rho$ compares the
+tangent and factor-set obstruction spaces. It proves equality of their dimensions after scalar
+extension. It does not prove equality of universal rings, because rings contain nonlinear
+descent information invisible to these vector spaces.
+
+### 19.7 Fixed determinants under coefficient change
+
+A determinant can be transported only when its values can be transported. If
+
+$$
+\delta:G\to\mathcal O^\times
+$$
+
+is fixed, composition with $\mathcal O\to\mathcal O'$ gives
+$\delta':G\to(\mathcal O')^\times$. Under same-residue restricted-base extension, the theorem of
+Section 19.2 gives
+
+$$
+R_{\bar\rho}^{\square,\delta}
+\widehat\otimes_{\mathcal O}\mathcal O'
+$$
+
+as the representing ring for the correspondingly restricted fixed-determinant problem. The
+quotient and completed base-change operations commute:
+
+$$
+(R/I_\delta)\widehat\otimes_{\mathcal O}\mathcal O'
+\simeq
+(R\widehat\otimes_{\mathcal O}\mathcal O')/overline{I_\delta R'}.
+$$
+
+With a larger residue field, the same canonical comparison map as in Section 19.5 exists for the
+new fixed-determinant universal ring. Again, it is an isomorphism only after an actual descent
+theorem. The trace-kernel tangent formula commutes with finite field extension because trace and
+the cochain differential do.
+
+### 19.8 What coefficient change preserves
+
+The reliable conclusions can be summarized without slogans. The completed tensor product
+represents restricted change of a same-residue base. Flatness preserves exact finite-module
+sequences, relative tangent dimensions, exact kernel extension, and minimal relation numbers.
+Finite residue-field extension preserves continuous cohomology after tensoring. None of these
+facts says that every deformation over the larger residual field descends, and none turns a
+nonuniversal hull into a universal object.
+
+Thus coefficient change has three layers:
+
+$$
+\begin{array}{c|c}
+\text{layer}&\text{needed hypothesis}\\ \hline
+\text{represent restricted-base functor}&
+\text{completed tensor product remains complete Noetherian local}\\
+\text{preserve tangent and relation modules}&
+\text{flatness and exact extension of the presentation kernel}\\
+\text{identify all enlarged-residue deformations}&
+\text{effective descent of objects and equivalences}.
+\end{array}
+$$
+
+Keeping these layers separate is what makes later coefficient extensions safe.
+
+## 20. Local and global deformation rings
+
+### 20.1 Why localization is a fiber-product problem
+
+A global representation is constrained by its restrictions to several local groups. The global
+object and the local objects are not independent: they must agree under restriction. This is
+exactly the situation encoded by a fiber product of functors and, contravariantly, by a completed
+tensor product of representing rings.
+
+Let $G$ be profinite and let
+
+$$
+i_v:G_v\longrightarrow G\qquad(v\in S)
+$$
+
+be a finite family of continuous homomorphisms. Fix
+$\bar\rho:G\to\operatorname{GL}_d(k)$ and put $\bar\rho_v=\bar\rho\circ i_v$. Restriction gives
+natural transformations from the global framed, unframed, and fixed-determinant functors to the
+corresponding products of local functors. The set $S$ is finite so that ordinary finite products
+and finite completed tensor products suffice.
+
+### 20.2 The unrestricted local product
+
+Assume each local functor $D_v$ under consideration is represented by $R_v$. Its product is
+represented by
+
+$$
+R_{\mathrm{loc}}
+=\widehat\bigotimes_{v\in S,\mathcal O}R_v.
+$$
+
+The exact hypotheses used here are that all structural maps are local, every factor has the
+same specified residue field $k$, the set $S$ is finite, and every $R_v$ is topologically of
+finite type over $\mathcal O$. Under these assumptions the finite completed tensor product is
+complete Noetherian local. Topological finite type is automatic for a complete Noetherian local
+$\mathcal O$-algebra whose relative cotangent space is finite-dimensional over $k$.
+
+If the global functor $D_G$ is represented by $R_G$, restriction
+
+$$
+D_G\longrightarrow\prod_{v\in S}D_v
+$$
+
+corresponds to a continuous local map
+
+$$
+R_{\mathrm{loc}}\longrightarrow R_G.
+$$
+
+This map records all localizations of the universal global family. It need not be finite,
+surjective, or injective merely because restriction exists.
+
+Framed local functors are automatically the cleanest choice because matrix gluing is exact.
+For unframed local functors, each local residual restriction needs its own representability
+hypothesis; a scalar centralizer for the global representation does not imply a scalar
+centralizer after restriction to every $G_v$.
+
+### 20.3 Closed local conditions
+
+A **local deformation condition** at $v$ is a subfunctor
+
+$$
+\mathcal L_v\hookrightarrow D_v.
+$$
+
+For the construction here, assume it is closedly relatively representable. Since $D_v=h_{R_v}$,
+this means there is a closed ideal $I_v\subseteq R_v$ such that
+
+$$
+\mathcal L_v\simeq h_{R_v/I_v}.
+$$
+
+The assumption is mathematical content. It must be proved from the defining local property; it
+does not follow from stability under coefficient change or from having a preferred tangent
+subspace.
+
+The product of the local conditions is represented by
+
+$$
+R_{\mathcal L}
+=\widehat\bigotimes_{v\in S,\mathcal O}(R_v/I_v).
+$$
+
+There is a natural surjection
+
+$$
+R_{\mathrm{loc}}\twoheadrightarrow R_{\mathcal L}.
+$$
+
+In a joint power-series presentation its kernel is the closed ideal generated by the images of
+all the $I_v$.
+
+### 20.4 The global functor with prescribed local conditions
+
+Define
+
+$$
+D_G^{\mathcal L}(A)
+=\{x\in D_G(A):x|_{G_v}\in\mathcal L_v(A)
+\text{ for every }v\in S\}.
+$$
+
+The definition is equivalently the functorial fiber product
+
+$$
+D_G^{\mathcal L}
+=D_G\times_{\prod_vD_v}\prod_v\mathcal L_v.
+$$
+
+This formula does more than abbreviate membership. It proves representability once the three
+displayed functors are represented.
+
+**Theorem (global ring with local conditions).** Under the representability and complete
+finite-type hypotheses above, $D_G^{\mathcal L}$ is represented by
+
+$$
+R_G^{\mathcal L}
+=R_G\widehat\otimes_{R_{\mathrm{loc}}}R_{\mathcal L}.
+$$
+
+Equivalently, if $J=\ker(R_{\mathrm{loc}}\to R_{\mathcal L})$, then
+
+$$
+R_G^{\mathcal L}
+\simeq R_G/\overline{JR_G}.
+$$
+
+**Proof.** A map from the completed tensor product to an Artinian ring $A$ is a pair of maps
+$R_G\to A$ and $R_{\mathcal L}\to A$ agreeing on $R_{\mathrm{loc}}$. Under the representing
+bijections this is a global deformation and a tuple of locally admissible deformations identified
+with its restrictions. That is exactly an element of $D_G^{\mathcal L}(A)$. The quotient formula
+is the quotient base-change identity for $R_{\mathrm{loc}}/J$; the closure is automatic in
+the Noetherian target but records the topology. $\square$
+
+This theorem is the precise passage from local conditions to a global universal ring. It uses
+closed relative representability locally and representability of the ambient global problem. It
+does not assert either hypothesis for a condition not yet analyzed.
+
+### 20.5 Tangent spaces with local conditions
+
+The tangent formula is the linear shadow of the fiber product. Let $t_G$ be the tangent space of
+the global functor, let $t_v$ be that of $D_v$, and let $L_v\subseteq t_v$ be the tangent space of
+$\mathcal L_v$. Then
+
+$$
+t_{D_G^{\mathcal L}}
+=\{x\in t_G:\operatorname{res}_v(x)\in L_v
+\text{ for every }v\in S\}.
+$$
+
+**Proof.** Evaluate the functorial fiber product on $k[\epsilon]$. Fiber products of sets commute
+with this evaluation, and every tangent set involved is a vector space because the functors
+satisfy the first-order gluing condition. The resulting fiber product of vector spaces is exactly
+the displayed inverse image. $\square$
+
+For an unframed unrestricted representation problem,
+
+$$
+t_G=H^1(G,\operatorname{ad}\bar\rho),
+\qquad
+t_v=H^1(G_v,\operatorname{ad}\bar\rho_v).
+$$
+
+Thus the global tangent space with local conditions is the kernel of the localization map to
+the quotients:
+
+$$
+\ker\left(
+H^1(G,\operatorname{ad}\bar\rho)
+\longrightarrow
+\prod_{v\in S}H^1(G_v,\operatorname{ad}\bar\rho_v)/L_v
+\right).
+$$
+
+For framed problems use cocycles. For fixed determinant use the exact trace-kernel tangent
+formula; it simplifies to cohomology with trace-zero coefficients only under the splitting
+hypothesis stated earlier.
+
+### 20.6 Obstructions with local conditions
+
+An ambient global obstruction class lies in
+
+$$
+H^2(G,\operatorname{ad}\bar\rho)\otimes_k I
+$$
+
+for an unrestricted small extension. Its restriction is the ambient local obstruction at every
+$v$. Vanishing of all local restrictions does not imply vanishing of the global class unless the
+relevant localization map is injective on that class.
+
+Imposing local conditions adds a second issue. Even if an ambient local representation lifts,
+it may fail to lift **inside** $\mathcal L_v$. Consequently the obstruction theory for
+$D_G^{\mathcal L}$ is not automatically the kernel of a map between ambient $H^2$ groups. A
+valid constrained obstruction package must provide:
+
+1. a complete obstruction to the global ambient lift;
+2. complete obstructions to membership-preserving local lifts;
+3. compatibility of the localized global class with the local classes;
+4. a degree-one correction criterion for moving an existing global lift into the prescribed
+   local torsors.
+
+Once such a finite-dimensional, functorial, additive, effective package $V_{\mathcal L}$ is
+proved, it bounds the minimal relations of $R_G^{\mathcal L}$. Without it, representability of
+the quotient ring still holds, but no cohomological relation bound has been justified.
+
+### 20.7 Framed global problems
+
+Framing avoids both residual centralizer hypotheses and ambiguous comparison arrows. If $G$ and
+each $G_v$ have finite-dimensional framed tangent spaces, all framed ambient functors are
+represented. The restriction diagram therefore produces a framed global ring with any closedly
+represented framed local conditions exactly as in Section 20.4.
+
+There are several inequivalent framings in a global problem. One may retain one global frame,
+retain independent frames at selected local groups, or add auxiliary local frames to a global
+unframed object. Their tangent dimensions differ by explicit change-of-frame spaces. A theorem
+relating their rings by power-series variables requires the corresponding forgetful
+transformation to be formally smooth and both endpoint functors to be represented. Merely
+counting the extra matrices does not prove the power-series statement.
+
+In the common scalar-centralizer situation, forgetting one global frame is formally smooth of
+relative tangent dimension $d^2-1$, so
+
+$$
+R_G^{\square}\simeq R_G[[Y_1,\ldots,Y_{d^2-1}]]
+$$
+
+noncanonically. More generally, for a single restriction $\bar\rho_v$, the change-of-frame
+space has dimension
+
+$$
+d^2-\dim_k H^0(G_v,\operatorname{ad}\bar\rho_v).
+$$
+
+If the corresponding forgetful maps are formally smooth and both their source and target
+functors are represented, independent local frames add these dimensions and hence add that many
+power-series variables. Without those hypotheses, the dimension calculation is only a tangent
+calculation.
+
+### 20.8 The global restricted-ramification specialization
+
+Let $F$ be a global field, let $S$ be a finite set of places containing every place at which the
+residual representation or allowed lifts may ramify, and let $G_{F,S}$ be the quotient of the
+absolute Galois group obtained by killing inertia outside $S$. Continuous representations
+unramified outside $S$ are exactly the representations factoring through $G_{F,S}$.
+
+Assume the finite-tangent condition $\Phi_p$ for $G_{F,S}$, where $p=\operatorname{char}k$.
+Then the framed unrestricted functor has a universal ring. If
+
+$$
+\operatorname{End}_{k[G_{F,S}]}(k^d)=k,
+$$
+
+the unframed unrestricted functor also has a universal ring. A continuous determinant lift may
+be imposed by quotient. At each $v\in S$, any local condition already proved closedly relatively
+representable may then be imposed by the completed fiber-product theorem.
+
+These are exact existence hypotheses. Arithmetic finiteness theorems may be used to verify
+$\Phi_p$ in a particular situation, while geometric or cohomological arguments may establish
+closed relative representability of a local condition. The abstract representability theorem
+does not replace either verification.
+
+### 20.9 Local and global uniqueness
+
+Once the functors in the diagram are represented, their rings and all structural maps are unique
+up to the unique isomorphisms compatible with the chosen representing identifications. The
+completed tensor description of $R_G^{\mathcal L}$ is therefore independent of presentations of
+the local rings or choices of generators for their defining ideals.
+
+If an ambient unframed functor has a hull $h_R\to D_G$ rather than a representing object, pull it
+back along $\prod_v\mathcal L_v\to\prod_vD_v$. If this pullback satisfies (H1)--(H3), has
+finite-dimensional tangent space, and its map from $h_R$ is closedly relatively representable,
+the hull construction produces a versal ring; without (H4), it does not acquire pointwise
+uniqueness. If a local
+condition is represented only after adding a filtration or a line, forgetting that structure
+must be analyzed before its image can be inserted as a quotient condition. Universality at the
+global level is no stronger than the weakest descent and uniqueness statement used in building
+the diagram.
+
+## 21. Exact existence and presentation theorems
+
+### 21.1 Why the hypotheses should be collected
+
+The theory has accumulated several logically independent assumptions: one controls finite
+tangent dimension, one controls automorphisms, one supplies a determinant, one makes local
+conditions closed, and one makes obstruction spaces count equations. A final theorem should
+display these separately so that later applications can cite exactly what they have proved.
+
+Continue to let $k$ be finite of characteristic $p$, let $\mathcal O$ be complete Noetherian
+local with residue field $k$, let $G$ be profinite, and let
+
+$$
+\bar\rho:G\to\operatorname{GL}_d(k)
+$$
+
+be continuous.
+
+### 21.2 The master representability theorem
+
+**Theorem (existence of universal representation rings).** Assume that
+$Z^1(G,\operatorname{ad}\bar\rho)$ is finite-dimensional. Then:
+
+1. The framed deformation functor is represented by a complete Noetherian local
+   $\mathcal O$-algebra $R_{\bar\rho}^{\square}$.
+2. If $\operatorname{End}_{k[G]}(k^d)=k$, the unframed deformation functor is represented by a
+   complete Noetherian local $\mathcal O$-algebra $R_{\bar\rho}$.
+3. Given a continuous lift $\delta:G\to\mathcal O^\times$ of $\det\bar\rho$, the framed
+   fixed-determinant functor is represented by a quotient
+   $R_{\bar\rho}^{\square,\delta}$ of $R_{\bar\rho}^{\square}$.
+4. Under the scalar-centralizer hypothesis, the unframed fixed-determinant functor is represented
+   by a quotient $R_{\bar\rho}^{\delta}$ of $R_{\bar\rho}$.
+
+Condition $(\Phi_p)$ is a convenient sufficient hypothesis for the finite-dimensionality in the
+first sentence. Topological finite generation of $G$ is a still simpler sufficient hypothesis.
+
+**Proof.** Framed lifts preserve every admissible coefficient fiber product exactly. Their
+tangent space is $Z^1(G,\operatorname{ad}\bar\rho)$, finite by hypothesis. Hence they satisfy
+(H1)--(H4), and the criterion gives (1). Under the scalar-centralizer hypothesis, all
+centralizers of Artinian lifts are scalar. The argument of Chapter 11 then makes comparison
+arrows unique up to liftable scalars, proving (H4) for unframed classes; their tangent space is a
+quotient of the finite-dimensional framed tangent space. This proves (2). Equality with the
+fixed determinant is a closed equation on the universal family, giving the quotient in (3), and
+scalar conjugation preserves determinant, giving (4). $\square$
+
+The theorem requires no vanishing or finiteness of $H^2$. Those properties govern the equations
+inside the universal ring, not its existence.
+
+### 21.3 Minimal numbers of variables
+
+Each universal ring has a minimal relative power-series presentation. The exact numbers of
+variables are
+
+$$
+\begin{array}{c|c}
+\text{problem}&\text{minimal relative variables}\\ \hline
+\text{framed}&\dim_kZ^1(G,\operatorname{ad}\bar\rho)\\
+\text{unframed}&\dim_kH^1(G,\operatorname{ad}\bar\rho)\\
+\text{framed, fixed }\delta&
+\dim_kZ^1(G,\operatorname{ad}^0\bar\rho)\\
+\text{unframed, fixed }\delta&
+\dim_k\ker\bigl(H^1(G,\operatorname{ad}\bar\rho)
+\to H^1(G,k)\bigr).
+\end{array}
+$$
+
+The last line becomes $\dim_kH^1(G,\operatorname{ad}^0\bar\rho)$ when
+$\operatorname{char}k\nmid d$. In the excluded characteristic the scalar line may lie inside
+$\operatorname{ad}^0$, and the trace-kernel formula is the invariant statement.
+
+These numbers count cotangent generators, not distinguished ring elements. Choosing a dual basis
+and lifts produces coordinates, and a different choice produces a formal coordinate change.
+
+### 21.4 Relation bounds from representation obstructions
+
+Assume now that the indicated second cohomology group is finite-dimensional. The factor-set
+obstruction theory for representations is complete, functorial under pushout, additive in the
+small kernel, and compatible with the tangent torsor action. The universal small extensions
+selected by functionals on a minimal relation module therefore give the effective obstruction
+map described in Section 8.4.
+
+**Theorem (cohomological presentation bounds).** Under the hypotheses of Section 21.2 there are
+minimal presentations
+
+$$
+R_{\bar\rho}^{\square}
+\simeq
+\mathcal O[[X_1,\ldots,X_z]]/(f_1,\ldots,f_s),
+$$
+
+with
+
+$$
+z=\dim_kZ^1(G,\operatorname{ad}\bar\rho),
+\qquad
+s\leq\dim_kH^2(G,\operatorname{ad}\bar\rho).
+$$
+
+Under the scalar-centralizer hypothesis there is likewise
+
+$$
+R_{\bar\rho}
+\simeq
+\mathcal O[[X_1,\ldots,X_h]]/(g_1,\ldots,g_t),
+$$
+
+with
+
+$$
+h=\dim_kH^1(G,\operatorname{ad}\bar\rho),
+\qquad
+t\leq\dim_kH^2(G,\operatorname{ad}\bar\rho).
+$$
+
+For fixed determinant, replace the second cohomology group by
+$H^2(G,\operatorname{ad}^0\bar\rho)$ and use the fixed-determinant tangent dimensions of
+Section 21.3.
+
+**Proof strategy.** A functional on the minimal relation space loosens one universal equation and
+produces a principal small extension of an Artinian quotient of the universal ring. The
+universal deformation has an obstruction in the displayed $H^2$. If the resulting linear map
+from the dual relation space had a kernel, completeness and the torsor compatibility would lift
+the universal family after deleting that relation direction, contradicting minimality. Hence
+the dual relation space injects into $H^2$, giving the bound. $\square$
+
+The proof gives an inequality. The second cohomology group can contain classes never realized by
+universal equations, and minimal equations can have smaller height than their number. No equality
+of relation number, obstruction dimension, or codimension follows without further arguments.
+
+### 21.5 The unobstructed case
+
+When the controlling second cohomology group vanishes, the conclusion becomes structural rather
+than merely numerical.
+
+**Corollary.** If
+
+$$
+H^2(G,\operatorname{ad}\bar\rho)=0,
+$$
+
+then
+
+$$
+R_{\bar\rho}^{\square}
+\simeq
+\mathcal O[[X_1,\ldots,X_z]]
+$$
+
+noncanonically. Under the scalar-centralizer hypothesis,
+
+$$
+R_{\bar\rho}
+\simeq
+\mathcal O[[X_1,\ldots,X_h]].
+$$
+
+For fixed determinant, the same conclusion holds when the complete determinant-preserving
+obstruction space $H^2(G,\operatorname{ad}^0\bar\rho)$ vanishes, with the correct
+fixed-determinant tangent dimension.
+
+**Proof.** Vanishing of the complete factor-set obstruction makes every small-extension lifting
+problem solvable, so the represented functor is formally smooth over $\mathcal O$. The
+power-series characterization of a topologically finite-type formally smooth complete local
+algebra gives the displayed rings. $\square$
+
+This corollary would be false if $H^2$ were merely a receptacle containing the actual
+obstructions without a completeness theorem. It would also fail for a coarse unframed functor
+that had not first been proved representable.
+
+### 21.6 Locally constrained presentation bounds
+
+Let $D_G^{\mathcal L}$ be the globally constrained functor of Chapter 20 and suppose it is
+represented by $R_G^{\mathcal L}$. Its tangent dimension gives the exact number of variables in
+a minimal presentation over $\mathcal O$. More usefully, suppose the structural map
+$R_{\mathcal L}\to R_G^{\mathcal L}$ is local, both rings have residue field $k$, and
+$R_G^{\mathcal L}$ is topologically of finite type over $R_{\mathcal L}$.
+
+If the relative tangent space has dimension $g$, there is a minimal surjection
+
+$$
+R_{\mathcal L}[[X_1,\ldots,X_g]]\twoheadrightarrow R_G^{\mathcal L}.
+$$
+
+If a finite-dimensional space $V_{G/\mathcal L}$ supplies a complete, functorial, additive, and
+effective **relative** obstruction theory, then the kernel is generated by at most
+$\dim_kV_{G/\mathcal L}$ elements. Hence
+
+$$
+\dim R_G^{\mathcal L}
+\geq
+\dim R_{\mathcal L}+g-\dim_kV_{G/\mathcal L}.
+$$
+
+No regularity or flatness of $R_{\mathcal L}$ is needed for the presentation or the elementary
+dimension inequality. Such hypotheses are needed for sharper dimension formulas, preservation
+under coefficient change, or complete-intersection conclusions.
+
+The adjective relative prevents double counting. Equations already defining the local
+conditions live in $R_{\mathcal L}$; the new variables and equations measure only global
+compatibility beyond those local choices.
+
+### 21.7 Universal versus versal rings in applications
+
+The word attached to a ring determines what conclusions may be drawn from it. A universal ring
+gives a natural bijection for every Artinian target and, by continuity, for every complete
+target. Its points, maps, quotient conditions, and coefficient changes are therefore uniquely
+classified.
+
+A versal ring gives existence of classifying maps but not uniqueness. A hull is a versal ring
+with minimal tangent space; its dimension and minimal presentation are meaningful up to
+noncanonical isomorphism, and an effective obstruction theory can still bound its relations.
+But two maps from a hull to the same coefficient ring may determine the same deformation, and a
+map between moduli problems need not determine a unique reversed map between chosen hulls.
+
+The safe terminology is therefore:
+
+$$
+\begin{array}{c|c}
+\text{available statement}&\text{permitted conclusion}\\ \hline
+(H1)\text{--}(H3)&\text{a hull, hence a minimal versal formal space}\\
+(H1)\text{--}(H4)&\text{a universal ring and unique classification}\\
+\text{framed exact gluing + finite tangent}&\text{a framed universal ring}\\
+\text{unframed scalar centralizer + finite tangent}&
+\text{an unframed universal ring}\\
+\text{larger stabilizers}&
+\text{a hull at best unless uniqueness is separately proved}.
+\end{array}
+$$
+
+This distinction is not weakened by complete reconstruction, fixed determinant, local
+conditions, or coefficient extension. Every later construction inherits the same level of
+uniqueness as its inputs.
+
+## 22. Conclusion
+
+### 22.1 The formal space assembled from finite tests
 
 A deformation functor begins as a collection of answers over finite local thickenings. Fiber products ask whether two answers with a common shadow can be glued; small extensions reduce that question to one infinitesimal layer; the tangent space identifies the necessary generators. Under (H1)--(H3), these data can be organized into compatible quotients of a finite-variable power-series ring. Their inverse limit is complete and Noetherian, and its universal system maps formally smoothly to the functor. That is the hull.
 
 The additional self-gluing condition (H4) removes the last ambiguity. It turns the hull's existence statement into unique classification and hence into a universal deformation ring. This is a categorical uniqueness phenomenon, not an obstruction-vanishing phenomenon.
 
-### 18.2 The role of automorphisms
+### 22.2 The role of automorphisms
 
 Framed representations glue as matrices and therefore satisfy exact fiber-product identities. Unframed classes forget comparison arrows. When the residual centralizer is scalar, every Artinian centralizer remains scalar; comparison automorphisms lift and act trivially, restoring unique descent. With a larger centralizer, the explicit second-order example shows that self-gluing can fail. The honest outcomes are then a framed universal ring, perhaps an unframed hull, or a groupoid-valued formal moduli problem—not a falsely universal coarse quotient.
 
 Fixed determinant is a closed equation once a compatible determinant lift has been chosen. Its universal ring is a quotient of an existing ambient universal ring, while its tangent and obstruction theory retain characteristic-sensitive trace phenomena. More general local conditions likewise give quotient rings only after closed relative representability has been proved.
 
-### 18.3 The endpoint
+### 22.3 The endpoint
 
 The reusable conclusion is now precise. Finite continuous tangent data supply a Noetherian power-series source. Schlessinger gluing supplies a hull. Automorphism-free self-gluing supplies universality. Complete obstruction theories help verify lifting and bound relations but do not replace any of those categorical steps. Quotients impose closed conditions, completed tensor products combine compatible problems, and formally smooth maps add power-series parameters.
 
-This package is the formal foundation on which later local and global deformation rings rest. Their arithmetic content will lie in defining the right conditions and calculating their tangent and obstruction spaces; their existence as complete local rings will follow by checking the representability mechanisms established here.
+Continuity now completes the passage from finite tests to complete coefficients: represented
+functors reconstruct maps into complete rings, framed representations reconstruct entrywise, and
+unframed classes reconstruct through compatible strict conjugators when the residue field is
+finite. Coefficient change is governed by completed tensor products for a same-residue base,
+while enlargement of the residual field requires a separate descent theorem. Finally, closed
+local conditions combine with a global universal family through a functorial fiber product, whose
+representing ring is the corresponding completed tensor product or quotient.
+
+This package is the formal foundation on which later local and global deformation rings rest.
+Their arithmetic content lies in defining the right conditions, proving those conditions closed
+in families, and calculating their tangent and obstruction spaces. Their existence, continuity,
+coefficient behavior, and exact degree of universality then follow from the mechanisms established
+here.
