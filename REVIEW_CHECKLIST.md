@@ -172,7 +172,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 105. Analytic Theory of Automorphic Rankin–Selberg L-functions
 - [ ] 106. Strong Multiplicity One and Global Newforms for GL₂
 - [ ] 107. Algebraicity and Integral Structures of Weight-Two Packets
-- [ ] 108. Cuspidal Trace-Formula Kernels for Rank Two
+- [x] 108. Cuspidal Trace-Formula Kernels for Rank Two
 - [ ] 109. The Cuspidal Spectral Side of the GL₂ Trace Formula
 - [ ] 110. The Geometric Side of the GL₂ Trace Formula
 - [ ] 111. Orbital Integrals for GL₂ and Quaternion Algebras
