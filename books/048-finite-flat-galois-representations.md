@@ -92,9 +92,22 @@ $$
 
 When $k$ has positive characteristic, its characteristic will be denoted $p$. Statements about $p$-primary torsion tacitly begin with that hypothesis; if $k$ has characteristic zero, every positive integer is invertible in $R$ and only the rigid étale case remains. Neither finiteness nor perfection of $k$ is built into the words “complete discretely valued field.” Completeness implies that $R$ is henselian; perfection will be added only when connected--étale structure requires it. Most arithmetic applications have $K$ a finite extension of $\mathbf Q_p$, so $\operatorname{char}K=0$ and $k$ is finite, but equal characteristic $K=k((t))$ is kept visible because it exposes several otherwise hidden hypotheses.
 
+There are three characteristics in the discussion, and confusing them destroys otherwise correct statements. The characteristic of $K$ governs whether a finite generic group is automatically étale. The characteristic of $k$ governs which orders can develop connected special fibers. The characteristic of a coefficient ring governs the torsion carried by a representation. In the central arithmetic case these are
+
+$$
+\operatorname{char}K=0,\qquad \operatorname{char}k=p,
+\qquad \operatorname{char}\Lambda=\ell^a,
+$$
+
+and the difficult local condition occurs at a place with $p=\ell$. At a place with $p\ne\ell$, every $\ell$-power-order model is forced to be étale, so finite flatness reduces to unramifiedness. This dichotomy explains why the same phrase has a geometric meaning above $\ell$ and a rigid Galois-theoretic meaning away from $\ell$.
+
+Book 2 supplies the valuation-theoretic facts used throughout: $R$ is henselian, the valuation extends uniquely to every finite extension, and the integral closure $R_L$ in a finite extension $L/K$ is a finite free $R$-module. Book 19 supplies finite étale descent and the finite-set description of absolute Galois actions. Books 46 and 47 supply finite-flat quotients, schematic closure over a DVR, and Cartier duality. We recall each imported statement at the point of use, including the hypothesis that makes it applicable, so that the argument remains readable without silently enlarging the dependency list.
+
 The geometry used here is the category of finite locally free commutative $R$-group schemes. “Finite flat” will always mean finite locally free, including finite presentation. Over the DVR $R$ the coordinate algebra is therefore a finite free $R$-module. Its rank is constant and survives passage to both generic and special fibers.
 
 ### 1.2 Finite continuous modules
+
+Before introducing integral geometry, we need a basis-free description of the generic datum. Matrices conceal changes of coefficients and invariant subgroups; a finite module with continuous action retains exactly the information that survives every change of basis.
 
 A **finite continuous $G_K$-module** is a finite abelian group $M$ equipped with an action of $G_K$ such that
 
@@ -116,9 +129,21 @@ $$
 
 but the module with its action is the invariant object. This distinction becomes important when finite flatness is required to be independent of a matrix presentation.
 
+The topology is not decorative. Since $\operatorname{Aut}(M)$ is finite and discrete, continuity of the action is equivalent to continuity of the homomorphism
+
+$$
+\rho_M:G_K\longrightarrow\operatorname{Aut}(M).
+$$
+
+The singleton $\{1\}$ is open in the target, so continuity implies that $\ker\rho_M$ is open. Conversely an open kernel makes $\rho_M$ factor through the finite discrete quotient $G_K/\ker\rho_M$, and the action is continuous. Thus every finite representation is controlled by a finite Galois extension: after replacing the open kernel by its open normal core, there is a finite Galois extension $L/K$ such that $G_L$ acts trivially. This is what makes ordinary finite Galois descent sufficient on the generic fiber.
+
+If $M$ is a finite $\Lambda$-module, continuity as an abelian-group representation and continuity as a $\Lambda$-linear representation are the same condition. Indeed $\operatorname{Aut}_\Lambda(M)$ is a subgroup of the same finite permutation group. Coefficient linearity is additional algebraic structure, not an additional topological constraint.
+
 The adjective “absolute” refers to $G_K$, not to an algebraic closure fixed once and for all. Replacing $K^s$ by another separable closure conjugates $G_K$ and transports its modules through an equivalence. Nothing below depends on that auxiliary choice.
 
 ### 1.3 From an integral group to its generic action
+
+The first direction of the dictionary is easy but foundational: an integral group should produce a generic representation. Isolating the hypothesis under which geometric points retain the whole generic group prevents connected infinitesimal groups from being mistaken for zero representations.
 
 Let $\mathcal G$ be a finite-flat commutative $R$-group scheme. Its generic fiber
 
@@ -139,11 +164,15 @@ $$
 =|\mathcal G_K(K^s)|.
 $$
 
+The last equality deserves its étale hypothesis. Over $K^s$, a finite étale scheme of rank $r$ is a disjoint union of $r$ copies of $\operatorname{Spec}K^s$, so it has exactly $r$ geometric points. A nonétale scheme can have fewer points than its rank. The generic representation therefore exists in the present sense precisely on the full subcategory of finite-flat groups with étale generic fiber.
+
 This construction is the bridge of the book. The representation is the generic shadow of an integral group. The special fiber $\mathcal G_k$ is not an extra representation: it is a finite group scheme that may have fewer geometric points, nilpotents, and a connected component of positive scheme-theoretic order.
 
 When $\operatorname{char}K=0$, every finite group scheme over $K$ is étale, so every finite-flat $R$-group has such a generic module. More generally, a finite group scheme over a field is étale whenever its order is prime to the characteristic. In characteristic $p$, however, $\alpha_p$ and $\mu_p$ show that a finite group scheme of $p$-power order need not be étale. Thus in equal characteristic the expression $\mathcal G_K(K^s)$ can lose information and is not automatically the generic representation of $\mathcal G$.
 
 ### 1.4 What geometric points forget
+
+Two examples now locate the exact boundary of the pointwise viewpoint. The mixed-characteristic example shows collision only after specialization; the equal-characteristic example shows that information may already be lost on the generic fiber.
 
 The familiar mixed-characteristic example is
 
@@ -160,6 +189,8 @@ $$
 after passage to an algebraic closure of $k$. Thus $p$ generic points merge into one geometric special point of length $p$. The Galois module sees the generic roots of unity and their cyclotomic action; the integral model additionally records the collision.
 
 In equal characteristic $p$, the warning is stronger. The group $\alpha_p=\operatorname{Spec}K[X]/(X^p)$ has only the zero geometric point, just as the trivial group does, although its scheme-theoretic order is $p$. Hence the functor of geometric points is not faithful on all finite group schemes. The finite étale hypothesis is the precise boundary at which points recover the scheme.
+
+The distinction may also be read through coordinate algebras. For the constant group of order $p$, the coordinate algebra over an algebraic closure is a product of $p$ fields. For $\alpha_p$ it is the local algebra $K[X]/(X^p)$, whose nilpotent element $X$ is invisible under every map to a field. Geometric points see the reduced quotient of a finite algebra; finite-flat geometry must retain its nilpotents as well. This is why finite flatness is never defined by counting points of the special fiber.
 
 This observation determines the architecture that follows. We first identify the generic finite étale object corresponding to a module. A finite-flat model will then mean an integral group whose generic fiber is identified with that étale object. The definition will never attempt to recover a nonétale generic group from its points.
 
@@ -181,6 +212,20 @@ is an equivalence from finite étale commutative $F$-group schemes to finite dis
 
 For the second direction, let $M$ be a finite continuous $G_F$-module. Choose an open normal subgroup acting trivially, corresponding to a finite Galois extension $L/F$. Over $L$ take the constant group $\underline M_L$. Its coordinate algebra is $L^M$, and $\operatorname{Gal}(L/F)$ acts semilinearly, permuting the factors according to its action on $M$. Galois descent produces a finite étale Hopf algebra over $F$. Increasing $L$ does not change the descended object. In the other direction, a finite étale group splits over some finite separable extension, and its descent datum is recovered from the action on its geometric points. These constructions are mutually inverse. $\square$
 
+The descent algebra makes every part of the construction visible. If $f\in L^M$ is a function $M\to L$, define
+
+$$
+(\gamma f)(m)=\gamma\bigl(f(\gamma^{-1}m)\bigr).
+$$
+
+Then $(L^M)^{\operatorname{Gal}(L/F)}$ is the descended coordinate algebra. Addition on $M$ gives
+
+$$
+\Delta(f)(m_1,m_2)=f(m_1+m_2),
+$$
+
+while zero and inversion give the counit and antipode. These maps commute with the semilinear action and therefore descend. A map between two split constant groups is exactly a homomorphism of their indexing finite abelian groups, and it descends precisely when it is Galois equivariant. This verifies full faithfulness as well as essential surjectivity.
+
 We denote the finite étale $K$-group associated with $M$ by $\mathcal E_K(M)$. The notation separates the abstract module from the scheme that represents it. There is a canonical identification
 
 $$
@@ -190,6 +235,8 @@ $$
 once the descent construction is fixed.
 
 ### 2.2 Where characteristic enters
+
+The correspondence itself is characteristic-free, but applications often use the separate assertion that a given group scheme is étale. This section disentangles those statements so that an invertibility hypothesis is never smuggled into descent.
 
 Theorem 2.1 has no restriction on the order of $M$. Even in characteristic $p$, a finite abstract $p$-group with continuous Galois action descends to a finite **étale** group scheme: after $F^s$ it is the constant disjoint union indexed by that group. What fails in characteristic $p$ is the converse claim that every finite group scheme arises this way.
 
@@ -201,6 +248,8 @@ There are therefore two different statements, with different hypotheses:
 Suppose $M$ is killed by an integer $n$. The associated $\mathcal E_F(M)$ is killed by $n$ with no condition on $n$. But to conclude that an arbitrary group scheme killed by $n$ is visible through geometric points, one requires $n$ invertible in $F$, or an independent proof of étaleness. This is the separability hypothesis that will accompany every use of generic geometric points.
 
 ### 2.3 Morphisms, exactness, and variance
+
+An equivalence of objects is useful only if it transports maps and exact sequences with the correct arrow directions. Those compatibilities will later turn generic submodules into subgroup schemes and generic quotients into faithfully flat quotients.
 
 The correspondence is covariant. A homomorphism $u:M\to N$ gives a morphism
 
@@ -232,6 +281,8 @@ $$
 
 is faithfully flat exact. Conversely, geometric points of a faithfully flat exact sequence of finite étale groups form an exact sequence of modules. Surjectivity here is a statement after separable base change; it is not a claim that $F$-rational points surject.
 
+Indeed, after extension to $F^s$ the groups are constant. A homomorphism between constant finite groups is faithfully flat exactly when the underlying homomorphism is surjective: on coordinate algebras it is the inclusion of products of copies of $F^s$ obtained by repeating a coordinate along every fiber. Faithful flatness descends, so exactness of the modules and faithfully flat exactness of the group schemes are equivalent. This calculation also explains why exactness on $F$-rational points is neither necessary nor expected.
+
 ### 2.4 Unramified modules over a henselian valuation ring
 
 Completeness now has its first representation-theoretic consequence. Since $R$ is henselian, finite étale $R$-schemes are equivalent to finite étale $k$-schemes. Choose a separable closure $k^s$ and write $G_k=\operatorname{Gal}(k^s/k)$. After choosing compatible separable closures, the generic fibers are exactly the finite étale $K$-schemes on which inertia acts trivially.
@@ -241,6 +292,15 @@ Completeness now has its first representation-theoretic consequence. Since $R$ i
 **Proof strategy.** Compare both sides with finite étale objects over the residue field. Henselianity lifts those objects and their morphisms uniquely, while the quotient $G_K\to G_k$ identifies residue Galois actions with generic actions trivial on inertia.
 
 If $\mathcal G/R$ is finite étale, reduction gives a finite étale $k$-group. Its generic geometric points carry the inflated $G_k$-action, so $I_K$ acts trivially. Conversely, if $I_K$ acts trivially on $M$, the action factors through $G_K/I_K\simeq G_k$. Theorem 2.1 gives a finite étale $k$-group, and the henselian lifting equivalence gives a finite étale $R$-group with the desired generic module. Full faithfulness of both equivalences gives uniqueness of the object and of its generic identification. $\square$
+
+Here inertia is the kernel in the exact sequence
+
+$$
+1\longrightarrow I_K\longrightarrow G_K
+\longrightarrow G_k\longrightarrow1.
+$$
+
+The right-hand map comes from the action on the residue field of the integral closure of $R$ in $K^s$. Henselianity ensures that every finite separable extension of $k$ lifts uniquely to a finite unramified extension of $K$, which proves surjectivity. No finiteness or perfection hypothesis on $k$ is used. When $k$ is finite, $G_k$ is procyclic: arithmetic Frobenius $x\mapsto x^{|k|}$ topologically generates it, while geometric Frobenius is the inverse. We will never use an unqualified Frobenius normalization.
 
 The phrase “unique” is deliberately confined to the finite étale category. A module can have this canonical étale model and also have a nonétale finite-flat model when $p$ divides its order. The constant and multiplicative example in Chapter 10 will make that distinction concrete.
 
@@ -267,7 +327,19 @@ Equivalently, one may give a $G_K$-equivariant isomorphism $\mathcal G_K(K^s)\si
 
 The word “model” means an object plus a generic identification. If one discards $\iota$, one obtains only an integral form of the isomorphism class of $M$. Both viewpoints are useful, but morphisms in a fiber over a fixed representation are most precise when the identification is retained.
 
+Two models $(\mathcal G,\iota)$ and $(\mathcal H,\theta)$ of the same $M$ are isomorphic as models when an $R$-group isomorphism $u:\mathcal G\to\mathcal H$ satisfies
+
+$$
+\theta\circ u_K=\iota.
+$$
+
+An isomorphism of the underlying integral groups need not be an isomorphism of models if it changes the marking on the generic fiber. Conversely, a chosen generic isomorphism need not extend integrally. The marking eliminates an automorphism ambiguity but does not manufacture morphisms.
+
+There is also a Hopf-lattice translation. Put $A_K=\mathcal O(\mathcal E_K(M))$. A model is equivalent to a finite free $R$-subalgebra $A\subset A_K$ that spans $A_K$ over $K$ and is stable under coproduct, counit, and antipode. Such an $A$ is an integral Hopf lattice. Different models of the same representation are different Hopf lattices inside one fixed generic Hopf algebra. A generic endomorphism extends exactly when its pullback preserves the chosen lattice.
+
 ### 3.2 Existence as a property
+
+Arithmetic statements usually say that a representation “is finite flat,” without carrying a chosen model forever. We therefore separate the witness from the existential property it witnesses.
 
 **Definition 3.2.** The module $M$ is **finite flat over $R$**, written informally
 
@@ -288,9 +360,15 @@ The integral group is evidence for the property, not part of the bare module. Th
 
 Finite flatness is invariant under $G_K$-module isomorphism. If $a:M\to N$ is an isomorphism and $(\mathcal G,\iota)$ models $M$, then $(\mathcal G,\mathcal E_K(a)\circ\iota)$ models $N$. This simple transport is what later makes the condition basis-independent.
 
+The zero module has the trivial one-point group as its model. A finite product of models will later model a direct sum. These elementary cases matter logically: the predicate is a property of an object in an abelian representation category, but its witnesses live in an exact geometric category that is not abelian.
+
 ### 3.3 The exponent and the order
 
-Every finite module is killed by some positive integer $n$, and its associated finite étale group has order $|M|$. Any model therefore has constant rank $|M|$. Moreover, the model is itself killed by $n$: multiplication by $n$ vanishes generically and hence vanishes integrally by faithfulness. These integers play different roles. The exponent controls coefficient actions and duality targets; the order controls rank and étaleness criteria.
+Two elementary integers impose different geometric constraints. Keeping exponent and order separate is essential for coefficient actions, ranks, duality, and extension categories.
+
+Every finite module is killed by some positive integer $n$, and its associated finite étale group has order $|M|$. Any model therefore has constant rank $|M|$. Moreover, the model is itself killed by $n$: multiplication by $n$ vanishes generically and hence vanishes integrally by faithfulness. Explicitly, $[n]_{\mathcal G}$ and the zero morphism have the same generic fiber, and maps out of $\mathcal G$ are determined by their generic fibers because $\mathcal O(\mathcal G)$ is $R$-torsion-free. These integers play different roles. The exponent controls coefficient actions and duality targets; the order controls rank and étaleness criteria.
+
+The exponent can be smaller than the order. For $M=(\mathbf Z/p\mathbf Z)^2$, every model has order $p^2$ and is killed by $p$. For $M=\mathbf Z/p^2\mathbf Z$, both order and exponent are $p^2$. This matters for extensions: an extension of two groups killed by $p$ can have middle term $\mathbf Z/p^2\mathbf Z$, so the middle term need not be killed by the same exponent as the endpoints.
 
 Assume now that $k$ has characteristic $p>0$. If $|M|$ is prime to $p$, then every finite-flat model has order invertible in $R$ and is finite étale. Consequently
 
@@ -304,6 +382,8 @@ In equal characteristic $p$, even a $p$-torsion Galois module still has an étal
 
 ### 3.4 First examples and nonexamples
 
+Examples must show both that the definition is populated and that it is restrictive. Constant and multiplicative groups give the basic models, while ramified prime-to-$p$ characters give a clean obstruction.
+
 Every unramified finite module is finite flat: take its unique finite étale $R$-model. In particular, the trivial module $\mathbf Z/n\mathbf Z$ has the constant model $\underline{\mathbf Z/n\mathbf Z}_R$ for every $n$.
 
 The cyclotomic module
@@ -314,6 +394,8 @@ $$
 
 has the model $\mu_n$ whenever $n$ is invertible in $K$. In mixed characteristic this includes $n=p^r$. The model is finite flat even though its special fiber is nonétale when $p\mid n$. Thus a finite-flat representation at residue characteristic $p$ need not be unramified; the mod-$p$ cyclotomic character is the basic counterexample.
 
+The qualification “$n$ is invertible in $K$” concerns the generic fiber. The group $\mu_n$ is finite locally free over $R$ for every $n$, because $R[T]/(T^n-1)$ is free with basis $1,T,\ldots,T^{n-1}$. Its generic fiber represents a Galois module exactly when it is étale, equivalently when $n\ne0$ in $K$. In mixed characteristic this always holds; in equal characteristic $p$, it fails for $p\mid n$.
+
 Not every finite $G_K$-module is finite flat. Assume $k$ has characteristic $p>0$, choose an odd prime $q\ne p$, and suppose $K$ admits a ramified quadratic character
 
 $$
@@ -322,9 +404,13 @@ $$
 
 Let $G_K$ act on the additive group $M=\mathbf F_q$ through $\chi$. Its order is $q$, prime to $p$. Every finite-flat model of order $q$ would be finite étale, and its generic module would be unramified. This contradicts the choice of $\chi$. Hence $M$ is not finite flat. The definition imposes a genuine integral ramification constraint, not just finiteness and continuity. At $p$-power order the constraints are subtler, and we will not replace them by an unproved classification.
 
+More generally, if $q\ne p$ and $M$ is any finite $q$-primary module on which inertia acts nontrivially, then $M$ is not finite flat. A putative model would have order invertible in $R$, hence would be finite étale, and Theorem 2.2 would force inertia to act trivially. Thus the prime-to-$p$ part has already been completely characterized. The later geometric work is concentrated exactly where the order is not a unit on the base.
+
 ## 4. The generic-fiber functor
 
 ### 4.1 Faithfulness
+
+Once models are viewed as integral lattices in a fixed generic object, the first categorical question is whether an integral morphism is determined generically. The answer is yes, and this modest rigidity will later enforce every identity constructed on a model.
 
 Let $\mathrm{FFCG}(R)$ denote the category of finite locally free commutative $R$-group schemes. Generic base change defines
 
@@ -356,6 +442,15 @@ $$
 
 Both are finite flat of order $p$, and both generic fibers are étale because the derivatives of their defining additive polynomials are nonzero over $K=k((t))$. The substitution $Y=tX$ is a generic isomorphism. Its inverse requires $X=t^{-1}Y$ and does not preserve the integral coordinate lattice. The special fibers explain the obstruction: $(\mathcal G_1)_k$ is étale, whereas $(\mathcal G_t)_k\simeq\alpha_p$ is connected.
 
+The equations really define subgroup schemes of the additive group. Give $X$ and $Y$ primitive coproducts,
+
+$$
+\Delta(X)=X\otimes1+1\otimes X,\qquad
+\Delta(Y)=Y\otimes1+1\otimes Y.
+$$
+
+In characteristic $p$, the two defining polynomials are additive, so their ideals are Hopf ideals. Each quotient is free on the powers below $p$. Over $K$, the derivatives are $-1$ and $-t^{p-1}$, both nonzero, which proves étaleness. The integral map corresponds contravariantly to $Y\mapsto tX$. Modulo $t$ it sends $Y$ to zero, so it cannot be an isomorphism.
+
 There is an integral morphism $\mathcal G_1\to\mathcal G_t$ whose generic fiber is the displayed isomorphism, but it is not an integral isomorphism. The inverse generic morphism has no integral extension. Hence the functor is not full, and an isomorphism on generic fibers need not be an isomorphism integrally.
 
 ### 4.3 Model groupoids and exact categories
@@ -375,6 +470,16 @@ $$
 $$
 
 This is the appropriate exact-category structure. An admissible monomorphism is a finite-flat closed subgroup whose represented quotient lies in the category; an admissible epimorphism is the corresponding faithfully flat quotient. The category is not asserted to be abelian. Arbitrary kernels can fail to be flat, and arbitrary schematic images need not give faithfully flat image factorizations.
+
+The fixed-exponent subcategory is also not closed under every extension formed in the larger finite-flat category. The constant sequence
+
+$$
+0\longrightarrow\mathbf Z/p\mathbf Z
+\longrightarrow\mathbf Z/p^2\mathbf Z
+\longrightarrow\mathbf Z/p\mathbf Z\longrightarrow0
+$$
+
+has endpoints killed by $p$ and middle term killed only by $p^2$. Thus $\mathscr C_R(n)$ admits those faithfully flat exact sequences whose three terms already lie in it. This qualification is separate from the failure of flat kernels and images.
 
 The generic-fiber functor from $\mathscr C_R(n)$ to finite étale $K$-groups killed by $n$ is faithful and exact on the declared exact sequences. Composing with geometric points gives a faithful exact functor to finite $G_K$-modules killed by $n$.
 
@@ -413,6 +518,8 @@ Transporting by $\iota$ gives a closed subgroup $H_K\subset\mathcal G_K$. The pr
 
 ### 5.2 The closure theorem
 
+The desired subgroup is forced by saturation. Proving this requires more than taking topological closure: one must construct a saturated Hopf ideal and verify flatness before descending the group identities.
+
 **Theorem 5.1 (finite-flat closure).** Let $R$ be a DVR, let $\mathcal G$ be a finite-flat commutative $R$-group, and let $H_K\subset\mathcal G_K$ be a closed subgroup. Its schematic closure $\overline H\subset\mathcal G$ is a finite-flat closed subgroup. It is the unique finite-flat closed subgroup of this fixed $\mathcal G$ with generic fiber $H_K$.
 
 **Proof strategy.** Contract the generic Hopf ideal to the integral coordinate algebra. Contraction makes the quotient torsion-free; over a DVR finite torsion-free modules are free. Only after flatness is established do the generic Hopf identities descend integrally.
@@ -429,7 +536,23 @@ If another finite-flat closed subgroup has the same generic ideal, its defining 
 
 The proof uses the one-dimensional valuation ring in a decisive way. Over a Dedekind domain it works locally and glues because finite torsion-free modules are projective. Over a higher-dimensional normal domain, torsion-free need not mean flat, so the same closure can fail to be a finite-flat model.
 
+Closure also commutes with flat extensions of DVRs. Let $R\to R'$ be flat, with fraction field $K'$, and use primes for scalar extensions. Since
+
+$$
+0\longrightarrow I\longrightarrow A\longrightarrow C\longrightarrow0
+$$
+
+has flat cokernel, tensoring with $R'$ remains exact. The quotient $C\otimes_RR'$ is torsion-free and has generic fiber $(A_{K'}')/I_{K'}$. Hence $I\otimes_RR'$ is the contraction of the extended generic ideal, by uniqueness of saturated contraction. Therefore
+
+$$
+(\overline H)_{R'}=\overline{H_{K'}}^{\,\mathcal G_{R'}}.
+$$
+
+This compatibility is stronger than preservation of rank. It says that once the ambient model is fixed, forming an integral subrepresentation and extending the local field can be done in either order.
+
 ### 5.3 Admissible subobjects and quotients
+
+Closure solves only half of the representation-theoretic problem: a submodule should also leave a quotient model. The finite-flat quotient theorem supplies that second half and turns saturation into an exact sequence.
 
 Apply Theorem 5.1 to $M'\subset M$ and write $\mathcal G'$ for the closure. The represented quotient $\mathcal G/\mathcal G'$ is finite flat, and
 
@@ -446,6 +569,21 @@ $$
 
 Consequently both $M'$ and $M/M'$ are finite flat. More precisely, a chosen model of $M$ induces a uniquely determined model of $M'$ **inside that ambient model**, and a corresponding quotient model of $M/M'$.
 
+Let us justify that the quotient has the claimed generic module. Book 46 proves that a finite-flat closed subgroup of a finite-flat commutative group has a represented finite-flat quotient and that quotient formation commutes with arbitrary base change. Therefore
+
+$$
+(\mathcal G/\mathcal G')_K
+\simeq\mathcal G_K/\mathcal G'_K.
+$$
+
+The finite étale--Galois equivalence is exact, so the geometric points of the right side are $M/M'$. The quotient map is faithfully flat, and the rank formula gives
+
+$$
+|\mathcal G/\mathcal G'|=\frac{|M|}{|M'|}=|M/M'|.
+$$
+
+No comparison of special-fiber point counts is used.
+
 This proves an important closure statement without claiming that either subquotient has a unique abstract model. If a different model of $M$ is chosen, its closure of $M'$ may be a different integral group. Ambient uniqueness and absolute uniqueness are separate assertions.
 
 The same reasoning handles a $G_K$-stable filtration
@@ -455,6 +593,15 @@ $$
 $$
 
 Closing each $M_i$ inside the one fixed $\mathcal G$ gives a filtration by finite-flat closed subgroups. Successive quotients model $M_i/M_{i-1}$. Intersections and sums should always mean the saturated closure of the corresponding generic intersection or sum inside a common ambient object. With that convention their ranks satisfy the expected formulas.
+
+For two stable submodules $M_1,M_2\subset M$, the reliable rank identity is
+
+$$
+|\overline{M_1+M_2}|\,|\overline{M_1\cap M_2}|
+=|\overline{M_1}|\,|\overline{M_2}|,
+$$
+
+where every bar denotes closure inside $\mathcal G$. The equality follows on the generic fiber from the elementary formula for finite abelian groups and then from preservation of rank under closure. It does not assert that the raw integral intersection or the raw image of the addition map is flat. Saturation is part of the construction.
 
 ### 5.4 Kernels and images: the unsafe shortcuts
 
@@ -487,7 +634,18 @@ $$
 
 Pointwise surjectivity is neither required nor generally true. A torsor may acquire a section only after a faithfully flat extension of the test ring.
 
+The standard roots-of-unity sequence illustrates the definition in every residue characteristic. For positive integers $a,b$,
+
+$$
+0\longrightarrow\mu_a\longrightarrow\mu_{ab}
+\xrightarrow{[a]}\mu_b\longrightarrow0
+$$
+
+is finite-flat exact. The kernel equation is $T^a=1$, and locally for the faithfully flat topology an element of $\mu_b$ acquires an $a$th root, which is exactly the torsor condition. If the residue characteristic divides $a$, the map need not be surjective on points over a test ring, but it remains a faithfully flat quotient. When the generic characteristic does not divide $ab$, generic geometric points give the corresponding exact cyclotomic module sequence.
+
 ### 6.2 Passing an integral sequence to representations
+
+The definition of exactness was chosen so that it survives to the generic module. This section verifies that promise and identifies the converse construction available when a middle model is already known.
 
 **Proposition 6.1.** Suppose the generic fibers in a finite-flat exact sequence are étale. Then geometric generic points form an exact sequence of finite continuous $G_K$-modules.
 
@@ -498,6 +656,8 @@ After base change to $K$, exactness is preserved. Over $K^s$ all three groups ar
 Conversely, if a finite-flat model $\mathcal G$ of the middle module $M$ is already supplied, closure of $M'\subset M$ produces an integral exact sequence modeling the given generic sequence. Thus every extension that already has a model automatically has compatible subobject and quotient models.
 
 ### 6.3 Which generic extensions are finite flat
+
+Separate finite-flat models of two endpoints do not determine which extension classes have integral middle terms. We therefore distinguish realizability with fixed endpoint lattices from existential realizability with some endpoint lattices.
 
 Fix finite-flat modules $M'$ and $M''$. An element
 
@@ -530,6 +690,10 @@ $$
 
 because closure inside a model of $M_\xi$ constructs the endpoint models and the exact integral sequence. The converse is false as a general principle. Finite flatness is not merely a condition on the Jordan--Hölder factors; it also restricts the extension class.
 
+There is an equivalent formulation that starts from the middle term: $\xi$ is finite-flat realizable if and only if $M_\xi$ is finite flat. One direction is immediate from the integral extension. For the other, choose a model of $M_\xi$, close the embedded copy of $M'$ inside it, and take the represented quotient. Chapter 5 shows that the resulting integral sequence has generic fiber the original extension. This equivalence allows one to test existence without first fixing endpoint models, while the relative notion remembers which endpoint lattices are required.
+
+The endpoint qualification is genuine. A module may have several models; an extension can be compatible with the quotient model induced from its middle term but incompatible with a separately chosen model of the same quotient representation. A generic isomorphism of endpoints does not repair this because it may not preserve the integral Hopf lattices.
+
 The split class is always realizable relative to chosen models: its middle term is $\mathcal G'\times\mathcal G''$. Nonsplit classes occur naturally as well. Suppose $R$ has mixed characteristic $(0,p)$, is henselian, and has perfect residue field. If an elliptic scheme over $R$ has ordinary special fiber, the connected--étale sequence of its $p$-torsion is a finite-flat exact sequence. Because the generic fiber has characteristic zero, its two rank-$p$ terms are étale and give one-dimensional $\mathbf F_p$-representations of $G_K$. The integral middle term remembers how the connected and étale directions meet. The sequence need not split over $R$, even when its special or generic behavior becomes simpler after an extension. This geometric example shows why the allowed classes cannot be replaced by split extensions alone. In equal characteristic $p$, the connected generic term need not be étale, so the same sequence cannot automatically be read as an extension of two Galois modules in the sense of this book.
 
 ### 6.4 Pullbacks, pushouts, and Baer operations
@@ -544,9 +708,13 @@ $$
 
 This statement is deliberately categorical rather than cohomological. Computing that subgroup through local cohomology, tangent spaces, or deformation functors belongs later. Here the point is that the geometry supplies a class of extensions stable under the operations required of a local condition.
 
+To check the subgroup assertion fully, the split product represents zero. Pullback and pushout preserve faithfully flat exactness, so the Baer construction stays among integral extensions. Pushing out along $[-1]$ gives the inverse. Associativity and commutativity follow from the corresponding identities for addition on $\mathcal G'$, and generic fiber carries these operations to the ordinary Baer operations. No claim about arbitrary generic extensions enters the proof.
+
 ## 7. A calculus of finite-flat representations
 
 ### 7.1 Sums, products, and primary parts
+
+The previous chapters handled one subobject or extension at a time. We now assemble those constructions into a calculus that can be applied to decompositions, coefficients, and filtrations without silently assuming an abelian category.
 
 Finite direct sums of modules correspond to finite products of their associated étale group schemes. If $(\mathcal G_i,\iota_i)$ models $M_i$ for $1\le i\le r$, then
 
@@ -570,6 +738,15 @@ M_q\text{ is finite flat for every }q.
 $$
 
 If $k$ has characteristic $p>0$, the $q$-primary part for $q\ne p$ is finite flat exactly when it is unramified. All model-theoretic flexibility is concentrated at $q=p$. When $k$ has characteristic zero, every primary part lies in the étale range.
+
+Here is the integral splitting explicitly. Choose integers $e_q$ whose classes in $\mathbf Z/n\mathbf Z$ are the Chinese-remainder idempotents. Integer multiplication defines endomorphisms $[e_q]$ of every model, and
+
+$$
+[e_q]^2=[e_q],\qquad [e_q][e_{q'}]=0\ (q\ne q'),
+\qquad\sum_q[e_q]=1.
+$$
+
+The product of the images of these idempotents maps isomorphically to the original group; the inverse is the tuple of projections. All identities hold integrally because they are identities between integer-multiplication morphisms. Thus no possibly nonflat raw image construction is being used: an idempotent has a split image and kernel, both direct factors of a finite locally free group.
 
 ### 7.2 Subquotients and supplied extensions
 
@@ -605,6 +782,8 @@ $$
 $$
 
 whose generic action corresponds under $\iota$ to the given action on $M$. Here addition in the endomorphism ring is pointwise addition of group homomorphisms and multiplication is composition.
+
+The word “ring” includes the identity: $1\in\Lambda$ must act as the identity of $\mathcal G$. If $\Lambda$ has characteristic $n$, then the structure map $\mathbf Z/n\mathbf Z\to\Lambda$ agrees with integer multiplication on the model. This follows generically and hence integrally by faithfulness. Thus coefficient structure refines, rather than replaces, the underlying commutative group structure.
 
 This condition cannot be replaced by saying that each scalar acts generically. A generic endomorphism need not extend to a chosen model. When the integral action is supplied, forgetting along a homomorphism $\Lambda_0\to\Lambda$ immediately gives a $\Lambda_0$-linear model. Thus restriction of coefficient scalars always preserves finite flatness.
 
@@ -643,7 +822,11 @@ $$
 
 is finite flat and has generic module $\Lambda'\otimes_\Lambda M$. It remains to recover the $\Lambda'$-action, since generic fullness cannot simply be invoked.
 
+The construction is independent of the chosen presentation at the level that matters here. Two presentations can be dominated by their direct sum. The induced quotient models need not be canonically isomorphic as unmarked integral groups, but each is a valid $\Lambda'$-linear witness for the same generic module. Since finite flatness is existential, no stronger presentation-independence is needed.
+
 For $a\in\Lambda'$, multiplication by $a$ on $\Lambda'$ lifts through $P\twoheadrightarrow\Lambda'$ to a $\Lambda$-linear endomorphism of the free module $P$. The resulting matrix of $\Lambda$-scalars acts on $\mathcal G^m$. It preserves $\mathcal H$: generically it preserves $N$, and the defining ideal then vanishes on $\mathcal H$ by torsion-freeness. Hence it descends to an endomorphism of $\mathcal Q$. Two choices of lift induce the same generic endomorphism of $\mathcal Q$, so faithfulness makes them equal integrally. The unit, addition, and multiplication identities for these endomorphisms also hold generically and therefore integrally. They define the required ring homomorphism $\Lambda'\to\operatorname{End}_R(\mathcal Q)$.
+
+The lifting step uses only that $P$ is free. If $q:P\to\Lambda'$ is the chosen surjection, then $m_a\circ q:P\to\Lambda'$ lifts to an endomorphism $T_a:P\to P$. For $x\in\ker q$, one has $q(T_ax)=a q(x)=0$, so $T_a$ preserves the relation module already before tensoring with $M$. Different lifts differ by a map landing in $\ker q$ and hence act trivially on the generic quotient. This proves both preservation of the closure and independence of choices without assuming that $\Lambda'$ is projective over $\Lambda$.
 
 **Proposition 7.3.** For every homomorphism $\Lambda\to\Lambda'$ of finite commutative rings, scalar extension carries a $\Lambda$-linear finite-flat module $M$ to the $\Lambda'$-linear finite-flat module $\Lambda'\otimes_\Lambda M$.
 
@@ -662,6 +845,8 @@ $$
 $$
 
 The action map $a\otimes m\mapsto am$ is a surjective $\Lambda[G_K]$-homomorphism onto $M$. Close its generic kernel in the supplied model and take the represented finite-flat quotient. Stability of the generic kernel under $\Lambda$ makes its closure $\Lambda$-stable, so the quotient is the required $\Lambda$-linear model of $M$. $\square$
+
+This resolves an apparent tension. Generic fullness fails for a fixed model, so that particular model need not carry the desired scalars. The existential predicate is nevertheless insensitive to the failure: products, closure, and quotient construct another model on which the coefficient action is integral. Thus “this chosen model is $\Lambda$-linear” is extra data, whereas “the representation has some $\Lambda$-linear model” is equivalent to finite flatness of the underlying abelian module.
 
 ## 8. Cartier duality and the Tate twist
 
@@ -688,11 +873,21 @@ $$
 
 If $M$ is free over $\mathbf Z/n\mathbf Z$, this is the familiar ordinary module dual tensored with $\mathbf Z/n\mathbf Z(1)$. The displayed Hom formulation is canonical for arbitrary finite modules killed by $n$.
 
+The construction does not depend on choosing the least possible annihilator. If $nM=0$ and $n\mid n'$, every homomorphism $M\to\mu_{n'}(K^s)$ lands in $\mu_n(K^s)$ because $f(m)^n=f(nm)=1$. Thus the character group is intrinsically
+
+$$
+\operatorname{Hom}\bigl(M,(K^s)^\times\bigr),
+$$
+
+and $\mu_n$ is simply a finite target through which every character factors. Its order equals $|M|$: after forgetting Galois action, the character group of a finite abelian group over a separably closed field of characteristic prime to its exponent has the same elementary divisors.
+
 Choosing a primitive root identifies $\mu_n(K^s)$ with $\mathbf Z/n\mathbf Z$ as an abstract group, but transports the cyclotomic action to the target. Forgetting it would turn a Galois-equivariant evaluation pairing into a generally non-equivariant one. The twist is therefore forced by the geometry.
 
 If $\operatorname{char}K$ divides $n$, the generic Cartier dual of an étale group can be nonétale. Its geometric points then need not encode the dual scheme. Cartier duality still exists, but the formula above does not furnish a dual finite Galois module of the same kind. This is why the invertibility hypothesis is explicit.
 
 ### 8.2 Dual models
+
+Having identified the correct twisted generic dual, we now ask whether duality preserves integral realizability. Base-change compatibility of Cartier duality gives exactly the required bridge.
 
 Let $(\mathcal G,\iota)$ be a finite-flat model of $M$, with $nM=0$ and $n\in K^\times$. Cartier duality produces a finite-flat commutative group $\mathcal G^D$, is compatible with arbitrary base change, and gives
 
@@ -702,7 +897,7 @@ $$
 
 The character description of the finite étale generic fiber identifies the right side with $\mathcal E_K(M^*(1))$. Hence:
 
-**Theorem 8.1.** Under the preceding hypotheses, $\mathcal G^D$ is a finite-flat model of $M^*(1)$. In particular,
+**Theorem 8.1.** Let $nM=0$ and assume $n\in K^\times$. If $\mathcal G$ is a finite-flat model of $M$, then $\mathcal G^D$ is a finite-flat model of $M^*(1)$. In particular,
 
 $$
 M\text{ finite flat}\quad\Longleftrightarrow\quad M^*(1)\text{ finite flat}.
@@ -714,9 +909,26 @@ The reverse implication follows from biduality. Notice that the theorem transpor
 
 Finite local freeness of $\mathcal G$ makes its dual Hopf algebra finite locally free, so $\mathcal G^D$ is an allowed integral object. Base change gives $(\mathcal G^D)_K\simeq(\mathcal G_K)^D$. Because $n$ is invertible in $K$, both sides are finite étale, and evaluation into $\mu_n$ identifies the geometric points of the latter with $\operatorname{Hom}(M,\mu_n(K^s))$ carrying the displayed Galois action. This constructs the required generic identification. Applying the same argument to $\mathcal G^D$ and using $\mathcal G^{DD}\simeq\mathcal G$ proves the converse. $\square$
 
+The Galois action formula follows from evaluation. If $f$ is a character and $m\in M$, equivariance of the evaluation pairing requires
+
+$$
+\langle\sigma f,\sigma m\rangle
+=\sigma\langle f,m\rangle.
+$$
+
+Replacing $m$ by $\sigma^{-1}m$ gives precisely
+
+$$
+(\sigma f)(m)=\sigma(f(\sigma^{-1}m)).
+$$
+
+This derivation shows that the inverse on the argument is contragredience and the outer action is the Tate twist; neither is a convention that may be dropped.
+
 If $\mathcal G$ carries an action of a commutative coefficient ring $\Lambda$, contravariance sends each scalar endomorphism to an endomorphism of $\mathcal G^D$. The scalar endomorphisms commute, so the reversed order of composition causes no ambiguity and gives a $\Lambda$-action on the dual. On generic points this is the contragredient coefficient action. Thus Theorem 8.1 also preserves coefficient-linear finite flatness, with the Tate twist retained.
 
 ### 8.3 Exactness and annihilators
+
+Duality is most useful when it controls subquotients, not merely isolated objects. Exactness reverses a quotient sequence and identifies the integral closure of a generic annihilator.
 
 Cartier duality reverses finite-flat exact sequences. From
 
@@ -744,7 +956,21 @@ $$
 
 is finite flat and is the closure of the generic annihilator inside the fixed ambient dual model. Thus closure and annihilator commute. The qualification “inside the fixed ambient model” is again essential.
 
+The proof is short but uses both prerequisite theorems in their exact forms. Cartier duality reverses the faithfully flat exact sequence
+
+$$
+0\to\mathcal H\to\mathcal G\to\mathcal G/\mathcal H\to0,
+$$
+
+so $\mathcal H^\perp\simeq(\mathcal G/\mathcal H)^D$ is finite flat. Its generic fiber is the character subgroup trivial on $\mathcal H_K$. It is therefore a finite-flat closed subgroup of $\mathcal G^D$ with the same generic fiber as the generic annihilator. Uniqueness of schematic closure inside $\mathcal G^D$ identifies the two. Biduality then gives the double-annihilator identity
+
+$$
+(\mathcal H^\perp)^\perp=\mathcal H.
+$$
+
 ### 8.4 Self-dual geometric representations
+
+Polarized abelian schemes provide the main source of perfect integral pairings. Their torsion explains both the Tate twist and the determinant constraint that recur in two-dimensional arithmetic representations. Retain the hypothesis $n\in K^\times$ when passing to generic Galois modules, although the integral group-scheme pairing itself exists without it.
 
 Let $A/R$ be an abelian scheme. The Weil pairing and the dual abelian scheme give
 
@@ -766,9 +992,25 @@ $$
 
 and an isomorphism $E[n]\simeq E[n]^*(1)$. In rank two this forces the determinant to be cyclotomic. The integral statement is stronger than the pointwise one at residue characteristic: even when the special-fiber point pairing degenerates visibly, the scheme-theoretic Weil pairing remains perfect.
 
+Here is the determinant calculation. Assume $n$ is invertible in $K$ and choose a basis $P,Q$ of the free rank-two module $E[n](K^s)$ such that $e_n(P,Q)$ is primitive. If $A_\sigma$ is the matrix of $\sigma$, bilinearity and alternation give
+
+$$
+e_n(\sigma P,\sigma Q)=e_n(P,Q)^{\det A_\sigma}.
+$$
+
+Galois equivariance gives the same left side as
+
+$$
+\sigma e_n(P,Q)=e_n(P,Q)^{\chi_n(\sigma)}.
+$$
+
+Primitivity yields $\det A_\sigma=\chi_n(\sigma)$ in $(\mathbf Z/n\mathbf Z)^\times$. Although a basis was used for the calculation, determinant and the cyclotomic character are intrinsic. When $n$ is not invertible on the special fiber, the calculation remains valid generically in mixed characteristic, while perfectness over $R$ is the stronger group-scheme statement supplied by Cartier duality.
+
 ## 9. Changing the local field
 
 ### 9.1 Restriction by base change
+
+Local representations are often examined after enlarging the local field. The forward operation is geometric base change and is automatic; the reverse operation is descent and requires extra integral compatibility. This chapter separates those directions.
 
 Let $L/K$ be a finite separable extension and let $R_L=\mathcal O_L$. Choose a $K$-embedding $L\hookrightarrow K^s$; then $K^s$ is also a separable closure of $L$, and $G_L$ identifies with a subgroup of $G_K$ up to conjugacy. If $(\mathcal G,\iota)$ models $M$, ordinary base change gives
 
@@ -783,7 +1025,19 @@ $$
 \operatorname{FF}_{R_L}(M|_{G_L}).
 $$
 
+Each hypothesis has a role. Separability permits $G_L$ to be read as a subgroup of $G_K$ and identifies generic scalar extension with restriction of the Galois action. Finiteness ensures, by the local extension theory of Book 2, that $R_L$ is finite free over $R$. Flatness then preserves finite local freeness, exact sequences, and ranks. A purely inseparable change has no subgroup interpretation of this form and is not the representation-theoretic scalar extension considered here.
+
 Finite-flat exact sequences, coefficient actions, Cartier duals, and products all commute with this base change. Schematic closure of a generic subgroup also commutes with the flat extension of DVRs $R\to R_L$. Thus a model and every admissible construction made inside it can be transported coherently to $L$.
+
+In particular, for $M'\subset M$ the two natural models after restriction agree:
+
+$$
+\left(\overline{\mathcal E_K(M')}^{\,\mathcal G}\right)_{R_L}
+=
+\overline{\mathcal E_L(M'|_{G_L})}^{\,\mathcal G_{R_L}}.
+$$
+
+Thus closing a subrepresentation and extending the local field may be done in either order.
 
 This operation is restriction of the **Galois group** together with extension of the **valuation ring**. It should not be confused with restriction or extension of the coefficient ring $\Lambda$ from Chapter 7.
 
@@ -813,9 +1067,17 @@ $$
 
 over $R_L\otimes_RR_L$, satisfying the cocycle condition after a third base change. The Hopf operations and any coefficient action must be compatible with this isomorphism. Effective faithfully flat descent then produces a finite-flat $R$-group $\mathcal G$ whose base change is $\mathcal H$.
 
+**Theorem 9.1 (descent criterion for a model).** Let $L/K$ be finite separable, put $R_L=\mathcal O_L$, and let $M$ be a finite continuous $G_K$-module. A finite-flat $R_L$-model $(\mathcal H,\eta)$ of $M|_{G_L}$ descends to an $R$-model of $M$ if and only if it carries effective descent data relative to $R_L/R$ preserving the group law, every coefficient action, and the generic marking $\eta$. The descended marked model is unique up to unique isomorphism.
+
+**Proof strategy.** Descend the finite projective coordinate algebra and each Hopf map, and then descend the marking. Faithful flatness detects all identities.
+
+Put $B=\mathcal O(\mathcal H)$. The datum descends the finite projective $R_L$-algebra $B$ to a finite projective $R$-algebra $A$. Compatibility descends multiplication, unit, coproduct, counit, antipode, and coefficient endomorphisms. Their identities may be checked after the faithfully flat base change, so $\operatorname{Spec}A$ is a finite-flat commutative $R$-group with the required scalars. The compatible generic marking descends to $\mathcal G_K\simeq\mathcal E_K(M)$. Full faithfulness of descent and generic-fiber faithfulness give uniqueness. Conversely, the base change of any downstairs marked model carries the canonical descent datum, compatible with every part of its structure. $\square$
+
 When $L/K$ is Galois, one often describes such data as compatible semilinear isomorphisms $\gamma^*\mathcal H\simeq\mathcal H$ for $\gamma\in\operatorname{Gal}(L/K)$. In the ramified case this shorthand must still encode descent over the possibly nonreduced ring $R_L\otimes_RR_L$; a collection of actions on geometric points is not a substitute for scheme-theoretic descent data.
 
 Suppose $M$ is already a $G_K$-module and $\mathcal H$ models $M|_{G_L}$. The generic identification supplies descent data on the generic fiber only. To descend the model, those generic isomorphisms must extend to the integral Hopf lattice. Generic-fiber faithfulness gives uniqueness of each extension if it exists, and then forces the cocycle identity. It does not give existence.
+
+Consequently the cocycle is not the difficult check after integral extensions have been found. The two composites over a triple overlap have the same generic fiber, and faithfulness forces them to agree. The hard issue is whether each generic comparison preserves the integral Hopf lattice in the first place.
 
 ### 9.4 Why potential finite flatness is weaker
 
@@ -834,7 +1096,7 @@ Descent is valid when the full integral datum exists. A base-changed model carri
 
 The simplest uniqueness theorem comes from étaleness. Let $M$ have order prime to $p$. Any finite-flat model $\mathcal G$ has invertible order over $R$. A finite locally free group scheme of invertible order is finite étale. Since $R$ is henselian, it follows that:
 
-**Theorem 10.1.** If $p\nmid|M|$, then the following are equivalent:
+**Theorem 10.1.** Assume $\operatorname{char}k=p>0$. If $p\nmid|M|$, then the following are equivalent:
 
 1. $M$ is finite flat over $R$;
 2. $M$ is unramified;
@@ -852,6 +1114,8 @@ For $p$-power order, neither implication remains a general characterization. A f
 
 ### 10.2 Constant and multiplicative models
 
+Prime-to-$p$ rigidity fails as soon as the special fiber can be nonétale. The simplest witness compares the two groups exchanged by Cartier duality and shows that even a trivial generic action need not force a unique integral specialization.
+
 Let $R$ have mixed characteristic $(0,p)$ and suppose $K$ contains a primitive $p$th root of unity. Then the generic groups
 
 $$
@@ -862,11 +1126,28 @@ $$
 
 are isomorphic. Both therefore model the same trivial $G_K$-module after a generic identification. Integrally they are not isomorphic. The constant group has an étale special fiber with $p$ geometric points, whereas $\mu_p$ has a connected nonreduced special fiber with one geometric point and length $p$.
 
+Choose a primitive root $\zeta_p\in K$. The map
+
+$$
+\mathbf Z/p\mathbf Z\longrightarrow\mu_p(K),
+\qquad a\longmapsto\zeta_p^a,
+$$
+
+identifies the two split finite étale generic groups. On the special fiber,
+
+$$
+T^p-1=(T-1)^p,
+$$
+
+so $\mu_{p,k}$ is connected, whereas the constant group is a disjoint union of $p$ copies of $\operatorname{Spec}k$. An integral isomorphism would preserve connected components after base change, which is impossible.
+
 This example separates existence from uniqueness in the most economical way. The representation is split and trivial; nonuniqueness is not caused by a complicated Galois action. It is caused by two different ways for the same generic points to meet the special fiber.
 
 The assumption about roots of unity is essential. Without it, the generic module of $\mu_p$ is the mod-$p$ cyclotomic module, not the trivial constant module. The two integral groups still exist, but they do not model the same $G_K$-module.
 
 ### 10.3 An equal-characteristic lattice example
+
+Mixed characteristic is not responsible for nonuniqueness. An explicit additive family in equal characteristic shows how the valuation depth of a Hopf lattice can vary while the generic representation remains fixed.
 
 The groups
 
@@ -878,6 +1159,29 @@ $$
 over $R=k[[t]]$ give a second nonuniqueness mechanism. Their generic fibers are isomorphic finite étale groups under $Y=tX$, yet one special fiber is étale and the other is $\alpha_p$. In this displayed example the generic module is in fact split: the roots of $X^p-X$ are the elements of $\mathbf F_p\subset K$. Thus even a trivial generic module can acquire genuinely different integral Hopf lattices in equal characteristic.
 
 The example also displays a partial order of lattices. The generic isomorphism extends in one direction as a nonisomorphic integral map. Such a map is neither an admissible monomorphism nor an admissible epimorphism merely because it is generically an isomorphism. Its failure of flat kernel measures the valuation depth between the two Hopf lattices.
+
+There is in fact a chain of such lattices. For $i\ge0$ put
+
+$$
+\mathcal G_{t^i}
+=\operatorname{Spec}R[Z_i]/(Z_i^p-t^{i(p-1)}Z_i).
+$$
+
+The substitution $Z_{i+1}=tZ_i$ gives
+
+$$
+\mathcal G_{t^0}\longrightarrow\mathcal G_{t^1}
+\longrightarrow\cdots\longrightarrow\mathcal G_{t^r}.
+$$
+
+All generic fibers are the same split étale group. For every $i>0$ the special fiber is $\alpha_p$. The models are nevertheless pairwise nonisomorphic: the cotangent module at the identity is
+
+$$
+e^*\Omega_{\mathcal G_{t^i}/R}
+\simeq R/(t^{i(p-1)})\,dZ_i,
+$$
+
+because differentiating the relation at the identity gives $-t^{i(p-1)}dZ_i=0$. Its $R$-length is $i(p-1)$, an isomorphism invariant. Hence even the pair consisting of generic and special isomorphism types does not classify a model; valuation depth in the Hopf lattice supplies additional integral information.
 
 No attempt will be made to classify all lattices or all models. Even rank-$p$ classification depends delicately on ramification and on the base. The examples are used only to establish the structural facts needed later: nonuniqueness occurs, generic maps need not extend, and special-fiber type carries information absent from the representation.
 
@@ -905,11 +1209,19 @@ $$
 
 is a finite-flat commutative $R$-group of order $n^{2g}$.
 
+This finite-flatness is not obtained by inspecting only the generic fiber. On an abelian scheme the differential of $[n]$ is multiplication by $n$ on the tangent bundle. When $n$ is not a unit, this differential may vanish on the special fiber, so étaleness fails. Properness and the group structure instead show that $[n]$ is a finite faithfully flat isogeny; fiberwise its degree is $n^{2g}$, and its kernel is finite locally free of that rank. This is precisely the theorem from Book 46 that makes abelian schemes useful at residue-characteristic torsion.
+
 If $\mathcal A[n]_K=A[n]$ is étale, then $\mathcal A[n]$ models the Galois module $A[n](K^s)$. This is automatic when $n$ is invertible in $K$, in particular for every $n$ when $K$ has characteristic zero. Thus over a $p$-adic field, all finite torsion representations of an abelian variety with good reduction are finite flat, including its $p$-power torsion.
 
 At primes $q\ne p$, $n=q^r$ is invertible already over $R$, so $\mathcal A[q^r]$ is finite étale and the representation is unramified. At $n=p^r$ in mixed characteristic, the generic fiber is still étale but the integral group need not be. Good reduction gives finite flatness rather than unramifiedness. This is the precise refinement of the prime-to-$p$ specialization theorem.
 
+**Proposition 11.1 (torsion from good reduction).** Assume $\operatorname{char}K=0$ and $A/K$ extends to an abelian scheme $\mathcal A/R$. Then for every $n\ge1$, the finite $G_K$-module $A[n](K^s)$ is finite flat over $R$. If $\operatorname{char}k=p>0$ and $p\nmid n$, it is unramified and its model is uniquely finite étale. If $p\mid n$, no unramifiedness conclusion follows. When $\operatorname{char}k=0$, every $n$ lies in the rigid étale range.
+
+**Proof.** Characteristic zero makes $A[n]$ finite étale over $K$. The finite locally free group $\mathcal A[n]$ has this generic fiber, hence is a model. If $\operatorname{char}k=p>0$ and $p\nmid n$, Theorem 10.1 applies. If $\operatorname{char}k=0$, the order is a unit in $R$, so the same differential argument used in Theorem 10.1 makes the model finite étale. The cyclotomic example and ordinary elliptic torsion below show why unramifiedness cannot be concluded at $p$-power order. $\square$
+
 ### 11.2 Elliptic curves at the residue characteristic
+
+Dimension one makes the geometry especially concrete. The ordinary and supersingular special fibers exhibit two radically different ways in which a rank-two generic torsion representation can specialize without losing scheme-theoretic rank.
 
 For an elliptic curve $E/K$ with good reduction and elliptic scheme $\mathscr E/R$,
 
@@ -932,6 +1244,8 @@ In equal characteristic $p$, the qualification from Chapter 1 returns. The group
 
 ### 11.3 Abelian schemes and finite-flat subgroup closures
 
+Torsion models become more useful when invariant subrepresentations are retained. Schematic closure turns a generic isogeny kernel into an integral kernel and simultaneously constructs its quotient.
+
 Suppose again that $\operatorname{char}K=0$, let $V\subset A[n](K^s)$ be a $G_K$-stable subgroup, and identify it with a generic subgroup $H_K\subset\mathcal A[n]_K$. Its schematic closure
 
 $$
@@ -942,11 +1256,11 @@ is finite flat and models $V$. The quotient $\mathcal A[n]/\mathcal H$ models $A
 
 For an elliptic curve, a $G_K$-stable line in $E[\ell](K^s)$ is the generic kernel of a cyclic $\ell$-isogeny. With good reduction, its closure inside $\mathscr E[\ell]$ is the integral kernel, even when $\ell=p$ and the special kernel becomes connected. This unifies three viewpoints developed earlier in the series:
 
-- the good-reduction theory of elliptic curves supplies a smooth proper group over $R$;
-- the torsion theory supplies the Galois representation, invariant lines, and the Weil pairing;
-- the theory of finite-flat commutative group schemes supplies integral torsion kernels, schematic closure, and represented quotients.
+- the abelian scheme supplies a smooth proper group over $R$ and its finite multiplication kernel;
+- finite étale descent supplies the generic Galois representation and its invariant submodules;
+- finite-flat group schemes and Cartier duality supply closure, quotients, and the Weil pairing.
 
-In the language of the prerequisites, Book 51 supplies the torsion representation, invariant lines, pairings, and good-reduction consequences, while Book 46 supplies integral torsion kernels, schematic closure, and represented quotients. The present book does not rebuild them; it identifies their common output as a finite-flat Galois representation and explains which representation-theoretic operations preserve that output.
+In the prerequisite chain, Book 19 proves the finite étale--Galois dictionary, Book 46 proves integral torsion kernels, schematic closure, and represented quotients, and Book 47 proves the Weil pairing and its perfectness. The present book identifies their common output as a finite-flat Galois representation and proves which representation-theoretic operations preserve it.
 
 The ambient torsion group is what makes the closure canonical. A bare invariant line need not possess a preferred model independently of this embedding.
 
@@ -982,6 +1296,8 @@ Finite local freeness here refers to $\mathcal O(\mathcal G)$ as an $R$-module. 
 
 ### 12.2 Basis-independent representations
 
+Residual representations are usually displayed as matrices, but finite flatness must survive conjugation and must treat reducible extensions without choosing a splitting. The module formulation accomplishes both goals.
+
 Let $\mathbf k$ be a finite field of characteristic $\ell$, and let $V$ be two-dimensional over $\mathbf k$. A basis writes its action as
 
 $$
@@ -997,6 +1313,20 @@ $$
 $$
 
 is therefore integrally realizable with those induced endpoint models. Knowing only that the two characters on the diagonal are finite flat would not suffice to recover this conclusion.
+
+Consequently finite flatness passes from $V$ to its semisimplification. Choose a composition series by stable subspaces, close it inside one model, and model every simple factor by a successive quotient. Their direct sum models $V^{\mathrm{ss}}$. The converse is not automatic: semisimplification forgets precisely the extension classes isolated in Chapter 6. Thus the local condition is stronger than a condition on the multiset of Jordan--Hölder factors.
+
+For a reducible two-dimensional representation one may, after identifying an invariant line, choose a basis and write
+
+$$
+\bar\rho(\sigma)=
+\begin{pmatrix}
+\chi_1(\sigma)&c(\sigma)\\
+0&\chi_2(\sigma)
+\end{pmatrix}.
+$$
+
+Finite flatness of $V$ implies finite flatness of both characters and integral realizability of the class encoded by $c$. The two character conditions alone do not imply finite flatness of the matrix representation. Changing a splitting changes the cocycle representative but not its extension class, so the geometric formulation remains basis independent.
 
 ### 12.3 Changing lattices and changing coefficients
 
@@ -1021,6 +1351,8 @@ is an injective $\mathbf k[G_K]$-map, so closing its image inside the restricted
 
 ### 12.4 Determinants and pairings
 
+In rank two, a perfect alternating pairing compresses duality into one character: the determinant. The point is not merely a matrix identity; the integral pairing supplies information even when the special fiber has too few geometric points for matrices. Throughout this section assume $\operatorname{char}K\ne\ell$, so that $\mu_\ell$ is finite étale on the generic fiber and its geometric points form a one-dimensional $\mathbf F_\ell$-module.
+
 For a two-dimensional $\mathbf k$-representation, put
 
 $$
@@ -1041,11 +1373,28 @@ $$
 
 identifies $V$ with its Tate-twisted dual and forces $\det V$ to be the mod-$\ell$ cyclotomic character. Elliptic-curve torsion carries exactly this pairing.
 
+Choose a basis and a nonzero element of the one-dimensional target. If $J$ is the alternating matrix, equivariance gives
+
+$$
+\bar\rho(\sigma)^{\mathsf t}J\bar\rho(\sigma)
+=\bar\chi_\ell(\sigma)J.
+$$
+
+For a $2\times2$ matrix $A$, one has $A^{\mathsf t}JA=(\det A)J$. Hence
+
+$$
+\det\bar\rho(\sigma)=\bar\chi_\ell(\sigma).
+$$
+
+The chosen basis and target generator disappear from the equality of characters. If the pairing comes from a perfect group-scheme pairing, it survives on connected special fibers where a pointwise matrix calculation is unavailable.
+
 One should not deduce general finite flatness of determinants from a nonexistent automatic tensor calculus on arbitrary finite-flat group schemes. Tensor products and exterior powers of the generic coefficient modules require representability and flatness on the integral side. In geometric situations the Weil pairing supplies the needed integral morphism directly. In other settings determinant conditions should be imposed or proved by an appropriate model construction.
 
 ## 13. The local finite-flat condition
 
 ### 13.1 At a place above the coefficient characteristic
+
+The preceding structure now condenses into the local condition used in arithmetic. Its definition must be intrinsic, compatible with coefficients, and precise about why places above the coefficient characteristic differ from all other finite places.
 
 Let $F$ be a number field, let $v\mid\ell$, and put
 
@@ -1061,9 +1410,23 @@ $$
 
 means that the restricted $\mathbf k[G_K]$-module $V|_{G_K}$ admits a $\mathbf k$-linear finite-flat model over $R$.
 
+The choice of decomposition group is harmless. Two embeddings defining the place give conjugate subgroups of $G_F$, and conjugation transports the restricted module through an isomorphism. Since finite flatness is invariant under module isomorphism, the condition depends only on $v$.
+
 Because $K$ has characteristic zero, the generic fiber of every finite-flat $R$-group is étale. No separability clause is hidden at this point. The subtlety lies entirely in extending the generic module across $R$, especially when its order is divisible by $\ell$.
 
 For a finite local coefficient ring $A$ of residue characteristic $\ell$ and a finite free $A$-module $V_A$ with continuous $G_K$-action, the analogous statement requires a finite-flat $R$-group with integral $A$-action whose generic points identify with $V_A$. This sentence specifies the object that later deformation theory will use; it does not define a deformation functor, claim representability, or calculate a tangent space.
+
+At a place $v\nmid\ell$, an $\ell$-power-order representation is finite flat exactly when it is unramified, by Theorem 10.1. The phrase “finite flat at places above $\ell$” singles out the places where the condition is not already ordinary unramifiedness.
+
+**Theorem 13.1 (local characterization).** Let $K$ be a finite extension of $\mathbf Q_\ell$, put $R=\mathcal O_K$, let $\Lambda$ be a finite commutative ring of $\ell$-power characteristic, and let $M$ be a finite continuous $\Lambda[G_K]$-module. The following are equivalent:
+
+1. $M$ is finite flat over $R$ as a $\Lambda$-linear representation.
+2. The finite étale $K$-group $\mathcal E_K(M)$ is the generic fiber of a finite locally free commutative $R$-group carrying a compatible $\Lambda$-action.
+3. The underlying abelian $G_K$-module has a finite-flat model.
+
+Under these conditions the property is independent of bases and coefficient presentations, but it need not determine a unique model.
+
+**Proof.** The equivalence of (1) and (2) is the definition with the generic marking explicit. Forgetting scalars gives (2)$\Rightarrow$(3). Corollary 7.4 constructs a possibly different $\Lambda$-linear model from any underlying model, giving (3)$\Rightarrow$(2). Transport along module isomorphisms proves basis independence, and Chapter 10 supplies nonunique models at $\ell$-power order. $\square$
 
 ### 13.2 Invariance and closure properties
 
@@ -1078,6 +1441,8 @@ The local condition has the formal properties needed for later use.
 - An extension is admitted whenever it is the generic fiber of a faithfully flat exact sequence of coefficient-linear finite-flat models.
 
 The last point is intentionally phrased with integral data. It is the exact closure property established in Chapter 6. A later deformation problem may define its allowable extension classes by requiring precisely such a model, but their cohomological description is not part of the present book.
+
+Two consequences sharpen the list. If $M$ is finite flat, every term and graded piece of a stable filtration is finite flat. If $M_1$ and $M_2$ are finite flat, their direct sum is finite flat, but an unspecified extension of $M_2$ by $M_1$ is not known to be finite flat until an integral middle model is produced. The proved closure properties therefore stop short of an unjustified Serre-subcategory slogan.
 
 ### 13.3 What the condition does not assert
 
@@ -1106,6 +1471,8 @@ This is a criterion of construction, not a classification theorem. In many arith
 ## 14. The four-level dictionary
 
 ### 14.1 Representation, model, existence, and uniqueness
+
+The conclusions are easiest to reuse when the four logical levels of the theory are displayed side by side. This prevents a theorem about a chosen lattice from being mistaken for a theorem about every lattice or about existence alone.
 
 The theory is most reliable when four levels are kept separate.
 
