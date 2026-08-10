@@ -184,7 +184,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 117. Compactified Modular Stacks and Coarse Modular Curves
 - [x] 118. Deligne–Rapoport Integral Models of Modular Curves
 - [x] 119. Integral Modular Forms and q-Expansion
-- [ ] 120. Modular and Shimura Curves
+- [x] 120. Modular and Shimura Curves
 - [x] 121. Modular Jacobians, Néron Models, and Hecke Correspondences
 - [ ] 122. Hecke Correspondences on Curves and Jacobians
 - [x] 123. Reductive Groups, Inner Forms, and Corestriction in Rank Two

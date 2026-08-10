@@ -7,6 +7,7 @@
    - [Fine moduli, coarse moduli, and stacks](#12-fine-moduli-coarse-moduli-and-stacks)
    - [Rigidification as a design principle](#13-rigidification-as-a-design-principle)
    - [Standing conventions](#14-standing-conventions)
+   - [Foundational inputs and logical scope](#15-foundational-inputs-and-logical-scope)
 2. [Three kinds of elliptic level](#2-three-kinds-of-elliptic-level)
    - [Why characteristic changes the definition](#21-why-characteristic-changes-the-definition)
    - [Full level $N$](#22-full-level-n)
@@ -63,6 +64,7 @@
     - [From complex points to a curve over the reflex field](#121-from-complex-points-to-a-curve-over-the-reflex-field)
     - [Properness](#122-properness)
     - [Coarse spaces and universal abelian schemes](#123-coarse-spaces-and-universal-abelian-schemes)
+    - [Comparison of moduli and adelic descriptions](#124-comparison-of-moduli-and-adelic-descriptions)
 13. [Reduced norms and components](#13-reduced-norms-and-components)
     - [Strong approximation isolates the obstruction](#131-strong-approximation-isolates-the-obstruction)
     - [Proof of the component formula](#132-proof-of-the-component-formula)
@@ -80,18 +82,22 @@
     - [Proof that the action respects level maps](#153-proof-that-the-action-respects-level-maps)
     - [Modular degeneracy maps](#154-modular-degeneracy-maps)
     - [Integral level change](#155-integral-level-change)
-16. [Moduli correspondences before Hecke theory](#16-moduli-correspondences-before-hecke-theory)
+16. [Hecke correspondences from moduli and double cosets](#16-hecke-correspondences-from-moduli-and-double-cosets)
     - [Why correspondences are the right object](#161-why-correspondences-are-the-right-object)
     - [The prime-to-level modular correspondence](#162-the-prime-to-level-modular-correspondence)
     - [Level-prime correspondences](#163-level-prime-correspondences)
     - [Quaternionic isogeny correspondences](#164-quaternionic-isogeny-correspondences)
     - [Independence of representatives](#165-independence-of-representatives)
+    - [The moduli correspondence equals the adelic double coset](#166-the-moduli-correspondence-equals-the-adelic-double-coset)
+    - [Composition and convolution](#167-composition-and-convolution)
+    - [Extension over good integral models](#168-extension-over-good-integral-models)
 17. [From curves to Jacobians and $H^1$](#17-from-curves-to-jacobians-and-h1)
     - [The proper curve is the cohomological object](#171-the-proper-curve-is-the-cohomological-object)
     - [Correspondence variance](#172-correspondence-variance)
     - [Good reduction and unramified cohomology](#173-good-reduction-and-unramified-cohomology)
     - [What has and has not been extracted](#174-what-has-and-has-not-been-extracted)
     - [A genus-zero warning](#175-a-genus-zero-warning)
+    - [The geometric Hecke modules](#176-the-geometric-hecke-modules)
 18. [An atlas of examples](#18-an-atlas-of-examples)
     - [$X(1)$ revisited](#181-x1-revisited)
     - [$X_0(2)$ as cyclic isogenies](#182-x_02-as-cyclic-isogenies)
@@ -101,7 +107,7 @@
 19. [The geometric dictionary](#19-the-geometric-dictionary)
     - [From input data to a curve](#191-from-input-data-to-a-curve)
     - [From a curve to later arithmetic objects](#192-from-a-curve-to-later-arithmetic-objects)
-    - [Boundaries between the next constructions](#193-boundaries-between-the-next-constructions)
+    - [The exact endpoint of the construction](#193-the-exact-endpoint-of-the-construction)
     - [Conclusion](#194-conclusion)
 
 ## 1. Curves born from classification problems
@@ -155,6 +161,26 @@ Rigidity thresholds depend on the moduli problem. Full level $N$ is fine over $\
 For an integer $N\geq1$, bases on which $N$ is invertible are schemes over $\mathbf Z[1/N]$. The group scheme of $N$th roots of unity is $\mu_N$, and the constant group scheme attached to $\mathbf Z/N\mathbf Z$ is denoted simply $\mathbf Z/N\mathbf Z$. Geometric connectedness always means connectedness after extension to an algebraic closure; it is stronger than connectedness over the displayed ground field.
 
 We distinguish the open moduli curve $Y$ of smooth elliptic curves from its compactification $X$. Script letters denote stacks, ordinary letters coarse spaces or fine schemes. When a fine problem is chosen, the distinction disappears and we say so explicitly. A subgroup called finite locally free has constant rank on each connected component of the base.
+
+### 1.5 Foundational inputs and logical scope
+
+A unified account is useful only if its foundations are visible. We shall repeatedly use the following established results, always with the hypotheses displayed here.
+
+First, generalized elliptic curves and their ample Drinfeld level structures form algebraic stacks with finite separated diagonal. Finite subgroup quotients and canonical contractions exist, are unique, and commute with base change. Their standard compactified level stacks are normal, proper, and flat over the indicated integral base; after adding auxiliary full level of order at least three, prime to every residue characteristic under consideration, one obtains a projective fine cover. The Tate charts on those covers are complete: they describe every boundary deformation, not merely a dense family of examples.
+
+Second, at a prime $p$ occurring to squarefree $\Gamma_0$-depth one, after prime-to-$p$ rigidification the Deligne--Rapoport model is regular and semistable. Its supersingular completed local rings are
+
+$$
+W(k)[[x,y]]/(xy-p),
+$$
+
+and its two normalized components are the Frobenius and Verschiebung branches. No corresponding assertion will be made for deeper $p$-power level, for an unrigidified wild coarse quotient, or for arbitrary parahoric data.
+
+Third, the quaternionic groups, their involutions, symplectic representations, and the PEL data used here have already been constructed. For a one-dimensional quaternionic PEL datum, neat level gives a smooth fine curve over the reflex field, complex uniformization identifies it with the selected adelic quotient, reduced norm computes its components by strong approximation, and canonical reciprocity gives the descent action on those components. At an unramified self-dual hyperspecial place its integral PEL functor is represented by a smooth model; anisotropy modulo center makes that model proper. At a split Iwahori place the rank-two local model is semistable only under the explicit unramified minuscule hypotheses stated in Chapter 14.
+
+Finally, for a smooth proper curve $X$, its Jacobian exists, finite correspondences act by pullback followed by norm, and the Kummer sequence identifies its Tate module with first étale cohomology in the variance used in Chapter 17. Smooth proper base change applies only to a smooth proper model. A regular semistable model instead brings component groups, nearby cycles, and monodromy into the picture.
+
+These are not hidden conclusions of this volume. They are its construction materials. What is proved here is how they fit together: the precise modular and quaternionic moduli problems, their analytic and adelic realizations, the passage to compact and integral curves, the comparison of component labels, and the construction of one common geometric Hecke action. Each later invocation will point back to the relevant hypothesis rather than abbreviating it as “standard.”
 
 ## 2. Three kinds of elliptic level
 
@@ -269,7 +295,29 @@ For the rigid ranges, one obtains schemes:
 
 **Theorem 3.1 (fine affine modular curves).** Over $\mathbf Z[1/N]$, the stack $\mathcal Y(N)$ is represented by a smooth affine scheme for $N\geq3$, and $\mathcal Y_1(N)$ is represented by a smooth affine scheme for $N\geq4$. They carry universal elliptic curves with their indicated level structures.
 
-The term affine deserves an explanation. A nonconstant modular invariant, together with the integrality of torsion coordinates over the $j$-line, makes the forgetful map finite; the inverse image of the affine $j$-line is affine. The compactified curve introduced later supplies the missing finite set of cusps.
+**Proof strategy.** The level sheaf is finite étale over the elliptic stack. We must show that the stated level kills inertia, turn the resulting algebraic space into a scheme, and then prove affineness.
+
+**Proof.** Let $(E,\alpha)$ be a geometric full-level object and let $u$ be an automorphism preserving $\alpha$. Then $u$ acts trivially on $E[N]$. We claim that $u=1$ for $N\geq3$. If $u\ne1$, the endomorphism $u-1$ is an isogeny and its kernel contains $E[N]$, so
+
+$$
+N^2\mid\deg(u-1). \tag{3.1a}
+$$
+
+The automorphism group of an elliptic curve acts faithfully on its prime-to-characteristic Tate module. Its possible finite-order characteristic polynomials have roots of unity of degree at most two, and therefore
+
+$$
+\deg(u-1)=\det(1-u\mid T_rE)\in\{1,2,3,4\}
+$$
+
+for an auxiliary prime $r$, unless $u=1$. Equality with $4$ occurs for $u=-1$, whose action on $E[N]$ is not the identity when $N\geq3$. The remaining cases cannot be divisible by $N^2$. Thus $u=1$. This argument remains valid in characteristics $2$ and $3$ because $N$ is invertible and the auxiliary Tate module detects the automorphism.
+
+For a $\Gamma_1(N)$ object $(E,P)$, an automorphism fixing $P$ makes $P$ lie in $\ker(u-1)$. The same list of possible degrees, together with the structure of the exceptional kernels, shows that no nonidentity automorphism can fix a point of exact order $N\geq4$. The bound is sharp as a uniform statement: at smaller levels, $[-1]$ fixes every point of order two, and exceptional automorphisms survive at special $j$-values.
+
+The level stacks have finite diagonal and are finite étale over the elliptic stack. Trivial geometric inertia makes each one an algebraic space. The established coarse-space theorem for finite level problems shows that the forgetful morphism to the coarse $j$-line is finite; equivalently, on Weierstrass charts the torsion coordinates satisfy the monic division equations and their invariant rings are integral over the $j$-ring. A finite algebraic space over a scheme is a scheme. Since a finite morphism to the affine scheme $\mathbf A^1_{\mathbf Z[1/N]}$ is affine, the resulting scheme is affine.
+
+Smoothness follows from the finite étale map to the smooth elliptic stack, or equivalently from the deformation calculation in the next section. The universal object on the level stack becomes a universal elliptic curve on the representing scheme. $\square$
+
+The compactified curve introduced later supplies the missing finite set of cusps. The proof also explains why the same statement cannot be transferred verbatim to bad characteristic: there the level sheaf need not be étale and full Drinfeld level need not kill inertia.
 
 For $\Gamma_0(N)$, the stack has generic stabilizer $\{\pm1\}$, so its coarse space $Y_0(N)$ is a curve but does not carry a universal elliptic curve. After also inverting $6$, its quotient singularities are tame and the usual coarse curve is smooth over $\mathbf Z[1/6N]$. At characteristics $2$ and $3$ one should retain the smooth stack or verify the coarse local ring separately rather than infer smoothness from the stack. Adding an auxiliary full level $M\geq3$, with $MN$ inverted, produces a fine cover on which the universal object exists; descent from that cover constructs the coarse curve and many of its maps.
 
@@ -335,13 +383,37 @@ selects the symplectic component $Y(N)_{\zeta_N}$.
 
 **Theorem 4.1.** For $N\geq3$, each fixed-pairing complex curve $Y(N)_{\zeta}$ is connected, hence geometrically connected over $\mathbf Q(\zeta_N)$. The full curve over $\mathbf Q$ is connected in the arithmetic sense appropriate to its cyclotomic field of constants but is not geometrically connected; after base change to $\overline{\mathbf Q}$ it is the disjoint union indexed by primitive roots.
 
-**Proof strategy.** Uniformization, developed in the next chapter, identifies a fixed-pairing component with $\Gamma(N)\backslash\mathfrak H$. The upper half-plane is connected, so its quotient is connected. Formula (2.3) shows that determinant classes permute these components transitively. Descent then identifies the constant field as cyclotomic. $\square$
+**Proof.** We give the uniformization argument here so that the component theorem does not depend on a later conclusion. Choose a primitive root $\zeta$. Every complex elliptic curve is $E_\tau=\mathbf C/(\mathbf Z\tau+\mathbf Z)$ for some $\tau\in\mathfrak H$. The two standard classes $1/N$ and $\tau/N$ form a basis of $E_\tau[N]$ whose pairing is a primitive root $\zeta_0$. There is a unique $b\in(\mathbf Z/N\mathbf Z)^\times$ with $\zeta_0^b=\zeta$, and the basis
+
+$$
+P=1/N,\qquad Q=b\tau/N
+$$
+
+has pairing $\zeta$. Conversely, a symplectic basis of $E[N]$ lifts to two vectors in $N^{-1}\Lambda/\Lambda$; completing those lifts to an oriented lattice basis expresses the marked curve in this form. Two parameters $\tau$ and $\tau'$ give isomorphic marked curves precisely when
+
+$$
+\tau'=\gamma\tau\qquad\text{for some }\gamma\in\Gamma(N).
+$$
+
+Thus $Y(N)_\zeta(\mathbf C)=\Gamma(N)\backslash\mathfrak H$. The continuous image of the connected space $\mathfrak H$ is connected. Since the quotient is a smooth complex algebraic curve, analytic connectedness is equivalent to algebraic connectedness.
+
+For any $g\in\operatorname{GL}_2(\mathbf Z/N\mathbf Z)$, formula (2.3) changes the pairing by the exponent $\det g$. The determinant map is surjective, so these matrices act transitively on the primitive pairing values. Hence the geometric fibers of (4.1), and no smaller pieces, are the geometric connected components.
+
+It remains to distinguish the ground fields. The finite étale target $\mu_N^{\mathrm{prim}}$ has coordinate algebra $\mathbf Q[T]/(\Phi_N)$, which is the field $\mathbf Q(\zeta_N)$ and is therefore connected over $\mathbf Q$. The total curve is connected because its components are permuted transitively by
+
+$$
+\operatorname{Gal}(\mathbf Q(\zeta_N)/\mathbf Q)\simeq(\mathbf Z/N\mathbf Z)^\times.
+$$
+
+After base change to $\overline{\mathbf Q}$ the cyclotomic algebra splits as a product indexed by primitive roots, and the curve splits accordingly. Over $\mathbf Q(\zeta_N)$ one chosen fiber is geometrically connected. $\square$
 
 The theorem illustrates why “connected” is insufficient in arithmetic. A scheme can be connected over $\mathbf Q$ because Galois permutes its geometric components transitively.
 
 ### 4.2 $\Gamma_1$ and $\Gamma_0$ components
 
 For the classical groups over $\mathbf Q$, the analytic curves $\Gamma_1(N)\backslash\mathfrak H$ and $\Gamma_0(N)\backslash\mathfrak H$ are connected. Their canonical algebraic models are geometrically connected over $\mathbf Q$. The disappearance of a visible cyclotomic component parameter reflects the fact that one has forgotten enough of the basis for determinant matrices to identify pairing values.
+
+Here is the exact descent argument. The quotient map from a fixed full-level component to $Y_1(N)$ is induced by allowing changes of the second basis vector while retaining the first. Such changes realize every possible primitive Weil pairing with the fixed point, so the Galois orbit of full-level components maps onto a single complex component. The analytic quotient $\Gamma_1(N)\backslash\mathfrak H$ is connected because it is a continuous image of $\mathfrak H$. Its field of moduli is $\mathbf Q$: the point condition $P$ of exact order $N$ is defined without choosing a root of unity. The same argument after forgetting the generator but retaining its cyclic subgroup gives $Y_0(N)$. Thus connectedness is not inferred merely from forgetting data; it follows from connected analytic uniformization together with descent of the defining moduli condition.
 
 This statement concerns the standard components attached to subgroups of $\operatorname{SL}_2(\mathbf Z)$. An adelic modular curve at a general compact open can have several components, controlled by the determinant quotient
 
@@ -504,7 +576,11 @@ or algebraically the corresponding parameter in the completed local ring. At a f
 
 **Theorem 7.1 (stable extension).** Let $R$ be a discrete valuation ring with fraction field $K$. A smooth elliptic curve over $K$ with stable level structure extends, after a finite extension of $R$ if necessary, to a generalized elliptic curve over the integral closure carrying stable level. Given two extensions and an identification of their generic fibers, that identification extends uniquely after the canonical contractions required by the chosen compactification.
 
-**Proof strategy.** First obtain semistable reduction for the genus-one curve after finite base change. The identity section selects the smooth group locus. The special fiber is either smooth or a cycle of rational curves after contraction of extraneous components. Take the schematic closures of prime-to-characteristic level data; for level divisible by the residue characteristic, take the finite-flat closure expressed by Drinfeld divisors. If the divisor misses components, contract exactly those components not required by stability. Properness of the curve extends sections, and the ampleness condition prevents further choices. Uniqueness follows because an isomorphism on the generic fiber extends across a normal trait between stable models. $\square$
+**Proof.** Potential semistable reduction for genus-one curves gives, after finite base change, a proper regular model whose identity component is either an elliptic scheme or a multiplicative group and whose minimal semistable fiber is smooth or polygonal. The identity section selects the smooth group locus. Contracting every component outside the minimal polygon produces a generalized elliptic curve; uniqueness of the minimal regular model makes this contraction canonical.
+
+For level of order prime to the residue characteristic, the torsion is finite étale, so every generic level section extends uniquely over the normal trait and its closure remains finite étale. For level divisible by the residue characteristic, take the scheme-theoretic closure of the generic subgroup and express its generator condition as equality of effective Cartier divisors. Flat closure preserves the generic rank, while the divisor equality preserves it through the special fiber. If the resulting level divisor misses polygon components, contract exactly the missed components. The quotient and contraction theorems ensure that the group action and level descend, and the final divisor is ample.
+
+For uniqueness, an isomorphism of generic fibers extends to the minimal regular models because their graphs have proper closure and minimality rules out exceptional components. Both candidate generalized curves are obtained from those models by contracting precisely the components missed by the same stable level divisor. Hence the isomorphism respects the contractions and extends uniquely. This proves existence and uniqueness after the finite base change. $\square$
 
 The finite extension in the theorem is part of the stack-valued valuative criterion: for a proper Deligne--Mumford stack, extension after a finite extension of the trait is the relevant existence statement. It does not by itself descend the stable object to the original trait. Descent over the original DVR requires an effective descent datum, and a generic object can have a genuine stable-reduction obstruction before ramified base change. In particular, one must not replace the theorem by the false assertion that every elliptic curve already has semistable reduction over every DVR.
 
@@ -697,7 +773,9 @@ Formula (10.2) already proves that the quotient is a complex curve. If $K$ is ne
 
 **Theorem 10.1.** If $B$ is a division algebra over $F$, every component $\Gamma_g\backslash\mathfrak H$ is compact. Equivalently, the Shimura curve has no cusps.
 
-**Proof strategy.** Noncompact ends of an arithmetic quotient of $\mathfrak H$ arise from parabolic elements, equivalently from nontrivial unipotents over $F$. A division algebra has no nonzero nilpotent element: if $(u-1)^2=0$ for $u\ne1$, then $u-1$ is a zero divisor. Hence $B^{\times}$ has no nontrivial $F$-rational unipotent. Reduction theory then gives compactness of the arithmetic quotient. $\square$
+**Proof.** The compactness criterion for arithmetic quotients of a rank-one symmetric domain says that $\Gamma\backslash\mathfrak H$ is noncompact exactly when the underlying adjoint group has a proper $F$-parabolic subgroup. In type $A_1$, such a parabolic is the stabilizer of an $F$-rational boundary point and its unipotent radical supplies a nonidentity $F$-rational unipotent. Conversely, a rational unipotent fixes a rational boundary point and produces a cusp neighborhood, so the criterion is an equivalence rather than merely a sufficient condition.
+
+If $u\in B^\times$ is unipotent, then $(u-1)^2=0$ in the degree-two algebra. A division algebra has no nonzero nilpotents: if $x^2=0$ and $x\ne0$, multiplying by $x^{-1}$ gives $x=0$. Thus $u=1$, and $PB^\times$ has no proper rational parabolic. The compactness criterion applies to every arithmetic subgroup $\Gamma_g$, proving that every quotient in (10.2) is compact. $\square$
 
 The proof exposes the structural contrast with modular curves. In $M_2(F)$ the upper triangular unipotent matrices fix rational boundary points and create cusps. In a division quaternion algebra no such matrices exist. Compactification adds nothing:
 
@@ -814,7 +892,11 @@ At primes where the lattice is self-dual and the algebra is unramified, a hypers
 
 **Theorem 11.1.** Under the quaternionic PEL hypotheses, the moduli problem (11.2) is a Deligne--Mumford stack of relative dimension one over its reflex field. For neat $K$ it is represented by a smooth quasi-projective curve and carries a universal abelian scheme with PEL structure. For nonneat $K$ it has a coarse algebraic curve, but the universal object exists naturally only on the stack. Its complex analytification is the PEL adelic quotient, which maps finitely to or from the quaternionic quotient of (10.1) according to the chosen central modification.
 
-**Proof strategy.** Polarized abelian varieties with fixed degree and sufficiently high auxiliary level lie in a quasi-projective fine moduli scheme. The $\mathcal O_D$ action, Rosati compatibility, determinant equations, and prescribed level orbit cut out a locally closed subscheme. Deformation theory gives dimension one and smoothness in characteristic zero. Forgetting the auxiliary rigidification and taking the finite quotient produces the stack and its coarse space. Complex Hodge theory sends a tuple to its polarized $D$-linear homology and identifies the resulting period domain with the chosen one-dimensional domain. $\square$
+**Proof.** Choose auxiliary full level $M\geq3$, prime to every fixed polarization degree. Polarized abelian varieties of the required dimension and degree with full $M$-level are represented by a quasi-projective scheme. An $\mathcal O_D$-action is the finite collection of endomorphisms associated with generators of the order, subject to its multiplication relations. Rosati compatibility is a closed equality of endomorphisms, the determinant condition is a closed polynomial identity on $\operatorname{Lie}A$, and the prescribed prime-to-$M$ level orbit is finite étale. Fixing the required open-and-closed determinant and component conditions therefore cuts out a quasi-projective fine scheme.
+
+At a characteristic-zero geometric point, deformation theory identifies first-order deformations with $\mathcal O_D$-stable isotropic lifts of the Hodge subspace. All definite real factors have a unique lift, while the active signature-$(1,1)$ factor contributes the tangent line to a projective line. Thus the completed local ring is a one-variable power-series ring. There are no obstructions because the relevant Grassmannian local model is smooth. The fine scheme is consequently smooth of pure dimension one.
+
+The finite group changing the auxiliary level acts on this scheme. Its quotient stack is Deligne--Mumford because polarizations give finite automorphism groups. If $K$ is neat, every stabilizer is trivial and the quotient is the desired fine scheme. Otherwise the finite-inertia quotient has a coarse algebraic curve, while its universal tuple remains on the stack. Finally, the polarized Hodge-lattice classification identifies its complex points and local period coordinates with the PEL adelic quotient; Proposition 12.2 gives the detailed inverse. The central comparison with the basic quaternionic quotient is finite because its kernel and cokernel are central tori with finite component effect at fixed level. $\square$
 
 The theorem is intentionally conditional on a complete PEL datum. It does not identify every quaternionic canonical model with a naive moduli scheme of abelian varieties.
 
@@ -843,6 +925,63 @@ There is no boundary divisor and no $q$-parameter. Attempting to add cusps to a 
 Suppose $K$ is not neat. A geometric PEL object may have a finite automorphism group. The coarse curve still exists and is proper, but the universal abelian scheme does not generally descend to it. Cohomology of the coarse curve and the stack agree with prime-to-stabilizer rational coefficients in the tame setting, but integral statements can differ. The safe methods are to retain the stack or pass to a neat normal cover $K'\triangleleft K$, perform the construction there, and take invariants only after checking coefficient primes.
 
 This is exactly parallel to $X_0(N)$. A coarse point records an isomorphism class, not an object with a chosen descent. Later correspondences may be defined on coarse curves even when universal abelian varieties are not.
+
+### 12.4 Comparison of moduli and adelic descriptions
+
+There are now two descriptions of the same curve, and it is worth proving their agreement rather than using identical notation as a substitute for a comparison. Fix a neat level $K$ and a connected union of PEL components selected by the central modification. The period map sends
+
+$$
+(A,\iota,\lambda,\bar\eta^K)
+$$
+
+to its rational homology $V_A=H_1(A(\mathbf C),\mathbf Q)$, its Hodge homomorphism $h_A$, and the finite-adelic marking supplied by $\bar\eta^K$. Choosing a $D$-linear similitude $V\simeq V_A$ produces a point $[h_A,g]$ of the adelic double quotient.
+
+**Proposition 12.2 (period comparison).** Under the quaternionic PEL hypotheses and neatness, the period map is a biholomorphism from the complex PEL moduli curve onto the selected union of components of
+
+$$
+G(\mathbf Q)\backslash(X\times G(\mathbf A_f)/K). \tag{12.1}
+$$
+
+It is compatible with level change, right translation, the reduced-norm component label, and the universal isogenies attached to commensurable adelic lattices.
+
+**Proof strategy.** The crucial issue is not surjectivity on points but independence from choices and compatibility in families. We first construct the inverse pointwise from a polarized Hodge lattice, then use the variation of Hodge structures to identify the analytic structures.
+
+**Proof.** If the comparison $V\simeq V_A$ is changed by $\gamma\in G(\mathbf Q)$, then $(h_A,g)$ changes to $(\gamma h_A\gamma^{-1},\gamma g)$ and represents the same double coset. Changing the representative of the level orbit replaces $g$ by $gk$ with $k\in K$. Hence the period map is well defined.
+
+Conversely, choose $[h,g]$. The Hodge homomorphism gives
+
+$$
+V_{\mathbf C}=V^{-1,0}\oplus V^{0,-1}.
+$$
+
+The finite adele $g$ determines the lattice
+
+$$
+\Lambda_g=V(\mathbf Q)\cap g\widehat\Lambda
+$$
+
+inside $V(\mathbf A_f)$, after scaling centrally if needed to make the polarization integral. Positivity of $h$ and the alternating form makes the complex torus
+
+$$
+A_{h,g}(\mathbf C)=V_{\mathbf R}/\Lambda_g
+$$
+
+an abelian variety by the Riemann criterion. The $D$-action preserves the lattice, the alternating form gives the required polarization class, and $g$ gives the $K$-level orbit. The Hodge multiplicities are precisely the determinant condition. Thus $[h,g]$ reconstructs a PEL object.
+
+Left multiplication by $G(\mathbf Q)$ gives a rational PEL quasi-isogeny. Once the lattice and integral level are included, that quasi-isogeny identifies the reconstructed objects in exactly the equivalence relation of the selected moduli problem. Right multiplication by $K$ changes only the representative of level. Consequently reconstruction is inverse to the period map on isomorphism classes.
+
+Locally on $X$, the Hodge filtration varies holomorphically. Its tangent space is
+
+$$
+\operatorname{Hom}_{\mathcal O_D}(\operatorname{Fil}^1,
+H_{\mathrm{dR}}/\operatorname{Fil}^1)
+$$
+
+subject to the infinitesimal isotropy condition. In the one-active-place signature this space has dimension one and is the tangent line of the upper half-plane. The period map and its inverse therefore vary holomorphically and have inverse differentials. They are biholomorphic.
+
+Changing $K$ merely forgets part of $g\widehat\Lambda$, so the construction commutes with level maps. Replacing $g$ by $ga$ replaces the lattice by the commensurable lattice $ga\widehat\Lambda$; inclusion after clearing denominators gives exactly the PEL isogeny used in the moduli correspondence. Finally, the component of $[h,g]$ is the abelianized class of $g$, which for the basic quaternionic group is its reduced-norm class. This proves every asserted compatibility. $\square$
+
+The proposition also explains what a central modification changes. It can enlarge the polarization-similitude coordinate and split or join component labels, but it does not change the adjoint upper-half-plane quotient. Accordingly, one must compare a specified component union, not assert without qualification that every auxiliary PEL curve is literally the basic quaternionic curve.
 
 ## 13. Reduced norms and components
 
@@ -917,7 +1056,11 @@ At such a place the same tuple (11.2), now over $\mathcal O_{E,v}$ with prime-to
 
 **Theorem 14.1 (good integral model).** Under these hypotheses and with neat prime-to-$p$ level, $\mathscr S_K$ is smooth of relative dimension one over $\mathcal O_{E,v}$. If $B$ is division, it is proper. Its generic fiber is the canonical Shimura curve, and it carries the universal PEL abelian scheme.
 
-**Proof strategy.** Properness follows from the valuative criterion for polarized abelian schemes with endomorphisms together with the absence of rational boundary components; potentially semistable semiabelian degeneration would define a boundary point, which the anisotropic Shimura datum excludes. For smoothness, Serre--Tate deformation theory reduces deformations to the $p$-divisible group with $\mathcal O_D$ action and polarization. The hyperspecial unramified local model with the stated determinant condition is a smooth one-dimensional scheme. $\square$
+**Proof.** Integral representability follows by applying the same auxiliary-level construction as in Theorem 11.1 over $\mathcal O_{E,v}$: the unramified order acts on the self-dual lattice, the polarization is prime to $p$, and the determinant law has coefficients in the reflex ring. The generic fiber is therefore the PEL canonical model.
+
+For smoothness, lift a geometric special-fiber point across a square-zero thickening. Deformation theory for abelian schemes with endomorphisms and polarization reduces the lift to an $\mathcal O_D$-stable isotropic lift of the Hodge filtration in relative de Rham homology. The self-dual hyperspecial lattice makes this module free, and the unramified determinant condition decomposes it into its embedding factors. Every definite factor has a unique filtration; the active factor asks for one direct-summand line in a free rank-two module. Its local model is $\mathbf P^1$, hence smooth of relative dimension one. Lifts exist across every square-zero thickening, so the integral moduli scheme is formally smooth, and finite presentation makes it smooth.
+
+For properness, take a punctured trait mapping to the generic fiber. After finite base change, the polarized abelian variety has semiabelian reduction. A nonzero toric part determines a nonzero isotropic subspace in rational homology and hence a proper rational parabolic of the adjoint PEL group. When $B$ is division, that adjoint group is anisotropic and has no such parabolic. The toric part is therefore zero, so the abelian variety, endomorphisms, polarization, and prime-to-$p$ level extend. Uniqueness follows from separatedness, and effective descent removes the finite base change. The valuative criterion proves properness. The universal tuple exists because the level is neat. $\square$
 
 The theorem prepares exactly the hypothesis used by smooth proper base change. For $\ell\ne p$,
 
@@ -1048,7 +1191,7 @@ At a finite place $v$ where both local levels are hyperspecial and the global le
 
 This distinction is the geometric reason that prime-to-$p$ correspondences specialize cleanly at a good $p$, whereas $p$-power correspondences interact with Frobenius and the branches of the bad fiber.
 
-## 16. Moduli correspondences before Hecke theory
+## 16. Hecke correspondences from moduli and double cosets
 
 ### 16.1 Why correspondences are the right object
 
@@ -1060,7 +1203,7 @@ $$
 
 The cycle $(p_1,p_2)_*[Z]\subset X\times X$ is a correspondence. Pullback along one projection and trace along the other produces an operator on cohomology or the Jacobian. Which projection is pulled back is a convention that later determines every formula.
 
-This chapter constructs the moduli diagrams only. Their normalization, multiplicative relations, comparison with automorphic double cosets, and Frobenius polynomials belong to the next volume.
+The goal of this chapter is to identify three descriptions of one operator: a moduli space of isogenies, an adelic double coset, and a finite algebraic correspondence. We shall also prove the convolution law. A good-prime Frobenius polynomial is a more refined assertion about the reduction of that correspondence and is not needed to construct the geometric Hecke module.
 
 ### 16.2 The prime-to-level modular correspondence
 
@@ -1133,7 +1276,95 @@ The kernel is not an arbitrary subgroup of the underlying abelian variety. It mu
 
 Replacing $h$ by $k_1hk_2$ with $k_i\in K$ changes the middle level by conjugacy and produces an isomorphic correspondence. Indeed, right multiplication by $k_2$ does not change a $K$-coset, while $k_1$ identifies the relevant intersection subgroups. Thus the diagram depends on the double coset $KhK$.
 
-This observation is enough to define moduli correspondences. It is not yet the assertion that composition matches convolution with specified coefficients. Multiplicities, normalizations, adjoints, and polynomial relations are deliberately left for systematic treatment.
+This observation makes the individual correspondence well defined. The next two sections prove that its composition law is the convolution law and explain which parts extend integrally.
+
+### 16.6 The moduli correspondence equals the adelic double coset
+
+Let $a\in G(\mathbf A_f)$ and put $K_a=K\cap aKa^{-1}$. Using the right-action convention, define the span
+
+$$
+[KaK]:\qquad
+X_K\xleftarrow{\pi_1}X_{K_a}
+\xrightarrow{\pi_2}X_K, \tag{16.6}
+$$
+
+where $\pi_1$ forgets from $K_a$ to $K$, while $\pi_2$ is $R_a$ followed by forgetting from $a^{-1}K_aa=a^{-1}Ka\cap K$ to $K$. This orientation matches (16.5).
+
+**Theorem 16.1 (moduli--double-coset comparison).** Suppose the levels are neat. The analytic correspondence (16.6), the algebraic correspondence obtained by canonical descent, and the PEL moduli space of isogenies of type $KaK$ are canonically isomorphic spans. For modular curves at a prime $\ell\nmid N$, taking $a=\operatorname{diag}(\ell,1)$ gives the cyclic-$\ell$-subgroup correspondence of Section 16.2.
+
+**Proof strategy.** We compare the two lattices encoded by a point of the intermediate level. The finite quotient of those lattices becomes the kernel of the universal isogeny.
+
+**Proof.** A point of $X_{K_a}$ has an adelic marking modulo both $K$ and $aKa^{-1}$. Its first image forgets to the original $K$-orbit. Multiplication by $a$ replaces the corresponding adelic lattice by a commensurable lattice. After multiplying $a$ by a central scalar locally at every prime, we may arrange an inclusion of lattices
+
+$$
+\widehat\Lambda\subset a\widehat\Lambda
+$$
+
+or the reverse inclusion, according to the chosen direction. The finite quotient of the larger lattice by the smaller one is stable under the prescribed order. Under the period comparison of Proposition 12.2, it becomes a finite subgroup of the universal abelian variety. Quotienting by that subgroup constructs the second PEL object, and its induced marking is represented by $ga$.
+
+Changing the scalar or integral representative factors the quasi-isogeny through multiplication by an integer. Because polarizations are taken in the prescribed similitude class and the kernel type is recorded, the resulting span is canonically unchanged. Changing a representative of $KaK$ was handled in Section 16.5.
+
+Conversely, a PEL isogeny of the required kernel type induces on rational Tate modules two commensurable integral lattices in $V\otimes\mathbf A_f$. Their relative position is the $K$-double coset of $a$. A compatible marking therefore lifts the isogeny to $K_a$-level. These constructions are inverse in families, since finite locally free kernels and their quotients commute with base change.
+
+For $G=\operatorname{GL}_2$ and $a=\operatorname{diag}(\ell,1)$, relative position says that the quotient lattice has index $\ell$. Index-$\ell$ overlattices of a rank-two lattice correspond to lines in $E[\ell]$, hence to cyclic subgroup schemes of rank $\ell$. The source and quotient maps are (16.2)--(16.3). Algebraicity and descent follow because level maps and right translations are morphisms of canonical models. $\square$
+
+The degree of either leg is a coset number. If
+
+$$
+KaK=\coprod_{i=1}^r a_iK,
+$$
+
+then $\deg(\pi_1)=r=[K:K\cap aKa^{-1}]$. The other degree is $[K:K\cap a^{-1}Ka]$, which need not equal the first for a general locally compact group. It does equal it in the familiar unramified rank-two correspondence after the central similitude normalization. For $\operatorname{diag}(\ell,1)$ in $\operatorname{GL}_2(\mathbf Q_\ell)$ with hyperspecial $K_\ell$, both degrees are $\ell+1$.
+
+### 16.7 Composition and convolution
+
+Let $\mathcal H(G(\mathbf A_f),K)$ be the free abelian group on compact double cosets, with convolution normalized by giving $K$ volume one. If
+
+$$
+KaK=\coprod_i a_iK,\qquad KbK=\coprod_j b_jK,
+$$
+
+then
+
+$$
+\mathbf 1_{KaK}*\mathbf 1_{KbK}
+=\sum_c m(a,b;c)\mathbf 1_{KcK}, \tag{16.7}
+$$
+
+where $m(a,b;c)$ counts, with the stabilizer multiplicity inherent in the right-coset decompositions, the pairs $(i,j)$ for which $a_i b_j\in KcK$.
+
+**Theorem 16.2 (geometric convolution).** With the correspondence direction of (16.6), composition of finite correspondences satisfies
+
+$$
+[KaK]\circ[KbK]
+=\sum_c m(a,b;c)[KcK]. \tag{16.8}
+$$
+
+Consequently $[KaK]\mapsto(\pi_2)_*\pi_1^*$ defines an action of $\mathcal H(G(\mathbf A_f),K)$ on every contravariant theory admitting trace for these finite maps.
+
+**Proof strategy.** Composition of spans is a fiber product. Its pieces are labelled by the same pairs of right cosets that occur in convolution.
+
+**Proof.** Form $X_{K_a}\times_{X_K}X_{K_b}$, where the first factor maps to the middle curve through its second leg and the second factor through its first. Over a geometric point with trivial stabilizer, a point of this fiber product is a successive choice of a modification of relative position $KaK$ and one of relative position $KbK$. Right-coset representatives label it by a pair $(a_i,b_j)$, and the composite modification has relative position $Ka_i b_jK$.
+
+Partition the pairs according to the double coset $KcK$ containing $a_i b_j$. On each part, the common-level construction gives a finite cover of the intermediate curve for $KcK$, and the number of identical sheets is $m(a,b;c)$. Normalizing the fiber product does not alter its generic cycle. Both sides are finite cycles between normal curves, so equality of generic cycles gives equality globally. This proves (16.8).
+
+Pull--push is functorial: finite base change identifies pullback through the fiber product, and transitivity of trace identifies the two successive pushforwards with pushforward along the composite. Applying this to (16.8) proves the action statement. $\square$
+
+The transpose of (16.6) is canonically the correspondence for $Ka^{-1}K$, with its legs interchanged. The projection formula makes these two operators adjoint for the Poincaré pairing on $H^1$ and for the canonical polarization on the Jacobian. No residue-cardinality factor appears in this geometric adjoint statement; such a factor enters only when generators are rescaled to a different automorphic normalization.
+
+At an unramified split place $\mathfrak l$, the spherical local algebra is generated by the double coset of $\operatorname{diag}(\varpi_{\mathfrak l},1)$ together with central double cosets. At an Iwahori place the two oriented elementary modifications generate the local Iwahori algebra, and orientation matters. Atkin--Lehner involutions arise from elements normalizing an Eichler level, while diamond operators arise from level-normalizing unit or central classes. Each is therefore a special case of the same span construction.
+
+### 16.8 Extension over good integral models
+
+Let $v$ have residue characteristic $p$, and suppose the modular level or PEL datum is good at $v$. If $a_p=1$, so the double coset is supported away from $p$, the kernel in the moduli description has order prime to $p$. Its schematic closure in the universal abelian scheme is finite étale, and the quotient is again an abelian scheme with the required action, polarization class, determinant condition, and prime-to-$p$ level. Hence both legs extend over the good model.
+
+**Proposition 16.3 (integral extension and specialization).** Under the preceding good-place, neatness, and prime-to-$p$ support hypotheses, the correspondence $[KaK]$ extends uniquely over the smooth proper integral model. Its generic- and special-fiber pull--push operators correspond under smooth proper base change. The same statement holds on quotient stacks; on coarse schemes it requires a separate check that the stabilizer quotient introduces no ramification at the coefficient prime.
+
+**Proof.** The moduli quotient construction gives existence. Separatedness gives uniqueness because two extensions agreeing on the dense generic fiber are equal. On the smooth modular locus, finite étaleness follows from finite étaleness of the kernel-choice functor and from the fact that a prime-to-$p$ isogeny induces an isomorphism on the deformation theory of the $p$-divisible group. Properness extends the maps across modular cusps; their Tate descriptions give finite maps there, generally ramified according to cusp width. For a division-algebra Shimura curve there is no boundary, so at neat prime-to-$p$ level the legs remain finite étale everywhere.
+
+Smooth proper base change is functorial for pullback. It is also functorial for finite trace, since trace is the counit of the finite pullback--pushforward adjunction and this adjunction commutes with base change. Therefore the pull--push endomorphisms correspond. $\square$
+
+When $a$ has nontrivial $p$-component, none of the finite-étale conclusions follows. The kernel may be connected, the quotient map can be inseparable on a component, and a hyperspecial model may have to be replaced by an Iwahori model. The special-fiber cycle then involves Frobenius and Verschiebung branches. The correspondence still exists under the semistable hypotheses of Chapters 8 and 14, but its analysis is a monodromy calculation rather than an application of smooth proper base change.
 
 ## 17. From curves to Jacobians and $H^1$
 
@@ -1205,11 +1436,48 @@ $$
 
 now carries commuting actions of the arithmetic Galois group and of every correspondence defined over $k$. The Jacobian carries the integral lattice $T_\ell J_X$ and the polarization pairing. These are the geometric Hecke modules promised by the construction.
 
-No two-dimensional representation has yet been singled out. To do so one must build the full Hecke algebra, prove its relations, choose an eigensystem, and analyze the corresponding summand. Nor have characteristic polynomials of Frobenius been identified with Hecke eigenvalues. Those are separate theorems, not formal consequences of having a curve.
+No two-dimensional representation has yet been singled out. Chapter 16 constructs the geometric double-coset algebra and proves its convolution relations, but one must still compare it with automorphic eigensystems and analyze the corresponding cohomological summands. Nor have characteristic polynomials of Frobenius been identified with Hecke eigenvalues. Those are separate theorems, not formal consequences of having a curve.
 
 ### 17.5 A genus-zero warning
 
 If $X$ has genus zero, then $J_X=0$ and $H^1(X_{\bar k},\mathbf Q_\ell)=0$. The moduli problem and its correspondences can still be rich, but this particular curve contributes no weight-two cohomology. For example $X(1)\simeq\mathbf P^1$ has many cyclic-isogeny correspondences through $X_0(\ell)$, yet its first cohomology vanishes. Geometry realizes automorphic modules only where the genus and coefficient system permit them.
+
+### 17.6 The geometric Hecke modules
+
+We can now state the output of the construction in a form reusable without revisiting the moduli problems. Let $S$ be a finite set containing the residue characteristics of bad reduction, the primes at which the level is not hyperspecial, and the primes needed to define the chosen PEL lattice and polarization. Let
+
+$$
+\mathbb T^{S}_{K,\mathbf Z}
+\subset\operatorname{Corr}(X_K)
+$$
+
+be the commutative algebra generated by spherical double-coset correspondences outside $S$, together with whatever diamond or central operators preserve the selected component union. If one works on the full disconnected curve, no component-stability restriction is needed; the algebra then also records permutation of components.
+
+**Theorem 17.1 (geometric Hecke modules).** Let $X_K$ be a smooth proper modular curve or a proper quaternionic Shimura curve over its canonical field $E$, at neat level or on a fixed tame stack with rational coefficients. For every prime $\ell$ the following are naturally modules for the geometric Hecke algebra whenever the indicated coefficients make sense:
+
+$$
+J_K,\qquad T_\ell J_K,\qquad
+H^1(X_{K,\overline E},\mathbf Z_\ell),\qquad
+H^1(X_{K,\overline E},\mathbf Q_\ell). \tag{17.5}
+$$
+
+The action on $T_\ell J_K$ corresponds to that on $H^1(X_{K,\overline E},\mathbf Z_\ell(1))$ under (17.1). It commutes with $\operatorname{Gal}(\overline E/E)$ for correspondences defined over $E$. Outside $S\cup\{\ell\}$ it is compatible with specialization to every good special fiber. Transposition corresponds to the polarization adjoint.
+
+**Proof.** Every generator is a finite correspondence defined over the canonical field by Chapters 15--16. Pullback and norm give its endomorphism of $J_K$; functoriality of the Tate module gives the second action. Pullback and trace give the two cohomological actions. The Kummer sequence is natural for pullback and norm, so it intertwines the Jacobian and cohomological actions, including the Tate twist.
+
+Because the defining maps are over $E$, their pullback and trace maps commute with the arithmetic Galois action. The convolution theorem proves that the assignments respect multiplication in the double-coset algebra rather than merely assigning unrelated endomorphisms to its generators. At a good place away from the support of the double coset, Proposition 16.3 and smooth proper base change identify the generic and special actions. Finally, the norm--pullback adjunction for the principal polarization is the same projection formula that gives adjointness for the Poincaré pairing. $\square$
+
+There are two integral cautions. First, a rational projector onto an eigenspace need not preserve the lattice $T_\ell J_K$; the geometric algebra acts integrally, but a decomposition of its rational module can have denominators. Second, if a nonneat stack has stabilizers divisible by $\ell$, coarse and stack cohomology need not have the same integral lattice. Fine level or an explicit stabilizer calculation is then required.
+
+The theorem constructs the promised modules but does not identify their irreducible constituents. A maximal ideal $\mathfrak m$ of $\mathbb T^S$ gives localizations
+
+$$
+H^1(X_{K,\overline E},\mathbf Z_\ell)_{\mathfrak m},
+\qquad
+T_\ell J_K{}_{\mathfrak m},
+$$
+
+provided the coefficient map places $\mathbb T^S$ in a suitable $\ell$-adic ring. Showing that such a localization contains a distinguished two-dimensional Galois representation, and identifying its Frobenius polynomial, requires an automorphic decomposition and an integral Eichler--Shimura theorem. Those are extra arithmetic results; the geometric Hecke module itself is now complete.
 
 ## 18. An atlas of examples
 
@@ -1310,16 +1578,15 @@ where the displayed twist is understood through (17.1). A level inclusion gives 
 
 At a good finite place, the chain extends over a smooth proper valuation ring model, so specialization preserves $H^1$ and inertia is trivial. At a selected semistable place, the special fiber and its dual graph replace this simple statement and signal monodromy. These alternatives are the exact geometric inputs needed when operator and Frobenius relations are studied.
 
-### 19.3 Boundaries between the next constructions
+### 19.3 The exact endpoint of the construction
 
-The present volume has defined the curves and the elementary correspondences. The following tasks remain logically distinct:
+The present volume has defined the curves, identified moduli isogenies with adelic double cosets, proved geometric convolution, and constructed the resulting Hecke modules. Three further arithmetic identifications remain logically distinct:
 
-- proving that the geometric double-coset diagrams generate the expected Hecke algebra and satisfy its polynomial relations;
 - comparing good-prime correspondences with Frobenius on special fibers;
 - isolating eigensummands in $H^1$ or $T_\ell J$;
 - proving that such summands are two-dimensional and determining their determinants, ramification, and local behavior.
 
-The first two concern correspondences; the last two concern Galois representations. None is smuggled into the word “modular” or “Shimura.”
+The first concerns the arithmetic of reduction; the last two concern automorphic decomposition and Galois representations. None is smuggled into the words “modular,” “Shimura,” or “Hecke module.”
 
 ### 19.4 Conclusion
 
@@ -1329,4 +1596,4 @@ Compactification forces another enlargement of viewpoint. An elliptic curve can 
 
 Quaternionic Shimura curves preserve the same one-dimensional symmetric geometry while changing its global source. A quaternion algebra split at exactly one real place contributes one upper half-plane; division removes rational unipotents and therefore removes cusps. Reduced norm replaces determinant as the component coordinate. A PEL realization turns the analytic quotient into a moduli curve only after polarization, positivity, determinant, and level conditions have been fixed. The distinction between the bare quaternionic datum and an auxiliary PEL datum is what keeps the construction canonical rather than accidental.
 
-Across both families, changing level produces finite maps, while right adelic multiplication acts on the tower. A double coset becomes a moduli space of isogenies with two projections. Compactified curves then have Jacobians and first cohomology, and every such correspondence acts compatibly on both. The geometric stage is therefore complete: level, components, compactification, and integral reduction have been assembled into smooth proper curves where the hypotheses permit, and into controlled bad models where they do not. These curves are now ready to carry operator algebras; their cohomology is ready to carry arithmetic action; and the boundary between geometry and the later extraction of representations remains exact.
+Across both families, changing level produces finite maps, while right adelic multiplication acts on the tower. A double coset becomes a moduli space of isogenies with two projections, and fiber products of these spans realize convolution. Compactified curves then have Jacobians and first cohomology, and every Hecke correspondence acts compatibly on both. The geometric stage is therefore complete: level, components, compactification, integral reduction, and the geometric Hecke algebra have been assembled on smooth proper curves where the hypotheses permit, and on controlled bad models where they do not. Their cohomology now carries commuting Hecke and arithmetic actions, while the boundary between this geometric module and the later extraction of individual representations remains exact.
