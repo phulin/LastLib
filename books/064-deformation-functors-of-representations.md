@@ -7,12 +7,15 @@
    - [Coefficient categories and the role of a base](#12-coefficient-categories-and-the-role-of-a-base)
    - [No finiteness hypothesis on $G$ is needed yet](#13-no-finiteness-hypothesis-on-g-is-needed-yet)
    - [Matrix convention and the adjoint module](#14-matrix-convention-and-the-adjoint-module)
+   - [Finite groups inside the profinite theory](#15-finite-groups-inside-the-profinite-theory)
 2. [Lifts and strict equivalence](#2-lifts-and-strict-equivalence)
    - [Why reduction includes an identification](#21-why-reduction-includes-an-identification)
    - [The congruence subgroup](#22-the-congruence-subgroup)
    - [A counterexample to arbitrary conjugacy](#23-a-counterexample-to-arbitrary-conjugacy)
    - [Base change of lifts](#24-base-change-of-lifts)
    - [Continuous lifts over complete rings](#25-continuous-lifts-over-complete-rings)
+   - [Deformation sets over complete coefficient rings](#26-deformation-sets-over-complete-coefficient-rings)
+   - [Successive obstructions along a complete tower](#27-successive-obstructions-along-a-complete-tower)
 3. [Unframed and framed deformation functors](#3-unframed-and-framed-deformation-functors)
    - [The unframed set-valued functor](#31-the-unframed-set-valued-functor)
    - [The deformation groupoid](#32-the-deformation-groupoid)
@@ -20,6 +23,9 @@
    - [Frames, orbits, and stabilizers](#34-frames-orbits-and-stabilizers)
    - [Residual centralizers and the first warning](#35-residual-centralizers-and-the-first-warning)
    - [A useful diagram of distinctions](#36-a-useful-diagram-of-distinctions)
+   - [The Schur condition](#37-the-schur-condition)
+   - [The scalar-centralizer theorem in families](#38-the-scalar-centralizer-theorem-in-families)
+   - [What the Schur hypothesis does and does not buy](#39-what-the-schur-hypothesis-does-and-does-not-buy)
 4. [Determinants and constrained deformations](#4-determinants-and-constrained-deformations)
    - [Why the determinant must be lifted first](#41-why-the-determinant-must-be-lifted-first)
    - [Fixed-determinant functors](#42-fixed-determinant-functors)
@@ -74,18 +80,21 @@
     - [Restriction to closed subgroups](#122-restriction-to-closed-subgroups)
     - [Change of residual basis](#123-change-of-residual-basis)
     - [Coefficient extension of the residue field](#124-coefficient-extension-of-the-residue-field)
-    - [Direct sums](#125-direct-sums)
-    - [Tensor products](#126-tensor-products)
-    - [Twists and duals](#127-twists-and-duals)
-13. [Local Galois representations as examples](#13-local-galois-representations-as-examples)
-    - [The local setting and what is being illustrated](#131-the-local-setting-and-what-is-being-illustrated)
-    - [Obstructions detected by local duality](#132-obstructions-detected-by-local-duality)
-    - [Mixed-characteristic dimension formulas](#133-mixed-characteristic-dimension-formulas)
-    - [Fixed determinant in mixed characteristic](#134-fixed-determinant-in-mixed-characteristic)
-    - [Coefficient characteristic away from the residue characteristic](#135-coefficient-characteristic-away-from-the-residue-characteristic)
-    - [Unramified tangent directions](#136-unramified-tangent-directions)
-    - [A split two-character local calculation](#137-a-split-two-character-local-calculation)
-    - [Elliptic-curve residual representations](#138-elliptic-curve-residual-representations)
+    - [Extension of the coefficient base](#125-extension-of-the-coefficient-base)
+    - [Descent is not the inverse of scalar extension](#126-descent-is-not-the-inverse-of-scalar-extension)
+    - [Direct sums](#127-direct-sums)
+    - [Tensor products](#128-tensor-products)
+    - [Twists and duals](#129-twists-and-duals)
+13. [Local and global deformation problems](#13-local-and-global-deformation-problems)
+    - [Why local information enters a global problem](#131-why-local-information-enters-a-global-problem)
+    - [Restriction of framed and unframed functors](#132-restriction-of-framed-and-unframed-functors)
+    - [The tangent localization map](#133-the-tangent-localization-map)
+    - [The Galois specialization](#134-the-galois-specialization)
+    - [Local obstruction classes](#135-local-obstruction-classes)
+    - [The global obstruction and its localizations](#136-the-global-obstruction-and-its-localizations)
+    - [A counterexample to naive local-to-global lifting](#137-a-counterexample-to-naive-local-to-global-lifting)
+    - [Comparing local choices with a global choice](#138-comparing-local-choices-with-a-global-choice)
+    - [The local--global dictionary for later use](#139-the-local--global-dictionary-for-later-use)
 14. [Fiber products, automorphisms, and the edge of representability](#14-fiber-products-automorphisms-and-the-edge-of-representability)
     - [Gluing framed lifts](#141-gluing-framed-lifts)
     - [Why unframed gluing is subtler](#142-why-unframed-gluing-is-subtler)
@@ -98,8 +107,8 @@
     - [Two commuting generators](#153-two-commuting-generators)
     - [An upper-triangular deformation condition as a preview](#154-an-upper-triangular-deformation-condition-as-a-preview)
     - [A nonscalar centralizer calculation](#155-a-nonscalar-centralizer-calculation)
-    - [An absolutely irreducible local example](#156-an-absolutely-irreducible-local-example)
-    - [A local reducible eigenvalue jump](#157-a-local-reducible-eigenvalue-jump)
+    - [Fixed determinant in characteristic two](#156-fixed-determinant-in-characteristic-two)
+    - [A reducible representation with only scalar automorphisms](#157-a-reducible-representation-with-only-scalar-automorphisms)
 16. [The reusable deformation--cohomology dictionary](#16-the-reusable-deformation--cohomology-dictionary)
     - [Data checklist](#161-data-checklist)
     - [Object and equivalence dictionary](#162-object-and-equivalence-dictionary)
@@ -110,6 +119,8 @@
     - [Functoriality dictionary](#167-functoriality-dictionary)
     - [Topology and finiteness checklist](#168-topology-and-finiteness-checklist)
     - [Boundary checklist](#169-boundary-checklist)
+    - [Schur and complete-coefficient checklist](#1610-schur-and-complete-coefficient-checklist)
+    - [Local--global checklist](#1611-local--global-checklist)
 17. [Conclusion](#17-conclusion)
     - [The coherent low-degree picture](#171-the-coherent-low-degree-picture)
     - [The endpoint for later deformation conditions](#172-the-endpoint-for-later-deformation-conditions)
@@ -190,6 +201,60 @@ $$
 $$
 
 The topology on cochains is never suppressed: $Z^i$ and $H^i$ always mean continuous cochains for the indicated topological coefficient module.
+
+### 1.5 Finite groups inside the profinite theory
+
+A finite group is a profinite group with the discrete topology, so every map from it to a finite
+coefficient group is continuous. Nothing in the definitions needs to be altered. This simple
+observation is useful for two reasons. First, it provides examples in which every matrix can be
+written down. Second, every residual representation of a profinite group factors through a
+finite quotient, although its deformations need not factor through that same quotient.
+
+The second point deserves emphasis. Let $N=\ker\bar\rho$. A first-order cocycle on $G$ with
+values in $\operatorname{ad}\bar\rho$ may be nonzero on $N$, even though $N$ acts trivially on
+the coefficient module. Such a cocycle produces a deformation that detects a finer quotient of
+$G$ than $\bar\rho$ does. Thus finite image of the residual representation does not reduce the
+whole deformation problem to the one finite group $G/N$. Inflation--restriction measures the
+additional directions on $N$.
+
+Finite groups also display the dividing line set by the residue characteristic. Put
+$p=\operatorname{char}k$. If $G$ is finite and $p\nmid |G|$, averaging makes the invariants
+functor exact, and hence
+
+$$
+H^i(G,M)=0\qquad(i>0)
+$$
+
+for every $k[G]$-module $M$. Applied to $M=\operatorname{ad}\bar\rho$, this has three different
+consequences.
+
+* The unframed tangent space is zero.
+* Every unrestricted small-extension obstruction vanishes.
+* Once a lift over a small extension exists, its rigidified unframed class is unique.
+
+The framed tangent space need not vanish. It equals
+
+$$
+Z^1(G,\operatorname{ad}\bar\rho)
+=B^1(G,\operatorname{ad}\bar\rho),
+$$
+
+so it consists entirely of infinitesimal changes of basis. This is a first illustration of the
+difference between rigidity of an abstract representation and rigidity of its matrices in a
+fixed frame.
+
+When $p\mid |G|$, none of these conclusions is automatic. For the trivial representation of
+$C_p$ in characteristic $p$,
+
+$$
+H^1(C_p,M)=M,
+$$
+
+when $M$ has trivial action, and $H^2(C_p,M)$ can also be nonzero. The presence of $p$-torsion in
+the group can therefore create both genuine tangent directions and genuine higher-order
+obstructions. The finite and profinite theories are one theory; continuity changes how finite
+quotients are assembled, while the coefficient characteristic determines which finite
+symmetries can be averaged away.
 
 ## 2. Lifts and strict equivalence
 
@@ -310,6 +375,132 @@ The resulting map is continuous: the inverse image of each principal congruence 
 
 This finite-level description does not assert that every compatible family is universal, nor that a universal complete ring exists. It only translates continuity and completeness.
 
+### 2.6 Deformation sets over complete coefficient rings
+
+The Artinian functor is the primary object, but an actual arithmetic representation often has
+values in a complete ring. It is therefore useful to state exactly how the two scales meet. Let
+$R$ be a complete Noetherian local coefficient ring with finite residue field $k$, and put
+
+$$
+R_n=R/\mathfrak m_R^n.
+$$
+
+Define $D_{\bar\rho}^{\square}(R)$ to be the set of continuous lifts to
+$\operatorname{GL}_d(R)$, and define $D_{\bar\rho}(R)$ by quotienting by conjugation with
+
+$$
+\Gamma_R=1+M_d(\mathfrak m_R).
+$$
+
+These definitions do not assert that $R$ represents anything. They merely evaluate the same
+matrix problem at a complete coefficient ring.
+
+For framed lifts there is an immediate bijection
+
+$$
+D_{\bar\rho}^{\square}(R)
+\xrightarrow{\sim}
+\varprojlim_nD_{\bar\rho}^{\square}(R_n).
+$$
+
+Indeed a compatible family of matrices has an entrywise inverse limit, multiplication holds
+because it holds modulo every $\mathfrak m_R^n$, and continuity is detected by the finite
+reductions. Conversely every complete lift supplies its compatible reductions.
+
+The analogous assertion for unframed classes needs proof, because compatibility of classes is
+weaker than compatibility of chosen representatives.
+
+**Proposition (complete classes from finite classes).** There is a natural bijection
+
+$$
+D_{\bar\rho}(R)
+\xrightarrow{\sim}
+\varprojlim_nD_{\bar\rho}(R_n).
+$$
+
+**Proof strategy.** For surjectivity, adjust a representative at each new level so that it
+reduces to the representative already chosen below. For injectivity, finite-level conjugators
+form a finitely branching tree; conjugators at arbitrarily deep levels give arbitrarily long
+branches, and compactness produces one compatible branch.
+
+**Proof.** Begin with a compatible family of classes $x_n$. Choose a representative $\rho_1$.
+Suppose $\rho_n$ has been chosen. Choose any representative $\sigma_{n+1}$ of $x_{n+1}$. Its
+reduction is strictly equivalent to $\rho_n$, so there is $P_n\in\Gamma_{R_n}$ carrying one to
+the other. The reduction map
+
+$$
+\Gamma_{R_{n+1}}\longrightarrow\Gamma_{R_n}
+$$
+
+is surjective: lift the entries of $P_n-1$, and the resulting matrix is invertible because it
+reduces to one. Conjugating $\sigma_{n+1}$ by such a lift produces a representative
+$\rho_{n+1}$ reducing exactly to $\rho_n$. The compatible representatives define a complete
+lift, proving surjectivity.
+
+For injectivity, suppose two complete lifts are strictly equivalent modulo every
+$\mathfrak m_R^n$. Let $S_n\subseteq\Gamma_{R_n}$ be the set of strict conjugators between their
+$n$th reductions. Every $S_n$ is nonempty and finite, and reduction carries $S_{n+1}$ into
+$S_n$. A conjugator at level $N$ and all its reductions give a branch of length $N$. Since the
+tree has finite levels and branches of arbitrary length, it has an infinite branch. Equivalently,
+the nested nonempty closed conditions inside the compact inverse limit
+$\Gamma_R=\varprojlim\Gamma_{R_n}$ have nonempty intersection. The resulting
+$P\in\Gamma_R$ conjugates the two lifts modulo every power of $\mathfrak m_R$, hence conjugates
+them in $R$ by separatedness. $\square$
+
+The finiteness of the residue field is used in the compactness step. More conceptually, the
+deformation groupoid over $R$ is reconstructed from compatible finite-level objects and arrows.
+At the level of arrows no compactness argument is needed once the arrows themselves have been
+chosen compatibly.
+
+### 2.7 Successive obstructions along a complete tower
+
+The quotient map
+
+$$
+R_{n+1}\longrightarrow R_n
+$$
+
+has kernel $\mathfrak m_R^n/\mathfrak m_R^{n+1}$, which is annihilated by the maximal ideal of
+$R_{n+1}$. It is therefore a small extension. Starting from $\bar\rho$ over $R_1=k$, one may try
+to construct a complete lift recursively. At stage $n$ the obstruction is
+
+$$
+o_n\in
+H^2(G,\operatorname{ad}\bar\rho)
+\otimes_k
+\mathfrak m_R^n/\mathfrak m_R^{n+1}.
+$$
+
+Its vanishing is equivalent to extending the chosen $\rho_n$ to $R_{n+1}$. When it vanishes,
+the possible framed extensions form a torsor under
+
+$$
+Z^1(G,\operatorname{ad}\bar\rho)
+\otimes_k
+\mathfrak m_R^n/\mathfrak m_R^{n+1},
+$$
+
+and the rigidified unframed alternatives form an $H^1$-torsor. Choosing one extension at each
+stage produces a compatible system and hence a complete continuous lift.
+
+Thus
+
+$$
+H^2(G,\operatorname{ad}\bar\rho)=0
+$$
+
+is sufficient for the existence of a lift to every prescribed complete Noetherian local
+coefficient ring with residue field $k$. The assertion is unrestricted: if a determinant or
+another structure is imposed, that structure must itself exist throughout the tower, and the
+obstruction module must be replaced by the correct constrained module. For a prescribed
+determinant it becomes $\operatorname{ad}^0\bar\rho$.
+
+There are two cautions. First, a collection of unrelated lifts over all $R_n$ is not a complete
+lift; compatibility is the essential inverse-limit condition. Second, the classes $o_n$ depend
+on the choices made at earlier stages. There is generally no single element of one $H^2$ whose
+vanishing simultaneously settles every possible tower. Obstruction theory is recursive: each
+successful choice creates the next lifting problem.
+
 ## 3. Unframed and framed deformation functors
 
 ### 3.1 The unframed set-valued functor
@@ -423,6 +614,178 @@ $$
 $$
 
 Framed functors are often technically cleaner because they retain equations rather than orbit classes. Unframed functors express the intrinsic deformation problem more economically. Neither is a substitute for the other.
+
+### 3.7 The Schur condition
+
+The hypothesis needed to control changes of basis is often weaker in appearance than absolute
+irreducibility. We say that $\bar\rho$ satisfies the **Schur condition** if
+
+$$
+\operatorname{End}_{k[G]}(k^d)=kI_d.
+$$
+
+Equivalently,
+
+$$
+H^0(G,\operatorname{ad}\bar\rho)=kI_d.
+$$
+
+Absolute irreducibility implies the Schur condition. Indeed, after extending scalars to an
+algebraic closure, every commuting endomorphism is scalar; a commuting matrix already defined
+over $k$ must then be a scalar from $k$. The tangent-space identifications do not require this
+hypothesis. Its role is to make stabilizers as small as they can be and to prevent nonscalar
+changes of basis from surviving invisibly.
+
+The converse needs irreducibility.
+
+**Proposition.** If $\bar\rho$ is irreducible over the finite field $k$, then it is absolutely
+irreducible if and only if it satisfies the Schur condition.
+
+**Proof strategy.** One direction descends scalars in a commuting matrix. For the other, use the
+finite-dimensional density theorem to show that the algebra generated by the image of $G$ is the
+full matrix algebra, a property preserved by scalar extension.
+
+**Proof.** If $\bar\rho$ is absolutely irreducible, a commuting endomorphism becomes scalar over
+an algebraic closure. Since its entries lie in $k$, that scalar lies in $k$, giving the Schur
+condition.
+
+Conversely, let $B\subseteq\operatorname{End}_k(k^d)$ be the $k$-algebra generated by
+$\bar\rho(G)$. Irreducibility makes $k^d$ a simple $B$-module, and its commuting division algebra
+is $\operatorname{End}_B(k^d)=k$. The finite-dimensional density theorem then gives
+
+$$
+B=\operatorname{End}_k(k^d).
+$$
+
+After any field extension $K/k$,
+
+$$
+B\otimes_kK=\operatorname{End}_K(K^d).
+$$
+
+A subspace of $K^d$ stable under every endomorphism is either zero or all of $K^d$. Hence the
+extended representation is irreducible for every $K$, and in particular over an algebraic
+closure. $\square$
+
+For a reducible nonsemisimple representation, however, the endomorphism algebra can already be
+scalar.
+
+Here is a concrete counterexample. Assume $k$ has at least three elements, choose distinct
+$a,b\in k^\times$, and let $G$ be the finite subgroup of $\operatorname{GL}_2(k)$ generated by
+
+$$
+D=\begin{pmatrix}a&0\\0&b\end{pmatrix},
+\qquad
+U=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+The tautological representation preserves the line $ke_1$, so it is reducible. It is not a
+direct sum: the only $D$-stable complementary line is $ke_2$, and $U$ does not preserve that
+line. A matrix commuting with $D$ is diagonal, and a diagonal matrix commuting with $U$ has
+equal diagonal entries. Hence the common centralizer is $kI_2$. This reducible nonsplit
+representation satisfies the Schur condition. Thus “Schur” and “absolutely irreducible” must
+not be used as synonyms unless semisimplicity or irreducibility has separately been established.
+
+### 3.8 The scalar-centralizer theorem in families
+
+The residual Schur condition controls centralizers over every Artinian thickening, not just in
+the special fiber.
+
+**Theorem (scalar centralizers).** Assume
+
+$$
+\operatorname{End}_{k[G]}(k^d)=kI_d.
+$$
+
+Let $A$ be an Artinian local coefficient ring and let
+$\rho_A:G\to\operatorname{GL}_d(A)$ be any lift. Then
+
+$$
+Z_{M_d(A)}(\rho_A(G))=AI_d.
+$$
+
+Consequently
+
+$$
+\operatorname{Aut}^{\mathrm{str}}_A(\rho_A)
+=(1+\mathfrak m_A)I_d.
+$$
+
+The same conclusions hold over a complete separated local coefficient ring.
+
+**Proof strategy.** Reduce a commuting endomorphism modulo the maximal ideal, remove its scalar
+part, and inspect the first nonzero maximal-ideal layer. That leading term commutes with the
+residual representation and must therefore be scalar. Choosing the scalar part from one matrix
+entry makes such a nonzero scalar leading term impossible.
+
+**Proof.** Let $Q\in M_d(A)$ commute with $\rho_A(G)$. Its reduction commutes with
+$\bar\rho(G)$, so $\bar Q=\lambda I_d$. Put $q=Q_{11}$ and $Y=Q-qI_d$. Then
+$Y\in M_d(\mathfrak m_A)$, $Y_{11}=0$, and $Y$ still commutes with $\rho_A(G)$.
+
+If $Y\neq0$, choose the least $n$ for which
+
+$$
+Y\in M_d(\mathfrak m_A^n)
+\quad\text{but}\quad
+Y\notin M_d(\mathfrak m_A^{n+1}).
+$$
+
+The image $\overline Y$ in
+
+$$
+M_d(k)\otimes_k
+\mathfrak m_A^n/\mathfrak m_A^{n+1}
+$$
+
+commutes with $\bar\rho(G)$, because reducing the commutator equation at its first nonzero order
+replaces $\rho_A$ by $\bar\rho$. Since the second tensor factor has trivial $G$-action, the Schur
+condition says
+
+$$
+\overline Y\in kI_d\otimes_k
+\mathfrak m_A^n/\mathfrak m_A^{n+1}.
+$$
+
+But its $(1,1)$ entry is zero, so this scalar tensor is zero. This contradicts the choice of
+$n$. Hence $Y=0$ and $Q=qI_d$.
+
+A strict automorphism is an invertible commuting matrix congruent to one, so it is precisely
+$(1+u)I_d$ with $u\in\mathfrak m_A$. For a complete separated ring, apply the Artinian result
+modulo every power of the maximal ideal. The off-diagonal entries and all differences between
+diagonal entries lie in every power and are therefore zero. $\square$
+
+Under the Schur condition, the action of $\Gamma_A$ on framed lifts has exactly the scalar
+subgroup $(1+\mathfrak m_A)I_d$ as kernel. Hence the fiber of
+
+$$
+D_{\bar\rho}^{\square}(A)\longrightarrow D_{\bar\rho}(A)
+$$
+
+over any point is a torsor under
+
+$$
+\Gamma_A/(1+\mathfrak m_A)I_d.
+$$
+
+This is stronger than the general orbit--stabilizer description. It is still not, by itself, a
+representability theorem: preserving coefficient fiber products is a further categorical
+question.
+
+### 3.9 What the Schur hypothesis does and does not buy
+
+It is useful to separate four assertions.
+
+1. The tangent theorem $t_{\bar\rho}=H^1(G,\operatorname{ad}\bar\rho)$ is unconditional.
+2. The Schur condition sets $h^0(\operatorname{ad}\bar\rho)=1$ and makes every family
+   centralizer scalar.
+3. Absolute irreducibility implies the Schur condition and behaves well under residue-field
+   extension.
+4. Neither condition forces $H^1$ or $H^2$ to vanish.
+
+Thus Schur controls automorphisms, not existence or rigidity. An absolutely irreducible residual
+representation may have a large tangent space and a nonzero obstruction space. Conversely, a
+representation with a large centralizer can have $H^1=H^2=0$. The three low degrees measure
+different features and no irreducibility slogan collapses them into one.
 
 ## 4. Determinants and constrained deformations
 
@@ -1649,7 +2012,110 @@ because locally constant maps are filtered unions of maps through finite quotien
 
 Absolute irreducibility is designed to behave well here: it means irreducibility after extension to an algebraic closure, and it forces the endomorphism algebra to remain scalar after every finite scalar extension.
 
-### 12.5 Direct sums
+### 12.5 Extension of the coefficient base
+
+Residue-field extension and coefficient-base extension are related but not identical. Suppose
+$\mathcal O\to\mathcal O'$ is a continuous local map of complete coefficient rings, inducing
+$k\to k'$ on residue fields. Whenever an Artinian $\mathcal O$-algebra $A$ is supplied with a
+compatible local map to an Artinian $\mathcal O'$-algebra $A'$, entrywise application gives
+
+$$
+D_{\bar\rho}(A)\longrightarrow D_{\bar\rho_{k'}}(A').
+$$
+
+The same construction works for framed and fixed-determinant problems, provided the prescribed
+determinant is also carried forward. This statement requires no flatness because it only applies
+a given ring map.
+
+There is often a canonical target. In equal characteristic,
+
+$$
+A_{k'}=A\otimes_k k'
+$$
+
+is Artinian local with maximal ideal $\mathfrak m_A\otimes_k k'$ and residue field $k'$. For
+complete coefficient rings one instead uses completed scalar extension, under the standard
+Noetherian and residue-compatible hypotheses,
+
+$$
+R_{\mathcal O'}=R\widehat\otimes_{\mathcal O}\mathcal O'.
+$$
+
+A complete lift $\rho_R$ then gives $\rho_R\widehat\otimes1$ over $R_{\mathcal O'}$. Completion
+is essential: the ordinary tensor product may omit infinite coefficient limits and need not be
+complete in the topology of the new closed point.
+
+At first order the comparison is especially clean. Finite extension of the residue field gives
+
+$$
+Z^i(G,M)\otimes_k k'
+\simeq Z^i(G,M\otimes_k k'),
+$$
+
+and similarly for coboundaries and cohomology, when $M$ is a finite-dimensional continuous
+$k[G]$-module. One direct proof chooses a $k$-basis of $k'$. A continuous cochain with values in
+$M\otimes_k k'$ has finitely many coordinate cochains with values in $M$, and the differential
+acts coordinatewise. Since $k'/k$ is flat, kernels, images, and quotients commute with tensoring.
+Thus
+
+$$
+H^i(G,M)\otimes_k k'
+\xrightarrow{\sim}H^i(G,M\otimes_k k').
+$$
+
+Applying this to $M=\operatorname{ad}\bar\rho$ compares unrestricted tangent and obstruction
+spaces. Trace commutes with scalar extension, so the same is true for
+$\operatorname{ad}^0\bar\rho$ and fixed determinant. In particular a nonzero obstruction class
+cannot become zero after a field extension: tensoring with $k'$ is faithful.
+
+Flatness matters beyond fields. A nonflat coefficient map can kill a nonzero kernel element and
+therefore kill the image of an obstruction. That proves existence only after the coefficient
+change, not before it. Likewise completed scalar extension preserves exact sequences of finite
+modules under flatness hypotheses, not merely because a completion symbol is present.
+
+### 12.6 Descent is not the inverse of scalar extension
+
+Extending coefficients is canonical once a coefficient map is given; descending coefficients
+is a separate problem. A deformation of $\bar\rho_{k'}$ over a $k'$-algebra need not admit a
+basis or equations over $k$. Even at first order the distinction is visible. Let $G=\mathbf Z_p$
+with trivial residual character in characteristic $p$. A tangent character over $k'$ has the
+form
+
+$$
+\gamma\longmapsto1+\epsilon a,
+\qquad a\in k'.
+$$
+
+Relative to the chosen generator and residual basis, this particular point descends to
+$k[\epsilon]$ exactly when $a$ lies in the image of $k$; a coefficient
+$a\in k'\setminus k$ is not itself a $k$-valued matrix. The equality
+
+$$
+H^1(G,k)\otimes_k k'\simeq H^1(G,k')
+$$
+
+says that all directions are generated after scalar extension. It does not equip each
+$k'$-valued point with descent data.
+
+For higher-dimensional representations, descent also involves conjugacy. A representation may
+be isomorphic to all of its coefficient conjugates without possessing a compatible system of
+isomorphisms; the failure of compatibility is an automorphism obstruction. Under a Schur
+hypothesis those automorphisms are scalar, which simplifies the problem, but does not solve it
+without an actual descent argument.
+
+The safe coefficient dictionary is therefore asymmetric:
+
+$$
+\begin{array}{c|c}
+\text{operation}&\text{unconditional conclusion}\\ \hline
+A\to B&\text{push a lift and its obstruction forward}\\
+k\to k'&\text{tensor tangent and obstruction spaces faithfully}\\
+\mathcal O\to\mathcal O'&\text{use completed base change when defined}\\
+\text{descent from }k'\text{ or }\mathcal O'&\text{requires separate descent data and proof}.
+\end{array}
+$$
+
+### 12.7 Direct sums
 
 Suppose
 
@@ -1690,7 +2156,7 @@ $$
 
 Thus fixed determinants combine only when the chosen characters multiply to the chosen determinant of the sum.
 
-### 12.6 Tensor products
+### 12.8 Tensor products
 
 Let $\rho_i$ be lifts on finite free $A$-modules of ranks $d_i$. Their tensor product is a continuous lift of $\bar\rho_1\otimes\bar\rho_2$:
 
@@ -1723,7 +2189,7 @@ $$
 
 Accordingly, tensor products respect fixed determinant only with this compatibility. Freeness of both modules is essential for the rank and determinant formulas in this form.
 
-### 12.7 Twists and duals
+### 12.9 Twists and duals
 
 A fixed continuous character $\chi:G\to\mathcal O^\times$ twists lifts by
 
@@ -1741,183 +2207,352 @@ $$
 
 It is compatible with strict equivalence, with the conjugator sent to ${}^{t}P^{-1}$. The induced adjoint identification sends $X$ to $-{}^tX$ at first order, reflecting the derivative of inverse transpose. These operations are safe because the underlying modules are finite free; dualizing arbitrary nonflat families would not have the same behavior.
 
-## 13. Local Galois representations as examples
+## 13. Local and global deformation problems
 
-### 13.1 The local setting and what is being illustrated
+### 13.1 Why local information enters a global problem
 
-Let $K$ be a nonarchimedean local field, let $G_K$ be its absolute Galois group, and let $k$ have characteristic $\ell$. The general deformation definitions require no special property of $G_K$. Books 30 and 31 supply additional arithmetic information: low-degree cohomology is finite in the standard finite-coefficient range, local Euler characteristic formulas calculate tangent dimensions, and local duality identifies $H^2$ with twisted invariants.
-
-These calculations describe the **ambient** local deformation functor. Conditions such as unramified, minimally ramified, ordinary, or finite flat select subfunctors and subspaces. Their systematic construction belongs to later books. Here the local examples show how the general deformation--cohomology dictionary becomes numerical.
-
-### 13.2 Obstructions detected by local duality
-
-For a finite-dimensional $k$-representation $M$ in the local duality range,
+A representation of an arithmetic group is global, but many of the properties one wants to
+preserve are visible after restriction to distinguished subgroups. The formal pattern does not
+require arithmetic. Let $G$ be profinite and let
 
 $$
-H^2(K,M)^*\simeq H^0(K,M^*(1)).
+i_v:G_v\longrightarrow G\qquad(v\in S)
 $$
 
-The trace pairing identifies $(\operatorname{ad}\bar\rho)^*$ with $\operatorname{ad}\bar\rho$, so
+be a finite family of continuous homomorphisms from profinite groups. Think of $G$ as a global
+group and the $G_v$ as local groups. The finiteness of $S$ ensures that products of tangent and
+obstruction spaces remain ordinary finite products; no restricted-product topology is involved.
+
+Put
 
 $$
-h^2_K(\operatorname{ad}\bar\rho)
-=h^0_K(\operatorname{ad}\bar\rho(1)).
+\bar\rho_v=\bar\rho\circ i_v.
 $$
 
-Thus the obstruction space vanishes if there is no adjoint endomorphism with the cyclotomic twist. Concretely, a nonzero invariant in $\operatorname{ad}\bar\rho(1)$ is an intertwiner between $\bar\rho$ and an appropriate cyclotomic twist of itself. This is often easier to test than writing down $2$-cocycles.
+Every global lift restricts to a local lift. This elementary operation is the source of the
+local-to-global maps on tangent spaces and obstructions. What is less elementary, and must not be
+silently assumed, is a converse: independently chosen local lifts need not arise from one global
+representation.
 
-Vanishing of the group makes every small-extension obstruction vanish. Nonvanishing of the group does not prove that a particular obstruction is nonzero; it only gives a receptacle in which one may occur.
+### 13.2 Restriction of framed and unframed functors
 
-### 13.3 Mixed-characteristic dimension formulas
-
-Assume $K/\mathbf Q_\ell$ is finite of degree $n_K$. The local Euler characteristic formula gives
-
-$$
-h^1_K(\operatorname{ad}\bar\rho)
-=h^0_K(\operatorname{ad}\bar\rho)
-+h^2_K(\operatorname{ad}\bar\rho)
-+n_Kd^2.
-$$
-
-Substituting into the framed formula yields
+For every Artinian coefficient ring $A$, composition gives
 
 $$
-\dim_k Z^1(K,\operatorname{ad}\bar\rho)
-=h^2_K(\operatorname{ad}\bar\rho)+(n_K+1)d^2.
+\operatorname{res}_v:
+D_{\bar\rho,G}^{\square}(A)
+\longrightarrow
+D_{\bar\rho_v,G_v}^{\square}(A).
 $$
 
-The residual centralizer cancels. This does not mean automorphisms have disappeared; their contribution to $h^1$ is exactly offset by the quotient from matrices to coboundaries.
-
-Suppose $\bar\rho$ is absolutely irreducible and has no cyclotomic self-twist contributing to $H^0(K,\operatorname{ad}\bar\rho(1))$. Then
-
-$$
-h^0=1,\qquad h^2=0,
-$$
-
-so
+The same formula descends to unframed classes because a global strict conjugator remains a
+strict conjugator after restriction. Taking all $v\in S$ gives natural maps
 
 $$
-h^1=1+n_Kd^2,
-\qquad
-\dim Z^1=(n_K+1)d^2.
-$$
-
-For $K=\mathbf Q_\ell$ and $d=2$, the unframed tangent dimension is $5$ and the framed tangent dimension is $8$.
-
-### 13.4 Fixed determinant in mixed characteristic
-
-Assume $\ell\nmid d$. Then the trace-zero adjoint splits off and local duality applies through the nondegenerate trace pairing. If
-
-$$
-H^0(K,\operatorname{ad}^0\bar\rho)=0,
-\qquad
-H^0(K,\operatorname{ad}^0\bar\rho(1))=0,
-$$
-
-then
-
-$$
-h^1_K(\operatorname{ad}^0\bar\rho)
-=n_K(d^2-1),
+D_{\bar\rho,G}^{\square}(A)
+\longrightarrow
+\prod_{v\in S}D_{\bar\rho_v,G_v}^{\square}(A)
 $$
 
 and
 
 $$
-\dim Z^1(K,\operatorname{ad}^0\bar\rho)
-=(n_K+1)(d^2-1).
+D_{\bar\rho,G}(A)
+\longrightarrow
+\prod_{v\in S}D_{\bar\rho_v,G_v}(A).
 $$
 
-For an absolutely irreducible two-dimensional representation of $G_{\mathbf Q_\ell}$ with $\ell\neq2$ and no relevant self-twist, these dimensions are $3$ and $6$.
+There is an asymmetry between the two displays. Equality of framed localizations uses the one
+global basis already chosen. Equality of unframed local classes permits a different local strict
+conjugator at each $v$. A tuple of local equivalences therefore need not come from one global
+equivalence. The passage from one global change of basis to many local changes of basis is
+another reason local classification can lose global information.
 
-When $\ell\mid d$, neither the trace splitting nor the self-duality of $\operatorname{ad}^0$ may be used in this form. The framed fixed-determinant tangent space remains $Z^1(\operatorname{ad}^0)$, but the unframed tangent is the kernel of trace on $H^1(\operatorname{ad})$, and the dual of $\operatorname{ad}^0$ is a quotient rather than automatically itself.
+If a determinant $\delta:G\to\mathcal O^\times$ is fixed, its local determinant is
+$\delta_v=\delta\circ i_v$. Restriction then maps the global fixed-determinant functor to the
+product of the local fixed-determinant functors. Prescribing unrelated local determinant lifts
+without a global character defines local problems but not a global fixed-determinant problem.
 
-### 13.5 Coefficient characteristic away from the residue characteristic
+### 13.3 The tangent localization map
 
-Suppose $\ell$ differs from the residue characteristic of $K$. The Euler characteristic has no $n_K\dim M$ term, so
-
-$$
-h^1_K(M)=h^0_K(M)+h^2_K(M).
-$$
-
-For $M=\operatorname{ad}\bar\rho$ this gives
-
-$$
-\dim Z^1(K,\operatorname{ad}\bar\rho)
-=d^2+h^2_K(\operatorname{ad}\bar\rho).
-$$
-
-If the adjoint obstruction group vanishes, the framed ambient tangent dimension is exactly $d^2$, regardless of the residual centralizer. The unframed dimension is then $h^0$, so an absolutely irreducible representation has a one-dimensional ambient tangent space. That direction is often unramified, but identifying a particular local condition still requires restriction to inertia.
-
-### 13.6 Unramified tangent directions
-
-Let $I_K\leq G_K$ be inertia and let $\varphi$ be arithmetic Frobenius. For a finite module $M$, the unramified subgroup is
+Write $M=\operatorname{ad}\bar\rho$. On $G_v$ it is the same vector space with action pulled
+back through $i_v$. If
 
 $$
-H^1_{\mathrm{ur}}(K,M)
-=\ker\bigl(H^1(K,M)\to H^1(I_K,M)\bigr)
+\rho_\epsilon(g)=(1+\epsilon c(g))\bar\rho(g),
 $$
 
-and admits the Frobenius description
+then its restriction has cocycle $c\circ i_v$. Therefore the differential of simultaneous
+restriction is exactly
 
 $$
-H^1_{\mathrm{ur}}(K,M)
-\simeq M^{I_K}/(\varphi-1)M^{I_K}.
+\operatorname{loc}:
+H^1(G,M)
+\longrightarrow
+\prod_{v\in S}H^1(G_v,M).
 $$
 
-For $M=\operatorname{ad}\bar\rho$, this is the tangent space obtained by requiring the infinitesimal cocycle to vanish on inertia up to coboundary. Its dimension is
+For framed functors the corresponding map is on cocycles,
 
 $$
-\dim H^1_{\mathrm{ur}}(K,\operatorname{ad}\bar\rho)
-=h^0_K(\operatorname{ad}\bar\rho).
+Z^1(G,M)\longrightarrow\prod_{v\in S}Z^1(G_v,M).
 $$
 
-For an absolutely irreducible residual representation this dimension is one. With fixed determinant and $\ell\nmid d$, it is
+For fixed determinant, replace the source by
 
 $$
-h^0_K(\operatorname{ad}^0\bar\rho),
+\ker\bigl(H^1(G,\operatorname{ad}\bar\rho)
+\xrightarrow{\operatorname{tr}}H^1(G,k)\bigr)
 $$
 
-which is zero in the absolutely irreducible case. These are tangent calculations only. Proving that an unramified deformation subfunctor has a particular lifting property belongs to the theory of local deformation conditions.
+and similarly at every $v$. When $d$ is invertible in $k$, these are the familiar
+$H^1$ groups with coefficients in $\operatorname{ad}^0\bar\rho$.
 
-### 13.7 A split two-character local calculation
-
-Assume here that $\ell$ differs from the residue characteristic of $K$. Let $\bar\rho=\chi_1\oplus\chi_2$ with both characters unramified, and let $q$ be the residue-field cardinality viewed in $k^\times$. Put
-
-$$
-\alpha=\chi_1(\varphi)\chi_2(\varphi)^{-1}.
-$$
-
-The upper-right adjoint line has Frobenius eigenvalue $\alpha$, and the lower-left line has eigenvalue $\alpha^{-1}$. Away from the residue characteristic, an unramified one-dimensional module with eigenvalue $a$ has
+The kernel of localization consists of global infinitesimal deformations that become strictly
+trivial on every selected local group. Its image consists of local tangent tuples satisfying all
+global compatibility relations. Neither kernel nor cokernel is forced to vanish by the abstract
+theory. In later global deformation problems, local conditions will choose subspaces
+$L_v\subseteq H^1(G_v,M)$, and the allowed global tangent space will be
 
 $$
-h^0=[a=1],\qquad h^2=[a=q],
-\qquad h^1=[a=1]+[a=q].
+\{x\in H^1(G,M):\operatorname{res}_v(x)\in L_v
+\text{ for every }v\in S\}.
 $$
 
-Therefore the upper-right extension direction appears when $\alpha=1$ or $\alpha=q$, and the lower-left direction appears when $\alpha^{-1}=1$ or $\alpha^{-1}=q$. The diagonal trivial lines each contribute their own unramified direction, with an additional tame contribution if $q=1$ in $k$.
+This formula is already justified by the present dictionary, although calculating its dimension
+requires additional global arithmetic.
 
-This worked calculation explains tangent-dimension jumps. They occur at special ratios of Frobenius eigenvalues, not because the formal definition changes, but because an off-diagonal character acquires invariants or twisted invariants.
+### 13.4 The Galois specialization
 
-### 13.8 Elliptic-curve residual representations
+Let $F$ be a global field with absolute Galois group $G_F$. For a place $v$ and a chosen embedding
+of a separable closure of $F$ into a separable closure of $F_v$, one obtains a continuous
+homomorphism from the local absolute Galois group $G_{F_v}$ to $G_F$, well defined up to
+conjugacy in $G_F$. Changing the
+embedding conjugates the subgroup map. Inner conjugation acts trivially on cohomology after the
+natural transport of coefficients, so the induced restriction map is independent of this choice
+up to its canonical identification.
 
-Let $E/K$ be an elliptic curve and $\ell\neq\operatorname{char}K$. Choosing a basis of $E[\ell]$ gives
+If ramification is allowed only at a finite set $S$, one may replace $G_F$ by the quotient
+$G_{F,S}$ obtained by killing the closed normal subgroup generated by inertia outside $S$.
+Continuous representations unramified outside $S$ are exactly those factoring through this
+quotient. This replacement is often essential for finite-dimensional global tangent spaces, but
+no finiteness theorem is needed to define the deformation functor.
+
+The word “local” can now mean two related things. A deformation of
+$\bar\rho|_{G_{F_v}}$ is a local deformation. A global deformation restricted to $G_{F_v}$ is a
+localized global deformation. Every localized global deformation is local, but most local
+deformations need not globalize.
+
+### 13.5 Local obstruction classes
+
+Fix one $v$ and a small extension
 
 $$
-\bar\rho_{E,\ell}:G_K\to\operatorname{GL}_2(\mathbf F_\ell).
+0\longrightarrow I\longrightarrow A'\longrightarrow A\longrightarrow0.
 $$
 
-The Weil pairing gives
+Given a local lift
 
 $$
-\det\bar\rho_{E,\ell}=\bar\chi_\ell,
+\rho_{v,A}:G_v\to\operatorname{GL}_d(A),
 $$
 
-the mod-$\ell$ cyclotomic character. Deformations arising from an $\ell$-adic Tate module therefore come naturally with a prescribed cyclotomic determinant, motivating the fixed-determinant functor.
+the construction of Chapter 9 gives
 
-If $E[\ell]$ has a $G_K$-stable line, an adapted basis makes the representation upper triangular. The two off-diagonal adjoint cohomology groups then describe possible extension directions between the two residual characters. A stable line is weaker than a rational point: its character can be nontrivial. Deformation theory must remember the characters on both line and quotient, not merely reducibility.
+$$
+\operatorname{ob}_v(\rho_{v,A},A'/A)
+\in H^2(G_v,\operatorname{ad}\bar\rho_v)\otimes_k I.
+$$
 
-If the residue characteristic of $K$ differs from $\ell$ and $E$ has good reduction, the representation is unramified, so the unramified tangent calculation applies. At multiplicative reduction the residual representation is typically upper triangular with a cyclotomic line and an extension class controlled by the Tate parameter. Those arithmetic shapes motivate local subfunctors but do not alter the ambient definitions developed here.
+It vanishes exactly when this fixed local representative lifts. If it vanishes, local framed
+lifts form a torsor under
+
+$$
+Z^1(G_v,\operatorname{ad}\bar\rho_v)\otimes_k I,
+$$
+
+and rigidified local unframed lifts form a torsor under the corresponding $H^1$. Local strict
+automorphisms reducing to the identity are $H^0\otimes I$.
+
+For a prescribed local determinant, determinant-preserving provisional matrices give instead
+
+$$
+\operatorname{ob}_v^\delta
+\in H^2(G_v,\operatorname{ad}^0\bar\rho_v)\otimes_k I.
+$$
+
+This is the complete local low-degree dictionary. It uses no global group and no local duality
+theorem. Any stronger conclusion, such as a numerical dimension formula or vanishing of the
+local obstruction group, requires additional information about $G_v$.
+
+### 13.6 The global obstruction and its localizations
+
+Now begin with one global lift $\rho_A$ and choose provisional global matrix lifts
+$\widetilde\rho(g)$. Their defect is
+
+$$
+1+\kappa(g,h)
+=\widetilde\rho(g)\widetilde\rho(h)
+\widetilde\rho(gh)^{-1}.
+$$
+
+Restricting the provisional matrices to $G_v$ gives defect
+
+$$
+\kappa_v(x,y)=\kappa(i_v(x),i_v(y)).
+$$
+
+Thus the local class is literally the restriction of the global class.
+
+**Proposition (localization of obstructions).** For every $v\in S$,
+
+$$
+\operatorname{res}_v
+\operatorname{ob}_G(\rho_A,A'/A)
+=
+\operatorname{ob}_{G_v}(\rho_A|_{G_v},A'/A).
+$$
+
+The same identity holds for fixed-determinant obstruction classes.
+
+**Proof.** Pullback of continuous cochains commutes with the differential and with the adjoint
+action. The pulled-back provisional lift is a valid provisional local lift, and its defect is the
+displayed pullback $\kappa_v$. Changing provisional global lifts adds a global coboundary whose
+restriction is the corresponding local coboundary. Hence the equality holds in cohomology. For
+fixed determinant, the provisional matrices already have the prescribed global determinant, so
+their restrictions have the prescribed local determinants and the same argument takes place in
+the trace-zero submodule. $\square$
+
+Consequently global liftability implies local liftability at every selected group. Conversely,
+if every local obstruction vanishes, the global class is known only to lie in
+
+$$
+\ker\left(
+H^2(G,M)\longrightarrow\prod_{v\in S}H^2(G_v,M)
+\right).
+$$
+
+It vanishes only if this localization map is injective on the class in question. No such
+injectivity follows from the definitions.
+
+### 13.7 A counterexample to naive local-to-global lifting
+
+The failure of a local-to-global converse already occurs for finite groups. Let
+
+$$
+G=C_p\times C_p
+$$
+
+and use the two coordinate subgroups as the selected local groups. Let $H_p$ be the group of
+upper unitriangular matrices
+
+$$
+\begin{pmatrix}
+1&a&c\\
+0&1&b\\
+0&0&1
+\end{pmatrix},
+\qquad a,b,c\in\mathbf F_p.
+$$
+
+Projection to $(a,b)$ gives a central extension
+
+$$
+0\longrightarrow\mathbf F_p^+
+\longrightarrow H_p
+\longrightarrow C_p\times C_p
+\longrightarrow1.
+$$
+
+It defines a class
+
+$$
+\xi\in H^2(C_p\times C_p,\mathbf F_p)
+$$
+
+for the trivial action. The restriction of $\xi$ to either coordinate subgroup is zero: setting
+$b=0$ or $a=0$ gives an evident homomorphic section. Globally the extension does not split. If
+it did, centrality and trivial action would make $H_p$ a direct product of three additive cyclic
+groups and hence abelian. But
+
+$$
+\begin{pmatrix}1&a&0\\0&1&0\\0&0&1\end{pmatrix}
+\begin{pmatrix}1&0&0\\0&1&b\\0&0&1\end{pmatrix}
+$$
+
+differs from the reverse product by the central entry $ab$, so $H_p$ is nonabelian. Therefore
+$\xi\neq0$ while both selected local restrictions vanish.
+
+This example is not an arithmetic pathology. It is the basic cohomological reason that solving
+every local lifting problem does not automatically solve the global one. A global obstruction
+can be locally invisible. Additional global duality or presentation theorems may control that
+kernel in particular arithmetic settings, but such control is extra structure, not part of the
+ambient deformation functor.
+
+### 13.8 Comparing local choices with a global choice
+
+Assume the global obstruction vanishes and fix a global lift $\rho_{A'}^0$. Other rigidified
+global lifts form a torsor under
+
+$$
+H^1(G,M)\otimes_k I.
+$$
+
+Fix also, at every $v$, a desired rigidified local lift $\rho_{v,A'}$. Its difference from
+$\rho_{A'}^0|_{G_v}$ is a class
+
+$$
+\ell_v\in H^1(G_v,M)\otimes_k I.
+$$
+
+There exists a global lift having all these prescribed local classes exactly when the tuple
+$(\ell_v)_{v\in S}$ lies in the image of
+
+$$
+H^1(G,M)\otimes_k I
+\longrightarrow
+\prod_{v\in S}H^1(G_v,M)\otimes_k I.
+$$
+
+**Proof.** Translating the chosen global lift by a global cocycle $c$ translates its $v$th
+restriction by $\operatorname{res}_v[c]$. Thus a global correction realizes the desired tuple
+precisely when its cohomology class maps to $(\ell_v)$. Changing cocycle representatives adds
+local coboundaries and does not affect the rigidified local classes. $\square$
+
+This proposition separates two stages that are often conflated. Degree two decides whether some
+global lift exists. Once one exists, degree one decides whether it can be moved to specified
+local positions. Degree zero then measures automorphisms of the chosen object. Fixed determinant
+uses the fixed-determinant tangent quotient from Chapter 7 at both global and local levels.
+
+### 13.9 The local--global dictionary for later use
+
+For a finite family $i_v:G_v\to G$, the precise translations are
+
+$$
+\begin{array}{c|c}
+\text{deformation statement}&\text{cohomological statement}\\ \hline
+\text{restrict a global tangent vector}&
+H^1(G,M)\to H^1(G_v,M)\\
+\text{globally trivial at all selected local groups}&
+\ker(H^1(G,M)\to\prod_vH^1(G_v,M))\\
+\text{localize a global obstruction}&
+H^2(G,M)\to H^2(G_v,M)\\
+\text{all local obstructions vanish}&
+o_G\in\ker(H^2(G,M)\to\prod_vH^2(G_v,M))\\
+\text{realize prescribed local lifts}&
+(\ell_v)_v\in\operatorname{im}(H^1(G,M)\to\prod_vH^1(G_v,M)).
+\end{array}
+$$
+
+Here $M=\operatorname{ad}\bar\rho$ for unrestricted deformations. For framed problems use
+cocycles before quotienting. For fixed determinant use trace-zero cocycles and divide by
+coboundaries from the full adjoint module, simplifying to $H^1(\operatorname{ad}^0)$ when $d$ is
+invertible in $k$. The global determinant must restrict to every prescribed local determinant.
+
+This is the exact cohomological dictionary available before imposing any special local
+condition. It identifies the spaces in which later unramified, ordinary, finite-flat, inertial,
+or Selmer conditions will live, without assuming their representability, smoothness, dimension,
+or duality properties.
 
 ## 14. Fiber products, automorphisms, and the edge of representability
 
@@ -2178,47 +2813,91 @@ $$
 
 If one had treated every reducible representation as though its two diagonal characters split, one would get the correct centralizer dimension in this self-extension example only by accident; the module structure and connecting maps remain different.
 
-### 15.6 An absolutely irreducible local example
+### 15.6 Fixed determinant in characteristic two
 
-Let $K/\mathbf Q_\ell$ have degree $n_K$, and let
-
-$$
-\bar\rho:G_K\to\operatorname{GL}_2(k)
-$$
-
-be absolutely irreducible. Assume $\ell\neq2$ and
+Let $k=\mathbf F_2$, let $G=\operatorname{GL}_2(\mathbf F_2)$, and let $\bar\rho$ be the
+tautological two-dimensional representation. It is absolutely irreducible: no line is fixed by
+all invertible matrices, and the same matrix calculation after scalar extension gives no common
+eigenline. Hence
 
 $$
-H^0(K,\operatorname{ad}\bar\rho(1))=0,
+H^0(G,\operatorname{ad}\bar\rho)=kI_2.
+$$
+
+But $\operatorname{tr}(I_2)=0$, so
+
+$$
+H^0(G,\operatorname{ad}^0\bar\rho)=kI_2
+$$
+
+as well. Consider the coefficient sequence
+
+$$
+0\to\operatorname{ad}^0\bar\rho
+\to\operatorname{ad}\bar\rho
+\xrightarrow{\operatorname{tr}}k\to0.
+$$
+
+The map on $H^0$ from the middle term to $k$ is zero, because every invariant endomorphism is
+scalar and every scalar $2\times2$ matrix has trace zero. Exactness therefore makes the
+connecting map
+
+$$
+\partial:k\hookrightarrow H^1(G,\operatorname{ad}^0\bar\rho)
+$$
+
+injective. The ordinary fixed-determinant tangent space is consequently
+
+$$
+t_{\bar\rho}^{\delta}
+\cong
+H^1(G,\operatorname{ad}^0\bar\rho)/k\partial(1),
+$$
+
+not all of $H^1(G,\operatorname{ad}^0\bar\rho)$. A representative of $\partial(1)$ is obtained
+by choosing any trace-one matrix, for example $E_{11}$, and taking
+
+$$
+g\longmapsto gE_{11}g^{-1}-E_{11}.
+$$
+
+This class is a change-of-frame direction arising from an infinitesimal conjugator of nonzero
+trace. It survives in trace-zero cohomology because characteristic two prevents subtracting half
+the trace. The example makes the characteristic caveat concrete even under absolute
+irreducibility.
+
+### 15.7 A reducible representation with only scalar automorphisms
+
+Return to the matrices
+
+$$
+D=\begin{pmatrix}a&0\\0&b\end{pmatrix},
 \qquad
-H^0(K,\operatorname{ad}^0\bar\rho(1))=0.
+U=\begin{pmatrix}1&1\\0&1\end{pmatrix}
 $$
 
-The unrestricted and fixed-determinant data are then
+over a finite field with $a\neq b$. Let $G=\langle D,U\rangle$ and let $\bar\rho$ be the
+inclusion. The line $ke_1$ is stable, so $\bar\rho$ is reducible, but the calculation of Section
+3.7 gives
 
 $$
-\begin{array}{c|c|c|c}
-\text{problem}&h^0&h^1&\dim Z^1\\ \hline
-\text{unrestricted}&1&1+4n_K&4(n_K+1)\\
-\text{fixed determinant}&0&3n_K&3(n_K+1).
-\end{array}
+H^0(G,\operatorname{ad}\bar\rho)=kI_2.
 $$
 
-For $K=\mathbf Q_\ell$, fixing determinant removes two unframed tangent dimensions: the unrestricted space has dimension five and the fixed-determinant space dimension three. One removed direction is the bulk scalar coefficient direction and the other is the scalar invariant contribution appearing through the Euler formula. At framed level the dimensions fall from eight to six, exactly the difference between $\dim\operatorname{ad}=4$ and $\dim\operatorname{ad}^0=3$ across both the local and frame terms.
-
-Both obstruction groups vanish under the hypotheses, so every small-extension lifting problem is soluble. The table still does not produce universal rings; it is a complete low-degree cohomological profile.
-
-### 15.7 A local reducible eigenvalue jump
-
-Let $K$ have residue cardinality $q$, let $\ell$ differ from the residue characteristic, and let $\bar\rho=\chi_1\oplus\chi_2$ be unramified. If
+For every lift $\rho_A$ to every Artinian coefficient ring, the scalar-centralizer theorem now
+gives
 
 $$
-\alpha=\chi_1(\varphi)\chi_2(\varphi)^{-1}
+\operatorname{Aut}^{\mathrm{str}}_A(\rho_A)
+=(1+\mathfrak m_A)I_2.
 $$
 
-is different from $1$, $q$, and $q^{-1}$, both off-diagonal adjoint lines have vanishing cohomology. The tangent space consists only of diagonal character variations. At $\alpha=1$, the two residual characters coincide on Frobenius and off-diagonal invariants appear. At $\alpha=q$, the upper-right line acquires a degree-two class and a corresponding degree-one direction; at $\alpha=q^{-1}$ the lower-left line does.
-
-Thus a family of residual representations can cross loci where both tangent and obstruction dimensions jump. Absolute irreducibility avoids this particular diagonal decomposition, but it does not rule out analogous self-twist loci detected by $H^0(\operatorname{ad}(1))$.
+Thus the framed-to-unframed orbit has exactly the same stabilizer size as it would for an
+absolutely irreducible residual representation. Nevertheless the tangent space can retain
+extension directions associated with the stable line, and scalar extension does not make the
+residual representation irreducible. This calculation shows precisely which later arguments may
+use the Schur condition alone—those controlling centralizers—and which genuinely require
+absolute irreducibility—those controlling constituents after coefficient extension.
 
 ## 16. The reusable deformation--cohomology dictionary
 
@@ -2422,6 +3101,73 @@ $$
 
 The missing issues are compatibility on coefficient fiber products, effectiveness of lifting, and automorphisms. They are not technical footnotes; they are the content of the next stage of the theory.
 
+### 16.10 Schur and complete-coefficient checklist
+
+The Schur condition is
+
+$$
+H^0(G,\operatorname{ad}\bar\rho)=kI_d.
+$$
+
+It implies, for every Artinian lift and every complete separated lift,
+
+$$
+Z_{M_d(A)}(\rho_A(G))=AI_d,
+\qquad
+\operatorname{Aut}^{\mathrm{str}}_A(\rho_A)
+=(1+\mathfrak m_A)I_d.
+$$
+
+Absolute irreducibility implies Schur, but a reducible nonsplit representation can also satisfy
+Schur. The hypothesis controls centralizers; it does not force tangent or obstruction groups to
+vanish.
+
+For a complete Noetherian local ring $R$ with finite residue field,
+
+$$
+D_{\bar\rho}^{\square}(R)
+\cong\varprojlim_nD_{\bar\rho}^{\square}(R/\mathfrak m_R^n),
+\qquad
+D_{\bar\rho}(R)
+\cong\varprojlim_nD_{\bar\rho}(R/\mathfrak m_R^n).
+$$
+
+The framed assertion uses compatible matrices. The unframed assertion additionally uses lifting
+of strict conjugators for existence and compactness of the finite congruence quotients for
+detection of complete strict equivalence. To construct a complete lift, solve successively the
+obstructions
+
+$$
+o_n\in H^2(G,\operatorname{ad}\bar\rho)
+\otimes_k\mathfrak m_R^n/\mathfrak m_R^{n+1}
+$$
+
+and retain compatible choices. Independent finite-level lifts do not define a complete lift.
+
+### 16.11 Local--global checklist
+
+For continuous maps $i_v:G_v\to G$ and $M=\operatorname{ad}\bar\rho$, restriction gives
+
+$$
+H^i(G,M)\longrightarrow\prod_vH^i(G_v,M)
+$$
+
+in every degree. Degree one is the differential of localization of deformation functors. Degree
+two carries the global obstruction to the local obstruction attached to the restricted lift:
+
+$$
+\operatorname{res}_v(o_G)=o_v.
+$$
+
+Therefore a global lift is locally liftable everywhere, but the converse requires the global
+obstruction to vanish, not merely all its restrictions. Once some global lift exists, a tuple of
+desired local lift classes is globally realizable exactly when its difference from the localized
+global lift lies in the image of the degree-one localization map.
+
+For fixed determinant, the global character must restrict to all local characters. Use
+$\operatorname{ad}^0$ for obstruction classes and trace-zero cocycles for framed tangents; for
+ordinary unframed tangents, continue to divide by coboundaries from the full adjoint module.
+
 ## 17. Conclusion
 
 ### 17.1 The coherent low-degree picture
@@ -2458,3 +3204,12 @@ Associativity proves it is a cocycle, changing provisional lifts adds a cobounda
 The resulting dictionary is deliberately ambient. Restriction to decomposition groups, preservation of inertia type, unramifiedness, ordinarity, finite flatness, and global Selmer conditions will later select subfunctors and subspaces inside the objects constructed here. At tangent level they will select subspaces of $H^1$; at obstruction level they will refine the $H^2$ class; at the groupoid level they must specify which extra structures and automorphisms remain.
 
 No universal ring has been assumed, and no representability criterion has been used. What has been established is logically prior: a precise continuous deformation functor, its framed and fixed-determinant variants, their naturality, their exact tangent spaces, and their complete obstruction theory across one square-zero step. This is the reusable local language in which the representability theory of Book 65 and the local and global deformation conditions of later books can be stated without ambiguity.
+
+Complete coefficient representations are recovered from compatible Artinian levels, and their
+strict-equivalence classes are detected at those levels. The Schur condition has been isolated at
+its exact strength: it makes all family centralizers scalar, while leaving tangent and obstruction
+groups untouched. Finally, restriction to a family of local groups carries global tangent and
+obstruction classes to their local counterparts. Local vanishing is necessary but not sufficient
+for global lifting; after existence, the image of $H^1$ measures whether prescribed local choices
+can be realized simultaneously. These statements complete the cohomological dictionary needed
+before any special local condition or global duality theorem is introduced.
