@@ -132,7 +132,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 065. Representability of Deformation Problems
 - [x] 066. Local Deformation Conditions Away from (\ell)
 - [x] 067. Finite-Flat Deformation Conditions at (\ell)
-- [ ] 068. Global Deformation Problems
+- [x] 068. Global Deformation Problems
 - [x] 069. Complete Local Algebra for Deformation Theory
 - [x] 070. Depth, Complete Intersections, and Fitting Ideals
 - [x] 071. Numerical Criteria for (R=T)

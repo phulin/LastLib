@@ -546,8 +546,8 @@ Base-change stability means stability under every morphism in $\operatorname{Art
 
 At a finite place $v\nmid\ell$, the local theory supplies several legitimate choices.
 
-- If $\bar\rho_v$ is unramified, the unramified condition requires inertia to remain trivial. Its tangent is $H^1_{\mathrm{ur}}(K_v,M)$. The framed condition is formally smooth, determined by one Frobenius matrix.
-- A compatible prime-to-$\ell$ finite inertial type gives a representable fixed-type condition. Its unframed tangent is again $H^1_{\mathrm{ur}}(K_v,M)$.
+- If $\bar\rho_v$ is unramified, the unramified condition requires inertia to remain trivial. Its tangent is $H^1_{\mathrm{ur}}(K_v,M)$. The framed condition is formally smooth because a lift is determined by one freely lifted Frobenius matrix. With fixed determinant, the same conclusion has relative dimension $d^2-1$; the determinant equation is smooth in this unramified situation.
+- A compatible prime-to-$\ell$ finite inertial type, together with an integral inertia model and a Frobenius intertwiner, gives a representable fixed-type condition. Averaging over the finite inertia quotient makes its deformations rigid up to conjugacy, and its unframed tangent is again $H^1_{\mathrm{ur}}(K_v,M)$. The framed condition is formally smooth of relative dimension $d^2$. Its fixed-determinant fiber is smooth of dimension $d^2-1$ when trace on the inertia centralizer is onto; this is automatic if $\ell\nmid d$, but must otherwise be checked.
 - Minimal unipotent and special conditions are available in the residual shapes for which their line, monodromy, determinant, and descent data have been specified. Their tangent spaces come from the derivative of their actual equations, not from a generic dimension slogan.
 - The relaxed condition has $L_v=H^1(K_v,M)$; the strict tangent condition has $L_v=0$.
 
@@ -1393,13 +1393,13 @@ The twist in (9.2) does not disappear because the untwisted trace-zero adjoint i
 
 ### 9.2 Orthogonal local conditions
 
-Local Tate duality gives a perfect pairing
+Local Tate duality gives a perfect $k$-bilinear pairing
 
 $$
 H^1(K_v,M)\times H^1(K_v,M')\longrightarrow k
 $$
 
-after fixing a nonzero additive character of $k$. Define
+using evaluation $M\otimes_kM^*\to k$, cup product, and the local invariant map for $k(1)$. Equivalently, one may first take the usual $\mathbf F_\ell$-valued invariant pairing and then use the coefficient-field trace to identify its $k$-linear adjoint. Either construction gives the same annihilator subspaces. Define
 
 $$
 L_v^\perp
