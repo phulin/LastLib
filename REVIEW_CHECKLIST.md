@@ -160,7 +160,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 093. Automorphic Representations of (D^\times)
 - [x] 094. Global Jacquet–Langlands
 - [x] 095. Hecke Characters and Automorphic Induction from (GL_1)
-- [ ] 096. Cyclic Base Change for (GL_2)
+- [x] 096. Cyclic Base Change for (GL_2)
 - [ ] 097. Solvable Base Change and Descent
 - [x] 098. Schwartz–Bruhat Analysis and Tate’s Thesis
 - [x] 099. Archimedean GL₂ and Discrete Series
