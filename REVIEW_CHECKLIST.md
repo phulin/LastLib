@@ -173,7 +173,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 106. Strong Multiplicity One and Global Newforms for GL₂
 - [ ] 107. Algebraicity and Integral Structures of Weight-Two Packets
 - [x] 108. Cuspidal Trace-Formula Kernels for Rank Two
-- [ ] 109. The Cuspidal Spectral Side of the GL₂ Trace Formula
+- [x] 109. The Cuspidal Spectral Side of the GL₂ Trace Formula
 - [ ] 110. The Geometric Side of the GL₂ Trace Formula
 - [ ] 111. Orbital Integrals for GL₂ and Quaternion Algebras
 - [ ] 112. Transfer of Test Functions and the Rank-Two Fundamental Lemma
