@@ -246,7 +246,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 179. Odlyzko Bounds and Fontaine’s Argument
 - [ ] 180. Hardly Ramified (3)-adic Representations
 - [ ] 181. Schoof's Finite-Flat Category over ℤ[1/2]
-- [ ] 182. Local Conditions for Hardly-Ramified Minimal Deformations
+- [x] 182. Local Conditions for Hardly-Ramified Minimal Deformations
 - [ ] 183. Supported Galois Cohomology and Selmer Calculations
 - [ ] 184. Relation Obstructions and Poitou–Tate Corrections
 - [ ] 185. Finite Image and the Balanced Minimal-Lift Argument
