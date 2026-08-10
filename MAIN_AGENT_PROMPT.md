@@ -9,7 +9,10 @@ Before launching workers, prepare the project cache serially from `/home/phulin/
 1. Run `lake exe cache get` and confirm the pinned Mathlib executable cache is present.
 2. Run one full `lake build` to warm the project cache. Before starting it, require at least 20 GiB of available RAM using a `/proc/meminfo` predicate joined directly to the build with `&&`. If less memory is available, wait 30 seconds and retry.
 
-All workers must use the same project directory and its shared `.lake` tree. Do not set separate `LAKE_HOME`, `LEAN_PATH`, package-cache, or build-directory overrides.
+Workers must never invoke Lake, raw Lean, or another compiler. The coordinator owns the main
+worktree's single writable `.lake` cache. After each proof worker exits, merge its accepted scoped
+changes first, then enqueue exactly one targeted build; serialize merge-and-build transactions so a
+new worker snapshot cannot observe new sources with stale artifacts.
 
 Give each worker the contents of `SUBAGENT_PROMPT.md`, replacing `<CHAPTER>` and `<CHAPTER_NUMBER>` for its assigned file. Tell workers to rely on pinned Mathlib as much as possible. Later chapters may use declarations from earlier chapters.
 
@@ -21,10 +24,14 @@ Enforce these project-wide rules:
 - Workers may add any focused Mathlib or stable LastLib imports their proofs require. They must not
   introduce the exact umbrella imports `import Mathlib` or `import LastLib`, or a book/chapter
   aggregator when a focused module supplies the API.
-- Give proof workers the Lean MCP when available and have them use whole-file diagnostics, goals, and batched tactic trials for their interactive loop. Use `lake build` exclusively for final compilation and acceptance testing; never use `lake env lean`.
+- Give proof workers the Lean MCP when available and have them use whole-file diagnostics, goals,
+  and batched tactic trials. Agents never build; the coordinator performs each post-merge targeted
+  `lake build` through the serialized queue.
 - Require every chapter target and the aggregate target to build without warnings, except for warnings
   caused by deliberate `sorry` placeholders while such placeholders are expected at that stage.
-- Immediately before every Lake build, check that `/proc/meminfo` reports `MemAvailable >= 20971520` kB and join the successful check to the Lake command with `&&`. If the check fails, wait 30 seconds and retry.
+- Immediately before every coordinator Lake build, check that `/proc/meminfo` reports
+  `MemAvailable >= 20971520` kB and join the successful check to the Lake command with `&&`. If the
+  check fails, leave that build at the head of the queue, wait 30 seconds, and retry.
 - Preserve unrelated changes and do not commit.
 - If a declaration is false, unprovable from its assumptions, or inaccurately formalizes the book, correct it as closely as possible to the book and require the worker to report the exact change and justification.
 - Each worker must first write a complete proof attempt for every placeholder throughout its entire file before compiling. It should then fix compiler errors in batches to reduce agent turns.
@@ -37,7 +44,7 @@ The final report must include:
 
 - Whether every chapter and the aggregate project build succeeded.
 - The final forbidden-token audit result.
-- Confirmation that all workers shared the same `.lake` cache.
+- Confirmation that only the coordinator wrote the single main-worktree `.lake` cache.
 - Every theorem, definition, or interface correction reported by the workers, with its reason.
 - Confirmation that the final builds emitted no warnings other than any expected `sorry` warnings,
   with each exception listed.

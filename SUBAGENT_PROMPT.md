@@ -19,7 +19,8 @@ module supplies the needed API.
 3. Make a whole-file proof-writing pass before the first diagnostic check. Write a coherent proof attempt for every target that appears mathematically sound; do not check after each speculative identifier.
 4. When the Lean MCP is available, request diagnostics for the entire assigned file and collect the complete error set. Classify failures into independent clusters, then repair only those clusters using proof goals, batched tactic attempts, code actions, declaration lookup, and fresh whole-file diagnostics.
 5. Continue through the entire chapter. One difficult declaration must not prevent you from proving independent later declarations.
-6. After the last source edit, run a fresh successful guarded chapter build. Any edit invalidates previous build results.
+6. After the last source edit, stop and report accurately. The coordinator will merge your changes
+   and run the fresh chapter build through its serialized build queue.
 
 ## Reconstruct the exact API
 
@@ -65,23 +66,18 @@ Continue proving all independent declarations in the rest of the chapter. The ma
 
 ## Compilation and resource rules
 
-Use the attached Lean MCP for the interactive edit/check loop and do not start another language server. Use only Lake builds for final compilation and acceptance testing. Never run `lake env lean`, raw `lean`, another compiler, a scratch module, or an alternate target. Run the final build from `/home/phulin/LastLib-book1/lean` so all workers share the project `.lake` cache. Do not override `LAKE_HOME`, `LEAN_PATH`, the package cache, or the build directory.
-
-Before the final Lake build, immediately check `/proc/meminfo` and start the build only if `MemAvailable` is at least `20971520` kB. Join the successful memory predicate directly to the Lake command with shell `&&`. If insufficient memory is available, wait 30 seconds and retry. Build the assigned target `+LastLib.Book01ValuationsDVRsAndCompletions.<CHAPTER>`; use a full `lake build` only when necessary.
-
-A suitable guarded pattern is:
-
-```sh
-while ! awk '/^MemAvailable:/ { ok = ($2 >= 20971520) } END { exit !ok }' /proc/meminfo; do sleep 30; done && awk '/^MemAvailable:/ { ok = ($2 >= 20971520) } END { exit !ok }' /proc/meminfo && lake build +LastLib.Book01ValuationsDVRsAndCompletions.<CHAPTER>
-```
-
-A successful build must emit no warnings except the expected warnings for deliberate remaining `sorry` placeholders. Repair linter, deprecation, unused-variable, unused-simp-argument, unnecessary-`simpa`, `letI`, reducibility, style, and all other warnings within the assigned file before finishing.
+Use the attached Lean MCP for the interactive edit/check loop and do not start another language
+server. Never run `lake build`, `lake env lean`, raw `lean`, another compiler, or a scratch module.
+Builds are coordinator-owned: after your process exits, the coordinator merges accepted scoped
+changes into the main worktree and runs the chapter target through a serialized build queue against
+the single writable `.lake` cache. Repair every diagnostic available through the MCP and report any
+remaining uncertainty for the coordinator build.
 
 ## Completion checks
 
 Before finishing:
 
-1. Run a fresh guarded build after the final edit and confirm the assigned chapter target succeeds.
+1. Confirm you did not invoke a compiler and that the coordinator build remains to be run after merge.
 2. Confirm the assigned file contains no `admit`, `aesop`, `axiom`, `unsafe`, `sorryAx`, or equivalent loophole, except for statements you failed to prove or needing update.
 3. Account for every remaining `sorry`: each must be either attached to a precise `STATEMENT_NEEDS_UPDATE` marker or reported as an unresolved proof obligation. Never claim completion merely because the file builds with placeholders.
 4. Inspect the diff to verify that declaration headers are unchanged and that any import edits add
@@ -96,9 +92,8 @@ Report one chapter-level summary, not a statement-by-statement JSON value. Inclu
 - The declarations proved and the remaining placeholder count.
 - Every declaration marked `STATEMENT_NEEDS_UPDATE`, with its concrete diagnosis and minimal proposed correction.
 - Any ordinary unresolved proof obligations that are difficult but do not justify a statement update.
-- The exact guarded build command and its result, run after the final edit.
+- Confirmation that no agent-owned build was run; the coordinator owns post-merge validation.
 - Forbidden-token and `git diff --check` results.
-- Confirmation that the final build emitted no warnings other than expected `sorry` warnings, with
-  each exception listed.
+- Every remaining MCP diagnostic or warning the coordinator build may encounter.
 - Confirmation that declaration headers were preserved, any imports added were focused rather than
   umbrella imports, only the assigned chapter file was modified, and temporary files were removed.

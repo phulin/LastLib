@@ -84,8 +84,10 @@ Keep guesses inside the assigned chapter namespace, use a distinctive but meanin
 1. Inventory the assigned source chapter section by section, outline plausible proof dependencies for its principal results, and inspect relevant Book 1 and Mathlib APIs.
 2. Create the chapter-local dependency interface only if needed.
 3. Write all section files and the chapter aggregator. Cover the entire chapter before spending time on optional proof bodies.
-4. When the Lean MCP is available, request whole-file diagnostics for every assigned Lean source after the complete statement pass. Repair diagnostics in coherent batches and request fresh diagnostics after each batch; do not invoke Lake after every edit.
-5. Before claiming success, force every assigned Lean source to be re-elaborated so stale `.olean` files cannot hide a late source error. From the project directory, run `find LastLib/Book02FiniteExtensionsOfLocalFields/Chapter{chapter_number_padded} -type f -name '*.lean' -exec touch {} +`, also touch the chapter aggregator, and then run `lake build +LastLib.Book02FiniteExtensionsOfLocalFields.Chapter{chapter_number_padded}` as the final acceptance check. Prefer `lake build` for final compilation and testing; never use `lake env lean` when a Lake build target is available. Continue until this forced fresh chapter build succeeds without warnings other than those expected from deliberate `sorry` placeholders.
+4. When the Lean MCP is available, request whole-file diagnostics for every assigned Lean source after the complete statement pass. Repair diagnostics in coherent batches and request fresh diagnostics after each batch; do not invoke Lake.
+5. Do not run Lake, raw Lean, or another compiler. After your process exits, the coordinator merges
+   accepted scoped changes into the main worktree and deterministically runs the chapter target
+   through its serialized build queue against the single writable `.lake` cache.
 6. Run `git diff --check` on files you created and audit them for malformed comments, exploratory `#check`/`#print`/`#eval`/`#reduce` commands, and forbidden loopholes (`axiom`, `unsafe`, `sorryAx`, `admit`, and vacuous `True` stand-ins). Ordinary `sorry` proof placeholders are allowed in this pass.
 
 Edit only the assigned chapter directory and aggregator, except for temporary scratch files inside the worktree, which must be removed before finishing. Preserve all existing user changes. Do not alter Book 1 files, the book Markdown, Lake configuration, shared root imports, or other Book 2 chapters. Do not use the internet, inspect Git history, or commit.
@@ -97,7 +99,7 @@ Report:
 - every file created;
 - the section-by-section declaration count and total declaration count;
 - every proof-support lemma added beyond explicit source declarations, grouped by the result or proof step it enables;
-- the exact successful Lake build command;
+- confirmation that the coordinator-owned post-merge build remains to be run;
 - every `BOOK2_DEPENDENCY_GUESS`, naming the expected source chapter;
 - every `SOURCE_ISSUE` and its correction;
 - any important source assertion intentionally not represented, with the reason;

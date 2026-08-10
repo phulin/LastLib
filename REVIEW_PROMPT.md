@@ -71,7 +71,9 @@ Edit the assigned Lean file directly. Do not edit the prose, `REVIEW_PROMPT.md`,
 
 Keep existing proofs when they still elaborate against faithful statements. When a necessary statement repair invalidates a proof and a short robust repair is not immediate, replace only that proof body with `by sorry`; accurate interfaces take priority in this pass. Existing `sorry` placeholders may remain. Do not distort a statement to preserve a proof.
 
-Run a targeted Lake build if practical, but do not spend the review budget chasing long proof failures caused by corrected statements. Run `git diff --check` on the assigned file. Before finishing, verify that you changed only the assigned file.
+Do not run Lake, raw Lean, or another compiler. Run `git diff --check` on the assigned file. Before
+finishing, verify that you changed only the assigned file. The coordinator will merge accepted
+changes and run the targeted build through its serialized main-worktree build queue.
 
 Perform the final review workflow in this order:
 
@@ -82,7 +84,7 @@ Perform the final review workflow in this order:
 5. Audit imports. Focused imports may be added freely and do not need to be minimized. Replace the
    exact umbrella imports `import Mathlib` and `import LastLib`, and replace any broad aggregator
    import with focused Mathlib or stable LastLib modules. Do not add later-chapter or cyclic edges.
-6. Run the targeted final build and `git diff --check`.
+6. Run `git diff --check`; the coordinator runs the post-merge targeted build.
 
 ## Final report
 
@@ -96,7 +98,7 @@ Report:
 - every `SOURCE_ISSUE` and its correction;
 - any substantive source assertion intentionally not represented and why;
 - dependency-order findings;
-- targeted build result, if run, and `git diff --check` result;
+- `git diff --check` result and confirmation that the coordinator owns the post-merge build;
 - confirmation that the complete embedded prose and Lean contents were reviewed and only the assigned file was changed.
 
 ## Embedded authoritative source chapter
