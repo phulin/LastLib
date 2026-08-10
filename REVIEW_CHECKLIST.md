@@ -202,7 +202,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 135. Galois Representations Attached to Weight-Two Automorphic Forms
 - [x] 136. Local–Global Compatibility for Weight-Two Galois Representations
 - [x] 137. Compatible Coefficient Systems and Purity
-- [ ] 138. Canonical Galois Lattices and Finite-Flat Quotients
+- [x] 138. Canonical Galois Lattices and Finite-Flat Quotients
 - [x] 139. Modular Curves (X_0(N)) and (X_1(N))
 - [ ] 140. Jacobians of Modular Curves
 - [ ] 141. The Eisenstein Ideal
