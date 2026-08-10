@@ -1,243 +1,295 @@
-# Rough book dependency graph
+# FLT book dependency graph
 
-An arrow `A --> B` means that book A supplies substantial prerequisites for book B.
-This is an architectural sketch rather than a strict reading order: transitive edges and
-small shared prerequisites are omitted, and several books could profitably be developed
-in parallel.
+This is the dependency companion to `BOOKS.md`. A row `X | A, B` means that A and B supply
+substantial direct prerequisites for X. Transitive edges, routine Mathlib facts, and small shared
+lemmas are omitted. Topical order in `BOOKS.md` is not a proposed reading order.
+
+The three external reference nodes are:
+
+- `MATHLIB`: the assumed mathematical background visible in the local checkout.
+- `CFT`: the companion Class Field Theory development, including reciprocity, Brauer groups, and invariant maps.
+- `CHEB`: the companion development of the Chebotarev density theorem.
+
+`CFT` and `CHEB` are proof sources, not permitted axioms. The final no-axiom audit must traverse
+all three nodes and reject `sorry`, theorem stubs, or additional mathematical axioms in any
+transitive import.
+
+## Critical proof spine
 
 ```mermaid
 flowchart LR
-    subgraph local[Local and global arithmetic]
-        B01["1 Valuations and DVRs"]
-        B02["2 Local field extensions"]
-        B03["3 Ramification"]
-        B04["4 Adeles and ideles"]
-        B05["5 Local CFT"]
-        B06["6 Global CFT"]
-        B07["7 Elliptic curves over DVRs"]
-        B08["8 Tate curves"]
-        B09["9 Torsion and Tate modules"]
-    end
-
-    subgraph flat[Finite-flat geometry]
-        B10["10 Finite locally free schemes"]
-        B11["11 Affine group schemes"]
-        B12["12 Finite flat group schemes"]
-        B13["13 Cartier duality"]
-        B14["14 Finite-flat representations"]
-    end
-
-    subgraph deformation[Cohomology and deformation theory]
-        B15["15 Continuous cohomology"]
-        B16["16 Local Galois cohomology"]
-        B17["17 Tate local duality"]
-        B18["18 Selmer groups"]
-        B19["19 Poitou-Tate duality"]
-        B20["20 Coefficient rings"]
-        B21["21 Deformation functors"]
-        B22["22 Representability"]
-        B23["23 Conditions away from ell"]
-        B24["24 Finite-flat conditions"]
-        B25["25 Global deformation problems"]
-    end
-
-    subgraph patching[Commutative algebra and patching]
-        B26["26 Complete local algebra"]
-        B27["27 Depth and complete intersections"]
-        B28["28 Numerical R=T criteria"]
-        B29["29 Taylor-Wiles primes"]
-        B30["30 Taylor-Wiles systems"]
-        B31["31 Patching modules and rings"]
-        B32["32 Abstract R=T"]
-    end
-
-    subgraph automorphic[Quaternionic and automorphic theory]
-        B33["33 Quaternion algebras"]
-        B34["34 Quaternion orders"]
-        B35["35 Definite quaternionic forms"]
-        B36["36 Hecke operators"]
-        B37["37 Hecke algebras"]
-        B38["38 Smooth representations"]
-        B39["39 Representations of GL2"]
-        B40["40 Representations of division algebras"]
-        B41["41 Local Jacquet-Langlands"]
-        B42["42 Automorphic representations of GL2"]
-        B43["43 Automorphic representations of D*"]
-        B44["44 Global Jacquet-Langlands"]
-        B45["45 Automorphic induction"]
-        B46["46 Local cyclic base change"]
-        B47["47 Global cyclic base change"]
-        B48["48 Solvable base change"]
-    end
-
-    subgraph geometry[Etale geometry and Galois representations]
-        B49["49 Finite etale covers"]
-        B50["50 Etale cohomology of curves"]
-        B51["51 Jacobians and H1"]
-        B52["52 Modular and Shimura curves"]
-        B53["53 Hecke correspondences"]
-        B54["54 Galois representations from forms"]
-    end
-
-    subgraph lifting[Modularity lifting]
-        B55["55 Minimal modularity lifting"]
-        B56["56 Nonminimal modularity lifting"]
-    end
-
-    subgraph potential[Potential modularity and changing prime]
-        B57["57 Hilbert irreducibility"]
-        B58["58 Moret-Bailly"]
-        B59["59 Potential-modularity moduli"]
-        B60["60 Potential modularity"]
-        B61["61 Compatible systems"]
-        B62["62 Brauer induction and descent"]
-        B63["63 Changing the prime"]
-        B64["64 Discriminants of representations"]
-        B65["65 Odlyzko and Fontaine"]
-        B66["66 Hardly ramified 3-adic reps"]
-    end
-
-    subgraph isogenies[Modular curves and rational isogenies]
-        B67["67 X0(N) and X1(N)"]
-        B68["68 Modular Jacobians"]
-        B69["69 Eisenstein ideal"]
-        B70["70 Rational prime-degree isogenies"]
-    end
-
-    B71["71 Frey curve and FLT"]
-
-    B01 --> B02 --> B03
-    B01 --> B04
-    B02 --> B05
-    B04 --> B06
-    B05 --> B06
-    B01 --> B07
-    B02 --> B08
-    B07 --> B08
-    B07 --> B09
-    B08 --> B09
-
-    B10 --> B11 --> B12 --> B13
-    B02 --> B14
-    B09 --> B14
-    B12 --> B14
-    B13 --> B14
-
-    B15 --> B16 --> B17
-    B15 --> B18
-    B16 --> B18
-    B17 --> B19
-    B18 --> B19
-    B20 --> B21 --> B22
-    B15 --> B21
-    B03 --> B23
-    B16 --> B23
-    B22 --> B23
-    B14 --> B24
-    B16 --> B24
-    B22 --> B24
-    B18 --> B25
-    B19 --> B25
-    B22 --> B25
-    B23 --> B25
-    B24 --> B25
-
-    B20 --> B26 --> B27 --> B28
-    B06 --> B29
-    B19 --> B29
-    B25 --> B29
-    B25 --> B30
-    B29 --> B30
-    B27 --> B31
-    B30 --> B31
-    B28 --> B32
-    B31 --> B32
-
-    B33 --> B34 --> B35 --> B36 --> B37
-    B38 --> B39
-    B33 --> B40
-    B38 --> B40
-    B39 --> B41
-    B40 --> B41
-    B04 --> B42
-    B39 --> B42
-    B35 --> B43
-    B40 --> B43
-    B41 --> B44
-    B42 --> B44
-    B43 --> B44
-    B06 --> B45
-    B39 --> B45
-    B42 --> B45
-    B39 --> B46
-    B41 --> B46
-    B42 --> B47
-    B45 --> B47
-    B46 --> B47 --> B48
-
-    B49 --> B50 --> B51
-    B34 --> B52
-    B49 --> B52
-    B36 --> B53
-    B51 --> B53
-    B52 --> B53
-    B03 --> B54
-    B09 --> B54
-    B42 --> B54
-    B50 --> B54
-    B53 --> B54
-
-    B32 --> B55
-    B37 --> B55
-    B54 --> B55
-    B23 --> B56
-    B24 --> B56
-    B44 --> B56
-    B48 --> B56
-    B55 --> B56
-
-    B57 --> B58
-    B49 --> B59
-    B52 --> B59
-    B45 --> B60
-    B48 --> B60
-    B54 --> B60
-    B56 --> B60
-    B58 --> B60
-    B59 --> B60
-    B54 --> B61
-    B60 --> B61
-    B45 --> B62
-    B48 --> B62
-    B61 --> B62
-    B14 --> B63
-    B61 --> B63
-    B03 --> B64
-    B14 --> B64
-    B64 --> B65
-    B63 --> B66
-    B64 --> B66
-    B65 --> B66
-
-    B07 --> B67
-    B09 --> B67
-    B49 --> B67
-    B51 --> B68
-    B53 --> B68
-    B67 --> B68
-    B37 --> B69
-    B68 --> B69
-    B09 --> B70
-    B67 --> B70
-    B68 --> B70
-    B69 --> B70
-
-    B07 --> B71
-    B08 --> B71
-    B09 --> B71
-    B56 --> B71
-    B60 --> B71
-    B63 --> B71
-    B66 --> B71
-    B70 --> B71
+    U["MATHLIB + CFT + CHEB"] --> D["deformation and automorphic infrastructure"]
+    D --> ML["B055–B056: modularity lifting, ℓ ≥ 7"]
+    ML --> L["N110: balanced hardly-ramified lift"]
+    L --> PM["N112–N114: potential automorphy and Brauer descent"]
+    PM --> P3["B063: change to three"]
+    P3 --> S["N141 + B064–B066: Schoof classification"]
+    I["B067–B070: Frey irreducibility, p ≥ 7"] --> F["B071: FLT assembly"]
+    P5["N117–N118: exponent five"] --> F
+    S --> F
+    ML --> F
 ```
+
+## Direct substantial prerequisites
+
+### I. Local and Global Arithmetic
+
+| Book | Direct prerequisites |
+|---|---|
+| B001 | MATHLIB |
+| B002 | B001 |
+| B003 | B002 |
+| B004 | MATHLIB |
+| B005 | B002, CFT |
+| B006 | B004, B005, CFT |
+| N081 | MATHLIB |
+
+### II. Algebraic-Geometric Foundations and Descent
+
+| Book | Direct prerequisites |
+|---|---|
+| N001 | MATHLIB |
+| N002 | N001, MATHLIB |
+| N003 | B001, N001, N007 |
+| N004 | N002, N003 |
+| N005 | N002, N003, N004 |
+| N007 | N001, MATHLIB |
+| N008 | N001, N007, MATHLIB |
+| N009 | N001, N010, MATHLIB |
+| N010 | MATHLIB |
+| N011 | N010, B026 |
+| N012 | N001, N009, B020 |
+
+### III. Étale, fppf, and Galois Cohomology
+
+| Book | Direct prerequisites |
+|---|---|
+| B049 | N007, MATHLIB |
+| B050 | N014, N015, N016 |
+| N014 | N010, B049, MATHLIB |
+| N015 | N009, N014 |
+| N016 | N014, N015 |
+| N017 | N005, N014, N015, N016 |
+| N018 | N014, N015, N016 |
+| N019 | N001, B051, N016, N018 |
+| N020 | N002, N031, B050 |
+| N021 | N007, MATHLIB |
+| B015 | MATHLIB |
+| B016 | B002, B003, B005, B015, N021 |
+| B017 | B016, CFT |
+| B018 | B006, B015, B016 |
+| B019 | B017, B018, CFT |
+
+### IV. Curves, Abelian Varieties, and Mordell–Weil Theory
+
+| Book | Direct prerequisites |
+|---|---|
+| N022 | B001, N003, N012 |
+| N023 | N022, N025 |
+| N024 | N002, N005, N007, N009 |
+| B051 | B050, N024, N025 |
+| N025 | B010, B012, B013, N007, N009 |
+| N026 | N003, N005, N024, N025 |
+| N027 | B003, N023, N026 |
+| N028 | N004, N005, N026, B051 |
+| N029 | N021, N025, B016, B018 |
+| N030 | N001, N025, N029 |
+
+### V. Elliptic Curves, Finite-Flat Groups, and Integral p-adic Theory
+
+| Book | Direct prerequisites |
+|---|---|
+| B010 | N001, N007 |
+| B011 | B010 |
+| B012 | B010, B011, N007 |
+| B013 | B011, B012 |
+| B014 | B002, B012, B013, B049 |
+| B007 | B001, B002, N003 |
+| B008 | B002, B007 |
+| B009 | B007, B008, B012 |
+| N031 | N002, N009, N010, N025 |
+| N032 | N010, MATHLIB |
+| N033 | N025, N031, N032 |
+| N037 | N021, N032, N033 |
+| N038 | B002, B010, B011, B012, B013 |
+| N039 | N032, N033, N038 |
+| N040 | N031, N032, N033, N039 |
+| N041 | B014, N037, N040 |
+| N043 | N025, N033, N039, N041 |
+| N044 | B003, B014, N038, N041 |
+
+### VI. Deformation Theory and Abstract Taylor–Wiles Patching
+
+| Book | Direct prerequisites |
+|---|---|
+| B020 | MATHLIB |
+| N143 | B015, B020 |
+| B021 | B015, B020 |
+| B022 | B020, B021, B026 |
+| B023 | B003, B016, B021, B022 |
+| B024 | B014, B016, B021, B022, N041 |
+| B025 | B018, B019, B022, B023, B024 |
+| B026 | B020 |
+| B027 | B026 |
+| B028 | B027 |
+| B029 | B019, B025, N142, CHEB |
+| B030 | B025, B029 |
+| B031 | B027, B030 |
+| B032 | B028, B031 |
+
+### VII. Local Representation Theory and Local Transfer
+
+| Book | Direct prerequisites |
+|---|---|
+| B038 | MATHLIB |
+| B039 | N058, N059, N060, N061 |
+| N058 | B038 |
+| N059 | B002, B038, N058 |
+| N060 | B002, B003, B015 |
+| N061 | B005, N058, N059, N060 |
+| B040 | B033, B038, N063 |
+| N063 | B033, B038, N059 |
+| B041 | N060, N063, N064 |
+| N064 | B039, B040, N060, N063 |
+| B046 | B039, B041, N061 |
+
+### VIII. Quaternionic and Global Automorphic Theory
+
+| Book | Direct prerequisites |
+|---|---|
+| B033 | B001, B002, B006, CFT |
+| B034 | B003, B033 |
+| B035 | B004, B034 |
+| B036 | B034, B035, B038 |
+| B037 | B020, B026, B036 |
+| B042 | B004, B039, N066, N068, N138 |
+| B043 | B035, B040, N066, N068 |
+| B044 | B041, B042, B043, N075, N126, N130 |
+| B045 | B006, N061, N065, N072 |
+| B047 | B042, B046, N078, N127, N139 |
+| B048 | B045, B047 |
+| N065 | B004, B005 |
+| N066 | B038 |
+| N067 | MATHLIB |
+| N125 | N066, N067 |
+| N068 | B004, B038, N066, N067, N125 |
+| N069 | N065, N068 |
+| N070 | N058, N065, N068 |
+| N071 | N060, N070 |
+| N138 | B039, N068, N071 |
+| N072 | N020, N031, N138 |
+| N074 | N067, N068, N069, N125 |
+| N075 | N068, N069, N074 |
+| N126 | B033, N074 |
+| N076 | B039, B040, N060, N066 |
+| N130 | N064, N076, N126 |
+| N078 | B042, B046 |
+| N139 | N069, N075, N078 |
+| N127 | B046, N076, N078 |
+
+### IX. Modular and Shimura Geometry with Galois Realization
+
+| Book | Direct prerequisites |
+|---|---|
+| N045 | B007, B009, N001, N008 |
+| N046 | N001, N003, N008, N045 |
+| N047 | N003, N004, N005, N046 |
+| N048 | N002, N009, N045, N046 |
+| B052 | N045, N046, N047, N048, N049, N086, N087, N088, N089, N091, N128, N132 |
+| N049 | N024, N026, N028, N047, N048 |
+| B053 | B036, B052, N028, N049, N132 |
+| N086 | B033, N025 |
+| N087 | B001, B006, N025 |
+| N140 | B005, B006, N087 |
+| N088 | B004, N086, N087, N140 |
+| N089 | N007, N008, N011, N025, N086, N088 |
+| N132 | N012, N028, N088, N089 |
+| N090 | N008, N011, N025, N086, N088, N089 |
+| N091 | N009, N012, N015, N025, N089, N090 |
+| N128 | N003, N004, N005, N017, N089, N090, N091 |
+| N092 | B043, B044, B050, B051, B053, N020, N088, N089, N132 |
+| N133 | B043, B044, N018, N019, N020, N090, N091, N128 |
+| N093 | B049, B050, N020, N086, N092, N133 |
+| B054 | N092, N093, N094, N095, N133, N134 |
+| N094 | N017, N027, N060, N091, N128, N093 |
+| N095 | N019, N072, N093, N094 |
+| N134 | B012, B013, B014, N041, N091, N093, N094 |
+
+### X. Eisenstein Descent, Exceptional Torsion, and the Frey Curve
+
+| Book | Direct prerequisites |
+|---|---|
+| B067 | N045, N046, N047, N048 |
+| B068 | B067, N024, N026, N049, N051, N053, N054 |
+| B069 | B037, B068, N050, N051, N052, N053, N054, N055 |
+| N050 | B037, N048 |
+| N051 | N005, N026, N049, N050 |
+| N052 | B012, B013, N021, N051 |
+| N053 | B020, N025, N026, N050, N051, N052 |
+| N054 | B017, B018, N029, N030, N050, N051, N052, N053 |
+| N055 | N002, N009, N048, N049, N053, N054 |
+| B070 | B067, B068, B069, N056, N119, N120, N121, N122 |
+| N119 | N002, N019, N024, N030, B067 |
+| N120 | N019, N119 |
+| N121 | N029, N120 |
+| N122 | N030, N120, N121 |
+| N056 | B006, B007, B008, B009, B014, N038, N055, N122 |
+| B071 | B007, B008, B009, B066, B070, N110, N113, N114, N117, N118, CHEB |
+
+### XI. Integral Automorphic Infrastructure and Modularity Lifting
+
+| Book | Direct prerequisites |
+|---|---|
+| B055 | N135, N101 |
+| B056 | B048, B055, N096, N097, N098, N100, N102, N136 |
+| N096 | B039, N038, N040, N041 |
+| N097 | N005, N026, N028, N128 |
+| N098 | B037, B041, B044, N097 |
+| N099 | B034, B035, B036, B037, N097 |
+| N100 | B024, B025, B037, B054, N094, N096, N098, N143, CHEB |
+| N142 | B003, B006, B009, B014, B015 |
+| N135 | B025, B037, B053, B054, N011, N096, N100, N142 |
+| N101 | B029, B032, N099, N135, N142 |
+| N136 | B027, N011, N097, N098, N100, N101 |
+| N102 | B055, N096, N097, N098, N100, N136 |
+
+### XII. Arithmetic Approximation and Residual Potential Modularity
+
+| Book | Direct prerequisites |
+|---|---|
+| B057 | B002, B049 |
+| B058 | N001, N007, N012, B057 |
+| B059 | N104, N105 |
+| B060 | B045, B048, B054, B056, B058, B059, N106 |
+| N085 | B002, B057, B058, CHEB |
+| N104 | N007, N008, N025, N043, N086, N087 |
+| N105 | B002, B007, B008, N038, N041, N104 |
+| N106 | B045, B054, B058, N085, N102, N104, N105, N142 |
+
+### XIII. Hardly-Ramified Lifts, Compatible Systems, and Changing Prime
+
+| Book | Direct prerequisites |
+|---|---|
+| B061 | N095, N114 |
+| B062 | N113, N137 |
+| B063 | B061, B062, N114, N116 |
+| B064 | B003, N044 |
+| B065 | N081, B064 |
+| B066 | B063, B064, B065, N141 |
+| N141 | B002, B003, B005, B006, B012, B013, B014, B049, B064, B065, N021, CFT |
+| N108 | B003, B014, B016, B023, B024, N038, N041, N096 |
+| N109 | B016, B017, B018, B019, B025, N108 |
+| N123 | B017, B019, N021, N109, CFT |
+| N110 | B020, B026, B060, N102, N108, N109, N123, N142, N143 |
+| N112 | B057, B058, B060, N085, N110 |
+| N137 | B045, B047, B048, N112 |
+| N113 | B015, B020, N137 |
+| N114 | N095, N112, N113, N137 |
+| N116 | B003, B014, N041, N094, N114 |
+
+### XIV. The Coefficient-Five Boundary
+
+| Book | Direct prerequisites |
+|---|---|
+| N117 | B001, MATHLIB |
+| N118 | N117 |
