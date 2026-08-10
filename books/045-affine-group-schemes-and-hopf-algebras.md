@@ -84,7 +84,49 @@
     - [The exactness checklist](#162-the-exactness-checklist)
     - [Constructing torsion](#163-constructing-torsion)
     - [What geometric fibers can and cannot prove](#164-what-geometric-fibers-can-and-cannot-prove)
-    - [Final synthesis](#165-final-synthesis)
+    - [A working protocol](#165-a-working-protocol)
+17. [The augmentation filtration](#17-the-augmentation-filtration)
+    - [Why first order is not enough](#171-why-first-order-is-not-enough)
+    - [Coproduct estimates for powers of the augmentation ideal](#172-coproduct-estimates-for-powers-of-the-augmentation-ideal)
+    - [The associated graded algebra](#173-the-associated-graded-algebra)
+    - [Completion at the identity](#174-completion-at-the-identity)
+    - [Calculations in the standard examples](#175-calculations-in-the-standard-examples)
+18. [Distributions supported at the identity](#18-distributions-supported-at-the-identity)
+    - [Finite-order functionals](#181-finite-order-functionals)
+    - [Convolution and the order filtration](#182-convolution-and-the-order-filtration)
+    - [Order one and the Lie bracket](#183-order-one-and-the-lie-bracket)
+    - [Finite group schemes and the local factor at the identity](#184-finite-group-schemes-and-the-local-factor-at-the-identity)
+    - [Base change and finiteness hypotheses](#185-base-change-and-finiteness-hypotheses)
+19. [Representations and comodules](#19-representations-and-comodules)
+    - [Why representations become coactions](#191-why-representations-become-coactions)
+    - [Matrix coefficients](#192-matrix-coefficients)
+    - [Invariant vectors and equivariant maps](#193-invariant-vectors-and-equivariant-maps)
+    - [Constant and diagonalizable groups](#194-constant-and-diagonalizable-groups)
+    - [Additive and multiplicative one-parameter actions](#195-additive-and-multiplicative-one-parameter-actions)
+20. [Torsors as descent objects](#20-torsors-as-descent-objects)
+    - [Trivial torsors and local triviality](#201-trivial-torsors-and-local-triviality)
+    - [Cocycles from a chosen cover](#202-cocycles-from-a-chosen-cover)
+    - [The affine descent calculation](#203-the-affine-descent-calculation)
+    - [Kummer and Artin--Schreier torsors](#204-kummer-and-artin--schreier-torsors)
+    - [Twisting and forms](#205-twisting-and-forms)
+21. [Representable quotients and the boundary of the theory](#21-representable-quotients-and-the-boundary-of-the-theory)
+    - [Universal properties before coordinates](#211-universal-properties-before-coordinates)
+    - [Normality and descended multiplication](#212-normality-and-descended-multiplication)
+    - [Images, closures, and purity](#213-images-closures-and-purity)
+    - [A base-change ledger](#214-a-base-change-ledger)
+    - [Failure patterns](#215-failure-patterns)
+22. [Extended calculations and structural examples](#22-extended-calculations-and-structural-examples)
+    - [Constant groups and locally constant points](#221-constant-groups-and-locally-constant-points)
+    - [Diagonalizable groups and character lattices](#222-diagonalizable-groups-and-character-lattices)
+    - [Additive polynomials and their kernels](#223-additive-polynomials-and-their-kernels)
+    - [Multiplicative isogenies](#224-multiplicative-isogenies)
+    - [Semidirect products and noncommutativity](#225-semidirect-products-and-noncommutativity)
+23. [The affine group-scheme theorem](#23-the-affine-group-scheme-theorem)
+    - [Statement](#231-statement)
+    - [Proof architecture](#232-proof-architecture)
+    - [Consequences for finite locally free groups](#233-consequences-for-finite-locally-free-groups)
+    - [The final checklist](#234-the-final-checklist)
+    - [Conclusion](#235-conclusion)
 
 ## 1. Groups whose elements vary with the ring
 
@@ -1651,7 +1693,7 @@ At the first level, $\alpha_p$ and $\mu_p$ both look trivial. At the second, the
 
 Thus a pointwise calculation should be converted into an equality of natural transformations, a coordinate-ring identity, or a faithfully flat descent statement before it is used as a structural proof.
 
-### 16.5 Final synthesis
+### 16.5 A working protocol
 
 Affine group schemes are groups whose elements may be evaluated in every algebra over the base. The functor of points makes this idea concrete, and elementary Yoneda reasoning turns natural pointwise laws back into geometric morphisms. Passing to coordinate rings reverses every arrow: products become tensor products, multiplication becomes comultiplication, the identity becomes a counit, and inversion becomes the uniquely determined antipode.
 
@@ -1666,3 +1708,682 @@ $$
 whose coordinate form is the canonical Hopf–Galois map. Under finite locally free hypotheses, this geometry becomes finite projective algebra: ranks multiply in exact sequences, arbitrary base change preserves the objects, and descent recovers them from split calculations.
 
 Finally, infinitesimal examples show why the scheme structure cannot be discarded. In characteristic $p$, $\mu_p$ and $\alpha_p$ may have only the identity as a geometric point while retaining rank $p$, nonzero cotangent space, and distinct Hopf laws. Torsion subgroup schemes must therefore be built as scheme-theoretic kernels and judged by their coordinate algebras, not by sets of points. With that principle in place, the passage from a commutative group object to its finite torsion kernels becomes a controlled sequence of operations: form the multiplication morphism, take its affine kernel, prove finite projectivity under the relevant hypotheses, and use Hopf algebra, rank, base change, and faithfully flat exactness to carry the resulting structure through arithmetic families.
+
+The dictionary developed so far constructs and compares affine group schemes. Two further layers make it more useful. Powers of the augmentation ideal retain higher-order information around the identity, and linear functionals on those neighborhoods turn the group law into an algebra of infinitesimal operators. Representations, torsors, and quotients then place the same formulas into a descent framework.
+
+## 17. The augmentation filtration
+
+The cotangent space $I/I^2$ records only the first infinitesimal neighborhood of the identity. That is enough to count tangent directions, but it cannot distinguish group laws that agree to first order. The full sequence
+
+$$
+A/I\leftarrow A/I^2\leftarrow A/I^3\leftarrow\cdots
+$$
+
+remembers successively higher jets. Its compatibility with comultiplication is the reason one can multiply finite-order distributions and recover the Lie bracket from a generally noncommutative group.
+
+### 17.1 Why first order is not enough
+
+Let $A$ be the coordinate Hopf algebra of $G$ and $I=\ker\varepsilon$. The quotient $A/I$ is $R$, the coordinate algebra of the identity section. The quotient $A/I^{n+1}$ is the algebraic $n$th infinitesimal neighborhood of that section. A map from it to an $R$-algebra $C$ is a point whose displacement from the identity is nilpotent to the indicated order.
+
+The powers $I^n$ need not be Hopf ideals. Multiplication of two points close to the identity can mix their orders, so an individual infinitesimal neighborhood need not be a subgroup. What is true is filtered compatibility: comultiplication of an element vanishing to order $n$ is a sum of terms whose orders in the two factors add to at least $n$.
+
+The distinction appears already for $\mathbf G_m$. Put $u=T-1$. Then
+
+$$
+\Delta(u)=u\otimes1+1\otimes u+u\otimes u.
+$$
+
+Modulo terms of total degree at least two, this is the additive formula. Thus $\mathbf G_m$ and $\mathbf G_a$ have the same first-order group law. The product term first appears at second order and separates them.
+
+### 17.2 Coproduct estimates for powers of the augmentation ideal
+
+The basic estimate is
+
+$$
+\Delta(I)\subseteq I\otimes_RA+A\otimes_RI.
+$$
+
+Using the splitting $A=R\oplus I$, for $x\in I$ one may write
+
+$$
+\Delta(x)=x\otimes1+1\otimes x+\widetilde\Delta(x),
+\qquad \widetilde\Delta(x)\in I\otimes_RI.
+$$
+
+The counit identities prove this formula. The last term is the reduced coproduct.
+
+Because $\Delta$ is an algebra map, multiplying $n$ such expressions proves
+
+$$
+\Delta(I^n)\subseteq
+\sum_{a+b=n} I^a\otimes_R I^b,
+$$
+
+where $I^0=A$ and each tensor product denotes its image in $A\otimes_RA$. Terms of larger total degree already lie in a displayed summand after exponents are lowered. No flatness is used.
+
+The antipode preserves the filtration. Since $S(I)\subseteq I$ and $S$ is multiplicative for a commutative coordinate algebra,
+
+$$
+S(I^n)\subseteq I^n.
+$$
+
+Consequently inversion acts on every quotient $A/I^{n+1}$. The coproduct estimate also gives compatible maps
+
+$$
+A/I^{r+s+1}\longrightarrow
+(A/I^{r+1})\otimes_R(A/I^{s+1}).
+$$
+
+These are the source of the order-addition law for distributions.
+
+### 17.3 The associated graded algebra
+
+Package the layers into
+
+$$
+\operatorname{gr}_I(A)=\bigoplus_{n\ge0}I^n/I^{n+1}.
+$$
+
+Its degree-zero part is $R$, and its degree-one part is $I/I^2$. Multiplication gives canonical surjections
+
+$$
+\operatorname{Sym}^n_R(I/I^2)\longrightarrow I^n/I^{n+1}.
+$$
+
+They need not be isomorphisms. Such an isomorphism is a regularity statement about the identity embedding, not a formal property of a Hopf algebra. For a smooth group of relative dimension $d$, locally at the identity the completed algebra behaves like a power-series algebra in $d$ variables and the associated graded is symmetric. A nonreduced finite group has extra relations.
+
+The coproduct estimate always gives a graded coproduct into the associated graded of the tensor-product filtration. When the natural comparison with $\operatorname{gr}_I(A)\otimes_R\operatorname{gr}_I(A)$ is an isomorphism—for example under suitable projectivity of the graded pieces—this makes the associated graded a graded bialgebra. On degree one the induced coproduct is primitive:
+
+$$
+\overline x\longmapsto\overline x\otimes1+1\otimes\overline x.
+$$
+
+The reduced term has total degree two. This is why every group law linearizes to addition on its tangent space.
+
+For $\mu_p$ in characteristic $p$, with $u=T-1$, both $\mu_p$ and $\alpha_p$ have graded algebra $k[u]/(u^p)$. Their distinction remains in the filtered coproduct: the term $u\otimes u$ is present for $\mu_p$ and absent for $\alpha_p$.
+
+### 17.4 Completion at the identity
+
+The inverse limit
+
+$$
+\widehat A_I=\varprojlim_n A/I^{n+1}
+$$
+
+is the algebra of formal functions near the identity. It is a topological algebra, and the coproduct extends continuously to
+
+$$
+\widehat\Delta:\widehat A_I\longrightarrow
+\widehat A_I\,\widehat\otimes_R\,\widehat A_I.
+$$
+
+This is the coordinate form of completion along the identity.
+
+Completion notation hides hypotheses. Tensor product need not commute with inverse limit, completion need not preserve exact sequences, and base change of a completion need not equal completion after base change. Finite presentation, noetherian hypotheses, or explicit power-series coordinates repair these issues when needed. Here completion only synthesizes the finite quotients already constructed.
+
+If $G$ is finite and connected over a field, $A$ is local Artinian and $I$ is nilpotent, so the completion equals $A$. If $G$ is a nontrivial constant finite group, $I$ contains idempotents and is not nilpotent; completion discards every component except the identity factor.
+
+### 17.5 Calculations in the standard examples
+
+For $\mathbf G_a$,
+
+$$
+A/I^{n+1}=R[T]/(T^{n+1}),\qquad \widehat A_I=R[[T]],
+$$
+
+with formal law $T\mapsto T\otimes1+1\otimes T$. For $\mathbf G_m$, writing $u=T-1$ gives the same underlying power-series algebra but law
+
+$$
+u\longmapsto u\otimes1+1\otimes u+u\otimes u.
+$$
+
+If all positive integers are invertible in $R$, the series
+
+$$
+\log(1+u)=u-\frac{u^2}{2}+\frac{u^3}{3}-\cdots
+$$
+
+changes the multiplicative formal law to the additive one. Over $\mathbb Z$ or in positive characteristic, denominators obstruct this identification.
+
+For $D(M)$, the augmentation ideal is generated by the elements $X^m-1$, and relations in $M$ become nonlinear relations among them. For a constant group, completion isolates the identity immediately. These opposite behaviors anticipate the contrast between character-type and point-type finite groups.
+
+## 18. Distributions supported at the identity
+
+Higher infinitesimal neighborhoods become easier to use after dualizing their functions. A distribution is a linear rule that reads only a finite jet at the identity. Convolution transfers the group law to a multiplication of such rules and places the Lie algebra inside an algebra of infinitesimal operators.
+
+### 18.1 Finite-order functionals
+
+Define
+
+$$
+\operatorname{Dist}_n(G)=
+\{\lambda\in\operatorname{Hom}_R(A,R):\lambda(I^{n+1})=0\}
+=\operatorname{Hom}_R(A/I^{n+1},R).
+$$
+
+There is an increasing filtration
+
+$$
+R\varepsilon=\operatorname{Dist}_0(G)
+\subseteq\operatorname{Dist}_1(G)\subseteq\cdots,
+$$
+
+and
+
+$$
+\operatorname{Dist}(G)=\bigcup_{n\ge0}\operatorname{Dist}_n(G)
+$$
+
+inside $\operatorname{Hom}_R(A,R)$. No projectivity is needed for the definition. Projectivity matters when dualization is expected to commute with base change.
+
+An order-zero distribution is a scalar multiple of evaluation at the identity. An order-one distribution has the form $r\varepsilon+D$, where $D$ is an augmentation derivation. Thus tangent vectors are precisely the order-one distributions vanishing on $1$.
+
+### 18.2 Convolution and the order filtration
+
+Define
+
+$$
+(\lambda*\mu)(a)=(\lambda\otimes\mu)(\Delta(a)).
+$$
+
+Coassociativity makes convolution associative and $\varepsilon$ is its identity. If $\lambda$ has order at most $r$ and $\mu$ order at most $s$, then
+
+$$
+\lambda*\mu\in\operatorname{Dist}_{r+s}(G).
+$$
+
+Indeed, every term in the coproduct of an element of $I^{r+s+1}$ lies in $I^i\otimes I^j$ with $i+j=r+s+1$. Either $i\ge r+1$ or $j\ge s+1$, so one functional kills it.
+
+The antipode acts by $\lambda\mapsto\lambda\circ S$. If $G$ is commutative, its coproduct is cocommutative and convolution is commutative. If $G$ is noncommutative, the distribution algebra can be noncommutative even though $A$ is a commutative algebra.
+
+For finite locally free $G$, the full dual $A^\vee$ is finite projective and convolution makes it an associative algebra. Distributions form a filtered subalgebra. They need not fill $A^\vee$, since functionals supported at the identity do not see other open-and-closed components.
+
+### 18.3 Order one and the Lie bracket
+
+For augmentation derivations $D,E:A\to R$, put
+
+$$
+[D,E]=D*E-E*D.
+$$
+
+Although each product can have order two, their commutator again has order one. Expanding $\Delta(ab)$ and using the derivation identities shows that the mixed second-order terms cancel and
+
+$$
+[D,E](ab)=\varepsilon(a)[D,E](b)+\varepsilon(b)[D,E](a).
+$$
+
+Thus convolution commutator defines the Lie bracket. Associativity supplies the Jacobi identity. If $G$ is commutative, the bracket vanishes.
+
+For $\mathrm{GL}_n$, an augmentation derivation is the first-order displacement of the universal matrix from the identity. Convolution commutator gives $XY-YX$. In favorable smooth settings the associated graded distribution algebra is symmetric on the Lie algebra. Positive characteristic introduces divided powers, so no unrestricted comparison is asserted here.
+
+### 18.4 Finite group schemes and the local factor at the identity
+
+Suppose $k$ is algebraically closed and $G$ finite. Its coordinate algebra is a product of local Artinian algebras, and the identity selects one factor $A_e$. Powers of $I$ eventually kill the maximal ideal in $A_e$ but act as the unit ideal on every other factor. Therefore
+
+$$
+\operatorname{Dist}(G)\cong A_e^\vee,
+\qquad
+\dim_k\operatorname{Dist}(G)=\operatorname{length}(G^0).
+$$
+
+For a constant finite group this dimension is one. For $\alpha_p$ and $\mu_p$ it is $p$.
+
+For $\alpha_p$, let $d_i$ be dual to $T^i$ for $0\le i<p$. Since
+
+$$
+\Delta(T^n)=\sum_{a+b=n}\binom{n}{a}T^a\otimes T^b,
+$$
+
+one obtains
+
+$$
+d_a*d_b=\binom{a+b}{a}d_{a+b}
+$$
+
+when $a+b<p$, and zero otherwise. This truncated divided-power algebra shows why the first derivative alone does not control positive-characteristic infinitesimal groups.
+
+### 18.5 Base change and finiteness hypotheses
+
+There is a natural map
+
+$$
+\operatorname{Dist}_n(G)\otimes_RR'
+\longrightarrow\operatorname{Dist}_n(G_{R'}).
+$$
+
+It is an isomorphism if $A/I^{n+1}$ is finite projective over $R$, because duals of finite projective modules commute with arbitrary base change. Without that hypothesis it can fail: Hom does not generally commute with scalar extension.
+
+The safe method is bounded. Fix $n$, prove projectivity of the corresponding infinitesimal quotient, and only then use duality or base change. Passing to the union over all orders is an additional filtered-colimit step and must not be hidden inside a finite argument.
+
+## 19. Representations and comodules
+
+An affine group scheme acts on algebraic families, not merely on sets of points. Linear actions are especially important because they turn geometric symmetry into module theory. Once again arrows reverse: a group action on a module-valued functor is encoded by a coaction of the coordinate Hopf algebra.
+
+### 19.1 Why representations become coactions
+
+Let $G=\operatorname{Spec}H$ and let $M$ be an $R$-module. A linear representation is a functorial action of $G(C)$ on $M\otimes_RC$ by $C$-linear automorphisms. When $M$ is finite locally free, it is equivalently a morphism $G\to\mathrm{GL}(M)$. Algebraically it is a coaction
+
+$$
+\delta:M\longrightarrow M\otimes_RH
+$$
+
+satisfying
+
+$$
+(\delta\otimes\operatorname{id})\delta
+=(\operatorname{id}\otimes\Delta)\delta,
+\qquad
+(\operatorname{id}\otimes\varepsilon)\delta=\operatorname{id}_M.
+$$
+
+If $\delta(m)=\sum m_{(0)}\otimes m_{(1)}$ and $g:H\to C$, then
+
+$$
+g\cdot(m\otimes c)=
+\sum m_{(0)}\otimes c\,g(m_{(1)}).
+$$
+
+Coassociativity expresses multiplication of points, while the counit gives the identity. The antipode supplies inverse operators.
+
+### 19.2 Matrix coefficients
+
+If $M$ is free with basis $e_1,\ldots,e_n$, write
+
+$$
+\delta(e_j)=\sum_i e_i\otimes a_{ij}.
+$$
+
+Then
+
+$$
+\Delta(a_{ij})=\sum_k a_{ik}\otimes a_{kj},
+\qquad \varepsilon(a_{ij})=\delta_{ij}.
+$$
+
+The matrix $(a_{ij})$ is invertible with inverse obtained from the antipode. Hence $x_{ij}\mapsto a_{ij}$ defines $G\to\mathrm{GL}_n$. Conversely, such a morphism gives a coaction. For finite projective $M$, dual bases make the same construction locally and it glues.
+
+Tensor products and duals follow from Hopf structure. The coefficients on $M\otimes N$ multiply in $H$, while the antipode gives the contragredient action on $M^\vee$. The regular representation is $\Delta:H\to H\otimes_RH$.
+
+### 19.3 Invariant vectors and equivariant maps
+
+The invariant submodule is
+
+$$
+M^G=\{m\in M:\delta(m)=m\otimes1\}.
+$$
+
+It is an equalizer, so flat base change preserves it under the usual finite-presentation hypotheses, whereas arbitrary base change need not. A map $f:M\to N$ is equivariant when
+
+$$
+(f\otimes\operatorname{id})\delta_M=\delta_Nf.
+$$
+
+Kernels of equivariant maps inherit coactions when tensoring with $H$ preserves the kernel; flatness of $H$ over $R$ suffices. Cokernels behave more readily because tensor product is right exact.
+
+If $P\to X$ is a $G$-torsor and $M$ finite locally free, descent of the trivial bundle on $P$ with its equivariant structure produces the associated vector bundle on $X$. This is the geometric link between representations and torsors.
+
+### 19.4 Constant and diagonalizable groups
+
+For a constant finite group $\underline\Gamma$, a comodule is an ordinary action of $\Gamma$ on $M$. Evaluation at components recovers the operators and the coproduct forces the group law.
+
+For $D(L)$, where $H=R[L]$, a comodule is an $L$-graded module
+
+$$
+M=\bigoplus_{\ell\in L}M_\ell,
+$$
+
+with $\delta(m)=m\otimes X^\ell$ on $M_\ell$. Conversely, the basis $X^\ell$ uniquely separates a coaction into finite-support weight components. Invariants are the weight-zero part. This remains valid for infinite $L$ because each coaction value is a finite sum.
+
+In particular, representations of $\mathbf G_m=D(\mathbb Z)$ are $\mathbb Z$-graded modules and representations of $\mu_n=D(\mathbb Z/n\mathbb Z)$ are cyclically graded modules.
+
+### 19.5 Additive and multiplicative one-parameter actions
+
+A $\mathbf G_a$-coaction can be written
+
+$$
+\delta(m)=\sum_{n\ge0}D_n(m)\otimes T^n,
+$$
+
+with finitely many nonzero terms for each $m$. Its identities say
+
+$$
+D_0=\operatorname{id},\qquad
+D_aD_b=\binom{a+b}{a}D_{a+b}.
+$$
+
+If $R$ contains the rational numbers, then $D_n=N^n/n!$ for a locally nilpotent operator $N=D_1$. In positive characteristic the higher $D_n$ are not determined by $D_1$; suppressing them loses divided-power information. For $\alpha_p$, only $0\le n<p$ remain.
+
+By contrast a $\mathbf G_m$-action is a grading. Additive one-parameter symmetry is therefore governed by iterative operators, while multiplicative symmetry is governed by weights. This conceptual distinction mirrors primitive versus group-like elements in their coordinate Hopf algebras.
+
+## 20. Torsors as descent objects
+
+The definition of a torsor in Chapter 8 is concise; its content emerges when one trivializes it over a cover and watches the trivializations disagree. That disagreement is a cocycle. The cocycle viewpoint explains why quotients are sheaves rather than pointwise orbit sets and how group schemes create twisted forms.
+
+### 20.1 Trivial torsors and local triviality
+
+For an $S$-scheme $X$, the projection
+
+$$
+X\times_SG\longrightarrow X
+$$
+
+with right multiplication on the second factor is the trivial $G$-torsor. Its canonical isomorphism sends
+
+$$
+(x,g_1,g_2)\longmapsto(x,g_1,g_1^{-1}g_2).
+$$
+
+A section $s:X\to P$ of a $G$-torsor trivializes it by $(x,g)\mapsto s(x)g$. The inverse sends $p$ to the unique $g$ with $p=s(\pi(p))g$. The torsor identity guarantees existence and uniqueness as a morphism, not merely on points.
+
+Every torsor becomes trivial after pulling back along its own faithfully flat cover $P\to X$. Global nontriviality is therefore encoded by how two trivializations compare over $P\times_XP$.
+
+### 20.2 Cocycles from a chosen cover
+
+Let $U\to X$ be a faithfully flat cover over which $P$ has a section. On $U_1=U\times_XU$, the two pulled-back sections differ by a unique
+
+$$
+g_{12}\in G(U_1).
+$$
+
+On $U\times_XU\times_XU$, uniqueness gives
+
+$$
+g_{13}=g_{12}g_{23}.
+$$
+
+Changing the section by $h\in G(U)$ changes the cocycle to $h_1^{-1}g_{12}h_2$. Conversely, effective faithfully flat descent glues $U\times G$ from such a cocycle. Thus torsors are precisely descent data for locally trivial principal homogeneous spaces.
+
+This also explains the topology. Requiring a global section would classify only trivial torsors. Requiring an étale section would exclude infinitesimal examples such as Frobenius with kernel $\alpha_p$.
+
+### 20.3 The affine descent calculation
+
+Take $X=\operatorname{Spec}B$, $P=\operatorname{Spec}A$, and $G=\operatorname{Spec}H$. Under the canonical isomorphism
+
+$$
+\beta:A\otimes_BA\xrightarrow{\sim}A\otimes_RH,
+$$
+
+the maps $a\mapsto a\otimes1$ and $a\mapsto1\otimes a$ become the trivial coaction and the given coaction. Faithfully flat descent therefore gives
+
+$$
+B=\operatorname{Eq}(A\rightrightarrows A\otimes_BA)
+\cong A^{\operatorname{co}H}.
+$$
+
+The same equalizer recovers modules from equivariant modules on $P$. Exactness here uses faithful flatness; a merely surjective map on spectra is not enough.
+
+This dictates the proof strategy for an affine quotient. Construct a candidate invariant algebra $B$, prove $A$ faithfully flat over it, and prove the canonical map is an isomorphism. Only then identify $\operatorname{Spec}B$ with the sheaf quotient.
+
+### 20.4 Kummer and Artin--Schreier torsors
+
+Let $a\in B^\times$. The algebra
+
+$$
+A=B[z]/(z^n-a)
+$$
+
+is finite free of rank $n$, and $\mu_n$ acts by $z\mapsto z\otimes T$. Since $z$ is a unit, the ratio of the two roots identifies the canonical map with an isomorphism. Thus $\operatorname{Spec}A\to\operatorname{Spec}B$ is a $\mu_n$-torsor. No invertibility of $n$ is required for faithful flatness. If $n$ is invertible it is finite étale; otherwise it can be infinitesimal.
+
+In characteristic $p$,
+
+$$
+B[z]/(z^p-z-a)
+$$
+
+is a torsor under the constant group $\underline{\mathbb Z/p\mathbb Z}$ by translation and is finite étale because the derivative is $-1$. By contrast
+
+$$
+B[z]/(z^p-a)
+$$
+
+with the translation action of $\alpha_p$ is finite faithfully flat and generally not étale. Equations of the same degree can therefore carry very different group-scheme symmetries.
+
+### 20.5 Twisting and forms
+
+Let $P$ be a right $G$-torsor and let $G$ act on an affine scheme $X$ on the left. The contracted product, when representable, is
+
+$$
+P\times^G X=(P\times_SX)/G,
+$$
+
+where $(p,x)g=(pg,g^{-1}x)$. After pullback to $P$ it becomes $P\times_SX$, so it is a form of $X$ obtained by twisting descent data by the torsor cocycle.
+
+For a finite locally free representation this gives an associated vector bundle. For an algebra with a compatible action it gives a descended algebra and hence an affine scheme. Effective descent from Book 44 supplies representability in these finite projective and affine cases. The notation alone does not prove representability for an arbitrary contracted product.
+
+## 21. Representable quotients and the boundary of the theory
+
+Quotients are where existence becomes a theorem. This chapter separates the universal property, the algebraic construction, and the hypotheses connecting them, then collects the exact base-change statements used in applications.
+
+### 21.1 Universal properties before coordinates
+
+For a right action of $H$ on $G$, a categorical quotient $q:G\to Q$ satisfies
+
+$$
+\operatorname{Hom}(Q,X)
+\cong\{f:G\to X:f(gh)=f(g)\}
+$$
+
+naturally in $X$. A sheaf quotient asks in addition that every local orbit have a local representative and that two representatives agree precisely when they differ locally by $H$. The identity
+
+$$
+G\times_SH\cong G\times_QG
+$$
+
+expresses this effectiveness.
+
+If an affine quotient is $Q=\operatorname{Spec}B$, invariant functions force $B\to A^{\operatorname{co}H}$. For an effective affine torsor it is an isomorphism. Without the torsor hypotheses, $\operatorname{Spec}(A^{\operatorname{co}H})$ can have an affine categorical property without representing the orbit sheaf. One must name the universal property being claimed.
+
+### 21.2 Normality and descended multiplication
+
+Assume $G\to Q$ is an $H$-torsor quotient and $H$ normal. Then
+
+$$
+(g_1h_1)(g_2h_2)=g_1g_2(g_2^{-1}h_1g_2)h_2,
+$$
+
+and the last two factors lie in $H$. Multiplication is therefore constant on cosets and descends. Identity and inversion descend similarly, making $Q$ a group scheme.
+
+Conversely, the kernel of any group morphism is normal. Thus normality is exactly what makes the quotient group law descend. In coordinates it says the invariant subalgebra is stable under the Hopf operations. Descending an already represented multiplication is often cleaner than proving that stability directly, because the direct calculation may require tensor purity.
+
+### 21.3 Images, closures, and purity
+
+The scheme-theoretic image of $f:G\to H$ is cut out by $\ker f^*$ and is the smallest closed subscheme through which $f$ factors. The sheaf image consists of sections locally lifted from $G$. The closure of the image of geometric points remembers neither nilpotents nor descent.
+
+Over a field, the scheme-theoretic image of an affine group morphism is a closed subgroup because tensoring preserves injections. Over a general base, purity of
+
+$$
+\mathcal O(\operatorname{SIm}f)\hookrightarrow\mathcal O(G)
+$$
+
+is sufficient. Without it, tensor products can create kernel elements and the defining ideal need not visibly satisfy the coproduct condition.
+
+Schematic closure has different input. Over a DVR, a generic-fiber subgroup is closed in an integral model by intersecting ideals. Saturation proves torsion-freeness of the quotient and, once finiteness is known, finite local freeness. Closure and image should not be conflated even when one is later applied to the other.
+
+### 21.4 A base-change ledger
+
+The following commute with arbitrary base change: products and fiber products; kernels and equalizers defined by fiber products; closed subgroups defined by extended Hopf ideals; finite local freeness and rank; represented torsors and their sheaf-exact sequences.
+
+Other constructions require hypotheses. Scheme-theoretic images commute with flat base change, not unconditionally with nonflat base change. Raw invariant rings commute when the defining equalizer is preserved. Bounded distributions commute when the infinitesimal quotient is finite projective. Generic-fiber closure requires suitable saturation and flatness. Connected components and reduced subschemes can change after inseparable extension.
+
+This ledger prevents the common invalid step of tensoring an exact sequence whose exactness was never known to survive tensor product.
+
+### 21.5 Failure patterns
+
+Frobenius on $\mathbf G_a$ can be bijective on geometric points while having kernel $\alpha_p$. The group $\mu_p$ can have one geometric point and rank $p$. A closed subgroup of a finite locally free group is finite but needs a flatness theorem to be finite locally free over a general base. An invariant ring need not represent an orbit sheaf. A point of a quotient need not lift globally, as $u\mapsto u^n$ on units shows.
+
+Each failure has one repair: replace points by functors or coordinate rings; replace cardinality by rank; prove flatness of the quotient module; verify the canonical torsor map; and replace global lifting by faithfully flat local lifting. These repairs all express the same principle—control the family before trusting its fibers.
+
+## 22. Extended calculations and structural examples
+
+The general theory is best tested where every arrow can be written down. The four fundamental families—constant, diagonalizable, additive, and multiplicative—exercise every variance convention. A semidirect product then shows how noncommutativity enters the coproduct.
+
+### 22.1 Constant groups and locally constant points
+
+For a finite group $\Gamma$, a point of $\underline\Gamma$ over $C$ is a family of orthogonal idempotents $(c_\gamma)$ with sum $1$. It partitions $\operatorname{Spec}C$ into open-and-closed pieces labeled by $\Gamma$. Multiplication labels an intersection by the product of its labels.
+
+A homomorphism $u:\Gamma\to\Lambda$ pulls functions back by
+
+$$
+R^\Lambda\longrightarrow R^\Gamma,qquad f\longmapsto f\circ u.
+$$
+
+Its kernel group scheme is $\underline{\ker u}$. If $u$ is surjective, the map is finite locally free and faithfully flat, with quotient $\underline\Lambda$. The rank formula recovers the ordinary order formula over every connected component of the base.
+
+If $\Gamma$ is nonabelian, $R^\Gamma$ is still a commutative algebra. Noncommutativity appears in
+
+$$
+\Delta(e_\eta)=\sum_{\gamma\delta=\eta}e_\gamma\otimes e_\delta,
+$$
+
+which is not fixed by the tensor flip.
+
+### 22.2 Diagonalizable groups and character lattices
+
+For $D(M)$, a homomorphism $M\to N$ gives $D(N)\to D(M)$. In particular the exact sequence
+
+$$
+\mathbb Z\xrightarrow{n}\mathbb Z\to\mathbb Z/n\mathbb Z\to0
+$$
+
+becomes
+
+$$
+1\to\mu_n\to\mathbf G_m\xrightarrow{[n]}\mathbf G_m\to1.
+$$
+
+If $M=\mathbb Z^r$, then $D(M)=\mathbf G_m^r$. Integer matrices define Laurent-monomial maps of split tori. Smith normal form decomposes their kernels and quotients into split tori and factors $\mu_d$. This is a lattice calculation with arrows reversed.
+
+When $M$ is finite, $D(M)$ is finite locally free of rank $|M|$ but can be nonreduced where the residue characteristic divides $|M|$. Diagonalizable means governed by characters, not reduced.
+
+### 22.3 Additive polynomials and their kernels
+
+In characteristic $p$, an additive polynomial
+
+$$
+P(T)=a_0T+a_1T^p+\cdots+a_rT^{p^r}
+$$
+
+defines $\mathbf G_a\to\mathbf G_a$. If $a_r$ is a unit, its kernel is finite locally free of rank $p^r$ after normalizing the leading coefficient. Its cotangent module is $R/(a_0)$, since the linear term is $a_0T$.
+
+The map $T^p-T$ has constant kernel $\underline{\mathbb F_p}$ and is étale because its derivative is $-1$. The map $T^p$ has kernel $\alpha_p$, only one geometric root, and a tangent direction. Equal degree and faithful flatness do not distinguish étale from infinitesimal behavior.
+
+Composition of additive polynomials can be noncommutative when coefficients are moved by Frobenius. Thus the endomorphism algebra of the commutative group $\mathbf G_a$ can itself be noncommutative.
+
+### 22.4 Multiplicative isogenies
+
+The map $[n]:\mathbf G_m\to\mathbf G_m$ corresponds to
+
+$$
+R[V,V^{-1}]\longrightarrow R[T,T^{-1}],\qquad V\longmapsto T^n.
+$$
+
+The target is free of rank $n$ with basis $1,T,\ldots,T^{n-1}$. Hence $[n]$ is a finite locally free $\mu_n$-torsor over every base. Its derivative at the identity is multiplication by $n$, so it is étale exactly where $n$ is invertible.
+
+In characteristic $p$, the kernel of $[p]$ has equation $(T-1)^p=0$. Rank remains $p$ while the geometric points collapse to one. This single family separates faithful flatness from étaleness, sheaf surjectivity from surjectivity on units, and rank from point count.
+
+### 22.5 Semidirect products and noncommutativity
+
+If $H$ acts on $N$ by group automorphisms, the semidirect product has multiplication
+
+$$
+(n,h)(n',h')=(n(h\cdot n'),hh')
+$$
+
+and a split exact sequence $1\to N\to N\rtimes H\to H\to1$.
+
+Take $N=\mathbf G_a$, $H=\mathbf G_m$, and $h\cdot n=hn$. With additive coordinate $X$ and invertible coordinate $T$,
+
+$$
+\Delta(T)=T\otimes T,
+\qquad
+\Delta(X)=X\otimes1+T\otimes X,
+$$
+
+$$
+\varepsilon(T)=1,\quad\varepsilon(X)=0,
+\qquad
+S(T)=T^{-1},\quad S(X)=-T^{-1}X.
+$$
+
+The coproduct of $X$ is not fixed by the tensor flip, so the group is noncommutative. These formulas directly encode composition and inversion of affine transformations $x\mapsto hx+n$.
+
+## 23. The affine group-scheme theorem
+
+The preceding chapters now assemble into a theorem whose clauses distinguish formal constructions from those needing finiteness, flatness, purity, or representability. This is the reusable endpoint of the book.
+
+### 23.1 Statement
+
+**Theorem 23.1 (affine group-scheme structure theorem).** Let $R$ be a commutative ring.
+
+1. Affine group schemes over $\operatorname{Spec}R$ are anti-equivalent to commutative $R$-Hopf algebras. Products correspond to tensor products, morphisms reverse direction, and scalar extension is tensor extension.
+2. Closed subgroup schemes of $\operatorname{Spec}A$ correspond to Hopf ideals. Kernels and equalizers exist as affine closed subgroups and commute with arbitrary base change.
+3. The scheme-theoretic image exists for every affine morphism. It is a closed subgroup over a field, or when its coordinate inclusion is pure, and it commutes with flat base change.
+4. Affine actions correspond to coactions, linear representations to comodules, and affine torsors to faithfully flat extensions with bijective canonical map.
+5. If $H\hookrightarrow G$ is finite locally free and $G$ affine, the faithfully flat sheaf quotient $G/H$ is affine; $G\to G/H$ is a finite locally free $H$-torsor. If $H$ is normal, the quotient is an affine group scheme.
+6. Sheaf exactness is encoded by a scheme-theoretic kernel, faithful flatness, invariants, and the canonical torsor isomorphism. It survives arbitrary base change but need not give surjectivity on points.
+7. If $A$ is finite projective, $G$ is finite locally free of locally constant positive rank. Ranks multiply componentwise in finite locally free exact sequences.
+8. The augmentation ideal controls infinitesimal structure. Its powers define higher neighborhoods, $I/I^2$ gives the cotangent module, and finite-order distributions form a filtered convolution algebra. Base change of their duals requires projectivity of the bounded quotients.
+
+No stronger assertion is implicit: a subgroup need not be flat over an arbitrary base, an invariant ring need not represent an orbit sheaf, and geometric bijectivity need not imply isomorphism.
+
+### 23.2 Proof architecture
+
+The anti-equivalence reverses the group diagrams into the Hopf identities. Quotients of coordinate rings turn subgroup factorizations into Hopf ideals. Fiber products give kernels, equalizers, and their base-change properties.
+
+For an image, the coordinate kernel is stable under Hopf operations when tensoring preserves the needed injection; fields and purity provide this. For a torsor, reversing
+
+$$
+P\times_SG\cong P\times_XP
+$$
+
+gives $A\otimes_BA\cong A\otimes_RH$, and faithful descent identifies $B$ with invariants.
+
+A finite locally free subgroup defines a finite locally free equivalence relation. Effective affine descent constructs its quotient and the torsor identity; normality descends the group operations. Torsor trivialization after a faithfully flat cover proves rank multiplication using Book 44.
+
+Finally, the counit splits $A=R\oplus I$. Multiplicativity of $\Delta$ gives the filtration estimate, which gives the convolution order law. Duals commute with base change exactly in the finite projective cases already isolated. This proves every clause with its stated scope.
+
+### 23.3 Consequences for finite locally free groups
+
+If $G$ has constant rank $n$, every geometric fiber has length $n$. Over an algebraically closed field, translations identify local structures and give
+
+$$
+n=|G(k)|\cdot\operatorname{length}(\mathcal O_{G,e}).
+$$
+
+Reduced fibers have local length one; infinitesimal fibers are measured by the identity local algebra and its distributions.
+
+For a finite locally free subgroup $H\hookrightarrow G$,
+
+$$
+\operatorname{rk}G=\operatorname{rk}H\operatorname{rk}(G/H)
+$$
+
+componentwise. This is Lagrange's theorem with rank replacing cardinality. A general kernel inside a finite locally free group is finite but requires a flatness argument before this formula applies.
+
+For commutative $G$, the torsion kernel $G[n]$ commutes with every base change. Its finite local freeness is not formal: prove it by a monic presentation, a valid flatness criterion, torsion-freeness over a DVR, or faithful descent. Once proved, its rank survives even where its points collide.
+
+### 23.4 The final checklist
+
+1. State the base and whether the coordinate algebra is flat, finitely presented, finite, or finite projective.
+2. Write $\Delta$, $\varepsilon$, and $S$ on generators and check convolution inverse identities.
+3. Reverse every group morphism when passing to coordinates.
+4. Define closed subgroups by Hopf ideals and kernels by pulled-back augmentation ideals.
+5. State the field, purity, or flatness hypothesis used for an image.
+6. Fix left or right action conventions before writing a coaction.
+7. Distinguish presheaf quotient, sheaf quotient, and representing scheme; verify faithful flatness and the canonical map.
+8. Test exactness scheme-theoretically, not only on rational or geometric points.
+9. Prove finite projectivity before using rank laws.
+10. Match each base-change claim to its construction: fiber product, kernel, image, invariant equalizer, closure, or dual.
+11. Use $A/I^{n+1}$ when tangent space is insufficient, and dualize only under the required finiteness hypothesis.
+
+This order is short enough for calculations and strong enough to prevent the standard errors.
+
+### 23.5 Conclusion
+
+Affine group schemes reconcile functorial and algebraic symmetry. Their points vary through every algebra over the base, including nilpotent ones; their Hopf algebras turn that variation into explicit maps. Contravariance changes multiplication into comultiplication, identity into counit, and inversion into antipode.
+
+The same reversal governs all constructions. Hopf ideals are subgroup equations, augmentation ideals cut out kernels, coactions encode actions, and the canonical torsor map expresses effective descent. Quotients exist at the scope proved here—most importantly for finite locally free subgroups—and exactness belongs to the faithfully flat topology rather than to pointwise surjectivity.
+
+Finite locally free groups add rank, an invariant that survives specialization when points merge and multiplies in exact sequences. The augmentation filtration and distributions retain the higher infinitesimal structure left invisible by rank and tangent space alone.
+
+The resulting method moves among four levels without confusing them: points suggest formulas, coordinate rings prove them, descent constructs quotients, and finite projective algebra carries structure across the base. Keeping those levels aligned is the central discipline of affine group-scheme theory and the foundation for the finite flat commutative groups that follow.
