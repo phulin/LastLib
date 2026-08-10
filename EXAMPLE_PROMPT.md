@@ -1,6 +1,6 @@
 # Example Prompt for Book 2
 
-Work in `/home/phulin/LastLib`. Write only Book 2. Do not search or browse the internet under any circumstances. Read `BOOKS.md` and the completed Book 1, `books/001-valuations-dvrs-and-completions.md`, before writing. You may inspect the local Mathlib checkout, and you may assume the reader knows its mathematical results, but do not let that prevent a complete and pedagogically coherent treatment. The book text must never mention Lean, Mathlib, formalization, APIs, theorem identifiers from code, or proof assistants.
+Work in `/home/phulin/LastLib`. Write only Book 2. Do not search or browse the internet under any circumstances. Read `REVIEW_CHECKLIST.md`, `BOOKS.md`, and the completed Book 1, `books/001-valuations-dvrs-and-completions.md`, before writing. Treat every applicable item in `REVIEW_CHECKLIST.md` as a mandatory final sign-off condition. You may inspect the local Mathlib checkout, and you may assume the reader knows its mathematical results, but do not let that prevent a complete and pedagogically coherent treatment. The book text must never mention Lean, Mathlib, formalization, APIs, theorem identifiers from code, or proof assistants.
 
 Create `books/002-finite-extensions-of-local-fields.md`. Do not alter Book 1, `BOOKS.md`, or the Mathlib checkout, and do not make a git commit.
 
