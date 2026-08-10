@@ -26,6 +26,7 @@
    - [The local formula and first computations](#44-the-local-formula-and-first-computations)
    - [The depth lemma](#45-the-depth-lemma)
    - [Sharpness and nonconverses](#46-sharpness-and-nonconverses)
+   - [Grade, radicals, and support](#47-grade-radicals-and-support)
 5. [Localization and completion](#5-localization-and-completion)
    - [Why depth must travel](#51-why-depth-must-travel)
    - [Localizing regular sequences](#52-localizing-regular-sequences)
@@ -60,17 +61,20 @@
     - [The conormal module](#104-the-conormal-module)
     - [Elementary complete-intersection criteria](#105-elementary-complete-intersection-criteria)
     - [Examples and boundary cases](#106-examples-and-boundary-cases)
+    - [Perfect modules and the ambient regular ring](#107-perfect-modules-and-the-ambient-regular-ring)
 11. [Stability of complete intersections](#11-stability-of-complete-intersections)
     - [Completion and quotients](#111-completion-and-quotients)
     - [Flat base change](#112-flat-base-change)
     - [Completed tensor products](#113-completed-tensor-products)
     - [What can fail](#114-what-can-fail)
+    - [Relative complete-intersection maps](#115-relative-complete-intersection-maps)
 12. [Fitting ideals from presentations](#12-fitting-ideals-from-presentations)
     - [Why annihilators are not enough](#121-why-annihilators-are-not-enough)
     - [Definition by minors](#122-definition-by-minors)
     - [Independence and the chain of ideals](#123-independence-and-the-chain-of-ideals)
     - [Base change and localization](#124-base-change-and-localization)
     - [Cyclic modules and direct sums](#125-cyclic-modules-and-direct-sums)
+    - [Generator strata and the finite-free locus](#126-generator-strata-and-the-finite-free-locus)
 13. [Support, annihilators, and faithfulness](#13-support-annihilators-and-faithfulness)
     - [Zeroth Fitting ideals detect support](#131-zeroth-fitting-ideals-detect-support)
     - [Annihilator bounds](#132-annihilator-bounds)
@@ -81,11 +85,14 @@
     - [Finite free resolutions and determinants](#142-finite-free-resolutions-and-determinants)
     - [Modules over a discrete valuation ring](#143-modules-over-a-discrete-valuation-ring)
     - [Congruence modules](#144-congruence-modules)
+    - [Cotangent modules at an augmentation](#145-cotangent-modules-at-an-augmentation)
 15. [Finite local maps and freeness criteria](#15-finite-local-maps-and-freeness-criteria)
     - [Depth and dimension across a finite map](#151-depth-and-dimension-across-a-finite-map)
-    - [Miracle freeness over a regular source](#152-miracle-freeness-over-a-regular-source)
-    - [Maximal Cohen--Macaulay does not mean free](#153-maximal-cohen--macaulay-does-not-mean-free)
-    - [Finite projective dimension restores freeness](#154-finite-projective-dimension-restores-freeness)
+    - [The local criterion behind miracle flatness](#152-the-local-criterion-behind-miracle-flatness)
+    - [Miracle flatness for rings and modules](#153-miracle-flatness-for-rings-and-modules)
+    - [Miracle freeness over a regular source](#154-miracle-freeness-over-a-regular-source)
+    - [Maximal Cohen--Macaulay does not mean free](#155-maximal-cohen--macaulay-does-not-mean-free)
+    - [Finite projective dimension restores freeness](#156-finite-projective-dimension-restores-freeness)
 16. [The patching dictionary](#16-the-patching-dictionary)
     - [Reading depth data](#161-reading-depth-data)
     - [Reading complete-intersection data](#162-reading-complete-intersection-data)
@@ -101,7 +108,9 @@ Book 69 turned tangent and obstruction calculations into presentations of comple
 
 The invariant that measures independence is **depth**. Its elementary definition counts successive nonzerodivisors; its homological definition finds the first nonvanishing Ext group. The bridge between them is the Koszul complex. Once depth is connected to free resolutions, the Auslander--Buchsbaum formula turns a depth equality into projective dimension zero. This is the source of many freeness arguments.
 
-Complete intersections form the corresponding class of rings. They are quotients of regular local rings by regular sequences, so their number of equations equals their codimension for a structural reason, not merely by a generator count. Fitting ideals supply a complementary language: presentation matrices give canonical ideals that commute with base change and detect precisely where a finite module vanishes.
+Complete intersections form the corresponding class of rings. They are quotients of regular local rings by regular sequences, so their number of equations equals their codimension for a structural reason, not merely by a generator count. The module theory remembers both the quotient and its ambient regular ring: maximal-depth modules have finite ambient resolutions even when their resolutions over the quotient are infinite. Miracle flatness then turns a dimension equality and Cohen--Macaulayness into flatness over a regular source.
+
+Fitting ideals supply a complementary language. Presentation matrices give canonical ideals that commute with base change, detect precisely where a finite module vanishes, and cut out its generator and free-rank strata. Over a discrete valuation ring, determinants become lengths. This numerical interpretation leads naturally to congruence modules, augmentation cotangent modules, and the exact length identities that feed later comparison criteria.
 
 The aim is not a catalogue of these notions. The chapters follow one mechanism:
 
@@ -543,6 +552,86 @@ $$
 $$
 
 The strict offset in the second line is deliberate. At the boundary $\operatorname{depth}A=\operatorname{depth}C+1$, both $\operatorname{depth}B=\operatorname{depth}C$ and larger values are compatible with the three inequalities.
+
+### 4.7 Grade, radicals, and support
+
+Depth in an ideal is often called **grade**:
+
+$$
+\operatorname{grade}(I,M)=\operatorname{depth}_I(M).
+$$
+
+The change of name emphasizes that the invariant belongs to the closed subset $V(I)$, not to a preferred generating list. The exact local formula is
+
+$$
+\operatorname{depth}_I(M)
+=\inf_{\substack{\mathfrak p\in\operatorname{Supp}M\\I\subseteq\mathfrak p}}
+\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}.
+$$
+
+**Proof strategy.** A regular sequence in $I$ remains regular at every relevant localization, giving one inequality. After quotienting by a maximal such sequence, maximality places $I$ inside an associated prime. At that prime the quotient has depth zero, so the localized original module has depth exactly the sequence length.
+
+**Proof.** Put $r=\operatorname{depth}_I(M)$ and choose a maximal $M$-regular sequence $x_1,\ldots,x_r$ in $I$. If $\mathfrak p\in\operatorname{Supp}M$ contains $I$, localization preserves injectivity at every stage, and the final quotient is nonzero by Nakayama because all $x_i$ lie in $\mathfrak pR_{\mathfrak p}$. Hence
+
+$$
+r\le \operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}
+$$
+
+for every $\mathfrak p\supseteq I$ in $\operatorname{Supp}M$.
+
+Set $N=M/(x_1,\ldots,x_r)M$. Maximality and prime avoidance give an associated prime $\mathfrak p\in\operatorname{Ass}N$ containing $I$. After localizing at $\mathfrak p$, the maximal ideal of $R_{\mathfrak p}$ is associated to $N_{\mathfrak p}$, so
+
+$$
+\operatorname{depth}_{R_{\mathfrak p}}N_{\mathfrak p}=0.
+$$
+
+The localized sequence remains $M_{\mathfrak p}$-regular, and repeated depth shift yields
+
+$$
+\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}=r.
+$$
+
+Thus the infimum is both at least and at most $r$. $\square$
+
+Several consequences become immediate.
+
+First, depth depends only on the radical of the ideal:
+
+$$
+\sqrt I=\sqrt J
+\quad\Longrightarrow\quad
+\operatorname{depth}_I(M)=\operatorname{depth}_J(M),
+$$
+
+because the two ideals define the same family of primes in the local formula. This justifies the radical replacement used for finite local maps in Chapter 15.
+
+Second,
+
+$$
+\operatorname{depth}_I(M)
+\le
+\inf_{\substack{\mathfrak p\in\operatorname{Supp}M\\I\subseteq\mathfrak p}}
+\dim_{R_{\mathfrak p}}M_{\mathfrak p}.
+$$
+
+The right side is the least codimension, inside the support of $M$, at which $V(I)$ meets that support. Regular elements cannot outnumber this local geometric codimension.
+
+Third, if $M$ is Cohen--Macaulay, every localization $M_{\mathfrak p}$ is Cohen--Macaulay, so the inequality becomes an equality:
+
+$$
+\operatorname{depth}_I(M)
+=
+\inf_{\substack{\mathfrak p\in\operatorname{Supp}M\\I\subseteq\mathfrak p}}
+\dim_{R_{\mathfrak p}}M_{\mathfrak p}.
+$$
+
+For $M=R$ and $R$ Cohen--Macaulay, this is the familiar formula
+
+$$
+\operatorname{depth}_I(R)=\operatorname{ht}(I),
+$$
+
+where height means the minimum height of a prime containing $I$. It is the decisive equality behind the criterion “height equals number of generators” for regular-sequence ideals.
 
 ## 5. Localization and completion
 
@@ -1223,6 +1312,91 @@ The quotient $k[[x,y,z]]/(xy,xz)$ has an ideal generated by two elements of heig
 
 Conormal modules distinguish the two codimension-two Artinian examples above. For $A=k[[x,y]]/(x^2,y^2)$, the classes of $x^2$ and $y^2$ freely generate $I/I^2$. For $B$, the three classes of $x^2,xy,y^2$ minimally generate its conormal module at the closed point. Since the intrinsic codimension is two, that excess generator witnesses failure of the complete-intersection condition.
 
+### 10.7 Perfect modules and the ambient regular ring
+
+Complete intersections control modules in two different ways, and confusing them leads to a common false conclusion. A regular sequence gives a finite free resolution over the **ambient regular ring**. It does not make every module have a finite free resolution over the **quotient ring**.
+
+For a nonzero finite module $M$ over a Noetherian local ring $R$, define its grade by
+
+$$
+\operatorname{grade}_R(M)
+=\inf\{i:\operatorname{Ext}_R^i(M,R)\ne0\}.
+$$
+
+A finite module is called **perfect** if it has finite projective dimension and
+
+$$
+\operatorname{pd}_RM=\operatorname{grade}_R(M).
+$$
+
+Over a Cohen--Macaulay local ring, grade, codimension, and resolution length align for Cohen--Macaulay modules of finite projective dimension. The precise numerical test needed here is the following. If $R$ is Cohen--Macaulay of dimension $d$ and $M$ has finite projective dimension, then Auslander--Buchsbaum gives
+
+$$
+\operatorname{pd}_RM=d-\operatorname{depth}_RM.
+$$
+
+Consequently
+
+$$
+M\text{ is Cohen--Macaulay}
+\quad\Longleftrightarrow\quad
+\operatorname{pd}_RM=d-\dim_RM.
+$$
+
+The right side says that the resolution length is exactly the codimension of the support. This is the module form of “the expected number of independent equations.” It is not automatic for a finite-projective-dimension module: if depth is smaller than support dimension, the resolution is longer than the codimension.
+
+Now let
+
+$$
+A=Q/(f_1,\ldots,f_c)
+$$
+
+be a complete-intersection presentation with $Q$ regular local and the $f_i$ a $Q$-regular sequence. Since $Q\to A$ is finite, depth and dimension of any finite $A$-module are unchanged when the module is viewed through $Q$. The regularity of $Q$ makes every finite $Q$-module have finite projective dimension. Therefore, for every nonzero finite $A$-module $M$,
+
+$$
+\operatorname{pd}_QM
+=\dim Q-\operatorname{depth}_AM.
+$$
+
+In particular,
+
+$$
+M\text{ is maximal Cohen--Macaulay over }A
+\quad\Longleftrightarrow\quad
+\operatorname{pd}_QM=c.
+$$
+
+Indeed $\dim A=\dim Q-c$, so maximal depth over $A$ is precisely depth $\dim Q-c$ over $Q$. This criterion is one of the most useful module consequences of a complete-intersection presentation. It says that every maximal Cohen--Macaulay $A$-module has a finite ambient resolution of the same length as $A$ itself.
+
+The ambient qualifier is decisive. Take
+
+$$
+Q=k[[x,y]],\qquad A=Q/(xy),\qquad M=A/(x).
+$$
+
+The module $M$ is maximal Cohen--Macaulay over the one-dimensional hypersurface $A$. As a $Q$-module it has the length-one resolution
+
+$$
+0\longrightarrow Q\xrightarrow{x}Q\longrightarrow M\longrightarrow0,
+$$
+
+so $\operatorname{pd}_QM=1$, the hypersurface codimension. As an $A$-module, however, it has the infinite periodic resolution displayed in Section 6.5. Thus complete-intersection modules have controlled ambient homology without necessarily being free, or even of finite projective dimension, over the quotient.
+
+The most literal modules cut out by a complete intersection are finite free $Q$-modules modulo the sequence. If $F$ is finite free over $Q$, then
+
+$$
+F/(f_1,\ldots,f_c)F\simeq A^{\operatorname{rank}F},
+$$
+
+and tensoring the Koszul resolution of $A$ by $F$ gives a length-$c$ free resolution over $Q$. Its Betti numbers are
+
+$$
+\beta_i^Q\bigl(F/(\mathbf f)F\bigr)
+=\operatorname{rank}(F)\binom ci.
+$$
+
+These are the free modules on the complete intersection. General maximal Cohen--Macaulay modules share the same ambient projective dimension but need not share the Koszul Betti numbers or quotient-ring freeness.
+
 ## 11. Stability of complete intersections
 
 ### 11.1 Completion and quotients
@@ -1317,6 +1491,78 @@ Combining the two presentations would list $\varpi,\varpi$ in the same ambient r
 
 Absolute codimension also need not be the sum of relative codimensions. The ring $\mathcal O[[x,y]]/(xy-\varpi)$ is relatively a hypersurface but absolutely regular. Any codimension formula must state which cotangent space and which base it uses.
 
+### 11.5 Relative complete-intersection maps
+
+Many constructions naturally produce a map rather than an isolated ring. The relative notion records only the equations introduced by that map.
+
+Let $A\to B$ be a local homomorphism of complete Noetherian local rings with the same residue field. We call the map a **relative complete-intersection map** when there is a factorization
+
+$$
+A\longrightarrow P=A[[x_1,\ldots,x_r]]
+\longrightarrow B=P/(f_1,\ldots,f_c)
+$$
+
+in which $f_1,\ldots,f_c$ is a $P$-regular sequence. The relative dimension and codimension are then
+
+$$
+\dim B-\dim A=r-c,
+\qquad
+\operatorname{codim}_A(B)=c
+$$
+
+whenever the displayed presentation is minimal relative to $A$. A formally smooth map is the case $c=0$; a finite relative complete intersection has $r=c$ once dimensions of source and target agree.
+
+The definition is stable under adding and removing a formal coordinate together with a relation having a unit linear coefficient. Consequently the numbers in a minimal relative presentation do not depend on such stabilization. More intrinsically, the conormal module of the surjection $P\to B$ is free:
+
+$$
+I/I^2\simeq B^c,
+\qquad I=(f_1,\ldots,f_c),
+$$
+
+and $B$ has projective dimension $c$ as a $P$-module. These two conclusions distinguish a regular-sequence quotient from an arbitrary quotient having the same raw number of equations.
+
+There is a useful composition rule. Suppose
+
+$$
+A\longrightarrow B=A[[\mathbf x]]/(\mathbf f)
+$$
+
+is a relative complete intersection and
+
+$$
+B\longrightarrow C=B[[\mathbf y]]/(\mathbf g)
+$$
+
+is another, where the images of $\mathbf g$ are regular after the first quotient. Then
+
+$$
+C\simeq A[[\mathbf x,\mathbf y]]/(\mathbf f,\widetilde{\mathbf g}),
+$$
+
+and the concatenated list is regular. Relative codimensions add. The qualification on $\mathbf g$ is not formal: a lift may be regular in the larger power-series ring but become a zerodivisor after imposing $\mathbf f$.
+
+Flat base change gives the cleanest preservation theorem. Let $A\to A'$ be flat local, put
+
+$$
+B'=B\widehat\otimes_AA',
+$$
+
+and assume the completed base change is Noetherian and the displayed kernel extends exactly. Then
+
+$$
+B'\simeq A'[[\mathbf x]]/(\mathbf f)A'[[\mathbf x]],
+$$
+
+and the images of $\mathbf f$ remain regular if the final quotient is nonzero. Thus the **relative presentation** remains complete intersection. To infer that $B'$ is an absolute complete-intersection ring, one must additionally know that the new ambient ring $A'[[\mathbf x]]$ is regular; a singular base does not become regular merely because the map from it is flat.
+
+For modules, the same distinction applies. If $M$ is a maximal Cohen--Macaulay $B$-module and $B$ has relative presentation through $P=A[[\mathbf x]]$, then the equality
+
+$$
+\operatorname{pd}_PM=c
+$$
+
+follows when $P$ is regular, by Section 10.7. If $A$ is not regular, no finite ambient projective dimension follows merely from the relative complete-intersection description. The quality of the base and the quality of the equations are separate inputs.
+
 ## 12. Fitting ideals from presentations
 
 ### 12.1 Why annihilators are not enough
@@ -1363,6 +1609,32 @@ Although the definition uses a matrix, the ideals depend only on $M$.
 **Theorem (presentation independence).** Elementary row and column operations, adjoining redundant relation generators, and stabilization by a generator--relation block $R\xrightarrow{1}R$ do not change the appropriately indexed determinantal ideals. Any two finite presentations admit a common refinement by these presentation moves. Therefore $\operatorname{Fitt}_i(M)$ is intrinsic.
 
 **Proof strategy.** Invertible row or column operations replace minors by invertible linear combinations of minors of the same size. A redundant relation adds a column already generated by the old relation columns and changes no determinantal ideal. Stabilization by an identity block converts each relevant minor into either zero or an old minor, with the indexing shift exactly compensated by the added target generator. Lifting the generators of either presentation through the other produces a common refinement. $\square$
+
+Here is the common-refinement step in more detail. Given surjections
+
+$$
+F\twoheadrightarrow M,
+\qquad
+G\twoheadrightarrow M
+$$
+
+from finite free modules, lift the chosen basis images of $F$ through $G\to M$ and those of $G$ through $F\to M$. The combined surjection
+
+$$
+F\oplus G\longrightarrow M,
+\qquad
+(u,v)\longmapsto \bar u+\bar v,
+$$
+
+is obtained from either original surjection by adjoining the other set of generators. For every newly adjoined generator, its chosen lift supplies a relation having coefficient $1$ on that generator. This is exactly an identity stabilization followed by column operations. Because $M$ is finitely presented, the kernel of the combined surjection is finite; after adjoining finitely many redundant relation generators, both relation maps present that same kernel. The two matrices are therefore connected by the moves already checked. This proves independence without assuming that either original presentation was minimal.
+
+There is also a conceptual exterior-power description. A $(q-i)$-minor is a coordinate of the map
+
+$$
+\bigwedge^{q-i}R^p\longrightarrow\bigwedge^{q-i}R^q
+$$
+
+induced by the relation matrix. The ideal generated by all coordinates of its image is unchanged by choosing new bases. Stabilization adds a direct summand on which the exterior map is the identity and recovers precisely the same indexed ideal. The determinantal definition is therefore coordinate-free even though matrices are the most efficient way to calculate it.
 
 Finite presentation is essential over a general ring. A finite module over a Noetherian ring is automatically finitely presented, which is why the distinction is often invisible in local algebra. For an arbitrary noncoherent ring, finite generation alone does not provide a finite relation matrix, so the stated construction and base-change theorem are unavailable.
 
@@ -1428,6 +1700,64 @@ $$
 $$
 
 whereas its annihilator is $(a)\cap(b)$. This difference anticipates the next chapter.
+
+### 12.6 Generator strata and the finite-free locus
+
+Higher Fitting ideals do more than count generators at one point. They cut out the loci on which a finite presentation can be simplified to a prescribed rank.
+
+Let $M$ be finitely presented. At a prime $\mathfrak p$,
+
+$$
+\mu_{R_{\mathfrak p}}(M_{\mathfrak p})\le i
+\quad\Longleftrightarrow\quad
+\operatorname{Fitt}_i(M)\not\subseteq\mathfrak p.
+$$
+
+To prove the nontrivial direction, localize and suppose a $(q-i)\times(q-i)$ minor of a presentation matrix is a unit. Row and column operations turn that minor into an identity block. Cancelling the corresponding generator--relation pairs leaves a presentation with at most $i$ target generators. Conversely, a presentation with $i$ generators has $\operatorname{Fitt}_i=R$ by convention and presentation independence.
+
+It follows that
+
+$$
+U_i(M)=\{\mathfrak p:\mu(M_{\mathfrak p})\le i\}
+=\operatorname{Spec}R\setminus V(\operatorname{Fitt}_i(M))
+$$
+
+is open. Thus the number of local generators is upper semicontinuous: it can jump upward only on a closed determinantal locus.
+
+The free-rank criterion uses two adjacent Fitting ideals.
+
+**Theorem (finite-free locus).** Let $M$ be finitely presented and let $r\ge0$. For a prime $\mathfrak p$, the following are equivalent.
+
+1. $M_{\mathfrak p}$ is free of rank $r$.
+2. There is an element $f\notin\mathfrak p$ such that
+
+   $$
+   \operatorname{Fitt}_r(M)R_f=R_f,
+   \qquad
+   \operatorname{Fitt}_{r-1}(M)R_f=0,
+   $$
+
+   where $\operatorname{Fitt}_{-1}(M)=0$ by convention.
+3. After localizing at $\mathfrak p$,
+
+   $$
+   \operatorname{Fitt}_r(M)R_{\mathfrak p}=R_{\mathfrak p},
+   \qquad
+   \operatorname{Fitt}_{r-1}(M)R_{\mathfrak p}=0.
+   $$
+
+**Proof strategy.** The first equality gives $r$ generators. The second says that every entry of a relation matrix for those generators vanishes. Finite presentation is what makes the kernel visible through a finite matrix.
+
+**Proof.** If $M_{\mathfrak p}\simeq R_{\mathfrak p}^r$, the formulas for a free module give (3), and finitely many elements and minors permit the equalities to be spread to a neighborhood. Conversely, the unit condition on $\operatorname{Fitt}_r$ allows cancellation until a localized presentation has the form
+
+$$
+R_{\mathfrak p}^a\xrightarrow{A}R_{\mathfrak p}^r
+\longrightarrow M_{\mathfrak p}\longrightarrow0.
+$$
+
+Now $\operatorname{Fitt}_{r-1}$ is the ideal generated by the entries of $A$. Its vanishing makes $A=0$. Exactness says the kernel of $R_{\mathfrak p}^r\to M_{\mathfrak p}$ is zero, so the map is an isomorphism. $\square$
+
+Consequently a finitely presented module is finite projective of constant rank $r$ exactly when these two equalities hold globally. In a local ring, finite projective means finite free, recovering the elementary criterion. The finite-presentation hypothesis cannot be weakened to finite generation over an arbitrary ring: a kernel too large to admit a finite matrix need not be detected by this argument.
 
 ## 13. Support, annihilators, and faithfulness
 
@@ -1613,9 +1943,29 @@ $$
 
 A presentation of $M$ can be built from presentations of $M'$ and $M''$ using a block upper-triangular matrix. Products of maximal minors of the diagonal blocks occur among its maximal minors, proving the inclusion. If the sequence splits, the matrix is block diagonal and equality follows from the direct-sum formula.
 
+The higher-index form is
+
+$$
+\sum_{i+j=n}
+\operatorname{Fitt}_i(M')\operatorname{Fitt}_j(M'')
+\subseteq\operatorname{Fitt}_n(M)
+\qquad(n\ge0).
+$$
+
+To see it, choose finite generators of $M''$, lift them to $M$, and add finite generators coming from $M'$. Relations for $M$ can then be arranged in block upper-triangular form. A product of a minor from each diagonal block occurs, up to sign and terms of the same determinantal size, in the corresponding minor of the total matrix. Summing over all ways to distribute the surviving target generators gives the displayed inclusion. This proof uses only right exactness at $M''$; the map $M'\to M$ need not be injective.
+
+If the sequence is short exact and $M''$ is finite projective, it splits. For a constant free rank $r$ quotient, the direct-sum formula becomes the useful shift
+
+$$
+\operatorname{Fitt}_n(M)
+=\operatorname{Fitt}_{n-r}(M'),
+$$
+
+with $\operatorname{Fitt}_j=0$ for $j<0$. No such equality follows merely because $M'$ is free: an extension with a free submodule need not split.
+
 Equality can also hold in important nonsplit cases, but it is not formal. For example, over a discrete valuation ring, lengths are additive in every short exact sequence, and the valuation formula of Section 14.3 forces equality of zeroth Fitting ideals for finite-length modules. Over a general ring, extension data can add determinantal relations, so only the inclusion is automatic.
 
-There are broader formulas involving all higher Fitting ideals and the number of generators of one term. Their indexing depends on the precise presentation hypotheses. For patching, the safe operations are arbitrary base change, localization, direct-sum convolution, and the displayed zeroth-ideal containment.
+For patching, the safe operations are arbitrary base change, localization, direct-sum convolution, and the displayed exact-sequence containments. Equality beyond split sequences or special one-dimensional coefficient rings always requires a separate argument.
 
 ### 14.2 Finite free resolutions and determinants
 
@@ -1697,25 +2047,326 @@ $$
 
 This is a precise numerical-size interpretation. It relies on the principal ideal structure of a discrete valuation ring and on finite length. Over a higher-dimensional local ring, a single valuation cannot recover module length, and over a nondomain a determinant may be a zerodivisor.
 
+Two change-of-rings formulas are useful when numerical invariants are compared after extending coefficients. Let $(A,\mathfrak m,k)\to(B,\mathfrak n,l)$ be a local homomorphism of Noetherian local rings.
+
+First, if $M$ is a finite-length $B$-module and $[l:k]$ is finite, then restriction of scalars gives
+
+$$
+\operatorname{length}_A(M)
+=[l:k]\,\operatorname{length}_B(M).
+$$
+
+Indeed a composition series over $B$ has every simple factor isomorphic to $l$, and $l$ has $A$-length $[l:k]$. If the residue fields agree, length is unchanged.
+
+Second, suppose $B$ is flat over $A$ and the closed fiber $B/\mathfrak mB$ has finite $B$-length. For every finite-length $A$-module $N$,
+
+$$
+\operatorname{length}_B(N\otimes_AB)
+=\operatorname{length}_A(N)\,
+\operatorname{length}_B(B/\mathfrak mB).
+$$
+
+Filter $N$ by a composition series. Flatness preserves the injections in the filtration, and each scalar-extended simple factor is
+
+$$
+k\otimes_AB\simeq B/\mathfrak mB.
+$$
+
+Additivity of length gives the formula. The flatness and finite closed-fiber hypotheses both matter. Without flatness, a filtration may acquire kernels after tensoring; without a zero-dimensional closed fiber, the right side is not a finite numerical size.
+
 ### 14.4 Congruence modules
 
-A congruence module arises when two integral systems agree after passing to a common generic object but fail to split integrally. At the elementary algebraic level, let $L$ be a finite free $\mathcal O$-lattice inside a vector space over the fraction field, and let $L_1,L_2$ be sublattices whose generic fibers give complementary pieces. A quotient such as
+A congruence module arises when a decomposition exists after inverting the uniformizer but not before. The generic decomposition supplies idempotent projectors; denominators of those projectors measure the failure of integral splitting. This principle has a lattice form, an algebra form, and a module form.
+
+Let $\mathcal O$ be a discrete valuation ring with fraction field $K$. Suppose
 
 $$
-C=L/(L_1+L_2)
+V=V_1\oplus V_2
 $$
 
-is finite length when the sum has full rank. It measures the integral overlap between the two pieces.
-
-The ideal $\operatorname{Fitt}_0^{\mathcal O}(C)$ then records exactly the total congruence length. If a basis turns the inclusion $L_1+L_2\hookrightarrow L$ into a square matrix $A$, then
+is a finite-dimensional $K$-vector space and $L\subseteq V$ is an $\mathcal O$-lattice. Put
 
 $$
-\operatorname{Fitt}_0(C)=(\det A),
+L_i=L\cap V_i.
+$$
+
+Each $L_i$ is saturated in $L$: if $\varpi x\in L_i$ and $x\in L$, then $x\in V_i$ because $V_i$ is a $K$-space. The sum $L_1\oplus L_2$ has full rank in $L$, so the **lattice congruence module**
+
+$$
+C(L)=L/(L_1\oplus L_2)
+$$
+
+has finite length. It vanishes exactly when the generic direct sum descends to an integral direct sum.
+
+Let $e_i:V\to V_i$ be the two projectors. Projection gives canonical isomorphisms
+
+$$
+C(L)\xrightarrow{\sim}e_1L/L_1
+\xrightarrow{\sim}e_2L/L_2.
+$$
+
+For the first map, send the class of $x$ to the class of $e_1x$. If $e_1x\in L_1$, then $e_2x=x-e_1x$ lies in $L\cap V_2=L_2$, so the kernel is exactly $L_1\oplus L_2$. Surjectivity is immediate. Thus the congruence module can equally be read as the denominator of either generic projector.
+
+Choose bases of $L_1\oplus L_2$ and $L$. If the inclusion is represented by a square matrix $A$, then
+
+
+$$
+\operatorname{Fitt}_0^{\mathcal O}(C(L))=(\det A),
 \qquad
-\operatorname{length}_{\mathcal O}C=v(\det A).
+\operatorname{length}_{\mathcal O}C(L)=v(\det A).
 $$
 
-This language explains why zeroth Fitting ideals occur in numerical comparison arguments. We stop at the size mechanism. Criteria comparing a congruence module to a cotangent module and deducing an isomorphism of rings belong to Book 71.
+This determinant is an index, not a choice-dependent number: changing either basis multiplies it by a unit.
+
+Now let $T$ be a finite flat local $\mathcal O$-algebra and let
+
+$$
+\lambda:T\longrightarrow\mathcal O
+$$
+
+be an $\mathcal O$-algebra homomorphism. It is automatically surjective because it is the identity on the coefficient subring. Write $\mathfrak p=\ker\lambda$. Assume that the generic algebra splits as
+
+$$
+T_K:=T\otimes_{\mathcal O}K
+\simeq K\times T_K^c,
+$$
+
+with $\lambda_K$ the projection onto the first factor. This hypothesis holds, for example, when $T_K$ is reduced and the chosen homomorphism selects one of its $K$-factors. Let $e=(1,0)$ be the corresponding central idempotent.
+
+The **congruence ideal** and **algebra congruence module** at $\lambda$ are
+
+$$
+\eta_\lambda
+=\lambda(\operatorname{Ann}_T\mathfrak p)\subseteq\mathcal O,
+\qquad
+C_\lambda(T)=\mathcal O/\eta_\lambda.
+$$
+
+The annihilator has a transparent generic description:
+
+$$
+\operatorname{Ann}_T\mathfrak p=T\cap Ke
+$$
+
+inside $T_K$. Indeed an element annihilating $\mathfrak p$ has zero component in $T_K^c$, because $\mathfrak p_K=0\times T_K^c$ contains the unit of the second factor. Conversely an integral element lying in $Ke$ annihilates $\mathfrak p$ after extension to $K$, and torsion-freeness of $T$ brings the equality back to $T$. Consequently
+
+$$
+\eta_\lambda=\{a\in\mathcal O:ae\in T\}.
+$$
+
+Thus $\eta_\lambda$ is exactly the denominator ideal of the generic idempotent.
+
+There is also an intrinsic quotient description. Since
+
+$$
+T\cap(1-e)T_K=\mathfrak p,
+$$
+
+the generic decomposition and the first isomorphism theorem give
+
+$$
+\frac{T}{\mathfrak p+\operatorname{Ann}_T\mathfrak p}
+\xrightarrow{\sim}
+\frac{\mathcal O}{\eta_\lambda}.
+$$
+
+Equivalently, apply the lattice construction to $L=T\subseteq T_K$. The projected lattice is $eT=\mathcal Oe$, while its integral intersection with the selected factor is
+
+$$
+T\cap Ke=\eta_\lambda e.
+$$
+
+Hence
+
+$$
+C(T)\simeq \mathcal Oe/\eta_\lambda e
+\simeq C_\lambda(T).
+$$
+
+The generic splitting assumption cannot be omitted. For $T=\mathcal O[\epsilon]/(\epsilon^2)$ with $\lambda(\epsilon)=0$, the generic algebra still has a nilpotent extension rather than a product decomposition. The annihilator of $(\epsilon)$ is $(\epsilon)$, its image under $\lambda$ is zero, and $\mathcal O/\eta_\lambda$ is not finite length. This correctly signals that there is no finite denominator measuring a nonexistent generic idempotent.
+
+Associative perfect pairings turn the congruence ideal into a single scalar. Suppose $T$ is finite free over $\mathcal O$ and admits a perfect pairing
+
+$$
+\langle x,y\rangle=\ell(xy)
+$$
+
+for some $\mathcal O$-linear functional $\ell:T\to\mathcal O$. Associativity implies
+
+$$
+\operatorname{Ann}_T\mathfrak p=\mathfrak p^\perp.
+$$
+
+For if $t$ is orthogonal to $\mathfrak p$, then for $p\in\mathfrak p$ and $u\in T$,
+
+$$
+\langle tp,u\rangle=\langle t,pu\rangle=0;
+$$
+
+perfectness forces $tp=0$. The reverse inclusion is immediate. Restricting the perfect duality therefore identifies
+
+$$
+\operatorname{Ann}_T\mathfrak p
+\simeq\operatorname{Hom}_{\mathcal O}(T/\mathfrak p,\mathcal O)
+\simeq\mathcal O.
+$$
+
+If $t_\lambda$ is an $\mathcal O$-basis of this rank-one module, then
+
+$$
+\eta_\lambda=(\lambda(t_\lambda)),
+\qquad
+\operatorname{length}_{\mathcal O}C_\lambda(T)
+=v(\lambda(t_\lambda)).
+$$
+
+This is the scalar form of the congruence number.
+
+Finally let $M$ be a finite free $\mathcal O$-module carrying a $T$-action. The idempotent $e$ decomposes $M_K$ into $eM_K\oplus(1-e)M_K$. Define
+
+$$
+M_\lambda=M\cap eM_K,
+\qquad
+M^c=M\cap(1-e)M_K,
+$$
+
+and
+
+$$
+C_\lambda(M)=M/(M_\lambda\oplus M^c).
+$$
+
+This finite-length module measures congruences in the chosen integral representation of $T$. If $M$ is free of rank $r$ over $T$, a $T$-basis identifies every intersection component coordinatewise, giving
+
+$$
+C_\lambda(M)\simeq C_\lambda(T)^r.
+$$
+
+Therefore
+
+$$
+\operatorname{Fitt}_0^{\mathcal O}(C_\lambda(M))
+=\eta_\lambda^r,
+\qquad
+\operatorname{length}_{\mathcal O}C_\lambda(M)
+=r\,\operatorname{length}_{\mathcal O}C_\lambda(T).
+$$
+
+Neither equality follows from mere faithfulness of the $T$-action or freeness over $\mathcal O$; the coordinatewise intersection argument uses actual $T$-freeness. These are the numerical length formulas exported to comparison arguments. Relating them to a cotangent module and forcing equality of rings requires the additional numerical criterion developed in the next volume.
+
+### 14.5 Cotangent modules at an augmentation
+
+The congruence module measures failure of integral generic splitting. A second finite module measures first-order equations at the selected integral point.
+
+Continue with a finite flat local $\mathcal O$-algebra $T$ and an augmentation
+
+$$
+\lambda:T\longrightarrow\mathcal O,
+\qquad
+\mathfrak p=\ker\lambda.
+$$
+
+The **augmentation cotangent module** is
+
+$$
+\Phi_\lambda(T)=\mathfrak p/\mathfrak p^2.
+$$
+
+It is a finite $\mathcal O$-module. Under the generic product hypothesis of Section 14.4 it has finite length, because
+
+$$
+\mathfrak p_K=0\times T_K^c
+$$
+
+is an idempotent ideal, so $\mathfrak p_K/\mathfrak p_K^2=0$. A finite $\mathcal O$-module whose scalar extension to $K$ vanishes is torsion and hence has finite length.
+
+A presentation turns this module into a Jacobian calculation. Suppose
+
+$$
+T\simeq
+\mathcal O[[X_1,\ldots,X_g]]/(f_1,\ldots,f_s),
+$$
+
+and the augmentation sends every $X_i$ to zero. Necessarily $f_j(0)=0$. Write the linear part of $f_j$ as
+
+$$
+f_j\equiv\sum_{i=1}^g a_{ji}X_i
+\pmod{(X_1,\ldots,X_g)^2}.
+$$
+
+Then there is a right-exact presentation
+
+$$
+\mathcal O^s\xrightarrow{J_\lambda}
+\mathcal O^g\longrightarrow\Phi_\lambda(T)\longrightarrow0,
+$$
+
+where $J_\lambda$ has entries $a_{ji}$, with transpose chosen according to the convention that free modules are column modules. Equivalently, $a_{ji}$ is the value at the augmentation of the formal partial derivative $\partial f_j/\partial X_i$.
+
+**Proof.** The augmentation ideal is generated by the images of the $X_i$. Modulo its square, every term of degree at least two vanishes. The only relations among the resulting generators contributed by $f_j$ are therefore their displayed linear parts. This is precisely the conormal sequence at the augmentation. $\square$
+
+It follows that
+
+$$
+\operatorname{Fitt}_0^{\mathcal O}(\Phi_\lambda(T))
+=I_g(J_\lambda),
+$$
+
+the ideal of maximal $g\times g$ minors. If $s=g$ and $\det J_\lambda\ne0$, then
+
+$$
+\operatorname{length}_{\mathcal O}\Phi_\lambda(T)
+=v(\det J_\lambda).
+$$
+
+This is the tangent-side analogue of the determinant formula for a lattice index. It is independent of the chosen presentation even though the matrix is not: the zeroth Fitting ideal belongs intrinsically to $\Phi_\lambda(T)$.
+
+Surjections give an equally important exact length formula. Let
+
+$$
+R\twoheadrightarrow T=R/I
+$$
+
+be a surjection of augmented local $\mathcal O$-algebras, compatible with maps to $\mathcal O$. Put $\mathfrak p_R=\ker(R\to\mathcal O)$ and $\mathfrak p_T=\ker(T\to\mathcal O)$. Then $I\subseteq\mathfrak p_R$ and
+
+$$
+\mathfrak p_T=\mathfrak p_R/I,
+\qquad
+\mathfrak p_T^2=(\mathfrak p_R^2+I)/I.
+$$
+
+Hence there is a short exact sequence
+
+$$
+0\longrightarrow
+\frac{I}{I\cap\mathfrak p_R^2}
+\longrightarrow
+\Phi(R)
+\longrightarrow
+\Phi(T)
+\longrightarrow0.
+$$
+
+When all three terms have finite $\mathcal O$-length,
+
+$$
+\operatorname{length}_{\mathcal O}\Phi(R)
+=\operatorname{length}_{\mathcal O}
+\frac{I}{I\cap\mathfrak p_R^2}
++\operatorname{length}_{\mathcal O}\Phi(T).
+$$
+
+Thus the cotangent-length loss under a quotient is exactly the length of the new relation directions visible to first order at the augmentation. Relations lying in $\mathfrak p_R^2$ do not contribute to this first-order loss, even though they may change the ring substantially.
+
+The two numerical modules now stand side by side:
+
+$$
+\Phi_\lambda(T)=\mathfrak p/\mathfrak p^2,
+\qquad
+C_\lambda(T)=\mathcal O/\eta_\lambda.
+$$
+
+The first is calculated from linearized equations; the second from the denominator of the generic projector. Their lengths need not agree formally. Establishing an inequality between them, identifying the equality case, and deriving structural consequences is precisely the numerical comparison problem reserved for the next volume.
 
 ## 15. Finite local maps and freeness criteria
 
@@ -1779,7 +2430,109 @@ $$
 
 is finite, local, and injective. Both rings have dimension one, but the source is singular and the target is regular. Finiteness and equal dimension do not force an isomorphism or equality of embedding dimensions.
 
-### 15.2 Miracle freeness over a regular source
+### 15.2 The local criterion behind miracle flatness
+
+Flatness is an exactness condition involving every finite relation, while depth is measured by one regular sequence. Miracle flatness is the theorem that turns the latter into the former when the source is regular and the dimensions leave no room for extra torsion.
+
+The bridge is the local criterion for flatness.
+
+**Local flatness criterion.** Let $(A,\mathfrak m,k)\to(B,\mathfrak n,l)$ be a local homomorphism of Noetherian local rings, and let $N$ be a finite $B$-module. Then
+
+$$
+N\text{ is flat over }A
+\quad\Longleftrightarrow\quad
+\operatorname{Tor}_1^A(k,N)=0.
+$$
+
+**Proof strategy.** The forward implication is immediate. For the converse, use the equational criterion for flatness and Nakayama over $B$. A minimal unsolved coefficient relation over $A$ would survive after reduction modulo $\mathfrak m$, producing a nonzero class in the displayed Tor group.
+
+**Proof.** Present any finitely generated ideal $I\subseteq A$ by $A^s\to I$. Tensoring with $N$ shows that failure of injectivity of
+
+$$
+I\otimes_AN\longrightarrow N
+$$
+
+is measured by $\operatorname{Tor}_1^A(A/I,N)$. Choose a finite set of $B$-generators for the kernel of a coefficient relation; such finiteness is available because $N$ is finite over the Noetherian ring $B$. Reduction modulo $\mathfrak n$ turns a minimal generating family into a nonzero family over $l$. Since the structural map is local, $\mathfrak mB\subseteq\mathfrak n$. The long exact Tor sequences associated to a finite presentation of $A/I$, followed by reduction to $k$, show that a nonzero minimal kernel class maps to a nonzero element of $\operatorname{Tor}_1^A(k,N)\otimes_kl$. The assumed vanishing therefore forces every map $I\otimes_AN\to N$ to be injective. The ideal criterion for flatness now proves that $N$ is $A$-flat. $\square$
+
+The finiteness over a Noetherian **local algebra** is essential to this one-fiber test. For arbitrary $A$-modules, one residue Tor group need not control all coefficient relations.
+
+**Corollary.** Let $(A,\mathfrak m,k)$ be regular local of dimension $d$, with regular system of parameters $x_1,\ldots,x_d$. Let $(B,\mathfrak n)$ be a Noetherian local $A$-algebra and let $N$ be a finite $B$-module. If $x_1,\ldots,x_d$ is $N$-regular, then $N$ is flat over $A$. If $N$ is also finite over $A$, it is finite free over $A$.
+
+**Proof.** The Koszul complex on $x_1,\ldots,x_d$ is a free resolution of $k$ over $A$. After tensoring with $N$, its positive homology vanishes precisely because the same sequence is $N$-regular. Hence
+
+$$
+\operatorname{Tor}_1^A(k,N)=0.
+$$
+
+The local flatness criterion gives $A$-flatness. Finite flat modules over a local ring are free. $\square$
+
+The corollary explains why regularity of the source is the right hypothesis. A full parameter sequence generates the maximal ideal and reduces the source to its residue field. Regular action of that one sequence is therefore enough to test every relation over the source.
+
+### 15.3 Miracle flatness for rings and modules
+
+The preceding criterion becomes “miraculous” when dimension and Cohen--Macaulayness produce the required regular sequence automatically.
+
+**Theorem (miracle flatness, module form).** Let
+
+$$
+(A,\mathfrak m,k)\longrightarrow(B,\mathfrak n,l)
+$$
+
+be a local homomorphism of Noetherian local rings. Assume $A$ is regular of dimension $d$. Let $M$ be a nonzero finite $B$-module which is Cohen--Macaulay over $B$. Put
+
+$$
+e=\dim_{B/\mathfrak mB}(M/\mathfrak mM).
+$$
+
+If
+
+$$
+\dim_BM=d+e,
+$$
+
+then $M$ is flat over $A$. If $M$ is finite over $A$, it is finite free over $A$.
+
+**Proof strategy.** Choose parameters in the source and in the closed-fiber module. Their union has exactly the length predicted by the dimension hypothesis and cuts $M$ to finite length. It is therefore a system of parameters for $M$. Cohen--Macaulayness turns that system into a regular sequence, and Section 15.2 turns regularity of the source parameters into flatness.
+
+**Proof.** Choose a regular system of parameters $x_1,\ldots,x_d$ for $A$. Choose $y_1,\ldots,y_e\in\mathfrak n$ whose residues form a system of parameters for the finite $B/\mathfrak mB$-module $M/\mathfrak mM$. Then
+
+$$
+M/(x_1,\ldots,x_d,y_1,\ldots,y_e)M
+$$
+
+has finite length over $B$. The displayed list has $d+e=\dim_BM$ elements, so it is a system of parameters for $M$. Since $M$ is Cohen--Macaulay, every system of parameters is $M$-regular. In particular $x_1,\ldots,x_d$ is $M$-regular. The corollary of Section 15.2 proves $A$-flatness, and finite flatness over local $A$ gives freeness when $M$ is finite over $A$. $\square$
+
+Taking $M=B$ gives the ring form.
+
+**Corollary (miracle flatness, ring form).** In the same local setup, assume $A$ is regular, $B$ is Cohen--Macaulay, and
+
+$$
+\dim B=\dim A+\dim(B/\mathfrak mB).
+$$
+
+Then $A\to B$ is flat.
+
+Every hypothesis has a distinct role. Regularity supplies a parameter sequence that controls flatness over $A$. The dimension equality makes those source parameters, together with fiber parameters, a full parameter system in $B$. Cohen--Macaulayness turns parameters into nonzerodivisors.
+
+The dimension equality cannot be replaced by an inequality. The map $k[[t]]\to k$ has Cohen--Macaulay target but
+
+$$
+0=\dim k<\dim k[[t]]+\dim k=1,
+$$
+
+and is not flat. Cohen--Macaulayness also cannot be omitted. Let
+
+$$
+A=k[[t]],
+\qquad
+B=A[[x]]/(tx,x^2).
+$$
+
+The ring $B$ has dimension one and $B/tB\simeq k[[x]]/(x^2)$ has dimension zero, so the dimension equality holds. But $x$ is killed by $t$, hence $B$ is not $A$-flat. The maximal ideal is associated to $B$, so $\operatorname{depth}B=0<1=\dim B$: exactly the Cohen--Macaulay hypothesis fails.
+
+When $B$ is finite over $A$, the closed fiber has dimension zero. The theorem says that a finite Cohen--Macaulay $A$-algebra of dimension $\dim A$ is $A$-flat, hence finite free. This is the ring-level form most often paired with a dimension calculation.
+
+### 15.4 Miracle freeness over a regular source
 
 The preceding comparison combines with Auslander--Buchsbaum to give the basic patching-shaped freeness criterion.
 
@@ -1807,7 +2560,7 @@ For $r=1$, this already forces $A\to B$ to be an isomorphism. Indeed the injecti
 
 There is another useful special case. If $A\twoheadrightarrow B$ is surjective and $M$ is both nonzero $A$-free and a faithful $B$-module, then the kernel of $A\to B$ annihilates $M$. A nonzero free $A$-module is faithful, so the kernel is zero and the surjection is an isomorphism. Here ring equality is forced by combining source freeness, target faithfulness, and a pre-existing surjection; none of the three alone is sufficient.
 
-### 15.3 Maximal Cohen--Macaulay does not mean free
+### 15.5 Maximal Cohen--Macaulay does not mean free
 
 Suppose $B$ is Cohen--Macaulay of dimension $d$ and $M$ is maximal Cohen--Macaulay. Then $\operatorname{depth}_BM=d$, but $M$ need not be $B$-free. The module $B/(y)$ over
 
@@ -1827,7 +2580,7 @@ is faithful and maximal Cohen--Macaulay, but not free. Its minimal resolution co
 
 Over a complete intersection of positive codimension, such periodic or eventually structured resolutions are typical rather than exceptional. The ring controls their complexity, but complete intersection alone does not terminate them. Consequently any statement that a maximal Cohen--Macaulay module over a complete intersection is free must include an additional hypothesis.
 
-### 15.4 Finite projective dimension restores freeness
+### 15.6 Finite projective dimension restores freeness
 
 The exact additional hypothesis is finite projective dimension.
 
@@ -1860,6 +2613,14 @@ $$
 $$
 
 If $A$ is regular of dimension $d$ and the common depth is $d$, then $M$ is $A$-free. This is a resolution theorem, not a support theorem. It uses finite generation, the finite local map, regularity of $A$, and Auslander--Buchsbaum.
+
+For a local map that is not finite, source freeness is usually replaced by source flatness. If $M$ is Cohen--Macaulay and
+
+$$
+\dim_BM=\dim A+\dim_{B/\mathfrak m_A B}(M/\mathfrak m_A M),
+$$
+
+miracle flatness makes $M$ flat over the regular ring $A$. The closed-fiber term must be retained; deleting it silently specializes the theorem to a finite map.
 
 If only $\operatorname{depth}_BM=\dim B$ is known, then $M$ is maximal Cohen--Macaulay over $B$. That conclusion ensures good dimension cutting and unmixed support, but it does not imply $B$-freeness. A separate finite-projective-dimension input is required unless $B$ is regular.
 
@@ -1897,6 +2658,16 @@ $$
 $$
 
 Thus $\operatorname{Fitt}_0(M)$ controls the underlying support and commutes with localization and arbitrary base change. It also retains multiplicity information invisible to the radical, especially over a discrete valuation ring where its valuation equals length.
+
+At an augmentation $\lambda:T\to\mathcal O$, keep the two finite numerical modules distinct:
+
+$$
+\Phi_\lambda(T)=\mathfrak p/\mathfrak p^2,
+\qquad
+C_\lambda(T)=\mathcal O/\lambda(\operatorname{Ann}_T\mathfrak p).
+$$
+
+The first comes from linearized presentation equations and the second from the denominator of the generic idempotent. Their zeroth Fitting ideals record their lengths over the coefficient discrete valuation ring. No equality between those lengths is formal.
 
 The implications governing faithfulness are
 
@@ -1949,6 +2720,8 @@ Minimal free resolutions reveal the second face of depth. Their Betti numbers ar
 
 Complete intersections are precisely the regular-local quotients whose defining equations form a regular sequence. Their codimension is intrinsic in a minimal presentation, their conormal module is free of the expected rank, and their stability under completion, regular quotients, suitable flat base change, and carefully controlled completed tensor products makes them compatible with deformation-theoretic constructions. They are Cohen--Macaulay and unmixed, but need not be reduced or regular.
 
+The module theory explains both the strength and the limit of that structure. A maximal Cohen--Macaulay module over a complete intersection has the expected finite projective dimension over the ambient regular ring, but may have an infinite periodic resolution over the quotient. Over a regular source, however, maximal depth forces flatness: the local flatness criterion and the Auslander--Buchsbaum formula yield the miracle-flatness and miracle-freeness forms needed for finite and positive-relative-dimensional maps.
+
 Fitting ideals supply the determinantal counterpart. They are independent of presentation, commute with arbitrary base change, stratify generator number, and recover support through
 
 $$
@@ -1956,5 +2729,7 @@ $$
 $$
 
 Their relation to annihilators explains exactly what support does and does not prove. Over a discrete valuation ring, the zeroth Fitting ideal becomes a numerical size through length and determinants; over a general local ring, it retains scheme-theoretic information that a radical discards.
+
+For an augmented finite flat algebra with generically split selected factor, the same determinant language produces two distinct finite modules. The congruence module measures the denominator of the generic idempotent, while the augmentation cotangent module measures first-order equations. Perfect pairings, free acting modules, Jacobian presentations, and short exact sequences turn both into explicit length formulas without presupposing that their lengths coincide.
 
 The resulting patching dictionary is deliberately conditional. Depth over a regular source can force source freeness. Finite projective dimension can turn maximal Cohen--Macaulay into target freeness. Annihilators or reduced Fitting criteria can force faithfulness. Height and regular-sequence arguments can force complete-intersection structure. The numerical comparisons that make several of these conclusions occur at once are the next subject; the present volume supplies the algebra that makes every step in that comparison legitimate.
