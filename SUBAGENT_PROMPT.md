@@ -70,8 +70,10 @@ Use the attached Lean MCP for the interactive edit/check loop and do not start a
 server. Never run `lake build`, `lake env lean`, raw `lean`, another compiler, or a scratch module.
 Builds are coordinator-owned: after your process exits, the coordinator merges accepted scoped
 changes into the main worktree and runs the chapter target through a serialized build queue against
-the single writable `.lake` cache. Repair every diagnostic available through the MCP and report any
-remaining uncertainty for the coordinator build.
+the single writable `.lake` cache. That build rejects every warning except the exact “declaration
+uses `sorry`” warning for a theorem whose proof you attempted but could not complete. Repair every
+other diagnostic available through the MCP; fix warning causes rather than disabling a linter or
+warning option, and report any remaining uncertainty for the coordinator build.
 
 ## Completion checks
 
@@ -82,8 +84,10 @@ Before finishing:
 3. Account for every remaining `sorry`: each must be either attached to a precise `STATEMENT_NEEDS_UPDATE` marker or reported as an unresolved proof obligation. Never claim completion merely because the file builds with placeholders.
 4. Inspect the diff to verify that declaration headers are unchanged and that any import edits add
    only focused modules required by the proofs.
-5. Run `git diff --check` for the assigned file.
-6. Remove all scratch, backup, and log files you created.
+5. Request fresh whole-file MCP diagnostics and confirm that every remaining warning is an expected
+   “declaration uses `sorry`” warning accounted for in step 3.
+6. Run `git diff --check` for the assigned file.
+7. Remove all scratch, backup, and log files you created.
 
 ## Final report
 
