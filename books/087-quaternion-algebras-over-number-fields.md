@@ -7,12 +7,14 @@
    - [Presentations and their multiplication](#12-presentations-and-their-multiplication)
    - [Why every degree-two algebra has a presentation](#13-why-every-degree-two-algebra-has-a-presentation)
    - [Changing parameters without changing the algebra](#14-changing-parameters-without-changing-the-algebra)
+   - [Inner symmetries and conjugacy of quadratic subalgebras](#15-inner-symmetries-and-conjugacy-of-quadratic-subalgebras)
 2. [Conjugation, trace, norm, and the norm form](#2-conjugation-trace-norm-and-the-norm-form)
    - [The intrinsic replacement for eigenvalues](#21-the-intrinsic-replacement-for-eigenvalues)
    - [The reduced characteristic polynomial](#22-the-reduced-characteristic-polynomial)
    - [Invertibility and the quadratic norm form](#23-invertibility-and-the-quadratic-norm-form)
    - [Polarization and pure quaternions](#24-polarization-and-pure-quaternions)
    - [Worked trace and norm calculations](#25-worked-trace-and-norm-calculations)
+   - [The trace pairing and the pure three-space](#26-the-trace-pairing-and-the-pure-three-space)
 3. [The split and division models](#3-the-split-and-division-models)
    - [Matrices as a quaternion algebra](#31-matrices-as-a-quaternion-algebra)
    - [Hamilton's algebra](#32-hamiltons-algebra)
@@ -35,6 +37,7 @@
    - [Opposites and exponent two](#62-opposites-and-exponent-two)
    - [Tensor identities](#63-tensor-identities)
    - [Extension of scalars](#64-extension-of-scalars)
+   - [Restriction, corestriction, exponent, and index](#65-restriction-corestriction-exponent-and-index)
 7. [Hilbert symbols over local fields](#7-hilbert-symbols-over-local-fields)
    - [A binary sign for a local splitting problem](#71-a-binary-sign-for-a-local-splitting-problem)
    - [Square classes, symmetry, and bilinearity](#72-square-classes-symmetry-and-bilinearity)
@@ -42,6 +45,7 @@
    - [Odd residue characteristic](#74-odd-residue-characteristic)
    - [Dyadic fields and the rational dyadic formula](#75-dyadic-fields-and-the-rational-dyadic-formula)
    - [A local calculation laboratory](#76-a-local-calculation-laboratory)
+   - [Nondegeneracy and the geometry of square classes](#77-nondegeneracy-and-the-geometry-of-square-classes)
 8. [Local classification and local invariants](#8-local-classification-and-local-invariants)
    - [Why there is only one division algebra](#81-why-there-is-only-one-division-algebra)
    - [The invariant normalization](#82-the-invariant-normalization)
@@ -54,22 +58,27 @@
    - [Finiteness and the infinite places](#93-finiteness-and-the-infinite-places)
    - [Hilbert reciprocity and parity](#94-hilbert-reciprocity-and-parity)
    - [Reciprocity as a global norm statement](#95-reciprocity-as-a-global-norm-statement)
+   - [Global reduced norms and positivity](#96-global-reduced-norms-and-positivity)
 10. [The local--global classification](#10-the-local--global-classification)
     - [The classification theorem](#101-the-classification-theorem)
     - [Why uniqueness is global](#102-why-uniqueness-is-global)
     - [Why every even set occurs](#103-why-every-even-set-occurs)
     - [Presentations versus algebras](#104-presentations-versus-algebras)
     - [Producing a presentation from local data](#105-producing-a-presentation-from-local-data)
+    - [Exact control of the archimedean signature](#106-exact-control-of-the-archimedean-signature)
 11. [Base change and quadratic embeddings](#11-base-change-and-quadratic-embeddings)
     - [The local degree formula](#111-the-local-degree-formula)
     - [Ramification after extension](#112-ramification-after-extension)
     - [The quadratic embedding criterion](#113-the-quadratic-embedding-criterion)
     - [Constructing useful quadratic subfields](#114-constructing-useful-quadratic-subfields)
+    - [Conjugacy and the classification of embeddings](#115-conjugacy-and-the-classification-of-embeddings)
+    - [Why every ramified place must be checked](#116-why-every-ramified-place-must-be-checked)
 12. [Totally definite algebras](#12-totally-definite-algebras)
     - [Compactness at infinity begins with ramification](#121-compactness-at-infinity-begins-with-ramification)
     - [The exact parity condition](#122-the-exact-parity-condition)
     - [Construction with prescribed finite ramification](#123-construction-with-prescribed-finite-ramification)
     - [The algebra required later](#124-the-algebra-required-later)
+    - [Definite, indefinite, and mixed signature](#125-definite-indefinite-and-mixed-signature)
 13. [Explicit algebras over the rationals](#13-explicit-algebras-over-the-rationals)
     - [Four basic ramification patterns](#131-four-basic-ramification-patterns)
     - [Computing a ramification set](#132-computing-a-ramification-set)
@@ -192,6 +201,40 @@ $$
 The same formula remains valid when $E=F\times F$, with its exchange involution and product norm. This is the first indication that splitting will be governed by quadratic norm groups.
 
 One warning will remain in force. The symbol $(a,b)_F$ denotes a presented algebra; a letter such as $B$ denotes an algebra independent of presentation. Statements about ramification, discriminant, or definiteness belong to $B$. We may compute them from a chosen presentation, but they do not depend on that choice.
+
+### 1.5 Inner symmetries and conjugacy of quadratic subalgebras
+
+A presentation chooses a quadratic direction, but the algebra itself usually contains many of them. To compare calculations made from different choices, one needs to know how much freedom an algebra automorphism has. The answer is unusually rigid: every symmetry fixing the center is produced by conjugation inside the algebra.
+
+**Theorem 1.2 (innerness and conjugacy).** Let $B$ be a quaternion algebra over an infinite field $F$ of characteristic different from $2$.
+
+1. Every $F$-algebra automorphism of $B$ has the form $x\mapsto uxu^{-1}$ for some $u\in B^\times$.
+2. If $E$ and $E'$ are isomorphic quadratic étale $F$-subalgebras of $B$, then some $u\in B^\times$ satisfies $uEu^{-1}=E'$.
+3. If two embeddings $\iota_1,\iota_2:E\hookrightarrow B$ of a quadratic étale algebra have the same source, then $\iota_2(x)=u\iota_1(x)u^{-1}$ for all $x\in E$ and some $u\in B^\times$.
+
+**Proof strategy.** After extending scalars to a field that splits $B$, the assertions become the familiar conjugacy of faithful two-dimensional representations. The relation obtained there is a finite system of linear equations over $F$. Its solution space is already defined over $F$, and invertibility is the nonvanishing of a determinant polynomial. Descent then produces an invertible solution over $F$.
+
+**Proof.** We prove the third statement, from which the second follows by composing one embedding with an isomorphism $E\cong E'$. Consider the $F$-linear subspace
+
+$$
+V=\{u\in B:u\iota_1(x)=\iota_2(x)u\text{ for every }x\in E\}.
+$$
+
+It suffices to impose the relation for one generator of $E$, so $V$ is the kernel of an $F$-linear map. Extend scalars to a separable closure $F^s$. The algebra $B_{F^s}$ is $M_2(F^s)$, while $E_{F^s}\cong F^s\times F^s$. Both embeddings decompose the two-dimensional column space into two distinct one-dimensional eigenspaces. A linear isomorphism carrying the ordered pair of eigenspaces for $\iota_1$ to that for $\iota_2$ is an invertible element of $V\otimes_FF^s$.
+
+Choose an $F$-basis $v_1,\ldots,v_r$ of $V$. The reduced norm of $t_1v_1+\cdots+t_rv_r$ is a quadratic polynomial in the $t_i$. The invertible point over $F^s$ shows that this polynomial is not identically zero. Because $F$ is infinite, some $(c_1,\ldots,c_r)\in F^r$ makes it nonzero. Then
+
+$$
+u=c_1v_1+\cdots+c_rv_r
+$$
+
+lies in $V^\times$ and intertwines the embeddings. This proves the third and second statements.
+
+For the first, let $\varphi$ be an $F$-automorphism of $B$. Choose a quadratic étale subalgebra $E\subset B$. By the third statement, after composing $\varphi$ with an inner automorphism we may suppose that it fixes $E$ pointwise. Write $B=E\oplus Ej$ with $jx=\sigma(x)j$. An automorphism fixing $E$ must send $j$ to $cj$ for some $c\in E^\times$, because $Ej$ is exactly the subspace on which right multiplication twists by $\sigma$. Preservation of $j^2$ gives $N_{E/F}(c)=1$. Hilbert's theorem 90 supplies $d\in E^\times$ with $c=d/\sigma(d)$. Conjugation by $d$ fixes $E$ and sends $j$ to $(d/\sigma(d))j=cj$. Thus the adjusted automorphism is also inner, and so is $\varphi$. $\square$
+
+The infinitude hypothesis enters only in the nonvanishing argument. The conclusion also holds over finite fields, but that extension is not needed here. Every field considered from Chapter 7 onward is infinite.
+
+This theorem explains why changing a maximal quadratic subfield is a coordinate change rather than new structure. It also gives a useful warning: the conjugating element is determined only up to multiplication by the centralizer of $E$, which is $E^\times$. A presentation is therefore plentiful but never canonical.
 
 ## 2. Conjugation, trace, norm, and the norm form
 
@@ -435,6 +478,64 @@ x^3=(t^2-n)x-tn.
 $$
 
 This is the quaternionic analogue of the Cayley--Hamilton recurrence for a $2\times2$ matrix. It is often preferable to repeated noncommutative multiplication because all coefficients remain central.
+
+### 2.6 The trace pairing and the pure three-space
+
+The norm determines invertibility, while the trace pairing detects the full four-dimensional linear structure. Define
+
+$$
+T_B(x,y)=\operatorname{Trd}(xy).
+$$
+
+It is symmetric because reduced trace is cyclic. In the basis $1,i,j,k$ of $(a,b)_F$, its Gram matrix is diagonal:
+
+$$
+\operatorname{diag}(2,2a,2b,-2ab).
+$$
+
+Its determinant is $-16a^2b^2$, which is nonzero. Thus $T_B$ is nondegenerate. This gives a quick intrinsic proof that the orthogonal complement of the scalar line is exactly $B^0=\ker(\operatorname{Trd})$: for $y\in B$,
+
+$$
+T_B(1,y)=\operatorname{Trd}(y).
+$$
+
+The multiplication of pure quaternions can be separated into a scalar part and a pure part. For $u,v\in B^0$, put
+
+$$
+u\times v=\frac{uv-vu}{2}.
+$$
+
+Then
+
+$$
+uv=-\frac12\langle u,v\rangle+u\times v,
+$$
+
+where $\langle u,v\rangle=\operatorname{Trd}(u\bar v)$ is the polar form of the reduced norm. The first summand measures the failure of $u$ and $v$ to be orthogonal; the second measures the failure to commute. In particular,
+
+$$
+uv=-vu
+\quad\Longleftrightarrow\quad
+\langle u,v\rangle=0,
+$$
+
+If nonzero pure elements $u$ and $v$ commute, then their cross product vanishes. The centralizer of $u$ is the quadratic algebra $F[u]$, whose pure part is one-dimensional; hence $u$ and $v$ lie on the same pure line.
+
+These formulas recover the multiplication from the geometry of $B^0$ together with an orientation of its alternating product. For the standard generators,
+
+$$
+i\times j=k,\qquad j\times k=-bi,\qquad k\times i=-aj.
+$$
+
+The signs encode the same parameters that occur in the norm form. This is the three-dimensional shadow of quaternion multiplication: scalar products govern anticommutators, cross products govern commutators.
+
+There is a useful separability consequence. If $x\notin F$, then the subalgebra $F[x]$ has dimension two. It is quadratic étale unless the reduced characteristic polynomial is a repeated linear factor. In characteristic different from $2$, the latter occurs precisely when the trace-zero part of $x$ is a nonzero nilpotent. That can happen in the split algebra but never in a division algebra. Thus every nonscalar element of a quaternion division algebra generates a separable quadratic field, while a split algebra also contains nonsemisimple elements. The matrix
+
+$$
+\begin{pmatrix}0&1\\0&0\end{pmatrix}
+$$
+
+is the basic counterexample: it is nonscalar, has repeated reduced characteristic polynomial $T^2$, and generates the nonreduced algebra $F[\varepsilon]/(\varepsilon^2)$ rather than a quadratic étale algebra.
 
 ## 3. The split and division models
 
@@ -864,6 +965,54 @@ $$
 
 At this stage $B_v$ could in principle be split or division independently at many places. Local classification and global reciprocity will show exactly which patterns occur and why only finitely many places can be division.
 
+### 6.5 Restriction, corestriction, exponent, and index
+
+Scalar extension is only one direction of functoriality. For a finite separable extension $L/F$, there is also a transfer
+
+$$
+\operatorname{Cor}_{L/F}:\operatorname{Br}(L)\longrightarrow\operatorname{Br}(F).
+$$
+
+The two operations satisfy
+
+$$
+\operatorname{Cor}_{L/F}\bigl(\operatorname{Res}_{L/F}(\alpha)\bigr)
+=[L:F]\alpha.
+$$
+
+This identity is the conceptual reason that odd-degree extensions cannot destroy a nonzero quaternion class. If $\alpha$ has order two and its restriction is zero, then
+
+$$
+0=\operatorname{Cor}(0)=[L:F]\alpha.
+$$
+
+For odd $[L:F]$, multiplication by the degree acts as the identity on a group of exponent two, so $\alpha=0$.
+
+Two numerical invariants of a Brauer class must be distinguished. Its **exponent** is its order in the Brauer group. Its **index** is the degree of the central division algebra representing it. The exponent divides the index and they have the same prime divisors. For a quaternion division algebra both are two. A class of exponent two can nevertheless have index four or larger over a general field; it need not be represented by a quaternion algebra. This is why the number-field index theorem is used explicitly in the global existence proof: local invariants in $\{0,1/2\}$ force global index at most two there, a conclusion unavailable over arbitrary fields.
+
+For local fields the invariant map makes the functorial laws numerical. If $L/F$ is finite and $\alpha\in\operatorname{Br}(F)$, then
+
+$$
+\operatorname{inv}_L(\operatorname{Res}_{L/F}\alpha)
+=[L:F]\operatorname{inv}_F(\alpha).
+$$
+
+If $\beta\in\operatorname{Br}(L)$, then
+
+$$
+\operatorname{inv}_F(\operatorname{Cor}_{L/F}\beta)
+=\operatorname{inv}_L(\beta).
+$$
+
+Applying the second formula to a restriction recovers the first compatibility with transfer. Over number fields, corestriction sums these local contributions over all places above a fixed place. More precisely, for $w\mid v$,
+
+$$
+\operatorname{inv}_v\bigl((\operatorname{Cor}_{L/F}\beta)_v\bigr)
+=\sum_{w\mid v}\operatorname{inv}_w(\beta_w).
+$$
+
+These formulas prevent a common normalization error. Restriction multiplies an invariant by a local degree; corestriction does not multiply each local invariant but adds the invariants over the branches. The global sum remains unchanged because summing first over $w$ or first over $v$ gives the same finite sum.
+
 ## 7. Hilbert symbols over local fields
 
 ### 7.1 A binary sign for a local splitting problem
@@ -1138,6 +1287,56 @@ $$
 $$
 
 The last two follow from $(v^2-1)/8$ for $v=5,7$. The larger square-class group is exactly why “unit versus uniformizer” no longer gives a complete dyadic classification.
+
+### 7.7 Nondegeneracy and the geometry of square classes
+
+Bilinearity says that the symbol is a pairing; nondegeneracy says that it loses no square-class information. This matters whenever local conditions are prescribed, because it guarantees a parameter capable of detecting each nonsquare class.
+
+**Theorem 7.1 (local nondegeneracy).** Let $K$ be $\mathbf R$ or a nonarchimedean local field of characteristic different from $2$. The pairing
+
+$$
+K^\times/K^{\times2}\times K^\times/K^{\times2}
+\longrightarrow\{\pm1\},
+\qquad(a,b)\longmapsto(a,b)_K
+$$
+
+is symmetric, bilinear, and nondegenerate. Equivalently, if $(a,b)_K=1$ for every $b\in K^\times$, then $a$ is a square.
+
+**Proof strategy.** For a nonsquare $a$, the quadratic field $E=K(\sqrt a)$ has a norm subgroup of index two. Choosing any element outside that subgroup gives a nontrivial symbol.
+
+**Proof.** Symmetry and bilinearity were established in Section 7.2. Suppose that $a$ is nonsquare. Then $E/K$ is quadratic. Local reciprocity, or the local norm-index theorem in its quadratic form, gives
+
+$$
+[K^\times:N_{E/K}(E^\times)]=[E:K]=2.
+$$
+
+Thus some $b\in K^\times$ is not a norm. The norm criterion yields $(a,b)_K=-1$. Hence the left radical is trivial; symmetry makes the right radical trivial as well. Over $\mathbf R$, the same argument is the elementary identity $N_{\mathbf C/\mathbf R}(\mathbf C^\times)=\mathbf R_{>0}$. $\square$
+
+For a fixed nonsquare $a$, the orthogonal hyperplane
+
+$$
+a^\perp=\{b\in K^\times/K^{\times2}:(a,b)_K=1\}
+$$
+
+is exactly the image of the norm group from $K(\sqrt a)$. Over a nonarchimedean field of odd residue characteristic, the square-class space has dimension two over $\mathbf F_2$, so every nonzero class has an orthogonal line. Over $\mathbf Q_2$ it has dimension three, and each nonzero class has an orthogonal plane. This linear-algebra picture explains both the compact odd-prime table and the richer dyadic one.
+
+The pairing need not be alternating. Since $(a,-a)_K=1$, bilinearity gives
+
+$$
+(a,a)_K=(a,-1)_K.
+$$
+
+Thus $(a,a)_K$ can be $-1$ when $-1$ is not orthogonal to $a$. For example,
+
+$$
+(-1,-1)_{\mathbf R}=-1,
+\qquad
+(-1,-1)_2=-1.
+$$
+
+Calling the pairing symplectic would therefore be wrong unless $-1$ is a square in $K$. When $-1$ is a square, the pairing is alternating and the square-class space has even dimension.
+
+There is also a direct algebraic consequence. Given a nonsquare $a$, exactly half of the square classes $b$ yield the division algebra and half yield the split algebra. The statement is literal because the square-class group of a nonarchimedean local field of characteristic zero is finite. It does not mean half of the elements of $K^\times$ in a measure-theoretic sense; each square class is an open coset, and their measures depend on normalization.
 
 ## 8. Local classification and local invariants
 
@@ -1446,6 +1645,56 @@ $$
 
 Thus classical quadratic reciprocity is the rational shadow of Hilbert reciprocity. The places $2$ and infinity are not corrections added after the fact; they are indispensable local factors in the global relation.
 
+### 9.6 Global reduced norms and positivity
+
+Quadratic subfield norms have index two locally, but reduced norms from the whole quaternion algebra behave differently. At finite places they are surjective even in the division case. The only global obstruction comes from Hamiltonian real places.
+
+**Theorem 9.2 (reduced norm theorem for quaternion algebras).** Let $B$ be a quaternion algebra over a number field $F$. Then
+
+$$
+\operatorname{Nrd}(B^\times)
+=\{c\in F^\times:\tau(c)>0
+\text{ for every real }\tau\in\operatorname{Ram}(B)\}.
+$$
+
+In particular, if $B$ is split at every real place, its reduced norm map is surjective.
+
+**Proof strategy.** Necessity is the positivity of the Hamilton norm. For sufficiency, view $\operatorname{Nrd}(x)=c$ as a quadratic-form representation problem, solve it at every completion, and apply the local--global theorem for quadratic forms. Anisotropy of the quaternion norm rules out a solution at infinity in the homogenizing coordinate.
+
+**Proof.** If $c=\operatorname{Nrd}(x)$ and $v$ is a ramified real place, then $B_v\cong\mathbf H$ and its reduced norm is the positive-definite sum of four squares. Hence $c$ is positive at $v$.
+
+Conversely, suppose $c$ has the stated signs. If $B$ is globally split, identify it with $M_2(F)$; then
+
+$$
+\begin{pmatrix}c&0\\0&1\end{pmatrix}
+$$
+
+has determinant $c$, so assume that $B$ is division. Let $n_B$ be its reduced norm form and consider the five-dimensional quadratic form
+
+$$
+q_c=n_B\perp\langle-c\rangle.
+$$
+
+We show that $q_c$ is isotropic over every completion $F_v$. At a finite place, if $B_v$ is split, determinants represent every nonzero element. If $B_v$ is division, the local reduced norm map is surjective by Section 8.5. At a complex place every quaternion algebra is split. At a real split place determinants are again surjective. At a real ramified place, the Hamilton norm represents precisely the positive numbers, and the hypothesis gives $c>0$. Thus in every case there is $x_v\in B_v^\times$ with $n_B(x_v)=c$, so $(x_v,1)$ is an isotropic vector for $q_c$.
+
+The local--global theorem for quadratic forms now makes $q_c$ isotropic over $F$. Choose a nonzero pair $(x,t)\in B\oplus F$ with
+
+$$
+n_B(x)=ct^2.
+$$
+
+If $t=0$, then $n_B(x)=0$. Since $B$ is division, its norm form is anisotropic, forcing $x=0$, contrary to the choice of a nonzero pair. Hence $t\ne0$, and
+
+$$
+\operatorname{Nrd}(x/t)=c.
+$$
+
+The element $x/t$ is invertible because its norm is nonzero. This proves sufficiency. $\square$
+
+The theorem separates two norm phenomena that are easy to conflate. For a quadratic field $E\subset B$, the field norm subgroup $N_{E/F}(E^\times)$ can have many local index-two conditions. Allowing all of $B^\times$ removes every finite-place condition; only positivity at ramified real places survives.
+
+For a totally definite algebra over a totally real field, the reduced norm image is exactly the group of totally positive elements. For an indefinite quaternion algebra over $\mathbf Q$, the reduced norm is all of $\mathbf Q^\times$, even if the algebra is division at finite primes. This is another sharp distinction between global division and definiteness.
+
 ## 10. The local--global classification
 
 ### 10.1 The classification theorem
@@ -1542,6 +1791,53 @@ $$
 The local requirements on $b$ are transparent: $b$ must be a nonnorm from $E_v/F_v$ exactly at $v\in S$, and a norm at every other place. Global existence of the Brauer class guarantees that these local norm cosets are compatible. Changing $b$ by a global norm changes the cyclic generator but not the algebra.
 
 This construction explains both the power and the limitation of local prescriptions. One may freely prescribe the division sign at an even set of places. After a quadratic splitting field has been chosen, the corresponding local norm signs determine a global cyclic class. But one may not prescribe an odd number of nonnorm signs: Hilbert reciprocity is the obstruction.
+
+### 10.6 Exact control of the archimedean signature
+
+The global classification is often used with the finite places fixed and the real behavior left implicit. That is unsafe: real ramification participates in the same parity law and can change compactness, embeddings, and positivity. The following form makes every archimedean choice explicit.
+
+Let $F$ have $r_1$ real places and $r_2$ complex places. Choose a subset $S_\infty$ of the real places and a finite set $S_f$ of finite places. Complex places are excluded because no quaternion algebra can ramify there.
+
+**Theorem 10.2 (signature prescription).** There exists a quaternion algebra $B/F$ satisfying
+
+$$
+B_v\cong
+\begin{cases}
+\mathbf H,&v\in S_\infty,\\
+M_2(\mathbf R),&v\text{ real and }v\notin S_\infty,\\
+M_2(\mathbf C),&v\text{ complex},
+\end{cases}
+$$
+
+and ramified at exactly the finite places in $S_f$ if and only if
+
+$$
+|S_\infty|+|S_f|\equiv0\pmod2.
+$$
+
+When it exists, it is unique up to $F$-algebra isomorphism.
+
+**Proof strategy.** Translate the desired behavior into local invariants and use exactness of the global invariant sequence. Degree two then converts the resulting class back into a quaternion algebra.
+
+**Proof.** Necessity follows from reciprocity: each prescribed ramified place contributes $1/2$, so the invariant sum vanishes only when the total number is even. Conversely, assume the parity condition and define a finite family of local invariants by assigning $1/2$ at $S_\infty\cup S_f$ and $0$ elsewhere. The sum is zero. Exactness produces a global Brauer class with precisely these localizations. As in Section 10.3, its global index is the least common multiple of its local indices, hence at most two. The zero class is represented by $M_2(F)$; a nonzero class has a division representative of degree two. In either case there is a quaternion algebra with the required local forms. Equality of all local invariants and global injectivity prove uniqueness. $\square$
+
+Several consequences are worth recording separately.
+
+First, if $F$ has no real places, the archimedean behavior is forced: every infinite completion is complex and split. A quaternion algebra over such a field is determined by an even set of finite places. It is division globally exactly when that set is nonempty.
+
+Second, if $F$ has real places, one may alter the real signature only while respecting total parity with the finite ramification. With $S_f$ fixed, the number of ramified real places has prescribed parity but their identities remain freely selectable. Two choices of the same cardinality can yield nonisomorphic algebras because ramification remembers the actual embeddings, not merely their number.
+
+Third, a quaternion algebra is globally division if and only if its ramification set is nonempty. Indeed, any ramified completion rules out a global matrix algebra, while an empty ramification set gives the split algebra by injectivity. This condition is weaker than definiteness. An algebra ramified at two finite places and split at every real place is division but indefinite.
+
+Fourth, if $B=(a,b)_F$ is a chosen presentation, the real set is
+
+$$
+S_\infty(B)=\{\tau:F\hookrightarrow\mathbf R:\tau(a)<0\text{ and }\tau(b)<0\}.
+$$
+
+Weak approximation allows one to control the signs of $a$ at all real embeddings independently, and likewise for $b$. Yet prescribing the sign intersections alone does not control the finite Hilbert symbols; the global class theorem is what guarantees simultaneous compatibility.
+
+This theorem is the exact archimedean version of global existence and uniqueness. “Ramified at infinity” is never a single condition over a general number field: it is a subset of the real places, and every complex place is automatically absent.
 
 ## 11. Base change and quadratic embeddings
 
@@ -1648,6 +1944,61 @@ This construction has two related uses. It recognizes a given algebra by finding
 
 The local condition cannot be weakened to “every ramified finite prime is nonsplit” while ignoring infinity. If $B$ ramifies at a real place and $E$ is real there, then $E\otimes_F\mathbf R\cong\mathbf R\times\mathbf R$ and no embedding can exist, regardless of the finite behavior.
 
+### 11.5 Conjugacy and the classification of embeddings
+
+Existence is only the first embedding question. Once a quadratic field occurs, one also wants to know whether different occurrences carry extra information. They do not at the level of the ambient algebra.
+
+**Corollary 11.2 (conjugacy of quadratic embeddings).** Let $E/F$ be a quadratic field and let $B/F$ be a quaternion algebra. If $\iota_1,\iota_2:E\hookrightarrow B$ are $F$-embeddings, then there is $u\in B^\times$ such that
+
+$$
+\iota_2(x)=u\iota_1(x)u^{-1}
+\qquad(x\in E).
+$$
+
+**Proof.** This is Theorem 1.2 applied to the two images of $E$. Number fields are infinite and have characteristic zero, so all its hypotheses hold. $\square$
+
+Thus the criterion of Theorem 11.1 classifies quadratic subfields up to inner conjugacy by one condition: nonsplitting at every ramified place. It does not distinguish integral embeddings into particular orders; those involve additional local data and belong to the next stage of the subject.
+
+An embedded field can be recognized from one element. Suppose $x\in B\setminus F$ and set
+
+$$
+t=\operatorname{Trd}(x),
+\qquad n=\operatorname{Nrd}(x),
+\qquad \Delta=t^2-4n.
+$$
+
+Then $x$ satisfies $X^2-tX+n$. If $\Delta$ is nonsquare, this polynomial is irreducible and
+
+$$
+F[x]\cong F(\sqrt\Delta).
+$$
+
+Conversely, for an embedding $E=F(\sqrt d)\hookrightarrow B$, the image of $\sqrt d$ is pure, squares to $d$, and has reduced norm $-d$. Hence the embedding criterion can be restated:
+
+> There exists a pure quaternion $y\in B$ with $y^2=d$ if and only if no ramified place of $B$ splits in $F(\sqrt d)$.
+
+This is a representation statement for the ternary quadratic form on $B^0$, because $y^2=-\operatorname{Nrd}(y)$. It links field embeddings to values of the pure norm form without introducing new hypotheses.
+
+### 11.6 Why every ramified place must be checked
+
+The criterion is a conjunction, not a parity test. It is not enough for the number of ramified places that split in $E$ to be even. A single split ramified place leaves two degree-one extensions of the invariant $1/2$, and both remain nonzero. For example, let $B/\mathbf Q$ ramify at $2$ and $3$. A quadratic field in which both primes split still fails to embed, even though the number of offending base places is two.
+
+Nor may “split” be replaced by “unramified.” At a finite ramified place of $B$, either an unramified quadratic field or a ramified quadratic field splits the local division algebra, because both have local degree two. The forbidden local algebra is only $F_v\times F_v$. Thus the behavior of the prime in the quadratic field, not the ramification of the quadratic extension, is decisive.
+
+At infinity, the terminology becomes especially transparent. If $v$ is real, then
+
+$$
+E\otimes_FF_v\cong
+\begin{cases}
+\mathbf C,&d<0\text{ under }v,\\
+\mathbf R\times\mathbf R,&d>0\text{ under }v.
+\end{cases}
+$$
+
+The first is a field of local degree two and kills a Hamiltonian invariant; the second has two degree-one branches and preserves it twice. Consequently, if $B$ is totally definite over a totally real field, every quadratic subfield is totally imaginary. The converse is not automatic: a totally imaginary quadratic field embeds only if it is also nonsplit at every finite ramified place.
+
+Finally, the criterion applies to the split algebra with no local restrictions. Every quadratic field embeds in $M_2(F)$ through the regular representation. This endpoint is a useful consistency check: a proposed embedding theorem that imposes conditions at unramified places would incorrectly exclude quadratic fields from the matrix algebra.
+
 ## 12. Totally definite algebras
 
 ### 12.1 Compactness at infinity begins with ramification
@@ -1730,6 +2081,32 @@ From this statement alone one can safely infer:
 - the reduced discriminant of the algebra is $\mathfrak d(D)=\prod_{v\in S_f}\mathfrak p_v$.
 
 No maximal order, Eichler level, ideal class, or compact open subgroup has yet been chosen. Those are extra integral and adelic data. Keeping them separate is what allows the same algebra $D$ to support many later levels.
+
+### 12.5 Definite, indefinite, and mixed signature
+
+Over $\mathbf Q$ the terminology is binary: a quaternion algebra is definite when it ramifies at the unique real place and indefinite when it splits there. Over a totally real field with several embeddings, an algebra can have mixed signature, ramified at some real places and split at others. It is useful to state exactly which conclusions survive.
+
+At a real ramified place, the norm-one group is the compact three-sphere
+
+$$
+\{x\in\mathbf H:\operatorname{Nrd}(x)=1\}.
+$$
+
+At a real split place it is $\operatorname{SL}_2(\mathbf R)$, which is noncompact. Hence the product of the archimedean norm-one groups is compact if and only if the algebra is ramified at every real place. One split real factor makes the product noncompact.
+
+If $F$ has a complex place, its local factor is $\operatorname{SL}_2(\mathbf C)$ and is noncompact. Therefore a number field admits an algebra compact modulo center at all archimedean places only when it is totally real and the algebra is totally definite. Complex places cannot be repaired by ramification because there is no quaternion division algebra over $\mathbf C$.
+
+The center quotient gives the same criterion. At a Hamiltonian place,
+
+$$
+\mathbf H^\times/\mathbf R^\times
+$$
+
+is compact. At a real split place one gets $\operatorname{PGL}_2(\mathbf R)$, and at a complex place one gets $\operatorname{PGL}_2(\mathbf C)$; both are noncompact. Thus the phrase “definite at infinity” contains two exact hypotheses: the base field is totally real, and every real localization is Hamiltonian.
+
+The quadratic embedding criterion has a parallel signature consequence. A quadratic subfield of a totally definite algebra must be totally imaginary. For mixed signature, it must be complex at each ramified real place but may be real or complex at each split real place. Weak approximation can impose these signs independently, simultaneously with nonsplitting conditions at the finitely many ramified finite places.
+
+Finally, reduced norms reflect the same trichotomy. At a ramified real place they are positive; at a split real or complex place they are unrestricted. Theorem 9.2 therefore says that the global reduced norm image is cut out by positivity at exactly the ramified real places. Total definiteness is the extreme case in which positivity is required at every real embedding.
 
 ## 13. Explicit algebras over the rationals
 
