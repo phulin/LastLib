@@ -139,7 +139,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [ ] 072. Taylor–Wiles Primes
 - [ ] 073. Taylor–Wiles Systems
 - [x] 074. Patching Modules and Rings
-- [ ] 075. The Abstract (R=T) Argument
+- [x] 075. The Abstract (R=T) Argument
 - [x] 076. Smooth Representations of (p)-adic Groups
 - [x] 077. Representations of (GL_2(K))
 - [x] 078. Parabolic Induction, Jacquet Modules, and Whittaker Models for GL₂

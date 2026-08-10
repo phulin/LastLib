@@ -144,6 +144,8 @@ This is why the final argument is a theorem about support and annihilators, not 
 
 The resulting logic is robust enough to cover several outcomes. With coverage of every component one obtains near faithfulness. With reducedness, or with a direct annihilator argument, one obtains faithfulness. Without full coverage one obtains a theorem only on the components actually seen by the module. Without reducedness one obtains equality only after killing nilpotents.
 
+The algebraic foundations used below have already been established in the preceding sequence of volumes. Complete local presentations, depth, regular sequences, and Fitting ideals provide the ordinary commutative-algebra background. The numerical-criteria volume proves the Wiles--Lenstra theorem in the precise source-unrestricted form recalled in Chapter 9. The patching volume constructs the strong patched pair, proves its depth and support formulas, and separates exact ring, module, and acting-algebra recovery. The present book does not repeat those constructions. Its task is to assemble them into the final comparison while proving every new implication from dimension to support, from support to annihilators, and from infinite-level equality to the canonical finite-level map.
+
 ### 1.2 The canonical map and the chosen patched world
 
 The finite-level map
@@ -617,7 +619,7 @@ At augmentation it becomes
 $$
 \begin{array}{ccccc}
 R&\xrightarrow{\varphi}&\mathbb T&\hookrightarrow&
-\operatorname{End}_{\mathcal O}(M),
+\operatorname{End}_{\mathcal O}(M)
 \end{array}
 \tag{2.27}
 $$
@@ -1332,6 +1334,20 @@ Reducedness is sufficient, not necessary. A direct annihilator argument may prov
 
 Each is stronger than support. A perfect self-pairing on $M_\infty$ by itself is not on this list: it can descend perfectly to a quotient while a nilpotent kernel remains invisible.
 
+There is a precise local test that packages such arguments. Let $B$ be Noetherian and $N$ a finite $B$-module. Then
+
+$$
+N\text{ is faithful over }B
+\Longleftrightarrow
+\operatorname{Ann}_{B_{\mathfrak p}}(N_{\mathfrak p})=0
+\text{ for every }\mathfrak p\in\operatorname{Ass}_B(B).
+\tag{5.16}
+$$
+
+Only the reverse implication needs proof. Put $J=\operatorname{Ann}_B(N)$ and suppose $J\ne0$. The nonzero finite submodule $J\subseteq B$ has an associated prime $\mathfrak p$, and $\operatorname{Ass}_B(J)\subseteq\operatorname{Ass}_B(B)$. Choosing an element of $J$ whose annihilator is $\mathfrak p$ shows that $J_{\mathfrak p}\ne0$. Since $J_{\mathfrak p}$ annihilates $N_{\mathfrak p}$, the localized action is not faithful, contrary to the right side of (5.16).
+
+When $B$ is Cohen--Macaulay local, it has no embedded associated primes, so $\operatorname{Ass}_B(B)=\operatorname{Min}B$. In that case it is enough to prove scheme-theoretic faithfulness at every generic local ring. This remains strictly stronger than component coverage: over a nonreduced zero-dimensional local ring, a nonzero module may still have a nonzero nilpotent annihilator. Criterion (5.16) is therefore a genuine nilpotent-killing argument, whereas the condition $N_{\mathfrak p}\ne0$ is only a component-detection argument.
+
 Reducedness only at finite level does not by itself prove $I_\infty=0$. It may kill the image of $I_\infty$ after augmentation while leaving a kernel supported in the augmentation direction. Conversely, reducedness of $R_\infty$ proves patched faithfulness and therefore finite equality without requiring reducedness of $R$ as a separate input.
 
 ### 5.6 Componentwise quotients
@@ -1340,7 +1356,7 @@ Let $\Sigma$ be the set of components seen by $M_\infty$ and define the reduced 
 
 $$
 P_\Sigma=\bigcap_{\mathfrak p\in\Sigma}\mathfrak p.
-\tag{5.16}
+\tag{5.17}
 $$
 
 Equation (5.6) gives
@@ -1349,7 +1365,7 @@ $$
 (R_\infty/P_\Sigma)^{\mathrm{red}}
 \xrightarrow{\sim}
 A_\infty^{\mathrm{red}}.
-\tag{5.17}
+\tag{5.18}
 $$
 
 Since $R_\infty/P_\Sigma$ is already reduced by construction, this can be written
@@ -1358,21 +1374,21 @@ $$
 R_\infty/P_\Sigma
 \xrightarrow{\sim}
 A_\infty^{\mathrm{red}}.
-\tag{5.18}
+\tag{5.19}
 $$
 
 Scheme-theoretic component equality is stronger. It requires
 
 $$
 I_\infty=P_\Sigma,
-\tag{5.19}
+\tag{5.20}
 $$
 
-not merely equality of radicals. Under (5.19),
+not merely equality of radicals. Under (5.20),
 
 $$
 R_\infty/P_\Sigma\xrightarrow{\sim}A_\infty.
-\tag{5.20}
+\tag{5.21}
 $$
 
 Thus a componentwise $R=T$ theorem has two possible meanings: equality after reducing the selected union, which follows from topological support, or equality with its chosen scheme structure, which needs control of the annihilator itself.
@@ -1382,7 +1398,7 @@ At finite level the selected quotient is
 $$
 R_\Sigma
 :=R_\infty/(P_\Sigma+\mathfrak a_\infty).
-\tag{5.21}
+\tag{5.22}
 $$
 
 This definition records how the patched components specialize. It need not coincide with an independently chosen union of components of $R$ unless specialization of minimal primes has been checked. A component theorem must state which of these two meanings is intended.
@@ -2140,7 +2156,7 @@ Combining (9.9) and (9.11) forces equality everywhere. The difficulty is proving
 
 ### 9.3 The module congruence lattice
 
-Assume that $\mathbb T$ is finite flat over $\mathcal O$, that $M$ is finite free over $\mathcal O$, and that $M$ carries a faithful self-adjoint $\mathbb T$-action and a perfect pairing. Let $K$ be the fraction field of $\mathcal O$, and let $e_\lambda$ be the idempotent of the distinguished factor of $\mathbb T_K$.
+Assume that $\mathbb T$ is finite flat over $\mathcal O$, that the generic point selected by the augmentation is an isolated factor of $\mathbb T_K$, that $M$ is finite free over $\mathcal O$, and that $M$ carries a faithful self-adjoint $\mathbb T$-action and a perfect pairing. Let $K$ be the fraction field of $\mathcal O$, and let $e_\lambda$ be the idempotent of that distinguished factor of $\mathbb T_K$.
 
 Define
 
@@ -2234,7 +2250,7 @@ $$
 
 This determinant lemma compares maps and lattices, not lengths. Its hypotheses can be verified before either cokernel is measured.
 
-> **Common-determinant hypothesis.** After exact augmentation, there are finite free $\mathcal O$-modules $U$ and $V$ of the same rank and a map $D:U\to V$ such that:
+> **Common-determinant hypothesis.** After exact augmentation, there are finite free $\mathcal O$-modules $U$ and $V$ of the same rank and a map $D:U\to V$ with finite cokernel such that:
 >
 > 1. $\operatorname{coker}D\cong\Phi_R$;
 > 2. the patched pairing supplies determinant-line isomorphisms satisfying the compatibility in the determinant lemma for $D$ and the lattice inclusion $M_\lambda\hookrightarrow M_\lambda^\vee$.
@@ -2547,7 +2563,7 @@ R_v^{\square}\longrightarrow R_v^{\mathrm{cond}}
 \tag{11.5}
 $$
 
-These factorizations survive the inverse-limit construction because the defining ideals are closed and the transition maps respect them.
+The arithmetic levels need not admit transition maps. To make these factorizations survive patching, their reductions must instead be included among the marked finite shadows used in the coherent diagonal construction. Compatibility of those shadows and closedness of the defining ideals then force the limiting action to factor through the same local quotients. This is an input to the patching datum, not a formal consequence of having maps at every unrelated auxiliary level.
 
 ### 11.3 Auxiliary local branches
 
@@ -3181,14 +3197,14 @@ We now consolidate the argument. The hypotheses are deliberately arranged so tha
 >
 > Suppose the following data and hypotheses are given.
 >
-> **Presentation.** There is a complete Noetherian local $S_\infty$-algebra
+> **Presentation.** There is a quotient of complete Noetherian local rings
 >
 > $$
 > R_\infty=P_\infty/J_\infty,
 > \tag{16.2}
 > $$
 >
-> where $P_\infty$ is Cohen--Macaulay, catenary, and equidimensional of dimension $d+b$, the dimension formula holds at primes minimal over $J_\infty$, and $J_\infty$ is generated by at most $b$ elements.
+> compatible with the displayed $S_\infty$-algebra structure, where $P_\infty$ is Cohen--Macaulay, catenary, and equidimensional of dimension $d+b$, the dimension formula holds at primes minimal over $J_\infty$, and $J_\infty$ is generated by at most $b$ elements.
 >
 > **Patched module and action.** A nonzero finite $R_\infty$-module $M_\infty$ is finite free over $S_\infty$. Its $R_\infty$-action is compatible with the structural $S_\infty$-action. Put
 >
@@ -3299,12 +3315,15 @@ $$
 \text{(F1)}&R_\infty\text{ is reduced};\\
 \text{(F2)}&I_\infty=0\text{ by a direct annihilator argument};\\
 \text{(F3)}&R_\infty\otimes_{S_\infty}K_\infty\text{ is reduced};\\
-\text{(F4)}&R\text{ is reduced}.
+\text{(F4)}&R\text{ is reduced};\\
+\text{(F5)}&\operatorname{Ann}_{(R_\infty)_{\mathfrak p}}
+((M_\infty)_{\mathfrak p})=0
+\text{ for every }\mathfrak p\in\operatorname{Min}R_\infty.
 \end{array}
 \tag{16.13}
 $$
 
-Under (F1), the nilpotent ideal $I_\infty$ is zero. Under (F2), this is the hypothesis itself. Under (F3), assertion 5 of Theorem 16.1 makes $R_\infty$ $S_\infty$-torsion-free, so it injects into its generic fiber; a nilpotent element maps to zero there and must vanish. In all three cases
+Under (F1), the nilpotent ideal $I_\infty$ is zero. Under (F2), this is the hypothesis itself. Under (F3), assertion 5 of Theorem 16.1 makes $R_\infty$ $S_\infty$-torsion-free, so it injects into its generic fiber; a nilpotent element maps to zero there and must vanish. Under (F5), Theorem 16.1 makes $R_\infty$ Cohen--Macaulay, so its associated primes are its minimal primes; the associated-prime criterion (5.16) makes the action faithful. In these four cases
 
 $$
 R_\infty\xrightarrow{\sim}A_\infty,
@@ -3517,7 +3536,7 @@ M_\infty\text{ maximal Cohen--Macaulay}
 I_\infty\text{ nilpotent}
 &\text{full component coverage}\\
 I_\infty=0
-&\text{source reducedness or a direct annihilator proof}\\
+&\text{source reducedness, generic associated-prime faithfulness, or a direct annihilator proof}\\
 R_\infty\text{ finite free over }S_\infty
 &\text{near faithfulness, ring Cohen--Macaulayness, dimension equality}\\
 R=\mathbb T
