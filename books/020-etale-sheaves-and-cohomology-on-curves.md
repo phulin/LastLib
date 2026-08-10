@@ -84,10 +84,23 @@
     - [Lattices and rational local systems](#172-lattices-and-rational-local-systems)
     - [Integral duality and torsion warnings](#173-integral-duality-and-torsion-warnings)
     - [Continuous Galois representations](#174-continuous-galois-representations)
-18. [The cohomological representation attached to a curve](#18-the-cohomological-representation-attached-to-a-curve)
-    - [Construction and functoriality](#181-construction-and-functoriality)
-    - [Correspondences and descent](#182-correspondences-and-descent)
-    - [Conclusion](#183-conclusion)
+18. [Semistable curves over a field](#18-semistable-curves-over-a-field)
+    - [Nodes, normalization, and the dual graph](#181-nodes-normalization-and-the-dual-graph)
+    - [The normalization calculation](#182-the-normalization-calculation)
+    - [Arithmetic genus and the lost half of a loop](#183-arithmetic-genus-and-the-lost-half-of-a-loop)
+    - [Duality at a node](#184-duality-at-a-node)
+    - [Sheaves and correspondences on a nodal curve](#185-sheaves-and-correspondences-on-a-nodal-curve)
+19. [Semistable reduction and local Galois action](#19-semistable-reduction-and-local-galois-action)
+    - [The trait and its three fibers](#191-the-trait-and-its-three-fibers)
+    - [The local calculation at $xy=\pi$](#192-the-local-calculation-at-xypi)
+    - [Invariant cycles and monodromy](#193-invariant-cycles-and-monodromy)
+    - [Unramified and semistable representations](#194-unramified-and-semistable-representations)
+    - [Frobenius, monodromy, and correspondences](#195-frobenius-monodromy-and-correspondences)
+20. [The cohomological representation attached to a curve](#20-the-cohomological-representation-attached-to-a-curve)
+    - [Construction and functoriality](#201-construction-and-functoriality)
+    - [The commuting-action theorem](#202-the-commuting-action-theorem)
+    - [Good and semistable places](#203-good-and-semistable-places)
+    - [Conclusion](#204-conclusion)
 
 ## 1. From coverings to cohomology
 
@@ -103,14 +116,14 @@ $$
 
 is left exact but usually not right exact. Its right derived functors are the étale cohomology groups $H^i_{\mathrm{\acute et}}(X,\mathcal F)$. Degree zero gives global sections; degree one classifies gluing failures such as torsors; degree two receives cup products and, on a smooth proper curve, carries the trace that turns cohomology into a duality theory.
 
-This book develops that theory for curves, where its essential geometry is visible without the full machinery required in higher dimension. The endpoint is not merely a list of groups. For a smooth proper geometrically connected curve $C$ over a field $k$ and a prime $\ell$ invertible in $k$, we shall construct a finite-dimensional continuous representation
+This book develops that theory for curves, where its essential geometry is visible without the full machinery required in higher dimension. Smooth proper curves provide the clean form of the theory; open curves force compact support and residues; semistable curves show exactly how graph cycles, component cohomology, and vanishing cycles fit together. The endpoint is not merely a list of groups. For a smooth proper geometrically connected curve $C$ over a field $k$ and a prime $\ell$ invertible in $k$, we shall construct a finite-dimensional continuous representation
 
 $$
 G_k\longrightarrow
 \operatorname{GL}\bigl(H^1_{\mathrm{\acute et}}(C_{k^s},\mathbf Q_\ell)\bigr),
 $$
 
-equipped with pullbacks, traces, cup products, duality, and actions of algebraic correspondences. This is precisely the package from which later geometric representations are extracted.
+equipped with pullbacks, traces, cup products, duality, and actions of algebraic correspondences. At a place where $C$ has good reduction we will prove that this representation is unramified. At a place where $C$ has semistable reduction we will identify its invariant cycles, its nilpotent monodromy, and the component and graph pieces on which every extending correspondence acts. This is precisely the package from which later geometric representations are extracted.
 
 ### 1.2 Standing conventions
 
@@ -132,7 +145,9 @@ Unless variance matters, we abbreviate $H^i_{\mathrm{\acute et}}$ to $H^i$. Ordi
 
 ### 1.3 A map of the theory
 
-The argument has three layers. First comes local-to-global algebra: the small étale site, stalks at geometric points, constructible sheaves, derived global sections, torsors, and higher direct images. Second comes curve geometry: compactification, Kummer theory, finiteness, base change, cycle classes, and the trace in degree two. Third comes duality and representation theory: perfect pairings, Euler characteristics, correspondences, inverse limits, and continuous Galois actions.
+The argument has four layers. First comes local-to-global algebra: the small étale site, stalks at geometric points, constructible sheaves, derived global sections, torsors, and higher direct images. Second comes smooth curve geometry: compactification, Kummer theory, finiteness, base change, cycle classes, and the trace in degree two. Third comes duality and representation theory: perfect pairings, Euler characteristics, correspondences, inverse limits, and continuous Galois actions. Fourth comes semistable geometry: normalization, dual graphs, invariant cycles, tame monodromy, and the interaction of specialization with correspondences.
+
+The foundational burden is deliberately separated from the curve calculations. Book 21 constructs derived and continuous cohomology, proves the finiteness and completion statements used here, and supplies the Galois and product formalism. Book 22 proves proper and smooth base change and local acyclicity. Book 23 constructs compact support, trace, purity, and duality, including the dualizing complex of a nodal curve. We recall those results with their hypotheses and normalizations; we do not rebuild their general proofs. Our task is to extract their precise consequences in dimension one, compute the groups and maps, and prove the smooth, open, and semistable curve theorems in the form later arithmetic arguments actually use.
 
 Several tempting shortcuts are unsafe. Cohomology of a lisse sheaf is not always group cohomology of $\pi_1$: that comparison requires an étale $K(\pi,1)$ condition or a range in which the universal pro-étale cover is acyclic. Proper base change and smooth base change solve different problems. An inverse limit of finite cohomology groups can carry a $\varprojlim^1$ correction. A finite correspondence is contravariant on one leg and covariant by trace on the other. We shall make these qualifications part of the construction rather than repairs added at the end.
 
@@ -832,7 +847,7 @@ The prime-to-$p$ restriction is essential to this package. In characteristic $p$
 
 **Finiteness theorem for curves.** Let $C$ be a separated curve of finite type over a separably closed field and let $\mathcal F$ be a constructible sheaf of finite $\Lambda$-modules, where $|\Lambda|$ is prime to the characteristic. Then every $H^i(C,\mathcal F)$ and $H_c^i(C,\mathcal F)$ is finite, and all vanish outside $0\leq i\leq2$.
 
-The proof is geometric, not a consequence of finite stalks alone. Choose a dense smooth open $U$ on which $\mathcal F$ is lisse and a finite étale cover $V\to U$ trivializing it. The Čech-to-derived spectral sequence reduces finiteness to constant-coefficient cohomology of finite covers of $U$ and their iterated fiber products. Compactify and normalize these curves. Kummer theory controls degrees zero and two, while divisor classes and the finite $n$-torsion of degree-zero divisor classes control degree one. Boundary localization contributes only finite sums of finite stalks.
+This is the dimension-one specialization of the finiteness theorem in Book 21. Its proof is geometric, not a consequence of finite stalks alone. The curve-specific reduction chooses a dense smooth open $U$ on which $\mathcal F$ is lisse and a finite étale cover $V\to U$ trivializing it. The Čech-to-derived spectral sequence reduces finiteness to constant-coefficient cohomology of finite covers of $U$ and their iterated fiber products. Compactification and normalization reduce those terms to smooth curves. Kummer theory controls degrees zero and two, while divisor classes and the finite $n$-torsion of degree-zero divisor classes control degree one. Boundary localization contributes only finite sums of finite stalks.
 
 This reasoning also proves constructibility of $R^qf_*\mathcal F$ in the curve situations needed later: stratify the base so that the finite combinatorial data, local monodromy, and ranks of the relevant cohomology groups are constant. The theorem is therefore stable under the devissages used in base change.
 
@@ -866,7 +881,7 @@ is an isomorphism. Here $f'$ and $g'$ are the pullbacks of $f$ and $g$.
 
 The statement says that proper cohomology has no information hidden in arbitrarily small neighborhoods of the fiber. Properness supplies the missing compactness: a support or relation that exists nearby cannot disappear by running off to infinity.
 
-We now give the proof architecture in the curve setting. The decisive point is not invariance from the generic fiber to the special fiber; that assertion is false for a singular degeneration. What must be compared is the cohomology of the special fiber with the filtered colimit of cohomology over all étale neighborhoods of that fiber. Properness turns a cover near the fiber into a cover over a neighborhood of the base point, and finite presentation lets cocycles, refinements, and relations spread out. Constructibility and the curve dimension bound make all the data finite. This is the content of the strict-local lemma proved next.
+Book 22 proves this comparison in the required constructible range. We recall its curve proof architecture because it explains every later application. The decisive point is not invariance from the generic fiber to the special fiber; that assertion is false for a singular degeneration. What must be compared is the cohomology of the special fiber with the filtered colimit of cohomology over all étale neighborhoods of that fiber. Properness turns a cover near the fiber into a cover over a neighborhood of the base point, and finite presentation lets cocycles, refinements, and relations spread out. Constructibility and the curve dimension bound make all the data finite. This is the content of the strict-local proper lemma recalled next.
 
 ### 11.2 Reduction to a strictly henselian trait
 
@@ -890,17 +905,17 @@ $$
 
 for every $q$.
 
-Here is the proof in the form needed for curves. Compute derived cohomology by finite truncated étale hypercovers. For any fixed $q$, a class on $X_s$ is represented by finitely many étale maps of finite presentation, finitely many sections of $\mathcal F$, and finitely many cocycle identities through a finite simplicial degree depending on $q$. Every one of these data spreads to an étale neighborhood in $X$. The spread-out maps initially cover only $X_s$. If their images failed to cover $X$ over every neighborhood of $s$, the complement would have closed image in $S$ because $f$ is proper; that closed image would avoid $s$, so it would disappear after shrinking about $s$. Hence, after one common shrinking, the maps form a hypercover of the whole inverse image of a neighborhood of $s$. This proves surjectivity on cohomology.
+The proof supplied in Book 22 computes derived cohomology by finite truncated étale hypercovers. For any fixed $q$, a class on $X_s$ is represented by finitely many étale maps of finite presentation, finitely many sections of $\mathcal F$, and finitely many cocycle identities through a finite simplicial degree depending on $q$. Every one of these data spreads to an étale neighborhood in $X$. The spread-out maps initially cover only $X_s$. If their images failed to cover $X$ over every neighborhood of $s$, the complement would have closed image in $S$ because $f$ is proper; that closed image would avoid $s$, so it would disappear after shrinking about $s$. Hence, after one common shrinking, the maps form a hypercover of the whole inverse image of a neighborhood of $s$. This is the surjectivity mechanism.
 
-For injectivity, suppose a spread-out cocycle becomes a coboundary on $X_s$. A witnessing cochain and the refinement on which its identities hold again consist of finitely presented étale data. Spread them out and use the same proper-image argument to ensure that the refinement covers over a neighborhood of $s$. Every étale neighborhood of the closed point of a strictly local scheme has a section; pulling the spread-out data back along such a section produces the required data over $S$ itself. The original class therefore vanishes on $X$. This works for each $q$. Sheaves supported on zero-dimensional strata reduce directly to exactness of finite pushforward; stratifying $\mathcal F$ and using the localization long exact sequences completes the constructible devissage. This proves the strict-local proper lemma and hence (11.1).
+For injectivity, a witnessing cochain and the refinement on which its identities hold are again finitely presented étale data. They spread out, and the same proper-image argument makes the refinement cover over a neighborhood of $s$. The strict-local section property then returns the data over $S$. Sheaves supported on zero-dimensional strata reduce to exactness of finite pushforward; stratifying $\mathcal F$ and using localization completes the constructible devissage. These observations verify that the hypotheses in the theorem from Book 22 apply to the curve families used here.
 
-The argument is stable under replacing $S$ by any $S'\to S$: applying the stalk calculation on $S'$ proves (11.2). The same finite data spread over a finite stratification of $S$, so $R^qf_*\mathcal F$ is constructible. Notice what was not proved or used: generic and special fiber cohomology need not agree, and no semistable alteration or division by the degree of a cover enters the argument.
+The theorem is stable under replacing $S$ by any $S'\to S$, which gives (11.2). The same finite data spread over a finite stratification of $S$, so $R^qf_*\mathcal F$ is constructible. Notice what the theorem does not say: generic and special fiber cohomology need not agree, and no division by the degree of a cover is part of the conclusion.
 
 ### 11.3 Smooth base change and local acyclicity
 
 Proper base change controls pushforward along a proper map. Smooth base change addresses a different issue: whether a sheaf acquires vanishing cycles as the base varies. A morphism $f:X\to S$ is **locally acyclic relative to $\mathcal F$** if, after strict localization at a geometric point $x$ above $s$, the cohomology of a nearby geometric fiber maps to the local cohomology without producing an extra specialization cone. Informally, local topology does not change in the family.
 
-If $f$ is smooth and $\mathcal F$ is lisse with finite coefficients invertible on $S$, then $f$ is universally locally acyclic relative to $\mathcal F$. The local calculation can be made explicit. Étale locally near a chosen geometric point, a smooth morphism admits an étale map to $\mathbf A_S^d$. Strict local neighborhoods are unchanged by that étale map. For $d=1$, compactify $\mathbf A_S^1$ to $\mathbf P_S^1$. Proper base change computes the two fiberwise classes of $\mathbf P^1$, and the localization sequence for the section at infinity, with its purity class in degree two, cancels the top class. The reduced cohomology of the affine-line neighborhood is therefore zero. Repeating this calculation one coordinate at a time proves the affine-space case. A finite étale neighborhood trivializes $\mathcal F$; applying the constant calculation to every level of its Čech nerve and totalizing proves the lisse case. Because the calculation survives every pullback of $S$, the local acyclicity is universal.
+Book 22 proves that if $f$ is smooth and $\mathcal F$ is lisse with finite coefficients invertible on $S$, then $f$ is universally locally acyclic relative to $\mathcal F$. In relative dimension one, the decisive local calculation is transparent. Étale locally near a chosen geometric point, a smooth morphism admits an étale map to $\mathbf A_S^1$. Compactifying to $\mathbf P_S^1$, proper base change computes the two fiberwise classes, while localization at infinity cancels the top class of the affine neighborhood. A finite étale neighborhood trivializes $\mathcal F$, so the same calculation on its Čech nerve gives the lisse case. The argument survives every pullback of $S$, which is exactly the universal qualifier.
 
 Consequently, for a smooth morphism and lisse prime-to-characteristic coefficients, the strict-local specialization maps defining nearby and vanishing cycles commute with arbitrary base change and have zero vanishing-cycle cone. This is the smooth-base-change statement being used here; it does not assert that ordinary cohomology of an arbitrary nonproper fiber is constant in a family. If $f$ is also proper, proper base change turns the local statement into the global conclusion that $R^qf_*\mathcal F$ is lisse and that its stalks are the fiber cohomology groups. For a smooth proper family of geometrically connected curves over a connected base,
 
@@ -1096,7 +1111,7 @@ $$
 
 For $\Lambda=\mathbf Z/\ell^m\mathbf Z$ and $\mathcal F$ lisse finite free, the same adjoint maps are isomorphisms of finite $\Lambda$-modules. The field case is conceptually clearest; the ring case follows by devissage through multiplication by $\ell$ while preserving the trace normalization.
 
-We shall prove the theorem in two stages. First establish duality for the constant sheaf using local purity and divisor theory. Then pass to arbitrary lisse sheaves through finite covers, projection formulas, and exact-sequence devissage. This exposes the geometric mechanism behind perfectness.
+Book 23 proves this theorem from purity, trace, and Verdier duality. We now unpack the dimension-one mechanism and its consequences. Constant coefficients reduce the middle pairing to divisors, residues, and curve reciprocity. Finite descent and the projection formula then explain why the same pairing is perfect for an arbitrary lisse finite free sheaf. This discussion verifies normalizations and supplies curve-specific tests; it is not a reconstruction of the general duality theorem.
 
 ### 14.2 The constant-coefficient calculation
 
@@ -1153,7 +1168,7 @@ There is a useful alternative consistency check. For $C=\mathbf P^1$, both $H^1$
 
 ### 14.3 Perfectness for lisse sheaves
 
-Let $\mathcal F$ be lisse. Choose a connected finite Galois cover $p:D\to C$ with group $G$ such that $p^*\mathcal F$ is constant with stalk $M$. We use the following finite descent lemma.
+Let $\mathcal F$ be lisse. Choose a connected finite Galois cover $p:D\to C$ with group $G$ such that $p^*\mathcal F$ is constant with stalk $M$. The following finite descent lemma is the curve-level specialization of the descent step in Book 23.
 
 **Finite descent lemma.** Suppose constant-coefficient duality on $D$ is compatible with the $G$-action and with restriction and trace. Then it implies duality on $C$ for the local system associated with every $\Lambda$-module $M$ which is finite free over $\Lambda$ and carries a $G$-action.
 
@@ -1429,7 +1444,7 @@ Finite-level actions are compatible under reduction $\Lambda_{m+1}\to\Lambda_m$.
 
 ### 17.1 Inverse systems and the Milnor sequence
 
-Fix a prime $\ell$ invertible on $X$. It is tempting to define $\ell$-adic cohomology by writing a sheaf $\mathbf Z_\ell$ and applying ordinary discrete-sheaf cohomology. That loses the topology and can give the wrong derived limit. Instead begin with the system $\Lambda_m=\mathbf Z/\ell^m\mathbf Z$ and define continuous cohomology from the derived inverse limit
+Fix a prime $\ell$ invertible on $X$. Book 21 shows why it is unsafe to define $\ell$-adic cohomology by writing a sheaf $\mathbf Z_\ell$ and applying ordinary discrete-sheaf cohomology: that loses the topology and can give the wrong derived limit. We use its continuous construction, beginning with the system $\Lambda_m=\mathbf Z/\ell^m\mathbf Z$ and the derived inverse limit
 
 $$
 R\Gamma(X,\mathbf Z_\ell)
@@ -1561,47 +1576,619 @@ $$
 
 so the representation is canonically dual to its Tate-twisted dual.
 
-## 18. The cohomological representation attached to a curve
+## 18. Semistable curves over a field
 
-### 18.1 Construction and functoriality
+Smoothness made the preceding duality statements look inevitable: there was one fundamental class, one top trace, and an even-dimensional middle group. A nodal curve is the first test of which features came from properness and which came from smoothness. Properness still gives finite cohomology and base change. A node, however, joins two branches and inserts a graph into the geometry. The graph contributes to $H^1$, while reducible components contribute independently to $H^2$. Ordinary constant-coefficient Poincaré duality therefore cannot survive unchanged.
 
-We can now state the construction without hiding any topology. For a smooth proper geometrically connected curve $C/k$ and $\ell\ne\operatorname{char}k$, define
+This chapter computes the static cohomology of a semistable fiber. The next chapter studies how such a fiber sits below a smooth generic curve. Keeping those two problems separate is essential: normalization computes the singular fiber, whereas inertia and vanishing cycles compare it with the generic fiber.
+
+### 18.1 Nodes, normalization, and the dual graph
+
+Let $C$ be a connected proper curve over a separably closed field $k$. We call $C$ **semistable** if it is reduced and its only singularities are ordinary double points. Étale locally at such a point its completed local equation has the form
+
+$$
+xy=0.
+$$
+
+Let
+
+$$
+\nu:\widetilde C=\coprod_{v\in V}C_v\longrightarrow C
+$$
+
+be the normalization. Each $C_v$ is a smooth proper connected curve. Let $E$ be the set of nodes. The **dual graph** $\Gamma$ has one vertex $v$ for each normalized component and one edge $e$ for each node. The endpoints of $e$ are the components containing the two branches above that node. A self-node gives a loop, and two components may be joined by several edges. These possibilities must be retained: loops and parallel edges are exactly what create graph cohomology.
+
+Choose an orientation of every edge. The cellular cochain complex with coefficients in a ring $\Lambda$ is
+
+$$
+C^0(\Gamma,\Lambda)=\Lambda^V
+\xrightarrow{d}
+C^1(\Gamma,\Lambda)=\Lambda^E,
+$$
+
+where
+
+$$
+(da)_e=a_{t(e)}-a_{s(e)}.
+$$
+
+Changing an orientation multiplies the corresponding edge coordinate by $-1$ and does not change the cohomology. Since $C$ is connected,
+
+$$
+H^0(\Gamma,\Lambda)=\Lambda,
+\qquad
+\operatorname{rank}H^1(\Gamma,\Lambda)
+=b_1(\Gamma)=|E|-|V|+1
+$$
+
+when $\Lambda$ is a field or a discrete valuation ring. This first Betti number counts independent circuits, not nodes. A tree can have many nodes and still has $b_1=0$.
+
+### 18.2 The normalization calculation
+
+The reason the graph enters cohomology is visible directly on sheaves. A locally constant function on $C$ is a locally constant function on each $C_v$ whose two values above every node agree. Hence there is an exact sequence
+
+$$
+0\longrightarrow\Lambda_C
+\longrightarrow\nu_*\Lambda_{\widetilde C}
+\xrightarrow{\delta}
+\bigoplus_{e\in E}i_{e*}\Lambda
+\longrightarrow0. \tag{18.1}
+$$
+
+After orienting an edge, $\delta$ takes the value on its terminal branch minus the value on its initial branch. The quotient is canonical even though this identification with $\Lambda$ changes sign when the orientation changes. The map $\nu$ is finite, so it has no higher direct images on the sheaves under consideration. Taking cohomology of (18.1) therefore gives
+
+$$
+0\to\Lambda
+\to\Lambda^V
+\xrightarrow d\Lambda^E
+\to H^1(C,\Lambda)
+\to\bigoplus_{v\in V}H^1(C_v,\Lambda)
+\to0, \tag{18.2}
+$$
+
+and
+
+$$
+H^2(C,\Lambda)
+\xrightarrow{\sim}
+\bigoplus_{v\in V}H^2(C_v,\Lambda). \tag{18.3}
+$$
+
+The first three terms of (18.2) are the cellular complex of $\Gamma$. We obtain the canonical short exact sequence
+
+$$
+0\longrightarrow H^1(\Gamma,\Lambda)
+\longrightarrow H^1(C,\Lambda)
+\longrightarrow\bigoplus_{v\in V}H^1(C_v,\Lambda)
+\longrightarrow0. \tag{18.4}
+$$
+
+It generally has no canonical splitting. A splitting would require choices of paths through the graph or choices of how to lift component classes across the nodes. The exact sequence, not a preferred direct sum, is the functorial object.
+
+For $\Lambda=\mathbf Z/\ell^m\mathbf Z$, every term in (18.4) is finite free: graph cohomology is free and every smooth component contributes a free group of rank twice its genus. Passing compatibly through $m$ gives
+
+$$
+0\longrightarrow H^1(\Gamma,\mathbf Z_\ell)
+\longrightarrow H^1(C,\mathbf Z_\ell)
+\longrightarrow\bigoplus_v H^1(C_v,\mathbf Z_\ell)
+\longrightarrow0. \tag{18.5}
+$$
+
+There is no derived-limit correction because all finite-level groups are finite. In particular,
+
+$$
+\operatorname{rank}_{\mathbf Z_\ell}H^1(C,\mathbf Z_\ell)
+=b_1(\Gamma)+2\sum_v g_v. \tag{18.6}
+$$
+
+Equation (18.3) has a different flavor. Since each component has its own fundamental class,
+
+$$
+H^2(C,\mathbf Z_\ell)
+\cong\mathbf Z_\ell(-1)^V. \tag{18.7}
+$$
+
+Thus a reducible connected curve has several ordinary top classes. Connectedness controls $H^0$; irreducible components control $H^2$.
+
+If $C$ is defined over a nonclosed field, the calculation is made after separable base change. The ground-field Galois group permutes vertices, edges, and normalized components, and all maps in (18.2)--(18.7) are equivariant. Over a finite field, arithmetic or geometric Frobenius therefore acts on the graph complex by its permutation of the geometric components and nodes, and acts on the component cohomology by the usual pullback action.
+
+### 18.3 Arithmetic genus and the lost half of a loop
+
+The arithmetic genus of a connected proper nodal curve satisfies
+
+$$
+g_a(C)=\sum_v g_v+b_1(\Gamma). \tag{18.8}
+$$
+
+One proves this from the analogous normalization sequence for the structure sheaf: the cokernel at every node has dimension one, and the incidence map removes $|V|-1$ independent constants. Comparing (18.6) with (18.8) gives
+
+$$
+\dim H^1(C,\mathbf Q_\ell)
+=2g_a(C)-b_1(\Gamma). \tag{18.9}
+$$
+
+A smooth curve of genus $g$ has dimension $2g$. A singular semistable curve of the same arithmetic genus has lost one degree-one class for each independent graph circuit. The graph itself restores one class per circuit, but a smooth handle has two degree-one directions. The other direction is not cohomology of the static singular fiber; it will appear as a vanishing class in a smoothing.
+
+Examples make the formula tangible.
+
+If $C$ is a tree of projective lines, then every $g_v$ and $b_1(\Gamma)$ is zero, so $H^1(C,\Lambda)=0$. It may have many nodes, but no circuit survives.
+
+If $C$ is a polygon of $r$ projective lines, then $b_1(\Gamma)=1$ and
+
+$$
+H^1(C,\Lambda)=\Lambda.
+$$
+
+The same answer occurs for an irreducible rational curve with one node: the normalization is $\mathbf P^1$, and the self-node gives one loop edge. This rank-one group is the simplest proof that smooth Poincaré duality cannot be copied onto a nodal curve.
+
+If two smooth curves of genera $g_1$ and $g_2$ meet in one node, the graph is a single edge joining two vertices and is a tree. Hence
+
+$$
+H^1(C,\Lambda)
+\cong H^1(C_1,\Lambda)\oplus H^1(C_2,\Lambda)
+$$
+
+noncanonically as modules and canonically through (18.4). Its rank is $2g_1+2g_2=2g_a(C)$. A smoothing has no vanishing rank in this compact-type case, even though its special fiber is singular.
+
+### 18.4 Duality at a node
+
+For a smooth proper connected curve, the dualizing complex is $\Lambda(1)[2]$ and the trace makes $H^1$ self-dual up to twist. At a node this identification fails. The irreducible nodal rational curve has rank-one $H^1$; over odd coefficients no alternating form on a rank-one free module can be perfect. The failure is not a defect of cohomology. It says that the constant sheaf is not the orientation object of the singular curve.
+
+Book 23 supplies the correct dualizing complex $\omega_C^\bullet$. Dualizing (18.1) gives a triangle
+
+$$
+\bigoplus_{e\in E}i_{e*}\Lambda
+\longrightarrow
+\nu_*\Lambda(1)[2]
+\longrightarrow
+\omega_C^\bullet
+\longrightarrow
+\bigoplus_{e\in E}i_{e*}\Lambda[1]. \tag{18.10}
+$$
+
+The first map is the difference of the two branch fundamental classes. Its signs match the incidence map in the graph complex. Verdier duality then gives a perfect identity
+
+$$
+R\Gamma\bigl(C,R\mathcal Hom(K,\omega_C^\bullet)\bigr)
+\simeq
+R\operatorname{Hom}_\Lambda(R\Gamma(C,K),\Lambda) \tag{18.11}
+$$
+
+for bounded constructible finite coefficients. The component pairings and the vertex-edge incidence pairing are the visible pieces of (18.11). The node term supplies the part that an alternating pairing on $H^1(C,\Lambda)$ alone cannot see.
+
+There is still a scalar trace, but it is the counit associated with $\omega_C^\bullet$, not an assertion that the multi-dimensional group in (18.7) is canonically one-dimensional. On component fundamental classes it sums the component traces with the incidence correction prescribed by (18.10). This distinction is vital whenever a singular fiber is substituted into a smooth formula.
+
+### 18.5 Sheaves and correspondences on a nodal curve
+
+The normalization method is not restricted to constant coefficients. If $\mathcal F$ is lisse finite free on the whole nodal curve, then
+
+$$
+0\longrightarrow\mathcal F
+\longrightarrow\nu_*\nu^*\mathcal F
+\longrightarrow\bigoplus_{e\in E}i_{e*}\mathcal Q_e
+\longrightarrow0, \tag{18.12}
+$$
+
+where $\mathcal Q_e$ is the quotient of the two branch fibers by the diagonal gluing supplied by $\mathcal F$. After choices, the resulting degree-zero and degree-one terms form a cellular complex on $\Gamma$ with local coefficients. Formula (18.4) is the constant case. For a constructible sheaf one first separates the smooth open strata, the nodes, and any additional singular support; (18.12) then combines with the standard support filtration. No claim of a uniform rank is possible without knowing the branch gluing and the component monodromy.
+
+A finite correspondence between nodal proper curves acts by the same pull-then-trace rule as in the smooth case whenever its normalized legs are finite and the coefficient morphism is specified. On normalization it acts on the cohomology of components. At nodes it acts on branch values, hence on the graph complex. Functoriality of (18.12) shows that the two actions fit into a map of the exact sequences (18.4). A correspondence that collapses a component or is supported at a point has zero action on the moving degree-one component, but it can affect degree zero or the collection of top component classes.
+
+If the correspondence and curve descend to a field $k$, the component and graph actions commute with $G_k$. If a correspondence on a generic smooth curve extends to a semistable model, this static action will be the special-fiber shadow of its action on generic cohomology. The extension hypothesis matters: a generic correspondence always acts on the generic representation, but without a controlled closure its specialization may acquire vertical components and need not be described by a naive map of dual graphs.
+
+## 19. Semistable reduction and local Galois action
+
+A semistable special fiber is not merely a singular curve waiting to be computed. It is the record of how a smooth curve degenerates. Proper base change identifies cohomology near the closed point with cohomology of that singular fiber, but smooth local acyclicity fails at the nodes. The failure produces inertia and a nilpotent operator on the generic $H^1$.
+
+The aim of this chapter is a curve-specific semistable comparison. It is obtained by combining the proper comparison and duality theorems of Books 22 and 23 with the explicit two-branch calculation at each node. No assertion here applies when the coefficient prime equals the residue characteristic.
+
+### 19.1 The trait and its three fibers
+
+Let $R$ be a strictly henselian discrete valuation ring with fraction field $K$, uniformizer $\pi$, and separably closed residue field $k$ of characteristic $p$. Let
+
+$$
+f:\mathcal C\longrightarrow\operatorname{Spec}R
+$$
+
+be proper and flat. Assume that $\mathcal C$ is regular, the geometric generic fiber $C_{\bar K}$ is smooth and connected, and the special fiber $C_0$ is reduced with ordinary double points. Étale locally at every node, the family has equation
+
+$$
+xy=\pi. \tag{19.1}
+$$
+
+These are the strict semistable hypotheses. Let $\Gamma$ be the dual graph of $C_0$ and let $g_v$ be the genera of its normalized components. Flatness keeps the arithmetic genus constant, so if the generic genus is $g$, then
+
+$$
+g=\sum_v g_v+b_1(\Gamma). \tag{19.2}
+$$
+
+There are three cohomological objects that must not be conflated:
+
+$$
+R\Gamma(\mathcal C,\Lambda),
+\qquad
+R\Gamma(C_0,\Lambda),
+\qquad
+R\Gamma(C_{\bar K},\Lambda).
+$$
+
+Proper base change identifies the first with the second because the base is strictly local. It also constructs a specialization map
+
+$$
+\operatorname{sp}:H^i(C_0,\Lambda)
+\longrightarrow H^i(C_{\bar K},\Lambda). \tag{19.3}
+$$
+
+The direction is from special to generic: it is the generization map of the proper higher direct image. The map need not be an isomorphism. On the smooth locus of $f$, local acyclicity says there is no defect. Thus every defect in (19.3) is supported at the nodes.
+
+For a smooth model there are no nodes, $R^if_*\Lambda$ is lisse, and (19.3) is an isomorphism. Since the base is strictly henselian, this says that inertia acts trivially on generic cohomology. That is the good-reduction case. The semistable case replaces trivial inertia by a precisely controlled unipotent action.
+
+### 19.2 The local calculation at $xy=\pi$
+
+The equation (19.1) contains the entire local mechanism. The punctured special fiber has two branches, $x=0$ and $y=0$. A section on the normalization descends exactly when its two values at the origin agree. This is the local source of the difference map in (18.1).
+
+The punctured generic fiber is an annulus. With prime-to-$p$ coefficients it has one degree-one Kummer class. One may represent it by extracting compatible $\ell^m$th roots of $x$; since $xy=\pi$, extracting roots of $y$ gives the negative class after the constant class of $\pi$ is accounted for. The boundary of this annular class is the difference of the two branch residues. Thus the local comparison is governed by the two-term complex
+
+$$
+\Lambda^{\{\text{branches}\}}
+\xrightarrow{(a,b)\mapsto b-a}
+\Lambda^{\{\text{node}\}}. \tag{19.4}
+$$
+
+To pass from one node to the whole curve, cover $\mathcal C$ by the smooth locus and small node neighborhoods. The smooth pieces contribute no vanishing cohomology. The overlap maps assemble the local difference maps (19.4) into the incidence map
+
+$$
+\Lambda^V\longrightarrow\Lambda^E
+$$
+
+of the dual graph. A node therefore does not automatically contribute an independent global vanishing class. Relations at vertices remove the tree edges; precisely $b_1(\Gamma)$ independent annular classes remain.
+
+This also gives a dimension check. By (18.6) and (19.2),
+
+$$
+\dim H^1(C_0,\mathbf Q_\ell)
+=2\sum_vg_v+b_1(\Gamma),
+$$
+
+whereas
+
+$$
+\dim H^1(C_{\bar K},\mathbf Q_\ell)
+=2g=2\sum_vg_v+2b_1(\Gamma).
+$$
+
+The difference is $b_1(\Gamma)$, exactly the number of global annular classes. For a nodal cubic the special rank is one and the generic elliptic rank is two. For two smooth components joined by one node, the graph is a tree and no rank is lost.
+
+### 19.3 Invariant cycles and monodromy
+
+Fix $\ell\ne p$ and put
+
+$$
+V=H^1(C_{\bar K},\mathbf Q_\ell).
+$$
+
+Let $I_K\subset G_K$ be inertia. The $\ell$-primary tame character is
+
+$$
+t_\ell:I_K\longrightarrow\mathbf Z_\ell(1).
+$$
+
+The node calculation proves the following theorem.
+
+**Semistable curve theorem.** Under the strict semistable hypotheses of Section 19.1:
+
+1. wild inertia acts trivially on $V$;
+2. there is a canonical nilpotent map
+
+   $$
+   N:V\longrightarrow V(-1),
+   \qquad N^2=0,
+   $$
+
+   such that, after the natural tensor contraction with $t_\ell(\sigma)$,
+
+   $$
+   \rho(\sigma)=1+t_\ell(\sigma)N
+   \qquad(\sigma\in I_K);
+   \tag{19.5}
+   $$
+
+3. specialization induces an isomorphism
+
+   $$
+   H^1(C_0,\mathbf Q_\ell)
+   \xrightarrow{\sim}V^{I_K}=\ker N;
+   \tag{19.6}
+   $$
+
+4. $\operatorname{rank}N=b_1(\Gamma)$.
+
+Here (19.5) is intrinsic despite its compact notation: $t_\ell(\sigma)$ has twist $(1)$ and $N$ has twist $(-1)$, so their product is an endomorphism of $V$.
+
+**Proof strategy.** First compute the action locally on the annulus, then glue the local classes through the incidence complex.
+
+On a smooth chart, universal local acyclicity makes inertia trivial. On a node chart, compatible roots of $x$ describe the tame tower of the annulus. Wild inertia has pro-$p$ image and cannot act nontrivially on this prime-to-$p$ tower. A tame generator changes a chosen root by a root of unity, so its action is a transvection. Its logarithm is the rank-one local map from the annular class to the branch-difference class. A transvection has square-zero logarithm.
+
+Gluing all node charts gives a sum of these local logarithms. The incidence relations at vertices show that its independent image has dimension $b_1(\Gamma)$; the composite of two local logarithms is zero because the first lands in the graph subspace on which every local logarithm vanishes. Hence $N^2=0$ and (19.5) follows.
+
+The same gluing complex compares special classes with invariant generic classes. Its kernel is the graph cohomology and its quotient is the direct sum of component $H^1$ groups, exactly as in (18.4). Thus the map to $\ker N$ has the same graph subobject and component quotient. It is an isomorphism on both, hence an isomorphism in the middle. This proves (19.6). Finally the dimension difference computed in Section 19.2 gives $\operatorname{rank}N=b_1(\Gamma)$. $\square$
+
+The proof produces a useful filtration
+
+$$
+0\subset W_0\subset W_1\subset W_2=V, \tag{19.7}
+$$
+
+where $W_1=\ker N=V^{I_K}$ and $W_0$ is the graph subspace. Its graded pieces are
+
+$$
+\operatorname{Gr}_0^W V\cong H^1(\Gamma,\mathbf Q_\ell),
+$$
+
+$$
+\operatorname{Gr}_1^W V
+\cong\bigoplus_vH^1(C_v,\mathbf Q_\ell),
+$$
+
+$$
+\operatorname{Gr}_2^W V
+\cong H_1(\Gamma,\mathbf Q_\ell)(-1). \tag{19.8}
+$$
+
+The map $N$ induces an isomorphism
+
+$$
+\operatorname{Gr}_2^W V
+\xrightarrow{\sim}
+\operatorname{Gr}_0^W V(-1). \tag{19.9}
+$$
+
+For a strict semistable model the edge pairing identifies graph homology with the dual of graph cohomology and gives (19.9). If a nonregular model has equations $xy=\pi^{n_e}$, the edge lengths $n_e$ enter that pairing; rationally the same filtration remains, while integral saturation can change. This is why the clean theorem above assumes a regular total space and states the comparison first over $\mathbf Q_\ell$.
+
+Poincaré duality on the generic curve is compatible with this filtration. In the untwisted form the alternating pairing is
+
+$$
+V\times V\longrightarrow\mathbf Q_\ell(-1).
+$$
+
+Differentiating inertia invariance gives the skew-adjoint relation
+
+$$
+\langle Nx,y\rangle+\langle x,Ny\rangle=0, \tag{19.10}
+$$
+
+with the evident twists. The graph pieces in degrees $0$ and $2$ pair with one another, and the component piece carries the direct sum of the smooth component pairings. This recovers, on the generic fiber, the dualizing-complex correction seen on the singular fiber.
+
+### 19.4 Unramified and semistable representations
+
+A continuous $\ell$-adic representation of $G_K$ is **unramified** if inertia acts trivially. It is **semistable in the curve-theoretic prime-to-$p$ sense** used here if inertia acts unipotently with square-zero logarithm as in (19.5). This terminology describes the representation produced by a semistable curve; it should not be confused with coefficient-prime theories used when $\ell=p$.
+
+If $\mathcal C/R$ is smooth proper, smooth proper base change gives
+
+$$
+H^1(C_0,\mathbf Q_\ell)
+\xrightarrow{\sim}H^1(C_{\bar K},\mathbf Q_\ell),
+$$
+
+and the right side is unramified. This is the cohomological good-reduction theorem.
+
+For a strict semistable model, (19.5) shows that the representation is unramified precisely when $N=0$. By the rank formula, this is equivalent to
+
+$$
+b_1(\Gamma)=0,
+$$
+
+or equivalently to $\Gamma$ being a tree. Thus a semistable curve of **compact type** has unramified $H^1$ even when the curve itself has bad reduction.
+
+This gives an important counterexample to a tempting converse. Let the special fiber be two smooth positive-genus curves meeting transversely in one point. Its graph is a tree, so $H^1$ is unramified, but the special fiber is reducible and the curve does not have good reduction in that model. Cohomology detects the toric loop part of the degeneration, not every singularity of the curve.
+
+If a curve becomes semistable only after a finite extension $K'/K$, restriction to $G_{K'}$ has the form (19.5). Hence inertia over $K$ acts quasi-unipotently: after an open subgroup its action is unipotent. A finite residual action may remain before the extension. One must therefore distinguish “unramified over $K$,” “semistable over $K$,” and “potentially semistable after a finite extension.”
+
+The coefficient restriction remains visible. None of these arguments applies to $\ell=p$: the tame character no longer captures the relevant local cohomology, wild inertia is not cohomologically negligible, and the inverse systems used here are not a substitute for a residue-characteristic comparison theory.
+
+### 19.5 Frobenius, monodromy, and correspondences
+
+Suppose now that $R$ is henselian with finite residue field $\mathbf F_q$; make the preceding construction after strict henselization. A lift of residue-field Frobenius acts on $V$, on the geometric special fiber, and on its dual graph. The filtration (19.7) is stable under this action.
+
+Let $F_{\mathrm{arith}}$ and $F_{\mathrm{geom}}=F_{\mathrm{arith}}^{-1}$ denote arithmetic and geometric Frobenius. After choosing a basis of the twist in which $N$ is viewed as a matrix, the tame relation gives
+
+$$
+F_{\mathrm{arith}}NF_{\mathrm{arith}}^{-1}=qN,
+\qquad
+F_{\mathrm{geom}}NF_{\mathrm{geom}}^{-1}=q^{-1}N. \tag{19.11}
+$$
+
+Intrinsically, (19.11) says that $N:V\to V(-1)$ has exactly the Frobenius covariance imposed by its twist. On $\operatorname{Gr}_0^W$, Frobenius acts through the finite combinatorial action on the graph. On $\operatorname{Gr}_1^W$, it acts on the $H^1$ of the normalized components. The top graph piece is the dual graph-homology action with the twist $(-1)$. These statements determine the semistable Frobenius action up to the extensions in (19.7); no semisimplicity is asserted.
+
+Every correspondence on the generic curve defined over $K$ commutes with $G_K$, hence with inertia, Frobenius, and $N$. If it extends to a properly supported correspondence of semistable models and its closure has controlled normalized legs, it also acts on the special normalization and dual graph. The invariant-cycle isomorphism (19.6) then fits into a commutative square
+
+$$
+\begin{array}{ccc}
+H^1(C_0,\mathbf Q_\ell)&\xrightarrow{\operatorname{sp}}&V^{I_K}\\
+\downarrow\Gamma_*&&\downarrow\Gamma_*\\
+H^1(C_0,\mathbf Q_\ell)&\xrightarrow{\operatorname{sp}}&V^{I_K}.
+\end{array} \tag{19.12}
+$$
+
+The action preserves (19.7), acts separately on graph and component graded pieces, and commutes with (19.9). Transpose remains adjoint for the generic Poincaré pairing and, on the special fiber, for the dualizing-complex pairing. If the closure acquires vertical components, these must be retained in the special correspondence; discarding them can destroy (19.12).
+
+## 20. The cohomological representation attached to a curve
+
+The constructions can now be assembled without hiding their coefficient topology, their variance, or their behavior at bad places. The central object is $H^1$ of the geometric smooth proper curve. Its importance comes from the structures that meet there: Galois descent, the alternating cup product, specialization, and the pull-push action of correspondences.
+
+### 20.1 Construction and functoriality
+
+Let $C/k$ be smooth, proper, and geometrically connected of genus $g$, and let $\ell\ne\operatorname{char}k$. Define
+
+$$
+T_\ell(C)=
+H^1_{\mathrm{\acute et}}(C_{k^s},\mathbf Z_\ell)
+=\varprojlim_m
+H^1_{\mathrm{\acute et}}(C_{k^s},\mathbf Z/\ell^m\mathbf Z)
+$$
+
+and
+
+$$
+V_\ell(C)=T_\ell(C)\otimes_{\mathbf Z_\ell}\mathbf Q_\ell.
+$$
+
+This notation is cohomological: $T_\ell(C)$ is the integral cohomology lattice, not a torsion-point module. The finite-level groups are finite and their reductions are surjective, so the derived-limit correction vanishes. Chapter 15 proved finite-level freeness, hence
+
+$$
+T_\ell(C)\cong\mathbf Z_\ell^{,2g},
+\qquad
+\dim_{\mathbf Q_\ell}V_\ell(C)=2g. \tag{20.1}
+$$
+
+Descent gives a continuous action
+
+$$
+\rho_{C,\ell}:G_k\longrightarrow
+\operatorname{GL}(T_\ell(C))
+$$
+
+and therefore a continuous rational representation on $V_\ell(C)$. Continuity is not an extra theorem after the limit: the stabilizer of every class modulo $\ell^m$ is open, and the congruence quotients define the topology of the lattice.
+
+Cup product gives a perfect alternating $G_k$-equivariant pairing
+
+$$
+V_\ell(C)\times V_\ell(C)
+\longrightarrow\mathbf Q_\ell(-1). \tag{20.2}
+$$
+
+Equivalently, after choosing a basis of $\mathbf Q_\ell(-1)$, the representation is symplectic up to the inverse cyclotomic multiplier. The twist is not removable from the canonical statement.
+
+A morphism $f:C\to D$ gives contravariant pullback
+
+$$
+f^*:V_\ell(D)\longrightarrow V_\ell(C).
+$$
+
+If $f$ is nonconstant, it is finite and trace gives
+
+$$
+f_*:V_\ell(C)\longrightarrow V_\ell(D),
+$$
+
+with
+
+$$
+f_*f^*=(\deg f)\operatorname{id},
+\qquad
+\langle f^*x,y\rangle_C=\langle x,f_*y\rangle_D. \tag{20.3}
+$$
+
+All maps preserve the integral lattices and are $G_k$-equivariant when $f$ is defined over $k$.
+
+### 20.2 The commuting-action theorem
+
+Let $\operatorname{Corr}_k(C)$ be a ring of algebraic self-correspondences on $C$ generated by cycles whose moving components are finite over both factors. A component supported on a point times $C$, or on $C$ times a point, acts trivially on $H^1$ and may be included without changing the following statement. For a moving integral component with normalized projections
+
+$$
+C\xleftarrow{p_1}\Gamma^\nu\xrightarrow{p_2}C,
+$$
+
+define
+
+$$
+[\Gamma]_*=(p_2)_*p_1^*.
+$$
+
+**Commuting-action theorem.** The space $V_\ell(C)$ has the following compatible structures:
+
+1. a continuous $2g$-dimensional action of $G_k$;
+2. an action of $\operatorname{Corr}_k(C)$ by $\mathbf Q_\ell$-linear endomorphisms;
+3. the perfect pairing (20.2), for which transpose correspondences are adjoint.
+
+The two actions commute. Equivalently, there is a ring homomorphism
+
+$$
+\operatorname{Corr}_k(C)
+\longrightarrow
+\operatorname{End}_{\mathbf Q_\ell[G_k]}(V_\ell(C)), \tag{20.4}
+$$
+
+and
+
+$$
+\langle[\Gamma]_*x,y\rangle
+=\langle x,[{}^t\Gamma]_*y\rangle. \tag{20.5}
+$$
+
+**Proof.** Pullback and trace were constructed at every finite coefficient level and commute with coefficient reduction. Their inverse limits therefore preserve $T_\ell(C)$ and act continuously on it. Composition of correspondences agrees with composition of pull-push maps by the projection formula and the refined multiplicities in the fiber product. Since the cycle, both projections, and all trace maps descend to $k$, functoriality of the descent action gives
+
+$$
+\sigma[\Gamma]_*=[\Gamma]_*\sigma
+$$
+
+for every $\sigma\in G_k$. Finally, moving pullback across the cup product by the projection formula turns $[\Gamma]_*$ into the pull-push map for the transposed cycle, proving (20.5). $\square$
+
+The field of definition is essential. If $\Gamma$ is defined only over $k'/k$, its operator commutes with $G_{k'}$, not automatically with $G_k$. Galois invariance of a characteristic polynomial is weaker than descent of the cycle and does not supply (20.4). Summing the Galois conjugates produces a descended operator, but can destroy properties such as idempotence.
+
+For a lisse rational coefficient sheaf $\mathcal V$, the same construction works only after a coefficient morphism
+
+$$
+p_1^*\mathcal V\longrightarrow p_2^*\mathcal V
+$$
+
+has been specified. A geometric cycle alone does not canonically identify unrelated pulled-back local systems. Constant coefficients are special precisely because this datum is automatic.
+
+### 20.3 Good and semistable places
+
+Suppose $k$ is a global field, or more generally that $C$ is viewed over the fraction field of a henselian discrete valuation ring at a place $v$ of residue characteristic $p\ne\ell$.
+
+If $C$ extends to a smooth proper curve over the valuation ring, smooth proper base change shows that $V_\ell(C)$ is unramified at $v$. Its Frobenius action is identified with that on the geometric special fiber. With geometric Frobenius $F_v$, the local cohomological polynomial is naturally written
+
+$$
+P_v(T)=\det\bigl(1-TF_v\mid V_\ell(C)\bigr). \tag{20.6}
+$$
+
+Using arithmetic Frobenius replaces $F_v$ by $F_v^{-1}$. The top cohomology convention from Chapter 12 gives geometric Frobenius eigenvalue $q_v$ on $H^2$, so there is no ambiguity once (20.6) is fixed.
+
+If $C$ has strict semistable reduction, inertia acts by
+
+$$
+\rho(\sigma)=1+t_\ell(\sigma)N,
+\qquad N^2=0,
+$$
+
+and
+
+$$
+\operatorname{rank}N=b_1(\Gamma_v). \tag{20.7}
+$$
+
+The invariant space is the cohomology of the geometric special fiber:
+
+$$
+V_\ell(C)^{I_v}
+\cong H^1(C_{\bar v},\mathbf Q_\ell). \tag{20.8}
+$$
+
+Its graph, component, and vanishing pieces are given by (19.7)--(19.9). A local polynomial for the semistable representation uses the invariant space,
+
+$$
+P_v(T)=\det\bigl(1-TF_v\mid V_\ell(C)^{I_v}\bigr), \tag{20.9}
+$$
+
+with geometric Frobenius. Formula (20.9) records the unramified quotient of the local action; the omitted information is exactly the nilpotent map $N$.
+
+Every correspondence defined over the local field commutes with inertia and Frobenius, hence preserves $V^{I_v}$ and commutes with $N$. If it extends over a semistable model, it acts on the graph and component descriptions of the graded pieces. Therefore (20.6) and (20.9) may be decomposed into simultaneous correspondence-stable factors whenever an actual idempotent acts over the chosen coefficient field. An integral splitting requires the idempotent denominators to be $\ell$-adic units.
+
+No assertion of purity, a point-counting trace formula, or independence of $\ell$ is needed to obtain this commuting local structure. Those are distinct theorems. The present result supplies the representation, the Frobenius convention, the inertia operator, and the correspondence algebra on which such theorems can later operate.
+
+### 20.4 Conclusion
+
+Étale cohomology begins with a modest failure: local lifts of a sheaf section need not glue globally. Following that failure through torsors, derived sections, localization, and higher direct images reveals the global geometry of a curve. Geometric stalks make exactness local, constructibility makes the groups finite, and compact support records what occurs at omitted points. Kummer theory turns units and divisors into classes, while purity identifies the local class of a point. Their sum is the degree-two trace.
+
+The trace is the pivot of the smooth theory. Cup product followed by trace pairs complementary degrees, explains the rank $2g$, and makes pullback adjoint to pushforward. On open curves, compact support and residue sum supply the missing boundary half of duality. Passing through finite $\ell^m$-coefficients preserves topology and exposes every possible derived-limit and torsion correction before rationalization.
+
+Semistable curves show the exact frontier of those smooth formulas. Normalization separates component cohomology from graph cohomology. The dualizing complex corrects ordinary Poincaré duality at a node. In a smoothing, each graph circuit has a second, vanishing direction; tame inertia acts by a transvection, its logarithm has rank $b_1(\Gamma)$, and special-fiber cohomology is the invariant-cycle space. Good reduction is the case of trivial inertia, while compact-type bad reduction shows that unramified $H^1$ does not by itself certify a smooth model.
+
+The final object
 
 $$
 V_\ell(C)=H^1_{\mathrm{\acute et}}(C_{k^s},\mathbf Q_\ell)
-=\left(\varprojlim_m
-H^1_{\mathrm{\acute et}}(C_{k^s},\mathbf Z/\ell^m\mathbf Z)\right)
-\otimes_{\mathbf Z_\ell}\mathbf Q_\ell.
 $$
 
-The transition systems are finite and Mittag--Leffler, so no $\varprojlim^1$ term is hidden. The integral limit is free of rank $2g$; hence $V_\ell(C)$ is $2g$-dimensional. Descent supplies a continuous $G_k$-action. Smooth proper base change shows that in a smooth proper family this representation varies through the lisse sheaf $R^1f_*\mathbf Q_\ell$ and is unchanged under geometric specialization in the allowed prime-to-characteristic regime.
-
-A morphism $f:C\to D$ gives contravariant pullback $f^*:V_\ell(D)\to V_\ell(C)$. If $f$ is finite, trace gives $f_*:V_\ell(C)\to V_\ell(D)$, with projection formula and $f_*f^*=\deg f$. Every map is continuous, $G_k$-equivariant when defined over $k$, and compatible with the integral lattices.
-
-### 18.2 Correspondences and descent
-
-A finite correspondence $\Gamma:C\dashrightarrow D$ defined over $k$ acts by
-
-$$
-\Gamma_*=(p_D)_*p_C^*:V_\ell(C)\longrightarrow V_\ell(D).
-$$
-
-Composition of cycles matches composition of endomorphisms, transpose is adjoint under Poincaré duality, and all actions commute with $G_k$. In particular, a ring of self-correspondences on $C$ maps to
-
-$$
-\operatorname{End}_{\mathbf Q_\ell[G_k]}(V_\ell(C)).
-$$
-
-The order is important: the source projection is pulled back and the target projection is traced forward. The graph of a map acts by pushforward, while its transpose acts by pullback.
-
-If a correspondence is defined only after a finite extension $k'/k$, its operator is $G_{k'}$-equivariant. It descends to a $G_k$-equivariant operator exactly when the cycle class and coefficient morphism are invariant with compatible descent data; merely having a conjugacy-invariant characteristic polynomial is not enough. Summing Galois conjugates always produces a descended correspondence, though it may lose idempotence.
-
-### 18.3 Conclusion
-
-Étale cohomology begins with a modest failure: local lifts of a sheaf section need not glue globally. Following that failure through torsors, derived sections, localization, and higher direct images reveals the global geometry of a curve. Geometric stalks make exactness local, constructibility makes the theory finite, and compact support records what occurs at omitted points. Kummer theory turns units and divisors into classes, while purity identifies the local class of a point. Their sum is the degree-two trace.
-
-The trace is the pivot of the theory. Cup product followed by trace pairs complementary degrees, and the local residue calculation proves that no nonzero class escapes detection. Poincaré duality then explains the dimension $2g$, open-curve duality explains boundary terms, and projection formulas make finite maps and correspondences act with controlled variance. Proper base change prevents classes from escaping a proper family; smooth local acyclicity prevents new classes from being born in a smooth one.
-
-Passing through finite $\ell^m$-coefficients rather than pretending that $\mathbf Z_\ell$ is discrete preserves topology and exposes the possible $\varprojlim^1$ and torsion terms. For a smooth proper curve the system is especially clean: it yields a free rank-$2g$ lattice and a finite-dimensional continuous $G_k$-representation on $V_\ell(C)$. Poincaré duality, Tate twists, Frobenius conventions, traces, and algebraic correspondences are all compatible with that action.
-
-This is the reusable cohomological endpoint. It does not yet identify $V_\ell(C)$ with the Tate module of a represented Picard object, nor does it impose polarizations or introduce special modular correspondences. Those are additional geometric structures. What has been constructed here is the cohomological space on which they will act: finite-dimensional, continuous, dual, functorial, and ready to carry the arithmetic of curves into the representation theory that follows.
+is therefore more than a vector space of dimension $2g$. It is a continuous Galois representation with a Tate-twisted alternating pairing, functorial pullbacks and traces, and a commuting action of algebraic correspondences. At good places it carries unramified Frobenius; at semistable places it carries commuting Frobenius and nilpotent monodromy. This joint Galois--correspondence structure is the reusable cohomological realization of a curve.
