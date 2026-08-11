@@ -484,7 +484,14 @@ $$
 \longrightarrow \tfrac1n\mathbf Z/\mathbf Z. \tag{4.4}
 $$
 
-This map is an isomorphism. To see surjectivity, choose a finite place in $S$. The local invariant on $H^2(K_v,\mu_n)$ has image $\tfrac1n\mathbf Z/\mathbf Z$, so every target value is represented by a local class. For injectivity, suppose a local family has invariant sum zero. Extend it by zero outside $S$. The Brauer exact sequence produces a global Brauer class with precisely those localizations. Because every component outside $S$ is zero, that class is unramified outside $S$ and lies in the image of $H^2(G_{K,S},\mu_n)$. Thus its class in the cokernel vanishes. If real $2$-primary terms continue beyond degree two, the final arrow in (4.3) maps isomorphically onto the real periodic tail; hence it contributes no additional kernel. This proves injectivity in every case covered by the standing convention.
+This map is an isomorphism. The precise input is the finite arithmetic-duality calculation for the Cartier-dual pair $\mathbf Z/n\mathbf Z,\mu_n$, proved from $S$-units, divisors, $S$-ideal classes, and the Brauer sequence. With the same compact-support cone and the same complete real complexes, that calculation identifies the cokernel of
+
+$$
+H^2(G_{K,S},\mu_n)\longrightarrow
+\bigoplus_{v\in S}\widetilde H^2(K_v,\mu_n)
+$$
+
+with $H^0(G_{K,S},\mathbf Z/n\mathbf Z)^D=\tfrac1n\mathbf Z/\mathbf Z$, and identifies the quotient map with the sum of invariants. Its surjectivity is concrete: when $n>1$, the hypotheses put a finite place above a prime dividing $n$ in $S$, and the local invariant on $H^2(K_v,\mu_n)$ has image $\tfrac1n\mathbf Z/\mathbf Z$; for $n=1$ the assertion is trivial. Its kernel statement says precisely that a finitely supported local Brauer family of total invariant zero comes from $H^2(G_{K,S},\mu_n)$, not merely from the absolute Brauer group. The real $2$-primary tail is part of the cyclic calculation, so the final arrow in (4.3) contributes no additional kernel. This proves the asserted trace isomorphism without assuming the arbitrary-coefficient theorem of Section 5.
 
 Passing through the inclusions $\mu_n\subset\mu_{mn}$ makes the traces compatible. Their direct limit gives
 
@@ -548,68 +555,124 @@ Before proving the theorem, it is worth locating the difficulty. Local duality p
 
 ### 5.2 The finite-level engine
 
-The phrase “finite level” refers to finite coefficients, not to replacing the absolute groups by a single finite quotient. Although the action on $M$ factors through a finite Galois extension, the kernel still carries the cohomology of units and roots of unity. Discarding that kernel would discard the very classes on which the invariant is evaluated.
+The phrase “finite level” refers to finite coefficients, not to replacing the absolute groups by one finite quotient. Although the action on $M$ factors through a finite Galois extension, the kernel still carries Kummer classes, units, ideal classes, and Brauer classes. Discarding that kernel would discard the arithmetic on which the invariant is evaluated.
 
-We prove the comparison in five steps. The details matter because they also prove compatibility with connecting maps.
-
-**Step 1: the global class formation.** Let $L/K$ be finite Galois, with group $\Delta$. Write $J_L$ for the idèle group and $C_L=J_L/L^\times$ for the idèle class group. The exact sequence
+We first record the exact prior input, because this is where a circular proof can easily hide. The cyclic compact-support theorem for the Cartier-dual pair
 
 $$
-1\longrightarrow L^\times\longrightarrow J_L
-\longrightarrow C_L\longrightarrow1 \tag{5.2}
+A_n=\mathbf Z/n\mathbf Z,
+\qquad A_n'=\mu_n \tag{5.2}
 $$
 
-is a sequence of $\Delta$-modules. The module $J_L$ is assembled from local multiplicative groups induced from decomposition subgroups. More precisely, after choosing one place $w$ over each place $v$ of $K$, the relevant cohomology of its restricted factors is computed by the modules induced from $\Delta_w$ with coefficient $L_w^\times$. Shapiro's lemma therefore turns its cohomology into the sum of local cohomology groups, including every $w\mid v$.
+was proved by the finite $S$-units--divisors--$S$-ideal-classes calculation. It includes complete Tate complexes at real places and proves perfectness in every degree for this pair and for the pair with the two coefficients interchanged. The same calculation proves the Brauer invariant sequence. It does **not** assume arbitrary-coefficient Poitou--Tate duality. The global class-formation construction also gives, for every finite Galois $L/K$, a canonical $S_L$-unit two-extension with cohomologically trivial middle terms; its restriction to each decomposition group is the normalized local fundamental class. These are the inputs used below.
 
-Global reciprocity supplies a fundamental class
+Choose a finite Galois extension $L/K$ inside $K_S$ through which the action on $M$ factors and which contains $\mu_n$, and put $\Delta=\operatorname{Gal}(L/K)$. Let $S_L$ be the places above $S$. Enlarge $S_L$, if necessary, by full $\Delta$-orbits of finite places until the $S_L$-ideal class group is zero and the decomposition groups at places in $S_L$ generate $\Delta$. The separation theorem in global class field theory proves that such a finite enlargement exists. This enlargement does change the compact-support cone. Section 3.6 identifies the change with the sum of the relative unramified-to-local cones at the added places. Local duality pairs each such relative cone perfectly with the corresponding relative cone for the dual coefficient: unramified degree-one subgroups are exact orthogonal complements, and the degree-zero and degree-two terms pair by local duality. Consequently a comparison proved after enlargement descends to the original $S$ by the two relative exact triangles and the five lemma. We may therefore use the enlarged set in the construction and return to the original set at the end.
 
-$$
-u_{L/K}\in H^2(\Delta,C_L) \tag{5.3}
-$$
-
-whose restriction to a decomposition subgroup agrees with the local fundamental class after passage through (5.2). Its normalization is fixed by the local invariant: for every subgroup $H\subseteq\Delta$, the restriction to $H$ generates a cyclic group of order $|H|$. Corestriction preserves the invariant, while restriction multiplies it by the extension degree. These two rules make the classes compatible in towers.
-
-**Step 2: Tate--Nakayama for lattices.** If $X$ is a finitely generated free abelian $\Delta$-module, cup product with $u_{L/K}$ gives
+The class-formation input is not merely the idèle sequence. It is the canonical exact two-extension
 
 $$
-\widehat H^q(\Delta,X)\xrightarrow{\sim}
-\widehat H^{q+2}(\Delta,X\otimes C_L). \tag{5.4}
+0\longrightarrow U_{L,S_L}\longrightarrow A_S
+\longrightarrow B_S\longrightarrow X_S\longrightarrow0, \tag{5.3}
 $$
 
-Here is the proof rather than merely the name of the result. For $X=\mathbf Z[\Delta/H]$, Shapiro reduces (5.4) to the trivial lattice over $H$. In two adjacent degrees that assertion is exactly the norm-index theorem and the fact that $\operatorname{res}_H u_{L/K}$ has order $|H|$. A complete resolution is two-sided, so the long exact sequence propagates those two degrees to every degree. For general $X$, embed it in a finite sum $P$ of regular permutation lattices so that $P/X$ is again free over $\mathbf Z$. The long exact sequences for
+where $U_{L,S_L}$ is the $S_L$-unit group,
 
 $$
-0\longrightarrow X\longrightarrow P\longrightarrow P/X\longrightarrow0
+X_S=\ker\bigl(\mathbf Z[S_L]\xrightarrow{\sum}\mathbf Z\bigr),
 $$
 
-shift the assertion one degree at a time. A permutation surjection onto $X$ shifts in the opposite direction. The two shifts and the permutation calculation prove (5.4) for every lattice. Because cup product commutes with boundaries with the graded sign, these are isomorphisms of exact sequences, not isolated isomorphisms of groups.
-
-**Step 3: localization produces the third degree.** Tensor (5.2) with $X$ and compare its global terms with the induced local terms. The adelic middle term becomes the local cochain package by Shapiro. The quotient term is shifted by two through (5.4), and taking the cone of global-to-local localization supplies one further shift. Evaluation against the dual lattice therefore gives a comparison of complexes with complementary degree three. On the trivial lattice this comparison is the elementary Kummer calculation: units and ideal classes occupy degree one, Brauer classes occupy degree two, and the last cokernel is measured by the sum of invariants. Thus the abstract class-formation comparison has exactly the trace normalization of Section 4.
-
-**Step 4: passage from lattices to a finite module.** Let $M$ be killed by $n$ and let $\Delta$ act through a splitting field. The permutation lattice $X_0=\mathbf Z[M]$ maps onto $M$ by $[m]\mapsto m$. Its kernel $X_1$ is free over $\mathbf Z$, giving
+and $A_S,B_S$ are cohomologically trivial for every subgroup of $\Delta$. The local component of its extension class at $w\mid v$ is the local fundamental class of $L_w/K_v$. Splicing (5.3) with the valuation sequence outside $S_L$ and with principal idèles gives the global fundamental class
 
 $$
-0\longrightarrow X_1\longrightarrow X_0\longrightarrow M\longrightarrow0. \tag{5.5}
+u_{L/K}\in H^2(\Delta,C_L). \tag{5.4}
 $$
 
-One must not dualize this sequence into $L^\times$ and simply assert exactness: a finite extension's multiplicative group is not divisible. Instead pass through all finite splitting fields to the multiplicative group of a separable closure. The $n$th-power map there is surjective, so the obstruction to extending a character of the finite quotient vanishes. Applying the character dual is then exact at $M$, and its left term is
+For every subgroup $H\subseteq\Delta$, its restriction generates $H^2(H,C_L)$, a cyclic group of order $|H|$, and $H^1(H,C_L)=0$. These assertions are precisely the global norm-index and Brauer-localization calculations already proved in the class formation.
+
+We now prove the comparison in four steps.
+
+**Step 1: the lattice comparison.** Let $X$ be a finitely generated free abelian $\Delta$-module. The spliced two-extension representing (5.4) has the form
 
 $$
-\operatorname{Hom}(M,\mu_n)=M'.
+0\longrightarrow C_L\longrightarrow A\longrightarrow B
+\longrightarrow\mathbf Z\longrightarrow0,
 $$
 
-The lattice comparisons for $X_0$ and $X_1$, together with the two adjoint long exact sequences of (5.5), give the comparison for $M$ by the five lemma. This is a finite resolution of length one; no infinite repetition of induced embeddings is being hidden.
+with $A$ and $B$ cohomologically trivial for every subgroup. Tensor it with $X$. Exactness is preserved because $X$ is free. The middle terms remain cohomologically trivial: a complete induced resolution stays exact after tensoring with $X$, and the coordinate change
 
-**Step 5: passage to continuous cohomology.** A continuous cochain with finite coefficients has finite image and is locally constant. Any finite collection of cochains, coboundaries, and chosen primitives therefore factors through some finite quotient. Consequently continuous cohomology is the filtered colimit of the finite-level calculations. Inflation on one side is adjoint to norm on the other; the degree factor in the inflation of the fundamental class is exactly cancelled by restriction--corestriction. Filtered colimits are exact, and character duality turns them into inverse limits. Since all cohomology groups that survive are finite, no completion or derived-limit term appears.
+$$
+g\otimes a\otimes x\longmapsto g\otimes a\otimes g^{-1}x
+$$
 
-The outcome is a functorial comparison
+moves the diagonal action to the induced factor. The resulting exact sequence is
+
+$$
+0\longrightarrow X\otimes C_L\longrightarrow X\otimes A
+\longrightarrow X\otimes B\longrightarrow X\longrightarrow0.
+$$
+
+Its two middle terms have zero Tate cohomology. The connecting map across the two-extension is cup product with $u_{L/K}$, so its long exact sequence immediately gives
+
+$$
+\widehat H^q(H,X)\xrightarrow{\sim}
+\widehat H^{q+2}(H,X\otimes C_L) \tag{5.5}
+$$
+
+for every subgroup $H$ and every integer $q$. This is the lattice form of Tate--Nakayama. The hypotheses that make the two middle modules cohomologically trivial were proved from $H^1(H,C_L)=0$ and from the fact that $\operatorname{res}_H u_{L/K}$ generates the cyclic group $H^2(H,C_L)$ of order $|H|$. Boundary compatibility follows from the graded Leibniz rule, so (5.5) is a comparison of exact sequences, not only an equality of orders.
+
+**Step 2: localization supplies the third shift.** In the canonical $S_L$-unit sequence, the summand indexed by the orbit of $w$ is induced from its decomposition group $\Delta_w$. Shapiro therefore identifies it with the cochain complex over $L_w$. After taking $\Delta$-cochains and regrouping the orbits over the places of $K$, the map from the global unit/divisor complex to these induced summands is the usual localization map. The augmentation $\mathbf Z[S_L]\to\mathbf Z$ is the sum over the places, so its degree-two trace is
+
+$$
+(z_v)_v\longmapsto\sum_{v\in S}\operatorname{inv}_v(z_v),
+$$
+
+including the value $1/2$ at a real place. Put
+
+$$
+X^\dagger=\operatorname{Hom}_{\mathbf Z}(X,(K^s)^\times)
+\simeq X^\vee\otimes (K^s)^\times,
+\qquad X^\vee=\operatorname{Hom}_{\mathbf Z}(X,\mathbf Z).
+$$
+
+Apply (5.5) to $X^\vee$. Evaluation $X\times X^\dagger\to(K^s)^\times$, together with that two-degree class-formation shift and the one-degree mapping-cone shift, produces complementary degree three. At finite Galois level this is a chain comparison between the compact-support complex for $X$ and the character dual of the global complex for $X^\dagger$; its local pieces are exactly local Tate duality and its terminal map is the trace of Section 4. On the trivial lattice it is the explicit units--divisors--ideal-classes calculation recalled before (5.2); naturality and the preceding dimension shifts give it for every lattice.
+
+**Step 3: passage from lattices to $M$.** Form the permutation lattice $X_0=\mathbf Z[M]$ and send $[m]$ to $m$. Its kernel $X_1$ is free over $\mathbf Z$, so
+
+$$
+0\longrightarrow X_1\longrightarrow X_0\longrightarrow M\longrightarrow0. \tag{5.6}
+$$
+
+There is a genuine exactness issue here. Applying $\operatorname{Hom}(-,L^\times)$ would be invalid because $L^\times$ is not divisible. Instead pass compatibly through all finite splitting fields inside a separable closure. The $n$th-power map on $(K^s)^\times$ is surjective, and hence
+
+$$
+\operatorname{Ext}^1_{\mathbf Z}(M,(K^s)^\times)=0.
+$$
+
+Applying $\operatorname{Hom}(-,(K^s)^\times)$ to (5.6) is therefore exact at the right. Its left term is
+
+$$
+\operatorname{Hom}(M,(K^s)^\times)
+=\operatorname{Hom}(M,\mu_n)=M'. \tag{5.7}
+$$
+
+Evaluation makes (5.6) and its reversed character sequence adjoint. The two lattice comparisons from Steps 1--2 give isomorphisms on $X_0$ and $X_1$; the two adjoint long exact sequences, with the boundary sign fixed by the Leibniz rule, give the comparison on $M$ by the five lemma. This is why the finite quotient is reached only after the divisible separable-closure coefficient has replaced the nondivisible group of one finite field.
+
+**Step 4: passage to continuous cochains.** A continuous cochain with finite coefficients has finite image and is locally constant. Any finite collection consisting of cocycles, proposed coboundaries, and chosen local primitives therefore factors through one finite quotient. Continuous cohomology is consequently the filtered colimit of these finite calculations. If $L'\supseteq L$, then
+
+$$
+\operatorname{inf}(u_{L/K})=[L':L]u_{L'/K}; \tag{5.8}
+$$
+
+restriction multiplies a local invariant by the same degree, while corestriction preserves it. Thus inflation on the primal complex is adjoint to the norm transition on the character complex. Filtered colimits are exact, Pontryagin character duality turns them into inverse limits, and the surviving cohomology groups are finite. Hence neither a completion defect nor a derived-limit term appears.
+
+Returning through the relative exact triangles if places were added, the resulting functorial quasi-isomorphism for the original set $S$ is
 
 $$
 R\Gamma_c(G_{K,S},M)\xrightarrow{\sim}
-R\operatorname{Hom}\bigl(R\Gamma(G_{K,S},M'),\mathbf Q/\mathbf Z\bigr)[-3]. \tag{5.6}
+R\operatorname{Hom}\bigl(R\Gamma(G_{K,S},M'),\mathbf Q/\mathbf Z\bigr)[-3]. \tag{5.9}
 $$
 
-This notation abbreviates the preceding explicit cochain construction. Since $\mathbf Q/\mathbf Z$ is injective, taking cohomology of the right side introduces no extension term. Its degree-$i$ group is exactly $H^{3-i}(G_{K,S},M')^D$.
+This derived notation abbreviates the explicit cone, complete resolutions, evaluation maps, and invariant sums just described. It is not an appeal to a later duality formalism. Since $\mathbf Q/\mathbf Z$ is injective, taking cohomology on the right introduces no $\operatorname{Ext}$ term: its degree-$i$ group is exactly $H^{3-i}(G_{K,S},M')^D$.
 
 ### 5.3 Proof of perfectness
 
@@ -621,9 +684,9 @@ We now assemble the finite-coefficient engine on the absolute restricted group.
 
 2. **The natural comparison.** The null-homotopy of Section 4 makes the cup-product map a morphism from compact-support cohomology to the Pontryagin dual of complementary global cohomology. Compatibility with coefficient boundaries follows from the graded Leibniz rule. Thus the maps (5.1) form a morphism of long exact sequences, rather than a collection of unrelated pairings.
 
-3. **Class-formation comparison.** The lattice calculation and the idèle sequence identify the cone with the character dual complex shifted by three. For $\mathbf Z/n\mathbf Z$ and $\mu_n$, this is visibly the Kummer, ideal-class, and Brauer calculation; the last map is the sum of invariants.
+3. **Class-formation comparison.** The lattice calculation and the canonical $S_L$-unit sequence identify the cone with the character dual complex shifted by three. For $\mathbf Z/n\mathbf Z$ and $\mu_n$, this is visibly the Kummer, ideal-class, and Brauer calculation; the last map is the sum of invariants.
 
-4. **Finite-module devissage.** The length-one permutation-lattice resolution (5.5), exact character duality after passage to the separable closure, and the five lemma prove (5.6) for every finite $M$.
+4. **Finite-module devissage.** The length-one permutation-lattice resolution (5.6), exact character duality after passage to the separable closure, and the five lemma prove (5.9) for every finite $M$.
 
 5. **Real places.** When $2\mid n$, the argument uses complete resolutions at real decomposition groups throughout. Their two-periodic Tate pairings are perfect, and the real fundamental class has invariant $1/2$. Thus devissage includes, rather than deletes, the real tail.
 
@@ -647,20 +710,20 @@ The treatment of a real place deserves a final audit because two different opera
 $$
 H^i(G_{K,S},M)\xrightarrow{\sim}
 \bigoplus_{v\text{ real}}\widehat H^i(K_v,M),
-\qquad i\ge3. \tag{5.7}
+\qquad i\ge3. \tag{5.10}
 $$
 
-The same statement holds for $M'$. This follows by passing to a totally imaginary extension of degree a power of two, using cohomological dimension two there, and applying restriction--corestriction and the complete-resolution sequence for the real decomposition groups. Said geometrically, every high-degree class is supported at the real boundary.
+The same statement holds for $M'$. This is a high-degree consequence of the same comparison (5.9). Away from the real summands the compact-support complex has amplitude at most three, because a totally imaginary open subgroup has cohomological dimension two. On the real summands the complete $C_2$-resolution is two-periodic. Comparing the cone triangle with its dual and using local Tate perfectness shows that the only surviving ordinary global terms above degree two restrict isomorphically to those periodic summands. Equivalently, one may pass to the totally imaginary extension $K(i)$, apply Hochschild--Serre to its index-two subgroup, and identify the quotient terms with the complete resolutions of the real decomposition groups. In either proof, no ordinary cohomological-dimension-two claim is made over $K$ itself. Said geometrically, every high-degree class is supported at the real boundary.
 
 Now inspect the cone sequence before degree zero:
 
 $$
 H^{-1}(G_{K,S},M)\to P_S^{-1}(M)
 \to H_c^0(G_{K,S},M)
-\to H^0(G_{K,S},M). \tag{5.8}
+\to H^0(G_{K,S},M). \tag{5.11}
 $$
 
-The first group is zero, while duality identifies $H_c^0(M)$ with $H^3(M')^D$. Under this identification the middle arrow is dual to the isomorphism (5.7) for $M'$ in degree three. It is therefore an isomorphism. The next arrow is zero, and the following map $H^0(M)\to P_S^0(M)$ is injective. At the other end, the same cancellation shows that $P_S^2(M)\to H^0(M')^D$ is surjective even though $H^3(M)$ itself may be nonzero.
+The first group is zero, while duality identifies $H_c^0(M)$ with $H^3(M')^D$. Under this identification the middle arrow is dual to the isomorphism (5.10) for $M'$ in degree three. It is therefore an isomorphism. The next arrow is zero, and the following map $H^0(M)\to P_S^0(M)$ is injective. At the other end, the same cancellation shows that $P_S^2(M)\to H^0(M')^D$ is surjective even though $H^3(M)$ itself may be nonzero.
 
 This explains precisely why the nine visible terms remain exact for 2-primary coefficients. The periodic groups have not been declared zero; they cancel through canonical restriction isomorphisms immediately outside the displayed range. Any proof that simply says the global cohomological dimension is two over a field with real places has missed this phenomenon.
 
@@ -1172,12 +1235,12 @@ Taking orders in (8.9) gives
 $$
 \frac{|H^1_{\mathcal L'}(K,M)|}{|H^1_{\mathcal L}(K,M)|}
 \cdot
-\frac{|H^1_{(\mathcal L')^\perp}(K,M')|}
-{|H^1_{\mathcal L^\perp}(K,M')|}
+\frac{|H^1_{\mathcal L^\perp}(K,M')|}
+{|H^1_{(\mathcal L')^\perp}(K,M')|}
 =\prod_{v\in S}\frac{|\mathcal L'_v|}{|\mathcal L_v|}. \tag{8.10}
 $$
 
-The first ratio alone need not equal the local product; the dual Selmer ratio is the correction.
+The direction of the second ratio is forced by orthogonality: relaxing the primal condition shrinks the dual condition. Thus the local quotient can be absorbed either by growth of the primal Selmer group or by a decrease of the dual Selmer group. The first ratio alone need not equal the local product; the old-to-new dual Selmer ratio is the correction.
 
 ### 8.5 What is perfect and what is not
 
@@ -1283,7 +1346,7 @@ when the coefficient is trivial at every real place, exactly the right side of (
 
 Thus $e_{L,S_L}(M)=0$. Equation (9.2b) gives $[L:K]e_{K,S}(M)=0$, and the exponent is an integer, so $e_{K,S}(M)=0$. Exponentiating proves (9.2). This argument also proves independence of $S$: adding a finite place adds one unit valuation direction and one local Brauer direction, which cancel. $\square$
 
-If $M$ has 2-primary torsion and $K$ has real places, ordinary cohomology has a two-periodic tail and an infinite alternating product is meaningless. In this case define the **modified Euler determinant** by taking the localization triangle with complete real Tate complexes and cancelling the restriction isomorphisms (5.7) in the two periodic tails. The remaining finite determinant is exactly the right side of (9.2). Thus (9.2) is still the precise modified determinant formula, but its left side is not the three-term ratio (9.1). In applications, the order formula below is the safest low-degree expression of this determinant and remains valid with modified local groups.
+If $M$ has 2-primary torsion and $K$ has real places, ordinary cohomology has a two-periodic tail and an infinite alternating product is meaningless. In this case define the **modified Euler determinant** by taking the localization triangle with complete real Tate complexes and cancelling the restriction isomorphisms (5.10) in the two periodic tails. The remaining finite determinant is exactly the right side of (9.2). Thus (9.2) is still the precise modified determinant formula, but its left side is not the three-term ratio (9.1). In applications, the order formula below is the safest low-degree expression of this determinant and remains valid with modified local groups.
 
 For a $k$-vector space $M$ of dimension $m$, away from the real 2-primary exception, (9.2) becomes
 
@@ -1397,7 +1460,7 @@ $$
 
 At each finite place, local duality identifies $\widetilde h_v^2(M)$ with ordinary $h_v^0(M')$, while the local Euler formula controls $h_v^0(M)-\widetilde h_v^1(M)+\widetilde h_v^2(M)$. If there is no real 2-primary exception, insert (9.3) for the global combination in (9.9). The coefficient-characteristic contributions $[K_v:\mathbf Q_\ell]\dim M$ sum to $[K:\mathbf Q]\dim M$ and cancel the corresponding global term. At a real place the local contribution becomes $-h_v^0(M)$, and at a complex place it becomes $-\dim M=-h_v^0(M)$.
 
-In the real 2-primary case one must instead use the modified Euler determinant of Section 9.1. Truncate the localization triangle in a high degree and cancel the global and real Tate terms through the restriction isomorphisms (5.7); the two-periodic tail then contributes zero to the finite determinant. The remaining low-degree equality is exactly the replacement for (9.3) needed in (9.9), with the real contribution again equal to $-h_v^0(M)$. This does not assert a three-term ordinary Euler formula in the exceptional case. In either case, what survives is
+In the real 2-primary case one must instead use the modified Euler determinant of Section 9.1. Truncate the localization triangle in a high degree and cancel the global and real Tate terms through the restriction isomorphisms (5.10); the two-periodic tail then contributes zero to the finite determinant. The remaining low-degree equality is exactly the replacement for (9.3) needed in (9.9), with the real contribution again equal to $-h_v^0(M)$. This does not assert a three-term ordinary Euler formula in the exceptional case. In either case, what survives is
 
 $$
 h^0(M)-h^0(M')+\sum_v(l_v-h_v^0(M)),
@@ -1508,7 +1571,7 @@ Over a finite field,
 $$
 \begin{aligned}
 &\dim H^1_{\mathcal L'}-\dim H^1_{\mathcal L}
-+\dim H^1_{(\mathcal L')^\perp}-\dim H^1_{\mathcal L^\perp}\\
++\dim H^1_{\mathcal L^\perp}-\dim H^1_{(\mathcal L')^\perp}\\
 &\hspace{35mm}=\dim\mathcal L'_w-\dim\mathcal L_w.
 \end{aligned} \tag{10.4}
 $$

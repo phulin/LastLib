@@ -56,7 +56,7 @@ any resulting corrections.
 - [x] 030. Local Galois Cohomology
 - [x] 031. Tate Local Duality
 - [x] 032. Global Galois Cohomology and Selmer Groups
-- [ ] 033. Poitou–Tate Duality
+- [x] 033. Poitou–Tate Duality
 - [x] 034. Rigid Analytic Curves and Formal Models
 - [x] 035. Rigid Uniformization of Abelian Varieties
 - [x] 036. Relative Picard Schemes and Jacobians
