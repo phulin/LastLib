@@ -44,7 +44,7 @@ any resulting corrections.
 - [x] 018. Formal Schemes, GAGA, and Algebraization
 - [x] 019. Finite Étale Covers and Fundamental Groups
 - [ ] 020. Étale Sheaves and Cohomology on Curves
-- [ ] 021. Derived Étale and ℓ-adic Cohomology
+- [x] 021. Derived Étale and ℓ-adic Cohomology
 - [ ] 022. Proper and Smooth Base Change
 - [ ] 023. Étale Duality and Trace Maps in Low Dimension
 - [ ] 024. Nearby Cycles and Monodromy in Dimensions One and Two

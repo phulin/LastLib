@@ -73,8 +73,8 @@
   - [14.3 Open and semistable curves](#143-open-and-semistable-curves)
   - [14.4 Perfectness](#144-perfectness)
 - [15. Abelian schemes](#15-abelian-schemes)
-  - [15.1 Torsion and the first cohomology group](#151-torsion-and-the-first-cohomology-group)
-  - [15.2 The exterior algebra calculation](#152-the-exterior-algebra-calculation)
+  - [15.1 Absolute finiteness and amplitude](#151-absolute-finiteness-and-amplitude)
+  - [15.2 Torsion and lisse Tate systems](#152-torsion-and-lisse-tate-systems)
   - [15.3 Families and base change](#153-families-and-base-change)
   - [15.4 Integral perfectness](#154-integral-perfectness)
 - [16. Selected Shimura surfaces](#16-selected-shimura-surfaces)
@@ -137,7 +137,7 @@ At the rational level, one inverts $\ell$ only after constructing an integral ob
 
 ### 1.4 The main results
 
-The book establishes four packages. First, finite torsion coefficients admit a complete derived theory on the small étale topos, with Leray, hypercohomology, localization, Hochschild--Serre, and cup products. Second, constructible prime-to-residue-characteristic coefficients have finite cohomology in the dimensions needed here: degrees at most $2$ for proper curves, at most $2g$ for $g$-dimensional abelian varieties, and at most $4$ for surfaces. Third, compatible finite-level complexes define continuous integral and rational cohomology, with the exact $\varprojlim^1$ obstruction displayed. Fourth, in the proper smooth cases needed for curves, abelian schemes, and the selected two-dimensional PEL varieties, the resulting geometric complexes are bounded and perfect over $\Lambda$, and their cohomology carries continuous Galois and functorial correspondence actions.
+The book establishes four packages. First, finite torsion coefficients admit a complete derived theory on the small étale topos, with Leray, hypercohomology, localization, Hochschild--Serre, and cup products. Second, constructible prime-to-residue-characteristic coefficients on a separated finite-type $d$-fold over a separably closed field have finite cohomology and vanish above degree $2d$. We prove the affine theorem and the dimension-controlled gluing argument from which this follows; in particular the bounds are $2$ for proper curves, $2g$ for $g$-dimensional abelian varieties, and $4$ for surfaces. Third, compatible finite-level complexes define continuous integral and rational cohomology, with the exact $\varprojlim^1$ obstruction displayed. Fourth, in the cases needed for curves, abelian schemes, and the selected two-dimensional PEL varieties, the resulting geometric complexes are bounded and perfect over $\Lambda$, and their cohomology carries continuous Galois and functorial correspondence actions.
 
 The geometric comparison theorem asserting proper or smooth base change in complete generality belongs to the next stage of the theory. Here we construct its canonical maps, prove the cases forced by finite étale morphisms and constant products, and formulate exact hypotheses under which finite-level comparison passes to adic coefficients. This boundary prevents a formal derived argument from being mistaken for the geometric theorem it is designed to transport.
 
@@ -191,7 +191,13 @@ $$
 \cong H^q(X_{(\bar y)},\mathcal F).
 $$
 
-To prove this, compute the stalk as a filtered colimit over pointed étale neighborhoods $V$ of $\bar y$. Restriction of injective sheaves is acyclic for sections over the base changes $X_V$, filtered colimits are exact, and étale cohomology of constructible torsion sheaves is continuous under the resulting inverse limit of schemes. Passing to the limit identifies the result with cohomology on the strict-local fiber. The same formula holds more generally whenever this continuity property is available. Notice that this is not yet geometric base change: $X_{(\bar y)}$ need not have the cohomology of the geometric fiber $X_{\bar y}$.
+To prove this, compute the stalk as a filtered colimit over pointed étale neighborhoods $V$ of $\bar y$. Evaluation on $X_V$ sends an injective sheaf to a complex acyclic for sections, and filtered colimits of modules are exact, so the stalk is
+
+$$
+\varinjlim_V H^q(X_V,\mathcal F).
+$$
+
+The required continuity can be proved directly in the constructible torsion case. In a fixed degree, a class is represented on a hypercover truncated one degree beyond that class. Quasi-compactness and quasi-separatedness let one choose finitely many quasi-compact étale objects in every relevant degree. Their equations, the finitely many coefficient sections, and all face identities descend to one pointed neighborhood $V$. If a descended class becomes zero on the limit, the finitely many cochains and homotopies witnessing zero also descend after a further neighborhood. This proves both surjectivity and injectivity of the map from the displayed colimit to $H^q(X_{(\bar y)},\mathcal F)$. Notice that this is not yet geometric base change: $X_{(\bar y)}$ need not have the cohomology of the geometric fiber $X_{\bar y}$.
 
 ### 2.4 Why the finite-cover site is not enough
 
@@ -380,17 +386,17 @@ E_2^{p,q}=H^p(Y,R^qf_*K)
 \Longrightarrow H^{p+q}(X,K).
 $$
 
-For a finite étale morphism $f$, the direct image on abelian sheaves is exact. This can be checked étale-locally on $Y$, where $X$ is a finite disjoint union of copies of the base and $f_*$ is a finite product. Therefore $R^qf_*=0$ for $q>0$, and Leray gives
+For a finite morphism $f$, the direct image on abelian étale sheaves is exact. Check exactness on a geometric stalk of the target and pass to the strict localization. A finite scheme over a strictly henselian local scheme is a finite disjoint union of henselian local schemes with separably closed residue fields. Every étale covering of each such local scheme has a section, so its global-section functor is exact. The stalk criterion now proves exactness of $f_*$. Therefore $R^qf_*=0$ for $q>0$, and Leray gives
 
 $$
 R\Gamma(X,K)\simeq R\Gamma(Y,f_*K).
 $$
 
-This elementary case is the cohomological form of induction along a finite cover.
+For finite étale $f$, this is the cohomological form of induction along a finite cover; the exactness statement itself also applies to ramified finite maps such as normalization.
 
 ### 5.2 Arithmetic descent and Hochschild--Serre
 
-Let $X/k$ be geometrically connected of finite type and let $\mathcal F$ descend to $X$. The fundamental exact sequence separates geometric monodromy from $G_k$. Derived invariants then give
+Let $X/k$ be of finite type and let $\mathcal F$ descend to $X$. Galois descent on the whole base change $\bar X$ gives
 
 $$
 E_2^{a,b}=H^a_{\mathrm{cts}}
@@ -407,7 +413,7 @@ $$
 \to H^2(G_k,H^0(\bar X,\mathcal F)).
 $$
 
-Thus a geometrically invariant class need not descend; the final arrow is its obstruction. If $X$ is not geometrically connected, the quotient group must be replaced by the stabilizer of a chosen geometric component. If the coefficient object is completed, continuous cochains and derived inverse limits must both be retained; Section 11 returns to this point.
+Thus a geometrically invariant class need not descend; the final arrow is its obstruction. If $X$ is geometrically disconnected, $G_k$ permutes all components and the same sequence remains valid for their union. Only a reformulation through the fundamental group of one chosen component replaces $G_k$ by its stabilizer. If the coefficient object is completed, continuous cochains and derived inverse limits must both be retained; Section 11 returns to this point.
 
 ### 5.3 Coefficient change
 
@@ -419,22 +425,24 @@ R\Gamma(X,K)\otimes^L_{\Lambda_n}A
 R\Gamma(X,K\otimes^L_{\Lambda_n}A).
 $$
 
-It is an isomorphism when $K$ has a bounded flat representative and the relevant cohomology is computed by a bounded complex of flat modules; later, perfectness will provide this condition. If $A=\Lambda_1$ and $K$ is flat enough, multiplication by $\ell$ gives a triangle
+It is an isomorphism, for example, when $A$ is perfect over the coefficient ring, by the projection formula, or when compatible bounded flat models compute both sides. One must not obtain reduction from $\Lambda_n$ to $\Lambda_1$ by pretending that multiplication by $\ell$ is a non-zero-divisor in $\Lambda_n$; it is not.
+
+The useful two-term formula is instead integral. If $C$ is a complex of $\Lambda=\mathbf Z_\ell$-modules, then the free resolution of $\Lambda_1$ over $\Lambda$ gives a triangle
 
 $$
-K\xrightarrow{\ell}K\longrightarrow K\otimes^L\Lambda_1
-\longrightarrow K[1]
+C\xrightarrow{\ell}C\longrightarrow C\otimes^L_\Lambda\Lambda_1
+\longrightarrow C[1]
 $$
 
 and therefore
 
 $$
-0\to H^i(K)/\ell H^i(K)
-\to H^i(K\otimes^L\Lambda_1)
-\to H^{i+1}(K)[\ell]\to0.
+0\to H^i(C)/\ell H^i(C)
+\to H^i(C\otimes^L_\Lambda\Lambda_1)
+\to H^{i+1}(C)[\ell]\to0.
 $$
 
-The right-hand torsion term is the exact reason reduction of cohomology need not equal cohomology after reduction. It disappears if $H^{i+1}(K)$ is $\ell$-torsion-free, but freeness of $H^i(K)$ alone does not suffice.
+The right-hand torsion term is the exact reason reduction of cohomology need not equal cohomology after reduction. It disappears if $H^{i+1}(C)$ is $\ell$-torsion-free, but freeness of $H^i(C)$ alone does not suffice.
 
 ### 5.4 Boundedness and convergence
 
@@ -478,7 +486,7 @@ $$
 
 computes cohomology, where $\varphi$ is arithmetic Frobenius.
 
-A strictly henselian local scheme has no nontrivial finite étale covers, but one should apply this fact only to finite locally constant coefficients. Such a sheaf is constant and its positive cohomology vanishes. For constructible sheaves on a strict localization, closed strata can contribute; the appropriate local dimension bound depends on the dimension of the local scheme.
+A strictly henselian local scheme has no nontrivial finite étale covers, so every finite locally constant sheaf is constant and its degree-one torsors vanish. Triviality of the finite-cover category alone does not prove vanishing in every higher degree on the whole small étale site; such a rigidity assertion needs a separate cohomological argument. For constructible sheaves on a strict localization, closed strata can contribute, and the appropriate local dimension bound depends on the dimension of the local scheme.
 
 ### 6.3 Curves
 
@@ -490,19 +498,17 @@ $$
 
 for every constructible $\ell$-primary sheaf $\mathcal F$. If $C$ is proper, the corresponding bound is $q>2$.
 
-Here is the proof strategy. Normalize $C$ and separate the finite singular locus by the localization sequence. Finite pushforward along the normalization is exact, so singularities reduce to skyscraper terms and a smooth curve. On a dense open, a constructible sheaf is lisse and becomes constant after a finite étale cover; finite-cover descent reduces its cohomology to constant coefficients plus finite group cohomology. For a smooth affine curve, Kummer coverings and the function-field valuation sequence give a resolution of length one for prime-to-characteristic torsion. Compactifying by finitely many points adds one local-support degree, producing the bound two for a proper curve. Skyscraper sheaves have no positive cohomology over a separably closed residue field, so the induction closes.
+The assertion is the one-dimensional case of the affine theorem proved in Section 7.2. It is worth isolating why finite-cover descent alone is not its proof. If a finite Galois cover with group $G$ trivializes a lisse sheaf and $\ell$ divides $|G|$, the groups $H^a(G,-)$ can be nonzero in arbitrarily large degrees. The differentials in the descent sequence must then cancel those terms. The affine theorem obtains the cancellation from a length-one geometric model for a punctured curve, not from an unjustified vanishing of finite-group cohomology.
 
-The difference between one and two is visible on $\mathbf P^1$. One has
+Normalization and the finite singular locus then extend the smooth affine result to every affine curve. More explicitly, for the normalization $\nu:\widetilde C\to C$, the kernel and cokernel of
 
 $$
-H^0(\mathbf P^1,\Lambda_n)=\Lambda_n,
-\qquad
-H^1(\mathbf P^1,\Lambda_n)=0,
-\qquad
-H^2(\mathbf P^1,\Lambda_n(1))=\Lambda_n.
+\mathcal F\longrightarrow \nu_*\nu^*\mathcal F
 $$
 
-The last class is the class of a point. Removing a point makes the curve affine and removes this top ordinary cohomology. The twist records how the class transforms before the base field is made separably closed.
+are supported on finitely many points. Finite pushforward is exact, and a sheaf supported at a geometric point has no positive cohomology. The long exact sequence therefore transfers both the degree-one bound and finiteness from the normalized affine curve to $C$. For a proper curve, a finite affine cover has intersections that are affine because the curve is separated. The cover-to-derived spectral sequence has Čech degree at most one and affine cohomological degree at most one, giving the bound two.
+
+The difference between the affine and proper bounds is sharp: a proper smooth curve can have a nonzero degree-two class, whereas the affine theorem rules out degree two after a point is removed. Constructing the trace that canonically identifies the top group, and proving its perfect pairing with degree zero, belong to the duality theory. No trace is used in the dimension proof here.
 
 ### 6.4 Low-dimensional finite-type schemes
 
@@ -512,9 +518,9 @@ $$
 H^q(X,\mathcal F)=0\qquad(q>2d).
 $$
 
-In the required range we need only $d\le2$. The proof is by noetherian induction. Replace $X$ by a dense smooth open and a lower-dimensional complement. On the smooth open, choose a finite étale cover trivializing the lisse part of $\mathcal F$ and compactify. Successively remove a normal-crossings boundary; the local purity calculation for a smooth divisor contributes one support degree and one codimension shift. The complement has smaller dimension, so localization closes the induction. Altering the smooth open does not change the bound because the discarded locus is lower-dimensional. For $d=2$, the possible degrees are therefore $0,1,2,3,4$.
+In the required range we need only $d\le2$, but the argument of Section 7.2 proves the displayed statement for every $d$. Its two inputs are different. The affine theorem gives the sharper bound $d$ on an affine $d$-fold. A dimension-controlled affine refinement of a separated noetherian scheme contributes at most another $d$ Čech degrees. This distinction is important: merely covering by an unspecified finite number of affine opens proves finiteness but does not prove the bound $2d$. For $d=2$, the possible degrees are therefore $0,1,2,3,4$.
 
-If $X$ is smooth affine of dimension $d$, the sharper prime-to-characteristic bound $H^q(X,\mathcal F)=0$ for $q>d$ holds for lisse torsion coefficients. We use it for affine charts, but the global surface bound remains $2d$ because gluing affine pieces and boundary support can double the range.
+If $X$ is affine of dimension $d$, the sharper prime-to-characteristic bound $H^q(X,\mathcal F)=0$ for $q>d$ holds for every constructible torsion coefficient sheaf, not only for lisse ones. The constructible form is required for induction across a boundary. The global bound remains $2d$ because gluing the affine pieces can add another $d$ degrees.
 
 Over a nonclosed field, Hochschild--Serre adds the cohomological dimension of the ground field. More precisely, if $G_k$ has $\ell$-cohomological dimension $c$ on the finite modules in question, then
 
@@ -530,30 +536,84 @@ This follows immediately from the rectangle supporting the spectral sequence. No
 
 Vanishing alone does not make inverse limits manageable. We also need every finite-level group to be finite.
 
-**Finite-coefficient theorem.** Let $k$ be separably closed, let $X$ be separated of finite type over $k$ with $\dim X\le2$, and let $\mathcal F$ be a constructible sheaf of finite $\ell$-primary modules, where $\ell\ne\operatorname{char}k$. Then every $H^q(X,\mathcal F)$ is finite and vanishes for $q>2\dim X$. Without a dimension restriction, the same conclusion holds for abelian varieties, again with the bound $2\dim X$.
+**Finite-coefficient theorem.** Let $k$ be separably closed, let $X$ be separated of finite type over $k$ of dimension $d$, and let $\mathcal F$ be a constructible sheaf of finite $\ell$-primary modules, where $\ell\ne\operatorname{char}k$. Then every $H^q(X,\mathcal F)$ is finite and
 
-For an abelian variety of dimension $g$, the last phrase gives a bound $2g$ rather than restricting to dimension two. In the applications, coefficients are constant, lisse finite free, or obtained from these by a finite stratification.
+$$
+H^q(X,\mathcal F)=0\qquad(q>2d).
+$$
+
+If $X$ is affine, the sharper bound is $q>d$. Thus the theorem gives $[0,2]$ for proper curves, $[0,2g]$ for $g$-dimensional abelian varieties, and $[0,4]$ for surfaces. No properness or smoothness is needed for finiteness. In the applications, coefficients are constant, lisse finite free, or obtained from these by a finite stratification.
 
 ### 7.2 The proof architecture
 
-The proof is a finite induction with three reductions. First, a constructible sheaf has a filtration by extensions by zero of lisse sheaves on strata. The long exact localization sequence reduces finiteness to one lisse sheaf on a smooth connected stratum. Second, a lisse finite sheaf is trivialized by a finite étale cover. Replacing the cover by a Galois closure gives a finite group $G$ and a descent spectral sequence
+The proof has one geometric lemma and one gluing lemma. We give their proofs because neither finite monodromy nor the derived formalism alone implies finiteness.
+
+**Affine constructible lemma.** If $U$ is affine of finite type of dimension $d$ over $k$, then, for every constructible finite $\ell$-primary sheaf $\mathcal F$,
 
 $$
-H^a(G,H^b(Y,\Lambda_n^r))
+H^q(U,\mathcal F)=0\quad(q>d),
+$$
+
+and every group in the remaining range is finite.
+
+**Proof.** We argue simultaneously by dimension and noetherian induction on the support. The assertion is immediate in dimension zero: the reduced support is a finite set of spectra of finite purely inseparable extensions of $k$, hence has the same étale topos as a finite set of separably closed points.
+
+We next establish the curve step without using the higher-dimensional induction. Normalize an affine curve, compactify each smooth component, and let $D$ be the nonempty finite boundary. Skyscraper kernels and cokernels at the singular points have no positive cohomology, so it is enough to treat a lisse finite sheaf on a smooth $U=C\setminus D$. The prime-to-characteristic tame fundamental group has the finite presentation
+
+$$
+\left\langle
+a_1,b_1,\ldots,a_g,b_g,c_1,\ldots,c_r
+\ \middle|\
+\prod_{i=1}^g[a_i,b_i]\prod_{j=1}^r c_j=1
+\right\rangle,
+$$
+
+in every finite quotient of order prime to the characteristic; $c_j$ is inertia at the $j$th boundary point. Here is the algebraic construction of the presentation. Choose separating functions with prescribed simple zeros and poles by Riemann--Roch, use their Kummer covers to produce the $c_j$, and use $g$ pairs of functions with disjoint polar divisors to produce the handle generators. Normalizing successive fiber products gives every finite tame cover: the valuation criterion says that a function-field extension unramified on $U$ can ramify only at $D$, and the product of the local inertia elements is one because the divisor of a rational function has degree zero. Riemann--Hurwitz shows that a proper quotient of the displayed group would omit a connected cover of the predicted degree and genus, so the map on every finite tame quotient is injective as well as surjective. This proves the presentation through the finite-cover classification of Book 19.
+
+Because $r>0$, eliminate $c_r$; the maximal pro-$\ell$ quotient is a free pro-$\ell$ group on $2g+r-1$ generators. In characteristic $p>0$, wild inertia is pro-$p$, and invariants under it are exact on $\ell$-primary modules; in characteristic zero there is no wild subgroup. Prime-to-$\ell$ parts of the remaining finite monodromy are also exact by averaging. Thus continuous cohomology of the full group with a finite $\ell$-primary module is computed by the two-term free-group cochain complex
+
+$$
+M\longrightarrow M^{,2g+r-1}.
+$$
+
+It is finite and has no cohomology above degree one. Finite torsors give the same complex as étale cohomology on $U$, and a finite constructibility filtration extends the result from lisse sheaves to all constructible sheaves. This proves the lemma in dimension one.
+
+For the induction step in dimension at least two, first refine the constructibility stratification and replace the support by one irreducible stratum. After removing a smaller closed subset, the stratum is smooth and the sheaf is lisse. A generic linear projection, after shrinking source and target, gives an elementary affine-curve fibration
+
+$$
+U^\circ\xrightarrow{f}V
+$$
+
+with $V$ affine of dimension $d-1$: there is a smooth proper relative curve $\overline U^\circ\to V$ containing $U^\circ$, and the complement is finite over $V$. To obtain it, choose a separating transcendence basis for the smooth function field and realize $d-1$ of its elements as sufficiently general linear projections on an affine embedding. The generic fiber is then a smooth curve; openness of the smooth locus gives a smooth morphism after deleting the discriminant. Normalizing the projective closure and deleting the nonflat locus makes the boundary finite; deleting its branch locus makes it étale. This argument remains valid over an imperfect separably closed field because the chosen basis is separating. Every deletion has smaller-dimensional complement and is handled by noetherian induction.
+
+We need the relative curve calculation only for this elementary fibration. A lisse finite sheaf is trivialized by a finite étale cover. Normalize $\overline U^\circ$ in a Galois closure and shrink $V$ once more so that the normalization and every branch component are finite and flat over the corresponding strata. At a boundary branch the strict-local group is an extension of wild inertia by a procyclic tame group. In characteristic $p>0$, wild inertia is pro-$p$ and its invariants are exact on finite $\ell$-primary modules: on every finite quotient, averaging by the inverse of its $p$-power order splits invariants. In characteristic zero the wild group is trivial. The remaining tame cochains are represented by the two-term complex
+
+$$
+M\xrightarrow{\tau-1}M,
+$$
+
+where $\tau$ is a compatible tame generator. Apply the curve presentation just proved to the geometric fibers. The finite list of generators, inertia operators, and the single relation is defined after one pointed étale neighborhood of the base: all covers and branch sections involved are finitely presented. The resulting two-term presentation complexes therefore form constructible finite sheaves on $V$ and commute with further pointed étale restriction. Descent along the finite trivializing cover is retained in these complexes rather than replaced by the generally unbounded groups $H^a(G,-)$. It follows that $R^0f_*\mathcal F$ and $R^1f_*\mathcal F$ are constructible finite sheaves and that $R^qf_*\mathcal F=0$ for $q>1$. The same construction with extension by zero handles a locally closed stratum: the missing sections simply impose zero in the corresponding local term.
+
+The Leray sequence now has only the rows $0$ and $1$. By induction on $\dim V$ its terms vanish when $a>d-1$, so $H^{a+b}(U^\circ,\mathcal F)$ vanishes above $d$ and is finite. The kernel and cokernel of the map from the extension by zero on $U^\circ$ to the original sheaf are supported on the deleted closed subset. The localization long exact sequence and noetherian induction transfer the same assertions to $U$. This closes both inductions. $\square$
+
+The proof also explains the prime-to-characteristic hypothesis. It is exactly what makes wild-inertia invariants exact and leaves a length-one tame local complex. It explains the uniformity in the exponent as well: for a fixed stratification and fixed ranks, the same finite Čech and inertia complexes work for every $\Lambda_n$.
+
+We pass from affine to separated schemes without assuming quasi-projectivity. A separated noetherian space of dimension $d$ has a finite affine refinement of order at most $d+1$, meaning that no nonempty intersection uses more than $d+1$ members. Construct such a refinement by induction on dimension: choose disjoint affine neighborhoods of the finitely many generic points, remove their closed complement, and refine that complement, whose dimension is smaller; shrinking the new affine neighborhoods away from the previously chosen closed pieces preserves the asserted order. Separatedness makes every finite intersection affine.
+
+For such a cover $\mathfrak U$, cohomological descent gives
+
+$$
+E_1^{a,b}=
+\prod_{i_0<\cdots<i_a}
+H^b(U_{i_0}\cap\cdots\cap U_{i_a},\mathcal F)
 \Longrightarrow H^{a+b}(X,\mathcal F).
 $$
 
-Every group on the left is finite once constant-coefficient cohomology on $Y$ is finite. Third, compactification and localization reduce constant coefficients to smooth proper curves, smooth proper surfaces in the selected class, and boundary strata of smaller dimension.
-
-For curves, the Kummer sequence makes the base cases concrete. Proper smooth $C$ has finite $\ell^n$-torsion in its Picard group, while units modulo $\ell^n$ are finite on an affine curve because the divisor map embeds them, up to constants, in a finitely generated free group on boundary points. The Kummer exact sequence gives finite $H^1(C,\mu_{\ell^n})$. The point class supplies the finite top group. Twists and finite descent treat constant and then lisse coefficients.
-
-For an abelian variety $A$, multiplication by $\ell^n$ is finite étale of degree $\ell^{2gn}$. Its kernel is $(\Lambda_n)^{2g}$ after a geometric basis choice. The Kummer sequence for the dual abelian variety identifies the first cohomology with the dual of this torsion module. Products of degree-one classes generate the constant-coefficient algebra, as proved in Section 15.2, so all groups are finite.
-
-For the selected surfaces, choose a smooth projective compactification whose boundary is a divisor with smooth components and finitely many crossings. The surface, its boundary curves, and their intersections form a finite stratification. Repeated extension by zero and the localization sequence reduce the boundary terms to constructible complexes on curves and points; no duality identification of support is required. On affine surface charts, Noether normalization gives a finite map to affine space; induction along a generic projection and localization at its discriminant prove finite constant-coefficient cohomology. A finite affine cover of the proper surface has affine intersections because the surface is separated, and the resulting Čech-to-derived double complex has finitely many finite terms in each relevant bidegree. This proves finiteness without assuming a general relative base-change theorem.
+Every product is finite. The affine lemma gives $b\le d$, while the order of the cover gives $a\le d$. Thus the abutment is finite and zero above $2d$. This proves the finite-coefficient theorem. Notice that the argument uses a Čech-to-derived spectral sequence, not the ordinary Čech complex of one allegedly acyclic cover.
 
 ### 7.3 Uniformity in the exponent
 
-For passage to $\mathbf Z_\ell$, finiteness must be compatible as $n$ varies. Suppose $(\mathcal F_n)$ is a lisse system, finite free of rank $r$ at each level and compatible under reduction. The preceding dimension bounds are independent of $n$. Each $H^q(X,\mathcal F_n)$ is finite, and the transition maps form an inverse system of finite groups. For fixed $n$, the descending sequence of images
+For passage to $\mathbf Z_\ell$, finiteness must be compatible as $n$ varies. Suppose $(\mathcal F_n)$ is a constructible system on a common finite stratification, with bounded ranks and compatible derived reduction. The preceding dimension bounds are independent of $n$. Each $H^q(X,\mathcal F_n)$ is finite, and the transition maps form an inverse system of finite groups. For fixed $n$, the descending sequence of images
 
 $$
 \operatorname{im}(H^q(X,\mathcal F_m)\to H^q(X,\mathcal F_n)),
@@ -563,6 +623,24 @@ $$
 stabilizes because the target is finite. Thus every such tower is Mittag--Leffler, even when its transition maps are not surjective.
 
 This argument is stronger than a careless appeal to coefficient surjectivity. A surjection $\mathcal F_{n+1}\to\mathcal F_n$ need not induce a surjection on $H^q$; the connecting map into $H^{q+1}$ can obstruct lifting. Finiteness of the target, not exactness of cohomology, supplies Mittag--Leffler.
+
+There is a second, stronger uniform statement used for perfectness. Anticipating the systematic treatment in Chapter 9, call $K=(K_n)$ normalized when, for $K_\infty=R\varprojlim K_n$ in the derived category of étale $\Lambda$-module sheaves, every canonical reduction map is an isomorphism. Thus
+
+$$
+K_n\simeq K_\infty\otimes^L_\Lambda\Lambda_n.
+$$
+
+Derived global sections preserve derived inverse limits. Moreover, $\Lambda_n$ is represented over $\Lambda$ by the two-term finite free complex $[\Lambda\xrightarrow{\ell^n}\Lambda]$. Tensoring with this complex uses only finite direct sums and a cone, all of which commute with derived global sections. Therefore
+
+$$
+\left(R\varprojlim_mR\Gamma(X,K_m)\right)
+\otimes^L_\Lambda\Lambda_n
+\simeq R\Gamma(X,K_n). \tag{7.1}
+$$
+
+This proves finite-level reduction before perfectness is invoked; there is no circular appeal to a bounded free representative. In particular, reduction modulo $\ell$ of the continuous complex is bounded with finite-dimensional cohomology by the finite-coefficient theorem.
+
+We shall use the following complete-DVR lemma. If $C$ is derived $\ell$-complete and $C\otimes^L_\Lambda\Lambda_1$ is a bounded complex with finite-dimensional cohomology, then $C$ is perfect over $\Lambda$. To prove it, choose a minimal free resolution of $C$: lift a basis of the mod-$\ell$ cocycles degree by degree and remove every differential entry that is a unit by a contractible two-term summand. The remaining differentials lie in $\ell\Lambda$. Reduction of this minimal complex has zero differential, so its term in degree $i$ has rank $\dim H^i(C\otimes^L\Lambda_1)$. Those dimensions are finite and vanish outside a finite interval. The minimal resolution is therefore a bounded complex of finite free modules. Derived completeness excludes an additional complex on which multiplication by $\ell$ is invertible, since such a complex has zero derived completion. This proves the lemma and, together with (7.1), the integral perfectness statements below.
 
 ### 7.4 What fails without the hypotheses
 
@@ -771,14 +849,14 @@ This isomorphism is compatible with long exact sequences only when those sequenc
 
 ### 10.3 Reduction and completion
 
-Suppose $C=R\Gamma_{\mathrm{cont}}(X,\mathcal F)$ is derived complete and perfect over $\Lambda$, and suppose the normalized coefficient system satisfies the finite-level coefficient-change comparison. Then
+Let $\mathcal F=(\mathcal F_n)$ be normalized and put $C=R\Gamma_{\mathrm{cont}}(X,\mathcal F)$. Equation (7.1), proved from normalization, preservation of derived limits, and the explicit two-term free resolution of $\Lambda_n$, gives
 
 $$
 C\otimes^L_\Lambda\Lambda_n
 \xrightarrow{\sim}R\Gamma(X,\mathcal F_n).
 $$
 
-One proves this first for a bounded finite free representative of $C$, where inverse limit and tensor are computed termwise, and then transports it across a quasi-isomorphism. Conversely, if the finite-level complexes have a common bounded amplitude, finite cohomology, and compatible derived reduction, their derived inverse limit is a bounded complex with finitely generated $\Lambda$-cohomology and the displayed comparison holds.
+No prior perfectness of $C$ is needed. If $X$ is separated of finite type over a separably closed field and $\mathcal F_1$ is bounded constructible, the right side for $n=1$ is bounded with finite-dimensional cohomology. The complete-DVR lemma of Section 7.3 then proves that $C$ is perfect. Thus reduction is an input to the proof of perfectness, not a consequence obtained from perfectness and then used circularly.
 
 At the level of groups, the universal-coefficient sequence reads
 
@@ -821,7 +899,13 @@ For a rational constructible complex, one similarly chooses an integral construc
 
 ### 11.1 Geometric cohomology over a field
 
-Let $X$ be separated of finite type over $k$, and let a constructible coefficient system $\mathcal F$ descend to $X$. Every $\sigma\in G_k$ acts on $\bar X=X\times_kk^s$ and on the pulled-back coefficient. Functoriality gives an action on
+Let $X$ be separated of finite type over $k$, and let a constructible coefficient system $\mathcal F$ descend to $X$. Write $a_\sigma$ for the automorphism of $\bar X=X\times_kk^s$ induced by $\sigma$ on $k^s$. Pullback is contravariant, so our left action is
+
+$$
+\sigma\cdot c=(a_{\sigma^{-1}})^*c,
+$$
+
+using the coefficient descent isomorphism. The inverse is essential: without it, pullback would define a right action. This convention gives an action on
 
 $$
 R\Gamma(\bar X,\mathcal F_n)
@@ -843,7 +927,7 @@ G_k\longrightarrow
 H^q_{\mathrm{cont}}(\bar X,\mathcal F).
 $$
 
-Give the target module its $\ell$-adic topology. The action is continuous because its reduction modulo every $\ell^n$ factors through the finite continuous action at level $n$, and congruence subgroups form a neighborhood basis in the automorphism group. This argument requires the integral group to be recovered with its inverse-limit topology; regarding it as an abstract module would lose the conclusion.
+First give the group the inverse-limit topology coming from the finite groups $H^q(\bar X,\mathcal F_n)$. The action is continuous because every coordinate action is continuous. In the normalized finite-type cases, perfectness makes the limit a finitely generated $\Lambda$-module and (7.1), together with the universal-coefficient sequence, shows that this topology agrees with its $\ell$-adic topology. It is not necessary, and can be false in the presence of next-degree torsion, that $H^q(\bar X,\mathcal F_n)$ itself equal the quotient of $H^q_{\mathrm{cont}}$ by $\ell^n$. Regarding the limit as an abstract module would lose the continuity conclusion.
 
 If the integral cohomology is finitely generated, tensoring with $E$ yields a continuous finite-dimensional $E$-representation. A stable lattice is already present, so continuity does not have to be reconstructed after rationalization.
 
@@ -857,7 +941,7 @@ R\Gamma(X,\mathcal F_n)
 \bigl(G_k,R\Gamma(\bar X,\mathcal F_n)\bigr)
 $$
 
-under the usual boundedness conditions. Taking $R\varprojlim_n$ produces an adic descent object. If the geometric cohomology towers are Mittag--Leffler and continuous group cohomology has finite cohomological dimension on the modules involved, the two derived operations may be totalized in either order. The resulting spectral sequence is
+under the boundedness conditions of Section 5.2. Taking $R\varprojlim_n$ produces an adic descent object. Define continuous cochains of the compact limit as the inverse limit of the finite discrete cochain complexes. If the geometric cohomology towers and the cochain-cohomology towers are Mittag--Leffler, and $G_k$ has finite cohomological dimension on the modules involved, the two derived operations may be totalized in either order. The resulting spectral sequence is
 
 $$
 H^a_{\mathrm{cts}}
@@ -928,7 +1012,7 @@ $$
 g^*Rf_*K_n\xrightarrow{\sim}Rf'_*g'^*K_n
 $$
 
-for every $n$. Taking $R\varprojlim$ yields a comparison of continuous direct-image complexes. It is an isomorphism provided the systems have uniform bounded amplitude and the relevant cohomology-sheaf towers are Mittag--Leffler. These conditions allow stalks, finite totalizations, and derived inverse limits to be interchanged.
+for every $n$. These arrows already form an isomorphism of finite-level systems. After normalizing both systems they therefore give an isomorphism in the adic derived category; no interchange of a stalk with an ordinary inverse limit is involved in that assertion. If one realizes the two sides as $R\varprojlim$ complexes of ordinary $\Lambda$-module sheaves, uniform bounded amplitude and the relevant Mittag--Leffler conditions justify the realization and its stalkwise interpretation.
 
 For a proper smooth family of curves, abelian varieties, or selected surfaces with lisse finite free coefficients, finite-level constructibility and uniform cohomological dimension give precisely this control. One obtains
 
@@ -938,7 +1022,7 @@ g^*R f_{*,\mathrm{cont}}\mathcal F
 R f'_{*,\mathrm{cont}}g'^*\mathcal F,
 $$
 
-where the continuous direct image is represented by $(Rf_*\mathcal F_n)_n$ and normalized. Rationalizing afterward preserves the isomorphism.
+where the continuous direct image is represented by $(Rf_*\mathcal F_n)_n$ and normalized, and $g^*$ on the left means normalized adic pullback. Rationalizing afterward preserves the isomorphism.
 
 ### 12.4 A safe base-change protocol
 
@@ -1034,7 +1118,13 @@ $$
 X\xleftarrow{p}Z\xrightarrow{q}X
 $$
 
-acts contravariantly by $p^*$ and, when a suitable finite or proper pushforward is available, covariantly by $q_*$. The composite $q_*p^*$ acts on cohomology and respects cup products through projection formulas. In this book finite étale pushforward is already available. Trace maps for general proper maps and their duality properties require the later duality theory; no such trace is silently assumed here.
+acts contravariantly by $p^*$. If $q$ is finite étale, there is also an elementary coefficient trace
+
+$$
+\operatorname{tr}_q:q_*q^*L\longrightarrow L.
+$$
+
+Étale-locally, $q$ is a finite disjoint union of identity maps and this arrow is summation of the components; permutation invariance makes those local maps descend. The composite of $R\Gamma(Z,q^*L)=R\Gamma(X,q_*q^*L)$ with $\operatorname{tr}_q$ is the covariant map denoted $q_*$. Thus $q_*p^*$ acts when the coefficient identifications along the two legs have been specified, and the projection formula gives compatibility with cup products. Trace maps for general proper maps and their duality properties require the later duality theory; no such trace is silently assumed here.
 
 ## 14. Curves
 
@@ -1048,19 +1138,7 @@ $$
 
 and all cohomology groups are finite. If $C$ is affine, the upper endpoint is $1$. For a bounded constructible complex with cohomology in $[a,b]$, the corresponding ranges are $[a,b+2]$ and $[a,b+1]$.
 
-For the constant sheaf on a proper smooth curve of genus $g$,
-
-$$
-H^0(C,\Lambda_n)=\Lambda_n,
-\qquad
-H^1(C,\Lambda_n)\cong\Lambda_n^{2g},
-\qquad
-H^2(C,\Lambda_n(1))\cong\Lambda_n.
-$$
-
-The first equality is connectedness. The middle rank follows from the $\ell^n$-torsion of the Jacobian, or equivalently from the classification of cyclic étale torsors and the Kummer sequence. The last group is generated by the class of a closed point of degree one after passing to a suitable finite extension; degree gives the inverse map. The full canonical trace interpretation and perfect duality pairing are developed with étale duality, but finiteness and rank do not depend on that later structure.
-
-As a check, $\mathbf A^1$ has only $H^0$ for constant prime-to-characteristic coefficients, while $\mathbf G_m$ has $H^1(\mathbf G_m,\Lambda_n(1))\cong\Lambda_n$, represented by the Kummer class of the coordinate. The missing points at infinity account for the difference.
+For the constant sheaf on a proper smooth connected curve, $H^0(C,\Lambda_n)=\Lambda_n$ and the remaining possible groups are finite in degrees one and two. Their ranks and the canonical identification of the top twisted group require the divisor-class and trace calculations developed in the curve and duality books. The present result is exactly what the adic construction needs: finite groups in a uniform interval. Kummer theory still supplies useful individual classes on open curves, but it is not being used as a substitute for the full top-degree calculation.
 
 ### 14.2 The first cohomology group
 
@@ -1080,7 +1158,7 @@ H^1(C,\mathbf Z_\ell)
 (\pi_1(C)^{\mathrm{ab}},\mathbf Z_\ell).
 $$
 
-If $C$ descends to $k_0$, this finite free module of rank $2g$ carries a continuous $G_{k_0}$-action. This action is the one later compared with the Tate module of the Jacobian. It should not be confused with the fundamental-group action on the stalk of a lisse coefficient sheaf: constant coefficients have trivial stalk action, while $H^1(\bar C,\mathbf Z_\ell)$ usually has nontrivial arithmetic action.
+If $C$ descends to $k_0$, this finitely generated $\Lambda$-module carries a continuous $G_{k_0}$-action. Later divisor-class theory proves that it is free of rank $2g$ and compares it with the Tate module of the Jacobian. That later identification is not used for its construction or continuity here. The action should not be confused with the fundamental-group action on the stalk of a lisse coefficient sheaf: constant coefficients have trivial stalk action, while $H^1(\bar C,\mathbf Z_\ell)$ usually has nontrivial arithmetic action.
 
 For nonconstant lisse $\mathcal F$, $H^0(C,\mathcal F)$ is the invariant submodule of a geometric stalk. The group $H^1$ measures extensions and torsors twisted by monodromy. Even if $\mathcal F$ has no invariants, $H^1$ need not vanish; topology of the curve and monodromy relations can create classes.
 
@@ -1110,107 +1188,58 @@ This calculation is the static cohomology of a semistable fiber. Comparing it wi
 
 ### 14.4 Perfectness
 
-Let $(\mathcal F_n)$ be a constructible adic system on a finite-type curve, with uniformly bounded finite stalks and derived reduction. Then
+Let $(\mathcal F_n)$ be a normalized bounded constructible adic system on a finite-type curve, on a common finite stratification. Then
 
 $$
 C=R\Gamma_{\mathrm{cont}}(C,\mathcal F)
 $$
 
-is bounded and has finitely generated $\Lambda$-cohomology. Indeed, the finite-level amplitude is uniformly bounded, the cohomology groups are finite, and the inverse systems are Mittag--Leffler. The derived Nakayama argument gives finite generation: lift a finite set of generators of the mod-$\ell$ cohomology, correct the error successively modulo $\ell^m$, and use derived completeness to pass to the limit. Applied through the finite truncation tower, this proves finite generation of every cohomology module.
-
-Because $\Lambda$ is a discrete valuation ring, every finitely generated module has a finite free resolution of length at most one. Resolving the finitely many cohomology modules and assembling their truncation triangles shows that every bounded complex with finitely generated cohomology is perfect. Hence $C$ is perfect. For a proper smooth curve with constant coefficients it has cohomology only in degrees $0,1,2$, with ranks $1,2g,1$ after tensoring with $E$.
+is perfect over $\Lambda$. Indeed, (7.1) identifies its reduction modulo $\ell$ with $R\Gamma(C,\mathcal F_1)$, which is bounded with finite-dimensional cohomology. The complete-DVR lemma of Section 7.3 then gives a bounded finite free representative. In particular its integral cohomology modules are finitely generated, and Milnor identifies them with the ordinary inverse limits of the finite-level groups. For a proper curve the sheaf-cohomological range is $[0,2]$; a coefficient complex shifts this interval by its own amplitude.
 
 Perfectness is stronger than degreewise finite generation. It makes derived reduction, tensor products, dual constructions, and base change compatible with finite complexes. It does not assert that each integral cohomology group is torsion-free, nor that the complex splits as the direct sum of its cohomology groups.
 
 ## 15. Abelian schemes
 
-### 15.1 Torsion and the first cohomology group
+### 15.1 Absolute finiteness and amplitude
 
-Let $A$ be an abelian variety of dimension $g$ over a separably closed field of characteristic different from $\ell$. Multiplication by $\ell^n$ is finite étale, and
-
-$$
-A[\ell^n](k^s)\cong(\Lambda_n)^{2g}.
-$$
-
-The inverse limit is the Tate module $T_\ell A$, a free $\Lambda$-module of rank $2g$. Finite étale torsors and the group law identify
+Let $A$ be an abelian variety of dimension $g$ over a separably closed field of characteristic different from $\ell$. It is smooth, proper, and of finite type, so the finite-coefficient theorem applies to every constructible finite $\ell$-primary sheaf $\mathcal F$:
 
 $$
-H^1(A,\Lambda_n)
-\cong\operatorname{Hom}_{\Lambda_n}(A[\ell^n],\Lambda_n),
+H^q(A,\mathcal F)\text{ is finite},
+\qquad H^q(A,\mathcal F)=0\quad(q>2g).
 $$
 
-compatibly in $n$, and therefore
+This is the abelian-variety finiteness input promised here. It does not require a calculation of the full constant-coefficient algebra. The later comparison with the dual Tate module and the exterior-algebra description of constant cohomology use polarizations and duality. Keeping those assertions out of the present proof prevents a rank computation from being smuggled into the finiteness theorem.
+
+For a normalized bounded constructible adic complex $\mathcal F$, (7.1) identifies finite-level reduction of $R\Gamma_{\mathrm{cont}}(A,\mathcal F)$. Its mod-$\ell$ reduction is bounded in the interval obtained by adding $[0,2g]$ to the amplitude of $\mathcal F_1$ and has finite-dimensional cohomology. The complete-DVR lemma makes the continuous complex perfect.
+
+### 15.2 Torsion and lisse Tate systems
+
+Let $f:A\to S$ be an abelian scheme of relative dimension $g$, and assume $\ell$ is invertible on $S$. Multiplication by $\ell^n$ is étale because its differential on the relative tangent bundle is multiplication by the unit $\ell^n$. It is proper and quasi-finite, hence finite. Its kernel $A[\ell^n]$ is therefore finite étale over $S$.
+
+Its rank is $\ell^{2gn}$. To see the degree without assuming a cohomology calculation, choose a relatively ample line bundle and replace it by its tensor product with its pullback under $[-1]$; this makes it symmetric. For completeness, the cubical identity is obtained by taking the alternating tensor product of the pullbacks of $L$ along the seven nonempty partial-sum maps $A^3\to A$. Its restriction to every coordinate plane is trivial. Applying the seesaw argument twice shows that the bundle itself is pulled back from the zero section, hence is numerically trivial on every fiber. Specializing two variables gives the theorem of the square, and induction on $m$ gives, on every geometric fiber,
 
 $$
-H^1(A,\mathbf Z_\ell)
-\cong\operatorname{Hom}_\Lambda(T_\ell A,\Lambda).
+[m]^*L\equiv L^{\otimes m^2}.
 $$
 
-The pairing is contravariant in $A$. If $A$ is defined over a field $k$, both sides carry continuous $G_k$-actions and the isomorphism is equivariant. A polarization may later identify the dual with a Tate-twisted Tate module, but the twist depends on the Weil pairing and should not be omitted.
+On a geometric fiber, the leading coefficient of the Hilbert polynomial is the top self-intersection of $L$ divided by $g!$. Pullback multiplies that self-intersection by $\deg[m]$, while replacing $L$ by $L^{\otimes m^2}$ multiplies it by $m^{2g}$. Hence $\deg[m]=m^{2g}$; the degree is locally constant on $S$, giving the stated rank for $m=\ell^n$.
 
-The key geometric point is that translations act trivially on cohomology. For a torsion translation this follows because translation is connected to the identity through the group scheme and acts trivially on finite étale torsor classes; compatibility and density extend the conclusion. Thus cohomology records the group structure through primitive degree-one classes rather than through the choice of an origin translate.
-
-### 15.2 The exterior algebra calculation
-
-The cup product induces a homomorphism of graded algebras
-
-$$
-\bigwedge{}^*H^1(A,\Lambda_n)
-\longrightarrow H^*(A,\Lambda_n).
-$$
-
-It is an isomorphism. In particular,
-
-$$
-H^i(A,\Lambda_n)
-\cong\bigwedge{}^i(\Lambda_n^{2g}),
-\qquad
-\operatorname{rank}_{\Lambda_n}H^i(A,\Lambda_n)
-=\binom{2g}{i},
-$$
-
-and the groups vanish for $i>2g$.
-
-Here is the proof mechanism. The group law $m:A\times A\to A$ makes cohomology a graded Hopf algebra, with coproduct $m^*$. Degree-one classes are primitive:
-
-$$
-m^*x=x\otimes1+1\otimes x.
-$$
-
-The decisive input is the cubical calculation for a commutative proper group: using the three face maps in $A^3$, the alternating sum of pullbacks kills every reduced class except its primitive part. Induction on degree then proves simultaneously that $[m]^*$ acts by $m^i$ on $H^i(A,\Lambda_n)$ and that the reduced cohomology is generated by primitive degree-one classes. The tower of covers $[\ell^r]:A\to A$ consequently has no persistent positive-degree cohomology: for fixed $n$ and $i>0$, pullback is zero once $ri\ge n$.
-
-The inverse system of these covers is therefore cohomologically acyclic for $\Lambda_n$. Its deck group is the pro-$\ell$ module $T_\ell A\cong\mathbf Z_\ell^{2g}$. Descent identifies $H^*(A,\Lambda_n)$ with the continuous group cohomology of this module. The Koszul complex for $\mathbf Z_\ell^{2g}$ is the exterior complex on the dual of $T_\ell A$ and has zero differential for the trivial action. It follows that the exterior map is an isomorphism and that
-
-$$
-\sum_i\operatorname{rank}H^i(A,\Lambda_n)t^i=(1+t)^{2g}.
-$$
-
-This calculation also proves freeness at every level, so passage from $\Lambda_1$ to all $\Lambda_n$ introduces no hidden Tor classes.
-
-For an elliptic curve this gives ranks $1,2,1$. For a product of two elliptic curves it gives $1,4,6,4,1$. The calculation includes the cross-terms that would be lost by adding the cohomology of the factors instead of taking the tensor product.
-
-For a nonconstant lisse sheaf on $A$, the cohomology need not be the exterior algebra on its first cohomology. The theorem is a calculation for constant coefficients; general lisse coefficients retain finiteness and the $[0,2g]$ bound but can have very different dimensions.
-
-### 15.3 Families and base change
-
-Let $f:A\to S$ be an abelian scheme of relative dimension $g$ and assume $\ell$ is invertible on $S$. Each $A[\ell^n]$ is finite étale over $S$, so it defines a lisse $\Lambda_n$-sheaf of rank $2g$. The tower
+The transition maps $A[\ell^{n+1}]\to A[\ell^n]$ make
 
 $$
 T_\ell A=(A[\ell^n])_n
 $$
 
-is a lisse $\Lambda$-sheaf. Fiberwise, the preceding calculation gives
+a lisse $\Lambda$-system of rank $2g$. This construction uses only finite étale covering theory. It should not yet be identified with $R^1f_*\Lambda$; that comparison is a cohomological base-change and duality statement with a contravariance and, after polarization, a Tate twist.
 
-$$
-R^if_*\Lambda_n
-\cong\bigwedge{}^i(R^1f_*\Lambda_n)
-$$
+### 15.3 Families and base change
 
-once finite-level smooth proper base change identifies stalks with geometric-fiber cohomology. Thus $R^if_*\Lambda_n$ is lisse finite free of rank $\binom{2g}{i}$ and zero above $2g$.
+Let $f:A\to S$ be as above. On every geometric fiber, Section 15.1 gives finite cohomology and vanishing above $2g$. The finite étaleness of $A[\ell^n]$ constructs the lisse Tate system without a cohomological comparison theorem. By contrast, identifying stalks of $R^if_*\Lambda_n$ with fiber cohomology and proving that these direct images are lisse use smooth proper base change. Those are precisely the geometric assertions reserved for the next book.
 
-The dependence on base change is explicit. The finite étaleness of $A[\ell^n]$ constructs the lisse Tate module without a cohomological comparison theorem. Identifying it with $R^1f_*\Lambda_n$ and transporting the exterior calculation across $S$ uses smooth proper base change. Once that finite-level theorem is available, the uniform ranks and surjective reductions make passage to $\mathbf Z_\ell$ formal by Section 12.3.
+Once finite-level smooth proper base change is available, the uniform amplitude and finite-level constructibility let Section 12.3 transport the result to the normalized $\Lambda$-system. Any later identification of $R^1f_*\Lambda_n$ with the dual of $A[\ell^n]$ must state its contravariance; a polarization changes that dual description by the Weil-pairing twist.
 
-An isogeny $u:A\to B$ induces $u^*:H^1(B)\to H^1(A)$ and hence maps on every exterior power. If its degree is prime to $\ell$, the map on Tate modules is an isomorphism and so is the map on $\ell$-adic cohomology. If $\ell$ divides the degree, kernels and cokernels can survive integrally even when the rational map is an isomorphism.
+An isogeny $u:A\to B$ induces contravariant pullback on cohomology and a covariant map on Tate modules. If its degree is prime to $\ell$, the Tate-module map is an isomorphism. Deducing the corresponding cohomological isomorphism requires the later identification just described; it is not inferred here from matching ranks.
 
 ### 15.4 Integral perfectness
 
@@ -1220,17 +1249,11 @@ $$
 R\Gamma(A_{\bar s},\mathbf Z_\ell)
 $$
 
-is perfect, supported in cohomological degrees $0$ through $2g$, and has finite free cohomology. The exterior calculation commutes with reduction, so no hidden $\ell$-torsion enters the universal-coefficient sequence.
+is perfect and supported in cohomological degrees $0$ through $2g$. Perfectness follows from (7.1) and the complete-DVR lemma. It does not assert that every integral cohomology group is torsion-free.
 
-Relatively, after finite-level proper smooth base change, the normalized system $(Rf_*\Lambda_n)_n$ is locally represented by a bounded complex of lisse finite free $\Lambda$-systems and is perfect over $S$ in the adic sense. Fiberwise perfection alone would not prove this local relative statement; constructibility and base change are what spread a finite model from a geometric fiber to an étale neighborhood.
+Relatively, after finite-level proper smooth base change and constructibility, the normalized system $(Rf_*\Lambda_n)_n$ is perfect over $S$ in the adic sense. Fiberwise perfection alone would not prove this local relative statement; constructibility and base change are what spread a finite model from a geometric fiber to an étale neighborhood.
 
-Tensoring with $E$ gives a perfect rational complex. Its class in the Grothendieck group has alternating rank
-
-$$
-\sum_{i=0}^{2g}(-1)^i\binom{2g}{i}=0
-$$
-
-when $g>0$. This vanishing of Euler characteristic is a consequence of the exterior algebra, not a claim that the individual cohomology groups vanish.
+Tensoring with $E$ gives a perfect rational complex. Computing its individual ranks or Euler characteristic is a separate constant-coefficient calculation and is not needed for finiteness, completion, or continuity.
 
 ## 16. Selected Shimura surfaces
 
@@ -1241,7 +1264,7 @@ The surfaces needed in the arithmetic route arise from PEL moduli problems at su
 1. $S$ has a smooth projective compactification $j:S\hookrightarrow\overline S$ whose boundary $D$ is a strict normal-crossings divisor after a finite extension of $K$;
 2. away from a finite set of primes there is a smooth model of the pair $(\overline S,D)$;
 3. the coefficient systems under consideration arise from finite free $\Lambda$-lattices in algebraic PEL representations and are lisse on $S$;
-4. their local monodromy along $D$ is constructible, with finite-level inertia cohomology in a uniform bounded range.
+4. $D$ has a finite stratification on which every finite-level local inertia action is constant up to isomorphism, and the corresponding inertia cohomology vanishes outside one bounded range independent of the level.
 
 Compact quaternionic surfaces have $D=\varnothing$. For noncompact Hilbert or unitary examples, toroidal compactifications provide the normal-crossings boundary after the stated level and field adjustments. The book uses only the four geometric properties above; it does not infer them from the word “Shimura.”
 
@@ -1272,7 +1295,7 @@ $$
 \mathcal B_n=i^*Rj_*\mathcal L_n
 $$
 
-is the boundary complex. Its stalk at a smooth boundary point is continuous cohomology of the local inertia group acting on the stalk of $\mathcal L_n$; at a crossing, two inertia directions produce a two-variable local complex. The finite-monodromy hypothesis makes these cohomology sheaves constructible.
+is the boundary complex. Its stalk at a smooth boundary point is continuous cohomology of the local inertia group acting on the stalk of $\mathcal L_n$; at a crossing, two inertia directions produce a two-variable local complex. The finite-level local-monodromy hypothesis in Section 16.1 makes these cohomology sheaves constructible.
 
 Define interior cohomology by
 
@@ -1299,7 +1322,7 @@ R\Gamma(S,\mathcal L),
 R\Gamma(D,\mathcal B).
 $$
 
-Finite-level finiteness makes every cohomology tower Mittag--Leffler, so the boundary triangle survives completion and the integral cohomology modules are finitely generated. Each complex is therefore perfect over $\Lambda$. If $S$ is proper, the boundary complex is zero and ordinary and compactly supported cohomology coincide.
+Finite-level finiteness makes every cohomology tower Mittag--Leffler, so the boundary triangle survives completion. Normalization and (7.1) identify the mod-$\ell$ reductions of the three continuous complexes with their finite-level counterparts. The complete-DVR lemma therefore makes each complex perfect over $\Lambda$ and its cohomology finitely generated. If $S$ is proper, the boundary complex is zero and ordinary and compactly supported cohomology coincide.
 
 For the constant system on a smooth proper surface, the cohomological range is exactly contained in $[0,4]$. For an open surface, ordinary and compactly supported cohomology are still bounded, but their groups need not agree and boundary contributions can occur in several degrees. A claim that only the middle degree matters requires a separate projector, vanishing theorem, or weight argument; dimension alone does not provide it.
 
@@ -1312,6 +1335,8 @@ S\xleftarrow{p}S'\xrightarrow{q}S
 $$
 
 whose arrows are finite étale on the open surface and extend compatibly to the chosen compactifications after refinement. Pullback along $p$ and finite pushforward along $q$ define an endomorphism $q_*p^*$ of finite-level cohomology. Compatibility with reduction gives an action on the integral perfect complex and then on rational cohomology.
+
+The notation includes the coefficient isomorphism $p^*\mathcal L_n\simeq q^*\mathcal L_n$ supplied by the PEL correspondence; without such an isomorphism the diagram does not act on cohomology with coefficients in $\mathcal L_n$.
 
 Because the correspondence and coefficients descend to $K$, Hecke actions commute with the continuous $G_K$-action on geometric cohomology. This commutation is already true at every finite level and survives inverse limit. It is therefore legitimate to take generalized Hecke eigenspaces inside a finite-dimensional $E$-representation of $G_K$.
 
@@ -1329,17 +1354,17 @@ We can now collect the constructions into the form used later.
 - an abelian variety of dimension $g$;
 - a selected smooth Shimura surface satisfying Section 16.1, with either ordinary or compactly supported cohomology.
 
-Let $\mathcal F=(\mathcal F_n)$ be a normalized constructible $\Lambda$-system with a common finite stratification, derived reduction, uniformly bounded numbers of stalk generators, and uniform cohomological amplitude. Then:
+Let $\mathcal F=(\mathcal F_n)$ be a normalized bounded constructible $\Lambda$-system on a common finite stratification. For compact support, apply this hypothesis to $(j_!\mathcal F_n)$. Then:
 
 1. $R\Gamma_{\mathrm{cont}}(\bar X,\mathcal F)$ is bounded and derived complete;
 2. its cohomology modules are finitely generated over $\Lambda$;
 3. it is a perfect $\Lambda$-complex;
 4. reduction modulo $\ell^n$ recovers $R\Gamma(\bar X,\mathcal F_n)$;
-5. it carries a continuous $G_k$-action compatible with cup products and all finite correspondences defined over $k$.
+5. it carries a continuous $G_k$-action compatible with cup products and every finite correspondence defined over $k$ that is equipped with the required coefficient identification.
 
 For a proper curve the sheaf-cohomological range is $[0,2]$, for an abelian variety it is $[0,2g]$, and for a proper surface it is $[0,4]$. A coefficient complex shifts these ranges by its own amplitude. For open surfaces with boundary complexes, add the finite local-inertia amplitude rather than asserting the proper range.
 
-**Proof.** Finite-level boundedness is supplied by Chapter 6 and finiteness by Chapter 7. Hence every fixed-degree tower is Mittag--Leffler, so Milnor identifies continuous cohomology with its inverse limit and preserves the uniform range. Derived reduction follows from normalization and the perfect finite-level comparison. Finite generation and perfection follow as in Section 14.4 from completeness over the discrete valuation ring. The descent action is continuous modulo every $\ell^n$, hence continuously on the inverse limit. Products and correspondences are compatible levelwise and therefore on the normalized limit. $\square$
+**Proof.** Finite-level boundedness and finiteness are supplied by Chapters 6 and 7. Hence every fixed-degree tower is Mittag--Leffler, so Milnor identifies continuous cohomology with its inverse limit and preserves the uniform range. Equation (7.1) gives derived reduction directly from normalization. In particular the mod-$\ell$ reduction is bounded with finite-dimensional cohomology; the complete-DVR lemma makes the continuous complex perfect and its cohomology finitely generated. The descent action is continuous at every finite level and therefore on the inverse-limit topology. Products and finite traces are compatible levelwise and hence on the normalized limit. $\square$
 
 ### 17.2 The rational theorem
 
