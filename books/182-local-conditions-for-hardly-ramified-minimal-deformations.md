@@ -221,10 +221,10 @@ This is the smallest nontrivial tame irreducible local type at $2$. It is exactl
 For any $\mathcal O$-algebra $A$, define
 
 $$
-S_A=A[u]/(u^2+u+1). \tag{2.2}
+B_A=A[u]/(u^2+u+1). \tag{2.2}
 $$
 
-Since the discriminant is $-3$ and $\ell\ge7$, $S_A$ is a quadratic finite étale $A$-algebra. It may be split or connected; none of our arguments requires choosing a primitive cube root in $A$.
+Since the discriminant is $-3$ and $\ell\ge7$, $B_A$ is a quadratic finite étale $A$-algebra. It may be split or connected; none of our arguments requires choosing a primitive cube root in $A$. We reserve $S_A$ for the coefficient algebra used at the prime $\ell$ in Chapter 6, so the two unrelated étale algebras cannot be confused.
 
 Let
 
@@ -246,7 +246,7 @@ T_0^2+T_0+I=0,
 \qquad \operatorname{tr}T_0=-1. \tag{2.4}
 $$
 
-The $A$-subalgebra $A[T_0]\subset M_2(A)$ is canonically $S_A$. The nontrivial $A$-automorphism $\sigma$ of $S_A$ is given by
+The $A$-subalgebra $A[T_0]\subset M_2(A)$ is canonically $B_A$. The nontrivial $A$-automorphism $\sigma$ of $B_A$ is given by
 
 $$
 \sigma(u)=u^2=-1-u. \tag{2.5}
@@ -264,7 +264,7 @@ $$
 \rho_A(\tau)^2+\rho_A(\tau)+I=0. \tag{2.6}
 $$
 
-The second equation forces $\rho_A(\tau)^3=I$ and excludes the trivial order-three root. Because $S_A$ is étale, the associated rank-two $A[C_3]$-module is locally the regular pair of nontrivial characters and is rigid under nilpotent thickening.
+The second equation forces $\rho_A(\tau)^3=I$ and excludes the trivial order-three root. Because $B_A$ is étale, the associated rank-two $A[C_3]$-module is locally the regular pair of nontrivial characters and is rigid under nilpotent thickening.
 
 The definition is independent of the compatible tame generator. Replacing $\tau$ by another generator raises its order-three image to the first or second power. Both $T$ and $T^2=-I-T$ satisfy the same polynomial, and wild inertia remains trivial. It is also invariant under conjugacy. Hence (2.6) is an intrinsic condition on the local representation, despite its convenient matrix presentation.
 
@@ -355,7 +355,7 @@ WT_0W^{-1}=T_0^2,
 \qquad \det W=-1. \tag{3.2}
 $$
 
-Consequently every matrix $C\in S_A^\times=A[T_0]^\times$ gives a solution
+Consequently every matrix $C\in B_A^\times=A[T_0]^\times$ gives a solution
 
 $$
 T=T_0,
@@ -371,13 +371,13 @@ $$
 FT_0F^{-1}=T_0^2.
 $$
 
-Then there is a unique $C\in S_A^\times$ such that $F=CW$.
+Then there is a unique $C\in B_A^\times$ such that $F=CW$.
 
-**Proof.** Since $W T_0 W^{-1}=T_0^2$, the matrix $FW^{-1}$ commutes with $T_0$. The centralizer of a cyclic $2\times2$ matrix is the algebra it generates: writing an arbitrary matrix and solving $XT_0=T_0X$ gives $X=aI+bT_0$. Thus $FW^{-1}\in S_A$. It is invertible because $F$ and $W$ are, so it lies in $S_A^\times$. Uniqueness is immediate. $\square$
+**Proof.** Since $W T_0 W^{-1}=T_0^2$, the matrix $FW^{-1}$ commutes with $T_0$. The centralizer of a cyclic $2\times2$ matrix is the algebra it generates: writing an arbitrary matrix and solving $XT_0=T_0X$ gives $X=aI+bT_0$. Thus $FW^{-1}\in B_A$. It is invertible because $F$ and $W$ are, so it lies in $B_A^\times$. Uniqueness is immediate. $\square$
 
-The lemma makes the geometry transparent. Fixing the inertia operator leaves a torsor under the smooth two-dimensional torus $S_A^\times$. The determinant will cut its norm-one direction.
+The lemma makes the geometry transparent. Fixing the inertia operator leaves a torsor under the smooth two-dimensional torus $B_A^\times$. The determinant will cut its norm-one direction.
 
-It is worth locating the two apparent dimensions before quotienting. The fixed-norm elements of $S_A^\times$ form a one-dimensional formal torus. Conjugation by the centralizer also has a one-dimensional effective norm-one direction, because scalar centralizer elements act trivially. The two directions cancel in the unframed quotient. The three remaining framed variables later come from moving the chosen basis relative to the unique representation, not from changing its isomorphism class.
+It is worth locating the two apparent dimensions before quotienting. The fixed-norm elements of $B_A^\times$ form a one-dimensional formal torus. Conjugation by the centralizer also has a one-dimensional effective norm-one direction, because scalar centralizer elements act trivially. The two directions cancel in the unframed quotient. The three remaining framed variables later come from moving the chosen basis relative to the unique representation, not from changing its isomorphism class.
 
 ### 3.2 Classification with fixed inertia
 
@@ -395,18 +395,18 @@ $$
 UTU^{-1}=T_0.
 $$
 
-The conjugator is unique up to right multiplication by an element of $1+\mathfrak m_AS_A$.
+The conjugator is unique up to left multiplication by an element of $1+\mathfrak m_AB_A$.
 
-**Proof strategy.** Regard $A^2$ as a module over the étale quadratic algebra $S_A$. Its reduction is free of rank one over $S_k$, and Nakayama lifts a generator.
+**Proof strategy.** Regard $A^2$ as a module over the étale quadratic algebra $B_A$. Its reduction is free of rank one over $B_k$, and Nakayama lifts a generator.
 
-**Proof.** Let $u\in S_A$ act on $A^2$ as $T$. The relation gives an $S_A$-module structure. Modulo $\mathfrak m_A$, this module is the standard rank-one $S_k$-module because $\bar T=\bar T_0$. Choose a vector $v$ lifting the standard generator. Then $v,Tv$ reduce to a $k$-basis, so they form an $A$-basis. The map
+**Proof.** Let $u\in B_A$ act on $A^2$ as $T$. The relation gives a $B_A$-module structure. Modulo $\mathfrak m_A$, this module is the standard rank-one $B_k$-module because $\bar T=\bar T_0$. Choose a vector $v$ lifting the standard generator. Then $v,Tv$ reduce to a $k$-basis, so they form an $A$-basis. The map
 
 $$
-S_A\longrightarrow A^2,
+B_A\longrightarrow A^2,
 \qquad a+bu\longmapsto av+bTv
 $$
 
-is therefore an $S_A$-linear isomorphism. Comparing this basis with the standard basis gives a conjugator congruent to the identity. Two such identifications differ by an $S_A$-linear automorphism, namely multiplication by an element of $S_A^\times$ congruent to $1$. $\square$
+is therefore a $B_A$-linear isomorphism. Comparing this basis with the standard basis gives a conjugator congruent to the identity. Two such identifications differ by a $B_A$-linear automorphism, namely multiplication by an element of $B_A^\times$ congruent to $1$. $\square$
 
 It follows that every tame-quadratic lift is strictly equivalent to one with the standard inertia matrix and Frobenius $CW$. No eigenvalue or splitting-field choice has entered.
 
@@ -421,14 +421,14 @@ $$
 This is exactly the norm
 
 $$
-N_{S_A/A}(a+bu)
+N_{B_A/A}(a+bu)
 =(a+bu)(a+bu^2).
 $$
 
 Since $\det W=-1$, the fixed-determinant equation for $F=CW$ is
 
 $$
-N_{S_A/A}(C)=-\delta(\phi). \tag{3.5}
+N_{B_A/A}(C)=-\delta(\phi). \tag{3.5}
 $$
 
 The inertia determinant is automatically one by (2.4), so compatibility also requires $\delta|_{I_2}=1$. This holds for $\delta=\chi_\ell$ because $\ell\ne2$.
@@ -436,10 +436,10 @@ The inertia determinant is automatically one by (2.4), so compatibility also req
 The derivative of norm at a unit $C$ is, after translating to the identity, the trace
 
 $$
-\operatorname{Tr}_{S_k/k}:S_k\longrightarrow k. \tag{3.6}
+\operatorname{Tr}_{B_k/k}:B_k\longrightarrow k. \tag{3.6}
 $$
 
-As $S_k/k$ is finite étale of degree two and $2\ne0$ in $k$, this trace is surjective: it sends $1$ to $2$. Therefore every fixed-norm fiber is formally smooth of relative dimension one.
+As $B_k/k$ is finite étale of degree two and $2\ne0$ in $k$, this trace is surjective: it sends $1$ to $2$. Therefore every fixed-norm fiber is formally smooth of relative dimension one.
 
 ### 3.4 Existence over every coefficient ring
 
@@ -448,17 +448,17 @@ We need more than infinitesimal smoothness: a compatible determinant value must 
 **Lemma 3.3 (surjectivity of the quadratic norm on units).** Let $A$ be an Artinian local $\mathcal O$-algebra. Then
 
 $$
-N_{S_A/A}:S_A^\times\longrightarrow A^\times
+N_{B_A/A}:B_A^\times\longrightarrow A^\times
 $$
 
 is surjective.
 
-**Proof.** On residue fields there are two cases. If $S_k\simeq k\times k$, the norm is multiplication and is visibly onto. If $S_k$ is a quadratic field, its multiplicative group is cyclic and the finite-field norm $x\mapsto x^{|k|+1}$ maps onto $k^\times$.
+**Proof.** On residue fields there are two cases. If $B_k\simeq k\times k$, the norm is multiplication and is visibly onto. If $B_k$ is a quadratic field, its multiplicative group is cyclic and the finite-field norm $x\mapsto x^{|k|+1}$ maps onto $k^\times$.
 
-It remains to lift through nilpotents. Factor $A\to k$ into small extensions. For a small extension with kernel $J$, an element $1+x\in1+J S_A$ has norm
+It remains to lift through nilpotents. Factor $A\to k$ into small extensions. For a small extension with kernel $J$, an element $1+x\in1+J B_A$ has norm
 
 $$
-N(1+x)=1+\operatorname{Tr}_{S_k/k}(x),
+N(1+x)=1+\operatorname{Tr}_{B_k/k}(x),
 $$
 
 because $J^2=0$. The trace is onto by (3.6), so any correction in $1+J$ is a norm. Induction proves surjectivity. $\square$
@@ -481,22 +481,22 @@ $$
 \rho_A(\phi)=C_AW.
 $$
 
-The same matrix $T_0$ over $A'$ lifts inertia and still satisfies $T_0^2+T_0+I=0$. This simple observation is the matrix form of prime-to-$\ell$ rigidity. More intrinsically, the idempotents of the finite étale algebra $S_A$ lift uniquely through nilpotent extensions, so the rank-one $S_A$-module lifts to the rank-one $S_{A'}$-module.
+The same matrix $T_0$ over $A'$ lifts inertia and still satisfies $T_0^2+T_0+I=0$. This simple observation is the matrix form of prime-to-$\ell$ rigidity. More intrinsically, the idempotents of the finite étale algebra $B_A$ lift uniquely through nilpotent extensions, so the rank-one $B_A$-module lifts to the rank-one $B_{A'}$-module.
 
 No wild action appears: we continue to send $P_2$ to $1$. Continuity follows because inertia has finite image and Frobenius generates a procyclic quotient.
 
 ### 4.2 Correcting Frobenius while fixing determinant
 
-Choose any lift $\widetilde C\in S_{A'}^\times$ of $C_A$. Its norm may not yet equal $-\delta(\phi)$. The quotient
+Choose any lift $\widetilde C\in B_{A'}^\times$ of $C_A$. Its norm may not yet equal $-\delta(\phi)$. The quotient
 
 $$
 r=-\delta(\phi)N(\widetilde C)^{-1}
 $$
 
-lies in $1+J$. By the infinitesimal norm calculation, choose $x\in JS_{A'}$ with
+lies in $1+J$. By the infinitesimal norm calculation, choose $x\in JB_{A'}$ with
 
 $$
-\operatorname{Tr}_{S_k/k}(x)=r-1.
+\operatorname{Tr}_{B_k/k}(x)=r-1.
 $$
 
 Then $C'=(1+x)\widetilde C$ satisfies
@@ -519,26 +519,26 @@ lifts $\rho_A$, satisfies the tame relation, and has determinant $\delta$. Thus 
 
 Liftability does not yet show that the unframed condition has no parameter. For that we need to compare two fixed-norm Frobenius intertwiners.
 
-Conjugation by $D\in S_A^\times$ fixes $T_0$ and transforms
+Conjugation by $D\in B_A^\times$ fixes $T_0$ and transforms
 
 $$
 CW\longmapsto D(CW)D^{-1}
 =DC\sigma(D)^{-1}W. \tag{4.1}
 $$
 
-Thus two elements $C,C'\in S_A^\times$ with the same norm are conjugate precisely when
+Thus two elements $C,C'\in B_A^\times$ with the same norm are conjugate precisely when
 
 $$
 C'C^{-1}=D\sigma(D)^{-1}. \tag{4.2}
 $$
 
-**Lemma 4.1 (strict quadratic Hilbert 90).** Let $A\in\operatorname{Art}_{\mathcal O}$. If $z\in S_A^\times$ satisfies
+**Lemma 4.1 (strict quadratic Hilbert 90).** Let $A\in\operatorname{Art}_{\mathcal O}$. If $z\in B_A^\times$ satisfies
 
 $$
-N_{S_A/A}(z)=1
+N_{B_A/A}(z)=1
 $$
 
-and $z\equiv1\pmod{\mathfrak m_A}$, then there is $D\in1+\mathfrak m_AS_A$ such that
+and $z\equiv1\pmod{\mathfrak m_A}$, then there is $D\in1+\mathfrak m_AB_A$ such that
 
 $$
 z=D\sigma(D)^{-1}.
@@ -546,10 +546,10 @@ $$
 
 **Proof strategy.** Solve successively over small extensions. The linearized map is $d\mapsto d-\sigma(d)$, whose image is exactly the trace-zero line.
 
-**Proof.** The assertion is trivial over $k$. Suppose it holds over $A$ and lift across a small extension $A'\to A$ with kernel $J$. After using a lifted solution from $A$, the remaining element has the form $1+x$ with $x\in JS_{A'}$. The norm-one equation gives
+**Proof.** The assertion is trivial over $k$. Suppose it holds over $A$ and lift across a small extension $A'\to A$ with kernel $J$. After using a lifted solution from $A$, the remaining element has the form $1+x$ with $x\in JB_{A'}$. The norm-one equation gives
 
 $$
-\operatorname{Tr}_{S_k/k}(x)=x+\sigma(x)=0.
+\operatorname{Tr}_{B_k/k}(x)=x+\sigma(x)=0.
 $$
 
 Because $2$ is invertible, take $d=x/2$. Then $\sigma(x)=-x$, so
@@ -593,7 +593,7 @@ $$
 M=\operatorname{ad}^0\bar V.
 $$
 
-The centralizer of $\bar T_0$ in $M_2(k)$ is $S_k=k[\bar T_0]$. Its trace-zero part is the line generated by
+The centralizer of $\bar T_0$ in $M_2(k)$ is $B_k=k[\bar T_0]$. Its trace-zero part is the line generated by
 
 $$
 H=2\bar T_0+I. \tag{5.1}
@@ -618,7 +618,15 @@ $$
 (\operatorname{ad}\bar V)^{I_2}=kI\oplus kH,
 $$
 
-with Frobenius eigenvalues $1$ and $-1$. The full decomposition-group centralizer is therefore only $kI$. Thus $\bar V$ is absolutely irreducible as a $G_2$-representation, even if the inertia polynomial is already split over $k$.
+with Frobenius eigenvalues $1$ and $-1$. The full decomposition-group centralizer is therefore only $kI$. In fact $\bar V$ is absolutely irreducible as a $G_2$-representation, even if the inertia polynomial is already split over $k$.
+
+The last assertion is not being inferred merely from the size of the
+centralizer. After extending scalars to an algebraic closure of $k$, inertia
+has two distinct eigenlines, with characters of order three. Every
+inertia-stable line is one of those eigenlines, while arithmetic Frobenius
+interchanges them by the squaring relation. Hence neither line is
+$G_2$-stable. The scalar extension of $\bar V$ is irreducible, which is
+exactly absolute irreducibility.
 
 ### 5.2 The fixed-determinant tangent vanishes
 
@@ -646,14 +654,20 @@ The vanishing is not a dimension guessed from rigidity. It is the explicit Frobe
 
 ### 5.3 Ambient obstruction vanishing
 
-The top-degree local cohomology formula away from the residue characteristic says
+Tate local duality for finite modules, applied away from the residue
+characteristic, says
 
 $$
 \dim_k H^2(\mathbf Q_2,M)
 =\dim_k H^0(\mathbf Q_2,M^*(1)). \tag{5.6}
 $$
 
-The trace pairing identifies $M^*$ with $M$. Thus we must compute invariants in $M(1)$. The cyclotomic character is unramified at $2$ and has arithmetic Frobenius eigenvalue $2$. On the inertia-invariant line $kH$, Frobenius therefore acts in $M(1)$ by
+The trace pairing is nondegenerate on $M=\operatorname{ad}^0\bar V$
+because $2$ is invertible, and it identifies $M^*$ with $M$. Thus we must
+compute invariants in $M(1)$. Any such invariant first lies in
+$(M(1))^{I_2}=M^{I_2}(1)=kH(1)$, since the cyclotomic character is
+unramified at $2$. Arithmetic Frobenius acts on that character by $2$ and
+on $H$ by $-1$, so on this line it acts by
 
 $$
 (-1)\cdot2=-2. \tag{5.7}
@@ -706,7 +720,7 @@ $$
 
 of dimension three. The general framing theorem gives a formally smooth morphism of relative dimension three from the framed ring to the unframed ring, proving (5.10).
 
-Alternatively, the framed tangent is $Z^1(\mathbf Q_2,M)$. Since $H^1(M)=0$ and $H^0(M)=0$, all three dimensions are coboundaries. Equation (5.8) makes the unrestricted fixed-determinant ambient functor formally smooth, while (5.9) makes it unframed rigid. Since the tame-quadratic lift exists, both ambient and constrained functors are the same. $\square$
+Alternatively, the framed tangent is $Z^1(\mathbf Q_2,M)$. Since $H^1(M)=0$ and $H^0(M)=0$, all three dimensions are coboundaries. Equation (5.8) makes the unrestricted fixed-determinant ambient functor formally smooth, while (5.9) makes it unframed rigid. To justify the final identification of functors, factor any Artinian coefficient ring down to $k$ through small extensions. At each step formal smoothness gives an ambient lift and the zero tangent gives at most one strict-equivalence class of such lifts. Theorem 4.2 supplies a tame-quadratic lift at the same step. The unique ambient class is therefore that constrained class. Induction proves equality on every Artinian ring, both unframed and, after adjoining a frame, framed. $\square$
 
 This theorem is the cleanest local contribution to the global problem: the prime $2$ contributes neither an unframed tangent direction nor a local obstruction.
 
@@ -903,7 +917,31 @@ d^0:\bigoplus_i M_2(k)
 \bigoplus_i\bigl(\operatorname{Hom}(L_i,M_i/L_i)\oplus M_2(k)\bigr). \tag{7.4}
 $$
 
-The exact formula contains the divided conjugation dictated by the two weights, but its rank can be read without choosing a normalization. The kernel consists precisely of endomorphisms of the residual filtered object. Full faithfulness identifies this kernel with
+The formula matters because ordinary conjugation would forget the cyclic
+Witt-Frobenius shift. If $\bar\Phi_i$ denotes the residual divided-Frobenius
+map, the line component of $d^0(X)$ is
+
+$$
+e\longmapsto X_i(e)\bmod L_i,
+$$
+
+and its matrix component at $i$ is
+
+$$
+X_{i+1}\bar\Phi_i-\bar\Phi_i\widetilde X_i.
+$$
+
+Here $\widetilde X_i$ is the differential of the canonical map induced on
+$D_{L_i}(M_i)$ while the line itself moves. This formula is the
+linearization of
+
+$$
+\Phi_i\longmapsto g_{i+1}\Phi_iD(g_i)^{-1};
+$$
+
+in particular, the target index is $i+1$. The kernel consists precisely of
+infinitesimal endomorphisms of the residual filtered object. Full
+faithfulness identifies this kernel with
 
 $$
 \operatorname{End}_{k[G_K]}(V).
@@ -928,7 +966,22 @@ d^1:\bigoplus_i\bigl(\operatorname{Hom}(L_i,M_i/L_i)\oplus M_2(k)\bigr)
 \longrightarrow k. \tag{7.7}
 $$
 
-To see surjectivity concretely, alter one Frobenius matrix by $1+\epsilon a e_{11}$. Its determinant changes by $1+\epsilon a$. Transport around the cycle changes the determinant Frobenius scalar by the same nonzero first-order amount. Hence $d^1$ has rank one.
+In adapted divided bases its value on matrix perturbations
+$\dot\Phi_i$ is the logarithmic derivative
+
+$$
+d^1((\dot\Phi_i)_i)
+=\sum_i\operatorname{tr}
+(\bar\Phi_i^{-1}\dot\Phi_i).
+$$
+
+Line perturbations contribute no additional term: changing the chosen
+complement adds a multiple of the filtration vector, whose exterior wedge
+with that vector is zero. To see surjectivity concretely, take
+$\dot\Phi_0=\bar\Phi_0\operatorname{diag}(a,0)$ and all other perturbations
+zero. Then the displayed derivative equals $a$. Moreover $d^1d^0=0$.
+Taking determinants in the gauge formula gives a cyclic sum of
+$\operatorname{tr}X_{i+1}-\operatorname{tr}X_i$, which telescopes.
 
 The fixed-determinant coarse tangent is the middle cohomology
 
@@ -936,7 +989,14 @@ $$
 \ker d^1/\operatorname{im}d^0. \tag{7.8}
 $$
 
-This complex is not merely a parameter count. Its degree zero records automorphisms, its middle term records line and divided-Frobenius perturbations, and its last map records the one determinant constraint.
+This complex is not merely a parameter count. The exact low-weight
+classification says that every first-order finite-flat deformation gives
+such line and divided-Frobenius data, and that two data give the same
+unframed deformation exactly when they differ by the displayed gauge
+action. Its degree zero therefore records all automorphisms, its middle
+term records all deformations, and its last map records exactly the one
+determinant constraint. No extension class is lost on passing to filtered
+data.
 
 ### 7.3 The dimension formula
 
@@ -975,7 +1035,17 @@ $$
 
 The added dimension is therefore $3-(h-1)=4-h$. Adding it to (7.9) gives $f+3$. $\square$
 
-Several cases deserve to be separated. If $V$ is absolutely irreducible or a nonsplit extension of two distinct characters, then $h=1$ and the unframed dimension is $f$. If $V$ is a split sum of distinct characters, then $h=2$ and the coarse tangent has dimension $f+1$, although an unframed universal ring need not exist because the local centralizer is larger than the scalars. Equal-character semisimplification cannot occur with cyclotomic determinant and Hodge rank one at every embedding: an exact filtration by two equal rank-one objects would give even Hodge rank, contradicting rank one.
+Several cases deserve to be separated. If $V$ is absolutely irreducible or a nonsplit extension of two distinct characters, then $h=1$ and the unframed dimension is $f$. If $V$ is a split sum of distinct characters, then $h=2$ and the coarse tangent has dimension $f+1$, although an unframed universal ring need not exist because the local centralizer is larger than the scalars.
+
+Equal-character semisimplification cannot occur with cyclotomic determinant
+and Hodge rank one at every embedding. Indeed, schematic closure of a
+stable line inside the unique finite-flat model, followed by the represented
+quotient, gives an exact sequence of two rank-one finite-flat models. If
+the two generic characters are equal, Raynaud uniqueness identifies their
+marked models, so the two rank-one filtered objects have the same Hodge
+rank, either zero or one, at each embedding. Exactness then makes the
+rank-two Hodge rank there either zero or two. This contradicts the rank-one
+condition forced by the cyclotomic determinant.
 
 The framed dimension being independent of $h$ has a geometric explanation. At a split point the coarse filtered object gains one endomorphism and therefore one genuine coarse tangent direction. At the same time its change-of-frame orbit loses one dimension because the stabilizer is larger. These effects cancel. Consequently the framed ring stays smooth of dimension $f+3$ across ordinary split, ordinary nonsplit, and irreducible residual shapes. What changes is the quotient by automorphisms, not the framed local geometry.
 
@@ -1143,7 +1213,7 @@ We now assemble the two calculations. A local predicate is suitable for a univer
 
 First, it must be invariant under strict equivalence, because global deformations are isomorphism classes. Second, it must be stable under arbitrary Artinian coefficient maps, including nonflat quotients. Third, its framed form must be cut out by a closed quotient of the ambient framed deformation ring. Fourth, its tangent must be an explicitly identified subspace of local $H^1$. Fifth, lifting through small extensions must be proved, either through a complete vanishing theorem or through direct constrained coordinates. Finally, any conductor or type assertion must be constant for a structural reason.
 
-The prime $2$ condition meets these requirements through the quadratic étale algebra $S_A$, the norm equation, and strict Hilbert 90. The coefficient-prime condition meets them through exact finite-flat models and the low-weight filtered classification. The mechanisms are different, but their outputs have the same formal shape.
+The prime $2$ condition meets these requirements through the quadratic étale algebra $B_A$, the norm equation, and strict Hilbert 90. The coefficient-prime condition meets them through exact finite-flat models and the low-weight filtered classification. The mechanisms are different, but their outputs have the same formal shape.
 
 ### 9.2 The two distinguished places
 
@@ -1370,7 +1440,7 @@ Let $\mathcal O\to\mathcal O'$ be a finite extension of coefficient DVRs, with r
 At $2$, the matrices $T_0$ and $W$, the quadratic algebra
 
 $$
-S_A=A[u]/(u^2+u+1),
+B_A=A[u]/(u^2+u+1),
 $$
 
 and the norm equation all commute with scalar extension. If the quadratic algebra changes from connected to split, the normal form remains the same; only the description by eigenlines changes. The intrinsic condition therefore base-changes without choosing an ordering of those lines.
@@ -1541,7 +1611,7 @@ At $\ell$, finite flatness must not be replaced by unramifiedness, by semisimpli
 
 Finally, local smoothness does not imply global smoothness. The local obstruction maps vanish, but a global factor-set obstruction can remain, and moving an ambient global lift into prescribed local torsors is a separate localization problem. The present theorem constructs the exact local inputs and the universal global quotient. It does not anticipate the supported cohomology and global relation analysis that follow.
 
-The dependency boundary is also exact. Ramification theory supplies the tame conductor formula. Local Galois cohomology supplies the Frobenius description of unramified classes, the local Euler characteristic, and the top-degree twisted-invariant calculation. The finite-flat theory supplies marked models, schematic closure, represented quotients, coefficient actions, and Cartier duality. Small-height rigidity and the integral Fontaine--Laffaille equivalence supply uniqueness, exact low-weight classification, compatible quotients, and unramified base change. The established local-deformation theory supplies the fixed finite-type and finite-flat representability criteria, while integral local-type theory supplies the depth-zero quadratic lattice and its detection theorem. Every use in this book retains the hypotheses stated in those results; no later global duality or relation theorem is used here.
+The dependency boundary is also exact. Ramification theory supplies the tame conductor formula. Local Galois cohomology supplies the Frobenius description of unramified classes and the local Euler characteristic; Tate local duality supplies the top-degree twisted-invariant calculation. Finite-flat geometry supplies marked models, schematic closure, represented quotients, coefficient actions, and Cartier duality. Small-height Oort--Tate rigidity supplies the rank-one endpoint checks. Raynaud full faithfulness and the integral Fontaine--Laffaille equivalence supply uniqueness of marked models, exact low-weight classification, compatible quotients, and unramified base change. The established local-deformation theory supplies the fixed finite-type and finite-flat representability criteria, while integral local-type theory supplies the depth-zero quadratic lattice and its detection theorem. Every use in this book retains the hypotheses stated in those results; no later global duality or relation theorem is used here.
 
 ### 12.3 Conclusion
 
