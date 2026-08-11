@@ -311,7 +311,7 @@ $$
 
 for which each homogeneous $F\in I_d$ evaluates to zero as a section of $\mathcal L^d$. This formulation works over rings with nilpotents and glues without choosing coordinates.
 
-As an example, the degree-$d$ Veronese map arises from all monomials of degree $d$:
+As an example, for $d\geq1$ the degree-$d$ Veronese map arises from all monomials of degree $d$:
 
 $$
 \nu_d:\mathbf P^r_S\longrightarrow

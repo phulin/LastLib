@@ -680,7 +680,7 @@ If $H$ is not normal, there is no quotient extension $M/K$ with group $G/H$. The
 
 Now assume $H\triangleleft G$, so $M/K$ is Galois with group $G/H$. One might hope that its $i$th lower group is simply $G_iH/H$. This is generally false. The reason is normalization: the valuation of $M$ is a rescaled restriction of $v_L$, so a displacement depth measured upstairs does not retain the same integer label downstairs. Different automorphisms can also merge in a quotient, and the least displacement among their lifts changes nonlinearly.
 
-Tame examples hide the problem because there is only one nontrivial level. In a tower with several wild breaks, naive quotienting places the quotient jumps at the wrong integers. We need a change of coordinates that accelerates whenever the ramification group becomes smaller. The Herbrand function supplies precisely that clock.
+Tame examples hide the problem because there is only one nontrivial level. In a tower with several wild breaks, naive quotienting places the quotient jumps at the wrong integers. We need a change of coordinates that slows, compressing lower depth, whenever the ramification group becomes smaller. The Herbrand function supplies precisely that clock.
 
 ### 4.3 Real lower indices and continuity convention
 
