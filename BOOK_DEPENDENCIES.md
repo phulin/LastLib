@@ -41,8 +41,8 @@ flowchart LR
 | 2 | 1 |
 | 3 | 2 |
 | 4 | MATHLIB |
-| 5 | 2, CFT |
-| 6 | 4, 5, CFT |
+| 5 | 2 |
+| 6 | 4, 5 |
 | 7 | MATHLIB |
 
 ### II. Algebraic-Geometric Foundations and Descent
@@ -77,9 +77,9 @@ flowchart LR
 | 28 | 46, 13, MATHLIB |
 | 29 | MATHLIB |
 | 30 | 2, 3, 5, 29, 28 |
-| 31 | 30, CFT |
+| 31 | 5, 30 |
 | 32 | 6, 29, 30, 31 |
-| 33 | 31, 32, CFT |
+| 33 | 6, 31, 32 |
 
 ### IV. Curves, Abelian Varieties, and Mordell–Weil Theory
 
@@ -133,7 +133,7 @@ flowchart LR
 | 69 | 62 |
 | 70 | 69 |
 | 71 | 70 |
-| 72 | 33, 68, 162, CHEB |
+| 72 | 5, 6, 33, 68, 162 |
 | 73 | 68, 72 |
 | 74 | 70, 73 |
 | 75 | 71, 74 |

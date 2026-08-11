@@ -2604,7 +2604,7 @@ The global generator counts are (13.5) and (13.7), while the local framed coordi
 
 ### 13.5 What dual-Selmer vanishing does and does not imply
 
-Dual-Selmer vanishing has three immediate consequences in the present finite-level problem. It makes the localization tests imposed by $Q$ independent, turns the Wiles dimension identity into an exact formula for the primal tangent dimension, and removes the absolute dual term from the five-term comparison sequence. These are substantial conclusions, but they should not be strengthened without further hypotheses.
+Dual-Selmer vanishing has three immediate consequences in the present finite-level problem. It says that the combined localization map imposed by $Q$ detects every old dual Selmer class, turns the Wiles dimension identity into an exact formula for the primal tangent dimension, and removes the absolute dual term from the five-term comparison sequence. For an unpadded set with $|Q|=q$, source and target have the same dimension, so the localization tests are independent. For a padded set they are necessarily redundant: the combined localization remains injective, but its target has dimension $|Q|>q$. These are substantial conclusions, but they should not be strengthened without further hypotheses.
 
 First, tangent dimension counts generators, not equations. If
 
@@ -2809,7 +2809,19 @@ If the original problem is balanced, the common value in (14.6) is $q$. Partial 
 
 **Proof.** The restriction and disjointness lemmas of Chapter 4 reduce the cyclotomic, residual, and cocycle requirements to a compatible element in a finite Galois quotient. The regular semisimple image lemma of Chapter 5 constructs that element, and Theorem 6.5 realizes it at infinitely many primes. The induction of Chapter 11 selects exactly $q$ distinct primes and proves (14.4).
 
-Chapters 7–9 construct the local functors, rings, group-algebra structures, tangent spaces, and augmentation maps. Global assembly gives (14.5). The local tangent quotient has dimension one at each prime, so the global numerical identity gives the first equality in (14.6); dual Selmer vanishing gives the second. The comparison sequence shows that the primal dimension is unchanged during the $q$ detecting steps. $\square$
+Chapters 7–9 construct the local functors, rings, group-algebra structures, tangent spaces, and augmentation maps. Global assembly gives (14.5). The local tangent quotient has dimension one at each prime, so the global numerical identity gives
+
+$$
+\Delta(\mathcal D_{Q_N})=\Delta(\mathcal D)+q.
+$$
+
+Together with dual Selmer vanishing, this gives the first equality in (14.6). The original numerical identity gives
+
+$$
+\dim H^1_{\mathcal L}(K,M)=\Delta(\mathcal D)+q,
+$$
+
+which is the second equality. Equivalently, the comparison sequence shows directly that the primal dimension is unchanged during the $q$ detecting steps. $\square$
 
 ### 14.3 Variants and their exact adjustments
 
@@ -2829,7 +2841,7 @@ For different values of $N$, the theorem gives independent sets and permits them
 
 ### 14.4 Conclusion
 
-Auxiliary primes solve a precise global problem by a precise local exchange. A nonzero dual Selmer class first becomes an elementary abelian extension over the residual and cyclotomic fixed field. Adequate residual image forces that extension to be nontrivial, separates it from higher cyclotomic layers, and supplies a split regular semisimple element that detects a translation. The fiber-product lemma proves that the resulting residual, cyclotomic, and cohomological prescriptions are compatible. Only then does Chebotarev turn the compatible element into primes.
+Auxiliary primes solve a precise global problem by a precise local exchange. A nonzero dual Selmer class first becomes an elementary abelian extension over the residual and cyclotomic fixed field. The split Taylor–Wiles image conditions force that extension to be nontrivial, separate it from higher cyclotomic layers, and supply a split regular semisimple element that detects a translation. Ordinary adequacy supplies the finite-image cohomology vanishing and semisimple detection, but the underlying-prime-field no-trivial-quotient clause used for cyclotomic disjointness is an additional hypothesis unless it has been verified in the particular image. The fiber-product lemma proves that the resulting residual, cyclotomic, and cohomological prescriptions are compatible. Only then does the finite Galois distribution theorem proved in Chapter 6 turn the compatible element into primes.
 
 At each such prime, distinct residual eigenvalues select a unique local branch. The tame relation and the congruence $q_v\equiv1\pmod{\ell^N}$ produce one diamond character, while fixed determinant places its inverse on the complementary line. The universal local ring is a power-series ring over the finite group algebra. Its augmentation is the smooth unramified branch, its special-fiber tangent gains one direction, and its exact dual orthogonal loses one direction.
 
