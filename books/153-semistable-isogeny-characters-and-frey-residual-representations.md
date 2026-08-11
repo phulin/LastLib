@@ -72,7 +72,7 @@
 
 ## 1. The irreducibility problem
 
-The residual representation of an elliptic curve is a two-dimensional object, but its reducibility is governed by a one-dimensional character. That reduction in dimension is the central opportunity of this book. A stable line in $E[p]$ is the kernel of a rational isogeny; Galois acts on that line through a character; semistable reduction sharply restricts the character on inertia; and arithmetic over $mathbf Q$ then forces one of the two diagonal characters to be trivial. The last statement turns a rational isogeny, whose kernel need not have a rational generator, into an actual rational point of order $p$ on one of two isogenous curves.
+The residual representation of an elliptic curve is a two-dimensional object, but its reducibility is governed by a one-dimensional character. That reduction in dimension is the central opportunity of this book. A stable line in $E[p]$ is the kernel of a rational isogeny; Galois acts on that line through a character; semistable reduction sharply restricts the character on inertia; and arithmetic over $\mathbf Q$ then forces one of the two diagonal characters to be trivial. The last statement turns a rational isogeny, whose kernel need not have a rational generator, into an actual rational point of order $p$ on one of two isogenous curves.
 
 For a general elliptic curve this conclusion is not enough to prove irreducibility. Rational prime torsion does exist at small primes. The Frey curve brings one more rigid feature: all of its two-torsion is rational. An odd isogeny preserves that full two-torsion. Consequently the curve on which the rational $p$-torsion appears would have both full rational two-torsion and a rational point of order $p$. The formal-immersion prime-torsion theorem eliminates large $p$, while exact low-genus calculations eliminate $p=5$ and $p=7$.
 
@@ -80,7 +80,7 @@ The point of the argument is not merely its short conclusion. Several superficia
 
 ### 1.1 From a matrix question to an isogeny
 
-Let $E/mathbf Q$ be an elliptic curve and let $p$ be a prime. Since the ground field has characteristic zero,
+Let $E/\mathbf Q$ be an elliptic curve and let $p$ be a prime. Since the ground field has characteristic zero,
 
 $$
 E[p](\overline{\mathbf Q})\simeq \mathbf F_p^2.
@@ -95,13 +95,13 @@ $$
 
 well defined up to conjugacy. The question whether this representation is reducible is basis independent: it asks whether $E[p]$ has a $G_{\mathbf Q}$-stable line.
 
-Book 51 proves the isogeny--line equivalence with exactly the hypothesis needed here. Because $p$ is invertible in $mathbf Q$, a stable line is a finite étale subgroup scheme $C\subset E[p]$ of order $p$, defined over $mathbf Q$. The quotient $E/C$ exists, and
+Book 51 proves the isogeny--line equivalence with exactly the hypothesis needed here. Because $p$ is invertible in $\mathbf Q$, a stable line is a finite étale subgroup scheme $C\subset E[p]$ of order $p$, defined over $\mathbf Q$. The quotient $E/C$ exists, and
 
 $$
 \varphi:E\longrightarrow E'=E/C
 $$
 
-is a $mathbf Q$-rational isogeny of degree $p$. Conversely, the kernel of every rational degree-$p$ isogeny is such a line. Thus
+is a $\mathbf Q$-rational isogeny of degree $p$. Conversely, the kernel of every rational degree-$p$ isogeny is such a line. Thus
 
 $$
 \overline\rho_{E,p}\text{ reducible}
@@ -153,13 +153,13 @@ $$
 
 For a prime $q$, a decomposition group and inertia group are denoted $G_q$ and $I_q$. Their embeddings in $G_{\mathbf Q}$ are fixed only up to conjugacy, but all characters considered are abelian, so their restrictions are unambiguous up to canonical identification.
 
-An elliptic curve over $mathbf Q$ is **semistable** when it has good or multiplicative reduction at every prime. Full rational two-torsion means
+An elliptic curve over $\mathbf Q$ is **semistable** when it has good or multiplicative reduction at every prime. Full rational two-torsion means
 
 $$
 E[2](\mathbf Q)\simeq(\mathbf Z/2\mathbf Z)^2,
 $$
 
-or equivalently that the finite étale group scheme $E[2]$ is constant. A rational $p$-isogeny means an isogeny defined over $mathbf Q$; it does not mean that its kernel has a rational generator.
+or equivalently that the finite étale group scheme $E[2]$ is constant. A rational $p$-isogeny means an isogeny defined over $\mathbf Q$; it does not mean that its kernel has a rational generator.
 
 Throughout the main isogeny argument, $p\ge5$ is prime. This avoids the collapse of the two coefficient-prime inertia characters at $p=2$ and places the final application in the range relevant to Frey curves. The final Frey theorem will be stated for $p\ge7$, exactly as required for prime exponents remaining after the separate small-exponent arguments.
 
@@ -211,7 +211,7 @@ $$
 \xrightarrow{\varphi}E'\longrightarrow0
 $$
 
-is defined over $mathbf Q$. In a basis $(P,Q)$ beginning with a generator of $C$,
+is defined over $\mathbf Q$. In a basis $(P,Q)$ beginning with a generator of $C$,
 
 $$
 \overline\rho_{E,p}(\sigma)=
@@ -291,7 +291,7 @@ This table will turn triviality of either character into rational torsion.
 
 ### 2.4 Rational subgroup versus rational generator
 
-The subgroup $C$ is defined over $mathbf Q$ precisely because Galois preserves it. A generator is rational precisely when Galois fixes it pointwise. Therefore
+The subgroup $C$ is defined over $\mathbf Q$ precisely because Galois preserves it. A generator is rational precisely when Galois fixes it pointwise. Therefore
 
 $$
 C\text{ has a rational generator}
@@ -507,7 +507,7 @@ $$
 \tag{4.5}
 $$
 
-Equation (4.5) is stronger than merely knowing their product. It uses finite-flat geometry to show that no intermediate tame exponent occurs over the unramified base. Over a ramified extension of $\mathbf Q_p$ with $e>1$, intermediate exponents $0<r<e$ can occur and (4.4) can fail. The fact that the global base is $mathbf Q$ is therefore used locally through $\mathbf Q_p/\mathbf Q_p$ having absolute ramification index one.
+Equation (4.5) is stronger than merely knowing their product. It uses finite-flat geometry to show that no intermediate tame exponent occurs over the unramified base. Over a ramified extension of $\mathbf Q_p$ with $e>1$, intermediate exponents $0<r<e$ can occur and (4.4) can fail. The fact that the global base is $\mathbf Q$ is therefore used locally through $\mathbf Q_p/\mathbf Q_p$ having absolute ramification index one.
 
 ## 5. Multiplicative reduction at the coefficient prime
 
@@ -613,7 +613,7 @@ p\mid m.
 \tag{5.5}
 $$
 
-Book 50 constructs the corresponding finite-flat extension explicitly and proves that, for odd $p$ over the unramified base, any finite-flat model must preserve the intrinsic cyclotomic line. Therefore
+Book 50 proves this criterion for the canonical Tate sequence, with its specified multiplicative subgroup and constant quotient. To pass from that statement to the abstract representation, suppose that some finite-flat model of $E[p]$ over $\mathbf Z_p$ is given. Close the canonical Tate line in this model and take the represented quotient. Book 48 makes both groups finite flat. Since $e=1<p-1$, the height-one rigidity theorem of Book 56 identifies them from their generic fibers with the multiplicative and étale endpoint models, including the unramified quadratic twist in the nonsplit case. The chosen middle model therefore realizes the canonical twisted Tate sequence, so Book 50 forces $p\mid m$. The explicit construction proves the converse. Consequently
 
 $$
 E[p]\text{ is finite flat over }\mathbf Z_p
@@ -692,7 +692,7 @@ Three boundaries are essential.
 
 First, additive reduction is excluded. A potentially good additive curve can carry nontrivial finite inertia characters on the diagonal, and a potentially multiplicative additive curve can carry a ramified quadratic splitting character. Semistability removes both phenomena.
 
-Second, the global field is $mathbf Q$. Over a local field with absolute ramification index $e>1$, an order-$p$ finite-flat line may have Oort--Tate exponent strictly between $0$ and $e$, producing inertia $\theta^r$ rather than $1$ or $\overline\chi_p$.
+Second, the global field is $\mathbf Q$. Over a local field with absolute ramification index $e>1$, an order-$p$ finite-flat line may have Oort--Tate exponent strictly between $0$ and $e$, producing inertia $\theta^r$ rather than $1$ or $\overline\chi_p$.
 
 Third, at $p=2$ the mod-$2$ cyclotomic character is trivial, so constant and multiplicative generic characters coincide. The Oort--Tate endpoints still exist, but the character alone cannot distinguish them. Our final application has $p\ge7$, so this dyadic collapse never enters.
 
@@ -748,7 +748,7 @@ $$
 
 Thus the absolute discriminant of $L$ has absolute value $1$. A nontrivial number field has absolute discriminant greater than $1$: this follows from the Minkowski lattice bound, whose equality case would force degree one. Hence $L=\mathbf Q$, so the image of $\psi$ is trivial. $\square$
 
-There is an equivalent ray-class proof. An abelian extension of $mathbf Q$ unramified at finite places is contained in the ray class field of modulus consisting only of the real place. The corresponding narrow ideal class group of $mathbf Q$ is trivial because every fractional ideal has a positive rational generator. The discriminant proof has the advantage of treating possible complexification at infinity without an extra sign discussion.
+There is an equivalent ray-class proof. An abelian extension of $\mathbf Q$ unramified at finite places is contained in the ray class field of modulus consisting only of the real place. The corresponding narrow ideal class group of $\mathbf Q$ is trivial because every fractional ideal has a positive rational generator. The discriminant proof has the advantage of treating possible complexification at infinity without an extra sign discussion.
 
 ### 7.3 The semistable isogeny theorem
 
@@ -784,7 +784,7 @@ The conclusion is symmetric in the two sides of the isogeny. It does not assert 
 
 It is tempting to prove that a bounded power such as $\lambda^{12}$ is unramified and then infer that $\lambda$ is trivial. That inference is false: a nontrivial character can have trivial twelfth power. The present proof avoids the loss of information. The coefficient-prime alternatives apply to $\lambda$ itself, and the determinant identifies the exact complementary character. Global class field theory is then applied to one actual diagonal character, not to a power of it.
 
-Nor can one replace Lemma 7.1 by the assertion that every unramified local character is trivial. Unramified local characters may have nontrivial Frobenius values. It is the simultaneous absence of ramification at all finite primes, together with the global arithmetic of $mathbf Q$, that forces triviality.
+Nor can one replace Lemma 7.1 by the assertion that every unramified local character is trivial. Unramified local characters may have nontrivial Frobenius values. It is the simultaneous absence of ramification at all finite primes, together with the global arithmetic of $\mathbf Q$, that forces triviality.
 
 ## 8. Prime torsion over the rationals
 
@@ -798,7 +798,7 @@ $$
 \#\widetilde E(\mathbf F_3)\le7<p.
 $$
 
-Nor can the reduction lie in the identity torus of a boundary fiber, because $\mathbf F_3^\times$ has order two. The modular point therefore reduces to an outward rational cusp.
+Nor can the reduction lie in the identity torus of a boundary fiber. A one-dimensional torus over $\mathbf F_3$ has order two in the split case and order four in the nonsplit case, neither divisible by $p\ge11$. The modular point therefore reduces to an outward rational cusp.
 
 For $p\ge17$, the corrected Eisenstein index
 
@@ -818,7 +818,7 @@ $$
 y^2+y=x^3-x^2
 $$
 
-and proves that its five rational points are precisely its five cusps. Therefore no elliptic curve over $mathbf Q$ has a rational point of order $11$.
+and proves that its five rational points are precisely its five cusps. Therefore no elliptic curve over $\mathbf Q$ has a rational point of order $11$.
 
 Book 152 completes the level-thirteen handoff. On the model
 
@@ -859,7 +859,7 @@ The theorem says nothing about rational isogenies with nontrivially generated ke
 
 ## 9. Odd isogenies and full rational two-torsion
 
-The next invariant survives passage from $E$ to $E/C$. The clean statement is scheme-theoretic and works over any base, although the rational-point consequence is used over $mathbf Q$.
+The next invariant survives passage from $E$ to $E/C$. The clean statement is scheme-theoretic and works over any base, although the rational-point consequence is used over $\mathbf Q$.
 
 ### 9.1 The Bezout inverse
 
@@ -941,7 +941,7 @@ For $p=5$ and $p=7$, the exact impossibility of (9.7) is the remaining arithmeti
 
 ## 10. The exceptional primes five and seven
 
-The large-prime theorem begins at eleven. The primes five and seven are not errors in the bound: elliptic curves over $mathbf Q$ can have rational points of those orders. The extra full two-torsion must be used, and it leads to two explicit low-genus parameter curves.
+The large-prime theorem begins at eleven. The primes five and seven are not errors in the bound: elliptic curves over $\mathbf Q$ can have rational points of those orders. The extra full two-torsion must be used, and it leads to two explicit low-genus parameter curves.
 
 ### 10.1 Why the prime-torsion theorem leaves two cases
 
@@ -967,7 +967,7 @@ $$
 (b,c)=(t^3-t^2,t^2-t)\quad\text{for order }7.
 $$
 
-Full rational two-torsion makes the cubic of nonzero two-torsion $x$-coordinates split over $mathbf Q$. Its discriminant must therefore be a square. Only this necessary direction is used; a square cubic discriminant does not by itself imply splitting.
+Full rational two-torsion makes the cubic of nonzero two-torsion $x$-coordinates split over $\mathbf Q$. Its discriminant must therefore be a square. Only this necessary direction is used; a square cubic discriminant does not by itself imply splitting.
 
 ### 10.2 The five-primary mixed curve
 
@@ -985,7 +985,7 @@ C_5(\mathbf Q)=\{\infty,(0,0)\}.
 \tag{10.3}
 $$
 
-The affine point has $t=0$, which is a degenerate Tate parameter, and the point at infinity is boundary. Hence no smooth elliptic curve over $mathbf Q$ has both full rational two-torsion and a rational point of order five. Equivalently,
+The affine point has $t=0$, which is a degenerate Tate parameter, and the point at infinity is boundary. Hence no smooth elliptic curve over $\mathbf Q$ has both full rational two-torsion and a rational point of order five. Equivalently,
 
 $$
 \mathbf Z/2\mathbf Z\times\mathbf Z/10\mathbf Z
@@ -1047,7 +1047,7 @@ No semistability hypothesis is needed in Theorem 10.1. Semistability entered ear
 
 ## 11. Irreducibility for semistable curves with full two-torsion
 
-All layers can now be assembled. The main criterion is slightly stronger than the final Frey statement: it applies to every semistable elliptic curve over $mathbf Q$ with full rational two-torsion and every prime $p\ge5$.
+All layers can now be assembled. The main criterion is slightly stronger than the final Frey statement: it applies to every semistable elliptic curve over $\mathbf Q$ with full rational two-torsion and every prime $p\ge5$.
 
 ### 11.1 The main criterion
 
@@ -1274,11 +1274,11 @@ v_2(\Delta_{\min})
 \tag{12.14}
 $$
 
-The subtraction of eight is indispensable. Applying the raw exponent $4+2p,v_2(a)$ would miss the admissible coordinate improvement and give incorrect residual inertia at two.
+The subtraction of eight is indispensable. Applying the raw exponent $4+2p\,v_2(a)$ would miss the admissible coordinate improvement and give incorrect residual inertia at two.
 
 ### 12.5 Semistability
 
-**Proposition 12.1 (Frey semistability).** The Frey curve (12.4) is semistable over $mathbf Q$. It has good reduction outside $2abc$ and multiplicative reduction at every prime dividing $2abc$.
+**Proposition 12.1 (Frey semistability).** The Frey curve (12.4) is semistable over $\mathbf Q$. It has good reduction outside $2abc$ and multiplicative reduction at every prime dividing $2abc$.
 
 **Proof.** Section 12.3 proves the statement at every odd prime. Section 12.4 proves multiplicative reduction at two. These cases exhaust all finite primes. $\square$
 
@@ -1358,6 +1358,66 @@ $$
 \tag{13.4}
 $$
 
+The full local datum is more precise. Let $t_p:I_2\twoheadrightarrow\mathbf Z_p$ be the $p$-primary tame character normalized as in Book 50, let $\overline t_p$ be its reduction, and put
+
+$$
+m_2=v_2(\Delta_{\min})=2p\,v_2(a)-8.
+$$
+
+In a Tate basis,
+
+$$
+\overline\rho_{a,b,p}(\sigma)
+=1+\overline t_p(\sigma)\overline N,
+\qquad
+\overline N=
+\begin{pmatrix}0&\overline m_2\\0&0\end{pmatrix},
+\qquad
+\overline N^2=0,
+\qquad
+\overline N\ne0
+\quad(\sigma\in I_2).
+\tag{13.4a}
+$$
+
+Wild inertia acts trivially and $\overline t_p$ is surjective, so the inertial image is cyclic of order $p$. Its unique fixed and monodromy line is
+
+$$
+L_2=\ker\overline N=\operatorname{im}\overline N.
+\tag{13.4b}
+$$
+
+This is the intrinsic ordered special line: $\overline N$ maps the quotient direction onto $L_2$, and rescaling the tame generator rescales $\overline N$ without changing the line. If $\phi_2$ is arithmetic Frobenius and $\eta_2$ is the unramified quadratic splitting character, then
+
+$$
+\overline\rho_{a,b,p}(\phi_2)
+=\eta_2(\phi_2)
+\begin{pmatrix}2&*\\0&1\end{pmatrix},
+\qquad
+\overline\rho_{a,b,p}(\phi_2)\overline N
+\overline\rho_{a,b,p}(\phi_2)^{-1}
+=2\overline N.
+\tag{13.4c}
+$$
+
+An upper-unipotent change of basis preserving $\overline N$ removes the star because $2-1$ is a unit modulo $p$. Thus the remaining named sign is
+
+$$
+\varepsilon_2=\eta_2(\phi_2)=
+\begin{cases}
++1,&b\equiv1\pmod8\quad\text{(split)},\\
+-1,&b\equiv5\pmod8\quad\text{(nonsplit)}.
+\end{cases}
+\tag{13.4d}
+$$
+
+The invariant line has dimension one and the Swan conductor is zero, so the residual Artin conductor exponent at two is exactly
+
+$$
+a_2(\overline\rho_{a,b,p})=1.
+\tag{13.4e}
+$$
+
 At the coefficient prime $p$, there are two cases. If $p\nmid abc$, the curve has good reduction and $E[p]$ is finite flat over $\mathbf Z_p$. If $p\mid abc$, it has multiplicative reduction and (12.9) gives
 
 $$
@@ -1373,7 +1433,16 @@ $$
 
 for the Frey curve. This conclusion is stronger than what was required for the isogeny-character alternatives.
 
-The conductor picture is consequently sharp. Away from $2p$, the residual representation is unramified at every prime dividing $abc$. At two it has the nontrivial semistable unipotent contribution. At $p$ its correct integral condition is finite flat, not unramifiedness.
+The conductor picture is consequently sharp. At a prime outside $2p$, good reduction gives unramifiedness when the prime does not divide $abc$, and (13.3) gives unramifiedness when it does. Hence
+
+$$
+\overline\rho_{a,b,p}\text{ is unramified outside }\{2,p\}.
+\tag{13.6}
+$$
+
+The determinant is cyclotomic, and for complex conjugation $c$ one has $\det\overline\rho_{a,b,p}(c)=-1$. Since $p$ is odd, this also proves that the representation is odd. Thus the exact package established here is: irreducibility over $\mathbf F_p$, cyclotomic determinant, oddness, (13.6), the nonzero ordered minimal-special datum (13.4a)--(13.4e) with its named sign, and the actual finite-flat model (13.5) at the coefficient prime.
+
+This package does not assert absolute irreducibility, irreducibility after restriction to the cyclotomic field, adequacy, or full residual image. Those are separate image-theoretic hypotheses in later applications. Nor does one residual finite-flat model by itself supply a compatible tower of higher coefficient-linear models; the downstream finite-flat deformation condition constructs and controls that additional integral data.
 
 ### 13.4 All prime exponents at least seven
 
@@ -1387,21 +1456,21 @@ The proof is short only because its imports have been kept exact. This chapter r
 
 ### 14.1 Imported local results
 
-**Book 49.** Integral Weierstrass invariants, minimality criteria, and the good/multiplicative reduction test justify (12.7)--(12.14). Its primitive Frey-curve calculation supplies the admissible dyadic change and verifies that the transformed equation is minimal. We use no coarse additive-reduction shortcut.
+**Book 49.** Integral Weierstrass invariants, minimality criteria, and the good/multiplicative reduction test justify (12.7)--(12.14). Its primitive Frey-curve calculation supplies the admissible dyadic change, verifies that the transformed equation is minimal, and identifies the dyadic splitness sign by $b\bmod8$. We use no coarse additive-reduction shortcut.
 
-**Book 50.** Tate uniformization supplies (3.3), (3.5), (5.1), and their unramified quadratic twists. Its Kummer calculation proves the residual unramified criterion away from the coefficient prime and the canonical finite-flat criterion at the coefficient prime. We use the latter as a criterion for the abstract representation only over the unramified base and for odd $p$, exactly where the intrinsic-line proof applies.
+**Book 50.** Tate uniformization supplies (3.3), (3.5), (5.1), their unramified quadratic twists, and the precise inertia and Frobenius matrices used in (13.4a)--(13.4c). Its Kummer calculation proves the residual unramified criterion away from the coefficient prime and the canonical finite-flat criterion at the coefficient prime. Section 5.4 promotes the latter to the abstract representation only by combining it with schematic closure and height-one low-ramification rigidity.
 
 **Book 51.** The Weil pairing supplies the cyclotomic determinant; a stable line is equivalent to a rational prime-degree isogeny; the dual line has character $\overline\chi_p\lambda^{-1}$; good reduction away from $p$ gives unramifiedness; and the Frey torsion representation is two-dimensional because the ground field has characteristic zero.
 
-**Book 48.** A good model supplies a finite-flat torsion representation at the coefficient prime. Schematic closure carries a stable generic line to a finite-flat subgroup in a fixed ambient model, and the represented quotient has the correct generic character. We do not infer that every extension of finite-flat endpoints is finite flat.
+**Book 48.** A good model supplies a finite-flat torsion representation at the coefficient prime. Schematic closure carries a stable generic line to a finite-flat subgroup in a fixed ambient model, and the represented quotient has the correct generic character. In Section 5.4 this is applied to a supplied middle model, not to two separately chosen endpoints. We do not infer that every extension of finite-flat endpoints is finite flat.
 
-**Book 56.** Over an unramified mixed-characteristic DVR, every order-$p$ finite-flat group is étale or multiplicative. The inertia formula identifies their generic restrictions as $1$ or $\overline\chi_p$, and Cartier duality exchanges the alternatives. Intermediate exponents over ramified bases are explicitly excluded from the global-$\mathbf Q$ theorem.
+**Book 56.** Over an unramified mixed-characteristic DVR, every order-$p$ finite-flat group is étale or multiplicative. The inertia formula identifies their generic restrictions as $1$ or $\overline\chi_p$, and Cartier duality exchanges the alternatives. Since $e=1<p-1$, its height-one full-faithfulness theorem also identifies the endpoint models from their generic fibers in Section 5.4. Intermediate exponents over ramified bases are explicitly excluded from the global-$\mathbf Q$ theorem.
 
 **Book 38.** Quotients by finite subgroup schemes, dual kernels, quasi-inverses of isogenies, and odd-isogeny invariance of two-torsion justify the passage between $E$ and $E/C$. The two-torsion result is used as a group-scheme isomorphism, not merely as equality of point counts.
 
 ### 14.2 Imported global and geometric results
 
-**Book 6.** Finite Galois characters correspond to finite-order idele class characters; conductor exponent zero means unramified; and the conductor--discriminant formula gives (7.3). Applied to $mathbf Q$, this proves that a finite character unramified at every finite prime is trivial. No prime-distribution theorem is required.
+**Book 6.** Finite Galois characters correspond to finite-order idele class characters; conductor exponent zero means unramified; and the conductor--discriminant formula gives (7.3). Applied to $\mathbf Q$, this proves that a finite character unramified at every finite prime is trivial. No prime-distribution theorem is required.
 
 **Book 147.** The selected Eisenstein quotient and formal immersion exclude rational points of prime order $p\ge17$. The separate genus-one calculation excludes $p=11$. The same book proves the complete five-primary mixed-torsion exclusion and derives the mixed-seven curve with the logically correct necessary direction.
 
@@ -1424,7 +1493,7 @@ The exceptional cases are summarized as follows.
 | $p=11$ | genus-one $X_1(11)$ calculation | no rational $11$-torsion |
 | $p=13$ | genus-two sieve on $X_1(13)$ | no rational $13$-torsion |
 | $p\ge17$ | oriented formal immersion | no rational $p$-torsion |
-| $q=2$ on the Frey curve | dyadic minimal change | $v_2(\Delta_{\min})=2p,v_2(a)-8$ |
+| $q=2$ on the Frey curve | dyadic minimal change and Tate monodromy | $v_2(\Delta_{\min})=2p\,v_2(a)-8$; nonzero ordered special line, named sign, conductor one |
 
 Arithmetic Frobenius is used throughout. The determinant is the mod-$p$ cyclotomic character for the covariant action on torsion points. The nonsplit multiplicative character is unramified. Full rational two-torsion is transported only across odd-degree isogenies. Square discriminant of the two-torsion cubic is used only as a necessary condition in the mixed-five and mixed-seven reductions.
 
@@ -1432,6 +1501,6 @@ Arithmetic Frobenius is used throughout. The determinant is the mod-$p$ cyclotom
 
 A reducible elliptic-curve torsion representation contains a line, but semistability makes that line far more rigid than an arbitrary character. Away from the coefficient prime, good reduction and multiplicative unipotence erase diagonal inertia. At the coefficient prime, finite-flat closure in the good case and the Tate exact sequence in the multiplicative case leave only the trivial and cyclotomic alternatives. Duality makes those alternatives complementary.
 
-Global class field theory then supplies the decisive collapse: one diagonal character is unramified at every finite prime, and over $mathbf Q$ such a finite character is trivial. A semistable rational $p$-isogeny therefore has a rationally generated kernel on one side. An odd isogeny preserves full rational two-torsion, so in the Frey isogeny class this rational point would create forbidden mixed torsion. Formal immersion excludes prime torsion from eleven upward, while the exact five- and seven-primary curves close the small cases.
+Global class field theory then supplies the decisive collapse: one diagonal character is unramified at every finite prime, and over $\mathbf Q$ such a finite character is trivial. A semistable rational $p$-isogeny therefore has a rationally generated kernel on one side. An odd isogeny preserves full rational two-torsion, so in the Frey isogeny class this rational point would create forbidden mixed torsion. Formal immersion excludes prime torsion from eleven upward, while the exact five- and seven-primary curves close the small cases.
 
 For a primitive Fermat-type triple, the Frey equation displays all two-torsion and factors its discriminant into the square of the three root differences. The odd-prime calculation and the corrected minimal model at two prove semistability. The general criterion then proves that its mod-$p$ representation is irreducible for every prime exponent at least seven. The resulting package is fully local at its inputs, global only in the one-dimensional class-field step, and exact at every exceptional prime.
