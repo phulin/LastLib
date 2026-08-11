@@ -115,7 +115,7 @@ The same notation can conceal four different constructions.
 3. In the **completed regime**, one passes to an inverse limit, normally $p$-adically or along a specified divided-power filtration. Infinite divided-power series are allowed only with a stated convergence condition.
 4. In the **derived regime**, tensor products and inverse limits retain Tor and first-derived-limit terms. A derived tensor product does not become ordinary merely because the notation is shorter.
 
-There are comparison theorems among these regimes, but none is an identity by definition. Flatness removes Tor. Finite generation and surjective transition maps remove first-derived-limit terms. Nilpotence turns an infinite-looking Taylor series into a finite sum. Every later theorem will name the mechanism it uses.
+There are comparison theorems among these regimes, but none is an identity by definition. Flatness removes Tor. Mittag--Leffler hypotheses remove first-derived-limit terms. A divided-power-order truncation, or modulewise quasi-nilpotence on an ordinary nilpotent thickening, turns an infinite-looking Taylor series into a finite sum. Every later theorem will name the mechanism it uses.
 
 ### 1.3 Standing conventions
 
@@ -172,7 +172,7 @@ $$
 
 The coefficient in (2.4) is an integer: it counts the partitions of an $mn$-element labelled set into $m$ unordered blocks of size $n$. Thus no division is performed in $A$.
 
-The membership condition in (2.1) makes the iteration in (2.4) meaningful. Some authors define the operations on all of $A$ by setting them to zero outside $I$; that bookkeeping convention changes no statement about elements of $I$.
+The membership condition in (2.1) makes the iteration in (2.4) meaningful. The operations are part of the structure on the ideal $I$; no operation on elements outside $I$ is intended.
 
 Why are all four substantive identities needed? Equation (2.2) is the denominator-free binomial theorem. Equation (2.3) controls multiplication of Taylor monomials. Equation (2.4) controls Taylor expansion inside a Taylor coefficient. Scalar compatibility ensures that the construction is intrinsic to the ideal, rather than to a chosen set of generators.
 
@@ -447,10 +447,14 @@ The base ideal is often $(p)$. Saying only that $p$ belongs to $K$ is insufficie
 
 ### 5.1 One variable
 
-The ordinary polynomial ring freely adjoins an element. The divided-power polynomial algebra freely adjoins an element of a PD ideal. As an $A$-module, define
+In Sections 5.1 and 5.2 the coefficient ring $A$ has the trivial base PD
+ideal $(0)$; the nontrivial relative construction begins in Section 5.3. The
+ordinary polynomial ring freely adjoins an element. The divided-power
+polynomial algebra freely adjoins an element of a PD ideal. As an $A$-module,
+define
 
 $$
-A\langle t\rangle=\bigoplus_{n\geq0}A,t^{[n]}.
+A\langle t\rangle=\bigoplus_{n\geq0}A\,t^{[n]}.
 \tag{5.1}
 $$
 
@@ -486,7 +490,7 @@ Then
 
 $$
 A\langle t_1,\ldots,t_d\rangle
-=\bigoplus_{\nu\in\mathbf N^d}A,t^{[\nu]},
+=\bigoplus_{\nu\in\mathbf N^d}A\,t^{[\nu]},
 \tag{5.3}
 $$
 
@@ -544,7 +548,7 @@ In one variable,
 
 $$
 (at^{[2]}+bt^{[3]})^{[2]}
-=a^2\gamma_2(t^{[2]})+ab,t^{[2]}t^{[3]}
+=a^2\gamma_2(t^{[2]})+ab\,t^{[2]}t^{[3]}
 +b^2\gamma_2(t^{[3]}).
 $$
 
@@ -560,7 +564,7 @@ Hence
 
 $$
 (at^{[2]}+bt^{[3]})^{[2]}
-=3a^2t^{[4]}+10ab,t^{[5]}+10b^2t^{[6]}.
+=3a^2t^{[4]}+10ab\,t^{[5]}+10b^2t^{[6]}.
 \tag{5.9}
 $$
 
@@ -608,7 +612,15 @@ The image of $I$ need not embed in $D$. Even $P\to D$ can have a kernel: factori
 
 Suppose $P\twoheadrightarrow R$ and $P'\twoheadrightarrow R$ are two polynomial presentations, with kernels $I$ and $I'$. Their envelopes need not be isomorphic as bare rings without relating $P$ and $P'$. What is intrinsic is the sheaf obtained after passing to a smooth local comparison.
 
-If a map $P\to P'$ over $A$ carries $I$ into $I'$, universality gives $D_P(I)\to D_{P'}(I')$. If maps in both directions induce the identity on $R$ and their composites are homotopic through maps differing by kernel elements, the induced maps on envelopes are not automatically inverse. The safe statement is the following: when the two presentations are joined by an isomorphism of pairs, their envelopes are uniquely isomorphic. For general smooth presentations, the diagonal-envelope descent of Chapters 12 and 13 supplies canonical comparison data rather than a bare global identification.
+If a map $P\to P'$ over $A$ carries $I$ into $I'$, universality gives
+$D_P(I)\to D_{P'}(I')$. Even if maps in both directions induce the identity
+on $R$ and their composites differ from the relevant identity maps only by
+kernel-valued corrections, the induced maps on envelopes are not automatically
+inverse. The safe statement is the following: when the two presentations are
+joined by an isomorphism of pairs, their envelopes are uniquely isomorphic.
+For general smooth presentations, the diagonal-envelope descent of Chapters
+12 and 13 supplies canonical comparison data rather than a bare global
+identification.
 
 This distinction prevents a common mistake. A universal property is independent of how one presents the *same input pair*; it does not identify different input pairs merely because they have the same quotient.
 
@@ -632,7 +644,7 @@ $$
 The most important geometric example is the diagonal. Let $R=A[x_1,\ldots,x_d]$ and put
 
 $$
-P=R\otimes_A R,\qquad \xi_i=x_i\otimes1-1\otimes x_i.
+P=R\otimes_A R,\qquad \xi_i=1\otimes x_i-x_i\otimes1.
 $$
 
 The multiplication map $P\to R$ has kernel generated by the $\xi_i$, so its envelope is
@@ -642,10 +654,11 @@ D(1)\cong R\langle\xi_1,\ldots,\xi_d\rangle.
 \tag{6.3}
 $$
 
-The two maps $R\rightrightarrows D(1)$ differ by
+Writing $p_1(x)=x\otimes1$ and $p_2(x)=1\otimes x$, the two maps
+$R\rightrightarrows D(1)$ differ by
 
 $$
-p_1(x_i)-p_2(x_i)=\xi_i.
+p_2(x_i)-p_1(x_i)=\xi_i.
 $$
 
 This ring is the integral Taylor neighborhood of the diagonal. It will turn crystals into stratifications and then into connections.
@@ -714,7 +727,9 @@ These completions need not agree because the filtrations need not be cofinal. A 
 
 The divided powers extend continuously to (7.5). At each finite level they descend by Proposition 4.1, and the transition maps preserve them. Applying $\gamma_n$ componentwise to a compatible inverse system gives a compatible inverse system. This proves existence; uniqueness follows from density when the completion is separated.
 
-Ordinary inverse limits are not automatically derived inverse limits. For a tower $A_m$ there is an exact sequence
+Ordinary inverse limits are not automatically derived inverse limits. For a
+countable tower of complexes of abelian groups, or of modules in a category
+with exact countable products, there is an exact sequence
 
 $$
 0\to R^1\!\varprojlim H^{q-1}(A_m)
@@ -796,7 +811,10 @@ This book does not identify an ordinary PD envelope with a hypothetical derived 
 
 ### 8.4 Completed base change
 
-Let $D$ be filtered by ideals $F^mD$ and let $A\to A'$ be a coefficient change. There is a natural comparison
+Let $D$ be filtered by ideals $F^mD$ and let $A\to A'$ be a coefficient
+change. If the left side means the completion of
+$\widehat D\otimes_AA'$ for the induced filtration, there is a natural
+comparison
 
 $$
 \widehat D\,\widehat\otimes_A A'
@@ -805,7 +823,17 @@ $$
 \tag{8.3}
 $$
 
-It is an isomorphism if $A'$ is flat, the transition maps remain surjective after tensoring, and completion is taken with respect to the displayed quotient system. For derived completion one replaces each tensor by $\otimes^L$ and the limit by $R\varprojlim$. Finite presentation and noetherian hypotheses often guarantee the needed Mittag--Leffler condition, but they are not part of the definition and cannot be omitted from a theorem.
+Flatness removes Tor at each finite level, but it does not by itself make
+tensor product commute with an inverse limit. The comparison is an isomorphism
+when tensoring with $A'$ commutes with the displayed inverse limit and the
+induced completion; a safe sufficient case is that $A'$ is finite projective
+over $A$ and the quotient tower is surjective. Alternatively one may *define*
+the completed tensor product to be the right side, in which case (8.3) is a
+definition rather than a theorem about commuting operations. For derived
+completion one replaces each tensor by $\otimes^L$ and the limit by
+$R\varprojlim$. Finite generation, noetherian completeness, and
+Mittag--Leffler hypotheses often prove the needed comparison, but their exact
+form must be stated in each theorem.
 
 A particularly safe finite-level procedure is: first form $D/F^mD$, then make the stated base change, and only afterward pass to the inverse limit. Reversing the order requires exactly the comparison in (8.3).
 
@@ -925,6 +953,20 @@ with the induced divided powers. Pullbacks of coverings are coverings because op
 One can instead use an étale or flat crystalline topology. That changes the sheaf category and must be stated. Throughout this book, “the crystalline topology” means the Zariski topology just defined unless a qualifier is present.
 
 Representable presheaves are sheaves: maps of schemes glue uniquely over open covers, and the condition of respecting a closed immersion and divided powers is local. Thus the site is subcanonical.
+
+The **small crystalline topos** is
+
+$$
+(X/S)_{\mathrm{cris}}^{\sim}
+=\operatorname{Sh}((X/S)_{\mathrm{cris}}),
+$$
+
+the category of sheaves of sets on this site. Together with the sheaf
+$\mathcal O_{X/S}$ defined below, it is a ringed topos. A continuous left-exact
+functor between crystalline sites therefore produces a geometric morphism of
+their topoi. Its inverse-image functor is left exact on sheaves of sets, while
+pullback of modules also includes extension of scalars and is generally only
+right exact.
 
 ### 10.3 The structure and defining-ideal sheaves
 
@@ -1115,7 +1157,7 @@ If $Y=\operatorname{Spec}(R)$ has étale coordinates $x_1,\ldots,x_d$, then loca
 
 $$
 \mathcal O_{\widetilde D(1)}\cong R\langle\xi_1,\ldots,\xi_d\rangle,\qquad
-\xi_i=p_1(x_i)-p_2(x_i).
+\xi_i=p_2(x_i)-p_1(x_i).
 \tag{13.2}
 $$
 
@@ -1213,7 +1255,11 @@ The Leibniz rule becomes $\theta_i(fm)=f\theta_i(m)+(\partial_i f)m$, and curvat
 
 ### 14.2 From a stratification to a connection
 
-Let $Q$ be the PD ideal of the diagonal in $D(1)$. Modulo $Q^{[2]}$, the difference $\varepsilon-1$ takes values in
+Let $Q$ be the augmentation ideal for the diagonal section $Y\to D(1)$; on
+rings it is the kernel of $\mathcal O_{D(1)}\to\mathcal O_Y$. This is
+the PD ideal generated by the differences $p_2(f)-p_1(f)$, not the larger
+defining ideal of $X$ in $D(1)$, which also contains the image of the base
+ideal. Modulo $Q^{[2]}$, the difference $\varepsilon-1$ takes values in
 
 $$
 M\otimes_R Q/Q^{[2]}.
@@ -1223,7 +1269,7 @@ There is a canonical isomorphism
 
 $$
 Q/Q^{[2]}\cong\Omega^1_{R/A},\qquad
-p_1(f)-p_2(f)\longmapsto df.
+p_2(f)-p_1(f)\longmapsto df.
 \tag{14.5}
 $$
 
@@ -1252,7 +1298,19 @@ $$
 
 defines an element of the chosen ordinary truncation or completion.
 
-This condition is independent of étale coordinates. A change of coordinates expresses each new derivation as an $R$-linear combination of the old ones; repeated application, using Leibniz, expresses an operator of large order as a sum of old operators whose orders tend to infinity. Local nilpotence, or topological convergence, is therefore preserved.
+Under the hypotheses used below---$R/A$ smooth and $p$ locally nilpotent in
+$A$---this condition is independent of the chosen étale coordinates. To see
+the point which a mere change-of-basis argument misses, write each new
+derivation as an $R$-linear combination of the old ones and repeatedly apply
+Leibniz. Terms of bounded old-operator order contain increasingly high
+derivatives of the change-of-coordinate coefficients. Those derivatives are
+eventually divisible by any fixed power of $p$, by the same factorial estimate
+used for the canonical connection in the next paragraph; terms of unbounded
+old-operator order kill the chosen section by (14.6). Thus every sufficiently
+long new iterate vanishes locally. The identical argument with convergence in
+place of vanishing proves invariance in the adic setting. Equivalently, the
+condition says intrinsically that the Taylor isomorphism is defined on the
+ordinary nilpotent diagonal towers, a coordinate-free property.
 
 When $p$ is locally nilpotent on $A$, the canonical connection $d$ on $R$ is quasi-nilpotent. For a localized coordinate, repeated derivatives contain factorial factors; the $p$-adic valuation of $n!$ tends to infinity, so sufficiently high iterates vanish modulo a fixed power of $p$. On a $p$-adically complete ring they need not vanish, but the Taylor expansion converges in the diagonal PD topology. This example shows why nilpotent and completed definitions differ.
 
@@ -1260,16 +1318,62 @@ When $p$ is locally nilpotent on $A$, the canonical connection $d$ on $R$ is qua
 
 **Theorem 14.1.** Let $(A,J,\gamma)$ have nilpotent $J$, assume that $p$ is nilpotent in $A$, let $R$ be smooth over $A$, and let $X=\operatorname{Spec}(R/JR)$. Quasi-coherent crystals on $(X/S)_{\mathrm{cris}}$ correspond to quasi-coherent $R$-modules with integrable quasi-nilpotent connection. In the $p$-adically completed setting, use complete modules and topological quasi-nilpotence.
 
-**Proof strategy.** Theorem 13.1 reduces crystals to stratifications. Section 14.2 sends a stratification to an integrable connection, and its full expansion gives quasi-nilpotence.
+**Proof strategy.** Theorem 13.1 reduces crystals to stratifications. Section
+14.2 sends a stratification to an integrable connection. To see
+quasi-nilpotence rather than merely formal convergence, evaluate the
+stratification on the ordinary-power quotients of the diagonal envelope. At
+each level its value on a fixed section is an algebraic, hence finite, sum of
+divided monomials.
 
-Conversely, choose étale coordinates and commuting operators $\theta_i$. Define $\varepsilon$ by (14.7). Quasi-nilpotence makes the sum meaningful. The Leibniz rule and the divided Taylor formula
+The needed coefficient estimate is elementary. In one variable, write
+$s_p(n)$ for the sum of the base-$p$ digits of $n$. Multiplying the divided
+monomials indexed by those digits gives
 
 $$
-p_1(f)=\sum_\nu\partial^\nu(f)\,\xi^{[\nu]}
+\prod_r\bigl(\xi^{[p^r]}\bigr)^{a_r}
+=u_n\xi^{[n]},\qquad n=\sum_ra_rp^r,
+$$
+
+where $u_n$ is prime to $p$: Legendre's formula gives zero $p$-adic valuation
+for the multinomial coefficient. Conversely, if
+$p^r=n_1+\cdots+n_b$ with every $n_j>0$, the coefficient of
+$\xi^{[p^r]}$ in the product of the $b$ corresponding divided monomials has
+valuation
+
+$$
+\frac{\sum_j s_p(n_j)-1}{p-1}
+\geq\frac{b-1}{p-1}.
+$$
+
+It follows that the possible coefficient of $\xi^{[p^r]}$ in the ordinary
+power $K^N$, where $K$ is generated by $J$ and the positive divided
+monomials, lies in an ideal contained in $((p)+J)^{c(N)}$ for integers
+$c(N)\to\infty$; one may take
+
+$$
+c(N)=\min_{a+b=N,\ b\geq1}
+\left(a+\left\lceil\frac{b-1}{p-1}\right\rceil\right).
+$$
+
+Thus finiteness of the stratification modulo every $K^N$
+forces $\theta_i^{p^r}(m)$ into $((p)+J)^{c(N)}$ for all sufficiently large
+$r$. The ideal $(p)+J$ is nilpotent, so after fixing a sufficiently large
+$N$ one gets $\theta_i^{p^r}(m)=0$ for all sufficiently large $r$.
+The same statement for finitely many coordinates implies (14.6) by the
+pigeonhole principle. Thus the full expansion gives quasi-nilpotence.
+
+Conversely, choose étale coordinates and commuting operators $\theta_i$. Define $\varepsilon$ by (14.7). Quasi-nilpotence makes the sum meaningful. The Leibniz rule and the divided Taylor formula, with coefficients viewed through $p_1$,
+
+$$
+p_2(f)=\sum_\nu p_1(\partial^\nu(f))\,\xi^{[\nu]}
 \tag{14.8}
 $$
 
-show that $\varepsilon$ is semilinear. Replacing $\xi$ by $-\xi$ constructs its inverse. Commutativity of the $\theta_i$ proves the cocycle: expanding transport by $\xi$ and then by $\eta$ gives the expansion by $\xi+\eta$, because
+show that $\varepsilon$ is $\mathcal O_{D(1)}$-linear from $p_2^*M$ to
+$p_1^*M$. This is exactly where the sign convention
+$\xi=p_2(x)-p_1(x)$ enters. Replacing $\xi$ by $-\xi$ constructs its inverse.
+Commutativity of the $\theta_i$ proves the cocycle: expanding transport by
+$\xi$ and then by $\eta$ gives the expansion by $\xi+\eta$, because
 
 $$
 (\xi+\eta)^{[n]}=\sum_{r+s=n}\xi^{[r]}\eta^{[s]}.
@@ -1318,13 +1422,17 @@ For a crystal $\mathcal E$ on $X/S$, define
 
 $$
 h_{\mathrm{cris}}^*\mathcal E
-=\mathcal O_{X'/S'}\otimes_{h^{-1}\mathcal O_{X/S}}h^{-1}\mathcal E.
+=\mathcal O_{X'/S'}\otimes_{h_{\mathrm{cris}}^{-1}\mathcal O_{X/S}}
+h_{\mathrm{cris}}^{-1}\mathcal E.
 \tag{15.2}
 $$
 
 This is again a crystal. To check it, take an arrow $T_1'\to T_2'$ of thickenings. Pullback of (15.2) to $T_1'$ can be regrouped as scalar extension of the pullback of $\mathcal E$ from the corresponding $S$-thickening. The transition map for $\mathcal E$ is an isomorphism, and associativity of tensor products preserves it.
 
-Finite locally free crystals remain finite locally free. A quasi-coherent crystal remains quasi-coherent under the usual quasi-compactness conditions on the scheme maps, and always objectwise in the affine setting.
+Finite locally free crystals remain finite locally free. A quasi-coherent
+crystal remains quasi-coherent: objectwise this is the usual fact that pullback
+of a quasi-coherent module along a scheme morphism is quasi-coherent. No
+quasi-compactness hypothesis is needed for pullback.
 
 On a smooth lift with connection, (15.2) is the familiar pullback connection
 
@@ -1350,9 +1458,15 @@ M_T\otimes_A^LA'.
 \tag{15.4}
 $$
 
-The result is a derived crystal: its transition maps are equivalences after derived scalar extension. Its cohomology sheaves need not be ordinary crystals unless Tor commutes with every transition pullback. A perfect complex of crystals is safe because it is locally represented by a bounded complex of finite locally free crystals.
+The result is a derived crystal: its transition maps are equivalences after
+derived scalar extension. A perfect complex of crystals is a safe coefficient
+for this derived operation because it is locally represented by a bounded
+complex of finite locally free crystals. Even then, its individual cohomology
+sheaves need not commute with underived pullback, and hence need not be
+ordinary crystals, unless the relevant Tor terms vanish.
 
-Reduction modulo $p^n$ gives the triangle
+If multiplication by $p^n$ is injective on the coefficient ring $A$, the
+two-term free resolution of $A/(p^n)$ gives the triangle
 
 $$
 K\xrightarrow{p^n}K\longrightarrow
@@ -1360,7 +1474,12 @@ K\otimes^L_AA/(p^n)\longrightarrow K[1].
 \tag{15.5}
 $$
 
-Hence ordinary reduction of $H^q(K)$ agrees with derived reduction in degree $q$ only when $H^{q+1}(K)$ has no $p^n$-torsion. This warning becomes decisive in degree one.
+and the associated universal-coefficient short exact sequence. Hence ordinary
+reduction of $H^q(K)$ agrees with derived reduction in degree $q$ only when
+$H^{q+1}(K)$ has no $p^n$-torsion. If $p^n$ is a zero divisor in $A$, (15.5)
+need not hold: one must use an actual flat resolution of $A/(p^n)$, whose
+higher Tor terms may occupy more than one degree. This warning becomes
+decisive in degree one.
 
 ### 15.4 Transitivity
 
@@ -1443,16 +1562,31 @@ $$
 
 These identities explain how a Frobenius lift packages first-order arithmetic information. If $R$ has $p$-torsion, divisibility in (16.3) does not determine a quotient, so (16.4) is not canonical.
 
-A smooth algebra has Frobenius lifts locally after choosing étale coordinates: send each coordinate to its $p$th power and use the infinitesimal lifting property across the étale map. Different choices are expected and are compared by the crystal stratification.
+At a nilpotent level, a smooth algebra has Frobenius lifts locally after
+choosing an étale map to affine space: send the affine coordinates to their
+$p$th powers and use formal étaleness to lift across the nilpotent ideal
+$(p)$. Over a $p$-adically complete algebra the same construction is performed
+successively modulo $p^n$ and then passed to the limit, so completeness and
+separatedness are required. Without nilpotence or completeness, formal
+étaleness alone does not produce a lift across the nonnilpotent ideal $pR$.
+Different choices are expected and are compared by the crystal stratification.
 
 ### 16.3 Frobenius crystals and isocrystals
 
-At a fixed nilpotent level, a **crystal with Frobenius** is a crystal $\mathcal E$ together with a morphism
+At a fixed nilpotent level, let $\mathcal E^{(p)}$ denote the $\sigma$-twist of
+a crystal $\mathcal E$, a crystal on $X^{(p)}/S$ obtained by the base-change
+pullback of Chapter 15. A **crystal with Frobenius** is $\mathcal E$ together
+with a morphism
 
 $$
-\Phi:F_{\mathrm{cris}}^*\mathcal E\longrightarrow\mathcal E.
+\Phi:F_{\mathrm{cris}}^*\mathcal E^{(p)}\longrightarrow\mathcal E.
 \tag{16.6}
 $$
+
+If an identification $X^{(p)}\cong X$ has been fixed, the twist is commonly
+suppressed and (16.6) is written $F_{\mathrm{cris}}^*\mathcal E\to\mathcal E$.
+Without that identification, suppressing $\mathcal E^{(p)}$ would make the
+source and target live on different crystalline topoi.
 
 No invertibility condition follows from this definition. Since $p$ is nilpotent at a finite level, inverting $p$ would annihilate the whole coefficient ring and cannot define a useful isogeny category.
 
@@ -1460,7 +1594,16 @@ Over a $p$-adically complete, $p$-torsion-free base, an **$F$-crystal** will mea
 
 An **$F$-isocrystal** is obtained after rationalizing coefficients. Integral lattices inside the same isocrystal need not be unique. Thus an isocrystal does not by itself supply finite-level integral objects.
 
-Pullback, tensor product, and duality carry Frobenius in the expected way. For duality, finite local freeness is required and the Frobenius on the dual is inverse-transpose only after $Phi$ has become invertible; integrally one obtains the corresponding isogeny map after clearing a power of $p$.
+Pullback and tensor product carry Frobenius in the expected covariant way.
+Duality requires a variance warning. Dualizing (16.6) gives
+$\mathcal E^\vee\to F_{\mathrm{cris}}^*(\mathcal E^{(p)})^\vee$, the reverse
+of (16.6). After rationalization, $\Phi$ is invertible and its inverse transpose
+gives a canonical Frobenius on the dual isocrystal. Integrally, a map in the
+direction (16.6) is obtained only after choosing an exponent $a$ for which
+$p^a\Phi^{-1}$ preserves the chosen dual lattice; different adequate $a$ give
+different integral Frobenius maps. Thus the dual isocrystal is canonical, but
+an integral dual $F$-crystal in this convention includes a lattice choice and
+an integral normalization.
 
 ### 16.4 The divided differential
 
@@ -1478,15 +1621,34 @@ $$
 \tag{16.8}
 $$
 
+Equivalently, keeping the Frobenius twist visible, this is the $R$-linear map
+
+$$
+\varphi^*\Omega^1_{R/A}:=
+R\otimes_{R,\varphi}\Omega^1_{R/A}
+\longrightarrow\Omega^1_{R/A},\qquad
+a\otimes dr\longmapsto a\,\frac{d\varphi(r)}p.
+\tag{16.9}
+$$
+
+Here the right $R$-action on the first factor is
+$a\cdot r=a\varphi(r)$; this convention records exactly the
+$\sigma$-semilinearity suppressed in (16.8).
+
 This degree-one operator is the first place where the Frobenius lift carries more information than special-fiber Frobenius, whose differential is zero. It depends on the lift, but two lifts are infinitesimally close and a crystal's stratification gives the canonical comparison required in cohomological constructions.
 
-Division by $p$ in (16.8) requires $p$-torsion-freeness, or a separately supplied factorization through multiplication by $p$. It is not legitimate merely because $d\varphi$ reduces to zero modulo $p$.
+Division by $p$ in (16.8) requires $p$-torsion-freeness of the target module
+of differentials, or a separately supplied factorization through
+multiplication by $p$. For smooth $R/A$, $\Omega^1_{R/A}$ is locally
+projective over $R$, so $p$-torsion-freeness of $R$ implies the needed
+torsion-freeness. It is not legitimate merely because $d\varphi$ reduces to
+zero modulo $p$.
 
 ## 17. Degree-one constructions
 
 ### 17.1 The first crystalline complex
 
-The full finiteness, base-change, duality, and Kunneth theory of crystalline cohomology belongs to the next stage. Here we isolate the degree-one construction that those theorems will act on.
+The full finiteness, base-change, duality, and Künneth theory of crystalline cohomology belongs to the next stage. Here we isolate the degree-one construction that those theorems will act on.
 
 For a crystal $\mathcal E$, derived global sections on the ringed crystalline site are defined, using an injective replacement, by
 
@@ -1503,7 +1665,7 @@ H^0_{\mathrm{cris}}=H^0R\Gamma_{\mathrm{cris}},
 H^1_{\mathrm{cris}}=H^1R\Gamma_{\mathrm{cris}}.
 $$
 
-Under the hypotheses of Theorem 14.1, if $X$ admits a smooth lift $Y/S$ and $\mathcal E$ corresponds to $(M,\nabla)$, the local crystalline Poincare argument identifies the low-degree complex with
+Under the hypotheses of Theorem 14.1, if $X$ admits a smooth lift $Y/S$ and $\mathcal E$ corresponds to $(M,\nabla)$, the local crystalline Poincaré argument identifies the low-degree complex with
 
 $$
 M\xrightarrow{\nabla}M\otimes\Omega^1_{Y/S}
@@ -1511,13 +1673,40 @@ M\xrightarrow{\nabla}M\otimes\Omega^1_{Y/S}
 \tag{17.2}
 $$
 
-Here is the mechanism. Resolve the crystal by its alternating cosimplicial evaluations on the diagonal envelopes $D(n)$. In étale coordinates, the normalized complex is filtered by total divided-power degree. Its associated graded complex is a tensor product of one-variable complexes in which the homotopy removes one divided variable at a time. The identity
+Here is the mechanism, including the descent step. Over any object $(U,T)$,
+smoothness supplies locally a map $T\to Y$. The augmented nerve of all such
+local lifts has a local extra degeneracy after one lift is chosen, so its
+alternating sheaf complex is contractible in positive degrees. Consequently
+the alternating cosimplicial evaluations on the diagonal towers $D(n)$ form a
+resolution of the crystal; this is a Čech--Alexander argument on the
+crystalline site, not an assertion that $Y$ is a final object.
+
+In étale coordinates, filter the normalized complex by total divided-power
+degree. Its associated graded complex is a tensor product of one-variable
+complexes. In one variable the positive-degree part is contracted by
 
 $$
-d(\xi^{[n]})=\xi^{[n-1]}d\xi
+h(\xi^{[n]}d\xi)=\xi^{[n+1]},\qquad n\geq0,
 $$
 
-for PD differentials makes that homotopy integral. The degree-zero survivors are exactly the exterior forms on $Y$, and the differential induced by the stratification is $\nabla$. At finite PD order the contraction is finite. On the ordinary nilpotent site, $p$-local nilpotence together with quasi-nilpotence makes the Taylor expressions locally finite; in the completed setting one passes through the stated inverse-limit topology, with surjective finite-level transitions. This yields the comparison in degrees zero and one without asserting the later global finiteness results.
+because the identity
+
+$$
+d(\xi^{[n]})=\xi^{[n-1]}d\xi\qquad(n\geq1)
+$$
+
+for PD differentials gives $dh+hd=1$ on that part. Tensoring these contractions
+removes the divided variables one at a time; the usual alternating sign in a
+tensor product makes the contractions compatible. The survivors are exactly
+the exterior forms on $Y$, and conjugating by the Taylor stratification makes
+the surviving differential $\nabla$. At finite divided-power order every
+contraction is finite. On the ordinary nilpotent towers, local nilpotence of
+$p$ together with quasi-nilpotence makes the coefficient Taylor expressions
+locally finite; in the completed setting the same homotopies are continuous
+and pass through the stated inverse-limit topology. The augmentation and the
+coordinate contraction therefore give the comparison through degree one.
+This proves the low-degree assertion without using the later finiteness,
+proper base-change, or global duality theorems.
 
 In particular, on an affine lift,
 
@@ -1569,7 +1758,11 @@ On a cover $(T_i)$, a class may be represented by local splittings of (17.5). Th
 
 ### 17.3 Curves and abelian objects
 
-Let $f:X\to B_0$ be smooth over the special fiber of a PD base $B$. The degree-one assignment
+Let $f:X\to B_0$ be smooth over the special fiber of a PD base $B$. For an
+object $(U,T)$ of $(B_0/B)_{\mathrm{cris}}$, write $X_U=X\times_{B_0}U$.
+Degree-one relative cohomology is the sheaf on $T$ whose value on an open
+$V\subseteq T$ is the corresponding crystalline cohomology of
+$X_{U\times_TV}/V$; on affine objects its module of global sections is denoted
 
 $$
 (U,T)\longmapsto
@@ -1577,7 +1770,14 @@ H^1_{\mathrm{cris}}(X_U/T,\mathcal O)
 \tag{17.6}
 $$
 
-has pullback maps from the functoriality of the crystalline site. Under the properness, finite-presentation, and base-change hypotheses proved in the next volume, these values form a finite locally free crystal on $B_0/B$. This book constructs the transition maps and proves their coherence; it does not assume their finiteness or base-change bijectivity.
+An arrow $(U,T)\to(U',T')$ gives a derived pullback comparison from the value
+over $T'$ to the value over $T$. Pasting arrows gives the same comparison as
+pulling back once along the composite, by the transitivity of Chapter 15.
+Under the properness, finite-presentation, and base-change hypotheses proved in
+the next volume, these comparisons are isomorphisms and the sheaves are finite
+locally free, so the values form a finite locally free crystal on $B_0/B$.
+This book constructs the comparison maps and proves their coherence; it does
+not assume their finiteness or base-change bijectivity.
 
 For a smooth proper relative curve, the local lift model is the two-term beginning
 
@@ -1587,33 +1787,45 @@ $$
 
 because $\Omega^2_{Y/B}=0$. Degree one therefore receives both gluing classes of functions and closed relative differentials. A direct-sum decomposition does not follow: even if a later spectral sequence degenerates, the Hodge pieces can form a nontrivial extension.
 
-For a smooth proper commutative group object, multiplication, inversion, and the identity section induce pullback maps on (17.6). The group law gives the primitive comparison
+For a smooth proper commutative group object, multiplication, inversion, and the identity section induce pullback maps on (17.6). Once the required Künneth isomorphism is available, the primitive identity is the well-typed formula
 
 $$
-m^*:H^1\longrightarrow H^1\otimes1+1\otimes H^1
+m^*(z)=\operatorname{pr}_1^*(z)+\operatorname{pr}_2^*(z)
 \tag{17.7}
 $$
 
-once the required Kunneth isomorphism is available. At this stage we construct $m^*$ and the two projection pullbacks; identifying the target as a direct sum is deliberately deferred. This is the degree-one functorial skeleton later used for abelian schemes.
+inside $H^1$ of the product. At this stage we construct $m^*$ and the two
+projection pullbacks; the Künneth identification of the target with a direct
+sum is deliberately deferred. This is the degree-one functorial skeleton later
+used for abelian schemes.
 
 ### 17.4 Finite-level and torsion coefficients
 
-Integral degree one cannot be recovered by naively reducing a rational object. Let $K=R\Gamma_{\mathrm{cris}}(X/S,\mathcal E)$. From (15.5) one obtains
+Integral degree one cannot be recovered by naively reducing a rational object.
+Let $K=R\Gamma_{\mathrm{cris}}(X/S,\mathcal E)$ and regard it as a complex of
+abelian groups. Since multiplication by $p^n$ is injective on $\mathbf Z$, the
+triangle (15.5), now formed over $\mathbf Z$, gives
 
 $$
 0\longrightarrow
 H^1(K)/p^nH^1(K)
 \longrightarrow
-H^1(K\otimes^L\mathbf Z/p^n)
+H^1(K\otimes^L_{\mathbf Z}\mathbf Z/p^n)
 \longrightarrow
 H^2(K)[p^n]
 \longrightarrow0.
 \tag{17.8}
 $$
 
-Thus the finite-level degree-one module has an extra contribution precisely when degree two has $p^n$-torsion. Flatness of $H^2$, or an appropriate vanishing theorem, removes it. No such hypothesis is silently imposed here.
+Thus derived reduction of the integral degree-one complex has an extra
+contribution precisely when degree two has $p^n$-torsion. Identifying this
+derived reduction with crystalline cohomology on a base reduced modulo $p^n$
+is a separate base-change theorem; (17.8) alone does not make that
+identification. Flatness of $H^2$, or an appropriate vanishing theorem,
+removes the right-hand term. No such hypothesis is silently imposed here.
 
-For a compatible system of crystals $\mathcal E_n$ modulo $p^n$, completed degree one fits into
+For a countable compatible system of crystals $\mathcal E_n$ modulo $p^n$,
+apply the Milnor sequence in abelian groups to obtain
 
 $$
 0\to R^1\!\varprojlim H^0_{\mathrm{cris}}(\mathcal E_n)
@@ -1623,18 +1835,31 @@ $$
 \tag{17.9}
 $$
 
-Surjectivity of the $H^0$ transition maps kills the first term. This is the exact compatibility needed before a finite-flat or divisible object can be reconstructed from all torsion levels.
+The displayed sequence computes the derived inverse limit; it does not by
+itself identify that limit with cohomology on a completed crystalline topos.
+Surjectivity of the $H^0$ transition maps kills the first term. Effectivity of
+the coefficient system and the comparison with the completed site are separate
+requirements before a finite-flat or divisible object can be reconstructed
+from all torsion levels.
 
 ### 17.5 Functorial degree-one data
 
 The constructions needed later can now be listed as proved operations rather than hoped-for identifications:
 
 - a morphism $X\to Y$ induces pullback $H^1_{\mathrm{cris}}(Y/S,\mathcal E)\to H^1_{\mathrm{cris}}(X/S,f^*\mathcal E)$;
-- a morphism of PD bases induces the derived base-change comparison, with an isomorphism only under the flatness or perfectness conditions of Chapter 15;
+- a morphism of PD bases induces a derived base-change comparison; Chapter 15
+  controls coefficient pullback, but invertibility of the comparison for
+  crystalline cohomology additionally requires the geometric base-change
+  theorem proved in the next volume;
 - a correspondence supplies pullback along one leg and, only after a separately established proper trace, pushforward along the other;
 - tensor products give cup products into degree two, but duality or perfectness is not inferred from their existence;
-- a Frobenius lift gives the semilinear action on (17.2), and different lifts are compared through the stratification;
-- finite-level reduction is governed by (17.8), while passage to a completed lattice is governed by (17.9).
+- for the structure crystal, a Frobenius lift acts semilinearly on (17.2); for
+  general coefficients one also needs a Frobenius morphism (16.6), and
+  different choices of lift are compared through the stratification;
+- derived finite-level coefficient reduction is governed by (17.8), while
+  passage to a derived inverse-limit lattice is governed by (17.9); geometric
+  identification with reduced or completed crystalline sites requires the
+  separate comparisons stated there.
 
 These distinctions are exactly what degree-one applications to curves, abelian schemes, and finite-flat objects require. The site supplies functorial maps; geometry must still supply finiteness, perfectness, trace, and comparison isomorphisms.
 
@@ -1672,16 +1897,19 @@ Every downward step has a distinct hypothesis. Divided powers remove factorial d
 | quotient PD structure | kernel intersection is PD-stable | the operation depends on the chosen lift |
 | envelope commutes with ordinary tensor | flat compatible base change | the ordinary tensor need not be the PD pushout |
 | ordinary completion computes derived completion | derived completeness and vanishing first derived limit | hidden inverse-limit classes remain |
+| completed tensor commutes with the quotient limit | tensor commutes with that limit, for example finite-projective coefficient change with a surjective tower | flatness alone does not commute with inverse limits |
 | crystals equal modules with stratification | a local smooth lift | values on arbitrary thickenings cannot be reconstructed from one evaluation |
 | stratifications equal connections | smoothness, integrability, quasi-nilpotence, and $p$ locally nilpotent in the nilpotent version | curvature or divergent Taylor series obstructs descent |
 | dual of a crystal is a crystal | finite local freeness, or another dualizable hypothesis | Hom need not commute with pullback |
 | kernels stay crystals | flat pullback or flat quotient | Tor changes the pulled-back kernel |
 | Frobenius isogeny | a $p$-adic integral system; rationalization meaningful | at one nilpotent level, inverting $p$ annihilates coefficients |
-| $d\varphi/p$ is defined | $p$-torsion-freeness or a chosen factorization | divisibility does not choose a quotient |
-| reduction commutes with $H^1$ | $H^2[p^n]=0$ | the right term of (17.8) survives |
-| completed $H^1$ is the inverse limit | $R^1\varprojlim H^0=0$ | the left term of (17.9) survives |
+| dual Frobenius has the direction (16.6) | rational invertibility, and integrally a normalized lattice-preserving inverse transpose | ordinary duality reverses the Frobenius arrow |
+| $d\varphi/p$ is defined | $p$-torsion-freeness of $\Omega^1$, or a chosen factorization | divisibility does not choose a quotient |
+| derived reduction has the two-row sequence (17.8) | reduction over $\mathbf Z$, or a coefficient ring on which $p^n$ is a non-zero-divisor | extra Tor rows may occur |
+| reduction commutes with $H^1$ | the preceding two-row hypothesis and $H^2[p^n]=0$ | the right term of (17.8) survives |
+| completed $H^1$ is the inverse limit | $R^1\varprojlim H^0=0$, plus effectivity and comparison with the completed site | a derived-limit class or noneffective tower survives |
 
-Finiteness of crystalline cohomology, proper and smooth base change, global Poincare duality, Kunneth isomorphisms, comparison with the degree-one cohomology of curves and abelian schemes, and the classification consequences for finite-flat groups require additional geometry. They are not consequences of the site axioms and have not been smuggled into the constructions above.
+Finiteness of crystalline cohomology, proper and smooth base change, global Poincaré duality, Künneth isomorphisms, comparison with the degree-one cohomology of curves and abelian schemes, and the classification consequences for finite-flat groups require additional geometry. They are not consequences of the site axioms and have not been smuggled into the constructions above.
 
 ### 18.3 Final perspective
 
@@ -1689,4 +1917,10 @@ Divided powers are an arithmetic replacement for factorial denominators. Their u
 
 Smooth coordinates reveal the mechanism without defining it: the diagonal envelope contains the divided monomials, a stratification is a Taylor isomorphism, its linear term is a connection, its triple-overlap identity is zero curvature, and quasi-nilpotence is convergence. Frobenius adds a semilinear arithmetic transport whose differential becomes visible only after division by $p$ under an honest torsion-freeness hypothesis.
 
-The degree-one theory already carries pullback, extensions, Frobenius, finite-level reduction, and completion. What it does not yet carry automatically is just as important: finiteness, duality, traces, Kunneth decompositions, or torsion-free base change. With those boundaries explicit, crystalline sites provide a reliable integral framework for the later cohomology of curves and abelian schemes and for the finite-level structures attached to them.
+The degree-one theory already carries pullback, extensions, Frobenius, derived
+finite-level reduction, and derived inverse-limit bookkeeping. What it does not
+yet carry automatically is just as important: finiteness, duality, traces,
+Künneth decompositions, effectivity on a completed site, or torsion-free base
+change. With those boundaries explicit, crystalline sites provide a reliable
+integral framework for the later cohomology of curves and abelian schemes and
+for the finite-level structures attached to them.

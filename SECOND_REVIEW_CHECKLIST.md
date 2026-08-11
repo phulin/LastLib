@@ -76,7 +76,7 @@ any resulting corrections.
 - [ ] 050. Tate Curves and Multiplicative Reduction
 - [ ] 051. Torsion and Tate Modules of Elliptic Curves
 - [ ] 052. Algebraic de Rham Cohomology and Gauss–Manin Connections
-- [ ] 053. Divided Powers and Crystalline Sites
+- [x] 053. Divided Powers and Crystalline Sites
 - [ ] 054. Crystalline Cohomology of Curves and Abelian Schemes
 - [ ] 055. Syntomic Cohomology and Integral Period Maps
 - [ ] 056. Finite-Flat Group Schemes of Small Height
