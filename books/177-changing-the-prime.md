@@ -62,42 +62,37 @@
     - [Potential automorphy over an extension](#112-potential-automorphy-over-an-extension)
     - [Solvable descent with an extending member](#113-solvable-descent-with-an-extending-member)
     - [The descent failure test](#114-the-descent-failure-test)
-12. [Passage to the rational prime 3](#12-passage-to-the-rational-prime-3)
-    - [Coefficient places above 3](#121-coefficient-places-above-3)
-    - [Residual image possibilities](#122-residual-image-possibilities)
-    - [Adequacy in characteristic 3](#123-adequacy-in-characteristic-3)
-    - [Reducible and dihedral branches](#124-reducible-and-dihedral-branches)
-13. [Integral local structure at 3](#13-integral-local-structure-at-3)
-    - [Finite-flat type zero one](#131-finite-flat-type-zero-one)
-    - [Tame inertia weights](#132-tame-inertia-weights)
-    - [Ordinary and supersingular shapes](#133-ordinary-and-supersingular-shapes)
-    - [The 3-adic local checklist](#134-the-3-adic-local-checklist)
-14. [The hardly ramified package](#14-the-hardly-ramified-package)
-    - [Definition and conductor record](#141-definition-and-conductor-record)
-    - [Local break and different bounds at 3](#142-local-break-and-different-bounds-at-3)
-    - [The global root-discriminant bound](#143-the-global-root-discriminant-bound)
-    - [Degree and auxiliary-prime refinements](#144-degree-and-auxiliary-prime-refinements)
-    - [What is exported to the discriminant argument](#145-what-is-exported-to-the-discriminant-argument)
-15. [Four hostile diagnostics](#15-four-hostile-diagnostics)
-    - [A Steinberg parameter vanishing modulo the new prime](#151-a-steinberg-parameter-vanishing-modulo-the-new-prime)
-    - [A CM or dihedral system](#152-a-cm-or-dihedral-system)
-    - [Residue degree greater than one](#153-residue-degree-greater-than-one)
-    - [A successful elliptic-curve switch to 3](#154-a-successful-elliptic-curve-switch-to-3)
-16. [The prime-switching theorem package](#16-the-prime-switching-theorem-package)
-    - [Controlled switching theorem](#161-controlled-switching-theorem)
-    - [The 3-adic companion theorem](#162-the-3-adic-companion-theorem)
-    - [The hardly ramified corollary](#163-the-hardly-ramified-corollary)
-    - [Proof architecture and source ledger](#164-proof-architecture-and-source-ledger)
-17. [Failure modes and audit protocol](#17-failure-modes-and-audit-protocol)
-    - [Prime, place, and embedding failures](#171-prime-place-and-embedding-failures)
-    - [Residual and monodromy failures](#172-residual-and-monodromy-failures)
-    - [Hodge and finite-flat failures](#173-hodge-and-finite-flat-failures)
-    - [Compatibility and descent failures](#174-compatibility-and-descent-failures)
-    - [A hostile audit checklist](#175-a-hostile-audit-checklist)
-18. [Interfaces and conclusion](#18-interfaces-and-conclusion)
-    - [Interface to the classification of hardly ramified representations](#181-interface-to-the-classification-of-hardly-ramified-representations)
-    - [Interface to the modular-method synthesis](#182-interface-to-the-modular-method-synthesis)
-    - [Final perspective](#183-final-perspective)
+12. [The chosen hardly-ramified family](#12-the-chosen-hardly-ramified-family)
+    - [The distinguished lift](#121-the-distinguished-lift)
+    - [The assembled family over the base field](#122-the-assembled-family-over-the-base-field)
+    - [The exact prime-switching question](#123-the-exact-prime-switching-question)
+13. [The rational three-adic companion](#13-the-rational-three-adic-companion)
+    - [Choosing a coefficient place above three](#131-choosing-a-coefficient-place-above-three)
+    - [Common Frobenius polynomials and determinant](#132-common-frobenius-polynomials-and-determinant)
+    - [Automorphic identification and coefficient covariance](#133-automorphic-identification-and-coefficient-covariance)
+    - [Crystallinity and Hodge type at three](#134-crystallinity-and-hodge-type-at-three)
+14. [All-level finite-flatness at three](#14-all-level-finite-flatness-at-three)
+    - [From a crystalline space to one good lattice](#141-from-a-crystalline-space-to-one-good-lattice)
+    - [Strong divisibility in weights zero and one](#142-strong-divisibility-in-weights-zero-and-one)
+    - [Every open coefficient ideal](#143-every-open-coefficient-ideal)
+    - [Changing the lattice without losing finite flatness](#144-changing-the-lattice-without-losing-finite-flatness)
+15. [The prime two: type, conductor, and the special line](#15-the-prime-two-type-conductor-and-the-special-line)
+    - [The exact rational dyadic parameter](#151-the-exact-rational-dyadic-parameter)
+    - [Why the conductor is two](#152-why-the-conductor-is-two)
+    - [Integral degeneration in characteristic three](#153-integral-degeneration-in-characteristic-three)
+    - [The decomposition-group-stable special line](#154-the-decomposition-group-stable-special-line)
+    - [A simultaneous global lattice](#155-a-simultaneous-global-lattice)
+16. [The full torsion tower](#16-the-full-torsion-tower)
+    - [Ramification away from two and three](#161-ramification-away-from-two-and-three)
+    - [Finite-flat objects over the punctured integer ring](#162-finite-flat-objects-over-the-punctured-integer-ring)
+    - [Transition maps, determinant, and duality](#163-transition-maps-determinant-and-duality)
+    - [What the tower remembers](#164-what-the-tower-remembers)
+17. [The companion theorem and hostile audit](#17-the-companion-theorem-and-hostile-audit)
+    - [The exact three-adic companion theorem](#171-the-exact-three-adic-companion-theorem)
+    - [Proof ledger](#172-proof-ledger)
+    - [Hostile mathematical audit](#173-hostile-mathematical-audit)
+    - [Dependency-boundary audit](#174-dependency-boundary-audit)
+18. [Conclusion](#18-conclusion)
 
 ## 1. The prime-switching problem
 
@@ -731,7 +726,7 @@ The hypotheses of such a theorem matter. One must account for inner twists, excl
 
 If only a density-one image theorem is available, the exceptional set may be infinite of density zero. It cannot be relabeled finite. If no uniform theorem is available, a proposed $\nu$ may still be used after a direct absolute-irreducibility and adequacy calculation, but that calculation has no conclusion for other coefficient places.
 
-In a CM system the large-image theorem is the wrong tool. The residual induction criterion will often give absolute irreducibility outside a finite set, while the projective image remains dihedral. That branch is treated explicitly in Chapter 12 and in the hostile diagnostic of Chapter 15.
+In a CM system the large-image theorem is the wrong tool. The residual induction criterion will often give absolute irreducibility outside a finite set, while the projective image remains dihedral. Such a branch must be retained explicitly in the switching ledger; it cannot be merged into the non-CM large-image branch.
 
 ## 6. Local invariants away from the new coefficient prime
 
@@ -1003,7 +998,7 @@ This conclusion follows from a good-reduction abelian scheme when $T_\nu$ is the
 - the existence of some stable lattice;
 - finite flatness of a different coefficient-prime member.
 
-An arbitrary stable lattice in a rational representation is not automatically the Tate lattice of the geometric factor used to prove finite flatness. When the downstream argument needs a finite-flat deformation condition or a discriminant bound, the actual model is part of the hypothesis.
+An arbitrary stable lattice in a rational representation is not automatically the Tate lattice of the geometric factor used to prove finite flatness. When the downstream argument needs an integral torsion tower, the actual model is part of the hypothesis.
 
 ### 8.4 An all-prime local compatibility certificate
 
@@ -1369,971 +1364,755 @@ Before claiming descent, ask:
 
 A negative answer to any question stops the descent. In particular, a general potential-modularity field need not be Galois or solvable. Passing to its Galois closure can change residual images and local fields. Prime switching may continue over the field where the compatible system is known, but descent to the original base is a separate theorem.
 
-## 12. Passage to the rational prime 3
+## 12. The chosen hardly-ramified family
 
-The rational prime $3$ lies inside the exact weight-two Fontaine--Laffaille range and is small enough for powerful global classifications. It is also too small for generic residual-image shortcuts. A successful passage to $3$ therefore combines an especially clean integral local condition with an especially careful image calculation.
+The general theory now meets the fixed arithmetic object for which this volume was designed. Up to this point the base field, the old coefficient prime, and the bad set have been allowed to vary. In the application they are no longer variables. Fixing them removes several generic exceptional-set questions and replaces them by exact local statements.
 
-### 12.1 Coefficient places above 3
+The adjective “hardly ramified” will be used only as a name for the chosen lift and its inherited local package. No discriminant estimate or classification is part of the present argument. What matters here is that the lift is ramified only where stated, that its dyadic type is known as a full Weil--Deligne representation, and that its coefficient-prime lattice has already been selected.
 
-Let
+### 12.1 The distinguished lift
+
+Let $\ell\ge 7$, let $L_0/\mathbf Q_\ell$ be finite, and let
+
+$$
+\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(L_0)
+\tag{12.1}
+$$
+
+be the chosen balanced, minimally ramified lift. Its established properties are:
+
+1. $\rho$ is continuous and absolutely irreducible;
+2. $\det\rho=\chi_\ell$;
+3. $\rho$ is unramified outside $\{2,\ell\}$;
+4. at $2$, wild inertia is trivial, the monodromy operator is zero, and tame inertia has primitive order three;
+5. a stable lattice at $\ell$ has already been chosen, together with its coefficient-linear finite-flat quotient system.
+
+The dyadic assertion in item 4 means more than conductor exponent two. If $t_2$ is a tame generator acting through the order-three quotient, then
+
+$$
+t_2^2+t_2+1=0
+\tag{12.2}
+$$
+
+on the two-dimensional space, and $t_2\ne1$. The two eigencharacters over a splitting field are inverse primitive cubic characters. Frobenius conjugates $t_2$ to $t_2^2$. These relations will determine both the rational conductor and the residual special line after the prime is changed.
+
+The chosen lattice at $\ell$ is not carried across to characteristic three. It belongs to the old completion. Its role in the earlier construction was to retain the original integral deformation condition and to anchor the distinguished member. The three-adic member will require a new lattice.
+
+### 12.2 The assembled family over the base field
+
+The descent results of the preceding volumes provide a number field $E$, a place
+$\lambda_0\mid\ell$, and an $E$-rational family
+
+$$
+\mathcal R=\{r_\lambda\}_{\lambda\in\operatorname{Pl}_f(E)}
+\tag{12.3}
+$$
+
+of continuous, semisimple, absolutely irreducible rank-two representations of $G_{\mathbf Q}$.
+After one common finite scalar extension,
+
+$$
+r_{\lambda_0}\simeq\rho.
+\tag{12.4}
+$$
+
+For every rational prime $p\notin\{2,\ell\}$ there is a polynomial
+
+$$
+P_p(X)=X^2-a_pX+p\in E[X]
+\tag{12.5}
+$$
+
+such that, whenever $p$ is different from the residue characteristic of $\lambda$,
+
+$$
+r_\lambda\text{ is unramified at }p,\qquad
+\det(X-r_\lambda(\operatorname{Frob}_p))=P_p(X).
+\tag{12.6}
+$$
+
+Every root of $P_p$ is a Weil number of weight one under every complex embedding. For every finite $p$ there is an algebraic Frobenius-semisimple Weil--Deligne pair $D_p$ over $E$ satisfying
+
+$$
+\operatorname{WD}_p(r_\lambda)^{\mathrm{F\text{-}ss}}
+\simeq D_p\otimes_EE_\lambda
+\tag{12.7}
+$$
+
+whenever the coefficient characteristic is not $p$. At $p=2$ the pair $D_2$ has exactly the type described by (12.2), trivial wild inertia, and $N_2=0$. At every $p\notin\{2,\ell\}$ it is unramified. At $p=\ell$, it is the common away-from-$\ell$ parameter; no identification with the period module of the distinguished $\ell$-adic member is being inserted.
+
+For every coefficient place,
+
+$$
+\det r_\lambda=\chi_\lambda,\qquad
+r_\lambda^\vee\simeq r_\lambda\otimes\chi_\lambda^{-1}.
+\tag{12.8}
+$$
+
+The family is independent of the Brauer relation and of the auxiliary presentation used to construct it. This independence is rational. Each member has a stable lattice by compactness, but no integral Brauer cancellation and no common lattice over $\mathcal O_E$ has been proved.
+
+### 12.3 The exact prime-switching question
+
+Choose a place $\nu\mid3$ of $E$. The rational representation
+
+$$
+V=r_\nu:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(K),
+\qquad K=E_\nu,
+\tag{12.9}
+$$
+
+already exists. The problem is to endow it with the following exact package:
+
+- the common good Frobenius polynomials and cyclotomic determinant;
+- the same full dyadic rational type as $\rho$;
+- crystallinity at $3$ with Hodge--Tate weights $\{0,1\}$;
+- a globally stable lattice $T\subset V$ whose quotient by every open coefficient ideal is finite flat at $3$;
+- compatible transition maps among all these quotient models;
+- primitive tame order-three action at $2$ whose first residual reduction is a nontrivial unipotent block;
+- the resulting decomposition-group-stable special line;
+- unramifiedness outside $\{2,3\}$; and
+- compatible determinant pairings and Cartier duality.
+
+The prime $\ell$ deserves attention. It was a bad prime in the weak presentation of the family only because it was the coefficient prime of the distinguished lift. For $V$, whose coefficient prime is $3$, the place $\ell$ is away from coefficient characteristic. The strict parameter $D_\ell$ applies. The exact assembled family proves that $V$ is unramified there. Thus the three-adic companion is unramified outside $\{2,3\}$, not merely outside $\{2,3,\ell\}$.
+
+No assertion about the residual image being adequate is needed for this construction. Absolute irreducibility of the rational member is already part of the assembled family; its reduction may be reducible. The later use of the torsion tower must therefore retain the actual finite-flat objects and their extension structure rather than presuppose an image theorem at the small prime.
+
+## 13. The rational three-adic companion
+
+### 13.1 Choosing a coefficient place above three
+
+Factor
 
 $$
 3\mathcal O_E=\prod_{\nu\mid3}\nu^{e_\nu}.
+\tag{13.1}
 $$
 
-For each choice $\nu$,
+A choice of $\nu$ determines
 
 $$
-k_\nu\simeq\mathbf F_{3^{f_\nu}},
+K=E_\nu,\qquad
+\mathcal O=\mathcal O_K,\qquad
+\mathfrak m=(\varpi),\qquad
+k=\mathcal O/\mathfrak m.
+\tag{13.2}
+$$
+
+There can be several such choices. The corresponding representations need not be isomorphic over one local field, because the completions can differ. The correct common statement is that each reads the same algebraic record through its own embedding $E\hookrightarrow E_\nu$.
+
+The residue field can be $\mathbf F_{3^f}$ with $f>1$. Nothing in the construction requires $f=1$. The lattice $T$ will be free of rank two over $\mathcal O$, and $T/\mathfrak mT$ will be two-dimensional over $k$. Viewed over $\mathbf F_3$ it has dimension $2f$. We never replace this statement by an unsupported two-dimensional $\mathbf F_3$ model.
+
+A coefficient enlargement is harmless when every object, ideal, model, and transition map is extended together. It cannot lower the residue degree. The companion is therefore indexed by an actual place $\nu$, not by the rational prime $3$ alone.
+
+### 13.2 Common Frobenius polynomials and determinant
+
+For every $p\notin\{2,3,\ell\}$, equations (12.5)--(12.6) give
+
+$$
+\det(X-V(\operatorname{Frob}_p))
+=X^2-\iota_\nu(a_p)X+p.
+\tag{13.3}
+$$
+
+The strict local comparison at $\ell$ removes the apparent exceptional prime $\ell$: since $D_\ell$ is unramified for the effective complement, $V$ is unramified at $\ell$ as well. Hence (after defining the corresponding local polynomial from $D_\ell$) the three-adic member is unramified at every $p\ne2,3$.
+
+The determinant identity is literal:
+
+$$
+\det V=\chi_3.
+\tag{13.4}
+$$
+
+At arithmetic Frobenius this gives determinant $p$. It also gives the rational alternating isomorphism
+
+$$
+V\xrightarrow{\sim}V^\vee(1).
+\tag{13.5}
+$$
+
+An integral perfect pairing does not yet follow. Once a lattice is chosen, the determinant isomorphism must be rescaled so that $\bigwedge^2T$ maps isomorphically, rather than merely with finite index, to $\mathcal O(1)$.
+
+Purity transports through the algebraic roots of $P_p$. It is not inferred from the product of the roots. If $\alpha_p\beta_p=p$, the two absolute values could still be unequal; the established weight-one purity theorem is what gives
+
+$$
+|\sigma(\alpha_p)|=|\sigma(\beta_p)|=p^{1/2}
+\tag{13.6}
+$$
+
+for every complex embedding $\sigma$.
+
+### 13.3 Automorphic identification and coefficient covariance
+
+The family arose from effective Brauer descent of weight-two automorphic packets. At every coefficient embedding the signed Brauer class was proved to be one actual irreducible rank-two representation, and multiplicity one descended it to the corresponding completion. Thus $V$ is not a virtual representation and not merely a collection of Frobenius traces.
+
+If $\Pi$ denotes the automorphic packet used to display the family over an auxiliary elementary field, restriction of $V$ to that field has the same almost-everywhere Frobenius polynomials as the $\nu$-adic realization of $\Pi$. Chebotarev identifies their semisimplifications. Actual effectivity and absolute irreducibility identify the intended constituent. The descent theorem then assembles this constituent over $\mathbf Q$.
+
+This order matters:
+
+$$
+\text{automorphic packets}
+\longrightarrow
+\text{effective constituent}
+\longrightarrow
+\text{coefficient descent}
+\longrightarrow
+V.
+\tag{13.7}
+$$
+
+Chebotarev recognizes an existing representation; it does not create the constituent or descend its coefficient field. Nor does it choose a lattice. Coefficient conjugation sends $a_p$, $D_p$, and $\nu$ together. It does not compare matrices in unrelated completions entry by entry.
+
+### 13.4 Crystallinity and Hodge type at three
+
+Strict compatibility stops at the coefficient prime. Although $D_3$ is unramified when read by members of coefficient characteristic different from $3$, that statement does not prove that $V$ is crystalline. A separate coefficient-prime bridge is required.
+
+The displaying weight-two packet factors at $3$ occur in degree-one good-reduction geometry. Their three-adic realizations are crystalline, and their Hodge filtrations have steps only in degrees $0$ and $1$. The effective cancellation is an actual characteristic-zero direct sum
+
+$$
+R_3^+\simeq V\oplus R_3^-.
+\tag{13.8}
+$$
+
+Both displaying terms are crystalline. The crystalline category is closed under direct summands, so $V$ is crystalline. Applying the exact filtered period functor to (13.8) and subtracting the equal auxiliary contributions yields
+
+$$
+\dim_KD_{\mathrm{cris}}(V)=2,
+\tag{13.9}
+$$
+
+$$
+\dim\operatorname{gr}^0D_{\mathrm{cris}}(V)
+=\dim\operatorname{gr}^1D_{\mathrm{cris}}(V)=1.
+\tag{13.10}
+$$
+
+Consequently the Hodge--Tate multiset is $\{0,1\}$. The determinant is compatible with this calculation: its Hodge weight is $1$, the sum of the two weights.
+
+The use of actual cancellation in (13.8) is rational. It is legitimate because crystalline representations form an exact subcategory and rational projectors define subobjects. The same projector need not preserve any integral packet lattice. That is why crystallinity is proved here while the finite-flat lattice is constructed separately in the next chapter.
+
+## 14. All-level finite-flatness at three
+
+The phrase “finite flat at three” is sometimes used for a residual representation alone. That is insufficient here. The desired object is a single lattice whose quotients at every coefficient level have finite-flat models, with maps compatible as the level changes. This stronger statement is what makes the infinite lattice recoverable from its torsion tower.
+
+### 14.1 From a crystalline space to one good lattice
+
+Put
+
+$$
+D=D_{\mathrm{cris}}(V).
+\tag{14.1}
+$$
+
+It is a two-dimensional weakly admissible filtered Frobenius module with
+
+$$
+\operatorname{Fil}^0D=D,\qquad
+\dim\operatorname{Fil}^1D=1,\qquad
+\operatorname{Fil}^2D=0.
+\tag{14.2}
+$$
+
+Rational admissibility alone does not name an integral lattice. We seek a coefficient-linear lattice $M\subset D$ such that
+
+$$
+F_M=M\cap\operatorname{Fil}^1D
+\tag{14.3}
+$$
+
+is saturated of rank one and the ordinary and divided Frobenius images generate $M$.
+
+Choose a basis $e_0,e_1$ with $F_M=\mathcal Re_1$, where $\mathcal R$ is the unramified base ring with the coefficient action. Strong divisibility asks that
+
+$$
+\varphi_0(e_0)=ae_0+ce_1,\qquad
+\varphi_1(e_1)=be_0+de_1
+\tag{14.4}
+$$
+
+have normal matrix
+
+$$
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\in\operatorname{GL}_2(\mathcal R).
+\tag{14.5}
+$$
+
+The divided map on the weight-one line accounts for the factor of $3$. The invertibility of (14.5) is the integral condition hidden by the rational Hodge numbers.
+
+### 14.2 Strong divisibility in weights zero and one
+
+**Theorem 14.1 (strongly divisible lattice).** The module $D$ contains a coefficient-linear strongly divisible lattice of Hodge type $(0,1)$.
+
+**Proof strategy.** Start with a lattice $M_0$ whose intersection with the Hodge line is saturated. Form the normal image
+
+$$
+\Phi(M_0,F_0)=\varphi(M_0)+3^{-1}\varphi(F_0),
+\qquad F_0=M_0\cap\operatorname{Fil}^1D.
+\tag{14.6}
+$$
+
+After a homothety this is another lattice. Repeat the operation and saturate the new Hodge intersection. The relative elementary divisors of two consecutive lattices can be normalized to $(0,d_i)$.
+
+If the integers $d_i$ were unbounded, the long directions would converge in the projective line to a Frobenius-stable line $D'\subset D$. According to whether this direction repeatedly lies in the Hodge line or its complement, the iteration would force either
+
+$$
+t_N(D')<t_H(D')
+\quad\text{or}\quad
+t_N(D/D')<t_H(D/D').
+\tag{14.7}
+$$
+
+Both inequalities contradict weak admissibility. Thus only finitely many normalized relative positions occur. A pair repeats; taking the finite sum around the resulting cycle and saturating the Hodge intersection gives a fixed pair satisfying
+
+$$
+M=\varphi(M)+3^{-1}\varphi(F_M).
+\tag{14.8}
+$$
+
+This is strong divisibility. The coefficient action commutes with every operation, so it is retained. $\square$
+
+The theorem produces one lattice, not a canonical one. Ordinary and nonordinary shapes are both possible. In an ordinary shape the normal matrix may be triangular modulo $\mathfrak m$; in a local--local shape its diagonal entries may vanish while the off-diagonal entries are units. Finite flatness does not imply a stable ordinary line.
+
+The integral realization of $M$ gives a $G_{\mathbf Q_3}$-stable lattice $T_{\mathrm{ff}}\subset V$ whose torsion quotients lie in the weight interval $[0,1]$.
+
+### 14.3 Every open coefficient ideal
+
+Let $I\subset\mathcal O$ be a nonzero open ideal. Integral low-weight theory produces a finite-flat commutative group scheme
+
+$$
+\mathcal G_{I,3}/\mathbf Z_3
+\tag{14.9}
+$$
+
+with $\mathcal O/I$-action and a marked identification
+
+$$
+\mathcal G_{I,3}(\overline{\mathbf Q}_3)
+\simeq T_{\mathrm{ff}}/IT_{\mathrm{ff}}.
+\tag{14.10}
+$$
+
+This is asserted for every open ideal, not merely $(3^n)$. If $\mathcal O/\mathbf Z_3$ is ramified and $3=u\varpi^e$, the quotients by $(3^n)$ omit many $\varpi$-power levels. An all-level theorem stated only for $3^n$ would therefore lose part of the coefficient filtration.
+
+For nested ideals $J\subset I$, the generic quotient
+
+$$
+T_{\mathrm{ff}}/JT_{\mathrm{ff}}
+\twoheadrightarrow
+T_{\mathrm{ff}}/IT_{\mathrm{ff}}
+\tag{14.11}
+$$
+
+extends to a faithfully flat morphism
+
+$$
+Q_{J,I}:\mathcal G_{J,3}\longrightarrow\mathcal G_{I,3}.
+\tag{14.12}
+$$
+
+If $K\subset J\subset I$, then
+
+$$
+Q_{J,I}\circ Q_{K,J}=Q_{K,I}.
+\tag{14.13}
+$$
+
+The direction is worth auditing: the realization from filtered objects is contravariant, so the surjection of Galois modules corresponds to an inclusion on the filtered side. Reversing that arrow gives the wrong kernel.
+
+The models form one quotient system. Separately producing some model at each level would not imply (14.12)--(14.13).
+
+### 14.4 Changing the lattice without losing finite flatness
+
+The lattice that makes the dyadic type visible need not be $T_{\mathrm{ff}}$. We therefore need a transfer theorem.
+
+**Proposition 14.2 (commensurability transfer).** Let $T$ and $T'$ be stable $\mathcal O$-lattices in the same local representation. If every open-ideal quotient of $T$ has a finite-flat model, then the same is true of $T'$.
+
+**Proof.** Choose $c\ge0$ with
+
+$$
+\varpi^cT\subset T'\subset\varpi^{-c}T.
+\tag{14.14}
+$$
+
+For $I=(\varpi^n)$, place $T'/\varpi^nT'$ inside a sufficiently deep quotient of $\varpi^{-c}T$. More precisely, let $A$ be the image of $T'$ and $B$ the image of $\varpi^nT'$ in
+
+$$
+\varpi^{-c}T/\varpi^{n+c}T.
+\tag{14.15}
+$$
+
+Because $\varpi^{n+c}T\subset\varpi^nT'$, one has
+
+$$
+A/B\simeq T'/\varpi^nT'.
+\tag{14.16}
+$$
+
+Take the schematic closure of $A$ in the available finite-flat ambient model and then the represented quotient by the closure of $B$. This gives the desired finite-flat model. The same argument applies to an arbitrary open ideal. $\square$
+
+The proposition uses closure under stable subobjects and represented quotients, not a false assertion that finite flatness follows from rational crystallinity for every lattice. It is the hinge allowing integral Hodge theory at $3$ and integral type theory at $2$ to be satisfied by one global lattice.
+
+## 15. The prime two: type, conductor, and the special line
+
+### 15.1 The exact rational dyadic parameter
+
+Since $2\ne3$, strict compatibility applies to $V|_{G_{\mathbf Q_2}}$. The common pair is
+
+$$
+D_2=(r_2,N_2),
 \qquad
-E_\nu/\mathbf Q_3
-\text{ has ramification index }e_\nu.
-$$
-
-The system provides one $3$-adic member for every such $\nu$. Their good Frobenius polynomials are conjugate scalar realizations of the same $P_v$, but their residual images can differ. A proof may compare all choices and select one; it may not speak of a unique $3$-adic member unless the coefficient field has a unique place above $3$ or the choice is immaterial for a proved reason.
-
-If $f_\nu=1$, the residual representation can be written over $\mathbf F_3$ after its field of definition has been verified. If $f_\nu>1$, it is two-dimensional over $\mathbf F_{3^{f_\nu}}$. Viewing it over $\mathbf F_3$ makes it $2f_\nu$-dimensional and leaves the rank-two theory.
-
-An enlargement $E'/E$ cannot lower $f_\nu$. For a place $\nu'\mid\nu$,
-
-$$
-f(\nu'/3)=f(\nu'/\nu)f_\nu.
-$$
-
-Thus a degree-one coefficient place at $3$ is a genuine arithmetic input. It cannot be arranged after the fact by adjoining more coefficients.
-
-There is a different descent possibility. If the residual trace and determinant functions lie in $\mathbf F_3$ and the absolutely irreducible representation has a proved scalar descent datum with vanishing cocycle obstruction, it may admit an $\mathbf F_3$-model. This is coefficient descent, not coefficient enlargement, and it must be proved.
-
-### 12.2 Residual image possibilities
-
-Put $k=\mathbf F_{3^f}$ and let
-
-$$
-H=\bar\rho_\nu(G_F)\subseteq\operatorname{GL}_2(k).
-$$
-
-The projective image gives a useful first division.
-
-1. **Reducible or Borel case.** Over $\overline k$, the group fixes a line. The residual semisimplification is a sum of two characters.
-2. **Cartan-normalizer case.** A group contained in a Cartan is absolutely reducible. A group contained in its normalizer but not the Cartan can be absolutely irreducible and has dihedral projective image.
-3. **Exceptional case.** The projective image can be one of $A_4$, $S_4$, or $A_5$ when the field permits the corresponding embedding.
-4. **Defining-characteristic or subfield case.** The projective image contains a group $\operatorname{PSL}_2(k_0)$, or lies between the corresponding projective special and general linear groups, for a subfield $k_0\subseteq k$.
-
-The remaining subgroups with nontrivial normal $3$-subgroup lie in a Borel and hence belong to the reducible branch. This is the rank-two projective subgroup classification in the form needed for image auditing.
-
-When $f=1$, small coincidences occur:
-
-$$
-|\operatorname{GL}_2(\mathbf F_3)|=48,
-$$
-
-$$
-\operatorname{PGL}_2(\mathbf F_3)\simeq S_4,
+N_2=0,
 \qquad
-\operatorname{PSL}_2(\mathbf F_3)\simeq A_4.
+r_2(P_2)=1,
+\tag{15.1}
 $$
 
-Thus a label such as “contains the special linear group” no longer guarantees that the image lies in a stable large-characteristic regime. The group is simultaneously a defining-characteristic group and an exceptional small group.
+and a tame generator $t_2$ acts by an operator $A$ satisfying
 
-The determinant restricts which full inverse images can occur. In the weight-two cyclotomic case,
-
-$$
-\det\bar\rho_\nu=\bar\chi_3,
-$$
-
-whose image over a totally real field contains the sign $-1$ at complex conjugation. The determinant does not determine the projective image and does not prove absolute irreducibility.
-
-### 12.3 Adequacy in characteristic 3
-
-No finite-exception theorem that proves adequacy only after excluding residue characteristics at most $5$ says anything at $3$. The actual group $H$ must be checked.
-
-First verify that $H$ has no invariant line over $\overline k$. After this separate absolute-irreducibility check, a direct adequacy audit consists of four computations:
-
-$$
-\operatorname{End}_{\overline k[H]}(\overline k^2)
-=\overline k,
-$$
-
-$$
-H^1(H,\overline k)=0,
-$$
-
-$$
-H^1(H,\operatorname{ad}^0\overline k^2)=0,
-$$
-
-and verification that semisimple elements span
-
-$$
-\operatorname{End}_{\overline k}(\overline k^2).
-$$
-
-Given absolute irreducibility, the first records the scalar centralizer, equivalently the required $H^0$-vanishing in this odd-characteristic rank-two setting. Without the separate irreducibility check, a scalar centralizer alone would not suffice for a nonsemisimple representation. The next two computations detect small quotient and adjoint-cohomology exceptions. The last prevents all semisimple elements from lying in a proper linear subspace of the matrix algebra.
-
-If $|H|$ is prime to $3$ and the representation is absolutely irreducible, averaging gives both cohomology vanishings, every element is semisimple, and the matrix-algebra theorem gives the spanning condition. This supplies an elementary adequate branch. It must be applied to the full image, not merely to the projective group.
-
-If $3\mid|H|$, no such averaging argument applies. Full image, projective $A_4$ or $S_4$, and subfield special-linear cases require their own calculation. The result may be adequate or inadequate; the word “large” is not a proof in characteristic $3$.
-
-When adequacy fails, the prime switch itself remains valid. What fails is a downstream lifting theorem whose hypotheses include adequacy. A specialized small-image lifting theorem or the explicit classification of the next stage may replace it, but that replacement must be named.
-
-### 12.4 Reducible and dihedral branches
-
-If
-
-$$
-\bar\rho_\nu^{\mathrm{ss}}
-=\bar\alpha\oplus\bar\beta,
-$$
-
-then a chosen lattice may reduce as a split sum or as a nonsplit extension in either direction. The compatible system determines only the two characters. An ordinary argument can use a selected stable line when the integral local and global hypotheses supply it. An irreducible modularity-lifting theorem cannot be applied.
-
-For an elliptic curve over $F$, a $G_F$-stable line in $E[3]$ is a rational cyclic subgroup of order $3$ and hence a rational $3$-isogeny. Absence of such an isogeny proves irreducibility over $\mathbf F_3$ but does not by itself exclude a nonsplit-Cartan representation that becomes reducible over $\mathbf F_9$. Absolute irreducibility still needs the endomorphism or two-element test.
-
-In the dihedral case there is a quadratic extension $M/F$ and a residual character $\bar\theta$ such that
-
-$$
-\bar\rho_\nu
-\simeq\operatorname{Ind}_{G_M}^{G_F}\bar\theta.
-$$
-
-It is absolutely irreducible precisely when
-
-$$
-\bar\theta\ne\bar\theta^\sigma.
-$$
-
-Its projective image remains dihedral. Some such images are adequate by the prime-to-$3$ argument; others require direct checking. In every case the non-CM large-image theorem is irrelevant, and restriction to $G_M$ makes the representation reducible. Automorphic induction and self-twist bookkeeping replace the generic branch.
-
-## 13. Integral local structure at 3
-
-At $3$, the weight-two interval is exactly $[0,1]$. This gives a sharp local classification when the base is unramified, but it does not choose the coefficient place, the lattice, or the residual image. This chapter states the complete local package to be checked after those choices have been made.
-
-### 13.1 Finite-flat type zero one
-
-Assume $3$ is unramified in $F$. For every $u\mid3$,
-
-$$
-F_u/\mathbf Q_3
-$$
-
-is unramified. Let $T_\nu$ be a chosen stable lattice in the new member. The clean type-$(0,1)$ conclusion is:
-
-$$
-T_\nu/\varpi_\nu^nT_\nu
-$$
-
-has a compatible coefficient-linear finite-flat model over $\mathcal O_{F_u}$ for every $n$, and the classified filtration has one weight $0$ and one weight $1$ at every embedding.
-
-There are two standard proofs.
-
-- If the system comes from an elliptic curve or an integral rank-two factor of a good-reduction abelian scheme, use its $3$-power torsion group schemes. The coefficient action and projector must be integral.
-- If an integral comparison theorem identifies $T_\nu$ with a Fontaine--Laffaille lattice, apply Theorem 9.1. The equality $1=3-2$ shows that the endpoint is permitted.
-
-The determinant audit is
-
-$$
-\det T_\nu\simeq\mathcal O_\nu(1)
-$$
-
-up to the declared finite-order character. With a nontrivial finite-order factor at $3$, one must check that its integral model and Hodge weight are compatible with the claimed type. It cannot simply be erased from the determinant.
-
-If $3$ is ramified in $F$, the clean classification invoked above is unavailable. Direct good-reduction geometry can still give finite flatness, and the later discriminant bound then uses the actual local ramification index. A proof based only on the phrase “weights $\{0,1\}$” fails.
-
-### 13.2 Tame inertia weights
-
-Finite-flat type $(0,1)$ constrains the tame inertia weights of the residual representation. Let $F_u/\mathbf Q_3$ be unramified of residue degree $d$. After extending the coefficient residue field, the tame characters are expressed in fundamental characters indexed by the $d$ residue embeddings.
-
-In a reducible tame semisimplification one can write
-
-$$
-\bar\rho_\nu|_{I_u}^{\mathrm{ss}}
-=\bar\eta_1\oplus\bar\eta_2,
-$$
-
-and, up to unramified twists,
-
-$$
-\bar\eta_j
-=\prod_{i=0}^{d-1}\omega_{d,i}^{a_{j,i}},
-\qquad a_{j,i}\in\{0,1\}.
-$$
-
-Cyclotomic determinant and type $(0,1)$ force
-
-$$
-\{a_{1,i},a_{2,i}\}=\{0,1\}
-$$
-
-at every label. These are the tame weight digits.
-
-In an irreducible or supersingular shape, restriction to the unramified quadratic extension splits into two Frobenius-conjugate characters of niveau $2d$. Their base-$3$ digits are again the $0$--$1$ digits supplied by the classified filtered object, and their product is the cyclotomic tame character. The precise cyclic arrangement of the digits is part of that object; finite flatness does not select one universal arrangement for all $d$.
-
-For $d=1$, the two familiar possibilities, up to unramified twist and semisimplification, are
-
-$$
-1\oplus\omega
-$$
-
-in the ordinary case and
-
-$$
-\omega_2\oplus\omega_2^3
-$$
-
-in the irreducible supersingular case, where $\omega$ is the niveau-one fundamental character and $\omega_2$ has niveau two. Their determinants are both $\omega$.
-
-This is a statement about tame inertia and semisimplification. Wild inertia at $3$ and nonsplit extension classes are not determined by the tame digits alone. A classification argument requiring those data must read the full finite-flat object.
-
-### 13.3 Ordinary and supersingular shapes
-
-For a good ordinary elliptic curve, the connected--étale sequence of the $3$-divisible group gives a local filtration whose residual form is, after unramified twists,
-
-$$
-0\longrightarrow k_\nu(1)
-\longrightarrow E[3]\otimes k_\nu
-\longrightarrow k_\nu\longrightarrow0.
-$$
-
-The extension may be split or nonsplit. In the clean unramified range, a finite-flat extension class lies in the unit Kummer subspace; a valuation class is excluded. A chosen ordinary line is integral data and can matter to a deformation problem.
-
-For good supersingular reduction, no $G_{F_u}$-stable ordinary line need exist. The finite-flat group scheme has connected height two special fiber, and the residual representation can be irreducible. In the clean unramified Fontaine--Laffaille range it still has type $(0,1)$ and the same cyclotomic determinant.
-
-At multiplicative reduction over a place above $3$, the Tate module is semistable noncrystalline. Its generic extension class is controlled by the Tate parameter. It is not covered by the good-reduction finite-flat assertion, and a valuation-direction class can obstruct a finite-flat model of the full residual extension. Semistable is not a substitute for finite flat.
-
-### 13.4 The 3-adic local checklist
-
-For every base place $u\mid3$, record:
-
-1. whether $F_u/\mathbf Q_3$ is unramified;
-2. the chosen coefficient place $\nu$ and its coefficient ramification and residue degree;
-3. the labelled weights of $\rho_\nu|_{G_{F_u}}$;
-4. whether the rational representation is crystalline, semistable noncrystalline, or only de Rham;
-5. the source of the chosen lattice $T_\nu$;
-6. the finite-flat models of its quotients, when claimed;
-7. the ordinary line or supersingular shape, when relevant;
-8. the determinant and integral pairing; and
-9. any comparison between its period parameter and the common away-from-$3$ datum at $u$.
-
-Passing this checklist at every $u\mid3$ is the coefficient-prime part of producing a controlled $3$-adic companion. None of the entries is supplied by the factorization of $3$ in the coefficient field alone.
-
-## 14. The hardly ramified package
-
-The phrase “hardly ramified” is useful only after it is made numerical. The relevant object for the discriminant argument is the finite residual module and the field cut out by its kernel, not the infinite $3$-adic representation by itself. This chapter defines the package and derives the exact bounds that follow from finite flatness and the local ledger.
-
-### 14.1 Definition and conductor record
-
-Let $T_\nu$ be a chosen stable lattice in a $3$-adic member and put
-
-$$
-M=T_\nu/\varpi_\nu T_\nu.
-$$
-
-Let $S_0$ be a finite set of base places away from $3$, and choose real numbers $R_v\ge0$ for $v\in S_0$. We say that $M$ carries a **hardly ramified package relative to $(S_0,\{R_v\})$** if:
-
-1. $M|_{G_{F_u}}$ has a finite-flat model for every $u\mid3$;
-2. $M$ is unramified outside $S_0\cup\{u:u\mid3\}$;
-3. for $v\in S_0$, the local field cut out by $M$ has last upper ramification break at most $R_v$; and
-4. its determinant, oddness source, coefficient field, dimension, and actual residual image are recorded.
-
-The package is **strictly hardly ramified** when $S_0$ is empty. If ramification at $v\in S_0$ is tame, record its inertia order $e_v(M)$ as a sharper substitute for $R_v=0$.
-
-The prime-to-$3$ conductor ledger follows from direct local data. At every finite place outside $S_0$ and the places above $3$, the exponent is zero. At a tame $v\in S_0$, it is
-
-$$
-a_v(M)=\operatorname{codim}M^{I_v},
-$$
-
-so it is $1$ for nonzero rank-one unipotent inertia and at most $2$ in rank two. At a place with last upper break $R_v$, the fixed-space formula gives the coarse bound
-
-$$
-a_v(M)\le2(1+R_v).
-$$
-
-Whenever an exact residual type has been computed, its exact conductor replaces this coarse inequality.
-
-Weak compatibility proves clause 2 with $S_0$ initially replaced by the common bad set $S$. Integral local calculations decide which places can be removed. Strong compatibility supplies characteristic-zero types, while local certificates determine their residual survival or collapse. Thus strict hardly ramified behavior never follows from the good polynomials alone.
-
-### 14.2 Local break and different bounds at 3
-
-Fix $u\mid3$ and write
-
-$$
-e_u^0=v_u(3)=e(F_u/\mathbf Q_3).
-$$
-
-Also write
-
-$$
-f_u^0=[k_u:\mathbf F_3]=f(F_u/\mathbf Q_3).
-$$
-
-Let $L_u/F_u$ be the local extension cut out by $M$. Since $3\in\varpi_\nu\mathcal O_\nu$, the module $M=T_\nu/\varpi_\nu T_\nu$ is killed by $3$. Together with its finite-flat model, the finite-flat ramification theorem gives
-
-$$
-G_{F_u}^r\text{ acts trivially on }M
-\quad\text{for every}
-\quad
-r>e_u^0\left(1+\frac12\right)-1.
-$$
-
-Thus the last upper break is at most
-
-$$
-R_u^{\mathrm{ff}}=\frac{3e_u^0}{2}-1.
-$$
-
-If $e(L_u/F_u)$ is the relative ramification index and $d(L_u/F_u)$ the different exponent upstairs, then
-
-$$
-d(L_u/F_u)
-\le
-e(L_u/F_u)\frac{3e_u^0}{2}-1,
-$$
-
-and hence
-
-$$
-\frac{d(L_u/F_u)}{e(L_u/F_u)}
-<\frac{3e_u^0}{2}.
-$$
-
-When $F_u/\mathbf Q_3$ is unramified, this becomes
-
 $$
-R_u^{\mathrm{ff}}=\frac12,
-\qquad
-\frac{d(L_u/F_u)}{e(L_u/F_u)}<\frac32.
+A^2+A+1=0,\qquad A\ne1.
+\tag{15.2}
 $$
 
-The rank-two conductor bound obtained from the upper cutoff is
+Arithmetic Frobenius $\phi_2$ satisfies
 
 $$
-a_u(M)\le2\left(1+R_u^{\mathrm{ff}}\right)=3e_u^0.
+r_2(\phi_2)A r_2(\phi_2)^{-1}=A^2.
+\tag{15.3}
 $$
 
-Here $a_u(M)$ denotes the fixed-space ramification number obtained by integrating codimensions along the finite image filtration. It is not a prime-to-$3$ automorphic conductor factor, which by convention omits places above the coefficient prime. The inequality is intentionally coarse. The different bound is the decisive one for root discriminants and is independent of the rank and image size.
+Over a field containing a primitive cube root $\zeta$, inertia has eigencharacters $\zeta$ and $\zeta^{-1}$, while Frobenius exchanges their lines. Thus the local Weil representation is not an arbitrary direct sum of two tame characters. The Frobenius interchange is part of the local type.
 
-Finite flatness, not crystallinity alone, is what proves these ramification bounds. The theorem uses the integral group law and applies to any chosen finite-flat model; it does not require uniqueness of that model.
+### 15.2 Why the conductor is two
 
-### 14.3 The global root-discriminant bound
+Wild inertia is trivial, so the Swan conductor is zero. The primitive tame action has no invariant vector in characteristic zero:
 
-Let
-
-$$
-L=F(M)
-$$
-
-be the finite Galois extension cut out by the full residual action. The local bounds at all places above $3$, together with the upper cutoffs at $S_0$, give
-
-$$
-\boxed{
-\operatorname{rd}(L)
-<\operatorname{rd}(F)\,
-3^{3/2}
-\prod_{v\in S_0}
-(Nv)^{(1+R_v)/[F:\mathbf Q]}.
-}
-$$
-
-If $S_0$ is empty, this is
-
-$$
-\boxed{
-\operatorname{rd}(F(M))
-<\operatorname{rd}(F)\,3^{3/2}.
-}
-$$
-
-The proof is short because the local work has already been done. At $u\mid3$, the normalized different contribution is strictly less than $3e_u^0/2$. Since
-
-$$
-\sum_{u\mid3}e_u^0f_u^0=[F:\mathbf Q],
-$$
-
-the local norm powers combine to $3^{3/2}$. At $v\in S_0$, the last-break estimate gives normalized contribution less than $1+R_v$. Multiplying the local contributions and retaining the base factor $\operatorname{rd}(F)$ gives the displayed inequality.
-
-The clean factor $3^{3/2}$ remains valid even when $3$ ramifies in $F$, provided the finite-flat models over the actual $\mathcal O_{F_u}$ exist. The local ramification indices cancel in the global degree sum. What fails over a ramified base is the automatic use of the unramified Fontaine--Laffaille criterion, not the finite-flat discriminant theorem.
-
-### 14.4 Degree and auxiliary-prime refinements
-
-If $k_\nu=\mathbf F_{3^f}$, then
-
-$$
-[F(M):F]\le
-|\operatorname{GL}_2(\mathbf F_{3^f})|
-=(3^{2f}-1)(3^{2f}-3^f).
-$$
-
-For $f=1$, this gives
-
 $$
-[F(M):F]\le48.
+V^{I_2}=0.
+\tag{15.4}
 $$
 
-The actual residual image gives the exact degree and should replace this bound whenever known. A reducible or dihedral image can cut out a much smaller field, while restriction of scalars to $\mathbf F_3$ does not improve the field and changes the represented dimension.
+Since $N_2=0$, the Artin conductor is
 
-At a tame auxiliary place $v$, use the exact normalized different contribution
-
-$$
-1-\frac1{e_v(M)}
-$$
-
-instead of the coarse $1+R_v=1$. The global bound improves to
-
-$$
-\operatorname{rd}(L)
-<\operatorname{rd}(F)3^{3/2}
-\prod_{v\in S_0}
-(Nv)^{(1-1/e_v(M))/[F:\mathbf Q]}
-$$
-
-when every auxiliary place is tame.
-
-If a place in $S$ becomes residually unramified because an integral monodromy parameter vanishes, remove it from $S_0$ entirely. Retaining a tame factor there is valid but weaker. If residual ramification has not been computed, it may not be removed merely because a characteristic-zero conductor is small.
-
-### 14.5 What is exported to the discriminant argument
-
-The hardly ramified record passed forward is
-
 $$
-\mathscr H_3=
-\left(
-F,M,k_\nu,\operatorname{im}\bar\rho_\nu,
-S_0,\{R_v\},
-\{\mathcal G_u\}_{u\mid3},
-\det M,
-\operatorname{rd}_{\max}
-\right),
+a_2(V)=\operatorname{codim}V^{I_2}+\operatorname{Sw}_2(V)
+=2+0=2.
+\tag{15.5}
 $$
 
-where $\mathcal G_u$ is a chosen finite-flat model and $\operatorname{rd}_{\max}$ is the explicit right side of Section 14.3 or its tame refinement.
+This is conductor two at the prime two. It is not Steinberg. A Steinberg parameter has nonzero rank-one monodromy; here monodromy is zero and finite tame inertia moves both dimensions. The integer (15.5) is a consequence of the full pair (15.1)--(15.3), not a replacement for it.
 
-Book 178 supplies the upper-break, different, and root-discriminant inequalities just used. Book 179 compares such upper bounds with global discriminant lower bounds, and Book 180 analyzes the surviving hardly ramified $3$-adic and residual possibilities. Their lower-bound and classification conclusions are exported to, not proved in, this book.
-
-The export must retain the field $F$, its root discriminant and signature, the exact degree or image bound, and every auxiliary local contribution. Writing only “small discriminant” loses the numerical statement needed for classification.
-
-## 15. Four hostile diagnostics
-
-Abstract ledgers are most useful when they survive examples designed to break them. The four diagnostics in this chapter isolate the main failure mechanisms: integral monodromy divisibility, quadratic induction, residue-field growth, and a complete successful switch from an elliptic curve to its $3$-adic member.
-
-### 15.1 A Steinberg parameter vanishing modulo the new prime
-
-Let $v$ have residue characteristic $p$, and consider a compatible system with an unramified Steinberg twist at $v$. For every coefficient place $\lambda$ with $\ell(\lambda)\ne p$, the rational parameter has
-
-$$
-D_v=\bigl(\theta\|\cdot\|_v\oplus\theta,N_v\bigr),
-\qquad \operatorname{rank}N_v=1.
-$$
-
-Its inertial type is scalar, and if $\theta$ is unramified its conductor exponent is one.
-
-Suppose the system comes from an elliptic curve with multiplicative reduction at $v$. Let $q_{E,v}$ be a Tate parameter and put
-
-$$
-m_v=v(q_{E,v})=v(\Delta_{\min}).
-$$
+### 15.3 Integral degeneration in characteristic three
 
-For a coefficient prime $q\ne p$, the geometric Tate lattice has tame inertia, after a suitable basis, of the form
+Choose a vector $e$ such that $e,Ae$ span $V$. In the basis $(e,Ae)$, the tame operator is
 
 $$
-\rho_{E,q}(\sigma)=
+[A]=
 \begin{pmatrix}
-1&m_vt_q(\sigma)\\
-0&1
+0&-1\\
+1&-1
 \end{pmatrix}.
+\tag{15.6}
 $$
 
-The rational monodromy is nonzero for every $q\ne p$. Reduction modulo $q$ gives trivial inertia exactly when
+This matrix preserves the lattice $\mathcal Oe+\mathcal OA e$. Modulo $\mathfrak m$,
 
 $$
-q\mid m_v.
+X^2+X+1=(X-1)^2.
+\tag{15.7}
 $$
 
-Thus at such a coefficient prime
+The reduced matrix is not the identity, because
 
 $$
-a_v(V_qE)=1,
+A-1=
+\begin{pmatrix}
+-1&-1\\
+1&-2
+\end{pmatrix},
 \qquad
-a_v(E[q])=0.
+\det(A-1)=3.
+\tag{15.8}
 $$
 
-Strong compatibility has not failed. It correctly keeps rank-one rational monodromy. The integral thickness $m_v$ is the separate datum that vanishes on reduction.
-
-This diagnostic has two opposite readings. If the next lifting problem requires a Steinberg residual component, every coefficient place dividing $m_v$ is exceptional. If the goal is a residual representation unramified away from $3$, divisibility $3\mid m_v$ removes $v$ from the residual bad set. Both conclusions require the displayed calculation.
-
-### 15.2 A CM or dihedral system
-
-Let $M/F$ be quadratic and let $\Theta=\{\theta_\lambda\}$ be a compatible character system of $G_M$. Put
+Therefore
 
 $$
-\rho_\lambda=
-\operatorname{Ind}_{G_M}^{G_F}\theta_\lambda.
+(\overline A-1)^2=0,\qquad
+\overline A-1\ne0.
+\tag{15.9}
 $$
 
-Then
+The residual tame action is one nontrivial unipotent Jordan block. Its semisimplification is trivial on inertia and hence forgets the dyadic ramification completely. This is the decisive example showing why residual semisimplification, though lattice independent, is not enough for the torsion argument.
+
+### 15.4 The decomposition-group-stable special line
+
+For a type-adapted lattice $T$, put $\overline T=T/\mathfrak mT$ and define
 
 $$
-\rho_\lambda|_{G_M}
-\simeq\theta_\lambda\oplus\theta_\lambda^\sigma
+\mathscr L_2
+=\ker(\overline A-1)
+=\operatorname{im}(\overline A-1).
+\tag{15.10}
 $$
 
-and
+The two spaces agree because $\overline A-1$ is a nonzero square-zero operator of rank one. Thus $\mathscr L_2$ is one-dimensional over $k$.
+
+Replacing $t_2$ by its inverse does not change the line:
 
 $$
-\rho_\lambda\otimes\eta_{M/F}
-\simeq\rho_\lambda.
+\overline A^{-1}-1
+=-\overline A^{-1}(\overline A-1).
+\tag{15.11}
 $$
 
-The common quadratic self-twist forces the projective image into a Cartan normalizer. No non-CM large-image theorem applies.
+Frobenius preserves it because Frobenius conjugates $\overline A$ to $\overline A^2$. Hence $\mathscr L_2$ is stable under the entire decomposition group $G_{\mathbf Q_2}$, not only inertia.
 
-Choose a base prime $w$ of $M$ for which
-
-$$
-\theta(\operatorname{Frob}_w)
--\theta^\sigma(\operatorname{Frob}_w)\ne0.
-$$
-
-After clearing the fixed denominators of a common integral character model, outside the finitely many coefficient places dividing those denominators or this nonzero difference, the residual inducing characters remain distinct and the induction is absolutely irreducible over $F$. At a place dividing every available distinction, the residual induction can become reducible. This is the exact exceptional-divisibility test.
-
-Even at a good residual place, restriction to $G_M$ is reducible. A base change containing $M$ destroys cuspidality of the automorphic induction and destroys residual irreducibility. A potential-modularity field must therefore be checked for intersection with $M$ and for distinction of the restricted characters.
-
-At a coefficient place above $3$, adequacy is a separate group calculation. If the full dihedral image has order prime to $3$, absolute irreducibility and averaging give adequacy. If a scalar or character quotient contributes $3$-torsion, the four conditions of Section 12.3 must be checked directly. The correct branch is explicit induction, not generic special-linear image.
-
-### 15.3 Residue degree greater than one
-
-Suppose $3$ is inert and unramified in a quadratic coefficient field $E$. There is one place $\nu\mid3$, with
+There is an exact residual sequence
 
 $$
-E_\nu/\mathbf Q_3
-\text{ unramified quadratic},
-\qquad
-k_\nu=\mathbf F_9.
+0\longrightarrow\mathscr L_2
+\longrightarrow\overline T
+\longrightarrow\overline T/\mathscr L_2
+\longrightarrow0.
+\tag{15.12}
 $$
 
-The companion is
+Both endpoints are trivial on tame inertia, but the sequence is nonsplit as an inertia module. It is this middle extension that cuts out the tame cubic action.
+
+The line is a first-level object. At higher coefficient levels $\ker(A-1)$ need not be a free rank-one direct summand because $\det(A-1)=3$ up to a unit. What persists at every level is the action of the same cyclic order-three tame group and the filtration
 
 $$
-\rho_\nu:G_F\longrightarrow
-\operatorname{GL}_2(E_\nu),
+0\subset(A-1)T_I
+\subset\ker(A-1\mid T_I)
+\subset T_I.
+\tag{15.13}
 $$
 
-and its residual member is two-dimensional over $\mathbf F_9$. The elementary degree bound is
+We do not promote $\mathscr L_2$ to a fictitious free fixed line throughout the tower.
+
+### 15.5 A simultaneous global lattice
+
+**Proposition 15.1 (simultaneous lattice).** There is a globally $G_{\mathbf Q}$-stable lattice $T\subset V$ such that:
+
+1. every $T/IT$ is finite flat at $3$ for every open $I\subset\mathcal O$;
+2. its dyadic restriction is type adapted and reduces as the nontrivial block (15.9);
+3. its first residual level contains the special line (15.10).
+
+**Proof.** Begin with the cyclic dyadic lattice of (15.6). Saturate its orbit under the compact global image to obtain a global stable lattice without replacing the primitive $\mathcal O[A]$-structure by the nonsaturated scalar order. The resulting lattice is commensurable with $T_{\mathrm{ff}}$. Proposition 14.2 transfers all-level finite flatness at $3$ to it. Equations (15.7)--(15.10) give the dyadic conclusions. $\square$
+
+The proposition is a simultaneous selection theorem, not a uniqueness theorem. Once $T$ is fixed, its special line is intrinsic. Another stable lattice could carry a different residual extension even though its residual semisimplification is the same.
+
+## 16. The full torsion tower
+
+### 16.1 Ramification away from two and three
+
+For $p\ne2,3$, strict compatibility identifies the local parameter of $V$ with the common unramified $D_p$. This includes the old coefficient prime $\ell$. Hence inertia acts trivially on $V$, on $T$, and on every quotient
 
 $$
-[F(\bar\rho_\nu):F]
-\le|\operatorname{GL}_2(\mathbf F_9)|
-=(81-1)(81-9)=5760.
+T_I=T/IT.
+\tag{16.1}
 $$
 
-There is no two-dimensional $\mathbf F_3$-representation in this statement. Restriction of scalars gives dimension four, while adjoining more coefficients leaves the residue degree divisible by two. If a later classification accepts only subgroups of $\operatorname{GL}_2(\mathbf F_3)$, the switch has not reached its input.
+Thus every $T_I$ is unramified outside $\{2,3\}$. At $2$, wild inertia is trivial and tame inertia factors through $C_3$. At $3$, the quotient has its finite-flat model.
 
-To repair the situation, one needs a genuine $\mathbf F_3$ coefficient descent. It requires the residual character values to lie in $\mathbf F_3$, an absolutely irreducible field-of-definition theorem, and vanishing of the descent cocycle. None follows from inertness, from compatibility, or from characteristic-zero coefficient enlargement.
+The distinction between rational and modular conductors remains important. The rational conductor at $2$ is exactly two by (15.5). Modulo $\mathfrak m$, the tame action becomes unipotent, and semisimplification would have conductor zero. The safe datum at the torsion level is the actual $C_3$-action and its special line, not a conductor copied from characteristic zero.
 
-All rational conclusions remain valid. The member has the common good polynomials, determinant, purity, and strong local parameters in the established range. The failure is exactly the residual coefficient field.
+### 16.2 Finite-flat objects over the punctured integer ring
 
-### 15.4 A successful elliptic-curve switch to 3
+At $3$, $T_I$ has the model $\mathcal G_{I,3}$ constructed above. At every $p\ne2,3$, its unramified generic fiber has a unique finite étale extension over $\mathbf Z_p$. These marked local models glue over the Dedekind base with $2$ removed.
 
-Consider the elliptic curve over $\mathbf Q$
-
-$$
-A:\qquad y^2+y=x^3-x.
-$$
-
-Its discriminant is
+**Theorem 16.1 (global finite-flat model).** For every open ideal $I\subset\mathcal O$, there is a finite-flat commutative group scheme
 
 $$
-\Delta_A=37.
+\mathcal G_I/\mathbf Z[1/2]
+\tag{16.2}
 $$
 
-Thus it has good reduction at $3$ and multiplicative reduction at $37$. Its compatible system has coefficient field $\mathbf Q$, so there is one coefficient place above every rational prime and no residue-degree ambiguity.
+with $\mathcal O/I$-action and generic geometric points $T_I$.
 
-The $3$-adic companion is the covariant Tate module
+**Proof strategy.** Spread the generic finite étale Hopf algebra away from finitely many primes. At $3$ use the prescribed finite-flat Hopf order. At the remaining primes use the unique finite étale orders. Intersect these finitely many local Hopf orders inside the common generic Hopf algebra. Over a Dedekind domain the intersection is finite projective, and the Hopf operations preserve it because they preserve every localization. Its localizations recover the marked local models. $\square$
 
-$$
-\rho_{A,3}:G_{\mathbf Q}
-\longrightarrow\operatorname{GL}_2(\mathbf Z_3).
-$$
+Removing $2$ is necessary. A finite-flat group scheme of $3$-power order over $\mathbf Z_2$ is finite étale, so its generic fiber would be unramified. Our generic fiber has nontrivial tame order-three inertia at $2$.
 
-At every $p\ne3,37$,
+### 16.3 Transition maps, determinant, and duality
 
-$$
-\det\bigl(X-\rho_{A,3}(\operatorname{Frob}_p)\bigr)
-=X^2-a_p(A)X+p,
-$$
-
-the same polynomial read by every Tate module. The determinant is $\chi_3$, the representation is odd and pure of weight one, and $V_3A=T_3A\otimes\mathbf Q_3$ is crystalline with weights $\{0,1\}$ at $3$. The finite-flat models for the lattice quotients are the group schemes
+For $J\subset I$, the maps $Q_{J,I}$ at $3$ and the unique finite étale maps away from $3$ glue to faithfully flat morphisms
 
 $$
-\mathcal A[3^n]
+Q_{J,I}:\mathcal G_J\longrightarrow\mathcal G_I.
+\tag{16.3}
 $$
 
-of the good-reduction elliptic scheme over $\mathbf Z_3$.
+They compose transitively. Thus $\{\mathcal G_I,Q_{J,I}\}$ is one all-level quotient system.
 
-The $x$-coordinate $3$-division polynomial is
-
-$$
-\psi_3(x)=3x^4-6x^2+3x-1.
-$$
-
-Modulo $2$ it is $x^4+x+1$, which is irreducible. A cubic resolvent is
+Rescale the rational determinant isomorphism so that
 
 $$
-3z^3+6z^2+4z+5;
+\bigwedge_{\mathcal O}^2T\simeq\mathcal O(1).
+\tag{16.4}
 $$
 
-the rational-root test makes it irreducible. Finally,
+Wedge product then gives a perfect alternating pairing
 
 $$
-\operatorname{disc}(\psi_3)
-=-3^3\,37^2
+T_I\times T_I\longrightarrow(\mathcal O/I)(1).
+\tag{16.5}
 $$
 
-is not a square. The Galois group of $\psi_3$ is therefore $S_4$. Since it is the projective action on the four cyclic subgroups of $A[3]$, the projective residual image is
+To compare coefficient-linear duality with Cartier duality over $\mathbf Z_3$, retain the coefficient dualizing module
 
 $$
-\operatorname{PGL}_2(\mathbf F_3)\simeq S_4.
+\mathcal O^\dagger
+=\operatorname{Hom}_{\mathbf Z_3}(\mathcal O,\mathbf Z_3).
+\tag{16.6}
 $$
 
-The determinant is surjective and the central extension does not split, so
+It is the inverse different as a fractional $\mathcal O$-ideal. The invariant duality statement is
 
 $$
-\bar\rho_{A,3}(G_{\mathbf Q})
-=\operatorname{GL}_2(\mathbf F_3).
+\mathcal G_I^D
+\simeq
+\mathcal G_I\otimes_{\mathcal O/I}(\mathcal O/I)^\dagger.
+\tag{16.7}
 $$
 
-Indeed, an index-two complement to the scalar center would give a second nontrivial character of $\operatorname{GL}_2(\mathbf F_3)$; its abelianization is generated by determinant, whose kernel projects only to $A_4$. Hence no such complement exists. The image is absolutely irreducible. A direct finite-group adequacy calculation passes: its abelianization has no quotient of order $3$, the cocycle equations on elementary and diagonal matrices give
+Choosing a generator of $\mathcal O^\dagger$ identifies the right side with $\mathcal G_I$, compatibly in $I$, but this identification is noncanonical up to a unit. Suppressing the inverse different when $K/\mathbf Q_3$ is ramified would turn a rationally perfect trace pairing into an integrally imperfect one.
 
-$$
-H^1\bigl(\operatorname{GL}_2(\mathbf F_3),
-\operatorname{ad}^0\mathbf F_3^2\bigr)=0,
-$$
+### 16.4 What the tower remembers
 
-and its semisimple matrices span $M_2(\mathbf F_3)$. This is a small-image calculation, not an application of the large-characteristic criterion.
+The inverse limit of the generic points of $\mathcal G_{\mathfrak m^n}$ recovers $T$. The tower retains:
 
-At $37$, the Tate thickness is
+- the rank-two $\mathcal O$-module and its $G_{\mathbf Q}$-action;
+- the cyclotomic determinant and alternating pairing;
+- finite flatness at $3$ at every coefficient level;
+- exact transition maps and successive kernels;
+- unramifiedness outside $\{2,3\}$;
+- the full tame $C_3$-action at $2$;
+- the nonsplit residual orientation recorded by $\mathscr L_2$.
 
-$$
-v_{37}(\Delta_A)=1,
-$$
+It does not classify the simple factors of the finite-flat objects, split the residual extension, or assert a free fixed line at every higher level. Those would be new theorems, not consequences of changing coefficient prime.
 
-so the residual monodromy does not disappear modulo $3$. The residual inertia is tame unipotent of order $3$, with conductor exponent one. Hence the hardly ramified package has
+## 17. The companion theorem and hostile audit
 
-$$
-S_0=\{37\}
-$$
+### 17.1 The exact three-adic companion theorem
 
-and the tame refinement gives
+**Theorem 17.1 (three-adic companion of the chosen hardly-ramified lift).** Let $\rho$ be the chosen lift (12.1), and let $\mathcal R$ be the effective compatible family (12.3) containing it at $\lambda_0\mid\ell$. Fix any coefficient place $\nu\mid3$, put $K=E_\nu$, and let $V=r_\nu$.
 
-$$
-\operatorname{rd}(\mathbf Q(A[3]))
-<3^{3/2}37^{2/3}.
-$$
+Then:
 
-The degree is exactly $48$. Every step of the switch is now certified: coefficient place, common polynomials, determinant, oddness, finite flatness at $3$, residual image, adequacy, and the one auxiliary tame place. This is what a successful elliptic-curve switch looks like when no hypothesis is hidden.
-
-## 16. The prime-switching theorem package
-
-We now assemble the book into reusable statements. The first theorem treats a flexible or preselected coefficient place with an explicit exceptional ledger. The second specializes to $3$ and replaces generic largeness by direct hypotheses. The third extracts the hardly ramified residual field and its numerical bounds.
-
-### 16.1 Controlled switching theorem
-
-**Theorem 16.1 (controlled change of coefficient prime).** Let $F$ be a number field and let
-
-$$
-\mathcal R=\{\rho_\lambda\}_\lambda
-$$
-
-be a rank-two semisimple compatible system over a final coefficient field $E$. Let $\lambda_0\mid\ell_0$ be an original coefficient place and $\nu\mid q$ a new one, with $q\ne\ell_0$. Assume:
-
-1. the weak compatible-system data consist of one finite bad set $S$ and common polynomials $P_v(X)\in E[X]$;
-2. the determinant is $\psi_\lambda\chi_{\ell(\lambda)}^m$, and purity, a polarization, total oddness when defined, and labelled Hodge data have been proved in their stated ranges;
-3. strong compatibility has been proved at every place in a declared set $\mathcal V_{\mathrm{str}}$;
-4. one member $\rho_{\lambda_0}$ is associated with a regular algebraic cuspidal automorphic representation $\pi$, and the realizations $\rho_{\pi,\lambda}$ exist over the aligned coefficient field at all coefficient places under consideration;
-5. for a finite set $T$ of base places, every desired residual local distinction is represented by a uniform algebraic integral model and a nonzero certificate;
-6. at every $u\mid q$, a coefficient-prime theorem gives the claimed de Rham, crystalline, semistable, or ordinary property, and a finite-flat conclusion is requested only for a named lattice with the required compatible integral models; and
-7. either $\nu$ lies outside the explicit finite image exceptional set of an applicable non-CM theorem and has residue characteristic in that theorem's adequacy range, or absolute irreducibility and adequacy at this particular $\nu$ have been checked directly. In a CM or dihedral system, replace this clause by the explicit induction and image calculation.
-
-Let
-
-$$
-B_{\mathrm{sw}}
-=B_{\mathrm{den}}\cup B_{\mathrm{loc}}
-\cup B_{\mathrm{pair}}\cup B_{\mathrm{img}}
-\cup B_{\mathrm{aut}}
-$$
-
-be the finite set attached to these hypotheses, with $B_{\mathrm{img}}$ omitted from this union when the direct image-calculation or explicit CM/dihedral branch of hypothesis 7 is used. If $\nu\notin B_{\mathrm{sw}}$, except for a deliberately imposed and separately verified conductor-drop divisibility, then:
-
-1. the new member $\rho_\nu$ exists and, after a common local coefficient extension,
+1. $V$ is continuous and absolutely irreducible, with $\det V=\chi_3$.
+2. For every $p\ne2,3$, $V$ is unramified and has the polynomial obtained from the common algebraic $P_p$ through $E\hookrightarrow K$.
+3. At every fixed prime away from coefficient characteristic, its Frobenius-semisimple Weil--Deligne pair is the scalar extension of the common $D_p$. In particular, at $2$ it has trivial wild inertia, $N=0$, primitive tame order-three type, and Artin conductor two.
+4. At $3$, $V$ is crystalline with Hodge--Tate weights $\{0,1\}$.
+5. There is a globally stable rank-two $\mathcal O$-lattice $T\subset V$ such that every $T/IT$ has a compatible coefficient-linear finite-flat model over $\mathbf Z_3$ for every open ideal $I\subset\mathcal O$.
+6. The lattice can be chosen so that modulo $\mathfrak m$ the dyadic tame generator acts as a nontrivial unipotent block with the decomposition-group-stable special line
    $$
-   \rho_\nu^{\mathrm{ss}}
-   \simeq\rho_{\pi,\nu}^{\mathrm{ss}};
+   \mathscr L_2=\ker(t_2-1)=\operatorname{im}(t_2-1).
    $$
-2. at every $v\notin S$ with $v\nmid q$, its Frobenius polynomial is $\iota_\nu P_v(X)$;
-3. it has determinant $\psi_\nu\chi_q^m$ and, in the ranges stated in hypothesis 2, the common purity weight, polarization, total oddness, and labelled Hodge data;
-4. for $v\in\mathcal V_{\mathrm{str}}$ with $v\nmid q$, its Frobenius-semisimple Weil--Deligne pair is $\iota_\nu D_v$, including $N_v$, so its characteristic-zero inertial type, monodromy rank, and conductor exponent are the common ones;
-5. for $v\in T$ with $v\nmid q$, every residual local distinction certified in hypothesis 5 survives; an intentionally vanishing certificate gives exactly the separately computed conductor drop;
-6. the chosen residual semisimplification is absolutely irreducible and adequate under hypothesis 7; and
-7. at $u\mid q$, the new member has exactly the rational and integral local properties in hypothesis 6, no more.
+7. The quotients $T/IT$ are unramified outside $\{2,3\}$ and glue to a compatible finite-flat system over $\mathbf Z[1/2]$.
+8. The system has cyclotomic determinant and the compatible Cartier duality (16.7).
 
-If $\rho_\nu$ and $\rho_{\pi,\nu}$ are irreducible, the semisimplification signs in clause 1 can be removed. If a full residual extension or finite-flat model is used, its chosen lattice remains part of the conclusion.
+This $V$ is the three-adic companion of $\rho$: it is not obtained by extending scalars from $L_0$ to $K$, but by reading one algebraic compatible family at the place $\nu$.
 
-**Proof.** Selection of $\rho_\nu$ is part of the compatible system. Weak compatibility proves clause 2. Equality with the automorphic good polynomials at $\lambda_0$, followed by Chebotarev at $\nu$, proves clause 1. The compatible determinant, weight, polarization, parity, and Hodge ledgers prove clause 3. Strong compatibility proves clause 4. Avoidance of the finitely many denominators and nonzero certificates proves the survival assertion in clause 5; a vanishing assertion is instead the stated direct divisibility calculation. The image theorem or direct group calculation proves clause 6. The coefficient-prime comparison and integral model prove clause 7. No clause is inferred from another. $\square$
+**Proof.** The effective base-field family gives clauses 1--3 and removes the old auxiliary prime $\ell$ from the ramification set. Actual weight-two cancellation in the crystalline category gives clause 4. The strongly divisible lattice and arbitrary-open-ideal construction give clause 5. Commensurability transfer permits the simultaneous type-adapted global lattice, giving clause 6. Strict compatibility away from $3$ and gluing of marked local models give clause 7. The rescaled determinant lattice and inverse-different normalization give clause 8. $\square$
 
-### 16.2 The 3-adic companion theorem
+### 17.2 Proof ledger
 
-**Theorem 16.2 (controlled $3$-adic companion).** In Theorem 16.1 fix a coefficient place $\nu_3\mid3$. Assume additionally:
+Each conclusion has one precise source.
 
-1. its residue field $k_{\nu_3}=\mathbf F_{3^f}$ and coefficient ramification are explicitly recorded; if a two-dimensional $\mathbf F_3$ endpoint is required, assume $f=1$ or prove coefficient descent;
-2. for every $u\mid3$, either $F_u/\mathbf Q_3$ is unramified and the chosen lattice $T_{\nu_3}$ is an integral Fontaine--Laffaille lattice of type $(0,1)$, or compatible direct geometric finite-flat models for all quotients $T_{\nu_3}/\varpi_{\nu_3}^nT_{\nu_3}$ are supplied over the actual local base;
-3. the rational member is crystalline with labelled weights $\{0,1\}$ at every $u\mid3$, this rational assertion being recorded separately from the integral models in hypothesis 2;
-4. $\bar\rho_{\nu_3}$ is absolutely irreducible, and adequacy is verified by the four-condition characteristic-$3$ calculation, or a named reducible, dihedral, or small exceptional branch is retained for separate treatment;
-5. every desired away-from-$3$ residual local behavior has been checked on $T_{\nu_3}$, including every monodromy parameter meant to survive or vanish; and
-6. the automorphic family and coefficient alignment are those of hypothesis 4 of Theorem 16.1.
+| conclusion | mechanism | forbidden shortcut |
+|---|---|---|
+| new rational member | effective compatible family | tensoring two unrelated completions |
+| common good polynomials | algebraic $P_p\in E[X]$ | comparing local matrices |
+| determinant | actual Brauer determinant transfer | normalizing by a late twist |
+| dyadic rational type | strict local compatibility | reconstructing type from conductor |
+| crystallinity at $3$ | good weight-two coefficient-prime comparison | using the away-from-$3$ pair $D_3$ |
+| one good integral lattice | strong divisibility in weights $0,1$ | claiming rational crystallinity chooses a lattice |
+| every quotient level | arbitrary-open-ideal integral theory | checking only $3^n$ |
+| type-adapted lattice | cyclic lattice and saturation | averaging by an order divisible by $3$ |
+| finite flatness after replacement | schematic subquotient transfer | assuming it for every crystalline lattice |
+| special line | nontrivial unipotent reduction | residual semisimplification |
+| global models | gluing marked Hopf orders | potential descent from an unspecified field |
+| Cartier duality | determinant lattice plus inverse different | raw trace self-duality |
 
-Then $\rho_{\nu_3}$ is a controlled $3$-adic companion of $\rho_{\lambda_0}$. At every $v\notin S$ with $v\nmid3$, it has the common good Frobenius polynomial; it has the compatible determinant and, in their proved ranges, oddness, polarization, purity, and Hodge labels; it has the common strong local parameters at every declared place away from $3$; it has a finite-flat lattice at $3$ precisely under hypothesis 2, which is a Fontaine--Laffaille lattice of type $(0,1)$ in the unramified branch of that hypothesis; and it has the residual image and away-from-$3$ ramification explicitly recorded in hypotheses 4--5. The companion is the $3$-adic realization of the same automorphic representation over $F$ as in Theorem 16.1.
+The ledger also shows why the four prerequisites are complementary. The general compatible-system theory supplies the language and prime-switching boundary. Brauer descent supplies an actual effective constituent. The base-field assembly supplies one coherent family with exact local pairs. The fixed-three integral theory supplies precisely the lattice, finite-flat tower, and special line absent from rational compatibility.
 
-**Proof.** The nonimage arguments of Theorem 16.1 apply with $q=3$. In the absolutely irreducible adequate branch, hypothesis 4 supplies the required characteristic-$3$ replacement for its generic image clause. In a named reducible, dihedral, or small exceptional branch, clause 6 of Theorem 16.1 is omitted and only the explicitly recorded image conclusion above is retained. Theorem 9.1 proves the type-$(0,1)$ conclusion in the unramified local branch, while direct geometry proves the alternative branch. Chapter 7 proves exactly the recorded residual behavior away from $3$. $\square$
+### 17.3 Hostile mathematical audit
 
-There is a separate potential-only variant. Under hypotheses 1--5 above, suppose instead that the compatible system $\mathcal R$ has already been constructed over $F$, while its restriction to a named finite extension $L/F$ is identified with the compatible family of an automorphic representation $\Pi/L$. The same local, residual, and finite-flat conclusions hold for the $G_F$-member $\rho_{\nu_3}$, and Chebotarev after restriction identifies $\rho_{\nu_3}|_{G_L}^{\mathrm{ss}}$ with the $\nu_3$-adic realization of $\Pi$. The automorphy conclusion is then over $L$, not $F$. It descends to $F$ only when the solvable-Galois, extending-member, irreducibility, cuspidality, and twist-control hypotheses of Section 11.3 are fulfilled.
+**Prime versus place.** The companion is $r_\nu$ for a named $\nu\mid3$. No uniqueness among all places above $3$ is claimed, and the residue field $k$ is retained.
 
-The theorem does not assert that such a place $\nu_3$ has residue degree one, that its residual image is adequate, or that finite flatness follows from strong compatibility. Those are hypotheses because $3$ is fixed.
+**No cross-completion tensor product.** There is no expression
+$\rho\otimes_{L_0}K$. The common objects are $P_p$, $D_p$, and the determinant character over the algebraic coefficient field.
 
-### 16.3 The hardly ramified corollary
+**Semisimplification boundary.** The rational family is semisimple and absolutely irreducible. Reduction of a stable lattice has a lattice-independent semisimplification, but the dyadic line belongs to the selected lattice. The theorem never attributes that line to $\overline V^{\mathrm{ss}}$.
 
-**Corollary 16.3 (hardly ramified residual companion).** Under Theorem 16.2, put
+**Coefficient-prime boundary.** Strict compatibility at $3$ for other members does not prove crystallinity of $V$. The weight-two geometric comparison and actual crystalline cancellation do.
+
+**Integral projector boundary.** The rational projector defining $V$ inside $R_3^+$ is used only in characteristic zero. The finite-flat lattice is constructed inside $D_{\mathrm{cris}}(V)$; it is not cut out by an allegedly integral Brauer projector.
+
+**All-level meaning.** Every nonzero open ideal of $\mathcal O$ is included. Transition maps are part of the assertion. A ramified coefficient ring therefore loses no intermediate $\varpi$-level.
+
+**Commensurability argument.** The transfer of finite flatness uses a finite-flat ambient object and schematic subquotients. It does not rest on extension closure without a supplied middle object.
+
+**Conductor at two.** The equality $a_2(V)=2$ comes from zero invariants and zero Swan conductor. Monodromy remains zero. The word “special” in “special line” refers to the residual unipotent line, not a Steinberg parameter.
+
+**Nonbanal reduction.** Since the tame order is three and the coefficient characteristic is three, semisimplicity fails. The companion matrix proves that the reduction is nontrivial, so it is not silently replaced by the identity.
+
+**Higher-level line.** Only the bottom special line is free of rank one. At higher levels the full $C_3$-action and filtration (15.13) are retained.
+
+**Old coefficient prime.** The three-adic member is unramified at $\ell$ by the exact local complement in the assembled family. This is not inferred from the old $\ell$-adic period module.
+
+**Pairing.** The exterior pairing is made integral by rescaling, and Cartier duality retains the coefficient dualizing module. Ramification of $K/\mathbf Q_3$ is not ignored.
+
+**No later conclusions.** No discriminant bound, torsion-field classification, extension-group calculation, or final reducibility statement has been used or asserted.
+
+Every central implication in Theorem 17.1 survives these tests.
+
+### 17.4 Dependency-boundary audit
+
+The imported results are exactly the following.
+
+From the compatible-system theory we use common Frobenius polynomials, strong local pairs away from coefficient characteristic, determinant transport, stable-lattice existence, lattice independence of residual semisimplification, and the warning that none of these provides new coefficient-prime integral data.
+
+From effective Brauer descent we use the actual rank-two constituent at every coefficient embedding, determinant and local Mackey compatibility, and identification of the distinguished constituent. We do not turn its rational cancellation into integral cancellation.
+
+From the base-field assembly we use one number field $E$, actual absolutely irreducible members $r_\lambda$, the polynomials $P_p$, the pairs $D_p$, exact dyadic type, purity, cyclotomic determinant, removal of auxiliary ramification, coefficient covariance, and retention of the original member. We respect its explicit statement that it supplies no new finite-flat lattice at $3$.
+
+From the fixed-three integral theory we use the coefficient-prime crystalline bridge, the strongly divisible lattice, arbitrary-open-ideal finite-flat models, commensurability transfer, the type-adapted global lattice, the dyadic companion calculation, the special line, gluing over $\mathbf Z[1/2]$, transition maps, determinant pairings, and inverse-different Cartier duality.
+
+No conclusion is strengthened at an import boundary:
+
+- “stable lattice exists” is not read as “canonical lattice exists”;
+- “residual semisimplification is independent” is not read as “residual extension is independent”;
+- “strict compatibility” is not extended to equal coefficient and residue characteristic;
+- “crystalline of weights $\{0,1\}$” is not read as “every lattice is finite flat”;
+- “conductor two” is not read as “the full dyadic type is determined”;
+- “finite flat at each level” is used together with, not in place of, compatible transition maps.
+
+This closes the dependency audit without drawing on any later volume.
+
+## 18. Conclusion
+
+Changing coefficient prime is a reconstruction from common algebraic data, not a scalar extension between local fields. The distinguished $\ell$-adic lift and its three-adic companion live in different completions. They belong together because their good Frobenius polynomials, determinant, purity, and away-from-coefficient local parameters are realizations of the same algebraic ledger.
+
+For the chosen hardly-ramified lift, the rational passage is exact. The effective Brauer construction produces an actual member at every coefficient place; coefficient descent places those members over completions of one number field; the base-field assembly identifies the original lift and retains the primitive dyadic type. Choosing $\nu\mid3$ therefore produces a genuine two-dimensional three-adic representation, unramified outside $\{2,3\}$, with cyclotomic determinant and the same conductor-two tame type at $2$.
+
+The integral passage requires new work. Good weight-two comparison proves crystallinity with weights $\{0,1\}$ at the coefficient prime. Strong divisibility produces one lattice, and the arbitrary-open-ideal theory produces compatible finite-flat models at every coefficient level. Commensurability then allows the lattice to be replaced by one adapted to dyadic inertia without losing finite flatness.
+
+At $2$, the primitive cubic characters merge modulo $3$. On the selected lattice they do not become trivial: they form one nontrivial unipotent Jordan block. Its common kernel and image is the decomposition-group-stable special line. This line is invisible in residual semisimplification and cannot be reconstructed from the conductor integer. It is precisely why the lattice and its nonsplit residual extension must travel with the companion.
+
+The final object is the certified tower
 
 $$
-M=T_{\nu_3}/\varpi_{\nu_3}T_{\nu_3}.
+\boxed{
+V=r_\nu,\quad
+T\subset V,\quad
+\{\mathcal G_I/\mathbf Z[1/2]\}_I,\quad
+\det T=\mathcal O(1),\quad
+\mathscr L_2=\ker(t_2-1)=\operatorname{im}(t_2-1).
+}
+\tag{18.1}
 $$
 
-Assume the local audit produces a finite set $S_0$ away from $3$ such that $M$ is unramified outside $S_0\cup\{u:u\mid3\}$, and an upper cutoff $R_v$ at every $v\in S_0$. Then $M$ has the hardly ramified package of Chapter 14. For $L=F(M)$,
-
-$$
-[L:F]\le
-(3^{2f}-1)(3^{2f}-3^f),
-$$
-
-and
-
-$$
-\operatorname{rd}(L)
-<\operatorname{rd}(F)3^{3/2}
-\prod_{v\in S_0}
-(Nv)^{(1+R_v)/[F:\mathbf Q]}.
-$$
-
-At a tame $v$, replace its factor by
-
-$$
-(Nv)^{(1-1/e_v(M))/[F:\mathbf Q]}.
-$$
-
-If $S_0$ is empty, then
-
-$$
-\operatorname{rd}(L)
-<\operatorname{rd}(F)3^{3/2}.
-$$
-
-At each $u\mid3$, the last upper break is at most
-
-$$
-\frac{3e(F_u/\mathbf Q_3)}2-1,
-$$
-
-and the normalized different exponent is strictly less than
-
-$$
-\frac{3e(F_u/\mathbf Q_3)}2.
-$$
-
-**Proof.** Weak compatibility and the chosen local calculations give the ramification set. Finite flatness gives the local bounds at $3$. The residual image gives the degree bound. The global finite-flat discriminant formula with the recorded auxiliary cutoffs gives the root-discriminant inequality. $\square$
-
-### 16.4 Proof architecture and source ledger
-
-The theorem package has five independent engines.
-
-```text
-common algebraic polynomials  --->  new rational member
-            |
-            +--------------->  Chebotarev automorphic identification
-
-strong local parameters      --->  rational type, conductor, monodromy
-integral local certificates  --->  residual survival or conductor drop
-coefficient-prime geometry   --->  crystalline and finite-flat data at q
-residual image theorem       --->  irreducibility and adequacy
-```
-
-The arrows cannot be interchanged. Good polynomials do not prove bad-place compatibility. Strong rational monodromy does not prove residual monodromy. Crystallinity does not select a finite-flat lattice. A large characteristic-zero monodromy group does not prove adequacy at $3$. Potential automorphy does not prove descent.
-
-The explicit exceptional set is correspondingly modular. A denominator exception can obstruct integral comparison without affecting residual image. An image exception can leave every local parameter intact. A monodromy divisor can deliberately remove one residual conductor factor. Keeping these causes separate is what makes the theorem reusable.
-
-## 17. Failure modes and audit protocol
-
-A prime switch can look correct at almost every Frobenius class while failing at the single local or integral point needed by the application. The safest final step is a hostile audit: assume each ambiguous noun has been used in its strongest possible sense, then demand the hypothesis that justifies that strength.
-
-### 17.1 Prime, place, and embedding failures
-
-**Coefficient residue degree greater than one.** If $k_\nu=\mathbf F_{q^f}$ with $f>1$, the residual member is not two-dimensional over $\mathbf F_q$. Coefficient enlargement cannot lower $f$, and restriction of scalars changes dimension.
-
-**Unspecified place above $q$.** A rational prime can have several coefficient places with different completions and residual images. “Choose $q$” is incomplete until $\nu\mid q$ is named.
-
-**Base place confused with coefficient place.** Changing from $\lambda_0$ to $\nu$ does not move $v$. It changes whether $p(v)$ equals the coefficient characteristic. Every local statement must display both $v$ and $\ell(\lambda)$ when ambiguity is possible.
-
-**Coefficient embedding omitted.** The equality of local polynomials across completions means that both are images of $P_v\in E[X]$. Bad-place parameters and Hodge labels likewise require compatible embeddings. An entrywise comparison of arbitrary local matrices is meaningless.
-
-**Coefficient enlargement made too late.** A prime split in $E$ need not split in a later $E'$. Flexible selection must occur after the final field is fixed. At $3$, every enlargement consequence is audited directly.
-
-### 17.2 Residual and monodromy failures
-
-**Residual reducibility.** Compatibility does not prevent $\bar\rho_\nu^{\mathrm{ss}}$ from being a sum of characters. One irreducible Frobenius polynomial over $k_\nu$ does not prove absolute irreducibility. Use a two-element test, or apply the endomorphism test to the semisimplification; scalar endomorphisms of a nonsemisimple reduction alone do not suffice.
-
-**Lattice treated as canonical.** Only residual semisimplification is lattice independent. A nonsplit extension, stable line, ordinary orientation, or exact inertia matrix belongs to a named lattice.
-
-**Adequacy inferred at a small prime.** The large-characteristic sufficient criterion excludes $3$. Compute the actual image cohomology and semisimple span, or retain a named exceptional branch.
-
-**CM system fed into a non-CM theorem.** A quadratic self-twist forces a dihedral projective image. Residual irreducibility is decided by the inducing characters, and restriction to the quadratic field makes every member reducible.
-
-**Monodromy reduced without an integral model.** The rational operator $N_v$ can be rescaled. Its residual nonvanishing is meaningful only through an integral tame action tied to the chosen lattice.
-
-**Monodromy vanishing overlooked.** At a Steinberg place, a coefficient prime dividing the integral thickness can make residual inertia trivial while rational conductor remains one. This can invalidate a minimal Steinberg condition or improve a hardly ramified package.
-
-**Residual conductor copied from characteristic zero.** Equality needs invariant-rank or monodromy certificates. Without them, compute the residual action itself.
-
-### 17.3 Hodge and finite-flat failures
-
-**Hodge weights outside the Fontaine--Laffaille range.** After normalization, the span must be at most $q-2$. Type $(0,1)$ requires the actual weights $0$ and $1$, not merely some weights inside the broad interval.
-
-**Ramified local base.** The explicit criterion of Theorem 9.1 assumes $F_u/\mathbf Q_q$ unramified and $q>2$. Raynaud uniqueness under $e<q-1$ does not supply the missing unramified classification. Direct geometry may still supply finite flatness.
-
-**Crystalline confused with unramified.** The cyclotomic character is the standard counterexample. Good reduction at a coefficient-prime place gives crystalline, generally ramified, cohomology.
-
-**Crystalline weights confused with an integral lattice.** A rational type does not select a stable lattice or compatible finite-flat quotients. Name the integral comparison or group scheme.
-
-**Semistable confused with finite flat.** Multiplicative reduction gives a semistable noncrystalline Tate module, and its valuation-direction residual extension need not be finite flat.
-
-**Finite flat confused with ordinary.** In the unramified Fontaine--Laffaille range, supersingular good reduction is finite flat of type $(0,1)$ without an ordinary stable line.
-
-**Old coefficient-prime period data copied to the new away member.** The common $D_v$ and the old period module agree only under an all-prime local comparison certificate.
-
-### 17.4 Compatibility and descent failures
-
-**Weak compatibility at a bad place.** Common good polynomials do not determine the chosen bad-place inertial type or monodromy from the definition. A local comparison theorem or geometry is required.
-
-**Strong compatibility promoted beyond its range.** If it is known only at semistable places, no supercuspidal or deep-type place is added. If it is all-place away from coefficient primes, it still stops at the moving coefficient-prime places.
-
-**Chebotarev used as local--global compatibility.** Chebotarev identifies global semisimplifications. It does not prove the predicted local parameter or identify lattices.
-
-**One automorphic lift confused with all lifts.** An automorphic representation supplies its own compatible family. A different characteristic-zero lift of the same residual representation requires a modularity-lifting theorem to become automorphic.
-
-**Potential automorphy descended without control.** A system constructed over $L$ remains over $L$. Descent needs a suitable field tower, cuspidality, coherent character corrections, local control, and usually an extending irreducible arithmetic representation.
-
-**Restriction assumed to preserve image.** Restriction can make a dihedral representation reducible and can shrink any residual image if the extension meets its fixed field. Disjointness must be proved.
-
-### 17.5 A hostile audit checklist
-
-Before declaring a switch complete, verify the following list line by line.
-
-1. **Fields:** Are the base field, final coefficient field, and all auxiliary fields fixed before $q$ is selected?
-2. **Places:** Are $v$ of $F$, $\lambda_0$ of $E$, $\nu$ of $E$, and their rational residue characteristics never conflated?
-3. **Embeddings:** Does every cross-completion comparison pass through one algebraic datum and named embeddings?
-4. **Good data:** Are the common Frobenius polynomials stated only at places away from the relevant coefficient characteristic?
-5. **Strong range:** Is the exact set $\mathcal V_{\mathrm{str}}$ visible?
-6. **Monodromy:** Is $N$ retained after Frobenius-semisimplification, and is any reduction of it tied to an integral lattice?
-7. **Conductor:** Is each characteristic-zero or residual conductor identified by the correct local theorem?
-8. **Lattice:** Is every nonsplit residual extension or stable line attached to a named lattice?
-9. **Image:** Is absolute irreducibility proved over the algebraic residue field? Is adequacy proved in the actual characteristic?
-10. **Coefficient prime:** At every $u\mid q$, are Hodge labels, crystalline or semistable status, ordinarity, and finite flatness separately sourced?
-11. **Weight range:** Are $q>2$, unramified local base, and type $(0,1)$ all present when Theorem 9.1 is used?
-12. **Residue degree:** Is $k_\nu$ stated, and is a required $\mathbf F_q$-model proved rather than assumed?
-13. **Exceptional set:** Is each set finite for a stated reason, with density-zero sets not mislabeled finite?
-14. **Automorphy:** Is the automorphic representation defined at the new coefficient place, and is Chebotarev used only for semisimple identification?
-15. **Descent:** Is the field where automorphy is proved the field named in the conclusion?
-16. **Hardly ramified record:** Are the finite module, image, ramification set, local cutoffs, degree, base root discriminant, and strict numerical upper bound all retained?
-
-Passing this audit is stronger than producing an attractive commutative diagram. It certifies that every arrow in the diagram has a theorem behind it.
-
-## 18. Interfaces and conclusion
-
-The controlled $3$-adic companion is not the final arithmetic conclusion. It is a precisely prepared input for two later stages: classification of small-ramification $3$-adic representations and the final modular-method synthesis. This last chapter states what those stages receive and what remains for them to prove.
-
-### 18.1 Interface to the classification of hardly ramified representations
-
-Book 180, the next classification stage, receives the tuple
-
-$$
-\left(
-F,E_{\nu_3},\mathcal O_{\nu_3},\varpi_{\nu_3},
-\rho_{\nu_3},T_{\nu_3},M,
-k_{\nu_3},\operatorname{im}\bar\rho_{\nu_3},
-\det\rho_{\nu_3},
-\{H_{\tau_0}\},
-\mathscr G_3,
-S_0,\{R_v\},
-\operatorname{rd}_{\max}
-\right).
-$$
-
-Here $\mathscr G_3$ records, for every $u\mid3$, the source and compatible finite-flat models for the quotients $T_{\nu_3}/\varpi_{\nu_3}^nT_{\nu_3}$, together with the Fontaine--Laffaille object only in the unramified branch. Retaining $E_{\nu_3}$, $\mathcal O_{\nu_3}$, and $\varpi_{\nu_3}$ keeps the coefficient ramification and the relation between the $3$-power and $\varpi_{\nu_3}$-power filtrations visible.
-
-Its entries have already been proved to satisfy:
-
-- oddness or the exact polarization parity over the totally real base;
-- determinant $\psi_{\nu_3}\chi_3^m$;
-- the common good Frobenius polynomials and purity;
-- compatible finite-flat model towers at places above $3$ only under the exact local hypotheses, and Fontaine--Laffaille type $(0,1)$ only in the unramified Fontaine--Laffaille branch;
-- a directly calculated residual image, with coefficient residue degree visible;
-- an explicit residual ramification set and conductor record away from $3$;
-- the local upper-break and different bounds at $3$; and
-- the strict global root-discriminant upper bound.
-
-The classification stage may combine this input with global discriminant lower bounds, finite-group analysis, and arithmetic restrictions on reducible or dihedral images. It must not assume a smaller residue field, a smaller ramification set, or a stronger finite-flat category than the tuple provides.
-
-In particular, the upper bound
-
-$$
-\operatorname{rd}(F(M))
-<\operatorname{rd}(F)3^{3/2}
-\prod_{v\in S_0}
-(Nv)^{(1+R_v)/[F:\mathbf Q]}
-$$
-
-is exported, not reproved or analytically interpreted here. The later conclusion that only certain fields or representations can occur belongs to that classification.
-
-### 18.2 Interface to the modular-method synthesis
-
-Book 154, the final modular-method stage, receives two linked but distinct objects.
-
-First, it receives the original member and its arithmetic origin: for a Frey-type curve this includes its cyclotomic determinant, good and multiplicative local behavior, residual representation, and the exact field over which automorphy or potential automorphy has been proved.
-
-Second, it receives the controlled $3$-adic companion and the identification through the compatible system. At good places,
-
-$$
-P_v(X)
-=X^2-a_vX+\psi(v)(Nv)^m
-$$
-
-belongs to both members through their coefficient embeddings. At fixed bad places away from $3$, the strong parameters agree in the declared range. At $3$, the companion carries the separately proved finite-flat or semistable local package. Its residual image enters the small-prime classification.
-
-The final synthesis may then combine:
-
-- modularity or potential modularity of the compatible family;
-- the $3$-adic classification just described;
-- rational-isogeny alternatives when a residual representation is reducible;
-- level lowering or lifting with the exact residual local components; and
-- the Diophantine properties of the original curve.
-
-Changing the coefficient prime does not itself prove any rational-isogeny theorem, any discriminant lower bound, or the final contradiction. It ensures that the representation fed into those arguments is genuinely a member of the same arithmetic family and retains exactly the local and global data they require.
-
-If the compatible family is known only after restriction to a potential-modularity field, the final stage must either work over that field or invoke a valid descent mechanism. The prime switch does not improve the descent status.
-
-### 18.3 Final perspective
-
-Changing the prime is not an operation on matrix entries. It is a passage through algebraic arithmetic data. The original and new completions read the same Frobenius polynomials, determinant character, purity, polarization, and labelled weight record. Strong compatibility adds a common Weil--Deligne parameter at each fixed place away from the moving coefficient characteristic. Chebotarev identifies semisimple global realizations of one automorphic representation.
-
-The power of the method comes from respecting what remains outside that common record. Lattices are choices. Residual extensions can change with those choices. Residual irreducibility and adequacy have exceptional primes and small-image branches. Integral monodromy can vanish even when rational monodromy has rank one. At the new coefficient prime, crystalline periods and finite-flat group schemes require their own comparison and integral theorems. Potential automorphy remains over its auxiliary field until descent is performed.
-
-With those boundaries fixed, the passage to $3$ becomes exact. One chooses an actual place above $3$, records its residue field, constructs the corresponding member, checks its characteristic-$3$ image directly, and verifies finite flatness at every place above $3$, through a type-$(0,1)$ Fontaine--Laffaille lattice in the unramified odd range or through direct geometry over the actual local base. Away from $3$, integral certificates decide which ramification survives. The residual field cut out by the chosen lattice then has an explicit degree, upper-break record, conductor, and root-discriminant bound.
-
-The enduring output is therefore not the slogan that the prime has changed. It is a certified companion: the same algebraic arithmetic family in a new topology, equipped with a fresh lattice, a freshly checked residual image, a separate coefficient-prime local model, an honest exceptional-set ledger, and numerical ramification bounds ready for classification. That is the form in which changing the prime can carry an argument without carrying an error with it.
+Every arrow is now accounted for: algebraic compatibility changes the coefficient prime; coefficient-prime comparison proves crystallinity; integral low-weight theory builds the torsion models; saturation preserves the dyadic type; and gluing assembles the global finite-flat tower. No arithmetic information requested in the passage from the chosen lift to its three-adic companion is lost at a completion, semisimplification, lattice, or local-theory boundary.

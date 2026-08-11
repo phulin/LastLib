@@ -241,7 +241,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 174. Auxiliary Dihedral Data and Residual Potential Modularity
 - [x] 175. Compatible Systems of Galois Representations
 - [x] 176. Brauer Induction and Descent of Automorphy
-- [ ] 177. Changing the Prime
+- [x] 177. Changing the Prime
 - [x] 178. Discriminants of Galois Representations
 - [x] 179. Odlyzko Bounds and Fontaine’s Argument
 - [ ] 180. Hardly Ramified (3)-adic Representations
