@@ -71,8 +71,8 @@
    - [Finite spectral windows](#114-finite-spectral-windows)
    - [Why compactness is typewise](#115-why-compactness-is-typewise)
 12. [The discrete cuspidal decomposition](#12-the-discrete-cuspidal-decomposition)
-   - [From direct integrals to atoms](#121-from-direct-integrals-to-atoms)
-   - [Atomicity on every type](#122-atomicity-on-every-type)
+   - [Compact cuspidal convolution](#121-compact-cuspidal-convolution)
+   - [The compact-operator decomposition](#122-the-compact-operator-decomposition)
    - [Finite multiplicity](#123-finite-multiplicity)
    - [The decomposition theorem](#124-the-decomposition-theorem)
    - [Consequences and boundaries](#125-consequences-and-boundaries)
@@ -620,18 +620,60 @@ $$
 
 where at finite places the sup norm is used, at real places the Euclidean norm, and at complex places the square of the Euclidean norm. Any two choices of standard local norms change only $C_F$.
 
-**Proof strategy.** Scale a product of local balls until its adelic volume exceeds the covolume of $F^2$, then use the adelic lattice-point principle. The local radii must be chosen with weighted product $R$; scaling every archimedean coordinate by the same ordinary radius would obscure the complex-place normalization.
+**Proof strategy.** Keep the finite body equal to the standard integral lattice and scale all ordinary archimedean radii by $R^{1/n}$. The product norm then grows by $R$, while the two-dimensional adelic volume grows by $R^2$.
 
-**Proof.** The additive group $F^2$ is a discrete cocompact subgroup of $\mathbf A^2$. Let $D$ be a measurable fundamental region of volume $c_F^2$. At the finite places choose balls whose radii are integral powers of $q_v$ and equal one almost everywhere. At a real place use a centrally symmetric Euclidean disk, and at a complex place use a complex Euclidean ball but count its ordinary radius twice. If the weighted product of all chosen radii is $R$, the product body $\mathcal B_R$ has volume between $c_1R^2$ and $c_2R^2$, where the constants depend only on $F$ and on the rounding of finite radii. Moreover every $w\in\mathcal B_R$ satisfies $\prod_v\|w_v\|_v\leq C R$.
-
-Right multiplication by $g^{-1}$ scales additive volume on $\mathbf A^2$ by $|\det g|_{\mathbf A}^{-1}$. Choose the radii so that the finitely many denominators of $g_f$ are absorbed and then take $R=C_F|\det g|_{\mathbf A}^{1/2}$. For $C_F$ sufficiently large, the set $\mathcal B_Rg^{-1}$ has volume greater than $4c_F^2$.
-
-Choose a concentric product body $\mathcal C_R$ with $\mathcal C_R-\mathcal C_R\subset\mathcal B_R$ and volume greater than $c_F^2$; the fixed factor-four margin, enlarged once to absorb finite-radius rounding, permits this choice. Project $\mathcal C_Rg^{-1}$ to $\mathbf A^2/F^2$. Its volume exceeds that of the quotient, so the projection cannot be one-to-one almost everywhere. Two distinct points have the same image modulo $F^2$; their nonzero difference lies in $F^2\cap\mathcal B_Rg^{-1}$. Multiplying by $g$ gives (4.2). This is the two-dimensional adelic convex-body argument. $\square$
-
-The constant is uniform in $g$. Indeed, the only apparent dependence came from rounding finite radii, and each rounded radius changes by at most one factor $q_v$; the compensating finite determinant factor cancels their weighted product. Equivalently, one may first attach to $g_f$ the full $\mathcal O_F$-lattice
+**Proof.** The additive group $F^2$ is a discrete cocompact subgroup of $\mathbf A^2$. Let $D$ be a measurable fundamental region of volume $c_F^2$. For $R>0$, define $\mathcal B_R$ by
 
 $$
-L(g_f)=\{v\in F^2:v g_f\in\widehat{\mathcal O}_F^{,2}\},
+w_v\in\mathcal O_v^2\quad(v<\infty),
+\qquad
+\|w_v\|_{\mathrm{usual}}\leq R^{1/n}\quad(v\mid\infty).
+$$
+
+At a real place the corresponding volume exponent is $2/n$, and at a complex place it is $4/n$. Hence
+
+$$
+\operatorname{vol}(\mathcal B_R)=c_\infty R^2,
+$$
+
+because $2r_1+4r_2=2n$. Every $w\in\mathcal B_R$ also satisfies
+
+$$
+\prod_v\|w_v\|_v\leq R:
+$$
+
+finite norms are at most one, each real place contributes at most $R^{1/n}$, and each complex place contributes at most $R^{2/n}$.
+
+Right multiplication by $g^{-1}$ scales additive volume on $\mathbf A^2$ by $|\det g|_{\mathbf A}^{-1}$. Choose
+
+$$
+R=C|\det g|_{\mathbf A}^{1/2}
+$$
+
+with $C$ depending only on $F$. Shrink every archimedean radius by a fixed factor to obtain a concentric body $\mathcal C_R$ such that
+
+$$
+\mathcal C_R-\mathcal C_R\subset\mathcal B_{C_0R}
+$$
+
+for a fixed $C_0$, while
+
+$$
+\operatorname{vol}(\mathcal C_Rg^{-1})>c_F^2.
+$$
+
+The finite inclusion uses $\mathcal O_v^2-\mathcal O_v^2=\mathcal O_v^2$; at infinity it is the triangle inequality. Project $\mathcal C_Rg^{-1}$ to $\mathbf A^2/F^2$. Its volume exceeds that of the quotient, so the projection cannot be one-to-one almost everywhere. Two distinct points have the same image modulo $F^2$; their nonzero difference lies in
+
+$$
+F^2\cap\mathcal B_{C_0R}g^{-1}.
+$$
+
+Multiplying by $g$ gives (4.2), after replacing $C_0C$ by $C_F$. All constants are independent of $g$. $\square$
+
+Equivalently, one may attach to $g_f$ the full $\mathcal O_F$-lattice
+
+$$
+L(g_f)=\{v\in F^2:v g_f\in\widehat{\mathcal O}_F^{\,2}\},
 $$
 
 whose archimedean covolume is the finite determinant factor times $c_F^2$, and then apply the ordinary convex-body theorem to $L(g_f)$ at infinity. The finitely many ideal classes make the comparison constants uniform. This second description is often convenient when one wants an explicit, though nonoptimal, value of $C_F$.
@@ -674,7 +716,7 @@ To see compactness of the remaining finite coordinates, choose a fractional idea
 For the unipotent coordinate, write the already reduced torus representative as $t$. Left multiplication by $n(q)$ changes
 
 $$
-n(x)t=n(q),n(x-q)t.
+n(x)t=n(q)n(x-q)t.
 $$
 
 Choose $q\in F$ so that $x-q\in\Omega_N$. If the torus representative is subsequently altered within its fixed compact norm-one class, conjugation replaces $\Omega_N$ by the image of $\Omega_N$ under a compact family of additive automorphisms. The union of those images is still compact. This justifies the assertion in Section 4.1 without assuming a coordinate section invariant under every torus operation.
@@ -1056,6 +1098,16 @@ $$
 At a real place, (3.7) gives $|y_v(t)|\asymp e^{t/n}$. At a complex place, the normalized absolute value is $|y_v|_{\mathrm{usual}}^2$, and the same balanced formula again gives $|y_v(t)|_{\mathrm{usual}}\asymp e^{t/n}$. The complex unipotent direction has two real coordinates, both multiplied by this ordinary modulus. Hence every real transverse direction expands at the same lower rate $e^{t/n}$, even though its contribution to the global module was counted with local degree two.
 
 Changing from a coordinate derivative to a right-invariant field introduces coefficients from the compact $t_1$ and $k$ variables. Those coefficients and their inverses remain bounded. Differentiating them yields the lower-order terms in (6.4). This proves both the principal expansion and the uniform control required when fields are commuted in higher Sobolev estimates.
+
+Equivalently, after taking bounded linear combinations of a full invariant frame $X_1,\ldots,X_m$, the coordinate gradient along the unipotent fiber satisfies the pointwise estimate
+
+$$
+|\nabla_Yu|^2
+\leq Ce^{-2t/n}\sum_{i=1}^m|X_i u|^2.
+\tag{6.4b}
+$$
+
+This form allows the compact variables to mix the invariant directions and is the one used in the Poincare estimate. It asserts control by the full first-order invariant energy, not by a coordinate field that has been held fixed while the compact coordinates vary.
 
 Fix a basis $X_1,\ldots,X_m$ of the archimedean Lie algebra modulo the scalar direction and let the same letters denote right-invariant fields. On a fixed level and compact type, define
 
@@ -1628,12 +1680,12 @@ $$
 
 where $\ell(\Lambda^*)$ is the length of the shortest nonzero dual vector. Thus one may take $C_Y=(2\pi\ell(\Lambda^*))^{-1}$. Finiteness of the possible level lattices gives the uniform constant used below.
 
-Apply this on every unipotent fiber, with the other compact coordinates fixed. Cuspidality gives the mean-zero hypothesis. Since invariant transverse fields have the form (6.4),
+Apply this on every unipotent fiber, with the other compact coordinates fixed. Cuspidality gives the mean-zero hypothesis. Estimate (6.4b) gives
 
 $$
 \|u(t,\cdot)\|_{L^2(Y)}^2
 \leq Ce^{-2t/n}
-\sum_j\|W_ju(t,\cdot)\|_{L^2(Y)}^2.
+\sum_i\|X_iu(t,\cdot)\|_{L^2(Y)}^2.
 \tag{10.2}
 $$
 
@@ -1777,11 +1829,11 @@ The fixed-type hypothesis enters through the Sobolev norm on compact directions.
 The full embedding $H^1\hookrightarrow L^2$ is not compact. In one cusp choose a smooth function $\psi$ supported in $(0,1)$ and define
 
 $$
-u_j(t,y)=c\,e^{t/2}\psi(t-j),
+u_j(t,y)=c_j e^{t/2}\psi(t-j),
 \tag{10.9}
 $$
 
-independent of the unipotent coordinate $y$. Since the measure is comparable to $e^{-t}dt\,dy$, the factor $e^{t/2}$ normalizes the $L^2$ mass. Radial derivatives remain uniformly bounded, and transverse derivatives vanish. For a spaced subsequence the supports are disjoint, so
+independent of the unipotent coordinate $y$, where $c_j>0$ is chosen so that $\|u_j\|_2=1$. Since the measure is comparable to $e^{-t}dt\,dy$, the factor $e^{t/2}$ makes the unnormalized masses bounded above and below independently of $j$; hence both $c_j$ and $c_j^{-1}$ are uniformly bounded. Radial derivatives remain uniformly bounded, and transverse derivatives vanish. For a spaced subsequence the supports are disjoint, so
 
 $$
 \|u_j-u_k\|_2=\sqrt2
@@ -1794,7 +1846,7 @@ To verify the derivative bound, write $s=t-j$ on the support. Then
 
 $$
 \partial_tu_j
-=c e^{t/2}\bigl(\psi'(s)+\tfrac12\psi(s)\bigr).
+=c_j e^{t/2}\bigl(\psi'(s)+\tfrac12\psi(s)\bigr).
 $$
 
 Multiplication by the density $e^{-t}dt$ cancels $e^t$ in both the function and its radial derivative. All compact derivatives vanish, so the full first-order norm is independent of $j$ up to the fixed bounded cusp Jacobian. This makes the counterexample robust under every coordinate choice allowed in (6.2).
@@ -1805,7 +1857,7 @@ Subtracting the global integral of $u_j$ would make it orthogonal to constants b
 
 ### 11.1 The positive measuring operator
 
-Let $G_\infty=\prod_{v\mid\infty}G(F_v)$ and choose an $\operatorname{Ad}(K_\infty)$-invariant inner product on its Lie algebra modulo the scalar direction already removed. Let $\Omega_G$ be a positive choice of the central quadratic operator on the noncompact directions and $\Omega_K$ the nonnegative compact-direction operator. A standard elliptic combination is
+Let $G_\infty=\prod_{v\mid\infty}G(F_v)$ and choose an $\operatorname{Ad}(K_\infty)$-invariant inner product on its Lie algebra modulo the scalar direction already removed. Let $\Omega_G$ be the central Casimir, with the convention that $-\Omega_G$ is positive on the noncompact directions, and let $\Omega_K$ be the nonnegative compact-direction operator. The elliptic combination is
 
 $$
 \Lambda=1-\Omega_G+2\Omega_K,
@@ -1943,7 +1995,7 @@ The number of cubes grows polynomially in $L$. The cube scale contributes a fixe
 
 Finite windows have two immediate analytic consequences. After increasing $D$ if necessary, $(1+A_\tau)^{-s}$ is trace class for every $s>D$, because the polynomial counting bound makes the eigenvalue sum converge. Also $e^{-tA_\tau}$ is trace class for every $t>0$. These assertions remain typewise: their traces need not be summable over all compact types or finite levels.
 
-The window bound can be stated variationally. If $V$ is a subspace on which $q_\tau(u)\leq L\|u\|_2^2$, then $\dim V\leq C(1+L)^D$. This is the form used in the atomicity argument: a continuous family would furnish arbitrarily many orthogonal vectors with the same energy bound, contradicting the variational estimate.
+The window bound can be stated variationally. If $V$ is a subspace on which $q_\tau(u)\leq L\|u\|_2^2$, then $\dim V\leq C(1+L)^D$. This is also the form that bounds the contribution of the irreducible summands found in Chapter 12: every nonzero contribution to one window consumes at least one dimension.
 
 ### 11.5 Why compactness is typewise
 
@@ -1953,101 +2005,151 @@ It would also be false to sum blindly over all finite levels. Repeating one boun
 
 ## 12. The discrete cuspidal decomposition
 
-### 12.1 From direct integrals to atoms
+### 12.1 Compact cuspidal convolution
 
-The second-countable group $G(\mathbf A)$ modulo its center is of type I. Its unitary representations therefore admit an essentially unique direct-integral decomposition. Apply this foundational decomposition to the right regular representation on $L^2_{\mathrm{cusp},\omega}$:
+Write $\mathcal H=L^2_{\mathrm{cusp},\omega}$. Let $\mathcal D$ be the convolution algebra of finite sums of functions
 
 $$
-L^2_{\mathrm{cusp},\omega}
-\simeq\int_{\widehat G_\omega}^{\oplus}
-M_\pi\otimes\mathcal H_\pi\,d\mu(\pi).
+f=f_\infty\otimes f_f,
+$$
+
+where $f_\infty\in C_c^\infty(G_\infty)$ is finite under left and right translation by $K_\infty$, and $f_f$ is compactly supported, locally constant, and bi-invariant under some compact open subgroup of $G(\mathbf A_f)$. The involution preserves $\mathcal D$.
+
+**Lemma 12.1.** For every $f\in\mathcal D$, the operator $R(f)$ on $\mathcal H$ is compact.
+
+**Proof.** It is enough to treat one tensor. Left invariance of $f_f$ under a compact open $K_f'$ makes the image of $R(f)$ fixed by $K_f'$. Finite-dimensionality of the left $K_\infty$-orbit of $f_\infty$ makes the image lie in a finite sum $\Theta$ of $K_\infty$-types. These assertions follow directly from changing variables in (7.7).
+
+Archimedean differentiation of $R(f)u$ differentiates a left translate of $f_\infty$. Hence, for every invariant differential monomial $D$,
+
+$$
+\|D R(f)u\|_2
+\leq \|D_Lf_\infty\|_1\,\|f_f\|_1\,\|u\|_2,
 \tag{12.1}
 $$
 
-Here $\widehat G_\omega$ denotes irreducible unitary representations with central character $\omega$, $M_\pi$ is a multiplicity space, and $\mu$ is a measure class. At this stage $\mu$ could have a continuous part.
-
-The central character causes no measure-theoretic difficulty. Every representation occurring in $L^2_\omega$ has the prescribed scalar action, so it factors through the quotient of $G(\mathbf A)$ by the kernel of $\omega$ in the center. That quotient remains second countable and of type I. The direct integral may therefore be formed inside the fixed-central-character dual rather than decomposing first and discarding unwanted central characters afterward.
-
-The symbol $M_\pi$ separates two notions that must not be confused. The Hilbert space $\mathcal H_\pi$ carries the irreducible group action and can be infinite-dimensional. The group acts trivially on $M_\pi$; its dimension is the automorphic multiplicity. Proving that $\mu$ is atomic establishes discreteness, while proving $\dim M_\pi<\infty$ establishes finite multiplicity. Neither conclusion formally implies the other.
-
-The structural admissibility theorem supplies the needed fiber dimensions. An irreducible unitary representation of $G(\mathbf A)$ is a restricted tensor product of irreducible local representations; its smooth local factors are admissible. Hence every archimedean $K_\infty$-type occurs with finite multiplicity, and for every compact open $K_f'$ the finite-adelic fixed space is finite-dimensional. Consequently the $(K_f',\tau)$ fiber in (12.1) is
+with the evident finite sum for a general $f$. Convolution preserves cuspidality by Section 9.3. Thus $R(f)$ factors as a bounded map
 
 $$
-M_\pi\otimes
-\mathcal H_{\pi,f}^{K_f'}\otimes
-\mathcal H_{\pi,\infty}(\tau),
+\mathcal H\longrightarrow
+H^1_{\mathrm{cusp},\omega}(K_f',\Theta)
+$$
+
+followed by inclusion into $\mathcal H$. The latter inclusion is compact because $\Theta$ is finite and Theorem 10.1 applies to each of its types. Therefore $R(f)$ is compact. $\square$
+
+This lemma packages the entire geometric argument into a representation-theoretic statement: every smooth, finite-level, finite-type convolution operator is compact on the whole cuspidal space, even though no unrestricted Sobolev embedding is compact.
+
+The algebra $\mathcal D$ is dense in $L^1(G(\mathbf A))$. At the finite places, locally constant compactly supported functions are dense. At infinity, smooth compactly supported functions are dense, and convolution on the left and right by finite Peter--Weyl sums on $K_\infty$ approximates them in $L^1$. These approximations may be chosen inside a fixed compact enlargement of the original support. In particular, $\mathcal D$ contains an $L^1$ approximate identity $(\eta_j)$ for which
+
+$$
+R(\eta_j)u\longrightarrow u
+\qquad(u\in\mathcal H).
 \tag{12.2}
 $$
 
-with the last two factors finite-dimensional.
+### 12.2 The compact-operator decomposition
 
-To justify the finite-adelic statement globally, choose a finite set $S$ containing every place where $K_f'$ is not maximal compact and every place where the restricted tensor product is ramified. Outside $S$, the distinguished spherical line is one-dimensional. Inside $S$, local admissibility makes the fixed space under the corresponding compact open subgroup finite-dimensional. Their finite tensor product is therefore finite-dimensional. At infinity, compact-group admissibility gives the same conclusion for the $\tau$-isotypic multiplicity space.
-
-### 12.2 Atomicity on every type
-
-Restrict (12.1) to a fixed level and type. The closed differential operator $A_\tau$ is affiliated with the decomposable infinitesimal action, so it is decomposable. On the fiber
+Let
 
 $$
-M_\pi\otimes V_{\pi,K_f',\tau},
+\mathfrak A
+=\overline{R(\mathcal D)}^{\|\cdot\|}
+\subset B(\mathcal H).
+$$
+
+Lemma 12.1 and norm-closedness of the compact operators give
+
+$$
+\mathfrak A\subset\mathcal K(\mathcal H).
+\tag{12.3}
+$$
+
+The action is nondegenerate by (12.2), and $\mathfrak A$ is separable because the group is second countable. We use the following elementary compact-operator structure lemma.
+
+**Lemma 12.2.** Let $A$ be a separable $C^*$-algebra acting nondegenerately on a separable Hilbert space $H$. If $A\subset\mathcal K(H)$, then there are countably many pairwise inequivalent irreducible nondegenerate representations $\pi$ and finite-dimensional multiplicity spaces $M_\pi$ such that
+
+$$
+H\simeq\widehat\bigoplus_\pi M_\pi\otimes H_\pi,
 \qquad
-V_{\pi,K_f',\tau}
-=\mathcal H_{\pi,f}^{K_f'}\otimes
-\mathcal H_{\pi,\infty}(\tau),
+A\text{ acts as }
+\widehat\bigoplus_\pi I_{M_\pi}\otimes\pi(A).
+\tag{12.4}
 $$
 
-it acts as the identity on $M_\pi$ tensored with a self-adjoint operator on the finite-dimensional intrinsic type space $V_{\pi,K_f',\tau}$. The multiplicity space is not yet known to be finite-dimensional. The central quadratic part is determined by the archimedean infinitesimal character, while the compact quadratic part is fixed on $\tau$. Every bounded spectral projection is therefore decomposable.
+**Proof.** If $0\ne a\in A$ is positive, compactness gives an isolated nonzero part of its spectrum. Continuous functional calculus with a function vanishing at zero produces a nonzero finite-rank projection in $A$. A minimal projection exists in the resulting finite-dimensional corner. Group mutually equivalent minimal projections and use the partial isometries between them as matrix units. Their closed spans are mutually orthogonal elementary ideals, each isomorphic to the compact operators on one irreducible module. A maximal family has zero annihilator; otherwise the same construction in the annihilator would produce another minimal projection. Nondegeneracy therefore makes the corresponding modules span $H$.
 
-Suppose a non-atomic subset $S$ of positive $\mu$-measure contributes to this level and type. The increasing bounded spectral projections exhaust the fiber, so some bounded window contributes on a non-atomic subset $S_0\subset S$ of positive measure. Split $S_0$ into infinitely many disjoint measurable subsets of positive measure. Measurable selection in the nonzero finite-dimensional fiber gives a unit vector field on each subset. After multiplying by scalar functions so that the resulting sections have norm one, these sections are orthonormal and all lie in the same bounded spectral window. This contradicts finite dimensionality of (11.5).
+Separability makes the family countable. In a representation of one elementary ideal, the action has the form $I_M\otimes\mathcal K(H_0)$. If $M$ were infinite-dimensional, $I_M\otimes b$ would fail to be compact for every nonzero finite-rank $b$. Hence each multiplicity space is finite-dimensional. Finally, compactness of every element forces the norms of its components to tend to zero, giving the Hilbert direct sum in (12.4). $\square$
 
-Thus the measure on that level and type is purely atomic, with only finitely many atoms in any bounded $A_\tau$ window. Every nonzero irreducible unitary representation contains some $K_\infty$-type and has a nonzero fixed vector under some compact open $K_f'$. Taking a countable cofinal set of levels and the countable set of compact types exhausts the representation. Hence the entire measure $\mu$ in (12.1) is purely atomic and countable.
-
-The measure-theoretic principle used here can be isolated. Let
+Apply Lemma 12.2 to $\mathfrak A$. Since $\mathcal D$ is $L^1$-dense, $\mathfrak A$ is also the norm closure of the integrated right action of $L^1(G(\mathbf A))$. A closed subspace is invariant under $\mathfrak A$ if and only if it is invariant under $G(\mathbf A)$. One direction follows by integration. For the other, if $V$ is $\mathfrak A$-invariant and $v\in V$, then a left translate of the approximate identity gives
 
 $$
-\mathcal H=\int_S^\oplus\mathcal H_s\,d\nu(s)
+R(L_g\eta_j)v\longrightarrow R(g)v;
 $$
 
-and let $P=\int_S^\oplus P_s\,d\nu(s)$ be a decomposable orthogonal projection of finite rank. Then the set on which $P_s\ne0$ consists, modulo null sets, of finitely many atoms of $\nu$. Indeed, a non-atomic positive-measure part can be split repeatedly into disjoint positive-measure subsets, producing infinitely many orthogonal sections in $\operatorname{ran}P$. Infinitely many distinct atoms with nonzero fibers produce the same contradiction by choosing one unit vector on each atom. Therefore finite rank permits only finitely many contributing atoms.
+every vector on the left belongs to $V$, so $R(g)v\in V$. Thus irreducibility and equivalence for the $\mathfrak A$-modules are exactly irreducibility and equivalence for the corresponding unitary group representations.
 
-Apply this principle to every bounded spectral projection in every fixed level and type. The union of those projections is strongly the identity on the detected fiber. Hence a non-atomic part cannot hide at arbitrarily high eigenvalues: if all bounded projections vanished there, their strong limit would vanish as well. This closes the only possible gap between typewise finite rank and global atomicity.
+Every summand has central character $\omega$, because the center already acts by that scalar on $\mathcal H$. Consequently (12.4) becomes
 
-We have therefore obtained a Hilbert direct sum rather than a genuine continuous integral.
+$$
+L^2_{\mathrm{cusp},\omega}
+\simeq
+\widehat\bigoplus_{\pi\in\mathcal A_{\mathrm{cusp}}(G,\omega)}
+M_\pi\otimes\mathcal H_\pi,
+\tag{12.5}
+$$
 
-The exhaustion argument deserves one additional detail. Let $(K_{f,j})$ be a countable decreasing cofinal family of compact open subgroups and enumerate the compact types as $(\tau_k)$. In a nonzero irreducible unitary representation, smooth finite-adelic vectors are dense, so some $K_{f,j}$ fixes a nonzero vector; compact-type decomposition at infinity then supplies some $\tau_k$. The corresponding finite-dimensional fiber is exhausted by the increasing spectral projections $\mathbf1_{[1,L]}(A_{\tau_k})$. Thus every point of the direct-integral support is detected by at least one triple $(j,k,L)$.
-
-There are countably many such triples. For each triple, finite dimensionality permits only finitely many atoms with nonzero contribution, counted with fiber dimension. A countable union of finite sets is countable. This proves both that no support has escaped the typewise argument and that the atomic index set may be chosen countable.
+where the index set is countable, every $\mathcal H_\pi$ is irreducible and unitary, and $1\leq\dim M_\pi<\infty$. This proves discreteness and finite multiplicity without assuming a direct-integral theorem, a type-I theorem for the adelic group, or a restricted-tensor-product classification.
 
 ### 12.3 Finite multiplicity
 
-Let $\pi$ be an atom. Choose $K_f'$ and $\tau$ such that
+The compact-operator lemma already proves finite multiplicity. The elliptic windows give an independent bound and explain how multiplicity is detected geometrically.
+
+Let $\pi$ be a summand in (12.5). Strong continuity at the finite places and compact Fourier completeness at infinity give $K_f'$ and $\tau$ such that
 
 $$
-\mathcal H_{\pi,f}^{K_f'}\ne0,
-\qquad
-\mathcal H_{\pi,\infty}(\tau)\ne0.
+V_{\pi,K_f',\tau}
+=\mathcal H_\pi^{K_f'}(\tau)\ne0.
 $$
 
-On this irreducible fiber, the central quadratic operator is scalar and the compact quadratic operator is scalar on the $\tau$-isotypic component. Their sum therefore has an eigenvalue $\lambda$ on the nonzero finite-dimensional type space. Then the global eigenspace $E(K_f',\tau,\lambda)$ contains
+The spectral projections of the central archimedean quadratic operator commute with the group action. Irreducibility and the spectral form of Schur's lemma therefore make that operator scalar on $\mathcal H_\pi$; the compact quadratic operator is scalar on the $\tau$-isotypic component. Their sum has one value $\lambda$ on $V_{\pi,K_f',\tau}$. Hence
 
 $$
-M_\pi\otimes V_{\pi,K_f',\tau,\lambda},
+M_\pi\otimes V_{\pi,K_f',\tau}
+\subset E(K_f',\tau,\lambda).
 $$
 
-where $V_{\pi,K_f',\tau,\lambda}$ is nonzero and finite-dimensional. By (11.3), the global eigenspace is finite-dimensional. Therefore
+By (11.3), the space on the right is finite-dimensional. It follows simultaneously that $V_{\pi,K_f',\tau}$ and $M_\pi$ are finite-dimensional, and
 
 $$
 \dim M_\pi
 \leq\frac{\dim E(K_f',\tau,\lambda)}
-{\dim V_{\pi,K_f',\tau,\lambda}}
+{\dim V_{\pi,K_f',\tau}}
 <\infty.
-\tag{12.3}
+\tag{12.6}
 $$
 
 This is finite automorphic multiplicity. It does not say that $\mathcal H_\pi$ is finite-dimensional; archimedean irreducible representations are usually infinite-dimensional.
 
-The same finite-window argument rules out an atom with infinite-dimensional multiplicity even if its measure weight is arbitrarily small. An atom contributes a genuine orthogonal summand, and every vector in $M_\pi$ tensored with one fixed nonzero type eigenvector lies in the same global eigenspace. The dimension of that eigenspace, not the numerical mass assigned to the atom by a representative of the measure class, controls multiplicity.
+The same argument rules out an infinite-dimensional multiplicity even though the irreducible representation itself can be infinite-dimensional. Every vector in $M_\pi$ tensored with one fixed nonzero type vector lies in the same global eigenspace. The dimension of that eigenspace controls multiplicity.
 
 Conversely, finite-dimensional type spaces alone would not prove finite automorphic multiplicity. One could tensor a fixed irreducible representation with an infinite multiplicity space and retain finite-dimensional intrinsic type spaces. The global compact-resolvent theorem excludes exactly this possibility by bounding the entire automorphic eigenspace.
+
+More generally, every bounded spectral projection of $A_\tau$ preserves the orthogonal sum (12.5), and
+
+$$
+E_I(K_f',\tau)
+=\widehat\bigoplus_\pi
+M_\pi\otimes V_{\pi,K_f',\tau,I}
+$$
+
+for a bounded interval $I$. Since the left side is finite-dimensional, only finitely many summands on the right are nonzero, and
+
+$$
+\dim E_I(K_f',\tau)
+=\sum_\pi
+\dim M_\pi\,\dim V_{\pi,K_f',\tau,I}.
+$$
+
+This proves the counted finite-window assertion in Theorem 12.1. It also completes the regularity interface: a finite-level, finite-type vector in one irreducible summand lies in the scalar eigenspace described above, so Section 11.3 makes it smooth and Section 10.3 makes it rapidly decreasing.
 
 ### 12.4 The decomposition theorem
 
@@ -2061,7 +2163,7 @@ Conversely, finite-dimensional type spaces alone would not prove finite automorp
    \simeq
    \widehat\bigoplus_{\pi\in\mathcal A_{\mathrm{cusp}}(G,\omega)}
    m(\pi)\mathcal H_\pi,
-   \tag{12.4}
+   \tag{12.7}
    $$
 
    where the index set is countable, every $\mathcal H_\pi$ is irreducible and unitary with central character $\omega$, and
@@ -2073,13 +2175,13 @@ Conversely, finite-dimensional type spaces alone would not prove finite automorp
 3. For every compact open $K_f'$, every $K_\infty$-type $\tau$, and every bounded elliptic spectral interval, only finitely many summands contribute, counted with the dimensions of their type spaces and their multiplicities.
 4. Every finite-level, finite-type vector in a summand is smooth and rapidly decreasing in every cusp.
 
-**Proof.** Closedness and invariance are Theorem 9.1 and Section 9.3. Typewise compact resolvent and finite spectral windows are Chapter 11. The direct-integral decomposition becomes atomic by Section 12.2, finite multiplicity follows from (12.3), and elliptic regularity plus cuspidal decay gives the last assertion. $\square$
+**Proof.** Closedness and invariance are Theorem 9.1 and Section 9.3. Compactness of finite-type convolution and Lemma 12.2 give the direct sum with finite multiplicities. Typewise compact resolvent and finite spectral windows are Chapter 11, while elliptic regularity plus cuspidal decay gives the last assertion. $\square$
 
-Orthogonality in (12.4) is Hilbert-space orthogonality. Distinct irreducible equivalence classes occupy orthogonal isotypic summands, and the $m(\pi)$ copies inside one isotypic summand are encoded by an orthonormal basis of $M_\pi$. The sum is complete because the direct integral was a decomposition of the whole closed cuspidal subspace and atomicity changed its measure type without discarding any fiber.
+Orthogonality in (12.7) is Hilbert-space orthogonality. Distinct irreducible equivalence classes occupy orthogonal isotypic summands, and the $m(\pi)$ copies inside one isotypic summand are encoded by an orthonormal basis of $M_\pi$. The sum is complete because the nondegenerate compact-operator algebra acts on the whole closed cuspidal subspace.
 
 The theorem is stable under changing among the two central realizations. On $[G]^1$, first apply (7.6). Each character subspace corresponds to a unitary idele class character after a choice of extension across the module direction, and the extension affects only the removed scalar action. The geometric height, cuspidality, compact embedding, and multiplicities are unchanged.
 
-The same theorem on $[G]^1$ decomposes first by the compact center as in (7.6) and then applies (12.4) to each central character.
+The same theorem on $[G]^1$ decomposes first by the compact center as in (7.6) and then applies (12.7) to each central character.
 
 ### 12.5 Consequences and boundaries
 
@@ -2132,15 +2234,15 @@ $$
 +\text{ellipticity}\\
 &\hspace{25mm}\Longrightarrow
 \text{typewise compact resolvent and finite windows},\\[2mm]
-&\text{finite windows}
-+\text{unitary direct-integral decomposition}\\
+&\text{compact finite-type convolution}
++\text{compact-operator structure}\\
 &\hspace{25mm}\Longrightarrow
-\text{atomic cuspidal spectrum with finite multiplicities}.
+\text{discrete cuspidal spectrum with finite multiplicities}.
 \end{aligned}
 \tag{13.1}
 $$
 
-No arrow can be replaced by the conclusion of the preceding line alone. Finite volume does not give uniform tails; uniform tails do not give regularity; ellipticity does not prevent escape; a direct integral does not become atomic without compact finite windows.
+No arrow can be replaced by the conclusion of the preceding line alone. Finite volume does not give uniform tails; uniform tails do not give regularity; ellipticity does not prevent escape; and compact convolution is obtained only after smoothing has been confined to finitely many levels and compact types.
 
 ### 13.2 A normalization ledger
 
@@ -2189,4 +2291,4 @@ Reduction theory turns an adelic quotient from an abstract double coset into a s
 
 Cuspidality responds to the same geometry. The constant term is the transverse zero mode along the rational line selected by the cusp. Removing it forces oscillation on a compact unipotent quotient. Balanced torus expansion magnifies that oscillation by at least $H^{1/[F:\mathbf Q]}$, so bounded Sobolev energy cannot move indefinitely outward. Compactness on truncations and uniform smallness of the tails then give a compact embedding on every finite level and compact type.
 
-The final spectral conclusion is consequently geometric before it is representation-theoretic. Compact embedding gives compact resolvent, compact resolvent gives finite spectral windows, and those windows force the unitary decomposition to be atomic with finite multiplicity. Every smooth finite-type cuspidal vector is automatically rapidly decreasing. The cuspidal spectrum of $\mathrm{GL}_2$ is therefore a discrete countable collection of irreducible unitary representations, each repeated only finitely many times, while the omitted constant-term channel remains available for the noncuspidal spectrum that lies beyond this book.
+The final spectral conclusion is consequently geometric before it is representation-theoretic. Compact embedding makes every smooth finite-type convolution operator compact; the resulting compact-operator algebra gives a discrete irreducible sum with finite multiplicities. Typewise compact resolvent supplies finite spectral windows and regularity. Every smooth finite-type cuspidal vector is automatically rapidly decreasing. The cuspidal spectrum of $\mathrm{GL}_2$ is therefore a discrete countable collection of irreducible unitary representations, each repeated only finitely many times, while the omitted constant-term channel remains available for the noncuspidal spectrum that lies beyond this book.
