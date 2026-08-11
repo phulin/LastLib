@@ -164,7 +164,7 @@ any resulting corrections.
 - [ ] 138. Canonical Galois Lattices and Finite-Flat Quotients
 - [x] 139. Modular Curves (X_0(N)) and (X_1(N))
 - [ ] 140. Jacobians of Modular Curves
-- [ ] 141. The Eisenstein Ideal
+- [x] 141. The Eisenstein Ideal
 - [x] 142. Eisenstein Series, Congruences, and the Eisenstein Ideal
 - [x] 143. Cuspidal Divisors and Specialization on Modular Jacobians
 - [x] 144. Mazur–Raynaud Admissible Group Schemes
