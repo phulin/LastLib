@@ -98,7 +98,7 @@ $$
 
 In relative dimensions one and two these objects are sparse enough to calculate. For curves, nodes, component genera, and the first homology of the dual graph give the complete rational picture in degree one. For surfaces, components, double curves, triple points, and the two-dimensional dual complex govern the five possible monodromy levels in middle cohomology. The aim of this book is to construct this package, prove its low-dimensional form, and turn it into formulas for conductors and local types.
 
-The geometry of semistable curves, graph lattices, thicknesses, component groups, derived cohomology, base change, trace, and low-dimensional duality is assumed. We recall notation when it enters a formula, but we do not rebuild those foundations.
+The geometry of semistable curves, graph lattices, thicknesses, component groups, derived cohomology, base change, trace, low-dimensional duality, and the finite-image Artin--Swan formalism is assumed. We recall notation when it enters a formula, but we do not rebuild those foundations. Nearby cycles, their local semistable calculation, the passage from finite tame inertia to a nilpotent logarithm, and the resulting weight spectral sequence are proved here.
 
 ### 1.2 Conventions and normalizations
 
@@ -163,7 +163,7 @@ $$
 is a reduced strict normal-crossings divisor; every $Y_i$ is smooth, and every multiple intersection has the expected codimension. Put
 
 $$
-Y^{(r)}=coprod_{i_1<\cdots<i_r}
+Y^{(r)}=\coprod_{i_1<\cdots<i_r}
 Y_{i_1}\cap\cdots\cap Y_{i_r},
 \qquad Y^{(0)}=\varnothing.
 \tag{1.5}
@@ -203,7 +203,7 @@ The stalk has a useful geometric description. If $\bar x\to Y$ is a geometric po
 
 $$
 (R\Psi_fK)_{\bar x}
-\simeq R\Gammaigl((X_{(\bar x)})_{\bar\eta},K\bigr).
+\simeq R\Gamma\bigl((X_{(\bar x)})_{\bar\eta},K\bigr).
 \tag{2.2}
 $$
 
@@ -222,7 +222,7 @@ $$
 The **vanishing-cycle complex** is its cone:
 
 $$
-R\Phi_fL=operatorname{Cone}(\operatorname{sp}).
+R\Phi_fL=\operatorname{Cone}(\operatorname{sp}).
 \tag{2.4}
 $$
 
@@ -295,7 +295,7 @@ R\Psi K\otimes^L R\Psi L
 \tag{2.9}
 $$
 
-For a proper family, the generic trace and special-fiber duality identify the dual of nearby cycles with nearby cycles of the dual, with the expected shift and twist. In relative dimension $d$ this yields a perfect pairing on generic cohomology
+At finite level, Verdier duality on the strict-local generic fibers identifies the Verdier dual of $R\Psi K$ with nearby cycles of the generic-fiber dual. The dual on $Y$ is taken with respect to its actual dualizing complex; at a singular fiber it is not obtained by replacing that complex with a shifted constant sheaf. The identification is checked on the stalks (2.2), where it is local duality, and then glues because geometric stalks detect isomorphisms. Passing through a normalized inverse system gives the integral statement, and rationalization gives the $E$-statement. For a proper family, proper comparison and the generic trace consequently yield a perfect pairing
 
 $$
 H^m(X_{\bar\eta},E)\times
@@ -312,7 +312,7 @@ $$
 
 after placing twists so both terms have the same target.
 
-If $X\xleftarrow{a}Z\xrightarrow{b}X$ is a correspondence extending properly over $S$, pullback and proper pushforward act on nearby cycles and commute with inertia. A correspondence existing only on the generic fiber need not have this property: its closure may acquire vertical components, and those components contribute genuine restriction or Gysin maps. This is why geometric extension hypotheses accompany later functorial statements.
+If $X\xleftarrow{a}Z\xrightarrow{b}X$ extends over $S$ and the pull--push $b_*a^*$ is oriented and degree-preserving in the sense of low-dimensional duality—for example, for the finite flat lci legs used below—then it acts on nearby cycles and commutes with inertia. Properness of $b$ alone does not create an untwisted pushforward: the orientation fixes its shift and twist. A correspondence existing only on the generic fiber need not act on a chosen semistable complex by its naive closure, because that closure may acquire vertical components. Those components contribute genuine restriction or Gysin maps.
 
 ## 3. The semistable local calculation
 
@@ -349,7 +349,17 @@ $$
 
 where $C_{x,n}=\operatorname{coker}(\Lambda_n\to\Lambda_n^r)$. The stalk vanishes for $q\ge r$. These identifications respect cup product. Wild inertia acts trivially, and the action induced on each cohomology sheaf $R^q\Psi$ is trivial; nontrivial tame monodromy survives in the extension structure of the full complex.
 
-**Proof strategy.** Strict-local invariance reduces the stalk to the chart above. Adjoin compatible prime-to-$p$ roots of the coordinates. The resulting tower is a tame cover whose deck group has maximal pro-$\ell$ quotient $\mathbf Z_\ell(1)^{r-1}$; the product equation gives the single diagonal relation. The smooth coordinates contribute no higher cohomology. Continuous cohomology of a free rank-$(r-1)$ pro-$\ell$ group with trivial finite coefficients is the exterior algebra on its degree-one dual, which gives (3.2) and the twists. The wild group has no nontrivial continuous quotient in this tower. Descent through the finite prime-to-$\ell$ part shows that it acts trivially on the displayed constant stalk groups. Cup products agree because both sides are generated by Kummer classes in degree one. $\square$
+**Proof.** By strict-local invariance, the stalk is the cohomology of the geometric generic fiber of the strict localization of the chart. The extra smooth coordinates form an étale polydisc and contribute no positive-degree cohomology. Adjoining compatible prime-to-$p$ roots of $t_1,\ldots,t_r$ gives a cofinal tame Kummer tower. Its maximal pro-$\ell$ deck group is
+
+$$
+G_x=\ker\left[
+\mathbf Z_\ell(1)^r\xrightarrow{\mathrm{sum}}\mathbf Z_\ell(1)
+\right],
+$$
+
+because compatible roots must be multiplied to the chosen root of $\pi$. Dualizing this exact sequence identifies the degree-one character module of $G_x$ with $C_{x,n}(-1)$; this is precisely the kernel-versus-cokernel distinction noted after (3.1). The continuous cochain complex of the free rank-$(r-1)$ pro-$\ell$ group $G_x$ is the Koszul complex on those characters. With trivial coefficients its differential is zero, so its degree-$q$ cohomology is $\bigwedge^q C_{x,n}(-q)$. This also proves vanishing above degree $r-1$ and identifies multiplication with exterior product.
+
+When $p>1$, wild inertia is pro-$p$ and acts trivially on this prime-to-$p$ Kummer tower and its cohomology; when $p=1$, there is no wild inertia. Tame deck transformations translate chosen Kummer roots by roots of unity; they fix the corresponding degree-one Kummer classes, hence the exterior algebra that they generate. This proves the stated action on every $R^q\Psi$ as well as compatibility with cup product. $\square$
 
 The theorem says more than a rank calculation. It fixes the degree, the twist, the product, and the source of inertia. A common error is to conclude from trivial action on every $R^q\Psi$ that inertia acts trivially on global cohomology. An action can be nontrivial on a filtered object while acting trivially on all associated graded pieces; the logarithm $N$ measures precisely that extension.
 
@@ -446,7 +456,9 @@ $$
 
 Moreover $N^{d+1}=0$ on all cohomology; in particular $N^2=0$ for curves and $N^3=0$ for surfaces.
 
-**Proof strategy.** The local theorem makes wild inertia trivial and makes tame inertia trivial on the cohomology sheaves of $R\Psi$. Filter $R\Psi$ by its semistable strata. Inertia therefore acts trivially on each graded object. An automorphism acting trivially on the graded objects of a filtration of length $d+1$ is unipotent with nilpotence index at most $d+1$. Proper comparison transports the result to generic cohomology. On a sufficiently small tame subgroup the logarithm is a scalar multiple of one nilpotent operator because $t_\ell$ identifies that subgroup with an open submodule of $\mathbf Z_\ell(1)$. The Frobenius conjugation rule proves equivariance and uniqueness. $\square$
+**Proof.** Filter $R\Psi E$ by the Postnikov filtration. By the local theorem its only nonzero cohomology sheaves have degrees $0,\ldots,d$, wild inertia acts trivially on them, and tame inertia acts trivially on each of them. Thus $\rho(\sigma)-1$ lowers this filtration. Every product of $d+1$ such lowering operators is zero, so inertia acts unipotently and $(\rho(\sigma)-1)^{d+1}=0$. When $p>1$, the continuous image of wild inertia is at once pro-$p$ and, after choosing a stable lattice, contained in a pro-$\ell$ unipotent group; because $p\ne\ell$, that image is trivial. In residue characteristic zero wild inertia is already trivial. Proper comparison transports these conclusions to $H^m(X_{\bar\eta},E)$.
+
+On a sufficiently small tame subgroup, $t_\ell$ identifies the pro-$\ell$ quotient with an open submodule of $\mathbf Z_\ell(1)$. The logarithm is additive on the resulting commuting unipotent operators, so $\log\rho(\sigma)=t_\ell(\sigma)N$ for one nilpotent $N$. The density of the image of $t_\ell$ gives uniqueness. Conjugating this identity by Frobenius and using (4.2) gives (1.2). Since the logarithm is a polynomial in $\rho(\sigma)-1$, the same filtration argument gives $N^{d+1}=0$. $\square$
 
 The exponent bound is coarse in degrees away from the middle. Duality and the spectral sequence give $N^2=0$ on $H^1$ of a surface and, dually, on $H^3$. Only $H^2$ can contain a Jordan block of length three.
 
@@ -460,12 +472,20 @@ $$
 \text{the nilpotent operator }N.
 $$
 
-After choosing a compatible splitting, this is the usual pair $(r,N)$ satisfying
+For $\sigma\in I_K$, put
 
 $$
-r(w)Nr(w)^{-1}=|w|N.
+r(\sigma)=\rho(\sigma)\exp\bigl(-t_\ell(\sigma)N\bigr).
+$$
+
+The two factors commute on inertia, and additivity of $t_\ell$ makes $r$ a representation. After shrinking to $I_L$, (4.3) shows that $r$ is trivial there, so $r(I_K)$ is finite. When $k$ is finite, extend $t_\ell$ compatibly to the Weil group with $t_\ell(F)=0$ and use the same formula for $w\in W_K$. The resulting Weil--Deligne pair $(r,N)$ satisfies
+
+$$
+r(w)Nr(w)^{-1}=|w|N,
 \tag{4.4}
 $$
+
+where $|F|=q^{-1}$ for geometric Frobenius. A different compatible extension changes the presentation by the usual isomorphism but not the underlying Weil--Deligne representation. Over a general residue field, the finite inertial representation and $N$ still exist; only this Frobenius presentation is omitted.
 
 The finite part may permute components, reverse edges, act on component cohomology, or arise from multiplicities before semistable reduction. Wild inertia can occur in this finite part. Thus potential semistability implies quasi-unipotence, not that wild inertia was already trivial over $K$.
 
@@ -489,7 +509,7 @@ H^m(Y,E)\longrightarrow H^m(X_{\bar\eta},E)^{I_K}.
 \tag{4.6}
 $$
 
-For a proper semistable curve it is an isomorphism in degree one. In higher dimension it is generally surjective under the invariant-cycle theorem, but its kernel can contain classes of components that vanish after smoothing. One should therefore not replace the surface invariant space by ordinary special-fiber cohomology without analyzing the spectral sequence.
+For a proper semistable curve it is an isomorphism in degree one. In higher dimension, surjectivity is a separate local invariant-cycle theorem, not a formal consequence of nearby cycles. When that theorem is available, the kernel can still contain component classes that vanish after smoothing. The surface calculations below therefore use the $E_\infty$ filtration directly; they invoke an $E_2$ description only under the explicit degeneration hypotheses stated there.
 
 Even for curves, (4.6) does not identify all generic cohomology. Its cokernel before taking invariants is precisely where the monodromy partner of a graph class lives.
 
@@ -600,7 +620,7 @@ The local exterior algebra must now be glued across $Y$. The gluing is controlle
 The identities
 
 $$
-\rho^2=0,qquad \gamma^2=0,qquad
+\rho^2=0,\qquad \gamma^2=0,\qquad
 \rho\gamma+\gamma\rho=0
 \tag{6.1}
 $$
@@ -611,7 +631,7 @@ Filtering nearby cycles by the number of components through a point produces a s
 
 ### 6.2 The general low-dimensional formula
 
-**Weight spectral sequence theorem.** Let $X/S$ be proper and strictly semistable of relative dimension $d\le2$. Then there is an inertia- and Frobenius-equivariant spectral sequence
+**Weight spectral sequence theorem.** Let $X/S$ be proper and strictly semistable of relative dimension $d\le2$. Then there is an inertia- and residue-Galois-equivariant spectral sequence
 
 $$
 E_1^{-r,w+r}=
@@ -623,7 +643,18 @@ $$
 
 Terms with meaningless intersection index or cohomological degree are zero. The differential $d_1$ is the signed sum of restriction and Gysin maps. The induced filtration is finite and stable under all arithmetic actions. Monodromy acts on the first page by identity maps between matching copies of stratum cohomology, with the necessary twists, and has bidegree $(2,-2)$ in the $(p,q)$ notation.
 
-**Proof strategy.** Resolve $R\Psi E$ by the alternating complex of its normal-crossings strata. The local exactness is checked on $t_1\cdots t_r=\pi$, where it becomes the Koszul resolution of the diagonal relation in (3.1). Purity for each regular immersion supplies the shifts and twists. Filter the resulting double complex by intersection depth. Its associated graded gives the summands in (6.2), and its two boundary operators are precisely $\rho$ and $\gamma$. The finite range $1\le r+2k+1\le d+1$ gives strong convergence. Proper comparison identifies the abutment with generic cohomology. The local tame logarithm acts by contraction on the exterior algebra; on the resolved complex this becomes the stated identity between matching summands. $\square$
+**Proof.** Order the components and form the alternating restriction complex of all their intersections. At a point on $s$ components, its stalk is the augmented simplex complex on those $s$ vertices. Tensoring it with the exterior-algebra description (3.2) and sorting by exterior degree gives a Koszul complex for the diagonal relation in (3.1); hence it resolves the filtered nearby-cycle complex stalkwise. Because geometric stalks detect isomorphisms, these local resolutions glue.
+
+For every inclusion obtained by deleting one component, purity identifies the boundary in one direction with restriction and the boundary in the dual direction with the codimension-one Gysin map, including its shift by two and twist by one. Filtering this finite double complex by intersection depth gives
+
+$$
+\bigoplus_{k\ge\max(0,-r)}
+H^{w-r-2k}\bigl(Y^{(r+2k+1)},E\bigr)(-r-k)
+$$
+
+in bidegree $(-r,w+r)$, which is (6.2). The simplicial sign rule and the self-intersection formula give $d_1=\rho+\gamma$ and $d_1^2=0$ as in (6.1). Only $1\le r+2k+1\le d+1$ occurs, so the filtration is finite and the spectral sequence converges strongly. Proper comparison identifies its abutment with $H^w(X_{\bar\eta},E)$.
+
+On the local exterior algebra, the tame logarithm is contraction by the diagonal relation. In the resolved complex this is the identity from each stratum summand to its matching copy two columns to the right, with one Tate twist; it therefore has bidegree $(2,-2)$. All constructions are canonical under inertia and residue Galois. When the residue field is finite, this includes Frobenius equivariance. $\square$
 
 Formula (6.2) fixes a frequent indexing ambiguity. The total degree is $w=(-r)+(w+r)$. A twist $(-a)$ raises Frobenius weight by $2a$ under our geometric-Frobenius convention.
 
@@ -895,7 +926,13 @@ $$
 
 Changing the convention for the ordered intersection pairing reverses both displayed signs and no geometric conclusion changes.
 
-**Proof strategy.** Away from the node the family is locally acyclic, so the variation is supported in the annulus. The local vanishing group is rank one. The variation map from vanishing cohomology to generic cohomology and the canonical map back to vanishing cohomology are adjoint under local duality. Their composite is determined by intersection with the thimble. With convention (8.1), this gives (8.2). Since $\langle\delta,\delta\rangle=0$ in an alternating pairing, $N^2=0$, and exponentiating gives (8.3). $\square$
+**Proof.** Away from the node the family is locally acyclic, so the variation is supported in the annulus. Its vanishing group is one-dimensional, generated after choosing an orientation by the boundary $\delta$ of a thimble. The canonical map to that vanishing group evaluates a class $v$ on the thimble boundary. Local duality identifies this functional, with convention (8.1), as $v\mapsto-\langle v,\delta\rangle$. The variation map sends the chosen local generator back to $\delta$. Their composite is therefore
+
+$$
+v\longmapsto-\langle v,\delta\rangle\delta,
+$$
+
+which is (8.2). The pairing on $H^1$ is alternating, so $\langle\delta,\delta\rangle=0$ and the square of this operator is zero. The exponential in (4.3) consequently truncates after its linear term and gives (8.3). Reversing the thimble replaces both occurrences of $\delta$ by their negatives and leaves the operator unchanged. $\square$
 
 The formula is a transvection: it fixes the hyperplane orthogonal to $\delta$ and also fixes $\delta$ itself, but it is not the identity if $\delta\ne0$.
 
@@ -928,7 +965,7 @@ If the nodes have disjoint vanishing cycles, the local nilpotent operators commu
 
 $$
 \rho(\sigma)=\prod_e
-\left(1-t_\ell(\sigma),
+\left(1-t_\ell(\sigma)
 \langle -,\delta_e\rangle\delta_e\right),
 $$
 
@@ -957,7 +994,7 @@ $$
 The five graded pieces are
 
 $$
-\operatorname{gr}_a^M V\cong E_2^{,2-a,a}
+\operatorname{gr}_a^M V\cong E_2^{2-a,a}
 \qquad(0\le a\le4).
 \tag{9.2}
 $$
@@ -1006,16 +1043,29 @@ If $\Delta(Y)$ is a tree, both extreme groups vanish. If it is a triangulated tw
 
 ### 9.3 Double-curve and component terms
 
-The odd graded pieces come from $H^1$ of the double curves, modulo restriction and Gysin relations. Schematically,
+The odd graded pieces come from $H^1$ of the double curves, modulo restriction and Gysin relations. Reading the rows of (6.4) gives the exact formulas
 
 $$
 \operatorname{gr}_3^M V
-=H^1\left[
-H^1(Y^{(2)})(-1)\longrightarrow H^3(Y^{(1)})(-1)
+=E_2^{-1,3}
+=\ker\left[
+H^1(Y^{(2)},E)(-1)
+\xrightarrow{\gamma}H^3(Y^{(1)},E)
 \right]
 $$
 
-in the relevant row, while $\operatorname{gr}_1^M$ is its dual restriction-side quotient. The precise meaning is $E_2^{-1,3}$ and $E_2^{1,1}$ from the full row (6.4). Duality makes
+and
+
+$$
+\operatorname{gr}_1^M V
+=E_2^{1,1}
+=\operatorname{coker}\left[
+H^1(Y^{(1)},E)
+\xrightarrow{\rho}H^1(Y^{(2)},E)
+\right].
+$$
+
+There are no additional adjacent terms because $Y^{(3)}$ is zero-dimensional. Duality makes
 
 $$
 N:\operatorname{gr}_3^M
@@ -1025,7 +1075,7 @@ $$
 
 when the monodromy--weight property holds.
 
-The middle piece $\operatorname{gr}_2^M$ contains classes from $H^2(Y_i)$ subject to compatibility along double curves, together with the triple-point correction $H^0(Y^{(3)})(-1)$. Monodromy vanishes on the primitive middle quotient. This part contains divisor classes on components and may also contain transcendental component cohomology. The spectral sequence does not assert that it is algebraic.
+The middle piece $\operatorname{gr}_2^M$ contains classes from $H^2(Y_i)$ subject to compatibility along double curves, together with the triple-point correction $H^0(Y^{(3)})(-1)$. Its length-one, monodromy-primitive quotient is killed by $N$; the middle vectors of length-three blocks need not be. This piece contains divisor classes on components and may also contain transcendental component cohomology. The spectral sequence does not assert that it is algebraic.
 
 An important counterexample is obtained by replacing each component with another smooth surface having the same incidence divisor but different middle cohomology. The dual complex and all local crossing equations remain unchanged, while $\operatorname{gr}_2^M$ changes. Combinatorics determines the extremes, not the whole middle cohomology.
 
@@ -1073,7 +1123,13 @@ x_0^2+x_1^2+x_2^2=\pi
 \tag{10.1}
 $$
 
-when $2$ is invertible. Its vanishing cohomology is rank one in degree two. The vanishing class $\delta\in H^2(X_{\bar\eta},E)$ has self-intersection
+when $2$ is invertible. Its vanishing cohomology is rank one in degree two. Normalize middle cohomology by
+
+$$
+W=H^2(X_{\bar\eta},E(1)).
+$$
+
+The cup-product trace is then an $E$-valued symmetric form on $W$. The normalized vanishing class $\delta\in W$ has self-intersection
 
 $$
 \langle\delta,\delta\rangle=-2
@@ -1082,11 +1138,11 @@ $$
 
 under the orientation convention (8.1).
 
-Unlike a curve vanishing class, $\delta$ lies in an even-degree symmetric pairing and has nonzero square. This changes a unipotent transvection into a reflection. The local monodromy is finite of order two on the vanishing line before semistable base change.
+Unlike a curve vanishing class, $\delta$ lies in an even-degree symmetric pairing and has nonzero square. This changes a unipotent transvection into a reflection. The local monodromy is finite of order two on the vanishing line before semistable base change. Untwisting $W$ recovers the same inertia action on $H^2$; the normalization is needed only to make the pairing and formula scalar-valued.
 
 ### 10.2 The reflection formula
 
-Since $\varepsilon_2=+1$, Picard--Lefschetz gives
+Since $\varepsilon_2=+1$, Picard--Lefschetz gives, for $v\in W$,
 
 $$
 T(v)=v+\langle v,\delta\rangle\delta.
@@ -1095,13 +1151,13 @@ $$
 
 In particular, (10.2) gives $T(\delta)=-\delta$, while $T$ fixes $\delta^\perp$. Thus $T$ is the orthogonal reflection in the root $\delta$.
 
-**Proof strategy.** Local acyclicity away from the singular point confines variation to a rank-one vanishing group. Variation and canonical maps are adjoint under local duality. Their composite on the vanishing line is multiplication by the self-intersection number. The local quadratic form determines that number as $-2$. The sign convention then yields (10.3), and the formula on $\delta$ proves that the operator has order two. $\square$
+**Proof.** Local acyclicity away from the singular point confines variation to the rank-one vanishing group generated by $\delta$. For the diagonal quadratic singularity, the vanishing thimble has boundary the middle-dimensional quadric sphere; its normal Euler number is $-2$. Purity identifies this local intersection calculation with $\langle\delta,\delta\rangle=-2$ in $W$. The canonical and variation maps are adjoint under local duality, so with $\varepsilon_2=+1$ their composite sends $v$ to $\langle v,\delta\rangle\delta$. Adding this variation to the identity gives (10.3). It sends $\delta$ to $-\delta$ and fixes $\delta^\perp$, so its square is the identity. $\square$
 
 For several disjoint ordinary double points with mutually orthogonal vanishing classes, the monodromy is the product of their commuting reflections. If vanishing paths are changed so that the classes are not orthogonal, braid relations replace commutativity. A count of singular points alone does not determine the global reflection group.
 
 ### 10.3 From a reflection to semistable monodromy
 
-After the quadratic base change $\pi=u^2$, the sign on the vanishing line is killed. Resolving the resulting total space produces a semistable model. The finite tame reflection has then moved into the descent datum of that model; on the semistable subgroup the unipotent logarithm of this isolated singularity may be zero.
+After the quadratic base change $\pi=u^2$, the sign on the vanishing line is killed. Resolving the resulting total space produces a semistable model. The finite tame reflection has then moved into the descent datum of that model. On this rank-one vanishing line the restricted action is trivial, so the unipotent logarithm is $N=0$.
 
 This is an essential distinction. Potential strict semistability packages the original action as a finite part $r$ together with $N$. For an isolated surface ordinary double point, $r$ can contain the quadratic character and $N=0$ on its rank-one vanishing line. For a double-curve semistable degeneration, the finite part is trivial and $N$ can be nonzero. Both are called monodromy in informal speech, but they contribute differently to local type.
 
@@ -1177,7 +1233,7 @@ $$
 X\xleftarrow{a}Z\xrightarrow{b}X
 $$
 
-extends over $S$, with $b$ proper and the maps transverse to the semistable strata. Then $b_*a^*$ acts on every $Y^{(r)}$, commutes with $\rho$, $\gamma$, $N$, and the spectral sequence, and preserves the monodromy filtration. Its transpose is adjoint under the pairings above.
+extends over $S$. Assume that its pull--push is oriented and degree-preserving—for instance, both legs are finite flat lci—and that the maps meet the semistable strata transversely. Then $b_*a^*$ acts on every $Y^{(r)}$, commutes with $\rho$, $\gamma$, $N$, and the spectral sequence, and preserves the monodromy filtration. The orientation supplies the required shift and twist; properness of $b$ by itself would not. Its transpose is adjoint under the pairings above.
 
 If transversality fails, refined intersection multiplicities must be included. If the closure of a generic correspondence gains a vertical component, that component contributes a map on the $E_1$ page. Therefore equality of generic correspondences does not by itself imply equality of their actions on a chosen integral semistable complex.
 
@@ -1187,7 +1243,9 @@ For finite maps of semistable curves, these statements recover adjunction betwee
 
 ### 12.1 The conductor formula
 
-Let $V$ be a finite-dimensional $E$-representation of $G_K$. Its Artin conductor exponent is
+In this chapter assume that the residue field is perfect, so the classical upper-numbering break decomposition and its integrality theorem apply. The strict semistable identities involving only $N$ do not require this added hypothesis, but the Artin--Swan packaging does.
+
+Let $V$ be a finite-dimensional quasi-unipotent $E$-representation of $G_K$. Its Artin conductor exponent is
 
 $$
 a(V)=\dim V-\dim V^{I_K}+\operatorname{Sw}(V),
@@ -1199,17 +1257,17 @@ where $\operatorname{Sw}(V)$ is the Swan conductor. This normalization assigns c
 If $V$ is described after quasi-unipotent reduction by $(r,N)$, then
 
 $$
-V^{I_K}=(\ker N)^{I_K,r},
+V^{I_K}=(\ker N)^{r(I_K)},
 $$
 
 and hence
 
 $$
-a(V)=\dim V-dim(\ker N)^{I_K,r}+\operatorname{Sw}(r).
+a(V)=\dim V-\dim(\ker N)^{r(I_K)}+\operatorname{Sw}(r).
 \tag{12.2}
 $$
 
-Here the superscript denotes invariants for the finite inertial part. In a strict semistable model over $K$, $r|_{I_K}=1$ and $\operatorname{Sw}=0$, so
+Indeed, invariance under the open subgroup on which $r$ is trivial is equivalent to membership in $\ker N$; on that kernel the exponential term disappears, leaving precisely invariance under the finite group $r(I_K)$. Moreover the tame character vanishes on every positive ramification group, so the wild break decomposition of $V$ is the one carried by $r$ and $\operatorname{Sw}(V)=\operatorname{Sw}(r)$. This proves (12.2). In a strict semistable model over $K$, $r|_{I_K}=1$ and $\operatorname{Sw}=0$, so
 
 $$
 a(V)=\dim V-\dim\ker N=\operatorname{rank}N.
@@ -1276,8 +1334,8 @@ $$
 If $n_j$ is the number of Jordan blocks of length $j$, then
 
 $$
-n_3=r_2,qquad
-n_2=r_1-2r_2,qquad
+n_3=r_2,\qquad
+n_2=r_1-2r_2,\qquad
 n_1=\dim H^2-2r_1+r_2.
 \tag{12.6}
 $$
@@ -1296,15 +1354,15 @@ Accordingly a reliable local description reports at least
 
 $$
 \bigl(r|_{I_K},\ N,\ \operatorname{rank}N^2,\
-\operatorname{Sw},\ \text{Frobenius on }(\ker N)^{I_K,r}\bigr)
+\operatorname{Sw},\ \text{Frobenius on }(\ker N)^{r(I_K)}\bigr)
 $$
 
 in degree two. The last term controls the local Euler factor; it is not determined by the conductor.
 
-With geometric Frobenius $F$, the local Euler polynomial in this normalization is
+When the residue field is finite, with geometric Frobenius $F$, the local Euler polynomial in this normalization is
 
 $$
-P(V,T)=\det\left(1-FT\mid(\ker N)^{I_K,r}\right).
+P(V,T)=\det\left(1-FT\mid(\ker N)^{r(I_K)}\right).
 \tag{12.7}
 $$
 
@@ -1326,7 +1384,7 @@ This identity is bookkeeping rather than a positivity statement; the alternating
 Let $K'/K$ have ramification index $e$ and choose compatible tame parameters. Restriction gives
 
 $$
-t_{\ell,K}|_{I_{K'}}=e,t_{\ell,K'}.
+t_{\ell,K}|_{I_{K'}}=e\,t_{\ell,K'}.
 $$
 
 Hence the monodromy operator measured with the normalized parameter of $K'$ is
@@ -1338,7 +1396,9 @@ $$
 
 This matches the geometric equation: $xy=\pi$ becomes $xy=u(\pi')^e$, so an edge acquires length $e$ before resolution. The rational monodromy filtration is unchanged because multiplying $N$ by a nonzero scalar does not change its Jordan blocks. Integral cokernels and component groups can change.
 
-After resolving and contracting unstable chains, saturation must be recomputed. It is incorrect to multiply the order of a component group by a guessed power of $e$ without checking the lattice index. The operator scales simply; its integral discriminant need not.
+If a curve base change leaves the geometric graph and descent action unchanged and merely multiplies every edge length by $e$, then the graph pairing is multiplied by $e$. On a cycle lattice of rank $b_1(\Gamma)$ its discriminant, and hence the geometric component-group order, is multiplied by $e^{b_1(\Gamma)}$. This is the exact fixed-graph scaling law.
+
+After normalization, resolution, or contraction of unstable chains, however, the graph or its saturated cycle lattice may change and the fixed-graph hypothesis must be checked again. The operator still scales as in (13.1), but no component-group order should be scaled before that comparison.
 
 ### 13.2 Residue extension and nonsplit strata
 
