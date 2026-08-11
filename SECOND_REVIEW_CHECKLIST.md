@@ -127,7 +127,7 @@ any resulting corrections.
 - [x] 101. Sobolev Theory and Elliptic Regularity on Arithmetic Quotients
 - [x] 102. Reduction Theory and the Cuspidal Spectrum of GL₂
 - [x] 103. Global Constant Terms and Eisenstein Contributions for GL₂
-- [ ] 104. Global Whittaker Models and Rankin–Selberg Theory
+- [x] 104. Global Whittaker Models and Rankin–Selberg Theory
 - [ ] 105. Analytic Theory of Automorphic Rankin–Selberg L-functions
 - [ ] 106. Strong Multiplicity One and Global Newforms for GL₂
 - [ ] 107. Algebraicity and Integral Structures of Weight-Two Packets

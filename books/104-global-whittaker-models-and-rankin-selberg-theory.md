@@ -51,29 +51,17 @@
    - [The unramified four-factor calculation](#83-the-unramified-four-factor-calculation)
    - [The local factor and test vectors](#84-the-local-factor-and-test-vectors)
    - [The local functional equation](#85-the-local-functional-equation)
-9. [Global Euler products and functional equations](#9-global-euler-products-and-functional-equations)
-   - [The completed Rankin–Selberg function](#91-the-completed-rankinselberg-function)
+9. [Global integral identities and residues](#9-global-integral-identities-and-residues)
+   - [Factorizable integrals and Euler tails](#91-factorizable-integrals-and-euler-tails)
    - [Meromorphic continuation](#92-meromorphic-continuation)
    - [The global functional equation](#93-the-global-functional-equation)
    - [Poles and invariant pairings](#94-poles-and-invariant-pairings)
-   - [The self-dual positive case](#95-the-self-dual-positive-case)
-10. [Analytic estimates and incomplete products](#10-analytic-estimates-and-incomplete-products)
-    - [Absolute convergence](#101-absolute-convergence)
-    - [Deleting finitely many factors](#102-deleting-finitely-many-factors)
-    - [Logarithmic derivatives](#103-logarithmic-derivatives)
-    - [Coefficient bounds from positivity](#104-coefficient-bounds-from-positivity)
-    - [A warning about zeros and poles](#105-a-warning-about-zeros-and-poles)
-11. [Strong multiplicity one](#11-strong-multiplicity-one)
-    - [Why ordinary multiplicity one is not enough](#111-why-ordinary-multiplicity-one-is-not-enough)
-    - [The pole comparison](#112-the-pole-comparison)
-    - [Strong multiplicity one](#113-strong-multiplicity-one)
-    - [Density and finite-exception variants](#114-density-and-finite-exception-variants)
-12. [Whittaker analysis in trace formulas](#12-whittaker-analysis-in-trace-formulas)
-    - [Whittaker–Parseval identities](#121-whittakerparseval-identities)
-    - [Cuspidal convolution kernels](#122-cuspidal-convolution-kernels)
-    - [A convergent cuspidal trace identity](#123-a-convergent-cuspidal-trace-identity)
-    - [Relative kernels and Rankin–Selberg bounds](#124-relative-kernels-and-rankinselberg-bounds)
-    - [What has been achieved](#125-what-has-been-achieved)
+   - [Detection and the remaining gap](#95-detection-and-the-remaining-gap)
+10. [The established Rankin–Selberg interface](#10-the-established-rankinselberg-interface)
+    - [What is intrinsic at this stage](#101-what-is-intrinsic-at-this-stage)
+    - [What passes to the analytic theory](#102-what-passes-to-the-analytic-theory)
+    - [What passes to multiplicity and trace formulas](#103-what-passes-to-multiplicity-and-trace-formulas)
+    - [Conclusion](#104-conclusion)
 
 ## 1. From cusp forms to Euler products
 
@@ -95,7 +83,7 @@ $$
 
 The numerator is real information: the diagonal integral alone misses a central-character Euler factor. A two-dimensional Schwartz variable supplies exactly that missing factor. This is why the full integral is not an ornamental enlargement of the simpler one.
 
-The purpose of this book is to prove this local-to-global mechanism with all measures, characters, half-powers, convergence domains, and exceptional poles visible. The final applications are multiplicity one, strong multiplicity one, and the absolute convergence statements that allow cuspidal trace identities to be used without hidden truncations.
+The purpose of this book is to prove this local-to-global mechanism with all measures, characters, half-powers, convergence domains, and possible Eisenstein residues visible. The conclusions are global genericity, Whittaker factorization, automorphic multiplicity one, the unfolded Rankin–Selberg integral, its local zeta ideals and unramified factors, and the meromorphic integral identities passed to the later analytic theory. Strong multiplicity one, canonical completed $L$-functions, vertical estimates, positivity, and trace-formula kernel theorems require additional inputs and are not proved here.
 
 ### 1.2 Standing notation
 
@@ -139,21 +127,35 @@ $$
 
 Thus $dx$ itself is the probability measure on the unipotent quotient. This differs from the finite-place convention $\operatorname{vol}(\mathcal O_v)=1$ at the finitely many places dividing the different. The self-dual convention is the one used throughout this book because it makes global Fourier inversion and Poisson summation carry no discriminant scalar.
 
+Book 102 expressed reduction theory using the product measure with $\operatorname{vol}(\mathcal O_v)=1$ and then divided by its covolume to obtain probability measure on $F\backslash\mathbf A$. That probability quotient measure is exactly the quotient of the present self-dual product measure: the complex factors and the local different factors cancel the old covolume. Thus its rapid-decay and spectral estimates transfer with no hidden global scalar.
+
 At a finite place define $d^\times y$ by
 
 $$
 \operatorname{vol}(\mathcal O_v^\times)=1.
 $$
 
-At infinity use $dy/|y|$ over $\mathbf R$ and the corresponding radial multiplicative measure over $\mathbf C$. Quotient measures are always determined by integration in stages. Maximal compact subgroups have probability measure.
-
-These choices make the Iwasawa formula
+At infinity use $d^\times y=dy/|y|$ over $\mathbf R$. Over $\mathbf C$, where the normalized absolute value is $|z|_{\mathbf C}=z\bar z$ and the self-dual additive measure is $2\,dx\,dy$, use
 
 $$
-dg=\left|\frac ad\right|^{-1}dx\,d^\times a\,d^\times d\,dk
+d^\times z=\frac{2\,dx\,dy}{|z|_{\mathbf C}}.
 $$
 
-for $g=n(x)\operatorname{diag}(a,d)k$. The quotient measure on $N(F_v)\backslash G(F_v)$ is the last three factors with the same modular density.
+These are exactly the archimedean conventions of Book 98. Quotient measures are always determined by integration in stages. Maximal compact subgroups have probability measure. The Haar measure on $G(\mathbf A)$ is the restricted product of these local $K_v$-probability measures; the product is defined because the local formulas below are scalar-free at almost every place.
+
+There is a fixed local scalar $c_v>0$ in the Iwasawa formula
+
+$$
+dg=c_v\left|\frac ad\right|^{-1}dx\,d^\times a\,d^\times d\,dk
+$$
+
+for $g=n(x)\operatorname{diag}(a,d)k$. It is uniquely fixed by the probability normalization of $K_v$. At a finite place,
+
+$$
+c_v=\operatorname{vol}_{dx}(\mathcal O_v)^{-1};
+$$
+
+thus $c_v=1$ when $\psi_v$ has conductor $\mathcal O_v$, and $c_v=1$ at almost every place. This scalar is necessary at the finite places dividing the different: self-duality and $\operatorname{vol}(K_v)=1$ cannot both be retained in the scalar-free formula there. The quotient measure on $N(F_v)\backslash G(F_v)$ has the same $c_v$. These finitely many constants are part of the exceptional local corrections and do not alter the unramified Euler tail.
 
 ### 1.4 The normalization ledger
 
@@ -208,9 +210,9 @@ The exponents in (1.4) and (1.5) are compatible: after Iwasawa decomposition, (1
 
 ### 1.5 The main arc
 
-Chapters 2–4 construct the global model and prove existence, uniqueness, factorization, and cuspidal multiplicity one. Chapter 5 treats the standard degree-two Mellin integral. Chapters 6–9 build the two-dimensional Eisenstein section, unfold the degree-four integral, calculate its local factors, and derive continuation, poles, and functional equations. Chapters 10 and 11 turn those analytic properties into strong multiplicity one. Chapter 12 records the precise convergence consequences used when cuspidal kernels enter trace formulas.
+Chapters 2–4 construct the global model and prove existence, uniqueness, factorization, and cuspidal multiplicity one. Chapter 5 treats the standard degree-two Mellin integral. Chapters 6–9 build the two-dimensional Eisenstein section, unfold the degree-four integral, define its finite-place zeta ideals, calculate the unramified factor, and derive continuation, possible residues, and the functional equation for the family of integrals. Chapter 10 records exactly which statements have become intrinsic and which remain tasks for the later analytic, multiplicity, and trace-formula books.
 
-Two boundaries will be maintained. General estimates uniform in conductor or archimedean spectral parameter belong to the subsequent analytic theory. The present book proves the fixed-data continuation, functional equations, pole criterion, and finite-exception estimates required for multiplicity arguments and cuspidal trace identities. Likewise, the noncuspidal spectral decomposition is not reconstructed here; only the Eisenstein family needed for the integral is developed.
+Three boundaries will be maintained. Passing from a family of continued integrals to a canonical completed $L$-function, proving its exact pole criterion, vertical bounds, and coefficientwise positivity belong to the subsequent analytic theory. Strong multiplicity one and global newform theory come only after that analytic package. Absolute kernel convergence and the spectral and geometric trace expansions belong to the trace-formula books. Likewise, the noncuspidal spectral decomposition is not reconstructed here; only the Eisenstein family needed for the integral is developed.
 
 ## 2. Fourier analysis on the global unipotent quotient
 
@@ -309,15 +311,21 @@ $$
 
 in the fiberwise sense. Cuspidality makes $W_{\phi,0}=0$, while (2.4) gives the asserted terms.
 
-Fix a compact set of $g$ and a compact open subgroup fixing $\phi$ at the finite places. The finite component of (2.1) then forces $\xi$ into one fixed fractional ideal. At infinity, apply an invariant unipotent differential operator $D$ of order $r$. On the character $\psi(\xi x)$ it acts by a polynomial $P_D(\xi)$ of degree $r$. Integration by parts on the compact archimedean torus gives
+Fix a compact set of $g$ and a compact open subgroup fixing $\phi$ at the finite places. The finite component of (2.1) then forces $\xi$ into one fixed fractional ideal. After choosing a finite-level component, the remaining archimedean unipotent fiber is a compact real torus. Choose a Euclidean basis $X_1,\ldots,X_n$ of its invariant vector fields and put
+
+$$
+\Delta_N=1-\sum_{j=1}^nX_j^2.
+$$
+
+On the character indexed by $\xi$, $\Delta_N^r$ acts by a positive multiplier comparable to $(1+\|\xi\|^2)^r$. Integration by parts on the compact torus therefore gives
 
 $$
 |W_{\phi,\xi}(g)|
-\leq C_{D,K}(1+\|\xi\|)^{-r}
-\sup_{g'\in K'}|D\phi(g')|.
+\leq C_{r,K}(1+\|\xi\|)^{-2r}
+\sup_{g'\in K'}|\Delta_N^r\phi(g')|.
 $$
 
-The enlarged set $K'$ is compact. Taking $r>[F:\mathbf Q]+m$ makes the sum converge absolutely with $m$ spare powers. The same estimate after differentiating in $g$ proves normal convergence of all derived series. In a Siegel region, rapid cuspidal decay bounds the displayed supremum uniformly with any prescribed negative power of height. $\square$
+The enlarged set $K'$ is compact. Taking $2r>[F:\mathbf Q]+m$ makes the sum converge absolutely with $m$ spare powers. The same estimate after differentiating in $g$ proves normal convergence of all derived series. In a Siegel region, apply the argument on each compact cross-section. The rapid cuspidal-decay theorem for all invariant derivatives bounds the displayed seminorm uniformly by any prescribed negative power of height. This proves the asserted rapid normal convergence. $\square$
 
 The theorem explains why a cusp form need not be compactly supported: its infinitely many nonzero Fourier modes persist, but each is controlled strongly enough for termwise integration on the domains used below.
 
@@ -381,20 +389,53 @@ is injective because its kernel is an invariant subspace of the irreducible repr
 
 ### 3.3 Restricted tensor products of local models
 
-Write
+The factorization used below is not a consequence of the notation for the adelic group, so we first close that interface. An irreducible cuspidal summand is unitary by the discrete-spectrum theorem. The product-group decomposition for irreducible unitary representations, applied to one finite set of places and its commuting complement, gives compatible irreducible unitary local representations $\pi_v$ and an isomorphism on smooth vectors
 
 $$
 \pi\simeq\bigotimes_v'\pi_v.
 $$
 
-Every $\pi_v$ is infinite-dimensional and generic. At a finite unramified place choose the spherical vector $v_v^\circ$ and the unique local Whittaker functional $\lambda_v$ normalized by
+Here is the argument in the form needed in this book. Choose a nonzero smooth vector fixed by $K_v=G(\mathcal O_v)$ outside a finite set $S_0$. For a finite $S\supseteq S_0$ containing the archimedean places, factor the irreducible unitary representation of
+
+$$
+\prod_{v\in S}G(F_v)\times G(\mathbf A)^S
+$$
+
+as an external Hilbert tensor product. The standard product-group lemma proves this by decomposing the restriction to the first factor: more than one isomorphism class on a set of positive measure would give a nontrivial projection commuting with both factors, while on the single surviving class the commutant is the operator algebra of the multiplicity space; irreducibility forces the complementary action on that space to be irreducible. Enlarging $S$ and using Schur's lemma shows that the previously extracted local factors do not change. Outside $S_0$, the chosen vector gives $\pi_v^{K_v}\ne0$. The spherical Hecke algebra is commutative and the Cartan anti-involution fixes its double cosets, so the usual Gelfand-pair argument gives
+
+$$
+\dim\pi_v^{K_v}=1.
+$$
+
+Choose a nonzero reference vector $v_v^\circ$ in that line. Compatible finite tensor stages then map equivariantly into the smooth vectors of $\pi$. The source is irreducible: a nonzero vector lies in one finite stage, finite-product irreducibility generates that stage, and the action at one new place generates the next. The image contains the original cyclic vector and is therefore the whole smooth representation. This proves the displayed restricted tensor factorization without using either form of multiplicity one.
+
+The local factors are admissible. At an archimedean place this is the admissibility theorem for irreducible unitary representations of $\mathrm{GL}_2(\mathbf R)$ and $\mathrm{GL}_2(\mathbf C)$. At a finite place $v$, fix a compact open $J_v$, nonzero compact-fixed reference vectors at the other finite places, and one archimedean compact type occurring in $\pi$. Tensoring with those fixed vectors embeds $\pi_v^{J_v}$ into a fixed-level, fixed-type automorphic subspace for the single elliptic eigenvalue of $\pi$. The finite-window theorem for the cuspidal spectrum makes that ambient subspace finite-dimensional. Hence $\dim\pi_v^{J_v}<\infty$.
+
+It remains to justify local genericity and local uniqueness at every place. Choose a pure tensor $v^0=\otimes_vv_v^0$ with $\lambda_\psi(v^0)\ne0$; such a tensor exists because pure tensors span the smooth restricted product. Varying only its component at a place $v$ defines
+
+$$
+\lambda_v(u_v)=
+\lambda_\psi\left(u_v\otimes\bigotimes_{w\ne v}v_w^0\right).
+$$
+
+This is a nonzero $\psi_v$-Whittaker functional, since its value at $v_v^0$ is $\lambda_\psi(v^0)$. Thus every $\pi_v$ is generic and hence infinite-dimensional. At nonarchimedean places, local Whittaker uniqueness is the rank-one distribution theorem proved in the local theory.
+
+At an archimedean place the required input is the rank-one Casselman–Wallach Whittaker multiplicity-one theorem. In the exact form used here, if $K=\mathbf R$ or $\mathbf C$ and $V$ is an irreducible admissible smooth moderate-growth representation of $\mathrm{GL}_2(K)$, then for every nontrivial additive character $\psi_K$,
+
+$$
+\dim\operatorname{Hom}^{\mathrm{cont}}_{N(K)}(V,\psi_K)\leq1.
+$$
+
+This is standard archimedean local representation theory, on the same footing here as admissibility of irreducible unitary real-group representations; Book 78 proves only its nonarchimedean analogue. Its proof uses the anti-involution $g\mapsto j\,{}^tg\,j$ and the two Bruhat cells, but also Harish–Chandra regularity to control transverse derivatives of distributions supported on the closed cell. That last step is why the nonarchimedean distribution proof must not simply be repeated word for word. The resulting invariant-distribution criterion and Schur's lemma give the displayed bound. Applying it to the admissible local factors just constructed supplies uniqueness at every archimedean place without importing any result from a later book.
+
+At a finite unramified place normalize the unique local Whittaker functional by
 
 $$
 W_v^\circ(1)=\lambda_v(v_v^\circ)=1.
 \tag{3.3}
 $$
 
-At the remaining places choose any nonzero local functional. For a pure tensor $v=\otimes_vv_v$ with $v_v=v_v^\circ$ almost everywhere, the product
+This normalization is possible at almost every place: use the pure tensor $v^0$ above, enlarge $S_0$ so that $v_v^0=v_v^\circ$ outside it, and note that the curried functional has nonzero value on $v_v^\circ$. At the remaining places choose any nonzero local functional. For a pure tensor $v=\otimes_vv_v$ with $v_v=v_v^\circ$ almost everywhere, the product
 
 $$
 \prod_v\lambda_v(v_v)
@@ -409,11 +450,11 @@ The point of the spherical normalization is consistency as the finite set of exc
 **Theorem 3.2 (global Whittaker uniqueness).** Let $\pi=\otimes_v'\pi_v$ be an irreducible cuspidal automorphic representation. On its smooth restricted tensor product,
 
 $$
-\dim\operatorname{Hom}_{N(\mathbf A)}(\pi,\psi)=1.
+\dim\operatorname{Hom}^{\mathrm{cont}}_{N(\mathbf A)}(\pi,\psi)=1.
 \tag{3.4}
 $$
 
-Every nonzero global Whittaker functional is a scalar multiple of the restricted product of the normalized local functionals.
+Continuity refers to the usual smooth Fréchet topology in the archimedean variables and the inductive-limit topology over finite levels. Every nonzero continuous global Whittaker functional is a scalar multiple of the restricted product of the normalized local functionals.
 
 **Proof strategy.** Restrict a global functional to vectors varying at finitely many places. Local uniqueness makes that finite tensor-product functional one-dimensional; compatibility among finite sets forces one global scalar.
 
@@ -457,7 +498,7 @@ $$
 
 Applying (2.5) to both automorphic forms gives $i_2(v)=ci_1(v)$. Density extends this equality to the Hilbert realizations. Hence two independent copies cannot occur. $\square$
 
-This is multiplicity one inside the spectrum. It does not yet say that two representations with the same local components at almost every place are isomorphic. That stronger statement needs the pole comparison developed in Chapters 9–11.
+This is multiplicity one inside the spectrum. It does not yet say that two representations with the same local components at almost every place are isomorphic. That stronger statement needs the canonical pole comparison developed in the later analytic and multiplicity-one books.
 
 ## 4. Factorization of the global model
 
@@ -465,19 +506,19 @@ This is multiplicity one inside the spectrum. It does not yet say that two repre
 
 Euler products arise from pure tensors, not from arbitrary vectors. A finite sum of pure tensors gives a finite sum of products, while a general Hilbert vector need not admit a pointwise factorization at all. We therefore work first on the smooth restricted tensor product and then extend analytic identities by density where appropriate.
 
-Fix local Whittaker functionals as in Section 3.3. For $v=\otimes_vv_v$ put
+Fix local Whittaker functionals as in Section 3.3. For a pure tensor $\mathbf v=\otimes_vv_v$ put
 
 $$
-W_v(g_v)=\lambda_v(\pi_v(g_v)v_v).
+W_{v_v}(g_v)=\lambda_v(\pi_v(g_v)v_v).
 $$
 
-The product $\prod_vW_v(g_v)$ is well defined for $g=(g_v)\in G(\mathbf A)$ because both $g_v$ and $v_v$ are standard at almost every finite place. It transforms on the left by $\psi$ and on the right by the restricted tensor action.
+The product $\prod_vW_{v_v}(g_v)$ is well defined for $g=(g_v)\in G(\mathbf A)$ because both $g_v$ and $v_v$ are standard at almost every finite place. It transforms on the left by $\psi$ and on the right by the restricted tensor action.
 
-The automorphic Whittaker function $W_v^{\mathrm{aut}}(g)$ has the same properties. Global uniqueness says the two differ by one scalar independent of $v$ and $g$. Rescaling one exceptional local functional makes that scalar one. This is the only global normalization choice.
+The automorphic Whittaker function $W_{\mathbf v}^{\mathrm{aut}}(g)$ has the same properties. Global uniqueness says the two differ by one scalar independent of $\mathbf v$ and $g$. Rescaling one exceptional local functional makes that scalar one. This is the only global normalization choice.
 
 ### 4.2 The unramified reference vector
 
-At a finite unramified place write the Satake parameters of $\pi_v$ as $\alpha_v,\beta_v$, so
+At a finite place where $\pi_v$ is unramified and $\psi_v$ has conductor $\mathcal O_v$, write the Satake parameters of $\pi_v$ as $\alpha_v,\beta_v$, so
 
 $$
 L_v(s,\pi_v)=
@@ -517,11 +558,11 @@ All three identities depend on normalized induction. The half-power in (4.2) is 
 
 ### 4.3 The factorization theorem
 
-**Theorem 4.1 (factorization).** Normalize the global functional by one choice at an exceptional place. If $v=\otimes_vv_v$ is a pure tensor in an irreducible cuspidal representation, then
+**Theorem 4.1 (factorization).** Normalize the global functional by one choice at an exceptional place. If $\mathbf v=\otimes_vv_v$ is a pure tensor in an irreducible cuspidal representation, then
 
 $$
 \boxed{
-W_v(g)=\prod_vW_{v_v}(g_v).
+W_{\mathbf v}^{\mathrm{aut}}(g)=\prod_vW_{v_v}(g_v).
 }
 \tag{4.4}
 $$
@@ -534,13 +575,13 @@ The theorem also shows that changing the global additive character to $\psi_c(x)
 
 ### 4.4 Ramified vectors and finite correction factors
 
-At a ramified place there is usually no maximal-compact fixed vector. Factorization does not fail; only the canonical choice of a local vector disappears. A local zeta integral then equals the canonical local factor times a correction function determined by the chosen vector.
+This section previews the correction mechanism for the zeta integrals defined in Chapters 5 and 8; the finite-place assertions are proved there from Kirillov asymptotics and the zeta ideal. At a ramified place there is usually no maximal-compact fixed vector. Factorization does not fail; only the canonical choice of a local vector disappears. A local zeta integral then equals the canonical local factor times a correction function determined by the chosen vector.
 
 For finite places those correction functions are Laurent polynomials in $q_v^{-s}$ after the local factor is divided out. At infinity they are holomorphic functions in the convergence strip and continue with the local zeta integral. Globally only finitely many corrections differ from one for a pure tensor.
 
-This finite-exception principle is crucial. It allows global continuation to be proved using a convenient tensor and then transferred to any other tensor without modifying the Euler tail. It also explains why deleting finitely many Euler factors does not alter a pole at $s=1$ once the deleted factors are known to be finite and nonzero there.
+This finite-exception principle is crucial. It allows global continuation to be proved using a convenient tensor and then transferred to any other tensor without modifying the Euler tail. Whether a finite correction is nonzero at a specified point is a separate local question; no deletion-of-factors conclusion will be assumed here.
 
-One can make the correction principle concrete. Fix a finite set $S$ containing the archimedean places and every finite place where the representation, vector, character, or Schwartz function is not spherical. In a convergence half-plane, a factorizable zeta integral has the form
+One can make the correction principle concrete. Fix a finite set $S$ containing the archimedean places and every finite place where the representation, vector, multiplicative character, or Schwartz function is not spherical, or where $\psi_v$ does not have conductor $\mathcal O_v$. In a convergence half-plane, a factorizable zeta integral has the form
 
 $$
 \left(\prod_{v\notin S}L_v(s)\right)
@@ -550,10 +591,13 @@ $$
 At a finite $v\in S$, local rationality writes $Z_v(s)=L_v(s)P_v(q_v^{-s})$ with $P_v$ Laurent polynomial after denominators common to the zeta ideal have been removed. Hence
 
 $$
-Z(s)=L^S(s)\prod_{v\in S}L_v(s)P_v(q_v^{-s}).
+Z(s)=L^S(s)
+\prod_{\substack{v\in S\\v<\infty}}
+L_v(s)P_v(q_v^{-s})
+\prod_{v\mid\infty}Z_v(s).
 $$
 
-All dependence on the vector is in the finite product of the $P_v$ and in the finitely many archimedean Mellin transforms. If one correction vanishes at a point, choose a different local vector; the zeta-ideal definition guarantees that the local factor itself has not vanished from the theory. This is why poles and functional equations are stated for the family of integrals before a single test vector is selected.
+All dependence on the vector is in the finite product of the $P_v$ and in the finitely many archimedean Mellin transforms. If one correction vanishes at a point, the finite Bezout relation expressing the local generator as a sum of local integrals guarantees that some finite collection of other data detects the generator there; it does not promise that an arbitrarily prescribed single test vector does so. This is why poles and functional equations are stated for the family of integrals before a single test vector is selected.
 
 ### 4.5 A factorization counterexample
 
@@ -622,13 +666,13 @@ Z_v(s,W_v,\chi_v)
 \tag{5.4}
 $$
 
-The factorization is justified by first isolating a finite set $S$ containing all exceptional data, integrating on the finite product over $S$, and summing the nonnegative majorant of the unramified valuation tail outside $S$. It is not an unqualified infinite application of Fubini's theorem.
+The factorization is justified by first isolating a finite set $S$ containing all exceptional data, including the places where $\psi_v$ does not have conductor $\mathcal O_v$. In the initial right half-plane, absolute convergence of the unfolded global integral makes the product of the absolute local integrands integrable. Fubini on finite sets and monotone convergence applied to absolute values then show that the product of local absolute integrals is finite and that the finite-stage products converge to (5.3). This derives convergence of the Euler tail from the global integral rather than assuming a bound on Satake parameters.
 
 At every finite place the local integrals are the degree-two integrals already characterized by their local fractional ideal. At archimedean places (5.4) is an ordinary Mellin transform of a rapidly decreasing Whittaker function.
 
 ### 5.4 The unramified degree-two factor
 
-Suppose $v$ is finite and all data are unramified. Since every multiplicative shell has volume one, (4.2) gives
+Suppose $v$ is finite, $psi_v$ has conductor $\mathcal O_v$, and $\pi_v$ and $\chi_v$ are unramified. Since every multiplicative shell has volume one, (4.2) gives
 
 $$
 \begin{aligned}
@@ -670,25 +714,26 @@ Z_v(s,W_v,\chi_v).
 \tag{5.7}
 $$
 
-At finite principal-series and special places the gamma factor is the product or limiting product of the one-dimensional gamma factors with the normalizations of Chapter 1. At the remaining places (5.7) defines it uniquely.
+At finite principal-series and special places the prior local Whittaker theory proves that the gamma factor is the product or limiting product of one-dimensional Tate gamma factors. At a finite cuspidal place, uniqueness of homogeneous Mellin functionals on the compact Kirillov model gives (5.7); at an archimedean place the same distribution argument, followed by meromorphic continuation of Mellin transforms, gives a unique meromorphic factor.
 
-Globally, the change $y\mapsto y^{-1}$ in (5.1), the rational Weyl element, and the central transformation law identify the transformed integral with the corresponding integral for $\widetilde\pi\otimes\chi^{-1}$ at $1-s$. Comparing with (5.3) gives
+Globally, the change $y\mapsto y^{-1}$ in (5.1), the rational Weyl element, and the central transformation law give the exact identity
 
 $$
-\prod_v\gamma_v(s,\pi_v\otimes\chi_v,\psi_v)=1
+I(s,\phi,\chi)
+=I(1-s,R(w)\phi,\omega_\pi^{-1}\chi^{-1}).
 \tag{5.8}
 $$
 
-as a meromorphic identity. Therefore the completed standard product attached to the local zeta integrals is entire for cuspidal $\pi$ and satisfies
+For pure data, comparison with (5.3) and the local equations gives
 
 $$
-\Lambda(s,\pi\otimes\chi)
-=\epsilon(s,\pi\otimes\chi)
-\Lambda(1-s,\widetilde\pi\otimes\chi^{-1}).
+\prod_v\gamma_v(s,\pi_v\otimes\chi_v,\psi_v)=1
 \tag{5.9}
 $$
 
-Here $\epsilon$ is the product of the local monomial factors after the Euler denominators have been separated. Formula (5.8), rather than an isolated local convention, is the decisive global consistency check.
+as a meromorphic identity. The product in (5.9) is regularized, not asserted to converge absolutely as a raw product of rational functions. Choose a finite $S$ containing every exceptional place, multiply the finitely many gamma factors in $S$, and represent the complement by the quotient of the two convergent unramified Euler tails in their respective half-planes; the global identity gives their common meromorphic continuation and says that this finite-stage expression is one. Enlarging $S$ does not change it because the added spherical local equation cancels the added Euler factors.
+
+Formula (5.9), rather than an isolated local convention, is the decisive global consistency check. The assertion at this stage concerns the family of factorizable Mellin integrals. Passing to a test-data-independent product of canonical local generators would require eliminating correction-factor zeros.
 
 The matrix calculation behind the global transformation is worth recording. Since
 
@@ -710,7 +755,7 @@ $$
 \widetilde\pi\simeq\pi\otimes\omega_\pi^{-1},
 $$
 
-so this is exactly the dual twist in (5.9). Formula (5.10) also proves entire continuation directly: after splitting the idele module at one, both halves become Mellin transforms of rapidly decreasing functions on $[1,\infty)$.
+so this is exactly the dual twist in (5.8). Formula (5.10) also proves that every global standard integral is entire: after splitting the idele module at one, both halves become Mellin transforms of rapidly decreasing functions on $[1,\infty)$.
 
 Over $\mathbf Q$, a normalized cuspidal eigenform with unramified parameters $\alpha_p,\beta_p$ therefore gives
 
@@ -718,7 +763,7 @@ $$
 L(s)=\prod_p(1-\alpha_pp^{-s})^{-1}(1-\beta_pp^{-s})^{-1}.
 $$
 
-At a ramified prime the chosen vector contributes its local factor times a finite correction; at infinity the Whittaker Mellin transform contributes the gamma factor. The functional equation is not a separate symmetry guessed from this product: it is the diagonal inversion (5.10) expressed through local Mellin transforms.
+At a ramified prime the chosen vector contributes its local factor times a finite correction; at infinity the Whittaker Mellin transform contributes the local archimedean factor. The integral functional equation is not a symmetry guessed from an Euler product: it is the diagonal inversion (5.10) expressed through local Mellin transforms.
 
 ## 6. Eisenstein sections from two-dimensional Schwartz functions
 
@@ -773,6 +818,18 @@ E(g,\Phi,\eta,s)
 f_{\Phi,\eta,s}(\gamma g).
 \tag{6.4}
 $$
+
+The equality between projective rational lines and nonzero rational row vectors gives, in the convergence half-plane, the exact theta realization
+
+$$
+E(g,\Phi,\eta,s)
+=|\det g|^s
+\int_{F^\times\backslash\mathbf A^\times}
+\left(\sum_{0\ne x\in F^2}\Phi(txg)\right)
+\eta(t)|t|^{2s}\,d^\times t.
+$$
+
+Indeed, $B(F)\backslash G(F)$ parametrizes $F^\times\backslash(F^2\setminus\{0\})$ through the bottom row, and unfolding the remaining $F^\times$-orbit turns the quotient integral into the scalar integral in (6.1). This identity is the bridge from the Eisenstein sum to the two-dimensional Poisson argument.
 
 For $\operatorname{Re}(s)>1$, reduction theory and the rapid decrease of $\Phi$ give absolute locally uniform convergence. The estimate is rank one: in a Siegel region the summand is bounded by a fixed Schwartz seminorm times $H^{\operatorname{Re}(s)}$ in one chamber, while the rational-line count has the complementary decay. Equivalently, after writing primitive bottom rows, the series is dominated by an ideal sum of exponent $2\operatorname{Re}(s)>2$.
 
@@ -840,21 +897,21 @@ For $\tau=0$, the residue at $s=1$ is
 
 $$
 \operatorname*{Res}_{s=1}E(g,\Phi,1,s)
-=c_F\widehat\Phi(0),
+=\kappa_F\widehat\Phi(0),
 \tag{6.8}
 $$
 
-where $c_F>0$ is the volume constant determined by the quotient and multiplicative measures. The residue is independent of $g$. At $s=0$ the residue is the corresponding negative multiple of $\Phi(0)$.
+where $\kappa_F>0$ is the norm-one idele-class volume constant determined by the multiplicative quotient measure. The residue is independent of $g$. At $s=0$ the residue is the corresponding negative multiple of $\Phi(0)$.
 
 **Proof strategy.** Subtract the two constant-term asymptotics, use Poisson summation to reflect the small-module range into the large-module range, and observe that the remaining integrals are entire.
 
 **Proof.** Periodize $\Phi$ over $F^2$ and separate the zero vector. Splitting the scalar module at one produces two rapidly convergent integrals. On the small-module part, Poisson summation replaces $\Phi$ by $\widehat\Phi$ and $s$ by $1-s$. The zero vector and its Fourier counterpart contribute
 
 $$
-c_F\left(\frac{\widehat\Phi(0)}{s-1}-\frac{\Phi(0)}s\right)
+\kappa_F\left(\frac{\widehat\Phi(0)}{s-1}-\frac{\Phi(0)}s\right)
 $$
 
-when $\eta=1$. More generally, if $\eta=|\cdot|^{i\tau}$, replace $s$ throughout by $s+i\tau/2$; this moves the poles to the points in (6.7), and the upper residue is $c_F\widehat\Phi(0)|\det g|^{-i\tau/2}$. If $\eta$ is nontrivial on the norm-one idele class group, integration over that compact group kills both constants. The remaining large-module integrals are entire because Schwartz decay dominates every power and every logarithmic derivative. This proves the continuation and residue assertions. $\square$
+when $\eta=1$. More generally, if $\eta=|\cdot|^{i\tau}$, replace $s$ throughout by $s+i\tau/2$; this moves the poles to the points in (6.7), and the upper residue is $\kappa_F\widehat\Phi(0)|\det g|^{-i\tau/2}$. If $\eta$ is nontrivial on the norm-one idele class group, integration over that compact group kills both constants. The remaining large-module integrals are entire because Schwartz decay dominates every power and every logarithmic derivative. This proves the continuation and residue assertions. $\square$
 
 The qualifier “possible” depends on the test function: $\widehat\Phi(0)=0$ removes the pole at one. The Eisenstein family as a meromorphic distribution nevertheless has that pole.
 
@@ -862,24 +919,19 @@ To see that no pole is hidden in a nonconstant Fourier term, take its Fourier co
 
 ### 6.6 The Eisenstein functional equation
 
-Let
-
-$$
-\iota(g)=\begin{pmatrix}0&1\\1&0\end{pmatrix}{}^tg^{-1}
-\begin{pmatrix}0&1\\1&0\end{pmatrix}.
-$$
+Let $\iota(g)={}^tg^{-1}$. This is the automorphism dual to the right action on row vectors for the dot-product Fourier pairing fixed in Section 6.4.
 
 Poisson summation and (6.5) give the meromorphic identity
 
 $$
 E(g,\Phi,\eta,s)
-=E(\iota(g),\widehat\Phi,\eta^{-1},1-s),
+=E({}^tg^{-1},\widehat\Phi,\eta^{-1},1-s).
 \tag{6.9}
 $$
 
-after transporting the section through the displayed transpose-inverse map. Applying the identity twice returns $\Phi(-x)$; the rational matrix $-I_2$ and the central character account for the resulting harmless sign. Thus (6.9) is compatible with Fourier inversion.
+The matrix is forced by Poisson summation: the dual of the row lattice $F^2g$ is $F^2{}^tg^{-1}$. Inserting antidiagonal matrices on both sides would require replacing $\widehat\Phi(x)$ by $\widehat\Phi(xj)$ and would mix two different conventions. Applying the identity twice returns $\Phi(-x)$; the rational matrix $-I_2$ and the central character account for the resulting harmless sign. Thus (6.9) is compatible with Fourier inversion.
 
-At factorizable data, comparison of local intertwining equations yields the product formula for their normalized gamma factors. This is the degree-two Schwartz analogue of (5.8).
+At factorizable data, comparison of local intertwining equations yields the regularized product formula for their normalized gamma factors, in the finite-stage sense explained after (5.9). This is the degree-two Schwartz analogue of that identity.
 
 ## 7. The global Rankin–Selberg integral
 
@@ -978,7 +1030,7 @@ where the local integral is defined in (8.1) below.
 
 ### 7.5 Exact convergence hypotheses
 
-The first unfolding needs absolute convergence of the Eisenstein series and the quotient integral; $\operatorname{Re}(s)>1$ suffices for unitary cuspidal data. The second needs normal convergence of both Fourier expansions on the compact unipotent fiber. The final Euler factorization needs a pure tensor and absolute convergence of the unramified Euler tail.
+The first unfolding needs absolute convergence of the Eisenstein series and the quotient integral; $\operatorname{Re}(s)>1$ suffices for unitary cuspidal data. The second needs normal convergence of both Fourier expansions on the compact unipotent fiber. The final Euler factorization needs a pure tensor. Absolute convergence of the unfolded global integral, followed by finite-stage Fubini and monotone convergence for its absolute value, proves the required absolute convergence of the unramified Euler tail; it is not an extra Satake-parameter hypothesis.
 
 After continuation, (7.4) is an identity of meromorphic functions, not necessarily of absolutely convergent integrals. One must not reinsert a continued value under the original integral sign without a convergence argument. All later identities are obtained first in the common convergence region and then extended meromorphically.
 
@@ -1014,7 +1066,7 @@ Assume $K$ is nonarchimedean. Iwasawa decomposition gives
 $$
 \begin{aligned}
 \Psi(s,W_1,W_2,\Phi)
-=\int_{K^\times}\int_{K^\times}\int_{K_0}
+=c_K\int_{K^\times}\int_{K^\times}\int_{K_0}
 &W_1(\operatorname{diag}(yd,d)k)
 W_2(\operatorname{diag}(yd,d)k)\\
 &\Phi((0,d)k)|y|^{s-1}|d|^{2s}
@@ -1025,14 +1077,14 @@ $$
 
 where $K_0=\mathrm{GL}_2(\mathcal O_K)$. The power $|y|^{s-1}$ is the product of $|\det g|^s$ and the quotient modular density $|y|^{-1}$.
 
-Choose a compact open subgroup fixing all data. The $k$-integral becomes a finite sum. The $d$-integral is a finite sum of one-dimensional local zeta integrals. The $y$-integral is a shell sum of products of Kirillov functions; their eventual character-exponential expansions make it rational in $q^{-s}$. Hence
+Choose a compact open subgroup fixing all data. The $k$-integral becomes a finite sum. The $d$-integral is a finite linear combination of one-dimensional local zeta integrals, not generally a finite shell sum. The $y$-integral is a shell sum of products of Kirillov functions; their eventual character-exponential expansions make it rational in $q^{-s}$. The fixed scalar $c_K$ does not affect rationality or the normalized zeta ideal. Hence
 
 $$
 \Psi(s,W_1,W_2,\Phi)\in\mathbf C(q^{-s}).
 \tag{8.3}
 $$
 
-As the data vary, these rational functions form a fractional ideal of $\mathbf C[q^s,q^{-s}]$. Stability under multiplication by $q^{\pm s}$ comes from diagonal translation. Since this Laurent polynomial ring is principal, there is a unique generator with constant term one:
+As the data vary, these rational functions form a nonzero fractional ideal of $\mathbf C[X,X^{-1}]$, where $X=q^{-s}$. Stability under multiplication by $X^{\pm1}$ comes from diagonal translation. Since this Laurent polynomial ring is principal, there is a unique generator of the form $P(X)^{-1}$ with $P(0)=1$:
 
 $$
 L(s,\pi_1\times\pi_2).
@@ -1047,11 +1099,11 @@ $$
 c\,v(y)^r\mu(y)|y|^{1/2},
 $$
 
-with $r$ bounded and $\mu$ a Jacquet exponent. Mellin transformation turns $v(y)^r$ into a derivative of a geometric series, hence into a denominator $(1-cq^{-s})^{r+1}$. There are only finitely many exponents and finitely many compact $k$-orbits. One common product of these denominators therefore clears every integral at that level. Translating compactly supported Kirillov functions supplies Laurent monomials, so the generated module is nonzero and fractional. Taking the union over levels does not introduce new asymptotic exponents for fixed $\pi_1,\pi_2$; the same finite denominator works. This proves the ideal statement rather than merely rationality one vector at a time.
+with $r$ bounded and $\mu$ a Jacquet exponent. Mellin transformation turns $v(y)^r$ into a derivative of a geometric series, hence into a denominator $(1-cq^{-s})^{r+1}$. There are only finitely many exponents and finitely many compact $k$-orbits. One common product of these denominators therefore clears every integral at that level. Translating compactly supported Kirillov functions supplies Laurent monomials, so the generated module is nonzero and fractional. Taking the union over levels does not introduce new asymptotic exponents for fixed $\pi_1,\pi_2$; the same finite denominator works. The remaining unit ambiguity in a generator is $cX^m$; requiring the reciprocal-polynomial form and $P(0)=1$ removes both $c$ and $m$. This proves the ideal statement rather than merely rationality one vector at a time.
 
 ### 8.3 The unramified four-factor calculation
 
-Suppose $\pi_i$ are unramified with Satake parameters
+Suppose $\psi$ has conductor $\mathcal O_K$, so the self-dual additive measure has $\operatorname{vol}(\mathcal O_K)=1$ and $c_K=1$. Suppose $\pi_i$ are unramified with Satake parameters
 
 $$
 (\alpha_1,\alpha_2),\qquad(\beta_1,\beta_2),
@@ -1129,13 +1181,23 @@ The central integral contributes $(1-X^2)^{-1}$ and leaves $(1-X)^{-4}$, the exp
 
 ### 8.4 The local factor and test vectors
 
-The generator (8.4) need not be attained by a spherical vector when one datum is ramified. Nevertheless it is attained by suitable data. To see this, use the compactly supported core in each Kirillov model. Choose $W_i(a(y))$ on one small multiplicative coset so that their unit characters cancel, and choose $\Phi$ supported on a compatible compact-open subset of $K^2$. The resulting integral is a nonzero Laurent monomial. Combining such compact integrals with vectors realizing each asymptotic denominator shows that the greatest common divisor of all integrals is exactly (8.4).
+The generator (8.4) need not be attained by a preferred vector when one datum is ramified, and no single-vector attainment theorem is needed here. The definition of the generated fractional ideal says instead that finitely many triples of data and Laurent polynomials $A_r(X)$ satisfy
 
-For principal series the factor is the product of the four one-dimensional factors attached to the inducing characters. At reducibility, cancellation removes the factors belonging to the nongeneric character constituent and leaves the factor of the special constituent. For local cuspidal representations, compact Kirillov support does not force the degree-four factor to be one: the tensor product of two cuspidal parameters can contain unramified invariants, especially when the second representation is an unramified twist of the contragredient. The three-variable integral detects this interaction even though each separate degree-two standard factor may be one.
+$$
+L(s,\pi_1\times\pi_2)
+=\sum_r A_r(q^{-s})
+\Psi(s,W_{1,r},W_{2,r},\Phi_r).
+$$
+
+Indeed, a principal ideal generator belongs to the ideal, and ideal membership is a finite linear combination. Compactly supported Kirillov functions show directly that the ideal is nonzero: choose the two diagonal functions on one small multiplicative coset with cancelling unit characters and choose $\Phi$ on a compatible compact-open row set. Diagonal translations realize the Laurent monomials. This finite-family statement, rather than an unsupported favorite test vector, is the correct bridge to the later global Bezout argument.
+
+For principal series, inserting the two Kirillov tails identifies the possible denominators with products of the four one-dimensional Tate denominators. At a reducibility point, the nongeneric character constituent has no Whittaker model, so its spurious tail is absent from the generic special constituent. A complete comparison at every ramified representation with Weil–Deligne factors belongs to the subsequent analytic theory, which has local constants as an additional prerequisite.
 
 ### 8.5 The local functional equation
 
-Define the contragredient Whittaker transforms using transpose-inverse, and give $K^2$ the self-dual Fourier transform. Local uniqueness for the relevant trilinear zeta functional gives a unique rational function
+Define the contragredient Whittaker transforms using transpose-inverse, and give $K^2$ the self-dual Fourier transform.
+
+**Theorem 8.1 (local functional equation).** For the data of Section 8.1, there is a unique nonzero factor
 
 $$
 \gamma(s,\pi_1\times\pi_2,\psi)
@@ -1150,9 +1212,22 @@ $$
 \tag{8.10}
 $$
 
-**Proof strategy.** Both sides are rational families with the same covariance under $G(K)$ and scalar dilation. On compact open-cell data, two-dimensional Fourier inversion identifies them up to one scalar. Local Whittaker uniqueness makes the scalar independent of the vectors.
+At a finite place it is rational in $q^{-s}$; at an archimedean place it is meromorphic in $s$.
 
-**Proof.** Begin where both integrals converge. Resolve the $k$-variable at one finite level and use Bruhat coordinates. On each compact rectangle, the transformation $g\mapsto{}^tg^{-1}$ turns the $e_2g$ variable into the Fourier-dual row variable and exchanges $s$ with $1-s$. Finite Fourier inversion proves proportionality. If two proportionality scalars existed, their difference would define a second Whittaker functional on one local representation after the other data were fixed, contradicting uniqueness. Rationality extends the equality to all $s$. $\square$
+**Proof strategy.** Regard the integral as an invariant trilinear functional on two Whittaker models and the Schwartz representation on row vectors. Prove uniqueness on the nonzero-row orbit, show that the origin can contribute only at discrete parameters, and then use Fourier inversion to compare the original and transformed functionals.
+
+**Proof.** Let $G(K)$ act on row Schwartz functions by $R(h)\Phi(x)=\Phi(xh)$. A change of variables on $N\backslash G$ shows the exact covariance
+
+$$
+\Psi(s,R(h)W_1,R(h)W_2,R(h)\Phi)
+=|\det h|^{-s}\Psi(s,W_1,W_2,\Phi).
+$$
+
+Filter the Schwartz space by the subspace of functions vanishing near the origin. The group is transitive on $K^2\setminus\{0\}$, with the stabilizer of $e_2$ equal to the mirabolic subgroup. Frobenius reciprocity therefore reduces an invariant trilinear functional on this open orbit to a bilinear functional on the two Whittaker models equivariant under that mirabolic subgroup. Its restriction to the upper unipotent is forced because the characters are $\psi$ and $\psi^{-1}$; restriction to the diagonal then fixes its values on every multiplicative translate of one compact unit neighborhood. Local Whittaker uniqueness shows that no second choice remains. Thus the open-orbit functional space is one-dimensional.
+
+The quotient supported at the origin consists, at a nonarchimedean place, only of evaluation at zero and, at an archimedean place, of finitely many derivatives of the point mass in each bounded order. Their scalar-dilation characters agree with the required $s$-character only at a discrete set of parameters. Hence the trilinear functional is unique for generic $s$. The shell expansion at a finite place and Taylor subtraction at an archimedean place continue both families meromorphically, so uniqueness extends through the exceptional parameters as an identity of meromorphic families.
+
+Now apply the transpose-inverse change of variables to the quotient and Fourier inversion to the row variable. It converts the original family at $s$ into the displayed transformed family at $1-s$, with exactly the same covariance. Generic uniqueness makes them proportional by a scalar independent of all three data. Choosing compact open-orbit data with nonzero integral proves that scalar is unique and nonzero. Rationality at a finite place and meromorphic continuation at infinity extend (8.10) to every $s$. $\square$
 
 Set
 
@@ -1164,7 +1239,7 @@ $$
 \tag{8.11}
 $$
 
-The same shell argument shows that $\epsilon$ is a nonzero constant times a monomial in $q^{-s}$. If $\psi_c(x)=\psi(cx)$ and the measure is changed to the self-dual measure for $\psi_c$, then
+At a finite place the same shell argument shows that $\epsilon$ is a nonzero constant times a monomial in $q^{-s}$. If $\psi_c(x)=\psi(cx)$ and the measure is changed to the self-dual measure for $\psi_c$, then
 
 $$
 \gamma(s,\pi_1\times\pi_2,\psi_c)
@@ -1175,29 +1250,29 @@ $$
 
 The exponents are the dimension-four rule: each central character occurs with the dimension of the other factor, and the absolute-value exponent is $4(s-\tfrac12)$.
 
-## 9. Global Euler products and functional equations
+## 9. Global integral identities and residues
 
-### 9.1 The completed Rankin–Selberg function
+### 9.1 Factorizable integrals and Euler tails
 
-For finite places define the Euler product
+For pure data, Theorem 7.1 gives in $\operatorname{Re}(s)>1$
 
 $$
-L_f(s,\pi_1\times\pi_2)
-=\prod_{v<\infty}L_v(s,\pi_{1,v}\times\pi_{2,v}).
+\mathcal I(s,\phi_1,\phi_2,\Phi)
+=\prod_v\Psi_v(s,W_{1,v},W_{2,v}^-,\Phi_v).
 \tag{9.1}
 $$
 
-It converges absolutely in a right half-plane. At almost every place its factor is (8.9). At the archimedean places retain the local zeta integrals themselves. For fixed nonzero archimedean data and local correction factors $P_v(s)$ at the exceptional finite places, put
+Choose a finite set $S$ containing the archimedean places, every ramified datum, and every place where $\psi_v$ does not have conductor $\mathcal O_v$. Outside $S$, (8.8) turns the tail into
 
 $$
-\Lambda(s,\pi_1\times\pi_2;\mathcal D)
-=L_f(s,\pi_1\times\pi_2)
-\prod_{v\mid\infty}\Psi_v(s,\mathcal D_v)
-\prod_{v\in S_f}P_v(s).
+\prod_{v\notin S}\prod_{i,j=1}^2
+(1-\alpha_{i,v}\beta_{j,v}q_v^{-s})^{-1}.
 \tag{9.2}
 $$
 
-The datum $\mathcal D$ records the finitely many choices. The unfolding theorem says that (9.2) is exactly the global integral for a suitable pure tensor. Different choices multiply it by a finite product of holomorphic correction functions. Thus the finite Euler product, pole criterion, and functional equation are intrinsic even though an explicit list of archimedean gamma factors has not been imposed as an extra convention.
+At each finite $v\in S$, the local integral is the zeta-ideal generator times a Laurent-polynomial correction. The archimedean factors are the actual local zeta integrals. Thus one factorizable global integral is an Euler tail multiplied by finitely many local corrections.
+
+This statement is deliberately data-dependent. Continuation of one such product does not yet continue the canonical product of all local generators: a correction polynomial may vanish, and dividing by it could create false poles. Removing that dependence requires a finite Bezout family of local integrals and compatible archimedean factors. That is the first task of the subsequent analytic theory.
 
 ### 9.2 Meromorphic continuation
 
@@ -1211,11 +1286,17 @@ its only possible poles are simple poles at $s=-i\tau/2$ and $s=1-i\tau/2$.
 
 **Proof.** In (7.1), the cusp forms are rapidly decreasing, uniformly on vertical strips after invariant differentiation. Pairing them with the meromorphic Eisenstein family of Theorem 6.1 therefore preserves meromorphic continuation and cannot create new poles. If the Eisenstein family is holomorphic, so is the pairing. If it has a simple pole, the pairing has at most that simple pole. $\square$
 
-It follows from (7.5) that every completed expression (9.2) has the same continuation after its finite correction factors are included. Conversely, choose local data for which none of those corrections vanishes identically; the continuation of the global integral then gives continuation of the canonical finite Euler product after multiplication by the selected archimedean factors.
+It follows from (9.1) that every factorizable product, with its actual finite correction factors included, has this continuation. Nothing in the argument permits division by a correction factor at one of its zeros.
 
 ### 9.3 The global functional equation
 
-Apply (6.9) inside (7.1), use the change of variables $g\mapsto\iota(g)$, and transform both cusp forms to their contragredient realizations. This gives
+Apply (6.9) inside (7.1) and use the measure-preserving change of variables $g\mapsto{}^tg^{-1}$. Put
+
+$$
+\widetilde\phi_i(g)=\phi_i({}^tg^{-1}).
+$$
+
+This is automorphic because transpose-inverse preserves $G(F)$, and its right representation is the contragredient realization; inserting the rational antidiagonal matrix on the left gives the local Whittaker transform used in (8.10). We obtain
 
 $$
 \mathcal I(s,\phi_1,\phi_2,\Phi)
@@ -1223,25 +1304,14 @@ $$
 \tag{9.3}
 $$
 
-For factorizable data, comparison with (8.10) yields
+For factorizable data, comparison with (8.10) yields, with the same finite-stage regularized-product convention as in (5.9),
 
 $$
 \prod_v\gamma(s,\pi_{1,v}\times\pi_{2,v},\psi_v)=1.
 \tag{9.4}
 $$
 
-After the local Euler factors are separated, the completed equation has the form
-
-$$
-\boxed{
-\Lambda(s,\pi_1\times\pi_2)
-=\epsilon(s,\pi_1\times\pi_2)
-\Lambda(1-s,\widetilde\pi_1\times\widetilde\pi_2).
-}
-\tag{9.5}
-$$
-
-The global epsilon factor is a root number of modulus one times the conductor monomial $Q^{1/2-s}$. Its exact allocation between $\Lambda$ and $\epsilon$ depends on whether conductor powers are built into the completed function. Equation (9.4) is invariant under that allocation and fixes the normalization used here.
+Equation (9.4) is the local-global compatibility statement established here. Separating canonical local Euler factors, proving that the remaining epsilon factors have the expected conductor monomial and modulus-one root number, and obtaining a test-data-independent completed equation require the local-constant comparison of the subsequent analytic theory.
 
 ### 9.4 Poles and invariant pairings
 
@@ -1249,22 +1319,22 @@ Assume first that $\omega_1\omega_2=1$. Taking the residue of (7.1) at $s=1$ and
 
 $$
 \operatorname*{Res}_{s=1}\mathcal I(s,\phi_1,\phi_2,\Phi)
-=c_F\widehat\Phi(0)
+=\kappa_F\widehat\Phi(0)
 \int_{Z(\mathbf A)G(F)\backslash G(\mathbf A)}
 \phi_1(g)\phi_2(g)\,dg.
-\tag{9.6}
+\tag{9.5}
 $$
 
 The last integral is a $G(\mathbf A)$-invariant bilinear pairing between $\pi_1$ and $\pi_2$. By irreducibility it is zero unless
 
 $$
 \pi_2\simeq\widetilde\pi_1.
-\tag{9.7}
+\tag{9.6}
 $$
 
-If (9.7) holds, choose paired vectors and $\Phi$ with $\widehat\Phi(0)\ne0$; then (9.6) is nonzero. We have proved the precise pole criterion.
+If (9.6) holds, choose paired vectors and $\Phi$ with $\widehat\Phi(0)\ne0$; then (9.5) is nonzero. Thus the family of global integrals detects the upper possible pole exactly in the dual case.
 
-The implication from a nonzero invariant pairing to (9.7) is elementary but important. The pairing defines a map
+The implication from a nonzero invariant pairing to (9.6) is elementary but important. The pairing defines a map
 
 $$
 \pi_2\longrightarrow\pi_1^\vee,\qquad
@@ -1279,329 +1349,94 @@ $$
 (\phi_1,\phi_2)\longmapsto
 \int_{Z(\mathbf A)G(F)\backslash G(\mathbf A)}
 \phi_1(g)\phi_2(g)|\det g|^{-iu}\,dg.
-\tag{9.8}
+\tag{9.7}
 $$
 
 It is an invariant pairing between $\pi_1$ and $\pi_2\otimes|\det|^{-iu}$. It is nonzero precisely when
 
 $$
 \pi_2\simeq\widetilde\pi_1\otimes|\det|^{iu}.
-\tag{9.9}
+\tag{9.8}
 $$
 
-**Theorem 9.2 (pole theorem).** The completed Rankin–Selberg function for cuspidal $\pi_1,\pi_2$ is entire unless there is a real $u$ such that (9.9) holds. In that exceptional case it has simple poles at
+**Theorem 9.2 (residue criterion for the integral family).** If $\omega_1\omega_2$ is not a pure module character, every global integral is entire. If $\omega_1\omega_2=|\cdot|^{2iu}$, its only possible poles are simple poles at
 
 $$
 s=-iu,\qquad s=1-iu.
-\tag{9.10}
+\tag{9.9}
 $$
 
-In particular, it has a pole at $s=1$ if and only if $\pi_2\simeq\widetilde\pi_1$.
+The residue at the upper point vanishes for every choice of data unless (9.8) holds. If (9.8) holds, there are paired cusp forms and a Schwartz function for which that residue is nonzero. In particular, the family has a member with a pole at $s=1$ if and only if $\pi_2\simeq\widetilde\pi_1$.
 
-The theorem concerns the canonical completed function. A particular test integral can miss the pole because its invariant pairing or $\widehat\Phi(0)$ vanishes. Varying the data recovers it.
+**Proof.** Theorem 9.1 gives the possible pole set and simplicity. Formula (9.7) and irreducibility give the necessary condition (9.8). Under that condition choose a nonzero invariant pairing and $\widehat\Phi(0)\ne0$ to obtain a nonzero upper residue. The lower assertion follows directly from the lower Eisenstein residue, or by applying the integral functional equation. $\square$
 
-### 9.5 The self-dual positive case
+### 9.5 Detection and the remaining gap
 
-Let $\pi$ be unitary and take $\pi_2=\widetilde\pi$. Choose $\phi_2=\overline\phi$ in the unitary realization. Then (9.6) becomes
-
-$$
-c_F\widehat\Phi(0)\|\phi\|_2^2,
-$$
-
-which is positive when $\widehat\Phi(0)>0$. This proves the pole without an appeal to an abstract nonzero pairing.
-
-At unramified finite places the diagonal part of the unfolded integral has coefficients
+Let $\pi$ be unitary and take $\pi_2=\widetilde\pi$. Choose $\phi_2=\overline\phi$ in the unitary realization. Then (9.5) becomes
 
 $$
-|h_m(\alpha_1,\alpha_2)|^2\geq0.
+\kappa_F\widehat\Phi(0)\|\phi\|_2^2,
 $$
 
-Multiplying by the central factor preserves nonnegativity. Hence the self-convolution Euler product has nonnegative Dirichlet coefficients. Positivity prevents cancellation at its first singularity and is the source of several estimates in the next chapter.
+which is positive when $\widehat\Phi(0)>0$. This proves that at least one member of the self-dual integral family has a genuine pole.
 
-## 10. Analytic estimates and incomplete products
+It does not yet prove that a canonical product of local generators has that pole. A selected integral equals that product times local correction functions, and one must rule out the possibility that the selected correction vanishes. Nor does positivity of this Petersson residue prove coefficientwise positivity of the canonical Euler product. The later analytic theory closes both gaps by a finite Bezout construction for local zeta ideals and a separate Schur-polynomial calculation. Keeping these statements separate is essential: the present theorem concerns a meromorphic family of integrals, not yet a test-data-independent completed $L$-function.
 
-### 10.1 Absolute convergence
+## 10. The established Rankin–Selberg interface
 
-The global unfolding initially gives absolute convergence for $\operatorname{Re}(s)>1$ when expressed through positive self-convolution majorants. For a cross product, Cauchy–Schwarz on the unramified coefficients gives
+### 10.1 What is intrinsic at this stage
 
-$$
-|h_m(\alpha_1,\alpha_2)h_m(\beta_1,\beta_2)|
-\leq\frac12\left(
-|h_m(\alpha_1,\alpha_2)|^2+
-|h_m(\beta_1,\beta_2)|^2\right).
-\tag{10.1}
-$$
+The global Whittaker coefficient is intrinsic to an automorphic realization. Global uniqueness shows that, after one scalar normalization, it factors on every pure tensor as the restricted product of the unique local Whittaker functionals. The Fourier–Whittaker expansion recovers the cusp form from this coefficient, and therefore proves automorphic multiplicity one.
 
-After summing over ideals, each majorant is a self Rankin–Selberg series, convergent for $\operatorname{Re}(s)>1$. Thus the Euler product and Dirichlet series for $L_f(s,\pi_1\times\pi_2)$ converge absolutely there after finitely many exceptional factors are removed.
-
-Here is a noncircular proof for the self product. Choose nonnegative local Schwartz data and paired Whittaker vectors so that the unfolded coefficients are nonnegative. For $\sigma>1$, the Eisenstein series and the global integral converge absolutely, hence the resulting Dirichlet series does. The central factor in (8.5) is an absolutely convergent Hecke Euler product at $2\sigma>2$. Multiplying the diagonal positive series by that central product gives the full self Rankin–Selberg series with nonnegative coefficients, so it also converges. For a cross product, apply (10.1) prime-power by prime-power and then Cauchy–Schwarz to the ideal coefficients. This establishes absolute convergence before any logarithmic differentiation is used.
-
-Absolute convergence of the Dirichlet series implies absolute convergence of the Euler product because the logarithm at an unramified place is a sum over positive powers of the four roots. Apply the same self-product majorant to those power sums. Finitely many ramified factors are rational functions and are harmless in a sufficiently far right half-plane; their local functional equations then provide meromorphic continuation elsewhere.
-
-The conclusion is fixed-data absolute convergence. Uniform estimates as the conductor or archimedean parameter varies require additional work and are not inferred from (10.1).
-
-### 10.2 Deleting finitely many factors
-
-For a finite set $S$ containing the archimedean and ramified places, define
+At a finite place, the family of local Rankin–Selberg integrals is also intrinsic: it is a nonzero fractional ideal in the Laurent polynomial ring. Its normalized generator depends only on the two local representations. For unramified representations, the spherical calculation identifies that generator with the four-factor expression
 
 $$
-L^S(s,\pi_1\times\pi_2)
-=\prod_{v\notin S}L_v(s,\pi_{1,v}\times\pi_{2,v}).
-\tag{10.2}
+\prod_{i,j=1}^2
+(1-\alpha_i\beta_jq^{-s})^{-1}.
 $$
 
-Each omitted nonarchimedean local factor is a reciprocal polynomial with constant term one. If the local representations are unitary and generic, their inducing exponents have real parts strictly between $-\tfrac12$ and $\tfrac12$. Consequently every reciprocal root of the degree-four factor has modulus strictly less than $q_v$; the local factor is finite and nonzero at $s=1$.
+For pure global data, the unfolded integral factors into these local families. Outside a finite set it is the product of the displayed unramified factors, while every dependence on ramified vectors and Schwartz functions is confined to finitely many correction functions.
 
-Therefore deleting finitely many places neither creates nor removes a pole at $s=1$. In particular,
+The meromorphic continuation and functional equation proved here belong first to the global integral family. Its possible residues are exactly the Eisenstein zero-orbit residues, and the upper residue is an invariant bilinear pairing. This is enough to detect the dual-twist case by a suitable choice of data.
 
-$$
-L^S(s,\pi\times\widetilde\pi)
-$$
+### 10.2 What passes to the analytic theory
 
-has a simple pole at $s=1$, while $L^S(s,\pi_1\times\pi_2)$ is holomorphic there when $\pi_2\not\simeq\widetilde\pi_1$.
+The next analytic step begins with three proved inputs:
 
-The strict inequalities on the exponents matter. A nonunitary principal series at the boundary can have a local denominator vanishing at $s=1$, so a deleted factor could change the pole order. Unitarity is not a decorative hypothesis in the finite-exception argument.
+1. the finite-place zeta ideal and its normalized generator;
+2. the factorization (9.1) of every pure global integral in its convergence half-plane;
+3. the continuation, functional equation, and residue formula for the full family of global integrals.
 
-### 10.3 Logarithmic derivatives
+What remains is not formal. A finite Bezout family must eliminate zeros of individual local corrections. Archimedean zeta integrals must be replaced by canonical gamma factors compatible with the finite normalization. Only then can continuation and the residue criterion be transferred from the family to one canonical completed function. Absolute convergence at the optimal initial boundary, finite order, vertical estimates, local regularity at $s=1$, and coefficientwise positivity require further proofs.
 
-In the absolute-convergence half-plane, differentiating the Euler product gives
+This boundary prevents two invalid divisions. One may not divide a continued integral by a correction polynomial at its zeros, and one may not infer nonvanishing of a holomorphic cross product at $s=1$ from a formal Euler product whose absolute convergence stops at that line.
 
-$$
--\frac{L^{S\prime}}{L^S}(s,\pi_1\times\pi_2)
-=\sum_{v\notin S}\sum_{r\geq1}
-\left(\sum_{i,j}(\alpha_{i,v}\beta_{j,v})^r\right)
-(\log q_v)q_v^{-rs}.
-\tag{10.3}
-$$
+### 10.3 What passes to multiplicity and trace formulas
 
-For $\pi_2=\widetilde\pi_1$, the coefficient in parentheses is
+Automorphic multiplicity one is already complete: two embeddings of the same irreducible representation have proportional Whittaker coefficients and hence proportional Fourier expansions. Strong multiplicity one is different. It compares two a priori different global representations from almost all of their local factors. Its proof needs the canonical pole criterion and stability under deleting finitely many local factors, neither of which has been established in this book.
 
-$$
-\left|\alpha_{1,v}^r+\alpha_{2,v}^r\right|^2\geq0.
-\tag{10.4}
-$$
+The trace-formula handoff is similarly precise but more modest. Smooth finite-level cusp forms have rapidly and normally convergent Whittaker expansions. The Rankin–Selberg integral supplies meromorphic Mellin pairings and identifies the local unramified factors controlling products of Whittaker coefficients. These are inputs to later kernel estimates. They do not by themselves prove trace class, absolute convergence of a rational kernel, annihilation of the noncuspidal spectrum, or equality of spectral and geometric trace expansions. Those statements require the dedicated constant-term and trace-kernel theories.
 
-The simple pole at one therefore gives
+### 10.4 Conclusion
+
+Fourier analysis on the compact group $F\backslash\mathbf A$ turns a cuspidal automorphic form into its nonzero unipotent frequencies. The rational diagonal torus moves every such frequency to one standard character. This gives the Fourier–Whittaker expansion and global genericity. Nonarchimedean local uniqueness from Book 78, the archimedean Casselman–Wallach uniqueness input, and the restricted tensor structure of a cuspidal summand then give the factorization
 
 $$
--\frac{L^{S\prime}}{L^S}(s,\pi\times\widetilde\pi)
-=\frac1{s-1}+O(1)
-\qquad(s\to1^+).
-\tag{10.5}
+W_\phi(g)=\prod_vW_v(g_v)
 $$
 
-This logarithmic form measures how much local disagreement can be hidden while retaining a global pole. It is also useful for bounding prime sums that occur in trace comparisons.
+for pure tensors and force automorphic multiplicity one.
 
-### 10.4 Coefficient bounds from positivity
-
-Let
+The standard Mellin integral explains the degree-two Euler factor. For two cusp forms, equal rational frequencies survive only after opposite Whittaker signs are chosen. The two-dimensional Schwartz variable integrates the scalar center and cancels the numerator left by the diagonal Whittaker product. The resulting local unramified integral is exactly
 
 $$
-L^S(s,\pi\times\widetilde\pi)=\sum_{\mathfrak a}b(\mathfrak a)(N\mathfrak a)^{-s},
-\qquad b(\mathfrak a)\geq0.
+\prod_{i,j=1}^2
+(1-\alpha_i\beta_jq^{-s})^{-1}.
 $$
 
-For $\sigma>1$ and $X\geq1$,
+Globally, the Eisenstein realization unfolds to the product of local zeta integrals. Poisson summation supplies its continuation and functional equation, while the two zero orbits supply all possible residues. At the upper possible pole the residue is an invariant pairing, nonzero for suitable data exactly in the dual-twist case.
 
-$$
-\sum_{N\mathfrak a\leq X}b(\mathfrak a)
-\leq X^\sigma L^S(\sigma,\pi\times\widetilde\pi).
-\tag{10.6}
-$$
-
-Taking $\sigma=1+1/\log X$ and using the simple pole gives
-
-$$
-\sum_{N\mathfrak a\leq X}b(\mathfrak a)
-\ll_\pi X\log X.
-\tag{10.7}
-$$
-
-No cancellation is used. Cauchy–Schwarz then gives corresponding fixed-data bounds for cross coefficients. These estimates suffice to dominate the Whittaker sums and relative kernels used in Chapter 12.
-
-### 10.5 A warning about zeros and poles
-
-Equality of Euler factors outside a finite set gives equality of incomplete products, but it does not give equality of completed products term by term at the exceptional places. The strong multiplicity-one proof uses only the incompatible behavior at $s=1$: one incomplete product has a pole and the other is holomorphic.
-
-It would be circular to claim that a cross product is nonzero at $s=1$ merely from its Euler product, since absolute convergence stops at the boundary. Holomorphy follows from the global Eisenstein integral and the pole criterion, not from a formal substitution into an Euler product.
-
-## 11. Strong multiplicity one
-
-### 11.1 Why ordinary multiplicity one is not enough
-
-Cuspidal multiplicity one says that a fixed irreducible representation has only one automorphic realization. Strong multiplicity one says that almost all local components determine the global representation. The first is a uniqueness statement inside one global isomorphism class; the second identifies the class from incomplete local data.
-
-The bridge is analytic. A representation paired with its contragredient produces a pole at one. Pairing with the contragredient of a genuinely different representation does not. If the two representations agree away from finitely many places, the two incomplete Euler products are identical, and they cannot be simultaneously polar and holomorphic.
-
-### 11.2 The pole comparison
-
-Let $\pi$ and $\pi'$ be irreducible unitary cuspidal representations, and suppose
-
-$$
-\pi_v\simeq\pi'_v
-\qquad(v\notin S)
-\tag{11.1}
-$$
-
-for a finite set $S$. Then
-
-$$
-L^S(s,\pi\times\widetilde\pi)
-=L^S(s,\pi'\times\widetilde\pi).
-\tag{11.2}
-$$
-
-The left side has a simple pole at $s=1$ by Theorem 9.2 and Section 10.2. If $\pi'\not\simeq\pi$, the right side is holomorphic at $s=1$ by the same theorem. Equality (11.2) is then impossible.
-
-Notice that no separate assumption on central characters is needed. The conclusion will identify the representations and hence their central characters. The local equality outside $S$ is used only to obtain (11.2).
-
-### 11.3 Strong multiplicity one
-
-**Theorem 11.1 (strong multiplicity one for cuspidal $\mathrm{GL}_2$).** Let $\pi$ and $\pi'$ be irreducible unitary cuspidal automorphic representations of $G(\mathbf A_F)$. If $\pi_v\simeq\pi'_v$ for all but finitely many places $v$, then
-
-$$
-\pi\simeq\pi'.
-$$
-
-**Proof.** Choose $S$ containing every exceptional and archimedean place. Equation (11.2) follows from the unramified factor formula. Its left side has a simple pole at one. If the representations were not isomorphic, its right side would be holomorphic at one. This contradiction proves the theorem. $\square$
-
-An equivalent Hecke formulation is immediate. At an unramified place the local representation is determined by the unordered pair of Satake parameters, equivalently by its Hecke trace and central character. Thus equality of those data outside a finite set determines the cuspidal representation globally.
-
-### 11.4 Density and finite-exception variants
-
-The proof extends whenever the exceptional Euler factors contribute too little to imitate the logarithmic singularity (10.5). One clean version is the following.
-
-**Proposition 11.2.** Suppose the unramified local parameters of $\pi$ and $\pi'$ are tempered, so their Satake parameters have modulus one. Suppose they agree outside a set $S$ of finite places satisfying
-
-$$
-\sum_{v\in S}q_v^{-1}<\infty.
-\tag{11.3}
-$$
-
-Then $\pi\simeq\pi'$.
-
-**Proof.** Under temperedness, the difference between the logarithms of the two Euler products is bounded for $s\to1^+$ by a constant times
-
-$$
-\sum_{v\in S}\sum_{r\geq1}q_v^{-rs}
-\ll\sum_{v\in S}q_v^{-1},
-$$
-
-so it cannot change a $-\log(s-1)$ singularity into a bounded function. The pole comparison therefore remains valid. $\square$
-
-Condition (11.3) is a genuine sparsity condition, not merely density zero. Sharper density thresholds require uniform local bounds and finer control of the logarithmic coefficients. They are not consequences of the fixed-data argument alone.
-
-## 12. Whittaker analysis in trace formulas
-
-### 12.1 Whittaker–Parseval identities
-
-For a smooth cusp form and fixed $g$, Parseval on $F\backslash\mathbf A$ gives
-
-$$
-\int_{F\backslash\mathbf A}|\phi(n(x)g)|^2\,dx
-=\sum_{r\in F^\times}|W_\phi(a(r)g)|^2.
-\tag{12.1}
-$$
-
-The zero term is absent by cuspidality. Integrating (12.1) over a truncated set of the remaining coordinates and using monotone convergence gives a global $L^2$ identity. Rapid decay and (10.7) permit the truncation to be removed for smooth finite-type vectors.
-
-More generally, polarization gives
-
-$$
-\int_{F\backslash\mathbf A}
-\phi_1(n(x)g)\overline{\phi_2(n(x)g)}\,dx
-=\sum_{r\in F^\times}
-W_{\phi_1}(a(r)g)\overline{W_{\phi_2}(a(r)g)}.
-\tag{12.2}
-$$
-
-These identities replace a potentially divergent integral over a cusp cross-section by a positive or bilinear sum of Whittaker coefficients. They are the basic estimates behind relative trace constructions.
-
-### 12.2 Cuspidal convolution kernels
-
-Let $f=\otimes_vf_v$ be smooth and compactly supported on $G(\mathbf A)$ modulo the center, with the central transformation compatible with a fixed unitary character. Define
-
-$$
-K_f(x,y)=\sum_{\gamma\in Z(F)\backslash G(F)}
-f(x^{-1}\gamma y).
-\tag{12.3}
-$$
-
-Assume that at one finite place $v_0$ the factor $f_{v_0}$ is **strongly cuspidal**, meaning
-
-$$
-\int_{N(F_{v_0})}f_{v_0}(gnh)\,dn=0
-\qquad\text{for every }g,h\in G(F_{v_0}),
-\tag{12.4}
-$$
-
-and the same condition holds for the opposite unipotent subgroup. This exact two-sided condition is stronger than requiring the integral only at $g=h=1$.
-
-Unfolding the constant term of (12.3) and grouping rational matrices by their parabolic orbit shows that (12.4) kills every proper-parabolic contribution. Hence $K_f(\cdot,y)$ and $K_f(x,\cdot)$ are cuspidal. Smoothness follows from that of $f$; finite level and finite type follow from compact support and compact averaging. The cuspidal decay theorem then makes the kernel rapidly decreasing in each variable.
-
-### 12.3 A convergent cuspidal trace identity
-
-**Theorem 12.1 (cuspidal trace identity).** Under the hypothesis (12.4), assume in addition that the archimedean factor is bi-$K_\infty$-finite and smoothing of order greater than the polynomial spectral-window exponent of the finitely many compact types it meets. Then $R_{\mathrm{cusp}}(f)$ is trace class and
-
-$$
-\operatorname{tr}R_{\mathrm{cusp}}(f)
-=\int_{Z(\mathbf A)G(F)\backslash G(\mathbf A)}K_f(x,x)\,dx
-=\sum_{[\gamma]}
-\operatorname{vol}(Z(\mathbf A)G_\gamma(F)\backslash G_\gamma(\mathbf A))
-O_\gamma(f).
-\tag{12.5}
-$$
-
-The last sum ranges over the central classes and elliptic regular rational conjugacy classes that meet the support, with the central quotient understood, and
-
-$$
-O_\gamma(f)=\int_{G_\gamma(\mathbf A)\backslash G(\mathbf A)}
-f(x^{-1}\gamma x)\,dx.
-$$
-
-**Proof strategy.** Cuspidality gives rapid decay of the kernel, so the diagonal is integrable. Spectral trace class identifies its diagonal integral with the operator trace. Absolute convergence permits the rational sum to be regrouped by conjugacy class.
-
-**Proof.** Bi-$K_\infty$-finiteness leaves only finitely many compact types. On each, the polynomial spectral-window bound and the assumed smoothing order make the sum of singular values converge; the finite-level operator is therefore trace class. On compact truncations the kernel sum is locally finite, and the usual integral-kernel trace identity applies to finite spectral projections. Strong cuspidality and Chapter 10's rapid decay dominate the complement uniformly, so the truncations converge in trace norm and in diagonal $L^1$. This proves the first equality.
-
-For the second, insert (12.3). Reduction theory gives a uniform finite-overlap bound on every truncation, while rapid cuspidal decay supplies an integrable majorant independent of the truncation. Dominated convergence therefore permits interchange of sum and integral. The constant-term calculation implied by (12.4) makes the contributions induced from the split torus and its unipotent degenerations vanish. What remain are central and elliptic regular classes; their centralizers are anisotropic modulo $Z$, so their adelic centralizer quotients have finite volume. For one remaining class, unfolding $G_\gamma(F)\backslash G(F)$ gives its centralizer volume times the orbital integral. The finite-place support bounds denominators and the archimedean support bounds every conjugate, so only finitely many rational characteristic polynomials occur. Summing the resulting absolutely convergent contributions proves (12.5). $\square$
-
-Without (12.4), parabolic constant terms survive and the diagonal integral generally requires truncation; continuous and residual terms then enter. The theorem is a cuspidal trace identity, not a claim that every trace formula is absolutely convergent without regularization.
-
-### 12.4 Relative kernels and Rankin–Selberg bounds
-
-Apply the Whittaker coefficient in both kernel variables:
-
-$$
-K_f^{\psi,\psi^{-1}}(x,y)
-=\int_{[N]}\int_{[N]}
-K_f(n(u)x,n(v)y)\psi(-u)\psi(v)\,du\,dv.
-\tag{12.6}
-$$
-
-On the spectral side, multiplicity one and factorization give
-
-$$
-K_f^{\psi,\psi^{-1}}(x,y)
-=\sum_\pi\sum_{e\in\mathcal B_\pi}
-W_{\pi(f)e}(x)\overline{W_e(y)},
-\tag{12.7}
-$$
-
-for an orthonormal basis of smooth vectors, with convergence after the same smoothing hypothesis as in Theorem 12.1. Cauchy–Schwarz, (12.1), and the self Rankin–Selberg estimate (10.7) give an integrable majorant on diagonal torus ranges. Thus Mellin weights may be inserted and the relative spectral sum unfolded term by term.
-
-On the geometric side, (12.6) applies finite Fourier transforms to the two unipotent variables of $f(x^{-1}\gamma y)$. Bruhat decomposition separates the closed and open cells. Strong cuspidality removes the closed-cell constant term; the open cell produces Kloosterman-type orbital integrals. The equality of the two expansions is the analytic core of a Whittaker relative trace formula.
-
-The role of Rankin–Selberg theory is now precise: it supplies positive square-sum bounds for Whittaker coefficients, controls the Mellin tails, and prevents an unjustified exchange of the spectral sum with torus integration.
-
-### 12.5 What has been achieved
-
-The global unipotent quotient turns cuspidality into a nonzero-frequency expansion. Torus conjugation identifies every nonzero frequency with one standard character, proving global genericity. Local uniqueness and normalized spherical reference vectors then turn the global Whittaker functional into a restricted product. The Fourier–Whittaker expansion recovers the automorphic form from that product and forces cuspidal multiplicity one.
-
-The degree-two Mellin integral reads the standard Euler factors directly from spherical Whittaker values. For two representations, the diagonal Whittaker product leaves one central-character numerator. A two-dimensional Schwartz variable contributes its inverse, and the unfolded local integral yields the full four-factor Euler term. Poisson summation gives the Eisenstein functional equation; its constant term gives continuation and residues; the invariant bilinear pairing gives the exact pole criterion.
-
-The pole of $L(s,\pi\times\widetilde\pi)$ at one and the holomorphy of $L(s,\pi'\times\widetilde\pi)$ for $\pi'\not\simeq\pi$ force strong multiplicity one. Positivity of the self-convolution coefficients supplies the bounds needed to control Whittaker sums. Finally, a two-sided cuspidal local test function removes all parabolic kernel terms, making the cuspidal trace identity and its Whittaker-relative version absolutely convergent.
-
-The durable chain is
+The durable chain established here is
 
 $$
 \text{cuspidality}
@@ -1610,9 +1445,9 @@ $$
 \Longrightarrow
 \text{local factorization}
 \Longrightarrow
-\text{Euler products and functional equations}
+\text{Rankin–Selberg unfolding}
 \Longrightarrow
-\text{multiplicity and trace consequences}.
+\text{meromorphic integral family and residue pairing}.
 $$
 
-Every arrow depends on the normalization ledger: probability measure on $F\backslash\mathbf A$, opposite Fourier signs in the bilinear unfolding, normalized spherical Whittaker functions, the power $|\det g|^s$, and self-dual Fourier measure. With those choices fixed, the global and local theories are not parallel stories but one calculation viewed from opposite ends.
+Every arrow uses the same ledger: probability measure on $F\backslash\mathbf A$, positive Fourier phase, opposite Whittaker signs in the bilinear unfolding, normalized spherical functions, the weight $|\det g|^s$, and self-dual Fourier measure. This is the complete global Whittaker and Rankin–Selberg interface required by the later analytic theory, with no claim borrowed from that later theory.
