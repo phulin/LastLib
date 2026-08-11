@@ -38,7 +38,7 @@ any resulting corrections.
 - [ ] 012. Semistable Curves, Dual Graphs, and Component Groups
 - [x] 013. Faithfully Flat Descent in Algebraic Geometry
 - [x] 014. Moduli Stacks for Modular and PEL Problems
-- [ ] 015. Coherent Cohomology in Proper Families
+- [x] 015. Coherent Cohomology in Proper Families
 - [x] 016. Arithmetic Spectral Sequences and Derived Cohomology
 - [ ] 017. Cotangent Complexes, Perfect Complexes, and Determinant Lines
 - [ ] 018. Formal Schemes, GAGA, and Algebraization
