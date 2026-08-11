@@ -1359,17 +1359,20 @@ $$
 Indeed,
 
 $$
-\beta_{\mathfrak q}
-\begin{pmatrix}a&b\\c&d\end{pmatrix}
 \beta_{\mathfrak q}^{-1}
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\beta_{\mathfrak q}
 =
 \begin{pmatrix}
-a&\varpi_{\mathfrak q}^{-1}b\\
-\varpi_{\mathfrak q}c&d
+a&\varpi_{\mathfrak q}b\\
+\varpi_{\mathfrak q}^{-1}c&d
 \end{pmatrix},
 $$
 
-so an integral matrix whose lower-left entry is divisible by $\varpi_{\mathfrak q}$ lies in the displayed conjugate. We therefore obtain two maps
+and the matrix on the right is integral when $c$ is divisible by
+$\varpi_{\mathfrak q}$. Thus every element of $I_{\mathfrak q}$ has the form
+$\beta_{\mathfrak q}k\beta_{\mathfrak q}^{-1}$ with
+$k\in K_{\mathfrak q}$, which proves the displayed inclusion. We therefore obtain two maps
 
 $$
 \delta_0,\delta_1:
@@ -1621,7 +1624,31 @@ $$
 
 Then evaluation $\langle w,\lambda\rangle_W=\lambda(w)$ is invariant. If central characters are included, the two form spaces must have inverse central characters so that their scalar factors cancel.
 
-For symmetric powers there is also, after a determinant twist, a natural invariant pairing. On degree-$n$ binary forms it is induced by the alternating form on the standard two-dimensional representation. Its symmetry sign is $(-1)^n$. Over an integral ring, a divided-power lattice can be preferable to the monomial lattice because binomial coefficients affect perfectness.
+For symmetric powers the determinant twist can be stated exactly over the
+characteristic-zero coefficient field $E$. The alternating form on the
+standard two-dimensional representation $V$ gives
+
+$$
+V^\vee\cong V\otimes\det^{-1},
+$$
+
+and hence
+
+$$
+\left(\operatorname{Sym}^nV\otimes\det^m\right)^\vee
+\cong
+\operatorname{Sym}^nV\otimes\det^{-n-m}.
+$$
+
+Thus the natural invariant pairing couples determinant exponents $m$ and
+$-n-m$. Its symmetry sign is $(-1)^n$ when the two factors are identified.
+In particular, this weight is self-dual with the same determinant exponent
+only when $n$ is even and $m=-n/2$. Over an integral ring, a divided-power
+lattice can be preferable to the monomial lattice because binomial
+coefficients affect perfectness. Integrally, the dual of a symmetric-power
+lattice is naturally described by divided powers; one should use the actual
+dual lattice rather than infer perfectness from the characteristic-zero
+display.
 
 ### 10.2 Finite-sum pairings
 
@@ -1795,7 +1822,30 @@ X_{U(3)}\cong
 \widehat{\mathcal H}^{\times}/U(3).
 $$
 
-Reduction at $3$ identifies the right quotient with $\operatorname{GL}_2(\mathbf F_3)$. Direct reduction of the explicit list of $24$ Hurwitz units shows that they remain distinct; their image lies in $\operatorname{SL}_2(\mathbf F_3)$ because every one has reduced norm one. Since $\operatorname{SL}_2(\mathbf F_3)$ also has order $24$, the image is the whole group. Hence
+Reduction at $3$ identifies the right quotient with $\operatorname{GL}_2(\mathbf F_3)$. The $24$ Hurwitz units remain distinct after reduction. Indeed, if two norm-one units $u$ and $v$ had the same reduction, then
+
+$$
+u-v=3x
+$$
+
+for some $x\in\mathcal H$. If $u\ne v$, positivity and integrality of the
+reduced norm on the Hurwitz order would give
+
+$$
+\operatorname{Nrd}(u-v)=9\operatorname{Nrd}(x)\ge 9.
+$$
+
+On the other hand, the Euclidean quaternion norm satisfies the triangle
+inequality, so
+
+$$
+\operatorname{Nrd}(u-v)^{1/2}
+\le \operatorname{Nrd}(u)^{1/2}+\operatorname{Nrd}(v)^{1/2}=2,
+$$
+
+a contradiction. Their image lies in $\operatorname{SL}_2(\mathbf F_3)$
+because every one has reduced norm one. Since
+$\operatorname{SL}_2(\mathbf F_3)$ also has order $24$, the image is the whole group. Hence
 
 $$
 X_{U(3)}\cong
@@ -1915,13 +1965,24 @@ $$
 g_i a_r=\gamma_{i,r}g_{j(i,r)}u_{i,r}.
 $$
 
-In an admissible decomposition its contribution has the form
+In an admissible decomposition an individual summand has the form
 
 $$
 w_{j(i,r)}\longmapsto\rho(\gamma_{i,r})w_{j(i,r)}
 $$
 
-followed, when necessary, by projection to the target stabilizer invariants. Summing over $r$ gives a block matrix. If stabilizer orders are invertible, the projection is the averaging idempotent; without that hypothesis the trace construction itself remains integral and should be used instead of inserting denominators.
+in the ambient coefficient module $W$. Individual summands need not lie in
+the target stabilizer invariants. One first collects all summands belonging to
+the same target class and then sums them in $W$. The target stabilizer
+permutes this completed family of summands, so the completed row lies in the
+required invariant submodule. This gives the block matrix promised by the
+trace construction.
+
+If stabilizer orders are invertible, applying the averaging idempotent to a
+completed row leaves it unchanged and can be used to verify invariance. It
+must not be applied separately to the summands: termwise projection can
+change the correspondence. Without invertibility, the trace construction is
+already integral and no denominators are needed.
 
 Changing representatives conjugates this matrix by the block-diagonal changes $\rho(b_i)$. Hence its linear map is intrinsic even though its entries are coordinate dependent. This is precisely why admissible bases are useful: they expose the finite calculation without pretending that the chosen matrix is canonical.
 
@@ -1966,20 +2027,68 @@ $$
 
 On a central scalar $z$, reduced norm is $z^2$, so the central character of this automorphic character is $\psi^2$. It satisfies the vacuous intrinsic cuspidality condition because there are no proper parabolics. Nevertheless it is one-dimensional and belongs to the character spectrum rather than the genuinely nonabelian spectrum.
 
-There is a coefficient-system qualification. The scalar function $\psi\circ\operatorname{Nrd}$ belongs to a space with coefficient module $W$ only when its archimedean character occurs as a one-dimensional subrepresentation of $W$ and its finite conductor and central character match the level data. Over characteristic zero, for the irreducible weight
+There is a coefficient-system qualification, including an inverse forced by
+the right-equivariance convention. Let $w\ne0$ span a line in $W$ such that
+
+$$
+\rho(k_\infty)w
+=\psi_\infty(\operatorname{Nrd}(k_\infty))^{-1}w
+\qquad(k_\infty\in G_\infty).
+$$
+
+If
+
+$$
+\psi_f\circ\operatorname{Nrd}|_U=1,
+\qquad
+\chi_f=\psi_f^2,
+$$
+
+then the formula
+
+$$
+f_{\psi,w}(g_f)
+=\psi_f(\operatorname{Nrd}(g_f))w
+$$
+
+defines an element of $S(U,W,\chi_f)$. To check the left transformation law,
+use the idele-class relation
+
+$$
+\psi_f(\operatorname{Nrd}(\gamma))
+=\psi_\infty(\operatorname{Nrd}(\gamma))^{-1}
+\qquad(\gamma\in D^\times).
+$$
+
+The level condition gives right $U$-invariance, and
+$\operatorname{Nrd}(z)=z^2$ for a central scalar gives the asserted central
+character. Conversely, a norm-character vector of this form forces exactly
+these conditions on its nonzero coefficient line.
+
+Over characteristic zero, for the irreducible weight
 
 $$
 \bigotimes_\tau\operatorname{Sym}^{n_\tau}V_\tau
 \otimes\det^{m_\tau},
 $$
 
-this can happen only when every $n_\tau=0$; the resulting algebraic character is a product of determinant, hence reduced-norm, powers. Thus a scalar norm character must not be inserted into a higher-dimensional weight space merely because its central character agrees.
+such a line can occur only when every $n_\tau=0$; then $\rho$ itself is the
+product of the reduced-norm powers $\operatorname{Nrd}^{m_\tau}$ at the real
+places, and $\psi_\infty\circ\operatorname{Nrd}$ must restrict to its inverse.
+Thus a scalar norm character must not be inserted into a higher-dimensional
+weight space merely because its central character agrees.
 
 This distinction is essential in comparisons with automorphic forms on $\operatorname{GL}_2$. One-dimensional representations of $D^\times$ do not transfer as cuspidal two-dimensional automorphic representations in the same manner as higher-dimensional constituents.
 
 ### 13.3 The character subspace and its complement
 
-Define the **norm-character subspace** $S^{\mathrm{char}}(U,W,\chi)$ to be the span of the compatible one-dimensional automorphic subrepresentations that occur in the chosen coefficient system, equivalently of the embeddings of matching characters $\psi\circ\operatorname{Nrd}$ into the form space. It is zero when $W$ contains no matching one-dimensional weight. In trivial weight it can be described entirely on the class set: such a function factors through the norm map
+Define the **norm-character subspace** $S^{\mathrm{char}}(U,W,\chi)$ to be
+the span of the explicit functions $f_{\psi,w}$ above as $\psi$ and its
+compatible coefficient line vary. It is zero when $W$ contains no matching
+one-dimensional weight. This definition uses only the form space constructed
+in this book and does not presuppose a decomposition into automorphic
+representations. In trivial weight it can be described entirely on the class
+set: such a function factors through the norm map
 
 $$
 X_U\longrightarrow
@@ -2133,7 +2242,7 @@ $$
 where $\gamma\in D^\times$, $u\in U$, and $z\in Z_f$. The definition presupposes
 
 $$
-\chi_f(a)=\rho(a_\infty)quad(a\in F^\times),
+\chi_f(a)=\rho(a_\infty)\quad(a\in F^\times),
 \qquad
 \chi_f|_{U\cap Z_f}=1.
 $$
