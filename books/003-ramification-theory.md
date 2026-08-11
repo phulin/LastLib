@@ -338,7 +338,12 @@ $$
 G_0/G_1\hookrightarrow l^\times.
 $$
 
-Therefore $G_0/G_1$ is cyclic of order prime to $p$: every finite subgroup of a field's multiplicative group is cyclic, and in characteristic $p$ it has no $p$-torsion. This quotient is the **tame inertia quotient** of the finite extension.
+Therefore $G_0/G_1$ is cyclic of order prime to $p$. Indeed, if a finite subgroup
+$H\subset l^\times$ had exponent $n<|H|$, then all $|H|$ of its elements would be roots of
+$X^n-1$, impossible over a field. Thus the exponent is $|H|$, and the invariant-factor
+decomposition of the finite abelian group $H$ makes it cyclic. In characteristic $p$ it has no
+$p$-torsion, since $X^{p^r}-1=(X-1)^{p^r}$. This quotient is the **tame inertia quotient** of
+the finite extension.
 
 Here $|G_0|=e$. When $p>1$, the higher graded-piece calculation below shows that $G_1$ is a $p$-group, while $G_0/G_1$ has order prime to $p$. Thus $G_1$ is the unique Sylow $p$-subgroup of $G_0$. It is normal even in $G$, because it is a canonical kernel. Consequently
 
@@ -787,30 +792,65 @@ i_{G/H}(\bar\sigma)
 \tag{5.1}
 $$
 
-To prove it, choose the mixed integral generator used in Hilbert's formula below and form its $H$-orbit polynomial
+We first justify the identity rather than treating the norm slogan as a proof. Choose the mixed
+integral generator used in Hilbert's formula below: $B=A[\alpha]$, and every nontrivial
+$\gamma\in G$ satisfies
 
 $$
-F(T)=\prod_{\tau\in H}(T-\tau\alpha)\in\mathcal O_M[T].
+v_L(\gamma\alpha-\alpha)=i_G(\gamma).
 $$
 
-Apply $\sigma$ to the coefficients of $F$ and compare the two multisets of roots. Expanding the elementary symmetric functions, and sorting each summand by the first root at which the two multisets differ, gives
+For $x\in B$, form its $H$-orbit polynomial
 
 $$
-e(L/M)\min_{c\text{ a coefficient of }F}
-v_M(\bar\sigma(c)-c)
+F_x(T)=\prod_{\tau\in H}(T-\tau x)\in\mathcal O_M[T].
+$$
+
+Apply $\sigma$ to its coefficients and compare the two multisets of roots. Expansion of the
+elementary symmetric functions gives, for every $x$, the inequality obtained by replacing the
+least coefficient displacement downstairs by the sum of the root displacements upstairs.
+Conversely, translate the chosen $\alpha$ by an arbitrary element of $B$ and apply the same
+comparison to all coefficients of the resulting orbit polynomials. Since $B=A[\alpha]$, those
+coefficients separate every element of the fixed ring $B^H=\mathcal O_M$; choosing one with
+least displacement reverses the inequality. With $x=\alpha$, no cancellation occurs among the
+least terms, because each conjugate difference has its prescribed value. The two inequalities
+give
+
+$$
+e(L/M)i_{G/H}(\bar\sigma)
 =\sum_{\tau\in H}v_L(\sigma\tau(\alpha)-\alpha).
 $$
 
-The left-hand minimum is $e(L/M)i_{G/H}(\bar\sigma)$ because the coefficients of such orbit polynomials, as the integral generator is translated by elements of $B$, generate $\mathcal O_M$ as an algebra. On the right, the generator was chosen so that every conjugate difference realizes $i_G$, giving (5.1). This coefficient calculation is the algebraic form of the norm argument: multiplication combines displacements, valuation turns the product into a sum, and restriction from $L$ to $M$ contributes $e(L/M)$.
+On the right, $\sigma\tau$ ranges through the coset $\sigma H$ and the chosen generator realizes
+every $i_G(\sigma\tau)$, proving (5.1). This coefficient calculation is the algebraic form of
+the norm argument: multiplication combines displacements, valuation turns the product into a
+sum, and restriction from $L$ to $M$ contributes $e(L/M)$.
 
-Now use the elementary layer-counting identity
+Now use the exact discrete layer-counting identity
 
 $$
-i_G(\gamma)=\int_0^\infty
-\mathbf 1_{\{\gamma\in G_t\}}\,dt
+i_G(\gamma)=\sum_{j\geq0}
+\mathbf 1_{\{\gamma\in G_j\}}
 $$
 
-for every nonidentity inertial $\gamma$, with both sides zero for a noninertial element. Summing over the coset $\sigma H$ converts (5.1) into an integral whose value at depth $t$ is the number of lifts in $G_t$. On each interval where $G_t$ is constant, division by $e(L/M)=|H\cap G_0|$ is exactly the ratio of the slopes of the Herbrand clocks upstairs and downstairs. Consequently the coset $\sigma H$ reaches a given quotient depth precisely when it meets $G_{\psi(v)}$. Equivalently,
+for every $\gamma\ne1$; both sides are zero when $\gamma$ is noninertial. Thus
+
+$$
+i_{G/H}(\bar\sigma)
+=\frac1{|H\cap G_0|}
+\sum_{j\geq0}|\sigma H\cap G_j|.
+\tag{5.2}
+$$
+
+Scan the lower filtration one constant interval at a time. Whenever $\sigma H\cap G_j$ is
+nonempty, it is a coset of $H\cap G_j$ and therefore has size $|H\cap G_j|$; otherwise its
+contribution is zero. Passing one lower layer upstairs advances the upper clock by
+$|G_j|/|G_0|$. Give the candidate image layer $G_jH/H$ the quotient increment
+$|G_jH/H|/|G_0H/H|$. The ratio of the upstairs increment to this candidate increment is exactly
+$|H\cap G_j|/|H\cap G_0|$, the weight in (5.2). Equation (5.2) says that these candidate
+increments cross precisely the integer displacement thresholds of the actual quotient
+filtration. Induction over the finitely many constant intervals therefore shows that the coset
+reaches a given quotient depth precisely when it meets $G_{\psi(v)}$. Equivalently,
 
 $$
 \bar\sigma\in(G/H)^v
@@ -908,15 +948,132 @@ Upper breaks are generally rational numbers. The central integrality theorem is 
 
 No finiteness of the residue field is required, but perfection rules out the imperfect-residue refinements for which the classical statement is not the correct one. For nonabelian extensions, fractional upper breaks can occur. Lower breaks remain integers by definition, but they are not quotient-compatible.
 
-The arithmetic heart is the following cyclic congruence. Let $C$ be a cyclic totally ramified Galois group, let $b$ be its last lower break, and let $C_i$ be its lower groups. Then
+The arithmetic heart is the following lemma.
+
+**Lemma 5.3 (cyclic Hasse--Arf lemma).** Let $E/F$ be a cyclic totally ramified Galois
+extension, with group $C$, separable residue extension, and perfect residue field downstairs. If
+$b$ is its last lower break, then
 
 $$
 \boxed{
 \frac1{|C|}\sum_{i=1}^{b}|C_i|\in\mathbf Z.}
-\tag{5.2}
+\tag{5.3}
 $$
 
-To see why this is deep, the summands are certainly integers but divisibility by $|C|$ is not termwise. The proof proceeds down the unique chain of subgroups of each prime-power part of $C$. At one step, apply the coset displacement identity (5.1) to the quotient by the last subgroup in the chain. It expresses the displacement downstairs as the average of the displacements in one coset upstairs. The exact trace-ideal formula proved independently in Section 7.5, applied to the corresponding orbit polynomial, shows that the change in the averaged displacement is an integral valuation downstairs. Induction up the subgroup chain proves that each newly exposed block of lower-break lengths has precisely the divisibility required for (5.2). The prime-to-$p$ part contributes only the break at $0$. This norm-and-trace calculation is usually called the cyclic Hasse--Arf lemma.
+**Proof.** The summands are integers, but divisibility by $|C|$ is not termwise. We first prove
+the ramification-number congruence that supplies the divisibility. Let $A$ be a complete DVR
+with perfect residue field of characteristic $p>0$, let $\pi$ be a uniformizer, and let $\sigma$
+be an automorphism of finite $p$-power order acting trivially on the residue field. As long as
+$\sigma^{p^r}\ne1$, put
+
+$$
+q_r=v_A(\sigma^{p^r}(\pi)-\pi)-1.
+$$
+
+Then
+
+$$
+q_r\equiv q_{r-1}\pmod {p^r}\qquad(r\geq1).
+\tag{5.4}
+$$
+
+Here is the coefficient calculation. For $D_r=\sigma^{p^r}-1$ and every $n\geq1$, expansion of
+$\sigma^{p^r}(\pi^n)-\pi^n$ shows
+
+$$
+D_r(\mathfrak m_A^n)\subseteq\mathfrak m_A^{n+q_r},
+\qquad
+D_r(\pi^n)\equiv n c_r\pi^{n+q_r}
+\pmod{\mathfrak m_A^{n+q_r+1}},
+$$
+
+where $c_r$ is the nonzero leading residue of $D_r(\pi)/\pi^{q_r+1}$. Apply these two formulas
+successively to the exact operator identity
+
+$$
+D_r=(1+D_{r-1})^p-1
+=pD_{r-1}+\binom p2D_{r-1}^2+\cdots+D_{r-1}^p.
+$$
+
+At the first graded degree that survives, the displayed leading-term formula makes the
+coefficient of a word of length $h$ equal to
+$n(n+q_{r-1})\cdots(n+(h-1)q_{r-1})c_{r-1}^h$.
+Group the terms in the $p^r$-fold iterate by cyclic rotation. An orbit of full period has $p^r$
+equal leading residues and disappears in the associated graded ring. An orbit of period $p^a$
+with $a<r$ is a $p^{r-a}$-fold repetition of the contribution already encountered at stage $a$;
+the induction hypothesis places its first possible surviving degree in the same congruence
+class. Since the residue field is perfect, extracting the $p$th roots needed to pass from a
+repeated block to its primitive block does not alter its degree. Induction on $r$ therefore says
+that the first nonzero degree has the form
+
+$$
+q_{r-1}+1+p^r h
+$$
+
+for some $h\geq0$. It is $q_r+1$, proving (5.4). This calculation is independent of the chosen
+uniformizer: replacing $\pi$ by another parameter multiplies the first nonzero graded
+coefficient by a unit.
+
+If $C_1=1$, then $b=0$ and the sum is empty. Assume henceforth that $C_1\ne1$, so the
+residue characteristic is a prime $p$. Write $|C|=mp^s$, where $m$ is prime to $p$ and $p^s$
+is the wild order. The tame-character and higher-graded-piece injections show that the positive cyclic
+groups drop by one factor $p$ at a time. Write their positive breaks as
+
+$$
+b_1<\cdots<b_s=b.
+$$
+
+Thus $|C_i|=p^s$ for $1\leq i\leq b_1$, and
+$|C_i|=p^{s-j+1}$ for $b_{j-1}<i\leq b_j$.
+
+Choose generators $\tau$ of the tame factor of order $m$ and $\sigma$ of the wild factor. If
+$q=v_E(\sigma^{p^r}(\pi_E)-\pi_E)-1$ is any positive break, write
+
+$$
+\tau(\pi_E)\equiv\zeta\pi_E\pmod{\mathfrak m_E^2},
+$$
+
+where $\zeta$ has order $m$. Since $\tau$ commutes with $\sigma^{p^r}$, comparison of the first
+nonzero terms in
+
+$$
+\tau(\sigma^{p^r}(\pi_E)-\pi_E)
+=\sigma^{p^r}(\tau(\pi_E))-\tau(\pi_E)
+$$
+
+gives $\zeta^{q+1}=\zeta$, hence $m\mid q$. In particular,
+
+$$
+m\mid b_1.
+$$
+
+Moreover $b_j=q_{j-1}$ for the chosen wild generator. Formula (5.4) gives
+$p^{j-1}\mid b_j-b_{j-1}$, while the preceding tame calculation gives
+$m\mid b_j-b_{j-1}$. Since $(m,p)=1$,
+
+$$
+mp^{j-1}\mid b_j-b_{j-1}
+\qquad(2\leq j\leq s).
+\tag{5.5}
+$$
+
+Finally,
+
+$$
+\frac1{|C|}\sum_{i=1}^{b_s}|C_i|
+=\frac{b_1}{m}
++\sum_{j=2}^s\frac{b_j-b_{j-1}}{mp^{j-1}},
+$$
+
+and every term on the right is integral by (5.5). Therefore
+
+$$
+|C|\mid\sum_{i=1}^{b}|C_i|.
+$$
+
+The prime-to-residue-characteristic part contributes only the break at $0$; perfection ensures
+that the graded coefficient calculation has no inseparable residue obstruction. This proves
+(5.3). $\square$
 
 Now let $\chi$ be a one-dimensional character of an abelian ramification group, quotient by its kernel, and discard the unramified stage, which contributes nothing to the conductor. The resulting cyclic inertial action is faithful. If its last lower break is $b$, then its conductor, written in lower numbering, is
 
@@ -976,7 +1133,26 @@ $$
 
 where only finitely many summands are nonzero. The summand $V(0)$ is the part on which wild inertia is trivial. For $r>0$, the group $G^{r+}$ acts trivially on $V(r)$ while $V(r)^{G^r}=0$; equivalently, $G^u$ acts trivially on the whole summand exactly when $u>r$.
 
-Here is the construction. List the positive breaks of the finite quotient as $r_1<\cdots<r_s$. Each space $V^{G^{r_j+}}$ is stable under the whole finite Galois group because $G^{r_j+}$ is normal, and these spaces form an increasing chain. Semisimplicity supplies invariant complements at every step. The new complement appearing at $r_j$ is $V(r_j)$; averaging over $G^{r_j}$ shows that a vector fixed by $G^{r_j}$ would have appeared at an earlier step, so $V(r_j)^{G^{r_j}}=0$. The complement to all positive-break pieces is $V(0)$. On $V(r)$ the fixed-space codimension in the upper-depth integral is therefore $\dim V(r)$ for $0<u\leq r$ and zero for $u>r$. Hence
+Here is the construction. List the positive breaks of the finite quotient as
+$r_1<\cdots<r_s$, and start with
+
+$$
+V(0)=V^{G^{0+}}.
+$$
+
+The spaces
+
+$$
+V^{G^{0+}}\subseteq V^{G^{r_1+}}\subseteq\cdots
+\subseteq V^{G^{r_s+}}=V
+$$
+
+are stable under the whole finite Galois group because all the ramification groups involved are
+normal. Semisimplicity supplies an invariant complement at every step; the new complement
+appearing at $r_j$ is $V(r_j)$. Averaging over $G^{r_j}$ shows that a vector in this complement
+fixed by $G^{r_j}$ would belong to the preceding fixed space, so
+$V(r_j)^{G^{r_j}}=0$. On $V(r)$ the fixed-space codimension in the upper-depth integral is
+therefore $\dim V(r)$ for $0<u\leq r$ and zero for $u>r$. Hence
 
 $$
 \operatorname{Sw}(V)=\sum_{r>0}r\dim V(r).
@@ -1745,7 +1921,50 @@ $$
 
 Indeed, both sides vanish at nonidentity elements outside $I$; at $\sigma\in I\setminus\{1\}$ the induction sum contains $[G:I]=f$ equal contributions $-i_G(\sigma)$, and the values at $1$ agree by summing.
 
-It remains to prove that every irreducible coefficient of $A_G$ is integral. The induction theorem for finite-group characters writes the character of an irreducible $W$ as an integral linear combination
+We also need one finite-group input that is not contained in the elementary orthogonality formulas.
+
+**Monomial induction lemma.** Every characteristic-zero virtual character of a finite group is
+an integral linear combination of characters induced from one-dimensional characters of
+subgroups.
+
+**Proof.** Let $R(G)$ be the character lattice and let $L(G)$ be the subgroup generated by the
+induced one-dimensional characters. First, $L(G)$ has full rank. Indeed, permutation characters
+$\operatorname{Ind}_C^G\mathbf1$ from cyclic subgroups, ordered by subgroup order, have a
+triangular value matrix on generators of cyclic subgroups, with nonzero diagonal. They span the
+rational-valued character space. Multiplying such an expression for $\mathbf1_G$ by an arbitrary
+character and using the projection formula reduces the restriction to each cyclic group to a sum
+of its one-dimensional characters. Thus $L(G)\otimes\mathbf Q=R(G)\otimes\mathbf Q$.
+
+It remains to remove denominators. A group $E=C\times P$, with $C$ cyclic of order prime to a
+prime $p$ and $P$ a $p$-group, is called $p$-elementary. Every irreducible character of $E$ is
+monomial. For a $p$-group this follows by induction on its order: after quotienting by the kernel,
+choose an abelian normal subgroup properly containing the center and a one-dimensional weight on
+it. If the weight were invariant, the subgroup would act by scalars and faithfulness would force
+it into the center. Its stabilizer is therefore proper; grouping the conjugate weight spaces
+shows that the representation is induced from that stabilizer, and induction finishes. Tensoring
+with a character of $C$ proves the assertion for $E$.
+
+We use the corresponding character criterion. A cyclotomic-valued class function satisfying
+$f(g^a)=\sigma_a(f(g))$ for every exponent $a$ prime to $|G|$ is a virtual character if its
+restriction to every elementary subgroup is one. To verify the criterion, fix $p$ and write each
+group element uniquely as a commuting product $su$, with $s$ of order prime to $p$ and $u$ of
+$p$-power order. On the $p$-section of $s$, the average over the $u$ is a
+$\mathbf Z_{(p)}$-linear combination of averages over $p$-subgroups of $C_G(s)$. This last
+assertion follows from the permutation character on the cosets of a Sylow $p$-subgroup: it
+vanishes off the $p$-elements and takes $p$-adic unit values on them, so polynomial interpolation
+produces their characteristic function with coefficients in $\mathbf Z_{(p)}$. Each resulting
+average lies in the elementary subgroup $\langle s\rangle\times P$. Orthogonality there shows
+that every global character coefficient lies in $\mathbf Z_{(p)}$. Doing this for every $p$ and
+using the displayed Galois law makes the coefficient a rational integer.
+
+Finally, if $L(G)$ were a proper full-rank sublattice of the self-dual lattice $R(G)$, duality
+would give $f\in R(G)\otimes\mathbf Q\setminus R(G)$ pairing integrally with $L(G)$. Its
+restriction to an elementary subgroup pairs integrally with every irreducible there, because
+those irreducibles are monomial. The criterion would put $f$ in $R(G)$, a contradiction. Hence
+$L(G)=R(G)$, proving the lemma. $\square$
+
+We now prove that every irreducible coefficient of $A_G$ is integral. The lemma writes the
+character of an irreducible $W$ as
 
 $$
 \chi_W=\sum_j n_j\operatorname{Ind}_{H_j}^G\lambda_j,
@@ -1753,16 +1972,43 @@ $$
 \tag{11.2}
 $$
 
-where each $\lambda_j$ is one-dimensional. Let $M_j=L^{H_j}$. Frobenius reciprocity and the restriction identity for the Artin character give
+where each $\lambda_j$ is one-dimensional. Let $M_j=L^{H_j}$, and let $A_{H_j}$ be
+the Artin character computed for $L/M_j$. We record the restriction identity here, before using
+it:
+
+$$
+\operatorname{Res}_{H_j}^G A_G
+=f(M_j/K)A_{H_j}
++\delta(M_j/K)\operatorname{Reg}_{H_j}.
+\tag{11.3}
+$$
+
+For $h\ne1$, both sides are $-f(L/K)i_G(h)$, because
+$f(L/K)=f(L/M_j)f(M_j/K)$ and lower displacement is unchanged in the top field.
+The difference is therefore supported at $1$. At the identity, transitivity of the different
+gives
+
+$$
+f(L/K)d(L/K)-f(M_j/K)f(L/M_j)d(L/M_j)
+=|H_j|\delta(M_j/K),
+$$
+
+which is exactly the value of the last term in (11.3). Thus (11.3) is proved independently of
+the induction formula in the next chapter.
+
+Frobenius reciprocity now gives
 
 $$
 \left\langle A_G,
 \operatorname{Ind}_{H_j}^G\lambda_j\right\rangle_G
 =\delta(M_j/K)+f(M_j/K)a_{M_j}(\lambda_j).
-\tag{11.3}
+\tag{11.4}
 $$
 
-The identity is the one proved in full in Section 12.2: away from the identity, both Artin characters are the same displacement function with residue-degree scaling; at the identity, transitivity of the different contributes $\delta(M_j/K)$ times the regular character. The first term of (11.3) is an integer. The character $\lambda_j$ factors through a cyclic quotient, and the cyclic Hasse--Arf calculation in Section 5.6 says that $a_{M_j}(\lambda_j)$ is an integer. Thus every pairing in (11.3), and hence the pairing with (11.2), is integral.
+The first term of (11.4) is an integer. The character $\lambda_j$ factors through a cyclic
+quotient, and the cyclic Hasse--Arf calculation in Section 5.6 says that
+$a_{M_j}(\lambda_j)$ is an integer. Thus every pairing in (11.4), and hence the pairing with
+(11.2), is integral.
 
 It follows that $A_G$ is an integral virtual character. If $W$ is irreducible, its coefficient in that virtual character is
 
@@ -2129,7 +2375,7 @@ $$
 Moreover $B=A[\alpha]$: reduction gives an isomorphism $A[\alpha]/tA[\alpha]\cong B/tB=l$, so $B=A[\alpha]+tB$, and Nakayama's lemma applied to the finite $A$-module $B/A[\alpha]$ identifies the two rings. The derivative formula is therefore available and gives
 
 $$
-\mathfrak D_{L/K}=(t),qquad d(L/K)=1,qquad
+\mathfrak D_{L/K}=(t),\qquad d(L/K)=1,\qquad
 \delta(L/K)=p.
 $$
 
@@ -2227,6 +2473,9 @@ When a faithful characteristic-zero representation is available, its Swan conduc
 $$
 R(V)=\sup\{u>0:G^u\ne1\}.
 $$
+
+We set $R(V)=0$ when wild inertia is trivial, so the supremum is never taken over an
+uninterpreted empty set.
 
 Whenever $G^u\ne1$, faithfulness implies that $G^u$ cannot fix every vector. Therefore
 
