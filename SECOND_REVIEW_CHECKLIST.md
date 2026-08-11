@@ -83,7 +83,7 @@ any resulting corrections.
 - [x] 057. Dieudonné Theory and Raynaud Full Faithfulness
 - [x] 058. Fontaine–Laffaille Modules and Torsion Representations
 - [x] 059. Integral Fontaine–Laffaille Equivalence and Base Change
-- [ ] 060. p-divisible Groups and Serre–Tate Theory
+- [x] 060. p-divisible Groups and Serre–Tate Theory
 - [ ] 061. Ramification and Discriminants of Finite-Flat Representations
 - [x] 062. Artinian and Complete Local Coefficient Rings
 - [x] 063. Pseudocompact Trace Algebras and Carayol Descent

@@ -98,11 +98,11 @@ $$
 
 Thus $\mathbf Q_p/\mathbf Z_p$ has slope $0$ and $\mu_{p^\infty}$ has slope $1$. A homomorphism $G\to H$ induces $D(H)\to D(G)$. Cartier duality is denoted $G\mapsto G^D$. For an abelian scheme $A$, the associated group is $A[p^\infty]$, and the convention agrees with the contravariant crystal $H^1_{\mathrm{cris}}(A)$ developed earlier.
 
-Statements about slopes are made over a perfect field. Statements about connected--etale lifting are made over a complete local ring, or level by level over an artinian local ring, with perfect residue field. The Serre--Tate theorem is stated for nilpotent thickenings on which $p$ is locally nilpotent and, by passage to inverse limits, for complete noetherian local $W$-algebras. Whenever divided powers are used directly in a lifting step, the ideal carries nilpotent divided powers compatible with those on $(p)$. For a general nilpotent thickening no such divided powers are silently assumed: one passes to its divided-power envelope and uses crystalline descent. This distinction is needed especially when the ideal contains $p$.
+Statements about slopes are made over a perfect field. Statements about connected--etale lifting are made over a complete local ring, or level by level over an artinian local ring, with perfect residue field. The Serre--Tate theorem is stated for nilpotent thickenings on which $p$ is locally nilpotent. For a complete noetherian local $W$-algebra, its inverse-limit form classifies compatible formal deformation systems over the artinian quotients. Such a formal system is algebraic when it carries a compatible relatively ample line bundle; this effectivity qualification is essential and will be retained. Whenever divided powers are used directly in a lifting step, the ideal carries nilpotent divided powers compatible with those on $(p)$. For a general nilpotent thickening no such divided powers are silently assumed: the proof uses divided-power envelopes together with descent. This distinction is needed especially when the ideal contains $p$.
 
 An **ordinary abelian scheme** in characteristic $p$ means one whose geometric fibers are ordinary. We do not use “ordinary” to mean that a Galois representation or an extension is split. This distinction will prevent several common errors.
 
-Books 38, 54, 57, and 59 supply the exact prior foundations. In particular, multiplication kernels of an abelian scheme are finite locally free, polarizations give perfect torsion pairings in the principal case, first crystalline cohomology is a finite locally free contravariant crystal with its Hodge sequence, and finite-level Dieudonne theory identifies $D(A[p^n])$ with $H^1_{\mathrm{cris}}(A)/p^n$. The low-weight integral equivalence explains how compatible finite-flat levels and filtered lattices pass between one another. We shall recall every form needed below and prove the genuinely infinite-level and deformation assertions here.
+Books 38, 54, 57, and 59 supply the substantial direct foundations recorded in the dependency graph. In particular, multiplication kernels of an abelian scheme are finite locally free, polarizations give perfect torsion pairings in the principal case, first crystalline cohomology is a finite locally free contravariant crystal with its Hodge sequence, and finite-level Dieudonne theory identifies $D(A[p^n])$ with $H^1_{\mathrm{cris}}(A)/p^n$. Book 59 is used only for its integral finite-flat and filtered-lattice interface, and only under its standing hypothesis $p>2$; no all-prime deformation assertion below depends on it. It does not contain the deformation theorems proved here. The finite-etale lifting and local Kummer calculations used below are recalled with proofs, rather than imported as additional deformation input.
 
 ### 1.3 The package developed here
 
@@ -143,13 +143,22 @@ Truncation loses information. A finite group killed by $p^n$ may have the correc
 
 ### 2.2 Height, dimension, and basic examples
 
-Height measures the logarithmic growth of the finite levels. Dimension measures the infinitesimal connected direction. Define
+Height measures the logarithmic growth of the finite levels. Dimension measures the infinitesimal connected direction. The formal completion of $G$ at the identity is a formally smooth commutative formal group; define
 
 $$
-\dim G=\operatorname{rank}_S\operatorname{Lie}(G[p^n])
+\dim G=\operatorname{rank}_S\operatorname{Lie}(G)
+=\operatorname{rank}_S\omega_G.
 $$
 
-for any sufficiently large $n$; the Lie algebra is already stable at level one because the inclusion $G[p]\subset G[p^n]$ induces an isomorphism on tangent spaces. When the base is connected this rank is constant in the situations considered here. More intrinsically, $\omega_G=e^*\Omega^1_{G[p^n]/S}$ stabilizes, and $\dim G=\operatorname{rank}\omega_G$.
+If $p^n=0$ on $S$, then $G[p^n]$ contains the entire formal neighborhood of the identity and
+
+$$
+\operatorname{Lie}(G[p^n])\simeq\operatorname{Lie}(G),
+\qquad
+e^*\Omega^1_{G[p^n]/S}\simeq\omega_G.
+$$
+
+Thus a sufficiently high finite level computes the dimension on a $p$-nilpotent base. Level one does not do so over a general mixed-characteristic thickening: for example, $\operatorname{Lie}(\mu_p)$ over $W_m(k)$ is annihilated by $p$, whereas $\mu_{p^\infty}$ has one-dimensional formal part. Over a field, already $G[p]$ computes the dimension. In the constant-dimension situations below, $\omega_G$ is locally free of that rank.
 
 The two height-one models are
 
@@ -159,7 +168,7 @@ $$
 \mu_{p^\infty}[p^n]=\mu_{p^n}.
 $$
 
-The first has dimension $0$ and is etale when $p$ is locally nilpotent; the second has dimension $1$. Cartier duality exchanges them. If $A/S$ is an abelian scheme of relative dimension $g$, Book 38 proves that $A[p^n]$ has rank $p^{2gn}$. Exactness of multiplication gives a $p$-divisible group
+The first has dimension $0$ and is etale over every base; the second has dimension $1$. Cartier duality exchanges them. If $A/S$ is an abelian scheme of relative dimension $g$, Book 38 proves that $A[p^n]$ has rank $p^{2gn}$. Exactness of multiplication gives a $p$-divisible group
 
 $$
 A[p^\infty]
@@ -167,7 +176,7 @@ $$
 
 of height $2g$ and dimension $g$. The formal completion $\widehat A$ at the identity is not the whole $p$-divisible group: in characteristic $p$ it detects the connected part, while the etale quotient is invisible to the formal completion.
 
-Products add heights and dimensions. An isogeny of $p$-divisible groups is a homomorphism with finite locally free kernel; it preserves height and dimension after passing to an exact sequence. The zero group has height and dimension zero and causes no exception in the formulas.
+Products add heights and dimensions. An isogeny of $p$-divisible groups is a homomorphism with finite locally free kernel. It preserves height by comparing sufficiently high levels, and it preserves dimension because it identifies the rational Dieudonne isocrystals, whose slope sum is the dimension by (4.6). The latter justification is proved in Chapter 4; a finite kernel is not itself a $p$-divisible term to which (2.2) could be applied. The zero group has height and dimension zero and causes no exception in the formulas.
 
 ### 2.3 Kernels, quotients, duality, and Tate modules
 
@@ -216,14 +225,22 @@ Because the functor is contravariant, the first summand is the module of $H^{\ma
 
 ### 3.2 Passage to the divisible system
 
-Apply (3.1) to every $G[p^n]$. Functoriality makes the connected subgroups compatible. The etale quotients are compatible because multiplication by $p$ respects connected components. Taking the colimit yields the canonical connected--etale sequence
+Apply (3.1) to every $G[p^n]$. Functoriality makes the connected subgroups compatible. The etale quotients are compatible because multiplication by $p$ respects connected components. Equivalently, the functorial Fitting summands in (3.2) commute with reduction from level $n+1$ to level $n$. Taking the colimit yields the canonical connected--etale sequence
 
 $$
 0\longrightarrow G^0\longrightarrow G
 \longrightarrow G^{\mathrm{et}}\longrightarrow0. \tag{3.3}
 $$
 
-Both ends are $p$-divisible. To prove this rather than assume it, let the ranks of $G[p^n]^{\mathrm{et}}$ be $p^{e_n}$. Exactness of multiplication gives $e_{n+m}=e_n+e_m$, because a fiber of the etale quotient map has the rank of the preceding etale kernel. Hence $e_n=ne_1$. The connected ranks are then $p^{n(h-e_1)}$, and multiplication is fppf-surjective on both pieces. Thus $G^{\mathrm{et}}$ has height $e_1$ and $G^0$ height $h-e_1$.
+Both ends are $p$-divisible. Indeed the exact sequence (2.1) induces, by functoriality of the Fitting summands, an exact sequence on the $F$-invertible parts of the three finite Dieudonne modules. Finite-level anti-equivalence turns it into
+
+$$
+0\to G[p^n]^{\mathrm{et}}\to
+G[p^{n+m}]^{\mathrm{et}}\xrightarrow{p^n}
+G[p^m]^{\mathrm{et}}\to0.
+$$
+
+If $G[p]^{\mathrm{et}}$ has rank $p^e$, induction gives rank $p^{ne}$ at level $n$. Applying the same argument to the $F$-nilpotent summands gives rank $p^{n(h-e)}$ for the connected levels. Hence the two compatible systems satisfy (2.1), so $G^{\mathrm{et}}$ has height $e$ and $G^0$ height $h-e$.
 
 Sequence (3.3) need not split over $k$. It does split over a perfect field when $G$ is ordinary; that stronger assertion will follow from the absence of slopes strictly between $0$ and $1$. For a general group, a connected local-local piece may carry nontrivial extensions internally.
 
@@ -237,13 +254,13 @@ It is the maximal subgroup of multiplicative type. In particular, ordinary group
 
 ### 3.3 Lifting the decomposition over complete local bases
 
-Let $R$ be a complete local ring with perfect residue field $k$ of characteristic $p$, and assume $p$ is topologically nilpotent. If $G/R$ is $p$-divisible, its etale special-fiber quotient has a unique etale lift: finite etale schemes over $R$ and over $k$ are equivalent because $(R,\mathfrak m)$ is henselian. At level $n$, the quotient map on the special fiber lifts uniquely to a map
+Let $R$ be a complete local ring with perfect residue field $k$ of characteristic $p$, and assume $p$ is topologically nilpotent. If $G/R$ is $p$-divisible, its etale special-fiber quotient has a unique etale lift: finite etale schemes over $R$ and over $k$ are equivalent because $(R,\mathfrak m)$ is henselian. At level $n$, call that lift $E_n$. Since $E_n/R$ is etale, the special-fiber quotient map lifts uniquely across each nilpotent closed immersion
 
 $$
-G[p^n]\longrightarrow E_n.
+G[p^n]\longrightarrow E_n
 $$
 
-One way to see existence is to lift the corresponding idempotent in the coordinate algebra of the maximal etale quotient; idempotents lift uniquely through nilpotent quotients, and completeness passes to the limit. The kernels are finite locally free by the fiberwise flatness criterion. Compatibility and uniqueness at adjacent levels give
+and hence, by completeness, over $R$. It remains a group homomorphism because the two candidate composites on $G[p^n]\times G[p^n]$ agree on the special fiber and maps to an etale scheme lift uniquely. To check faithful flatness, pass faithfully flatly to a strict henselian local extension, where $E_n$ is a disjoint union of copies of the base. The inverse image of each copy is an open-and-closed summand of the finite locally free scheme $G[p^n]$, hence is finite locally free over the base. Every summand is nonempty because the special-fiber quotient is surjective. Thus $G[p^n]\to E_n$ is finite locally free and surjective; its identity fiber is finite locally free. These properties descend. Compatibility with inclusions and multiplication follows from uniqueness, so the kernels and quotients form divisible systems and give
 
 $$
 0\longrightarrow G^0\longrightarrow G\longrightarrow G^{\mathrm{et}}\longrightarrow0 \tag{3.4}
@@ -299,7 +316,15 @@ $$
 Fe_i=e_{i+1}\ (i<b-1),\qquad Fe_{b-1}=p^ae_0. \tag{4.5}
 $$
 
-Its slope is $a/b$. After extending a perfect base field to an algebraic closure, every isocrystal is a direct sum of these cyclic objects, uniquely up to order. We recall the proof because slope conventions control the geometry. Regard $N$ as a module over the skew Laurent ring $K_0\{F,F^{-1}\}$ with $Fa=\sigma(a)F$. A cyclic-vector argument presents each simple quotient by a twisted polynomial. The Newton polygon of that polynomial factors it, after unramified scalar extension, into one-slope factors. For a one-slope factor, dividing the exponents by their common denominator and successively changing the cyclic vector reduces the relation to $F^b=p^a$. Distinct slopes have no extensions after inverting $p$: if $u$ is an off-diagonal extension map between slopes $\lambda<\mu$, repeated conjugation by $F$ multiplies its valuation by a quantity tending to $+\infty$, and the convergent geometric correction kills $u$. Induction gives the direct sum. The valuations of the determinants of $F^m$ recover the multiset of slopes, proving uniqueness.
+Its slope is $a/b$. After extending a perfect base field to an algebraic closure, every isocrystal is a direct sum of these cyclic objects, uniquely up to order. Here is the algebraic reduction. The skew polynomial ring $K_0\{F\}$, with $Fa=\sigma(a)F$, has left and right division by a polynomial whose initial and final coefficients are nonzero. A cyclic vector therefore presents a simple isocrystal by one irreducible skew polynomial. Give a term $a_iF^i$ the point $(i,v_p(a_i))$ and take the lower convex hull. The Newton factorization step remains valid because $\sigma$ preserves $v_p$: successive changes of cyclic vector cancel the terms above each segment, and the corrections converge $p$-adically. Thus the polynomial factors into one-slope factors.
+
+For an irreducible one-slope factor, clear the relatively prime slope $a/b$. Applying the same cancellation to $F^bv-p^av$ gives a nonzero solution after extending the algebraically closed residue coefficients and lifting them successively. Its $F$-orbit has length $b$; irreducibility makes that orbit a basis, yielding (4.5). Hence every simple object is $N_{a/b}$. If $\lambda<\mu$, an extension of a slope-$\mu$ object by a slope-$\lambda$ object is represented in a block basis by an off-diagonal map $C$. Changing the splitting by $Z$ replaces it by
+
+$$
+C+F_\lambda\sigma(Z)-ZF_\mu.
+$$
+
+After a common iterate, division by the larger-slope block makes the successive correction gain the positive valuation $m(\mu-\lambda)$; the resulting geometric series converges and kills $C$. Equal-slope extensions split after reducing by skew-polynomial division to the simple cyclic blocks. The category is therefore semisimple. Induction gives the direct sum, and the break points of the Newton polygon, equivalently the valuations of determinants on exterior powers of iterates of $F$, recover the multiplicities. This proves existence and uniqueness without asserting that a finite unramified extension already contains the algebraic closure.
 
 The polygon with these slopes, repeated with multiplicity and arranged increasingly, is the **Newton polygon**. Because $D(G)$ is an integral lattice with
 
@@ -321,7 +346,7 @@ $$
 \dim G=\sum_{i=1}^h\lambda_i. \tag{4.6}
 $$
 
-To prove (4.6), choose $r$ so that $F^r$ is linear over a common fixed coefficient field after scalar extension. The valuation of $\det F^r$ is $r\sum\lambda_i$. On the other hand, compare the lattice $D(G)$ with $F^rD(G)$. At each step the length of $D/F D$ equals $\dim G$: modulo $p$, $D/FD$ is the invariant-differential space. Additivity of lattice indices gives length $r\dim G$. Dividing by $r$ proves the formula.
+To prove (4.6), regard $F^r$ as the linear map $\sigma^{r*}N\to N$. The valuation of its determinant is well defined and equals $r\sum\lambda_i$; no power of Witt Frobenius is being assumed to become the identity. On the integral lattices, compare $D(G)$ with the image of $\sigma^{r*}D(G)$. At each step the length of $D/FD$ equals $\dim G$: modulo $p$, $D/FD$ is the invariant-differential space. Additivity of lattice indices gives length $r\dim G$. Dividing by $r$ proves the formula.
 
 Duality replaces every slope $\lambda$ by $1-\lambda$. Indeed the Dieudonne pairing has weight one, so
 
@@ -352,7 +377,7 @@ The following forms make the definition usable.
 4. over an algebraic closure,
 
    $$
-   0\to\mu_{p^\infty}^{,d}\to G
+   0\to\mu_{p^\infty}^{d}\to G
    \to(\mathbf Q_p/\mathbf Z_p)^{h-d}\to0;
    \tag{5.2}
    $$
@@ -440,6 +465,22 @@ $$
 
 This agreement is the heart of Serre--Tate theory. It is not merely a rank coincidence: both sequences arise from the universal vector extension of the dual abelian scheme, so their inclusions and functorialities agree.
 
+Here is why the field-level comparison used in (4.4) extends to this relative crystal. The Poincare biextension evaluates a torsion point of $A_0$ against a torsion point of $A_0^\vee$ and differentiates in the second variable. At level $p^n$ this gives a functorial map
+
+$$
+\mathbb D(A_0[p^n])\longrightarrow
+H^1_{\mathrm{cris}}(A_0)/p^n.
+$$
+
+On every geometric special fiber it is the comparison proved in Book 57, hence an isomorphism. Both sides are finite locally free crystals of the same rank, so the cokernel vanishes by Nakayama on every PD evaluation. Passing compatibly over $n$ gives
+
+$$
+\mathbb D(A_0[p^\infty])\simeq
+H^1_{\mathrm{cris}}(A_0).
+$$
+
+The conormal map of the Poincare biextension is the usual Hodge inclusion, which proves compatibility with (6.1), duality, endomorphisms, and polarizations. Thus no relative comparison stronger than the prior finite-level theorem is being assumed without construction.
+
 A lift $G/S$ supplies a direct summand
 
 $$
@@ -454,20 +495,37 @@ The filtration in (6.2) contains exactly the infinitesimal freedom.
 
 **Theorem 6.1 (lifting by the Hodge filtration).** Let $S_0\hookrightarrow S$ be a nilpotent PD thickening on which $p$ is nilpotent. The groupoid of lifts of $G_0$ to $S$ is equivalent to the groupoid of direct summands $\operatorname{Fil}^1\subset\mathbb D(G_0)(S)$ lifting $\omega_{G_0}$. Morphisms lift exactly when the induced crystal map carries one filtration into the other.
 
-**Proof strategy.** Work first over a square-zero PD ideal. A lift of each finite level is obtained by lifting the Hopf algebra and its divided-power logarithm; associativity makes the discrepancy a linear cocycle. The cocycle is measured by a map from invariant differentials to the Lie algebra of the dual, exactly the difference between two lifted filtrations. Compatibility in the level removes all other choices. General nilpotent thickenings follow by induction.
+**Proof.** We isolate the square-zero deformation calculation. Evaluate the universal vector extension attached to the divisible group $G_0^D$ on the PD thickening; by definition its Lie algebra is $\mathbb D(G_0)(S)$, independently of a lift. Reduction modulo $p^n$ gives the construction for $H=G_0[p^n]$. The conormal sequence at the identity identifies the kernel of the projection to $\operatorname{Lie}(G_0^D)$ with the Hodge submodule. Consequently the normalized cotangent complex of a lift has only two terms relevant to deformation,
 
-For the decisive square-zero calculation, write the ideal as $I$ and choose one lift $G$ locally. Any other lift has the same crystal $M$ by crystalline rigidity. Its Hodge summand is the graph of a unique map
+$$
+\omega_{G_0}\longrightarrow
+\mathbb D(G_0)(S)\otimes\mathcal O_{S_0}
+\longrightarrow\operatorname{Lie}(G_0^D),
+$$
+
+and the first arrow is the Hodge inclusion. This description is compatible with $p:H[p^{n+1}]\to H[p^n]$, so the calculation is independent of $n$ once $p^n$ kills the base.
+
+Write the square-zero PD ideal as $I$ and choose one lift $G$ fppf-locally. Crystalline rigidity identifies the value of the crystal for every other lift with the same module $M$. Every direct-summand lift of $\omega_{G_0}$ is the graph, relative to a local complement, of a unique map
 
 $$
 u:\omega_{G_0}\longrightarrow
 \operatorname{Lie}(G_0^D)\otimes I. \tag{6.3}
 $$
 
-Conversely, alter the coproduct on a local Hopf presentation by the bilinear cocycle corresponding to $u$. The cocycle equation is precisely coassociativity modulo $I^2=0$; the counit and antipode equations follow from normalization at the identity. At level $p^n$, this produces a finite locally free lift, and the construction commutes with inclusion and multiplication because $u$ is defined on the stable Hodge sequence rather than on one level. The fppf-local constructions glue: two gluings differ by an infinitesimal automorphism, and crystalline rigidity identifies that automorphism with the unique correction preserving the graph.
+The key calculation is that the normalized Hopf deformation complex of the compatible finite levels is quasi-isomorphic to
 
-A morphism induces a map of crystals. The same calculation says that its obstruction to lifting is the failure to preserve the two graphs; if they are preserved, the lift is unique. For a PD ideal with a finite nilpotence filtration, apply the square-zero result successively. Effectivity for an inverse system over a complete base follows because the finite Hopf algebras at each level are finite projective and complete. $\square$
+$$
+\operatorname{Hom}(\omega_{G_0},
+\operatorname{Lie}(G_0^D)\otimes I)
+$$
 
-The word “unique” for a lifted morphism is relative to a chosen lift on the closed fiber. It follows from the crystal, not from a claim that $p$-divisible groups have no automorphisms. Indeed $\mathbf Q_p/\mathbf Z_p$ has many automorphisms. If two lifts of the same closed-fiber morphism preserve the filtration, their difference has zero crystalline realization on the square-zero layer, and finite-level Dieudonne faithfulness makes the difference zero. This distinction becomes important when passing from a framed deformation functor to a moduli stack.
+placed in deformation degree one. We spell out the verification. Resolve the Hopf algebra of $H$ by a polynomial algebra with projective conormal module and normalize the resulting bar complex by the unit section. Evaluation on the universal vector extension sends a normalized cochain to its differential at the identity. The kernel consists of cochains whose differential and value at the identity vanish. Divided-power Taylor expansion contracts that kernel, one polynomial degree at a time; the contraction commutes with multiplication by $p$ because the divided powers are compatible. The cokernel is the conormal-to-tangent map displayed above, by the exact Hodge sequence. Hence differential at the identity is a quasi-isomorphism of deformation complexes.
+
+It follows that changing a lift by $u$ changes its Hodge graph by $u$, every $u$ occurs, and the obstruction group beyond it vanishes. The polynomial resolution therefore descends to a finite projective Hopf algebra realizing the prescribed graph. The quasi-isomorphism is functorial under $p:H[p^{n+1}]\to H[p^n]$; uniqueness makes the realized levels compatible, so they form one $p$-divisible group.
+
+A morphism induces a contravariant map of crystals. Applying the same bar-complex calculation to the graph of a homomorphism shows that its sole obstruction is failure to carry the target Hodge summand into the source Hodge summand; when this condition holds, the lift is unique relative to the closed-fiber map. This proves the theorem for a square-zero PD ideal. Filter a general nilpotent PD ideal by divided-power-stable ideals whose successive quotients are square-zero and argue inductively. The classifications and their morphisms are independent of the filtration because at every step they are characterized by the same Hodge summand. $\square$
+
+The word “unique” for a lifted morphism is relative to a chosen closed-fiber morphism. It follows from the deformation calculation, not from a claim that $p$-divisible groups have no automorphisms. Indeed $\mathbf Q_p/\mathbf Z_p$ has many automorphisms. This distinction becomes important when passing from a framed deformation functor to a moduli stack.
 
 The theorem is compatible with duality, pairings, and coefficient actions because all three are morphisms of crystals. Thus a quasi-polarization lifts exactly when its alternating form makes the chosen filtration isotropic, and an endomorphism lifts exactly when the filtration is stable under its crystalline action.
 
@@ -513,25 +571,32 @@ The use of groupoids matters: an automorphism which is the identity on the speci
 
 ### 7.2 Equivalence for abelian schemes
 
-**Theorem 7.1 (Serre--Tate).** Under the hypotheses above, (7.1) is an equivalence of groupoids. The equivalence is functorial in the thickening and in $A_0$. It remains true over a complete noetherian local $W(k)$-algebra after interpreting a deformation as a compatible system over its artinian quotients.
+**Theorem 7.1 (Serre--Tate).** Under the hypotheses above, (7.1) is an equivalence of groupoids. The equivalence is functorial in the thickening and in $A_0$. Over a complete noetherian local $W(k)$-algebra it gives an equivalence between compatible formal abelian deformations and compatible deformations of $G_0$ over the artinian quotients. A formal abelian deformation is represented by an abelian scheme over the complete ring whenever it carries a compatible relatively ample line bundle.
 
-**Proof strategy.** Both deformation problems are controlled by the same crystal and the same Hodge direct summand. This proves the assertion across square-zero thickenings. Induction gives nilpotent thickenings, and formal effectivity gives the complete case.
+**Proof.** Evaluate $H^1_{\mathrm{cris}}(A_0)$ on $R$. Book 54 and the torsion comparison identify it with $\mathbb D(G_0)(R)$, including the Hodge submodule. We first verify the corresponding square-zero calculation for the abelian scheme. Local smooth lifts of the underlying scheme exist, and the cotangent-complex deformation complex begins with Cech cochains in $T_{A_0/R_0}\otimes I$. The identity section and group law select its normalized primitive subcomplex. Translation identifies $T_{A_0/R_0}$ with $\operatorname{Lie}(A_0)\otimes\mathcal O_{A_0}$; duality identifies $H^1(A_0,\mathcal O_{A_0})$ with $\operatorname{Lie}(A_0^\vee)$. Differentiating a normalized primitive deformation therefore gives a map
 
-Evaluate $H^1_{\mathrm{cris}}(A_0)$ on $R$. Book 54 and the torsion comparison identify it with $\mathbb D(G_0)(R)$, including the Hodge submodule. The infinitesimal deformation theorem for an abelian scheme says that its lifts across a PD square-zero thickening are classified by direct-summand lifts of
+$$
+\omega_{A_0}\longrightarrow
+\operatorname{Lie}(A_0^\vee)\otimes I. \tag{7.2a}
+$$
+
+This differentiation map is a quasi-isomorphism. To verify it, pull a cochain along the three projections from $A_0^3$ and apply the cubical alternating sum. The theorem of the cube says that a rigidified line bundle with zero cubical sum comes uniquely from the dual abelian scheme. Its infinitesimal rigidifications are exactly $\operatorname{Lie}(A_0^\vee)\otimes I$. Thus the kernel of differentiation is contracted by the cubical operator, while every map (7.2a) is realized by changing the vector subgroup in the universal vector extension of $A_0^\vee$. This proves at once that there is no further obstruction and that isomorphisms relative to $A_0$ are detected by the same map.
+
+Under this identification the deformation class is exactly the change in the direct-summand lift of
 
 $$
 \omega_{A_0}\subset H^1_{\mathrm{dR}}(A_0/R_0). \tag{7.2}
 $$
 
-This follows by deforming the universal vector extension of $A_0^\vee$: a lifted Hodge summand determines the lifted extension, and the theorem of the cube reconstructs the group law. Proper smooth effectivity reconstructs the abelian scheme. By Theorem 6.1, the same direct summands classify lifts of $G_0$. Under comparison, the maps from both lift sets to the Grassmannian are identical. Hence (7.1) is essentially surjective and fully faithful over a square-zero step.
+The Lie algebra of the universal vector extension is $H^1_{\mathrm{cris}}(A_0)(R)$, and choosing (7.2) is choosing its vector subgroup. Hence the abelian and $p$-divisible deformation complexes both identify, functorially and not merely by a dimension count, with (7.2a). Theorem 6.1 therefore gives essential surjectivity and full faithfulness of (7.1) over a square-zero PD step.
 
-If the nilpotent thickening has no compatible divided powers, form its finite divided-power envelope at each nilpotence stage. The two lifting problems over the envelope are equivalent by the argument just given. Their descent data over the two projections to the divided-power envelope of the self-product are also identified, because morphisms are identified by preservation of the same Hodge filtration. Crystalline descent is effective for the finite locally free torsion levels and for proper smooth abelian schemes. The descended equivalence is independent of the chosen presentation of the envelope. This proves the arbitrary nilpotent case without putting nonexistent divided powers on the original ideal.
+For a longer PD thickening, filter the ideal by square-zero PD-stable quotients and induct. If the nilpotent thickening has no compatible divided powers, choose a polynomial presentation and form its finite divided-power envelope at each nilpotence stage. The two lifting problems over the envelope are equivalent by the argument just given. On the divided-power envelope of the self-product, the two pullbacks carry the same Hodge summand, so full faithfulness supplies a unique comparison satisfying the cocycle condition. The crystalline descent equalizer is effective here: affine-locally it is the equalizer for the finite projective Hopf algebras at every torsion level, while for the abelian side the same equalizer descends the proper smooth scheme and its structure maps. A common divided-power refinement proves independence of the presentation. This proves the arbitrary nilpotent case without treating the divided-power envelope as a faithfully flat cover or putting nonexistent divided powers on the original ideal.
 
-For a complete ring $R$, apply the nilpotent result to $R/\mathfrak m^n$. A compatible formal abelian scheme is algebraizable: a relatively ample cubical line bundle on the special fiber has a positive tensor power lifting compatibly, and formal GAGA algebraizes the proper formal scheme and its group law. The finite levels of the algebraized group are the prescribed finite levels by uniqueness over every quotient. This proves the complete case. $\square$
+For a complete ring $R$, apply the nilpotent result to $R/\mathfrak m^n$. This gives the asserted equivalence of compatible formal systems. It does **not** manufacture an ample line bundle on an arbitrary unpolarized system. If compatible relatively ample line bundles $L_n$ are part of the system, choose one power which is relatively very ample on the special fiber. Cohomology and base change makes the modules of sections compatible after a further fixed power; the completed graded section algebra is finite in each degree, and its relative Proj algebraizes the formal scheme. To algebraize a formal map between two such Proj schemes, take its compatible graphs. Their coherent homogeneous ideals are inverse systems of finite modules, hence algebraize inside the product Proj; the first projection is an isomorphism modulo every $\mathfrak m^n$, so its kernel and cokernel vanish by completeness and Nakayama. The algebraized graph is therefore the graph of a unique map. Apply this to the identity, inverse, and multiplication. Their identities hold because they hold modulo every $\mathfrak m^n$ and the intersection of those powers is zero. The resulting proper smooth group scheme is an abelian scheme, and uniqueness over every quotient identifies its $p$-power kernels with the prescribed ones. This proves both the formal statement and the stated effectivity criterion. $\square$
 
 Full faithfulness can also be seen directly. Given a morphism of the deformed $p$-divisible groups, its crystal map preserves the Hodge filtrations. The abelian lifting theorem therefore produces a morphism of the abelian schemes across each square-zero layer. Rigidity of morphisms from a proper connected group to an abelian scheme makes these lifts unique and compatible. Conversely a morphism of abelian schemes plainly induces the morphism on every multiplication kernel. Thus no morphism is gained or lost when the infinite torsion tower replaces the abelian scheme.
 
-The theorem does not say that an abstract $p$-divisible group over $R$ is globally the torsion of an abelian scheme. It says that a deformation of one already arising from $A_0$ arises uniquely in the formal neighborhood of $A_0$.
+The theorem does not say that an abstract $p$-divisible group over $R$ is globally the torsion of an abelian scheme. It says that a deformation of one already arising from $A_0$ arises uniquely over a nilpotent thickening, and uniquely as a formal system over a complete base. Algebraicity in the complete case requires the separate effectivity condition just stated.
 
 ### 7.3 Polarizations, endomorphisms, and level structure
 
@@ -598,14 +663,20 @@ $$
 
 The special fiber is split exactly because this unit is congruent to $1$. Baer sum of extensions multiplies the units.
 
-For precision, the compatible Kummer map is
+For precision, the local Kummer sequence and $\operatorname{Pic}(R)=0$ give
 
 $$
 \widehat{\mathbf G}_m(R)\longrightarrow
 \varprojlim_n H^1_{\mathrm{fppf}}(R,\mu_{p^n}). \tag{8.5}
 $$
 
-It is injective on deformations with a fixed special-fiber trivialization: if $q$ has compatible $p^n$th roots congruent to $1$, nilpotence and successive comparison modulo powers of $\mathfrak m_R$ force $q=1$. It is surjective because a compatible system of Kummer classes can be represented successively by units $q_n$; multiplying $q_{n+1}$ by a $p^n$th power adjusts it to $q_n$, and artinian completeness produces one $q\in1+\mathfrak m_R$. Hence (8.5) identifies the framed extension group with $\widehat{\mathbf G}_m(R)$.
+Indeed $H^1(R,\mu_{p^n})=R^\times/R^{\times p^n}$: a torsor is locally $z^{p^n}=q$, and a line bundle over a local ring is free. The inverse limit is the pro-$p$ completion of $R^\times$. Reduction splits it into the residue-field part and the kernel $1+\mathfrak m_R$. Since $k$ is perfect, $k^\times\xrightarrow{x\mapsto x^{p^n}}k^\times$ is bijective and contributes nothing. The finite filtration
+
+$$
+1+\mathfrak m_R\supset1+\mathfrak m_R^2\supset\cdots\supset1
+$$
+
+has additive successive quotients, and multiplication by $p$ on each quotient is the operation induced by taking $p$th powers, with the mixed-characteristic correction lying one step deeper. Induction on this filtration shows that $1+\mathfrak m_R$ is complete and separated for the power subgroups. Hence (8.5) is an isomorphism. The framing on the split special fiber is what selects $1+\mathfrak m_R$ rather than an unrecorded residue unit.
 
 The construction can be made without choices by using the one-motive $[\mathbf Z\xrightarrow{1\mapsto q}\mathbf G_m]$. Its $p^n$-torsion consists fppf-locally of pairs $(a,z)$ with $a\in\mathbf Z/p^n\mathbf Z$ and $z^{p^n}=q^a$. It fits into
 
@@ -636,7 +707,7 @@ $$
 (X\otimes_{\mathbf Z_p}Y,\widehat{\mathbf G}_m(R)). \tag{8.7}
 $$
 
-Over a nonalgebraically closed $k$, the homomorphisms in (8.7) must respect the semilinear descent data. This is the intrinsic form of the Kummer calculation.
+Over a nonalgebraically closed $k$, pass to a strict unramified extension that splits the etale lattices. The construction there carries a continuous descent action, and finite-level finite-flat descent is effective. Consequently the right side of (8.7) means descent-equivariant homomorphisms. This is the intrinsic form of the Kummer calculation; it can be a nonsplit unramified formal torus over $W(k)$.
 
 ### 8.3 The Serre--Tate pairing
 
@@ -679,7 +750,7 @@ with descent invariants understood over nonalgebraically closed $k$.
 
 ### 9.1 The universal formal torus
 
-Choose bases $x_1,\ldots,x_{h-d}$ of $X$ and $y_1,\ldots,y_d$ of $Y$. Put
+First suppose the etale lattices are split over $k$, as they are after a strict unramified extension, and choose bases $x_1,\ldots,x_{h-d}$ of $X$ and $y_1,\ldots,y_d$ of $Y$. Put
 
 $$
 q_{ij}=q(x_i,y_j),\qquad t_{ij}=q_{ij}-1. \tag{9.1}
@@ -709,6 +780,8 @@ Its dimension $d(h-d)$ agrees with the crystalline tangent calculation (6.4), pr
 
 Representability follows directly from the universal units $q_{ij}=1+t_{ij}$. Given an artinian local $W(k)$-algebra $R$, a continuous map from (9.2) to $R$ is exactly a choice of all $q_{ij}\in1+\mathfrak m_R$, hence by bilinearity a unique homomorphism $X\otimes Y\to\widehat{\mathbf G}_m(R)$. This identification respects small extensions and inverse limits. The power-series ring is therefore not obtained from a tangent-dimension guess; it represents the entire nonlinear functor.
 
+For general perfect $k$, descent of the split construction represents the functor by an unramified form of a split formal torus, with $p$-adic character lattice $X\otimes Y$ and its continuous descent action. The action need not factor through a finite quotient, so this formal group need not be the completion of an algebraic torus. It is formally smooth of relative dimension $d(h-d)$ and is noncanonically a formal power-series space over $W(k)$, but coordinates such as (9.1) exist over $W(k)$ only after choosing a descended basis. Calling it a split formal torus without this qualification would discard the Galois forms described in §5.3.
+
 ### 9.2 Coordinates, tangent vectors, and change of basis
 
 Modulo the square of the maximal ideal, multiplication in $1+\mathfrak m$ becomes addition. Thus
@@ -729,7 +802,7 @@ The Hodge calculation identifies $X/pX$ dually with the appropriate etale quotie
 Coordinates depend on bases, but the formal torus does not. If $x'_a=\sum_i u_{ia}x_i$ and $y'_b=\sum_jv_{jb}y_j$, then
 
 $$
-q'_{ab}=\prod_{i,j}q_{ij}^{,u_{ia}v_{jb}}, \tag{9.6}
+q'_{ab}=\prod_{i,j}q_{ij}^{u_{ia}v_{jb}}, \tag{9.6}
 $$
 
 where $z\mapsto z^c$ for $c\in\mathbf Z_p$ is defined on the formal group by the compatible binomial power series. Consequently a linear change of Tate basis becomes a monomial change of multiplicative coordinates. Treating the $t_{ij}$ as linearly transforming coordinates beyond first order would lose the formal group law.
@@ -763,7 +836,7 @@ If it lifts, it lifts uniquely.
 
 **Proof.** A morphism of extensions must commute with their etale quotients and multiplicative subgroups. Pull the extension for $B$ back along $f_X$ and push the extension for $A$ out along the dual multiplicative map. The two resulting Kummer classes are respectively the right and left sides of (9.7). Equality is therefore necessary and sufficient for a morphism of $p$-divisible groups. Serre--Tate full faithfulness then gives the unique homomorphism of abelian schemes. $\square$
 
-The homomorphism locus is consequently a closed formal subtorus cut out by character equations. Isogenies cause no denominator problem in (9.7), because the maps on Tate lattices are integral. Replacing an isogeny by its rational inverse would introduce denominators and is not legitimate on the integral formal torus.
+The homomorphism locus is consequently a closed formal subgroup cut out by character equations. It is a formal subtorus precisely when the resulting quotient of the character lattice is torsion-free; otherwise a finite non-smooth diagonalizable factor can occur. Isogenies cause no denominator problem in (9.7), because the maps on Tate lattices are integral. Replacing an isogeny by its rational inverse would introduce denominators and is not legitimate on the integral formal torus.
 
 ## 10. The canonical lift
 
@@ -778,7 +851,7 @@ q_{A^{\mathrm{can}}}(x,y)=1
 \quad\text{for every }x\in X, y\in Y. \tag{10.1}
 $$
 
-To construct it, take at every artinian Witt level the split extension of the unique etale and multiplicative lifts. These extensions are compatible under reduction. The Serre--Tate equivalence gives compatible abelian schemes, and formal effectivity algebraizes them over $W(k)$. Uniqueness follows from (8.10): there is only one identity point.
+To construct it, take at every artinian Witt level the split extension of the unique etale and multiplicative lifts. These extensions are compatible under reduction, and the formal Serre--Tate equivalence gives compatible abelian schemes. Choose any polarization $\lambda_0$ of $A_0$. Since the identity pairing satisfies every homomorphism equation (9.7), $\lambda_0$ lifts compatibly at all Witt levels. The lifted homomorphisms remain polarizations because ampleness is unchanged across a nilpotent thickening. Choose a rigidified ample line bundle inducing the polarization at one level. At the next level any inducing line bundle restricts to it up to an element of $\operatorname{Pic}^0=A^\vee$; smoothness of $A^\vee$ lifts that element, so twisting makes the restriction exact. Induction, after one fixed power to preserve the chosen rigidification, produces compatible relatively ample line bundles. The effectivity criterion in Theorem 7.1 therefore algebraizes the formal system over $W(k)$. Uniqueness follows from (8.10): there is only one identity point. Notice that effectivity has been proved using the lifted polarization; it is not being inferred for arbitrary unpolarized formal deformations.
 
 If $k$ is not algebraically closed, the identity pairing is invariant under descent, so the canonical lift is defined over $W(k)$ without choosing a splitting basis. After any perfect extension $k'/k$,
 
@@ -817,7 +890,13 @@ $$
 \widetilde\pi:A^{\mathrm{can}}\to A^{\mathrm{can}}. \tag{10.5}
 $$
 
-Conversely, suppose a deformation admits a lift of an endomorphism whose actions on the two slope parts have $p$-adic valuations $0$ and $r$, as Frobenius does. Equation (10.3) forces a coordinate $q$ to satisfy both a unit-weight and a $p^r$-weight relation. Iterating and using $q\in1+\mathfrak m$ gives $q=1$: in each artinian quotient, the relation drives $q-1$ into arbitrarily high powers of the nilpotent ideal. Thus a genuine Frobenius lift characterizes the canonical point.
+Conversely, suppose a deformation admits the $q$-power Frobenius lift. On the two etale character lattices, write its actions in (10.3) as $U$ and $P$. The first is a $\mathbf Z_p$-linear automorphism, while $P$ is divisible by $p^r$; this is the integral form of the slope-$0$ and slope-$r$ actions of Frobenius and its dual. Equation (10.3) says that the character $q:X\otimes Y\to\widehat{\mathbf G}_m$ is trivial on the image of
+
+$$
+U\otimes1-1\otimes P.
+$$
+
+This operator is a $\mathbf Z_p$-automorphism: factor it as $(U\otimes1)(1-(U^{-1}\otimes P))$, and invert the second factor by the convergent geometric series, since $U^{-1}\otimes P$ is divisible by $p^r$. Its image is the whole character lattice, so $q=1$. Thus a genuine Frobenius lift characterizes the canonical point. The same proof applies to an endomorphism whose two induced integral actions have respectively unit and strictly positive $p$-adic slopes; rational slope data alone is not enough unless it preserves the lattices.
 
 This argument is integral. Looking only at the rational isocrystal would not distinguish the deformations, because all ordinary deformations have the same two rational slope pieces; the extension is encoded in the integral formal coordinate.
 
@@ -1021,16 +1100,16 @@ This proof gives more than upper semicontinuity of $p$-rank. It supplies an actu
 
 ### 13.3 Completed local rings at ordinary points
 
-Let $\mathscr M$ be a moduli scheme or Deligne--Mumford stack of abelian varieties with a rigidifying level structure, and let $x$ be an ordinary geometric point. Assume the moduli problem has no infinitesimal automorphisms at $x$, as happens after a sufficiently fine prime-to-$p$ level. The Serre--Tate equivalence identifies the completed local deformation functor with the appropriate $p$-divisible deformation functor.
+Let $\mathscr M$ be an algebraic moduli scheme or Deligne--Mumford stack of polarized abelian varieties with a rigidifying level structure, and let $x$ be an ordinary geometric point. Assume the moduli problem has no infinitesimal automorphisms at $x$, as happens after a sufficiently fine prime-to-$p$ level. The Serre--Tate equivalence identifies the completed local deformation functor with the appropriately polarized $p$-divisible deformation functor.
 
-Without a polarization,
+For the framed deformation functor of the underlying abelian variety, without claiming the existence of an unpolarized finite-type moduli scheme, the hull is
 
 $$
-\widehat{\mathcal O}_{\mathscr M,x}
+R^{\mathrm{unpol}}_{A_0}
 \simeq W(k)[[t_1,\ldots,t_{g^2}]]. \tag{13.3}
 $$
 
-For a principal polarization,
+For the algebraic moduli problem with a principal polarization,
 
 $$
 \widehat{\mathcal O}_{\mathscr A_g,x}
@@ -1057,13 +1136,13 @@ $$
 
 Since the character lattice is free, this formal scheme is formally smooth over $W(k)$. The identity is the PEL canonical lift; every sufficiently small choice of parameters gives another lift. The ordinary locus contains the entire special-fiber formal neighborhood because every deformation in this formal neighborhood has ordinary special fiber and its pure parts remain etale and multiplicative.
 
-If a local condition asks certain special-fiber endomorphisms to lift, equations (12.1) cut out a formal subtorus. If it asks for a prime-to-$p$ level structure, that structure lifts uniquely and adds no parameter. Thus many local conditions relevant to a moduli construction remain smooth character conditions rather than arbitrary nonlinear equations.
+If a local condition asks certain special-fiber endomorphisms to lift, equations (12.1) cut out a closed formal subgroup; it is a smooth formal subtorus when the character relations are saturated, as in Theorem 12.1. If it asks for a prime-to-$p$ level structure, that structure lifts uniquely and adds no parameter. Thus, under the stated saturation hypothesis, many local conditions relevant to a moduli construction remain smooth character conditions rather than arbitrary nonlinear equations.
 
 ### 14.2 Components, residue extensions, and density
 
 Unramified extension from $W(k)$ to $W(k')$ tensors the etale Tate lattices with unchanged character relations. Therefore (14.1) base changes to the corresponding formal torus at the extended point. Geometric connected components do not merge unexpectedly in the completed ordinary neighborhood: a formal torus over a complete local base has connected special fiber, while determinant rank conditions have already selected an open-and-closed component.
 
-The generic fiber of a smooth formal torus has many algebraic points after finite extensions of the fraction field. Concretely, assign each $t_i$ an element of the maximal ideal of a finite extension; the resulting continuous map from the power-series ring gives a point. Conditions excluding finitely many proper subtori remain satisfiable because a nonzero Laurent character cannot vanish identically on an open polydisc. Hence the ordinary formal neighborhood supplies locally abundant characteristic-zero points.
+The generic fiber of a positive-dimensional smooth formal torus has many algebraic points after finite extensions of the fraction field. Concretely, assign each $t_i$ an element of the maximal ideal of a finite extension; the resulting continuous map from the power-series ring gives a point. A finite union of proper formal subtori cannot contain an open polydisc: after splitting the torus, each is cut out by a nonzero character $q^a-1$, and a nonzero restricted power series cannot vanish on every tuple in the polydisc. Hence conditions excluding finitely many proper subtori remain satisfiable. If $L_{\mathrm{PEL}}$ has rank zero, the formal neighborhood is one point and this avoidance conclusion is unavailable; nonemptiness still follows from the canonical lift.
 
 This is the precise local input used in approximation arguments: nonemptiness comes from the canonical lift, smoothness from the free PEL character lattice, and room to avoid closed conditions from the positive-dimensional formal torus. A global theorem is still needed to satisfy conditions at several places simultaneously.
 
@@ -1092,7 +1171,7 @@ The constructions above establish the following reusable statement.
    \operatorname{Hom}(\omega_G,\operatorname{Lie}(G^D)).
    $$
 
-5. If $G=A[p^\infty]$, this classification is identical to the infinitesimal classification of deformations of $A$. Consequently deformations of $A$ and of $G$ are equivalent, including polarizations, endomorphisms, and level structures in their correct forms.
+5. If $G=A[p^\infty]$, this classification is identical to the infinitesimal classification of deformations of $A$. Consequently deformations of $A$ and of $G$ are equivalent over nilpotent bases, including polarizations, endomorphisms, and level structures in their correct forms. Over a complete base the equivalence classifies formal systems; a compatible ample line bundle makes such a system algebraic.
 6. If $A_0$ is ordinary, its deformation functor is the formal torus
 
    $$
@@ -1125,8 +1204,9 @@ The theory is compact only when its conventions are kept visible.
 | connected--etale sequence in families | perfect field, complete local base, or constant-rank stratum | claiming a global quotient across jumps |
 | ordinary | maximal etale height, not split generic representation | confusing filtration with splitting |
 | Hodge sequence | $0\to\omega_G\to\mathbb D(G)\to\operatorname{Lie}(G^D)\to0$ | putting the dual on the wrong term |
-| infinitesimal lifting | nilpotent PD steps; complete case by limits | applying a crystal without a valid thickening |
-| Serre--Tate equivalence | deformations of an existing $A_0$, not arbitrary groups | global algebraization overclaim |
+| infinitesimal lifting | nilpotent PD steps; arbitrary nilpotent steps by PD descent | applying a crystal without a valid thickening |
+| complete Serre--Tate theory | formal systems; algebraization requires a compatible ample line bundle | unpolarized effectivity overclaim |
+| Serre--Tate equivalence | deformations of an existing $A_0$, not arbitrary groups | global realization overclaim |
 | ordinary coordinate | $X\times Y$ with $Y=T_p(A_0^\vee)^{\mathrm{et}}$ | pairing two unjustified copies |
 | coordinate group law | multiplication of $q$, not addition of $q-1$ | incorrect nonlinear basis change |
 | dual coordinate | $q_{A^\vee}(y,x)=q_A(x,y)$ in our normalization | hidden inverse convention |
@@ -1142,7 +1222,7 @@ $$
 D(A[p^n])\simeq H^1_{\mathrm{cris}}(A)/p^n.
 $$
 
-Book 59 supplies the compatibility of finite-flat levels with integral filtered lattices and confirms that ordinary and local-local types survive the allowed base changes and coefficient operations. What was not already present there has been proved here: passage to the infinite divisible object, its slope and ordinary structures, the Grothendieck--Messing lifting classification, the Serre--Tate equivalence, the Kummer coordinate calculation, the canonical lift, the PEL character quotient, and openness through the Hasse determinant. No classification over a ramified base or result about a later global moduli construction is used as a proof input.
+Under its hypothesis $p>2$, Book 59 supplies the compatibility of finite-flat levels with integral filtered lattices and confirms that ordinary and local-local types survive its allowed base changes and coefficient operations. The statements here at $p=2$ instead use the all-prime group-scheme, crystalline, and Dieudonne inputs of Books 38, 54, and 57 together with the proofs given here. Book 57 already constructs compatible divisible systems and their infinite Dieudonne modules; this book does not claim that result as new. What is developed here is the slope and ordinary structure, the Grothendieck--Messing lifting classification, the Serre--Tate equivalence with its effectivity boundary, the recalled-and-proved local Kummer coordinate calculation, the canonical lift, the PEL character quotient, and openness through the Hasse determinant. No classification over a ramified base or result about a later global moduli construction is used as a proof input.
 
 ### 15.3 Conclusion
 
