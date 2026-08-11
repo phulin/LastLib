@@ -124,6 +124,14 @@ $$
 
 forgets the generator but retains its cyclic subgroup. It is a finite map of compactified curves. We work over $\mathbf Z[1/N]$, where the point-level and cyclic-level compactifications have their good integral meaning.
 
+Let $w_N$ be the Atkin--Lehner involution on $X_0(N)$ and put
+
+$$
+\sigma=w_N\circ\rho. \tag{1.2a}
+$$
+
+This extra involution is not cosmetic. With the standard q-expansion convention, $\infty$ is the cyclic-level cusp $(\operatorname{Tate}(q),\mu_N)$. An outward point-level cusp first maps under $\rho$ to the component-subgroup cusp and then under $w_N$ to $\infty$. The composite $\sigma$, rather than $\rho$ alone, is therefore the map whose cotangent is measured by the standard first q-coefficient.
+
 Let $\mathbb T$ be the faithful Hecke algebra acting on $J$, with $T_q$ for primes $q\ne N$ and incoming operator $U_N$. Its Eisenstein ideal and exact index are
 
 $$
@@ -179,7 +187,7 @@ Smoothness of the quotient makes the induced cotangent sequence exact. Consequen
 
 Second, Book 121 identifies $\omega_{\mathcal J/R}$ with the regular dualizing differentials on the modular curve, and Book 119 identifies these at good level with integral weight-two cusp forms. If a primitive differential remains nonzero modulo $r$, its expansion at a cusp is nonzero. Some coefficient is therefore a unit modulo $r$. A Hecke operator moves that coefficient into the first position.
 
-Third, the first coefficient is the cotangent of the Abel--Jacobi map at the cusp. At the outward oriented $\Gamma_1$ cusp, forgetting the generator preserves the smoothing parameter. The resulting map $X_1\to A$ is therefore a formal immersion after a suitable Hecke translate.
+Third, the first coefficient is the cotangent of the Abel--Jacobi map at the standard cusp $\infty$. At an outward oriented $\Gamma_1$ cusp, the quotient-oriented map $\sigma=w_N\rho$ carries the point-level parameter to the standard q-parameter with unit linear term. The resulting map $X_1\to A$ is therefore a formal immersion after a suitable Hecke translate.
 
 Fourth, take $r=3$. A rational point of exact prime order $N\ge17$ reduces either to an interior elliptic curve over $\mathbf F_3$ or to an oriented cusp. The first alternative contradicts the Hasse bound. In the second, the chosen generator must point along the component group rather than the multiplicative identity component; it therefore reaches a rational outward cusp. Finiteness of $A(\mathbf Q)$ and odd-prime specialization make its Abel image zero, while formal immersion makes the original section equal to the cusp.
 
@@ -330,11 +338,23 @@ There are two boundary types after the usual identifications.
 
 The terminology is geometric rather than topological. Outward means that the level point survives in the component group of the polygon; inward means that it remains inside the torus.
 
-The two types behave differently under forgetting the generator. At an outward cusp, the cyclic subgroup meets every component and its image on $X_0(N)$ is the cusp customarily denoted $\infty$ after choosing the standard orientation. At an inward cusp, the subgroup is multiplicative and maps to the other cyclic-level cusp. Atkin--Lehner interchanges the two cyclic-level cusps, but it does not erase the point-level orientation.
+The two types behave differently under forgetting the generator. We fix the standard q-expansion convention in which
+
+$$
+\infty=(\operatorname{Tate}(q),\mu_N).
+$$
+
+Thus an inward cusp maps under $\rho$ to $\infty$. An outward cusp has component subgroup $\langle t\rangle$ on the $N$-gon $\operatorname{Tate}_N(t)$, whose generic Tate period is $t^N$; it maps under $\rho$ to the other cyclic-level cusp, customarily denoted $0$. The Atkin--Lehner involution quotients by that component subgroup and sends the resulting Tate curve of period $t$ to $\infty$. Hence $\sigma=w_N\rho$ sends every outward cusp to the standard q-expansion cusp.
 
 ### 3.3 The outward cusp parameter
 
-Let $c$ be an outward cusp. The completed point-level chart has a Tate parameter $q$ and a chosen section represented by $q^{1/N}$ on the $N$-gon. Forgetting the generator leaves the underlying Tate generalized elliptic curve and its smoothing parameter unchanged. Consequently
+Let $c$ be an outward cusp. Its completed point-level chart has parameter $t$ and universal framed object
+
+$$
+(\operatorname{Tate}_N(t),[t]),
+$$
+
+whose generic Tate period is $t^N$. Forgetting the generator gives the component-subgroup chart $(\operatorname{Tate}_N(t),\langle t\rangle)$ on $X_0(N)$. The local parameter at that cyclic-level cusp is also $t$, even though the unlevelled Tate period is $t^N$. Consequently
 
 $$
 \widehat{\mathcal O}_{X_0,\rho(c)}
@@ -345,16 +365,26 @@ $$
 sends
 
 $$
-q\longmapsto u q \tag{3.3}
+t_0\longmapsto u t \tag{3.3}
 $$
 
-for a unit $u$ determined by the chosen frames. After choosing compatible standard frames, $u=1$.
+for a unit $u$ determined by the chosen frames. After choosing compatible standard frames, $u=1$. Applying $w_N$ quotients $\operatorname{Tate}_{t^N}$ by $\langle t\rangle$ and produces $\operatorname{Tate}_t$. Therefore the standard parameter $q$ at $\infty$ satisfies
+
+$$
+\sigma^*q=u't \tag{3.3a}
+$$
+
+with $u'$ a unit, and $u'=1$ in the standard frames.
 
 **Proposition 3.1.** Over $\mathbf Z[1/N]$, the forgetful map $\rho$ is unramified at every outward cusp, and the induced map on relative cotangent lines is an isomorphism.
 
 **Proof.** The deformation of the split polygon with its component-oriented point is the deformation of the polygon itself. The component label is finite étale data because $N$ is invertible, so it lifts uniquely across nilpotent thickenings. Thus no new infinitesimal parameter appears and no old parameter is raised to a power. The Tate calculation gives (3.3), whose linear term is a unit. This proves the cotangent assertion and hence unramifiedness. $\square$
 
-At an inward cusp the natural parameter on one side can be an $N$th root of the parameter on the other. The map can be ramified, and a cotangent direction from $X_0(N)$ need not detect it. This is why the theorem is stated at the outward oriented cusp rather than at an unspecified point-level cusp.
+**Corollary 3.2.** The composite $\sigma=w_N\rho$ is unramified at every outward cusp, maps it to the standard cusp $\infty$, and induces an isomorphism on relative cotangent lines.
+
+**Proof.** Proposition 3.1 handles $\rho$. The involution $w_N$ is an isomorphism, and the explicit quotient of the component-subgroup Tate curve gives (3.3a). $\square$
+
+At an inward cusp, $\rho$ is unramified over the standard cusp but $\sigma$ carries it to the width-$N$ component cusp. There the standard q-parameter and the point-level parameter differ by an $N$th power. A first q-coefficient at $\infty$ therefore does not measure that cotangent direction. This is why the theorem is stated at the outward oriented cusp and uses $\sigma$, rather than using an unspecified point-level cusp or silently interchanging the two cyclic-level cusps.
 
 ### 3.4 Rationality and reduction of the orientation
 
@@ -368,17 +398,17 @@ gives the other outward cusps. On the coarse point-level curve the involution $(
 
 The inward cusp requires a primitive $N$th root of unity in the torus. Its field of definition is cyclotomic in general. This field-of-definition distinction supplies a useful reduction test.
 
-**Lemma 3.2 (orientation test).** Let $r\ne N$ be prime. Suppose a $\mathbf Q_r$-rational point of exact order $N$ on a Tate generalized elliptic curve specializes to the boundary. If its component index is zero, then $\mathbf F_r^\times$ contains an element of order $N$. In particular
+**Lemma 3.3 (orientation test).** Let $r\ne N$ be prime. Suppose a $\mathbf Q_r$-rational point of exact order $N$ on a generalized elliptic curve specializes to the boundary. If its component index is zero, then its reduction is an order-$N$ point on a one-dimensional $\mathbf F_r$-torus. Consequently
 
 $$
-N\mid r-1. \tag{3.4}
+N\mid r-1\quad\text{or}\quad N\mid r+1. \tag{3.4}
 $$
 
-If $N\nmid r-1$, the specialization is outward.
+In particular, if $N\nmid r^2-1$, the specialization is outward.
 
-**Proof.** Component index zero means that the point specializes to the identity torus. Because $N$ is prime to $r$, the $N$-torsion of that torus is finite étale and reduction preserves exact order. Its special fiber is $\mu_N$. A rational point of exact order $N$ in $\mu_N(\mathbf F_r)$ exists only when $N\mid\#\mathbf F_r^\times=r-1$. The contrapositive proves the final assertion. $\square$
+**Proof.** Component index zero means that the point specializes to the identity torus $T$. Because $N$ is prime to $r$, the group $T[N]$ is finite étale and reduction preserves exact order. Every one-dimensional torus over a finite field is either split or becomes split over the quadratic extension. In the split case $\#T(\mathbf F_r)=r-1$. In the nonsplit case Frobenius acts by inversion on the character lattice, so $\#T(\mathbf F_r)=r+1$. An order-$N$ point forces one of the divisibilities in (3.4). Their product divides $r^2-1$, and the contrapositive proves the final assertion. $\square$
 
-For $r=3$ and $N\ge5$, condition (3.4) is impossible. Thus every rational prime-order point that reaches the boundary at $3$ reaches a rational outward cusp. This elementary orientation test is the bridge from specialization to the exact cusp where the cotangent theorem applies.
+For $r=3$ and prime $N\ge11$, neither $N\mid2$ nor $N\mid4$ is possible. Thus every rational prime-order point in the range used below that reaches the boundary at $3$ reaches a rational outward cusp. This elementary orientation test is the bridge from specialization to the exact cusp where the cotangent theorem applies. The split formula $N\mid r-1$ is recovered on the standard Tate chart, but the proof does not silently assume that an arbitrary rational boundary form is split.
 
 ## 4. Cotangent lattices of optimal Eisenstein quotients
 
@@ -474,17 +504,45 @@ $$
 
 and, more strongly, equality of the selected finite-flat torsion towers over $S$. The same finite-flat equality controls cotangents.
 
-For an abelian scheme $B/\mathbf Z_\ell$, the cotangent module of its $\ell$-divisible group at the identity is canonically $\omega_{B/\mathbf Z_\ell}$. At finite level, the conormal module of $B[\ell^n]$ maps onto the same invariant differential module, and the compatible limit recovers it. An idempotent acts on these conormal modules and hence on $\omega_B$.
-
-Applying $e$ to the finite-flat comparison of Book 145 gives
+For an abelian scheme $B/\mathbf Z_\ell$, apply the conormal sequence to
 
 $$
-e\bigl(\omega_{\mathcal J/\mathbf Z_\ell}\bigr)
+0\longrightarrow B[\ell^n]\longrightarrow B
+\xrightarrow{[\ell^n]}B\longrightarrow0.
+$$
+
+Pullback by $[\ell^n]$ acts as multiplication by $\ell^n$ on invariant differentials. Hence there is a canonical, functorial identity
+
+$$
+\omega_{B[\ell^n]}
+\simeq \omega_{B/\mathbf Z_\ell}/\ell^n\omega_{B/\mathbf Z_\ell}. \tag{4.6a}
+$$
+
+The idempotent $e$ modulo $\ell^n$ acts on both sides. The transition maps in (4.6a) are reduction maps, and the finite free module $\omega_B$ is $\ell$-adically complete.
+
+Book 145 identifies the finite flat groups $e\mathcal J[\ell^n]$ and $e\mathcal A[\ell^n]$ through the map induced by $\pi$, compatibly in $n$. Contravariance of invariant differentials and (4.6a) therefore give
+
+$$
+e\bigl(\omega_{\mathcal A}/\ell^n\omega_{\mathcal A}\bigr)
 \xrightarrow{\sim}
-e\bigl(\omega_{\mathcal A/\mathbf Z_\ell}\bigr). \tag{4.7}
+e\bigl(\omega_{\mathcal J}/\ell^n\omega_{\mathcal J}\bigr)
 $$
 
-Here the map is induced by $\pi^*$, with the action on differentials interpreted contravariantly. To see the kernel directly, apply $e$ to (4.3). The selected finite-flat part of $\mathcal K[\ell^n]$ is zero at every $n$ by the saturation theorem. Its conormal module is therefore zero, so
+for every $n$. Taking inverse limits gives
+
+$$
+e\bigl(\omega_{\mathcal A/\mathbf Z_\ell}\bigr)
+\xrightarrow{\sim}
+e\bigl(\omega_{\mathcal J/\mathbf Z_\ell}\bigr). \tag{4.7}
+$$
+
+Here the map is $\pi^*$. To see its cokernel directly, apply $e$ to (4.3). The selected finite-flat part of $\mathcal K[\ell^n]$ is zero at every $n$ by the saturation theorem. Formula (4.6a) gives
+
+$$
+e\bigl(\omega_{\mathcal K}/\ell^n\omega_{\mathcal K}\bigr)=0
+$$
+
+for all $n$. Passing to the inverse limit, or applying Nakayama already at $n=1$, gives
 
 $$
 e\omega_{\mathcal K/\mathbf Z_\ell}=0.
@@ -580,13 +638,47 @@ $$
 a_n(U_Nf)=a_{Nn}(f). \tag{5.6}
 $$
 
-Repeatedly applying (5.6) and then (5.5) gives an integral Hecke operator $T_m=U_N^bT_s$ satisfying
+Here is the integral cusp calculation behind (5.6). Work over $\mathbf Z_r$ with $r\ne N$ and make a finite étale extension containing $\zeta_N$. Above the standard object $(\operatorname{Tate}(q),\mu_N)$, the incoming correspondence has the $N$ complementary subgroups
 
 $$
-a_1(T_mf)=a_m(f) \tag{5.7}
+D_a=\langle\zeta_N^a q^{1/N}\rangle,
+\qquad 0\le a<N.
 $$
 
-for every $m\ge1$.
+The quotient branch has Tate parameter $q_a=\zeta_N^a q^{1/N}$. Since
+
+$$
+\frac{dq_a}{q_a}=\frac1N\frac{dq}{q},
+$$
+
+pullback of the differential followed by the trace over the $N$ branches acts on its q-series by
+
+$$
+\frac1N\sum_{a=0}^{N-1}
+\sum_{j\ge1}a_j(f)\zeta_N^{aj}q^{j/N}.
+$$
+
+The root-of-unity sum is $N$ when $N\mid j$ and zero otherwise, leaving
+
+$$
+\sum_{n\ge1}a_{Nn}(f)q^n.
+$$
+
+The calculation is invariant under the finite étale descent, and the final series has coefficients in $\mathbf Z_r$. This proves (5.6) without importing bad-level geometry in residue characteristic $N$; throughout this chapter the residue characteristic is different from $N$.
+
+Repeatedly applying (5.6) and then (5.5) gives an integral Hecke operator
+
+$$
+\mathcal T_m=U_N^bT_s
+$$
+
+satisfying
+
+$$
+a_1(\mathcal T_mf)=a_m(f) \tag{5.7}
+$$
+
+for every $m\ge1$. The notation $\mathcal T_m$ is local to this coefficient-moving argument; when $N\mid m$, it does not assert that $U_N^bT_s$ is the standard away-level double-coset operator indexed by $m$.
 
 The equality uses the incoming normalization $U_N$, the same one for which $U_N-1$ belongs to the Eisenstein ideal. Replacing it by the adjoint outgoing operator would alter (5.6) and the cusp orientation.
 
@@ -604,10 +696,10 @@ $$
 a_m(\bar f)\ne0\quad\text{in }\mathbf F_r. \tag{5.8}
 $$
 
-Lift $\bar f$ to $f\in L$. Then $a_m(f)$ is a unit of $\mathbf Z_r$. Hecke stability puts $T_mf$ back in $L$, and (5.7) gives
+Lift $\bar f$ to $f\in L$. Then $a_m(f)$ is a unit of $\mathbf Z_r$. Hecke stability puts $\mathcal T_mf$ back in $L$, and (5.7) gives
 
 $$
-a_1(T_mf)=a_m(f)\in\mathbf Z_r^\times. \tag{5.9}
+a_1(\mathcal T_mf)=a_m(f)\in\mathbf Z_r^\times. \tag{5.9}
 $$
 
 This is the coefficient-moving lemma. It requires neither a normalized eigenform nor freeness of $L$ over a local Hecke algebra. It uses only primitivity, Hecke stability, and q-expansion injectivity.
@@ -649,14 +741,14 @@ be the selected optimal quotient. For every prime $r\ne N$:
    $$
    f\in\Omega_{\mathfrak m,r}
    \quad\text{with}\quad
-   a_1(T_mf)=a_m(f)\in\mathbf Z_r^\times;
+   a_1(\mathcal T_mf)=a_m(f)\in\mathbf Z_r^\times;
    \tag{6.1}
    $$
 5. at $r=\ell$, the completed selected cotangent is exactly
    $$
-   e_{\mathfrak m}\omega_{\mathcal J/\mathbf Z_\ell}
-   \xrightarrow{\sim}
-   e_{\mathfrak m}\omega_{\mathcal A/\mathbf Z_\ell}.
+   e_{\mathfrak m}\omega_{\mathcal A/\mathbf Z_\ell}
+   \overset{\pi^*}{\xrightarrow{\sim}}
+   e_{\mathfrak m}\omega_{\mathcal J/\mathbf Z_\ell}.
    \tag{6.2}
    $$
 
@@ -674,15 +766,23 @@ The proof uses the whole optimal quotient lattice at $r$, not merely the chosen 
 
 ### 6.3 The selected summand at the Eisenstein prime
 
-**Proof of Theorem 6.1, item 5.** The local idempotent $e_{\mathfrak m}$ acts on the finite-flat $\ell$-power torsion tower and on its conormal modules. Book 145 identifies the selected towers in $\mathcal J$ and $\mathcal A$ level by level. Passing to invariant differentials gives (6.2).
-
-Equivalently, apply $e_{\mathfrak m}$ to (4.3). The selected torsion of $\mathcal K$ is zero because
+**Proof of Theorem 6.1, item 5.** The local idempotent $e_{\mathfrak m}$ acts modulo $\ell^n$ on the finite-flat $\ell$-power torsion tower and on invariant differentials. For every abelian scheme $B/\mathbf Z_\ell$, formula (4.6a) identifies the latter module with $\omega_B/\ell^n\omega_B$. Book 145 identifies the selected towers in $\mathcal J$ and $\mathcal A$ level by level, so contravariance gives an isomorphism
 
 $$
-e_{\mathfrak m}T_\ell K=0.
+e_{\mathfrak m}(\omega_{\mathcal A}/\ell^n)
+\xrightarrow{\sim}
+e_{\mathfrak m}(\omega_{\mathcal J}/\ell^n)
 $$
 
-The selected conormal module of $\mathcal K[\ell^n]$ is therefore zero at every level, and so $e_{\mathfrak m}\omega_{\mathcal K}=0$. Exactness gives the asserted isomorphism. $\square$
+for every $n$. The transition maps agree, and both cotangent modules are finite free and $\ell$-adically complete. Their inverse limits give (6.2).
+
+Equivalently, apply $e_{\mathfrak m}$ to (4.3). Book 145's finite-flat kernel statement gives
+
+$$
+e_{\mathfrak m}\mathcal K[\ell^n]=0
+$$
+
+for every $n$; the weaker equality $e_{\mathfrak m}T_\ell K=0$ by itself would not suffice for this integral conclusion. Formula (4.6a) applied to $\mathcal K$ says that its selected cotangent quotient modulo $\ell^n$ is zero at every level. Completeness gives $e_{\mathfrak m}\omega_{\mathcal K}=0$, and exactness gives the same asserted isomorphism directly from (4.3). $\square$
 
 The use of conormal modules is important. A statement only about rational Tate spaces would show equality after tensoring with $\mathbf Q_\ell$ but would not exclude an $\ell$-power index between the cotangent lattices.
 
@@ -707,55 +807,55 @@ These distinctions are what allow the argument to include ramified coefficient f
 Let $c\in X_1(N)(\mathbf Z[1/N])$ be an outward cusp and let
 
 $$
-c_0=\rho(c)\in X_0(N)(\mathbf Z[1/N]).
+c_\infty=\infty\in X_0(N)(\mathbf Z[1/N]).
 $$
 
-Use $c_0$ as the Abel--Jacobi base point:
+By Section 3.3, $\sigma(c)=c_\infty$. Use this standard cusp as the Abel--Jacobi base point:
 
 $$
-j_{c_0}:X_0(N)\longrightarrow J_0(N),
-\qquad x\longmapsto[x-c_0]. \tag{7.1}
+j_\infty:X_0(N)\longrightarrow J_0(N),
+\qquad x\longmapsto[x-c_\infty]. \tag{7.1}
 $$
 
 Define
 
 $$
-h=\pi\circ j_{c_0}\circ\rho:X_1(N)\longrightarrow A. \tag{7.2}
+h=\pi\circ j_\infty\circ\sigma:X_1(N)\longrightarrow A. \tag{7.2}
 $$
 
 Then $h(c)=0$. Every Hecke operator acting on $A$ gives a translate
 
 $$
-h_m=T_m\circ h. \tag{7.3}
+h_m=\mathcal T_m\circ h. \tag{7.3}
 $$
 
-The phrase “Hecke translate” refers to composition on the target, not to moving the cusp on the source. Since $T_m(0)=0$, one still has $h_m(c)=0$.
+The phrase “Hecke translate” refers to composition on the target, not to moving the cusp on the source. Since $\mathcal T_m(0)=0$, one still has $h_m(c)=0$.
 
-Over $\mathbf Z_r$ with $r\ne N$, the curve is smooth at the cusp and $\mathcal A$ is an abelian scheme. Thus (7.2)--(7.3) extend to the relevant integral neighborhoods. This follows from the integral Abel map on the smooth locus and the Néron mapping property, or directly from the Cartier divisor $x-c_0$.
+Over $\mathbf Z_r$ with $r\ne N$, the curve is smooth at the cusp and $\mathcal A$ is an abelian scheme. Thus (7.2)--(7.3) extend to the relevant integral neighborhoods. This follows from the integral Abel map on the smooth locus and the Néron mapping property, or directly from the Cartier divisor $x-c_\infty$.
 
 ### 7.2 The cotangent calculation
 
 Let $f\in\omega_{\mathcal A/\mathbf Z_r}$ and use the same letter for its primitive image in the differential lattice of $X_0(N)$. Pullback along the Abel map identifies invariant differentials on the Jacobian with the same regular differentials on the curve. Therefore
 
 $$
-h_m^*f=\rho^*(T_mf). \tag{7.4}
+h_m^*f=\sigma^*(\mathcal T_mf). \tag{7.4}
 $$
 
-At $c_0$, write
+At $c_\infty$, write
 
 $$
-T_mf=
-\left(a_1(T_mf)+a_2(T_mf)q+\cdots\right)dq. \tag{7.5}
+\mathcal T_mf=
+\left(a_1(\mathcal T_mf)+a_2(\mathcal T_mf)q+\cdots\right)dq. \tag{7.5}
 $$
 
-At the outward point-level cusp, Proposition 3.1 gives $q=ut+O(t^2)$ with $u$ a unit and $t$ a local parameter on $X_1(N)$. Pulling back (7.5) gives
+At the outward point-level cusp, Corollary 3.2 gives $q=ut+O(t^2)$ with $u$ a unit and $t$ a local parameter on $X_1(N)$. Pulling back (7.5) gives
 
 $$
 h_m^*f=
-\left(u\,a_1(T_mf)+O(t)\right)dt. \tag{7.6}
+\left(u\,a_1(\mathcal T_mf)+O(t)\right)dt. \tag{7.6}
 $$
 
-If $a_1(T_mf)$ is a unit modulo $r$, then (7.6) spans the cotangent line of $X_1(N)_{\mathbf F_r}$ at $c$. The induced map
+If $a_1(\mathcal T_mf)$ is a unit modulo $r$, then (7.6) spans the cotangent line of $X_1(N)_{\mathbf F_r}$ at $c$. The induced map
 
 $$
 \omega_{\mathcal A/\mathbf Z_r}\otimes\mathbf F_r
@@ -778,7 +878,7 @@ is a formal immersion at the reduction of $c$.
 
 **Proof.** Because $\ell\mid n_N$, the completed Eisenstein piece is nonzero: its finite level contains the nonzero $\ell$-primary cuspidal subgroup established in Book 145. Hence $A_{\mathfrak m}$ has positive dimension.
 
-Apply Theorem 6.1 at $r$. It gives $f$ in the primitive quotient cotangent lattice and $m\ge1$ such that $a_1(T_mf)$ is a unit. Equation (7.6) shows that $h_m^*f$ is nonzero in the one-dimensional cotangent line at $c$. Thus (7.7) is surjective. Proposition 2.1 gives the formal immersion. $\square$
+Apply Theorem 6.1 at $r$. It gives $f$ in the primitive quotient cotangent lattice and $m\ge1$ such that $a_1(\mathcal T_mf)$ is a unit. Equation (7.6) shows that $h_m^*f$ is nonzero in the one-dimensional cotangent line at $c$. Thus (7.7) is surjective. Proposition 2.1 gives the formal immersion. $\square$
 
 The theorem holds in every good residue characteristic, including $2$ and $3$, as a statement about cotangents. Its rational-point consequence will be stated at odd $r$ because that later step also requires injectivity of torsion specialization on the quotient.
 
@@ -845,7 +945,7 @@ $$
 Choose the Hecke translate $h_m$ supplied by Theorem 7.1. Then
 
 $$
-h_m(x)=T_mh(x)=0=T_mh(c)=h_m(c). \tag{8.5}
+h_m(x)=\mathcal T_mh(x)=0=\mathcal T_mh(c)=h_m(c). \tag{8.5}
 $$
 
 Both sections pass through the same special cusp, and $h_m$ is a formal immersion there. Lemma 2.2 gives $x=c$.
@@ -861,6 +961,8 @@ $$
 
 then $x=c$.
 
+**Proof.** Equations (8.3)--(8.4) use finiteness of $A(\mathbf Q)$ and Proposition 8.1 to show $h(x)=h(c)=0$. Choose the coefficient-moving operator supplied by Theorem 7.1. Equation (8.5) gives equality of the two images under the formally immersive map $h_m$, and Lemma 2.2 separates the two sections in their common cusp disk. $\square$
+
 The theorem uses one selected Eisenstein quotient, for any choice of $\ell\mid n_N$. It does not require $x-c$ to lift to a rational torsion point on $J_0(N)$. The point already lies on the quotient, whose rational group is finite in its own right.
 
 ### 8.3 Why the argument is stated at an odd prime
@@ -873,7 +975,7 @@ This boundary is independent of the dyadic admissibility in Book 145. Admissibil
 
 ### 8.4 Compatibility with changing the oriented cusp
 
-Let $c_a$ be the outward cusp with component label $a$. The diamond automorphism $\langle a\rangle$ on $X_1(N)$ carries $c_1$ to $c_a$. It commutes with the forgetful map up to the natural equality on cyclic subgroups. Therefore the diagram
+Let $c_a$ be the outward cusp with component label $a$. The diamond automorphism $\langle a\rangle$ on $X_1(N)$ carries $c_1$ to $c_a$. Multiplying a generator does not change its cyclic subgroup, so $\rho\langle a\rangle=\rho$ and hence $\sigma\langle a\rangle=\sigma$. Therefore the diagram
 
 $$
 \begin{array}{ccc}
@@ -883,7 +985,7 @@ A&=&A
 \end{array}
 $$
 
-commutes after translating the pointed Abel map by its cusp value; that value is zero for either compatible base cusp. On completed local parameters, the diamond action multiplies the parameter by a unit. It follows that formal immersion and section separation transport from $c_1$ to $c_a$.
+commutes without a translation: every outward cusp maps under $\sigma$ to $\infty$, the fixed base point of $j_\infty$. On completed local parameters, the diamond action multiplies the parameter by a unit. It follows that formal immersion and section separation transport from $c_1$ to $c_a$.
 
 Thus Theorem 8.2 is not tied to a preferred label. A reduction argument may produce any rational outward orientation, and the same rigidity conclusion applies.
 
@@ -943,17 +1045,17 @@ The exact-order assertion in (9.2) deserves proof. Multiplication by $p$ is éta
 
 We are therefore in the boundary alternative at $r=3$ for every $p\ge11$. The oriented point can a priori lie in the toric identity component or meet a nonidentity component.
 
-If it lies in the identity component, its reduction is a point of exact order $p$ in
+If it lies in the identity component, its reduction is a point of exact order $p$ on a one-dimensional $\mathbf F_3$-torus $T$. The torus is split or is the unique nonsplit form, so
 
 $$
-\mathbf G_m(\mathbf F_3)=\mathbf F_3^\times,
+\#T(\mathbf F_3)=2\quad\text{or}\quad4.
 $$
 
-which has order $2$. This is impossible for $p\ge5$. Equivalently, Lemma 3.2 gives the impossible divisibility $p\mid2$.
+This is impossible for $p\ge11$. Equivalently, Lemma 3.3 gives the impossible divisibility $p\mid3^2-1$.
 
 Thus the level point has nonzero component index. Since $p$ is prime, that index generates the component group after rescaling the chosen generator. The reduction is an outward component-oriented cusp.
 
-There is no hidden second rational $p$-direction. If both an independent toric direction and a component direction were rational, their Weil pairing would give a rational primitive $p$th root of unity. For $p\ge5$ this cannot lie in $\mathbf Q$. In the present argument the simpler count in $\mathbf F_3^\times$ already excludes the toric direction, but the Weil-pairing observation explains why the orientation is intrinsic.
+There is no hidden second rational $p$-direction. If both an independent toric direction and a component direction were rational, their Weil pairing would give a rational primitive $p$th root of unity. For $p\ge5$ this cannot lie in $\mathbf Q$. In the present argument the finite-torus count already excludes the toric direction, but the Weil-pairing observation explains why the orientation is intrinsic.
 
 ### 9.4 The rational oriented cusp reached at three
 
@@ -969,7 +1071,7 @@ We summarize the specialization argument.
 
 **Proposition 9.1 (oriented specialization at three).** Let $p\ge11$ be prime and let $P\in E(\mathbf Q)$ have exact order $p$. The corresponding point of $X_1(p)(\mathbf Q)$ reduces modulo $3$ to a rational outward cusp.
 
-**Proof.** Interior reduction contradicts (9.2)--(9.4). Boundary reduction in the identity torus would give an order-$p$ point of $\mathbf F_3^\times$, also impossible. Hence the component index is nonzero, so the point reaches the rational outward cusp with that index. $\square$
+**Proof.** Interior reduction contradicts (9.2)--(9.4). Boundary reduction in the identity torus would give an order-$p$ point in a group of order $2$ or $4$, also impossible. Hence the component index is nonzero, so the point reaches the rational outward cusp with that index. $\square$
 
 The proposition alone does not rule out the rational point. It locates the residue disk. The formal-immersion theorem will show that, when an Eisenstein quotient exists, the only rational point in that disk is its cusp.
 
@@ -1029,7 +1131,7 @@ $$
 
 But $x$ lies in the open modular curve and $c$ lies in the boundary. This contradiction proves the theorem. $\square$
 
-Every hypothesis has now been used. The threshold $17$ guarantees a nontrivial Eisenstein index. The prime $3$ guarantees both the Hasse exclusion and torsion-free formal reduction. The point-level orientation guarantees that the reached cusp is rational and that forgetting the generator is unramified there.
+Every hypothesis has now been used. The threshold $17$ guarantees a nontrivial Eisenstein index. The prime $3$ guarantees both the Hasse exclusion and torsion-free formal reduction. The point-level orientation guarantees that the reached cusp is rational and that the quotient-oriented map $\sigma=w_p\rho$ has unit cotangent there.
 
 ### 10.3 Exceptional index and residue-characteristic checks
 
@@ -1115,19 +1217,85 @@ $$
 \right). \tag{11.5a}
 $$
 
-These formulas hold on the open set $bc\ne0$. They follow by one tangent addition and then two secant additions; direct substitution in (11.4)--(11.5) verifies every numerator and denominator. Continuing the same recurrence, the condition
+These formulas hold on the open set $bc\ne0$. They follow by one tangent addition and then two secant additions; direct substitution in (11.4)--(11.5) verifies every numerator and denominator. Continue the recurrence after introducing
 
 $$
-5P=-6P \tag{11.6}
+r=\frac bc,
+\qquad
+s=\frac{c^2}{b-c}. \tag{11.6}
 $$
 
-cuts out the exact order-$11$ locus after the factors $b=0$, the discriminant, and the lower-order loci are removed. Successive cancellation gives a smooth affine curve whose normalization is transformed by completing the square and the elementary substitutions arising from the two ratios of consecutive denominators into
+On the open set $c(b-c)\ne0$, this substitution is reversible:
 
 $$
-y^2+y=x^3-x^2.
+b=rs(r-1),
+\qquad c=s(r-1). \tag{11.6a}
 $$
 
-This calculation is reversible: substituting the recovered rational functions $b(x,y),c(x,y)$ in (11.3) makes (11.6) an identity, while (11.4)--(11.5) recover $(x,y)$ from a nondegenerate order-$11$ pair. Hence the two curves represent the same open moduli problem and have the same smooth compactification.
+Substitution in (11.5a), followed by one further addition of $P$, gives
+
+$$
+4P=\bigl(r(r-1),r^2(r-1)(s-1)\bigr),
+$$
+
+$$
+5P=\bigl(rs(s-1),rs^2(r-s)\bigr), \tag{11.6b}
+$$
+
+and
+
+$$
+x(6P)=
+\frac{s(r^2-rs-r+s)}{(s-1)^2}. \tag{11.6c}
+$$
+
+For a nonzero point, $x(5P)=x(6P)$ says $5P=-6P$: the other sign would give $5P=6P$ and hence $P=0$. Equating (11.6b) and (11.6c), cancelling the nonzero factor $s$, and clearing $(s-1)^2$ gives exactly
+
+$$
+r^2-rs^3+3rs^2-4rs+s=0. \tag{11.6d}
+$$
+
+Conversely (11.6d) gives $x(5P)=x(6P)$ and therefore $11P=0$. Since $11$ is prime and the removed locus contains $P=0$ and every singular Tate form, the remaining pairs have exact order $11$.
+
+The normalization can also be displayed explicitly. Put
+
+$$
+w=2r-s^3+3s^2-4s.
+$$
+
+Completing the square in the quadratic equation (11.6d) gives
+
+$$
+w^2=s(s-1)^2(s^3-4s^2+8s-4). \tag{11.6e}
+$$
+
+On $s(s-1)\ne0$, define
+
+$$
+x=1-\frac1s,
+\qquad
+2y+1=\frac{w}{(s-1)s^2}. \tag{11.6f}
+$$
+
+Dividing (11.6e) by $(s-1)^2s^4$ and using $s^{-1}=1-x$ gives
+
+$$
+(2y+1)^2=4x^3-4x^2+1,
+$$
+
+or $y^2+y=x^3-x^2$. The change is birational, not merely dominant. Its inverse is
+
+$$
+s=\frac1{1-x},
+\qquad
+w=(2y+1)(s-1)s^2,
+$$
+
+$$
+r=\frac{w+s^3-3s^2+4s}{2}, \tag{11.6g}
+$$
+
+followed by (11.6a). Thus the exact-order locus in Tate normal form and a dense open of (11.1) have isomorphic function fields. Their smooth projective normalizations are isomorphic.
 
 For (11.1), the Weierstrass coefficients are
 
@@ -1148,7 +1316,7 @@ $$
 \Delta=-b_2^2b_8-27b_6^2+9b_2b_4b_6=16-27=-11. \tag{11.7}
 $$
 
-The model is therefore smooth away from $11$. The points in (11.2) satisfy the equation by substitution. In the Tate normalization, the boundary factors removed before (11.6) map to precisely these five points; equivalently, the cusp charts show that they are the five component labels in $(\mathbf Z/11\mathbf Z)^\times/\{\pm1\}$. Hence they are exactly the outward rational cusps. $\square$
+The model is therefore smooth away from $11$. The points in (11.2) satisfy the equation by substitution. Formulas (11.6f)--(11.6g) locate the rational part of the removed boundary: $s=0$ gives $O$, $s=1$ gives the two points with $x=0$, and the two branches at $s=\infty$ give the points with $x=1$. Thus all five displayed points are cusps. The outward cusp charts give exactly $(11-1)/2=5$ rational cusps, indexed by $(\mathbf Z/11\mathbf Z)^\times/\{\pm1\}$; the inward cusps require a primitive eleventh root of unity and are not rational. Hence the five points in (11.2) are precisely the outward rational cusps. $\square$
 
 The normalization calculation in the proof is a finite group-law calculation, not an appeal to a rational-point classification. Its role is to identify the modular curve and its rational boundary on one integral genus-one model.
 
@@ -1168,7 +1336,13 @@ $$
 \rho:X_1(11)\longrightarrow X_0(11)
 $$
 
-is nonconstant. Pullback and norm induce nonzero homomorphisms between the two one-dimensional Jacobians. A nonzero homomorphism of elliptic curves is an isogeny, so
+is nonconstant. The cyclic-level genus formula gives $g(X_0(11))=1$: the index of $\Gamma_0(11)$ is $12$, there are two cusps, and there are no elliptic fixed points because $11\equiv3\pmod4$ and $11\equiv2\pmod3$. Thus both Jacobians are one-dimensional. Pullback and norm satisfy
+
+$$
+\rho_*\rho^*=[\deg\rho]
+$$
+
+on $J_0(11)$, so they are nonzero homomorphisms. A nonzero homomorphism of elliptic curves is an isogeny, and therefore
 
 $$
 J_1(11)\sim J_0(11). \tag{11.9}
@@ -1248,7 +1422,7 @@ Every point in the set is a cusp by Proposition 11.1. Hence
 
 **Theorem 11.2 (level eleven).** Every rational point of $X_1(11)$ is cuspidal. In particular no elliptic curve over $\mathbf Q$ has a rational point of exact order $11$.
 
-The final implication follows because a smooth elliptic curve with such a point would define a rational point of the open curve $Y_1(11)$, whereas (11.15) lies entirely in the boundary.
+**Proof.** Proposition 11.1 identifies the five points in (11.2) as cusps. Eisenstein finiteness and the isogeny (11.9) make $C_{11}(\mathbf Q)$ finite; the two reduction counts then prove (11.14), while the five displayed points force equality. Thus (11.15) is the full rational-point set and lies in the boundary. A smooth elliptic curve with a rational point of exact order $11$ would instead define a rational point of the open curve $Y_1(11)$, which is impossible. $\square$
 
 This argument is exact about the role of finiteness. Reduction counts alone bound rational torsion, not a positive-rank Mordell--Weil group. Book 146 first proves finiteness through the isogenous Eisenstein quotient; only then do the two finite-field counts determine every rational point.
 
@@ -1280,7 +1454,7 @@ $$
 2P=(b,bc),
 $$
 
-after using (11.4)--(11.5) and the defining coefficients. The equality $2P=-3P$ for order five reduces, after removing $b=0$ and the discriminant, to $b=c$; write the common value as $t$. For order seven, the equality $3P=-4P$ first gives a ratio $t=c/b$ on the nondegenerate locus, and clearing denominators yields the second row of (12.2). Substitution back into the group law verifies $5P=0$ or $7P=0$, while the removed factors are precisely the lower-order or singular cases.
+after using (11.4)--(11.5) and the defining coefficients. The equality $2P=-3P$ for order five reduces, after removing $b=0$ and the discriminant, to $b=c$; write the common value as $t$. For order seven, the equality $3P=-4P$ first gives the ratio $t=b/c$ on the nondegenerate locus. Clearing denominators yields $c=t(t-1)$ and $b=t^2(t-1)$, the second row of (12.2). Substitution back into the group law verifies $5P=0$ or $7P=0$, while the removed factors are precisely the lower-order or singular cases.
 
 The nonzero points of order two on a general Weierstrass equation are fixed by negation. Since
 
@@ -1372,7 +1546,13 @@ $$
 
 For completeness, (12.10) is obtained by taking dimensions over $\mathbf F_2$ in the two exact quotients by the dual isogenies; the two rational kernels each contribute one factor of $2$, and the free rank contributes equally to the two quotients.
 
-Direct counting gives
+The discriminant of this Weierstrass equation is
+
+$$
+16B^2(A^2-4B)=16\cdot125=2000,
+$$
+
+so $3$ and $7$ are primes of good reduction. Direct counting gives
 
 $$
 \#E_5(\mathbf F_3)=6,
@@ -1380,7 +1560,7 @@ $$
 \#E_5(\mathbf F_7)=6. \tag{12.11}
 $$
 
-Hence rational torsion has order dividing $6$. The $3$-division polynomial factors as
+Proposition 8.1 makes reduction injective on the full rational torsion at both odd primes, so its order divides $\gcd(6,6)=6$. The $3$-division polynomial factors as
 
 $$
 \psi_3(x)=3x^4-44x^3-6x^2-1
@@ -1462,13 +1642,78 @@ X_1(13):\quad
 y^2+(x^3+x^2+1)y=x^2+x. \tag{13.1}
 $$
 
-We recall how the equation is certified. Begin with (11.3), compute consecutive multiples of $P=(0,0)$ by (11.4)--(11.5), and impose
+We now certify the equation with reversible functions. Begin with (11.3) and use the variables from (11.6):
 
 $$
-6P=-7P. \tag{13.2}
+r=\frac bc,
+\qquad
+s=\frac{c^2}{b-c},
+\qquad
+b=rs(r-1),
+\qquad
+c=s(r-1). \tag{13.2}
 $$
 
-After removing the factors for singular curves and lower-order points, two ratios of successive denominators give functions $x$ and $y$ satisfying (13.1). Conversely, solving for $b$ and $c$ in terms of these ratios and substituting in the group law makes (13.2) an identity. Thus the normalization of the exact-order locus is the affine curve (13.1), and adding its points at infinity gives $X_1(13)$.
+The additions already used at level $11$ give
+
+$$
+x(6P)=\frac{s(r^2-rs-r+s)}{(s-1)^2}
+$$
+
+and
+
+$$
+y(6P)=\frac{s^2}{(s-1)^3}
+\bigl(r^3s-2r^3-2r^2s+5r^2+rs-4r+1\bigr). \tag{13.2a}
+$$
+
+Use this point in the addition formula once more to compute $x(7P)$. The condition $x(6P)=x(7P)$ has numerator
+
+$$
+s^3(r-1)^3G_{13}(r,s),
+$$
+
+where
+
+$$
+\begin{aligned}
+G_{13}(r,s)={}&r^2s^4-5r^2s^3+9r^2s^2+rs^3-r^3\\
+&-4r^2s-6rs^2+s^3+2r^2+3rs-r.
+\end{aligned} \tag{13.2b}
+$$
+
+The displayed factorization is obtained by substituting (13.2a) into (11.4)--(11.5), multiplying the equality of x-coordinates by
+
+$$
+(s-1)^2s^2(r^2-rs-r+s)^2,
+$$
+
+and collecting terms. The factors $s=0$ and $r=1$ belong to the removed singular or lower-order locus. On the remaining locus, equality of the x-coordinates gives $6P=-7P$: the other sign would imply $P=0$. Thus $G_{13}=0$ is exactly the order-$13$ locus in these coordinates.
+
+Its normalization is (13.1). On the dense open where the denominators below are nonzero, the direct change of variables is
+
+$$
+r=1-xy,
+\qquad
+s=1-\frac{xy}{y+1}. \tag{13.2c}
+$$
+
+The substitution has the following exact polynomial certificate:
+
+$$
+(y+1)^4G_{13}\left(1-xy,1-\frac{xy}{y+1}\right)
+=x^3y^5\bigl(y^2+(x^3+x^2+1)y-x^2-x\bigr). \tag{13.2d}
+$$
+
+Conversely,
+
+$$
+y=\frac{s-r}{1-s},
+\qquad
+x=\frac{(1-r)(1-s)}{s-r}. \tag{13.2e}
+$$
+
+Equations (13.2c) and (13.2e) are mutual inverses by direct cancellation, while (13.2d) verifies that the image lies on $G_{13}=0$. Equations (13.2), (13.2b) then recover $b,c$ and verify $13P=0$. Hence the two affine curves have the same function field. Adding the points omitted by the denominators and taking the unique smooth projective normalization gives $X_1(13)$ with equation (13.1).
 
 The same calculation identifies the visible boundary points. On (13.1) they are
 
@@ -1478,7 +1723,7 @@ $$
 (-1,0),\quad(-1,-1). \tag{13.3}
 $$
 
-The four affine points follow immediately from $x^2+x=0$. The two points at infinity are the two branches of the even-degree hyperelliptic completion described below. Cusp charts identify these six points with the outward rational cusps, indexed by
+The four affine points follow immediately from $x^2+x=0$. In (13.2c), the points with $y=0$ approach the removed branch $r=s=1$, while the points with $y=-1$ and the two points at infinity lie on the other omitted denominator or pole branches. Thus all six displayed points are boundary points of the Tate-normal-form locus. The two points at infinity are the two branches of the even-degree hyperelliptic completion described below. There are exactly $(13-1)/2=6$ rational outward cusps, and the inward cusps have nontrivial cyclotomic field of definition. Hence these six boundary points are precisely the outward rational cusps, indexed by
 
 $$
 (\mathbf Z/13\mathbf Z)^\times/\{\pm1\}.
@@ -1614,13 +1859,13 @@ be the selected optimal Eisenstein quotient. Then:
 2. the inclusion and its finite free quotient commute with arbitrary base change from $\mathbf Z_r$;
 3. at $r=\ell$, the completed idempotent gives the exact integral comparison
    $$
-   e_{\mathfrak m}\omega_{J_0(N),\mathbf Z_\ell}
-   \simeq
-   e_{\mathfrak m}\omega_{A_{\mathfrak m},\mathbf Z_\ell};
+   e_{\mathfrak m}\omega_{A_{\mathfrak m},\mathbf Z_\ell}
+   \overset{\pi^*}{\xrightarrow{\sim}}
+   e_{\mathfrak m}\omega_{J_0(N),\mathbf Z_\ell};
    $$
 4. for every outward rational cusp $c$ of $X_1(N)$ and every $r\ne N$, a Hecke translate of
    $$
-   X_1(N)\longrightarrow X_0(N)
+   X_1(N)\xrightarrow{\ \sigma=w_N\rho\ } X_0(N)
    \longrightarrow J_0(N)
    \longrightarrow A_{\mathfrak m}
    $$
@@ -1656,7 +1901,7 @@ $$
 
 for $(m,N)=1$. We prove the $U_N$ extension (5.6)--(5.7) in the incoming normalization. At $r=3$, the stack and stabilizer cautions of Book 119 are retained; a naive coarse q-lattice is never used.
 
-**Book 121.** The Néron cotangent lattice is the canonical lattice of regular dualizing differentials, the correspondence action has variance $(\pi_2)_*\pi_1^*$, and pullback on cotangents agrees with the normalized weight-two Hecke operator. The integral Hecke action extends to Néron models and preserves cotangents. We use no rank-two conclusion from Eichler--Shimura and no rational projector on a component lattice.
+**Book 121.** The Néron cotangent lattice is the canonical lattice of regular dualizing differentials, the correspondence action has variance $(\pi_2)_*\pi_1^*$, and pullback on cotangents agrees with the normalized weight-two Hecke operator. The integral Hecke action extends to Néron models and preserves cotangents. Its Atkin--Lehner moduli formula sends a cyclic isogeny to its dual; the Tate quotient in Section 3.3 then proves that $w_N\rho$ takes an outward point-level parameter to the standard parameter at $\infty$. We use no rank-two conclusion from Eichler--Shimura and no rational projector on a component lattice.
 
 **Book 145.** The selected rational support defines an optimal quotient with connected kernel; over $\mathbf Z[1/N]$ it gives the exact abelian-scheme sequence (4.2). The local idempotent $e_{\mathfrak m}$ is distinct from the rational projector, the selected Tate lattice is saturated, and the selected finite-flat torsion towers in $J$ and $A$ agree. These facts prove both the primitive whole-quotient cotangent inclusion and the completed comparison (4.7). Nontriviality follows from the actual cuspidal $\ell$-primary subgroup, not merely from a formal maximal ideal.
 
@@ -1685,8 +1930,8 @@ T&(\pi_2)_*\pi_1^*&
 \text{cotangent action replaced by its adjoint}\\
 \text{Frobenius}&\text{arithmetic}&
 \text{inverted good-prime polynomial}\\
-\text{cusp}&\text{outward component orientation}&
-\text{ramified forgetful parameter}\\
+\text{cusp map}&\sigma=w_N\rho\text{ at an outward cusp}&
+\text{first coefficient taken at the wrong }X_0(N)\text{ cusp}\\
 \text{differentials}&\text{Néron dualizing lattice}&
 \text{nonsaturated coarse lattice at }2,3\\
 \text{specialization prime}&r=3&
@@ -1704,7 +1949,7 @@ The exceptional levels and primes are as follows.
 
 - At $N=11$, a selected quotient exists, and the complete genus-one calculation is supplied separately.
 
-- The inward $\Gamma_1$ cusp is not covered by Theorem 7.1 through the forgetful map to $X_0(N)$; its parameter can be ramified. The prime-order specialization at $3$ reaches the outward cusp, so no case is omitted in the application.
+- The inward $\Gamma_1$ cusp is not covered by Theorem 7.1 through $\sigma=w_N\rho$. Under this composite it maps to the component cusp, where the standard q-parameter has width $N$. The prime-order specialization at $3$ reaches the outward cusp, so no case is omitted in the application.
 
 - Square discriminant of the two-torsion cubic is necessary but not sufficient for splitting. The mixed-seven conclusion is stated only in the necessary direction.
 
@@ -1712,7 +1957,7 @@ The exceptional levels and primes are as follows.
 
 The selected Eisenstein quotient has two integral realizations that must be kept together. Rational support constructs an optimal abelian quotient with connected kernel. Completion at an Eisenstein maximal ideal constructs an exact finite-flat torsion summand. The connected kernel makes the quotient cotangent lattice primitive at every good prime, while the completed torsion comparison identifies the exact selected cotangent direction at the Eisenstein prime.
 
-Once that lattice is placed inside regular dualizing cusp forms, q-expansion turns a nonzero reduced differential into a visible coefficient. A Hecke operator moves that coefficient to the first position. At an outward $\Gamma_1$ cusp, forgetting the generator preserves the smoothing parameter, so the unit first coefficient spans the point-level cotangent line. This is the formal immersion.
+Once that lattice is placed inside regular dualizing cusp forms, q-expansion turns a nonzero reduced differential into a visible coefficient. A Hecke operator moves that coefficient to the first position. At an outward $\Gamma_1$ cusp, the composite $\sigma=w_N\rho$ quotients the component subgroup and carries the point-level parameter to the standard parameter at $\infty$ with unit linear term. The unit first coefficient therefore spans the point-level cotangent line. This is the formal immersion.
 
 Finiteness of the quotient's rational group supplies the global half of the argument. At the odd good prime $3$, torsion specializes injectively. A rational point in the cusp disk therefore has the same quotient image as the cusp, and formal immersion makes the two sections equal. A rational point of prime order at least seventeen is forced into exactly such a disk by the Hasse bound and the component orientation, proving the uniform exclusion.
 
