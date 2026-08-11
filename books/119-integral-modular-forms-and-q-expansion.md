@@ -122,7 +122,7 @@ The results below also apply componentwise to a compactified modular stack obtai
 - framed completed cusp charts are power-series discs carrying Tate generalized elliptic curves;
 - the level order and every cusp width are invertible on the base.
 
-Book 117 proves this package over $B_\Gamma$. Whenever stack cohomology is used, one may choose the projective fine cover $Y\to\mathcal X$ of that book. Sections on $\mathcal X$ are equivariant sections on $Y$, and all local curve arguments are made on $Y$ before descent. This reduces the geometric assertions at issue to proper curves and finite descent.
+Book 117 proves this package over $B_\Gamma$. Its fine covers are local on the arithmetic base: after a faithfully flat disjoint-union base change, one may choose projective fine curves $Y\to\mathcal X$ with finite change-of-level groups. Sections on $\mathcal X$ are equivariant sections on these curves, and the assertions below are checked there and descended. We never assume the existence of one auxiliary level that is invertible over all of $B_\Gamma$.
 
 ### 1.3 Conventions on weights, cusps, and coefficients
 
@@ -153,7 +153,7 @@ A phrase such as “at every cusp” includes every geometric cusp on every geom
 
 The integral Drinfeld moduli functors make sense at primes dividing the level, but Book 117 deliberately constructs its normal proper compactification only over the good-level base. This book uses exactly that construction. It does not assume regularity, semistable equations, or normalization at a removed level prime.
 
-Hecke correspondences of auxiliary degree $m$ are first constructed where $m$ is invertible, because there Book 117 applies to the enlarged level. Their q-expansion formulas preserve the integral lattice away from the original level; the q-expansion principle then gives an integral operator on forms without asserting an integral compactified correspondence in characteristic dividing $m$. This distinction will be explicit in Chapters 11 and 12.
+Hecke correspondences of auxiliary degree $m$ are first constructed where $m$ is invertible, because there Book 117 applies to the enlarged level. In positive weight, their q-expansion formulas preserve the lattice over the characteristic-zero Dedekind coefficient rings used below; the q-expansion principle then gives an integral operator without asserting an integral compactified correspondence in characteristic dividing $m$. This distinction will be explicit in Chapters 11 and 12.
 
 The ordinary background used below consists of invariant differentials on elliptic curves, the elementary deformation theory of a smooth elliptic curve, and traces for finite locally free morphisms. Divisor degree, relative duality, cohomology and base change, generalized elliptic curves, Tate charts, compactified stacks, and coarse-space warnings are all supplied by Books 9, 15, 116, and 117 and are recalled when used.
 
@@ -260,7 +260,7 @@ $$
 [-1]^*\eta=-\eta.
 $$
 
-Hence it acts on $\lambda^k$ by $(-1)^k$. Over a coefficient ring in which $2$ is not zero, an odd-weight section on the unlevelled stack must vanish at every point with only generic inversion inertia; density then makes it zero. This is the geometric source of the absence of ordinary odd-weight level-one forms. In characteristic two the character becomes trivial, so a special-fiber section can exist without lifting; Chapter 9 will identify the accompanying base-change issue.
+Hence it acts on $\lambda^k$ by $(-1)^k$. If multiplication by $2$ is injective on the coefficient module--in particular over a field of characteristic different from two--an odd-weight section on the unlevelled stack must vanish at every point with only generic inversion inertia; density then makes it zero. This is the geometric source of the absence of ordinary odd-weight level-one forms. In characteristic two the character becomes trivial, so a special-fiber section can exist without lifting; Chapter 9 will identify the accompanying base-change issue.
 
 The same calculation gives the descent criterion to a coarse curve. If $\lambda^k$ were pulled back from a line on the coarse curve, every stabilizer would act trivially on its fiber. Conversely, on a tame quotient chart, Book 117 proves that trivial stabilizer characters suffice for descent. Thus modular forms are naturally stack sections even when a divisible power of the Hodge line happens to descend.
 
@@ -272,7 +272,7 @@ The geometric definition would have little arithmetic force if its section modul
 
 ### 3.1 Global sections and descent from a fine cover
 
-Choose a projective fine cover $r:Y\to\mathcal X$ as in Book 117, with finite change-of-level group $G$, so that $\mathcal X\simeq[Y/G]$. The pullback $\lambda_Y=r^*\lambda$ is a genuine line bundle on a projective relative curve. Descent gives
+Work on an arithmetic-base open admitting a projective fine cover $r:Y\to\mathcal X$ as in Book 117, with finite change-of-level group $G$, so that $\mathcal X\simeq[Y/G]$. The pullback $\lambda_Y=r^*\lambda$ is a genuine line bundle on a projective relative curve. Descent gives
 
 $$
 M_k(\Gamma;R)
@@ -283,7 +283,7 @@ The equality is an equalizer, not an averaging formula. It remains valid when $|
 
 Independence of the fine cover follows from the stack definition, but it is also visible directly. Two fine covers admit the common normalized refinement constructed in Book 117. Pulling an equivariant section to the refinement and imposing both descent data recovers the same section on the quotient stack.
 
-Equation (3.1) lets every finiteness or base-change assertion be checked using the coherent theory of Book 15 on the proper scheme $Y$. It also shows why replacing the stack by its coarse curve can give the wrong module: the Hodge line on $Y$ may have a nontrivial stabilizer character and therefore no line-bundle descent to the coarse quotient.
+Equation (3.1) lets every finiteness or base-change assertion be checked using the coherent theory of Book 15 on the proper scheme $Y$. The local conclusions agree on common refinements and descend along the faithfully flat cover of the arithmetic base, so they are global statements about $\mathcal X$. Equation (3.1) also shows why replacing the stack by its coarse curve can give the wrong module: the Hodge line on $Y$ may have a nontrivial stabilizer character and therefore no line-bundle descent to the coarse quotient.
 
 ### 3.2 Finiteness and flat change of coefficients
 
@@ -481,18 +481,18 @@ For a relative modular curve, one uses schematic density rather than only pointw
 
 ### 5.2 Injectivity on a connected component
 
-**Theorem 5.1 (q-expansion principle).** Let $R$ be a noetherian $B$-algebra and assume that $\mathcal X_R$ is flat with reduced geometric fibers. Choose framed cusps meeting every geometric irreducible component. Then
+**Theorem 5.1 (q-expansion principle).** Let $R$ be a noetherian $B$-algebra and assume that $\mathcal X_R$ is flat with reduced geometric fibers. Choose the finite cusp framings so that their images meet every geometric irreducible component. Then
 
 $$
 \operatorname{qexp}:M_k(\Gamma;R)
 \longrightarrow\prod_c(R\otimes_BA_c)[[t_c]] \tag{5.1}
 $$
 
-is injective. If every geometric fiber is integral and $\mathcal X_R$ is connected, one cusp in every geometric connected component suffices.
+is injective. Over a field, one cusp on each integral connected component suffices.
 
 **Proof.** Pull a section $f$ with zero expansions to a fine cover $Y_R$. At a selected cusp, trivialize the line. Its coefficient function maps to zero in the $t_c$-adic completion. Since $t_c$ is a non-zero-divisor in the noetherian local cusp ring, Krull intersection makes the completion map injective. Thus $f$ vanishes on an open neighborhood of every selected cusp.
 
-The union of these neighborhoods meets every irreducible component of every geometric fiber. Flatness and geometric reducedness imply that this union is schematically dense: every associated point of $Y_R$ specializes from an associated generic point of a fiber, and those are precisely the component generic points. A section of a line bundle vanishing on a schematically dense open is zero. Faithful descent gives $f=0$ on $\mathcal X_R$. $\square$
+The union of these neighborhoods meets every irreducible component of every geometric fiber. It is schematically dense. Indeed, for a flat finitely presented morphism, an associated point of the total space lies over an associated point of the base and is an associated point of that fiber; geometric reducedness says that the latter points are precisely the generic points of the fiber components. All of them lie in the union. A section of a line bundle vanishing on a schematically dense open is zero. Faithful descent gives $f=0$ on $\mathcal X_R$. $\square$
 
 The theorem also has a one-cusp field form: on an integral modular curve over a field, the expansion at any one cusp is injective. The all-cusp form is safer over arithmetic bases because it survives splitting of components and cusp fields.
 
@@ -658,10 +658,10 @@ c_4=1+240\sum_{n\geq1}\sigma_3(n)q^n, \tag{6.8}
 $$
 
 $$
-c_6=1-504\sum_{n\geq1}\sigma_5(n)q^n. \tag{6.9}
+c_6=-1+504\sum_{n\geq1}\sigma_5(n)q^n. \tag{6.9}
 $$
 
-The signs and constants are checked by (6.7) and the normalized first term $\Delta=q+O(q^2)$. These expansions show that $c_4$ and $c_6$ do not vanish at the cusp, whereas $\Delta$ is cuspidal.
+The sign in (6.9) is fixed by the standard invariant formula: at the nodal Tate equation $y^2+xy=x^3$ one has $b_2=1$, $b_4=b_6=0$, and therefore $c_6=-b_2^3=-1$. Identity (6.7) then checks the squares and the normalized first term $\Delta=q+O(q^2)$. These expansions show that $c_4$ and $c_6$ do not vanish at the cusp, whereas $\Delta$ is cuspidal.
 
 We do not need a presentation of the entire graded ring of level-one forms. The forms (6.6) are included because they calibrate weight, integrality, and discriminant normalization without relying on complex analysis.
 
@@ -750,7 +750,7 @@ $$
 
 The map $\operatorname{ct}$ is the simultaneous constant-term map. It retains residue fields and stabilizer characters; replacing its target by one copy of the base per visible cusp is correct only after a splitting frame.
 
-Surjectivity of constant-term evaluation is not formal. The obstruction is exactly the last $H^1$. Chapter 9 proves that it vanishes for $k>2$. For $k=2$ it is a rank-one duality module, and the single relation among constant terms is the residue theorem. This exceptional behavior is geometrically meaningful rather than a defect of the definition.
+Surjectivity of constant-term evaluation is not formal. The obstruction is exactly the last $H^1$. On a fine modular curve, or on a quotient with linearly reductive stabilizers, Chapter 9 proves that it vanishes for $k>2$. For $k=2$ the corresponding duality module has rank one on each geometrically connected component, and the single relation among constant terms is the residue theorem. On a wild quotient, taking invariants can impose further restrictions. This exceptional behavior is geometrically meaningful rather than a defect of the definition.
 
 ### 7.4 Saturation of the cusp-form lattice
 
@@ -779,34 +779,58 @@ Weight two is special because deformation of an elliptic curve is dual to the sq
 
 ### 8.1 Why weight two is differential
 
-Let $E/S$ be a smooth elliptic curve. Its first de Rham bundle fits into the Hodge sequence
+Let $E$ be an elliptic curve over a ring $A$, and let $A'\twoheadrightarrow A$ have square-zero kernel $I$. First regard $E$ as a pointed genus-one curve. Infinitesimal automorphisms fixing the identity are sections of $T_{E/A}(-e)$. The exact sequence
 
 $$
-0\longrightarrow\lambda_E
-\longrightarrow\mathcal H^1_{\mathrm{dR}}(E/S)
-\longrightarrow\lambda_E^{-1}
-\longrightarrow0. \tag{8.1}
+0\to T_{E/A}(-e)\to T_{E/A}\to e_*e^*T_{E/A}\to0
 $$
 
-The last identification uses the perfect alternating cup-product pairing. The Gauss--Manin connection differentiates the Hodge subline and, after projection to the quotient, gives
+induces an isomorphism on $H^1$, because translation identifies global vector fields with their values at the identity, so $H^0(T_{E/A})\to e^*T_{E/A}$ is an isomorphism. A pointed genus-one curve has a unique compatible elliptic group law; consequently the deformation groupoid of the pointed curve is the deformation groupoid of the elliptic curve.
+
+Choose affine opens of $E$ on which a putative lift is trivial. Two local lifts differ on an overlap by an infinitesimal automorphism, hence, after the preceding $H^1$ identification, by a section of $T_{E/A}\otimes_A I$. The cocycle condition on triple overlaps says that the differences form a class in
 
 $$
-\lambda_E\longrightarrow\lambda_E^{-1}\otimes\Omega^1_S.
+H^1(E,T_{E/A})\otimes_A I. \tag{8.1}
 $$
 
-Equivalently it gives the Kodaira--Spencer map
+Here the displayed tensor description follows from projection formula and cohomology and base change for the trivial line on a genus-one curve. Changing the local identifications adds a coboundary. Conversely, gluing by any such cocycle gives a deformation, and a Cech calculation on triple overlaps proves associativity of the gluing. Thus (8.1) is the torsor of first-order deformations. Obstructions would lie in $H^2(E,T_{E/A})$, which is zero because $E$ is a curve.
+
+Translation canonically identifies
 
 $$
-\operatorname{KS}:\lambda_E^{2}\longrightarrow\Omega^1_S. \tag{8.2}
+T_{E/A}\simeq\lambda_E^{-1}\otimes_A\mathcal O_E.
 $$
 
-At the moduli level, a first-order deformation of an elliptic curve is measured by $H^1(E,T_E)$. Since $T_E\simeq\lambda_E^{-1}\otimes\mathcal O_E$ and $H^1(E,\mathcal O_E)\simeq\lambda_E^{-1}$ by duality, the tangent line is $\lambda_E^{-2}$. Its dual cotangent line is $\lambda_E^2$. This calculation predicts that (8.2) is an isomorphism on the elliptic moduli stack.
+Serre duality and the canonical trivialization $\Omega^1_{E/A}\simeq\lambda_E\otimes_A\mathcal O_E$ give
 
-Level of order invertible on the base is finite étale deformation data: it has a unique lift across nilpotent thickenings once the elliptic curve lifts. Therefore it does not change the tangent line. This explains why the same square appears for all good-level modular curves.
+$$
+H^1(E,T_{E/A})
+\simeq\lambda_E^{-1}\otimes_AH^1(E,\mathcal O_E)
+\simeq\lambda_E^{-2}. \tag{8.2}
+$$
+
+The universal deformation class on a smooth atlas of the elliptic moduli stack $\mathcal M$ therefore gives a canonical morphism from the dual line
+
+$$
+\operatorname{KS}_{\mathcal M}:\lambda^2
+\longrightarrow\Omega^1_{\mathcal M/B}. \tag{8.3}
+$$
+
+At a geometric point, its transpose is exactly the isomorphism (8.2), so (8.3) is an isomorphism. For a family classified by $h:S\to\mathcal M$, pullback followed by the cotangent map gives the usual family Kodaira--Spencer morphism
+
+$$
+\lambda_E^2\simeq h^*\lambda^2
+\longrightarrow h^*\Omega^1_{\mathcal M/B}
+\longrightarrow\Omega^1_{S/B};
+$$
+
+this last map need not be an isomorphism for a non-universal family. The Cech construction is functorial in isomorphisms and base change, which makes the atlas maps glue.
+
+Level of order invertible on the base is finite étale deformation data: finite étale schemes lift uniquely across nilpotent thickenings. Once the elliptic curve lifts, so do its chosen level sections or subgroup. The deformation torsor is therefore unchanged, explaining why the same Hodge square is the cotangent line for every good-level modular curve.
 
 ### 8.2 The logarithmic Kodaira--Spencer isomorphism
 
-At a cusp, the ordinary cotangent $dt$ vanishes on the boundary, whereas elliptic deformation remembers the logarithmic direction $dt/t$. Let
+At a cusp, the ordinary cotangent line is generated by $dt$. Inside the logarithmic cotangent line one has $dt=t(dt/t)$, so its image on the boundary is zero, whereas elliptic deformation retains the nonzero logarithmic direction $dt/t$. Let
 
 $$
 \Omega^1_{\mathcal X/B}(\log D)=\Omega^1_{\mathcal X/B}(D)
@@ -818,30 +842,36 @@ on the smooth relative stack curve. Locally it is generated by $dt/t$.
 
 $$
 \operatorname{KS}:\lambda^2
-\xrightarrow{\sim}\Omega^1_{\mathcal X/B}(\log D). \tag{8.3}
+\xrightarrow{\sim}\Omega^1_{\mathcal X/B}(\log D). \tag{8.4}
 $$
 
 **Proof strategy.** On the elliptic open, use the deformation calculation of Section 8.1. At a cusp, compute in a Tate frame and prove that the extension is a unit multiple of the logarithmic parameter.
 
-**Proof.** The deformation interpretation makes (8.2) an isomorphism on $\mathcal Y$. It is functorial under isomorphisms and level changes, so it descends from a fine chart to the stack.
+**Proof.** The deformation interpretation makes (8.3) an isomorphism on $\mathcal Y$. It is functorial under isomorphisms and level changes, so it descends from a fine chart to the stack.
 
 On a Tate curve with period $q$, use the invariant frame $\eta=du/u$. The universal extension class of the multiplicative quotient varies with $q$, and differentiating it gives
 
 $$
-\operatorname{KS}(\eta^{\otimes2})=\frac{dq}{q} \tag{8.4}
+\operatorname{KS}(\eta^{\otimes2})=\frac{dq}{q} \tag{8.5}
 $$
 
-up to the global sign fixed by the choice of the Gauss--Manin pairing. We take (8.4) as the sign normalization. A direct verification uses the Cech cover of $\mathbf G_m/q^{\mathbf Z}$: changing the period by $q(1+\epsilon a)$ changes the gluing by the vector field $a,u\partial_u$, which pairs with $(du/u)^2$ to $a=dq/q$.
+as the sign normalization. To verify it, vary the period to $q(1+\epsilon a)$. The old and new multiplicative uniformizations are locally identical, but their gluing across one period differs by
+
+$$
+u\longmapsto(1+\epsilon a)u.
+$$
+
+The resulting deformation cocycle is $a\,u\partial_u$. Under the two identifications in (8.2), $u\partial_u$ is dual to $du/u$, so this cocycle pairs with $(du/u)^2$ to $a$. Since the cotangent functional $dq/q$ also takes the value $a$ on $q\mapsto q(1+\epsilon a)$, formula (8.5) follows.
 
 At a width-$w$ level cusp, $q=t^w$, so
 
 $$
-\frac{dq}{q}=w\frac{dt}{t}. \tag{8.5}
+\frac{dq}{q}=w\frac{dt}{t}. \tag{8.5a}
 $$
 
-The integer $w$ is invertible on the good-level base. Hence (8.4) extends as an isomorphism from the Hodge square to the logarithmic cotangent line. Both sides are line bundles; the local extensions agree with the already canonical map on the dense elliptic open, so density makes them glue uniquely. $\square$
+The integer $w$ is invertible on the good-level base. Hence (8.5) extends as an isomorphism from the Hodge square to the logarithmic cotangent line. Both sides are line bundles; the local extensions agree with the already canonical map on the dense elliptic open, so density makes them glue uniquely. $\square$
 
-If $w$ were not invertible, (8.5) could vanish in the special fiber. This is one precise reason the theorem is not being asserted at a removed level prime without further integral-model analysis.
+If $w$ were not invertible, the coefficient in (8.5a) could vanish in the special fiber. This is one precise reason the theorem is not being asserted at a removed level prime without further integral-model analysis.
 
 ### 8.3 Weight-two cusp forms and regular dualizing differentials
 
@@ -852,7 +882,7 @@ $$
 =\Omega^1_{\mathcal X/B}.
 $$
 
-On the stack, or after passage to a fine cover, the ordinary cotangent line is the relative dualizing line. Twisting (8.3) by $-D$ gives
+On the stack, or after passage to a fine cover, the ordinary cotangent line is the relative dualizing line. Twisting (8.4) by $-D$ gives
 
 $$
 \lambda^2(-D)\xrightarrow{\sim}\omega_{\mathcal X/B}. \tag{8.6}
@@ -873,7 +903,7 @@ $$
 f=\left(\sum_{n\geq0}a_nt^n\right)\eta^2,
 $$
 
-then (8.3) sends it to
+then (8.4) sends it to
 
 $$
 \left(\sum_{n\geq0}a_nt^n\right)w\frac{dt}{t}. \tag{8.8}
@@ -889,22 +919,24 @@ The coefficient shift explains the analytic phrase $f(q)dq/q$: a cuspidal q-seri
 
 ### 8.4 Residues and constant terms
 
-Without the cusp condition, (8.3) identifies weight-two modular forms with logarithmic differentials. Formula (8.8) gives
+Without the cusp condition, (8.4) identifies weight-two modular forms with logarithmic differentials. Formula (8.8) gives
 
 $$
-\operatorname{res}_c(\operatorname{KS}(f))=w_c,a_0(c,f), \tag{8.9}
+\operatorname{res}_c(\operatorname{KS}(f))=w_c a_0(c,f), \tag{8.9}
 $$
 
-after applying the residue-field trace when the cusp is nonrational. The width factor is required because $dq/q=w_cdt/t$.
+in the coefficient algebra of the framed cusp. For a nonrational cusp orbit, descent places this element in the corresponding finite boundary algebra. The width factor is required because $dq/q=w_cdt/t$.
 
-Book 9's global residue theorem now gives a relation among constant terms:
+Book 9's global residue theorem, applied after a finite cusp splitting and then descended, gives the relation
 
 $$
-\sum_c\operatorname{Tr}_{\kappa(c)/R}
-\bigl(w_c,a_0(c,f)\bigr)=0. \tag{8.10}
+\sum_c\operatorname{Tr}_{A(c)/R}
+\bigl(w_c a_0(c,f)\bigr)=0. \tag{8.10}
 $$
 
-Over a field and on a connected component, this is the only relation. Indeed, the residue exact sequence
+Here $A(c)$ is the finite residue algebra of the descended cusp orbit after imposing its framing symmetries. The symbol $\operatorname{Tr}_{A(c)/R}$ is its finite-algebra trace; over a field it is the usual residue-field trace, with all geometric cusps counted after splitting. Equivalently, one may verify (8.10) on a fine cusp-splitting cover, where it is the ordinary sum of residues, and descend the resulting zero.
+
+Suppose now that the modular problem is fine, or that its stabilizers are linearly reductive over the coefficient ring. On a geometrically connected component, (8.10) is then the only relation. Indeed, the residue exact sequence
 
 $$
 0\to\omega_{\mathcal X}
@@ -923,7 +955,7 @@ $$
 
 with the Hodge frames understood in identifying the fibers with $\mathcal O_D$.
 
-Equation (8.11) explains why arbitrary prescribed weight-two constant terms need not occur. For weights greater than two, the obstruction group vanishes and the boundary values become independent.
+For a fine curve this is the ordinary relative residue sequence. For a linearly reductive quotient it remains exact after taking invariants. Without either hypothesis, every actual form still satisfies (8.10), but taking invariants need not preserve surjectivity, so further constant-term restrictions can occur. Under the stated hypothesis, (8.11) explains why arbitrary prescribed weight-two constant terms do not occur. For weights greater than two, the obstruction group vanishes and the boundary values become independent under the same fine or linearly reductive hypothesis.
 
 ## 9. Cohomology, base change, and integral lattices
 
@@ -1186,7 +1218,7 @@ and $\pi_2$ sends the object to the quotient $E/C$ with the transported $\Gamma$
 
 On a smooth geometric fiber, $E[\ell]\simeq(\mathbf Z/\ell\mathbf Z)^2$ has $\ell+1$ cyclic subgroups. Hence $\pi_1$ is finite étale of degree $\ell+1$ on the elliptic locus. At cusps its ramification is governed by the two Tate quotient types, but it remains finite on the good-level compactification.
 
-It is also finite locally free. This may be checked on a fine chart. Source and target are flat Cohen--Macaulay relative curves, the target is regular in the cusp parameter, and the finite map has constant generic degree $\ell+1$ on every fiber. The local finite module is maximal Cohen--Macaulay over the regular one-dimensional target ring and hence free. Thus the trace used below is the ordinary finite-locally-free trace.
+It is also finite locally free. This may be checked before arbitrary scalar extension, on a fine chart over the regular Dedekind good-level base. Both total spaces are smooth relative curves and hence regular of dimension two. For a target local ring $A$ and a source local ring $B$ above it, finiteness and equality of dimensions make $B$ a maximal Cohen--Macaulay $A$-module. The regular local ring $A$ has finite global dimension; the depth formula therefore makes $B$ projective, hence free because $A$ is local. The rank is the constant generic degree $\ell+1$. Finite local freeness persists under every later base change, so the trace below is the ordinary finite-locally-free trace.
 
 ### 11.2 Differentials through the universal isogeny
 
@@ -1219,7 +1251,7 @@ The direction of (11.3) is essential. Transporting a differential from $E/C$ bac
 Define over $R[1/\ell]$
 
 $$
-T_\ell f=rac1\ell
+T_\ell f=\frac{1}{\ell}
 \operatorname{Tr}_{\pi_1}
 \left((\varphi^*)^k\pi_2^*f\right). \tag{11.5}
 $$
@@ -1240,9 +1272,9 @@ $$
 
 where (11.5) is defined.
 
-For integral coefficients, (11.5) initially lies in $M_k(R[1/\ell])$. Chapter 12 shows that every cusp expansion has coefficients in $R$. The integral q-expansion criterion then puts the result in $M_k(R)$. In this way the operator is extended integrally without using a compactified auxiliary-$\ell$ correspondence in residue characteristic $\ell$.
+For the characteristic-zero Dedekind coefficient rings $R$ considered in Section 12.4, (11.5) initially lies in $M_k(R[1/\ell])$. In positive weight, Chapter 12 shows that every cusp expansion has coefficients in $R$. The integral q-expansion criterion then puts the result in $M_k(R)$. In this way the operator is extended integrally without using a compactified auxiliary-$\ell$ correspondence in residue characteristic $\ell$.
 
-This argument also proves uniqueness. Two integral endomorphisms agreeing after inverting $\ell$ agree because $M_k(R)$ is torsion-free. Thus the q-expansion formula does not merely suggest an integral operator; it determines one.
+This argument also proves uniqueness in that setting. Two integral endomorphisms agreeing after inverting $\ell$ agree because the Dedekind lattice $M_k(R)$ is torsion-free. Thus the q-expansion formula does not merely suggest an integral operator; it determines one.
 
 ## 12. Hecke operators on q-expansions
 
@@ -1335,7 +1367,7 @@ $$
 
 On a $\chi$-eigenspace, the second term is $\chi(\ell)\ell^{k-1}a_{n/\ell}(f)$.
 
-At a general cusp, the same formula holds after transporting the level framing; the operator can permute cusps. Integrality and vanishing of constant terms are invariant under that transport.
+At a general framed cusp, write its period as $q=t^w$. Because $w$ divides the original level order and $(\ell,N)=1$, one has $(\ell,w)=1$. The multiplicative subgroup sends the transported root parameter to a unit times $t^\ell$; the other $\ell$ subgroups use the $\ell$ choices of a root parameter, and summing them gives the same root-of-unity cancellation as (12.6). After choosing compatible transported frames, (12.8) is therefore the coefficient formula in the genuine parameter $t$, with the cusp label and diamond action transported along the correspondence. A different standard framing inserts only the unit changes of (4.7). In particular the operator may permute cusps, but at every cusp its coefficients remain integral and its constant term remains zero when the original constant terms are zero.
 
 ### 12.3 Composite indices and Hecke relations
 
@@ -1349,7 +1381,7 @@ $$
 
 with the evident interpretation that $\langle d\rangle$ depends only on $d\bmod N$. For level one it is omitted.
 
-We prove the formula and relations by prime powers and coprime products. A cyclic subgroup of order $\ell^r$ has a unique subgroup of order $\ell^{r-1}$ unless it occurs as the noncyclic kernel counted in the composite of two $\ell$-correspondences. Sorting chains of two cyclic isogenies by their composite kernel gives
+We prove the formula and relations by prime powers and coprime products. In a chain consisting of a cyclic $\ell$-isogeny followed by a cyclic $\ell^r$-isogeny, let $H$ be the inverse image of the second kernel in the original elliptic curve. If $H$ is cyclic of order $\ell^{r+1}$, its order-$\ell$ subgroup is unique, so the chain is counted by the cyclic $\ell^{r+1}$-correspondence. Otherwise $H$ contains the full kernel $E[\ell]$; quotienting it by $E[\ell]$ leaves a cyclic subgroup of order $\ell^{r-1}$. This is the exceptional family of chains. On it the composite isogeny factors through $[\ell]$, which multiplies invariant differentials by $\ell$. Repeating the root-of-unity trace calculation of (12.4)--(12.7) on this exceptional family shows that the normalized pull--trace is $\ell^{k-1}\langle\ell\rangle$ times the remaining $\ell^{r-1}$-correspondence. Sorting the two disjoint families therefore gives
 
 $$
 T_\ell T_{\ell^r}
@@ -1421,35 +1453,37 @@ Applied to $L=\lambda^k$, the restriction to $i_cc$ is exactly the first $i_c$ c
 
 ### 13.2 Degree of the Hodge line
 
-Fix a geometric connected component $X$ and let
+Fix a geometric connected component $X$. Degrees must retain inertia. Choose a finite representable fine cover $r:Y\to X$. It is finite locally free after restricting to the component: both curves are smooth and the same Cohen--Macaulay argument used for $\pi_1$ in Section 11.1 applies. For a line bundle $L$ on $X$, define
 
 $$
-\rho:X\longrightarrow\overline{\mathcal M}_{1,1}
+\deg_XL=\frac{\deg_Y(r^*L)}{\deg(r)}.
 $$
 
-be the forgetful map. Let $\mu_X$ be its generic degree in the stack sense. The unlevelled discriminant has one simple zero at the unlevelled cusp. Pullback gives the weighted cusp divisor
+For a geometric cusp component $D_c$, define $\deg_XD_c$ by the same pullback rule, including ramification multiplicity. A common fine refinement shows that both definitions are independent of $r$. On a fine modular curve they are ordinary degrees; on a stack they can be rational. In particular, on the unlevelled stack the generic involution gives
 
 $$
-W=\sum_{c\in X}w_cc,
+\deg\lambda=\frac1{24},
+\qquad \deg D_\infty=\frac12.
 $$
 
-and degree of finite pullback gives
+This example is the factor-of-two test that an unnormalized stack calculation must pass.
+
+The discriminant identity gives the exact degree formula
 
 $$
-\deg W=\mu_X. \tag{13.3}
+12\deg_X\lambda
+=\deg_XW
+=\sum_cw_c\deg_XD_c. \tag{13.3}
 $$
 
-From $\lambda^{12}\simeq\mathcal O(W)$,
+For a chosen cusp $c$, define its **cusp-normalized modular index** by
 
 $$
-\deg\lambda=\frac{\mu_X}{12},
-\qquad
-\deg\lambda^k=\frac{k\mu_X}{12}. \tag{13.4}
+\mu_{X,c}
+=\frac{12\deg_X\lambda}{\deg_XD_c}. \tag{13.4}
 $$
 
-The fraction is a stack degree. On a fine modular curve the relevant stabilizer factors make the degree of every actual line bundle integral. Equivalently, one can compute on a finite fine cover, where both sides of (13.4) are multiplied by its degree.
-
-If $-I$ belongs to the classical subgroup, $\mu_X$ is the usual index $[\operatorname{SL}_2(\mathbf Z):\Gamma]$. If $-I$ does not belong, the representable fine curve sees the index of the image in $\operatorname{PSL}_2(\mathbf Z)$; using the larger $\operatorname{SL}_2$ index gives the familiar valid but sometimes nonsharp classical bound. Defining $\mu_X$ by the stack degree removes this factor-of-two ambiguity.
+This ratio is unchanged on a fine framed cover provided the denominator is the degree of the full pulled-back cusp orbit $r^*D_c$, not the degree of one arbitrarily chosen lift. The degree of the cover, the stabilizer order, and the ramification of the local parameter then occur in both numerator and denominator and cancel. At the standard infinity cusp, $\mu_{X,c}$ is the usual index $[\operatorname{SL}_2(\mathbf Z):\Gamma]$ when $-I\in\Gamma$, and it is the index of the image of $\Gamma$ in $\operatorname{PSL}_2(\mathbf Z)$ when $-I\notin\Gamma$. Using the larger $\operatorname{SL}_2$ index in the latter case gives a valid but sometimes nonsharp bound.
 
 Kodaira--Spencer gives a second check. Taking degrees in
 
@@ -1463,46 +1497,54 @@ $$
 2\deg\lambda=2g(X)-2+\deg D \tag{13.5}
 $$
 
-on a fine smooth curve. Combining (13.4) and (13.5) is the familiar genus--cusp--index relation, with elliptic stabilizer corrections automatically retained if one works on the stack.
+on a fine smooth curve. Combining (13.3) and (13.5) is the familiar genus--cusp--index relation. The rational-degree version retains the elliptic stabilizer corrections on the stack.
 
 ### 13.3 Classical numerical bounds
 
-Let $K$ be a field on the good-level base and $X$ an integral component. Choose a cusp $c$ with root parameter $t$. If
+Let $k\geq0$, let $K$ be a field on the good-level base, and let $X$ be an integral component. Choose a cusp $c$ with genuine root parameter $t$. If
 
 $$
 f(t)=\sum_{n\geq0}a_nt^n
 $$
 
-is nonzero of weight $k$, its order satisfies
+is nonzero of weight $k$, its zero divisor contains $\operatorname{ord}_c(f)D_c$. Consequently
 
 $$
-\operatorname{ord}_c(f)\leq\deg\lambda^k
-=\frac{k\mu_X}{12}. \tag{13.6}
+\operatorname{ord}_c(f)\deg_XD_c
+\leq k\deg_X\lambda,
+\qquad
+\operatorname{ord}_c(f)\leq\frac{k\mu_{X,c}}{12}. \tag{13.6}
 $$
 
 Consequently, with
 
 $$
-B_X(k)=\left\lfloor\frac{k\mu_X}{12}\right\rfloor, \tag{13.7}
+B_{X,c}(k)=\left\lfloor\frac{k\mu_{X,c}}{12}\right\rfloor, \tag{13.7}
 $$
 
 the vanishing
 
 $$
-a_0=a_1=\cdots=a_{B_X(k)}=0 \tag{13.8}
+a_0=a_1=\cdots=a_{B_{X,c}(k)}=0 \tag{13.8}
 $$
 
-forces $f=0$. Indeed, (13.8) gives order at least $B_X(k)+1$, strictly greater than the degree.
+forces $f=0$. Indeed, (13.8) gives an order whose contribution to the zero-divisor degree is strictly greater than $k\deg_X\lambda$.
 
 If the chosen series is written in the unlevelled parameter $q=t^w$, only exponents compatible with the cusp frame occur, and order must be converted to $t$-order. The clean bound is always (13.7) in the genuine uniformizer. At the standard infinity cusp of $\Gamma_0(N)$, the width is one, so (13.7) is the usual q-coefficient bound.
 
-For a disconnected modular curve, impose (13.8) at one cusp on each connected component, using the component degree $\mu_X$. Alternatively, choose jets at all cusps whose total multiplicity on each component is greater than $k\mu_X/12$. The latter form is invariant under Galois permutation of cusps.
+For a disconnected modular curve, impose (13.8) at one cusp on each connected component. Alternatively, choose jets of lengths $i_c$ at all cusps such that
+
+$$
+\sum_c i_c\deg_XD_c>k\deg_X\lambda
+$$
+
+on each component. This form is invariant under Galois permutation of cusps.
 
 The bound is intentionally stated with a floor and coefficients through that index. Saying only “check up to $k\mu/12$” is ambiguous when the number is integral: one must force order strictly greater than the degree.
 
 ### 13.4 Congruences and finite certification
 
-Let $R$ be a noetherian coefficient ring and $I\subset R$ an ideal. Choose a finite cusp jet divisor $Z$ satisfying (13.2) for $L=\lambda^k$ on every geometric fiber of $R/I$. Theorem 13.1 gives an injection
+Let $k\geq0$, let $R$ be a noetherian coefficient ring, and let $I\subset R$ be an ideal. Choose a finite cusp jet divisor $Z$ satisfying (13.2) for $L=\lambda^k$ on every geometric fiber of $R/I$. On a stack this condition is checked after a finite fine framing; the resulting jet conditions are then imposed equivariantly. Theorem 13.1 gives an injection
 
 $$
 M_k(\Gamma;R/I)
@@ -1515,18 +1557,18 @@ $$
 f\equiv g\pmod{I}
 $$
 
-if and only if their finitely many selected cusp coefficients are congruent modulo $I$. No reducedness of $R/I$ is needed: injectivity was proved for the whole relative scheme, not only its geometric points.
+if and only if their finitely many selected cusp coefficients are congruent modulo $I$ in the corresponding framed coefficient algebras. Here $f\equiv g\pmod I$ means that their images in $M_k(\Gamma;R/I)$ agree. It means $f-g\in I M_k(\Gamma;R)$ as well whenever the base-change map identifies the latter quotient with its image, for example under Theorem 9.1; without such a hypothesis, that stronger module-theoretic wording is not automatic. No reducedness of $R/I$ is needed: injectivity was proved for the whole relative scheme, not only its geometric points.
 
-Over a connected fine component, one may take one cusp and the first
+At one cusp of an integral component, one may take the first
 
 $$
-1+\left\lfloor\frac{k\mu_X}{12}\right\rfloor
+1+B_{X,c}(k)
 $$
 
 coefficients. For all-cusp certification, choose nonnegative integers $i_c$ with
 
 $$
-\sum_{c\in X}i_c>\frac{k\mu_X}{12}
+\sum_c i_c\deg_XD_c>k\deg_X\lambda
 $$
 
 on each component and compare coefficients of orders $0$ through $i_c-1$.
@@ -1590,13 +1632,15 @@ Under the good-level hypotheses of Section 1.2, the following statements have be
 
    and this formula extends them integrally in positive weight while preserving cusp lattices.
 
-9. A section is determined by any finite set of cusp jets whose total imposed vanishing exceeds the Hodge degree on every component. On a connected component of stack degree $\mu_X$, coefficients through
+9. A section is determined by any finite set of cusp jets whose total imposed vanishing exceeds the Hodge degree on every component. At a cusp $c$ of an integral component, coefficients through
 
    $$
-   \left\lfloor k\mu_X/12\right\rfloor
+   \left\lfloor k\mu_{X,c}/12\right\rfloor,
+   \qquad
+   \mu_{X,c}=\frac{12\deg_X\lambda}{\deg_XD_c},
    $$
 
-   suffice at one genuine cusp uniformizer.
+   suffice in the genuine cusp uniformizer. This ratio, rather than either stack degree alone, incorporates generic and cuspidal inertia correctly.
 
 The imported results are exactly those verified in the direct prerequisites. Book 9 supplies Cartier divisors, residues, dualizing sheaves, degree, Serre duality, and the finite-jet degree argument. Book 15 supplies proper finiteness, exact base-change criteria, formal completion, and Hodge pushforwards. Book 116 supplies invariant differentials on polygons, Tate frames, cusp parameters, contractions, and quotient isogenies. Book 117 supplies the proper compactified stacks, fine covers, coarse-space cautions, cusp Cartier divisors, and finite degeneracy maps. Every additional result central here—q-injectivity, integral lattice recognition, logarithmic Kodaira--Spencer in this setting, Hecke coefficient formulas, and Sturm certification—was proved in the present book. Arbitrary nonflat base change on a stack is asserted only in the fine or linearly reductive cases; flat base change remains valid generally.
 
@@ -1616,7 +1660,7 @@ The following failures mark the exact scope of the package.
 
 - If stabilizers are discarded by passing prematurely to a coarse curve, the Hodge line or universal elliptic curve may fail to descend.
 
-- If the level or cusp width is not invertible, $dq/q=w,dt/t$ need not generate the logarithmic cotangent line. The good-level Kodaira--Spencer proof then does not establish the desired integral isomorphism.
+- If the level or cusp width is not invertible, $dq/q=w\,dt/t$ need not generate the logarithmic cotangent line. The good-level Kodaira--Spencer proof then does not establish the desired integral isomorphism.
 
 - If one divides a trace without proving divisibility, the proposed Hecke operator need not preserve an integral lattice. Here integrality was proved from the q-formula and the integral q-expansion criterion.
 
