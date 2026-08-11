@@ -41,12 +41,12 @@
   - [7.4 Spherical factors and Satake normalization](#74-spherical-factors-and-satake-normalization)
 - [8. Eisenstein wave packets and the continuous channel](#8-eisenstein-wave-packets-and-the-continuous-channel)
   - [8.1 Normalized induction recalled](#81-normalized-induction-recalled)
-  - [8.2 Convolution before continuation](#82-convolution-before-continuation)
+  - [8.2 Convolution on genuine wave packets](#82-convolution-on-genuine-wave-packets)
   - [8.3 Vanishing on the unitary axis](#83-vanishing-on-the-unitary-axis)
   - [8.4 Vanishing of the continuous trace distribution](#84-vanishing-of-the-continuous-trace-distribution)
 - [9. Residues and their annihilation](#9-residues-and-their-annihilation)
   - [9.1 The residual characters](#91-the-residual-characters)
-  - [9.2 Vanishing by taking residues](#92-vanishing-by-taking-residues)
+  - [9.2 Why residues require a separate proof](#92-why-residues-require-a-separate-proof)
   - [9.3 Direct constant-term proof](#93-direct-constant-term-proof)
   - [9.4 No omitted discrete noncuspidal term](#94-no-omitted-discrete-noncuspidal-term)
 - [10. The selected cuspidal spectral formula](#10-the-selected-cuspidal-spectral-formula)
@@ -90,13 +90,16 @@ continuous and residual spectral terms are exactly zero rather than merely absen
 notation.
 
 Those questions form the spectral computation carried out here.  The decisive local object is a
-pseudo-coefficient of a square-integrable representation.  After the Haar measure is fixed, a
-normalized matrix coefficient gives an operator of trace one on the chosen representation and
-zero on every other irreducible unitary representation.  More importantly for the global
+pseudo-coefficient of a square-integrable representation.  After the Haar measure is fixed, the
+kernel-admissible normalized coefficient used here gives trace one on the chosen representation
+and zero on every other irreducible unitary representation.  More importantly for the global
 argument, it is strongly cuspidal: its two-sided unipotent constant terms vanish.  Tensor
-factorization then makes the global test operator zero on every parabolically induced
-representation.  This kills unitary Eisenstein families before integration, kills every
-expression involving a scattering operator, and kills residues by taking Laurent coefficients.
+factorization then makes the global test operator zero on every unitary parabolically induced
+representation.  This kills unitary Eisenstein wave packets before integration and kills every
+expression involving a scattering operator.  Residual determinant characters are killed
+separately by the vanishing parabolic transform.  Keeping those arguments separate is essential
+at an archimedean selector: its Schwartz coefficient has an honest convolution action on the
+unitary axis, but need not admit the same off-axis meromorphic action at a reducibility point.
 
 What survives is concrete.  If the factor at a real place $v_0$ selects a discrete series
 $D$, then
@@ -197,10 +200,20 @@ $$
 \tag{1.4}
 $$
 
-We use the test class for which the preceding kernel theorem applies: finite sums of
+We use exactly the test class for which the preceding kernel theorem applies: finite sums of
 factorizable functions $f=\otimes_v f_v$, compactly supported modulo the center at finite
-places, Schwartz modulo the center at archimedean places, finite under left and right maximal
-compact actions, and strongly cuspidal at the fixed real place $v_0$.  Every factor satisfies
+places, finite under left and right maximal compact actions, and strongly cuspidal at the fixed
+real place $v_0$.  At each archimedean place the factor is not merely Harish--Chandra Schwartz:
+it is kernel-admissible for the fixed heights and exponent of the kernel theorem.  Thus, if
+$A_F$ dominates its volume-growth and rational-point exponents and $Q>A_F+1$ is fixed, every
+left-right invariant differential operator $D_1$ satisfies
+
+$$
+|D_1f_v(g)|\leq C_{D_1}\|g\|_v^{-Q}.
+\tag{1.5a}
+$$
+
+Every factor also satisfies
 
 $$
 f_v(zg)=\omega_v(z)^{-1}f_v(g).
@@ -209,6 +222,13 @@ $$
 
 The inverse in (1.5) is forced: $f_v(g)\pi_v(g)$ must descend to $Z(F_v)\backslash G(F_v)$ when
 $\pi_v$ has central character $\omega_v$.
+
+We choose $Q$ once and for all large enough also to dominate the fixed Iwasawa exponents in the
+bounded complementary-series strip $|\operatorname{Re}(s)|\leq1/2$; increasing $Q$ preserves
+the kernel theorem.  Kernel admissibility is a genuine extra hypothesis.  That theorem proves that
+compact-finite real discrete-series coefficients of sufficiently high lowest weight satisfy it
+for the fixed $Q$; it does not assert this for every lowest weight merely from membership in the
+Harish--Chandra Schwartz space.  All trace-class statements below retain this threshold.
 
 The restriction to a real $v_0$ is the exact hypothesis of the kernel theorem used here.  The
 purely spectral annihilation argument works equally well with a strongly cuspidal
@@ -252,7 +272,8 @@ correct proof must eliminate (1.7) separately.
 
 Choose an irreducible square-integrable representation $D$ of $G(F_{v_0})$ modulo its center,
 with central character $\omega_{v_0}$.  A normalized pseudo-coefficient $f_D$ will be constructed
-in Chapter 5.  Let
+in Chapter 5.  For the global trace-class formula we assume that its chosen compact-finite
+coefficient is kernel-admissible in the sense of (1.5a).  Let
 
 $$
 f=f_D\otimes f^{v_0}.
@@ -277,7 +298,7 @@ The last series is absolutely convergent.  Its equality with the kernel trace fo
 preceding kernel theorem; its explicit selection rule is proved here.  Formula (1.9) is the
 basic spectral side used in trace comparison.
 
-Only three previously established interfaces are used. Reduction theory supplies the closed
+Three direct dependency interfaces are used. Reduction theory supplies the closed
 cuspidal space and its countable irreducible decomposition with finite multiplicities, for an
 arbitrary number field and a unitary central character. Global constant-term theory supplies the
 classification of the orthogonal complement into normalized Eisenstein wave packets and the
@@ -288,7 +309,9 @@ in Section 1.2. We apply these results with exactly their fixed central characte
 measures, finite level, finite compact type, and real cuspidal place. Local admissibility,
 Schur orthogonality for square-integrable representations, and the rank-one classification of
 the local unitary dual are the ordinary local representation theory used to compute the new
-local traces. No later global multiplicity or transfer theorem enters the argument.
+local traces. We also use the previously established restricted tensor decomposition of a
+cuspidal automorphic representation and its distinguished unramified lines. No global
+multiplicity-one, newvector, transfer, or later comparison theorem enters the argument.
 
 ## 2. Measures, centers, and convolution
 
@@ -386,9 +409,10 @@ R_\omega(f_1*f_2)=R_\omega(f_1)R_\omega(f_2).
 $$
 
 At a finite place compact support modulo $Z_v$ makes these integrals ordinary finite-volume
-integrals.  At infinity Schwartz decay makes them absolutely convergent with every invariant
-derivative.  Globally the finite support and restricted-product normalization give an
-integrable function on $Z(\mathbf A)\backslash G(\mathbf A)$.
+integrals.  At infinity the kernel-admissible estimates of Section 1.2 make them absolutely
+convergent with every invariant derivative.  Globally those estimates, finite support, and the
+restricted-product normalization give an integrable function on
+$Z(\mathbf A)\backslash G(\mathbf A)$.
 
 The order convention in (2.2) is right convolution.  Replacing $g$ by $g^{-1}$ or omitting the
 complex conjugation in a matrix-coefficient selector would replace a projection by its adjoint.
@@ -410,7 +434,7 @@ The conventions can be summarized as follows.
 | Automorphic central action | $\phi(zg)=\omega(z)\phi(g)$ |
 | Test central action | $f(zg)=\omega(z)^{-1}f(g)$ |
 | Local operator | $\pi_v(f_v)=\int_{Z_v\backslash G_v}f_v(g)\pi_v(g)d\bar g$ |
-| Compact idempotent | Probability average |
+| Compact idempotent | Normalized central-character average (3.1) |
 | Normalized induction | Includes $\delta_B^{1/2}$; unitary axis $\operatorname{Re}(s)=0$ |
 | Formal degree | Relative to the displayed local quotient measure |
 | Automorphic multiplicity | $m(\pi)=\dim M_\pi$, independent of formal degree |
@@ -435,19 +459,29 @@ source of the local trace.
 
 ### 3.2 Compact projectors
 
-Let $J\subset G(F_v)$ be compact open and give it probability Haar measure.  Its averaging
-operator is
+Let $J\subset G(F_v)$ be compact open and assume that $\omega_v$ is trivial on $J\cap Z_v$.
+Write $\overline J$ for the image of $J$ in $Z_v\backslash G(F_v)$.  The central-character
+extension of its normalized characteristic function is
 
 $$
-e_J=\frac{\mathbf1_J}{\operatorname{vol}(J)},
+e_{J,\omega_v}(zj)
+=\frac{\omega_v(z)^{-1}}{\operatorname{vol}(\overline J)}
+\quad(z\in Z_v,\ j\in J),
 \qquad
-\pi_v(e_J)u=\int_J\pi_v(j)u\,dj.
+e_{J,\omega_v}(g)=0\quad(g\notin Z_vJ).
 \tag{3.1}
 $$
 
-When the central-character quotient is in use, (3.1) is interpreted with the compatible
-central extension; existence of $J$-fixed vectors already forces $\omega_v$ to be trivial on
-$J\cap Z_v$.
+The condition on $J\cap Z_v$ makes this definition independent of the decomposition $zj$.
+For a representation with central character $\omega_v$, quotient convolution gives
+
+$$
+\pi_v(e_{J,\omega_v})u
+=\frac1{\operatorname{vol}(\overline J)}
+  \int_{\overline J}\pi_v(j)u\,d\bar j.
+$$
+
+We abbreviate $e_{J,\omega_v}$ to $e_J$ when the central character is fixed.
 
 **Proposition 3.1.** The operator $\pi_v(e_J)$ is the orthogonal projection onto
 $\mathcal H_{\pi_v}^J$.
@@ -556,8 +590,10 @@ I_v(\xi_1,\xi_2;s)(f_v)=0
 \tag{4.3}
 $$
 
-for every pair of quasicharacters and every parameter at which the induced representation is
-defined.
+on the unitary principal axis.  The same conclusion holds at any other parameter for which the
+compact-picture integral below is an absolutely convergent honest convolution operator.  If
+$f_v$ is compactly supported modulo the center, it holds for every parameter as a meromorphic
+finite-type operator identity.
 
 **Proof strategy.** Write the operator in the compact picture.  Its kernel is a Mellin transform
 of the two-sided constant term (4.1), so it vanishes before a trace is taken.
@@ -566,19 +602,25 @@ of the two-sided constant term (4.1), so it vanishes before a trace is taken.
 
 $$
 K_{f_v,s}(x,y)
-=\int_{T(F_v)}\xi_1(a)\xi_2(d)|a/d|_v^s\delta_B(t)^{1/2}
+=\int_{Z_v\backslash T(F_v)}\xi_1(a)\xi_2(d)|a/d|_v^s\delta_B(t)^{1/2}
 \left(\int_{N(F_v)}f_v(x^{-1}tny)\,dn\right)dt.
 \tag{4.4}
 $$
 
-In a chamber of absolute convergence the inner integral is zero, hence the kernel is zero.
-Fixed compact-type matrix entries continue meromorphically in $s$, so the identity theorem
-extends zero to every regular parameter.  At a reducibility point the induced operator is the
-specialization of the zero meromorphic family and is again zero. $\square$
+The quotient by $Z_v$ is required: the central transformations make the integrand descend, but
+an integral over all of $T(F_v)$ would contain an infinite central factor.  On the unitary axis
+the Schwartz algebra acts honestly on tempered induction and Fubini is valid, so the inner
+integral is zero and hence so is the kernel.  Exactly the same proof applies whenever (4.4) is
+absolutely convergent as an honest action.  For compact-mod-center $f_v$, each fixed compact-type
+matrix entry is a Laurent or Mellin transform of compactly supported data, so the zero identity
+continues meromorphically to every parameter. $\square$
 
-Every subrepresentation and quotient of (4.2) is consequently killed as well.  This observation
-will handle the one-dimensional residual representations without a separate integral
-calculation.
+For a general archimedean Schwartz coefficient, the last continuation is not available.  At a
+nonunitary reducibility point a formal regularized principal-series action can contain the very
+discrete series from which the coefficient was formed.  We therefore use (4.3) only for honest
+unitary-axis actions, and for absolutely convergent complementary-series actions when they
+occur in the local unitary-dual argument.  Residual characters will be killed directly by the
+parabolic transform, not by specializing an off-axis zero family.
 
 ### 4.3 The trace-level parabolic transform
 
@@ -595,7 +637,7 @@ Taking the compact-picture trace in (4.4) gives
 
 $$
 \operatorname{tr}I_v(\xi_1,\xi_2;s)(f_v)
-=\int_{T(F_v)}\xi_1(a)\xi_2(d)|a/d|_v^s f_v^B(t)\,dt.
+=\int_{Z_v\backslash T(F_v)}\xi_1(a)\xi_2(d)|a/d|_v^s f_v^B(t)\,dt.
 \tag{4.6}
 $$
 
@@ -685,6 +727,11 @@ a real place a compact-finite discrete-series coefficient belongs to the invaria
 space modulo the center. In either case the constant-term theory proves that (5.2) is strongly
 cuspidal.
 
+At a real place, Schwartz membership alone does not imply the kernel-admissible bound (1.5a).
+For the global theorems we choose $D$ and $u$ so that this additional bound holds.  The explicit
+Cartan decay of discrete-series coefficients proves that every sufficiently high lowest weight
+in the required parity supplies such a choice.
+
 Apply $D(f_{D,u})$ to $v$ and pair with $w$. By (5.1),
 
 $$
@@ -710,7 +757,8 @@ The factor $d(D)$ in (5.2) is forced by (5.4). Omitting it would give trace $d(D
 ### 5.3 The pseudo-coefficient theorem
 
 **Theorem 5.1 (matrix-coefficient pseudo-coefficient).** Let $D$ and $f_{D,u}$ be as above. For
-every irreducible unitary representation $\sigma$ of $G_k$ with central character $\omega_D$,
+every irreducible tempered unitary representation $\sigma$ of $G_k$ with central character
+$\omega_D$,
 
 $$
 \operatorname{tr}\sigma(f_{D,u})=
@@ -721,8 +769,10 @@ $$
 \tag{5.5}
 $$
 
-Moreover $f_{D,u}$ is strongly cuspidal and therefore acts by zero, not merely trace zero, on
-every representation parabolically induced from the Borel.
+If $k$ is nonarchimedean, or if $k=\mathbf R$ and $f_{D,u}$ is kernel-admissible for the standing
+choice of $Q$, the same formula holds for every irreducible unitary $\sigma$.  Moreover
+$f_{D,u}$ is strongly cuspidal and acts by zero, not merely trace zero, on every unitary
+principal-series representation on which its compact-picture convolution is honest.
 
 **Proof strategy.** Separate the unitary dual into square-integrable representations and
 representations obtained from normalized induction. Schur orthogonality handles the first
@@ -732,15 +782,23 @@ class; the two-sided constant term handles the second.
 center and inequivalent to $D$, mixed Schur orthogonality makes every matrix coefficient of
 $\sigma(f_{D,u})$ zero, hence the operator and its trace are zero.
 
-Every irreducible unitary representation of $\mathrm{GL}_2(k)$ that is not square-integrable
-modulo the center occurs as a subquotient of a normalized principal series. This includes
-complementary series and one-dimensional characters; the tempered nonsquare-integrable
-representations are themselves induced. Strong cuspidality and Theorem 4.2 kill the full
-induced representation, hence every subquotient. The trace is zero. $\square$
+Every irreducible tempered unitary representation that is not square-integrable modulo the
+center is an irreducible unitary principal series, including a limit representation at its
+tempered boundary.  The unitary-axis part of Theorem 4.2 kills its honest convolution operator.
 
-At a reducibility point it is important that we kill the whole induced operator. Merely knowing
-the trace on a generic irreducible principal series would not automatically control both
-composition factors at the exceptional point.
+For the strengthened assertion, the remaining infinite-dimensional unitary representations are
+complementary series.  Their normalized-induction parameters satisfy
+$|\operatorname{Re}(s)|<1/2$.  At a finite place compact support makes (4.4) an honest finite
+Laurent integral.  At the real place, the kernel-admissible estimate (1.5a), with $Q$ chosen as
+in Section 1.2, dominates the Iwasawa Jacobian, the inducing factor throughout this bounded
+strip, and every fixed compact-type matrix entry.  Fubini and dominated convergence therefore
+make (4.4) an absolutely convergent honest action; its inner constant term is zero.
+
+The only remaining unitary representations are one-dimensional characters $\eta\circ\det$.
+Their operator is the scalar obtained by averaging first over $K_k$ and $N_k$ and then taking
+the torus Mellin integral.  This is the Mellin transform of $f_{D,u}^B=0$, so the scalar is zero.
+At a real reducibility point we have not specialized a formal meromorphic induced operator: we
+have computed its honest unitary quotient directly.  This proves (5.5). $\square$
 
 ### 5.4 Dependence on the vector and the measure
 
@@ -1039,40 +1097,49 @@ $$
 with rapidly decreasing amplitude, together with the corresponding discrete sum over compact
 idele-class characters.
 
-### 8.2 Convolution before continuation
+### 8.2 Convolution on genuine wave packets
 
-In the convergence chamber, absolute convergence permits convolution through (8.2):
+The strongly cuspidal place in the main theorem is archimedean and its coefficient is Schwartz,
+not compactly supported modulo the center.  We must therefore begin on the unitary axis with
+genuine $L^2$ wave packets, rather than convolving an individual Eisenstein series in its
+off-axis convergence chamber.  Truncate the Eisenstein sum and the outer $t$-integral in (8.4).
+On these finite truncations, the Harish--Chandra Schwartz estimates, the kernel-admissible
+majorant (1.5a), and the polynomial vertical bounds for Eisenstein series justify Fubini.  After
+the truncations are removed by dominated convergence, one obtains
 
 $$
-R_\omega(f)E(g,f_s)
-=E\bigl(g,I(\chi,s)(f)f_s\bigr).
+R_\omega(f)W_a(g)
+=\int_{\mathbf R}
+E\bigl(g,I(\chi,it)(f)f_{it}\bigr)a(t)\,dt.
 \tag{8.5}
 $$
 
-For factorizable data,
+For factorizable data, restricted tensor factorization gives the honest unitary operator
 
 $$
-I(\chi,s)(f)=\bigotimes_v I_v(\chi_v,s)(f_v).
+I(\chi,it)(f)=\bigotimes_v I_v(\chi_v,it)(f_v).
 \tag{8.6}
 $$
 
-If $f_{v_0}$ is strongly cuspidal, Theorem 4.2 makes that local operator zero. Consequently
+The $v_0$ factor is zero by the unitary-axis assertion of Theorem 4.2.  Hence
 
 $$
-I(\chi,s)(f)=0
-\quad\text{and}\quad
-R_\omega(f)E(g,f_s)=0
+I(\chi,it)(f)=0
+\quad\text{for every }t\in\mathbf R,
+\qquad
+R_\omega(f)W_a=0.
 \tag{8.7}
 $$
 
-throughout the convergence chamber. Both sides of (8.5) are meromorphic on the required strip,
-so the identity theorem extends (8.7) across it. The family is killed in a region of ordinary
-absolute convergence and remains zero after continuation.
+This proof uses neither a regularized nonunitary local action nor pointwise convolution of a
+non-square-integrable Eisenstein family.  If the strongly cuspidal factor were compactly
+supported modulo the center, convolution in the initial chamber and meromorphic continuation
+would give the same unitary-axis conclusion, but that stronger route is not available for the
+archimedean coefficient used here.
 
 ### 8.3 Vanishing on the unitary axis
 
-At $s=it$, equation (8.7) says that every generalized Eisenstein vector is killed. Integrating
-against a rapidly decreasing amplitude and using the polynomial vertical bounds gives
+Equation (8.7) says directly that every rapidly decreasing unitary wave packet is killed:
 
 $$
 R_\omega(f)W_a=0.
@@ -1083,8 +1150,9 @@ Finite sums of such packets are dense in the nonresidual continuous subspace at 
 and finite compact type. Since $R_\omega(f)$ is bounded, it vanishes on the closure. Exhausting
 the finite data shows that it vanishes on the whole continuous subspace met by the test.
 
-The argument does not assign a trace to a single Eisenstein series. It acts on genuine $L^2$
-wave packets and uses boundedness to pass to their closed span.
+The repetition of the zero in (8.8) emphasizes the topology: (8.7) proves the identity on a
+dense set of packets, and boundedness passes it to their closed span.  No trace or Hilbert-space
+operator is assigned to a single Eisenstein series.
 
 ### 8.4 Vanishing of the continuous trace distribution
 
@@ -1141,45 +1209,51 @@ and $\eta^2=\omega$. Since $\eta$ is unitary and $[\overline G]$ has finite volu
 belongs to $L^2_\omega$. Its unipotent constant term is itself, so it is not cuspidal. The
 residual space is the Hilbert sum of the lines $\mathbf C(\eta\circ\det)$.
 
-### 9.2 Vanishing by taking residues
+### 9.2 Why residues require a separate proof
 
-Equation (8.7) is an identity of meromorphic automorphic families. Since bounded convolution
-commutes with extraction of a finite Laurent coefficient,
+If the strongly cuspidal factor were compactly supported modulo the center, convolution would
+give a zero meromorphic Eisenstein family and one could take its Laurent coefficient at $s_0$.
+That is not the argument available here.  For an archimedean Schwartz coefficient, (8.7) is an
+identity only for honest unitary-axis operators on wave packets; it is not an identity of
+off-axis meromorphic automorphic families.  Formally specializing it at a nonunitary
+reducibility point would be especially dangerous, because the corresponding principal series
+can contain the discrete series from which the coefficient was formed.
 
-$$
-R_\omega(f)\operatorname*{Res}_{s=s_0}E(g,f_s)
-=\operatorname*{Res}_{s=s_0}R_\omega(f)E(g,f_s)=0.
-\tag{9.3}
-$$
-
-Every residual character is obtained from a section having nonzero residue functional. Hence
-
-$$
-R_\omega(f)|_{L^2_{\mathrm{res},\omega}}=0
-\quad\text{and}\quad
-I_{\mathrm{res},\omega}(f)=0.
-\tag{9.4}
-$$
-
-The residue must be extracted after meromorphic continuation; merely integrating a zero generic
-trace along the unitary axis would not mention the poles crossed by the contour.
+Thus unitary-axis vanishing alone does not dispose of poles crossed in the contour motion.  The
+residual lines must be evaluated directly.  This is not a loss of strength: they are
+one-dimensional, so their convolution operators are explicit scalars.
 
 ### 9.3 Direct constant-term proof
 
-A residual character $\eta\circ\det$ is a quotient of the reducible induced representation at
-(9.1). The strongly cuspidal local factor kills the entire induced representation, so it kills
-this quotient. Globally,
+A residual character $r_\eta=\eta\circ\det$ is one-dimensional.  Its global convolution
+operator is multiplication by the restricted product of its local scalars.  At the selected
+place the scalar is computed in the compact-picture order
 
 $$
-(\eta\circ\det)(f)
-=\prod_v\int_{Z_v\backslash G_v}
-f_v(g)\eta_v(\det g)\,d\bar g=0,
-\tag{9.5}
+\lambda_{v_0}
+=\int_{Z_{v_0}\backslash T_{v_0}}
+\xi_{\eta,v_0}(t) f_{v_0}^B(t)\,dt,
+\tag{9.3}
 $$
 
-because the $v_0$ factor is zero. Alternatively, Iwasawa integration rewrites the local
-integral as the Mellin transform of $f_{v_0}^B$, which vanishes. This second calculation confirms
-the central-character compatibility: $\eta_{v_0}^2=\omega_{v_0}$, so the integrand descends.
+where $\xi_{\eta,v_0}$ is the normalized torus character whose one-dimensional quotient is
+$\eta_{v_0}\circ\det$.  To obtain (9.3), average first over $K_{v_0}$ and $N_{v_0}$ in the order
+used in (4.5), and only then take the outer torus Mellin integral.  This order is the definition
+of the Schwartz-algebra action if an absolute group integral is unavailable; for the
+kernel-admissible tests of Theorem 10.1 it also agrees with ordinary absolutely convergent
+convolution.  Strong cuspidality gives $f_{v_0}^B=0$, so $\lambda_{v_0}=0$ before the outer
+integral is taken.
+
+The central transformations are compatible because $\eta_{v_0}^2=\omega_{v_0}$, so the
+integrand descends to $Z_{v_0}\backslash T_{v_0}$.  Restricted tensor factorization now supplies
+one zero local factor and hence
+
+$$
+R_\omega(f)|_{L^2_{\mathrm{res},\omega}}=0,
+\qquad
+I_{\mathrm{res},\omega}(f)=0.
+\tag{9.4}
+$$
 
 ### 9.4 No omitted discrete noncuspidal term
 
@@ -1230,7 +1304,8 @@ projection.
 
 Suppose $S_{\mathrm{sel}}$ is a finite set of places and, for each $v\in S_{\mathrm{sel}}$, choose
 a square-integrable representation $D_v$ and its normalized coefficient $f_{D_v}$. Assume at
-least one of these places is the real place required by the global kernel theorem. Then
+least one of these places is the real place required by the global kernel theorem, and that all
+archimedean factors are kernel-admissible. Then
 
 $$
 I_{\mathrm{spec},\omega}(f)
@@ -1285,8 +1360,9 @@ level.
 with real place $v_0$, let $\omega$ be a unitary idele class character, and let $D$ be an
 irreducible discrete-series representation of $\mathrm{GL}_2(F_{v_0})$ with central character
 $\omega_{v_0}$. Form its pseudo-coefficient $f_D$ by (5.2), using the local quotient measure
-induced from the global ledger. Let $f=f_D\otimes f^{v_0}$ be a finite-level, left-right
-compact-finite admissible test function, spherical almost everywhere. Then:
+induced from the global ledger. Assume $f_D$, and every other archimedean factor, satisfies the
+kernel-admissible estimate (1.5a) for the standing $Q$. Let $f=f_D\otimes f^{v_0}$ be a
+finite-level, left-right compact-finite test function, spherical almost everywhere. Then:
 
 1. $R_\omega(f)$ is trace class on $L^2_\omega$.
 2. It acts by zero on the continuous and residual subspaces.
@@ -1306,8 +1382,9 @@ compact-finite admissible test function, spherical almost everywhere. Then:
 5. For factorizable $f^{v_0}$, each summand factors into the finite product of local traces in
    (7.2), with spherical factors normalized by (7.6).
 
-**Proof.** The pseudo-coefficient is a compact-finite strongly cuspidal Schwartz function by
-Chapter 5, so the hypotheses of the cuspidal kernel theorem are satisfied. That theorem gives
+**Proof.** The pseudo-coefficient is compact-finite and strongly cuspidal by Chapter 5, and the
+explicit kernel-admissibility hypothesis supplies the extra decay required by the kernel
+theorem. That theorem gives
 trace class and the absolutely convergent cuspidal expansion. Chapters 8 and 9 prove operator
 vanishing on the continuous and residual subspaces. The local trace identity (5.5) and the
 finite tensor trace lemma turn the cuspidal expansion into (10.7). $\square$
@@ -1343,7 +1420,8 @@ then
 $$
 I_{\mathrm{spec},\omega}(f)
 =\sum_{\substack{\pi\in\mathcal A_{\mathrm{cusp}}(G,\omega)\\
-\pi_{v_0}\simeq D}}
+\pi_{v_0}\simeq D\\
+\pi_v\text{ unramified for every }v\notin S}}
 m(\pi)
 \prod_{v\in S\setminus\{v_0\}}\dim\pi_v^{J_v},
 \tag{11.3}
@@ -1371,18 +1449,21 @@ $$
 \tag{11.4}
 $$
 
-If $h_v$ is the standard generator normalized to have Satake transform $X+Y$, the global
-distribution becomes
+If $h_v$ is the standard generator normalized to have Satake transform $X+Y$, let $S$ contain
+$v_0$, $v$, and every place where the remaining test is not spherical, and put
+$S'=S\setminus\{v_0,v\}$.  The global distribution becomes
 
 $$
-\sum_{\substack{\pi\ \mathrm{cuspidal}\\\pi_{v_0}\simeq D}}
+\sum_{\substack{\pi\ \mathrm{cuspidal}\\
+\pi_{v_0}\simeq D\\
+\pi_w\text{ unramified for every }w\notin S}}
 m(\pi)(\alpha_v(\pi)+\beta_v(\pi))
 \prod_{w\in S'}\operatorname{tr}\pi_w(f_w),
 \tag{11.5}
 $$
 
-for the remaining finite exceptional set $S'$. Thus the trace formula computes a weighted sum
-of Hecke eigenvalues in the selected archimedean packet.
+Thus the trace formula computes a weighted sum of Hecke eigenvalues in the selected
+archimedean packet; components ramified where the test is spherical contribute zero.
 
 If several spherical Hecke factors are inserted, their eigenvalues multiply. A finite linear
 combination of such tests therefore evaluates any polynomial in finitely many normalized Hecke
@@ -1419,7 +1500,10 @@ The normalized coefficient removes it at the source.
 ### 11.4 A weight and level example
 
 Take $F=\mathbf Q$, trivial central character, and let $D_k$ be the full real discrete series of
-lowest weight $k\geq2$ with compatible parity. Let $f_{D_k}$ be its normalized coefficient.
+compatible even lowest weight.  Choose $k$ sufficiently high that its normalized compact-finite
+coefficient $f_{D_k}$ satisfies the standing kernel-admissible estimate.  (The local selector
+identity itself holds already for every $k\geq2$; the high-weight condition is what licenses the
+global trace-class formula used in this example.)
 Choose the full-level spherical projector at every finite prime. Then
 
 $$
@@ -1545,8 +1629,8 @@ The data exported from the spectral formula are therefore these.
 | Local convolution domain | $Z_v\backslash G_v$ |
 | Selector | $d(D)\overline{\langle D(g)u,u\rangle}$ |
 | Selector trace on $D$ | $+1$ |
-| Trace on other unitary irreducibles | $0$ |
-| Induced operator | Zero |
+| Trace on other unitary irreducibles | $0$ for the kernel-admissible selector used globally |
+| Induced operator | Zero on every unitary-axis principal series |
 | Spherical projector trace | $1$ on the spherical line |
 | Hecke eigenvalue | Normalized Satake polynomial |
 | Global weight | $m(\pi)\prod_v\operatorname{tr}\pi_v(f_v)$ |
@@ -1561,8 +1645,8 @@ integrals or the existence of matching functions.
 
 ### 13.1 Continuity of the distribution
 
-On a fixed finite-level, finite-type admissible Schwartz space, the kernel theorem provides a
-seminorm $\nu$ such that
+On a fixed finite-level, finite-type kernel-admissible space with the standing strongly
+cuspidal real block, the kernel theorem provides a seminorm $\nu$ such that
 
 $$
 \|R_\omega(f)\|_1\leq C\nu(f).
@@ -1587,11 +1671,11 @@ I_{\mathrm{spec},\omega}(f_n)
 \tag{13.3}
 $$
 
-This permits a rapidly decreasing matrix coefficient to be approximated by compactly supported
-functions when a local calculation benefits from compact support, provided the approximants
-remain in the controlled finite-type block. Strong cuspidality itself must either be preserved
-by the approximation or restored by a cuspidal projection; arbitrary cutoffs can create a
-nonzero constant term.
+This continuity statement applies to a net that already remains inside the same
+kernel-admissible, strongly cuspidal block.  It does not construct compactly supported
+approximants to an archimedean discrete-series coefficient: arbitrary cutoffs can create a
+nonzero constant term, and no cuspidal projection with the required topology has been assumed
+or constructed here.
 
 ### 13.2 Legitimate regrouping
 
@@ -1665,8 +1749,10 @@ $$
 $$
 
 does not imply $I_v(\chi_v,s)(f_v)=0$. It therefore does not by itself kill scattering terms,
-residues as vectors, or the constant term of a two-variable automorphic kernel. The repair is the
-two-sided condition (4.1), which gives the zero operator through (4.4).
+or the constant term of a two-variable automorphic kernel. The repair for the continuous
+channel is the two-sided condition (4.1), which gives the zero unitary induced operator through
+(4.4).  Residual one-dimensional operators are then killed separately by the transform
+$f_v^B=0$ as in (9.3).
 
 Conversely, if a trace formula has already been regularized and every continuous summand is
 known to involve only the ordinary induced trace, then $f_v^B=0$ can suffice. That weaker
@@ -1701,9 +1787,11 @@ Doing so here would create a dependency on an unproved later theorem.
 
 ### 14.4 The limits of the present computation
 
-The present spectral theorem assumes the test class of the simple kernel formula: finite sums of
-factorizable, finite-level, compact-finite functions with a strongly cuspidal real factor. It
-does not claim trace class for every Schwartz function on the full group. Without finite compact
+The present spectral theorem assumes the exact test class of the simple kernel formula: finite
+sums of factorizable, finite-level, compact-finite functions, kernel-admissible at every
+archimedean place, with a strongly cuspidal real factor. It does not claim trace class for every
+Harish--Chandra Schwartz function on the full group. Without the fixed algebraic decay power,
+the periodization estimate used by the kernel theorem is unavailable; without finite compact
 type, an additional summation over types is needed; without a cuspidal factor, continuous terms
 require truncation and regularization.
 
@@ -1716,6 +1804,10 @@ Several boundary cases deserve explicit mention.
 
 - A limit of discrete series need not be square-integrable modulo the center, so construction
   (5.2) and Schur orthogonality do not apply unchanged.
+- A low-weight discrete-series coefficient is a valid local tempered pseudo-coefficient but may
+  fail the fixed kernel-admissibility threshold.  The global trace-class theorem includes it
+  only if (1.5a) is verified independently; sufficiently high weights are supplied by the
+  preceding kernel analysis.
 - At a complex place $\mathrm{GL}_2(\mathbf C)$ has no discrete series modulo center. Such a
   place cannot supply the real pseudo-coefficient used by the kernel theorem.
 - A nonunitary central character does not define the unitary Hilbert-space decomposition used in
@@ -1746,11 +1838,15 @@ $$
 &\text{strong local cuspidality}
 +\text{restricted tensor factorization}\\
 &\qquad\Longrightarrow
-I(\chi,s)(f)=0,\\[2mm]
-&I(\chi,s)(f)=0
-+\text{Eisenstein continuation and residue classification}\\
+I(\chi,it)(f)=0,\\[2mm]
+&I(\chi,it)(f)=0
++\text{unitary wave-packet density}\\
 &\qquad\Longrightarrow
-I_{\mathrm{cont},\omega}(f)=I_{\mathrm{res},\omega}(f)=0,\\[2mm]
+I_{\mathrm{cont},\omega}(f)=0,\\[2mm]
+&f_{v_0}^B=0
++\text{residual-character classification}\\
+&\qquad\Longrightarrow
+I_{\mathrm{res},\omega}(f)=0,\\[2mm]
 &\text{cuspidal kernel trace class}
 +\text{discrete finite-multiplicity decomposition}\\
 &\qquad\Longrightarrow
@@ -1772,15 +1868,16 @@ global summability; and restricted tensor products expose the local weights.
 ### 15.2 The reusable spectral package
 
 **Theorem 15.1 (transfer-ready cuspidal spectral package).** Under the hypotheses of Theorem
-10.1, let $S$ contain the real selector place, every ramified place of the test or representation,
-and every place where the test is not the spherical projector. Then
+10.1, let $S$ contain every archimedean place and every finite place where the test is not the
+normalized spherical projector. Then
 
 $$
 \boxed{
 I_{\mathrm{spec},\omega}(f)
 =I_{\mathrm{cusp},\omega}(f)
 =\sum_{\substack{\pi\in\mathcal A_{\mathrm{cusp}}(G,\omega)\\
-\pi_{v_0}\simeq D}}
+\pi_{v_0}\simeq D\\
+\pi_v\text{ unramified for every }v\notin S}}
 m(\pi)
 \prod_{v\in S\setminus\{v_0\}}
 \operatorname{tr}\pi_v(f_v),}
@@ -1796,14 +1893,18 @@ I_{\mathrm{res},\omega}(f)=0.
 \tag{15.3}
 $$
 
-The sum in (15.2) is absolutely convergent and independent of the choice of $S$. The local
+Representations ramified outside $S$ have already contributed zero through an outside spherical
+projector, which is why the displayed restriction is necessary.  The sum in (15.2) is
+absolutely convergent and is unchanged if $S$ is enlarged. The local
 selector has trace $+1$, spherical projectors have trace one on spherical lines, Hecke traces are
 normalized Satake polynomials, and all automorphic multiplicities remain explicit. A consistent
 Haar rescaling changes the formal degree and the selector inversely, leaving every local and
 global trace unchanged.
 
 **Proof.** Equations (8.10) and (9.4) prove (15.3). Theorem 10.1 gives the selected absolutely
-convergent cuspidal sum. Lemma 7.1 factors each term and proves independence of $S$. The measure,
+convergent cuspidal sum.  An outside spherical projector kills every representation ramified
+outside $S$; for each survivor, $S$ now contains every ramified place, so Lemma 7.1 factors the
+term and proves invariance under enlarging $S$. The measure,
 spherical, and Satake assertions are (5.6), (7.5), and (7.6). $\square$
 
 ### 15.3 Conclusion
@@ -1813,11 +1914,12 @@ weighted and absolutely convergent distribution. Its construction begins locally
 formal-degree-normalized square-integrable matrix coefficient is simultaneously a spectral
 selector and a strongly cuspidal test function. Schur orthogonality gives trace one on the chosen
 discrete series and zero on every other discrete representation; the vanished two-sided
-constant term gives the zero operator on every induced representation.
+constant term gives the zero operator on every unitary principal-series representation, and on
+the honest complementary-series actions needed for the local selector theorem.
 
-That local zero propagates through the global tensor product. It kills Eisenstein series in the
-convergence chamber, hence after continuation, and therefore kills every unitary wave packet.
-Taking Laurent coefficients kills every residual determinant character. The constant-term
+That local zero propagates through the global tensor product on the unitary axis and kills every
+genuine Eisenstein wave packet.  Independently, the vanishing parabolic transform kills every
+residual determinant character by a direct one-dimensional calculation. The constant-term
 classification proves that these exhaust the noncuspidal spectrum, so their disappearance is a
 theorem rather than an omission from the final notation.
 
