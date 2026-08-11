@@ -172,7 +172,7 @@ any resulting corrections.
 - [ ] 146. Eisenstein Descent and the Mordell–Weil Group of the Eisenstein Quotient
 - [ ] 147. Eisenstein Cotangent Lattices and Formal Immersion
 - [ ] 148. Rational Isogenies of Prime Degree
-- [ ] 149. Genus-Two Curves, Jacobians, and Abel–Jacobi Geometry
+- [x] 149. Genus-Two Curves, Jacobians, and Abel–Jacobi Geometry
 - [ ] 150. Mumford Representations and Exact Genus-Two Jacobian Arithmetic
 - [ ] 151. Explicit Two-Descent on Genus-Two Jacobians
 - [ ] 152. Mordell–Weil Sieves for Hyperelliptic Curves

@@ -173,9 +173,9 @@ Since $\deg\mathcal O(1)=1$, one gets $\deg\pi=2$. Finiteness follows because a 
 
 ### 2.2 The hyperelliptic involution and its uniqueness
 
-A degree-two cover has a symmetry exchanging the two points of a general fiber. In separable characteristic this is the familiar deck transformation. The intrinsic canonical construction shows that it belongs to the curve, not to a chosen equation.
+A separable degree-two cover has a symmetry exchanging the two points of a general fiber. The intrinsic canonical construction shows that this deck transformation belongs to the curve, not to a chosen equation; the first issue is to exclude inseparability in characteristic two.
 
-**Proposition 2.2.** If the canonical map is generically separable, there is a unique nontrivial automorphism
+**Proposition 2.2.** The canonical map is generically separable. Consequently there is a unique nontrivial automorphism
 
 $$
 \iota:C\longrightarrow C
@@ -183,9 +183,17 @@ $$
 
 over $\mathbf P^1$, and $C/\langle\iota\rangle=\mathbf P^1$. Every automorphism of $C$ commutes with $\iota$ and descends to an automorphism of $\mathbf P^1$ preserving the branch divisor.
 
-**Proof.** The separable quadratic extension $k(C)/k(\mathbf P^1)$ has a unique nontrivial field automorphism. Normality of the smooth curve extends it to an automorphism $\iota$ of $C$. Any automorphism of $C$ acts linearly on $H^0(C,\omega_C)$ and therefore carries fibers of the canonical map to fibers. It conjugates the unique nontrivial automorphism over the generic point to itself, so it commutes with $\iota$ and descends to $\mathbf P^1$. A descended automorphism must preserve the ramification, hence the branch divisor. $\square$
+**Proof.** Only characteristic two needs a separability argument. After extending the ground field to an algebraic closure, suppose the degree-two canonical map were purely inseparable. If $K=\bar k(C)$ and $F=\bar k(\mathbf P^1)$, then $K^2\subseteq F$. Since $\bar k$ is perfect and $K$ has transcendence degree one,
 
-In characteristic different from two, the canonical cover is automatically separable. In characteristic two a smooth genus-two curve may have a separable Artin--Schreier double cover or a more delicate inseparable canonical map. All later uses of the involution either assume separability or use the equation hypotheses that guarantee it.
+$$
+[K:K^2]=2=[K:F],
+$$
+
+so $F=K^2$. Frobenius identifies $K$ with $K^2$ after twisting constants; in geometric terms, the purely inseparable map would be the relative Frobenius of $C$ followed by an isomorphism from its Frobenius twist to $\mathbf P^1$. Frobenius twisting preserves the genus of a smooth proper curve over a perfect field, contradicting $g(C)=2$. Thus the canonical map is separable.
+
+The separable quadratic extension $k(C)/k(\mathbf P^1)$ now has a unique nontrivial field automorphism. Normality of the smooth curve extends it to an automorphism $\iota$ of $C$. Any automorphism of $C$ acts linearly on $H^0(C,\omega_C)$ and therefore carries fibers of the canonical map to fibers. It conjugates the unique nontrivial automorphism over the generic point to itself, so it commutes with $\iota$ and descends to $\mathbf P^1$. A descended automorphism must preserve the ramification, hence the branch divisor. $\square$
+
+In characteristic two the separable double cover is Artin--Schreier in nature, and its ramification can be wild. What fails there is the sign-change equation and the count of six distinct ramification points, not the existence of the canonical involution.
 
 The uniqueness has a useful consequence. If a genus-two curve is presented in two apparently different hyperelliptic forms, their degree-two maps differ only by an automorphism of the genus-zero target. Thus coordinate changes on the $x$-line account for every change of hyperelliptic coordinate.
 
@@ -206,7 +214,7 @@ with multiplication on $M^{-1}\otimes M^{-1}$ specified by the branch section of
 
 ### 2.3 Ramification and Weierstrass points
 
-Assume the canonical cover is separable. Riemann--Hurwitz determines its ramification without coordinates. Let $R_\pi$ be the ramification divisor. Since the target has genus zero,
+Riemann--Hurwitz determines the ramification of the now-proved separable canonical cover without coordinates. Let $R_\pi$ be its different divisor, also called the ramification divisor. Since the target has genus zero,
 
 $$
 K_C\sim\pi^*K_{\mathbf P^1}+R_\pi.
@@ -228,7 +236,7 @@ $$
 
 Conversely, if $2P\sim K_C$, then $2P$ belongs to the canonical pencil and is a nonreduced fiber, so $P$ is ramified. Thus (2.2) characterizes Weierstrass points intrinsically.
 
-Wild ramification changes the counting language in characteristic two: the different, rather than the number of distinct ramification points, has degree six. It is therefore unsafe to assert that every genus-two curve in characteristic two has six distinct Weierstrass points. The divisor-theoretic statements below are phrased through canonical fibers and remain valid whenever the double cover is separable.
+Wild ramification changes the counting language in characteristic two: the different, rather than the number of distinct ramification points, has degree six. It is therefore unsafe to assert that every genus-two curve in characteristic two has six distinct Weierstrass points. The divisor-theoretic statements below are phrased through scheme-theoretic canonical fibers and remain valid in every characteristic.
 
 ### 2.4 Canonical divisors and conjugate pairs
 
@@ -347,7 +355,7 @@ These transformations explain why coefficients alone are not geometric invariant
 
 ### 3.4 What changes in characteristic two
 
-Completing the hypothesis ledger requires a separate description in characteristic two. A separable quadratic extension of $k(x)$ is written
+Completing the hypothesis ledger requires a separate description in characteristic two. Proposition 2.2 shows that the canonical quadratic extension is separable, so after choosing a hyperelliptic coordinate it is written
 
 $$
 y^2+h(x)y=f(x), \tag{3.5}
@@ -572,7 +580,13 @@ $$
 
 It is principal: it is an isomorphism, not merely an isogeny. Changing $b$ translates $\Theta_b$, and translation does not change $\phi_M$. Hence $\lambda_C$ is independent of the base point and exists even when $C(k)$ is empty.
 
-For clarity, the numerical reason for principality can be seen directly in dimension two. On an abelian surface, Riemann--Roch gives
+For clarity, the numerical reason for principality can be seen directly in dimension two without presupposing the conclusion. The theta divisor is the smooth curve $C$, while $K_J$ is trivial. Adjunction therefore gives
+
+$$
+\Theta_b^2=\deg K_C=2.
+$$
+
+On an abelian surface, Riemann--Roch then gives
 
 $$
 \chi(M)=\frac{c_1(M)^2}{2},\qquad
@@ -583,7 +597,7 @@ For the theta line, $c_1(M)^2=2$, so $\chi(M)=1$ and $\deg\phi_M=1$. The kernel 
 
 ### 5.4 Intersection numbers and translates
 
-The self-intersection
+The self-intersection, already used in the numerical proof of principality,
 
 $$
 \Theta^2=2 \tag{5.7}
@@ -801,7 +815,7 @@ identifies $C^{(2)}$ with the blowup of $J$ at the $k$-rational point $\kappa_b=
 
 **Proof strategy.** The fiber theorem shows that $u_b$ is a proper birational morphism, an isomorphism away from one point, with one projective-line fiber. We identify its first-order behavior with the universal directions through that point.
 
-At a divisor $D\in|K_C|$, the tangent space to $C^{(2)}$ is
+Put $E=|K_C|$. At a divisor $D\in E$, the tangent space to $C^{(2)}$ is
 
 $$
 H^0(D,\mathcal O_D(D)).
@@ -816,25 +830,37 @@ $$
 \longrightarrow0. \tag{7.6}
 $$
 
-Because $h^0(\mathcal O_C(D))=2$, its kernel is one-dimensional after quotienting by constants; this kernel is exactly the tangent line to $|K_C|$. The transpose of the differential is restriction
+Because $h^0(\mathcal O_C(D))=2$, its kernel is one-dimensional after quotienting by constants; this kernel is exactly the tangent line to $E$. The transpose of the differential is restriction
 
 $$
 H^0(C,\omega_C)\longrightarrow H^0(D,\omega_C|_D). \tag{7.7}
 $$
 
-As $D$ varies in the canonical pencil, the quotient normal direction records the corresponding one-dimensional quotient of $H^0(C,\omega_C)^\vee=T_0J$. Thus the exceptional curve maps canonically to
+The induced map from the normal line $N_{E/C^{(2)},D}$ to $T_{\kappa_b}J=H^0(C,\omega_C)^\vee$ is nonzero. If $s$ is the canonical section with zero divisor $D$, then (7.7) has kernel $ks$, so the image of the original differential is the annihilator line $(ks)^\perp$. As $D$ varies, these annihilator lines form the tautological line over $\mathbf P(T_{\kappa_b}J)$. Consequently
 
 $$
-\mathbf P(T_{\kappa_b}J)\simeq\mathbf P^1
+N_{E/C^{(2)}}\simeq\mathcal O_E(-1), \tag{7.7a}
 $$
 
-and this map is an isomorphism. The universal property of the blowup therefore factors $u_b$ through
+and the exceptional curve maps canonically and isomorphically to
+
+$$
+\mathbf P(T_{\kappa_b}J)\simeq\mathbf P^1.
+$$
+
+The two generators of the maximal ideal of $\kappa_b$ pull back to functions vanishing to order one along $E$, and their first-order normal parts never vanish simultaneously by the preceding tangent calculation. Hence
+
+$$
+\mathfrak m_{\kappa_b}\mathcal O_{C^{(2)}}=\mathcal O_{C^{(2)}}(-E), \tag{7.7b}
+$$
+
+an invertible ideal. The universal property of the blowup therefore factors $u_b$ through
 
 $$
 C^{(2)}\longrightarrow\operatorname{Bl}_{\kappa_b}J\longrightarrow J.
 $$
 
-The first arrow is proper and birational and is an isomorphism away from the exceptional divisor. Along that divisor it induces an isomorphism both on the divisor and on the normal conormal quotient. Hence it is quasi-finite there and an isomorphism on completed local rings. It is therefore finite birational between smooth, hence normal, surfaces, so it is an isomorphism. The exceptional normal bundle on a blowup of a smooth surface is $\mathcal O(-1)$. $\square$
+The first arrow is proper and birational and is an isomorphism away from the exceptional divisor. Along that divisor it induces an isomorphism both on the divisor and, by (7.7a), on the normal line. Its tangent map is therefore an isomorphism at every point of $E$, so it is etale and quasi-finite there. It is quasi-finite everywhere, hence finite; being finite birational onto the smooth, therefore normal, blowup, it is an isomorphism. Formula (7.7a) also identifies the exceptional normal bundle with $\mathcal O_{\mathbf P^1}(-1)$. $\square$
 
 The theorem is defined over $k$, not merely over $\bar k$, because $K_C$ and $b$ are defined over $k$. It explains why a degree-two class is represented uniquely except at the canonical class: blowing down forgets which member of the canonical pencil was chosen.
 
@@ -1254,24 +1280,24 @@ If $v$ and $w$ are two good places of distinct residue characteristics, the tors
 
 ### 10.4 Semistable fibers and graph corrections
 
-Good reduction is the clean case, but genus-two curves can degenerate semistably. Let $\mathcal C/R$ be a regular proper semistable model. The special fiber may be irreducible with nodes, or reducible. Its generalized Jacobian fits into
+Good reduction is the clean case, but genus-two curves can degenerate semistably. Let $\mathcal C/R$ be a regular proper semistable model. The special fiber may be irreducible with nodes, or reducible. After passing to an algebraic closure $\bar k$ of the residue field, let $\Gamma$ be the geometric dual graph and let $\widetilde C_v$ be the normalization of its geometric components. The generalized Jacobian fits into
 
 $$
 0\longrightarrow T_\Gamma
-\longrightarrow\operatorname{Pic}^0(C_k)
+\longrightarrow\operatorname{Pic}^0(C_{\bar k})
 \longrightarrow\prod_vJ(\widetilde C_v)
 \longrightarrow0, \tag{10.5}
 $$
 
-where $\Gamma$ is the dual graph, $T_\Gamma$ is the graph torus, and $\widetilde C_v$ are normalized components. The torus rank is $b_1(\Gamma)$.
+where $T_\Gamma$ is the graph torus. Its rank is $b_1(\Gamma)$.
 
-The separated model of the generic Jacobian has component group
+The separated model of the generic Jacobian has geometric component group
 
 $$
 \Phi\simeq\operatorname{Div}^0(\Gamma)/\Delta\mathbf Z^{V(\Gamma)} \tag{10.6}
 $$
 
-for a regular unit-thickness model. Weighted edge lengths replace the ordinary Laplacian when nodes have thickness. Thus specialization contains three layers: component Jacobians, a torus from graph cycles, and a finite graph-Jacobian component group.
+for a split regular unit-thickness model, or equivalently after geometric base change. Weighted edge lengths replace the ordinary Laplacian when nodes have thickness. Over the original residue field, Galois acts on the geometric graph, torus, component Jacobians, and component group; rational points are not obtained by simply forgetting that action. Thus specialization contains three geometric layers: component Jacobians, a torus from graph cycles, and a finite graph-Jacobian component group.
 
 It is incorrect at bad reduction simply to reduce a divisor and regard its total-degree-zero class as a point of an abelian special fiber. Multidegree and vertical divisors intervene. A common regular semistable model and the separated Picard quotient are needed to make the specialization map canonical.
 
@@ -1630,7 +1656,7 @@ The main assertions depend on the following exact hypotheses.
 
 **Intrinsic geometry.** Smoothness, properness, and geometric connectedness are required for the genus, Riemann--Roch, the abelian Jacobian, and the Abel embedding. Genus exactly two forces $\deg K_C=2$ and produces the canonical double cover. A rational point is required to land canonically in $J$ rather than in a Picard torsor.
 
-**Hyperelliptic equations.** The form $y^2=f(x)$, the sign involution, and the squarefree criterion require characteristic different from two. A squarefree polynomial of degree five or six gives genus two only after taking the smooth projective model and checking infinity. Characteristic two uses $y^2+h(x)y=f(x)$ and a different smoothness test.
+**Hyperelliptic equations.** The form $y^2=f(x)$, the sign involution, and the squarefree criterion require characteristic different from two. A squarefree polynomial of degree five or six gives genus two only after taking the smooth projective model and checking infinity. The canonical cover remains separable in characteristic two, but it uses $y^2+h(x)y=f(x)$ with $h\ne0$, has the translation involution $y\mapsto y+h(x)$, and requires a different smoothness and ramification test.
 
 **Finite-field results.** The Frobenius formulas and Weil bounds require a smooth proper geometrically connected curve over a finite field. The formula $\#J(\mathbf F_q)=P_C(1)$ uses the Jacobian of that curve. The blowup count requires a rational blowup center, supplied by a rational base point.
 
@@ -1642,7 +1668,7 @@ The main assertions depend on the following exact hypotheses.
 
 Let $C/k$ be a smooth proper geometrically connected genus-two curve.
 
-1. The canonical system is base-point free and defines a degree-two map to a genus-zero curve. If the map is separable, it has the canonical involution $\iota$ and canonical fibers $P+\iota(P)$.
+1. The canonical system is base-point free and defines a separable degree-two map to $\mathbf P^1$. It has the canonical involution $\iota$ and canonical fibers $P+\iota(P)$.
 2. An effective divisor $D$ of degree two has $h^0(D)=2$ exactly when $D\sim K_C$; otherwise $h^0(D)=1$ and $D$ is unique in its class.
 3. The Jacobian $J$ is an abelian surface with canonical principal polarization. After choosing $b\in C(k)$, the Abel map $j_b$ is a closed immersion and its image is a theta divisor.
 4. The theta divisor satisfies $\Theta^2=2$. Distinct translates meet in a zero-dimensional scheme of length two.
