@@ -106,7 +106,7 @@ any resulting corrections.
 - [x] 080. Weil–Deligne Representations and Local Constants
 - [x] 081. Local Langlands in the Principal, Special, and Dihedral Cases
 - [ ] 082. Representations of Quaternion Division Algebras
-- [ ] 083. Characters and Dihedral Types on Quaternion Division Algebras
+- [x] 083. Characters and Dihedral Types on Quaternion Division Algebras
 - [ ] 084. Local Jacquet–Langlands
 - [ ] 085. Local Jacquet–Langlands for Special and Dihedral Packets
 - [ ] 086. Cyclic Base Change: Local Theory
