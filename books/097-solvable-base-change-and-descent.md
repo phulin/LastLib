@@ -40,7 +40,7 @@
    - [Restriction after induction](#61-restriction-after-induction)
    - [Proof of the commuting formula](#62-proof-of-the-commuting-formula)
    - [Cuspidality in the disjoint and contained cases](#63-cuspidality-in-the-disjoint-and-contained-cases)
-   - [Higher cyclic induction and towers](#64-higher-cyclic-induction-and-towers)
+   - [Iteration through solvable towers](#64-iteration-through-solvable-towers)
    - [Conductors, weights, and twists under the comparison](#65-conductors-weights-and-twists-under-the-comparison)
 7. [Descent through one cyclic step](#7-descent-through-one-cyclic-step)
    - [Invariance is the admissible image condition for a cusp form](#71-invariance-is-the-admissible-image-condition-for-a-cusp-form)
@@ -76,7 +76,7 @@
     - [The commuting square](#112-the-commuting-square)
     - [The isobaric boundary](#113-the-isobaric-boundary)
     - [Descent on an inner form](#114-descent-on-an-inner-form)
-12. [Four solvable patterns](#12-four-solvable-patterns)
+12. [Four solvable patterns and one local calculation](#12-four-solvable-patterns-and-one-local-calculation)
     - [A quadratic--cubic tower](#121-a-quadratic--cubic-tower)
     - [An $S_3$-extension](#122-an-s_3-extension)
     - [An $A_4$-extension](#123-an-a_4-extension)
@@ -141,8 +141,9 @@ $$
 where every $F_i/F_{i-1}$ is cyclic and every arrow on the second line is cyclic
 base change. Within the selected, trace-comparable range inherited from cyclic base
 change, upward arrows exist. A downward arrow for a cuspidal representation exists
-when it is invariant under the cyclic group, its local parameters have selected
-extensions, and the reverse comparison has the required cuspidal selector. A
+when it is invariant under the cyclic group, its local parameters have the required
+antecedent-complete selected extension fibers, and the reverse comparison has the
+required cuspidal selector. A
 downward path through the entire diagram exists only when these hypotheses and the
 choices can be made compatibly.
 
@@ -270,25 +271,33 @@ hold:
    selected local range of the cyclic theorem: determinant characters, principal
    series, special representations, and the constructed depth-zero or tame
    dihedral packets, with the primitive wild and ramified dyadic boundaries
-   excluded;
+   excluded; moreover, at every nonsplit place, the full admissible extension
+   fiber of the restricted parameter with determinant prescribed by
+   $\omega_\rho$ is selected. This is the extension-complete condition, and it is
+   stronger than the existence of the known source extension;
 2. its archimedean components are among the cohomological parameters for which the
    local twisted comparison is established;
 3. matching global test tensors can be chosen with a strongly cuspidal factor.
 
 An essentially unitary cohomological representation is admitted after a common real
 norm twist. A prime cyclic tower with source $\pi$ is **ascent-admissible** when each
-cyclically cuspidal intermediate representation satisfies these conditions at the
-next step. If a quadratic step produces a two-character isobaric sum, later steps
+cuspidal intermediate representation satisfies these conditions at the next step.
+If a quadratic step produces a two-character isobaric sum, later steps
 are defined by norm pullback of the characters and need no further cuspidal trace
 comparison.
 
 For descent, a cyclically invariant cusp form is **descent-admissible** at a step if
-its local parameters possess selected extensions and the reverse trace comparison is
-available. A descent chain is admissible when this holds at every chosen step. When
-we describe an entire twisting fiber, we additionally assume **fiber saturation**:
-every norm-character twist that occurs remains selected and trace-comparable. Without
-saturation, the formulas describe the ambient parameter fiber, while the theorem
-constructs only its admissible members.
+it is selected and trace-comparable, the reverse comparison has a strongly cuspidal
+factor, and its local parameters are **antecedent-complete selected**: at every
+nonsplit place and for every norm antecedent of the invariant central character, the
+entire admissible fixed-determinant extension fiber is selected. Mere existence of
+one selected local extension is not enough, because the matching algebra cannot
+separate it from an unselected extension with the same restriction. A descent chain
+is admissible when this holds at every chosen step. When we describe an entire
+twisting fiber, we additionally assume **fiber saturation**: every norm-character
+twist that occurs remains selected and trace-comparable. Without saturation, the
+formulas describe the ambient parameter fiber, while the theorem constructs only its
+admissible members.
 
 These conditions are stable under changing a cyclic generator but need not be stable
 under changing a tower. Accordingly, “solvable base change exists” below always
@@ -315,10 +324,10 @@ becomes cuspidal again under further base change.
 
 **Descent.** Which representations over $E$ come from $F$? For one admissible cyclic
 step, a cuspidal representation descends exactly when it is Galois invariant and has
-the selected local extensions required by the cyclic theorem. Through a
-solvable tower, one must choose a descent at each stage that is invariant at the next
-stage. Full invariance of the top is necessary in the Galois case, but it need not by
-itself provide coherent choices for a noncyclic group.
+the antecedent-complete local extension fibers required by the cyclic theorem.
+Through a solvable tower, one must choose a descent at each stage that is invariant at
+the next stage. Full invariance of the top is necessary in the Galois case, but it
+need not by itself provide coherent choices for a noncyclic group.
 
 The proofs use cyclic base change as an input, but the solvable assertions will be
 proved by induction rather than cited as a black box. The repeated local restriction,
@@ -1489,30 +1498,21 @@ This example shows why the exact criterion is stepwise rather than a test involv
 only the original inducing field or only $X(E/F)$. Linear disjointness controls the
 Mackey shape, but character restriction can acquire additional stabilizers.
 
-### 6.4 Higher cyclic induction and towers
+### 6.4 Iteration through solvable towers
 
-For a cyclic extension $M/F$ of degree $d$ and a Hecke character $\theta$ of $M$,
-automorphic induction produces a rank-$d$ representation. Its restriction after base
-change to $E$ is governed by the double-coset formula
+Return to the quadratic extension $M/F$ of the preceding sections. Apply Proposition
+6.1 at each prime cyclic step of an ascent-admissible tower from $F$ to $E$. Before
+$M$ enters the current field, the disjoint-case formula carries the same quadratic
+induction to the compositum. At the first field containing $M$, the contained-case
+formula exposes the two conjugate character lines. Every later step pulls those two
+characters through its norm.
 
-$$
-\operatorname{Res}_{W_E}^{W_F}
-\operatorname{Ind}_{W_M}^{W_F}\theta
-\cong
-\bigoplus_{x\in W_E\backslash W_F/W_M}
-\operatorname{Ind}_{W_E\cap xW_Mx^{-1}}^{W_E}
-(\theta^x|_{W_E\cap xW_Mx^{-1}}).
-$$
-
-When the relevant automorphic inductions are defined, the same formula holds
-automorphically. In rank two only the quadratic case is needed, but the general
-identity explains the mechanism: intersection fields determine the induced blocks,
-and containment turns induction into an isobaric sum of conjugate characters.
-
-Both restriction and Mackey decomposition are transitive. Therefore compatibility
-with automorphic induction is independent of the chosen solvable tower. A calculation
-may be performed at the first layer where $M$ meets the tower, but the resulting
-endpoint is determined solely by $M\otimes_FE$.
+Restriction and the quadratic Mackey decomposition are transitive. Consequently the
+iterated formula is independent of the chosen solvable tower and is exactly the
+quadratic formula of Section 6.1 over the endpoint: the answer is determined by the
+quadratic étale $E$-algebra $M\otimes_FE$. This uses only the rank-two quadratic
+automorphic induction proved in the preceding book; no higher-rank automorphic
+induction theorem is being assumed.
 
 ### 6.5 Conductors, weights, and twists under the comparison
 
@@ -1563,10 +1563,12 @@ restriction of the function $\mu$ along an inclusion.
 
 ### 7.1 Invariance is the admissible image condition for a cusp form
 
-Let $L/K$ be cyclic of prime degree with group $\Gamma$, and let $\Pi$ be a selected,
-trace-comparable cuspidal automorphic representation on
-$\mathrm{GL}_2(\mathbb A_L)$ whose local parameters admit selected extensions to
-$K$. For $\sigma\in\Gamma$, define
+Let $L/K$ be cyclic of prime degree with group $\Gamma$, and let $\Pi$ be a
+descent-admissible cuspidal automorphic representation on
+$\mathrm{GL}_2(\mathbb A_L)$ in the sense of Section 1.4. Thus $\Pi$ is selected and
+trace-comparable, its local parameters are antecedent-complete selected, and the
+reverse comparison has the required strongly cuspidal factor. For
+$\sigma\in\Gamma$, define
 
 $$
 \Pi^\sigma(g)=\Pi(\sigma^{-1}g).
@@ -1577,8 +1579,8 @@ Every base change is invariant. The cyclic descent theorem proves the converse:
 **Theorem 7.1 (admissible cyclic cuspidal descent).** The following are equivalent:
 
 1. $\Pi^\sigma\cong\Pi$ for every $\sigma\in\Gamma$;
-2. there is a selected, trace-comparable cuspidal automorphic representation $\pi$ on
-   $\mathrm{GL}_2(\mathbb A_K)$ such that
+2. there is a selected, trace-comparable, extension-complete cuspidal automorphic
+   representation $\pi$ on $\mathrm{GL}_2(\mathbb A_K)$ such that
    $\operatorname{BC}_{L/K}(\pi)\cong\Pi$.
 
 Every descent of a cuspidal $\Pi$ is cuspidal.
@@ -2020,10 +2022,11 @@ $$
 An obstruction can occur only in the $p$-torsion of the first descent group.
 
 If $|Q|$ and $|X_H|$ are coprime, averaging shows that $H^1(Q,X_H)=0$. Concretely,
-the norm operator on the finite module is invertible after the relevant Bezout
-identity, so every affine $Q$-action on the torsor has a fixed point. This often makes
-an odd step harmless after a quadratic one, or conversely, but only when the action
-and group orders satisfy the coprimality condition.
+multiplication by $|Q|$ is an automorphism of the finite group $X_H$. Averaging the
+orbit of any chosen origin and then applying its inverse produces a fixed origin for
+the affine action. Thus every affine $Q$-action on the torsor has a fixed point. This
+often makes an odd step harmless after a quadratic one, or conversely, but only when
+the action and group orders satisfy the coprimality condition.
 
 When $Q=C_2$ acts on $X_H=C_m$ by inversion, an affine action has the form
 
@@ -2150,10 +2153,10 @@ $$
 =\operatorname{rec}_{F_v}(\pi_v)|_{W_{E_w}}.
 $$
 
-This order of reasoning is often efficient. Use density-one unramified data and
-strong multiplicity one to identify the global object, then invoke all-place local
-compatibility to read off the bad places. Do not try to infer a ramified parameter
-from an unramified Euler product alone.
+This order of reasoning is often efficient. Use unramified data at all but finitely
+many places and strong multiplicity one to identify the global object, then invoke
+all-place local compatibility to read off the bad places. Do not try to infer a
+ramified parameter from an unramified Euler product alone.
 
 In descent the same method works in reverse. A cyclic trace comparison constructs a
 descent with the prescribed local components. If another arithmetic construction
@@ -2182,8 +2185,8 @@ isomorphism; no single completion can replace it.
 ### 9.4 Density, conjugation, and Galois invariance
 
 Let $E/F$ be Galois and $\Pi$ be cuspidal over $E$. To show
-$\Pi^g\cong\Pi$, it suffices to compare good-place Hecke polynomials for a density-one
-set of primes. At a place $w$ where both sides are unramified,
+$\Pi^g\cong\Pi$, it suffices to compare good-place Hecke polynomials at all but
+finitely many places. At a place $w$ where both sides are unramified,
 
 $$
 P_w(\Pi^g,X)=P_{g^{-1}w}(\Pi,X).
@@ -2225,8 +2228,9 @@ isobaric decompositions.
 The theorem also explains why a positive-density but incomplete comparison requires
 care. Equality on all but finitely many places is sufficient. Weaker density
 hypotheses need refined multiplicity-one theorems and are not silently used here. In
-the arithmetic descent criterion, Chebotarev supplies equality at all unramified
-places outside a finite set, which is exactly the safe range.
+the arithmetic descent criterion below, equality of characteristic polynomials at all
+unramified places outside a finite set is imposed as part of the association
+hypothesis, which is exactly the safe range.
 
 ## 10. Arithmetic and representation-theoretic compatibilities
 
@@ -2416,14 +2420,21 @@ reintroduce ramification that the top parameter cannot see.
 
 ### 11.1 Scalar extension of the inner form
 
-Let $D$ be a quaternion algebra over $F$, let $\rho$ be a noncharacter automorphic
-representation of $D^\times(\mathbb A_F)$, and let
+This chapter stays inside the global Jacquet--Langlands theorem already established:
+$F$ is totally real, $D/F$ is totally definite, $\rho$ is a selected noncharacter
+automorphic representation in the prescribed parallel-weight-two range, and every
+finite packet used after restriction remains selected. The split case
+$D=M_2(F)$ is included as the identity boundary. We take $E/F$ to be totally real,
+so $D_E$ is again totally definite when $D$ is. No global inner-form existence
+statement outside this range is used here.
+
+Let
 
 $$
 \pi=\operatorname{JL}_{D/F}(\rho)
 $$
 
-be its cuspidal transfer to $\mathrm{GL}_2(\mathbb A_F)$. Scalar extension gives
+be the cuspidal transfer to $\mathrm{GL}_2(\mathbb A_F)$. Scalar extension gives
 
 $$
 D_E=D\otimes_FE.
@@ -2460,7 +2471,8 @@ $\operatorname{PGL}_2(\mathbb C)$ is cyclic, and a cyclic projective action can 
 lifted and diagonalized. A special parameter retains nonzero monodromy. Hence
 $\Pi_w$ is discrete series at every ramified place of $D_E$.
 
-Global Jacquet--Langlands therefore gives a unique noncharacter automorphic
+The selected global Jacquet--Langlands theorem over $E$ therefore gives a unique
+noncharacter automorphic
 representation $\rho_E$ of $D_E^\times(\mathbb A_E)$ with
 
 $$
@@ -2481,9 +2493,11 @@ commutes. At each place both routes restrict the same Weil--Deligne parameter. T
 proves compatibility with central characters, twists, contragredients, conductors,
 local factors, levels, and algebraic weights wherever both sides are defined.
 
-**Proposition 11.1 (solvable inner-form compatibility).** The commuting square is
-independent of the cyclic tower. It can be formed step by step whenever the split-side
-endpoint is cuspidal, and its endpoint agrees with the direct construction above.
+**Proposition 11.1 (solvable inner-form compatibility).** Within the selected,
+totally definite parallel-weight-two range fixed in Section 11.1, the commuting square
+is independent of the cyclic tower. It can be formed step by step whenever the
+split-side endpoint is cuspidal, and its endpoint agrees with the direct construction
+above.
 
 **Proof.** At every cyclic step, local Jacquet--Langlands and local base change commute
 through the common parameter. Global Jacquet--Langlands is unique by its local
@@ -2507,9 +2521,9 @@ dihedral self-twist or, when compatible parameter data exist, by the primitive
 projective pattern described in Chapter 5. It is not a defect in local parameter
 restriction.
 
-If $D_E\cong M_2(E)$ globally, the lower inner form is the split group, so the
-isobaric endpoint remains meaningful and the lower horizontal arrow is the identity.
-It must still not be called cuspidal. If $D_E$ is nonsplit, there is no lower-left
+In the split boundary $D=M_2(F)$, also $D_E=M_2(E)$, so the isobaric endpoint remains
+meaningful and the lower horizontal arrow is the identity. It must still not be
+called cuspidal. For a nonsplit totally definite $D_E$, there is no lower-left
 cuspidal representation corresponding to that isobaric sum.
 
 There is no need to test cuspidality separately at every intermediate layer. Once a
@@ -2533,12 +2547,7 @@ fixed $v$ simultaneously; a twist cannot turn a discrete parameter into a
 nondiscrete one. What the upstairs split algebra may fail to determine is which
 extension of the top local parameter occurs downstairs before twisting.
 
-At a real ramified place, complexification splits the quaternion algebra. The compact
-highest-weight representation transfers first to a real discrete series and then to
-the complex principal series obtained by restricting its parameter. This is the
-archimedean instance of the same commuting square.
-
-## 12. Four solvable patterns
+## 12. Four solvable patterns and one local calculation
 
 ### 12.1 A quadratic--cubic tower
 
@@ -2751,11 +2760,11 @@ $\{\alpha,\beta\}$: the residue degree is one. The component occurs twice becaus
 $g_v=2$. Neither the ramification index three nor the global degree six raises the
 roots.
 
-If instead $\pi_v$ is supercuspidal, the two components are conjugate restrictions of
-its Weil representation to $W_{E_{w_j}}$. They can remain supercuspidal or become
-principal series according to irreducibility after restriction. Their conductor
-exponents are equal in the Galois setting, but are not determined by the downstairs
-exponent alone.
+If instead $\pi_v$ is a selected supercuspidal, the two components are conjugate
+restrictions of its Weil representation to $W_{E_{w_j}}$. Each remains
+supercuspidal: restriction through this cyclic extension of odd degree preserves
+irreducibility in dimension two. Their conductor exponents are equal in the Galois
+setting, but are not determined by the downstairs exponent alone.
 
 Follow $w_1$ through a prime tower. One global step may split the chosen place, while
 another supplies the totally ramified cubic local extension. Reversing the order in a
@@ -2922,10 +2931,11 @@ character can change the downstairs conductor, so a claim about minimal level mu
 identify the selected twist rather than merely assert existence of some descent.
 
 If a quaternion algebra is used to impose or remove discrete-series conditions,
-Chapter 11 applies. The split-side solvable base change must remain cuspidal, and the
-descent selected at the bottom must be discrete at every place ramified in the chosen
-quaternion algebra. These are explicit local and self-twist checks, not automatic
-consequences of solvability.
+Chapter 11 applies within its selected, totally definite parallel-weight-two range.
+The split-side solvable base change must remain cuspidal, and the descent selected at
+the bottom must be discrete at every place ramified in the chosen quaternion algebra.
+These are explicit local and self-twist checks, not automatic consequences of
+solvability.
 
 This theorem is the precise amount of solvable descent needed in many modularity
 arguments: it moves an already identified automorphic system down a solvable totally
@@ -2998,7 +3008,7 @@ with the following properties.
 3. It satisfies
 
    $$
-   \omega_\Pi=\omega_\pi\circ N_{E/F},
+   \omega_\Pi=\omega_\pi\circ N_{E/F}.
    $$
 
    Whenever the twisted source remains admissible,
@@ -3024,7 +3034,8 @@ with the following properties.
    $\mathbb Q(\Pi)\subseteq\mathbb Q(\pi)$ in algebraic normalization.
 
 6. Base change commutes with quadratic automorphic induction by the Mackey formulas
-   of Chapter 6. If $D/F$ is quaternionic,
+   of Chapter 6. In the selected, totally real, totally definite
+   parallel-weight-two range of Chapter 11, if $D/F$ is quaternionic,
    $\pi=\operatorname{JL}_{D/F}(\rho)$, and the endpoint is cuspidal, then it is
    discrete at every place ramified in $D_E=D\otimes_FE$ and is the
    Jacquet--Langlands transfer of the inner-form base change defined in Chapter 11.
@@ -3159,10 +3170,10 @@ parameter makes this class vanish. For the automorphic representation alone, the
 unconditional criterion is recursive choice of a compatible chain. The displayed
 $H^1$ fixed-point class applies only when the stated quotient action on one torsor
 exists; a general subnormal tower need not provide such an action at every
-transition. Cyclic invariance together with the selected-extension and comparison
-hypotheses is sufficient at one step, while full invariance under
-a noncyclic solvable group should not be substituted for the compatible-chain
-condition.
+transition. At one step, cyclic invariance together with the antecedent-complete
+selected local extension fibers and comparison hypotheses is sufficient. Full
+invariance under a noncyclic solvable group should not be substituted for the
+compatible-chain condition.
 
 If one descent of a cuspidal $\Pi$ exists, $E/F$ is Galois, and the source fiber is
 saturated, all admissible descents form an $X(E/F)$-torsor. The existence statement
@@ -3198,13 +3209,20 @@ every cyclic step used below.
    chain.
 
 3. If $D/F$ is quaternionic and the split-side solvable base change is cuspidal,
-   Jacquet--Langlands commutes with base change to $D_E$. On descent, the selected
-   split representation must be discrete series at every place ramified in $D$.
+   Jacquet--Langlands commutes with base change to $D_E$ in the selected, totally
+   definite parallel-weight-two range of Chapter 11. On descent, the selected split
+   representation must be discrete series at every place ramified in $D$.
 
 4. Prescribed levels and local conditions must be checked on restricted or extended
    local parameters. Solvability alone does not preserve minimal conductor, prevent a
    supercuspidal from splitting, choose a fixed central character, or remove the
    noncuspidal automorphic-induction boundary.
+
+**Proof.** Part 1 is Theorems 13.1 and 14.2, with weights and local components
+carried by parameter restriction. Part 2 combines Theorem 13.3 with the recursive
+criterion of Theorem 14.3. Part 3 is Proposition 11.1 together with Section 11.4.
+The placewise assertions in part 4 are the calculations of Chapters 3, 4, 10, and
+12. $\square$
 
 The theorem is a transfer tool, not a construction of auxiliary extensions or a
 modularity lifting argument. Its hypotheses isolate exactly what later applications
@@ -3245,9 +3263,10 @@ The theory has a short list of precise failure modes.
   parameters. They are not obtained uniformly by extending an ideal or multiplying
   by a discriminant.
 
-- **Inner-form boundary ignored.** Jacquet--Langlands commutes with solvable base
-  change in the cuspidal range. A two-character endpoint does not come from a
-  noncharacter representation on a nonsplit quaternion algebra.
+- **Inner-form boundary ignored.** In the selected, totally definite
+  parallel-weight-two range, Jacquet--Langlands commutes with solvable base change
+  while the split endpoint remains cuspidal. A two-character endpoint does not come
+  from a noncharacter representation on a nonsplit quaternion algebra.
 
 Each failure has appeared as the negation of a proved hypothesis. None is an
 unspecified exceptional case.
@@ -3292,7 +3311,7 @@ These distinctions make the theory usable. Strong multiplicity one recognizes an
 ascent or an invariant conjugate from good-place data. A compatible arithmetic
 representation over the bottom field selects the correct twists and makes solvable
 descent effective over totally real fields. Automorphic induction explains the exact
-cuspidal boundary, while Jacquet--Langlands commutes wherever that boundary has not
-been crossed. The resulting package moves automorphy upward canonically and downward
-under explicit, checkable coherence conditions, with every ambiguity and failure mode
-accounted for.
+cuspidal boundary, while in the selected totally definite parallel-weight-two range
+Jacquet--Langlands commutes wherever that boundary has not been crossed. The resulting
+package moves automorphy upward canonically and downward under explicit, checkable
+coherence conditions, with every ambiguity and failure mode accounted for.

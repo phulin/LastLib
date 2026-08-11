@@ -120,7 +120,7 @@ any resulting corrections.
 - [x] 094. Global Jacquet–Langlands
 - [x] 095. Hecke Characters and Automorphic Induction from (GL_1)
 - [x] 096. Cyclic Base Change for (GL_2)
-- [ ] 097. Solvable Base Change and Descent
+- [x] 097. Solvable Base Change and Descent
 - [x] 098. Schwartz–Bruhat Analysis and Tate’s Thesis
 - [x] 099. Archimedean GL₂ and Discrete Series
 - [x] 100. Hilbert-Space Spectral and Trace-Class Theory
