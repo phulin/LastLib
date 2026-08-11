@@ -24,7 +24,7 @@
    - [Separated and unramified diagonals](#45-separated-and-unramified-diagonals)
 5. [Algebraic stacks and atlases](#5-algebraic-stacks-and-atlases)
    - [Definition and first consequences](#51-definition-and-first-consequences)
-   - [Smooth and finite atlases](#52-smooth-and-finite-atlases)
+   - [Smooth atlases and finite flat presentations](#52-smooth-atlases-and-finite-flat-presentations)
    - [Parameter spaces and change of framing](#53-parameter-spaces-and-change-of-framing)
    - [An atlas criterion for the moduli problems of this book](#54-an-atlas-criterion-for-the-moduli-problems-of-this-book)
 6. [Quotient stacks](#6-quotient-stacks)
@@ -255,6 +255,15 @@ Therefore the diagonal is representable exactly when isomorphisms between two fa
 
 For proper polarized curves or abelian schemes, an isomorphism preserves a fixed relatively ample bundle. A sufficiently high power embeds both objects into projective bundles. An isomorphism is then represented by the locally closed locus of projective transformations carrying one embedded family and all marked tensors to the other. Closed equations impose preservation; invertibility is open. Thus the isomorphism sheaf is separated and of finite presentation.
 
+Two finiteness points are implicit here. The construction is local on the base, so the section
+bundles may first be trivialized faithfully flatly and the resulting scheme then descended. Also
+the graph Hilbert polynomial must be fixed. It is fixed in the polarized problem because the two
+projections of a graph pull back the two prescribed ample bundles. Book 8 therefore supplies one
+bounded graph Hilbert scheme. The graph condition and invertibility are open, while preservation
+of the marked structures and the two inverse identities are closed equalities of morphisms. This
+proves representability over an arbitrary test scheme without invoking morphisms of unbounded
+degree.
+
 ### 4.4 Inertia and stabilizers
 
 The **inertia stack** is
@@ -280,7 +289,7 @@ The inertia is not usually the constant group $G$ over the quotient; it is the q
 
 An algebraic stack is called separated when its diagonal is proper, and it has finite diagonal when the diagonal is finite. A Deligne--Mumford stack is an algebraic stack whose diagonal is unramified; equivalently, it admits an etale atlas. We use the term only under these hypotheses.
 
-Finite inertia alone does not imply a finite diagonal without quasi-compactness and separation of the isomorphism spaces. Conversely, a finite diagonal makes every stabilizer finite but does not make it trivial. For polarized abelian schemes the polarization forces the automorphism group to be finite: after choosing a high symmetric power of the polarization line bundle, automorphisms act faithfully on a finite projective embedding, and the subgroup preserving the embedded abelian variety and its group law is proper and affine, hence finite. Its infinitesimal part may survive in bad characteristic, so unramifiedness must be checked separately.
+Finite inertia alone does not imply a finite diagonal without quasi-compactness and separation of the isomorphism spaces. Conversely, a finite diagonal makes every stabilizer finite but does not make it trivial. For polarized abelian schemes the polarization forces the automorphism group to be finite. Rigidity for homomorphisms of abelian schemes shows that the homomorphism functor has no infinitesimal deformation once its value at the identity is fixed. A high power of an inducing ample bundle embeds the abelian scheme, making the polarization-preserving automorphism scheme affine and of finite presentation. The valuative criterion extends a generic such automorphism: take the closure of its graph, use properness of the abelian schemes, and use rigidity to extend the group identities and the inverse. The automorphism scheme is therefore proper as well as affine, hence finite. At a bad prime finite must still not be silently replaced by etale; the relevant unramifiedness assertion has to be checked in the chosen integral problem.
 
 ## 5. Algebraic stacks and atlases
 
@@ -302,13 +311,17 @@ with source and target maps to $U$. The stack can be recovered from the groupoid
 
 If $R$ is a scheme in a presentation, the whole geometry is controlled by schemes. This will hold for all explicit quotient charts below. Properties local for the smooth topology may be checked on $U$, while stabilizer-sensitive properties remain encoded in $R$.
 
-### 5.2 Smooth and finite atlases
+### 5.2 Smooth atlases and finite flat presentations
 
-A **finite atlas** means a representable finite, flat, surjective map from a scheme. It is much stronger than a smooth atlas. Its relative dimension is zero, and it implies especially tight control of the stack by a finite equivalence relation. A finite surjective map that is not flat is not called a finite atlas here.
+A **finite flat presentation** means a representable finite, flat, surjective map from a scheme.
+It gives especially tight fppf control of the stack by a finite relation, but it is not a smooth
+atlas unless it is also smooth, equivalently finite etale. Thus it is supplementary structure,
+not a stronger instance of a smooth atlas. A finite surjective map that is not flat is not called
+a finite flat presentation here.
 
-For a quotient $[X/G]$, the canonical atlas $X\to[X/G]$ inherits the property of the group scheme $G\to S_0$: it is smooth if $G$ is smooth, etale if $G$ is etale, and finite locally free if $G$ is finite locally free. Thus one quotient presentation can supply either kind of atlas.
+For a quotient $[X/G]$, the canonical presentation $X\to[X/G]$ inherits the property of the group scheme $G\to S_0$: it is a smooth atlas if $G$ is smooth, finite etale if $G$ is etale and finite, and a finite flat presentation if $G$ is finite locally free. In the last case a separate smooth atlas is constructed in Section 6.2.
 
-A fine moduli scheme has the identity as an atlas, but the existence of a finite atlas does not make a stack a scheme. The classifying stack of a nontrivial finite flat group has a finite flat atlas by a point and still has that group as inertia.
+A fine moduli scheme has the identity as an atlas, but the existence of a finite flat presentation does not make a stack a scheme. The classifying stack of a nontrivial finite flat group has such a presentation by a point and still has that group as inertia.
 
 ### 5.3 Parameter spaces and change of framing
 
@@ -335,9 +348,11 @@ There is no circular use of a universal moduli space here. Book 8 constructs the
 
 Then $\mathcal X$ is algebraic, with a smooth atlas by the scheme of objects framed by a basis of the pushforward.
 
-**Proof.** The framed objects form a locally closed subscheme $H$ of the Hilbert parameter space. The frame-change group $G=\operatorname{GL}_r$ acts on $H$. A family in $\mathcal X(T)$ acquires a frame after the fppf cover given by its frame bundle, and a framed family gives a map to $H$. Changes between frames are exactly $G$-valued arrows. Hence $\mathcal X\simeq[H/G]$. The quotient theorem of the next chapter makes $H\to\mathcal X$ smooth and surjective. Representability of the diagonal follows from the assumed isomorphism spaces. $\square$
+**Proof.** The framed objects form a locally closed subscheme $H$ of the Hilbert parameter space. The frame-change group $G=\operatorname{GL}_r$ acts on $H$. A family in $\mathcal X(T)$ acquires a frame after the fppf cover given by its frame bundle, and a framed family gives a map to $H$. Changes between frames are exactly $G$-valued arrows. Hence $\mathcal X\simeq[H/G]$. The quotient-atlas theorem of the next chapter makes $H\to\mathcal X$ smooth and surjective; its proof uses only torsor descent and does not use the present atlas criterion. Representability of the diagonal follows from the assumed isomorphism spaces. $\square$
 
-The first condition is applied only where the needed base-change statement is available. In later volumes more refined cohomological results enlarge its range. Here explicit Weierstrass or level charts can replace it when necessary.
+The first condition is applied only where the needed base-change statement is available. Here
+explicit Weierstrass or level charts replace it when necessary; no broader cohomological
+base-change statement is used.
 
 ## 6. Quotient stacks
 
@@ -368,9 +383,32 @@ To see this, a point of the fiber product is a point $x$ of $X$ together with an
 
 Since $P\to T$ is an fppf $G$-torsor, $q$ is flat, locally of finite presentation, and surjective. If $G$ is smooth, etale, or finite locally free, then $q$ has the same property. Thus:
 
-**Quotient-atlas theorem.** If $G$ is smooth and finitely presented, $X\to[X/G]$ is a smooth atlas. If $G$ is finite locally free, it is a finite flat atlas.
+**Quotient-atlas theorem.** If $G$ is smooth and finitely presented, $X\to[X/G]$ is a smooth atlas. If $G$ is finite locally free, it is a finite flat presentation. Under the locally noetherian, finite-presentation, and quasi-projective hypotheses used in this book, $[X/G]$ also admits a smooth scheme atlas.
 
-This proof is fully local and does not assume that an orbit scheme exists.
+For the last assertion, the regular representation gives a closed immersion
+$G\hookrightarrow\operatorname{GL}_r$. Give $X\times\operatorname{GL}_r$ the action
+
+$$
+g\cdot(x,h)=(gx,hg^{-1}).
+$$
+
+It is free because it is free on the second factor, and its scheme quotient is
+
+$$
+U=(X\times\operatorname{GL}_r)/G;
+$$
+
+the invariant-affine proof of Section 7.2 applies and uses no assertion about quotient stacks.
+The induced map $U\to[X/G]$ is representable, and after pulling back to the finite flat
+presentation $X\to[X/G]$ it becomes
+$X\times(\operatorname{GL}_r/G)\to X$. The scheme
+$\operatorname{GL}_r/G$ is smooth: its finite flat cover by $\operatorname{GL}_r$ is smooth over
+the base, and smoothness descends faithfully flatly by Book 13. Hence $U\to[X/G]$ is smooth and
+surjective. This is the required smooth atlas even when $G$ itself is non-smooth.
+
+The identification $T\times_{[X/G]}X\simeq P$, and hence the canonical presentation, is fully
+local and does not assume that an orbit scheme exists. Only the additional smooth atlas in the
+finite flat case uses the finite free quotient just constructed.
 
 ### 6.3 The diagonal of a quotient stack
 
@@ -382,11 +420,16 @@ These hypotheses are sufficient rather than maximal. They are exactly what the p
 
 ### 6.4 Examples and warnings
 
-For $X=S_0$ with trivial action, $[X/G]=BG$, the classifying stack of $G$-torsors. Its atlas $S_0\to BG$ has fiber $G$. Its coarse sheaf of orbits is just $S_0$, but its inertia is $G$ up to conjugation. This is the smallest counterexample to the claim that a quotient stack is its orbit space.
+For $X=S_0$ with trivial action, $[X/G]=BG$, the classifying stack of $G$-torsors. Its canonical presentation $S_0\to BG$ has fiber $G$; it is a smooth atlas exactly when $G$ is smooth. Its coarse sheaf of orbits is just $S_0$, but its inertia is $G$ up to conjugation. This is the smallest counterexample to the claim that a quotient stack is its orbit space.
 
 If $G=\mathbf G_m$ acts on $\mathbf A^1$ by scaling, the nonzero locus has trivial stabilizer and quotient a point, while the origin has stabilizer $\mathbf G_m$. The quotient stack is not separated because its diagonal is not proper. Stabilizer dimension can therefore jump even when the atlas is smooth.
 
-If a finite group of order invertible on the base acts, its constant group scheme is finite etale, so the quotient stack is Deligne--Mumford and has a finite etale atlas. If the order is not invertible, the same abstract group may define a finite etale constant group scheme, but naturally occurring group schemes such as $\mu_p$ are not etale in characteristic $p$. “Finite stabilizer” must not be replaced by “etale stabilizer.”
+A constant finite group scheme is finite etale over every base, so its quotient stack is
+Deligne--Mumford and its canonical presentation is finite etale. If its order is invertible, it is
+also linearly reductive and the quotient is tame. When the order is not invertible the constant
+group is still etale, but naturally occurring group schemes such as $\mu_p$ are not etale in
+characteristic $p$. “Finite stabilizer” must not be replaced by “etale stabilizer,” and
+“finite etale” must not be replaced by “tame.”
 
 ## 7. Rigidification, finite quotients, and coarse spaces
 
@@ -403,7 +446,7 @@ $$
 followed by stackification. The map $\rho:\mathcal X\to\mathcal X\mathbin{\!\sslash\!}H$ sends
 
 $$
-\operatorname{Aut}_{\mathcal X}(x)longrightarrow
+\operatorname{Aut}_{\mathcal X}(x)\longrightarrow
 \operatorname{Aut}_{\mathcal X\sslash H}(\rho x)
 $$
 
@@ -411,23 +454,51 @@ with kernel $H_x$ and, fppf-locally, quotient the target.
 
 Centrality is decisive: without it, composition of cosets is not well defined. Compatibility under isomorphism is what allows the local quotients to glue. Rigidification does not quotient the objects by an action on their underlying schemes; it quotients a specified part of their automorphism groups.
 
+The construction has the following universal property, which also proves that it is independent of
+the chosen local presentation. If $F:\mathcal X\to\mathcal Y$ sends every section of $H_x$ to the
+identity of $F(x)$, then $F$ is constant on the displayed cosets. It therefore factors through the
+quotient prestack and, because $\mathcal Y$ is a stack, uniquely through its stackification. Thus
+
+$$
+\operatorname{Hom}(\mathcal X\mathbin{\!\sslash\!}H,\mathcal Y)
+\simeq
+\{F:\mathcal X\to\mathcal Y:F(H)=1\}.
+$$
+
+To compute automorphisms, lift an arrow in the stackification to a cover on which it is represented
+by an arrow of $\mathcal X$. Two lifts differ exactly by a section of $H$; descent of arrows then
+gives the asserted quotient. In particular $\rho$ is an fppf gerbe banded by $H$, its relative
+inertia is $H$, and the inertia after rigidification is $I_{\mathcal X}/H$. This verifies the
+kernel statement rather than building it into the definition.
+
 Locally the construction is transparent. If $\mathcal X=[X/G]$, a central subgroup $H\subseteq G$ acts trivially on $X$, and the flat quotient $G/H$ exists, then
 
 $$
 [X/G]\mathbin{\!\sslash\!}H\simeq[X/(G/H)].
 $$
 
-Indeed, both sides have the same local $X$-objects and changes of frame differing by $H$ become equal. These local identifications glue by uniqueness. Consequently rigidification preserves algebraicity in the finite-flat and smooth-affine cases used here.
+Indeed, both sides have the same local $X$-objects and changes of frame differing by $H$ become equal. These local identifications glue by the universal property. An atlas for $[X/G]$ is still an atlas after replacing $G$ by $G/H$; on overlaps the arrow scheme is the corresponding quotient. Consequently rigidification preserves algebraicity in the finite-flat and smooth-affine quotient charts used here.
 
 ### 7.2 Finite group quotients
 
-Let a finite locally free group scheme $G$ act on a quasi-projective scheme $X$ over $S_0$. The fppf sheaf quotient is represented by a scheme $Y=X/G$, and $X\to Y$ is finite and surjective.
+Assume in this section that $S_0$ is locally noetherian and that $X$ is finitely presented. Let a finite locally free group scheme $G$ act on a quasi-projective $S_0$-scheme $X$. There is a quasi-projective categorical scheme quotient $Y=X/G$, and $X\to Y$ is finite and surjective. It is important that this is not called the fppf sheafification of $T\mapsto X(T)/G(T)$: with stabilizers or a non-linearly-reductive group, that sheaf need not be represented by the invariant scheme and would have the wrong base-change behavior.
 
-**Proof strategy.** First work on a $G$-stable affine open. Quasi-projectivity supplies such neighborhoods. Locally on the base, every finite orbit lies in an affine nonvanishing locus of a sufficiently high ample power. Remove the finite image of the complement of that locus under $G\times X\to X$; the remaining neighborhood is invariant. It is affine because it is obtained from finitely controlled affine intersections in the separated quasi-projective scheme. Equivalently, the norm of the pullback of the ample bundle along the finite locally free projection $G\times X\to X$ gives an invariant ample power and invariant affine nonvanishing loci.
+**Proof strategy.** First produce $G$-stable affine neighborhoods. Choose a relatively ample bundle $L$. The norm of the pullback of $L$ along the finite locally free projection $G\times X\to X$ has a canonical $G$-linearization: coassociativity of the action identifies its two pullbacks on $G\times X$, and the norm is transitive on $G\times G\times X$. It is ample by the finite-norm argument of Book 13. Given a geometric orbit, a sufficiently high invariant section avoids that finite orbit; its nonvanishing locus is affine and $G$-stable. Faithfully flat descent and noetherian approximation spread this neighborhood from the geometric fiber to a neighborhood on the base. Such opens cover $X$.
 
-If $X=\operatorname{Spec}A$, define $A^G$ as the equalizer of the coaction $A\rightrightarrows A\otimes\mathcal O(G)$. The finite-action integrality lemma says that $A$ is integral over $A^G$. Its proof applies Cayley--Hamilton to the finite locally free coaction module: the characteristic coefficients of the orbit operator are invariant, and the characteristic polynomial annihilates each $a\in A$. Finite presentation then makes $A$ finite over $A^G$. Thus $\operatorname{Spec}A\to\operatorname{Spec}A^G$ is finite and has the invariant-map universal property. The affine quotients agree on invariant overlaps and glue. Book 13 supplies the effective gluing. $\square$
+If $X=\operatorname{Spec}A$, write the coaction as $\alpha:A\to A\otimes H$, where $H$ is finite locally free. Multiplication by $\alpha(a)$ on the finite locally free $A$-module $A\otimes H$ has a monic characteristic polynomial. Translation by the universal group element conjugates this multiplication operator; hence all characteristic coefficients are invariant. Cayley--Hamilton, followed by the counit $A\otimes H\to A$, shows that $a$ satisfies that monic polynomial over $A^G$. Thus $A$ is integral over $A^G$. Since finitely many generators of $A$ over the base also generate it as an $A^G$-algebra, $A$ is finite over $A^G$. The spectrum of $A^G$ has the universal property for invariant maps to affine schemes. The invariant affine opens agree on their invariant principal overlaps, so their quotients glue. A map to an arbitrary scheme, and then to an algebraic space after an etale cover of the target, factors on these opens and the factorizations agree by uniqueness. This proves the categorical universal property and finiteness.
 
-Over an algebraically closed field, $Y(k)$ is the set of $G(k)$-orbits when $G$ is a constant finite group. For a nonreduced finite group scheme, geometric points alone do not see the infinitesimal action; the sheaf quotient remains the correct statement.
+Finally, the linearized norm bundle used to construct the invariant affine cover has canonical
+multiplicative descent functions on every invariant affine overlap. If $r$ is the rank of $G$,
+the image of any residual stabilizer character is a finite subgroup of $\mathbf G_m$ of rank at
+most $r$; the power $r!$ kills every one of them. On invariant affine charts the resulting
+transition functions lie in $(A^G)^\times$, satisfy the cocycle, and define an invertible sheaf
+on $Y$. Its invariant nonvanishing sections have exactly the invariant affine opens constructed
+above, so this sheaf is ample. A high power embeds $Y$ into a projective bundle, proving
+quasi-projectivity. This is an explicit norm calculation, not an appeal to exactness of
+invariants.
+$\square$
+
+Over an algebraically closed field, $Y(k)$ is the set of $G(k)$-orbits when $G$ is a constant finite group. For a nonreduced finite group scheme, geometric points do not see the infinitesimal part of the action; the invariant scheme, rather than an orbit presheaf, remains the correct quotient.
 
 The quotient stack $[X/G]$ maps to $Y$. The map is generally not representable: its fiber at an orbit retains the stabilizer. It becomes an isomorphism exactly when the action is a torsor, equivalently when $X\to Y$ is fppf and
 
@@ -460,13 +531,19 @@ provides this projection.
 
 This is the tame boundary. In residue characteristic dividing the stabilizer order, invariants need not be exact, coarse formation may fail to commute with a nonflat base change, and a vector bundle on the stack need not descend to the coarse space. Flat base change remains safe.
 
-A quasi-coherent sheaf $\mathcal F$ on a tame stack descends through $\pi$ precisely when every geometric stabilizer acts trivially on its fibers; locally on $[X/G]$, equivariant descent to $X/G$ then follows by taking invariants and using exactness. Without trivial stabilizer action, no sheaf downstairs can pull back to $\mathcal F$, because a pulled-back sheaf has trivial inertia action.
+A finite locally free sheaf $\mathcal F$ on a tame finite quotient stack descends through $\pi$ precisely when every geometric stabilizer acts trivially on its fibers. Necessity is immediate. For sufficiency, work on an invariant affine chart $X=\operatorname{Spec}A$ and let $M$ be the corresponding equivariant finite projective module. Exact invariants make $M^G$ a finite projective $A^G$-module. The adjunction
+
+$$
+A\otimes_{A^G}M^G\longrightarrow M
+$$
+
+may be tested on geometric fibers. On the fiber over an orbit it is the induction map from the stabilizer invariants; triviality of the stabilizer action makes it an isomorphism. Its kernel and cokernel therefore have empty support, so the map is an isomorphism. These local modules glue. The same criterion holds for finitely presented quasi-coherent sheaves that are flat over the coarse base. Without trivial stabilizer action no sheaf downstairs can pull back to $\mathcal F$, because every pulled-back sheaf has trivial inertia action.
 
 ## 8. Generalized elliptic curves
 
 ### 8.1 The boundary object
 
-A smooth elliptic curve cannot specialize within the category of elliptic curves when its discriminant tends to zero. The correct compact boundary is a polygon, not a cusp. A **Neron $n$-gon** over an algebraically closed field is a cycle of $n$ copies of $\mathbf P^1$, with $\infty$ on one copy glued to $0$ on the next. Its smooth locus is
+A smooth elliptic curve cannot specialize within the category of elliptic curves when its discriminant tends to zero. The correct compact boundary is a polygon, not a cusp. A **Néron $n$-gon** over an algebraically closed field is a cycle of $n$ copies of $\mathbf P^1$, with $\infty$ on one copy glued to $0$ on the next. Its smooth locus is
 
 $$
 \mathbf G_m\times\mathbf Z/n\mathbf Z,
@@ -480,7 +557,7 @@ $$
 E^{\mathrm{sm}}\times_SE\longrightarrow E
 $$
 
-extending translation, such that every geometric fiber is either a smooth connected genus-one curve or a Neron polygon, and translation by the smooth group acts transitively on the components of each singular fiber.
+extending translation, such that every geometric fiber is either a smooth connected genus-one curve or a Néron polygon, and translation by the smooth group acts transitively on the components of each singular fiber.
 
 The action is part of the definition. A cycle of projective lines with a marked smooth point does not by itself determine the required group structure in families. The transitivity condition rules out irrelevant components invisible to the group.
 
@@ -488,9 +565,32 @@ The action is part of the definition. A cycle of projective lines with a marked 
 
 Generalized elliptic curves form an fpqc stack. Descend the proper flat curve, the section, the smooth open, the group law, and the action as in Book 13. Group identities are equalities of maps. Smoothness of the indicated open and the geometric polygon condition are reflected after faithfully flat field extension. The transitive action on components can be checked on geometric fibers. This proves effectivity; descent of isomorphisms proves the prestack condition.
 
-The diagonal is representable and separated. Given $E,E'$ over $T$, choose an invariant effective Cartier divisor meeting every component, for instance the orbit of a sufficiently divisible multiple of the identity after an fppf cover. Its associated line bundle is relatively ample. A common high power embeds both curves. The scheme of projective transformations carrying the embedded curve, identity, multiplication, and action to their counterparts represents $\underline{\operatorname{Isom}}(E,E')$. Preservation is closed and invertibility is open.
+The diagonal is representable and separated. Given $E,E'$ over $T$, pass fppf-locally on $T$ and
+choose finite effective Cartier divisors $D\subset E^{\mathrm{sm}}$ and
+$D'\subset E'^{\mathrm{sm}}$ meeting every component of every fiber. Such divisors exist: after
+splitting the finitely many components near a chosen geometric point, choose one smooth section on
+each component and spread the disjoint sections after an etale neighborhood. Their associated line
+bundles are relatively ample, because they have positive degree on every irreducible component.
+Common high powers embed both curves. Book 8 then represents maps by their graphs. The open locus
+of graphs which are isomorphisms, preserve the identity, and intertwine the two group actions
+represents $\underline{\operatorname{Isom}}(E,E')$. This construction is independent of the
+auxiliary divisors and descends by the uniqueness of the represented isomorphism sheaf.
+The graph polynomial is fixed: with the product polarization its degree is the sum of the two
+fixed divisor degrees and its arithmetic genus is one.
 
-For a fixed bound on the number of geometric components, the diagonal is finite. Fiberwise, an automorphism preserving the identity and group action is determined on the dense smooth locus and belongs to a finite group; the projective embedding makes the isomorphism scheme affine, while properness follows from extension across the nodal boundary. Proper and quasi-finite is finite. The component bound supplies quasi-compactness. Without it, one must not infer one global finite-type assertion from all individual polygons.
+For a fixed bound on the number of geometric components, the diagonal is quasi-finite and of
+finite presentation. On a smooth genus-one fiber an automorphism fixing the identity is finite in
+number; on an $n$-gon it is determined by its automorphism of
+$\mathbf G_m\times\mathbf Z/n\mathbf Z$ preserving the cyclic incidence, again a finite set. The
+component bound supplies one finite-presentation graph locus. The isomorphism scheme is separated:
+it is an open subscheme of a graph Hilbert scheme, and the equalizer of two maps to the separated
+target is closed. This argument also works over nonreduced test schemes, where agreement on a
+dense open alone would not suffice.
+
+It is generally not proper. Over a valuation ring the same generic elliptic curve can have
+distinct polygonal contractions, and a generic isomorphism between them need not extend. Thus the
+unlevelled bounded stack does not have finite diagonal. An ample level divisor removes precisely
+this ambiguity in Chapter 9; finiteness is asserted only there.
 
 ### 8.3 Weierstrass charts and contraction
 
@@ -505,19 +605,49 @@ $$
 Admissible coordinate changes are
 
 $$
-x=u^2x'+r,qquad
-y=u^3y'+u^2sx'+t,qquad u\in\mathbf G_m.
+x=u^2x'+r,\qquad
+y=u^3y'+u^2sx'+t,\qquad u\in\mathbf G_m.
 $$
 
-Let $W$ be the open in the affine coefficient space where every geometric cubic is smooth or nodal and the marked point at infinity is smooth. Let $G_W$ be the smooth affine group of these coordinate changes. Then the stack of framed stable Weierstrass cubics is $[W/G_W]$. The atlas $W\to[W/G_W]$ is smooth.
+Let $W$ be the open in the affine coefficient space where every geometric cubic is smooth or nodal and the marked point at infinity is smooth. Let $G_W$ be the smooth affine group of these coordinate changes. Then the stack of Weierstrass cubics is $[W/G_W]$. The atlas $W\to[W/G_W]$ is smooth. This quotient chart describes the smooth and one-gon fibers. It is not asserted to remember an arbitrary polygon before the additional component data below are supplied.
 
 An arbitrary polygon is not recovered from its contraction alone: contraction forgets how many components were inserted. Level structure or an explicit component marking supplies the missing finite data. This is why one cannot prove algebraicity of every boundary problem merely by writing one Weierstrass equation.
 
 ### 8.4 Algebraicity and bounded boundary
 
-Fix $m\geq1$ and let $\mathcal E\!ll_{\leq m}$ be the full bounded substack in which singular geometric fibers have at most $m$ components. The contraction to a stable cubic, together with the finite data describing the cyclic component cover and its gluing, is represented over the Weierstrass chart by a finite-presentation parameter scheme. The component incidence equations are closed; the Neron condition and transitivity are open. Book 8 supplies the finite Hilbert loci and Book 13 glues them after changing the Weierstrass frame.
+Fix $m\geq1$ and let $\mathcal E\!ll_{\leq m}$ be the full bounded substack in which singular geometric fibers have at most $m$ components. We now construct its atlas rather than treating the forgotten component data as automatic. Let $\mathcal V_m$ classify a generalized elliptic curve together with a relative effective Cartier divisor
 
-Therefore $\mathcal E\!ll_{\leq m}$ is an algebraic stack with separated finite diagonal and a smooth scheme atlas. The union over $m$ is a locally algebraic stack, generally not quasi-compact. Modular level conditions below impose their own finite component bounds, so every compactified modular stack used later lies in one algebraic finite-type piece.
+$$
+D\subset E^{\mathrm{sm}}
+$$
+
+of degree $m$ which meets every geometric component. Repetitions are permitted, so every polygon
+with at most $m$ components admits such a divisor after an etale cover. The forgetful map
+$\mathcal V_m\to\mathcal E\!ll_{\leq m}$ is represented by the open, component-meeting locus in
+the relative degree-$m$ Hilbert scheme of the smooth locus. The divisor-chart calculation of
+Book 8 shows that this morphism is smooth, and the preceding existence argument shows that it is
+surjective.
+
+The line bundle $\mathcal O_E(D)$ has positive degree on every component and is therefore
+relatively ample. A fixed high power, depending only on $m$, embeds every such genus-one curve
+with at most $m$ components and has one fixed Hilbert polynomial. Book 8 gives the corresponding
+Hilbert parameter scheme. The marked identity and divisor are further Hilbert or incidence data.
+The open conditions say that the curve is flat, nodal with the stated smooth locus, and that $D$
+meets every component. The group law on the smooth locus and its action on the proper curve are
+represented by taking graph closures in the fixed projective compactification and then imposing
+that the projection over the smooth-domain open is an isomorphism. The component bound leaves
+only finitely many graph polynomials. The identity, inverse, associativity, commutativity, and
+transitivity conditions are equalities or open fiber conditions. They therefore cut out a
+locally closed parameter scheme. Choosing a basis of the high-power section bundle gives a
+general-linear frame torsor, so Chapter 5 supplies a smooth scheme atlas of $\mathcal V_m$.
+Composing with the smooth surjection above gives a smooth atlas of
+$\mathcal E\!ll_{\leq m}$.
+
+Together with the diagonal argument of Section 8.2, this proves that
+$\mathcal E\!ll_{\leq m}$ is an algebraic stack of finite presentation with separated
+quasi-finite diagonal. The union over $m$ is a locally algebraic stack, generally not quasi-compact. Modular
+level conditions below impose their own finite component bounds, so every compactified modular
+stack used later lies in one algebraic finite-type piece.
 
 This conclusion is deliberately narrower than a claim that every genus-one degeneration is allowed. Cuspidal cubics, nonreduced fibers, and cycles with tails are excluded: their smooth loci and deformation behavior do not satisfy the generalized elliptic axioms.
 
@@ -525,13 +655,16 @@ This conclusion is deliberately narrower than a claim that every genus-one degen
 
 ### 9.1 Drinfeld structures and ampleness
 
-At primes dividing $N$, a list of $N$ distinct torsion sections is the wrong definition of level. Sections can collide in the special fiber while their sum still defines the correct finite flat subgroup divisor. Let $G$ be a finite locally free commutative group scheme and $H$ a constant finite abelian group. A **Drinfeld $H$-structure** is a homomorphism $\alpha:H\to G(T)$ for which
+At primes dividing $N$, a list of $N$ distinct torsion sections is the wrong definition of level. Sections can collide in the special fiber while their sum still defines the correct finite flat subgroup divisor. Let $G\subset E^{\mathrm{sm}}$ be a finite locally free commutative subgroup scheme of rank $|H|$ and let $H$ be a constant finite abelian group. A **Drinfeld $H$-structure** on $G$ is a homomorphism $\alpha:H\to G(T)$ for which
 
 $$
 \sum_{h\in H}[\alpha(h)]
 $$
 
-is the full subgroup divisor of the prescribed rank. Equality is equality of effective Cartier divisors, so it is stable under base change and meaningful in bad characteristic.
+is the Cartier divisor $G\subset E^{\mathrm{sm}}$ in the ambient smooth curve. Thus the definition
+includes both the homomorphism equations and equality with the entire finite locally free subgroup,
+not merely equality of supports. It is stable under base change and meaningful in bad
+characteristic.
 
 On a generalized elliptic curve a level divisor must also be **ample**: it must meet every irreducible component of every geometric fiber. On a polygon, a divisor supported on the identity component is finite flat but cannot control the other components and gives no projective embedding of the whole curve. The ampleness clause is what makes level compactification finite and prevents invisible components.
 
@@ -539,41 +672,100 @@ When $N$ is invertible, the torsion is etale and a Drinfeld basis is an ordinary
 
 ### 9.2 Full, point, and cyclic level
 
-A full $\Gamma(N)$-structure is a pair $(P,Q)$ defining a Drinfeld structure
+A full $\Gamma(N)$-structure is a homomorphism, written as a pair $(P,Q)$,
 
 $$
 (\mathbf Z/N\mathbf Z)^2\longrightarrow E^{\mathrm{sm}}[N]
 $$
 
-whose associated orbit divisor is ample. If a primitive $N$th root and a symplectic convention are fixed, one may additionally require the Weil pairing of $P,Q$ to equal that root.
+for which the sum of the $N^2$ image sections equals the Cartier divisor
+$E^{\mathrm{sm}}[N]$ and is ample on $E$. In particular, the equality itself forces
+$E^{\mathrm{sm}}[N]$ to have rank $N^2$ on this locus. If a primitive $N$th root and a
+symplectic convention are fixed, one may additionally require the Weil pairing of $P,Q$ to equal
+that root.
 
-A $\Gamma_1(N)$-structure is a Drinfeld homomorphism $\mathbf Z/N\mathbf Z\to E^{\mathrm{sm}}[N]$, written $1\mapsto P$, with ample divisor $\sum_a[aP]$. A $\Gamma_0(N)$-structure is a finite locally free cyclic subgroup $C\subset E^{\mathrm{sm}}$ of rank $N$, locally generated by a Drinfeld point, with $\sum_{c\in C}[c]$ ample.
+A $\Gamma_1(N)$-structure is a Drinfeld homomorphism $\mathbf Z/N\mathbf Z\to E^{\mathrm{sm}}[N]$, written $1\mapsto P$, with ample divisor $\sum_a[aP]$. A $\Gamma_0(N)$-structure is a finite locally free cyclic subgroup $C\subset E^{\mathrm{sm}}$ of rank $N$, locally generated by a Drinfeld point, whose Cartier subgroup divisor $C\subset E$ is ample.
 
 The local-generation phrase for $\Gamma_0(N)$ is necessary. A finite flat group scheme may have no global generator. Requiring one would define a framed $\Gamma_1$-type cover rather than the cyclic subgroup problem.
 
-These definitions are stable under pullback and have effective descent. The divisor equality, cyclicity after an fppf cover, and ampleness are all fppf local. Consequently each level problem is a stack and its forgetful map to generalized elliptic curves is representable and finite in the bounded compactified range. Over $\mathbf Z[1/N]$ it is etale over the smooth elliptic locus.
+These definitions are stable under pullback and have effective descent. The divisor equality, cyclicity after an fppf cover, and ampleness are all fppf local. To see representability of the forgetful map, work on the divisor-framed atlas of Chapter 8. Each possible section is a point of a finite torsion scheme; homomorphism, divisor-equality, and subgroup conditions are closed, while ampleness is open. Hence the level functor is represented by a locally closed subscheme of a finite scheme over that atlas. Descent gives a representable, separated, quasi-finite morphism of finite presentation. It need not be finite: a generic torsion divisor can specialize into too few components of a fixed polygon, so ampleness can fail in the special fiber. Proper compactified level maps require the decontractions used in Section 9.4. Over $\mathbf Z[1/N]$ the torsion is etale, so the forgetful map is etale over the smooth elliptic locus.
 
 ### 9.3 When level produces a fine scheme
 
-An automorphism of a generalized elliptic curve preserving a full level basis acts trivially on the level divisor and on the component group it meets. For $N\geq3$, with $N$ invertible, it is the identity. On a smooth fiber, the polarization-preserving automorphism group is finite and its faithful action on $N$-torsion lies in a congruence subgroup. The elementary congruence lemma says that a finite-order integral matrix congruent to $1$ modulo $N\geq3$ is $1$: applying the binomial expansion at a prime divisor of the order and comparing the first nonzero $N$-adic term gives a contradiction. On a polygon, the ample basis determines every component and the dense smooth locus; identity there extends to the proper curve.
+An automorphism of a generalized elliptic curve preserving a full level basis acts trivially on the level divisor and on the component group it meets. For $N\geq3$, with $N$ invertible, it is the identity. On a smooth fiber its action on every prime-adic Tate module is faithful by rigidity. If an odd prime $\ell$ divides $N$, the action lies in $1+\ell M_2(\mathbf Z_\ell)$; if $N$ has no odd divisor, then $4\mid N$ and it lies in $1+4M_2(\mathbf Z_2)$. These two congruence groups are torsion-free. Indeed, for an element $1+\ell^aB$ of prime order, the first nonzero term in its binomial expansion has valuation $a+1$ for odd $\ell$, and at least $a+1$ for $\ell=2$ with $a\geq2$, whereas all later terms have larger valuation. Reduction to a prime divisor of the order proves the claim. On a polygon, the ample basis meets and labels every component and determines the automorphism on the dense smooth locus; equality there extends to the proper curve.
 
-Thus full level $N\geq3$ kills inertia over $\mathbf Z[1/N]$. The stack is then a sheaf. Its finite map to an algebraic stack and its local quasi-projective parameter construction show that it is represented by a scheme. It is a fine moduli scheme and carries the universal generalized elliptic curve.
+Thus full level $N\geq3$ kills inertia over $\mathbf Z[1/N]$. The stack is then a sheaf. For
+completeness, scheme representability does not follow from trivial inertia alone. Symmetrize the
+ample level divisor to obtain
+
+$$
+\mathcal L=\mathcal O_E(D+[-1]^*D).
+$$
+
+A high power has a theta group whose quotient by its central $\mathbf G_m$ is finite. After a finite etale cover, a theta frame identifies that
+central extension with the standard Heisenberg extension and gives its standard projective frame on
+$H^0(E,\mathcal L^n)$. Theta-framed level curves are therefore a locally closed Hilbert parameter
+scheme. The choices of theta frame form a torsor under the finite automorphism group of the
+standard Heisenberg group: after choosing a Lagrangian splitting, the representation is explicitly
+the space of functions on that finite Lagrangian, with translations and characters giving the
+Heisenberg action. Forgetting the theta frame is consequently a finite-group quotient. Chapter 7
+constructs that quotient as a scheme, and the ample Hilbert bundle makes it quasi-projective.
+Because inertia has already vanished, the quotient represents the level sheaf rather than only
+its coarse orbit functor. It is a fine moduli scheme and carries the universal generalized
+elliptic curve.
 
 Smaller or weaker levels require a stabilizer check. Full level $2$ is preserved by $[-1]$ because $-P=P$ on $2$-torsion. A $\Gamma_1(N)$ point may leave special automorphisms at small $N$, and a cyclic subgroup is preserved by $[-1]$ for every $N$. Hence a $\Gamma_0(N)$ problem is normally a stack even for large $N$ unless an auxiliary rigid level is added.
 
 ### 9.4 Compactified modular stacks and coarse curves
 
-Write $\overline{\mathcal M}(\Gamma)$ for the stack of generalized elliptic curves with an ample level structure of type $\Gamma$. The level divisor bounds the number of polygon components by its degree, so Chapter 8 makes this an algebraic stack of finite presentation with finite diagonal. Its open substack $\mathcal M(\Gamma)$ classifies smooth elliptic curves.
+Write $\overline{\mathcal M}(\Gamma)$ for the stack of generalized elliptic curves with an ample level structure of type $\Gamma$. The level divisor bounds the number of polygon components by its degree, so Chapter 8 makes this an algebraic stack of finite presentation. Its diagonal is now finite. Indeed, over a valuation ring an isomorphism of generic fibers preserving the level divisor extends to the common stable marked model: normalize the closures of the components and contract every rational component having only its two nodal branches as special points. A component disjoint from the level divisor is exactly such a contractible component. Ampleness says that no component in either model is contracted, so both models equal the common stable marked model. The extension is unique by density of the smooth locus. Thus the diagonal is proper; it was already quasi-finite and finitely presented, hence is finite. The open substack $\mathcal M(\Gamma)$ classifies smooth elliptic curves.
 
-Choose an auxiliary full level $M\geq3$, invert $M$, and impose it in addition to $\Gamma$. The resulting fine scheme $X(\Gamma\cap\Gamma(M))$ is finite over $\overline{\mathcal M}(\Gamma)$ and carries an action of the finite change-of-basis group. Locally the original stack is the corresponding finite quotient stack. The finite quotient theorem therefore constructs a coarse modular curve
+Zariski-locally on the base choose an auxiliary integer $M\geq3$ which is invertible there. Such
+choices cover every integral base: near residue characteristic $p$, take any $M\geq3$ prime to
+$p$. On the smooth locus one simply adds a full level-$M$ basis. At a polygon this basis need not
+exist on the same contraction, so the compactified cover must also remember a decontraction
+$E'\to E$ on which full level $M$ is ample. This qualification is essential.
+
+The possible decontractions and bases form a finite surjective cover. This may be checked after
+splitting the polygon: its smooth group is
+$\mathbf G_m\times\mathbf Z/n\mathbf Z$; inserting a fixed finite number of components makes the
+component group receive the two level generators. Choices of torsion generators are finite etale;
+the root parameters which decontract a nodal family are only finite flat at the boundary. The
+cyclic incidence determines the decontraction uniquely from
+this finite data. The construction is equivariant under change of basis and descends from the
+split polygon by Book 13. Thus the compactified auxiliary-level space $\widetilde X_M$ is a fine
+scheme, finite and surjective over $\overline{\mathcal M}(\Gamma)$, with an action of the finite
+change-of-basis group $\Delta_M$; the compatible contraction is determined by the level orbit. Moreover,
+
+$$
+\overline{\mathcal M}(\Gamma)\simeq[\widetilde X_M/\Delta_M].
+$$
+
+Indeed, a quotient-stack object is a $\Delta_M$-torsor carrying an equivariant auxiliary-level
+family; descending its contraction gives a $\Gamma$-object. Conversely a $\Gamma$-object acquires
+a decontraction and full basis after an fppf cover, and two choices differ by a unique element of
+$\Delta_M$. The overlap elements satisfy the torsor cocycle, so the two constructions are inverse.
+
+The finite quotient theorem therefore constructs a local coarse modular curve
 
 $$
 \overline{\mathcal M}(\Gamma)\longrightarrow X(\Gamma).
 $$
 
-This construction is independent of the auxiliary level: both candidates satisfy the same categorical coarse universal property. Over a tame base, formation of $X(\Gamma)$ commutes with arbitrary base change and sheaves with trivial stabilizer action descend. At primes dividing residual stabilizer orders, only flat base change is automatic.
+On overlaps two such quotients are canonically isomorphic because both satisfy the same categorical
+coarse universal property. Those isomorphisms obey the cocycle by uniqueness, so the local schemes
+glue to $X(\Gamma)$. This proves existence over the original base rather than only after inverting
+one auxiliary integer. Over a tame base, formation of $X(\Gamma)$ commutes with arbitrary base
+change and finite locally free sheaves with trivial stabilizer action descend. At primes dividing
+residual stabilizer orders, only flat base change is automatic.
 
-The universal generalized elliptic curve lives on the stack. It descends to the coarse curve only where inertia acts trivially on it, which is generally false. In contrast, suitable powers of the Hodge line can descend once every stabilizer acts trivially on their fibers.
+The universal generalized elliptic curve lives on the stack. It descends to the coarse curve only where inertia acts trivially on it, which is generally false. In contrast, suitable powers of the Hodge line
+
+$$
+\omega=e^*\Omega^1_{E^{\mathrm{sm}}/\overline{\mathcal M}(\Gamma)}
+$$
+
+can descend once every stabilizer acts trivially on their fibers.
 
 ## 10. The common PEL framework
 
@@ -624,6 +816,38 @@ It says that the adjoint involution induced by the polarization restricts to the
 
 For integral descent, a polarization may be encoded either by the homomorphism together with the condition of being induced by a relatively ample rigidified line bundle, or by such a line bundle itself. Positivity is never defined merely fiberwise by a sign. The fixed kernel type is a finite locally free subgroup condition and includes separability only when its rank is invertible.
 
+For the parameter arguments in this book we use the line-bundle presentation: an inducing
+rigidified symmetric ample bundle is part of the object and its genuine cocycle is part of every
+descent datum. We record why this differs only by finite data from the homomorphism presentation.
+
+**Polarization-line lemma.** For a rigidified line bundle $\mathcal L$ on an abelian scheme, the
+rule
+
+$$
+x\longmapsto t_x^*\mathcal L\otimes\mathcal L^{-1}
+$$
+
+is a homomorphism $\lambda_{\mathcal L}:A\to A^\vee$. If $\mathcal L$ is ample, its kernel is
+finite. Two rigidified symmetric ample bundles inducing the same homomorphism differ by a
+two-torsion point of $A^\vee$.
+
+**Proof.** On $A^3$, compare the four pullbacks of $\mathcal L$ by sums of one or three variables
+with the three pullbacks by sums of two variables. Their quotient is trivial whenever one
+variable is the identity. Rigidity for a line bundle on a proper family with geometrically
+connected fibers then makes the quotient trivial everywhere: trivialize along one coordinate,
+observe that the resulting map to the relative group of rigidified line bundles is constant on
+the other connected proper fibers, and repeat. The resulting cube identity, specialized in one
+variable, is the square identity and proves additivity of $\lambda_{\mathcal L}$. Its kernel is
+proper. A positive-dimensional subgroup in the kernel would make $\mathcal L$ translation
+invariant along that subgroup, so its restriction there would have degree zero, contradicting
+ampleness. The kernel is therefore proper and quasi-finite, hence finite. If two bundles give the
+same homomorphism, their quotient is translation-invariant and lies in $A^\vee$; symmetry
+identifies it with its inverse, so its square is trivial. The converse is immediate. $\square$
+
+Thus the choices of inducing bundle form a finite torsor. One may construct the stack with the
+bundle and then take this finite quotient. This supplies the ample bundle needed below and does
+not assume that an arbitrarily chosen bundle descends.
+
 An isomorphism $f:(A,\iota,\lambda,\eta K)\to(A',\iota',\lambda',\eta'K)$ satisfies
 
 $$
@@ -642,7 +866,19 @@ $$
 \det\bigl(T-\iota(b)\mid\operatorname{Lie}(A)\bigr)=P_b(T).
 $$
 
-It suffices to impose this on finitely many generators of $\mathcal O$ together with the polynomial identities expressing the datum. The coefficients are polynomial functions of matrices on a finite locally free sheaf, so the condition is closed and commutes with base change.
+This apparently infinite family is a finite scheme-theoretic condition. Choose a
+$\mathbf Z$-basis $b_1,\ldots,b_s$ of $\mathcal O$ and form the universal element
+$b_{\mathrm{univ}}=\sum X_ib_i$. Equality of
+
+$$
+\det\bigl(T-\iota(b_{\mathrm{univ}})\mid\operatorname{Lie}(A)\bigr)
+$$
+
+with the prescribed universal polynomial is equality of finitely many coefficients in
+$R[X_1,\ldots,X_s,T]$. Specialization gives the condition for every $b$, and the converse is
+obtained by comparing polynomial coefficients. The determinant locus is therefore closed and
+commutes with base change. Imposing the condition only on a ring-generating set would not by
+itself control arbitrary linear combinations and is not the definition used here.
 
 This condition controls the infinitesimal Hodge type, not merely the total dimension. Without it an $\mathcal O$-action can distribute its embeddings incorrectly among tangent directions. In ramified residue characteristic the determinant condition alone need not produce the desired flat integral model; wedge, spin, or local-model conditions may be needed. Those are additional closed conditions attached to a chosen integral datum. We make no claim that the naive determinant locus is flat at every bad prime.
 
@@ -656,23 +892,57 @@ $$
 
 carrying $\psi$ to the Weil pairing up to the prescribed multiplier. More generally, a $K$-level structure is a $K$-orbit of compatible prime-to-bad-prime trivializations. The orbit formulation prevents a basis choice from being mistaken for intrinsic structure.
 
+This adelic notation is still finite-presentation data. After fixing the lattice, every compact
+open $K$ contains a principal congruence subgroup of some level $N$. A $K$-orbit is therefore the
+finite quotient of a full level-$N$ trivialization by the finite group
+$K/K(N)$. All stack and parameter arguments impose this finite level condition; no infinite list
+of torsion trivializations is treated as a finite type object.
+
 When the level order is not invertible, one must specify finite flat subgroup schemes and integral pairing conditions rather than geometric bases. Such parahoric level problems depend on a lattice chain and local model. The abstract stack and descent arguments still apply, but etaleness and smoothness do not follow from the prime-to-level proof.
 
 A level is **neat** if no nontrivial finite-order automorphism compatible with the rational tensors fixes it. A principal level $N\geq3$ is the standard sufficient example in the symplectic cases considered here. Neatness is the exact property used to remove inertia.
 
 ### 10.5 Stack, diagonal, and atlas theorems
 
-**PEL stack theorem.** For fixed integral PEL data, fixed polarization type, determinant condition, and finite-presentation level condition, PEL objects form an fpqc stack. Its diagonal is representable, separated, and finite. After restricting to a locus on which the prescribed deformation conditions admit the framed parameter chart, it is an algebraic stack of finite presentation. Over a good-prime locus with the standard smooth local model, it has a smooth atlas. After adding neat prime-to-base level, its inertia is trivial and it is represented by a quasi-projective scheme.
+We first isolate the final representability step.
+
+**Rigid-level scheme lemma.** On a locally noetherian base, polarized abelian schemes of fixed
+dimension and integral polarization type with neat prime-to-base level form a quasi-projective
+scheme.
+
+**Proof.** Choose a symmetric high power $\mathcal L^n$ of the inducing rigidified ample bundle.
+Its theta group is the central extension of the finite locally free
+kernel of the associated polarization by $\mathbf G_m$, obtained from pairs
+$(x,\phi)$ with $\phi:t_x^*\mathcal L^n\simeq\mathcal L^n$. The polarization-line lemma gives its
+multiplication and commutator pairing. After an fppf cover the fixed integral polarization type
+identifies this finite kernel and pairing with the standard ones. A theta frame is an isomorphism with the standard
+Heisenberg extension, respecting the central $\mathbf G_m$.
+
+Theta frames form a torsor under the finite locally free automorphism group of that standard extension. The
+standard irreducible representation of the Heisenberg group supplies, up to the central scalar,
+a basis of $a_*\mathcal L^n$ compatible with base change. Hence a theta-framed object is a
+locally closed point of the Hilbert parameter scheme: the group law, level sections,
+endomorphisms, and polarization pairing are imposed by the graph and tensor equations already
+constructed. It is therefore represented by a quasi-projective scheme. Forgetting the theta
+frame is the quotient by its finite locally free change-of-frame group. Chapter 7 constructs the
+quasi-projective scheme quotient.
+Neatness says that no residual automorphism of the abelian scheme
+fixes the level, so this quotient represents the original sheaf and carries its universal
+abelian scheme. Different auxiliary $n$ and local choices give canonically isomorphic schemes by
+the representing property, and these glue over the base. $\square$
+
+**PEL stack theorem.** For fixed integral PEL data, fixed polarization type, determinant condition, and finite-presentation integral level or local-model condition, PEL objects form an fpqc stack. Its diagonal is representable, separated, and finite, and it is an algebraic stack of finite presentation. After adding neat prime-to-base level, its inertia is trivial and it is represented by a quasi-projective scheme.
 
 **Proof.** Book 13 descends the abelian scheme, group law, endomorphisms, rigidified polarization, and finite level data. The determinant and Rosati conditions descend as equations; ampleness descends by Book 8. This proves the stack assertion.
 
 For the diagonal, a polarization-preserving isomorphism belongs to the finite automorphism scheme of a polarized abelian scheme. Commuting with $\mathcal O$ and preserving level cut out closed subgroups or closed translates. Hence the diagonal is finite and separated.
 
-Choose a sufficiently high power of a line bundle representing a fixed multiple of the polarization. Book 8 gives projective embeddings and the required Hilbert parameter scheme in the range at hand. Endomorphism graphs, the group law, Rosati compatibility, and determinant equations define locally closed loci. Frames form a general-linear torsor, so the framed-parameter theorem gives algebraicity. Smoothness is asserted only where the corresponding parameter or local-model morphism is known smooth; it is not inferred from algebraicity.
+Choose a sufficiently high power of the inducing line bundle. Book 8 gives projective embeddings and the required Hilbert parameter scheme locally on the noetherian base. Endomorphism graphs, the group law, Rosati compatibility, determinant equations, and the stated integral local-model conditions define locally closed loci. Their Hilbert polynomials and graph degrees are fixed by the dimension and polarization type. Frames form a general-linear torsor, so the framed-parameter theorem gives algebraicity and finite presentation.
 
-Finally, a neat level forces every stabilizer to be trivial. The stack is then a sheaf; the quasi-projective framed quotient descends to a scheme by the descent results of Book 13. $\square$
+Finally, a neat level forces every stabilizer to be trivial, and the rigid-level scheme lemma
+represents the resulting sheaf. $\square$
 
-The theorem separates three issues that are often conflated: descent proves stackhood, a parameter presentation proves algebraicity, and deformation or local-model calculations prove smoothness.
+The theorem separates three issues that are often conflated: descent proves stackhood and a parameter presentation proves algebraicity. Smoothness of an atlas comes from the frame torsor; smoothness of the stack over its arithmetic base is a different deformation statement and is not asserted here.
 
 ## 11. Hilbert moduli problems
 
@@ -684,14 +954,15 @@ $$
 \iota:\mathcal O_F\hookrightarrow\operatorname{End}_S(A).
 $$
 
-A single principal polarization is often too restrictive and is not stable under all ideal-class operations. The intrinsic datum is the module of symmetric $\mathcal O_F$-linear homomorphisms
+A single principal polarization is often too restrictive and is not stable under all ideal-class operations. The intrinsic datum is the fppf sheaf of symmetric $\mathcal O_F$-linear homomorphisms
 
 $$
 \mathcal P(A)=
 \operatorname{Hom}_{\mathcal O_F}^{\mathrm{sym}}(A,A^\vee),
 $$
 
-with its positive cone of polarizations. Fix a fractional ideal $\mathfrak c$ and its totally positive cone $\mathfrak c^+$. A **$\mathfrak c$-polarization** is an isomorphism of ordered invertible $\mathcal O_F$-modules
+with its positive cone of polarizations. It is not assumed in advance to be invertible;
+invertibility is part of the condition below. Fix a fractional ideal $\mathfrak c$ and its totally positive cone $\mathfrak c^+$. A **$\mathfrak c$-polarization** is an isomorphism of ordered invertible $\mathcal O_F$-module sheaves
 
 $$
 \lambda:\mathfrak c\xrightarrow{\sim}\mathcal P(A)
@@ -732,7 +1003,7 @@ Let $\mathcal H_{\mathfrak c,K}$ denote the stack of Hilbert abelian schemes sat
 
 - $\mathcal H_{\mathfrak c,K}$ is an algebraic stack of finite presentation on the fixed integral locus;
 - its diagonal is finite and separated;
-- over the unramified good-level locus, the standard framed charts are smooth;
+- the frame map from the standard parameter scheme is a smooth atlas;
 - for neat $K$, it is a fine quasi-projective scheme.
 
 For a non-neat $K$, choose a normal neat subgroup $K'\triangleleft K$. The finite group $\Delta=K/K'$ acts on the fine scheme $H_{\mathfrak c,K'}$, and
@@ -790,7 +1061,7 @@ $$
 
 The order matters only logically: the later conditions are statements about structures already descended. The diagonal is the closed subgroup of polarization-preserving automorphisms commuting with $\mathcal O_B$ and fixing the level, hence is finite.
 
-On a good-prime locus, framed polarized embeddings give a smooth atlas and $\mathcal Q_K$ is algebraic of finite presentation. If $K'$ is neat and normal in $K$, the fine scheme $Q_{K'}$ carries the finite action of $K/K'$ and
+Framed polarized embeddings give a smooth atlas and $\mathcal Q_K$ is algebraic of finite presentation; this does not assert that its structural morphism is smooth at a ramified prime. If $K'$ is neat and normal in $K$, the fine scheme $Q_{K'}$ carries the finite action of $K/K'$ and
 
 $$
 \mathcal Q_K\simeq[Q_{K'}/(K/K')].
@@ -798,13 +1069,18 @@ $$
 
 The quotient scheme is coarse. Fixed points of the finite action do not disappear: they become inertia in the quotient stack and quotient singularities in the coarse space.
 
-In the compact Shimura-curve case no cusps are added, because the quaternion algebra prevents the relevant rational parabolic subgroups. This geometric properness is different from stack separatedness. The latter follows from the finite diagonal; the former is a property of the structural morphism and requires the global quaternionic hypothesis.
+In the compact Shimura-curve case no cusps are added. The required hypothesis is that the
+similitude group be anisotropic modulo its center—for example, in the rank-two case, that the
+quaternion algebra be a division algebra at some finite place. Then there are no relevant rational
+parabolic subgroups. If $B=M_2(F)$, this conclusion is false and one obtains a modular-type
+noncompact curve. Geometric properness is different from stack separatedness: the latter follows
+from the finite diagonal, while the former requires precisely this global anisotropy.
 
 ## 13. Unitary moduli problems
 
 ### 13.1 CM actions and signatures
 
-Let $F$ be totally real, let $E/F$ be a CM extension, and let complex conjugation be $a\mapsto\bar a$. Fix an $E$-vector space of rank $n$ with a hermitian form and signatures
+Let $F$ be totally real, let $E/F$ be a CM extension, and let complex conjugation be $a\mapsto\bar a$. For every real embedding $\tau$ of $F$, choose one of the two extensions $\varphi_\tau:E\hookrightarrow\mathbf C$; the other is $\bar\varphi_\tau$. Fix an $E$-vector space of rank $n$ with a hermitian form and signatures
 
 $$
 (r_\tau,s_\tau),\qquad r_\tau+s_\tau=n,
@@ -817,8 +1093,8 @@ A unitary object is an abelian scheme $A$ of relative dimension $n[F:\mathbf Q]$
 $$
 \det\bigl(T-\iota(a)\mid\operatorname{Lie}(A)\bigr)
 =\prod_\tau
-(T-\tau(a))^{r_\tau}
-(T-\bar\tau(a))^{s_\tau},
+(T-\varphi_\tau(a))^{r_\tau}
+(T-\bar\varphi_\tau(a))^{s_\tau},
 $$
 
 interpreted over the reflex base. The formula is shorthand for the universal polynomial whose coefficients lie in that base; it does not require every embedding to be individually defined there.
@@ -841,7 +1117,7 @@ At a ramified prime of $E/F$, the determinant condition may again be too large. 
 
 ### 13.3 Level, inertia, and coarse spaces
 
-Let $\mathcal U_K$ be the unitary PEL stack for fixed signature, polarization kernel, integral local conditions, and level. The common theorem gives stackhood, finite separated diagonal, and an algebraic finite-presentation atlas. On good unramified loci with the standard local model the atlas is smooth. A neat prime-to-base level kills the finite group of tensor-preserving polarized automorphisms and gives a fine quasi-projective scheme $U_{K'}$.
+Let $\mathcal U_K$ be the unitary PEL stack for fixed signature, polarization kernel, integral local conditions, and level. The common theorem gives stackhood, finite separated diagonal, and a smooth algebraic finite-presentation atlas. This atlas statement is independent of whether the structural morphism is smooth. A neat prime-to-base level kills the finite group of tensor-preserving polarized automorphisms and gives a fine quasi-projective scheme $U_{K'}$.
 
 For normal neat $K'\subset K$,
 
@@ -851,7 +1127,10 @@ $$
 U_K^{\mathrm{coarse}}=U_{K'}/(K/K').
 $$
 
-This description proves the required atlas and coarse statements: $U_{K'}\to\mathcal U_K$ is finite etale where the finite change-of-level group is etale, and finite flat in the corresponding integral torsor setting. It also computes inertia as the stabilizer of the level-change action.
+This description proves the required atlas and coarse statements: for prime-to-base level the
+constant change-of-level group makes $U_{K'}\to\mathcal U_K$ finite etale; for a genuinely
+integral parahoric change group the presentation may be only finite flat. It also computes inertia
+as the stabilizer of the level-change action.
 
 The universal abelian scheme and its $\mathcal O_E$-action exist on $\mathcal U_K$. On the coarse space, only constructions with trivial stabilizer action descend. In particular, the determinant of the Hodge bundle may descend even when the Hodge bundle itself does not, after taking a power divisible by the exponent of all stabilizer characters on the tame locus.
 
@@ -891,13 +1170,17 @@ The constructions of this book yield the following precise results for later mod
 - Two-fiber products retain the comparison isomorphism. The diagonal represents isomorphisms, and inertia represents automorphisms.
 - A representable morphism may be tested after every scheme base change. Finite, smooth, etale, and proper have this meaning for stack morphisms.
 - A stack with representable diagonal and a smooth surjective scheme atlas is algebraic. Framing a sufficiently positive projective embedding produces the atlases needed here from the parameter spaces of Book 8.
-- For a smooth affine group acting on a separated scheme, the quotient stack has its canonical smooth atlas and representable diagonal. For a finite locally free group, that atlas is finite flat.
+- For a smooth affine finitely presented group acting on a separated scheme, the quotient stack has its canonical smooth atlas and representable diagonal. For a finite locally free group, the canonical map is a finite flat presentation; in the quasi-projective finite-presentation cases used here, induction through a general linear group supplies a genuine smooth scheme atlas.
 - A compatible central flat subgroup of inertia can be rigidified; locally $[X/G]\sslash H=[X/(G/H)]$ when $H$ acts trivially.
-- A finite locally free group acting on a quasi-projective scheme has a finite scheme quotient. The quotient-stack map to that scheme is coarse. Flat base change is safe; arbitrary base change and exact sheaf descent require linear reductivity.
-- Generalized elliptic curves with bounded polygonal boundary form algebraic stacks with finite diagonal. Ample Drinfeld level bounds the boundary. Full invertible level $N\geq3$ kills inertia and yields a fine scheme.
+- Over a locally noetherian base, a finite locally free group acting on a finitely presented quasi-projective scheme has a finite scheme quotient. The quotient-stack map to that scheme is coarse. Flat base change is safe; arbitrary base change and descent of finite locally free sheaves with trivial stabilizer action require linear reductivity.
+- Generalized elliptic curves with bounded polygonal boundary form algebraic stacks with separated quasi-finite diagonal; the unlevelled diagonal need not be proper. Ample Drinfeld level bounds the boundary and makes the modular-stack diagonal finite. Full invertible level $N\geq3$ kills inertia and yields a fine scheme.
 - Hilbert, quaternionic, and unitary PEL objects are defined by an exact order action, Rosati-compatible polarization, determinant or stated integral local-model condition, and level orbit. Their stacks have finite diagonal and explicit framed atlases. Neat level produces fine quasi-projective schemes; removing it gives finite quotient stacks and coarse spaces.
 
-Every conclusion retains its hypothesis. Good-prime smoothness is not asserted at a ramified local model. A determinant condition is not substituted for a stronger integral condition where they differ. Finite is not silently strengthened to finite etale. A coarse space is never treated as though it carried the universal family.
+Every conclusion retains its hypothesis. Smoothness of a frame atlas is not confused with
+smoothness of the structural morphism at a ramified local model. A determinant condition is not
+substituted for a stronger integral condition where they differ. Finite is not silently
+strengthened to finite etale. A coarse space is never treated as though it carried the universal
+family.
 
 ### 14.4 Conclusion
 
