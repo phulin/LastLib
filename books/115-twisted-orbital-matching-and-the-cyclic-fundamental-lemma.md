@@ -12,11 +12,11 @@
   - [2.1 Twisted classes and ordered norms](#21-twisted-classes-and-ordered-norms)
   - [2.2 The regular norm image](#22-the-regular-norm-image)
   - [2.3 Split local algebras](#23-split-local-algebras)
-  - [2.4 Scalar norms and the quadratic exception](#24-scalar-norms-and-the-quadratic-exception)
+  - [2.4 Scalar norms and the order-two exception](#24-scalar-norms-and-the-order-two-exception)
 - [3. Measures, discriminants, and transfer factors](#3-measures-discriminants-and-transfer-factors)
   - [3.1 Complementary quotient measures](#31-complementary-quotient-measures)
   - [3.2 Ordinary and twisted Weyl determinants](#32-ordinary-and-twisted-weyl-determinants)
-  - [3.3 The base-change transfer factor](#33-the-base-change-transfer-factor)
+  - [3.3 The relative root calculation](#33-the-relative-root-calculation)
   - [3.4 Measure changes and products](#34-measure-changes-and-products)
 - [4. Twisted characters in the selected rank-two range](#4-twisted-characters-in-the-selected-rank-two-range)
   - [4.1 Normalizing the intertwiner](#41-normalizing-the-intertwiner)
@@ -47,7 +47,7 @@
 - [9. Ramified lattice matching](#9-ramified-lattice-matching)
   - [9.1 Ramification, depth, and fixed subtrees](#91-ramification-depth-and-fixed-subtrees)
   - [9.2 The finite triangular system](#92-the-finite-triangular-system)
-  - [9.3 Tail recurrences near the scalar locus](#93-tail-recurrences-near-the-scalar-locus)
+  - [9.3 Finite germ tails near the scalar locus](#93-finite-germ-tails-near-the-scalar-locus)
   - [9.4 The ramified invariant-level theorem](#94-the-ramified-invariant-level-theorem)
 - [10. Iwahori and congruence matching](#10-iwahori-and-congruence-matching)
   - [10.1 Oriented edges and relative position](#101-oriented-edges-and-relative-position)
@@ -64,7 +64,7 @@
   - [12.1 Why regular matching is not enough](#121-why-regular-matching-is-not-enough)
   - [12.2 The two split germs and the twisted germs](#122-the-two-split-germs-and-the-twisted-germs)
   - [12.3 Germ-compatible transfer](#123-germ-compatible-transfer)
-  - [12.4 Quadratic division-centralizer terms](#124-quadratic-division-centralizer-terms)
+  - [12.4 Quaternion division-centralizer terms](#124-quaternion-division-centralizer-terms)
   - [12.5 Central distributions](#125-central-distributions)
 - [13. Archimedean cyclic matching](#13-archimedean-cyclic-matching)
   - [13.1 Split archimedean algebras](#131-split-archimedean-algebras)
@@ -120,14 +120,16 @@ algebra.
 Ramified places require a different conclusion.  There is no reason for the two raw maximal-
 compact units to match, and the depth of a character changes according to the ramification
 filtration.  We first prove transfer on the regular set by explicit transverse descent.  We
-then turn stable vertices, edges, segments, and primitive endpoints into a finite triangular
-system.  Its solution gives the invariant, Iwahori, $K_0$, $K_1$, special, and tame-dihedral
-functions needed in cyclic trace comparisons.  The proof retains the wild boundary: primitive
+then turn stable vertices, edges, segments, primitive endpoints, regular slices, and the two
+scalar germs into a finite block-triangular interpolation system.  Its solution gives the
+invariant, Iwahori, $K_0$, $K_1$, special, and tame-dihedral functions needed in cyclic trace
+comparisons.  The proof retains the wild boundary: primitive
 wild packets and ramified dyadic positive-depth types are not covered by a finite tame Fourier
 calculation.
 
 There is also a singular boundary.  Near a scalar, regular orbital integrals have nilpotent
-germs, and in quadratic degree a scalar norm can have quaternion division centralizer.  These
+germs, and in even cyclic degree an order-two scalar norm class can have quaternion division
+centralizer.  These
 terms cannot be repaired by changing a sign in the regular identity.  They are analyzed and
 matched separately.  The final package therefore distinguishes regular matching, germ
 compatibility, and central distributions before assembling local factors into the geometric
@@ -157,11 +159,13 @@ $ab\in N_{L/F}(L^\times)$ does not suffice.  A function supported on integral ma
 therefore meet an ordinary class for which no twisted class exists.  Matching must require the
 ordinary orbital integral to vanish on the nonnorm locus.
 
-At the opposite extreme, suppose $L/F$ is quadratic and
-$N_\sigma(\delta)=aI_2$.  If $a$ is not a field norm, the twisted centralizer is the
-multiplicative group of the quaternion division algebra $(L/F,a)$.  The stable norm is scalar,
-but the twisted orbit is elliptic.  Any statement mentioning only strongly regular norms omits
-this genuine trace-formula term.
+At the opposite extreme, suppose $N_\sigma(\delta)=aI_2$.  The determinant identity forces the
+class of $a$ in $F^\times/N_{L/F}(L^\times)$ to have order at most two.  If that class is
+nontrivial, necessarily in even degree, the twisted centralizer is the multiplicative group of
+the quaternion division algebra representing the cyclic Brauer class $(L/F,a)$.  The stable
+norm is scalar, but the twisted orbit is elliptic.  Any statement mentioning only strongly
+regular norms omits this genuine trace-formula term.  For the prime-degree global application,
+this exceptional case is exactly the quadratic one.
 
 The goal is consequently threefold: classify the matching classes, normalize their measures,
 and construct functions with matching orbital distributions.  Only after those tasks are
@@ -169,7 +173,8 @@ complete may character identities turn geometric matching into equality of trace
 
 ### 1.2 Standing notation and scope
 
-Unless Chapter 13 says otherwise, $F$ is a nonarchimedean local field with ring of integers
+Unless Chapter 13 says otherwise, $F$ is a nonarchimedean local field of characteristic zero
+with ring of integers
 $\mathcal O_F$, maximal ideal $\mathfrak p_F=(\varpi_F)$, residue field $k_F$, and
 $q_F=|k_F|$.  Let $L/F$ be cyclic of degree $d$ with generator $\sigma$.  Write
 
@@ -206,8 +211,18 @@ All finite-place functions are complex-valued, locally constant, and compactly s
 compact-mod-center formulation with fixed unitary central character is obtained by central
 averaging; central terms are retained explicitly in Chapter 12.
 
-The unramified theorems hold for every finite cyclic unramified extension.  The ramified
-regular-transfer theorem also holds for every finite cyclic extension.  The explicit positive-
+Characteristic zero is the range required by localization of the number-field comparison.  It
+also ensures that the finite-order semilinear tangent operator is semisimple, even when the
+residue characteristic divides $d$.  The algebraic norm and fiber results below remain valid in
+equal characteristic.  The analytic normalization by an ordinary determinant on the tangent
+quotient also remains valid when the characteristic does not divide $d$.  A wildly ramified
+equal-characteristic extension of degree divisible by the characteristic requires a Fitting-
+ideal density in place of that determinant and is not part of the number-field theorem proved
+here.
+
+The unramified theorems hold for every finite cyclic unramified extension in this scope.  The
+ramified regular-transfer theorem also holds for every finite cyclic extension in this scope.
+The explicit positive-
 depth type calculations are asserted in the selected range already constructed by the local
 representation theory: characters, principal series, special representations, depth-zero
 dihedral supercuspidals, and tame positive-depth dihedral supercuspidals whose restricted
@@ -231,7 +246,7 @@ The following choices remain fixed throughout the finite-place theory.
 | twisted centralizer | identified with the norm centralizer and given the transported measure |
 | orbit quotient | complementary measure from $dh=di\,d\dot h$ or $dg=dt\,d\dot g$ |
 | ordinary normalization | $I_\gamma(f)=|D_G(\gamma)|^{1/2}O_\gamma(f)$ |
-| twisted normalization | $I_\delta^\sigma(\phi)=|D^\sigma(\delta)|^{1/2}O_\delta^\sigma(\phi)$ |
+| twisted base-change normalization | $I_\delta^{\sigma,\mathrm{bc}}(\phi)=|D_{\mathrm{bc}}^\sigma(\delta)|^{1/2}O_\delta^\sigma(\phi)$ |
 
 At ramified places, the phrase “transported measure” is not shorthand for a nonexistent
 canonical choice.  We select a Haar measure on the common algebraic centralizer
@@ -248,14 +263,14 @@ normalization of Book 86.
 
 Let $\delta\in H(F)$ be strongly $\sigma$-regular with stable norm $\gamma\in G(F)$.  A pair
 $(f,\phi)$, with $f$ on $G(F)$ and $\phi$ on $H(F)$, has **matching regular orbital
-integrals** if
+integrals on the norm image** if
 
 $$
-I_\gamma(f)=I_\delta^\sigma(\phi)
+I_\gamma(f)=I_\delta^{\sigma,\mathrm{bc}}(\phi)
 \tag{1.1}
 $$
 
-for every matching pair and
+for every matching pair.  It is a **complete regular transfer** if, in addition,
 
 $$
 I_\gamma(f)=0
@@ -267,23 +282,23 @@ fiber has one rational class in rank two, so no additional sum occurs in (1.1). 
 word “stable” because the norm class, not a chosen ordered product matrix, is the comparison
 variable.
 
-The unnormalized form of (1.1) is
+The relative root calculation in Section 3.3 proves
+$D_{\mathrm{bc}}^\sigma(\delta)=D_G(\gamma)$.  Thus the unnormalized form of (1.1) is simply
 
 $$
-O_\gamma(f)
-=\Delta_{L/F}(\gamma,\delta)^{-1}O_\delta^\sigma(\phi),
-\qquad
-\Delta_{L/F}(\gamma,\delta)
-=\left|\frac{D_G(\gamma)}{D^\sigma(\delta)}\right|^{1/2}.
+O_\gamma(f)=O_\delta^\sigma(\phi).
 \tag{1.3}
 $$
 
-Thus an assertion of raw equality is valid only when the chosen measures and tangent
-normalizations make the displayed factor one.  We use (1.1) as the primary statement.
+Book 113 uses the determinant on the *full* tangent quotient.  That convention differs by the
+toral descent determinant $D_T^\sigma$ of (3.8).  Under that convention (1.1) reads
+$I_\gamma=|D_T^\sigma|^{-1/2}I_\delta^{\sigma,\mathrm{full}}$.  Keeping this conversion visible
+prevents a constant error when the residue characteristic divides $d$.
 
 The second form is the **fundamental lemma**: for prescribed natural functions, usually
-hyperspecial units or Hecke functions, prove (1.1)--(1.2) without choosing the function class
-by class.  The point is uniformity over infinitely many regular orbits.
+hyperspecial units or Hecke functions, prove (1.1) uniformly, and prove (1.2) when support does
+not already make it automatic.  The point is that the functions are chosen before, rather than
+class by class.  In the unramified unit case below, support makes (1.2) automatic.
 
 The third form is **germ-compatible matching**.  It requires (1.1), compatibility of the
 nilpotent expansions as $\gamma$ approaches a scalar, and a separately declared rule for
@@ -417,7 +432,7 @@ These exact conditions explain the vanishing clause (1.2).
 In a global cyclic extension, a place can split completely.  Locally one then has
 
 $$
-L=F^d,qquad
+L=F^d,\qquad
 H(F)=G(F)^d,
 $$
 
@@ -449,7 +464,7 @@ analogy: after using (2.9), the $d-1$ free group variables are exactly the convo
 variables.  In particular, the tensor of hyperspecial units transfers to the hyperspecial
 unit, and every local norm class occurs.
 
-### 2.4 Scalar norms and the quadratic exception
+### 2.4 Scalar norms and the order-two exception
 
 Suppose $N_\sigma(\delta)=aI_2$.  The fixed algebra
 
@@ -463,15 +478,40 @@ is a central simple algebra of degree two over $F$, split by $L$, and
 $I_\delta=B_\delta^\times$.  If $d$ is odd, its Brauer class is killed by both $2$ and $d$,
 hence is zero.  The class is twisted conjugate to a scalar.
 
-If $d=2$, then
+The determinant of (2.2) gives
 
 $$
-B_\delta\simeq(L/F,a),
+a^2=N_{L/F}(\det\delta).
 \tag{2.12}
 $$
 
-the quaternion cyclic algebra.  It is split precisely when $a\in N_{L/F}(L^\times)$ and is
-division otherwise.  A convenient representative is
+Thus $[a]$ is $2$-torsion in the local norm quotient
+$F^\times/N_{L/F}(L^\times)$.  Book 86 identifies the dual of this quotient with the character
+group of $\operatorname{Gal}(L/F)$, so the quotient is cyclic of order $d$.  If $d$ is odd,
+$a$ is a norm.  If $d$ is
+even, there are two possibilities: the norm coset and its unique element of order two.
+
+This elementary condition also identifies the descended algebra.  The image of $\delta$ in
+$\mathrm{PGL}_2(L)$ is a $1$-cocycle, and the connecting map for
+$1\to L^\times\to\mathrm{GL}_2(L)\to\mathrm{PGL}_2(L)\to1$ sends it to the cyclic Brauer
+class $(L/F,a)$.  That class is zero when $a$ is a norm.  On the nontrivial order-two coset it
+is nonzero; since $B_\delta$ has degree two, Book 111's local classification makes it the
+unique quaternion division algebra over $F$.  Thus $B_\delta$ is the degree-two representative
+of the cyclic class.
+
+Conversely, each of the two admissible cosets occurs.  Represent the corresponding split or
+quaternion algebra by a $\mathrm{PGL}_2$ descent cocycle and lift its generator to
+$\delta\in\mathrm{GL}_2(L)$.  Its ordered product is $a'I_2$ with
+$[(L/F,a')]=[(L/F,a)]$, hence
+$a'/a=N_{L/F}(z)$ for some $z\in L^\times$.  Replacing $\delta$ by $z^{-1}\delta$ makes the
+ordered product $aI_2$.  Two lifts with the same product differ by a norm-one scalar cocycle,
+so Hilbert 90 makes them twisted conjugate.  This proves existence and uniqueness for each
+admissible scalar class.  In the division case, existence of the descent cocycle follows from
+the same Book 111 invariant calculation: an extension of even degree multiplies the quaternion
+invariant $1/2$ by an even integer and therefore splits the algebra.
+
+When $d=2$, the descended algebra itself is the quaternion cyclic algebra $(L/F,a)$.  A
+convenient representative is
 
 $$
 \delta_a=
@@ -545,7 +585,7 @@ The ordinary Weyl determinant is
 
 $$
 D_G(\gamma)
-=\det_F(1-\operatorname{Ad}(\gamma)mid
+=\det_F(1-\operatorname{Ad}(\gamma)\mid
 \mathfrak g/\mathfrak t).
 \tag{3.4}
 $$
@@ -573,66 +613,94 @@ X\longmapsto\operatorname{Ad}(\delta)\sigma(X)-X
 $$
 
 on $\mathfrak h=\operatorname{Res}_{L/F}\mathfrak{gl}_2$.  Its kernel is
-$\mathfrak i_\delta$.  For a twisted semisimple element define
+$\mathfrak i_\delta$.  For a twisted semisimple element define the **full tangent
+determinant** used in Book 113 by
 
 $$
-D^\sigma(\delta)
-=\det_F(1-\operatorname{Ad}(\delta)\sigmamid
+D_{\mathrm{full}}^\sigma(\delta)
+=\det_F(1-\operatorname{Ad}(\delta)\sigma\mid
 \mathfrak h/\mathfrak i_\delta).
 \tag{3.7}
 $$
 
-This determinant is invariant under twisted conjugacy.  It is nonzero with
-$\dim I_\delta=2$ exactly for strongly regular classes.
+This determinant is invariant under twisted conjugacy.  In the characteristic-zero scope it is
+nonzero with $\dim I_\delta=2$ exactly for strongly regular classes.
 
-It is tempting to replace (3.7) by (3.4) because the centralizers are isomorphic.  That is not
-valid without a calculation: $\mathfrak h$ has $F$-dimension $4d$, while $\mathfrak g$ has
-dimension four.  The extra semilinear directions contribute to (3.7).  The transfer factor in
-the next section records them.
-
-### 3.3 The base-change transfer factor
-
-For a matching regular pair define
+The full quotient contains both relative root directions and the nonfixed directions in the
+scalar extension of the norm centralizer.  Let $T=T_\gamma\simeq I_\delta$ and put
 
 $$
-\Delta_{L/F}(\gamma,\delta)
-=\left|\frac{D_G(\gamma)}{D^\sigma(\delta)}\right|_F^{1/2}.
+D_T^\sigma
+=\det_F(1-\sigma\mid
+\operatorname{Lie}T(L)/\operatorname{Lie}T(F)).
 \tag{3.8}
 $$
 
-This factor is positive and depends only on the two stable classes with the declared absolute
-value convention.  Its role is forced, not chosen: equality of normalized integrals is
-equivalent to (1.3).
-
-There is a useful root calculation.  Over a splitting field of the norm torus, a root direction
-of $\mathfrak h$ is an $L$-line on which the twisted operator is $c\sigma$.  The elementary
-determinant identity
+After conjugating $\delta$ into $T(L)$, its adjoint action is trivial on the toral algebra, so
+(3.8) is exactly the toral factor in (3.7).  In fact
+$\operatorname{Lie}T(L)=\operatorname{Lie}T(F)\otimes_FL$.  A normal basis, or the identity
+$\prod_{\zeta^d=1,\zeta\ne1}(1-\zeta)=d$, gives
 
 $$
-\det_F(1-c\sigma\mid L)=1-N_{L/F}(c)
+D_T^\sigma=d^{\dim T}=d^2
+\tag{3.8a}
+$$
+
+for every regular centralizer in $\mathrm{GL}_2$.  Define the **base-change relative
+discriminant** by
+
+$$
+D_{\mathrm{bc}}^\sigma(\delta)
+=D_{\mathrm{full}}^\sigma(\delta)/D_T^\sigma.
 \tag{3.9}
 $$
 
-follows by choosing a normal basis: the matrix of $c\sigma$ is a weighted cycle, and the
-constant term of its characteristic polynomial is $N(c)$.  The two root directions therefore
-contribute
+For $\mathrm{GL}_1$ this relative discriminant is $1$, as it must be: base change for a torus
+has no root directions.  The undivided determinant fails this rank-one test whenever
+$|D_T^\sigma|\ne1$.
+
+### 3.3 The relative root calculation
+
+For a matching regular pair,
+
+$$
+\boxed{D_{\mathrm{bc}}^\sigma(\delta)=D_G(\gamma).}
+\tag{3.10}
+$$
+
+To prove this, work over a splitting field of the norm torus.  A root direction of
+$\mathfrak h$ is an $L$-line on which the twisted operator is $c\sigma$.  A normal basis gives
+
+$$
+\det_F(1-c\sigma\mid L)=1-N_{L/F}(c):
+\tag{3.11}
+$$
+
+the matrix of $c\sigma$ is a weighted cycle, and evaluating its characteristic polynomial at
+$1$ gives the displayed value.  On the two root lines the norms of $c$ are $a/b$ and $b/a$,
+where $a,b$ are the eigenvalues of $\gamma$.  Their product is
 
 $$
 (1-a/b)(1-b/a)=D_G(\gamma).
 $$
 
-The remaining factor in $D^\sigma$ comes from the nonfixed directions of the centralizer
-algebra.  It is independent of the root values and is exactly compensated by the Jacobian
-used when the centralizer measure is descended from $L$ to $F$.  Thus with quotient measures
-defined from a common invariant differential form, (3.8) is the full conversion between raw
-orbital densities; no orbit-dependent sign remains for $\mathrm{GL}_2$.
+The remaining directions are precisely the toral directions divided out in (3.9), which
+proves (3.10).  Consequently
 
-At an unramified place the root lattices descend integrally, but the nonfixed semilinear
-directions of the centralizer can still contribute a constant determinant, notably when the
-residue characteristic divides $d$.  One must therefore retain (3.8) unless the chosen
-quotient differentials have been checked to make it one.  At a ramified place the different
-adds a further possible contribution.  This is why the normalized formulation remains
-primary.
+$$
+I_\delta^{\sigma,\mathrm{bc}}(\phi)
+=|D_G(\gamma)|^{1/2}O_\delta^\sigma(\phi),
+\qquad
+I_\delta^{\sigma,\mathrm{full}}(\phi)
+=|D_T^\sigma|^{1/2}I_\delta^{\sigma,\mathrm{bc}}(\phi).
+\tag{3.12}
+$$
+
+At any place $D_T^\sigma$ can be a nonunit when the residue characteristic divides $d$; for a
+one-dimensional torus its value is $d$.  No different is hidden in (3.8a).  A different factor
+arising from an integral-lattice choice is a Haar-measure conversion governed by (3.13), not a
+Weyl determinant.  Formula (3.12) is the required conversion to the normalization of Book 113;
+it is not an orbit-dependent rescaling of a transfer function.
 
 ### 3.4 Measure changes and products
 
@@ -642,7 +710,7 @@ $$
 O_\gamma\longmapsto(a/c)O_\gamma,
 \qquad
 O_\delta^\sigma\longmapsto(b/c)O_\delta^\sigma.
-\tag{3.10}
+\tag{3.13}
 $$
 
 The discriminants do not change.  A matching identity survives only if the test functions or
@@ -660,15 +728,15 @@ is multiplied by its inverse.  Hence
 
 $$
 a(\delta)O_\delta^\sigma(\phi)
-\tag{3.11}
+\tag{3.14}
 $$
 
 is invariant.  Also, for rational regular $\delta$, the product formula gives
 
 $$
-\prod_v|D^\sigma(\delta)|_v
+\prod_v|D_{\mathrm{bc}}^\sigma(\delta)|_v
 =\prod_v|D_G(\gamma)|_v=1.
-\tag{3.12}
+\tag{3.15}
 $$
 
 Local discriminant factors therefore cancel in the product, but they remain essential at each
@@ -684,14 +752,16 @@ $$
 \Pi=\operatorname{BC}_{L/F}(\pi)
 $$
 
-be defined.  Book 86 proves $\Pi^\sigma\simeq\Pi$.  An isomorphism
+be defined.  With the Book 86 convention
+$\Pi^\sigma(g)=\Pi(\sigma^{-1}(g))$, Book 86 proves $\Pi^\sigma\simeq\Pi$.  An isomorphism
 
 $$
 A_\sigma:\Pi\longrightarrow\Pi^\sigma
 $$
 
 is unique up to scalar when $\Pi$ is irreducible.  A twisted trace is meaningless until this
-scalar is fixed.
+scalar is fixed.  Thus $A_\sigma\Pi(g)A_\sigma^{-1}=\Pi(\sigma^{-1}(g))$, the convention used
+again in Chapter 11.
 
 For a generic $\Pi$, choose the Whittaker model for the trace-compatible additive character
 
@@ -739,10 +809,10 @@ $$
 =\chi_1(a)\chi_2(b)
 $$
 
-and the term with $a,b$ exchanged.  The tangent Jacobian converts by (3.8).  Hence
+and the term with $a,b$ exchanged.  The relative root Jacobian converts by (3.10).  Hence
 
 $$
-|D^\sigma(\delta)|^{1/2}\Theta_{\Pi,\sigma}(\delta)
+|D_{\mathrm{bc}}^\sigma(\delta)|^{1/2}\Theta_{\Pi,\sigma}(\delta)
 =|D_G(\gamma)|^{1/2}\Theta_\pi(\gamma).
 \tag{4.2}
 $$
@@ -823,6 +893,41 @@ $$
 
 which is the value of $\theta$ on the ordinary norm element downstairs.
 
+The finite calculation used here is the following Shintani trace lemma.  Let $k_d/k$ be finite
+cyclic, let $V_d=V\otimes_kk_d$ be a finite additive quotient with a nondegenerate trace
+pairing, and normalize counting measure by $|V_d|^{-1}$.  If $A_\sigma$ fixes the chosen
+polarization functional, then
+
+$$
+\operatorname{tr}\bigl(\rho_d(x)A_\sigma\bigr)
+=\operatorname{tr}\rho\bigl(N_\sigma x\bigr)
+\tag{4.4a}
+$$
+
+for the residue-torus characters and the Heisenberg representations occurring in a selected
+tame type.
+
+To prove the lemma for a torus character, write the twisted induced trace as a sum over the
+$\sigma$-fixed cosets.  Finite-field Hilbert 90 identifies those cosets with the downstairs
+cosets, and $\theta_d=\theta\circ N$ identifies their values.  For an additive layer, Fourier
+inversion gives
+
+$$
+\frac1{|V_d|}\sum_{x\in V_d}
+\psi\bigl(\operatorname{Tr}_{k_d/k}\langle x,y\rangle\bigr)
+=\begin{cases}1,&y=0,\\0,&y\ne0.
+\end{cases}
+\tag{4.4b}
+$$
+
+The fixed subspace and the image of $\sigma-1$ are annihilators, so (4.4b) cancels every
+nonfixed orbit and leaves exactly the downstairs Fourier sum.  A tame type is built by a
+finite succession of these additive layers followed by the residue torus.  Induction through
+the filtration proves (4.4a).  Stone--von Neumann uniqueness leaves one possible root of unity
+in the Heisenberg intertwiner; requiring it to fix the polarization, equivalently the local
+Whittaker functional, makes that scalar $1$.  This proves the lemma rather than assuming a
+twisted character identity from Book 86.
+
 At depth zero, the remaining finite quotient is a Frobenius orbit in a quadratic residue
 field.  The two terms are
 
@@ -831,12 +936,13 @@ $$
 \tag{4.4}
 $$
 
-Upstairs, semilinear fixed points form the corresponding Frobenius orbit over $k_L$; taking the
-$\sigma$-trace collapses it to (4.4).  At tame positive depth, the compact-induction trace is a
-finite Fourier sum on the trace-orthogonal complement of the torus.  Successive layers occur in
-dual pairs.  Their Fourier indices cancel, while the last active layer is carried by the field
-trace from $M$ to $K$.  Trace transitivity makes its phase exactly the downstairs phase.  The
-Whittaker normalization removes the common Gauss scalar.  Thus (4.2) holds.
+Upstairs, semilinear fixed points form the corresponding Frobenius orbit over $k_L$; the torus
+case of (4.4a) collapses its $\sigma$-trace to (4.4).  At tame positive depth, the
+compact-induction trace is a finite Fourier sum on the trace-orthogonal complement of the
+torus.  Successive layers occur in dual pairs and the additive case of (4.4a) cancels their
+nonfixed Fourier indices.  The last active layer is carried by the field trace from $M$ to
+$K$; trace transitivity makes its phase exactly the downstairs phase.  The Whittaker
+normalization removes the common Gauss scalar.  Thus (4.2) holds.
 
 If restriction makes the parameter reducible, the two torus embeddings become two character
 lines.  The same Mackey sum is then precisely the fixed-flag formula for the resulting
@@ -859,7 +965,7 @@ matching strongly regular pair $(\gamma,\delta)$,
 $$
 \boxed{
 |D_G(\gamma)|^{1/2}\Theta_\pi(\gamma)
-=|D^\sigma(\delta)|^{1/2}
+=|D_{\mathrm{bc}}^\sigma(\delta)|^{1/2}
 \Theta_{\Pi,\sigma}(\delta).}
 \tag{4.5}
 $$
@@ -1035,14 +1141,35 @@ $$
 $$
 
 This ratio is the finite version of cancellation between orbit multiplicity and stabilizer
-volume.  Iterating (5.9) cancels all congruence-layer factors.  A determinant from the
-nonfixed semilinear torus and orbit directions remains; it is recorded by the transfer factor
-below.
+volume.  Iterating (5.9) cancels all congruence-layer factors.
 
 The argument also handles nonmaximal orders.  Their unit filtration may have a larger nilpotent
 radical modulo $\mathfrak p$, but that radical is an additive $k_F$-space; (5.7) applies to it.
 The reduced quotient is a product of finite multiplicative groups, handled by (5.6).  No
 smoothness assertion about the whole nonmaximal order is being assumed.
+
+Here is the exact descent statement used in the mass calculation.  Fix $m$ and set
+
+$$
+A_{c,m}=(R_c\otimes_{\mathcal O_F}\mathcal O_L)/\mathfrak p_F^m.
+$$
+
+Choose $t_0\in A_{c,m}^\times$ of norm $\gamma$; the residue and principal-unit arguments above
+prove that such a choice exists whenever the corresponding stable-lattice piece is nonempty.
+Every semilinear operator on that piece with $d$th power $\gamma$ is $ut_0\sigma$ with
+$N(u)=1$.  Equation (5.8) writes $u=x^{-1}\sigma(x)$, so conjugation by $x$ carries it to
+$t_0\sigma$.  The automorphisms left after this conjugation are exactly the fixed units
+$R_c/\mathfrak p_F^m$.  Therefore the groupoid of semilinear structures on the scalar-extended
+piece and the groupoid of descended $R_c$-lattice structures have the same mass.  Passing from
+$m$ to $m+1$ is compatible because (5.9) is one.  Inverse limits therefore preserve Haar
+mass, not merely the number of isomorphism classes.  This is the integral Shintani lemma for
+the lattice piece.
+
+Flags cause no new obstruction.  Replace the unit group by the subgroup preserving the flag;
+its successive quotients are a product of residue units and additive matrix spaces, so the same
+proof applies.  For a primitive endpoint, the last quotient is a free unit torsor and its
+cardinality cancels the corresponding stabilizer index.  Thus the integral Shintani lemma is
+equivariant for every finite lattice-chain correspondence used below.
 
 ### 5.4 The weighted descent theorem
 
@@ -1054,8 +1181,7 @@ shell,
 $$
 \boxed{
 |\mathscr L_L(\delta)|_{\mathrm w}
-=\Delta_{L/F}(\gamma,\delta)
-|\mathscr L_F(\gamma)|_{\mathrm w}.}
+=|\mathscr L_F(\gamma)|_{\mathrm w}.}
 \tag{5.10}
 $$
 
@@ -1064,9 +1190,9 @@ primitive endpoint vector, provided the relative-position labels are carried thr
 correspondence.
 
 **Proof strategy.** Decompose both groupoids by multiplier order and elementary-divisor data.
-On each piece, descend the semilinear structure through the residue quotient and then through
-the principal-unit filtration.  At every step, lift multiplicity cancels automorphism
-multiplicity.
+On each piece apply the integral Shintani lemma just proved.  It descends the semilinear
+structure through the residue quotient and then through the principal-unit filtration, with
+lift multiplicity cancelling automorphism multiplicity at every step.
 
 **Proof.** A $T_\delta$-stable lattice is stable under $\gamma=T_\delta^d$ and hence has one of
 the finitely many multiplier orders $R_c$ visible in the fixed determinant shell.  Choose an
@@ -1077,10 +1203,9 @@ the prescribed norm is a coboundary, so it descends to an $R_c$-lattice over $\m
 Conversely, extending a downstairs stable lattice to $\mathcal O_L$ and choosing the given
 norm representative produces the corresponding semilinear object.  Different choices are
 measured by the same cocycle group.  The layerwise ratio (5.9) cancels the integral lifting
-factors even when there is no bijection on bare isomorphism classes.  Comparing the remaining
-quotient differential lattices gives
-$|D_G(\gamma)/D^\sigma(\delta)|^{1/2}$, exactly the factor in (5.10).  Summing over multiplier
-orders proves the formula.
+factors even when there is no bijection on bare isomorphism classes.  The common centralizer
+measure gives the same stabilizer volume on the two descended groupoids.  Summing over
+multiplier orders proves (5.10).
 
 A chain is a lattice together with finitely many subquotients.  Their automorphism filtrations
 have the same multiplicative residue part and additive congruence layers, so the identical
@@ -1111,17 +1236,17 @@ statement a fundamental lemma rather than local patching.
 strongly regular pair $(\gamma,\delta)$,
 
 $$
-\boxed{I_\gamma(f_F^0)=I_\delta^\sigma(\phi_L^0).}
+\boxed{I_\gamma(f_F^0)=I_\delta^{\sigma,\mathrm{bc}}(\phi_L^0).}
 \tag{6.2}
 $$
 
 If a regular $\gamma$ is not in the local norm image, its matching stable twisted orbital
-distribution is zero.  In unnormalized form, (6.2) is exactly
+distribution and its ordinary unit orbital integral are both zero.  In unnormalized form,
+(6.2) is exactly
 
 $$
 O_\gamma(\mathbf1_{K_F})
-=\Delta_{L/F}(\gamma,\delta)^{-1}
-O_\delta^\sigma(\mathbf1_{K_L}).
+=O_\delta^\sigma(\mathbf1_{K_L}).
 \tag{6.3}
 $$
 
@@ -1133,9 +1258,9 @@ centralizer algebras.
 **Proof of Theorem 6.1.** If either side is nonzero, trace and determinant of the corresponding
 norm are integral and the determinant has the compatible unit valuation.  Equations (5.1) and
 (5.2) identify the two raw orbital integrals with the weighted groupoid cardinalities in
-(5.4).  Theorem 5.1 relates those cardinalities by the transfer factor.  Substituting its
-definition (3.8) gives (6.3), and multiplication by the two square-root discriminants gives
-(6.2).
+(5.4).  Theorem 5.1 identifies those cardinalities and gives (6.3).  The relative root identity
+(3.10) says that the two base-change discriminant factors are equal, so multiplying (6.3) by
+their common square root gives (6.2).  Lemma 6.2 below proves the off-image vanishing.
 $\square$
 
 It is worth isolating the decisive step.  A $T_\delta$-stable lattice does not generally arise
@@ -1145,22 +1270,49 @@ object.  Equation (5.9) makes the excess choices and excess automorphisms cancel
 that merely identifies the two buildings overlooks this issue.
 
 For a maximal unramified elliptic order, the congruence part of each groupoid has one object
-with unit stabilizer; the remaining scale is exactly the quotient-differential factor in
-(5.10).  For a nonmaximal order, extra stable lattice classes occur on both sides and their
+with unit stabilizer.  For a nonmaximal order, extra stable lattice classes occur on both sides and their
 layerwise ratios cancel in the same way.  For a split torus, quotienting its apartment removes
-the infinite translation direction, leaving a finite tube calculation with the same transfer
-factor.
+the infinite translation direction, leaving a finite tube calculation with the same mass.
 
 ### 6.3 Vanishing outside the norm image
 
-The phrase “the twisted orbital integral is zero” outside the norm image needs interpretation:
-there is no twisted class to integrate.  Define the stable twisted unit distribution on a
-regular ordinary class by
+The phrase “the twisted orbital integral is zero” outside the norm image first means that there
+is no twisted class to integrate.  For the unit function there is a stronger and necessary
+support assertion: its ordinary orbital integral vanishes there as well.
+
+**Lemma 6.2 (integral classes are unramified norms).** Suppose $L/F$ is unramified.  If
+$\gamma\in G(F)$ is regular semisimple and $O_\gamma(\mathbf1_{K_F})\ne0$, then
+
+$$
+\gamma\in N_{L/F}^{T_\gamma}(T_\gamma(L)).
+\tag{6.4}
+$$
+
+**Proof.** Nonvanishing gives a lattice $M$ on which $\gamma$ acts invertibly.  Thus
+$\gamma$ belongs to the unit group of the multiplier order of $M$ in the quadratic étale
+algebra $K=F[\gamma]$.
+
+If $K=F\times F$, both eigenvalues are units of $F$.  The norm on units of an unramified
+extension is onto: it is onto on residue-field units, and on each principal-unit quotient its
+linearization is the surjective residue-field trace.  Hence both eigenvalues are norms.
+
+If $K$ is a field, $K\otimes_FL$ is a product of unramified field extensions of $K$ (possibly
+the split product).  The same residue-norm and principal-unit argument makes
+
+$$
+N:(\mathcal O_K\otimes_{\mathcal O_F}\mathcal O_L)^\times
+\longrightarrow\mathcal O_K^\times
+$$
+
+surjective.  The element $\gamma$ is a unit in $K$, so it is a norm.  This proves (6.4) in
+both cases. $\square$
+
+Now define the stable twisted unit distribution on a regular ordinary class by
 
 $$
 SO_\gamma^\sigma(\phi_L^0)
-=\sum_{N^{\mathrm{st}}\delta=\gamma}I_\delta^\sigma(\phi_L^0).
-\tag{6.4}
+=\sum_{N^{\mathrm{st}}\delta=\gamma}I_\delta^{\sigma,\mathrm{bc}}(\phi_L^0).
+\tag{6.5}
 $$
 
 The regular fiber theorem makes this sum empty or a singleton.  Thus
@@ -1173,22 +1325,12 @@ unless $\gamma$ satisfies the torus norm equation (2.6), and Theorem 6.1 says
 
 $$
 SO_\gamma^\sigma(\phi_L^0)=I_\gamma(f_F^0)
-\tag{6.5}
+\tag{6.6}
 $$
 
-on the norm image.
-
-Equation (6.5) does not mean that $I_\gamma(f_F^0)$ vanishes for every integral nonnorm class.
-Indeed the ordinary unit can have a nonzero orbital integral there.  The standard base-change
-statement compares only the norm image; if one wants a function whose ordinary orbital
-integral is zero off that image, one applies the norm projector in the spherical Hecke algebra
-or the regular patching construction of Chapter 8.  Keeping these two formulations distinct
-prevents an impossible claim about $\mathbf1_{K_F}$.
-
-Accordingly, the **unit fundamental lemma** is (6.2) on matching classes.  A **complete transfer
-function** additionally includes off-image vanishing, and need not be the raw unit.  In global
-cyclic comparison, rational classes on the twisted side already satisfy the norm condition, so
-(6.2) is the required unramified identity.
+on the norm image.  Lemma 6.2 shows that its right side is zero off the norm image.  Therefore
+the raw hyperspecial unit is a complete transfer, not merely a match after restricting the
+index set.  This also reconciles Theorem 6.1 with the definition in Section 1.4.
 
 ### 6.4 Boundary and residue-characteristic checks
 
@@ -1273,8 +1415,7 @@ $T_\delta$, modulo its centralizer.  The stabilizer of a gallery is the intersec
 stabilizers of its vertices.
 
 The chain version of Theorem 5.1 relates the weighted groupoid cardinality of these twisted
-fixed galleries to that of ordinary $\gamma$-fixed galleries over $F$, with the same
-$\Delta_{L/F}$ quotient-differential factor as for vertices.  A cyclic orbit of gallery steps
+fixed galleries to that of ordinary $\gamma$-fixed galleries over $F$.  A cyclic orbit of gallery steps
 upstairs descends to one step downstairs whose coweight is the sum of the orbit.
 On the dual torus, summing a $d$-cycle of equal coweights is exactly
 
@@ -1291,8 +1432,25 @@ functions.  A based gallery carries a sequence of choices of one of the two coor
 directions.  The cyclic semilinear action permutes the $d$ copies of each choice.  A fixed
 choice is constant around the cycle and contributes weight $d(1,0)$ or $d(0,1)$.  After
 forgetting the ordering, these are the monomials $X_1^d$ and $X_2^d$.  Products of galleries
-give products of monomials, and lower-distance folds give the usual triangular Satake
-correction.  Hence the descended operator is exactly (7.2).
+give products of monomials.  The lower-distance folds can be checked without appealing to a
+spectral identity.  Let $C_m$ be the correspondence obtained from a cyclic string of $m$
+oriented elementary steps after descent.  Partition a string contributing to
+$\mathsf T_F*C_{m-1}$ according to whether its last step continues the last root direction or
+immediately reverses it.  Continuing gives $C_m$.  In a reversing pair, delete the two steps;
+their common scalar displacement is the central correspondence $\mathsf S_F$, and the
+remaining string contributes $C_{m-2}$.  Stabilizers are unchanged by deletion except for the
+finite set of choices already represented by convolution measure.  Thus, as correspondences,
+
+$$
+C_m=\mathsf T_F*C_{m-1}-\mathsf S_F*C_{m-2},
+\qquad C_0=2,\quad C_1=\mathsf T_F.
+\tag{7.4a}
+$$
+
+Induction gives $C_m=P_m$ of (7.6), whose monomial is $X_1^m+X_2^m$.  Adding a central step and
+forming convolution products proves the same assertion for every symmetric Laurent monomial,
+hence for the whole spherical algebra.  This establishes (7.2) geometrically, including every
+fold coefficient and sign.
 
 ### 7.3 Proof of spherical matching
 
@@ -1302,12 +1460,14 @@ $(\gamma,\delta)$,
 
 $$
 \boxed{
-I_\gamma(b_{L/F}\phi)=I_\delta^\sigma(\phi).}
+I_\gamma(b_{L/F}\phi)=I_\delta^{\sigma,\mathrm{bc}}(\phi).}
 \tag{7.5}
 $$
 
-Equivalently, the corresponding unnormalized integrals satisfy (1.3).  The identity is
-compatible with convolution, central translation, inversion, and cyclic towers.
+If a regular $\gamma$ is not in the torus-norm image, then
+$I_\gamma(b_{L/F}\phi)=0$.  Thus $b_{L/F}\phi$ is a complete regular transfer.  Equivalently,
+the corresponding unnormalized integrals are equal as in (1.3).  The identity is compatible
+with convolution, central translation, inversion, and cyclic towers.
 
 **Proof strategy.** Prove the identity first for convolution words in elementary double
 cosets by counting fixed galleries.  Apply weighted unramified descent to the gallery groupoid.
@@ -1319,12 +1479,18 @@ linear combination by the standard distance-one correspondence and the central s
 correspondence.  A convolution word expands as a finite weighted set of galleries.  Its
 twisted orbital integral is the weighted cardinality of the $T_\delta$-fixed gallery groupoid.
 The chain statement in Theorem 5.1 turns this into the weighted cardinality of the descended
-$\gamma$-fixed gallery groupoid with the factor $\Delta_{L/F}(\gamma,\delta)$.
+$\gamma$-fixed gallery groupoid.
 
 Section 7.2 identifies the operator represented by that descended groupoid with
 $b_{L/F}$ of the original convolution word.  Therefore its weighted cardinality is
-$O_\gamma(b_{L/F}\phi)$.  The unramified tangent and measure calculation converts this raw
-identity to (7.5).  Linearity proves the theorem for all $\phi$.
+$O_\gamma(b_{L/F}\phi)$.  The relative root identity (3.10) converts this raw identity to
+(7.5).  Linearity proves the theorem for all $\phi$.
+
+If $\gamma$ is not a torus norm, the semilinear groupoid over it is empty.  Conversely, a
+fixed descended gallery in one of the coweight correspondences reconstructs, layer by layer,
+the semilinear structure of Section 5; the only obstruction is precisely the torus norm class
+of (2.6).  Hence the descended fixed-gallery groupoid is empty as well.  This proves the
+off-image assertion for every convolution word and therefore for every spherical function.
 
 Central translations add $(r,r)$ to every coweight and commute with (7.4).  Reversing a gallery
 proves compatibility with inversion.  In a tower, substitution by $d_1$th powers followed by
@@ -1336,7 +1502,7 @@ Let $\mathsf T_F$ and $\mathsf T_L$ be the normalized standard Hecke operators, 
 transforms $X_1+X_2$ and $Y_1+Y_2$.  Let $\mathsf S_F$ have transform $X_1X_2$.  Define
 
 $$
-P_0=2,qquad P_1=\mathsf T_F,qquad
+P_0=2,\qquad P_1=\mathsf T_F,\qquad
 P_m=\mathsf T_F*P_{m-1}-\mathsf S_F*P_{m-2}.
 \tag{7.6}
 $$
@@ -1450,11 +1616,13 @@ constructs $f$ and $\phi$ with
 
 $$
 I_\gamma(f)=a(\gamma)
-=I_\delta^\sigma(\phi)
+=I_\delta^{\sigma,\mathrm{bc}}(\phi)
 \tag{8.4}
 $$
 
-throughout the slice.  The ratio of Jacobians is precisely the transfer factor (3.8).
+throughout the slice.  The relative root Jacobians agree by (3.10).  If the twisted side is
+written with Book 113's full tangent determinant instead, the remaining quotient is exactly
+the toral conversion in (3.12).
 
 ### 8.3 Patching compact regular data
 
@@ -1489,7 +1657,7 @@ $f\in C_c^\infty(G(F))$ such that
 $$
 I_\gamma(f)=
 \begin{cases}
-I_\delta^\sigma(\phi),&N^{\mathrm{st}}\delta=\gamma,\\
+I_\delta^{\sigma,\mathrm{bc}}(\phi),&N^{\mathrm{st}}\delta=\gamma,\\
 0,&\gamma\text{ is not a norm},
 \end{cases}
 \tag{8.5}
@@ -1558,105 +1726,111 @@ discriminant square class is not enough.
 ### 9.2 The finite triangular system
 
 Let $S_{F,j}$ be the normalized characteristic function of the stabilizer of a length-$j$
-segment in $X_F$, with $S_{F,0}=\mathbf1_{K_F}$.  Let $S_{L,j}$ be the corresponding function
-upstairs.  Choose representatives $C_0,\ldots,C_r$ of the finitely many level-$n$ regular
-strata in the norm image.  Put
+segment in $X_F$, with $S_{F,0}=\mathbf1_{K_F}$, and define $S_{L,j}$ similarly.  These
+functions distinguish fixed-depth strata, but they do not by themselves distinguish every
+trace--determinant congruence class.  A complete interpolation system must also contain the
+regular-slice functions of Chapter 8.
+
+Fix a germ threshold $m_0$.  Refine the finitely many level-$n$ strata of discriminant depth
+less than $m_0$ into disjoint compact-open balls $C_1,\ldots,C_r$ in the invariant coordinates
+$(\operatorname{tr},\det)$, with centralizer type and norm coset fixed on each ball.  Section
+8.2 constructs an ordinary function $R_{F,i}$ whose normalized orbital integral is $1$ on
+$C_i$ and $0$ on every other refined ball.  Concretely, choose a compact-open orbit box, divide
+its characteristic function by its quotient volume and relative Jacobian, and average over
+the invariant ball.  Its nonzero diagonal value is the finite index
 
 $$
-A_{ij}=I_{\gamma_i}(S_{F,j}),
-\qquad
-B_{ij}=I_{\delta_i}^\sigma(S_{L,j}),
+\frac{\operatorname{vol}(J_i)}
+{\operatorname{vol}(T_i\cap J_i)}.
 \tag{9.2}
 $$
 
-where $(\gamma_i,\delta_i)$ is a matching pair in $C_i$.
-
-Order the strata from deepest fixed subtree to shallowest, separately for vertex and edge
-cores.  A length-$j$ segment can be fixed only when it lies in the truncated fixed subtree.
-At the largest visible $j$ for a stratum, the core segment occurs and has nonzero reciprocal
-stabilizer volume.  Consequently the matrices obtained from (9.2) by selecting one new segment
-length at each depth are triangular with nonzero diagonal.
-
-The diagonal entries are explicit.  If $\mathcal S$ is the unique new core segment, its
-contribution is
+For a selected invariant function $\phi$, local constancy makes
 
 $$
-\frac{\operatorname{vol}(\operatorname{Stab}(\mathcal S))}
-{\operatorname{vol}(T\cap\operatorname{Stab}(\mathcal S))}
+v_i=I_{\delta_i}^{\sigma,\mathrm{bc}}(\phi)
 \tag{9.3}
 $$
 
-downstairs, and the same quotient with the twisted centralizer upstairs.  Every group in (9.3)
-is a compact open subgroup whose index is computed in a finite quotient of
-$\mathrm{GL}_2(\mathcal O/\mathfrak p^m)$ or of a quadratic order.  Thus all entries, and hence
-all solutions, are explicit rational functions of the relevant residue cardinalities and
-unit indices.
-
-Suppose a twisted invariant function
+independent of the matching representative over $C_i$.  Then
 
 $$
-\phi=\sum_{j=0}^n b_jS_{L,j}
+f_{\mathrm{shallow}}=\sum_{i=1}^rv_iR_{F,i}
 \tag{9.4}
 $$
 
-is prescribed.  Its value vector on the strata is $v_i=\sum_jB_{ij}b_j$.  Solve
+matches on every shallow norm ball and vanishes on every shallow nonnorm ball.  To express it
+in a preferred finite-level basis, adjoin the $S_{F,j}$ and row-reduce the finite matrix of
+their orbital values together with the $R_{F,i}$.  Ordered first by invariant ball and then by
+fixed depth, the matrix is block triangular; (9.2) gives its nonzero diagonal.  Backward
+substitution is therefore an effective algorithm, and every entry is a stabilizer count in a
+finite quotient of $\mathrm{GL}_2(\mathcal O/\mathfrak p^m)$ or of a quadratic-order unit
+group.
+
+### 9.3 Finite germ tails near the scalar locus
+
+A fixed-level function encounters regular classes of arbitrarily large depth as they approach
+a scalar.  It is therefore not enough to solve a finite list and ignore the tail.  A universal
+branch formula depending only on $q$ would be false: torus stabilizers change with the
+multiplier order, and ramification can change the trace cokernel on a principal-unit layer.
+The correct finite control is the two-germ theorem.
+
+Fix a scalar congruence class $z$ meeting the support.  For sufficiently deep regular annuli,
+Book 111's rank-two slice calculation gives
 
 $$
-\sum_jA_{ij}a_j=v_i
+I_{z(1+X)}(f)
+=\Gamma_{0,\mathcal A}(X)f(z)
++\Gamma_{N,\mathcal A}(X)\mu_{N,z}(f),
 \tag{9.5}
 $$
 
-by backward substitution, deepest stratum first.  The result
+for each split or quadratic approach type $\mathcal A$.  The twisted analogue and its relative
+root coordinate under the norm are obtained by the following calculation.
+
+At a scalar limit $\delta_0$, semilinear descent identifies the transverse tangent algebra with
+the trace-zero subspace of the fixed degree-two algebra $B_{\delta_0}$.  If
+$B_{\delta_0}\simeq M_2(F)$, its nilpotent cone has the zero orbit and one regular orbit, so
 
 $$
-f=\sum_ja_jS_{F,j}
+I_{\delta_0(1+Y)}^{\sigma,\mathrm{bc}}(\phi)
+=\Gamma_0^\sigma(Y)c_0^\sigma(\phi)
++\Gamma_N^\sigma(Y)c_N^\sigma(\phi).
+\tag{9.5a}
+$$
+
+If $B_{\delta_0}$ is quaternion division, $x^2=0$ forces $x=0$, so only the zero coefficient
+occurs.  To compare (9.5a) with (9.5), take a companion slice and partition it by the valuation
+of an off-diagonal coordinate.  The semilinear root equation on each shell is $1-c\sigma$.
+Identity (3.11) turns its determinant into $1-N(c)$, which is the ordinary root equation.
+Moreover, the solutions on a finite congruence layer form a torsor under its kernel, while the
+same kernel enlarges the stabilizer.  The two factors cancel in the weighted quotient mass.
+Passing through the finite layers and then to the inverse limit identifies the zero and regular
+coefficients with those in (9.5).  In the division case the ordinary regular coefficient is
+therefore prescribed to be zero.  Thus an infinite tail is determined by at most two numbers
+on each scalar congruence class, not by one unverified tree recurrence.
+
+These two numbers can be interpolated independently.  Choose $F_{0,z}$ supported in a small
+central neighborhood, constant there with $F_{0,z}(z)=1$.  Choose $F_{N,z}$ supported in a
+small thickening of a compact-open piece of the regular nilpotent orbit, disjoint from the
+center, and normalize it by $\mu_{N,z}(F_{N,z})=1$.  Then
+
+$$
+\begin{pmatrix}
+F_{0,z}(z)&\mu_{N,z}(F_{0,z})\\
+F_{N,z}(z)&\mu_{N,z}(F_{N,z})
+\end{pmatrix}
+=
+\begin{pmatrix}1&*\\0&1\end{pmatrix}.
 \tag{9.6}
 $$
 
-matches $\phi$ on every visible norm stratum.  Add slice functions supported in the finitely
-many nonnorm strata to force zero there.  This is an algorithm, not a dimension count: the
-support implication proves triangularity, (9.3) proves the diagonal is nonzero, and backward
-substitution gives each coefficient.
-
-### 9.3 Tail recurrences near the scalar locus
-
-A fixed-level function encounters regular classes of arbitrarily large depth as they approach
-a scalar.  It is therefore not enough to solve a finite list and ignore the tail.  The tail is
-controlled by a recurrence.
-
-Once the fixed tube contains every segment of length at most $n$ meeting a chosen core, moving
-one layer deeper attaches identical finite branches to each boundary vertex.  Every new branch
-has one initial edge and $q$ forward edges.  Weighted vertex and segment counts therefore obey
-a linear recurrence with coefficients determined by $q$ and compact-stabilizer indices.  On
-the twisted side the same statement holds with $q_L$ and the semilinear fixed branches.  Norm
-descent identifies the orbit of boundary branches and converts the recurrence by the tangent
-factor (3.8).
-
-Concretely, let $V_c$ and $E_c$ denote weighted fixed vertices and oriented edges visible at
-depth $c$.  Away from the core,
-
-$$
-V_{c+1}-V_c=q^c u_c,
-\qquad
-E_{c+1}-E_c=(q+1)q^c u_c,
-\tag{9.7}
-$$
-
-where $u_c$ is the reciprocal torus-stabilizer index of one boundary orbit.  Higher segment
-counts have the same first-order form after shifting the length.  The exact value of $u_c$
-depends on the multiplier order, but its transition
-$u_{c+1}/u_c$ is the index of one principal-unit layer and is therefore explicit.  The
-ramified norm map sends that layer through the trace map on its additive quotient; kernel and
-cokernel sizes give the conversion factor.
-
-It follows that if (9.5) holds through the first complete layer beyond level $n$, then the two
-sides satisfy the same recurrence and match for every deeper class.  The finite system must
-therefore include the core strata, all depths through $n$, and one recurrence-check row for
-each core parity.  No infinite interpolation is required.
-
-The alternating vertex-edge combination illustrates the mechanism.  New terminal vertices
-and their incident edges cancel, so its tail is constant.  More general segment combinations
-have nonconstant tails, but (9.7) determines them from finitely many initial values.
+Subtracting the starred multiple of $F_{N,z}$ makes this the identity matrix.  Therefore any
+prescribed pair of germ coefficients is realized by a unique linear combination of the two
+normalized functions.  A level-$n$ compact function has only finitely many scalar congruence
+classes in its determinant shells.  Adding these finitely many germ interpolators to
+$f_{\mathrm{shallow}}$ controls every deeper annulus.  These are the justified two finite tail
+rows used below.
 
 ### 9.4 The ramified invariant-level theorem
 
@@ -1668,34 +1842,43 @@ noninvariant wild cosets.
 
 **Theorem 9.1 (ramified invariant-level matching).** Let $L/F$ be finite cyclic, possibly
 ramified, and let $\phi$ be selected invariant of level $n$.  Then there is an explicitly
-recursive compactly supported $f$ on $G(F)$ such that
+computable compactly supported $f$ on $G(F)$ such that
 
 $$
-I_\gamma(f)=I_\delta^\sigma(\phi)
+I_\gamma(f)=I_\delta^{\sigma,\mathrm{bc}}(\phi)
 \tag{9.8}
 $$
 
 for every matching strongly regular pair and $I_\gamma(f)=0$ on regular nonnorm strata.  The
-coefficients of $f$ are obtained from (9.3)--(9.6), with the tail rows of Section 9.3.  The
+coefficients of $f$ are obtained from the finite regular-slice matrix (9.2)--(9.4) and the
+two germ rows (9.5)--(9.6).  The
 construction commutes with central translation, inversion, and twisting through determinant
 and norm.
 
-**Proof strategy.** Partition by finite invariant data, solve the fixed-segment system on the
-visible strata, and use the common tail recurrence near the scalar boundary.  Use regular
-descent to remove the finitely many nonnorm values.
+**Proof strategy.** Partition by finite invariant data, solve the finite regular-slice system
+on the shallow strata, and interpolate the two germ coefficients on each deep scalar tail.
 
 **Proof.** Compact support leaves finitely many determinant shells.  On each shell, the level
-$n$ data produce finitely many core and depth strata.  Triangularity and the nonzero core
-weights solve (9.5).  Include one full transition layer; Section 9.3 then propagates equality
-to every deeper regular class.  The regular norm fiber makes the twisted value single-valued.
-The norm coset is locally constant on each regular stratum, so Theorem 8.1 supplies finite
-corrections supported on nonnorm pieces.  Central translation, inversion, and norm twisting
-preserve fixed subtrees and multiply matching values by the same scalar. $\square$
+$n$ data produce finitely many shallow invariant balls and finitely many scalar congruence
+classes.  Formula (9.4) matches the former and is zero on the nonnorm balls.  For each split
+scalar class, compute the two twisted germ coefficients by the finite shell sum defining
+$\phi$; for a division class use the zero coefficient and set the absent regular coefficient to
+zero.  In both cases, the shell calculation following (9.5a) identifies their norm descent.
+The invertible matrix (9.6) supplies the ordinary germ correction, which matches every
+sufficiently deep annulus.  Increase $m_0$ once so that
+the finitely many annuli between the shallow partition and the germ range are included among
+the regular balls.  These regions exhaust the regular quotient meeting the support.
+
+The regular norm fiber makes every twisted value single-valued, and the norm coset is locally
+constant away from the scalar divisor.  Central translation and inversion transport the
+finite partition and the two germ functionals.  Multiplication by a determinant character
+multiplies matching values by the same norm value.  Hence all three operations commute with the
+construction. $\square$
 
 This theorem is the ramified matching statement at the level of invariant compact data.  It
 does not say that $\mathbf1_{K_L}$ transfers to $\mathbf1_{K_F}$, nor that the transfer is
-unique as a function.  It gives a canonical recursive representative once the segment basis
-and stratum ordering are fixed.
+unique as a function.  It gives an algorithmic representative once the slice, germ, and
+segment bases and the stratum ordering are fixed.
 
 ## 10. Iwahori and congruence matching
 
@@ -1761,14 +1944,14 @@ these cells and central translations.
 Iwahori subspace of $G(L)$ there is a function $f$ in the corresponding finite segment
 subspace of $G(F)$ satisfying regular cyclic matching.  For unramified $L/F$, this transfer is
 the restriction of the spherical/gallery base-change operation when $\phi$ is spherical.  For
-ramified $L/F$, its coefficients are the edge-core and recurrence solution of Theorem 9.1.
+ramified $L/F$, its coefficients are the regular-slice and germ solution of Theorem 9.1.
 
 **Proof.** Decompose the orbital integrals into fixed and relative-position edge groupoids.
-The diagonal weight is nonzero because the core edge or the first edge from a core vertex has a
-nonzero compact stabilizer.  Order by fixed depth and relative position; this gives the same
-triangular matrix as in Section 9.2 with separate parity blocks.  Backward substitution matches
-the prescribed values, and the tail recurrence propagates them.  Nonnorm strata are removed by
-regular descent. $\square$
+On each shallow invariant ball the quotient volume of the core edge, or of the first edge from
+a core vertex, is nonzero; use it as the diagonal orbit box in Section 9.2.  Relative position
+refines the finite partition and gives separate parity blocks.  Regular-slice interpolation
+matches those blocks, while the two germ rows of Section 9.3 match every deep tail.  Nonnorm
+balls receive value zero by construction. $\square$
 
 At a split local algebra $F^d$, the theorem reduces to convolution as in (2.10).  At an
 unramified field place, $q_L=q_F^d$ and the probability normalization in (10.2) is essential.
@@ -1803,18 +1986,20 @@ Formula (10.4) is exact even for scalar reduction.  A residue eigenline count se
 first edge and fails when an order fixes several lifts.  Segment stabilizers record every lift
 and its correct weight.
 
-Applying Theorem 9.1 to the normalized functions for lengths $0,\ldots,n$ gives a transfer
-matrix
+Applying Theorem 9.1 to the normalized functions for lengths $0,\ldots,n$ gives a finite
+transfer matrix $\mathbf M_n$: its shallow block consists of the stabilizer indices (9.2), and
+its two tail rows are the germ matrix (9.6).  Row reduction gives
 
 $$
-\mathbf B_n=(B_{ij})
-\quad\longmapsto\quad
-\mathbf A_n^{-1}\mathbf B_n.
+(S_{L,0},\ldots,S_{L,n})
+\longmapsto
+(S_{F,0},\ldots,S_{F,n},R_{F,1},\ldots,F_{N,z})\mathbf M_n.
 \tag{10.5}
 $$
 
-This is the level-$K_0$ base-change matrix.  Its entries are finite subgroup indices and are
-therefore computable without selecting a representative inside each conjugacy orbit.
+Only the finitely many regular-slice and germ functions meeting these segment supports occur.
+Every entry is a finite subgroup index or a finite nilpotent-orbit sum, so the matrix is
+computable without choosing a representative inside each conjugacy orbit.
 
 ### 10.4 Primitive endpoints and $K_1$-level
 
@@ -1851,7 +2036,7 @@ not by multiplying $n$ by $e$.
 **Corollary 10.2 (selected $K_0/K_1$ matching).** Every selected $K_0$- or character-projected
 $K_1$-function of finite level on $G(L)$ has a germ-compatible regular transfer on $G(F)$,
 computed by (10.5) and (10.7), provided the relevant character filtration lies in the selected
-tame range.  If norm pullback kills the top character, the recursion automatically moves the
+tame range.  If norm pullback kills the top character, finite character orthogonality moves the
 transfer to the lower surviving level.
 
 The proof is the segment theorem plus finite character orthogonality.  Ramified dyadic wild
@@ -1863,12 +2048,27 @@ quadratic refinements are excluded for the same reason as in Section 4.4.
 
 Let $J_L\subset G(L)$ be compact modulo center, stable under $\sigma$, and let $\lambda_L$ be a
 finite-dimensional representation equipped with an intertwiner $a_\sigma$ satisfying
-$a_\sigma^d=1$.  On a fixed central-character quotient define the twisted type function
+$a_\sigma^d=1$.  We use the convention
+
+$$
+a_\sigma\lambda_L(j)a_\sigma^{-1}=\lambda_L(\sigma^{-1}(j)),
+\qquad
+A_\sigma\Pi(j)A_\sigma^{-1}=\Pi(\sigma^{-1}(j)).
+$$
+
+The induced operator on the multiplicity space is
+
+$$
+\mathcal A_\sigma(T)=A_\sigma T a_\sigma^{-1},
+\qquad T\in\operatorname{Hom}_{J_L}(\lambda_L,\Pi).
+$$
+
+On a fixed central-character quotient define the twisted type function
 
 $$
 e_{\lambda_L,\sigma}(j)
 =\frac{\dim\lambda_L}{\operatorname{vol}(J_L/Z_L)}
-\operatorname{tr}(\lambda_L(j^{-1})a_\sigma),
+\operatorname{tr}(\lambda_L(j^{-1})a_\sigma^{-1}),
 \qquad j\in J_L,
 \tag{11.1}
 $$
@@ -1877,10 +2077,17 @@ and extend it by zero.  Twisted Schur orthogonality gives
 
 $$
 \operatorname{tr}(\Pi(e_{\lambda_L,\sigma})A_\sigma)
-=\operatorname{tr}igl(A_\sigmamid
-\operatorname{Hom}_{J_L}(\lambda_L,\Pi)igr).
+=\operatorname{tr}\bigl(\mathcal A_\sigma\mid
+\operatorname{Hom}_{J_L}(\lambda_L,\Pi)\bigr).
 \tag{11.2}
 $$
+
+Indeed, decompose the $J_L$-isotypic part as
+$\lambda_L\otimes\operatorname{Hom}_{J_L}(\lambda_L,\Pi)$ and integrate the first tensor
+factor.  Matrix-coefficient orthogonality makes the operator defined by (11.1) act there by
+$a_\sigma^{-1}$.  The following $A_\sigma$ acts by $a_\sigma$ on the first factor and by
+$\mathcal A_\sigma$ on the second.  The first two actions cancel.  All other isotypic parts
+integrate to zero.  This proves (11.2), including its scalar and inverse conventions.
 
 If the selected type occurs with multiplicity one and the normalizations agree, the right side
 is one.  Downstairs the ordinary type idempotent
@@ -1951,7 +2158,8 @@ $$
 
 The conjugate embedding contributes $\bar\theta(x^{q_F})$.  All other terms lie in free finite
 orbits under a nontrivial additive character and sum to zero.  Stabilizers are the unit groups
-of the same descended torus, so their quotient volumes agree after the transfer factor.
+of the same descended torus, so their quotient volumes agree under the common centralizer
+measure and the relative root identity (3.10).
 
 If $K\subset L$, the base-changed parameter splits into two characters.  The two terms in
 (11.5) then become the two invariant-flag terms of the principal-series type upstairs.  This is
@@ -2008,12 +2216,15 @@ irreducible principal series, special representation, depth-zero dihedral superc
 tame positive-depth dihedral supercuspidal in the selected local base-change domain.  Put
 $\Pi=\operatorname{BC}_{L/F}(\pi)$, allowing the selected discrete-to-principal transition.
 Choose the minimal type functions downstairs and the normalized twisted type functions
-upstairs as in (11.1)--(11.3).  After applying the segment projection and norm-character
-projection prescribed in Chapters 9 and 10, the pair has germ-compatible regular orbital
-matching.  Moreover,
+upstairs as in (11.1)--(11.3).  Let $f_\pi$ be the explicit ordinary finite-level combination
+obtained from the twisted type function by the segment, regular-slice, germ, and norm-character
+matrices of Chapters 9 and 10.  Then $(f_\pi,e_{\lambda_L,\sigma})$ has germ-compatible regular
+orbital matching.  In rows where the ordinary minimal type idempotent already has the computed
+orbital vector, $f_\pi=e_{\lambda_F}$; no such equality of functions is assumed in the other
+rows.  Moreover,
 
 $$
-\operatorname{tr}\pi(e_{\lambda_F})
+\operatorname{tr}\pi(f_\pi)
 =\operatorname{tr}(\Pi(e_{\lambda_L,\sigma})A_\sigma)=1
 \tag{11.9}
 $$
@@ -2026,8 +2237,11 @@ Central translates, contragredients, and selected character twists satisfy the s
 **Proof.** Principal and special rows are Section 11.2.  The depth-zero finite orbit sum is
 Section 11.3.  Tame positive depth reduces shell by shell to the Fourier orthogonality (11.8)
 and trace transitivity (11.7).  The invariant support and split-tube corrections are supplied by
-Theorems 9.1 and 10.1.  Twisted and ordinary Schur orthogonality prove (11.9).  The operations in
-the last sentence preserve norm, inversion, and determinant values. $\square$
+Theorems 9.1 and 10.1.  Twisted Schur orthogonality gives the second trace in (11.9).  The
+orbital identity just proved, the character identity (4.5), and Weyl integration give the first;
+the germ audit of Section 9.3 ensures that no singular boundary term was omitted.  The same argument gives
+vanishing on selected packets without the type.  The operations in the last sentence preserve
+norm, inversion, and determinant values. $\square$
 
 The theorem proves precisely the ramified and level-specific statements needed for the
 selected cyclic comparison.  It does not extrapolate from trace one to an orbital identity;
@@ -2049,7 +2263,7 @@ Three assertions must be separated:
 2. matching of nilpotent germ coefficients;
 3. equality of separately weighted scalar distributions.
 
-The first has been proved.  We now establish the second and describe the third.  Quadratic
+The first has been proved.  We now establish the second and describe the third.  Quaternion
 division-centralizer scalar classes form a fourth-looking term, but geometrically they belong to
 the scalar-norm stratum and must be unfolded through their actual quaternionic centralizer.
 
@@ -2072,29 +2286,43 @@ I_{z(1+X)}(f)
 \tag{12.1}
 $$
 
-on sufficiently small regular annuli.  The zero-orbit coefficient carries the universal
-square-root behavior; the regular-nilpotent coefficient is bounded after Weyl normalization.
-
-On the twisted side, nilpotent germs are invariant distributions for the semilinear tangent
-operator.  Taking the $d$th power maps its zero orbit to zero and its unique rank-one
-semilinear degeneration to the ordinary regular nilpotent orbit.  On the transverse slice, the
-Jacobian ratio is the transfer factor (3.8).  Consequently
+on sufficiently small regular annuli.  In the normalization of Book 111,
 
 $$
-I_{\delta(1+Y)}^\sigma(\phi)
+\Gamma_0(X)\longrightarrow0,
+\qquad
+\Gamma_{\mathrm{reg}}(X)\longrightarrow c_{\mathcal A}\ne0
+\tag{12.1a}
+$$
+
+on every sufficiently deep ray of fixed quadratic-algebra type $\mathcal A$.  Before Weyl
+normalization the regular-nilpotent coefficient has reciprocal-square-root growth.  Reversing
+these limits would incorrectly make a normalized regular limit determine $f(z)$.
+
+On the twisted side, the descended scalar-norm algebra determines the germ space.  If it is
+split, it is $M_2(F)$; semilinear descent identifies the tangent slice with its trace-zero
+subspace, whose nilpotent cone consists of zero and one regular orbit.  If it is quaternion
+division, it has no nonzero nilpotent element, since $x^2=0$ implies $x=0$.  Thus a split
+scalar-norm stratum has exactly two germs, while a division stratum has only the zero germ.
+
+In the split case write
+
+$$
+I_{\delta(1+Y)}^{\sigma,\mathrm{bc}}(\phi)
 =\Gamma_0^\sigma(Y)c_0^\sigma(\phi)
-+\Gamma_{\mathrm{reg}}^\sigma(Y)c_N^\sigma(\phi),
++\Gamma_{\mathrm{reg}}^\sigma(Y)c_N^\sigma(\phi).
 \tag{12.2}
 $$
 
-with the two coefficients carried to those of (12.1).  There is no third rank-two germ.
-
-One can see this without a general germ theorem.  In a companion-matrix slice, the invariant
-coordinate is the discriminant.  Summing valuation shells of an off-diagonal coordinate splits
-them into shells collapsing to zero and shells converging to the rank-one nilpotent orbit.  The
-first geometric series gives the square-root coefficient; the second is bounded.  Replacing
-ordinary conjugation by semilinear conjugation changes the linear equation by
-$1-\operatorname{Ad}(\delta)\sigma$ and hence only by the declared Jacobian.
+Taking the $d$th power carries its two tangent orbits to the two ordinary nilpotent orbits.  To
+compare coefficients, use a companion slice and sum by the valuation of one off-diagonal
+coordinate.  Shells collapsing to zero give $\Gamma_0$; shells approaching the nonzero
+nilpotent orbit give $\Gamma_{\mathrm{reg}}$.  In the semilinear calculation the root equation
+is $1-c\sigma$.  Identity (3.11) turns its determinant into $1-N(c)$, the ordinary root
+equation.  On each congruence layer the solution set is a torsor under the kernel and the same
+kernel enlarges the stabilizer, so weighted masses agree.  Passing to inverse limits proves
+that the two coefficients in (12.2) map to those of (12.1), in every residue characteristic.
+There is no third rank-two germ.
 
 ### 12.3 Germ-compatible transfer
 
@@ -2103,41 +2331,40 @@ every finite truncation of a near-scalar fixed subtree.  New lifts and new autom
 layer by layer.  Passing to the limit identifies both germ coefficients.  Hence the unit
 fundamental lemma is germ-compatible.
 
-For the ramified segment functions, the tail recurrence (9.7) separates the two coefficients.
-The alternating vertex-edge direction kills the regular-nilpotent coefficient: every new
-terminal vertex is paired with its incident edge.  A small scalar-neighborhood function
-controls the zero coefficient.  The resulting $2\times2$ system is triangular because the
-alternating function has zero scalar value after central correction, while the neighborhood
-function has nonzero zero-orbit coefficient.
+For ramified segment functions, finite shell sums compute the two coefficients.  The
+alternating vertex-edge direction kills the regular-nilpotent coefficient: every new terminal
+vertex is paired with its incident edge.  The two explicit functions of (9.6) then interpolate
+the required pair.  This is the complete finite tail calculation; no universal branch
+recurrence is assumed.
 
 **Theorem 12.1 (germ extension).** The unramified spherical matching of Theorem 7.1 and the
-selected level matching of Theorem 11.1 extend across the regular singular boundary after a
-unique choice of the two germ coefficients modulo distributions supported at the scalar.  The
-regular-nilpotent coefficients agree under norm descent, and a central correction can prescribe
-the zero-orbit coefficient without changing regular matching away from a chosen scalar
-neighborhood.
+selected level matching of Theorem 11.1 extend across the regular singular boundary.  On a
+split scalar-norm stratum both nilpotent coefficients agree under norm descent.  On a division
+scalar-norm stratum only the zero germ occurs.  The remaining ambiguity consists of regular
+orbital-null functions and the separately normalized scalar distribution.
 
-**Proof.** The two-germ expansions (12.1)--(12.2) show that only two coefficients must be
-matched.  Weighted unramified descent identifies both for spherical functions.  In the
-ramified selected case, the segment recurrence identifies the regular coefficient, while the
-finite Fourier sums of Chapter 11 introduce no new nilpotent orbit.  The scalar-neighborhood
-and alternating functions give a triangular coefficient matrix with nonzero diagonal, so it
-can be solved. $\square$
+**Proof.** The descent-algebra argument and shell calculation above classify and compare all
+possible germs.  Weighted unramified Shintani descent identifies both coefficients for
+spherical functions.  In the ramified selected case, finite segment and type sums compute the
+two twisted coefficients, and (9.6) realizes their ordinary images.  The finite Fourier sums
+of Chapter 11 introduce no new nilpotent orbit.  A regular orbital-null function may still be
+added, and normalized regular limits do not fix a scalar point value; these are exactly the
+stated ambiguities. $\square$
 
-The qualification “modulo distributions supported at the scalar” is unavoidable.  Regular
-orbital integrals do not determine the value of a test function at one central point.
+### 12.4 Quaternion division-centralizer terms
 
-### 12.4 Quadratic division-centralizer terms
-
-Let $L/F$ be quadratic and $a\notin N_{L/F}(L^\times)$.  The representative $\delta_a$ of
-(2.13) has twisted centralizer
+Suppose $d$ is even and $[a]$ is the nontrivial order-two class in
+$F^\times/N_{L/F}(L^\times)$.  Let $\delta_a$ be the scalar-norm class constructed in Section
+2.4.  Its twisted centralizer is
 
 $$
 I_{\delta_a}=B_a^\times,
-\qquad B_a=(L/F,a)
+\qquad [B_a]=[(L/F,a)]\in\operatorname{Br}(F),
 $$
 
-with $B_a$ quaternion division.  Define its relative twisted orbital integral by
+with $B_a$ the quaternion division representative of that cyclic Brauer class.  When $d=2$,
+this is literally the quaternion cyclic algebra and $\delta_a$ is the matrix (2.13).  Define
+its relative twisted orbital integral by
 
 $$
 O_{\delta_a}^\sigma(\phi)
@@ -2151,25 +2378,39 @@ $B_a^\times/F^\times$ is anisotropic, so (12.3) converges for compactly supporte
 
 The correct untwisted comparison is not an orbital integral at the scalar $aI_2$ in
 $G(F)$.  It is the central distribution on the quaternionic inner form $B_a^\times$.  Book 111
-supplies its Haar measures and selected character sign.  Relative semisimple descent pushes
-the left side of (12.3) to a locally constant function of $a$ on each compact scalar-norm
-stratum.  Choose $f_{B_a}$ with that prescribed central value and with the regular elliptic
-values supplied by ordinary rank-two inner-form matching.  Then the scalar-norm comparison is
+supplies its Haar measures, orbital slices, singular behavior, and selected character sign; it
+explicitly does not supply the transfer function.  We construct that function here.
+
+All $a$ in the order-two obstruction coset define the unique quaternion division algebra over
+$F$, so fix one model $D$.
+Different identifications $B_a\simeq D$ differ by an inner automorphism and do not change
+orbital integrals.  Relative semisimple descent makes (12.3) a locally constant function of
+$a$ on every compact scalar-norm stratum.  Prescribe that function as the value of $f_D$ on
+the corresponding central stratum.
+
+For neighboring regular elliptic classes, use the common quadratic centralizer and prescribe
+the ordinary $D^\times$ orbital integral to equal the relative twisted orbital integral.  The
+ordinary orbit map is a submersion on the regular set, so the compact regular-slice construction
+of Section 8.2 realizes the datum on each invariant ball.  Only finitely many balls meet the
+support.  At the scalar boundary, $D$ has no nonzero nilpotent orbit; the ordinary division
+orbital integral and the twisted division-centralizer slice therefore both have only the zero
+germ.  Their prescribed central value supplies that germ, so the regular pieces patch with it.
+Adding the finitely many local functions gives $f_D$.  The scalar-norm comparison is
 
 $$
 O_{\delta_a}^\sigma(\phi)
-=f_{B_a}(aI_2).
+=f_D(aI_2).
 \tag{12.4}
 $$
 
-Here the central point is viewed in $B_a^\times$, and the quotient-volume coefficient is kept
+Here the central point is viewed in $D^\times$, and the quotient-volume coefficient is kept
 outside the local point value.  The construction is uniform on every compact-open scalar-norm
-stratum: local constancy gives one prescribed value per finite stratum, while regular descent
-supplies the neighboring elliptic data.  Thus (12.4) is a genuine local test-function
-statement, not an identification of two orbit spaces of different dimensions.
+stratum and simultaneously supplies the neighboring elliptic data.  Thus (12.4) is a genuine
+local test-function statement, not an identification of two orbit spaces of different
+dimensions and not a misattribution of transfer to Book 111.
 
-Locally the obstruction group has order two at a nonsplit place.  Globally, the quaternion
-algebras $B_a$ have an even set of ramified places.  Their local inner-form transfer signs
+Locally this scalar obstruction is the order-two subgroup of the norm quotient.  Globally, the
+quaternion algebras $B_a$ have an even set of ramified places.  Their local inner-form transfer signs
 therefore multiply to one.  This is why the exceptional terms fit the global comparison
 rather than obstruct it.
 
@@ -2189,18 +2430,39 @@ not generally the point value $\phi(b)$.  In a determinant-one global realizatio
 weighted by the volume of the corresponding relative centralizer quotient.
 
 On the ordinary side, a central term is a point value times an arithmetic quotient volume.
-No regular germ identity makes
+No regular germ identity by itself makes
 
 $$
 \operatorname{vol}([G]^1)f(aI_2)
 $$
 
-equal to (12.5).  The equality must be imposed by the central normalization of the global test
-functions or removed symmetrically from the two trace formulas.
+equal to (12.5).  A **complete local transfer** therefore includes the additional prescription
+
+$$
+f(aI_2)=O_{bI_2}^\sigma(\phi),
+\qquad a=N_{L/F}(b),
+\tag{12.6}
+$$
+
+for the common quotient-measure convention.  This prescription is realizable, rather than a
+formal equality of unrelated values.  On a compact scalar family the right side is locally
+constant in $a$.  Its zero-orbit coefficient and the regular-nilpotent coefficient obtained
+from the neighboring twisted slice are carried by Section 12.2 to the corresponding ordinary
+coefficients.  The two functions in (9.6) realize those coefficients, while the regular-slice
+functions of Chapter 8 realize the finitely many annuli outside the germ neighborhood.
+Patching the disjoint scalar congruence classes produces a compactly supported ordinary
+function satisfying (12.6) and all neighboring regular identities simultaneously.
+
+For a restricted tensor product choose this complete normalization at every place.  Almost
+every local equality is the hyperspecial one.  The twisted scalar and ordinary scalar have the
+same algebraic centralizer $G$, hence the same global arithmetic volume; multiplying (12.6)
+then compares the two global scalar channels.  Alternatively, one may remove them
+symmetrically from both trace formulas.
 
 With a fixed $\sigma$-invariant central character, scalar multiples are combined by Fourier
 projection along the norm-one idele-class center.  Split scalar norms form one projective
-channel; in quadratic degree, nonnorm scalars form the nontrivial obstruction channel.  The
+channel; in even local degree, the order-two norm coset forms the nontrivial obstruction
+channel.  The
 projective stabilizer can be larger than $I_\delta/F^\times$ by a finite index, and central
 disintegration automatically supplies that index.
 
@@ -2242,7 +2504,7 @@ determinant are real, and regular norm fibers satisfy the same torus criterion a
 For a split regular $\gamma$ with eigenvalues $a,b\in\mathbf R^\times$, the norm condition is
 
 $$
-a>0,qquad b>0,
+a>0,\qquad b>0,
 \tag{13.2}
 $$
 
@@ -2263,7 +2525,7 @@ complex conjugation on its Whittaker model as in Section 4.1.  The selected char
 (4.5) gives, for an elliptic real norm
 
 $$
-\gamma=rR_\theta,qquad
+\gamma=rR_\theta,\qquad
 R_\theta=
 \begin{pmatrix}\cos\theta&\sin\theta\\-\sin\theta&\cos\theta\end{pmatrix},
 $$
@@ -2293,12 +2555,34 @@ $$
 
 To construct its twisted partner, use the regular slice on
 $\mathrm{GL}_2(\mathbf C)$ and prescribe the normalized orbital function given by (13.4) on
-the norm fiber.  The sine quotient is smooth on $0<\theta<\pi$ and has finite limits at the
-endpoints.  A partition of unity and rapid central cutoff give a Schwartz function $\phi_k$.
-The two-germ calculation fixes its endpoint correction.  Thus
+the norm fiber.  Modulo the real center, the elliptic invariant interval has compact closure
+$[0,\pi]$.  Cover its interior by finitely many orbit--slice charts after separating two small
+endpoint neighborhoods.  On each interior chart, integrate a compactly supported function of
+integral one in the orbit directions and divide by the relative Jacobian; multiplication by a
+partition of unity in $\theta$ realizes the prescribed orbital function.  On the positive
+split norm charts prescribe zero, matching the split orbital integral of $f_k$.
+
+The sine quotient is smooth on $0<\theta<\pi$ and has the finite endpoint limits (13.6).
+Endpoint extension is an archimedean calculation, not an application of the nonarchimedean
+germs of Chapter 12.  In a real trace-zero companion slice, use
+$u=\sin^2\theta$ as the invariant coordinate.  A smooth central bump has nonzero constant
+orbital jet at $u=0$, while a bump supported on a small thickening of the real regular
+nilpotent orbit has zero central value and nonzero first transverse orbital jet.  Rescaling the
+second bump and subtracting its contribution from the first gives a triangular basis for the
+rank-two germ module over the ring of smooth functions of $u$: multiplying the two bumps by
+smooth invariant coefficients prescribes the full Taylor germs, not merely their first two
+numbers.
+On the twisted complex slice the transverse equation is $1-c\bar{phantom{x}}$; its real
+determinant is $1-c\bar c$, the ordinary equation in $u$.  The orbit Jacobians and their germ
+modules therefore agree.  Solve the resulting triangular $2\times2$ system over
+$C^\infty(u)$ for the full endpoint germs of the sine quotient.  The interior pieces then glue
+smoothly across $u=0$ at both ends.
+
+Finally multiply in the real central direction by a smooth rapidly decreasing cutoff with the
+required central covariance.  The result is a Schwartz function $\phi_k$ and
 
 $$
-I_{rR_\theta}(f_k)=I_\delta^\sigma(\phi_k)
+I_{rR_\theta}(f_k)=I_\delta^{\sigma,\mathrm{bc}}(\phi_k)
 \tag{13.5}
 $$
 
@@ -2307,8 +2591,9 @@ the split character row; if the global comparison is cuspidal, one chooses the E
 so that the parabolic channel is absent.
 
 This construction does not identify $\phi_k$ with a pointwise character.  It realizes the
-required orbital function by archimedean descent and fixes its spectral scalar by the twisted
-trace of $\Pi_k$.
+required orbital function by archimedean descent.  The character identity (4.5) and Weyl
+integration then give its twisted trace on $\Pi_k$; no independent spectral rescaling is
+inserted.
 
 ### 13.3 Weight and singular-endpoint checks
 
@@ -2323,9 +2608,9 @@ Thus the ordinary orbital integral in (13.4) has a finite limit, while the norma
 tends to zero.  The twisted partner has the same behavior by (13.5).  This is the archimedean
 counterpart of the finite-place zero germ for a cuspidal Euler function.
 
-The hypothesis $k\ge2$ is essential.  At $k=1$, the limiting representation has formal degree
-zero and there is no trace-one discrete-series Euler function with the stated cuspidal orbital
-properties.  The central twist must also be compatible with complex norm: a scalar
+The hypothesis $k\ge2$ is essential.  At $k=1$, the limit-of-discrete-series representation is
+not square-integrable and its formal degree is undefined; there is no trace-one discrete-series
+Euler function with the stated cuspidal orbital properties.  The central twist must also be compatible with complex norm: a scalar
 $z\in\mathbf C^\times$ has real norm $|z|^2$, so a prescribed real central character is pulled
 back along that map.
 
@@ -2375,12 +2660,17 @@ norm criterion is equivalent to its local versions.  At every place, the local f
 and
 
 $$
-I_{\gamma_v}(f_v)=I_{\delta_v}^\sigma(\phi_v).
+I_{\gamma_v}(f_v)=I_{\delta_v}^{\sigma,\mathrm{bc}}(\phi_v).
 \tag{14.1}
 $$
 
-Multiplying (14.1) and using the product formula for the two discriminants gives equality of
-the raw adelic orbital products.  The algebraic centralizers are the same torus
+By (3.10), each equality in (14.1) is already equality of the raw local orbital integrals.
+Multiplying gives equality of the raw adelic orbital products.  If one instead inserts Book
+113's full tangent normalization, (3.12) contributes the toral factor
+$|D_{T_\gamma}^\sigma|_v^{1/2}$ at $v$.  The determinant is the localization of the
+$F$-rational determinant of $1-\sigma$ on
+$\operatorname{Lie}T(E)/\operatorname{Lie}T(F)$, so its global product is one by the product
+formula.  The algebraic centralizers are the same torus
 $T_\gamma$, so their arithmetic volume coefficient is identical.  Hence
 
 $$
@@ -2405,8 +2695,8 @@ quadratic degree a division-centralizer scalar channel.  Split regular and nonse
 cancel together after parabolic unfolding because one local factor is strongly cuspidal.  They
 are not compared orbit by orbit.
 
-For split scalar norms, compare the relative distribution (12.5) with the separately normalized
-ordinary central term.  In the determinant-one realization, retain the actual scalar norm
+For split scalar norms, compare the relative distribution (12.5) with the ordinary central
+term using the complete local normalization (12.6).  In the determinant-one realization, retain the actual scalar norm
 $a$ and its quotient volume.  In a fixed-central-character realization, Fourier projection
 combines scalar multiples into one projective channel.  Either method is valid; mixing their
 coefficients is not.
@@ -2436,7 +2726,8 @@ $$
 \tag{14.3}
 $$
 
-For type functions this equality is also the direct Schur-orthogonality calculation (11.9).
+For a twisted type function, Schur orthogonality computes the right side directly; its equality
+with the trace of the constructed ordinary transfer is (11.9).
 At unramified places it is the Satake identity (7.3).  The product of normalized local
 intertwiners gives the global field-automorphism action after the global Whittaker functional is
 fixed.
@@ -2463,8 +2754,9 @@ geometric equality required by the trace formula.
 The full comparison is sensitive to a short list of recurring errors.
 
 First, norm matching is a torus norm condition.  Determinant norm alone is insufficient.
-Second, the primary local identity uses normalized orbital integrals; raw equality requires the
-factor (3.8).  Third, the unramified base-change homomorphism substitutes $d$th powers in
+Second, the primary local identity uses the base-change relative discriminant; Book 113's full
+tangent normalization requires the toral conversion (3.12), while raw matching is equality.
+Third, the unramified base-change homomorphism substitutes $d$th powers in
 Satake variables; it does not multiply the first Hecke operator by $d$.
 
 Fourth, a ramified unit is not declared to match another raw unit.  Ramified transfer is the
@@ -2475,7 +2767,8 @@ by a determinant character.
 
 Seventh, residue eigenlines do not control scalar-reduction classes at positive depth; full
 segments and their stabilizers are required.  Eighth, regular matching does not compare central
-point values.  Ninth, a quadratic nonnorm scalar has quaternion division centralizer and cannot
+point values.  Ninth, an order-two scalar obstruction in even cyclic degree has quaternion
+division centralizer and cannot
 be discarded as singular noise.  Tenth, the tame Fourier proof does not cover primitive wild or
 ramified dyadic positive-depth packets.
 
@@ -2488,8 +2781,9 @@ latter contain class groups, units, and the product formula and must remain glob
 
 We can now collect the local results with their exact scope.
 
-**Theorem 15.1 (twisted orbital matching and the cyclic fundamental lemma for rank two).** Let
-$L/F$ be a finite cyclic extension of nonarchimedean local fields and fix a generator $\sigma$.
+**Theorem 15.1 (twisted orbital matching and the cyclic fundamental lemma for rank two).** In
+the characteristic-zero scope of Section 1.2, let $L/F$ be a finite cyclic extension of
+nonarchimedean local fields and fix a generator $\sigma$.
 
 1. A strongly regular ordinary class $\gamma$ has a twisted norm class if and only if
 
@@ -2502,36 +2796,40 @@ $L/F$ be a finite cyclic extension of nonarchimedean local fields and fix a gene
 2. Matching is normalized by
 
    $$
-   I_\gamma(f)=I_\delta^\sigma(\phi),
+   I_\gamma(f)=I_\delta^{\sigma,\mathrm{bc}}(\phi),
    $$
 
-   or, in raw form, by the transfer factor (3.8).  Common centralizer measures and complementary
-   quotient measures are required.
+   and the relative root identity (3.10); in raw form the orbital integrals are equal.  Common
+   centralizer measures and complementary quotient measures are required.  Book 113's full
+   normalization is recovered through (3.12).
 3. If $L/F$ is unramified, the hyperspecial units satisfy the unit fundamental lemma, and every
    spherical Hecke function satisfies
 
    $$
-   I_\gamma(b_{L/F}\phi)=I_\delta^\sigma(\phi),
+   I_\gamma(b_{L/F}\phi)=I_\delta^{\sigma,\mathrm{bc}}(\phi),
    \qquad
    \mathcal S_F(b_{L/F}\phi)(X_1,X_2)
    =\mathcal S_L(\phi)(X_1^d,X_2^d).
    $$
 
+   Both transfers vanish on regular classes outside the torus-norm image.
+
 4. For arbitrary ramification, every compact regular twisted orbital datum transfers by local
-   descent.  Selected invariant finite-level data have the explicit segment recursion of
-   Theorem 9.1, including the tail at the scalar boundary.
+   descent.  Selected invariant finite-level data have the explicit finite slice-and-germ
+   interpolation of Theorem 9.1, including the full tail at the scalar boundary.
 5. The Iwahori, selected $K_0$, and character-projected $K_1$ functions match by fixed edges,
    segments, and finite norm-character sums.  Character levels are determined by the surviving
    norm-pulled filtration, not by a universal degree multiple.
-6. Determinant, principal, special, depth-zero dihedral, and tame positive-depth dihedral type
-   functions have the level-specific matching of Theorem 11.1 whenever the restricted
+6. Determinant, principal, special, depth-zero dihedral, and tame positive-depth dihedral
+   twisted type functions have the explicit finite-level transfers of Theorem 11.1 whenever the restricted
    parameter remains selected.  The statement includes discrete-to-principal transitions and
    excludes primitive wild and ramified dyadic wild packets.
 7. Unramified spherical and selected level matching are compatible with the two nilpotent germs.
-   Central distributions remain separate.  In quadratic degree, a nonnorm scalar has
-   quaternion division centralizer and is matched through that inner form.
+   Split central distributions require the additional realizable normalization (12.6).  In
+   even degree, the nontrivial order-two scalar norm class has quaternion division centralizer
+   and is matched through that inner form.
 8. For every selected representation in the local base-change domain, normalized twisted
-   characters satisfy (4.5), and matching type functions have equal ordinary and twisted
+   characters satisfy (4.5), and the matching finite-level functions have equal ordinary and twisted
    selected traces.
 
 **Proof.** The regular class and centralizer assertions are Theorem 2.1.  Chapter 3 proves the
@@ -2552,21 +2850,22 @@ regular case identify its quadratic étale centralizer and test the full torus n
 Do not use determinant alone.
 
 Next choose one Haar measure on the common centralizer and define both quotient measures from
-it.  Compute $D_G(\gamma)$ and $D^\sigma(\delta)$ before deciding whether a raw or normalized
-identity is being used.
+it.  Compute $D_G(\gamma)$ and $D_{\mathrm{bc}}^\sigma(\delta)$ before deciding whether a raw or normalized
+identity is being used.  For Book 113's convention also compute the toral factor (3.8) and use
+the conversion (3.12).
 
 At an unramified place, apply the Satake base-change homomorphism.  For the standard Hecke
 operator use the recurrence (7.6), not a single distance shell.  At a ramified place, identify
 the determinant shell, core type, fixed depth, and visible segment length; solve the triangular
-system and include its tail row.  For $K_1$ data, apply the finite norm-character projector.
+system and include its two germ rows.  For $K_1$ data, apply the finite norm-character projector.
 
 If the function selects a representation, restrict the complete Weil--Deligne parameter first.
 Retain monodromy, allow a dihedral parameter to split, and only then choose the upstairs type.
 Normalize the field-automorphism intertwiner through the Whittaker functional or the natural
 determinant-character action.
 
-Finally inspect the scalar boundary.  Match the two germ coefficients, state the central
-normalization, and in quadratic degree test the scalar norm class in
+Finally inspect the scalar boundary.  Match the two germ coefficients and impose (12.6) for
+the split central channel; in even degree test the scalar norm class in
 $F^\times/N_{L/F}(L^\times)$.  A nontrivial class requires the quaternion division-centralizer
 term.
 
@@ -2587,15 +2886,15 @@ $(X_1,X_2)\mapsto(X_1^d,X_2^d)$.
 
 Ramification replaces hyperspecial descent by controlled finite geometry.  Vertices, oriented
 edges, segments, and primitive endpoints form a triangular system whose diagonal is a compact-
-stabilizer index.  Its tail recurrence reaches all the way to the scalar divisor.  Finite norm
+stabilizer index.  Its two germ rows reach all the way to the scalar divisor.  Finite norm
 and trace sums then supply the principal, special, depth-zero dihedral, and tame positive-depth
 type identities, with an honest boundary at wild types not constructed by the preceding local
 theory.
 
 The singular analysis completes the package.  There are two rank-two nilpotent germs, their
 coefficients can be matched independently, and regular identities do not determine central
-terms.  In quadratic degree a nonnorm scalar descends the matrix algebra to a quaternion
-division algebra, producing a genuine elliptic distribution.  Once that term and the split
+terms.  In even cyclic degree the nontrivial order-two scalar class descends the matrix algebra
+to a quaternion division algebra, producing a genuine elliptic distribution.  Once that term and the split
 scalar channel are retained, the local identities multiply with the global centralizer
 coefficients of the convergent twisted geometric expansion.
 
