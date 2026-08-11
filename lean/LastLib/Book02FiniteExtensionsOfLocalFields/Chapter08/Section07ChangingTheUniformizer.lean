@@ -132,7 +132,7 @@ theorem chapter08_norm_unit_factor_class_is_coordinate_invariant
     (h₁ : Algebra.norm K π₁ = (u₁ : K) * πK)
     (h₂ : Algebra.norm K π₂ = (u₂ : K) * πK)
     (hchange : π₂ = (a : L) * π₁)
-    (hπK : πK ≠ 0) (hπ₁ : π₁ ≠ 0) :
+    (hπK : πK ≠ 0) (_hπ₁ : π₁ ≠ 0) :
     QuotientGroup.mk (s := chapter08UnitNormSubgroup K L) u₁ =
       QuotientGroup.mk (s := chapter08UnitNormSubgroup K L) u₂ := by
   let na : Kˣ := Units.map (Algebra.norm K (S := L)) a

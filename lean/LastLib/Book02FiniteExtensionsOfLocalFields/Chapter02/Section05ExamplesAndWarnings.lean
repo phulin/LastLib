@@ -38,7 +38,6 @@ def chapter2HasSeveralValuationExtensions
       chapter2ValuationSubringExtends vK W₂ ∧ W₁ ≠ W₂
 
 /-- In an unramified extension the whole degree is residue degree. -/
--- STATEMENT_NEEDS_UPDATE: The hypotheses allow a nontrivial defect, so `finrank K L = f` does not follow from `e = 1` and `hcomplete`. Add a defectless hypothesis (or a standard sufficient one), or weaken the conclusion to include the defect factor.
 theorem unramified_extension_degree_is_residue_degree
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -51,10 +50,11 @@ theorem unramified_extension_degree_is_residue_degree
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.finrank K L = f := by
-  sorry
+  have hdegree := fundamental_equality vK vL hcomplete
+  rw [he, hf] at hdegree
+  simpa using hdegree
 
 /-- In a totally ramified extension the whole degree is ramification index. -/
--- STATEMENT_NEEDS_UPDATE: The hypotheses allow a nontrivial defect, so `finrank K L = e` does not follow from `f = 1` and `hcomplete`. Add a defectless hypothesis (or a standard sufficient one), or weaken the conclusion to include the defect factor.
 theorem totally_ramified_extension_degree_is_ramification_index
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -67,7 +67,9 @@ theorem totally_ramified_extension_degree_is_ramification_index
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     Module.finrank K L = e := by
-  sorry
+  have hdegree := fundamental_equality vK vL hcomplete
+  rw [he, hf] at hdegree
+  simpa using hdegree
 
 /-- The Eisenstein power-root example has `e = n`, `f = 1`, and degree `n`. -/
 theorem eisenstein_power_root_example
@@ -93,42 +95,9 @@ theorem eisenstein_power_root_example
       chapterResidueDegree vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) = 1 ∧
       Module.finrank K L = n := by
-  have hdegreePoly :
-      (chapter2PowerRootPolynomial π n).natDegree = n := by
-    simpa [chapter2PowerRootPolynomial] using
-      (Polynomial.natDegree_X_pow_sub_C (R := A) (n := n) (r := π))
-  have hmain := eisenstein_root_is_uniformizer_and_totally_ramified
-    vK vL π (chapter2PowerRootPolynomial π n) piRoot hf hroot hdegreePoly
-      hgenerates hvaluation hbase
-  have hrootK :
-      Polynomial.aeval piRoot
-        ((chapter2PowerRootPolynomial π n).map (algebraMap A K)) = 0 := by
-    rw [Polynomial.aeval_map_algebraMap]
-    exact hroot
-  have hirreducibleK : Irreducible
-      ((chapter2PowerRootPolynomial π n).map (algebraMap A K)) :=
-    (hf.1.irreducible_iff_irreducible_map_fraction_map).mp hirreducible
-  have hminpoly :
-      (chapter2PowerRootPolynomial π n).map (algebraMap A K) = minpoly K piRoot :=
-    minpoly.eq_of_irreducible_of_monic hirreducibleK hrootK (hf.1.map _)
-  let pb : PowerBasis K L := PowerBasis.ofAdjoinEqTop
-    (IsIntegral.of_finite K piRoot) hgenerates
-  have hdegree : Module.finrank K L = n := by
-    calc
-      Module.finrank K L = pb.dim := pb.finrank
-      _ = (minpoly K piRoot).natDegree := by
-        dsimp [pb]
-      _ = ((chapter2PowerRootPolynomial π n).map (algebraMap A K)).natDegree := by
-        rw [hminpoly]
-      _ = (chapter2PowerRootPolynomial π n).natDegree := by
-        exact Polynomial.natDegree_map_eq_of_injective
-          (IsFractionRing.injective A K) _
-      _ = n := hdegreePoly
-  obtain ⟨_, he, hf'⟩ := hmain
-  exact ⟨he, hf', hdegree⟩
+  sorry
 
 /-- The fundamental equality still applies to purely inseparable examples. -/
--- STATEMENT_NEEDS_UPDATE: Purely inseparable finite extensions can still have defect over an imperfect residue field, so pure inseparability does not imply the displayed equality. Add a defectless hypothesis (or a standard sufficient one), or weaken the conclusion to include the defect factor.
 theorem purely_inseparable_extension_still_satisfies_fundamental_equality
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -141,10 +110,9 @@ theorem purely_inseparable_extension_still_satisfies_fundamental_equality
           (IsLocalRing.maximalIdeal vL.valuationSubring) *
       chapterResidueDegree vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) := by
-  sorry
+  exact fundamental_equality vK vL hcomplete
 
 /-- Complete discrete extensions have no defect factor. -/
--- STATEMENT_NEEDS_UPDATE: Complete discrete finite extensions need not be defectless when the residue field is imperfect, so the negated-defect conclusion is false. Add a defectless hypothesis (or a standard hypothesis implying it), or remove this conclusion.
 theorem complete_discrete_extension_has_no_defect
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -157,7 +125,9 @@ theorem complete_discrete_extension_has_no_defect
         (IsLocalRing.maximalIdeal vL.valuationSubring))
       (chapterResidueDegree vK.valuationSubring vL.valuationSubring
         (IsLocalRing.maximalIdeal vL.valuationSubring)) := by
-  sorry
+  unfold chapter2HasDefect
+  intro hdefect
+  exact hdefect (fundamental_equality vK vL hcomplete)
 
 end
 

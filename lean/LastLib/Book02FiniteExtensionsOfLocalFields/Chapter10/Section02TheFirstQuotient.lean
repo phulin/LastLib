@@ -79,7 +79,7 @@ theorem chapter10_teichmuller_residue_roots_are_simple
     [Fintype (Chapter10ResidueField A)]
     (a : Chapter10ResidueField A)
     (ha : a ≠ 0)
-    (hroot : a ^ (Fintype.card (Chapter10ResidueField A) - 1) = 1) :
+    (_hroot : a ^ (Fintype.card (Chapter10ResidueField A) - 1) = 1) :
     (Polynomial.derivative
       (Polynomial.X ^ (Fintype.card (Chapter10ResidueField A) - 1) -
         Polynomial.C 1)).eval a ≠ 0 := by
@@ -119,9 +119,9 @@ theorem chapter10_teichmuller_section_exists_unique
 
 /-- The Teichmüller lift extends by the convention `[0] = 0`. -/
 theorem chapter10_teichmuller_zero_extension
-    {L : Type*} [Field L] (A : ValuationSubring L) (q : ℕ)
+    {L : Type*} [Field L] (A : ValuationSubring L) (_q : ℕ)
     (s : (Chapter10ResidueField A)ˣ →* Aˣ)
-    (hs : ∀ a, chapter10UnitReduction A (s a) = a) :
+    (_hs : ∀ a, chapter10UnitReduction A (s a) = a) :
     ∃ t : Chapter10ResidueField A → A,
       t 0 = 0 ∧
         ∀ a : (Chapter10ResidueField A)ˣ, t a = (s a : A) := by

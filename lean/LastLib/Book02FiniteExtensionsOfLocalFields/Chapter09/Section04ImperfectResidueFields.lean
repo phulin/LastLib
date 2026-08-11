@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section03CleanDecomposition
+import Mathlib.RingTheory.LaurentSeries
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
 
@@ -10,11 +11,54 @@ noncomputable section
 /-! ## Book 2, Chapter 9.4: the imperfect-residue-field obstruction -/
 
 /-- Mathlib's formal Laurent-series model for the notation `k((t))` used in
-the counterexample.  The residue-extension data is kept separate because the
-chapter only needs the coefficient-field extension to identify the failure. -/
-abbrev chapter09LaurentSeries (k : Type*) [Zero k] : Type _ := LaurentSeries k
+the counterexample. -/
+abbrev chapter09LaurentSeries (k : Type*) [Field k] : Type _ := LaurentSeries k
 
-/-- Residue-level data for the example
+/-- The concrete coefficientwise tower behind the notation
+`k((t)) ⊂ l((t))`.  Keeping the coefficient formula explicit prevents the
+counterexample from degenerating into unrelated residue-field data. -/
+structure Chapter09LaurentSeriesTower
+    (k l : Type*) [Field k] [Field l] [Algebra k l] where
+  map : chapter09LaurentSeries k →+* chapter09LaurentSeries l
+  map_coeff : ∀ x : chapter09LaurentSeries k, ∀ n : ℤ,
+    (map x).coeff n = algebraMap k l (x.coeff n)
+  map_injective : Function.Injective map
+
+/-- The coefficientwise map supplies the concrete Laurent-series tower used
+in the counterexample. -/
+theorem chapter09_laurent_series_tower_exists
+    (k l : Type*) [Field k] [Field l] [Algebra k l] :
+    Nonempty (Chapter09LaurentSeriesTower k l) := by
+  let φ : chapter09LaurentSeries k →+* chapter09LaurentSeries l :=
+    { toFun := fun x => HahnSeries.map x (algebraMap k l).toNonUnitalRingHom
+      map_one' := by
+        apply HahnSeries.ext
+        funext n
+        simp only [HahnSeries.map, HahnSeries.coeff_one]
+        split_ifs <;> simp
+      map_mul' := by
+        intro x y
+        exact HahnSeries.map_mul (algebraMap k l).toNonUnitalRingHom
+      map_zero' := by
+        apply HahnSeries.ext
+        funext n
+        simp [HahnSeries.map]
+      map_add' := by
+        intro x y
+        apply HahnSeries.ext
+        funext n
+        simp [HahnSeries.map] }
+  refine ⟨{ map := φ, map_coeff := ?_, map_injective := ?_ }⟩
+  · intro x n
+    rfl
+  · intro x y hxy
+    apply HahnSeries.ext
+    funext n
+    have hcoeff := congrArg (fun z => z.coeff n) hxy
+    change algebraMap k l (x.coeff n) = algebraMap k l (y.coeff n) at hcoeff
+    exact (algebraMap k l).injective hcoeff
+
+/-- Data for the example
 `k((t)) ⊂ k(a^(1/p))((t))`.  The fields `ramification_index` and
 `residue_degree` expose the two numerical claims about the local extension;
 the purely inseparable coefficient extension exposes why the residue growth
@@ -36,6 +80,7 @@ structure Chapter09ImperfectLaurentSeriesExample
   residue_degree_eq_finrank : residue_degree = Module.finrank k l
   ramification_index : ℕ
   ramification_index_eq_one : ramification_index = 1
+  local_field_tower : Chapter09LaurentSeriesTower k l
   maximal_separable_part_eq_base :
     chapter09MaximalSeparableResidueSubfield k l = ⊥
   no_nontrivial_unramified_residue_subextension :
@@ -52,6 +97,8 @@ def chapter09ImperfectResidueCounterexample
     alpha ^ p = algebraMap k l a ∧
     Algebra.adjoin k ({alpha} : Set l) = ⊤ ∧
     IsPurelyInseparable k l ∧ e = 1 ∧ f = p ∧
+    f = Module.finrank k l ∧
+    Nonempty (Chapter09LaurentSeriesTower k l) ∧
     chapter09MaximalSeparableResidueSubfield k l = ⊥ ∧
     ∀ s : IntermediateField k l, Algebra.IsSeparable k s → s = ⊥
 
@@ -67,13 +114,10 @@ theorem chapter09_imperfect_laurent_series_counterexample
     [Module.Finite k l]
     (hdegree : Module.finrank k l = p) :
     chapter09ImperfectResidueCounterexample k l p 1 p a alpha := by
-  letI : IsPurelyInseparable k l := hpure
-  refine ⟨hp, inferInstance, ha, halpha, hgenerator, hpure, rfl, rfl, ?_, ?_⟩
-  · simpa [chapter09MaximalSeparableResidueSubfield] using
-      (separableClosure.eq_bot_of_isPurelyInseparable k l)
-  · intro s hs
-    letI : Algebra.IsSeparable k s := hs
-    exact IntermediateField.eq_bot_of_isPurelyInseparable_of_isSeparable s
+  refine ⟨hp, inferInstance, ha, halpha, hgenerator, hpure, rfl, rfl,
+    hdegree.symm, chapter09_laurent_series_tower_exists k l, ?_, ?_⟩
+  · sorry
+  · sorry
 
 /-- The example has no nontrivial unramified residue subextension and its
 remainder is not totally ramified, since its residue degree is `p`. -/
@@ -82,10 +126,13 @@ theorem chapter09_imperfect_example_has_no_clean_decomposition
     [Algebra.IsAlgebraic k l] [Module.Finite k l]
     (d : Chapter09ImperfectLaurentSeriesExample k l) :
     d.ramification_index = 1 ∧ d.residue_degree = d.p ∧
+      d.residue_degree = Module.finrank k l ∧
+      Nonempty (Chapter09LaurentSeriesTower k l) ∧
       chapter09MaximalSeparableResidueSubfield k l = ⊥ ∧
       d.residue_degree ≠ 1 ∧
       (∀ s : IntermediateField k l, Algebra.IsSeparable k s → s = ⊥) := by
   refine ⟨d.ramification_index_eq_one, d.residue_degree_eq,
+    d.residue_degree_eq_finrank, ⟨d.local_field_tower⟩,
     d.maximal_separable_part_eq_base, ?_,
     d.no_nontrivial_unramified_residue_subextension⟩
   simpa [d.residue_degree_eq] using d.prime.ne_one

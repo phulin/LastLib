@@ -8,6 +8,18 @@ open scoped nonZeroDivisors
 
 /-! ## 4.6. Trace pairings and separability -/
 
+/- The pointwise trace pairing, bundled canonically as a bilinear form. -/
+def chapter04TracePairing
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] : LinearMap.BilinForm K L :=
+  Algebra.traceForm K L
+
+@[simp] theorem chapter04TracePairing_apply
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] (x y : L) :
+    chapter04TracePairing K L x y = Algebra.trace K L (x * y) := by
+  rfl
+
 /- The trace pairing is Mathlib's canonical trace bilinear form (§4.6). -/
 theorem chapter04_trace_pairing_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -48,11 +60,19 @@ def chapter04TraceDual
   {z | ∀ y : B, ∃ a : A,
     algebraMap A K a = Algebra.trace K L (z * algebraMap B L y)}
 
+@[simp] theorem chapter04TraceDual_mem_iff
+    (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
+    [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
+    [IsScalarTower A K L] [IsScalarTower A B L] (z : L) :
+    z ∈ chapter04TraceDual A B K L ↔
+      ∀ y : B, ∃ a : A,
+        algebraMap A K a = Algebra.trace K L (z * algebraMap B L y) := Iff.rfl
+
 /- In the separable case the trace dual is represented by Mathlib's bundled
 fractional-ideal structure (§4.6). -/
 theorem chapter04_trace_dual_is_fractional
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
-    [IsDomain B] [Field K] [Field L] [Algebra A B] [Algebra A K]
+    [Field K] [Field L] [Algebra A B] [Algebra A K]
     [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -61,12 +81,13 @@ theorem chapter04_trace_dual_is_fractional
     [Module.IsTorsionFree A B] [Algebra.IsIntegral A B] :
     ∃ I : FractionalIdeal B⁰ L,
       (I : Set L) = chapter04TraceDual A B K L := by
+  let _ : IsIntegralClosure B A L := IsIntegralClosure.of_isIntegrallyClosed B A L
   let I : FractionalIdeal B⁰ L :=
     FractionalIdeal.dual A K (1 : FractionalIdeal B⁰ L)
   refine ⟨I, ?_⟩
   have hI : (I : Submodule B L) =
       Submodule.traceDual A K (1 : Submodule B L) := by
-    simpa [I] using (FractionalIdeal.coe_dual_one (A := A) (K := K) B L)
+    simp [I]
   change (I : Submodule B L) = chapter04TraceDual A B K L
   rw [hI]
   ext z

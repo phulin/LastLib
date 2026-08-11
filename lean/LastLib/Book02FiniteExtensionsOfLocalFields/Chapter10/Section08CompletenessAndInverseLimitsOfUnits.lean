@@ -186,8 +186,8 @@ theorem chapter10_finite_residue_finite_precision_quotients
     [Finite (Chapter10ResidueField A)] (n : ℕ)
     (hDVR : IsDiscreteValuationRing A) :
     Finite (Chapter10PrecisionQuotient A (n + 1)) := by
-  letI : IsDiscreteValuationRing A := hDVR
-  letI : Finite (A ⧸ IsLocalRing.maximalIdeal A) := by
+  let _ : IsDiscreteValuationRing A := hDVR
+  let _ : Finite (A ⧸ IsLocalRing.maximalIdeal A) := by
     change Finite (Chapter10ResidueField A)
     infer_instance
   exact Ideal.finite_quotient_pow
@@ -248,8 +248,8 @@ theorem chapter10_infinite_residue_prevents_unit_compactness
     ¬ Chapter10CompactUnitGroup (G := Aˣ) := by
   classical
   intro hcompact
-  letI : CompactSpace Aˣ := ⟨hcompact⟩
-  letI : DiscreteTopology (Chapter10ResidueField A)ˣ :=
+  let _ : CompactSpace Aˣ := ⟨hcompact⟩
+  let _ : DiscreteTopology (Chapter10ResidueField A)ˣ :=
     ⟨eq_bot_of_singletons_open (fun x => hquotient_discrete {x})⟩
   have hrange : IsCompact (Set.range (chapter10UnitReduction A)) := by
     simpa only [Set.image_univ, hresidue_surjective.range_eq] using
@@ -258,7 +258,7 @@ theorem chapter10_infinite_residue_prevents_unit_compactness
     hrange.finite_of_discrete
   have huniv : (Set.univ : Set (Chapter10ResidueField A)ˣ).Finite := by
     simpa only [hresidue_surjective.range_eq] using hfinite
-  letI : Finite (Chapter10ResidueField A)ˣ :=
+  let _ : Finite (Chapter10ResidueField A)ˣ :=
     Finite.of_finite_univ huniv
   let f : Chapter10ResidueField A →
       (Chapter10ResidueField A)ˣ ⊕ Unit :=
@@ -266,7 +266,7 @@ theorem chapter10_infinite_residue_prevents_unit_compactness
   have hf : Function.Injective f := by
     intro x y hxy
     by_cases hx : x = 0 <;> by_cases hy : y = 0
-    · simpa [hx, hy]
+    · simp [hx, hy]
     · simp [f, hx, hy] at hxy
     · simp [f, hx, hy] at hxy
     · have hunit : Units.mk0 x hx = Units.mk0 y hy := by
@@ -274,7 +274,7 @@ theorem chapter10_infinite_residue_prevents_unit_compactness
       exact congrArg Units.val hunit
   have hfinite_residue : Finite (Chapter10ResidueField A) := by
     exact Finite.of_injective f hf
-  letI : Finite (Chapter10ResidueField A) := hfinite_residue
+  let _ : Finite (Chapter10ResidueField A) := hfinite_residue
   exact not_finite (Chapter10ResidueField A)
 
 end

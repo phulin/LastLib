@@ -18,6 +18,21 @@ def Chapter10FiniteOrderTorsion
     {G : Type*} [Group G] (u : G) : Prop :=
   ∃ m : ℕ, 0 < m ∧ u ^ m = 1
 
+/-- A root of unity in the fraction field has valuation zero. -/
+theorem chapter10_field_root_of_unity_is_ring_unit
+    {L : Type*} [Field L] (A : ValuationSubring L) (m : ℕ) (hm : 0 < m)
+    (ζ : Lˣ) (hζ : (ζ : L) ^ m = 1) :
+    ∃ u : Aˣ, Units.map A.subtype.toMonoidHom u = ζ := by
+  sorry
+
+/-- The characteristic-`p` identity used to detect principal-unit torsion. -/
+theorem chapter10_equal_characteristic_p_power_sub_one_identity
+    {K : Type*} [Field K] (p r : ℕ) [Fact p.Prime] [CharP K p]
+    (x : K) :
+    x ^ (p ^ r) - 1 = (x - 1) ^ (p ^ r) := by
+  rw [sub_pow_char_pow]
+  ring
+
 /-- Prime-to-residue-characteristic roots inject under reduction. -/
 theorem chapter10_prime_to_residue_characteristic_roots_reduce_injectively
     {L : Type*} [Field L] (A : ValuationSubring L)
@@ -90,8 +105,8 @@ theorem chapter10_padic_prime_to_p_roots_are_cyclic
     {L : Type*} [Field L] (A : ValuationSubring L) (p : ℕ)
     [Fact p.Prime] [Fintype (Chapter10ResidueField A)]
     [CharP (Chapter10ResidueField A) p] [CharZero A]
-    (hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
-    (hDVR : IsDiscreteValuationRing A) :
+    (_hcomplete : IsAdicComplete (IsLocalRing.maximalIdeal A) A)
+    (_hDVR : IsDiscreteValuationRing A) :
     IsCyclic
       (chapter10RootOfUnitySubgroup A
         (Fintype.card (Chapter10ResidueField A) - 1)) := by
@@ -112,7 +127,7 @@ theorem chapter10_padic_prime_to_p_roots_are_cyclic
   have hf : Function.Injective f := by
     exact chapter10_prime_to_residue_characteristic_roots_reduce_injectively
       A (q - 1) p hcoprime
-  letI : Finite H := Finite.of_injective f hf
+  let _ : Finite H := Finite.of_injective f hf
   change IsCyclic H
   infer_instance
 
@@ -146,7 +161,7 @@ theorem chapter10_equal_characteristic_principal_units_have_no_p_power_torsion
     {k : Type*} [Field k] (p : ℕ) [Fact p.Prime] [CharP k p]
     (u : (PowerSeries k)ˣ)
     (hu : Chapter10PowerTorsion p u) : u = 1 := by
-  letI : CharP (PowerSeries k) p :=
+  let _ : CharP (PowerSeries k) p :=
     charP_of_injective_algebraMap (R := k) (A := PowerSeries k)
       (fun a b h => by
         have h₀ := congrArg (PowerSeries.coeff 0) h

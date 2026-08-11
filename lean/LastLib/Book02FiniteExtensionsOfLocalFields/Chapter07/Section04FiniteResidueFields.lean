@@ -50,6 +50,8 @@ structure Chapter07FiniteResidueUnramifiedModel
   q_card : Fintype.card k = q
   degree : ℕ
   degree_eq : degree = Module.finrank K carrier
+  [residueFintype : Fintype residue]
+  residue_card : Fintype.card residue = (Fintype.card k) ^ degree
   residueDegree : ℕ
   residueDegree_eq : residueDegree = Module.finrank k residue
   ramificationIndex : ℕ
@@ -95,6 +97,21 @@ theorem chapter07_finite_residue_unramified_exists
       M.degree = f ∧ M.residueDegree = f ∧ M.ramificationIndex = 1 := by
   sorry
 
+/-- Any two models produced for the same finite residue degree are isomorphic
+over the base field. -/
+theorem chapter07_finite_residue_unramified_unique
+    {A K k : Type*} [CommRing A] [IsDomain A]
+    [Field K] [Field k] [Fintype k]
+    [Algebra A K] [IsFractionRing A K] (res : A →+* k) (f : ℕ)
+    (M₁ M₂ : Chapter07FiniteResidueUnramifiedModel A K k res)
+    (h₁ : M₁.degree = f) (h₂ : M₂.degree = f) :
+    letI : Field M₁.carrier := M₁.carrierField
+    letI : Field M₂.carrier := M₂.carrierField
+    letI : Algebra K M₁.carrier := M₁.carrierAlgebra
+    letI : Algebra K M₂.carrier := M₂.carrierAlgebra
+    Nonempty (M₁.carrier ≃ₐ[K] M₂.carrier) := by
+  sorry
+
 /-- The finite unramified Galois group is cyclic, with generator characterized
 by arithmetic Frobenius on the residue field. -/
 theorem chapter07_finite_residue_galois_group_is_cyclic
@@ -107,22 +124,12 @@ theorem chapter07_finite_residue_galois_group_is_cyclic
       ∃ σ : Chapter07GaloisAutomorphismGroup K L,
         D.reduction σ = chapter06ArithmeticFrobenius k l ∧
           orderOf σ = Module.finrank k l ∧
-          ∀ τ : Chapter07GaloisAutomorphismGroup K L,
-            ∃ n : ℤ, σ ^ n = τ := by
-  let σ : Chapter07GaloisAutomorphismGroup K L :=
-    chapter06UnramifiedArithmeticFrobenius D
-  have hcyclic : IsCyclic (Chapter07GaloisAutomorphismGroup K L) := by
-    exact D.reduction.isCyclic.mpr inferInstance
-  refine ⟨hcyclic, ⟨σ, ?_, ?_, ?_⟩⟩
-  · simp [σ, chapter06UnramifiedArithmeticFrobenius]
-  · calc
-      orderOf σ = orderOf (D.reduction σ) := (D.reduction.orderOf_eq σ).symm
-      _ = orderOf (chapter06ArithmeticFrobenius k l) := by
-        simp [σ, chapter06UnramifiedArithmeticFrobenius]
-      _ = Module.finrank k l :=
-        chapter06_arithmetic_frobenius_order k l (Module.finrank k l) rfl
-  · intro τ
-    simpa [σ] using chapter06_unramified_arithmetic_frobenius_generates D τ
+          (∀ τ : Chapter07GaloisAutomorphismGroup K L,
+            ∃ n : ℤ, σ ^ n = τ) ∧
+        Nonempty
+          (Chapter07GaloisAutomorphismGroup K L ≃*
+            Multiplicative (ZMod (Module.finrank k l))) := by
+  sorry
 
 /-- The source-level unramified predicate for an intermediate field.  The
 residue fields are existential here because the tower is being described in a
@@ -167,6 +174,10 @@ structure Chapter07FiniteResidueTower
   exhaustive : ∀ E : IntermediateField K Ω,
     Chapter07IntermediateIsUnramified E →
     ∃ f, E = level f
+  compositum_lcm : ∀ m n, ∃ f,
+    f.1 = Nat.lcm m.1 n.1 ∧ level m ⊔ level n = level f
+  intersection_gcd : ∀ m n, ∃ f,
+    f.1 = Nat.gcd m.1 n.1 ∧ level m ⊓ level n = level f
 
 /-- The maximal unramified subextension inside a chosen separable closure is
 the union of all finite unramified levels. -/
@@ -184,6 +195,16 @@ theorem chapter07_maximal_unramified_extension_is_maximal
   obtain ⟨f, hf⟩ := T.exhaustive E hE
   rw [hf]
   exact le_iSup (fun f : Chapter07PositiveNat => T.level f) f
+
+/-- The numerical compositum and intersection laws in the finite-residue
+tower. -/
+theorem chapter07_finite_residue_tower_compositum_intersection
+    {K : Type uK} {Ω : Type uΩ} [Field K] [Field Ω] [Algebra K Ω]
+    (T : Chapter07FiniteResidueTower K Ω)
+    (m n : Chapter07PositiveNat) :
+    (∃ f, f.1 = Nat.lcm m.1 n.1 ∧ T.level m ⊔ T.level n = T.level f) ∧
+      (∃ f, f.1 = Nat.gcd m.1 n.1 ∧ T.level m ⊓ T.level n = T.level f) := by
+  sorry
 
 /-- A fixed inverse-limit model of the profinite completion of the integers.
 Compatibility is expressed using Mathlib's canonical maps `ZMod n → ZMod m`
@@ -240,44 +261,7 @@ theorem chapter07_maximal_unramified_galois_group_is_profinite_integer_completio
     ∃ e : G ≃* Multiplicative Chapter07ProfiniteIntegerCompletion,
       e hG.arithmeticFrobenius =
         Multiplicative.ofAdd (chapter07IntegerToProfiniteCompletion 1) := by
-  let φ : G →* Multiplicative Chapter07ProfiniteIntegerCompletion :=
-    { toFun := fun g =>
-        Multiplicative.ofAdd
-          ⟨fun n => (hG.quotient n g).toAdd, by
-            intro m n h
-            have hc := congrArg (fun f => f g)
-              (hG.quotient_compatible m n h)
-            exact congrArg Multiplicative.toAdd hc⟩
-      map_one' := by
-        ext n
-        simp
-      map_mul' := by
-        intro g h
-        apply Multiplicative.ext
-        ext n
-        simp }
-  have hφinj : Function.Injective φ := by
-    intro g h hgh
-    apply hG.quotient_separates
-    intro n
-    have hn := congrArg
-      (fun x : Multiplicative Chapter07ProfiniteIntegerCompletion =>
-        (x.toAdd).1 n) hgh
-    simpa [φ] using hn
-  have hφsurj : Function.Surjective φ := by
-    intro x
-    obtain ⟨g, hg⟩ := hG.quotient_realizes x.toAdd
-    refine ⟨g, ?_⟩
-    apply Multiplicative.ext
-    ext n
-    simpa [φ] using congrArg Multiplicative.toAdd (hg n)
-  let e : G ≃* Multiplicative Chapter07ProfiniteIntegerCompletion :=
-    MulEquiv.ofBijective φ ⟨hφinj, hφsurj⟩
-  refine ⟨e, ?_⟩
-  apply Multiplicative.ext
-  ext n
-  simpa [e, φ, MulEquiv.ofBijective, chapter07IntegerToProfiniteCompletion] using
-    congrArg Multiplicative.toAdd (hG.arithmeticFrobenius_image n)
+  sorry
 
 /-- The precise formal content of the warning about the completed infinite
 union: non-algebraicity is a property of the chosen completion model, not an

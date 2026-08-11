@@ -15,6 +15,9 @@ variable {K : Type u} {L : Type v} [Field K] [Field L] [Algebra K L]
 
 /-! ## Book 2, Chapter 2, §2.2
 
+The finite-free interface below is intentionally stated independently of any
+choice of integral basis.
+
 The source's `B` is represented by `vL.valuationSubring`; the fraction-field
 claim is exposed as `IsFractionRing B L`, and the rank claim is stated with
 `Module.rank` so that the field degree is `Module.finrank K L`.
@@ -22,6 +25,11 @@ claim is exposed as `IsFractionRing B L`, and the rank claim is stated with
 
 /-- The finite-lattice theorem for the integral closure in a complete discrete
 extension. -/
+-- SOURCE_ISSUE: §2.2 states finite freeness from “If L/K is finite of degree
+-- n” alone, although the lattice argument needs the complete discrete local
+-- hypotheses (and the unique extension valuation).  Without them the
+-- integral closure need not be finite.  The theorem should retain those
+-- hypotheses explicitly.
 theorem finite_integral_closure_is_free
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -40,6 +48,7 @@ theorem finite_integral_closure_is_free
       IsFractionRing vL.valuationSubring L := by
   have hstruct := finite_complete_extension_valuation_ring vK vL hcomplete
   letI : Module.Finite vK.valuationSubring vL.valuationSubring := hstruct.1
+  letI : Module.Free vK.valuationSubring vL.valuationSubring := hstruct.2.1
   have hclosure := complete_extension_unit_ball_is_integral_closure vK vL
   letI : IsFractionRing vK.valuationSubring K :=
     (Valuation.valuationSubring.integers vK).isFractionRing
@@ -59,7 +68,7 @@ theorem finite_integral_closure_is_free
             rw [Cardinal.toNat_natCast]
       _ = Module.finrank K L := hfinrank
   exact ⟨hclosure.symm, hstruct.1, hstruct.2.1, hrank, hstruct.2.2.1,
-    hstruct.2.2.2, inferInstance⟩
+    hstruct.2.2.2.1, inferInstance⟩
 
 /-- The integral closure is finite over the base valuation ring. -/
 theorem integral_closure_is_module_finite

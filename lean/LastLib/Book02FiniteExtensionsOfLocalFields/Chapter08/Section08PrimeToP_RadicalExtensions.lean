@@ -63,13 +63,13 @@ theorem chapter08_tame_radical_extension_profile
     [IsDiscreteValuationRing A] [Field K] [Field L]
     [Algebra A K] [IsFractionRing A K] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
-    (p e : ℕ) (hp : Nat.Prime p) (he : Nat.Coprime e p)
+    (p e : ℕ) (_hp : Nat.Prime p) (_he : Nat.Coprime e p)
     [CharP (IsLocalRing.ResidueField A) p]
     (u : Aˣ) (π : A) (α : L)
-    (hπ : Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A)
-    (hroot : chapter08TameRadicalPresentation
+    (_hπ : Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A)
+    (_hroot : chapter08TameRadicalPresentation
       (algebraMap A K (u : A)) (algebraMap A K π) α e)
-    (hdegree : Module.finrank K L = e) :
+    (_hdegree : Module.finrank K L = e) :
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = e ∧ q.ramificationIndex = e ∧ q.residueDegree = 1 ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q := by
@@ -133,20 +133,20 @@ unramified operation in the local-field setting. -/
 theorem chapter08_prime_to_p_roots_of_unity_are_unramified
     {K K' : Type*} [Field K] [Field K'] [Algebra K K']
     [FiniteDimensional K K'] [Algebra.IsSeparable K K']
-    (p e : ℕ) [Fact p.Prime] (he : Nat.Coprime e p)
+    (p e : ℕ) [Fact p.Prime] (_he : Nat.Coprime e p)
     (vK : AddValuation K (WithTop ℤ))
     (vK' : AddValuation K' (WithTop ℤ))
-    (hdiscreteK :
+    (_hdiscreteK :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
-    (hdiscreteK' :
+    (_hdiscreteK' :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK')
-    (hval : vK.IsEquiv (AddValuation.comap (algebraMap K K') vK'))
+    (_hval : vK.IsEquiv (AddValuation.comap (algebraMap K K') vK'))
     [CharP (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueField vK) p]
-    (hcomplete : IsAdicComplete
+    (_hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.toValuation.valuationSubring)
         vK.toValuation.valuationSubring)
-    (ζ : K') (hζ : IsPrimitiveRoot ζ e)
-    (hgen : Algebra.adjoin K ({ζ} : Set K') = ⊤) :
+    (ζ : K') (_hζ : IsPrimitiveRoot ζ e)
+    (_hgen : Algebra.adjoin K ({ζ} : Set K') = ⊤) :
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = Module.finrank K K' ∧ q.ramificationIndex = 1 ∧
       q.residueDegree = Module.finrank K K' ∧

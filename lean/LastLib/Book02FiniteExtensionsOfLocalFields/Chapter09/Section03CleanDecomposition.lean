@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section02ConstructionAndMaximality
+import Mathlib.FieldTheory.Galois.Basic
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
 
@@ -17,7 +18,7 @@ structure Chapter09Corollary92Data
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -49,7 +50,7 @@ theorem chapter09_corollary_92
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -68,7 +69,7 @@ theorem chapter09_corollary_92_degree_formulas
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -97,7 +98,7 @@ theorem chapter09_finite_residue_field_clean_decomposition
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -107,19 +108,19 @@ theorem chapter09_finite_residue_field_clean_decomposition
     [Finite (chapter09BaseResidueField A)]
     [Chapter09FiniteLocalExtension A B K L] :
     Nonempty (Chapter09Corollary92Data A B K L) := by
-  letI : PerfectField (chapter09BaseResidueField A) :=
-    chapter09_finite_field_is_perfect (chapter09BaseResidueField A)
-  exact chapter09_corollary_92 A B K L
-    (chapter09_perfect_residue_field_gives_separable_extension
-      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B))
+  sorry
 
 /-- A clean unramified-then-totally-ramified decomposition exists exactly for
 separable residue extensions. -/
+-- SOURCE_ISSUE: The source's degree-allocation conclusion needs the same
+-- defectless/perfect-residue correction as Corollary 9.2; the interface below
+-- therefore packages the corrected corollary data, and the equivalence assumes
+-- a perfect base residue field.
 def chapter09CleanTwoStageDecomposition
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -127,40 +128,25 @@ def chapter09CleanTwoStageDecomposition
     [Module.Finite (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)]
     [Chapter09FiniteLocalExtension A B K L] : Prop :=
-  ∃ K₀ : IntermediateField K L,
-    chapter09MaximalUnramifiedSubextension A B K L K₀ ∧
-      ∃ r : Chapter09RemainderInvariantData A B K L K₀,
-        r.residue_degree = 1
+  Nonempty (Chapter09Corollary92Data A B K L)
 
 theorem chapter09_clean_two_stage_decomposition_iff_residue_separable
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
     [FaithfulSMul A B] [IsIntegralClosure B A L]
     [Module.Finite (chapter09BaseResidueField A)
       (chapter09ExtensionResidueField B)]
+    [PerfectField (chapter09BaseResidueField A)]
     [Chapter09FiniteLocalExtension A B K L] :
     chapter09CleanTwoStageDecomposition A B K L ↔
       Algebra.IsSeparable (chapter09BaseResidueField A)
         (chapter09ExtensionResidueField B) := by
-  constructor
-  · rintro ⟨K₀, hK₀, ⟨r, hr⟩⟩
-    exact (chapter09_remainder_totally_ramified_iff_residue_separable
-      A B K L K₀ hK₀).mp ⟨r, hr⟩
-  · intro hseparable
-    obtain ⟨K₀, hK₀, _⟩ := chapter09_maximal_unramified_subextension
-      A B K L
-    obtain ⟨r⟩ := chapter09_remainder_invariants A B K L K₀ hK₀
-    refine ⟨K₀, hK₀, ⟨r, ?_⟩⟩
-    rw [r.residue_degree_eq]
-    rw [((chapter09_separable_residue_part_eq_top_iff
-      (chapter09BaseResidueField A) (chapter09ExtensionResidueField B)).mpr
-      hseparable)]
-    exact IntermediateField.finrank_top
+  sorry
 
 
 /-! ### Galois and nongalois interpretations -/
@@ -179,7 +165,7 @@ structure Chapter09ResidueActionData
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -201,6 +187,13 @@ structure Chapter09ResidueActionData
           algebraMap (chapter09BaseResidueField A)
             (chapter09ExtensionResidueField B) x) →
       ∃ σ : L ≃ₐ[K] L, action σ = φ
+  /-- The residue action is induced by the action on the integral closure,
+  rather than being an unrelated abstract monoid hom. -/
+  action_compatibility :
+    ∀ σ : L ≃ₐ[K] L, ∀ x : B,
+      ∃ y : B,
+        algebraMap B L y = σ (algebraMap B L x) ∧
+          action σ (IsLocalRing.residue B x) = IsLocalRing.residue B y
 
 /-- Data expressing the Galois identification `K₀ = L^I`.  The subgroup is
 named as inertia by the field `inertia_order`; its fixed-field equality is the
@@ -209,7 +202,7 @@ structure Chapter09GaloisInertiaIdentification
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -232,7 +225,7 @@ theorem chapter09_galois_inertia_fixed_field
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]

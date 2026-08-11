@@ -14,7 +14,7 @@ type `A[X]`; the following theorem records the arithmetic consequence for the
 field trace and norm after passing to fraction fields.
 -/
 theorem chapter04_integral_trace_and_norm
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
     [Algebra K L] [Algebra A L] [IsScalarTower A B L] [IsScalarTower A K L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -32,7 +32,7 @@ theorem chapter04_integral_trace_and_norm
 /- The characteristic polynomial of multiplication descends from the finite
 free integral basis to the fraction-field extension (§4.2). -/
 theorem chapter04_integral_characteristic_polynomial
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
     [Algebra K L] [Algebra A L] [IsScalarTower A B L] [IsScalarTower A K L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -43,7 +43,7 @@ theorem chapter04_integral_characteristic_polynomial
         (LinearMap.charpoly (Algebra.lmul A B x)) =
       LinearMap.charpoly (Algebra.lmul K L (algebraMap B L x)) := by
   classical
-  letI : IsIntegralClosure B A L := IsIntegralClosure.of_isIntegrallyClosed B A L
+  let _ : IsIntegralClosure B A L := IsIntegralClosure.of_isIntegrallyClosed B A L
   let b := Module.Free.chooseBasis A B
   let bK := b.localizationLocalization K (nonZeroDivisors A) L
   calc
@@ -65,7 +65,7 @@ theorem chapter04_integral_characteristic_polynomial
 
 /- The norm of an integral unit is a unit of the base ring (§4.2). -/
 theorem chapter04_norm_of_integral_unit_is_base_unit
-    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B] [IsDomain B]
+    (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
     [Field K] [Field L] [Algebra A B] [Algebra A K] [Algebra B L]
     [Algebra K L] [Algebra A L] [IsScalarTower A B L] [IsScalarTower A K L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -85,7 +85,7 @@ characteristic different from two has a trace-zero field unit (§4.2).
 theorem chapter04_quadratic_trace_zero_unit
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
-    (hdegree : Module.finrank K L = 2) (hchar : (2 : K) ≠ 0) :
+    (hdegree : Module.finrank K L = 2) (_hchar : (2 : K) ≠ 0) :
     ∃ u : Lˣ,
       Algebra.trace K L (u : L) = 0 ∧
         ¬IsUnit (Algebra.trace K L (u : L)) := by
@@ -96,7 +96,7 @@ theorem chapter04_quadratic_trace_zero_unit
   rcases (Submodule.ne_bot_iff _).mp hker with ⟨z, hz, hz0⟩
   refine ⟨Units.mk0 z hz0, ?_, ?_⟩
   · exact (LinearMap.mem_ker.mp hz)
-  · simpa [LinearMap.mem_ker.mp hz]
+  · simp [LinearMap.mem_ker.mp hz]
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04

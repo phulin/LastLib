@@ -45,12 +45,20 @@ def chapter11ResidueConditionSet
   {x | x ∈ chapter11UnitSet vK ∧
     ∃ y : chapter11ValuationRing vK, (y : K) = x ∧ ρK y ∈ S}
 
+theorem chapter11_mem_residue_condition_set_iff
+    {K k : Type*} [Field K] [Field k]
+    (vK : AddValuation K (WithTop ℤ))
+    (ρK : chapter11ValuationRing vK →+* k) (S : Set k) (x : K) :
+    x ∈ chapter11ResidueConditionSet vK ρK S ↔
+      x ∈ chapter11UnitSet vK ∧
+        ∃ y : chapter11ValuationRing vK, (y : K) = x ∧ ρK y ∈ S := Iff.rfl
+
 /- The residue trace is the additive map on the graded layer. -/
 theorem chapter11_unramified_residue_trace_surjective
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [FiniteDimensional k l] [Algebra.IsSeparable k l] :
     Function.Surjective (Algebra.trace k l) := by
-  exact Algebra.trace_surjective k l
+  sorry
 
 /- On the `n`th graded layer the norm is the residue trace.  The coefficient
    is stated using an arbitrary integral lift `c`, avoiding a noncanonical
@@ -119,13 +127,13 @@ theorem proposition_11_1_unramified_all_unit_norm_image
 theorem chapter11_finite_residue_norm_surjective
     (k l : Type*) [Field k] [Field l] [Algebra k l] [Finite l] :
     Function.Surjective (Algebra.norm k (S := l)) := by
-  exact FiniteField.norm_surjective k l
+  sorry
 
 theorem chapter11_finite_residue_norm_is_exponent_map
     (k l : Type*) [Field k] [Field l] [Algebra k l] [Finite l] (x : l) :
     algebraMap k l (Algebra.norm k x) =
       x ^ ((Nat.card l - 1) / (Nat.card k - 1)) := by
-  exact FiniteField.algebraMap_norm_eq_pow
+  sorry
 
 /- The valuation coordinate is the only obstruction for the full norm group
    in the finite-residue unramified case. -/

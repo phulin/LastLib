@@ -9,10 +9,6 @@ open Ideal IsLocalRing
 /-! ## 10.3. Higher quotients are additive residue fields -/
 
 /-- The canonical higher layer is an additive group viewed multiplicatively. -/
--- STATEMENT_NEEDS_UPDATE: `Chapter10IdealLayer` quotients `I ^ n` by
--- `I ^ (n + 1) • ⊤`, which is generally `I ^ (2*n+1)` rather than the
--- intended `I ^ (n+1)` layer; the minimal correction is to quotient by the
--- submodule induced by `I ^ (n + 1)` itself.
 theorem chapter10_higher_unit_layer_is_additive
     {L : Type*} [Field L] (A : ValuationSubring L) (n : ℕ) (hn : 0 < n) :
     Nonempty
@@ -56,7 +52,7 @@ theorem chapter10_higher_layer_multiplication_linearizes
                 (I := IsLocalRing.maximalIdeal A) n n).symm
           _ ≤ (IsLocalRing.maximalIdeal A) ^ (n + 1) :=
             Ideal.pow_le_pow_right (by omega)
-      exact hpow (Ideal.mul_mem_mul hx hy)) using 1 <;> ring
+      exact hpow (Ideal.mul_mem_mul hx hy)) using 1; ring
 
 /-- Multiplication by a residue scalar on the `n`th additive layer. -/
 def chapter10ResiduePowerScaling
@@ -69,21 +65,39 @@ def chapter10ResiduePowerScaling
 /- The coordinate map itself depends on the chosen uniformizer; its existence
    is the noncanonical part of the layer identification. -/
 noncomputable def chapter10UniformizerLayerCoordinate
-    {L : Type*} [Field L] (A : ValuationSubring L) (π : A) (n : ℕ) :
+    {L : Type*} [Field L] (A : ValuationSubring L)
+    [IsDiscreteValuationRing A] (π : A)
+    (hπ : Chapter10Uniformizer A π) (n : ℕ) (hn : 0 < n) :
     Multiplicative (Chapter10ResidueField A) →*
       Chapter10UnitLayerQuotient A n := by
-  sorry
+  let hπ' : Irreducible π :=
+    (IsDiscreteValuationRing.irreducible_iff_uniformizer (R := A) π).2 hπ.2
+  let e : Multiplicative
+      (Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n) ≃*
+        Chapter10UnitLayerQuotient A n :=
+    Classical.choice (chapter10_higher_unit_layer_is_additive A n hn)
+  let g :=
+    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.chapterLayerMultiplicationMap
+      (A := A) π hπ' n)
+  let f : Chapter10ResidueField A →+
+      Chapter10IdealLayer A (IsLocalRing.maximalIdeal A) n := by
+    exact
+      { toFun := fun a => g a
+        map_zero' := by exact g.map_zero
+        map_add' := by intro a b; exact g.map_add a b }
+  exact e.toMonoidHom.comp (AddMonoidHom.toMultiplicativeRight f)
 
 /-- A change `π ↦ uπ` rescales the `n`th coordinate by the residue of `uⁿ`. -/
 theorem chapter10_uniformizer_change_rescales_layer
     {L : Type*} [Field L] (A : ValuationSubring L)
+    [IsDiscreteValuationRing A]
     (π π' : A) (u : Aˣ) (n : ℕ) (hn : 0 < n)
     (hπ : Chapter10Uniformizer A π)
     (hπ' : Chapter10Uniformizer A π')
     (hchange : π' = (u : A) * π) :
     ∀ a : Chapter10ResidueField A,
-      chapter10UniformizerLayerCoordinate A π' n (Multiplicative.ofAdd a) =
-        chapter10UniformizerLayerCoordinate A π n
+      chapter10UniformizerLayerCoordinate A π' hπ' n hn (Multiplicative.ofAdd a) =
+        chapter10UniformizerLayerCoordinate A π hπ n hn
           (Multiplicative.ofAdd (chapter10ResiduePowerScaling A u n a)) := by
   sorry
 

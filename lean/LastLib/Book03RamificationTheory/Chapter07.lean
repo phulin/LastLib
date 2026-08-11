@@ -1,0 +1,14 @@
+import LastLib.Book03RamificationTheory.Chapter07.Section01MeasuringTheDefectOfIntegralTraceDuality
+import LastLib.Book03RamificationTheory.Chapter07.Section02UnramifiednessAndTheDifferent
+import LastLib.Book03RamificationTheory.Chapter07.Section03TheDerivativeFormula
+import LastLib.Book03RamificationTheory.Chapter07.Section04KaehlerDifferentials
+import LastLib.Book03RamificationTheory.Chapter07.Section05ExactTraceIdeals
+import LastLib.Book03RamificationTheory.Chapter07.Section06TameAndWildDerivativeBounds
+import LastLib.Book03RamificationTheory.Chapter07.Section07FurtherDerivativeCalculations
+
+namespace LastLib.Book03RamificationTheory.Chapter07
+
+/-! Aggregator for Book 3, Chapter 7: the complementary module and the
+    different. -/
+
+end LastLib.Book03RamificationTheory.Chapter07

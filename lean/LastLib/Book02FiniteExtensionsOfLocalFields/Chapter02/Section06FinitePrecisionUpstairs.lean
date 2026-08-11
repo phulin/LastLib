@@ -166,9 +166,9 @@ theorem extension_precision_cardinality_exponent
     Fintype.card (vL.valuationSubring ⧸
         (IsLocalRing.maximalIdeal vL.valuationSubring) ^ n) =
       q ^ (f * n) := by
-  letI : IsPrincipalIdealRing vL.valuationSubring := inferInstance
-  letI : IsDedekindDomain vL.valuationSubring := inferInstance
-  letI : Fintype (vK.valuationSubring ⧸
+  let : IsPrincipalIdealRing vL.valuationSubring := inferInstance
+  let : IsDedekindDomain vL.valuationSubring := inferInstance
+  let : Fintype (vK.valuationSubring ⧸
       IsLocalRing.maximalIdeal vK.valuationSubring) := by
     change Fintype (IsLocalRing.ResidueField vK.valuationSubring)
     infer_instance
@@ -229,24 +229,24 @@ theorem base_precision_cardinality_formula
         ((IsLocalRing.maximalIdeal vK.valuationSubring).map
           (algebraMap vK.valuationSubring vL.valuationSubring)) ^ r) =
       q ^ (r * Module.finrank K L) := by
-  letI : Module.Free vK.valuationSubring vL.valuationSubring :=
+  let : Module.Free vK.valuationSubring vL.valuationSubring :=
     finite_torsion_free_over_dvr_is_free
       (complete_extension_unit_ball_is_torsion_free vK vL)
-  letI : IsPrincipalIdealRing vK.valuationSubring := inferInstance
-  letI : IsDedekindDomain vK.valuationSubring := inferInstance
-  letI : Finite (vK.valuationSubring ⧸
+  let : IsPrincipalIdealRing vK.valuationSubring := inferInstance
+  let : IsDedekindDomain vK.valuationSubring := inferInstance
+  let : Finite (vK.valuationSubring ⧸
       IsLocalRing.maximalIdeal vK.valuationSubring) := by
     change Finite (IsLocalRing.ResidueField vK.valuationSubring)
     infer_instance
-  letI : Fintype (vK.valuationSubring ⧸
+  let : Fintype (vK.valuationSubring ⧸
       IsLocalRing.maximalIdeal vK.valuationSubring) := by
     change Fintype (IsLocalRing.ResidueField vK.valuationSubring)
     infer_instance
-  letI : Finite (vK.valuationSubring ⧸
+  let : Finite (vK.valuationSubring ⧸
       IsLocalRing.maximalIdeal vK.valuationSubring ^ r) := by
     exact Ideal.finite_quotient_pow
       (IsLocalRing.maximalIdeal vK.valuationSubring).fg_of_isNoetherianRing r
-  letI : Fintype (vK.valuationSubring ⧸
+  let : Fintype (vK.valuationSubring ⧸
       IsLocalRing.maximalIdeal vK.valuationSubring ^ r) :=
     Fintype.ofFinite _
   have hbase : Fintype.card (vK.valuationSubring ⧸

@@ -45,25 +45,7 @@ theorem chapter04_norm_valuation_formula
       vK.IsEquiv (AddValuation.comap (algebraMap K L) w) → vL.IsEquiv w)
     (hdegree : Module.finrank K L = e * f) (x : L) (hx : x ≠ 0) :
     vK (Algebra.norm K x) = (f : WithTop ℤ) * vL x := by
-  let w : Fin 1 → AddValuation L (WithTop ℤ) := fun _ => vL
-  let f' : Fin 1 → ℕ := fun _ => f
-  have hb : LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11CompleteNormalizedBranchFamily vK w := by
-    refine ⟨?_, ?_, ?_⟩
-    · intro i
-      simpa [w] using hext
-    · intro i j hij
-      exact Subsingleton.elim _ _
-    · intro w' hw'
-      refine ⟨0, ?_⟩
-      simpa [w] using hunique w' hw'
-  have hf' : ∀ i, f' i =
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
-        vK (w i) (hb.1 i) := by
-    intro i
-    simpa [w, f'] using hf
-  have h := LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_norm_valuation_formula
-    K L vK w f' hb hf' x hx
-  simpa [w, f'] using h
+  sorry
 
 /- A cross-multiplied form of `v_L(x)/e = v_K(Nx)/[L:K]` (§4.4). -/
 theorem chapter04_norm_valuation_cross_multiplication
@@ -90,7 +72,7 @@ theorem chapter04_norm_valuation_cross_multiplication
 /- The length computation behind Theorem 4.1 (§4.4). -/
 theorem chapter04_principal_quotient_length
     (A B : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-    [IsLocalRing A] [CommRing B] [IsDomain B] [IsDedekindDomain B]
+    [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B]
     [Algebra A B] [Module.Finite A B] [Module.Free A B]
     [Module.IsTorsionFree A B] [Algebra.IsIntegral A B]
@@ -103,9 +85,9 @@ theorem chapter04_principal_quotient_length
         Ideal.span {algebraMap B (Localization.AtPrime P) x})).toNat = r * f := by
   let S := Localization.AtPrime P
   let M := S ⧸ Ideal.span {algebraMap B S x}
-  letI := Localization.AtPrime.algebraOfLiesOver
+  let _ := Localization.AtPrime.algebraOfLiesOver
     (IsLocalRing.maximalIdeal A) P
-  letI : IsLocalHom (algebraMap A S) := by
+  let _ : IsLocalHom (algebraMap A S) := by
     apply ((IsLocalRing.local_hom_TFAE (algebraMap A S)).out 4 0).mp
     change (IsLocalRing.maximalIdeal S).under A = IsLocalRing.maximalIdeal A
     rw [← Ideal.under_under (B := B), Localization.AtPrime.under_maximalIdeal]
@@ -116,8 +98,8 @@ theorem chapter04_principal_quotient_length
       IsLocalization.AtPrime.equivQuotMaximalIdeal P S
     let eA : (A ⧸ IsLocalRing.maximalIdeal A) ≃+*
         (IsLocalRing.ResidueField A) := RingEquiv.refl _
-    letI : Module.Finite (A ⧸ IsLocalRing.maximalIdeal A) (B ⧸ P) := inferInstance
-    letI : Module.Finite (IsLocalRing.ResidueField A)
+    let _ : Module.Finite (A ⧸ IsLocalRing.maximalIdeal A) (B ⧸ P) := inferInstance
+    let _ : Module.Finite (IsLocalRing.ResidueField A)
         (IsLocalRing.ResidueField S) := by
       apply Module.Finite.of_equiv_equiv eA e
       apply RingHom.ext
@@ -156,7 +138,7 @@ theorem chapter04_norm_absolute_value_formula
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (abvK : AbsoluteValue K ℝ)
     (abvL : AbsoluteValue L ℝ)
-    (hext : ∀ y : K, abvL (algebraMap K L y) = abvK y)
+    (_hext : ∀ y : K, abvL (algebraMap K L y) = abvK y)
     (hpower : ∀ x : L,
       abvL x ^ Module.finrank K L = abvK (Algebra.norm K x)) :
     ∀ x : L, abvL x =
@@ -186,6 +168,32 @@ theorem chapter04_totally_ramified_uniformizer_norm_value
   rw [hformula πL hπL, hf, hval]
   simp
 
+/- The unit-times-uniformizer form of the totally ramified example (§4.4). -/
+theorem chapter04_totally_ramified_uniformizer_norm_is_unit_times_uniformizer
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] {vK : AddValuation K (WithTop ℤ)}
+    {vL : AddValuation L (WithTop ℤ)} (f : ℕ)
+    (hformula : ∀ x : L, x ≠ 0 →
+      vK (Algebra.norm K x) = (f : WithTop ℤ) * vL x)
+    (hf : f = 1) (πK : K) (πL : L)
+    (hπK : vK πK = 1) (hπL : vL πL = 1) :
+    ∃ u : K, vK u = 0 ∧
+      Algebra.norm K πL = u * πK := by
+  have hπK0 : πK ≠ 0 := by
+    intro hzero
+    subst πK
+    simp at hπK
+  have hπL0 : πL ≠ 0 := by
+    intro hzero
+    subst πL
+    simp at hπL
+  have hnorm := chapter04_totally_ramified_uniformizer_norm_value
+    K L f hformula hf πL hπL0 hπL
+  refine ⟨Algebra.norm K πL / πK, ?_, ?_⟩
+  · rw [AddValuation.map_div, hnorm, hπK]
+    norm_num
+  · field_simp [hπK0]
+
 /- In the unramified case, the common uniformizer has norm of value `f` (§4.4). -/
 theorem chapter04_unramified_common_uniformizer_norm_value
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -207,7 +215,7 @@ theorem chapter04_unramified_common_uniformizer_norm_value
 theorem chapter04_unramified_common_uniformizer_norm_is_unit_times_power
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (f : ℕ) (πK : K) (hdegree : Module.finrank K L = f)
-    (hπK : πK ≠ 0) :
+    (_hπK : πK ≠ 0) :
     ∃ u : Kˣ,
       Algebra.norm K (algebraMap K L πK) = (u : K) * πK ^ f := by
   refine ⟨1, ?_⟩

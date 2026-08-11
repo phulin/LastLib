@@ -1,3 +1,4 @@
+import Mathlib.RingTheory.Etale.Basic
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section01IsolatingResidueGrowth
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
@@ -64,11 +65,12 @@ structure Chapter07MonogenicResiduePresentation
 
 /-! Theorem 7.1.  The hypotheses identify the abstract profile from §7.1
 with one finite normalization branch.  Completeness/henselianity is expressed
-by `HenselianLocalRing A`, while the normalization and residue maps remain
-explicit interfaces for later proof passes. -/
+by `HenselianLocalRing A`, and both residue maps are explicit. -/
 
 /-- The five field/ring/residue criteria for an unramified extension. -/
--- STATEMENT_NEEDS_UPDATE: The forward data only constrain the numeric profile and the chosen map A →+* k; they do not supply a residue map B →+* l or the presentation data needed for the Nonempty monogenic clause, nor do they imply Algebra.Etale A B. Add those normalization/presentation hypotheses or weaken the equivalence conclusion.
+-- SOURCE_ISSUE: The source suppresses the residue map upstairs.  The
+-- proof-ready interface adds it, together with its compatibility, kernel, and
+-- surjectivity data.
 theorem chapter07_unramified_criteria
     {A B K L k l : Type*} [CommRing A] [IsDomain A]
     [CommRing B] [IsDomain B] [Field K] [Field L] [Field k] [Field l]
@@ -86,6 +88,11 @@ theorem chapter07_unramified_criteria
     (hP : P = IsLocalRing.maximalIdeal B)
     (hres_surjective : Function.Surjective res)
     (hres_kernel : RingHom.ker res = m)
+    (resB : B →+* l)
+    (hresB_surjective : Function.Surjective resB)
+    (hresB_kernel : RingHom.ker resB = P)
+    (hresB_compatible :
+      resB.comp (algebraMap A B) = (algebraMap k l).comp res)
     (hE : E.ramificationIndex =
       P.ramificationIdx A)
     (hf : E.residueDegree =

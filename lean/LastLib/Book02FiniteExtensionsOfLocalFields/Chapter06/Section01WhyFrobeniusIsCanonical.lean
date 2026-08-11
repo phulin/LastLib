@@ -52,8 +52,7 @@ theorem chapter06_arithmetic_frobenius_apply
     (k l : Type*) [Field k] [Fintype k] [Field l] [Finite l]
     [Algebra k l] [Algebra.IsAlgebraic k l] (x : l) :
     chapter06ArithmeticFrobenius k l x = x ^ Fintype.card k := by
-  simpa [chapter06ArithmeticFrobenius] using
-    congrFun (FiniteField.coe_frobeniusAlgEquivOfAlgebraic k l) x
+  simp [chapter06ArithmeticFrobenius]
 
 /- Arithmetic Frobenius fixes the base field pointwise. -/
 theorem chapter06_arithmetic_frobenius_fixes_base
@@ -106,6 +105,25 @@ theorem chapter06_arithmetic_frobenius_generates
     (FiniteField.bijective_frobeniusAlgEquivOfAlgebraic_pow k l).2 σ
   refine ⟨i.1, ?_⟩
   simpa [chapter06ArithmeticFrobenius] using hi
+
+/- The cyclic-generator formulation of the finite-field Galois group. -/
+theorem chapter06_arithmetic_frobenius_zpowers_eq_top
+    (k l : Type*) [Field k] [Fintype k] [Field l] [Finite l]
+    [Algebra k l] [Algebra.IsAlgebraic k l] :
+    Subgroup.zpowers (chapter06ArithmeticFrobenius k l) = ⊤ := by
+  apply top_unique
+  intro σ hσ
+  obtain ⟨n, hn⟩ := chapter06_arithmetic_frobenius_generates k l σ
+  exact (Subgroup.mem_zpowers_iff).2 ⟨n, hn⟩
+
+/- Membership in the fixed-point set is the base-field condition. -/
+theorem chapter06_frobenius_fixed_point_iff
+    (k l : Type*) [Field k] [Fintype k] [Field l] [Finite l]
+    [Algebra k l] [Algebra.IsAlgebraic k l] (x : l) :
+    x ∈ chapter06FrobeniusFixedPoints k l ↔
+      ∃ a : k, algebraMap k l a = x := by
+  rw [chapter06_frobenius_fixed_points_eq_base_image]
+  rfl
 
 /- Geometric Frobenius is the inverse convention. -/
 theorem chapter06_geometric_frobenius_is_inverse

@@ -1,5 +1,6 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Section03CompatibilityInTowers
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06.Section01WhyFrobeniusIsCanonical
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
+import Mathlib.NumberTheory.Padics.RingHoms
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter06
 
@@ -18,9 +19,15 @@ explicit reduction equality records which lift is being used.
 def chapter06PadicPolynomialLift
     (p f : ℕ) [Fact p.Prime] (gbar : (ZMod p)[X])
     (g : (PadicInt p)[X]) : Prop :=
-  gbar.Monic ∧ g.Monic ∧
+  g.Monic ∧
     g.map (PadicInt.toZMod : PadicInt p →+* ZMod p) = gbar ∧
     Irreducible gbar ∧ gbar.natDegree = f
+
+/- An irreducible polynomial over the finite residue field is separable. -/
+theorem chapter06_padic_residue_polynomial_is_separable
+    (p : ℕ) [Fact p.Prime] (gbar : (ZMod p)[X])
+    (hirr : Irreducible gbar) : gbar.Separable := by
+  sorry
 
 /- A residue element is a root of the displayed residue polynomial. -/
 def chapter06ResidueRootOfPolynomial
@@ -30,25 +37,72 @@ def chapter06ResidueRootOfPolynomial
   eval₂ (algebraMap (ZMod p) l) (res θ) gbar = 0
 
 /-
+SOURCE_ISSUE: The source suppresses the valuation on the generated field and
+the identification of its integral closure with a valuation ring.  A bare
+numerical profile is not enough to conclude that the displayed extension is
+unramified, so the corrected interface below records the valuation branch and
+realizes the profile by that branch.  The stronger generic bridge is supplied
+by the earlier `chapter10_unramified_lift_profile` interface.
+-/
+
+/-
 An irreducible residue polynomial with a monic `p`-adic lift gives the
 unramified profile predicted by the book.  The generation and degree
 hypotheses make the chosen root the intended field generator.
 -/
 theorem chapter06_padic_irreducible_lift_is_unramified
-    (p f : ℕ) [Fact p.Prime] {L : Type*} [Field L]
+    (p f : ℕ) [Fact p.Prime] {L ΓK ΓL : Type*} [Field L]
     [Algebra (Padic p) L] [FiniteDimensional (Padic p) L]
     [Algebra (PadicInt p) L]
     [IsScalarTower (PadicInt p) (Padic p) L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
     (gbar : (ZMod p)[X]) (g : (PadicInt p)[X]) (θ : L)
     (hlift : chapter06PadicPolynomialLift p f gbar g)
     (hroot : eval₂ (algebraMap (PadicInt p) L) θ g = 0)
     (hgenerates : Algebra.adjoin (Padic p) ({θ} : Set L) = ⊤)
-    (hdegree : Module.finrank (Padic p) L = f) :
-    ∃ profile : Chapter10FiniteExtensionProfile,
-      profile.degree = f ∧ profile.ramificationIndex = 1 ∧
-        profile.residueDegree = f ∧ Chapter10Unramified profile := by
-  exact ⟨{ degree := f, ramificationIndex := 1, residueDegree := f },
-    rfl, rfl, rfl, rfl⟩
+    (hdegree : Module.finrank (Padic p) L = f)
+    (hres : ∃ e : IsLocalRing.ResidueField (PadicInt p) ≃+* ZMod p,
+      e.toRingHom.comp (IsLocalRing.residue (PadicInt p)) =
+        (PadicInt.toZMod : PadicInt p →+* ZMod p))
+    (v : Valuation (Padic p) ΓK) (w : Valuation L ΓL)
+    (hA : v.Integers (PadicInt p))
+    (hext : v.IsEquiv (w.comap (algebraMap (Padic p) L))) :
+    ∃ d : Chapter10HeterogeneousExtensionData v w hext,
+      ∃ profile : Chapter10FiniteExtensionProfile,
+        Chapter10ProfileRealizedByData d profile ∧
+          Irreducible g ∧ profile.degree = f ∧
+          profile.ramificationIndex = 1 ∧ profile.residueDegree = f ∧
+          Chapter10Unramified profile ∧
+          (g.map (PadicInt.toZMod : PadicInt p →+* ZMod p)).Separable := by
+  sorry
+
+/- The valuation-level form with the suppressed local hypotheses restored. -/
+theorem chapter06_padic_unramified_lift_profile
+    {L ΓK ΓL : Type*} (p f : ℕ) [Fact p.Prime]
+    [Field L] [Algebra (Padic p) L]
+    [FiniteDimensional (Padic p) L]
+    [Algebra (PadicInt p) L]
+    [IsScalarTower (PadicInt p) (Padic p) L]
+    [LinearOrderedCommGroupWithZero ΓK]
+    [LinearOrderedCommGroupWithZero ΓL]
+    (res : PadicInt p →+* ZMod p) (P : (PadicInt p)[X])
+    (hred : Chapter10IrreducibleSeparableReduction res P f)
+    (hres : ∃ e : IsLocalRing.ResidueField (PadicInt p) ≃+* ZMod p,
+      e.toRingHom.comp (IsLocalRing.residue (PadicInt p)) = res)
+    (α : L) (hroot : eval₂ (algebraMap (PadicInt p) L) α P = 0)
+    (hgen : Algebra.adjoin (Padic p) ({α} : Set L) = ⊤)
+    (hdegree : Module.finrank (Padic p) L = f)
+    (v : Valuation (Padic p) ΓK) (w : Valuation L ΓL)
+    (hA : v.Integers (PadicInt p))
+    (hext : v.IsEquiv (w.comap (algebraMap (Padic p) L))) :
+    ∃ d : Chapter10HeterogeneousExtensionData v w hext,
+      ∃ profile : Chapter10FiniteExtensionProfile,
+        Chapter10ProfileRealizedByData d profile ∧
+          Irreducible P ∧ profile.degree = f ∧
+          profile.ramificationIndex = 1 ∧ profile.residueDegree = f ∧
+          Chapter10Unramified profile ∧ (P.map res).Separable := by
+  sorry
 
 /- The residue of the chosen root is acted on by `p`-power Frobenius. -/
 theorem chapter06_padic_residue_frobenius_on_root
@@ -56,8 +110,21 @@ theorem chapter06_padic_residue_frobenius_on_root
     [Algebra (ZMod p) l] [Algebra.IsAlgebraic (ZMod p) l]
     (θbar : l) :
     chapter06ArithmeticFrobenius (ZMod p) l θbar = θbar ^ p := by
-  simpa [chapter06ArithmeticFrobenius, ZMod.card] using
-    congrFun (FiniteField.coe_frobeniusAlgEquivOfAlgebraic (ZMod p) l) θbar
+  sorry
+
+/- A lifted polynomial root reduces to a root of the reduced polynomial. -/
+theorem chapter06_residue_of_padic_lifted_root
+    (p : ℕ) [Fact p.Prime] {B l : Type*} [CommRing B] [Field l]
+    [Algebra (ZMod p) l]
+    (res : B →+* l) (coeffLift : PadicInt p →+* B)
+    (gbar : (ZMod p)[X]) (g : (PadicInt p)[X]) (θ : B)
+    (hres : res.comp coeffLift =
+      (algebraMap (ZMod p) l : ZMod p →+* l).comp
+        (PadicInt.toZMod : PadicInt p →+* ZMod p))
+    (hmap : g.map (PadicInt.toZMod : PadicInt p →+* ZMod p) = gbar)
+    (hroot : eval₂ coeffLift θ g = 0) :
+    chapter06ResidueRootOfPolynomial p res gbar θ := by
+  sorry
 
 /-
 The canonical statement about a lifted root is a residue congruence.  The
@@ -81,6 +148,17 @@ def chapter06IntegralModelAutomorphismCompatibility
     {B L : Type*} [CommRing B] [Field L] [Algebra B L]
     (σB : B ≃+* B) (σL : L ≃+* L) : Prop :=
   ∀ x : B, algebraMap B L (σB x) = σL (algebraMap B L x)
+
+/- The concrete `p`-power form of the residue congruence. -/
+theorem chapter06_padic_residue_frobenius_congruence_iff
+    (p : ℕ) [Fact p.Prime] {B l : Type*} [CommRing B] [Field l]
+    [Fintype l] [Algebra (ZMod p) l]
+    [Algebra.IsAlgebraic (ZMod p) l]
+    (res : B →+* l) (σB : B ≃+* B) (θ : B) :
+    chapter06ResidueFrobeniusCongruence res σB
+        (chapter06ArithmeticFrobeniusRingEquiv (ZMod p) l) θ ↔
+      res (σB θ) = (res θ) ^ p := by
+  sorry
 
 end
 

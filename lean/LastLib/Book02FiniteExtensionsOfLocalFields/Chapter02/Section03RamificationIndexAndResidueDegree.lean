@@ -26,6 +26,11 @@ def chapter2NormalizedValuationRestriction
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰) (e : ℕ) : Prop :=
   ∀ x : K, vL (algebraMap K L x) = vK x ^ e
 
+/-- A valuation to `ℤᵐ⁰` is normalized when it is surjective onto its target. -/
+def chapter2SurjectiveIntegerValuation
+    {F : Type*} [Field F] (v : Valuation F ℤᵐ⁰) : Prop :=
+  Function.Surjective v
+
 /-- The residue-field extension attached to two extending valuation rings. -/
 def chapter2ResidueFieldExtension
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
@@ -34,7 +39,13 @@ def chapter2ResidueFieldExtension
     (IsLocalRing.ResidueField vL.valuationSubring)
 
 /-- In the normalized convention, restriction scales by the ramification index. -/
--- STATEMENT_NEEDS_UPDATE: `Valuation.HasExtension` identifies the restricted and base valuations only up to equivalence, so their normalizations may differ (already for `K = L` with the extension valuation rescaled); the displayed equality is therefore false. Add an equality/normalization hypothesis on the restriction, or weaken the conclusion to equivalence of valuations/value orders.
+-- SOURCE_ISSUE: `Valuation.HasExtension` identifies valuations only up to
+-- order equivalence.  It does not fix the integer scale: even with `K = L`,
+-- replacing `vL` by a positive power preserves `HasExtension` and the
+-- valuation subring while changing the displayed equality.  The corrected
+-- normalized interface is `normalized_valuation_restriction_has_ramification_factor`
+-- below; this legacy declaration preserves the source-facing signature used
+-- by later book chapters.
 theorem valuation_restriction_is_power_of_ramification_index
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -44,6 +55,20 @@ theorem valuation_restriction_is_power_of_ramification_index
     (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
       (IsLocalRing.maximalIdeal vL.valuationSubring) = e) :
     ∀ x : K, vL (algebraMap K L x) = vK x ^ e := by
+  sorry
+
+/-- The restriction formula with surjective integer-valued normalizations. -/
+theorem normalized_valuation_restriction_has_ramification_factor
+    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
+    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL] [FiniteDimensional K L]
+    [Module.Finite vK.valuationSubring vL.valuationSubring]
+    (hK : chapter2SurjectiveIntegerValuation vK)
+    (hL : chapter2SurjectiveIntegerValuation vL)
+    (e : ℕ)
+    (he : chapterRamificationIndex vK.valuationSubring vL.valuationSubring
+      (IsLocalRing.maximalIdeal vL.valuationSubring) = e) :
+    chapter2NormalizedValuationRestriction vK vL e := by
   sorry
 
 /-- Uniformizers give the principal-ideal factorization `π_K = u π_L^e`. -/
@@ -60,7 +85,7 @@ theorem uniformizer_factorization
     ∃ u : vL.valuationSubringˣ,
       algebraMap vK.valuationSubring vL.valuationSubring πK =
       (u : vL.valuationSubring) * (πL : vL.valuationSubring) ^ e := by
-  letI : FaithfulSMul vK.valuationSubring vL.valuationSubring :=
+  let : FaithfulSMul vK.valuationSubring vL.valuationSubring :=
     (faithfulSMul_iff_algebraMap_injective _ _).mpr
       (Valuation.HasExtension.algebraMap_injective (vK := vK) (vA := vL))
   let A := vK.valuationSubring
@@ -82,7 +107,7 @@ theorem uniformizer_factorization
       rw [Ideal.map_map]
       congr 1
 
-    letI : IsDiscreteValuationRing (Localization.AtPrime mB) :=
+    let : IsDiscreteValuationRing (Localization.AtPrime mB) :=
       IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B
         (IsDiscreteValuationRing.not_a_field B) (Localization.AtPrime mB)
     rw [hmaploc, hn, Ideal.map_pow,
@@ -133,7 +158,7 @@ theorem maximal_ideal_extension_is_power
     (IsLocalRing.maximalIdeal vK.valuationSubring).map
         (algebraMap vK.valuationSubring vL.valuationSubring) =
       (IsLocalRing.maximalIdeal vL.valuationSubring) ^ e := by
-  letI : FaithfulSMul vK.valuationSubring vL.valuationSubring :=
+  let : FaithfulSMul vK.valuationSubring vL.valuationSubring :=
     (faithfulSMul_iff_algebraMap_injective _ _).mpr
       (Valuation.HasExtension.algebraMap_injective (vK := vK) (vA := vL))
   let A := vK.valuationSubring
@@ -155,7 +180,7 @@ theorem maximal_ideal_extension_is_power
       rw [Ideal.map_map]
       congr 1
 
-    letI : IsDiscreteValuationRing (Localization.AtPrime mB) :=
+    let : IsDiscreteValuationRing (Localization.AtPrime mB) :=
       IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B
         (IsDiscreteValuationRing.not_a_field B) (Localization.AtPrime mB)
     rw [hmaploc, hn, Ideal.map_pow,

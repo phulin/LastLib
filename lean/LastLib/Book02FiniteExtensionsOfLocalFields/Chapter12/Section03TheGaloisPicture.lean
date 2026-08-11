@@ -1,5 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section02TheSeparabilityMap
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section03ResidueActionAndInertia
+import Mathlib.FieldTheory.Finite.GaloisField
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12
 
@@ -89,7 +90,7 @@ theorem galois_reduction_is_exact
     chapter12GaloisReductionExactSequence vK vL d := by
   change Function.MulExact (Subgroup.subtype d.inertia) d.reduction
   apply MonoidHom.mulExact_iff.mpr
-  simpa [Chapter12GaloisReductionData.inertia] using d.inertia.range_subtype.symm
+  exact (Subgroup.range_subtype (MonoidHom.ker d.reduction)).symm
 
 instance chapter12GaloisInertiaNormal
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
@@ -181,6 +182,9 @@ theorem complete_decomposition_group_is_the_whole_galois_group
       Valuation.HasExtension.val_isEquiv_comap hcomplete hunique
 
 /-- Book 2, §12.3: under completeness and residue separability, reduction is onto. -/
+-- DEPENDENCY_GUESS: This is the Hensel-lifting/surjectivity bridge from the
+-- residue-action chapter, retained as an explicit local interface until its
+-- valuation-ring construction is connected to this generic package.
 theorem complete_galois_reduction_is_surjective
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]
@@ -240,6 +244,7 @@ theorem galois_reduction_has_exact_quotient
       (Gal(L / K) ⧸ d.inertia ≃*
         Gal(IsLocalRing.ResidueField vL.valuationSubring /
           IsLocalRing.ResidueField vK.valuationSubring)) := by
+  refine ⟨?_⟩
   simpa [Chapter12GaloisReductionData.inertia] using
     (QuotientGroup.quotientKerEquivOfSurjective d.reduction hred)
 
@@ -385,7 +390,7 @@ theorem ramified_frobenius_lifts_have_the_same_inertia_coset
   · change d.reduction (σ⁻¹ * τ) = 1
     rw [map_mul, map_inv, hσ, hτ]
     simp
-  · simp
+  · simp [mul_assoc]
 
 /-- Book 2, §12.3: when inertia is trivial, Frobenius is an actual generator. -/
 theorem unramified_frobenius_is_an_actual_generator

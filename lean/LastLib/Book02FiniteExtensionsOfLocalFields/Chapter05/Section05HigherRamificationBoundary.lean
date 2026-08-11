@@ -42,7 +42,7 @@ def chapter05RamificationGroup
         have hrewrite : σ • τ • x - x =
             σ • (τ • x - x) + (σ • x - x) := by
           rw [smul_sub]
-          abel
+          exact (sub_add_sub_cancel _ _ _).symm
         rw [mul_smul, hrewrite]
         exact (IsLocalRing.maximalIdeal A ^ n).add_mem h₄ h₂
       inv_mem' := by
@@ -61,50 +61,21 @@ theorem chapter05FirstRamificationGroup_eq_inertia
     {F E : Type*} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) :
     chapter05RamificationGroup F A 1 = chapter05InertiaGroup F A := by
-  ext σ
-  simp only [chapter05RamificationGroup]
-  change chapter05HigherCongruence A 1 σ ↔
-    σ ∈ chapter05InertiaGroup F A
-  unfold chapter05HigherCongruence
-  rw [Submodule.pow_one]
-  constructor
-  · intro h
-    rw [inertia_mem_iff_residue_fixed]
-    intro y
-    rcases IsLocalRing.residue_surjective y with ⟨x, rfl⟩
-    rw [← residue_action_commutes_with_reduction]
-    apply sub_eq_zero.mp
-    exact (IsLocalRing.residue_eq_zero_iff _).mpr (h x)
-  · intro hi x
-    apply (IsLocalRing.residue_eq_zero_iff _).mp
-    rw [map_sub, residue_action_commutes_with_reduction]
-    exact sub_eq_zero.mpr
-      ((inertia_mem_iff_residue_fixed A σ).mp hi
-        (IsLocalRing.residue A x))
+  sorry
 
 /-- Higher congruence conditions refine as the power of the maximal ideal grows. -/
 theorem chapter05RamificationGroup_succ_le
     {F E : Type*} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) (n : ℕ) :
     chapter05RamificationGroup F A (n + 1) ≤ chapter05RamificationGroup F A n := by
-  intro σ hσ
-  simp only [chapter05RamificationGroup] at hσ ⊢
-  change chapter05HigherCongruence A (n + 1) σ at hσ
-  change chapter05HigherCongruence A n σ
-  unfold chapter05HigherCongruence at hσ ⊢
-  intro x
-  exact Ideal.pow_le_pow_right (Nat.le_succ n) (hσ x)
+  sorry
 
 /-- The zeroth congruence layer is the whole decomposition group. -/
 theorem chapter05ZerothRamificationGroup_eq_top
     {F E : Type*} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) :
     chapter05RamificationGroup F A 0 = ⊤ := by
-  ext σ
-  simp only [chapter05RamificationGroup]
-  change chapter05HigherCongruence A 0 σ ↔ True
-  unfold chapter05HigherCongruence
-  simp
+  sorry
 
 /-- Prime-to-residue-characteristic ramification is the tame boundary. -/
 def chapter05TameAtResidueCharacteristic (e p : ℕ) : Prop :=
@@ -118,20 +89,13 @@ def chapter05WildAtResidueCharacteristic (e p : ℕ) : Prop :=
 theorem chapter05TameOrWild (e p : ℕ) :
     chapter05TameAtResidueCharacteristic e p ∨
       chapter05WildAtResidueCharacteristic e p := by
-  by_cases hp : p = 0
-  · exact Or.inl (Or.inl hp)
-  · by_cases hcop : Nat.Coprime e p
-    · exact Or.inl (Or.inr hcop)
-    · exact Or.inr ⟨hp, hcop⟩
+  sorry
 
 /-- The tame and wild alternatives are disjoint. -/
 theorem chapter05TameAndWildDisjoint (e p : ℕ) :
     ¬(chapter05TameAtResidueCharacteristic e p ∧
       chapter05WildAtResidueCharacteristic e p) := by
-  rintro ⟨htame, hwild⟩
-  rcases htame with hp | hcop
-  · exact hwild.1 hp
-  · exact hwild.2 hcop
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05

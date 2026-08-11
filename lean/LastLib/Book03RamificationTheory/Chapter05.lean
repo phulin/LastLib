@@ -1,0 +1,12 @@
+import LastLib.Book03RamificationTheory.Chapter05.Section01ANumberingDesignedForQuotients
+import LastLib.Book03RamificationTheory.Chapter05.Section02HerbrandsQuotientTheorem
+import LastLib.Book03RamificationTheory.Chapter05.Section03TowerTransitivity
+import LastLib.Book03RamificationTheory.Chapter05.Section04BreakConversionInExamples
+import LastLib.Book03RamificationTheory.Chapter05.Section05ATwoBreakTower
+import LastLib.Book03RamificationTheory.Chapter05.Section06HasseArfAndTheLimitsOfIntegrality
+
+namespace LastLib.Book03RamificationTheory.Chapter05
+
+/-! Aggregator for Book 3, Chapter 5: upper numbering. -/
+
+end LastLib.Book03RamificationTheory.Chapter05

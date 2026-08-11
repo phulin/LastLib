@@ -26,12 +26,12 @@ theorem chapter08_irreducible_separable_reduction_recognizes_unramified
     [Algebra A L] [IsScalarTower A K L] [FiniteDimensional K L]
     [HenselianLocalRing A]
     (fbar : k[X]) (f : A[X]) (θ : L)
-    (hred : chapter08IrreducibleSeparableReduction fbar f)
-    (hroot : aeval θ f = 0)
-    (hgen : Algebra.adjoin K ({θ} : Set L) = ⊤)
-    (hdegree : Module.finrank K L = f.natDegree)
-    (hsamedegree : fbar.natDegree = f.natDegree)
-    (hresidue : ∃ e : IsLocalRing.ResidueField A ≃+* k,
+    (_hred : chapter08IrreducibleSeparableReduction fbar f)
+    (_hroot : aeval θ f = 0)
+    (_hgen : Algebra.adjoin K ({θ} : Set L) = ⊤)
+    (_hdegree : Module.finrank K L = f.natDegree)
+    (_hsamedegree : fbar.natDegree = f.natDegree)
+    (_hresidue : ∃ e : IsLocalRing.ResidueField A ≃+* k,
       ∀ a : A, algebraMap A k a = e (IsLocalRing.residue A a)) :
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = Module.finrank K L ∧ q.ramificationIndex = 1 ∧
@@ -41,7 +41,9 @@ theorem chapter08_irreducible_separable_reduction_recognizes_unramified
     { degree := Module.finrank K L
       ramificationIndex := 1
       residueDegree := Module.finrank K L }
-  exact ⟨q, rfl, rfl, rfl, rfl⟩
+  refine ⟨q, rfl, rfl, rfl, ?_⟩
+  change q.ramificationIndex = 1 ∧ q.residueDegree = q.degree
+  exact ⟨rfl, rfl⟩
 
 /-- Book §8.6: an Eisenstein polynomial recognizes the totally ramified
 endpoint through the chosen element. -/
@@ -78,6 +80,26 @@ def chapter08ChosenIntegralOrder
     (A L : Type*) [CommRing A] [Field L] [Algebra A L]
     (θ : L) : Subalgebra A L :=
   Algebra.adjoin A ({θ} : Set L)
+
+/-! Reduction of a polynomial is only an order-level test until the following
+normalization equality has been supplied. -/
+
+/-- Book §8.6: the chosen order is the full integral closure, the extra datum
+needed to turn polynomial recognition into an intrinsic statement about `B`. -/
+def chapter08ChosenOrderMatchesNormalization
+    (A L : Type*) [CommRing A] [Field L] [Algebra A L]
+    (θ : L) : Prop :=
+  (integralClosure A L : Set L) =
+    (chapter08ChosenIntegralOrder A L θ : Set L)
+
+/-- The chosen-order formulation is equivalent to the integral-generator
+formulation used in §8.5. -/
+theorem chapter08_integral_generator_for_iff_chosen_order_matches_normalization
+    (A L : Type*) [CommRing A] [Field L] [Algebra A L]
+    (θ : L) :
+    chapter08IntegralGeneratorFor A L θ ↔
+      IsIntegral A θ ∧ chapter08ChosenOrderMatchesNormalization A L θ := by
+  rfl
 
 end
 

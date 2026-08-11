@@ -1,4 +1,5 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section04ImperfectResidueFields
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section05MonogenicityAndResidueGenerators
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section03CleanDecomposition
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
 
@@ -16,6 +17,16 @@ def chapter09ExplicitIntegralBasis
   {x | ∃ j : Fin f, ∃ i : Fin e,
     x = algebraMap K₀ L (θ ^ (j : ℕ)) * πL ^ (i : ℕ)}
 
+/-- Membership in the displayed monomial set is the expected finite-index
+existential, which is convenient for rewriting coordinate statements. -/
+theorem chapter09_mem_explicit_integral_basis_iff
+    (K₀ L : Type*) [Field K₀] [Field L] [Algebra K₀ L]
+    (θ : K₀) (πL : L) (f e : ℕ) (x : L) :
+    x ∈ chapter09ExplicitIntegralBasis K₀ L θ πL f e ↔
+      ∃ j : Fin f, ∃ i : Fin e,
+        x = algebraMap K₀ L (θ ^ (j : ℕ)) * πL ^ (i : ℕ) := by
+  rfl
+
 /-- A presentation of the two integral stages.  The first polynomial is
 unramified because its derivative is a unit; the second is Eisenstein and has
 the ramification degree.  The coordinate fields record both uniqueness claims
@@ -23,18 +34,19 @@ from the source, and basis makes the final displayed set a genuine linear
 basis. -/
 structure Chapter09TwoStageIntegralDescription
     (A B K K₀ L : Type*) [CommRing A] [CommRing B] [IsDomain A]
-    [IsLocalRing A]
     [Field K] [Field K₀] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K K₀] [Algebra A K₀]
     [Algebra K₀ L] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K K₀] [IsScalarTower K K₀ L]
     [IsScalarTower A K L] [IsScalarTower A K₀ L] [IsScalarTower A B L]
     [IsLocalHom (algebraMap A B)] [IsFractionRing B L]
-    [IsDomain B] [IsLocalRing B] [IsDiscreteValuationRing B]
+    [IsDomain B] [IsDiscreteValuationRing B]
     [IsDiscreteValuationRing A] [Module.Finite A B]
     [Module.IsTorsionFree A B] [FaithfulSMul A B] [IsIntegralClosure B A L]
     [FiniteDimensional K K₀] [FiniteDimensional K₀ L] [IsLocalRing K₀]
     (θ : K₀) (πL : L) (e f : ℕ) where
+  positive_e : 0 < e
+  positive_f : 0 < f
   O₀ : Subalgebra A K₀
   O₁ : Subalgebra A L
   O₀_eq_adjoin : O₀ = Algebra.adjoin A ({θ} : Set K₀)
@@ -66,6 +78,8 @@ structure Chapter09TwoStageIntegralDescription
   second_polynomial_monic : second_polynomial.Monic
   second_polynomial_root :
     eval₂ ((algebraMap K₀ L).comp (algebraMap O₀ K₀)) πL second_polynomial = 0
+  second_polynomial_is_minimal :
+    minpoly K₀ πL = second_polynomial.map (algebraMap O₀ K₀)
   second_polynomial_eisenstein :
     letI : IsLocalRing O₀ := O₀_local
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt pi₀ second_polynomial
@@ -89,17 +103,16 @@ structure Chapter09TwoStageIntegralDescription
 two-stage presentation. -/
 theorem chapter09_two_stage_coordinates
     (A B K K₀ L : Type*) [CommRing A] [CommRing B] [IsDomain A]
-    [IsLocalRing A]
     [Field K] [Field K₀] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K K₀] [Algebra A K₀]
     [Algebra K₀ L] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K K₀] [IsScalarTower K K₀ L]
     [IsScalarTower A K L] [IsScalarTower A K₀ L] [IsScalarTower A B L]
     [IsLocalHom (algebraMap A B)] [IsFractionRing B L]
-    [IsDomain B] [IsLocalRing B] [IsDiscreteValuationRing B]
+    [IsDomain B] [IsDiscreteValuationRing B]
     [IsDiscreteValuationRing A] [Module.Finite A B]
     [Module.IsTorsionFree A B] [FaithfulSMul A B] [IsIntegralClosure B A L]
-    [FiniteDimensional K K₀] [FiniteDimensional K₀ L] [IsLocalRing K₀]
+    [FiniteDimensional K K₀] [FiniteDimensional K₀ L]
     (θ : K₀) (πL : L) (e f : ℕ)
     (d : Chapter09TwoStageIntegralDescription A B K K₀ L θ πL e f) :
     (∀ x : L, x ∈ d.O₁ → ∃! c : Fin e → K₀,
@@ -113,15 +126,44 @@ theorem chapter09_two_stage_coordinates
   intro ji
   exact ⟨ji.1, ji.2, d.basis_apply ji⟩
 
+/-- The basis images are exactly the monomials displayed in the source, not
+merely elements of that set. -/
+theorem chapter09_two_stage_basis_image_eq_explicit_integral_basis
+    (A B K K₀ L : Type*) [CommRing A] [CommRing B] [IsDomain A]
+    [Field K] [Field K₀] [Field L]
+    [Algebra A B] [Algebra A K] [Algebra K K₀] [Algebra A K₀]
+    [Algebra K₀ L] [Algebra K L] [Algebra B L] [Algebra A L]
+    [IsScalarTower A K K₀] [IsScalarTower K K₀ L]
+    [IsScalarTower A K L] [IsScalarTower A K₀ L] [IsScalarTower A B L]
+    [IsLocalHom (algebraMap A B)] [IsFractionRing B L]
+    [IsDomain B] [IsDiscreteValuationRing B]
+    [IsDiscreteValuationRing A] [Module.Finite A B]
+    [Module.IsTorsionFree A B] [FaithfulSMul A B] [IsIntegralClosure B A L]
+    [FiniteDimensional K K₀] [FiniteDimensional K₀ L]
+    (θ : K₀) (πL : L) (e f : ℕ)
+    (d : Chapter09TwoStageIntegralDescription A B K K₀ L θ πL e f) :
+    Set.range (fun ji : Fin f × Fin e => algebraMap B L (d.basis ji)) =
+      chapter09ExplicitIntegralBasis K₀ L θ πL f e := by
+  ext x
+  constructor
+  · rintro ⟨ji, rfl⟩
+    exact ⟨ji.1, ji.2, d.basis_apply ji⟩
+  · rintro ⟨j, i, rfl⟩
+    exact ⟨(j, i), d.basis_apply (j, i)⟩
+
 /-- Existence interface for the two-stage integral description under the
 separable-residue hypothesis.  The local-field and finite-dimensional
 hypotheses are explicit so later proof passes can identify the abstract
 presentation with the valuation rings of K₀ and L. -/
+-- SOURCE_ISSUE: Separability of the residue extension alone does not exclude
+-- finite defect extensions over imperfect residue fields, so the source's
+-- monogenic two-stage presentation needs a perfect-residue or defectless
+-- hypothesis.  The interface below requires the corrected degree data.
 theorem chapter09_two_stage_integral_description_exists
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]

@@ -18,8 +18,7 @@ used by the chapter.
 /- Reduction data identifying the two finite Galois groups in an unramified extension. -/
 structure Chapter06UnramifiedGaloisReduction
     (K L k l : Type*) [Field K] [Field L] [Field k] [Field l]
-    [Fintype k] [Finite l] [Algebra K L] [Algebra k l]
-    [Algebra.IsAlgebraic k l] [FiniteDimensional K L]
+    [Algebra K L] [Algebra k l] [FiniteDimensional K L]
     [FiniteDimensional k l] [IsGalois K L] [IsGalois k l] where
   /- The canonical reduction identification `Gal(L/K) ≃ Gal(l/k)`. -/
   reduction : Gal(L/K) ≃* Gal(l/k)
@@ -42,15 +41,87 @@ noncomputable def chapter06UnramifiedGeometricFrobenius
     (D : Chapter06UnramifiedGaloisReduction K L k l) : Gal(L/K) :=
   (chapter06UnramifiedArithmeticFrobenius D)⁻¹
 
+/-
+SOURCE_ISSUE: The source writes the reduction map on automorphisms and on the
+valuation ring without naming either map.  This interface makes those maps
+explicit.  The residue-surjectivity field is the exact local hypothesis needed
+to turn equality of residue actions into uniqueness of the lifted automorphism.
+-/
+
+/- A reduction action on an integral model of an unramified extension. -/
+structure Chapter06UnramifiedResidueAction
+    (K L k l B : Type*) [Field K] [Field L] [Field k] [Field l]
+    [Fintype k] [Finite l] [CommRing B] [Algebra K L] [Algebra k l]
+    [Algebra B L] [Algebra.IsAlgebraic k l] [FiniteDimensional K L]
+    [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
+    (D : Chapter06UnramifiedGaloisReduction K L k l) where
+  /- Reduction of the chosen integral model to the residue field. -/
+  residue : B →+* l
+  /- The induced action of `Gal(L/K)` on the integral model. -/
+  action : Gal(L/K) →* (B ≃+* B)
+  /- The model action is the restriction of the field automorphism. -/
+  action_on_field : ∀ (σ : Gal(L/K)) (x : B),
+    algebraMap B L (action σ x) = σ (algebraMap B L x)
+  /- Every residue class has an integral representative. -/
+  residue_surjective : Function.Surjective residue
+  /- Reduction intertwines the two Galois actions. -/
+  reduction_commutes : ∀ (σ : Gal(L/K)) (x : B),
+    residue (action σ x) = D.reduction σ (residue x)
+
+/- The integral-model action of the lifted arithmetic Frobenius. -/
+noncomputable def chapter06UnramifiedArithmeticFrobeniusOnModel
+    {K L k l B : Type*} [Field K] [Field L] [Field k] [Field l]
+    [Fintype k] [Finite l] [CommRing B] [Algebra K L] [Algebra k l]
+    [Algebra B L] [Algebra.IsAlgebraic k l] [FiniteDimensional K L]
+    [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
+    {D : Chapter06UnramifiedGaloisReduction K L k l}
+    (R : Chapter06UnramifiedResidueAction K L k l B D) : B ≃+* B :=
+  R.action (chapter06UnramifiedArithmeticFrobenius D)
+
+/- The field action corresponding to the model action. -/
+theorem chapter06_unramified_arithmetic_frobenius_action_on_field
+    {K L k l B : Type*} [Field K] [Field L] [Field k] [Field l]
+    [Fintype k] [Finite l] [CommRing B] [Algebra K L] [Algebra k l]
+    [Algebra B L] [Algebra.IsAlgebraic k l] [FiniteDimensional K L]
+    [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
+    {D : Chapter06UnramifiedGaloisReduction K L k l}
+    (R : Chapter06UnramifiedResidueAction K L k l B D) (x : B) :
+    algebraMap B L (chapter06UnramifiedArithmeticFrobeniusOnModel R x) =
+      chapter06UnramifiedArithmeticFrobenius D (algebraMap B L x) := by
+  sorry
+
+/- The residue formula for the lifted arithmetic Frobenius. -/
+theorem chapter06_unramified_arithmetic_frobenius_residue_formula
+    {K L k l B : Type*} [Field K] [Field L] [Field k] [Field l]
+    [Fintype k] [Finite l] [CommRing B] [Algebra K L] [Algebra k l]
+    [Algebra B L] [Algebra.IsAlgebraic k l] [FiniteDimensional K L]
+    [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
+    {D : Chapter06UnramifiedGaloisReduction K L k l}
+    (R : Chapter06UnramifiedResidueAction K L k l B D) (x : B) :
+    R.residue (chapter06UnramifiedArithmeticFrobeniusOnModel R x) =
+      (R.residue x) ^ Fintype.card k := by
+  sorry
+
+/- The residue congruence characterizes the lifted arithmetic Frobenius. -/
+theorem chapter06_unramified_arithmetic_frobenius_residue_unique
+    {K L k l B : Type*} [Field K] [Field L] [Field k] [Field l]
+    [Fintype k] [Finite l] [CommRing B] [Algebra K L] [Algebra k l]
+    [Algebra B L] [Algebra.IsAlgebraic k l] [FiniteDimensional K L]
+    [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
+    {D : Chapter06UnramifiedGaloisReduction K L k l}
+    (R : Chapter06UnramifiedResidueAction K L k l B D) :
+    ∃! σ : Gal(L/K), ∀ x : B,
+      R.residue (R.action σ x) = (R.residue x) ^ Fintype.card k := by
+  sorry
+
 /- The reduction identification itself, recorded as a chapter-facing theorem. -/
 theorem chapter06_unramified_reduction_identifies_galois_groups
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
-    [Fintype k] [Finite l] [Algebra K L] [Algebra k l]
-    [Algebra.IsAlgebraic k l] [FiniteDimensional K L]
+    [Algebra K L] [Algebra k l] [FiniteDimensional K L]
     [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
     (D : Chapter06UnramifiedGaloisReduction K L k l) :
     Nonempty (Gal(L/K) ≃* Gal(l/k)) := by
-  exact ⟨D.reduction⟩
+  sorry
 
 /- The upstairs arithmetic Frobenius is the unique lift of residue Frobenius. -/
 theorem chapter06_unramified_arithmetic_frobenius_unique
@@ -60,11 +131,7 @@ theorem chapter06_unramified_arithmetic_frobenius_unique
     [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
     (D : Chapter06UnramifiedGaloisReduction K L k l) :
     ∃! σ : Gal(L/K), D.reduction σ = chapter06ArithmeticFrobenius k l := by
-  refine ⟨chapter06UnramifiedArithmeticFrobenius D, ?_, ?_⟩
-  · simp [chapter06UnramifiedArithmeticFrobenius]
-  · intro σ hσ
-    apply D.reduction.injective
-    simpa [chapter06UnramifiedArithmeticFrobenius] using hσ
+  sorry
 
 /- The arithmetic Frobenius upstairs generates the unramified Galois group. -/
 theorem chapter06_unramified_arithmetic_frobenius_generates
@@ -74,11 +141,7 @@ theorem chapter06_unramified_arithmetic_frobenius_generates
     [FiniteDimensional k l] [IsGalois K L] [IsGalois k l]
     (D : Chapter06UnramifiedGaloisReduction K L k l) (σ : Gal(L/K)) :
     ∃ n : ℤ, (chapter06UnramifiedArithmeticFrobenius D) ^ n = σ := by
-  obtain ⟨n, hn⟩ :=
-    chapter06_arithmetic_frobenius_generates k l (D.reduction σ)
-  refine ⟨n, ?_⟩
-  apply D.reduction.injective
-  simpa [chapter06UnramifiedArithmeticFrobenius] using hn
+  sorry
 
 /- Geometric Frobenius upstairs is the inverse of arithmetic Frobenius. -/
 theorem chapter06_unramified_geometric_frobenius_is_inverse
@@ -89,7 +152,7 @@ theorem chapter06_unramified_geometric_frobenius_is_inverse
     (D : Chapter06UnramifiedGaloisReduction K L k l) :
     chapter06UnramifiedGeometricFrobenius D =
       (chapter06UnramifiedArithmeticFrobenius D)⁻¹ := by
-  rfl
+  sorry
 
 /-
 For the ramified case the inertia subgroup is kept explicit.  The quotient
@@ -115,10 +178,7 @@ theorem chapter06_arithmetic_frobenius_coset_nonempty
     {G H : Type*} [Group G] [Group H] (I : Subgroup G) [I.Normal]
     (D : Chapter06RamifiedGaloisReduction G H I) (φ : H) :
     (chapter06ArithmeticFrobeniusCoset I D φ).Nonempty := by
-  obtain ⟨g, hg⟩ := QuotientGroup.mk'_surjective I (D.quotientEquiv.symm φ)
-  refine ⟨g, ?_⟩
-  change D.quotientEquiv (QuotientGroup.mk' I g) = φ
-  rw [hg, D.quotientEquiv.apply_symm_apply]
+  sorry
 
 /- Two lifts of the same residue automorphism differ by an inertia element. -/
 theorem chapter06_frobenius_lifts_differ_by_inertia
@@ -127,14 +187,7 @@ theorem chapter06_frobenius_lifts_differ_by_inertia
     {g h : G} (hg : g ∈ chapter06ArithmeticFrobeniusCoset I D φ)
     (hh : h ∈ chapter06ArithmeticFrobeniusCoset I D φ) :
     ∃ i : I, h = g * i := by
-  change D.quotientEquiv (QuotientGroup.mk' I g) = φ at hg
-  change D.quotientEquiv (QuotientGroup.mk' I h) = φ at hh
-  have hq : QuotientGroup.mk' I g = QuotientGroup.mk' I h := by
-    apply D.quotientEquiv.injective
-    rw [hg, hh]
-  obtain ⟨i, hi, hih⟩ := (QuotientGroup.mk'_eq_mk' I).mp hq
-  refine ⟨⟨i, hi⟩, ?_⟩
-  exact hih.symm
+  sorry
 
 /- If inertia is nontrivial, the Frobenius coset has no unique lift. -/
 theorem chapter06_ramified_frobenius_has_no_distinguished_lift
@@ -142,19 +195,7 @@ theorem chapter06_ramified_frobenius_has_no_distinguished_lift
     (D : Chapter06RamifiedGaloisReduction G H I) (φ : H)
     (hI : ∃ i : I, (i : G) ≠ 1) :
     ¬ ∃! g : G, g ∈ chapter06ArithmeticFrobeniusCoset I D φ := by
-  rintro ⟨g, hg, hunique⟩
-  change D.quotientEquiv (QuotientGroup.mk' I g) = φ at hg
-  obtain ⟨i, hi⟩ := hI
-  have hqi : QuotientGroup.mk' I (i : G) = 1 := by
-    simpa only [QuotientGroup.mk'_apply] using
-      (QuotientGroup.eq_one_iff (i : G)).2 i.property
-  have hgi : g * (i : G) ∈ chapter06ArithmeticFrobeniusCoset I D φ := by
-    change D.quotientEquiv (QuotientGroup.mk' I (g * (i : G))) = φ
-    rw [map_mul, hqi, mul_one, hg]
-  have heq := hunique (g * (i : G)) hgi
-  apply hi
-  apply (mul_left_cancel (a := g))
-  simpa using heq
+  sorry
 
 end
 

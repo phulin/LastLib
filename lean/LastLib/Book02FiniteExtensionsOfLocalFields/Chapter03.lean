@@ -5,3 +5,7 @@ import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section04ScalarExte
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section05MixedAndEqualCharacteristic
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section06QuadraticLaboratory
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section07ContinuityOfEmbeddings
+
+/-! # Chapter 3: Towers, completion, and change of base
+
+The imports follow the seven sections of the chapter in source order. -/

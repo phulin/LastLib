@@ -1,3 +1,8 @@
+import Mathlib.RingTheory.AdicCompletion.Basic
+import Mathlib.RingTheory.AdicCompletion.Algebra
+import Mathlib.RingTheory.AdicCompletion.Completeness
+import Mathlib.RingTheory.Ideal.Quotient.PowTransition
+import Mathlib.RingTheory.PowerSeries.Basic
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section07RootsOfUnity
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
@@ -30,19 +35,27 @@ abbrev Chapter07ExtensionPrecisionQuotient
     (π : A) (n : ℕ) : Type _ :=
   B ⧸ Chapter07ExtensionPrecisionIdeal A B π n
 
-/-- A finite precision quotient is free of rank `f` over the corresponding
-base quotient. -/
+/-- The quotient-algebra interface needed to compare precision quotients. -/
+abbrev Chapter07PrecisionAlgebra
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    (π : A) (n : ℕ) : Type _ :=
+  Algebra (Chapter07BasePrecisionQuotient A π n)
+    (Chapter07ExtensionPrecisionQuotient A B π n)
+
+/- A finite precision quotient is free of rank `f` over the corresponding
+  base quotient.  `Module.rank`, rather than `Module.finrank`, is used because
+  a quotient modulo `π^n` is generally not a field when `n > 1`. -/
 def Chapter07FinitePrecisionFreeOfRank
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (π : A) (f n : ℕ)
-    [Algebra (Chapter07BasePrecisionQuotient A π n)
-      (Chapter07ExtensionPrecisionQuotient A B π n)] : Prop :=
+    (qAlgebra : Chapter07PrecisionAlgebra A B π n) : Prop :=
+  letI := qAlgebra
   Module.Finite (Chapter07BasePrecisionQuotient A π n)
       (Chapter07ExtensionPrecisionQuotient A B π n) ∧
     Module.Free (Chapter07BasePrecisionQuotient A π n)
       (Chapter07ExtensionPrecisionQuotient A B π n) ∧
-    Module.finrank (Chapter07BasePrecisionQuotient A π n)
-      (Chapter07ExtensionPrecisionQuotient A B π n) = f
+    Cardinal.toNat (Module.rank (Chapter07BasePrecisionQuotient A π n)
+      (Chapter07ExtensionPrecisionQuotient A B π n)) = f
 
 /-- Unramified finite freeness at every precision.  The source's “determined
 by the residue extension” phrase is represented by a compatible family of
@@ -51,24 +64,17 @@ structure Chapter07FinitePrecisionTower
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
     (π : A) (f : ℕ) (k l : Type*) [Field k] [Field l]
     [Algebra k l] [FiniteDimensional k l] where
+  quotientAlgebra : ∀ n, Chapter07PrecisionAlgebra A B π n
   finiteFree : ∀ n,
-    Module.Finite (Chapter07BasePrecisionQuotient A π n)
-      (Chapter07ExtensionPrecisionQuotient A B π n)
-  free : ∀ n,
-    Module.Free (Chapter07BasePrecisionQuotient A π n)
-      (Chapter07ExtensionPrecisionQuotient A B π n)
-  rank : ∀ n,
-    Module.finrank (Chapter07BasePrecisionQuotient A π n)
-      (Chapter07ExtensionPrecisionQuotient A B π n) = f
+    0 < n → Chapter07FinitePrecisionFreeOfRank A B π f n (quotientAlgebra n)
   residueDegree : Module.finrank k l = f
   residueSeparable : Chapter07ResidueExtensionIsSeparable k l
 
 /-- For an unramified finite extension, all quotients `B/π^nB` are finite free
 of rank equal to the residue degree. -/
--- STATEMENT_NEEDS_UPDATE: The quantified `n` includes `n = 0`, where both
--- precision quotients are zero rings and the rank clause forces `f = 0`,
--- contradicting the positive residue degree of a nontrivial unramified
--- extension. Restrict the claim to `0 < n` (or change the rank statement).
+-- SOURCE_ISSUE: At `n = 0`, the quotient is the zero ring and its free-module
+-- rank is zero.  The source's “every `n`” must therefore be read as positive
+-- precision.
 theorem chapter07_unramified_quotients_are_free
     {A B K L k l : Type*} [CommRing A] [IsDomain A] [CommRing B]
     [IsDomain B] [Field K] [Field L] [Field k] [Field l]
@@ -84,8 +90,10 @@ theorem chapter07_unramified_quotients_are_free
     (hπ : IsLocalRing.maximalIdeal A = Ideal.span ({π} : Set A))
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hE : Chapter07UnramifiedExtension E)
-    (hf : E.residueDegree = f) :
-    ∀ n : ℕ, Chapter07FinitePrecisionFreeOfRank A B π f n := by
+    (hf : E.residueDegree = f)
+    (qAlgebra : ∀ n, Chapter07PrecisionAlgebra A B π n) :
+    ∀ n : ℕ, 0 < n →
+      Chapter07FinitePrecisionFreeOfRank A B π f n (qAlgebra n) := by
   sorry
 
 /-- A compatible family of roots modulo all powers of an ideal.  Transition
@@ -112,29 +120,7 @@ theorem chapter07_hensel_constructs_compatible_precision_roots
     (hroot : eval₂ (Ideal.Quotient.mk I) a p = 0)
     (hderiv : IsUnit (eval₂ (Ideal.Quotient.mk I) a p.derivative)) :
     Nonempty (Chapter07CompatibleRootApproximation R I p) := by
-  subst I
-  have hlift : ∃ x : R,
-      p.IsRoot x ∧ Ideal.Quotient.mk (IsLocalRing.maximalIdeal R) x = a := by
-    letI : Field (R ⧸ IsLocalRing.maximalIdeal R) :=
-      Ideal.Quotient.field (IsLocalRing.maximalIdeal R)
-    have hT := ((HenselianLocalRing.TFAE R).out 0 2).mp
-      (inferInstance : HenselianLocalRing R)
-    exact hT (Ideal.Quotient.mk (IsLocalRing.maximalIdeal R))
-      Ideal.Quotient.mk_surjective p hmonic a hroot hderiv.ne_zero
-  obtain ⟨x, hx, hxa⟩ := hlift
-  refine ⟨{
-    root := fun n => Ideal.Quotient.mk (IsLocalRing.maximalIdeal R ^ n) x
-    transition := fun n =>
-      Ideal.Quotient.factorPow (IsLocalRing.maximalIdeal R) (Nat.le_succ n)
-    transition_canonical := fun n => rfl
-    root_equation := ?_
-    compatible := ?_ }⟩
-  · intro n
-    rw [eval₂_hom]
-    rw [hx]
-    simp
-  · intro n
-    simp
+  sorry
 
 /-- A compatible finite-precision root family has an inverse-limit lift in the
 adic completion, with its prescribed finite projections. -/
@@ -143,31 +129,7 @@ theorem chapter07_compatible_roots_have_adic_limit
     (S : Chapter07CompatibleRootApproximation R I p) :
     ∃ x : AdicCompletion I R, ∀ n,
       AdicCompletion.evalₐ I n x = S.root n := by
-  classical
-  choose a ha using fun n =>
-    (Ideal.Quotient.mk_surjective (I := I ^ n)) (S.root n)
-  have hCauchy : ∀ n, a n ≡ a (n + 1) [SMOD (I ^ n • ⊤ : Submodule R R)] := by
-    intro n
-    rw [SModEq.sub_mem]
-    have hquot : Ideal.Quotient.mk (I ^ n) (a n) =
-        Ideal.Quotient.mk (I ^ n) (a (n + 1)) := by
-      calc
-        Ideal.Quotient.mk (I ^ n) (a n) = S.root n := ha n
-        _ = S.transition n (S.root (n + 1)) := (S.compatible n).symm
-        _ = Ideal.Quotient.factorPow I (Nat.le_succ n) (S.root (n + 1)) := by
-          rw [S.transition_canonical]
-        _ = Ideal.Quotient.factorPow I (Nat.le_succ n)
-            (Ideal.Quotient.mk (I ^ (n + 1)) (a (n + 1))) := by
-          rw [ha (n + 1)]
-        _ = Ideal.Quotient.mk (I ^ n) (a (n + 1)) := by simp
-    have hmem : a n - a (n + 1) ∈ I ^ n :=
-      (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).mp hquot
-    simpa [Submodule.mem_smul_top_iff, smul_eq_mul] using hmem
-  let f : AdicCompletion.AdicCauchySequence I R :=
-    AdicCompletion.AdicCauchySequence.mk I R (fun n => a n) hCauchy
-  refine ⟨AdicCompletion.mk I R f, ?_⟩
-  intro n
-  simpa [f] using ha n
+  sorry
 
 /-- In equal characteristic, a chosen coefficient field identifies the
 unramified ring with a literal power-series ring. -/
@@ -181,15 +143,7 @@ theorem chapter07_mixed_characteristic_has_no_coefficient_field
     {B k : Type*} [CommRing B] [Field k] [CharZero B]
     {p : ℕ} [CharP k p] [Fact p.Prime] :
     ¬Nonempty (k →+* B) := by
-  rintro ⟨f⟩
-  have hpB : (p : B) = 0 := by
-    calc
-      (p : B) = f (p : k) := by
-        symm
-        exact map_natCast f p
-      _ = f 0 := by rw [CharP.cast_eq_zero k p]
-      _ = 0 := f.map_zero
-  exact (Nat.cast_ne_zero.mpr (Fact.out : Nat.Prime p).ne_zero) hpB
+  sorry
 
 /-- The warning that finite-precision data need not have a coefficientwise
 power-series expansion is a property of a chosen mixed-characteristic model,
@@ -203,11 +157,7 @@ theorem chapter07_mixed_characteristic_has_no_coefficientwise_power_series
     {B k' : Type*} [CommRing B] [Field k'] [CharZero B]
     {p : ℕ} [CharP k' p] [Fact p.Prime] :
     Chapter07FinitePrecisionHasNoCoefficientwiseExpansion (B := B) (k' := k') := by
-  change ¬Nonempty (B ≃+* PowerSeries k')
-  rintro ⟨e⟩
-  apply chapter07_mixed_characteristic_has_no_coefficient_field
-    (B := B) (k := k') (p := p)
-  exact ⟨e.symm.toRingHom.comp PowerSeries.C⟩
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

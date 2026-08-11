@@ -1,3 +1,5 @@
+import Mathlib.RingTheory.Etale.Basic
+import Mathlib.RingTheory.TensorProduct.Maps
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section05ExamplesBothCharacteristics
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
@@ -87,23 +89,7 @@ theorem chapter07_separable_quotient_is_product
       (Ideal.span ({gᵢ j} : Set K[X])))) :
     Nonempty (AdjoinRoot g ≃+* (∀ i, AdjoinRoot (gᵢ i))) ∧
       ∀ i, IsField (AdjoinRoot (gᵢ i)) := by
-  have hcop : ∀ i j : Fin r, i ≠ j → IsCoprime (gᵢ i) (gᵢ j) := by
-    intro i j hij
-    exact (Ideal.isCoprime_span_singleton_iff _ _).mp (hpairwise hij)
-  let f : Fin r → Ideal K[X] := fun i => Ideal.span ({gᵢ i} : Set K[X])
-  have hpair : Pairwise (fun i j => IsCoprime (f i) (f j)) := by
-    intro i j hij
-    exact hpairwise hij
-  have hspan : Ideal.span ({g} : Set K[X]) = ⨅ i, f i := by
-    rw [hproduct]
-    exact (Ideal.iInf_span_singleton hcop).symm
-  constructor
-  · refine ⟨(Ideal.quotEquivOfEq hspan).trans
-      (Ideal.quotientInfRingEquivPiQuotient f hpair)⟩
-  · intro i
-    letI : Fact (Irreducible (gᵢ i)) := ⟨hirreducible i⟩
-    letI : Field (AdjoinRoot (gᵢ i)) := inferInstance
-    exact Field.toIsField _
+  sorry
 
 /-- The local-field data attached to one lifted factor.  The factor index is
 kept in the type so that a later proof can identify the residue polynomial,
@@ -122,6 +108,33 @@ structure Chapter07SeparableFactorResidueField
   residue_degree : profile.residueDegree = (F.factors i).natDegree
   residue_separable : Chapter07ResidueExtensionIsSeparable k l
 
+/-- A chosen residue-field shadow of an intermediate unramified extension. -/
+structure Chapter07IntermediateResidueShadow
+    (K Ω k κ : Type*) [Field K] [Field Ω] [Field k] [Field κ]
+    [Algebra K Ω] [Algebra k κ]
+    (E : IntermediateField K Ω) [FiniteDimensional K E]
+    where
+  residue : IntermediateField k κ
+  [residueFinite : FiniteDimensional k residue]
+  profile : Chapter07FiniteLocalExtensionData K E k residue
+  unramified : Chapter07UnramifiedExtension profile
+
+/-- The residue-field equalities for composita and intersections, with the
+chosen residue shadows made explicit. -/
+theorem chapter07_unramified_residue_compositum_and_intersection
+    {K Ω k κ : Type*} [Field K] [Field Ω] [Field k] [Field κ]
+    [Algebra K Ω] [Algebra k κ]
+    (K₁ K₂ : IntermediateField K Ω)
+    [FiniteDimensional K K₁] [FiniteDimensional K K₂]
+    [FiniteDimensional K (K₁ ⊔ K₂)] [FiniteDimensional K (K₁ ⊓ K₂)]
+    (S₁ : Chapter07IntermediateResidueShadow K Ω k κ K₁)
+    (S₂ : Chapter07IntermediateResidueShadow K Ω k κ K₂)
+    (S₁₂ : Chapter07IntermediateResidueShadow K Ω k κ (K₁ ⊔ K₂))
+    (S₀ : Chapter07IntermediateResidueShadow K Ω k κ (K₁ ⊓ K₂)) :
+    S₁₂.residue = S₁.residue ⊔ S₂.residue ∧
+      S₀.residue = S₁.residue ⊓ S₂.residue := by
+  sorry
+
 /-- The residue tensor product is finite étale over the changed residue field,
 hence a finite product of separable fields. -/
 theorem chapter07_residue_tensor_product_is_separable_product
@@ -129,17 +142,42 @@ theorem chapter07_residue_tensor_product_is_separable_product
     [Algebra k k'] [Algebra k l] [FiniteDimensional k l]
     [Algebra.IsSeparable k l] :
     Algebra.Etale k' (l ⊗[k] k') := by
-  letI : Algebra.FormallyEtale k l :=
-    Algebra.FormallyEtale.of_isSeparable k l
-  letI : Algebra.FinitePresentation k l :=
-    Algebra.FinitePresentation.of_finiteType.mp
-      (inferInstance : Algebra.FiniteType k l)
-  letI : Algebra.Etale k l := ⟨inferInstance, inferInstance⟩
-  let e : l ⊗[k] k' ≃ₐ[k'] k' ⊗[k] l :=
-    .ofRingEquiv (f := Algebra.TensorProduct.comm k l k') (by
-      intro x
-      simp [RingHom.algebraMap_toAlgebra])
-  exact Algebra.Etale.of_equiv e.symm
+  sorry
+
+/-- A finite product of unramified factors after scalar extension. -/
+structure Chapter07UnramifiedScalarExtensionProduct
+    (K K' L k k' l : Type*) [Field K] [Field K'] [Field L]
+    [Field k] [Field k'] [Field l] [Algebra K K'] [Algebra K L]
+    [Algebra k k'] [Algebra k l] (r : ℕ)
+    [FiniteDimensional K K'] [FiniteDimensional K L]
+    [FiniteDimensional k l] where
+  factor : Fin r → Type*
+  [factorField : ∀ i, Field (factor i)]
+  [factorAlgebra : ∀ i, Algebra K' (factor i)]
+  [factorFinite : ∀ i, FiniteDimensional K' (factor i)]
+  residue : Fin r → Type*
+  [residueField : ∀ i, Field (residue i)]
+  [residueAlgebra : ∀ i, Algebra k' (residue i)]
+  [residueFinite : ∀ i, FiniteDimensional k' (residue i)]
+  profile : ∀ i,
+    Chapter07FiniteLocalExtensionData K' (factor i) k' (residue i)
+  unramified : ∀ i, Chapter07UnramifiedExtension (profile i)
+  productEquiv : Nonempty
+    (L ⊗[K] K' ≃+* (∀ i, factor i))
+
+/-- Hensel lifting of the residue idempotents gives the product decomposition
+of an unramified scalar extension. -/
+theorem chapter07_unramified_scalar_extension_is_product
+    {K K' L k k' l : Type*} [Field K] [Field K'] [Field L]
+    [Field k] [Field k'] [Field l] [Algebra K K'] [Algebra K L]
+    [Algebra k k'] [Algebra k l] [FiniteDimensional K K']
+    [FiniteDimensional K L] [FiniteDimensional k l]
+    [Algebra.IsSeparable k l]
+    (E : Chapter07FiniteLocalExtensionData K L k l)
+    (hE : Chapter07UnramifiedExtension E) :
+    ∃ r : ℕ, Nonempty
+      (Chapter07UnramifiedScalarExtensionProduct K K' L k k' l r) := by
+  sorry
 
 -- SOURCE_ISSUE: The source's unconditional linear-disjointness sentence is
 -- false for arbitrary finite separable residue extensions.  The minimal

@@ -1,5 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section01TheMeaningOfTotalRamification
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08
 
@@ -153,7 +153,7 @@ theorem chapter08_eisenstein_root_has_reciprocal_value
     simpa [Polynomial.constantCoeff] using hconstant
   have hconstant_ne : g.constantCoeff ≠ 0 := by
     intro hzero
-    simpa [hzero] using hconstant
+    simp [hzero] at hconstant
   have hαne : α ≠ 0 := by
     intro hzero
     have hzeroL : algebraMap A L g.constantCoeff = 0 := by
@@ -166,7 +166,7 @@ theorem chapter08_eisenstein_root_has_reciprocal_value
       simpa using hzeroL
     have hbad := hconstant
     rw [hzeroK, AddValuation.map_zero] at hbad
-    simpa using hbad
+    simp at hbad
   have hαtop : vL α ≠ (⊤ : WithTop ℚ) := vL.ne_top_iff.mpr hαne
   obtain ⟨r, hr⟩ := WithTop.ne_top_iff_exists.mp hαtop
   have hr' : vL α = (r : WithTop ℚ) := hr.symm
@@ -377,7 +377,7 @@ fractional lattice `(1/n)ℤ`. -/
 theorem chapter08_eisenstein_value_group_contains_fractional_lattice
     {L : Type*} [Field L]
     (vL : AddValuation L (WithTop ℚ))
-    (n : ℕ) (hn : n ≠ 0) (α : L) (hα : α ≠ 0)
+    (n : ℕ) (_hn : n ≠ 0) (α : L) (_hα : α ≠ 0)
     (hvalue : vL α = ((1 : ℚ) / (n : ℚ) : WithTop ℚ)) :
     ∀ z : ℤ, ∃ x : L,
       vL x = ((z : ℚ) / (n : ℚ) : WithTop ℚ) := by
@@ -406,11 +406,11 @@ theorem chapter08_eisenstein_value_group_forces_degree
     [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℚ))
     (vL : AddValuation L (WithTop ℚ))
-    (hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
+    (_hval : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     (hrestrict : ∀ x : K, x ≠ 0 →
       vL (algebraMap K L x) = vK x)
     (n : ℕ) (hn : 0 < n) (πK : K)
-    (hπK : vK πK = 1)
+    (_hπK : vK πK = 1)
     (hbase : ∀ x : K, x ≠ 0 →
       ∃ z : ℤ, vK x = ((z : ℚ) : WithTop ℚ))
     (hvalue_group : ∀ z : ℤ, ∃ x : L,

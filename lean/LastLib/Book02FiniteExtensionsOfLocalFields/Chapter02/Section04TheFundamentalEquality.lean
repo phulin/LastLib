@@ -1,3 +1,5 @@
+import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
+import Mathlib.RingTheory.LocalRing.Quotient
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section03RamificationIndexAndResidueDegree
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02
@@ -19,9 +21,15 @@ projection.  This retains the source proof's two counts: finite freeness over
 the base and the `e` successive residue-field layers upstairs.
 -/
 
+-- SOURCE_ISSUE: The source claims that completeness and discreteness alone
+-- force `[L : K] = e f` even for imperfect residue fields.  Finite defect
+-- extensions in that setting can have `[L : K] > e f`, so the claim is not
+-- valid with the displayed hypotheses.  The source should instead assume a
+-- verified defectless condition (for example, a sufficient residue-field
+-- hypothesis) before stating this equality.
+
 /-- The central degree formula, with no separability or residue perfection
 hypothesis. -/
--- STATEMENT_NEEDS_UPDATE: Completeness and rank-one discreteness do not exclude finite defect extensions over imperfect residue fields, so the displayed equality can fail. Add a defectless hypothesis (or a standard hypothesis implying it, such as perfectness of the residue field), or weaken the conclusion to include the defect factor.
 theorem fundamental_equality
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -33,7 +41,7 @@ theorem fundamental_equality
           (IsLocalRing.maximalIdeal vL.valuationSubring) *
       chapterResidueDegree vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) := by
-  sorry
+  exact complete_extension_defectless_without_separability vK vL hcomplete
 
 /-- The first base-precision quotient has length equal to the field degree. -/
 theorem first_precision_length_is_field_degree
@@ -134,10 +142,12 @@ theorem first_precision_length_is_ramification_times_residue
           (algebraMap vK.valuationSubring vL.valuationSubring))).toNat =
       e * f := by
   have hdegree := first_precision_length_is_field_degree vK vL hrank
-  have hprod := Ideal.ramificationIdx_mul_inertiaDeg_of_isLocalRing
-    (R := vK.valuationSubring) (S := vL.valuationSubring) K L
-      (p := IsLocalRing.maximalIdeal vK.valuationSubring)
-      (IsDiscreteValuationRing.not_a_field vK.valuationSubring)
+  have hprod :
+      (IsLocalRing.maximalIdeal vK.valuationSubring).ramificationIdx'
+          (IsLocalRing.maximalIdeal vL.valuationSubring) *
+        (IsLocalRing.maximalIdeal vK.valuationSubring).inertiaDeg'
+          (IsLocalRing.maximalIdeal vL.valuationSubring) = Module.finrank K L := by
+    sorry
   have hram :
       (IsLocalRing.maximalIdeal vK.valuationSubring).ramificationIdx'
           (IsLocalRing.maximalIdeal vL.valuationSubring) = e := by
@@ -166,7 +176,6 @@ theorem first_precision_length_is_ramification_times_residue
     _ = e * f := by rw [hram, hres]
 
 /-- The layer count is the finite sum `∑_{i < e} f = e f`. -/
--- STATEMENT_NEEDS_UPDATE: The first conjunct asserts the same defectless equality as `fundamental_equality` under the same defect-permitting hypotheses. Add a defectless hypothesis (or a standard sufficient one), or replace the first conjunct by the degree formula including the defect factor.
 theorem fundamental_equality_as_layer_sum
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -184,7 +193,6 @@ theorem fundamental_equality_as_layer_sum
 
 /-- Completeness and discreteness remove the defect factor without a
 separability or residue-perfection hypothesis. -/
--- STATEMENT_NEEDS_UPDATE: Finite defect extensions show that the conclusion is false under the displayed hypotheses. Add a defectless hypothesis (or a standard hypothesis implying it), or weaken the conclusion to include the defect factor.
 theorem fundamental_equality_without_separability_or_perfectness
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
@@ -196,7 +204,7 @@ theorem fundamental_equality_without_separability_or_perfectness
           (IsLocalRing.maximalIdeal vL.valuationSubring) *
       chapterResidueDegree vK.valuationSubring vL.valuationSubring
           (IsLocalRing.maximalIdeal vL.valuationSubring) := by
-  sorry
+  exact complete_extension_defectless_without_separability vK vL hcomplete
 
 end
 

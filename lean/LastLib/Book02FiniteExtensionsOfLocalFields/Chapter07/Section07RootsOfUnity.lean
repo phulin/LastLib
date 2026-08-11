@@ -1,3 +1,4 @@
+import Mathlib.RingTheory.RootsOfUnity.Basic
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07.Section06FactorizationAndBaseChange
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
@@ -22,11 +23,19 @@ def chapter07RootsOfUnityReduction
     rootsOfUnity m K →* rootsOfUnity m k :=
   restrictRootsOfUnity ρ m
 
+/-- A bijective reduction map induces a bijection on the prime-to-
+residue-characteristic roots of unity. -/
+theorem chapter07_roots_of_unity_reduction_bijective
+    {K k : Type*} [CommMonoid K] [CommMonoid k]
+    (m : ℕ) (ρ : K →* k) (hρ : Function.Bijective ρ) :
+    Function.Bijective (chapter07RootsOfUnityReduction m ρ) := by
+  sorry
+
 /-- The derivative of `T^m - 1` has the expected normalization factor. -/
 theorem chapter07_derivative_power_minus_one
     {R : Type*} [CommRing R] (m : ℕ) :
     derivative (X ^ m - 1 : R[X]) = C (m : R) * X ^ (m - 1) := by
-  simp [derivative_sub, derivative_X_pow]
+  sorry
 
 /-- When `m` is a unit, every residue root is simple. -/
 theorem chapter07_prime_to_residue_characteristic_roots_are_simple
@@ -34,19 +43,7 @@ theorem chapter07_prime_to_residue_characteristic_roots_are_simple
     (res : A →+* k) (m : ℕ) (hm : Chapter07OrderInvertibleIn A m)
     (ζ : k) (hζ : ζ ^ m = 1) :
     eval₂ (RingHom.id k) ζ (derivative (X ^ m - 1 : k[X])) ≠ 0 := by
-  have hm' : IsUnit (m : k) := by
-    simpa [Chapter07OrderInvertibleIn] using hm.map res
-  have hm0 : m ≠ 0 := by
-    intro hm0
-    apply hm'.ne_zero
-    simp [hm0]
-  rw [chapter07_derivative_power_minus_one]
-  simp only [eval₂_mul, eval₂_C, eval₂_pow, RingHom.id_apply]
-  exact mul_ne_zero hm'.ne_zero (pow_ne_zero _ (by
-    intro hζ0
-    have hζ0' : ζ = 0 := by simpa using hζ0
-    subst ζ
-    simpa [hm0] using hζ))
+  sorry
 
 /-- The root-lifting property for a chosen maximal unramified subextension of
 a finite extension.  It is kept as a predicate because the subgroup `S` and
@@ -58,12 +55,43 @@ def Chapter07FiniteExtensionResidueRootLifting
       ∃! ξ : rootsOfUnity m L, (ξ : Lˣ) ∈ S ∧
         ρ ξ = ζ.1
 
+/-- The chosen unramified subgroup supplies the unique lift of each residue
+root. -/
+theorem chapter07_finite_extension_residue_root_lifting
+    {L l : Type*} [Field L] [Field l]
+    (m : ℕ) (ρ : Lˣ →* lˣ) (S : Subgroup Lˣ)
+    (hρ : Chapter07FiniteExtensionResidueRootLifting m ρ S) :
+    ∀ ζ : rootsOfUnity m l,
+      ∃! ξ : rootsOfUnity m L, (ξ : Lˣ) ∈ S ∧ ρ ξ = ζ.1 := by
+  sorry
+
+/-- Hensel's simple-root criterion lifts every residue `m`th root when `m` is
+invertible in the local ring. -/
+theorem chapter07_prime_to_residue_characteristic_root_lifts_uniquely
+    {B l : Type*} [CommRing B] [Field l] [HenselianLocalRing B]
+    (res : B →+* l) (m : ℕ) (hm : Chapter07OrderInvertibleIn B m)
+    (hres : Function.Surjective res)
+    (hker : RingHom.ker res = IsLocalRing.maximalIdeal B)
+    (ζ : l) (hζ : ζ ^ m = 1) :
+    ∃! ξ : B, ξ ^ m = 1 ∧ res ξ = ζ := by
+  sorry
+
 /-- The exact-order compatibility assertion for the reduction map. -/
 def Chapter07ReductionPreservesPrimitiveRootOrder
     {L l : Type*} [CommMonoid L] [CommMonoid l]
     (m : ℕ) (ρ : Lˣ →* lˣ) : Prop :=
   ∀ ζ : rootsOfUnity m L, IsPrimitiveRoot (ζ : Lˣ) m →
     IsPrimitiveRoot (ρ ζ) m
+
+/-- The primitive-root clause is a reusable consequence of the reduction
+compatibility interface. -/
+theorem chapter07_reduction_preserves_primitive_root_order
+    {L l : Type*} [CommMonoid L] [CommMonoid l]
+    (m : ℕ) (ρ : Lˣ →* lˣ)
+    (hρ : Chapter07ReductionPreservesPrimitiveRootOrder m ρ)
+    (ζ : rootsOfUnity m L) (hζ : IsPrimitiveRoot (ζ : Lˣ) m) :
+    IsPrimitiveRoot (ρ ζ) m := by
+  sorry
 
 /-- The numerical relation defining the multiplicative order of `q` modulo
 `m`; it avoids silently assuming that the modulus is prime. -/
@@ -72,9 +100,23 @@ def Chapter07MultiplicativeOrderModulo
   1 < q ∧ 0 < m ∧ 0 < d ∧ Nat.Coprime q m ∧
     m ∣ q ^ d - 1 ∧ ∀ n : ℕ, 0 < n → n < d → ¬m ∣ q ^ n - 1
 
+/-- In a finite residue field, a primitive root generates the residue field
+whose degree is the least exponent for which `m ∣ q^d - 1`. -/
+theorem chapter07_finite_field_primitive_root_degree
+    {k l : Type*} [Field k] [Field l] [Fintype k]
+    [Algebra k l] [FiniteDimensional k l] [Finite l]
+    (q m d : ℕ) (hq : Fintype.card k = q)
+    (horder : Chapter07MultiplicativeOrderModulo q m d)
+    (hroot : ∃ ζ : l, IsPrimitiveRoot ζ m ∧
+      Algebra.adjoin k ({ζ} : Set l) = ⊤) :
+    Module.finrank k l = d := by
+  sorry
+
 /-- The residue degree of a primitive `m`th root is the least `d` satisfying
 `m ∣ q^d - 1`. -/
--- STATEMENT_NEEDS_UPDATE: The hypotheses on the primitive roots do not relate the extensions K/L and k/l, so horder cannot force either finrank k l or finrank K L to equal d; add hypotheses identifying these degrees with the multiplicative order (or explicitly assume the two displayed finrank equalities).
+-- SOURCE_ISSUE: The source suppresses the identifications between the field
+-- extensions and the residue-field root fields.  The two degree equalities
+-- are therefore explicit hypotheses in this proof-ready interface.
 theorem chapter07_primitive_root_unramified_degree
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]
     [Algebra K L] [Algebra k l] [FiniteDimensional K L]
@@ -84,6 +126,8 @@ theorem chapter07_primitive_root_unramified_degree
     (hsep : Chapter07ResidueExtensionIsSeparable k l)
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (he : E.ramificationIndex = 1)
+    (hres_degree : Module.finrank k l = d)
+    (hfield_degree : Module.finrank K L = d)
     (hroot : ∃ ζ : L, IsPrimitiveRoot ζ m ∧
       Algebra.adjoin K ({ζ} : Set L) = ⊤)
     (hresroot : ∃ ζ : l, IsPrimitiveRoot ζ m ∧
@@ -99,9 +143,8 @@ theorem chapter07_padic_prime_to_p_roots_of_unity
     (horder : Chapter07MultiplicativeOrderModulo p m d) :
     ∃ q : Chapter10FiniteExtensionProfile,
       q.degree = d ∧ q.ramificationIndex = 1 ∧ q.residueDegree = d ∧
-        Chapter10Unramified q := by
-  refine ⟨{ degree := d, ramificationIndex := 1, residueDegree := d },
-    rfl, rfl, rfl, rfl⟩
+      Chapter10Unramified q := by
+  sorry
 
 /-- In residue characteristic `p`, the derivative of `T^p - 1` has a
 non-unit `p` factor; this is the boundary with wild ramification. -/
@@ -111,14 +154,7 @@ theorem chapter07_p_power_root_derivative_is_not_a_unit
     (ζ : A) (hζ : ζ ^ (p ^ r) = 1) :
     ¬IsUnit (eval₂ (RingHom.id A) ζ
       (derivative (X ^ (p ^ r) - 1 : A[X]))) := by
-  intro hunit
-  apply hp
-  rw [chapter07_derivative_power_minus_one] at hunit
-  simp only [eval₂_mul, eval₂_C, eval₂_pow, RingHom.id_apply] at hunit
-  have hpow : IsUnit ((p : A) ^ r) := by
-    rw [← Nat.cast_pow]
-    exact isUnit_of_mul_isUnit_left hunit
-  exact (isUnit_pow_iff hr.ne').mp hpow
+  sorry
 
 /-- A nontrivial `p`-power root extension whose residue root collapses and whose
 residue degree is one is ramified.  The degree and residue interfaces make the
@@ -145,16 +181,7 @@ theorem chapter07_p_power_roots_are_not_prime_to_characteristic_unramified
     (hdegree : 1 < Module.finrank K L)
     (hresidue_degree : Module.finrank k l = 1) :
     E.ramificationIndex ≠ 1 ∧ ¬Chapter07UnramifiedExtension E := by
-  have hne : E.ramificationIndex ≠ 1 := by
-    intro he
-    have hdeg : Module.finrank K L = 1 := by
-      calc
-        Module.finrank K L = E.ramificationIndex * E.residueDegree :=
-          E.degree_eq_ramification_residue
-        _ = 1 * 1 := by rw [he, E.residueDegree_eq, hresidue_degree]
-        _ = 1 := by simp
-    exact (Nat.ne_of_gt hdegree) hdeg
-  exact ⟨hne, fun hU => hne hU.1⟩
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

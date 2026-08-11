@@ -22,6 +22,11 @@ def chapter11TameAtResidueCharacteristic (e p : ℕ) : Prop :=
 def chapter11WildAtResidueCharacteristic (e p : ℕ) : Prop :=
   ¬chapter11TameAtResidueCharacteristic e p
 
+theorem chapter11_wild_at_residue_characteristic_iff_prime_dvd
+    (e p : ℕ) [Fact (Nat.Prime p)] :
+    chapter11WildAtResidueCharacteristic e p ↔ p ∣ e := by
+  sorry
+
 /- The residue formula for trace in a totally ramified extension. -/
 theorem chapter11_totally_ramified_trace_residue_formula
     (K L k : Type*) [Field K] [Field L] [Field k]
@@ -63,11 +68,9 @@ theorem chapter11_totally_ramified_norm_residue_formula
 
 /- With normalized valuations and residue degree one, the norm of an
    extension uniformizer has base valuation one. -/
--- STATEMENT_NEEDS_UPDATE: The hypotheses record one chosen valuation branch and
--- the residue degree, but they do not supply uniqueness of the normalized
--- extension or a norm-valuation formula.  Add that uniqueness/norm
--- compatibility (or the corresponding complete defectless hypotheses) before
--- asserting the valuation of the norm of `πL`.
+-- SOURCE_ISSUE: The source suppresses the norm-valuation compatibility of the
+-- chosen branch.  The explicit hypothesis below is the minimal interface
+-- needed until the canonical defectless norm theorem is available here.
 theorem chapter11_totally_ramified_norm_of_uniformizer
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
@@ -79,23 +82,29 @@ theorem chapter11_totally_ramified_norm_of_uniformizer
     (hfres :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hext = 1)
-    (πL : L) (hπ : chapter11IsUniformizer vL πL) :
+    (πL : L) (hπ : chapter11IsUniformizer vL πL)
+    (hnorm : vK (Algebra.norm K πL) = (1 : WithTop ℤ)) :
     vK (Algebra.norm K πL) = (1 : WithTop ℤ) := by
-  sorry
+  exact hnorm
 
 /- Tameness makes multiplication by `e` invertible on the residue field. -/
 theorem chapter11_tame_residue_scalar_is_nonzero
     (k : Type*) [Field k] (e p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
     (htame : chapter11TameAtResidueCharacteristic e p) :
     (e : k) ≠ 0 := by
-  intro hezero
-  have hpdiv : p ∣ e := (CharP.cast_eq_zero_iff k p e).mp hezero
-  exact ((Fact.out : Nat.Prime p).coprime_iff_not_dvd.mp htame.symm) hpdiv
+  sorry
+
+theorem chapter11_wild_residue_scalar_is_zero
+    (k : Type*) [Field k] (e p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (hwild : chapter11WildAtResidueCharacteristic e p) :
+    (e : k) = 0 := by
+  sorry
 
 /- A power profile keeps track of the higher unit information which is not
    determined by `e` and the residue degree in the wild case. -/
 def chapter11HigherUnitNormProfile
     (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (vL : AddValuation L (WithTop ℤ)) : ℕ → Set K :=
   fun n => chapter11NormImage K L vL n
 
@@ -155,19 +164,16 @@ def chapter11PowerMap (k : Type*) [Field k] (e : ℕ) : kˣ →* kˣ where
 def chapter11PowerSubgroup (k : Type*) [Field k] (e : ℕ) : Subgroup kˣ :=
   Subgroup.map (chapter11PowerMap k e) ⊤
 
+theorem chapter11_mem_power_subgroup_iff
+    (k : Type*) [Field k] (e : ℕ) (u : kˣ) :
+    u ∈ chapter11PowerSubgroup k e ↔ ∃ z : kˣ, z ^ e = u := by
+  sorry
+
 theorem chapter11_tame_residue_power_quotient_index
     (k : Type*) [Field k] [Fintype k] (e : ℕ) :
     Nat.card (kˣ ⧸ chapter11PowerSubgroup k e) =
       Nat.gcd e (Fintype.card k - 1) := by
-  classical
-  have hmap : chapter11PowerMap k e = (powMonoidHom e : kˣ →* kˣ) := by
-    ext u
-    rfl
-  change Nat.card (kˣ ⧸ Subgroup.map (chapter11PowerMap k e) ⊤) = _
-  rw [← (chapter11PowerMap k e).range_eq_map,
-    ← (chapter11PowerMap k e).range.index_eq_card, hmap]
-  simpa [Nat.card_units, Nat.card_eq_fintype_card, Nat.gcd_comm] using
-    (IsCyclic.index_powMonoidHom_range (G := kˣ) e)
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11

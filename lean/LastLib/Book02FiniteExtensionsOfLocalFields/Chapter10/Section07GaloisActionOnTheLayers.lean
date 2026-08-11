@@ -106,8 +106,8 @@ theorem chapter10_galois_higher_layer_coordinate_formula
     {L : Type*} [Field L] (A : ValuationSubring L)
     (σ : A ≃+* A) (σbar : Chapter10ResidueField A ≃+* Chapter10ResidueField A)
     (π : A) (c : Aˣ) (n : ℕ)
-    (hcompat : Chapter10ResidueAutomorphismCompatible A σ σbar)
-    (hπ : σ π = (c : A) * π) :
+    (_hcompat : Chapter10ResidueAutomorphismCompatible A σ σbar)
+    (_hπ : σ π = (c : A) * π) :
     ∀ a : Chapter10ResidueField A,
       chapter10GaloisLayerCoordinateAction A σbar c n a =
         σbar a * ((chapter10UnitReduction A c :

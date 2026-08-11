@@ -77,7 +77,7 @@ theorem chapter10_field_filtration_zero_one
     · rintro ⟨u, -, rfl⟩
       rw [ValuationSubring.mem_unitGroup_iff]
       change A.valuation ((Units.map A.subtype.toMonoidHom u : Lˣ)) = 1
-      simpa using A.valuation_unit u
+      simp
     · intro hx
       let x' : A.unitGroup := ⟨x, hx⟩
       refine ⟨A.unitGroupMulEquiv x', trivial, ?_⟩

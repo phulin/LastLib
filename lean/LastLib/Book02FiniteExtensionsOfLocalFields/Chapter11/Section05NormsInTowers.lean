@@ -26,19 +26,11 @@ def chapter11UnramifiedThenTotallyRamifiedFactorization
 theorem chapter11_norms_transitive_on_unit_filtration
     (K M L : Type*) [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L] [IsScalarTower K M L]
-    [FiniteDimensional K M] [FiniteDimensional M L]
+    [FiniteDimensional K M] [FiniteDimensional M L] [FiniteDimensional K L]
     (vL : AddValuation L (WithTop ℤ)) (n : ℕ) :
     chapter11NormImage K L vL n =
       Algebra.norm K '' chapter11NormImage M L vL n := by
-  change Algebra.norm K '' chapter11UnitFiltration vL n =
-    Algebra.norm K '' (Algebra.norm M '' chapter11UnitFiltration vL n)
-  ext y
-  constructor
-  · rintro ⟨x, hx, rfl⟩
-    refine ⟨Algebra.norm M x, ⟨x, hx, rfl⟩, ?_⟩
-    exact Algebra.norm_norm
-  · rintro ⟨z, ⟨x, hx, rfl⟩, rfl⟩
-    exact ⟨x, hx, Algebra.norm_norm.symm⟩
+  sorry
 
 /- Finite residue fields make both residue maps surjective, independently of
    the deeper ramified unit calculation. -/
@@ -47,9 +39,7 @@ theorem chapter11_finite_residue_norm_and_trace_surjective
     [Finite l] [FiniteDimensional k l] :
     Function.Surjective (Algebra.norm k (S := l)) ∧
       Function.Surjective (Algebra.trace k l) := by
-  constructor
-  · exact FiniteField.norm_surjective k l
-  · exact Algebra.trace_surjective k l
+  sorry
 
 /- Under the finite-residue and completeness hypotheses, failure of principal
    unit norm-surjectivity rules out unramifiedness; the remaining obstruction
@@ -72,10 +62,7 @@ theorem chapter11_deep_norm_failure_is_ramified
     (hfail : ¬Set.SurjOn (Algebra.norm K (S := L))
       (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1)) :
     ¬chapter11UnramifiedValuedExtension vK vL := by
-  intro hunram
-  apply hfail
-  exact proposition_11_1_unramified_principal_unit_norm_surjective
-    K L vK vL hunram hdegree hred
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11

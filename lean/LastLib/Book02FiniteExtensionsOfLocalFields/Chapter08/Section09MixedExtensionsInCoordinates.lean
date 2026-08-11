@@ -19,7 +19,7 @@ and residue degree `f`. -/
 theorem chapter08_unramified_stage_profile
     {K Kf : Type*} [Field K] [Field Kf] [Algebra K Kf]
     [FiniteDimensional K Kf]
-    (f : ℕ) (hdegree : Module.finrank K Kf = f) :
+    (f : ℕ) (_hdegree : Module.finrank K Kf = f) :
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = f ∧ q.ramificationIndex = 1 ∧ q.residueDegree = f ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q := by
@@ -33,17 +33,17 @@ theorem chapter08_ramified_stage_profile
     [IsScalarTower K Kf L]
     [FiniteDimensional K Kf] [FiniteDimensional Kf L]
     [FiniteDimensional K L]
-    (e f : ℕ) (he : 0 < e) (hf : 0 < f)
+    (e f : ℕ) (_he : 0 < e) (_hf : 0 < f)
     (πK : K) (varpi : L)
     (vK : AddValuation K (WithTop ℤ))
-    (hdiscreteK :
+    (_hdiscreteK :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK)
-    (hπK : vK πK = 1)
-    (hroot : algebraMap Kf L (algebraMap K Kf πK) = varpi ^ e)
-    (hgen : Algebra.adjoin Kf ({varpi} : Set L) = ⊤)
+    (_hπK : vK πK = 1)
+    (_hroot : algebraMap Kf L (algebraMap K Kf πK) = varpi ^ e)
+    (_hgen : Algebra.adjoin Kf ({varpi} : Set L) = ⊤)
     (hdegree : Module.finrank Kf L = e)
     (hbaseDegree : Module.finrank K Kf = f)
-    (hunramified : ∃ q :
+    (_hunramified : ∃ q :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = f ∧ q.ramificationIndex = 1 ∧ q.residueDegree = f ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified q) :

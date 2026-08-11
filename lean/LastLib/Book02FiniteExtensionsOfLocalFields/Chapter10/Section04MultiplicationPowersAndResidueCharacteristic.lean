@@ -12,7 +12,7 @@ open scoped BigOperators
 /-- First-order power congruence, including the integer-power formulation. -/
 theorem chapter10_unit_power_first_order_congruence
     {L : Type*} [Field L] (A : ValuationSubring L) (m : ℤ) (n : ℕ)
-    (hn : 0 < n) (x : A) (hx : x ∈ (IsLocalRing.maximalIdeal A) ^ n)
+    (_hn : 0 < n) (x : A) (hx : x ∈ (IsLocalRing.maximalIdeal A) ^ n)
     (u : Aˣ) (hu : (u : A) = 1 + x) :
     ((u ^ m : Aˣ) : A) - (1 + (m : A) * x) ∈
       (IsLocalRing.maximalIdeal A) ^ (2 * n) := by
@@ -115,10 +115,6 @@ noncomputable def chapter10IdealLayerScalarMap
       map_add' := by intro z w; simp [smul_add] }
 
 /-- On a layer, the power map is represented by scalar multiplication by the residue of `m`. -/
--- STATEMENT_NEEDS_UPDATE: the preceding `Chapter10IdealLayer` definition has
--- the wrong denominator (`I ^ (n + 1) • ⊤`), so it is not generally the
--- additive layer `I ^ n / I ^ (n + 1)` and the asserted equivalence cannot
--- have the stated layer interpretation; correct that denominator first.
 theorem chapter10_unit_layer_power_is_residue_scalar
     {L : Type*} [Field L] (A : ValuationSubring L) (m n : ℕ) (hn : 0 < n) :
     ∃ e : Multiplicative
@@ -164,9 +160,6 @@ theorem chapter10_residue_characteristic_binomial_expansion
     (add_pow x (1 : A) p)
 
 /-- If the residue of `m` vanishes, the first-order map on every layer vanishes. -/
--- STATEMENT_NEEDS_UPDATE: with the preceding `Chapter10IdealLayer` denominator
--- `I ^ (n + 1) • ⊤`, residue-zero scalar multiplication need not vanish on the
--- quotient; replace that denominator by the submodule induced by `I ^ (n + 1)`.
 theorem chapter10_residue_characteristic_layer_map_can_vanish
     {L : Type*} [Field L] (A : ValuationSubring L) (m n : ℕ) (hn : 0 < n)
     (hzero : (m : Chapter10ResidueField A) = 0) :

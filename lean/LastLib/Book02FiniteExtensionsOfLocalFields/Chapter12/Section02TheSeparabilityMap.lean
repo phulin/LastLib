@@ -1,4 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12.Section01TheStructuralDictionary
+import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.FieldTheory.Finite.GaloisField
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter12
 
@@ -120,14 +122,14 @@ theorem separable_trace_and_norm_are_embedding_sum_and_product
       ∑ σ : L →ₐ[K] E, σ x ∧
       algebraMap K E (Algebra.norm K x) =
         ∏ σ : L →ₐ[K] E, σ x := by
-  exact ⟨Algebra.trace_eq_sum_embeddings E, Algebra.norm_eq_prod_embeddings E x⟩
+  exact ⟨trace_eq_sum_embeddings E, Algebra.norm_eq_prod_embeddings E x⟩
 
 /-- Book 2, §12.2: trace nondegeneracy is a separable-extension statement. -/
 theorem separable_trace_pairing_is_nondegenerate
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L] :
     tracePairingNondegenerate (K := K) (L := L) := by
-  simpa [tracePairingNondegenerate] using (Algebra.traceForm_nondegenerate K L)
+  simpa [tracePairingNondegenerate] using (traceForm_nondegenerate K L)
 
 /-- Book 2, §12.2: Galois means both normal and separable, and then the group has degree order. -/
 theorem finite_galois_is_normal_separable_and_has_degree_order
@@ -151,6 +153,10 @@ theorem totally_ramified_requires_unit_residue_degree
   rfl
 
 /-- Book 2, §12.2: a separable residue extension admits the two-stage factorization interface. -/
+-- DEPENDENCY_GUESS: The preceding chapters prove the factorization in a
+-- valuation-ring presentation; this generic valuation-level package is the
+-- local interface needed here and its construction is intentionally left
+-- open for a later proof.
 theorem separable_residue_extension_has_unramified_then_totally_ramified_factorization
     {K L Γ : Type u} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]

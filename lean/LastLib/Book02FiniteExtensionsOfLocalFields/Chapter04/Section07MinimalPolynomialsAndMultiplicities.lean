@@ -27,7 +27,7 @@ theorem chapter04_norm_minpoly_formula
   rw [Algebra.norm_eq_norm_adjoin K x]
   rw [← IntermediateField.adjoin.powerBasis_gen (Algebra.IsIntegral.isIntegral x)]
   rw [Algebra.PowerBasis.norm_gen_eq_coeff_zero_minpoly]
-  simp only [PowerBasis.dim, IntermediateField.adjoin.powerBasis, minpoly_gen]
+  simp only [IntermediateField.adjoin.powerBasis, minpoly_gen]
 
 /- Purely inseparable minimal polynomials are Frobenius powers (§4.7). -/
 theorem chapter04_purely_inseparable_minpoly_shape
@@ -73,8 +73,8 @@ theorem chapter04_purely_inseparable_generator_norm
     rw [hgen']
     exact IntermediateField.finrank_top
   rw [hfinrank]
-  simp only [Polynomial.natDegree_X_pow_sub_C, pow_one, Polynomial.coeff_sub,
-    Polynomial.coeff_X_pow, if_neg hp0.symm, Polynomial.coeff_C_zero, sub_zero,
+  simp only [Polynomial.natDegree_X_pow_sub_C, Polynomial.coeff_sub,
+    Polynomial.coeff_X_pow, if_neg hp0.symm, Polynomial.coeff_C_zero,
     zero_sub, pow_succ]
   ring
 
@@ -82,7 +82,7 @@ theorem chapter04_purely_inseparable_generator_norm
 integrally closed base ring (§4.7). -/
 theorem chapter04_integral_minpoly_coefficients_in_base
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
-    [IsDomain B] [Field K] [Field L] [Algebra A B] [Algebra A K]
+    [Field K] [Field L] [Algebra A B] [Algebra A K]
     [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -99,7 +99,7 @@ theorem chapter04_integral_minpoly_coefficients_in_base
 /- A unit has a unit constant coefficient in its minimal polynomial (§4.7). -/
 theorem chapter04_integral_unit_minpoly_constant_coefficient_is_unit
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
-    [IsDomain B] [Field K] [Field L] [Algebra A B] [Algebra A K]
+    [Field K] [Field L] [Algebra A B] [Algebra A K]
     [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
@@ -149,12 +149,12 @@ conclusion uses Book 1 Chapter 12's coefficient-level Eisenstein interface.
 -/
 theorem chapter04_totally_ramified_uniformizer_minpoly_is_eisenstein
     (A B K L : Type*) [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
-    [CommRing B] [IsDomain B] [IsDiscreteValuationRing B] [IsLocalRing A]
-    [IsLocalRing B] [Field K] [Field L] [Algebra A B] [Algebra A K]
+    [CommRing B] [IsDedekindDomain B] [IsDiscreteValuationRing B]
+    [Field K] [Field L] [Algebra A B] [Algebra A K]
     [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
-    [IsIntegrallyClosed A] [IsDedekindDomain B] [Module.Finite A B]
+    [IsIntegrallyClosed A] [Module.Finite A B]
     [Module.Free A B] [Module.IsTorsionFree A B] [Algebra.IsIntegral A B]
     (P : Ideal B) [P.IsPrime] [P.IsMaximal]
     [P.LiesOver (IsLocalRing.maximalIdeal A)] (πA : A) (x : B)

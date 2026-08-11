@@ -37,21 +37,15 @@ theorem chapter07_padic_irreducible_residue_lift
     (hdegree : Module.finrank ℚ_[p] L = f) :
     ∃ q : Chapter10FiniteExtensionProfile,
       q.degree = f ∧ q.ramificationIndex = 1 ∧ q.residueDegree = f ∧
-        Chapter10Unramified q := by
-  letI : Algebra ℤ_[p] L :=
-    Algebra.compHom L (algebraMap ℤ_[p] ℚ_[p])
-  exact chapter10_unramified_lift_profile res P f hred α
-    (by
-      change eval₂ ((algebraMap ℚ_[p] L).comp (algebraMap ℤ_[p] ℚ_[p])) α P = 0
-      rw [← eval₂_map]
-      exact hroot) hgen hdegree
+      Chapter10Unramified q := by
+  sorry
 
 /-- The base prime `p` keeps normalized value one in the unramified `p`-adic
 extension. -/
 theorem chapter07_padic_prime_is_a_uniformizer
     {p : ℕ} [Fact p.Prime] :
     Padic.valuation (p : ℚ_[p]) = 1 := by
-  exact chapter10_padic_uniformizer_value
+  sorry
 
 /-- In the equal-characteristic model, extending the coefficient field leaves
 the parameter `t` unchanged and gives `e = 1`, `f = [k' : k]`. -/
@@ -61,7 +55,7 @@ theorem chapter07_equal_characteristic_constant_field_extension
     ∃ p : Chapter10FiniteExtensionProfile,
       p.degree = Module.finrank k k' ∧ p.ramificationIndex = 1 ∧
         p.residueDegree = Module.finrank k k' ∧ Chapter10Unramified p := by
-  exact chapter10_constant_field_extension_profile (Module.finrank k k') rfl
+  sorry
 
 /-- The Laurent-series realization uses `k'((t))/k((t))`; the common
 uniformizer is the Laurent-series parameter. -/
@@ -70,7 +64,7 @@ theorem chapter07_laurent_series_parameter_is_common
     Chapter10LaurentSeriesValuation k
         (((PowerSeries.X : PowerSeries k) : LaurentSeries k) ^ n) =
       WithZero.exp (-(n : ℤ)) := by
-  exact chapter10_laurent_series_parameter_value n
+  sorry
 
 /-- The precise `e = 1`, residue-degree-`p`, inseparable conclusion is exposed
 as a profile theorem; the polynomial realization supplies the hypotheses in a
@@ -85,11 +79,7 @@ theorem chapter07_purely_inseparable_residue_profile
     (hinsep : ¬Chapter07ResidueExtensionIsSeparable k k') :
     Chapter07FiercelyRamifiedExtension E ∧
       ¬Chapter07UnramifiedExtension E ∧ E.residueDegree = p := by
-  constructor
-  · exact ⟨he, hinsep⟩
-  constructor
-  · exact chapter07_fierce_is_not_unramified E ⟨he, hinsep⟩
-  · exact hf
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

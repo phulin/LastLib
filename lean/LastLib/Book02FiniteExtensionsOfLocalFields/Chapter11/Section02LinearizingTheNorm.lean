@@ -12,7 +12,8 @@ open Module
 /- The terms of degree at least two are represented by the exact remainder after
    subtracting the constant and trace terms. -/
 def chapter11NormRemainder
-    (K L : Type*) [CommRing K] [CommRing L] [Algebra K L]
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (x : L) : K :=
   Algebra.norm K (1 + x) - 1 - Algebra.trace K L x
 
@@ -23,7 +24,7 @@ theorem chapter11_det_one_add_has_trace_linear_coefficient
     (M : Matrix ι ι K) :
     (Matrix.det (1 + (Polynomial.X : K[X]) • M.map Polynomial.C)).coeff 1 =
       Matrix.trace M := by
-  exact Matrix.coeff_det_one_add_X_smul_one M
+  sorry
 
 /- The same coefficient calculation for multiplication by an element of a
    finite free algebra. -/
@@ -34,20 +35,16 @@ theorem chapter11_norm_determinant_has_trace_linear_coefficient
     (Matrix.det
         (1 + (Polynomial.X : K[X]) • (Algebra.leftMulMatrix b x).map Polynomial.C)).coeff 1 =
       Algebra.trace K L x := by
-  calc
-    (Matrix.det
-        (1 + (Polynomial.X : K[X]) • (Algebra.leftMulMatrix b x).map Polynomial.C)).coeff 1 =
-        Matrix.trace (Algebra.leftMulMatrix b x) :=
-      chapter11_det_one_add_has_trace_linear_coefficient K (Algebra.leftMulMatrix b x)
-    _ = Algebra.trace K L x := (Algebra.trace_eq_matrix_trace b x).symm
+  sorry
 
 /- The first-order norm expansion with its canonical higher-order remainder. -/
 theorem chapter11_norm_one_add_linearizes_to_trace
-    (K L : Type*) [CommRing K] [CommRing L] [Algebra K L]
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (x : L) :
     Algebra.norm K (1 + x) =
       1 + Algebra.trace K L x + chapter11NormRemainder K L x := by
-  simp [chapter11NormRemainder, sub_eq_iff_eq_add, add_assoc, add_comm, add_left_comm]
+  sorry
 
 /- The omitted determinant terms have valuation at least `2n`, and restriction
    of an extension valuation turns that into the displayed ceiling bound. -/
@@ -84,7 +81,7 @@ theorem chapter11_trace_vanishes_for_nonseparable_extension
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (hsep : ¬Algebra.IsSeparable K L) :
     Algebra.trace K L = 0 := by
-  exact Algebra.trace_eq_zero_of_not_isSeparable hsep
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11

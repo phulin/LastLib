@@ -1,4 +1,5 @@
-import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section05TwoStageIntegralDescription
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section08PrimeToP_RadicalExtensions
+import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.Section03CleanDecomposition
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
 
@@ -12,6 +13,11 @@ noncomputable section
 /-- Tameness at the exponential characteristic of the residue field.  The
 use of coprimality makes the characteristic-zero case automatic because
 ringExpChar is one there. -/
+-- SOURCE_ISSUE: Over an imperfect residue field, coprimality of `e` and the
+-- residue characteristic does not by itself exclude finite defect, so the
+-- source's extension-level use of “tamely ramified” needs a defectless (or
+-- perfect-residue) hypothesis.  This predicate intentionally records only
+-- the numerical prime-to-`p` condition stated in the section.
 def chapter09Tame (k : Type*) [Ring k] (e : ℕ) : Prop :=
   Nat.Coprime e (ringExpChar k)
 
@@ -20,10 +26,18 @@ def chapter09Wild (k : Type*) [Ring k] (e : ℕ)
     (residueSeparable : Prop) : Prop :=
   residueSeparable ∧ ¬ chapter09Tame k e
 
-/-- In the separable setting every finite ramification index is either tame or
-wild. -/
+/-- In residue characteristic zero the characteristic exponent is one, so
+every ramification index is tame. -/
+theorem chapter09_char_zero_is_tame
+    (k : Type*) [Ring k] [CharZero k] (e : ℕ) :
+    chapter09Tame k e := by
+  simp [chapter09Tame]
+
+/-- For a finite separable residue extension and a supplied ramification index,
+the index is either tame or wild. -/
 theorem chapter09_tame_or_wild
     (k l : Type*) [Field k] [Field l] [Algebra k l]
+    [FiniteDimensional k l]
     (e : ℕ) (hseparable : Algebra.IsSeparable k l) :
     chapter09Tame k e ∨ chapter09Wild k e (Algebra.IsSeparable k l) := by
   by_cases ht : chapter09Tame k e
@@ -41,31 +55,21 @@ theorem chapter09_wild_iff_prime_dvd
   simpa [chapter09Tame, hchar, Nat.coprime_comm] using
     (hp.dvd_iff_not_coprime (n := e)).symm
 
-/-- Group-theoretic content of the finite-Galois assertion: inertia has order
-e, wild inertia is the maximal normal p-subgroup, and the quotient is cyclic
-of order prime to p. -/
-structure Chapter09WildInertiaStructure
-    (G : Type*) [Group G] [Finite G] (p e : ℕ) where
-  inertia : Subgroup G
-  inertia_order : Nat.card inertia = e
-  wild_inertia : Subgroup inertia
-  wild_normal : wild_inertia.Normal
-  wild_is_p_group : IsPGroup p wild_inertia
-  wild_maximal :
-    ∀ H : Subgroup inertia, H.Normal → IsPGroup p H → H ≤ wild_inertia
-  quotient_cyclic :
-    letI : wild_inertia.Normal := wild_normal
-    IsCyclic (inertia ⧸ wild_inertia)
-  quotient_prime_to_p :
-    letI : wild_inertia.Normal := wild_normal
-    Nat.Coprime (Nat.card (inertia ⧸ wild_inertia)) p
+/-- Replacing an inertia subgroup by its cardinality preserves the tame
+criterion.  This is the bridge from the numerical definition to the finite
+Galois statement about inertia. -/
+theorem chapter09_tame_iff_inertia_order_coprime
+    (k G : Type*) [Ring k] [Group G] [Finite G]
+    (e : ℕ) (I : Subgroup G) (hI : Nat.card I = e) :
+    chapter09Tame k e ↔ Nat.Coprime (Nat.card I) (ringExpChar k) := by
+  simp [chapter09Tame, hI]
 
 /-- Finite-Galois ramification data over a perfect residue field. -/
 structure Chapter09FiniteGaloisRamificationData
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -75,21 +79,21 @@ structure Chapter09FiniteGaloisRamificationData
     [Chapter09FiniteLocalExtension A B K L] [IsGalois K L]
     [PerfectField (chapter09BaseResidueField A)]
     [Finite (L ≃ₐ[K] L)] where
-  group_data : Chapter09WildInertiaStructure (L ≃ₐ[K] L)
-    (ringExpChar (chapter09BaseResidueField A))
-    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B
-      (IsLocalRing.maximalIdeal B))
+  inertia : Subgroup (L ≃ₐ[K] L)
+  inertia_order : Nat.card inertia =
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B
+      (IsLocalRing.maximalIdeal B)
   residue_action : Chapter09ResidueActionData A B K L
-  inertia_eq_kernel : group_data.inertia =
+  inertia_eq_kernel : inertia =
     MonoidHom.ker residue_action.action
 
-/-- The finite-Galois perfect-residue theorem in the form consumed by later
-proofs. -/
-theorem chapter09_finite_galois_inertia_and_wild_quotient
+/-- The finite-Galois perfect-residue theorem records the inertia order and
+the residue action; the chapter introduces no wild-inertia filtration. -/
+theorem chapter09_finite_galois_inertia_order
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -102,16 +106,20 @@ theorem chapter09_finite_galois_inertia_and_wild_quotient
     Nonempty (Chapter09FiniteGaloisRamificationData A B K L) := by
   sorry
 
-/-- A post-base-change Kummer presentation of a totally tamely ramified
-extension.  The coefficient ring is the valuation ring after adjoining the
-needed roots of unity or making the suitable unramified base change. -/
+/-- A post-base-change Kummer presentation for the ramified stage.  The
+coefficient ring is the valuation ring after adjoining the needed roots of
+unity or making the suitable unramified base change; an integral-model
+package is needed to state the corresponding total-ramification predicate. -/
 structure Chapter09TameKummerPresentation
-    (A K L : Type*) [CommRing A] [IsDomain A] [IsLocalRing A]
+    (A K L : Type*) [CommRing A] [IsDomain A]
     [IsDiscreteValuationRing A] [Field K] [Field L]
     [Algebra A K] [Algebra K L] [Algebra A L]
     [IsScalarTower A K L] [IsFractionRing A K]
+    [FiniteDimensional K L]
     (e : ℕ) (π : A) where
   tame : chapter09Tame (chapter09BaseResidueField A) e
+  positive : 0 < e
+  roots_of_unity : ∃ ζ : K, IsPrimitiveRoot ζ e
   uniformizer :
     Ideal.span ({π} : Set A) = IsLocalRing.maximalIdeal A
   alpha : L
@@ -120,7 +128,7 @@ structure Chapter09TameKummerPresentation
   degree : Module.finrank K L = e
 
 /- The chapter deliberately stops before introducing higher ramification
-filtrations, jumps, different ideals, or discriminants. -/
+filtrations, jumps, wild inertia subgroups, different ideals, or discriminants. -/
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09

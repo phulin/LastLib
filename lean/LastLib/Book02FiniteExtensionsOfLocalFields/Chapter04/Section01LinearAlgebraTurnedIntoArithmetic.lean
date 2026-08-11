@@ -124,7 +124,7 @@ theorem chapter04_purely_inseparable_trace_eq_zero
     ∀ x : L, Algebra.trace K L x = 0 := by
   have hnot : ¬Algebra.IsSeparable K L := by
     intro hsep
-    letI : Algebra.IsSeparable K L := hsep
+    let _ : Algebra.IsSeparable K L := hsep
     have hfin : Field.finSepDegree K L = Module.finrank K L :=
       Field.finSepDegree_eq_finrank_of_isSeparable K L
     have hone := IsPurelyInseparable.finSepDegree_eq_one K L

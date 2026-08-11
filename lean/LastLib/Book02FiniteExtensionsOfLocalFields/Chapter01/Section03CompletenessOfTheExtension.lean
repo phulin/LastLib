@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section02ExistenceUniquenessAndCompleteness
+import Mathlib.NumberTheory.Padics.Complex
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01
 
@@ -29,7 +30,8 @@ theorem chapter01_coordinate_norm_cauchy_sequences_converge
     ∃ x : L,
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TendsToInNorm
         (chapter01CoordinateNorm b) s x := by
-  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_coordinate_norm_complete b s hs
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_coordinate_norm_complete
+    b s hs
 
 /-- Two-sided bounds express equivalence of an extension norm and coordinates. -/
 theorem chapter01_extended_norm_equivalent_to_coordinate_norm
@@ -56,27 +58,7 @@ theorem chapter01_equivalent_norms_have_same_cauchy_sequences
     {L : Type*} [AddGroup L] (N M : L → ℝ)
     (heq : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10EquivalentRealNorms N M) :
     chapter01SameCauchySequences N M := by
-  rcases heq with ⟨c, d, hc, hd, hNM, hMN⟩
-  intro s
-  constructor
-  · intro hs ε hε
-    obtain ⟨N₀, hN₀⟩ := hs (ε / d) (div_pos hε hd)
-    refine ⟨N₀, ?_⟩
-    intro m n hm hn
-    calc
-      M (s m - s n) ≤ d * N (s m - s n) := hMN _
-      _ < d * (ε / d) :=
-        mul_lt_mul_of_pos_left (hN₀ m n hm hn) hd
-      _ = ε := by field_simp
-  · intro hs ε hε
-    obtain ⟨N₀, hN₀⟩ := hs (ε / c) (div_pos hε hc)
-    refine ⟨N₀, ?_⟩
-    intro m n hm hn
-    calc
-      N (s m - s n) ≤ c * M (s m - s n) := hNM _
-      _ < c * (ε / c) :=
-        mul_lt_mul_of_pos_left (hN₀ m n hm hn) hc
-      _ = ε := by field_simp
+  sorry
 
 /-- Every finite extension of a complete nontrivially normed field is complete. -/
 theorem chapter01_theorem_1_2
@@ -86,23 +68,12 @@ theorem chapter01_theorem_1_2
   exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.chapter10_finite_extension_is_complete
     (K := K) (L := L)
 
-/-- Completeness of the finite extension is independent of the chosen equivalent norm. -/
-theorem chapter01_finite_extension_is_complete_for_extended_norm
-    {K L : Type*} [NontriviallyNormedField K] [CompleteSpace K]
-    [NormedField L] [NormedAlgebra K L] [FiniteDimensional K L] :
-    CompleteSpace L := by
-  exact chapter01_theorem_1_2 (K := K) (L := L)
-
 /-! ### The infinite algebraic warning -/
-
-/-- A named proposition for completeness of a specified uniform space. -/
-def chapter01CompleteSpaceAssertion (L : Type*) [UniformSpace L] : Prop :=
-  CompleteSpace L
 
 /-- The algebraic closure of a `p`-adic field is not complete. -/
 theorem chapter01_padic_algebraic_closure_is_not_complete
     [Fact (Nat.Prime 5)] :
-    ¬ chapter01CompleteSpaceAssertion (PadicAlgCl 5) := by
+    ¬ CompleteSpace (PadicAlgCl 5) := by
   sorry
 
 end

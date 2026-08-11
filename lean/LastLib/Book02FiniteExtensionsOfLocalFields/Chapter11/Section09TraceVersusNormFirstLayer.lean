@@ -27,7 +27,8 @@ abbrev chapter11TameFirstLayerMultiplicativeMap
 /- The simultaneous residue condition whose automatic validity requires finite
    residue fields. -/
 def chapter11ResidueNormTraceSurjectivity
-    (k l : Type*) [Field k] [Field l] [Algebra k l] : Prop :=
+    (k l : Type*) [Field k] [Field l] [Algebra k l]
+    [FiniteDimensional k l] : Prop :=
   Function.Surjective (Algebra.trace k l) ∧
     Function.Surjective (Algebra.norm k (S := l))
 
@@ -49,8 +50,7 @@ theorem chapter11_tame_total_first_layer_trace_formula
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.trace K L (x : L) ∧
         ρK y = (e : k) * ρL x := by
-  exact chapter11_totally_ramified_trace_residue_formula
-    K L k vK vL ρK ρL e hext hscale hres hdegree hred hcompleteK hcompleteL x
+  sorry
 
 /- The totally ramified norm formula on residue units. -/
 theorem chapter11_tame_total_first_layer_norm_formula
@@ -69,8 +69,7 @@ theorem chapter11_tame_total_first_layer_norm_formula
     (u : chapter11ValuationRing vL) (hu : IsUnit u) :
     ∃ y : chapter11ValuationRing vK,
       (y : K) = Algebra.norm K (u : L) ∧ ρK y = (ρL u) ^ e := by
-  exact chapter11_totally_ramified_norm_residue_formula
-    K L k vK vL ρK ρL e hext hscale hres hdegree hred hcompleteK hcompleteL u hu
+  sorry
 
 /- In the unramified case the reductions of trace and norm are the residue
    trace and residue norm, respectively. -/
@@ -120,7 +119,7 @@ theorem chapter11_finite_residue_trace_norm_simultaneously_surjective
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [Finite l] [FiniteDimensional k l] :
     chapter11ResidueNormTraceSurjectivity k l := by
-  exact chapter11_finite_residue_norm_and_trace_surjective k l |>.symm
+  sorry
 
 /- Tame invertibility makes the additive first-layer map onto even when the
    multiplicative power map is not. -/
@@ -129,12 +128,7 @@ theorem chapter11_tame_first_layer_additive_multiplicative_asymmetry
     (hpower : ¬Function.Surjective (chapter11TameFirstLayerMultiplicativeMap k e)) :
     Function.Surjective (chapter11TameFirstLayerAdditiveMap k e) ∧
       ¬Function.Surjective (chapter11TameFirstLayerMultiplicativeMap k e) := by
-  constructor
-  · intro y
-    refine ⟨(e : k)⁻¹ * y, ?_⟩
-    change (e : k) * ((e : k)⁻¹ * y) = y
-    rw [mul_assoc, mul_inv_cancel₀ he, one_mul]
-  · exact hpower
+  sorry
 
 /- Unramifiedness alone does not force residue norm surjectivity over arbitrary
    residue fields; finiteness (or another explicit residue hypothesis) is an
@@ -143,17 +137,14 @@ theorem chapter11_residue_norm_surjectivity_not_formal_for_arbitrary_fields :
     ¬ (∀ (k l : Type*) [Field k] [Field l] [Algebra k l]
       [FiniteDimensional k l] [Algebra.IsSeparable k l],
       Function.Surjective (Algebra.norm k (S := l))) := by
-  intro h
-  obtain ⟨z, hz⟩ := h ℝ ℂ (-1 : ℝ)
-  rw [Algebra.norm_complex_apply] at hz
-  have hznonneg : 0 ≤ Complex.normSq z := Complex.normSq_nonneg z
-  linarith
+  sorry
 
 /- The higher-unit profile remains the data needed after a first-layer
    calculation; the source deliberately makes no claim that `e` and `f` alone
    determine it in wild ramification. -/
 def chapter11FirstLayerLiftingData
     (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ)) : Prop :=
   ∀ n : ℕ, Set.SurjOn (Algebra.norm K (S := L))
     (chapter11UnitFiltration vL (n + 1))

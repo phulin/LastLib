@@ -53,7 +53,7 @@ theorem chapter08_monogenicity_forces_simple_residue_extension
     {A B k l : Type*} [CommRing A] [CommRing B] [Field k] [Field l]
     [Algebra A B] [Algebra k l]
     (ρA : A →+* k) (ρB : B →+* l)
-    (hρA : Function.Surjective ρA)
+    (_hρA : Function.Surjective ρA)
     (hρB : Function.Surjective ρB)
     (hcompat : ∀ a : A,
       ρB (algebraMap A B a) = algebraMap k l (ρA a))

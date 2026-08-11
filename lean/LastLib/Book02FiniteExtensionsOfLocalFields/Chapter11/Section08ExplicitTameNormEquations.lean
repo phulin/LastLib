@@ -14,27 +14,53 @@ principal-unit hypotheses are kept visible in the theorem that identifies it
 with the actual norm image.
 -/
 
-/- The full set of tame norm-equation candidates: powers of a chosen norm
-   uniformizer times a unit whose residue is an `e`th power.  Choosing the
-   uniformizer itself in the norm image avoids hiding its unit factor in the
-   residue obstruction. -/
+/- The unit factor contributed by a chosen uniformizer.  The quotient is the
+   source's `c = N(π_L) / π_K`; the equation API below keeps it explicit. -/
+def chapter11TameNormUniformizerFactor
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] (πK : K) (πL : L) : K :=
+  Algebra.norm K πL / πK
+
+theorem chapter11_tame_norm_uniformizer_factor_spec
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] (πK : K) (πL : L) (hπK : πK ≠ 0) :
+    chapter11TameNormUniformizerFactor K L πK πL * πK = Algebra.norm K πL := by
+  sorry
+
+/- The full set of tame norm-equation candidates: powers of a chosen
+   uniformizer times a unit whose residue, after correcting by `c⁻ʳ`, is an
+   `e`th power. -/
 def chapter11TameNormEquationSet
     {K k : Type*} [Field K] [Field k]
     (vK : AddValuation K (WithTop ℤ))
-    (ρK : chapter11ValuationRing vK →+* k) (πK : K) (e : ℕ) : Set K :=
+    (ρK : chapter11ValuationRing vK →+* k) (πK c : K) (e : ℕ) : Set K :=
   {a | ∃ r : ℤ, ∃ u : K,
-    u ∈ chapter11ResidueConditionSet vK ρK
-      (chapter11ResidueUnitPowerImage k e) ∧
+    u ∈ chapter11UnitFiltration vK 0 ∧
+      u * c ^ (-r) ∈ chapter11ResidueConditionSet vK ρK
+        (chapter11ResidueUnitPowerImage k e) ∧
       a = πK ^ r * u}
 
 /- The norm image of units already lying in the base field. -/
 def chapter11BaseUnitNormImage
-    (K L : Type*) [Field K] [Field L] [Algebra K L] (e : ℕ) : Set K :=
-  Set.range (fun u : Kˣ => (u : K) ^ e)
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (vK : AddValuation K (WithTop ℤ)) (e : ℕ) : Set K :=
+  Set.range (fun u : (chapter11ValuationRing vK)ˣ =>
+    ((u : chapter11ValuationRing vK) : K) ^ e)
+
+theorem chapter11_mem_base_unit_norm_image_iff
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
+    (vK : AddValuation K (WithTop ℤ)) (e : ℕ) (x : K) :
+    x ∈ chapter11BaseUnitNormImage K L vK e ↔
+      ∃ u : (chapter11ValuationRing vK)ˣ,
+        ((u : chapter11ValuationRing vK) : K) ^ e = x := Iff.rfl
 
 /- The elementary valuation coordinate in tame total ramification is
    surjective, although a particular target unit may still have a residue
-   obstruction. -/
+   obstruction.  The displayed norm-value hypothesis is the missing bridge
+   from a chosen uniformizer to the valuation formula. -/
+-- SOURCE_ISSUE: The source suppresses the norm-valuation compatibility of a
+-- chosen extension uniformizer.  It is stated explicitly here because the
+-- valuation branch interface alone does not determine the norm of `πL`.
 theorem chapter11_tame_total_norm_valuation_coordinate_surjective
     (K L : Type*) [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ)) (vL : AddValuation L (WithTop ℤ))
@@ -46,7 +72,8 @@ theorem chapter11_tame_total_norm_valuation_coordinate_surjective
     (hfres :
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL hext = 1)
-    (πL : L) (hπ : chapter11IsUniformizer vL πL) (r : ℤ) :
+    (πL : L) (hπ : chapter11IsUniformizer vL πL)
+    (hnormπ : vK (Algebra.norm K πL) = (1 : WithTop ℤ)) (r : ℤ) :
     ∃ x : L, x ≠ 0 ∧ vK (Algebra.norm K x) = (r : WithTop ℤ) := by
   sorry
 
@@ -75,10 +102,12 @@ theorem chapter11_tame_total_norm_equation_iff
         vK vL hext = 1)
     (πK : K) (hπK : chapter11IsUniformizer vK πK)
     (πL : L) (hπL : chapter11IsUniformizer vL πL)
-    (hnormπ : Algebra.norm K πL = πK)
+    (c : K) (hc : c ∈ chapter11UnitFiltration vK 0)
+    (hcdef : c = chapter11TameNormUniformizerFactor K L πK πL)
+    (hnormπ : Algebra.norm K πL = c * πK)
     (a : K) (ha : a ≠ 0) :
     chapter11NormEquationSolution K L a ↔
-      a ∈ chapter11TameNormEquationSet vK ρK πK e := by
+      a ∈ chapter11TameNormEquationSet vK ρK πK c e := by
   sorry
 
 /- A Kummer polynomial records the example in which a totally ramified
@@ -100,21 +129,7 @@ theorem chapter11_kummer_uniformizer_norm
     (hminpoly : minpoly K root = chapter11KummerPolynomial π e)
     (hdegree : Module.finrank K L = e) :
     Algebra.norm K root = (-1 : K) ^ (e + 1) * π := by
-  have hrootint : IsIntegral K root := IsIntegral.of_finite K root
-  have htop : K⟮root⟯ = ⊤ := by
-    apply (Field.primitive_element_iff_minpoly_natDegree_eq K root).2
-    rw [hminpoly, chapter11KummerPolynomial, natDegree_X_pow_sub_C, hdegree]
-  let pb : PowerBasis K L := PowerBasis.ofAdjoinEqTop' hrootint htop
-  have hgen : pb.gen = root := by
-    simpa [pb] using (PowerBasis.ofAdjoinEqTop'_gen hrootint htop)
-  have hdim : pb.dim = e := by
-    simp [pb, hminpoly, chapter11KummerPolynomial]
-  have hepos : 0 < e := by
-    rw [← hdim]
-    exact PowerBasis.dim_pos pb
-  have hnorm := PowerBasis.norm_gen_eq_coeff_zero_minpoly pb
-  rw [hgen, hminpoly, hdim] at hnorm
-  simpa [chapter11KummerPolynomial, hepos.ne', pow_succ, mul_assoc] using hnorm
+  sorry
 
 /- Norms of elements embedded from the base field are powers by the extension
    degree. -/
@@ -123,11 +138,12 @@ theorem chapter11_norm_of_base_unit
     [FiniteDimensional K L] (e : ℕ)
     (hdegree : Module.finrank K L = e) (u : K) :
     Algebra.norm K (algebraMap K L u) = u ^ e := by
-  simpa [hdegree] using (Algebra.norm_algebraMap (R := K) (S := L) u)
+  sorry
 
 /- The base-unit formula gives an inclusion in the full unit norm image; it
-   does not identify that image with the base-field power image. -/
--- STATEMENT_NEEDS_UPDATE: `chapter11BaseUnitNormImage` ranges over all field units `Kˣ`, while the target `chapter11NormImage ... 0` only ranges over valuation-ring units in `L`; no hypothesis restricts a source unit to `U^0_K`.  Replace the source set by the valuation-ring unit group (or add that membership premise) before asserting the inclusion.
+   does not identify that image with the base-field power image.  The source
+   units are restricted to the valuation-ring unit group so the target really
+   is a zeroth unit layer. -/
 theorem chapter11_base_unit_norm_image_subset
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
@@ -137,7 +153,7 @@ theorem chapter11_base_unit_norm_image_subset
     (hcompleteK : chapter11ValuationComplete vK)
     (hcompleteL : chapter11ValuationComplete vL)
     (hdegree : Module.finrank K L = e) :
-    chapter11BaseUnitNormImage K L e ⊆ chapter11NormImage K L vL 0 := by
+    chapter11BaseUnitNormImage K L vK e ⊆ chapter11NormImage K L vL 0 := by
   sorry
 
 /- The finite-residue tame quotient is the residue-unit obstruction, with no
@@ -147,7 +163,7 @@ theorem chapter11_tame_total_norm_unit_quotient_index
     (k : Type*) [Field k] [Fintype k] (e : ℕ) :
     Nat.card (kˣ ⧸ chapter11PowerSubgroup k e) =
       Nat.gcd e (Fintype.card k - 1) := by
-  exact chapter11_tame_residue_power_quotient_index k e
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11

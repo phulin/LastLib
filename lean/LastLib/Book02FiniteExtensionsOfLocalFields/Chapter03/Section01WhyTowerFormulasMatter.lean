@@ -1,5 +1,6 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.Section01TheLocalExtensionProblem
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.Section04TheFundamentalEquality
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section09Towers
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03
 
@@ -11,12 +12,7 @@ open LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
 /-! ## 3.1. Why tower formulas matter -/
 
-/--
-The normalized restriction relation used throughout this chapter.
-
-The factor is recorded explicitly because normalized valuations on the two
-fields need not restrict literally equally.
--/
+/-- The normalized additive restriction relation for a finite local extension. -/
 abbrev chapter03ValuationRestrictionScale
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     (vK : AddValuation K (WithTop ℤ))
@@ -24,7 +20,7 @@ abbrev chapter03ValuationRestrictionScale
   LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01ValuationRestrictionScale
     vK vL e
 
-/-- A normalized-valued field tower, with the two restriction factors visible. -/
+/-- A tower with the normalized valuations and the two restriction factors. -/
 structure Chapter03NormalizedValuedTower
     (K M L : Type*) [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
@@ -34,16 +30,16 @@ structure Chapter03NormalizedValuedTower
   vL : AddValuation L (WithTop ℤ)
   eMK : ℕ
   eLM : ℕ
-  vK_discrete : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK
-  vM_discrete : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vM
-  vL_discrete : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL
+  vK_discrete :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vK
+  vM_discrete :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vM
+  vL_discrete :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10DiscreteAddValuation vL
   restrict_M_to_K : chapter03ValuationRestrictionScale vK vM eMK
   restrict_L_to_M : chapter03ValuationRestrictionScale vM vL eLM
 
-/-! The following wrappers keep the normalized local invariants attached to
-the chosen valuations.  In particular, `e` and `f` are not unconstrained
-natural numbers whose product merely happens to be the field degree. -/
-
+/-- The intrinsic ramification index for two chosen valuation rings. -/
 def chapter03RamificationIndex
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]
@@ -52,6 +48,7 @@ def chapter03RamificationIndex
   chapterRamificationIndex vK.valuationSubring vL.valuationSubring
     (IsLocalRing.maximalIdeal vL.valuationSubring)
 
+/-- The intrinsic residue degree for two chosen valuation rings. -/
 def chapter03ResidueDegree
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]
@@ -60,6 +57,7 @@ def chapter03ResidueDegree
   chapterResidueDegree vK.valuationSubring vL.valuationSubring
     (IsLocalRing.maximalIdeal vL.valuationSubring)
 
+/-- Book-facing data recording the two local factors and their degree product. -/
 structure Chapter03FiniteLocalExtensionData
     (K L Γ : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [LinearOrderedCommGroupWithZero Γ]
@@ -71,18 +69,27 @@ structure Chapter03FiniteLocalExtensionData
   f_eq : chapter03ResidueDegree vK vL = f
   degree_eq : Module.finrank K L = e * f
 
-/-- The chapter's field-level form of the fundamental equality. -/
+/-- The field-level form of the fundamental equality. -/
 def chapter03FundamentalEquality
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) (vL : Valuation L Γ)
     [vK.HasExtension vL] : Prop :=
-  Module.finrank K L = chapter03RamificationIndex vK vL * chapter03ResidueDegree vK vL
+  Module.finrank K L =
+    chapter03RamificationIndex vK vL * chapter03ResidueDegree vK vL
 
--- SOURCE_ISSUE: The source's unqualified complete-discrete fundamental
--- equality is false over general imperfect residue fields because finite
--- defect extensions exist.  The minimally corrected interface assumes a
--- perfect residue field (a defectless hypothesis would also suffice).
+theorem chapter03_fundamental_equality_iff_extension_data
+    {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L] [LinearOrderedCommGroupWithZero Γ]
+    (vK : Valuation K Γ) (vL : Valuation L Γ)
+    [vK.HasExtension vL] :
+    chapter03FundamentalEquality vK vL ↔
+      Nonempty (Chapter03FiniteLocalExtensionData K L Γ vK vL) := by
+  sorry
+
+-- SOURCE_ISSUE: Completeness and discreteness alone do not imply the
+-- fundamental equality over imperfect residue fields; finite defect can occur.
+-- The interface therefore makes a standard defectless hypothesis explicit.
 theorem chapter03_complete_fundamental_equality
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
@@ -93,14 +100,9 @@ theorem chapter03_complete_fundamental_equality
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     chapter03FundamentalEquality vK vL := by
-  exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.fundamental_equality
-    vK vL hcomplete
+  sorry
 
-/--
-The ramification and residue factors multiply in a finite local tower.  This
-is stated without a separability hypothesis, using Mathlib's intrinsic ideal
-invariants.
--/
+/-- Ramification indices and residue degrees multiply in a local tower. -/
 theorem chapter03_tower_ramification_and_residue_laws
     {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
     [Algebra R S] [Algebra R T] [Algebra S T] [IsScalarTower R S T]
@@ -109,48 +111,26 @@ theorem chapter03_tower_ramification_and_residue_laws
     [q.LiesOver p] [r.LiesOver q] [Module.Flat S T] :
     r.ramificationIdx R = q.ramificationIdx R * r.ramificationIdx S ∧
       r.inertiaDeg R = q.inertiaDeg R * r.inertiaDeg S := by
-  constructor
-  · exact
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_ramification_indices_multiply_in_towers
-        p q r
-  · exact
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_inertia_degrees_multiply_in_towers
-        p q r
+  sorry
 
-/-- The vector-space degree identity for the same tower. -/
+/-- The vector-space degree identity in the same tower. -/
 theorem chapter03_tower_degree_formula
     (K M L : Type*) [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L] [IsScalarTower K M L]
     [FiniteDimensional K M] [FiniteDimensional M L] :
     Module.finrank K L = Module.finrank K M * Module.finrank M L := by
-  simpa using
-    (LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_field_degrees_multiply_in_towers
-      K M L)
+  sorry
 
-/-- The restriction formula along the two steps of a normalized tower. -/
+/-- The two normalized restriction factors compose along the tower. -/
 theorem chapter03_restriction_factors_compose
     {K M L : Type*} [Field K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] [Algebra K L]
     [IsScalarTower K M L]
     (T : Chapter03NormalizedValuedTower K M L) (x : K) (hx : x ≠ 0) :
     T.vL (algebraMap K L x) = (T.eLM * T.eMK) • T.vK x := by
-  rcases T.restrict_M_to_K with ⟨_, hMK⟩
-  rcases T.restrict_L_to_M with ⟨_, hLM⟩
-  have hay : algebraMap K M x ≠ 0 :=
-    (algebraMap K M).injective.ne_zero hx
-  calc
-    T.vL (algebraMap K L x) =
-        T.vL (algebraMap M L (algebraMap K M x)) := by
-          rw [IsScalarTower.algebraMap_eq K M L x]
-    _ = T.eLM • T.vM (algebraMap K M x) := hLM _ hay
-    _ = T.eLM • (T.eMK • T.vK x) := by rw [hMK x hx]
-    _ = (T.eLM * T.eMK) • T.vK x := by rw [smul_smul]
+  sorry
 
-/--
-The ideal-theoretic version of the tower formula.  The equalities are kept as
-an explicit proposition so later proof passes can instantiate it with maximal
-ideals of discrete valuation rings without losing the normalization powers.
--/
+/-- The ideal-power form of the tower formula. -/
 def chapter03IdealPowerTowerFormula
     {A B C : Type*} [CommRing A] [CommRing B] [CommRing C]
     [Algebra A B] [Algebra B C] [Algebra A C] [IsScalarTower A B C]
@@ -158,23 +138,18 @@ def chapter03IdealPowerTowerFormula
     (eBC eAB eAC : ℕ) : Prop :=
   Ideal.map (algebraMap A C) p = r ^ eAC ∧
     Ideal.map (algebraMap B C) q = r ^ eBC ∧
-    Ideal.map (algebraMap A C) p = (Ideal.map (algebraMap B C) q) ^ eAB ∧
+    Ideal.map (algebraMap A C) p =
+      (Ideal.map (algebraMap B C) q) ^ eAB ∧
     eAC = eBC * eAB
 
-/--
-The ring-level tower formula for finite extensions of local DVRs.  The
-discrete-local hypotheses are intentionally explicit; no separability class
-is required.
--/
 theorem chapter03_ideal_power_tower_formula
     {A B C : Type*} [CommRing A] [CommRing B] [CommRing C]
     [Algebra A B] [Algebra B C] [Algebra A C] [IsScalarTower A B C]
     [IsDomain A] [IsDomain B] [IsDomain C]
-    [IsLocalRing A] [IsLocalRing B] [IsLocalRing C]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsDiscreteValuationRing C]
     [Module.Finite A B] [Module.Finite B C]
-    [Module.Flat B C]
+    [Module.Flat A B] [Module.Flat B C]
     [Algebra.IsIntegral A B] [Algebra.IsIntegral B C]
     (p : Ideal A) (q : Ideal B) (r : Ideal C)
     [p.IsPrime] [q.IsPrime] [r.IsPrime]

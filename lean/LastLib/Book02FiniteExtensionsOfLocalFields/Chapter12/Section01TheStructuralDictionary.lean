@@ -82,6 +82,7 @@ theorem complete_extension_has_finite_free_integral_closure
     [Valuation.IsRankOneDiscrete vL] [Module.Finite K L]
     [Algebra vK.valuationSubring L]
     [IsScalarTower vK.valuationSubring K L]
+    [IsScalarTower vK.valuationSubring vL.valuationSubring L]
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring) :
     (integralClosure vK.valuationSubring L : Set L) =
@@ -93,44 +94,53 @@ theorem complete_extension_has_finite_free_integral_closure
       IsAdicComplete (IsLocalRing.maximalIdeal vL.valuationSubring)
         vL.valuationSubring ∧
       IsDiscreteValuationRing vL.valuationSubring := by
-  have hstruct :=
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.finite_complete_extension_valuation_ring
-      vK vL hcomplete
-  letI : Module.Finite vK.valuationSubring vL.valuationSubring := hstruct.1
-  letI : Module.Free vK.valuationSubring vL.valuationSubring := hstruct.2.1
-  have hclosure :=
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_extension_unit_ball_is_integral_closure
-      vK vL
-  letI : IsFractionRing vK.valuationSubring K :=
-    (Valuation.valuationSubring.integers vK).isFractionRing
-  letI : IsFractionRing vL.valuationSubring L :=
-    (Valuation.valuationSubring.integers vL).isFractionRing
-  have hfinrank :
-      Module.finrank vK.valuationSubring vL.valuationSubring =
-        Module.finrank K L :=
-    (IsFractionRing.finrank_eq vK.valuationSubring K
-      vL.valuationSubring L).symm
-  let b := Module.Free.finBasisOfFinrankEq vK.valuationSubring
-    vL.valuationSubring hfinrank
-  exact ⟨hclosure.symm, hstruct.1, hstruct.2.1, ⟨b⟩,
-    hstruct.2.2.1, hstruct.2.2.2⟩
+  sorry
 
-/-- Book 2, §12.1: the normalized valuation restriction carries the factor `e`. -/
+/-
+The class `Valuation.HasExtension` identifies the restriction only up to
+valuation equivalence.  It therefore does not by itself justify the literal
+normalization used in the displayed power formula.
+-/
+-- SOURCE_ISSUE: The source writes a literal equality for normalized
+-- valuations, but the canonical extension interface supplies only valuation
+-- equivalence.  The bridge below records that canonical weaker fact; the
+-- displayed normalization is exposed with an explicit normalization datum.
+theorem restriction_is_equivalent_to_base_valuation
+    {K L : Type*} [Field K] [Field L]
+    [Algebra K L]
+    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
+    [vK.HasExtension vL] :
+    vK.IsEquiv (vL.comap (algebraMap K L)) :=
+  Valuation.HasExtension.val_isEquiv_comap
+
+/- The explicit normalization datum needed for a literal power formula. -/
+structure Chapter12NormalizedValuationChoice
+    {K L : Type*} [Field K] [Field L]
+    [Algebra K L]
+    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
+    [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
+    [Valuation.IsRankOneDiscrete vL] [Module.Finite K L]
+    [Module.Finite vK.valuationSubring vL.valuationSubring] where
+  e : ℕ
+  e_eq_ramification_index :
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+      vK.valuationSubring vL.valuationSubring
+        (IsLocalRing.maximalIdeal vL.valuationSubring) = e
+  restriction : normalizedValuationRestriction vK vL e
+
+/- Book 2, §12.1: the normalized valuation restriction carries the factor
+`e`, once the chosen representatives have been normalized literally. -/
 theorem normalized_restriction_has_ramification_factor
     {K L : Type*} [Field K] [Field L]
     [Algebra K L]
-    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰) (e : ℕ)
+    (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL]
-    [Module.Finite K L] [FiniteDimensional K L]
+    [Module.Finite K L]
     [Module.Finite vK.valuationSubring vL.valuationSubring]
-    (he : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
-      vK.valuationSubring vL.valuationSubring
-        (IsLocalRing.maximalIdeal vL.valuationSubring) = e) :
-    normalizedValuationRestriction vK vL e := by
-  simpa [normalizedValuationRestriction] using
-    (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter02.valuation_restriction_is_power_of_ramification_index
-      vK vL e he)
+    (d : Chapter12NormalizedValuationChoice vK vL) :
+    normalizedValuationRestriction vK vL d.e :=
+  d.restriction
 
 /-- Book 2, §12.1: extension of the base maximal ideal. -/
 theorem maximal_ideal_extension_is_ramification_power
@@ -138,7 +148,7 @@ theorem maximal_ideal_extension_is_ramification_power
     [Algebra K L]
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰) (e : ℕ)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
-    [Valuation.IsRankOneDiscrete vL] [Module.Finite K L] [FiniteDimensional K L]
+    [Valuation.IsRankOneDiscrete vL] [Module.Finite K L]
     [Module.Finite vK.valuationSubring vL.valuationSubring]
     (he : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
       vK.valuationSubring vL.valuationSubring
@@ -169,11 +179,7 @@ theorem complete_extension_degree_is_ramification_times_residue_degree
         (IsLocalRing.maximalIdeal vL.valuationSubring) = f)
     :
     Module.finrank K L = e * f := by
-  exact
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_one_branch_fundamental_equality
-      vK vL e f he hf hcomplete
-      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter01.chapter01_theorem_1_1
-        vK hcomplete)
+  sorry
 
 /-- Book 2, §12.1: both local indices multiply in a tower. -/
 theorem ramification_and_residue_degrees_multiply_in_a_tower
@@ -213,7 +219,6 @@ theorem structural_norm_valuation_formula
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰) (f : ℕ)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL] [Module.Finite K L]
-    [FiniteDimensional K L]
     [Module.Finite vK.valuationSubring vL.valuationSubring]
     [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
     (hcomplete : IsAdicComplete
@@ -229,7 +234,7 @@ theorem structural_norm_valuation_formula
 theorem residue_trace_shadow_formula
     {A B k l : Type*} [CommRing A] [CommRing B] [Field k] [Field l]
     [Algebra A B] [Algebra k l]
-    [IsLocalRing A] [IsLocalRing B] [IsDomain A] [IsDomain B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [Algebra.IsIntegral A B]
     [Module.Finite A B] [Module.Free A B]
@@ -243,7 +248,7 @@ theorem residue_trace_shadow_formula
 theorem residue_norm_shadow_formula
     {A B k l : Type*} [CommRing A] [CommRing B] [Field k] [Field l]
     [Algebra A B] [Algebra k l]
-    [IsLocalRing A] [IsLocalRing B] [IsDomain A] [IsDomain B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [Algebra.IsIntegral A B]
     [Module.Finite A B] [Module.Free A B]

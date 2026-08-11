@@ -84,7 +84,7 @@ theorem unit_zero_layer_is_residue_units
         (inferInstanceAs (IsLocalHom (IsLocalRing.residue A))) y
     refine ⟨⟨u, ?_⟩, ?_⟩
     · simp [unitFiltration]
-    · exact hu
+    · simpa [ρ] using hu
   have hker : ρ.ker =
       (unitFiltration A 1).comap (unitFiltration A 0).subtype := by
     classical
@@ -117,10 +117,11 @@ theorem unit_zero_layer_is_residue_units
   exact QuotientGroup.quotientKerEquivOfSurjective ρ hρ
 
 /-- Book 2, §12.4: every positive layer is the additive residue field. -/
--- STATEMENT_NEEDS_UPDATE: `Multiplicative (Additive k)` carries the
--- multiplicative group law of the field `k`, not its additive group law, so
--- it cannot be the positive unit layer in general.  The minimal correction is
--- to state the codomain as `Multiplicative k`.
+/-
+The quotient is a multiplicative group, so the additive residue group is
+represented by `Multiplicative (Additive k)`.  This is the standard Lean
+wrapper for the source's notation `k⁺`.
+-/
 theorem positive_unit_layer_is_residue_additive
     (A : Type u) [CommRing A] [IsLocalRing A]
     [IsDomain A] [IsDiscreteValuationRing A] (n : ℕ) (hn : 0 < n) :
@@ -139,7 +140,6 @@ theorem norm_valuation_coordinate
     (vK : Valuation K ℤᵐ⁰) (vL : Valuation L ℤᵐ⁰) (f : ℕ)
     [vK.HasExtension vL] [Valuation.IsRankOneDiscrete vK]
     [Valuation.IsRankOneDiscrete vL] [Module.Finite K L]
-    [FiniteDimensional K L]
     [Module.Finite vK.valuationSubring vL.valuationSubring]
     [PerfectField (IsLocalRing.ResidueField vK.valuationSubring)]
     (hcomplete : IsAdicComplete

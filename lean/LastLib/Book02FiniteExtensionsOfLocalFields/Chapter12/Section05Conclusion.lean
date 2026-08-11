@@ -36,14 +36,16 @@ theorem coherent_complete_or_henselian_base_has_one_branch
     {K Γ E : Type u} [Field K] [Field E]
     [LinearOrderedCommGroupWithZero Γ] [Algebra K E]
     (v : Valuation K Γ)
-    (hunique : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.hasUniqueExtensionToEveryAlgebraicField v)
+    (hbase : HenselianLocalRing v.valuationSubring ∨
+      IsAdicComplete (IsLocalRing.maximalIdeal v.valuationSubring)
+        v.valuationSubring)
     [Algebra.IsAlgebraic K E] :
     ∃ W : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.HeterogeneousValuationExtension v E,
       ∀ W' : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.HeterogeneousValuationExtension v E,
         (letI : LinearOrderedCommGroupWithZero W.valueGroup := W.orderedValueGroup
          letI : LinearOrderedCommGroupWithZero W'.valueGroup := W'.orderedValueGroup
          W'.valuation.IsEquiv W.valuation) := by
-  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_or_henselian_base_has_one_branch v hunique
+  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.complete_or_henselian_base_has_one_branch v hbase
 
 /--
 Book 2, §12.5: an Eisenstein root supplies coordinates for the totally
@@ -56,13 +58,17 @@ theorem coherent_eisenstein_coordinates_control_total_ramification
     [LinearOrderedCommGroupWithZero Γ] [Algebra K L]
     [Algebra A L] [IsScalarTower A K L]
     (vK : Valuation K Γ) (v : Valuation L Γ) [vK.HasExtension v]
-    [Valuation.IsRankOneDiscrete v]
+    [Valuation.IsRankOneDiscrete vK] [Valuation.IsRankOneDiscrete v]
     {n : ℕ} (π : A) (f : A[X]) (Pi : L)
     (hf : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt π f)
     (hroot : aeval Pi f = 0) (hdegree : f.natDegree = n)
     (hgenerates : Algebra.adjoin K ({Pi} : Set L) = ⊤)
     (hvaluation : v Pi = Valuation.IsRankOneDiscrete.generator v)
-    (hbase : vK (algebraMap A K π) = (v Pi) ^ n) :
+    (hbaseIntegers : vK.Integers A)
+    (hbaseValuationRing :
+      (vK.valuationSubring : Set K) = Set.range (algebraMap A K))
+    (hupperIntegralClosure :
+      (v.valuationSubring : Set L) = (integralClosure A L : Set L)) :
     v.IsUniformizer Pi ∧
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
           vK.valuationSubring v.valuationSubring
@@ -70,8 +76,11 @@ theorem coherent_eisenstein_coordinates_control_total_ramification
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
           vK.valuationSubring v.valuationSubring
           (IsLocalRing.maximalIdeal v.valuationSubring) = 1 := by
-  exact LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_root_is_uniformizer_and_totally_ramified
-    vK v π f Pi hf hroot hdegree hgenerates hvaluation hbase
+  have h :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_root_is_uniformizer_and_totally_ramified
+      vK v π f Pi hf hroot hdegree hgenerates hvaluation hbaseIntegers
+      hbaseValuationRing hupperIntegralClosure
+  exact ⟨h.1, h.2.1, h.2.2.1⟩
 
 /-- Book 2, §12.5: Eisenstein coordinates leave the residue field unchanged. -/
 theorem coherent_eisenstein_coordinates_preserve_residue_field

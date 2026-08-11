@@ -1,5 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section03UniformizersAndMinimalPolynomials
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter03.Section06ResiduesAndLeadingCoefficients
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08
 
@@ -33,9 +33,9 @@ theorem chapter08_radical_polynomial_is_eisenstein
     have hi' : i < n := by simpa [natDegree_X_pow_sub_C] using hi
     by_cases hi0 : i = 0
     · subst i
-      simp [coeff_sub, coeff_X_pow, hn.ne', eq_comm, Ideal.mem_span_singleton]
+      simp [coeff_sub, coeff_X_pow, hn.ne', eq_comm]
     · rw [coeff_sub]
-      simp [coeff_C, Nat.ne_of_lt hi', hi0, Ideal.mem_span_singleton]
+      simp [coeff_C, Nat.ne_of_lt hi', hi0]
   · have hπ0 : π ≠ 0 := by
       intro hzero
       have hbot : IsLocalRing.maximalIdeal A = (⊥ : Ideal A) := by
@@ -90,7 +90,7 @@ theorem chapter08_padic_radical_extension
     (α : L)
     (hroot : aeval α (chapter08PadicRadicalPolynomial p n) = 0)
     (hgen : Algebra.adjoin (ℚ_[p]) ({α} : Set L) = ⊤)
-    (hdegree : Module.finrank (ℚ_[p]) L = n) :
+    (_hdegree : Module.finrank (ℚ_[p]) L = n) :
     ∃ q : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile,
       q.degree = n ∧ q.ramificationIndex = n ∧ q.residueDegree = 1 ∧
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified q ∧
@@ -112,7 +112,9 @@ theorem chapter08_padic_radical_extension
       (p : ℤ_[p]) (chapter08PadicIntegralRadicalPolynomial p n) α
       (chapter08_padic_radical_polynomial_is_eisenstein p n hn)
       hroot' hdegree' hgen
-  exact ⟨q, rfl, rfl, rfl, rfl, hclosure⟩
+  refine ⟨q, rfl, rfl, rfl, ?_, hclosure⟩
+  change q.ramificationIndex = q.degree ∧ q.residueDegree = 1
+  exact ⟨rfl, rfl⟩
 
 /-- The equal-characteristic radical polynomial over `k((t))`. -/
 def chapter08LaurentRadicalPolynomial
@@ -137,7 +139,7 @@ theorem chapter08_char_p_radical_derivative_zero
     {K : Type*} [Field K] (a : K) (p : ℕ) [CharP K p] :
     (chapter08RadicalPolynomial a p).derivative = 0 := by
   rw [show chapter08RadicalPolynomial a p = X ^ p - C a by rfl]
-  simp [Polynomial.derivative_sub, Polynomial.derivative_pow, CharP.cast_eq_zero K p]
+  simp [Polynomial.derivative_sub, Polynomial.derivative_pow]
 
 /-- Book §8.4: in equal characteristic `p`, the exponent-`p` radical is the
 purely inseparable endpoint, while the valuation-theoretic profile remains
@@ -148,8 +150,8 @@ theorem chapter08_laurent_radical_purely_inseparable_profile
     [IsPurelyInseparable (LaurentSeries k) L]
     (p : ℕ) [Fact p.Prime] [CharP k p]
     (α : L)
-    (hroot : aeval α (chapter08LaurentRadicalPolynomial k p) = 0)
-    (hgen : Algebra.adjoin (LaurentSeries k) ({α} : Set L) = ⊤)
+    (_hroot : aeval α (chapter08LaurentRadicalPolynomial k p) = 0)
+    (_hgen : Algebra.adjoin (LaurentSeries k) ({α} : Set L) = ⊤)
     (hdegree : Module.finrank (LaurentSeries k) L = p)
     (vK : AddValuation (LaurentSeries k) (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))

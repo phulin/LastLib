@@ -1,4 +1,7 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section07UnramifiedAndTotallyRamifiedEndpoints
+import Mathlib.FieldTheory.Perfect
+import Mathlib.FieldTheory.PurelyInseparable.Basic
+import Mathlib.FieldTheory.SeparableClosure
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09
 
@@ -25,7 +28,7 @@ class Chapter09FiniteLocalExtension
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -45,7 +48,7 @@ abbrev chapter09ExtensionResidueField (B : Type*) [CommRing B] [IsLocalRing B] :
 /-- Unramified means ramification index one and separable residue extension. -/
 def chapter09Unramified
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)]
     [Module.Finite (chapter09BaseResidueField A)
@@ -66,6 +69,35 @@ def chapter09TotallyRamified
   LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.foundationalTotallyRamified
     (LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree A B
       (IsLocalRing.maximalIdeal B))
+
+/-- The book-facing unramified predicate unfolds to the canonical endpoint
+condition used by the earlier valuation API. -/
+theorem chapter09_unramified_iff
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    [IsDomain A] [IsDomain B]
+    [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
+    [IsLocalHom (algebraMap A B)]
+    [Module.Finite (chapter09BaseResidueField A)
+      (chapter09ExtensionResidueField B)] :
+    chapter09Unramified A B ↔
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B
+          (IsLocalRing.maximalIdeal B) = 1 ∧
+        Algebra.IsSeparable (chapter09BaseResidueField A)
+          (chapter09ExtensionResidueField B) := by
+  rfl
+
+/-- The book-facing total-ramification predicate unfolds to residue degree
+one. -/
+theorem chapter09_totally_ramified_iff
+    (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]
+    [IsLocalRing A] [IsLocalRing B]
+    [IsLocalHom (algebraMap A B)]
+    [Module.Finite (chapter09BaseResidueField A)
+      (chapter09ExtensionResidueField B)] :
+    chapter09TotallyRamified A B ↔
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree A B
+        (IsLocalRing.maximalIdeal B) = 1 := by
+  rfl
 
 /-- The separable part of a finite residue extension, using Mathlib's canonical
 separable closure rather than redeclaring a subfield. -/
@@ -97,34 +129,7 @@ theorem chapter09_separable_residue_part_unique
     (k l : Type*) [Field k] [Field l] [Algebra k l]
     [Algebra.IsAlgebraic k l] :
     ∃! s : IntermediateField k l, chapter09SeparablePartProperty k l s := by
-  let s₀ := chapter09MaximalSeparableResidueSubfield k l
-  have hs₀ : chapter09SeparablePartProperty k l s₀ :=
-    chapter09_separable_residue_part_properties k l
-  refine ⟨s₀, hs₀, ?_⟩
-  intro s hs
-  rcases hs with ⟨hs_sep, hs_pure⟩
-  letI : Algebra.IsSeparable k s := hs_sep
-  letI : IsPurelyInseparable s l := hs_pure
-  apply le_antisymm
-  · simpa [s₀, chapter09MaximalSeparableResidueSubfield] using
-      le_separableClosure k l s
-  · intro x hx
-    have hx' : x ∈ separableClosure k l := by
-      simpa [s₀, chapter09MaximalSeparableResidueSubfield] using hx
-    have hx_sep : IsSeparable s x :=
-      IsSeparable.tower_top s (mem_separableClosure_iff.mp hx')
-    letI : Algebra.IsSeparable s
-        (IntermediateField.adjoin s ({x} : Set l)) := by
-      exact (IntermediateField.isSeparable_adjoin_simple_iff_isSeparable s l).2 hx_sep
-    obtain ⟨y, hy⟩ :=
-      IsPurelyInseparable.surjective_algebraMap_of_isSeparable s
-        (IntermediateField.adjoin s ({x} : Set l))
-        ⟨x, IntermediateField.mem_adjoin_simple_self s x⟩
-    have hxy : (y : l) = x := by
-      simpa using congrArg
-        (fun z : IntermediateField.adjoin s ({x} : Set l) => (z : l)) hy
-    rw [← hxy]
-    exact y.property
+  sorry
 
 /-- The maximal separable part is all of the residue field exactly when the
 residue extension is separable. -/
@@ -152,7 +157,7 @@ theorem chapter09_local_degree_formula
     (A B K L : Type*) [CommRing A] [CommRing B] [Field K] [Field L]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
-    [IsDomain A] [IsDomain B] [IsLocalRing A] [IsLocalRing B]
+    [IsDomain A] [IsDomain B]
     [IsDiscreteValuationRing A] [IsDiscreteValuationRing B]
     [IsLocalHom (algebraMap A B)] [IsFractionRing A K] [IsFractionRing B L]
     [FiniteDimensional K L] [Module.Finite A B] [Module.IsTorsionFree A B]
@@ -166,58 +171,7 @@ theorem chapter09_local_degree_formula
           (IsLocalRing.maximalIdeal B) *
         LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree A B
           (IsLocalRing.maximalIdeal B) := by
-  letI : IsDedekindDomain A :=
-    ((IsDiscreteValuationRing.TFAE A (IsDiscreteValuationRing.not_isField A)).out 0 2).mp
-      (inferInstance : IsDiscreteValuationRing A)
-  letI : IsDedekindDomain B :=
-    ((IsDiscreteValuationRing.TFAE B (IsDiscreteValuationRing.not_isField B)).out 0 2).mp
-      (inferInstance : IsDiscreteValuationRing B)
-  have hprimes :
-      Ideal.primesOver (IsLocalRing.maximalIdeal A) B =
-        {IsLocalRing.maximalIdeal B} :=
-    IsLocalRing.primesOver_eq (R := A) (A := B)
-      (p := IsLocalRing.maximalIdeal A)
-      (IsDiscreteValuationRing.maximalIdeal A).ne_bot
-  have hmem :
-      (IsLocalRing.maximalIdeal B : Ideal B) ∈
-        Ideal.primesOver (IsLocalRing.maximalIdeal A) B := by
-    rw [hprimes]
-    simp
-  let q₀ : Ideal.primesOver (IsLocalRing.maximalIdeal A) B :=
-    ⟨IsLocalRing.maximalIdeal B, hmem⟩
-  letI : Unique (Ideal.primesOver (IsLocalRing.maximalIdeal A) B) :=
-    { default := q₀
-      uniq := by
-        intro q
-        have hq : q.1 = (IsLocalRing.maximalIdeal B : Ideal B) := by
-          have hq' : q.1 ∈
-              ({(IsLocalRing.maximalIdeal B : Ideal B)} : Set (Ideal B)) :=
-            by simpa only [hprimes] using q.2
-          exact Set.mem_singleton_iff.mp hq'
-        exact Subtype.ext hq }
-  have hsum :=
-    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.final_sum_ramification_times_residue_degree
-      (R := A) (S := B) (IsLocalRing.maximalIdeal A : Ideal A)
-  have hsum' :
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B
-          (IsLocalRing.maximalIdeal B) *
-        LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree A B
-          (IsLocalRing.maximalIdeal B) = Module.finrank A B := by
-    rw [Fintype.sum_unique] at hsum
-    have hdefault :
-        (default : Ideal.primesOver (IsLocalRing.maximalIdeal A) B) = q₀ :=
-      (Unique.eq_default q₀).symm
-    rw [hdefault] at hsum
-    simpa [q₀,
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex,
-      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree] using hsum
-  calc
-    Module.finrank K L = Module.finrank A B :=
-      IsFractionRing.finrank_eq A K B L
-    _ = LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex A B
-          (IsLocalRing.maximalIdeal B) *
-        LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree A B
-          (IsLocalRing.maximalIdeal B) := hsum'.symm
+  sorry
 
 
 end

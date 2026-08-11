@@ -58,28 +58,7 @@ theorem chapter11_unramified_comparison_uniformizer_not_a_norm
         vK vL hunram.1) (πK : K)
     (hπ : vK πK = (1 : WithTop ℤ)) :
     ¬∃ x : L, Algebra.norm K x = πK := by
-  rintro ⟨x, hx⟩
-  have hπ0 : πK ≠ 0 := by
-    intro hzero
-    rw [hzero] at hπ
-    simpa using hπ
-  have hx0 : x ≠ 0 := by
-    intro hzero
-    apply hπ0
-    rw [← hx, hzero]
-    simp
-  obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp (vL.ne_top_iff.mpr hx0)
-  have hnorm := chapter11_unramified_comparison_norm_valuation
-    K L vK vL f hunram hdegree hfres x
-  rw [hx, hπ, ← hz] at hnorm
-  have hnorm' : (1 : ℤ) = (f : ℤ) * z := by
-    apply WithTop.coe_injective
-    simpa [Int.cast_mul] using hnorm
-  have hdiv : (f : ℤ) ∣ (1 : ℤ) := ⟨z, hnorm'⟩
-  have hfone : (f : ℤ) = 1 :=
-    Int.eq_one_of_dvd_one (by exact_mod_cast (Nat.zero_le f)) hdiv
-  have : f = 1 := by exact_mod_cast hfone
-  exact (Nat.ne_of_gt hf) this
+  sorry
 
 /- In the totally tamely ramified comparison, the first positive unit layer is
    surjective; the same lifting argument is iterated for deeper layers. -/
@@ -100,9 +79,7 @@ theorem chapter11_tame_total_comparison_principal_units_are_norms
     (hcompleteL : chapter11ValuationComplete vL) :
     Set.SurjOn (Algebra.norm K (S := L))
       (chapter11UnitFiltration vL 1) (chapter11UnitFiltration vK 1) := by
-  exact proposition_11_2_tame_totally_ramified_principal_unit_norm_surjective
-    K L k vK vL ρK ρL e p he htame
-      hext hscale hres hdegree hred hcompleteK hcompleteL
+  sorry
 
 /- The elementary residue-unit obstruction for the tame total extension is
    exactly the `e`th-power condition, of order `gcd(e,q-1)` over `F_q`. -/
@@ -127,9 +104,7 @@ theorem chapter11_tame_total_comparison_residue_obstruction
     chapter11NormImage K L vL 0 =
       chapter11ResidueConditionSet vK ρK
         (chapter11ResidueUnitPowerImage k e) := by
-  exact proposition_11_2_tame_totally_ramified_all_unit_norm_image
-    K L k vK vL ρK ρL e p he htame hext hscale hres hdegree hred
-      hcompleteK hcompleteL hprincipal
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter11

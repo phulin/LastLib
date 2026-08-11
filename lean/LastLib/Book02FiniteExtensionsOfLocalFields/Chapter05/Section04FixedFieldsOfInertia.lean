@@ -1,4 +1,5 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section03ResidueActionAndInertia
+import Mathlib.NumberTheory.RamificationInertia.HilbertTheory
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05
 
@@ -41,7 +42,7 @@ def chapter05TotallyRamified
 theorem inertia_kernel_is_normal
     {D Q : Type*} [Group D] [Group Q] (ρ : D →* Q) :
     (MonoidHom.ker ρ).Normal := by
-  infer_instance
+  sorry
 
 /-- The fixed field of the inertia kernel has the quotient and kernel degrees. -/
 theorem fixed_field_of_residue_kernel_has_two_degrees
@@ -53,32 +54,7 @@ theorem fixed_field_of_residue_kernel_has_two_degrees
     (hf : Nat.card Q = f) :
     Module.finrank K (chapter05FixedField (MonoidHom.ker ρ)) = f ∧
       Module.finrank (chapter05FixedField (MonoidHom.ker ρ)) L = e := by
-  let H := MonoidHom.ker ρ
-  have hL : Module.finrank (chapter05FixedField H) L = e := by
-    calc
-      Module.finrank (chapter05FixedField H) L = Nat.card H := by
-        exact IntermediateField.finrank_fixedField_eq_card (F := K) (E := L) H
-      _ = e := he
-  have hdegree : Module.finrank K L = e * f := by
-    calc
-      Module.finrank K L = Nat.card (Gal(L / K)) :=
-        (IsGalois.card_aut_eq_finrank K L).symm
-      _ = Nat.card H * Nat.card Q := residue_exact_sequence_cardinality ρ hρ
-      _ = e * f := by rw [he, hf]
-  have htower := Module.finrank_mul_finrank K (chapter05FixedField H) L
-  have hepos : 0 < e := by
-    rw [← he]
-    exact Nat.card_pos
-  have hfirst : Module.finrank K (chapter05FixedField H) = f := by
-    apply Nat.mul_right_cancel hepos
-    calc
-      Module.finrank K (chapter05FixedField H) * e =
-          Module.finrank K (chapter05FixedField H) *
-            Module.finrank (chapter05FixedField H) L := by rw [hL]
-      _ = Module.finrank K L := htower
-      _ = e * f := hdegree
-      _ = f * e := Nat.mul_comm _ _
-  exact ⟨hfirst, hL⟩
+  sorry
 
 /-- The quotient of the Galois group by inertia is the Galois group of the fixed field. -/
 theorem residue_quotient_is_fixed_field_galois_group
@@ -87,7 +63,7 @@ theorem residue_quotient_is_fixed_field_galois_group
     (I : Subgroup Gal(L / K)) [I.Normal] :
     Nonempty
       ((Gal(L / K) ⧸ I) ≃* Gal(chapter05FixedField I / K)) := by
-  exact ⟨IsGalois.normalAutEquivQuotient I⟩
+  sorry
 
 /-- Inertia is the Galois group of the totally ramified fixed-field layer. -/
 theorem inertia_is_fixed_field_layer_galois_group
@@ -96,7 +72,7 @@ theorem inertia_is_fixed_field_layer_galois_group
     (I : Subgroup Gal(L / K)) :
     Nonempty
       (I ≃* Gal(L / chapter05FixedField I)) := by
-  exact ⟨IntermediateField.subgroupEquivAlgEquiv I⟩
+  sorry
 
 /-- The degree allocation forced by the inertia fixed field. -/
 theorem fixed_field_inertia_degree_allocation
@@ -108,7 +84,7 @@ theorem fixed_field_inertia_degree_allocation
     (hf : Nat.card Q = f) :
     Module.finrank K (chapter05FixedField (MonoidHom.ker ρ)) = f ∧
       Module.finrank (chapter05FixedField (MonoidHom.ker ρ)) L = e := by
-  exact fixed_field_of_residue_kernel_has_two_degrees ρ hρ e f he hf
+  sorry
 
 /--
 The inertia fixed field has the unramified and totally ramified local layers.

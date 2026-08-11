@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.Index
+import Mathlib.FieldTheory.Perfect
 import Mathlib.LinearAlgebra.Dimension.Finite
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section05SeveralExtensionsAndTheFundamentalEquality
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.Section02TheCompletedProductTheorem
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07
 
@@ -81,12 +83,16 @@ noncomputable def Chapter07RamificationIndex
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) (vL : Valuation L Γ)
+    [Finite (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL ⧸
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vK).subgroupOf
+        (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL))]
     (hΓ : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vK ≤
       LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10ValueGroup vL) : ℕ :=
   LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10RamificationIndex vK vL hΓ
 
 noncomputable def Chapter07ResidueDegree
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     [LinearOrderedCommGroupWithZero Γ]
     (vK : Valuation K Γ) (vL : Valuation L Γ)
     (h : vK.IsEquiv (vL.comap (algebraMap K L))) : ℕ :=
@@ -102,8 +108,7 @@ theorem chapter07_unramified_degree_eq_residue_degree
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hE : Chapter07UnramifiedExtension E) :
     Module.finrank K L = Module.finrank k l := by
-  rcases hE with ⟨he, _⟩
-  rw [E.degree_eq_ramification_residue, he, one_mul, E.residueDegree_eq]
+  sorry
 
 /-- In the complete discrete valuation setting, the separability assertion uses
 the actual residue fields and the defectless degree equality, rather than only
@@ -117,12 +122,15 @@ theorem chapter07_unramified_is_separable
     (hcomplete : IsAdicComplete
       (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring)
     (hdegree : Module.finrank K L =
-      (IsLocalRing.maximalIdeal vL.valuationSubring).ramificationIdx
-          vK.valuationSubring *
-        (IsLocalRing.maximalIdeal vL.valuationSubring).inertiaDeg
-          vK.valuationSubring)
-    (he : (IsLocalRing.maximalIdeal vL.valuationSubring).ramificationIdx
-          vK.valuationSubring = 1)
+      LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+          vK.valuationSubring vL.valuationSubring
+          (IsLocalRing.maximalIdeal vL.valuationSubring) *
+        LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterResidueDegree
+          vK.valuationSubring vL.valuationSubring
+          (IsLocalRing.maximalIdeal vL.valuationSubring))
+    (he : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.chapterRamificationIndex
+          vK.valuationSubring vL.valuationSubring
+          (IsLocalRing.maximalIdeal vL.valuationSubring) = 1)
     (hresidue : ∀ x : IsLocalRing.ResidueField vL.valuationSubring,
       IsSeparable (IsLocalRing.ResidueField vK.valuationSubring) x) :
     Chapter07FiniteExtensionIsSeparable K L := by
@@ -135,8 +143,7 @@ theorem chapter07_fierce_is_not_unramified
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hE : Chapter07FiercelyRamifiedExtension E) :
     ¬Chapter07UnramifiedExtension E := by
-  intro hU
-  exact hE.2 hU.2
+  sorry
 
 /-- Over a perfect residue field, the separability clause is automatic. -/
 theorem chapter07_perfect_residue_unramified_iff_e_one
@@ -146,21 +153,13 @@ theorem chapter07_perfect_residue_unramified_iff_e_one
     (E : Chapter07FiniteLocalExtensionData K L k l)
     (hk : Chapter07PerfectResidueField k) :
     Chapter07UnramifiedExtension E ↔ E.ramificationIndex = 1 := by
-  constructor
-  · intro hE
-    exact hE.1
-  · intro he
-    refine ⟨he, ?_⟩
-    change ∀ x : l, IsSeparable k x
-    letI : PerfectField k := hk
-    exact Algebra.IsSeparable.isSeparable k
+  sorry
 
 /-- Every finite field is perfect; this statement deliberately has no
 characteristic-zero hypothesis. -/
 theorem chapter07_finite_field_is_perfect
     (k : Type*) [Field k] [Finite k] : Chapter07PerfectResidueField k := by
-  change PerfectField k
-  infer_instance
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter07

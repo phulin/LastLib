@@ -1,5 +1,5 @@
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.Section07NormsAndIdeals
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08
 
@@ -22,6 +22,7 @@ degree is one.  No separability or Galois hypothesis is built into this
 definition. -/
 def chapter08TotallyRamified
     {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (h : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) : Prop :=
@@ -31,6 +32,7 @@ def chapter08TotallyRamified
 residue fields, namely residue degree one for the induced residue extension. -/
 def chapter08ResidueFieldsEqual
     {K L : Type*} [Field K] [Field L] [Algebra K L]
+    [FiniteDimensional K L]
     (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ))
     (h : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL)) : Prop :=
@@ -56,8 +58,8 @@ theorem chapter08_total_ramification_degree_formula
     (hdegree : p.degree = p.ramificationIndex * p.residueDegree)
     (htotal : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified p) :
     p.degree = p.ramificationIndex := by
-  change p.residueDegree = 1 at htotal
-  simpa [htotal] using hdegree
+  rcases htotal with ⟨_, hresidue⟩
+  simpa [hresidue] using hdegree
 
 /-- A root relation of the form used by the equal-characteristic example
 `k((t^(1/p)))/k((t))`. -/
@@ -75,7 +77,7 @@ theorem chapter08_purely_inseparable_radical_is_totally_ramified
     (vL : AddValuation L (WithTop ℤ))
     (h : vK.IsEquiv (AddValuation.comap (algebraMap K L) vL))
     (p : ℕ) (hp : Nat.Prime p) (π : K) (α : L)
-    (hroot : chapter08RadicalPresentation π α p)
+    (_hroot : chapter08RadicalPresentation π α p)
     (hdegree : Module.finrank K L = p)
     (e : ℕ)
     (he_lower : p ≤ e)
@@ -83,8 +85,7 @@ theorem chapter08_purely_inseparable_radical_is_totally_ramified
       e * LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
         vK vL h) :
     chapter08TotallyRamified vK vL h := by
-  change LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
-    vK vL h = 1
+  unfold chapter08TotallyRamified
   let residueDegree :=
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11AdditiveResidueDegree
       vK vL h
@@ -148,11 +149,17 @@ theorem chapter08_total_ramification_inherited_by_subextensions
   have hML : fML ∣ 1 := ⟨fKM, by simpa [Nat.mul_comm] using hmul.symm⟩
   exact ⟨Nat.eq_one_of_dvd_one hKM, Nat.eq_one_of_dvd_one hML⟩
 
+-- SOURCE_ISSUE: residue-degree equality alone does not determine the degree or
+-- ramification index of the base-changed branch.  The profile therefore keeps
+-- the degree and ramification compatibilities explicit instead of making the
+-- preservation statement vacuous.
 /-- The invariant-level interface for the unramified base-change assertion in
 Book §8.1. -/
 def chapter08UnramifiedBaseChangeProfile
     (base p p' : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10FiniteExtensionProfile) : Prop :=
   LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10Unramified base ∧
+    p'.degree = p.degree ∧
+    p'.ramificationIndex = p.ramificationIndex ∧
     p'.residueDegree = p.residueDegree
 
 /-- Book §8.1: unramified base change preserves total ramification once the
@@ -162,10 +169,10 @@ theorem chapter08_total_ramification_preserved_under_unramified_base_change
     (hbase : chapter08UnramifiedBaseChangeProfile base p p')
     (htotal : LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified p) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10TotallyRamified p' := by
-  change p'.residueDegree = 1
-  rcases hbase with ⟨_, hresidue⟩
-  change p.residueDegree = 1 at htotal
-  exact hresidue.trans htotal
+  rcases hbase with ⟨_, hdegree, hramification, hresidue⟩
+  rcases htotal with ⟨htotal_ramification, htotal_residue⟩
+  exact ⟨by simpa [hdegree, hramification] using htotal_ramification,
+    hresidue.trans htotal_residue⟩
 
 end
 

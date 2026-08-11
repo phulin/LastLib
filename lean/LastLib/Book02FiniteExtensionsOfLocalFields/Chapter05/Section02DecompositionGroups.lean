@@ -1,4 +1,8 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05.Section01FromEmbeddingsToLocalSymmetries
+import Mathlib.RingTheory.AdicCompletion.Basic
+import Mathlib.RingTheory.Valuation.RamificationGroup
+import Mathlib.FieldTheory.Galois.IsGaloisGroup
+import Mathlib.Topology.Algebra.Valued.WithVal
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05
 
@@ -21,7 +25,7 @@ theorem chapter05ValuationAction_apply
     [LinearOrderedCommGroupWithZero Γ]
     (σ : Gal(E / F)) (w : Valuation E Γ) (x : E) :
     chapter05ValuationAction σ w x = w (σ.symm x) := by
-  rfl
+  sorry
 
 /-
 Valuation subrings on `E` lying above the chosen valuation ring on `F`.
@@ -50,7 +54,7 @@ theorem decomposition_group_membership_iff_valuation_ring_stable
     {F E : Type*} [Field F] [Field E] [Algebra F E]
     (A : ValuationSubring E) (σ : Gal(E / F)) :
     σ ∈ chapter05DecompositionGroup F A ↔ σ • A = A := by
-  rfl
+  sorry
 
 /-- A decomposition-group automorphism preserves the maximal ideal. -/
 theorem decomposition_group_preserves_maximal_ideal
@@ -58,11 +62,7 @@ theorem decomposition_group_preserves_maximal_ideal
     (A : ValuationSubring E) (σ : chapter05DecompositionGroup F A) :
     ∀ x : A,
       x ∈ IsLocalRing.maximalIdeal A ↔ σ • x ∈ IsLocalRing.maximalIdeal A := by
-  intro x
-  let f : RingAut A := MulSemiringAction.toRingAut _ _ σ
-  change x ∈ IsLocalRing.maximalIdeal A ↔ f x ∈ IsLocalRing.maximalIdeal A
-  rw [IsLocalRing.mem_maximalIdeal, IsLocalRing.mem_maximalIdeal]
-  exact (not_congr (isUnit_map_iff f x)).symm
+  sorry
 
 /-- The same action preserves every power of the maximal ideal. -/
 theorem decomposition_group_preserves_maximal_ideal_powers
@@ -71,29 +71,7 @@ theorem decomposition_group_preserves_maximal_ideal_powers
     ∀ x : A,
       x ∈ (IsLocalRing.maximalIdeal A) ^ n ↔
         σ • x ∈ (IsLocalRing.maximalIdeal A) ^ n := by
-  intro x
-  let f : RingAut A := MulSemiringAction.toRingAut _ _ σ
-  change x ∈ (IsLocalRing.maximalIdeal A) ^ n ↔
-    f x ∈ (IsLocalRing.maximalIdeal A) ^ n
-  have hmap : Ideal.map f
-        ((IsLocalRing.maximalIdeal A) ^ n) =
-      (IsLocalRing.maximalIdeal A) ^ n := by
-    rw [Ideal.map_pow]
-    exact congrArg
-      (fun I : Ideal A => I ^ n) (IsLocalRing.map_ringEquiv_maximalIdeal f)
-  constructor
-  · intro hx
-    have hx' : f x ∈ Ideal.map f
-        ((IsLocalRing.maximalIdeal A) ^ n) := Ideal.mem_map_of_mem f hx
-    rw [hmap] at hx'
-    exact hx'
-  · intro hx
-    have hx' : f x ∈ Ideal.map f
-        ((IsLocalRing.maximalIdeal A) ^ n) := by
-      rw [hmap]
-      exact hx
-    exact (Ideal.apply_mem_of_equiv_iff (f := f)
-      (I := (IsLocalRing.maximalIdeal A) ^ n) (x := x)).mp hx'
+  sorry
 
 /-- A decomposition-group element preserves the corresponding valuation up to equivalence. -/
 theorem decomposition_group_stabilizes_the_valuation
@@ -102,16 +80,7 @@ theorem decomposition_group_stabilizes_the_valuation
     (w : Valuation E Γ) (σ : Gal(E / F))
     (hσ : σ ∈ chapter05DecompositionGroup F w.valuationSubring) :
     (chapter05ValuationAction σ w).IsEquiv w := by
-  rw [Valuation.isEquiv_iff_valuationSubring]
-  have hval : (chapter05ValuationAction σ w).valuationSubring =
-      (σ : Gal(E / F)) • w.valuationSubring := by
-    ext x
-    change w (σ.symm x) ≤ 1 ↔ x ∈ (σ : Gal(E / F)) • w.valuationSubring
-    rw [ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
-    rfl
-  rw [hval]
-  exact decomposition_group_membership_iff_valuation_ring_stable
-    w.valuationSubring σ |>.mp hσ
+  sorry
 
 /-- The Galois group acts transitively on the branches above a base valuation. -/
 theorem galois_group_transitive_on_valuations_above
@@ -143,34 +112,7 @@ theorem branch_count_eq_decomposition_index
           ∃ σ : Gal(E / F), σ • A₁ = A₂) :
     chapter05BranchCount (E := E) v =
       (chapter05DecompositionGroup F A).index := by
-  have hstable : ∀ (σ : Gal(E / F)) (B : ValuationSubring E),
-      B ∈ chapter05ValuationsAbove v →
-        σ • B ∈ chapter05ValuationsAbove v := by
-    intro σ B hB
-    ext x
-    rw [ValuationSubring.mem_comap]
-    rw [ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
-    change (σ⁻¹ : Gal(E / F)) (algebraMap F E x) ∈ B ↔
-      x ∈ v.valuationSubring
-    rw [(σ⁻¹ : Gal(E / F)).commutes x]
-    change x ∈ B.comap (algebraMap F E) ↔ x ∈ v.valuationSubring
-    rw [hB]
-  have horbit : MulAction.orbit (Gal(E / F)) A =
-      chapter05ValuationsAbove v := by
-    ext B
-    constructor
-    · rintro ⟨σ, rfl⟩
-      exact hstable σ A hA
-    · intro hB
-      exact htrans hA hB
-  calc
-    chapter05BranchCount (E := E) v =
-        (chapter05ValuationsAbove v).ncard :=
-      Nat.card_coe_set_eq _
-    _ = (MulAction.orbit (Gal(E / F)) A).ncard := by rw [horbit]
-    _ = (MulAction.stabilizer (Gal(E / F)) A).index :=
-      (MulAction.index_stabilizer (Gal(E / F)) A).symm
-    _ = (chapter05DecompositionGroup F A).index := rfl
+  sorry
 
 /-- A completion of a valued field, using Mathlib's valuation completion. -/
 abbrev chapter05ValuationCompletion
@@ -199,12 +141,13 @@ theorem decomposition_group_is_completion_galois_group
     Nonempty
       (chapter05DecompositionGroup F w.valuationSubring ≃*
         Gal(w.Completion / v.Completion)) := by
-  letI := hD
-  exact ⟨IsGaloisGroup.mulEquivAlgEquiv
-    (chapter05DecompositionGroup F w.valuationSubring)
-    (v.Completion) (w.Completion)⟩
+  sorry
 
-/-- Over a complete base, the unique branch makes the decomposition group all of `G`. -/
+/- SOURCE_ISSUE: Completeness gives uniqueness of the valuation branch only up
+   to Mathlib's valuation equivalence.  Literal equality for the selected
+   normalized valuation therefore requires the explicit extension and
+   normalized-uniqueness hypotheses below. -/
+/- Over a complete base, the unique branch makes the decomposition group all of `G`. -/
 theorem complete_base_decomposition_group_eq_galois_group
     {K L Γ : Type*} [Field K] [Field L] [Algebra K L]
     [LinearOrderedCommGroupWithZero Γ] [FiniteDimensional K L] [IsGalois K L]
@@ -214,26 +157,7 @@ theorem complete_base_decomposition_group_eq_galois_group
       v.valuationSubring)
     (hunique : chapter05UniqueNormalizedValuationExtension v w) :
     chapter05DecompositionGroup K w.valuationSubring = ⊤ := by
-  rw [eq_top_iff]
-  intro σ
-  intro _
-  apply (decomposition_group_membership_iff_valuation_ring_stable
-    w.valuationSubring σ).mpr
-  have hcomap :
-      (chapter05ValuationAction σ w).comap (algebraMap K L) =
-        w.comap (algebraMap K L) := by
-    ext x
-    change w (σ.symm (algebraMap K L x)) = w (algebraMap K L x)
-    rw [σ.symm.commutes x]
-  have hunique' : chapter05ValuationAction σ w = w :=
-    hunique _ (by rw [hcomap]; exact hext)
-  have hval : (chapter05ValuationAction σ w).valuationSubring =
-      (σ : Gal(L / K)) • w.valuationSubring := by
-    ext x
-    change w (σ.symm x) ≤ 1 ↔ x ∈ (σ : Gal(L / K)) • w.valuationSubring
-    rw [ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
-    rfl
-  rw [← hval, hunique']
+  sorry
 
 /-- A convenient pointwise version of the preceding local conclusion. -/
 theorem complete_base_every_galois_automorphism_preserves_the_branch
@@ -245,9 +169,7 @@ theorem complete_base_every_galois_automorphism_preserves_the_branch
       v.valuationSubring)
     (hunique : chapter05UniqueNormalizedValuationExtension v w) :
     ∀ σ : Gal(L / K), σ ∈ chapter05DecompositionGroup K w.valuationSubring := by
-  intro σ
-  rw [complete_base_decomposition_group_eq_galois_group v w hext hcomplete hunique]
-  exact Subgroup.mem_top σ
+  sorry
 
 /-- Stabilization of the valuation-center ideal under a compatible symmetry. -/
 theorem decomposition_stabilizes_the_integral_closure_branch
@@ -260,28 +182,7 @@ theorem decomposition_stabilizes_the_integral_closure_branch
     (hcompat : ∀ x : B, ι (τ x) = σ (ι x))
     (hσ : chapter05ValuationPreserving w σ) :
     chapter05BranchIdealStabilized P τ := by
-  unfold chapter05BranchIdealStabilized
-  ext x
-  have hmem : x ∈ Ideal.map τ.toRingHom P ↔
-      ∃ y, y ∈ P ∧ τ.toRingHom y = x := by
-    exact Ideal.mem_map_iff_of_surjective τ.toRingHom τ.surjective
-  rw [hmem]
-  constructor
-  · rintro ⟨y, hy, rfl⟩
-    apply (hcenter (τ y)).mpr
-    rw [hcompat y, hσ]
-    exact (hcenter y).mp hy
-  · intro hx
-    refine ⟨τ.symm x, ?_, by simp⟩
-    apply (hcenter (τ.symm x)).mpr
-    have hcompat' := hcompat (τ.symm x)
-    have hval : w (ι x) = w (ι (τ.symm x)) := by
-      calc
-        w (ι x) = w (σ (ι (τ.symm x))) := by
-          rw [← hcompat']
-          simp
-        _ = w (ι (τ.symm x)) := hσ _
-    exact hval ▸ (hcenter x).mp hx
+  sorry
 
 end
 end LastLib.Book02FiniteExtensionsOfLocalFields.Chapter05

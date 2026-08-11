@@ -1,4 +1,5 @@
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter08
+import LastLib.Book01ValuationsDVRsAndCompletions.Chapter05.Section01SuccessivePrecision
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter11
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter12
 
@@ -40,7 +41,7 @@ def chapter10IdealUnitFiltration
     intro u hu
     change ((↑u⁻¹ : Rˣ) : R) - 1 ∈ I ^ n at *
     have hinv : ((↑u⁻¹ : Rˣ) : R) * (u : R) = 1 := by
-      simpa using congrArg (fun z : Rˣ => (z : R)) u.inv_val
+      simp
     rw [show ((↑u⁻¹ : Rˣ) : R) - 1 =
         -((↑u⁻¹ : Rˣ) : R) * ((u : R) - 1) by
           rw [neg_mul, mul_sub, hinv]
@@ -75,10 +76,15 @@ def chapter10UnitReduction {L : Type*} [Field L]
   Units.map (IsLocalRing.residue A).toMonoidHom
 
 /-- The additive quotient of the `n`th and `(n+1)`st ideal layers. -/
+def chapter10IdealLayerDenominator
+    (R : Type*) [CommRing R] (I : Ideal R) (n : ℕ) :
+    Submodule R (↥(I ^ n : Ideal R)) :=
+  Submodule.comap (I ^ n : Submodule R R).subtype
+    (I ^ (n + 1) : Submodule R R)
+
 abbrev Chapter10IdealLayer
     (R : Type*) [CommRing R] (I : Ideal R) (n : ℕ) : Type _ :=
-  (I ^ n : Ideal R) ⧸
-    (I ^ (n + 1) • ⊤ : Submodule R (I ^ n : Ideal R))
+  (↥(I ^ n : Ideal R)) ⧸ chapter10IdealLayerDenominator R I n
 
 /-- The multiplicative quotient `Uⁿ/Uⁿ⁺¹` inside the ring-of-integers units. -/
 abbrev Chapter10UnitLayerQuotient {L : Type*} [Field L]
