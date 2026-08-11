@@ -6,6 +6,7 @@
    - [Why one coefficient prime is not enough](#11-why-one-coefficient-prime-is-not-enough)
    - [The three levels of compatibility](#12-the-three-levels-of-compatibility)
    - [Standing conventions](#13-standing-conventions)
+   - [The prerequisite boundary](#14-the-prerequisite-boundary)
 2. [The two number fields and their places](#2-the-two-number-fields-and-their-places)
    - [Base field versus coefficient field](#21-base-field-versus-coefficient-field)
    - [Finite coefficient places](#22-finite-coefficient-places)
@@ -65,11 +66,12 @@
     - [A worked elliptic-curve diagnostic](#122-a-worked-elliptic-curve-diagnostic)
     - [Abelian varieties and coefficient factors](#123-abelian-varieties-and-coefficient-factors)
     - [Comparison with an automorphic system](#124-comparison-with-an-automorphic-system)
-13. [Potential modularity and the field where the system lives](#13-potential-modularity-and-the-field-where-the-system-lives)
+13. [Potential modularity and descent to the base field](#13-potential-modularity-and-descent-to-the-base-field)
     - [The exact input inherited from potential modularity](#131-the-exact-input-inherited-from-potential-modularity)
     - [Constructing the system after restriction](#132-constructing-the-system-after-restriction)
     - [Residual potential modularity is not enough](#133-residual-potential-modularity-is-not-enough)
     - [Why descent is a new theorem](#134-why-descent-is-a-new-theorem)
+    - [Effective Brauer descent](#135-effective-brauer-descent)
 14. [Coefficient descent and conjugate systems](#14-coefficient-descent-and-conjugate-systems)
     - [Trace fields and enlargement](#141-trace-fields-and-enlargement)
     - [Galois conjugates](#142-galois-conjugates)
@@ -91,6 +93,7 @@
     - [Cuspidality and its first failure](#172-cuspidality-and-its-first-failure)
     - [Descent with a compatible arithmetic extension](#173-descent-with-a-compatible-arithmetic-extension)
     - [Automorphic induction in a solvable diagram](#174-automorphic-induction-in-a-solvable-diagram)
+    - [Descent beyond solvable towers](#175-descent-beyond-solvable-towers)
 18. [Changing the coefficient prime](#18-changing-the-coefficient-prime)
     - [What compatibility supplies](#181-what-compatibility-supplies)
     - [What Chebotarev adds](#182-what-chebotarev-adds)
@@ -173,6 +176,42 @@ Local reciprocity sends a uniformizer to arithmetic Frobenius. Consequently the 
 We use covariant Tate modules. Our Hodge--Tate convention assigns weight $1$ to $\chi_\ell$. Thus an elliptic curve with good reduction has labelled Hodge--Tate multiset $\{0,1\}$. A Tate twist by $(r)$ adds $r$ to every Hodge--Tate weight and multiplies arithmetic-Frobenius eigenvalues away from $\ell$ by $q_v^r$.
 
 All representations are continuous. A characteristic-zero member of a compatible system will normally be required to be semisimple. This is not a cosmetic choice: good Frobenius data determine only semisimplification. When a naturally occurring representation is not known to be semisimple, the system records its semisimplification unless extension data are separately retained.
+
+### 1.4 The prerequisite boundary
+
+Two established constructions form the input boundary for this book. The first attaches a pure rank-two family to a parallel-weight-two automorphic packet. In its geometric-Frobenius normalization it supplies a common Hecke polynomial, determinant, coefficient conjugates, and the full Frobenius-semisimple Weil--Deligne pair at every place covered by the established local geometric package. It also supplies stable lattices place by place, but no canonical lattice shared across coefficient places and no automatic finite-flat conclusion at the moving coefficient prime.
+
+The normalization change is exact. Suppose that source writes geometric Frobenius $\Phi_v$ and
+
+$$
+\det(X-\rho_\lambda(\Phi_v))
+=X^2-t_vX+q_vs_v,
+\qquad
+\det\rho_\lambda=\chi_\lambda^{-1}\eta_\lambda, \tag{1.3}
+$$
+
+with $s_v=\eta(\Phi_v)$. Put
+
+$$
+\rho_\lambda^{\mathrm{arith}}=\rho_\lambda^\vee,
+\qquad
+\psi=\eta^{-1}. \tag{1.4}
+$$
+
+Because arithmetic Frobenius is $\Phi_v^{-1}$, its action on $\rho_\lambda^\vee$ has the same eigenvalues as $\rho_\lambda(\Phi_v)$. Thus the polynomial in (1.3) remains $X^2-t_vX+q_vs_v$, while
+
+$$
+\det\rho_\lambda^{\mathrm{arith}}
+=\chi_\lambda\psi_\lambda,
+\qquad
+\psi(\operatorname{Frob}_v)=s_v.
+$$
+
+Dualizing the common local pair, with the dual monodromy operator, transports strict compatibility and does not alter conductor or purity weight in this simultaneous Frobenius conversion. This is the packet family used below; no coefficient or local theorem is added during the change of convention.
+
+The second input begins with a chosen two-dimensional representation that becomes automorphic over a controlled totally real Galois extension. It supplies compatible automorphic systems on elementary fixed fields, an effective Brauer relation, coefficient descent of the multiplicity-one constituent to one completion of one number field, and algebraic local cancellation. Its output is an honest pure strictly compatible rank-two system—in the full Frobenius-semisimple Weil--Deligne sense fixed below—over the original base field, containing the chosen representation at a distinguished coefficient place. This is stronger than potential automorphy over the top field and stronger than a virtual identity in a Grothendieck group.
+
+The exact boundary matters. From the first input we may use the common packet polynomials, purity, determinant, and verified local pairs, but not an unproved all-place comparison. From the second we may use actual base-field members, common local pairs, and independence of the Brauer presentation, but not integral cancellation, a coherent global lattice, or finite-flat structures at newly chosen coefficient places. Everything else developed below is either proved here from these inputs or stated with its additional hypotheses visible.
 
 ## 2. The two number fields and their places
 
@@ -550,7 +589,7 @@ The local Euler polynomial only uses a suitable Frobenius action on an invariant
 
 The terminology in the literature is not completely uniform, so we fix it explicitly.
 
-A weakly compatible system $\mathcal R$ is **strongly compatible away from coefficient primes** if, for every finite place $v$ of $F$, there is an algebraic Frobenius-semisimple Weil--Deligne pair
+A weakly compatible system $\mathcal R$ is **strictly compatible away from coefficient primes**, or equivalently **strongly compatible** in this book, if, for every finite place $v$ of $F$, there is an algebraic Frobenius-semisimple Weil--Deligne pair
 
 $$
 D_v=(r_v,N_v) \tag{4.11}
@@ -565,7 +604,7 @@ $$
 
 The field in (4.11) may be enlarged once to define all matrix coefficients at the finitely many bad places. If every $D_v$ is defined over $E$ itself, we call the system **$E$-rationally strongly compatible**.
 
-A system is **fully strictly compatible at $v$** if (4.12) holds before Frobenius-semisimplification, after the exact choices needed to compare full parameters have been made. This stronger condition is useful only when the nonsemisimple Frobenius extension is itself canonical. Most arithmetic applications require the Frobenius-semisimple pair with $N$ retained.
+A system is **unsemisimplified-locally compatible at $v$** if (4.12) holds before Frobenius-semisimplification, after the exact choices needed to compare full parameters have been made. This stronger condition is useful only when the nonsemisimple Frobenius extension is itself canonical. Most arithmetic applications require strict compatibility in the preceding sense: the Frobenius-semisimple pair with $N$ retained.
 
 Strong compatibility immediately makes the following data independent of $\lambda$ for $\lambda\nmid v$:
 
@@ -576,7 +615,7 @@ $$
 
 as well as the local Euler polynomial. Weak compatibility supplies none of these conclusions at $v\in S$.
 
-One also encounters the term **strictly compatible system** for a weak system whose local Euler polynomials on inertia invariants are independent of $\lambda$. That condition is weaker than (4.12) if it does not include the inertial type and $N$. In this book “strong” always means the full pair displayed in (4.11).
+One also encounters the term **strictly compatible system** for a weak system whose local Euler polynomials on inertia invariants are independent of $\lambda$. That condition is weaker than (4.12) if it does not include the inertial type and $N$. Here both “strict” and “strong” mean the full pair displayed in (4.11); a statement about Euler factors alone will be named explicitly as such.
 
 ### 4.5 Principal series and Steinberg parameters
 
@@ -1656,7 +1695,7 @@ Equation (12.11) identifies the global rational representations. It does not ide
 
 When both sides have proved strong local compatibility, their common Weil--Deligne parameters agree with $D(\pi_v)$ at every $v\nmid\lambda$. This is a consistency theorem among geometry, automorphic local correspondence, and Chebotarev. The local comparison input cannot be deleted merely because the good-prime comparison is dense.
 
-## 13. Potential modularity and the field where the system lives
+## 13. Potential modularity and descent to the base field
 
 ### 13.1 The exact input inherited from potential modularity
 
@@ -1761,7 +1800,7 @@ Suppose $F^{\mathrm{pm}}/F$ is Galois for the moment. The system attached to $\P
 
 If the extension is solvable, cyclic descent can be attempted one layer at a time. Each layer has a finite twisting ambiguity. Choices at one layer must be invariant at the next. A compatible representation already defined on $G_F$ can select the correct twists, but a representation at only one coefficient prime need not select coherent descents for every other member without a compatibility argument.
 
-If $F^{\mathrm{pm}}/F$ is not solvable or not Galois, the solvable descent theorem does not apply directly. Passing to a Galois closure changes the field and can destroy residual image conditions. Brauer induction in the next book is designed to organize such fields, but it needs the exact compatible-system and field-intersection record supplied here.
+If $F^{\mathrm{pm}}/F$ is not solvable or not Galois, the solvable descent theorem does not apply directly. Passing to a Galois closure changes the field and can destroy residual image conditions. A different mechanism is available only when one has a controlled Galois top, compatible systems on the necessary elementary fixed fields, and exact overlap identities on their intersections. Effective Brauer descent, treated in the next section, uses precisely that stronger ledger.
 
 Potential modularity should therefore be recorded as
 
@@ -1772,6 +1811,78 @@ $$
 $$
 
 not as an unnamed system over $F$.
+
+### 13.5 Effective Brauer descent
+
+Potential automorphy over a top field and a compatible system over the original field are separated by three obstructions. A Brauer expression is initially virtual; an effective constituent obtained over an algebraic closure may have a Schur obstruction; and rational cancellation need not preserve any chosen lattice. The established base-field descent theorem removes the first two obstructions, while deliberately leaving the third in place.
+
+Here is the reusable form of that theorem. Let $M/F$ be a finite Galois extension with group $\Gamma$. Suppose that for every elementary subgroup $H\leq\Gamma$, with fixed field $F_H=M^H$, there is a pure strongly compatible rank-two automorphic system
+
+$$
+\mathcal R_H=\{r_{H,\lambda}:G_{F_H}\to
+\operatorname{GL}_2(E_\lambda)\}_\lambda. \tag{13.9}
+$$
+
+Assume the following data have been proved.
+
+1. There is an integral Brauer relation
+
+   $$
+   1_\Gamma=\sum_i n_i
+   \operatorname{Ind}_{H_i}^{\Gamma}\theta_i, \tag{13.10}
+   $$
+
+   where the $H_i$ are elementary and the $\theta_i$ are finite-order characters defined over one number field $E$.
+2. If $D\leq H$ is an elementary intersection subgroup occurring in a Mackey calculation, then the restriction of the selected system on $F_H$ to $F_D$ is the selected system on $F_D$, after scalar extension. Equality only after restriction to $G_M$ is not enough, because two extensions to $G_{F_D}$ can differ by a character of $D$.
+3. At a distinguished coefficient place $\lambda_0$, the signed induced class associated with (13.10) is one prescribed absolutely irreducible rank-two representation $r$ of $G_F$.
+4. The character-norm calculation for the signed class is coefficient independent and has norm one, and the combined norm-zero comparison applies to any two allowable Brauer relations. The determinant-of-induction calculation, including permutation determinants and the transferred character squares, yields one prescribed compatible determinant character. Locally, the analogous Mackey class includes finite inertia, Frobenius return maps, and monodromy, not only Euler factors or conductors.
+
+Write $n_i=n_i^+-n_i^-$ and form actual semisimple representations
+
+$$
+R_\lambda^\pm=
+\bigoplus_i
+\left(
+\operatorname{Ind}_{G_{F_{H_i}}}^{G_F}
+(r_{H_i,\lambda}\otimes\theta_{i,\lambda})
+\right)^{\oplus n_i^\pm}. \tag{13.11}
+$$
+
+The norm-one theorem says that over an algebraic closure
+
+$$
+[R_\lambda^+]-[R_\lambda^-]=[S_\lambda] \tag{13.12}
+$$
+
+for one absolutely irreducible rank-two representation $S_\lambda$. This is effectivity, but coefficient descent still has to be proved. Decompose $R_\lambda^\pm$ into simple $E_\lambda$-modules. After scalar extension, every simple module contributes a complete Galois orbit of absolutely irreducible constituents, each with common multiplicity equal to its Schur index. In (13.12) the constituent $S_\lambda$ has coefficient one and every conjugate constituent has coefficient zero. Its Galois orbit must therefore be a singleton, and its Schur index must divide one. Hence $S_\lambda$ has an $E_\lambda$-model $r_\lambda$, uniquely characterized by
+
+$$
+R_\lambda^+\simeq r_\lambda\oplus R_\lambda^-. \tag{13.13}
+$$
+
+This argument simultaneously proves continuity and independence of the positive-minus-negative presentation. Applying it to two Brauer relations and using the combined norm-zero comparison proves independence of the relation itself.
+
+At a good place $v$, taking determinants of $1-T\operatorname{Frob}_v$ in (13.13) turns the signed product of induced local polynomials into the characteristic polynomial of the actual rank-two complement. At a bad place, apply the Weil--Deligne construction to (13.13). The algebraic local Mackey objects satisfy
+
+$$
+\mathscr D_{v,E}^+
+\simeq D_v\oplus\mathscr D_{v,E}^-, \tag{13.14}
+$$
+
+after a single finite coefficient enlargement for the finitely many bad places. Krull--Schmidt cancellation makes the rank-two complement $D_v$ independent of $\lambda$ and of the Brauer relation. Thus the family $\{r_\lambda\}_\lambda$ is weakly compatible, and it is strongly compatible wherever the elementary-field inputs provide the required full local pairs.
+
+**Theorem 13.1 (effective descent of a potentially automorphic family).** Under hypotheses 1--4 above, there is an $E$-rational rank-two compatible system
+
+$$
+\mathcal R_F=\{r_\lambda:G_F\to
+\operatorname{GL}_2(E_\lambda)\}_\lambda \tag{13.15}
+$$
+
+whose distinguished member is $r$ and whose common good polynomials, prescribed determinant, purity, and proved local Weil--Deligne pairs are independent of the Brauer presentation. Its restriction data are compatible with the elementary-field ledger wherever the stated overlap and base-change identities identify them. If the local elementary systems are strictly compatible at every finite place and the local Mackey cancellation applies there, then so is $\mathcal R_F$.
+
+**Proof.** Equations (13.11)--(13.13) give actual continuous rank-two members over every $E_\lambda$ and show coefficient descent. Induced Frobenius-block determinants give the common good polynomials. Their restriction to the top-field polynomial ledger gives purity: if a Frobenius root becomes its $f$-th power over a residue-degree-$f$ place, weight one upstairs gives absolute value $q_v^{f/2}$, so the original root has absolute value $q_v^{1/2}$. The assumed determinant-transfer calculation gives the prescribed compatible determinant. Equation (13.14) gives the common local pair and hence conductor, type, and monodromy independence. The norm-zero comparison for two relations and faithful descent of intertwiners prove presentation independence. The distinguished tensor identity identifies $r_{\lambda_0}$ with $r$. $\square$
+
+The theorem does not descend lattices through (13.13). An isomorphism over $E_\lambda$ can have denominators, the intersection of $r_\lambda$ with a positive lattice need not be saturated, and reduction need not preserve the direct sum. Each member has some stable lattice by compactness, while the distinguished member retains its originally selected lattice. New finite-flat quotients, self-dual lattices, and residual extension classes require separate integral arguments.
 
 ## 14. Coefficient descent and conjugate systems
 
@@ -2208,6 +2319,32 @@ For higher cyclic induction of a character, dimension becomes the extension degr
 
 These facts give the safe descent rule: restrict full local parameters on ascent; use an actual compatible extension or a proved recursive descent datum on descent; check self-twists at every quadratic layer; and never use induction without auditing its new dimension.
 
+### 17.5 Descent beyond solvable towers
+
+The failure of a solvable tower does not license an induction of one two-dimensional top-field member: that induction has dimension multiplied by the degree. Effective Brauer descent instead combines many induced systems in a signed relation and proves that their virtual difference is one actual rank-two constituent.
+
+The logical order is indispensable:
+
+$$
+\begin{array}{c}
+\text{compatible systems on elementary fixed fields}
+\\ \Downarrow\ \text{intersection identities and Mackey theory}
+\\
+\text{one coefficient-independent signed class}
+\\ \Downarrow\ \text{character norm one}
+\\
+\text{one effective rank-two constituent over an algebraic closure}
+\\ \Downarrow\ \text{multiplicity-one Schur descent}
+\\
+\text{one }E_\lambda\text{-representation for every }\lambda
+\\ \Downarrow\ \text{local Krull--Schmidt cancellation}
+\\
+\text{one compatible system over the base field.}
+\end{array} \tag{17.8}
+$$
+
+Skipping the intersection identities makes the character norm wrong: restrictions that agree only over the top field can differ on an intersection field by quotient characters. Skipping effectivity leaves a virtual object. Skipping multiplicity-one descent leaves representations over unrelated algebraic closures. Skipping local cancellation retains good traces but loses inertia and monodromy. Section 13.5 proves the resulting base-field theorem and also explains why none of these rational steps performs integral cancellation.
+
 ## 18. Changing the coefficient prime
 
 ### 18.1 What compatibility supplies
@@ -2495,7 +2632,7 @@ $$
 
 an automorphic representation at the top, a compatible arithmetic representation over $F$ or a recursive chain of descent data, and the self-twist group at every step. The system supplies common polynomials and local parameters throughout the tower. It does not supply the coherent downward choices by itself.
 
-For a nonsolvable potential-modularity field, the exact field and disjointness data are passed forward unchanged. A later Brauer-induction argument can combine systems over solvable subextensions. It must not assume that the original potential-modularity extension was solvable or that its Galois closure preserves residual images.
+For a nonsolvable potential-modularity field, the exact field and disjointness data are passed forward unchanged unless the effective descent hypotheses of Section 13.5 have actually been verified. When they are verified, the elementary fixed-field systems, intersection identities, character-norm calculation, multiplicity-one coefficient descent, and local cancellation produce an honest base-field system. Without any one of those ingredients, the output remains the top-field system (13.8); invariance of traces is not a substitute.
 
 ### 20.3 The changing-prime interface
 
@@ -2513,14 +2650,25 @@ The common polynomials permit two uses of Chebotarev. They identify the new memb
 
 ### 20.4 Final theorem
 
-The entire book can be exported as one theorem with two entry routes.
+The entire book can be exported as one theorem with three entry routes.
+
+Before stating it, the dependency boundary can be audited in one table.
+
+| established input | exact use here | conclusion not imported |
+|---|---|---|
+| weight-two packet compatible-system theorem | members over coefficient completions, common packet polynomials, determinant, purity, coefficient transport, and the verified Frobenius-semisimple local pairs | no unverified bad-place pair, canonical cross-prime lattice, or coefficient-prime finite-flat model |
+| effective base-field descent theorem | elementary-field systems, overlap identities, norm-one effectivity, multiplicity-one coefficient descent, common local Mackey complements, and the distinguished original member | no integral Brauer cancellation, new finite-flat lattice, or automatic residual extension |
+| ordinary semisimple representation theory developed in Chapters 2--9 | Chebotarev uniqueness, scalar operations, restriction, induction, stable lattices, and residual semisimplification | no residual large-image theorem or moving-prime integral comparison |
+
+Thus the first input is neither weakened by forgetting its full local pair nor strengthened to coefficient-prime comparison. The second is neither weakened to a virtual family nor strengthened to integral cancellation. The remaining image and changing-prime assertions retain their explicit additional hypotheses.
 
 **Theorem 20.1 (arithmetic family for descent and changing prime).** Let $F$ be totally real. Suppose either:
 
 1. **Automorphic route:** $\pi$ is a regular algebraic cuspidal representation of $\operatorname{GL}_2(\mathbf A_F)$ satisfying the curve-realization, multiplicity, coefficient-field, local--global, coefficient-prime comparison, and purity hypotheses of Theorems 10.1--10.2; or
 2. **Potential-modularity route:** one representation $\rho$ satisfies every hypothesis of the controlled characteristic-zero potential-modularity theorem listed in Section 13.1, producing a finite totally real $F^{\mathrm{pm}}/F$ and an automorphic $\Pi$ with the identity (13.3). In this route replace $F$ below by $F^{\mathrm{pm}}$, retain the full field-control ledger, and record the exact local--global comparison range proved for $\Pi$. Full strong compatibility at every finite place is included only if the all-place hypothesis of Theorem 10.2 is also available.
+3. **Descended potential-automorphy route:** in addition to the second route, there is a controlled finite Galois top together with the elementary fixed-field automorphic systems, intersection identities, effective Brauer relation, norm-one theorem, and algebraic local Mackey data of Section 13.5. In this route the base field remains $F$, and the distinguished member of the descended system is the original representation $\rho$.
 
-Then the relevant automorphic representation produces a rank-two arithmetic family (20.1) with the following properties.
+Then the relevant automorphic construction—directly over the base field, over the potential-automorphy field, or through effective descent—produces a rank-two arithmetic family (20.1) with the following properties.
 
 1. Every finite coefficient place has a continuous semisimple member, and all members have the common algebraic arithmetic-Frobenius polynomials outside one finite set.
 2. The determinant is $\psi_\lambda\chi_{\ell(\lambda)}^m$, the system is polarized, totally odd, and pure of weight $m$ under the stated hypotheses.
@@ -2529,17 +2677,17 @@ Then the relevant automorphic representation produces a rank-two arithmetic fami
 5. Stable lattices exist. Their semisimplified reductions are canonical, their full reductions need not be, and their residual determinants are the reductions of the compatible determinant.
 6. Coefficient extension, twists, duals, the tensor operations of Chapter 8, and restriction preserve compatibility with the stated changes of rank, roots, weights, and local parameters. Induction has the polynomial (9.9) and multiplies dimension by the extension degree.
 7. If the non-CM, inner-twist, monodromy, and integral-specialization hypotheses of Theorem 16.1 hold, residual members are absolutely irreducible and adequate outside a finite set. In the CM case, the exact induced description (16.5)--(16.9) replaces this conclusion.
-8. Solvable base change agrees with restriction of the family. Cuspidality is subject to the stepwise self-twist criterion. Descent requires a compatible cyclic descent chain or an extending arithmetic representation; potential modularity alone gives no descent to the original field.
+8. Solvable base change agrees with restriction of the family. Cuspidality is subject to the stepwise self-twist criterion. Solvable descent requires a compatible cyclic descent chain or an extending arithmetic representation. Beyond the solvable case, descent is available under the effective Brauer hypotheses of Section 13.5; potential modularity alone still gives no descent to the original field.
 9. Once the uniform integral models and nonzero certificates required by hypothesis 4 of Theorem 18.1 have been supplied, excluding their finite integral-local set permits the residual local conclusions of that theorem at a new coefficient prime. Without those certificates, one may still transfer the rational algebraic invariants and use Chebotarev for automorphic identification, but no uniform residual local extension or conductor claim follows. Adequacy holds uniformly outside a further finite set only under Theorem 16.1; otherwise it must be verified at the particular new place.
 
-**Proof.** The automorphic route is Theorems 10.1--10.2 together with Chapters 6--12 and 14--18. The potential-modularity route first invokes the exact output (13.3), then applies Theorem 10.1 and precisely the proved range of Theorem 10.2 over $F^{\mathrm{pm}}$; no local comparison and no descent is inserted. The residual, functorial, image, base-change, and switching clauses are respectively Theorems 7.1, the calculations of Chapters 8--9, Theorem 16.1 and Corollary 16.2, the solvable analysis of Chapter 17, and Theorem 18.1. $\square$
+**Proof.** The automorphic route is Theorems 10.1--10.2 together with Chapters 6--12 and 14--18. The potential-modularity route first invokes the exact output (13.3), then applies Theorem 10.1 and precisely the proved range of Theorem 10.2 over $F^{\mathrm{pm}}$; no local comparison and no descent is inserted. The descended route applies Theorem 13.1: character-norm effectivity produces one constituent, multiplicity one kills its Schur obstruction, induced Frobenius determinants give the common good polynomials, and local Krull--Schmidt cancellation gives the common proved Weil--Deligne pairs. The residual, functorial, image, base-change, and switching clauses are respectively Theorem 7.1, the calculations of Chapters 8--9, Theorem 16.1 and Corollary 16.2, Chapter 17, and Theorem 18.1. $\square$
 
 ### 20.5 Conclusion
 
 A compatible system is an arithmetic family because its common information exists before completion. The base field supplies places, inertia, and Frobenius. The coefficient field supplies algebraic traces and the completions in which matrices live. Weak compatibility joins the members at good Frobenius classes; strong compatibility joins their full Frobenius-semisimple Weil--Deligne pairs, including monodromy; labelled Hodge data join the moving coefficient-prime places through embeddings.
 
-The distinctions are as important as the identifications. Chebotarev determines semisimplification, not extensions or lattices. A stable lattice has a canonical residual semisimplification, not a canonical residual extension. Purity and algebraicity require weight and rationality theorems. Residual irreducibility and adequacy require image theorems and admit exceptional primes. Restriction can split an irreducible dihedral member, while induction changes dimension. Potential modularity constructs the family over the controlled totally real extension where automorphy was proved; it does not descend the family to the original field.
+The distinctions are as important as the identifications. Chebotarev determines semisimplification, not extensions or lattices. A stable lattice has a canonical residual semisimplification, not a canonical residual extension. Purity and algebraicity require weight and rationality theorems. Residual irreducibility and adequacy require image theorems and admit exceptional primes. Restriction can split an irreducible dihedral member, while induction changes dimension. Potential modularity by itself constructs the family only over the controlled totally real extension where automorphy was proved. Descent to the original field is a separate achievement: in the solvable case coherent cyclic choices may suffice, while in the nonsolvable controlled case effectivity, multiplicity-one coefficient descent, and local cancellation are all required.
 
-Once those boundaries are respected, changing the coefficient prime becomes exact rather than heuristic. One passes through common algebraic Frobenius polynomials, identifies the new member by Chebotarev, transports strong local data away from the new coefficient prime, reads labelled Hodge data at that prime, and invokes a separate image theorem for its reduction. Solvable descent is similarly exact when a compatible arithmetic extension selects the twisting choices at every cyclic layer.
+Once those boundaries are respected, changing the coefficient prime becomes exact rather than heuristic. One passes through common algebraic Frobenius polynomials, identifies the new member by Chebotarev, transports strong local data away from the new coefficient prime, reads labelled Hodge data at that prime, and invokes a separate image theorem for its reduction. Solvable descent is exact when a compatible arithmetic extension selects the twisting choices at every cyclic layer. Effective Brauer descent is exact for a controlled nonsolvable top because it turns a signed family into one actual coefficient-descended rank-two member before any prime is changed.
 
-The resulting ledger is the required endpoint: an automorphic or potentially automorphic rank-two family indexed by coefficient places, with common polynomials, determinant, purity, polarization, local parameters, Hodge labels, integral warnings, residual exceptional set, and an honest field-of-descent status. It is now suitable both for descent by induction identities and for a controlled change from one coefficient prime to another.
+The resulting ledger is the required endpoint: an automorphic, potentially automorphic top-field, or effectively descended base-field rank-two family indexed by coefficient places, with common polynomials, determinant, purity, polarization, local parameters, Hodge labels, integral warnings, residual exceptional set, and an honest field-of-descent status. It is now suitable both for descent by induction identities and for a controlled change from one coefficient prime to another.
