@@ -101,7 +101,7 @@ and let $G_k$ act arithmetically. Thus over a finite field arithmetic Frobenius 
 
 If an argument requires all closed points to be rational, we pass further from $k^s$ to an algebraic closure $\Omega$. The extension $\Omega/k^s$ is purely inseparable. It is a universal homeomorphism on base-changed schemes and therefore changes neither prime-to-characteristic étale cohomology nor the $G_k$-action; geometric properties such as properness, smoothness, dimension, and ampleness may also be checked after this faithfully flat extension. This small distinction matters over an imperfect separably closed field.
 
-Three bodies of earlier theory are used with their full hypotheses. For smooth proper curves, the relative Picard theorem supplies representability, base change, degree components, the Abel--Jacobi and Albanese constructions, norms, and the canonical theta polarization. The theory of abelian schemes supplies dual abelian varieties, Poincaré bundles, finite flat torsion, isogenies, and Weil pairings. The cohomology of curves supplies Kummer sequences, trace maps, smooth proper base change, Poincaré duality, and the fact that geometric $H^1$ with $\mathbf Z/\ell^m\mathbf Z$-coefficients is free of rank $2g$. We recall the constructions needed to compare these theories, but we do not silently enlarge their hypotheses. In particular, torsion is treated scheme-theoretically until $\ell$ is assumed invertible, and correspondence normalizations are assumed smooth whenever pullback and norm are used through an intermediate curve.
+Three established bodies of theory are used with their full hypotheses. For smooth proper curves, the relative Picard theorem supplies representability, base change, degree components, the Abel--Jacobi and Albanese constructions, norms, and the canonical theta polarization. The theory of abelian schemes supplies dual abelian varieties, Poincaré bundles, finite flat torsion, isogenies, and Weil pairings. The cohomology of curves supplies Kummer sequences, trace maps, smooth proper base change, Poincaré duality, and the fact that geometric $H^1$ with $\mathbf Z/\ell^m\mathbf Z$-coefficients is free of rank $2g$. We recall the constructions needed to compare these theories, but we do not silently enlarge their hypotheses. In particular, torsion is treated scheme-theoretically until $\ell$ is assumed invertible, and correspondence normalizations are assumed smooth whenever pullback and norm are used through an intermediate curve.
 
 We use a covariant Tate-module convention:
 
@@ -987,6 +987,14 @@ $$
 W_{g-1}=\{[L]:h^0(C_\Omega,L)>0\}.
 $$
 
+The divisor structure, including its multiplicities, is supplied by determinant of cohomology. Let $p:C_\Omega\times\operatorname{Pic}^{g-1}\to\operatorname{Pic}^{g-1}$ and choose a normalized universal bundle $\mathcal U$. Locally on the Picard variety, $Rp_*\mathcal U$ is represented by a two-term complex of vector bundles
+
+$$
+E^0\xrightarrow{d}E^1.
+$$
+
+Riemann--Roch gives Euler characteristic zero, so after adding the same trivial summand to both terms their ranks agree. The determinant $\det(d)$ is a section of $(\det E^0)^{-1}\otimes\det E^1$. Its zero scheme is exactly the locus where $H^0(C_\Omega,L)$, equivalently $H^1(C_\Omega,L)$, is nonzero. It is not the zero section because a general degree-$(g-1)$ bundle has no section. Since the Picard variety is smooth, this nonzero determinant defines an effective Cartier divisor with the desired geometric support. Changing the local two-term resolution multiplies the determinant by a unit and canonically identifies its determinant line, so the local divisors glue. This is the theta divisor with its scheme-theoretic multiplicity; a set-theoretic Abel image would not suffice for the intersection calculation below.
+
 Choose a line bundle $M$ of degree $g-1$. Translation by $M^{-1}$ identifies $\operatorname{Pic}^{g-1}$ with $J$, and transports $W_{g-1}$ to a divisor $\Theta_M$ on $J$. Different choices of $M$ translate this divisor:
 
 $$
@@ -1005,31 +1013,70 @@ $$
 
 Equation (12.3) makes this independent of $M$. It is called the **canonical principal polarization** of the Jacobian.
 
-We now explain principality rather than treating it as a label. Write $W_d$ for the image of $C^{(d)}$ in $\operatorname{Pic}^d$ and translate every $W_d$ into $J$. Adding one point gives an incidence map
+We now explain principality rather than treating it as a label. Write $W_d$ for the image of $C^{(d)}$ in $\operatorname{Pic}^d$ and translate every $W_d$ into $J$. The decisive point is to retain diagonal and inseparable multiplicities. Fix $0\leq d\leq g-1$, choose an effective divisor $E$ of degree $N\gg0$, and let $\mathcal L$ be a normalized universal degree-$d$ bundle on $C_\Omega\times\operatorname{Pic}^d$. Pushing forward
 
 $$
-C\times W_{d-1}\longrightarrow W_d.
+0\longrightarrow\mathcal L
+\longrightarrow\mathcal L(E)
+\longrightarrow\mathcal L(E)|_E
+\longrightarrow0
 $$
 
-Over a general reduced effective divisor of degree $d$, this map has exactly $d$ points, according to which point is distinguished. Intersecting $W_d$ with a general theta translate imposes one independent point condition. The divisor exact sequence
+gives a map of vector bundles
 
 $$
-0\longrightarrow L(-p)\longrightarrow L\longrightarrow L|_p\longrightarrow0
+p_*\mathcal L(E)\longrightarrow p_*(\mathcal L(E)|_E) \tag{12.5}
 $$
 
-shows that the local intersection multiplicity is the length of the corresponding evaluation cokernel. Away from diagonals that length is one; specialization across a diagonal preserves the total length. Inducting on $d$ therefore gives the equality of intersection cycles
+of ranks $N+d+1-g$ and $N$. Its kernel at $[L]$ is $H^0(C_\Omega,L)$. Hence $W_d$, with its Abel-image scheme structure, is the locus where (12.5) has rank at most $N+d-g$. It has the expected codimension $g-d$: the Abel map $C^{(d)}\to W_d$ is generically one-to-one because a general effective divisor of degree at most $g-1$ has only its canonical section.
+
+The maximal-minor resolution of (12.5) computes the degeneracy cycle as
 
 $$
-\Theta_M^{\,g-d}\cdot[J]=(g-d)![W_d].
+[W_d]=c_{g-d}\bigl(p_*(\mathcal L(E)|_E)-p_*\mathcal L(E)\bigr).
 $$
 
-At $d=0$, $W_0$ is the reduced origin. Equivalently, the Abel map $C^{(g)}\to\operatorname{Pic}^g$ is generically a single point over a general line bundle, while $C^g\to C^{(g)}$ has degree $g!$. Both calculations give
+The virtual bundle in parentheses is $-Rp_*\mathcal L$, independently of $E$. The curve Riemann--Roch calculation of its Chern classes is short enough to record. Write
 
 $$
-c_1(\Theta_M)^g=g!. \tag{12.5}
+c_1(\mathcal L)=d\eta+\xi,
 $$
 
-The nonzero top self-intersection implies that the connected translation stabilizer of $\Theta_M$ is trivial, equivalently that $\lambda_{\mathcal O(\Theta_M)}$ has finite kernel. An effective line bundle with finite translation stabilizer on an abelian variety is ample. Abelian Riemann--Roch now gives $\chi(\mathcal O(\Theta_M))=1$, and (12.1) gives $\deg\lambda_C=1$. Thus $\lambda_C$ is a finite degree-one homomorphism, hence an isomorphism. This order matters: using the degree formula before establishing finite kernel would assume the nondegeneracy one is trying to prove.
+where $\eta$ is the class of a point on $C_\Omega$ and $\xi$ has one degree in the curve direction and one in the Picard direction. In
+
+$$
+\operatorname{ch}(Rp_*\mathcal L)
+=p_*\bigl(\exp(d\eta+\xi)\operatorname{td}(C_\Omega)\bigr),
+$$
+
+only $d\eta$, $(1-g)\eta$, and $\xi^2/2$ have the required curve degree. The first two give the rank $d+1-g$; contraction of $\xi^2/2$ by the divisor--differential pairing is $-c_1(\Theta_M)$. Higher positive-degree Chern-character terms vanish because the curve contributes no higher degree. Thus, for $V=-Rp_*\mathcal L$,
+
+$$
+\operatorname{ch}(V)=g-d-1+c_1(\Theta_M),
+\qquad
+c(V)=\exp(c_1(\Theta_M)).
+$$
+
+It follows that
+
+$$
+[W_d]=\frac{c_1(\Theta_M)^{g-d}}{(g-d)!}. \tag{12.6}
+$$
+
+Because this is a determinantal-cycle computation, it includes the multiplicities along diagonals and remains valid in every characteristic. At $d=0$, $W_0$ is the reduced origin, so (12.6) gives
+
+$$
+c_1(\Theta_M)^g=g![0]. \tag{12.7}
+$$
+
+An effective divisor on an abelian variety is nef: translate it away from a chosen curve and compute a nonnegative intersection. A nef line bundle has zero top self-intersection when its connected translation stabilizer is positive-dimensional, because its numerical class then descends to a quotient of smaller dimension. Equation (12.7) therefore makes the stabilizer finite. The abelian Nakai criterion makes $\mathcal O(\Theta_M)$ ample, so $\lambda_C$ is an isogeny. Abelian Riemann--Roch gives
+
+$$
+\chi(\mathcal O(\Theta_M))
+=\frac{c_1(\Theta_M)^g}{g!}=1.
+$$
+
+Now, and only now, (12.1) applies and gives $\deg\lambda_C=1$. Its finite flat kernel has rank one and is therefore trivial, so $\lambda_C$ is an isomorphism. This order avoids using the degree formula before nondegeneracy has been proved.
 
 For $g=1$, $W_0$ is the origin in $\operatorname{Pic}^0$, and (12.4) is the usual principal polarization of an elliptic curve. For $g=0$, $J=0$ and its unique self-map is the principal polarization by convention.
 
@@ -1053,7 +1100,7 @@ $$
 e_n:A[n]\times A^\vee[n]\longrightarrow\mu_n. \tag{13.1}
 $$
 
-We fix the following order convention. The first variable lies in $A[n]$, the second in $A^\vee[n]$, and $e_n(x,\eta)$ is the commutator obtained by translating the Poincaré line bundle first in the $A$-direction by $x$ and then in the $A^\vee$-direction by $\eta$. Reversing that order replaces the value by its inverse.
+We fix the following order convention. The first variable lies in $A[n]$, the second in $A^\vee[n]$, and $e_n(x,\eta)$ is the scalar carrying the torsion trivialization obtained by translating first in the $A$-direction by $x$ and then in the $A^\vee$-direction by $\eta$ to the trivialization obtained in the reverse order. Interchanging the two routes replaces the value by its inverse. This convention is fixed independently of a later identification $A\simeq A^\vee$.
 
 For a polarization $\lambda:A\to A^\vee$, put
 
@@ -1126,7 +1173,7 @@ $$
 
 so the displayed ratio is indeed an $n$th root of unity. Scaling $f$ or $g$ has no effect because $D$ and $E$ have degree zero. Replacing, for example, $D$ by $D+\operatorname{div}h$ replaces $f$ by $fh^n$; Weil reciprocity gives $g(\operatorname{div}h)=h(\operatorname{div}g)=h(E)^n$, so numerator and denominator acquire the same factor. The other changes are identical. Thus the cohomological value is well defined and is computed entirely by these local commutators.
 
-It remains to identify the geometric commutator with the same calculation. Pull the normalized Poincaré bundle on $J\times J^\vee$ back along
+It remains to identify the geometric commutator with the same calculation, including the sign forced by the Abel map. Pull the normalized Poincaré bundle on $J\times J^\vee$ back along
 
 $$
 u_{D_0}\times\lambda_C:C\times J\longrightarrow J\times J^\vee
@@ -1135,10 +1182,24 @@ $$
 after making a geometric degree-one choice. In the notation of the Albanese theorem, the identity factorization of $u_{D_0}$ says
 
 $$
-(u_{D_0}^*)^\vee\lambda_C=1_J.
+-\,(u_{D_0}^*)^\vee\lambda_C=1_J.
 $$
 
-Dualizing and using the symmetry of $\lambda_C$ gives $u_{D_0}^*\lambda_C=1_J$. The see-saw principle therefore identifies the displayed pullback with the normalized universal degree-zero bundle on $C\times J$: both are trivial along the chosen base point and, on a slice indexed by $[E]$, both represent $\mathcal O(E)$ with its normalization. Translation of the degree-one choice changes both sides by a base pullback and leaves their commutators unchanged. Hence the Poincaré commutator of $x$ and $\lambda_C(y)$ can be computed on $C$ itself. Trivializing the pulled-back universal bundle off the supports of $D$ and $E$ gives exactly the transition cocycles $(a_{ij})$ and $(b_{ij})$ above. Going around the torsion parallelogram with vertices $0,x,y,x+y$ therefore gives the same ratio $f(E)/g(D)$. With our order—$x$ first and $\lambda_C(y)$ second—the ratio is the cup product above, not its inverse.
+Dualizing and using the symmetry of $\lambda_C$ gives
+
+$$
+u_{D_0}^*\lambda_C=[-1]_J. \tag{13.6a}
+$$
+
+This is the established Abel--theta sign for the conventions $u_{D_0}(x)=\mathcal O(x-D_0)$ and $\lambda_L(a)=t_a^*L\otimes L^{-1}$. The see-saw principle therefore identifies the displayed pullback not with the normalized universal degree-zero bundle $\mathcal U$ on $C\times J$, but with its dual $\mathcal U^\vee$. On the slice indexed by $[E]$ it represents $\mathcal O(-E)$. Omitting this dual is the usual source of a wrong sign in the comparison theorem.
+
+Now compute the biextension commutator using $\mathcal U^\vee$. Off the supports of $D$ and $E$, use the inverse rational trivializations supplied by $f$ and $g$. Along the route “first $x$, then $\lambda_C(y)$,” the change across $E$ contributes $f(E)$; along the reverse route the change across $D$ contributes $g(D)$. Their quotient, with the convention of Section 13.1, is
+
+$$
+\frac{f(E)}{g(D)}.
+$$
+
+The inverse universal bundle and the inverse in (13.6a) have already been incorporated in these two transition calculations; inserting another minus sign would count the same inversion twice. Translation of the degree-one choice tensors both families by a base pullback and leaves the commutator unchanged. Hence the Poincaré commutator of $x$ and $\lambda_C(y)$ is exactly the cup-product value above, not merely equal to it up to sign.
 
 This proves (13.6) for divisor representatives with disjoint support. The moving lemma on a smooth curve supplies such representatives for any pair of degree-zero classes, and every prime-to-characteristic torsion class is a degree-zero divisor class. Bilinearity then proves the theorem. Notice that the argument proves compatibility, not merely that two perfect alternating forms exist: perfect alternating forms of rank $2g$ are not unique without a chosen symplectic basis.
 
@@ -1366,15 +1427,17 @@ $$
 =\operatorname{End}_k(A)\otimes_{\mathbf Z}\mathbf Q.
 $$
 
-The integral endomorphism ring is a finite free abelian group, so $\operatorname{End}^0_k(A)$ is a finite-dimensional $\mathbf Q$-algebra. Every endomorphism acts covariantly on $T_\ell A$ and $V_\ell A$. If it is defined over $k$, that action commutes with $G_k$:
+The integral endomorphism ring is a finite free abelian group. Here is the finiteness input. More generally, for abelian varieties $A$ and $B$, pull the normalized Poincaré bundle on $B\times B^\vee$ back along $f\times1_{B^\vee}$ for $f:A\to B$. Its normalized mixed line-bundle class on $A\times B^\vee$ recovers $f$ by Poincaré representability and biduality. This embeds $\operatorname{Hom}_k(A,B)$ into the Néron--Severi group of $A\times B^\vee$, which is finitely generated. The Hom group is torsion-free: if $nf=0$, then $f$ factors through the finite affine group scheme $B[n]$. Every morphism from the proper geometrically connected variety $A$ to an affine scheme is constant because its coordinate functions are global regular functions on $A$; as a homomorphism, $f$ is therefore zero. Thus $\operatorname{Hom}_k(A,B)$, and in particular $\operatorname{End}_k(A)$, is finite free. Consequently $\operatorname{End}^0_k(A)$ is a finite-dimensional $\mathbf Q$-algebra.
+
+Every endomorphism acts covariantly on $T_\ell A$ and $V_\ell A$. If it is defined over $k$, that action commutes with $G_k$, giving
 
 $$
-\operatorname{End}_k(A)\otimes\mathbf Z_\ell
+\operatorname{End}_k(A)
 \longrightarrow
 \operatorname{End}_{\mathbf Z_\ell[G_k]}(T_\ell A). \tag{15.1}
 $$
 
-The map is injective. If an endomorphism kills $T_\ell A$, it kills $A[\ell^m](k^s)$ for every $m$. The union $A[\ell^\infty](k^s)$ is Zariski dense. Indeed, its Zariski closure is a closed subgroup $H$; if $A/H$ had positive dimension, its prime-to-characteristic $\ell^m$-torsion would have order $\ell^{2m\dim(A/H)}$. Multiplication by $\ell^m$ is surjective on $H$, so every such quotient torsion point lifts, after correcting by a point of $H$, to an $\ell^m$-torsion point of $A$. Its image would be both nonzero and zero, a contradiction. Hence $H=A$. The kernel of our endomorphism is closed and contains this dense union, so the endomorphism is zero. We do not assert that (15.1) is surjective over an arbitrary field; that is a much deeper arithmetic statement and is not needed here.
+The map is injective. If an endomorphism kills $T_\ell A$, it kills $A[\ell^m](k^s)$ for every $m$. The union $A[\ell^\infty](k^s)$ is Zariski dense. Indeed, let $H$ be its Zariski closure; it is a closed subgroup. The union is $\ell$-divisible, while the image $[\ell](H)$ is closed because $H$ is proper. Since $[\ell](H)$ contains the dense torsion union, it equals $H$; multiplication by $\ell$ is therefore surjective on $H(k^s)$, including on its finite component group. If $Q=A/H$ had positive dimension, choose a nonzero $y\in Q[\ell](k^s)$ and lift it to $x\in A(k^s)$. Then $\ell x\in H(k^s)$, so choose $h\in H(k^s)$ with $\ell h=\ell x$. Now $x-h\in A[\ell](k^s)\subset H(k^s)$, whence $x\in H(k^s)$ and $y=0$, a contradiction. Thus $H=A$. The kernel of our endomorphism is closed and contains this dense union, so the endomorphism is zero. We do not assert that (15.1) is surjective over an arbitrary field; that is a much deeper arithmetic statement and is not needed here.
 
 For a Jacobian, correspondences defined over $k$ supply a distinguished subalgebra of $\operatorname{End}_k(J)$. Vertical and horizontal cycle components lie in its kernel. Different cycles can induce the same endomorphism, so the correspondence ring and the endomorphism ring should not be identified.
 
@@ -1465,7 +1528,9 @@ $$
 
 is therefore an isogeny. Thus inclusions split after tensoring Hom groups with $\mathbf Q$.
 
-It follows that $\operatorname{End}^0(A)$ is a finite-dimensional semisimple $\mathbf Q$-algebra and that idempotents in it cut out abelian subvarieties up to isogeny. This statement does **not** imply that the $G_k$-representation $V_\ell A$ is semisimple for every possible ground field; that requires additional arithmetic hypotheses. What is available unconditionally is geometric splitting in the isogeny category and the corresponding splitting of $V_\ell A$ whenever an algebraic idempotent has been supplied.
+To pass from this complement statement to algebra, take any homomorphism in the isogeny category. Its connected kernel and its image are abelian subvarieties; replacing source and target by isogenous products with complements expresses the map as an isomorphism on one factor and zero on the other. Hence kernels and images split in the isogeny category. Dimensions strictly decrease along a proper nonzero subobject, so every object has finite length. Together with the finite-dimensionality of Hom spaces proved in Section 15.1, this makes the isogeny category semisimple. In particular $\operatorname{End}^0(A)$ is a finite-dimensional semisimple $\mathbf Q$-algebra.
+
+If $e\in\operatorname{End}^0(A)$ is idempotent, clear denominators and take the connected image of the resulting integral endomorphism. The complement construction shows that its inclusion into $A$ realizes $e$ in the isogeny category, so idempotents cut out abelian subvarieties up to isogeny. This statement does **not** imply that the $G_k$-representation $V_\ell A$ is semisimple for every possible ground field; that requires additional arithmetic hypotheses. What is available unconditionally is geometric splitting in the isogeny category and the corresponding splitting of $V_\ell A$ whenever an algebraic idempotent has been supplied.
 
 ## 16. Good reduction and integral families
 
@@ -1497,15 +1562,17 @@ $$
 
 is an abelian scheme whose generic fiber is $J_C$ and whose special fiber is $J_{\mathcal C_\kappa}$. In particular $J_C$ has good reduction.
 
-If $\ell$ is invertible in $R$, every $\mathcal J[\ell^m]$ is finite étale over $R$. After passing to a strict henselization, finite étale sections specialize uniquely, so inertia acts trivially on $T_\ell J_C$. Smooth proper base change gives the same conclusion cohomologically and makes the diagram
+If $\ell$ is invertible in $R$, every $\mathcal J[\ell^m]$ is finite étale over $R$. After passing to a strict henselization, finite étale sections specialize uniquely, so inertia acts trivially on $T_\ell J_C$. Smooth proper base change gives the same conclusion cohomologically. With the specialization map taken in its canonical special-to-generic direction, it gives an isomorphism
 
 $$
-T_\ell J_C\simeq H^1(C_{K^s},\mathbf Z_\ell(1))
-\longrightarrow H^1(\mathcal C_{\bar\kappa},\mathbf Z_\ell(1))
-\simeq T_\ell J_{\mathcal C_{\bar\kappa}}
+T_\ell J_{\mathcal C_{\bar\kappa}}
+\simeq H^1(\mathcal C_{\bar\kappa},\mathbf Z_\ell(1))
+\xrightarrow{\operatorname{sp}}
+H^1(C_{K^s},\mathbf Z_\ell(1))
+\simeq T_\ell J_C. \tag{16.1}
 $$
 
-an isomorphism after the standard specialization identification. This statement requires $\ell\ne\operatorname{char}\kappa$.
+Its inverse is the frequently used generic-to-special identification. Writing the arrow as in (16.1) keeps it consistent with the generization map on proper higher direct images. This statement requires $\ell\ne\operatorname{char}\kappa$.
 
 The converse “unramified Tate module implies good reduction” is a separate criterion for abelian varieties and requires its own hypotheses. It is not needed for the forward integral passage here.
 
@@ -1622,7 +1689,15 @@ $$
 e\in\mathbb T\otimes\mathbf Q_\ell
 $$
 
-cuts out a finite-dimensional $G_k$-stable summand $eV_\ell J$. More generally, after extending scalars to a finite extension $E/\mathbf Q_\ell$, the simultaneous generalized eigenspace attached to a character of a commutative quotient of $\mathbb T$ is $G_k$-stable because the two actions commute. Its Galois action is continuous as the restriction of the action on a finite-dimensional $E$-space. In particular, for a commuting family of modular or Shimura correspondences, localizing the rational correspondence algebra at an eigensystem and projecting to its generalized eigenspace produces the desired finite-dimensional $\ell$-adic representation. Geometry supplies its Galois stability; determining that it has dimension two, or identifying its Frobenius polynomials, requires arithmetic analysis of the particular curve and eigensystem.
+cuts out a finite-dimensional $G_k$-stable summand $eV_\ell J$. For generalized eigenspaces, one must first pass to the finite-dimensional image
+
+$$
+\mathbb T_{V,\ell}
+=\operatorname{im}\bigl(\mathbb T\otimes\mathbf Q_\ell
+\longrightarrow\operatorname{End}_{\mathbf Q_\ell}(V_\ell J)\bigr).
+$$
+
+If this image is commutative, then after a finite scalar extension $E/\mathbf Q_\ell$ its Artinian primary decomposition splits $V_\ell J\otimes E$ into simultaneous generalized eigenspaces. Each primary projector is a polynomial in correspondence operators, so it commutes with $G_k$; its summand is therefore $G_k$-stable and carries a continuous action. Localization of the abstract correspondence algebra is enough only after passing to the local factor that acts through this finite-dimensional image. With that qualification, a commuting family of modular or Shimura correspondences produces the desired finite-dimensional $\ell$-adic representations. Geometry supplies their Galois stability; determining that a chosen factor has dimension two, or identifying its Frobenius polynomials, requires arithmetic analysis of the particular curve and eigensystem.
 
 At finite level, reduction of (17.3) gives
 
