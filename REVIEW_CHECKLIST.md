@@ -252,7 +252,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 185. Finite Image and the Balanced Minimal-Lift Argument
 - [x] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
 - [x] 187. Brauer Induction for Automorphy Families
-- [ ] 188. Brauer Characters and Effectivity of Compatible Families
+- [x] 188. Brauer Characters and Effectivity of Compatible Families
 - [ ] 189. Compatible Systems over the Base Field
 - [ ] 190. The Fixed-Three Integral Local Theory
 - [x] 191. Quintic Cyclotomic Units and Kummer Arithmetic
