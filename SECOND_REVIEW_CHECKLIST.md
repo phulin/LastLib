@@ -214,5 +214,5 @@ any resulting corrections.
 - [ ] 188. Brauer Characters and Effectivity of Compatible Families
 - [ ] 189. Compatible Systems over the Base Field
 - [ ] 190. The Fixed-Three Integral Local Theory
-- [ ] 191. Quintic Cyclotomic Units and Kummer Arithmetic
+- [x] 191. Quintic Cyclotomic Units and Kummer Arithmetic
 - [ ] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
