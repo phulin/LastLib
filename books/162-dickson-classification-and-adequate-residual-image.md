@@ -15,8 +15,8 @@
    - [Normalizers and the origin of dihedral groups](#24-normalizers-and-the-origin-of-dihedral-groups)
 3. [Dickson's classification](#3-dicksons-classification)
    - [The complete statement](#31-the-complete-statement)
-   - [The solvable branch](#32-the-solvable-branch)
-   - [The nonsolvable branch](#33-the-nonsolvable-branch)
+   - [The tame and fixed-point branches](#32-the-tame-and-fixed-point-branches)
+   - [The defining-characteristic branch](#33-the-defining-characteristic-branch)
    - [Small coincidences and exceptional characteristics](#34-small-coincidences-and-exceptional-characteristics)
    - [Orders, orbits, and recognition](#35-orders-orbits-and-recognition)
    - [Two finite-field portraits](#36-two-finite-field-portraits)
@@ -133,7 +133,7 @@ $$
 \tag{1.3}
 $$
 
-Conversely, for a two-dimensional representation over a finite field, (1.3) implies absolute irreducibility provided the representation is semisimple. Without semisimplicity a nonsplit extension of a character by itself has scalar endomorphism ring but is reducible. We will therefore use the invariant-line definition and invoke Schur's lemma only in the safe direction.
+Conversely, for a two-dimensional representation over a finite field, (1.3) implies absolute irreducibility provided the representation is semisimple. Without semisimplicity there are reducible nonsplit extensions with distinct constituents whose only equivariant endomorphisms are scalars. We will therefore use the invariant-line definition and invoke Schur's lemma only in the safe direction.
 
 ### 1.3 Determinants, scalars, and twists
 
@@ -153,7 +153,7 @@ $$
 \tag{1.5}
 $$
 
-Multiplying $g$ by a scalar changes numerator and denominator by the same square, so $\tau$ is a function on $\overline G$. It is also invariant under conjugacy and coefficient-field automorphisms. The subfield
+Multiplying $g$ by a scalar changes numerator and denominator by the same square, so $\tau$ is a function on $\overline G$. It is invariant under conjugacy and is equivariant for coefficient-field automorphisms: $\tau(\sigma(g))=\sigma(\tau(g))$. The subfield
 
 $$
 k_{\mathrm{ptr}}=\mathbf F_\ell\bigl(\tau(g):g\in G\bigr)\subseteq k
@@ -267,7 +267,7 @@ which is cyclic of order $q+1$. Its two fixed points are conjugate over $k_2$ an
 
 ### 2.4 Normalizers and the origin of dihedral groups
 
-The normalizer of either torus has index two. In coordinates for the split torus, the nontrivial coset is represented by $w:x\mapsto1/x$, and
+Except for the trivial split subgroup in $\operatorname{PGL}_2(\mathbf F_2)$, the normalizer of either full torus has index two. In coordinates for the split torus, the nontrivial coset is represented by $w:x\mapsto1/x$, and
 
 $$
 waw^{-1}=a^{-1}.
@@ -305,116 +305,132 @@ We now classify all finite subgroups, including the reducible affine branch need
 
 The alternatives have small overlaps: $\operatorname{PSL}_2(2)\simeq S_3$, $\operatorname{PSL}_2(3)\simeq A_4$, $\operatorname{PGL}_2(3)\simeq S_4$, and $\operatorname{PSL}_2(4)\simeq\operatorname{PSL}_2(5)\simeq A_5$. Classification means that every subgroup belongs to one of the displayed structural families, not that the labels are disjoint in these small cases.
 
-### 3.2 The solvable branch
+### 3.2 The tame and fixed-point branches
 
-The proof is organized by Sylow $p$-subgroups. This exposes both the affine branch and the geometry of tori.
+**Proof strategy.** Organize the proof by stabilizer orbits on the geometric projective line. Fixed-point incidence counting first gives the possible stabilizer orders. In defining characteristic, the same count leaves either a dihedral exception, one characteristic-three icosahedral case, or a doubly transitive orbit whose translation parameters form a finite field.
 
-Let $P$ be a Sylow $p$-subgroup of $H$. If $P=1$, every nonidentity element fixes two points. Choose a maximal cyclic subgroup $C$. All elements centralizing a generator of $C$ preserve its two fixed points and hence lie in its torus. The normalizer of $C$ can only preserve or exchange those points, so $N_H(C)/C$ has order at most two after $C$ is enlarged to the full toral part of $H$.
-
-If every conjugate of $C$ has the same fixed pair, then $H$ preserves that pair and is cyclic or dihedral. If distinct fixed pairs occur, count incidences
+**Proof.** First suppose $p\nmid |H|$. Every nonidentity element then fixes exactly two points. There are only finitely many points with nontrivial stabilizer; let $e_1,\ldots,e_s$ be the stabilizer orders of their $H$-orbits. A point stabilizer is cyclic: after fixing the point, its action on the tangent coordinate embeds it in $\overline k^\times$. Count pairs $(g,x)$ with $g\ne1$ and $gx=x$. Counting first by $g$ and then by point-orbits gives
 
 $$
-(h,P),\qquad 1\ne h\in H,\qquad P\in\operatorname{Fix}(h).
-$$
-
-Each $h$ contributes two incidences. Stabilizers of points and pairs are cyclic and dihedral, respectively. The orbit--stabilizer identities force the possible rotation stabilizer orders to be $(2,3,3)$, $(2,3,4)$, or $(2,3,5)$; these are the spherical triples. Presentations
-
-$$
-\langle x,y:x^2=y^3=(xy)^m=1\rangle,
-\qquad m=3,4,5,
+2(|H|-1)=|H|\sum_{i=1}^s\left(1-\frac1{e_i}\right).
 \tag{3.2}
 $$
 
-then give $A_4,S_4,A_5$. Here is the numerical step. A fundamental orbit triangle has stabilizers $a,b,c$, and counting translates gives
+The right side forces $2\le s\le3$. If $s=2$, then
+$1/e_1+1/e_2=2/|H|$. Since $e_i\le |H|$, equality forces
+$e_1=e_2=|H|$: the group fixes the same two points and is cyclic.
+If $s=3$, order the stabilizers so that $2\le e_1\le e_2\le e_3$. Equation (3.2) becomes
 
 $$
-\frac2{|H|}=\frac1a+\frac1b+\frac1c-1>0.
+\frac1{e_1}+\frac1{e_2}+\frac1{e_3}
+=1+\frac2{|H|}>1.
 \tag{3.3}
 $$
 
-With $2\le a\le b\le c$, positivity yields $a=2$, then $b=2$ (the dihedral family) or $b=3$ and $c=3,4,5$. This proves the prime-to-$p$ branch without assuming the answer.
+Thus the triple is $(2,2,n)$, $(2,3,3)$, $(2,3,4)$, or
+$(2,3,5)$, and (3.3) gives group orders $2n,12,24,60$.
+These data identify the groups without a hidden presentation argument. In the first case the cyclic stabilizer of order $n$ has index two; the other coset exchanges its two fixed points and acts by inversion, so the group is dihedral. In the $(2,3,3)$ case the fixed-point count gives four Sylow $3$-subgroups. Their normalizers have order three, so the conjugation action on the four of them has trivial kernel and identifies the group of order twelve with the unique index-two subgroup $A_4\subset S_4$.
 
-Now suppose $P\ne1$. By Lemma 2.2, $P$ fixes a unique point $x_P$. If every Sylow $p$-subgroup fixes the same point, that point is $H$-stable and $H$ is of Borel type. The translation subgroup is normal, and the multiplier quotient is cyclic.
+In the $(2,3,4)$ case there are again four Sylow $3$-subgroups, now with normalizer order six. The conjugation kernel contains no element of order three: an order-three subgroup normalizing a distinct one would centralize it, producing a subgroup of order nine. The kernel is therefore a $2$-group contained in every order-six normalizer, so it has order at most two. A kernel of order two would be central; its nonidentity projective transformation would have an $H$-stable fixed pair, putting $H$ in a torus normalizer, contrary to the three-orbit data. Thus the action is faithful, and equality of orders identifies $H$ with $S_4$.
 
-It remains to study the case of at least two Sylow $p$-subgroups with distinct fixed points. The subgroup generated by opposite unipotent groups is the mechanism that produces a group over a finite subfield.
+In the $(2,3,5)$ case the same fixed-point count gives six Sylow $5$-subgroups, ten Sylow $3$-subgroups, and fifteen involutions. The corresponding conjugacy-class sizes are $12,12,20,15$; no proper sum of these sizes together with the identity both exceeds one and divides sixty. Hence $H$ is simple. Its Sylow $2$-subgroups are Klein four groups, and the fifteen involutions partition among five of them. Conjugation on these five Sylow groups is nontrivial and therefore faithful by simplicity, embedding $H$ as an order-sixty subgroup of $S_5$. Simplicity forces its sign character to be trivial, so its image is $A_5$. This proves the prime-to-$p$ part.
 
-### 3.3 The nonsolvable branch
-
-Conjugate one Sylow group to translations $u(a):x\mapsto x+a$ with $a\in A$, and choose an opposite Sylow group fixing $0$, written
-
-$$
-v(b)=\begin{pmatrix}1&0\\b&1\end{pmatrix}.
-$$
-
-Let $k_0$ be the finite subfield generated by all products $ab$ that occur. The elementary matrix identity
+Now let $P$ be a nontrivial Sylow $p$-subgroup. By Lemma 2.2 it fixes a unique point $x_P$. If $P$ is normal, $x_P$ is $H$-fixed. In affine coordinates the full stabilizer has the form
 
 $$
-\begin{pmatrix}1&a\\0&1\end{pmatrix}
-\begin{pmatrix}1&0\\b&1\end{pmatrix}
-=
-\begin{pmatrix}1+ab&a\\b&1\end{pmatrix}
-\tag{3.4}
+A\rtimes C,
 $$
 
-and its conjugates show that the generated group contains diagonal elements
-$\operatorname{diag}(t,t^{-1})$ for $t$ in the multiplicative group generated by the nonzero parameters. Conjugating $u(a)$ by these diagonal elements multiplies $a$ by $t^2$. Closure under addition, multiplication, and inversion follows from the elementary identities
+where $A$ is the additive translation group and $C$ is a cyclic multiplier group of order prime to $p$. This is the Borel branch.
 
-$$
-u(a)u(b)=u(a+b),
-\qquad
-\begin{pmatrix}t&0\\0&t^{-1}\end{pmatrix}
-u(a)
-\begin{pmatrix}t^{-1}&0\\0&t\end{pmatrix}
-=u(t^2a),
-\tag{3.5}
-$$
+### 3.3 The defining-characteristic branch
 
-together with the analogous lower-unipotent formulas. Thus the parameter set is a finite field $k_0$ after a common rescaling. The upper and lower elementary matrices over $k_0$ generate $\operatorname{SL}_2(k_0)$: Gaussian elimination writes every determinant-one matrix with nonzero lower-left entry as a product of such matrices, and diagonal matrices follow from
-
-$$
-\begin{pmatrix}t&0\\0&t^{-1}\end{pmatrix}
-=u(t)v(-t^{-1})u(t)u(-1)v(1)u(-1),
-\tag{3.6}
-$$
-
-with harmless adjustments at the smallest fields. Projectivizing gives $\operatorname{PSL}_2(k_0)$.
-
-The normalizer of this projective special linear group in the projective linear group over the ambient finite field acts on its two root subgroups and preserves the field generated by their cross-ratios. It is therefore contained in $\operatorname{PGL}_2(k_0)$ after conjugation. This proves (3.1).
-
-For completeness, we spell out the orbit calculation hidden in the phrase “opposite Sylow groups.” Let $\Omega$ be the set of fixed points of nontrivial Sylow $p$-subgroups. Distinct Sylow groups have distinct fixed points: a common fixed point would place both in the translation group at that point, whose finite $p$-subgroups lie in one elementary abelian group and hence in a larger common $p$-subgroup. Thus Sylow groups and points of $\Omega$ correspond bijectively.
-
-Fix $\infty\in\Omega$ and write
+Assume from now on that $P$ is not normal. Let $e=|P|$, and let
+$\Omega$ be the set of fixed points of the Sylow $p$-subgroups. Distinct Sylow groups have distinct fixed points: if two fixed the same point, both would lie in the translation group there and hence in a common larger $p$-subgroup. Thus $\Omega$ is one $H$-orbit. Write
 
 $$
 H_\infty=P\rtimes C,
+\qquad |C|=m.
+\tag{3.4}
+$$
+
+The multiplier group $C$ acts freely on $P\setminus\{1\}$, so $m\mid e-1$. Also $P$ acts freely on $\Omega\setminus\{\infty\}$, because a nonidentity projective $p$-element has no second fixed point. Consequently
+
+$$
+N:=|\Omega|=1+er
+\tag{3.5}
+$$
+
+for an integer $r\ge1$, and $|H|=emN$.
+
+We next count all fixed-point incidences. Every nonidentity unipotent belongs to a unique Sylow $p$-subgroup and fixes one point; there are $N(e-1)$ such elements. Every other nonidentity element fixes two points. Thus the incidence count by elements is
+$2(|H|-1)-N(e-1)$. Counting the wild orbit by points gives
+$N(em-1)$ incidences. Apart from $\Omega$, a point with nontrivial stabilizer has cyclic stabilizer of order prime to $p$. If their orbit stabilizer orders are $n_1,\ldots,n_t$, the remaining contribution is
+$|H|\sum_i(1-1/n_i)$. Equating these expressions and using
+$|H|=emN$ gives
+
+$$
+\sum_{i=1}^t\left(1-\frac1{n_i}\right)
+=1-\frac1m+\frac2{em}-\frac2{|H|}.
+\tag{3.6}
+$$
+
+The right side is positive and strictly less than one, while every summand on the left is at least one half. Hence $t=1$. Calling the one tame stabilizer order $n$ and substituting $N=1+er$ into (3.6) yields
+
+$$
+n=\frac{m(1+er)}{1+r(e-2)}.
 \tag{3.7}
 $$
 
-where $P$ is a translation group and $C$ is cyclic of order prime to $p$. The subgroup $C$ acts freely on $P\setminus\{1\}$ unless a multiplier fixes a nonzero translation parameter. Hence every nontrivial stabilizer in this action is read from a proper scalar subfield. Choose $0\in\Omega\setminus\{\infty\}$ and let $H_{0,\infty}$ be the pointwise stabilizer of the ordered pair. It is cyclic and embeds in both corresponding multiplier groups.
+This elementary divisibility relation contains the remaining classification. If $e=2$, then $m=1$, $n=N$, and $H$ has a cyclic subgroup of order $n$ and index two. Its other coset exchanges the two fixed points of that cyclic subgroup, so $H$ is dihedral of order $2n$, with $n$ odd.
 
-There are now two possibilities. If $P$ acts regularly on $\Omega\setminus\{\infty\}$, rescale so that $0$ and $1$ belong to that orbit. The translation parameters form an additive set $A$, while the two-point stabilizer gives multipliers. Conjugating by an element exchanging $0$ and $\infty$ turns these into lower translations. Cross-ratios
+Suppose $e>2$. Since $m\mid e-1$, equation (3.7) and
 
 $$
-[\infty,0;a,b]=a/b
+\gcd(1+r(e-2),r)=1
+$$
+
+show that $1+r(e-2)$ divides $2m$. If $r>1$ and $e\ge4$, the bound $1+r(e-2)\le2m\le2(e-1)$ excludes $r\ge3$, so $r=2$. Then the odd integer $2e-3$ would have to divide the even integer $2m\le2e-2$; its only possible positive multiple in that range is itself, an impossibility. If $e=3$, the divisor $1+r$ must divide $2m$ with $m\mid2$; the only nonregular solution is $r=3$, $m=2$, $n=5$. It gives $|H|=60$; the Sylow counts are those in the $(2,3,5)$ case above, so $H\simeq A_5$. Thus, outside this characteristic-three coincidence, one has $r=1$.
+
+It remains to recover the field when $r=1$. Conjugate so that
+
+$$
+P=\{u(a):x\mapsto x+a:a\in A\},
+\qquad \Omega=A\cup\{\infty\},
+$$
+
+where $A$ is an additive group of order $e$ containing $0$ and $1$. The regular action of $P$ on the complement of $\infty$ makes $H$ doubly transitive on $\Omega$. Hence an element $w$ exchanges $0$ and $\infty$ and has form $w(x)=c/x$ for some $c\in A^\times$. Since $w$ preserves $\Omega$, one has $c/a\in A$ for every $a\in A^\times$. Conjugating the upper translations by $w$ gives lower translations; in particular $v(-a^{-1})$ is available because $-c/a\in A$. Direct multiplication gives
+
+$$
+\bigl(u(a)v(-a^{-1})u(a)\bigr)
+\bigl(u(-1)v(1)u(-1)\bigr)
+=\begin{pmatrix}a&0\\0&a^{-1}\end{pmatrix}
+\quad\text{projectively in }H
+\qquad(a\in A^\times).
 \tag{3.8}
 $$
 
-of four points in the orbit show that the ratios of nonzero parameters remain in the same parameter set. Thus $A$ is closed under addition, multiplication, and inversion after normalization; it is a finite field $k_0$. Equations (3.4)--(3.6) then give $\operatorname{PSL}_2(k_0)$.
-
-If $P$ is not regular on the complement, a nontrivial element fixes an additional orbit point. But a nontrivial projective $p$-element has only its unique fixed point, so the extra stabilizer has order prime to $p$. Counting the $H_\infty$-orbits and then the $H$-orbits of ordered triples reduces to
+Conjugation of $P$ by (3.8) shows that $a^2A=A$. If $p$ is odd, then
 
 $$
-\frac1a+\frac1b+\frac1c>1
-\tag{3.9}
+2ab=(a+1)^2b-a^2b-b\in A,
 $$
 
-for the three nontrivial stabilizer orders. As in (3.3), the solutions are the dihedral family and $(2,3,3)$, $(2,3,4)$, $(2,3,5)$. The dihedral solution has no nontrivial $p$-subgroup except possibly at $p=2$ and is already in the torus-normalizer branch. The three remaining presentations have orders $12$, $24$, and $60$: using the coset action on the vertices, edges, and faces of the associated orbit complex identifies them with $A_4,S_4,A_5$. In characteristics dividing these orders the same groups can also appear as the small subfield coincidences recorded below.
+so $A$ is closed under multiplication. If $p=2$, squaring maps the finite set $A$ injectively to itself and is therefore surjective; write $a=c^2$ and again obtain $ab=c^2b\in A$. Thus $A$ is a finite field $k_0$.
 
-This proves that failure of the field-parameter construction produces no further family. Combined with the prime-to-$p$ calculation, it completes the classification. $\square$
+The upper translations and their $w$-conjugates are the elementary upper and lower matrices over $k_0$. Gaussian elimination shows that they generate $\operatorname{SL}_2(k_0)$, so
+$\operatorname{PSL}_2(k_0)\subseteq H$. Finally (3.7) with $r=1$ says
+
+$$
+n=\frac{m(e+1)}{e-1}.
+$$
+
+Since $m\mid e-1$, integrality leaves $m=e-1$ or, for odd $e$, $m=(e-1)/2$. The corresponding orders are those of
+$\operatorname{PGL}_2(k_0)$ and $\operatorname{PSL}_2(k_0)$, respectively. The containment just proved is therefore an equality with one of those two groups. Together with the tame and Borel cases, this completes the classification. $\square$
 
 ### 3.4 Small coincidences and exceptional characteristics
 
-The theorem is uniform, but its interpretation is not. In characteristic $3$, $A_4$ and $S_4$ have order divisible by the characteristic. In characteristic $5$, $A_5$ does. These are exactly the situations in which averaging in group cohomology fails for an exceptional group. At primes $\ell\ge7$, all three exceptional group orders
+The theorem is uniform, but its interpretation is not. Among odd characteristics, $A_4$ and $S_4$ have order divisible by $3$, while $A_5$ has order divisible by both $3$ and $5$; characteristic two is more singular still. These are the cases in which prime-to-characteristic averaging is unavailable for an exceptional group. At primes $\ell\ge7$, all three exceptional group orders
 
 $$
 |A_4|=12,\qquad |S_4|=24,\qquad |A_5|=60
@@ -480,7 +496,7 @@ These portraits make two points. Divisibility by $\ell$ distinguishes the affine
 
 ### 4.1 Eliminating point stabilizers and cyclic groups
 
-Let $G\subset\operatorname{GL}_2(k)$ act absolutely irreducibly and let $\overline G$ be its projective image. The Borel branch of Theorem 3.1 is impossible by (1.2). The cyclic branch is also impossible: a cyclic projective group of order prime to $\ell$ is generated by a semisimple element, and all its lifts commute up to scalars. Over $\overline k$ they preserve its two eigenlines. Thus only dihedral, exceptional, and large projective images remain.
+Let $G\subset\operatorname{GL}_2(k)$ act absolutely irreducibly and let $\overline G$ be its projective image. The Borel branch of Theorem 3.1 is impossible by (1.2). The cyclic branch is also impossible: the full inverse image of a cyclic projective group is generated by one lift together with scalars, so it is abelian. Its order is prime to $\ell$, and over $\overline k$ its matrices are simultaneously diagonalizable. Thus only dihedral, exceptional, and large projective images remain.
 
 This reduction is useful but not reversible. A group with dihedral projective image can still become reducible if its rotation subgroup is scalar. Absolute irreducibility forces the projective rotation order to exceed two in the genuinely induced case, apart from small Klein-four realizations that must be checked directly.
 
@@ -518,7 +534,14 @@ This is a projective assertion. The full image need not equal $\operatorname{GL}
 
 The invariant $\tau$ distinguishes a genuine full-field image from a subfield image.
 
-**Proposition 4.2.** If $q_0>3$, the values of $\tau$ on $\operatorname{PSL}_2(\mathbf F_{q_0})$ generate $\mathbf F_{q_0}$. Hence the smallest field over which a projective subgroup containing $\operatorname{PSL}_2(\mathbf F_{q_0})$ can be defined is its projective trace field.
+**Proposition 4.2.** Suppose $q_0>3$ and
+
+$$
+\operatorname{PSL}_2(\mathbf F_{q_0})\subseteq H
+\subseteq\operatorname{PGL}_2(\mathbf F_{q_0}).
+$$
+
+Then the values of $\tau$ on $H$ generate $\mathbf F_{q_0}$. Consequently, in the large branch of Theorem 3.1 the subfield $\mathbf F_{q_0}$ is exactly the projective trace field and is the smallest projective field of definition.
 
 **Proof.** For
 
@@ -526,7 +549,7 @@ $$
 g_t=\begin{pmatrix}t&-1\\1&0\end{pmatrix}\in\operatorname{SL}_2(\mathbf F_{q_0}),
 $$
 
-one has $\tau(g_t)=t^2$. The squares generate the field additively and multiplicatively: in odd characteristic,
+one has $\tau(g_t)=t^2$. The squares generate the field: in odd characteristic,
 $t=((t+1)^2-(t-1)^2)/4$; in characteristic two every element is a square because Frobenius is an automorphism. Thus all $t\in\mathbf F_{q_0}$ lie in the field generated by the $\tau$-values. The reverse inclusion is clear. $\square$
 
 ### 4.5 Central lifts and determinants
@@ -547,7 +570,7 @@ $$
 \tag{4.4}
 $$
 
-Associativity says that $c$ is a two-cocycle. Changing lifts multiplies it by a coboundary. Thus the obstruction to lifting a projective representation with a prescribed scalar group is a class in $H^2(\overline G,k^\times)$ for the trivial action. This is the precise reason an abstract isomorphism $\overline G\simeq A_5$ does not yet identify the full matrix image.
+Associativity says that $c$ is a two-cocycle. Changing lifts multiplies it by a coboundary. Thus the obstruction to a lift with arbitrary $k^\times$-scalars lies in $H^2(\overline G,k^\times)$ for the trivial action. If the scalar kernel is prescribed to be $C\subseteq k^\times$, one must in addition ask whether the class comes from $H^2(\overline G,C)$. This is the precise reason an abstract isomorphism $\overline G\simeq A_5$ does not yet identify the full matrix image.
 
 The determinant supplies an additional restriction. If $g\in\overline G$ has order $n$ and $\widetilde g$ is a lift, then $\widetilde g^n$ is scalar. Its determinant is the square of that scalar, while also equal to $\det(\widetilde g)^n$. In arithmetic applications the prescribed determinant fixes the latter value. This frequently decides which central extension and which conjugacy class of lifts is possible.
 
@@ -600,7 +623,7 @@ Restriction to a normal subgroup is the main source of dihedral alternatives.
 
 **Proof.** Suppose $\rho|_N$ is reducible and choose an $N$-stable line $L$. For $g\in\Gamma$, normality shows that $gL$ is again $N$-stable. If $L$ were the unique stable line, it would be $\Gamma$-stable, contrary to irreducibility. If $N$ has two stable lines and does not act projectively by scalars, these are exactly its two common eigendirections; $\Gamma$ permutes them transitively. Their stabilizer $\Gamma_M$ has index two and contains $N$, so Theorem 4.1 gives induction.
 
-It remains to exclude the possibility that $N$ acts projectively by scalars. Then $\mathbb P\rho$ factors through the cyclic group $\Gamma/N$. Its order is prime to $\ell$, so over $\overline k$ its matrices are simultaneously diagonalizable. That contradicts absolute irreducibility. Thus only the two-line case occurs. $\square$
+It remains to exclude the possibility that $N$ acts projectively by scalars. Then $\mathbb P\rho$ factors through the cyclic group $\Gamma/N$. The full finite image is a central extension of that cyclic projective image by scalar matrices, hence is abelian; its order is prime to $\ell$. Its matrices are therefore simultaneously diagonalizable over $\overline k$, contrary to absolute irreducibility. Thus only the two-line case occurs. $\square$
 
 The cyclic quotient hypothesis is exactly what is available for cyclotomic restriction: the image of $\bar\chi_\ell$ lies in $k^\times$, whose order is prime to $\ell$.
 
@@ -677,7 +700,7 @@ At $v\mid\ell$, saying that $\bar\rho|_{G_{F_v}}$ is finite flat means that its 
 
 The finite-flat condition is preserved under supplied subobjects, quotients, duality, unramified base change, and coefficient extension in the forms established by the integral theory. It constrains a dihedral induction because both character lines over the inducing field, when they extend as admissible subquotients of a model, must belong to the corresponding finite-flat character category. One must not infer those line models merely from a generic invariant line without taking schematic closure in an ambient model.
 
-If an additional integral theorem supplies an upper-break bound $R_v$, then (6.3) applies. For a level-$\ell$ module over an unramified extension of $\mathbf Q_\ell$, the standard cutoff $R_v\le1/(\ell-1)$, when available as a proved input, gives
+If an additional integral theorem supplies an upper-break bound $R_v$, then (6.3) applies. In particular, if a separate proved input gives $R_v\le1/(\ell-1)$, then
 
 $$
 \frac de<\frac\ell{\ell-1}.
@@ -733,7 +756,7 @@ $$
 
 with $A$ elementary abelian of characteristic $\ell$ and $C$ cyclic of order prime to $\ell$.
 
-If $p\ne\ell$, a finite wild inertia image is a $p$-group in characteristic $\ell$. Its matrices are semisimple when $p$ is odd to their order, but the abstract $p$-group need not be cyclic before projectivization. Dickson's theorem restricts it sharply: it lies in a torus, in a dihedral $2$-group, in an exceptional Sylow group, or in a subfield group. When geometric reduction theory already gives a unipotent matrix of order $\ell$, as at a multiplicative place, that element comes from tame rather than wild inertia because $p\ne\ell$.
+If $p\ne\ell$, a finite wild inertia image is a $p$-group of order prime to the coefficient characteristic, so each of its matrices is semisimple. Dickson's theorem makes its projective shape very small: an odd $p$-subgroup is cyclic and lies in a torus, while a $2$-subgroup may also be dihedral or one of the Sylow $2$-subgroups occurring in an exceptional group. When geometric reduction theory already gives a unipotent matrix of order $\ell$, as at a multiplicative place, that element comes from tame rather than wild inertia because $p\ne\ell$.
 
 At a tamely ramified place, the projective inertia image is cyclic. It lies in a split torus if its two eigenlines are defined over $k$ and in a nonsplit torus otherwise. The decomposition group normalizes inertia, and Frobenius conjugates a tame generator $\tau$ by
 
@@ -766,7 +789,7 @@ Every clause serves a different purpose. The determinant controls scalars. Absol
 
 ### 7.2 The small-image alternatives
 
-**Theorem 7.1 (small-image ledger).** For an absolutely irreducible hardly-ramified residual datum, exactly one of the following structural cases occurs:
+**Theorem 7.1 (small-image ledger).** For an absolutely irreducible hardly-ramified residual datum, one of the following structural cases occurs:
 
 1. **Dihedral:** $\bar\rho\simeq\operatorname{Ind}_{G_M}^{G_F}\theta$ for a quadratic extension $M/F$. The character of $M/F$ is unramified outside the projective ramification set and has the locally prescribed conductor bounds.
 2. **Exceptional:** $\mathbb P\bar\rho(G_F)$ is $A_4$, $S_4$, or $A_5$. The projective cutout field has degree $12$, $24$, or $60$, respectively, and each quotient of the exceptional group supplies an abelian subextension subject to the ray-class restrictions.
@@ -774,7 +797,7 @@ Every clause serves a different purpose. The determinant controls scalars. Absol
 
 If absolute irreducibility is omitted, Borel and cyclic alternatives must be restored.
 
-**Proof.** The first reduction is Theorem 3.1 together with Section 4.1. The dihedral description and conductor assertion are Theorem 4.1 and Section 6.4. The degrees in the exceptional case are the group orders. Proposition 4.2 identifies the subfield in the large case. $\square$
+**Proof.** The first reduction is Theorem 3.1 together with Section 4.1. The dihedral description and conductor assertion are Theorem 4.1 and Section 6.4. The degrees in the exceptional case are the group orders. Proposition 4.2 identifies the subfield in the large case when $|k_0|>3$; the only remaining possibility under $\ell>2$ is $k_0=\mathbf F_3$, already the prime field in the definition of $k_{\mathrm{ptr}}$. The alternatives overlap only at the small coincidences listed after Theorem 3.1; when a disjoint decision tree is wanted, declare the large branch first, then the exceptional branch, then the dihedral branch. $\square$
 
 The theorem “determines” small image in the useful sense: it converts it into quadratic character data or one of three explicit finite groups. Eliminating those alternatives requires arithmetic information about the particular $F$ and local datum; it cannot be done from the adjective hardly ramified alone.
 
@@ -786,7 +809,7 @@ $$
 \det\bar\rho(c)=-1.
 $$
 
-Since $\ell>2$, the eigenvalues are $1$ and $-1$ after scaling, so $\mathbb P\bar\rho(c)$ is a nontrivial involution. In particular complex conjugation is not projectively scalar.
+Since $\ell>2$, the equations $c^2=1$ and $\det\bar\rho(c)=-1$ force the two eigenvalues to be $1$ and $-1$, so $\mathbb P\bar\rho(c)$ is a nontrivial involution. In particular complex conjugation is not projectively scalar.
 
 In a dihedral branch, $c$ may lie in the rotation subgroup or the reflection coset. In the latter case the inducing quadratic field is imaginary at that real place; in the former it is real there. Oddness alone does not choose between these possibilities because a diagonal rotation can also have determinant $-1$ after restoring scalars. The determinant and local character calculation must be retained.
 
@@ -909,7 +932,7 @@ The same reasoning applies to trivial coefficients. Thus central scalar extensio
 
 The large branch has order divisible by $\ell$, so averaging is unavailable. The required replacement is an explicit rank-one calculation.
 
-**Proposition 8.2.** Let $q=\ell^f$ with $\ell\ge7$, let $V$ be the natural two-dimensional $\mathbf F_q$-module, and let $k$ contain $\mathbf F_q$. Then
+**Proposition 8.2.** Let $q=\ell^f>5$ with $\ell\ge5$, let $V$ be the natural two-dimensional $\mathbf F_q$-module, and let $k$ contain $\mathbf F_q$. Then
 
 $$
 H^1(\operatorname{SL}_2(\mathbf F_q),k)=0,
@@ -918,9 +941,19 @@ H^1(\operatorname{SL}_2(\mathbf F_q),\operatorname{ad}^0V)=0.
 \tag{8.6}
 $$
 
-**Proof strategy.** The first group vanishes because $\operatorname{SL}_2(\mathbf F_q)$ is perfect. For the second, restrict a cocycle to the upper unipotent subgroup, use the diagonal torus to isolate weights, subtract a coboundary, and then use the Weyl element and the elementary generators.
+**Proof strategy.** Restriction to the upper Borel is injective because its index is $q+1$, a unit in characteristic $\ell$. Inside the Borel, averaging over the diagonal torus reduces the calculation to three explicit additive-polynomial weight equations on the upper unipotent group.
 
-**Proof.** Write
+**Proof.** Put $S=\operatorname{SL}_2(\mathbf F_q)$ and let $B=U\rtimes T$ be its upper Borel. The composite of restriction and corestriction on $H^1(S,M)$ is multiplication by
+$[S:B]=q+1$, which equals $1$ in characteristic $\ell$. Thus
+
+$$
+H^1(S,M)\longrightarrow H^1(B,M)
+\tag{8.7}
+$$
+
+is injective for every $k[S]$-module $M$.
+
+Take $M=\operatorname{ad}^0V$ and write
 
 $$
 e=\begin{pmatrix}0&1\\0&0\end{pmatrix},\quad
@@ -928,14 +961,20 @@ h=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
 f=\begin{pmatrix}0&0\\1&0\end{pmatrix}.
 $$
 
-For $d(t)=\operatorname{diag}(t,t^{-1})$, conjugation has weights $t^2,1,t^{-2}$ on $e,h,f$. Let $z$ be a cocycle. Since the torus $T$ has order prime to $\ell$, subtract a coboundary so that $z|_T=0$. From
+For $d(t)=\operatorname{diag}(t,t^{-1})$, conjugation has weights $t^2,1,t^{-2}$ on $e,h,f$. Let $z$ be a cocycle on $B$. Since $|T|=q-1$ is prime to $\ell$, averaging lets us subtract a coboundary so that $z|_T=0$. From
 
 $$
 d(t)u(a)d(t)^{-1}=u(t^2a)
-\tag{8.7}
+\tag{8.8}
 $$
 
-and the cocycle identity, the three coordinates of $z(u(a))$ satisfy respectively the weight relations of degrees $2,0,-2$. To make the coefficient step explicit, conjugation by $u(a)$ acts through
+the cocycle identity gives exact $T$-equivariance. Write
+
+$$
+z(u(a))=A(a)e+B(a)h+C(a)f.
+$$
+
+Conjugation by $u(a)$ acts through
 
 $$
 e\longmapsto e,
@@ -945,7 +984,7 @@ h\longmapsto h-2ae,
 f\longmapsto f+ah-a^2e.
 $$
 
-Write $z(u(a))=A(a)e+B(a)h+C(a)f$. Substitution in $u(a+b)=u(a)u(b)$ gives
+Substitution in $u(a+b)=u(a)u(b)$ gives
 
 $$
 \begin{aligned}
@@ -955,24 +994,37 @@ A(a+b)&=A(a)+A(b)-2aB(b)-a^2C(b).
 \end{aligned}
 $$
 
-Equation (8.7) gives the corresponding three torus-weight identities. Comparing these identities for all $a,b,t\in\mathbf F_q$, and then using the same equations after conjugation by $w$, leaves exactly the coboundary solutions. Equivalently,
+while (8.8) gives
 
 $$
-z(u(a))=u(a)m-m
-\tag{8.8}
+ A(t^2a)=t^2A(a),\qquad
+ B(t^2a)=B(a),\qquad
+ C(t^2a)=t^{-2}C(a).
+\tag{8.9}
 $$
 
-for one $m$ fixed by $T$. Subtract this coboundary as well; then $z$ vanishes on $T$ and on the upper unipotent group $U$.
-
-Let $w=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$. From $w^2=-I$, whose adjoint action is trivial, we get $(1+w)z(w)=0$. The relation $wd(t)w^{-1}=d(t^{-1})$ says $z(w)$ is $T$-fixed, hence is a multiple of $h$. But $whw^{-1}=-h$, and $(1+w)z(w)=0$ leaves this possibility; the relation
+We now solve these equations rather than hiding the coefficient comparison. The first cocycle equation says that $C$ is additive. Every additive map $\mathbf F_q\to k$ has a unique linearized-polynomial expression
 
 $$
-w u(1) w^{-1}=v(-1)
+C(a)=\sum_{i=0}^{f-1}c_i a^{\ell^i}.
 $$
 
-together with the elementary identity expressing $d(t)$ through $u$ and $v$ forces that multiple to be zero. Thus $z(w)=0$. Since $wUw^{-1}$ is the lower unipotent group and $U,w$ generate $\operatorname{SL}_2(\mathbf F_q)$, $z=0$.
+The last identity in (8.9) says that a nonzero $c_i$ would force
+$q-1$ to divide $2(\ell^i+1)$. For $f=1$ this would make
+$\ell-1$ divide $4$, excluded by $q>5$; for $f>1$ one has
+$q-1>2(\ell^{f-1}+1)$. Hence $C=0$.
 
-The last comparison is ordinary polynomial coefficient comparison of degree at most four. In characteristics at least seven its coefficients $2,3,4,5$ remain distinguishable; in characteristics three and five additional solutions may survive. Finally, elementary matrices show that $\operatorname{SL}_2(\mathbf F_q)$ is perfect for $q>3$: commutators with $d(t)$ generate $U$ and its opposite, and these generate the group. Hence $H^1(\operatorname{SL}_2(\mathbf F_q),k)=\operatorname{Hom}(\operatorname{SL}_2(\mathbf F_q),k^+)=0$. $\square$
+The second cocycle equation now makes $B$ additive. Its weight identity would force $q-1\mid2\ell^i$ for a nonzero linearized coefficient. Since $q-1$ is prime to $\ell$ and $q>3$, this is impossible, so $B=0$. Finally $A$ is additive, and its weight identity permits only the term $A(a)=ca$: for $i>0$ it would require
+$q-1\mid2(\ell^i-1)$, whose positive right side is smaller than $q-1$. Therefore
+
+$$
+z(u(a))=cae=u(a)(-c h/2)-(-c h/2).
+$$
+
+This is a coboundary coming from the $T$-fixed vector $-ch/2$. After subtracting it, $z$ vanishes on both $U$ and $T$, hence on $B$. Thus $H^1(B,M)=0$, and injectivity of (8.7) proves the adjoint vanishing.
+
+For trivial coefficients, $S$ is perfect. Indeed choose $t$ with $t^2\ne1$; the commutators $[d(t),u(a)]$ run through all of $U$, and conjugation by the Weyl element does the same for the lower unipotent group. Those two elementary groups generate $S$. Hence
+$H^1(S,k)=\operatorname{Hom}(S,k^+)=0$. $\square$
 
 If $G$ contains $\operatorname{SL}_2(\mathbf F_q)$ normally with quotient of order prime to $\ell$, inflation--restriction and taking quotient invariants extend (8.6) to $G$.
 
@@ -994,7 +1046,7 @@ $$
 \operatorname{ad}^0\rho
 \simeq k(\delta)\oplus
 \operatorname{Ind}_{\Gamma_M}^{\Gamma}\varphi.
-\tag{8.9}
+\tag{8.10}
 $$
 
 This can be checked directly. If
@@ -1009,7 +1061,7 @@ $$
 
 then $\Gamma_M$ acts on $e,f,h$ through $\varphi,\varphi^{-1},1$, while an antidiagonal element exchanges $e$ and $f$ and negates $h$.
 
-Formula (8.9) shows why merely calling a dihedral image “small” is inadequate. Its adjoint deformation problem separates into a quadratic character direction and an induced rotation direction. Globally, Shapiro's lemma identifies cohomology of the induced summand with cohomology over $M$. Locally, the conductors of $\delta$ and $\varphi$ can behave differently. In the finite image itself, however, Dickson's rotation order is prime to odd $\ell$, so averaging kills both first-cohomology groups.
+Formula (8.10) shows why merely calling a dihedral image “small” is inadequate. Its adjoint deformation problem separates into a quadratic character direction and an induced rotation direction. Globally, Shapiro's lemma identifies cohomology of the induced summand with cohomology over $M$. Locally, the conductors of $\delta$ and $\varphi$ can behave differently. In the finite image itself, however, Dickson's rotation order is prime to odd $\ell$, so averaging kills both first-cohomology groups.
 
 There are two degeneracies. If $\varphi=1$, the original induction is reducible. If $\varphi$ has order two, the projective image is Klein four and more than one index-two subgroup may serve as a “rotation” subgroup. The intrinsic inducing field statement therefore requires either rotation order greater than two or an explicit choice among the three quadratic characters.
 
@@ -1019,7 +1071,7 @@ There are two degeneracies. If $\varphi=1$, the original induction is reducible.
 
 Absolute irreducibility says that the only invariant endomorphisms are scalars. Prime selection and deformation arguments need more: first cohomology must not hide infinitesimal image deformations, and semisimple elements must detect every endomorphism direction. Adequacy packages exactly these finite-group requirements.
 
-The condition is deliberately weaker than requiring the full image to contain $\operatorname{SL}_2(k)$. Prime-to-$\ell$ dihedral and exceptional images can be adequate even though they are small. Conversely, an image that looks large projectively at coefficient five can fail because its order is divisible by five and an adjoint cohomology class survives.
+The condition is deliberately weaker than requiring the full image to contain $\operatorname{SL}_2(k)$. Prime-to-$\ell$ dihedral and exceptional images can be adequate even though they are small. Conversely, projective $\operatorname{PSL}_2(\mathbf F_5)$ fails at coefficient five because a specific adjoint cohomology class survives; divisibility of the group order alone would not imply failure.
 
 ### 9.2 Definition and elementary permanence
 
@@ -1047,7 +1099,7 @@ is nondegenerate on $\operatorname{End}(V)$. Hence semisimple elements span if a
 
 **Lemma 9.1.** If $\ell\nmid|G|$ and $V$ is absolutely irreducible, then the semisimple elements of $G$ span $\operatorname{End}(V)$.
 
-**Proof.** Every element of $G$ is semisimple because its minimal polynomial divides $X^{|G|}-1$, which is separable. Burnside's theorem in dimension two says that the algebra generated by an absolutely irreducible matrix group over an algebraically closed field is the full endomorphism algebra. Here is a direct proof. If the generated algebra $A$ were proper, choose a nonzero vector with $Av$ of minimal positive dimension. If $Av$ were one-dimensional it would be a stable line. If it were two-dimensional, the maps in $A$ sending $v$ through a basis and the absence of a common invariant line produce the four matrix units by linear combinations, forcing $A=\operatorname{End}(V)$. Scalar descent then gives the assertion over $k$. Since every generator is semisimple, their linear span is full. $\square$
+**Proof.** Every element of $G$ is semisimple because its minimal polynomial divides the separable polynomial $X^{|G|}-1$. Let $A$ be the $k$-linear span of $G$. Since $G$ is a group, $A$ is already a unital algebra. Extend scalars to $\overline k$. Choose a nonscalar $g\in G$; it has two distinct eigenvalues, and interpolation in $g$ puts the two eigenline projectors $e_{11},e_{22}$ in $A\otimes_k\overline k$. Absolute irreducibility supplies an element with nonzero lower-left entry and an element with nonzero upper-right entry in this eigenbasis. Multiplying them on the left and right by the two projectors puts nonzero multiples of $e_{21}$ and $e_{12}$ in the algebra. Thus all four matrix units lie in $A\otimes_k\overline k$, so this algebra is $M_2(\overline k)$. Dimension is unchanged by scalar extension, hence $A=M_2(k)$. Since every member of $G$ is semisimple, this is precisely the required semisimple span. $\square$
 
 ### 9.4 Dihedral and exceptional prime-to-ell images
 
@@ -1092,7 +1144,13 @@ $$
 
 This is semisimple, being conjugate to $d(t)$, and subtracting $d(t)$ produces a nonzero multiple of $e_{12}$. Conjugation by the Weyl element produces $e_{21}$. Together with diagonal matrices these form a basis of $M_2$. $\square$
 
-Combining Lemma 10.1 with Proposition 8.2 proves adequacy for the special-linear core. If $G$ normalizes that core and the quotient has order prime to $\ell$, inflation--restriction preserves the cohomology vanishings, while the same semisimple matrices remain in $G$ and continue to span.
+We also need to pass honestly from a projective core to matrices.
+
+**Projective lifting lemma.** Suppose $G\subset\operatorname{GL}_2(\overline k)$ and $\overline G$ contains a conjugate of $\operatorname{PSL}_2(\mathbf F_q)$ in defining characteristic $\ell$, with $q>3$. After the same conjugation, $G$ contains $\operatorname{SL}_2(\mathbf F_q)$.
+
+**Proof.** Consider a standard projective upper unipotent $\overline{u(a)}$ with $a\ne0$. Its inverse image in $G$ is a coset under the scalar kernel $C$, whose order is prime to $\ell$. If $x$ is any lift, then $x^\ell\in C$. The map $c\mapsto c^\ell$ is an automorphism of $C$, so the coset contains a unique element $y$ with $y^\ell=1$. Projectively $y$ is $u(a)$, hence as a matrix it is $\lambda u(a)$. In characteristic $\ell$, the equation $y^\ell=1$ forces $\lambda=1$. Thus every upper unipotent $u(a)$ in the projective core actually belongs to $G$. The same argument applies to the lower unipotents. These elementary matrices generate $\operatorname{SL}_2(\mathbf F_q)$. $\square$
+
+The special-linear subgroup supplied by this lemma is normal in $G$: its projectivization is normal in the group lying between $\operatorname{PSL}_2$ and $\operatorname{PGL}_2$, and the unique lifts of projective unipotents are preserved by conjugation. The quotient consists of the scalar kernel and at most the projective determinant quotient, so its order is prime to $\ell$. Combining Lemma 10.1 with Proposition 8.2 and inflation--restriction therefore proves adequacy for every such large branch.
 
 ### 10.2 The theorem for coefficient primes at least seven
 
@@ -1100,7 +1158,7 @@ Combining Lemma 10.1 with Proposition 8.2 proves adequacy for the special-linear
 
 **Proof.** Apply Dickson's classification to $\overline G$. Borel and cyclic cases are excluded by absolute irreducibility. In the dihedral case the projective order is prime to $\ell$, so Proposition 9.2 applies. In the exceptional case $\ell\nmid60$, so the same proposition applies.
 
-In the remaining case, $\overline G$ contains $\operatorname{PSL}_2(k_0)$ for a finite field $k_0$ of characteristic $\ell$. Its inverse image has a normal special-linear central cover, and the quotient contributed by scalars and projective determinants has order prime to $\ell$. Proposition 8.2 and Lemma 10.1, followed by inflation--restriction, give all adequacy clauses. $\square$
+In the remaining case, $\overline G$ contains $\operatorname{PSL}_2(k_0)$ for a finite field $k_0$ of characteristic $\ell$. The projective lifting lemma supplies a normal $\operatorname{SL}_2(k_0)$ subgroup with prime-to-$\ell$ quotient. Proposition 8.2 and Lemma 10.1, followed by inflation--restriction, give all adequacy clauses. $\square$
 
 The theorem says **every absolutely irreducible** two-dimensional image is adequate at $\ell\ge7$; it does not say every such image contains $\operatorname{SL}_2(k)$. Adequacy is the cohomological conclusion, while “big image” is a stronger group-containment conclusion.
 
@@ -1115,7 +1173,16 @@ $$
 \tag{10.1}
 $$
 
-**Proof.** If $w$ paired trivially with every semisimple element, adequacy and nondegeneracy of the trace pairing would give $w=0$. Thus some semisimple $g$ has nonzero pairing. A scalar $g$ pairs trivially with $w$ because $\operatorname{tr}w=0$, so $g$ is nonscalar. In dimension two a nonscalar semisimple element has two distinct eigenvalues after a finite coefficient extension, hence is regular semisimple. $\square$
+**Proof.** If $w$ paired trivially with every semisimple element, adequacy and nondegeneracy of the trace pairing would give $w=0$. Thus some semisimple $g$ has nonzero pairing. A scalar $g$ pairs trivially with $w$ because $\operatorname{tr}w=0$, so $g$ is nonscalar. In dimension two a nonscalar semisimple element has two distinct eigenvalues $\alpha,\beta$ after a finite coefficient extension, hence is regular semisimple. If $e_{g,\alpha}$ is the projector onto the $\alpha$-eigenline, then
+
+$$
+g=\beta I+(\alpha-\beta)e_{g,\alpha},
+\qquad
+\operatorname{tr}(wg)=(\alpha-\beta)
+\operatorname{tr}(w e_{g,\alpha}).
+$$
+
+Thus the corresponding eigenprojector also detects $w$, which is the form used in prime selection. $\square$
 
 This is the algebraic heart of auxiliary-prime selection: a cohomology class has a direction, and a regular semisimple conjugacy class detects it. Distribution of that conjugacy class among arithmetic primes is a separate global input.
 
@@ -1150,7 +1217,7 @@ When $G/H$ has order prime to $\ell$, $H^1(G/H,k)=0$ automatically by averaging.
 
 The reverse direction requires more. If $G$ is adequate and $H\triangleleft G$ has prime-to-$\ell$ index, $H$ need not remain absolutely irreducible. Proposition 5.1 shows the rank-two failure: $H$ may preserve two lines exchanged by $G$. Cyclotomic restriction is precisely such a normal prime-to-$\ell$ restriction, which is why its absolute irreducibility appears as a separate hypothesis.
 
-There is also a useful equality-of-image criterion. If $N\triangleleft\Gamma$ and the full cutout field of $\rho$ is linearly disjoint from the fixed field of $N$, then $\rho(N)=\rho(\Gamma)$. Adequacy is then literally unchanged, with no permanence theorem needed. Arithmetic constructions should prefer this stronger situation whenever they can impose disjointness.
+There is also a useful equality-of-image criterion in a Galois setting. If $N\triangleleft\Gamma$ and the full cutout field of $\rho$ is linearly disjoint from the fixed field of $N$, then $\rho(N)=\rho(\Gamma)$. Adequacy is then literally unchanged, with no permanence theorem needed. Arithmetic constructions should prefer this stronger situation whenever they can impose disjointness.
 
 ### 10.6 Worked adequacy decisions
 
@@ -1173,7 +1240,7 @@ A_5\simeq\operatorname{PSL}_2(\mathbf F_5).
 \tag{11.1}
 $$
 
-Thus “exceptional” and “large over the prime field” meet at precisely the point where the weight-separation argument in Proposition 8.2 can fail. Averaging is unavailable, and absolute irreducibility alone no longer forces adjoint $H^1$ to vanish.
+Thus “exceptional” and “large over the prime field” meet at precisely the one field excluded from Proposition 8.2. Averaging is unavailable, and absolute irreducibility alone no longer forces adjoint $H^1$ to vanish.
 
 The dihedral cases whose projective order is prime to five remain adequate. The groups $A_4$ and $S_4$ also remain prime-to-five and hence adequate. The only new two-dimensional obstruction in the Dickson list is the icosahedral projective image.
 
@@ -1188,31 +1255,57 @@ $$
 
 Consequently a matrix group with projective image $A_5$ in its natural characteristic-five realization is not adequate.
 
-**Proof.** We record the calculation because it is exactly the boundary of the general theorem. Use the generators
+**Proof.** Restriction to the upper Borel is injective, exactly as in Proposition 8.2, because its index is six, which is a unit in characteristic five. We first compute the target of restriction. After killing the cocycle on the diagonal torus, use the functions $A,B,C$ and equations of (8.9). Since every additive map $\mathbf F_5\to\mathbf F_5$ is linear, those equations give
+
+$$
+C(a)=ca,\qquad B(a)=\frac c2a^2,
+\qquad A(a)=3ca^3+\alpha a.
+\tag{11.3}
+$$
+
+Conversely these formulas satisfy all the equations. A coboundary from the torus-fixed line $\mathbf F_5h$ changes $\alpha$ arbitrarily and leaves $c$ unchanged. Hence
+
+$$
+\dim H^1(B,\operatorname{ad}^0V)=1,
+$$
+
+and injectivity gives an upper bound of one for the group in (11.2).
+
+To exhibit the surviving class without appealing to an incomplete list of relations, put
 
 $$
 u=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
-w=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
-d=\begin{pmatrix}2&0\\0&3\end{pmatrix}.
+w=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad m=e+f.
 $$
 
-They satisfy $u^5=1$, $w^2=-I$, $d^2=-I$, $dud^{-1}=u^4$, and the elementary Bruhat relations. Write a cocycle's values on $u,w,d$ in the basis $e,h,f$ of Section 8.4. Since $\langle d\rangle$ has order prime to five in the adjoint quotient, subtract a coboundary to make $z(d)=0$. The conjugation relation forces
+The binary icosahedral presentation
 
 $$
-z(u)=a e+b(h+2f)
+\operatorname{SL}_2(\mathbf F_5)
+=\langle x,y:x^2=y^3=(xy)^5,\ x^4=1\rangle
+\tag{11.4}
 $$
 
-for two parameters $a,b$. The relation $w^2=-I$ and the Bruhat relation force
+is realized by $x=w$ and $y=wu$. Indeed the common power is $-I$; modulo it this is the $(2,3,5)$ presentation of $A_5$, so the presented group has order at most $120$, while the displayed matrices generate the group of order $120$. Define
 
 $$
-z(w)=b(e-f)+\text{the coboundary determined by }a.
+z(x)=0,\qquad z(y)=-m.
 $$
 
-Subtracting that last coboundary kills $a$ and leaves one free parameter $b$. Direct substitution in the remaining relations shows that every $b$ gives a cocycle. A coboundary vanishing on $d$ comes from a $d$-fixed multiple of $h$; its value on $u$ has no $h+2f$ component, so it cannot kill $b$. Hence the quotient of cocycles by coboundaries is one-dimensional.
+Direct conjugation gives
 
-The center acts trivially on $\operatorname{ad}^0V$ and has order two, so (8.5) carries the same nonzero class to the projective $A_5$ action. $\square$
+$$
+z(x^2)=z(y^3)=z((xy)^5)=z(x^4)=0,
+$$
 
-The calculation also explains the failure in Proposition 8.2: over $\mathbf F_5$, the torus weights used there collide, leaving the $b$-direction.
+so (11.4) makes this a cocycle. Since $u=x^{-1}y$, it satisfies
+$z(u)=e+f$, whose $f$-coefficient is the nonzero parameter $c$ in (11.3). It is not a coboundary: if $z(w)=0$ forced
+$z(g)=gr-r$, then $r$ would lie in the $w$-fixed line
+$\mathbf F_5(e-f)$, but $u(e-f)-(e-f)$ is a multiple of $e-h$, never $e+f$. The upper bound is therefore attained.
+
+The center acts trivially on $\operatorname{ad}^0V$ and has order two, so (8.5) carries the same nonzero class to the projective $A_5$ action and to every central matrix lift. $\square$
+
+The calculation also explains the failure of the general weight argument: only over the prime field $\mathbf F_5$ does the $C(a)=ca$ weight survive.
 
 ### 11.3 Safe statements at five
 
@@ -1222,12 +1315,15 @@ The correct coefficient-five conclusion is therefore a case distinction.
 
 - If its projective image is cyclic or Borel, absolute irreducibility fails.
 - If its projective image is dihedral, $A_4$, or $S_4$, and has order prime to five, then $G$ is adequate.
-- If its projective image is $A_5\simeq\operatorname{PSL}_2(\mathbf F_5)$ in the natural characteristic-five realization, adequacy can fail and in the basic case does fail by Proposition 11.1.
-- If the projective image contains $\operatorname{PSL}_2(\mathbf F_{5^f})$ with $f>1$, it requires its own cohomological verification; it is not justified by quoting the $\ell\ge7$ theorem.
+- If its projective image is $A_5\simeq\operatorname{PSL}_2(\mathbf F_5)$, then $G$ is not adequate.
+- If its projective image is $\operatorname{PGL}_2(\mathbf F_5)$, then $G$ is adequate.
+- If the projective image contains $\operatorname{PSL}_2(\mathbf F_{5^f})$ with $f>1$, then $G$ is adequate.
 
-**Proof.** The first clause is Section 4.1. Dihedral, $A_4$, and $S_4$ projective orders are prime to five in the stated cases, so Proposition 9.2 proves the second clause. Proposition 11.1 proves the claimed failure for the natural $A_5$ lift. None of the preceding arguments proves the final large-field case: averaging fails because five divides the group order, while Proposition 8.2 assumes $\ell\ge7$. Thus that case is deliberately left as a required direct verification rather than assigned an unsupported conclusion. $\square$
+**Proof.** The first two clauses follow from Section 4.1 and Proposition 9.2. Proposition 11.1 proves failure for projective $A_5$ because central scalar kernels do not change adjoint first cohomology.
 
-This volume makes no blanket modularity-lifting or prime-selection assertion at five. Any theorem there must explicitly eliminate the icosahedral case or replace adequacy by a small-image argument. This is a mathematical boundary, not a matter of notation.
+For projective $\operatorname{PGL}_2(\mathbf F_5)$, use the normal special-linear core. Inflation--restriction identifies the adjoint $H^1$ with the invariants in the one-dimensional group (11.2) under the outer involution. Conjugation by $s=\operatorname{diag}(2,1)$ sends the parameter $c$ in (11.3) to $2^{-2}c=-c$, so those invariants vanish. The scalar $H^1$ also vanishes, and Lemma 10.1 supplies semisimple spanning. Thus this case is adequate. Finally, when $f>1$, Proposition 8.2 applies to the special-linear core and the projective lifting lemma plus prime-to-five inflation--restriction passes adequacy to $G$. $\square$
+
+This volume makes no blanket modularity-lifting or prime-selection assertion at five. Any theorem there must explicitly eliminate the projective $\operatorname{PSL}_2(\mathbf F_5)$ case or replace adequacy by a small-image argument. Projective $\operatorname{PGL}_2(\mathbf F_5)$ is not part of the obstruction. This is a mathematical boundary, not a matter of notation.
 
 ### 11.4 The smaller primes
 
@@ -1241,7 +1337,7 @@ $$
 
 fails. Oddness cannot be read as determinant $-1$, since $-1=1$. The entire dimension-two formulation must be modified.
 
-At $\ell=3$, the exceptional groups $A_4$ and $S_4$ have order divisible by three, and the coincidences
+At $\ell=3$, all three exceptional group orders are divisible by three, and the coincidences
 
 $$
 \operatorname{PSL}_2(\mathbf F_3)\simeq A_4,
@@ -1257,25 +1353,23 @@ These observations are not claims that every characteristic-three image is inade
 
 ### 12.1 Projectively large versus full special-linear image
 
-Suppose $q_0>3$ and $\overline G$ contains $\operatorname{PSL}_2(\mathbf F_{q_0})$. Let $G_0$ be its inverse image in $G$. Commutators kill scalar ambiguity, and the universal central extension represented by $\operatorname{SL}_2(\mathbf F_{q_0})$ yields
+Suppose $q_0>3$ and $\overline G$ contains $\operatorname{PSL}_2(\mathbf F_{q_0})$. Let $G_0$ be its inverse image in $G$. The projective lifting lemma of Section 10.1 gives
 
 $$
 \operatorname{SL}_2(\mathbf F_{q_0})\subseteq [G_0,G_0]
 \tag{12.1}
 $$
 
-after conjugating and extending coefficients if necessary.
-
-To see this concretely, lift upper and lower projective unipotents. Their orders are powers of $\ell$, while the scalar kernel has order prime to $\ell$, so each has a unique lift of the same $\ell$-power order. The commutator relations among these lifts are the elementary $\operatorname{SL}_2$ relations. They generate the special-linear subgroup; scalar errors vanish because an element simultaneously of $\ell$-power order and scalar prime-to-$\ell$ order is trivial.
+after conjugating and extending coefficients if necessary. Indeed the lemma gives the stronger containment $\operatorname{SL}_2(\mathbf F_{q_0})\subseteq G_0$. Since this special-linear group is perfect for $q_0>3$, it lies in $[G_0,G_0]$, proving (12.1). This route uses the unique order-$\ell$ lifts of the projective root elements and introduces no unverified scalar relations.
 
 Thus projective largeness supplies a special-linear core over $k_0$. It supplies $\operatorname{SL}_2(k)$ only if $k_0=k$.
 
 ### 12.2 A trace-field big-image criterion
 
-**Theorem 12.1.** Let $k$ have characteristic $\ell\ge7$, let $G\subset\operatorname{GL}_2(k)$ act absolutely irreducibly, and assume its projective image is in the large branch. If the projective trace field is $k$, then, after conjugation,
+**Theorem 12.1.** Let $k$ have characteristic $\ell\ge7$, let $G\subset\operatorname{GL}_2(k)$ act absolutely irreducibly, and assume its projective image is in the large branch. If the projective trace field is $k$, then there is $x\in\operatorname{GL}_2(\overline k)$ such that
 
 $$
-\operatorname{SL}_2(k)\subseteq G.
+\operatorname{SL}_2(k)\subseteq xGx^{-1}.
 \tag{12.2}
 $$
 
@@ -1372,7 +1466,7 @@ G=\{g\in\operatorname{GL}_2(k):\det g\in D\},
 \tag{12.7}
 $$
 
-The projective image is all of $\operatorname{PGL}_2(k)$ exactly when $D$ contains a nonsquare; if $D$ consists only of squares, it is $\operatorname{PSL}_2(k)$. Thus the projective distinction is already encoded by the determinant squareclasses.
+When $\operatorname{char}k$ is odd, the projective image is all of $\operatorname{PGL}_2(k)$ exactly when $D$ contains a nonsquare; if $D$ consists only of squares, it is $\operatorname{PSL}_2(k)$. In characteristic two every element of $k^\times$ is a square and $\operatorname{PSL}_2(k)=\operatorname{PGL}_2(k)$. Thus the projective distinction, when nontrivial, is encoded by the determinant squareclasses.
 
 To prove (12.7), take a matrix $x$ with determinant in $D$. Choose $g\in G$ with the same determinant. Then $xg^{-1}\in\operatorname{SL}_2(k)\subseteq G$, so $x\in G$. This elementary argument shows why determinant information completes a genuinely full projective image.
 
@@ -1392,7 +1486,7 @@ Next apply Dickson's theorem. A fixed projective point means reducibility. A cyc
 
 Then impose arithmetic. Unramified places remain unramified in every quotient. Multiplicative inertia is read from the minimal-discriminant exponent. Finite flatness at $\ell$ is kept as an integral model condition unless a separate theorem supplies a numerical ramification bound. Dihedral quadratic fields and exceptional abelian quotients are tested in the appropriate ray class groups.
 
-Finally address adequacy on the group that will actually be used. At $\ell\ge7$, absolute irreducibility suffices. For Taylor--Wiles applications this means absolute irreducibility after cyclotomic restriction. At five, isolate projective $A_5$ and perform a separate argument. Under base change, preserve the residual image by linear disjointness rather than by hope.
+Finally address adequacy on the group that will actually be used. At $\ell\ge7$, absolute irreducibility suffices. For Taylor--Wiles applications this means absolute irreducibility after cyclotomic restriction. At five, projective $\operatorname{PSL}_2(\mathbf F_5)$ is the obstruction; projective $\operatorname{PGL}_2(\mathbf F_5)$ and the larger subfield groups are adequate. Under base change, preserve the residual image by linear disjointness rather than by hope.
 
 ### 13.2 The package established
 
@@ -1400,4 +1494,4 @@ The finite subgroup theorem and the arithmetic interfaces now form one reusable 
 
 The cohomological conclusions are equally precise. Prime-to-$\ell$ absolutely irreducible images are adequate. Groups containing a defining-characteristic special-linear core are adequate in dimension two for $\ell\ge7$. Hence every absolutely irreducible two-dimensional residual image is adequate at those primes, including after cyclotomic restriction when that restriction remains absolutely irreducible. Adequacy supplies vanishing of scalar and adjoint first cohomology and regular semisimple detection; it does not replace separate adjoint-twist or local-condition checks.
 
-Coefficient five remains outside that uniform conclusion. The coincidence $A_5\simeq\operatorname{PSL}_2(\mathbf F_5)$ leaves a genuine adjoint cohomology class, so the icosahedral branch must be eliminated or handled directly. With that boundary explicit, the image theory is strong enough for later Taylor--Wiles prime selection and potential-modularity constructions without concealing a small-prime exception or a local ramification hypothesis.
+Coefficient five remains outside that uniform conclusion in one exact case. The coincidence $A_5\simeq\operatorname{PSL}_2(\mathbf F_5)$ leaves a genuine adjoint cohomology class, so that projective image must be eliminated or handled directly. The outer involution in $\operatorname{PGL}_2(\mathbf F_5)$ kills the class, and special-linear cores over $\mathbf F_{5^f}$ with $f>1$ satisfy the general calculation. With that boundary explicit, the image theory is strong enough for later Taylor--Wiles prime selection and potential-modularity constructions without concealing a small-prime exception or a local ramification hypothesis.
