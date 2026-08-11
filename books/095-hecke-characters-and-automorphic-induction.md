@@ -129,6 +129,8 @@ Its kernel is $N(C_M)$.
 
 Reciprocity is normalized arithmetically. Thus a uniformizer at an unramified finite place maps to **arithmetic Frobenius**, acting on the residue field by $x\mapsto x^{q_v}$. A Hecke character unramified at $v$ and its Galois avatar therefore have the same value on a uniformizer and on arithmetic Frobenius. No hidden inversion will occur later.
 
+The local correspondence used below was developed earlier with geometric Frobenius as the named generator. We transport it once and for all to the present convention: replace the geometric generator by its inverse and define the Weil character through arithmetic reciprocity. This relabeling changes no representation of $F_v^\times$ or $\mathrm{GL}_2(F_v)$, no conductor, and no analytic local factor; it only changes which inverse Frobenius is named in the Galois interpretation. Thus every formula below involving a uniformizer and arithmetic Frobenius is the translated form of that local dictionary, not a second incompatible normalization.
+
 At a finite place $v$ of $F$, write $q_v$ for the residue cardinality, $\nu_v=|\cdot|_v$, and $U_v^r=1+\mathfrak p_v^r$ for $r\geq1$, with $U_v^0=\mathcal O_v^\times$. Normalized parabolic induction on $\mathrm{GL}_2(F_v)$ is denoted
 
 $$
@@ -312,7 +314,7 @@ The extension argument also clarifies prescribed local conditions. Local charact
 
 ### 3.1 Arithmetic reciprocity without inversions
 
-Global class field theory gives a continuous homomorphism with dense image
+Global class field theory gives a continuous surjection
 
 $$
 \operatorname{Art}_M:C_M\longrightarrow G_M^{\mathrm{ab}}.
@@ -690,48 +692,91 @@ This archimedean dichotomy is the analytic reflection of the same regularity con
 
 ### 5.6 A direct local model and the wild boundary
 
-The preceding parameter descriptions must not be read as importing a classification beyond the available local theory. There is a direct model that also explains what the words “local induction” mean at a dyadic or wildly ramified place. Regard the quadratic étale algebra $E/K$ as the two-dimensional quadratic space
+The preceding parameter descriptions must not be read as importing a wild local correspondence from the tame theory. We now construct the missing representation. One subtlety is essential: a norm orbital integral sees only one of the two cosets of $N(E^\times)$ in $K^\times$. A construction on that coset alone cannot be a representation of all of $\mathrm{GL}_2(K)$. The similitude extension below supplies the second coset.
+
+Regard the quadratic étale algebra $E/K$ as the quadratic space
 
 $$
-(E,Q),\qquad Q(x)=N_{E/K}(x).
+V=(E,Q),\qquad Q(x)=N_{E/K}(x).
 $$
 
-Fix a nontrivial additive character $\Psi$ of $K$. The Fourier transform associated with the bilinear form
+Multiplication by $t\in E^\times$ is a similitude of $V$ with multiplier $N(t)$. Fix a nontrivial additive character $\Psi$ of $K$, put $m(a)=\operatorname{diag}(a,a^{-1})$, and let $\gamma(aQ,\Psi)$ denote the normalized Weil index of the quadratic form $aQ$. On $\mathcal S(V)$ put
 
 $$
-B(x,y)=\operatorname{Tr}_{E/K}(x\tau(y))
+\begin{aligned}
+\omega(n(b))\phi(x)&=\Psi(bQ(x))\phi(x),\\
+\omega(m(a))\phi(x)&=c_Q(a)|a|\phi(ax),\\
+\omega(w)\phi(x)&=\gamma(V,\Psi)\widehat\phi(x),
+\end{aligned}
 $$
 
-acts on $\mathcal S(E)$. Translation, dilation, and this Fourier transform satisfy the Bruhat relations for $\mathrm{GL}_2(K)$ after the usual Weil-index scalar is inserted. Multiplication by $t\in E^\times$ acts on $E$ with similitude ratio $N(t)$. On the group of matching similitudes one therefore has a representation on $\mathcal S(E)$. Projecting its $E^\times$-action to the $\theta$-isotypic quotient produces a smooth $\mathrm{GL}_2(K)$-module $\Theta_K(E,\theta)$.
+where the transform uses
 
-The quotient is nonzero. Indeed, choose a compact open subgroup $U\subset E^\times$ on which $\theta$ is trivial and a small additive ball $L\subset E$ stable under $U$. Averaging $1_L$ against $E^\times/U$ with the character $\theta^{-1}$ gives a nonzero isotypic vector after its support is restricted to finitely many valuation classes. Its Whittaker coefficient at $a\in K^\times$ is an orbital integral over the norm fiber $N(x)=a$:
+$$
+B(x,y)=\operatorname{Tr}_{E/K}(x\tau(y)),
+$$
+
+the measure is self-dual, $c_Q(a)$ is the normalized quotient of $\gamma(aQ,\Psi)$ by $\gamma(Q,\Psi)$ with the inverse chosen according to the displayed positive Fourier phase, and $\gamma(V,\Psi)$ is the corresponding Fourier scalar. These constants are not decorative. Fourier inversion gives $\omega(w)^2=\omega(-1)$; changing variables gives the diagonal conjugation relation; and completing the square in
+
+$$
+\int_V\Psi(aQ(x)+B(x,y))\,dx
+$$
+
+gives the remaining Bruhat relation. Those three calculations prove that the displayed operators define the Weil action, rather than merely a projective action. The product and change-of-variable formulas for the same Gaussian integral extend it to
+
+$$
+R(K)=\{(g,t)\in\mathrm{GL}_2(K)\times E^\times:\det g=N(t)\}.
+$$
+
+Put
+
+$$
+G^+=\{g\in\mathrm{GL}_2(K):\det g\in N(E^\times)\}.
+$$
+
+Project the $E^1$-action to the character induced by $\theta$. For $g\in G^+$ choose $t_g$ with $N(t_g)=\det g$ and act through $(g,t_g)$, multiplying by $\theta(t_g)^{-1}$. Replacing $t_g$ by $t_gu$ with $u\in E^1$ changes the Weil action and the scalar by inverse factors, so the operator is independent of the choice. Multiplication of two choices differs by the same norm-one calculation, proving the group law. This gives a smooth representation $\Theta_K^+(E,\theta)$ of $G^+$.
+
+For a quadratic field, $G^+$ has index two in $\mathrm{GL}_2(K)$. Define
+
+$$
+\Theta_K(E,\theta)
+=\operatorname{Ind}_{G^+}^{\mathrm{GL}_2(K)}
+\Theta_K^+(E,\theta).
+$$
+
+Conjugation by the other coset changes $\theta$ to $\theta^\tau$. Thus the two Mackey summands are inequivalent exactly when $\theta\ne\theta^\tau$; this is the source of irreducibility below. For the split algebra the norm is surjective, so $G^+=\mathrm{GL}_2(K)$ and the same construction separates into the two coordinate characters.
+
+This quotient is nonzero. Choose a compact open subgroup $U\subset E^\times$ on which $\theta$ is trivial and a small $U$-stable ball $L\subset E$. Average $1_L$ over the finitely many valuation classes meeting its support with weight $\theta^{-1}$. The value at a point whose stabilizer lies in $U$ is a nonzero multiple of $1_L$, so the average does not vanish.
+
+On the determinant norm component, its Whittaker functions have the orbital form
 
 $$
 W_{\phi,\theta}
 \left(\begin{pmatrix}a&0\\0&1\end{pmatrix}\right)
 =|a|^{1/2}
-\int_{E^1}\phi(x_a t)\theta(x_a t)\,dt,
+\int_{E^1}\phi(x_at)\theta(x_at)\,dt,
+\qquad N(x_a)=a.
 $$
 
-whenever $x_a\in E^\times$ has norm $a$, and it is zero if $a$ is not a norm. Changing $x_a$ only translates the compact group $E^1$, so the expression is well defined. In the split algebra the two norm coordinates separate and the formula unfolds to the Kirillov model of $I(\theta_1,\theta_2)$.
+Changing $x_a$ translates the compact group $E^1$ and changes both factors compatibly. The induced second component gives the same formula on the other coset of $N(E^\times)$. Therefore varying $\phi$ gives every compactly supported locally constant function on each of the two open norm cosets, hence all of $C_c^\infty(K^\times)$ in the regular field case. In the split algebra the two coordinates separate and the formula instead gives the usual two asymptotic tails of $I(\theta_1,\theta_2)$.
 
-In the field case, varying $\phi$ on a small norm fiber and translating by the diagonal torus produces every compactly supported locally constant Kirillov function. The upper unipotent acts by the nontrivial characters $a\mapsto\Psi(ax)$, so a nonzero invariant subspace contains one such compactly supported function after averaging over a sufficiently small additive subgroup. Diagonal translations move its support through all valuation shells, and the Weyl Fourier transform moves between a ball and its annihilator. These operations generate the whole compactly supported Kirillov space. Thus the regular theta quotient is irreducible. It has no nonzero Jacquet quotient: a hypothetical torus exponent would define a boundary functional, and comparing the two open norm orbits would force $\theta=\theta^\tau$. Hence it is supercuspidal. If $\theta=\mu\circ N$, the two boundary functionals survive and give the principal datum $\mu\oplus\mu\eta_{E/K}$.
+We can now prove the representation-theoretic dichotomy. Suppose $E$ is a field and $\theta\ne\theta^\tau$. A nonzero invariant subspace contains a compactly supported Kirillov function after averaging against a sufficiently small upper-unipotent subgroup. Diagonal translation moves it through both norm cosets and all valuation shells, while the Weyl Fourier operator moves a ball to its annihilator. The preceding spanning result then gives the entire Kirillov space, so $\Theta_K(E,\theta)$ is irreducible. A Jacquet functional would be a boundary distribution on the two norm cosets. The Weyl relation identifies their exponents, while the $E^\times$-isotypic relation makes them transform by $\theta$ and $\theta^\tau$; a nonzero boundary distribution would force $\theta=\theta^\tau$. Thus the regular quotient has zero Jacquet module and is supercuspidal. If $\theta=\mu\circ N$, the two boundary distributions survive with exponents $\mu$ and $\mu\eta_{E/K}$, giving the irreducible principal series $I(\mu,\mu\eta_{E/K})$.
 
-Fourier transformation gives the local functional equation. Applying the rank-one equation over $E$ to the Mellin transform of the displayed orbital integral yields
+Finally, Mellin transformation of the orbital formula and the rank-one local equation over $E$ give
 
 $$
 \gamma(s,\Theta_K(E,\theta),\Psi)
 =\lambda(E/K,\Psi)\gamma(s,\theta,\Psi\circ\operatorname{Tr}_{E/K}).
 $$
 
-The central action is $\eta_{E/K}\theta|_{K^\times}$, and the trace-dual lattice is $\mathfrak D_{E/K}^{-1}$. Comparing the first lattice on which the orbital integral is fixed with its trace dual gives
+The Gaussian change-of-variable factor shows that the center acts by $\eta_{E/K}\theta|_{K^\times}$. The trace dual of $\mathcal O_E$ is $\mathfrak D_{E/K}^{-1}$. At the first invariant lattice, the Fourier operator therefore contributes the discriminant exponent in $K$, while the character filtration contributes $f(E/K)a_E(\theta)$. Hence
 
 $$
 a_K(\Theta_K(E,\theta))
-=d(E/K)+f(E/K)a_E(\theta).
+=d(E/K)+f(E/K)a_E(\theta),
 $$
 
-These three invariants—central character, gamma factor, and conductor—agree with induction of the rank-one Weil character. In the tame range this identifies $\Theta_K(E,\theta)$ with the dihedral representation established by the local theory. In the wild range the same theta quotient is the definition used here; the Fourier calculation proves exactly the local identities needed globally. No unproved assertion about a raw compact induction from $E^\times$ is being made. The construction also shows why rectifying constants appear in type-theoretic descriptions: they are the Weil indices needed for the Bruhat relations and for the displayed lambda factor.
+where $d(E/K)$ is the exponent in $K$ of the discriminant ideal. These are precisely the determinant, factor, and conductor identities for induction of the rank-one Weil character. In the tame range, the recognition theorem already proved for the local correspondence identifies this quotient with the rectified dihedral representation. In the dyadic wild range, the quotient itself supplies the required local representation, and the calculation proves its complete local dictionary. No raw compact induction from $E^\times$, and no missing determinant coset, is being smuggled into the argument.
 
 ## 6. Local invariants and exceptional behavior
 
@@ -987,6 +1032,8 @@ $$
 
 is invariant under $R(F)$. Mellin projection of the $t$-variable against $\psi$ gives the same functions as the Whittaker construction. The norm-one torus quotient occurring in this projection is compact because $M$ is a field. This gives convergence and explains why the quadratic norm, rather than an arbitrary binary form, carries the inducing character.
 
+There is one necessary qualification. The projection of $R(\mathbf A_F)$ to $\mathrm{GL}_2(\mathbf A_F)$ contains only determinants in the adelic norm group. On that subgroup, choose a matching $t_g$ and project the norm-one torus action against $\psi$; changing $t_g$ by a norm-one idele cancels between the Weil action and the character, exactly as in Section 5.6. The restricted tensor product of the local index-two extensions then supplies every adelic determinant class. The product formula for Weil indices makes the rational splitting genuine. Thus the resulting Whittaker function is defined on every determinant class; it is not a function on the global norm subgroup silently extended by zero.
+
 ### 7.3 The global Whittaker series
 
 Put $W_\varphi=\prod_vW_{\varphi_v,\psi_v}$. Define
@@ -1011,7 +1058,19 @@ $$
 
 The local definition makes right translation by $w$ into Fourier transform on $M_v$. Global Poisson summation on the additive space $M$ says that the sum of $\varphi$ over $M$ equals the sum of its Fourier transform over $M$. After Mellin projection, the zero orbit contributes a boundary functional proportional to the average of $\psi/\psi^\sigma$ on the norm-one torus quotient. When $\psi\ne\psi^\sigma$, character orthogonality kills this functional, so Poisson summation gives the exact Weyl transformation of $\Theta_{\varphi,\psi}$. Since $N(F)$, the diagonal torus, and $w$ generate $\mathrm{GL}_2(F)$ through Bruhat decomposition, the regular series is automorphic.
 
-When $\psi=\psi^\sigma$, the boundary functional does not vanish. Writing $\psi=\mu\circ N_{M/F}$, the two zero-orbit contributions transform through $\mu$ and $\mu\eta$. Adding them to the displayed nonconstant series gives the standard Eisenstein realization of the isobaric sum $\mu\boxplus\mu\eta$, initially in a convergence chamber and then at the desired parameter by the usual continuation of Eisenstein series. Thus Poisson summation proves a precise alternative: the Whittaker-only series is a cusp form in the regular case, while in the descended case its automorphic completion has the two required constant terms.
+When $\psi=\psi^\sigma$, the boundary functional does not vanish. Writing $\psi=\mu\circ N_{M/F}$, the two zero-orbit contributions transform through $\mu$ and $\mu\eta$. We briefly justify the required Eisenstein completion. For a flat section $f_s$ of
+
+$$
+I(\mu|\cdot|^s,\mu\eta|\cdot|^{-s}),
+$$
+
+the series
+
+$$
+E(g,f_s)=\sum_{\gamma\in B(F)\backslash\mathrm{GL}_2(F)}f_s(\gamma g)
+$$
+
+converges when $\operatorname{Re}(s)$ is large. Unfolding its constant term gives $f_s+M(s)f_s$. On a factorable section, the intertwiner $M(s)$ is a product of rank-one Tate integrals for the quotient character $\eta|\cdot|^{-2s}$. The continuation and functional equation already proved for those integrals therefore continue $M(s)$ and $E(g,f_s)$; the nonconstant Fourier coefficients are the same continued Whittaker integrals. At $s=0$ there is no pole, because the only constant-term pole on the unitary axis would require the two inducing characters to coincide, whereas $\eta$ is the nontrivial quadratic character of $M/F$. Consequently $E(g,f_0)$ realizes the isobaric sum $\mu\boxplus\mu\eta$. Its two constant terms are exactly the two zero-orbit terms above. Thus Poisson summation proves a precise alternative: the Whittaker-only series is a cusp form in the regular case, while in the descended case its automorphic completion has the two required constant terms.
 
 No rational invariance is hidden here. For $u\in F$, left translation by $n(u)$ multiplies the summand indexed by $a$ by $\Psi(ua)=1$. For $r\in F^\times$, left translation by $\operatorname{diag}(r,1)$ replaces $a$ by $ra$. Rational scalar matrices act through $\eta\psi|_{C_F}$, which is trivial on diagonal $F^\times$. Bruhat decomposition reduces every remaining rational matrix to the Weyl calculation.
 
@@ -1678,14 +1737,13 @@ $$
 \chi(h)\not\equiv\chi^\sigma(h)\pmod\lambda.
 $$
 
-By Chebotarev, one may often take $h=\operatorname{Frob}_\mathfrak P$ at a prime away from all ramification. Thus it is enough to find $\mathfrak P$ with
+For an algebraic Hecke character, a Frobenius witness exists without invoking a prime-density theorem. Let $\Psi$ and $\Psi^\sigma$ be the two ideal characters away from a common modulus. If they were equal, their principal-ideal rules would agree on every $a\equiv1$ modulo that modulus. This congruence set is Zariski dense in the multiplicative torus $\operatorname{Res}_{M/\mathbf Q}\mathbf G_m$: after choosing a $\mathbf Z$-basis of the modulus, a Laurent polynomial vanishing on all tuples $1+n_1b_1+\cdots+n_rb_r$ vanishes identically by induction on the integers $n_i$. Two monomial characters agreeing there therefore have the same integral infinity exponents. The remaining finite ray characters then agree as well, so $\psi=\psi^\sigma$. Thus noninvariance makes the quotient ideal character nontrivial. Choose an ideal on which it is nontrivial and factor that ideal into primes. At least one prime factor $\mathfrak P$, away from the common modulus, satisfies
 
 $$
-\psi(\mathfrak P)\not\equiv
-\psi(\mathfrak P^\sigma)\pmod\lambda.
+\psi(\mathfrak P)\ne\psi(\mathfrak P^\sigma).
 $$
 
-Only finitely many $\lambda$ divide a fixed nonzero difference. Hence if $\psi\ne\psi^\sigma$, residual induction is irreducible for all but finitely many coefficient primes. This finiteness conclusion is much stronger than checking a separate matrix calculation for every $\lambda$.
+Their difference is a nonzero algebraic number. Only finitely many $\lambda$ divide it, and for every other $\lambda$ the displayed inequality remains true modulo $\lambda$. Hence if $\psi\ne\psi^\sigma$, residual induction is irreducible for all but finitely many coefficient primes. This argument uses unique factorization of ideals, not an unlisted density theorem.
 
 ### 13.6 What reduction preserves in the automorphic data
 
@@ -1864,9 +1922,9 @@ $$
 
 is absolutely irreducible, has determinant $\bar\nu\,\bar\epsilon_\ell^{\,W}$ in the arithmetic convention, and retains every prescribed prime-to-$\ell$ inertial distinction. Its automorphic source $\operatorname{AI}_{M/F}(\psi)$ is cuspidal and has the explicitly calculated local components of Chapters 5 and 6.
 
-**Proof strategy.** Solve one finite character-extension problem, force noninvariance at one auxiliary prime, and then exclude the coefficient primes at which one of finitely many witnessing differences vanishes.
+**Proof strategy.** Solve one finite character-extension problem. Regularity of the infinity type already forces noninvariance, so no theorem about the supply of split primes is needed. Then exclude the coefficient primes at which one of finitely many witnessing differences vanishes.
 
-**Proof.** Choose a modulus containing $S$, the primes needed for the infinity-type unit condition, and provisional auxiliary primes. The prescribed local data and the desired restriction to $C_F$ define a character on a subgroup of the finite ray group, precisely because of the two compatibility assumptions. Section 2.6 extends it to the whole ray group. If its conjugate ratio is still trivial, choose a finite place $v\notin S$ that splits as $w w^\sigma$ in $M$, with residue field large enough to admit a nontrivial character of order prime to the eventual coefficient characteristic. Enlarge the modulus at $w$ and $w^\sigma$, and prescribe a unit character $\xi$ at $w$ and $\xi^{-1}$ at $w^\sigma$. Their product is trivial on diagonally embedded local units, so the determinant restriction is unchanged, while conjugation interchanges two unequal characters. After adding further auxiliary data if necessary to cancel the global ray-unit restriction, the finite-group extension argument globalizes them. The resulting $\psi/\psi^\sigma$ is nontrivial, so automorphic induction is cuspidal.
+**Proof.** Choose a modulus containing $S$, the primes needed for the infinity-type unit condition, and any auxiliary places needed to cancel the stated ray-unit obstruction. The prescribed local data and the desired restriction to $C_F$ define a character on a subgroup of the finite ray group, precisely because of the two compatibility assumptions. Section 2.6 extends it to the whole ray group while preserving the prescribed restriction on that subgroup. If the resulting $\psi$ equaled $\psi^\sigma$, their infinity types would agree. Conjugation interchanges $p_w$ and $q_w$, contrary to $p_w\ne q_w$. Hence $\psi/\psi^\sigma$ is nontrivial and automorphic induction is cuspidal.
 
 The determinant formula of Chapter 4 gives
 
@@ -1875,7 +1933,7 @@ $$
 =\eta_{M/F}(\chi_{\psi,\lambda}\circ\operatorname{Ver}).
 $$
 
-Under reciprocity this is the $\ell$-adic avatar of $\eta\psi|_{C_F}$. Since arithmetic $|\cdot|^{-1}$ corresponds to the cyclotomic character, the factor $|\cdot|^{-W}$ becomes $\epsilon_\ell^W$, proving the asserted determinant normalization. Choose one Frobenius $h$ at which $\chi_\psi(h)-\chi_\psi^\sigma(h)$ is nonzero, and for every prescribed inertia condition choose an element $t$ witnessing the required nontrivial value or conjugate ratio. These are finitely many nonzero algebraic numbers. Only finitely many coefficient primes divide any of them. Outside that finite set, the Frobenius difference proves absolute irreducibility and the inertial differences prove survival of all local conditions. The local automorphic statements follow from the all-place compatibility theorem. $\square$
+Under reciprocity this is the $\ell$-adic avatar of $\eta\psi|_{C_F}$. Since arithmetic $|\cdot|^{-1}$ corresponds to the cyclotomic character, the factor $|\cdot|^{-W}$ becomes $\epsilon_\ell^W$, proving the asserted determinant normalization. Section 13.5 supplies a prime $\mathfrak P$ at which the two algebraic ideal values differ. For every prescribed inertia condition choose an element $t$ witnessing the required nontrivial value or conjugate ratio. The prime-value difference and the finitely many inertial differences are nonzero algebraic numbers. Only finitely many coefficient primes divide any of them. Outside that finite set, the Frobenius difference proves absolute irreducibility and the inertial differences prove survival of all local conditions. The local automorphic statements follow from the all-place compatibility theorem. $\square$
 
 The hypotheses are deliberately exact. If the ray-unit condition fails, no global character with the proposed local restrictions exists. If the determinant condition fails on $C_F$, a later twist can change it only by a square, because a determinant twist multiplies the central character by $\mu^2$. If $\lambda$ divides the order of an imposed local character, reduction may erase the ramification. Each apparent technicality is therefore a genuine obstruction, not bookkeeping.
 
@@ -1899,7 +1957,37 @@ while at a good inert prime $a_v=0$. At a ramified prime of $M/F$, the conductor
 
 This last feature distinguishes field ramification from character ramification: the former enters through the permutation action, the latter through the character itself.
 
-A concrete unramified example comes from $M=\mathbf Q(\sqrt{-23})$, whose ideal class group is cyclic of order three. Let $\psi$ be a nontrivial class-group character. Complex conjugation inverts ideal classes, so $\psi^\sigma=\psi^{-1}\ne\psi$. The induction is a weight-one cusp form of level $23$ and quadratic nebentype attached to $M$. Its projective Galois image is the dihedral group of order six, equivalently $S_3$.
+A concrete unramified example comes from $M=\mathbf Q(\sqrt{-23})$. We verify the class-number input rather than assuming it. Put
+
+$$
+\omega=\frac{1+\sqrt{-23}}2,
+\qquad
+\mathcal O_M=\mathbf Z[\omega],
+\qquad
+N(x+y\omega)=x^2+xy+6y^2.
+$$
+
+Minkowski's bound for an imaginary quadratic field says that every ideal class contains an integral ideal of norm at most
+
+$$
+\frac2\pi\sqrt{23}<4.
+$$
+
+Thus primes above $2$ and $3$ generate the class group. Let $\mathfrak p=(2,\omega)$ and $\mathfrak q=(3,\omega)$. Since $N(\omega)=6$, comparison of norms gives $(\omega)=\mathfrak p\mathfrak q$, so $[\mathfrak q]=[\mathfrak p]^{-1}$. The form $x^2+xy+6y^2$ never equals $2$: multiplying such an equality by four would give
+
+$$
+(2x+y)^2+23y^2=8,
+$$
+
+which is impossible for both $y=0$ and $|y|\geq1$. Thus $\mathfrak p$ is not principal. On the other hand $N(1+\omega)=8$ and $1+\omega$ lies in $\bar{\mathfrak p}=(2,\omega-1)$ but not in $\mathfrak p$; hence
+
+$$
+(1+\omega)=\bar{\mathfrak p}^{3}.
+$$
+
+Therefore the class group is generated by the nontrivial class of $\mathfrak p$ and has order three.
+
+Let $\psi$ be a nontrivial class-group character. Complex conjugation inverts ideal classes, so $\psi^\sigma=\psi^{-1}\ne\psi$. The induction is a weight-one cusp form of level $23$ and quadratic nebentype attached to $M$. Its projective Galois image is the dihedral group of order six, equivalently $S_3$.
 
 At an inert prime its coefficient is zero. At a split prime $p=\mathfrak p\bar{\mathfrak p}$, the coefficient is
 
