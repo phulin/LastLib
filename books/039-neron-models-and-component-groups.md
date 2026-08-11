@@ -41,7 +41,7 @@
    - [Unramified base change](#82-unramified-base-change)
    - [Ramified base change](#83-ramified-base-change)
    - [Descent and Galois action](#84-descent-and-galois-action)
-9. [The Picard route to the Néron model](#9-the-picard-route-to-the-neron-model)
+9. [The Picard route to the Néron model](#9-the-picard-route-to-the-néron-model)
    - [Regular curve models and relative line bundles](#91-regular-curve-models-and-relative-line-bundles)
    - [The closure of the generic identity](#92-the-closure-of-the-generic-identity)
    - [The Raynaud quotient theorem](#93-the-raynaud-quotient-theorem)
@@ -61,7 +61,7 @@
     - [Maps on component groups](#122-maps-on-component-groups)
     - [The component pairing for Jacobians](#123-the-component-pairing-for-jacobians)
     - [Prime-to-residue-characteristic torsion](#124-prime-to-residue-characteristic-torsion)
-13. [Global Néron models](#13-global-neron-models)
+13. [Global Néron models](#13-global-néron-models)
     - [Localization at the bad places](#131-localization-at-the-bad-places)
     - [Sections and arithmetic component maps](#132-sections-and-arithmetic-component-maps)
     - [Exact global bookkeeping](#133-exact-global-bookkeeping)
@@ -114,7 +114,7 @@ $$
 
 It is a finite étale $k$-group scheme. The abstract geometric group is $\Phi_A(k^s)$, carrying its natural Galois action. We do not identify $\Phi_A(k)$ with the whole geometric group unless that action is trivial.
 
-The regular-model input comes from Books 10 and 12. Thus a smooth projective curve over $K$ admits a regular proper model after the stated excellence hypotheses, and a semistable fiber has a geometric dual graph whose edge lengths record node thickness. The vertical intersection and negativity theorem used for nonreduced fibers is the arithmetic-surface result of Book 11. Book 36 supplies relative Picard schemes and generalized Jacobians. We recall the necessary notation at the point of use rather than duplicating those constructions.
+The regular-model input comes from Books 10 and 12. Thus a smooth projective curve over $K$ admits a regular proper model after the stated excellence hypotheses, and a semistable fiber has a geometric dual graph whose edge lengths record node thickness. Book 36 supplies relative Picard schemes and generalized Jacobians. Book 38 supplies abelian schemes, duality, isogenies, and polarizations. The one intersection-theoretic fact needed for a nonreduced fiber is proved directly in Section 10.1 from the principal-fiber relation, so no undeclared intersection-theory volume is being imported.
 
 ### 1.3 Three guiding examples
 
@@ -194,44 +194,63 @@ The first reward of a universal property is canonical uniqueness.
 
 **Proof.** Use $T=\mathcal X$ in the mapping property of $\mathcal X'$ to extend the generic identity to $f:\mathcal X\to\mathcal X'$. Reverse the roles to obtain $g$. Both $gf$ and the identity on $\mathcal X$ extend the same generic map, so uniqueness in (2.1) gives $gf=1$. Similarly $fg=1$. $\square$
 
-Several smaller tests suffice to verify the property. They are useful because a construction usually first controls sections over unramified valuation rings.
+The property may be checked on smooth affine test schemes, but it cannot be checked only on unramified points or in codimension one.
 
-**Proposition 2.4 (local test).** Let $R$ be henselian and let $\mathcal X/R$ be smooth and separated with generic fiber $X$. Suppose that:
+**Proposition 2.4 (affine test).** A smooth separated $S$-model $\mathcal X$ of $X$ has the Néron mapping property if and only if (2.1) is bijective for every smooth affine $S$-scheme of finite type.
 
-1. for every finite étale extension $R'/R$, the map $\mathcal X(R')\to X(K')$ is bijective;
-2. for every smooth affine $R$-scheme $T$ and generic map $u_K:T_K\to X$, the map extends on an open subset containing every generic point of $T_k$.
+**Proof.** Necessity is immediate. Conversely, cover a smooth finite-type test scheme $T$ by smooth affine opens $T_i$. A generic map extends to every $T_i$ by hypothesis. On $T_i\cap T_j$ the two extensions agree on the schematically dense generic fiber; separatedness of $\mathcal X$ makes them equal. They therefore glue. The same density argument proves uniqueness. $\square$
 
-Then $\mathcal X$ has the Néron mapping property.
+There is no stronger pointwise shortcut. Let $T=\mathbf A_R^1$ with coordinate $x$. The formula
 
-**Proof strategy.** The first condition supplies values at closed geometric points of the special fiber. The second supplies an extension in codimension one. Smoothness of $T$ makes its local rings regular, and separatedness makes local extensions agree.
+$$
+T_K\longrightarrow\mathbf P^1_K,
+\qquad x\longmapsto[x:\pi]
+$$
 
-Let $U\subseteq T$ be the maximal open on which $u_K$ extends. By condition 2, $U$ contains the generic fiber and the generic points of $T_k$; hence $T\setminus U$ has codimension at least two. At a point $t$ of this complement, choose an étale map from a neighborhood of $t$ to affine space over $R$. Successively intersect with general relative curves through $t$. Their strict henselizations are spectra of discrete valuation rings unramified over smooth local rings. Condition 1 gives compatible values at their closed points.
-
-Because $\mathcal X$ is smooth, these values lift through every nilpotent neighborhood; because it is separated, two lifts agreeing on the punctured neighborhood agree. The regular local ring $\mathcal O_{T,t}$ is the intersection of its height-one localizations, so the coordinate functions of an affine neighborhood of the image lie in $\mathcal O_{T,t}$. Thus the map extends across $t$. Repeating removes the complement. Uniqueness follows since $T_K$ is schematically dense in the flat scheme $T$ and $\mathcal X$ is separated. $\square$
-
-The intersection argument in the last paragraph is the familiar Hartogs principle for maps whose target is smooth and whose graph is already controlled in codimension one. It cannot be applied to a singular test space: a rational map can meet an exceptional branch in codimension two with no unique continuation.
+is a morphism because $\pi$ is invertible on the generic fiber. It extends at every height-one point of $T$ but not at the closed codimension-two point $(x,\pi)$: there the pair $(x,\pi)$ does not generate an invertible ideal, and the two height-one specializations give incompatible values. Nevertheless $\mathbf P^1_R(R')\to\mathbf P^1_K(K')$ is bijective for every valuation ring $R'$ finite étale over $R$, by properness. Thus extension of all unramified points, even together with codimension-one extension, does not imply the Néron property. This example is why the construction below must control whole smooth families rather than only their sections.
 
 ### 2.3 Good reduction
 
 An abelian variety $A/K$ has **good reduction** if it extends to an abelian scheme over $R$. The mapping property makes that extension canonical.
 
-**Theorem 2.5.** An abelian scheme $\mathcal A/R$ is the Néron model of its generic fiber.
+The key input for good reduction is the extension theorem traditionally called Weil's extension lemma.
 
-**Proof strategy.** Properness extends a generic map along every valuation centered on a smooth test scheme; the group structure removes possible codimension-two indeterminacy.
+**Lemma 2.5 (Weil extension over a regular base).** Let $T$ be a regular noetherian scheme, let $V\subseteq T$ be a schematically dense open containing every codimension-one point, and let $\mathcal B\to T$ be an abelian scheme. Every section of $\mathcal B$ over $V$ extends uniquely to a section over $T$.
 
-Let $T/R$ be smooth and $u_K:T_K\to\mathcal A_K$. The closure of its graph in $T\times_R\mathcal A$ is proper over $T$. At every height-one point of $T$, the local ring is a discrete valuation ring, so the valuative criterion of properness gives an extension. Thus the rational map is defined away from codimension at least two.
-
-It remains to eliminate that indeterminacy. Étale-locally on $T$, choose a section $t_0$ through a point in question and translate $u_K$ by the extended value of $u_K(t_0)$. The translated map takes $t_0$ to the identity. Apply the rigidity lemma for maps into an abelian scheme to differences
+**Proof.** The missing set has codimension at least two. Work Zariski-locally on $T$ and choose a polarization
 
 $$
-u(x+y)-u(x)-u(y)
+\lambda:\mathcal B\longrightarrow\mathcal B^\vee;
 $$
 
-on suitable smooth relative curves through the point. It shows that the graph closure is invariant under enough local translations to carry its domain of definition across the point. Equivalently, a translation-invariant codimension-two indeterminacy subset in a smooth connected fiber is either empty or the whole fiber; it cannot be the whole fiber because the map is defined at its generic points. Hence $u_K$ extends everywhere. Uniqueness follows from separatedness and density. $\square$
+Book 38 constructs both the dual abelian scheme and this finite locally free isogeny. Let $b_V$ be the given section and put $y_V=\lambda(b_V)$. By the Poincaré description of $\mathcal B^\vee$, $y_V$ is a rigidified algebraically trivial line bundle $L_V$ on $\mathcal B_V$.
 
-**Corollary 2.6.** If the Néron model $\mathcal A/R$ of an abelian variety is proper, then $A$ has good reduction and $\mathcal A$ is an abelian scheme.
+The total space $\mathcal B$ is regular because it is smooth over the regular scheme $T$. Removing the inverse image of $T\setminus V$ removes only points of codimension at least two. On a regular noetherian scheme Cartier divisors extend uniquely across such a subset, so restriction gives
 
-**Proof.** A proper smooth finite-type group scheme has a finite étale relative component scheme. Its generic fiber is connected, so that component scheme has degree one over the connected base. Hence every geometric fiber is connected. Thus $\mathcal A$ is an abelian scheme. The converse is Theorem 2.5. $\square$
+$$
+\operatorname{Pic}(\mathcal B)\xrightarrow{\sim}
+\operatorname{Pic}(\mathcal B_V).
+$$
+
+Thus $L_V$ extends to a line bundle $L$ on $\mathcal B$. Its rigidification extends as well: the restriction of $L$ to the identity section is trivial off a codimension-two subset of the regular scheme $T$, and the same Cartier-divisor argument makes it trivial on all of $T$. The classifying morphism $T\to\operatorname{Pic}_{\mathcal B/T}$ lands in the open-and-closed degree-zero component because it does so on the dense open $V$. Hence $L$ defines a section $y:T\to\mathcal B^\vee$ extending $y_V$.
+
+Form the finite $T$-scheme
+
+$$
+Z=T\times_{y,\mathcal B^\vee,\lambda}\mathcal B.
+$$
+
+The section $b_V$ gives a section of $Z_V$. Its schematic closure $Z_0\subseteq Z$ is finite over $T$ and generically has degree one. Affine-locally its coordinate algebra is an integral $\mathcal O_T$-subalgebra of the function field of $T$. Normality of $T$ therefore forces that algebra to be $\mathcal O_T$. Consequently $Z_0\simeq T$, and its inclusion in $Z$ is the required lift $b:T\to\mathcal B$. Two lifts agree on the dense open $V$ and hence everywhere by separatedness. $\square$
+
+The proof explains why abelian targets are special: polarization converts the rational section into a line bundle, and regularity extends line bundles across codimension two. Neither step exists for the map to $\mathbf P^1$ above.
+
+**Theorem 2.6.** An abelian scheme $\mathcal A/R$ is the Néron model of its generic fiber.
+
+**Proof.** Let $T/R$ be smooth and $u_K:T_K\to\mathcal A_K$. Smoothness makes $T$ regular, and $u_K$ is a section over $T_K$ of the abelian scheme $\mathcal A\times_RT\to T$. Properness extends that section at every height-one point of $T$, by the valuative criterion. Apply Lemma 2.5 to the maximal extension open. The section extends over all of $T$, and separatedness gives uniqueness. $\square$
+
+**Corollary 2.7.** If the Néron model $\mathcal A/R$ of an abelian variety is proper, then $A$ has good reduction and $\mathcal A$ is an abelian scheme.
+
+**Proof.** A proper smooth finite-type group scheme has a finite étale relative component scheme. Its generic fiber is connected, so that component scheme has degree one over the connected base. Hence every geometric fiber is connected. Thus $\mathcal A$ is an abelian scheme. The converse is Theorem 2.6. $\square$
 
 This criterion is stronger than connectedness of the special fiber. A connected special fiber may contain a torus or a unipotent group and therefore fail to be proper.
 
@@ -243,7 +262,7 @@ At the other extreme, testing only $S$-valued points is too weak. Two smooth sep
 
 There is also a useful functorial consequence.
 
-**Proposition 2.7.** Let $\mathcal X$ be the Néron model of $X$. For every smooth $S$-scheme $T$, the set of generic maps $T_K\to X$ is already an étale sheaf in $T$, and $\mathcal X$ represents it.
+**Proposition 2.8.** Let $\mathcal X$ be the Néron model of $X$. For every smooth $S$-scheme $T$, the set of generic maps $T_K\to X$ is already an étale sheaf in $T$, and $\mathcal X$ represents it.
 
 **Proof.** Morphisms to the separated $K$-scheme $X$ satisfy étale descent. The mapping property identifies this sheaf with $T\mapsto\operatorname{Hom}_S(T,\mathcal X)$, which is represented by $\mathcal X$. $\square$
 
@@ -323,13 +342,27 @@ $$
 
 In particular every smooth proper $K$-scheme has a weak Néron model.
 
-**Proof strategy.** Dilatations preserve the generic fiber and every section lifts uniquely by (3.2). The integer defect decreases along an offending section. The essential finiteness point is to make this decrease uniform over all sections.
+**Proof.** At stage $r$, use the Fitting ideals of $\Omega^1_{X_r/R}$ to give the non-smooth locus in $(X_r)_k$ its canonical Jacobian subscheme structure, and dilate that closed subscheme. Every section with non-smooth center factors through it modulo $\pi$. Property (3.2) therefore lifts the section uniquely, and the local elementary-divisor calculation (3.3)--(3.5) strictly decreases $\delta(a)$ until the center of that particular section is smooth.
 
-For a point $x$ of the special fiber, the elementary divisors of the relative Jacobian matrix are upper semicontinuous on the constructible set of sections centered at $x$. Because $X_k$ is noetherian and quasi-compact, finitely many locally closed strata control all possible defect vectors. Choose as center the reduced closure of the strata on which the lexicographically largest vector occurs. After dilatation, (3.5) strictly lowers that vector for every section centered in the chosen stratum; sections elsewhere do not acquire a larger vector because the modification is an isomorphism away from the center.
+To prove uniform termination, replace $R^{\mathrm{sh}}$ temporarily by its completion $\widehat R^{\mathrm{sh}}$.
 
-The defect vectors belong to a finite product of nonnegative integers ordered lexicographically. At each stage the maximum decreases. No infinite decreasing sequence exists, so after finitely many stages every lifted section has defect zero. Its center lies in the smooth locus. Conversely an $R^{\mathrm{sh}}$-section of the smooth locus gives a generic point, and uniqueness of all lifts follows from separatedness. This proves (3.6). $\square$
+It remains to prove that one stage works uniformly for all sections. For each $n$, sections modulo $\pi^{n+1}$ form the finite-type Greenberg scheme $\operatorname{Gr}_n(X)$ over $k^s$; this is the standard finite-level restriction-of-scalars construction for a finite-type scheme over a complete DVR. The inverse limit
 
-Excellence enters by making the non-smooth locus closed under the completion and approximation steps implicit in the Jacobian stratification. Properness is used only to ensure that generic points have centers. Consequently the theorem applies more broadly whenever boundedness supplies centers on a chosen model.
+$$
+\operatorname{Gr}(X)=\varprojlim_n\operatorname{Gr}_n(X)
+$$
+
+is the space of formal sections. It is quasi-compact because it is an inverse limit of quasi-compact spectral spaces. For every $r$, let $U_r\subseteq\operatorname{Gr}(X)$ consist of sections whose lift to $X_r$ has smooth center. Smoothness is detected at a finite jet level, so $U_r$ is open. The sets are increasing, and the strict defect decrease shows that every formal section belongs to some $U_r$. Quasi-compactness gives
+
+$$
+\operatorname{Gr}(X)=U_0\cup\cdots\cup U_N=U_N
+$$
+
+for one $N$. Hence after finitely many dilatations every completed strict-henselian section has smooth center.
+
+The centers were defined by Fitting ideals on the original $R$-models, so the finite initial sequence through $X_N$ is already defined over $R$. Every original $K^{\mathrm{sh}}$-point had a center by hypothesis and lifts uniquely through that sequence; comparison with the completion shows that its final center is smooth. Conversely a section of the smooth locus gives a generic point, and separatedness gives injectivity. This proves (3.6). Excellence guarantees the regularity and completion comparison used in passing to $\widehat R^{\mathrm{sh}}$. $\square$
+
+Properness is used only to supply centers. The same argument applies whenever the chosen set of points is bounded on one finite-type model.
 
 ### 3.4 What smoothening does not yet provide
 
@@ -349,7 +382,7 @@ $$
 \mathscr N_A(T)=\operatorname{Hom}_K(T_K,A). \tag{4.1}
 $$
 
-Because morphisms into a separated scheme descend étale-locally, $mathscr N_A$ is a sheaf for the étale topology. Pointwise addition of maps makes it a sheaf of abelian groups. A Néron model is exactly a smooth separated finite-type $S$-scheme representing this sheaf.
+Because morphisms into a separated scheme descend étale-locally, $\mathscr N_A$ is a sheaf for the étale topology. Pointwise addition of maps makes it a sheaf of abelian groups. A Néron model is exactly a smooth separated finite-type $S$-scheme representing this sheaf.
 
 This formulation prevents a circular construction of the group law. We first represent the sheaf. Its addition, inverse, and identity then become morphisms by representability. The generic group identities automatically extend because two morphisms representing the same transformation are equal.
 
@@ -365,15 +398,15 @@ where $h_W(T)=\operatorname{Hom}_S(T,W)$. It is not generally surjective, but it
 
 We isolate the construction that turns the atlas into a scheme.
 
-**Theorem 4.1 (group extension representability).** Let $G/K$ be a smooth separated group variety. Suppose:
+**Theorem 4.1 (bounded group extension).** Let $G/K$ be a smooth separated group variety. Suppose:
 
 1. $G$ has a weak Néron model $W$ of finite type;
 2. finitely many translates of the generic open $W_K\subseteq G$ cover $G$;
-3. the closures of the graphs of multiplication and inversion admit smoothenings compatible with the projections to those translates.
+3. the closures of the graphs of multiplication, inversion, and the translate overlaps admit smoothenings compatible with their projections.
 
 Then the sheaf $T\mapsto\operatorname{Hom}_K(T_K,G)$ on smooth $R$-schemes is represented by a smooth separated group scheme $\mathcal G$ locally of finite type. If the translate classes required in the special fiber form a finite set, $\mathcal G$ is of finite type.
 
-**Proof.** Choose points $g_1,\ldots,g_r$ over a finite unramified extension so that $G=\bigcup_i(g_i+W_K)$ after that extension. Enlarge the extension to be Galois and include all conjugates. Descent turns the disjoint union of the translated weak charts into a smooth $R$-space $U$ with a generically surjective map to $G$.
+**Proof.** First pass to a finite extension over which a finite translate cover of $G$ is defined, enlarge it to a Galois extension, and include every conjugate chart. The graph smoothenings descend the resulting charts to a smooth $R$-space $U$ with a generically surjective map to $G$. A translate need not itself extend as an $R$-section; this is why one descends its graph rather than pretending that translation already exists integrally.
 
 For two charts $U_i,U_j$, consider the generic isomorphism induced by translation on the overlap of their generic images. Take the closure of its graph in $U_i\times_RU_j$, smoothen it, and retain the open on which both projections are étale. Over $R^{\mathrm{sh}}$ these projections identify exactly those sections having the same generic image: the weak extension property gives existence, and separatedness of $G$ gives uniqueness. Thus these overlap spaces define an étale equivalence relation
 
@@ -381,11 +414,11 @@ $$
 R_U\rightrightarrows U. \tag{4.3}
 $$
 
-The relation is effective. Indeed, on affine étale neighborhoods of a special point, the two projections are open immersions after shrinking because they are generically isomorphisms and induce bijections on strict-henselian sections. The local quotients are therefore obtained by gluing open subschemes. The cocycle follows from equality of the corresponding generic translations and separatedness. Gluing all charts gives a smooth $R$-scheme $\mathcal G$.
+The relation is effective. Indeed, on affine étale neighborhoods of a special point, each projection is étale and radicial: two geometric points or two infinitesimal lifts with the same generic map coincide by separatedness and the weak extension property. An étale radicial morphism is an open immersion. The local quotients are therefore ordinary gluings along open subschemes. Equality of the generic translations gives the cocycle, again by separatedness. Gluing the charts gives a smooth $R$-scheme $\mathcal G$.
 
 The same graph construction for multiplication shows that the generic product maps on $U_i\times U_j$ are compatible with (4.3) and descend to $\mathcal G\times_R\mathcal G\to\mathcal G$. Inversion and the identity descend similarly. Associativity and the group identities hold generically; both sides are morphisms from a flat scheme to a separated scheme, so they hold everywhere.
 
-By construction, every generic map from a smooth $T$ lands étale-locally in a chart and extends there. The overlap relation glues the local extensions, proving the mapping property. The diagonal of $\mathcal G$ is the descended closure of the generic diagonal and is closed, so $\mathcal G$ is separated. It is locally of finite type because the charts are. If only finitely many special translate classes occur, finitely many charts cover $\mathcal G$, making it finite type. $\square$
+By construction, every generic map from a smooth $T$ lands étale-locally in a chart and extends there. The overlap relation glues the local extensions, proving the mapping property. The diagonal is closed because two charts are identified only where their generic maps agree and the graph closures were taken inside separated products. Thus $\mathcal G$ is separated and locally of finite type. If only finitely many special translate classes occur, finitely many charts cover $\mathcal G$, making it finite type. $\square$
 
 The third hypothesis is not an extra existence assumption in the applications: Theorem 3.2 supplies those smoothenings. It is stated to expose the two inputs. Smoothening provides charts; the generic group law tells us exactly how to glue them.
 
@@ -393,21 +426,17 @@ The third hypothesis is not an extra existence assumption in the applications: T
 
 **Theorem 4.2 (existence).** Let $R$ be an excellent discrete valuation ring and $A/K$ an abelian variety. Then $A$ has a Néron model $\mathcal A/R$. It is a smooth separated group scheme of finite type. Its formation is unique up to unique isomorphism.
 
-**Proof strategy.** Properness gives a weak model and a finite translate cover. The remaining point is finite type of the represented group.
+**Proof strategy.** Properness gives a weak model and also bounds the integral translate charts. The latter point is what distinguishes an abelian variety from a torus.
 
-Choose a projective flat $R$-model $X$ of $A$ and apply Theorem 3.2 to obtain a weak model $W$. Since $A$ is quasi-compact, finitely many translates of the nonempty open $W_K$ cover $A$. Smoothen the closures of the required multiplication, inverse, and overlap graphs. Theorem 4.1 produces a Néron lft-model $\mathcal A$.
+Choose a projective flat $R$-model $X$ of $A$ and apply Theorem 3.2 to obtain a weak model $W$. Since $A$ is quasi-compact, finitely many geometric translates of the nonempty open $W_K$ cover $A$. Smoothen the closures of their translate, multiplication, inverse, and overlap graphs. Theorem 4.1 produces a Néron lft-model $\mathcal A$.
 
-We prove quasi-compactness. Choose a symmetric ample divisor $H$ on $A$. Every translate chart meets a fixed finite affine cover of $A$ cut out by sections of powers of $H$. For an $R^{\mathrm{sh}}$-section $a$, its reduction class relative to $W$ is measured by the orders with which the translated sections of $H$ vanish along the closure of $a$. Properness of $X$ bounds these orders on each affine chart, and the theorem of the square gives
+It remains to show that only finitely many integral charts occur. Use the formal-section space from the proof of Theorem 3.2 after completing $R^{\mathrm{sh}}$. Properness of $X$ identifies its formal sections with all points of $A$ over the completed fraction field, and this space is quasi-compact. Every graph chart in the lft-model contains an open cylinder of formal sections, because the chart is smooth and extension is unique. These cylinders cover the formal-section space by the mapping property built into the gluing. A finite subcollection therefore covers it.
 
-$$
-v_H(a+b)+v_H(a-b)=2v_H(a)+2v_H(b)+O(1), \tag{4.4}
-$$
+Every geometric point of the special fiber of the lft-model lifts to a formal section by smoothness, so the same finite collection covers the whole special fiber. Its generic fiber is the quasi-compact variety $A$, for which finitely many generic chart opens suffice as well. The complement of these finitely many charts has empty generic and special fibers and is therefore empty. Each selected chart and transition is defined over a finite étale subextension; adjoining its finite Galois orbit descends the finite collection to $R$. Hence finitely many finite-type charts cover $\mathcal A$.
 
-where the bounded term depends only on the chosen finite presentation. Hence every section class is represented by one of finitely many valuation vectors. Two sections with the same vector lie in a common translated weak chart after an unramified refinement. Thus only finitely many translate classes are needed in the special fiber.
+Thus $\mathcal A$ is of finite type. Uniqueness is Theorem 2.3. $\square$
 
-The final clause of Theorem 4.1 makes $\mathcal A$ finite type. Uniqueness is Theorem 2.3. $\square$
-
-The boundedness argument is where properness of the generic group is decisive. For a split torus, valuations of coordinates can be arbitrary integers; its Néron lft-model generally has infinitely many components. For an abelian variety, an ample divisor turns translation into a quadratic boundedness relation and rules out such an infinite escape.
+Properness is decisive in the boundedness paragraph because it gives a center on one quasi-compact special fiber for every unramified point. For a split torus, coordinate valuations range through all integers and no finite family of integral charts covers them; its Néron lft-model can have infinitely many components.
 
 ### 4.4 Gluing over a Dedekind base
 
@@ -415,9 +444,11 @@ Let $S$ now be an excellent Dedekind scheme and $A/K$ an abelian variety. Spread
 
 **Theorem 4.3 (global existence).** The local Néron models over $S_s$ and the abelian scheme over $U$ glue uniquely to a smooth separated finite-type group scheme $\mathcal A/S$ satisfying the Néron mapping property.
 
-**Proof.** Each local model restricts on the generic point to $A$. Over the overlap with $U$, both it and the abelian scheme are Néron models; Theorem 2.3 gives a unique isomorphism. Unique isomorphisms satisfy the cocycle condition, so the schemes and group laws glue.
+**Proof.** One cannot glue a scheme over $S_s$ directly to a scheme over $U$ along the generic point, because that point is not an open overlap. We first spread every local model. Its coordinate charts, group law, inverse, identity, smoothness, and separated diagonal are all finite-presentation data. Hence the Néron model over $S_s$ descends to a smooth separated finite-type group scheme $\mathcal A^{(s)}$ over an open neighborhood $V_s$ of $s$.
 
-For a smooth $S$-scheme $T$ and a generic map $T_K\to A$, the local mapping properties give extensions over $T_U$ and every $T\times_SS_s$. They agree generically, hence agree on overlaps by separatedness. The extensions glue to $T\to\mathcal A$. Uniqueness is again generic density. Finite type is local on $S$ and follows from the local construction. $\square$
+The generic identification with $A$ also spreads. After shrinking $V_s$ while retaining $s$, it identifies $\mathcal A^{(s)}$ with the abelian scheme over $V_s\cap U$: an isomorphism and its inverse are finitely many morphisms and identities, so they spread from the generic point after deleting finitely many closed points. Choose the $V_s$ to contain no other point of $S\setminus U$. The schemes over $U$ and the finitely many $V_s$ now glue along genuine open overlaps. Their overlap isomorphisms are unique after localization at the generic point, so they satisfy the cocycle and preserve the group laws.
+
+For the mapping property, let $T/S$ be smooth and start with $T_K\to A$. Theorem 2.6 extends it over $T_U$. The local Néron property at $s$ extends it over the whole base change $T\times_SS_s$. Morphisms between finitely presented schemes commute with the filtered limit of the open neighborhoods of $s$, so this latter morphism descends to $T_{V'_s}$ for some smaller open neighborhood $V'_s\subseteq V_s$ of $s$. The two extensions agree over $T_{U\cap V'_s}$ by generic density and separatedness, and hence glue. Doing this for the finitely many bad points produces an extension over all of $T$. Uniqueness is the same density argument. Finite type, smoothness, and separatedness are local on $S$. This proves the theorem. $\square$
 
 Thus the existence problem is genuinely local at the closed points, while the answer is globally canonical.
 
@@ -514,7 +545,7 @@ $$
 \lambda_{\mathcal A}:\mathcal A\longrightarrow\mathcal A^\vee_{\mathrm N}. \tag{5.4}
 $$
 
-If $lambda$ is principal, the generic inverse extends as well, and the two composites are identities. Hence:
+If $\lambda$ is principal, the generic inverse extends as well, and the two composites are identities. Hence:
 
 **Proposition 5.4.** A principal polarization induces an isomorphism between the Néron models of $A$ and $A^\vee$.
 
@@ -656,7 +687,9 @@ It has **purely toric reduction** if $B=0$ as well. It has **additive reduction*
 2. its Néron model is proper;
 3. $\mathcal A_k^0$ is an abelian variety and $\Phi_A=0$.
 
-**Proof.** The equivalence of 1 and 2 is Corollary 2.6. Good reduction plainly implies 3. Conversely, under 3 the special fiber is connected and proper. Properness of a smooth finite-type morphism can be checked by the valuative criterion. A generic point of $\mathcal A$ approaching the special fiber has a limit in the proper identity fiber; translation by a section through that limit covers every valuation. Thus no boundary point is missing, and $\mathcal A/R$ is proper. $\square$
+**Proof.** The equivalence of 1 and 2 is Corollary 2.7, and good reduction plainly implies 3. Conversely, under 3 both fibers of the smooth separated finite-type morphism $\mathcal A\to\operatorname{Spec}R$ are proper: the generic fiber is $A$ and the special fiber equals the assumed abelian identity component.
+
+We recall the fiberwise properness argument over a valuation base. Choose a compactification $\mathcal A\hookrightarrow\overline{\mathcal A}$ and replace it by the schematic closure of the generic fiber, so that it is proper and flat over $R$ and $\mathcal A$ is dense. Since $A$ is proper, its open immersion into $\overline{\mathcal A}_K$ is also closed; density makes it the whole generic fiber. Stein factorization gives connected fibers for $\overline{\mathcal A}$: its finite Stein factor is birational over the normal local base because the generic fiber is geometrically connected, and hence equals $\operatorname{Spec}R$. The open immersion $\mathcal A_k\hookrightarrow\overline{\mathcal A}_k$ is proper, hence closed, because $\mathcal A_k$ is proper and the target is separated. It is nonempty, so connectedness makes it the whole special fiber. The boundary has neither a generic nor a special point and is empty. Therefore $\mathcal A$ is proper. This gives 2 and completes the equivalence. $\square$
 
 The condition $\Phi_A=0$ alone is much weaker: a semiabelian connected special fiber can still contain a torus. Likewise $U=T=0$ without control of components is not by itself the formulation one should use.
 
@@ -666,9 +699,23 @@ Let $E/K$ be an elliptic curve. Its minimal regular proper model exists by the r
 
 **Theorem 7.2.** Let $\mathcal C/R$ be the minimal regular proper model of $E$, with the origin extended to a section. Its smooth locus $\mathcal C_{\mathrm{sm}}$ is the Néron model $\mathcal E$ of $E$.
 
-**Proof.** Let $\mathcal U=\mathcal C_{\mathrm{sm}}$. Resolve the closure of the graph of generic addition in $\mathcal C\times_R\mathcal C\times_R\mathcal C$. Above $\mathcal U\times_R\mathcal U$, either projection from the resolution can have only vertical exceptional curves. If such a curve were contracted by one projection and not the other, its image would be a vertical exceptional curve of the first kind in $\mathcal C$, contradicting minimality. The two projections therefore identify the graph with a morphism $\mathcal U\times_R\mathcal U\to\mathcal U$. The same argument extends inversion; the group identities follow from generic density.
+**Proof.** Put $\mathcal U=\mathcal C_{\mathrm{sm}}$. We first record where sections of $\mathcal C$ land. After strict henselization, if a section $P$ meets the special fiber, intersection with the principal fiber gives
 
-Now let $T/R$ be smooth and $T_K\to E$ a generic map. Properness of $\mathcal C$ extends it at every height-one point of $T$. Resolve the remaining graph indeterminacy. Any exceptional divisor maps vertically into $\mathcal C$. If it met a nonsmooth point of a fiber, translating the map by a local section through a nearby smooth point would produce a vertical exceptional curve in the relatively minimal model, by the same contraction argument. Hence the rational map lands in $\mathcal U$ and has no indeterminacy. It extends uniquely to $T\to\mathcal U$ because $\mathcal U$ is separated and $T_K$ is dense. Thus $\mathcal U$ has the Néron mapping property. $\square$
+$$
+1=(P\cdot\mathcal C_k)=\sum_jm_j(P\cdot\Gamma_j).
+$$
+
+All summands are nonnegative integers. Thus $P$ meets one multiplicity-one component transversely and avoids every other component; the special fiber is regular at that point and the morphism is smooth there. Properness of $\mathcal C$ gives a center for every point of $E(K^{\mathrm{sh}})$, so
+
+$$
+\mathcal U(R^{\mathrm{sh}})=E(K^{\mathrm{sh}}).
+$$
+
+Let $\mathcal E$ be the Néron model supplied by Theorem 4.2. Compactify $\mathcal E$ over $R$, take the closure of its proper generic fiber, normalize, and resolve without changing the regular open $\mathcal E$. Book 10 gives a regular proper model $\mathcal Y$ containing $\mathcal E$ as an open subscheme. Relative minimality gives a unique morphism $\mathcal Y\to\mathcal C$ inducing the identity on $E$; restrict it to $f:\mathcal E\to\mathcal C$.
+
+The morphism $f$ factors through $\mathcal U$. Indeed every geometric point of $\mathcal E_k$ lifts, after strict henselization, to a section because $\mathcal E$ is smooth. Its image is a section of $\mathcal C$, and the preceding intersection calculation puts its special point in $\mathcal U$. Hence the inverse image of the closed complement $\mathcal C\setminus\mathcal U$ has no geometric point and is empty.
+
+Conversely, the generic identity $\mathcal U_K=E\to E$ extends by the Néron property to $g:\mathcal U\to\mathcal E$. Both $fg$ and $1_{\mathcal U}$ agree on the dense generic fiber, as do $gf$ and $1_{\mathcal E}$; separatedness makes both pairs equal. Thus $f$ and $g$ are inverse isomorphisms, proving that $\mathcal U$ is the Néron model. $\square$
 
 The three familiar cases now have a uniform form over an algebraic closure of $k$:
 
@@ -763,21 +810,42 @@ $$
 \Phi_A(k^s)=X^\vee/qX, \tag{8.4}
 $$
 
-and the nested lattices give
+The component map induced by the canonical base-change morphism (8.1) is
+
+$$
+i_e:X^\vee/qX\longrightarrow X^\vee/eqX,
+\qquad [x]\longmapsto[ex]. \tag{8.5}
+$$
+
+It is injective: if $ex\in eqX$, then $x\in qX$. Its cokernel is $X^\vee/eX^\vee$, so
+
+$$
+0\longrightarrow\Phi_A(k^s)\xrightarrow{i_e}
+\Phi_{A_{K'}}(k^s)
+\longrightarrow X^\vee/eX^\vee\longrightarrow0. \tag{8.6}
+$$
+
+There is also a different natural map, obtained by reducing a class modulo the larger lattice $qX$:
 
 $$
 0\longrightarrow X/eX\xrightarrow{q}\Phi_{A_{K'}}(k^s)
-\longrightarrow\Phi_A(k^s)\longrightarrow0. \tag{8.5}
+\xrightarrow{\pi_e}\Phi_A(k^s)\longrightarrow0. \tag{8.7}
 $$
 
-Consequently $|\Phi_{A_{K'}}|=e^{\operatorname{rank}X}|\Phi_A|$. Outside the semistable setting, ramification may also alter a unipotent part; the old component group alone cannot determine the result.
+The maps satisfy $\pi_ei_e=[e]$ on the old group and $i_e\pi_e=[e]$ on the new group. Thus (8.7) is not the component map of (8.1); it is the contraction quotient supplied by the nested monodromy lattices. Both sequences give
+
+$$
+|\Phi_{A_{K'}}|=e^{\operatorname{rank}X}|\Phi_A|. \tag{8.8}
+$$
+
+For a polygon this says that the base-change map $\mathbf Z/n\mathbf Z\to\mathbf Z/en\mathbf Z$ is multiplication by $e$, whereas $\pi_e$ is reduction modulo $n$. Outside the semistable setting, ramification may also alter a unipotent part; the old component group alone cannot determine the result.
 
 ### 8.4 Descent and Galois action
 
 For a finite unramified Galois extension, Theorem 8.1 transports the descent datum to every special-fiber layer. In particular
 
 $$
-\Phi_A(k)=\Phi_A(k^s)^{G_k}. \tag{8.6}
+\Phi_A(k)=\Phi_A(k^s)^{G_k}. \tag{8.9}
 $$
 
 The torus descends through its character lattice, where branch reversal can act by $-1$. Smoothness, separatedness, finite type, and the mapping property all descend because extensions are unique. For ramified descent one must instead compare with (8.1); the base-changed model need not already be Néron.
@@ -786,13 +854,19 @@ The torus descends through its character lattice, where branch reversal can act 
 
 ### 9.1 Regular curve models and relative line bundles
 
-Let $C/K$ be a smooth proper geometrically connected curve, $J=\operatorname{Pic}^0_{C/K}$, and $\mathcal X/R$ a regular proper flat model. Write $P=\operatorname{Pic}_{\mathcal X/R}$ and let $P^{[0]}$ denote the part whose generic restriction has degree zero.
+Let $C/K$ be a smooth proper geometrically connected curve, $J=\operatorname{Pic}^0_{C/K}$, and $\mathcal X/R$ a regular proper flat model. Write $P=\operatorname{Pic}_{\mathcal X/R}$ and let $P^{[0]}$ denote the part whose generic restriction has degree zero. In the presence of nonreduced fibers this object can initially be an algebraic space and need not be smooth, so we record precisely which replacement is used beyond the smooth and nodal cases of Book 36.
 
-A vertical divisor is empty generically, so its line bundle represents the generic identity while possibly changing special multidegree. Call $\mathcal X$ **Picard-admissible** when the needed part of $P^{[0]}$ is represented by a smooth group scheme locally of finite type and commutes with strict henselization. Regular semistable models satisfy this. Cohomological flatness in degree zero also suffices; if it fails, one first smoothens the Picard sheaf. The final separated quotient is unaffected.
+Choose a relatively ample line bundle $H$ on the projective regular model. On any fixed finite set of Hilbert polynomials, a sufficiently large twist by $H$ kills $H^1$ and generates every line bundle on every fiber, by relative Serre vanishing. Effective Cartier divisors with those polynomials form the open Cartier locus in the relative Hilbert scheme. Over that locus, regular sections of the universal line bundle form an open in a projective bundle. As in the high-degree quotient construction of Book 36, its two divisor maps present linear equivalence. Fppf-local linear slices select one divisor in each complete linear system, and the unique transition maps satisfy the cocycle. Thus every bounded collection of degree-zero charts is represented by an algebraic space locally of finite presentation. Across a square-zero extension the obstruction lies in coherent $H^2$ of a curve fiber and vanishes, so its group smoothening is the only further operation required; no representability statement for arbitrary higher-dimensional Picard functors is being imported.
+
+Call $\mathcal X$ **Picard-admissible** when the required degree-zero charts are already a smooth group scheme locally of finite type and commute with strict henselization. Regular semistable models satisfy this by Book 12, and cohomological flatness in degree zero also suffices.
+
+In general let $P^\natural$ denote the **Raynaud smoothening** of these charts. The Picard-smoothening theorem is the group form of Theorem 3.2: perform compatible dilatations along the non-smooth closures in each bounded chart, use tensor product to translate the construction, and take the filtered union. It produces a smooth group algebraic space locally of finite type with generic fiber $J$ such that the closure of the generic identity is flat and étale and its separated quotient is unchanged by the preliminary dilatations. It also has the required universal feature: a morphism from a smooth $R$-scheme to the Picard object whose generic image lies in $J$ factors fppf-locally through $P^\natural$. All operations are canonical because two smoothenings have a common further smoothening. This is standard local-library smoothening mathematics; the divisor-chart construction in the preceding paragraph verifies its finite-presentation hypotheses here. If $\mathcal X$ is Picard-admissible, no dilatation is needed and $P^\natural=P^{[0]}$.
+
+A vertical divisor is empty generically, so its line bundle represents the generic identity while possibly changing special multidegree. Smoothening changes its integral chart but does not change its generic class or the equivalence relation generated by such vertical bundles.
 
 ### 9.2 The closure of the generic identity
 
-Let $E\subseteq P^{[0]}$ be the schematic closure of the generic identity. Over a strict henselization, it is represented by vertical line bundles
+Let $E\subseteq P^\natural$ be the schematic closure of the generic identity. Over a strict henselization, it is represented by the smoothened charts of vertical line bundles
 
 $$
 \mathcal O_{\mathcal X}\left(\sum_i a_i\Gamma_i\right), \tag{9.1}
@@ -800,41 +874,45 @@ $$
 
 modulo multiples of the whole fiber.
 
-**Lemma 9.1.** Two line bundles on $\mathcal X$ with isomorphic generic restrictions differ, after a base pullback, by a vertical Cartier divisor.
+**Lemma 9.1.** Two line bundles on $\mathcal X$ with isomorphic generic restrictions differ, after a base pullback, by a vertical Cartier divisor. The same assertion holds fppf-locally after base change by a smooth $R$-scheme $T$: the difference is represented by a divisor supported on $\mathcal X_k\times_kT_k$, with coefficients locally constant on its component strata.
 
-**Proof.** A generic isomorphism is a rational section of their ratio. Its divisor has no horizontal part and is therefore supported on the special fiber. Scaling by $K^\times$ changes it by a multiple of the principal whole fiber. $\square$
+**Proof.** A generic isomorphism is a rational section of the ratio line bundle. Its divisor has no horizontal part and is therefore supported on the special fiber. Scaling by $K^\times$ changes it by a multiple of the principal whole fiber. For the relative assertion, $\mathcal X\times_RT$ is regular because it is smooth over the regular scheme $\mathcal X$. The same divisor argument applies; after an fppf refinement of $T$, the irreducible vertical components and their coefficients are constant in the family. A factor pulled back from $T$ is invisible in the relative Picard functor. $\square$
 
 **Lemma 9.2.** The fppf quotient
 
 $$
-Q=P^{[0]}/E \tag{9.2}
+Q=P^\natural/E. \tag{9.2}
 $$
 
 is separated.
 
-**Proof.** Two valuation-ring sections agreeing generically differ, after local lifting to $P^{[0]}$, by a generically trivial line bundle. Lemma 9.1 puts that difference in $E$. The valuative criterion therefore makes the diagonal closed. $\square$
+**Proof.** The smoothening theorem makes $E$ flat and étale; translation makes its action free. Choose representatives of the vertical multidegree orbits on any finite collection of charts. Translation by $E$ glues their open smooth images, so the fppf quotient is represented locally; these local quotients glue because changing a representative is another translation by $E$.
+
+Two valuation-ring sections agreeing generically differ, after local lifting to Picard charts before smoothening, by a generically trivial line bundle. Lemma 9.1 puts that difference in $E$. The valuative criterion therefore makes the diagonal of the quotient closed. $\square$
 
 Schematic closure matters: visible vertical points can form a nonsaturated subgroup and give the wrong finite quotient.
 
 ### 9.3 The Raynaud quotient theorem
 
-**Theorem 9.3.** For a Picard-admissible regular proper model, $Q$ is the Néron model $\mathcal J$ of $J$. Its identity component is the image of the multidegree-zero Picard subgroup.
+**Theorem 9.3 (Raynaud quotient).** For every regular proper model $\mathcal X/R$, with $P^\natural$ understood as above, the quotient $Q$ is the Néron model $\mathcal J$ of $J$. Its identity component is the image of the smoothened multidegree-zero Picard subgroup. For a Picard-admissible model this reads $\mathcal J=P^{[0]}/E$.
 
 **Proof strategy.** Extension comes from closing divisors on the regular surface; uniqueness is exactly division by $E$.
 
-The Picard deformation obstruction lies in $H^2$ of a curve and vanishes, so $Q$ is smooth and locally of finite type. Chapter 10 proves that only finitely many components remain. Its generic fiber is $J$.
+The construction of $P^\natural$ makes $Q$ smooth and locally of finite type, and Lemma 9.2 makes it separated. Its generic fiber is $J$.
 
-Let $T/R$ be smooth and $T_K\to J$ a map. Étale-locally it is represented by a divisor on $C\times_KT_K$. Move its support away from singular points and close it in $\mathcal X\times_RT$. Regularity makes the resulting codimension-one class invertible after an étale refinement, and $H^2=0$ lifts it through infinitesimal neighborhoods. The local Picard extensions differ on overlaps by generically trivial bundles, hence by $E$ through Lemma 9.1. They glue uniquely to $T\to Q$. This proves the Néron property. Multidegree zero is the connected generalized Jacobian, proving the final assertion. $\square$
+Let $T/R$ be smooth and $T_K\to J$ a map. Fppf-locally on $T$ it is represented by a line bundle and, after the high-degree divisor construction, by a difference of relative divisors on $C\times_KT_K$. Move their support apart and close them in $\mathcal X\times_RT$. This fiber product is regular because it is smooth over the regular scheme $\mathcal X$; hence the codimension-one closures are Cartier and their difference is a line bundle extending the generic class. It defines a local map to the Picard object, which factors locally through $P^\natural$ by the smoothening property. The local extensions differ on overlaps by generically trivial bundles, hence by $E$ through Lemma 9.1. They descend uniquely to $T\to Q$. This proves the Néron mapping property.
 
-This proves, rather than assumes, the separated-Picard identification used for semistable Jacobians in Books 12 and 36.
+Theorem 4.2 has already constructed the Néron model $\mathcal J$ as a scheme. Applying its mapping property on smooth charts of $Q$, and the property just proved in the reverse direction, gives inverse maps $Q\rightleftarrows\mathcal J$. Thus $Q$ is that finite-type scheme. The smoothened multidegree-zero chart contains the identity and is connected; every other fixed-multidegree chart is its translate. Its image is therefore exactly $Q^0$. In the semistable case this connected chart is the generalized Jacobian described in Book 12; for a nonreduced fiber it may also contain a unipotent part. $\square$
+
+In the regular semistable case, Book 12 already constructed this separated Picard quotient and proved its extension property directly from divisors and vertical line bundles; Book 36 imported that result for its specialization chapter. The theorem here does not serve as a premise for those earlier books. It identifies their independently constructed quotient with the Néron model by the universal property and extends the method to arbitrary regular models by inserting the explicit group-smoothening step.
 
 ### 9.4 Independence of the regular model
 
 If $\mathcal X'\to\mathcal X$ blows up a special point, pullback introduces only the exceptional vertical class beyond the old Picard classes. It belongs to the closure of the generic identity, so
 
 $$
-P^{[0]}_{\mathcal X/R}/E_{\mathcal X}
-\simeq P^{[0]}_{\mathcal X'/R}/E_{\mathcal X'}. \tag{9.3}
+(P^\natural_{\mathcal X/R})/E_{\mathcal X}
+\simeq(P^\natural_{\mathcal X'/R})/E_{\mathcal X'}. \tag{9.3}
 $$
 
 Any two regular models have a common regular domination by Book 10. Thus the quotient is model-independent, as uniqueness of the Néron model also requires.
@@ -860,17 +938,41 @@ The whole fiber is principal, so $M(\mathbf Z^I)\subseteq\Lambda$.
 
 **Lemma 10.1.** The intersection form is negative semidefinite with rational kernel spanned by $(m_i)$. Hence $M(\mathbf Z^I)$ has finite index in $\Lambda$.
 
-**Proof.** The negativity theorem for a connected fiber from Book 11 says that the vertical intersection matrix is negative semidefinite and that its rational radical is exactly the line generated by the whole-fiber multiplicity vector. Hence its rank is $|I|-1$. The lattice $\Lambda$ also has rank $|I|-1$, so the inclusion $M(\mathbf Z^I)\subseteq\Lambda$ has finite index. $\square$
+**Proof.** We include the intersection argument so that the dependency is closed. For $i\ne j$, put
+
+$$
+b_{ij}=(\Gamma_i\cdot\Gamma_j)\geq0.
+$$
+
+These are sums of local intersection lengths, including residue degrees. The whole fiber is the principal divisor of $\pi$, so for every $i$,
+
+$$
+0=(\mathcal X_k\cdot\Gamma_i)
+=m_i\Gamma_i^2+\sum_{j\ne i}m_jb_{ij}. \tag{10.3}
+$$
+
+For $V=\sum_i a_i\Gamma_i$, substitute (10.3) into $V^2$ and group unordered pairs. One obtains the weighted Laplacian identity
+
+$$
+V^2=-\sum_{i<j}m_im_jb_{ij}
+\left(\frac{a_i}{m_i}-\frac{a_j}{m_j}\right)^2. \tag{10.4}
+$$
+
+Thus the form is negative semidefinite. The support of the fiber is connected: Stein factorization of the proper model is finite over the normal local base and has generic fiber $\operatorname{Spec}K$, hence is the base itself. Therefore equality in (10.4) forces all $a_i/m_i$ to be equal. The rational kernel is exactly $\mathbf Q(m_i)$ and the matrix has rank $|I|-1$.
+
+Finally, (10.3) says $M(\mathbf Z^I)\subseteq\Lambda$. Both are lattices of rank $|I|-1$, so the index is finite. $\square$
 
 ### 10.2 The component-group formula
 
 **Theorem 10.2.** There is a canonical Galois-equivariant isomorphism
 
 $$
-\Phi_J(k^s)\simeq\Lambda/M(\mathbf Z^I). \tag{10.3}
+\Phi_J(k^s)\simeq\Lambda/M(\mathbf Z^I). \tag{10.5}
 $$
 
-**Proof.** A generic-degree-zero line bundle has multidegree $d$ with $\sum m_id_i=0$. Horizontal divisors through smooth component points realize all of $\Lambda$ after an étale extension. Twisting by $\sum a_j\Gamma_j$ changes multidegree by $M(a)$. The Raynaud quotient identifies exactly these twists, while each fixed multidegree is a translate of the connected generalized Jacobian. Lemma 10.1 gives finiteness and descent gives equivariance. $\square$
+**Proof.** A generic-degree-zero line bundle has multidegree $d$ with $\sum m_id_i=0$, by intersecting its divisor with the principal whole fiber. Conversely every $d\in\Lambda$ occurs. Work over the strict henselization. Choose a smooth $k^s$-point $x_i$ on each $\Gamma_i$ away from all other components. In the two-dimensional regular local ring at $x_i$, lift a uniformizer of the regular curve $\Gamma_i$; its zero locus is a horizontal Cartier germ meeting $\Gamma_i$ once. The relative moving lemma for a regular projective surface globalizes this germ to a horizontal divisor $H_i$ with no other special-fiber intersection. Its generic degree is therefore $m_i$. Then the signed divisor $\sum_i d_iH_i$ has intersection vector $d$ and generic degree $\sum_i m_id_i=0$. This proves realization; descent replaces a point by its finite Galois-orbit sum when necessary.
+
+Twisting by $\sum a_j\Gamma_j$ changes multidegree by $M(a)$. Lemma 9.1 shows that these, and only these, are the generically trivial twists killed in the Raynaud quotient. Each fixed multidegree chart has the same connected identity group after smoothening, so the remaining connected components are exactly $\Lambda/M(\mathbf Z^I)$. Lemma 10.1 makes the quotient finite, and the construction is invariant under the residue Galois action. $\square$
 
 Equivalently, $\Phi_J(k^s)$ is the torsion in the cokernel of the intersection matrix. Smith normal form, rather than the determinant alone, gives its invariant factors.
 
@@ -879,13 +981,13 @@ Equivalently, $\Phi_J(k^s)$ is the torsion in the cokernel of the intersection m
 For a degree-zero divisor $D$ whose closure meets the fiber smoothly, put
 
 $$
-\rho(D)=((\overline D\cdot\Gamma_i))_i\in\Lambda. \tag{10.4}
+\rho(D)=((\overline D\cdot\Gamma_i))_i\in\Lambda. \tag{10.6}
 $$
 
 If $D=\operatorname{div}(f)$, then $\operatorname{div}_{\mathcal X}(f)=\overline D+\sum a_i\Gamma_i$, so $\rho(D)=-M(a)$. Therefore
 
 $$
-J(K^{\mathrm{sh}})\longrightarrow\Lambda/M(\mathbf Z^I) \tag{10.5}
+J(K^{\mathrm{sh}})\longrightarrow\Lambda/M(\mathbf Z^I) \tag{10.7}
 $$
 
 is the component map. If $P,Q$ specialize on $\Gamma_i,\Gamma_j$, then $c_J([P-Q])=[e_i-e_j]$. A nonrational closed point contributes its full Galois-orbit sum.
@@ -897,10 +999,10 @@ Solving $M(a)=-\rho(D)$ over $\mathbf Q$ gives a vertical correction orthogonal 
 The weights $m_i$ cannot be omitted. Every horizontal divisor satisfies
 
 $$
-\deg(D_K)=\sum_im_i(D\cdot\Gamma_i). \tag{10.6}
+\deg(D_K)=\sum_im_i(D\cdot\Gamma_i). \tag{10.8}
 $$
 
-Thus $\delta=\gcd_i(m_i)$ divides every rational divisor degree. If $C(K)\ne\varnothing$, a section forces $\delta=1$; over a henselian ring with algebraically closed residue field, moving horizontal divisors proves that $\delta$ equals the index. When $\delta>1$, the unsmoothed Picard object can fail cohomological flatness, but the smoothened quotient and formula (10.3) remain valid.
+Thus $\delta=\gcd_i(m_i)$ divides every rational divisor degree. If $C(K)\ne\varnothing$, a section forces $\delta=1$; over a henselian ring with algebraically closed residue field, moving horizontal divisors proves that $\delta$ equals the index. When $\delta>1$, the unsmoothed Picard object can fail cohomological flatness, but the smoothened quotient and formula (10.5) remain valid.
 
 ## 11. Semistable Jacobians
 
@@ -1032,7 +1134,7 @@ $$
 
 which descends to the discriminant groups. $\square$
 
-Under the principal polarization of a Jacobian, (12.3) is the component-level duality pairing. The analogous construction for arbitrary semistable abelian varieties requires the general monodromy pairing developed in the next book; no broader perfection claim is used here.
+Under the principal polarization of a Jacobian, (12.3) is the component-level duality pairing. Our graph convention uses the positive edge-length form $q_n$; the surface intersection matrix is its negative on the corresponding vertical lattice, so formulas written directly with intersections acquire the compensating minus sign. The analogous construction for arbitrary semistable abelian varieties requires the general monodromy pairing developed in the next book; no broader perfection claim is used here.
 
 ### 12.4 Prime-to-residue-characteristic torsion
 
@@ -1061,7 +1163,7 @@ $$
 \simeq\text{the Néron model over }\mathcal O_{S,s}. \tag{13.1}
 $$
 
-This follows from restriction and uniqueness. Reduction type, identity component, and component group are therefore local calculations. Good places contribute no component group.
+Although $S_s$ is a localization rather than an open subscheme, this still follows from finite presentation. A smooth finite-type test scheme over $\mathcal O_{S,s}$, together with its generic map, descends to some open neighborhood of $s$ in $S$. The global mapping property extends the descended map there, and two choices agree after further shrinking. Passing back to the localization proves the local mapping property; uniqueness identifies the base change with the local Néron model. Reduction type, identity component, and component group are therefore local calculations. Good places contribute no component group.
 
 ### 13.2 Sections and arithmetic component maps
 
@@ -1103,7 +1205,7 @@ The conclusions needed later can now be stated in one place.
 2. Homomorphisms, products, and principal polarizations extend uniquely.
 3. At a closed point $s$, $\mathcal A_s^0$ is smooth and connected and $\Phi_{A,s}$ is finite étale.
 4. Over a henselian local ring, $A(K)=\mathcal A(R)$ and the kernel of the component map is $\mathcal A^0(R)$; the map is onto when the residue field is finite or separably closed.
-5. For a Jacobian and a Picard-admissible regular model, $\mathcal J=P^{[0]}/E$.
+5. For a Jacobian and any regular proper model, $\mathcal J=P^\natural/E$; when the degree-zero Picard object is already smooth, this is $P^{[0]}/E$.
 6. If $\mathcal X_{k^s}=\sum m_i\Gamma_i$, then
 
    $$
