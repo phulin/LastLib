@@ -114,7 +114,7 @@ any resulting corrections.
 - [x] 088. Orders in Quaternion Algebras
 - [x] 089. Automorphic Forms on Definite Quaternion Algebras
 - [x] 090. Hecke Operators on Quaternionic Forms
-- [ ] 091. Hecke Algebras and Congruences
+- [x] 091. Hecke Algebras and Congruences
 - [ ] 092. Automorphic Representations of (GL_2)
 - [ ] 093. Automorphic Representations of (D^\times)
 - [ ] 094. Global Jacquet–Langlands
