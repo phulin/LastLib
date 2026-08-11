@@ -621,7 +621,13 @@ $$
 
 Hence $Na=0$. This holds naturally for every $T$ and every $a\in G(T)$, so the Yoneda principle gives $[N]_G=0$. The argument sums the whole finite scheme with multiplicity; it never replaces it by its geometric point set.
 
-If rank varies on a disconnected base, $G$ is killed on each clopen rank stratum by the corresponding order, and one common multiple kills it globally. In applications to abelian schemes we will usually retain an explicitly chosen annihilator $n$, since that identifies the particular ambient kernel $A[n]$ in which closure is taken.
+If rank varies on a disconnected base, $G$ is killed on each clopen rank stratum by the
+corresponding order. When the rank function takes only finitely many values—in particular when
+$S$ is quasi-compact—their least common multiple kills $G$ globally. Without that finiteness
+hypothesis there need not be one global annihilating integer: on an infinite disjoint union of
+fields, the orders may be unbounded. In applications to abelian schemes we will usually retain
+an explicitly chosen annihilator $n$, since that identifies the particular ambient kernel
+$A[n]$ in which closure is taken.
 
 ### 4.5 Order invertible implies étale
 
@@ -666,7 +672,7 @@ $$
 
 The last map is faithfully flat: on coordinates, $R[V]/(V^b-1)$ maps to $R[T]/(T^{ab}-1)$ by $V\mapsto T^a$, and the target is free with basis $1,T,\ldots,T^{a-1}$. The kernel equation is $T^a=1$. Thus exactness and the rank identity $ab=a\cdot b$ hold over every base, including residue characteristics dividing $ab$.
 
-In characteristic $p$, write
+In characteristic $p$ and for $r\ge 2$, write
 
 $$
 \alpha_{p^r}=\ker(F^r:\mathbf G_a\to\mathbf G_a)
@@ -730,7 +736,28 @@ $$
 
 The quotient is maximal among finite étale quotients: every map from $G$ to a finite étale group kills $G^0$, because the image of a connected scheme containing the identity lies in the identity component, which for an étale scheme is a point. Dually in the categorical, not Cartier-dual, sense, $G^0$ is the kernel of the maximal discrete quotient.
 
-The sequence need not split over $k$. After a separable extension the étale quotient becomes constant, but lifting its points may still define nontrivial torsors under $G^0$. Even when it splits, the splitting is additional structure and need not be canonical.
+Over a perfect field the sequence has more structure: it splits canonically. Indeed the reduced
+closed subscheme $G_{\mathrm{red}}$ is a subgroup. This may be checked after extension to an
+algebraic closure, where a product of reduced finite schemes is reduced and the group operations
+therefore preserve the reduced subscheme; faithful descent brings the factorizations back to
+$k$. The restriction
+
+$$
+G_{\mathrm{red}}\longrightarrow G^{\mathrm{et}}
+$$
+
+is an isomorphism. After algebraic closure, its source consists of one reduced point in each
+connected component, while its target is the set of those components. The restriction is thus
+an isomorphism after a faithfully flat field extension and hence over $k$. In the commutative
+case multiplication consequently gives a canonical isomorphism
+
+$$
+G^0\times G_{\mathrm{red}}\xrightarrow{\sim}G.
+$$
+
+This splitting is a theorem over the perfect field. It must not be carried over to a henselian
+local base: the reduced point inside each special-fiber component is not an open-and-closed
+component, and its subgroup need not lift.
 
 Without perfection, $G/G^0$ need not be étale in the desired geometric sense. One may still form the component quotient under standard finite-group-scheme results, but inseparable residue extensions obstruct the clean connected–étale conclusion. We will retain the perfectness hypothesis whenever this exact sequence is used.
 
@@ -760,7 +787,7 @@ This hierarchy is essential when a generic étale representation specializes. Th
 
 ### 5.6 The role of perfection
 
-It is useful to isolate exactly where perfection entered. The Artinian product decomposition and the existence of $G^0$ did not use it. Nor did the quotient theorem. Perfection was used to turn a reduced finite algebra into a geometrically reduced one, hence to identify the component quotient as finite étale by inspecting reducedness over the original field.
+It is useful to isolate exactly where perfection entered. The Artinian product decomposition and the existence of $G^0$ did not use it. Nor did the quotient theorem. Perfection was used to turn a reduced finite algebra into a geometrically reduced one, hence to make $G_{\mathrm{red}}$ a finite étale subgroup and identify it with the component quotient. This is also what supplies the canonical splitting in §5.3.
 
 The warning is already visible without a group law. If $k$ is imperfect of characteristic $p$ and $a\in k$ is not a $p$th power, then
 
@@ -927,7 +954,12 @@ $$
 
 It measures how much of the order lies in the connected special fiber and how much survives as an unramified discrete quotient. This is often the first structural invariant of a finite-flat model.
 
-The sequence may fail to split, and even a splitting of the special fiber need not lift. A split product is therefore never implicit in the superscript “et.” Moreover, if the residue field is imperfect, the clean étaleness assertion can fail; if the local ring is not henselian, the special-fiber idempotents need not lift. Both hypotheses serve distinct purposes.
+The sequence may fail to split over $R$, even though its special fiber over the perfect field
+splits canonically by §5.3. That special-fiber section need not lift to a homomorphism over $R$.
+A split product is therefore never implicit in the superscript “et” over a local base. Moreover,
+if the residue field is imperfect, the clean étaleness assertion can fail; if the local ring is
+not henselian, the special-fiber idempotents need not lift. Both hypotheses serve distinct
+purposes.
 
 ### 7.4 Base change and completion
 
@@ -1292,13 +1324,18 @@ $$
 
 Over a field of characteristic prime to $n$, $E[n]$ is finite étale and over a separable closure its points form $(\mathbf Z/n\mathbf Z)^2$. This recovers the familiar two-dimensional torsion module, now as the geometric points of a scheme whose integral specializations remain meaningful.
 
-In characteristic $p$, the connected–étale sequence of $E[p]$ detects the ordinary or supersingular character. Over a perfect algebraically closed field, an ordinary elliptic curve has connected part of order $p$ of multiplicative type and étale quotient of order $p$:
+In characteristic $p$, the connected–étale sequence of $E[p]$ detects the ordinary or supersingular character. Over an algebraically closed field, an ordinary elliptic curve has connected part of order $p$ of multiplicative type and étale quotient of order $p$:
 
 $$
 0\to\mu_p\to E[p]\to\underline{\mathbf Z/p\mathbf Z}\to0.
 $$
 
-The sequence records the structure needed here; a splitting should not be silently assumed over a smaller field or base. For a supersingular elliptic curve, $E[p]$ is connected of order $p^2$. It contains subtler infinitesimal structure and is not generally the product $\alpha_p\times\alpha_p$. Thus the abstract group of geometric $p$-torsion points—trivial in the supersingular case—does not measure the order of the kernel.
+Over this perfect field the sequence splits through the reduced subgroup, as §5.3 proves. What
+must not be assumed is that this special-fiber splitting lifts over a local base. For a
+supersingular elliptic curve, $E[p]$ is connected of order $p^2$. It contains subtler
+infinitesimal structure and is not generally the product $\alpha_p\times\alpha_p$. Thus the
+abstract group of geometric $p$-torsion points—trivial in the supersingular case—does not
+measure the order of the kernel.
 
 ### 10.4 Subgroups and isogenies
 
@@ -1316,13 +1353,40 @@ $$
 \deg(A\to A/H)=|H|.
 $$
 
-Here representability is a theorem, not a consequence of the affine quotient result because $A$ is proper rather than affine. A concise construction uses the finite locally free relation
+Here representability is a theorem, not a consequence of the affine quotient result because $A$ is proper rather than affine. We give the construction needed to close that gap. Use the finite locally free relation
 
 $$
 H\times_SA\rightrightarrows A
 $$
 
-given by projection and translation. Choose a relatively ample line bundle $L$ on $A$. Taking the norm of the translated bundle along the finite locally free projection $H\times A\to A$ is the scheme-theoretic version of tensoring all $H$-translates of $L$. Translation on the $H$-factor supplies invariant descent data; after a fixed positive tensor power, it gives compatible projective embeddings for the quotient relation. Effective descent then constructs a proper $S$-scheme $B$ representing the sheaf quotient. The group law descends because $H$ is normal, and smoothness descends along the torsor $A\to B$. Fibers are quotients of abelian varieties by finite subgroup schemes, hence geometrically connected. Thus $B$ is an abelian scheme.
+given by projection and translation. Choose a relatively ample line bundle $L$ on $A$, and put
+
+$$
+M=N_{\operatorname{pr}_2}\bigl(m^*L\bigr),
+$$
+
+where $m:H\times A\to A$ is translation and the norm is taken along
+$\operatorname{pr}_2:H\times A\to A$. Norm-ampleness for a finite locally free surjection makes
+$M$ relatively ample: the automorphism $(h,a)\mapsto(h,h+a)$ identifies $m$ with the finite
+locally free projection, so $m^*L$ is relatively ample before the norm is taken. Translating the
+$H$-index permutes the factors in the norm and gives $M$
+a canonical $H$-linearization; the cocycle is the associativity of that permutation.
+
+This linearized ample bundle produces invariant affine neighborhoods. Indeed, after replacing
+$M$ by one fixed positive power locally on $S$, sections of $M$ give affine nonvanishing opens.
+For a chosen section, take the norm of all its $H$-translates. Its nonvanishing open is
+$H$-stable, affine, and contains every orbit on which the original section is nonzero at every
+point. Finite prime avoidance on the finite orbit and relative ampleness supply such a section
+around each point. Quasi-compactness then gives an $H$-stable affine cover of $A$.
+
+On every member of this cover the finite locally free affine quotient theorem represents the
+quotient by the invariant algebra and proves the torsor identity. On overlaps the quotients agree
+by their sheaf universal property, so they glue to an $S$-scheme $B$ representing $A/H$. The
+linearized powers of $M$ descend and give a relatively ample bundle on $B$; hence $B$ is
+projective, in particular proper, over $S$. The group law descends because $H$ is normal.
+Smoothness descends along the finite locally free cover $A\to B$, and every geometric fiber of
+$B$ is the surjective image of the connected fiber of $A$, hence is connected. Thus $B$ is an
+abelian scheme.
 
 After pulling back along $A\to B$, the quotient map becomes the projection $A\times H\to A$. It follows by descent that $A\to B$ is finite locally free of rank $|H|$ and has kernel $H$. Conversely, an isogeny of abelian schemes is finite locally free by the same fiberwise flatness argument, and its identity fiber is a finite locally free kernel. A mere finite closed subgroup that is not flat does not meet any of these hypotheses.
 

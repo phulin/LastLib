@@ -69,7 +69,7 @@ any resulting corrections.
 - [ ] 043. Heights and the Mordell–Weil Theorem
 - [x] 044. Finite Locally Free Schemes and Algebras
 - [x] 045. Affine Group Schemes and Hopf Algebras
-- [ ] 046. Finite Flat Commutative Group Schemes
+- [x] 046. Finite Flat Commutative Group Schemes
 - [ ] 047. Cartier Duality
 - [ ] 048. Finite-Flat Galois Representations
 - [ ] 049. Elliptic Curves over DVRs
