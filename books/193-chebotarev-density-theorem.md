@@ -1001,7 +1001,7 @@ $\mathfrak P\mid\mathfrak p$. The local factor is
 
 $$
 L_{\mathfrak p}(s,\rho)
-=\det\!\left(1-(N\mathfrak p)^{-s}ho(\phi_{\mathfrak P})
+=\det\!\left(1-(N\mathfrak p)^{-s}\rho(\phi_{\mathfrak P})
 \mid V^{I_{\mathfrak P}}\right)^{-1},
 \tag{6.1}
 $$

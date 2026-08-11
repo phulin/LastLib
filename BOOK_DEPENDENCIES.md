@@ -298,4 +298,4 @@ flowchart LR
 
 | Book | Direct prerequisites |
 |---|---|
-| 193 | 2, 3, 4, 6, 7, 29 |
+| 193 | 2, 3, 4, 5, 6, 7, 19, 29 |
