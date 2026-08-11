@@ -1273,7 +1273,7 @@ $$
 
 Weak approximation moves every ray class to an idele trivial at the places dividing the modulus and at infinity, proving surjectivity. Its kernel is exactly the stated congruence-and-sign subgroup. This also proves finiteness, since the ray quotient fits into an exact sequence with the ordinary ideal class group and the finite groups $(\mathcal O_K/\mathfrak m_0)^\times$ and $\{\pm1\}^{|\mathfrak m_\infty|}$, modulo the image of global units.
 
-When $\mathfrak m=(1)$ and no real place is included, this is the ordinary class group. When $\mathfrak m_0=(1)$ and all real places are included, it is the narrow class group. These coincide exactly when the needed sign patterns can be supplied by global units. For $K=\mathbf Q$, the unit $-1$ supplies its unique sign; in the real quadratic case a unit of norm $-1$ supplies all four sign patterns, but one norm-$-1$ unit does not suffice in arbitrary higher degree.
+When $\mathfrak m=(1)$ and no real place is included, this is the ordinary class group. When $\mathfrak m_0=(1)$ and all real places are included, it is the narrow class group. These coincide exactly when the needed sign patterns can be supplied by global units. For $K=\mathbf Q$, the unit $-1$ supplies its unique sign; in the real quadratic case $-1$ together with a unit of norm $-1$ supplies all four sign patterns, but one norm-$-1$ unit does not suffice in arbitrary higher degree.
 
 ### 7.3 Conductors of extensions and characters
 

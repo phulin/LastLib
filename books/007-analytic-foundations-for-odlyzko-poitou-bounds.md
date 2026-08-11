@@ -769,6 +769,12 @@ $$
 |T_j-\operatorname{Im}\rho|\geq\frac{a}{(T_j+3)^d}.
 $$
 
+Indeed, (4.4) bounds the number of zero ordinates within distance one of $[j,j+1]$ by
+$O(\log D_K+n\log(j+3))$. Remove intervals of radius $(j+3)^{-d}$ about those ordinates. For
+some fixed $d\geq2$ their total length is less than $1$ for all large $j$, so a point $T_j$ remains
+in $[j,j+1]$; increasing $d$ and decreasing a positive constant $a$ handles the finitely many
+initial intervals.
+
 On this sequence
 
 $$
@@ -1515,7 +1521,7 @@ lie at or above the applicable analytic threshold.
 
 ### 13.3 Uniform finite composita
 
-Let $\{L_i\}_{i\in I}$ be extensions of a fixed field, and suppose every finite compositum satisfies one ceiling $U$ and one signature lower bound $\alpha_0$. If $U<4\pi e^{\gamma+\alpha_0}$, their directed compositum is finite.
+Fix an overfield $\Omega$ of $F$, let $\{L_i\}_{i\in I}$ be intermediate fields of $\Omega/F$, and suppose every finite compositum satisfies one ceiling $U$ and one signature lower bound $\alpha_0$. If $U<4\pi e^{\gamma+\alpha_0}$, their directed compositum is finite.
 
 Indeed, all finite subcomposita have bounded degree. Choose one of maximal degree. Composing it with any other member cannot increase the degree, so it already contains that member. The common compositum is therefore the chosen finite field.
 
