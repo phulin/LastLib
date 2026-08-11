@@ -633,7 +633,7 @@ $$
 
 with Cartier evaluation as the perfect pairing between the two kernels.
 
-For $\varphi=[n]_E$, pullback of degree-zero line bundles shows that $\varphi^\vee=[n]_{E^\vee}$. The polarization $\lambda$ therefore gives an isomorphism $E[n]^D\simeq E[n]$. Its evaluation pairing is obtained by comparing translation trivializations of $\mathcal O_E(O)$; expressing those trivializations by $D_P$ and $f_P$ gives exactly (4.3). This proves that (4.6) is an isomorphism. Since $n$ is invertible, both group schemes are finite étale, so the scheme-theoretic isomorphism is the asserted perfect pairing on geometric points. $\square$
+For $\varphi=[n]_E$, pullback of degree-zero line bundles shows that $\varphi^\vee=[n]_{E^\vee}$. The origin polarization therefore gives an isomorphism $E[n]^D\simeq E[n]$. There is a harmless sign to fix here: using $t_P$ rather than $t_{-P}$ identifies the adjoint with the negative of the identification obtained from the other convention. We choose the sign for which Cartier evaluation, expressed through the translation trivializations determined by $D_P$ and $f_P$, is (4.3). Reversing this choice would replace every value by its inverse and would change neither perfectness nor any determinant conclusion. With this convention, (4.6) is an isomorphism. Since $n$ is invertible, both group schemes are finite étale, so the scheme-theoretic isomorphism is the asserted perfect pairing on geometric points. $\square$
 
 Choose a point $P$ of exact order $n$. Perfectness supplies $Q$ such that $e_n(P,Q)$ has exact order $n$: otherwise $e_n(P,Q)^{n/d}=1$ for every $Q$ for some proper divisor $d$, and nondegeneracy would force $(n/d)P=0$. Thus one can choose a basis $(P,Q)$ satisfying
 
@@ -680,7 +680,7 @@ $$
 e_{mn}(P,Q)^m=e_n(mP,mQ). \tag{4.12}
 $$
 
-One proof compares the divisor functions for $P$ and $mP$; another verifies the identity on a symplectic basis, where both sides are the same power of a primitive $mn$th root. Nondegeneracy then makes the identity basis-free.
+The clean proof uses functoriality of the Poincaré biextension under multiplication by $m$: pulling back in both variables changes its commutator trivialization by the $m$th power and gives (4.12) as an equality of pairings. On prime-to-characteristic geometric points, the exponent can be checked on a symplectic basis: both sides are the same power of a primitive $mn$th root. Thus the displayed formula is not being inferred from the existence of one convenient basis; it is the pointwise shadow of the functorial group-scheme identity.
 
 In particular, if $\ell P_{r+1}=P_r$ and $\ell Q_{r+1}=Q_r$, then
 
@@ -1134,7 +1134,23 @@ This proves the index formula (7.4) and also records the possible shapes of the 
 
 The reduction modulo $\ell$ explains why residual representations may change. In the cyclic case, $M$ has rank one modulo $\ell$; its kernel is the line corresponding to the isogeny kernel and its image is related to the dual-isogeny line on $E'[\ell]$. Although $V_\ell E$ and $V_\ell E'$ are the same rational representation, the two lattices sit at adjacent vertices in the lattice graph of that representation. Their mod-$\ell$ extensions can point in opposite directions.
 
-Semisimplification removes this lattice dependence. The characteristic polynomial of every Galois element on the common rational representation is integral and has the same reduction for both lattices. The semisimplifications of the two reductions therefore agree. In the degree-$\ell$ situation, their constituents are precisely the kernel character $\psi$ and the forced quotient character $\overline\chi_\ell\psi^{-1}$ from (6.8). What can change is the extension class joining them.
+Semisimplification removes this lattice dependence. Here is the integral reason, which avoids treating equality of characteristic polynomials as a substitute for a lattice argument. If $L$ and $L'$ are two stable lattices in the same rational representation, rescale one so that $L'\subset L$. Put $M=L/L'$. Reduction of the short exact sequence gives
+
+$$
+0\longrightarrow M[\ell]\longrightarrow L'/\ell L'
+\longrightarrow L/\ell L\longrightarrow M/\ell M
+\longrightarrow0. \tag{7.11}
+$$
+
+In the Grothendieck group of finite-length $\mathbf Z_\ell[G_K]$-modules, the two exact sequences
+
+$$
+0\to M[\ell]\to M\xrightarrow{\ell}\ell M\to0,
+\qquad
+0\to\ell M\to M\to M/\ell M\to0
+$$
+
+show that $M[\ell]$ and $M/\ell M$ have the same composition factors. Equation (7.11) therefore gives the same composition factors for $L'/\ell L'$ and $L/\ell L$. A chain of such inclusions handles arbitrary commensurable lattices. Their semisimplifications consequently agree. In the degree-$\ell$ situation, the common constituents are precisely the kernel character $\psi$ and the forced quotient character $\overline\chi_\ell\psi^{-1}$ from (6.8). What can change is the extension class joining them.
 
 This lattice calculation is also the reason one must not invert the degree too early. Rationalizing makes functoriality simple, but it erases the kernel line that detects a rational isogeny and the finite index that controls residual congruences.
 
@@ -1554,7 +1570,7 @@ $$
 [n]^*L\simeq L^{\otimes n^2}
 $$
 
-up to a line bundle from the base. Thus $[n]$ is fiberwise finite of degree $n^2$. Properness makes it finite, and fiberwise flatness between smooth curves makes it finite locally free. Therefore
+up to a line bundle from the base. Thus $[n]$ is fiberwise finite of degree $n^2$, and properness makes it finite. For flatness, the source and target fibers are smooth curves, hence Cohen--Macaulay and regular of the same dimension; finite miracle flatness applies on every fiber, and the fiberwise flatness criterion applies over $R$. This is also the multiplication theorem for abelian schemes proved in the finite-flat theory. Therefore
 
 $$
 \mathcal E[n]=\ker([n]:\mathcal E\to\mathcal E)
@@ -1598,7 +1614,7 @@ $$
 \mathbf Z/p^r\mathbf Z\longrightarrow0. \tag{11.4}
 $$
 
-The sequence records the connected multiplicative part and the étale quotient. A splitting is not canonical and is not implicit. The geometric points see only the quotient, giving $\widetilde E[p^r](\overline k)\cong\mathbf Z/p^r\mathbf Z$. Cartier duality reverses (11.4), and the principal polarization makes the full sequence self-dual in this reversed sense.
+The sequence records the connected multiplicative part and the étale quotient. Because $\overline k$ is perfect, the reduced subgroup of the special fiber maps isomorphically to the étale quotient and gives a canonical splitting of this special-fiber connected--étale sequence. Identifying that reduced cyclic group with a particular copy of $\mathbf Z/p^r\mathbf Z$ still requires a generator. More importantly, the special-fiber splitting need not lift to a splitting of the connected--étale sequence over $R$. The geometric points see only the reduced étale factor, giving $\widetilde E[p^r](\overline k)\cong\mathbf Z/p^r\mathbf Z$. Cartier duality reverses (11.4), and the principal polarization makes the full sequence self-dual in this reversed sense.
 
 For a supersingular special fiber, $\widetilde E[p^r]$ is connected, and its Cartier dual is connected as well. It is local-local rather than multiplicative or étale. Its group of geometric points is trivial although its rank is $p^{2r}$. In particular, it is generally false to replace it by $\alpha_{p^r}\times\alpha_{p^r}$: rank, connectedness, and tangent dimension do not determine the Hopf law.
 
@@ -1609,7 +1625,7 @@ These alternatives can be seen from $[p]=V\circ F$. Relative Frobenius has purel
 Let $E/K$ have an integral Weierstrass equation and let $T=-x/y$ be the formal parameter at the origin. Its formal group has a multiplication series
 
 $$
-[p](T)=pT+c_2T^2+c_3T^3+\cdots. \tag{11.8}
+[p](T)=pT+c_2T^2+c_3T^3+\cdots. \tag{11.5}
 $$
 
 If $p$ is invertible, the linear coefficient makes $[p]$ locally invertible. In residue characteristic $p$, that coefficient vanishes after reduction, so the first nonzero higher term controls the kernel near the origin.
@@ -1617,10 +1633,12 @@ If $p$ is invertible, the linear coefficient makes $[p]$ locally invertible. In 
 For a good special fiber in characteristic $p$, after a suitable parameter the reduced series begins
 
 $$
-[p](T)=uT^{p^h}+\text{higher terms},\qquad u\ne0, \tag{11.9}
+[p](T)=uT^{p^h}+\text{higher terms},\qquad u\ne0, \tag{11.6}
 $$
 
-where $h=1$ for ordinary reduction and $h=2$ for supersingular reduction. This **height** explains the point counts. Height one leaves an étale direction outside the connected formal kernel; height two uses the full degree $p^2$ in the connected direction, leaving no nonzero geometric $p$-torsion.
+where $h=1$ for ordinary reduction and $h=2$ for supersingular reduction. No formal-group classification is hidden here. In a local parameter, relative Frobenius has initial term a unit times $T^p$. Since $[p]=V\circ F$, the initial degree of $[p]$ is $p$ when $V$ is separable, which is exactly the ordinary case. When $V$ is inseparable, it too has initial degree $p$; the composite then has initial degree $p^2$. Its total degree is already $p^2$, so no larger initial degree is possible. This proves the two stated heights from the factorization in Section 2.4.
+
+The **height** explains the point counts. Height one leaves an étale direction outside the connected formal kernel; height two uses the full degree $p^2$ in the connected direction, leaving no nonzero geometric $p$-torsion.
 
 The formula also explains why the reduction map on $p$-torsion cannot be treated by the proof of Theorem 9.1. The kernel of $[p]$ on the integral model is not étale. Distinct generic points can specialize to the same special point, with their separation retained in infinitesimal structure.
 
@@ -1643,7 +1661,7 @@ For a Tate curve there is still an exact sequence
 $$
 0\longrightarrow\mathbf Z_p(1)
 \longrightarrow T_pE_q
-\longrightarrow\mathbf Z_p\longrightarrow0, \tag{11.10}
+\longrightarrow\mathbf Z_p\longrightarrow0, \tag{11.7}
 $$
 
 whose extension class is the $p$-adic Kummer class of $q$. Both the cyclotomic line and roots of the unit part of $q$ can be ramified. The tame inertia matrix from Chapter 10 is therefore unavailable.
@@ -1662,14 +1680,14 @@ After the unramified splitting extension, Tate uniformization gives
 
 $$
 0\longrightarrow\mu_p\longrightarrow E[p]
-\longrightarrow\mathbf Z/p\mathbf Z\longrightarrow0. \tag{11.5}
+\longrightarrow\mathbf Z/p\mathbf Z\longrightarrow0. \tag{11.8}
 $$
 
 Its extension class is the Kummer class of the Tate parameter $q$, with $v(q)=m$. This class comes from an integral $\mu_p$-torsor exactly when it has a unit representative modulo $p$th powers. Writing $q=\pi^m u$ gives
 
 $$
 [q]\text{ has a unit representative}
-\quad\Longleftrightarrow\quad p\mid m. \tag{11.6}
+\quad\Longleftrightarrow\quad p\mid m. \tag{11.9}
 $$
 
 When $m=ps$, write $q=(\pi^s)^pa$ with $a\in R^\times$. For each $i\in\mathbf Z/p\mathbf Z$, take
@@ -1678,17 +1696,20 @@ $$
 \mathcal G_i=\operatorname{Spec}R[T_i]/(T_i^p-a^i)
 $$
 
-and form their disjoint union. Multiplication uses $T_iT_j$ and divides by $a$ whenever $i+j$ crosses $p$. Since $a$ is a unit, this defines a finite locally free group of rank $p^2$. Its kernel over the zero component is $\mu_p$, its component label gives the constant quotient, and on the generic fiber $T_i=z$ corresponds to the Tate parameter $(\pi^s)^iz$. This proves sufficiency in (11.6). Conversely, pulling an integral extension back along $1\in\mathbf Z/p\mathbf Z$ gives a $\mu_p$-torsor over $R$, so its generic Kummer class must be represented by a unit. This proves necessity for the displayed canonical extension.
-
-For an unramified extension of $\mathbf Q_p$ with $p$ odd, the two residual inertia characters $\overline\chi_p$ and $1$ are distinct. The cyclotomic line is then intrinsic, and schematic closure forces any finite-flat model to extend (11.5) in the displayed order. Under these hypotheses,
+and form their disjoint union. Multiplication uses $T_iT_j$ and divides by $a$ whenever $i+j$ crosses $p$. Since $a$ is a unit, this defines a finite locally free group of rank $p^2$. Its kernel over the zero component is $\mu_p$, its component label gives the constant quotient, and on the generic fiber $T_i=z$ corresponds to the Tate parameter $(\pi^s)^iz$. This proves sufficiency in (11.9). Conversely, pulling an integral extension back along $1\in\mathbf Z/p\mathbf Z$ gives a $\mu_p$-torsor over $R$, so its generic Kummer class must be represented by a unit. We have proved the exact statement available from Tate uniformization:
 
 $$
-E[p]\text{ is finite flat over }R
-\quad\Longleftrightarrow\quad
-p\mid v(\Delta_{\min}). \tag{11.7}
+\begin{aligned}
+&\text{the distinguished Tate sequence (11.8), with its specified }\mu_p
+\text{ subgroup and constant quotient,}\\
+&\hspace{35mm}\text{extends over }R
+\quad\Longleftrightarrow\quad p\mid v(\Delta_{\min}).
+\end{aligned} \tag{11.10}
 $$
 
-An unramified quadratic twist changes both characters by the same finite étale sign and does not alter the criterion. At $p=2$ the residual cyclotomic character is trivial, so the intrinsic-line argument fails; (11.6) still classifies the canonical extension, but abstract necessity requires additional classification. On ramified bases, intermediate finite-flat models can occur, so the unramified hypothesis in (11.7) cannot be dropped.
+In particular, the divisibility supplies a finite-flat model of the generic representation $E[p]$. The converse for the bare existence of some finite-flat model is stronger than (11.10). Even over an unramified extension of $\mathbf Q_p$ with $p$ odd, the distinct residual characters do not by themselves classify the schematic closures of the two lines in every possible model. Such a necessity statement requires an additional classification theorem and is not asserted here.
+
+An unramified quadratic twist descends the constructed model through a finite étale sign and does not alter the sufficient divisibility criterion. At $p=2$ the residual cyclotomic character is trivial, so even the generic character distinction disappears; (11.10) still classifies the distinguished twisted Tate extension, but no abstract necessity follows. Ramified bases can admit still more integral models.
 
 ### 11.7 Equal characteristic
 
@@ -1824,15 +1845,15 @@ when $v(A)>4$. Only after this calculation may the multiplicative inertia criter
 
 At a place $v\mid\ell$, the coefficient prime equals the residue characteristic. The representation remains two-dimensional because the number field has characteristic zero, and its determinant remains cyclotomic, but good reduction does not imply unramifiedness and the tame multiplicative formula does not apply.
 
-There is nevertheless an exact finite-level conclusion. If $E$ has good reduction at $v$, the group $E[\ell]$ is the generic fiber of the finite locally free group $\mathcal E[\ell]$ over $\mathcal O_{F_v}$. Thus $\overline\rho_{E,\ell}|_{G_{F_v}}$ is finite flat. If $E$ has multiplicative reduction, $F_v/\mathbf Q_\ell$ is unramified, and $\ell$ is odd, criterion (11.7) gives
+There is nevertheless an exact finite-level conclusion. If $E$ has good reduction at $v$, the group $E[\ell]$ is the generic fiber of the finite locally free group $\mathcal E[\ell]$ over $\mathcal O_{F_v}$. Thus $\overline\rho_{E,\ell}|_{G_{F_v}}$ is finite flat. If $E$ has multiplicative reduction and
 
 $$
-E[\ell]\text{ is finite flat over }\mathcal O_{F_v}
-\quad\Longleftrightarrow\quad
-\ell\mid v(\Delta_{\min}). \tag{12.12}
+\ell\mid v(\Delta_{\min}), \tag{12.12}
 $$
 
-For the exponentiated Frey curve at a place $v\mid abc$ above $\ell$, formula (12.10) supplies this divisibility. Hence, under the unramified odd-prime hypothesis, its residual representation is finite flat there even though the curve has multiplicative reduction. If $v\nmid abc$ and the curve has good reduction, finite flatness follows from the good model instead. Ramified coefficient fields and the dyadic case require the qualifications stated in Section 11.6; no stronger criterion is asserted here.
+the construction leading to (11.10), followed by finite étale descent in the nonsplit case, supplies a finite-flat model of $E[\ell]$ over $\mathcal O_{F_v}$. This is a sufficient condition over an arbitrary mixed-characteristic DVR. We do not reverse it for the abstract representation: failure of (12.12) rules out the distinguished Tate extension in its displayed order, but excluding every differently filtered model requires additional classification.
+
+For the exponentiated Frey curve at a place $v\mid abc$ above $\ell$, formula (12.10) supplies the divisibility (12.12). Hence its residual representation is finite flat there even though the curve has multiplicative reduction. If $v\nmid abc$ and the curve has good reduction, finite flatness follows from the good model instead. The construction, unlike an abstract necessity statement, does not require $F_v/\mathbf Q_\ell$ to be unramified. The dyadic case retains the filtration caveat of Section 11.6, although the same divisibility still gives the distinguished model.
 
 ### 12.5 Reducibility as the remaining geometric branch
 
@@ -1863,7 +1884,7 @@ e_\ell&\det\overline\rho_{E,\ell}=\overline\chi_\ell\\
 \ell\mid v(\Delta_{\min})&\text{trivial residual inertia at that multiplicative place}\\
 \text{a stable line in }E[\ell]&\text{a rational cyclic }\ell\text{-isogeny}\\
 \text{good reduction at }v\mid\ell&\text{the finite-flat model }\mathcal E[\ell]\\
-\text{multiplicative }v\mid\ell&\text{the criterion (11.7) under its stated hypotheses}.
+\text{multiplicative }v\mid\ell&\text{the sufficient construction (11.10) when }\ell\mid v(\Delta_{\min}).
 \end{array} \tag{12.14}
 $$
 
