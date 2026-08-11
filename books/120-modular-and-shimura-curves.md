@@ -74,7 +74,7 @@
     - [What “good” means](#141-what-good-means)
     - [Good reduction is a property of datum and level](#142-good-reduction-is-a-property-of-datum-and-level)
     - [Split primes with Iwahori level](#143-split-primes-with-iwahori-level)
-    - [A selected ramified prime](#144-a-selected-ramified-prime)
+    - [The boundary at a ramified algebra place](#144-the-boundary-at-a-ramified-algebra-place)
     - [Specialization and cohomological scope](#145-specialization-and-cohomological-scope)
 15. [Varying level and adelic actions](#15-varying-level-and-adelic-actions)
     - [A tower, not a single curve](#151-a-tower-not-a-single-curve)
@@ -166,7 +166,7 @@ We distinguish the open moduli curve $Y$ of smooth elliptic curves from its comp
 
 A unified account is useful only if its foundations are visible. We shall repeatedly use the following established results, always with the hypotheses displayed here.
 
-First, generalized elliptic curves and their ample Drinfeld level structures form algebraic stacks with finite separated diagonal. Finite subgroup quotients and canonical contractions exist, are unique, and commute with base change. Their standard compactified level stacks are normal, proper, and flat over the indicated integral base; after adding auxiliary full level of order at least three, prime to every residue characteristic under consideration, one obtains a projective fine cover. The Tate charts on those covers are complete: they describe every boundary deformation, not merely a dense family of examples.
+First, generalized elliptic curves and their ample Drinfeld level structures form algebraic stacks with finite separated diagonal. Finite subgroup quotients and canonical contractions exist, are unique, and commute with base change. Over the good-level base, where the level order is invertible, the standard compactified level stacks are smooth, proper, and flat. Zariski-locally on that base one may choose auxiliary full level of order at least three that is invertible there and obtain a projective fine cover; the resulting covers form a faithfully flat projective cover globally. Their Tate charts are complete: they describe every boundary deformation, not merely a dense family of examples. At a prime dividing the level, only the prime-depth integral model singled out in the next paragraph is taken as established; no arbitrary bad-level compactification theorem is being imported.
 
 Second, at a prime $p$ occurring to squarefree $\Gamma_0$-depth one, after prime-to-$p$ rigidification the Deligne--Rapoport model is regular and semistable. Its supersingular completed local rings are
 
@@ -176,7 +176,7 @@ $$
 
 and its two normalized components are the Frobenius and Verschiebung branches. No corresponding assertion will be made for deeper $p$-power level, for an unrigidified wild coarse quotient, or for arbitrary parahoric data.
 
-Third, the quaternionic groups, their involutions, symplectic representations, and the PEL data used here have already been constructed. For a one-dimensional quaternionic PEL datum, neat level gives a smooth fine curve over the reflex field, complex uniformization identifies it with the selected adelic quotient, reduced norm computes its components by strong approximation, and canonical reciprocity gives the descent action on those components. At an unramified self-dual hyperspecial place its integral PEL functor is represented by a smooth model; anisotropy modulo center makes that model proper. At a split Iwahori place the rank-two local model is semistable only under the explicit unramified minuscule hypotheses stated in Chapter 14.
+Third, the quaternionic groups, their involutions, symplectic representations, and the PEL data used here have already been constructed. For a one-dimensional quaternionic PEL datum, neat level gives a smooth fine curve over the reflex field, complex uniformization identifies it with the selected adelic quotient, reduced norm computes the components of the basic group by strong approximation, and canonical reciprocity gives the descent action on those components. At an unramified self-dual hyperspecial place the integral PEL functor is represented by a smooth model. Properness of that integral model additionally requires either the direct quaternionic trace realization or the established boundary-rationality condition for every trait degeneration; anisotropy alone does not supply the missing rational boundary flag. At a split Iwahori place the rank-two local model is semistable only under the explicit unramified minuscule and flat-local-model hypotheses stated in Chapter 14.
 
 Finally, for a smooth proper curve $X$, its Jacobian exists, finite correspondences act by pullback followed by norm, and the Kummer sequence identifies its Tate module with first étale cohomology in the variance used in Chapter 17. Smooth proper base change applies only to a smooth proper model. A regular semistable model instead brings component groups, nearby cycles, and monodromy into the picture.
 
@@ -311,7 +311,7 @@ $$
 
 for an auxiliary prime $r$, unless $u=1$. Equality with $4$ occurs for $u=-1$, whose action on $E[N]$ is not the identity when $N\geq3$. The remaining cases cannot be divisible by $N^2$. Thus $u=1$. This argument remains valid in characteristics $2$ and $3$ because $N$ is invertible and the auxiliary Tate module detects the automorphism.
 
-For a $\Gamma_1(N)$ object $(E,P)$, an automorphism fixing $P$ makes $P$ lie in $\ker(u-1)$. The same list of possible degrees, together with the structure of the exceptional kernels, shows that no nonidentity automorphism can fix a point of exact order $N\geq4$. The bound is sharp as a uniform statement: at smaller levels, $[-1]$ fixes every point of order two, and exceptional automorphisms survive at special $j$-values.
+For a $\Gamma_1(N)$ object $(E,P)$, an automorphism fixing $P$ makes the cyclic subgroup generated by $P$ lie in $\ker(u-1)$. Since $N$ is invertible, this subgroup has rank $N$, so $N\mid\deg(u-1)$. The displayed degree list rules out $N\geq5$. If $N=4$, divisibility forces $\deg(u-1)=4$, hence the characteristic polynomial has trace $-2$ and $u=-1$ on the auxiliary Tate module. But $\ker(-1-1)=E[2]$ contains no point of exact order four. Thus $u=1$. The bound is sharp as a uniform statement: at smaller levels, $[-1]$ fixes every point of order two, and exceptional automorphisms survive at special $j$-values.
 
 The level stacks have finite diagonal and are finite étale over the elliptic stack. Trivial geometric inertia makes each one an algebraic space. The established coarse-space theorem for finite level problems shows that the forgetful morphism to the coarse $j$-line is finite; equivalently, on Weierstrass charts the torsion coordinates satisfy the monic division equations and their invariant rings are integral over the $j$-ring. A finite algebraic space over a scheme is a scheme. Since a finite morphism to the affine scheme $\mathbf A^1_{\mathbf Z[1/N]}$ is affine, the resulting scheme is affine.
 
@@ -389,7 +389,14 @@ $$
 P=1/N,\qquad Q=b\tau/N
 $$
 
-has pairing $\zeta$. Conversely, a symplectic basis of $E[N]$ lifts to two vectors in $N^{-1}\Lambda/\Lambda$; completing those lifts to an oriented lattice basis expresses the marked curve in this form. Two parameters $\tau$ and $\tau'$ give isomorphic marked curves precisely when
+has pairing $\zeta$. Conversely, relative to any oriented basis of $\Lambda$, a marked basis with the same pairing differs from the displayed one by an element of $\operatorname{SL}_2(\mathbf Z/N\mathbf Z)$. Surjectivity of
+
+$$
+\operatorname{SL}_2(\mathbf Z)\longrightarrow
+\operatorname{SL}_2(\mathbf Z/N\mathbf Z)
+$$
+
+lifts that change of level basis to a change of oriented lattice basis. Two parameters $\tau$ and $\tau'$ therefore give isomorphic marked curves precisely when
 
 $$
 \tau'=\gamma\tau\qquad\text{for some }\gamma\in\Gamma(N).
@@ -574,29 +581,29 @@ or algebraically the corresponding parameter in the completed local ring. At a f
 
 ### 7.2 The valuative extension theorem
 
-**Theorem 7.1 (stable extension).** Let $R$ be a discrete valuation ring with fraction field $K$. A smooth elliptic curve over $K$ with stable level structure extends, after a finite extension of $R$ if necessary, to a generalized elliptic curve over the integral closure carrying stable level. Given two extensions and an identification of their generic fibers, that identification extends uniquely after the canonical contractions required by the chosen compactification.
+**Theorem 7.1 (stable extension in the proved ranges).** Let $R$ be a discrete valuation ring with fraction field $K$. Fix either a standard level problem whose order is invertible in $R$, or the squarefree-depth-one $\Gamma_0(p)$ problem with the prime-to-$p$ rigidifying normalization branch used in Chapter 8. A smooth generic object extends, after a finite extension of $R$ if necessary, to the corresponding stable generalized elliptic object. Given two such extensions and an identification of their generic fibers, that identification extends uniquely after the canonical contractions required by the chosen compactification.
 
-**Proof.** Potential semistable reduction for genus-one curves gives, after finite base change, a proper regular model whose identity component is either an elliptic scheme or a multiplicative group and whose minimal semistable fiber is smooth or polygonal. The identity section selects the smooth group locus. Contracting every component outside the minimal polygon produces a generalized elliptic curve; uniqueness of the minimal regular model makes this contraction canonical.
+**Proof.** Potential semistable reduction gives, after finite base change, a proper regular model whose identity component is either an elliptic scheme or a multiplicative group and whose minimal semistable fiber is smooth or polygonal. The identity section selects the smooth group locus. The established contraction theorem then produces the generalized elliptic model selected by the retained level divisor.
 
-For level of order prime to the residue characteristic, the torsion is finite étale, so every generic level section extends uniquely over the normal trait and its closure remains finite étale. For level divisible by the residue characteristic, take the scheme-theoretic closure of the generic subgroup and express its generator condition as equality of effective Cartier divisors. Flat closure preserves the generic rank, while the divisor equality preserves it through the special fiber. If the resulting level divisor misses polygon components, contract exactly the missed components. The quotient and contraction theorems ensure that the group action and level descend, and the final divisor is ample.
+When the level order is invertible, torsion is finite étale, so the generic level extends over the normal trait after the finite base change. The complete Tate charts show which polygon and contraction make its divisor ample; they also show that every boundary deformation is obtained in this way. In the selected $\Gamma_0(p)$ case, the integral extension is the proper normalized Deligne--Rapoport moduli problem: the subgroup is extended as the finite locally free cyclic divisor in that problem, and its two boundary charts are the multiplicative and component charts. This is precisely where the prime-depth hypothesis is used. A scheme-theoretic closure inside an arbitrary bad-level torsion group would not by itself prove flatness, cyclicity, or ampleness.
 
-For uniqueness, an isomorphism of generic fibers extends to the minimal regular models because their graphs have proper closure and minimality rules out exceptional components. Both candidate generalized curves are obtained from those models by contracting precisely the components missed by the same stable level divisor. Hence the isomorphism respects the contractions and extends uniquely. This proves existence and uniqueness after the finite base change. $\square$
+For uniqueness, the graph of a generic isomorphism extends across the stable marked model. Equivalently, both candidates are the canonical contractions selected by the same ample level divisor, so the contraction universal property identifies them uniquely. $\square$
 
 The finite extension in the theorem is part of the stack-valued valuative criterion: for a proper Deligne--Mumford stack, extension after a finite extension of the trait is the relevant existence statement. It does not by itself descend the stable object to the original trait. Descent over the original DVR requires an effective descent datum, and a generic object can have a genuine stable-reduction obstruction before ramified base change. In particular, one must not replace the theorem by the false assertion that every elliptic curve already has semistable reduction over every DVR.
 
 ### 7.3 Proper compactified modular curves
 
-**Theorem 7.2.** For the standard Deligne--Rapoport--type compactification attached to the specified stable level problem, the stack $\mathcal X_H$ is proper and flat of relative dimension one over its stated integral base. Over the locus where the level is invertible it is smooth, and its boundary
+**Theorem 7.2 (compactification in the proved ranges).** Over the base on which the level order is invertible, the standard compactified stack $\mathcal X_H$ is smooth, proper, and flat of relative dimension one. Its boundary
 
 $$
 \mathcal C_H=\mathcal X_H\setminus\mathcal Y_H
 $$
 
-is a relative effective Cartier divisor finite over the base. Where the integral problem is actually represented by a scheme, the same statements hold for that representing scheme. Prime-to-characteristic auxiliary rigidification is a standard way to reach this situation. A level that is fine over $\mathbf Z[1/N]$ need not remain fine at a prime dividing $N$, as the supersingular example of Section 2.2 shows. In a nonfine range, the coarse space is proper, but smoothness of the stack does not automatically imply smoothness of the coarse space at wild stabilizers.
+is a relative effective Cartier divisor. As a stack over the base it is proper, flat, and quasi-finite; its pullback to every fine cover and its coarse image are finite. Where the whole problem is represented by a scheme, the boundary itself is finite over the base. Separately, the squarefree-depth-one $\Gamma_0(p)$ normalization with prime-to-$p$ rigidifying branch is projective, proper, normal, and flat; its cusps are Cartier, while its supersingular points have the nonsmooth semistable equation analyzed in Chapter 8. No corresponding assertion is made here for deeper $p$-power level or an arbitrary bad-level coarse quotient.
 
-**Proof.** Finite type and separatedness come from the bounded stable moduli problem and uniqueness in Theorem 7.1. That theorem gives the valuative criterion for properness. The local Tate description gives one deformation parameter at a cusp and shows that the boundary is cut out by that parameter. On the smooth locus, the deformation calculation of Section 3.2 applies. Flatness follows because the local rings have no vertical associated component and every fiber has pure dimension one. $\square$
+**Proof.** On the good-level base, boundedness and the stable extension theorem give finite presentation, separatedness, and properness. The elliptic deformation calculation and the complete Tate charts give formal smoothness of relative dimension one everywhere; smoothness supplies flatness. The Tate parameter cuts out the boundary by a non-zero-divisor. The selected prime-level assertions are the global consequences of its normalized integral moduli construction and its ordinary, supersingular, and cusp charts; Chapter 8 recalls the decisive local equation. $\square$
 
-The scope matters. Smoothness over $\mathbf Z[1/N]$ is asserted. At primes dividing $N$, properness and flatness survive for the standard integral problem, but smoothness need not.
+The scope matters. Smoothness is asserted on the good-level base. At a level prime, properness and flatness have been established here only for the selected prime-depth problem; even there smoothness fails at the supersingular crossings.
 
 ### 7.4 Boundary maps and cusp widths
 
@@ -651,7 +658,7 @@ None follows formally from the others, and all can be spoiled on a coarse space 
 
 ### 8.3 The $X_0(p)$ model with auxiliary rigidification
 
-Let $p\geq5$, and add a fine auxiliary level $M\geq3$ prime to $p$. Consider the standard $\Gamma_0(p)$ compactification over $\mathbf Z_p$ with that auxiliary level. Its special fiber has two principal components. On the ordinary locus, a subgroup of rank $p$ is either of multiplicative type or étale type. Forgetting the subgroup identifies each locus with the prime-to-$p$ modular curve, one through Frobenius and the other through Verschiebung. Their closures meet at supersingular points.
+Let $p$ be any prime, and choose a prime-to-$p$ rigidifying normalization branch, for example the branch supplied by full level $M\geq3$ with $(M,p)=1$. At the boundary this is a label on the normalized auxiliary cover, not a second ample divisor on the same polygon. Consider the resulting fine Deligne--Rapoport $\Gamma_0(p)$ compactification over an unramified discrete valuation ring above $p$. Its geometric special fiber has exactly two components. On the ordinary locus, a cyclic subgroup of rank $p$ is either of multiplicative type or étale type. Forgetting the subgroup identifies the two normalized loci with the prime-to-$p$ modular curve, with the degeneracy maps given by identity and Frobenius in opposite orders. Their closures meet at supersingular points.
 
 At a supersingular point the strict henselian completed local ring of the rigidified model has the semistable form
 
@@ -661,7 +668,7 @@ $$
 
 after a compatible choice of local parameters. Hence the total space is regular and the special fiber has an ordinary double point $xy=0$. This gives a semistable curve over $\mathbf Z_p$ in this exact squarefree Iwahori-level situation.
 
-The auxiliary level is not cosmetic: it removes automorphisms and makes the displayed local ring a scheme-local statement. Dropping it requires stack language or a quotient analysis. Allowing $p^2$ level, $\Gamma_1(p^r)$ structure, or $p=2,3$ changes the local equations and may require blowups or ramified base change. We make no blanket semistability claim in those cases.
+The auxiliary branch is not cosmetic: it removes automorphisms and makes the displayed local ring a scheme-local statement. Dropping it requires stack language or a quotient analysis. The same fine crossing theorem remains valid for $p=2$ and $p=3$ because no stabilizer quotient is taken. Allowing $p^2$ level or a general $\Gamma_1(p^r)$ structure changes the local problem and may require modifications or ramified base change; no blanket semistability claim is made in those cases.
 
 ### 8.4 Reduction maps needed later
 
@@ -797,10 +804,10 @@ $$
 for $M\geq3$ prime to $6$. Then
 
 $$
-B_+^{\times}\cap K(M)\backslash\mathfrak H
+\bigl(B_+^{\times}\cap K(M)\bigr)\backslash\mathfrak H
 $$
 
-is a smooth compact Riemann surface. It has no cusp points to add and no Tate parameter. At the primes $2$ and $3$ the algebra is ramified, so the integral geometry is bad and requires separate local analysis; at primes away from $6M$ the curve has a good integral model.
+is a smooth compact Riemann surface. It has no cusp points to add and no Tate parameter. At the primes $2$ and $3$ the algebra is ramified, so the integral geometry is bad and requires separate local analysis; at primes away from $6M$ the PEL curve has a smooth integral model, which is proper under either additional alternative of Theorem 14.1.
 
 This example is “explicit” at the conceptual level relevant here: the finite ramification set proves division and compactness, while the principal level proves rigidity. Computing its genus requires volume and elliptic-cycle formulas beyond the construction itself.
 
@@ -834,6 +841,8 @@ $$
 
 Assume that the associated Hermitian symmetric domain has complex dimension one and that the derived adjoint datum is the quaternionic datum of Sections 9--10. Concretely, at the distinguished real place the signature is $(1,1)$ in the relevant two-dimensional factor, while every other real factor is definite. These are the **quaternionic PEL hypotheses** used below.
 
+We also fix the integral data that make this one exact moduli problem: a polarization kernel type, a compatible lattice genus, the universal determinant polynomial law, and an open-and-closed component union stable under every asserted descent. If the PEL group is a nontrivial central modification of the basic quaternionic group, the PEL curve is a finite central cover; neither its component set nor its universal family is silently identified with that of the basic group.
+
 The reflex field $E$ is the field of definition of the conjugacy class of the cocharacter determined by $h$. It need not equal $F$ and must not be silently replaced by $\mathbf Q$.
 
 ### 11.3 Objects of the moduli problem
@@ -848,14 +857,14 @@ where:
 
 1. $A/S$ is an abelian scheme of relative dimension $\frac12\dim_{\mathbf Q}V$;
 2. $\iota:\mathcal O_D\to\operatorname{End}_S(A)$ is an action;
-3. $\lambda:A\to A^\vee$ is a polarization, usually considered up to a similitude class whose degrees avoid a fixed finite set of primes, and whose Rosati involution satisfies
+3. $\lambda:A\to A^\vee$ is an actual polarization of the fixed kernel type, whose degree is invertible at every prime designated good and whose Rosati involution satisfies
    $$
    \iota(d)^\dagger=\iota(d^*);
    $$
 4. $\bar\eta^K$ is a $K$-orbit of $D$-linear trivializations between $V\otimes\mathbf A_f$ and the rational adelic Tate module of $A$, carrying $\psi$ to the Weil pairing up to the same similitude factor;
 5. the determinant condition below holds.
 
-Isomorphisms respect the action, carry the polarization class to the polarization class, and preserve the level orbit. Depending on the chosen group, one may classify actual polarizations or prime-to-a-set quasi-polarizations; the compact open and lattice must be chosen compatibly. This choice affects the central components but not the derived quaternionic geometry.
+Isomorphisms respect the action, pull the target polarization back to the source polarization, and preserve the level orbit. A different PEL presentation may instead use a specified prime-to-a-set quasi-polarization category, but that is a different exact moduli problem whose arrows, lattice genus, and component set must be fixed before applying the representability theorem. Throughout this chapter the actual-polarization convention above is in force.
 
 ### 11.4 The determinant condition
 
@@ -890,13 +899,13 @@ for a suitable pure quaternion $\delta$. A false elliptic curve is an abelian su
 
 At primes where the lattice is self-dual and the algebra is unramified, a hyperspecial compact open stabilizes $\Lambda\otimes\mathbf Z_p$. Away from those primes, level is a $K$-orbit of trivializations rather than a single basis. A sufficiently deep principal congruence level supported at primes invertible on the base is neat and kills automorphisms; in the standard integral matrix settings, level at least three is the familiar sufficient bound. The depth condition belongs to the chosen lattice and cannot be read from an abstract compact open without that integral structure.
 
-**Theorem 11.1.** Under the quaternionic PEL hypotheses, the moduli problem (11.2) is a Deligne--Mumford stack of relative dimension one over its reflex field. For neat $K$ it is represented by a smooth quasi-projective curve and carries a universal abelian scheme with PEL structure. For nonneat $K$ it has a coarse algebraic curve, but the universal object exists naturally only on the stack. Its complex analytification is the PEL adelic quotient, which maps finitely to or from the quaternionic quotient of (10.1) according to the chosen central modification.
+**Theorem 11.1.** Under the quaternionic PEL hypotheses, the moduli problem (11.2) is a Deligne--Mumford stack of relative dimension one over its reflex field. For neat $K$ it is represented by a smooth quasi-projective curve and carries a universal abelian scheme with PEL structure. For nonneat $K$ it has a coarse algebraic curve, but the universal object exists naturally only on the stack. Its complex analytification is the PEL adelic quotient. In the direct case this is the selected quaternionic quotient of (10.1); for the fixed nontrivial central modification it maps finitely to that quotient through the specified effective central quotient.
 
 **Proof.** Choose auxiliary full level $M\geq3$, prime to every fixed polarization degree. Polarized abelian varieties of the required dimension and degree with full $M$-level are represented by a quasi-projective scheme. An $\mathcal O_D$-action is the finite collection of endomorphisms associated with generators of the order, subject to its multiplication relations. Rosati compatibility is a closed equality of endomorphisms, the determinant condition is a closed polynomial identity on $\operatorname{Lie}A$, and the prescribed prime-to-$M$ level orbit is finite étale. Fixing the required open-and-closed determinant and component conditions therefore cuts out a quasi-projective fine scheme.
 
 At a characteristic-zero geometric point, deformation theory identifies first-order deformations with $\mathcal O_D$-stable isotropic lifts of the Hodge subspace. All definite real factors have a unique lift, while the active signature-$(1,1)$ factor contributes the tangent line to a projective line. Thus the completed local ring is a one-variable power-series ring. There are no obstructions because the relevant Grassmannian local model is smooth. The fine scheme is consequently smooth of pure dimension one.
 
-The finite group changing the auxiliary level acts on this scheme. Its quotient stack is Deligne--Mumford because polarizations give finite automorphism groups. If $K$ is neat, every stabilizer is trivial and the quotient is the desired fine scheme. Otherwise the finite-inertia quotient has a coarse algebraic curve, while its universal tuple remains on the stack. Finally, the polarized Hodge-lattice classification identifies its complex points and local period coordinates with the PEL adelic quotient; Proposition 12.2 gives the detailed inverse. The central comparison with the basic quaternionic quotient is finite because its kernel and cokernel are central tori with finite component effect at fixed level. $\square$
+The finite group changing the auxiliary level acts on this scheme. Its quotient stack is Deligne--Mumford because polarizations give finite automorphism groups. If $K$ is neat, every stabilizer is trivial and the quotient is the desired fine scheme. Otherwise the finite-inertia quotient has a coarse algebraic curve, while its universal tuple remains on the stack. Finally, the polarized Hodge-lattice classification identifies its complex points and local period coordinates with the PEL adelic quotient; Proposition 12.2 gives the detailed inverse. In the nontrivial central-modification case, the effective finite central quotient fixed with the datum supplies the asserted finite comparison. $\square$
 
 The theorem is intentionally conditional on a complete PEL datum. It does not identify every quaternionic canonical model with a naive moduli scheme of abelian varieties.
 
@@ -914,7 +923,7 @@ The word **canonical** concerns descent, not only existence. A complex algebraic
 
 ### 12.2 Properness
 
-**Theorem 12.1.** If $B$ is division, the canonical Shimura curve at any compact open level is proper over its reflex field. If $K$ is neat it is a smooth projective fine-level curve. Otherwise the moduli stack is smooth proper with finite stabilizers; its coarse space is still a smooth projective curve in characteristic zero, although the stack-to-coarse map is ramified at elliptic points and a universal object need not descend.
+**Theorem 12.1.** If $B$ is division, the canonical Shimura curve at any compact open level is proper over its reflex field. If $K$ is neat it is a smooth projective level curve. When a PEL realization has been fixed, the corresponding nonneat moduli stack is smooth proper with finite stabilizers; its coarse space is still a smooth projective curve in characteristic zero, although the stack-to-coarse map is ramified at elliptic points and a universal object need not descend.
 
 **Proof.** The complex analytification is compact by Theorem 10.1. The algebraic curve is quasi-projective by construction. A smooth quasi-projective complex curve is proper exactly when its analytification is compact, so every complex base change is proper. Properness descends to the reflex field. $\square$
 
@@ -928,7 +937,14 @@ This is exactly parallel to $X_0(N)$. A coarse point records an isomorphism clas
 
 ### 12.4 Comparison of moduli and adelic descriptions
 
-There are now two descriptions of the same curve, and it is worth proving their agreement rather than using identical notation as a substitute for a comparison. Fix a neat level $K$ and a connected union of PEL components selected by the central modification. The period map sends
+There are now two descriptions of the same curve, and it is worth proving their agreement rather than using identical notation as a substitute for a comparison. Fix a neat level $K$ and a connected union of PEL components selected by the central modification. The selected integral type includes an equivariant normalization of the polarization module: if the form on the lattice attached to $g$ is $c(g)\psi$, then
+
+$$
+c(qg)\nu(q)=c(g)
+\qquad\bigl(q\in G(\mathbf Q)\text{ relating representatives in the selected union}\bigr). \tag{12.0}
+$$
+
+Without this condition the double quotient would classify only rational polarization classes, not the actual polarizations used in the moduli problem. The period map sends
 
 $$
 (A,\iota,\lambda,\bar\eta^K)
@@ -966,9 +982,9 @@ $$
 A_{h,g}(\mathbf C)=V_{\mathbf R}/\Lambda_g
 $$
 
-an abelian variety by the Riemann criterion. The $D$-action preserves the lattice, the alternating form gives the required polarization class, and $g$ gives the $K$-level orbit. The Hodge multiplicities are precisely the determinant condition. Thus $[h,g]$ reconstructs a PEL object.
+an abelian variety by the Riemann criterion. The $D$-action preserves the lattice, and the normalized integral multiple $c(g)\psi$ gives the required actual polarization of the selected type. The adele $g$ gives the $K$-level orbit, and the Hodge multiplicities are precisely the determinant condition. Thus $[h,g]$ reconstructs a PEL object.
 
-Left multiplication by $G(\mathbf Q)$ gives a rational PEL quasi-isogeny. Once the lattice and integral level are included, that quasi-isogeny identifies the reconstructed objects in exactly the equivalence relation of the selected moduli problem. Right multiplication by $K$ changes only the representative of level. Consequently reconstruction is inverse to the period map on isomorphism classes.
+Left multiplication by $q\in G(\mathbf Q)$ carries $\Lambda_g$ isomorphically onto $\Lambda_{qg}$. Together with (12.0), it therefore gives an isomorphism of the reconstructed integral PEL objects, although relative to one fixed reference lattice the same rational map is naturally described as a quasi-isogeny. Right multiplication by $K$ changes only the representative of level. Consequently reconstruction is inverse to the period map on isomorphism classes.
 
 Locally on $X$, the Hodge filtration varies holomorphically. Its tangent space is
 
@@ -1047,22 +1063,27 @@ For later cohomology one usually either selects a geometrically connected compon
 Let $v$ be a finite place of the reflex field above a rational prime $p$, and let $\mathfrak p$ be the corresponding place of $F$. A good PEL place satisfies all of the following:
 
 - $D$ and its involution are unramified at $p$ in the relevant sense;
-- the lattice is self-dual, or has the prescribed unramified parahoric type;
+- the lattice is self-dual;
 - $K_p$ is hyperspecial for the self-dual lattice;
 - the polarization degree and auxiliary level are prime to $p$;
 - the determinant local model is the unramified one dictated by the signature.
 
-At such a place the same tuple (11.2), now over $\mathcal O_{E,v}$ with prime-to-$p$ level, defines the integral canonical model $\mathscr S_K$.
+At such a place the same tuple (11.2), now over $\mathcal O_{E,v}$ with prime-to-$p$ level, defines the integral PEL model $\mathscr S_K$.
 
-**Theorem 14.1 (good integral model).** Under these hypotheses and with neat prime-to-$p$ level, $\mathscr S_K$ is smooth of relative dimension one over $\mathcal O_{E,v}$. If $B$ is division, it is proper. Its generic fiber is the canonical Shimura curve, and it carries the universal PEL abelian scheme.
+**Theorem 14.1 (good integral model with exact properness alternatives).** Under these hypotheses and with neat prime-to-$p$ level, the integral PEL functor is represented by a smooth quasi-projective scheme $\mathscr S_K$ of relative dimension one over $\mathcal O_{E,v}$. Its generic fiber is the canonical curve of the selected PEL-exact datum, and it carries the universal PEL abelian scheme. If the adjoint quaternionic datum is anisotropic and either
+
+1. the selected PEL realization is the direct quaternionic trace realization $D=V=B$, or
+2. every trait degeneration on a principal-level cover satisfies the established boundary-rationality condition,
+
+then $\mathscr S_K$ is proper, hence projective. For a nontrivial central modification, this conclusion applies first to the PEL cover; a quotient model requires the effective quotient to be treated separately.
 
 **Proof.** Integral representability follows by applying the same auxiliary-level construction as in Theorem 11.1 over $\mathcal O_{E,v}$: the unramified order acts on the self-dual lattice, the polarization is prime to $p$, and the determinant law has coefficients in the reflex ring. The generic fiber is therefore the PEL canonical model.
 
 For smoothness, lift a geometric special-fiber point across a square-zero thickening. Deformation theory for abelian schemes with endomorphisms and polarization reduces the lift to an $\mathcal O_D$-stable isotropic lift of the Hodge filtration in relative de Rham homology. The self-dual hyperspecial lattice makes this module free, and the unramified determinant condition decomposes it into its embedding factors. Every definite factor has a unique filtration; the active factor asks for one direct-summand line in a free rank-two module. Its local model is $\mathbf P^1$, hence smooth of relative dimension one. Lifts exist across every square-zero thickening, so the integral moduli scheme is formally smooth, and finite presentation makes it smooth.
 
-For properness, take a punctured trait mapping to the generic fiber. After finite base change, the polarized abelian variety has semiabelian reduction. A nonzero toric part determines a nonzero isotropic subspace in rational homology and hence a proper rational parabolic of the adjoint PEL group. When $B$ is division, that adjoint group is anisotropic and has no such parabolic. The toric part is therefore zero, so the abelian variety, endomorphisms, polarization, and prime-to-$p$ level extend. Uniqueness follows from separatedness, and effective descent removes the finite base change. The valuative criterion proves properness. The universal tuple exists because the level is neat. $\square$
+Properness is a separate step. In the direct trace realization, the common rational quaternionic module excludes a nonzero toric part by its module-dimension constraint. In the second case, boundary rationality turns a nonzero Raynaud torus into a nonzero rational isotropic subspace whose stabilizer has proper parabolic image; anisotropy then excludes it. After passing to a principal prime-to-$p$ level, level rigidity and the good-reduction criterion descend potential good reduction to the original trait. The action, polarization, and level extend uniquely, so the valuative criterion gives properness. Without either alternative, separate local Tate-module filtrations do not manufacture the rational boundary subspace, and the argument stops at smooth quasi-projective representability. $\square$
 
-The theorem prepares exactly the hypothesis used by smooth proper base change. For $\ell\ne p$,
+Under either properness alternative, the theorem prepares exactly the hypothesis used by smooth proper base change. For $\ell\ne p$,
 
 $$
 H^1(\operatorname{Sh}_{K,\overline E},\mathbf Q_\ell)
@@ -1080,7 +1101,7 @@ Conversely, a prime dividing an arbitrarily chosen equation need not be a bad pr
 
 ### 14.3 Split primes with Iwahori level
 
-Suppose $\mathfrak p\nmid\mathfrak D_B$, so $B_{\mathfrak p}\simeq M_2(F_{\mathfrak p})$, but replace hyperspecial level by an Eichler/Iwahori subgroup of squarefree depth one. Under unramified PEL hypotheses, neat auxiliary level, and the minuscule one-dimensional signature, the local model has two smooth branches crossing normally. After the standard integral-model normalization, the completions of its strict henselian local rings at crossing points have the form
+Suppose $\mathfrak p\nmid\mathfrak D_B$, so $B_{\mathfrak p}\simeq M_2(F_{\mathfrak p})$, but replace hyperspecial level by an Eichler/Iwahori subgroup of squarefree depth one. Assume the actual parahoric datum satisfies the flat-local-model hypothesis: after Morita equivalence its determinant, isotropy, and any additional conditions cut out the rank-two incidence model. Under this hypothesis, neat auxiliary level, and the minuscule one-dimensional signature, the local model has two smooth branches crossing normally. The completions of the strict henselian local rings of the parahoric PEL space at crossing points have the form
 
 $$
 \widehat{\mathcal O^{\mathrm{sh}}}[[x,y]]/(xy-\varpi) \tag{14.2}
@@ -1088,19 +1109,17 @@ $$
 
 in the basic semistable case.
 
-This is the quaternionic analogue of (8.2). It is not a theorem for arbitrary parahoric level, ramified coefficient algebra, or nonminuscule signature. In those settings local models can be singular and modifications may be required.
+This is the quaternionic analogue of (8.2). With either properness alternative of Theorem 14.1, the resulting curve is a proper regular semistable model. Without such an alternative the equation is still a local statement about the represented parahoric space, not a proof of projectivity. It is not a theorem for arbitrary parahoric level, ramified coefficient algebra, or nonminuscule signature.
 
-### 14.4 A selected ramified prime
+### 14.4 The boundary at a ramified algebra place
 
-When $\mathfrak p\mid\mathfrak D_B$, hyperspecial level does not exist for $B_{\mathfrak p}^{\times}$. For suitable maximal level away from $\mathfrak p$ and standard local hypotheses, the formal completion of the Shimura curve can be described by a $p$-adic upper-half-plane uniformization: a discrete group acts on a formal semistable curve whose dual graph is the Bruhat--Tits tree of $\operatorname{PGL}_2(F_{\mathfrak p})$ for the switched quaternion algebra.
-
-This description implies a controlled semistable model after the extension and quotient specified by the uniformization theorem. We use only the conclusion that the bad fiber is assembled from rational components with intersections encoded by a finite graph. We do **not** assert that the original coarse model over the unextended local field is already regular or semistable, nor that the statement holds for arbitrary ramified PEL data.
+When $\mathfrak p\mid\mathfrak D_B$, hyperspecial level for $B_{\mathfrak p}^{\times}$ does not exist, and the unramified rank-two local model of Sections 14.1--14.3 does not apply. The local foundational package used in this volume contains no ramified-place uniformization theorem. We therefore make no claim here about a regular or semistable model, rational components, or a dual graph at such a place. This is a genuine boundary of the construction, not a conclusion obtainable by replacing a split matrix algebra with a division algebra in (14.2).
 
 ### 14.5 Specialization and cohomological scope
 
 At a good place, a PEL abelian scheme and its prime-to-$p$ level reduce without changing type. The reduction map sends geometric generic points extending over an unramified valuation ring to points of the smooth special fiber. Equality (14.1) transfers finite level maps and prime-to-$p$ correspondences to cohomology.
 
-At the selected Iwahori or ramified places, the special fiber and its dual graph describe the failure of smoothness. Proper base change still compares the cohomology of the generic fiber with nearby cycles on the special fiber, but smooth proper base change does not apply. The monodromy and operator calculations belong to later developments; the exact geometry needed to formulate them is now in place.
+At a selected Iwahori place satisfying Section 14.3, the special fiber and its dual graph describe the failure of smoothness. Proper base change compares the cohomology of a proper generic fiber with nearby cycles only when the properness alternative has also been verified; smooth proper base change does not apply. Ramified algebra places remain outside the present integral construction.
 
 ## 15. Varying level and adelic actions
 
@@ -1221,6 +1240,14 @@ $$
 
 where $\eta_D$ is transported through the isomorphism on $N$-torsion induced by the prime-to-$N$ isogeny $E\to E/D$.
 
+There is a component qualification for fixed-pairing full level. If $\eta=(P,Q)$ satisfies $e_N(P,Q)=\zeta$, then the degree-$\ell$ isogeny $\phi:E\to E/D$ satisfies
+
+$$
+e_N(\phi P,\phi Q)=e_N(P,Q)^\ell=\zeta^\ell. \tag{16.3a}
+$$
+
+Thus $p_2$ routes the $\zeta$-component to the $\zeta^\ell$-component; it is an endomorphism of one fixed-pairing component only when that component is preserved. In this section $Y_H$ therefore means either the full Galois-stable union of pairing components or explicitly typed source and target components. For $\Gamma_1$ and $\Gamma_0$ level there is no omitted pairing coordinate.
+
 Both maps are finite étale on the open fine curve. Geometrically, $E[\ell]$ has $\ell+1$ lines, so $p_1$ has degree $\ell+1$. The map $p_2$ has the same degree by dual isogeny. After compactification both maps are finite but can ramify at cusps.
 
 **Proof of finiteness.** The choices of $D$ form a finite étale scheme over the open curve because $E[\ell]$ is finite étale and its rank-$\ell$ direct summands form a finite étale sheaf. The quotient elliptic curve exists and varies algebraically. Properness of the compactifications and the valuative uniqueness of stable extension extend the maps across the finite boundary; a proper quasi-finite map of curves is finite. $\square$
@@ -1268,7 +1295,7 @@ $$
 
 and only then does the forgetful map land on $\operatorname{Sh}_K$. Suppressing this intermediate level would contradict the convention of (15.3).
 
-The diagram (16.5) is the elementary double-coset correspondence. In the PEL interpretation, a point of the middle curve is an abelian variety with PEL structure together with an $\mathcal O_D$-stable finite subgroup of the type selected by $h_{\mathfrak l}$. The second map quotients by that subgroup and transports the action, polarization up to similitude, determinant condition, and prime-to-$\mathfrak l$ level.
+The diagram (16.5) is the elementary double-coset correspondence. In the PEL interpretation, a point of the middle curve is an abelian variety with PEL structure together with an $\mathcal O_D$-stable finite subgroup of the type selected by $h_{\mathfrak l}$. The second map quotients by that subgroup and transports the action, the normalized target polarization prescribed by the routed component, the determinant condition, and prime-to-$\mathfrak l$ level.
 
 The kernel is not an arbitrary subgroup of the underlying abelian variety. It must be stable under the endomorphism order and isotropic or self-dual to exactly the extent required for the quotient polarization. These conditions are the PEL analogue of cyclicity for an elliptic isogeny.
 
@@ -1290,11 +1317,11 @@ $$
 
 where $\pi_1$ forgets from $K_a$ to $K$, while $\pi_2$ is $R_a$ followed by forgetting from $a^{-1}K_aa=a^{-1}Ka\cap K$ to $K$. This orientation matches (16.5).
 
-**Theorem 16.1 (moduli--double-coset comparison).** Suppose the levels are neat. The analytic correspondence (16.6), the algebraic correspondence obtained by canonical descent, and the PEL moduli space of isogenies of type $KaK$ are canonically isomorphic spans. For modular curves at a prime $\ell\nmid N$, taking $a=\operatorname{diag}(\ell,1)$ gives the cyclic-$\ell$-subgroup correspondence of Section 16.2.
+**Theorem 16.1 (moduli--double-coset comparison).** Suppose the levels are neat, and work either on the full component union or with source and target unions explicitly routed by $a$. The analytic correspondence (16.6), the algebraic correspondence obtained by canonical descent, and the PEL moduli space of isogenies of type $KaK$ are canonically isomorphic spans. For modular curves at a prime $\ell\nmid N$, taking $a=\operatorname{diag}(\ell,1)$ gives the cyclic-$\ell$-subgroup correspondence of Section 16.2.
 
 **Proof strategy.** We compare the two lattices encoded by a point of the intermediate level. The finite quotient of those lattices becomes the kernel of the universal isogeny.
 
-**Proof.** A point of $X_{K_a}$ has an adelic marking modulo both $K$ and $aKa^{-1}$. Its first image forgets to the original $K$-orbit. Multiplication by $a$ replaces the corresponding adelic lattice by a commensurable lattice. After multiplying $a$ by a central scalar locally at every prime, we may arrange an inclusion of lattices
+**Proof.** A point of $X_{K_a}$ has an adelic marking modulo both $K$ and $aKa^{-1}$. Its first image forgets to the original $K$-orbit. Multiplication by $a$ replaces the corresponding adelic lattice by a commensurable lattice. After multiplying $a$ by one positive rational integer in the center, which does not change the map on the adjoint Shimura quotient, we may arrange an inclusion of lattices
 
 $$
 \widehat\Lambda\subset a\widehat\Lambda
@@ -1302,7 +1329,7 @@ $$
 
 or the reverse inclusion, according to the chosen direction. The finite quotient of the larger lattice by the smaller one is stable under the prescribed order. Under the period comparison of Proposition 12.2, it becomes a finite subgroup of the universal abelian variety. Quotienting by that subgroup constructs the second PEL object, and its induced marking is represented by $ga$.
 
-Changing the scalar or integral representative factors the quasi-isogeny through multiplication by an integer. Because polarizations are taken in the prescribed similitude class and the kernel type is recorded, the resulting span is canonically unchanged. Changing a representative of $KaK$ was handled in Section 16.5.
+Changing the scalar or integral representative factors the honest isogeny through multiplication by an integer. The endpoint curves and their normalized actual polarizations are still the ones selected by the same adelic points, so the resulting span is canonically unchanged even though the degree of that chosen honest isogeny changes. Changing a representative of $KaK$ was handled in Section 16.5.
 
 Conversely, a PEL isogeny of the required kernel type induces on rational Tate modules two commensurable integral lattices in $V\otimes\mathbf A_f$. Their relative position is the $K$-double coset of $a$. A compatible marking therefore lifts the isogeny to $K_a$-level. These constructions are inverse in families, since finite locally free kernels and their quotients commute with base change.
 
@@ -1314,7 +1341,7 @@ $$
 KaK=\coprod_{i=1}^r a_iK,
 $$
 
-then $\deg(\pi_1)=r=[K:K\cap aKa^{-1}]$. The other degree is $[K:K\cap a^{-1}Ka]$, which need not equal the first for a general locally compact group. It does equal it in the familiar unramified rank-two correspondence after the central similitude normalization. For $\operatorname{diag}(\ell,1)$ in $\operatorname{GL}_2(\mathbf Q_\ell)$ with hyperspecial $K_\ell$, both degrees are $\ell+1$.
+then $\deg(\pi_1)=r=[K:K\cap aKa^{-1}]$. The other degree is $[K:K\cap a^{-1}Ka]$. The adelic reductive groups used here are unimodular, so conjugation preserves Haar measure and these two indices are equal. For $\operatorname{diag}(\ell,1)$ in $\operatorname{GL}_2(\mathbf Q_\ell)$ with hyperspecial $K_\ell$, both degrees are $\ell+1$.
 
 ### 16.7 Composition and convolution
 
@@ -1331,22 +1358,35 @@ $$
 =\sum_c m(a,b;c)\mathbf 1_{KcK}, \tag{16.7}
 $$
 
-where $m(a,b;c)$ counts, with the stabilizer multiplicity inherent in the right-coset decompositions, the pairs $(i,j)$ for which $a_i b_j\in KcK$.
-
-**Theorem 16.2 (geometric convolution).** With the correspondence direction of (16.6), composition of finite correspondences satisfies
+Write $r_c=[K:K\cap cKc^{-1}]$, the number of right $K$-cosets in $KcK$. Then
 
 $$
-[KaK]\circ[KbK]
+m(a,b;c)=\frac{1}{r_c}
+\#\{(i,j):a_i b_j\in KcK\}.
+$$
+
+Equivalently, $m(a,b;c)$ is the common multiplicity with which each right coset contained in $KcK$ occurs in the multiset $\{a_i b_jK\}_{i,j}$. Bi-$K$-invariance makes that multiplicity constant, and in particular proves that the displayed quotient is an integer.
+
+**Theorem 16.2 (geometric convolution).** With the correspondence direction of (16.6), first applying $[KaK]$ and then $[KbK]$ gives
+
+$$
+[KbK]\circ[KaK]
 =\sum_c m(a,b;c)[KcK]. \tag{16.8}
 $$
 
-Consequently $[KaK]\mapsto(\pi_2)_*\pi_1^*$ defines an action of $\mathcal H(G(\mathbf A_f),K)$ on every contravariant theory admitting trace for these finite maps.
+Consequently
+
+$$
+v\cdot\mathbf 1_{KaK}:=(\pi_2)_*\pi_1^*v
+$$
+
+defines a right action of $\mathcal H(G(\mathbf A_f),K)$ on every contravariant theory admitting trace for these finite maps.
 
 **Proof strategy.** Composition of spans is a fiber product. Its pieces are labelled by the same pairs of right cosets that occur in convolution.
 
-**Proof.** Form $X_{K_a}\times_{X_K}X_{K_b}$, where the first factor maps to the middle curve through its second leg and the second factor through its first. Over a geometric point with trivial stabilizer, a point of this fiber product is a successive choice of a modification of relative position $KaK$ and one of relative position $KbK$. Right-coset representatives label it by a pair $(a_i,b_j)$, and the composite modification has relative position $Ka_i b_jK$.
+**Proof.** Form $X_{K_a}\times_{X_K}X_{K_b}$, where the first factor maps to the middle curve through its second leg and the second factor through its first. Over a geometric point with trivial stabilizer, a point of this fiber product is a successive choice of a modification of relative position $KaK$ and one of relative position $KbK$. Right-coset representatives label it by a pair $(a_i,b_j)$, and the composite modification has relative position $Ka_i b_jK$. In ordinary function-composition notation this is $[KbK]\circ[KaK]$, since the $a$-correspondence is traversed first.
 
-Partition the pairs according to the double coset $KcK$ containing $a_i b_j$. On each part, the common-level construction gives a finite cover of the intermediate curve for $KcK$, and the number of identical sheets is $m(a,b;c)$. Normalizing the fiber product does not alter its generic cycle. Both sides are finite cycles between normal curves, so equality of generic cycles gives equality globally. This proves (16.8).
+Partition the pairs according to the double coset $KcK$ containing $a_i b_j$. Within a fixed double coset, every one of its $r_c$ right cosets occurs with the same multiplicity $m(a,b;c)$. The common-level construction therefore gives $m(a,b;c)$ copies of the intermediate correspondence for $KcK$, not one copy for every pair. Normalizing the fiber product does not alter its generic cycle. Both sides are finite cycles between normal curves, so equality of generic cycles gives equality globally. This proves (16.8).
 
 Pull--push is functorial: finite base change identifies pullback through the fiber product, and transitivity of trace identifies the two successive pushforwards with pushforward along the composite. Applying this to (16.8) proves the action statement. $\square$
 
@@ -1356,15 +1396,15 @@ At an unramified split place $\mathfrak l$, the spherical local algebra is gener
 
 ### 16.8 Extension over good integral models
 
-Let $v$ have residue characteristic $p$, and suppose the modular level or PEL datum is good at $v$. If $a_p=1$, so the double coset is supported away from $p$, the kernel in the moduli description has order prime to $p$. Its schematic closure in the universal abelian scheme is finite étale, and the quotient is again an abelian scheme with the required action, polarization class, determinant condition, and prime-to-$p$ level. Hence both legs extend over the good model.
+Let $v$ have residue characteristic $p$, and suppose the modular level or PEL datum is good at $v$. If $a_p=1$, so the double coset is supported away from $p$, the kernel in the moduli description has order prime to $p$. Its schematic closure in the universal abelian scheme is finite étale, and the quotient is again an abelian scheme with the required action, normalized target polarization, determinant condition, and prime-to-$p$ level. Hence both legs extend over the good model.
 
-**Proposition 16.3 (integral extension and specialization).** Under the preceding good-place, neatness, and prime-to-$p$ support hypotheses, the correspondence $[KaK]$ extends uniquely over the smooth proper integral model. Its generic- and special-fiber pull--push operators correspond under smooth proper base change. The same statement holds on quotient stacks; on coarse schemes it requires a separate check that the stabilizer quotient introduces no ramification at the coefficient prime.
+**Proposition 16.3 (integral extension and specialization).** Under the preceding good-place, neatness, and prime-to-$p$ support hypotheses, and assuming the relevant smooth integral model is proper, the correspondence $[KaK]$ extends uniquely over that model. Its generic- and special-fiber pull--push operators correspond under smooth proper base change. The same statement holds on quotient stacks with rational coefficients. On coarse schemes one must separately verify that the coarse model is smooth proper and that the finite legs descend with the required trace maps; this is not formal at a wild quotient.
 
 **Proof.** The moduli quotient construction gives existence. Separatedness gives uniqueness because two extensions agreeing on the dense generic fiber are equal. On the smooth modular locus, finite étaleness follows from finite étaleness of the kernel-choice functor and from the fact that a prime-to-$p$ isogeny induces an isomorphism on the deformation theory of the $p$-divisible group. Properness extends the maps across modular cusps; their Tate descriptions give finite maps there, generally ramified according to cusp width. For a division-algebra Shimura curve there is no boundary, so at neat prime-to-$p$ level the legs remain finite étale everywhere.
 
 Smooth proper base change is functorial for pullback. It is also functorial for finite trace, since trace is the counit of the finite pullback--pushforward adjunction and this adjunction commutes with base change. Therefore the pull--push endomorphisms correspond. $\square$
 
-When $a$ has nontrivial $p$-component, none of the finite-étale conclusions follows. The kernel may be connected, the quotient map can be inseparable on a component, and a hyperspecial model may have to be replaced by an Iwahori model. The special-fiber cycle then involves Frobenius and Verschiebung branches. The correspondence still exists under the semistable hypotheses of Chapters 8 and 14, but its analysis is a monodromy calculation rather than an application of smooth proper base change.
+When $a$ has nontrivial $p$-component, none of the finite-étale conclusions follows. The kernel may be connected, the quotient map can be inseparable on a component, and a hyperspecial model may have to be replaced by an Iwahori model. For the elementary level-prime modifications represented by the moduli problems of Chapters 8 and 14, the correspondence exists under their stated semistable hypotheses and its special-fiber cycle involves Frobenius and Verschiebung branches. Its analysis is a monodromy calculation rather than an application of smooth proper base change. No extension theorem for an arbitrary deeper $p$-power double coset is asserted.
 
 ## 17. From curves to Jacobians and $H^1$
 
@@ -1422,7 +1462,7 @@ H^1(X_{\bar K},\mathbf Q_\ell)
 \simeq H^1(\mathscr X_{\bar k},\mathbf Q_\ell). \tag{17.4}
 $$
 
-Prime-to-$p$ level maps and correspondences extending over $R$ commute with this identification. Thus the good modular models of Section 8.1 and good Shimura models of Section 14.1 provide unramified cohomological spaces with geometrically defined endomorphisms.
+Prime-to-$p$ level maps and correspondences extending over $R$ commute with this identification. Thus the good modular models of Section 8.1, and the good Shimura models of Section 14.1 whenever one of its properness alternatives holds, provide unramified cohomological spaces with geometrically defined endomorphisms.
 
 At a semistable but nonsmooth model, the relative identity component of the Picard scheme is generally semiabelian rather than abelian, and (17.4) must be replaced by a monodromy-sensitive statement. Regularity alone is not enough. This is why the exact hypotheses on integral models were maintained throughout.
 
@@ -1453,7 +1493,7 @@ $$
 
 be the commutative algebra generated by spherical double-coset correspondences outside $S$, together with whatever diamond or central operators preserve the selected component union. If one works on the full disconnected curve, no component-stability restriction is needed; the algebra then also records permutation of components.
 
-**Theorem 17.1 (geometric Hecke modules).** Let $X_K$ be a smooth proper modular curve or a proper quaternionic Shimura curve over its canonical field $E$, at neat level or on a fixed tame stack with rational coefficients. For every prime $\ell$ the following are naturally modules for the geometric Hecke algebra whenever the indicated coefficients make sense:
+**Theorem 17.1 (geometric Hecke modules).** Let $X_K$ be a smooth proper modular curve or a proper quaternionic Shimura curve over its canonical field $E$, at neat level or on a fixed tame stack with rational coefficients. For every prime $\ell$ the following are naturally right modules for the geometric Hecke algebra whenever the indicated coefficients make sense:
 
 $$
 J_K,\qquad T_\ell J_K,\qquad
@@ -1461,7 +1501,7 @@ H^1(X_{K,\overline E},\mathbf Z_\ell),\qquad
 H^1(X_{K,\overline E},\mathbf Q_\ell). \tag{17.5}
 $$
 
-The action on $T_\ell J_K$ corresponds to that on $H^1(X_{K,\overline E},\mathbf Z_\ell(1))$ under (17.1). It commutes with $\operatorname{Gal}(\overline E/E)$ for correspondences defined over $E$. Outside $S\cup\{\ell\}$ it is compatible with specialization to every good special fiber. Transposition corresponds to the polarization adjoint.
+The right action on $T_\ell J_K$ corresponds to that on $H^1(X_{K,\overline E},\mathbf Z_\ell(1))$ under (17.1). It commutes with $\operatorname{Gal}(\overline E/E)$ for correspondences defined over $E$. Outside $S\cup\{\ell\}$ it is compatible with specialization to every good special fiber for which the smooth proper model has been established. Transposition corresponds to the polarization adjoint.
 
 **Proof.** Every generator is a finite correspondence defined over the canonical field by Chapters 15--16. Pullback and norm give its endomorphism of $J_K$; functoriality of the Tate module gives the second action. Pullback and trace give the two cohomological actions. The Kummer sequence is natural for pullback and norm, so it intertwines the Jacobian and cohomological actions, including the Tate twist.
 
@@ -1536,7 +1576,7 @@ It is geometrically connected over $\mathbf Q(\zeta_3)$ and uniformized by $\Gam
 
 Return to the algebra $B/\mathbf Q$ ramified at $2$ and $3$. At maximal level, the norm quotient (13.3) is trivial, so its complex Shimura curve is connected. Passing to neat principal level $M$ gives a finite cover that may split according to the smaller norm subgroup; selecting a norm class selects a connected component. Every component is compact because division is unchanged by level.
 
-At a prime $q\nmid6M$, the maximal local order is split and hyperspecial, so the PEL realization has smooth proper reduction under the stated datum. At $q=2$ or $3$, no such conclusion follows; these are division places and require the selected bad-prime uniformization. At $q\mid M$, the level itself is bad even though $B$ is split. The example separates the three sources of local behavior: algebra ramification, level, and auxiliary PEL data.
+At a prime $q\nmid6M$, the maximal local order is split and hyperspecial, so the PEL realization has smooth proper reduction when one of the properness alternatives of Theorem 14.1 holds. At $q=2$ or $3$, no integral conclusion is drawn here: these are division places, outside the proved local models. At $q\mid M$, the level itself is bad even though $B$ is split. The example separates the three sources of local behavior: algebra ramification, level, and auxiliary PEL data.
 
 ## 19. The geometric dictionary
 
@@ -1554,8 +1594,8 @@ The constructions can now be summarized without erasing their hypotheses.
 | Components | determinant and Weil-pairing data | reduced-norm or similitude class group |
 | Boundary | cusps represented by Néron polygons | none when $B$ is division |
 | Local boundary coordinate | Tate parameter $q_c$ determined by cusp width | not applicable |
-| Good integral model | smooth proper over primes away from level | smooth proper at unramified self-dual hyperspecial places |
-| Selected bad model | squarefree $\Gamma_0(p)$ gives two semistable branches under rigid hypotheses | Iwahori local model, or ramified-place uniformization, under stated hypotheses |
+| Good integral model | smooth proper over primes away from level | smooth at unramified self-dual hyperspecial places, and proper under Theorem 14.1's additional alternatives |
+| Selected bad model | squarefree $\Gamma_0(p)$ gives two semistable branches under rigid hypotheses | split Iwahori local model under the flat rank-two hypotheses; ramified algebra places are not constructed here |
 
 This table is a map, not a replacement for the construction. In particular, “level” means finite étale data only where its order is invertible; “good” includes every part of the datum; and a coarse curve never silently acquires a universal object.
 
@@ -1576,7 +1616,7 @@ $$
 
 where the displayed twist is understood through (17.1). A level inclusion gives a finite map of curves and hence pullback and trace. A double coset gives a two-legged moduli correspondence. The same correspondence acts on $J_X$ and $H^1$, with transpose giving the polarization adjoint.
 
-At a good finite place, the chain extends over a smooth proper valuation ring model, so specialization preserves $H^1$ and inertia is trivial. At a selected semistable place, the special fiber and its dual graph replace this simple statement and signal monodromy. These alternatives are the exact geometric inputs needed when operator and Frobenius relations are studied.
+At a good finite place where the required proper integral model has been established, the chain extends over a smooth proper valuation ring model, so specialization preserves $H^1$ and inertia is trivial. At a selected semistable place, the special fiber and its dual graph replace this simple statement and signal monodromy. These alternatives are the exact geometric inputs needed when operator and Frobenius relations are studied.
 
 ### 19.3 The exact endpoint of the construction
 
@@ -1592,7 +1632,7 @@ The first concerns the arithmetic of reduction; the last two concern automorphic
 
 A modular curve begins with the failure of the $j$-invariant to be a universal classification. The remedy is not merely to add coordinates but to formulate families as a stack, preserve their automorphisms, and add level that is rigid enough for the desired purpose. Away from its order, level is finite étale linear algebra. At its characteristic, it must be expressed by finite locally free subgroup schemes and Drinfeld divisors. The Weil pairing then reveals that a full basis carries a cyclotomic component coordinate, so determinants govern both symmetry and connectedness.
 
-Compactification forces another enlargement of viewpoint. An elliptic curve can approach the boundary only by becoming a generalized elliptic curve, and stable level must meet every polygon component. The Tate curve describes the resulting formal disk and its cusp width. The valuative criterion turns these local pictures into a proper curve. At good primes the model is smooth and cohomology specializes unchanged; at level primes the connected and étale directions can cross, and semistability is available only under the precise local hypotheses stated.
+Compactification forces another enlargement of viewpoint. An elliptic curve can approach the boundary only by becoming a generalized elliptic curve, and stable level must meet every polygon component. The Tate curve describes the resulting formal disk and its cusp width. The valuative criterion turns these local pictures into a proper curve. At good primes a proved smooth proper model makes cohomology specialize unchanged; at level primes the connected and étale directions can cross, and semistability is available only under the precise local hypotheses stated.
 
 Quaternionic Shimura curves preserve the same one-dimensional symmetric geometry while changing its global source. A quaternion algebra split at exactly one real place contributes one upper half-plane; division removes rational unipotents and therefore removes cusps. Reduced norm replaces determinant as the component coordinate. A PEL realization turns the analytic quotient into a moduli curve only after polarization, positivity, determinant, and level conditions have been fixed. The distinction between the bare quaternionic datum and an auxiliary PEL datum is what keeps the construction canonical rather than accidental.
 
