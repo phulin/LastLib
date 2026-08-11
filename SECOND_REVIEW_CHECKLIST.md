@@ -187,7 +187,7 @@ any resulting corrections.
 - [ ] 161. Hecke-Valued Galois Representations and Nonminimal Reciprocity
 - [x] 162. Dickson Classification and Adequate Residual Image
 - [ ] 163. The Minimal Totally-Real Deformation–Hecke Problem
-- [ ] 164. Minimal Patching and R=T over Totally Real Fields
+- [x] 164. Minimal Patching and R=T over Totally Real Fields
 - [ ] 165. One-Prime Type Complexes and Component Support
 - [ ] 166. One-Prime Nonminimal Patching and R=T
 - [x] 167. Hilbert Irreducibility and Arithmetic Approximation

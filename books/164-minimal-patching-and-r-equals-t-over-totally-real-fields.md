@@ -92,7 +92,7 @@
 
 ### 1.1 What remains after constructing the comparison map
 
-Let $F$ be totally real and let $ell$ be an odd coefficient prime. The preceding minimal deformation--Hecke comparison supplies two finite arithmetic objects. One is the universal fixed-determinant minimal deformation ring $R^{\min}$. The other is the faithful Hecke algebra $\mathbb T^{\min}$ acting on a localized definite-quaternion module $M^{\min}$. A Hecke-valued Galois representation gives a canonical surjection
+Let $F$ be totally real and let $\ell$ be an odd coefficient prime. The preceding minimal deformation--Hecke comparison supplies two finite arithmetic objects. One is the universal fixed-determinant minimal deformation ring $R^{\min}$. The other is the faithful Hecke algebra $\mathbb T^{\min}$ acting on a localized definite-quaternion module $M^{\min}$. A Hecke-valued Galois representation gives a canonical surjection
 
 $$
 R^{\min}\twoheadrightarrow\mathbb T^{\min}.
@@ -151,7 +151,12 @@ M_\infty,
 \tag{1.6}
 $$
 
-with $M_\infty$ finite free over $S_\infty$. The exact minimal presentation shows
+with $M_\infty$ finite free over $S_\infty$. The sharp absolute presentation gives
+
+$$
+P=\mathcal O[[x_1,\ldots,x_q]]\twoheadrightarrow R_\infty.
+\tag{1.6a}
+$$
 
 Equal-variable rigidity then proves
 
@@ -202,7 +207,7 @@ No conclusion is asserted here for $\ell=5$, for a residual cyclotomic restricti
 
 ### 2.1 Coefficients, determinant, and residual representation
 
-Fix a finite extension $E/\mathbf Q_\ell$ with ring of integers $\mathcal O$, uniformizer $\varpi$, and finite residue field $k$. We enlarge $E$ at the outset if necessary so that all selected residual Frobenius eigenvalues, type lattices, and finite characters are defined over it. A later coefficient extension is treated separately in Chapter 14.
+Fix a finite extension $E/\mathbf Q_\ell$ with ring of integers $\mathcal O$, uniformizer $\varpi$, and finite residue field $k$. We enlarge $E$ at the outset if necessary so that the residual Frobenius eigenvalues and the finite-order type characters already present in the minimal datum are defined over it. The auxiliary characters of orders $\ell^N$ are universal group-like elements of $\mathcal O[\Delta_N]$; no fixed finite coefficient field is required to contain roots of unity of every $\ell$-power order. A later coefficient extension is treated separately in Chapter 14.
 
 Let $F$ be totally real. We fix a continuous representation
 
@@ -239,7 +244,7 @@ H^0(F,M)=0.
 \tag{2.5}
 $$
 
-Adequacy on the cyclotomic restriction rules out the cyclotomic self-twist that would contribute $H^0(F,M(1))$; thus
+Absolute irreducibility on the cyclotomic restriction, rather than adequacy alone, rules out the cyclotomic self-twist that would contribute $H^0(F,M(1))$. Indeed, an invariant trace-zero map $\bar\rho\to\bar\rho(1)$ restricts over $F(\zeta_\ell)$ to an endomorphism of an absolutely irreducible representation. It is scalar there, and a trace-zero scalar is zero because $\ell$ is odd. Thus
 
 $$
 H^0(F,M(1))=0.
@@ -291,13 +296,16 @@ Choose a totally definite quaternion algebra over $F$, a parallel-weight-two coe
 - the localized minimal module $M^{\min}$ is finite free over $\mathcal O$;
 - its faithful image is a complete local finite-flat algebra $\mathbb T^{\min}$;
 - primary and companion modules carry a perfect integral pairing with inverse-double-coset adjoints;
-- every characteristic-zero branch lies in the established rank-two Galois attachment range;
-- the generic Hecke algebra is reduced;
-- integral local--global compatibility puts the Hecke-valued representation in exactly the local conditions of Section 2.2;
+- every characteristic-zero branch of the minimal module and of every auxiliary module constructed below lies in the established rank-two Galois attachment range;
+- the minimal and auxiliary generic Hecke algebras are reduced, and their named acting algebras contain no operators beyond the trace-generated order, the fixed determinant scalars, and the ordered auxiliary operators proved in Section 6.1 to belong to that order;
+- integral local--global compatibility puts the minimal and auxiliary Hecke-valued representations in exactly the local conditions of Section 2.2 and the ordered conditions of Section 4.1, on every Artinian quotient;
 - type lattices, degeneracy maps, and primary idempotents are saturated;
-- stabilizers act effectively at every deep auxiliary level.
+- at every admissible auxiliary set, the projective diagonal-ratio diamond group has full nominal rank, every remaining arithmetic point stabilizer has trivial image in it, and the resulting deep-to-oriented fibers are genuine torsors;
+- the localized oriented new complement has no support at the chosen regular refinement, and the acting-image augmentation is saturated, so that it recovers exactly $\mathbb T^{\min}$ rather than only a quotient or a finite-index order.
 
-These assumptions are already needed to construct (1.1). They are retained because the auxiliary modules must use the same branches, determinant, central character, and integral lattices. Patching cannot repair a mismatch that was present at minimal level.
+The first minimal-level instances of these assumptions are already needed to construct (1.1). Their auxiliary-level instances are separate input to the Taylor--Wiles system: residual occurrence at minimal level supplies a nonzero old summand, but does not by itself construct a representation over every auxiliary Hecke order or prove exact augmentation of its acting image. The auxiliary modules must use the same determinant, central character, local branches, and integral lattices. Patching cannot repair a mismatch at finite level.
+
+Residual automorphy is assumed over $F$ in this exact definite-quaternion realization. If it is known only after a solvable extension, a separate automorphic descent theorem and an integral comparison of the descended Hecke order are required before this book applies. No such existence or descent statement is hidden in the patching argument.
 
 The Hecke polynomial at a good finite place $v$ is written using geometric Frobenius:
 
@@ -311,6 +319,8 @@ The central operator $S_v$ is a unit and is not silently normalized to one. This
 ### 2.4 Why the prime bound is seven
 
 The auxiliary-prime theorem needs more than absolute irreducibility. It requires semisimple elements that detect every nonzero adjoint cohomology direction, the vanishing of a finite-image first cohomology group, and the absence of nontrivial $\ell$-power quotients in the cyclotomic restricted image. For a two-dimensional absolutely irreducible representation these adequacy properties hold uniformly when $\ell\geq7$.
+
+Prime selection uses the slightly more explicit split Taylor--Wiles package on the underlying $\mathbf F_\ell$-module: every stable additive subspace arising from a cocycle has no trivial quotient, and some split regular semisimple element detects it. The finite-image classification supplies this stronger formulation as well. In the prime-to-$\ell$ cases it follows from semisimplicity and the absence of adjoint invariants; in the defining-characteristic cases it follows from the special-linear core and the irreducibility of its trace-zero adjoint module. One common finite coefficient extension splits all required detecting elements.
 
 Characteristic five has an exceptional natural representation with projective image $A_5\simeq\operatorname{PSL}_2(\mathbf F_5)$. Its adjoint first cohomology need not vanish. Consequently absolute irreducibility at five does not imply the prime-selection package used below. The main theorem therefore has a genuine arithmetic boundary at seven, not a bound inserted for convenience.
 
@@ -488,6 +498,8 @@ R_x^{\mathrm{TW},\delta,\alpha_x}
 \tag{4.2}
 $$
 
+On the automorphic side, this cyclic group is realized by the projective diagonal ratio on the oriented subgroup, not by the lower-right residue entry alone. A scalar matrix has ratio one, so the fixed central character contributes no common-scalar kernel. The right-action and reciprocity conventions can identify the deck generator with either $\chi_x$ or $\chi_x^{-1}$; we choose the generator once so that the structural map in (4.7) agrees exactly with the automorphic diamond action. The full-effective-rank hypothesis of Section 2.3 says that no further global stabilizer quotient reduces the order $\ell^N$.
+
 The framed versions add two eigenline-position variables. The group algebra is not smooth over $\mathcal O$; it contains the finite-order equation. The local ring is instead formally smooth over that group algebra.
 
 ### 4.2 Finite and limiting diamond algebras
@@ -592,9 +604,9 @@ The last expression is nonzero because the roots are distinct and nonzero. There
 
 ### 5.1 Deep level and the effective diamond action
 
-At each $x\in Q_N$, choose the oriented subgroup $U_0(x)$ and its deeper subgroup $U_1(x,N)$ whose quotient is $\Delta_x$. Taking products gives levels $U_0(Q_N)$ and $U_1(Q_N,N)$. Right translation induces a diamond action of $\Delta_N$ on the deep-level class groupoid and hence on its automorphic module.
+At each $x\in Q_N$, choose the oriented subgroup $U_0(x)$ and let $U_1(x,N)$ be the kernel of its projective diagonal-ratio quotient of order $\ell^N$. Taking products gives levels $U_0(Q_N)$ and $U_1(Q_N,N)$. Right translation induces a diamond action of the nominal group $\Delta_N$ on the deep-level class groupoid and hence on its automorphic module.
 
-A group action alone does not make the module free over the group ring. Freeness requires the fibers of the map from deep to oriented class groupoids to be genuine torsors and requires coefficient stabilizers to remain unchanged. The clean stabilizer hypotheses ensure exactly this. Central or ineffective diamonds have already been removed in the definition of $\Delta_N$.
+A group action alone does not make the module free over the group ring. Freeness requires the fibers of the map from deep to oriented class groupoids to be genuine torsors and requires coefficient stabilizers to remain unchanged. Projectivization removes the local center, and the full-effective-rank hypothesis says that every remaining arithmetic stabilizer has trivial image. Hence the effective group is the full nominal product $\Delta_N\simeq(\mathbf Z/\ell^N\mathbf Z)^q$; passing to a smaller effective quotient would lower the number of patching variables and invalidate the dimension ledger.
 
 Let $M_N$ denote the localized primary deep-level module and $M_N^\dagger$ its adjoint companion. The primary factor uses the chosen root $\alpha_x$ at every auxiliary place. The companion factor is dictated by the adjoint involution; it is not an informally identical copy.
 
@@ -688,7 +700,7 @@ Augmentation of (5.8) recovers the minimal primary--companion pairing. Invariant
 
 ### 6.1 Rings, Hecke algebras, and modules
 
-Let $\mathbb T_N$ be the faithful image of the auxiliary Hecke algebra on $M_N$. Branchwise Galois attachment and trace descent construct a representation
+Let $\mathbb T_N$ be the faithful image of the named auxiliary Hecke algebra on $M_N$. The auxiliary-level realization hypothesis of Section 2.3, applied to every generic branch and not inferred merely from residual occurrence, permits the same trace-coordinate descent as at minimal level. It constructs a representation
 
 $$
 \rho_N:G_F\longrightarrow\operatorname{GL}_2(\mathbb T_N)
@@ -702,7 +714,21 @@ R_N\longrightarrow\mathbb T_N.
 \tag{6.2}
 $$
 
-Good Hecke traces and the fixed determinant generate the acting algebra, so (6.2) is surjective. This is a finite-level argument and does not use the desired minimal equality.
+There is a small generation point here. Begin with the order generated by good Hecke traces and the fixed determinant coefficients. Density puts the trace of every Galois element in this order, and residual absolute irreducibility gives the representation over it. At $x$, let $a_x,b_x$ be the Hensel lifts of the two residual roots in that trace order. Their difference is a unit, so
+
+$$
+e_x=\frac{\rho_N(\Phi_x)-b_x}{a_x-b_x}
+\tag{6.2a}
+$$
+
+is the integral projector onto the selected line. If $\tau_x$ is a tame generator, then
+
+$$
+\operatorname{tr}\bigl(e_x\rho_N(\tau_x)\bigr)=\chi_x(\tau_x).
+\tag{6.2b}
+$$
+
+Local--global compatibility identifies this element, with the fixed possible inversion from Section 4.1, with the projective diamond operator. Thus the entire group algebra $\Lambda_N$, as well as the ordered Frobenius root, already lies in the trace order. The hypothesis that no further auxiliary operator has been adjoined now shows that good traces and the fixed determinant generate $\mathbb T_N$. Hence (6.2) is surjective. This is a finite-level argument and does not use the desired minimal equality.
 
 ### 6.2 The commuting action diagram
 
@@ -723,7 +749,7 @@ The algebra $\mathbb T_N$ is by definition faithful on $M_N$. No faithfulness of
 
 ### 6.3 Exact augmentation
 
-Equations (4.8) and (5.7) give exact ring and module control. The acting algebra requires one more saturation statement: endomorphisms that vanish after augmentation must be generated by the augmentation ideal in the acting image. The retained integral lattice and degeneracy saturation hypotheses give
+Equations (4.8) and (5.7) give exact ring and module control. The acting algebra requires one more, logically independent saturation statement: endomorphisms that vanish after augmentation must be generated by the augmentation ideal in the acting image. This is the acting-image augmentation hypothesis stated in Section 2.3; module freeness and saturated degeneracy maps alone would not imply it. It gives
 
 $$
 \mathbb T_N/\mathfrak a_N\mathbb T_N\xrightarrow{\sim}\mathbb T^{\min}.
@@ -1410,7 +1436,7 @@ There is an abstract numerical criterion that can prove $R=T$ from a common dete
 
 ### 14.1 Finite coefficient extension
 
-Let $\mathcal O'/\mathcal O$ be the integers in a finite extension of coefficient fields, with residue field $k'$. Completed scalar extension preserves the clean local rings, the universal fixed-determinant problem, the finite automorphic modules, and the perfect pairings. It also preserves regular sequences and finite freeness.
+Let $\mathcal O'/\mathcal O$ be the integers in a finite extension of coefficient fields, with residue field $k'$. After selecting the local residual factor corresponding to $\bar\rho\otimes_k k'$, completed scalar extension preserves the clean local rings, the universal fixed-determinant problem, the finite automorphic modules, and the perfect pairings. It also preserves regular sequences and finite freeness.
 
 Thus the entire patched construction may be performed after a finite extension used to split residual eigenvalues. One obtains
 
@@ -1444,7 +1470,7 @@ depends on the same convention. Omitting $S_x^{-1}$ would make (4.10) false unle
 
 ### 14.4 Returning from enlarged coefficients
 
-Suppose (14.1) is known and $R^{\min}\to\mathbb T^{\min}$ is the original map. Its kernel and cokernel are finite $\mathcal O$-modules. Faithful flatness of $\mathcal O'$ over $\mathcal O$ shows that both vanish if their scalar extensions vanish. Hence the isomorphism descends to $\mathcal O$.
+Suppose (14.1) is known and $R^{\min}\to\mathbb T^{\min}$ is the original map. Because $\mathcal O'$ is finite free over $\mathcal O$, completed tensor product on these complete Noetherian algebras agrees with the relevant ordinary finite base change and is exact. The kernel and cokernel therefore become zero after tensoring with $\mathcal O'$. Faithful flatness shows that they were already zero; no prior finiteness of the deformation-ring kernel as an $\mathcal O$-module is being assumed. Hence the isomorphism descends to $\mathcal O$.
 
 The same argument descends finite projectivity. Over a local ring, finite projective modules are free, and their rank is read after faithful flat base change. Gorensteinness descends here through the explicit complete-intersection presentation, not through an unsupported claim about arbitrary faithfully flat descent of dualizing modules.
 
@@ -1484,11 +1510,11 @@ The proof uses its direct prerequisites in the following exact forms.
 |---|---|---|
 | Book 72, Taylor--Wiles primes | sets of exactly $q$ split regular primes at every depth, killing dual Selmer; local auxiliary rings and augmentation | fixed determinant, odd $\ell$, represented local conditions, adequate cyclotomic restricted image, eigenvalues in the residue field |
 | Book 75, abstract $R=T$ | depth transfer, support versus faithfulness, regular-sequence descent, determinant criterion | complete local rings, finite faithful action image, exact augmentation, finite free diamond module, independent regularity or support input |
-| Book 160, deep-level quaternionic modules | diamond torsors, group-ring freeness, exact augmentation, primary--companion duality, minimal-level control criterion | effective stabilizers, saturated degeneracy maps, unit Gram determinant, no localized new support, distinct roots |
-| Book 163, minimal totally real deformation--Hecke problem | $R^{\min}\twoheadrightarrow\mathbb T^{\min}$, balanced number $q$, local smoothness, Hecke-valued representation, pairings and determinant data | all standing hypotheses of Sections 2.1--2.3 |
+| Book 160, deep-level quaternionic modules | projective diamond torsors, full-effective-rank group-ring freeness, exact module augmentation, primary--companion duality, minimal-level control criterion | trivial scalar ratio, clean arithmetic stabilizers, saturated degeneracy maps, unit Gram determinant, no localized new support, distinct roots |
+| Book 163, minimal totally real deformation--Hecke problem | $R^{\min}\twoheadrightarrow\mathbb T^{\min}$, balanced number $q$, local smoothness, trace-coordinate descent, pairings and determinant data | its standing minimal hypotheses, with the auxiliary analogues separately assumed in Section 2.3 |
 | Book 162, residual image classification and adequacy | adequacy and regular semisimple detection for $\ell\geq7$, coefficient-five boundary | absolute irreducibility after cyclotomic restriction and coefficient characteristic at least seven |
 
-Every imported theorem is used with its original determinant and Frobenius conventions. No later nonminimal or potential-modularity result enters the proof.
+The determinant convention is unchanged throughout. Book 72 states prime selection with arithmetic Frobenius; here we invert the selected conjugacy class and its ordered eigenvalues to use geometric Frobenius. This preserves the residue-cardinality congruence, regularity, and localization rank. The quaternionic Hecke polynomial and the projective diamond labels are then transported into the geometric convention fixed in Book 163. No later nonminimal, minimal-lifting, potential-modularity, or solvable-descent result enters the proof.
 
 ### 16.2 The two structural inputs used through them
 
@@ -1500,7 +1526,7 @@ Second, inverse limits preserve the required quotient sequences because the fini
 
 The hypothesis matching is literal. Book 72 requires the split regular detection clauses, not merely a slogan of “large image”; Book 162 supplies those clauses under the $\ell\geq7$ cyclotomic irreducibility assumptions. Book 160 makes its deep-level freeness conditional on effective diamond torsors and makes its hyperspecial augmentation conditional on integral old--new control. Sections 5.1--5.3 verify these conditions, using the standing saturation assumption from Book 163 and the unit calculation (4.10). Book 75 distinguishes near faithfulness from faithfulness; Proposition 10.1 supplies the stronger nilpotent-sensitive conclusion needed for full equality.
 
-Book 163 also requires every generic Hecke branch to lie in the verified Galois attachment and integral local-compatibility range. Section 6.1 retains that condition at auxiliary level before constructing $R_N\to\mathbb T_N$. The map is not manufactured by patching. Conversely, no theorem from Book 164 is used to justify any hypothesis imported from Book 163, so the dependency is acyclic.
+Book 163 requires every generic Hecke branch to lie in the verified Galois attachment and integral local-compatibility range. Section 2.3 explicitly retains that condition at auxiliary level, and Section 6.1 uses it before constructing $R_N\to\mathbb T_N$. The map and the exact acting-image augmentation are not manufactured by patching. Book 155 is a later synthesis that depends on the present theorem and is not used here. Conversely, no theorem from Book 164 is used to justify any hypothesis imported from Book 163, so the dependency is acyclic.
 
 ### 16.3 Hypothesis matching
 
@@ -1540,14 +1566,15 @@ The two chains meet only after patching. Their equal number of variables makes t
 
 ### 17.1 Prime selection and local branches
 
-The auxiliary-prime audit has six entries.
+The auxiliary-prime audit has seven entries.
 
 1. The selected number is the absolute dual Selmer dimension $q$, not a framed or relaxed obstruction number.
 2. Every $Q_N$ has exactly $q$ primes and every residue cardinality is $1$ modulo $\ell^N$.
 3. Detection, cyclotomic congruence, residual Frobenius, and avoidance are imposed in one compatible finite quotient.
 4. Residual Frobenius has two distinct eigenvalues in the coefficient residue field, and an ordering is retained.
 5. The new dual local condition is zero, and the localization matrix has full rank, proving (3.10).
-6. The determinant and central-character normalization makes (4.10) a unit.
+6. The automorphic diamond is the projective diagonal ratio, so common scalars act trivially at the source, while the clean stabilizer condition leaves the full nominal group of rank $q$ effective.
+7. The determinant and central-character normalization makes (4.10) a unit.
 
 Failure of any entry changes the local functor or leaves a dual class alive.
 
@@ -1588,11 +1615,14 @@ The final audit checks that:
 - ring augmentation recovers the universal minimal functor, using uniqueness of the lifted eigenline;
 - module augmentation passes through oriented level using the unit Gram determinant, saturation, and absence of new support;
 - acting-algebra augmentation is saturated and recovers the faithful minimal Hecke image;
+- auxiliary Hecke-valued representations exist on every generic branch in the retained range, and the ordered-projector calculation puts every diamond in the trace order;
 - the images of $z_1,\ldots,z_q$ form a regular sequence on $R_\infty$ and $M_\infty$;
 - quotienting $R_\infty=A_\infty$ gives the canonical map $R^{\min}\to\mathbb T^{\min}$;
 - module freeness descends without higher Tor terms;
 - complete-intersection and Gorenstein claims follow from the displayed regular quotient;
-- determinant comparison is constructed from presentations and pairings before it is used, and is not deduced from the desired equality in a circular route.
+- determinant comparison is made only after the ring equality has been proved independently, and it is not used retroactively in a circular route.
+
+The arithmetic input is already over $F$. Neither residual automorphy nor automorphic descent from a solvable extension is inferred from the existence of the patch.
 
 This closes every possible gap between a patched generic comparison and the integral minimal theorem.
 
