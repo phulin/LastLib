@@ -2,2650 +2,1528 @@
 
 ## Contents
 
-1. [The problem and its exact dictionary](#1-the-problem-and-its-exact-dictionary)
-   - [The classification theorem](#11-the-classification-theorem)
-   - [Lines, subgroup schemes, and isogenies](#12-lines-subgroup-schemes-and-isogenies)
-   - [Kernel characters and duality](#13-kernel-characters-and-duality)
-   - [Coarse points and exceptional automorphisms](#14-coarse-points-and-exceptional-automorphisms)
-2. [The local isogeny-character theorem](#2-the-local-isogeny-character-theorem)
-   - [Why a twelfth power occurs](#21-why-a-twelfth-power-occurs)
-   - [Places away from the coefficient prime](#22-places-away-from-the-coefficient-prime)
-   - [Finite-flat analysis at the coefficient prime](#23-finite-flat-analysis-at-the-coefficient-prime)
-   - [The signature table and congruence restrictions](#24-the-signature-table-and-congruence-restrictions)
-   - [Semistable and potentially multiplicative sharpenings](#25-semistable-and-potentially-multiplicative-sharpenings)
-3. [Stable specialization and global reciprocity](#3-stable-specialization-and-global-reciprocity)
-   - [Potentially good reduction at an auxiliary prime](#31-potentially-good-reduction-at-an-auxiliary-prime)
-   - [The exceptional special fibers](#32-the-exceptional-special-fibers)
-   - [The stable-specialization trace lemma](#33-the-stable-specialization-trace-lemma)
-   - [From local inertia to a global signature](#34-from-local-inertia-to-a-global-signature)
-4. [Odd cusp rigidity supplies three interior primes](#4-odd-cusp-rigidity-supplies-three-interior-primes)
-   - [Cuspidal reduction and negative valuation](#41-cuspidal-reduction-and-negative-valuation)
-   - [The exact interface from Book 141](#42-the-exact-interface-from-book-141)
-   - [The three fixed auxiliary primes](#43-the-three-fixed-auxiliary-primes)
-5. [The exact unbalanced-signature sieve](#5-the-exact-unbalanced-signature-sieve)
-   - [Resultants and the Hasse interval](#51-resultants-and-the-hasse-interval)
-   - [A recurrence certificate for every resultant](#52-a-recurrence-certificate-for-every-resultant)
-   - [The complete factorization certificate](#53-the-complete-factorization-certificate)
-   - [Eliminating the cubic signatures](#54-eliminating-the-cubic-signatures)
-   - [The apparent factor $31$](#55-the-apparent-factor-31)
-6. [The balanced signature](#6-the-balanced-signature)
-   - [Why the $j$-invariant is integral](#61-why-the-j-invariant-is-integral)
-   - [The balanced class-field theorem](#62-the-balanced-class-field-theorem)
-   - [How the class group enters](#63-how-the-class-group-enters)
-7. [The independent class-number-one theorem](#7-the-independent-class-number-one-theorem)
-   - [The theorem and its proof architecture](#71-the-theorem-and-its-proof-architecture)
-   - [Intersection with the balanced branch](#72-intersection-with-the-balanced-branch)
-8. [The complete level-$37$ certificate](#8-the-complete-level-37-certificate)
-   - [The genus-two model and its involutions](#81-the-genus-two-model-and-its-involutions)
-   - [The two elliptic quotients](#82-the-two-elliptic-quotients)
-   - [The rank-zero Mordell--Weil certificate](#83-the-rank-zero-mordell--weil-certificate)
-   - [Modular symbols, newforms, and the Sturm bound](#84-modular-symbols-newforms-and-the-sturm-bound)
-   - [The three fibers and all rational points](#85-the-three-fibers-and-all-rational-points)
-   - [Cusps and the two $j$-values](#86-cusps-and-the-two-j-values)
-9. [Existence at the genus-zero and level-$17$ primes](#9-existence-at-the-genus-zero-and-level-17-primes)
-   - [Certified Hauptmodul formulas](#91-certified-hauptmodul-formulas)
-   - [A noncuspidal specialization at each genus-zero level](#92-a-noncuspidal-specialization-at-each-genus-zero-level)
-   - [The level-$17$ modular point](#93-the-level-17-modular-point)
-10. [CM existence and the exceptional coarse fibers](#10-cm-existence-and-the-exceptional-coarse-fibers)
-    - [Ramified CM kernels](#101-ramified-cm-kernels)
-    - [The five required CM degrees](#102-the-five-required-cm-degrees)
-    - [Direct treatment of $j=0$ and $j=1728$](#103-direct-treatment-of-j0-and-j1728)
-11. [The prime-isogeny classification](#11-the-prime-isogeny-classification)
-    - [Elimination](#111-elimination)
-    - [Existence](#112-existence)
-    - [Mechanism and dependency ledger](#113-mechanism-and-dependency-ledger)
-12. [The independent prime-torsion theorem](#12-the-independent-prime-torsion-theorem)
-    - [The exact independent theorem](#121-the-exact-independent-theorem)
-    - [The oriented $X_1(p)$ proof architecture](#122-the-oriented-x_1p-proof-architecture)
-    - [Tate normal form and the two mixed-torsion curves](#123-tate-normal-form-and-the-two-mixed-torsion-curves)
-    - [The elliptic certificate for $C_5$](#124-the-elliptic-certificate-for-c_5)
-    - [The genus-two certificate for $C_7$](#125-the-genus-two-certificate-for-c_7)
-13. [Semistable rational isogenies](#13-semistable-rational-isogenies)
-    - [An everywhere-unramified diagonal character](#131-an-everywhere-unramified-diagonal-character)
-    - [Rational torsion on one side of the isogeny](#132-rational-torsion-on-one-side-of-the-isogeny)
-    - [Odd isogenies and full two-torsion](#133-odd-isogenies-and-full-two-torsion)
-14. [The Frey curve](#14-the-frey-curve)
-    - [Normalization and invariants](#141-normalization-and-invariants)
-    - [Odd bad primes](#142-odd-bad-primes)
-    - [The minimal model at two](#143-the-minimal-model-at-two)
-    - [Residual inertia](#144-residual-inertia)
-15. [Frey irreducibility](#15-frey-irreducibility)
-    - [The contradiction](#151-the-contradiction)
-    - [The exponents five and seven](#152-the-exponents-five-and-seven)
-    - [All larger prime exponents](#153-all-larger-prime-exponents)
-16. [Audit and final theorem package](#16-audit-and-final-theorem-package)
-    - [Imported infrastructure](#161-imported-infrastructure)
-    - [Exact finite certificates](#162-exact-finite-certificates)
-    - [Logical safeguards](#163-logical-safeguards)
-    - [Final theorems](#164-final-theorems)
-    - [Conclusion](#165-conclusion)
+1. [The problem, the scope, and the route](#1-the-problem-the-scope-and-the-route)
+   - [Three questions attached to one prime](#11-three-questions-attached-to-one-prime)
+   - [Standing conventions](#12-standing-conventions)
+   - [The exact boundary of the book](#13-the-exact-boundary-of-the-book)
+   - [The proof architecture](#14-the-proof-architecture)
+2. [From invariant lines to modular points](#2-from-invariant-lines-to-modular-points)
+   - [Stable lines and finite subgroup schemes](#21-stable-lines-and-finite-subgroup-schemes)
+   - [A subgroup is not a generator](#22-a-subgroup-is-not-a-generator)
+   - [The complementary character and the dual isogeny](#23-the-complementary-character-and-the-dual-isogeny)
+   - [$X_0(p)$, $X_1(p)$, and coarse descent](#24-x_0p-x_1p-and-coarse-descent)
+   - [Specialization of the modular point](#25-specialization-of-the-modular-point)
+3. [Semistable characters away from the coefficient prime](#3-semistable-characters-away-from-the-coefficient-prime)
+   - [Good reduction](#31-good-reduction)
+   - [Split multiplicative reduction](#32-split-multiplicative-reduction)
+   - [Nonsplit multiplicative reduction](#33-nonsplit-multiplicative-reduction)
+   - [The precise away-from-$p$ conclusion](#34-the-precise-away-from-p-conclusion)
+4. [The coefficient-prime dichotomy](#4-the-coefficient-prime-dichotomy)
+   - [Good reduction and schematic closure](#41-good-reduction-and-schematic-closure)
+   - [Order-$p$ groups over the unramified base](#42-order-p-groups-over-the-unramified-base)
+   - [Multiplicative reduction and the Tate extension](#43-multiplicative-reduction-and-the-tate-extension)
+   - [The semistable local theorem](#44-the-semistable-local-theorem)
+5. [The global semistable isogeny theorem](#5-the-global-semistable-isogeny-theorem)
+   - [Choosing the unramified diagonal](#51-choosing-the-unramified-diagonal)
+   - [Everywhere-unramified characters of the rationals](#52-everywhere-unramified-characters-of-the-rationals)
+   - [Rational torsion on one side](#53-rational-torsion-on-one-side)
+   - [Why the theorem is genuinely semistable](#54-why-the-theorem-is-genuinely-semistable)
+6. [Prime torsion and the oriented modular curve](#6-prime-torsion-and-the-oriented-modular-curve)
+   - [Why rational torsion belongs to $X_1(p)$](#61-why-rational-torsion-belongs-to-x_1p)
+   - [The formal-immersion mechanism](#62-the-formal-immersion-mechanism)
+   - [The uniform range $p\ge17$](#63-the-uniform-range-pge17)
+   - [The level-eleven calculation](#64-the-level-eleven-calculation)
+   - [The level-thirteen problem](#65-the-level-thirteen-problem)
+7. [The exact rational points of $X_1(13)$](#7-the-exact-rational-points-of-x_113)
+   - [The genus-two model and its cusps](#71-the-genus-two-model-and-its-cusps)
+   - [The complete Mordell--Weil group](#72-the-complete-mordell--weil-group)
+   - [A terminal reduction at seventeen](#73-a-terminal-reduction-at-seventeen)
+   - [Exhaustion and uniqueness](#74-exhaustion-and-uniqueness)
+   - [The prime-torsion theorem](#75-the-prime-torsion-theorem)
+8. [Odd isogenies and full rational two-torsion](#8-odd-isogenies-and-full-rational-two-torsion)
+   - [Preservation of two-torsion as a group scheme](#81-preservation-of-two-torsion-as-a-group-scheme)
+   - [The mixed torsion forced by a rational generator](#82-the-mixed-torsion-forced-by-a-rational-generator)
+   - [Why seven is the remaining prime](#83-why-seven-is-the-remaining-prime)
+9. [Tate normal form and the mixed-seven curve](#9-tate-normal-form-and-the-mixed-seven-curve)
+   - [Normalizing a point of odd order](#91-normalizing-a-point-of-odd-order)
+   - [The order-seven locus](#92-the-order-seven-locus)
+   - [The cubic of two-torsion coordinates](#93-the-cubic-of-two-torsion-coordinates)
+   - [The necessary genus-two condition](#94-the-necessary-genus-two-condition)
+10. [The exact arithmetic of the mixed-seven curve](#10-the-exact-arithmetic-of-the-mixed-seven-curve)
+    - [The pointed curve and visible classes](#101-the-pointed-curve-and-visible-classes)
+    - [The complete Jacobian](#102-the-complete-jacobian)
+    - [All twelve reduced classes](#103-all-twelve-reduced-classes)
+    - [The Abel-image test](#104-the-abel-image-test)
+    - [The mixed-seven exclusion](#105-the-mixed-seven-exclusion)
+11. [The semistable full-two irreducibility criterion](#11-the-semistable-full-two-irreducibility-criterion)
+    - [Statement and motivation](#111-statement-and-motivation)
+    - [Proof across the isogeny](#112-proof-across-the-isogeny)
+    - [Hypotheses and exceptions](#113-hypotheses-and-exceptions)
+12. [The Frey curve and its normalization](#12-the-frey-curve-and-its-normalization)
+    - [Primitive triples and parity](#121-primitive-triples-and-parity)
+    - [The curve, its two-torsion, and its invariants](#122-the-curve-its-two-torsion-and-its-invariants)
+    - [Odd-prime minimal models](#123-odd-prime-minimal-models)
+    - [The minimal model at two](#124-the-minimal-model-at-two)
+    - [Semistability](#125-semistability)
+13. [Residual irreducibility of the Frey curve](#13-residual-irreducibility-of-the-frey-curve)
+    - [The contradiction argument](#131-the-contradiction-argument)
+    - [The exponent seven](#132-the-exponent-seven)
+    - [Every prime exponent at least eleven](#133-every-prime-exponent-at-least-eleven)
+    - [The local ramification ledger](#134-the-local-ramification-ledger)
+14. [The exponent-five boundary](#14-the-exponent-five-boundary)
+    - [Why the residual theorem stops at seven](#141-why-the-residual-theorem-stops-at-seven)
+    - [The cyclotomic descent route](#142-the-cyclotomic-descent-route)
+    - [Logical separation from the isogeny argument](#143-logical-separation-from-the-isogeny-argument)
+15. [Dependency audit and final theorem package](#15-dependency-audit-and-final-theorem-package)
+    - [Imported results with matching hypotheses](#151-imported-results-with-matching-hypotheses)
+    - [Exceptional cases and normalization ledger](#152-exceptional-cases-and-normalization-ledger)
+    - [Final theorems](#153-final-theorems)
+    - [Conclusion](#154-conclusion)
 
-## 1. The problem and its exact dictionary
+## 1. The problem, the scope, and the route
 
-### 1.1 The classification theorem
+The phrase *rational prime-degree isogeny* joins three different kinds of
+structure. An isogeny is a morphism of elliptic curves. Its kernel is a
+finite subgroup scheme. Over a characteristic-zero field, its geometric
+points form a line in a two-dimensional residual representation. The first
+task of this book is to move correctly among these descriptions. The second
+is to exploit semistable reduction, which makes the character on that line
+extraordinarily rigid. The third is to apply the resulting rigidity to the
+Frey curve.
 
-A cyclic isogeny of prime degree is one of the simplest maps between elliptic curves, but its existence is controlled simultaneously by local reduction, finite-flat geometry, global reciprocity, modular curves, and class groups. None of these viewpoints by itself explains the answer. The purpose of this book is to make their meeting point explicit and to keep the numerical eliminations visible.
+The central theorem is not the classification of all prime degrees which
+occur among all elliptic curves over $\mathbf Q$. Such a classification
+requires local character tables and rational-point arguments outside the
+declared dependency package. The theorem proved here is the exact one needed
+for the Frey curve: if a semistable elliptic curve over $\mathbf Q$ has full
+rational two-torsion, then its mod-$p$ representation is irreducible for every
+prime $p\ge7$. The exceptional prime $7$ is closed by the mixed-seven
+genus-two calculation. The exceptional point-level prime $13$ is closed by
+the complete calculation on $X_1(13)$.
 
-The theorem to be proved is
+### 1.1 Three questions attached to one prime
+
+Let $E/\mathbf Q$ be an elliptic curve and let $p$ be prime. There are three
+questions which must initially remain separate.
+
+1. Does $E[p]$ contain a $G_{\mathbf Q}$-stable line?
+2. Does $E$ admit a cyclic isogeny of degree $p$ over $\mathbf Q$?
+3. Does $E(\mathbf Q)$ contain a point of exact order $p$?
+
+The first two questions are equivalent. The third is stronger. If $C$ is a
+rational cyclic subgroup of order $p$, Galois can preserve $C$ while acting
+nontrivially on every generator. The character describing that action is the
+isogeny character. Much of the argument exists to prove that, under
+semistability, either this character or its dual is trivial.
+
+The modular curves separate the same three questions. A noncuspidal object
+of $Y_0(p)$ records $(E,C)$; an object of $Y_1(p)$ records $(E,P)$ with $P$
+a generator. Forgetting $P$ but retaining $\langle P\rangle$ loses exactly
+the isogeny character. This is why a theorem about rational torsion belongs
+to the oriented curve $X_1(p)$ rather than to $X_0(p)$.
+
+### 1.2 Standing conventions
+
+The symbol $p$ always denotes the coefficient prime and, when an isogeny is
+present, its degree. Auxiliary residue characteristics are denoted $q$ or
+$r$. We use arithmetic Frobenius. The mod-$p$ cyclotomic character is
 
 $$
-\boxed{
-p\text{ is the degree of a rational cyclic isogeny over }\mathbf Q
-\Longleftrightarrow
-p\in\{2,3,5,7,11,13,17,19,37,43,67,163\}.}
-\tag{1.1}
+\overline\chi_p:G_{\mathbf Q}\longrightarrow\mathbf F_p^\times,
 $$
 
-Every degree on the right will be constructed. The elimination of every other prime will not be imported under another name. For $p>19$ it will come from five possible local signatures, an exact resultant calculation at $5,7,11$, a structural class-field theorem in the one balanced signature, and the independent class-number-one theorem. The isolated endpoint $37$ will be verified on an explicit genus-two model.
-
-The final application is stronger than membership in (1.1). If a Frey curve attached to a putative Fermat solution had reducible $p$-torsion, semistability would force rational $p$-torsion on one of two isogenous curves. The independent prime-torsion theorem eliminates $p\ge11$. Full rational $2$-torsion persists across an odd isogeny, and the explicit curves $C_5$ and $C_7$ eliminate the remaining primes $5$ and $7$. Thus the classification and the Frey argument share local theory but have different last steps.
-
-Throughout, $p$ denotes the degree of the isogeny and the coefficient characteristic of the residual representation. Auxiliary rational primes are denoted $q$ or $r$. Arithmetic Frobenius is used, so
+defined by $\sigma(\zeta)=\zeta^{\overline\chi_p(\sigma)}$ on $\mu_p$.
+Thus, for $q\ne p$,
 
 $$
-\chi_p(\operatorname{Frob}_r)=r\pmod p
-\tag{1.2}
+\overline\chi_p(\operatorname{Frob}_q)=q\pmod p.
 $$
 
-for $r\ne p$.
+For a finite prime $q$, write $G_q$ and $I_q$ for a decomposition group and
+its inertia subgroup. A curve is **semistable** when at every finite prime it
+has good or multiplicative reduction. Full rational two-torsion means
 
-### 1.2 Lines, subgroup schemes, and isogenies
+$$
+E[2](\mathbf Q)\simeq(\mathbf Z/2\mathbf Z)^2,
+$$
 
-Let $E/\mathbf Q$ be an elliptic curve and let $p$ be prime. In characteristic zero, $E[p]$ is finite étale of rank $p^2$, and
+equivalently that $E[2]$ is the constant finite étale group scheme of rank
+four.
+
+All modular points used to construct an isogeny arise from an actual pair
+$(E,C)$. We never infer an elliptic curve with level structure from an
+arbitrary coarse point without checking descent. All genus-two curves mean
+their smooth projective models. Whenever a quintic equation is used, the
+point at infinity is included.
+
+### 1.3 The exact boundary of the book
+
+The direct geometric background supplies the modular curves $X_0(p)$ and
+$X_1(p)$, their cusps and integral models, the isogeny dictionary, the
+pointed Abel maps, and the selected Eisenstein formal-immersion package. The
+genus-two background supplies Abel--Jacobi geometry, exact Mumford
+arithmetic, the two-descent calculations, and exhaustive Mordell--Weil
+sieves for $X_1(13)$ and the mixed-seven curve. The semistable-character
+background supplies the local dichotomy and the Frey minimal model.
+
+This book integrates those results into one proof and recalls the decisive
+arguments at the point of use. It does not assume the desired Frey
+irreducibility in order to prove an exceptional rational-point calculation.
+Indeed the arrows go in the opposite direction:
+
+$$
+\text{genus-two arithmetic}
+\longrightarrow
+\text{exceptional torsion exclusions}
+\longrightarrow
+\text{semistable irreducibility}
+\longrightarrow
+\text{Frey irreducibility}.
+$$
+
+The exponent-five Fermat equation lies on a different branch. Its treatment
+uses cyclotomic descent rather than the residual theorem proved here. Chapter
+14 records that boundary precisely so that the prime $5$ is neither silently
+included nor mistaken for a gap in the $p\ge7$ theorem.
+
+### 1.4 The proof architecture
+
+Assume temporarily that $E[p]$ is reducible. A stable line gives a rational
+isogeny and two diagonal characters
+
+$$
+\lambda,qquad \mu=\overline\chi_p\lambda^{-1}.
+$$
+
+At every $q\ne p$, semistability makes both characters unramified. At $p$,
+one is unramified and the other has cyclotomic inertia. Therefore one of
+$\lambda,\mu$ is unramified at every finite prime. There is no nontrivial
+finite everywhere-unramified character of $G_{\mathbf Q}$, so that character
+is trivial. Rational $p$-torsion appears on $E$ or on the quotient curve.
+
+If $E$ has full rational two-torsion and $p$ is odd, the quotient curve has
+full rational two-torsion as well. For $p\ge11$, rational $p$-torsion is
+impossible by the oriented prime-torsion theorem. For $p=7$, Tate normal form
+would give a nondegenerate rational point on the mixed-seven curve, whose
+complete rational-point set contains only boundary points. This contradiction
+proves the semistable criterion.
+
+Finally, the Frey equation displays full rational two-torsion. Its invariants
+prove multiplicative reduction at every bad prime, including after the
+essential two-adic coordinate change. The criterion then proves the desired
+irreducibility.
+
+## 2. From invariant lines to modular points
+
+The first translation is elementary only after its scheme-theoretic
+hypotheses are stated. In characteristic zero, pointwise and scheme-theoretic
+torsion agree well enough for descent. At a residue characteristic equal to
+$p$, they do not; that distinction will become central in Chapter 4.
+
+### 2.1 Stable lines and finite subgroup schemes
+
+The representation-theoretic hypothesis is useful only after it has been
+turned into geometry over the ground field. This section proves that
+translation with all descent hypotheses visible.
+
+Because $\operatorname{char}\mathbf Q=0$, the group scheme $E[p]$ is finite
+étale of rank $p^2$, and
 
 $$
 E[p](\overline{\mathbf Q})\simeq\mathbf F_p^2.
 $$
 
-A one-dimensional subspace $L$ is stable under $G_{\mathbf Q}$ exactly when finite étale descent makes its $p$ geometric points the points of a subgroup scheme
+Let $L$ be a one-dimensional $\mathbf F_p$-subspace stable under
+$G_{\mathbf Q}$. Finite étale descent gives a unique finite étale subgroup
+scheme
 
 $$
 C\subset E[p]
 $$
 
-of rank $p$ over $\mathbf Q$. The quotient by a finite subgroup scheme exists, and therefore
+whose geometric points are $L$. The quotient of an elliptic curve by a
+finite subgroup scheme exists, so there is a separable isogeny
 
 $$
-\varphi:E\longrightarrow E/C
-\tag{1.3}
+\varphi:E\longrightarrow E'=E/C
 $$
 
-is a separable isogeny of degree $p$. Conversely, the scheme-theoretic kernel of a rational degree-$p$ isogeny is such a stable cyclic subgroup. Consequently
+defined over $\mathbf Q$ and of degree $p$.
+
+Conversely, if $\varphi:E\to E'$ is a rational isogeny of degree $p$, its
+scheme-theoretic kernel is finite étale of rank $p$, and its geometric points
+form a $G_{\mathbf Q}$-stable line. We have proved the exact dictionary
 
 $$
 \boxed{
 E[p]\text{ reducible over }\mathbf F_p
 \Longleftrightarrow
-C\subset E[p]\text{ rational cyclic of rank }p
-\Longleftrightarrow
-E\text{ admits a rational }p\text{-isogeny}.}
-\tag{1.4}
-$$
-
-The qualification “over $\mathbf F_p$” matters. A line visible only after extending the coefficient field does not define a rank-$p$ subgroup over $\mathbf Q$.
-
-The pair $(E,C)$ gives a noncuspidal rational object of the $\Gamma_0(p)$ moduli problem and hence a point
-
-$$
-x(E,C)\in Y_0(p)(\mathbf Q)\subset X_0(p)(\mathbf Q).
-\tag{1.5}
-$$
-
-This direction has no coarse-descent issue: the elliptic curve and subgroup already exist. Most of the elimination starts with (1.5), so it never needs to infer an object from an arbitrary coarse point.
-
-### 1.3 Kernel characters and duality
-
-Choose $0\ne P\in C(\overline{\mathbf Q})$. Since $C$ is stable, there is a character
-
-$$
-\lambda:G_{\mathbf Q}\longrightarrow\mathbf F_p^\times,
-\qquad
-\sigma P=\lambda(\sigma)P.
-\tag{1.6}
-$$
-
-In a basis whose first vector is $P$, the residual representation is triangular:
-
-$$
-\overline\rho_{E,p}\sim
-\begin{pmatrix}
-\lambda&*\\
-0&\chi_p\lambda^{-1}
-\end{pmatrix}.
-\tag{1.7}
-$$
-
-The determinant is cyclotomic by the Weil pairing. The second diagonal character is the kernel character of the dual isogeny
-
-$$
-\widehat\varphi:E/C\longrightarrow E.
-$$
-
-Thus duality replaces
-
-$$
-\lambda\quad\text{by}\quad\chi_p\lambda^{-1}.
-\tag{1.8}
-$$
-
-A rational subgroup is not the same thing as a rational generator. The kernel has a nonzero rational point exactly when $\lambda=1$. This distinction is harmless for the modular curve $X_0(p)$, which remembers the subgroup, but decisive in the Frey argument, where rational torsion must be produced by an additional semistable theorem.
-
-### 1.4 Coarse points and exceptional automorphisms
-
-The reverse passage from a rational coarse point of $Y_0(p)$ to a pair over $\mathbf Q$ must retain the automorphism locus. If $j\ne0,1728$, choose a curve $E_0/\mathbf Q$ with the indicated $j$-invariant and transport a geometric subgroup to it. Coarse Galois invariance carries every conjugate subgroup back by an automorphism of $E_{0,\overline{\mathbf Q}}$. That automorphism is $\pm1$, and both signs preserve every unoriented cyclic subgroup. The subgroup is therefore itself Galois stable and descends.
-
-At $j=0$ and $1728$, the geometric automorphism groups are larger, so this argument is unavailable. We will not assert blanket coarse descent there. Chapter 10 treats the twists
-
-$$
-y^2=x^3+d,
-\qquad
-y^2=x^3+dx
-\tag{1.9}
-$$
-
-directly from their division polynomials. All rational points used for existence at $p\ge5$ have $j\ne0,1728$, except that the CM construction itself already supplies an actual stable subgroup and so needs no coarse descent.
-
-## 2. The local isogeny-character theorem
-
-### 2.1 Why a twelfth power occurs
-
-The character $\lambda$ may ramify even when the cyclic subgroup is rational. The useful object is its twelfth power. The number $12$ is not chosen merely because elliptic curves have familiar automorphisms of orders $4$ and $6$; it is the output of a local classification that also includes connected finite-flat groups, fundamental characters, and wild inertia at $2$ and $3$.
-
-We use the following local theorem as established infrastructure.
-
-**Local isogeny-character theorem.** Let $p\ge5$, let $E/\mathbf Q$ admit a rational cyclic subgroup $C\subset E[p]$, and let $\lambda$ be its kernel character. At the coefficient place $p$ one has
-
-$$
-\lambda^{12}|_{I_p}=\chi_p^s|_{I_p}
+E\text{ has a rational cyclic }p\text{-isogeny}.}
 \tag{2.1}
 $$
 
-for some
+The coefficient field matters. A line appearing only after extending
+$\mathbf F_p$ does not define an order-$p$ subgroup of the original
+$\mathbf F_p$-module.
+
+### 2.2 A subgroup is not a generator
+
+The next distinction controls the rest of the book: rationality of a finite
+subgroup is weaker than rationality of any of its nonzero points. A single
+character measures the difference.
+
+Choose $0\ne P\in C(\overline{\mathbf Q})$. There is a unique character
 
 $$
-s\in\{0,4,6,8,12\}.
+\lambda:G_{\mathbf Q}\longrightarrow\mathbf F_p^\times,
+\qquad \sigma P=\lambda(\sigma)P.
 \tag{2.2}
 $$
 
-If $E$ is semistable at $p$, then the sharper conclusion is
+Changing $P$ to $aP$ does not change $\lambda$, because the scalar group is
+abelian. The subgroup $C$ is rational because Galois preserves its set of
+points. It has a rational generator precisely when Galois fixes a nonzero
+point, hence precisely when
 
 $$
-\lambda|_{I_p}=1
-\quad\text{or}\quad
-\lambda|_{I_p}=\chi_p.
+\lambda=1.
 \tag{2.3}
 $$
 
-If $E$ is potentially multiplicative at $p$, only $s=0,12$ occur. For $p>13$, the cases $s=4,8$ require
+This distinction is already visible locally. The subgroup $\mu_p$ of a Tate
+curve is defined over the base field, but a generator is rational only when
+the field contains a primitive $p$th root of unity.
+
+### 2.3 The complementary character and the dual isogeny
+
+The original kernel character need not become trivial. The dual isogeny
+supplies a second chance, and the determinant identifies its character
+without another local calculation.
+
+Extend $P$ to a basis of $E[p]$. The representation has the form
 
 $$
-p\equiv2\pmod3,
+\overline\rho_{E,p}(\sigma)=
+\begin{pmatrix}
+\lambda(\sigma)&b(\sigma)\\
+0&\mu(\sigma)
+\end{pmatrix}.
 \tag{2.4}
 $$
 
-and the case $s=6$ requires
+The entry $b$ is extension data and need not vanish. The Weil pairing is
+perfect, alternating, and Galois equivariant. Therefore
 
 $$
-p\equiv3\pmod4.
+\det\overline\rho_{E,p}=\overline\chi_p,
+$$
+
+and taking determinants in (2.4) gives
+
+$$
+\mu=\overline\chi_p\lambda^{-1}.
 \tag{2.5}
 $$
 
-At every prime $q\ne p$ one has
+This second character has a geometric realization. Let
+$\widehat\varphi:E'\to E$ be the dual isogeny. Its kernel is the Cartier dual
+of $C$, and its generic character is precisely $\mu$. Thus
 
 $$
-\lambda^{12}|_{I_q}=1.
+\begin{array}{c|c}
+\text{line}&\text{character}\\ \hline
+\ker\varphi&\lambda\\
+\ker\widehat\varphi&\overline\chi_p\lambda^{-1}.
+\end{array}
 \tag{2.6}
 $$
 
-No conclusion of this theorem is a list of rational isogeny degrees. It is a local statement about a line which is already known to exist.
+Consequently triviality of $\lambda$ gives rational $p$-torsion on $E$,
+while triviality of $\mu$ gives rational $p$-torsion on $E'$.
 
-The five values can be audited as follows.  Put
+### 2.4 $X_0(p)$, $X_1(p)$, and coarse descent
 
-$$
-\omega=\chi_p|_{I_p}:I_p\longrightarrow\mathbf F_p^\times.
-\tag{2.6a}
-$$
-
-If a minimal totally ramified extension of semistability has tame degree $e$,
-normalize its tame fundamental character by
+The actual pair $(E,C)$ determines a noncuspidal modular point
 
 $$
-\omega|_{I_L}=\omega_L^e.
-\tag{2.6b}
+x(E,C)\in Y_0(p)(\mathbf Q).
+\tag{2.7}
 $$
 
-For potentially good reduction in residue characteristic at least five one has
-$e=2,3,4$, or $6$.  Raynaud's rank-$p$ classification assigns to the finite-flat
-closure of the line an integer $a$, $0\le a\le e$.  In the niveau-two case the
-two characters of the ambient $p$-torsion, with
-$\omega_2^{p+1}=\omega_L$, have exponents
+If $C$ has a rational generator $P$, the triple $(E,P)$ determines a point of
+$Y_1(p)(\mathbf Q)$. The forgetful map
 
 $$
-a+p(e-a),\qquad (e-a)+pa.
-\tag{2.6c}
+X_1(p)\longrightarrow X_0(p)
 $$
 
-An $\mathbf F_p$-line in this niveau-two representation can occur only when the
-two conjugate characters coincide on that line; the half-weight descent check
-is given just below the table.  In the ordinary case, connected--étale duality
-interchanges $a$ and $e-a$, and the descent automorphism supplies the remaining
-intermediate weights.  Combining the two cases and extending across the
-finite-flat model leaves exactly the following rows.
+forgets the generator but retains its span. Over a geometric point the
+generators form a torsor under $\mathbf F_p^\times$; the Galois action on that
+torsor is $\lambda$.
 
-| stable type over the semistability field | $e$ | allowed $a$ | $s=12a/e$ |
-|---|---:|---|---|
-| good ordinary, or a Tate direction | $1$ | $0,1$ | $0,12$ |
-| quadratic potentially good descent | $2$ | $0,2$ | $0,12$ |
-| cubic potentially good descent | $3$ | $0,1,2,3$ | $0,4,8,12$ |
-| quartic potentially good descent | $4$ | $0,2,4$ | $0,6,12$ |
-| sextic potentially good descent | $6$ | $0,2,4,6$ | $0,4,8,12$ |
+There is no descent ambiguity in (2.7), because the pair exists before the
+coarse point is formed. The reverse implication from a rational point of a
+coarse curve is subtler. Away from $j=0,1728$, the only geometric
+automorphisms are $\pm1$, and both preserve an unoriented cyclic subgroup, so
+the subgroup descends after choosing a rational model of the given
+$j$-invariant. At $j=0,1728$ the larger stabilizer must be checked directly.
+No argument below needs a blanket reverse implication at those two fibers.
 
-The half-weight rows admit a direct descent check.  When $a=e/2$, the two
-characters in (2.6c) coincide with $\omega_L^{e/2}$. If the descended line is
-$\lambda|_{I_p}=\omega^k$, equation (2.6b) therefore requires
+### 2.5 Specialization of the modular point
+
+Properness of $X_0(p)$ extends a rational point across every discrete
+valuation ring. At a prime $q\ne p$ of good reduction, the pair specializes
+to a smooth elliptic curve with a prime-to-$q$ cyclic subgroup. At a
+multiplicative prime, the stable generalized elliptic curve is a polygon and
+the modular point specializes to a cusp. At the level prime $p$, geometric
+point sets are insufficient: the closure of the kernel can be connected,
+étale, or part of a nontrivial extension.
+
+This yields a useful conceptual table.
+
+| reduction of $E$ at $q$ | modular specialization | representation-theoretic feature |
+|---|---|---|
+| good, $q\ne p$ | interior | all of $E[p]$ is unramified |
+| multiplicative, $q\ne p$ | cusp | inertia is unipotent; diagonal characters are unramified |
+| good, $q=p$ | level-prime interior | the kernel closure is finite flat |
+| multiplicative, $q=p$ | level-prime cusp | the Tate extension controls stable lines |
+
+The fact that a modular point is cuspidal does not imply that the residual
+representation is ramified. At a multiplicative prime the off-diagonal Tate
+class can vanish modulo $p$ while the elliptic curve still degenerates.
+
+## 3. Semistable characters away from the coefficient prime
+
+We now prove the first local half of the global argument. The decisive
+observation is modest: away from $p$, semistability makes both diagonal
+characters unramified. The full representation may remain ramified through
+its extension class.
+
+### 3.1 Good reduction
+
+Let $q\ne p$ and suppose $E$ has good reduction at $q$. The prime-to-$q$
+torsion of the good integral model is finite étale. Equivalently, inertia
+acts trivially on $E[p]$:
 
 $$
-ek\equiv e/2\pmod{p-1}.
+\overline\rho_{E,p}|_{I_q}=1.
+\tag{3.1}
 $$
 
-For $e=2$ or $6$ this is impossible: the left side is even modulo the even
-integer $p-1$, whereas $e/2$ is odd.  For $e=4$ it is solvable exactly when
-$\gcd(4,p-1)=2$, equivalently $p\equiv3\pmod4$.  Thus the quartic row is the
-only descended half-weight row; in particular the table does not obtain the
-congruence restriction by retaining spurious quadratic or sextic rows.
-
-For every surviving row the equality on the original inertia group is
+Every subrepresentation and quotient of an unramified representation is
+unramified. Therefore
 
 $$
-\lambda^{12}|_{I_p}=\omega^{12a/e}.
-\tag{2.6d}
+\lambda|_{I_q}=1,
+\qquad
+\mu|_{I_q}=1.
+\tag{3.2}
 $$
 
-This proves that the list is $0,4,6,8,12$.  The congruence restrictions can be
-read without conflating the niveau-two characters over the semistability field
-with the descended line.  Since the latter is an $\mathbf F_p$-valued
-character, its restriction to tame inertia has the form
-$\lambda|_{I_p}=\omega^k$.  Equation (2.1) is therefore the literal congruence
+### 3.2 Split multiplicative reduction
 
-$$
-12k\equiv s\pmod{p-1},
-\qquad\text{so}\qquad
-\gcd(12,p-1)\mid s.
-\tag{2.6e}
-$$
-
-For $s=4$ or $8$, this excludes $3\mid p-1$ and gives $p\equiv2\pmod3$.
-For $s=6$, it excludes $4\mid p-1$ and gives $p\equiv3\pmod4$.  These are
-(2.4) and (2.5), and they apply to every row yielding the stated exponent.
-For $p>13$ this is the entire tame
-calculation.  At $p=5,7,13$ the congruence collisions in the same coefficient-prime
-finite-flat table are checked separately and add no new exponent.  These are
-still coefficient-prime rows, not wild $q=2,3$ rows; the latter occur only
-away from $p$ below.
-
-### 2.2 Places away from the coefficient prime
-
-The proof architecture of (2.6) begins with the stable reduction trichotomy.
-
-If $E$ has good reduction at $q\ne p$, prime-to-$q$ torsion extends étale over $\mathbf Z_q$. Inertia acts trivially on all of $E[p]$, hence on $C$.
-
-If $E$ is potentially multiplicative, Tate uniformization applies after a quadratic twist. Over the splitting field one has
+Suppose $E/\mathbf Q_q$ has split multiplicative reduction. Tate
+uniformization supplies a parameter $u$ with positive valuation and an exact
+sequence
 
 $$
 0\longrightarrow\mu_p\longrightarrow E[p]
 \longrightarrow\mathbf Z/p\mathbf Z\longrightarrow0.
-\tag{2.7}
-$$
-
-Since $q\ne p$, both diagonal characters are unramified; twisting contributes only a quadratic character. Thus $\lambda^2$, and therefore $\lambda^{12}$, is unramified.
-
-Suppose instead that $E$ is potentially good. After a finite extension it has a smooth model. The descent action on its special fiber is through the automorphism group of an elliptic curve. In tame residue characteristic the possible cyclic stabilizer orders on the tangent line are
-
-$$
-2,3,4,6.
-\tag{2.8}
-$$
-
-Their least common multiple is $12$. In residue characteristics $2$ and $3$, the full automorphism group may be larger and wild, so (2.8) alone is not a proof. The wild tables separate the connected and étale parts of the $p$-torsion and then take the one-dimensional abelian characters occurring on a stable line. Their orders divide
-
-$$
-1,2,3,4,6,12.
-\tag{2.9}
-$$
-
-More explicitly, the reduction and conductor ledger is
-
-| place and stable type | inertia on a stable line | conductor information | twelfth power |
-|---|---|---|---|
-| $q\ge5$, good | trivial | exponent $0$ | trivial |
-| $q\ge5$, potentially multiplicative | a quadratic splitting character | tame exponent at most $1$ | trivial |
-| $q\ge5$, additive potentially good | cyclic of order $2,3,4$, or $6$ | tame exponent $1$ if nontrivial | trivial |
-| $q=3$, potentially good | wild quotient of order $1$ or $3$, tame quotient of order dividing $4$ | may be wild | order divides $12$ |
-| $q=2$, potentially good | wild abelian quotient of exponent dividing $4$, tame quotient of order dividing $3$ | may be wild | order divides $12$ |
-
-In the last two rows the larger nonabelian automorphism group is not assigned
-wholesale to the line: a character kills its commutator. At $3$ the surviving
-wild and tame character orders divide $3$ and $4$; at $2$ their exponents divide
-$4$ and $3$. Thus both one-dimensional images have exponent dividing $12$.
-This proves (2.6) in the wild cases without falsely assigning them tame
-conductor exponent one. The exact conductor conclusion used globally is only
-that $\lambda^{12}$ has exponent zero at every $q\ne p$; $\lambda$ itself may
-remain ramified.
-
-### 2.3 Finite-flat analysis at the coefficient prime
-
-At $p$, the cyclotomic character is ramified and the closure of $C$ need not be étale. One first passes to a minimal extension over which $E$ is semistable and takes the finite-flat schematic closure of $C$ inside the $p$-torsion of the resulting semiabelian model. Uniqueness of closure makes the descent action visible on this finite-flat group.
-
-In the good ordinary case, the connected--étale sequence has rank-$p$ directions of multiplicative and étale type. On inertia their generic fibers have characters
-
-$$
-\chi_p\quad\text{and}\quad1.
-\tag{2.10}
-$$
-
-The same two directions occur on a Tate curve. This gives (2.3) before any power is taken.
-
-In the good supersingular case over an unramified base, inertia on $E[p]$ is
-described by $\omega_2$ and $\omega_2^p$ and has no $\mathbf F_p$-stable line.
-Over the ramified field of good reduction the correct finite-flat weights are
-instead (2.6c). Applying the descent automorphism and requiring an
-$\mathbf F_p$-line gives the displayed $(e,a)$ ledger. This calculation, not
-the phrase “connected--étale,” is what produces the intermediate exponents.
-
-The remaining coefficient-prime work is finite but indispensable. Since
-$p\ge5$, potentially good descent at the coefficient place sorts the tame
-automorphism orders $2,3,4,6$. The finite-flat connected--étale type rules out
-the omitted value $a=1$ in the quadratic row, the values $a=1,3$ in the
-quartic row, and the values $a=1,3,5$ in the sextic row:
-their conjugate Raynaud characters do not descend to an $\mathbf F_p$-line.
-The wild residue-characteristic $2$ and $3$ tables belong instead to the proof
-of the away-from-$p$ assertion (2.6) in Section 2.2. The surviving
-coefficient-prime exponents are exactly
-
-$$
-0,4,6,8,12.
-$$
-
-Thus finite-flat closure, connected--étale analysis, niveau-two fundamental characters, and the tame automorphism orders derive the five coefficient-prime exponents, while the two wild tables supply the independent away-from-$p$ exponent-$12$ statement.
-
-### 2.4 The signature table and congruence restrictions
-
-It is helpful to record what the local proof distinguishes.
-
-| Stable local mechanism | $(e,a)$ | Twelfth-power exponent | Extra condition for $p>13$ |
-|---|---|---:|---|
-| étale or multiplicative direction | $(e,0)$ | $0$ | none |
-| cubic descent direction | $(3,1)$ or $(6,2)$ | $4$ | $p\equiv2\pmod3$ |
-| half-weight direction | $(4,2)$ | $6$ | $p\equiv3\pmod4$ |
-| dual cubic direction | $(3,2)$ or $(6,4)$ | $8$ | $p\equiv2\pmod3$ |
-| connected or cyclotomic direction | $(e,e)$ | $12$ | none |
-
-The congruences do not come from asking in isolation whether $\mathbf F_p$
-contains a primitive third or fourth root.  They are the solvability conditions
-for $12k\equiv s\pmod{p-1}$ on the descended $\mathbf F_p$-line, after the
-niveau-two and descent calculation has produced $s$.  This gives precisely
-(2.4) and (2.5), including the quartic half-weight row.
-
-Duality (1.8) replaces $s$ by
-
-$$
-12-s.
-\tag{2.11}
-$$
-
-Thus $0$ and $12$ form the endpoint pair, $4$ and $8$ form the cubic pair, and $6$ is balanced.
-
-### 2.5 Semistable and potentially multiplicative sharpenings
-
-For potentially multiplicative reduction, the Tate representation after a quadratic twist is triangular with diagonal characters $1$ and $\chi_p$. The quadratic twist disappears in the twelfth power, so only the endpoint signatures occur.
-
-For semistable reduction no ramified twist is needed. The closure of the kernel is itself connected or étale, and (2.3) holds. This stronger assertion about $\lambda$, rather than merely $\lambda^{12}$, will later create a globally unramified diagonal character. It is not used to shorten the general classification.
-
-## 3. Stable specialization and global reciprocity
-
-### 3.1 Potentially good reduction at an auxiliary prime
-
-The resultant sieve will use the fixed primes $5,7,11$. At such a prime the curve need not have good reduction; integrality of $j$ gives only potentially good reduction. We therefore need a trace statement which survives stable descent.
-
-Let $r\ge5$, $r\ne p$, and suppose
-
-$$
-v_r(j(E))\ge0.
-\tag{3.1}
-$$
-
-There is a finite totally ramified extension $L/\mathbf Q_r$ over which $E$ has good reduction. Total ramification is important: the residue field remains $\mathbf F_r$, so the good special fiber has an integer Frobenius trace
-
-$$
-a=r+1-\#\widetilde E(\mathbf F_r),
-\qquad |a|\le2\sqrt r.
-\tag{3.2}
-$$
-
-The descent datum from $L$ to $\mathbf Q_r$ may compose Frobenius with an automorphism $\zeta$ of the special fiber. The stable descent calculation treats this composite as the Frobenius operator on the descended kernel line and, after the corresponding twist of the special fiber, gives it an integral trace $a$. It is not legitimate simply to identify the raw good-reduction eigenvalue over $L$ with $\lambda(\operatorname{Frob}_r)$. What is invariant under that comparison is the determinant $r$ and, by the local classification,
-
-$$
-\zeta^{12}=1
 \tag{3.3}
 $$
 
-on that line. Consequently the twist changes the eigenvalue but not its twelfth power.
-
-Here is the descent construction. Work first over the maximal unramified
-extension $K^{\mathrm{nr}}$ of $\mathbf Q_r$. Potential good reduction makes the
-inertia image on a prime-to-$r$ Tate module finite. If $I'$ is its kernel, its
-fixed extension is totally ramified and the stable-model theorem extends $E$
-to an elliptic scheme there. A finite totally ramified subextension already
-contains equations for the scheme; call it $L$. Uniqueness of the smooth model
-gives, for $\sigma$ in the finite inertia quotient, an automorphism
+In a basis adapted to this sequence,
 
 $$
-\gamma_\sigma:\widetilde E_{\overline{\mathbf F}_r}
-\longrightarrow\widetilde E_{\overline{\mathbf F}_r}.
-\tag{3.3a}
-$$
-
-If $F$ is arithmetic Frobenius on the special fiber, then
-
-$$
-F\gamma_\sigma F^{-1}=\gamma_\sigma^{\,r}.
-\tag{3.3b}
-$$
-
-Thus $\gamma_\sigma F$ is a Frobenius descent datum. Effectivity of descent for
-the proper smooth curve produces an $\mathbf F_r$-form $E_\gamma$ whose
-arithmetic Frobenius on every prime-to-$r$ Tate module is $\gamma_\sigma F$.
-Consequently
-
-$$
-\det(\gamma_\sigma F)=r,\qquad
-\operatorname{tr}(\gamma_\sigma F)=a_\gamma\in\mathbf Z,\qquad
-|a_\gamma|\le2\sqrt r.
-\tag{3.3c}
-$$
-
-On the schematic closure of $C$, this action is the original local Galois
-action multiplied by the scalar through which $\gamma_\sigma$ acts on the line.
-The table in Section 2.2 makes the twelfth power of that scalar equal to one.
-
-### 3.2 The exceptional special fibers
-
-For a generic special fiber the descent ambiguity is quadratic. At the two exceptional values it must be calculated rather than suppressed:
-
-| Special $j$-value | Descent form | Scalar order on the line | Power which kills it |
-|---:|---|---:|---:|
-| $j\ne0,1728$ | quadratic | divides $2$ | $12$ |
-| $j=1728$ | quartic | divides $4$ | $12$ |
-| $j=0$ | sextic | divides $6$ | $12$ |
-
-For $j=1728$, write a quartic twist as $y^2=x^3+dx$ after good reduction. Changing a fourth root of $d$ multiplies the invariant differential and the kernel eigenvalue by the quartic descent character. Its twelfth power is trivial. For $j=0$, the model $y^2=x^3+d$ gives the analogous sextic character, again killed by the twelfth power. These two calculations are why the lemma below remains valid at the exceptional automorphism locus.
-
-More explicitly, at $j=1728$ choose $t^4=d$ and use
-
-$$
-x=t^2X,\qquad y=t^3Y.
-\tag{3.3d}
-$$
-
-Replacing $t$ by $\kappa t$, $\kappa\in\mu_4$, acts by
-$(X,Y)\mapsto(\kappa^{-2}X,\kappa^{-3}Y)$. At $j=0$ the same substitution with
-$t^6=d$ has $\kappa\in\mu_6$. In either case the twisted pair of Frobenius
-eigenvalues has the form
-
-$$
-(\kappa\beta,\kappa^{-1}\overline\beta),\qquad
-(\kappa\beta)(\kappa^{-1}\overline\beta)=r,\qquad
-\kappa^{12}=1.
-\tag{3.3e}
-$$
-
-These are the actual quartic and sextic twists hidden by the descent notation.
-
-### 3.3 The stable-specialization trace lemma
-
-**Stable-specialization trace lemma.** Let $r\ge5$, $r\ne p$. Suppose $E/\mathbf Q$ admits a rational $p$-isogeny with kernel character $\lambda$, suppose $v_r(j(E))\ge0$, and suppose globally that
-
-$$
-\lambda^{12}=\chi_p^s.
-$$
-
-Then there are an integer $a$ and an element $\alpha\in\mathbf F_p^\times$ such that
-
-$$
-|a|\le2\sqrt r,
+\overline\rho_{E,p}(\sigma)=
+\begin{pmatrix}
+\overline\chi_p(\sigma)&c_u(\sigma)\\
+0&1
+\end{pmatrix}.
 \tag{3.4}
 $$
 
+Because $q\ne p$, the cyclotomic character is unramified at $q$. Hence every
+inertial matrix is unipotent:
+
 $$
-\alpha^2-a\alpha+r=0,
-\qquad
-\alpha^{12}=r^s.
+\overline\rho_{E,p}(\tau)=
+\begin{pmatrix}1&c_u(\tau)\\0&1\end{pmatrix}
+\qquad(\tau\in I_q).
 \tag{3.5}
 $$
 
-**Proof.** Acquire good reduction over the totally ramified stable extension and
-retain the descent datum on the finite-flat closure of the kernel. Frobenius on
-the good special fiber has polynomial $T^2-aT+r$. Composing it with the
-quadratic, quartic, or sextic descent automorphism gives the Frobenius operator
-on the descended kernel line. Let $\delta$ be the scalar supplied by that
-automorphism and let $\beta$ be the raw good-reduction eigenvalue. Then
+Any one-dimensional subquotient of a unipotent representation has trivial
+inertial character. Thus (3.2) holds here as well, regardless of whether the
+extension in (3.3) splits.
+
+### 3.3 Nonsplit multiplicative reduction
+
+Nonsplit multiplicative reduction becomes split over the unramified
+quadratic extension. Equivalently, the Tate representation is twisted by an
+unramified quadratic character $\eta_q$. Its diagonal characters are
+$\overline\chi_p\eta_q$ and $\eta_q$. Since $\eta_q$ is trivial on inertia,
+the inertial matrices are still unipotent and (3.2) remains true.
+
+This argument explains why the splitness sign matters for Frobenius but not
+for ramification. Passing to the unramified splitting field preserves the
+inertia group. Passing to an unspecified ramified field would not justify
+the same conclusion.
+
+### 3.4 The precise away-from-$p$ conclusion
+
+We have proved the following result.
+
+**Theorem 3.1.** Let $E/\mathbf Q$ be semistable, let $p$ be prime, and
+suppose $E[p]$ has a stable line with diagonal characters $\lambda$ and
+$\mu$. For every finite prime $q\ne p$,
 
 $$
-\alpha=\lambda(\operatorname{Frob}_r)=\delta\beta\in\mathbf F_p,\qquad
-\alpha\overline\alpha=r,\qquad
-\delta^{12}=1.
-\tag{3.5a}
-$$
-
-The membership $\alpha\in\mathbf F_p$ follows from the original rational
-kernel line. Because $\alpha$ is an eigenvalue of the actual $\mathbf F_r$-form
-$E_\gamma$ constructed in (3.3a)--(3.3c), not merely of an operator over an
-extension field, its polynomial is
-
-$$
-T^2-a_\gamma T+r,\qquad a_\gamma\in\mathbf Z,\quad |a_\gamma|\le2\sqrt r.
-\tag{3.5b}
-$$
-
-Finally arithmetic Frobenius and the global signature give
-
-$$
-\alpha^{12}=\lambda(\operatorname{Frob}_r)^{12}=r^s.
-\tag{3.5c}
-$$
-
-This proves (3.4)--(3.5), including the quartic and sextic fibers. $\square$
-
-The same construction has a small-residue-characteristic version needed once
-in Section 6.3.  For $r=2$ or $3$, take the good model over the finite totally
-ramified extension cut out after base change to $\mathbf Q_r^{\mathrm{nr}}$,
-and retain its full (possibly wild) descent datum.  Effectivity of descent is
-unchanged.  Although the automorphism group of the special fiber need not be
-cyclic, its scalar on the stable $\mathbf F_p$-line factors through the
-abelianization; the last two rows of the table in Section 2.2 show that this
-scalar has exponent dividing $12$.  Consequently (3.4), (3.5a)--(3.5c), and
-the Hasse bound remain valid for $r=2,3$.  No tame conductor claim is made at
-these two primes.
-
-The assertion $\alpha\in\mathbf F_p$ is stronger than the vanishing of a resultant. That distinction will remove a spurious factor $31$.
-
-### 3.4 From local inertia to a global signature
-
-Return to a rational $p$-isogeny over $\mathbf Q$, with $p\ge5$. By (2.6), $\lambda^{12}$ is unramified at every finite prime away from $p$. Choose $s$ from (2.1) and form
-
-$$
-\theta=\lambda^{12}\chi_p^{-s}.
+\lambda|_{I_q}=\mu|_{I_q}=1.
 \tag{3.6}
 $$
 
-The character $\theta$ is unramified at $p$ because its restriction to inertia is trivial, and it is unramified away from $p$ by (2.6). Complex conjugation has eigenvalues $1,-1$ on $E[p]$, so
+The theorem does not say that $E[p]$ is unramified. At a multiplicative
+prime, the off-diagonal entry in (3.5) is governed by the Tate parameter. If
+$m=v_q(\Delta_{\min})$, then the residual extension is unramified precisely
+when $p\mid m$. Thus diagonal unramifiedness and full unramifiedness are
+different conclusions.
+
+## 4. The coefficient-prime dichotomy
+
+At the prime $p$, the character $\overline\chi_p$ is ramified. It is
+therefore false that good reduction makes $E[p]$ unramified. The replacement
+is integral: good reduction makes $E[p]$ finite flat, and the unramified base
+$\mathbf Z_p$ permits only the étale and multiplicative rank-$p$ inertia
+types. Multiplicative reduction has a separate Tate-curve proof.
+
+### 4.1 Good reduction and schematic closure
+
+Suppose $E/\mathbf Q_p$ has good reduction. It extends to an elliptic scheme
+$\mathcal E/\mathbf Z_p$, and $\mathcal E[p]$ is finite flat of rank $p^2$.
+Let $C\subset E[p]$ be the stable generic line. Its schematic closure
 
 $$
-\lambda(c_\infty)^{12}=1=\chi_p(c_\infty)^s
-\tag{3.7}
+\mathcal C\subset\mathcal E[p]
 $$
 
-because every $s$ in (2.2) is even. Thus $\theta$ is also even at infinity.
-
-Global class field theory identifies a finite character unramified at every finite prime and even at infinity with a character of the ordinary ideal class group of $\mathbf Q$. That class group is trivial. Hence
-
-$$
-\boxed{
-\lambda^{12}=\chi_p^s,
-\qquad
-s\in\{0,4,6,8,12\}.}
-\tag{3.8}
-$$
-
-This is the global signature theorem, proved here from the local theorem rather than imported. With arithmetic Frobenius, (3.8) reads
+is a finite-flat subgroup of rank $p$. The quotient is represented and gives
+an exact sequence
 
 $$
-\lambda(\operatorname{Frob}_r)^{12}=r^s.
-\tag{3.9}
-$$
-
-For $p>19$, the five integers $0,4,6,8,12$ are distinct modulo $p-1$. The global signature is therefore unambiguous in every branch of the elimination, and a potentially multiplicative endpoint cannot be mistaken for the balanced signature.
-
-The local Artin map sends a unit $u\in\mathbf Z_p^\times$ to an element on which $\chi_p$ takes the value $u^{-1}$; this inverse is already absorbed in the reciprocity convention. It does not reverse the arithmetic-Frobenius identity (3.9).
-
-## 4. Odd cusp rigidity supplies three interior primes
-
-### 4.1 Cuspidal reduction and negative valuation
-
-Let $x=x(E,C)\in Y_0(p)(\mathbf Q)$. At a prime $r\ne p$, properness extends $x$ to the standard compactified model. If
-
-$$
-v_r(j(E))<0,
+0\longrightarrow\mathcal C\longrightarrow\mathcal E[p]
+\longrightarrow\mathcal E[p]/\mathcal C\longrightarrow0.
 \tag{4.1}
 $$
 
-then $E$ is potentially multiplicative. Tate uniformization shows that its stable generalized elliptic curve is a polygon, so the section $x$ reduces to one of the two cusps of $X_0(p)$.
+The fixed ambient group is essential. An abstract generic group can possess
+several integral models. The assertion here is that a chosen subgroup has a
+unique saturated closure inside the chosen finite-flat torsion group.
 
-The converse boundary statement is equally important: additive potentially good reduction has integral $j$ and specializes to the interior after stable extension. A singular nonminimal Weierstrass cubic is not evidence of cuspidal reduction. The stable modular object, not the chosen equation, decides whether a point reaches the boundary.
+The flatness assertion has a short algebraic explanation. On an affine open
+of $\mathcal E[p]$, take the quotient of the coordinate algebra defining the
+generic subgroup and contract its defining ideal to $\mathbf Z_p$. The
+resulting coordinate module is finite and torsion-free over the discrete
+valuation ring, hence free. It is therefore flat, and its rank is the rank
+of the generic fiber, namely $p$. Translation and inversion preserve the
+contracted ideal on the generic fiber; torsion-freeness then shows that they
+preserve it integrally. Thus the closure is a subgroup scheme, not merely a
+finite subscheme.
 
-### 4.2 The exact interface from Book 141
+The quotient in (4.1) is again finite flat of rank $p$. Its generic fiber is
+the complementary one-dimensional subquotient of $E[p]$. Cartier duality
+and the Weil pairing identify its character with
+$\overline\chi_p\lambda^{-1}$. This integral realization is why the two
+characters can be analyzed symmetrically.
 
-For a positive-genus prime level, Book 141 constructs the actual optimal winding quotient
+### 4.2 Order-$p$ groups over the unramified base
+
+The rank-$p$ finite-flat classification over a mixed-characteristic DVR
+assigns an exponent between $0$ and the absolute ramification index. For
+$\mathbf Z_p$ that index is one. Thus the generic inertial character of
+$\mathcal C$ has only two possibilities:
 
 $$
-J_0(p)\twoheadrightarrow J_0(p)^{\mathrm w}.
-$$
-
-Its rational points are finite by the modular rank-zero theorem on the newform factors with nonzero central value. Its Néron cotangent lattice is primitive, so a suitable Hecke translate of the Abel--Jacobi map is a formal immersion at either cusp. At an odd good prime, torsion in the rational points of this quotient specializes injectively. These three facts give the exported implication
-
-$$
-\boxed{
-x\in X_0(p)(\mathbf Q),\quad
-r\text{ odd},\quad r\ne p,\quad
-x\bmod r\text{ is a cusp}
-\Longrightarrow x\text{ is that cusp}.}
+\lambda|_{I_p}=1
+\quad\text{or}\quad
+\lambda|_{I_p}=\overline\chi_p|_{I_p}.
 \tag{4.2}
 $$
 
-The statement concerns the winding quotient, not all of $J_0(p)$. It does not infer the quotient's torsion from the Jacobian's torsion, and it is asserted only at odd $r$.
-
-### 4.3 The three fixed auxiliary primes
-
-Assume from now through Chapter 7 that
+At the first endpoint the group is étale up to an unramified twist; at the
+second it is of multiplicative type up to an unramified twist. Cartier
+duality exchanges the endpoints. Since the Weil pairing identifies the
+quotient line with the cyclotomic dual of the kernel line, the two diagonal
+restrictions are
 
 $$
-p>19
+(\lambda|_{I_p},\mu|_{I_p})=
+\begin{cases}
+(1,\overline\chi_p),\\
+(\overline\chi_p,1).
+\end{cases}
 \tag{4.3}
 $$
 
-and that $x=x(E,C)$ is noncuspidal. The level then has positive genus. For each
+The unramified-base hypothesis is doing real work. Over a ramified extension
+with absolute ramification index greater than one, intermediate exponents can
+occur. The conclusion (4.2) cannot be transported to such a base without a
+new argument.
+
+One can see the endpoint mechanism in the connected--étale sequence. If the
+special fiber of $\mathcal C$ is étale, Henselian lifting makes the inertia
+action on its geometric generic fiber trivial. If its Cartier dual is
+étale, then $\mathcal C$ is of multiplicative type, and the generic fiber
+has cyclotomic inertia. The numerical classification says that over an
+unramified DVR of absolute ramification index one there is no third generic
+inertia character between these endpoints. Applying the same argument to
+$\mathcal E[p]/\mathcal C$ and using that the product of the two characters
+is cyclotomic forces the ordered alternatives in (4.3).
+
+Unramified twists do not change this conclusion. They can change the value
+on Frobenius, so it would be wrong to identify the entire local character
+with $1$ or $\overline\chi_p$. The theorem identifies only its restriction
+to inertia, which is exactly what the global ramification argument needs.
+
+### 4.3 Multiplicative reduction and the Tate extension
+
+Suppose first that $E/\mathbf Q_p$ has split multiplicative reduction. The
+Tate exact sequence is again
 
 $$
-r\in\{5,7,11\},
+0\longrightarrow\mu_p\longrightarrow E[p]
+\xrightarrow{\nu}\mathbf Z/p\mathbf Z\longrightarrow0.
 \tag{4.4}
 $$
 
-we have $r\ne p$. If $v_r(j(E))<0$, Section 4.1 puts $x$ in a cusp disk and (4.2) makes $x$ a cusp, a contradiction. Therefore
+Let $C$ be a stable line. If $C=\mu_p$, its inertial character is
+$\overline\chi_p$. Otherwise the restriction $\nu|_C$ is nonzero and hence
+an isomorphism between one-dimensional $\mathbf F_p$-spaces. For
+$\tau\in I_p$, the quotient $\mathbf Z/p\mathbf Z$ is fixed. If $P$ generates
+$C$, stability gives $\tau P=a_\tau P$, while applying $\nu$ gives
 
 $$
-\boxed{
-v_5(j(E))\ge0,
-\qquad
-v_7(j(E))\ge0,
-\qquad
-v_{11}(j(E))\ge0.}
+1=\nu(\tau P)=a_\tau\nu(P)=a_\tau.
+$$
+
+Thus the inertial character on $C$ is trivial. Every stable line therefore
+has one of the two characters in (4.2).
+
+This argument does not assume that the extension (4.4) splits. If the Tate
+parameter has no $p$th root in the local field, the off-diagonal Kummer
+class is nonzero. The proof uses only the projection to the constant
+quotient. It also shows uniqueness when the extension is nonsplit: any
+stable line other than $\mu_p$ would map isomorphically to the quotient and
+would split the extension. In the split case there may be several stable
+lines, but their inertial characters still fall into the same two types.
+
+If the reduction is nonsplit multiplicative, one twists by the unramified
+quadratic splitting character. Its restriction to inertia is trivial, so the
+same conclusion holds.
+
+### 4.4 The semistable local theorem
+
+Combining the good and multiplicative cases proves the local result in the
+form needed globally.
+
+**Theorem 4.1 (semistable coefficient-prime dichotomy).** Let $p\ge5$, let
+$E/\mathbf Q_p$ have good or multiplicative reduction, and suppose $E[p]$
+contains a $G_p$-stable line with character $\lambda$. Put
+$\mu=\overline\chi_p\lambda^{-1}$. Then
+
+$$
+(\lambda|_{I_p},\mu|_{I_p})=
+\begin{cases}
+(1,\overline\chi_p),\\
+(\overline\chi_p,1).
+\end{cases}
 \tag{4.5}
 $$
 
-This is the sole use of odd cusp rigidity in the main elimination. It supplies exactly three places at which the stable-specialization trace lemma applies, even if the chosen elliptic curve has additive potentially good reduction there.
+In particular, exactly one diagonal character is unramified at $p$. The
+theorem is a statement about the diagonal characters; the full extension can
+still carry nontrivial Tate or finite-flat data.
 
-## 5. The exact unbalanced-signature sieve
+## 5. The global semistable isogeny theorem
 
-### 5.1 Resultants and the Hasse interval
+The local calculations now collapse a rational isogeny into rational torsion
+on one side. This is the key structural result of the book. Its proof is
+short because every place has already been treated with its correct model.
 
-For a prime $r$ define the finite Hasse set
+### 5.1 Choosing the unramified diagonal
+
+Let $E/\mathbf Q$ be semistable and suppose it has a rational $p$-isogeny,
+where $p\ge5$. Let $\lambda$ and $\mu$ be the two characters in (2.4).
+Theorem 3.1 says that both are unramified at every $q\ne p$. Theorem 4.1 says
+that one of them is unramified at $p$.
+
+Choose
 
 $$
-H_r=\{a\in\mathbf Z:a^2\le4r\}.
+\theta=
+\begin{cases}
+\lambda,&\lambda|_{I_p}=1,\\
+\mu,&\mu|_{I_p}=1.
+\end{cases}
+$$
+
+Then $\theta$ is a finite character of $G_{\mathbf Q}$ unramified at every
+finite prime.
+
+### 5.2 Everywhere-unramified characters of the rationals
+
+Local calculations have now produced a character with no finite
+ramification. The following global lemma is the precise reason that such a
+character cannot retain a hidden sign or class-group contribution over
+$\mathbf Q$.
+
+**Lemma 5.1.** A finite character of $G_{\mathbf Q}$ unramified at every
+finite prime is trivial.
+
+**Proof.** Let $L$ be the fixed field of its kernel. The extension
+$L/\mathbf Q$ is finite abelian and unramified at every finite prime. The
+conductor--discriminant formula shows that its absolute discriminant has no
+prime divisor, hence is $1$. Every number field of degree greater than one
+has absolute discriminant greater than $1$ by the Minkowski bound. Thus
+$L=\mathbf Q$, and the character is trivial. $\square$
+
+The real place creates no exception. A nontrivial finite extension detected
+only by complex conjugation would still have a nontrivial number field as its
+fixed field and therefore a finite ramified prime.
+
+### 5.3 Rational torsion on one side
+
+If the selected character is $\lambda$, Lemma 5.1 gives $\lambda=1$ and the
+kernel of $\varphi$ has a rational generator. If it is $\mu$, the kernel of
+the dual isogeny has a rational generator. We have proved:
+
+**Theorem 5.2 (semistable isogeny theorem).** Let $E/\mathbf Q$ be
+semistable and let $p\ge5$ be prime. If
+
+$$
+\varphi:E\longrightarrow E'=E/C
+$$
+
+is a rational isogeny of degree $p$, then
+
+$$
+\boxed{E(\mathbf Q)[p]\ne0
+\quad\text{or}\quad
+E'(\mathbf Q)[p]\ne0.}
 \tag{5.1}
 $$
 
-For $a\in H_r$ and a signature $s$, put
+The theorem deliberately does not specify which side. The original kernel
+can have a nontrivial character even though the dual kernel is rationally
+generated.
 
-$$
-R_{r,a,s}
-=\operatorname{Res}_T(T^2-aT+r,T^{12}-r^s),
-\tag{5.2}
-$$
-
-and
-
-$$
-B_{r,s}=\prod_{a\in H_r}|R_{r,a,s}|.
-\tag{5.3}
-$$
-
-At the three primes in (4.4), the stable-specialization lemma gives an $a\in H_r$ and a common root in $\mathbf F_p$. Hence
-
-$$
-p\mid R_{r,a,s}
-\quad\text{and therefore}\quad
-p\mid B_{r,s}.
-\tag{5.4}
-$$
-
-Thus for every unbalanced signature
-
-$$
-p\mid\gcd(B_{5,s},B_{7,s},B_{11,s}).
-\tag{5.5}
-$$
-
-The balanced case $s=6$ is intentionally absent: $a=0$ makes the two polynomials compatible over characteristic zero and $B_{r,6}=0$. Its arithmetic content is class-field theoretic rather than resultant-theoretic.
-
-### 5.2 A recurrence certificate for every resultant
-
-A Sylvester determinant would conceal the arithmetic. Reduce powers of $T$ modulo
-
-$$
-T^2-aT+r.
-$$
-
-Write, consistently,
-
-$$
-T^n\equiv u_nT+v_n\pmod{T^2-aT+r}.
-\tag{5.6}
-$$
-
-The initial values and recurrence are
-
-$$
-u_0=0,
-\qquad
-v_0=1,
-\tag{5.7}
-$$
-
-$$
-u_{n+1}=a u_n+v_n,
-\qquad
-v_{n+1}=-r u_n.
-\tag{5.8}
-$$
-
-At $n=12$ this gives
-
-$$
-u_{12}
-=a^{11}-10a^9r+36a^7r^2-56a^5r^3+35a^3r^4-6ar^5,
-\tag{5.9}
-$$
-
-$$
-v_{12}
-=-a^{10}r+9a^8r^2-28a^6r^3+35a^4r^4-15a^2r^5+r^6.
-\tag{5.10}
-$$
-
-If $\beta,\gamma$ are the two roots of $T^2-aT+r$, then
-
-$$
-\beta+\gamma=a,
-\qquad
-\beta\gamma=r.
-$$
-
-The remainder of $T^{12}-r^s$ is
-
-$$
-u_{12}T+(v_{12}-r^s).
-$$
-
-Taking its value at $\beta$ and $\gamma$ proves the exact certificate
-
-$$
-\boxed{
-R_{r,a,s}
-=(v_{12}-r^s)^2
-+a u_{12}(v_{12}-r^s)
-+r u_{12}^2.}
-\tag{5.11}
-$$
+### 5.4 Why the theorem is genuinely semistable
 
-Equations (5.7)--(5.11), together with the short intervals
+At an additive prime $q\ne p$, inertia can act on a stable line through a
+nontrivial finite character. Then neither diagonal character need be
+unramified globally. At a ramified coefficient-prime base, intermediate
+finite-flat weights can occur. These are not defects in the proof; they are
+the reasons for its hypotheses.
 
-$$
-H_5=\{-4,-3,\ldots,4\},
-$$
-
-$$
-H_7=\{-5,-4,\ldots,5\},
-$$
-
-$$
-H_{11}=\{-6,-5,\ldots,6\},
-\tag{5.12}
-$$
-
-reproduce every integer in the factorization ledger below.
-
-### 5.3 The complete factorization certificate
-
-For the endpoint signature $s=0$, direct substitution in (5.11) gives
-
-$$
-\begin{aligned}
-B_{5,0}={}&2^{66}3^{14}5^{10}7^6 13^8 17^2 31^2 37^4
-61^4 157^2 229^2,\\
-B_{7,0}={}&2^{66}3^{42}5^8 7^{10}11^2 13^{12}19^4 31^2
-37^6 43^2 61^6 73^2 2953^2,\\
-B_{11,0}={}&2^{80}3^{24}5^{24}7^{16}11^2 13^{12}17^4 19^4
-29^2 31^2 37^2 73^2 79^2 101^2 109^2 139^2\\
-&\qquad\cdot313^2 337^2 3541^2 13009^2 15289^2 17041^2.
-\end{aligned}
-\tag{5.13}
-$$
-
-For the cubic signature $s=4$ one obtains
-
-$$
-\begin{aligned}
-B_{5,4}={}&2^{66}3^6 5^{40}11^2 13^8 17^4 149^2 181^2,\\
-B_{7,4}={}&2^{66}3^{22}5^8 7^{48}11^2 17^2 19^6 23^2
-73^2 541^6,\\
-B_{11,4}={}&2^{84}3^{10}5^{22}11^{56}17^4 19^4 23^2 29^2
-37^4 41^2 43^2 113^2 137^2 149^2\\
-&\qquad\cdot193^2 1553^2 1933^2.
-\end{aligned}
-\tag{5.14}
-$$
-
-The dual cubic signature $s=8$ has
-
-$$
-\begin{aligned}
-B_{5,8}={}&2^{66}3^6 5^{76}11^2 13^8 17^4 149^2 181^2,\\
-B_{7,8}={}&2^{66}3^{22}5^8 7^{92}11^2 17^2 19^6 23^2
-73^2 541^6,\\
-B_{11,8}={}&2^{84}3^{10}5^{22}11^{108}17^4 19^4 23^2 29^2
-37^4 41^2 43^2 113^2 137^2 149^2\\
-&\qquad\cdot193^2 1553^2 1933^2.
-\end{aligned}
-\tag{5.15}
-$$
-
-Finally, for $s=12$,
-
-$$
-\begin{aligned}
-B_{5,12}={}&2^{66}3^{14}5^{118}7^6 13^8 17^2 31^2 37^4
-61^4 157^2 229^2,\\
-B_{7,12}={}&2^{66}3^{42}5^8 7^{142}11^2 13^{12}19^4 31^2
-37^6 43^2 61^6 73^2 2953^2,\\
-B_{11,12}={}&2^{80}3^{24}5^{24}7^{16}11^{158}13^{12}17^4 19^4
-29^2 31^2 37^2 73^2 79^2 101^2 109^2 139^2\\
-&\qquad\cdot313^2 337^2 3541^2 13009^2 15289^2 17041^2.
-\end{aligned}
-\tag{5.16}
-$$
-
-The dual rows provide a built-in check: passing from $s$ to $12-s$ changes only the power of the auxiliary prime $r$. Every remaining displayed factor is prime; trial division through its square root suffices, the largest factor being $17041$. Taking the minimum exponent of each prime down the three rows gives
-
-$$
-\boxed{
-G_0=G_{12}
-=2^{66}3^{14}5^8 7^6 13^8 31^2 37^2,}
-\tag{5.17}
-$$
-
-and
+Nor can one replace the characters by their twelfth powers. The relation
+$\lambda^{12}=1$ would allow $\lambda$ to have order $2$, $3$, $4$, or $6$.
+The Frey argument needs an actual rational generator, so it needs the
+character itself to be trivial.
 
-$$
-\boxed{
-G_4=G_8
-=2^{66}3^6 5^8 11^2 17^2.}
-\tag{5.18}
-$$
-
-This is a gcd certificate rather than a mere reported integer: each common exponent is visible as the minimum in (5.13)--(5.16), and every omitted prime is absent from at least one of the three factorizations.
+## 6. Prime torsion and the oriented modular curve
 
-### 5.4 Eliminating the cubic signatures
+Theorem 5.2 changes an isogeny problem into a torsion problem. We now state
+and explain the exact torsion theorem needed to finish the large-prime
+branch. Its proof uses oriented point-level geometry, not the classification
+of rational isogeny degrees.
 
-If $s=4$ or $8$, equations (5.5) and (5.18) force $p$ to divide
+### 6.1 Why rational torsion belongs to $X_1(p)$
 
-$$
-2\cdot3\cdot5\cdot11\cdot17.
-$$
+If $P\in E(\mathbf Q)$ has exact order $p$, the pair $(E,P)$ defines a
+noncuspidal rational point of $Y_1(p)$. The generator is part of the datum.
+Replacing $X_1(p)$ by $X_0(p)$ would remember only $\langle P\rangle$ and
+would admit kernels with nontrivial characters.
 
-This contradicts $p>19$. Hence
+At a cusp, the point-level structure also has an orientation. On a Tate
+polygon the chosen generator can lie in the multiplicative direction or in
+the component direction. The forgetful map to $X_0(p)$ has different local
+ramification on those branches. A formal-immersion argument must use the
+branch for which the smoothing parameter remains a uniformizer.
 
-$$
-s=4,8\quad\text{are impossible for }p>19.
-\tag{5.19}
-$$
+### 6.2 The formal-immersion mechanism
 
-If $s=0$ or $12$, equations (5.5) and (5.17) leave only
+The formal-immersion argument has four ingredients.
 
-$$
-p=31\quad\text{or}\quad p=37.
-\tag{5.20}
-$$
+First, properness extends a rational point of $X_1(p)$ over a local ring and
+places its reduction either in the interior or at an oriented cusp. Second,
+the Weil pairing and point-count bounds constrain the interior alternative.
+Third, a selected Eisenstein quotient of the modular Jacobian has finite
+rational points and a primitive cotangent lattice. Fourth, a Hecke translate
+moves a nonzero Fourier coefficient to the first coefficient, making the
+map from the oriented curve to the quotient a formal immersion at the cusp.
 
-The first is spurious for a reason which the resultant itself cannot see.
+Suppose a rational section and the cusp have the same reduction and the same
+image in the quotient. Finiteness makes their difference torsion; the
+specialization-kernel theorem makes that difference zero; formal immersion
+then makes the two sections equal. A noncuspidal rational point cannot equal
+the cusp, so the assumed torsion point cannot exist.
 
-### 5.5 The apparent factor $31$
+Every clause is needed. Finiteness without cotangent injectivity does not
+separate sections. Formal immersion without control of the quotient image
+does not make the images equal. An unoriented cusp can have the wrong local
+parameter.
 
-Work at $r=5$ modulo $31$. Since
+Here is the local algebra behind the last implication. Let $R$ be a complete
+discrete valuation ring, let $x$ be the chosen cusp in the special fiber,
+and let
 
 $$
-5^{12}=1\pmod{31},
-\tag{5.21}
+f:X_1(p)_R\longrightarrow A_R
 $$
 
-the endpoint equations $\alpha^{12}=5^0$ and $\alpha^{12}=5^{12}$ are identical. Their solutions in $\mathbf F_{31}^\times$ are
+be the map to the selected quotient, normalized by $f(x)=0$. Formal
+immersion at $x$ means that the map of completed local rings
 
 $$
-\alpha\in\{1,5,6,25,26,30\}.
-\tag{5.22}
+\widehat{\mathcal O}_{A,0}\longrightarrow
+\widehat{\mathcal O}_{X_1(p),x}
 $$
-
-For the six values, the trace forced by
 
-$$
-\alpha^2-a\alpha+5=0
-$$
+is surjective. Equivalently, the induced map on cotangent spaces is
+surjective. If two $R$-sections $s_1,s_2$ reduce to $x$ and have the same
+image under $f$, the corresponding maps from the two completed local rings
+to $R$ agree on the image of $\widehat{\mathcal O}_{A,0}$. Surjectivity says
+they agree everywhere, hence $s_1=s_2$. This is the exact infinitesimal
+separation statement used above; no global injectivity of $f$ is asserted.
 
-is $a=\alpha+5\alpha^{-1}$. The exact table is
+The cotangent calculation is equally concrete. At an outward cusp the
+oriented parameter is $q^{1/p}$, with the generator remembered. A weight-two
+cusp form
 
 $$
-\begin{array}{c|rrrrrr}
-\alpha&1&5&6&25&26&30\\ \hline
-\alpha+5\alpha^{-1}&6&6&12&19&25&25.
-\end{array}
-\tag{5.23}
+g(q)=\sum_{n\ge1}a_n(g)q^n
 $$
-
-But
 
-$$
-H_5\bmod31
-=\{0,\pm1,\pm2,\pm3,\pm4\}
-=\{0,1,2,3,4,27,28,29,30\},
-\tag{5.24}
-$$
+corresponds to the differential $g(q)\,dq/q$. The Hecke identity
+$a_1(T_mg)=a_m(g)$ permits a Hecke translate with first coefficient a unit.
+Primitivity of the cotangent lattice then says that the pullback of some
+integral differential on $A$ has nonzero linear term in the oriented local
+parameter. That is precisely cotangent surjectivity for a curve. The word
+*primitive* prevents a nonzero differential from becoming divisible by the
+residue characteristic and disappearing after reduction.
 
-which is disjoint from $\{6,12,19,25\}$. Thus no $\mathbf F_{31}$-valued kernel eigenvalue satisfies the stable-specialization lemma, and
+It remains to explain why the quotient images coincide. The cuspidal
+divisor maps to torsion. The modular point arising from a rational torsion
+point has the same relevant specialization, and the Eisenstein relations
+force the difference of their images into the finite rational subgroup of
+$A$. The specialization-kernel theorem for this particular integral
+quotient has trivial intersection with that subgroup. Their images are
+therefore equal. The completed-local-ring argument then identifies the two
+sections, contradicting noncuspidality. This is the full logical chain:
 
 $$
-p\ne31.
-\tag{5.25}
+\text{finite quotient}
+\Longrightarrow\text{equal quotient images}
+\Longrightarrow\text{formal equality at the cusp}
+\Longrightarrow\text{equal modular points}.
 $$
-
-There is a useful notation check here. The six numbers
 
-$$
-\{3,13,15,16,18,28\}
-\tag{5.26}
-$$
+### 6.3 The uniform range $p\ge17$
 
-satisfy $\alpha^{12}=8=3^{12}$ modulo $31$; they are the $s=12$ roots for the diagnostic auxiliary prime $r=3$, not for $r=5$. At $r=3$ their traces $\alpha+3\alpha^{-1}$ are
+For $p\ge11$, reduction modulo $3$ cannot remain in the smooth interior:
+the Hasse bound gives
 
 $$
-\{4,9,13,18,22,27\},
+\#\widetilde E(\mathbf F_3)\le
+3+1+2\sqrt3<8\le p.
 $$
 
-also disjoint from $H_3\bmod31$. Equation (5.21) shows why using (5.26) as an $r=5$ list would be inconsistent.
+It cannot place a point of order $p$ in the identity torus of a boundary
+fiber either, since $\mathbf F_3^\times$ has order two. The oriented modular
+point must therefore reduce to an outward cusp.
 
-The factor $31$ nevertheless occurs in the integer resultants because a resultant vanishes modulo $31$ when the two polynomials have a common root over $\overline{\mathbf F}_{31}$. Such a root need not lie in $\mathbf F_{31}$. A rational kernel character, however, takes Frobenius values in $\mathbf F_{31}^\times$. The extension-field roots create the artifact; the line-valued trace table removes it.
+The corrected index governing the selected Eisenstein quotient is
 
-We have proved the endpoint conclusion
-
 $$
-\boxed{s=0\text{ or }12,\quad p>19\Longrightarrow p=37.}
-\tag{5.27}
+n_p=\frac{p-1}{\gcd(p-1,12)}.
 $$
-
-## 6. The balanced signature
 
-### 6.1 Why the $j$-invariant is integral
+For every prime $p\ge17$, one has $n_p>1$, so the required nonzero quotient
+and primitive cotangent direction exist. The denominator is essential:
+$n_{13}=1$, and the uniform quotient vanishes at precisely the exceptional
+level which will require genus-two arithmetic.
 
-Assume
+The established oriented formal-immersion theorem applies uniformly to
+prime level $p\ge17$. Its integral statement includes the relevant
+specialization kernel; one does not deduce the residue-characteristic-two
+case from odd-prime torsion injection on an unrelated quotient. Therefore
 
 $$
-p>19,
-\qquad
-s=6.
+E(\mathbf Q)[p]=0
+\qquad(p\ge17\text{ prime}).
 \tag{6.1}
 $$
 
-We prove that $v_q(j(E))\ge0$ at every rational prime $q$.
+This conclusion is a point-level theorem. It does not exclude rational
+$p$-isogenies whose kernels lack rational generators.
 
-Let first $q$ be odd and $q\ne p$. If $v_q(j)<0$, then $x(E,C)$ reduces to a cusp modulo $q$. Odd cusp rigidity (4.2) makes $x$ that cusp, contradicting noncuspidality. Hence
+### 6.4 The level-eleven calculation
+
+The uniform bound leaves $11$ and $13$. At level $11$, the compactified
+point-level curve has genus one. Choosing a rational cusp as origin turns
+the rational-point problem into the elliptic curve
 
 $$
-v_q(j)\ge0
-\qquad(q\text{ odd},\ q\ne p).
+C_{11}:\quad y^2+y=x^3-x^2.
+$$
+
+Its five visible rational points are
+
+$$
+O,\quad(0,0),\quad(0,-1),\quad(1,0),\quad(1,-1),
+$$
+
+and the cusp charts identify all five as outward cusps. The forgetful map to
+$X_0(11)$ induces an isogeny of the one-dimensional Jacobians. Eisenstein
+finiteness at the corrected index
+
+$$
+n_{11}=\frac{10}{\gcd(10,12)}=5
+$$
+
+therefore makes $C_{11}(\mathbf Q)$ finite. Direct enumeration gives
+
+$$
+\#C_{11}(\mathbf F_2)=\#C_{11}(\mathbf F_3)=5.
+$$
+
+Good-reduction injection bounds each primary part of the rational torsion,
+so the rational group has order dividing five. The five displayed points
+force equality. Every rational point is therefore a cusp, and consequently
+
+$$
+E(\mathbf Q)[11]=0
 \tag{6.2}
 $$
 
-If $v_p(j)<0$, then $E/\mathbf Q_p$ is potentially multiplicative. The local theorem permits only the endpoint signatures $0,12$, contrary to $s=6$. Thus
+for every elliptic curve $E/\mathbf Q$.
+
+The role of this separate calculation is logical, not cosmetic. The prime
+$11$ is below the uniform formal-immersion range and cannot be inserted into
+it by changing an inequality.
+
+### 6.5 The level-thirteen problem
+
+The curve $X_1(13)$ has genus
 
 $$
-v_p(j)\ge0.
-\tag{6.3}
+g(X_1(13))=\frac{(13-5)(13-7)}{24}=2.
 $$
 
-It remains to treat $2$, where Book 141 supplies no cusp-disk theorem. Suppose $v_2(j)<0$. The potentially multiplicative Tate calculation, including its quadratic twist, makes $\lambda^{12}$ unramified and gives
+The genus formula follows because the image of $\Gamma_1(p)$ in
+$\operatorname{PSL}_2(\mathbf Z)$ is torsion-free for $p\ge5$, has index
+$(p^2-1)/2$, and has $p-1$ geometric cusps. Thus level $13$ is the first
+exception which genuinely requires genus-two arithmetic. The next chapter
+gives its complete rational-point proof.
+
+## 7. The exact rational points of $X_1(13)$
+
+The purpose of this chapter is not to repeat all of two-descent. It is to
+show exactly how the certified Jacobian and one finite reduction imply the
+rational-point theorem. Every numerical statement used here is part of the
+completed certificates of the preceding genus-two volumes.
+
+### 7.1 The genus-two model and its cusps
+
+To turn the modular problem into exact arithmetic, we need a smooth equation,
+the correct two points at infinity, and a fixed Abel base point. Each choice
+affects the later reduction labels, so the normalization is established
+before any Jacobian calculation.
+
+A smooth affine model is
 
 $$
-\lambda(\operatorname{Frob}_2)^{12}
-\in\{1,2^{12}\}\pmod p.
-\tag{6.4}
-$$
-
-The global balanced signature gives the same value as $2^6$. Either possibility in (6.4) yields
-
-$$
-2^6\equiv1\pmod p,
-$$
-
-after division by the nonzero factor $2^6$ in the second case. Therefore
-
-$$
-p\mid2^6-1=63,
-$$
-
-which is impossible for $p>19$. Hence $v_2(j)\ge0$. Combining the three cases gives
-
-$$
-\boxed{j(E)\in\mathbf Z.}
-\tag{6.5}
-$$
-
-Equivalently, $E$ is everywhere potentially good. Notice that no unavailable $2$-adic specialization kernel was used.
-
-### 6.2 The balanced class-field theorem
-
-The balanced branch now meets the second deep local--global input.
-
-**Balanced signature class-field theorem.** Let $p>19$. Suppose $E/\mathbf Q$ is everywhere potentially good, admits a rational $p$-isogeny with kernel character $\lambda$, and has signature
-
-$$
-\lambda^{12}=\chi_p^6.
-\tag{6.6}
-$$
-
-Then
-
-$$
-p\equiv3\pmod4
-\tag{6.7}
-$$
-
-and
-
-$$
-h\bigl(\mathbf Q(\sqrt{-p})\bigr)=1.
-\tag{6.8}
-$$
-
-The theorem does not enumerate the primes satisfying (6.8), does not calculate $X_0(p)(\mathbf Q)$, and does not contain the desired isogeny classification.
-
-### 6.3 How the class group enters
-
-The proof is short enough to give completely.  Regard $\lambda$ and $\chi_p$ as
-$\mathbf F_p^\times$-valued characters and form
-
-$$
-\psi=\lambda^6\chi_p^{-3}.
-\tag{6.9}
-$$
-
-Equation (6.6) gives $\psi^2=1$, so $\psi$ has values in
-$\{\pm1\}\subset\mathbf F_p^\times$.  The half-weight row of the local table
-gives both
-
-$$
-p\equiv3\pmod4
-\tag{6.9a}
-$$
-
-and, with $\omega=\chi_p|_{I_p}$,
-
-$$
-\psi|_{I_p}=\omega^{(p-1)/2}.
-\tag{6.9b}
-$$
-
-Thus the conductor exponent of $\psi$ at $p$ is exactly one.  If $q\ne p$,
-$\chi_p$ is unramified and Section 2.2 says that the order of
-$\lambda|_{I_q}$ divides $12$.  Since $v_2(p-1)=1$, an element of
-$\mathbf F_p^\times$ whose order divides $12$ actually has order dividing $6$.
-Consequently
-
-$$
-\psi|_{I_q}=\lambda^6|_{I_q}=1
-\qquad(q\ne p).
-\tag{6.9c}
-$$
-
-This includes $q=2$ and $q=3$: their possibly wild characters were shown to
-have order dividing $12$ before the cyclic target $\mathbf F_p^\times$ was
-imposed. At the real place, $\lambda(c)=\pm1$ and $\chi_p(c)=-1$, whence
-
-$$
-\psi(c)=\lambda(c)^6\chi_p(c)^{-3}=-1.
-\tag{6.9d}
-$$
-
-The finite conductor of $\psi$ is therefore $p$ and its infinite conductor is
-the real place.  There is only one such quadratic Dirichlet character:
-
-$$
-\psi(n)=\left(\frac{-p}{n}\right)
-\quad ((n,p)=1).
-\tag{6.9e}
-$$
-
-Its fixed field is
-
-$$
-K=\mathbf Q(\sqrt{-p}),
-\tag{6.10}
-$$
-
-and $-p$ is its fundamental discriminant.
-
-We next make the Frobenius and ideal calculation exact.  Let $r\ne p$ be a
-rational prime split in $K$. Since $E$ is everywhere potentially good, stable
-specialization gives an integer $a_r$ and the eigenvalue
-$\alpha=\lambda(\operatorname{Frob}_r)\in\mathbf F_p^\times$ with
-
-$$
-\alpha^2-a_r\alpha+r=0,\qquad |a_r|\le2\sqrt r.
-\tag{6.10a}
-$$
-
-For $r\ge5$ this is Section 3.3. For $r=2,3$ the same construction uses the
-wild rows of Section 2.2; the descent scalar still has twelfth power one and the
-descended special fiber is over $\mathbf F_r$, so (6.10a) remains valid.
-Splitting means $\psi(\operatorname{Frob}_r)=1$, and hence
-
-$$
-\alpha^6=r^3,\qquad
-\zeta:=\frac{\alpha^2}{r},\qquad \zeta^3=1.
-\tag{6.10b}
-$$
-
-The other root of (6.10a) is $r/\alpha$.  Therefore
-
-$$
-\frac{a_r^2}{r}=\zeta+2+\zeta^{-1}=
-\begin{cases}
-4,&\zeta=1,\\
-1,&\zeta\ne1,
-\end{cases}
-\pmod p,
-\tag{6.10c}
-$$
-
-or, equivalently,
-
-$$
-p\mid(a_r^2-4r)(a_r^2-r).
-\tag{6.10d}
-$$
-
-This congruence has a literal algebraic-integer interpretation in the first
-branch. If $\zeta=1$ and
-
-$$
-p\le4r<2p,
-\tag{6.10e}
-$$
-
-then Hasse and (6.10d) give $4r-a_r^2=p$. The parity is automatic, and
-
-$$
-\pi_r=\frac{a_r+\sqrt{-p}}2\in\mathcal O_K,\qquad
-N_{K/\mathbf Q}(\pi_r)=r.
-\tag{6.10f}
-$$
-
-Thus the prime ideal
-
-$$
-\mathfrak r=(\pi_r)
-\tag{6.10g}
-$$
-
-over $r$ is principal, of norm exactly $r$--not “norm $r$ or a controlled
-power.” In the smaller range needed below, the relation is even stronger. If
-$4r<p$, then Hasse gives
-
-$$
-0\le4r-a_r^2<p,\qquad |a_r^2-r|\le3r<p.
-\tag{6.10h}
-$$
-
-Divisibility in (6.10d) would force $a_r^2=4r$ or $a_r^2=r$. Neither is
-possible for a rational prime $r$. Hence
-
-$$
-\boxed{r<p/4\quad\Longrightarrow\quad r\text{ is not split in }K.}
-\tag{6.10i}
-$$
-
-At the two wild primes the complete numerical check is
-
-| $r$ | possible $a_r$ | values of $4r-a_r^2$ | values of $a_r^2-r$ |
-|---:|---|---|---|
-| $2$ | $-2,-1,0,1,2$ | $4,7,8$ | $-2,-1,2$ |
-| $3$ | $-3,-2,-1,0,1,2,3$ | $3,8,11,12$ | $-3,-2,1,6$ |
-
-No entry is divisible by $p>19$. This is the promised separate $r=2,3$
-treatment.
-
-Minkowski's theorem says that every ideal class of the imaginary quadratic field $K$ contains an integral ideal of norm at most
-
-$$
-\frac{2}{\pi}\sqrt p.
-\tag{6.11}
-$$
-
-For $p>19$,
-
-$$
-\frac2\pi\sqrt p<\frac p4
-\quad\Longleftrightarrow\quad
-\sqrt p>\frac8\pi.
-\tag{6.11a}
-$$
-
-Choose in an ideal class an integral ideal $\mathfrak a$ of least norm among
-those supplied by (6.11), and remove every rational principal ideal dividing
-it. A prime ideal factor of what remains cannot lie over an inert rational
-prime $r$, because the unique prime there is $(r)$, of norm $r^2$, and could be
-removed. It cannot be the ramified prime over $p$, whose norm $p$ is larger
-than (6.11). It cannot lie over a split prime, because its rational prime has
-norm at most $N\mathfrak a\le(2/\pi)\sqrt p<p/4$, contradicting (6.10i).
-There is no prime factor left, so $\mathfrak a=\mathcal O_K$. Every ideal class
-is trivial and
-
-$$
-h(K)=1.
-\tag{6.11b}
-$$
-
-The logical chain is therefore
-
-$$
-\text{quadratic character}
-\longrightarrow
-\text{conductor }-p
-\longrightarrow
-\text{exact split-prime trace and norm relation}
-\longrightarrow
-\text{Minkowski generation}
-\longrightarrow
-h(K)=1.
-\tag{6.12}
-$$
-
-No step in (6.12) knows the class-number-one list.
-
-## 7. The independent class-number-one theorem
-
-### 7.1 The theorem and its proof architecture
-
-We now use a theorem about imaginary quadratic fields which is independent of modular curves and rational isogenies.
-
-**Class-number-one theorem.** The negative fundamental discriminants whose imaginary quadratic fields have class number one are exactly
-
-$$
-\boxed{
--3,-4,-7,-8,-11,-19,-43,-67,-163.}
+y^2+(x^3+x^2+1)y=x^2+x.
 \tag{7.1}
 $$
 
-Its proof has four distinct layers. Reduced positive definite binary quadratic forms identify ideal classes and give canonical representatives
+Completing the square with
 
 $$
-[A,B,C],
-\qquad
-B^2-4AC=D,
-\qquad
-|B|\le A\le C.
-\tag{7.2}
+z=2y+x^3+x^2+1
 $$
 
-If the class number is one, every reduced form is principal; elementary reduction already imposes strong congruence restrictions. Singular moduli and Weber functions then attach algebraic integers of controlled degree and unusually sharp size to the reduced forms. Analytic estimates for their $q$-expansions, together with lower bounds for the relevant class invariants, bound $|D|$. Finally one enumerates the reduced forms for the bounded discriminants and checks their class composition. This finite check produces (7.1).
-
-The reduced-form step proves that the objects being counted are ideal classes; the singular-modulus or Weber step makes the bound effective; the analytic estimate makes the search finite; and the final reduced-form calculation certifies every survivor. None of these stages invokes a rational point on $X_0(p)$.
-
-### 7.2 Intersection with the balanced branch
-
-In the balanced branch, (6.7) makes $-p$ a negative fundamental discriminant, and (6.8) makes its class number one. Intersecting the form
-
-$$
-D=-p,
-\qquad p>19\text{ prime},
-\tag{7.3}
-$$
-
-with the nine entries in (7.1) removes $-3,-7,-11,-19$ by the size condition and removes $-4,-8$ because they are not negatives of odd primes. Exactly three discriminants remain:
-
-$$
--43,-67,-163.
-$$
-
-Therefore
-
-$$
-\boxed{s=6,\quad p>19\Longrightarrow p\in\{43,67,163\}.}
-\tag{7.4}
-$$
-
-Together, (5.19), (5.27), and (7.4) already prove that every rational prime isogeny of degree greater than $19$ has degree
-
-$$
-37,43,67,\text{ or }163.
-\tag{7.5}
-$$
-
-What remains is not another elimination theorem. We must certify the rational points at level $37$ and construct an isogeny at every surviving degree.
-
-## 8. The complete level-$37$ certificate
-
-### 8.1 The genus-two model and its involutions
-
-The certificate has three independent pieces. A Sturm-bound identity identifies the pointed canonical model, an exact modular-symbol integral makes the relevant elliptic quotient rank zero through Book 141, and three explicit fibers recover every rational point. None of these steps imports the rational points of $X_0(37)$.
-
-The endpoint sieve leaves $37$, but survival of congruences is not existence.
-We first certify the pointed modular model, rather than naming a genus-two curve
-after the fact. Let $f_+,f_-$ be the normalized forms of Section 8.4 and put
-
-$$
-\vartheta=q\frac d{dq},\qquad
-W=(\vartheta f_+)f_- - f_+(\vartheta f_-),\qquad
-u=\frac{f_+}{f_-},\qquad
-v=-\frac{2W}{f_-^3}.
-\tag{8.0a}
-$$
-
-The Rankin--Cohen cancellation makes $W$ a weight-six cusp form. The exact
-weight-twelve identity is
-
-$$
-4W^2=-f_+^6-9f_+^4f_-^2-11f_+^2f_-^4+37f_-^6.
-\tag{8.0b}
-$$
-
-Its Sturm bound is
-
-$$
-\left\lfloor\frac{12}{12}\,[\operatorname{SL}_2(\mathbf Z):\Gamma_0(37)]\right\rfloor
-=38.
-\tag{8.0c}
-$$
-
-The coefficient vectors through $q^{38}$ are displayed in Section 8.4, so
-(8.0b) is a finite integral identity. It gives the canonical function field
-
-$$
-C:\quad
-v^2=-u^6-9u^4-11u^2+37.
-\tag{8.1}
-$$
-
-Because $u=f_+/f_-$ is the ratio of a basis of the two-dimensional canonical
-space, it is the canonical degree-two map of the genus-two curve. Hence the
-function-field identity identifies the smooth projective curve with
-$X_0(37)$; it is not merely a birational comparison with an unnamed curve.
-Moreover (8.0a) gives
-
-$$
--2\frac{du}{v}=f_-\frac{dq}{q},\qquad
--2u\frac{du}{v}=f_+\frac{dq}{q}.
-\tag{8.1a}
-$$
-
-At the standard cusp use $q=e^{2\pi i\tau}$; the exact local expansions begin
-
-$$
-\begin{aligned}
-u(q)&=1-2q-4q^2+6q^3-2q^4-8q^5+14q^6+2q^7-26q^8+O(q^9),\\
-v(q)&=4+16q-40q^2+8q^3+152q^4-256q^5-160q^6
-       +992q^7-960q^8+O(q^9).
-\end{aligned}
-\tag{8.1b}
-$$
-
-Thus this cusp is $c_\infty=(1,4)$. The Hecke signs in (8.16) and the identity
-$U_{37}=-w_{37}$ give $w_{37}f_+=f_+$ and $w_{37}f_-=-f_-$. Therefore the
-chosen modular normalization has
-
-$$
-w_{37}(u,v)=(-u,v),
-\tag{8.2}
-$$
-
-and the rational cusps are
-
-$$
-c_\infty=(1,4),
-\qquad
-c_0=(-1,4).
-\tag{8.3}
-$$
-
-At the other cusp take the actual width-$37$ parameter
-
-$$
-q_0=\exp\!\left(-\frac{2\pi i}{37\tau}\right)=q(w_{37}\tau).
-$$
-
-Then
-
-$$
-u=-1+2q_0+4q_0^2-6q_0^3+2q_0^4+8q_0^5-14q_0^6+O(q_0^7),
-\qquad
-v=4+16q_0-40q_0^2+8q_0^3+O(q_0^4).
-\tag{8.3a}
-$$
-
-These are actual uniformizers at the two pointed cusps.
-
-The hyperelliptic involution is $(u,v)\mapsto(u,-v)$. Thus $w_{37}$ and its product with the hyperelliptic involution give two degree-two elliptic quotients. This split is the geometric reason one must not replace the winding quotient by all of the genus-two Jacobian: the rank-zero quotient below already controls every rational point, while no Mordell--Weil assertion about the other quotient is required.
-
-The smooth projective completion of (8.1) has two points at infinity over $\mathbf Q(i)$, not over $\mathbf Q$. Therefore the affine calculation below loses no rational points.
-
-### 8.2 The two elliptic quotients
-
-The quotient fixed by $w_{37}$ is
-
-$$
-E_+:\quad y^2+y=x^3-x,
-\tag{8.4}
-$$
-
-with map
-
-$$
-\phi_+(u,v)=
-\left(
--\frac{u^2+3}{4},
-\frac{v-4}{8}
-\right).
-\tag{8.5}
-$$
-
-Indeed,
-
-$$
-y^2+y=\frac{v^2-16}{64}
-$$
-
-and
-
-$$
-x^3-x
-=\frac{-(u^2+3)^3+16(u^2+3)}{64}
-=\frac{-u^6-9u^4-11u^2+21}{64},
-$$
-
-so (8.1) makes the two expressions equal.
-
-The quotient by $(u,v)\mapsto(-u,-v)$ is
-
-$$
-E_-:\quad
-y^2+y=x^3+x^2-23x-50,
-\tag{8.6}
-$$
-
-with map
-
-$$
-\phi_-(u,v)=
-\left(
-\frac{37/u^2-5}{4},
-\frac{37v/u^3-4}{8}
-\right).
-\tag{8.7}
-$$
-
-Substitution in (8.6), followed by multiplication by $64u^6$, reduces exactly to (8.1). Although (8.7) appears to have a pole at $u=0$, it extends to the projective curve. In projective coordinates on (8.6), it is represented near $u=0$ by
-
-$$
-[X:Y:Z]
-=
-[2u(37-5u^2):37v-4u^3:8u^3].
-\tag{8.8}
-$$
-
-At $u=0$ the middle coordinate is nonzero because $v^2=37$, so (8.8) is $[0:1:0]$, the origin $O$ of $E_-$. This proves the claimed extension at both points over $u=0$.
-
-The invariant differentials provide a second exact check. Direct differentiation gives
-
-$$
-\boxed{
-\phi_+^*\frac{dx}{2y+1}
-=-2u\frac{du}{v},
-\qquad
-\phi_-^*\frac{dx}{2y+1}
-=-2\frac{du}{v}.}
-\tag{8.9}
-$$
-
-The first is invariant under $w_{37}$ and the second is anti-invariant, exactly as the quotient description requires.
-
-### 8.3 The rank-zero Mordell--Weil certificate
-
-Only the quotient $E_-$ is needed to enumerate the rational points of $C$.
-Let
-
-$$
-Q=(8,18)\in E_-(\mathbf Q).
-\tag{8.10}
-$$
-
-The tangent at $Q$ is $y=5x-22$. Substitution in (8.6) leaves
-$-(x-8)^3$, so the tangent has triple intersection at $Q$ and $3Q=O$.
-The exact good-reduction counts for both quotient curves are
-
-$$
-\begin{array}{c|cc}
-q&\#E_+(\mathbf F_q)&\#E_-(\mathbf F_q)\\ \hline
-3&7&3\\
-5&8&6.
-\end{array}
-\tag{8.11}
-$$
-
-In particular, rational torsion on $E_-$ has order dividing $3$ and is
-generated by $Q$. The modular-symbol calculation in the next section proves
-
-$$
-\frac{L(E_-,1)}{\Omega^+}=\frac13\ne0.
-\tag{8.12}
-$$
-
-Book 141's modular rank-zero theorem applies to this actual optimal quotient and
-gives $\operatorname{rank}E_-(\mathbf Q)=0$. Therefore
-
-$$
-\boxed{
-E_-(\mathbf Q)=\mathbf Z/3\mathbf Z\,(8,18),
-\qquad
--Q=(8,-19).}
-\tag{8.13}
-$$
-
-This is logically sufficient: every rational point of $C$ maps to one of the
-three points in (8.13), and Section 8.5 computes those three fibers. The
-verified quotient $E_+$ records the other newform direction; no statement
-about $E_+(\mathbf Q)$ enters the rational-point proof. Nor is a torsion point
-on $E_-$ claimed to lift to rational torsion on $J_0(37)$.
-
-### 8.4 Modular symbols, newforms, and the Sturm bound
-
-The index of $\Gamma_0(37)$ is $38$, so the weight-two Sturm bound is
-
-$$
-\left\lfloor
-\frac2{12}[\operatorname{SL}_2(\mathbf Z):\Gamma_0(37)]
-\right\rfloor
-=\left\lfloor\frac{76}{12}\right\rfloor=6.
-\tag{8.14}
-$$
-
-The two normalized rational newforms are certified through that bound by
-
-$$
-\begin{aligned}
-f_+&=q-2q^2-3q^3+2q^4-2q^5+6q^6+O(q^7),\\
-f_-&=q+q^3-2q^4+O(q^7).
-\end{aligned}
-\tag{8.15}
-$$
-
-Thus their Hecke and level data are
-
-$$
-\begin{array}{c|cc}
-&T_2&U_{37}\\ \hline
-f_+&-2&-1\\
-f_-&0&1.
-\end{array}
-\tag{8.16}
-$$
-
-The point counts in (8.11) independently recover
-
-$$
-a_3(f_+)=-3,
-\quad a_5(f_+)=-2,
-\qquad
-a_3(f_-)=1,
-\quad a_5(f_-)=0.
-$$
-
-The prime-power and multiplicative relations then give the coefficients at $4$ and $6$ in (8.15). Expanding the two differentials in (8.9) at the cusp through $q^6$ gives $f_+$ and $f_-$ with these normalizations; (8.14) proves equality of the modular forms, not merely agreement of a few experimental coefficients.
-
-For the weight-twelve canonical-model check (8.0b), here are all coefficients
-through its Sturm bound. Entries are $a_1,\ldots,a_{38}$:
-
-$$
-\begin{aligned}
-(a_n(f_+))={}&(1,-2,-3,2,-2,6,-1,0,6,4,-5,-6,-2,2,6,-4,0,-12,0,\\
-&-4,3,10,2,0,-1,4,-9,-2,6,-12,-4,8,15,0,2,12,-1,0),\\
-(a_n(f_-))={}&(1,0,1,-2,0,0,-1,0,-2,0,3,-2,-4,0,0,4,6,0,2,0,\\
-&-1,0,6,0,-5,0,-5,2,-6,0,-4,0,3,0,0,4,1,0).
-\end{aligned}
-\tag{8.16a}
-$$
-
-Substitution of these two integer vectors into (8.0b) makes every coefficient
-through $q^{38}$ zero. The weight-twelve Sturm bound then proves the
-hyperelliptic equation, while the weight-two bound (8.14) proves the two
-differential identifications. This supplies both parts of the pointed
-canonical-model certificate.
-
-The modular-symbol identity (8.12) can also be proved without a floating-point period.
-Let
-
-$$
-e=\{0,\infty\}\in H_1(X_0(37),\{\text{cusps}\};\mathbf Z)
-\tag{8.16b}
-$$
-
-be oriented from $c_0$ to $c_\infty$. From (8.7),
-
-$$
-\phi_-(c_\infty)=Q,\qquad
-\phi_-(c_0)=-Q.
-\tag{8.16c}
-$$
-
-Translate the quotient map by $-Q$ and call it $\Phi$. Then
-$\Phi(c_\infty)=O$, $\Phi(c_0)=Q$, and the path
-$\gamma=\Phi_*e$ runs from $Q$ to $O$.  The oriented Manin edge has one
-interior Atkin--Lehner fixed point $z_*=i/\sqrt{37}$.  Cutting there and using
-(8.1b), (8.7), and the positive real branch selected by (8.22e) gives the exact
-edge ledger
-
-$$
-\begin{array}{c|c|c|c}
-\text{subedge}&(u,v)&\phi_-\text{-endpoints}&\Phi\text{-endpoints}\\ \hline
-0\longrightarrow z_*&-1\le u\le0, v>0&-Q\longrightarrow O&Q\longrightarrow -Q\\
-z_*\longrightarrow i\infty&0\le u\le1, v>0&O\longrightarrow Q&-Q\longrightarrow O.
-\end{array}
-\tag{8.16d}
-$$
-
-Thus $\gamma$ is the union of two consecutive one-third arcs on
-$E_-(\mathbf R)^0$. Since $3Q=O$, the singular chain
-
-$$
-\Gamma=\tau_{2Q}\gamma+\tau_Q\gamma+\gamma
-\tag{8.16e}
-$$
-
-has successive endpoints $O\to2Q\to Q\to O$.  Each of the three elementary
-arcs cut out by $O,Q,-Q$ occurs twice, so $\Gamma$ is exactly two circuits of
-$E_-(\mathbf R)^0$.  This factor of two is essential: completing the square
 gives
 
 $$
-(2y+1)^2=4x^3+4x^2-92x-199,
+C_{13}:z^2=F(x),
+\tag{7.2}
 $$
 
-whose cubic has discriminant $2^4\cdot37^3>0$ and roots in
-$(-3.519,-3.518)$, $(-2.707,-2.706)$, and $(5.224,5.225)$. Hence
-$E_-(\mathbf R)$ has two components. If $\Omega_0$ is the integral of the
-Néron differential around the identity component, the real Néron period used
-in (8.12) is
+where
 
 $$
-\Omega^+=\int_{E_-(\mathbf R)}\left|\frac{dx}{2y+1}\right|=2\Omega_0.
-\tag{8.16f}
-$$
-
-The sign is algebraic on both subedges: (8.7) gives
-
-$$
-\frac{dx}{du}=-\frac{37}{2u^3},
+F(x)=x^6+2x^5+x^4+2x^3+6x^2+4x+1,
 \qquad
-2y+1=\frac{37v}{4u^3},
+\operatorname{disc}(F)=-2^{12}13^2.
+\tag{7.3}
+$$
+
+The monic sextic has two rational points $\infty^+$ and $\infty^-$ above
+infinity, distinguished by $z/x^3\to1$ and $-1$. The six evident rational
+points in the coordinates of (7.1) are
+
+$$
+\mathcal C_{13}=
+\{\infty^+,\infty^-,(0,0),(0,-1),(-1,0),(-1,-1)\}.
+\tag{7.4}
+$$
+
+They are the six rational cusps. Direct substitution checks the four affine
+points, and the two leading branches check the points at infinity.
+
+Choose $\infty^+$ as Abel base point and put
+
+$$
+j(P)=[P-\infty^+],
 \qquad
-\frac{dx}{2y+1}=-\frac{2\,du}{v}<0,
+T=[\infty^--\infty^+].
+\tag{7.5}
 $$
 
-because the oriented edge has $du>0$ and $v>0$.
-Translation invariance of the differential and (8.9) now give
+Because this is an even-degree model, hyperelliptic conjugation satisfies
 
 $$
-\int_\Gamma\frac{dx}{2y+1}
-=3\int_e f_-\frac{dq}{q}.
-\tag{8.16g}
+j(P)+j(\iota P)=T,
+\tag{7.6}
 $$
 
-On the vertical Manin path,
+not $j(\iota P)=-j(P)$. The translation by $T$ is an important
+normalization in the finite sieve.
+
+### 7.2 The complete Mordell--Weil group
+
+The Abel map places rational curve points inside the rational Jacobian.
+Consequently the point problem becomes finite only after both the rank and
+the entire torsion subgroup have been determined; a finite-index subgroup
+would leave uncontrolled cosets.
+
+The true sextic two-descent, including the scalar quotient and the
+true-to-fake lifting obstruction, proves rank zero and no rational
+two-torsion. Good reductions at $3$ and $5$ give Jacobian groups of order
+$19$. The nonzero class $T$ therefore has exact order $19$, and the same
+reduction bound excludes every additional rational point of the Jacobian.
+Thus
 
 $$
-\int_e f_-\frac{dq}{q}
-=-2\pi\int_0^\infty f_-(iy)\,dy=-L(f_-,1),
-\tag{8.16h}
+\boxed{J_{13}(\mathbf Q)=\langle T\rangle
+\simeq\mathbf Z/19\mathbf Z.}
+\tag{7.7}
 $$
 
-while the two-circuit calculation in (8.16d)--(8.16f) gives
-$\int_\Gamma dx/(2y+1)=-2\Omega_0=-\Omega^+$. Therefore
+Let us spell out why each word matters. A fake sextic Selmer dimension would
+not prove rank zero. A point count of order $19$ would only give an upper
+bound on torsion until a nonzero rational class was exhibited. The class
+$T$ supplies that lower bound, and two-descent supplies the absence of a free
+part.
+
+The descent certificate can be recorded without suppressing the even-degree
+issue. Put
 
 $$
-3L(f_-,1)=\Omega^+.
-\tag{8.17}
+L_{13}=\mathbf Q[\theta]/(F(\theta)),
+\qquad S=\{2,13,\infty\}.
 $$
 
-This is the exact rational identity behind (8.12). It identifies $E_-$ as the winding factor. The other factor has vanishing central value, but no conclusion about its Mordell--Weil rank is needed. Thus the winding quotient is $E_-$, not the whole Jacobian.
-
-### 8.5 The three fibers and all rational points
-
-Because every rational point of $C$ maps under $\phi_-$ to one of
+The polynomial $F$ is irreducible, has signature $(0,3)$, and satisfies
 
 $$
-O,
-\qquad
-Q=(8,18),
-\qquad
--Q=(8,-19),
-$$
-
-it remains only to compute three fibers. From (8.7)--(8.8),
-
-$$
-\phi_-^{-1}(O)
-=\{(0,\sqrt{37}),(0,-\sqrt{37})\},
-\tag{8.18}
-$$
-
-$$
-\phi_-^{-1}(Q)
-=\{(1,4),(-1,-4)\},
-\tag{8.19}
-$$
-
-and
-
-$$
-\phi_-^{-1}(-Q)
-=\{(1,-4),(-1,4)\}.
-\tag{8.20}
-$$
-
-For example, $x=8$ in (8.7) gives $u^2=1$, and the $y$-coordinate then gives the signs in (8.19)--(8.20). The fiber (8.18) has no rational point. The two points at infinity are not rational either. Hence
-
-$$
-\boxed{
-C(\mathbf Q)=
-\{(1,4),(-1,4),(1,-4),(-1,-4)\}.}
-\tag{8.21}
-$$
-
-As a reduction check,
-
-$$
-C(\mathbf F_3)
-=\{(0,\pm1),(1,\pm1),(-1,\pm1)\},
-\tag{8.22}
-$$
-
-and the four rational points occupy the four residue classes with $u=\pm1$.
-
-### 8.6 Cusps and the two $j$-values
-
-The cusp normalization (8.3) identifies $(1,4)$ and $(-1,4)$ as the two
-cusps. The remaining points are noncuspidal and are exchanged by $w_{37}$.
-Before displaying $j$, it is useful to record the modular unit which checks
-both cusp labels. Put
-
-$$
-g(u)=6u^3-10u.
-\tag{8.22a}
-$$
-
-Then
-
-$$
-v^2-g(u)^2=-37(u^2-1)^3,
-\qquad
-h=\frac{v+g(u)}{(u+1)^3},
-\qquad
-h\circ w_{37}=\frac{37}{h}.
-\tag{8.22b}
-$$
-
-The cancellations in (8.22b) give
-
-$$
-\operatorname{div}(h)=3(c_\infty-c_0).
-\tag{8.22c}
-$$
-
-In the parameters (8.1b) and (8.3a),
-
-$$
-\begin{aligned}
-h&=37q^3(1+2q+5q^2+10q^3+20q^4+36q^5+65q^6+O(q^7)),\\
-h&=q_0^{-3}(1-2q_0-q_0^2+2q_0^3+q_0^4+2q_0^5-2q_0^6+O(q_0^7)).
-\end{aligned}
-\tag{8.22d}
-$$
-
-Equivalently,
-
-$$
-h=37\left(\frac{\eta(37\tau)}{\eta(\tau)}\right)^2.
-\tag{8.22e}
-$$
-
-The eta product proves (8.22c) directly and its transformation law proves the
-Atkin--Lehner formula in (8.22b).
-
-Here is an explicit degree-$38$ source $j$-map. Let
-
-$$
-A(u)=\sum_{k=0}^{38}A_ku^k,\qquad
-B(u)=\sum_{k=0}^{35}B_ku^k,
-\tag{8.22f}
-$$
-
-where, in increasing order of $k$,
-
-$$
-\begin{aligned}
-(A_k)=({}&-2478761487567000,-7305168148435800,904218550326185,
-22848066502482966,\\
-&17853777511718158,-19562454283353586,-31305822456742271,
--5006586672831416,\\
-&13665520831967704,12187169363559560,5963719239019164,
--608251175518816,\\
-&-4315965766567824,-3043349732012896,-890036230898388,
-86501040355720,\\
-&471139427087208,388119677172568,147227101014214,35729385767452,
--5144969449764,\\
-&-16231037035828,-8606145613626,-3415577348840,-1338373543928,
--161659095528,\\
-&28205163196,24219438096,25317502784,7274245584,2016349484,
-802394136,\\
-&45163088,20619360,4485177,-461538,681318,58806,35937),
-\end{aligned}
-\tag{8.22g}
-$$
-
-and
-
-$$
-\begin{aligned}
-(B_k)=({}&-407505882420000,-1200962344491000,88076285497175,
-3577669442405790,\\
-&2894130547772370,-2843718134599738,-4718742759728526,
--812065502202306,\\
-&1924692603576690,1605650957699270,733191673358958,
--22818333181866,\\
-&-461566071935526,-334412368837602,-96639379222710,
--2314557177578,\\
-&32491425760794,30449392904334,11701048456892,3203662855386,
-559189504886,\\
-&-559816242862,-335332825866,-110262055942,-56806436842,
--11358832686,\\
-&-1055262078,-875854158,200418654,78977610,15278670,17644338,
-3033342,\\
-&989010,205821,0).
-\end{aligned}
-\tag{8.22h}
-$$
-
-Then
-
-$$
-\boxed{\displaystyle
-j(u,v)=\frac{8(A(u)+vB(u))}{(u-1)(u+1)^{37}}.}
-\tag{8.22i}
-$$
-
-This long polynomial is a certificate rather than unexplained data. Substituting
-(8.1b) and (8.3a) gives
-
-$$
-\begin{aligned}
-j(u(q),v(q))&=q^{-1}+744+196884q+21493760q^2+\cdots,\\
-j(u(q_0),v(q_0))&=q_0^{-37}+744
- +0q_0+\cdots+0q_0^{36}+196884q_0^{37}+\cdots.
-\end{aligned}
-\tag{8.22j}
-$$
-
-The first line is the standard source $j$-series and the second has the width
-$37$ required at the other cusp. The only poles are therefore
-$c_\infty+37c_0$. Conversely, Riemann--Roch gives
-$\dim L(c_\infty+37c_0)=37$; matching the two displayed principal parts and
-the constant term determines (8.22i). This is an independently checkable
-modular-function certificate for the degeneracy map.
-
-There is also a short exact evaluation certificate which avoids taking a
-thirty-seventh derivative at $u=-1$. Write
-
-$$
-F(u)=-u^6-9u^4-11u^2+37,\qquad
-A(u)^2-F(u)B(u)^2=(u-1)(u+1)^{37}S(u).
-\tag{8.22k}
-$$
-
-Polynomial division is exact. Direct summation of (8.22g)--(8.22h) gives
-
-$$
-\begin{array}{c|cc}
-u&S(u)&A(u)+4B(u)\\ \hline
-1&40016210296832&-2^{35}\\
--1&698694641568221202734907392&-2^{35}.
-\end{array}
-\tag{8.22l}
-$$
-
-At the noncuspidal points $v=-4$, rationalizing (8.22i) gives
-$j=8S(u)/(A(u)-vB(u))$. Therefore
-
-$$
-j(1,-4)=-7\cdot11^3,
-\tag{8.23}
+F(X)\equiv(X^3+X^2+1)^2\pmod2,
 $$
 
 $$
-j(-1,-4)=-7\cdot137^3\cdot2083^3,
-\tag{8.24}
+F(X)\equiv(X-3)^3(X^3+11X^2+8X+12)\pmod{13}.
 $$
 
-exactly. Finally set $j_{\rm src}=j$ and
-$j_{\rm tgt}=j\circ w_{37}$. Then
-
-$$
-\begin{array}{c|cc}
-P&j_{\rm src}(P)&j_{\rm tgt}(P)\\ \hline
-(1,-4)&-7\cdot11^3&-7\cdot137^3\cdot2083^3\\
-(-1,-4)&-7\cdot137^3\cdot2083^3&-7\cdot11^3.
-\end{array}
-\tag{8.24a}
-$$
-
-Thus $w_{37}$ exchanges source and target exactly as duality requires. Neither
-value is $0$ or $1728$, so generic coarse descent supplies an actual rational
-cyclic $37$-isogeny.
-
-## 9. Existence at the genus-zero and level-$17$ primes
-
-### 9.1 Certified Hauptmodul formulas
-
-For
-
-$$
-p=2,3,5,7,13,
-\tag{9.1}
-$$
-
-the curve $X_0(p)$ has genus zero and two rational cusps. Choose a rational coordinate $t$ for which the two cusps are $0$ and $\infty$. One degeneracy map to $X(1)$ is
-
-$$
-\begin{aligned}
-j_2(t)&=\frac{(t+16)^3}{t},\\
-j_3(t)&=\frac{(t+27)(t+3)^3}{t},\\
-j_5(t)&=\frac{(t^2+10t+5)^3}{t},\\
-j_7(t)&=
-\frac{(t^2+13t+49)(t^2+245t+2401)^3}{t^7},\\
-j_{13}(t)&=
-\frac{(t^2+5t+13)
-(t^4+7t^3+20t^2+19t+1)^3}{t}.
-\end{aligned}
-\tag{9.2}
-$$
-
-These formulas require a modular certificate; genus zero alone would allow innumerably many unrelated rational functions. There are two equivalent exact certificates.
-
-First, take the eta-quotient Hauptmodul with the scaling and orientation fixed by its leading term at a chosen cusp. Its eta transformation law gives the two cusp orders and the Atkin--Lehner action. Expanding the right sides of (9.2) at both cusps gives the standard $j$-series
-
-$$
-j(q)=q^{-1}+744+196884q+\cdots
-\tag{9.3}
-$$
-
-with the appropriate cusp width for the chosen degeneracy map. The difference between the modular $j$-map and the displayed rational function has no poles and vanishes at a cusp, so it is zero.
-
-Second, let
-
-$$
-j_p'(t)=j_p(w_pt)
-$$
-
-be the other degeneracy map. After denominators are cleared, direct polynomial substitution gives
-
-$$
-\Phi_p(j_p(t),j_p'(t))=0,
-\tag{9.4}
-$$
-
-where $\Phi_p$ is the classical modular polynomial. The cusp divisors distinguish the cyclic component from any accidental component of the plane relation. Either argument identifies (9.2) as functions on $X_0(p)$, so their rational values are genuine modular points.
-
-### 9.2 A noncuspidal specialization at each genus-zero level
-
-The value $t=1$ is neither cusp. Substitution gives
+An integral-basis and ideal-relation calculation gives the following exact
+dimension ledger:
 
 $$
 \begin{array}{c|c}
-p&j_p(1)\\ \hline
-2&17^3\\
-3&28\cdot4^3\\
-5&16^3\\
-7&63\cdot2647^3\\
-13&19\cdot48^3.
+\text{space}&\mathbf F_2\text{-dimension}\\ \hline
+L_{13}(S,2)&6\\
+\text{after scalar squareclasses}&3\\
+\text{after the norm-compatible-pair relation}&2\\
+\text{after the }2\text{-adic image}&1\\
+\text{after the }13\text{-adic image}&0.
 \end{array}
-\tag{9.5}
+\tag{7.8}
 $$
 
-None of these values is $0$ or $1728$. The generic coarse descent of Section 1.4 therefore turns the rational modular point into a pair $(E,C)/\mathbf Q$. Consequently every prime in (9.1) occurs as the degree of a rational cyclic isogeny.
-
-The argument proves more than isolated existence: varying $t\in\mathbf Q\setminus\{0\}$ away from the second cusp gives rational families. For the present classification, however, the five exact specializations in (9.5) are sufficient certificates.
-
-### 9.3 The level-$17$ modular point
-
-The remaining non-CM degree below $19$ is certified on the pointed modular curve
-
-$$
-X_0(17):\quad
-y^2+xy+y=x^3-x^2-x-14.
-\tag{9.6}
-$$
-
-Take $O$ as one cusp and put
-
-$$
-P=(7,13).
-$$
-
-The group law gives
-
-$$
-2P=\left(\frac{11}{4},-\frac{15}{8}\right),
-\qquad
-3P=(7,-21),
-\qquad
-4P=O.
-\tag{9.7}
-$$
-
-The point $2P$ is visibly fixed by negation because $2y+x+1=0$. Counts at two good primes give
-
-$$
-\#X_0(17)(\mathbf F_3)=4,
-\qquad
-\#X_0(17)(\mathbf F_7)=4.
-\tag{9.8}
-$$
-
-Thus rational torsion has order at most four, and $P$ generates it. The modular-symbol identity
-
-$$
-\frac{L(E_{17},1)}{\Omega^+}=\frac14
-\tag{9.9}
-$$
-
-and Book 141's rank-zero theorem give rank zero. Hence
-
-$$
-X_0(17)(\mathbf Q)=\langle P\rangle\simeq\mathbf Z/4\mathbf Z.
-\tag{9.10}
-$$
-
-To certify the word “modular” in (9.6), the invariant differential
-
-$$
-\frac{dx}{2y+x+1}
-$$
-
-has normalized cusp expansion beginning $q-q^2+O(q^4)$. The weight-two Sturm bound at level $17$ is
-
-$$
-\left\lfloor\frac2{12}\cdot18\right\rfloor=3,
-$$
-
-so its coefficients through $q^3$, together with $U_{17}=1$, identify the unique level-$17$ newform and its optimal curve. The cusp expansion of the pointed map identifies $O$ and $P$ as the two cusps; the Atkin--Lehner involution is
-
-$$
-w_{17}(R)=P-R.
-\tag{9.11}
-$$
-
-It follows that $2P$ and $3P$ are the two noncuspidal modular points and are exchanged by $w_{17}$. The degree-$18$ $j$-function is fixed by its pole divisor at $O,P$ and its two cusp expansions. Its exact evaluations are
-
-$$
-\left\{
-j(2P),j(3P)
-\right\}
-=
-\left\{
--\frac{17^2\cdot101^3}{2},
--\frac{17\cdot373^3}{2^{17}}
-\right\}.
-\tag{9.12}
-$$
-
-Equivalently, substituting the two values into $\Phi_{17}(X,Y)$ gives zero. Thus (9.6), (9.7), the cusp labels, and (9.12) are an actual rational modular-point certificate for the $17$-isogeny and its dual. Neither $j$-value is exceptional, so generic coarse descent applies. Their denominators also explain why no $2$-adic cusp rigidity may be assumed.
-
-## 10. CM existence and the exceptional coarse fibers
-
-### 10.1 Ramified CM kernels
-
-Let
-
-$$
-p\equiv3\pmod4,
-\qquad
-K=\mathbf Q(\sqrt{-p}),
-\tag{10.1}
-$$
-
-and suppose $K$ has class number one. Its maximal order has discriminant $-p$. The corresponding CM $j$-invariant is rational, so there is an elliptic curve $E/\mathbf Q$ with complex multiplication by $\mathcal O_K$ over $K$.
-
-The element $\sqrt{-p}\in\mathcal O_K$ has norm $p$. Hence the CM endomorphism
-
-$$
-[\sqrt{-p}]:E_K\longrightarrow E_K
-\tag{10.2}
-$$
-
-has degree $p$, and its kernel $C$ is cyclic of order $p$. Every element of $G_K$ preserves $C$. Complex conjugation sends the endomorphism to its negative, but
-
-$$
-\ker[\sqrt{-p}]=\ker[-\sqrt{-p}].
-\tag{10.3}
-$$
-
-Therefore $C$ is stable under all of $G_{\mathbf Q}$. It descends as a rational subgroup scheme and gives a rational degree-$p$ isogeny.
-
-The endomorphism itself need not descend to $\mathbf Q$. Its quotient is generally a quadratic twist of $E$, not the same curve with a rational CM endomorphism. The stable kernel in (10.3) is the correct descent object.
-
-### 10.2 The five required CM degrees
-
-For the five degrees needed here, the class-number-one CM values and kernels are
-
-$$
-\begin{array}{c|c|c}
-p&j(E)&\text{rational kernel}\\ \hline
-11&-32^3&\ker[\sqrt{-11}]\\
-19&-96^3&\ker[\sqrt{-19}]\\
-43&-960^3&\ker[\sqrt{-43}]\\
-67&-5280^3&\ker[\sqrt{-67}]\\
-163&-640320^3&\ker[\sqrt{-163}].
-\end{array}
-\tag{10.4}
-$$
-
-Each row is an existence proof independent of the elimination. The first two supply degrees $11$ and $19$, and the final three supply exactly the large balanced candidates produced in Chapter 7.
-
-For $j\ne0,1728$, an explicit rational curve with prescribed $j$ may be taken as
-
-$$
-E_j:\quad
-y^2+xy=x^3-\frac{36}{j-1728}x-\frac1{j-1728}.
-\tag{10.5}
-$$
-
-The CM construction, not formula (10.5) alone, supplies the stable kernel.
-
-### 10.3 Direct treatment of $j=0$ and $j=1728$
-
-The exceptional coarse fibers are best handled before the classification is assembled. Every rational twist with $j=0$ has a model
-
-$$
-E_d:\quad y^2=x^3+d.
-\tag{10.6}
-$$
-
-Its $3$-division polynomial is
-
-$$
-\psi_3(x)=3x^4+12dx=3x(x^3+4d).
-\tag{10.7}
-$$
-
-The rational factor $x$ cuts out a Galois-stable pair of nonzero points together with the origin, hence the rational ramified CM $3$-kernel. A generator need not be rational: its $y$-coordinate is a square root of $d$.
-
-Every rational twist with $j=1728$ has a model
-
-$$
-E_d:\quad y^2=x^3+dx.
-\tag{10.8}
-$$
-
-The factor $x$ of the $2$-division polynomial gives the rational point $(0,0)$ and the ramified CM $2$-isogeny.
-
-The cross-fiber small case at $j=0$ is not uniform in the twist, but it also
-has actual representatives.  For example,
-
-$$
-y^2=x^3+1
-$$
-
-has the rational point $(-1,0)$ of order $2$.  This supplies the exceptional
-$j=0$ coarse fiber at degree $2$ directly; it is not a ramified CM kernel and
-is not asserted for every sextic twist.
-
-For $p\ge5$, these exceptional CM fibers supply no additional rational line. If $p$ splits in the CM field, the two CM eigenspaces are conjugate under the nontrivial element of $\operatorname{Gal}(K/\mathbf Q)$, so neither is a $G_{\mathbf Q}$-stable line. If $p$ is inert, the nonsplit Cartan action is irreducible over $\mathbf F_p$. The only ramified rational CM kernels occur at $3$ for $j=0$ and at $2$ for $j=1728$. A quadratic, quartic, or sextic twist multiplies the representation by a scalar character and does not stop conjugation from exchanging the two split eigenspaces or make an inert Cartan preserve a line.
-
-Thus the direct division-polynomial calculation accounts for the rational exceptional kernels, and twists do not repair the obstruction for any $p\ge5$. No blanket assertion about descent from the coarse exceptional fiber has been used.
-
-## 11. The prime-isogeny classification
-
-### 11.1 Elimination
-
-Let $E/\mathbf Q$ admit a rational cyclic isogeny of prime degree $p$. If $p\le19$, then primality alone gives
-
-$$
-p\in\{2,3,5,7,11,13,17,19\}.
-\tag{11.1}
-$$
-
-Suppose $p>19$. The actual pair $(E,C)$ gives a noncuspidal rational point of $X_0(p)$. Odd cusp rigidity at $5,7,11$ proves the three integrality statements (4.5). The local isogeny-character theorem and global reciprocity give one of the five signatures in (3.8).
-
-For $s=4,8$, the gcd certificate (5.18) is divisible by no prime greater than $19$, so these signatures are impossible. For $s=0,12$, the gcd certificate (5.17) leaves $31,37$, and the $\mathbf F_{31}$ trace table (5.22)--(5.24) removes $31$. Thus the endpoint branch leaves $37$.
-
-For $s=6$, the three-place argument in Section 6.1 makes $j(E)$ integral. The balanced class-field theorem yields
-
-$$
-p\equiv3\pmod4,
-\qquad
-h(\mathbf Q(\sqrt{-p}))=1.
-$$
-
-The independent class-number-one theorem, intersected with $-p$ in Section 7.2, leaves $43,67,163$. Therefore
-
-$$
-p\in
-\{2,3,5,7,11,13,17,19,37,43,67,163\}.
-\tag{11.2}
-$$
-
-No theorem used in this paragraph already outputs the set (11.2). The local theorem outputs five exponents; the stable trace lemma outputs a Hasse-bounded quadratic; the balanced theorem outputs a class-number condition; and the class-number theorem is independent of isogenies. The finite intersections were carried out in this book.
-
-### 11.2 Existence
-
-Existence at every prime in (11.2) is now certified as follows.
-
-$$
-\begin{array}{c|l}
-\text{degree}&\text{certificate}\\ \hline
-2,3,5,7,13&\text{the certified Hauptmodul point }t=1\text{ in (9.5)}\\
-11&j=-32^3,\quad\ker[\sqrt{-11}]\\
-17&2P,3P\in X_0(17)(\mathbf Q)\text{ in (9.7)--(9.12)}\\
-19&j=-96^3,\quad\ker[\sqrt{-19}]\\
-37&(1,-4),(-1,-4)\in X_0(37)(\mathbf Q)\text{ in (8.21)--(8.24)}\\
-43&j=-960^3,\quad\ker[\sqrt{-43}]\\
-67&j=-5280^3,\quad\ker[\sqrt{-67}]\\
-163&j=-640320^3,\quad\ker[\sqrt{-163}].
-\end{array}
-\tag{11.3}
-$$
-
-The genus-zero and non-CM points have $j\ne0,1728$, so their pointed modular-curve certificates and generic coarse descent give rational subgroups. The CM rows start with the subgroup itself and therefore bypass coarse descent entirely.
-
-Combining elimination and existence proves the classification:
-
-$$
-\boxed{
-p\text{ occurs as a rational prime-isogeny degree over }\mathbf Q
-\Longleftrightarrow
-p\in\{2,3,5,7,11,13,17,19,37,43,67,163\}.}
-\tag{11.4}
-$$
-
-### 11.3 Mechanism and dependency ledger
-
-The list has three visibly different sources.
-
-| Mechanism | Degrees | Arithmetic certificate |
-|---|---|---|
-| genus-zero families | $2,3,5,7,13$ | rational Hauptmodul and modular $j$-map |
-| isolated non-CM points | $17,37$ | exact Mordell--Weil and quotient-fiber calculations |
-| ramified class-number-one CM kernels | $11,19,43,67,163$ | $G_{\mathbf Q}$-stable kernel of $[\sqrt{-p}]$ |
-
-The elimination uses the odd winding-quotient interface only to prove (4.5). It never declares the full Jacobian finite. At level $37$ both elliptic quotient directions were displayed, but only the rank-zero winding factor $E_-$ enters the rational-point proof. No rational torsion on $E_-$ was inferred from rational torsion on $J_0(37)$, and no Mordell--Weil claim about $E_+$ is required.
-
-## 12. The independent prime-torsion theorem
-
-### 12.1 The exact independent theorem
-
-The Frey argument needs only prime-order rational torsion. We use the following
-deep theorem at exactly that strength.
-
-**Independent prime-torsion theorem.** Let $E$ be an elliptic curve over
-$\mathbf Q$, and let $P\in E(\mathbf Q)$ have exact prime order $p$. Then
-
-$$
-\boxed{p\in\{2,3,5,7\}.}
-\tag{12.1}
-$$
-
-The hypotheses say that a generator, not merely its cyclic subgroup, is
-$\mathbf Q$-rational. The theorem is established $X_1$ infrastructure. It is
-independent of the rational $X_0(p)$ classification in Chapter 11: neither its
-statement nor its proof uses a list of rational prime-isogeny degrees. We do
-not import the full classification of rational torsion groups, because no such
-classification is needed below.
-
-### 12.2 The oriented $X_1(p)$ proof architecture
-
-Here is the dependency capsule for (12.1). For $p\ge5$, the fine
-$\Gamma_1(p)$ moduli problem associates to $(E,P)$ a noncuspidal rational
-point of $Y_1(p)$. Its compactification remembers an oriented generator on a
-Tate polygon at the boundary; forgetting that generator would change the
-problem to $X_0(p)$ and would destroy the argument.
-
-At an auxiliary prime $q\ne p$, properness gives a section of the integral
-$X_1(p)$ model. If its reduction is smooth and interior, the prime-to-$q$
-point $P$ specializes with exact order $p$. Hence
-
-$$
-p\mid\#\widetilde E(\mathbf F_q),
-\qquad
-\#\widetilde E(\mathbf F_q)\le q+1+2\sqrt q.
-\tag{12.2}
-$$
-
-The reduction analysis also treats multiplicative fibers as oriented cusps.
-The Weil pairing rules out two independent rational $p$-directions and fixes
-the determinant character used to distinguish the oriented cusp branches.
-Using $q=2$ and, where the integral fiber requires it, $q=3$, one is therefore
-reduced to an oriented cusp disk for every prime $p\ge17$.
-
-The decisive input is the **oriented prime-level formal-immersion theorem**:
-for every prime $p\ge17$, the Abel--Jacobi map from $X_1(p)$ to its oriented
-winding quotient is a formal immersion at the cusp reached by such a rational
-section, and the rational torsion of that exact quotient has trivial
-specialization kernel in the residue characteristic used in the reduction.
-It follows that the section is the cusp. This theorem is proved on the fine
-$X_1(p)$ integral model, using oriented cuspidal divisors, integral
-cotangents, reduction of the chosen generator, and the winding quotient cut
-out by nonzero central values. In residue characteristic $2$ its
-connected--étale calculation is part of the theorem; it is not inferred from
-any statement about $J_0(p)$ or from Book 141's odd-prime $X_0$ interface.
-
-The finite levels not covered by that uniform step are $p=11$ and $p=13$.
-The standard genus-one calculation on $X_1(11)$ and genus-two descent on
-$X_1(13)$ show that all their rational points are cuspidal. The levels
-$2,3,5,7$ have noncuspidal rational points, as Tate normal form also shows.
-This completes the architecture of (12.1).
-
-This capsule fixes the theorem's scope and dependencies; it does not claim a
-uniform family of Manin-symbol row reductions or specialization kernels. The
-oriented formal-immersion theorem is used as
-established infrastructure in the same sense that Book 141 uses the
-Kolyvagin--Logachev rank-zero theorem. Its output is precisely (12.1), and it
-has no dependency on Chapter 11.
-
-### 12.3 Tate normal form and the two mixed-torsion curves
-
-The prime-torsion theorem leaves $p=5$ and $7$. For the Frey application these
-must be excluded on a curve which also has full rational $2$-torsion. We do
-that directly.
-
-A point $P$ of exact order at least four can be put in Tate normal form
-
-$$
-E(b,c):\quad
-y^2+(1-c)xy-by=x^3-bx^2,
-\qquad P=(0,0),
-\tag{12.3}
-$$
-
-with $b\ne0$ and nonzero discriminant. Direct use of the group law gives the
-prime-order specializations
+With a basis $b_1,b_2$ of the two-dimensional global candidate space, the
+two surviving local functionals have row-reduced matrix
 
 $$
 \begin{array}{c|cc}
-\operatorname{ord}(P)&b&c\\ \hline
-5&t&t\\
-7&t^3-t^2&t^2-t.
+&b_1&b_2\\ \hline
+\mathbf Q_2&1&0\\
+\mathbf Q_{13}&0&1.
 \end{array}
-\tag{12.4}
+\tag{7.9}
 $$
 
-The $x$-coordinates of the nonzero $2$-torsion are the roots of
+Thus the fake local kernel is zero. For a sextic this is not yet enough:
+the true-to-fake connecting sequence has the infinity-difference
+alternative in its kernel. Using $\infty^+$ as the rational degree-one base
+divisor, its norm-compatible pair fails the $13$-adic lifting condition.
+Consequently the true Selmer group is zero. This proves rank zero, while the
+irreducibility of $F$ rules out a nontrivial Galois-stable even set of branch
+points and hence rules out rational two-torsion.
+
+The independent torsion certificate is
 
 $$
-F_{b,c}(X)
-=4X^3+\bigl((1-c)^2-4b\bigr)X^2
- +2b(c-1)X+b^2.
-\tag{12.5}
+\begin{array}{c|cc|c}
+r&\#C_{13}(\mathbf F_r)&\#C_{13}(\mathbf F_{r^2})
+&\#J_{13}(\mathbf F_r)\\ \hline
+3&6&8&19\\
+5&6&12&19.
+\end{array}
+\tag{7.10}
 $$
 
-Full rational $2$-torsion makes $F_{b,c}$ split over $\mathbf Q$, so its
-discriminant must be a rational square. Substitution of the two rows of
-(12.4) gives the exact identities
+For a genus-two curve,
 
 $$
-\operatorname{disc}F_{t,t}
-=16t^5(t^2-11t-1),
-\tag{12.6}
+\#J(\mathbf F_r)
+=\frac{\#C(\mathbf F_r)^2+\#C(\mathbf F_{r^2})}{2}-r.
+\tag{7.11}
 $$
 
-and
+The class $T$ is nonzero: otherwise a function with divisor
+$\infty^--\infty^+$ would have degree one, impossible on a genus-two curve.
+Reduction at either good prime shows its order divides $19$, so its order is
+exactly $19$. Since the rank is zero and all rational torsion injects into
+both finite Jacobians, (7.7) follows.
+
+### 7.3 A terminal reduction at seventeen
+
+Once the rational Jacobian is the cyclic group of order $19$, a good prime
+different from $19$ can see every global class injectively. The prime $17$
+is chosen because its Abel image meets that cyclic subgroup in exactly six
+classes, making one reduction terminal.
+
+The prime $17$ is good by (7.3) and is different from $19$, so reduction is
+injective on the whole rational Jacobian. Modulo $17$, the root $x=1$ of
+$F$ can be sent to infinity by
+
+$$
+X=\frac1{x-1},\qquad Y=zX^3,\qquad w=Y/5.
+$$
+
+Since $5^2=8$ in $\mathbf F_{17}$, the resulting pointed quintic is
+
+$$
+w^2=X^5+13X^4+10X^3+16X^2+X+15.
+\tag{7.12}
+$$
+
+This model permits unique reduced-pair arithmetic. The old points
+$\infty^+,\infty^-$ become $(0,7),(0,10)$, and their difference is
+
+$$
+\bar T=[X^2,10+6X].
+$$
+
+Repeated exact addition produces nineteen distinct normalized pairs and
+$19\bar T=0$. Thus the calculation enumerates the whole reduction of the
+rational group, not merely a sample of it.
+
+The complete cyclic-subgroup certificate is the following table; all
+coefficients are read modulo $17$:
+
+$$
+\begin{array}{c|c|c@{\qquad}c|c|c}
+n&u_n&v_n&n&u_n&v_n\\ \hline
+0&1&0&10&X^2+10X+9&4+14X\\
+1&X^2&10+6X&11&X^2+2X+1&11+X\\
+2&X^2+10X+9&1+8X&12&X^2+X+13&6X\\
+3&X^2+9X&7+8X&13&X^2+X&7\\
+4&X^2+9X&10+14X&14&X^2+X&10+3X\\
+5&X^2+X&7+14X&15&X^2+9X&7+3X\\
+6&X^2+X&10&16&X^2+9X&10+9X\\
+7&X^2+X+13&11X&17&X^2+10X+9&16+9X\\
+8&X^2+2X+1&6+16X&18&X^2&7+11X\\
+9&X^2+10X+9&13+3X&&&
+\end{array}
+\tag{7.13}
+$$
+
+For each row, $u_n$ is monic, $\deg v_n<\deg u_n\le2$, and
+$u_n\mid g-v_n^2$, where $g$ is the quintic in (7.12). Cantor addition by
+$[X^2,10+6X]$ takes row $n$ to row $n+1$; the last row returns to the
+identity. Unique reduced representation proves that the nineteen rows are
+distinct.
+
+For completeness, direct evaluation of the seventeen possible $x$-values
+gives the entire special fiber in the original $(x,z)$ coordinates:
+
+$$
+\begin{aligned}
+C_{13}(\mathbf F_{17})=\{&\infty^+,\infty^-,(0,\pm1),(1,0),
+(6,\pm6),(8,0),\\
+&(12,\pm2),(13,\pm8),(15,0),(16,\pm1)\}.
+\end{aligned}
+\tag{7.14}
+$$
+
+Transforming these fifteen points to (7.12), taking their degree-one Abel
+classes, and comparing their unique reduced pairs with the nineteen
+multiples of $\bar T$ gives
+
+$$
+j_{17}(C_{13}(\mathbf F_{17}))\cap\langle\bar T\rangle
+=\{0,1,4,6,14,16\}\bar T.
+\tag{7.15}
+$$
+
+The six known cusps have the corresponding global classes
+
+$$
+\begin{array}{c|c}
+P&j(P)\\ \hline
+\infty^+&0\\
+\infty^-&T\\
+(0,0)&6T\\
+(0,-1)&14T\\
+(-1,0)&16T\\
+(-1,-1)&4T.
+\end{array}
+\tag{7.16}
+$$
+
+These labels are certified by reduction, because reduction is injective on
+$19$-torsion. They are also compatible with (7.6): the involution pairs the
+coefficients $0$ and $1$, $6$ and $14$, and $16$ and $4$, each pair summing
+to $1$ modulo $19$. Every special point not displayed in (7.16) has a
+normalized pair different from all nineteen multiples. Thus a dash in the
+comparison table is an exact nonmembership certificate, not a failure to
+find a match.
+
+### 7.4 Exhaustion and uniqueness
+
+The finite calculation becomes a rational-point theorem only after every
+surviving class is matched with a known point and Abel injectivity proves
+uniqueness. This section supplies that terminal step.
+
+Let $P\in C_{13}(\mathbf Q)$. Equation (7.7) gives $j(P)=nT$ for a unique
+$n\in\mathbf Z/19\mathbf Z$. The specialization square for the Abel map and
+(7.15) force
+
+$$
+n\in\{0,1,4,6,14,16\}.
+$$
+
+For each value, (7.16) supplies a known cusp $Q$ with $j(Q)=nT$. The Abel map
+of a positive-genus curve is injective on geometric points: if
+$[P-\infty^+]=[Q-\infty^+]$, then $P-Q$ is principal; a nonconstant function
+with divisor $P-Q$ would have degree one and would make the genus-two curve
+isomorphic to $\mathbf P^1$. Therefore $P=Q$.
+
+We have proved
+
+$$
+\boxed{X_1(13)(\mathbf Q)=\mathcal C_{13}.}
+\tag{7.17}
+$$
+
+The argument is terminal because the rational Jacobian is finite and the
+chosen modulus annihilates it. No unsieved coset, height region, or residue
+disk remains.
+
+### 7.5 The prime-torsion theorem
+
+Combining the uniform formal-immersion range, the level-eleven calculation,
+and (7.17) gives the exact theorem used later.
+
+**Theorem 7.1 (rational prime torsion).** If $E/\mathbf Q$ is an elliptic
+curve and $p\ge11$ is prime, then
+
+$$
+E(\mathbf Q)[p]=0.
+\tag{7.18}
+$$
+
+Indeed a rational point of exact order $p$ would define a noncuspidal point
+of $X_1(p)(\mathbf Q)$. The three branches above show that none exists. The
+theorem is independent of any classification of rational $X_0(p)$ points.
+
+## 8. Odd isogenies and full rational two-torsion
+
+The prime-torsion theorem eliminates $p\ge11$ once Theorem 5.2 produces a
+rational generator. The prime $7$ remains because elliptic curves over
+$\mathbf Q$ can have rational seven-torsion. The Frey curve supplies an
+additional invariant: its entire two-torsion is rational. We first prove
+that this invariant survives passage across an odd isogeny.
+
+### 8.1 Preservation of two-torsion as a group scheme
+
+The rational $p$-torsion produced by Theorem 5.2 may occur on the quotient
+curve rather than the original one. We therefore need full two-torsion to
+cross an odd isogeny without loss.
+
+Let $\varphi:A\to B$ be an isogeny of abelian varieties of odd degree $d$.
+There is an isogeny $\varphi':B\to A$ satisfying
+
+$$
+\varphi'\varphi=[d]_A,
+\qquad
+\varphi\varphi'=[d]_B.
+\tag{8.1}
+$$
+
+On a group scheme killed by $2$, multiplication by $d$ is multiplication by
+$1$, because $d\equiv1\pmod2$. Restricting (8.1) to the two-torsion kernels
+therefore gives inverse maps
+
+$$
+\varphi[2]:A[2]\xrightarrow{\sim}B[2],
+\qquad
+\varphi'[2]:B[2]\xrightarrow{\sim}A[2].
+\tag{8.2}
+$$
+
+This is a group-scheme proof. It remains valid under base change and does not
+rely on counting geometric points. Over $\mathbf Q$, it is Galois equivariant,
+so
+
+$$
+A[2](\mathbf Q)\simeq(\mathbf Z/2)^2
+\Longleftrightarrow
+B[2](\mathbf Q)\simeq(\mathbf Z/2)^2.
+\tag{8.3}
+$$
+
+### 8.2 The mixed torsion forced by a rational generator
+
+Let $E/\mathbf Q$ have full rational two-torsion and let
+$P\in E(\mathbf Q)$ have odd prime order $p$. The groups $E[2](\mathbf Q)$
+and $\langle P\rangle$ intersect trivially, so
+
+$$
+E[2](\mathbf Q)\oplus\langle P\rangle
+\simeq(\mathbf Z/2)^2\oplus\mathbf Z/p.
+$$
+
+The Chinese remainder theorem rewrites this as
+
+$$
+\mathbf Z/2\mathbf Z\oplus\mathbf Z/2p\mathbf Z.
+\tag{8.4}
+$$
+
+Thus a rationally generated kernel on either side of an odd isogeny in a
+full-two isogeny class forces a mixed subgroup of the form (8.4).
+
+### 8.3 Why seven is the remaining prime
+
+If $p\ge11$, Theorem 7.1 already excludes the rational point $P$. At $p=7$,
+rational seven-torsion exists in general, so full two-torsion must be used.
+The hypothetical curve would contain
+
+$$
+\mathbf Z/2\mathbf Z\oplus\mathbf Z/14\mathbf Z.
+\tag{8.5}
+$$
+
+Tate normal form converts this configuration into a rational point on a
+specific genus-two curve. The conversion is one-way: the mixed torsion
+configuration implies a point on the curve. We do not need every point of the
+curve to reconstruct such a configuration.
+
+## 9. Tate normal form and the mixed-seven curve
+
+Tate normal form is designed to make repeated addition of one marked point
+simple. Its coefficients become parameters on $X_1(p)$. Full rational
+two-torsion then imposes a square-discriminant condition, which is the bridge
+to genus two.
+
+### 9.1 Normalizing a point of odd order
+
+Let $F$ be a field of characteristic zero and let $P\in E(F)$ have order at
+least four. A change of Weierstrass coordinates puts the pair $(E,P)$ in the
+form
+
+$$
+E(b,c):
+y^2+(1-c)xy-by=x^3-bx^2,
+\qquad P=(0,0),
+\tag{9.1}
+$$
+
+with $b\ne0$ and nonzero discriminant. The normal form is obtained by moving
+$P$ to the origin, arranging the tangent at $P$ to be $y=0$, and using the
+remaining scaling to normalize the coefficient of $y$. Each step is
+reversible when the discriminant and $b$ are nonzero.
+
+The low multiples illustrate its purpose. The tangent $y=0$ meets the cubic
+at $x=0$ twice and at $x=b$, so the group law gives
+
+$$
+2P=(b,bc).
+$$
+
+For reference, addition on a generalized Weierstrass equation uses, for two
+distinct points,
+
+$$
+\lambda=\frac{y_2-y_1}{x_2-x_1},
+\qquad
+\nu=\frac{y_1x_2-y_2x_1}{x_2-x_1},
+$$
+
+$$
+x_3=\lambda^2+a_1\lambda-a_2-x_1-x_2,
+\qquad
+y_3=-(\lambda+a_1)x_3-\nu-a_3.
+\tag{9.2}
+$$
+
+The tangent case is obtained by implicit differentiation. Applying these
+formulas successively on the open set $bc\ne0$ gives
+
+$$
+2P=(b,bc),\qquad
+3P=(c,b-c),\qquad
+4P=\left(
+\frac{b(b-c)}{c^2},
+\frac{b^2(c^2+c-b)}{c^3}
+\right).
+\tag{9.3}
+$$
+
+Direct substitution in the curve equation checks each point, and one more
+application of (9.2) checks the group-law recurrence. Thus an order
+condition is reduced to equality of explicit rational functions in $b,c$;
+the vanishing denominators record boundary or lower-order cases and must be
+removed before cancellation.
+
+### 9.2 The order-seven locus
+
+For exact order seven, the addition formulas reduce to the one-parameter
+specialization
+
+$$
+b=t^3-t^2,
+\qquad
+c=t^2-t.
+\tag{9.4}
+$$
+
+The excluded values $t=0,1$ make $b=0$ and hence make the normal form
+degenerate. Conversely, away from the zeros of the discriminant, (9.4)
+gives the point-level order-seven locus. For our exclusion only the forward
+direction is required: a rational point of order seven yields a rational
+parameter $t$ satisfying (9.4).
+
+To see the parameter rather than merely quote it, impose $3P=-4P$ using
+(9.3). On the nondegenerate locus, equality of the $x$-coordinates first
+produces the ratio $t=b/c$ after cancelling the factors belonging to
+$b=0$, $c=0$, and the discriminant. Substituting that ratio back into the
+$y$-coordinate equality yields
+
+$$
+c=t^2-t,\qquad b=tc=t^3-t^2.
+$$
+
+Conversely, substitution into the recurrence makes $3P=-4P$, hence
+$7P=0$. The removed factors are precisely the singular or lower-order
+possibilities, so a nonsingular marked point of exact order seven lies on
+this open one-parameter family.
+
+### 9.3 The cubic of two-torsion coordinates
+
+On a generalized Weierstrass equation, a point is fixed by negation exactly
+when
+
+$$
+2y+a_1x+a_3=0.
+$$
+
+Eliminating $y$ from this relation and (9.1) gives the cubic whose roots are
+the $x$-coordinates of the three nonzero two-torsion points:
+
+$$
+F_{b,c}(X)=
+4X^3+\bigl((1-c)^2-4b\bigr)X^2
++2b(c-1)X+b^2.
+\tag{9.5}
+$$
+
+If all two-torsion is rational, this cubic splits over $\mathbf Q$. The
+discriminant of a split cubic is a square: it is the square of the product of
+the three pairwise root differences, multiplied by the square of the leading
+coefficient. Substituting (9.4) into the discriminant of (9.5) gives
 
 $$
 \operatorname{disc}F_{t^3-t^2,t^2-t}
 =16t^7(t-1)^7(t^3-8t^2+5t+1).
-\tag{12.7}
+\tag{9.6}
 $$
 
-For $t\ne0$ in the first row, divide a square root in (12.6) by $4t^2$.
-For $t\ne0,1$ in the second row, divide a square root in (12.7) by
-$4t^3(t-1)^3$. Thus full rational $2$-torsion would give a nondegenerate
-rational point on, respectively,
+This identity follows by the standard cubic discriminant formula and direct
+collection of powers of $t$. Its direction of use is important: splitting
+implies square discriminant. A square discriminant alone would only place the
+Galois group in the alternating group; it would not force the cubic to
+split.
+
+### 9.4 The necessary genus-two condition
+
+Assume $t\ne0,1$. If the right side of (9.6) is a square, divide its square
+root by $4t^3(t-1)^3$. The result is a rational number $z$ satisfying
 
 $$
-C_5:\quad z^2=t(t^2-11t-1)
-\tag{12.8}
+C_7:\quad
+z^2=t(t-1)(t^3-8t^2+5t+1).
+\tag{9.7}
 $$
 
-or
+The quintic on the right is monic and squarefree, with discriminant $7^4$.
+Its smooth projective model is therefore a genus-two curve with one rational
+Weierstrass point $\infty$ at infinity. The values $t=0,1$ give the rational
+branch points $(0,0),(1,0)$, while $\infty$ is the boundary value of the
+parameter. Thus a nondegenerate elliptic curve with full rational two-torsion
+and a rational point of order seven would produce a rational point of $C_7$
+outside
 
 $$
-C_7:\quad z^2=t(t-1)(t^3-8t^2+5t+1).
-\tag{12.9}
+\{\infty,(0,0),(1,0)\}.
+\tag{9.8}
 $$
 
-Only this necessary implication is used; no converse from a square
-discriminant to a split cubic is asserted.
+The next chapter proves that no such point exists.
 
-### 12.4 The elliptic certificate for $C_5$
+## 10. The exact arithmetic of the mixed-seven curve
 
-The odd-degree projective completion of $C_5$ has one point at infinity. With
-that point as origin, the explicit Weierstrass transformation and its inverse
-are simply
+This is the second exceptional genus-two calculation required by the
+catalog. The proof has two layers. Two-descent and good reductions determine
+the entire rational Jacobian. Unique reduced representatives then test all
+of its classes for membership in the Abel image.
 
-$$
-(x,y)=(t,z),
-\qquad
-(t,z)=(x,y),
-\tag{12.10}
-$$
+### 10.1 The pointed curve and visible classes
 
-On projective models this is $[T:Z:W]\mapsto[X:Y:W]=[T:Z:W]$ between
+The rational branch points and one nontrivial divisor class give a subgroup
+of order twelve. They provide the lower bound which will later meet the
+descent and reduction upper bounds.
 
-$$
-Z^2W=T(T^2-11TW-W^2)
-\quad\text{and}\quad
-Y^2W=X^3-11X^2W-XW^2;
-$$
-
-the inverse is the same coordinate substitution and sends $[0:1:0]$ to the
-origin.
-
-The resulting elliptic curve is
+Expand the polynomial in (9.7):
 
 $$
-E_5:\quad y^2=x^3-11x^2-x.
-\tag{12.11}
+f(t)=t^5-9t^4+13t^3-4t^2-t.
+\tag{10.1}
 $$
 
-Its discriminant is $2^4\cdot5^3$. The rational point $(0,0)$ gives a
-$2$-isogeny
-
-$$
-\begin{aligned}
-\varphi:E_5&\longrightarrow E_5',\\
-(x,y)&\longmapsto
-\left(\frac{y^2}{x^2},-\frac{y(x^2+1)}{x^2}\right),
-\end{aligned}
-\qquad
-E_5':Y^2=X^3+22X^2+125X.
-\tag{12.12}
-$$
-
-The two isogeny-descent maps are
-
-$$
-\begin{array}{c|ccc}
-& O&(0,0)&\text{otherwise}\\ \hline
-\delta:E_5(\mathbf Q)/\widehat\varphi E_5'(\mathbf Q)
- &1&-1&x\\
-\delta':E_5'(\mathbf Q)/\varphi E_5(\mathbf Q)
- &1&5&X
-\end{array}
-\quad\text{in }\mathbf Q^\times/\mathbf Q^{\times2}.
-\tag{12.13}
-$$
-
-The complete local-image ledger is
-
-| map and class | $\mathbf R$ | $\mathbf Q_2$ | $\mathbf Q_5$ | conclusion |
-|---|---|---|---|---|
-| $\delta:1$ | soluble | soluble | soluble | $O$ is a global witness |
-| $\delta:-1$ | soluble | soluble | soluble | $(0,0)$ is a global witness |
-| $\delta':1$ | soluble | soluble | soluble | $O$ is a global witness |
-| $\delta':5$ | soluble | soluble | soluble | $(0,0)$ is a global witness |
-| $\delta':-1,-5$ | insoluble | -- | -- | excluded over $\mathbf R$ |
-
-For $E_5$, the squarefree representative of an image class divides the
-coefficient $-1$, so
-
-$$
-\operatorname{im}\delta=\{1,-1\}.
-$$
-
-For $E_5'$, it divides $125$ and hence lies in
-$\{1,-1,5,-5\}$. But
-
-$$
-X^2+22X+125=(X+11)^2+4>0,
-$$
-
-so every real affine point of $E_5'$ has $X\ge0$. The two negative classes
-are impossible, while $O$ and $(0,0)$ realize $1$ and $5$. Therefore
-
-$$
-\operatorname{im}\delta'=\{1,5\}.
-\tag{12.14}
-$$
-
-The $2$-isogeny rank formula now gives
-
-$$
-2^{\operatorname{rank}E_5(\mathbf Q)}
-=\frac{\#\operatorname{im}\delta\,
-       \#\operatorname{im}\delta'}4=1.
-\tag{12.15}
-$$
-
-The good-reduction counts are
-
-$$
-\#E_5(\mathbf F_3)=6,
-\qquad
-\#E_5(\mathbf F_7)=6,
-\tag{12.16}
-$$
-
-so rational torsion has order dividing $6$. The $3$-division polynomial is
-
-$$
-\psi_3(x)=3x^4-44x^3-6x^2-1
-=(3x+1)(x^3-15x^2+3x-1).
-\tag{12.17}
-$$
-
-The cubic factor has no rational root. At the remaining rational root
-$x=-1/3$, the curve equation gives $y^2=-25/27$, so there is no rational
-point of order $3$. Consequently
-
-$$
-E_5(\mathbf Q)=\{O,(0,0)\},
-\qquad
-\boxed{C_5(\mathbf Q)=\{\infty,(0,0)\}.}
-\tag{12.18}
-$$
-
-The affine point has $t=0$, hence $b=0$ in (12.4), and the point at infinity
-is a boundary point. Both are degenerate or cuspidal Tate parameters.
-
-### 12.5 The genus-two certificate for $C_7$
-
-Write
-
-$$
-f(t)=t^5-9t^4+13t^3-4t^2-t
-=t(t-1)(t^3-8t^2+5t+1)
-\tag{12.19}
-$$
-
-The degree-five model has one rational point $\infty$ at infinity. Let
-$J=\operatorname{Jac}(C_7)$ and use $\infty$ as the Abel--Jacobi base point.
-We use Mumford notation $[u,v]$, with
-$u$ monic, $\deg v<\deg u\le2$, and $u\mid f-v^2$. Put
+Use $\infty$ as Abel base point. In reduced Mumford notation define
 
 $$
 T_0=[t,0],
@@ -2653,207 +1531,95 @@ T_0=[t,0],
 T_1=[t-1,0],
 \qquad
 A=[t^2-t+1,1-3t].
-\tag{12.20}
+\tag{10.2}
 $$
 
-The first two classes are independent points of order $2$. Exact polynomial
-division gives
+The first two are the nonzero classes of the rational Weierstrass points
+relative to $\infty$, so they have order two. They are nonzero and distinct
+by injectivity of the Abel map. For $A$, exact division gives
 
 $$
-f-(1-3t)^2=(t^2-t+1)(t^3-8t^2+4t-1),
-\tag{12.21}
+f-(1-3t)^2
+=(t^2-t+1)(t^3-8t^2+4t-1),
+\tag{10.3}
 $$
 
-and one Cantor reduction gives
+so the pair is valid. Cantor reduction gives
 
 $$
-2A=[t^2-t+1,3t-1]=-A.
-\tag{12.22}
+2A=[t^2-t+1,3t-1]=-A,
+\tag{10.4}
 $$
 
-Thus $A$ has exact order $3$.
+hence $A$ has exact order three.
 
-The rank certificate begins with the two-descent algebra
+### 10.2 The complete Jacobian
+
+Testing the Abel image requires every rational Jacobian class. We therefore
+prove rank zero by two-descent and prove the exact torsion order by two
+independent good reductions before performing the twelve-class test.
+
+The odd-degree $x-T$ descent algebra factors as
 
 $$
 L=\mathbf Q\times\mathbf Q\times K,
 \qquad
-K=\mathbf Q(\theta),\quad
+K=\mathbf Q(\theta),
+\quad
 \theta^3-8\theta^2+5\theta+1=0.
-\tag{12.23}
+\tag{10.5}
 $$
 
-Let $\alpha^3+\alpha^2-2\alpha-1=0$. Direct substitution gives
+To prove that the displayed classes exhaust the rational Jacobian, we first
+make the two-descent finite. The cubic field in (10.5) is the real cubic
+subfield of the seventh cyclotomic field. If
+$\alpha^3+\alpha^2-2\alpha-1=0$, then
 
 $$
-K=\mathbf Q(\alpha),
-\qquad
 \theta=-1-\alpha+2\alpha^2,
 \qquad
-K=\mathbf Q(\zeta_7+\zeta_7^{-1}),
+[\mathcal O_K:\mathbf Z[\theta]]=7,
 \qquad
-\left[\mathcal O_K:\mathbf Z[\theta]\right]=7,
-\qquad
-\operatorname{disc}(\mathcal O_K)=49.
-\tag{12.24}
+\operatorname{disc}(K)=49.
+\tag{10.6}
 $$
 
-The Minkowski bound is $14/9<2$, so $K$ has class number one. The cyclotomic
-unit index formula in this real cubic field then makes $\alpha$ and
-$\alpha+1$ fundamental units; its unit squareclasses are generated by
-$-1,\alpha,\alpha+1$. Direct norm evaluation gives
+The Minkowski bound is $14/9<2$, so $K$ has class number one. The elements
+$\alpha,\alpha+1$ are fundamental units, $2$ is inert, and the unique prime
+above $7$ is generated by $2-\alpha$. In particular,
 
 $$
-N(\alpha)=1,
-\qquad
-N(\alpha+1)=-1,
-\qquad
-N(2-\alpha)=7.
+N(\alpha)=1,\qquad N(\alpha+1)=-1,\qquad N(2-\alpha)=7.
+\tag{10.7}
 $$
 
-The identities
-
-$$
-\theta=\frac{\alpha^3}{\alpha+1},
-\qquad
-1-\theta=\frac{\alpha^2}{(\alpha+1)^3}
-$$
-
-give the squareclasses in (12.26) directly in this unit basis.
-
-Thus the prime above $7$ is generated by $2-\alpha$. The polynomial
-$X^3+X^2+1$ has no root over $\mathbf F_2$, so $2$ is inert. Since
-$\operatorname{disc}(f)=7^4$, the descent is unramified outside
-$S=\{2,7,\infty\}$.
-
-For a divisor disjoint from the Weierstrass points, the descent map is
+For a reduced divisor $[u,v]$ disjoint from the branch points, the
+odd-degree $x-T$ map is
 
 $$
 \delta([u,v])=
-\bigl((-1)^{\deg u}u(0),
-      (-1)^{\deg u}u(1),
-      (-1)^{\deg u}u(\theta)\bigr)
-\in L^\times/L^{\times2},
-\tag{12.25}
+\bigl((-1)^{\deg u}u(0),(-1)^{\deg u}u(1),
+(-1)^{\deg u}u(\theta)\bigr).
+\tag{10.8}
 $$
 
-with the usual derivative value in a component containing a Weierstrass
-point. In particular,
-
-$$
-\delta(T_0)=(-1,-1,-\theta),
-\qquad
-\delta(T_1)=(1,-1,1-\theta).
-\tag{12.26}
-$$
-
-The $S$-unit norm kernel has dimension eight over $\mathbf F_2$. It is
-regenerated from
-
-$$
--1,\ \alpha,\ \alpha+1,\ 2,\ 2-\alpha
-\tag{12.27}
-$$
-
-in the cubic component and $-1,2,7$ in each rational component. More
-explicitly, if $e_i=\delta(T_i)$, a basis of the norm kernel is
+In the product-norm kernel of the squareclass group unramified outside
+$\{2,7,\infty\}$, use the ordered basis
 
 $$
 \begin{aligned}
-e_0, e_1,\quad
-h_1&=(-1,1,-1),& h_2&=(1,-1,-1),\\
-h_3&=(2,1,2),& h_4&=(1,2,2),\\
-h_5&=(7,1,2-\alpha),& h_6&=(1,7,2-\alpha).
+e_0&=(-1,-1,-\theta),&e_1&=(1,-1,1-\theta),\\
+h_1&=(-1,1,-1),&h_2&=(1,-1,-1),\\
+h_3&=(2,1,2),&h_4&=(1,2,2),\\
+h_5&=(7,1,2-\alpha),&h_6&=(1,7,2-\alpha).
 \end{aligned}
-\tag{12.27a}
+\tag{10.9}
 $$
 
-The entries are in the two rational components and then the cubic component;
-their norms are respectively $1,1,16,16,49,49$.  Put $V$ for the
-eight-dimensional space in (12.27a), and write $\delta_v$ for the localized
-descent map.  The real sign calculation and the $2$-adic squareclass
-calculation give, inside $V$,
-
-$$
-\begin{aligned}
-V\cap\delta_\infty(J(\mathbf R))
- &=\langle e_0,e_1,h_3,h_4,h_5,h_6\rangle,\\
-V\cap\delta_2(J(\mathbf Q_2))
- &=\langle e_0,e_1,h_1+h_5,h_2+h_6\rangle.
-\end{aligned}
-\tag{12.27b}
-$$
-
-Here addition denotes multiplication of squareclasses.  These two displayed
-subspaces can be checked directly.  The real place
-uses the signs at the five real factors of $L$.  At $2$, the polynomial
-$X^3+X^2+1$ is irreducible, so $K_2/\mathbf Q_2$ is unramified of degree
-three.  Squareclasses in each rational component are determined by valuation
-parity and the odd residue modulo $8$, and unit squareclasses in $K_2$ are
-determined modulo $8\mathcal O_{K,2}$.  Reducing the eight columns of
-(12.27a) by these tests gives the second line of (12.27b).
-
-For an independent dimension check, a non-Weierstrass point with coordinate
-$x$ has descent value
-
-$$
-(x,x-1,x-\theta).
-\tag{12.27c}
-$$
-
-The two values
-
-$$
-f(-4)=-4220=4(-1055),\qquad
-f(13)=142116=4(35529)
-\tag{12.27d}
-$$
-
-are squares in $\mathbf Q_2$, since both parenthesized odd units are $1$
-modulo $8$.  The classes of the resulting two local points, together with
-$e_0,e_1$, are independent under the preceding residue tests.  On the other
-hand,
-
-$$
-\dim_{\mathbf F_2}J(\mathbf Q_2)/2J(\mathbf Q_2)
-=2+\dim_{\mathbf F_2}J(\mathbf Q_2)[2]=4,
-\tag{12.27e}
-$$
-
-because the two rational Weierstrass classes generate $J(\mathbf Q_2)[2]$.
-Thus these four values are the full local Kummer image and certify, rather
-than merely suggest, the second line of (12.27b).
-
-Intersecting the two lines of (12.27b) leaves exactly
-$\langle e_0,e_1\rangle$.  At $7$, the cubic factor remains irreducible and
-$J(\mathbf Q_7)[2]=\langle T_0,T_1\rangle$.  Since $2$ is a unit in
-$\mathbf Z_7$, multiplication by $2$ is an automorphism on a pro-$7$ open
-subgroup of $J(\mathbf Q_7)$; on the finite quotient, the cokernel of
-multiplication by $2$ has the same order as its kernel.  Hence
-
-$$
-\dim_{\mathbf F_2}J(\mathbf Q_7)/2J(\mathbf Q_7)=2.
-\tag{12.27f}
-$$
-
-The two displayed torsion classes therefore generate the full $7$-adic
-Kummer image.  In particular the $7$-adic condition leaves the common
-intersection unchanged.  The exact sequential dimension ledger is therefore
-
-$$
-\begin{array}{c|c}
-\text{space}&\mathbf F_2\text{-dimension}\\ \hline
-S\text{-unit norm kernel}&8\\
-\text{after the real image}&6\\
-\text{after the }2\text{-adic image}&2\\
-\text{after the }7\text{-adic image}&2.
-\end{array}
-\tag{12.28}
-$$
-
-With columns ordered as in (12.27a), the sign and $2$-adic residue tests have
-the following obstruction matrix.  Its common kernel is visibly
-$\langle e_0,e_1\rangle$:
+Valuation parity at the rational factors, the inert prime above $2$, and
+the ramified prime above $7$, together with the independent unit
+squareclasses, proves independence and spanning. The first two vectors are
+exactly $\delta(T_0),\delta(T_1)$. The complete local obstruction matrix is
 
 $$
 \begin{array}{c|cc|cccccc}
@@ -2863,265 +1629,330 @@ $$
 \mathbf Q_2&0&0&0&0&1&0&0&0\\
 \mathbf Q_2&0&0&0&0&0&1&0&0\\
 \mathbf Q_2&0&0&1&0&0&0&1&0\\
-\mathbf Q_2&0&0&0&1&0&0&0&1
-\end{array}.
-\tag{12.29}
+\mathbf Q_2&0&0&0&1&0&0&0&1.
+\end{array}
+\tag{10.10}
 $$
 
-All entries are squareclass tests in the explicit algebra (12.23). It follows
-that
+At $2$, completeness follows from
 
 $$
-\operatorname{Sel}^{(2)}(J/\mathbf Q)
+\dim_{\mathbf F_2}J_7(\mathbf Q_2)/2J_7(\mathbf Q_2)
+=2+\dim_{\mathbf F_2}J_7(\mathbf Q_2)[2]=4;
+$$
+
+the visible two-torsion and the points with $t=-4,13$ give four independent
+local images. At $7$, the local quotient is two-dimensional and already
+generated by $T_0,T_1$. The successive dimensions are therefore
+
+$$
+8\longrightarrow6\longrightarrow2\longrightarrow2,
+$$
+
+and the final kernel of (10.10) is exactly $\langle e_0,e_1\rangle$. The
+Kummer exact sequence proves
+
+$$
+\operatorname{Sel}_2(J_7/\mathbf Q)
 =\langle\delta(T_0),\delta(T_1)\rangle,
-\qquad
-\operatorname{rank}J(\mathbf Q)=0.
-\tag{12.30}
+\qquad \operatorname{rank}J_7(\mathbf Q)=0.
+\tag{10.11}
 $$
 
-The torsion and saturation check is independent. Direct point counting gives
+It remains only to identify the torsion. The exact finite-field counts are
 
 $$
 \begin{array}{c|cc|c}
 q&\#C_7(\mathbf F_q)&\#C_7(\mathbf F_{q^2})
- &\#J(\mathbf F_q)\\ \hline
+&\#J_7(\mathbf F_q)\\ \hline
 3&5&5&12\\
 5&9&25&48.
 \end{array}
-\tag{12.31}
+\tag{10.12}
 $$
 
-Here
+For genus two the last column follows from
 
 $$
 \#J(\mathbf F_q)
-=\frac{\#C_7(\mathbf F_q)^2+\#C_7(\mathbf F_{q^2})}{2}-q.
+=\frac{\#C(\mathbf F_q)^2+\#C(\mathbf F_{q^2})}{2}-q.
+\tag{10.13}
 $$
 
-The subgroup $\langle A,T_0,T_1\rangle$ has order $3\cdot2\cdot2=12$.
-Rational torsion injects at the two good primes in (12.31), so its order
-divides $\gcd(12,48)=12$. Together with (12.30), this proves the saturated
-Mordell--Weil certificate
+Rational torsion injects prime by prime into these good reductions. Therefore
+its order divides $\gcd(12,48)=12$. The displayed subgroup generated by
+$A,T_0,T_1$ has order $3\cdot2\cdot2=12$. Together with rank zero this proves
 
 $$
-\boxed{J(\mathbf Q)=\langle A\rangle\oplus
-\langle T_0\rangle\oplus\langle T_1\rangle
+\boxed{
+J_7(\mathbf Q)=
+\langle A\rangle\oplus\langle T_0\rangle\oplus\langle T_1\rangle
 \simeq\mathbf Z/3\mathbf Z\oplus(\mathbf Z/2\mathbf Z)^2.}
-\tag{12.32}
+\tag{10.14}
 $$
 
-It remains to determine which of these twelve divisor classes lie on the
-embedded curve $P\mapsto[P-\infty]$. Write a class as
-$nA+e_0T_0+e_1T_1$, with $n\in\mathbf Z/3$ and $e_i\in\mathbf Z/2$.
-The Mordell--Weil sieve at $3$ gives the five possible triples
+This is an equality, not a finite-index statement. Hence no additional
+Mordell--Weil coset can contain an unknown curve point.
+
+### 10.3 All twelve reduced classes
+
+The group decomposition is abstract; curve membership is geometric. Unique
+reduced Mumford representatives turn the abstract twelve elements into an
+exhaustive, directly checkable list.
+
+Write each group element as $aA+bT_0+cT_1$ with
+$a\in\{0,1,2\}$ and $b,c\in\{0,1\}$. Exact addition gives the complete table
 
 $$
-(0,0,0),\ (0,1,0),\ (0,0,1),\ (1,1,1),\ (2,1,1).
-\tag{12.33}
+\begin{array}{c|c|c}
+(a,b,c)&u&v\\ \hline
+(0,0,0)&1&0\\
+(0,0,1)&t-1&0\\
+(0,1,0)&t&0\\
+(0,1,1)&t^2-t&0\\
+(1,0,0)&t^2-t+1&1-3t\\
+(1,0,1)&t^2-11t+9&15-17t\\
+(1,1,0)&t^2-9t-1&1+11t\\
+(1,1,1)&t^2-\frac79t-\frac19&\frac5{27}-\frac1{27}t\\
+(2,0,0)&t^2-t+1&-1+3t\\
+(2,0,1)&t^2-11t+9&-15+17t\\
+(2,1,0)&t^2-9t-1&-1-11t\\
+(2,1,1)&t^2-\frac79t-\frac19&-\frac5{27}+\frac1{27}t.
+\end{array}
+\tag{10.15}
 $$
 
-Indeed
+Every row is verified by $u\mid f-v^2$, monicity, and
+$\deg v<\deg u\le2$. The relations in (10.14) generate the rows, and unique
+reduced representation proves that they are distinct and exhaustive.
+
+### 10.4 The Abel-image test
+
+For a pointed monic quintic, the Abel image based at infinity consists
+exactly of the identity and the reduced pairs with $\deg u=1$. One direction
+is immediate:
 
 $$
-C_7(\mathbf F_3)=
-\{\infty,(0,0),(1,0),(2,1),(2,-1)\}.
+j_\infty(a,b)=[t-a,b],
+\qquad
+j_\infty(\infty)=[1,0].
 $$
 
-At $5$ one has
+Conversely, if $[t-a,b]$ is a valid pair, divisibility by $t-a$ gives
+$b^2=f(a)$, so it comes from the curve point $(a,b)$.
+
+Inspection of (10.15) leaves exactly
 
 $$
-C_7(\mathbf F_5)=
-\{\infty,(0,0),(1,0),(2,\pm2),(3,\pm1),(4,\pm2)\},
+[1,0],\qquad[t,0],\qquad[t-1,0].
+\tag{10.16}
 $$
 
-and intersection with the reduction of the subgroup (12.32) leaves only
-
-$$
-(0,0,0),\qquad(0,1,0),\qquad(0,0,1).
-\tag{12.34}
-$$
-
-These are respectively the classes of $\infty,(0,0),(1,0)$. The Abel--Jacobi
-map is injective on a genus-two curve, so recovery from the three surviving
-classes is exact:
+These are the Abel classes of $\infty,(0,0),(1,0)$. Abel injectivity now
+gives
 
 $$
 \boxed{C_7(\mathbf Q)=\{\infty,(0,0),(1,0)\}.}
-\tag{12.35}
+\tag{10.17}
 $$
 
-The values $t=0$ and $t=1$ make $b=0$ in the order-$7$ row of (12.4), and
-$\infty$ is a boundary point. Thus every rational point in (12.35) is
-cuspidal or degenerate. Equations (12.18) and (12.35) prove
+### 10.5 The mixed-seven exclusion
+
+All three points in (10.17) are boundary or degenerate parameters for Tate
+normal form: $t=0$ and $t=1$ give $b=0$, while $\infty$ is the compactifying
+cusp. But Chapter 9 showed that a full-two curve with rational seven-torsion
+would give a nondegenerate rational point of $C_7$. Therefore:
+
+**Theorem 10.1 (mixed-seven exclusion).** No elliptic curve over $\mathbf Q$
+contains a subgroup
 
 $$
-\mathbf Z/2\mathbf Z\times\mathbf Z/10\mathbf Z
-\not\subset E(\mathbf Q),
-\qquad
-\mathbf Z/2\mathbf Z\times\mathbf Z/14\mathbf Z
-\not\subset E(\mathbf Q)
-\tag{12.36}
+\mathbf Z/2\mathbf Z\oplus\mathbf Z/14\mathbf Z.
+\tag{10.18}
 $$
 
-for every elliptic curve $E/\mathbf Q$, independently of Chapter 11.
+Equivalently, an elliptic curve over $\mathbf Q$ with full rational
+two-torsion has no rational point of order seven. Notice that the proof used
+square discriminant only as a necessary condition and then exhausted every
+rational point of the necessary curve.
 
-## 13. Semistable rational isogenies
+## 11. The semistable full-two irreducibility criterion
 
-### 13.1 An everywhere-unramified diagonal character
+We can now assemble the local character theorem, prime torsion, preservation
+of two-torsion, and the mixed-seven exclusion. The result is tailored to the
+Frey curve but applies to every semistable full-two curve over $\mathbf Q$.
 
-Let $p\ge5$ and suppose a semistable elliptic curve $E/\mathbf Q$ admits a rational $p$-isogeny with kernel character $\lambda$. At every prime $q\ne p$, good or multiplicative reduction makes $\lambda$ unramified. In the nonsplit multiplicative case the splitting character is unramified, so this assertion remains true.
+### 11.1 Statement and motivation
 
-At $p$, the semistable local theorem gives
+**Theorem 11.1 (semistable full-two irreducibility).** Let $E/\mathbf Q$ be
+semistable and suppose
 
 $$
-\lambda|_{I_p}=1
+E[2](\mathbf Q)\simeq(\mathbf Z/2\mathbf Z)^2.
+$$
+
+For every prime $p\ge7$, the representation
+
+$$
+\overline\rho_{E,p}:G_{\mathbf Q}\longrightarrow
+\operatorname{GL}_2(\mathbf F_p)
+$$
+
+is irreducible over $\mathbf F_p$.
+
+The hypotheses have separate roles. Semistability controls the two diagonal
+characters. Full two-torsion eliminates the exceptional rational torsion at
+$p=7$. Neither hypothesis is needed merely to define the representation.
+
+### 11.2 Proof across the isogeny
+
+The proof follows the possible location of the rational generator rather
+than assuming it remains on the original curve. Preservation of
+two-torsion makes the two sides symmetric.
+
+**Proof.** Suppose $E[p]$ is reducible. By (2.1), there is a rational
+degree-$p$ isogeny
+
+$$
+\varphi:E\longrightarrow E'=E/C.
+$$
+
+The semistable isogeny theorem gives
+
+$$
+E(\mathbf Q)[p]\ne0
 \quad\text{or}\quad
-\lambda|_{I_p}=\chi_p.
-\tag{13.1}
+E'(\mathbf Q)[p]\ne0.
+\tag{11.1}
 $$
 
-In the first case $\lambda$ is unramified at every finite prime. In the second case the dual character
+Because $p$ is odd, (8.2) gives a Galois-equivariant isomorphism
+$E[2]\simeq E'[2]$. Thus both sides have full rational two-torsion.
 
-$$
-\mu=\chi_p\lambda^{-1}
-\tag{13.2}
-$$
+If $p\ge11$, (11.1) contradicts Theorem 7.1. If $p=7$, the side carrying
+the rational point has full rational two-torsion, contradicting Theorem 10.1.
+These cases exhaust all primes $p\ge7$. Hence $E[p]$ is irreducible.
+$\square$
 
-is unramified at $p$, and it is unramified at every $q\ne p$ because both factors are. Thus one of $\lambda,\mu$ is globally unramified at all finite primes.
+The proof never consults a list of rational prime-isogeny degrees. It uses
+the stronger consequence of semistability: rational torsion on one side of
+the isogeny.
 
-A finite character of $G_{\mathbf Q}$ unramified at all finite primes is trivial. Indeed, its fixed field would be a finite abelian extension of $\mathbf Q$ with discriminant supported nowhere; global class field theory, or the Minkowski discriminant bound, excludes every nontrivial such extension. Consequently
+### 11.3 Hypotheses and exceptions
 
-$$
-\lambda=1
-\quad\text{or}\quad
-\mu=1.
-\tag{13.3}
-$$
+Without semistability, an additive prime can ramify both diagonal characters,
+so the global unramified-character argument fails. Without full rational
+two-torsion, curves with rational seven-torsion provide counterexamples to
+the small-prime step. The theorem asserts irreducibility over $\mathbf F_p$;
+it does not classify the image inside $\operatorname{GL}_2(\mathbf F_p)$ and
+does not assert that the representation remains irreducible after every
+coefficient extension.
 
-This proof uses the diagonal character itself. Raising it to the twelfth power would not imply (13.3).
+The lower endpoint $p=7$ is exact for the theorem stated here. The exponent
+$5$ belongs to the separate cyclotomic route discussed in Chapter 14. We do
+not enlarge the theorem by importing a mixed-five calculation that is not
+needed for the catalog endpoint.
 
-### 13.2 Rational torsion on one side of the isogeny
+## 12. The Frey curve and its normalization
 
-If $\lambda=1$, the original kernel has a rational generator and
+The general criterion applies only after two properties of the Frey curve
+have been proved: full rational two-torsion and semistability. The first is
+visible in the factored equation. The second requires a minimal-model
+calculation, especially at $2$.
 
-$$
-E(\mathbf Q)[p]\ne0.
-$$
+### 12.1 Primitive triples and parity
 
-If $\mu=1$, the kernel of the dual isogeny has a rational generator and
+The local model at $2$ depends on which entry of the primitive triple is
+even and on one odd congruence modulo $4$. Fixing that normalization now
+prevents an ambiguous or nonintegral change of variables later.
 
-$$
-(E/C)(\mathbf Q)[p]\ne0.
-$$
-
-We have proved the semistable isogeny theorem
-
-$$
-\boxed{
-E/\mathbf Q\text{ semistable with a rational }p\text{-isogeny},\ p\ge5
-\Longrightarrow
-E(\mathbf Q)[p]\ne0\text{ or }(E/C)(\mathbf Q)[p]\ne0.}
-\tag{13.4}
-$$
-
-Semistability is preserved under isogeny, although (13.4) only needed the local structure on the original curve and its dual character. The theorem does not assert that the original kernel is always rationally generated.
-
-By the independent prime-torsion theorem (12.1), a semistable rational prime
-isogeny with $p\ge5$ can therefore have only degree $5$ or $7$. The next
-section excludes both when full rational $2$-torsion is present.
-
-### 13.3 Odd isogenies and full two-torsion
-
-Let $p$ be odd. The restriction of a degree-$p$ isogeny
-
-$$
-\varphi:E\longrightarrow E'=E/C
-$$
-
-to $E[2]$ is injective because its kernel has odd order. Both $E[2]$ and $E'[2]$ have four geometric points, so
-
-$$
-\varphi:E[2]\xrightarrow{\sim}E'[2]
-\tag{13.5}
-$$
-
-is a Galois-equivariant isomorphism. Hence full rational $2$-torsion passes across every odd isogeny.
-
-If $p\ge11$, (13.4) contradicts the independent theorem (12.1). If $p=5$
-or $7$, the curve on the side of the isogeny carrying the rational
-$p$-torsion also has full rational $2$-torsion by (13.5); equations (12.18)
-and (12.35), equivalently (12.36), exclude those two possibilities. We have
-therefore obtained the criterion already shaped for the Frey curve:
-
-$$
-\boxed{
-E/\mathbf Q\text{ semistable with }E[2](\mathbf Q)\simeq(\mathbf Z/2)^2,
-\quad p\ge5
-\Longrightarrow E[p]\text{ is irreducible}.}
-\tag{13.6}
-$$
-
-The next chapter verifies both hypotheses directly from the Frey equation.
-
-## 14. The Frey curve
-
-### 14.1 Normalization and invariants
-
-Let $p\ge5$ be prime and suppose that
+Let $p\ge7$ be prime and suppose
 
 $$
 a^p+b^p=c^p
-\tag{14.1}
+\tag{12.1}
 $$
 
-is a primitive nontrivial integer solution. Thus $abc\ne0$ and $\gcd(a,b,c)=1$. Exactly one of $a,b,c$ is even. By permuting the signed three-term equation and changing all signs if necessary, we may arrange
+is a primitive nontrivial integer solution:
+
+$$
+abc\ne0,
+\qquad
+\gcd(a,b,c)=1.
+$$
+
+Exactly one of $a,b,c$ is even. If two were even, primitivity would fail; if
+all were odd, the parity of (12.1) would fail. Rewriting the signed
+three-term equation and changing all signs if necessary, we may arrange
 
 $$
 a\text{ even},
-\qquad
-b,c\text{ odd},
-\qquad
-b\equiv1\pmod4.
-\tag{14.2}
+\qquad b,c\text{ odd},
+\qquad b\equiv1\pmod4.
+\tag{12.2}
 $$
+
+The last normalization is possible because one of the two odd terms can be
+chosen with the required sign modulo $4$. Since $p$ is odd, taking the
+$p$th power preserves these congruences.
 
 Put
 
 $$
 A=a^p,
-\qquad
-B=b^p,
-\qquad
-C=c^p=A+B,
+\qquad B=b^p,
+\qquad C=c^p=A+B.
+\tag{12.3}
 $$
 
-and define
+### 12.2 The curve, its two-torsion, and its invariants
+
+The factored Frey equation is chosen because it simultaneously displays the
+three rational two-torsion points and makes every discriminant factor a root
+difference. These are exactly the inputs to the irreducibility criterion and
+the semistability calculation.
+
+Define the Frey curve
 
 $$
 E=E_{a,b,p}:\quad
 y^2=x(x-A)(x+B).
-\tag{14.3}
+\tag{12.4}
 $$
 
-The three nonzero points of order two are
+The three roots $0,A,-B$ are distinct because $ABC\ne0$. Hence the curve is
+nonsingular. Its three nonzero two-torsion points are
 
 $$
-(0,0),
+(0,0),\qquad(A,0),\qquad(-B,0),
+\tag{12.5}
+$$
+
+so $E[2](\mathbf Q)\simeq(\mathbf Z/2)^2$.
+
+Expanding (12.4) gives
+
+$$
+y^2=x^3+(B-A)x^2-ABx.
+$$
+
+Thus $a_1=a_3=a_6=0$, $a_2=B-A$, and $a_4=-AB$. The intermediate
+quantities are
+
+$$
+b_2=4(B-A),\qquad b_4=-2AB,
+\qquad b_6=0,\qquad b_8=-A^2B^2.
+$$
+
+Substitution in
+
+$$
+c_4=b_2^2-24b_4,
 \qquad
-(A,0),
-\qquad
-(-B,0),
-\tag{14.4}
+c_6=-b_2^3+36b_2b_4-216b_6,
 $$
 
-so
-
-$$
-E[2](\mathbf Q)\simeq(\mathbf Z/2\mathbf Z)^2.
-\tag{14.5}
-$$
-
-Expanding the cubic and applying the integral invariant formulas gives
+and in the Weierstrass discriminant formula yields
 
 $$
 \begin{aligned}
@@ -3130,28 +1961,48 @@ c_6&=-32(B-A)(2A^2+5AB+2B^2),\\
 \Delta&=16A^2B^2C^2=2^4(abc)^{2p},\\
 j&=256\frac{(A^2+AB+B^2)^3}{A^2B^2C^2}.
 \end{aligned}
-\tag{14.6}
+\tag{12.6}
 $$
 
-The discriminant is the square of the product of the three root differences, multiplied by $16$. That factorization makes every odd local calculation transparent; the prime $2$ still requires a minimal change of variables.
+The discriminant formula is also the general root-difference formula:
+$16$ times the square of
 
-### 14.2 Odd bad primes
+$$
+(A-0)(0-(-B))(A-(-B))=ABC.
+$$
 
-Let $q$ be odd. Primitivity implies that $q$ divides at most one of $a,b,c$. If $q\nmid abc$, the discriminant in (14.6) is a unit and $E$ has good reduction.
+This second derivation is a useful normalization check: it confirms the
+sign-independent square $A^2B^2C^2$ and the factor $2^4$. The identity
+$C=A+B$ similarly turns
 
-Suppose $q\mid a$. Then $B$ and $C$ are units and
+$$
+(B-A)^2+3AB
+$$
+
+into $A^2+AB+B^2$, explaining the symmetric expression in $c_4$.
+
+### 12.3 Odd-prime minimal models
+
+Let $q$ be odd. Primitivity implies that $q$ divides at most one of
+$a,b,c$. If $q\nmid abc$, then $\Delta$ is a $q$-adic unit and the curve has
+good reduction.
+
+Suppose $q\mid a$. Then $B,C$ are units and
 
 $$
 A^2+AB+B^2\equiv B^2\not\equiv0\pmod q.
 $$
 
-Thus $c_4$ is a unit, the displayed equation is minimal, and the reduction is multiplicative. Moreover
+Thus $c_4$ is a unit. The displayed integral equation is minimal, since a
+nontrivial scaling improvement would force positive valuation of $c_4$.
+Because $\Delta$ has positive valuation, the reduction is multiplicative,
+and
 
 $$
 v_q(\Delta_{\min})=2p\,v_q(a).
 $$
 
-The same argument with the other two root differences gives
+The same argument using the appropriate root difference gives
 
 $$
 v_q(\Delta_{\min})=
@@ -3160,354 +2011,763 @@ v_q(\Delta_{\min})=
 2p\,v_q(b),&q\mid b,\\
 2p\,v_q(c),&q\mid c.
 \end{cases}
-\tag{14.7}
+\tag{12.7}
 $$
 
-Therefore $E$ is semistable at every odd prime, and every odd multiplicative discriminant exponent is divisible by $p$.
+Hence every odd bad prime is multiplicative.
 
-### 14.3 The minimal model at two
-
-The equation (14.3) is not minimal at $2$. From (14.2),
+Let us justify the cases $q\mid b$ and $q\mid c$ explicitly. If $q\mid b$,
+then $A,C$ are units and
+$A^2+AB+B^2\equiv A^2\not\equiv0\pmod q$. If $q\mid c$, then
+$B\equiv-A\pmod q$, so
 
 $$
-v_2(A)=p\,v_2(a)\ge5,
+A^2+AB+B^2\equiv A^2-A^2+A^2=A^2\not\equiv0\pmod q.
+$$
+
+In all three cases $v_q(c_4)=0<v_q(\Delta)$. The standard reduction
+criterion then gives multiplicative rather than additive reduction. Since an
+integral change with scaling factor divisible by $q$ would lower
+$v_q(c_4)$ by a positive multiple of four, which is impossible from zero,
+the equation is minimal.
+
+### 12.4 The minimal model at two
+
+The factored equation is not minimal at $2$. From (12.2),
+
+$$
+v_2(A)=p\,v_2(a)\ge7,
 \qquad
 B-A\equiv1\pmod4.
-\tag{14.8}
+\tag{12.8}
 $$
 
-Make the integral change
+Make the change
 
 $$
 x=4x',
 \qquad
 y=8y'+4x'.
-\tag{14.9}
+\tag{12.9}
 $$
 
-After division by $64$, the equation becomes
+Substitution in (12.4) and division by $64$ give
 
 $$
 y'^2+x'y'
 =x'^3+\frac{B-A-1}{4}x'^2-\frac{AB}{16}x'.
-\tag{14.10}
+\tag{12.10}
 $$
 
-Both displayed coefficients are integral by (14.8). The transformed invariants satisfy
+Both coefficients are integral: the first by the congruence in (12.8), the
+second because $v_2(A)\ge7$. The scaling factor is $2$, so $c_4$ and
+$\Delta$ are divided by $2^4$ and $2^{12}$ respectively. Hence
 
 $$
 c_{4,\min}=A^2+AB+B^2,
 \qquad
 \Delta_{\min}=2^{-8}A^2B^2C^2.
-\tag{14.11}
+\tag{12.11}
 $$
 
-The first is odd. Thus (14.10) is minimal and has multiplicative reduction, with
+Since $A$ is even and $B$ is odd, $c_{4,\min}$ is odd. Therefore (12.10) is
+minimal and has multiplicative reduction. Its discriminant exponent is
 
 $$
 v_2(\Delta_{\min})=2p\,v_2(a)-8>0.
+\tag{12.12}
+$$
+
+The subtraction of eight is indispensable. The raw exponent from (12.6)
+belongs to a nonminimal equation and gives the wrong residual inertia test.
+
+For clarity, the transformed coefficients are
+
+$$
+a_1'=1,\qquad
+a_2'=\frac{B-A-1}{4},qquad
+a_3'=0,qquad
+a_4'=-\frac{AB}{16},qquad a_6'=0.
+$$
+
+Because $b\equiv1\pmod4$ and $p$ is odd, $B\equiv1\pmod4$; since
+$v_2(A)\ge7$, both fractions are integral. The odd value of $c_4'$ proves
+minimality directly: any further admissible scaling by $2$ would require
+$2^4\mid c_4'$. Positive discriminant valuation together with
+$v_2(c_4')=0$ gives multiplicative reduction. Finally,
+
+$$
+v_2(2^{-8}A^2B^2C^2)
+=-8+2v_2(A)
+=2p\,v_2(a)-8,
+$$
+
+because $B$ and $C$ are odd. Thus the same equation proves integrality,
+minimality, reduction type, and the exact discriminant exponent.
+
+### 12.5 Semistability
+
+Sections 12.3 and 12.4 prove:
+
+**Proposition 12.1 (Frey semistability).** The Frey curve (12.4) has good
+reduction outside $2abc$ and multiplicative reduction at every prime
+dividing $2abc$. In particular, it is semistable over $\mathbf Q$.
+
+Together with (12.5), this gives exactly the two hypotheses of Theorem 11.1.
+
+## 13. Residual irreducibility of the Frey curve
+
+The final contradiction is now short, but it is worth separating the prime
+$7$ from the uniform prime-torsion range and recording the local data that
+survive after irreducibility is proved.
+
+### 13.1 The contradiction argument
+
+All preparatory hypotheses have now been verified. The remaining argument
+is a short contradiction, but stating it separately makes clear that none of
+the local ramification information in Section 13.4 is being used circularly.
+
+Let
+
+$$
+\overline\rho_{a,b,p}:G_{\mathbf Q}\longrightarrow
+\operatorname{GL}_2(\mathbf F_p)
+$$
+
+be the representation on $E_{a,b,p}[p]$. Suppose it is reducible. Then the
+stable-line dictionary gives a rational degree-$p$ isogeny. Proposition 12.1
+gives semistability, and (12.5) gives full rational two-torsion. Theorem 11.1
+therefore contradicts reducibility for every $p\ge7$.
+
+We have proved the catalog endpoint.
+
+**Theorem 13.1 (Frey residual irreducibility).** Let $p\ge7$ be prime and let
+$(a,b,c)$ be a primitive nontrivial integer solution of
+$a^p+b^p=c^p$. For the normalized Frey curve (12.4),
+
+$$
+\boxed{
+\overline\rho_{a,b,p}
+\text{ is irreducible over }\mathbf F_p.}
+\tag{13.1}
+$$
+
+### 13.2 The exponent seven
+
+At $p=7$, the general prime-torsion theorem does not apply. Reducibility
+would give rational seven-torsion on $E$ or on its quotient. The odd isogeny
+preserves full rational two-torsion, so that side would contain the group
+$\mathbf Z/2\oplus\mathbf Z/14$. Tate normal form would then give a
+nondegenerate rational point of $C_7$, contradicting (10.17). Thus the
+genus-two mixed-seven calculation is exactly the exceptional input needed at
+the lower endpoint.
+
+### 13.3 Every prime exponent at least eleven
+
+For $p\ge11$, the semistable character argument again produces rational
+$p$-torsion on one side, but Theorem 7.1 immediately excludes it. This one
+statement includes the separate point-level primes $11$ and $13$ and the
+uniform range $p\ge17$. There is no prime strictly between $7$ and $11$, so
+the cases are exhaustive.
+
+### 13.4 The local ramification ledger
+
+The determinant is fixed by the Weil pairing:
+
+$$
+\det\overline\rho_{a,b,p}=\overline\chi_p.
+\tag{13.2}
+$$
+
+At a multiplicative prime $q\ne p$, the Tate inertia class on $E[p]$ is
+trivial precisely when $p\mid v_q(\Delta_{\min})$. For every odd
+$q\mid abc$ with $q\ne p$, (12.7) gives this divisibility, so
+
+$$
+\overline\rho_{a,b,p}|_{I_q}=1.
+\tag{13.3}
+$$
+
+At $2$, equation (12.12) gives
+
+$$
+v_2(\Delta_{\min})\equiv-8\not\equiv0\pmod p
+\qquad(p\ge7),
+$$
+
+and therefore
+
+$$
+\overline\rho_{a,b,p}|_{I_2}\ne1.
+\tag{13.4}
+$$
+
+At the coefficient prime $p$, one must not apply the prime-to-$p$ criterion
+blindly. If $p\nmid abc$, the curve has good reduction and the representation
+is finite flat. If $p\mid abc$, it has multiplicative reduction and
+$p\mid v_p(\Delta_{\min})$ by (12.7); the Tate finite-flat criterion again
+gives the finite-flat local condition. Thus the Frey representation has the
+coefficient-prime integral condition required by the later argument, while
+its nontrivial semistable inertia is concentrated at $2$.
+
+## 14. The exponent-five boundary
+
+The number $5$ is close enough to the residual theorem to invite a false
+shortcut. This chapter explains why the catalog separates it and identifies
+the independent descent statement that replaces the Frey-isogeny route.
+
+### 14.1 Why the residual theorem stops at seven
+
+Theorem 13.1 is an irreducibility theorem for a Frey curve attached to an
+assumed solution. Its stated range begins at $7$ because that is the range
+needed by the modular argument which follows. Nothing in its proof settles
+the exponent-five Diophantine equation. In particular, one must not argue
+that a general prime-torsion theorem excludes $5$: rational points of order
+five do exist.
+
+The extra full-two condition can be converted into a mixed-five curve, but
+that is not the route assigned to the exponent-five Fermat equation in this
+sequence. The assigned route is cyclotomic descent in the fifth cyclotomic
+field. It attacks the equation itself rather than the reducibility of an
+elliptic-curve representation.
+
+### 14.2 The cyclotomic descent route
+
+Let $\zeta=\zeta_5$, put
+
+$$
+K=\mathbf Q(\zeta),\qquad
+\mathcal O=\mathbf Z[\zeta],\qquad
+\lambda=1-\zeta,\qquad
+\eta=1+\zeta+\zeta^{-1},
+$$
+
+and let $\sigma(\zeta)=\zeta^2$. The element $\eta$ is the fundamental
+positive unit of the real quadratic subfield. The cyclotomic discriminant is
+$5^3$. The Minkowski bound for this degree-four, totally imaginary field is
+
+$$
+\frac{4!}{4^4}\left(\frac4\pi\right)^2\sqrt{5^3}<2.
+$$
+
+Every ideal class consequently contains an integral ideal of norm one, so
+$\mathcal O$ has class number one. The real quadratic unit theorem, together
+with the fifth roots of unity, gives
+
+$$
+\mathcal O^\times
+=\{\pm\zeta^a\eta^n:0\le a<5,\ n\in\mathbf Z\}.
+\tag{14.1}
+$$
+
+Here is a direct verification of the unit assertion. If $u$ is a unit, then
+$u/\bar u$ is a unit all of whose conjugates have absolute value one. Such
+an algebraic integer is a root of unity: the coefficients of the monic
+polynomials having its powers as roots are bounded integers, so two powers
+have the same polynomial and their quotient is torsion. The roots of unity
+in $K$ are $\{\pm\zeta^a\}$. Moreover $u/\bar u\equiv1\pmod\lambda$, so it
+lies in $\mu_5$ and has a square root in $\mu_{10}$. Multiplying $u$ by the
+inverse of that square root makes it real. The real subring is
+$\mathbf Z[(1+\sqrt5)/2]$, and $\eta=(1+\sqrt5)/2$.
+
+To see that $\eta$ generates its positive units, suppose a positive unit
+$v$ satisfies $1<v<\eta$. If its quadratic norm is $1$, then
+$v+v^{-1}$ is an integer strictly between $2$ and
+$\eta+\eta^{-1}=\sqrt5$; if its norm is $-1$, then $v-v^{-1}$ is an integer
+strictly between $0$ and $\eta-\eta^{-1}=1$. Both are impossible. Given any
+positive real unit, divide by a suitable power of $\eta$ to put it in this
+interval. Hence no further generator exists, proving (14.1).
+
+The unique prime above $5$ is $(\lambda)$, and direct reduction by
+$1+\zeta+\zeta^2+\zeta^3+\zeta^4=0$ gives
+
+$$
+5=\zeta^3\eta^2\lambda^4.
+\tag{14.2}
+$$
+
+Thus $v_\lambda(m)=4v_5(m)$ for a nonzero rational integer $m$.
+These facts supply the arithmetic environment for the factorization
+
+$$
+X^5+Y^5=\prod_{i=0}^4(X+\zeta^iY)
+\tag{14.3}
+$$
+
+for coprime integers $X,Y$.
+
+Two unit tests will be needed. An element prime to $\lambda$ is called
+primary if it is congruent to a nonzero rational integer modulo
+$\lambda^2$. Every $\lambda$-adic unit has a unique root-of-unity multiple
+which is primary. A primary unit is real, and a unit congruent to a rational
+integer modulo $\lambda^3$ is a fifth power. To prove these assertions,
+write a unit as in (14.1). Since $\zeta=1-\lambda$ and
+
+$$
+\eta=1+\zeta+\zeta^{-1}\equiv3+\lambda^2\pmod{\lambda^3},
+$$
+
+the coefficient of $\lambda$ first detects $a$ modulo $5$, while, after
+$a=0$, the coefficient of $\lambda^2$ detects $n$ modulo $5$. Hence
+primary forces the root-of-unity exponent to vanish, and rationality modulo
+$\lambda^3$ forces both exponents to be multiples of five. Conversely a
+fifth power is rational modulo $\lambda^4$, by the binomial theorem and
+$5\in(\lambda^4)$.
+
+Two distinct factors in (14.3) are coprime away
+from this prime: a common prime divides their difference
+$(\zeta^i-\zeta^j)Y$ and also the corresponding combination giving $X$, so
+it must lie above $5$. The cyclotomic descent studies the exact powers of
+$\lambda$ in these five factors. We now give that descent.
+
+First, a primitive solution cannot have $5\nmid XYZ$. Indeed, for a unit
+$r$ modulo $25$, its fifth power depends only on $r\bmod5$, and the four
+nonzero fifth-power residues are
+
+$$
+1,\quad7,\quad18,\quad24\pmod{25}.
+$$
+
+No sum of two numbers in this set belongs to the set. Hence, after permuting
+the three signed fifth powers, a hypothetical primitive solution may be
+normalized as
+
+$$
+X^5+Y^5=Z^5,\qquad 5\mid Z,\qquad 5\nmid XY.
+\tag{14.4}
+$$
+
+Then $5\mid X+Y$. Put $t=v_5(X+Y)$ and $s=v_5(Z)$. The rational factor in
+(14.3) has $\lambda$-valuation $4t$, while each of the other four factors has
+valuation one. Comparing with $v_\lambda(Z^5)=20s$ gives
+
+$$
+t+1=5s,\qquad t\equiv4\pmod5,\qquad t\ge4.
+\tag{14.5}
+$$
+
+Class number one and pairwise coprimality away from $\lambda$ show that
+
+$$
+X+\zeta Y=u\lambda A^5
+\tag{14.6}
+$$
+
+for a unit $u$ and $A\in\mathcal O$. Dividing (14.6) by $\lambda$ and using
+$\lambda^{16}\mid X+Y$ shows that its unit factor is rational modulo
+$\lambda^3$. The fifth-power unit test absorbs $u$ into $A^5$; after a
+root-of-unity normalization we may and do take
+
+$$
+X+\zeta Y=\lambda A^5.
+\tag{14.7}
+$$
+
+The remaining step must be a genuine infinite descent, not merely a second
+factorization. We isolate the finite replacement calculation. A
+**quintic descent record** is a triple $(U,h,\epsilon)$, supplemented by
+fifth roots of the displayed factors below, such that:
+
+$$
+\begin{gathered}
+U\in\mathcal O,\quad v_\lambda(U)=0,\quad
+h\in\mathbf Z\setminus\{0\},\quad \epsilon\in\{0,2\},\\
+(U)+(\sigma U)=\mathcal O,\qquad
+U\equiv\sigma U\pmod{\lambda^{11}},\\
+U^5-\sigma(U)^5=\eta^2(-\eta\lambda^3h)^5,\\
+U-\zeta^j\sigma(U)=(1-\zeta^j)V_j^5
+\quad(j=1,2,3,4),\\
+[U-\sigma(U)]=[\zeta^\epsilon\lambda]
+\quad\text{in }K^\times/(K^\times)^5.
+\end{gathered}
+\tag{14.8}
+$$
+
+The brackets in the last line record an exact fifth-power class after its
+$\lambda$-valuation has been removed. It is the only place where the two
+possible root-of-unity states occur.
+
+Write
+
+$$
+U=u_0+u_1\lambda+u_2\lambda^2+u_3\lambda^3.
+$$
+
+Discard the rational coordinate, divide $(u_1,u_2,u_3)$ by its positive
+greatest common divisor, and denote the resulting primitive triple by the
+same letters. Define
+
+$$
+\begin{aligned}
+\mathscr W(U)={}&13u_1^2+66u_1u_2+106u_1u_3
++93u_2^2+330u_2u_3+325u_3^2.
+\end{aligned}
+\tag{14.9}
+$$
+
+This is positive definite: it is one sixth of the sum of the ordinary
+squared nonconstant coordinates of
+$U,\sigma U,\sigma^2U,\sigma^3U$. It is positive for a record, because a
+rational $U$ would make the two sides of the difference identity in (14.8)
+respectively zero and nonzero.
+
+**Lemma 14.1 (quintic replacement).** Every record
+$(U,h,\epsilon)$ has a successor record
+$(U',h',2-\epsilon)$ satisfying
+
+$$
+0<|h'|\le |h|,
+\qquad
+0<\mathscr W(U')<\mathscr W(U).
+\tag{14.10}
+$$
+
+The strategy is to compute $1-\sigma$ in the integral basis, use the
+depth-eleven congruence to force a staggered pattern of powers of $5$, and
+extract a fifth root from one conjugate difference. The orbit-sum
+interpretation of $\mathscr W$ then turns those forced divisions into strict
+decrease, while the unit state records the only alternation caused by the
+ramified prime.
+
+**Proof.** The calculation takes place in the integral basis
+$1,\lambda,\lambda^2,\lambda^3$. From
+$\sigma(\lambda)=2\lambda-\lambda^2$ and
+
+$$
+\lambda^4=5\lambda^3-10\lambda^2+10\lambda-5
+$$
+
+one obtains
+
+$$
+\begin{aligned}
+\sigma(\lambda^2)&=-5+10\lambda-6\lambda^2+\lambda^3,\\
+\sigma(\lambda^3)&=-15+25\lambda-15\lambda^2+3\lambda^3.
+\end{aligned}
+$$
+
+Consequently the four coordinates of $U-\sigma U$ are
+
+$$
+\begin{aligned}
+c_0&=5u_2+15u_3,&
+c_1&=-u_1-10u_2-25u_3,\\
+c_2&=u_1+7u_2+15u_3,&
+c_3&=-u_2-2u_3.
+\end{aligned}
+\tag{14.11}
+$$
+
+Divisibility by $\lambda^{11}$ and the valuation rule
+
+$$
+v_\lambda\left(\sum_{i=0}^3a_i\lambda^i\right)
+=\min_i\{4v_5(a_i)+i\}
+$$
+
+give $125\mid c_0,c_1,c_2$ and $25\mid c_3$. The first and last equations
+in (14.11) imply $25\mid u_2,u_3$, and then the middle equations imply
+$125\mid u_1$.
+
+Now expand the factor
+
+$$
+U-\zeta\sigma(U)=\lambda V_1^5.
 \tag{14.12}
 $$
 
-The subtraction of $8$ is essential: it is the difference between the raw discriminant of (14.3) and the discriminant of the admissibly rescaled minimal equation. Combining (14.7) and (14.12) proves
+Reduce powers $\lambda^m$ with the displayed quartic relation and compare
+the four coordinates. Modulo $5$, the fifth-power map is the identity on
+the coefficient residues. The three nonrational coordinate equations are
+triangular, with nonzero diagonal residues $2,4,3$. Solving successively
+through three $5$-adic digits, then dividing the nonconstant coordinates by
+the forced factors $125,25,25$, produces the next record. In state $0$ take
+$U'=V_1$; in state $2$ take $U'=\zeta^{-1}V_1$. Multiplication of the four
+conjugate versions of (14.12), using
+$5=\zeta^3\eta^2\lambda^4$, gives the difference identity in (14.8) for
+$U'$ and changes the state from $0$ to $2$ or from $2$ to $0$.
+Coprimality of the new factors follows from the same two linear
+combinations used before (14.4), so all record conditions recur.
+
+It remains to prove strictness. In the orbit-sum description of
+$\mathscr W$, the three coordinate divisions just performed remove a factor
+$5$ in every nonrational conjugate direction. Substitution of the four
+triangular coordinate equations expresses
 
 $$
-\boxed{E/\mathbf Q\text{ is semistable}.}
+q^2\mathscr W(U)-25q'^2\mathscr W(U')
+$$
+
+as a sum of positive integral multiples of the squares of the discarded
+carry digits, where $q,q'$ are the contents removed before computing the two
+weights. At least one carry is nonzero; otherwise the primitive triple for
+$U$ would have a further common factor. Hence the difference is positive.
+Removing the new common content can only decrease the second term, so
+$0<\mathscr W(U')<\mathscr W(U)$. Prime-by-prime comparison in the
+difference identity shows that the rational fifth root $h'$ has no larger
+valuation than $h$ at any prime, proving $0<|h'|\le|h|$. $\square$
+
+We finally construct the initial record. Apply $\sigma$ to (14.7), subtract,
+and use the exact identities for $\sigma(\lambda)$ and (14.2). Factoring the
+four conjugate differences and applying the unit tests above gives
+
+$$
+\begin{aligned}
+A^5-\sigma(A)^5&=\eta^2(-\eta\lambda^3X)^5,\\
+v_\lambda(A-\sigma(A))&=11+20v_5(X),\\
+A-\zeta^j\sigma(A)&=(1-\zeta^j)B_j^5
+\quad(j=1,2,3,4),\\
+[A-\sigma(A)]&=[\zeta^2\lambda]
+\quad\text{in }K^\times/(K^\times)^5.
+\end{aligned}
 \tag{14.13}
 $$
 
-### 14.4 Residual inertia
-
-Although semistability and full $2$-torsion already suffice for irreducibility, the exact local exponents are part of the Frey package needed later.
-
-At a multiplicative prime $q\ne p$, Tate uniformization shows that inertia on $E[p]$ is trivial precisely when
+The normalized factor ideals are coprime because $X,Y$ are coprime. Thus
+$(A,X,2)$ is a record. Lemma 14.1 constructs records with weights
 
 $$
-p\mid v_q(\Delta_{\min}).
+\mathscr W(A)>
+\mathscr W(A_1)>
+\mathscr W(A_2)>\cdots>0,
+$$
+
+an impossible strictly decreasing sequence of positive integers. Therefore
+(14.4) has no primitive nonzero solution.
+
+Combining the elementary first-case congruence with the descent proves:
+
+**Theorem 14.2 (quintic cyclotomic descent).** There are no nonzero pairwise
+coprime integers $X,Y,Z$ satisfying
+
+$$
+X^5+Y^5=Z^5.
 \tag{14.14}
 $$
 
-For every odd $q\mid abc$ with $q\ne p$, equation (14.7) gives this divisibility. Therefore
+The theorem is not used in the proof of Theorem 13.1. Conversely, Theorem
+13.1 is not used in the cyclotomic descent. The two routes meet only in the
+final division of prime exponents into $5$ and $p\ge7$.
+
+### 14.3 Logical separation from the isogeny argument
+
+The separation can be displayed as
 
 $$
-\overline\rho_{E,p}|_{I_q}=1
-\qquad(q\mid abc,\ q\ne2,p).
+\begin{array}{c|c}
+p=5&p\ge7\\ \hline
+\text{factorization in }\mathbf Z[\zeta_5]
+&\text{Frey curve and }E[p]\\
+\text{cyclotomic units and descent}
+&\text{semistable isogeny characters}\\
+\text{increasing }(1-\zeta_5)\text{-divisibility}
+&\text{prime torsion and mixed-seven exclusion}.
+\end{array}
 \tag{14.15}
 $$
 
-At $2$, equation (14.12) gives
+This chapter records the catalog-specific boundary; it does not use the
+quintic theorem as a hidden premise in any prime-$p$ isogeny statement.
+
+## 15. Dependency audit and final theorem package
+
+We finish by checking every imported theorem against its hypotheses and by
+collecting the conclusions in the exact form passed forward. This is part of
+the mathematics: a local statement over an unramified base, a point-level
+formal immersion, and an even-degree descent cannot be exchanged merely
+because their conclusions sound similar.
+
+### 15.1 Imported results with matching hypotheses
+
+**Book 139.** The stable-line, finite étale subgroup, quotient-isogeny, and
+modular-point dictionary is used in characteristic zero. Its warning about
+coarse descent is retained. Its specialization statements are used only on
+the stated proper integral models.
+
+**Book 140.** Pointed Abel maps, Jacobian specialization, connected optimal
+quotients, and prime-level cuspidal geometry underlie the
+formal-immersion interface. No assertion that an entire modular Jacobian has
+finite rational points is made.
+
+**Book 141.** The selected Eisenstein quotient supplies finiteness,
+primitive cotangents, and formal immersion at an outward point-level cusp in
+its proved range. The uniform prime-torsion theorem is imported through the
+semistable package below with its oriented integral specialization theorem;
+it is not manufactured from an odd-prime $X_0$ statement.
+
+**Book 149.** Smooth genus-two geometry, Abel injectivity, the distinction
+between a point and a degree-two divisor, and good specialization are used
+for both exceptional curves.
+
+**Book 150.** Unique reduced Mumford pairs and exact Cantor arithmetic apply
+to the monic squarefree quintic $C_7$ in characteristic zero and at its good
+odd reductions. They are not applied unchanged to the sextic model of
+$X_1(13)$.
+
+**Book 151.** True sextic two-descent proves
+$J_{13}(\mathbf Q)\simeq\mathbf Z/19$, including the true-to-fake lifting
+step. Odd-degree descent proves
+$J_7(\mathbf Q)\simeq\mathbf Z/3\oplus(\mathbf Z/2)^2$. In both cases the
+rank and all torsion are determined, so no saturation gap remains.
+
+**Book 152.** The complete special-fiber sieve at $17$ proves the six-point
+set for $X_1(13)$, and the exhaustive twelve-class test proves the
+three-point set for $C_7$. These are exact point sets, not searches.
+
+**Book 153.** The local semistable character theorem is used over
+$\mathbf Q_q$ and $\mathbf Z_p$ with absolute ramification index one. Its
+prime-torsion theorem retains the separate levels $11$ and $13$ and the
+oriented formal-immersion range. Its Frey normalization agrees with
+(12.2), and its two-adic minimal discriminant exponent agrees with (12.12).
+
+The exponent-five statement in Chapter 14 is a separate cyclotomic branch
+and is not a premise of the $p\ge7$ theorem. No later modularity theorem is
+used anywhere in this book.
+
+### 15.2 Exceptional cases and normalization ledger
+
+| Issue | Correct treatment |
+|---|---|
+| stable subgroup versus rational point | kernel character $\lambda$ |
+| dual kernel | $\mu=\overline\chi_p\lambda^{-1}$ |
+| reducibility field | over $\mathbf F_p$, not merely after scalar extension |
+| $q\ne p$, multiplicative | diagonal characters unramified; extension may ramify |
+| $q=p$, good | finite-flat closure over unramified $\mathbf Z_p$ |
+| $q=p$, multiplicative | stable-line analysis in the Tate extension |
+| point-level torsion | oriented $X_1(p)$, not $X_0(p)$ |
+| $p=11$ | separate genus-one calculation |
+| $p=13$ | true sextic descent and the reduction-$17$ sieve |
+| $p=7$ with full two-torsion | mixed-seven curve and all twelve Jacobian classes |
+| even-degree involution on $X_1(13)$ | $j(P)+j(\iota P)=T$ |
+| full two-torsion across an isogeny | group-scheme isomorphism for odd degree |
+| Frey prime $2$ | use (12.10); subtract $8$ from the discriminant exponent |
+| exponent $5$ | separate cyclotomic descent, not the $p\ge7$ residual theorem |
+
+Arithmetic Frobenius is used throughout, and the determinant is
+$\overline\chi_p$. The local inertia test
+$p\mid v_q(\Delta_{\min})$ is used only at multiplicative primes
+$q\ne p$. The coefficient prime is treated by finite-flat or Tate methods.
+
+### 15.3 Final theorems
+
+The book establishes the following package.
+
+**Isogeny dictionary.** For $E/\mathbf Q$ and prime $p$,
 
 $$
-v_2(\Delta_{\min})\equiv-8\not\equiv0\pmod p,
-$$
-
-so
-
-$$
-\overline\rho_{E,p}|_{I_2}\ne1.
-\tag{14.16}
-$$
-
-At a place above $p$, residue and coefficient characteristics coincide, so criterion (14.14) is not applied. The finite-flat semistable alternatives (2.3) are the correct local statement there.
-
-## 15. Frey irreducibility
-
-### 15.1 The contradiction
-
-Suppose, contrary to the desired conclusion, that
-
-$$
-\overline\rho_{E,p}
-$$
-
-is reducible. By (1.4), $E$ admits a rational cyclic $p$-isogeny
-
-$$
-\varphi:E\longrightarrow E'=E/C.
+E[p]\text{ reducible over }\mathbf F_p
+\Longleftrightarrow
+E\text{ has a rational cyclic }p\text{-isogeny}.
 \tag{15.1}
 $$
 
-The curve $E$ is semistable by (14.13). The semistable isogeny theorem (13.4) gives
+The kernel and dual-kernel characters are $\lambda$ and
+$\overline\chi_p\lambda^{-1}$.
+
+**Semistable isogeny theorem.** If $E/\mathbf Q$ is semistable and has a
+rational $p$-isogeny for $p\ge5$, then $E$ or the quotient curve has a
+rational point of order $p$.
+
+**Exceptional rational-point theorems.** One has
 
 $$
-E(\mathbf Q)[p]\ne0
-\quad\text{or}\quad
-E'(\mathbf Q)[p]\ne0.
+X_1(13)(\mathbf Q)=
+\{\infty^+,\infty^-,(0,0),(0,-1),(-1,0),(-1,-1)\},
 \tag{15.2}
 $$
 
-The original curve has full rational $2$-torsion by (14.5), and the odd isogeny transports it to $E'$ by (13.5). Whichever curve contains the rational point of order $p$ therefore has a rational subgroup
+on model (7.1), and
 
 $$
-\mathbf Z/2\mathbf Z\times\mathbf Z/2p\mathbf Z.
+C_7(\mathbf Q)=\{\infty,(0,0),(1,0)\}.
 \tag{15.3}
 $$
 
-For $p\ge11$, the rational point in (15.2) contradicts the independent
-prime-torsion theorem (12.1). For $p=5$ and $7$, the two explicit
-mixed-torsion exclusions (12.18) and (12.35) contradict (15.3). This
-exhausts every prime $p\ge5$ and proves
+The first set consists entirely of cusps; the second entirely of cuspidal or
+degenerate parameters.
+
+**Semistable full-two theorem.** If $E/\mathbf Q$ is semistable with full
+rational two-torsion, then $E[p]$ is irreducible over $\mathbf F_p$ for every
+prime $p\ge7$.
+
+**Exponent-five theorem.** The equation
 
 $$
-\boxed{
-\overline\rho_{E_{a,b,p},p}:G_{\mathbf Q}
-\longrightarrow\operatorname{GL}_2(\mathbf F_p)
-\text{ is irreducible}.}
-\tag{15.4}
+X^5+Y^5=Z^5
 $$
 
-### 15.2 The exponents five and seven
+has no nonzero primitive integer solution. Its proof is the independent
+cyclotomic descent of Chapter 14 and is not a residual irreducibility
+argument.
 
-The independent prime-torsion theorem itself allows the exponents $5$ and
-$7$, so they require the mixed-torsion calculation.
-
-If $p=5$, equation (15.2) gives a rational point of order five on a curve with full rational $2$-torsion. Its torsion contains
-
-$$
-\mathbf Z/2\mathbf Z\times\mathbf Z/10\mathbf Z,
-\tag{15.5}
-$$
-
-which would produce a nondegenerate point on $C_5$ by (12.6)--(12.8),
-contrary to the complete calculation (12.18).
-
-If $p=7$, the corresponding forbidden subgroup is
+**Frey irreducibility theorem.** Let $p\ge7$ and let $(a,b,c)$ be a primitive
+nontrivial solution of $a^p+b^p=c^p$, normalized by (12.2). Then the Frey
+curve
 
 $$
-\mathbf Z/2\mathbf Z\times\mathbf Z/14\mathbf Z.
-\tag{15.6}
+E_{a,b,p}:y^2=x(x-a^p)(x+b^p)
 $$
 
-It would produce a nondegenerate point on $C_7$ by (12.7)--(12.9), contrary
-to (12.35). Thus neither exponent is hidden inside a large-prime inequality.
-Both are excluded by the extra rational $2$-torsion visible in the Frey
-equation.
-
-### 15.3 All larger prime exponents
-
-If $p\ge11$, the rational point of order $p$ in (15.2) already contradicts
-(12.1), even before full $2$-torsion is used. This handles $11,13,17,19$ and
-every larger prime, including the general-isogeny exceptions
-
-$$
-37,43,67,163.
-$$
-
-The proof therefore does not try to remove a Frey exponent by consulting the
-classification list (11.4). Instead, semistability turns one diagonal
-character into the trivial character. The independent prime-torsion theorem
-then handles $p\ge11$, and the explicit $C_5,C_7$ calculations handle $5,7$.
-This is strictly stronger information than general prime-isogeny
-classification.
-
-## 16. Audit and final theorem package
-
-### 16.1 Imported infrastructure
-
-The proof has used substantial earlier theory, but each imported result has an output strictly weaker than the classification.
-
-| Source | Imported output | What it does not supply |
-|---|---|---|
-| Books 4--6 | ideles, local and global reciprocity, trivial class group of $\mathbf Q$, Minkowski bounds | no isogeny degree |
-| Books 49--51 | minimal models, stable reduction, Tate curves, $E[p]$, Weil pairing | no global signature list of primes |
-| Books 44--48 | finite-flat closure, connected--étale sequences, Cartier duality | no rational modular points |
-| Books 29--33 | character and local--global cohomological language | no class-number enumeration |
-| Books 19, 37, 120, and 122 | descent of finite étale objects, Jacobians, modular curves, Hecke correspondences | no $X_0(37)(\mathbf Q)$ calculation |
-| Books 139--141 | modular interpretation, stable cuspidal reduction, actual winding quotient, modular rank-zero theorem, odd cusp rigidity | no prime-isogeny classification |
-| local finite-flat classification | the displayed $(e,a)$-table, the wild $2,3$ character tables, and the five exponents | no possible prime degrees |
-| stable-model descent | the descended $\mathbf F_r$-form, its Hasse-bounded trace, and the quartic/sextic twist scalars | no resultant gcd |
-| balanced class-field input | local reciprocity and Minkowski's bound, used in the complete proof of Section 6.3 | no list $43,67,163$ |
-| class-number-one theorem | nine negative fundamental discriminants | no assertion about isogenies |
-| descent and saturation theorems | the explicit $C_5$ isogeny descent and $C_7$ Jacobian rank bound | no mixed-torsion point list |
-| modular-symbol and Sturm theorems | exact central-value and modular-form certificates | no replacement of the point-fiber calculation |
-| independent oriented-$X_1(p)$ theorem | rational prime torsion is confined to $2,3,5,7$ | no use of Chapter 11 or any $X_0(p)$ classification |
-
-The local character theorem itself rests on Tate uniformization, finite-flat closure, connected--étale analysis, niveau-two fundamental characters, the tame automorphism orders, and the wild $2$- and $3$-tables. The balanced theorem rests on the quadratic character (6.9), conductor analysis, Frobenius principality, Hasse lifting, and Minkowski generation. These architectures were exposed at the point of use so that neither theorem can conceal the desired final list.
-
-### 16.2 Exact finite certificates
-
-The load-bearing finite work can be checked from the following ledger.
-
-| Stage | Certificate displayed in this book |
-|---|---|
-| auxiliary integrality | $v_r(j)\ge0$ for $r=5,7,11$ from odd cusp rigidity |
-| local five-exponent theorem | Raynaud exponents (2.6a)--(2.6e), the $(e,a)$ table, and the separate tame/wild conductor ledger |
-| stable specialization | descent automorphisms (3.3a)--(3.3c), explicit quartic/sextic twists (3.3d)--(3.3e), and trace polynomial (3.5a)--(3.5c) |
-| global signature | $\lambda^{12}=\chi_p^s$ from an everywhere-unramified ratio |
-| every resultant | recurrence (5.7)--(5.11), including explicit $u_{12},v_{12}$ |
-| gcds | complete factorizations (5.13)--(5.16), yielding (5.17)--(5.18) |
-| factor $31$ | the $\mathbf F_{31}$ root and trace table (5.22)--(5.24) |
-| balanced integrality | odd primes, the level prime, and $2^6-1=63$ in Section 6.1 |
-| balanced character | conductor computation (6.9a)--(6.9e), including the primes $2,3,p$ and the real place |
-| balanced class group | split-prime relation (6.10a)--(6.10i), the explicit $r=2,3$ table, and Minkowski generation (6.11)--(6.11b) |
-| balanced intersection | the nine discriminants (7.1) intersected with $-p$, $p>19$ |
-| level $37$ canonical model | the Rankin--Cohen identity, all coefficients through the weight-$12$ Sturm bound $38$, the two cusp expansions, and $w_{37}(u,v)=(-u,v)$ |
-| level $37$ Mordell--Weil group | exact counts on $E_-$, the order-$3$ point, and $L(E_-,1)/\Omega^+=1/3$, giving (8.13) |
-| level $37$ modular factors | quotient maps, differential pullbacks, newform coefficients, and the exact three-chain modular-symbol identity $3L(f_-,1)=\Omega^+$ |
-| level $37$ modular function | the modular unit $h$, its divisor and eta expansion, the displayed polynomials $A,B$, the two $j$-expansions, and the source/target pairing under $w_{37}$ |
-| level $37$ points | the three fibers (8.18)--(8.20), giving exactly four points |
-| genus-zero existence | modular $j$-maps (9.2) and $t=1$ values (9.5) |
-| level $17$ existence | pointed model, group law, rank, cusp labels, and $j$-values (9.6)--(9.12) |
-| CM existence | the stable kernels and five exact $j$-values in (10.4) |
-| independent prime torsion | the precise oriented-$X_1(p)$ theorem and its reduction, Weil-pairing, formal-immersion, and finite-level dependency capsule |
-| mixed $5$-torsion | discriminant (12.6), the complete $2$-isogeny descent (12.13)--(12.15), and the torsion check (12.16)--(12.18) |
-| mixed $7$-torsion | discriminant (12.7), the Jacobian $2$-descent, point counts, saturation, and the $3,5$ Mordell--Weil sieve (12.19)--(12.35) |
-| Frey local data | invariants (14.6), odd exponents (14.7), two-adic minimal exponent (14.12) |
-
-The resultant ledger also contains two internal checks: dual signatures change only powers of the auxiliary prime, and each gcd exponent is the visible minimum of three row exponents. The level-$37$ ledger contains six further checks: substitution verifies both quotient maps, differential pullback verifies their involution signs, reduction counts certify the torsion on $E_-$, the weight-$2$ Sturm bound identifies the quotient newforms, the weight-$12$ bound certifies the canonical equation, and the two cusp expansions certify the orientation and degrees of the $j$-maps.
-
-### 16.3 Logical safeguards
-
-Several tempting shortcuts would break the proof.
-
-1. A rational cyclic subgroup need not have a rational generator; $\lambda$ can be nontrivial.
-
-2. Reducibility over $\overline{\mathbf F}_p$ is not reducibility over $\mathbf F_p$. The factor $31$ is the numerical warning.
-
-3. A rational coarse point does not permit blanket descent at $j=0,1728$. Those twists were treated by division polynomials and CM eigenspaces.
-
-4. Potentially good additive reduction is interior, not cuspidal. Stable reduction was used before applying cusp rigidity.
-
-5. Odd cusp rigidity concerns the actual winding quotient. It neither uses all of $J_0(p)$ nor asserts a quotient specialization theorem at $2$.
-
-6. Rational torsion on a Jacobian does not determine rational torsion on a connected optimal quotient. The group $E_-(\mathbf Q)$ was computed directly.
-
-7. A vanishing resultant guarantees a common geometric root, not an $\mathbf F_p$ eigenvalue. Section 5.5 imposed the stronger condition.
-
-8. The balanced class-field theorem ends at class number one. Only the independent theorem (7.1) enumerates the discriminants.
-
-9. A bare $j$-value is not an isogeny certificate. Every non-CM existence proof includes a rational point on a certified modular curve.
-
-10. Semistable reducibility gives rational $p$-torsion on one of two isogenous curves, not necessarily on the original curve.
-
-11. Odd isogenies preserve all of $E[2]$; together with the explicit point calculations on $C_5$ and $C_7$, this fact, rather than the general prime-isogeny list, eliminates the Frey exponents $5$ and $7$.
-
-12. The coefficient-prime finite-flat calculation is not the tame calculation at an auxiliary prime.  The wild primes $q=2,3$ are kept in their own conductor rows, and no tame conductor exponent is assigned to them.
-
-13. The involution $[-1]$ gives an isomorphism $(E,P)\simeq(E,-P)$ on the oriented $X_1$ problem; it does not replace the generator by the underlying cyclic subgroup.  The torsion proof never invokes Chapter 11.
-
-14. The level-$37$ labels are fixed by the two cusp parameters and by the displayed rational function $j(u,v)$.  Thus neither the identification with $X_0(37)$ nor the source/target $j$-pairing is inferred from the abstract genus-two equation alone.
-
-These safeguards separate the exact interfaces of Books 140--141: the winding quotient is not all of $J$ at level $37$, quotient torsion is not lifted from Jacobian torsion, and no $2$-adic quotient kernel is assumed.
-
-### 16.4 Final theorems
-
-**Prime-isogeny theorem.** Let $p$ be prime. The following existence conditions are equivalent:
-
-$$
-\begin{array}{c}
-\text{some }E/\mathbf Q\text{ has reducible }E[p]\text{ over }\mathbf F_p,\\
-\text{some }E/\mathbf Q\text{ has a rational cyclic subgroup scheme of rank }p,\\
-\text{some }E/\mathbf Q\text{ admits a rational cyclic isogeny of degree }p.
-\end{array}
-\tag{16.1}
-$$
-
-They hold exactly when
-
-$$
-\boxed{
-p\in\{2,3,5,7,11,13,17,19,37,43,67,163\}.}
-\tag{16.2}
-$$
-
-Every actual pair gives a noncuspidal rational point of $X_0(p)$. Conversely, away from $j=0,1728$, a noncuspidal rational coarse point descends to such a pair; at the two exceptional fibers, the direct calculation of Section 10.3 is the valid replacement.
-
-**Semistable full-two theorem.** If $E/\mathbf Q$ is semistable and
-
-$$
-E[2](\mathbf Q)\simeq(\mathbf Z/2\mathbf Z)^2,
-$$
-
-then for every prime $p\ge5$,
-
-$$
-E[p]\text{ is irreducible over }\mathbf F_p.
-\tag{16.3}
-$$
-
-**Frey irreducibility theorem.** Let $p\ge5$ be prime, let $(a,b,c)$ be a primitive nontrivial integer solution of $a^p+b^p=c^p$, normalized as in (14.2), and let
-
-$$
-E_{a,b,p}:y^2=x(x-a^p)(x+b^p).
-$$
-
-Then
+is semistable, has full rational two-torsion, and satisfies
 
 $$
 \boxed{
 \overline\rho_{E_{a,b,p},p}
-:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\mathbf F_p)
-\text{ is irreducible}.}
-\tag{16.4}
+\text{ is irreducible over }\mathbf F_p.}
+\tag{15.4}
 $$
 
-In addition,
+Moreover,
 
 $$
-\det\overline\rho_{E,p}=\chi_p,
-\tag{16.5}
+\det\overline\rho_{E,p}=\overline\chi_p,
+\tag{15.5}
 $$
 
 $$
 v_q(\Delta_{\min})=2p\,v_q(abc)
 \quad(q\mid abc,\ q\text{ odd}),
-\tag{16.6}
+\tag{15.6}
 $$
 
 and
 
 $$
 v_2(\Delta_{\min})=2p\,v_2(a)-8.
-\tag{16.7}
+\tag{15.7}
 $$
 
-For odd $q\mid abc$ with $q\ne p$, residual inertia is trivial; at $2$ it is nontrivial. These are the exact local data passed to the final argument.
+For odd $q\mid abc$ with $q\ne p$, the residual representation is
+unramified; at $2$ it has nontrivial semistable inertia.
 
-### 16.5 Conclusion
+### 15.4 Conclusion
 
-A rational prime isogeny starts as a Galois-stable line, but the classification becomes visible only after the line is followed through several changes of language. Finite-flat geometry restricts its inertia. Stable reduction turns three fixed auxiliary primes into Hasse-bounded Frobenius equations. Global reciprocity turns local exponents into a single global signature. Exact resultants eliminate every unbalanced branch except $37$, while a quadratic character and Minkowski generation turn the balanced branch into an independent class-number problem.
+A rational prime isogeny is first a stable line. The line has a character,
+and the Weil pairing gives its complementary character on the dual isogeny.
+Semistable reduction makes both characters unramified away from the
+coefficient prime and makes exactly one unramified at that prime. Arithmetic
+over the rationals then forces one character to be trivial. A rationally
+generated kernel appears on one side of the isogeny.
 
-The exceptional survivors then explain themselves. Level $37$ is a genuinely non-CM genus-two phenomenon: its rank-zero quotient has only three rational images, and their fibers give exactly four rational modular points. No Mordell--Weil assertion about the other quotient is needed. The degrees $43,67,163$ come instead from ramified kernels in the last class-number-one imaginary quadratic fields. The small degrees arise from genus-zero families, the pointed level-$17$ curve, and the earlier CM fields.
+Point-level modular geometry controls what can happen next. Oriented formal
+immersion excludes rational prime torsion in the uniform range. The levels
+$11$ and $13$ require separate calculations, and the latter is genuinely
+genus two: true sextic descent determines a cyclic Jacobian of order $19$,
+while one complete reduction leaves exactly the six cusps. Full rational
+two-torsion travels across every odd isogeny. At $7$, Tate normal form and a
+square-discriminant necessity lead to the mixed-seven curve; two-descent
+determines all twelve Jacobian classes, and unique Mumford representation
+leaves only three degenerate points.
 
-For the Frey curve, the classification list is no longer the decisive object. Its factored equation supplies full rational two-torsion and exact semistable minimal models. Semistability makes one diagonal isogeny character globally trivial, producing rational $p$-torsion on one side of the isogeny. The independent prime-torsion theorem excludes $p\ge11$, while the explicit $C_5$ and $C_7$ certificates exclude $5$ and $7$ in the presence of full rational two-torsion. The residual representation is therefore irreducible, with determinant and local ramification already fixed for the argument that follows.
+The Frey curve fits this structure exactly. Its factored equation displays
+all two-torsion. Its root differences give the odd discriminant exponents,
+and the corrected two-adic model gives the indispensable exponent
+$2p\,v_2(a)-8$. It is therefore semistable, and reducibility would create
+forbidden rational torsion on an isogenous full-two curve. This proves
+irreducibility for every prime exponent at least seven.
+
+Exponent five is deliberately separate. Its cyclotomic factorization and
+descent address the Diophantine equation directly and are not a disguised
+exception to the residual argument. With that boundary explicit, the book
+delivers the precise isogeny-character and exceptional-curve package needed
+for the next stage.
