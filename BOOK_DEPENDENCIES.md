@@ -185,7 +185,7 @@ flowchart LR
 | 111 | 77, 82, 80, 99 |
 | 112 | 85, 111, 110 |
 | 113 | 92, 86 |
-| 114 | 103, 109, 113 |
+| 114 | 86, 103, 106, 109, 110, 113 |
 | 115 | 86, 111, 113 |
 
 ### IX. Modular and Shimura Geometry with Galois Realization

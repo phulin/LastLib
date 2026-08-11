@@ -137,7 +137,7 @@ any resulting corrections.
 - [x] 111. Orbital Integrals for GL₂ and Quaternion Algebras
 - [x] 112. Transfer of Test Functions and the Rank-Two Fundamental Lemma
 - [x] 113. Twisted Conjugacy and Geometric Trace Distributions
-- [ ] 114. Twisted Cuspidal Trace Kernels and Spectral Expansion
+- [x] 114. Twisted Cuspidal Trace Kernels and Spectral Expansion
 - [ ] 115. Twisted Orbital Matching and the Cyclic Fundamental Lemma
 - [x] 116. Generalized Elliptic Curves and Level Structures
 - [x] 117. Compactified Modular Stacks and Coarse Modular Curves

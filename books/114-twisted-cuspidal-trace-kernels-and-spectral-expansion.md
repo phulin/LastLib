@@ -108,22 +108,26 @@ factor.  Its two-sided unipotent transform is zero.  This makes the kernel cuspi
 variables, gives rapid decay in the cusp, and makes the associated operator trace class.  At the
 same time, the same local zero annihilates every parabolically induced representation as an
 operator.  Consequently continuous scattering expressions vanish before traces or derivatives
-of intertwiners have to be evaluated, and residues vanish by taking Laurent coefficients.
+of intertwiners have to be evaluated.  Residual determinant characters vanish by a direct
+constant-term calculation; Laurent coefficients give a second proof when the selected factor
+is compactly supported modulo the center.
 
 The main theorem is an honest twisted simple trace formula.  Its left side is the trace of a
 trace-class operator and an absolutely convergent sum of twisted traces on $\sigma$-stable
 cuspidal representations.  Its right side is the convergent twisted geometric distribution:
-the scalar channel, regular elliptic norm classes, and, in quadratic degree, the exceptional
-scalar-norm classes with quaternion division centralizer.  Split regular and nonsemisimple
-classes have already cancelled together in the parabolic channel.
+the scalar channel, regular elliptic projective twisted classes whose actual norms satisfy the
+torus condition, and, in quadratic degree, the exceptional scalar-norm classes with quaternion
+division centralizer.  Split regular and nonsemisimple classes have already cancelled together
+in the parabolic channel.
 
 The final chapters explain precisely how this formula serves cyclic base change.  Local base
 change produces $\sigma$-invariant representations over $E$ and prescribes the unramified power
 map on Satake parameters.  Twisted pseudo-coefficients isolate invariant local types, while
 spherical functions record the power map.  Comparing the twisted formula over $E$ with an
 ordinary formula over $F$ then has a completely specified spectral meaning.  The local equality
-of orbital integrals needed to identify the two geometric sides is a separate local theorem;
-we isolate that boundary rather than building it into the present argument.
+of orbital integrals is a separate local theorem, and global comparison additionally requires
+the projective norm-fiber and centralizer-coefficient identity recorded in Chapter 13; we
+isolate those boundaries rather than building them into the present argument.
 
 ## 1. The twisted spectral problem
 
@@ -214,7 +218,7 @@ $$
 \phi(zg)=\Omega(z)\phi(g)
 $$
 
-and live on
+and are realized as $\Omega$-equivariant sections over
 
 $$
 X_{E,\Omega}=Z_E(\mathbf A_E)G_E(E)\backslash G_E(\mathbf A_E).
@@ -446,9 +450,17 @@ parabolic channel as an operator, not merely make one induced trace vanish.
 
 At a nonarchimedean place $w$ of $E$, use smooth functions compactly supported modulo the
 center with inverse central covariance.  At an archimedean place, use smooth functions that are
-finite under left and right maximal compact actions and rapidly decreasing modulo the center
-with every invariant derivative.  A global admissible function is a finite sum of restricted
-tensors
+finite under left and right maximal compact actions and satisfy the geometric Schwartz
+estimates used in the preceding twisted-kernel theory.  Explicitly, for every invariant
+differential operator $D$, every $A>0$, and a fixed proper submultiplicative projective height,
+
+$$
+|Df_w(g)|\leq C_{D,A}\|g\|_w^{-A}.
+$$
+
+This is stronger than mere membership in the Harish--Chandra Schwartz algebra and is the
+hypothesis that licenses both the rational-point summation in Chapter 4 and the global orbital
+estimates in Chapter 11.  A global admissible function is a finite sum of restricted tensors
 
 $$
 f=\bigotimes_w f_w,
@@ -489,22 +501,28 @@ $$
 the kernel of the integrated operator between compact-picture points $x$ and $y$ is
 
 $$
-\int_{T(k)}\chi_1(a)\chi_2(d)|a/d|^s\delta_B(t)^{1/2}
+\int_{Z(k)\backslash T(k)}\chi_1(a)\chi_2(d)|a/d|^s\delta_B(t)^{1/2}
 \left(\int_{N(k)}h(x^{-1}tny)\,dn\right)dt.
 \tag{3.3}
 $$
 
-Thus (3.2) implies
+The quotient by $Z(k)$ is forced by the fixed central character and removes the otherwise
+infinite central factor.  On the unitary axis the integral is the kernel of the honest bounded
+induced action, so (3.2) implies
 
 $$
-I_k(\chi_1,\chi_2;s)(h)=0
+I_k(\chi_1,\chi_2;it)(h)=0
 \tag{3.4}
 $$
 
-first in a convergence chamber and then at every regular parameter by continuation of the
-finite compact-type matrix entries.  At a reducibility point the specialization is still the
-zero operator.  This is stronger than trace zero and is the form needed when a scattering
-operator or its derivative occurs beside the test operator.
+for every genuine unitary principal series with the prescribed central character.  If $k$ is
+nonarchimedean and $h$ is compactly supported modulo the center, the compact-picture matrix
+entries are Laurent transforms of compactly supported data.  In that case (3.4) extends as the
+zero meromorphic family in $s$, including every regular parameter and every Laurent
+coefficient at a reducibility point.  No such off-unitary specialization is asserted for a
+general archimedean Schwartz coefficient: formal continuation there need not equal honest
+convolution on a nonunitary subquotient.  The unitary-axis operator zero is already stronger
+than trace zero and is exactly what genuine Eisenstein wave packets require.
 
 ### 3.3 Why one local zero is global
 
@@ -512,12 +530,14 @@ Assume one factor $f_{w_0}$ in (3.1) is strongly cuspidal.  For a factorizable g
 representation,
 
 $$
-I_E(\chi_1,\chi_2;s)(f)
-=\bigotimes_w I_w(\chi_{1,w},\chi_{2,w};s)(f_w).
+I_E(\chi_1,\chi_2;it)(f)
+=\bigotimes_w I_w(\chi_{1,w},\chi_{2,w};it)(f_w)=0.
 \tag{3.5}
 $$
 
-The $w_0$-factor is zero by (3.4), so the global operator is zero.  The same assertion can be
+The $w_0$-factor is zero by (3.4), so the honest global unitary induced operator is zero.  If
+that factor is nonarchimedean and compactly supported modulo the center, the same tensor
+identity is meromorphically zero in $s$.  The same assertion can be
 grouped by places $v$ of $F$.  If $E_v=\prod_{w\mid v}E_w$ and the local function is a tensor
 over $w\mid v$, one zero component makes its integral over
 $N(E_v)=\prod_{w\mid v}N(E_w)$ vanish.  Hence the test also satisfies the strong-cuspidality
@@ -536,7 +556,9 @@ Jacquet module, which is zero.  After formal-degree normalization, such a coeffi
 an exact spectral selector.
 
 At a real place, a compact-finite discrete-series coefficient is rapidly decreasing modulo the
-center and has zero proper constant term.  At a complex place
+center and has zero proper constant term.  Such a coefficient is usable here when it also
+satisfies the explicit projective-height estimates of Section 3.1; compactly supported
+modulo-center pseudo-coefficients satisfy them automatically.  At a complex place
 $\mathrm{GL}_2(\mathbf C)$ has no discrete series modulo center, so an archimedean selector of
 this kind is unavailable; a finite supercuspidal place supplies the needed zero instead.  This
 is why the twisted theorem is stated with a strongly cuspidal place, not with a real place.
@@ -557,11 +579,17 @@ Before a trace can be taken, the rational-point series must define a genuine smo
 The safe order is: prove local uniform convergence, prove vanishing of both constant terms,
 deduce rapid decay, and only then restrict to the diagonal.
 
+Write $X$ for $X_E^1$ in the determinant-one realization and for the central-character
+quotient, with its $\Omega$-equivariant line bundle, in the fixed-central-character realization.
+
 ### 4.1 Absolute convergence before taking a trace
 
 For an admissible $f$, define $K_f^\sigma$ by (2.9).  The finite support of $f$ confines the
 entries of a contributing rational matrix $\delta$ and $\det(\delta)^{-1}$ to fixed fractional
-ideals.  On compact sets of $x$ and $y$, archimedean rapid decrease gives, for every $A$,
+ideals in the determinant-one realization.  In the fixed-central-character realization,
+choose a primitive representative of each projective class; only finitely many ideal classes
+occur, and the same assertion holds in one fixed fractional lattice for each of them.  On
+compact sets of $x$ and $y$, the archimedean estimates of Section 3.1 give, for every $A$,
 
 $$
 |f(x^{-1}\delta\sigma(y))|
@@ -578,6 +606,22 @@ transported by $\sigma$.  It satisfies the same estimates.  We have therefore pr
 
 **Proposition 4.1.** The series $K_f^\sigma(x,y)$ and every invariant derivative converge
 absolutely and locally uniformly.  The resulting kernel is smooth and of moderate growth.
+
+For later use, it is also the distribution kernel of $T_\sigma(f)$.  If $\phi$ is a smooth
+automorphic vector compactly supported modulo the relevant rational and central quotient,
+local normal convergence and that compact support permit unfolding:
+
+$$
+\int_XK_f^\sigma(x,y)\phi(y)\,dy
+=\int_{Z_E(\mathbf A_E)\backslash G_E(\mathbf A_E)}
+f(g)\phi(\sigma^{-1}(xg))\,d\bar g
+=T_\sigma(f)\phi(x),
+\tag{4.1a}
+$$
+
+with the center omitted in the determinant-one realization.  Haar invariance under $\sigma$
+gives the second equality.  Density and the $L^1$ bound for convolution extend this identity
+to the automorphic Hilbert space.
 
 The proof takes place before setting $x=y$.  A diagonal estimate alone would not justify
 convolution against an arbitrary $L^2$ function or differentiation in two independent
@@ -614,20 +658,33 @@ Inversion of $N_E$, conjugation by $T_E$, and (3.2) show that $f^{\sigma,*}$ is 
 cuspidal.  Moreover
 
 $$
-K_{f^{\sigma,*}}^\sigma(y,x)
+K_{f^{\sigma,*}}^{\sigma^{-1}}(y,x)
 =\overline{K_f^\sigma(x,y)}.
 $$
 
-Applying the first-variable calculation to this kernel proves vanishing of the second constant
-term.  Thus the kernel is cuspidal in both variables, not merely on the diagonal.
+Indeed, applying $\sigma$ inside $f^{\sigma,*}$ and reindexing the rational sum by
+$\delta\mapsto(\sigma\delta)^{-1}$ gives the displayed identity.  Applying the first-variable
+calculation with the generator $\sigma^{-1}$ to this kernel proves vanishing of the second
+constant term.  Thus the kernel is cuspidal in both variables, not merely on the diagonal.
 
 ### 4.3 Simultaneous rapid decay
 
-Rapid decay of cusp forms says that a smooth finite-type cusp form and all its invariant
-derivatives decrease faster than every power of height on a Siegel set.  Apply this theorem to
-$x\mapsto K_f^\sigma(x,y)$.  The constants can be controlled by finitely many Sobolev norms in
-the $y$ variable because the kernel has finite type.  Apply Sobolev embedding in $y$ and use the
-second-variable cuspidality just proved.  For every $A>0$ one obtains
+The usual rapid-decay theorem is often stated for automorphic vectors finite under the
+archimedean infinitesimal center.  Our Schwartz kernel need not satisfy that hypothesis, so we
+use the underlying rank-one Fourier argument directly.  Fix the finite level and the finitely
+many cusp charts meeting the finite support.  On a compact unipotent cross-section in either
+variable, Section 4.2 says that the zero Fourier coefficient vanishes.  The restriction of the
+kernel to a product of two such cross-sections is therefore a double Fourier series indexed by
+nonzero points of two fixed fractional lattices.
+
+At cusp heights $H_x$ and $H_y$, invariant differentiation in the two unipotent directions
+multiplies a nonzero Fourier mode by positive powers of $H_x$ and $H_y$.  Integrate by parts
+$r$ times in each set of unipotent variables, and apply Sobolev embedding on the two compact
+cross-sections.  The differentiated Poincare series is locally normally convergent by
+Proposition 4.1, while the all-orders projective estimates of Section 3.1 bound the required
+Sobolev norms by one continuous Schwartz seminorm of $f$.  Taking $r$ larger than the two
+lattice ranks plus the desired decay exponent makes the two nonzero-frequency sums absolutely
+convergent and gives, for every $A>0$,
 
 $$
 |D_xD_yK_f^\sigma(x,y)|
@@ -636,9 +693,9 @@ $$
 \tag{4.3}
 $$
 
-This is stronger than two unrelated one-variable bounds.  The constant in (4.3) is uniform in
-both variables.  Its proof uses only finitely many derivatives because the compact types of $f$
-are finite.
+The compact parts of the cusp charts and the finitely many charts change only the constant.
+This proves simultaneous, rather than merely separate, decay uniformly in both variables.  For
+each prescribed $A,D_x,D_y$, only finitely many derivatives of $f$ occur.
 
 The estimate is stable under bounded variation of $f$ in a sufficiently high admissible
 Schwartz seminorm.  This uniformity will give continuity of the trace distribution and allow
@@ -708,7 +765,8 @@ clear that no continuous resolvent is being treated as compact.
 
 ### 5.2 A cuspidal Sobolev factorization
 
-Choose an even integer $m>d$.  From (5.2),
+Choose an even integer $m>d$, increasing it whenever a prescribed finite number of kernel
+derivatives is needed.  From (5.2),
 
 $$
 S=(1+\Delta)^{-m/2}P_{\mathrm{cusp}}
@@ -776,27 +834,58 @@ not allowed: it can create a nonzero constant term and destroy (5.1).
 
 ### 5.4 Equality of operator trace and kernel diagonal
 
-Let $\{e_j\}$ be a smooth orthonormal eigenbasis for the fixed cuspidal level-type block.  The
-Sobolev factorization and Cauchy--Schwarz give absolute convergence of
+An $L^2$ kernel cannot simply be restricted to the diagonal, which has product measure zero.
+We therefore identify the canonical smooth kernel with the Hilbert--Schmidt contraction
+provided by (5.4).  Take $m$ large enough that $S$ has a smooth rapidly decreasing kernel
+$H_m(x,y)$, as supplied by cuspidal Sobolev theory, and write
 
 $$
-\sum_j\langle T_\sigma(f)e_j,e_j\rangle.
+h_x(y)=\overline{H_m(x,y)},
+\qquad
+(Su)(x)=\langle u,h_x\rangle.
 \tag{5.8}
 $$
 
-For a finite partial sum, insert the kernel and integrate.  The spectral projector kernel is
-smooth, so Fubini is ordinary.  Apply sufficiently many powers of $(1+\Delta)^{-1}$ to the
-projector and use (4.3); the resulting majorant is integrable independently of the partial
-sum.  Passing to the limit yields
+The map $x\mapsto h_x$ and all of its required derivatives are continuous as $L^2$-valued
+maps and rapidly decreasing in the cusp.  Since $B$ is bounded, $U=SB$ and $V=S$ are
+Hilbert--Schmidt and $T_\sigma(f)=UV$.  Their contraction kernel is
 
 $$
-\sum_j\langle T_\sigma(f)e_j,e_j\rangle
-=\int_XK_f^\sigma(x,x)\,dx.
+L_f(x,y)=\langle h_y,B^*h_x\rangle.
 \tag{5.9}
 $$
 
-The left side is the trace of the trace-class operator.  Exhausting the finite level-type
-blocks is legitimate because $f$ itself meets only finitely many source and target types.
+Cauchy--Schwarz and the $L^2$-valued derivative bounds make $L_f$ smooth and rapidly decreasing
+in both variables.  It represents $SBS=T_\sigma(f)$.  The canonical Poincare kernel
+$K_f^\sigma$ represents the same operator by Section 2.3.  Pairing their difference against
+compactly supported smooth functions in both variables shows that it is the zero distribution.
+Because the difference is continuous and the quotient measure has full support,
+
+$$
+L_f(x,y)=K_f^\sigma(x,y)
+\quad\text{for every }x,y.
+\tag{5.9a}
+$$
+
+The Hilbert--Schmidt product theorem now gives an $L^1$ diagonal contraction:
+
+$$
+\int_X\left|\int_XK_U(x,y)K_V(y,x)\,dy\right|dx
+\leq\|U\|_2\|V\|_2.
+\tag{5.9b}
+$$
+
+By (5.8)--(5.9a), the inner contraction is $L_f(x,x)=K_f^\sigma(x,x)$.  The same product
+theorem identifies its integral with $\operatorname{tr}(UV)$.  Hence
+
+$$
+\operatorname{tr}T_\sigma(f)
+=\int_XK_f^\sigma(x,x)\,dx,
+\tag{5.9c}
+$$
+
+and the integral is absolutely convergent.  Only finitely many source and target level-type
+blocks occur, so their finite direct sum introduces no additional limit.
 
 **Theorem 5.2 (diagonal trace theorem).** Under the hypotheses of Theorem 5.1,
 
@@ -1091,7 +1180,7 @@ $$
 unless $\Pi^\sigma\simeq\Pi$.  For a stable $\Pi$, equation (6.8) gives
 
 $$
-\operatorname{tr}igl(P_\Pi T_\sigma(f)P_\Pi\bigr)
+\operatorname{tr}\bigl(P_\Pi T_\sigma(f)P_\Pi\bigr)
 =\operatorname{tr}(B_\Pi)
  \operatorname{tr}(\Pi(f)A_\Pi).
 \tag{8.1}
@@ -1263,7 +1352,9 @@ product measure is invariant.
 
 ### 9.3 Vanishing before regularization
 
-Convolution passes through (9.2) in the convergence chamber:
+There are two legitimate routes, depending on the selected local factor.  If the strongly
+cuspidal factor is nonarchimedean and compactly supported modulo the center, convolution passes
+through (9.2) in the convergence chamber:
 
 $$
 R(f)E(g,h_s)
@@ -1271,24 +1362,40 @@ R(f)E(g,h_s)
 \tag{9.6}
 $$
 
-By (3.5), $I_E(\chi,s)(f)=0$.  Therefore
+Section 3.3 makes the induced operator a zero meromorphic family in this case.  Hence
 
 $$
 R(f)E(g,h_s)=0.
 \tag{9.7}
 $$
 
-Both sides are meromorphic, so (9.7) holds throughout the required strip.  Composing with
-$U_\sigma$ changes the inducing datum but not the conclusion:
+Taking meromorphic continuation proves (9.7) throughout the required strip.
+
+For a general allowed archimedean strongly cuspidal Schwartz factor, no off-unitary argument is
+needed or valid.  Let
 
 $$
-T_\sigma(f)E(g,h_s)=0.
+W_a(g)=\sum_\chi\int_{\mathbf R}a_\chi(t)E(g,h_{\chi,it})\,dt
+$$
+
+be a smooth wave packet with finitely many character and compact-type data and rapidly
+decreasing amplitudes.  First truncate the $t$-integral and the finite character sum.  The
+Schwartz estimates for $f$, rapid decrease of $a_\chi$, and the polynomial vertical bounds for
+finite-type Eisenstein series justify Fubini.  Convolution acts fiberwise by
+$I_E(\chi,it)(f)$, which is the zero operator by (3.5).  Removing the truncations by the same
+majorant gives $R(f)W_a=0$.  Such packets are dense in the continuous subspace, and boundedness
+of $R(f)$ extends the zero to its closure.
+
+In either case, composing with $U_\sigma$ only transports the inducing data and does not change
+the conclusion:
+
+$$
+T_\sigma(f)W_a=0.
 \tag{9.8}
 $$
 
-Integrating against a rapidly decreasing amplitude and using the polynomial vertical bounds
-for finite compact type gives zero on every Eisenstein wave packet.  Boundedness then extends
-zero to the closed continuous subspace.
+When the compact-support continuation argument applies, (9.8) also holds with $W_a$ replaced
+by the meromorphic Eisenstein family in (9.7).
 
 ### 9.4 Scattering terms and derivatives
 
@@ -1309,10 +1416,13 @@ operators, and logarithmic derivatives.  Equation (3.5) makes the final factor i
 zero operator.  Hence the integrand is identically zero, independently of how the scattering
 operator is normalized.
 
-Even expressions in which a parameter derivative appears on the test operator vanish.  The
-family $I_E(\chi,s)(f)$ is meromorphically zero, so all its Laurent coefficients and derivatives
-are zero.  This is precisely why operator-level strong cuspidality was required.  Trace zero
-alone would not imply the vanishing of a product with $Q_\sigma$.
+Even expressions in which a tangential parameter derivative appears on the test operator
+vanish.  The honest family $t\mapsto I_E(\chi,it)(f)$ is identically zero and differentiable on
+the unitary axis, so all of its $t$-derivatives are zero.  If the selected factor is
+nonarchimedean and compactly supported modulo the center, the stronger meromorphic statement
+from Section 3.3 also makes every off-axis Laurent coefficient zero.  We do not infer that
+stronger statement for a general archimedean Schwartz factor.  Operator zero, rather than trace
+zero, is what annihilates the product with $Q_\sigma$ in all cases.
 
 ## 10. Residues and the exhaustion of the noncuspidal spectrum
 
@@ -1346,26 +1456,45 @@ $R(f)$ annihilates every residual line, stable or not.
 
 ### 10.2 Two proofs of residual vanishing
 
-First take the residue of (9.7).  Bounded convolution commutes with a finite Laurent
-coefficient, so
+If the strongly cuspidal factor is nonarchimedean and compactly supported modulo the center, we
+may first take the residue of the meromorphic identity (9.7).  Bounded convolution commutes
+with a finite Laurent coefficient, so
 
 $$
 R(f)\operatorname*{Res}_{s=s_0}E(g,h_s)=0.
 \tag{10.2}
 $$
 
-Every line (10.1) occurs as a nonzero residue for a suitable section.  Hence $R(f)$, and
-therefore $T_\sigma(f)$, is zero on the residual subspace.
+Every line (10.1) occurs as a nonzero residue for a suitable section, proving the assertion in
+that case.  This proof is not used for a general archimedean Schwartz factor.
 
-There is also a local proof.  The character $\eta\circ\det$ is a quotient of a reducible
-principal series at the pole.  The strongly cuspidal factor kills the whole induced
-representation by (3.4), hence every quotient.  Equivalently, Iwasawa integration rewrites
+The direct local proof works in every case and is the required argument at an archimedean
+selected place.  On the residual line, local convolution is a scalar.  In compact-picture
+order that scalar is
 
 $$
-\int_{Z(k)\backslash G(k)}f_{w_0}(g)\eta(\det g)\,d\bar g
+\lambda_{w_0}
+=\int_{Z(k)\backslash T(k)}\xi_{\eta,w_0}(t)f_{w_0}^B(t)\,dt,
+\tag{10.2a}
 $$
 
-as a Mellin transform of the parabolic transform of $f_{w_0}$, which is zero.
+where $\xi_{\eta,w_0}$ is the normalized torus character whose one-dimensional quotient is
+$\eta_{w_0}\circ\det$, and $f_{w_0}^B$ is the corresponding $K$-averaged parabolic transform.
+It is assembled from the functions
+
+$$
+\delta_B(t)^{1/2}\int_{N(k)}
+f_{w_0}(k_1^{-1}tnk_2)\,dn
+$$
+
+with the compact-picture character weights in $k_1$ and $k_2$.  Formula (10.2a) is obtained by
+performing these $K$- and $N$-averages first and
+only then taking the outer torus Mellin integral.  This ordering is essential at an
+archimedean Schwartz place, where the undissected group integral need not be absolutely
+convergent; it is precisely the Schwartz-algebra action.  Strong cuspidality makes
+$f_{w_0}^B$ identically zero before the outer integral is taken.  Tensor factorization then
+gives one zero local scalar, so $R(f)$, and therefore $T_\sigma(f)$, annihilates every residual
+line.
 
 ### 10.3 No hidden fourth channel
 
@@ -1533,7 +1662,20 @@ in (11.3).  All noncuspidal terms vanish.
 The split scalar classes combine into one projective scalar channel.  In quadratic degree the
 division scalar classes are indexed projectively by
 $F^\times/N_{E/F}(E^\times)$ with the central weight included.  Regular elliptic terms are
-indexed modulo $F^\times$ and still satisfy the torus norm condition.
+indexed by projective twisted classes
+
+$$
+\{[\delta]_\sigma:\delta\text{ regular elliptic}\}/E^\times.
+\tag{11.7a}
+$$
+
+Equivalently, one may use norm pairs modulo the scalar relation actually induced by a lift.
+Indeed, replacing $\delta$ by $z\delta$ changes its actual norm $\gamma$ to
+$N_{E/F}(z)\gamma$.  Central projection therefore identifies lift norms only through
+$N_{E/F}(E^\times)$, not through every scalar in $F^\times$.  Two lifts can have the same
+image in $\mathrm{PGL}_2(F)$ while remaining distinct projective twisted classes.  Thus the
+regular channel must not be indexed merely by ordinary projective norm classes unless a
+separate scalar-fiber theorem has removed this obstruction.
 
 **Proof.** Work first on the determinant-one quotient.  Its norm-one idele-class center is
 compact, and $\sigma$ acts on it.  Choose a compactly supported scalar-module lift of the
@@ -1589,12 +1731,13 @@ trace one.
 
 ### 12.1 Why an ordinary selector needs adjustment
 
-Let $L/k$ be a cyclic local field extension occurring at a nonsplit place $v$ of $F$, and let
+Let $L/k$ be a cyclic extension of nonarchimedean local fields occurring at a nonsplit place
+$v$ of $F$, and let
 $D$ be an irreducible unitary representation of $\mathrm{GL}_2(L)$ square-integrable modulo
 the center.  Assume $D^\sigma\simeq D$ and choose a unitary intertwiner
 
 $$
-ADA^{-1}=D\circ\sigma,
+A D(g)A^{-1}=D(\sigma(g))\qquad(g\in\mathrm{GL}_2(L)),
 \qquad A^d=1,
 \tag{12.1}
 $$
@@ -1664,8 +1807,8 @@ $$
 \tag{12.6}
 $$
 
-**Proposition 12.1 (twisted pseudo-coefficient).** For every irreducible unitary
-$\rho$ with the same central character and equipped with a compatible $\sigma$-intertwiner,
+**Proposition 12.1 (twisted pseudo-coefficient).** For every $\sigma$-stable irreducible unitary
+$\rho$ with the same central character and a declared compatible $\sigma$-intertwiner,
 
 $$
 \operatorname{tr}\bigl(\rho(f_{D,A,u}^{\mathrm{tw}})A_\rho\bigr)
@@ -1706,7 +1849,7 @@ $$
 \tag{12.8}
 $$
 
-when every component is the cyclicly compatible copy of $\rho$, and zero if one component is
+when every component is the cyclically compatible copy of $\rho$, and zero if one component is
 not selected.  Thus exact selection works on an orbit of places even though no individual
 component is fixed by $\sigma$.
 
@@ -1850,10 +1993,14 @@ are therefore two manifestations of the same norm direction.
 
 ### 13.4 The trace-comparison mechanism
 
-Let $\varphi=\otimes_v\varphi_v$ be an admissible cuspidal test on
-$\mathrm{GL}_2(\mathbf A_F)$, and let $f=\otimes_vf_v$ be a twisted admissible test on
-$\mathrm{GL}_2(\mathbf A_E)$.  Suppose the following local matching statement holds at every
-place, with the same centralizer and discriminant measures:
+Assume $F$ has a real place, and let $\varphi=\otimes_v\varphi_v$ lie in the exact ordinary
+simple-trace-formula class: it satisfies the all-orders projective Schwartz estimates, is finite
+under both compact actions, and has a strongly cuspidal factor at a real place.  Let
+$f=\otimes_vf_v$ be a twisted admissible test on $\mathrm{GL}_2(\mathbf A_E)$.  Suppose the
+following local matching statement holds at every place, with the same centralizer and
+discriminant measures.  Here $SO$ denotes the stable sum of local orbital integrals over the
+rational classes in the indicated stable fiber, with the declared projective stabilizer
+multiplicities:
 
 $$
 SO_{\gamma_v}(\varphi_v)
@@ -1861,13 +2008,29 @@ SO_{\gamma_v}(\varphi_v)
 \tag{13.8}
 $$
 
-for every regular norm class, together with the corresponding identities for the scalar and
-quadratic exceptional channels.  Assume the functions are units and the measures are the
-compatible unramified ones almost everywhere.
+for every regular norm class.  This local identity is only the first part of the comparison
+contract.  We also require the global projective fiber and coefficient identity
 
-**Theorem 13.1 (trace-comparison principle).** Under (13.8), the ordinary simple trace formula
-over $F$ and the twisted simple trace formula over $E$ have equal geometric sides.  Hence their
-cuspidal spectral sides are equal:
+$$
+\kappa(\gamma)a_F(\gamma)\prod_vO_{\gamma_v}(\varphi_v)
+=\sum_{[\delta]_{\sigma,Z}\mapsto[\gamma]}
+a_\Omega(\delta)\prod_vO_{\delta_v}^\sigma(f_v),
+\tag{13.8a}
+$$
+
+where $\kappa(\gamma)$ is the ordinary projective stabilizer factor and the sum retains every
+projective twisted class in the scalar fiber described in (11.7a).  If $[\gamma]$ is not in the
+twisted norm image, the right side is empty and (13.8a) requires the ordinary orbital product
+to vanish.  Finally, the ordinary central term must equal the aggregate of the twisted split
+scalar channel and, in quadratic degree, the division scalar channels, with their character
+weights and projective stabilizer indices.  Assume the functions are units and the measures are
+the compatible unramified ones almost everywhere.  In applications, (13.8a) is deduced from
+(13.8) together with a separate global norm-fiber and centralizer-volume calculation; it does
+not follow from local orbital matching by itself.
+
+**Theorem 13.1 (trace-comparison principle).** Under (13.8), (13.8a), and the stated scalar
+channel identity, the ordinary simple trace formula over $F$ and the twisted simple trace
+formula over $E$ have equal geometric sides.  Hence their cuspidal spectral sides are equal:
 
 $$
 \sum_{\pi\in\mathcal A_{\mathrm{cusp}}(F,\omega)}
@@ -1882,12 +2045,17 @@ $$
 with the local selection conditions imposed by the chosen pseudo-coefficients.  Both sums are
 absolutely convergent.
 
-**Proof.** Local matching and factorization identify each regular elliptic orbital product.
-The scalar identities identify the scalar channels, including the quadratic division terms.
-Complementary centralizer measures make each volume-orbit product invariant under rescaling.
-Absolute convergence permits multiplication of local identities and summation over global
-classes.  The ordinary and twisted simple trace formulas then turn equality of geometric sides
-into (13.9). $\square$
+**Proof.** Equation (13.8) supplies the local analytic matching on every stable norm fiber.
+Identity (13.8a) is the separate globalization statement that assembles those local identities
+into a complete rational projective term: it includes the ordinary factor $\kappa(\gamma)$,
+every projective twisted class above the norm, and the global centralizer volumes, which do not
+themselves factor into local volumes.  It also sets the ordinary non-norm terms equal to the
+empty twisted fiber.  The scalar identity matches
+the remaining ordinary central term with the full twisted scalar aggregate, including the
+quadratic division terms.  Complementary centralizer measures make each volume-orbit product
+invariant under rescaling.  Absolute convergence permits summation of these classwise
+identities.  The ordinary and twisted simple trace formulas then turn equality of geometric
+sides into (13.9). $\square$
 
 The hypothesis (13.8) is substantial.  The present theorem proves the global implication once
 local matching is known; it does not prove the local fundamental lemma by comparing spectral
@@ -1908,9 +2076,10 @@ unmatched spectral remainder.
 What is not yet proved is that every prescribed global tensor
 $\otimes_v\operatorname{BC}(\pi_v)$ occurs automorphically, or that every globally stable
 $\Pi$ has an automorphic descent.  Those global existence and exhaustion assertions follow
-from a trace comparison only after local matching, separation by sufficiently many test
-functions, and the descent-fiber analysis have all been supplied.  The twisted simple trace
-formula is the complete spectral half of that argument.
+from a trace comparison only after local matching, the global coefficient and projective-fiber
+identity (13.8a), separation by sufficiently many test functions, and the descent-fiber
+analysis have all been supplied.  The twisted simple trace formula is the complete spectral
+half of that argument.
 
 ## 14. Examples and boundary phenomena
 
@@ -1969,8 +2138,10 @@ eigenspaces of $A$.  A normalized coefficient based on a unit vector $u_+$ in th
 twisted trace $+1$.  A coefficient based on $u_-$ has twisted trace $-1$; multiplying it by
 $-1$ restores trace $+1$.
 
-The two functions have the same ordinary character values on irreducible representations but
-different twisted normalizations.  This is a concrete warning that an ordinary
+Before the final multiplication by $-1$, the two normalized coefficient functions have the
+same ordinary character values on irreducible representations but opposite twisted traces;
+the scalar adjustment that restores twisted trace $+1$ also changes the ordinary trace to
+$-1$.  This is a concrete warning that an ordinary
 pseudo-coefficient does not determine a twisted pseudo-coefficient until $A$ is fixed.
 
 If the local parameter has scalar endomorphisms, its descents differ by the quadratic character
@@ -2017,6 +2188,10 @@ central.
 cancellation can hide local discrepancies.  The local identities in (13.8) require their own
 proof with exact measures.
 
+**Collapsing regular projective twisted classes to $\mathrm{PGL}_2(F)$ norm classes.**  Scalar
+projection changes an actual norm only by $N_{E/F}(E^\times)$.  The larger quotient by all of
+$F^\times$ can merge distinct geometric terms and lose their stabilizer indices.
+
 ## 15. Final synthesis
 
 The theory can now be compressed without concealing any of the analytic or normalization
@@ -2055,7 +2230,7 @@ I_{\mathrm{cont}}^\sigma(f)=I_{\mathrm{res}}^\sigma(f)=0,\\[2mm]
 &\text{convergent twisted orbit expansion}\\
 &\qquad\Longrightarrow
 \text{the twisted simple trace formula},\\[2mm]
-&\text{local base-change invariance and compatible orbital matching}\\
+&\text{local orbital matching and global coefficient--fiber matching}\\
 &\qquad\Longrightarrow
 \text{ordinary--twisted spectral comparison}.
 \end{aligned}
@@ -2064,7 +2239,8 @@ $$
 
 Each arrow has its own hypothesis.  In particular, local cuspidality proves operator vanishing;
 trace class proves absolute spectral summability; automorphic normalization fixes cyclic
-scalars; and local matching, when supplied, identifies geometric sides.
+scalars; and local matching together with the global coefficient--fiber identity identifies
+geometric sides.
 
 ### 15.2 The reusable theorem package
 
@@ -2077,7 +2253,8 @@ hypotheses under which all four features coexist.
 degree $\ell$, fix a generator $\sigma$, and let $\Omega$ be a $\sigma$-invariant unitary Hecke
 character of $E$.  Let $f$ be a finite sum of factorizable test functions with inverse central
 character, finite level, finite left and right compact type, spherical almost everywhere, and
-one strongly cuspidal local factor in every tensor summand.  Then:
+one strongly cuspidal local factor in every tensor summand.  Using the established global
+multiplicity-one theorem for $\mathrm{GL}_2$, the following conclusions hold:
 
 1. The kernel
 
@@ -2109,12 +2286,13 @@ one strongly cuspidal local factor in every tensor summand.  Then:
 5. For coherent local intertwiners this twisted trace is a finite product of local twisted
    traces, and at a split place it reduces to the ordinary trace of the cyclic product.
 6. The same trace equals the absolutely convergent projective geometric distribution consisting
-   of the split scalar channel, regular elliptic torus-norm classes, and, when $\ell=2$, the
-   quaternion division scalar channel.  No split regular, nonsemisimple, continuous, or
-   residual term remains.
+   of the split scalar channel, the regular elliptic projective twisted classes in (11.7a),
+   whose actual norms satisfy the torus norm condition, and, when $\ell=2$, the quaternion
+   division scalar channel.  No split regular, nonsemisimple, continuous, or residual term
+   remains.
 7. A twisted pseudo-coefficient attached to a normalized invariant square-integrable local
-   representation has twisted trace one on that representation and zero on every other unitary
-   irreducible representation.
+   representation has twisted trace one on that representation and zero on every other
+   $\sigma$-stable unitary irreducible representation with its declared intertwiner.
 
 **Proof.** Chapters 3--5 prove items 1 and 2.  Chapters 9 and 10 prove item 3.  Chapters 6--8
 prove items 4 and 5, including absolute convergence and normalization.  Theorems 11.1 and 11.2
@@ -2147,5 +2325,6 @@ all present with compatible measures, while the parabolic classes have cancelled
 truncation is removed.  The twisted simple trace formula is therefore complete on both sides.
 It supplies cyclic base change with its exact spectral mechanism: invariance, descent data,
 unramified power maps, selectors, and no noncuspidal remainder.  Once corresponding local
-orbital integrals are matched, the ordinary and twisted formulas can be compared without a
-hidden scalar, missing class, or unsupported spectral term.
+orbital integrals and the global projective coefficient--fiber identities are matched, the
+ordinary and twisted formulas can be compared without a hidden scalar, missing class, or
+unsupported spectral term.
