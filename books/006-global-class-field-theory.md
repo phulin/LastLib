@@ -756,12 +756,32 @@ $$
 while local reciprocity identifies $H^1(F,A_n)$ with the continuous $\mathbf Z/n\mathbf Z$-valued characters of $F^\times$. We fix the cup-product sign by requiring
 
 $$
-\exp\!\left(2\pi i\operatorname{inv}_F(c\smile a)\right)
-=c(\operatorname{rec}_F(a)).
+\operatorname{inv}_F(c\smile a)
+=\frac{c(\operatorname{rec}_F(a))}{n}
+\quad\text{in }\tfrac1n\mathbf Z/\mathbf Z.
 \tag{4.11}
 $$
 
-For a cyclic character, both sides are the cyclic norm-residue symbol: they have the same kernel, namely the norm group of the cyclic extension cut out by $c$, and they send an unramified uniformizer to the chosen arithmetic Frobenius value. Cyclic decomposition and bilinearity prove (4.11) in general.
+Here the residue class $r\in A_n$ on the right is sent to
+$r/n\in\frac1n\mathbf Z/\mathbf Z$. Equivalently, after the fixed embedding
+
+$$
+\jmath_n:A_n\longrightarrow\mu_n(\mathbf C),
+\qquad
+r\longmapsto e^{2\pi i r/n},
+$$
+
+exponentiating (4.11) gives
+
+$$
+\exp\!\left(2\pi i\operatorname{inv}_F(c\smile a)\right)
+=\jmath_n\!\left(c(\operatorname{rec}_F(a))\right).
+$$
+
+For a cyclic character, the exponentiated identity is the cyclic norm-residue symbol: the two
+characters have the same kernel, namely the norm group of the cyclic extension cut out by $c$,
+and they send an unramified uniformizer to the chosen arithmetic Frobenius value. Cyclic
+decomposition and bilinearity prove (4.11) in general.
 
 This pairing is perfect. Indeed, local reciprocity identifies
 
@@ -983,7 +1003,11 @@ E\subseteq L
 N_{L/K}C_L\subseteq N_{E/K}C_E.
 $$
 
-Now let $L/K$ be any finite extension, in a common separable closure. The idele norm corresponds to inclusion of Galois groups:
+Now let $L/K$ be any finite extension, in a common separable closure. Finite reciprocity already
+assembles, over the finite abelian quotients, maps $C_F\to G_F^{\mathrm{ab}}$ for
+$F=K,L$; this assembly does not use the existence theorem or assert surjectivity. Chapter 10
+will identify its topology after existence has been proved. With that interpretation, the idele
+norm corresponds to inclusion of Galois groups:
 
 $$
 \begin{array}{ccc}
@@ -1108,10 +1132,18 @@ The theorem is the exact safe replacement for an unrestricted Grunwald assertion
 
 ### 6.3 Constructing the global character
 
-Let $\chi:C_K\to\mathbf C^\times$ be continuous of finite order, and choose $n$ annihilating its image. After fixing an identification of that image with a subgroup of $A_n$, its local restriction and local reciprocity give
+Let $\chi:C_K\to\mathbf C^\times$ be continuous of finite order, and choose $n$ annihilating its image. Then $\operatorname{im}\chi\subseteq\mu_n(\mathbf C)$. Use the fixed embedding $\jmath_n$ from Section 4.6. For every place $v$, define the unique local additive character
 
 $$
-c_v\in H^1(K_v,A_n).
+c_v\in H^1(K_v,A_n)
+$$
+
+given by the character form of local reciprocity and the identity
+
+$$
+\jmath_n\!\left(c_v(\operatorname{rec}_{K_v}(x))\right)
+=\chi_v(x)
+\qquad(x\in K_v^\times).
 $$
 
 Continuity of $\chi$ says that $c_v$ is unramified for almost every $v$, so $(c_v)$ belongs to the restricted product in Theorem 6.1.
@@ -1129,10 +1161,23 @@ $$
 c\in H^1(K,A_n)=\operatorname{Hom}_{\mathrm{cont}}(G_K,A_n)
 $$
 
-whose localization is every $c_v$. Let $L$ be the fixed field of $\ker c$, and let $\bar c:\operatorname{Gal}(L/K)\hookrightarrow A_n$ be the induced faithful character. The field $L/K$ is cyclic, and its degree is $|\operatorname{im}c|=|\operatorname{im}\chi|$ because the local restrictions of the two characters agree at every place. The product of those local restrictions is $\chi$, so
+whose localization is every $c_v$. Let $L$ be the fixed field of $\ker c$, and let $\bar c:\operatorname{Gal}(L/K)\hookrightarrow A_n$ be the induced faithful additive character. The complex Galois character is
 
 $$
-\chi=\bar c\circ\operatorname{Art}_{L/K}.
+\chi^{\mathrm{Gal}}=\jmath_n\circ\bar c:
+\operatorname{Gal}(L/K)\longrightarrow\mathbf C^\times.
+$$
+
+The field $L/K$ is cyclic. The images of all decomposition groups generate
+$\operatorname{Gal}(L/K)$: otherwise their generated subgroup would have a nontrivial fixed
+field split at every completion, contrary to the separation argument of Section 4.2. Therefore
+the common local restrictions generate both $\operatorname{im}c$ and
+$\operatorname{im}\chi$, and $\jmath_n$ identifies these two images. In particular,
+$[L:K]=|\operatorname{im}\chi|$. The product of the local restrictions of
+$\chi^{\mathrm{Gal}}\circ\operatorname{Art}_{L/K}$ is $\chi$, so
+
+$$
+\chi=\chi^{\mathrm{Gal}}\circ\operatorname{Art}_{L/K}.
 $$
 
 Finite reciprocity for the constructed field gives
@@ -1622,7 +1667,7 @@ $$
 
 Moreover, a compact profinite group is already complete for the topology of its finite quotients. The map from $C_K/C_K^0$ to $\widehat{C_K}$ has dense image because the completion map does, and its image is closed because its source is compact. It is therefore onto; the intersection formula makes it injective. Hence it is an isomorphism, not merely a dense embedding.
 
-The dimension count can be upgraded to an irreducibility proof. If all conjugates are distinct, finitely many commuting diagonal actions of $G_M$ separate the coset lines. Interpolation in their eigenvalues produces the projector onto each line. Hence every $G_M$-stable subspace is a sum of coset lines. Since $G_K$ permutes those lines transitively, a $G_K$-stable sum is either zero or all of $R$. Conversely, if the stabilizer $\Gamma_\theta$ is nontrivial, induction from $G_M$ to its inverse image in $G_K$ is the regular module of a twisted group algebra of $\Gamma_\theta$. In characteristic zero that algebra is semisimple, and its regular module has a proper simple summand when $\Gamma_\theta\ne1$. Inducing that summand to $G_K$ gives a proper summand of $R$. Therefore
+Combining this identification with Theorem 10.1 gives
 
 $$
 \ker\operatorname{Art}_K=C_K^0
@@ -1891,7 +1936,7 @@ $$
 
 because the principal idele $-1$ must have total value one; depending on whether one defines the finite component using an inverse residue convention, both displayed values are inverted together. With the ideal convention of this book, arithmetic Frobenius has eigenvalue $\psi(p)$. Primitivity of the Dirichlet character is exactly minimality of the conductor modulus. The associated Galois character factors through $\mathbf Q(\zeta_m)$ and sends arithmetic Frobenius at $p$ to $\psi(p)$.
 
-An imaginary quadratic field $M$ supplies the first genuinely nonparallel algebraic examples. Choose integers $p,q$ and a finite conductor $\mathfrak f$. A character on ideals prime to $\mathfrak f$ has infinity type $(p,q)$ when, for every principal ideal $(a)$ with $a\equiv1\pmod{\mathfrak f}$,
+An imaginary quadratic field $M/\mathbf Q$ supplies the first genuinely nonparallel algebraic examples. Choose integers $p,q$ and a finite conductor $\mathfrak f$. A character on ideals prime to $\mathfrak f$ has infinity type $(p,q)$ when, for every principal ideal $(a)$ with $a\equiv1\pmod{\mathfrak f}$,
 
 $$
 \theta((a))=a^p\bar a^q.
@@ -1899,7 +1944,7 @@ $$
 
 This rule is well defined only if every unit congruent to $1$ modulo $\mathfrak f$ satisfies $u^p\bar u^q=1$. Since the unit group of an imaginary quadratic field is finite, enlarging $\mathfrak f$ removes the obstruction. Extending from principal ray ideals to all ray ideals amounts to extending a character from a subgroup of a finite abelian ray class group, which is always possible because $\mathbf C^\times$ is divisible. The resulting ideal character is the finite description of an algebraic Hecke character whose adelic infinity component is $z^{-p}\bar z^{-q}$.
 
-If $p\ne q$, complex conjugation changes the infinity type and therefore $\theta\ne\theta^\sigma$. Its $\ell$-adic avatar and its conjugate are distinct, so induction from $G_M$ is irreducible. If $p=q$ and the finite part is conjugation-invariant, the character is the norm pullback of either of two extensions to $K$, and induction is reducible. These two models explain why finite ray characters and algebraic infinity types are both needed in later dihedral constructions.
+If $p\ne q$, complex conjugation changes the infinity type and therefore $\theta\ne\theta^\sigma$. Its $\ell$-adic avatar and its conjugate are distinct, so induction from $G_M$ to $G_{\mathbf Q}$ is irreducible. If $p=q$ and the finite part is conjugation-invariant, the character is the norm pullback of either of two extensions to $\mathbf Q$, and induction is reducible. These two models explain why finite ray characters and algebraic infinity types are both needed in later dihedral constructions.
 
 ### 11.8 The quadratic induction interface
 
@@ -1926,16 +1971,36 @@ $$
 
 This proves both the irreducibility criterion and the descent assertion; no unstated extension obstruction remains over the algebraically closed coefficient field.
 
-The finite conductor ideal is
+For a finite-order $\theta$, the representation $\rho$ has finite image, so its Artin conductor
+is defined at every finite place. For an algebraic $\theta$, the raw $\ell$-adic avatar includes
+the locally algebraic correction at places above $\ell$ and can have infinite inertia there; in
+that case we assert the Artin-conductor formula only away from $\ell$. If
+$\mathfrak a^{(\ell)}$ denotes the part of an ideal prime to the places above $\ell$, put
 
 $$
+\mathfrak f_0^{(\ell)}(\rho)
+=\prod_{v\nmid\ell}\mathfrak p_v^{a_v(\rho)}.
+$$
+
+The precise statement is
+
+$$
+\begin{aligned}
 \mathfrak f_0(\rho)
-=\mathfrak d_{M/K}\,
-N_{M/K}\bigl(\mathfrak f_0(\theta)\bigr).
+&=\mathfrak d_{M/K}\,
+N_{M/K}\bigl(\mathfrak f_0(\theta)\bigr)
+&&\text{if }\theta\text{ has finite order},\\
+\mathfrak f_0^{(\ell)}(\rho)
+&=\left(
+\mathfrak d_{M/K}\,
+N_{M/K}\bigl(\mathfrak f_0(\theta)\bigr)
+\right)^{(\ell)}
+&&\text{for algebraic }\theta.
+\end{aligned}
 \tag{11.3}
 $$
 
-Indeed, at a place $v$ the local induction formula from the ramification theory gives
+Indeed, at every $v$ in the first case, and at every $v\nmid\ell$ in the second, the local induction formula from the ramification theory gives
 
 $$
 a_v(\rho)
@@ -1945,7 +2010,9 @@ $$
 
 The first term is the exponent of the normed conductor, and the second is the discriminant exponent. This includes split, inert, tame, and wild places.
 
-There are equally explicit unramified Euler factors. If $v=ww^s$ splits and neither local character is ramified, then
+There are equally explicit unramified Euler factors. Assume that $\rho$ is unramified at $v$;
+for an algebraic character of nonfinite order, assume in particular that $v\nmid\ell$. If
+$v=ww^s$ splits and neither local character is ramified, then
 
 $$
 \det\!\left(X-\rho(\operatorname{Frob}_v^{\mathrm{arith}})\right)
@@ -2051,7 +2118,18 @@ R\text{ is irreducible}
 \tag{11.12}
 $$
 
-The argument does not require $\theta_\ell$ to have finite image: the finite twisted group algebra comes from the finite stabilizer quotient, while a nonzero intertwiner between two one-dimensional characters exists exactly when the characters agree. When the stabilizer is nontrivial, induction is analyzed in stages through its fixed field; a quadratic two-summand formula does not extend unchanged to a larger stabilizer.
+Here is the irreducibility argument, including the converse implicit in the endomorphism count. If all conjugates are distinct, finitely many commuting diagonal actions of $G_M$ separate the coset lines. Interpolation in their eigenvalues produces the projector onto each line. Hence every $G_M$-stable subspace is a sum of coset lines. Since $G_K$ permutes those lines transitively, a $G_K$-stable sum is either zero or all of $R$.
+
+Conversely, put
+
+$$
+\Gamma_\theta
+=\{\sigma\in\Gamma:\theta_\ell^\sigma=\theta_\ell\}.
+$$
+
+If $\Gamma_\theta$ is nontrivial, induction from $G_M$ to its inverse image in $G_K$ is the regular module of a twisted group algebra of $\Gamma_\theta$. In characteristic zero that finite-dimensional algebra is semisimple, and its regular module has a proper simple summand when $\Gamma_\theta\ne1$. Inducing that summand to $G_K$ gives a proper summand of $R$. This proves (11.12).
+
+The argument does not require $\theta_\ell$ to have finite image: the twisted group algebra comes from the finite stabilizer quotient, while a nonzero intertwiner between two one-dimensional characters exists exactly when the characters agree. When the stabilizer is nontrivial, induction is analyzed in stages through its fixed field; a quadratic two-summand formula does not extend unchanged to a larger stabilizer.
 
 The determinant uses the other idele map. Let
 
@@ -2076,7 +2154,9 @@ $$
 
 To prove this, choose right coset representatives. An element $g\in G_K$ permutes the coset basis, contributing its permutation sign. The product of the nonzero matrix entries is $\theta_\ell(\operatorname{Ver}_{M/K}g)$ by the coset formula for transfer. Reciprocity identifies transfer with $j_{M/K}$. In degree two, $\delta_{M/K}=\varepsilon_{M/K}$ and this is (11.8). Thus determinants use diagonal inclusion and transfer, whereas twist pullbacks use norm and restriction.
 
-The local induction formula for the finite conductor gives
+Use the conductor convention of Section 11.8: all finite places are included when $\theta$ has
+finite order, while only $v\nmid\ell$ is asserted for a general algebraic $\theta$. At every
+place in that range, the local induction formula gives
 
 $$
 a_v(R)=v(\mathfrak d_{M/K})
@@ -2084,25 +2164,38 @@ a_v(R)=v(\mathfrak d_{M/K})
 \tag{11.14}
 $$
 
-Here $a_w(\theta)$ is the conductor exponent of the finite local component of the Hecke character; away from $\ell$ it is also the Artin conductor of the avatar. To prove the formula, pass to a common finite Galois extension on which the relevant inertia characters factor and use
+Here $a_w(\theta)$ is the conductor exponent of the finite local component of the Hecke character; in the stated range it is also the Artin conductor of the avatar. To prove the formula, pass to a common finite Galois extension on which the relevant inertia characters factor and use
 
 $$
 a(V)=\sum_{i\geq0}\frac{|G_i|}{|G_0|}
 \operatorname{codim}V^{G_i}.
 $$
 
-For the induced coset representation, double-count the pairs consisting of a ramification element and a coset it fixes. The contribution with trivial character is the conductor of the permutation representation, which is the discriminant exponent. On the orbit belonging to $w$, the remaining character contribution is $f(w/v)a_w(\theta)$ after Herbrand reindexing. This proves (11.14), including the tame and wild terms. Multiplying over finite places yields
+For the induced coset representation, double-count the pairs consisting of a ramification element and a coset it fixes. The contribution with trivial character is the conductor of the permutation representation, which is the discriminant exponent. On the orbit belonging to $w$, the remaining character contribution is $f(w/v)a_w(\theta)$ after Herbrand reindexing. This proves (11.14), including the tame and wild terms. Multiplying over the applicable finite places yields
 
 $$
+\begin{aligned}
 \mathfrak f_0(R)
-=\mathfrak d_{M/K}\,
-N_{M/K}\bigl(\mathfrak f_0(\theta)\bigr).
+&=\mathfrak d_{M/K}\,
+N_{M/K}\bigl(\mathfrak f_0(\theta)\bigr)
+&&\text{if }\theta\text{ has finite order},\\
+\mathfrak f_0^{(\ell)}(R)
+&=\left(
+\mathfrak d_{M/K}\,
+N_{M/K}\bigl(\mathfrak f_0(\theta)\bigr)
+\right)^{(\ell)}
+&&\text{for algebraic }\theta.
+\end{aligned}
 \tag{11.15}
 $$
 
 No Galois hypothesis on $M/K$ is required. Formula (11.3) is the quadratic specialization.
 
-There is also a uniform Frobenius formula. Suppose $v$ is unramified in $M$ and $\theta$ is unramified at every $w\mid v$. Arithmetic Frobenius permutes the coset basis in cycles indexed by the $w$. The cycle for $w$ has length $f(w/v)$, and the product of its matrix entries is $\theta_\ell(\operatorname{Frob}_w^{\mathrm{arith}})$. Therefore
+There is also a uniform Frobenius formula. Suppose $v$ is unramified in $M$, $\theta$ is
+unramified at every $w\mid v$, and $R$ is unramified at $v$; for an algebraic character of
+nonfinite order, assume in particular that $v\nmid\ell$. Arithmetic Frobenius permutes the coset
+basis in cycles indexed by the $w$. The cycle for $w$ has length $f(w/v)$, and the product of its
+matrix entries is $\theta_\ell(\operatorname{Frob}_w^{\mathrm{arith}})$. Therefore
 
 $$
 \det\!\left(X-R(\operatorname{Frob}_v^{\mathrm{arith}})\right)
