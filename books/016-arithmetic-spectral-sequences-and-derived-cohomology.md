@@ -99,9 +99,9 @@ and there need be no canonical splitting. Remembering this filtration is essenti
 
 An **abelian category** is an additive category with a zero object, kernels and cokernels, in which every monomorphism is a kernel and every epimorphism is a cokernel. Modules over a ring, sheaves of modules on a site, and equivariant sheaves of modules are the principal examples. We use the ordinary diagram lemmas of abelian categories, including the snake lemma and the $3\times3$ lemma; each follows by factoring maps through kernels and cokernels and chasing their universal properties.
 
-A **Grothendieck abelian category** is an abelian category with all small coproducts, exact filtered colimits, and a generator. The category of sheaves of modules on any small ringed site is Grothendieck. Here is the relevant reason. Sheafification is exact for modules, filtered colimits are computed after sheafification from objectwise colimits, and the coproduct of extensions by zero of the structure sheaf from all objects of the site forms a generator. The generator detects a nonzero section after restriction to some object. A standard transfinite enlargement argument then embeds every object into an injective one: successively adjoin solutions to all extension problems from subobjects of the generator and take the filtered colimit. Exactness of filtered colimits preserves the monomorphism, and at the first regular cardinal exceeding all relevant hom-sets the resulting object has the extension property characterizing injectivity.
+A **Grothendieck abelian category** is an abelian category with all small coproducts, exact filtered colimits, and a generator. The category of sheaves of modules on any small ringed site is Grothendieck. Here is the relevant reason. Sheafification is exact for modules, and filtered colimits are obtained by sheafifying objectwise colimits. For each object $U$ of the site, sheafify the free presheaf module represented by $U$. The resulting set of objects detects nonzero sections, and its coproduct is a generator. A standard transfinite enlargement argument then embeds every object into an injective one: successively adjoin solutions to extension problems from subobjects of the generator and take the filtered colimit. Exactness of filtered colimits preserves the monomorphism. Choosing a regular cardinal larger than the set of relevant morphisms makes the construction stationary, and the stationary object has the extension property characterizing injectivity.
 
-We work on a ringed site $(X,\mathcal O_X)$ with category $\operatorname{Mod}(X)$ of sheaves of $\mathcal O_X$-modules. An **arithmetic sheaf category** in this book means one of the following: $\operatorname{Mod}(X)$; modules over a sheaf of algebras on $X$; discrete sheaves with an action of a profinite group; or inverse systems of such sheaves when completeness is imposed explicitly. Nothing about the topology beyond the stated exactness and acyclicity hypotheses is silently used.
+We work on a ringed site $(X,\mathcal O_X)$ with category $\operatorname{Mod}(X)$ of sheaves of $\mathcal O_X$-modules. An **arithmetic sheaf category** in this book means one of the following: $\operatorname{Mod}(X)$; modules over a sheaf of algebras on $X$; discrete sheaves with an action of a profinite group; or the ambient abelian category of inverse systems of such sheaves when completeness is imposed explicitly on the objects. We do not silently replace that ambient category by a full subcategory of complete objects, which need not be abelian. Nothing about the topology beyond the stated exactness and acyclicity hypotheses is silently used.
 
 ### 1.3 Conventions and boundedness
 
@@ -299,17 +299,35 @@ Let $(X,\mathcal O_X)$ be ringed. A complex $P$ of right $\mathcal O_X$-modules 
 
 **Bounded-above criterion.** A bounded-above complex of flat modules is K-flat.
 
-**Proof.** Filter $P$ by brutal truncations. Each successive quotient is a flat module placed in one degree, whose tensor with $A$ is acyclic because tensoring with a flat module preserves the kernel-image sequences defining the cohomology of $A$. In any fixed total degree only finitely many quotients occur, so induction through the finite filtration proves acyclicity. $\square$
+**Proof.** First suppose $P$ is bounded on both sides. Its finite brutal filtration has successive quotients equal to flat modules placed in one degree. Tensoring each quotient with an acyclic complex $A$ is acyclic, because a flat module preserves the short exact kernel-image sequences defining the cohomology of $A$. Induction through the finite filtration shows that $P\otimes A$ is acyclic.
+
+For a merely bounded-above $P$, let $P_m$ be the brutal truncation supported between degrees $-m$ and the fixed upper bound. The inclusions $P_m\to P_{m+1}$ form a filtered system with colimit $P$. Tensor product commutes with this colimit, and filtered colimits are exact in the module and sheaf-module categories under consideration. Hence
+
+$$
+P\otimes A=\varinjlim_m(P_m\otimes A)
+$$
+
+is a filtered colimit of acyclic complexes and is acyclic. $\square$
 
 A useful counterexample explains the letter K. A termwise flat unbounded complex need not preserve acyclicity under tensor product; infinite diagonals in the total complex can defeat the finite-filtration argument. K-flatness is exactly the invariant condition needed.
 
 ### 3.4 Existence and uniqueness of replacements
 
-For the unbounded theory we use the following precise hypothesis.
+For the unbounded theory we use the following precise hypothesis. It separates the formal arguments in this book from the existence of the particular replacements required by a chosen sheaf category.
 
-**Replacement hypothesis.** Every complex in the Grothendieck abelian category under consideration admits a quasi-isomorphism $K\to I$ with $I$ K-injective. In module and sheaf-module categories, every complex also admits a quasi-isomorphism $P\to K$ with $P$ K-flat.
+**Replacement hypothesis.** Whenever an unbounded right-derived operation is used, every complex in the Grothendieck abelian category under consideration admits a quasi-isomorphism $K\to I$ with $I$ K-injective. Whenever unbounded derived tensor is used in a module or sheaf-module category, every complex admits a quasi-isomorphism $P\to K$ with $P$ K-flat. For sheaf-valued internal Hom we additionally require an internal K-injective replacement: $L\to I$ such that $\mathcal Hom(A,I)$ is acyclic for every acyclic complex $A$, and the same remains true after restriction to every object of the site.
 
-We now prove the construction in the bounded directions actually used most often. If $K$ is bounded below, resolve $K^n$ injectively and form a Cartan--Eilenberg double complex. Its product totalization is bounded along every relevant diagonal, and the rowwise quasi-isomorphism $K\to I$ is a quasi-isomorphism by the row-filtration spectral sequence. The total complex is bounded below and termwise injective after replacing the double resolution by split injective columns, hence K-injective. Dually, a bounded-above complex has a K-flat replacement obtained from flat resolutions and direct-sum totalization.
+We now prove the construction in the bounded directions actually used most often. The ingredient is the Cartan--Eilenberg construction. For every degree $n$ of a bounded-below complex $K$, consider
+
+$$
+0\to Z^nK\to K^n\to B^{n+1}K\to0,
+\qquad
+0\to B^nK\to Z^nK\to H^nK\to0.
+$$
+
+Choose injective resolutions of the boundary and cohomology objects. The horseshoe construction applied to the second exact sequence gives a compatible injective resolution of $Z^nK$; applying it to the first gives one of $K^n$. These choices give short exact sequences of resolution complexes lifting both displayed sequences. Define the horizontal differential on the resolution of $K^n$ as the quotient to the chosen resolution of $B^{n+1}K$, followed by its inclusion through the resolutions of $Z^{n+1}K$ and $K^{n+1}$. Two successive horizontal maps compose to zero because the quotient from the resolution of $K^{n+1}$ kills the resolution of $Z^{n+1}K$. The resulting double complex has injective entries, resolves $K$ in one direction, and resolves its cycles, boundaries, and cohomology compatibly in the other. This is a Cartan--Eilenberg injective resolution.
+
+Each total diagonal is finite because $K$ is bounded below and the resolution degree is nonnegative. Hence direct-sum and product totalizations agree. The row-filtration spectral sequence shows that the map from $K$ to the total complex is a quasi-isomorphism. Each term of the total complex is a finite direct sum of injectives, hence injective; it is bounded below and therefore K-injective by Section 3.2. Dually, in a module or sheaf-module category with enough flat objects, a bounded-above complex has a K-flat replacement obtained from flat resolutions and direct-sum totalization. The free sheaves generated by objects of a small ringed site supply enough flat objects in the sheaf-module case.
 
 For an unbounded complex, truncate and splice these replacements only under an additional completeness hypothesis. On the injective side take a compatible inverse tower for $\tau_{\ge -n}K$ and its homotopy limit. If products are exact on the chosen tower and the first derived inverse limits vanish, the map from $K$ is a quasi-isomorphism. If, in addition, null-homotopies against acyclic complexes can be chosen compatibly—equivalently, the homotopy limit remains right orthogonal to acyclic complexes—the limit is K-injective. On the flat side one may use compatible direct systems when filtered colimits are exact and tensor commutes with them. Thus truncation proves unbounded replacement only with these stated hypotheses. All first-quadrant applications below need merely bounded-below injective replacements; genuinely unbounded statements explicitly invoke the replacement hypothesis.
 
@@ -333,7 +351,7 @@ Three assertions are easily confused. A termwise injective resolution computes a
 
 On the tensor side, a bounded-above complex of flats is K-flat. A general termwise flat unbounded complex is not covered by that argument. If a complex is perfect—locally quasi-isomorphic to a bounded complex of finite projective modules—it is K-flat and dualizable. Perfect complexes are consequently safe coefficients for projection formulas and base change.
 
-Finally, replacing the wrong variable can invalidate a calculation. For $K\otimes^LL$, replace at least one variable K-flatly. For global $R\operatorname{Hom}(K,L)$, replace $L$ K-injectively or $K$ K-projectively. For sheaf-valued $R\mathcal Hom$, use a replacement $I$ that is homotopically injective for internal Hom: $\mathcal Hom(A,I)$ must be acyclic for every acyclic $A$. This local condition avoids pretending that a statement about global morphisms automatically controls every restriction.
+Finally, replacing the wrong variable can invalidate a calculation. For $K\otimes^LL$, replace at least one variable K-flatly. For global $R\operatorname{Hom}(K,L)$, replace $L$ K-injectively or $K$ K-projectively. For sheaf-valued $R\mathcal Hom$, use the internal K-injective replacement in Section 3.4. Its restriction condition avoids pretending that a statement about global morphisms automatically controls every local object.
 
 ## 4. The three derived operations
 
@@ -389,7 +407,7 @@ $$
 \mathcal Hom^n(K,L)=\prod_i\mathcal Hom(K^i,L^{i+n}),
 $$
 
-with differential $d(f)=d_Lf-(-1)^nfd_K$. For global derived Hom, a K-injective replacement of the second variable suffices. For the sheaf-valued operation choose an internally homotopically injective replacement $L\to I$ as in Section 3.6 and put
+with differential $d(f)=d_Lf-(-1)^nfd_K$. For global derived Hom, a K-injective replacement of the second variable suffices. For the sheaf-valued operation choose an internal K-injective replacement $L\to I$ as in Section 3.4 and put
 
 $$
 R\mathcal Hom(K,L)=\mathcal Hom(K,I).
@@ -432,11 +450,11 @@ Rf_*K\otimes^L M\longrightarrow
 Rf_*(K\otimes^L Lf^*M).
 $$
 
-It is an isomorphism, for example, if $M$ is represented by a bounded complex of finite locally free modules. Indeed, reduce through the finite filtration to one finite locally free module $E$; then $f_*(K)\otimes E\cong f_*(K\otimes f^*E)$ sectionwise because $E$ is locally a finite free module. Exact triangles rebuild the bounded complex. Without finite presentation or a suitable perfectness hypothesis, direct image need not commute with tensor, so the formula is not unconditional.
+It is an isomorphism, for example, if $M$ is represented by a bounded complex of finite locally free modules. Indeed, reduce through the finite filtration to one finite locally free module $E$. On any object of the site over which $E$ is free of finite rank, the projection morphism is the evident isomorphism between two copies of the same finite direct sum of $f_*K$. Since being an isomorphism of sheaves is local, the underived projection map is an isomorphism for $E$. The same local argument applied to an acyclic resolution shows that tensoring by $f^*E$ preserves the acyclicity needed to compute $Rf_*$. Exact triangles then rebuild the bounded complex. Without finite presentation or a suitable perfectness hypothesis, direct image need not commute with tensor, so the formula is not unconditional.
 
 ### 4.5 Tor, Ext, and change of rings
 
-Let $R\to S$ be a ring map. Restriction of scalars is exact, while extension of scalars has left-derived functor $S\otimes_R^L-$. If $M$ is an $S$-module and $N$ an $R$-module, derived adjunction gives
+Let $R\to S$ be a homomorphism of commutative rings. Restriction of scalars is exact, while extension of scalars has left-derived functor $S\otimes_R^L-$. If $M$ is an $S$-module and $N$ an $R$-module, derived adjunction gives
 
 $$
 R\operatorname{Hom}_S(S\otimes_R^LN,M)
@@ -445,7 +463,7 @@ $$
 
 To prove it, choose a projective resolution of $N$. Ordinary tensor-Hom adjunction holds degree by degree, and its signs agree with the differential of the Hom complex.
 
-For a composite $R\to S\to T$, resolving successively yields change-of-rings sequences. One common Tor form is
+Resolving the two tensor operations successively yields the change-of-rings sequence
 
 $$
 E^2_{p,q}=\operatorname{Tor}^{S}_p
@@ -453,7 +471,7 @@ E^2_{p,q}=\operatorname{Tor}^{S}_p
 \Longrightarrow \operatorname{Tor}^{R}_{p+q}(N,M),
 $$
 
-when the displayed module structures exist and the chosen flat resolutions make the composite tensor operation the stated one. Its Ext counterpart has the schematic form
+where $N$ is an $R$-module and $M$ is an $S$-module, regarded also as an $R$-module. To construct it, resolve $N$ by projective $R$-modules. After extension to $S$ these remain projective $S$-modules, so they are acyclic for $-\otimes_S M$. A Cartan--Eilenberg resolution and the two filtrations of its total complex give the displayed $E^2$ page and the target $N\otimes_R^L M$. This also proves strong convergence in the first-quadrant indexing. Its Ext counterpart has the schematic form
 
 $$
 E_2^{p,q}=R^pF(R^qG(N))\Longrightarrow R^{p+q}(F\circ G)(N),
@@ -508,22 +526,27 @@ Then $d=jk$ squares to zero because $kj=0$. Derive a new couple by replacing $D$
 
 ### 5.3 Pages and differentials
 
-For $r\ge1$, define
+For $r\ge0$, put $n=p+q$ and define the group of $r$-cycles at filtration $p$ by
 
 $$
-Z_r^{p,q}=
-\frac{F^pK^{n}\cap d^{-1}(F^{p+r}K^{n+1})+F^{p+1}K^n}
-{F^{p+1}K^n+d(F^{p-r+1}K^{n-1})\cap F^pK^n},
-\quad n=p+q,
+Z_r^{p,q}=F^pK^n\cap d^{-1}(F^{p+r}K^{n+1}).
 $$
 
-with the denominator understood inside the numerator. Equivalently, and more transparently, $E_r^{p,q}$ consists of representatives in $F^pK^n$ closed modulo $F^{p+r}$, modulo elements one filtration step deeper and boundaries coming from filtration $p-r+1$. The representative formula gives
+Thus $Z_0^{p,q}=F^pK^n$. For $r\ge1$ the page is the quotient
+
+$$
+E_r^{p,q}=
+\frac{Z_r^{p,q}}
+{Z_{r-1}^{p+1,q-1}+dZ_{r-1}^{p-r+1,q+r-2}}.
+$$
+
+Both denominator terms lie in $Z_r^{p,q}$: the first consists of deeper-filtration $r$-cycles, while an element $y$ of the second satisfies $y\in F^{p-r+1}K^{n-1}$ and $dy\in F^pK^n$. Equivalently, $E_r^{p,q}$ consists of representatives in $F^pK^n$ closed modulo $F^{p+r}$, modulo the deeper representatives and boundaries that themselves satisfy the required filtration condition. The representative formula gives
 
 $$
 E_{r+1}^{p,q}\cong H(E_r^{p,q},d_r).
 $$
 
-For large $r$, if the filtration is finite in total degree $n$ and $n+1$, the conditions stabilize. The stable group is denoted $E_\infty^{p,q}$.
+For large $r$, if the filtration is finite in total degrees $n-1$, $n$, and $n+1$, the conditions stabilize. The stable group is denoted $E_\infty^{p,q}$.
 
 ### 5.4 The derived viewpoint
 
@@ -539,10 +562,10 @@ This viewpoint has two advantages. First, it is invariant under filtered quasi-i
 
 ### 5.5 Filtrations from arithmetic geometry
 
-Three filtrations recur. The truncation filtration of a derived direct image has graded pieces $R^qf_*K[-q]$ and produces Leray after applying global sections. The filtration of a double complex by columns separates one derived operation from another. An ideal-adic filtration has
+Three filtrations recur. The truncation filtration of a derived direct image has graded pieces $R^qf_*K[-q]$ and produces Leray after applying global sections. The filtration of a double complex by columns separates one derived operation from another. Extend an ideal-adic filtration to all integers by taking $F^pK=K$ for $p\le0$; for $p\ge0$ it has
 
 $$
-F^pK=I^pK,qquad \operatorname{gr}^p_FK=I^pK/I^{p+1}K,
+F^pK=I^pK,\qquad \operatorname{gr}^p_FK=I^pK/I^{p+1}K,
 $$
 
 and compares integral information with simpler residue-level layers.
@@ -552,10 +575,11 @@ For example, if $I=(\pi)$ and multiplication by $\pi$ is injective on every term
 A filtration may also arise geometrically from a closed-open decomposition. If $i:Z\hookrightarrow X$ and $j:U\hookrightarrow X$ are complementary, the localization triangle
 
 $$
-R\Gamma_Z(K)\longrightarrow K\longrightarrow Rj_*j^*K\longrightarrow R\Gamma_Z(K)[1]
+R\underline{\Gamma}_Z(K)\longrightarrow K\longrightarrow Rj_*j^*K
+\longrightarrow R\underline{\Gamma}_Z(K)[1]
 $$
 
-is a two-step spectral object. Its long exact sequence is the simplest spectral sequence associated to a stratification. Iterating over finitely many strata produces a finite filtration whose graded layers are cohomology supported on individual strata.
+is a two-step spectral object, where $R\underline{\Gamma}_Z$ is the sheaf-valued derived functor of sections supported on $Z$. Its long exact sequence is the simplest spectral sequence associated to a stratification. Iterating over finitely many strata produces a finite filtration whose graded layers are cohomology sheaves supported on individual strata; applying global sections then gives the corresponding groups with support.
 
 ## 6. Convergence, filtrations, and edge maps
 
@@ -594,20 +618,20 @@ $$
 K\xrightarrow{\sim}R\varprojlim_p K/F^pK
 $$
 
-in the derived sense, not merely degreewise. The obstruction is a derived inverse limit. For a tower $A_p$ there is a short exact Milnor sequence
+in the derived sense, not merely degreewise. The obstruction is a derived inverse limit. For a countable tower $A_p$ of complexes of abelian groups or modules, there is a short exact Milnor sequence
 
 $$
 0\to R^1\varprojlim H^{n-1}(A_p)\to H^n(R\varprojlim A_p)
 \to\varprojlim H^n(A_p)\to0.
 $$
 
-It follows by representing the derived limit as the cone, shifted by $-1$, of
+More generally the same statement holds in an abelian category with exact countable products; without that hypothesis, higher derived functors of product can add further terms. Under the stated hypothesis, the sequence follows by representing the derived limit as the cone, shifted by $-1$, of
 
 $$
 \prod_pA_p\xrightarrow{1-\mathrm{shift}}\prod_pA_p
 $$
 
-and taking its long exact sequence. If the transition maps on cohomology are eventually surjective, the first derived limit vanishes: recursively choose corrections lifting the discrepancy in each stage. This is the Mittag--Leffler criterion.
+and taking its long exact sequence. Exactness of products identifies the cohomology of the product complex with the product of the cohomology groups. If the transition maps on cohomology are eventually surjective, the first derived limit vanishes: recursively choose corrections lifting the discrepancy at each stage. More generally stabilization of the images is the Mittag--Leffler criterion and has the same consequence for towers of abelian groups.
 
 Thus a complete, exhaustive filtration with suitable derived-limit vanishing gives strong convergence. Without completeness, all pages can vanish while the target does not. One model is an infinitely deep filtration with $F^pK=K$ for every $p$: its associated graded object is zero, yet $H^*(K)$ may be nonzero. Without separatedness, the stable graded pieces see only $H/\bigcap_pF^pH$. Without exhaustive convergence, they see only the union of the filtered pieces. These are structural failures, not indexing nuisances.
 
@@ -644,7 +668,7 @@ which is often called the seven-term refinement when joined to the first three t
 
 A morphism of filtered complexes induces maps on every page and on the filtered abutments.
 
-**Spectral comparison theorem.** Let $f:(K,F)\to(L,F)$ be a morphism of strongly convergent filtered complexes. If $f_r:E_r(K)\to E_r(L)$ is an isomorphism for some page $r$, then $H^n(f)$ is an isomorphism for every $n$.
+**Spectral comparison theorem.** Let $f:(K,F)\to(L,F)$ be a morphism of filtered complexes whose spectral sequences converge strongly. Assume in addition that the abutment filtrations are finite in every degree, or that they are complete and separated and passage to the relevant inverse limits is exact. If $f_r:E_r(K)\to E_r(L)$ is an isomorphism for some page $r$, then $H^n(f)$ is an isomorphism for every $n$.
 
 **Proof.** Taking homology page by page shows that every later $f_s$, hence $f_\infty$, is an isomorphism. Thus $H^n(f)$ induces an isomorphism on each associated graded piece. For a finite filtration, induction on its length and the short exact sequences
 
@@ -654,7 +678,7 @@ $$
 
 show that $H^n(f)$ is an isomorphism. For complete infinite filtrations the same conclusion follows by passage to inverse limits, provided the relevant first derived limits vanish. $\square$
 
-A useful range form says: if $f_r^{p,q}$ is an isomorphism for $p+q<n$ and a monomorphism for $p+q=n$, and no differential can enter the stated region from outside it, then the same holds on the abutment. The qualification about incoming differentials is indispensable.
+A useful range form has a precise one-degree buffer. If $f_r^{p,q}$ is an isomorphism for $p+q\le n$ and a monomorphism for $p+q=n+1$, then it has the same property on every later page: a differential raises total degree by one, so the isomorphism range controls boundaries entering it and the monomorphism one degree higher controls kernels leaving it. Under the same reconstruction hypotheses as in the theorem, $H^m(f)$ is an isomorphism for $m\le n$ and a monomorphism for $m=n+1$.
 
 ### 6.5 Degeneration is not splitting
 
@@ -706,7 +730,13 @@ $$
 
 If the double complex is first quadrant, both converge strongly to $H^{p+q}(\operatorname{Tot}C)$. These two views are a proof technique: choose one filtration to identify the total object and the other to expose the desired $E_2$ page.
 
-For example, if every row except $q=0$ is exact, the row sequence collapses and identifies $\operatorname{Tot}C$ with the complex formed by the horizontal zeroth cohomology. The column sequence can then compute that same object through nontrivial higher groups.
+For example, if the horizontal cohomology of every row with $q\ne0$ vanishes, the row sequence is supported on $q=0$ and gives
+
+$$
+H^n(\operatorname{Tot}C)\cong H_h^n(C^{\bullet,0}).
+$$
+
+Dually, if the vertical cohomology vanishes away from degree zero, the column sequence identifies total cohomology with the cohomology of the horizontal complex $p\mapsto H_v^0(C^{p,\bullet})$. The other filtration can still compute that same target through nontrivial higher groups.
 
 ### 7.3 Hypercohomology
 
@@ -723,9 +753,9 @@ E_2^{p,q}=H^p(X,\mathcal H^q(K))
 \Longrightarrow\mathbb H^{p+q}(X,K).
 $$
 
-It converges strongly if $K$ is bounded below and $X$ has finite cohomological dimension on its cohomology sheaves, or if $K$ is bounded and each relevant sheaf cohomology vanishes in sufficiently high degree. More generally it converges under completeness of the truncation tower and derived-limit vanishing.
+It converges strongly whenever $K$ is bounded below: after translating the lower bound, $p,q\ge0$, so every total diagonal is finite. A bounded-above or unbounded $K$ requires an additional finite-cohomological-dimension bound that makes each relevant diagonal finite, or completeness of the truncation tower together with the derived-limit vanishing of Section 6.2.
 
-There is a second sequence. Resolve every $K^q$ by $\Gamma$-acyclic sheaves and take the resulting double complex. Filtering in the other direction gives
+There is a second sequence. For $K$ bounded below, resolve every $K^q$ by $\Gamma$-acyclic sheaves and take the resulting first-quadrant double complex. Filtering in the other direction gives
 
 $$
 E_1^{p,q}=H^q(X,K^p)\Longrightarrow\mathbb H^{p+q}(X,K),
@@ -737,7 +767,7 @@ If $K$ is concentrated in degree zero, both constructions recover ordinary sheaf
 
 ### 7.4 Acyclic resolutions and Cech models
 
-Let $\mathfrak U=(U_i\to X)$ be a covering for which finite fiber products exist. The augmented Cech complex of a sheaf $\mathcal F$ has
+Let $\mathfrak U=(U_i\to X)$ be a finite covering for which finite fiber products exist. The augmented Cech complex of a sheaf $\mathcal F$ has
 
 $$
 \check C^p(\mathfrak U,\mathcal F)=
@@ -745,7 +775,7 @@ $$
 \mathcal F(U_{i_0}\times_X\cdots\times_XU_{i_p}),
 $$
 
-with alternating restriction maps. Its augmentation computes global cohomology if every finite intersection is acyclic for $\mathcal F$ and for the terms of a chosen resolution. Indeed, form the double complex of Cech cochains of an injective resolution. Vertically it computes sheaf cohomology. Horizontally the augmented Cech complex is exact: locally a chosen index supplies a contracting homotopy, and exactness of sheaves is local. The two spectral sequences then identify Cech and derived cohomology.
+with alternating restriction maps. Suppose the sheafified augmented Cech complex is exact and every finite intersection $U_{i_0}\times_X\cdots\times_XU_{i_p}$ is acyclic for $\mathcal F$. Then this one cover computes global cohomology. Indeed, apply Cech cochains to an injective resolution of $\mathcal F$. In one direction the resolution computes the cohomology of each intersection, so the acyclicity assumption leaves only the Cech complex of $\mathcal F$. In the other direction the sheafified Cech augmentation is exact; locally a chosen member of the cover supplies a contracting homotopy. Its terms are acyclic for global sections because they are products of direct images from the acyclic intersections. The two strongly convergent spectral sequences therefore identify Cech and derived cohomology.
 
 The acyclicity hypothesis cannot be omitted. A cover may have intersections with higher cohomology; then Cech cohomology for that single cover sees only the first stage of a hypercover calculation and can differ from sheaf cohomology.
 
@@ -795,7 +825,7 @@ $$
 E_2^{p,q}=R^pF(R^qG(A))\Longrightarrow R^{p+q}(F\circ G)(A).
 $$
 
-**Proof.** Choose an injective resolution $A\to I^\bullet$, then resolve the complex $G(I^\bullet)$ vertically by a Cartan--Eilenberg injective resolution $J^{p,q}$. The column filtration of $F(J)$ first computes $R^qG(A)$ and then $R^pF$. The row filtration collapses because each $G(I^q)$ is $F$-acyclic, and its total complex computes $(F\circ G)(I^\bullet)$. First-quadrant convergence identifies the common abutment. Comparison of resolutions and the homotopy uniqueness of lifts prove functoriality. $\square$
+**Proof.** Choose an injective resolution $A\to I^\bullet$ and a Cartan--Eilenberg injective resolution of the complex $G(I^\bullet)$. After applying $F$, filter its first-quadrant total complex in the two directions. One filtration first takes cohomology of $G(I^\bullet)$, producing $R^qG(A)$, and then derives $F$, producing $R^pF(R^qG(A))$. For the other filtration, each object $G(I^q)$ is $F$-acyclic, so the resolution direction has cohomology only in degree zero. It therefore collapses to the complex $F(G(I^\bullet))$. Because $I^\bullet$ is an injective resolution, this complex computes $R(F\circ G)(A)$. First-quadrant convergence identifies the common abutment. Comparison of resolutions and homotopy uniqueness of lifts prove functoriality. $\square$
 
 For $G=f_*$ and $F=\Gamma(Y,-)$, the required condition is that $f_*I$ be $\Gamma(Y,-)$-acyclic for every injective $I$ on $X$. It holds, in particular, when the left adjoint $f^*$ is exact: adjunction then shows that $f_*$ preserves injectives. It also holds for ordinary sheaves on spaces because injectives are flasque, direct image preserves flasqueness, and flasque sheaves are acyclic. For a general ringed-site morphism we retain the acyclicity condition rather than silently asserting exactness of module pullback. Under it we obtain
 
@@ -824,7 +854,7 @@ H^n(X,\mathcal F)\longrightarrow
 H^0(Y,R^nf_*\mathcal F)
 $$
 
-restricts a global cohomology class to the fibers or local objects over $Y$, while
+records the restrictions of a global cohomology class over the local objects of $Y$; identifying its values with fiber cohomology requires the relevant base-change theorem. The other edge map
 
 $$
 H^n(Y,f_*\mathcal F)\longrightarrow H^n(X,\mathcal F)
@@ -851,7 +881,7 @@ $$
 If $Y$ has cohomological dimension at most one, only columns $p=0,1$ remain and all $d_r$ for $r\ge2$ vanish. The resulting short exact sequences
 
 $$
-0\to H^1(Y,R^{n-1}f_*\mathcal F)	o H^n(X,\mathcal F)
+0\to H^1(Y,R^{n-1}f_*\mathcal F)\to H^n(X,\mathcal F)
 \to H^0(Y,R^nf_*\mathcal F)\to0
 $$
 
@@ -886,17 +916,38 @@ $$
 C^p_{\mathrm{cts}}(G,M)=\{\text{continuous maps }G^p\to M\}
 $$
 
-with the alternating group-cohomology differential. If $M$ is discrete, every cochain factors through a finite quotient on each compact domain when the action data are locally constant.
+with differential
+
+$$
+\begin{aligned}
+(dc)(g_1,\ldots,g_{p+1})={}&g_1c(g_2,\ldots,g_{p+1})\\
+&+\sum_{r=1}^{p}(-1)^r
+c(g_1,\ldots,g_rg_{r+1},\ldots,g_{p+1})\\
+&+(-1)^{p+1}c(g_1,\ldots,g_p).
+\end{aligned}
+$$
+
+Every term is continuous. Expanding $d(dc)$, the two ways of multiplying two adjacent entries cancel with opposite signs; the two ways involving the action cancel as well. Hence $d^2=0$, and the kernel in degree zero is $M^G$. Continuity and compactness imply that a cochain has finite image and is constant on the cosets of some open normal subgroup in each variable. Thus it factors through $(G/U)^p$ for a suitable open normal subgroup $U$ depending on the cochain.
+
+For completeness, these cochains do calculate the right-derived functors of invariants. Let $B^p(M)=\operatorname{Map}_{\mathrm{cts}}(G^{p+1},M)$ with its diagonal $G$-action and the alternating differential that omits one entry. The augmented complex $M\to B^0(M)\to B^1(M)\to\cdots$ is exact on underlying modules: inserting $1$ as the first entry gives a contraction. Each $B^p(M)$ is coinduced, because its first variable identifies it with $\operatorname{Map}_{\mathrm{cts}}(G,N_p)$ for a suitable discrete module $N_p$. Coinduced modules are acyclic for invariants by the same insertion contraction.
+
+The invariants $B^p(M)^G$ are the homogeneous continuous cochains, namely the functions satisfying
+
+$$
+f(gg_0,\ldots,gg_p)=g f(g_0,\ldots,g_p),
+$$
+
+and the differential is the alternating sum of the omission maps. Evaluation at $(1,g_1,g_1g_2,\ldots,g_1\cdots g_p)$ identifies this invariant complex with the inhomogeneous one above. The acyclic-resolution lemma of Section 3.5 therefore identifies the cohomology of $C^\bullet_{\mathrm{cts}}(G,M)$ with $R^p(-)^G(M)$.
 
 ### 9.2 Construction and convergence
 
-Apply the composition theorem to global sections on $\bar X$ followed by invariants. The required acyclicity holds if injective equivariant sheaves have invariant-acyclic global sections. This follows from the adjunction with the exact coinduction functor
+Apply the composition theorem to global sections on $\bar X$ followed by invariants. The precise geometric hypothesis is that the global sections on $\bar X$ of every injective equivariant sheaf are acyclic for invariants. It holds in the standard quotient situation when the equivariant sheaf category has an exact forgetful functor with exact coinduction and the global-section functor carries the resulting coinduced injectives to coinduced discrete modules. On the module side, coinduction is
 
 $$
 M\longmapsto \operatorname{Map}_{\mathrm{cts}}(G,M),
 $$
 
-whose higher cohomology vanishes by the contracting homotopy inserting the identity element. One obtains
+and its higher invariant cohomology vanishes by the contracting homotopy that inserts the identity element. Thus the stated geometric condition is not being inferred merely from the existence of coinduction: the compatibility with global sections is part of the quotient hypothesis. Under it, the composition theorem gives
 
 $$
 E_2^{p,q}=H^p_{\mathrm{cts}}
@@ -906,7 +957,7 @@ $$
 
 For a bounded-below equivariant complex $K$, replace $H^q$ by $\mathbb H^q$.
 
-Strong convergence holds when both indices are nonnegative, as for a sheaf, or when $K$ is bounded below and $G$ and $\bar X$ have finite cohomological dimension on the coefficients. For unbounded or completed coefficients, the continuous cochain totalization and derived inverse limit must be retained; ordinary invariants of the inverse limit can miss a first derived-limit term.
+Strong convergence holds for a sheaf and, after translating the vertical index, for every bounded-below equivariant complex: both indices are then nonnegative and each total diagonal is finite. For an unbounded complex, a finite-cohomological-dimension bound can again make the diagonals finite. For completed coefficients, the continuous cochain totalization and derived inverse limit must be retained; ordinary invariants of the inverse limit can miss a first derived-limit term.
 
 ### 9.3 Restriction, inflation, and descent
 
@@ -919,18 +970,21 @@ $$
 The same construction gives
 
 $$
-H^p(G/N,H^q(N,M))\Longrightarrow H^{p+q}(G,M).
+H^p_{\mathrm{cts}}(G/N,H^q_{\mathrm{cts}}(N,M))
+\Longrightarrow H^{p+q}_{\mathrm{cts}}(G,M).
 $$
+
+Normality gives the inner cohomology groups a $G/N$-action, and discreteness follows from the finite-quotient description of continuous cochains.
 
 Its five-term sequence begins
 
 $$
-0\to H^1(G/N,M^N)\xrightarrow{\mathrm{inf}}H^1(G,M)
-\xrightarrow{\mathrm{res}}H^1(N,M)^{G/N}
-\xrightarrow{\mathrm{tr}}H^2(G/N,M^N).
+0\to H^1_{\mathrm{cts}}(G/N,M^N)\xrightarrow{\mathrm{inf}}H^1_{\mathrm{cts}}(G,M)
+\xrightarrow{\mathrm{res}}H^1_{\mathrm{cts}}(N,M)^{G/N}
+\xrightarrow{\mathrm{tr}}H^2_{\mathrm{cts}}(G/N,M^N).
 $$
 
-The transgression sends an invariant $N$-extension to its obstruction to descent through $G/N$. Exactness is the general edge-map argument of Section 6.3. For a finite Galois cover $\bar X\to X$, this is simultaneously group descent and Leray: the higher direct images encode the same stabilizer cohomology.
+The transgression sends an invariant $N$-extension to its obstruction to descent through $G/N$. Exactness is the general edge-map argument of Section 6.3. For a finite Galois cover $\bar X\to X$, the same sequence can be obtained from the Cech nerve of the cover: its iterated fiber products are indexed by tuples of elements of $G$, and the alternating Cech differential becomes the bar differential. This is descent along the cover; it should not be confused with a claim that the direct image of the finite map has nonzero higher derived functors.
 
 When the order of a finite group $G$ is invertible on $M$, invariants are exact. Indeed, the averaging operator
 
@@ -974,7 +1028,7 @@ Changing representatives changes the product by a boundary or a deeper-filtratio
 
 ### 10.2 Products on pages and on the abutment
 
-Under strong convergence, the $E_\infty$ product is the associated graded of the product on $H^*(K)$ because cocycle multiplication respects the induced filtration. If the product is graded commutative on cohomology, the pages are graded commutative with respect to total degree from the page on which the product is defined.
+Under strong convergence, the $E_\infty$ product is the associated graded of the product on $H^*(K)$ because cocycle multiplication respects the induced filtration. If the filtered differential graded product is graded commutative, or graded commutative through a filtration-preserving homotopy, then every page on which the product is defined is graded commutative with respect to total degree. Graded commutativity of the abutment alone would not imply graded commutativity on earlier pages.
 
 Degeneration as groups does not determine the ring. Hidden multiplicative extensions remain: two classes represented in graded pieces may multiply into a deeper filtered piece invisible from their product in $E_\infty$. A claimed ring decomposition therefore needs a compatible splitting of the filtration, not merely vanishing differentials.
 
@@ -1017,26 +1071,26 @@ Functoriality under pasting follows from the units and counits of adjunction: bo
 
 ### 11.2 A spectral criterion for base change
 
-Filter both sides by their standard truncation towers. In general, the source has the hyper-Tor sequence
+Choose compatible double-complex models for the two sides of the base-change morphism and filter them by resolution degree. The source has the hyper-Tor sequence
 
 $$
 E_2^{-p,q}=L_pg^*(R^qf_*K)
 \Longrightarrow \mathcal H^{q-p}(Lg^*Rf_*K),
 $$
 
-where $L_p$ denotes the $p$th left-derived functor. Resolve $K$ K-flatly before applying $g'^*$ and filter a direct-image resolution in the other direction to obtain the corresponding sequence for the target. A sheafwise base-change theorem identifies the terms of these sequences; the abstract comparison argument then assembles them.
+where $L_p$ denotes the $p$th left-derived functor. Resolving $K$ K-flatly before applying $g'^*$ and then using a direct-image resolution gives a corresponding sequence for the target. In the nonflat case, a map between the displayed source terms and the target terms is extra data supplied by a higher base-change theorem; it is not a formal consequence of the underived square. Once compatible resolutions provide a morphism of spectral sequences, the abstract comparison argument assembles the termwise information.
 
-**Base-change criterion.** Assume the two spectral sequences converge strongly. If the base-change map induces an isomorphism on every $E_2^{p,q}$ contributing to total degree $n$ and $n+1$, then it induces an isomorphism on cohomology in degree $n$. If it is an isomorphism in total degrees below $n$ and a monomorphism in degree $n$, the same range statement holds on cohomology, provided no differential enters the range from an unchecked term.
+**Base-change criterion.** Assume the two spectral sequences converge strongly and their abutment filtrations satisfy the reconstruction hypotheses of Section 6.4. If, on some page $r$, the induced map is an isomorphism in total degrees at most $n$ and a monomorphism in total degree $n+1$, then the base-change map is an isomorphism on cohomology in degrees at most $n$ and a monomorphism in degree $n+1$. In particular, an isomorphism on the whole page gives a derived isomorphism.
 
-**Proof.** Naturality of truncation gives a morphism of filtered objects. Apply the comparison theorem of Section 6.4. The extra adjacent degree controls differentials entering or leaving the degree under study. $\square$
+**Proof.** Naturality of the compatible filtrations gives a morphism of filtered objects. Apply the range comparison theorem of Section 6.4. The one-degree monomorphism buffer controls the kernels of differentials leaving the isomorphism range. $\square$
 
-When $g$ is flat, all $L_pg^*$ for $p>0$ vanish. The criterion reduces to the familiar sheafwise maps
+When both $g^*$ and its base change $g'^*$ are exact, as happens for a flat base change of schemes, all higher inverse-image functors vanish. For bounded-below $K$, the criterion reduces to the familiar sheafwise maps
 
 $$
 g^*R^qf_*K\longrightarrow R^qf'_*g'^*K.
 $$
 
-If they are isomorphisms, the full derived base-change map is an isomorphism under boundedness. This cleanly separates a geometric input—the sheafwise comparison—from the homological argument assembling all degrees.
+If they are isomorphisms for every $q$, the base-change morphism induces an isomorphism on every cohomology sheaf and is therefore a derived isomorphism. This cleanly separates a geometric input—the sheafwise comparison—from the homological argument assembling all degrees.
 
 ### 11.3 Coefficient change and derived completion
 
@@ -1072,14 +1126,21 @@ $$
 
 Consequently ordinary completion computes derived completion when the cohomology towers are Mittag--Leffler and Tor terms are controlled. This proviso is central for integral arithmetic coefficients.
 
-Reduction modulo an ideal illustrates both phenomena. From the triangle
+Reduction modulo one element illustrates both phenomena. Assume that multiplication by $\pi$ is injective on $\Lambda$, so
+
+$$
+0\longrightarrow\Lambda\xrightarrow{\pi}\Lambda
+\longrightarrow\Lambda/(\pi)\longrightarrow0
+$$
+
+is a flat resolution of $\Lambda/(\pi)$. Tensoring it with $K$ gives the triangle
 
 $$
 K\xrightarrow{\pi}K\longrightarrow K\otimes^L\Lambda/(\pi)
 \longrightarrow K[1]
 $$
 
-one gets
+whose long exact cohomology sequence gives
 
 $$
 0\to H^n(K)/\pi H^n(K)
@@ -1087,7 +1148,7 @@ $$
 \to H^{n+1}(K)[\pi]\to0.
 $$
 
-Thus reduction commutes with cohomology exactly when the next cohomology group has no $\pi$-torsion. Iterating this statement controls the transition maps modulo $\pi^m$. If the cohomology groups are finitely generated over a noetherian complete ring, those transition maps are eventually surjective, so the Mittag--Leffler obstruction vanishes. Without finite generation, inverse systems can retain infinitely receding torsion and ordinary completion need not recover the derived one.
+Thus reduction commutes with cohomology exactly when the next cohomology group has no $\pi$-torsion. Iterating this statement controls the transition maps modulo $\pi^m$ when every $\pi^m$ is again a non-zero-divisor. If $\Lambda$ is noetherian and complete and $K$ is a bounded complex with finitely generated cohomology, the Artin--Rees stabilization of the relevant torsion and quotient systems gives the Mittag--Leffler condition. Without these finiteness hypotheses, inverse systems can retain infinitely receding torsion and ordinary completion need not recover the derived one.
 
 ## 12. Nearby cycles and specialization
 
@@ -1095,36 +1156,45 @@ Thus reduction commutes with cohomology exactly when the next cohomology group h
 
 Let $S$ be the spectrum of a henselian discrete valuation ring, with generic point $\eta$, closed point $s$, geometric points $\bar\eta,\bar s$, and inertia group $I$. For a finite-type $S$-space $f:X\to S$, write $X_{\bar\eta}$ and $X_{\bar s}$ for geometric fibers. The specialization problem asks how cohomology on $X_{\bar\eta}$ approaches the special fiber.
 
-There is no honest inclusion $X_{\bar\eta}\hookrightarrow X_{\bar s}$. Nearby cycles correct this by working on the oriented fiber product, whose objects remember a geometric point near $X_{\bar s}$ together with a specialization from the geometric generic direction. Denote the resulting generic-to-special morphism of sites by $j$ and the projection to the special fiber by $i$. The composite $i^*Rj_*$ is meaningful and retains the inertia action.
+There is no honest inclusion $X_{\bar\eta}\hookrightarrow X_{\bar s}$. Nearby cycles correct this by working on the oriented fiber site $X_{\overleftarrow S}$, whose objects remember a geometric point near $X_{\bar s}$ together with a specialization from the geometric generic direction. There are morphisms of sites
+
+$$
+X_{\bar\eta}\xrightarrow{j}X_{\overleftarrow S}
+\xleftarrow{\iota}X_{\bar s}.
+$$
+
+Write $j_0:X_{\bar\eta}\to X$ and $i_0:X_{\bar s}\to X$ for the ordinary fiber morphisms. The composite $\iota^*Rj_*$ is meaningful and retains the inertia action, while $i_0^*$ and $j_0^*$ restrict a complex on $X$ to its two geometric fibers.
 
 ### 12.2 Nearby and vanishing cycles
 
-For a bounded-below complex $K$ on $X_{\bar\eta}$ define
+For a bounded-below complex $K$ on $X_{\bar\eta}$, assume first that the inverse-image functors in this paragraph are exact in the chosen coefficient category and define
 
 $$
-R\Psi_fK=i^*Rj_*K.
+R\Psi_fK=\iota^*Rj_*K.
 $$
+
+For modules over varying structure sheaves, replace $\iota^*$ by $L\iota^*$; all spectral arguments below then use the cohomology sheaves of that derived pullback. We keep the conventional notation $R\Psi_f$ in both cases.
 
 If $L$ is a complex on $X$ itself, adjunction gives a specialization map
 
 $$
-i^*L\longrightarrow R\Psi_f(j^*L).
+i_0^*L\longrightarrow R\Psi_f(j_0^*L).
 $$
 
 Its cone is the vanishing-cycle complex:
 
 $$
 R\Phi_f(L)=\operatorname{Cone}
-\bigl(i^*L\to R\Psi_f(j^*L)\bigr).
+\bigl(i_0^*L\to R\Psi_f(j_0^*L)\bigr).
 $$
 
 Thus there is a distinguished triangle
 
 $$
-i^*L\to R\Psi_f(j^*L)\to R\Phi_f(L)\to i^*L[1].
+i_0^*L\to R\Psi_f(j_0^*L)\to R\Phi_f(L)\to i_0^*L[1].
 $$
 
-The associated long exact sequence says exactly which classes fail to specialize locally constantly. In a locally acyclic family the specialization map is an isomorphism, hence vanishing cycles vanish. Conversely, vanishing of $R\Phi$ is the derived expression of local acyclicity for the chosen coefficients.
+The associated long exact sequence says exactly which classes fail to specialize locally constantly. In a locally acyclic family the specialization map is an isomorphism, hence vanishing cycles vanish. For this fixed trait and specialization, vanishing of $R\Phi$ says that no local vanishing cycles occur. Full local acyclicity requires the corresponding vanishing after every permitted base change and at every geometric specialization, so it is not inferred from a single vanishing calculation.
 
 Because $j$ is defined over the geometric generic direction, $I$ acts on $R\Psi_fK$. The specialization map is $I$-equivariant when the special-fiber term has trivial inertia action. No assertion of unipotence or a monodromy filtration is needed for the constructions here.
 
@@ -1151,19 +1221,19 @@ R\Gamma(X_{\bar s},R\Psi_fK)
 \longrightarrow R\Gamma(X_{\bar\eta},K)
 $$
 
-is an isomorphism, the abutment is $H^{p+q}(X_{\bar\eta},K)$. This comparison is a separate geometric hypothesis. It holds in standard proper base-change situations, but it is not a formal consequence of the definition of nearby cycles.
+is an isomorphism, the abutment is $H^{p+q}(X_{\bar\eta},K)$. This comparison is a separate geometric hypothesis, not a formal consequence of the definition of nearby cycles. A geometric application must establish it by an appropriate properness or compact-support argument before using the generic-fiber abutment.
 
-**Nearby-cycle convergence theorem.** Suppose $K$ is bounded below, $R^q\Psi_fK=0$ for $q$ outside a finite interval in each relevant total range, and $X_{\bar s}$ has finite cohomological dimension on these sheaves. Then the nearby-cycle spectral sequence converges strongly. If the displayed global comparison is an isomorphism, it induces a finite, functorial, inertia-stable filtration on $H^n(X_{\bar\eta},K)$ with graded pieces $E_\infty^{p,n-p}$.
+**Nearby-cycle convergence theorem.** Suppose the nearby-cycle $E_2$ page has only finitely many nonzero terms on each total diagonal. This holds, in particular, when $R\Psi_fK$ is bounded below, as it is for bounded-below $K$ when the inverse image used in its definition is exact. Then the nearby-cycle spectral sequence converges strongly. If the displayed global comparison is an isomorphism, it induces a finite, functorial, inertia-stable filtration on $H^n(X_{\bar\eta},K)$ with graded pieces $E_\infty^{p,n-p}$.
 
-**Proof.** The hypotheses make the truncation spectral object finite along each total diagonal. Section 6.1 gives strong convergence. All truncation maps and the inertia action commute, so each page and the limiting filtration are $I$-stable. Transport the filtration across the global comparison. $\square$
+**Proof.** The hypothesis makes the truncation spectral object finite along each total diagonal. Section 6.1 gives strong convergence. In the stated bounded-below case, $p\ge0$ and $q$ has a lower bound, so a fixed equation $p+q=n$ has only finitely many solutions. All truncation maps and the inertia action commute, so each page and the limiting filtration are $I$-stable. Transport the filtration across the global comparison. $\square$
 
-If $R^q\Psi_fK=0$ for $q>1$, only two rows occur. The only possible nonzero higher differential is
+If $R^q\Psi_fK=0$ unless $q=0,1$, only two rows occur. The only possible nonzero higher differential is
 
 $$
 d_2:E_2^{p,1}\to E_2^{p+2,0}.
 $$
 
-The five-term sequence then isolates the obstruction for an invariant local nearby class to lift to global generic-fiber cohomology.
+The five-term sequence then isolates the obstruction for a global section of $R^1\Psi_fK$ to lift to global generic-fiber cohomology.
 
 ### 12.4 Inertia and arithmetic consequences
 
@@ -1184,9 +1254,9 @@ This observation supplies a disciplined strategy for degeneration questions. Fir
 
 A nearby-cycle calculation has four logically distinct stages. First, construct $R\Psi$ on the oriented fiber and record its inertia action. Second, bound its cohomological amplitude; without this, the local-to-global sequence may not converge strongly. Third, compute or compare the sheaves $R^q\Psi K$ on the special fiber. Fourth, justify the global comparison between special-fiber nearby cohomology and generic-fiber cohomology, usually through a properness or compact-support theorem suited to the chosen site.
 
-These stages should not be collapsed. Local acyclicity proves $R\Phi=0$ and identifies $i^*L$ with $R\Psi(j^*L)$, but says nothing by itself about global cohomology if global base change is unavailable. Properness may provide the global comparison while local singularities still make higher $R^q\Psi$ nonzero. Trivial inertia on the $E_2$ page need not imply trivial inertia on the target if hidden extensions carry a nontrivial action.
+These stages should not be collapsed. Local acyclicity proves $R\Phi=0$ and identifies $i_0^*L$ with $R\Psi(j_0^*L)$, but says nothing by itself about global cohomology if global base change is unavailable. Properness may provide the global comparison while local singularities still make higher $R^q\Psi$ nonzero. Trivial inertia on the $E_2$ page need not imply trivial inertia on the target if hidden extensions carry a nontrivial action.
 
-Suppose, for illustration, that $R^q\Psi K$ vanishes except for $q=0,1$, the first sheaf is supported on finitely many closed points, and the special fiber has cohomological dimension one. Then $H^p(R^1\Psi K)=0$ for $p>0$, and $H^p(R^0\Psi K)=0$ for $p>1$. There is no possible nonzero $d_2$, so the sequence degenerates. The generic cohomology receives a two-step inertia-stable filtration. Even here, the extension between its two graded pieces remains to be determined.
+Suppose, for illustration, that $R^q\Psi K$ vanishes except for $q=0,1$, that $R^1\Psi K$ is supported on finitely many closed points and is acyclic there, and that the special fiber has cohomological dimension one. Then $H^p(R^1\Psi K)=0$ for $p>0$, and $H^p(R^0\Psi K)=0$ for $p>1$. There is no possible nonzero $d_2$, so the sequence degenerates. The generic cohomology receives a two-step inertia-stable filtration. Even here, the extension between its two graded pieces remains to be determined.
 
 ## 13. Reusable comparison theorems
 
@@ -1196,31 +1266,31 @@ The following theorem is designed for repeated use.
 
 **Filtered derived comparison theorem.** Let $u:(K,F)\to(L,F)$ be a morphism of filtered complexes in an abelian category. Assume:
 
-1. each filtration is exhaustive and derived complete;
-2. for every $n$, only finitely many graded pieces contribute to total degree $n$, or the relevant towers satisfy the Mittag--Leffler condition;
+1. each filtration is exhaustive and either finite in every complex degree or derived complete and separated;
+2. the two spectral sequences converge strongly, and in the infinite case the cohomology towers are Mittag--Leffler so that inverse limits reconstruct the abutments exactly;
 3. the spectral sequences use the same differential convention;
 4. $\operatorname{gr}^p(u)$ is a quasi-isomorphism for every $p$.
 
-Then $u$ is a quasi-isomorphism. It induces an isomorphism of filtered cohomology objects, not merely of their underlying objects. Pairings compatible on the graded pieces are compatible on the abutment.
+Then $u$ is a quasi-isomorphism. It induces an isomorphism of filtered cohomology objects, not merely of their underlying objects. Any pairing already defined as a morphism of filtered complexes remains compatible after passage to the abutment.
 
-**Proof.** The fourth condition makes the $E_1$ pages isomorphic. Naturality makes every later page isomorphic. The first two conditions identify $E_\infty$ with the associated graded of complete separated filtrations. Finite induction, or inverse limits with vanishing first derived limit, reconstructs the filtered cohomology isomorphism. Compatibility of products holds on representatives and survives both passage to pages and completion. $\square$
+**Proof.** The fourth condition makes the $E_1$ pages isomorphic. Naturality makes every later page isomorphic. The first two conditions identify $E_\infty$ with the associated graded of the abutment filtrations. Finite induction, or inverse limits with vanishing first derived limit, reconstructs the filtered cohomology isomorphism. A pairing that is compatible before passage to graded pieces is compatible on representatives, hence on every page and after completion. Merely knowing that two pairings agree on associated graded objects would not suffice, because they could differ by a filtration-raising map. $\square$
 
 The completeness clause is essential: an infinitely deep nonzero subobject has zero associated graded and would otherwise furnish a false comparison.
 
 ### 13.2 The derived-composition package
 
-**Derived-composition theorem.** Let $F$ and $G$ be left exact functors between Grothendieck abelian categories. Assume either:
-
-- $G$ takes K-injective complexes to $F$-acyclic complexes; or
-- on the bounded-below subcategory, $G$ takes injective objects to $F$-acyclic objects.
-
-Then there is a canonical comparison
+**Derived-composition theorem.** Let $F$ and $G$ be left exact functors between Grothendieck abelian categories, and work on a subcategory on which $RG$, $RF$, and $R(F\circ G)$ exist. There is a canonical comparison
 
 $$
-RF\circ RG\longrightarrow R(F\circ G),
+R(F\circ G)\longrightarrow RF\circ RG.
 $$
 
-which is an isomorphism under the stated acyclicity hypothesis. Its truncation filtration yields
+It is an isomorphism under either of the following precise hypotheses:
+
+- on the bounded-below subcategory, $G$ takes injective objects to $F$-acyclic objects;
+- in the unbounded setting, all three derived functors are computed on the chosen K-injective replacements and $G(I)$ is $F$-acyclic for every K-injective $I$ used there, meaning that $F(G(I))\to RF(G(I))$ is a quasi-isomorphism.
+
+For an object $A$ in degree zero, or more generally in a first-quadrant range, the truncation filtration yields
 
 $$
 R^pF(R^qG(A))\Longrightarrow R^{p+q}(F\circ G)(A).
@@ -1228,7 +1298,13 @@ $$
 
 The sequence is natural in $A$ and in natural transformations of $F$ or $G$, multiplicative when the functors carry compatible lax monoidal structures, and strongly convergent under first-quadrant or finite-diagonal hypotheses.
 
-**Proof.** A K-injective replacement of $A$ computes $RG(A)$. The acyclicity assumption says that applying $F$ to this representative computes $RF(RG(A))$ and also the derived composite. The comparison is therefore a quasi-isomorphism. Filtering a Cartan--Eilenberg model by one resolution degree gives the displayed pages; comparison uniqueness supplies naturality. The product and convergence statements follow from Chapters 10 and 6. $\square$
+**Proof.** In the bounded-below case, choose an injective resolution $A\to I$. The complex $F(G(I))$ computes $R(F\circ G)(A)$. To compute $RF(RG(A))$, take a bounded-below injective replacement $G(I)\to J$. It is K-injective by Section 3.2. The replacement map induces
+
+$$
+F(G(I))\longrightarrow F(J),
+$$
+
+which explains the direction of the canonical comparison. Since every $G(I^q)$ is $F$-acyclic, the Cartan--Eilenberg argument of Section 8.1 shows that this map is a quasi-isomorphism. The unbounded proof is identical with the stated K-injective hypotheses: $G(I)$ computes $RG(A)$, its $F$-acyclicity makes $F(G(I))$ compute $RF(RG(A))$, and the chosen replacement also computes the derived composite. Filtering the Cartan--Eilenberg model by one resolution degree gives the displayed pages; comparison uniqueness supplies naturality. The product and convergence statements follow from Chapters 10 and 6. $\square$
 
 Leray, Hochschild--Serre, and the invariant-after-nearby-cycles sequence are instances of this single result.
 
@@ -1237,9 +1313,17 @@ Leray, Hochschild--Serre, and the invariant-after-nearby-cycles sequence are ins
 **Arithmetic comparison theorem.** In a cartesian square as in Section 11.1, let $K$ be a bounded-below complex of arithmetic sheaves. Assume:
 
 1. finite Tor amplitude for the inverse-image operations on $K$;
-2. finite cohomological amplitude for the direct images on every cohomology sheaf of $K$;
-3. the sheafwise base-change maps on all contributing derived functors are isomorphisms;
-4. if coefficients are inverse systems, their cohomology towers are Mittag--Leffler.
+2. finite cohomological amplitude, uniformly in each contributing total range, for the direct images of the cohomology sheaves of $K$;
+3. compatible resolutions give a morphism between the two higher base-change spectral sequences, and the maps
+
+   $$
+   L_b g^*\bigl(R^a f_*\mathcal H^q(K)\bigr)
+   \longrightarrow
+   R^a f'_*\bigl(L_b g'^*\mathcal H^q(K)\bigr)
+   $$
+
+   identify every contributing term on one page;
+4. both sequences converge strongly and, if coefficients are inverse systems, their cohomology towers are Mittag--Leffler.
 
 Then
 
@@ -1247,11 +1331,11 @@ $$
 Lg^*Rf_*K\xrightarrow{\sim}Rf'_*Lg'^*K.
 $$
 
-The isomorphism is compatible with composition of squares, cup products, truncation filtrations, edge maps, and coefficient reduction.
+The isomorphism is compatible with composition of squares, with any coefficient pairings carried by the base-change construction, with truncation filtrations and edge maps, and with coefficient reduction formed by derived tensoring both sides.
 
-**Proof.** Finite Tor and cohomological amplitudes make both standard filtrations finite on every diagonal. The sheafwise maps identify the $E_2$ pages, so filtered comparison proves the derived isomorphism. Pasting compatibility was proved from adjunction in Section 11.1. Products are compatible already on K-flat and K-injective representatives. Coefficient reduction follows by tensoring the comparison and applying the universal-coefficient sequence; the Mittag--Leffler condition removes the only inverse-limit obstruction. $\square$
+**Proof.** Finite Tor and cohomological amplitudes make the relevant triple filtrations finite on every diagonal. The maps in item 3 identify a whole page, so filtered comparison proves the derived isomorphism. Pasting compatibility was proved from adjunction in Section 11.1. The base-change morphism respects coefficient pairings on the chosen K-flat and K-injective representatives, so Chapter 10 carries cup-product compatibility to the abutment. Truncation and edge-map compatibility are functorial. Coefficient reduction follows by derived tensoring the comparison; for completed coefficients, the Mittag--Leffler condition removes the inverse-limit obstruction. $\square$
 
-The theorem deliberately separates formal homological conditions from geometric base-change input. In an application, only item 3 normally requires new geometry; the rest can be checked from boundedness, flatness, and finiteness.
+The theorem deliberately separates formal homological conditions from geometric base-change input. For flat base change, $b=0$ is the only row in item 3, and the hypotheses reduce to the sheafwise maps of Section 11.2. In a nonflat application, the compatible higher maps in item 3 must actually be constructed; their existence is not hidden in the word “cartesian.” Identifying the coefficient-reduced right side with the direct image of reduced coefficients additionally requires the corresponding projection formula.
 
 ### 13.4 Final synthesis
 

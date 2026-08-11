@@ -39,7 +39,7 @@ any resulting corrections.
 - [ ] 013. Faithfully Flat Descent in Algebraic Geometry
 - [ ] 014. Moduli Stacks for Modular and PEL Problems
 - [ ] 015. Coherent Cohomology in Proper Families
-- [ ] 016. Arithmetic Spectral Sequences and Derived Cohomology
+- [x] 016. Arithmetic Spectral Sequences and Derived Cohomology
 - [ ] 017. Cotangent Complexes, Perfect Complexes, and Determinant Lines
 - [ ] 018. Formal Schemes, GAGA, and Algebraization
 - [ ] 019. Finite Étale Covers and Fundamental Groups
