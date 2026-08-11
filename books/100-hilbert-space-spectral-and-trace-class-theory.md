@@ -37,7 +37,7 @@
   - [6.3 Compact resolvent and discrete spectrum](#63-compact-resolvent-and-discrete-spectrum)
   - [6.4 Variational eigenvalue principles](#64-variational-eigenvalue-principles)
   - [6.5 Spectral functions and counting](#65-spectral-functions-and-counting)
-- [7. Hilbert--Schmidt operators and kernels](#7-hilbertschmidt-operators-and-kernels)
+- [7. Hilbert--Schmidt operators and kernels](#7-hilbert--schmidt-operators-and-kernels)
   - [7.1 A square-summable operator ideal](#71-a-square-summable-operator-ideal)
   - [7.2 Basis independence and ideal estimates](#72-basis-independence-and-ideal-estimates)
   - [7.3 Integral kernels](#73-integral-kernels)
@@ -50,7 +50,7 @@
   - [8.5 Trace-norm convergence](#85-trace-norm-convergence)
 - [9. Diagonal kernels and spectral traces](#9-diagonal-kernels-and-spectral-traces)
   - [9.1 Why an arbitrary kernel has no diagonal](#91-why-an-arbitrary-kernel-has-no-diagonal)
-  - [9.2 The Hilbert--Schmidt product formula](#92-the-hilbertschmidt-product-formula)
+  - [9.2 The Hilbert--Schmidt product formula](#92-the-hilbert--schmidt-product-formula)
   - [9.3 Positive continuous kernels](#93-positive-continuous-kernels)
   - [9.4 Heat kernels and resolvent powers](#94-heat-kernels-and-resolvent-powers)
 - [10. Orthogonal decompositions and commuting actions](#10-orthogonal-decompositions-and-commuting-actions)
@@ -266,7 +266,7 @@ $$
 The operator is closed when this graph is closed. Equivalently,
 
 $$
-x_n\to x,quad Tx_n\to y
+x_n\to x,\quad Tx_n\to y
 \quad\Longrightarrow\quad
 x\in D(T),\ Tx=y.
 $$
@@ -282,7 +282,7 @@ makes $D(T)$ a normed space, and the map $x\mapsto(x,Tx)$ is an isometry onto $\
 An operator is closable if the closure of its graph is again the graph of an operator. This happens exactly when
 
 $$
-x_n\to0,quad Tx_n\to y
+x_n\to0,\quad Tx_n\to y
 \quad\Longrightarrow\quad y=0.
 $$
 
@@ -297,7 +297,7 @@ For the multiplication operator above, suppose $f_n\to f$ and $mf_n\to g$ in $L^
 Let $T:D(T)\subset H\to K$ be densely defined. A vector $y\in K$ belongs to $D(T^*)$ if the functional
 
 $$
-x\longmapsto\langle Tx,y\rangle,qquad x\in D(T),
+x\longmapsto\langle Tx,y\rangle,\qquad x\in D(T),
 $$
 
 is bounded with respect to the ambient $H$-norm. There is then a unique $z\in H$ such that
@@ -487,7 +487,7 @@ $$
 N_+=\ker(T^*-i),\qquad N_-=\ker(T^*+i)
 $$
 
-are the deficiency spaces. Their dimensions measure the missing boundary data. A closed symmetric operator has self-adjoint extensions exactly when the two deficiency dimensions agree; a unitary map $N_+\to N_-$ specifies an extension. The derivative example has one-dimensional deficiency spaces, and the phase $e^{i\theta}$ encodes this unitary choice. The general classification will not be needed later, but it explains why boundary conditions naturally come in unitary families.
+are the deficiency spaces. Their dimensions measure the missing boundary data. A closed symmetric operator has self-adjoint extensions exactly when the two deficiency dimensions agree; a unitary map $N_+\to N_-$ specifies an extension. The derivative example has one-dimensional deficiency spaces, and the phase $e^{i\theta}$ encodes this unitary choice. The Cayley transform now proves the classification and explains why boundary conditions naturally come in unitary families.
 
 ### 3.3 The Cayley transform and boundary conditions
 
@@ -522,6 +522,31 @@ $$
 
 the domain in (3.3) is what gives this formula meaning.
 
+Here is the domain calculation hidden in the word “direct.” Unitarity gives, for $x,y\in H$,
+
+$$
+\left\langle i(I+U)x,(I-U)y\right\rangle
+=\left\langle (I-U)x,i(I+U)y\right\rangle,
+$$
+
+so $A$ is symmetric. Moreover,
+
+$$
+(A+i)(I-U)x=2ix,
+\qquad
+(A-i)(I-U)x=2iUx.
+$$
+
+Both $A+i$ and $A-i$ are therefore onto. The resolvent criterion proves self-adjointness, and substituting these two identities recovers $U=(A-i)(A+i)^{-1}$.
+
+We can now prove the deficiency-space assertion from Section 3.2. For a closed symmetric $T$, define on the closed subspace $\operatorname{ran}(T+i)$
+
+$$
+V((T+i)x)=(T-i)x.
+$$
+
+The equality $\|(T+i)x\|=\|(T-i)x\|$ makes $V$ an isometry onto $\operatorname{ran}(T-i)$; both ranges are closed by (3.1). Their orthogonal complements are respectively $N_+$ and $N_-$. Thus $V$ extends to a unitary on $H$ exactly when there is a unitary $N_+\to N_-$. Every such extension has no fixed vector: the range of $I-V$ contains $D(T)$, since $(I-V)(T+i)x=2ix$, and density rules out $\ker(I-V^*)$, hence also $\ker(I-V)$. Construction (3.3) therefore gives a self-adjoint extension of $T$. Conversely, the Cayley transform of any self-adjoint extension restricts to $V$, so every extension arises from one of these unitary choices.
+
 The Cayley transform is useful conceptually because the difference between symmetry and self-adjointness becomes the difference between a partial isometry and a unitary operator. It is also a reminder that the resolvent, rather than $A$ itself, is the bounded object through which compactness should be tested.
 
 ### 3.4 Essential self-adjointness and bounded perturbations
@@ -548,14 +573,7 @@ $$
 
 The first factor is invertible by its Neumann series. Hence $A+B-it$ is onto; the same argument with $+it$ gives the other range. Theorem 3.2 applies. ∎
 
-The boundedness hypothesis cannot simply be discarded. Singular potentials and lower-order differential terms may alter the domain or even destroy essential self-adjointness. A broader theorem allows symmetric $B$ satisfying
-
-$$
-\|Bx\|\leq a\|Ax\|+b\|x\|,
-\qquad a<1,
-$$
-
-but its proof requires a more careful resolvent argument. The strict inequality is decisive: it ensures equivalence of graph norms and makes the perturbation small after moving sufficiently far along the imaginary axis.
+The boundedness hypothesis cannot simply be discarded. Singular potentials and lower-order differential terms may alter the domain or even destroy essential self-adjointness. Unbounded perturbations require their own relative-domain estimates; Theorem 3.3 makes no claim about them.
 
 ## 4. Closed quadratic forms
 
@@ -659,7 +677,13 @@ $$
 
 The map $G:H\to H$ is bounded. Taking $v=Gg$ in (4.3), and using symmetry, gives $\langle Gf,g\rangle=\langle f,Gg\rangle$, so $G$ is self-adjoint. It is positive and injective. Its range is dense because $\ker G=(\operatorname{ran}G)^\perp$ for a self-adjoint operator and $\ker G=0$.
 
-Define $A+c=G^{-1}$ on $\operatorname{ran}G$. A bounded, injective, self-adjoint operator with dense range has a self-adjoint inverse on its range: either apply the resolvent range criterion directly, or observe that the graph of $G^{-1}$ is obtained by flipping the closed graph of $G$. Equation (4.3) now becomes
+Define $A+c=G^{-1}$ on $\operatorname{ran}G$. This inverse is self-adjoint, not merely closed. Indeed, $I\pm iG$ are bijective because $G$ is bounded and self-adjoint. Given $y\in H$, put $z=(I\pm iG)^{-1}y$ and $x=Gz$. Then
+
+$$
+(G^{-1}\pm i)x=z\pm iGz=y.
+$$
+
+Thus both nonreal ranges of the symmetric operator $G^{-1}$ are all of $H$, and Theorem 3.2 applies. Equation (4.3) now becomes
 
 $$
 \mathfrak a[u,v]=\langle Au,v\rangle.
@@ -753,7 +777,7 @@ The spectral theorem says that every self-adjoint operator has this form after a
 A projection-valued measure on $\mathbb R$ is a map $E$ from Borel sets to orthogonal projections on $H$ satisfying
 
 $$
-E(\varnothing)=0,qquad E(\mathbb R)=I,qquad
+E(\varnothing)=0,\qquad E(\mathbb R)=I,\qquad
 E(B\cap C)=E(B)E(C),
 $$
 
@@ -809,7 +833,14 @@ $$
 \tag{5.3}
 $$
 
-One way to see the crucial case is to factor a polynomial with no zeros on the real spectrum and use the resolvent; approximation then gives the general inequality. Real polynomial approximation on the compact spectrum extends $p\mapsto p(A)$ uniquely to a unital, norm-preserving, adjoint-preserving homomorphism
+For completeness, the norm assertion uses only standard Banach-algebra facts, not the spectral measure being constructed. If $N$ is bounded and normal, the $C^*$-identity and the spectral-radius formula give $\|N\|=r(N)$. Polynomial spectral mapping therefore gives
+
+$$
+\|p(A)\|=r(p(A))
+=\max_{\lambda\in\sigma(A)}|p(\lambda)|.
+$$
+
+Thus (5.3) is in fact an equality. Polynomial approximation on the compact real set $\sigma(A)$ extends $p\mapsto p(A)$ uniquely to a unital, norm-preserving, adjoint-preserving homomorphism
 
 $$
 C(\sigma(A))\longrightarrow\mathcal B(H),
@@ -824,9 +855,32 @@ $$
 \tag{5.5}
 $$
 
-Define $E_A(B)$ weakly by $\langle E_A(B)x,y\rangle=\mu_{x,y}(B)$. Positivity of the function calculus and approximation of indicators show that $E_A(B)$ is an orthogonal projection, while measure additivity gives strong countable additivity. Taking $f(\lambda)=\lambda$ gives (5.1).
+Positivity of the continuous calculus makes every $\mu_x$ positive, and polarization gives
+
+$$
+|\mu_{x,y}(B)|^2\leq\mu_x(B)\mu_y(B)
+\leq\|x\|^2\|y\|^2.
+$$
+
+Thus $\langle E_A(B)x,y\rangle=\mu_{x,y}(B)$ defines a bounded operator. To justify the projection law without assuming it, approximate indicators of open sets increasingly and indicators of closed sets decreasingly by continuous functions. Monotone convergence for every $\mu_x$, followed by polarization, gives the corresponding strong operator limits. Multiplicativity in (5.4) passes to these limits, and a monotone-class argument then gives, for all Borel sets,
+
+$$
+E_A(B)E_A(C)=E_A(B\cap C),
+\qquad E_A(B)^*=E_A(B).
+$$
+
+In particular $E_A(B)^2=E_A(B)$, so these operators are orthogonal projections. Measure additivity gives weak countable additivity; orthogonality of the summands upgrades it to strong countable additivity. Taking $f(\lambda)=\lambda$ gives (5.1).
 
 Simple Borel functions are now integrated as $\sum_jc_jE_A(B_j)$. Bounded pointwise approximation, together with dominated convergence for every $\mu_x$, extends the construction to bounded Borel functions and proves (5.2). If two projection-valued measures give (5.1), they give the same continuous functional calculus, hence the same scalar measures in (5.5), so they are equal. ∎
+
+The same construction applies to a bounded normal operator $N$. Indeed, the unital $C^*$-algebra generated by $N$ is commutative, its characters are identified with $\sigma(N)$ by evaluation at $N$, and its Gelfand transform is the isometric map to $C(\sigma(N))$. Equivalently, one uses polynomials in $z$ and $\overline z$, with $\overline z(N)=N^*$, and then completes. Repeating the measure construction yields a unique projection-valued measure with
+
+$$
+N=\int_{\sigma(N)}z\,dE_N(z).
+\tag{5.5a}
+$$
+
+We will use this normal form only for the unitary Cayley transform in the proof of the unbounded theorem.
 
 The support statement and the exact norm in (5.2) deserve emphasis. The spectral calculus does not see values of $f$ on a Borel set $B$ for which $E_A(B)=0$. This is the operator analogue of identifying measurable functions almost everywhere.
 
@@ -853,7 +907,7 @@ $$
 E_A(B)f(A)=f(A)E_A(B).
 $$
 
-Conversely, a bounded operator $S$ commutes with $A$ if and only if it commutes with every $E_A(B)$. One direction follows from the functional calculus. For the other, commuting with $A$ implies commuting with its resolvents, then with continuous functions of $A$, and finally with indicators by bounded pointwise approximation. For a nonnormal $S$, the direct reducing statement requires both $S$ and $S^*$ to commute; equivalently, $S$ commutes with every spectral projection.
+Conversely, a bounded operator $S$ commutes with $A$ if and only if it commutes with every $E_A(B)$. One direction follows from the functional calculus. For the other, commuting with $A$ implies commuting with its resolvents, then with continuous functions of $A$, and finally with indicators by bounded pointwise approximation. Taking adjoints shows that $S^*$ then commutes as well, so every spectral subspace reduces both operators.
 
 For $x\in H$, the closed cyclic subspace generated by $A$ and $x$ is
 
@@ -892,13 +946,19 @@ $$
 
 and $f(A)x=\int f\,dE_Ax$. If $f$ is real-valued, $f(A)$ is self-adjoint; if $f$ is bounded, it is the bounded operator already described.
 
-**Proof.** Apply the bounded spectral theorem to the Cayley transform $U=(A-i)(A+i)^{-1}$. The spectral measure of $U$ lives on the unit circle and has no atom at $1$. Pull it back under
+**Proof.** Apply the bounded normal form (5.5a) to the unitary Cayley transform $U=(A-i)(A+i)^{-1}$. Its spectral measure lives on the unit circle. Moreover,
+
+$$
+E_U(\{1\})H=\ker(I-U)=\{0\},
+$$
+
+so it has no atom at $1$. Pull the measure on the circle minus $1$ back under
 
 $$
 \lambda\longmapsto\frac{\lambda-i}{\lambda+i}.
 $$
 
-The inverse map is $\zeta\mapsto i(1+\zeta)/(1-\zeta)$, and its square-integrability domain is exactly $D(A)$ by the Cayley-transform formula. This produces (5.8). Uniqueness follows because the resolvent functions $(\lambda-z)^{-1}$ determine finite measures, and the resolvent of $A$ is already fixed. Formula (5.9) follows from truncation and (5.6). ∎
+The inverse map is $\zeta\mapsto i(1+\zeta)/(1-\zeta)$, and its square-integrability domain is exactly $D(A)$ by the Cayley-transform formula. This produces (5.8). For uniqueness, equality of the operators gives equality of all matrix coefficients of every nonreal resolvent. The algebra generated by the functions $(\lambda-z)^{-1}$ and their conjugates is dense in the continuous functions vanishing at infinity; hence the corresponding finite scalar measures agree. Formula (5.9) follows from truncation and (5.6). ∎
 
 The calculus makes domain questions explicit. For Borel functions $f$ and $g$, one has
 
@@ -906,13 +966,13 @@ $$
 f(A)g(A)\subset (fg)(A),
 $$
 
-and equality holds on the natural domain
+and the domain of the product is exactly
 
 $$
 \{x\in D(g(A)):g(A)x\in D(f(A))\}.
 $$
 
-Writing an equality of unbounded products without its domain is unsafe.
+On this domain, $f(A)g(A)x=(fg)(A)x$. The inclusion may be strict because $D((fg)(A))$ need not force $x\in D(g(A))$. Writing an equality of unbounded products without its domain is unsafe.
 
 For a semibounded $A\geq m$, spectral integration proves the assertion postponed in Chapter 4:
 
@@ -921,7 +981,7 @@ D((A-m+1)^{1/2})
 =\left\{x:\int(\lambda-m+1)\,d\mu_x(\lambda)<\infty\right\},
 $$
 
-and the right side is exactly the closed form domain associated with $A$. Moreover,
+For $x\in D(A)$, (4.1) identifies the squared shifted form norm with this integral. For any $x$ in the displayed square-root domain, the truncations $E_A([-n,n])x$ lie in $D(A)$ and converge in the square-root norm. Thus completing $D(A)$ proves that this is exactly the original closed form domain. Moreover,
 
 $$
 \mathfrak a[x,y]
@@ -942,7 +1002,7 @@ $$
 
 The cyclic construction in Section 5.3 proves this by an orthogonal induction: choose a cyclic vector, pass to the orthogonal complement of its reducing cyclic subspace, and repeat. Separability makes the process countable.
 
-The scalar spectral measure splits uniquely into pure point, absolutely continuous, and singular continuous parts. Correspondingly,
+A control measure for the spectral resolution—for example a strictly positive summable weighted sum of the scalar measures of an orthonormal basis—splits uniquely into pure point, absolutely continuous, and singular continuous parts. Correspondingly,
 
 $$
 H=H_{\mathrm{pp}}\oplus H_{\mathrm{ac}}\oplus H_{\mathrm{sc}}.
@@ -972,7 +1032,7 @@ $$
 \tag{6.2}
 $$
 
-This follows from polarization and the spectral-radius estimate for self-adjoint operators; it can also be proved directly by applying Cauchy--Schwarz to $T\pm\|T\|I$. Choose unit vectors $x_n$ for which the absolute values in (6.2) tend to $\|T\|$. After changing $T$ to $-T$ along a subsequence, assume $\langle Tx_n,x_n\rangle\to\|T\|$. Compactness gives a subsequence with $Tx_n\to y$. The identity
+This follows from polarization and the spectral-radius estimate for self-adjoint operators; it can also be proved directly by applying Cauchy--Schwarz to $T\pm\|T\|I$. Choose unit vectors $x_n$ for which the absolute values in (6.2) tend to $\|T\|$. Passing to a subsequence fixes the sign of the quadratic values; replace $T$ by $-T$ once if that sign is negative. We may then assume $\langle Tx_n,x_n\rangle\to\|T\|$. Compactness gives a subsequence with $Tx_n\to y$. The identity
 
 $$
 \|(T-\|T\|I)x_n\|^2
@@ -1098,17 +1158,17 @@ $$
 \lambda_{n-1}<\lambda_n=\cdots=\lambda_{n+r-1}<\lambda_{n+r},
 $$
 
-then the eigenspace has dimension $r$. Small perturbations of the form move the ordered eigenvalues continuously under suitable relative bounds, even when individual eigenvectors cannot be chosen continuously through a multiple eigenvalue.
+then the eigenspace has dimension $r$.
 
 ### 6.5 Spectral functions and counting
 
-For a semibounded compact-resolvent operator, a Borel function $f(A)$ is compact exactly when $f(\lambda_n)\to0$, after ignoring finite-dimensional eigenspaces. It is finite rank if $f$ vanishes on all but finitely many eigenvalues. Two functions are especially important:
+For a semibounded compact-resolvent operator and a bounded Borel function $f$ on its spectrum, $f(A)$ is compact exactly when $f(\lambda_n)\to0$, with eigenvalues repeated according to multiplicity. It is finite rank if and only if $f$ is nonzero on only finitely many eigenvalues. Two functions are especially important:
 
 $$
 e^{-tA},\qquad (A+c)^{-s}.
 $$
 
-After shifting $A\geq0$, the heat operator $e^{-tA}$ is compact for every $t>0$, and
+Here $c$ is chosen so that $A+c>0$. After shifting $A\geq0$, the heat operator $e^{-tA}$ is compact for every $t>0$, and
 
 $$
 e^{-tA}x=\sum_ne^{-t\lambda_n}\langle x,e_n\rangle e_n.
@@ -1235,7 +1295,7 @@ $$
 
 ### 7.3 Integral kernels
 
-Let $(X,\mu)$ and $(Y,\nu)$ be sigma-finite measure spaces with separable $L^2$ spaces. Given
+Let $(X,\mu)$ and $(Y,\nu)$ be $\sigma$-finite measure spaces with separable $L^2$ spaces. Given
 
 $$
 K\in L^2(X\times Y,\mu\times\nu),
@@ -1371,7 +1431,28 @@ $$
 \|T\|\leq\|T\|_2\leq\|T\|_1.
 $$
 
-Each inclusion is strict in infinite dimension. Diagonal sequences $n^{-2}$, $n^{-1}$, and $n^{-1/2}$ provide immediate examples at the boundaries.
+Each inclusion is strict in infinite dimension: $\operatorname{diag}(n^{-1})$ is Hilbert--Schmidt but not trace class, $\operatorname{diag}(n^{-1/2})$ is compact but not Hilbert--Schmidt, and the identity is bounded but not compact.
+
+The trace norm is complete. Indeed, if $(T_m)$ is trace-norm Cauchy, it converges in operator norm to a compact operator $T$. The approximation formula (6.5) implies
+
+$$
+|s_j(S)-s_j(R)|\leq\|S-R\|
+$$
+
+for compact $S,R$. Hence, for fixed $m$ and $N$,
+
+$$
+\sum_{j\leq N}s_j(T_m-T)
+=\lim_{k\to\infty}\sum_{j\leq N}s_j(T_m-T_k)
+\leq\liminf_{k\to\infty}\|T_m-T_k\|_1.
+$$
+
+Letting $N\to\infty$ shows that $T_m-T$ is trace class and that $T_m\to T$ in trace norm. Finite-rank operators are dense because truncating a singular-value expansion gives
+
+$$
+\|T-T_N\|_1=\sum_{n>N}s_n(T)\longrightarrow0.
+\tag{8.1a}
+$$
 
 Trace class has a useful factorization characterization.
 
@@ -1384,7 +1465,7 @@ $$
 through some Hilbert space $L$, with $B:H\to L$ and $A:L\to K$ Hilbert--Schmidt. Moreover,
 
 $$
-\|T\|_1=inf_{T=AB}\|A\|_2\|B\|_2.
+\|T\|_1=\inf_{T=AB}\|A\|_2\|B\|_2.
 \tag{8.2}
 $$
 
@@ -1394,7 +1475,26 @@ $$
 \|A\|_2^2=\|B\|_2^2=\sum_ns_n(T)=\|T\|_1.
 $$
 
-Conversely, choose orthonormal bases and apply Cauchy--Schwarz to finite-rank compressions of $AB$. The resulting singular-value inequality gives
+Conversely, first suppose that $A$ and $B$ have finite rank, and let $AB=V|AB|$ be the polar decomposition. The ordinary finite-dimensional trace, computed in an orthonormal basis $(e_n)$ of $H$, gives
+
+$$
+\begin{aligned}
+\|AB\|_1
+&=\operatorname{tr}|AB|
+=\operatorname{tr}(V^*AB)\\
+&=\sum_n\langle Be_n,A^*Ve_n\rangle
+\leq\|B\|_2\,\|A^*V\|_2
+\leq\|A\|_2\,\|B\|_2.
+\end{aligned}
+$$
+
+For general Hilbert--Schmidt $A$ and $B$, choose finite-rank $A_n\to A$ and $B_n\to B$ in Hilbert--Schmidt norm. The finite-rank inequality applied to
+
+$$
+A_nB_n-A_mB_m=(A_n-A_m)B_n+A_m(B_n-B_m)
+$$
+
+shows that $(A_nB_n)$ is Cauchy in trace norm. Its trace-norm limit agrees with $AB$, since both products also converge in operator norm. Passing to the limit gives
 
 $$
 \|AB\|_1\leq\|A\|_2\|B\|_2.
@@ -1410,12 +1510,7 @@ $$
 \tag{8.4}
 $$
 
-It is complete in the trace norm. Finite-rank operators are dense: truncating a singular-value expansion gives
-
-$$
-\|T-T_N\|_1=\sum_{n>N}s_n(T)\to0.
-\tag{8.5}
-$$
+Completeness and finite-rank density were proved above; together with (8.4), they make finite-dimensional approximation stable under bounded multiplication.
 
 ### 8.2 The operator trace
 
@@ -1526,7 +1621,7 @@ $$
 for unitaries $U,V$. More generally, if $P$ is an orthogonal projection and $T\geq0$ is trace class, then
 
 $$
-\operatorname{tr}(PTP)=\operatorname{tr}(T^{1/2}PT^{1/2})leq\operatorname{tr}(T).
+\operatorname{tr}(PTP)=\operatorname{tr}(T^{1/2}PT^{1/2})\leq\operatorname{tr}(T).
 \tag{8.14}
 $$
 
@@ -1551,7 +1646,7 @@ $$
 
 where nonzero eigenvalues are repeated with algebraic, equivalently geometric, multiplicity and the series converges absolutely. This follows directly by choosing an orthonormal eigenbasis for the compact self-adjoint operator.
 
-For a general, not necessarily normal, trace-class operator, the equality of trace with the absolutely convergent sum of algebraic eigenvalues is deeper because eigenvectors need not be orthogonal and may not span the space. The equality is true, but the automorphic applications developed here require only self-adjoint spectral functions and traces of smoothing operators computed through kernels. We will not use the general eigenvalue-sum theorem without first reducing to those controlled settings.
+For a general, not necessarily normal, trace-class operator, eigenvectors need not be orthogonal and may not span the space. No eigenvalue-sum formula in that generality will be assumed here. The automorphic applications below use self-adjoint spectral functions or compute traces of smoothing operators through kernels, where the preceding proofs apply directly.
 
 An orthogonal projection $P$ is trace class exactly when it has finite rank, and then
 
@@ -1682,7 +1777,7 @@ $$
 
 Continuity can select a canonical representative, while positivity forces summability.
 
-**Theorem 9.1 (positive-kernel trace theorem).** Let $X$ be a compact Hausdorff space with a finite Borel measure of full support. Suppose $K\in C(X\times X)$, $K(y,x)=\overline{K(x,y)}$, and the integral operator $T_K$ on $L^2(X)$ is positive. Then $T_K$ is trace class and
+**Theorem 9.1 (positive-kernel trace theorem).** Let $X$ be a compact metric space with a finite Borel measure of full support. Suppose $K\in C(X\times X)$, $K(y,x)=\overline{K(x,y)}$, and the integral operator $T_K$ on $L^2(X)$ is positive. Then $T_K$ is trace class and
 
 $$
 \operatorname{tr}(T_K)=\int_XK(x,x)\,d\mu(x).
@@ -1698,19 +1793,67 @@ $$
 
 with uniform convergence on $X\times X$.
 
-**Proof strategy.** The continuous kernel makes $T_K$ compact and sends $L^2$ boundedly into $C(X)$. Positivity and the compact spectral theorem give nonnegative eigenvalues and an $L^2$ eigenfunction expansion. For the partial kernels
+**Proof.** Since the measure is finite, $K\in L^2(X\times X)$, so $T_K$ is Hilbert--Schmidt and compact. Uniform continuity of $K$ and Cauchy--Schwarz show that $T_K$ maps $L^2(X)$ continuously into $C(X)$. Hence every eigenfunction with positive eigenvalue has a continuous representative.
+
+We first record how operator positivity becomes pointwise positivity. If a continuous Hermitian kernel $R$ has positive integral operator, then for any points $x_1,\ldots,x_r$ and scalars $c_1,\ldots,c_r$,
+
+$$
+\sum_{i,j}c_i\overline{c_j}R(x_i,x_j)\geq0.
+\tag{9.3a}
+$$
+
+Indeed, replace each point mass by the normalized indicator of a shrinking neighborhood of positive measure, apply positivity in $L^2$, and use continuity. Full support guarantees that the normalizations exist. Thus $R$ is a positive-definite kernel. In particular,
+
+$$
+R(x,x)\geq0,
+\qquad
+|R(x,y)|^2\leq R(x,x)R(y,y),
+\tag{9.3b}
+$$
+
+the second inequality being the nonnegativity of a $2\times2$ determinant.
+
+List the positive eigenvalues of $T_K$ decreasingly, with multiplicity, and choose continuous representatives $\phi_n$ of the corresponding orthonormal eigenfunctions. For the partial kernels
 
 $$
 K_N(x,y)=\sum_{n\leq N}\lambda_n\phi_n(x)\overline{\phi_n(y)},
 $$
 
-positivity of the remainder implies $0\leq K_N(x,x)\leq K(x,x)$. A Cauchy--Schwarz inequality for positive kernels,
+the operator with kernel $R_N=K-K_N$ is the positive spectral remainder. The preceding argument applies to $R_N$, so $R_N(x,x)\geq0$ and
 
 $$
-|R_N(x,y)|^2\leq R_N(x,x)R_N(y,y),
+|R_N(x,y)|^2\leq R_N(x,x)R_N(y,y).
 $$
 
-reduces uniform convergence on $X\times X$ to uniform convergence on the diagonal. Compactness and equicontinuity give convergence of the continuous diagonal remainders; monotonicity then upgrades it to uniform convergence. Integrating the increasing diagonal sums yields
+It remains to prove that the decreasing continuous functions $R_N(x,x)$ tend to zero. The kernel order $0\leq R_N\leq K$ gives uniform equicontinuity. More explicitly, the positive-kernel Cauchy--Schwarz inequality gives
+
+$$
+|R_N(x,x)-R_N(y,y)|
+\leq 2M^{1/2}
+\big(K(x,x)+K(y,y)-2\operatorname{Re}K(x,y)\big)^{1/2},
+\tag{9.3c}
+$$
+
+where $M=\max_xK(x,x)$. The same estimate in each variable controls $R_N(y,z)-R_N(x,x)$ uniformly in $N$ when $y,z\to x$.
+
+If $R_N(x,x)$ failed to tend to zero for some fixed $x$, there would be $\varepsilon>0$, a subsequence, and one neighborhood $V$ of $x$ such that
+
+$$
+\operatorname{Re}R_N(y,z)\geq\varepsilon/2
+\qquad(y,z\in V)
+$$
+
+along that subsequence. For $h=1_V/\mu(V)$ this gives $\langle T_{R_N}h,h\rangle\geq\varepsilon/2$. On the other hand,
+
+$$
+|\langle T_{R_N}h,h\rangle|
+\leq\|T_{R_N}\|\,\|h\|_2^2
+=\frac{\|T_{R_N}\|}{\mu(V)}\longrightarrow0,
+$$
+
+because the compact spectral theorem gives $\|T_{R_N}\|\to0$. This contradiction proves pointwise convergence on the diagonal. Dini's theorem now makes it uniform, and (9.3b) makes $R_N\to0$ uniformly on $X\times X$.
+
+Finally, integrate the increasing diagonal sums:
 
 $$
 \sum_n\lambda_n
@@ -1738,7 +1881,7 @@ $$
 \tag{9.6}
 $$
 
-Suppose geometric analysis also produces a continuous heat kernel $K_t(x,y)$. The semigroup identity gives
+Suppose geometric analysis also produces continuous heat kernels $K_s(x,y)$ and bounds that justify kernel composition and Fubini at times $s=t/2,t$. The semigroup identity then gives
 
 $$
 K_t(x,y)=\int_XK_{t/2}(x,z)K_{t/2}(z,y)d\mu(z),
@@ -1853,7 +1996,7 @@ $$
 \sup_j\|T_j\|<\infty.
 $$
 
-It is compact exactly when every $T_j$ is compact and the finite-rank approximation can be made uniform, equivalently $\|T_j\|\to0$ after discarding finitely many indices. It is trace class exactly when each $T_j$ is trace class and
+It is compact exactly when every $T_j$ is compact and the finite-rank approximation can be made uniform, equivalently, for every $\varepsilon>0$, only finitely many $j$ satisfy $\|T_j\|\geq\varepsilon$. It is trace class exactly when each $T_j$ is trace class and
 
 $$
 \sum_j\|T_j\|_1<\infty,
@@ -1914,7 +2057,7 @@ In particular, every occurring $\pi$ containing $\tau$ has finite multiplicity, 
 
 ### 10.4 Simultaneous spectral organization
 
-A commuting family of bounded normal operators on a finite-dimensional Hilbert space has a common orthonormal eigenbasis. The proof is inductive: choose an eigenspace of one operator; commutation with that operator and its adjoint makes the eigenspace reducing for every other member; diagonalize on it and on its complement.
+A commuting family of bounded normal operators on a finite-dimensional Hilbert space has a common orthonormal eigenbasis. The proof is inductive: choose an eigenspace of one operator. In finite dimension its adjoint is a polynomial in that operator, so every commuting operator and its adjoint preserve the chosen eigenspace. The restrictions remain normal; diagonalize on that eigenspace and its complement, and continue.
 
 Applied to the finite-dimensional spaces (10.6), this diagonalizes commuting Hecke-type or symmetry operators without requiring those operators to be compact on all of $H$. If $T_\alpha$ commute with $A$ and with one another, and each $T_\alpha$ is normal on $H(\tau,\lambda)$, then
 
@@ -1949,9 +2092,11 @@ The spectral argument begins only after the following analytic inputs have been 
 - Its form domain embeds compactly into the corresponding cuspidal $L^2$ subspace. The compactness combines local elliptic compactness on truncated regions with uniform cusp decay preventing mass from escaping.
 - Smooth compactly supported convolution operators improve regularity to sufficiently high order, and their automorphic kernels satisfy the convergence estimates needed for Fubini and diagonal integration.
 
+To pass from eigenvectors to irreducible representation labels, one also needs the standard representation-theoretic inputs: the right regular representation has a type-I direct-integral decomposition, its relevant irreducible constituents are admissible, the chosen finite and compact types exhaust the smooth representation, and the elliptic operators are decomposable and act scalarly on each irreducible fixed-type fiber. These are not consequences of compactness, so they remain explicit hypotheses at this interface.
+
 Once these inputs are available, the results of this book turn them into the following outputs.
 
-**Cuspidal spectral principle.** On every fixed level and compact type, the self-adjoint elliptic operator has compact resolvent. Hence the cuspidal space has an orthonormal basis of smooth eigenvectors on that type, bounded spectral intervals are finite-dimensional, commuting normal symmetries admit simultaneous orthogonal decomposition, and each resulting representation occurs with finite multiplicity. Sufficiently smoothing convolution operators are trace class, and their trace has both an absolutely convergent spectral expansion and a diagonal-kernel expression.
+**Cuspidal spectral principle.** On every fixed level and compact type, the self-adjoint elliptic operator has compact resolvent. Hence the cuspidal space has an orthonormal basis of smooth eigenvectors on that type, bounded spectral intervals are finite-dimensional, and commuting normal symmetries admit simultaneous orthogonal decomposition. With the representation-theoretic hypotheses just stated, the direct integral is atomic and every resulting irreducible representation occurs with finite multiplicity. Sufficiently smoothing convolution operators are trace class once their typewise trace norms are summable, and their trace then has both an absolutely convergent spectral expansion and a justified diagonal-kernel expression.
 
 The proof is now short because the difficult geometry has been isolated. Compactness of the form embedding gives compact resolvent by Proposition 4.3. Theorem 6.2 gives a discrete eigenbasis and finite-dimensional spectral windows. Elliptic regularity upgrades weak eigenvectors to smooth vectors. Sections 10.3 and 10.4 organize the windows under compact types and commuting operators. Chapters 7--9 give trace class and the kernel trace formula once smoothing and kernel bounds are known.
 
@@ -1979,7 +2124,7 @@ $$
 
 and every summand is finite-dimensional. The hat emphasizes Hilbert completion; individual vectors are square-summable sums of eigencomponents.
 
-As $K_f$ ranges through a countable cofinal family and $\tau$ through the countable unitary dual of $K_\infty$, the finite-type spaces exhaust the smooth vectors densely. Representation-theoretic decomposition may initially be given as a direct integral. Compactness forces its measure to be atomic on every type: a nonatomic piece of positive measure would make an appropriate bounded spectral projection on a nonzero type infinite-dimensional. Since types exhaust the representation, only discrete atoms remain. Finite dimensionality in (11.1) bounds the multiplicity of every atom containing $\tau$. Thus one obtains a Hilbert direct sum
+As $K_f$ ranges through a countable cofinal family and $\tau$ through the countable unitary dual of $K_\infty$, the finite-type spaces exhaust the smooth vectors densely. Under the representation-theoretic hypotheses of Section 11.1, the decomposition may initially be given as a direct integral. On a fixed type, the union of the spectral sets $[-R,R]$ exhausts every nonzero fiber. If a nonatomic part of positive measure remained, some $R$ would therefore give a nonzero direct-integral piece inside $E_{A_\tau}([-R,R])\mathcal H_{K_f,\tau}$. Splitting that nonatomic set into infinitely many disjoint subsets of positive measure would produce infinitely many orthogonal vectors in the projection range, contradicting its finite rank. Thus the measure is atomic on every type. Since the types exhaust the representation, only discrete atoms remain. Admissibility and finite dimensionality in (11.1) then bound the multiplicity of every atom containing $\tau$. Thus one obtains a Hilbert direct sum
 
 $$
 \mathcal H_{\mathrm{cusp}}
@@ -2089,16 +2234,19 @@ $$
 
 Thus the twisted trace is an ordinary trace-class trace; no new ideal is required.
 
-If $\Theta$ permutes the irreducible summands in (11.2), a finite orbit of length greater than one contributes zero to the trace of the resulting off-diagonal block. Only $\Theta$-stable representations contribute. After choosing an intertwiner $I_\pi:\pi\to\pi\circ\Theta$, the spectral expansion takes the form
+Suppose the underlying automorphism is $\theta$, so that $\Theta$ sends the $\pi$-isotypic summand to the $\pi^\theta$-isotypic summand. Every orbit of length greater than one, finite or infinite, contributes zero: relative to the orthogonal isotypic decomposition, its operator has zero diagonal blocks. Only $\theta$-stable representations contribute.
+
+Write the stable isotypic summand as $M_\pi\otimes\mathcal H_\pi$, where $\dim M_\pi=m(\pi)$. Choose an intertwiner $I_\pi:\mathcal H_\pi\to\mathcal H_\pi$ implementing $\pi\simeq\pi^\theta$. Schur's lemma then writes the restriction of $\Theta$ uniquely in the form $J_\pi\otimes I_\pi$ for an operator $J_\pi$ on $M_\pi$, once the normalization of $I_\pi$ is fixed. The spectral expansion is therefore
 
 $$
 \operatorname{tr}(\Theta R(f)|_{\mathrm{cusp}})
-=\sum_{\pi\simeq\pi\circ\Theta}
-m(\pi)\operatorname{tr}(I_\pi\pi(f)),
+=\sum_{\pi\simeq\pi^\theta}
+\operatorname{tr}(J_\pi)\,
+\operatorname{tr}(I_\pi\pi(f)),
 \tag{11.9}
 $$
 
-with the action on the multiplicity space included in $I_\pi$ when it is nontrivial. Normalizing the intertwiner is part of the representation-theoretic data; multiplying it by a scalar changes the twisted character.
+and the series is absolutely convergent because $\Theta R(f)$ is trace class. If $\Theta$ acts trivially on the multiplicity space, then $J_\pi=I_{M_\pi}$ and $\operatorname{tr}(J_\pi)=m(\pi)$, recovering the familiar coefficient. Rescaling $I_\pi$ forces the inverse rescaling of $J_\pi$ if $\Theta$ is held fixed; the product in (11.9) is intrinsic, although the separately normalized twisted character is not.
 
 On the kernel side, $\Theta$ replaces the ordinary diagonal by a twisted diagonal. If $(\Theta\varphi)(x)=\varphi(\theta^{-1}x)$, then the kernel of $\Theta R(f)$ is obtained from $K_f$ by applying $\theta^{-1}$ in the output variable, and its trace integrates the corresponding twisted diagonal. Grouping its terms produces twisted conjugacy classes. As before, the spectral theory guarantees trace class and legitimate trace expansions; arithmetic geometry and harmonic analysis identify the twisted orbital terms.
 
