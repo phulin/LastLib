@@ -276,14 +276,14 @@ $$
 for a degree-$p$ cochain, with this sign convention. A closed oriented $d$-manifold has a fundamental class $[T]$, and cap product gives
 
 $$
--\frown[T]:H^p_B(T,A)\longrightarrow H_{d-p}(T,A). \tag{2.5}
+[T]\frown-:H^p_B(T,A)\longrightarrow H_{d-p}(T,A). \tag{2.5}
 $$
 
 The cellular proof of Poincaré duality uses a triangulation and its dual cell decomposition: each oriented $p$-simplex meets one dual $(d-p)$-cell with sign $+1$, and the cochain differential is, up to the displayed sign, the boundary in the dual cell complex. Thus (2.5) is an isomorphism for every coefficient ring on an oriented closed manifold.
 
 ### 2.4 Relative groups, compact support, and functoriality
 
-For $Z\subseteq T$, the quotient complex $C_\bullet(T)/C_\bullet(Z)$ defines $H_\bullet(T,Z;A)$. Its short exact sequence of complexes produces the long exact sequence of a pair. Dually, cochains vanishing on $Z$ define relative cohomology. If $U=T\setminus Z$ with $T$ compact, excision identifies
+For $Z\subseteq T$, the quotient complex $C_\bullet(T)/C_\bullet(Z)$ defines $H_\bullet(T,Z;A)$. Its short exact sequence of complexes produces the long exact sequence of a pair. Dually, cochains vanishing on $Z$ define relative cohomology. If $T$ is a compact triangulable space and $Z$ is a closed subcomplex after subdivision—as happens for a finite set in a compact surface—then excision identifies
 
 $$
 H^n_c(U,A)\simeq H^n(T,Z;A). \tag{2.6}
@@ -306,7 +306,7 @@ $$
 For a branched holomorphic map $f:T\to U$ of compact Riemann surfaces, define the cohomological pushforward without choosing lifts by Poincaré duality:
 
 $$
-f_*^{\mathrm{coh}}=operatorname{PD}_U^{-1}
+f_*^{\mathrm{coh}}=\operatorname{PD}_U^{-1}
 \circ f_*^{\mathrm{hom}}\circ\operatorname{PD}_T.
 $$
 
@@ -345,7 +345,7 @@ $$
 After abelianization the cellular boundary of the two-cell is zero, as is the boundary from the one-cells to the unique vertex. Therefore
 
 $$
-H_0\simeq\mathbf Z,qquad
+H_0\simeq\mathbf Z,\qquad
 H_1\simeq\mathbf Z^{2h},\qquad
 H_2\simeq\mathbf Z. \tag{3.1}
 $$
@@ -374,8 +374,8 @@ Represent two classes in $H_1(X,\mathbf Z)$ by oriented embedded one-cycles meet
 For the standard loops one may arrange
 
 $$
-a_i\cdot a_j=b_i\cdot b_j=0,qquad
-a_i\cdot b_j=\delta_{ij},qquad
+a_i\cdot a_j=b_i\cdot b_j=0,\qquad
+a_i\cdot b_j=\delta_{ij},\qquad
 b_j\cdot a_i=-\delta_{ij}. \tag{3.3}
 $$
 
@@ -383,7 +383,7 @@ Thus intersection is alternating and unimodular. Under Poincaré duality it corr
 
 $$
 Q_B(\alpha,\beta)
-=\langle\alpha\smile\beta,[X]\rangle,qquad
+=\langle\alpha\smile\beta,[X]\rangle,\qquad
 \alpha,\beta\in H^1_B(X,\mathbf Z). \tag{3.4}
 $$
 
@@ -549,9 +549,33 @@ H^q(X^{\mathrm{an}},\mathcal F^{\mathrm{an}}),
 \qquad q=0,1. \tag{5.2}
 $$
 
-**Proof strategy.** We first treat line bundles of high degree, descend by adding points, and then filter a vector bundle by a line subbundle. This mirrors the proof of duality in Book 9 and avoids importing a higher-dimensional comparison theorem.
+**Proof strategy.** We compare line-bundle sections by algebraizing meromorphic quotients, compare their first cohomology by an explicit analytic duality argument, and then filter a vector bundle by a line subbundle. This mirrors the residue proof of duality in Book 9 and avoids importing a higher-dimensional comparison theorem.
 
-**Proof.** For a line bundle $L$ of sufficiently high degree, both algebraic and analytic $H^1$ vanish. Algebraically this follows from Serre duality and negative-degree vanishing. Analytically the same residue proof of Serre duality identifies $H^1(L^{\mathrm{an}})^\vee$ with holomorphic sections of $K\otimes L^{-1}$, which vanish when their degree is negative. Riemann--Roch on both sides then gives the same dimension for $H^0$. Choose a nonzero algebraic meromorphic section $e$ of $L$. An analytic section is $he$ for a meromorphic function $h$, and Section 5.1 makes $h$ algebraic. Thus comparison is an isomorphism in high degree.
+**Proof.** We first record the analytic input rather than hide it in the word “comparison.” On a compact Riemann surface $M$, Dolbeault cohomology identifies
+
+$$
+H^1(M,L)\simeq
+\frac{\mathcal A^{0,1}(L)}
+{\bar\partial\mathcal A^{0,0}(L)}.
+$$
+
+Integration of the product gives a pairing with $H^0(M,K_M\otimes L^{-1})$. It is perfect. Choose Hermitian metrics and take the harmonic representative of a Dolbeault class. The formal-adjoint identity identifies harmonic $L$-valued $(0,1)$-forms with the conjugate duals of holomorphic $K_M\otimes L^{-1}$-valued sections. If the pairing with every such section is zero, the harmonic representative has zero norm; the class is zero. The same argument in the other variable proves perfection. This is analytic Serre duality, normalized by integration.
+
+Adding a point and using
+
+$$
+0\to L\to L(p)\to L(p)|_p\to0
+$$
+
+shows that $\chi(L(p))=\chi(L)+1$. For sufficiently large degree, analytic duality and negative-degree vanishing kill $H^1$. Descending by points gives
+
+$$
+\chi(L)=\deg L+1-h^1(M,\mathcal O_M).
+$$
+
+Taking $L=\mathcal O_M$ identifies $h^1(\mathcal O_M)$ with $h^0(K_M)$. This proves the analytic Riemann--Roch formula in exactly the form used here.
+
+Now let $L$ be algebraic. A nonzero algebraic meromorphic section $e$ identifies every analytic section with $he$ for a meromorphic function $h$. Section 5.1 makes $h$ algebraic, so comparison on $H^0$ is always an isomorphism. Algebraic Serre duality from Book 9 and the analytic duality just proved identify the two $H^1$ dimensions, because Section 5.1 also algebraizes holomorphic differentials and hence the relevant dual sections. Thus comparison is an isomorphism for line bundles in both degrees.
 
 For a point $p$, compare
 
@@ -559,7 +583,7 @@ $$
 0\to L\to L(p)\to L(p)|_p\to0 \tag{5.3}
 $$
 
-with its analytic counterpart. The quotient is the same one-dimensional complex vector space, and the connecting maps are both described by the same principal part. Starting in high degree and descending one point at a time, the five lemma proves (5.2) for every line bundle.
+with its analytic counterpart. The quotient is the same one-dimensional complex vector space, and the connecting maps are both described by the same principal part. This exact-sequence comparison also shows that the analytic duality trace agrees with the algebraic residue trace: both send the local pair $z^{-1}$ and $dz$ to $1$.
 
 We argue by rank for a vector bundle $\mathcal F$. A nonzero vector in its generic fiber spans a rational line. Clear its finitely many poles to obtain a line subsheaf and saturate it. The quotient is torsion-free; over the discrete valuation ring at every point, a finite torsion-free module is free. There is therefore an exact sequence
 
@@ -607,6 +631,33 @@ $$
 
 when the class is represented by a global algebraic one-form. A general hypercohomology class has a Čech function component as well; integrating the glued smooth representative gives the same map.
 
+The same theorem holds for every smooth complex algebraic curve, and the boundary argument is short enough in dimension one to include. If $U$ is not proper, let $j:U\hookrightarrow X$ be its smooth projective compactification and let $D=X\setminus U$ with the reduced structure. The nonempty divisor $D$ is ample on the proper curve, so $U$ is affine and $j$ is an affine morphism. Consequently the de Rham hypercohomology of $U$ is computed on $X$ by the direct-image complex below, with no higher direct-image term. On $X$ consider the logarithmic complex
+
+$$
+\Omega_X^\bullet(\log D)
+=\bigl[\mathcal O_X\xrightarrow d\Omega_X^1(D)\bigr].
+$$
+
+The inclusion into the meromorphic complex
+
+$$
+\bigl[\mathcal O_X(*D)\xrightarrow d\Omega_X^1(*D)\bigr]
+=j_*\Omega_U^\bullet
+$$
+
+is a quasi-isomorphism. This is local at a point of $D$. With parameter $z$, every term $z^{-m}dz$ with $m\ne1$ is the derivative of
+$z^{-m+1}/(-m+1)$, while the single surviving class is $dz/z$. A meromorphic function whose derivative has at most a simple pole is regular, so degree zero also agrees. Characteristic zero is used exactly in dividing by $m-1$.
+
+The identical Laurent-series calculation proves that the analytic logarithmic complex is quasi-isomorphic to the holomorphic de Rham complex on $U^{\mathrm{an}}$. Coherent comparison applies termwise to $\mathcal O_X$ and $\Omega_X^1(D)$, so it compares the algebraic and analytic logarithmic hypercohomology. The analytic de Rham theorem then gives
+
+$$
+H^n_{\mathrm{dR}}(U/\mathbf C)
+\xrightarrow{\sim}H^n_B(U^{\mathrm{an}},\mathbf C).
+\tag{5.7}
+$$
+
+The construction is functorial: after replacing compactifications by the normalization of the graph of a map, pullback preserves logarithmic forms and the resulting map is independent of that replacement because both sides identify with the intrinsic complexes on the open curves. This proves the nonproper comparison rather than extrapolating it from the projective case.
+
 ### 5.4 Functoriality and base field extension
 
 If $f:X\to Y$ is a morphism of smooth projective complex curves, pullback commutes with analytification, exterior differentiation, and integration:
@@ -618,7 +669,7 @@ $$
 Therefore (5.4) is functorial. For a finite map, the analytic transfer is adjoint to pullback. On the complement of the branch points, trace of a differential is the sum over inverse branches, so change of variables gives
 
 $$
-\int_\gamma f_*\eta=\int_{f^!\gamma}\eta, \tag{5.7}
+\int_\gamma f_*\eta=\int_{f^!\gamma}\eta, \tag{5.8}
 $$
 
 where $f^!$ is the homological transfer. Both sides extend across branch points by local degree. Thus comparison also commutes with cohomological trace.
@@ -627,10 +678,10 @@ Now let $X/K$ with $K\subseteq\mathbf C$. Book 52 proves arbitrary base change f
 
 $$
 H^n_{\mathrm{dR}}(X/K)\otimes_K\mathbf C
-\simeq H^n_{\mathrm{dR}}(X_{\mathbf C}/\mathbf C). \tag{5.8}
+\simeq H^n_{\mathrm{dR}}(X_{\mathbf C}/\mathbf C). \tag{5.9}
 $$
 
-Composing (5.8) with (5.4) proves (1.1). If $K\hookrightarrow\mathbf C$ is changed, the Betti surface can change by conjugating the coefficients and complex structure; the algebraic $K$-space remains fixed. Thus the embedding is part of the comparison datum.
+Composing (5.9) with (5.4) proves (1.1). If $K\hookrightarrow\mathbf C$ is changed, the Betti surface can change by conjugating the coefficients and complex structure; the algebraic $K$-space remains fixed. Thus the embedding is part of the comparison datum.
 
 ## 6. Periods, Hodge theory, and rational structures
 
@@ -684,7 +735,7 @@ where
 $$
 H^{1,0}(X)=H^0(X,\Omega^1_X),
 \qquad
-H^{0,1}(X)=\overline{H^{1,0}(X)}simeq H^1(X,\mathcal O_X). \tag{6.3}
+H^{0,1}(X)=\overline{H^{1,0}(X)}\simeq H^1(X,\mathcal O_X). \tag{6.3}
 $$
 
 The last identification is Dolbeault cohomology. Algebraic coherent comparison identifies it with algebraic $H^1(\mathcal O_X)$, and Book 9's Serre duality shows both summands have dimension $g$. This proves that the topological genus of Section 3.2 equals the algebraic genus.
@@ -760,7 +811,7 @@ Applying (4.8) to $\omega=\sum c_i\omega_i$ and $\bar\omega$ gives
 
 $$
 i\int_X\omega\wedge\bar\omega
-=2\,\bar c^{,t}(\operatorname{Im}\tau)c>0
+=2\,\bar c^{\,t}(\operatorname{Im}\tau)c>0
 \qquad(c\ne0). \tag{6.10}
 $$
 
@@ -872,8 +923,8 @@ The argument also proves compatibility with cup products: choose the common hype
 For a smooth proper genus-$g$ curve and a finite ring $A$, comparison and Chapter 3 give
 
 $$
-H^0_{\mathrm{\acute et}}(X,A)=A,qquad
-H^1_{\mathrm{\acute et}}(X,A)=A^{2g},qquad
+H^0_{\mathrm{\acute et}}(X,A)=A,\qquad
+H^1_{\mathrm{\acute et}}(X,A)=A^{2g},\qquad
 H^2_{\mathrm{\acute et}}(X,A)=A, \tag{8.4}
 $$
 
@@ -907,8 +958,8 @@ One can also prove (8.6) from the two localization sequences. Point-supported co
 For constant $A$ and $r=|Z|>0$, the result gives
 
 $$
-H^0_c(U,A)=0,qquad
-H^1_c(U,A)\simeq A^{2g+r-1},qquad
+H^0_c(U,A)=0,\qquad
+H^1_c(U,A)\simeq A^{2g+r-1},\qquad
 H^2_c(U,A)\simeq A. \tag{8.7}
 $$
 
@@ -923,7 +974,7 @@ Finite comparison becomes ℓ-adic comparison only after controlling inverse lim
 For a compact finite CW complex $T$, define
 
 $$
-H^n_B(T,\mathbf Z_\ell)=arprojlim_m
+H^n_B(T,\mathbf Z_\ell)=\varprojlim_m
 H^n_B(T,\mathbf Z/\ell^m\mathbf Z).
 $$
 
@@ -965,7 +1016,7 @@ $$
 The isomorphism is canonical, functorial, compatible with cup products, and compatible with reduction modulo every $\ell^m$. For a genus-$g$ proper curve,
 
 $$
-H^0\simeq\mathbf Z_\ell,qquad
+H^0\simeq\mathbf Z_\ell,\qquad
 H^1\simeq\mathbf Z_\ell^{2g},
 \qquad H^2\simeq\mathbf Z_\ell(-1) \tag{9.4}
 $$
@@ -984,7 +1035,7 @@ H^n_B(X,\mathbf Q_\ell)
 H^n_{\mathrm{\acute et}}(X,\mathbf Q_\ell). \tag{9.5}
 $$
 
-For a finite-dimensional lisse $\mathbf Q_\ell$-local system, choose a stable $\mathbf Z_\ell$-lattice, compare its finite locally constant reductions, take the inverse limit, and invert $\ell$. Such a lattice exists because the continuous monodromy image is compact and every compact subgroup of $\operatorname{GL}_r(\mathbf Q_\ell)$ stabilizes a lattice. Two stable lattices are commensurable, so the rational comparison is independent of the choice. The full monodromy need not be finite; only each reduction has finite image.
+For a finite-dimensional lisse $\mathbf Q_\ell$-local system, choose a stable $\mathbf Z_\ell$-lattice, compare its finite locally constant reductions, take the derived inverse limit, and invert $\ell$. Such a lattice exists because the continuous monodromy image is compact and every compact subgroup of $\operatorname{GL}_r(\mathbf Q_\ell)$ stabilizes a lattice. At every finite level the cohomology groups are finite, so their inverse system is Mittag--Leffler and the Milnor $\varprojlim^1$ term vanishes even when the transition maps are not surjective. Two stable lattices are commensurable, so the rational comparison is independent of the choice. The full monodromy need not be finite; only each reduction has finite image.
 
 If $X$ descends to $K\subset\mathbf C$, the group on the right for $X_{\bar K}$ carries an action of $G_K$. Choosing an embedding $\bar K\hookrightarrow\mathbf C$ identifies the underlying vector space with Betti cohomology, but the Galois action is additional arithmetic structure; $X^{\mathrm{an}}$ alone does not produce it. A different extension of the embedding changes the comparison by the corresponding Galois element.
 
@@ -1145,7 +1196,14 @@ $$
 
 For Betti cohomology, $f_*$ is dual to the homological transfer described in Section 2.4. For de Rham cohomology, it is trace on functions and differentials, with residue compatibility from Book 9 and the construction in Book 52. For étale cohomology, it is the trace of Book 20.
 
-The comparison of $f_*$ can be checked away from branch points, where all three traces sum over local sheets. The complements are finite. The only possible discrepancy is therefore a map supported in top degree at a branch point. Applying the trace to its point class and using local degree shows that discrepancy is zero. Hence
+The comparison of $f_*$ is most safely deduced from adjointness. In Betti, de Rham, and étale cohomology, $f_*$ is the unique map satisfying
+
+$$
+\operatorname{Tr}_Y(f_*x\smile y)
+=\operatorname{Tr}_X(x\smile f^*y)
+$$
+
+in complementary degrees. The pairings are perfect, comparison commutes with $f^*$ and cup product, and Chapter 10 has already matched the three top traces, including the factor $2\pi i$ and the Tate twist. Transporting the displayed identity through either comparison therefore characterizes the transported map as $f_*$. Hence
 
 $$
 \operatorname{comp}\circ f_*=f_*\circ\operatorname{comp} \tag{11.2}
@@ -1274,7 +1332,7 @@ A positive integral Riemann form determines an ample line bundle on a complex to
 
 $$
 j_\lambda(z)=
-\exp\bigl(-\pi i,n^t\tau n-2\pi i,n^tz\bigr).
+\exp\bigl(-\pi i\,n^t\tau n-2\pi i\,n^tz\bigr).
 $$
 
 The identity
@@ -1283,7 +1341,37 @@ $$
 j_{\lambda+\mu}(z)=j_\lambda(z+\mu)j_\mu(z)
 $$
 
-uses the integrality and symmetry in (12.5), so these factors descend the trivial line bundle on $V$ to a line bundle on $V/\Lambda$. Its Chern form has imaginary part $E$ and is positive, hence the line bundle is ample. Unimodularity makes the induced map to the dual torus an isomorphism. This is the canonical principal polarization of the Jacobian.
+uses the integrality and symmetry in (12.5), so these factors descend the trivial line bundle on $V$ to a line bundle $\Theta$ on $V/\Lambda$. The convergence and positivity assertions can be seen directly from the theta series
+
+$$
+\vartheta(z,\tau)=
+\sum_{r\in\mathbf Z^g}
+\exp\bigl(\pi i\,r^t\tau r+2\pi i\,r^tz\bigr).
+$$
+
+Positive definiteness of $\operatorname{Im}\tau$ makes the series and all its derivatives converge normally on compact sets. Reindexing $r$ proves the transformation laws
+
+$$
+\vartheta(z+m,\tau)=\vartheta(z,\tau),
+$$
+
+$$
+\vartheta(z+\tau n,\tau)
+=\exp\bigl(-\pi i\,n^t\tau n-2\pi i\,n^tz\bigr)
+\vartheta(z,\tau).
+$$
+
+Thus $\vartheta$ is a holomorphic section of $\Theta$. For $\Theta^{\otimes k}$, use the theta series with characteristics
+$(a,b)\in(k^{-1}\mathbf Z^g/\mathbf Z^g)^2$ and the corresponding corrected exponential factors. Their Fourier expansions have distinct characters modulo $k\mathbf Z^g$. Fourier orthogonality shows that, for $k\geq3$, their common values separate two distinct points; differentiating the expansions shows that their first derivatives separate every nonzero tangent vector. They therefore give a holomorphic embedding of the compact torus into projective space. Hence $\Theta$ is ample.
+
+The first Chern form of $\Theta$ has imaginary part $E$. Unimodularity says that the homomorphism
+
+$$
+\Lambda\longrightarrow\operatorname{Hom}(\Lambda,\mathbf Z),
+\qquad \lambda\longmapsto E(\lambda,-),
+$$
+
+is an isomorphism, so the induced homomorphism from the torus to its dual has degree one and is an isomorphism. This proves, rather than merely names, the canonical principal polarization of the Jacobian.
 
 ### 12.3 Comparison with cup-product polarizations
 
@@ -1309,21 +1397,32 @@ Q_\ell:H^1_{\mathrm{\acute et}}(X,\mathbf Z_\ell)
 \longrightarrow\mathbf Z_\ell(-1), \tag{12.8}
 $$
 
-obtained by cup product and inverse Tate twist. Finite comparison of trace identifies it with $Q_B\otimes\mathbf Z_\ell$, once coefficients are expressed canonically with $\mathbf Z_\ell(1)$.
+obtained by cup product followed by the canonical identification
+$H^2_{\mathrm{\acute et}}(X,\mathbf Z_\ell)\simeq\mathbf Z_\ell(-1)$. Equivalently, without moving a twist across the pairing, it is
+
+$$
+H^1_{\mathrm{\acute et}}(X,\mathbf Z_\ell)
+\times H^1_{\mathrm{\acute et}}(X,\mathbf Z_\ell(1))
+\longrightarrow\mathbf Z_\ell.
+$$
+
+Finite comparison of trace identifies this second form with the Betti cup pairing with coefficients in $\mathbf Z_\ell(1)$.
 
 Positivity belongs to the Betti--Hodge pair, not to the ℓ-adic vector space by itself. The ℓ-adic comparison transports the alternating form and its unimodularity, but $\mathbf Q_\ell$ has no complex conjugation giving the inequality (6.10). This is an example of a structure compatible across realizations whose positivity is meaningful only in one realization.
 
 ### 12.4 Isogenies and denominators
 
-Let $u:J(X)\to A$ be an isogeny of complex abelian varieties. Pullback on degree-one cohomology is injective integrally with finite cokernel and becomes an isomorphism over $\mathbf Q$, $\mathbf C$, and $\mathbf Q_\ell$. Trace gives
+An arbitrary comparison theorem for higher-dimensional abelian varieties is not needed here. What the curve package does control is the denominator behavior of operators on a Jacobian period lattice and of isogenies between the resulting complex tori.
+
+Let $u:V/\Lambda\to V'/\Lambda'$ be an isogeny of $g$-dimensional complex tori, of topological degree $d$. It is a finite covering. Pullback on singular degree-one cohomology is injective with finite cokernel, and transfer gives
 
 $$
-u_*u^*=(\deg u)\operatorname{id}. \tag{12.9}
+u_*u^*=d\,\operatorname{id}. \tag{12.9}
 $$
 
-Thus $(\deg u)^{-1}u_*$ is the rational inverse. Integrally at $\ell$, it is an inverse only when $\ell\nmid\deg u$. This matches Book 52's warning that de Rham isogeny invariance over a general base requires the degree to be invertible.
+Thus $d^{-1}u_*$ is the rational inverse. After tensoring with $\mathbf Z_\ell$, it preserves the integral inverse lattice precisely when $\ell\nmid d$; over $\mathbf Q_\ell$ it is always defined.
 
-If $u$ is compatible with polarizations, its Rosati adjoint is computed by transpose correspondence on the curve realization. Comparison shows that the same adjoint operator acts in Betti, de Rham, and étale cohomology. The statement is algebraic; the positivity used to call it a Rosati involution comes from the complex polarization.
+For an operator actually induced by a curve correspondence, Chapter 11 transports this rational inverse and its denominator condition to the de Rham and étale realizations of the curve. Its adjoint is induced by the transpose correspondence. This is the precise cross-realization assertion available here; no comparison for the cohomology of an unrelated abelian variety has been assumed. Positivity of the associated Rosati form belongs to the polarized Betti--Hodge realization constructed above.
 
 ## 13. Families, horizontal periods, and monodromy
 
@@ -1426,7 +1525,7 @@ Concrete curves test the general normalizations. The examples below are not deta
 For $X=\mathbf P^1_\mathbf C$,
 
 $$
-H^0_B(X,\mathbf Z)=\mathbf Z,qquad H^1_B(X,\mathbf Z)=0,
+H^0_B(X,\mathbf Z)=\mathbf Z,\qquad H^1_B(X,\mathbf Z)=0,
 \qquad H^2_B(X,\mathbf Z)=\mathbf Z.
 $$
 
@@ -1445,7 +1544,7 @@ Thus $H^1_B(U,\mathbf Z)=\mathbf Z$ and $H^1_{\mathrm{dR}}(U)=\mathbf C[dz/z]$. 
 Let $E_\tau=\mathbf C/(\mathbf Z+\tau\mathbf Z)$ with $\operatorname{Im}\tau>0$. The form $dz$ descends and has periods
 
 $$
-\int_a dz=1,qquad\int_b dz=\tau.
+\int_a dz=1,\qquad\int_b dz=\tau.
 $$
 
 Hence the analytic Jacobian is $E_\tau$ itself. The Hodge decomposition is
@@ -1481,7 +1580,7 @@ $$
 so the topological and algebraic genus is $g$. A basis of holomorphic differentials is
 
 $$
-\omega_j=\frac{x^{j-1}dx}{y},qquad1\leq j\leq g. \tag{14.2}
+\omega_j=\frac{x^{j-1}dx}{y},\qquad1\leq j\leq g. \tag{14.2}
 $$
 
 At finite branch points, $x-a=t^2$ makes $dx/y$ regular. At infinity, the degree bound $j\leq g$ is exactly what prevents a pole. Linear independence is clear from their distinct powers of $x$, and dimension $g$ proves they form a basis.
@@ -1561,7 +1660,7 @@ We can now state the result in the form needed for later arithmetic geometry. Ev
 
 **Proof.** Statements 1 and 3 are the comparison isomorphism (5.4), the decomposition (6.2), and the integral surface calculation of Chapter 3. Statement 2 is the finite comparison theorem of Section 8.2 together with the vanishing of the Milnor term in Section 9.1. Point and Kummer calculations in Chapter 10 prove every trace and cycle normalization; multiplicativity then gives the pairings. Chapter 11 proves correspondence compatibility. The Riemann bilinear relations and the construction of Chapter 12 prove the polarization statement. Each cited result has the displayed hypotheses, so their composition proves all six assertions. $\square$
 
-If $X$ is smooth but not proper, finite comparison and algebraic de Rham comparison remain true, with compact supports where duality requires them. The pure weight-one polarization and compact Jacobian statement are proper phenomena and are not asserted for an open curve.
+If $X$ is smooth but not proper, the logarithmic-boundary argument of Section 5.3 and the finite-coefficient argument of Chapter 8 give the de Rham, finite, and ℓ-adic comparisons. Compact supports enter where duality requires them. The pure weight-one polarization and compact Jacobian statement are proper phenomena and are not asserted for an open curve.
 
 ### 15.2 Hypothesis and normalization audit
 
