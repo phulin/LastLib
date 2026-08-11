@@ -160,8 +160,9 @@ The clean minimal problem considered throughout satisfies these hypotheses.
 - The representation $\bar\rho:G_F\to\operatorname{GL}_2(k)$ is continuous, absolutely irreducible, and totally odd.
 - Its restriction to $G_{F(\zeta_\ell)}$ is absolutely irreducible.
 - A continuous determinant lift $\delta:G_F\to\mathcal O^\times$ is fixed and agrees with the determinant of the automorphic packets under consideration.
-- At coefficient-prime places the residual representation lies in the low-weight finite-flat range with weights $\{0,1\}$ and fixed determinant $\delta$.
+- At coefficient-prime places the residual representation lies in the proved low-weight finite-flat range with weights $\{0,1\}$. The local determinant is the cyclotomic--central determinant covered by that theorem, or its transport by a fixed integral twist for which finite flatness and the determinant fiber have been proved.
 - Away from $\ell$, every ramified place belongs to an unramified, fixed prime-to-$\ell$ finite-type, or clean minimal-special case whose represented local condition and neutral tangent calculation are known.
+- The represented local conditions carry compatible complete and effective obstruction theories, and their local-condition complexes make the global Selmer complex perfect. These hypotheses are used for relation bounds and determinant lines, not merely for representability or tangent calculations.
 - The residual system occurs in the selected parallel-weight-two definite-quaternion module, is non-Eisenstein, and every characteristic-zero branch in its localization lies in the established rank-two attachment and integral local-compatibility range.
 - The localized generic Hecke algebra is reduced, and the selected integral module and all local type lattices satisfy the stated saturation, pairing, and stabilizer hypotheses.
 
@@ -286,7 +287,7 @@ There is a useful counterexample to replacing cyclotomic irreducibility by globa
 
 ### 2.5 The controlling set of places
 
-It is useful to separate three finite sets. Let $S_\ell$ be the places above $\ell$, let $S_{\min}$ be the finite places away from $\ell$ at which the residual representation or its prescribed minimal type is ramified, and let $S_B$ be the finite ramification set of the definite quaternion algebra. We take
+It is useful to separate three finite sets. Let $S_\ell$ be the places above $\ell$, let $S_{\min}$ be the finite places away from $\ell$ at which the residual representation or its prescribed minimal type is ramified, and let $S_B$ be the finite ramification set of the definite quaternion algebra. In the clean definite model used here, $S_B\cap S_\ell=\varnothing$ and $S_B\subseteq S_{\min}$; every division-algebra place therefore carries a named matching minimal packet and integral local datum. We take
 
 $$
 S_f=S_\ell\cup S_{\min}\cup S_B,
@@ -308,11 +309,11 @@ For an Artinian local $\mathcal O$-algebra $A$ with residue field $k$, an $A$-va
 
 Let $v\mid\ell$, and put $f_v=[F_v:\mathbf Q_\ell]$. We assume $F_v/\mathbf Q_\ell$ is unramified and $\bar\rho|_{G_v}$ belongs to the rank-two low-weight finite-flat range. The minimal local condition is:
 
-> the lift is the generic fiber of a finite flat group with $\mathcal O$-action, height two, Hodge weights $\{0,1\}$ at every embedding, and determinant $\delta|_{G_v}$.
+> on every Artinian coefficient quotient $A$, the rank-two $A$-module underlying the lift is the generic fiber of a marked finite locally free group scheme with compatible coefficient action, Hodge weights $\{0,1\}$ at every embedding, and determinant $\delta|_{G_v}$.
 
 The phrase “finite flat” is imposed on every Artinian quotient. It is stronger than asking that the characteristic-zero generic fiber be crystalline. The marked coefficient action and compatible transition maps are part of the integral datum.
 
-Under the stated unramified, low-weight, and odd-prime hypotheses, the framed fixed-determinant local functor is represented by a formally smooth ring of relative dimension
+Here the determinant is required to lie in the exact determinant fiber covered by the clean finite-flat theorem, as specified in Section 1.4. Under those unramified, low-weight, odd-prime, and determinant hypotheses, the framed fixed-determinant local functor is represented by a formally smooth ring of relative dimension
 
 $$
 f_v+3
@@ -529,7 +530,7 @@ In the formally smooth cases the ring is therefore a power-series ring in three 
 
 ### 4.5 The completed local base
 
-Choose a nonempty set $T$ of finite places at which frames are retained, large enough to contain every local factor used in the fiber-product construction. Define
+Choose a nonempty set $T$ of finite places at which frames are retained. Conditions at places outside $T$ are still imposed as closed pullbacks on the global functor; choosing $T$ does not relax them. Define
 
 $$
 R_{\mathrm{loc}}^{\min}
@@ -541,8 +542,8 @@ The completed tensor product is legitimate because the factors are complete Noet
 
 $$
 d_{\mathrm{loc}}
-=\sum_{v\in T,,v\mid\ell}(f_v+3)
-+\sum_{v\in T,,v\nmid\ell}3.
+=\sum_{\substack{v\in T\\v\mid\ell}}(f_v+3)
++\sum_{\substack{v\in T\\v\nmid\ell}}3.
 \tag{4.6}
 $$
 
@@ -576,18 +577,18 @@ Its universal representation is defined up to strict conjugacy. This is sufficie
 
 ### 5.2 The framed fiber product
 
-Let $R_{F,S}^{\square_T}$ be the unrestricted global fixed-determinant ring with frames at $T$, and let $R_v^\square$ be the unrestricted local framed rings. Restriction of representations gives the ring map
+Let $R_{F,S}^{\square_T,\mathcal D^{S\setminus T}}$ be the global fixed-determinant ring with frames at $T$ and with the minimal conditions outside $T$ already imposed as closed pullbacks. Let $R_v^\square$ be the unrestricted local framed rings. Restriction of representations gives the ring map
 
 $$
 \widehat\bigotimes_{v\in T}R_v^\square
-\longrightarrow R_{F,S}^{\square_T}.
+\longrightarrow R_{F,S}^{\square_T,\mathcal D^{S\setminus T}}.
 $$
 
 The conditioned global framed ring is
 
 $$
 R^{\square_T,\min}
-=R_{F,S}^{\square_T}
+=R_{F,S}^{\square_T,\mathcal D^{S\setminus T}}
 \widehat\otimes_{\widehat\otimes_{v\in T}R_v^\square}
 R_{\mathrm{loc}}^{\min}.
 \tag{5.2}
@@ -740,7 +741,7 @@ For the unframed absolute problem, a minimal Cohen presentation over $\mathcal O
 
 ### 6.1 Choosing the inner form
 
-The automorphic side should be finite, integral, and free of boundary cohomology. A quaternion algebra definite at every real place provides precisely such a carrier. Let $B/F$ be a quaternion algebra ramified at all real places and at a finite set $\Sigma_B$ chosen so that the total number of ramified places is even. At a finite place where $B$ is ramified, the residual and automorphic local packets must lie in the established local correspondence range.
+The automorphic side should be finite, integral, and free of boundary cohomology. A quaternion algebra definite at every real place provides precisely such a carrier. Let $B/F$ be a quaternion algebra ramified at all real places and at the finite set $\Sigma_B=S_B$ chosen so that the total number of ramified places is even. Thus $B$ is split at every place above $\ell$. At a finite place where $B$ is ramified, the residual and automorphic local packets must lie in the established local correspondence range.
 
 The parity condition is not cosmetic: a quaternion algebra with the declared ramification set exists only when that set has even cardinality. Nor may one choose $B$ solely for convenience. The selected residual packet must transfer to $B^\times$, and the faithful integral Hecke order used below must agree with the order on any alternative geometric carrier whenever such an identification is invoked. Rational transfer alone does not identify integral congruence ideals.
 
@@ -754,12 +755,16 @@ Choose a compact open subgroup $U=\prod_vU_v\subset G$. Outside $S_f$, take $B_v
 
 ### 6.2 Level, weight, and local type lattices
 
-Parallel weight two contributes no nontrivial algebraic weight representation to a totally definite class-set model after the central normalization is fixed. The finite local data remain essential. For each $v\in S_{\min}$, choose a finite free $\mathcal O$-lattice $W_v$ realizing the primary compact type that matches $\mathcal D_v^{\min}$:
+Parallel weight two contributes no nontrivial algebraic weight representation to a totally definite class-set model after the central normalization is fixed. The finite local data remain essential. For each $v\in S_{\min}$, choose a finite free $\mathcal O$-lattice $W_v$ for the compact group $U_v$ that realizes the primary local type matching $\mathcal D_v^{\min}$.
+
+When $B$ is split at $v$, this is the corresponding integral $\operatorname{GL}_2(\mathcal O_{F_v})$-type, for example:
 
 - the trivial spherical lattice for an unramified condition;
 - an induced flag lattice for a regular principal finite type;
 - the projective-line quotient or its explicitly declared special variant at a special place;
 - an integral cuspidal or tame Heisenberg lattice for a controlled dihedral type.
+
+When $B$ is ramified at $v$, $W_v$ is instead the named integral compact type on the quaternion division group, obtained in the verified local Jacquet--Langlands range. Its primary label, companion, and integral pairing are transported by the established integral comparison; a split-group flag or projective-line lattice is not silently used as a representation of $\mathcal O_{B_v}^{\times}$.
 
 Put
 
@@ -791,13 +796,17 @@ $$
 is finite. Define $M_U(W)$ to be the $\mathcal O$-module of functions on $G$ with the prescribed left $B^\times$-invariance, right $U$-equivariance through $W$, and central character. Concretely, choosing double-coset representatives $g_i$ identifies it with a direct sum of invariant modules
 
 $$
-M_U(W)\simeq\bigoplus_i W^{\Gamma_i},
+M_U(W)\simeq\bigoplus_i W^{\overline\Gamma_i},
 \qquad
-\Gamma_i=B^\times\cap g_iUg_i^{-1} 	ext{modulo center}.
+\Gamma_i^{\mathrm{raw}}=B^\times\cap g_iUg_i^{-1},
+\quad
+C_i=F^\times\cap g_iUg_i^{-1}=F^\times\cap U,
+\quad
+\overline\Gamma_i=\Gamma_i^{\mathrm{raw}}/C_i,
 \tag{6.4}
 $$
 
-We impose neatness, or the equivalent unit-stabilizer condition needed for the chosen coefficient prime, so that taking $\Gamma_i$-invariants preserves the required integral direct summands. It follows that $M_U(W)$ is finite free over $\mathcal O$.
+Here the compatible central character has been absorbed into the coefficient action, so $C_i$ acts trivially and the invariant module in (6.4) means $W^{\overline\Gamma_i}$. Definiteness makes $\overline\Gamma_i$ finite even though $C_i$ need not be. We impose neatness, or the equivalent unit-stabilizer condition needed for the chosen coefficient prime, so that taking $\overline\Gamma_i$-invariants preserves the required integral direct summands. It follows that $M_U(W)$ is finite free over $\mathcal O$.
 
 Formula (6.4) is also a warning. Treating the class set as an unweighted collection of points loses stabilizer multiplicities. The Hecke action and mass pairing below use the exact orbit weights.
 
@@ -860,7 +869,7 @@ The algebra is generated by the good $T_v$ together with the prescribed central 
 The module $M^{\min}$ is finite free over $\mathcal O$. The algebra $\mathbb T^{\min}$ embeds in its endomorphism ring, so it is finite and $\mathcal O$-torsion-free. Over a DVR, finite torsion-free modules are free. Thus
 
 $$
-\mathbb T^{\min}\ 	ext{is finite flat over }\mathcal O.
+\mathbb T^{\min}\ \text{is finite flat over }\mathcal O.
 \tag{7.2}
 $$
 
@@ -893,7 +902,7 @@ For representatives $g_i$ of (6.3), define
 
 $$
 \langle f,h\rangle
-=\sum_i\frac{1}{|\Gamma_i|}
+=\sum_i\frac{1}{|\overline\Gamma_i|}
 \langle f(g_i),h(g_i)\rangle_{W,W^\dagger}.
 \tag{7.4}
 $$
@@ -984,7 +993,7 @@ on the relevant untwisted cohomology, followed by rank-two extraction. Equation 
 Taking the product of the $\rho_\pi$ gives a representation over $\prod E_\pi$. Good Frobenius traces lie in the suborder $\mathbb T^{\min}$ by construction. Density of good Frobenius classes and continuity put the trace of every Galois element in that order. Residual absolute irreducibility then turns trace coordinates into a rank-four matrix algebra and splits it over the complete local order. The result is a continuous representation
 
 $$
-\rho_{\mathbb T}:G_{F,S}longrightarrow
+\rho_{\mathbb T}:G_{F,S}\longrightarrow
 \operatorname{GL}_2(\mathbb T^{\min}),
 \tag{8.3}
 $$
@@ -1124,7 +1133,7 @@ The perfect pairing (7.5) restricts to a pairing $L\times L^\dagger\to\mathcal O
 
 $$
 \Psi_M
-=\operatorname{coker}left(
+=\operatorname{coker}\left(
 L\longrightarrow\operatorname{Hom}_{\mathcal O}(L^\dagger,\mathcal O)
 \right).
 \tag{9.8}
@@ -1134,7 +1143,20 @@ Equivalently, using the complementary saturated generic summands, $\Psi_M$ measu
 
 ### 9.4 Multiplicity and saturation
 
-Suppose the selected generic packet has multiplicity $r$, so $L$ and $L^\dagger$ have rank $r$ over $\mathcal O$. The ring congruence ideal acts by scalars on the branch. Under branch saturation and a primitive perfect multiplicity pairing, Smith normal form gives
+Suppose the selected generic packet has multiplicity $r$, so $L$ and $L^\dagger$ have rank $r$ over $\mathcal O$. Put
+
+$$
+P=e_0M^{\min}\subset e_0M_E^{\min}.
+$$
+
+The full perfect pairing identifies $P$ with $\operatorname{Hom}_{\mathcal O}(L^\dagger,\mathcal O)$ under the primitive multiplicity hypothesis. The exact branch-saturation hypothesis is
+
+$$
+L=\eta_TP.
+\tag{9.8a}
+$$
+
+It is an integral lattice equality, not a consequence of faithfulness or generic multiplicity. Under (9.8a), Smith normal form gives
 
 $$
 \operatorname{length}_{\mathcal O}\Psi_M
@@ -1142,9 +1164,9 @@ $$
 \tag{9.9}
 $$
 
-Here is the mechanism. In the normalization, an element $a$ belongs to $\operatorname{Ann}I_T$ exactly when its components vanish off the selected branch. Its selected component $\lambda_T(a)$ therefore sends the full lattice into the selected saturated lattice. Conversely, primitivity and faithfulness show that every scalar carrying the complementary lattice integrally away from the selected branch comes from such an annihilator. On each of the $r$ multiplicity coordinates, the same principal ideal appears. Diagonalizing the inclusion adds its valuation $r$ times, proving (9.9).
+Here is the mechanism. In the normalization, an element $a$ belongs to $\operatorname{Ann}I_T$ exactly when its components vanish off the selected branch. Thus $\eta_TP\subseteq L$. Hypothesis (9.8a) says that there is no further branch-saturation quotient. The pairing identifies the target of (9.8) with $P$, so its cokernel is $P/L=P/\eta_TP$. On each of the $r$ multiplicity coordinates the same principal ideal appears. Diagonalizing the inclusion adds its valuation $r$ times, proving (9.9).
 
-Without saturation, the right side of (9.9) must be corrected by the finite index between the chosen eigenlattice and its saturation. Without multiplicity control, $\Psi_M$ can contain a matrix discriminant not determined by the ring congruence ideal. Thus dividing a module length by an observed eigenspace dimension is justified only after the hypotheses of (9.9) have been checked.
+Without (9.8a), the exact correction is the finite quotient $L/\eta_TP$, and the module congruence length is smaller than the right side of (9.9) by its length. Without multiplicity control, $\Psi_M$ can contain a matrix discriminant not determined by the ring congruence ideal. Thus dividing a module length by an observed eigenspace dimension is justified only after the hypotheses of (9.9) have been checked.
 
 ### 9.5 The exact numerical inequalities
 
@@ -1285,7 +1307,18 @@ $$
 
 The order of factors follows the exact triangle; reversing two odd virtual-rank factors can introduce a sign. Formula (10.7) is stable under replacing any local complex by a quasi-isomorphic one and under flat coefficient extension.
 
-At a finite place away from $\ell$, neutrality says that the local quotient complex has virtual rank zero. At $v\mid\ell$, its virtual rank is $f_v$. At a real place it is $-1$. Tensoring the local determinant lines reproduces the cancellation (5.11), now before taking dimensions. This is the determinant-line form of the balanced calculation.
+Taking graded degrees in (10.7) gives the Euler characteristic of the defining cone. After global duality and the global Euler-characteristic formula are used, this degree is
+
+$$
+\deg\mathscr D_{\min}
+=-\left(
+h^1_{\mathcal L}(F,M)
+-h^1_{\mathcal L^\perp}(F,M(1))
+\right).
+\tag{10.7a}
+$$
+
+The negative of (10.7a) is then rewritten by (5.10): finite places away from $\ell$ contribute zero, coefficient-prime places contribute $+f_v$, and real places contribute $-1$. Those entries are the normalized Wiles-defect ledger obtained after combining the global Euler characteristic with the local complexes. They are not, without a further normalization of $U_v^\bullet$, assertions that the raw quotient complexes $C^\bullet(F_v,M)/U_v^\bullet$ individually have those virtual ranks. Their total cancels by (5.11), which is exactly the degree-zero conclusion (10.6).
 
 For the framed problem, one tensors (10.7) with the determinant lines of the local gauge complexes and divides by the global gauge line. Taking graded degrees gives precisely the correction in (5.6). Thus the determinant formalism and the explicit framing ledger agree.
 
@@ -1422,20 +1455,24 @@ S_N=\mathcal O[\Delta_{Q_N}].
 \tag{11.7}
 $$
 
-Its augmentation ideal $\mathfrak a_N$ is generated by $|Q_N|$ group elements minus one, subject to their finite-order relations. Passing through a compatible sequence with orders tending to infinity gives
+Its augmentation ideal $\mathfrak a_N$ is generated by $|Q_N|$ group elements minus one, subject to their finite-order relations. If $|Q_N|=r$ is fixed and each $\Delta_x$ is replaced by its quotient of order $\ell^N$, then abstractly $\Delta_{Q_N}\simeq(\mathbf Z/\ell^N\mathbf Z)^r$. The formal limiting diamond source and completed group algebra are
 
 $$
-\Delta_\infty\simeq\mathbf Z_\ell^{,|Q_N|},
+\Delta_\infty\simeq\mathbf Z_\ell^r,
 \qquad
 S_\infty=\mathcal O[[\Delta_\infty]]
-\simeq\mathcal O[[z_1,\ldots,z_{|Q_N|}]].
+\simeq\mathcal O[[z_1,\ldots,z_r]].
 \tag{11.8}
 $$
+
+For the balanced auxiliary system below, $r=q$.
+
+This is an inverse limit of the abstract marked source groups, not a claim that the arithmetic prime sets $Q_N$ are nested or carry transition maps. The later patching construction obtains coherence from compatible finite marked shadows.
 
 The variables $z_i$ are the limiting diamond directions. The specialization
 
 $$
-S_\infty/(z_1,\ldots,z_{|Q_N|})\simeq\mathcal O
+S_\infty/(z_1,\ldots,z_r)\simeq\mathcal O
 \tag{11.9}
 $$
 
@@ -1495,15 +1532,20 @@ At $\ell=5$, absolute irreducibility is not a sufficient replacement. A projecti
 
 ### 12.1 Extension of the coefficient DVR
 
-Let $\mathcal O\to\mathcal O'$ be a finite extension of complete DVRs, with residue field enlarged as necessary. Every represented local condition in the clean datum is compatible with this coefficient change. The global universal property gives
+Let $\mathcal O\to\mathcal O'$ be a finite extension of complete DVRs, with residue field enlarged as necessary. Every represented local condition in the clean datum is compatible with this coefficient change. If the residue field changes, write $R^{\min}_{\mathcal O'}$ for the intrinsic deformation ring of $\bar\rho\otimes_k k'$ at the selected residual point. Scalar extension of the old universal family gives a canonical map in the direction
 
 $$
 R^{\min}_{\mathcal O'}
-\simeq R^{\min}_{\mathcal O}\widehat\otimes_{\mathcal O}\mathcal O'
+\longrightarrow
+\left(
+R^{\min}_{\mathcal O}\widehat\otimes_{\mathcal O}\mathcal O'
+\right)_{\mathfrak n'}^\wedge,
 \tag{12.1}
 $$
 
-after selecting the corresponding residual local factor. The type lattices, companion pairings, automorphic modules, and Hecke operators base-change explicitly. The faithful image after base change must nevertheless be taken anew: image formation does not commute with arbitrary base change unless the module and cokernel hypotheses have been checked. In the present finite-free, saturated setting it does.
+where $\mathfrak n'$ is the closed point selected by the extended residual representation. This map is an isomorphism when the residue field is unchanged and one merely restricts the old functor to $\mathcal O'$-algebras. For a genuine residue extension it is an isomorphism only when an effective scalar-extension theorem proves that every deformation of $\bar\rho\otimes_k k'$ descends from the scalar-extended universal family. Compatibility of the local conditions alone does not prove that assertion. Whenever completed base change is identified with the intrinsic ring below, this effective hypothesis and the selected local factor are understood.
+
+The type lattices, companion pairings, automorphic modules, and Hecke operators base-change explicitly. Because $\mathcal O'$ is flat and the automorphic module is finite free, the faithful Hecke image base-changes faithfully; a subsequent localization must still be branch preserving. Nonflat reduction would require a separate saturation argument.
 
 If the ramification index is $e$, finite lengths satisfy
 
@@ -1658,7 +1700,7 @@ $$
 \left(
 R^{\min}\twoheadrightarrow\mathbb T^{\min},
 M^{\min},M^{\dagger,\min},
-\langle, ,\,\rangle,
+\langle\ ,\ \rangle,
 q,
 R_{\mathrm{loc}}^{\min},
 \mathscr D_{\min}
