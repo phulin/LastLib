@@ -160,8 +160,8 @@ valid and to replace the invalid nonelliptic unfoldings by a convergent cancella
 
 ### 1.2 Standing hypotheses
 
-We work in the same simple-trace-formula setting as the preceding kernel theorem.  Thus $F$ has
-a real place $v_0$, and
+We work inside the simple-trace-formula setting of Book 108, Theorem 11.1.  Thus $F$ has a real
+place $v_0$, and
 
 $$
 \omega:F^\times\backslash\mathbf A^\times\longrightarrow\mathbf C^\times
@@ -176,16 +176,21 @@ $$
 
 At finite places $f_v$ is locally constant and compactly supported modulo $Z(F_v)$; at
 archimedean places it is a Schwartz function modulo the center and is finite under both
-maximal-compact actions.  Concretely, for a proper submultiplicative projective norm and every
-invariant differential operator $D$ and $A>0$, we require
+maximal-compact actions.  For the geometric estimates we use the following, slightly smaller,
+test space.  For a proper submultiplicative projective norm, every invariant differential
+operator $D$, and every $A>0$, we require
 
 $$
 |Df_v(g)|\le C_{D,A}\|g\|_v^{-A}.
 \tag{1.4a}
 $$
 
-This explicit form is the decay used in the height estimates below.  We begin with a restricted
-tensor product $f=\otimes_v f_v$ and later allow finite sums.
+This explicit form is the decay used in the height estimates below.  It is stronger than Book
+108's one-fixed-power kernel-admissibility condition, so there is no hidden claim that every test
+function admitted by the kernel theorem has the geometric expansion proved here.  Compactly
+supported functions modulo the center satisfy (1.4a), including the compactly supported
+pseudo-coefficients used in trace comparison.  We begin with a restricted tensor product
+$f=\otimes_v f_v$ and later allow finite sums.
 
 The distinguished factor $f_{v_0}$ is **strongly cuspidal**: for the upper triangular Borel
 $B=TN$, one has
@@ -201,8 +206,9 @@ side of a unipotent integral is fixed, and a one-sided or trace-only vanishing s
 not reach the resulting expression.
 
 Compactly supported modulo-center pseudo-coefficients of real discrete series provide the
-intended examples.  Their cuspidality is the local constant-term statement established in the
-preceding harmonic analysis, so existence of the test class is part of the inherited setup.
+intended examples.  This is the standard local real-harmonic-analysis source of the test class;
+the proof below uses only the explicit decay and two-sided vanishing in (1.4a)--(1.5), not a
+packet-selection property.
 
 These hypotheses are stable under invariant differentiation and under the adjoint
 $f^*(g)=\overline{f(g^{-1})}$.  They imply that the global two-sided parabolic transform
@@ -292,13 +298,26 @@ f(g^{-1}\gamma g)\,d\dot g.
 \tag{1.11}
 $$
 
-The main result is
+There is one projective stabilizer correction.  Put
+
+$$
+\kappa(\gamma)=
+\begin{cases}
+\frac12,&\operatorname{tr}(\gamma)=0,\\
+1,&\operatorname{tr}(\gamma)\ne0.
+\end{cases}
+\tag{1.11a}
+$$
+
+The condition is invariant under scalar multiplication.  Section 3.2 proves that it is the
+reciprocal of the number of components in the rational projective stabilizer.  The main result
+is
 
 $$
 \boxed{
 I_{\mathrm{geom}}(f)
 =\operatorname{vol}([\overline G])f(1)
-+\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f).}
++\sum_{[\gamma]_{\mathrm{ell}}}\kappa(\gamma)a(\gamma)O_\gamma(f).}
 \tag{1.12}
 $$
 
@@ -324,7 +343,7 @@ The geometric simplification in rank two begins with elementary linear algebra. 
 $\gamma\in G(F)$ put
 
 $$
-p_\gamma(X)=X^2-s_\gamma X+d_\gamma,qquad
+p_\gamma(X)=X^2-s_\gamma X+d_\gamma,\qquad
 s_\gamma=\operatorname{tr}(\gamma),\quad d_\gamma=\det(\gamma),
 $$
 
@@ -423,7 +442,7 @@ The eigenvalue-ratio interpretation explains (2.4).  Over a splitting field, if
 $r=\lambda_1/\lambda_2$, then
 
 $$
-j=r+r^{-1}+2,qquad D=r+r^{-1}-2.
+j=r+r^{-1}+2,\qquad D=r+r^{-1}-2.
 \tag{2.5}
 $$
 
@@ -513,7 +532,7 @@ $\operatorname{Res}_{E/F}\mathbf G_m$.
 
 ### 3.2 Quotienting by the scalar center
 
-The kernel is indexed projectively, so the relevant centralizer is
+The local orbital integrals use the connected projective centralizer
 
 $$
 \overline G_\gamma=G_\gamma/Z.
@@ -529,16 +548,45 @@ $$
 
 There is a useful comparison with the norm-one torus
 $T_E^1=\ker(N_{E/F}:\operatorname{Res}_{E/F}\mathbf G_m\to\mathbf G_m)$.
-The map
+The map of $F$-tori
 
 $$
-E^\times/F^\times\longrightarrow E^1,qquad x\longmapsto x/\sigma(x),
+E^\times/F^\times\longrightarrow E^1,\qquad x\longmapsto x/\sigma(x),
 \tag{3.5}
 $$
 
-is an isomorphism of $F$-tori: its kernel before passage to the quotient is the scalar torus,
-and Hilbert's theorem 90 gives surjectivity on $F$-points.  We use (3.4), which is canonically
-the projective centralizer; (3.5) is used to see anisotropy and compactness.
+is an isomorphism of $F$-tori.  After base change to a separable closure, write an element of
+$E^\times$ as $(a,b)$.  The source has coordinate $a/b$, the norm-one target has coordinate
+$(u,u^{-1})$, and (3.5) sends $a/b$ to $(a/b,b/a)$.  It is therefore an isomorphism after a
+faithfully flat base change, hence over $F$.  On $F$-points its surjectivity is the familiar
+Hilbert theorem 90.  We use (3.4), which is canonically the projective centralizer; (3.5) is
+used to see anisotropy and compactness.
+
+One must distinguish this connected centralizer from the stabilizer of the *projective* rational
+element.  Set
+
+$$
+C_\gamma(F)=
+\{\bar g\in\overline G(F):g^{-1}\gamma g\in F^\times\gamma\}.
+\tag{3.5a}
+$$
+
+If $s_\gamma\ne0$, taking traces in $g^{-1}\gamma g=z\gamma$ forces $z=1$, so
+$C_\gamma(F)=\overline G_\gamma(F)$.  If $s_\gamma=0$, determinants force $z=\pm1$.
+The nontrivial automorphism of the quadratic algebra $F[\gamma]$ is implemented by an
+$F$-linear automorphism of the two-dimensional space and sends $\gamma$ to $-\gamma$.
+Consequently
+
+$$
+[C_\gamma(F):\overline G_\gamma(F)]
+=\begin{cases}2,&s_\gamma=0,\\1,&s_\gamma\ne0.\end{cases}
+\tag{3.5b}
+$$
+
+This is the exceptional Weyl symmetry of a projective involution.  Local orbital integrals in
+this book and the next one continue to use the connected quadratic centralizer
+$\overline G_\gamma$.  Rational orbit unfolding must therefore include the reciprocal index
+$\kappa(\gamma)$ from (1.11a).  Omitting it would double every trace-zero elliptic term.
 
 At a place $v$ where $E\otimes_FF_v\simeq F_v\times F_v$, the local quotient torus is split
 and noncompact.  This does not conflict with global anisotropy.  Compactness concerns the
@@ -562,10 +610,20 @@ with $e_1+e_2$.  The quotient torus has character lattice generated by $e_1-e_2$
 element of $\operatorname{Gal}(E/F)$ sends this generator to its negative, so the invariant
 sublattice is zero.  This is anisotropy.
 
-For completeness, compactness can be seen idelically.  Map an idele $x\in\mathbf A_E^\times$
-to its class modulo $\mathbf A_F^\times E^\times$.  The idele module direction is removed by
-$\mathbf A_F^\times$; the remaining quotient is a closed quotient of the compact norm-one
-idele class group.  Hence the quotient in (3.6) is compact as well.
+For completeness, compactness can be seen idelically.  The quotient in (3.6) is
+
+$$
+\mathbf A_E^\times/(E^\times\mathbf A_F^\times).
+\tag{3.6a}
+$$
+
+The idele module of an embedded $a\in\mathbf A_F^\times$ is $|a|_{\mathbf A_F}^2$, and the
+idele-module map of $\mathbf A_F^\times$ is onto $\mathbf R_{>0}$.  Every class in (3.6a)
+therefore has a representative of $E$-idele module one.  The norm-one idele class group
+$E^\times\backslash\mathbf A_E^1$ is compact: choose ideal representatives from the finite
+ideal class group, reduce every finite idele to a compact unit group, and use the unit theorem
+to reduce the logarithms of the archimedean coordinates to a compact fundamental
+parallelepiped.  Thus (3.6a), a continuous quotient of that compact group, is compact.
 $\square$
 
 Compactness proves finiteness of $a(\gamma)$ for elliptic $\gamma$.  It also explains why no
@@ -580,7 +638,7 @@ regular-orbit formula.  If
 $\gamma=z(1+N_0)$ with $N_0\ne0$ nilpotent, a direct calculation gives
 
 $$
-G_\gamma=left\{
+G_\gamma=\left\{
 \begin{pmatrix}a&b\\0&a\end{pmatrix}:a\in\mathbf G_m, b\in\mathbf G_a
 \right\}=ZN.
 \tag{3.7}
@@ -671,18 +729,37 @@ Choose the local centralizer measures uniformly as follows.  At every finite pla
 maximal compact subgroup of $T_E(F_v)$ volume one.  At a split real place transport $d^\times r$
 through $T_E(\mathbf R)\simeq\mathbf R^\times$, and at a nonsplit real place give the compact
 circle probability measure; use the analogous polar convention at complex places.  These
-choices vary through a bounded algebraic family and agree with the usual unramified convention
-at almost every place.  Then the adelic quotient and
-the integrand are restricted products.  Tonelli, first for $|f|$ and then for $f$, gives
+choices agree with the usual unramified convention at almost every place.  If $v$ is outside a
+finite set containing the residue-characteristic-two places, the ramification of $E/F$, and the
+denominators of $\gamma$, then $T_E$ extends to a smooth torus over $\mathcal O_v$, the orbit of
+$\gamma$ meets the hyperspecial compact in one integral orbit, and quotient integration gives
+
+$$
+O_{\gamma,v}(f_v)=1.
+\tag{4.3a}
+$$
+
+Here $f_v$ is the normalized spherical unit.  To verify the assertion, reduce a primitive
+integral representative modulo $\varpi_v$.  Its discriminant is a unit, so its centralizer is
+smooth and conjugacy is smooth transverse to that centralizer.  Hensel lifting identifies the
+integral fiber with the orbit of $K_v$; both the centralizer compact and $K_v$ have volume one,
+which gives (4.3a).  Thus only finitely many local factors differ from one for a fixed rational
+class.  The adelic quotient and the integrand are genuine restricted products, and finite Fubini
+gives
 
 $$
 O_\gamma(f)=\prod_vO_{\gamma,v}(f_v)
 \tag{4.4}
 $$
 
-for a factorizable test function.  Almost all factors equal the standard unramified orbital
-factor.  Equation (4.4) is a factorization statement, not the assertion that every unramified
-factor equals one for every orbit; that numerical evaluation belongs to local orbital analysis.
+for a factorizable test function.  This uses only the elementary good-place value (4.3a); the
+values at the finitely many bad or level places belong to the local orbital analysis of the next
+book.  For a finite sum $f=\sum_i\otimes_v f_{i,v}$, linearity instead gives
+
+$$
+O_\gamma(f)=\sum_i\prod_vO_{\gamma,v}(f_{i,v}).
+\tag{4.4a}
+$$
 
 If $dt_\gamma$ is replaced by $c\,dt_\gamma$, then
 
@@ -692,34 +769,40 @@ a(\gamma)\longmapsto c\,a(\gamma),
 \tag{4.5}
 $$
 
-Thus $a(\gamma)O_\gamma(f)$ is independent of this auxiliary normalization.  It still depends
+Thus $\kappa(\gamma)a(\gamma)O_\gamma(f)$ is independent of this auxiliary normalization.  It
+still depends
 on the initially fixed measure $d\bar g$ on $\overline G(\mathbf A)$, exactly as the operator
 trace does.
 
 ### 4.4 The elliptic coefficient
 
 For elliptic $\gamma$ the volume (1.10) is finite by Proposition 3.2.  Its occurrence can be
-derived rather than memorized.  The rational orbit of $\gamma$ is
-$G_\gamma(F)\backslash G(F)$.  When this orbit is unfolded against the automorphic quotient,
+derived rather than memorized.  The rational orbit of the projective element is
+$C_\gamma(F)\backslash\overline G(F)$.  The summand is invariant under $C_\gamma(F)$: if
+$c^{-1}\gamma c=z\gamma$ with $z\in F^\times$, then its covariance factor is
+$\omega(z)^{-1}=1$.  When this orbit is unfolded against the automorphic quotient,
 the integration domain becomes
 
 $$
-\overline G_\gamma(F)\backslash\overline G(\mathbf A).
+C_\gamma(F)\backslash\overline G(\mathbf A).
 $$
 
-Insert the intermediate quotient by $\overline G_\gamma(\mathbf A)$ and apply (4.1):
+By (3.5b), passage from $C_\gamma(F)$ to its connected subgroup
+$\overline G_\gamma(F)$ is a finite cover of degree $\kappa(\gamma)^{-1}$.  Give the finite
+quotient counting measure.  Then insert the intermediate adelic connected centralizer and apply
+(4.1):
 
 $$
 \begin{aligned}
-&\int_{\overline G_\gamma(F)\backslash\overline G(\mathbf A)}
+&\int_{C_\gamma(F)\backslash\overline G(\mathbf A)}
 f(x^{-1}\gamma x)\,dx\\
-&\quad=
+&\quad=\kappa(\gamma)
 \operatorname{vol}\bigl(
 \overline G_\gamma(F)\backslash\overline G_\gamma(\mathbf A)
 \bigr)
 \int_{\overline G_\gamma(\mathbf A)\backslash\overline G(\mathbf A)}
 f(g^{-1}\gamma g)\,d\dot g\\
-&\quad=a(\gamma)O_\gamma(f).
+&\quad=\kappa(\gamma)a(\gamma)O_\gamma(f).
 \end{aligned}
 \tag{4.6}
 $$
@@ -731,8 +814,9 @@ elliptic orbits will be justified only after the uniform estimates of Chapters 1
 
 ### 5.1 What the kernel theorem supplies
 
-The preceding kernel theory proves the following statement with exactly the hypotheses of
-Section 1.2.
+Book 108, Theorem 11.1 proves the following statement for its kernel-admissible test class.
+Condition (1.4a) implies that fixed-power admissibility, so the theorem applies to every test
+function used here without changing its central character, compact types, level, or measures.
 
 **Kernel input.** The series (1.1), and every series obtained by invariant differentiation,
 converges absolutely and locally uniformly on $G(\mathbf A)\times G(\mathbf A)$.  It is the
@@ -816,8 +900,8 @@ Reduction theory supplies finitely many cusp charts.  In each chart write an Iwa
 decomposition
 
 $$
-x=n(u)a(y)k,qquad
-a(y)=\begin{pmatrix}y&0\\0&1\end{pmatrix},qquad
+x=n(u)a(y)k,\qquad
+a(y)=\begin{pmatrix}y&0\\0&1\end{pmatrix},\qquad
 H(x)=|y|_{\mathbf A}\ge1,
 \tag{5.6}
 $$
@@ -827,7 +911,7 @@ $\chi:[0,\infty)\to[0,1]$ equal to one on $[0,1]$ and zero on $[2,\infty)$.  Pat
 charts with a compact partition of unity and obtain $\chi_T$ satisfying
 
 $$
-\chi_T(x)=1\quad(H(x)\le T),qquad
+\chi_T(x)=1\quad(H(x)\le T),\qquad
 \chi_T(x)=0\quad(H(x)\ge2T),
 \tag{5.7}
 $$
@@ -921,7 +1005,7 @@ factor.
 Our convention is
 
 $$
-\phi(zg)=\omega(z)\phi(g),qquad
+\phi(zg)=\omega(z)\phi(g),\qquad
 f(zg)=\omega(z)^{-1}f(g).
 \tag{6.3}
 $$
@@ -964,8 +1048,8 @@ central locus was removed before applying the incidence identity.
 Modulo the center, every element of $B(F)$ may be represented as
 
 $$
-t(r)n(u),qquad
-t(r)=\begin{pmatrix}r&0\\0&1\end{pmatrix},qquad
+t(r)n(u),\qquad
+t(r)=\begin{pmatrix}r&0\\0&1\end{pmatrix},\qquad
 n(u)=\begin{pmatrix}1&u\\0&1\end{pmatrix}.
 \tag{7.1}
 $$
@@ -1000,15 +1084,36 @@ $$
 $$
 
 This is simply the decomposition of $N(\mathbf A)$ into rational translates of a fundamental
-domain.  In the truncated trace, take
+domain.  Two different appearances of (7.3) are needed.  When $r\ne1$, formula (7.2) gives the
+sum-integral identity
+
+$$
+\sum_{u\in F}\int_{F\backslash\mathbf A}
+H\bigl(u+(1-r^{-1})v\bigr)\,dv
+=\int_{\mathbf A}H(w)\,dw.
+\tag{7.3a}
+$$
+
+Changing the representative of $v$ merely reindexes $u$, and the substitution by
+$1-r^{-1}\in F^\times$ has global modulus one by the product formula.  Thus (7.3a) unfolds the
+rational upper-right entry and the compact unipotent coordinate in the Borel quotient.  When
+$r=1$, the nonzero entries $u\in F^\times$ are scaled by the rational diagonal
+torus.  Unfolding $F^\times\backslash\mathbf A^\times$ and using
+$t(a)^{-1}n(u)t(a)=n(a^{-1}u)$ changes the multiplicative measure, together with the Borel
+modular factor, into additive Haar measure on $\mathbf A\setminus\{0\}$.  The omitted point has
+additive measure zero.  This last observation is what permits the central element $u=0$ to have
+been removed without leaving a spurious correction.
+
+In the truncated trace, after the $B(F)\backslash G(F)$ incidence unfolding, both cases reduce
+to (7.3) with
 
 $$
 h(n)=f(x^{-1}tny)
 $$
 
-after the $B(F)\backslash G(F)$ unfolding.  With both cutoffs present all sums and integrals are
-finite or absolutely convergent, so (7.3) applies without qualification.  The full unipotent
-integral is
+for translated $x,y$ and a diagonal $t$.  With both cutoffs present all sums and integrals are
+finite or absolutely convergent, so the changes of variables apply without qualification.  The
+full unipotent integral is
 
 $$
 \delta_B(t)^{-1/2}f_B(x,y;t),
@@ -1033,15 +1138,57 @@ What vanishes is a parabolically grouped expression obtained by:
 4. unfolding $N(F)\backslash N(\mathbf A)$;
 5. applying the zero global transform (1.6).
 
+The following finite-level statement records the equality that will be estimated in the next
+chapter.  It is important because it includes the repeated-root fiber rather than appealing to
+an undefined “unipotent orbital integral.”
+
+**Lemma 7.1 (rank-one parabolic regrouping).** Let $\rho_R$ be the rational height cutoff of
+Section 5.4 and let $\Psi$ be a smooth compactly supported function on $[\overline G]$.  The
+incidence-weighted integral of all noncentral nonelliptic terms with cutoff $\rho_R$ is the sum
+of:
+
+1. finitely many integrals in which the inner factor is
+
+   $$
+   \delta_B(t)^{-1/2}f_B(x,y;t);
+   \tag{7.5}
+   $$
+
+2. finitely many integrals obtained from the same unfolded variables by replacing $\Psi(x)$
+   with a difference $\Psi(n(v)x)-\Psi(x)$.
+
+The coefficients in these integrals are the incidence weights $1/2$ for $r\ne1$ and $1$ for
+$r=1$; on every rational-height shell their absolute values and Jacobians are bounded by a fixed
+polynomial in the torus and unipotent heights, independently of $R$.
+
+**Proof.** Apply (2.8) before removing either cutoff.  A marked line is a point of
+$B(F)\backslash G(F)$; moving it to $Fe_1$ and unfolding that coset sum changes the automorphic
+domain from $G(F)\backslash G(\mathbf A)$ to $B(F)\backslash G(\mathbf A)$.  Write the rational
+Borel element as $t(r)n(u)$ and use the compact quotient
+$N(F)\backslash N(\mathbf A)$ in this domain.  For $r\ne1$, (7.3a) turns the sum over
+$u$ and the compact integration variable into the full $N(\mathbf A)$ integral.  The two Weyl
+choices are exactly the two eigenlines, so their total coefficient is the incidence weight
+$1/2$ counted twice.  For $r=1$, unfold the rational diagonal scaling as described after
+(7.3a); $u=0$ is absent, but its image is the additive-Haar null point $0\in\mathbf A$.  This
+produces the same full unipotent integral with coefficient one.
+
+If $\Psi$ were invariant under every translation made in these changes of variables, the result
+would be exactly (7.5).  Insert and subtract the untranslated value of $\Psi$ at each change of
+variables.  The untranslated pieces give (7.5); the remaining pieces have the asserted cutoff
+difference.  On the finite rational sum every step is ordinary finite Fubini.  The affine
+Jacobians in (7.3a), the root character in diagonal scaling, and the two incidence weights are
+rational functions of $r$ of bounded degree.  They therefore have polynomial height on every
+shell, which proves the uniform assertion.  $\square$
+
 For a split regular semisimple element the local orbital integral of a strongly cuspidal factor
 does vanish, and this gives a useful consistency check.  The nonsemisimple contribution,
 however, is naturally entangled with the truncation boundary and should not be defined as an
 isolated absolutely convergent global orbital term.  The stable-line method treats both strata
 uniformly and produces the correct cancellation before taking the limit.
 
-With an invariant cutoff equal to one, the computation would give zero exactly.  The actual
-cutoff $\chi_T$ is not invariant under the unipotent translations used in (7.3).  Therefore a
-boundary discrepancy remains.  Proving that it tends to zero is the final nonelliptic step.
+The main terms in Lemma 7.1 are zero by (1.6).  The actual cutoff $\chi_T$ is not invariant
+under the translations used in the unfolding, so only its difference terms remain.  Proving
+that they tend to zero is the final nonelliptic step.
 
 ## 8. Removing the truncation boundary
 
@@ -1058,7 +1205,8 @@ f(x^{-1}tn(v)y)\,dv\,d\mu(x,t,y).
 \tag{8.1}
 $$
 
-The precise compact variables and the incidence weight are harmless and uniformly bounded.
+The variables suppressed in (8.1) range over fixed compact sets or over the rational torus
+shells of Lemma 7.1; their measures and incidence coefficients have fixed polynomial height.
 The difference of cutoffs is supported where either $x$ or $n(v)x$ lies in the band
 
 $$
@@ -1129,9 +1277,18 @@ In the complementary range use the bound following (8.5).  Integration of
 $(1+|v|)^{-N}$ over $|v|>H^{1/2}$ gives an arbitrarily large negative power of $H$ when $N$ is
 large.  At finite places the support of $f$ confines the rational torus coordinates to fixed
 fractional ideals.  In each dyadic archimedean torus shell, lattice counting is polynomial.
-Choose the Schwartz order larger than this counting exponent and the polynomial losses from
-the Iwasawa coordinates.  The torus sum is then uniformly bounded, independently of the
-rational height cutoff.
+More explicitly, there are fixed exponents $d,e$ such that a shell of torus-unipotent height
+$2^m$ contains at most $C2^{dm}$ rational parameters and the Jacobians and coordinate changes
+in Lemma 7.1 cost at most $C2^{em}$.  A Schwartz seminorm of order $L$ contributes
+$C\nu_L(f)2^{-Lm}$.  Taking $L>d+e+2$ makes
+
+$$
+\sum_{m\ge0}C\nu_L(f)2^{-m(L-d-e)}
+\tag{8.5a}
+$$
+
+converge uniformly, independently of the rational height cutoff.  This also justifies all
+limit passages that remove that cutoff.
 
 After the compact variables are integrated, the remaining height integral is bounded by
 
@@ -1177,21 +1334,21 @@ Its contribution to the rational kernel is
 
 $$
 K_{[\gamma]}(x,x)=
-\sum_{\delta\in \overline G_\gamma(F)\backslash\overline G(F)}
+\sum_{\delta\in C_\gamma(F)\backslash\overline G(F)}
 f(x^{-1}\delta^{-1}\gamma\delta x).
 \tag{9.1}
 $$
 
 On a compactly truncated region and with rational height bounded, unfolding the sum over
 $\delta$ yields an integral over
-$\overline G_\gamma(F)\backslash\overline G(\mathbf A)$.  To remove the rational height cutoff
+$C_\gamma(F)\backslash\overline G(\mathbf A)$.  To remove the rational height cutoff
 for this fixed orbit, note that the orbit map is proper on the inverse image of compact sets
 modulo $\overline G_\gamma$.  Finite-place compact support and archimedean Schwartz decay then
 give absolute convergence.  Consequently
 
 $$
 \int_{[\overline G]}K_{[\gamma]}(x,x)\,dx
-=\int_{\overline G_\gamma(F)\backslash\overline G(\mathbf A)}
+=\int_{C_\gamma(F)\backslash\overline G(\mathbf A)}
 f(x^{-1}\gamma x)\,dx.
 \tag{9.2}
 $$
@@ -1202,7 +1359,8 @@ not asserted yet.
 
 ### 9.2 Compactness in the centralizer direction
 
-Decompose the domain in (9.2) in two stages:
+Pass first from $C_\gamma(F)$ to $\overline G_\gamma(F)$, acquiring the finite-cover factor
+$\kappa(\gamma)$, and then decompose the connected-centralizer domain in two stages:
 
 $$
 \overline G_\gamma(F)\backslash\overline G(\mathbf A)
@@ -1219,9 +1377,12 @@ integration therefore gives
 $$
 \int_{\overline G_\gamma(F)\backslash\overline G(\mathbf A)}
 f(x^{-1}\gamma x)\,dx
-=a(\gamma)O_\gamma(f).
+=a(\gamma)O_\gamma(f),
 \tag{9.4}
 $$
+
+so the integral in (9.2) is
+$\kappa(\gamma)a(\gamma)O_\gamma(f)$.
 
 The equality is unchanged by rescaling the centralizer measure, as shown in (4.5).  It is also
 unchanged by replacing $\gamma$ by a rational scalar multiple, by the central-character
@@ -1238,8 +1399,10 @@ principle.
 For $\mathrm{GL}_2$, stable and rational conjugacy agree for regular semisimple elements with a
 fixed characteristic polynomial.  Indeed, Proposition 2.2 constructs a rational conjugating
 matrix.  There is therefore no hidden sum over rational classes inside a stable elliptic class.
-This special fact fails for many other groups and is one reason the rank-two formula has such a
-clean geometric side.
+The trace-zero projective class still has the extra Weyl stabilizer of (3.5b); that changes the
+orbit coefficient by $\kappa(\gamma)$ but does not split the orbit into two rational classes.
+This special degree-two control fails for many other groups and is one reason the rank-two
+formula has such a clean geometric side.
 
 The quadratic field $E=F[\gamma]$ is determined by the irreducible characteristic polynomial.
 At a place $v$, $E\otimes_FF_v$ may be a field or $F_v\times F_v$.  The formula (4.4) includes
@@ -1255,7 +1418,7 @@ Combining the central evaluation, parabolic cancellation, and fixed-orbit unfold
 $$
 \lim_{T\to\infty}I_T(f)
 =\operatorname{vol}([\overline G])f(1)
-+\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f).
++\sum_{[\gamma]_{\mathrm{ell}}}\kappa(\gamma)a(\gamma)O_\gamma(f).
 \tag{9.5}
 $$
 
@@ -1289,7 +1452,7 @@ The orbit map
 
 $$
 q_\gamma:\overline G_\gamma\backslash\overline G
-\longrightarrow \overline G,qquad g\longmapsto g^{-1}\gamma g
+\longrightarrow \overline G,\qquad g\longmapsto g^{-1}\gamma g
 \tag{10.2}
 $$
 
@@ -1351,7 +1514,7 @@ Let $k=\mathbf R$ or $\mathbf C$.  In Cartan coordinates $g=k_1a(s)k_2$, Haar me
 by
 
 $$
-C e^{cs}\,ds\,dk_1\,dk_2,qquad s\ge0.
+C e^{cs}\,ds\,dk_1\,dk_2,\qquad s\ge0.
 \tag{10.5}
 $$
 
@@ -1427,25 +1590,63 @@ large inverse local discriminants at finite places into archimedean size or into
 factor $N\mathfrak d_{E/F}$.  Multiplying (10.4) over finite places and (10.7) over archimedean
 places therefore gives the key estimate.
 
+We isolate the arithmetic comparison used in that multiplication.  Let $\mathcal S(f)$ be the
+set of rational regular classes whose finite orbits meet the support of $f_{\mathrm{fin}}$.
+There are constants $c,C>0$ such that, for $\gamma\in\mathcal S(f)$ with $j(\gamma)\ne0$,
+
+$$
+N\mathfrak d_{F[\gamma]/F}
+\prod_{v<\infty}\max(1,|\mathfrak D(\gamma)|_v^{-1})
+\le C H_F(j(\gamma))^c.
+\tag{10.7b}
+$$
+
+Indeed, normalize to trace one.  Then
+$d=j^{-1}$, $\Delta=(j-4)/j$, and $\mathfrak D=4-j$, up to harmless sign conventions.  The
+quadratic field is $F(\sqrt{j(j-4)})$.  Finite support bounds the denominator ideal of $j$;
+clearing that fixed ideal, the relative field discriminant divides a fixed dyadic ideal times
+the squarefree part of the numerator ideals of $j$ and $j-4$.  The finite product in (10.7b) is
+the denominator norm of $j-4$, again up to a fixed ideal.  Taking norms and applying the product
+formula gives (10.7b).  Conversely, the product of the archimedean coefficient heights of a
+primitive companion representative is bounded below by a fixed positive power of $H_F(j)$
+once the finite denominator of $j$ is fixed.
+
+When $j=0$, finite orbital support permits only finitely many determinant squareclasses.  To
+see this locally, outside a fixed finite set the good-place calculation (4.3a) forces the
+quadratic algebra to be unramified; at a place in the fixed set, $F_v^\times/F_v^{\times2}$ is
+finite.  Globally, squareclasses with prescribed parity outside that set form a finite group by
+the $S$-unit and ideal-class argument displayed later in (11.1).  Thus all estimates below on
+the trace-zero fiber can be enlarged uniformly over a finite set.
+
 **Theorem 10.1 (rapid global orbital decay).** For every $M>0$ there is a continuous Schwartz
 seminorm $\nu_M$ such that
 
 $$
-|O_\gamma(f)|\le \nu_M(f)H_{\mathrm{ell}}(\gamma)^{-M}.
+|O_\gamma(f)|\le \nu_M(f)H_{\mathrm{ell}}(\gamma)^{-M}
 \tag{10.8}
 $$
 
 for every globally elliptic class whose finite orbit meets the support of $f$.
 
-**Proof.** Multiply the local bounds.  At the finitely many places in $S$, their constants and
-fixed powers of the discriminant are controlled by finitely many local seminorms.  Outside
-$S$, only primes dividing the integral orbit discriminant contribute a loss, and the product of
-these losses is a fixed power of its norm.  The archimedean estimate supplies arbitrary decay
-in the projective coefficient height.  Increase its Schwartz order until it dominates all
-finite-place losses and a further prescribed power $M$.  The product formula identifies the
-remaining factors with a fixed power of $N\mathfrak d_{E/F}$ and the invariant coefficient
-height, both included in $H_{\mathrm{ell}}(\gamma)$.  Restricted-product factorization then
-yields (10.8).  $\square$
+**Proof.** First suppose $j(\gamma)\ne0$.  Multiply (10.4) at the finite places.  At the
+finitely many places in $S$, the constants are controlled by finitely many local seminorms;
+their discriminant factors remain in the displayed product of (10.7b).  Outside $S$, (4.3a)
+removes every good-discriminant place.  Thus the product of every remaining local loss is at
+worst a fixed power of the left side of (10.7b), hence at most a fixed power of $H_F(j)$.
+
+At the archimedean places, multiply (10.7).  The lower bound following (10.7b) converts the
+arbitrary projective decay in (1.4a) into an arbitrary negative power of $H_F(j)$.  The
+archimedean inverse-discriminant factors are at most another fixed power of $H_F(j)$, by the
+definition of Weil height applied to $4-j$.  Choose the Schwartz order after all these fixed
+losses have been determined, large enough to leave
+$H_F(j)^{-M}$ and an additional negative power absorbing
+$N\mathfrak d_{E/F}^{M}$.  This is possible because that discriminant is itself bounded by a
+fixed power of $H_F(j)$ in (10.7b).  The result is (10.8).
+
+On the trace-zero fiber there are only finitely many contributing classes by the paragraph
+following (10.7b).  Enlarge the same continuous seminorm by the maximum of the finitely many
+continuous orbital-integral seminorms multiplied by $H_{\mathrm{ell}}(\gamma)^M$.  This proves
+the estimate there as well.  Finite sums of tensors follow by adding seminorms.  $\square$
 
 A logarithmic singularity causes no problem: for every $\epsilon>0$,
 $|\log x|\ll_\epsilon x^{-\epsilon}$ on $0<x\le1$.  Hence logarithms are absorbed by an
@@ -1468,10 +1669,26 @@ scale to trace one and use the companion matrix.  The exceptional value $j=0$ is
 the second factor in (10.7a).  A trace-zero class determines the quadratic field $E$, and $E$
 determines its determinant square class.  Quadratic extensions with
 $N\mathfrak d_{E/F}\le X$ are polynomially numerous.  To see this without an asymptotic
-counting theorem, note that the discriminant ideal has norm at most $X$, there are polynomially
-many such ideals, and a quadratic extension unramified outside a fixed ideal is determined by
-a quadratic character of a ray class group whose order is bounded polynomially in the modulus.
-Thus the invariant height counts both the ordinary and trace-zero fibers correctly.
+counting theorem or class field theory, write $E=F(\sqrt a)$ and let $S$ contain the archimedean
+places and the finite places dividing $2\mathfrak d_{E/F}$.  Outside $S$, every valuation of
+$a$ is even.  The relevant squareclasses fit into the elementary ideal-theoretic sequence
+
+$$
+\mathcal O_{F,S}^{\times}/\mathcal O_{F,S}^{\times2}
+\longrightarrow
+\{a\in F^\times/F^{\times2}:v(a)\equiv0\pmod2\text{ off }S\}
+\longrightarrow
+\operatorname{Cl}(\mathcal O_{F,S})[2].
+\tag{11.1}
+$$
+
+The first group has order at most a fixed constant times $2^{|S|}$ by the unit theorem.  The
+last has order at most the class number of $F$ times $2^{|S|}$, as follows by inverting the
+primes of $S$ one at a time in the ideal-class presentation.  There are polynomially many
+possible discriminant ideals of norm at most $X$, and $2^{|S|}$ is at most a fixed multiple of
+the norm of their product.  The finitely many dyadic squareclasses contribute only a fixed
+factor.  Hence the number of fields is $O(X^C)$ for a constant depending only on $F$.  Thus the
+invariant height counts both the ordinary and trace-zero fibers correctly.
 
 ### 11.2 Polynomial counting
 
@@ -1480,16 +1697,18 @@ $f$, such that
 
 $$
 \#\bigl\{[\gamma]_{\mathrm{ell}}:
-H_{\mathrm{ell}}(\gamma)\le X, O_{\gamma,f}(f_f)\ne0\bigr\}
+H_{\mathrm{ell}}(\gamma)\le X, O_{\gamma,\mathrm{fin}}(f_{\mathrm{fin}})\ne0\bigr\}
 \le CX^A
 \tag{11.2}
 $$
 
 for $X\ge1$.
 
-Here $O_{\gamma,f}(f_f)=\prod_{v<\infty}O_{\gamma,v}(f_v)$ denotes the finite-adelic factor.
+Here
+$O_{\gamma,\mathrm{fin}}(f_{\mathrm{fin}})=\prod_{v<\infty}O_{\gamma,v}(f_v)$ denotes the
+finite-adelic factor.
 
-**Proof.** The lattice count for $j\ne0$ and the discriminant-and-ray-class count for $j=0$ were
+**Proof.** The lattice count for $j\ne0$ and the discriminant-and-squareclass count for $j=0$ were
 proved in Section 11.1.  Discarding values that give split or singular polynomials can only
 decrease the count.  The finite orbital support condition imposes further restrictions and
 likewise cannot increase it.  $\square$
@@ -1525,13 +1744,31 @@ unit lattice.
 Minkowski's convex-body theorem supplies in every ideal class an integral ideal whose norm is
 bounded by a fixed power of $|D_E|$.  It also bounds the number of ideal classes coarsely by a
 fixed power of $|D_E|$: represent each class by such an ideal and count integral ideals of
-bounded norm through lattice points.  Dirichlet's unit theorem identifies the noncompact
-archimedean unit directions with a lattice of fixed rank.  Applying successive minima to the
-logarithmic embedding produces a basis whose fundamental parallelepiped has volume bounded by
-a fixed power of $|D_E|$.  Roots of unity are bounded in fixed degree.  Comparing integral
+bounded norm through lattice points.
+
+We also need an upper, rather than lower, regulator bound.  In fixed degree it follows by the
+quantitative form of Dirichlet's box argument.  Embed $\mathcal O_E$ as a lattice of covolume
+$2^{-r_2(E)}|D_E|^{1/2}$.  Apply the pigeonhole proof of the unit theorem in an archimedean box
+whose side lengths are $exp(C|D_E|^{C_0})$, subdivided by a fundamental cell of that lattice
+and by the finitely many ideal classes just bounded.  Two elements in the same cell and ideal
+class have a quotient which is a unit; its logarithm vector has norm at most
+$C|D_E|^{C_0}$.  After one unit has been found, perform the same argument in the quotient by
+its logarithmic span.  At each of the fixed number
+$r_E=r_1(E)+r_2(E)-1$ of stages, enlarging $C_0$ if necessary prevents all lattice points from
+lying in the finitely many previously obtained lower-rank slabs.  This produces $r_E$
+independent units with logarithm vectors of polynomial size in $|D_E|$.  The determinant of
+those vectors bounds from above the covolume of the full unit lattice.  Thus
+
+$$
+R_E\le C|D_E|^{C_0}.
+\tag{11.3a}
+$$
+
+Dirichlet's unit theorem identifies this regulator with the volume of the noncompact
+archimedean unit directions.  Roots of unity are bounded in fixed degree.  Comparing integral
 maximal compact subgroups under (3.5) can introduce local indices only at places dividing the
-relative discriminant, and their product is bounded by a fixed power of
-$N\mathfrak d_{E/F}$.
+relative discriminant, and each index is bounded by a fixed power of the residue-field size;
+their product is bounded by a fixed power of $N\mathfrak d_{E/F}$.
 
 Multiplying these estimates bounds the volume by $C|D_E|^{B_0}$.  Since
 $|D_E|=|D_F|^2N\mathfrak d_{E/F}$ and the relative discriminant norm is a factor of our height,
@@ -1546,7 +1783,7 @@ coarseness is an advantage: it is uniform over all fields $E$ that occur.
 **Theorem 11.3.** The series
 
 $$
-\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f)
+\sum_{[\gamma]_{\mathrm{ell}}}\kappa(\gamma)a(\gamma)O_\gamma(f)
 \tag{11.4}
 $$
 
@@ -1556,7 +1793,8 @@ it is dominated by one summable majorant.
 **Proof.** Divide the classes into shells
 $2^m\le H_{\mathrm{ell}}(\gamma)<2^{m+1}$.  Proposition 11.1 bounds the number in the $m$-th shell by
 $C2^{Am}$.  Proposition 11.2 bounds each volume by $C2^{Bm}$.  Theorem 10.1 bounds the orbital
-integral by $\nu_M(f)2^{-Mm}$.  Hence the sum of absolute values in the shell is at most
+integral by $\nu_M(f)2^{-Mm}$, and $0<\kappa(\gamma)\le1$.  Hence the sum of absolute values in
+the shell is at most
 
 $$
 C\nu_M(f)2^{-m(M-A-B)}.
@@ -1582,7 +1820,7 @@ We can now complete the passage from the diagonal to rational orbits.
 $$
 \int_{[\overline G]}K_f(x,x)\,dx
 =\operatorname{vol}([\overline G])f(1)
-+\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f),
++\sum_{[\gamma]_{\mathrm{ell}}}\kappa(\gamma)a(\gamma)O_\gamma(f),
 \tag{12.1}
 $$
 
@@ -1595,7 +1833,8 @@ to the zero parabolic transform; Proposition 8.1 shows that the cutoff discrepan
 zero.
 
 For each elliptic class, orbit unfolding and quotient integration give
-$a(\gamma)O_\gamma(f)$ by (9.4).  Theorem 11.3 supplies a majorant independent of both cutoffs,
+$\kappa(\gamma)a(\gamma)O_\gamma(f)$ by Sections 9.1--9.2.  Theorem 11.3 supplies a majorant
+independent of both cutoffs,
 so dominated convergence permits the rational height cutoff and then $T$ to tend to infinity
 through the elliptic class sum.  Finally, (5.9) identifies the limit of $I_T(f)$ with the
 diagonal integral.  This proves (12.1).  $\square$
@@ -1624,7 +1863,7 @@ The proof of Theorem 11.3 also shows continuity.  For fixed finite support and l
 
 $$
 \left|
-\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f)
+\sum_{[\gamma]_{\mathrm{ell}}}\kappa(\gamma)a(\gamma)O_\gamma(f)
 \right|\le C\nu_M(f).
 \tag{12.3}
 $$
@@ -1635,7 +1874,7 @@ space, and hence on their finite inductive union.
 
 ### 12.3 Equality with the spectral expansion
 
-The kernel theorem and cuspidal spectral decomposition give
+Book 108, Theorem 11.1 and its discrete cuspidal decomposition give
 
 $$
 \int_{[\overline G]}K_f(x,x)\,dx
@@ -1660,7 +1899,8 @@ counting, and torus volumes control the elliptic sum.
 **Theorem 12.2 (simple trace formula for $\mathrm{GL}_2$).** Let $F$ be a number field with a
 real place $v_0$, let $\omega$ be a unitary idele class character, and let $f$ be a finite sum
 of factorizable central-character Schwartz functions satisfying (1.4) and (1.4a), finite under
-left and right maximal-compact actions, with a strongly cuspidal factor at $v_0$ in every tensor.  Then
+left and right maximal-compact actions, with a strongly cuspidal factor at $v_0$ in every tensor.
+Write $f=\sum_i f_i$ with $f_i=\otimes_v f_{i,v}$.  Then
 $R_\omega(f)$ is trace class, annihilates the noncuspidal spectrum, and
 
 $$
@@ -1669,17 +1909,19 @@ $$
 m(\pi)\operatorname{tr}\pi(f)
 =\operatorname{vol}([\overline G])f(1)
 +\sum_{[\gamma]_{\mathrm{ell}}}
-a(\gamma)\prod_vO_{\gamma,v}(f_v).}
+\kappa(\gamma)a(\gamma)\sum_i\prod_vO_{\gamma,v}(f_{i,v}).}
 \tag{12.5}
 $$
 
 Both displayed series converge absolutely.  All quotient measures are induced from the fixed
 Haar measures by (1.7), (1.9), and (4.1).  Rescaling a centralizer measure changes
-$a(\gamma)$ and $O_\gamma(f)$ inversely and leaves (12.5) unchanged.
+$a(\gamma)$ and $O_\gamma(f)$ inversely and leaves (12.5) unchanged.  By (4.4a), the inner
+finite sum depends only on $f$, not on its chosen tensor decomposition.
 
 **Proof.** Trace class, noncuspidal annihilation, and the first equality in (12.4) are the kernel
 input.  Theorem 12.1 gives its geometric evaluation.  Factorization of an elliptic orbital
-integral is (4.4), and all interchanges are justified by Theorem 11.3.  $\square$
+integral is (4.4), its finite-sum form is (4.4a), and all interchanges are justified by Theorem
+11.3.  $\square$
 
 The formula includes multiplicities $m(\pi)$; no multiplicity-one theorem is needed.  It also
 does not assert a numerical value for any local orbital integral.  Those values can now be
@@ -1719,8 +1961,10 @@ $$
 
 The projective invariant $j$ is always zero, but the field
 $\mathbf Q(\sqrt{-d})$ varies with the square class of $d$.  This concrete family exhibits the
-exceptional fiber discussed in Section 2.3.  It also shows why a convergence height must record
-the quadratic discriminant in addition to $j$.
+exceptional fiber discussed in Section 2.3.  Conjugation implementing the nontrivial automorphism
+of that field sends $\gamma_{0,d}$ to $-\gamma_{0,d}$, so this is also exactly the fiber on which
+$\kappa=1/2$.  It shows why a convergence height must record the quadratic discriminant in
+addition to $j$.
 
 If $f_\infty$ is a pseudo-coefficient of a holomorphic discrete series and the finite factors
 are spherical away from a level $N$, (12.5) has the familiar shape
@@ -1730,6 +1974,7 @@ $$
 =\text{volume}\cdot f(1)
 +\sum_{\substack{\text{imaginary quadratic}\\
 \text{projective classes meeting the level}}}
+\text{projective stabilizer factor}\cdot
 \text{torus volume}\cdot\text{orbital product}.
 $$
 
@@ -1764,7 +2009,7 @@ $$
 \begin{pmatrix}
 \cos\theta&-\sin\theta\\
 \sin\theta&\cos\theta
-\end{pmatrix},qquad 0<|\theta|<\pi.
+\end{pmatrix},\qquad 0<|\theta|<\pi.
 \tag{13.3}
 $$
 
@@ -1825,7 +2070,7 @@ $$
 \text{one stable line, the same unipotent unfolding},\\
 &\text{elliptic classes}
 &&\longrightarrow
-a(\gamma)O_\gamma(f).
+\kappa(\gamma)a(\gamma)O_\gamma(f).
 \end{aligned}
 \tag{14.1}
 $$
@@ -1860,7 +2105,7 @@ Define on the admissible cuspidal test space
 
 $$
 I_{\mathrm{ell}}(f)=
-\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f).
+\sum_{[\gamma]_{\mathrm{ell}}}\kappa(\gamma)a(\gamma)O_\gamma(f).
 \tag{14.3}
 $$
 
@@ -1889,7 +2134,8 @@ the split and nonsemisimple classes inside the unique proper parabolic, where a 
 cuspidal real factor makes their unfolded main term zero and rapid decay removes the truncation
 boundary.  Irreducible characteristic polynomials produce anisotropic projective tori; their
 compact adelic quotients supply the coefficients $a(\gamma)$ and their transverse orbits supply
-the orbital integrals.
+the orbital integrals.  The factor $\kappa(\gamma)=1/2$ on the trace-zero fiber records its extra
+projective Weyl stabilizer; it is one on every other elliptic class.
 
 The convergence proof is as structural as the classification.  Local orbit charts measure the
 only singularity through the Weyl discriminant, archimedean Schwartz estimates provide
