@@ -67,7 +67,7 @@
     - [Why generic torsion is not enough](#111-why-generic-torsion-is-not-enough)
     - [The integral Kummer boundary](#112-the-integral-kummer-boundary)
     - [The canonical finite-flat extension](#113-the-canonical-finite-flat-extension)
-    - [When the criterion is necessary](#114-when-the-criterion-is-necessary)
+    - [Why the canonical qualifier matters](#114-why-the-canonical-qualifier-matters)
     - [The dyadic and equal-characteristic boundaries](#115-the-dyadic-and-equal-characteristic-boundaries)
 12. [Worked local fields](#12-worked-local-fields)
     - [A split curve over $\mathbf Q_5$](#121-a-split-curve-over-mathbf-q_5)
@@ -122,7 +122,7 @@ $$
 
 We write $R=\mathcal O_K$, $\mathfrak m=(\pi)$, and $k=R/\mathfrak m$. Choose an absolute value compatible with $v$, so $|x|=c^{v(x)}$ for a fixed $0<c<1$. The **residue characteristic exponent** is denoted $p$: it is $\operatorname{char}k$ when that characteristic is positive and $1$ in residue characteristic zero.
 
-Three fields must be kept distinct. Fix a separable closure $K^s$, an algebraic closure $\overline K$, and a completion $C$ of $\overline K$ for the extended absolute value. In positive characteristic $K^s$ may be smaller than $\overline K$ because of purely inseparable elements. The Galois group is
+Three fields must be kept distinct. Fix a separable closure $K^s$, an algebraic closure $\overline K$, and a completion $C$ of $\overline K$ for the extended absolute value. The standard completion theorem says that $C$ is again algebraically closed. Its proof is worth recalling: approximate the coefficients of a monic polynomial over $C$ by coefficients in $\overline K$ more closely than the finitely many slopes of its Newton polygon; the factor of a chosen slope persists under that perturbation, and successive approximation of a root gives a Cauchy sequence in $\overline K$. The limit is a root in $C$. Repeating with the quotient splits the polynomial. In positive characteristic $K^s$ may be smaller than $\overline K$ because of purely inseparable elements. The Galois group is
 
 $$
 G_K=\operatorname{Gal}(K^s/K).
@@ -262,13 +262,23 @@ $$
 [a_1]+[a_2]-[b_1]-[b_2].
 $$
 
+The quotient used here is an actual smooth analytic curve, not only a set of orbits. The action of $q^{\mathbf Z}$ on $C^\times$ is free and properly discontinuous: a closed annulus meets only finitely many of its translates. Take a closed fundamental annulus and glue small neighborhoods of its two boundary circles by $u\mapsto qu$. The resulting curve $A_q$ is connected and complete, its local charts are annuli or discs, and its points are exactly $C^\times/q^{\mathbf Z}$. The differential $du/u$ is unchanged by the gluing. Every zero or pole has only finitely many representatives in the fundamental annulus, so divisors on $A_q$ are finite sums.
+
 Thus the theta product solves a concrete problem: it manufactures periodic functions with prescribed zeros and poles. It also gives a direct route to the group law. A degree-zero divisor $\sum_i[a_i]-\sum_j[b_j]$ is principal precisely when the two multisets have equal size and
 
 $$
 \prod_i a_i\equiv\prod_j b_j\pmod{q^{\mathbf Z}}. \tag{1.6}
 $$
 
-The necessity follows by multiplying the quasiperiodicity factors; the sufficiency follows from the corresponding theta quotient. Relation (1.6) says that addition in the divisor class group is multiplication of uniformizing parameters. It is the divisor-theoretic core of Tate uniformization.
+Here is the full divisor argument. Move every point into one closed fundamental annulus and choose its representative there. The theta quotient built from the representatives has the prescribed zeros and poles. Under $u\mapsto qu$ its multiplier is
+
+$$
+\frac{\prod_i a_i}{\prod_j b_j}.
+$$
+
+It can be made periodic exactly when that multiplier is a power of $q$, since changing one representative by $q^r$ changes neither its quotient point nor the divisor and absorbs that power. This proves sufficiency. Conversely, divide a periodic meromorphic function by theta factors accounting for all of its zeros and poles in the fundamental annulus. The quotient is an invertible analytic function on $C^\times$. A Laurent series on all of $C^\times$ which is invertible there is $cu^r$ for some $c\in C^\times$ and $r\in\mathbf Z$: if two exponents contributed to its Newton polygon, a slope between them would give a zero. Its multiplier under $u\mapsto qu$ is therefore $q^r$. Comparison with the theta multiplier gives (1.6). The same Laurent calculation applied to a periodic analytic function shows that only its constant coefficient can survive, so every analytic function on the quotient without a pole is constant.
+
+Relation (1.6) says that addition in the divisor class group is multiplication of uniformizing parameters. It is the divisor-theoretic core of Tate uniformization, and, unlike a derivative-rigidity argument, it remains valid in positive characteristic.
 
 Logarithmic derivatives connect this product with the functions used below. On any pole-free annulus, termwise differentiation gives
 
@@ -343,6 +353,29 @@ $$
 q\frac{d}{dq}\log\Delta(q)
 =1-24S_1(q).
 $$
+
+This calculation does not import a transformation law. Put
+
+$$
+E_2=1-24S_1,\qquad E_4=1+240S_3=c_4,
+\qquad E_6=1-504S_5=-c_6.
+$$
+
+Expanding each Lambert series by (1.1) and comparing the coefficient of $q^N$ gives the two divisor-sum convolutions
+
+$$
+3qE_4'=E_2E_4-E_6,
+\qquad
+2qE_6'=E_2E_6-E_4^2.
+$$
+
+For example, the first is obtained by sorting pairs of divisors according to the larger complementary summand; the second is the same calculation with fifth powers. These are finite coefficient identities for each $N$. Since $1728\Delta=E_4^3-E_6^2$, differentiation and substitution give
+
+$$
+1728q\Delta'=E_2(E_4^3-E_6^2)=1728E_2\Delta,
+$$
+
+which is the asserted logarithmic derivative wherever division by $\Delta$ is made.
 
 The right side is also the logarithmic derivative of $qP(q)^{24}$. Their quotient therefore has zero logarithmic derivative and is constant. Both series begin with $q$, so the constant is $1$. Since all coefficients involved are integers, equality in $\mathbf Q[[q]]$ is equality in $\mathbf Z[[q]]$, and it may be specialized in every complete field.
 
@@ -473,7 +506,7 @@ $$
 Y(u)^2+X(u)Y(u)=X(u)^3+a_4X(u)+a_6. \tag{3.5}
 $$
 
-A useful proof avoids an unilluminating full expansion. The difference of the two sides is $q$-periodic. Its possible poles occur at $q^{\mathbf Z}$. Expanding at $u=1$ shows that all negative-power terms cancel precisely for the constants (2.1). The difference is therefore an analytic function on the proper quotient with no pole and hence constant. Evaluating in the limit $u\to0$ through a fundamental annulus shows the constant is zero. This pole-cancellation argument is the multiplicative counterpart of deriving a Weierstrass relation from Riemann--Roch spaces.
+A useful proof avoids an unilluminating full expansion. The difference of the two sides is $q$-periodic. Its possible poles occur at $q^{\mathbf Z}$. Expand the $n=0$ summands at $u=1$ and pair the $n$ and $-n$ summands in the remaining orbit sums. Successive cancellation of the coefficients of $z^{-6},\ldots,z^{-1}$ first forces $a_4=-5S_3$ and then $12a_6=-5S_3-7S_5$. Substitution of these two values also makes the remaining constant coefficient zero. Thus the displayed difference has neither a principal part nor a constant term. It is an analytic function on the quotient without a pole, hence is constant by the Laurent argument after (1.6), and its computed constant term makes that constant zero. This pole-cancellation argument is the multiplicative counterpart of deriving a Weierstrass relation from pole spaces. Because the calculation is an identity of integral orbit sums, reduction to characteristics $2$ and $3$ is legitimate even though the displayed notation for $a_6$ contains $1/12$.
 
 Define
 
@@ -514,22 +547,23 @@ $$
 \phi_q^*\left(\frac{dx}{2y+x}\right)=\frac{du}{u}. \tag{3.9}
 $$
 
-Thus the map is locally an isomorphism. Second, the divisor of $X(u)-X(a)$ shows that the only points with the same image as $a$ are $a$ and the inverse dictated by the group law; together with $Y$, this proves injectivity modulo $q^{\mathbf Z}$. In particular the preimage of $O$ is exactly $q^{\mathbf Z}$. Third, a nonconstant morphism from the complete one-dimensional quotient to the smooth cubic has open and closed image; connectedness gives surjectivity.
+Thus the map is locally an isomorphism. Second, $X$ has divisor of poles $2[1]$ on the quotient. Hence the induced map to the $X$-line has degree two. Identity (3.3) exhibits its two generic points as $[u]$ and $[u^{-1}]$, and $Y$ separates them unless they coincide. Consequently $(X,Y)$ induces an equality of meromorphic function fields between the quotient and the smooth cubic (2.2). The map is finite because $X$ is finite of degree two, and a finite map inducing equality of function fields between smooth complete curves is an isomorphism. In particular its preimage of $O$ is exactly $q^{\mathbf Z}$, and surjectivity is part of this degree-one conclusion.
 
-To see why the analytic isomorphism respects groups rather than merely spaces, consider
+Third, the group law follows from divisors, with no differential-rigidity shortcut. Let $P,Q,R$ be the three intersections, counted with multiplicity, of a line with the cubic, and choose parameters $u,v,w$ for them. The quotient of the line equation by the line at infinity has divisor
 
 $$
-(u,v)\longmapsto
-\phi_q(uv)-\phi_q(u)-\phi_q(v).
+(P)+(Q)+(R)-3(O).
 $$
 
-It is an analytic map from a connected two-dimensional domain to the discrete kernel of the induced local homomorphism near $(1,1)$. It is zero near $(1,1)$ by (3.9), hence zero everywhere. Equivalently, the invariant differential and the chosen identity rigidify a genus-one isomorphism into a group isomorphism.
+Pulling back and applying (1.6) gives $uvw\in q^{\mathbf Z}$. Thus $[w]=[uv]^{-1}$. The chord-and-tangent law says $P+Q=-R$, while (3.3) says that negation replaces a parameter by its inverse. Therefore
+
+$$
+\phi_q([uv])=P+Q.
+$$
+
+Tangencies follow by intersection multiplicity, so the calculation also covers doubling and points of order two. This proves (3.8) in every characteristic.
 
 The kernel statement is not $\mu_\infty$ and not the unit group. Multiplication by the single period $q$ is exactly what is forgotten. This distinction is the source of the later exact sequence for torsion.
-
-Here is a more algebraic view of injectivity and surjectivity. On the quotient, $X$ has exactly one pole, at the identity, of order two. Therefore the induced map to the projective $X$-line has degree two. Identity (3.3) shows that its two points over a generic value are $[u]$ and $[u^{-1}]$. The function $Y$ separates these two unless they are equal, because (3.3) identifies its other value with $-Y-X$. Thus the pair $(X,Y)$ is generically injective. A finite degree-one map between smooth complete curves is an isomorphism; the Laurent expansion at the identity supplies finiteness there and normal convergence supplies it on every other annulus. This proves both global injectivity and surjectivity without a point count.
-
-For the group law, let $\alpha$ denote the analytic isomorphism of the quotient with the cubic just obtained. Transport the cubic group law back to the quotient. Both the transported law and ordinary multiplication have identity $[1]$. Their invariant differential at that identity is $du/u$ by (3.9). For fixed $v$, the discrepancy between the two translations has zero derivative and fixes one point; on a smooth connected one-dimensional analytic group it is the identity. Varying $v$ gives equality of the two laws. This supplies the rigidity step behind (3.8).
 
 The differential computation itself follows by differentiating (3.1). The derivative terms telescope after shifting $n$, and substitution of (3.5) simplifies the quotient to $du/u$. Near $u=1$, it is already forced: from (3.4), $dx/(2y+x)$ has leading term $-dz/(1-z)=du/u$. The quotient of the two invariant differentials is a pole-free function on the complete quotient, hence constant, and the leading term makes that constant $1$.
 
@@ -566,13 +600,13 @@ When $L$ is not complete, the right interpretation is the union over finite sube
 
 There are two superficially plausible but incorrect shortcuts. The first is to state only $C^\times/q^{\mathbf Z}\cong E_q(C)$ and silently replace $C$ by $\overline K$. The second is to claim that a convergent series of algebraic elements must be algebraic; this is false in general.
 
-Here the correct argument is more precise. If $q,u\in L$ for a finite extension $L/K$, every term of (3.1) lies in $L$, and $L$ is complete. Hence $X(u),Y(u)\in L$. Conversely, if $P\in E_q(\overline K)$, choose a finite extension $L$ containing its coordinates. Analytic surjectivity gives a parameter in $C^\times$; the finite morphism behavior on a fundamental annulus, or equivalently the descent of the inverse analytic map, shows that some representative belongs to a finite algebraic extension of $L$. Thus
+Here the correct argument is more precise. If $q,u\in L$ for a finite extension $L/K$, every term of (3.1) lies in $L$, and $L$ is complete. Hence $X(u),Y(u)\in L$. Conversely, if $P\in E_q(\overline K)$, choose a finite extension $L$ containing its coordinates. Analytic surjectivity gives a parameter in $C^\times$; the finite morphism behavior on a fundamental annulus, or equivalently the descent of the inverse analytic map, shows that some representative belongs to a finite algebraic extension of $L$. The inverse is separable because (3.9) has nonzero differential, so it preserves separable fields of definition. Thus
 
 $$
 \overline K^\times/q^{\mathbf Z}\xrightarrow{\sim}E_q(\overline K), \tag{3.14}
 $$
 
-and similarly with $K^s$ when torsion orders are prime to the field characteristic. Completion proves the analytic theorem, while finite-extension completeness returns the result to algebraic arithmetic.
+and similarly with $K^s$. Completion proves the analytic theorem, while finite-extension completeness and the nonvanishing differential return the result to algebraic arithmetic.
 
 ### 3.6 Analytic and algebraic uniformization compared
 
@@ -603,7 +637,7 @@ $$
 
 It is an isomorphism when $L$ is algebraically closed and complete. It is also an isomorphism for every algebraic extension of $K$, interpreted as a union of its finite subextensions. In all cases the pullback of the invariant differential is $du/u$.
 
-**Proof strategy.** Normal convergence gives the map and its differential. The theta quotients of Section 1.5 show that every meromorphic function on the quotient with a prescribed degree-zero divisor is generated by multiplicative parameters. In particular, $X$ has degree two and $(X,Y)$ has degree one, proving the algebraically closed case. Descent to algebraic extensions uses (3.16). The differential identity was established locally at $u=1$ and then globally because the ratio of two invariant differentials is constant. $\square$
+**Proof strategy.** Normal convergence gives the map and its differential. The theta quotients of Section 1.5 show that every meromorphic function on the quotient with a prescribed degree-zero divisor is generated by multiplicative parameters. In particular, $X$ has degree two and $(X,Y)$ has degree one, proving the algebraically closed complete case. For an algebraic field $M/K$, embed an algebraic closure of $M$ in its completion and apply that case there. Restriction to a fundamental annulus is finite, so the residue field of a point in the inverse image is finite over the residue field of its image; the chosen parameter is therefore algebraic, not merely an element of the completion. A point fixed by $G_M$ now has an algebraic parameter satisfying (3.16) with $G_K$ replaced by $G_M$; compactness forces the exponent homomorphism to vanish, so the parameter lies in $M$. This also covers purely inseparable $M/K$, because the inverse has nonzero differential and hence its parameter is separable over the point's field of definition. The differential identity was established locally at $u=1$ and then globally because the ratio of two invariant differentials is constant. $\square$
 
 The theorem is functorial in $L$. If $L'/L$ is an extension, the square
 
@@ -754,11 +788,7 @@ $$
 v(q)=-v(j(E))=v(\Delta_{\min}(E/K)). \tag{5.4}
 $$
 
-**Proof strategy.** Equation (5.2) first constructs the only possible $q$ from $j(E)$. Over an algebraic closure, equal $j$ gives an isomorphism between $E$ and $E_q$, apart from the familiar exceptional automorphisms; negative valuation excludes $j=0,1728$ as field elements of nonnegative valuation. The obstruction to descending that isomorphism is an automorphism cocycle. Near a nodal fiber, its only relevant quadratic part acts on the multiplicative coordinate by $u\mapsto u^{-1}$. Split reduction says that both tangent directions are individually rational, so this cocycle is trivial. The isomorphism descends to $K$.
-
-One may also prove the theorem directly from the formal neighborhood and the smooth locus. The formal group of $E$ is analytically identified with $1+\mathfrak m$ through the minimal differential. Continue this local isomorphism across successive annuli. Traversing all $m=v(\Delta_{\min})$ components returns to the identity after multiplication by one element $q$ of valuation $m$. The resulting map $K^\times/q^{\mathbf Z}\to E(K)$ has the correct differential and extends algebraically to $E_q\to E$. Comparing $j$ identifies this period with (5.2).
-
-Both proofs explain the hypotheses. Completeness glues the successive local corrections. Multiplicative reduction supplies a torus. Splitness identifies that torus with $\mathbf G_m$ over $K$ rather than only after an unramified quadratic extension.
+**Proof strategy.** Equation (5.2) first constructs the only possible $q$ from $j(E)$. Over an algebraic closure, equal $j$ gives an isomorphism between $E$ and $E_q$, apart from the familiar exceptional automorphisms; negative valuation excludes $j=0,1728$. The obstruction to descending that isomorphism is an automorphism cocycle. Integral uniqueness after a finite field of definition lets the isomorphism act on the two branches of the minimal nodal fibers. Its nontrivial value is inversion, which exchanges those branches. Split reduction says that both branch actions are trivial, so the cocycle vanishes and the isomorphism descends.
 
 We can make the descent step in the first proof explicit. Choose an isomorphism
 
@@ -766,7 +796,7 @@ $$
 f:E_{K^s}\longrightarrow(E_q)_{K^s}.
 $$
 
-For $\sigma\in G_K$, the composite $f\,{}^\sigma f^{-1}$ is an automorphism of $E_q$ fixing the origin. Because $v(j)<0$, the values $j=0$ and $1728$ are excluded, so over a separably closed field the automorphism group is $\{\pm1\}$, including in the small-characteristic cases relevant here after interpreting the exceptional values correctly. Hence the composites define a quadratic character. Under degeneration, $+1$ fixes each tangent branch and $-1$ exchanges them, as is visible from $u\mapsto u^{-1}$. Split reduction says that Galois fixes both branches, so the character is trivial. Then ${}^\sigma f=f$ for every $\sigma$, and ordinary Galois descent gives $f$ over $K$.
+For $\sigma\in G_K$, the composite $f\,{}^\sigma f^{-1}$ is an automorphism of $E_q$ fixing the origin. Because $v(j)<0$, the values $j=0$ and $1728$ are excluded, so over a separably closed field the automorphism group is $\{\pm1\}$, including in residue characteristics $2$ and $3$. Hence the composites define a quadratic character. Choose a finite extension over which $f$ is defined. Both base-changed equations remain minimal: their $c_4$ invariants are units, and their discriminant exponents both equal $-v(j)$. Integral uniqueness therefore extends $f$ to an isomorphism of their minimal cubics and identifies their tangent branches. Under this identification, $+1$ fixes each branch and $-1$ exchanges them, as is visible from $u\mapsto u^{-1}$. Split reduction says that Galois fixes each branch on both cubics, so the character is trivial. Then ${}^\sigma f=f$ for every $\sigma$, and Galois descent gives $f$ over $K$.
 
 There is one apparent circularity: equal $j$ first gives an isomorphism only after an algebraic closure, while $q$ was constructed analytically. But $q\in K$ by convergence of (5.2), and $E_q$ is algebraic by equation (2.2). The classification of elliptic curves over an algebraically closed field now applies directly to the two algebraic curves. No descent assertion is hidden in the analytic inversion.
 
@@ -846,7 +876,9 @@ $$
 v(\Delta_{\min})=v(q)=-v(j(E)). \tag{6.6}
 $$
 
-The final equality for nonsplit multiplicative reduction follows either from the minimal-model criterion or after unramified base change, which preserves normalized valuations and minimal discriminant exponents. A ramified quadratic character can also occur when $v(j)<0$, but then the curve need not already have multiplicative reduction over $K$; it may have additive, potentially multiplicative reduction. That case lies beyond the split/nonsplit multiplicative dichotomy of this book.
+**Proof.** The inverse series constructs $q\in K$ and gives $j(E_q)=j(E)$. Since this common value is neither $0$ nor $1728$, an isomorphism over $K^s$ has automorphism cocycle in $\{\pm1\}$. This cocycle is a quadratic character $\eta$, and changing the chosen isomorphism does not change it because the automorphism group is central. Thus $E$ is the $\eta$-twist of $E_q$, uniquely. If the minimal special fiber is nodal over $K$, integral uniqueness after a finite splitting extension identifies the cocycle action with the action on its two branches. That action factors through the separable quadratic residue algebra, so $\eta$ is unramified; it is trivial exactly when both branches are rational. Finally, a minimal multiplicative equation has unit $c_4$, whence $v(j)=-v(\Delta_{\min})$, while (5.3) gives $v(q)=-v(j)$. $\square$
+
+A ramified quadratic character can also occur when $v(j)<0$, but then the curve need not already have multiplicative reduction over $K$; it may have additive, potentially multiplicative reduction. That case lies beyond the split/nonsplit multiplicative dichotomy of this book.
 
 The theorem prevents a common error: a nonsplit curve is not uniformized over $K$ by the naive quotient $K^\times/q^{\mathbf Z}$. Its points are the fixed points of a twisted Galois action on $K'^\times/q^{\mathbf Z}$.
 
@@ -1019,13 +1051,21 @@ $$
 
 Thus the component of a rational torsion point must be killed by $n$ in $\mathbf Z/m\mathbf Z$. On the identity component, rational torsion is the root-of-unity subgroup of $K$.
 
-More explicitly, write $d=\gcd(n,m)$. The possible component labels killed by $n$ form a subgroup of order $d$. A label is actually realized over $K$ only if the corresponding unit equation has a solution. For example, a point mapping to $m/d$ requires an element $u\in K$ with
+More explicitly, write $d=\gcd(n,m)$. The possible component labels killed by $n$ are
 
 $$
-u^{n/d}=q^{1/d}
+r_b=\frac{bm}{d}\pmod m,
+\qquad b\in\mathbf Z/d\mathbf Z.
 $$
 
-up to a root of unity, so the unit part of $q$ matters. Valuation conditions are necessary, not sufficient.
+A label is actually realized over $K$ only if the corresponding power equation has a solution. For $r_b$, equation (7.10) becomes
+
+$$
+u^n=q^{bn/d},
+\qquad v(u)=\frac{bm}{d}. \tag{7.11}
+$$
+
+Thus the class of $q^{bn/d}$ must vanish in $K^\times/(K^\times)^n$. This is stronger than the valuation equality and retains the unit part of $q$. Valuation conditions are necessary, not sufficient.
 
 If $K$ has finite residue field and $n$ is prime to $p$, roots of unity of order dividing $n$ are controlled by $k^\times$, while the power map is an automorphism on $U^1$. Hence rational prime-to-$p$ torsion can be decided by a finite residue calculation together with the divisibility of $m$ and the Kummer class of $q$.
 
@@ -1040,10 +1080,10 @@ where $\omega$ is a Teichmüller lift of a residue unit and $\varepsilon\in U^1$
 $$
 n\mid m
 \quad\text{and}\quad
-\overline\omega\in(k^\times)^n. \tag{7.11}
+\overline\omega\in(k^\times)^n. \tag{7.12}
 $$
 
-More generally, the rational lifts of a component label $a\in\mathbf Z/m\mathbf Z$ killed by $n$ are governed by the same test applied to $q^{a/n}$ after clearing the evident valuation. This reduces all prime-to-$p$ rational torsion questions to the cyclic residue group when $k$ is finite.
+More generally, the rational lifts of the component $r_b$ are governed by the same test applied to the right side of (7.11). This reduces all prime-to-$p$ rational torsion questions to the cyclic residue group when $k$ is finite.
 
 For example, let $K=\mathbf Q_7$, $q=7^6\cdot2$, and $n=3$. The component group has three-torsion because $3\mid6$. But $2$ is not a cube modulo $7$, so $q$ is not a cube and no $K$-rational point gives a splitting lift of the generator of $\mathbf Z/3\mathbf Z$. Replacing $2$ by $-1$ makes the residue unit a cube and produces such a point. The component group alone cannot distinguish the two curves.
 
@@ -1157,11 +1197,15 @@ E_q[n]\cong\mu_n\oplus\mathbf Z/n\mathbf Z
 q\in(K^\times)^n. \tag{8.10}
 $$
 
-For if $q=r^n$ with $r\in K$, the class $[r]$ is a $G_K$-fixed lift of $1$. Conversely, a $G_K$-equivariant section supplies such a lift; after multiplying its parameter by a root of unity, Galois descent gives an $n$th root of $q$ in $K$. Equivalently, the extension class is the image of $q$ under
+For if $q=r^n$ with $r\in K$, the class $[r]$ is a $G_K$-fixed lift of $1$. Conversely, a $G_K$-equivariant section supplies such a lift. If $u$ represents it, then $\sigma(u)/u\in q^{\mathbf Z}$; compactness of $G_K$ forces this exponent to vanish, so $u\in K$, and adjusting by a power of $q$ gives an $n$th root of $q$. Equivalently, choosing an $n$th root $a_n$ defines the Kummer map
 
 $$
-K^\times/(K^\times)^n\cong H^1(G_K,\mu_n). \tag{8.11}
+\kappa_n:K^\times/(K^\times)^n\longrightarrow H^1(G_K,\mu_n),
+\qquad
+[a]\longmapsto\left[\sigma\longmapsto\frac{\sigma(a_n)}{a_n}\right]. \tag{8.11}
 $$
+
+The extension class is $\kappa_n(q)$. This map is injective for the only reason needed here: a zero cocycle permits a $G_K$-fixed choice of $a_n$, hence an $n$th root in $K$; changing $a_n$ changes the cocycle by a coboundary. No general cohomological classification is required for the splitting criterion.
 
 For a nonsplit multiplicative curve with splitting character $\eta$, twisting (8.7) gives diagonal characters $\eta\chi_n$ and $\eta$. It remains reducible, and its extension splits under the same Kummer condition on $q$.
 
@@ -1221,7 +1265,13 @@ This recovers (8.8) in a basis-free way. It also shows why an unramified quadrat
 
 Formula (8.14) makes the two canonical directions visibly dual. The subgroup $\mu_n$ is isotropic, as every cyclic subgroup must be under an alternating pairing, and the quotient $\mathbf Z/n\mathbf Z$ pairs perfectly with it after choosing a lift. There is no canonical lift: changing $e_2$ by $ae_1$ leaves $e_n(e_1,e_2)$ unchanged, exactly as the Kummer cocycle changes by a coboundary.
 
-When $n$ is not invertible, the same formula belongs to the finite flat group objects rather than merely to geometric points. The multiplicative group $\mu_n$ may then be nonreduced, but Cartier duality still pairs it with the constant cyclic quotient. The pointwise determinant argument is therefore valid only for invertible $n$; the group-theoretic pairing survives more generally and anticipates the coefficient-prime discussion of Chapter 11.
+When $n$ is not invertible, the pointwise formula with a primitive $\zeta_n$ is unavailable because $\mu_n$ may be nonreduced. The group-object formula nevertheless has a direct meaning. After the faithfully flat cover which chooses $q^{1/n}$, write the two factors as $\mu_n\times\mathbf Z/n\mathbf Z$ and set
+
+$$
+e\bigl((\zeta,b),(\xi,d)\bigr)=\zeta^d\xi^{-b}.
+$$
+
+Evaluation of a character on a constant exponent is perfect on coordinate rings, even when $\mu_n$ is nonreduced; the formula is alternating and is unchanged by changing the chosen root of $q$. It therefore descends. The pointwise determinant argument is valid only for invertible $n$, while this group-object formula survives more generally and anticipates the coefficient-prime discussion of Chapter 11.
 
 ### 8.6 What changes in characteristic $p$
 
@@ -1236,7 +1286,14 @@ $$
 \longrightarrow\mathbf Z/n\mathbf Z\longrightarrow0. \tag{8.17}
 $$
 
-To see why, use the same exponent map as in (8.2). A local lift of the class $a\bmod n$ is obtained after adjoining a solution of $T^n=q^a$; that cover is finite and flat because the polynomial is monic, even when it is inseparable. Its kernel is defined by $T^n=1$, namely $\mu_n$. Thus separability is needed to turn (8.17) into an exact sequence of $n^2$ geometric points, not for the finite flat exact sequence itself. In characteristic $p$, this distinction is decisive.
+Here is a construction that does not count geometric points. Over $K$, form the disjoint union
+
+$$
+\mathcal T_n=\coprod_{i=0}^{n-1}
+\operatorname{Spec}K[T_i]/(T_i^n-q^i).
+$$
+
+Multiply coordinates by $T_iT_j$ when $i+j<n$ and by $T_iT_j/q$ after reducing $i+j$ modulo $n$. This makes $\mathcal T_n$ a finite flat commutative group of rank $n^2$. Its component label maps faithfully flatly to the constant group $\mathbf Z/n\mathbf Z$, and the fiber at $0$ is $T_0^n=1$, namely $\mu_n$. The parameter $T_i$ maps to the Tate point $[T_i]$; the Laurent expansions (3.4), written in projective coordinates at $O$, extend this map across the possibly nonreduced locus $T_0=1$. After the faithfully flat cover adjoining an $n$th root of $q$, the map identifies both sides with the same extension of the constant cyclic group by $\mu_n$, hence it is an isomorphism before the cover. This proves (8.17). Separability is needed to turn it into an exact sequence of $n^2$ geometric points, not for the finite flat exact sequence itself. In characteristic $p$, this distinction is decisive.
 
 ## 9. Tate modules and cyclotomic determinant
 
@@ -1321,7 +1378,7 @@ $$
 \longrightarrow0. \tag{9.8}
 $$
 
-This rational extension never splits over $G_K$ for a genuine Tate parameter. Indeed, splitting would make the Kummer class of $q$ vanish in the inverse limit of $K^\times/(K^\times)^{\ell^r}$. Its valuation $m>0$ cannot be divisible by arbitrarily high powers of $\ell$. Finite-level reductions may split, but the full $\ell$-adic extension does not.
+This rational extension never splits over $G_K$ for a genuine Tate parameter. Apply valuation to the Kummer class: under the Kummer map to $H^1(G_K,\mathbf Q_\ell(1))$, the class of $q$ has valuation coordinate $m\in\mathbf Q_\ell$. A rational splitting would make that coordinate zero, whereas $m>0$ is nonzero in $\mathbf Q_\ell$. Equivalently, multiplying the class by any power of $\ell$ still leaves a nonzero valuation, so it cannot become zero after tensoring the integral extension with $\mathbf Q_\ell$. Finite-level reductions may split, but the full $\ell$-adic extension does not.
 
 Changing the compatible roots changes $e_2$ to $e_2+a e_1$ for some $a\in\mathbf Z_\ell$. The cocycle changes by the coboundary
 
@@ -1448,6 +1505,8 @@ $$
 
 This normalization depends on the chosen roots and uniformizer, but changing them only makes a compatible harmless adjustment. It captures the maximal pro-$\ell$ quotient of tame inertia.
 
+The image is all of $\mathbf Z_\ell$. Indeed, every $\ell^r$th root of unity lies in a finite unramified extension by the prime-to-$p$ root-of-unity theorem. Over that complete field, $T^{\ell^r}-\pi$ is Eisenstein, so adjoining $\pi^{1/\ell^r}$ gives a totally ramified extension of degree $\ell^r$. Its automorphisms multiply the chosen root by every element of $\mu_{\ell^r}$. Restriction from absolute inertia is therefore surjective onto $\mathbf Z/\ell^r\mathbf Z$ for every $r$, and compatibility gives the assertion in the inverse limit. A pro-$p$ subgroup of inertia maps trivially to this pro-$\ell$ quotient.
+
 Why does the unit $u$ not contribute on inertia? The principal-unit group $U^1$ is uniquely $\ell$-divisible because the derivative of $X^{\ell^r}-a$ is a unit at each lifting step. The residue-unit part acquires its prime-to-$p$ roots in unramified extensions. Therefore compatible $\ell$-power roots of $u$ may be chosen in the maximal unramified extension times $K$, and their Kummer cocycle restricts trivially to inertia. It follows that
 
 $$
@@ -1483,7 +1542,7 @@ $$
 
 is nilpotent with $N^2=0$, and inertia acts as $1+t_\ell(\sigma)N$. Rescaling the second basis vector over $\mathbf Q_\ell$ can replace $m$ by $1$, so the rational representation remembers only that monodromy is nonzero. The integral lattice remembers the exact divisibility of $m=v(q)$.
 
-Wild inertia acts trivially because $t_\ell$ factors through tame inertia. The same formula holds for nonsplit multiplicative reduction: the character $\eta$ is unramified and hence equals $1$ on $I_K$.
+For clarity, the pro-$p$ assertion about wild inertia has an elementary local proof. In a finite Galois quotient of inertia, the action on a uniformizer modulo the next unit layer gives the prime-to-$p$ tame quotient inside the residue multiplicative group. The kernel acts successively on quotients $U^r/U^{r+1}\cong\overline k^+$, whose finite subgroups are $p$-groups. Passing to inverse limits makes the wild kernel pro-$p$. It acts trivially here: $t_\ell$ takes values in the pro-$\ell$ group $\mathbf Z_\ell$, and $\chi_\ell$ is unramified. The same formula holds for nonsplit multiplicative reduction because $\eta$ is unramified and hence equals $1$ on $I_K$.
 
 ### 10.3 Conductor consequences
 
@@ -1624,25 +1683,34 @@ $$
 
 Over $K$ all three terms are étale, because the characteristic is zero. Over $R$, however, $\mu_p$ is finite and flat but not étale, while the constant group $\mathbf Z/p\mathbf Z$ remains étale. Asking whether (11.1) extends over $R$ is therefore an integral question invisible from the dimension of the generic representation.
 
-There is an immediate conceptual distinction from Chapter 10. When $\ell\ne p$, the residual cyclotomic character is unramified and the whole residual representation becomes unramified exactly when $\ell\mid m$. When $\ell=p$, the character $\overline\chi_p$ is usually ramified, so even a finite-flat residual representation is generally not unramified. The correct local condition at the coefficient prime is extendability by a finite flat group over $R$, not triviality on inertia.
+There is an immediate conceptual distinction from Chapter 10. When $\ell\ne p$, the residual cyclotomic character is unramified and the whole residual representation becomes unramified exactly when $\ell\mid m$. When $\ell=p$, the character $\overline\chi_p$ is usually ramified, so even a finite-flat residual representation is generally not unramified. For the canonical Tate sequence, the relevant integral question is extendability by a finite flat group over $R$, not triviality on inertia.
 
 Nor does finite flatness mean that the elliptic curve has good reduction. A Tate curve has multiplicative reduction by construction. What may extend is its finite layer of torsion, in a model depending on that layer; the curve itself does not become an elliptic scheme over $R$.
 
 ### 11.2 The integral Kummer boundary
 
-The Kummer sequence must now be read for the faithfully flat topology. For a DVR, every line bundle is trivial, so its low-degree part gives
+The required Kummer calculation can be made directly. A $\mu_p$-torsor over a ring $A$ is the same as an invertible $A$-module $L$ together with a trivialization $L^{\otimes p}\simeq A$: locally, a generator $z$ then satisfies $z^p=a$ for a unit $a$. Over a DVR every invertible module is free. Choosing a generator identifies the torsor with
+
+$$
+\operatorname{Spec}R[T]/(T^p-a),
+\qquad a\in R^\times,
+$$
+
+and changing the generator multiplies $a$ by a $p$th power. Conversely this displayed algebra is finite free and becomes trivial after the faithfully flat cover obtained by adjoining a root of $a$. Thus, without importing a cohomological computation, one obtains
 
 $$
 R^\times/(R^\times)^p
 \cong H^1(R,\mu_p). \tag{11.2}
 $$
 
-Over the fraction field,
+The same classification over the fraction field gives
 
 $$
 K^\times/(K^\times)^p
 \cong H^1(K,\mu_p). \tag{11.3}
 $$
+
+Here $H^1$ denotes torsors for the faithfully flat topology; the explicit torsor classification above is all that will be used from this notation.
 
 The map from (11.2) to (11.3) is induced by inclusion of units. Its image consists exactly of the Kummer classes whose valuation is divisible by $p$:
 
@@ -1679,7 +1747,7 @@ $$
 p^r\mid m. \tag{11.6}
 $$
 
-Since a fixed positive integer $m$ is not divisible by every $p^r$, the entire $p$-divisible Tate extension never extends as an extension of a constant $p$-divisible group by the multiplicative one. Finite flatness at one residual level is therefore compatible with noncrystalline monodromy of the full $p$-adic representation.
+Since a fixed positive integer $m$ is not divisible by every $p^r$, the entire $p$-divisible Tate extension never extends as an extension of a constant $p$-divisible group by the multiplicative one. Extendability at one residual level therefore does not imply extendability of the full tower.
 
 ### 11.3 The canonical finite-flat extension
 
@@ -1723,37 +1791,25 @@ $$
 
 Twisting by an unramified quadratic character preserves finite flatness: the character is represented by a finite étale quadratic descent datum over $R$, and tensoring the two generic directions by it commutes with descent. Hence Theorem 11.1 applies equally to split and nonsplit multiplicative reduction at the level of the canonical twisted sequence.
 
-### 11.4 When the criterion is necessary
+### 11.4 Why the canonical qualifier matters
 
-The word “canonical” in Theorem 11.1 matters. It asks for a model extending the visibly distinguished multiplicative subgroup and constant quotient. An abstract generic representation can conceivably have another finite flat model in which those two generic lines do not extend in the expected order. To promote (11.5) to a criterion for the representation itself, one needs a uniqueness principle for the relevant finite flat subgroup.
+The word “canonical” in Theorem 11.1 matters. It asks for a model extending the visibly distinguished multiplicative subgroup and constant quotient. An abstract generic representation may have another finite flat model in which those two generic lines do not extend in the expected order. Promoting (11.5) to a criterion for the representation itself requires a classification or uniqueness theorem for rank-$p$ finite flat models, and neither follows from the Tate quotient.
 
-Here is the form used most often in semistable arguments. Assume that $K/\mathbf Q_p$ is unramified and $p$ is odd. On inertia, the two residual diagonal characters are
+Even when $K/\mathbf Q_p$ is unramified and $p$ is odd, the distinct inertial characters
 
 $$
 \overline\chi_p\eta
 \qquad\text{and}\qquad
-\eta. \tag{11.10}
+\eta \tag{11.10}
 $$
 
-Since $\eta$ is unramified and $\overline\chi_p$ is nontrivial on tame inertia, the two characters are distinct. The multiplicative line is therefore intrinsic. If $E[p]$ has any finite flat model, schematic closure of that line gives $\mu_p$, the quotient gives the constant group, and the model is an extension of the form (11.9). Theorem 11.1 then yields
+only make the two generic lines intrinsic. They do not by themselves prove that their schematic closures in an arbitrary model have the prescribed multiplicative and étale forms, nor that the quotient remains the expected model. Those are integral classification statements. Accordingly, this book proves the exact equivalence for the canonical extension in Theorem 11.1 and does not turn it into an unqualified assertion about every possible model of the abstract representation.
 
-$$
-E[p]\text{ is finite flat over }R
-\quad\Longleftrightarrow\quad
-p\mid v(\Delta_{\min}) \tag{11.11}
-$$
-
-under these hypotheses.
-
-The uniqueness assertion in that argument has a short valuation explanation. A rank-$p$ finite flat group over an unramified DVR is controlled, after choosing an augmentation parameter, by two coefficients whose product is a unit multiple of $p$. Their valuations are nonnegative integers adding to $v(p)=1$, so only the pairs $(0,1)$ and $(1,0)$ occur. They give respectively the étale and multiplicative models. Their generic characters are $1$ and $\overline\chi_p$, which are distinct for odd $p$. Thus the closure of the cyclotomic line can only be $\mu_p$, and the quotient can only be constant. Exactness follows because over a DVR a finite torsion-free module is flat. This proves the particular uniqueness input used above; when $v(p)>1$, intermediate valuation pairs appear and the argument no longer applies.
-
-The proof uses only two features of the unramified odd-prime setting: the two generic characters remain distinguishable, and closure of the multiplicative line preserves the required finite-flat exact sequence. More ramified bases can have several integral models of the same generic group and require a separate classification. It would be incorrect to quote (11.11) there without checking that uniqueness input.
-
-Residue characteristic $3$ causes no exception to the Tate equation or to the Kummer calculation. The integral equation $y^2+xy=x^3+a_4x+a_6$ avoids division by $3$, the discriminant product remains valid, and for an unramified extension of $\mathbf Q_3$ the two characters in (11.10) are distinct. Thus (11.11) includes $p=3$. What fails in characteristic $3$ is the casual use of a short Weierstrass equation, not the Tate construction.
+Residue characteristic $3$ causes no exception to the result that has actually been proved. The integral equation $y^2+xy=x^3+a_4x+a_6$ avoids division by $3$, the discriminant product remains valid, and Theorem 11.1 gives the canonical criterion without change. What fails in characteristic $3$ is the casual use of a short Weierstrass equation, not the Tate construction.
 
 ### 11.5 The dyadic and equal-characteristic boundaries
 
-At $p=2$, the mod-$2$ cyclotomic character is trivial. The two diagonal characters of the residual Tate representation coincide, and the sign character also reduces to $1$. Consequently the generic representation no longer singles out the multiplicative line by its character. The closure argument used in Section 11.4 breaks at exactly this point.
+At $p=2$, the mod-$2$ cyclotomic character is trivial. The two diagonal characters of the residual Tate representation coincide, and the sign character also reduces to $1$. Consequently the generic representation no longer singles out the multiplicative line by its character. Thus even the preliminary character distinction discussed in Section 11.4 disappears.
 
 The integral Kummer statement itself remains true:
 
@@ -1949,7 +2005,7 @@ $$
 
 For $q_1$, the valuation is divisible by $5$. Modulo fifth powers its class is represented by the unit $2$, because $q_1/5^5=2$. The construction of Section 11.3 therefore supplies a finite flat model of $E_{q_1}[5]$ over $\mathbf Z_5$. The residual representation is not unramified: its cyclotomic diagonal character is nontrivial on inertia. Finite flatness, not unramifiedness, is the relevant conclusion.
 
-For $q_2$, the valuation class is $4$ modulo $5$, so no unit represents $[q_2]$ in $\mathbf Q_5^\times/(\mathbf Q_5^\times)^5$. Since $5$ is odd and the base is unramified, the distinguished-line argument applies, and $E_{q_2}[5]$ is not finite flat over $\mathbf Z_5$.
+For $q_2$, the valuation class is $4$ modulo $5$, so no unit represents $[q_2]$ in $\mathbf Q_5^\times/(\mathbf Q_5^\times)^5$. Theorem 11.1 therefore says that the canonical Tate extension does not extend over $\mathbf Z_5$. Deciding whether the same abstract generic representation admits a differently filtered finite flat model would require the additional classification deliberately excluded in Section 11.4.
 
 The unit $2$ need not be a fifth power. That is irrelevant: a finite flat extension may be non-split. This example separates once more the three levels of information:
 
@@ -2089,15 +2145,15 @@ $$
 
 Thus the residual conductor drops from one to zero under the numerical divisibility in (13.11), even when an unramified nonsplit extension remains. This is the exact local statement used to remove a multiplicative prime from a residual conductor.
 
-At the coefficient prime $p$ in mixed characteristic, retain (13.4) with $\ell=p$ but discard (13.7), (13.10), and (13.11). The cyclotomic character is ramified and the unit part of the Kummer class matters on inertia. In the unramified odd-prime setting, the replacement is
+At the coefficient prime $p$ in mixed characteristic, retain (13.4) with $\ell=p$ but discard (13.7), (13.10), and (13.11). The cyclotomic character is ramified and the unit part of the Kummer class matters on inertia. The exact replacement proved here is
 
 $$
-E[p]\text{ is finite flat}
+\text{the canonical Tate sequence for }E[p]\text{ extends over }R
 \quad\Longleftrightarrow\quad
 p\mid m. \tag{13.13}
 $$
 
-In particular the coefficient-prime representation is ordinary in the elementary triangular sense: it has the stable line $\mathbf Z_p(1)\otimes\eta$, and its quotient $\mathbf Z_p\otimes\eta$ is unramified. Its residual extension satisfies the finite-flat local condition precisely under (13.13). For $p=2$, only the canonical-extension direction is supplied here, as explained in Section 11.5. These qualifications are part of the formula, not peripheral cautions.
+In particular the coefficient-prime representation is ordinary in the elementary triangular sense: it has the stable line $\mathbf Z_p(1)\otimes\eta$, and its quotient $\mathbf Z_p\otimes\eta$ is unramified. Its canonical residual extension satisfies the displayed integral condition precisely under (13.13). For every $p$, an assertion about some differently filtered finite flat model requires an additional classification, as explained in Sections 11.4 and 11.5. These qualifications are part of the formula, not peripheral cautions.
 
 Finally, changing from covariant Tate modules to the dual representation inverts the diagonal characters, and changing arithmetic to geometric Frobenius replaces $Q$ by $Q^{-1}$. A comparison theorem must make those two convention changes explicitly; otherwise a correct special representation can appear to have the wrong determinant or Frobenius eigenvalues.
 
@@ -2128,6 +2184,6 @@ A nodal special fiber is not merely a damaged elliptic curve. Its two branches r
 
 The same quotient makes the arithmetic transparent. Valuation modulo $v(q)$ labels components; units reduce to the smooth multiplicative group; roots of unity and roots of $q$ generate torsion. Galois acts triangularly, with the cyclotomic character on the multiplicative line and the Kummer cocycle of $q$ in the extension entry. Away from the residue characteristic, inertia becomes a single nontrivial unipotent direction, giving conductor exponent one and explaining why divisibility of $v(\Delta_{\min})$ can erase ramification after residual reduction.
 
-At the coefficient prime, the same divisibility has a different meaning. It moves the Kummer class of $q$ into the unit group and thereby permits the canonical residual extension to spread over the valuation ring as a finite flat group. The odd unramified case turns this into an exact criterion for the residual representation; the dyadic case requires a separate uniqueness analysis. Keeping this boundary explicit is essential to the local conditions used in semistable modularity.
+At the coefficient prime, the same divisibility has a different meaning. It moves the Kummer class of $q$ into the unit group and thereby permits the canonical residual extension to spread over the valuation ring as a finite flat group. Turning this canonical criterion into an assertion about every model of the abstract residual representation requires a separate uniqueness or classification theorem. Keeping this boundary explicit is essential to the local conditions used in semistable modularity.
 
 Split and nonsplit reduction differ by one unramified quadratic sign. That sign exchanges the branches, inverts the multiplicative coordinate, twists both diagonal characters, and changes rational components without altering the discriminant exponent or inertia monodromy. Thus the pair $(q,\eta)$ is the complete local language of multiplicative degeneration: $q$ measures and uniformizes the degeneration, while $\eta$ records its descent. Through that pair, integral geometry, nonarchimedean analysis, local points, and Galois representations become one coherent mathematical object.
