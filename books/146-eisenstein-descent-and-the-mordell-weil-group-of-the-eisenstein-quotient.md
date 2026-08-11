@@ -8,10 +8,10 @@
    - [The three obstructions](#13-the-three-obstructions)
    - [The proof architecture](#14-the-proof-architecture)
 2. [The selected quotient and its Kummer modules](#2-the-selected-quotient-and-its-kummer-modules)
-   - [Rational support and the local idempotent](#21-rational-support-and-the-local-idempotent)
+   - [Rational support and the two integral towers](#21-rational-support-and-the-two-integral-towers)
    - [The selected Mordell--Weil completion](#22-the-selected-mordell--weil-completion)
    - [Finite-level Kummer maps](#23-finite-level-kummer-maps)
-   - [Why saturation is indispensable](#24-why-saturation-is-indispensable)
+   - [From generic saturation to ordinary-tower rigidity](#24-from-generic-saturation-to-ordinary-tower-rigidity)
 3. [Flat local conditions away from the level](#3-flat-local-conditions-away-from-the-level)
    - [The integral condition at a good prime](#31-the-integral-condition-at-a-good-prime)
    - [The coefficient prime](#32-the-coefficient-prime)
@@ -167,27 +167,46 @@ $$
 \qquad e=v_\ell(n_N). \tag{1.8}
 $$
 
-Then $\ell\ne N$. Let $A=A_{\mathfrak m}$ be the selected optimal Eisenstein quotient of $J$ and let $e_{\mathfrak m}$ be the idempotent selecting the complete local factor of $\mathbb T\otimes\mathbf Z_\ell$. To keep the notation readable, write $\varepsilon=e_{\mathfrak m}$. Over $U$, let $\mathcal A$ be the abelian scheme obtained from the Néron model of $A$, and put
+Then $\ell\ne N$. Let $A=A_{\mathfrak m}$ be the selected optimal
+Eisenstein quotient of $J$ and let $e_{\mathfrak m}$ be the idempotent
+selecting the complete local factor of
+$\mathbb T\otimes\mathbf Z_\ell$. To keep the notation readable, write
+$\varepsilon=e_{\mathfrak m}$. Over $U$, let $\mathcal J$ and $\mathcal A$
+be the abelian schemes obtained from the Néron models of $J$ and $A$, and
+put
 
 $$
+P_r=\varepsilon\mathcal J[\ell^r],
+\qquad
 G_r=\varepsilon\mathcal A[\ell^r]
 \qquad(r\geq1). \tag{1.9}
 $$
 
-The preceding book proves that $G_r$ is finite flat over $U$, that
+Each tower in (1.9) is independently a direct summand of the torsion of its
+ambient abelian scheme. Thus both are finite flat and have their own exact
+transition sequences; no exact sequence relating $\mathcal J$ and
+$\mathcal A$ is used for this construction. For the quotient tower used in
+descent, the preceding book proves that
 
 $$
 0\longrightarrow G_r\longrightarrow G_{r+s}
 \xrightarrow{\ell^r}G_s\longrightarrow0 \tag{1.10}
 $$
 
-is fppf exact, and that every $G_r$ has a filtration by
+is fppf exact and that every $G_r$ has a filtration by
 
 $$
 \underline{\mathbf Z/\ell\mathbf Z}
 \quad\text{and}\quad
 \mu_\ell. \tag{1.11}
 $$
+
+Book 145, Theorem 8.1 also proves that the quotient map identifies
+$P_r$ with $G_r$ over $U$. That integral comparison is not a formal
+consequence of the generic Tate-module comparison: it is the conclusion of
+the ordinary endpoint, determinant, and finite-flat rigidity argument
+recalled in Section 2.4. Descent itself will always take $G_r$, defined
+directly on $\mathcal A$, as its coefficient group.
 
 At $\ell=2$ the factors in (1.11) are labeled by their integral connectedness after closure, not by their identical generic characters.
 
@@ -210,14 +229,22 @@ Equation (1.7) supplies more than a group order. It fixes the orientation
 $[0]-[\infty]$, the specialization map, and the Hecke sign on components.
 The quotient $A$ may have a smaller or differently presented component
 group, so descent later uses its actual image $D_N(A)$. Nevertheless the
-calculation for $J$ is what normalizes the selected maximal ideal and the
-finite-flat tower from which $A$ is constructed.
+calculation for $J$ is what normalizes the selected maximal ideal. The
+quotient $A$ is constructed from rational support, and its finite-flat tower
+is then defined directly on $\mathcal A$.
 
 ### 1.3 The three obstructions
 
 Three possible shortcuts would make the proof false.
 
-First, the rational projector defining $A$ is not the integral idempotent $\varepsilon$. A coefficient field can have several primes above $\ell$. The rational quotient retains every conjugate prime, while $\varepsilon$ selects one completed factor. The saturation theorem is what lets us compare their integral Tate lattices exactly.
+First, the rational projector defining $A$ is not the integral idempotent
+$\varepsilon$. A coefficient field can have several primes above $\ell$.
+The rational quotient retains every conjugate prime, while $\varepsilon$
+selects one completed factor. Generic saturation compares the selected
+integral Tate lattices. It does not identify their finite-flat models.
+The latter conclusion is Book 145, Theorem 8.1 and uses the compatible
+ordinary endpoint sequences, equal endpoint heights, a determinant-unit
+argument, and finite-flat rigidity.
 
 Second, a filtration by the two groups in (1.11) is not a direct sum. Mixed extensions are measured, for odd $\ell$, by the level unit $N$:
 
@@ -238,10 +265,11 @@ not to relax the atomic calculation. It is to keep the strict condition
 positive and put the finite group $\pi_0(A(\mathbf R))$ into the relaxed
 error term. This separation is carried out in Sections 3.4 and 4.4.
 
-These obstructions are logically independent. Saturation concerns the
-coefficient lattice, nonsplitting concerns the internal extension structure
-of that lattice, and components concern local point groups. Solving one does
-not solve either of the others.
+These obstructions are logically independent. Generic saturation concerns
+the Tate lattice, ordinary-tower rigidity concerns its finite-flat model,
+nonsplitting concerns the internal extension structure of that model, and
+components concern local point groups. Solving one does not solve any of the
+others.
 
 ### 1.4 The proof architecture
 
@@ -259,11 +287,13 @@ G_r\text{ finite flat and admissible over }U\\
 \operatorname{Sel}^{\mathrm{str}}(G_r)=0\\
 \Downarrow\\
 \varepsilon A(\mathbf Q)/\ell^r
-\hookrightarrow\text{a quotient of the fixed component group at }N\\
-\Downarrow\\
+\hookrightarrow\text{quotients of fixed component groups}\\
+\Downarrow\ \text{Mordell--Weil finite generation and growth}\\
 \operatorname{rank}_{\mathbf Z_\ell}
 \varepsilon(A(\mathbf Q)\otimes\mathbf Z_\ell)=0\\
-\Downarrow\ \text{rational support and heights}\\
+\Downarrow\ \text{rational support}\\
+A(\mathbf Q)\otimes\mathbf Q=0\\
+\Downarrow\\
 A(\mathbf Q)\text{ is finite}.
 \end{array} \tag{1.13}
 $$
@@ -272,17 +302,22 @@ Only after finiteness is proved do we study the Hecke support of the remaining t
 
 The architecture is algebraic at every stage. The Eisenstein Fourier series
 enters through its integral congruence index and the level-operator sign; it
-is not used to evaluate an $L$-value. Heights enter only after rank has been
-forced to zero, through the general finite-generation theorem for abelian
-varieties. This division keeps the argument confined to the selected
+is not used to evaluate an $L$-value. The general height theorem supplies
+Mordell--Weil finite generation before the growth calculation is applied;
+Chapter 8 recalls that theorem in full after the descent bound has been
+constructed. Once rank is zero, the same finite generation turns torsion
+into finiteness. This division keeps the argument confined to the selected
 Eisenstein quotient and does not import a rank theorem for unrelated modular
 factors.
 
 ## 2. The selected quotient and its Kummer modules
 
-The local idempotent acts naturally on $\ell$-adic objects, while rational points form an ordinary finitely generated abelian group. This chapter constructs the exact bridge between them. The saturation theorem from the completed piece is the reason no finite-index error occurs.
+The local idempotent acts naturally on $\ell$-adic objects, while rational
+points form an ordinary finitely generated abelian group. This chapter
+separates the generic lattice comparison, the integral comparison of two
+finite-flat towers, and the Kummer construction on the quotient tower.
 
-### 2.1 Rational support and the local idempotent
+### 2.1 Rational support and the two integral towers
 
 The rational Hecke algebra is a product of number fields. Let $E\in\mathbb T_{\mathbf Q}$ be the sum of the primitive rational idempotents whose scalar extension has a prime belonging to $\mathfrak m$. The optimal quotient $A$ is defined by the connected kernel complementary to $E$. The completed idempotent satisfies
 
@@ -292,19 +327,31 @@ $$
 
 but in general $\varepsilon\ne E\otimes1$.
 
-The quotient map $\pi:J\to A$ has connected kernel. At the level of $\ell$-adic Tate modules, the saturation theorem gives
+The quotient map $\pi:J\to A$ has connected generic kernel. Book 145's
+generic saturation theorem gives
 
 $$
 \varepsilon T_\ell J\xrightarrow{\sim}\varepsilon T_\ell A. \tag{2.2}
 $$
 
-Reducing (2.2) modulo $\ell^r$ identifies the generic fiber of (1.9) with the selected direct factor of $A[\ell^r]$. The finite-flat comparison over $U$ strengthens this to
+Reducing (2.2) modulo $\ell^r$ identifies the generic fibers of the two
+independently defined groups in (1.9). It does not identify their finite-flat
+models over $U$. That stronger statement is Book 145, Theorem 8.1
+(ordinary-tower rigidity):
 
 $$
-G_r\xrightarrow{\sim}\varepsilon\mathcal A[\ell^r]. \tag{2.3}
+\pi_r:P_r\xrightarrow{\sim}G_r
+\qquad\text{over }U. \tag{2.3}
 $$
 
-We henceforth use (2.3) without changing notation.
+The distinction is structural. The exact sequences in each of the $P$- and
+$G$-towers come independently from multiplication on $\mathcal J$ and
+$\mathcal A$. Equation (2.2) is a statement about their generic Tate
+lattices. Equation (2.3) is an integral theorem about their Hopf orders and
+uses the ordinary divisible-tower structure. Neither statement is obtained
+from a smooth exact sequence
+$0\to\ker(\mathcal J\to\mathcal A)\to\mathcal J\to\mathcal A\to0$ over
+$U$, and no such sequence is assumed.
 
 To make the support construction explicit, write the rational Hecke algebra,
 after dividing by its annihilator on $J$, as
@@ -321,12 +368,12 @@ so $E$ retains precisely those $K_i$ for which at least one selected pair
 occurs. This proves $\varepsilon E=\varepsilon$ and explains why
 $\varepsilon$ need not equal the scalar extension of $E$.
 
-The connectedness of the optimal kernel has two roles. It makes $A$ an
-abelian variety, and it makes the image lattice primitive inside rational
-homology. Primitivity becomes saturation after completion. If two lattices
-inside the same rational space differ by nonzero $\ell$-power index, their
-reductions modulo $\ell^r$ differ at every sufficiently large level.
-Equation (2.2) asserts that this defect is absent on the selected factor.
+Connectedness of the optimal generic kernel makes $A$ an abelian variety and
+is used in Book 145 to prove primitivity of the selected homology lattice.
+After completion this yields (2.2). The conclusion remains a generic
+$\ell$-adic lattice statement: it supplies neither smoothness of the
+positive-dimensional integral kernel nor full faithfulness for finite-flat
+models.
 
 ### 2.2 The selected Mordell--Weil completion
 
@@ -393,7 +440,9 @@ $$
 \hookrightarrow H^1(\mathbf Q,A[\ell^r]). \tag{2.8}
 $$
 
-Every Hecke operator commutes with multiplication, so (2.8) is Hecke equivariant. Applying $\varepsilon$ and using (2.3) gives
+Every Hecke operator commutes with multiplication, so (2.8) is Hecke
+equivariant. Taking the $\varepsilon$-direct summand and using the defining
+identity $G_r=\varepsilon\mathcal A[\ell^r]$ gives
 
 $$
 \boxed{
@@ -412,6 +461,10 @@ $$
 
 Changing $Q$ changes (2.10) by a coboundary. Changing a lift of $\varepsilon$ modulo $\ell^r$ changes nothing because the action on $A[\ell^r]$ already factors through the finite Hecke quotient.
 
+This construction is intrinsic to $A$. It does not pass through $P_r$, the
+rational projector $E$, or an integral sequence for the kernel of
+$J\to A$.
+
 Applying the idempotent has not weakened injectivity. Indeed, an idempotent
 decomposes both source and target into direct summands, and the Hecke
 equivariance of (2.8) maps the selected source into the selected target. The
@@ -424,24 +477,52 @@ $\delta_{\mathfrak m,r}(P)$ to $\delta_{\mathfrak m,s}(P)$. This
 compatibility confirms that the varying Kummer classes measure successive
 quotients of the one module (2.6b).
 
-### 2.4 Why saturation is indispensable
+### 2.4 From generic saturation to ordinary-tower rigidity
 
-Suppose (2.2) were known only after tensoring with $\mathbf Q_\ell$. Then the integral lattices could differ by a finite index. At level $r$ the putative comparison could have a kernel or cokernel of bounded but nonzero order. Such an error is harmless for rational representations and fatal for descent: it can create or remove Kummer classes at exactly the prime being studied.
+Generic saturation alone cannot prove (2.3). Over $\mathbf Z_2$, the map
+$\underline{\mathbf Z/2\mathbf Z}\to\mu_2$ sending the nonzero section to
+$-1$ is an isomorphism on the generic fiber and compares groups of equal
+rank, but it is not an isomorphism on the special fiber. Thus even an
+integral generic Tate comparison gives no general full-faithfulness theorem
+for finite-flat models.
 
-The connected optimal kernel eliminates that error. Its selected Tate module is zero, not merely torsion:
+Book 145, Theorem 8.1 eliminates this vertical defect only after adding the
+structure of the two compatible ordinary towers. Over $\mathbf Z_\ell$,
+admissibility and endpoint recognition give functorial multiplicative--etale
+exact sequences for the $P$- and $G$-divisible groups. Quasi-isogeny and
+self-duality give equal heights at corresponding endpoints. With bases
+adapted to these sequences, the saturated middle Tate map is block upper
+triangular and
 
 $$
-\varepsilon T_\ell(\ker\pi)=0. \tag{2.11}
+\det(T_\ell\pi)
+=\det(T_\ell\pi^{\mathrm{mult}})
+ \det(T_\ell\pi^{\mathrm{et}}). \tag{2.11}
 $$
 
-Consequently (2.9) uses the actual finite-flat group $G_r$. No isogenous replacement, denominator cancellation, or unproved flat kernel lies between a rational point and its coefficient group.
+The determinant on the left is a unit. The endpoint determinants are
+integral square determinants of equal ranks, so their nonnegative valuations
+sum to zero and both are units. Finite-etale full faithfulness upgrades the
+etale endpoint map to an integral isomorphism; Cartier duality does the same
+for the multiplicative endpoint. The short five lemma for fppf sheaves then
+gives $P_r\simeq G_r$ over $\mathbf Z_\ell$. The comparison is already an
+isomorphism over $U[1/\ell]$, and faithful flatness of completion globalizes
+it to $U$.
 
-A rational isogeny between coefficient representations would give only
-finite kernels and cokernels on integral lattices. Such bounded errors can be
-harmless for some rank comparisons, but they are fatal for strict vanishing:
-an order-$\ell$ error is itself an atomic Selmer coefficient. Saturation
-removes the error before local conditions are defined, ensuring that the
-local Kummer image and the finite-flat local image refer to the same group.
+Before this endpoint argument, the comparison maps are only a
+denominator-bounded quasi-isogeny of towers: their possible kernel and
+cokernel defects are killed by a fixed power of $\ell$. Such a defect is
+unacceptable in a strict Selmer calculation. Theorem 8.1, rather than
+saturation by itself, is what removes it.
+
+The scope is equally important. The theorem identifies only the selected
+torsion direct factors. It does not say that the positive-dimensional kernel
+of $\mathcal J\to\mathcal A$ is a smooth abelian scheme. Moreover, the
+Kummer map (2.9) already uses the actual quotient group
+$G_r=\varepsilon\mathcal A[\ell^r]$ by definition. The ambient tower $P_r$
+is used only when an input from the Jacobian tower must be transported
+integrally, in which case (2.3), not generic saturation alone, is the
+justification.
 
 ## 3. Flat local conditions away from the level
 
@@ -473,6 +554,11 @@ $$
 $$
 
 Properness gives $\mathcal A_v(\mathcal O_v)=A(\mathbf Q_v)$. Applying the idempotent shows that the localization of (2.9) belongs to (3.1).
+
+This calculation is intrinsic to the quotient abelian scheme
+$\mathcal A_v$: it uses its own multiplication sequence and its own direct
+factor $G_{r,v}$. It does not use an integral abelian-kernel sequence for
+$\mathcal J\to\mathcal A$ or the ambient comparison (2.3).
 
 The proof of (3.2) contains all the geometry needed here. A class is
 represented by a smooth proper torsor $X$ under $\mathcal A_v$. Its special
@@ -649,6 +735,12 @@ rational component, but not every rational component must lift through the
 reduction map for an arbitrary quotient model. Defining $D_N(A)$ as the
 image makes (4.3) right exact by definition and gives every later snake-lemma
 map its precise target.
+
+Book 145, Theorem 8.1 is a comparison over
+$U=\operatorname{Spec}\mathbf Z[1/N]$ and therefore makes no assertion about
+the special fiber at $N$. In particular it does not transport the component
+sequence of $J$ to $A$. Every component object here is defined from the
+Néron model of $A$ itself.
 
 Hecke correspondences extend to the Néron model and preserve its identity
 component. They therefore act on the component quotient and on the image of
@@ -1013,14 +1105,14 @@ class group, and the constant calculation uses the fact that the ground
 field is $\mathbf Q$.  These hypotheses will be checked again when the
 atomic result is applied to $G_r$.
 
-We finish the atomic chapter by justifying the passage from local integrality
-to cohomology over $U$. For a finite flat group $H/U$, a global generic-fiber
-torsor whose localization extends over every $\mathbf Z_v$ with $v\ne N$
-extends uniquely over $U$. Normalize $U$ in the finite generic torsor. The
-local extensions make the normalization flat at every codimension-one point.
-Since $U$ is a regular curve, finite torsion-free modules are locally free,
-and normality extends the group action and torsor identity. Thus no
-ramification condition is lost between the Selmer definition and (5.1).
+We finish the atomic chapter by making the passage from local integrality to
+cohomology over $U$ explicit for the two atoms. No purity assertion for an
+arbitrary non-etale finite-flat torsor is needed. For $\mu_\ell$, flat Kummer
+theory gives the class-group sequence below, so the local valuation
+conditions are exactly the condition of belonging to $H^1(U,\mu_\ell)$. For
+the constant atom, the torsor is finite etale and the usual purity statement
+for covers of a regular curve identifies extension over $U$ with being
+unramified at every closed point of $U$.
 
 For $\mu_\ell$ the class-group sequence is
 
@@ -1158,6 +1250,12 @@ generic Jordan--Holder series would not determine the condition at the
 coefficient prime, and at $2$ it would not distinguish the two integral
 closures.
 
+The flag (6.4) is an actual finite-flat flag inside the quotient group
+$G_r$. Its local conditions are propagated there directly. No step in the
+devissage transports a generic Jordan--Holder flag through $P_r$, applies
+the rational projector $E$ integrally, or invokes a smooth kernel for
+$\mathcal J\to\mathcal A$.
+
 At the level prime, the identity component of the semistable Néron model has
 an exact sequence
 
@@ -1274,9 +1372,10 @@ $$
 $$
 
 No compatibility map between the targets for different $r$ is required for
-this inequality.  The exact tower (1.10) ensures that all sources use the
-same completed lattice, while the component group supplies a single numeric
-bound.
+this inequality. The sources are the successive quotients of the single
+module $M_{\mathfrak m}$ by (2.6b); the exact quotient tower (1.10) makes
+their Kummer coefficient maps compatible. The component groups supply one
+numeric bound. No comparison with the ambient tower $P_r$ enters.
 
 Pointwise, if a selected point class is trivial in both component quotients,
 then its local Kummer class is strict at every place. Theorem 6.2 makes its
@@ -1315,10 +1414,11 @@ $$
 \operatorname{rank}_{\mathbf Z_\ell}M_{\mathfrak m}=0. \tag{7.6}
 $$
 
-The finite generation used here will be supplied in Chapter 8.  There is no
-circularity: Chapters 3--7 establish the uniform bound for the abstract
-Kummer quotients, and height theory identifies the algebraic structure of
-the source afterward.
+Book 43's Mordell--Weil theorem already supplies the finite generation used
+here because $A$ is an abelian variety over $\mathbf Q$. Chapter 8 recalls
+the height proof in full. Thus the dependency is invoked before the growth
+formula is applied; Chapters 3--7 contribute the independent uniform Kummer
+bound.
 
 Equivalently, a hypothetical free direction would contain a primitive
 element $x$. Its class modulo $\ell^r$ would have exact order $\ell^r$ for
@@ -1366,11 +1466,17 @@ guarantees that at least one such $\lambda$ belongs to $\varepsilon$.
 Therefore rational rank cannot hide at a conjugate place omitted by the
 completed idempotent.
 
+This is a rational representation argument. It uses $E$ only to name the
+rational support and uses $\varepsilon$ only after scalar extension to the
+selected completion. It neither treats $E$ as an integral endomorphism nor
+uses saturation or a finite-flat model comparison.
+
 ## 8. Height theory and finiteness
 
-The descent has proved rational rank zero conditional only on finite
-generation.  Height theory supplies finite generation for every abelian
-quotient under consideration and turns rank zero into actual finiteness.
+The dependency order already supplied finite generation before the growth
+calculation in Section 7.3. This chapter records the height proof at textbook
+depth and then uses finite generation once more to turn zero rank into
+actual finiteness.
 
 ### 8.1 Why rank zero is not yet the final sentence
 
@@ -1380,9 +1486,10 @@ $A(\mathbf Q)$ is finite.  The missing input is the Mordell--Weil theorem,
 whose hypotheses are satisfied because $A$ is an abelian variety over the
 number field $\mathbf Q$.
 
-The order of the argument matters.  Finite-flat descent proves bounded
-Kummer quotients.  Heights prove finite generation.  Together they prove
-finiteness; neither assertion substitutes for the other.
+The logical order matters. The Mordell--Weil theorem is invoked before the
+growth formula, while finite-flat descent independently proves the bounded
+Kummer quotients. Zero rank follows from both inputs, and finite generation
+then turns the resulting torsion group into a finite group.
 
 ### 8.2 Mordell--Weil finite generation
 
@@ -1522,6 +1629,11 @@ also has finite rational points. This does not enlarge the chosen support;
 it records the isogeny invariance of the conclusion with the necessary
 lifting issue handled correctly.
 
+Poincare reducibility is used only in the generic category of abelian
+varieties over $\mathbf Q$. This argument neither lifts rational points
+through a positive-dimensional kernel nor asserts that such a kernel extends
+to a smooth abelian scheme over an integral base.
+
 ## 9. Hecke support of rational torsion
 
 Finiteness leaves a finite Hecke module $A(\mathbf Q)$.  We next determine
@@ -1558,6 +1670,11 @@ $\mathfrak n^jC_{\mathfrak n}=0$. Then
 $\mathfrak n^{j-1}C_{\mathfrak n}$ is nonzero and killed by
 $\mathfrak n$. Clearing a denominator not in $\mathfrak n$ realizes a
 nonzero such element in $C$. Since $p\in\mathfrak n$, it is killed by $p$.
+
+The Eichler--Shimura identity is an endomorphism identity on the
+Hecke-stable generic quotient and hence on its good-reduction torsion. Its
+use here does not require an exact integral sequence relating the quotient
+to $J$, nor an integral action of the rational projector $E$.
 
 Let $q\nmid Np$.  Good reduction and the Eichler--Shimura relation give, on
 prime-to-$q$ torsion,
@@ -1599,11 +1716,12 @@ missing generators of the faithful algebra are $T_p$ and $U_N$.
 ### 9.2 The missing coefficient prime
 
 Because $p\mid n_N$ will follow from the argument, ultimately $p\ne N$.
-For the moment suppose only that $p\ne N$, so the modular Jacobian has good
+For the moment suppose only that $p\ne N$, so the modular quotient has good
 reduction at $p$. Take the schematic closure $\mathcal V$ of the residual
-eigenspace $V$ in the $p$-torsion of the abelian scheme over $\mathbf Z_p$.
-It is finite flat of rank $p^{[k:\mathbf F_p]}$ and is stable under the Hecke
-operators.
+eigenspace $V$ in that quotient's own $p$-torsion over $\mathbf Z_p$. It is
+finite flat of rank $p^{[k:\mathbf F_p]}$ and is stable under the Hecke
+operators. This closure is formed inside the quotient; it is not transported
+from the Jacobian through a model comparison.
 
 Choose a finite-flat composition flag of $\mathcal V$. For odd $p$, every
 generic constituent has trivial Galois character. Endpoint recognition
@@ -1626,9 +1744,12 @@ $$
 T_p=F+V \tag{9.6}
 $$
 
-on every order-$p$ factor.  This is the special-fiber form of the integral
-Eichler--Shimura correspondence recorded in Book 145; it is stronger than
-merely substituting $F$ into the generic quadratic polynomial.  Thus
+The identity (9.6) descends as an identity of commuting endomorphisms on the
+Hecke-stable quotient. It is not deduced by extending the positive-dimensional
+kernel of a modular parametrization over $\mathbf Z_p$. On every order-$p$
+factor, it is the special-fiber form of the integral Eichler--Shimura
+correspondence recorded in Book 145 and is stronger than merely substituting
+$F$ into the generic quadratic polynomial. Thus
 $T_p-1$ acts as zero on all successive
 factors of $\mathcal V$. On the other hand $T_p$ acts on $V$ through the
 single scalar $\lambda(T_p)\in k$. A scalar whose difference from $1$ acts
@@ -1748,6 +1869,9 @@ may make the comparison with the usual integral Eisenstein form directly.
 At $2$, $3$, or the bad characteristic $N$, the saturated all-cusp lattice
 must be used.  A rational Fourier series with a forbidden constant
 denominator is not a modular form that can be subtracted from $f$.
+Here “saturated” refers to the integral all-cusp q-expansion lattice. It is
+unrelated to the Tate-lattice saturation in (2.2) and supplies no
+finite-flat model comparison.
 
 When $p\ne N$, Sections 9.1 and 9.2 give (9.8), so Lemma 9.2 gives
 $U_NP=P$. When $p=N$, Section 9.1 already gives (9.8) for every generator
@@ -2113,11 +2237,17 @@ $$
 
 and fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$.  Let
 $A=A_{\mathfrak m}$ be the selected optimal Eisenstein quotient, let
-$\varepsilon$ be the completed local idempotent, and let
-$G_r=\varepsilon\mathcal A[\ell^r]$ be its finite-flat selected torsion over
-$\mathbf Z[1/N]$.  Assume the saturated Tate comparison, exact finite-flat
-tower, and admissible constant--multiplicative filtrations established for
-this selected quotient.  Then:
+$\varepsilon$ be the completed local idempotent, and put
+$P_r=\varepsilon\mathcal J[\ell^r]$ and
+$G_r=\varepsilon\mathcal A[\ell^r]$ over $\mathbf Z[1/N]$. These are the
+ambient and quotient finite-flat selected torsion groups, respectively.
+Book 145 proves that the quotient tower is exact and has admissible
+constant--multiplicative filtrations. Its Theorem 8.1 proves the integral
+comparison $P_r\xrightarrow{\sim}G_r$ using the compatible ordinary endpoint
+sequences, determinant-unit control, and finite-flat rigidity, rather than
+the saturated generic Tate comparison alone. The descent below uses $G_r$
+directly; (2.3) is invoked only when an ambient Jacobian input is
+transported. Then:
 
 1. for every $r\geq1$,
    $$
@@ -2151,6 +2281,10 @@ this selected quotient.  Then:
 
 **Proof.**  Atomic strict vanishing is Propositions 5.1 and 5.2.  The
 admissible filtration and left-exact devissage give (12.2) by Theorem 6.2.
+All coefficient groups, Kummer maps, and local conditions in that argument
+are defined on $G_r$ itself; no ambient tower or integral
+positive-dimensional kernel is used.
+
 The strict--relaxed comparison at the level prime and, dyadically, at the
 real place gives (12.3). Its finite right side bounds all Kummer quotients,
 so finite generation and the growth formula force zero selected rank.
@@ -2167,7 +2301,7 @@ chosen. Therefore (12.3) is a genuinely uniform family of injections. This
 uniformity, rather than finite-level Selmer finiteness by itself, is what
 forces rank zero.
 
-The proof has four logically separate transitions:
+The proof has five logically separate transitions:
 
 $$
 \begin{array}{c|c|c}
@@ -2176,7 +2310,9 @@ $$
 &\operatorname{Sel}^{\mathrm{str}}(G_r)=0\\
 \text{strict to relaxed}&\text{local component sequences}
 &\text{uniform Kummer bound}\\
-\text{completion to rational rank}&\text{saturation and rational support}
+\text{bound to selected rank}&\text{finite generation and growth}
+&\operatorname{rank}_{\mathbf Z_\ell}M_{\mathfrak m}=0\\
+\text{selected to rational rank}&\text{rational support and faithful completion}
 &A(\mathbf Q)\otimes\mathbf Q=0\\
 \text{rank to cardinality}&\text{Mordell--Weil finite generation}
 &\#A(\mathbf Q)<\infty
@@ -2184,12 +2320,19 @@ $$
 $$
 
 None can be omitted. Atomic calculations do not see nonsplit extensions;
-strict vanishing does not include component classes; a single completion
-does not equal a rational projector; and rank zero does not imply finiteness
-for an arbitrary abelian group. The preceding chapters supply exactly the
-bridge at each transition.
+strict vanishing does not include component classes; bounded quotients force
+rank zero only for a finitely generated module; a single completion does not
+equal a rational projector; and rank zero does not imply finiteness for an
+arbitrary abelian group. The preceding chapters supply exactly the bridge at
+each transition.
 
-The final Hecke assertions begin only after the fourth transition. For each
+The ambient-to-quotient model comparison is logically separate from this
+table because descent starts with $G_r$. Whenever a Jacobian-tower input is
+transported to $G_r$, Book 145, Theorem 8.1 supplies the bridge through
+ordinary endpoint sequences, determinant-unit control, finite-etale
+full faithfulness, Cartier duality, and fppf exactness.
+
+The final Hecke assertions begin only after the fifth transition. For each
 maximal ideal in the support of the finite group, its socle supplies a
 rational residual eigenspace. Good-prime Frobenius, finite-flat closure at
 the coefficient prime, and the prime-level sign lemma show that its maximal
@@ -2228,11 +2371,18 @@ Every substantial input occurs earlier with the same hypotheses:
   their extensions, including the odd $[N]$-class and the dyadic sign and
   carry.
 - Book 145 constructs the selected optimal quotient, distinguishes the
-  rational projector from the completed idempotent, proves saturation of the
-  selected Tate lattice, constructs the exact finite-flat tower $G_r$, and
-  proves admissibility at every level, including the dyadic endpoints and
-  the connected--etale sequence; its integral Eichler--Shimura input gives
-  the good-prime identities used in Sections 9.1 and 9.2.
+  rational projector from the completed idempotent, and constructs
+  $P_r=\varepsilon\mathcal J[\ell^r]$ and
+  $G_r=\varepsilon\mathcal A[\ell^r]$ independently as exact finite-flat
+  direct-summand towers. Its generic saturation theorem identifies only the
+  selected Tate lattices. Admissibility then gives the ordinary endpoint
+  sequences, including the dyadic endpoint recognition. Theorem 8.1 uses
+  equal endpoint heights, determinant-unit control, finite-etale full
+  faithfulness, Cartier duality, and the fppf short five lemma to prove the
+  integral tower isomorphisms $P_r\simeq G_r$. It does not assert smoothness
+  of the positive-dimensional kernel. Book 145's integral
+  Eichler--Shimura input also gives the good-prime identities used in
+  Sections 9.1 and 9.2.
 
 The hypothesis matching is exact.  Book 32 provides the language of
 finite-flat-shaped local images, while the actual coefficient-prime models
@@ -2247,11 +2397,21 @@ arithmetic Frobenius and $U_N$ convention as (1.5). Books 144 and 145 work
 over $\mathbf Z[1/N]$ with $\ell\mid n_N$, hence $\ell\ne N$, and include
 the full dyadic closure data needed in Chapters 5 and 6.
 
+The exactness of the $G$-tower comes from multiplication on $\mathcal A$ and
+does not depend on comparing it with $P$. Theorem 8.1 compares the towers
+over $\mathbf Z[1/N]$ only, so Chapter 4 uses the Néron model and actual
+component image of $A$ rather than importing a component sequence from $J$.
+At good primes, both the Kummer calculation and the coefficient-prime
+schematic closure are formed inside $\mathcal A$ itself.
+
 The imported results are used without strengthening them. The cyclic
 component calculation for $J$ is not promoted to an equality for
 $\Phi_N(A)$. Admissible constituents are not promoted to a direct-sum
-decomposition. Saturation is asserted only on the selected completion.
-Finite generation is not promoted to rank zero without descent. Finally,
+decomposition. Generic saturation is asserted only for the selected Tate
+lattices and is never treated as full faithfulness for finite-flat models.
+The integral equality of the two towers is invoked only through Book 145,
+Theorem 8.1 with its ordinary endpoint and determinant hypotheses. Finite
+generation is not promoted to rank zero without descent. Finally,
 constituent-wise Eisenstein action is promoted only to a power annihilator,
 not to annihilation by $I$ itself.
 
@@ -2271,7 +2431,9 @@ F_q&\text{arithmetic Frobenius}&\text{inverted Hecke polynomial}\\
 v=\ell&\text{flat integral condition}&\text{lost connected classes}\\
 v=N&\text{identity-component strictness}&\text{lost component error}\\
 v=\infty,\ \ell=2&\text{positive condition}&\text{surviving sign class}\\
-\varepsilon&\text{completed local idempotent}&\text{unsaturated finite levels}
+\varepsilon&\text{completed local idempotent}
+&\text{wrong completed support or coefficient summand}\\
+P_r\to G_r&\text{Book 145, Theorem 8.1}&\text{unsupported model identification}
 \end{array} \tag{12.6}
 $$
 
