@@ -1,0 +1,219 @@
+# Second Review Checklist
+
+This ledger records the independent second pass over every completed textbook. It supplements
+`REVIEW_CHECKLIST.md`; a checked first-review box is not evidence that this second audit passed.
+
+A second reviewer must read the assigned book in full and inspect every source on which its proofs
+depend. The reviewer must repair the assigned manuscript when the repair is in scope, and may
+report `READY` only after confirming all of the following:
+
+- every result promised by the current `BOOKS.md` description is present and proved;
+- every substantial input is ordinary assumed background or is actually proved in a prior book;
+- every cited prior result has the hypotheses and normalization used here;
+- no result is lost, misread, reversed, or silently strengthened at a boundary between books;
+- no circular appeal is made to a later book or to the theorem currently being proved;
+- any permitted class-field-theory or Chebotarev input is proved somewhere in the dependency chain;
+- definitions, variance, signs, Frobenius conventions, twists, coefficient changes, and exceptional
+  cases agree across the relevant books;
+- difficult proofs receive enough explanation to be intelligible and defensible;
+- the full rubric in `REVIEW_CHECKLIST.md` also passes;
+- only the assigned manuscript was edited, and `git diff --check` passes.
+
+A box is checked only after an independent fresh-context reviewer reports `READY` and root commits
+any resulting corrections.
+
+## All-books second-review ledger
+
+- [ ] 001. Valuations, DVRs, and Completions
+- [ ] 002. Finite Extensions of Local Fields
+- [ ] 003. Ramification Theory
+- [ ] 004. Adeles and Ideles
+- [ ] 005. Local Class Field Theory
+- [ ] 006. Global Class Field Theory
+- [ ] 007. Analytic Foundations for Odlyzko–Poitou Bounds
+- [ ] 008. Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers
+- [ ] 009. Divisors, Riemann–Roch, and Duality on Relative Curves
+- [ ] 010. Normalization and Regular Models of Arithmetic Curves
+- [ ] 011. Blowups and Intersection Theory on Arithmetic Surfaces
+- [ ] 012. Semistable Curves, Dual Graphs, and Component Groups
+- [ ] 013. Faithfully Flat Descent in Algebraic Geometry
+- [ ] 014. Moduli Stacks for Modular and PEL Problems
+- [ ] 015. Coherent Cohomology in Proper Families
+- [ ] 016. Arithmetic Spectral Sequences and Derived Cohomology
+- [ ] 017. Cotangent Complexes, Perfect Complexes, and Determinant Lines
+- [ ] 018. Formal Schemes, GAGA, and Algebraization
+- [ ] 019. Finite Étale Covers and Fundamental Groups
+- [ ] 020. Étale Sheaves and Cohomology on Curves
+- [ ] 021. Derived Étale and ℓ-adic Cohomology
+- [ ] 022. Proper and Smooth Base Change
+- [ ] 023. Étale Duality and Trace Maps in Low Dimension
+- [ ] 024. Nearby Cycles and Monodromy in Dimensions One and Two
+- [ ] 025. Lefschetz Trace Formulas for Curves and Surfaces
+- [ ] 026. Weights, Hard Lefschetz, and Weil Bounds in Low Dimension
+- [ ] 027. Betti, de Rham, and Étale Comparison for Curves
+- [ ] 028. fppf Cohomology and Kummer Theory
+- [ ] 029. Continuous Cohomology of Profinite Groups
+- [ ] 030. Local Galois Cohomology
+- [ ] 031. Tate Local Duality
+- [ ] 032. Global Galois Cohomology and Selmer Groups
+- [ ] 033. Poitou–Tate Duality
+- [ ] 034. Rigid Analytic Curves and Formal Models
+- [ ] 035. Rigid Uniformization of Abelian Varieties
+- [ ] 036. Relative Picard Schemes and Jacobians
+- [ ] 037. Jacobians and (H^1) of Curves
+- [ ] 038. Abelian Schemes, Isogenies, and Polarizations
+- [ ] 039. Néron Models and Component Groups
+- [ ] 040. Semistable Abelian Varieties and Monodromy
+- [ ] 041. Integral Correspondences on Curves and Jacobians
+- [ ] 042. Descent and Weak Mordell–Weil for Abelian Varieties
+- [ ] 043. Heights and the Mordell–Weil Theorem
+- [ ] 044. Finite Locally Free Schemes and Algebras
+- [ ] 045. Affine Group Schemes and Hopf Algebras
+- [ ] 046. Finite Flat Commutative Group Schemes
+- [ ] 047. Cartier Duality
+- [ ] 048. Finite-Flat Galois Representations
+- [ ] 049. Elliptic Curves over DVRs
+- [ ] 050. Tate Curves and Multiplicative Reduction
+- [ ] 051. Torsion and Tate Modules of Elliptic Curves
+- [ ] 052. Algebraic de Rham Cohomology and Gauss–Manin Connections
+- [ ] 053. Divided Powers and Crystalline Sites
+- [ ] 054. Crystalline Cohomology of Curves and Abelian Schemes
+- [ ] 055. Syntomic Cohomology and Integral Period Maps
+- [ ] 056. Finite-Flat Group Schemes of Small Height
+- [ ] 057. Dieudonné Theory and Raynaud Full Faithfulness
+- [ ] 058. Fontaine–Laffaille Modules and Torsion Representations
+- [ ] 059. Integral Fontaine–Laffaille Equivalence and Base Change
+- [ ] 060. p-divisible Groups and Serre–Tate Theory
+- [ ] 061. Ramification and Discriminants of Finite-Flat Representations
+- [ ] 062. Artinian and Complete Local Coefficient Rings
+- [ ] 063. Pseudocompact Trace Algebras and Carayol Descent
+- [ ] 064. Deformation Functors of Representations
+- [ ] 065. Representability of Deformation Problems
+- [ ] 066. Local Deformation Conditions Away from (\ell)
+- [ ] 067. Finite-Flat Deformation Conditions at (\ell)
+- [ ] 068. Global Deformation Problems
+- [ ] 069. Complete Local Algebra for Deformation Theory
+- [ ] 070. Depth, Complete Intersections, and Fitting Ideals
+- [ ] 071. Numerical Criteria for (R=T)
+- [ ] 072. Taylor–Wiles Primes
+- [ ] 073. Taylor–Wiles Systems
+- [ ] 074. Patching Modules and Rings
+- [ ] 075. The Abstract (R=T) Argument
+- [ ] 076. Smooth Representations of (p)-adic Groups
+- [ ] 077. Representations of (GL_2(K))
+- [ ] 078. Parabolic Induction, Jacquet Modules, and Whittaker Models for GL₂
+- [ ] 079. Dihedral Supercuspidals, Types, and Newvectors for GL₂
+- [ ] 080. Weil–Deligne Representations and Local Constants
+- [ ] 081. Local Langlands in the Principal, Special, and Dihedral Cases
+- [ ] 082. Representations of Quaternion Division Algebras
+- [ ] 083. Characters and Dihedral Types on Quaternion Division Algebras
+- [ ] 084. Local Jacquet–Langlands
+- [ ] 085. Local Jacquet–Langlands for Special and Dihedral Packets
+- [ ] 086. Cyclic Base Change: Local Theory
+- [ ] 087. Quaternion Algebras over Number Fields
+- [ ] 088. Orders in Quaternion Algebras
+- [ ] 089. Automorphic Forms on Definite Quaternion Algebras
+- [ ] 090. Hecke Operators on Quaternionic Forms
+- [ ] 091. Hecke Algebras and Congruences
+- [ ] 092. Automorphic Representations of (GL_2)
+- [ ] 093. Automorphic Representations of (D^\times)
+- [ ] 094. Global Jacquet–Langlands
+- [ ] 095. Hecke Characters and Automorphic Induction from (GL_1)
+- [ ] 096. Cyclic Base Change for (GL_2)
+- [ ] 097. Solvable Base Change and Descent
+- [ ] 098. Schwartz–Bruhat Analysis and Tate’s Thesis
+- [ ] 099. Archimedean GL₂ and Discrete Series
+- [ ] 100. Hilbert-Space Spectral and Trace-Class Theory
+- [ ] 101. Sobolev Theory and Elliptic Regularity on Arithmetic Quotients
+- [ ] 102. Reduction Theory and the Cuspidal Spectrum of GL₂
+- [ ] 103. Global Constant Terms and Eisenstein Contributions for GL₂
+- [ ] 104. Global Whittaker Models and Rankin–Selberg Theory
+- [ ] 105. Analytic Theory of Automorphic Rankin–Selberg L-functions
+- [ ] 106. Strong Multiplicity One and Global Newforms for GL₂
+- [ ] 107. Algebraicity and Integral Structures of Weight-Two Packets
+- [ ] 108. Cuspidal Trace-Formula Kernels for Rank Two
+- [ ] 109. The Cuspidal Spectral Side of the GL₂ Trace Formula
+- [ ] 110. The Geometric Side of the GL₂ Trace Formula
+- [ ] 111. Orbital Integrals for GL₂ and Quaternion Algebras
+- [ ] 112. Transfer of Test Functions and the Rank-Two Fundamental Lemma
+- [ ] 113. Twisted Conjugacy and Geometric Trace Distributions
+- [ ] 114. Twisted Cuspidal Trace Kernels and Spectral Expansion
+- [ ] 115. Twisted Orbital Matching and the Cyclic Fundamental Lemma
+- [ ] 116. Generalized Elliptic Curves and Level Structures
+- [ ] 117. Compactified Modular Stacks and Coarse Modular Curves
+- [ ] 118. Deligne–Rapoport Integral Models of Modular Curves
+- [ ] 119. Integral Modular Forms and q-Expansion
+- [ ] 120. Modular and Shimura Curves
+- [ ] 121. Modular Jacobians, Néron Models, and Hecke Correspondences
+- [ ] 122. Hecke Correspondences on Curves and Jacobians
+- [ ] 123. Reductive Groups, Inner Forms, and Corestriction in Rank Two
+- [ ] 124. CM Abelian Varieties, Types, and Reflex Norms
+- [ ] 125. Complex Multiplication, Reciprocity, and Reduction
+- [ ] 126. Shimura Data and Canonical Models in the FLT Cases
+- [ ] 127. Quaternionic PEL Functors and Representability
+- [ ] 128. Uniformization, Components, and Hecke Descent for Shimura Curves
+- [ ] 129. Unitary Shimura Surfaces and the Modèles Étranges Construction
+- [ ] 130. Good Integral Models of Shimura Curves and Surfaces
+- [ ] 131. Semistable Models and Monodromy of Shimura Varieties
+- [ ] 132. Automorphic Decomposition of Shimura-Curve H¹
+- [ ] 133. Automorphic Decomposition of Unitary-Surface H²
+- [ ] 134. Galois Representations from Weight-Two Shimura Cohomology
+- [ ] 135. Galois Representations Attached to Weight-Two Automorphic Forms
+- [ ] 136. Local–Global Compatibility for Weight-Two Galois Representations
+- [ ] 137. Compatible Coefficient Systems and Purity
+- [ ] 138. Canonical Galois Lattices and Finite-Flat Quotients
+- [ ] 139. Modular Curves (X_0(N)) and (X_1(N))
+- [ ] 140. Jacobians of Modular Curves
+- [ ] 141. The Eisenstein Ideal
+- [ ] 142. Eisenstein Series, Congruences, and the Eisenstein Ideal
+- [ ] 143. Cuspidal Divisors and Specialization on Modular Jacobians
+- [ ] 144. Mazur–Raynaud Admissible Group Schemes
+- [ ] 145. Completed Hecke Pieces and Eisenstein p-divisible Groups
+- [ ] 146. Eisenstein Descent and the Mordell–Weil Group of the Eisenstein Quotient
+- [ ] 147. Eisenstein Cotangent Lattices and Formal Immersion
+- [ ] 148. Rational Isogenies of Prime Degree
+- [ ] 149. Genus-Two Curves, Jacobians, and Abel–Jacobi Geometry
+- [ ] 150. Mumford Representations and Exact Genus-Two Jacobian Arithmetic
+- [ ] 151. Explicit Two-Descent on Genus-Two Jacobians
+- [ ] 152. Mordell–Weil Sieves for Hyperelliptic Curves
+- [ ] 153. Semistable Isogeny Characters and Frey Residual Representations
+- [ ] 154. The Frey Curve and Fermat’s Last Theorem
+- [ ] 155. Minimal Modularity Lifting
+- [ ] 156. Nonminimal Modularity Lifting
+- [ ] 157. Integral Local Types and Type Lattices
+- [ ] 158. Ihara Theory and Saturated Degeneracy Maps on Shimura Curves
+- [ ] 159. Integral Level Change and Jacquet–Langlands Comparison
+- [ ] 160. Deep-Level Quaternionic Modules and Diamond Actions
+- [ ] 161. Hecke-Valued Galois Representations and Nonminimal Reciprocity
+- [ ] 162. Dickson Classification and Adequate Residual Image
+- [ ] 163. The Minimal Totally-Real Deformation–Hecke Problem
+- [ ] 164. Minimal Patching and R=T over Totally Real Fields
+- [ ] 165. One-Prime Type Complexes and Component Support
+- [ ] 166. One-Prime Nonminimal Patching and R=T
+- [ ] 167. Hilbert Irreducibility and Arithmetic Approximation
+- [ ] 168. Moret–Bailly’s Theorem
+- [ ] 169. Moduli Constructions for Potential Modularity
+- [ ] 170. Potential Modularity of Two-Dimensional Representations
+- [ ] 171. Galois and Solvable Refinements of Arithmetic Approximation
+- [ ] 172. Hilbert–Blumenthal Moduli and Two-Prime Level Covers
+- [ ] 173. Local Geometry of Hilbert–Blumenthal Moduli
+- [ ] 174. Auxiliary Dihedral Data and Residual Potential Modularity
+- [ ] 175. Compatible Systems of Galois Representations
+- [ ] 176. Brauer Induction and Descent of Automorphy
+- [ ] 177. Changing the Prime
+- [ ] 178. Discriminants of Galois Representations
+- [ ] 179. Odlyzko Bounds and Fontaine’s Argument
+- [ ] 180. Hardly Ramified (3)-adic Representations
+- [ ] 181. Schoof's Finite-Flat Category over ℤ[1/2]
+- [ ] 182. Local Conditions for Hardly-Ramified Minimal Deformations
+- [ ] 183. Supported Galois Cohomology and Selmer Calculations
+- [ ] 184. Relation Obstructions and Poitou–Tate Corrections
+- [ ] 185. Finite Image and the Balanced Minimal-Lift Argument
+- [ ] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
+- [ ] 187. Brauer Induction for Automorphy Families
+- [ ] 188. Brauer Characters and Effectivity of Compatible Families
+- [ ] 189. Compatible Systems over the Base Field
+- [ ] 190. The Fixed-Three Integral Local Theory
+- [ ] 191. Quintic Cyclotomic Units and Kummer Arithmetic
+- [ ] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
+
