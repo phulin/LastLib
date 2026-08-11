@@ -35,7 +35,7 @@ any resulting corrections.
 - [x] 009. Divisors, Riemann–Roch, and Duality on Relative Curves
 - [x] 010. Normalization and Regular Models of Arithmetic Curves
 - [x] 011. Blowups and Intersection Theory on Arithmetic Surfaces
-- [ ] 012. Semistable Curves, Dual Graphs, and Component Groups
+- [x] 012. Semistable Curves, Dual Graphs, and Component Groups
 - [x] 013. Faithfully Flat Descent in Algebraic Geometry
 - [x] 014. Moduli Stacks for Modular and PEL Problems
 - [x] 015. Coherent Cohomology in Proper Families

@@ -96,7 +96,7 @@ $$
 \end{array}
 $$
 
-The earlier theories of divisors, normalization, regular models, blowups, intersection pairings, descent, and coherent Picard representability supply the geometric foundation. Here they are assembled into a numerical and functorial account of semistable degeneration.
+The earlier theories of divisors, normalization, regular models, blowups, intersection pairings, descent, and coherent cohomology supply the geometric foundation. The reducible Picard construction needed here is proved below rather than inferred from the earlier smooth-curve case. These ingredients are then assembled into a numerical and functorial account of semistable degeneration.
 
 ### 1.2 Standing conventions
 
@@ -225,6 +225,8 @@ For unmarked curves of arithmetic genus at least two, stability makes the moduli
 
 Starting from a semistable curve, contract every rational component on which the pointed dualizing line has degree zero. These are precisely rational bridge components. The contraction exists by the relative projective construction associated with a sufficiently large power of the dualizing line. It is an isomorphism elsewhere and replaces each maximal bridge chain by one node.
 
+For completeness, the required semiampleness follows from the curve theory already available. On every positive-degree component, a sufficiently large power of the pointed dualizing line has degree greater than the dualizing degree after subtracting any length-two subscheme. The componentwise vanishing criterion then makes global sections generate and separate points there. On a degree-zero rational bridge, the restriction is trivial, and the node-gluing condition forces every global section to be constant along the whole maximal bridge chain. Thus the morphism defined by a large power separates precisely the points not joined through such a chain. Its image is a proper nodal curve, and the local conductor description shows that the two surviving end branches are glued to one node. Taking the relative Proj of the section algebra gives the contraction in families and commutes with base change. No general contraction theorem is being assumed.
+
 If a chain contains $m$ unit edges, its contraction produces a node of thickness $m$. More generally, contracting consecutive weighted edges adds their lengths:
 
 $$
@@ -233,7 +235,9 @@ $$
 
 This additivity can be checked by resolving the local surface singularity in reverse or by comparing the intersection matrix of the chain. It is the first appearance of the metric nature of thickness.
 
-For a smooth generic curve of genus at least two, whenever stable reduction exists over $R$, the stable model is unique. Any isomorphism on generic fibers extends because the relative dualizing line is ample and its pluricanonical algebra determines the model. Regular semistable models are not unique: blowing up a smooth point of the special fiber creates a tail and leaves the generic fiber unchanged, while subdividing nodes changes the presentation. Minimality or stability is what restores uniqueness.
+The local calculation is inductive. Contract the last rational bridge in a chain and choose parameters $x$ and $y$ on the two surviving end branches. At the two adjacent nodes the unit-thickness equations identify the two branch parameters through one factor of $\pi$ each; eliminating a coordinate on the intervening projective line replaces the two equations by $xy=\pi^2$. Repeating the elimination multiplies the right side by one further factor of $\pi$ at each unit edge. Starting with weighted equations replaces a block of $n_i$ factors by $\pi^{n_i}$, so the final equation is $xy=\pi^{n_1+\cdots+n_r}$. This proves (3.2), including the coefficient rather than only the shape of the contracted node.
+
+For a smooth generic curve of genus at least two, whenever stable reduction exists over $R$, the stable model is unique. Any isomorphism on generic fibers extends because the relative dualizing line is ample and its pluricanonical algebra determines the model. Regular nodal models are not unique: blowing up a smooth point of the special fiber creates a rational tail and leaves the generic fiber unchanged. Under our convention that semistability excludes rational tails, that blowup is no longer semistable. Likewise, blowing up a unit-thickness node produces a nonreduced total transform, not a subdivision by two reduced unit edges. Subdivision is legitimate when it resolves a pre-existing thick node, and stabilization then removes the resulting valence-two bridge chain. These distinctions prevent birational nonuniqueness from being confused with nonuniqueness inside the fixed semistable category.
 
 ## 4. Normalization and the conductor
 
@@ -705,7 +709,25 @@ This distinction persists in point counts. Over a finite field with $q$ elements
 
 ### 9.1 The degree-zero functor and its defect
 
-Let $\mathcal X/R$ be a proper flat nodal model with smooth geometrically connected generic fiber $C$. The relative Picard sheaf assigns to $T/R$ line bundles on $\mathcal X_T$ modulo pullback from $T$. Coherent representability and faithfully flat descent give a group object locally of finite presentation in the present projective curve setting.
+Let $f:\mathcal X\to\operatorname{Spec}R$ be a proper flat nodal model with smooth geometrically connected generic fiber $C$. The relative Picard sheaf assigns to $T/R$ line bundles on $\mathcal X_T$ modulo pullback from $T$. We now construct its representing group object in the present projective curve setting.
+
+That last assertion needs an argument because the earlier Picard theorem treated smooth curves with geometrically integral fibers, not reducible nodal fibers. We give the missing construction. First pass to a strict henselization. Choose smooth closed points on every geometric component of the special fiber and lift them to horizontal sections. One section rigidifies line bundles; the sum of sufficiently many such sections has positive degree on every component. The finite collection is defined over a finite étale stage, and summing its conjugates produces a descended horizontal divisor $H$ with the same positivity. A sufficiently positive multiple of $H$ is relatively ample, so the nodal model is projective.
+
+Fix a geometric multidegree $d=(d_v)$. After tensoring by a sufficiently large multiple of $H$, every line bundle of multidegree $d$ has vanishing first cohomology on every connected union of components and is generated by global sections. The componentwise vanishing criterion follows from duality: a section of the dual bundle would have negative degree on the maximal connected union on which it is nonzero, with one forced zero at every boundary branch. Semicontinuity makes one multiple work in a neighborhood of the special fiber.
+
+Effective Cartier divisors with the resulting Hilbert polynomial form the open Cartier locus $Q$ in the projective Hilbert scheme. Over $Q$, cohomology and base change make the complete linear system a projective bundle of fixed rank. On a reducible curve not every nonzero section is regular: a section may vanish identically on a component. Accordingly, the relation between two Cartier divisors is the open subspace $U$ of that projective bundle on which the universal section is a non-zero-divisor on every fiber. Its two maps $U\rightrightarrows Q$ send a section to its original and its zero divisor, and they present precisely linear equivalence.
+
+The open relation has local slices. At a geometric point, sections vanishing identically on a fixed component form a proper linear subspace. There are only finitely many components, so their complement is a nonempty open set of regular sections. Choose one such section. After trivializing the locally free bundle of sections, choose linear functionals whose common kernel is its line. Shrink the base so that the kernel remains a line and its universal section remains a non-zero-divisor on every component. The resulting line selects one Cartier divisor in every nearby complete linear system. These slices cover $Q$ fppf-locally. The relation gives unique transition isomorphisms on overlaps, and transitivity gives their cocycle. Effective faithfully flat descent glues the slices. Thus the fppf sheaf of rigidified line bundles of multidegree $d$ is represented by a scheme locally of finite presentation. The use of the open $U$, rather than the whole projective bundle, is exactly what permits nonseparatedness. Varying $d$ and descending from the strict henselization represents the whole relative Picard sheaf $P$.
+
+The same construction also proves smoothness. Across a square-zero extension with ideal $I$, automorphisms, deformations, and obstructions of a rigidified line bundle lie respectively in
+
+$$
+H^0(\mathcal X_s,I\mathcal O),\qquad
+H^1(\mathcal X_s,I\mathcal O),\qquad
+H^2(\mathcal X_s,I\mathcal O).
+$$
+
+Rigidification removes the first group and the last vanishes because the fibers are curves. Hence $P$ is smooth. This proves the representability and smoothness used below rather than extending the smooth-fiber theorem past its hypotheses.
 
 There are two degree-zero conditions. Total degree zero is the condition visible on the generic fiber. Multidegree zero requires degree zero on every geometric component of every special fiber. The latter defines the open identity component, whose special fiber is the generalized Jacobian in (8.2).
 
@@ -739,6 +761,14 @@ $$
 
 is smooth and separated and has the extension property for line bundles from smooth test spaces. It is the canonical smooth separated model of the generic Jacobian in this setting. Its identity component has special fiber (8.2), and its group of geometric connected components is finite.
 
+Here is the construction and the separation argument. Work first over a strict henselization and write the reduced special fiber as $\sum_vY_v$. Every vertical divisor $A=\sum_va_vY_v$ gives an $R$-point $\mathcal O(A)$ of $P$ whose generic value is the identity. Conversely, if a line bundle has trivial generic restriction, a generic trivialization is a rational section; regularity of $\mathcal X$ makes its divisor vertical, so the bundle is of this form. If two vertical divisors give the same line bundle, their difference is the divisor of a rational function with no horizontal zero or pole. Its restriction to the proper geometrically connected generic curve is constant, so the difference is a multiple of the principal full fiber. Consequently the special points of $E$ are the vertex lattice modulo constants, and their multidegrees are exactly $-\Delta C_0$. This is also the schematic closure: an infinitesimal deformation in that closure which is zero generically lies in the torsion of $R^1f_*\mathcal O_{\mathcal X}$, and that module is finite free by cohomology and base change. Hence no embedded infinitesimal directions have been omitted.
+
+Translation by these vertical line bundles identifies the multidegree charts of $P$ in each $\Delta C_0$-orbit. Choose representatives for the finitely many orbits in $\operatorname{Div}^0/\Delta C_0$ and glue their smooth Picard charts using these translations. The cocycle is addition of vertical divisors, so the gluing is effective; changing representatives gives the same quotient. This explicitly represents the fppf quotient $P/E$. It is smooth because the charts are smooth.
+
+It is separated by the valuative criterion. Over any dominating discrete valuation ring, lift two sections fppf-locally to $P$. If their quotient is generically trivial, a rational trivialization defines a vertical Cartier divisor on the base-changed curve, even when ramification has made its total space singular. The corresponding point lies in the base change of the schematic closure $E$, so the two sections agree in the quotient. Conversely, equality in the quotient is visibly produced by such a vertical Cartier divisor. The same argument gives the extension property. If $T/R$ is smooth, then $\mathcal X_T$ is regular; fppf-locally on $T$, a rational section of a generic line bundle has a Cartier closure and therefore extends the bundle. Two extensions differ vertically and become equal after quotienting. Thus every generic morphism $T_K\to\operatorname{Pic}^0(C)$ extends uniquely to $T\to P/E$.
+
+All constructions commute with unramified descent, so the quotient and its extension property descend from the strict henselization. For a nonregular thick model, resolve first; the generic Picard variety is unchanged, and Chapter 7 shows that compression of the exceptional chains records exactly the same quotient through the weighted cycle pairing.
+
 This statement is deliberately scoped. It identifies the model supplied by the Picard quotient and its special fiber; the general construction and uniqueness theory for smooth separated models of arbitrary abelian varieties belongs later. For Jacobians of regular semistable curves, the quotient description is enough to calculate every component.
 
 The component calculation can now be proved directly. Every total-degree-zero multidegree is an element of $\operatorname{Div}^0(\Gamma)$. Tensoring by a vertical line bundle changes it by $\Delta C_0$. Hence the components of the separated quotient are indexed by the critical group. Within multidegree zero, normalization and the conductor sequence give the connected generalized Jacobian. Thus the quotient separates into
@@ -748,8 +778,6 @@ $$
 \quad\text{and}\quad
 \text{a finite graph quotient}. \tag{9.3}
 $$
-
-Smoothness along the identity can be checked with square-zero extensions. The obstruction to lifting a line bundle lies in degree-two coherent cohomology, which vanishes for a curve; choices of lifts form a torsor under degree-one cohomology. The dimension is constant by the arithmetic-genus formula. Translation carries this smoothness to every component. Separatedness is precisely what quotienting by $E$ supplies.
 
 The regularity hypothesis enters at one exact point: it identifies every vertical component with a Cartier divisor and its multidegree with an integral Laplacian column. On a thick model those components may fail to be Cartier at the node. Resolving restores Cartier divisors; compressing the answer replaces the unit pairing by the length pairing.
 
@@ -829,7 +857,7 @@ Specialization to the component group is weaker than specialization to the whole
 
 ### 11.1 Why characters and cocharacters differ
 
-The torus $T$ in the identity component has character lattice $X^*(T)$. Its dual torus has character lattice $X_*(T)=\operatorname{Hom}(X^*(T),\mathbf Z)$. A principal polarization of the generic Jacobian relates these lattices, but degeneration inserts a finite-index map rather than an automatic integral isomorphism.
+The torus $T$ in the identity component has character lattice $X^*(T)$. Its dual lattice is $X_*(T)=\operatorname{Hom}(X^*(T),\mathbf Z)$. Smoothing supplies a finite-index map between them, not an automatic integral identification.
 
 For a semistable Jacobian the identifications are
 
@@ -839,13 +867,13 @@ X^*(T)\simeq H_1(\Gamma,\mathbf Z),
 X_*(T)\simeq H_1(\Gamma,\mathbf Z)^\vee. \tag{11.1}
 $$
 
-The polarization induces the monodromy homomorphism
+In this book the monodromy homomorphism is constructed directly from the smoothing parameters and the intersection pairing:
 
 $$
 \mu:X^*(T)\longrightarrow X_*(T). \tag{11.2}
 $$
 
-Its associated bilinear form is symmetric and positive definite. The finite failure of (11.2) to be an isomorphism is the component group. Identifying characters and cocharacters by choosing a rational basis would erase exactly that finite index.
+Its associated bilinear form is symmetric and positive definite. The graph theorem below proves, without assuming autoduality or a polarization theorem from a later book, that the finite failure of (11.2) to be an isomorphism is the component group. Identifying characters and cocharacters by choosing a rational basis would erase exactly that finite index.
 
 ### 11.2 The local contribution of a node
 
@@ -1085,21 +1113,30 @@ Finite maps and correspondences introduce further lattice images. Even if a map 
 
 ### 14.1 Maps of components and harmonicity
 
-Let $f:\mathcal X\to\mathcal Y$ be a finite flat morphism of semistable curves over $R$, carrying nodes to nodes and smooth points to smooth points after suitable semistable modification. It induces a map of geometric dual graphs. A component $Y_v$ maps to a component $Z_w$ with degree $d_v$. Along a branch $e$ above a branch $e'$ there is a local degree $m_e$.
+Let $f:\mathcal X\to\mathcal Y$ be a finite flat morphism of semistable curves over the same discrete valuation ring. To read it on dual graphs we impose the precise admissibility condition used in this chapter: nodes map to nodes, their inverse images contain no smooth points, and after strict henselization the map at a node $e$ above $e'$ has compatible coordinates
+
+$$
+\mathcal Y:\ uv=\pi^{n_{e'}},\qquad
+\mathcal X:\ xy=\pi^{n_e},\qquad
+f^*u=\alpha x^{m_e},\quad f^*v=\beta y^{m_e},
+\tag{14.1}
+$$
+
+where $\alpha,\beta$ are units and $m_e\geq1$. Exchanging the two branches merely reverses both orientations. Comparing the two smoothing equations gives
+
+$$
+n_{e'}=m_en_e. \tag{14.2}
+$$
+
+For a map between bases of ramification index $r$, the comparison is $m_en_e=rn_{e'}$; all formulas below are applied after putting both models over one base. A component $Y_v$ of the source maps to a component $Z_w$ of the target with degree $d_v$, and $m_e$ is the ramification degree at the corresponding branch.
 
 Flatness forces the harmonicity relation
 
 $$
-\sum_{\substack{e\ni v\\e\mapsto e'}}m_e=d_v, \tag{14.1}
+\sum_{\substack{e\ni v\\e\mapsto e'}}m_e=d_v, \tag{14.3}
 $$
 
-independent of the chosen branch $e'$ at $w$. This is conservation of degree at a vertex. For an admissible local map, in which branch parameters pull back to unit multiples of $m_e$-th powers, the two smoothing equations also give the metric compatibility
-
-$$
-m_e n_e=n_{e'}\,r_e, \tag{14.2}
-$$
-
-with $r_e$ the ramification index on the base parameter in the most general local diagram; over the same base with unchanged parameter, this reduces to the appropriate equality of branch degree and edge lengths. Rather than applying (14.2) without a local model, it is safer to derive lengths from the two smoothing equations.
+independent of the chosen target branch at $w$. Indeed, restrict the finite flat map of components to the fiber over that branch point. The sum of the ramification indices in the fiber equals the component degree. This is conservation of degree at a vertex. Over nonclosed residue fields the same formula is made on the geometric graph; a closed-point version also multiplies each summand by its residue degree.
 
 A finite generic map need not extend to a finite map between chosen models. Normalize the target in the source function field, resolve, and stabilize as needed. The induced graph map is then attached to that controlled extension, not to an arbitrary rational map of special fibers.
 
@@ -1110,24 +1147,71 @@ The finite map supplies pullback and norm on line bundles,
 $$
 f^*:\operatorname{Pic}(\mathcal Y)\to\operatorname{Pic}(\mathcal X),
 \qquad
-\operatorname{Nm}_f:\operatorname{Pic}(\mathcal X)\to\operatorname{Pic}(\mathcal Y), \tag{14.3}
+\operatorname{Nm}_f:\operatorname{Pic}(\mathcal X)\to\operatorname{Pic}(\mathcal Y), \tag{14.4}
 $$
 
 with
 
 $$
-\operatorname{Nm}_f\circ f^*=[d] \tag{14.4}
+\operatorname{Nm}_f\circ f^*=[d] \tag{14.5}
 $$
 
-when $f$ has constant degree $d$. On vertex divisors, pullback weights inverse images by component and residue degrees; pushforward multiplies by residue degrees and local degrees. Harmonicity ensures that Laplacian-equivalent divisors remain equivalent, so both maps descend to graph Jacobians and component groups.
-
-On cycle lattices there are corresponding maps $f^*$ and $f_*$. With the monodromy pairings they are adjoint:
+when $f$ has constant degree $d$. The norm used here is not an additional input: for finite locally free $f$ it is
 
 $$
-q_{\mathcal X}(f^*a,b)=q_{\mathcal Y}(a,f_*b). \tag{14.5}
+\operatorname{Nm}_f(L)=
+\det(f_*L)\otimes\det(f_*\mathcal O_{\mathcal X})^{-1}.
 $$
 
-The proof is a sum of local degrees over edges, using (14.1) and the local smoothing equations. Equation (14.5) is the graph shadow of adjunction between pullback and norm under the Jacobian polarization.
+After trivializing $L$, transition units act on the finite locally free algebra by multiplication; taking determinants proves multiplicativity, base-change compatibility, and (14.5). On vertex divisors, pullback weights inverse images by component and residue degrees; pushforward multiplies by residue degrees and local degrees. Harmonicity ensures that Laplacian-equivalent divisors remain equivalent, so both maps descend to graph Jacobians and component groups.
+
+The variance on cycle lattices must be stated carefully. Orient edges compatibly. Define
+
+$$
+f_*:H_1(\Gamma_{\mathcal X},\mathbf Z)
+\longrightarrow H_1(\Gamma_{\mathcal Y},\mathbf Z),
+\qquad e\longmapsto e', \tag{14.6}
+$$
+
+and
+
+$$
+f^*:H_1(\Gamma_{\mathcal Y},\mathbf Z)
+\longrightarrow H_1(\Gamma_{\mathcal X},\mathbf Z),
+\qquad e'\longmapsto\sum_{e\mapsto e'}m_e e. \tag{14.7}
+$$
+
+The first is a chain map and therefore preserves cycles. Harmonicity is exactly what makes the boundary of the second expression vanish when the input is a cycle. These names describe the graph maps: on torus character lattices, $f^*$ is induced contravariantly by the norm map, whereas $f_*$ is induced contravariantly by pullback of line bundles.
+
+With the monodromy pairings they are adjoint:
+
+$$
+q_{\mathcal X}(f^*a,b)=q_{\mathcal Y}(a,f_*b). \tag{14.8}
+$$
+
+Indeed, the contribution of an edge $e$ on the left is
+
+$$
+n_em_ea_{e'}b_e=n_{e'}a_{e'}b_e
+$$
+
+by (14.2), and grouping by $e'$ gives the right side. Moreover $f_*f^*=d$ on cycles: the sum of the $m_e$ above any geometric target edge is the generic degree, by harmonicity at either endpoint.
+
+Dualizing gives the actual maps on the monodromy cokernels. Pullback on component groups is induced by
+
+$$
+f_*^*:H_1(\Gamma_{\mathcal Y})^\vee
+\longrightarrow H_1(\Gamma_{\mathcal X})^\vee,
+$$
+
+and norm is induced by
+
+$$
+f^{*\vee}:H_1(\Gamma_{\mathcal X})^\vee
+\longrightarrow H_1(\Gamma_{\mathcal Y})^\vee.
+$$
+
+Adjunction says respectively that these maps carry $\mu_{\mathcal Y}H_1(\Gamma_{\mathcal Y})$ into $\mu_{\mathcal X}H_1(\Gamma_{\mathcal X})$ and conversely. Hence they descend, and norm after pullback is multiplication by $d$ on the component group as well as on the generic Jacobian. This proves the integral functoriality; no passage to a rational cycle space is involved.
 
 ### 14.3 Correspondences and component groups
 
@@ -1140,20 +1224,22 @@ $$
 and acts on the Jacobian by
 
 $$
-T=\beta_*\alpha^*. \tag{14.6}
+T=\beta_*\alpha^*. \tag{14.9}
 $$
 
 If both maps extend in a controlled way to semistable models, the same formula acts on normalized component Jacobians, graph homology, and the component group. The transpose correspondence
 
 $$
-T^t=\alpha_*\beta^* \tag{14.7}
+T^t=\alpha_*\beta^* \tag{14.10}
 $$
 
 is adjoint for the monodromy pairing.
 
 This yields a practical rule. Compute the action first on oriented edges with all local and residue degrees, verify that it preserves cycles, and then take the adjoint or cokernel. An action on vertices alone can miss loop cycles. An action on the rational cycle space can miss a nonsaturated image. An action computed after forgetting orientation can give the wrong sign at nonsplit nodes.
 
-If a generic correspondence does not extend finitely, its Jacobian endomorphism may still extend to the separated smooth model. What fails is the ability to read its special action directly from the original curve diagram. A common dominating semistable model restores that comparison.
+No extension hypothesis is needed for existence of the action on components. Pullback and norm define the generic homomorphism of Jacobians. Apply the extension property of Chapter 9 to the smooth separated model itself: the generic homomorphism extends uniquely, and uniqueness makes it a group homomorphism. It therefore acts on the identity component and on $\Phi$.
+
+The model hypothesis is needed only for the edge formula. If a generic correspondence does not extend finitely to the chosen models, normalize its graph and take a common regular domination. Pullback, pushforward, and the projection formula there compute the same extended homomorphism; uniqueness of extension proves independence of the domination. A direct formula on edges is asserted only when the finite part has the admissible local form (14.1). This distinction avoids smuggling in a semistable-reduction theorem for finite maps.
 
 ## 15. A calculation package for arithmetic curves
 
