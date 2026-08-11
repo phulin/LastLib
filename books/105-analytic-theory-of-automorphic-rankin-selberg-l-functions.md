@@ -252,8 +252,9 @@ assertion is true, but that all six use the same local factors.
 There are several tempting shortcuts that the proof must avoid. Continuation of one integral
 does not continue the normalized generator of every local zeta ideal if the chosen correction
 factor has zeros. A formal product of local functional equations is meaningless until all but
-finitely many gamma factors are shown to equal one and the remaining product is tied to a
-global Fourier identity. A pole visible in an Eisenstein series can disappear after pairing
+finitely many epsilon factors are shown to equal one and the infinite quotient of Euler tails
+is regularized through a global Fourier identity; the unramified gamma factors themselves are
+not one. A pole visible in an Eisenstein series can disappear after pairing
 with cusp forms, so its residue must be calculated rather than merely located. Finally,
 positivity of the Petersson norm does not automatically imply coefficientwise positivity of an
 Euler product; the latter requires a separate local identity.
@@ -298,16 +299,20 @@ $$
 \subset \mathbf C[X,X^{-1}].
 $$
 
-Because this Laurent polynomial ring is a principal ideal domain, there is a unique generator
-of the form $P(X)^{-1}$ with $P(0)=1$. We define
+Book 104 proves two facts that are both needed here: this fractional ideal contains a
+distinguished generator with no Laurent monomial in its numerator, and its reciprocal may be
+normalized to be a polynomial with constant term one. A general fractional ideal of a Laurent
+polynomial ring would not have that extra property merely because the ring is principal. Thus
+there is a unique generator of the form $P(X)^{-1}$ with $P(0)=1$. We define
 
 $$
 L_v(s,\pi_v\times\pi'_v)=P(q_v^{-s})^{-1}.
 \tag{2.2}
 $$
 
-The normalization $P(0)=1$ matters: multiplication by $cX^m$ does not change a fractional
-ideal, so without it the generator would be ambiguous.
+The normalization $P(0)=1$ matters: the units of the Laurent polynomial ring are the elements
+$cX^m$, so without the reciprocal-polynomial condition and the value at zero the generator
+would be ambiguous.
 
 Two consequences will be used repeatedly.
 
@@ -380,14 +385,15 @@ the numerator in (2.5) and is not the degree-four $L$-factor.
 
 ### 2.3 Compatibility with Weil–Deligne factors
 
-Whenever a local representation is described by its Frobenius-semisimple Weil–Deligne
-parameter $D(\pi_v)$, define
+Whenever an established local parameterization identifies a local representation with a
+Frobenius-semisimple Weil–Deligne parameter $D(\pi_v)$, define
 
 $$
 D_v=D(\pi_v)\otimes D(\pi'_v),
 $$
 
-where the tensor monodromy is $N\otimes1+1\otimes N'$. Compatibility means
+where the tensor monodromy is $N\otimes1+1\otimes N'$. Compatibility in that parameterized
+class means
 
 $$
 L_v(s,\pi_v\times\pi'_v)=L(s,D_v)
@@ -396,9 +402,12 @@ $$
 
 and the analogous equality for epsilon and gamma factors.
 
-The point of (2.8) is not to import continuation from a parameter: it is to prove that the
-analytic factor and the local-constant factor use the same normalization. The verification
-reduces to the local building blocks.
+The qualification is important. The analytic definition (2.2) applies to every generic local
+representation occurring globally. A Weil–Deligne comparison may be asserted only after a
+parameter has actually been attached and compatibility with Whittaker integrals has been
+proved. The point of (2.8) is not to import continuation from a parameter: it is to check, in
+the parameterized classes, that the analytic factor and the local-constant factor use the same
+normalization. The verification reduces to the local building blocks.
 
 For two unramified parameters, inertia and monodromy are trivial and Frobenius on the tensor
 product has eigenvalues $\alpha_i\beta_j$. Book 80's determinant definition gives (2.7).
@@ -417,24 +426,30 @@ with the $q^{-m/2}$ factor dictated by normalized induction. Thus passage from a
 principal series to its generic special constituent deletes precisely the factor removed by
 $\ker N$ in Book 80's definition.
 
-For a representation induced from a character of the Weil group of a finite extension,
-Book 80 proves
+For a dihedral local representation whose Whittaker construction corresponds to a character
+of the Weil group of a finite extension, Book 80 proves on the parameter side
 
 $$
 L_K(s,\operatorname{Ind}_{W_L}^{W_K}U)=L_L(s,U)
 \tag{2.10}
 $$
 
-and the epsilon induction formula with its lambda constant. The local Whittaker integral obeys
-the same induction identity: after the open-cell change of variables, the additive character
-becomes $\psi_K\circ\operatorname{Tr}_{L/K}$ and the discrepancy for the trivial character is
-exactly the same lambda constant. Rank-one Fourier uniqueness then identifies the two gamma
-factors. Direct sums, twists, and special blocks exhaust the parameter calculations needed in
-the present Rankin–Selberg theory; multiplicativity gives (2.8).
+and the epsilon induction formula with its lambda constant. On the Whittaker side, unfold the
+compactly induced coefficient over the finite set $W_L\backslash W_K$. The trace pairing
+changes the Fourier phase to $\psi_K\circ\operatorname{Tr}_{L/K}$. The summand belonging to
+the trivial character is the permutation representation
+$\operatorname{Ind}_{W_L}^{W_K}1$, whose Fourier determinant is exactly Book 80's lambda
+constant. The remaining summands are rank-one Tate transforms over $L$. Their Euler
+denominators give (2.10), and their Fourier scalars give the epsilon induction formula. Thus
+rank-one Fourier uniqueness identifies the two gamma factors rather than merely their
+conductor exponents. Direct sums, twists, and special blocks then give (2.8) in the principal,
+special, and dihedral classes just described.
 
 This argument also explains the hypotheses. One cannot compare to a parameter that has not
-been attached to the representation. The analytic definition (2.2) remains valid for every
-generic local representation, independently of such a description.
+been attached to the representation, and no such attachment will be smuggled into the global
+argument. The analytic definition (2.2), the analytic epsilon factor of Section 2.5, and its
+conductor exponent remain valid for every generic local representation, independently of a
+parameter description.
 
 It is useful to make the block comparison explicit. If
 
@@ -544,9 +559,57 @@ P(-s)M_f(s)=Q(-s-r)M_f(s+r).
 $$
 
 Rapid decrease at infinity and the finite exponent expansion at zero determine $M_f$ up to an
-entire factor; the recurrence extracts exactly the gamma functions in (2.12). Varying the
-$K_v$-finite vector makes the remaining entire factors generate the unit ideal in the ring of
-polynomials in $s$. This is the archimedean analogue of Proposition 2.1.
+entire factor; the recurrence extracts exactly the gamma functions in (2.12). For the global
+argument one needs a finite family, not merely this formal recurrence.
+
+**Proposition 2.2 (archimedean finite family).** The factor in (2.12) may be normalized so
+that every $K_v$-finite local zeta integral is $L_v(s)$ times an entire function. Among the
+polynomial-Gaussian data there are finitely many correction polynomials $P_j(s)$ and
+polynomials $A_j(s)$ satisfying
+
+$$
+\sum_jA_j(s)P_j(s)=1.
+\tag{2.12a}
+$$
+
+The same normalization makes the local functional equation agree with reflection
+$s\mapsto1-s$ and with the gamma factors of the tensor parameter in every principal- and
+discrete-series case.
+
+**Proof.** Over $\mathbf C$, the compact-weight calculation for an irreducible generic
+admissible representation leaves two character exponents in a normalized principal-series
+model. Over $\mathbf R$, the rank-one raising-and-lowering relations give either two
+principal-series exponents or a pair of one-sided discrete-series ladders; a finite-dimensional
+constituent is nongeneric. Thus a fixed compact type has only finitely many radial exponents.
+
+Choose in each angular type a monomial times the Gaussian $e^{-\pi\lVert x\rVert^2}$. Angular
+orthogonality removes every mismatched type. For a matched type, the substitution $u=cr^2$
+reduces the radial integral to
+
+$$
+\int_0^\infty e^{-u}u^{(s+\mu)/2}\,\frac{du}{u},
+$$
+
+or its complex analogue. These are precisely $\Gamma_{\mathbf R}(s+\mu)$ and
+$\Gamma_{\mathbf C}(s+\mu)$. Raising the Gaussian degree replaces a gamma factor by
+$\Gamma(z+n)=(z)_n\Gamma(z)$, so every correction is a polynomial. The radial exponent
+expansion shows that the poles common to all Mellin transforms are exactly the gamma poles in
+(2.12): for each exponent, a lowest angular Gaussian has a nonzero principal part at its first
+pole, and raising the degree tests the successive translated poles. After those common gamma
+factors are removed, a nonconstant common divisor of all corrections would vanish at some
+$s_0$. But compactly supported open-orbit Whittaker and row data can be chosen so that the
+regularized local trilinear integral at $s_0$ is nonzero, contradicting such a common zero.
+Thus the correction polynomials generate the unit ideal. Since $\mathbf C[s]$ is Noetherian,
+finitely many already do so, and Euclid's algorithm gives (2.12a). Tensoring the finite choices
+for the finitely many exponent pairs gives the asserted family.
+
+Fourier transform preserves polynomial-Gaussians and exchanges an angular type with its dual.
+The one-variable Fourier calculation is the rank-one gamma functional equation; taking products
+gives reflection about $1/2$. A real discrete-series parameter restricts to conjugate
+characters of $\mathbf C^\times$, and induction groups each conjugate pair into one
+$\Gamma_{\mathbf C}$ factor. Thus the same calculation gives the tensor-parameter factor in
+the stated cases. Gamma functions have order one and the selected corrections are polynomials,
+so this finite family has finite order. $\square$
 
 For example, a real quasicharacter
 
@@ -579,7 +642,9 @@ $$
 \tag{2.13}
 $$
 
-At a finite place, compatibility with Book 80 gives
+At a finite place, Book 104's shell calculation shows that the analytic epsilon factor is a
+nonzero constant times a monomial in $q_v^{-s}$. Centering that monomial at $1/2$ and removing
+the additive-character exponent defines a unique integer $a_v$ by
 
 $$
 \epsilon_v(s,\pi_v\times\pi'_v,\psi_v)
@@ -587,10 +652,25 @@ $$
 \tag{2.14}
 $$
 
-where $a_v$ is the conductor exponent of the four-dimensional tensor parameter. For unitary
-data, $|W_v|=1$.
+and this $a_v$ is independent of $\psi_v$. It is the **analytic Rankin–Selberg conductor
+exponent**. It is nonnegative. To see the sign without assuming a parameter, filter the
+Kirillov functions and the row Schwartz space by their least invariant lattices. Fourier
+transform reverses this filtration. In a principal-series tail the displacement is the sum of
+the nonnegative conductors of the four character products. At a reducibility point the generic
+special constituent deletes one Euler tail and the Fourier displacement acquires the
+nonnegative monodromy term. If the Jacquet module is zero, both Kirillov functions have compact
+core modulo the center; the displacement is the least nonnegative number of lattice steps
+needed for the Weyl transform to return that core to the original filtration. These are the
+three possibilities, since a nonzero Jacquet exponent and Frobenius reciprocity put an
+irreducible generic representation in a principal series, with the reducible generic boundary
+being special. Thus $a_v\geq0$ in every case.
 
-If $\psi_{v,c}(x)=\psi_v(cx)$, the determinant-scaling rule of Book 80 gives
+For unitary data, $|W_v|=1$. Indeed, applying the local functional equation twice gives the
+duality identity (2.16). At $s=1/2$, the dual local data are the complex-conjugate unitary data;
+the two central constants are therefore complex conjugates up to the determinant value at
+$-1$, which has modulus one. Their product is one, forcing $|W_v|=1$.
+
+If $\psi_{v,c}(x)=\psi_v(cx)$, covariance of the analytic local integral gives
 
 $$
 \epsilon_v(s,\pi_v\times\pi'_v,\psi_{v,c})
@@ -604,6 +684,17 @@ Indeed, the determinant of a tensor product $V\otimes V'$ is
 $(\det V)^{\dim V'}(\det V')^{\dim V}$, which gives the two squares. Formula (2.15) is a
 sensitive check: using arithmetic Frobenius or the inverse reciprocity convention would invert
 the central-character factor.
+
+In every parameterized class of Section 2.3, Book 80 gives exactly the same formulas:
+
+$$
+a_v=a\bigl(D(\pi_v)\otimes D(\pi'_v)\bigr),
+$$
+
+and $W_v$ is the corresponding Weil–Deligne root number. Thus (2.14) is general by its
+analytic definition and is compatible with the parameter conductor precisely where that
+comparison has been established; it does not presume a parameter for an arbitrary generic
+representation.
 
 Local duality gives
 
@@ -658,31 +749,19 @@ $\Lambda$; comparison of almost all local components naturally concerns $L^S$.
 ### 3.2 Absolute convergence in the initial half-plane
 
 We prove absolute convergence without assuming a pointwise bound for each Satake parameter.
-For the self-pair $\pi\times\widetilde\pi$, choose conjugate Whittaker data. The unfolded
-coefficients are nonnegative; their precise form is proved in Chapter 8. In the half-plane
-$\sigma>1$, the defining Eisenstein series and the global pairing converge absolutely, so the
-resulting nonnegative Dirichlet series converges.
+Book 104 proves more than formal factorization: absolute convergence of the unfolded adelic
+integral, followed by finite-stage Fubini, proves absolute convergence of its spherical Euler
+tail for $\sigma>1$. Choose all exceptional local data from a finite nonzero family and enlarge
+$S$ to contain them. Outside $S$ the local factors are exactly (2.7), so this proves absolute
+convergence of $L^S(s,\pi\times\pi')$ for every pair. The purely local unitary argument in
+Section 10.1 shows that every omitted finite factor is holomorphic on a neighborhood of
+$\operatorname{Re}(s)\geq1$. Restoring finitely many such factors therefore proves absolute
+convergence of the complete finite product. This reasoning uses neither temperedness nor a
+bound on an individual Satake root.
 
-For a cross pair, the unramified diagonal coefficient satisfies
-
-$$
-|h_m(A_v)h_m(B_v)|
-\leq\frac12\bigl(|h_m(A_v)|^2+|h_m(B_v)|^2\bigr).
-\tag{3.5}
-$$
-
-The scalar Euler factor is absolutely convergent at $2\sigma>2$. Applying Cauchy–Schwarz to
-the ideal coefficients, and then the convergent self-pair series for $\pi$ and $\pi'$, proves
-absolute convergence of the cross Dirichlet series for $\sigma>1$.
-
-To pass from the Dirichlet series to the Euler product, expand the logarithm in a sufficiently
-far right half-plane and dominate the prime-power traces by the two self-pairs. Monotone
-convergence then carries the bound down to every $\sigma>1$. Finitely many ramified factors are
-rational functions with constant term one and do not affect convergence away from their finite
-set of poles. We have proved:
-
-Here is the coefficient-level passage in more detail. At an unramified place the Cauchy identity
-used later in (8.2) writes the degree-$m$ coefficient of the cross factor as
+It remains to verify that the Euler expansion and the ideal-indexed Dirichlet series have the
+same absolute boundary. The coefficient calculation also prepares positivity. At an
+unramified place the Cauchy identity used later in (8.2) writes the degree-$m$ coefficient as
 
 $$
 c_v(m)=\sum_{\substack{\lambda\vdash m\\\ell(\lambda)\leq2}}
@@ -709,8 +788,8 @@ $$
 $$
 
 Summing with weight $(N\mathfrak a)^{-\sigma}$ and applying Cauchy–Schwarz proves convergence
-of the cross Dirichlet series directly from the two self series. For logarithms, the analogous
-inequality is applied to
+of the cross Dirichlet series directly from the two self series, whose convergence follows from
+the preceding global-integral argument. For logarithms, the analogous inequality is applied to
 $\operatorname{tr}(A_v^r)\operatorname{tr}(B_v^r)$ at every prime power. This avoids any
 unproved individual estimate for $\alpha_{i,v}$ or $\beta_{j,v}$.
 
@@ -780,18 +859,22 @@ L(s,(\pi\otimes|\det|^{iu})\times\pi')
 \tag{3.10}
 $$
 
-The identity follows place by place because every tensor Frobenius eigenvalue is multiplied by
-$q_v^{-iu}$, while the same translation holds for archimedean Mellin transforms.
+At an unramified finite place the identity multiplies every tensor Satake root by
+$q_v^{-iu}$. At a ramified place it follows from diagonal covariance of the entire local zeta
+ideal, without invoking a parameter, and the same translation holds for archimedean Mellin
+transforms.
 
-Duality sends the local factor to the reciprocal parameters:
+Duality sends the local zeta ideal to the contragredient zeta ideal. In a parameterized class
+this is the reciprocal-parameter identity
 
 $$
 L_v(s,\widetilde\pi_v\times\widetilde\pi'_v)
-=L_v(s,D_v^\vee).
+=L(s,D_v^\vee).
 \tag{3.11}
 $$
 
-No complex conjugation appears in (3.11) as an algebraic identity. For unitary
+No complex conjugation appears in (3.11) as an algebraic parameter identity, and the global
+argument uses only the contragredient zeta ideal when no parameter has been attached. For unitary
 representations, however, $\widetilde\pi_v$ is the complex-conjugate unitary representation,
 so the Satake multiset of the contragredient is the complex conjugate multiset. This is the
 source of positivity in Chapter 8.
@@ -994,15 +1077,34 @@ $$
 \tag{5.3}
 $$
 
-For pure tensors, apply (5.1) at every place in the common convergence region. The two sides
-of (5.3) differ by $\prod_v\gamma_v(s)$. Choose local data with nonzero integrals there. Hence
+There is no common half-plane in which the Euler products at $s$ and $1-s$ both converge.
+Accordingly, the next product is regularized in the finite-stage sense already proved in
+Book 104. Let $S$ contain the archimedean places and every exceptional finite place, and put
 
 $$
-\boxed{\prod_v\gamma_v(s,\pi_v\times\pi'_v,\psi_v)=1.}
+\prod_v^{\mathrm{reg}}\gamma_v(s)
+:=
+\left(\prod_{v\in S}\gamma_v(s)\right)
+\frac{L^S(1-s,\widetilde\pi\times\widetilde\pi')}
+{L^S(s,\pi\times\pi')}.
+\tag{5.4a}
+$$
+
+The quotient in (5.4a) means its canonical meromorphic continuation from Chapter 4, not a
+quotient of two simultaneously convergent raw products. For factorizable data, apply (5.1) at
+the places in $S$ and use the spherical local equation to absorb each place outside $S$ into
+the two Euler tails. Equation (5.3) then gives
+
+$$
+\boxed{\prod_v^{\mathrm{reg}}
+\gamma_v(s,\pi_v\times\pi'_v,\psi_v)=1.}
 \tag{5.4}
 $$
 
-Meromorphic continuation makes (5.4) an identity for all $s$.
+Enlarging $S$ adds one local gamma factor and removes exactly its two local Euler factors from
+the quotient, so the definition is independent of $S$. The finite Bézout family ensures that
+zeros of a chosen local integral cannot affect the identity. This is the precise content of a
+global product formula; no raw infinite product of gamma factors is asserted.
 
 The product is independent of the global additive character. Replacing $\psi$ by $\psi_c$
 with $c\in F^\times$ multiplies the local factors by (2.15). Their product is one because the
@@ -1025,9 +1127,16 @@ Q_f=N_{F/\mathbf Q}\mathfrak q(\pi\times\pi').
 \tag{5.6}
 $$
 
-The additive-conductor exponents cancel globally against the discriminant factors already
-built into the self-dual archimedean normalization. This is the global form of Book 80's trace
-formula $n(\psi\circ\operatorname{Tr})=en(\psi)+d$.
+For the standard global character obtained by composing the character of
+$\mathbf Q\backslash\mathbf A_{\mathbf Q}$ with $\operatorname{Tr}_{F/\mathbf Q}$, the local
+additive conductor exponent is the different exponent. Hence
+
+$$
+\prod_{v<\infty}q_v^{4n(\psi_v)}=|D_F|^4.
+$$
+
+This is the global form of Book 80's trace formula
+$n(\psi\circ\operatorname{Tr})=en(\psi)+d$.
 
 After fixing the gamma factors as in (2.12), the product of all monomial powers has the form
 
@@ -1037,20 +1146,28 @@ $$
 \tag{5.7}
 $$
 
-where $Q>0$. With conductor powers placed wholly in the finite epsilon factors, $Q=Q_f$ times
-the fixed discriminant normalization determined by $F$ and the chosen $\Gamma_{\mathbf R}$ and
-$\Gamma_{\mathbf C}$ conventions.
+where, with the gamma factors (2.11),
 
-The conductor in (5.5) is the conductor of the tensor parameter, not the product of the two
-individual conductor ideals. There is no degree-only formula for it, because equal wild breaks
-can cancel in a tensor product. The definition remains exact:
+$$
+\boxed{Q(\pi\times\pi')=|D_F|^4Q_f>0.}
+\tag{5.7a}
+$$
+
+For a different global additive character the local phases and exponents change by (2.15),
+but every global character differs by a scaling in $F^\times$; the product formula restores
+the same $Q$ and $W$.
+
+The conductor in (5.5) is defined analytically by (2.14), not as the product of the two
+individual conductor ideals. In every parameterized class of Section 2.3 it is the conductor
+of the tensor parameter:
 
 $$
 a_v=a\bigl(D(\pi_v)\otimes D(\pi'_v)\bigr),
 \tag{5.8}
 $$
 
-with the monodromy correction included. For instance, two unramified parameters give $a_v=0$.
+with the monodromy correction included. There is no degree-only formula, because equal wild
+breaks can cancel in a tensor product. For instance, two unramified parameters give $a_v=0$.
 If $D(\pi_v)=\operatorname{Sp}_2(\chi)$ with $\chi$ unramified and $D(\pi'_v)=\mu$ is an
 unramified character, then the tensor remains a length-two special block and $a_v=1$. If both
 are unramified length-two special blocks, (2.10c) gives
@@ -1073,7 +1190,7 @@ epsilon factor is not. Replacing $\psi_v$ by a scaled character changes the expo
 $n(\psi_v)$ and changes the phase through the determinant. For a global scaling, the product
 formula and triviality of automorphic central characters on $F^\times$ cancel both changes.
 Trace-compatible local characters account for the different of $F_v/\mathbf Q_p$; collecting
-those differents is exactly the fixed discriminant term mentioned after (5.7).
+those differents gives exactly $|D_F|^4$ in (5.7a).
 
 Local duality and unitarity imply $|W_v|=1$ at every place. Only finitely many finite factors
 are nontrivial, so
@@ -1106,8 +1223,10 @@ W(\widetilde\pi\times\widetilde\pi')=1
 $$
 
 and equality of the two conductors. If the pair is self-dual, the root number is real and hence
-$\pm1$, provided the self-duality has determinant one in the same-character normalization. In
-general it is a complex number on the unit circle and should not be called a sign.
+$\pm1$: in that case the second application has the same root number, so (5.10) says
+$W^2=1$. Locally, using the same additive character can insert a determinant at $-1$, but the
+product of those determinant values is one because $-1\in F^\times$. In general the root
+number is a complex number on the unit circle and should not be called a sign.
 
 ### 5.5 Consistency checks
 
@@ -1120,10 +1239,11 @@ the two squares of the central characters in (2.15), exactly the determinant of 
 $2\times2$ tensor product. Finally, multiplying those scaling laws for $c\in F^\times$ gives
 one, which is necessary for (5.4).
 
-There is also a pole check. If $\pi'=\widetilde\pi\otimes|\det|^{iu}$, reflection in (5.9)
-sends $1-iu$ to $iu$ for the dual twisted pair; after translating the dual pair back by
-(3.10), this is the lower pole $-iu$ of the original function. Thus the polar set (4.7) is
-stable under the functional equation.
+There is also a pole check. If $\pi'=\widetilde\pi\otimes|\det|^{iu}$, the dual pair has twist
+parameter $-u$ and hence poles at $iu$ and $1+iu$. Reflection sends the original poles
+$1-iu$ and $-iu$ to these two dual poles, respectively. Thus the polar set (4.7) is stable
+under the functional equation without identifying a pole of the dual function with a point of
+the original function.
 
 ## 6. Finite order and Mellin control
 
@@ -1216,27 +1336,30 @@ terms occur, which is another explanation for the simplicity of the poles.
 
 ### 6.3 Finite order
 
-Apply Lemma 6.1 to the norm-coordinate form of every global integral in (3.8). The two powers
+Apply Lemma 6.1 to the norm-coordinate form of the global integrals in (3.8). The two powers
 in (6.3) are precisely the zero-vector terms in the Poisson summation used to continue the
 Eisenstein series. They yield the possible poles at $-iu$ and $1-iu$. All other terms are
 rapid at both ends because the cusp forms are rapidly decreasing and the Schwartz function is
-Schwartz.
+Schwartz. This proves rapid decay on each fixed strip for arbitrary smooth data.
 
 For finite order one needs more than stripwise rapid decrease, because the constants in a strip
-estimate could grow too quickly as the strip moves. Finite type at infinity provides the
-missing control. Each archimedean Whittaker component satisfies a regular-singular differential
+estimate could grow too quickly as the strip moves. Here we use the freedom in the Bézout
+family: choose at infinity the polynomial-Gaussian data of Proposition 2.2, and choose compact
+finite-place data in Proposition 2.1. These choices still recover the canonical function.
+Each selected archimedean Whittaker component satisfies a regular-singular differential
 equation with polynomial coefficients and decays exponentially in the positive chamber. After
 Poisson summation, the small-height part of the **global** kernel is the Weyl reflection of a
-positive-height kernel plus the explicit residual powers. Thus the regularized global
-norm-coordinate function, rather than an individual local Whittaker function, satisfies an
-estimate of the form
+positive-height kernel plus the explicit residual powers. Thus, for this finite detecting
+family, the regularized global norm-coordinate functions satisfy estimates of the form
 
 $$
 |D^jH_{\mathrm{reg}}(y)|\leq C_j(y^C+y^{-C})e^{-c(y^\eta+y^{-\eta})}
 \tag{6.7}
 $$
 
-for suitable $c,C,\eta>0$. At several archimedean places the estimate is applied in each
+for suitable $c,C,\eta>0$ depending on the chosen member. The exponential term follows from
+the polynomial-Gaussian and $K$-finite Whittaker asymptotics; it is not being claimed for an
+arbitrary Schwartz function. At several archimedean places the estimate is applied in each
 radial coordinate before the compact norm-one variables are integrated out. Finite coordinates
 contribute only finite geometric series or rational functions in $q_v^{-s}$.
 
@@ -1263,8 +1386,8 @@ $$
 \tag{6.9}
 $$
 
-Thus $\Lambda^*$ is entire of finite order, in fact of order at most one in the standard
-extended sense allowing the factor $\log |s|$. This is exactly the amount of growth control
+Thus $\Lambda^*$ is entire of finite order, in fact of order at most one: the definition of
+order allows a bound $\log M(r)=O(r\log r)$. This is exactly the amount of growth control
 needed for Phragmén–Lindelöf arguments. No assertion of boundedness follows merely from
 entireness.
 
@@ -1547,11 +1670,19 @@ $$
 Thus the pole of the self-convolution is not the result of cancellation among local terms. Its
 residue is detected by a positive global norm.
 
-Since the exceptional local correction factors can be chosen nonzero at $s=1$, the canonical
-residue differs from (8.6) by a nonzero explicit local scalar. With the standard positive
-unramified normalizations and paired ramified data, that scalar is positive. The sign of a
-residue for arbitrarily rescaled test vectors is irrelevant; positivity belongs to the
-canonical self-pairing normalization.
+This also gives positivity for the canonical incomplete product without making an unproved
+sign choice at ramified test vectors. Take $S$ to contain the ramified and archimedean places.
+Theorem 4.2 and Proposition 10.1 show that $L^S(s,\pi\times\widetilde\pi)$ has a nonzero simple
+residue $c$ at one. For real $\sigma>1$, (8.4) and (8.5) give
+$L^S(\sigma)>0$, so
+
+$$
+c=\lim_{\sigma\to1^+}(\sigma-1)L^S(\sigma)\geq0.
+$$
+
+The residue is nonzero, hence $c>0$. Thus the positive Petersson residue detects the pole, and
+coefficient positivity fixes the sign of the canonical residue; no arbitrary local rescaling
+enters the conclusion.
 
 ### 8.4 Consequences without a Tauberian theorem
 
@@ -1727,55 +1858,76 @@ removing that pole by a formal cancellation among nonnegative coefficients.
 To compare incomplete products, one must know that an omitted finite local factor is finite
 and nonzero at $s=1$. This is where unitarity enters.
 
-An irreducible generic unitary representation of $\mathrm{GL}_2(K)$ is either tempered or a
-complementary principal series whose two real inducing exponents lie strictly between
-$-1/2$ and $1/2$. Therefore every Frobenius root $\rho$ that can occur in a standard local
-factor has
+**Lemma 10.1 (unitary local regularity).** If $\sigma$ and $\tau$ are irreducible generic
+unitary representations of $\mathrm{GL}_2(K)$, then every local Rankin–Selberg integral is
+absolutely convergent and holomorphic in a neighborhood of
+$\operatorname{Re}(s)\geq1$. Consequently
 
 $$
-|\rho|<q^{1/2}
-$$
-
-after the unitary central twist is removed. A tensor root $\rho\rho'$ consequently satisfies
-
-$$
-|\rho\rho'|<q.
+0<|L(s,\sigma\times\tau)|<\infty
+\qquad(\operatorname{Re}(s)\geq1).
 \tag{10.1}
 $$
 
-Tempered and special endpoints satisfy an even stronger nonvanishing statement; monodromy can
-only remove denominator factors. Thus
+**Proof strategy.** We first locate the possible exponents from unitarity, then insert their
+strict inequalities in the Iwasawa shell expansion. This proves regularity directly for the
+analytic zeta-ideal generator and does not assume a Weil–Deligne parameter.
+
+**Proof.** If the normalized Jacquet module is zero, the representation is supercuspidal and
+its Kirillov functions are compactly supported in $K^\times$ modulo the unitary center. If the
+Jacquet module is nonzero, a character quotient and normalized Frobenius reciprocity place the
+irreducible representation in a principal series. The rank-one intertwining calculation then
+gives an irreducible principal series, a generic special constituent at a reducibility point,
+or a complementary series
 
 $$
-1-\rho\rho'q^{-1}\ne0,
-$$
-
-and
-
-$$
-0<|L_v(1,\pi_v\times\pi'_v)|<\infty.
+I(\xi|\cdot|^r,\xi'|\cdot|^{-r}),
+\qquad |r|<\frac12,
 \tag{10.2}
 $$
 
-The strict complementary-series inequality is essential. Equality would place a reciprocal
-root exactly at $q$ and could create a local pole at one.
+after a unitary twist. For completeness, the strict bound follows from the invariant Hermitian
+form. Choose compact-type vectors whose pairing detects the Jacquet quotient with exponent
+$|\cdot|^r$. Along $a(\varpi^n)$ their normalized matrix coefficient has a nonzero leading
+term $c q^{n(r-1/2)}$; this is obtained directly by splitting the compact-picture integral into
+the two Bruhat cells. A matrix coefficient of a unitary representation is bounded by the
+product of the two vector norms, so $r\leq1/2$. Applying the same argument to the opposite
+Jacquet exponent gives $r\geq-1/2$. At equality the rank-one standard intertwiner has a zero or
+pole, and its kernel-image calculation gives the reducible principal-series exact sequence;
+the infinite-dimensional generic constituent is special. Thus an irreducible complementary
+principal series has the strict inequality in (10.2), and the list is exhaustive.
 
-Let us justify that no local class has been missed. For a tempered principal series, the
-unramified absolute values of the inducing characters are one, so every surviving tensor root
-has modulus one. For a complementary series the inducing characters have the form
-$\xi|\cdot|^r$ and $\xi'|\cdot|^{-r}$ with $|r|<1/2$; pairing with a second complementary
-series of exponent $r'$ gives real exponents among $\pm r\pm r'$, all strictly between $-1$
-and $1$. A special representation has a centered length-two parameter; its only Euler root is
-shifted inward by $q^{-1/2}$, while monodromy deletes the other root. A unitary supercuspidal
-parameter has no inertia-fixed vector unless an interaction in the tensor product creates one.
-Any such invariant summand is an unramified unitary character and contributes a root of modulus
-one. These cases prove (10.1) for every generic unitary local component.
+In the Kirillov model a principal-series Whittaker function, for sufficiently deep positive
+valuation, is a finite sum of terms
 
-Nonvanishing is as important as finiteness. Each local factor is the reciprocal of a polynomial
-with constant term one. The preceding root bound shows that none of its linear factors vanishes
-at $X=q^{-1}$. Since a reciprocal polynomial has no numerator, it cannot vanish there either.
-At infinity, the unitary shifts in (2.12) avoid the nonpositive integers when $s=1$, so the
-gamma functions are likewise finite and nonzero. This completes the local input to the
+$$
+c\,v(y)^m\chi(y)|y|^{1/2+r},
+$$
+
+with $|r|<1/2$; a special representation has one endpoint tail, a tempered representation has
+$\operatorname{Re}(r)=0$, and a supercuspidal has no tail. Insert two such expansions in the
+Iwasawa formula (8.2) of Book 104. The root-coordinate shell has absolute size bounded by a
+polynomial in $v(y)$ times
+
+$$
+|y|^{\operatorname{Re}(s)+r+r'}.
+$$
+
+The worst exponent satisfies $r+r'>-1$, so the shell sum converges in a neighborhood of every
+point with $\operatorname{Re}(s)\geq1$. The scalar-coordinate integral is controlled at one
+end by the Schwartz function and at the other by its compact support together with the unitary
+central characters. The compact variable contributes only a finite sum at fixed level.
+Therefore every local integral is holomorphic there.
+
+Proposition 2.1 writes the canonical factor as a finite Laurent-polynomial combination of
+these integrals, so it too is holomorphic. It cannot vanish: by definition it is the reciprocal
+of a polynomial with constant term one and has no numerator. This proves (10.1). $\square$
+
+At an archimedean place the same strict unitary classification gives principal exponents with
+real parts in $(-1/2,1/2)$, tempered or discrete exponents on the boundary-compatible ladders,
+and no generic finite-dimensional constituent. Hence every argument $1+\mu_{v,k}$ in (2.12)
+avoids the nonpositive integers. Gamma functions have neither zeros nor any other poles, so the
+archimedean factors are finite and nonzero at one. This completes the local input to the
 deletion argument.
 
 ### 10.2 Stability of pole order
@@ -1789,7 +1941,7 @@ $$
 $$
 
 Every factor outside $L^S$ is meromorphic. At $s=1$, the archimedean gamma factors are finite
-and nonzero for unitary cuspidal data, and (10.2) handles the finite factors. Hence
+and nonzero for unitary cuspidal data, and (10.1) handles the finite factors. Hence
 
 $$
 \operatorname{ord}_{s=1}L^S(s,\pi\times\pi')
@@ -1916,13 +2068,16 @@ $$
 For $s\to1^+$, the total difference of the logarithms contributed by $T$ is bounded by
 
 $$
-C\sum_{v\in T}\sum_{r\geq1}q_v^{-rs}
+C\sum_{v\in T}\sum_{r\geq1}\frac{q_v^{-rs}}r
 \leq C'\sum_{v\in T}q_v^{-1}<\infty.
 \tag{11.6}
 $$
 
-It cannot create or remove the $-\log(s-1)$ singularity associated with a simple pole.
-Therefore the pole-comparison principle remains valid under (11.5).
+The series converges absolutely and uniformly for real $s\geq1$, so exponentiating shows that
+the ratio of the two Euler products contributed by $T$ stays bounded above and bounded away
+from zero as $s\to1^+$. It therefore cannot create or remove the
+$-\log(s-1)$ singularity associated with a simple pole. The pole-comparison principle remains
+valid under (11.5).
 
 The convergence condition is stronger than density zero. Better density thresholds require
 uniform bounds toward temperedness and finer prime sums; they do not follow from the fixed-data
@@ -2059,7 +2214,11 @@ it obtained them from a finite family of those integrals.
 Book 80 supplies the nonarchimedean normalization ledger: geometric Frobenius, tensor
 monodromy, $(\ker N)^I$, conductor exponents, self-dual measures, additive-character scaling,
 duality, and induction constants. Section 2.3 verified that the zeta-integral factors agree
-with those parameter factors on the local building blocks used here. Ordinary complex analysis
+with those parameter factors in the established principal, special, and dihedral parameter
+classes. For an arbitrary generic local component, the analytic zeta ideal and analytic
+epsilon monomial were used without asserting an unattached parameter. Book 104's global gamma
+identity was retained with its regularized finite-stage meaning; no common convergence region
+for the products at $s$ and $1-s$ was assumed. Ordinary complex analysis
 supplied Mellin continuation, Stirling's formula, Cauchy's estimates, and the
 Phragmén–Lindelöf principle; their required forms were proved or explicitly reduced in
 Chapters 6, 7, and 9.
@@ -2076,16 +2235,17 @@ its hypotheses.
 cuspidal automorphic representations of $\mathrm{GL}_2(\mathbf A_F)$, and let $S$ be finite and
 contain all archimedean places. Then:
 
-1. $L^S(s,\pi\times\widetilde\pi)$ has nonnegative Dirichlet coefficients and a simple pole at
-   $s=1$;
+1. $L^S(s,\pi\times\widetilde\pi)$ has a simple pole at $s=1$; if $S$ also contains every
+   finite place where $\pi$ is ramified, its Dirichlet coefficients are nonnegative;
 2. $L^S(s,\rho\times\widetilde\pi)$ is holomorphic at $s=1$ unless $\rho\simeq\pi$;
 3. finite local factors omitted in forming $L^S$ are finite and nonzero at $s=1$;
 4. consequently, equality of these two incomplete Euler products forces
    $\operatorname{Hom}_{G(\mathbf A)}(\rho,\pi)\ne0$.
 
-**Proof.** Positivity is (8.5). The exact pole alternative is Theorem 4.2. Stability after
-deleting $S$ is Proposition 10.1. The last assertion follows by comparing orders at one, as in
-Section 11.2. $\square$
+**Proof.** Positivity is (8.5) under the stated extra condition on $S$; without it, a ramified
+local factor need not have a visible sum-of-squares expansion. The exact pole alternative is
+Theorem 4.2, and stability after deleting any finite $S$ is Proposition 10.1. The last assertion
+follows by comparing orders at one, as in Section 11.2. $\square$
 
 The theorem is intentionally phrased in terms of incomplete products. It is ready to receive
 almost-everywhere local information without requiring any prior identification at the
