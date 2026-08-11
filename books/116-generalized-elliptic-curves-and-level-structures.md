@@ -284,7 +284,9 @@ After a geometric base change, the given cover becomes faithfully flat. Being a 
 
 This theorem permits all later definitions to be checked after a convenient fppf cover. In particular, a cyclic subgroup may acquire a generator and a polygon may acquire labeled split components after such a cover without changing the intrinsic statement.
 
-There is also useful diagonal control. For two generalized elliptic curves $E,E'$ over $S$, the isomorphism functor is separated: isomorphisms agreeing on the smooth locus agree everywhere. With a bound on component number it is finite. Choose an ample orbit divisor of uniformly bounded degree and a common very ample power. Both curves embed in projective bundles, and their isomorphisms form an affine finite-type subscheme of the projective transformation scheme. Extension across nodes gives properness, while fiberwise automorphism groups are finite. Proper and quasi-finite is finite. This is the precise boundedness needed when the objects are placed in moduli stacks.
+There is also useful diagonal control, but boundedness alone does not make the unlevelled diagonal proper. For two generalized elliptic curves $E,E'$ over $S$ with bounded component numbers, the isomorphism functor is representable, separated, quasi-finite, and of finite presentation. To see representability, choose auxiliary relatively ample bundles of bounded degree and embed both curves by high powers after a cover. An isomorphism is represented by its graph in $E\times_SE'$. Bounded component numbers bound the graph Hilbert polynomials, while being a graph whose two projections are inverse isomorphisms is open in the corresponding finite union of Hilbert schemes. Preserving the identity and action is closed. The construction descends from the cover. Fiberwise automorphism groups are finite, and density of the smooth locus gives separatedness.
+
+The functor need not be proper. Over a discrete valuation ring, two polygonal models of the same generic elliptic curve can differ by contracting special-fiber components. Their generic fibers are isomorphic, but that isomorphism cannot extend to an isomorphism of the two proper models because their special fibers have different numbers of irreducible components. Level structures will restore properness of the diagonal only when their ample divisors forbid precisely these contractions. This distinction is essential in the moduli argument below.
 
 ### 3.4 Rigidity of the action
 
@@ -606,7 +608,7 @@ Here is the matrix argument on a smooth fiber. An automorphism of finite order a
 
 The exclusions are real. Full level $2$ is preserved by $[-1]$. A $\Gamma_1(N)$ point can retain exceptional automorphisms at small $N$. Every $\Gamma_0(N)$ subgroup is preserved by $[-1]$. At primes dividing $N$, triviality must be checked on the full finite-flat divisor, not inferred from the number of geometric sections.
 
-For prime $p\geq5$ with $p$ invertible in the ground field, a $\Gamma_1(p)$ structure has no nontrivial automorphism. On a smooth fiber, a nontrivial origin-preserving automorphism has order $2$, $3$, $4$, or $6$ and cannot fix a point of exact order $p$. On a polygon, the component of an ample generator is nonzero and is reversed by inversion. Hence the automorphism is trivial.
+For prime $p\geq5$ with $p$ invertible in the ground field, a $\Gamma_1(p)$ structure has no nontrivial automorphism. On a smooth fiber, let $g$ fix a point of exact order $p$. The finite group of origin-preserving automorphisms has order divisible only by $2$ and $3$, including in the exceptional characteristics $2$ and $3$. Its action on the prime-to-characteristic Tate module is faithful, and $g-1$ has determinant $\deg(g-1)$. For nontrivial $g$, this degree is a product of powers of $2$ and $3$: equivalently, on the quadratic cyclotomic representation it is the norm of $\zeta-1$, and the extra automorphisms in characteristics $2$ and $3$ still have $2$- or $3$-power degree. Thus $g-1$ is invertible on $E[p]$, contradicting the fixed point. On a $p$-gon, write an automorphism in split coordinates. Fixing the generator fixes its component class and then its toric coordinate, so the automorphism is the identity. On a one-gon, the only possible nontrivial origin-preserving polygon automorphism is inversion, and it cannot fix a point of exact odd order $p$. Hence the automorphism is trivial in every case.
 
 No such blanket assertion is valid in characteristic $p$. A Drinfeld generator may have the identity as its only geometric value while its orbit divisor still has length $p$. Inversion can then fix the displayed section, and exceptional automorphisms of a smooth fiber can also survive collapsed level. On the component-type $p$-gon the nonzero component class still gives rigidity, but the multiplicative cusp need not. Integral moduli statements must therefore retain stack language unless stabilizers have been checked scheme-theoretically on the particular stratum.
 
@@ -649,21 +651,25 @@ with the following properties:
 3. it is $G$-equivariant and commutes with arbitrary base change;
 4. it is unique up to unique isomorphism.
 
-**Proof strategy.** Build a semiample line bundle with degree positive exactly on the visible components, take relative Proj, and use fiberwise rigidity to prove the action and base-change assertions.
+**Proof strategy.** Build a semiample line bundle with degree positive exactly on the visible components. Cohomology and base change, not merely the formal base-change property of Proj, will make its section algebra relative. Its Proj has a universal property that supplies gluing, equivariance, and uniqueness.
 
-**Proof.** After an étale cover and a stratification by polygon size and visible component subgroup, choose disjoint sections through each visible component. Their orbit sum gives a relative Cartier divisor $D$ whose degree is positive exactly there. For $m$ sufficiently large, cohomology on the normalization of every polygon shows that $\mathcal L^m=\mathcal O_E(mD)$ is generated and that multiplication of sections makes the graded algebra
+**Proof.** Shrink first to a quasi-compact neighborhood in $S$. Through a smooth point of any visible component, smoothness supplies a section after an étale base change. Noetherian induction over the finitely many component strata, extending each such section to an actual neighborhood and shrinking so that it remains in $G$, produces finitely many sections meeting every visible component in every fiber. Their sum, with collisions allowed, is a relative Cartier divisor $D$ supported in $G$ whose degree is positive precisely on the visible components. This construction takes place on open neighborhoods; the component stratification is used only to prove that finitely many choices suffice. Put $\mathcal L=\mathcal O_E(D)$. On an invisible connected chain, $\mathcal L$ has multidegree zero and is trivial after its value at either attaching point is fixed.
+
+For a sufficiently divisible $m$, the normalization exact sequence on every polygon shows three facts, uniformly on the chosen bounded stratum: $\mathcal L^m$ is generated relative to $S$; $R^1\pi_*\mathcal L^{mr}=0$ for every $r>0$; and multiplication is surjective in sufficiently high degrees. The cohomology-and-base-change theorem then says that $\pi_*\mathcal L^{mr}$ is finite locally free and commutes with arbitrary base change for $r>0$. After replacing the grading by a high Veronese, the algebra
 
 $$
 \mathcal A=\bigoplus_{r\geq0}\pi_*\mathcal L^{mr}
 $$
 
-generated in finite degree. Put $E_G=\operatorname{Proj}_S\mathcal A$. Relative Proj commutes with base change. The fiberwise calculation of Section 8.2 shows that the induced map has the asserted contraction and that the image fibers are polygons.
+is finitely generated. Put $E_G=\operatorname{Proj}_S\mathcal A$. Because the positive graded pieces of $\mathcal A$ have just been proved to commute with base change, this particular Proj construction commutes with arbitrary base change. The fiberwise calculation of Section 8.2 shows that the induced map is an isomorphism on $G$, is constant exactly on each connected invisible chain, and has polygonal image fibers. The normalization calculation also gives $(c_G)_*\mathcal O_E=\mathcal O_{E_G}$.
 
-Translation by $G$ preserves the multidegree of $D$ and hence the contraction equivalence relation. It descends to the image. The group identities hold on the dense smooth locus, so Proposition 3.2 extends them to the whole curve. The local constructions agree on overlaps: any two maps are isomorphisms on $G$ and contract the same proper rational chains, so their relative Proj algebras have the same sufficiently divisible graded pieces. They therefore glue. This also proves uniqueness. $\square$
+This yields the needed universal property. If $f:E\to X$ is a morphism to a separated $S$-space that is constant on every invisible chain in every geometric fiber, then $f$ factors uniquely through $c_G$. Existence is affine-local on $X$ and follows from $(c_G)_*\mathcal O_E=\mathcal O_{E_G}$; uniqueness follows because $c_G$ is surjective. Translation by an element of $G$ preserves the set of invisible chains, so the universal property descends the $G$-action to $E_G$. The group identities hold on the dense smooth locus and hence everywhere by Proposition 3.2.
+
+On overlaps, two local constructions contract the same chains and are isomorphisms on $G$. Applying the universal property in both directions gives inverse isomorphisms, and uniqueness gives the cocycle condition. The local targets therefore glue. The same argument proves uniqueness over $S$ and compatibility with every base change. $\square$
 
 The noetherian hypothesis is used only to choose a uniform semiample power. Approximation extends the result to bases on which the curve, subgroup, and component stratification descend to a noetherian model.
 
-The cohomology assertion is visible on the normalization. On a retained component $\mathcal L^m$ has positive degree and no first cohomology for $m$ large; on an invisible rational chain it is trivial. The normalization exact sequence describes a global section as component sections with matching endpoint values. Such sections separate every two points not on the same invisible chain and are constant along each invisible chain. Multiplication is surjective in high degree on the positive-degree components and hence after imposing the matching conditions. This proves finite generation and identifies the contracted fibers without invoking another contraction result.
+Here are the cohomological details used in the proof. On a retained component, $\mathcal L^m$ has positive degree and no first cohomology for $m$ large; on an invisible rational chain it is trivial. The normalization exact sequence describes a global section as component sections with matching endpoint values. Evaluation at the two ends of every positive-degree component is surjective once $m$ is large, so the matching map is surjective and the first cohomology vanishes. The same description shows that sections separate every two points not on the same invisible chain and are constant along such a chain. Multiplication is surjective in high degree on the positive-degree components; surjectivity of endpoint evaluation lets one impose the gluing conditions without losing it. This proves finite generation and all the base-change assertions used above without importing another contraction theorem.
 
 ### 8.4 Equivariance and level
 
@@ -710,9 +716,27 @@ $$
 
 whose restriction to the smooth locus is the quotient homomorphism. It has degree $\operatorname{rank}C$, is compatible with arbitrary base change, and is unique.
 
-**Proof.** The assertion is fppf local. On smooth fibers it is the usual quotient by a finite subgroup scheme. On a split polygon, further fppf localization diagonalizes the multiplicative part and chooses a generator for the component image. The map on normalizations is $z\mapsto z^a$, together with the quotient map on component labels. It sends $0$ to $0$ and $\infty$ to $\infty$, so it respects the nodal gluing. Components in one orbit are mapped finitely onto the same target component; none is contracted. The resulting target is an $(n/b)$-gon, and the map has degree $ab=\operatorname{rank}C$.
+**Proof.** The subgroup $C$ acts on the whole curve through the generalized elliptic action. Fppf-locally, an ample orbit divisor makes $E$ projective, so the finite-quotient theorem produces the categorical scheme quotient $E/C$ and a finite surjection $E\to E/C$. These local quotients descend uniquely because the quotient is characterized by its invariant morphisms. Its restriction to the smooth locus is the smooth separated group quotient $E^{\mathrm{sm}}/C$. What remains is to identify the boundary fibers and prove the stronger arbitrary-base-change assertion, since a general invariant-ring quotient supplies only flat base change automatically.
 
-These local maps are invariant under change of splitting because they agree with the intrinsic fppf quotient on the dense smooth locus. Density rigidity makes their descent data unique, so they descend and glue. The same uniqueness proves compatibility with base change. $\square$
+Over the smooth-elliptic stratum, this quotient is the usual elliptic-curve quotient. Over a fixed polygon stratum, further fppf localization splits the component group, identifies $C\cap E^{\mathrm{sm},0}$ with $\mu_a$, and labels the cyclic image of $C$ in the component group.
+
+On normalizations, the multiplicative part acts with quotient coordinate $z\mapsto z^a$, while the component part identifies the $b$ components in each orbit. The construction also works in a smoothing, where a completed étale neighborhood of a source node has the form
+
+$$
+A[[x,y]]/(xy-r).
+$$
+
+The multiplicative subgroup acts with weights $1$ and $-1$. Its quotient is given integrally by
+
+$$
+A[[X,Y]]/(XY-r^a)
+\longrightarrow A[[x,y]]/(xy-r),
+\qquad X\longmapsto x^a,\quad Y\longmapsto y^a. \tag{9.1a}
+$$
+
+This statement remains true when $a$ is not invertible: the weight-zero monomials are generated by $x^a$, $y^a$, and $xy=r$. The component part then identifies the labeled node charts in each orbit. Thus the local target is proper with smooth locus $E^{\mathrm{sm}}/C$; its geometric polygonal fiber has $n/b$ components, and none of the source components is contracted. The degree on the dense smooth locus is $ab=\operatorname{rank}C$.
+
+The normalization maps and the node maps agree on their common punctured neighborhoods, so they glue. A change of splitting produces the same homomorphism on the dense smooth locus. Proposition 3.2 therefore gives unique descent isomorphisms and the cocycle condition. The formulas on normalizations and (9.1a) are defined over the base ring and commute with every scalar extension; after descent they prove arbitrary base-change compatibility. Uniqueness again follows from agreement on the dense smooth locus. $\square$
 
 The quotient is finite locally free on the smooth locus, where the subgroup acts freely, but it need not be flat at a node. For example, the toric map has completed local form
 
@@ -802,7 +826,7 @@ $$
 
 with generic fiber $E_{t^n}$ and special fiber the standard $n$-gon.
 
-The construction is canonical once the component containing the identity and the orientation corresponding to positive valuation are fixed. It commutes with base change. On the completed local ring at a node, adjacent components have equation
+The construction is canonical up to the residual polygon automorphisms once the identity component and the orientation corresponding to positive valuation are fixed; the standard component framing of Section 10.4 removes that finite ambiguity. It commutes with base change. On the completed local ring at a node, adjacent components have equation
 
 $$
 xy=t,
@@ -835,13 +859,15 @@ More generally, $u=\varepsilon t^a$ and $u'=\varepsilon' t^{a'}$ specialize to t
 
 ### 10.4 The deformation parameter
 
-The formal parameter $t$ has a moduli meaning. Consider a deformation of the split $n$-gon together with a labeling of the identity component, a cyclic orientation, and a trivialization of the invariant differential. Translation identifies the completed local neighborhoods of all nodes. Their smoothing parameters are therefore the same up to the chosen orientation and differential normalization. Calling the common parameter $t$, contraction to the one-gon multiplies the $n$ passages and gives Tate parameter $q=t^n$.
+The formal parameter $t$ has a moduli meaning. A **standard component framing** of the split $n$-gon is an identification of the special fiber with the standard polygon, respecting the identity and action; equivalently, it gives the component labels, cyclic orientation, and the standard smooth points $(1,i)$. The standard points are essential: without them the automorphisms $(u,i)\mapsto(c^iu,i)$ would remain. Consider a deformation with this special-fiber framing. The normalization is a cycle of copies of $\mathbf P^1$, each marked at $0$, $\infty$, and $1$. A projective line with those three marks is rigid. Before the group action is imposed, the only deformation choices are therefore the node equations $x_i y_{i+1}=t_i$ and changes of the branch coordinates by units.
 
-Conversely, $\operatorname{Tate}_n(t)$ supplies such a deformation. Formal functions on a proper semistable curve are determined by their restrictions to the normalization with compatible values at the nodes. Applying this to successive infinitesimal thickenings shows uniqueness: any framed deformation is uniquely isomorphic to the pullback of (10.2) by its smoothing parameter.
+Translation carries the $i$th node to the next and identifies the equations, so all $t_i$ become one parameter after the unique coordinate changes preserving the three standard marks. Calling the remaining parameter $t$, gluing the normalized components with equations $x_i y_{i+1}=t$ gives $\operatorname{Tate}_n(t)$. Contracting the cycle to the one-gon multiplies the $n$ passages and gives $q=t^n$.
 
-At the tangent-space level an unstructured $n$-gon has one local smoothing direction at each node. Translation identifies these directions cyclically. The chosen orientation removes the cyclic ambiguity, and the invariant-differential framing identifies the remaining unit scalings. Only one tangent parameter survives. Obstructions vanish because the nodes are local complete intersections and the explicit Tate family lifts every infinitesimal order. Induction over nilpotent thickenings proves formal universality.
+This calculation also proves universality over Artinian thickenings. Given a square-zero extension, lift the single element $t$ and use the displayed node equations; the three-pointed normalized components have no deformation, so a lift exists. Two lifts with the same $t$ differ only by branch-coordinate units, which the standard-point framing removes. Induction over the nilpotent filtration gives a unique isomorphism with the pullback of (10.2). Equivalently, formal functions on the proper semistable curve are functions on its normalization whose endpoint values agree, so the local isomorphisms glue uniquely.
 
-Thus the framed deformation functor is represented by $\operatorname{Spf}\mathbf Z[[t]]$. If the orientation or labeling is forgotten, finite automorphisms act on $t$ and the resulting local object is a quotient chart. Level structures often supply exactly the missing labels and thereby turn the formal chart into a fine one.
+At the tangent-space level an unstructured $n$-gon has one local smoothing direction at each node, and translation identifies them cyclically. Only the class of $t$ survives. The explicit lifting just given shows that there are no obstructions, rather than merely predicting their vanishing from the tangent-space count.
+
+Thus the standard-component-framed deformation functor is represented by $\operatorname{Spf}\mathbf Z[[t]]$. If the standard point, orientation, or labeling is forgotten, finite automorphisms act on $t$ and the resulting local object is a quotient chart. Level structures often supply exactly the missing labels and thereby turn the formal chart into a fine one.
 
 ## 11. Tate charts with level
 
@@ -873,7 +899,7 @@ $$
 
 is the standard symplectic full-level cusp object over $\mathbf Z[\zeta_N][[t]]$.
 
-Every framed full-level deformation of a standard $N$-gon is obtained uniquely from this object. The underlying framed curve determines $t$ by Section 10.4. Full level identifies the multiplicative kernel with $\mu_N$ and chooses its primitive generator, while its second vector fixes the component orientation. The ratio between any two lifts of the component generator lies in the multiplicative kernel and is removed by changing the second basis vector by a multiple of the first. Hence the standard object is versal, and after the basis is fixed it is universal.
+Every framed full-level deformation of a standard $N$-gon is obtained from this object. The underlying framed curve determines $t$ by Section 10.4. Full level identifies the multiplicative kernel with $\mu_N$ and chooses its primitive generator, while its second vector fixes the component orientation. Before a full cusp label is fixed, replacing the second vector by $Q+aP$ gives one of finitely many different labels. For one fixed label, normalization to $P=[\zeta_N]$ and $Q=[t]$ leaves no choice, so the corresponding chart is universal. The other labels give neighboring charts or, after labels are forgotten, the relevant finite quotient action.
 
 The distinction between versal and universal is caused only by residual automorphisms. A framed basis kills them for $N\geq3$ in the invertible-level range. If one remembers merely the subgroup generated by $Q$, then replacing $Q$ by $aQ$ changes the component orientation and gives the same cyclic subgroup. The same power-series ring can therefore appear with different finite quotient groups in full, point, and cyclic moduli.
 
@@ -895,9 +921,15 @@ $$
 
 Its orbit meets every component, and the repetitions within each component give the correct Drinfeld multiplicity $e$.
 
-Conversely, let $P$ be a $\Gamma_1(N)$ point on a $d$-gon. Choose the Tate coordinate so that the component of $P$ is $1$. Then $P=[ut]$ for a unit $u$. The equation $NP=e$ gives $u^N=1$ after adjusting the representative by a power of $q$. Fppf-locally $u=\zeta_N^a$. This proves that (11.3) gives all cusp charts.
+Conversely, let $P$ be a $\Gamma_1(N)$ point on a $d$-gon. Choose the Tate coordinate so that the component of $P$ is $1$. Then $P=[ut]$ for a unit $u$. The equation $[N]P=e_E$ says $u^Nt^N=q^e$, hence $u^N=1$. Fppf-locally $u=\zeta_N^a$. This proves that (11.3) gives all cusp charts; the Drinfeld generator condition then imposes the coprimality condition below.
 
-Primitivity of the total Drinfeld divisor places a condition on $a$ when $e>1$. The multiplicative repetitions within one component must fill a cyclic divisor of rank $e$. Equivalently, the image of $\zeta_N^a$ in the appropriate quotient of $\mu_N$ must be a Drinfeld generator. This condition is automatic for $P=[t]$ when $d=N$, and it is the ordinary primitive-root condition when $d=1$. Stating it divisor-theoretically covers all intermediate divisors without a case-by-case point count.
+Primitivity of the total Drinfeld divisor is exactly the condition
+
+$$
+\gcd(a,e)=1. \tag{11.3a}
+$$
+
+Indeed, the orbit terms lying on component $b$ have indices $b+kd$, and the ratio between consecutive such terms is $P^d=[\zeta_N^{ad}]$. This element has exact Drinfeld order $e$ precisely when $\zeta_N^{ad}$ is a primitive $e$th root, equivalently when $\gcd(a,e)=1$. Its $e$ translates then cut out the full rank-$e$ multiplicative divisor on that component. Repeating over the $d$ components gives the required rank-$N$ orbit divisor and also shows that $P$ has exact order $de=N$. The proof is the polynomial identity for the divisor of $Z^e-1$, so it remains valid when roots collide in residue characteristic dividing $e$. For $d=N$ the condition is vacuous, while for $d=1$ it is the usual primitive-root condition.
 
 The parameter $t$ is determined only up to coordinate changes preserving $P$. Replacing $t$ by $\xi t$ changes $P=[\zeta_N^at]$ by the multiplicative torsion factor $\xi$. It preserves the point exactly when that factor is allowed by the generator data. Thus the finite stabilizer of a cusp can be read from the class of $(a,1)$ in the Tate torsion extension. Cusp width is the residual ramification after this stabilizer is accounted for.
 
@@ -925,15 +957,15 @@ $$
 (\operatorname{Tate}_p(t),\langle t\rangle). \tag{11.5}
 $$
 
-The first is defined over $\mathbf Z[[q]]$: the subgroup $\mu_p$ exists without choosing a primitive root. The second also descends to $\mathbf Z[[t]]$: fppf-locally its generators are $[\zeta_p^a t]$, and changing $a$ does not change their subgroup divisor. In the special fiber the first subgroup lies on the sole component, while the second maps isomorphically to the $p$ components.
+The first is defined over $\mathbf Z[[q]]$: the subgroup $\mu_p$ exists without choosing a primitive root. The second is already defined over $\mathbf Z[[t]]$ by the orbit divisor of the section $[t]$; its generators are $[t^u]$ for $u\in(\mathbf Z/p\mathbf Z)^\times$. For fixed $t$, the graph subgroup generated by $[\zeta_p^a t]$ is generally different. It is obtained from the standard family after the cusp-coordinate change $t\mapsto\zeta_p^a t$ over a base carrying $\zeta_p$, not by declaring the two subgroup divisors equal. In the special fiber the first subgroup lies on the sole component, while the second maps isomorphically to the $p$ components.
 
-**Theorem 11.1 (prime cusp completeness).** Every geometric $\Gamma_0(p)$ boundary point, and every formal deformation of it after choosing the standard component framing, is obtained from exactly one of the two charts in (11.5).
+**Theorem 11.1 (prime cusp completeness).** Every geometric $\Gamma_0(p)$ boundary point, and every formal deformation after choosing the standard component framing and normalizing its component subgroup, is fppf-locally obtained from exactly one of the two types in (11.5). Within that normalization, the parameter $q$ or $t$ is unique.
 
-**Proof.** Theorem 7.1 restricts the polygon size to $1$ or $p$. On the one-gon, a cyclic rank-$p$ subgroup of the smooth torus is fppf-locally $\mu_p$ and descends uniquely as that kernel. On the $p$-gon, ampleness makes the component map an isomorphism; choosing a generator and using polygon automorphisms normalizes it to $(1,1)$, which is the specialization of $[t]$. The framed deformation theorem then supplies the unique parameters $q$ or $t$. Forgetting the temporary generator descends the subgroup chart. $\square$
+**Proof.** Theorem 7.1 restricts the polygon size to $1$ or $p$, so the two types cannot overlap. On the one-gon, a cyclic rank-$p$ subgroup of the smooth torus is fppf-locally $\mu_p$ and descends uniquely as that kernel. On the $p$-gon, ampleness makes the component map an isomorphism. Choose a temporary generator. In split coordinates its specialization has the form $(c,1)$, and the polygon automorphism $(u,i)\mapsto(c^{-i}u,i)$ normalizes it to $(1,1)$, the specialization of $[t]$. The corresponding change in a deformation is the cusp-coordinate normalization described above. Section 10.4 then supplies the unique parameter $q$ or $t$. Changing the temporary generator changes the component framing but not the cyclic object, so fppf descent removes that choice. $\square$
 
 No third chart can be hidden by a nonsplit form. After a finite étale extension, the tangent branches and component group split and the theorem applies. Descent can twist the automorphisms of one of the two standard charts, but it cannot change the rank of the subgroup's image in the component group. Thus forms alter descent data, not the two-type classification.
 
-Neither standard subgroup requires a chosen generator. In the first chart, it is the kernel of $[p]$ on the smooth identity torus. In the second, fppf-local generators $[\zeta_p^at]$ have conjugate graphs whose sum descends to one subgroup divisor. These intrinsic descriptions prove that both charts live over the stated integral bases.
+Neither standard subgroup requires a chosen primitive generator. In the first chart, it is the kernel of $[p]$ on the smooth identity torus. In the second, it is the finite subgroup divisor generated by the globally defined section $[t]$; replacing $[t]$ by $[t^u]$ for $u\in(\mathbf Z/p\mathbf Z)^\times$ leaves that divisor unchanged. These intrinsic descriptions prove that both charts live over the stated integral bases.
 
 ### 11.4 Change of cusp coordinate
 
@@ -974,7 +1006,7 @@ The first problem is taken over a base on which the chosen primitive Weil-pairin
 
 These are fppf stacks. Generalized elliptic curves descend by Theorem 3.1. Sections and finite locally free subgroup schemes descend. The divisor equalities defining Drinfeld generation are fpqc local, as is cyclicity after a cover. Relative ampleness descends faithfully flatly. Hence descent data for level objects are effective.
 
-Their diagonals are finite on the bounded level locus. An isomorphism preserving level is a closed subfunctor of the finite isomorphism scheme of the underlying bounded generalized elliptic curves. For $\Gamma_1(p)$ and full level at rigid values of $p$, it is often trivial; for $\Gamma_0(p)$ it retains at least the familiar involution when that involution is nontrivial. This proves that the groupoid structure is controlled rather than merely formal.
+Their diagonals are finite. The bounded underlying isomorphism functor is separated, quasi-finite, and of finite presentation by Section 3.3, and preservation of the level sections or subgroup divisor is a closed condition. It remains to prove properness. Over a valuation ring, take the closure of the graph of a generic isomorphism preserving level. Normalize the closures of the components and contract every rational special-fiber component carrying only its two nodal branches and no part of the level divisor. The result is the common stable marked model on both sides: a component is contracted exactly when the level divisor has degree zero on it. Ampleness gives positive degree on every component, so neither original model loses a component and both already equal the common model. The generic isomorphism therefore extends, uniquely by density of the smooth locus. The level-preserving isomorphism functor satisfies the valuative criterion for properness; being proper and quasi-finite of finite presentation, it is finite. For $\Gamma_1(p)$ and full level at rigid values of $p$, it is often trivial; for $\Gamma_0(p)$ it retains at least the familiar involution when that involution is nontrivial.
 
 The notation anticipates compactification, but no properness claim is hidden in it. A global valuative proof must still show that every generic object extends, after permitted base change, to one of these generalized objects and that two extensions are uniquely isomorphic. Tate charts provide the local candidates, contraction corrects a nonample specialization, and properness of the curve extends the underlying sections. Those are inputs to the later global theorem, not a substitute for it.
 
@@ -1018,7 +1050,7 @@ They do prove algebraicity once combined with the bounded framed-curve charts: a
 
 ### 12.3 Boundary strata and their closures
 
-The singular locus in $\overline{\mathcal M}_1(p)$ and $\overline{\mathcal M}_0(p)$ has two geometric strata:
+The singular locus in $\overline{\mathcal M}_1(p)$ and $\overline{\mathcal M}_0(p)$ has two geometric types, each of which can have several components distinguished by cusp labels:
 
 $$
 \mathcal C_\mu: n=1,\ C=\mu_p,
@@ -1038,9 +1070,9 @@ When the residue characteristic differs from $p$, both subgroup schemes are éta
 
 ### 12.4 Fine and stacky behavior
 
-Over $\mathbf Z[1/p]$, full level for $p\geq3$ removes automorphisms, and $\Gamma_1(p)$ does so for $p\geq5$. On this invertible-level locus the bounded projective construction gives fine moduli schemes with universal generalized elliptic curves. At a component-type $p$-gon, the nonzero component generator also kills inversion, and a full basis fixes both the toric and component directions.
+Over $\mathbf Z[1/p]$, full level for $p\geq3$ removes automorphisms, and $\Gamma_1(p)$ does so for $p\geq5$. On this invertible-level locus the bounded projective construction gives fine moduli schemes with universal generalized elliptic curves. At a component-type $p$-gon, the nonzero component generator kills inversion, and a full basis fixes both the toric and component directions.
 
-Trivial stabilizers make the stack a sheaf, but a scheme also needs an atlas and descent. The bounded projective framing supplies a quasi-projective scheme atlas. Where the change-of-frame relation is free, faithfully flat descent of the framed universal curve produces the representing scheme. Thus each fine assertion uses both rigidity and the projective parameter construction.
+Trivial stabilizers make the stack a sheaf, but do not alone make that sheaf a scheme. Symmetrize the ample level divisor and take a high power of its line bundle. Its theta group is a central extension of a finite group scheme by scalar homotheties $\mathbf G_m$; in particular, its quotient by the center is finite. A theta frame gives a projective frame of the high pushforward, so theta-framed level curves form a locally closed quasi-projective Hilbert parameter scheme. Theta frames differ by the finite automorphism group of the standard extension. The finite-quotient theorem for quasi-projective schemes, proved in the prior stack theory, constructs the quotient as a scheme. Since the level has already killed inertia, this quotient represents the level sheaf rather than merely its coarse orbit functor, and the descended family is universal. Thus each fine assertion uses rigidity, the projective parameter construction, and a genuine finite scheme quotient.
 
 In characteristic $p$, Drinfeld sections can collide. A displayed $\Gamma_1(p)$ generator may then equal the identity as a geometric section even though its orbit divisor has length $p$, and a full pair can likewise collapse on a smooth height-two fiber. Such data need not kill origin-preserving automorphisms. The integral moduli problems in (12.1) must therefore be treated as stacks unless a separate stabilizer calculation proves rigidity on the stratum under discussion. The component-type cusp is rigid for $p\geq3$, but the multiplicative cusp can retain inversion when its generator specializes to the identity.
 
@@ -1060,7 +1092,7 @@ $$
 \pi_2(E,C)=E/C. \tag{13.1}
 $$
 
-At the generalized boundary, $\pi_1$ simply forgets $C$ and then contracts components if the target moduli problem retains less level and hence sees fewer components. The second map uses the boundary quotient of Theorem 9.1, followed by the unique contraction required by the target.
+For the unlevelled target used here, a polygon is put in its canonical one-gon model: apply Theorem 8.1 with $G=E^{\mathrm{sm},0}$. Thus at the generalized boundary, $\pi_1$ forgets $C$ and contracts every polygon to its identity component. The second map first uses the boundary quotient of Theorem 9.1 and then applies the same one-gon contraction to the quotient. More generally, if a target retains some level, its level divisor determines the open subgroup of components to retain; this recovers the same rule without ambiguity.
 
 Both operations are functorial in the base. They preserve isomorphisms and commute with fppf descent. Consequently they define morphisms of the prime-level moduli stacks before any coarse spaces are constructed.
 
@@ -1126,7 +1158,7 @@ There are two possible concerns. A quotient might be formed before or after exte
 
 **Proposition 13.1.** Finite subgroup quotients and component contractions commute with arbitrary base change. If two composites have the same quotient homomorphism on the smooth locus and contract the same geometric components, they are uniquely isomorphic.
 
-**Proof.** The fppf quotient of the smooth group commutes with base change. The relative Proj defining contraction does as well. On standard polygons the targets and contracted components are computed by quotient component groups, so the two composites agree fiberwise. They are isomorphic on the dense smooth locus; the universal properties of the quotient and contraction extend this isomorphism uniquely to the proper curves. $\square$
+**Proof.** Theorem 9.1 proves base change for quotients from the normalization and node formulas, and Theorem 8.1 proves it for contractions using cohomology and base change for the section algebra. On standard polygons the targets and contracted components are computed by quotient component groups, so the two composites agree fiberwise. The quotient universal property on the smooth group and the contraction universal property then produce an isomorphism of the proper targets. It is unique because it is fixed on the dense smooth locus. $\square$
 
 This proposition is what makes the Tate calculations global moduli formulas. They may be verified after completing at a cusp and then descend to every family carrying the corresponding level type.
 
@@ -1155,7 +1187,7 @@ The theory developed in this book can be used through the following chain of pro
 
 Every imported ingredient has a stated source in the preceding theory: relative ampleness and Proj for contraction, descent for the stack assertions, finite group schemes and Cartier divisors for Drinfeld level, elliptic torsion and the Weil pairing for full level, and Tate uniformization for the cusp formulas. No compactification or later integral-model theorem has been used as a premise.
 
-The hypotheses remain visible in the summary. Rank formulas are geometric-fiber statements. Relative contraction uses finite presentation and a bounded component stratification. Ordinary bases of torsion require the order to be invertible, whereas Drinfeld divisors do not. Formal universality uses a component and differential framing; forgetting them introduces finite quotient actions. Prime-level completeness uses primality in reducing the divisor list to $1,p$.
+The hypotheses remain visible in the summary. Rank formulas are geometric-fiber statements. Relative contraction uses finite presentation and a bounded component stratification. Ordinary bases of torsion require the order to be invertible, whereas Drinfeld divisors do not. Formal universality uses the standard component framing; forgetting it introduces finite quotient actions. Prime-level completeness uses primality in reducing the divisor list to $1,p$.
 
 ### 14.2 The boundary passed to compactification
 
