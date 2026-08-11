@@ -601,7 +601,7 @@ C_t=\{P\in\mathcal G(L):\nu(P)>t\}.
 \tag{5.1}
 $$
 
-The nonarchimedean inequality and the group law show that $C_t$ is a subgroup. Two points are congruent at depth $t$ precisely when their difference lies in $C_t$, so the congruence classes are the cosets of $C_t$ and all have the same cardinality. The groups $C_t$ decrease only at finitely many rational values and are stable under $G$.
+The nonarchimedean inequality and the group law show that $C_t$ is a subgroup. Two points are congruent at depth $t$ precisely when their difference lies in $C_t$, so the congruence classes are the cosets of $C_t$ and all have the same cardinality. The groups $C_t$ decrease only at finitely many rational values and are stable under $G$. The strict sign agrees with Theorem 4.2; replacing it by a weak sign would change the behavior at the critical radius.
 
 For the exponent filtration put
 
@@ -612,7 +612,7 @@ C_{t,j}=C_t\cap X_j
 \tag{5.2}
 $$
 
-On the generic fiber these are ordinary finite groups. If an integral kernel of $[\ell^j]$ is not visibly flat, its schematic closure in $\mathcal G$ is finite flat and has exactly these generic points. Thus every use of translation and equal block size may be made inside a finite-flat ambient group.
+On the generic fiber these are ordinary finite groups. We use only these point groups and their translation partitions. If an integral kernel of $[\ell^j]$ is needed, its schematic closure in $\mathcal G$ is finite flat and has exactly these generic points; no unproved flatness of a raw kernel is being assumed.
 
 ### 5.2 The cluster-counting lemma
 
@@ -631,80 +631,97 @@ The term $e_Kn$ records $n$ passages through multiplication by $\ell$. The radiu
 
 ### 5.3 Proof of the lemma
 
-The proof is a finite counting argument. We give it in detail because every later constant rests on it.
+The proof is a finite weighted count. We first isolate the one-layer statement so that the cancellation of the splitting-field ramification index is explicit.
 
-Let $L$, $G$, $E$, and $X_j$ be as above. For a finite $G$-set $Y$ write $b(Y)$ for the largest positive upper parameter at which $G^u$ acts nontrivially on $Y$; put $b(Y)=-1$ if the whole action is trivial. We prove
+**Weighted-block claim.** Let $X$ be a finite $G$-stable subgroup of $\mathcal G(L)$ and put $Y=[\ell]X$. Assume that every nonzero point of $\ker([\ell]:X\to Y)$ has depth at most $c$. If $b(Z)$ denotes the last upper parameter at which an upper ramification group acts nontrivially on a finite $G$-set $Z$, put $b(Z)=-1$ when inertia acts trivially and $b(Z)=0$ when inertia acts nontrivially but wild inertia acts trivially. Then
 
 $$
-b(X_1)\leq e_K+c-1,
-\qquad
-b(X_j)\leq b(X_{j-1})+e_K
-\quad(j>1).
+b(X)\leq
+\max\{b(Y)+e_K,\ e_K+c-1\}.
 \tag{5.4}
 $$
 
-Iteration then gives $b(X_n)\leq e_Kn+c-1$.
+Here $Y$ carries the induced action, whether or not it equals all points killed by one lower power of $\ell$.
 
-We first record the clock calculation behind (5.4). For a finite $G$-set $Y$ define
-
-$$
-\epsilon_Y(s)=
-\begin{cases}
-1,&G_s\text{ moves some element of }Y,\\
-0,&G_s\text{ fixes }Y\text{ pointwise}.
-\end{cases}
-$$
-
-The change of variables $u=\varphi(s)$ gives the exact identity
+We prove the claim. For a $G$-stable finite group $D$ and a $G$-stable subgroup $C$, the cosets of $C$ form an equal-block system. For a lower group $G_s$, count the pairs $(\sigma,x)$ satisfying $\sigma x-x\in C$. Counting first in $\sigma$ and then in $x$ gives
 
 $$
-\int_{0}^{\infty}
-\epsilon_Y(\psi(u))\,du
-=\int_0^\infty
-\frac{\epsilon_Y(s)}{[G_0:G_s]}\,ds.
+|C|\sum_{\sigma\in G_s}
+\left|\ker\bigl(\sigma-1:D/C\to D/C\bigr)\right|
+=\sum_{x\in D}
+\left|\operatorname{Stab}_{G_s}(x+C)\right|.
 \tag{5.5}
 $$
 
-If the action has a nontrivial positive upper group, the left side is its last positive upper break: the indicator is one on every positive interval before the final kernel becomes trivial and zero afterward. If the action is only tame or trivial, the integral is zero and the desired positive-break estimate is immediate. Thus (5.5) lets us prove an upper bound by charging lower displacement intervals with the Herbrand weight $1/[G_0:G_s]$.
-
-We need the following elementary block count. Suppose a $G_s$-stable finite group $D$ is partitioned into cosets of a subgroup $C$. Count pairs
+The equality is literal: for fixed $\sigma$, every nonempty solution fiber is a coset of $C$; for fixed $x$, the condition says exactly that $G_s$ stabilizes the block $x+C$. Divide (5.5) by $|G_0||D|$. On an interval where $G_s$ and the block system are constant, orbit--stabilizer identifies the resulting factor with the proportion of a block that has not yet separated. Multiplying by the lower length and summing gives the Herbrand-weighted length
 
 $$
-(\sigma,x),\qquad \sigma\in G_s,\quad x\in D,\quad
-\sigma x-x\in C.
-$$
-
-Write the number of these pairs in the two orders:
-
-$$
-\sum_{\sigma\in G_s}
-\left|\ker\bigl(\sigma-1:D/C\to D/C\bigr)\right|,|C|
-=\sum_{x\in D}
-\left|\operatorname{Stab}_{G_s}(x+C)\right|.
+\int\frac{ds}{[G_0:G_s]}.
 \tag{5.6}
 $$
 
-For fixed $\sigma$, translation makes every nonempty fiber in $x$ a coset of $C$, which proves the left expression. For fixed $x$, the stated congruence is exactly stabilization of $x+C$, which proves the right expression. Orbit--stabilizer says that the average stabilizer order is the reciprocal of the average orbit size after division by $|G_s|$. Consequently, when a congruence block breaks into $m$ equal blocks, its surviving contribution to the weighted lower clock is multiplied by $1/m$.
+This is the same finite sum that proves Herbrand's quotient theorem: passing to the action on $D/C$ replaces $G_s$ by its image, while the stabilizer factor in (5.5) accounts for the kernel. Thus upper time during which the quotient blocks move is charged to $D/C$, and only time during which points move inside one block remains to be charged to $C$.
 
-Now divide (5.6) by $|G_0||D|$ and sum over a lower interval on which $G_s$ and the congruence partition are constant. A lower interval of length $Ea$ contributes at most $qa$ to the right side of (5.5), where $q$ is the proportion of blocks that still coalesce. Indeed $E=|G_0|$ supplies the lower valuation length and the denominator in (5.6) cancels it; orbit--stabilizer supplies precisely $q$. This statement remains true orbit by orbit and hence for a nontransitive action.
-
-Apply the count successively to the coset partitions by $C_{t,j}$. When a block breaks from size $h$ into $m$ equal blocks, the surviving proportion is $1/m$ and the newly separated proportion is $1-1/m$. Charge the first part of the interval to the block which continues and the second part to the quotient blocks which have just separated. At the next critical depth the second charge becomes the first charge for the refined partition. Consequently the intermediate charges telescope. Only the raw valuation supplied by one multiplication by $\ell$, the terminal separation depth, and the initial inertia interval remain.
-
-Now consider $X_1$. For a nonzero point of depth $r$, (4.4) compares a linear term of valuation $e_K+r$ with terms of valuation at least $\min(e_K+2r,\ell r)$. The block count just proved shows that the linear term supplies at most $e_K$ units of upper time and the last surviving nonzero difference supplies at most $c$. Congruence modulo the first power of the maximal ideal is inertia, indexed by $0$, so the initial unit interval is not part of positive upper time. Thus
+Apply this count to the successive congruence partitions
 
 $$
-b(X_1)+1\leq e_K+c.
+D/C_t,
+\qquad C_t=\{P\in D:\nu(P)>t\}.
 \tag{5.7}
 $$
 
-For $j>1$, apply $[\ell]:X_j\to X_{j-1}$. Until the images of two points separate in $X_{j-1}$, their difference lies in a coset of $X_1$. Formula (4.3) says that lifting one congruence cluster through $[\ell]$ consumes raw valuation at most $v_L(\ell)=Ee_K$. Identity (5.5) and the equal-block count cancel $E$, so this consumes at most $e_K$ units of upper time. Once the images separate, the action is already detected on $X_{j-1}$. Therefore
+There are only finitely many critical $t$. If at one critical value a block of size $h$ splits into $m$ equal subblocks, the stabilizer factor in (5.5) multiplies the continuing charge by $1/m$; the complementary proportion $1-1/m$ becomes the charge of the new quotient blocks. At the next critical value that new quotient charge is the continuing charge. Hence all intermediate terms cancel in the finite sum. This telescoping is orbitwise, so transitivity of the action is not required.
+
+It remains to identify the two boundary charges. Pull the congruence filtration on $Y$ back through $[\ell]:X\to Y$. Proposition 4.1 gives
 
 $$
-b(X_j)-b(X_{j-1})\leq e_K.
+[\ell]^*I\subseteq \ell I+I^\ell.
 \tag{5.8}
 $$
 
-Equations (5.7) and (5.8) prove (5.4), and hence $b(X_n)\leq e_Kn+c-1$. The action on all geometric points is the action on $X_n$. Passing from the chosen splitting field to the absolute group changes nothing, by quotient compatibility. This proves the lemma. $\square$
+In the finite sum over critical congruence depths, the summand $\ell I$ translates every lower threshold by exactly $v_L(\ell)=Ee_K$. The $I^\ell$ summand only refines the current congruence block: its values are products of $\ell$ augmentation values, so its critical depths occur among the intermediate refinements already paired in the telescoping sum. It creates no additional boundary term. Thus pulling the quotient-block clock back from $Y$ to $X$ leaves one new raw boundary interval, of length at most $Ee_K$. In (5.6) the equal-block stabilizer factor divides that interval by the inertia index already accumulated. Since $E=|G_0|$ for a finite Galois extension of local fields with finite residue field, its total upper length is at most $e_K$. This gives the first term $b(Y)+e_K$ in (5.4).
+
+If the image block has already become a point, motion can remain only inside the kernel of $[\ell]$. Its last nonzero difference has depth at most $c$, so after the same $Ee_K$ linear shift the remaining raw terminal interval has length at most $Ec$. In the lower numbering, membership in $G_s$ means displacement valuation at least $s+1$; the first unit interval is therefore the integral-displacement baseline, and it lies where the Herbrand slope is one. Positive upper time starts after upper index $0$, so removing that unit interval subtracts exactly one from the upper clock. The terminal upper charge is consequently
+
+$$
+e_K+c-1.
+\tag{5.9}
+$$
+
+These are the only boundary terms left after telescoping, and (5.4) follows. Notice exactly where the dangerous $E$ disappeared: lower valuation multiplies every raw interval by $E$, while the equal-block stabilizer denominator in the Herbrand sum divides by the same inertia index. Without translation blocks of equal size, the cancellation would be unavailable.
+
+We now prove Lemma 5.1. Take
+
+$$
+X_j=\mathcal G[\ell^j](L),\qquad
+Y_j=[\ell]X_j\subseteq X_{j-1}.
+$$
+
+Write $b_j=b(X_j)$. Since $Y_j$ is a $G$-stable subgroup of $X_{j-1}$,
+
+$$
+b(Y_j)\leq b_{j-1}.
+\tag{5.10}
+$$
+
+The kernel of $X_j\to Y_j$ is contained in $X_1$, and every one of its nonzero points has depth at most $c$. The weighted-block claim gives
+
+$$
+b_1\leq e_K+c-1,
+\qquad
+b_j\leq\max\{b_{j-1}+e_K,e_K+c-1\}
+\quad(j>1).
+\tag{5.11}
+$$
+
+Induction yields
+
+$$
+b_j\leq je_K+c-1.
+\tag{5.12}
+$$
+
+Because $[\ell^n]_{\mathcal G}=0$, all geometric points lie in $X_n$. Thus $G^u$ fixes every point for $u>ne_K+c-1$. Herbrand quotient compatibility makes this independent of the chosen splitting field and identifies it with the assertion for $G_K^u$. This proves the lemma. $\square$
 
 The proof may be remembered as a three-column ledger:
 
@@ -714,7 +731,7 @@ $$
 \hline
 \text{terminal point separation}&Ec&c\\
 \text{one multiplication layer}&Ee_K&e_K\\
-\text{initial inertia interval}&E&1.
+\text{initial displacement interval}&1&1.
 \end{array}
 $$
 
@@ -1176,7 +1193,7 @@ There is also a compositum warning. Given two finite-flat fields $L_1/K$ and $L_
 Assume now that
 
 $$
-\ell>2,\qquad k\text{ is perfect of characteristic }\ell,
+\ell>2,\qquad k\text{ is finite of characteristic }\ell,
 \qquad W=W(k),\qquad K_0=W[1/\ell].
 \tag{10.1}
 $$
@@ -1245,7 +1262,7 @@ finite flatness bounds the ramification carried by $c$, not merely the tame iner
 
 The filtered classification adds uniqueness and functorial compatibility in its safe range. Because $e_{K_0}=1<\ell-1$, the generic fiber determines the marked finite-flat model uniquely. Coefficient actions, unramified ground-field base change, duality, stable lines, and compatible quotients can therefore be transported without choosing unrelated models at different levels.
 
-Unramified ground-field extension is particularly clean. If $k\subseteq k'$ is perfect and $K_0'=W(k')[1/\ell]$, then base change of the divided filtered object and base change of the finite-flat group agree. The restricted representation over $G_{K_0'}$ therefore has the same exponent and the same numerical cutoff because both absolute ramification indices are one. In the reverse direction, descent requires semilinear descent data on the full filtered object or finite-flat group; invariance of the generic isomorphism class alone is not enough.
+Unramified ground-field extension is particularly clean. If $k\subseteq k'$ is a finite extension of finite fields and $K_0'=W(k')[1/\ell]$, then base change of the divided filtered object and base change of the finite-flat group agree. The restricted representation over $G_{K_0'}$ therefore has the same exponent and the same numerical cutoff because both absolute ramification indices are one. In the reverse direction, descent requires semilinear descent data on the full filtered object or finite-flat group; invariance of the generic isomorphism class alone is not enough.
 
 Coefficient extension has a different variance. On the contravariant filtered side, extending a finite projective coefficient algebra $A$ to $B$ uses the dual module $B^\vee\otimes_A-$ so that generic realization becomes $B\otimes_A-$. For a nonflat coefficient quotient, the correct filtered object is the admissible annihilator characterized by the generic quotient. These constructions explain categorically the model-theoretic closure and quotient procedure of Chapter 8. In either language, the resulting Galois module is still killed by the expected power of $\ell$ and hence receives the same ramification bound.
 
