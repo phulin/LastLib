@@ -20,7 +20,7 @@
   - [4.1 Vertices, edges, and stabilizers](#41-vertices-edges-and-stabilizers)
   - [4.2 Orbital integrals as weighted fixed-cell counts](#42-orbital-integrals-as-weighted-fixed-cell-counts)
   - [4.3 The fixed-subtree Euler calculation](#43-the-fixed-subtree-euler-calculation)
-  - [4.4 The explicit elliptic projector](#44-the-explicit-elliptic-projector)
+  - [4.4 The explicit elliptic Euler function](#44-the-explicit-elliptic-euler-function)
 - [5. The unit fundamental lemma](#5-the-unit-fundamental-lemma)
   - [5.1 Split inner forms](#51-split-inner-forms)
   - [5.2 A ramified quaternion place](#52-a-ramified-quaternion-place)
@@ -37,10 +37,10 @@
   - [7.3 Central translation at a division place](#73-central-translation-at-a-division-place)
   - [7.4 The first Hecke shell](#74-the-first-hecke-shell)
 - [8. Selected congruence levels](#8-selected-congruence-levels)
-  - [8.1 Segments and depth](#81-segments-and-depth)
-  - [8.2 A triangular finite-count argument](#82-a-triangular-finite-count-argument)
-  - [8.3 The selected level theorem](#83-the-selected-level-theorem)
-  - [8.4 The scalar-reduction boundary](#84-the-scalar-reduction-boundary)
+  - [8.1 Conjugation averaging](#81-conjugation-averaging)
+  - [8.2 Extending functions on the invariant quotient](#82-extending-functions-on-the-invariant-quotient)
+  - [8.3 The invariant-level transfer theorem](#83-the-invariant-level-transfer-theorem)
+  - [8.4 Congruence depth and scalar reduction](#84-congruence-depth-and-scalar-reduction)
 - [9. Special and dihedral type functions](#9-special-and-dihedral-type-functions)
   - [9.1 Type idempotents and matrix coefficients](#91-type-idempotents-and-matrix-coefficients)
   - [9.2 Special packets](#92-special-packets)
@@ -120,7 +120,13 @@ $$
 \tag{1.3}
 $$
 
-All quotient measures are defined by $dh=dt\,d\dot h$.  These compact-unit choices, rather than an unnamed canonical measure, are responsible for the residue-degree factor that appears below.
+The center $F^\times$ has multiplicative measure $\operatorname{vol}(\mathcal O^\times)=1$.  All quotient measures are defined by $dh=dt\,d\dot h$.  Quotienting first by the center identifies the measure on $E^\times\backslash H$ with the iterated measure on
+
+$$
+(E^\times/F^\times)\backslash(H/F^\times),
+$$
+
+so the local integrals below have exactly the projective normalization used in Book 110's global geometric distribution.  These compact-unit choices, rather than an unnamed canonical measure, are responsible for the residue-degree factor that appears below.
 
 Test functions are complex-valued, locally constant, and compactly supported.  If a central character is imposed, the equivalent compact-mod-center formulation is obtained by the usual central averaging; every formula below then lies in a fixed determinant or reduced-norm shell.  We state the compactly supported form because it keeps point values and volumes visible.
 
@@ -138,9 +144,9 @@ $$
 
 has zero split regular orbital integrals and has orbital integral $-f(E/F)$ on an integral elliptic unit class with centralizer $E^\times$.  Since $\mathbf1_{\mathcal O_D^\times}$ has division-side orbital integral $f(E/F)$, equation (1.4) is the unit fundamental lemma in the present normalization.
 
-Third, the same tree calculation identifies the unique alternating line in the Iwahori algebra and extends, by finite segment and congruence Fourier sums, to the selected $K_0$, $K_1$, special, and tame dihedral functions required in global comparison.  Fourth, regular, singular, and central contributions are kept separate: the regular transfer sign is $-1$, the normalized singular germ is compatible, and central terms are compared with their actual quotient-volume coefficients.
+Third, the same tree calculation gives a second, odd-determinant kernel supported on the edge-reversing Iwahori coset.  These two parity kernels, together with conjugation averaging on the compact projective division group, transfer every selected finite-level and type function.  This avoids a false shortcut: the orbital integrals of length-$j$ segment stabilizers do not depend only on one integer called depth, so an unspecified triangular matrix of segment counts would not prove a level fundamental lemma.  Fourth, regular, singular, and central contributions are kept separate: the regular transfer sign is $-1$, the normalized singular germ is compatible, and central terms are compared with their actual quotient-volume coefficients.
 
-The restriction to selected positive-depth functions is substantive.  Ramified dyadic wild types carry data not captured by the tame finite Fourier comparison.  No assertion about them will be smuggled into the theorem.
+The geometric averaging construction transfers an arbitrary compactly supported division function.  The restriction to selected positive-depth packets is instead spectral: ramified dyadic wild types carry character data not supplied by Book 85's tame finite Fourier comparison.  We construct their orbital transfers but make no unsupported claim identifying the corresponding split representation.
 
 ## 2. Matching classes and measures
 
@@ -242,7 +248,7 @@ $$
 
 Moreover, $\det(z\gamma)=z^2\det\gamma$ and $\operatorname{Nrd}(z\delta)=z^2\operatorname{Nrd}\delta$, so central translation preserves matching.  Thus every unit-shell lemma immediately yields all even valuation translates.
 
-Inversion also preserves matching.  If $f^\vee(h)=f(h^{-1})$, then unimodularity and the change $x\mapsto x^{-1}$ give
+Inversion also preserves matching.  If $f^\vee(h)=f(h^{-1})$, then directly from the definition
 
 $$
 O_{h^{-1}}(f^\vee)=O_h(f).
@@ -261,15 +267,15 @@ The construction is useful even though the fundamental functions below are expli
 
 ### 3.2 A rank-two slice
 
-Fix a regular $h_0\in H$, let $T=H_{h_0}$, and choose an $F$-linear complement $\mathfrak q$ to $\mathfrak t$ in $\mathfrak h$.  For sufficiently small compact-open neighborhoods $U\subset\mathfrak q$ and $V\subset T$, consider
+Fix a regular $h_0\in H$, let $T=H_{h_0}$, and choose an $F$-linear complement $\mathfrak q$ to $\mathfrak t$ in $\mathfrak h$.  A sufficiently small compact-open neighborhood of $0$ in $\mathfrak q$ maps, by $X\mapsto T(1+X)$ after shrinking so that $1+X$ is invertible, homeomorphically onto a compact-open neighborhood $\overline U$ of the identity coset in $T\backslash H$.  For a sufficiently small compact-open neighborhood $V$ of $h_0$ in $T$, consider
 
 $$
-\Phi:T\backslash H\times V\longrightarrow H,
+\Phi:\overline U\times V\longrightarrow H,
 \qquad (\dot x,t)\longmapsto x^{-1}tx.
 \tag{3.1}
 $$
 
-At $(1,h_0)$ its differential sends $(X,Y)$ to
+At $(T,h_0)$ its differential, in the quotient coordinate just chosen, sends $(X,Y)$ to
 
 $$
 (1-\operatorname{Ad}(h_0^{-1}))X+Y.
@@ -277,11 +283,11 @@ $$
 
 The first summand is invertible on $\mathfrak q$ precisely because $h_0$ is regular, while the second spans $\mathfrak t$.  Hence the differential is invertible.  The nonarchimedean inverse function theorem, proved by successive approximation in coordinates, gives neighborhoods on which (3.1) is a homeomorphism and analytic diffeomorphism onto its image.
 
-Its Jacobian in the orbit direction is $|D_H(t)|$ up to the constant imposed by our fixed coordinate measures.  Shrinking $V$, absorb the constant into a test function on $U$.  This is the concrete rank-two form of semisimple descent.
+Its Jacobian in the orbit direction is $|D_H(t)|$ up to the constant imposed by our fixed coordinate measures.  Shrinking $V$, absorb that constant into a test function on $\overline U$.  This is the concrete rank-two form of semisimple descent.
 
 ### 3.3 Prescribing an orbital integral locally
 
-Let $a(t)$ be a locally constant compactly supported function on $V$.  Choose $b\in C_c^\infty(U)$ with integral one relative to the quotient coordinate.  On the image of (3.1) define
+Let $a(t)$ be a locally constant compactly supported function on $V$.  Choose $b\in C_c^\infty(\overline U)$ with integral one relative to the quotient coordinate.  On the image of (3.1) define
 
 $$
 f(x^{-1}tx)=a(t)b(\dot x)J(t)^{-1},
@@ -343,7 +349,9 @@ $$
 \tag{4.2}
 $$
 
-Here $T_v$ and $T_e$ mean the compact stabilizers after the common scalar direction is removed.  Formula (4.2) contains the factor $q+1$ because $\operatorname{vol}(I)=(q+1)^{-1}$.  Each geometric edge has two orientations with the same stabilizer.  Therefore
+Here $T_v=T\cap xKx^{-1}$ and $T_e=T\cap xIx^{-1}$ for representatives of the corresponding lattice or chain.  They are compact even though the scalar direction of $T$ is not: a nonunit scalar does not stabilize an actual lattice.  Formula (4.2) contains the factor $q+1$ because $\operatorname{vol}(I)=(q+1)^{-1}$.
+
+There is one small equivariant subtlety.  The two orientations of a geometric edge need not be two different $T$-orbits: a ramified torus uniformizer interchanges them.  Nevertheless one half of the oriented groupoid count is always the geometric-edge count.  If the two orientations are separate, this is obvious.  If an element of $T$ reverses the edge, the oriented stabilizer has index two in the setwise stabilizer, and the factor $1/2$ converts the reciprocal stabilizer volumes.  Consequently
 
 $$
 O_\gamma\left(\mathbf1_K-\frac{q+1}{2}\mathbf1_I\right)
@@ -351,7 +359,7 @@ O_\gamma\left(\mathbf1_K-\frac{q+1}{2}\mathbf1_I\right)
 \tag{4.3}
 $$
 
-where the right side is the weighted number of vertex orbits minus the weighted number of geometric-edge orbits.
+where the right side is the equivariant weighted number of vertex orbits minus the weighted number of geometric-edge orbits.  This observation is what makes (4.3) valid also for the edge-inverting core of a ramified torus.
 
 This is an identity of finite sums for elliptic $\gamma$.  For split $\gamma$, truncate the fixed tube to distance $N$ from a base vertex, form the alternating sum, and then pass to the quotient by $T$.  Boundary vertices and edges pair, so the stable value is again (4.3).  No convergence is hidden in the notation.
 
@@ -376,11 +384,13 @@ $$
 
 **Proof strategy.**  Prune finite branches from the fixed subtree.  Removing a terminal vertex together with its incident edge changes neither the weighted Euler sum nor the stabilizer ratio.  What remains is the minimal subtree of the torus.
 
-**Proof.**  In the split case the torus preserves an apartment.  The quotient of that apartment by the valuation lattice is a circle in the weighted cell complex, hence has Euler characteristic zero.  Every extra fixed branch is finite modulo $T$ and can be pruned in vertex-edge pairs.  This proves the first assertion, including elements close to the center whose fixed set is a thick tube.
+**Proof.**  Pruning must be done equivariantly.  A terminal geometric edge orbit and its terminal vertex orbit have the same compact stabilizer unless an edge inversion occurs; in the inversion case the half-oriented convention just proved inserts exactly the compensating index two.  Removing such an orbit pair therefore changes neither side of (4.3).  Iteration reduces the fixed subtree to the minimal $T$-invariant core.
 
-Suppose $E/F$ is unramified.  Its unit group fixes one distinguished vertex and no edge issuing from it is fixed by a residue-regular generator.  A generator of a smaller order fixes a larger finite subtree, but pruning returns to the distinguished vertex.  The valuation image of $E^\times$ in $\mathbf Z=v(\det G)$ is $2\mathbf Z$, so there are two determinant-parity positions in the full centralizer quotient; our unit determinant shell retains one weighted vertex.  Hence the value is $1=f(E/F)/2$.
+In the split case that core is an apartment.  The valuation quotient of $T=F^\times\times F^\times$ translates along it.  A fundamental cycle has one weighted vertex and one weighted geometric edge, with equal stabilizers, so its Euler value is zero.  This proves the first assertion, including elements close to the center: their fixed tubes differ from the apartment by branch orbits already removed by pruning.
 
-Suppose $E/F$ is ramified.  The minimal $E^\times$-invariant set is the midpoint of an edge.  An $E$-uniformizer exchanges its endpoints.  In the quotient this geometric edge has one vertex orbit with stabilizer index two relative to the edge stabilizer; its weighted Euler value is $1/2$.  Again all additional fixed branches prune.  Since $f(E/F)=1$, this is (4.5).  The argument uses only the valuation image and the tree, so it remains valid for separable ramified quadratic extensions in residue characteristic two.  $\square$
+Suppose $E/F$ is unramified.  The projective torus $E^\times/F^\times$ fixes the vertex represented by $\mathcal O_E$.  This is the entire core.  Its compact stabilizer is $\mathcal O_E^\times$, of volume one, so the core contributes $1$.  A generator of a nonmaximal order fixes extra finite branches, but equivariant pruning removes them.  Since $f(E/F)=2$, this is $f(E/F)/2$.
+
+Suppose $E/F$ is ramified.  The core is one geometric edge.  An $E$-uniformizer exchanges its endpoints, so the endpoints form one $T$-orbit and the two oriented core edges also form one $T$-orbit.  Both oriented stabilizers are $\mathcal O_E^\times$ of volume one.  The vertex contribution is therefore $1$, while one half of the oriented-edge contribution is $1/2$.  Their difference is $1/2=f(E/F)/2$.  Extra branches prune as before.  The proof uses only the action of a valuation-one element and hence remains valid for every separable ramified quadratic extension, including residue characteristic two.  $\square$
 
 The factor $1/2$ is not arbitrary.  It records the edge inversion by a ramified torus.  Omitting it is the common source of a false claim that one scalar multiple of $\mathbf1_K$ transfers to the quaternionic unit in both ramification types.
 
@@ -393,11 +403,11 @@ $$
 
 and (4.5) is immediate.
 
-For a ramified example with odd residue characteristic, write $E=F(\tau)$ with $\tau^2=u\varpi$ and take $\gamma=a+b\tau$ with $a,b\in\mathcal O^\times$.  The minimal $E^\times$-invariant set is an edge whose two endpoint lattices differ by the action of a ramified uniformizer.  That uniformizer exchanges the endpoint homothety classes.  Hence the two vertex contributions form one orbit, while the edge is fixed as an unoriented cell.  The stabilizer index is two, leaving Euler weight $1/2$.  In residue characteristic two the square-root model may fail, but a valuation-one element of a separable ramified quadratic field acts on the same edge core, so the argument is unchanged.
+For a ramified example with odd residue characteristic, write $E=F(\tau)$ with $\tau^2=u\varpi$ and take $\gamma=a+b\tau$ with $a,b\in\mathcal O^\times$.  The minimal $E^\times$-invariant set is an edge whose two endpoint lattices differ by the action of a ramified uniformizer.  That uniformizer exchanges both endpoints and both orientations.  Thus the quotient has vertex weight $1$ and half-oriented edge weight $1/2$, leaving Euler value $1/2$.  In residue characteristic two the square-root model may fail, but a valuation-one element of a separable ramified quadratic field acts on the same edge core, so the argument is unchanged.
 
 Finally take $\gamma=\operatorname{diag}(a,b)$ with $a,b\in\mathcal O^\times$.  Its torus fixes the standard apartment.  If $v(a-b)=c$, the element itself fixes a tube of radius governed by $c$, but the diagonal torus translates along the apartment.  A finite quotient of a length-$N$ portion has equally many new vertices and new edges at both ends.  Letting $N$ grow leaves Euler value zero.  This explains why checking only distinct reduction eigenvalues would prove too little: the same cancellation must persist when $a\equiv b\pmod{\mathfrak p^c}$ for arbitrarily large $c$.
 
-### 4.4 The explicit elliptic projector
+### 4.4 The explicit elliptic Euler function
 
 Define
 
@@ -529,11 +539,19 @@ $$
 \tag{6.3}
 $$
 
-The two characters of this finite two-cell algebra are the trivial and sign characters.  Only the sign direction is discrete; the trivial direction belongs to the parabolically induced constituent.  We do not claim that these two cells exhaust the full affine Iwahori algebra.
+The two characters of this finite two-cell algebra send $\tau_w$ to $q$ and $-1$.  They are the trivial and sign characters.  The sign character is the $I$-fixed line of Steinberg, while both characters occur together in the two-dimensional $I$-fixed module of a generic unramified principal series.  We do not claim that these two cells exhaust the full affine Iwahori algebra.
 
 ### 6.2 The alternating Iwahori line
 
-The function $e_{\mathrm{EP}}$ of (4.4) can be viewed as the alternating cellular trace of the tree: vertices contribute positively and unoriented edges negatively.  Because an unoriented edge has two orientations, its coefficient is $(q+1)/2$.  This alternating line is independent of the chosen standard edge up to conjugacy.
+The function $e_{\mathrm{EP}}$ of (4.4) can be viewed as the alternating cellular trace of the tree: vertices contribute positively and unoriented edges negatively.  Because an unoriented edge has two orientations, its coefficient is $(q+1)/2$.  This alternating line is independent of the chosen standard edge up to conjugacy.  It is not the sign idempotent.  Since $\mathbf1_K=\mathbf1_I+\mathbf1_{IwI}$,
+
+$$
+e_{\mathrm{EP}}
+=\frac1{q+1}\left(\tau_w-\frac{q-1}{2}e_I\right).
+\tag{6.3a}
+$$
+
+Its values under the trivial and sign characters of the two-cell algebra are $1/2$ and $-1/2$.  Thus its trace on the full two-dimensional unramified principal-series $I$-module is zero, while $-2e_{\mathrm{EP}}$ has trace one on the Steinberg line and trace $-1$ on the one-dimensional determinant constituent.  The latter trace is why global comparison must separately remove norm and determinant characters.
 
 For split regular $\gamma$ with distinct reduction eigenvalues, Book 111's direct count gives
 
@@ -550,7 +568,7 @@ so $O_\gamma(e_{\mathrm{EP}})=0$.  The tree proof extends this cancellation to a
 **Theorem 6.1 (Iwahori fundamental lemma).**
 
 1. At a split inner-form place, every function in the Iwahori algebra transfers to the identical function under a compatible identification $D^\times\simeq G$.
-2. At a division place, the discrete quotient of the two-cell Iwahori test space inside $K$ is one-dimensional for the selected transfer.  Its alternating generator $e_{\mathrm{EP}}$ has
+2. At a division place, the alternating Euler function $e_{\mathrm{EP}}$ has
 
 $$
 O_\gamma(e_{\mathrm{EP}})=0
@@ -567,7 +585,7 @@ $$
 
 Consequently $-2e_{\mathrm{EP}}$ transfers to the division unit with sign $-1$.
 
-**Proof.**  The split assertion is termwise equality.  At a division place, the trivial two-cell character is detected by split principal-series orbital data and cannot have a division counterpart.  Quotienting it out leaves the alternating cellular line.  Equations (4.5) and (5.3) give (6.4).  Within the vertex-edge space, the values on a regular-reduction split class and an unramified elliptic class are independent; hence the two residue counts determine both coefficients and leave precisely the displayed line.  The fixed-tube argument extends its vanishing from regular reduction to all split depths.  $\square$
+**Proof.**  The split assertion is termwise equality.  At a division place, equations (4.5) and (5.3) give (6.4).  Within the vertex-edge space, requiring zero orbital integral on a regular-reduction split class and the displayed value on an unramified elliptic class determines the two coefficients up to the stated normalization.  The fixed-tube argument extends split vanishing from regular reduction to all depths, and the edge-core calculation supplies the ramified value.  $\square$
 
 ### 6.4 Convolution and normalization checks
 
@@ -629,7 +647,7 @@ O_\delta(\mathbf1_C)=f(E/F)\mathbf1_C(\delta).
 \tag{7.4}
 $$
 
-The regular patching proposition constructs a split-side transfer on every compact subset away from the center.  For the invariant shells used here one can do better: express the support conditions through $v(n)$ and congruences in $(t,n)$, decompose them into finitely many tree-depth strata, and take the corresponding alternating vertex-edge sums.  Pruning again leaves $f(E/F)/2$, while the congruence indicator is constant on the fixed core.  Multiplication by $-2$ gives (7.4) with the transfer sign.
+The regular patching proposition constructs a split-side transfer on every compact subset away from the center.  For invariant shells one can do better and remain uniform at the singular boundary: extend the shell's value as a locally constant function of $(t,n)$ and multiply it by the appropriate even or odd parity kernel.  Chapter 8 proves this construction.  Since the multiplier is constant along an orbit, the unit or edge-reversing calculation immediately gives (7.4) with the transfer sign.
 
 Thus the unit lemma is not isolated.  It is the depth-zero member of a family of invariant shell identities.  The selected higher-depth members are made explicit in Chapters 8 and 9.
 
@@ -643,120 +661,228 @@ $$
 \tag{7.5}
 $$
 
-Hence its orbital integral is the weighted number of stable vertices together with a selected line in $L/\varpi L$.  If the reduction has two distinct eigenvalues, two lines contribute; if its characteristic polynomial is irreducible, none does.  This direct finite count agrees on two split copies of $G$ and supplies the first nontrivial check of (7.3).
+Hence its orbital integral is the weighted number of stable vertices together with a selected line in $L/\varpi L$.  If the reduction has two distinct eigenvalues, two lines contribute; if its characteristic polynomial is irreducible, none does.  This direct finite count agrees on two split copies of $G$ and supplies the first nontrivial check of (7.3).  It is not, by itself, the division-place odd-shell transfer: the whole spherical double coset contains split elements.
 
-At a division place an element of odd reduced-norm valuation lies in a ramified quadratic torus.  Its valuation quotient has one class.  The corresponding split function is obtained from oriented-edge displacement one, with the alternating endpoint correction.  Pairing all noncore branches leaves one core edge with weight $-1$, exactly the negative of the division integral.  This is the odd-shell analogue of Lemma 4.1.
+The correct odd kernel uses the edge-reversing coset.  Put
+
+$$
+\eta=\begin{pmatrix}0&1\\ \varpi&0\end{pmatrix}.
+\tag{7.6}
+$$
+
+Then $\eta^2=\varpi I_2$ and a direct multiplication shows $\eta I\eta^{-1}=I$.  Thus every element of $\eta I$ reverses the underlying standard edge.  Define
+
+$$
+f_{\mathrm{odd}}=-(q+1)\mathbf1_{\eta I}.
+\tag{7.7}
+$$
+
+**Proposition 7.1 (odd-shell fundamental kernel).**  If $\gamma$ is split regular, then $O_\gamma(f_{\mathrm{odd}})=0$.  If $\gamma$ is elliptic with integral trace and determinant valuation one, then its centralizer is ramified and
+
+$$
+O_\gamma(f_{\mathrm{odd}})=-1.
+\tag{7.8}
+$$
+
+On the division side, every regular $\delta$ with $v_D(\delta)=1$ has ramified centralizer and
+
+$$
+O_\delta(\mathbf1_{\Pi\mathcal O_D^\times})=1,
+\tag{7.9}
+$$
+
+because $\Pi\mathcal O_D^\times$ is exactly the conjugation-invariant set $\{d:v_D(d)=1\}$.  Consequently (7.7) is the signed transfer of the invariant odd unit shell.
+
+**Proof.**  A split semisimple element acts on the tree either with a fixed apartment or by a nonzero translation along its apartment; it cannot reverse an edge.  Its orbit therefore misses $\eta I$, proving the first assertion.
+
+If $v(\det\gamma)=1$ and $\gamma$ is elliptic integral, then $v(\operatorname{tr}\gamma)>0$: otherwise the reduction of its polynomial has two distinct roots $0$ and $\overline{\operatorname{tr}\gamma}$ and Hensel lifting makes the polynomial split.  Its characteristic polynomial is therefore Eisenstein.  Hence $E=F[\gamma]$ is ramified, $\mathcal O[\gamma]=\mathcal O_E$, and the fixed core is one edge.  The two orientations of that edge form one $E^\times$-orbit because a valuation-one element interchanges them.  The oriented stabilizer is $\mathcal O_E^\times$, of volume one.  The double-coset count used in (4.2) therefore gives
+
+$$
+O_\gamma(\mathbf1_{\eta I})=\operatorname{vol}(I)=\frac1{q+1},
+$$
+
+which proves (7.8).  Finally $v_D(E^\times)=\mathbf Z$ for a ramified quadratic field, so the quotient in the division calculation has one valuation class.  Conjugation invariance of the saturated shell gives (7.9), exactly as in (5.3).  $\square$
+
+Central translation of (7.7) treats every odd determinant shell.  Together with (7.2), the even and odd kernels now cover both components of $D^\times/F^\times$; no fictitious central square root of $\varpi$ is needed.
 
 ## 8. Selected congruence levels
 
-### 8.1 Segments and depth
+### 8.1 Conjugation averaging
 
-The subgroup $K_0(\mathfrak p^n)$ stabilizes a length-$n$ segment of the tree.  Its index and volume are
+The level problem becomes cleaner if one first separates spectral normalization from orbital data.  Let $f_D\in C_c^\infty(D^\times)$.  The projective group $D^\times/F^\times$ is compact.  Choose probability Haar measure $d\bar x$ on it and put
 
 $$
-[K:K_0(\mathfrak p^n)]=q^{n-1}(q+1),
-\qquad
-\operatorname{vol}(K_0(\mathfrak p^n))
-=\frac1{q^{n-1}(q+1)}.
+f_D^{\natural}(d)
+=\int_{D^\times/F^\times}f_D(x^{-1}dx)\,d\bar x.
 \tag{8.1}
 $$
 
-The subgroup $K_1(\mathfrak p^n)$ remembers a generator at the terminal quotient, and
+The function $f_D^{\natural}$ is locally constant, compactly supported, and conjugation invariant.  Averaging changes neither orbital nor representation traces:
 
 $$
-[K:K_1(\mathfrak p^n)]=q^{2n}-q^{2n-2}.
+O_\delta(f_D^{\natural})=O_\delta(f_D),
+\qquad
+\operatorname{tr}\rho(f_D^{\natural})=\operatorname{tr}\rho(f_D).
 \tag{8.2}
 $$
 
-Thus $K_0$-orbital integrals count stable segments with reciprocal stabilizer weights, while $K_1$-integrals refine the count by fixed primitive generators.  These descriptions remain correct when the reduction is scalar, where a naive eigenline count fails.
+For the first equality, insert (8.1), interchange the two compact integrals, and translate the orbit variable by $x$; quotient Haar measure is invariant.  For the second, $\rho(f_D^x)=\rho(x)^{-1}\rho(f_D)\rho(x)$, so its trace is unchanged before averaging.  The same proof works in a fixed-central-character Hecke space after passing throughout to the projective quotient.
 
-### 8.2 A triangular finite-count argument
-
-Fix a determinant shell and a depth bound $n$.  For a regular integral class define its **fixed depth** $c$ to be the largest radius of a tube around its minimal torus subtree fixed pointwise by the order $\mathcal O[\gamma]$.  Only $0\le c\le n$ can be distinguished by length-$n$ segment functions.
-
-Let $S_j$ be the normalized characteristic function of the stabilizer of a length-$j$ segment, with $S_0=\mathbf1_K$.  Let $N_{cj}$ be its weighted orbital integral on a class of fixed depth $c$.  A segment of length $j$ can lie in the fixed tube only when $j\le 2c+\epsilon$, where $\epsilon$ records whether the torus core is a vertex or an edge midpoint.  At the maximal allowable $j$, the core segment occurs with nonzero stabilizer weight.  Ordering rows by $c$ and columns by $j$ therefore makes the matrix $(N_{cj})$ triangular with nonzero diagonal after separating the vertex-core and edge-core parities.
-
-This elementary observation proves that every prescribed function of the finitely many depth strata can be realized by a unique linear combination
+If $E=F[\delta]$, conjugation invariance and (5.3) give the exact formula
 
 $$
-F=\sum_{j=0}^n a_jS_j
+O_\delta(f_D)
+=f(E/F)f_D^{\natural}(\delta).
 \tag{8.3}
 $$
 
-modulo combinations whose regular orbital integrals vanish.  The coefficients are obtained recursively from deepest stratum to shallowest.  They belong to $\mathbf Q(q)$ because every entry is a product of subgroup indices and finite stabilizer indices.
+Thus an arbitrary selected matrix coefficient has been reduced, without loss of any orbital or spectral information, to a scalar function on the division invariant quotient.
 
-The argument is a proof, not a dimension guess.  The support implication gives triangularity, and the unique core segment gives a nonzero diagonal.  At residue characteristic two one retains the two core types instead of labeling them by a discriminant square class.
+### 8.2 Extending functions on the invariant quotient
 
-It is helpful to see the first recursion steps.  At depth zero, $S_0=\mathbf1_K$ records fixed vertices.  At depth one, normalized $S_1$ records fixed oriented edges.  On a regular-reduction split class the row is proportional to
-
-$$
-(N_{00},N_{01})=(1,2),
-$$
-
-when $S_1$ is normalized to count oriented edges rather than to have subgroup volume $1/(q+1)$.  On an unramified elliptic class it is $(1,0)$.  Solving for a function which is zero on the split row and one on the elliptic row gives the vertex-minus-half-edge combination.  Restoring subgroup volumes produces $e_{\mathrm{EP}}$.
-
-At depth two, a scalar-reduction class may fix several length-two segments.  Subtract first the multiple of $S_2$ prescribed by the deepest core segment.  The remainder has no depth-two contribution and is a linear combination of the already solved depth-zero and depth-one rows.  Inductively, at stage $j$ one removes the unique core length-$j$ segment and falls back to stages $<j$.  This is ordinary backward substitution, and it shows both existence and uniqueness of the coefficients without requiring a closed but fragile formula for every stabilizer index.
-
-The $K_1$ refinement adds a finite Fourier transform rather than a new geometric obstruction.  Over each stable $K_0$ segment, primitive terminal generators form a torsor under $(\mathcal O/\mathfrak p^n)^\times$.  Projecting to a character $\eta$ uses
+Write $\mathcal Q=F\times F^\times$ for the trace--norm quotient.  On a fixed reduced-valuation shell, the map
 
 $$
-e_\eta=\frac1{|(\mathcal O/\mathfrak p^n)^\times|}
-\sum_u\eta(u)^{-1}[u].
-\tag{8.3a}
-$$
-
-Orthogonality makes the sum zero unless the torus action on the terminal generator has character $\eta$.  When it survives, the denominator cancels the size of the free unit orbit.  Thus the same triangular segment matrix remains, with each nonzero entry multiplied by an explicitly finite character sum.  This is why the selected $K_1$ functions, not only the $K_0$ characteristic functions, are covered by the theorem.
-
-### 8.3 The selected level theorem
-
-On $D^\times$, let $U_D^m=1+\mathfrak P_D^m$.  A selected invariant level function is constant on reduced valuation and on finitely many reduced trace-norm congruence strata modulo $\mathfrak p^n$.  Such a function has orbital integral
-
-$$
-f(E/F)\,f_D(\delta)
+D^\times/\!\!/D^\times\longrightarrow\mathcal Q,
+\qquad d\longmapsto(\operatorname{Trd}d,\operatorname{Nrd}d)
 \tag{8.4}
 $$
 
-when it is conjugation invariant; a type matrix coefficient is treated in Chapter 9.
+is a homeomorphism onto the closed subset consisting of division-admissible quadratic polynomials.  Here the scalar points are retained in the closure.  Injectivity is conjugacy of quadratic embeddings.  The shell $\{d:v_D(d)=m\}=\Pi^m\mathcal O_D^\times$ is compact.  Its conjugacy quotient is compact, the target is Hausdorff, and the continuous bijection onto its image is therefore a homeomorphism; its image is compact and hence closed.
 
-**Theorem 8.1 (selected congruence fundamental lemma).**  For every selected invariant division function of depth at most $n$, there is an explicitly recursive combination of the segment functions $S_0,\ldots,S_n$ and their determinant-shell translates whose split regular orbital integrals vanish and whose elliptic orbital integrals are the negatives of (8.4).  The coefficients are determined by the triangular system of Section 8.2.  The construction commutes with central translation, inversion, and norm twisting.
+We need the following elementary extension fact.
 
-**Proof.**  Partition the support by reduced valuation, trace-norm congruence, core parity, and fixed depth.  There are finitely many pieces.  On each piece, (8.4) is a prescribed constant times $f(E/F)$.  Apply the inverse triangular system separately to vertex-core and edge-core strata.  Subtract the cellular Euler combination on every split tube; its endpoint and edge contributions pair, so the split orbital integral is zero.  On an elliptic fixed subtree, pruning reduces the combination to the core, where the recursive coefficient was chosen to be $-f(E/F)f_D(\delta)$.  Disjointness of the invariant pieces lets us sum.  $\square$
+**Lemma 8.1 (clopen extension).**  Let $C$ be a compact subset of the image of (8.4), and let $a:C\to\mathbf C$ be locally constant.  There is a compactly supported locally constant function $\widetilde a$ on $\mathcal Q$ whose restriction to $C$ is $a$.
 
-This theorem is “selected” because the support is described by the finite trace-norm and segment data actually used by the global test functions.  It does not claim that every wild noninvariant coset is captured by those invariants.
+**Proof.**  The finite image $a(C)=\{c_1,\ldots,c_r\}$ gives a disjoint clopen partition $C=\bigsqcup C_i$.  Nonarchimedean affine space has a basis of compact-open boxes.  Compactness and separation of the closed sets $C_i$ allow finitely many boxes to be refined to pairwise disjoint compact-open neighborhoods $U_i$ with $U_i\cap C=C_i$.  Then $\widetilde a=\sum_i c_i\mathbf1_{U_i}$ works.  $\square$
 
-### 8.4 The scalar-reduction boundary
+Apply the lemma to $a(t(\delta),n(\delta))=f_D^{\natural}(\delta)$ on the **entire** compact invariant image of each valuation shell meeting the support, taking $a=0$ off the support inside that shell.  Put
 
-When $\bar\gamma$ is scalar, every residue line is invariant, but lifts to deeper stable segments depend on the order $\mathcal O[\gamma]$.  The number of lifts grows with fixed depth, and stabilizers shrink.  Replacing the exact count by $q+1$ therefore gives a wrong higher-level formula.
+$$
+A(h)=\widetilde a(t(h),n(h)).
+\tag{8.5}
+$$
 
-The triangular construction avoids the error.  Scalar reduction simply moves the class to a deeper row of $(N_{cj})$.  The recursive subtraction removes contributions already accounted for at greater depth.  Near the actual scalar locus the number of rows grows, but a fixed test function has bounded level, so only finitely many rows are visible.  The remaining limiting behavior is the germ calculation of Chapter 10.
+This is a conjugation-invariant multiplier on either inner form.  Most importantly, it is constant along every orbit, so
+
+$$
+O_\gamma(AF)=A(\gamma)O_\gamma(F)
+\tag{8.6}
+$$
+
+for every test function $F$.  Formula (8.6), rather than an unproved claim that segment counts depend on one depth parameter, is the mechanism that carries the unit calculation to arbitrary selected level.
+
+### 8.3 The invariant-level transfer theorem
+
+For an integer $r$, set
+
+$$
+F_{2r}=-2\mathbf1_{\varpi^rK}+(q+1)\mathbf1_{\varpi^rI},
+\tag{8.7}
+$$
+
+and
+
+$$
+F_{2r+1}=-(q+1)\mathbf1_{\varpi^r\eta I}.
+\tag{8.8}
+$$
+
+The subscript records determinant valuation.  Theorems 5.1 and Proposition 7.1 say
+
+$$
+O_\gamma(F_m)=
+\begin{cases}
+0,&\gamma\text{ split regular},\\
+-f(E/F),&\gamma\text{ elliptic of shell }m,
+\end{cases}
+\tag{8.9}
+$$
+
+where in the odd case $E/F$ is ramified and $f(E/F)=1$.
+
+**Theorem 8.2 (finite-level fundamental lemma).**  Let $f_D\in C_c^\infty(D^\times)$.  Decompose $f_D^{\natural}$ into the finitely many reduced-valuation shells meeting its support.  On shell $m$, choose an extension $A_m$ as in (8.5), and define
+
+$$
+f=\sum_m A_mF_m.
+\tag{8.10}
+$$
+
+Then $f\in C_c^\infty(G)$ and $(f,f_D)$ is matching in the signed sense (2.6)--(2.7).  The construction may be made inside the same finite trace--norm congruence depth as $f_D^{\natural}$, after increasing the depth only enough to separate the finitely many clopen pieces.  If the noncanonical extensions $A_m$ are transported along with the data, the construction is compatible with central translation, inversion, and twisting through norm.
+
+**Proof.**  The product $A_mF_m$ is compactly supported because $F_m$ is.  If $\gamma$ is split regular, every summand has zero orbital integral by (8.9).  If $\gamma\leftrightarrow\delta$ is elliptic and belongs to shell $m$, disjoint shell support, (8.6), (8.9), and the defining property of $A_m$ give
+
+$$
+O_\gamma(f)
+=-f(E/F)f_D^{\natural}(\delta)
+=-O_\delta(f_D)
+$$
+
+by (8.3).  This proves matching on every regular class.  Central translation, inversion, and twisting induce homeomorphisms of the invariant quotient and preserve the base identities by Section 2.4; transporting each chosen extension through the same homeomorphism proves the compatibility assertion.  The extension proof uses finitely many compact-open boxes, so all multipliers can be chosen at finite congruence depth.  $\square$
+
+This theorem is stronger geometrically than the selected statement needed later: it transfers every compactly supported division function.  The selected restriction reappears only when one asks which split and division representations have the character identity needed to interpret the transferred traces.  Book 85 supplies that spectral identity for special and tame dihedral packets, not for omitted primitive wild packets.
+
+In a fixed-central-character Hecke space, choose one even and one odd valuation shell as a fundamental domain for the scalar action.  Apply Theorem 8.2 to the two compact restrictions and extend the resulting functions by inverse central covariance.  Equations (2.9) and equality of determinant and reduced norm show that the extension is independent of the chosen representatives.  Thus the theorem applies exactly to the compact-mod-center type traces used below.
+
+### 8.4 Congruence depth and scalar reduction
+
+The standard level subgroups still explain the finite nature of (8.10).  The subgroup $K_0(\mathfrak p^n)$ stabilizes a length-$n$ segment, and
+
+$$
+[K:K_0(\mathfrak p^n)]=q^{n-1}(q+1).
+\tag{8.11}
+$$
+
+The subgroup $K_1(\mathfrak p^n)$ remembers a primitive terminal generator, and
+
+$$
+[K:K_1(\mathfrak p^n)]=q^{2n}-q^{2n-2}.
+\tag{8.12}
+$$
+
+Consequently every multiplier $A_m$ that is constant modulo $\mathfrak p^n$ turns (8.7) or (8.8) into a finite linear combination of characteristic functions of explicit congruence pieces.  In the original type construction, character projection on a primitive terminal generator is the finite Fourier idempotent
+
+$$
+\frac1{|(\mathcal O/\mathfrak p^n)^\times|}
+\sum_u\xi(u)^{-1}[u].
+\tag{8.13}
+$$
+
+After the division type trace containing (8.13) is conjugation-averaged, smoothness reduces that average to a finite sum on a sufficiently deep compact quotient.  Theorem 8.2 transfers this averaged function.  We do not claim that the prepared split transfer is the raw $K_1$ idempotent before averaging.
+
+When $\bar\gamma$ is scalar, every residue line is invariant, and raw segment counts proliferate with the conductor of $\mathcal O[\gamma]$.  Nothing in Theorem 8.2 replaces that exact behavior by $q+1$.  Instead the multiplier records the full trace--norm congruence class, while the parity kernel has already proved its orbital identity uniformly by equivariant pruning.  The identity therefore persists through all scalar-reduction annuli.  Chapter 10 verifies that this uniform regular matching has precisely the required singular germ.
 
 ## 9. Special and dihedral type functions
 
+The geometric transfer of Chapter 8 was valid for every nonarchimedean local field.  In this chapter we impose $\operatorname{char}F=0$, exactly as in Book 85, because the selected Jacquet--Langlands character theorem used to identify representation traces was proved there under that hypothesis.
+
 ### 9.1 Type idempotents and matrix coefficients
 
-Let $J\subset G$ be compact modulo center and let $\lambda$ be a finite-dimensional smooth representation of $J$.  On a fixed central-character space, its normalized type idempotent is
+Let $J\subset G$ be compact modulo center and let $\lambda$ be an irreducible finite-dimensional smooth representation of $J$.  On a fixed-central-character space, put
 
 $$
-e_\lambda(j)=\frac{\dim\lambda}{\operatorname{vol}(J/Z)}
+p_\lambda(j)=\frac1{\operatorname{vol}(J/Z)}
 \operatorname{tr}\lambda(j^{-1})
 \quad(j\in J),
 \tag{9.1}
 $$
 
-and zero off $J$.  Schur orthogonality gives
+and zero off $J$, with the prescribed inverse central covariance.  Schur orthogonality gives
 
 $$
-\operatorname{tr}\pi(e_\lambda)=\dim\operatorname{Hom}_J(\lambda,\pi).
+\operatorname{tr}\pi(p_\lambda)=\dim\operatorname{Hom}_J(\lambda,\pi).
 \tag{9.2}
 $$
 
-The same definition applies to $J'\subset D^\times$.  Equality of dimensions in (9.2) is not by itself orbital transfer; it is only a spectral check.  To prove the level fundamental lemma we compare the finite sums obtained by inserting (9.1) into the lattice-chain decompositions.
+Indeed, on each copy of $\lambda$, the operator $p_\lambda$ is $(\dim\lambda)^{-1}$ times the identity, so its operator trace is one.  The actual convolution idempotent is $(\dim\lambda)p_\lambda$; its trace is $\dim\lambda$ times the multiplicity.  Confusing these two normalizations produces a dimension error.
+
+The same definition applies to $J'\subset D^\times$.  Equality of dimensions in (9.2) is not by itself orbital transfer.  The geometric transfer is obtained by applying Theorem 8.2 to $p_{\lambda'}$; conjugation averaging preserves (9.2) by (8.2).
 
 ### 9.2 Special packets
 
-For an unramified character $\mu$, the split special representation $\operatorname{St}\otimes(\mu\circ\det)$ has its minimal line at Iwahori level, while its division companion $\mu\circ\operatorname{Nrd}$ is trivial on $\mathcal O_D^\times$.  The relevant type functions are therefore a norm twist of the pair in (5.4).  The tree proof gives their orbital transfer, and (9.2) gives trace one on the selected representations and zero on the unwanted spherical constituent.
+For an unramified character $\mu$, the split special representation $\operatorname{St}\otimes(\mu\circ\det)$ has its minimal line at Iwahori level, while its division companion $\mu\circ\operatorname{Nrd}$ is trivial on $\mathcal O_D^\times$.  The relevant functions are therefore a norm twist of the pair in (5.4).  The tree proof gives their orbital transfer and trace one on the selected representations.  The split Euler function has trace zero on a generic unramified principal series but trace $-1$ on the associated one-dimensional determinant constituent, as (6.3a) shows; removing that residual character is a separate global step.
 
-If $\mu$ is ramified of conductor $m>0$, both selected conductors are $2m$.  Twisting the depth-zero special pair by $\mu$ does not mean multiplying an unrestricted function by a nonconstant determinant character across several shells.  One first fixes a norm shell, where the character is constant on central translations, and then performs the twist.  Equation (2.9) and equality of determinant and reduced norm preserve the orbital identity.
+If $\mu$ is ramified of conductor $m>0$, both selected conductors are $2m$.  The division type trace is a compact-mod-center function supported at finite unit depth.  Choose representatives in the even and odd valuation shells, apply Theorem 8.2 there, and restore central covariance.  Equivalently, multiply each compact shell by the same character through determinant and reduced norm.  Equality of these norms on matching classes preserves (2.7).  No assertion that a ramified character is constant on an entire determinant shell is needed; it generally is not.
 
 ### 9.3 Depth-zero dihedral packets
 
@@ -776,7 +902,7 @@ $$
 
 We recall the finite proof because it is the fundamental calculation.  Regard $k_{q^2}$ as a two-dimensional $k$-space.  Projection to the $\bar\theta$-isotypic part averages multiplication operators over $k_{q^2}^\times$.  Fourier transform in the complementary one-dimensional direction has two stationary embeddings, $x$ and $x^q$; all nonstationary additive-character orbits sum to zero.  Passing to the cuspidal quotient subtracts the second Bruhat cell, producing the minus sign in (9.4).  Regularity ensures the two characters are distinct and cancels the idempotent denominator against the free torus orbit.
 
-Inflating the two finite types and decomposing the orbital integrals into the finitely many valuation positions yields the same two sums.  The quotient positions are two for the unramified torus on the division side; the split lattice count has the corresponding two embeddings.  Equations (9.3)--(9.4), with identical stabilizer volumes, prove orbital transfer of the normalized depth-zero type functions.
+Equations (9.3)--(9.4) are a spectral sign check, not an orbital proof for two preassigned type functions.  For the actual fundamental lemma, start with the division type trace $p_{\lambda'}$, average it as in (8.1), and apply Theorem 8.2.  The resulting split function has the required orbital integrals.  Its trace on the depth-zero split packet is then forced by the two signs in Weyl integration, while (9.3)--(9.4) identify that packet and verify the normalization.  This order of argument does not infer orbital transfer from equality of one representation trace.
 
 ### 9.4 Positive-depth tame packets
 
@@ -787,7 +913,7 @@ $$
 \tag{9.5}
 $$
 
-The split and division type traces reduce to finite Fourier sums on the complements of $E$ in $M_2(F)$ and $D$.  Choose $j$ with $jz=\sigma(z)j$.  The complementary line is $Ej$, and the commutator form is a scalar multiple of
+The split and division representation characters reduce to finite Fourier sums on the complements of $E$ in $M_2(F)$ and $D$.  Choose $j$ with $jz=\sigma(z)j$.  The complementary line is $Ej$, and the commutator form is a scalar multiple of
 
 $$
 (u,v)\longmapsto
@@ -814,27 +940,44 @@ Changing $a$ to $a'$ changes the quotient by the quadratic character of $a'/a$. 
 
 At several positive-depth layers one might fear a product of many minus signs.  That does not occur.  Trace-dual successive quotients away from the last active layer occur in paired hyperbolic planes, whose normalized Fourier indices multiply to $1$.  Only the anisotropic complementary quotient left by the common torus contributes to the ratio, and that quotient records the single Brauer-class difference between $M_2(F)$ and $D$.  Hence the total ratio is one $-1$, independent of depth.
 
-Near the center, extra embeddings enter the compact-induction trace.  Filter them by the largest congruence depth at which they agree with the fixed embedding.  Each graded fiber is an affine space over $k$; nonstationary fibers sum to zero, while stationary fibers have the form (9.6).  The radicals are the common torus directions and have equal cardinality on both sides.  Quotienting by them and applying (9.7) pairs every shell with sign $-1$.  This proves the identity on all regular elliptic classes, not only on the type-regular annulus.
+Near the center, extra embeddings enter the compact-induction trace.  Book 85 filters them by the largest congruence depth at which they agree with the fixed embedding.  Each graded fiber is an affine space over $k$; nonstationary fibers sum to zero, while stationary fibers have the form (9.6).  The radicals are the common torus directions and have equal cardinality on both sides.  Quotienting by them and applying (9.7) pairs every shell with sign $-1$.  This is the previously proved character identity on all regular elliptic classes, not a replacement for Theorem 8.2's orbital construction.
 
 ### 9.5 The level-specific fundamental lemma
 
-**Theorem 9.1 (special and selected dihedral fundamental lemma).**  Let $(\pi,\pi_D)$ be either a special pair or one of the depth-zero or tame positive-depth dihedral pairs constructed in Book 85.  Choose the normalized minimal type functions on the two sides, with the tame rectifier and compact-unit torus measures fixed above.  After replacing the split type function by its alternating segment projection, the functions satisfy (2.6)--(2.7).  Their central translates, contragredients, and norm twists also satisfy the same identity.
+**Theorem 9.1 (special and selected dihedral fundamental lemma).**  Let $(\pi,\pi_D)$ be either a special pair or one of the depth-zero or tame positive-depth dihedral pairs constructed in Book 85.  Let $p_{\lambda_D}$ be the normalized division type trace (9.1), with the tame rectifier included in its label.  There is a prepared split function $p_{\lambda_D}^{G}$ such that
 
-**Proof.**  Special pairs reduce to Theorems 5.1 and 6.1.  Depth-zero dihedral pairs reduce to the two stationary terms (9.3)--(9.4); all other finite Fourier terms cancel.  Positive-depth pairs reduce shell by shell to (9.6), and the cyclic-algebra norm class gives (9.7).  The alternating segment projection cancels every split tube by vertex-edge pairing.  Matching trace and norm identify support and the common torus coordinate.  Stabilizer measures agree because both are normalized by $\mathcal O_E^\times$.  Thus the only remaining ratio is $-1$, proving (2.7).  The operations in Section 2.4 prove the last assertion.  $\square$
+$$
+(p_{\lambda_D}^{G},p_{\lambda_D})
+$$
 
-The theorem excludes ramified dyadic positive-depth pairs and primitive wild packets.  In those cases the trace-dual filtration can jump and the last quotient need not be governed solely by the tame cyclic-algebra class.
+satisfies (2.6)--(2.7), and
+
+$$
+\operatorname{tr}\sigma(p_{\lambda_D}^{G})
+=\operatorname{tr}\sigma_D(p_{\lambda_D})
+=\dim\operatorname{Hom}_{J_D}(\lambda_D,\sigma_D)
+\tag{9.8}
+$$
+
+for every special or selected dihedral pair $(\sigma,\sigma_D)$ in Book 85's range with the central character prescribed by $p_{\lambda_D}$.  In particular, the common value is one for $(\pi,\pi_D)$.  Its central translates, contragredients, and norm twists satisfy the corresponding identities.  The theorem constructs a transfer of the normalized division type trace; it does not assert that an independently chosen split type idempotent has the same orbital integrals.
+
+**Proof.**  Average $p_{\lambda_D}$ by conjugation.  Equations (8.2) preserve all its orbital integrals and its trace on $\pi_D$.  Apply Theorem 8.2 shell by shell and call the resulting split function $p_{\lambda_D}^{G}$.  This proves (2.6)--(2.7) on every regular class, including the scalar-reduction annuli.
+
+Book 85 proves $\Theta_\sigma=-\Theta_{\sigma_D}$ for every selected pair on every matching regular elliptic class with the same rectifier, central character, and compact-unit torus measures.  Weyl integration now pairs the two orbital signs and gives equality of traces.  Schur orthogonality (9.2) identifies the division trace with the displayed type multiplicity, proving (9.8).  Book 85's multiplicity-one theorem makes it one for the defining pair.  Section 2.4 proves the assertions about translation, inversion, and twisting.  $\square$
+
+The geometric construction of Theorem 8.2 applies to a division type function even outside the selected packet range.  What is unavailable for ramified dyadic positive-depth and primitive wild packets is the prior character theorem needed for (9.8) and for identification of the split representation.  This is the exact boundary inherited from Book 85.
 
 ## 10. Singular germs and central terms
 
 ### 10.1 What regular matching does not say
 
-As $\gamma$ approaches a scalar $z$, $|D_G(\gamma)|$ tends to zero and $O_\gamma(f)$ may grow.  A pointwise identity on the regular set does not determine $f(z)$, nor does it by itself compare distributions supported at $z$.  Global trace formulas isolate the central term, so a defensible transfer argument must keep three assertions separate:
+As $\gamma$ approaches a scalar $z$, $|D_G(\gamma)|$ tends to zero and $O_\gamma(f)$ may grow.  A cross-inner-form identity on the regular set does not turn into a simple equality of the two point values at $z$, nor does it by itself compare the separately weighted global distributions supported at the scalar class.  Global trace formulas isolate the central term, so a defensible transfer argument must keep three assertions separate:
 
 1. equality of regular elliptic orbital integrals with sign;
 2. compatibility of their singular limits;
 3. equality of the separately weighted central distributions.
 
-No noncentral nonsemisimple class occurs in $D^\times$.  On $G$, however, the repeated-root fiber contains the regular unipotent orbit.  Its contribution is the second rank-two germ.
+In characteristic zero no noncentral nonsemisimple class occurs in $D^\times$.  In equal characteristic two a quaternion division algebra can contain inseparable quadratic subfields, but their elements are outside the regular semisimple transfer locus and are not nilpotent germs at a scalar.  On $G$, by contrast, the repeated-root fiber contains the regular unipotent orbit.  Its contribution is the second rank-two germ.
 
 ### 10.2 The two rank-two germs
 
@@ -847,7 +990,7 @@ I_{z(1+X)}(f)
 \tag{10.1}
 $$
 
-on each sufficiently small regular annulus.  Here $\Gamma_0$ is the universal square-root term and $\Gamma_{\mathrm{reg}}$ is locally constant after the Weyl normalization.  The coefficient $\mu_{\mathrm{reg},z}$ is the regular nilpotent orbital distribution translated to $z$.
+on each sufficiently small regular annulus.  Here $\Gamma_0$ is the zero-orbit square-root term for the chosen approach type and $\Gamma_{\mathrm{reg}}$ is locally constant after the Weyl normalization.  The coefficient $\mu_{\mathrm{reg},z}$ is the regular nilpotent orbital distribution translated to $z$.
 
 On the division algebra the nilpotent cone contains only zero: if $X^2=0$ in a division ring then $X=0$.  Thus
 
@@ -856,7 +999,7 @@ I_{z(1+Y)}(f_D)=\Gamma_0^D(Y)f_D(z).
 \tag{10.2}
 $$
 
-The common trace pairing and common discriminant coordinate identify $\Gamma_0$ on matching elliptic directions.  Transfer therefore requires the split regular-nilpotent coefficient to vanish and the zero-germ coefficient to have the chosen sign after the central normalization is specified.
+The coefficient functions in (10.1)--(10.2) are fixed by the declared group, torus, and nilpotent-centralizer measures; they must not be independently normalized to one.  Equality on matching regular elliptic directions first forces the split regular-nilpotent coefficient to vanish.  The remaining zero-germ terms then satisfy the relation already encoded by the regular orbital identity.  That relation is not, in general, the point-value identity $f(z)=-f_D(z)$.
 
 The assertion that there are only two split germs can be checked directly.  A nilpotent $2\times2$ matrix has characteristic polynomial $X^2$.  If it is nonzero, its image and kernel are the same one-dimensional subspace.  Choosing a vector outside the kernel and then its image gives a basis in which the matrix is
 
@@ -889,7 +1032,7 @@ $$
 
 and tends to zero as $\gamma\to z$.  The same is true on the division side with the opposite sign.  Thus the unit fundamental lemma reaches the singular boundary without an unaccounted regular-nilpotent distribution.
 
-For selected higher-level functions, the shell filtration in Section 9.4 gives the same conclusion: nonstationary affine fibers cancel, common radicals match, and the alternating segment projection kills the split nilpotent germ.
+For every finite-level transfer constructed in Theorem 8.2, the same conclusion follows without a second shell calculation.  Matching holds on all sufficiently small elliptic regular annuli, while the split orbital integral is identically zero on the split annuli.  The normalization-independent germ criterion proved in Book 111 then forces the coefficient of the regular nilpotent germ to vanish.  Thus no near-central annulus was lost in passing from the explicit parity kernels to congruence multipliers.
 
 ### 10.4 Central distributions
 
@@ -912,13 +1055,30 @@ $$
 
 with global measures and the selected central character.  Their equality is a separate volume-and-point-value identity.  One must either choose the global normalizations and scalar multiples so that (10.6) agrees, or subtract the central representations on both spectral sides.  Altering local torus measures cannot repair (10.5).
 
-For applications that demand a prescribed central value, Proposition 3.1 supplies regular corrections away from the center, while a small central neighborhood supplies a germ correction.  The two coefficients in (10.1) form a triangular $2\times2$ system: one function supported on a tiny scalar neighborhood controls $f(z)$, and an alternating vertex-edge function controls the regular nilpotent coefficient.  Solving this finite system adjusts the central term without changing the already prescribed regular elliptic values outside that neighborhood.  The global comparison must record which adjustment was chosen.
+The two-germ expansion does **not** permit one to change $f(z)$ while keeping every regular orbital integral fixed.  Indeed, if a function has zero regular orbital integrals, first taking the deep normalized limit in (10.1) kills its regular-nilpotent coefficient, and then the nonzero zero-germ coefficient kills its central value.  What can be changed is a *matching pair*: one changes the division function near $z$ and transfers that change to the split side, preserving regular matching between the two new functions.
+
+Here is the exact local operation at $z=1$.  Let $b_D$ be a conjugation-invariant bump supported in a sufficiently small neighborhood of $1$ inside the reduced-norm unit shell and let $B$ be its invariant extension from Lemma 8.1.  Then
+
+$$
+b_G=Bf_{\mathrm{ell}},
+\qquad b_D
+\tag{10.7}
+$$
+
+is a matching bump pair.  Its point values at the center are
+
+$$
+b_G(1)=(q-1)b_D(1),
+\tag{10.8}
+$$
+
+while its split regular-nilpotent germ is zero.  Central translates give the same statement at any scalar.  Adding a multiple of (10.7) changes the regular orbital data near the center on both sides but preserves their matching everywhere.  Whether a chosen global linear combination also annihilates specified norm-character traces is a separate finite interpolation problem.  Its solution and the resulting global volume coefficient must be checked in the global argument; local regular transfer alone supplies neither.
 
 ## 11. Character traces and uniqueness
 
 ### 11.1 Weyl integration with the two signs
 
-Let $(f,f_D)$ be matching and assume its singular terms have been treated as in Chapter 10.  For a selected discrete-series pair $(\pi,\pi_D)$, Weyl integration decomposes the trace into regular tori.  The split contribution on $G$ vanishes by (2.6).  On an elliptic torus, substitute
+Let $(f,f_D)$ be matching.  For a selected discrete-series pair $(\pi,\pi_D)$, Weyl integration decomposes the ordinary operator trace into regular tori.  In a fixed-central-character Hecke space this is the identical quotient formula on $H/Z$; for genuinely compact functions it is the formula on $H$.  The singular set has Haar measure zero, so no central point value is inserted into this local character integral.  The split contribution on $G$ vanishes by (2.6).  On an elliptic torus, substitute
 
 $$
 O_t(f)=-O_t(f_D),
@@ -937,17 +1097,17 @@ $$
 \tag{11.1}
 $$
 
-for every selected special or dihedral Jacquet--Langlands pair.
+for every selected special or dihedral Jacquet--Langlands pair having the central character of the matching Hecke spaces.
 
-**Proof.**  The regular Weyl integrals agree by Section 11.1.  The normalized germ bounds make the integrals locally integrable at the singular divisor.  Equation (10.3) removes the unmatched split regular-nilpotent distribution.  Central character projections make the remaining scalar action the same; when the trace formula retains an explicit central term, it is compared separately by (10.6).  Therefore no distribution remains between the two regular integrals, proving (11.1).  $\square$
+**Proof.**  Characters are locally integrable, and Weyl integration is an identity for the Haar integral defining the operator trace.  The regular set has full Haar measure.  Section 11.1 therefore compares the complete integrals: split tori contribute zero by (2.6), and the two minus signs cancel on every elliptic torus with identical Weyl order, discriminant, and torus measure.  This proves (11.1).  The germ calculation is needed for the geometric trace-formula boundary, not to add a measure-zero term to the local character integral.  $\square$
 
-For the unit pair, (11.1) says that the alternating Iwahori projector selects Steinberg on $G$, while the maximal-order unit selects its one-dimensional division companion.  For dihedral pairs it says that the matching type idempotents select corresponding multiplicity lines.
+For the unit pair, (11.1) says that the alternating Iwahori Euler function has trace one on Steinberg, matching the maximal-order unit on its one-dimensional division companion.  For dihedral pairs it says that the prepared split transfer of the normalized division type trace selects the corresponding multiplicity line.
 
 ### 11.3 Uniqueness modulo orbital null functions
 
-Transfer is not unique as a test function.  If $u\in C_c^\infty(G)$ has zero orbital integral on every regular class, then $f+u$ transfers whenever $f$ does.  Conversely, if two transfers have the same support away from the singular set, their difference has zero regular orbital integrals by definition.
+Transfer is not unique as a test function.  If $u\in C_c^\infty(G)$ has zero orbital integral on every regular class, then $f+u$ transfers whenever $f$ does.  Conversely, any two transfers of the same division function have difference with zero regular orbital integrals, directly from (2.6)--(2.7).
 
-The correct uniqueness statement is therefore uniqueness in the cocenter
+The correct elementary uniqueness statement is therefore uniqueness in the regular-orbital quotient
 
 $$
 C_c^\infty(G)\big/
@@ -955,7 +1115,7 @@ C_c^\infty(G)\big/
 \tag{11.2}
 $$
 
-The triangular segment construction chooses a concrete representative in this quotient.  Type idempotents choose another representative adapted to spectral traces.  They need not be equal as functions; their equality is the equality of the required orbital distributions.
+We do not call (11.2) the Hecke-algebra cocenter: identifying its kernel with the commutator subspace would require a separate density theorem not used here.  The extension construction of Chapter 8 chooses a concrete representative in this quotient.  A normalized split type function may choose another representative adapted to spectral traces, but Theorem 9.1 does not assert that the two functions coincide.
 
 ## 12. Archimedean transfer
 
@@ -971,7 +1131,7 @@ R_\theta=
 \quad 0<\theta<\pi.
 $$
 
-The Weyl factor is $2|\sin\theta|$.  The matching quaternion has the same trace $2r\cos\theta$ and norm $r^2$.  Split regular classes have no quaternionic partner.
+The square-root Weyl factor is $|D_G(rR_\theta)|^{1/2}=2|\sin\theta|$.  The matching quaternion has the same trace $2r\cos\theta$ and norm $r^2$.  Split regular classes have no quaternionic partner.
 
 ### 12.2 Weight-$k$ transfer
 
@@ -1006,20 +1166,23 @@ The split projector's minus sign is the alternating orientation of the two real 
 
 ### 12.3 The singular endpoints
 
-As $\theta\to0$ or $\pi$,
+At the two endpoints,
 
 $$
-\frac{\sin((k-1)\theta)}{\sin\theta}
-\longrightarrow (\pm1)^k(k-1).
+\lim_{\theta\to0}
+\frac{\sin((k-1)\theta)}{\sin\theta}=k-1,
+\qquad
+\lim_{\theta\to\pi}
+\frac{\sin((k-1)\theta)}{\sin\theta}=(-1)^k(k-1).
 $$
 
-The ordinary orbital integral has a finite elliptic limit, while multiplication by the Weyl factor makes the normalized orbital integral tend to zero.  This is compatible with the finite-place pattern (10.4).  At $k=1$ there is no discrete-series projector with the asserted properties, so the hypothesis $k\ge2$ is essential.
+The ordinary orbital integral has a finite elliptic limit, while multiplication by the square-root Weyl factor makes the normalized orbital integral tend to zero.  This is compatible with the finite-place pattern (10.4).  At $k=1$ there is no discrete-series projector with the asserted properties, so the hypothesis $k\ge2$ is essential.
 
 ## 13. Assembly for global comparison
 
 ### 13.1 Restricted tensor products
 
-Let $F$ now be a number field and $D$ a quaternion algebra.  At almost every finite split place choose the common hyperspecial unit.  At a finite division place choose the pair (5.4), or the selected level pair of Theorem 9.1.  At a distinguished real division place choose (12.1)--(12.2).  At the remaining finitely many places use identical split functions or the regular patching construction.
+Let $F$ now be a number field and $D$ a quaternion algebra.  At almost every finite split place choose the common hyperspecial unit.  At a finite division place choose the pair (5.4), or a finite-level pair from Theorem 8.2 or 9.1.  At a real division place choose (12.1)--(12.2).  At the remaining finitely many places use identical split functions or the regular patching construction.  The assembly below is conditional on Book 110's stated two-sided strong-cuspidality hypothesis; in the global route treated there, the distinguished factor is a real discrete-series projector.  If no such real factor is present, another input satisfying that hypothesis must be supplied before Book 110's geometric formula can be invoked.
 
 The resulting restricted tensors
 
@@ -1044,7 +1207,17 @@ $$
 
 for the regular elliptic global term, with the archimedean ramified places included.  A quaternion algebra over a number field is ramified at an even number of places, so the total sign is $+1$.  This parity follows from the product formula for local invariants of a quaternion algebra.  Hence the elliptic geometric sums agree term by term once the common torus-volume coefficient is identified.
 
-The split and nonsemisimple terms on the $G$ side vanish because at least one selected local factor has zero split orbital integrals and zero parabolic transform.  The division side has no split classes and no noncentral nilpotent class.  Absolute convergence established in Book 110 permits the termwise comparison.  Central terms remain the explicitly separate calculation (10.6).
+A rational regular class with no quaternionic partner is split at some ramified place; its local orbital integral then vanishes by (2.6).  The nonsemisimple and parabolic terms disappear for a different reason: Book 110 groups them by rational stable lines and applies the two-sided zero parabolic transform of the distinguished strongly cuspidal factor.  The finite Euler function (5.4) need not itself have zero parabolic transform, and zero split regular orbital integrals alone would not prove the required unipotent cancellation.
+
+The division side has no split classes and no noncentral nilpotent class.  Absolute convergence established in Book 110 permits termwise comparison of the elliptic series.  The scalar term is not automatic: the global functions must additionally satisfy
+
+$$
+\operatorname{vol}([G/Z])f(1)
+=\operatorname{vol}([D^\times/Z])f_D(1),
+\tag{13.3}
+$$
+
+in the chosen global measures, or both sides must be projected away from the corresponding determinant and norm characters.  Matching bumps from (10.7) are the local device available for that final interpolation.  Without this extra condition, regular transfer proves equality of elliptic terms but not equality of the complete geometric distributions.
 
 ### 13.3 The normalization ledger
 
@@ -1059,11 +1232,14 @@ The entire comparison can be audited in one table.
 | quotient measure | $dh=dt\,d\dot h$ |
 | Iwahori | $\operatorname{vol}(I)=1/(q+1)$ |
 | geometric edge | two orientations, producing $1/2$ |
+| odd kernel | $-(q+1)\mathbf1_{\eta I}$ on determinant valuation one |
 | Weyl factor | $|D_H(h)|=|\Delta(h)/n(h)|$ |
 | division quotient | $\operatorname{vol}(E^\times\backslash D^\times)=f(E/F)$ |
 | regular orbital sign | $O_G=-O_D$ at division places |
 | character sign | $\Theta_G=-\Theta_D$ for selected packets |
 | trace sign | the two signs cancel |
+| parabolic cancellation | supplied globally by Book 110's strongly cuspidal factor |
+| scalar term | separate condition (13.3), not a consequence of regular transfer |
 
 Rescaling a group or torus measure changes the corresponding row and must be propagated through every orbital integral, formal degree, and global coefficient.  The formulas are consistent precisely because no row is changed in isolation.
 
@@ -1071,9 +1247,9 @@ Rescaling a group or torus measure changes the corresponding row and must be pro
 
 Several tempting shortcuts are false.
 
-Raw maximal-compact units do not transfer at a division place: their orbital integrals are $1$ versus $f(E/F)$.  Regular elliptic matching alone does not kill principal-series traces; split orbital vanishing is necessary.  Equality of trace and determinant does not include inseparable quadratic subalgebras in residue characteristic two; regular semisimplicity must be retained.  Residue eigenlines do not compute scalar-reduction orbital integrals at positive depth; full stable segments and their stabilizers are required.  Equality of representation traces does not determine central point values.  Finally, the tame Fourier-index proof does not cover ramified dyadic wild types.
+Raw maximal-compact units do not transfer at a division place: their orbital integrals are $1$ versus $f(E/F)$.  Regular elliptic matching alone does not kill principal-series traces; split orbital vanishing is necessary.  Equality of trace and determinant does not include inseparable quadratic subalgebras in residue characteristic two; regular semisimplicity must be retained.  Residue eigenlines do not compute scalar-reduction orbital integrals at positive depth.  Equality of one representation trace does not prove orbital transfer, and the normalized type trace differs by a factor of $\dim\lambda$ from the actual type idempotent.  Finally, the tame Fourier-index proof identifies selected representation characters but does not cover ramified dyadic wild types.
 
-These are boundaries of the theorem, not missing steps inside it.  The unit and Iwahori lemmas hold in every residue characteristic for separable regular classes because their proof uses the tree and valuation indices.  The selected positive-depth lemma has exactly the tame scope of the prior type construction.
+These are boundaries of the theorem, not missing steps inside it.  The even and odd parity kernels and the finite-level orbital transfer hold in every residue characteristic for separable regular classes because their proof uses the tree, invariant quotient, and valuation indices.  The selected positive-depth **spectral interpretation** has exactly the tame scope of the prior type construction.
 
 ## 14. Final synthesis
 
@@ -1098,8 +1274,12 @@ $$
 \mathbf1_{\mathcal O_D^\times}.
 $$
 
-The same cellular mechanism proves the Iwahori statement and, after replacing vertices and edges by finite segments, the selected congruence statements.  Special type functions are norm twists of the alternating Iwahori projector.  Depth-zero dihedral functions reduce to the two residue-field embeddings, and positive-depth tame functions reduce to complementary finite Fourier forms whose cyclic-algebra norm classes differ by $-1$.  Congruence-shell filtration carries that comparison all the way to the near-central annuli.
+The same cellular mechanism gives the Iwahori statement and the odd edge-reversing kernel $-(q+1)\mathbf1_{\eta I}$.  Conjugation averaging on the compact projective division group preserves both orbital and representation traces.  A locally constant division class function extends from the closed elliptic invariant quotient to trace--norm space; multiplying that extension by the appropriate even or odd kernel gives the selected congruence transfer, including every scalar-reduction annulus.  This is the finite-level fundamental lemma.
 
-The singular audit is equally explicit.  The split regular-nilpotent germ vanishes by vertex-edge cancellation; normalized elliptic integrals tend to zero; central point values remain a separate distribution with their actual global quotient volumes.  At the real place the sine quotient supplies the same transfer sign.  Globally, local ramification signs occur an even number of times, elliptic terms match orbit by orbit, and the selected cuspidal factor removes the unmatched nonelliptic geometry.
+For spectral interpretation, the unramified special case begins with the alternating Iwahori Euler function.  Depth-zero dihedral character identities reduce to the two residue-field embeddings, and positive-depth tame identities reduce to complementary finite Fourier forms whose cyclic-algebra norm classes differ by $-1$.  These are genuine prior inputs from Book 85.  Combined with the newly constructed orbital transfer, their second minus sign gives trace one on the corresponding prepared split type function.
 
-We have therefore constructed, rather than postulated, the matching functions required for rank-two global comparison: hyperspecial units at split places, the Euler--Iwahori unit at division places, spherical and central shells, selected congruence functions, special projectors, tame dihedral type functions, and the real discrete-series projectors.  Their Haar normalizations, regular orbital terms, singular germs, central qualifications, and transfer signs now form one closed local-to-global package.
+The singular audit is equally explicit.  The split regular-nilpotent germ vanishes by vertex-edge cancellation, and the general finite-level transfer inherits this vanishing from the two-germ criterion.  Normalized elliptic integrals tend to zero, while central point values remain a separate distribution with their actual global quotient volumes.  A matching bump may alter both local functions near the center, but no function with all regular orbital integrals zero can independently change its central value.  At the real place the sine quotient supplies the same transfer sign.
+
+Globally, local ramification signs occur an even number of times and elliptic terms match orbit by orbit.  Book 110's distinguished strongly cuspidal factor, not the finite Euler function alone, removes the unmatched parabolic and nonsemisimple geometry.  Equality of complete geometric distributions additionally requires the scalar identity (13.3) or projection away from determinant and norm characters.
+
+We have therefore constructed, rather than postulated, the matching functions required for rank-two global comparison: hyperspecial units at split places, the Euler--Iwahori even unit at division places, the odd edge-reversing kernel, spherical functions at split places, selected congruence and prepared type transfers, and the real discrete-series projectors.  Their Haar normalizations, regular orbital terms, singular germs, central qualifications, and transfer signs now form one closed local-to-global package, with the global scalar condition stated rather than silently assumed.
