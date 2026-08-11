@@ -101,8 +101,8 @@ $$
 Thus the desired transfer becomes ordinary restriction. This does not trivialize the
 theory. One must invoke the local parameter correspondence that canonically attaches a
 selected parameter to a smooth representation, check that restriction preserves the
-relation defining monodromy, and then, when the restricted parameter remains selected,
-use the correspondence over $L$ to return to one and only one irreducible
+relation defining monodromy, prove that the restricted parameter remains in the
+selected range, and then use the correspondence over $L$ to return to one and only one irreducible
 representation of $\mathrm{GL}_2(L)$. One must also translate
 restriction back into visible
 representation theory: Frobenius eigenvalues, principal-series inducing characters,
@@ -126,11 +126,12 @@ $$
 and normalize $v_K(\varpi_K)=1$ and $|x|_K=q_K^{-v_K(x)}$. Put
 $n=[L:K]$, $e=e(L/K)$, and $f=f(L/K)$, so $n=ef$ and
 $q_L=q_K^f$. The Galois group $\Gamma=\operatorname{Gal}(L/K)$ is
-cyclic. Coefficients lie in an algebraically closed field $C$ of characteristic zero
-containing all values and square roots that occur. Whenever Haar measure, the complex
-variable $s$, or an analytic epsilon factor is used, take $C=\mathbf C$; the purely
-algebraic restriction, Mackey, and Clifford arguments work over the stated general
-coefficient field.
+cyclic. Representations and parameters have complex coefficients. This is the
+coefficient field of the selected correspondence established earlier and keeps the
+analytic local factors in the same category. The restriction, Mackey, and Clifford
+arguments remain valid over any algebraically closed characteristic-zero field
+containing the required values and square roots, but no coefficient-extension theorem
+is needed here.
 
 We use normalized parabolic induction. Thus
 
@@ -174,20 +175,12 @@ all kernels are unchanged by this simultaneous inversion.
 
 Let $\operatorname{Irr}_{\mathrm{sel}}\mathrm{GL}_2(K)$ consist of determinant
 characters, irreducible principal series, special representations, and the tame
-dihedral supercuspidals covered by the selected local correspondence. For a fixed
-extension $L/K$, put
-
-$$
-\operatorname{Irr}_{\mathrm{sel}}(K;L)
-=\{\pi\in\operatorname{Irr}_{\mathrm{sel}}\mathrm{GL}_2(K):
-\operatorname{rec}_K(\pi)|_{W_L}\text{ is selected over }L\}.
-$$
-
-The smooth transfer constructed in this book will be denoted
+dihedral supercuspidals covered by the selected local correspondence. The smooth
+transfer constructed in this book will be denoted
 
 $$
 \operatorname{BC}_{L/K}:
-\operatorname{Irr}_{\mathrm{sel}}(K;L)
+\operatorname{Irr}_{\mathrm{sel}}\mathrm{GL}_2(K)
 \longrightarrow
 \operatorname{Irr}_{\mathrm{sel}}\mathrm{GL}_2(L).
 $$
@@ -200,14 +193,15 @@ $$
 =\operatorname{Res}^{W_K}_{W_L}\operatorname{rec}_K(\pi).
 $$
 
-Every principal, character, and special parameter belongs to this domain. For a tame
+Every principal, character, and special parameter remains selected. For a tame
 dihedral parameter, a quadratic field either splits after scalar extension or remains
-an unramified or tamely ramified quadratic field. In the latter case the norm-pulled
-character must still satisfy the selected admissibility condition. Regularity alone
-does not automatically supply that condition after an arbitrary even ramified base
-change. The Weil--Deligne restriction always exists; the notation
-$\operatorname{BC}_{L/K}\pi$ denotes a smooth representation here only when the
-restricted parameter is selected. Chapter 8 makes this boundary explicit.
+an unramified or tamely ramified quadratic field. The evident norm-pulled character
+can fail the chosen-pair admissibility condition even when it remains regular. That
+does not make the parameter unselected: in precisely that exceptional ramified case
+its projective image is Klein four, and the same irreducible parameter has an
+admissible presentation from the unramified quadratic extension. Chapter 8 proves
+this relabeling instead of mistaking failure of one label for failure of the local
+correspondence.
 
 The substance lies in making every term and every consequence precise. Restriction can
 turn an irreducible two-dimensional Weil representation into a sum of characters, so
@@ -761,7 +755,7 @@ restriction involves no circular appeal to a global base-change theorem.
 We can now define the transfer promised in Chapter 1.
 
 **Definition 5.1.** For
-$\pi\in\operatorname{Irr}_{\mathrm{sel}}(K;L)$ with
+$\pi\in\operatorname{Irr}_{\mathrm{sel}}\mathrm{GL}_2(K)$ with
 $\operatorname{rec}_K(\pi)=(r,N)$, its **local base change to $L$** is
 
 $$
@@ -778,9 +772,10 @@ compatible with the local parameter dictionary would give the same answer.
 The defining relation for $N$ remains true because
 $\lVert\cdot\rVert_K|_{W_L}=\lVert\cdot\rVert_L$. Restriction preserves open
 inertial kernel. Whenever necessary, its Frobenius semisimplification is understood;
-this does not change inertia, monodromy, or any local factor used here. Membership in
-$\operatorname{Irr}_{\mathrm{sel}}(K;L)$ says precisely that the rank-two dictionary
-over $L$ produces a unique selected irreducible smooth representation.
+this does not change inertia, monodromy, or any local factor used here. Split and
+special restrictions are visibly selected. Section 8.4 proves the only remaining
+point, namely that restriction of a selected tame-dihedral parameter is again
+selected even when its most obvious quadratic label is not admissible.
 
 ### 5.2 Independence of embeddings and representatives
 
@@ -845,8 +840,9 @@ minimality assumption in the identity itself.
 ### 5.4 Transitivity in towers
 
 Let $K\subset L\subset M$ be finite extensions, with the relevant cyclic hypotheses
-when one wants Galois invariance. Assume that the restricted parameter is selected at
-each displayed stage. Since restriction of Weil--Deligne representations is
+when one wants Galois invariance. In the selected families considered here every
+displayed restriction remains selected by Section 8.4. Since restriction of
+Weil--Deligne representations is
 transitive,
 
 $$
@@ -1189,10 +1185,11 @@ pulls back through the norm in the opposite leg of the square.
 Regularity and selected admissibility are different tests. If after base change
 $\theta_M/\theta_M^{\tau_M}$ is nontrivial but is trivial on principal units while
 $M/L$ is ramified, the induced Weil representation is irreducible, but the pair is
-not among the admissible tame labels constructed in Book 81. The parameter restriction
-is still completely computed by the preceding formula. Unless that parameter is
-identified with some other selected label, the present book does not attach a smooth
-base change to it.
+not itself one of the admissible tame labels constructed in Book 81. Section 8.4
+shows that the parameter then has a second presentation using the unramified
+quadratic extension of $L$. Thus the displayed parameter computation remains valid,
+but the smooth supercuspidal must be named using that alternative admissible pair
+rather than the raw pair $(M/L,\theta_M)$.
 
 It can happen that $\theta\ne\theta^\tau$ but
 $\theta_M=\theta_M^{\tau_M}$. The difference character
@@ -1280,29 +1277,62 @@ E\not\subset L
 (\theta/\theta^\tau)|_{W_M}\ne1.
 $$
 
-When the condition holds and $(M/L,\theta_M)$ is selected admissible, the smooth base
-change is the supercuspidal $\pi_L(M,\theta_M)$. More generally, the same conclusion
-holds whenever the irreducible restricted parameter has a selected label. When the
+When the condition holds, the smooth base change is supercuspidal. It is
+$\pi_L(M,\theta_M)$ if this evident pair is admissible; otherwise the same parameter
+has the admissible unramified presentation constructed in the proof below. When the
 condition fails, the restricted parameter is a sum of two characters and the smooth
 lift is an irreducible principal series. The two characters are distinct, and an
 element of the cyclic quotient exchanges them. Their ratio goes to its inverse, so it
 cannot be the $\Gamma$-fixed nonquadratic character $\nu_L^{\pm1}$; the
-determinant-character boundary cannot occur here. If the
-parameter is irreducible but has no selected label, the parameter formula remains
-valid but a smooth lift lies outside the scope established here.
+determinant-character boundary cannot occur here. In particular, every restriction
+of a selected tame-dihedral parameter is again selected.
 
 **Proof strategy.** Mackey restriction supplies the formulas in Sections 8.2 and 8.3.
 An induction from an index-two subgroup is irreducible exactly when its inducing
-character is not fixed by the nontrivial coset. The selected local parameter
-dictionary turns irreducibility into supercuspidality exactly when the resulting pair
-remains selected.
+character is not fixed by the nontrivial coset. The only extra point is to prove that
+failure of admissibility for the evident regular ramified pair changes the label, not
+the selected status of the parameter.
 
 **Proof.** In the disjoint case, Mackey gives
 $\operatorname{Ind}_{W_M}^{W_L}\theta_M$. Its two restricted characters on $W_M$
 are $\theta_M$ and $\theta_M^{\tau_M}$, so the index-two irreducibility criterion is
 exactly the displayed nontriviality of $\theta/\theta^\tau$ on $W_M$. In the contained
-case Mackey gives two characters directly. Chapter 4 and the admissibility
-qualification complete the stated smooth translations. $\square$
+case Mackey gives two characters directly.
+
+It remains to justify selectedness in the regular disjoint case. The ramification
+index of $M/L$ divides that of $E/K$, so $M/L$ is unramified or tame; in residue
+characteristic two it is necessarily unramified. An unramified regular quadratic pair
+is admissible. Suppose therefore that $M/L$ is ramified tame and that the regular
+pair $(M/L,\theta_M)$ is not admissible. Put
+
+$$
+\delta_M=\theta_M/\theta_M^{\tau_M}.
+$$
+
+Then $\delta_M$ is nontrivial but trivial on $U_M^1$. The ramified quadratic
+automorphism acts trivially on the residue field and sends a uniformizer to its
+negative modulo $U_M^1$; since $-1$ is fixed, $\delta_M(-1)=1$. Hence it acts
+trivially on every value seen by $\delta_M$. On the other hand
+$\delta_M^{\tau_M}=\delta_M^{-1}$, so $\delta_M^2=1$. The projective image of
+$\operatorname{Ind}_{W_M}^{W_L}\theta_M$ is consequently the Klein four group: one
+involution is represented by the two diagonal character lines and another exchanges
+them.
+
+The three index-two subgroups of that projective image give three quadratic
+presentations of the same irreducible Weil representation. Besides the ramified field
+$M$, one of the corresponding quadratic extensions $M'/L$ is unramified. Restriction
+to $W_{M'}$ gives two distinct characters, say $\xi$ and $\xi^{\tau'}$, and therefore
+
+$$
+\operatorname{Ind}_{W_M}^{W_L}\theta_M
+\cong\operatorname{Ind}_{W_{M'}}^{W_L}\xi.
+$$
+
+The pair $(M'/L,\xi)$ is regular and unramified, hence selected admissible. This is
+exactly the exceptional multiple-presentation analysis in the injectivity proof of
+the selected correspondence. Thus every irreducible restriction has a selected
+label, while every reducible restriction is already a selected split parameter.
+Chapter 4 now gives all the asserted smooth translations. $\square$
 
 The criterion involves the character, not just the fields. Two supercuspidals built
 from the same quadratic $E/K$ can behave differently after the same disjoint cyclic
@@ -1362,8 +1392,7 @@ is cyclic and the representation has dimension two, so no additional case surviv
 ### 9.2 The selected cuspidality criterion
 
 **Theorem 9.1 (selected cuspidality criterion).** If $\pi$ is a selected tame
-dihedral supercuspidal representation of $\mathrm{GL}_2(K)$ whose restricted
-parameter is selected over $L$, then
+dihedral supercuspidal representation of $\mathrm{GL}_2(K)$, then
 
 $$
 \operatorname{BC}_{L/K}\pi\text{ is supercuspidal}
@@ -1406,8 +1435,8 @@ parameter. The loss of discreteness is not caused by a conductor accident; it is
 by the appearance of invariant lines after passage to a subgroup.
 
 For odd $[L:K]$, Clifford theory rules out that appearance, so every selected
-supercuspidal parameter remains irreducible. Whenever the resulting quadratic pair is
-still selected admissible, its smooth lift remains supercuspidal. For even degree, the
+supercuspidal parameter remains irreducible and its smooth lift remains selected
+supercuspidal. For even degree, the
 quadratic subextension of $L/K$ is the only possible field across which the two
 constituents can be exchanged. This observation will align perfectly with splitting
 of a quaternion algebra in Chapter 13.
@@ -2124,8 +2153,10 @@ exceptional larger fibers belong to the split semisimple row.
 
 ### 13.1 One parameter for two inner forms
 
-Let $D$ be the quaternion division algebra over $K$. Book 84 gives local
-Jacquet--Langlands in the selected range: special twists and tame dihedral packets. If
+For this chapter assume in addition that $K$ has characteristic zero, and let $D$ be
+the quaternion division algebra over $K$. This is exactly the field hypothesis under
+which Book 84 proves local Jacquet--Langlands in the selected range: special twists
+and tame dihedral packets. If
 $\rho$ is a selected representation of $D^\times$ and
 
 $$
@@ -2182,8 +2213,9 @@ as an unramified quadratic extension does.
 
 If $n$ is odd, restriction of the irreducible parameter of a selected dihedral packet
 remains irreducible by Clifford theory, while $\operatorname{Sp}_2$ remains special.
-Thus $\Phi|_{W_L}$ is still indecomposable. If it remains in the selected range, it
-corresponds to a selected discrete-series representation of $\mathrm{GL}_2(L)$.
+Thus $\Phi|_{W_L}$ is still indecomposable. Section 8.4 shows that it remains in the
+selected range, so it corresponds to a selected discrete-series representation of
+$\mathrm{GL}_2(L)$.
 Since $D_L=D\otimes_KL$ is again division, there is then a unique selected $\rho_L$
 with
 
@@ -2192,14 +2224,13 @@ $$
 =\operatorname{BC}_{L/K}(\operatorname{JL}_K\rho).
 $$
 
-This defines division-side base change in odd degree whenever the restricted common
-parameter remains selected.
+This defines division-side base change in odd degree.
 
 If $n$ is even, $D_L$ is split, so its multiplicative group is already
 $\mathrm{GL}_2(L)$. The restricted common parameter directly defines the parameter-
 level scalar-extension transfer from the inner form; this terminology does not mean tensoring the
-original representation space from $K$ to $L$. When the restricted parameter remains
-selected, the result may be discrete or
+original representation space from $K$ to $L$. The restricted parameter is selected
+and the result may be discrete or
 principal. Steinberg parameters
 stay special. A selected dihedral supercuspidal parameter may split into two
 characters, and then the result is an irreducible principal series. There is no division algebra
@@ -2447,8 +2478,8 @@ other families; here its exact change is dictated by the two exposed character l
 Let $E/K$ be quadratic and let $L/K$ be cyclic of odd degree, so $E\cap L=K$. Put
 $M=EL$, and let $\theta$ be a selected admissible character. Its restricted parameter
 remains irreducible: if it split, Clifford theory would produce an orbit of size two
-inside the odd group $\Gamma$.
-If $(M/L,\theta\circ N_{M/E})$ remains selected admissible, therefore
+inside the odd group $\Gamma$. If the evident pair
+$(M/L,\theta\circ N_{M/E})$ is admissible, then
 
 $$
 \operatorname{BC}_{L/K}\pi_K(E,\theta)
@@ -2461,9 +2492,9 @@ $$
 (\theta/\theta^\tau)|_{W_M}\ne1.
 $$
 
-Here as well, the displayed smooth symbol requires selected admissibility of the new
-pair. Without it, the induction formula still computes the irreducible restricted
-parameter but the prior smooth correspondence does not name it.
+Here as well, the displayed pair label requires its admissibility. If the restricted
+parameter is irreducible but this evident ramified label is not admissible, the
+unramified relabeling proved in Theorem 8.1 names the same selected supercuspidal.
 
 Choose, for instance, a character whose quotient with its conjugate has order prime to
 $[M:E]$; then it cannot become trivial on $W_M$. Conversely, if that quotient factors
@@ -2483,7 +2514,7 @@ special, and selected tame-dihedral range there is a unique transfer
 
 $$
 \operatorname{BC}_{L/K}:
-\operatorname{Irr}_{\mathrm{sel}}(K;L)
+\operatorname{Irr}_{\mathrm{sel}}\mathrm{GL}_2(K)
 \longrightarrow\operatorname{Irr}_{\mathrm{sel}}\mathrm{GL}_2(L)
 $$
 
@@ -2497,7 +2528,7 @@ $$
 It has the following properties.
 
 1. It is canonical, independent of embeddings and Frobenius lifts, and transitive in
-   towers whenever every displayed restricted parameter remains selected.
+   towers.
 2. Its central character is $\omega_\pi\circ N_{L/K}$; it commutes with arbitrary
    character twists and contragredients.
 3. For a spherical input it raises Satake parameters to their $f$th powers and sends
@@ -2542,8 +2573,9 @@ It has the following properties.
    extension as an unrestricted admissible parameter. Fibers are selected extension
    classes; $X_{L/K}$ acts by twisting and acts simply transitively when the parameter
    has scalar endomorphisms and one selected extension exists.
-10. It is compatible with the selected local Jacquet--Langlands correspondence
-    through restriction of the common parameter. If $D/K$ is quaternion division,
+10. When $K$ has characteristic zero, it is compatible with the selected local
+    Jacquet--Langlands correspondence through restriction of the common parameter.
+    If $D/K$ is quaternion division,
     $D\otimes_KL$ remains division for odd $n$ and splits for even $n$; in the even
     case a restricted selected supercuspidal parameter may lie on the principal-series
     side.

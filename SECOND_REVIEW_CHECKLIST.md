@@ -109,7 +109,7 @@ any resulting corrections.
 - [x] 083. Characters and Dihedral Types on Quaternion Division Algebras
 - [x] 084. Local Jacquet–Langlands
 - [x] 085. Local Jacquet–Langlands for Special and Dihedral Packets
-- [ ] 086. Cyclic Base Change: Local Theory
+- [x] 086. Cyclic Base Change: Local Theory
 - [x] 087. Quaternion Algebras over Number Fields
 - [x] 088. Orders in Quaternion Algebras
 - [x] 089. Automorphic Forms on Definite Quaternion Algebras
