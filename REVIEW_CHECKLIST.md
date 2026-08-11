@@ -253,7 +253,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
 - [x] 187. Brauer Induction for Automorphy Families
 - [x] 188. Brauer Characters and Effectivity of Compatible Families
-- [ ] 189. Compatible Systems over the Base Field
+- [x] 189. Compatible Systems over the Base Field
 - [ ] 190. The Fixed-Three Integral Local Theory
 - [x] 191. Quintic Cyclotomic Units and Kummer Arithmetic
 - [x] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
