@@ -71,7 +71,7 @@ any resulting corrections.
 - [x] 045. Affine Group Schemes and Hopf Algebras
 - [x] 046. Finite Flat Commutative Group Schemes
 - [x] 047. Cartier Duality
-- [ ] 048. Finite-Flat Galois Representations
+- [x] 048. Finite-Flat Galois Representations
 - [x] 049. Elliptic Curves over DVRs
 - [x] 050. Tate Curves and Multiplicative Reduction
 - [ ] 051. Torsion and Tate Modules of Elliptic Curves
