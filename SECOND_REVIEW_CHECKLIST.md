@@ -43,7 +43,7 @@ any resulting corrections.
 - [x] 017. Cotangent Complexes, Perfect Complexes, and Determinant Lines
 - [x] 018. Formal Schemes, GAGA, and Algebraization
 - [x] 019. Finite Étale Covers and Fundamental Groups
-- [ ] 020. Étale Sheaves and Cohomology on Curves
+- [x] 020. Étale Sheaves and Cohomology on Curves
 - [x] 021. Derived Étale and ℓ-adic Cohomology
 - [x] 022. Proper and Smooth Base Change
 - [x] 023. Étale Duality and Trace Maps in Low Dimension

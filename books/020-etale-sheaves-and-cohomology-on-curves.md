@@ -678,7 +678,7 @@ $$
 \longrightarrow0
 $$
 
-when $\mathcal F$ has the evident extension behavior, and more generally the localization triangle gives the same long exact formalism. For a sheaf $\mathcal F$ on $C$ it yields
+for every sheaf $\mathcal F$ on $C$: exactness may be checked on geometric stalks. Its associated localization triangle yields
 
 $$
 \cdots\to H_c^r(U,j^*\mathcal F)
@@ -766,7 +766,7 @@ $$
 H^1(C,\mu_n)\cong\operatorname{Pic}(C)[n].
 $$
 
-The degree map $\operatorname{Pic}(C)\to\mathbf Z$ has torsion-free target, so the right side lies in $\operatorname{Pic}^0(C)$. We use only divisor and line-bundle language here; representability of $\operatorname{Pic}^0$ and its polarization belong to the next book.
+The degree map $\operatorname{Pic}(C)\to\mathbf Z$ has torsion-free target, so the right side lies in $\operatorname{Pic}^0(C)$. We use only divisor and line-bundle language here; representability of $\operatorname{Pic}^0$ and its polarization belong to a later volume.
 
 For an open curve $U=C\setminus Z$, units can have zeros and poles at $Z$. The divisor sequence
 
@@ -817,15 +817,22 @@ $$
 \to\operatorname{Br}(C)[n]\to0.
 $$
 
-The Brauer group of such a curve is zero. One proof passes to its function field, uses residues at closed points, and observes that an unramified Brauer class has zero residues and hence comes from the algebraically closed constant field. Consequently degree induces
+The curve trace theorem of Book 23 gives a normalized isomorphism
 
 $$
-H^2(C,\mu_n)\cong\mathbf Z/n\mathbf Z. \tag{9.2}
+\operatorname{Tr}_C:H^2(C,\mu_n)\xrightarrow{\sim}\mathbf Z/n\mathbf Z. \tag{9.2}
 $$
 
-Indeed $\operatorname{Pic}^0(C)$ is divisible by $n$ when $n$ is invertible, so $\operatorname{Pic}(C)/n$ is measured exactly by degree modulo $n$.
+Its normalization says that the Kummer cycle class of a closed point is sent to its degree. Thus the composite
 
-Equation (9.2) is the origin of the trace map. A closed point has cycle class equal to its degree in $\mathbf Z/n\mathbf Z$; over an algebraically closed field every closed point has degree one. The full dimension of $H^1(C,\Lambda)$ will follow from duality and the genus calculation below.
+$$
+\operatorname{Pic}(C)/n\longrightarrow H^2(C,\mu_n)
+\xrightarrow{\operatorname{Tr}_C}\mathbf Z/n\mathbf Z
+$$
+
+is degree modulo $n$. A point supplies a degree-one class, so this composite is surjective. Since the trace is an isomorphism and the Kummer map is injective, every degree-zero line bundle is divisible by $n$ in $\operatorname{Pic}(C)$; equivalently $\operatorname{Pic}^0(C)/n=0$. The point class also makes the Kummer map onto, and the displayed Kummer sequence then gives $\operatorname{Br}(C)[n]=0$. This proves exactly the prime-to-characteristic Brauer vanishing used here, without importing a residue theorem for the function field.
+
+Equation (9.2) is the finite-level curve trace in concrete form. A closed point has cycle class equal to its degree in $\mathbf Z/n\mathbf Z$; over an algebraically closed field every closed point has degree one. The full dimension of $H^1(C,\Lambda)$ will follow from the genus calculation below.
 
 ## 10. Dimension and finiteness on curves
 
@@ -1289,30 +1296,37 @@ $$
 
 Indeed localization subtracts one degree-zero skyscraper contribution for each missing point.
 
-For a lisse sheaf $\mathcal F$ of rank $d$, the Grothendieck--Ogg--Shafarevich formula is
+There is also a coefficient-independent tame formula that follows from the curve presentations already available in Book 21. Suppose $Z\ne\varnothing$ and a lisse sheaf $\mathcal F$ of rank $d$ is tamely ramified along $Z$. The tame affine-curve presentation represents the cohomology of $\mathcal F^\vee(1)$ by a two-term finite complex whose terms have dimensions $d$ and $d(2g+r-1)$. Its Euler characteristic is therefore $d(2-2g-r)$. Compactly supported duality identifies this Euler characteristic with that of $R\Gamma_c(U,\mathcal F)$, so
 
 $$
-\chi_c(U,\mathcal F)=d\,\chi_c(U,\Lambda)
--\sum_{z\in Z}\operatorname{Swan}_z(\mathcal F). \tag{15.4}
+\chi_c(U,\mathcal F)=d\,\chi_c(U,\Lambda). \tag{15.4}
 $$
 
-Thus in the tame case the compactly supported Euler characteristic is simply $d\,\chi_c(U,\Lambda)$, even when tame inertia has few invariants. The invariant deficits $d-\dim M^{I_z}$ appear instead when one computes $\chi(C,j_*\mathcal F)$; together with Swan conductors they form the local Artin conductor. Systematic conductor theory belongs elsewhere, but distinguishing these two formulas prevents tame boundary monodromy from being counted twice.
+The dimensions of the presentation terms, not the ranks of its differentials, explain why tame inertia invariants do not enter (15.4). They do enter $\chi(C,j_*\mathcal F)$ through the boundary stalks. For wild ramification an additional local correction is necessary; proving that conductor formula requires input not developed in this volume, and no wild Euler-characteristic formula is being asserted here.
 
 ### 15.4 The dimension $2g$
 
-For a smooth proper geometrically connected curve, $H^0(C,\Lambda)=\Lambda$ and duality gives $H^2(C,\Lambda)=\Lambda(-1)$, each of dimension one. Combining this with (15.2),
+The dimension calculation is available before duality and supplies the promised proof of (15.2). Over a separably closed field choose a point $x\in C$ and put $U=C\setminus\{x\}$. The affine-curve presentation proved in Book 21 and applied to relative curves in Book 22 gives
 
 $$
-2-\dim H^1(C,\Lambda)=2-2g,
+H^0(U,\Lambda)=\Lambda,\qquad
+H^1(U,\Lambda)=\Lambda^{2g},\qquad
+H^q(U,\Lambda)=0\quad(q>1).
 $$
 
-so
+Purity at $x$ identifies $R\Gamma_x(C,\Lambda)$ with $\Lambda(-1)[-2]$. In the localization sequence the residue from $H^1(U,\Lambda)$ is zero: in the curve presentation the loop about the sole puncture is the product of the $g$ commutators, so it vanishes after abelianization. Restriction consequently identifies $H^1(C,\Lambda)$ with $H^1(U,\Lambda)$, while the support generator identifies $H^2(C,\Lambda)$ with $\Lambda(-1)$. Hence
 
 $$
 \dim_\Lambda H^1(C,\Lambda)=2g. \tag{15.5}
 $$
 
-The geometric input behind (15.2) can be given algebraically. Choose a nonconstant separable map $C\to\mathbf P^1$ and apply Riemann--Hurwitz together with localization at its branch points. Away from the branch locus the cover is finite étale, so trace computes the Euler characteristic by degree. At each ramification point the deficit is the ramification contribution. Riemann--Hurwitz says precisely that the total deficit changes $2\deg(f)$ into $2-2g$. Thus (15.2) is not imported from topology; it follows from finite-map cohomology and the algebraic ramification formula.
+Together with $H^0(C,\Lambda)=\Lambda$, these three groups give
+
+$$
+\chi(C,\Lambda)=1-2g+1=2-2g,
+$$
+
+which proves (15.2) rather than assuming it from topology or from a later Euler-characteristic theorem.
 
 For $\ell^m$ coefficients, use
 
@@ -1834,13 +1848,31 @@ $$
 \Lambda^{\{\text{node}\}}. \tag{19.4}
 $$
 
-To pass from one node to the whole curve, cover $\mathcal C$ by the smooth locus and small node neighborhoods. The smooth pieces contribute no vanishing cohomology. The overlap maps assemble the local difference maps (19.4) into the incidence map
+Here is the finite calculation that passes from one node to the whole curve. Fix $m$ and write $\Lambda_m=\mathbf Z/\ell^m\mathbf Z$. Choose an étale neighborhood $B_e$ with equation $xy=\pi$ around each node, small enough to contain no other node, and cover the remaining smooth locus by finitely many étale opens whose special-fiber pieces lie on single normalized components. Refine their intersections to a finite étale hypercover through degree two. The finite-presentation and boundary calculations of Books 21 and 22 compute its double complexes on the generic and special fibers. Nonproper terms are handled by smooth local acyclicity or by the explicit annulus calculation below; properness is used only when the total comparison is identified with the cohomology of $\mathcal C$ and $C_0$.
+
+On a smooth piece, generic and special complexes agree by local acyclicity. On $B_e$, the special complex records two branch values and their difference, as in (19.4). Its generic overlap is an annulus, whose prime-to-$p$ cohomology is $\Lambda_m$ in degree zero and $\Lambda_m(-1)$ in degree one: the latter is the Kummer class of $x$. Consequently the degree-zero horizontal differential in the global Čech complex is the graph coboundary
 
 $$
-\Lambda^V\longrightarrow\Lambda^E
+ d:\Lambda_m^V\longrightarrow\Lambda_m^E,
 $$
 
-of the dual graph. A node therefore does not automatically contribute an independent global vanishing class. Relations at vertices remove the tree edges; precisely $b_1(\Gamma)$ independent annular classes remain.
+and the residue differential on the annular terms is its transpose, the graph boundary
+
+$$
+\partial:\Lambda_m^E\longrightarrow\Lambda_m^V.
+$$
+
+Changing an edge orientation changes the signs of the corresponding coordinates in both maps and changes nothing intrinsic. Thus the global comparison depends on the nodes only through the two-term graph complexes $C^\bullet(\Gamma,\Lambda_m)$ and $C_\bullet(\Gamma,\Lambda_m)$. In particular, a node does not automatically contribute an independent global class. The quotient by vertex differences is $H^1(\Gamma,\Lambda_m)$, while the compatible annular classes form $H_1(\Gamma,\Lambda_m)$; both have rank $b_1(\Gamma)$.
+
+Passing compatibly through $m$ and then tensoring with $\mathbf Q_\ell$, the Čech filtration on generic cohomology has graded pieces
+
+$$
+H^1(\Gamma,\mathbf Q_\ell),\qquad
+\bigoplus_vH^1(C_v,\mathbf Q_\ell),\qquad
+H_1(\Gamma,\mathbf Q_\ell)(-1).
+$$
+
+The same calculation on the special fiber has only the first two pieces, exactly as in (18.4). This filtered complex, not a count of nodes, is the input to invariant cycles and monodromy.
 
 This also gives a dimension check. By (18.6) and (19.2),
 
@@ -1871,6 +1903,8 @@ Let $I_K\subset G_K$ be inertia. The $\ell$-primary tame character is
 $$
 t_\ell:I_K\longrightarrow\mathbf Z_\ell(1).
 $$
+
+It sends $\sigma$ to the compatible ratios $\sigma(\pi^{1/\ell^m})/\pi^{1/\ell^m}$. This does not depend on the uniformizer: every unit of a strictly henselian discrete valuation ring has compatible $\ell$-power roots, and inertia fixes those roots.
 
 The node calculation proves the following theorem.
 
@@ -1904,13 +1938,43 @@ The node calculation proves the following theorem.
 
 Here (19.5) is intrinsic despite its compact notation: $t_\ell(\sigma)$ has twist $(1)$ and $N$ has twist $(-1)$, so their product is an endomorphism of $V$.
 
-**Proof strategy.** First compute the action locally on the annulus, then glue the local classes through the incidence complex.
+**Proof.** We compute inertia on the finite Čech complexes just constructed and then pass to the limit. On every smooth chart it is trivial by universal local acyclicity. On the annulus in $B_e$, choose compatible $\ell^m$th roots of $x$. For $\sigma\in I_K$, changing these roots multiplies them by $t_\ell(\sigma)$. Comparing the resulting two splittings of the local Kummer complex adds $t_\ell(\sigma)$ times the map from the annular quotient to the branch-difference submodule. This is the local variation map. It kills branch classes and has image in the branch-difference classes, so the composite of two local variation maps is zero.
 
-On a smooth chart, universal local acyclicity makes inertia trivial. On a node chart, compatible roots of $x$ describe the tame tower of the annulus. Wild inertia has pro-$p$ image and cannot act nontrivially on this prime-to-$p$ tower. A tame generator changes a chosen root by a root of unity, so its action is a transvection. Its logarithm is the rank-one local map from the annular class to the branch-difference class. A transvection has square-zero logarithm.
+The choices disappear after gluing. Orient the edges and give $\mathbf Q_\ell^E$ its standard edge pairing. It induces a perfect map
 
-Gluing all node charts gives a sum of these local logarithms. The incidence relations at vertices show that its independent image has dimension $b_1(\Gamma)$; the composite of two local logarithms is zero because the first lands in the graph subspace on which every local logarithm vanishes. Hence $N^2=0$ and (19.5) follows.
+$$
+\mu:H_1(\Gamma,\mathbf Q_\ell)
+\xrightarrow{\sim}H^1(\Gamma,\mathbf Q_\ell),
+$$
 
-The same gluing complex compares special classes with invariant generic classes. Its kernel is the graph cohomology and its quotient is the direct sum of component $H^1$ groups, exactly as in (18.4). Thus the map to $\ker N$ has the same graph subobject and component quotient. It is an isomorphism on both, hence an isomorphism in the middle. This proves (19.6). Finally the dimension difference computed in Section 19.2 gives $\operatorname{rank}N=b_1(\Gamma)$. $\square$
+because $\operatorname{im}d$ is the orthogonal complement of $\ker\partial$. The sum of the local variation maps is the unique filtered map that is zero on the first two displayed graded pieces and induces
+
+$$
+H_1(\Gamma,\mathbf Q_\ell)(-1)
+\xrightarrow{\mu}
+H^1(\Gamma,\mathbf Q_\ell)(-1)
+$$
+
+on the outer graded pieces. Reversing an edge changes both coordinates by $-1$, so this map is orientation independent. Denote the resulting map $V\to V(-1)$ by $N$. It factors through the top graph quotient and lands in the bottom graph subspace. Therefore $N^2=0$, its image has dimension $b_1(\Gamma)$, and its kernel is the part of the filtration consisting of the bottom and middle pieces.
+
+At finite level wild inertia acts trivially on every term: node annuli use prime-to-$p$ Kummer covers and the smooth terms are locally acyclic. The prime-to-$\ell$ part of tame inertia also acts trivially on the $\ell$-primary Kummer complex. The preceding change-of-splitting calculation therefore gives, after inverse limit and rationalization,
+
+$$
+\rho(\sigma)-1=t_\ell(\sigma)N
+$$
+
+for every $\sigma\in I_K$. It also shows that the definition is independent of the chosen compatible roots: changing them changes the local splitting but not its variation map. This proves assertions 1, 2, and 4.
+
+It remains to identify invariant classes. Since the image of $t_\ell$ is open in $\mathbf Z_\ell(1)$, the displayed inertia formula gives $V^{I_K}=\ker N$. The special-fiber sequence (18.4) and the filtered generic calculation give exact rows
+
+$$
+\begin{array}{ccccccccc}
+0&\to&H^1(\Gamma,\mathbf Q_\ell)&\to&H^1(C_0,\mathbf Q_\ell)&\to&\displaystyle\bigoplus_vH^1(C_v,\mathbf Q_\ell)&\to&0,\\
+0&\to&H^1(\Gamma,\mathbf Q_\ell)&\to&\ker N&\to&\displaystyle\bigoplus_vH^1(C_v,\mathbf Q_\ell)&\to&0.
+\end{array}
+$$
+
+Specialization is the identity on the graph complex and is the smooth specialization isomorphism on every normalized component. It gives a map between these rows that is an isomorphism on the left and right. The short five lemma makes the middle map an isomorphism, proving (19.6). $\square$
 
 The proof produces a useful filtration
 
@@ -1979,7 +2043,7 @@ $$
 
 or equivalently to $\Gamma$ being a tree. Thus a semistable curve of **compact type** has unramified $H^1$ even when the curve itself has bad reduction.
 
-This gives an important counterexample to a tempting converse. Let the special fiber be two smooth positive-genus curves meeting transversely in one point. Its graph is a tree, so $H^1$ is unramified, but the special fiber is reducible and the curve does not have good reduction in that model. Cohomology detects the toric loop part of the degeneration, not every singularity of the curve.
+This gives an important counterexample to a tempting converse. Let a strict semistable smoothing have stable special fiber consisting of two smooth positive-genus curves meeting transversely in one point. Its graph is a tree, so $H^1$ of the generic curve is unramified. The stable model is nevertheless singular; the stable-model uniqueness proved in Book 12 prevents the same generic curve from having good reduction. Cohomology detects the toric loop part of the degeneration, not every singularity of the curve.
 
 If a curve becomes semistable only after a finite extension $K'/K$, restriction to $G_{K'}$ has the form (19.5). Hence inertia over $K$ acts quasi-unipotently: after an open subgroup its action is unipotent. A finite residual action may remain before the extension. One must therefore distinguish “unramified over $K$,” “semistable over $K$,” and “potentially semistable after a finite extension.”
 
@@ -2035,7 +2099,7 @@ $$
 This notation is cohomological: $T_\ell(C)$ is the integral cohomology lattice, not a torsion-point module. The finite-level groups are finite and their reductions are surjective, so the derived-limit correction vanishes. Chapter 15 proved finite-level freeness, hence
 
 $$
-T_\ell(C)\cong\mathbf Z_\ell^{,2g},
+T_\ell(C)\cong\mathbf Z_\ell^{\,2g},
 \qquad
 \dim_{\mathbf Q_\ell}V_\ell(C)=2g. \tag{20.1}
 $$
