@@ -97,7 +97,15 @@ $$
 \right\}.
 $$
 
-Let $X_0(p)$ be the compactified modular curve and let $S_2(\Gamma_0(p);\mathbf Z)$ be its integral lattice of weight-two cusp forms. Concretely, this is the lattice of regular differentials whose expansion at the cusp $\infty$ has the form
+Let $X_0(p)$ be the compactified modular curve. We define the integral q-expansion lattice by
+
+$$
+S_2(\Gamma_0(p);\mathbf Z)
+=S_2(\Gamma_0(p);\mathbf Q)\cap\mathbf Z[[q]]
+\subset \mathbf Q[[q]].
+$$
+
+Thus its elements have the form
 
 $$
 f(q)\frac{dq}{q},
@@ -106,15 +114,15 @@ f(q)=\sum_{m\geq1}a_m(f)q^m,
 \qquad a_m(f)\in\mathbf Z.
 $$
 
-The equality between weight-two cusp forms and regular differentials, the q-expansion principle, the integral lattice criterion, and the Hecke coefficient formulas are established in Book 119. We recall each in the form needed here rather than rebuilding the full geometric theory.
+Over $\mathbf Z[1/p]$, Book 119 identifies this lattice locally with regular dualizing differentials, proves the all-cusp q-expansion criterion, and proves the good-prime Hecke coefficient formulas. Book 119 explicitly does not treat the bad-level fiber at $p$. The comparison needed there is proved in Section 6.3 below; it is not being smuggled in through the notation $S_2(\Gamma_0(p);\mathbf Z)$.
 
-For a prime $\ell\neq p$, $T_\ell$ denotes the usual normalized weight-two Hecke operator. At $p$ we write $U_p$, with
+For a prime $\ell\neq p$, $T_\ell$ denotes the usual normalized weight-two Hecke operator. At $p$ define the rational operator $U_p$ by
 
 $$
 a_m(U_pf)=a_{pm}(f).
 $$
 
-All Hecke algebras below are acting image algebras. Thus two formal operators that act identically on the cusp-form lattice are already identified. This convention, developed abstractly in Book 91, prevents irrelevant maximal ideals of a formal polynomial algebra from entering the argument.
+The displayed coefficient formula shows directly that $U_p$ preserves the q-expansion lattice; no integral correspondence at the level prime is being assumed. All Hecke algebras below are acting image algebras. Thus two formal operators that act identically on the cusp-form lattice are already identified. This convention, developed abstractly in Book 91, prevents irrelevant maximal ideals of a formal polynomial algebra from entering the argument.
 
 ### 1.3 The exact integer
 
@@ -305,7 +313,7 @@ $$
 **Proof.** Apply the transformation law obtained by differentiating $\Delta(-1/z)=z^{12}\Delta(z)$ to the two terms in (2.3). The anomalous terms are equal and cancel; the remaining terms give
 
 $$
-p(pz)^{-2}left(
+p(pz)^{-2}\left(
 G_2\left(-\frac1{pz}\right)
 -pG_2\left(-\frac1z\right)
 \right)
@@ -336,16 +344,16 @@ $$
 This is the least positive even integer $k$ for which $24\mid k(p-1)$. The eta transformation formula shows that
 
 $$
-u_p(z)=\left(\frac{\eta(pz)}{\eta(z)}\right)^{k_p}
+v_p(z)=\left(\frac{\eta(pz)}{\eta(z)}\right)^{k_p}
 \tag{2.13}
 $$
 
-is a weight-zero rational modular function on $X_0(p)$. Both conditions are necessary: $24\mid k(p-1)$ removes the eta multiplier on the unipotent generators, while evenness makes $p^k$ a rational square and removes the quadratic character. Since eta has no zeros in the upper half-plane, $u_p$ is a modular unit.
+is a weight-zero rational modular function on $X_0(p)$. Both conditions are necessary: $24\mid k(p-1)$ removes the eta multiplier on the unipotent generators, while evenness makes $p^k$ a rational square and removes the quadratic character. Since eta has no zeros in the upper half-plane, $v_p$ is a modular unit.
 
 At $\infty$ its order is
 
 $$
-\operatorname{ord}_\infty(u_p)
+\operatorname{ord}_\infty(v_p)
 =\frac{k_p(p-1)}{24}=n_p.
 \tag{2.14}
 $$
@@ -353,20 +361,20 @@ $$
 Fricke exchanges its zero and pole, so
 
 $$
-\operatorname{div}(u_p)=n_p([\infty]-[0]).
+\operatorname{div}(v_p)=n_p([\infty]-[0]).
 \tag{2.15}
 $$
 
 Logarithmic differentiation gives
 
 $$
-q\frac d{dq}\log u_p=k_pE_p.
+q\frac d{dq}\log v_p=k_pE_p.
 \tag{2.16}
 $$
 
 The signs agree with our choice $E_p=G_2-pG_2(pz)$ because $q\,d\log\eta/dq=-G_2$. Equations (2.14)--(2.16) check simultaneously the first coefficient, the Fricke sign, and the appearance of $n_p$.
 
-They do not by themselves prove the q-expansion congruence. Reducing $d\log u_p$ gives the coefficient system $k_pb_p(m)$, not $b_p(m)$, and $k_p$ need not be a unit modulo $n_p$. At $p=17$, for example, $k_p=6$ and $n_p=4$. The logarithmic derivative sees twice the desired mod-$4$ class. The divided correction of Section 6.5 is exactly what restores the missing factor. This explains both the value and the limitation of the modular-unit heuristic.
+They do not by themselves prove the q-expansion congruence. Reducing $d\log v_p$ gives the coefficient system $k_pb_p(m)$, not $b_p(m)$, and $k_p$ need not be a unit modulo $n_p$. At $p=17$, for example, $k_p=6$ and $n_p=4$. The logarithmic derivative sees twice the desired mod-$4$ class. The divided correction of Section 6.5 is exactly what restores the missing factor. This explains both the value and the limitation of the modular-unit heuristic.
 
 ## 3. Hecke eigenvalues of the Eisenstein series
 
@@ -506,16 +514,18 @@ S=S_2(\Gamma_0(p);\mathbf Z).
 \tag{4.1}
 $$
 
-For $p\geq5$, this can be defined geometrically from the relative dualizing sheaf on the integral compactification and recovered globally as the intersection of its local lattices. In the standard Tate frame it satisfies the specialized integral q-expansion identity
+The traditional geometric model uses the relative dualizing sheaf on the integral compactification. In this book we instead begin with the specialized integral q-expansion identity
 
 $$
 S=S_2(\Gamma_0(p);\mathbf Q)\cap\mathbf Z[[q]].
 \tag{4.2}
 $$
 
-The intersection is taken inside $\mathbf Q[[q]]$ at $\infty$. This one-cusp formula is stronger than the general all-cusp criterion. Its proof uses connectedness, duality, and the integral Fricke correspondence to compare the other cusp. When testing an arbitrary rational modular form not already known to be cuspidal, the safe criterion remains integrality at both cusps. The module $S$ is finite free over $\mathbf Z$.
+The intersection is taken inside $\mathbf Q[[q]]$ at $\infty$, and (4.2) is the definition of $S$. To see finiteness without assuming an integral model, choose finitely many coefficient functionals that separate the finite-dimensional rational cusp space. They embed it into $\mathbf Q^d$; the q-integral intersection lies in the inverse image of $\mathbf Z^d$, while clearing the denominators of a rational basis supplies a full sublattice. Hence $S$ is finite free. Away from $p$, the all-cusp criterion of Book 119 identifies it with the regular-dualizing lattice. At $p$, the special fiber is reducible, so a one-cusp argument from Book 119 would be invalid; the normalization and weighted-node calculation in Section 6.3 proves the required $p$-saturation. Thus agreement with the geometric model over all of $\mathbf Z$ is a conclusion of the present denominator calculation, not an unrecorded prerequisite.
 
-The essential properties, all supplied by the integral q-expansion theory, are:
+When testing an arbitrary rational modular form not already known to be cuspidal, integrality at both cusps remains the safe criterion. The special q-lattice (4.2) is available only because the object being tested is already in the rational cusp space.
+
+The essential properties, supplied by Book 119 away from $p$ and by the definitions and saturation calculation here at $p$, are:
 
 1. the map $f\mapsto(a_m(f))_{m\geq1}$ is injective and its integral image is the saturated lattice (4.2);
 2. $S$ is saturated in the rational cusp space $S_\mathbf Q$;
@@ -714,7 +724,7 @@ $$
 \tag{5.10}
 $$
 
-for a uniquely determined $d\geq1$, with the zero ring represented by $d=1$. Nothing so far determines $d$. The next chapter proves the exact integral congruence calculation that will show $d=n_p$.
+for a uniquely determined $d\geq0$, using $\mathbf Z/0\mathbf Z=\mathbf Z$ and representing the zero ring by $d=1$. Nothing so far proves that $d$ is nonzero. The next chapter computes the torsion dual; that calculation will simultaneously prove finiteness and show $d=n_p$.
 
 ### 5.5 The quotient's universal property
 
@@ -743,7 +753,7 @@ $$
 
 for every $n$. Conversely (5.13) includes the prime generators and implies (5.12). Thus $\mathbb T/I$ represents the Eisenstein eigensystem occurring inside the cuspidal acting algebra.
 
-Because every $\mathcal T_n$ is scalar modulo $I$, the structural map $\mathbf Z\to\mathbb T/I$ is surjective. Its kernel is some ideal $(d)$, recovering (5.10) without choosing a basis of $\mathbb T$. The exact index problem is therefore the problem of determining which integers act as zero on the universal cuspidal Eisenstein system.
+Because every $\mathcal T_n$ is scalar modulo $I$, the structural map $\mathbf Z\to\mathbb T/I$ is surjective. Its kernel is some ideal $(d)$, recovering (5.10) without choosing a basis of $\mathbb T$; at this stage $(d)$ could be the zero ideal. The exact index problem is therefore the problem of proving that a positive integer acts as zero and determining the least one.
 
 The rational form $E_p$ does not itself define a character of the algebra in (5.1), because that algebra acts only on cusp forms. It supplies the desired eigenvalues. The q-expansion congruence theorem decides exactly over which quotient coefficient rings those values actually occur on the cuspidal lattice.
 
@@ -770,30 +780,29 @@ $$
 
 Thus an Eisenstein coefficient system of additive order $m$ occurs in the cuspidal lattice quotient exactly when $m\mid n_p$.
 
-The rest of this chapter proves the theorem. The calculation is included because neither a rational residue argument nor abstract Hecke algebra supplies the integral denominator. Its input is a finite presentation of the homology of $X_0(p)$ and an elementary Bernoulli-sum identity.
+The rest of this chapter proves the theorem. Neither a rational residue argument nor abstract Hecke algebra supplies the integral denominator. The proof uses the boundary residue sequence, the Hasse filtration and elliptic-gerbe descent at the good-level primes, and an explicit normalization-residue determinant at the level prime.
 
 ### 6.2 The two-cusp integral lattice
 
-The rational form $E_p$ lives in
+Over $\mathbf Z[1/p]$, the rational form $E_p$ is a section of
 
 $$
-H^0\bigl(X_0(p)_\mathbf Q,\lambda^2\bigr)
-\simeq H^0\bigl(X_0(p)_\mathbf Q,
-\Omega^1(0+\infty)\bigr),
+H^0\bigl(\mathscr X_0(p)_\mathbf Q,\lambda^2\bigr)
+\simeq H^0\bigl(\mathscr X_0(p)_\mathbf Q,
+\omega_{\mathrm{dual}}(0+\infty)\bigr).
 \tag{6.3}
 $$
 
-whereas the cusp lattice is
+For $r\ne p$, the cusp lattice is locally
 
 $$
-S=H^0\bigl(\mathscr X_0(p),\lambda^2(-0-\infty)\bigr)
-\simeq H^0\bigl(\mathscr X_0(p),\omega_{\mathrm{dual}}\bigr).
+S\otimes\mathbf Z_r
+=H^0\bigl(\mathscr X_0(p)_{\mathbf Z_r},
+\omega_{\mathrm{dual}}\bigr).
 \tag{6.4}
 $$
 
-Here $\lambda$ is the Hodge line. The unrigidified compactified stack $\mathscr X_0(p)$ is essential in (6.4). At an elliptic point, a stabilizer acts on the Hodge fiber. Passing to the coarse curve before taking invariants can enlarge the apparent lattice by a factor $2$ or $3$. Away from those primes the stack is linearly reductive and no discrepancy occurs; at $2$ and $3$ it must be calculated.
-
-We need the following integral form of the two-cusp q-expansion principle. It is the central geometric lemma of the book.
+At an elliptic point a stabilizer acts on the Hodge fiber, so passing to the coarse curve before taking invariants can change the integral lattice at $2$ or $3$. We need the following precise two-cusp calculation. It also includes the bad-level saturation at $r=p$ that Book 119 does not supply.
 
 **Lemma 6.2 (two-cusp Eisenstein lattice lemma).** Fix a prime $r$ and put $a=v_r(p-1)$. Let $x\in\mathbf Q_r/\mathbf Z_r$ have order $r^s$. There is a class $g\in S_{\mathbf Q_r}/S_{\mathbf Z_r}$ satisfying
 
@@ -808,14 +817,14 @@ $$
 s\leq
 \begin{cases}
 a=0,&r=p,\\
-a,&r\geq5,\\
+a,&r\geq5,\ r\ne p,\\
 \max(0,a-1),&r=3,\\
 \max(0,a-2),&r=2.
 \end{cases}
 \tag{6.6}
 $$
 
-**Proof plan.** The q-series determines a section on the formal punctured cusp disc. The question is whether it extends across the whole integral stack as a regular dualizing form, modulo the integral lattice. Normality reduces extension to codimension one. At an ordinary point, the Tate parameter and the Hasse invariant control the only possible divided extension. At the two elliptic residual gerbes, the stabilizer action removes one factor at $3$ and two factors at $2$. At the second cusp the Fricke involution changes the sign, so the two local corrections must be compatible. Sections 6.3--6.5 carry this out prime by prime.
+**Proof plan.** The q-series fixes a rational section on the punctured cusp disc. Normality reduces extension to codimension one. At a good-level prime, the ordinary Igusa trivialization and the Hasse invariant classify q-invisible corrections; descent at the order-three and order-four elliptic gerbes determines their exact integral denominator. At the level prime, normalization of the two-component fiber reduces saturation to an explicit weighted graph determinant.
 
 The boundary mechanism comes directly from the Cartier sequence. Let $D=0+\infty$. Tensor
 
@@ -836,75 +845,104 @@ H^0(D,\lambda^2|_D)
 \xrightarrow{\delta}H^1(\omega_{\mathrm{dual}}).
 $$
 
-After inverting $6$, relative duality identifies the last module with the dual of the constants. On a connected tame fiber, $\delta$ is the sum-of-residues map. In the two Tate frames its kernel is the opposite-value line
+After inverting $6p$, relative duality identifies the last module with the dual of the constants. On a connected tame fiber, $\delta$ is the sum-of-residues map. In the two Tate frames its kernel is the opposite-value line
 
 $$
 \{(u,v):u+v=0\}.
 $$
 
-This proves two facts used below. In every characteristic a logarithmic form is cuspidal precisely when its boundary pair is zero. In tame characteristic a proposed boundary pair occurs precisely when it lies on the opposite-value line. At $2$ and $3$, stabilizer cohomology can contribute an additional boundary direction, so the tame description of the image must not be reused.
+Thus a logarithmic form is cuspidal precisely when its boundary pair is zero. In tame characteristic the opposite-value relation is the only relation. At $2$ and $3$, taking stabilizer invariants is not exact and must be calculated.
 
-To justify the last qualification, choose a finite framed cover, write the Cartier sequence there, and retain its descent action. If the stabilizer order is a unit, taking invariants is exact and gives the same lattice as the coarse curve. If it is not a unit, the first stabilizer cohomology measures the failure of exactness. Sections 6.4 and 6.5 calculate that failure on the only weight-two directions whose positive q-coefficients are invisible.
-
-We first record the ordinary-locus calculation used in every case. In characteristic $r$, let $A_r$ be the Hasse invariant. It is the scalar by which Verschiebung acts on invariant differentials, so it is a modular form of weight $r-1$ and has q-expansion $1$. The equality of the q-expansion with $1$ follows on the Tate curve because its canonical subgroup is multiplicative and Verschiebung pulls the invariant differential back to itself. Its zero locus is the supersingular locus: Verschiebung on the Hodge line is zero exactly when the elliptic curve is supersingular.
-
-Consequently $A_r$ is a unit on the ordinary locus and multiplying or dividing by it there does not change a q-expansion. If two integral forms of weights differing by $r-1$ have the same q-expansion modulo $r$, their difference is divisible by $A_r$ on the ordinary locus. At a supersingular point, the completed local ring has a parameter $A_r$ up to a unit; normality then shows that the quotient extends if and only if its vanishing order is nonnegative. This proves the elementary filtration rule:
+**Local correction lemma.** Let $r\ne p$. Among weight-two special-fiber sections whose positive expansion at $\infty$ is zero, the only possible nonzero directions are
 
 $$
-\text{division by a q-invisible Hasse factor is possible}
-\Longleftrightarrow
-\text{the supersingular vanishing permits it}.
+\begin{array}{c|c|c}
+r&\text{q-invisible direction}&(c_\infty,c_0)\\ \hline
+r\ge5&0&0\\
+3&\mathbf F_3 A_3&(t,t)\\
+2&\mathbf F_2 A_2^2&(t,t).
+\end{array}
 \tag{6.7}
 $$
 
-For higher powers $r^s$, apply the rule successively to the differences of two lifts. If a q-expansion is divisible by $r^j$, divide the difference by $r^j$, reduce modulo $r$, and test one Hasse factor. This induction is legitimate because the dualizing lattice in (6.4) is finite free and saturated. It cannot create an unrecorded $r$-torsion section.
+At $2$ the last direction contributes one elementary divisor $2$ to the saturation of the integral descent lattice, and no second divisor. At $3$ it contributes nothing to the opposite-value line.
+
+**Proof.** On the ordinary locus, trivialize the Hodge line by the differential of the canonical multiplicative subgroup. The Igusa deck character has order $r-1$. A section with constant q-expansion is invariant under that character only if its weight is $0$ modulo $r-1$. In weight two this is impossible for $r\ge5$, gives $A_3$ for $r=3$, and gives $A_2^2$ for $r=2$.
+
+Here $A_r$ is the Hasse invariant: Verschiebung induces a map on invariant differentials, and its scalar is a section of $\lambda^{r-1}$. On the Tate curve the canonical subgroup is multiplicative, so this scalar has q-expansion $1$. It vanishes exactly when the elliptic curve is supersingular. Moreover, each zero is simple. Indeed, the framed deformation ring of a supersingular elliptic curve is $W(\overline{\mathbf F}_r)[[t]]$; the connected--étale boundary of its height-two group is cut out to first order by $t$, and the Verschiebung scalar has nonzero image in $(t)/(t^2)$. Thus $A_r$ is a parameter up to a unit there.
+
+These observations also prove that the displayed list is exhaustive. If two integral sections have the same positive q-expansion modulo $r$, their difference is constant on the punctured ordinary Igusa cover, so the deck-character calculation makes it the stated Hasse direction. Division by another Hasse factor would have negative order at every supersingular point. Normality tests extension in codimension one, hence excludes it. For a congruence modulo $r^j$, divide the difference of two lifts by the largest known power of $r$ and reduce modulo $r$; repeating the same argument gives the successive Smith layers and introduces no new direction.
+
+For integral descent, choose a finite framed cover and take the Čech equalizer. Away from the elliptic residual gerbes, its group order is prime to $r$, so invariants are exact. The Hasse forms take value $1$ at both cusps, giving the displayed equal-value line. At the order-four gerbe, pass faithfully flatly to $\mathbf Z_2[i]$ and choose a Hodge frame $e$. Since $i^*e=ie$, the action on $e^2$ is $-1$. A coefficient $c$ modulo $2^j$ descends exactly when
+
+$$
+c=-c,
+\qquad 2c=0.
+\tag{6.8}
+$$
+
+The solution module is $2^{j-1}\mathbf Z_2[i]/2^j$, a single layer of order $2$; a unit coefficient cannot descend modulo $4$. There may be two framed elliptic points, but the Igusa calculation has already reduced the q-invisible space to the single global line $\mathbf F_2A_2^2$. Every gerbe tests the same coefficient and imposes the same equation (6.8), so their number does not create extra elementary divisors. The Čech equalizer is saturated everywhere else, because there all stabilizer orders are units and averaging splits the invariants. Consequently its Smith normal form adds exactly one divisor $2$ to the global lattice. At the order-three gerbes the single global line $\mathbf F_3A_3$ remains on the equal-value line and cannot meet the opposite-value line because $2$ is a unit in $\mathbf F_3$. This proves the lemma. $\square$
+
+This argument proves existence as well as obstruction: exactness of the Čech complex glues the unique permitted correction. It does not infer a global form merely from a value at one stacky point.
 
 ### 6.3 The calculation at primes at least five
 
-We first dispose of the case $r=p$. Its geometry is different because the level is not invertible, and it cannot be omitted merely because $v_p(p-1)=0$.
+We first dispose of $r=p$. This is a saturation question at the bad-level fiber, not an application of Book 119.
 
-Suppose a $p$-primary class existed. Multiplying to its first nonzero layer would give a normalized cusp form $f$ modulo $p$ with
+**Bad-level saturation lemma.** The quotient between the one-cusp q-expansion lattice and the regular-dualizing lattice on the normalized prime-level model has order prime to $p$. Consequently no $p$-primary class can satisfy (6.5).
 
-$$
-T_\ell f=(1+\ell)f\quad(\ell\neq p),
-\qquad U_pf=f,
-\qquad a_1(f)=1.
-$$
+**Proof.** The moduli problem has two normalized components in characteristic $p$, corresponding to the connected and étale choices for the cyclic subgroup. Each is the level-one coarse curve, hence a projective line, and they meet at the supersingular classes.
 
-We prove that no such form exists. The special fiber of the prime-level compactification is obtained by gluing two copies of the level-one component along the supersingular points. This follows directly from the moduli problem: on an ordinary elliptic curve a cyclic subgroup of rank $p$ is either the connected canonical subgroup or the étale Frobenius-kernel complement, giving the two components; both choices coincide precisely for supersingular curves. The completed equation at a crossing is $xy=p$ up to a unit, because the two deformation parameters of the subgroup multiply to the deformation parameter of the isogeny. Thus a regular dualizing differential is a pair of logarithmic differentials on the two normalizations with opposite residues at every supersingular node.
+Here is the local calculation rather than an appeal to a bad-level model. Frame the source and target of the universal degree-$p$ isogeny. The deformation functor of a framed supersingular elliptic curve is unobstructed of dimension one, and choosing a cyclic subgroup adds the choice of one of the connected and étale directions. Let $x$ be the scalar induced by the isogeny on invariant differentials and $y$ the scalar induced by its dual. Their images generate the cotangent lines of those two directions. The identity $\varphi^\vee\varphi=[p]$ gives $xy=p$ up to a unit; rescaling one parameter removes the unit. The resulting map from $W[[x,y]]/(xy-p)$ to the completed framed deformation ring is an isomorphism: both rings are flat relative complete intersections of dimension two, and the tangent map is an isomorphism. If $x$ is a unit the kernel is étale, and if $y$ is a unit it is connected. In characteristic $p$ these are the two branches $x=0$ and $y=0$, and they meet exactly when neither scalar is a unit, which is the supersingular case. Thus the framed completed equation is $xy=p$, and the preceding description proves both the two-component normalization and its crossing locus.
 
-Each normalized component is the level-one curve, of genus zero. Therefore such a differential is determined by its residue vector
+After removing the generic central involution, an exceptional supersingular class has effective stabilizer
 
 $$
-(\rho_E)_{E\ \mathrm{supersingular}},
+e(E)=1,\ 2,\ \text{or }3.
 $$
 
-and it is zero if every $\rho_E$ is zero. The operator $T_\ell$ acts on this vector by summing over cyclic $\ell$-isogenies. Every row has weighted degree $1+\ell$, so the constant residue vector has eigenvalue $1+\ell$.
+The stabilizer acts by opposite characters, $(x,y)\mapsto(\zeta x,\zeta^{-1}y)$. Hence the invariant parameters $X=x^{e(E)}$ and $Y=y^{e(E)}$ satisfy $XY=p^{e(E)}$; every other invariant monomial is generated by $X,Y,$ and $xy=p$. Successive blowups of $XY=p^{e(E)}$ insert $e(E)-1$ rational curves, so the resolved node is a path of $e(E)$ unit edges.
 
-We need the integral converse, for which a real maximum principle would be insufficient after reduction. Let $B$ be the free lattice on supersingular classes with the weighted pairing
-
-$$
-\langle[E],[E']\rangle
-=\#\operatorname{Aut}(E)\,\delta_{E,E'}.
-$$
-
-Let $B^0$ be the orthogonal complement of the constant vector. The Brandt operators are self-adjoint and preserve $B^0$. Row reduction of the matrices $T_\ell-(1+\ell)$ on $B^0$ gives a cokernel killed by $p-1$: choose prime-to-$p$ isogenies joining the vertices in a spanning tree, subtract the row at one end from the row at the other, and successively remove the leaves. At a leaf the coefficient of its tree edge is its automorphism weight; the exceptional weights are $2,4,$ or $6$. Multiplying the reduced relations clears only these factors, and the final constant relation is the weighted mass relation. Hence the remaining determinant divides a power of $6(p-1)$. Repeating the reduction with auxiliary primes $\ell\equiv1$ modulo each of $2$ and $3$ removes the factors $2$ and $3$. Thus the common cokernel of all $T_\ell-(1+\ell)$ on $B^0$ is killed by $p-1$.
-
-Since $p\nmid p-1$, reduction modulo $p$ has no common kernel on $B^0$. Subtracting a constant from the residue vector therefore leaves zero. Thus the displayed eigensystem forces $\rho_E=c$ for all $E$.
-
-The residue theorem on one component now gives
+The normalization residue sequence identifies the possible failure of one-component q-saturation with the discriminant of
 
 $$
-c\sum_E\frac1{\#\operatorname{Aut}(E)}=0.
+X=\left\{(a_E)\in\mathbf Z^{\mathcal S}:\sum_Ea_E=0\right\},
+\qquad q(a,b)=\sum_Ee(E)a_Eb_E.
+\tag{6.9}
 $$
 
-The weighted supersingular mass is
+Indeed, a dualizing differential is a tuple on the normalized components with opposite residues on the two branches of every resolved node. Changing an integral tuple changes its residue vector by $qX$. Thus the obstruction group is $X^\vee/qX$. Choose one edge $E_0$ and the basis $[E]-[E_0]$. Its Gram matrix is
 
 $$
-\sum_E\frac1{\#\operatorname{Aut}(E)}=\frac{p-1}{24}.
+Q=\operatorname{diag}(e(E):E\ne E_0)
++e(E_0)\mathbf1\mathbf1^t,
 $$
 
-To verify the mass formula, count zeros of a generic invariant differential section of $\lambda^{p-1}$ on the level-one stack. The Hasse invariant is such a section, has one simple zero at each supersingular point, and the stack degree of $\lambda$ is $1/24$ after the generic order-two stabilizer is included. Hence its zero divisor has degree $(p-1)/24$, which is the weighted sum displayed. Modulo $p$ this number is $-1/24$, a unit because $p\geq5$. The residue equation therefore gives $c=0$. The residue vector vanishes, so $f=0$, contradicting $a_1(f)=1$. There is no $p$-primary class.
+and the matrix determinant lemma gives
+
+$$
+|\det Q|
+=\left(\prod_Ee(E)\right)
+\left(\sum_E\frac1{e(E)}\right).
+\tag{6.10}
+$$
+
+The Hasse invariant has weight $p-1$, q-expansion $1$, and one simple zero at each supersingular point. Simplicity follows from the universal deformation ring: its first-order Hasse scalar is the nonzero parameter separating the connected and étale loci. On the rigidified level-one stack, $\deg\lambda=1/12$ because $\Delta$ has weight $12$ and one cusp zero. Taking degrees gives
+
+$$
+\sum_E\frac1{e(E)}=\frac{p-1}{12}.
+\tag{6.11}
+$$
+
+There is at most one factor $2$ and at most one factor $3$. The Hasse-coefficient test on $y^2=x^3-x$ and $y^2=x^3-1$ shows that they occur respectively for $p\equiv3\pmod4$ and $p\equiv2\pmod3$. Hence
+
+$$
+\prod_Ee(E)=\frac{12}{\gcd(p-1,12)}.
+$$
+
+Equations (6.10)--(6.11) give $|\det Q|=n_p$, which is prime to $p$. The two lattices therefore have the same $p$-saturation.
+
+If (6.5) held with $x$ of order $p^s>1$, multiply by a $p$-adic unit so that $x$ is represented by $p^{-s}$. Subtracting $p^{-s}E_p$ from a rational representative of the cusp class would give integral positive q-coefficients but boundary value $-(p-1)/(24p^s)$. Both $p-1$ and $24$ are $p$-adic units, so this value is nonintegral. The just-proved saturation leaves no correction that can absorb it. $\square$
 
 Now assume $r\geq5$ and $r\neq p$. The stabilizers of orders $2$ and $3$ are linearly reductive over $\mathbf Z_r$, so taking invariants is exact. The stack and coarse q-integral lattices therefore agree at $r$.
 
@@ -925,7 +963,7 @@ lie in $r^a\mathbf Z_r$. Reduction modulo $r^a$ is therefore a regular different
 
 $$
 \sum_{m\geq1}b_p(m)q^m\pmod{r^a}.
-\tag{6.8}
+\tag{6.12}
 $$
 
 It proves existence for every $s\leq a$ by further reduction.
@@ -934,26 +972,33 @@ For necessity, suppose (6.5) holds with $x$ of order $r^s$. Multiplying by a uni
 
 $$
 h=g-r^{-s}E_p.
-\tag{6.9}
+\tag{6.13}
 $$
 
 All positive coefficients of $h$ are integral. The all-cusp divisibility theorem says that the only obstruction to $h$ lying in the integral logarithmic lattice is its boundary value. At $\infty$ that value is
 
 $$
 -\frac{p-1}{24r^s}.
-\tag{6.10}
+\tag{6.14}
 $$
 
-At $0$ it is the negative, because both $g$ and the Eisenstein eigensystem lie in the $-1$ Fricke direction. There is no stabilizer torsion that can absorb a nonintegral boundary value when $r\geq5$. Hence (6.10) must be integral, and $s\leq a$.
+At $0$ it is the negative, because both $g$ and the Eisenstein eigensystem lie in the $-1$ Fricke direction. The local correction lemma gives no q-invisible direction when $r\geq5$. Hence the displayed boundary value must be integral, and $s\leq a$.
 
-Here is the promised justification of the Fricke direction. Prime level is new in weight two because $S_2(\operatorname{SL}_2(\mathbf Z))=0$. On the new space the standard relation is
+Here is the promised justification of the Fricke direction. Sum the weight-two translates over the $p+1$ right cosets of $\Gamma_0(p)$ in $\operatorname{SL}_2(\mathbf Z)$. Pairing the $p$ nonidentity cosets with the Fricke matrix gives the normalized trace identity
+
+$$
+\operatorname{Tr}_{\Gamma_0(p)}^{\operatorname{SL}_2(\mathbf Z)}(f)
+=f+U_pW_pf.
+$$
+
+This follows directly on q-expansions: the root-of-unity sum in those $p$ cosets keeps precisely the coefficients indexed by multiples of $p$, and the determinant factor in the weight-two slash operator is the factor in (2.10), so no residual power of $p$ occurs. The trace lands in $S_2(\operatorname{SL}_2(\mathbf Z))=0$. Since $W_p^2=1$, right multiplication by $W_p$ gives
 
 $$
 U_p=-W_p.
-\tag{6.11}
+\tag{6.15}
 $$
 
-It follows from the two degeneracy maps and their adjoints: the usual oldspace matrix has source the zero level-one cusp space, so the orthogonal complement is the whole space and the new relation remains. Both sides preserve $S$, hence the rational identity is integral. Since (6.5) implies $(U_p-1)g\in S$, it gives $(W_p+1)g\in S$. Thus the two boundary obstructions are indeed opposite modulo the integral lattice.
+Both sides preserve $S$, hence the rational identity is integral. Since (6.5) implies $(U_p-1)g\in S$, it gives $(W_p+1)g\in S$. Thus the two boundary obstructions are indeed opposite modulo the integral lattice.
 
 This completes both directions for $r\geq5$.
 
@@ -961,7 +1006,7 @@ This completes both directions for $r\geq5$.
 
 Now let $r=3$ and write $p-1=3^a u$. If $a=0$, there is nothing to prove. Suppose $a\geq1$.
 
-The rational constant $(p-1)/24$ has $3$-adic valuation $a-1$. The Hasse invariant $A_3$ has weight $2$ and q-expansion $1$. One might therefore worry that a multiple of $A_3$ could change the boundary value without changing the positive Eisenstein coefficients. It cannot supply an additional step because it takes the same value at the two cusps, whereas the Eisenstein residues are opposite.
+The rational constant $(p-1)/24$ has $3$-adic valuation $a-1$. By the local correction lemma, the only possible q-invisible correction is a multiple of $A_3$. It takes the same value at the two cusps, whereas the Eisenstein residues are opposite.
 
 We make this precise using actual boundary values rather than the tame residue image. Over the special fiber, the boundary restriction map in weight two is
 
@@ -969,7 +1014,7 @@ $$
 M_2(\mathbf F_3)\longrightarrow
 \mathbf F_3\oplus\mathbf F_3,
 \qquad f\longmapsto(c_\infty(f),c_0(f)).
-\tag{6.12}
+\tag{6.16}
 $$
 
 The Hasse invariant maps to $(1,1)$, while the Eisenstein boundary pair is $(c,-c)$. A multiple $tA_3$ cancels both entries only if
@@ -983,7 +1028,7 @@ Thus $2c=0$. In characteristic $3$, multiplication by $2$ is invertible, so $c=0
 
 Existence through $3^{a-1}$ is direct. The form $E_p$ is integral over $\mathbf Z_3$ once $3\mid p-1$, and both constants are divisible by $3^{a-1}$. Its reduction is therefore cuspidal modulo that power.
 
-For necessity, repeat (6.9). If $s>a-1$, the first nonintegral boundary layer becomes, after multiplication by $3^{s-a+1}$ and reduction modulo $3$, a nonzero vector on the opposite-residue line. The only possible q-invisible correction is a multiple of $A_3$, by the filtration rule (6.7), but its boundary lies on the equal-value line. The two cannot cancel. Hence $s\leq a-1$.
+For necessity, repeat the subtraction of $3^{-s}E_p$. If $s>a-1$, the first nonintegral boundary layer becomes, after multiplication by $3^{s-a+1}$ and reduction modulo $3$, a nonzero vector on the opposite-residue line. By (6.7), every q-invisible correction lies on the equal-value line. The two cannot cancel. Hence $s\leq a-1$.
 
 This proves the $r=3$ line of (6.6). It also shows why simply saying “divide the constant by $24$” is not the proof: one must rule out a divided Hasse correction. The two-cusp residue relation does exactly that.
 
@@ -995,45 +1040,39 @@ The mod-$2$ Hasse invariant $A_2$ has weight $1$ and q-expansion $1$. Its square
 
 $$
 (1,1)=(1,-1).
-\tag{6.13}
+\tag{6.17}
 $$
 
 This is the source of the extra factor.
 
-We first construct the extra lift. Divide $p-1$ by $2^{a}$ and choose $u^{-1}$ modulo $2$. The boundary of
+We first construct the extra class. Divide $p-1$ by $2^{a}$ and choose the inverse of its odd part modulo $2$. The boundary of
 
 $$
 2^{-(a-2)}E_p
-\tag{6.14}
+\tag{6.18}
 $$
 
-has first nonintegral layer represented by the pair $(1,1)$ in characteristic $2$. Subtract the unique multiple of $A_2^2$ with that boundary value. The difference has zero boundary and the same positive q-expansion, because $A_2^2(q)=1$. By the boundary exact sequence it is a regular dualizing form on the special fiber.
+has first nonintegral layer represented by $(1,1)$ in characteristic $2$. Subtract the unique multiple of $A_2^2$ with that boundary value. The local correction lemma identifies the relevant invariant-lattice quotient, not merely its special fiber: its Smith normal form has one elementary divisor $2$. It therefore raises the constant-term exponent $a-3$ by exactly one and constructs a cusp class through $2^{a-2}$.
 
-To lift from the special fiber through the powers $2,4,\ldots,2^{a-2}$, proceed inductively. Suppose a correction has been constructed modulo $2^j$. Lift it arbitrarily to the finite free weight-two lattice modulo $2^{j+1}$. The error divided by $2^j$ is a mod-$2$ weight-two form whose positive q-expansion is zero. Q-expansion injectivity on the punctured ordinary locus makes it a multiple of $A_2^2$; its coefficient is fixed by either cusp value. Subtracting that multiple removes the error. The two cusp values are compatible because the Fricke sign is invisible modulo $2$. Saturation of the dualizing lattice guarantees that the induction introduces no hidden torsion. At $j=a-2$ this yields a cusp class with the desired Eisenstein coefficients modulo $2^{a-2}$.
-
-We next prove that the induction stops. A further lift would require dividing the correction $A_2^2$ once more while preserving weight two. On the ordinary locus such a division is formally possible, so the obstruction must be checked at the wild elliptic residual gerbe.
-
-Because an even Eisenstein exponent can occur only when $p\equiv1\pmod4$, an elliptic curve with automorphism $i$ has an $i$-stable cyclic subgroup of order $p$: the action of $i$ on $E[p]$ has eigenlines over $\mathbf F_p$. Hence the order-four elliptic stabilizer occurs on the relevant component of $\mathscr X_0(p)$. After the faithfully flat extension $\mathbf Z_2\subset\mathbf Z_2[i]$, choose a Hodge frame $e$ at this point. The automorphism acts by
+For clarity, the gerbe used in that calculation really occurs here. Since $a\ge3$, one has $p\equiv1\pmod4$. On an elliptic curve with automorphism $i$, the action on $E[p]$ has eigenlines over $\mathbf F_p$, so an $i$-stable cyclic subgroup of order $p$ exists. After the faithfully flat extension $\mathbf Z_2\subset\mathbf Z_2[i]$, choose a Hodge frame $e$. The automorphism acts by
 
 $$
 i^*e=i e,
 \qquad
 i^*(e^2)=-e^2.
-\tag{6.15}
+\tag{6.19}
 $$
 
 Thus a coefficient $c$ multiplying the weight-two fiber descends only if $c=-c$, or
 
 $$
 2c=0.
-\tag{6.16}
+\tag{6.20}
 $$
 
-Over $\mathbf Z/2^j\mathbf Z$, the solutions of (6.16) form the one-layer subgroup $2^{j-1}\mathbf Z/2^j\mathbf Z$. This is precisely why a correction invisible modulo $2$ exists. Dividing that correction once more would require a unit coefficient to satisfy (6.16) modulo $4$, which is impossible. Since the extension to $\mathbf Z_2[i]$ is faithfully flat, failure of equivariant descent there proves failure before extension.
+Over $\mathbf Z/2^j\mathbf Z$, the solutions of (6.20) form the one-layer subgroup $2^{j-1}\mathbf Z/2^j\mathbf Z$. A further division would require a unit coefficient to satisfy (6.20) modulo $4$, which is impossible. Faithful flatness proves failure before extension. At a supersingular point, $A_2$ is a parameter up to a unit, so no additional q-invisible quotient can evade this obstruction by vanishing elsewhere.
 
-The supersingular compatibility gives the same obstruction in the base direction. Locally the Hasse invariant is a parameter up to a unit, so a quotient by another Hasse factor would have a pole unless its numerator vanished once more at the supersingular point. The elliptic calculation shows that the required numerator is a unit in the anti-invariant weight-two fiber. It therefore does not vanish. Normality turns this failure in the completed codimension-one chart into a global failure of extension.
-
-We have proved existence up to $2^{a-2}$ and obstruction at the next power. This establishes the $r=2$ line of (6.6). It also explains why a coarse-curve calculation is unsafe: rigidifying the order-four stabilizer removes the anti-invariant fiber in (6.15) and loses the exact stopping point.
+We have proved existence up to $2^{a-2}$ and obstruction at the next power. This establishes the $r=2$ line of (6.6). It also explains why a coarse-curve calculation is unsafe: rigidifying the order-four stabilizer removes the anti-invariant fiber in (6.19) and loses the exact stopping point.
 
 ### 6.6 Global synthesis
 
@@ -1044,7 +1083,7 @@ Let $x\in\mathbf Q/\mathbf Z$ and write it as the sum of its primary components 
 $$
 S_\mathbf Q/S\simeq\bigoplus_r
 S_{\mathbf Q_r}/S_{\mathbf Z_r}
-\tag{6.17}
+\tag{6.21}
 $$
 
 on torsion subgroups. Thus (6.1) is solvable for $x$ exactly when it is solvable for every $x_r$.
@@ -1054,7 +1093,7 @@ If $x_r$ has order $r^{s_r}$, Lemma 6.2 says
 $$
 s_r\leq\max\{0,v_r(p-1)-v_r(12)\}
 =v_r(n_p).
-\tag{6.18}
+\tag{6.22}
 $$
 
 Equivalently, $n_px_r=0$ for every $r$, hence $n_px=0$. Conversely, if $n_px=0$, each primary component satisfies the bound, and the locally constructed classes add to a global class in $S_\mathbf Q/S$. Therefore
@@ -1100,7 +1139,7 @@ $$
 
 if and only if $m\mid n_p$. It is unique.
 
-**Proof.** If $m\mid n_p$, base change of $f_m$ from Theorem 7.1 gives $f_R$. Conversely, suppose $f_R$ exists. Its two pullbacks to $R\otimes_{\mathbf Z/m}R$ have identical q-expansions, hence are equal by q-expansion injectivity. Faithfully flat descent gives $f_m\in S/mS$ with the stated expansion. Theorem 7.1 forces $m\mid n_p$. Uniqueness follows in the same way, or directly from q-expansion injectivity over $R$. $\square$
+**Proof.** If $m\mid n_p$, base change of $f_m$ from Theorem 7.1 gives $f_R$. Conversely, suppose $f_R$ exists. Theorem 5.1 says that the coefficient functionals generate $S^\vee$; consequently the q-expansion map remains injective after every coefficient extension, including nonflat ones. The two pullbacks of $f_R$ to $R\otimes_{\mathbf Z/m}R$ have identical q-expansions and are therefore equal. Faithfully flat descent gives $f_m\in S/mS$ with the stated expansion. Theorem 7.1 forces $m\mid n_p$. Uniqueness follows in the same way. $\square$
 
 Faithfulness is important. After passing to a quotient in which a nonzero divisor of $m$ becomes zero, the additive order of $1$ can decrease, so the original modulus is no longer detectable. The theorem concerns the fixed integral cusp lattice and its honest coefficient extensions, not extra sections created by a nonflat base change.
 
@@ -1141,9 +1180,9 @@ Three formulations of the Eisenstein congruence now coincide, but only after nor
 
 1. $a_n(f)=b_p(n)$ for every $n\geq1$;
 2. $T_\ell f=(1+\ell)f$ for every prime $\ell\neq p$ and $U_pf=f$;
-3. $Tf=\epsilon(T)f$ for every $T\in\mathbb T$, where $\epsilon(\mathcal T_n)=b_p(n)$.
+3. the assignments $T_\ell\mapsto1+\ell$ and $U_p\mapsto1$ respect all relations in $\mathbb T$, hence define a character $\epsilon:\mathbb T\to R$, and $Tf=\epsilon(T)f$ for every $T\in\mathbb T$.
 
-For 1 implies 2, apply the coefficient formulas of Sections 3.1--3.2 and then q-expansion injectivity. The generators give 2 implies 3. Finally, from 3 and (3.7),
+For 1 implies 2, apply the coefficient formulas of Sections 3.1--3.2 and then q-expansion injectivity. For 2 implies 3, a polynomial relation among the generators acts on $f$ by the same polynomial in the proposed scalars. Since the relation is the zero operator and $a_1(f)=1$, that scalar is zero in $R$. The assignments therefore descend to the acting algebra and the generators give the eigenvector identity. The Hecke recurrences also give $\epsilon(\mathcal T_n)=b_p(n)$. Finally, from 3 and (3.7),
 
 $$
 a_n(f)=a_1(\mathcal T_nf)
@@ -1273,7 +1312,7 @@ That is a genuine congruence of eigencharacters in the sense of Book 91. The pre
 
 ### 9.1 Dualizing the quotient
 
-We now turn the q-expansion calculation into the promised algebra theorem. Since $\mathbb T/I$ is finite cyclic, its Pontryagin dual
+We now turn the q-expansion calculation into the promised algebra theorem. The quotient $\mathbb T/I$ is cyclic and finitely generated, but finiteness has not yet been assumed. Its Pontryagin dual
 
 $$
 (\mathbb T/I)^\vee
@@ -1281,7 +1320,7 @@ $$
 \tag{9.1}
 $$
 
-has the same order. A homomorphism $\phi:\mathbb T\to\mathbf Q/\mathbf Z$ factors through $\mathbb T/I$ exactly when $\phi(I)=0$.
+detects both possibilities: the dual of $\mathbf Z/d\mathbf Z$ has order $d$ for $d>0$, whereas the dual of $\mathbf Z$ is the infinite group $\mathbf Q/\mathbf Z$. A homomorphism $\phi:\mathbb T\to\mathbf Q/\mathbf Z$ factors through $\mathbb T/I$ exactly when $\phi(I)=0$.
 
 By Hecke--Fourier duality (5.7), such a $\phi$ corresponds to a unique class $g_\phi\in S_\mathbf Q/S$ with
 
@@ -1343,7 +1382,7 @@ $$
 \simeq(\tfrac1{n_p}\mathbf Z)/\mathbf Z,
 $$
 
-a cyclic group of order $n_p$. Hence $\mathbb T/I$ has order $n_p$. Section 5.4 showed that it is cyclic and generated by $1$, so the structural map $\mathbf Z\to\mathbb T/I$ induces the asserted isomorphism. The cases $p=2,3$ have both sides equal to the zero ring. $\square$
+a cyclic group of order $n_p$. The infinite alternative in Section 9.1 is therefore impossible, so $\mathbb T/I$ is finite. Its order equals the order of its dual, namely $n_p$. Section 5.4 showed that it is generated by $1$, so the structural map $\mathbf Z\to\mathbb T/I$ induces the asserted isomorphism. The cases $p=2,3$ have both sides equal to the zero ring. $\square$
 
 The proof gives both inequalities simultaneously. The congruence form modulo $n_p$ proves that the quotient has at least that much torsion; the denominator obstruction proves that it has no more.
 
@@ -1377,7 +1416,7 @@ $$
 \mathfrak m_r=(r,I).
 $$
 
-Localize $\mathbb T$ and $S$ at $\mathfrak m_r$. Since $\mathbb T$ is finite over $\mathbf Z$, the localization is already complete after tensoring with $\mathbf Z_r$ and taking its maximal local factor. Denote this complete local algebra by $\mathbb T_{\mathfrak m_r}$.
+First tensor with $\mathbf Z_r$. The finite $\mathbf Z_r$-algebra $\mathbb T\otimes\mathbf Z_r$ is a product of complete local factors; let $\mathbb T_{\mathfrak m_r}$ denote the factor selected by $\mathfrak m_r$. Equivalently, it is the completion of the ordinary localization of $\mathbb T$ at $\mathfrak m_r$. Ordinary localization over $\mathbf Z_{(r)}$ alone would not yet be complete.
 
 The localized module $S_{\mathfrak m_r}$ is faithful. This follows from the acting-image convention and localization of annihilators. It need not be free of rank one over $\mathbb T_{\mathfrak m_r}$, and its residual eigenspace need not be one-dimensional. None of those stronger multiplicity statements is needed for the index calculation.
 
@@ -1551,7 +1590,7 @@ B=\left\lfloor\frac{p+1}{6}\right\rfloor.
 \tag{11.1}
 $$
 
-If an integral cusp form $f$ satisfies
+If $M$ is prime to $p$ and an integral cusp form $f$ satisfies
 
 $$
 a_m(f)\equiv b_p(m)\pmod M
@@ -1559,7 +1598,7 @@ a_m(f)\equiv b_p(m)\pmod M
 \tag{11.2}
 $$
 
-and both constant terms are cuspidal, then the finite-jet theorem of Book 119 forces the full congruence. One must include the constant term when comparing two modular forms. Here $f$ is already cuspidal and Theorem 7.1 supplies the globally valid Eisenstein coefficient class, so comparing positive coefficients through $B$ suffices to identify the two cusp forms modulo $M$.
+then the finite-jet theorem of Book 119 forces the full congruence after comparing $f$ with the cusp class supplied by Theorem 7.1. Both forms are already cuspidal, so their constant terms vanish and positive coefficients through $B$ suffice. The condition $(M,p)=1$ keeps the comparison on the good-level base covered by Book 119; every possible Eisenstein modulus satisfies it because $p\nmid n_p$.
 
 The bound verifies a candidate; it does not prove that a candidate exists. Existence and the maximal modulus come from the denominator calculation. Confusing these two roles would make a finite computation appear to establish an integral theorem that it only checks in a known space.
 
@@ -1620,7 +1659,7 @@ Then:
 
 **Proof.** Items 1--3 are Propositions 2.1, 2.2, 3.1, and 3.2. Item 4 is Theorem 7.1, whose integral denominator is computed in Theorem 6.1. Item 5 is Theorem 9.1. Tensoring item 5 with $\mathbf Z_r$ proves item 6. $\square$
 
-Every substantial input is now accounted for. Book 119 supplies the integral cusp lattice, all-cusp q-expansion principle, weight-two differential interpretation, Hecke coefficient formula, and finite Sturm certification. Book 91 supplies the acting-image convention and the finite integral algebra language; the particular perfect Hecke--Fourier pairing needed here was proved in Chapter 5. The only new arithmetic obstruction—the exact denominator $n_p$, including its two-primary part—was proved in Chapter 6 from the two-cusp Hodge lattice, Hasse filtration, and stabilizer descent.
+Every substantial input is now accounted for. Book 119 supplies the good-level all-cusp q-expansion principle, weight-two differential interpretation, good-prime Hecke formula, and finite Sturm certification. It does not supply $U_p$ or bad-level geometry: $U_p$ was defined and checked on the q-lattice in Chapters 1 and 3, while Section 6.3 proved the required level-prime saturation from the two-component normalization. Book 91 supplies the acting-image convention and finite integral algebra language; the particular perfect Hecke--Fourier pairing needed here was proved in Chapter 5. The exact denominator $n_p$, including its two-primary part, was proved in Chapter 6 from the two-cusp Hodge lattice, the Hasse filtration, stabilizer descent, and the explicit bad-level residue lattice.
 
 ### 12.2 Hypotheses and boundaries
 
