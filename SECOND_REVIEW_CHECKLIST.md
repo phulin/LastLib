@@ -67,7 +67,7 @@ any resulting corrections.
 - [ ] 041. Integral Correspondences on Curves and Jacobians
 - [ ] 042. Descent and Weak Mordell–Weil for Abelian Varieties
 - [ ] 043. Heights and the Mordell–Weil Theorem
-- [ ] 044. Finite Locally Free Schemes and Algebras
+- [x] 044. Finite Locally Free Schemes and Algebras
 - [ ] 045. Affine Group Schemes and Hopf Algebras
 - [ ] 046. Finite Flat Commutative Group Schemes
 - [ ] 047. Cartier Duality
