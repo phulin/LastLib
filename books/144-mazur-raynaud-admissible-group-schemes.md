@@ -22,7 +22,7 @@
    - [Connected–étale structure over $\mathbf Z_\ell$](#41-connectedétale-structure-over-mathbf-z_ell)
    - [The maximal multiplicative subgroup](#42-the-maximal-multiplicative-subgroup)
    - [Order-$\ell$ rigidity for odd $\ell$](#43-order-ell-rigidity-for-odd-ell)
-   - [Local devissage for odd $\ell$](#44-local-devissage-for-odd-ell)
+   - [Local devissage from integral atoms](#44-local-devissage-from-integral-atoms)
    - [The dyadic failure of character separation](#45-the-dyadic-failure-of-character-separation)
 5. [The admissible category](#5-the-admissible-category)
    - [Filtration definition](#51-filtration-definition)
@@ -434,9 +434,9 @@ $$
 
 Both lie in $\{0,1\}$. For odd $\ell$, their difference has absolute value at most one and cannot be a nonzero multiple of $\ell-1$, so $r=r'$. The ratio of their parameters is then an $(\ell-1)$st power of a unit, which is precisely the integral coordinate change. At $\ell=2$, congruence modulo one says nothing.
 
-### 4.4 Local devissage for odd $\ell$
+### 4.4 Local devissage from integral atoms
 
-**Theorem 4.2 (local Eisenstein filtration).** Let $\ell$ be odd and let $G/\mathbf Z_\ell$ admit an admissible filtration with factors $\underline{\mathbf Z/\ell\mathbf Z}$ or $\mu_\ell$. Then
+**Theorem 4.2 (local Eisenstein filtration).** Let $\ell$ be any prime and let $G/\mathbf Z_\ell$ admit an admissible filtration whose factors are integrally identified as $\underline{\mathbf Z/\ell\mathbf Z}$ or $\mu_\ell$. Then
 
 $$
 G^{\mathrm{mult}}=G^0,
@@ -456,9 +456,28 @@ $$
 
 The induced maps on identity components and component groups have the corresponding ranks and are faithfully flat, which gives exactness. This argument takes place over a field, where every closed subgroup is flat.
 
-Apply this fact successively to the reduction modulo $\ell$ of an atomic filtration of $G$. A factor $\underline{\mathbf Z/\ell}$ contributes rank $\ell$ to the étale row and rank one to the connected row; a factor $\mu_\ell$ contributes rank $\ell$ to the connected row and rank one to the étale row. Intersecting the reduced filtration with the identity component therefore filters it by the multiplicative atoms, while passage to components filters the quotient by the constant atoms.
+Apply this fact successively to the reduction modulo $\ell$ of an atomic filtration of $G$. A factor $\underline{\mathbf Z/\ell}$ contributes rank $\ell$ to the étale row and rank one to the connected row; a factor $\mu_\ell$ contributes rank $\ell$ to the connected row and rank one to the étale row.
 
-Henselian lifting of open-and-closed components identifies these rows with the reductions of $G^0$ and $G^{\mathrm{et}}$ in (4.1), so the filtrations lift over $\mathbf Z_\ell$. A group filtered by $\mu_\ell$ is of multiplicative type: after Cartier duality it is filtered by finite étale groups, and extensions of finite étale groups are finite étale. Hence $G^0$ is multiplicative. Its maximality in (4.2) gives $G^{\mathrm{mult}}=G^0$. $\square$
+Here is the integral lifting step in detail. For every term $G_i$ of the chosen filtration, let $G_i^0$ be its henselian connected subgroup. Functoriality sends $G_i^0$ into $G^0$ and sends $G_i^0$ into $G_{i+1}^0$; because $G_i^0$ is an open-and-closed finite-flat subgroup of $G_i$, these are finite-flat closed immersions. If the next atom is constant, exactness of connected and étale ranks on the special fiber gives
+
+$$
+G_i^0=G_{i+1}^0,
+\qquad
+G_{i+1}^{\mathrm{et}}/G_i^{\mathrm{et}}
+\simeq\underline{\mathbf Z/\ell}.
+$$
+
+If the next atom is $\mu_\ell$, the same rank calculation gives
+
+$$
+G_{i+1}^0/G_i^0\simeq\mu_\ell,
+\qquad
+G_i^{\mathrm{et}}=G_{i+1}^{\mathrm{et}}.
+$$
+
+The displayed maps are induced integrally by the original atomic quotient. After reduction they are the exact connected and étale rows. Surjectivity on the indicated special-fiber quotient, together with equality of finite-flat ranks, makes the integral map faithfully flat by Nakayama's lemma on coordinate algebras; its kernel is the displayed connected subgroup. In the equality cases, the finite-flat closed immersion has equal rank and is an isomorphism. Removing repeated terms therefore gives a filtration of $G^0$ by copies of $\mu_\ell$, while the nontrivial component quotients filter $G^{\mathrm{et}}$ by copies of $\underline{\mathbf Z/\ell}$.
+
+A group filtered by $\mu_\ell$ is of multiplicative type: after Cartier duality it is filtered by finite étale groups, and extensions of finite étale groups are finite étale. Hence $G^0$ is multiplicative. Its maximality in (4.2) gives $G^{\mathrm{mult}}=G^0$. $\square$
 
 The proof uses the existence of an admissible atomic filtration. A general height-two local-local group need not possess one, so the conclusion is not a classification of all finite-flat $\ell$-groups.
 
@@ -485,7 +504,7 @@ Its special fiber is $\mathbf F_2[x]/(x^2)$, supported at one point. The constan
 
 Consequently Proposition 4.1 has no dyadic analogue. A generic order-two submodule can close to either endpoint depending on the ambient Hopf lattice. Cartier duality exchanges them, and the connected–étale sequence distinguishes them, but generic representation theory does not.
 
-The local devissage theorem remains true if the integral filtration is already known and its factors are identified as group schemes. What fails is recognition of those factors from their generic characters. Every two-primary application must therefore carry one additional piece of integral information: connectedness, multiplicative type, Cartier-dual étaleness, or an explicitly specified closure in an ambient group.
+The local devissage theorem therefore remains true at $2$ when the integral filtration is known and its factors are identified as group schemes. What fails is recognition of those factors from their generic characters. Every two-primary application must therefore carry one additional piece of integral information: connectedness, multiplicative type, Cartier-dual étaleness, or an explicitly specified closure in an ambient group.
 
 ## 5. The admissible category
 
@@ -587,7 +606,7 @@ $$
 
 with the stated closure property, choose the asserted composition series of $V/W$, and pull the latter back to $V$. The resulting stable flag passes through $W$. Proposition 2.2 closes it inside $G$. By hypothesis the factors below $W$ and above it are the appropriate atoms. Thus $H$ and $G/H$ have admissible filtrations. $\square$
 
-The closure hypothesis in the theorem is automatic for odd $\ell$ when the generic factors are exactly $1$ and $\overline\chi_\ell$, by Proposition 4.1. At $2$ it is not automatic. This is the precise point at which the two-primary boundary enters stability under generic subobjects.
+The closure hypothesis in the theorem is automatic for odd $\ell$ when the generic factors are exactly $1$ and $\overline\chi_\ell$, by Proposition 4.1. At $2$ it is not automatic from the generic character. Proposition 11.1 will prove, using the integral order-two classification over $\mathbf Z_2$ and global lattice gluing, that over this particular base every such closure is nevertheless one of the two atoms. What remains unavailable at $2$ is a generic rule labeling which atom occurred.
 
 ### 5.4 Primary decomposition and coefficient actions
 
@@ -708,6 +727,14 @@ $$
 Taking cokernel and kernel gives (6.5). Pulling an extension back along $1:S\to\underline{\mathbf Z/n}$ identifies the connecting map with the torsor fiber. If that torsor is trivial, choose a lift $x$; then $nx\in A(S)$, and replacing $x$ by $x+a'$ changes the carry by $na'$. This identifies the kernel with $A(S)/nA(S)$. $\square$
 
 The short exact sequence need not split naturally. A splitting would require choosing compatible group laws on root torsors or compatible lifts of $1$.
+
+There is one further formal consequence that matters at the dyadic boundary. The group
+
+$$
+\operatorname{Ext}^1_S(\underline{\mathbf Z/n\mathbf Z},A)
+$$
+
+is killed by $n$. Indeed multiplication by $n$ on an Ext group can be computed by pullback along multiplication by $n$ on its first argument, and that endomorphism of $\underline{\mathbf Z/n\mathbf Z}$ is zero. Pullback along the zero map gives the split extension. Thus (6.5) is an exact sequence of $\mathbf Z/n\mathbf Z$-modules, even though it generally has no preferred splitting.
 
 There is also a direct construction behind the derived argument. Let $P$ be an $A$-torsor whose class is killed by $n$. Write $P^{\wedge i}$ for its $i$-fold contracted product. The disjoint union
 
@@ -893,7 +920,16 @@ $$
 
 In particular the extension group has eight elements. The kernel is the carry class: its fiber above $1$ is the trivial $\mu_2$-torsor, but a chosen lift $x$ satisfies $2x=-1\in\mu_2(S)$ rather than $2x=1$.
 
-Because all groups in (7.11) have exponent two except that the middle group may a priori contain an element of order four, the sequence alone does not provide a canonical decomposition. Nor do we need one. The invariant statement is the exact sequence, with two root-torsor coordinates $[-1]$ and $[N]$ and one independent carry coordinate.
+The observation following Theorem 6.1 shows that the middle group is also killed by $2$. Consequently
+
+$$
+\operatorname{Ext}^1_S
+(\underline{\mathbf Z/2\mathbf Z},\mu_2)
+\simeq(\mathbf Z/2\mathbf Z)^3
+\tag{7.12}
+$$
+
+as an abstract group. This isomorphism is not canonical: (7.11) gives a canonical one-dimensional carry subspace and a canonical two-dimensional torsor quotient, but it chooses no complementary lift of that quotient. Thus $[-1]$ and $[N]$ are canonical coordinates only after passage to the torsor quotient; choosing extension classes above them is an additional, noncanonical splitting choice.
 
 The dyadic extension problem is therefore larger in two distinct ways: the two atomic generic characters coincide, and the atomic extension group has three binary parameters rather than one cyclic parameter.
 
@@ -1252,16 +1288,21 @@ Likewise, two isomorphic generic groups can acquire different closures in two di
 
 ### 11.2 Closing an Eisenstein line
 
-**Proposition 11.1 (global endpoint recognition).** Let $\ell$ be odd, let $G/S$ be finite flat, and let $W\subset G_{\mathbf Q}(\overline{\mathbf Q})$ be a stable line. Let $H$ be its closure.
+**Proposition 11.1 (global endpoint recognition and dyadic dichotomy).** Let $\ell$ be prime, let $G/S$ be finite flat, and let $W\subset G_{\mathbf Q}(\overline{\mathbf Q})$ be a stable line of order $\ell$. Let $H$ be its closure.
 
-1. If $W\simeq\mathbf F_\ell$ as a global $\Gamma$-module, then $H\simeq\underline{\mathbf Z/\ell\mathbf Z}$.
-2. If $W\simeq\mathbf F_\ell(1)$, then $H\simeq\mu_\ell$.
+1. If $\ell$ is odd and $W\simeq\mathbf F_\ell$ as a global $\Gamma$-module, then $H\simeq\underline{\mathbf Z/\ell\mathbf Z}$.
+2. If $\ell$ is odd and $W\simeq\mathbf F_\ell(1)$, then $H\simeq\mu_\ell$.
+3. If $\ell=2$, then $H$ is isomorphic to exactly one of $\underline{\mathbf Z/2\mathbf Z}$ and $\mu_2$. It is the constant endpoint when its special fiber at $2$ is étale and the multiplicative endpoint when that fiber is connected.
 
-**Proof strategy.** Compare $H$ with the standard model at every height-one point of $S$. Away from $\ell$ uniqueness of finite étale extension applies; at $\ell$ use low-ramification rigidity. Then recover the global Hopf lattice as the intersection of its localizations.
+**Proof strategy.** Compare $H$ with a standard model at every height-one point of $S$. Away from $\ell$ uniqueness of finite étale extension applies. At an odd $\ell$ use low-ramification rigidity; at $2$ use the two-endpoint Oort–Tate classification and inspect connectedness. Then recover the global Hopf lattice as the intersection of its localizations.
 
-**Proof.** For $r\ne N,\ell$, both $H_{\mathbf Z_r}$ and the appropriate standard endpoint are finite étale models of the same unramified generic representation, hence are uniquely isomorphic. At $r=\ell$, Proposition 4.1 gives the same conclusion. The coordinate Hopf algebras are finite projective $\mathbf Z[1/N]$-lattices in the same generic Hopf algebra and have equal localizations at every nonzero prime. A projective lattice over a Dedekind domain is the intersection of these localizations inside its generic vector space. Hence the local isomorphisms glue to a global isomorphism. $\square$
+**Proof.** Suppose first that $\ell$ is odd. Fix a global generic isomorphism from $H_{\mathbf Q}$ to the appropriate standard endpoint. For $r\ne N,\ell$, both integral groups are finite étale models of the same unramified generic representation, so that particular generic isomorphism extends uniquely over $\mathbf Z_r$. At $r=\ell$, Proposition 4.1 and height-one full faithfulness extend the same generic isomorphism.
 
-At $2$, the conclusion fails even for a globally trivial generic line. One must identify the closure by an integral criterion.
+Now let $\ell=2$. Every one-dimensional $\mathbf F_2$-module is trivial, so $H_{\mathbf Q}$ is the split group of order two. Over the unramified dyadic DVR $\mathbf Z_2$, the Oort–Tate interval has only its two endpoints. Thus $H_{\mathbf Z_2}$ is constant if its special fiber is étale and is $\mu_2$ if its special fiber is connected. Let $E$ be that standard global endpoint. The generic isomorphism $H_{\mathbf Q}\simeq E_{\mathbf Q}$ is unique because the group of order two has no nontrivial automorphism. For every $r\ne N,2$, both local groups are finite étale models of this split generic group, so the same isomorphism extends uniquely over $\mathbf Z_r$; by construction it also extends over $\mathbf Z_2$.
+
+In either case, view both coordinate Hopf algebras as finite projective $\mathbf Z[1/N]$-lattices in one fixed generic Hopf algebra. The local extensions say that their localizations agree at every nonzero prime. A projective lattice over a Dedekind domain is the intersection of these localizations inside its generic vector space. The two global Hopf lattices are equal, which gives the required global isomorphism. The two dyadic endpoints cannot both occur because their special fibers have different connectedness. $\square$
+
+At $2$, what fails is character recognition, not the endpoint dichotomy. The globally trivial generic line does not say which of the two models occurs; the connectedness of its actual closure does.
 
 ### 11.3 Quotients and flat images
 
@@ -1347,7 +1388,7 @@ The closures remain Hecke-stable. If $T$ preserves a generic subgroup $H_{\mathb
 
 The two filtrations in (12.4) are also Hecke-stable: their generic terms are the unique subgroups of each order in a cyclic generic group, hence stable under every endomorphism preserving the whole group. Uniqueness of closure then propagates stability integrally.
 
-Since $\ell\mid n_N$, one has $\ell\mid N-1$ and hence $\ell\ne N$. No claim about the intersection of these closures inside $\mathcal J$ is needed for this book, and no full Shimura-subgroup intersection theorem is used. At $\ell=2$, (12.4) is not inferred from the generic identifications: it becomes an additional integral endpoint condition, to be verified by the selected quotient's geometry.
+Since $\ell\mid n_N$, one has $\ell\mid N-1$ and hence $\ell\ne N$. No claim about the intersection of these closures inside $\mathcal J$ is needed for this book, and no full Shimura-subgroup intersection theorem is used. At $\ell=2$, Proposition 11.1 shows that every successive closure is one of the two atoms, so both primary closures are admissible. What is not inferred from the generic identifications is the named orientation displayed in (12.4): proving specifically that the cuspidal factors are constant and the Shimura factors multiplicative requires an integral connectedness or duality check.
 
 The Hecke eigenvalues on the two generic atoms explain the Eisenstein trace. At a prime $r\nmid N\ell$, Frobenius acts by $1$ on the constant line and by $r$ on the cyclotomic line, so the trace is
 
@@ -1364,9 +1405,9 @@ The following theorem is the precise bridge from generic Eisenstein data to fini
 
 **Theorem 12.1 (Eisenstein closure criterion).** Let $G/S$ be a finite-flat $\ell$-primary group contained in the torsion of a fixed abelian scheme over $S$. Suppose its generic Galois module $V$ has a stable composition series whose factors are $\mathbf F_\ell$ or $\mathbf F_\ell(1)$.
 
-If $\ell$ is odd, then $G$ is Eisenstein-admissible. If $\ell=2$, the same conclusion holds provided the closure of every factor in the successive ambient quotient is explicitly known to be either $\underline{\mathbf Z/2}$ or $\mu_2$.
+Then $G$ is Eisenstein-admissible for every $\ell$. For odd $\ell$, the generic character labels each factor as constant or multiplicative. For $\ell=2$, each factor is still one of the two atoms, but its label is determined only after taking its integral closure.
 
-**Proof.** Close the stable composition series inside $G$ by Proposition 2.2. For odd $\ell$, Proposition 11.1 identifies every order-$\ell$ closure with the standard endpoint dictated by its generic character. Thus the closure filtration is admissible. For $\ell=2$, generic characters do not identify the endpoints, so the additional integral hypothesis supplies exactly the missing step. $\square$
+**Proof.** Close the stable composition series inside $G$ by Proposition 2.2. For odd $\ell$, Proposition 11.1 identifies every order-$\ell$ closure with the standard endpoint dictated by its generic character. For $\ell=2$, the dyadic part of the same proposition identifies every order-two closure as one of the two standard endpoints, with its type read from connectedness at $2$. Thus in every case the closure filtration is admissible. $\square$
 
 The theorem assumes an actual stable series, not just a trace congruence. In a two-dimensional representation, trace $1+\overline\chi_\ell$ and determinant $\overline\chi_\ell$ determine the semisimplification but do not by themselves produce a stable line. Reducibility, or a geometrically supplied subgroup, is a separate input.
 
@@ -1467,7 +1508,7 @@ v_2(n_N)=\max(d-2,0).
 \tag{13.2}
 $$
 
-Thus $2$ is an Eisenstein prime exactly when $N\equiv1\pmod 8$. The depth of the two-primary cuspidal and Shimura groups is $2^{d-2}$.
+Thus $2$ is an Eisenstein prime exactly when $N\equiv1\pmod 8$. The two-primary cuspidal and Shimura groups have order $2^{d-2}$, hence atomic length $d-2$.
 
 Four changes occur at once.
 
@@ -1476,13 +1517,13 @@ Four changes occur at once.
 3. The two integral endpoints over $\mathbf Z_2$ remain distinct: one is étale and one connected multiplicative.
 4. The atomic extension group has the three-step exact description (7.11), involving $[-1]$, $[N]$, and a carry class.
 
-These facts dictate the correct dyadic protocol. Begin with a fixed finite-flat ambient group. Close each stable generic line inside the successive quotient. Determine its endpoint by special-fiber connectedness or Cartier duality, not by its generic character. Record both root-torsor coordinates and the carry coordinate for every extension of a constant atom by a multiplicative atom. Only after those checks may one use the same filtration and rank arguments as at odd primes.
+These facts dictate the correct dyadic protocol. Begin with a fixed finite-flat ambient group. Close each stable generic line inside the successive quotient. Determine its endpoint by special-fiber connectedness or Cartier duality, not by its generic character. For every extension of a constant atom by a multiplicative atom, first record its two root-torsor coordinates in the quotient of (7.11), and then record its position in the two-element fiber governed by the carry subspace. Turning those data into three coordinates requires a noncanonical splitting of (7.11). Only after these checks may one use the same filtration and rank arguments as at odd primes.
 
-**Theorem 13.1 (dyadic admissibility criterion).** Let $G/S$ be a finite-flat $2$-primary group in a fixed ambient torsion group. A generic flag with trivial one-dimensional factors makes $G$ admissible if and only if every successive order-two closure is one of the two standard endpoints. When this holds, the number of constant and multiplicative factors is intrinsic and equals the étale and connected length over $\mathbf Z_2$.
+**Theorem 13.1 (dyadic admissibility and integral labels).** Let $G/S$ be a finite-flat $2$-primary group in a fixed ambient torsion group. If its generic module has a stable flag with one-dimensional factors, then closing that flag makes $G$ Eisenstein-admissible. Every successive closure is $\underline{\mathbf Z/2}$ or $\mu_2$; its type is constant exactly when its special fiber at $2$ is étale and multiplicative exactly when that fiber is connected. The numbers of the two factors are intrinsic and equal the étale and connected lengths over $\mathbf Z_2$.
 
-**Proof.** Necessity is the definition of admissibility. For sufficiency, close the flag and use the assumed endpoint identification to obtain (5.1). Filtration independence and the rank description follow from Proposition 5.2 and the connected–étale sequence. $\square$
+**Proof.** Every one-dimensional $\mathbf F_2$-factor is generically trivial. Proposition 2.2 closes the flag, and the dyadic part of Proposition 11.1 identifies every successive order-two closure as one of the two standard endpoints. This is an admissible filtration. Proposition 5.2 and the connected–étale sequence prove the intrinsic rank description. $\square$
 
-The theorem is intentionally not a generic criterion: its additional integral condition is irreducible.
+The theorem is a generic criterion for admissibility only because the base at $2$ is the unramified ring $\mathbf Z_2$ and order-two groups have no nontrivial automorphism twists. It is not a generic criterion for the **labels** of the factors: connectedness of the actual integral closures remains indispensable.
 
 ### 13.5 A failure ledger
 
@@ -1534,7 +1575,7 @@ and let $\ell\mid n_N$ be prime.
 
 4. For odd $\ell$, every stable generic flag with factors $1$ and $\overline\chi_\ell$ in a fixed finite-flat ambient group closes to an admissible integral flag. This follows from schematic closure and height-one low-ramification rigidity over $\mathbf Z_\ell$.
 
-5. At $\ell=2$, the two generic characters coincide. A stable generic flag closes to an admissible flag exactly when each successive closure is integrally identified as the constant or multiplicative endpoint. The two multiplicities remain intrinsic, but generic representation theory cannot recover them.
+5. At $\ell=2$, the two generic characters coincide. Over $S$, every order-two closure is nevertheless one of the constant and multiplicative endpoints, so every stable generic flag closes to an admissible flag. The actual integral closure, through its connectedness at $2$, supplies the label; generic representation theory cannot recover the two multiplicities by itself.
 
 6. A separated admissible object is an extension
 
@@ -1563,7 +1604,9 @@ and let $\ell\mid n_N$ be prime.
    \to S^\times/S^{\times2}\to0,
    $$
 
-   whose outer terms have dimensions $1$ and $2$ over $\mathbf F_2$. The invariants are a carry, the sign class, and the level-unit class.
+   whose outer terms have dimensions $1$ and $2$ over $\mathbf F_2$. It records a canonical carry subspace and a torsor quotient generated by the sign and level-unit classes.
+
+   The middle group is killed by $2$, so it is abstractly $\mathbf F_2^3$. The exact sequence canonically distinguishes the carry subspace from the two-dimensional torsor quotient but does not canonically split them into three coordinates.
 
 9. Book 143 supplies generic cyclic groups
 
@@ -1574,9 +1617,9 @@ and let $\ell\mid n_N$ be prime.
    \qquad e=v_\ell(n_N),
    $$
 
-   as the constant and multiplicative prime-level Eisenstein constituents. Their closures are filtered by the standard atoms at odd $\ell$; at $2$ their endpoint types require the dyadic integral check. Any selected finite-flat quotient whose generic module has the required stable Eisenstein flag is admissible by item 4, or by item 5 with that check. A height-two separated layer is controlled by item 7 or item 8.
+   as the constant and multiplicative prime-level Eisenstein constituents. Their closures are filtered by the standard atoms at every $\ell$. At $2$, the named claim that the cuspidal closure is constant and the Shimura closure multiplicative still requires the dyadic connectedness or duality check. Any selected finite-flat quotient whose generic module has the required stable Eisenstein flag is admissible by item 4 or item 5. A height-two separated layer is controlled by item 7 or item 8.
 
-**Proof.** Items 1–2 are Theorem 2.1 and Cartier duality. Items 3–5 are Proposition 5.2, Theorem 12.1, and Theorem 13.1. Item 6 is Theorem 9.1 together with its stated global boundary. Items 7–8 are Theorem 7.1 and (7.11). Item 9 combines the prime-level package of Book 143 with Theorems 12.1 and 12.2. $\square$
+**Proof.** Item 1 is the exact structure supplied by Book 46 together with Theorem 2.1. Item 2 is exact Cartier duality. Items 3–5 are Proposition 5.2, Theorem 12.1, and Theorem 13.1. Item 6 is Theorem 9.1 together with its stated global boundary. Items 7–8 are Theorem 7.1 and (7.11)–(7.12). Item 9 combines the prime-level package of Book 143 with Theorems 12.1 and 12.2. $\square$
 
 ### 14.2 Dependency closure
 
