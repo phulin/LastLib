@@ -66,7 +66,7 @@ any resulting corrections.
 - [x] 040. Semistable Abelian Varieties and Monodromy
 - [x] 041. Integral Correspondences on Curves and Jacobians
 - [x] 042. Descent and Weak Mordell–Weil for Abelian Varieties
-- [ ] 043. Heights and the Mordell–Weil Theorem
+- [x] 043. Heights and the Mordell–Weil Theorem
 - [x] 044. Finite Locally Free Schemes and Algebras
 - [x] 045. Affine Group Schemes and Hopf Algebras
 - [x] 046. Finite Flat Commutative Group Schemes

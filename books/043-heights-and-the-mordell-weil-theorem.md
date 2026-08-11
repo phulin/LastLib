@@ -201,7 +201,7 @@ $$
 satisfies
 
 $$
-h(f(P))\leq e,h(P)+C. \tag{2.8}
+h(f(P))\leq e h(P)+C. \tag{2.8}
 $$
 
 Indeed each local value $|F_j(x)|_v$ is at most a coefficient-dependent constant times $\max_i|x_i|_v^e$. The ultrametric inequality makes that constant the largest coefficient at finite places; the archimedean triangle inequality adds at most the number of monomials. Summing gives (2.8).
@@ -215,7 +215,7 @@ $$
 with $\deg G_{ij}=r-e$. Applying the same local estimate gives
 
 $$
-e,h(P)\leq h(f(P))+C'. \tag{2.9}
+e h(P)\leq h(f(P))+C'. \tag{2.9}
 $$
 
 The two inequalities together express functoriality of height for a finite projective presentation. The explicit Nullstellensatz step is important: the absence of a base point, not merely the degree of the coordinate forms, supplies the reverse bound.
@@ -245,7 +245,7 @@ The local estimate applied to this identity gives
 
 $$
 r\log\|x\|_v
-\leq(r-e)\log\|x\|_v+log\max_j|F_j(x)|_v+c'_v.
+\leq(r-e)\log\|x\|_v+\log\max_j|F_j(x)|_v+c'_v.
 $$
 
 The constants $c'_v$ again vanish at almost all finite places. Summing and cancelling $(r-e)h(P)$ gives (2.9). This also explains a hidden geometric fact: a morphism presented everywhere by sections of an ample bundle cannot contract a positive-dimensional subvariety, because the pullback of $\mathcal O(1)$ is ample.
@@ -401,7 +401,13 @@ $$
 h_L(P)=h(\iota_L(P)). \tag{4.1}
 $$
 
-Two choices give heights differing by $O(1)$. Indeed the product map into the two projective spaces is projective, and the coordinate sections of either embedding are homogeneous expressions in sufficiently high products of those of the other. Applying (2.8)--(2.9) to the graph gives both inequalities. If the two bases span the same space, the simpler matrix estimate suffices.
+Two choices give heights differing by $O(1)$. Here is the comparison without assuming the height machine in advance. Let $V,W\subseteq H^0(X,L)$ be two base-point-free subspaces giving closed immersions $i_V,i_W$. Since $i_V$ is a closed immersion and $i_V^*\mathcal O(1)=L$, Serre generation on $i_V(X)$ shows that, for all sufficiently large $a$, every section of $L^a$ is the restriction of a homogeneous polynomial of degree $a$ in the $V$-coordinates. In particular, the $a$th powers of the $W$-coordinates are such polynomials. Estimate (2.8) then gives
+
+$$
+a h(i_W(P))\leq a h(i_V(P))+C.
+$$
+
+After division by $a$, this is one bounded comparison. Interchanging $V$ and $W$ gives the reverse comparison. If the two choices are bases of the same space, the simpler matrix estimate and its inverse suffice.
 
 If $L$ is ample, choose $r>0$ for which $L^r$ is very ample and put
 
@@ -419,21 +425,21 @@ If $M'$ is another choice, tensor-product compatibility for ample bundles shows 
 
 This construction also proves existence rather than merely postulating a list of properties. The only geometric input is that sufficiently high powers of an ample bundle are very ample and that twisting a fixed bundle by a sufficiently high ample power is ample.
 
-Let us justify the independence in (4.3) more explicitly. Suppose $M$ and $N$ are ample and so are $L\otimes M$ and $L\otimes N$. Choose $r$ so large that all bundles appearing after tensoring by $M^rN^r$ are very ample. The Segre calculation gives
+Let us justify the independence in (4.3) without circular cancellation in the Picard group. Suppose $M$ and $N$ are ample and so are $L\otimes M$ and $L\otimes N$. For very ample bundles the coordinate identity for the Segre embedding proves additivity of heights directly. Passing to sufficiently high powers and dividing proves the same assertion modulo $O(1)$ for any two ample bundles. Apply it to the ample pairs $(L\otimes M,N)$ and $(L\otimes N,M)$. Since their tensor products are canonically isomorphic, the comparison just proved gives
 
 $$
 h_{L\otimes M}+h_N
 =h_{L\otimes N}+h_M+O(1).
 $$
 
-Cancelling equal tensor factors in the Picard group, by first passing through very ample presentations, gives
+and hence
 
 $$
 h_{L\otimes M}-h_M
 =h_{L\otimes N}-h_N+O(1).
 $$
 
-The same comparison shows that a chosen height for $L^a$ divided by $a$ agrees with one for $L^b$ divided by $b$: compare both after raising to the common power $ab$. No root of a line bundle is chosen; only real-valued height functions are divided.
+The same direct comparison shows that a chosen height for $L^a$ divided by $a$ agrees with one for $L^b$ divided by $b$: both become heights for $L^{ab}$ after multiplication by the complementary exponent. No root of a line bundle is chosen; only real-valued height functions are divided. This proves that (4.2)--(4.3) are independent of every auxiliary choice before the formal properties of the height machine are invoked.
 
 ### 4.3 Functoriality, tensor products, and bounded ambiguity
 
@@ -549,7 +555,7 @@ $$
 r h_L(P)=h(\iota(P))+O(1). \tag{4.9}
 $$
 
-Projective height is nonnegative, proving the lower bound. A bound on $h_L$ gives a bound on $h(\iota(P))$, and the residue degree of $\iota(P)$ equals that of $P$. Projective Northcott proves finiteness. $\square$
+Projective height is nonnegative, proving the lower bound. A bound on $h_L$ gives a bound on $h(\iota(P))$, and a closed immersion over $K$ preserves residue fields. Moreover $[\mathbf Q(P):\mathbf Q]\leq [K:\mathbf Q]D$ when $[K(P):K]\leq D$. Projective Northcott therefore proves finiteness. $\square$
 
 Ampleness is essential. For the trivial bundle every associated height is bounded; on $\mathbf P^1(K)$ this gives an immediate infinite bounded-height set. A nef bundle pulled back from one factor of a product likewise fails to detect motion in the other factor.
 
@@ -633,7 +639,25 @@ $$
 
 whereas for antisymmetric $L$ the exponent is linear. Heights reflect the same division: symmetric classes produce quadratic heights and antisymmetric classes produce linear canonical heights. Finite generation needs only the positive quadratic part, so from now on $L$ will be symmetric and ample unless explicitly stated otherwise.
 
-Any ample $M$ yields such a bundle $M\otimes[-1]^*M$. Hence the argument does not require a principal polarization. If a polarization $\lambda$ is specified only as a homomorphism $A\to A^\vee$, a positive multiple of it is induced by a symmetric ample line bundle over $K$: after a finite extension choose an inducing bundle, take the tensor product of its Galois conjugates, and descend the resulting invariant bundle. Its associated homomorphism is a positive integral multiple of $\lambda$. Scaling the bundle only scales the eventual height, so this causes no loss.
+Any ample $M$ yields such a bundle $M\otimes[-1]^*M$. Hence the argument does not require a principal polarization. There is a descent point when a polarization $\lambda:A\to A^\vee$ is specified only as a homomorphism. By the definition recalled from Book 38, after a finite extension it is induced by an ample bundle. Pass to a finite Galois extension $F/K$ over which such a bundle $M$ exists. The norm bundle
+
+$$
+N_{F/K}(M)=\bigotimes_{\sigma\in\operatorname{Gal}(F/K)}\sigma^*M
+$$
+
+has its permutation descent datum and therefore descends to an ample bundle $N$ on $A$. Because $\lambda$ is defined over $K$, additivity and Galois compatibility of $M\mapsto\lambda_M$ give
+
+$$
+\lambda_N=[F:K]\lambda.
+$$
+
+The bundle $L=N\otimes[-1]^*N$ is symmetric and ample. The identity $\lambda_{[-1]^*N}=\lambda_N$, which follows directly from the square theorem, now gives
+
+$$
+\lambda_L=2[F:K]\lambda.
+$$
+
+Thus a positive multiple of every polarization is induced over $K$ by a symmetric ample bundle. Scaling the inducing class only scales the eventual height, so this causes no loss.
 
 ### 5.3 The bounded quadratic defect
 
@@ -683,7 +707,7 @@ $$
 \lambda_L(P)=t_P^*L\otimes L^{-1}:A\longrightarrow A^\vee.
 $$
 
-When $L$ is ample, $\lambda_L$ is a polarization. Tensor products add these homomorphisms, and $L^r$ induces $r\lambda_L$. Algebraically trivial twists do not change $\lambda_L$. The canonical quadratic height will similarly depend only on the symmetric Néron--Severi class of $L$, not on a chosen divisor or projective basis.
+When $L$ is ample, $\lambda_L$ is a polarization. Tensor products add these homomorphisms, and $L^r$ induces $r\lambda_L$. Algebraically trivial twists do not change $\lambda_L$. The canonical quadratic height will similarly depend only on the symmetric Néron--Severi class of $L$, not on a chosen divisor or projective basis. Indeed, if two symmetric bundles have the same Néron--Severi class, their quotient is both algebraically trivial and symmetric. In $\operatorname{Pic}^0(A)$ inversion pulls a class back to its inverse, so this quotient is two-torsion. Its height is bounded and its canonical quadratic height is zero. Additivity therefore identifies the canonical heights of the original bundles.
 
 There is nevertheless no universal numerical normalization independent of $L$. Replacing $L$ by $L^r$ multiplies the height by $r$. On an elliptic curve, using a divisor of degree $d$ multiplies the standard canonical height by $d$. Every statement below records the chosen symmetric ample bundle or polarization so that these scalings remain visible.
 
@@ -859,7 +883,7 @@ $$
 +\log|f_q(P)|_v. \tag{6.11}
 $$
 
-The three divisorial singularities cancel by (6.10). Consequently $\delta_v$ extends to a continuous function on the compact analytic group $A(F)$ for every finite extension $F/K_v$, and is bounded there. Define
+The three divisorial singularities cancel by (6.10). More explicitly, functoriality and additivity of local Weil functions show that the first two terms in (6.11) are a local Weil function for $[q]^*D-q^2D$, while $-\log|f_q|_v$ is a local Weil function for the same principal divisor. Their difference is therefore continuous across every local equation. Consequently $\delta_v$ extends to a continuous function on the compact analytic group $A(F)$ for every finite extension $F/K_v$, and is bounded there. Define
 
 $$
 u_v(P)=\sum_{r\geq0}q^{-2(r+1)}\delta_v([q^r]P). \tag{6.12}
@@ -886,7 +910,7 @@ $$
 
 It remains a local Weil function for $D$, since $u_v$ is continuous and bounded. The equation is asserted wherever neither side meets the relevant divisor; the Weil-function interpretation extends it across other charts.
 
-There is an additive-constant issue locally. Multiplying $f_q$ by $a\in K^\times$ changes the normalization, and adding a constant to $\widehat\lambda_{D,v}$ changes (6.14) by $(1-q^2)$ times that constant. For a coherent adelic choice, almost all local metrics are integral and almost all corrections vanish on integral points. The normalized global sum
+There is an additive-constant issue locally. Multiplying $f_q$ by $a\in K^\times$ changes the normalization, and adding a constant to $\widehat\lambda_{D,v}$ changes (6.14) by $(1-q^2)$ times that constant. To make the construction adelic, spread $A,D,f_q$, and the isomorphism (6.10) over the ring of integers with finitely many primes removed. At every remaining finite place, use the model metric; the same integral isomorphism then makes $\delta_v$ zero on integral points. Thus only finitely many places contribute nontrivial correction terms for a fixed algebraic point. The normalized global sum
 
 $$
 \frac1{[K:\mathbf Q]}\sum_vn_v\widehat\lambda_{D,v}(P) \tag{6.15}
@@ -894,7 +918,7 @@ $$
 
 is then well defined up to the one global normalization dictated by $D$. The terms involving $f_q$ cancel by the product formula, so (6.15) obeys the same quadratic distribution relation as $\widehat h_L$. It is also boundedly close to $h_D$. Uniqueness in Proposition 6.2 therefore identifies (6.15) with $\widehat h_L(P)$ after the compatible global constant is fixed.
 
-If $P$ lies on $D$, choose a linearly equivalent representative avoiding the finite orbit segment needed in the calculation. Its local functions differ by logarithms of one rational function, whose global contribution is zero. Thus the global equality extends to every algebraic point even though no single local expression $-\log|f(P)|_v$ is finite on the divisor itself.
+If $P$ lies on $D$, choose a linearly equivalent representative $D'$ avoiding $P$ and repeat the local construction for $D'$. This requires avoiding only the point at which the global sum is evaluated, not its entire infinite multiplication orbit: the correction functions $\delta_v$ already extend across their cancelled divisors. The local functions for $D$ and $D'$ differ by logarithms of one rational function wherever both are defined, and its global contribution is zero. Thus the line-bundle height at every algebraic point is obtained from a divisor representative avoiding that point, even though no single expression $-\log|f(P)|_v$ is finite on the support of its own divisor.
 
 Thus the global canonical height is not an unrelated limiting invariant. It is the sum of locally normalized Néron functions, while the product formula is what makes their rational-function corrections disappear globally.
 
@@ -1048,7 +1072,15 @@ $$
 \widehat h_{f^*M}(P)=\widehat h_M(f(P)),
 $$
 
-and applying the analogous identity to $g$ bounds the height of a point of $B$ by the height of a chosen preimage up to the fixed factor $d^2$. In particular the induced maps
+and, for every $Q\in B(\overline K)$,
+
+$$
+\widehat h_{f^*M}(gQ)
+=\widehat h_M(fgQ)
+=d^2\widehat h_M(Q).
+$$
+
+Thus the comparison is exact after pulling the chosen height through $f$ and $g$; comparisons with any other ample heights follow from (7.7). In particular the induced maps
 
 $$
 A(K)\otimes\mathbf Q\longleftrightarrow B(K)\otimes\mathbf Q
@@ -1137,7 +1169,7 @@ $$
 \qquad(P\in A(K)).
 $$
 
-Quadraticity gives $\|mP\|=m\|P\|$ for positive $m$. Cauchy--Schwarz gives the triangle inequality. Northcott, together with the bounded difference $h_L-\widehat h_L$, makes every ball finite. Finally Book 42 gives the finite quotient $A(K)/mA(K)$.
+Quadraticity gives $\|mP\|=m\|P\|$ for positive $m$. Cauchy--Schwarz gives the triangle inequality. Northcott, together with the bounded difference $h_L-\widehat h_L$, makes every ball finite. Finally Theorem 6.2 of Book 42 gives the finite quotient $A(K)/mA(K)$ for every integer $m\geq2$. Its hypotheses are exactly the present ones: $K$ is a number field and $A/K$ is an abelian variety. No polarization, semistability, or prior finite-generation hypothesis occurs in that theorem.
 
 To recall exactly what is imported in the last sentence, multiplication by $m$ is an isogeny
 
@@ -1333,16 +1365,16 @@ Likewise, if an algebra of correspondences acts on $J$ and an idempotent up to i
 
 ### 10.2 Base change, trace, and restriction
 
-For a finite extension $L/K$, inclusion gives $A(K)\subseteq A(L)$. Both groups are finitely generated. If $L/K$ is Galois, then
+For a finite extension $F/K$, inclusion gives $A(K)\subseteq A(F)$. Both groups are finitely generated. If $F/K$ is Galois, then
 
 $$
-A(K)=A(L)^{\operatorname{Gal}(L/K)}.
+A(K)=A(F)^{\operatorname{Gal}(F/K)}.
 $$
 
-For any finite extension, the trace homomorphism on Weil restrictions sends $P\in A(L)$ to the sum of its conjugates and satisfies
+For any finite extension, the trace homomorphism on Weil restrictions sends $P\in A(F)$ to the sum of its conjugates and satisfies
 
 $$
-\operatorname{Tr}_{L/K}(P)=[L:K]P
+\operatorname{Tr}_{F/K}(P)=[F:K]P
 \qquad(P\in A(K)). \tag{10.1}
 $$
 
