@@ -20,11 +20,14 @@
    - [A variance test in the quadratic case](#34-a-variance-test-in-the-quadratic-case)
 4. [The comparison theorem](#4-the-comparison-theorem)
    - [A precise form of the main theorem](#41-a-precise-form-of-the-main-theorem)
-   - [The torsion comparison lemma](#42-the-torsion-comparison-lemma)
-   - [Proof of the torsion comparison lemma](#43-proof-of-the-torsion-comparison-lemma)
-   - [Passage from torsion to lattices](#44-passage-from-torsion-to-lattices)
-   - [Independence of choices and the cocycle law](#45-independence-of-choices-and-the-cocycle-law)
-   - [Polarized and order-valued forms](#46-polarized-and-order-valued-forms)
+   - [The algebraic CM locus](#42-the-algebraic-cm-locus)
+   - [Rigidity, algebraicity, and the canonical moduli model](#43-rigidity-algebraicity-and-the-canonical-moduli-model)
+   - [The structural ray action](#44-the-structural-ray-action)
+   - [The clean-prime Frobenius calculation](#45-the-clean-prime-frobenius-calculation)
+   - [From prime Frobenius to arbitrary Artin action](#46-from-prime-frobenius-to-arbitrary-artin-action)
+   - [Theta values, torsion, and lattices](#47-theta-values-torsion-and-lattices)
+   - [Idele independence and the descent cocycle](#48-idele-independence-and-the-descent-cocycle)
+   - [Polarized and order-valued forms](#49-polarized-and-order-valued-forms)
 5. [Galois orbits and class fields](#5-galois-orbits-and-class-fields)
    - [The stabilizer of a CM datum](#51-the-stabilizer-of-a-cm-datum)
    - [The class field of a rigidified CM point](#52-the-class-field-of-a-rigidified-cm-point)
@@ -161,7 +164,7 @@ $$
 
 The left arrow is global Artin reciprocity; it is naturally a quotient map after passage to the profinite completion of the idele class group. The top-right route uses the reflex norm followed by the inverse ideal action. The bottom route is ordinary Galois conjugation of algebraic coefficients. The main theorem asserts that the two routes agree on CM objects, including their endomorphisms and prime-to-bad level data.
 
-This is not formal. The reflex norm was defined from a Hodge cocharacter, whereas Galois conjugation is defined algebraically. A proof needs a bridge from Hodge data to algebraic torsion data. The bridge will be a torsion comparison lemma: it identifies the action on all finite torsion simultaneously, and therefore identifies the corresponding commensurable lattices.
+This is not formal. The reflex norm was defined from a Hodge cocharacter, whereas Galois conjugation is defined algebraically. The bridge will have two parts. First, the determinant condition cuts out a finite étale algebraic CM locus over $E$, which proves algebraicity. Second, at clean primes its Hodge filtration determines the elementary divisors of crystalline Frobenius, and those divisors are the inverse-incidence exponents of the reflex norm. Global class field theory then upgrades prime Frobenius to arbitrary Artin action. The simultaneous torsion and lattice comparison follows from the resulting identities at every fine level.
 
 ### 1.4 What will be proved
 
@@ -255,7 +258,7 @@ $$
 Multiplication by an integral unit idele changes the local trivialization but not the ideal. Consequently an unrigidified CM isomorphism class sees the quotient
 
 $$
-K^\times\backslash\mathbf A_{K,f}^\times/widehat{\mathcal O}_K^\times, \tag{2.9}
+K^\times\backslash\mathbf A_{K,f}^\times/\widehat{\mathcal O}_K^\times, \tag{2.9}
 $$
 
 whereas a level structure sees more of the finite idele itself.
@@ -377,7 +380,7 @@ Embed $F_v^\times$ into the ideles at the $v$-component. The composite with glob
 $$
 \begin{aligned}
 \mathcal O_v^\times&\longleftrightarrow I_v^{\mathrm{ab}},\\
-U_v^n&\longleftrightarrow I_v^n\quad(n\geq1),\\
+U_v^n&\longleftrightarrow G_v^n\text{ in the abelian inertia quotient}\quad(n\geq1),\\
 \pi_v&\longleftrightarrow\text{arithmetic Frobenius modulo inertia}.
 \end{aligned} \tag{3.4}
 $$
@@ -402,7 +405,7 @@ $$
 If a class field $H/E$ is unramified at $v$, (3.3) and the desired comparison predict
 
 $$
-A^{\operatorname{Frob}_v}simeq
+A^{\operatorname{Frob}_v}\simeq
 R_\Phi(\mathfrak p_v)*A
 =A(R_\Phi(\mathfrak p_v)^{-1}\mathfrak a,\Phi). \tag{3.7}
 $$
@@ -434,7 +437,9 @@ This matches the degree $q$ of Frobenius. Reversing only one of Artin or the lat
 
 ## 4. The comparison theorem
 
-We now prove the arithmetic assertion that structural CM theory leaves open. The proof first works on torsion. Finite torsion detects the finite adelic lattice, and polarization controls the scalar ambiguity. This is the point at which the Hodge cocharacter, global reciprocity, and algebraic Galois action meet.
+We now prove the arithmetic assertion that structural CM theory leaves open. An analytic theta-transformation formula is not enough: it compares two complex presentations after an adelic change, but by itself it neither puts a CM point over $\overline{\mathbf Q}$ nor identifies the action of an arbitrary automorphism of $\mathbf C$. Those are the two arithmetic steps that must be supplied rather than hidden in the word “reciprocity.”
+
+The proof below is algebraic and noncircular. We put rigidified CM objects of fixed type in a zero-dimensional PEL moduli scheme over the reflex field and prove that this scheme is finite étale. This gives algebraicity and a canonical algebraic moduli model. We then spread the finite scheme and its universal abelian variety over a localization of $\mathcal O_E$. At every clean prime, contravariant Dieudonné theory and the determinant condition identify the relative Frobenius kernel with the kernel of the reflex-ideal isogeny. Finally, a zeta-function generation argument upgrades those prime identities to the action of the whole absolute Galois group; global class field theory then gives every idele and every Artin automorphism. Torsion, theta values, lattices, and descent are consequences of that arithmetic comparison.
 
 ### 4.1 A precise form of the main theorem
 
@@ -468,58 +473,406 @@ $$
 
 The isomorphism respects every prime-to-bad order action and transports level by multiplication with $r_\Phi(s_f)^{-1}$. With a polarization, the comparison is a similitude whose multiplier is prescribed by the weight identity.
 
+More intrinsically, if $x=(A,\iota,\lambda,\eta)$ is any sufficiently rigid finite-level CM datum and the right side means transport of all displayed structures, then
+
+$$
+x^\sigma=r_\Phi(s_f)*x. \tag{4.3a}
+$$
+
+This equality is an equality of geometric points of the algebraic fine moduli scheme. It is therefore stronger than an equality of unpolarized complex tori.
+
 The theorem concerns $\sigma$ fixing $E$. For arbitrary $\tau\in\operatorname{Aut}(\mathbf C)$, first transport $(K,\Phi,E)$ to $(\tau K,\tau\Phi,\tau E)$ and then apply the theorem over $\tau E$. One must not feed such a $\tau$ directly into $\operatorname{Art}_E$ unless it fixes $E$.
 
-### 4.2 The torsion comparison lemma
+### 4.2 The algebraic CM locus
 
-Write
+We first construct the algebraic object on which the comparison will be proved. Choose an order $\mathcal O\subset K$ preserving the lattice of $A$, a CM-compatible polarization $\lambda$ of degree $d_\lambda$, and an integer $N\geq3$ prime to the conductor of $\mathcal O$ and to $d_\lambda$. Choose a full $\mathcal O/N\mathcal O$-linear similitude level $\eta_N$. We use a similitude level, or equivalently the union of the symplectic components with their cyclotomic descent, so that the moduli problem is defined over $E$ rather than over a field obtained by choosing one primitive $N$-th root of unity. If desired, add a theta-group frame of an auxiliary symmetric power of $\lambda$. We write $\rho$ for this entire finite rigidification.
+
+The fine PEL construction gives a separated algebraic scheme $\mathscr M_{N,d_\lambda}$ of finite type, with a universal abelian scheme and universal displayed structures. Inside it impose the $\mathcal O$-action, the Rosati relation
+
+$$
+\iota(a)^\dagger=\iota(\bar a), \tag{4.4}
+$$
+
+and the determinant condition of type $\Phi$:
+
+$$
+\det\bigl(T-\iota(a)\mid\operatorname{Lie}A\bigr)
+=\prod_{\varphi\in\Phi}(T-\varphi(a))
+\qquad(a\in\mathcal O). \tag{4.5}
+$$
+
+It is enough to impose (4.5) on a finite set of generators of $\mathcal O$. The coefficients on the right are fixed by exactly the stabilizer of the type, so they lie in the reflex field $E$. Thus these equations define an algebraic PEL subfunctor over $E$; call its fine moduli scheme
+
+$$
+\mathscr C=\mathscr C(\mathcal O,\Phi,d_\lambda,N,\rho). \tag{4.6}
+$$
+
+This construction is the first place where the reflex field enters arithmetically. It uses the field of definition of the Hodge type, but no reciprocity theorem and no assertion about the coordinates of a CM point.
+
+Every complex CM datum with the chosen numerical invariants gives a point of $\mathscr C(\mathbf C)$. Conversely, the degree equality $[K:\mathbf Q]=2\dim A$ and (4.5) force the rational homology of every characteristic-zero geometric fiber to be a rank-one $K$-module of type $\Phi$. The complex classification therefore identifies its geometric points with the familiar polarized ideal data, together with the chosen finite rigidification. In particular, the ideal classification is being used only to describe the geometric fibers of an already algebraic moduli problem.
+
+The full level $N\geq3$ kills automorphisms. Hence $\mathscr C$ represents a sheaf rather than merely a stack, and its universal family is an honest abelian scheme. A theta frame is optional for this conclusion. Its later role is to turn theta sections into algebraic projective coordinates; it is not an arithmetic substitute for the construction of $\mathscr C$.
+
+### 4.3 Rigidity, algebraicity, and the canonical moduli model
+
+**Proposition 4.2 (rigidity and algebraicity).** The $E$-scheme $\mathscr C$ is finite étale. Consequently every rigidified CM point of type $\Phi$, every value at it of an $E$-rational moduli function, and every normalized theta-null ratio on a theta-framed cover is algebraic over $E$.
+
+**Proof.** Let $k$ be an algebraically closed field of characteristic zero containing $E$, and let $x\in\mathscr C(k)$. Put
+
+$$
+H=H^1_{\mathrm{dR}}(A_x/k),
+\qquad F^1=H^0(A_x,\Omega^1_{A_x/k}). \tag{4.7}
+$$
+
+After extending $k$ if necessary, the étale algebra $K\otimes_\mathbf Q k$ splits and its idempotents decompose $H$. Condition (4.5) gives one Hodge line for each character in $\Phi$. The polarization pairs the $\tau$- and $\bar\tau$-summands perfectly, its Rosati involution being CM conjugation, and $F^1$ is Lagrangian. It therefore gives one complementary line for each character in $\bar\Phi$. Since $\Phi\sqcup\bar\Phi$ is the full embedding set, $H$ is rank one over $K\otimes_\mathbf Q k$ and
+
+$$
+H=\bigoplus_{\tau:K\hookrightarrow k}H_\tau,
+\qquad \dim_kH_\tau=1. \tag{4.8}
+$$
+
+The determinant condition says
+
+$$
+F^1=\bigoplus_{\varphi\in\Phi}H_\varphi, \tag{4.9}
+$$
+
+after the chosen embedding of the reflex data in $k$. A first-order deformation of an abelian variety is a first-order deformation of its Hodge filtration. Requiring the $\mathcal O$-action to lift cuts its tangent space down to
+
+$$
+\operatorname{Hom}_{\mathcal O\otimes k}(F^1,H/F^1). \tag{4.10}
+$$
+
+The source is a sum of the characters in $\Phi$ and the target a sum of the complementary characters. No character occurs on both sides, so (4.10) is zero. The polarization and level conditions can only cut the tangent space down further. Thus every geometric point has zero tangent space.
+
+The PEL scheme is of finite type over $E$. Zero tangent space implies that every local ring of $\mathscr C_{\overline E}$ has dimension zero and is reduced. Hence $\mathscr C$ is a zero-dimensional reduced scheme of finite type over a characteristic-zero field. Such a scheme is finite étale. In particular, every map $\operatorname{Spec}\mathbf C\to\mathscr C$ factors through a finite extension of $E$ inside $\overline{\mathbf Q}$. This proves algebraicity without evaluating a theta series. $\square$
+
+There are two useful consequences.
+
+First, the residue field $E(x)$ of a point $x$ is already a field of definition for the *fine moduli object*: the universal abelian scheme, $\mathcal O$-action, polarization homomorphism, and finite level restrict to $E(x)$. This is a canonical model in the exact moduli sense required here. It has not yet been proved that $E(x)/E$ is abelian; that will be a conclusion of the arithmetic comparison.
+
+Second, finite étale schemes and abelian schemes spread out. After enlarging a finite set $S_0$ of finite places of $E$, there are
+
+$$
+R=\mathcal O_E[S_0^{-1}],
+\qquad \mathscr C_R\longrightarrow\operatorname{Spec}R \tag{4.11}
+$$
+
+with $\mathscr C_R$ finite étale, and an abelian scheme $\mathscr A\to\mathscr C_R$ carrying all universal structures whose generic fiber is the one above. We enlarge $S_0$ so that the order is maximal and étale at every remaining residue characteristic, the polarization degree and level are invertible, and every finite rigidification is étale. This spread is obtained from the finite algebraic data just constructed; it is not an assumed integral canonical-model theorem.
+
+### 4.4 The structural ray action
+
+We next construct an adelic action without mentioning Galois. Let $\mathfrak b$ be an integral ideal of $E$ prime to $S_0$, and put
+
+$$
+\mathfrak c=R_\Phi(\mathfrak b),
+\qquad n=N_{E/\mathbf Q}(\mathfrak b). \tag{4.12}
+$$
+
+If $\mathcal O$ is nonmaximal, $S_0$ contains its conductor and $\mathfrak c$ in this paragraph means the unique proper invertible $\mathcal O$-ideal prime to the conductor whose extension to $\mathcal O_K$ is $R_\Phi(\mathfrak b)$. Extension and contraction give this ideal, and the local equality with the maximal order away from the conductor preserves the weight identity. We suppress this harmless subscript only at the clean primes where it is valid.
+
+For a geometric point $x=(A,\iota,\lambda,\rho)$, the finite subgroup
+
+$$
+A[\mathfrak c]=\{P:aP=0\text{ for every }a\in\mathfrak c\} \tag{4.13}
+$$
+
+is the kernel of the ideal isogeny. The quotient exists algebraically, and the complex classification identifies it with the inverse lattice transform
+
+$$
+q_\mathfrak c:A\longrightarrow A/A[\mathfrak c]
+=\mathfrak c*A. \tag{4.14}
+$$
+
+The weight identity $\mathfrak c\bar{\mathfrak c}=n\mathcal O_K$ supplies the unique target polarization for which
+
+$$
+q_\mathfrak c^*\lambda_\mathfrak c=n\lambda. \tag{4.15}
+$$
+
+Because $\mathfrak b$ is prime to the level, $q_\mathfrak c$ is an isomorphism on the relevant level torsion and transports $\rho$. Thus $\mathfrak b$ defines a permutation $T_\mathfrak b$ of the finite geometric set $\mathscr C(\overline E)$. Quotients in succession give
+
+$$
+T_{\mathfrak b_1\mathfrak b_2}
+=T_{\mathfrak b_1}T_{\mathfrak b_2}. \tag{4.16}
+$$
+
+For a principal ideal $(a)$, formula $R_\Phi((a))=(r_\Phi(a))$ is not a claim that the reflex ideal vanishes. Multiplication by $r_\Phi(a)$ is the actual isomorphism
+
+$$
+r_\Phi(a)*x\xrightarrow{\ \sim\ }x. \tag{4.17}
+$$
+
+It respects (4.15), because
+
+$$
+r_\Phi(a)\overline{r_\Phi(a)}=N_{E/\mathbf Q}(a), \tag{4.18}
+$$
+
+and it respects the transported level and theta frame by their definition. If $a$ is sufficiently close to $1$ at the finitely many level and frame primes, the displayed isomorphism fixes the chosen rigidification.
+
+It follows that there is a modulus $\mathfrak m$ whose finite part is supported on a finite enlargement $S$ of $S_0$ such that the structural action factors through a finite ray class group; if the reflex datum has real places, the required sign conditions are included in the infinite part of $\mathfrak m$:
+
+$$
+\theta_\rho:\operatorname{Cl}_{\mathfrak m}(E)
+\longrightarrow\operatorname{Perm}\bigl(\mathscr C(\overline E)\bigr),
+\qquad [\mathfrak b]\longmapsto T_\mathfrak b. \tag{4.19}
+$$
+
+Equivalently, on ideles it is the action $x\mapsto r_\Phi(s_f)*x$, with principal ideles acting through (4.17) and the connected archimedean component acting trivially. The existence of $\mathfrak m$ is elementary: the finite level and frame see only a finite quotient of the local unit groups, and a sufficiently deep principal congruence subgroup acts trivially. At this stage (4.19) is only a finite group of explicitly constructed ideal correspondences. We have not identified it with a Galois group.
+
+### 4.5 The clean-prime Frobenius calculation
+
+The arithmetic bridge is a calculation on the special fibers of (4.11). Let $v\notin S$ have residue characteristic $p$ and cardinality
+
+$$
+q_v=p^d. \tag{4.20}
+$$
+
+Enlarge $S$ once and for all so that $p$ is unramified in $K$ and $E$. Put
+
+$$
+\mathfrak c_v=R_\Phi(\mathfrak p_v). \tag{4.21}
+$$
+
+Choose a geometric point of $\mathscr C_R$ above an algebraic closure of $k_v$, and denote its abelian variety by $\widetilde A$. Write
+
+$$
+F_{q_v}:\widetilde A\longrightarrow\widetilde A^{(q_v)} \tag{4.22}
+$$
+
+for relative $q_v$-power Frobenius.
+
+**Proposition 4.3 (reflex kernel lemma).** With these hypotheses,
+
+$$
+\ker F_{q_v}=\widetilde A[\mathfrak c_v] \tag{4.23}
+$$
+
+as finite flat $\mathcal O_K$-stable subgroup schemes. Under the induced target isomorphism, the polarization, prime-to-$p$ level, and every chosen prime-to-$p$ theta frame agree. Consequently the arithmetic Frobenius permutation of the geometric special fiber is
+
+$$
+\widetilde x^{\operatorname{Frob}_v}
+=\mathfrak c_v*\widetilde x. \tag{4.24}
+$$
+
+**Proof.** Work over $W=W(\overline{k}_v)$. In the contravariant convention, let
+
+$$
+M=H^1_{\mathrm{cris}}(\widetilde A/W). \tag{4.25}
+$$
+
+The order is maximal and étale at $p$. After extending Witt coefficients, its idempotents split $M$ as
+
+$$
+M=\bigoplus_{\varphi:K\hookrightarrow\overline{\mathbf Q}_p}M_\varphi,
+\qquad \operatorname{rank}_W M_\varphi=1. \tag{4.26}
+$$
+
+The ranks are one because the same idempotent summands have rank one on the generic de Rham fiber of the abelian scheme, and ranks of direct summands are locally constant. Crystalline Frobenius permutes these lines by Witt Frobenius.
+
+Modulo $p$, contravariant Dieudonné theory identifies the Hodge subspace by
+
+$$
+\omega_{\widetilde A}=\ker(F:M/pM\to M/pM). \tag{4.27}
+$$
+
+The determinant condition (4.5), which remains true on the integral model, says exactly that the idempotent lines in $\omega_{\widetilde A}$ are the $p$-adic transports of the embeddings in $\Phi$. On a rank-one summand the pullback induced by one relative $p$-Frobenius has elementary divisor either $1$ or $p$. Indeed, $FV=VF=p$ bounds the exponent by one, and (4.27) says that the exponent is one precisely on the translated type line.
+
+Iterate through the $d$ Witt-Frobenius translates belonging to $v$. If $e_\varphi$ is the exponent of $p$ in the image of $F^d$ on the $\varphi$-summand, then
+
+$$
+e_\varphi
+=\sum_{\tau:E\hookrightarrow\overline{\mathbf Q}_p\atop \tau\text{ induces }v}
+m(\tau,\varphi),
+\qquad
+m(\tau,\varphi)=
+\begin{cases}
+1,&\gamma_\tau^{-1}\varphi\in\Phi,\\
+0,&\gamma_\tau^{-1}\varphi\notin\Phi.
+\end{cases} \tag{4.28}
+$$
+
+The inverse on $\gamma_\tau$ is the contravariant transport of the Hodge character. Formula (4.28) is also exactly the valuation formula obtained by applying the reflex-norm exponent matrix to a prime idele at $v$. Therefore
+
+$$
+\operatorname{im}(F^d\mid M)
+=\bigoplus_\varphi p^{e_\varphi}M_\varphi
+=\mathfrak c_v M. \tag{4.29}
+$$
+
+This is the point at which the Hodge cocharacter becomes an integral Frobenius kernel. It also fixes the variance: the type norm has the wrong source and target, while replacing $m(\tau,\varphi)$ by the direct incidence would give the conjugate or transpose kernel.
+
+For an isogeny $u:B\to C$ with finite $p$-power kernel $G$, contravariance gives
+
+$$
+0\longrightarrow D(C[p^\infty])
+\xrightarrow{u^*}D(B[p^\infty])
+\longrightarrow D(G)\longrightarrow0. \tag{4.30}
+$$
+
+Thus $D(\ker F_{q_v})$ is the quotient of $M$ by the left side of (4.29). Locally at $p$, the invertible ideal $\mathfrak c_v$ has a generator whose component valuations are the same $e_\varphi$, so the identical quotient is $D(\widetilde A[\mathfrak c_v])$. Finite Dieudonné theory is an exact anti-equivalence over the perfect residue field. It follows that the two finite flat subgroup schemes are equal, proving (4.23).
+
+The generic ideal isogeny between the two corresponding fibers of $\mathscr A$ extends uniquely over the strict henselian discrete valuation ring: abelian schemes have the extension property for homomorphisms over a normal trait. Its schematic kernel is the finite flat $\mathfrak c_v$-kernel just computed, and formation of the quotient by that kernel commutes with base change. Hence the quotient appearing in the special fiber is genuinely the specialization of the structural transform $T_{\mathfrak p_v}x$, not merely an abstract abelian variety with an isomorphic $p$-divisible group.
+
+The quotient by a specified finite flat subgroup is unique up to a unique target isomorphism. Relative Frobenius pulls the Frobenius twist of a polarization back to its $q_v$-fold multiple; the ideal quotient does the same by
+
+$$
+\mathfrak c_v\bar{\mathfrak c}_v=q_v\mathcal O_K. \tag{4.31}
+$$
+
+Both maps are isomorphisms on prime-to-$p$ torsion, where they transport the same conjugated level and theta-group labels. Since the level is rigid, the target isomorphism has no residual automorphism. The target of (4.22) is therefore precisely the ideal transform as a rigidified PEL object. This is (4.24). $\square$
+
+The direction in (4.24) is worth recording. With arithmetic reciprocity, residue Frobenius acts on $\overline{k}_v$ by $a\mapsto a^{q_v}$, and conjugating the coefficients of a special-fiber object by that automorphism produces the target $\widetilde A^{(q_v)}$ of relative Frobenius. Thus the calculation gives $\mathfrak c_v$, not $\mathfrak c_v^{-1}$ or $\overline{\mathfrak c}_v$. The inverse appears later only in the lattice of the ideal transform.
+
+There is a useful generic-fiber consequence. A finite étale scheme over a strict henselian discrete valuation ring is a disjoint union of copies of the base. Hence specialization gives a bijection between its geometric generic points in a fixed unramified closure and its geometric special points. Applying this to $\mathscr C_R$ and (4.24) gives
+
+$$
+x^{\operatorname{Frob}_v}=\mathfrak c_v*x \tag{4.32}
+$$
+
+for every geometric generic point and every arithmetic Frobenius at a place over $v$. No global CM reciprocity has been used in proving (4.32): the inputs were the algebraic PEL model, its determinant condition, and finite Dieudonné theory.
+
+### 4.6 From prime Frobenius to arbitrary Artin action
+
+Let $L/E$ be a finite Galois extension through which the action of $G_E$ on the finite set $\mathscr C(\overline E)$ factors, and replace $L$ by the fixed field of the kernel so that
+
+$$
+G=\operatorname{Gal}(L/E)
+\hookrightarrow\operatorname{Perm}\bigl(\mathscr C(\overline E)\bigr) \tag{4.33}
+$$
+
+is faithful. Enlarge $S$ to contain the primes ramified in $L$. Equation (4.32) says that, for every $v\notin S$ and every place of $L$ above it, the corresponding arithmetic Frobenius element acts as the structural permutation $T_{\mathfrak p_v}$.
+
+We need a small generation lemma. It is weaker than the Chebotarev density theorem and follows from the zeta-function facts already available in global class field theory.
+
+**Lemma 4.4 (Frobenius generation outside a finite set).** If $L/E$ is finite Galois, the Frobenius elements at the primes outside any finite set containing the ramified primes generate $\operatorname{Gal}(L/E)$.
+
+**Proof.** Let $H$ be the subgroup generated by all those Frobenius elements, for all choices of primes above $v$. Conjugation merely changes the prime above $v$, so $H$ is normal. Every prime outside $S$ splits completely in $L^H/E$. If $d=[L^H:E]$, then, outside the finitely many Euler factors in $S$,
+
+$$
+\zeta_{L^H}(s)=\zeta_E(s)^d\cdot U_S(s), \tag{4.34}
+$$
+
+where $U_S(s)$ is a finite product of Euler factors holomorphic and nonzero at $s=1$. The left side has a simple pole at $1$, whereas the right side has a pole of order $d$. Hence $d=1$, so $H=G$. $\square$
+
+All permutations $T_{\mathfrak p_v}$ lie in the abelian image of the ray action (4.19). By Lemma 4.4 they generate the faithful group $G$. Therefore $G$ itself is abelian. This is where abelianity of the field of CM moduli values is proved; it was not assumed in order to move the support of an idele or to choose an Artin symbol.
+
+Now global reciprocity applies to the already proved abelian extension $L/E$. Enlarge the modulus $\mathfrak m$ so that both $L/E$ and the structural action (4.19) factor through $\operatorname{Cl}_{\mathfrak m}(E)$. The two homomorphisms
+
+$$
+\operatorname{Cl}_{\mathfrak m}(E)
+\rightrightarrows
+\operatorname{Perm}\bigl(\mathscr C(\overline E)\bigr) \tag{4.35}
+$$
+
+are the global Artin action through $L$ and the structural reflex action. They agree on every prime ideal outside $\mathfrak m$ by (4.32). Every ideal prime to $\mathfrak m$ is a product of such prime ideals, so they agree everywhere. In idelic notation,
+
+$$
+x^{\operatorname{Art}_E(s)}
+=r_\Phi(s_f)*x
+\qquad(s\in\mathbf A_E^\times). \tag{4.36}
+$$
+
+Here the left side means the action of any lift of the indicated element of $G_E^{\mathrm{ab}}$. The coordinates of $x$ lie in the abelian extension $L$, so the result is independent of the lift. Equation (4.36) includes ramified Artin elements and local units: their action follows from global class field theory after the clean-prime comparison has identified the two finite ray-class homomorphisms. We are not pretending that a ramified prime ideal has a canonical Frobenius.
+
+Finally let $\sigma\in\operatorname{Aut}(\mathbf C/E)$. Proposition 4.2 puts $x$ and its universal fine-moduli object over $\overline{\mathbf Q}$. Thus $\sigma$ acts through its restriction to $G_E$, and then through $G_E^{\mathrm{ab}}$ by the abelianity just proved. If $s$ represents $\sigma|_{E^{\mathrm{ab}}}$, (4.36) gives (4.3a). This proves the moduli form of Theorem 4.1 for an arbitrary automorphism, not merely for Frobenius elements or automorphisms detected on cyclotomic coefficients.
+
+### 4.7 Theta values, torsion, and lattices
+
+We can now state the arithmetic theta-value consequence with the necessary coefficient qualification. Let $Y$ be a theta-framed fine moduli cover defined over $E$ by cyclotomic descent, let $x\in Y(\overline E)$ be a CM point, and let $f$ be an $E$-rational function on $Y$ regular at every point under consideration. Then (4.36) gives
+
+$$
+f(x)^\sigma=f\bigl(r_\Phi(s_f)*x\bigr) \tag{4.37}
+$$
+
+for every $\sigma\in\operatorname{Aut}(\mathbf C/E)$ and every $s$ representing $\sigma|_{E^{\mathrm{ab}}}$. In particular $f(x)\in\overline{\mathbf Q}$ and in fact lies in an abelian extension of $E$.
+
+For a theta quotient whose coefficients lie in a cyclotomic extension $F$ rather than in $E$, the semilinear formula is
+
+$$
+f(x)^\sigma=f^\sigma\bigl(r_\Phi(s_f)*x\bigr). \tag{4.38}
+$$
+
+If $\sigma$ fixes the coefficients, this reduces to (4.37). Equivalently one may incorporate the cyclotomic change of characteristic into the finite adelic action on the theta frame. This distinction prevents an incorrect claim about a modular function whose coefficients themselves move. Also, the algebraic quantities are projective theta-null coordinates and equal-weight ratios. A raw analytic theta constant carries a period-scale factor and is not asserted to be algebraic.
+
+We next recover the simultaneous torsion statement. Write
 
 $$
 V_f(A)=H_1(A,\mathbf Q)\otimes\mathbf A_f,
-\qquad T_f(A)=H_1(A,\mathbf Z)\otimes\widehat{\mathbf Z}. \tag{4.4}
+\qquad T_f(A)=H_1(A,\mathbf Z)\otimes\widehat{\mathbf Z}. \tag{4.39}
 $$
 
-The quotient $V_f(A)/T_f(A)$ is canonically the full torsion subgroup $A_{\mathrm{tors}}(\mathbf C)$. Galois acts on torsion algebraically even though (4.4) was described analytically.
+The quotient $V_f(A)/T_f(A)$ is canonically the full torsion subgroup $A_{\mathrm{tors}}(\mathbf C)$. Galois acts on torsion algebraically even though (4.39) was described analytically.
 
-**Lemma 4.2 (torsion comparison).** Under the hypotheses of Theorem 4.1, there is a $K\otimes\mathbf A_f$-linear isomorphism
-
-$$
-\beta_{\sigma,s}:V_f(A)\xrightarrow{\sim}V_f(A^\sigma) \tag{4.5}
-$$
-
-such that
+Galois conjugation of algebraic torsion gives a canonical $\mathcal O\otimes\widehat{\mathbf Z}$-linear isomorphism
 
 $$
-\beta_{\sigma,s}(T_f(A))
-=r_\Phi(s_f)T_f(A^\sigma), \tag{4.6}
+\sigma_*:T_f(A)\xrightarrow{\sim}T_f(A^\sigma), \tag{4.40}
 $$
 
-and on the quotient by the lattices it induces the ordinary map $x\mapsto x^\sigma$ on torsion points. Equivalently, after using $\beta_{\sigma,s}$ to identify both rational spaces, the target integral lattice is $r_\Phi(s_f)^{-1}T_f(A)$.
+where the integral $\mathcal O$-action on the target, and the rational $K$-action after inverting denominators, are the transported CM labeling. It is the inverse limit of $P\mapsto P^\sigma$ on $A[N]$ and therefore carries the source Tate lattice onto the target Tate lattice.
 
-The assertion is simultaneous over all primes. A family of separate $\ell$-adic comparisons would leave an uncontrolled rational scalar; the adelic statement and the principal-idele relation remove that ambiguity.
+**Corollary 4.5 (torsion comparison).** Under the hypotheses of Theorem 4.1, there is a $K$-linear marking
 
-Before entering the proof, two algebraicity points deserve emphasis. A CM complex torus is projective because its positive trace form is a Riemann form. Its analytic homomorphisms are algebraic, because their graphs are polarized complex subtori. Finally, every polarized abelian variety with level is represented by a point of an algebraic moduli scheme of finite type. Thus both Galois conjugation and the ideal isogenies below act on algebraic objects. No conclusion is being drawn merely from a homeomorphism of complex tori.
+$$
+j_{\sigma,s}:H_1(A^\sigma,\mathbf Q)\xrightarrow{\sim}K \tag{4.41}
+$$
+
+such that, after tensoring with $\mathbf A_f$,
+
+$$
+(j_{\sigma,s}\otimes1)\bigl(\sigma_*x\bigr)
+=r_\Phi(s_f)^{-1}x
+\qquad(x\in\widehat{\mathfrak a}). \tag{4.42}
+$$
+
+In particular,
+
+$$
+(j_{\sigma,s}\otimes1)T_f(A^\sigma)
+=r_\Phi(s_f)^{-1}\widehat{\mathfrak a}. \tag{4.43}
+$$
+
+This is a well-typed assertion about Tate lattices. On torsion quotients it gives the commutative diagram
+
+$$
+\begin{array}{ccc}
+(K\otimes\mathbf A_f)/\widehat{\mathfrak a}
+&\xrightarrow{\ x\mapsto r_\Phi(s_f)^{-1}x\ }&
+(K\otimes\mathbf A_f)/(r_\Phi(s_f)^{-1}\widehat{\mathfrak a})\\
+\downarrow\wr&&\downarrow\wr\\
+A_{\mathrm{tors}}(\mathbf C)&\xrightarrow{\ P\mapsto P^\sigma\ }&
+A^\sigma_{\mathrm{tors}}(\mathbf C).
+\end{array} \tag{4.44}
+$$
+
+**Proof.** For each $M$ divisible by the fixed rigidifying level $N$, equip $A$ with the level-$M$ structure induced by the chosen adelic marking. There is no prime-to-bad restriction here: over characteristic zero, the sheaf of full $\mathbf Z/M\mathbf Z$-linear frames of $A[M]$ is a finite étale cover of the already fine CM scheme. When proving reciprocity for that cover, one merely adds the primes dividing $M$ to its clean spreading set; infinitely many other primes remain for Lemma 4.4.
+
+Apply (4.36) to this enhanced point. It identifies its Galois conjugate with the level transported by multiplication with $r_\Phi(s_f)^{-1}$. The underlying isomorphisms for different $M$ agree after forgetting to level $N$, because an isomorphism preserving full level $N\geq3$ is unique. Passing through the cofinal system of $M$ gives (4.42) on every finite torsion group and hence on the inverse limit. The analytic uniformization of the target ideal transform gives the marking (4.41), and (4.43)--(4.44) follow. $\square$
+
+The assertion is simultaneous over all primes. A family of unrelated $\ell$-adic comparisons could differ by rational $K^\times$-scalars. Compatibility through one tower of fine levels and the principal-idele isomorphism (4.17) remove that ambiguity.
 
 The torsion itself remembers the commensurability class of the lattice. If $V$ is a finite-dimensional rational vector space and $\Lambda\subset V$ a full lattice, then
 
 $$
-V/\Lambda=\varinjlim_N N^{-1}\Lambda/\Lambda. \tag{4.7}
+V/\Lambda=\varinjlim_N N^{-1}\Lambda/\Lambda. \tag{4.45}
 $$
 
-Conversely, the kernels of multiplication by $N$ together with their transition maps recover $\Lambda\otimes\widehat{\mathbf Z}$ inside $V\otimes\mathbf A_f$. Hence it is enough to prove a compatible comparison at every finite level; compatibility is what upgrades separate finite statements to a single finite-adelic statement.
+Conversely, the kernels of multiplication by $N$ together with their transition maps recover $\Lambda\otimes\widehat{\mathbf Z}$ inside $V\otimes\mathbf A_f$. This explains why the compatible finite-level calculation recovers the finite adelic lattice rather than merely its local isomorphism class.
 
-### 4.3 Proof of the torsion comparison lemma
+#### Analytic theta compatibility
 
-We give the comparison argument in enough detail to isolate its only genuinely arithmetic step.
+The preceding proof is complete without analytic theta transformation. It is nevertheless useful to check that the algebraic action agrees with the classical analytic formulas and that no hidden transpose has entered the reflex norm.
 
-Choose an integer $N\geq3$ divisible by none of the primes at which the order or polarization data are defective. A symplectic basis of $A[N]$ embeds the rigidified polarized CM object into the fine moduli scheme $\mathcal A_{g,d,N}$ of polarized abelian varieties of fixed degree with full level $N$. This scheme is defined over the cyclotomic field required by the Weil pairing. Its algebraic coordinate functions separate geometric points.
+Choose an integer $N\geq3$ divisible by none of the primes at which the order or polarization data are defective. A symplectic basis of $A[N]$ gives a point $x$ of the fine moduli scheme $\mathcal A_{g,d,N}$ of polarized abelian varieties of fixed degree with full level $N$. A component with a selected Weil-pairing value is defined over the corresponding cyclotomic field; the union with its cyclotomic descent is the similitude-level scheme used in Section 4.2.
 
-We may replace $N$ by a multiple without losing the original level, and we do so until theta constants of level dividing $2N$ give projective coordinates on the chosen fine moduli scheme. Ratios of homogeneous polynomials of the same degree in those constants then generate its function field. This reduction is useful because it lets us prove the required transformation statement on explicit convergent series.
+To use theta functions without claiming that a theta characteristic is intrinsic to this moduli problem, pass to the finite theta-framed cover $Y\to\mathcal A_{g,d,N}$: a point of $Y$ also chooses an isomorphism of the theta group of a sufficiently high symmetric power of the polarization with the standard finite Heisenberg group. The finite change-of-frame group $\Delta$ acts on $Y$, and $\mathcal A_{g,d,N}=Y/\Delta$ because the original level has trivial inertia. On $Y$, theta constants give a projective embedding; equal-weight quotients of homogeneous polynomials in them generate its function field. A rational function on $\mathcal A_{g,d,N}$ pulls back to a $\Delta$-invariant such quotient, and conversely a $\Delta$-invariant quotient descends. Thus it is enough to calculate on $Y$ and then take invariants. This is the precise role of theta coordinates below.
 
-On the analytic uniformization, such functions may be represented by quotients of theta constants of a common weight and level. We need two elementary transformation facts.
+On the analytic uniformization of $Y$, the relevant functions are quotients of theta constants of a common weight and level. We need two transformation facts.
 
 1. If a rational symplectic similitude $u$ carries one polarized lattice to another, substitution in the theta series carries the associated moduli value to the value at the transformed lattice. The finite residue of $u$ records its action on level.
-2. If $a\in E^\times$ is principal, the product formula together with the transformation formula makes its finite action cancel its archimedean action. Consequently the induced action on every algebraic moduli value is trivial.
+2. If $a\in E^\times$ is principal, the finite transformation attached to $r_\Phi(a)$ is the analytic change of $K$-basis induced by the same principal element. After descending from the theta frame, these are two presentations of the same polarized level object. Consequently the action on every algebraic moduli value is trivial. The product formula is what cancels the scalar automorphy factors in the theta-framed calculation.
 
 For completeness, the decisive cancellation can be seen term by term. A theta series has the form
 
@@ -527,13 +880,13 @@ $$
 \vartheta_m(z,\tau)=
 \sum_{n\in\mathbf Z^g}
 \exp\!\left(\pi i(n+m_1)^t\tau(n+m_1)
-+2\pi i(n+m_1)^t(z+m_2)\right). \tag{4.8}
++2\pi i(n+m_1)^t(z+m_2)\right). \tag{4.46}
 $$
 
 A change of symplectic lattice multiplies it by a determinant square root and a root of unity depending only on the level characteristic $m$. In a quotient of equal total weight the determinant factors cancel. The remaining roots of unity are acted on by the cyclotomic component of Artin reciprocity; local reciprocity sends a unit to exactly the inverse change of the level characteristic. For a principal $a$, the product of these local root-of-unity factors is $1$. The exponent matrix governing the change of the CM lattice is the Galois orbit of the Hodge cocharacter. By the defining identity
 
 $$
-(r_\Phi)_*[\iota_E]=\mu_\Phi, \tag{4.9}
+(r_\Phi)_*[\iota_E]=\mu_\Phi, \tag{4.47}
 $$
 
 that exponent matrix is precisely the reflex norm, with no type norm and no transpose.
@@ -564,20 +917,9 @@ $$
 
 with the square root selected continuously on Siegel space. Summing over $y\in\mathbf Z^g$ gives the determinant factor and exchanges the two halves of the characteristic. This proves the integral transformation formula on generators.
 
-A rational symplectic similitude becomes integral after multiplication by a denominator. Factor it into an integral change of basis and the finite isogeny induced by inclusion of lattices. Decomposing the original theta sum into residue classes modulo that denominator proves the distribution relation. Thus the only scalar factors are determinant powers and roots of unity. In a ratio of equal weight the determinant powers cancel. In a rational moduli function, the total degree in the characteristics is zero, so the remaining root of unity depends only on the action on level torsion. Arithmetic local reciprocity gives precisely the inverse multiplication convention on that torsion. This proves the two transformation facts without assuming the desired orbit formula.
+A rational symplectic similitude becomes integral after clearing a denominator. Factor the resulting lattice correspondence into an integral change of basis and finite inclusions of lattices. Decomposing the original theta sum into residue classes modulo those indices proves the distribution relation in both directions. Thus the only scalar factors are determinant powers and roots of unity. In a quotient of equal weight the determinant powers cancel. For a $\Delta$-invariant rational moduli function, the product of characteristic multipliers depends only on the induced finite-level torsion action. Arithmetic local reciprocity gives the inverse cyclotomic action on those characteristics. For a principal idele the global product formula makes their product $1$, while multiplication by $r_\Phi(a)$ supplies the actual isomorphism of lattice presentations. This proves the two transformation facts without assuming the CM orbit formula.
 
-Now let $f$ be any rational function on the fine moduli scheme regular at the CM point $x$. For the chosen $\sigma\in\operatorname{Aut}(\mathbf C/E)$ and an idele $s$ with $\operatorname{Art}_E(s)=\sigma|_{E^{\mathrm{ab}}}$, the preceding calculation gives the **CM value identity**
-
-$$
-f(x)^\sigma
-=f(r_\Phi(s_f)*x). \tag{4.10}
-$$
-
-Initially this is obtained when the finite Artin class can be represented away from the denominators of the theta quotient and the level. Weak approximation moves the support of an idele away from any prescribed finite set without changing its class in the relevant ray quotient. Theta quotients generate the function field of the fine moduli scheme, so clearing numerator and denominator extends the identity to every regular moduli function. In particular, (4.10) proves rather than assumes that all such CM values lie in an abelian extension of $E$: two automorphisms with the same restriction to $E^{\mathrm{ab}}$ give the same right side.
-
-Because regular functions separate the rigidified geometric points, (4.10) identifies $x^\sigma$ with $r_\Phi(s_f)*x$. Under analytic uniformization, the target lattice is $r_\Phi(s_f)^{-1}\widehat{\mathfrak a}$, and the level transformation is multiplication by the same inverse. Passing over all admissible levels gives (4.5)--(4.6).
-
-Two observations protect this proof from circularity. The algebraicity of the moduli functions and their $q$-expansions comes from the algebraic moduli scheme, not from a presumed canonical model of the CM point. And global reciprocity is used only to identify the action on cyclotomic coefficients and to kill principal ideles; the desired CM orbit formula is then forced by the independently computed theta transformation.
+The arithmetic CM value identity is (4.37), already proved from the finite étale CM locus and the Frobenius calculation. The analytic calculation above verifies that its right side is represented by the classical theta transformation, including the cyclotomic action on characteristics and the principal-idele cancellation. It does **not** by itself identify the left side for an arbitrary $\sigma$: a theta transformation law sees a change of analytic lattice and finitely many roots of unity, but it does not prove that the CM point is algebraic or that the commutator subgroup of $G_E$ fixes its coordinates. Proposition 4.2, Proposition 4.3, and Lemma 4.4 supply exactly those missing arithmetic facts.
 
 We expand the exponent calculation, since this is where the reflex norm rather than the type norm enters. Work in a finite Galois extension $L/\mathbf Q$ containing $K$ and $E$. If $\tau:E\hookrightarrow L$ and $\varphi:K\hookrightarrow L$, the exponent with which the $\tau$-component of $s$ changes the $\varphi$-component of the CM lattice is
 
@@ -586,46 +928,44 @@ m(\tau,\varphi)=
 \begin{cases}
 1,&\gamma_\tau^{-1}\varphi\in\Phi,\\
 0,&\gamma_\tau^{-1}\varphi\notin\Phi,
-\end{cases} \tag{4.11}
+\end{cases} \tag{4.48}
 $$
 
 where $\gamma_\tau|_E=\tau$. Consequently
 
 $$
 \varphi(r_\Phi(s))
-=\prod_{\tau:E\hookrightarrow L}\tau(s)^{m(\tau,\varphi)}. \tag{4.12}
+=\prod_{\tau:E\hookrightarrow L}\tau(s)^{m(\tau,\varphi)}. \tag{4.49}
 $$
 
-The inverse on $\gamma_\tau$ in (4.11) is forced by transporting a coordinate function contravariantly. In the primitive Galois case it changes the type set $S$ into $S^{-1}$. Multiplying the original type embeddings instead would give $N_\Phi:K^\times\to E^\times$, which cannot act on the $K$-lattice at all. Formula (4.12) therefore checks both the direction and the inverse incidence.
+The inverse on $\gamma_\tau$ in (4.48) is forced by transporting a coordinate function contravariantly. In the primitive Galois case it changes the type set $S$ into $S^{-1}$. Multiplying the original type embeddings instead would give $N_\Phi:K^\times\to E^\times$, which cannot act on the $K$-lattice at all. Formula (4.49) therefore checks both the direction and the inverse incidence. It is the same exponent matrix that appeared integrally in (4.28), so the analytic and crystalline calculations meet at the definition of the reflex norm rather than borrowing conclusions from one another.
 
-For clarity, the support-moving step does not presuppose that the field $E(f(x))$ is abelian. Choose a finite Galois field containing the coefficients of the theta quotient and the coordinates of $x$. The explicit transformation calculation depends on an automorphism only through its action on the finitely many roots of unity and torsion labels occurring in the formula. Those actions form a finite abelian ray quotient by local and global reciprocity. An idele representing the class in that quotient may be moved away from the denominator set. Applying the good-idele calculation there proves (4.10); it then shows that the commutator subgroup fixes $f(x)$. Thus abelianity is a consequence of the calculation, not an input to it.
+#### Passage from torsion to lattices
 
-### 4.4 Passage from torsion to lattices
-
-We derive Theorem 4.1 from Lemma 4.2. A full lattice in a rational vector space is recovered from all of its finite completions:
+We finish the homological formulation of Theorem 4.1 from Corollary 4.5. A full lattice in a rational vector space is recovered from all of its finite completions:
 
 $$
 \mathfrak a=K\cap\widehat{\mathfrak a}
-\quad\text{inside }K\otimes\mathbf A_f. \tag{4.13}
+\quad\text{inside }K\otimes\mathbf A_f. \tag{4.50}
 $$
 
-Indeed, membership in a fractional ideal is the collection of its lower valuation bounds at all finite primes. Equation (4.6) therefore determines the target integral homology lattice uniquely. It is
+Indeed, membership in a fractional ideal is the collection of its lower valuation bounds at all finite primes. Equation (4.43) therefore determines the target integral homology lattice uniquely. It is
 
 $$
 \mathfrak a^\sigma
-=K\cap r_\Phi(s_f)^{-1}\widehat{\mathfrak a}. \tag{4.14}
+=K\cap r_\Phi(s_f)^{-1}\widehat{\mathfrak a}. \tag{4.51}
 $$
 
-The right side is the fractional ideal represented adelically by $r_\Phi(s_f)^{-1}\widehat{\mathfrak a}$, so it is exactly the inverse ideal transform. The analytic classification of CM abelian varieties then turns equality of lattices into the algebraic isomorphism (4.3).
+The right side is the fractional ideal represented adelically by $r_\Phi(s_f)^{-1}\widehat{\mathfrak a}$, so it is exactly the inverse ideal transform. The analytic classification of CM abelian varieties then turns equality of lattices into the algebraic isomorphism (4.3). Together with the fine-moduli identity (4.3a), this completes the proof of Theorem 4.1 in its homological, level, endomorphism, and polarized forms.
 
-### 4.5 Independence of choices and the cocycle law
+### 4.8 Idele independence and the descent cocycle
 
-Suppose $s'$ has the same Artin image as $s$. Their quotient belongs to the kernel of the relevant finite Artin quotient. For the action on a fixed rigidified datum, that kernel is its adelic stabilizer, so $r_\Phi(s_f')*A$ and $r_\Phi(s_f)*A$ are canonically isomorphic with the specified level. In the unrestricted infinite statement the quotient may also contain a connected archimedean component, which has no finite reflex contribution.
+Suppose $s'$ has the same image as $s$ in $G_E^{\mathrm{ab}}$. Global reciprocity says that $s's^{-1}$ lies in $E^\times E_\infty^{\times,0}$. Write it as $az$ with $a\in E^\times$ and $z$ in the connected archimedean component. Its finite component is the principal idele $a$. Multiplication by $r_\Phi(a)$ therefore compares the two transformed lattice presentations. At a fixed finite level one may instead quotient by the larger open stabilizer $U_x$; that changes the Galois element by an element fixing the rigidified point, not merely by an element in the kernel of the full Artin map.
 
 If $s$ is replaced by $as$ with $a\in E^\times$, then
 
 $$
-r_\Phi(as_f)=r_\Phi(a)r_\Phi(s_f). \tag{4.15}
+r_\Phi(as_f)=r_\Phi(a)r_\Phi(s_f). \tag{4.52}
 $$
 
 Multiplication by $r_\Phi(a)$ identifies the two lattice presentations, since one target lattice is $r_\Phi(a)^{-1}$ times the other. Thus principal ideles change the comparison isomorphism, not the resulting isomorphism class.
@@ -633,36 +973,38 @@ Multiplication by $r_\Phi(a)$ identifies the two lattice presentations, since on
 For $\sigma,\tau\in G_E^{\mathrm{ab}}$ represented by $s,t$, multiplicativity of Artin, the reflex norm, and the ideal action gives
 
 $$
-r_\Phi(st)*(A)=r_\Phi(s)*(r_\Phi(t)*A). \tag{4.16}
+r_\Phi(st)*(A)=r_\Phi(s)*(r_\Phi(t)*A). \tag{4.53}
 $$
 
-With the base-change convention (1.7), the resulting isomorphisms satisfy the descent cocycle. Before rigidification they do so only up to an automorphism of the CM object; this is the precise source of the field-of-moduli obstruction discussed later.
+With the base-change convention (1.7), both composites from $x^{\tau\sigma}$ to the transform indexed by $st$ preserve the full level. They are therefore equal, because the target has no automorphisms preserving level $N\geq3$. Thus the comparison isomorphisms satisfy the descent cocycle as actual morphisms, not merely in a set of isomorphism classes.
 
-### 4.6 Polarized and order-valued forms
+This also explains the logical order of canonical descent. The finite étale scheme $\mathscr C/E$ is the canonical algebraic model of the *set of rigidified CM points*. Equation (4.36) identifies its arithmetic Galois action. For the field fixed by the stabilizer of one point, the unique fine-level comparison isomorphisms give a cocycle. Effective fpqc descent then descends the universal fiber, its group law, the $\mathcal O$-action, polarization homomorphism, and finite level. Before rigidification the comparisons can differ by an automorphism of the CM object; that is the field-of-moduli obstruction, not a failure of reciprocity.
+
+### 4.9 Polarized and order-valued forms
 
 Assume $(A,\iota,\lambda)$ is represented by $(\mathfrak a,\xi)$. For an integral ideal $\mathfrak b$ of $E$ away from the bad set, put
 
 $$
 \mathfrak c=R_\Phi(\mathfrak b),
-\qquad n=N_{E/\mathbf Q}(\mathfrak b). \tag{4.17}
+\qquad n=N_{E/\mathbf Q}(\mathfrak b). \tag{4.54}
 $$
 
 Then the comparison sends the polarized datum to
 
 $$
-(\mathfrak c^{-1}\mathfrak a,n\xi). \tag{4.18}
+(\mathfrak c^{-1}\mathfrak a,n\xi). \tag{4.55}
 $$
 
 Equation (2.15) proves that the polarization type is unchanged. The canonical isogeny has degree
 
 $$
-N_{K/\mathbf Q}(\mathfrak c)=n^g \tag{4.19}
+N_{K/\mathbf Q}(\mathfrak c)=n^g \tag{4.56}
 $$
 
 and pulls the new polarization back to $n\lambda$. The equality of degrees
 
 $$
-(n^g)^2=n^{2g}=\deg[n]_A \tag{4.20}
+(n^g)^2=n^{2g}=\deg[n]_A \tag{4.57}
 $$
 
 is a useful check on the conjugate factor in the reflex norm.
@@ -672,7 +1014,7 @@ For a nonmaximal order, the same statement holds away from its conductor with pr
 There is also a useful representation-theoretic form. Fix a model over a number field $L\supset E$ on which the CM action is defined, a prime $\ell$, and a $K\otimes\mathbf Q_\ell$-basis of $V_\ell(A)$. Galois acts through a character
 
 $$
-\rho_\ell:G_L\longrightarrow(K\otimes\mathbf Q_\ell)^\times. \tag{4.21}
+\rho_\ell:G_L\longrightarrow(K\otimes\mathbf Q_\ell)^\times. \tag{4.58}
 $$
 
 If $\gamma\in G_L$ is represented, after norm to $E$, by an idele $s$, the comparison theorem says that $\rho_\ell(\gamma)$ differs from $r_\Phi(s_f)^{-1}$ by the principal $K^\times$ factor used to identify the transformed CM datum with the chosen model. That principal correction is essential: the orbit formula determines an isomorphism class, while $\rho_\ell$ depends on a specific descended model and basis. It is also the source of the algebraic Hecke character attached to $A$. Suppressing it would incorrectly make every local unit preserving the lattice act trivially on the Tate module.
@@ -712,13 +1054,13 @@ $$
 
 Theorem 4.1 says that the Galois stabilizer of $x$ is precisely the Artin image of $U_x$. Therefore the coordinates of the rigidified CM point lie in $H_x$, and every conjugate over $E$ is obtained by a reflex ideal transform.
 
-**Theorem 5.1.** If the level is fine enough that $x$ has no nontrivial automorphisms, then $H_x$ is both the field of moduli and a field of definition of $x$. Moreover, for $s\in\mathbf A_E^\times$,
+**Theorem 5.1.** If the level is fine enough that $x$ has no nontrivial automorphisms, then $H_x$ is the field of moduli relative to $E$ and a field of definition of $x$. Moreover, for $s\in\mathbf A_E^\times$,
 
 $$
 x^{\operatorname{Art}_E(s)}=r_\Phi(s_f)*x. \tag{5.4}
 $$
 
-**Proof.** By Theorem 4.1, an Artin element fixes $x$ if and only if its representing idele belongs to $U_x$. Thus the fixed field of the Galois stabilizer is (5.3). The comparison isomorphisms satisfy the cocycle law by (4.16). Since the automorphism group is trivial, equality up to automorphism is equality, and ordinary Galois descent is effective. Formula (5.4) is the descended form of (4.3). $\square$
+**Proof.** By Theorem 4.1, an Artin element fixes $x$ if and only if its representing idele belongs to $U_x$. Thus the fixed field of the Galois stabilizer is (5.3). The comparison isomorphisms satisfy the cocycle law by (4.53). Since the automorphism group is trivial, equality up to automorphism is equality, and effective fpqc descent applies to the universal fine-moduli object. Formula (5.4) is the descended form of (4.3). $\square$
 
 ### 5.3 Orbit and degree formulas
 
@@ -744,7 +1086,7 @@ Let $K$ be imaginary quadratic, let $\mathcal O\subset K$ be an order of conduct
 
 $$
 \operatorname{Gal}(H_\mathcal O/K)
-\simeq K^\times\backslash\mathbf A_{K,f}^\times/widehat{\mathcal O}^\times
+\simeq K^\times\backslash\mathbf A_{K,f}^\times/\widehat{\mathcal O}^\times
 \simeq\operatorname{Pic}(\mathcal O). \tag{5.7}
 $$
 
@@ -807,7 +1149,7 @@ Knowing every Galois conjugate is not yet the same as constructing an object ove
 
 ### 6.1 Field of moduli versus field of definition
 
-For an object $x$ over $\overline E$, its field of moduli is the fixed field of
+For an object $x$ over $\overline E$, its field of moduli relative to $E$ is the fixed field of
 
 $$
 \{\sigma:x^\sigma\simeq x\}. \tag{6.1}
@@ -837,7 +1179,7 @@ This proves a general principle.
 
 **Proposition 6.1.** A rigidified polarized CM datum with trivial automorphism group descends effectively to its field of moduli.
 
-**Proof.** Choose the unique isomorphism (6.2) for each $\sigma$ in the stabilizer. Uniqueness gives (6.3). Effective descent for projective varieties and finite morphisms descends the abelian variety, its group law, the polarization homomorphism, the order action, and the finite level sections. $\square$
+**Proof.** Choose the unique isomorphism (6.2) for each $\sigma$ in the stabilizer. Uniqueness gives (6.3). After passing to a finite Galois extension containing the coefficients of the datum, this is a finite fpqc descent datum. Effective fpqc descent for abelian schemes descends the abelian variety together with its identity section, multiplication, inverse, and group law; their identities can be checked after the faithfully flat base change. The dual abelian scheme and the polarization homomorphism descend functorially. Each element of the finitely generated order action and each finite level morphism descends by full faithfulness, and their relations again descend because they hold after base change. Thus the whole rigidified PEL object, not only its coarse point, descends. $\square$
 
 The descended polarization is the homomorphism $A\to A^\vee$. A particular ample line bundle inducing it can have a separate scalar descent issue; polarized moduli do not require that line bundle as part of the datum.
 
@@ -850,6 +1192,14 @@ $$
 $$
 
 Compose this with the reciprocity comparison $x^\sigma\simeq r_\Phi(s_{\sigma,f})*x$. The result is independent of the idele choice and obeys (6.3). This is the **canonical CM descent datum**.
+
+There is an equivalent moduli description that makes effectivity completely transparent. Section 4 constructs the finite étale fine CM scheme $\mathscr C/E$ and proves that the residue field of $x$ is the abelian field fixed by its Artin stabilizer, namely $H_x$. Hence $x$ is an $H_x$-rational point of $\mathscr C$, and the desired canonical model is the pullback of the universal PEL abelian scheme along
+
+$$
+\operatorname{Spec}H_x\xrightarrow{x}\mathscr C. \tag{6.4a}
+$$
+
+The cocycle construction above is the Galois-descent presentation of this same pullback. Thus no canonical model of a zero-dimensional Shimura variety has been assumed: the required model was built as an algebraic fine moduli scheme, its arithmetic action was proved by specialization, and the universal family supplies the descended object.
 
 The adjective “canonical” is relative to the chosen Artin normalization, type convention, and moduli data. Switching to geometric reciprocity inverts the idele action. Switching from homology to cohomology inverts the Hodge cocharacter. Forgetting level can reintroduce automorphisms. A statement that suppresses all three choices is not genuinely canonical.
 
@@ -900,7 +1250,7 @@ The CM point is represented analytically by the Hodge morphism together with a f
 The reciprocity morphism attached to the CM point is
 
 $$
-r_x:operatorname{Res}_{E/\mathbf Q}\mathbf G_m
+r_x:\operatorname{Res}_{E/\mathbf Q}\mathbf G_m
 \xrightarrow{r_\Phi}T_K
 \longrightarrow T
 \xrightarrow{j}G. \tag{7.3}
@@ -989,7 +1339,7 @@ The algebra $K\otimes\mathbf Q_\ell$ is a product of finite separable field exte
 
 **Proof strategy.** First obtain semistable reduction after a finite extension. Semistable reduction makes inertia unipotent on a prime-to-residue-characteristic Tate module. The CM action makes the same inertia operators semisimple. They must therefore be trivial, and the good-reduction criterion finishes the proof.
 
-**Proof.** Fix a finite place $w$ of $L$. After a finite extension $L'/L$, the abelian variety has semistable reduction at a place $w'$ above $w$, and all CM endomorphisms are defined. For $\ell$ different from the residue characteristic, the inertia action on $V_\ell(A)$ is then unipotent. By (8.2) it is multiplication by elements of the étale algebra $K\otimes\mathbf Q_\ell$, hence semisimple. Therefore inertia acts trivially. The Néron--Ogg--Shafarevich criterion says that an abelian variety has good reduction precisely when inertia acts trivially on one such Tate module. Thus $A$ has good reduction over $L'_{w'}$. $\square$
+**Proof.** Fix a finite place $w$ of $L$. The potential semistable-reduction theorem proved earlier gives a finite extension $L'/L$ over which $A$ has semistable reduction at a place $w'$ above $w$; enlarge it once more so that all CM endomorphisms are defined. The semistable criterion makes inertia unipotent on $V_\ell(A)$ for $\ell$ different from the residue characteristic. By (8.2) it is also multiplication by elements of the étale algebra $K\otimes\mathbf Q_\ell$, hence semisimple. Therefore inertia acts trivially. The previously proved Néron--Ogg--Shafarevich criterion says that an abelian variety has good reduction precisely when inertia acts trivially on one such Tate module. Thus $A$ has good reduction over $L'_{w'}$. $\square$
 
 The theorem is potential, not absolute. CM elliptic curves can have additive reduction over a small field even though they acquire good reduction after a finite extension. Complex multiplication eliminates the toric part after extension; it does not assert that the original model was already smooth.
 
@@ -1009,7 +1359,7 @@ A\text{ has good reduction at }w
 \rho_{\ell,w}(I_w)=1. \tag{8.4}
 $$
 
-When $A$ is a canonical CM object covered by Theorem 4.1, local-global reciprocity gives a more explicit version of (8.4), but a principal correction must be retained. Let $v$ be the place of $E$ below $w$. For $u\in\mathcal O_{L_w}^\times$, form $N_{L_w/E_v}(u)$ and its reflex image. Since $u$ lies in inertia, the associated ideal transform fixes the isomorphism class of the descended CM object. Choose the unique principal factor $a(u)\in K^\times$ compatible with the rigidification. In a fixed CM basis the inertia character is
+When $A$ is a canonical CM object covered by Theorem 4.1, local-global reciprocity gives a more explicit version of (8.4), but a principal correction must be retained. Assume here that $L\supset E$, and let $v$ be the place of $E$ below $w$. For $u\in\mathcal O_{L_w}^\times$, form $N_{L_w/E_v}(u)$ and its reflex image. Since $u$ lies in inertia, the associated ideal transform fixes the isomorphism class of the descended CM object. Choose the unique principal factor $a(u)\in K^\times$ compatible with the rigidification. In a fixed CM basis the inertia character is
 
 $$
 \psi_w(u)
@@ -1029,7 +1379,7 @@ $$
 
 It would be wrong to replace (8.6) by the statement that the reflex image merely preserves the lattice. Every integral unit preserves the lattice as a set, but it can act nontrivially on its Tate module. Good reduction asks for trivial inertia, not just invariance of an isomorphism class.
 
-The least $n\geq0$ for which $\psi_w$ is trivial on $1+\mathfrak m_w^n$ is its local conductor exponent. It is zero exactly when the character is unramified, hence exactly when $A$ has good reduction under the standing CM hypotheses. This turns the geometric criterion into the same unit-filtration language used by local class field theory.
+Put $U_w^0=\mathcal O_{L_w}^\times$ and $U_w^n=1+\mathfrak m_w^n$ for $n\geq1$. The least $n\geq0$ for which $\psi_w$ is trivial on $U_w^n$ is its local conductor exponent. It is zero exactly when the character is unramified, hence exactly when $A$ has good reduction under the standing CM hypotheses. This turns the geometric criterion into the same unit-filtration language used by local class field theory.
 
 ### 8.4 Integral CM data and excluded primes
 
@@ -1042,7 +1392,7 @@ If any assumption fails, a different conclusion may still hold, but it requires 
 - a conductor prime may make the order action nonfree on the integral Tate or Dieudonné module;
 - a prime dividing the polarization degree can make the polarization kernel non-étale;
 - a level prime requires a finite flat level structure rather than geometric torsion points;
-- a ramified field of definition has nontrivial inertia even if the underlying abelian variety happens to have good reduction;
+- ramification of the class field over $E$ destroys the canonical prime Artin symbol, even when the abelian variety itself has good reduction;
 - an ambient integral model can be singular despite good reduction of the abelian variety.
 
 Thus “good CM prime” means good for a specified package, not merely unramified in $K$.
@@ -1056,7 +1406,7 @@ At a good unramified prime, the reciprocity theorem becomes an isogeny formula. 
 Let $x=(A,\iota,\lambda,\eta)$ be a rigidified CM datum defined over its class field $H/E$. Let $v$ be a finite place of $E$ satisfying all of the following:
 
 1. $H/E$ is unramified at $v$;
-2. $v$ lies outside the integral bad set of Section 2.5;
+2. $v$ lies outside the integral bad set of Section 2.5 and the clean spreading set of Section 4.5;
 3. $A$ has good reduction at a chosen place $w$ of $H$ above $v$;
 4. the full CM action is defined over $H$ and extends to the good model at $w$.
 
@@ -1084,21 +1434,13 @@ The passage from this characteristic-zero isogeny to relative Frobenius is an in
 
 **Frobenius-comparison lemma.** Under hypotheses 2--4, the reduction of the $\mathfrak c_v$-isogeny in (9.3) is the relative $q_v$-power Frobenius from $\widetilde A$ to its arithmetic-Frobenius twist.
 
-**Proof.** Work over the completed maximal unramified extension at $w$. Because the residue characteristic is outside the discriminant and conductor, the integral CM algebra splits étale-locally into factors indexed by its $p$-adic embeddings. The covariant Dieudonné module of the special fiber decomposes accordingly:
+**Proof.** This is Proposition 4.3 after base change to the strict henselization at $w$. Hypothesis 2 makes $\mathcal O_K\otimes\mathbf Z_p$ étale and the polarization and rigidifying level prime to $p$; hypotheses 3--4 identify the generic CM datum with a fiber of the clean integral PEL spread. The proof of Proposition 4.3 computed, independently of Theorem 4.1, that
 
 $$
-M=\bigoplus_{\tau:K\hookrightarrow\overline{\mathbf Q}_p}M_\tau.
+\ker F_{q_v}=\widetilde A[R_\Phi(\mathfrak p_v)] \tag{9.3a}
 $$
 
-The determinant condition says exactly which summands occur in the Hodge quotient attached to $\operatorname{Lie}\widetilde A$: they are the $p$-adic transports of the embeddings in $\Phi$. Relative Frobenius sends the $\tau$-summand toward the arithmetic-Frobenius translate of $\tau$, and its elementary divisor is $p$ precisely when that translated summand occurs in the Hodge quotient. Following one residue-Frobenius step, the exponent with which a prime component occurs is therefore
-
-$$
-m(\rho,\tau)=1
-\quad\Longleftrightarrow\quad
-\gamma_\rho^{-1}\tau\in\Phi.
-$$
-
-This is the inverse-incidence matrix defining $r_\Phi$. Hence the finite flat kernel of relative Frobenius and the finite flat kernel of the $R_\Phi(\mathfrak p_v)$-isogeny have the same Dieudonné submodule. The Dieudonné functor is faithful on finite commutative $p$-power group schemes over the perfect residue field, so the kernels, and therefore the quotient isogenies, agree. Their prime-to-$p$ parts are both trivial. $\square$
+by comparing the elementary divisors of crystalline Frobenius with the inverse-incidence exponents of the reflex norm. Formation of the finite flat ideal kernel and its quotient commutes with this base change. Its target polarization and prime-to-$p$ level are also the ones transported in characteristic zero, so the unique rigid target isomorphism identifies the reduction of the ideal isogeny with relative $q_v$-Frobenius. $\square$
 
 This lemma explains why good reduction and exclusion of discriminant and conductor primes appear in the theorem. A rational lattice calculation alone cannot identify a connected finite flat Frobenius kernel.
 
@@ -1118,9 +1460,13 @@ $$
 =R_\Phi(\mathfrak p_v)^f. \tag{9.5}
 $$
 
-**Proof.** Each arrow in (9.4) is the integral isogeny attached to $\mathfrak c_v$. Its analytic lattice changes by $\mathfrak c_v^{-1}$. After $f$ steps the target lattice is $\mathfrak c_v^{-f}\mathfrak a$. Because $\sigma^f$ fixes the chosen point over the residue field, the composite is an endomorphism. Under the rank-one $K$-description, an endomorphism carrying $\mathfrak c_v^{-f}\mathfrak a$ back to $\mathfrak a$ is multiplication by an element whose principal ideal is $\mathfrak c_v^f$. By the Frobenius-comparison lemma, the reductions of the arrows are the successive relative $q_v$-Frobenius maps, so their composite is $\pi_w$.
+**Proof.** Each arrow in (9.4) is the $K$-linear integral isogeny attached to $\mathfrak c_v$. Its analytic lattice changes by $\mathfrak c_v^{-1}$. The descent identification after $f$ steps preserves the labeled CM action, so the characteristic-zero composite is a $K$-linear endomorphism of the rank-one $K$-space $H_1(A,\mathbf Q)$. It is therefore multiplication by a unique element $\alpha_w\in K$. Since the composite carries $\mathfrak c_v^{-f}\mathfrak a$ to $\mathfrak a$, one has
 
-Every element of $K$ is defined over $H$ and hence its reduction commutes with $\pi_w$. On a prime-to-$p$ Tate module, $K$ is a maximal commutative semisimple subalgebra of dimension $2g$; its centralizer is itself. Thus $\pi_w\in K$, and the lattice computation gives (9.5). $\square$
+$$
+(\alpha_w)=\mathfrak c_v^f. \tag{9.4a}
+$$
+
+By the Frobenius-comparison lemma, the reductions of the arrows are the successive relative $q_v$-Frobenius maps, so the reduction of $\alpha_w$ is the $q_w$-power Frobenius endomorphism. We denote that reduction, and the element of $K$ inducing it, by the same symbol $\pi_w$. Equation (9.4a) is (9.5). This direct argument also shows exactly where the hypothesis that the labeled CM action descends is used. $\square$
 
 The exponent $f$ is essential. The ideal $R_\Phi(\mathfrak p_v)$ describes one $q_v$-Frobenius step between conjugate fibers. It becomes an endomorphism of the fiber over $k_w$ only after the entire residue orbit has been traversed.
 
@@ -1280,7 +1626,7 @@ $$
 \lambda_{\bar{\mathfrak q}}=1-\lambda_\mathfrak q. \tag{10.4}
 $$
 
-**Proof.** The isocrystal with $K_\mathfrak q$-action is isoclinic because it is one-dimensional over the field factor $K_\mathfrak q$ after a splitting extension. Frobenius acts there by $\pi_w$, so its slope is the valuation of $\pi_w$ divided by the valuation of the scalar $q_w$. Equation (10.1) and $q_w=q_v^f$ give the second equality. Equation (10.2) gives (10.4). The underlying $\mathbf Q_p$-dimension of the factor is $[K_\mathfrak q:\mathbf Q_p]$, which gives the multiplicity. $\square$
+**Proof.** Because the full $K$-action is defined over $k_w$, the linear $q_w$-Frobenius commutes with $K\otimes\mathbf Q_p$ and acts on the $K_\mathfrak q$-factor by the scalar $\pi_w$. After a coefficient field splits $K_\mathfrak q$, its eigenvalues are the $\mathbf Q_p$-embeddings of $\pi_w$ coming from that one local field. Every such embedding preserves the unique extension of the $p$-adic valuation, so all these eigenvalues have valuation $v_\mathfrak q(\pi_w)$. The factor is therefore isoclinic, with slope the valuation of $\pi_w$ divided by the valuation of $q_w$. Equation (10.1) and $q_w=q_v^f$ give the second equality. Equation (10.2) gives (10.4). The number of embeddings, hence the multiplicity, is $[K_\mathfrak q:\mathbf Q_p]$. $\square$
 
 The formula is unchanged after enlarging the residue field: both numerator and denominator are multiplied by the same residue degree. Newton slopes are geometric invariants.
 
@@ -1342,15 +1688,24 @@ $$
 E_v^\times\longrightarrow D_w, \tag{11.1}
 $$
 
-but a uniformizer chooses only a lift of residue Frobenius and units move that lift through inertia. The correct ramified statement is therefore the full local comparison
+but a uniformizer chooses only a lift of residue Frobenius and units move that lift through inertia. The correct ramified orbit statement is therefore
 
 $$
-\rho(T)(\operatorname{rec}_{E_v}(s))
-\quad\text{is governed by}\quad r_\Phi(s),
+x^{\operatorname{rec}_{E_v}(s)}
+=r_\Phi(s)*x,
 \qquad s\in E_v^\times, \tag{11.2}
 $$
 
-on prime-to-$p$ Tate modules and level data. There is no canonical replacement of (9.5) using only $\mathfrak p_v$.
+where $E_v^\times$ is embedded as the $v$-component of the ideles and the right side includes its action on prime-to-$p$ level. This compares conjugate moduli objects; it is not a linear representation of $D_w$ on one fixed Tate module unless descent data identify those conjugates.
+
+For the local representation of a model over $H_w$, an element $u\in H_w^\times$ first enters reciprocity through $N_{H_w/E_v}(u)$. After choosing the principal factor $a(u)\in K^\times$ supplied by the rigidified descent, its action in a fixed $K\otimes\mathbf Q_\ell$-basis is
+
+$$
+\rho_{\ell,w}(\operatorname{rec}_{H_w}(u))
+=a(u)\,r_\Phi(N_{H_w/E_v}u)_\ell^{-1}. \tag{11.2a}
+$$
+
+This is the local formula already used in (8.5). There is no canonical replacement of (9.5) using only $\mathfrak p_v$.
 
 After passing to an extension over which inertia is killed and good reduction is acquired, one may apply the unramified formula there. Norm compatibility (3.5) relates the new reflex ideal to the old local idele. This process depends on the extension and should not be compressed into a fictitious “ramified Frobenius ideal.”
 
@@ -1395,7 +1750,7 @@ a polarized CM datum of type $\Phi$. Assume the level is sufficiently fine to ri
    x^{\operatorname{Art}_E(s)}=r_\Phi(s_f)*x, \tag{12.1}
    $$
 
-   with arithmetic Artin reciprocity and inverse lattice action.
+   with arithmetic Artin reciprocity and inverse lattice action. The rigidified CM locus is finite étale over $E$; hence the point and all $E$-rational moduli values at it are algebraic. Their fields of values are abelian over $E$, and (12.1) holds for every lift in $\operatorname{Aut}(\mathbf C/E)$, not only for unramified Frobenius elements.
 
 2. The comparison is compatible with the CM action, polarization similitude, prime-to-bad level, products, induced types, and embeddings into ambient PEL similitude groups.
 
@@ -1423,7 +1778,7 @@ a polarized CM datum of type $\Phi$. Assume the level is sufficiently fine to ri
 
    At a clean unramified prime, the reduction is ordinary exactly when the reflex ideal and its conjugate are coprime.
 
-**Proof.** Assertion 1 is Theorem 4.1. The compatibility in assertion 2 follows from the weight identity, the level calculation, and functoriality of the reflex norm. Sections 5 and 6 prove assertion 3. Theorem 8.1 proves assertion 4. The orbit composition in Theorem 9.1 and the polarization identity prove assertion 5. The regular representation calculation and Theorem 10.1 prove assertion 6. $\square$
+**Proof.** Proposition 4.2 gives algebraicity and the canonical finite étale CM locus. Proposition 4.3 and Lemma 4.4 identify its clean-prime Frobenius permutations and then its full Galois group; global reciprocity gives Theorem 4.1 and assertion 1. The compatibility in assertion 2 follows from the weight identity, the simultaneous finite-level calculation, and functoriality of the reflex norm. Sections 5 and 6 prove assertion 3 by stabilizers and effective descent. Theorem 8.1 proves assertion 4. The independent reflex-kernel lemma and the orbit composition in Theorem 9.1, followed by the polarization identity, prove assertion 5. The regular representation calculation and Theorem 10.1 prove assertion 6. $\square$
 
 ### 12.2 A normalization checklist
 
@@ -1457,7 +1812,7 @@ r_\Phi:\operatorname{Res}_{E/\mathbf Q}\mathbf G_m
 \longrightarrow\operatorname{Res}_{K/\mathbf Q}\mathbf G_m,
 $$
 
-and arithmetic class field theory turns an idele of $E$ into a Galois automorphism. The torsion comparison proves that these meet in the inverse lattice transform
+and arithmetic class field theory turns an idele of $E$ into a Galois automorphism. The finite étale CM locus first makes CM moduli values algebraic. Its clean-prime crystalline Frobenius calculation realizes the inverse-incidence matrix of the Hodge cocharacter as the kernel of the reflex-ideal isogeny; Frobenius generation and global reciprocity then identify arbitrary Galois action. The resulting simultaneous torsion comparison recovers the inverse lattice transform
 
 $$
 A(\mathfrak a,\Phi)^{\operatorname{Art}_E(s)}
