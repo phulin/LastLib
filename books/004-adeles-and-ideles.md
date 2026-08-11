@@ -167,6 +167,17 @@ $$
 
 The localization $\mathcal O_{K,\mathfrak p}$ is a discrete valuation ring with this valuation. Its completion has fraction field $K_{\mathfrak p}$ and valuation ring $\mathcal O_{\mathfrak p}$. We denote its maximal ideal by $\mathfrak p\mathcal O_{\mathfrak p}$, often simply $\mathfrak p_v$, and its residue field still by $k(\mathfrak p)$. The compactness of $\mathcal O_{\mathfrak p}$ follows from completeness, discreteness, and finiteness of the residue field.
 
+The normalized order extends uniquely to
+
+$$
+\operatorname{ord}_{\mathfrak p}:K_{\mathfrak p}\longrightarrow
+\mathbf Z\cup\{+\infty\},
+\qquad \operatorname{ord}_{\mathfrak p}(0)=+\infty.
+$$
+
+Whenever an expression such as $a-x_{\mathfrak p}$ lies in the completion, this extended order,
+not merely the order on $K^\times$, is intended.
+
 Here is the global algebra behind those assertions. By the primitive-element theorem, after multiplying a generator by a nonzero integer one may write $K=\mathbf Q(\theta)$ with $\theta$ integral. The order $\mathbf Z[\theta]$ is free of rank $n$. If $x\in\mathcal O_K$, then
 
 $$
@@ -533,7 +544,7 @@ This topology is not the subspace topology inherited from the unrestricted produ
 
 **Proof.** Tychonoff's theorem makes $\prod_iH_i$ compact; it is open by the definition of the restricted topology. Its translates are compact neighborhoods. More generally, choose compact neighborhoods in finitely many exceptional factors and use $H_i$ elsewhere. Their product is a compact neighborhood of any specified point. $\square$
 
-The unrestricted product of the $K_v$ is also locally compact only in special finite situations; in our infinite arithmetic product it has no compact neighborhood of zero. Indeed, a product neighborhood leaves infinitely many whole noncompact factors unrestricted. The direct sum has other defects and does not contain the diagonal identity. Restricted products are therefore not a convenient compromise but the construction selected by topology and arithmetic simultaneously.
+The unrestricted product of the $K_v$ is also locally compact only in special finite situations; in our infinite arithmetic product it has no compact neighborhood of zero. Indeed, a product neighborhood leaves infinitely many whole noncompact factors unrestricted. The direct sum has other defects and excludes every diagonal family with infinitely many nonzero coordinates, in particular the constant-one family needed as a multiplicative identity. Restricted products are therefore not a convenient compromise but the construction selected by topology and arithmetic simultaneously.
 
 ### 3.4 Mapping properties
 
@@ -565,7 +576,8 @@ One must not confuse this union topology with an algebraic direct limit in a cat
 
 When the index set is countable and each local group is metrizable, a restricted product is metrizable. One may choose an exhaustion $S_m$ and compatible bounded metrics, penalizing departure from $H_i$ increasingly strongly outside $S_m$. In the number-field case the places are countable and the local fields are second countable, so the adele and idele groups are second countable and $\sigma$-compact.
 
-They are also complete for their natural uniform structures. A Cauchy net is eventually contained, after translation, in a fixed neighborhood whose tail lies in $\prod H_i$; coordinatewise completeness supplies its limit, and completeness of the compact tail ensures that the limiting family remains restricted. For sequences, the same idea is concrete: sufficiently late differences are integral, or multiplicative quotients are units, outside one finite set, and each coordinate converges locally.
+If every $G_i$ is complete Hausdorff and every $H_i$ is closed (as it is when compact open), the
+restricted product is also complete for its natural uniform structure. A Cauchy net is eventually contained, after translation, in a fixed neighborhood whose tail lies in $\prod H_i$; coordinatewise completeness supplies its limit, and completeness of the compact tail ensures that the limiting family remains restricted. For sequences, the same idea is concrete: sufficiently late differences are integral, or multiplicative quotients are units, outside one finite set, and each coordinate converges locally. These hypotheses hold for the local additive and multiplicative groups used below.
 
 Closed subgroups of locally compact groups are locally compact, and quotients by closed normal subgroups are locally compact and Hausdorff. These facts justify the topological claims about $K$, $K^\times$, $\mathbf A_K/K$, and $C_K$ once diagonal closedness has been established. Second countability ensures that sequences suffice for many later arguments, although none of the definitions depends on that convenience.
 
@@ -573,7 +585,7 @@ Closed subgroups of locally compact groups are locally compact, and quotients by
 
 The notation $\prod'G_i$ is incomplete until the $H_i$ are specified. If one changes $H_i$ at only finitely many indices, neither the underlying restricted product nor its topology changes: those indices can simply be absorbed into every exceptional set. This is why finitely many ramified primes or finitely many poorly chosen integral bases cause no difficulty.
 
-An infinite change can alter the object. In $\prod_p\mathbf Q_p$, compare the conditions $x_p\in\mathbf Z_p$ almost everywhere and $x_p\in p\mathbf Z_p$ almost everywhere. The identity family belongs to the first restricted product and not the second. Although $p\mathbf Z_p$ and $\mathbf Z_p$ are commensurable at every individual prime, pointwise commensurability is not enough to make infinitely many simultaneous changes harmless.
+An infinite change can alter the object. In $\prod_p\mathbf Q_p$, compare the conditions $x_p\in\mathbf Z_p$ almost everywhere and $x_p\in p\mathbf Z_p$ almost everywhere. The constant-one family belongs to the first restricted product and not the second. Although $p\mathbf Z_p$ and $\mathbf Z_p$ are commensurable at every individual prime, pointwise commensurability is not enough to make infinitely many simultaneous changes harmless.
 
 For finite-dimensional vector spaces over $K$, an $\mathcal O_K$-lattice gives a compact open lattice at every finite completion. Two global lattices become equal locally outside the finite set of primes dividing their index. Their adelic restricted products are therefore canonically the same. This is the mechanism behind basis independence in the scalar-extension result of Section 4.4.
 
@@ -665,6 +677,11 @@ For a finite extension $L/K$, the local decomposition from Section 2.5 assembles
 $$
 L\otimes_K\mathbf A_K\cong\mathbf A_L.
 $$
+
+The topology on the algebraic tensor product is the finite-dimensional $\mathbf A_K$-module
+topology: a $K$-basis of $L$ identifies it with $\mathbf A_K^{[L:K]}$. It is independent of the
+basis, because every change-of-basis matrix lies in
+$\operatorname{GL}_{[L:K]}(\mathbf A_K)$ and acts by a homeomorphism.
 
 To justify a tensor product statement that appears infinite, choose a $K$-basis of $L$. Both sides are then finite-dimensional $\mathbf A_K$-modules. Locally, $L\otimes_KK_v$ is the product of the $L_w$ over $v$. At almost every finite $v$, integral closure is unramified and the chosen integral lattice identifies with the product of the $\mathcal O_w$. Indeed, the trace discriminant of a full integral lattice is nonzero; away from its finitely many prime divisors the localized trace pairing is perfect, so the local different is trivial and the extension is unramified. A chosen field basis introduces only finitely many additional denominator primes. Therefore the local isomorphisms preserve the distinguished compact subgroups almost everywhere and assemble by restricted-product functoriality.
 
@@ -789,7 +806,7 @@ The full set of places is essential. In $\mathbf A_{K,f}$, the neighborhood $\wi
 
 ### 5.4 A local--global warning
 
-The diagonal embedding records compatibility, but it does not assert that every locally solvable equation has a global solution. The conic $x^2+y^2=-1$ fails already over $\mathbf R$, while subtler varieties can have points over every completion and none over $K$. Adeles provide the space in which such obstructions are formulated; they do not erase them.
+The diagonal embedding records compatibility, but it does not assert that every locally solvable equation has a global solution. The conic $x^2+y^2=-1$ fails already over $\mathbf R$, while subtler varieties can have points over every completion and none over $K$. The latter sentence is a scope warning, not a concrete local--global counterexample proved here; a checkable instance requires a specified variety and its local-point functors. Adeles provide the space in which such obstructions are formulated; they do not erase them.
 
 Even linear approximation needs its hypotheses. Weak approximation concerns finitely many places. Stronger statements that prescribe integrality outside a set require that the omitted set permit denominators. The density theorem above works in the finite adele ring because a basic neighborhood asks only for integral error almost everywhere, not exact equality in infinitely many coordinates.
 
@@ -955,7 +972,8 @@ The quotient is compact but not finite and not discrete. Its archimedean directi
 
 ### 6.6 Additive Haar measure and covolume
 
-Every locally compact group admits a nonzero translation-invariant Haar measure, unique up to scaling. On each finite $K_v$, normalize additive measure by
+Every locally compact Hausdorff group admits a nonzero regular Borel measure, finite on compact
+sets and invariant under translation, unique up to multiplication by a positive scalar. On each finite $K_v$, normalize additive measure by
 
 $$
 \mu_v(\mathcal O_v)=1.
@@ -1842,7 +1860,7 @@ U(\mathfrak m)=
 \prod_{v\mid\infty,\,v\notin\mathfrak m_\infty}K_v^\times.
 $$
 
-This is an open subgroup of $\mathbf A_K^\times$. Its finite part is compact open. The full group need not be compact because its archimedean factors are not, but those factors deliberately remove continuous magnitude while retaining the requested signs.
+This is an open subgroup of $\mathbf A_K^\times$. Its finite part is compact open. The full group need not be compact because its archimedean factors are not, and those factors retain continuous magnitude. At selected real places, restricting to $\mathbf R_{>0}$ removes the sign obstruction while retaining positive magnitude.
 
 The **ray class group modulo $\mathfrak m$** is
 

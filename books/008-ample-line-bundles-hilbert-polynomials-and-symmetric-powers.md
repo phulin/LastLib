@@ -371,7 +371,7 @@ This proof is sometimes hidden behind a permanence slogan. The twisting step is 
 
 If $\mathcal E$ has finite rank, $\mathbf P_S(\mathcal E)\to S$ is finitely presented, separated, and proper. Finite presentation and separatedness follow from its finite affine cover and the closed diagonal. Properness can be proved by the valuative criterion. Given a valuation ring $V$ with fraction field $K$, a $K$-point is a one-dimensional quotient of $K\otimes_VE$. Multiply a representing vector of coefficients by a scalar so that all coefficients lie in $V$ and at least one is a unit. The normalized tuple gives a unique $V$-point. Uniqueness follows because two primitive tuples differing by a $K$-scalar differ by a $V$-unit.
 
-A closed subscheme of a proper scheme is proper. Hence a projective morphism is proper, separated, and of finite type. It is finitely presented when the defining closed immersion is finitely presented, as happens over a locally noetherian base. A quasi-projective morphism is separated and of finite type; it is finitely presented under the analogous finiteness hypothesis. It need not be proper because points may escape through the omitted boundary.
+A closed subscheme of a proper scheme is proper. Hence a projective morphism is proper, separated, and of finite type. It is finitely presented when the defining closed immersion is finitely presented, as happens over a locally noetherian base. A quasi-projective morphism is separated and locally of finite type; if it is also quasi-compact, it is of finite type, and it is finitely presented under the analogous finite-presentation hypotheses. It need not be proper because points may escape through the omitted boundary.
 
 The converse “proper implies projective” is false in general. It is true for many curves and for abelian schemes, but its proof requires special geometry. Projectivity is properness together with enough homogeneous functions to embed the object.
 
@@ -454,13 +454,13 @@ H^i(X,\mathcal F\otimes\mathcal L^n)=0
 \quad(i>0, n\gg0).
 $$
 
-Conversely, if this vanishing and eventual generation hold for all coherent ideals, then $\mathcal L$ is ample. Chapter 6 proves the forward implication from the standard affine cover of projective space.
+Conversely, under the same projective morphism over a noetherian affine base, if this vanishing and eventual generation hold for all coherent ideals, then $\mathcal L$ is ample. Chapter 6 proves the forward implication from the standard affine cover of projective space.
 
 ### 4.5 Tensor powers and operations
 
 If $\mathcal L$ is ample, every positive power $\mathcal L^d$ is ample: replace each defining section by a power. Conversely, if $\mathcal L^d$ is ample for one $d>0$, then $\mathcal L$ is ample because sufficiently large powers in each residue class modulo $d$ are obtained by tensoring with one of finitely many fixed powers.
 
-If $\mathcal L$ is ample and $\mathcal M$ is invertible, then $\mathcal L^n\otimes\mathcal M$ is ample for all sufficiently large $n$. Apply the generation criterion to the finitely many twists needed to generate $\mathcal M$ and its inverse. In particular, ampleness is insensitive to a bounded twist at high degree.
+If $f:X\to S$ is quasi-compact and separated, $\mathcal L$ is $f$-ample, and $\mathcal M$ is invertible, then $\mathcal L^n\otimes\mathcal M$ is $f$-ample for all sufficiently large $n$. Apply the generation criterion to the finitely many twists needed to generate $\mathcal M$ and its inverse. In particular, in this relative context ampleness is insensitive to a bounded twist at high degree.
 
 If $S$ is quasi-compact and $X\to S$ is of finite type and quasi-compact, all sufficiently large
 powers of an ample $\mathcal L$ are relatively very ample. If $X\to S$ is proper, each such power
@@ -537,7 +537,7 @@ Faithfulness cannot be dropped. Restricting to an open subset of $S$ may erase a
 
 Quasi-compactness provides finite linear systems. An infinite disjoint union may be fiberwise embeddable with unbounded projective dimension but admit no one finite-rank ambient bundle. Quasi-separatedness is what makes sections commute with flat base change in the form used above.
 
-Finally, “very ample after taking a power” descends to ampleness, but it need not show that the original bundle is very ample if only the power is known upstairs. For example, $\mathcal O_{\mathbf P^1}(2)$ is very ample while $\mathcal O_{\mathbf P^1}(1)$ is also very ample, but on other varieties a square can embed when the original bundle has too few sections. Tensor roots do not inherit separation automatically.
+Finally, “very ample after taking a power” descends to ampleness, but it need not show that the original bundle is very ample if only the power is known upstairs. For example, on an elliptic curve a line bundle of degree $2$ is not very ample, whereas its square has degree $4$ and is very ample. Tensor roots do not inherit separation automatically.
 
 ## 6. Serre vanishing and projective cohomology
 
@@ -566,7 +566,10 @@ H^0(\mathbf P^r_A,\mathcal O(n))
 \simeq A[x_0,\ldots,x_r]_n
 $$
 
-for $n\geq0$, a free $A$-module of rank $\binom{n+r}{r}$. The top cohomology for negative twists is generated by Laurent monomials in which every variable has negative exponent. This also proves, over a field,
+for $n\geq0$, a free $A$-module of rank $\binom{n+r}{r}$. If $r\geq1$, then for $n\leq-r-1$ the top cohomology
+$H^r(\mathbf P^r_A,\mathcal O(n))$ is the free $A$-module with basis the Laurent monomials
+$x_0^{a_0}\cdots x_r^{a_r}$ for which every $a_i<0$ and $\sum_i a_i=n$; it is zero for
+$n\geq-r$. This also proves, over a field,
 
 $$
 \chi(\mathbf P^r_k,\mathcal O(n))=\binom{n+r}{r}
@@ -593,7 +596,7 @@ If $i:X\hookrightarrow\mathbf P^r_A$ is closed and $\mathcal G$ coherent on $X$,
 
 Let $f:X\to S$ be projective with $S$ locally noetherian, and let $\mathcal F$ be coherent. On an affine $U=\operatorname{Spec}A$, embed $X_U$ in projective space. The finite Cech calculation and the noetherian syzygy argument show that each $H^i(X_U,\mathcal F)$ is a finite $A$-module and vanishes above a finite bound. Consequently $R^if_*\mathcal F$ is coherent.
 
-For $n\gg0$,
+If $\mathcal L$ is an $f$-ample line bundle, then for $n\gg0$,
 
 $$
 R^if_*(\mathcal F\otimes\mathcal L^n)=0\quad(i>0).
@@ -1073,7 +1076,10 @@ The target classifies finite étale degree-$d$ subschemes of $X_T$ which split a
 
 Configuration space is the collision-free part of a symmetric power. If $X\to S$ is smooth of relative dimension $r$, then $\operatorname{Conf}_d(X)\to S$ is smooth of relative dimension $dr$, and so is its finite étale quotient $\operatorname{UConf}_d(X)$. A point is an unordered finite étale subscheme of rank $d$.
 
-The complement is the big diagonal. On a relative curve it is a divisor after suitable hypotheses; in higher dimension it has codimension equal to the relative dimension. Passing across it permits collisions and creates nonreduced divisors on a curve.
+Assume $X\to S$ is separated and smooth, and $d\geq2$. The complement is the big diagonal. For
+relative dimension one its components are effective Cartier divisors; in relative dimension
+$r$, each pairwise diagonal is a regular immersion of codimension $r$, and its finite quotient
+has the same codimension. Passing across it permits collisions and creates nonreduced divisors on a curve.
 
 There is a canonical degree-$d$ finite étale family over $\operatorname{UConf}_d(X)$. Start with
 
@@ -1182,9 +1188,14 @@ $$
 \longrightarrow\operatorname{Sym}^{d+e}(C),
 $$
 
-which are associative, commutative, and compatible with base change. The disjoint union over $d\geq0$ is thus a graded commutative monoid scheme, though not one finite-type scheme.
+which are associative, commutative, and compatible with base change. The disjoint union over
+$d\geq0$ is thus a graded commutative monoid scheme. If $S$ is nonempty and $C/S$ has nonempty
+geometric fibers, infinitely many components are nonempty; the union is then not quasi-compact
+and hence not of finite type, although each component is locally of finite type.
 
-For a nonsmooth curve, $\operatorname{Sym}^d(C)$ still exists if $C$ is quasi-projective, but it represents cycles rather than all finite flat subschemes. There may be no universal closed subscheme on $C\times\operatorname{Sym}^d(C)$. At a singularity several nonisomorphic embedded length-$d$ structures can have the same cycle. The Hilbert scheme retains these structures; the symmetric power forgets them.
+For a nonsmooth curve, $\operatorname{Sym}^d(C)$ still exists if $C$ is quasi-projective. On
+geometric points it records effective zero-cycles of degree $d$, rather than all finite flat
+embedded subschemes; no general relative cycle functor is asserted here. There may be no universal closed subscheme on $C\times\operatorname{Sym}^d(C)$. At a singularity several nonisomorphic embedded length-$d$ structures can have the same cycle. The Hilbert scheme retains these structures; the symmetric power forgets them.
 
 ## 12. The Hilbert functors needed here
 

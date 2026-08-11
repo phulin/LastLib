@@ -525,7 +525,8 @@ $$
 (L/K,\operatorname{Frob},\pi)
 $$
 
-is therefore the basic nontrivial class split by $L$.
+is therefore the basic class split by $L$. It is nontrivial when $n>1$; for $n=1$ the norm
+quotient and the Brauer class are both trivial.
 
 This computation fixes the orientation for everything that follows: the class of $\pi$ must correspond to arithmetic Frobenius, not its inverse. Once this one case is fixed, compatibility in towers determines the normalization of all fundamental classes.
 
@@ -557,7 +558,9 @@ $$
 is obtained as follows. Over an algebraic closure, $D$ becomes $M_d$; a matrix presentation uses only finitely many coefficients and therefore descends to a finite splitting field $S/K$. For $x\in D$, take the determinant of its image in $M_d(S)$. A second matrix presentation differs after a common scalar extension by an inner automorphism, which leaves determinant unchanged. Galois conjugation also gives another presentation and therefore fixes the determinant, so it lies in $K$. This proves independence of $S$ and of the presentation. It also proves multiplicativity and shows that the resulting map extends the ordinary determinant after every splitting. The same construction applied to the characteristic polynomial defines the reduced characteristic polynomial. Define
 
 $$
-w_D(x)=\frac1d\,v_K(\operatorname{Nrd}(x)).
+w_D(0)=+\infty,
+\qquad
+w_D(x)=\frac1d\,v_K(\operatorname{Nrd}(x))\quad(x\in D^\times).
 $$
 
 Here is the noncommutative triangle argument. For $a\in D$, the subalgebra $E=K(a)$ is a commutative field. If $m=[E:K]$, the reduced characteristic polynomial of $a$ is its field characteristic polynomial raised to the power $d/m$; after passing to a splitting field this follows by grouping the $d$ eigenvalues into the $m$ conjugates of $a$. Hence
@@ -1007,7 +1010,18 @@ $$
 
 is the **local fundamental class**.
 
-Its normalization is compatible in towers. If $K\subseteq M\subseteq L$, restriction and corestriction of the fundamental classes differ by exactly the degree factors dictated by the invariant formulas. In an unramified cyclic extension, $u_{L/K}$ is represented by
+Its normalization is compatible in towers. More explicitly, suppose $L/K$ is Galois, put
+$G=\operatorname{Gal}(L/K)$ and $H=\operatorname{Gal}(L/M)$, and regard
+$u_{L/K}\in H^2(G,L^\times)$ and $u_{L/M}\in H^2(H,L^\times)$. Then
+
+$$
+\operatorname{res}_H^G(u_{L/K})=u_{L/M},
+\qquad
+\operatorname{cor}_H^G(u_{L/M})=[M:K]u_{L/K}.
+$$
+
+Indeed their local invariants are respectively $1/[L:M]$ and
+$[M:K]/[L:K]$. In an unramified cyclic extension, $u_{L/K}$ is represented by
 
 $$
 (L/K,\operatorname{Frob}_{L/K},\pi).
@@ -2563,7 +2577,9 @@ $$
 (\mathbf Z/m'\mathbf Z)\times(\mathcal O/\pi^n)^\times
 $$
 
-after imposing the single relation determined by $\pi^m a$. The field corresponding to $H$ is the fixed field of the resulting subgroup in $E_{m',n}$.
+after quotienting by the image of the whole subgroup $H/(\pi^{m'\mathbf Z}U^n)$. Equivalently,
+one imposes both the relation determined by $\pi^m a$ and all relations contributed by
+$V/U^n$. The field corresponding to $H$ is the fixed field of the resulting subgroup in $E_{m',n}$.
 
 This procedure is usable: finite congruence arithmetic determines the subgroup, the unramified and torsion fields provide an explicit ambient abelian extension, and ordinary finite Galois theory extracts the desired field. The construction also shows that every finite abelian extension has finite conductor.
 
@@ -2641,7 +2657,8 @@ $$
 
 Under reciprocity, the corresponding Galois character is trivial on inertia and sends arithmetic Frobenius to $\alpha$. If geometric reciprocity were used, geometric Frobenius would be sent to the same $\alpha$, or arithmetic Frobenius to $\alpha^{-1}$.
 
-For a profinite target, any allowed $\alpha$ lies in a compact procyclic subgroup and the formula extends from $\mathbf Z$ to $\widehat{\mathbf Z}$. For $A=\mathcal O_E^\times$, this includes infinite-order $\ell$-adic unramified characters. For $A=\mathbf C^\times$ and a genuine continuous character of the profinite Galois group, $\alpha$ must have finite order; arbitrary complex Satake-type parameters belong to a Weil-group formulation, not to continuous characters of $G_K$ itself.
+For a profinite target, the closure $\overline{\langle\alpha\rangle}$ is a compact procyclic
+subgroup, and the formula extends from $\mathbf Z$ to $\widehat{\mathbf Z}$. For $A=\mathcal O_E^\times$, this includes infinite-order $\ell$-adic unramified characters. For $A=\mathbf C^\times$ and a genuine continuous character of the profinite Galois group, $\alpha$ must have finite order; arbitrary complex Satake-type parameters belong to a Weil-group formulation, not to continuous characters of $G_K$ itself.
 
 ### 11.4 Ramified characters and conductor
 
@@ -2667,7 +2684,9 @@ For a continuous $\ell$-adic character with infinite image on $U^1$, there may b
 
 ### 11.5 Characters in towers
 
-Let $L/K$ be finite separable. If $\chi:G_K\to A$ corresponds to $\chi_K:K^\times\to A$, then restriction to $G_L$ corresponds to precomposition with the norm:
+Let $L/K$ be finite separable, fix an embedding $L\hookrightarrow K^s$, and use $K^s$ as a
+separable closure of $L$; this identifies $G_L=\operatorname{Gal}(K^s/L)$ with a subgroup of
+$G_K$. If $\chi:G_K\to A$ corresponds to $\chi_K:K^\times\to A$, then restriction to $G_L$ corresponds to precomposition with the norm:
 
 $$
 \chi|_{G_L}

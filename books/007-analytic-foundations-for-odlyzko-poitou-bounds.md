@@ -415,7 +415,8 @@ The support of $F$ later turns the infinite prime series into a finite ledger. I
 
 ### 4.1 Archimedean local factors
 
-The real and complex Mellin transforms of the Gaussian are
+For $\operatorname{Re}(s)>0$, the following improper integrals converge and give the real and
+complex Mellin transforms of the Gaussian:
 
 $$
 \int_{-\infty}^{\infty}e^{-\pi x^2}|x|^s\,\frac{dx}{|x|}
@@ -650,7 +651,7 @@ $$
 F(x)e^{(s-1/2)x}\,dx.
 $$
 
-If $F$ has compact support, $\Phi_F$ is entire. Evenness gives
+If $F$ is continuous and compactly supported, $\Phi_F$ is entire. Evenness gives
 
 $$
 \Phi_F(s)=\Phi_F(1-s),
@@ -685,7 +686,8 @@ For lower bounds we additionally require $F(x)\geq0$. Positivity of the zero ter
 
 ### 5.3 Positive type and autocorrelation
 
-A continuous integrable function $G$ is of **positive type** when $\widehat G(t)\geq0$ for all real $t$. Autocorrelation supplies the main examples. If $h\in L^2(\mathbf R)$ is real and $\widetilde h(x)=h(-x)$, then
+A continuous integrable function $G:\mathbf R\to\mathbf R$ is of **positive type** when its
+Fourier transform is real-valued and $\widehat G(t)\geq0$ for every real $t$. Autocorrelation supplies the main examples. If $h\in L^1(\mathbf R)\cap L^2(\mathbf R)$ is real, nonzero, and $\widetilde h(x)=h(-x)$, then
 
 $$
 G=h*\widetilde h,
@@ -693,7 +695,8 @@ G=h*\widetilde h,
 \widehat G(t)=|\widehat h(t)|^2\geq0.
 $$
 
-After division by $G(0)$, one has $G(0)=1$. Pointwise nonnegativity does not follow from positive type in general, so it will always be imposed separately when the prime sum is discarded.
+Here $G\in L^1(\mathbf R)$, the displayed Fourier identity holds pointwise, and
+$G(0)=\|h\|_2^2>0$. After division by $G(0)$, one has $G(0)=1$. Pointwise nonnegativity does not follow from positive type in general, so it will always be imposed separately when the prime sum is discarded.
 
 ### 5.4 Two positivity regimes
 
@@ -758,7 +761,15 @@ $$
 \tag{6.2}
 $$
 
-where $E_T$ consists of the two horizontal integrals. From the order-one estimate in §4.4, there is a sequence $T_j\to\infty$, avoiding zero ordinates by a fixed inverse-polynomial distance, on which
+where $E_T$ consists of the two horizontal integrals. From the order-one estimate in §4.4,
+there are constants $a>0$, $d\in\mathbf N$, and a sequence $T_j\to\infty$ such that, for every
+nontrivial zero $\rho$,
+
+$$
+|T_j-\operatorname{Im}\rho|\geq\frac{a}{(T_j+3)^d}.
+$$
+
+On this sequence
 
 $$
 \frac{\xi_K'}{\xi_K}(\sigma+iT_j)=O\bigl(\log(D_K(T_j+3)^n)^2\bigr)
@@ -839,7 +850,21 @@ Their sum enters with the opposite sign after solving for $\log D_K$, giving the
 
 For smooth $F$, §6.2 supplies rectangles whose horizontal edges vanish. The zero count (4.4) and rapid decay of $\Phi_F$ show absolute convergence in horizontal bands, so the symmetric value is independent of the selected heights.
 
-For basically admissible $F$, smooth by even convolution with a nonnegative compactly supported approximate identity, then correct the value at zero by a factor tending to one. Uniform bounded variation gives a common $O((1+|t|)^{-2})$ transform majorant. Dominated convergence handles the zero sum, (5.1) handles the $\sinh$ kernel at zero, and compact support handles the prime sum. Formula (6.1) follows. This also covers triangles; their endpoint convention has no effect once the universal prime sum is discarded.
+For basically admissible $F$, choose an even nonnegative $\kappa\in C_c^\infty(\mathbf R)$,
+supported in $[-1,1]$, with $\int\kappa=1$, and put
+$\kappa_\varepsilon(x)=\varepsilon^{-1}\kappa(x/\varepsilon)$. Then
+$(F*\kappa_\varepsilon)(0)\to F(0)=1$, so it is nonzero for all sufficiently small
+$\varepsilon$; define
+
+$$
+F_\varepsilon=
+\frac{F*\kappa_\varepsilon}{(F*\kappa_\varepsilon)(0)}.
+$$
+
+These functions are even, smooth, compactly supported, normalized at zero, and converge to $F$
+uniformly and in the weighted integrals of (6.1). Uniform bounded variation gives a common
+$O((1+|t|)^{-2})$ transform majorant. Dominated convergence handles the zero sum, (5.1) handles
+the $\sinh$ kernel at zero, and compact support handles the prime sum. Formula (6.1) follows. This also covers triangles; their endpoint convention has no effect once the universal prime sum is discarded.
 
 ### 6.6 Normalization diagnostics
 
@@ -957,12 +982,19 @@ The pole cost disappears with degree; $B$ is the universal archimedean loss; and
 
 ### 8.2 The triangular autocorrelation
 
+Fix $T>0$, and use the convention
+
+$$
+\operatorname{sinc}(u)=
+\begin{cases}\sin u/u,&u\ne0,\\1,&u=0.\end{cases}
+$$
+
 The normalized autocorrelation of the indicator of $[-T/2,T/2]$ is
 
 $$
 G_T(x)=\left(1-\frac{|x|}{T}\right)_+,
 \qquad
-\widehat G_T(t)=T\left(\frac{\sin(Tt/2)}{Tt/2}\right)^2\geq0.
+\widehat G_T(t)=T\operatorname{sinc}(Tt/2)^2\geq0.
 \tag{8.3}
 $$
 
@@ -996,7 +1028,7 @@ $$
 \int_0^\infty\frac{1-\operatorname{sech}(x/2)}{2\cosh(x/2)}\,dx=\frac\pi2-1.
 $$
 
-If the series is stopped after $k=m$, its omitted part before multiplication by $2/T$ is at most
+If the series is stopped after $k=m$, where $m\in\mathbf N$ (including $m=0$), its omitted part before multiplication by $2/T$ is at most
 
 $$
 \frac{(1+T)e^{-(2m+3)T}}{1-e^{-2T}}.
@@ -1007,7 +1039,20 @@ This follows from $(1+jT)/j^2\leq1+T$ and a geometric series.
 
 ### 8.4 Smoothing corners without changing the bound
 
-Smooth the interval indicator by nonnegative even approximate identities and take normalized autocorrelations. The transforms remain nonnegative and the functions converge in every integral above. Near zero,
+Choose even nonnegative $\kappa\in C_c^\infty(\mathbf R)$ with $\int\kappa=1$, set
+$\kappa_\varepsilon(x)=\varepsilon^{-1}\kappa(x/\varepsilon)$, and smooth the interval indicator
+by $h_\varepsilon=\mathbf 1_{[-T/2,T/2]}*\kappa_\varepsilon$. Its normalized autocorrelation
+
+$$
+G_{T,\varepsilon}=
+\frac{h_\varepsilon*\widetilde h_\varepsilon}
+{(h_\varepsilon*\widetilde h_\varepsilon)(0)}
+$$
+
+is smooth, even, nonnegative, compactly supported, and has nonnegative Fourier transform.
+As $\varepsilon\downarrow0$, it converges to $G_T$ uniformly and in $L^1$. The common compact
+support and the local estimate below dominate the $A$, $B$, and $C$ integrands, so all three
+weighted integrals converge to their triangular values. Near zero,
 
 $$
 1-F_T^{\mathrm{un}}(x)=\frac{x}{T}+O(x^2),
@@ -1083,7 +1128,8 @@ $$
 \tag{10.2}
 $$
 
-give rational bounds for $\pi$; (10.2) is checked by taking tangents. Euler--Maclaurin gives
+give rational bounds for $\pi$; (10.2) is checked by taking tangents. For every integer $N>0$,
+Euler--Maclaurin gives
 
 $$
 \gamma=H_N-\log N-\frac1{2N}+\frac1{12N^2}-\frac1{120N^4}+\frac1{252N^6}+R_N,
@@ -1132,7 +1178,7 @@ $$
 
 ### 10.2 Finite formulas for $B_T$ and $C_T$
 
-Use
+For $T>0$, use
 
 $$
 \log\coth(T/2)=\log(1+e^{-T})-\log(1-e^{-T}),
@@ -1156,18 +1202,20 @@ T&A_T&B_T&C_T\\
 \tag{10.6}
 $$
 
-The omitted series contribution is at most $(2/T)(1+T)e^{-5T}/(1-e^{-2T})$, below $1.1\cdot10^{-7}$ even in the first row. Twenty terms after range reduction make every Taylor remainder smaller than the unused interval width.
+The omitted series contribution is at most $(2/T)(1+T)e^{-5T}/(1-e^{-2T})$, below $1.1\cdot10^{-7}$ even in the first row. The Taylor step is a parameterized certificate: for each reduced rational argument $y$ and reserved interval width $\delta>0$, retain an $M$ for which the explicit remainder bound in (10.1), (10.2), or the alternating exponential series is $<\delta$. Thus no fixed term count is asserted without its reduced argument and width.
 
 ### 10.3 Tail bounds and interval propagation
 
 In a lower bound, every subtracted quantity uses its upper endpoint and every positive quantity its lower endpoint. Logarithms should be compared before exponentiation. If a decimal exponential is wanted, the positive Taylor series has tail
 
 $$
-0<e^r-\sum_{j=0}^{M}\frac{r^j}{j!}
-<\frac{r^{M+1}}{(M+1)!}\frac1{1-r/(M+2)},
+0\leq e^r-\sum_{j=0}^{M}\frac{r^j}{j!}
+\leq\frac{r^{M+1}}{(M+1)!}\frac1{1-r/(M+2)},
 \qquad 0\leq r<1.
 \tag{10.7}
 $$
+
+Both inequalities are strict when $0<r<1$.
 
 Range reduction handles arbitrary $r$.
 
@@ -1372,7 +1420,8 @@ $$
 \tag{12.1}
 $$
 
-To exclude a degree at ceiling $U$, solve (12.1) for $\alpha$. An actual signature satisfies
+When $U>0$ and $0<\pi/2-C_T$, one may exclude a degree at ceiling $U$ by solving (12.1) for
+$\alpha$. An actual signature satisfies
 
 $$
 r_1\in\{n,n-2,n-4,\ldots\},
@@ -1384,11 +1433,13 @@ The signature belongs to the field being bounded. A totally real base may acquir
 
 ### 12.2 Finite rational searches
 
-Optimization can be completely finite. Choose a rational grid of supports
+Optimization can be completely finite. Choose a rational grid of positive supports
 
 $$
 \mathcal T=\{a+jh:0\leq j\leq M\}.
 $$
+
+Here $a>0$, $h\geq0$, and hence every grid point is positive.
 
 For each $T$, enclose $B_T,C_T$ by Chapter 10, form the directed lower endpoint of (12.1), and retain the largest. The maximum of certified lower endpoints is certified. A theorem needs only one successful rational support; it need not assert that the support is globally optimal.
 
@@ -1420,7 +1471,7 @@ For the GRH triangle, the pole cost grows like $e^{T/2}/(nT)$ while the archimed
 
 ### 13.1 The abstract comparison theorem
 
-**Theorem 13.1.** Let $U>0$, $0\leq\alpha_0\leq1$, and let $F$ be unconditionally admissible. Alternatively, assume GRH for every field under consideration and let $F$ be GRH-admissible. Suppose in either case that
+**Theorem 13.1.** Let $U>0$, let $N$ be a positive integer, let $0\leq\alpha_0\leq1$, and let $F$ be unconditionally admissible. Alternatively, assume GRH for every field under consideration and let $F$ be GRH-admissible. Suppose in either case that
 
 $$
 C(F)\leq\frac\pi2.
@@ -1458,7 +1509,9 @@ then the tower stabilizes.
 
 **Proof.** The threshold principle bounds all absolute degrees. They are nondecreasing positive integers, hence eventually constant. An inclusion of equal-degree finite fields is equality. $\square$
 
-This does not prohibit all infinite towers. An unramified tower has constant root discriminant and can exist above the analytic threshold.
+This is a compatibility warning rather than an existence assertion: if an infinite unramified
+tower exists, its root discriminant is constant, so the theorem merely forces that constant to
+lie at or above the applicable analytic threshold.
 
 ### 13.3 Uniform finite composita
 
@@ -1490,7 +1543,7 @@ Analysis begins after (13.3) is proved. It does not supply the local costs. Once
 
 ### 14.1 A growing ceiling is not uniform
 
-An estimate $\operatorname{rd}(K_m)<c\ell^m$ has no stabilizing force because its right side grows. For odd $\ell$,
+An estimate $\operatorname{rd}(K_m)<c\ell^m$ has no stabilizing force because its right side grows. For an odd prime $\ell$ and an integer $m\geq1$,
 
 $$
 [\mathbf Q(\zeta_{\ell^m}):\mathbf Q]=\ell^{m-1}(\ell-1),
@@ -1502,7 +1555,8 @@ Both quantities grow. A level-one ceiling cannot be reused at every level.
 
 ### 14.2 Bounded step degree is not bounded total degree
 
-Even if $[K_{m+1}:K_m]\leq C$, the total degree can grow like $C^m$. Fixed-degree local extensions can also have arbitrarily deep ramification. The analytic theorem needs a uniform absolute root-discriminant ceiling, not bounded relative group order.
+Even if $[K_{m+1}:K_m]\leq C$, the total degree can grow like $C^m$, and cumulative ramification
+depth in the tower need not be bounded by the degree of each step. The analytic theorem needs a uniform absolute root-discriminant ceiling, not bounded relative group order.
 
 ### 14.3 Signature is not inherited automatically
 
@@ -1516,7 +1570,7 @@ Normalization errors have recognizable symptoms: changing Fourier frequency inse
 
 ### 14.5 Analysis controls size, not group shape
 
-A degree cap restricts a Galois group order when the field is Galois, but it does not classify the group, determine reducibility, calculate ray groups, or remove extension classes. Those are separate arithmetic problems. The conclusion here is exactly that small root discriminant forces small degree or, under uniform compositum hypotheses, stabilization.
+Under the strict analytic threshold and the uniform signature hypothesis of Theorem 13.1, a degree cap restricts a Galois group order when the field is Galois, but it does not classify the group, determine reducibility, calculate ray groups, or remove extension classes. Those are separate arithmetic problems. Under the nesting hypothesis of Theorem 13.2, or the common finite-compositum ceiling of §13.3, the corresponding uniform cap yields stabilization or finiteness.
 
 Several examples separate these conclusions. The field $\mathbf Q(i)$ has root discriminant $2$ and degree $2$; the analytic bound does not say its group is trivial. An unramified extension has the same root discriminant as its base; the analytic bound may cap the length of a small-discriminant tower but cannot identify an intermediate class group. A family of pairwise nonnested fields can have bounded degree without forming a tower; bounded degree then gives no stabilization until a common finite-compositum ceiling is proved.
 

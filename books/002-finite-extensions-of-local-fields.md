@@ -515,13 +515,13 @@ $$
 
 and $v_K(p)=e(K/\mathbf Q_p)$. The residue field is finite, hence perfect, so every finite residue extension is separable.
 
-In equal characteristic $p$, the field $k((t))$ is the central model; a choice of coefficient field and uniformizer is what makes such a Laurent-series description literal. Imperfect $k$ introduces genuinely new behavior. For $a\in k$ not a $p$th power, adjoining a root of $X^p-a$ enlarges the residue field purely inseparably with $e=1$, while adjoining a root of $X^p-t$ is purely inseparable and totally ramified with $e=p$. Both are finite local extensions; neither is Galois in the usual separable sense.
+In equal characteristic $p$, the field $k((t))$ is the central model; a choice of coefficient field and uniformizer is what makes such a Laurent-series description literal. In the explicit model $K=k((t))$, regard $k$ as the constant coefficient field and choose the Laurent parameter $t$ with $v_K(t)=1$. Imperfect $k$ then introduces genuinely new behavior. For $a\in k$ not a $p$th power, adjoining a root of $X^p-a$ enlarges the residue field purely inseparably with $e=1$, while adjoining a root of $X^p-t$ is purely inseparable and totally ramified with $e=p$. Both are finite local extensions; neither is Galois in the usual separable sense.
 
 This is why later equivalences involving embeddings, Frobenius, or inertia require explicit separability hypotheses, even though the valuation and degree theory does not.
 
 ### 3.6 A quadratic laboratory
 
-Quadratic extensions over odd residue characteristic display the unramified and totally ramified directions with minimal notation. Let $K$ have finite residue field $k$ of odd cardinality, choose a nonsquare unit $u\in A^\times$, and let $\pi=\pi_K$.
+Quadratic extensions over odd residue characteristic display the unramified and totally ramified directions with minimal notation. Let $K$ have finite residue field $k$ of odd cardinality, choose a unit $u\in A^\times$ whose residue $\bar u\in k^\times$ is nonsquare, and let $\pi=\pi_K$.
 
 The polynomial $T^2-u$ has irreducible separable reduction, so
 
@@ -1316,7 +1316,10 @@ $$
 \kappa(K_1\cap K_2)=k_1\cap k_2.
 $$
 
-Their ramification indices remain $1$. In particular, they are linearly disjoint over their intersection.
+Their ramification indices remain $1$. If one of $k_1/(k_1\cap k_2)$ or
+$k_2/(k_1\cap k_2)$ is Galois, the corresponding unramified field extension is Galois and
+$K_1,K_2$ are linearly disjoint over $K_1\cap K_2$. Without such a Galois or explicit
+disjointness hypothesis, linear disjointness over the intersection is not automatic.
 
 Suppose $\bar g\in k[T]$ is separable but not irreducible:
 
@@ -1366,7 +1369,7 @@ $$
 B/\pi_K^nB
 $$
 
-is a finite free $A/\pi_K^nA$-algebra of rank $f$ for every $n$. The extension at all finite precisions is determined by the residue extension. Starting from a separable polynomial $\bar g$, the unique lifted factorization lets one construct compatible roots modulo $\pi_K^n$, and completeness takes their inverse limit.
+is a finite free $A/\pi_K^nA$-algebra of rank $f$ for every integer $n\geq1$. The extension at all finite precisions is determined by the residue extension. Starting from a separable polynomial $\bar g$, the unique lifted factorization lets one construct compatible roots modulo $\pi_K^n$, and completeness takes their inverse limit.
 
 This does not mean that $B$ is canonically the ring of formal power series over $l$. In equal characteristic with a chosen coefficient field, one has
 
@@ -2707,7 +2710,7 @@ $$
 E_{\mathfrak P}/F_{\mathfrak p}.
 $$
 
-The completed tensor product remembers all branches at once:
+Scalar extension to the completed base remembers all branches at once:
 
 $$
 E\otimes_FF_{\mathfrak p}
@@ -2828,7 +2831,7 @@ preserves the full product decomposition.
 ### 14.5 Prescribing finitely many local completions
 
 **Theorem 14.1 (prescribed nonarchimedean completions).** Let $F$ be a number field, let
-$v_1,\ldots,v_r$ be distinct nonarchimedean places, and for each $i$ let $L_i/F_{v_i}$ be a finite
+$v_1,\ldots,v_r$ be distinct nonarchimedean places with $r\geq1$, and for each $i$ let $L_i/F_{v_i}$ be a finite
 extension of degree $d_i$. Put $n=\max_i d_i$. If $n>1$, there exists a number field extension
 $E/F$ of degree $n$ and, for each $i$, a place $w_i$ of $E$ above $v_i$ such that
 

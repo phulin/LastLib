@@ -312,7 +312,8 @@ with the normalized absolute values used in the adelic volume. This identity is 
 
 ### 3.2 Norm groups are open and have finite index
 
-The local norm group is open at every place and equals the full unit group for almost every unramified place. Consequently $N_{L/K}\mathbf I_L$ contains a basic open subgroup of $\mathbf I_K$ and is open. Its image $N_{L/K}C_L$ is therefore open in $C_K$.
+The local norm group is open at every place. At almost every unramified finite place, the local
+norm maps the integral-unit subgroup onto the base integral-unit subgroup. Consequently $N_{L/K}\mathbf I_L$ contains a basic open subgroup of $\mathbf I_K$ and is open. Its image $N_{L/K}C_L$ is therefore open in $C_K$.
 
 Finite index is subtler: openness alone does not imply finite index in a noncompact group. The norm map is surjective on the positive real module direction: at one archimedean coordinate its restriction is either a positive power map on $\mathbf R_{>0}$ or the map $z\mapsto |z|^2$, and both have image $\mathbf R_{>0}$. Combined with the module identity, this shows that every class modulo $N_{L/K}C_L$ has a representative in the compact group $C_K^1$. The quotient is therefore a quotient of $C_K^1$ by an open subgroup. An open subgroup of a compact group has finite index. Hence
 
@@ -1188,7 +1189,7 @@ $$
 
 We have proved the needed character form of existence:
 
-**Lemma 6.2 (character existence).** Every continuous finite-order character of $C_K$ comes from a unique finite-image character of $G_K$. Its fixed field is cyclic of degree equal to the order of its image, and its kernel is the idele-class norm subgroup of that field.
+**Lemma 6.2 (character existence).** Every continuous finite-order character of $C_K$ comes from a unique intrinsic complex-valued finite-image character of $G_K$. The auxiliary integer $n$, the embedding $\jmath_n$, and the corresponding $A_n$-coordinate are choices in the construction; uniqueness of that coordinate is asserted only after they are fixed. Its fixed field is cyclic of degree equal to the order of its image, and its kernel is the idele-class norm subgroup of that field.
 
 When $\mu_n\subset K$, the dual sequence is self-dual after choosing a primitive $n$th root of unity. The construction then reduces to the familiar product of local Hilbert symbols and produces Kummer fields $K(\sqrt[n]{a})$. Without roots of unity, the dual module is genuinely $\mu_n$ and the cyclic field need not admit one radical equation over $K$. The formulation above retains the twisting automatically rather than hiding it in an informal descent.
 
@@ -1308,7 +1309,8 @@ Indeed, local reciprocity sends $U_v^r$ onto the upper ramification group $D_w^r
 
 ### 7.4 Existence and maximality of ray class fields
 
-The subgroup $K^\times U(\mathfrak m)/K^\times$ is open of finite index in $C_K$. The existence theorem therefore supplies a unique finite abelian extension $K_{\mathfrak m}/K$ such that
+The image of $U(\mathfrak m)$ in $C_K$, equivalently
+$K^\times U(\mathfrak m)/K^\times$, is open of finite index. The existence theorem therefore supplies a unique finite abelian extension $K_{\mathfrak m}/K$ such that
 
 $$
 \operatorname{Gal}(K_{\mathfrak m}/K)
