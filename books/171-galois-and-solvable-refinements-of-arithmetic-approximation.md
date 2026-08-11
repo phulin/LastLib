@@ -233,8 +233,12 @@ and the identification of a decomposition group with a completed Galois group. B
 Hilbert irreducibility with finite local approximation, preservation of generic monodromy, and
 equivariant local constancy of finite étale fibers. Book 168 supplies the moving-family
 construction that turns locally prescribed configurations on a smooth geometrically connected
-variety into a finite étale incidence family. We shall recall every form that enters a proof and
-shall state the additional hypotheses precisely.
+variety into a finite étale incidence family. Book 6 supplies finite global Artin reciprocity,
+finite-character existence, and the dictionary between finite-order Hecke characters and
+finite-image one-dimensional Galois characters. It supplies no prime-distribution theorem used
+here: Chapter 4 proves the required Chebotarev theorem from theta series, Poisson summation,
+Mellin transforms, and that reciprocity dictionary. We shall recall every form that enters a
+proof and shall state the additional hypotheses precisely.
 
 ## 2. Normal closures and field intersections
 
@@ -554,10 +558,40 @@ $$
 M_w/M_w^{D\cap gHg^{-1}}/K_v.
 $$
 
-The subgroup fixing the intermediate completion is $Q$. The value group gained from $K_v$ to
-$E$ is the quotient of the top inertia action by the inertia already fixing $E$, so its order is
-$[I:I\cap Q]$. On residue fields, the image of $Q$ in $D/I$ is $IQ/I$, and the residue degree
-is its index in $D/I$, namely $[D:IQ]$. Their product is
+The top extension $M_w/K_v$ is Galois with group $D$ and inertia group $I$. The upper extension
+$M_w/E$ is Galois with group $Q$, and its inertia group is $I\cap Q$: an element of $Q$ acts
+trivially on the residue field of $M_w$ exactly when it lies in $I$. Hence multiplicativity of
+ramification indices in the tower gives
+
+$$
+e(E/K_v)
+=\frac{e(M_w/K_v)}{e(M_w/E)}
+=\frac{|I|}{|I\cap Q|}
+=[I:I\cap Q].
+$$
+
+Similarly,
+
+$$
+f(M_w/K_v)=|D/I|
+$$
+
+and
+
+$$
+f(M_w/E)=|Q/(I\cap Q)|=|IQ/I|.
+$$
+
+Multiplicativity of residue degrees therefore gives
+
+$$
+f(E/K_v)
+=\frac{|D/I|}{|IQ/I|}
+=[D:IQ].
+$$
+
+In particular, the image of $Q$ in $D/I$ is $IQ/I$ and controls the residue field of $E$.
+The two formulas are consistent because
 
 $$
 [I:I\cap Q][D:IQ]=[D:Q]=[E:K_v],
@@ -644,9 +678,13 @@ one suitable prime is enough for specialization, but the strongest and cleanest 
 the exact Dirichlet density of every Frobenius class. We develop that statement here so that no
 prime-selection step rests on an unproved density assertion.
 
-The analytic input is the standard continuation and nonvanishing theorem for finite-order Hecke
-$L$-functions. We include the part of its proof that controls the singularity at $s=1$, which is
-the only part used in Chebotarev.
+We do not take a Chebotarev theorem, a prime-ideal theorem, or analytic properties of Artin
+$L$-functions as an input. We prove exactly what is needed. The analytic ingredients are the
+ordinary Poisson summation formula for a lattice in a Euclidean space, the elementary Mellin
+integral for a Gaussian, and the unit-lattice theorem. Book 6 enters only after that analysis,
+to attach a cyclic field to a finite-order Hecke character, to identify finite abelian Galois
+characters with such Hecke characters, and to match their values at unramified primes with
+arithmetic Frobenius.
 
 ### 4.1 Dirichlet density and Frobenius classes
 
@@ -666,7 +704,8 @@ $$
 $$
 
 Finite sets have density zero because their prime sums stay bounded as $s\to1^+$. The set of all
-primes has density one. Indeed the Euler product for the Dedekind zeta function gives
+primes has density one. Indeed Step 4 of Lemma 4.1 below proves directly from a theta series that
+$\zeta_K$ has a simple pole at $1$ with positive residue. Its Euler product then gives
 
 $$
 \log\zeta_K(s)
@@ -709,60 +748,502 @@ O(1),&\chi\ne1.
 \end{cases}
 $$
 
-**Proof strategy.** Take the logarithm of the Euler product. Higher prime powers are bounded.
-The trivial character gives the pole of $\zeta_K$. A nontrivial finite-order character has a
-Hecke $L$-function holomorphic and nonzero at $1$, so its logarithm stays bounded. We recall why
-the last analytic assertion holds.
+**Proof strategy.** We first prove, rather than cite, the required analytic statement. For every
+narrow ray class we write its partial zeta function as a sum of $|N_{K/\mathbf Q}\alpha|^{-s}$
+over one affine lattice, modulo the ray-unit group. A Gaussian theta series on that lattice is
+integrated over the positive archimedean scalings modulo units. Unfolding gives the partial zeta
+function times explicit gamma factors. Poisson summation gives its continuation. Its zero dual
+frequency gives the pole at $1$; the covolume formula makes the residue independent of the ray
+class and visibly positive. Character orthogonality then gives holomorphy at $1$. Finally, a
+prime-by-prime cyclic factorization of a Dedekind zeta function proves nonvanishing. Taking the
+Euler-product logarithm finishes the prime-sum calculation.
 
-**Proof.** For $\Re(s)>1$,
+**Proof.** We give all parts of the analytic argument.
 
-$$
-\log L(s,\chi)
-=\sum_{\mathfrak p}\sum_{m\ge1}
-\frac{\chi(\mathfrak p)^m}{m(N\mathfrak p)^{ms}}.
-$$
-
-The sum over $m\ge2$ is uniformly bounded for $s\ge1$, since it is dominated by
-
-$$
-\sum_{\mathfrak p}\sum_{m\ge2}(N\mathfrak p)^{-m}/m.
-$$
-
-Thus the desired prime sum differs from $\log L(s,\chi)$ by $O(1)$.
-
-For completeness, the analytic behavior at $1$ is obtained by the usual theta-series proof.
-Choose an integral modulus defining $\chi$, decompose ideals into narrow ray classes, and attach
-to each class the theta series of the corresponding lattice in the Minkowski space of $K$.
-Poisson summation gives a functional equation for its Mellin transform and continues the
-partial zeta function meromorphically to the plane. Every partial zeta function has the same
-simple pole at $1$, with residue independent of the ray class. Summing the partial zeta
-functions with coefficients $\chi$ cancels that residue when $\chi\ne1$, because the sum of a
-nontrivial character over the ray class group is zero. Hence $L(s,\chi)$ is holomorphic at $1$.
-
-It remains to exclude a zero at $1$. Let $m$ be the order of $\chi$ and consider all powers
-$\chi^j$. For $s>1$ their Euler products have positive real product
+**Step 1: ray partial zeta functions as unit-orbit sums.** Enlarge a conductor modulus for
+$\chi$, if necessary, so that it has the form
 
 $$
-\prod_{j=0}^{m-1}L(s,\chi^j).
+\mathfrak m=\mathfrak m_0\mathfrak m_\infty,
 $$
 
-This is the zeta function, up to finitely many Euler factors, of the finite abelian extension
-cut out by $\chi$; equivalently this identity follows prime by prime from the regular
-representation of the cyclic quotient. That zeta function has a simple pole at $1$. The trivial
-factor $L(s,1)$ already has a simple pole there, while every nontrivial factor is holomorphic.
-If one of the nontrivial factors vanished at $1$, their product would tend to zero, contradicting
-the fact that the quotient of the two zeta functions tends to the finite positive ratio of their
-residues at $1$. The positivity of those residues follows directly from the theta-series
-computation. Thus
-$L(1,\chi)\ne0$.
+where $\mathfrak m_\infty$ contains every real place of $K$. Let $I_{\mathfrak m}$ be the group
+of fractional ideals prime to $\mathfrak m_0$, and let
 
-Therefore $\log L(s,\chi)=O(1)$ for nontrivial $\chi$. For the trivial character,
-$L(s,1)$ differs from $\zeta_K(s)$ by finitely many nonzero Euler factors, so its logarithm is
-$\log(1/(s-1))+O(1)$. This proves the lemma. $\square$
+$$
+P_{\mathfrak m,1}
+=\{(\alpha):\alpha\equiv1\pmod{\mathfrak m_0},
+\ \sigma(\alpha)>0\text{ for every real }\sigma\}.
+$$
+
+The narrow ray class group is
+
+$$
+C_{\mathfrak m}=I_{\mathfrak m}/P_{\mathfrak m,1}.
+$$
+
+This group is finite: its map to the ordinary ideal class group has finite target, and its kernel
+is a quotient of the finite residue-and-sign group
+$(\mathcal O_K/\mathfrak m_0)^\times\times\{\pm1\}^{r_1}$.
+
+For $c\in C_{\mathfrak m}$ define
+
+$$
+\zeta_c(s)
+=\sum_{\substack{\mathfrak b\subset\mathcal O_K,
+\ (\mathfrak b,\mathfrak m_0)=1\\[2pt]
+[\mathfrak b]=c}}
+(N\mathfrak b)^{-s},
+\qquad \Re(s)>1.
+\tag{4.1}
+$$
+
+Choose an integral ideal $\mathfrak a$, prime to $\mathfrak m_0$, whose ray class is $c^{-1}$.
+Such a representative exists. Start with a fractional ideal $\mathfrak a'$ in the class.
+Because $\mathfrak a'$ is prime to $\mathfrak m_0$, the localization of
+$(\mathfrak a')^{-1}$ at every prime dividing $\mathfrak m_0$ is the local integer ring. The
+Chinese remainder theorem therefore makes the reduction map from $(\mathfrak a')^{-1}$ onto
+$\mathcal O_K/\mathfrak m_0$ surjective. Choose a preimage $\alpha$ of $1$; adding a
+sufficiently large positive rational integer lying in
+$\mathfrak m_0(\mathfrak a')^{-1}\cap\mathfrak m_0$ makes every real embedding of $\alpha$
+positive. Such integers exist after clearing the denominators of that fractional ideal, and
+arbitrary positive multiples remain in the intersection. Then
+$\alpha\mathfrak a'$ is integral and prime to $\mathfrak m_0$, and multiplication by the ray
+principal ideal $(\alpha)$ does not change the ray class.
+An ideal $\mathfrak b$ occurring in (4.1) satisfies
+
+$$
+\mathfrak b\mathfrak a=(\alpha)
+$$
+
+for an $\alpha\in\mathfrak a$ with
+
+$$
+\alpha\equiv1\pmod{\mathfrak m_0},
+\qquad
+\sigma(\alpha)>0\quad(\sigma:K\hookrightarrow\mathbf R).
+\tag{4.2}
+$$
+
+Conversely, every such $\alpha$ gives the integral ideal
+
+$$
+\mathfrak b=(\alpha)\mathfrak a^{-1}
+$$
+
+in the class $c$. Two elements give the same ideal exactly when they differ by an element of
+
+$$
+U_{\mathfrak m}
+=\{u\in\mathcal O_K^\times:u\equiv1\pmod{\mathfrak m_0},
+\ \sigma(u)>0\text{ at every real place}\}.
+$$
+
+Moreover,
+
+$$
+N\mathfrak b=\frac{|N_{K/\mathbf Q}\alpha|}{N\mathfrak a}.
+$$
+
+The elements of $\mathfrak a$ satisfying the finite congruence in (4.2) form an affine lattice
+
+$$
+A_{\mathfrak a}=\alpha_0+\mathfrak m_0\mathfrak a
+\tag{4.3}
+$$
+
+in the Minkowski space. To justify (4.3), localize at a finite prime. At primes dividing
+$\mathfrak m_0$ one has $\mathfrak a_{\mathfrak p}=\mathcal O_{K,\mathfrak p}$ and obtains the
+stated congruence; away from $\mathfrak m_0$, multiplication by $\mathfrak m_0$ is a unit and
+both sides impose only membership in $\mathfrak a_{\mathfrak p}$. The Chinese remainder theorem
+supplies $\alpha_0$. When $\mathfrak m_0=(1)$, (4.3) means simply
+$A_{\mathfrak a}=\mathfrak a$.
+
+Choose a torsion-free subgroup $U\subset U_{\mathfrak m}$ of finite index
+
+$$
+h=[U_{\mathfrak m}:U].
+$$
+
+The unit action on nonzero elements is free. Hence a $U_{\mathfrak m}$-orbit is the disjoint
+union of $h$ $U$-orbits. Writing a superscript $/U$ for a sum over one representative of each
+$U$-orbit, (4.1) becomes
+
+$$
+\zeta_c(s)
+=\frac{(N\mathfrak a)^s}{h}
+\sum_{\substack{\alpha\in A_{\mathfrak a},\ \alpha\ne0\\
+\sigma(\alpha)>0\ \forall\sigma}}^{/U}
+|N_{K/\mathbf Q}\alpha|^{-s}.
+\tag{4.4}
+$$
+
+This formula is an exact parametrization, not an asymptotic comparison.
+
+**Step 2: the theta kernels and Poisson summation.** Write
+
+$$
+K_\infty=K\otimes_{\mathbf Q}\mathbf R
+\simeq\mathbf R^{r_1}\times\mathbf C^{r_2}.
+$$
+
+For an archimedean place $v$, put $d_v=1$ if $v$ is real and $d_v=2$ if it is complex. For
+$t=(t_v)_v\in T=(\mathbf R_{>0})^{r_1+r_2}$ set
+
+$$
+q(t)=\prod_{v\mid\infty}t_v^{d_v},
+\qquad
+d^\times t=\prod_{v\mid\infty}\frac{dt_v}{t_v}.
+$$
+
+For a parity vector $\epsilon=(\epsilon_v)_{v\text{ real}}\in\{0,1\}^{r_1}$, define the
+Schwartz function
+
+$$
+\Phi_\epsilon(x)
+=\prod_{v\text{ real}}x_v^{\epsilon_v}e^{-\pi x_v^2}
+\prod_{v\text{ complex}}e^{-2\pi|x_v|^2}
+\quad(x\in K_\infty).
+\tag{4.5}
+$$
+
+Coordinatewise multiplication is denoted $tx$. Attach to the affine lattice (4.3) the theta
+series
+
+$$
+\Theta_{\mathfrak a,\epsilon}(t)
+=\sum_{\alpha\in A_{\mathfrak a}}\Phi_\epsilon(t\alpha).
+$$
+
+If $0\in A_{\mathfrak a}$, subtract its term, and write the result as
+$\Theta^*_{\mathfrak a,\epsilon}$. Thus the star always means that the zero vector is omitted.
+
+We recall the lattice Poisson formula in exactly the form used. If $L\subset K_\infty$ is a
+full lattice, $x_0+L$ an affine translate, and $L^\vee$ the dual for the trace pairing, then
+
+$$
+\sum_{x\in x_0+L}\Phi_\epsilon(tx)
+=\frac{q(t)^{-1}}{\operatorname{covol}(L)}
+\sum_{y\in L^\vee}
+e^{2\pi i\langle y,x_0\rangle}
+\widehat\Phi_\epsilon(t^{-1}y).
+\tag{4.6}
+$$
+
+Indeed, ordinary Poisson summation gives the formula at $t=1$. Under the change of variables
+$x\mapsto tx$, Lebesgue measure is multiplied by $q(t)$ and the Fourier variable changes by
+$t^{-1}$, giving (4.6). The one-dimensional Fourier transform of a Gaussian, and its derivative
+when $\epsilon_v=1$, show that $\widehat\Phi_\epsilon$ is again a polynomial times a Gaussian.
+In particular,
+
+$$
+\widehat\Phi_\epsilon(0)=0\quad(\epsilon\ne0),
+\qquad
+\widehat\Phi_0(0)>0.
+\tag{4.7}
+$$
+
+Under the standard Minkowski measure there is a fixed positive constant $c_K$ such that
+
+$$
+\operatorname{covol}(\mathfrak b)=c_KN\mathfrak b
+\tag{4.8}
+$$
+
+for every integral ideal $\mathfrak b$; with the usual unscaled complex Lebesgue measure,
+$c_K=2^{-r_2}|d_K|^{1/2}$. Hence
+
+$$
+\operatorname{covol}(\mathfrak m_0\mathfrak a)
+=c_KN\mathfrak m_0N\mathfrak a.
+\tag{4.9}
+$$
+
+The equality (4.8) follows by writing an integral basis in the Minkowski embedding: the square
+of the real determinant, after pairing each complex embedding with its conjugate, is the field
+discriminant. Multiplication by an ideal changes the lattice index by its ideal norm. Thus the
+covolume normalization and its positivity have both been accounted for.
+
+**Step 3: Mellin unfolding modulo the units.** Dirichlet's unit theorem says that
+
+$$
+u\longmapsto(\log|u|_v)_{v\mid\infty}
+$$
+
+maps $U$ to a full lattice in the hyperplane
+
+$$
+\sum_{v\mid\infty}d_vy_v=0.
+$$
+
+It acts on $T$ by $t_v\mapsto|u|_vt_v$. The function $q(t)$ and the measure
+$d^\times t$ are invariant, and the quotient of each hypersurface $q(t)=q$ by $U$ is compact.
+Choose a fundamental parallelepiped for the logarithmic unit lattice. It follows that
+$T/U$ is the product of a compact shape space and the radial coordinate $q\in\mathbf R_{>0}$;
+for a positive constant choice of shape measure,
+
+$$
+d^\times t=\frac{dq}{q}\,dy.
+\tag{4.10}
+$$
+
+For $\Re(s)>1$, put
+
+$$
+J_{\mathfrak a,\epsilon}(s)
+=\int_{T/U}\Theta^*_{\mathfrak a,\epsilon}(t)q(t)^s\,d^\times t.
+\tag{4.11}
+$$
+
+The theta series is $U$-invariant: replacing $t$ by $|u|t$ replaces the summation variable
+$\alpha$ by $u\alpha$; at a complex place the harmless phase $u_v/|u_v|$ disappears because
+the complex kernel in (4.5) is radial. Unfolding a $U$-orbit across a fundamental domain gives
+
+$$
+J_{\mathfrak a,\epsilon}(s)
+=G_\epsilon(s)
+\sum_{\substack{\alpha\in A_{\mathfrak a},\ \alpha\ne0}}^{/U}
+\left(\prod_{v\text{ real}}\operatorname{sgn}(\alpha_v)^{\epsilon_v}\right)
+|N_{K/\mathbf Q}\alpha|^{-s},
+\tag{4.12}
+$$
+
+where the separate one-variable Gaussian integrals give
+
+$$
+G_\epsilon(s)
+=\prod_{v\text{ real}}
+\left(
+\frac12\pi^{-(s+\epsilon_v)/2}
+\Gamma\!\left(\frac{s+\epsilon_v}{2}\right)
+\right)
+\prod_{v\text{ complex}}
+\left(
+\frac12(2\pi)^{-s}\Gamma(s)
+\right).
+\tag{4.13}
+$$
+
+For example, at a real place,
+
+$$
+\int_0^\infty(t\alpha)^\epsilon e^{-\pi t^2\alpha^2}t^s\frac{dt}{t}
+=\frac12\pi^{-(s+\epsilon)/2}
+\Gamma\!\left(\frac{s+\epsilon}{2}\right)
+\operatorname{sgn}(\alpha)^\epsilon|\alpha|^{-s}.
+$$
+
+This proves (4.12), including every archimedean normalization. For completeness, fix a Euclidean
+norm on $K_\infty$. A full lattice has $O(R^{[K:\mathbf Q]})$ points of norm at most $R$,
+because translates of one sufficiently small ball around its lattice points are disjoint and
+fit inside a ball of radius $R+O(1)$. The same estimate holds for an affine translate. On a
+compact shape set, the absolute value of every kernel in (4.5) is bounded by a polynomial times
+$\exp(-c q^{2/[K:\mathbf Q]}\|\alpha\|^2)$. Splitting the affine lattice into the shells
+$j\le\|\alpha\|<j+1$ shows uniformly in the shape variable that the sum of the absolute kernels
+is $O(q^{-1})$ for $0<q\le1$ and, after omitting zero, is exponentially decreasing for
+$q\ge1$. Thus its product with $q^{\Re(s)}dq/q$ is integrable exactly in the range needed,
+$\Re(s)>1$. Tonelli applied to the absolute values therefore justifies the unfolding and all
+interchanges of sum and integral.
+
+For a nonzero $\alpha$, positivity at all real places has the finite Fourier expansion
+
+$$
+1_{\{\alpha_v>0\ \forall v\text{ real}\}}
+=2^{-r_1}\sum_{\epsilon\in\{0,1\}^{r_1}}
+\prod_{v\text{ real}}\operatorname{sgn}(\alpha_v)^{\epsilon_v}.
+\tag{4.14}
+$$
+
+Combining (4.4), (4.12), and (4.14) gives the exact Mellin formula
+
+$$
+\zeta_c(s)
+=\frac{2^{-r_1}(N\mathfrak a)^s}{h}
+\sum_{\epsilon\in\{0,1\}^{r_1}}
+\frac{J_{\mathfrak a,\epsilon}(s)}{G_\epsilon(s)}.
+\tag{4.15}
+$$
+
+**Step 4: continuation, equal residues, and positivity.** We now analyze (4.11) at the two
+radial ends. On a fixed compact shape space, every $t_v$ is a bounded positive multiple of
+$q^{1/[K:\mathbf Q]}$. The lattice-point estimate just proved, applied on successive Euclidean
+shells, shows that as $q\to\infty$ the original theta sum with the zero term removed is a
+polynomial times $e^{-c q^{2/[K:\mathbf Q]}}$, uniformly in the shape variable.
+
+As $q\to0$, apply (4.6) with $L=\mathfrak m_0\mathfrak a$. The same lattice-point estimate on
+the dual lattice shows that the sum of its nonzero terms is a polynomial times
+$e^{-c q^{-2/[K:\mathbf Q]}}$, uniformly on the compact shape space. The zero dual vector gives
+
+$$
+\Theta^*_{\mathfrak a,\epsilon}(t)
+=\frac{\widehat\Phi_\epsilon(0)}
+{\operatorname{covol}(\mathfrak m_0\mathfrak a)}q^{-1}
+-\delta_{0\in A_{\mathfrak a}}\Phi_\epsilon(0)
++O(e^{-cq^{-2/[K:\mathbf Q]}})
+\tag{4.16}
+$$
+
+after allowing an irrelevant polynomial factor inside the exponentially decreasing error. The
+constant $c>0$ can be chosen uniformly on the shape space. Equations (4.7) and (4.16) are the
+entire singularity calculation.
+
+Split the radial integral at $q=1$. On $(0,1)$ subtract the two displayed elementary terms; on
+$(1,\infty)$ use exponential decay. The remainders have entire Mellin transforms. Thus
+$J_{\mathfrak a,\epsilon}(s)$ continues meromorphically to the plane, with possible simple poles
+only at $s=1$ and $s=0$. At $s=1$, only $\epsilon=0$ has a pole. If $V_U>0$ is the volume of
+the compact shape fundamental domain, then
+
+$$
+\operatorname*{res}_{s=1}J_{\mathfrak a,0}(s)
+=\frac{V_U\widehat\Phi_0(0)}
+{\operatorname{covol}(\mathfrak m_0\mathfrak a)}.
+\tag{4.17}
+$$
+
+The number in (4.17) is positive. Since $G_0(1)>0$, (4.9), (4.15), and (4.17) give
+
+$$
+\operatorname*{res}_{s=1}\zeta_c(s)
+=R_{K,\mathfrak m}
+=\frac{2^{-r_1}V_U\widehat\Phi_0(0)}
+{hG_0(1)c_KN\mathfrak m_0}>0.
+\tag{4.18}
+$$
+
+Most importantly, $R_{K,\mathfrak m}$ is independent of $c$: the factor
+$N\mathfrak a$ in (4.15) cancels the factor $N\mathfrak a$ in the lattice covolume. Formula
+(4.18) is both the equal-residue calculation and the proof of residue positivity. It also shows
+that the sum of all ray partial zeta functions, namely the Dedekind zeta function with the
+primes dividing $\mathfrak m_0$ omitted, has a simple pole at $1$ with positive residue. Taking
+$\mathfrak m_0=(1)$, while retaining all real places in $\mathfrak m_\infty$, gives the same
+conclusion for $\zeta_K(s)$ itself. No prime-distribution statement has entered.
+
+**Step 5: holomorphy and nonvanishing of finite-order $L$-functions.** By the finite-order
+Hecke-character dictionary of Book 6, $\chi$ factors through some $C_{\mathfrak m}$. With the
+finite conductor primes omitted, its ideal $L$-series is
+
+$$
+L_{\mathfrak m}(s,\chi)
+=\sum_{c\in C_{\mathfrak m}}\chi(c)\zeta_c(s).
+\tag{4.19}
+$$
+
+If $\chi\ne1$, character orthogonality gives
+
+$$
+\sum_{c\in C_{\mathfrak m}}\chi(c)=0.
+$$
+
+The equal residues in (4.18) therefore cancel in (4.19), so
+$L_{\mathfrak m}(s,\chi)$ is holomorphic at $s=1$. For the trivial character, (4.18) gives one
+simple pole with positive residue.
+
+We next prove, rather than assume, nonvanishing at $1$. Suppose $\chi$ has order $m>1$. Lemma
+6.2 of Book 6, together with its arithmetic-Frobenius normalization in Section 8.1, attaches to
+it a cyclic extension $F/K$ of degree $m$ and a faithful character of
+$\operatorname{Gal}(F/K)$ whose value at every unramified prime is $\chi(\mathfrak p)$. Choose
+a finite set $S$ containing all primes ramified in $F$ and all primes omitted from (4.19), and
+omit the primes of $F$ above $S$ as well. For $\Re(s)>1$ one has the Euler-factor identity
+
+$$
+\zeta_{F,S_F}(s)
+=\prod_{j=0}^{m-1}L_S(s,\chi^j).
+\tag{4.20}
+$$
+
+Here is the prime-by-prime verification. If $\mathfrak p\notin S$ has Frobenius of order $d$,
+then it has $m/d$ primes in $F$, all of residue degree $d$, so its factor on the left is
+
+$$
+(1-(N\mathfrak p)^{-ds})^{-m/d}.
+$$
+
+Because $\chi$ is faithful, the numbers $\chi(\operatorname{Frob}_{\mathfrak p})^j$ run through
+all $d$th roots of unity, each $m/d$ times. Hence the product of the factors on the right is the
+same, using
+
+$$
+\prod_{\zeta^d=1}(1-\zeta X)=1-X^d.
+$$
+
+This proves (4.20) without any assertion about how often a Frobenius element occurs.
+
+Every factor $L_S(s,\chi^j)$ for $1\le j<m$ is holomorphic at $1$ by (4.19). The theta
+calculation applied over $F$ and over $K$ shows that both $\zeta_{F,S_F}$ and
+$L_S(s,1)=\zeta_{K,S}$ have simple poles with positive residues. Dividing (4.20) by its trivial
+factor and taking $s\to1$ gives
+
+$$
+\prod_{j=1}^{m-1}L_S(1,\chi^j)
+=\frac{\operatorname*{res}_{s=1}\zeta_{F,S_F}(s)}
+{\operatorname*{res}_{s=1}\zeta_{K,S}(s)}>0.
+\tag{4.21}
+$$
+
+No factor on the left can therefore vanish. In particular,
+
+$$
+L_S(1,\chi)\ne0.
+\tag{4.22}
+$$
+
+Adding back or deleting finitely many Euler factors multiplies the value at $1$ by nonzero
+numbers, so (4.22) has exactly the conductor-omitted form required in the lemma.
+
+**Step 6: pass from $L$-functions to prime sums.** For $\Re(s)>1$, the absolutely convergent
+Euler product gives
+
+$$
+\log L_S(s,\chi)
+=\sum_{\mathfrak p\notin S}\sum_{r\ge1}
+\frac{\chi(\mathfrak p)^r}{r(N\mathfrak p)^{rs}}.
+\tag{4.23}
+$$
+
+The terms with $r\ge2$ are uniformly bounded for real $s\ge1$, because
+
+$$
+\sum_{\mathfrak p}\sum_{r\ge2}
+\frac1{r(N\mathfrak p)^r}<\infty.
+\tag{4.24}
+$$
+
+Indeed, the left side of (4.24) is at most
+
+$$
+2\sum_{\mathfrak p}(N\mathfrak p)^{-2}
+\le 2\sum_{\mathfrak a\ne0}(N\mathfrak a)^{-2}<\infty;
+$$
+
+the last convergence also follows from the lattice estimate in Step 3. If $\chi\ne1$,
+holomorphy and (4.22) give a nonvanishing neighborhood of $1$, so an analytic logarithm of
+$L_S(s,\chi)$ is bounded there. Equations (4.23)--(4.24) give
+
+$$
+\sum_{\mathfrak p\notin S}
+\chi(\mathfrak p)(N\mathfrak p)^{-s}=O(1).
+$$
+
+For $\chi=1$, the positive residue calculation gives
+
+$$
+L_S(s,1)=\frac{R}{s-1}+O(1),
+\qquad R>0,
+$$
+
+and hence
+
+$$
+\log L_S(s,1)=\log(1/(s-1))+O(1).
+$$
+
+Using (4.23)--(4.24) again proves the trivial-character line. The finite omitted set contributes
+only $O(1)$. This completes the proof of the lemma. $\square$
 
 The proof uses no unproved holomorphy of general Artin $L$-functions. Only one-dimensional
-finite-order characters occur, where class field theory and the theta-series argument supply
-the needed continuation and nonvanishing.
+finite-order characters occur. Poisson summation and Mellin unfolding prove their behavior at
+$1$; Book 6 is used only for finite-character existence and the translation between Hecke
+characters and cyclic Galois characters.
 
 ### 4.3 The abelian density theorem
 
@@ -780,9 +1261,9 @@ $$
 \overline{\chi(g)}\chi(h).
 $$
 
-Class field theory identifies each finite character of $G$ with a finite-order Hecke character
-of $K$ whose value at an unramified prime is $\chi(\operatorname{Frob}_{\mathfrak p})$. Summing
-the indicator identity over primes yields
+Finite Artin reciprocity and the finite-character dictionary of Book 6 identify each character
+of $G$ with a finite-order Hecke character of $K$ whose value at an unramified prime is
+$\chi(\operatorname{Frob}_{\mathfrak p})$. Summing the indicator identity over primes yields
 
 $$
 P_{S_g}(s)
@@ -824,27 +1305,48 @@ $$
 N_E\mathfrak q\ge (N_K\mathfrak p)^2,
 $$
 
-so their prime sum is bounded at $s=1$. Thus degree-one primes account for the whole logarithmic
-term.
+and at most $[E:K]$ primes of $E$ lie above one $\mathfrak p$. Hence their prime sum is bounded
+by
+
+$$
+[E:K]\sum_{\mathfrak p}(N_K\mathfrak p)^{-2s},
+$$
+
+which is bounded at $s=1$. Thus degree-one primes account for the whole logarithmic term.
 
 We also need the multiplicity. Fix an unramified $\mathfrak p$ with Frobenius class $C$ of $g$.
-The primes of $E$ above $\mathfrak p$ correspond to orbits of the cyclic decomposition group on
-$G/H$. A degree-one prime is a fixed coset $xH$, so
+Choose a prime $w$ of $M$ above $\mathfrak p$ whose Frobenius is exactly $g$; then its
+decomposition group is $H$. The primes of $E$ above $\mathfrak p$ correspond to the $H$-orbits
+on $G/H$. A degree-one prime is a fixed coset $xH$, and at the prime $x^{-1}w$ above it the
+relative Frobenius in $M/E$ is $x^{-1}gx$. Thus it equals the chosen element $g$ exactly when
 
 $$
-x^{-1}gx\in H.
+x^{-1}gx=g.
 $$
 
-Requiring its Frobenius in $M/E$ to equal the chosen element $g$ selects those $x$ satisfying
-$x^{-1}\operatorname{Frob}_{\mathfrak p}x=g$. For a fixed representative of the Frobenius
-class, the number of such cosets is
+The number of such cosets is
 
 $$
 \frac{|C_G(g)|}{|H|}.
 $$
 
-Indeed the set of conjugators carrying the representative to $g$ is a coset of $C_G(g)$, and
-right multiplication by $H$ gives the same prime of $E$.
+Indeed the set of $x$ satisfying the displayed equation is $C_G(g)$, and right multiplication
+by $H$ gives the same prime of $E$. It preserves the equation because
+$H=\langle g\rangle$ centralizes $g$. Thus the division by $|H|$ is exact.
+
+Combining the degree estimate and this multiplicity gives the prime-sum identity
+
+$$
+\sum_{\substack{\mathfrak q\text{ prime of }E\text{ unramified in }M\\
+\operatorname{Frob}_{\mathfrak q}=g}}
+(N_E\mathfrak q)^{-s}
+=\frac{|C_G(g)|}{|H|}P_{S_C(M/K)}(s)+O(1)
+\qquad(s\to1^+).
+\tag{4.25}
+$$
+
+The $O(1)$ consists exactly of the finitely many ramified primes and the
+residue-degree-at-least-two primes already bounded above.
 
 ### 4.5 Chebotarev's theorem and its selection forms
 
@@ -860,9 +1362,8 @@ $$
 **Proof.** Choose $g\in C$, set $H=\langle g\rangle$, and $E=M^H$. By Theorem 4.2 applied to
 the cyclic extension $M/E$, primes $\mathfrak q$ of $E$ with Frobenius $g$ have density
 $1/|H|$. Removing the residue-degree-at-least-two primes changes the prime sum by a bounded
-amount. Every remaining prime lies over a prime of $K$ with Frobenius class $C$, and each such
-prime of $K$ contributes exactly $|C_G(g)|/|H|$ primes of $E$ of the selected kind. Norms agree
-for residue-degree-one primes. Hence
+amount. Formula (4.25), including its converse multiplicity count and the equality of norms at
+residue degree one, therefore gives
 
 $$
 \frac1{|H|}
@@ -877,7 +1378,7 @@ $$
 
 $\square$
 
-Three selection corollaries will be used repeatedly.
+Four selection corollaries will be used repeatedly.
 
 **Corollary 4.4 (avoidance of finitely many places).** Every conjugacy class occurs at
 infinitely many unramified primes outside any prescribed finite set.
@@ -907,6 +1408,58 @@ of all the resulting classes is $G$.
 
 **Proof.** Choose the primes successively using Corollary 4.4. The final assertion is exactly the
 defining property of the classes. $\square$
+
+**Corollary 4.7 (compatible fixed-field and character selection).** Let $M/K$ be finite Galois
+with group $G$, choose $c\in G$, and fix finitely many pairs $(H,\theta)$ with
+
+$$
+H\le G,
+\qquad
+\theta:H\longrightarrow\mathbf C^\times
+$$
+
+one-dimensional. Outside any prescribed finite set, there are infinitely many primes
+$\mathfrak p$ with Frobenius class $[c]$. For each one, choose a prime $w$ of $M$ above
+$\mathfrak p$ whose arithmetic Frobenius is exactly $c$; such a choice is possible because the
+Frobenius elements above $\mathfrak p$ form $[c]$. Then, simultaneously for all $H$:
+
+1. the primes of $M^H$ above $\mathfrak p$ are the orbits of $\langle c\rangle$ on $G/H$;
+2. the residue degree of the prime indexed by the orbit of $xH$ is its orbit length $f$;
+3. the orbit of $xH$ corresponds to the prime
+   $\mathfrak q=x^{-1}w|_{M^H}$, and, at the prime $x^{-1}w$ of $M$ above it, arithmetic
+   Frobenius in the upper extension $M/M^H$ is
+   $$
+   x^{-1}c^fx\in H,
+   $$
+   and the corresponding character value is
+   $$
+   \theta(x^{-1}c^fx).
+   $$
+4. if $H_1\le H_2$ occur in the list, the natural map
+   $G/H_1\to G/H_2$ sends each orbit to the restricted prime in
+   $M^{H_2}\subset M^{H_1}$. If the two orbit lengths are $f_1$ and $f_2$, then
+   $f_2\mid f_1$ and
+   $$
+   \left(x^{-1}c^{f_2}x\right)^{f_1/f_2}=x^{-1}c^{f_1}x,
+   $$
+   which is the tower-compatibility relation for the two relative Frobenius elements.
+
+If $B/K$ is finite Galois and $M\cap B=K$, the same primes may additionally be required to split
+completely in $B$.
+
+**Proof.** The first assertion is Corollary 4.4. With the chosen $w$, the decomposition group is
+$\langle c\rangle$, so Theorem 3.1 says that its orbits on $G/H$ give the primes and their
+lengths give residue degrees. The orbit of $xH$ is the embedding description of
+$x^{-1}w|_{M^H}$. If $f$ is its length, then $c^fxH=xH$, hence
+$x^{-1}c^fx\in H$. Since $N\mathfrak q=(N\mathfrak p)^f$, functoriality of arithmetic
+Frobenius in the residue-field tower identifies $x^{-1}c^fx$ with the relative Frobenius at
+$x^{-1}w$ in $M/M^H$; applying $\theta$ gives the displayed value. Replacing the chosen prime
+above $\mathfrak q$ conjugates this element inside $H$, which does not change a one-dimensional
+character value. For $H_1\le H_2$, the map of coset sets is exactly the localization of the
+field inclusion by Theorem 3.1. Its image orbit length $f_2$ divides $f_1$, and the displayed
+power identity follows immediately; it is also the usual Frobenius law in the corresponding
+residue-field tower. For the final assertion, apply Corollary 4.5 to $M$ and $B$, using the
+class $[c]\times\{1\}$ in the product Galois group. $\square$
 
 For Hilbert specialization one often chooses one class avoiding each conjugacy class of maximal
 proper subgroups. The derangement argument in Book 167 constructs such classes, while
@@ -1108,9 +1661,14 @@ Let $X/K$ be a variety. A **Galois approximation datum for $X$** consists of:
    $V_v\subset H(K_v)$ on which both the local $G$-torsor and the evaluated points have the
    required behavior.
 
-The datum has **degree** $n=[G:J]$. The quotient fiber $T_h$ will become the point field, the
-top fiber $\widetilde T_h$ its normal closure, and $e$ the point on $X$. Core-freeness ensures
-that the normal closure is genuinely the top field rather than a proper quotient of it.
+The datum has **degree** $n=[G:J]$. The quotient fiber $T_h$ will become the chosen field of
+definition of the evaluated point, the top fiber $\widetilde T_h$ its normal closure, and $e$
+the point on $X$. We often call that chosen field the **point field**, but this terminology does
+not assert that it is the minimal residue field of the image point. If exact residue degree is
+needed, the presentation must also ensure that the evaluated point does not descend to a proper
+subfield; this is a separate evaluation check recorded in Section 14.3. Core-freeness ensures
+that the normal closure of the quotient field is genuinely the top field rather than a proper
+quotient of it.
 
 For a local point $b_v$, choose a geometric point of the top fiber and let
 
@@ -1217,11 +1775,19 @@ $$
 
 is therefore a tower of cyclic Galois extensions of prime degree.
 
-**Proof.** A nontrivial finite solvable group has a nontrivial abelian quotient. Choose a
-subgroup of prime order in that quotient and take the kernel of the resulting quotient map; it
-is normal with prime cyclic quotient. Repeat inside the kernel. The group order decreases, so
-the process terminates. Galois correspondence reverses the normal inclusions and identifies the
-successive Galois groups with the quotients. $\square$
+**Proof.** Suppose $J\ne1$, and choose a maximal proper normal subgroup $N\triangleleft J$.
+The quotient $J/N$ is nontrivial, simple, and solvable. A nontrivial simple solvable group is
+abelian: otherwise its commutator subgroup would be the whole group, so its derived series could
+never reach $1$. A finite simple abelian group is cyclic of prime order. Thus
+
+$$
+J/N\simeq C_p
+$$
+
+for some prime $p$. The subgroup $N$ is again solvable and has smaller order. Induction on
+$|J|$ gives a subnormal series for $N$ with cyclic prime-order quotients; adjoining $J$ at the
+front gives the required series for $J$. Galois correspondence reverses its normal inclusions
+and identifies each successive Galois group with the corresponding quotient. $\square$
 
 Thus “solvable bridge” has a concrete operational meaning. It is not shorthand for a field of
 solvable degree.
@@ -1386,6 +1952,14 @@ conjugacy. Its cycle structure on $G/J$ gives the factorization partition of $L$
 cycle structure on $G/H$ gives the partition in $M^H$. One conjugacy class therefore controls
 all quotient fields simultaneously.
 
+After the specialization has fixed $M$, the same conclusion is available at new auxiliary
+places rather than only at the places built into the local box. Corollary 4.7 selects infinitely
+many primes outside $S$ with any prescribed class $[c]\subset G$ and gives, in one calculation,
+the factors and upper character values for every fixed field in a finite subgroup list.
+Corollary 4.6 lets finitely many such primes witness the full group. If an auxiliary prime must
+also split in a Galois field $B$ disjoint from $M$, Corollary 4.5 imposes that condition at the
+same time. None of these prime choices is used to construct or vary $M$.
+
 ### 7.4 Why this is stronger than Moret--Bailly
 
 Book 168 starts from local points on a smooth geometrically connected variety and constructs a
@@ -1486,9 +2060,19 @@ approximation datum has realized split top fibers. The specialized top field in 
 be chosen so that every $v\in S_{\mathrm{split}}$ splits completely in the top field and in
 every member of its fixed-field family.
 
+**Proof.** Include $S_{\mathrm{split}}$ among the controlled places and choose the local
+neighborhoods supplied by Proposition 5.2 around the realized split fibers. Theorem 7.1 then
+makes the specialized local homomorphism trivial at every such place. Hence the top field splits
+completely there, and Proposition 3.3 propagates complete splitting to every fixed subfield.
+$\square$
+
 The corollary is not a consequence of Chebotarev: Chebotarev finds primes with a desired
 Frobenius class after a field is fixed. Here the primes are fixed first and the field is varied.
 Local realizability plus Hilbert approximation is the relevant mechanism.
+
+Conversely, once the specialized $M$ is fixed, an *additional* prime may be required both to
+have a chosen class in $M/K$ and to split completely in a Galois field $B/K$ with $M\cap B=K$;
+that is precisely Corollary 4.5. The two assertions have opposite orders of quantifiers.
 
 ### 8.4 Ramified local prescriptions
 
@@ -1514,6 +2098,11 @@ Frobenius class $C\subset G$ whose cycle lengths on $G/J$ give that partition. T
 have the same cycle lengths, however, and can act differently on an elementary coset space
 $G/H$. To control the full family, the class itself must be selected, not merely its cycle type
 in one quotient.
+
+The selection theorems of Chapter 4 apply only at primes unramified in the already fixed top
+field. They cannot create a new ramified local homomorphism after specialization; the ramified
+set of $M/K$ is already determined. Ramified requirements therefore belong in the local torsor
+input of Theorem 7.1, exactly as above.
 
 ## 9. Solvable bridges to the normal closure
 
@@ -1579,6 +2168,26 @@ start.
 At a non-split controlled place, the completion of each $L_i$ is determined by the double cosets
 $D_v\backslash G/J_i$. Thus a local condition that must survive each cyclic layer can be checked
 before specialization on this finite list of local algebras.
+
+There is also a compatible auxiliary-prime statement for the whole tower. For each quotient
+$J_i/J_{i+1}$ choose a faithful character and inflate it to
+
+$$
+\vartheta_i:J_i\longrightarrow\mu_{[J_i:J_{i+1}]},
+\qquad \ker\vartheta_i=J_{i+1}.
+$$
+
+After $M$ is fixed, apply Corollary 4.7 once to the finite pairs $(J_i,\vartheta_i)$. A selected
+top Frobenius class then determines simultaneously the primes and residue degrees in every
+$L_i$, and the formula
+
+$$
+\vartheta_i(x^{-1}c^fx)
+$$
+
+is the Frobenius value in the cyclic layer $L_{i+1}/L_i$. Thus no separate Chebotarev choice
+over the successive, generally different, base fields is required, and the chosen primes may be
+kept outside every previously controlled place.
 
 ### 9.3 The symmetric quintic bridge
 
@@ -1761,6 +2370,11 @@ same condition gives it: since $M$ and $D_{\mathrm{av}}$ are linearly disjoint o
 extensions $M/F_H$ and $F_HD_{\mathrm{av}}/F_H$ are linearly disjoint. This follows by comparing
 degrees after base change.
 
+If auxiliary Frobenius values are needed on this elementary upper tower, choose its subnormal
+prime-cyclic series and apply the simultaneous tower statement of Section 9.2. The actual prime
+is selected once in $K$ by Corollary 4.7; all primes and character values over the intermediate
+fields are then forced by the common top field.
+
 ### 10.4 Conjugate subgroups and conjugate fields
 
 Brauer relations are invariant under conjugating a subgroup and its character. The field
@@ -1925,16 +2539,46 @@ is the field-theoretic content behind multiplication of character twists. It doe
 coefficient embeddings of roots of unity; those are additional labels carried by the
 characters.
 
-Local restriction of $\theta$ at a place of $F_H$ is obtained by restricting it to the relevant
-conjugate of
+The place of $F_H$ indexed by $D_vgH$ has decomposition subgroup
 
 $$
-D_v\cap gHg^{-1}.
+g^{-1}D_vg\cap H
+$$
+
+inside $H=\operatorname{Gal}(M/F_H)$. Thus its local character is the restriction of $\theta$
+to that subgroup. Equivalently, if
+
+$$
+Q=D_v\cap gHg^{-1}
+$$
+
+is the subgroup used in the fixed-field description inside the chosen top completion, the
+character on $Q$ is
+
+$$
+q\longmapsto\theta(g^{-1}qg).
 $$
 
 Thus ramification and Frobenius values of every Brauer character are determined by the top local
 homomorphism. Prescribing local torsors at the top is exactly what makes all later twists
 locally compatible.
+
+For an auxiliary place not prescribed during specialization, this compatibility is an existence
+statement as well as a dictionary. Given $c\in G$, Corollary 4.7 supplies infinitely many primes
+outside the controlled set with top Frobenius class $[c]$. At the factor indexed by the orbit of
+$gH$, of length $f$, let $\mathfrak q=g^{-1}w|_{F_H}$. The Frobenius at the prime below
+$g^{-1}w$ in the cyclic extension $F_{H_\theta}/F_H$ is the class of
+$g^{-1}c^fg$ in $H/H_\theta$; under its faithful character, this gives
+
+$$
+\operatorname{Frob}_{F_{H_\theta}/F_H}
+\longmapsto
+\theta(g^{-1}c^fg).
+$$
+
+It does so simultaneously for every $(H,\theta)$ in the finite family. In particular, one does
+not make independent prime choices in the elementary fixed fields or in their cyclic character
+layers.
 
 ## 12. Mutually disjoint top fields
 
@@ -1988,8 +2632,18 @@ G_1\times\cdots\times G_r.
 $$
 
 At an unramified prime, Frobenius in the compositum is the tuple of the individual Frobenius
-classes. Chebotarev therefore permits simultaneous auxiliary-prime conditions across all top
-fields: any product conjugacy class occurs with positive density.
+classes. Theorem 4.3 applied to the compositum therefore gives every product conjugacy class
+$C_1\times\cdots\times C_r$ density
+
+$$
+\frac{|C_1|\cdots|C_r|}{|G_1|\cdots|G_r|}>0,
+$$
+
+so it permits simultaneous auxiliary-prime conditions across all top fields, outside any finite
+set. Corollary 4.7, applied after projection to each factor or directly to product subgroups,
+then supplies the compatible fixed-field factors and cyclic-character values in every family.
+If a further Galois field $B$ is disjoint from the compositum, Corollary 4.5 also makes the same
+prime split completely in $B$.
 
 At a controlled place built into all approximation data, local homomorphisms combine as
 
@@ -2047,6 +2701,11 @@ satisfies a fixed finite local package, and every new top field avoids the finit
 its predecessors. It does not produce one parameter satisfying countably many Hilbert
 conditions.
 
+The same finite-stage restriction applies to prime selection. Theorem 4.3 applies to the
+compositum of any fixed finite subcollection and therefore realizes a finite tuple of Frobenius
+classes. It makes no assertion that one prime realizes an arbitrarily prescribed infinite tuple
+across the entire sequence.
+
 Likewise, Theorem 12.2 handles only finitely many covers at once. A countable fiber product need
 not be a finite-type variety, and a countable intersection of Hilbert subsets need not be
 covered by Hilbert irreducibility. When an application seems to require infinitely many
@@ -2067,7 +2726,7 @@ supply by itself: an evaluation map to an arbitrary target variety.
 
 ### 13.1 Generic symmetric monodromy
 
-Let
+Fix an integer $n\ge2$. Let
 
 $$
 \mathcal P_n=\operatorname{Spec}K[a_1,\ldots,a_n]
@@ -2121,14 +2780,16 @@ on which the finite étale root algebra is constant. Passing to the splitting fi
 the permutation of all roots gives the equivariant strengthening.
 
 **Proposition 13.2.** There is a coefficient neighborhood $V_p\subset H_n(k)$ such that for
-every $q\in V_p$, the root algebra $k[X]/(q)$, its Galois closure as a $k$-algebra, and the
+every $q\in V_p$, the root algebra $k[X]/(q)$, the ordered-root finite étale algebra, and the
 associated local homomorphism
 
 $$
 G_k\longrightarrow S_n
 $$
 
-are isomorphic to those of $p$, up to conjugacy in $S_n$.
+are isomorphic to those of $p$, up to conjugacy in $S_n$. The ordered-root algebra is generally
+a product of copies of the splitting field; it is the local fiber of the top $S_n$-torsor, not
+necessarily one field.
 
 **Proof.** In a finite splitting field of $p$, choose disjoint small balls around its roots.
 Hensel stability gives one root of every nearby $q$ in each ball. Krasner's lemma, applied in
@@ -2136,7 +2797,8 @@ both directions after shrinking, shows that corresponding clusters generate the 
 extensions. The action of $G_k$ on the labeled balls is locally constant, because a continuous
 action on a finite discrete set cannot change under the unique root continuation. Thus the
 permutation homomorphism is conjugate to the original one. Taking orbits recovers the root
-algebra, and taking the faithful permutation field recovers its Galois closure. $\square$
+algebra. The regular $S_n$-set attached to the homomorphism recovers the ordered-root algebra,
+and each connected factor is a copy of the splitting field. $\square$
 
 Examples include:
 
@@ -2496,6 +3158,10 @@ a finite Galois extension $M/K$, a subfield $L\subset M$, and a point $x\in X(L)
    tower, and the same is true of $M/L$;
 9. all inclusions, intersections, composita, conjugations, localizations, and character-kernel
    fields in the family are those dictated by the subgroup lattice of $G$.
+10. after $M$ is fixed, any finite list of auxiliary Frobenius classes can be realized at
+    distinct primes outside the controlled set; at each such prime, all fixed-field factors and
+    character values are simultaneously those of Corollary 4.7. The primes may additionally be
+    required to split completely in any Galois subextension $B/K$ of $D_{\mathrm{av}}/K$.
 
 Moreover, one can construct infinitely many such packages whose top fields are mutually
 linearly disjoint and all avoid the same initial $D_{\mathrm{av}}$.
@@ -2522,6 +3188,12 @@ $M^H$ to $M$. Proposition 11.1 and the conjugation discussion of Section 10.4 pr
 field-family compatibility. Since every member is a subfield of $M$, closure-level avoidance
 implies preservation of every finite image by Lemma 2.5.
 
+For the auxiliary-prime assertion, choose the finitely many primes successively with
+Corollaries 4.4 and 4.7, adjoining each chosen prime to the finite set to keep them distinct.
+The orbit and relative-Frobenius calculation of Corollary 4.7 gives all fixed-field and character
+data at once. If splitting in $B\subset D_{\mathrm{av}}$ is requested, then
+$M\cap B=K$, so Corollary 4.5 imposes it simultaneously.
+
 For infinitely many packages, use Theorem 12.1: at stage $r$, add the compositum of all previous
 top fields to the avoidance field. Proposition 2.4 gives mutual linear disjointness. $\square$
 
@@ -2536,10 +3208,10 @@ Let us record exactly where the substantial inputs enter.
   explains how a point is evaluated from a connected fiber. It does not supply the bridge datum;
   that stronger presentation is hypothesis 1 of the ledger and must be proved in the geometric
   application.
-- Global reciprocity and the finite-order Hecke-character dictionary used in the abelian step are
-  supplied by Book 6. Chebotarev prime selection, including the density theorem used to choose
-  auxiliary Frobenius witnesses, was then proved in Chapter 4 from the one-dimensional analytic
-  lemma and the cyclic reduction.
+- Finite global reciprocity, finite-character existence, and the finite-order Hecke-character
+  dictionary used in the abelian step are supplied by Book 6. Chebotarev prime selection,
+  including the density theorem used to choose auxiliary Frobenius witnesses, was then proved in
+  Chapter 4 from the one-dimensional analytic lemma and the cyclic reduction.
 - All normal-closure, solvable-stabilizer, elementary-field, mutual-disjointness, and compatible
   family conclusions are proved in this book.
 
@@ -2638,7 +3310,10 @@ The safe order is now forced by the proofs.
 5. **Take fixed fields afterward.** Define every elementary, character-kernel, and cyclic-layer
    field inside the resulting top field by Galois correspondence.
 6. **Use Chebotarev only after fields are fixed.** Select auxiliary primes with desired
-   Frobenius classes, outside the finite controlled set, using Theorem 4.3.
+   Frobenius classes, outside the finite controlled set, using Theorem 4.3 and Corollary 4.4.
+   Read all induced fixed-field factors, solvable-layer Frobenius elements, and character values
+   from the single top choice by Corollary 4.7; use Corollary 4.5 when simultaneous splitting in
+   a disjoint auxiliary field is required.
 
 Changing this order causes the familiar failures. Taking the normal closure after imposing only
 root-field avoidance can introduce an intersection. Choosing subgroup fields separately can

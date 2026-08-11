@@ -194,7 +194,7 @@ any resulting corrections.
 - [x] 168. Moret–Bailly’s Theorem
 - [ ] 169. Moduli Constructions for Potential Modularity
 - [ ] 170. Potential Modularity of Two-Dimensional Representations
-- [ ] 171. Galois and Solvable Refinements of Arithmetic Approximation
+- [x] 171. Galois and Solvable Refinements of Arithmetic Approximation
 - [x] 172. Hilbert–Blumenthal Moduli and Two-Prime Level Covers
 - [ ] 173. Local Geometry of Hilbert–Blumenthal Moduli
 - [ ] 174. Auxiliary Dihedral Data and Residual Potential Modularity
