@@ -599,7 +599,7 @@ The fourth clause is a precise finite-level formal smoothness statement: every l
 
 ### 6.3 Proof of the finite-stage lemma
 
-**Strategy.** The universal small extension of $R_n=P/J_n$ dominated by $P$ is obtained by replacing $J_n$ with $\mathfrak m_PJ_n$. All new information lies in its finite-dimensional socle kernel. Candidate quotients correspond to subspaces of that kernel. Conditions (H1) and (H2) give two correction principles: liftable quotient directions are closed under sums, and a discrepancy in a split socle direction can be removed uniquely by a tangent vector. A maximal liftable quotient then solves every lifting problem based on $R_n$. Recording this relative statement, rather than mere existence of $\xi_{n+1}$, prevents circularity when formal smoothness is proved at the limit.
+**Strategy.** The universal small extension of $R_n=P/J_n$ dominated by $P$ is obtained by replacing $J_n$ with $\mathfrak m_PJ_n$. All new information lies in its finite-dimensional socle kernel. Candidate quotients correspond to subspaces of that kernel. Conditions (H1) and (H2) give two correction principles: liftable quotient directions are closed under sums, and a discrepancy in a split socle direction can be removed by a tangent vector. A maximal liftable quotient then solves every lifting problem based on $R_n$. Recording this relative statement, rather than mere existence of $\xi_{n+1}$, prevents circularity when formal smoothness is proved at the limit.
 
 **Proof.** The first stage is $P_1$ and $\xi_1$ from Section 5.2. Assume $(R_n,\xi_n)$ has been constructed. Consider
 
@@ -615,7 +615,35 @@ $$
 
 a finite-dimensional $k$-vector space annihilated by the maximal ideal. The ring $\widetilde R_{n+1}$ is Artinian because $J_n$ is open. Every quotient extension of $R_n$ dominated by $\widetilde R_{n+1}$ is obtained by quotienting $K_n$ by a subspace.
 
-Let $\mathscr L$ be the collection of quotient spaces $K_n\twoheadrightarrow Q$ for which $\xi_n$ lifts to the corresponding extension $R_{n,Q}$. It is nonempty because $Q=0$ is allowed. If lifts exist over $Q_1$ and $Q_2$, the generalized form of (H1) from Section 4.7 glues them over the fiber product of the two extensions. That fiber product corresponds to the image of $K_n$ in $Q_1\oplus Q_2$, or equivalently to quotienting $K_n$ by the intersection of the two kernels. Condition (H2) identifies changes of a lift along a split socle summand with $t_F\otimes_kQ$; the chosen tangent isomorphism makes exactly the same corrections available from $P$. Consequently scalar pushouts and changes of a generator preserve liftability. It follows that the intersection of the kernels of all liftable quotients is again the kernel of a largest liftable quotient $Q_n^{\max}$.
+We first make the correction principle precise. If $E\twoheadrightarrow R_n$ has finite-dimensional kernel $Q$ annihilated by $\mathfrak m_E$, then the iterated form of (H2) gives an action of
+
+$$
+t_F\otimes_kQ
+$$
+
+on every nonempty fiber of $F(E)\to F(R_n)$, and (H1) makes that action transitive. Indeed,
+
+$$
+E\times_{R_n}E\simeq E\times_k(k\oplus Q),
+\qquad
+(e_1,e_2)\longmapsto(e_1,\overline e_1+e_2-e_1).
+$$
+
+Under (H2), the second factor records an element of $F(k\oplus Q)=t_F\otimes_kQ$; the second projection gives the action. Surjectivity in (H1), first for one-dimensional subkernels and then by Section 4.7, proves transitivity. On the source side, changing lifts of the variables of $P$ by elements of $Q$ gives the analogous action of $t_{h_P}\otimes_kQ$. Because $J_n\subseteq J_1=\mathfrak m_{\mathcal O}P+\mathfrak m_P^2$, these variable translations preserve every quotient extension of $R_n$ dominated by $\widetilde R_{n+1}$. The fixed tangent isomorphism $t_{h_P}\simeq t_F$ therefore realizes every target correction by a source translation. In particular, any two lifts of $\xi_n$ to the same quotient extension are carried to one another after changing the quotient map by such a translation.
+
+Let $\mathscr L$ be the collection of quotient spaces $K_n\twoheadrightarrow Q$ for which $\xi_n$ lifts to the corresponding extension $R_{n,Q}$. It is nonempty because $Q=0$ is allowed. Suppose lifts exist over quotients with kernels $L_1,L_2\subseteq K_n$. Section 4.7 glues them over
+
+$$
+E=R_{n,Q_1}\times_{R_n}R_{n,Q_2}.
+$$
+
+The diagonal map from $\widetilde R_{n+1}$ has image
+
+$$
+D=\widetilde R_{n+1}/(L_1\cap L_2)\subseteq E.
+$$
+
+Its kernel over $R_n$ is the image of $K_n$ in $Q_1\oplus Q_2$. Choose a $k$-linear complement $W$ to that image in $Q_1\oplus Q_2$. Since the whole kernel is annihilated by the maximal ideal, writing $E=D\oplus W$ additively and killing $W$ defines a local $\mathcal O$-algebra retraction $E\to D$. Pushing the glued object along this retraction gives a lift of $\xi_n$ to $D$. Thus liftability is closed under intersection of kernels. It follows that the intersection of the kernels of all liftable quotients is again the kernel of a largest liftable quotient $Q_n^{\max}$.
 
 All vector spaces here are finite-dimensional: $P$ has finitely many variables and $\mathcal O$ is Noetherian. Hence only a finite subcollection is needed to realize that intersection. Repeated (H1) glues their chosen lifts to an element over the largest quotient. Define $R_{n+1}=R_{n,Q_n^{\max}}$ and choose one such lift $\xi_{n+1}$.
 
@@ -627,7 +655,9 @@ $$
 
 The projection $C\twoheadrightarrow R_n$ has kernel $I$ and is small. Condition (H1) glues $\xi_n$ and $y'$ to an object $z\in F(C)$. Choose lifts to $C$ of the images of the finitely many variables of $P$. Because the resulting map kills $J_n$ modulo $I$ and $\mathfrak m_CI=0$, it kills $\mathfrak m_PJ_n$; hence it factors through $\widetilde R_{n+1}$.
 
-We use the elementary correction implicit in (H2). If the image of $\widetilde R_{n+1}\to C$ misses the socle line $I$, then the difference between $z$ and the object induced from that image is a split infinitesimal displacement in $t_F\otimes_k I$. The isomorphism $t_{h_P}\simeq t_F$ changes the chosen variable lifts by the unique source displacement that removes it. After this correction, either the map onto $C$ is surjective or $z$ descends to its image. In both cases we obtain a quotient $R_{n,Q}$ of $\widetilde R_{n+1}$ to which $\xi_n$ lifts, together with a map $R_{n,Q}\to C$ carrying that lift to $z$. Thus $Q$ is dominated by $Q_n^{\max}$. The chosen lift over the maximal quotient consequently maps to $z$ after one further tangent correction of the same kind. Composing $R_{n+1}\to C$ with $C\to B'$ gives the required $u'$. This proves clause 4. The inclusions in clause 3 hold by construction, openness propagates because $\mathfrak m_PJ_n$ is open, and clause 5 remains fixed by making every tangent correction relative to the chosen first-order element. $\square$
+Let $D$ be the image of $\widetilde R_{n+1}\to C$. The map $D\to R_n$ is surjective, and its kernel is a subspace of the one-dimensional space $I$. There are exactly two cases. If $\ker(D\to R_n)=I$, then $D=C$, so $z$ itself exhibits this quotient of $\widetilde R_{n+1}$ as liftable. If the kernel is zero, then $D\simeq R_n$ is a section of $C\to R_n$. The object induced from $\xi_n$ along this section and $z$ have the same reduction to $R_n$. Their difference lies in the transitive $t_F\otimes_kI$-action described above. The tangent isomorphism changes the section by a source translation whose image is exactly that difference. After the change, $z$ is induced from $D$. Thus in either case there are a liftable quotient $R_{n,Q}$ and a map $R_{n,Q}\to C$ carrying a lift of $\xi_n$ to $z$.
+
+Maximality gives a map $R_{n+1}\to R_{n,Q}$. Its chosen lift need not initially map to the particular lift just obtained, but the two lie in the same fiber over $\xi_n$. Transitivity and the source-translation statement give a corrected map $R_{n+1}\to R_{n,Q}$ that carries $\xi_{n+1}$ to that lift. Composing with $R_{n,Q}\to C\to B'$ gives the required $u'$. This proves clause 4. The inclusions in clause 3 hold by construction, openness propagates because $\mathfrak m_PJ_n$ is open, and clause 5 remains fixed because all translations vanish on the first-order quotient. $\square$
 
 The maximal quotient is intrinsic once the preceding pair is fixed, but the lift $\xi_{n+1}$ is not. This is where obstruction control enters without assuming that $F$ comes equipped with a canonical obstruction space.
 
@@ -926,6 +956,14 @@ $$
 
 and $B^1$ is a quotient of the finite-dimensional space $\operatorname{ad}\bar\rho$, the framed tangent space is finite. Topological finite generation of $G$ is a simpler sufficient condition: a continuous cocycle is determined by its values on finitely many topological generators.
 
+It also implies $(\Phi_p)$. Indeed, if $H\leq G$ is open and $\Gamma$ is the dense abstract subgroup generated by $g_1,\ldots,g_s$, then $\Gamma\cap H$ is dense in $H$ and has finite index in $\Gamma$. Choose a finite set $T$ of right-coset representatives and, for each $t\in T$ and $g_i^{\pm1}$, let $\overline{tg_i^{\pm1}}\in T$ represent its coset. Rewriting a word one letter at a time expresses every element of $\Gamma\cap H$ as a product of the finitely many elements
+
+$$
+t g_i^{\pm1}\overline{t g_i^{\pm1}}^{-1}.
+$$
+
+Thus $H$ is topologically finitely generated, and a continuous homomorphism $H\to\mathbf F_p$ is determined by finitely many values.
+
 ### 10.3 Framed pro-representability theorem
 
 **Theorem.** If $G$ satisfies $(\Phi_p)$—in particular, if $G$ is topologically finitely generated—then $D_{\bar\rho}^{\square}$ is pro-representable by a complete Noetherian local $\mathcal O$-algebra $R_{\bar\rho}^{\square}$.
@@ -938,7 +976,9 @@ No vanishing of $H^2$ is required. A nonzero obstruction group contributes relat
 
 When $G$ is topologically generated by $g_1,\ldots,g_s$, one can see the ring more concretely. Choose lifts of the residual matrices $\bar\rho(g_i)$ to $\operatorname{GL}_d(\mathcal O)$ and attach $sd^2$ formal variables to their entries. This produces universal matrices over a power-series ring $P$.
 
-Let $F_s$ be the free profinite group on $s$ generators and $F_s\twoheadrightarrow G$ the chosen presentation. Any tuple of matrices over an Artinian ring determines a continuous homomorphism $F_s\to\operatorname{GL}_d(A)$. It descends to $G$ exactly when every element of the closed relation subgroup maps to the identity. Let $J$ be the ideal generated by all matrix entries of these relation defects. Although the relation subgroup may be infinitely generated, $P$ is Noetherian, so $J$ is finitely generated and closed. Then
+For completeness, the free profinite group used here can be constructed as the inverse limit of the finite quotients of the abstract free group on $s$ letters. A homomorphism from the abstract free group to a finite group factors through one of these quotients, so passage to the inverse limit gives, uniquely, a continuous homomorphism from $F_s$ for every ordered $s$-tuple in a finite group. Applying this universal property to all finite quotients of $G$ gives the continuous presentation $F_s\twoheadrightarrow G$.
+
+Any tuple of matrices over an Artinian ring determines a continuous homomorphism $F_s\to\operatorname{GL}_d(A)$. The compatible tuples over $P/\mathfrak m_P^n$ likewise give a continuous map to $\operatorname{GL}_d(P)=\varprojlim_n\operatorname{GL}_d(P/\mathfrak m_P^n)$. It descends to $G$ exactly when every element of the closed relation subgroup maps to the identity. Let $J$ be the ideal generated by all matrix entries of these relation defects. Although the relation subgroup may be infinitely generated, $P$ is Noetherian, so $J$ is finitely generated and closed. Then
 
 $$
 R_{\bar\rho}^{\square}=P/J
@@ -1838,9 +1878,11 @@ For injectivity, let $\rho$ and $\rho'$ be complete lifts which are strictly equ
 every $\mathfrak m_S^n$. Let $C_n$ be the set of strict conjugators between their reductions.
 Each $C_n$ is finite because $S_n$ is finite, and it is nonempty by hypothesis. Reduction maps
 conjugators to conjugators. A conjugator at level $N$ and all its reductions form a branch of
-length $N$ in the resulting finitely branching tree. Since branches of arbitrary finite length
-exist, there is an infinite branch. Its inverse limit is a strict conjugator over $S$. The fixed
-determinant condition changes no conjugator and hence no part of the proof. $\square$
+length $N$ in the resulting finitely branching tree. Starting at the root, choose at each level
+a child having descendants at arbitrarily large levels; one exists because there are only
+finitely many children. This recursion gives an infinite branch. Its inverse limit is a strict
+conjugator over $S$. The fixed determinant condition changes no conjugator and hence no part of
+the proof. $\square$
 
 Finiteness of $k$ is used exactly in the compactness argument. With an infinite residue field,
 one needs a replacement such as compactness of the relevant congruence groups or a direct
@@ -2434,11 +2476,14 @@ up to the unique isomorphisms compatible with the chosen representing identifica
 completed tensor description of $R_G^{\mathcal L}$ is therefore independent of presentations of
 the local rings or choices of generators for their defining ideals.
 
-If an ambient unframed functor has a hull $h_R\to D_G$ rather than a representing object, pull it
-back along $\prod_v\mathcal L_v\to\prod_vD_v$. If this pullback satisfies (H1)--(H3), has
-finite-dimensional tangent space, and its map from $h_R$ is closedly relatively representable,
-the hull construction produces a versal ring; without (H4), it does not acquire pointwise
-uniqueness. If a local
+If an ambient unframed functor has a hull $h_R\to D_G$ rather than a representing object, its
+pullback along $\prod_v\mathcal L_v\to\prod_vD_v$ parametrizes a restricted deformation together
+with a chosen point of $h_R$ above it. If this parameterized pullback is closedly relatively
+representable over $h_R$, it is represented by a quotient of $R$. That quotient represents the
+parameterized problem, not automatically the coarse restricted functor. A hull for the coarse
+restricted functor follows only after (H1)--(H3) are verified for that functor itself; identifying
+the quotient just constructed with such a hull additionally requires its map to be formally smooth
+and tangent-bijective. Without (H4), none of these statements gives pointwise uniqueness. If a local
 condition is represented only after adding a filtration or a line, forgetting that structure
 must be analyzed before its image can be inserted as a quotient condition. Universality at the
 global level is no stronger than the weakest descent and uniqueness statement used in building

@@ -88,7 +88,7 @@ any resulting corrections.
 - [x] 062. Artinian and Complete Local Coefficient Rings
 - [x] 063. Pseudocompact Trace Algebras and Carayol Descent
 - [x] 064. Deformation Functors of Representations
-- [ ] 065. Representability of Deformation Problems
+- [x] 065. Representability of Deformation Problems
 - [ ] 066. Local Deformation Conditions Away from (\ell)
 - [ ] 067. Finite-Flat Deformation Conditions at (\ell)
 - [ ] 068. Global Deformation Problems
