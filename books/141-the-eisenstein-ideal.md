@@ -2,1702 +2,1444 @@
 
 ## Contents
 
-1. [The boundary eigensystem and the arithmetic problem](#1-the-boundary-eigensystem-and-the-arithmetic-problem)
-   - [Why an Eisenstein ideal appears](#11-why-an-eisenstein-ideal-appears)
-   - [Standing notation and the five trivial levels](#12-standing-notation-and-the-five-trivial-levels)
-   - [The theorem package](#13-the-theorem-package)
-   - [The dependency order](#14-the-dependency-order)
-2. [Four integral Hecke realizations](#2-four-integral-hecke-realizations)
-   - [The actual cusp lattice and its perfect coefficient pairing](#21-the-actual-cusp-lattice-and-its-perfect-coefficient-pairing)
-   - [Anemic, full, relative, and augmented algebras](#22-anemic-full-relative-and-augmented-algebras)
-   - [Why relative equals augmented](#23-why-relative-equals-augmented)
-   - [The semistable correspondence theorem](#24-the-semistable-correspondence-theorem)
-   - [The three special-fiber actions of $U_p$](#25-the-three-special-fiber-actions-of-u_p)
-3. [The two-cusp integral Eisenstein bound](#3-the-two-cusp-integral-eisenstein-bound)
-   - [The coefficient-one Eisenstein form](#31-the-coefficient-one-eisenstein-form)
-   - [The Deligne--Rapoport--Katz theorem](#32-the-deligne--rapoport--katz-theorem)
-   - [Why the theorem needs the stack and both cusps](#33-why-the-theorem-needs-the-stack-and-both-cusps)
-   - [The independent upper bound](#34-the-independent-upper-bound)
-   - [The cuspidal lower bound and exact index](#35-the-cuspidal-lower-bound-and-exact-index)
-4. [The augmented crossing and its numerical meaning](#4-the-augmented-crossing-and-its-numerical-meaning)
-   - [The integral fiber product](#41-the-integral-fiber-product)
-   - [Saturated branches at an Eisenstein prime](#42-saturated-branches-at-an-eisenstein-prime)
-   - [The conclusion supplied by the numerical criterion](#43-the-conclusion-supplied-by-the-numerical-criterion)
-   - [Why no complete-intersection shortcut is available](#44-why-no-complete-intersection-shortcut-is-available)
-5. [Cuspidal, Shimura, and component groups](#5-cuspidal-shimura-and-component-groups)
-   - [Three cyclic objects with the same order](#51-three-cyclic-objects-with-the-same-order)
-   - [The quadratic Shimura-character theorem](#52-the-quadratic-shimura-character-theorem)
-   - [The exact cusp--Shimura intersection](#53-the-exact-cusp--shimura-intersection)
-   - [Monodromy and the variance ledger](#54-monodromy-and-the-variance-ledger)
-6. [Odd Eisenstein multiplicity one](#6-odd-eisenstein-multiplicity-one)
-   - [The maximal ideal and the claimed finite group scheme](#61-the-maximal-ideal-and-the-claimed-finite-group-scheme)
-   - [The Mazur--Raynaud infrastructure theorem](#62-the-mazur--raynaud-infrastructure-theorem)
-   - [The two Selmer orientations](#63-the-two-selmer-orientations)
-   - [The cyclotomic class-group input, including $\ell=3$](#64-the-cyclotomic-class-group-input-including-ell3)
-   - [Admissible-group-scheme devissage](#65-admissible-group-scheme-devissage)
-7. [Tate modules, duality, and the character lattice](#7-tate-modules-duality-and-the-character-lattice)
-   - [From multiplicity one to two generators](#71-from-multiplicity-one-to-two-generators)
-   - [Tate-module freeness](#72-tate-module-freeness)
-   - [Gorenstein self-duality](#73-gorenstein-self-duality)
-   - [Character-lattice freeness](#74-character-lattice-freeness)
-   - [Why this chapter has no $2$-adic analogue](#75-why-this-chapter-has-no-2-adic-analogue)
-8. [Rational torsion](#8-rational-torsion)
-   - [The odd rational Eisenstein-support theorem](#81-the-odd-rational-eisenstein-support-theorem)
-   - [The prime-level two-primary fixed-line theorem](#82-the-prime-level-two-primary-fixed-line-theorem)
-   - [Rational points of exact prime order](#83-rational-points-of-exact-prime-order)
-   - [The specialization and divisibility argument](#84-the-specialization-and-divisibility-argument)
-   - [The exact torsion theorem and its Hecke action](#85-the-exact-torsion-theorem-and-its-hecke-action)
-9. [The absolute winding quotient](#9-the-absolute-winding-quotient)
-   - [From a relative path to a rational absolute class](#91-from-a-relative-path-to-a-rational-absolute-class)
-   - [Construction and newform support](#92-construction-and-newform-support)
-   - [The Kolyvagin--Logachev rank-zero theorem](#93-the-kolyvagin--logachev-rank-zero-theorem)
-   - [Finiteness of rational points](#94-finiteness-of-rational-points)
-10. [Integral cotangents and formal immersion](#10-integral-cotangents-and-formal-immersion)
-    - [The winding-quotient cotangent theorem](#101-the-winding-quotient-cotangent-theorem)
-    - [Producing the formal immersion](#102-producing-the-formal-immersion)
-    - [Odd good-prime cusp-disk rigidity](#103-odd-good-prime-cusp-disk-rigidity)
-    - [Why the Jacobian torsion theorem does not settle the quotient at $2$](#104-why-the-jacobian-torsion-theorem-does-not-settle-the-quotient-at-2)
-11. [Four diagnostic prime levels](#11-four-diagnostic-prime-levels)
-    - [Levels $11$, $17$, and $19$](#111-levels-11-17-and-19)
-    - [Level $37$](#112-level-37)
-    - [What the diagnostics verify](#113-what-the-diagnostics-verify)
-12. [The exported theorem ledger](#12-the-exported-theorem-ledger)
-    - [The prime-level Eisenstein package](#121-the-prime-level-eisenstein-package)
-    - [The infrastructure ledger](#122-the-infrastructure-ledger)
-    - [The dependency audit](#123-the-dependency-audit)
-    - [The exact interface with Book 148](#124-the-exact-interface-with-book-148)
-    - [Conclusion](#125-conclusion)
+1. [The prime-level collision](#1-the-prime-level-collision)
+   - [Boundary eigenvalues and cuspidal congruences](#11-boundary-eigenvalues-and-cuspidal-congruences)
+   - [Conventions and exact scope](#12-conventions-and-exact-scope)
+   - [The integer that governs the theory](#13-the-integer-that-governs-the-theory)
+   - [The logical architecture](#14-the-logical-architecture)
+2. [The integral Hecke algebra and the exact index](#2-the-integral-hecke-algebra-and-the-exact-index)
+   - [The acting algebra](#21-the-acting-algebra)
+   - [The Eisenstein series](#22-the-eisenstein-series)
+   - [The Hecke--Fourier pairing](#23-the-hecke--fourier-pairing)
+   - [The exact congruence theorem](#24-the-exact-congruence-theorem)
+   - [Index and congruence ideal](#25-index-and-congruence-ideal)
+3. [Cusps, components, and the multiplicative boundary](#3-cusps-components-and-the-multiplicative-boundary)
+   - [The cuspidal divisor](#31-the-cuspidal-divisor)
+   - [The weighted special fiber](#32-the-weighted-special-fiber)
+   - [Exact specialization](#33-exact-specialization)
+   - [The Shimura subgroup](#34-the-shimura-subgroup)
+   - [What equal orders do not imply](#35-what-equal-orders-do-not-imply)
+4. [Eisenstein primes and local completion](#4-eisenstein-primes-and-local-completion)
+   - [Local factors of a finite Hecke algebra](#41-local-factors-of-a-finite-hecke-algebra)
+   - [Rational support and the optimal quotient](#42-rational-support-and-the-optimal-quotient)
+   - [Why the two projectors differ](#43-why-the-two-projectors-differ)
+   - [The exact local congruence depth](#44-the-exact-local-congruence-depth)
+5. [The selected finite-flat tower](#5-the-selected-finite-flat-tower)
+   - [Construction by integral idempotents](#51-construction-by-integral-idempotents)
+   - [Exact transition maps](#52-exact-transition-maps)
+   - [Comparison with the selected quotient](#53-comparison-with-the-selected-quotient)
+   - [Faithfulness and finite-level annihilators](#54-faithfulness-and-finite-level-annihilators)
+6. [Admissible Eisenstein group schemes](#6-admissible-eisenstein-group-schemes)
+   - [The two atoms](#61-the-two-atoms)
+   - [From a residual flag to a flat filtration](#62-from-a-residual-flag-to-a-flat-filtration)
+   - [Mixed extensions](#63-mixed-extensions)
+   - [The dyadic boundary](#64-the-dyadic-boundary)
+7. [The completed divisible group](#7-the-completed-divisible-group)
+   - [Connected, etale, and multiplicative pieces](#71-connected-etale-and-multiplicative-pieces)
+   - [Cuspidal and Shimura directions](#72-cuspidal-and-shimura-directions)
+   - [Duality and height](#73-duality-and-height)
+   - [Multiplicity one and Gorenstein boundaries](#74-multiplicity-one-and-gorenstein-boundaries)
+8. [Eisenstein descent](#8-eisenstein-descent)
+   - [Strict local conditions](#81-strict-local-conditions)
+   - [Atomic vanishing](#82-atomic-vanishing)
+   - [Devissage and component defects](#83-devissage-and-component-defects)
+   - [Rank zero and finiteness](#84-rank-zero-and-finiteness)
+   - [The exact torsion boundary](#85-the-exact-torsion-boundary)
+9. [The cotangent lattice](#9-the-cotangent-lattice)
+   - [Invariant differentials of an optimal quotient](#91-invariant-differentials-of-an-optimal-quotient)
+   - [Primitivity and base change](#92-primitivity-and-base-change)
+   - [The completed comparison](#93-the-completed-comparison)
+   - [Fourier coefficients as cotangent coordinates](#94-fourier-coefficients-as-cotangent-coordinates)
+10. [Formal immersion at an oriented cusp](#10-formal-immersion-at-an-oriented-cusp)
+    - [Why the cusp must be oriented](#101-why-the-cusp-must-be-oriented)
+    - [The cotangent calculation](#102-the-cotangent-calculation)
+    - [Separation in an odd cusp disk](#103-separation-in-an-odd-cusp-disk)
+    - [Limits of the argument](#104-limits-of-the-argument)
+11. [Exceptional primes and diagnostic levels](#11-exceptional-primes-and-diagnostic-levels)
+    - [Trivial Eisenstein levels](#111-trivial-eisenstein-levels)
+    - [Levels eleven, seventeen, and nineteen](#112-levels-eleven-seventeen-and-nineteen)
+    - [The level prime and the coefficient prime](#113-the-level-prime-and-the-coefficient-prime)
+    - [A normalization ledger](#114-a-normalization-ledger)
+12. [The selected Eisenstein theorem](#12-the-selected-eisenstein-theorem)
+    - [The theorem](#121-the-theorem)
+    - [Proof](#122-proof)
+    - [Dependency and hypothesis audit](#123-dependency-and-hypothesis-audit)
+    - [Excluded strengthenings](#124-excluded-strengthenings)
+13. [Conclusion](#13-conclusion)
 
-## 1. The boundary eigensystem and the arithmetic problem
+## 1. The prime-level collision
 
-### 1.1 Why an Eisenstein ideal appears
+### 1.1 Boundary eigenvalues and cuspidal congruences
 
-The two rational cusps of a prime-level modular curve form the smallest possible boundary. A Hecke correspondence away from the level has $q+1$ incoming branches at each cusp, while the incoming correspondence at the level preserves the oriented cusp difference. The boundary therefore carries the one-dimensional system
-
-$$
-T_q\longmapsto q+1,\qquad U_p\longmapsto1.
-$$
-
-Holomorphic cusp forms have no boundary values. The Eisenstein problem asks how closely an integral cuspidal eigensystem can approach this boundary system. The answer is not merely a congruence of Fourier coefficients. The same modulus governs a rational cusp class, a multiplicative finite subgroup, the component group at the bad prime, and the residual constant--cyclotomic representation in the Jacobian.
-
-Those manifestations must nevertheless be kept separate. A free boundary class in relative homology is not the torsion cusp class in the Jacobian. A character of the torus is not a component. A constant group scheme is not a multiplicative one, even when their geometric point sets have the same size. Much of this book is devoted to constructing the maps among these objects and proving that the common integer which appears is forced independently in each realization.
-
-The ultimate purpose is geometric. Book 148 will send a rational point of $X_0(p)$ to a finite quotient of $J_0(p)$ and use reduction at a cusp. The present book supplies the exact torsion, the finite winding quotient, and the formal-immersion statement required for that argument. It deliberately stops before classifying prime degrees of rational isogenies.
-
-### 1.2 Standing notation and the five trivial levels
-
-Let $p$ be prime. For the main argument assume $p\ge5$ and put
+Let $N$ be prime. The modular curve $X_0(N)$ has two rational cusps, denoted $0$ and $\infty$. A Hecke correspondence $T_q$ with $q\ne N$ has $q+1$ branches at the boundary, while the incoming level operator $U_N$ preserves the oriented difference of the cusps. The boundary therefore carries a one-dimensional system of eigenvalues
 
 $$
-X=X_0(p),\qquad J=J_0(p),\qquad
-c=[0]-[\infty],\qquad
-n=\frac{p-1}{\gcd(p-1,12)}.
+T_q\longmapsto 1+q,
+\qquad
+U_N\longmapsto1.
+\tag{1.1}
 $$
 
-The incoming convention for correspondences is the convention of Books 122 and 140. In particular, if a correspondence is displayed as
+A cusp form, by definition, vanishes at the boundary. Over a field of characteristic zero, a cuspidal eigenform cannot literally be the boundary eigenform. Integrally, however, the two systems can meet. If their Fourier coefficients agree modulo a positive integer $m$, the cuspidal and boundary branches have failed to separate over $\mathbf Z/m\mathbf Z$. The Eisenstein ideal is the algebraic record of that failure.
 
-$$
-X\xleftarrow{\beta}Y\xrightarrow{\alpha}X,
-$$
+This collision has several geometric shadows. The cusp difference gives a rational torsion point on $J_0(N)$. The bad fiber at $N$ gives a component group. The covering $X_1(N)\to X_0(N)$ gives a diagonalizable kernel in the Jacobian. Completion at a prime dividing the congruence modulus selects a finite-flat torsion tower. Yet these objects are not interchangeable. A component is not a point of the identity component, a constant group is not a multiplicative group, and a local idempotent on an $\ell$-adic module need not be a rational projector on an abelian variety.
 
-its covariant action on divisors, the Jacobian, and homology is $\alpha_*\beta^*$. All Tate modules are covariant. Arithmetic Frobenius acts on them, and the Tate twist is retained in every duality statement.
+The aim of this book is to assemble the exact prime-level theorem while preserving those distinctions. We calculate the index of the Eisenstein ideal, relate the cusp to the component group, construct the selected optimal quotient and its completed torsion, carry out Eisenstein descent, and prove the cotangent statement that yields formal immersion at the outward point-level cusp. The entire discussion concerns this selected quotient. It does not establish complete multiplicity one, a full cuspidal--Shimura intersection theorem, or an exact description of all rational torsion on $J_0(N)$.
 
-Throughout, $q$ denotes a prime distinct from $p$ when it indexes a Hecke generator, while $m$ denotes an arbitrary positive integer.
-
-The levels
-
-$$
-p=2,3,5,7,13
-$$
-
-are handled separately. Book 139 proves that $X_0(p)$ has genus zero at precisely these prime levels, and Book 140 gives
-
-$$
-J_0(p)=0,\qquad n=1.
-$$
-
-The faithful cuspidal Hecke algebra is then the zero ring, and
-
-$$
-\mathbb T/I=0=\mathbf Z/1\mathbf Z,\qquad
-C=\Sigma=\Phi_p=0,\qquad
-J(\mathbf Q)_{\mathrm{tors}}=0.
-$$
-
-There is no nonzero winding quotient in genus zero. Every later assertion about a nonzero winding quotient is therefore made only for the positive-genus prime levels, namely $p=11$ or $p\ge17$. The statements about $p=2,3$ do not rely on extending the $p\ge5$ integral-stack arguments into wild level characteristic.
-
-### 1.3 The theorem package
-
-The central result can now be stated without concealing its qualifications.
-
-**Prime-level Eisenstein theorem.** Let $p\ge5$ be prime. Let $\mathbb T$ be the faithful full integral Hecke algebra acting on the actual integral lattice $S_2(\Gamma_0(p),\mathbf Z)$, with incoming $U_p$, and define
-
-$$
-I=(T_q-q-1:q\ne p)+(U_p-1).
-$$
-
-Then
-
-$$
-\boxed{\mathbb T/I\simeq\mathbf Z/n\mathbf Z.}
-$$
-
-Moreover,
-
-$$
-C=\langle c\rangle\simeq\mathbf Z/n\mathbf Z,\qquad
-\Sigma\simeq\mu_n,\qquad
-\Phi_p\simeq\mathbf Z/n\mathbf Z,
-$$
-
-specialization induces an isomorphism $C\xrightarrow{\sim}\Phi_p$, and
-
-$$
-C\cap\Sigma=C[\gcd(n,2)].
-$$
-
-For every odd prime $\ell\mid n$, with $\mathfrak m=(\ell,I)$,
-
-$$
-J[\mathfrak m]\simeq\mathbf Z/\ell\mathbf Z\oplus\mu_\ell.
-$$
-
-After that multiplicity-one statement is established, it implies in order
-
-$$
-T_\ell J_{\mathfrak m}\simeq\mathbb T_{\mathfrak m}^{2},\qquad
-\mathbb T_{\mathfrak m}^{\vee}\simeq\mathbb T_{\mathfrak m},\qquad
-X_{p,\mathfrak m}\simeq\mathbb T_{\mathfrak m}.
-$$
-
-No corresponding multiplicity-one assertion is made at $2$. Instead a separate integral fixed-line theorem supplies the two-primary rational torsion. For every prime level,
-
-$$
-\boxed{J_0(p)(\mathbf Q)_{\mathrm{tors}}=C.}
-$$
-
-If $X_0(p)$ has positive genus, the absolute winding class defines a nonzero optimal quotient $J^{\mathrm w}$ supported on precisely the newform factors with $L(f,1)\ne0$, and
-
-$$
-J^{\mathrm w}(\mathbf Q)
-$$
-
-is finite. A Hecke translate of $X_0(p)\to J^{\mathrm w}$ is a formal immersion at either cusp in every good residue characteristic. The clean rational-point consequence used here is at an odd good prime. No quotient-level assertion about the kernel of specialization at $2$ is inferred from the torsion theorem for $J$.
-
-### 1.4 The dependency order
-
-The order of proof prevents the main conclusions from certifying their own hypotheses. First, integral modular geometry gives an upper bound for the Eisenstein quotient; the known cusp of order $n$ gives the independent lower bound. Only after those two bounds meet do we identify the augmented algebra as a fiber product.
-
-Second, the quadratic Shimura-character theorem identifies the possible common order-two point of $C$ and $\Sigma$. Character theory then excludes every larger intersection. Third, the odd multiplicity-one theorem is taken as deep classical infrastructure in the same explicit sense that Book 67 takes Raynaud and Fontaine--Laffaille theory as infrastructure. From multiplicity one we prove Tate-module freeness by Nakayama and generic rank, then Gorenstein self-duality, then character-lattice freeness. None of these arrows is reversed.
-
-Fourth, rational points of prime order are determined using the odd support theorem and the separate two-primary fixed-line theorem. The isomorphism $C\simeq\Phi_p$ then lifts the result through all prime powers. Only after rational torsion has been identified with $C$ do we conclude that the Eisenstein ideal annihilates all rational torsion.
-
-Finally, winding is constructed in absolute homology. The passage from nonzero central $L$-values to finite Mordell--Weil groups uses the full Kolyvagin--Logachev theorem. Formal immersion is then an integral cotangent statement for the optimal quotient. This last step does not assume that rational torsion on a quotient lifts to rational torsion on the Jacobian.
-
-## 2. Four integral Hecke realizations
-
-### 2.1 The actual cusp lattice and its perfect coefficient pairing
-
-An exact index requires a fixed integral lattice. Let $\mathscr X_0(p)$ be the unrigidified compactified modular stack over $\mathbf Z$, and let $\omega_{\mathrm{dual}}$ denote its relative dualizing sheaf. Set
-
-$$
-S_2(\mathbf Z)
-=H^0(\mathscr X_0(p),\omega_{\mathrm{dual}})
-=S_2(\Gamma_0(p),\mathbf Q)\cap\mathbf Z[[q]].
-$$
-
-The last equality is the integral $q$-expansion and base-change theorem: the Tate expansion embeds the dualizing lattice as a saturated lattice, with integrality compatible with expansion at every cusp and every stack chart. It is not a definition obtained by taking a naive coarse curve and declaring one $q$-expansion integral. At $2$ and $3$ the unrigidified stack retains the stabilizer conditions needed for saturation.
-
-For $m\ge1$, write $T_m$ for the usual integral operator, with
-
-$$
-T_{p^ru}=U_p^rT_u,\qquad (u,p)=1.
-$$
-
-The fundamental coefficient identity is
-
-$$
-a_1(T_mf)=a_m(f). \tag{2.1}
-$$
-
-It turns the first coefficient into a universal normalization functional.
-
-**Perfect Hecke--expansion theorem.** On the actual integral cusp lattice, the pairing
-
-$$
-\mathbb T\times S_2(\mathbf Z)\longrightarrow\mathbf Z,\qquad
-(t,f)\longmapsto a_1(tf) \tag{2.2}
-$$
-
-is perfect. Thus
-
-$$
-S_2(\mathbf Z)\simeq\operatorname{Hom}_{\mathbf Z}(\mathbb T,\mathbf Z). \tag{2.3}
-$$
-
-The hypotheses in this statement matter. The algebra is the faithful image on the displayed lattice, it contains the incoming $U_p$, and integrality is tested on the stack lattice. Injectivity follows from (2.1) and the $q$-expansion principle. Surjectivity is the integral saturation assertion: the coefficient functionals generated by the $T_m$ form the full dual lattice, rather than a finite-index sublattice. Its proof uses integral $q$-expansion and base change on the compactification, including the wild charts at $2$ and $3$.
-
-This theorem is established infrastructure. Its construction-level content is nevertheless transparent: Hecke correspondences manufacture every coefficient from $a_1$, while saturation says that a rational cusp form whose every coefficient functional is integral was already an integral dualizing differential. We shall use (2.2) to turn additive characters of a Hecke quotient into rational cusp forms.
-
-### 2.2 Anemic, full, relative, and augmented algebras
-
-Different realizations remember different parts of the boundary. Let
-
-$$
-\mathcal H=\mathbf Z[T_q\ (q\ne p),U_p]
-$$
-
-be the abstract commutative algebra mapping to the geometric correspondences. Define the Eisenstein augmentation
-
-$$
-\epsilon:\mathcal H\longrightarrow\mathbf Z,\qquad
-\epsilon(T_q)=q+1,\qquad \epsilon(U_p)=1. \tag{2.4}
-$$
-
-The **anemic cuspidal algebra** is
-
-$$
-\mathbb T^{\mathrm{an}}
-=\operatorname{im}\left(
-\mathbf Z[T_q:q\ne p]\to
-\operatorname{End}_{\mathbf Z}S_2(\mathbf Z)
-\right). \tag{2.5}
-$$
-
-The **full cuspidal algebra** is
-
-$$
-\mathbb T
-=\operatorname{im}\left(
-\mathcal H\to\operatorname{End}_{\mathbf Z}S_2(\mathbf Z)
-\right). \tag{2.6}
-$$
-
-It is faithful by definition and agrees with the image on $J$ and on absolute homology. This is an equality of image algebras, not an assertion that the abstract algebra is faithful on every realization.
+### 1.2 Conventions and exact scope
 
 Put
 
 $$
-H=H_1(X(\mathbf C),\mathbf Z),\qquad
-H^{\mathrm{rel}}=H_1(X(\mathbf C),\{0,\infty\};\mathbf Z).
+X=X_0(N),\qquad J=J_0(N),\qquad
+c=[0]-[\infty]\in J(\mathbf Q).
+\tag{1.2}
 $$
 
-The **relative algebra** is
+The Hecke correspondence convention is source-to-quotient. Thus, for
 
 $$
-\mathbb T^{\mathrm{rel}}
-=\operatorname{im}\left(
-\mathcal H\to\operatorname{End}_{\mathbf Z}H^{\mathrm{rel}}
-\right). \tag{2.7}
+X\xleftarrow{\pi_1}Y\xrightarrow{\pi_2}X,
 $$
 
-The **augmented algebra** is
+the covariant action on divisor classes and on $J$ is $(\pi_2)_*\pi_1^*$. The operator at the level is the incoming $U_N$ for which
+
+$$
+U_Nc=c.
+\tag{1.3}
+$$
+
+Arithmetic Frobenius is used on covariant Tate modules. At a good prime $q$ the Eichler--Shimura polynomial consequently has the form
+
+$$
+F_q^2-T_qF_q+q=0.
+\tag{1.4}
+$$
+
+The integral cusp-form lattice is
+
+$$
+S=S_2(\Gamma_0(N);\mathbf Z),
+\tag{1.5}
+$$
+
+interpreted as regular dualizing differentials on the compactified modular object. This interpretation is essential at $2$ and $3$: a single coarse $q$-expansion does not by itself remember stabilizer descent or saturation.
+
+The faithful Hecke algebra $\mathbb T$ means the image of the operators on $S$, equivalently on the corresponding faithful Jacobian realization. We never confuse this image with the polynomial algebra on formal symbols. The ideal studied throughout is
+
+$$
+I=(T_q-(1+q):q\ne N)+(U_N-1)\subseteq\mathbb T.
+\tag{1.6}
+$$
+
+Primes indexing Hecke operators are denoted $q$; a prime dividing the Eisenstein index is denoted $\ell$; a residue characteristic used for formal immersion is denoted $r$. This separation prevents the level prime, coefficient prime, and specialization prime from being silently identified.
+
+### 1.3 The integer that governs the theory
+
+Define
+
+$$
+n_N=\operatorname{num}\left(\frac{N-1}{12}\right)
+=\frac{N-1}{\gcd(N-1,12)}.
+\tag{1.7}
+$$
+
+For every prime $\ell$,
+
+$$
+v_\ell(n_N)=\max\{0,v_\ell(N-1)-v_\ell(12)\}.
+\tag{1.8}
+$$
+
+Thus $2$ is an Eisenstein prime exactly when $N\equiv1\pmod8$, while $3$ is an Eisenstein prime exactly when $N\equiv1\pmod9$. Every Eisenstein prime divides $N-1$, so
+
+$$
+\ell\mid n_N\quad\Longrightarrow\quad \ell\ne N.
+\tag{1.9}
+$$
+
+The same integer will occur as a congruence modulus, the order of the cusp class, and the order of the component group. These agreements are theorems, not definitions. Their proofs come from different sources: two-cusp integral modular forms, an eta multiplier, and a weighted monodromy graph. Keeping those proofs independent prevents the desired index from being smuggled into its own calculation.
+
+The five levels
+
+$$
+N\in\{2,3,5,7,13\}
+\tag{1.10}
+$$
+
+have $n_N=1$. At these levels the prime-level Jacobian in question is zero. There is no Eisenstein maximal ideal and no selected quotient. All statements involving a choice $\ell\mid n_N$ are therefore empty, not exceptional counterexamples.
+
+### 1.4 The logical architecture
+
+The proof proceeds in a strict order.
+
+First, the weight-two Eisenstein series and the integral two-cusp lattice determine the exact quotient $\mathbb T/I$. This calculation uses no rational torsion on $J$. Second, the modular unit and the weighted bad fiber compute the cusp and component groups and prove that specialization identifies them. The Shimura subgroup supplies a multiplicative constituent of the same order, but no intersection theorem is inferred.
+
+Third, for each $\ell\mid n_N$, the complete local factor of $\mathbb T\otimes\mathbf Z_\ell$ gives an integral idempotent. Its rational support, a different construction, gives an optimal quotient $A_{\mathfrak m}$. Exactness for the connected kernel proves that the two selections agree on the selected Tate lattice. Only then is there an honest finite-flat tower on which descent may operate.
+
+Fourth, the Eichler--Shimura polynomial and a radical filtration produce actual residual constant and cyclotomic factors. Schematic closure turns them into admissible finite-flat atoms. Strict Selmer vanishing, followed by a finite component correction, forces the selected Mordell--Weil rank to vanish. Finite generation then gives finiteness.
+
+Finally, the connected optimal quotient makes its Néron cotangent lattice primitive. The first-coefficient identity converts a nonzero reduced differential into a unit cotangent at an outward cusp of $X_1(N)$. This proves formal immersion. At an odd good prime, injectivity of torsion specialization combines with finiteness to separate rational sections in that cusp disk.
+
+## 2. The integral Hecke algebra and the exact index
+
+### 2.1 The acting algebra
+
+Because $S$ is finite free over $\mathbf Z$, its faithful Hecke image $\mathbb T$ is a finite torsion-free commutative $\mathbf Z$-algebra. It is therefore finite free as a $\mathbf Z$-module. The distinction between an abstract operator algebra and its image matters: an index is meaningful only after the integral lattice and faithful image have been fixed.
+
+For $m\ge1$, write $T_m$ for the usual operator, with the level convention
+
+$$
+T_{N^au}=U_N^aT_u,
+\qquad (u,N)=1.
+\tag{2.1}
+$$
+
+If $f=\sum_{m\ge1}a_m(f)q^m\in S$, then
+
+$$
+a_1(T_mf)=a_m(f).
+\tag{2.2}
+$$
+
+This formula is more than a convenient normalization. It says that all Fourier coefficients arise by translating one linear functional through the Hecke algebra. It is the bridge from a congruence of forms to a quotient of rings.
+
+The ideal $I$ is generated by an infinite displayed family, but it is finitely generated because $\mathbb T$ is noetherian. Hecke relations also show that one may replace the good-prime generators by $T_m-\sigma_1^{(N)}(m)$, where
+
+$$
+\sigma_1^{(N)}(m)=\sum_{\substack{d\mid m\\N\nmid d}}d.
+\tag{2.3}
+$$
+
+We retain the prime generators because they display the boundary character most clearly.
+
+### 2.2 The Eisenstein series
+
+The quasimodular defect of the level-one weight-two series cancels in the prime-level combination
+
+$$
+E_N(z)=G_2(z)-NG_2(Nz).
+\tag{2.4}
+$$
+
+With the coefficient-one normalization,
+
+$$
+E_N(q)=\frac{N-1}{24}
++\sum_{m\ge1}\sigma_1^{(N)}(m)q^m.
+\tag{2.5}
+$$
+
+Its constant terms at $\infty$ and $0$, in compatible Fricke frames, are $(N-1)/24$ and its negative. Moreover,
+
+$$
+T_qE_N=(1+q)E_N\quad(q\ne N),
+\qquad U_NE_N=E_N.
+\tag{2.6}
+$$
+
+The first identity follows by sorting divisors of an integer according to divisibility by $q$. The second follows directly from (2.5): deleting one power of $N$ from the index exactly matches the divisor sum with the $N$-part omitted. The Fricke relation $E_N|W_N=-E_N$ checks the opposite cusp constants and the incoming sign.
+
+The rational constant term suggests a modulus dividing the numerator of $(N-1)/24$, but that guess loses one factor of $2$. In characteristic $2$, opposite residues coincide and one divided Hasse correction descends through the stabilizer. The exact obstruction is therefore the numerator of $(N-1)/12$. This is the first place where the genuine integral modular object, rather than a rational Fourier series, changes the answer.
+
+### 2.3 The Hecke--Fourier pairing
+
+Consider
+
+$$
+\langle t,f\rangle=a_1(tf),
+\qquad t\in\mathbb T,quad f\in S.
+\tag{2.7}
+$$
+
+**Proposition 2.1.** The pairing (2.7) is perfect over $\mathbf Z$.
+
+**Proof.** If $t$ pairs to zero with every $f$, then (2.2) applied after every Hecke translate shows that every Fourier coefficient of $tf$ is zero for every $f$. The $q$-expansion principle gives $tf=0$, and faithfulness gives $t=0$. Thus the map
+
+$$
+\mathbb T\longrightarrow\operatorname{Hom}_{\mathbf Z}(S,\mathbf Z)
+$$
+
+is injective.
+
+For surjectivity, the integral $q$-expansion theorem identifies $S$ with the saturated lattice of regular dualizing cusp forms. The coefficient functionals $a_m$ span its full integral dual, and (2.2) identifies $a_m$ with the translate of $a_1$ by $T_m$. Hence every integral functional is $f\mapsto a_1(tf)$ for a unique $t\in\mathbb T$. This proves perfectness. $\square$
+
+The saturation clause is decisive. Perfectness over $\mathbf Q$ would determine only the rank of $\mathbb T$; it would not calculate an integral index. At residue characteristics $2$ and $3$, saturation uses the stacky cusp charts and the dualizing lattice.
+
+### 2.4 The exact congruence theorem
+
+For an integer $m\ge1$, call a class $f_m\in S/mS$ an Eisenstein cusp class if it is normalized by $a_1(f_m)=1$ and
+
+$$
+a_k(f_m)\equiv\sigma_1^{(N)}(k)\pmod m
+\qquad(k\ge1).
+\tag{2.8}
+$$
+
+**Theorem 2.2.** An Eisenstein cusp class modulo $m$ exists if and only if $m\mid n_N$. When it exists, it is unique.
+
+**Proof.** The integral two-cusp congruence theorem says that the nonconstant expansion of $E_N$ becomes the expansion of a regular cusp form modulo $m$ exactly when both boundary residues vanish in the integral dualizing lattice. At primes at least $5$, this is precisely the divisibility of $(N-1)/12$ after accounting for the width and residue normalization. At $3$, the Hasse filtration removes exactly $v_3(12)=1$ from $v_3(N-1)$. At $2$, stabilizer descent removes exactly $v_2(12)=2$, rather than $v_2(24)=3$. Thus the largest possible exponent at every prime is (1.8), so existence is equivalent to $m\mid n_N$.
+
+If $f_m$ and $g_m$ are two such classes, all their coefficients agree. The integral $q$-expansion principle gives $f_m=g_m$. $\square$
+
+The theorem is an all-coefficient statement. A Sturm bound can certify a proposed class, but finite checking alone does not prove that the class exists at the maximal modulus. The two-cusp calculation supplies existence and maximality.
+
+### 2.5 Index and congruence ideal
+
+**Theorem 2.3.** There is a canonical ring isomorphism
+
+$$
+\boxed{\mathbb T/I\simeq\mathbf Z/n_N\mathbf Z.}
+\tag{2.9}
+$$
+
+**Proof.** Dualize $\mathbb T/I$ over $\mathbf Z$. By Proposition 2.1, a homomorphism $\mathbb T/I\to\mathbf Q/\mathbf Z$ corresponds to a rational class of cusp forms whose coefficient functional is killed by every generator of $I$. Formula (2.2) says exactly that its positive coefficients lie on the Eisenstein line (2.5). Theorem 2.2 identifies that line with the cyclic group $\mathbf Z/n_N\mathbf Z$. Therefore the finite abelian group $\mathbb T/I$ has order $n_N$ and is cyclic, generated as a ring by the image of $1$. The unique unital cyclic quotient of that order is $\mathbf Z/n_N\mathbf Z$. $\square$
+
+Thus the exact index is
+
+$$
+[\mathbb T:I]=n_N.
+\tag{2.10}
+$$
+
+There are two related objects worth distinguishing. The ideal $I\subset\mathbb T$ is the Eisenstein ideal. The scalar congruence ideal on the boundary branch is the annihilator of the congruence module $\mathbb T/I$ inside $\mathbf Z$:
+
+$$
+\eta_E=\operatorname{Ann}_{\mathbf Z}(\mathbb T/I)=(n_N).
+\tag{2.11}
+$$
+
+There is also a literal branch-crossing description. Let $\mathcal H$ be the abstract algebra generated by the Hecke correspondences, let $\mathcal H\to\mathbb T$ be its cuspidal action, and let $\epsilon:\mathcal H\to\mathbf Z$ be the boundary character (1.1). Its image in $\mathbb T\times\mathbf Z$ is the augmented algebra
 
 $$
 \mathbb T^{\mathrm{aug}}
-=\operatorname{im}\left(
-\mathcal H\longrightarrow\mathbb T\times\mathbf Z,
-\ t\longmapsto(t,\epsilon(t))
-\right). \tag{2.8}
+=\mathbb T\times_{\mathbf Z/n_N\mathbf Z}\mathbf Z.
+\tag{2.12}
 $$
 
-The free group $\operatorname{Div}^0\{0,\infty\}$ and the finite group $C\subset J$ must not be identified. The former is the quotient of relative homology; the latter is its Abel--Jacobi image. This distinction is the reason the relative Eisenstein quotient is infinite while the cuspidal Eisenstein quotient is finite.
+Every abstract operator gives a pair satisfying the displayed congruence. Conversely, the maximality in Theorem 2.2 says that two boundary scalars can accompany the same cuspidal operator exactly when their difference is a multiple of $n_N$. This proves (2.12). The intersection of the boundary branch with the complementary cuspidal branch therefore has scalar annihilator $(n_N)$, recovering (2.11).
 
-### 2.3 Why relative equals augmented
+After completion at $\ell\mid n_N$, its local length is
 
-The relative algebra might appear to contain an off-diagonal action invisible on absolute homology and on the boundary. Mixed Hodge theory rules out exactly that possibility.
-
-The exact homology sequence is
-
-$$
-0\longrightarrow H
-\longrightarrow H^{\mathrm{rel}}
-\xrightarrow{\partial}
-\operatorname{Div}^0\{0,\infty\}
-\longrightarrow0. \tag{2.9}
-$$
-
-All three groups are torsion free. Over $\mathbf Q$, (2.9) is an exact sequence of mixed Hodge structures. The absolute homology has pure weight $-1$, while the reduced boundary group has weight $0$.
-
-The action on the subobject and quotient gives a homomorphism
-
-$$
-\mathbb T^{\mathrm{rel}}\longrightarrow\mathbb T^{\mathrm{aug}}. \tag{2.10}
-$$
-
-Suppose an abstract Hecke operator acts trivially on $H$ and on the boundary quotient. Its action on $H^{\mathrm{rel}}_{\mathbf Q}$ then factors as a morphism
-
-$$
-\operatorname{Div}^0\{0,\infty\}_{\mathbf Q}
-\longrightarrow H_{\mathbf Q}. \tag{2.11}
-$$
-
-Hecke correspondences act by morphisms of mixed Hodge structures. Strictness for the weight filtration makes (2.11) zero, because there is no nonzero morphism from a pure weight-$0$ object to a pure weight-$-1$ object. Hence the original operator is zero on $H^{\mathrm{rel}}_{\mathbf Q}$. Torsion-freeness of $H^{\mathrm{rel}}$ makes it zero integrally.
-
-The map (2.10) is therefore injective. It is surjective because both sides are the images of the same abstract generators with the same two recorded actions. Consequently
-
-$$
-\boxed{\mathbb T^{\mathrm{rel}}\simeq\mathbb T^{\mathrm{aug}}.} \tag{2.12}
-$$
-
-This proof uses neither a splitting of (2.9) over $\mathbf Z$ nor division by the degree of a trace. It is precisely the weight separation, followed by integral torsion-freeness, that removes the possible off-diagonal operator.
-
-### 2.4 The semistable correspondence theorem
-
-The operator at the level controls signs, components, and the missing Hecke relation in the torsion argument. Its integral construction cannot be replaced by a picture of one node.
-
-**Semistable $U_p$ correspondence theorem.** Let $p\ge5$. Add a neat prime-to-$p$ auxiliary level so that the modular problem is represented by a scheme, form the Deligne--Rapoport compactification, and let $\mathcal Y$ be the normalization of the compactified $p^2$-correspondence parametrizing chains of cyclic subgroup schemes of orders $p$ and $p^2$. The two forgetful maps
-
-$$
-\mathcal X\xleftarrow{\beta}\mathcal Y\xrightarrow{\alpha}\mathcal X
-$$
-
-are used with their scheme-theoretic multiplicities. Then:
-
-1. the incoming action on divisors, the Jacobian, and covariant homology is $U_p=\alpha_*\beta^*$;
-2. its action adjoint on relative dualizing differentials is $\beta_*\alpha^*$, and at the Tate cusp it is the Fourier operator
-
-   $$
-   \sum_{m\ge0}a_mq^m\longmapsto\sum_{m\ge0}a_{pm}q^m;
-   $$
-
-3. the identity $U_p=-w_p$ holds integrally on the prime-level cusp space and on the corresponding Jacobian and absolute-homology realizations;
-4. on the boundary and on the Néron component group, $U_p$ acts as $1$;
-5. if
-
-   $$
-   X_p=\operatorname{Div}^0(S_p)
-   $$
-
-   is the geometric character lattice of the torus at $p$, and
-
-   $$
-   \sigma[s]=[s^{(p)}]
-   $$
-
-   is the $p$-power Frobenius permutation of supersingular classes, then the incoming action on $X_p$ is $U_p=\sigma$.
-
-The proof architecture explains every clause. The auxiliary neat level removes stabilizers while the correspondence is normalized; it is removed only after pullback, trace, and multiplicities have been checked. Grothendieck duality for finite maps of the normalized correspondence identifies the differential action with pullback followed by trace on the relative dualizing sheaf. No ordinary-differential calculation at a node is substituted for this dualizing operation.
-
-On the generic fiber, prime level is entirely new in weight two because $S_2(\mathrm{SL}_2(\mathbf Z))=0$. The two degeneracy maps from level one therefore make the usual newspace relation reduce to
-
-$$
-U_p=-w_p.
-$$
-
-Both sides preserve the saturated integral cusp lattice, so the rational identity is integral. On the special fiber, the normalized $p^2$ correspondence has several subgroup-chain strata. Following both maps through those strata gives the boundary and component action $1$. Book 140 gives $w_p=-\sigma$ on the oriented character lattice; combining this with $U_p=-w_p$ gives $U_p=\sigma$ with the correct variance.
-
-This is established semistable infrastructure. A single local nodal chart describes only one lifted crossing of the $X_0(p)$ model; it neither describes the global $p^2$ correspondence nor justifies an integral descent by dividing a trace degree.
-
-### 2.5 The three special-fiber actions of $U_p$
-
-It is useful to display why the apparently different formulas are compatible. The cusp and component group record a difference of the two principal components. The Frobenius permutation does not change that difference, so the action induced by $\sigma$ on the cyclic discriminant group is $1$. On the full character lattice, however, supersingular classes need not be individually fixed over $\mathbf F_p$, and the permutation must remain visible.
-
-Thus the variance ledger is
-
-$$
-\begin{array}{c|c|c}
-\text{realization}&U_p&w_p\\ \hline
-S_2(\mathbf Z),\ J,\ H&-w_p&w_p\\
-\operatorname{Div}^0\{0,\infty\}&1&-1\\
-\Phi_p&1&-1\\
-X_p&\sigma&-\sigma.
-\end{array} \tag{2.13}
-$$
-
-The first row is an operator identity, not a scalar assertion: different newforms can have different signs. The final row is an identity on the character lattice, not on its dual unless the monodromy pairing is used to transport it. This table will later prevent a rational fixed point from being analyzed with the wrong $U_p$ action.
-
-## 3. The two-cusp integral Eisenstein bound
-
-### 3.1 The coefficient-one Eisenstein form
-
-The boundary eigensystem has a canonical characteristic-zero differential. Start with
-
-$$
-E_2(q)=1-24\sum_{m\ge1}\sigma_1(m)q^m
-$$
-
-and define
-
-$$
-E_p=\frac{pE_2(q^p)-E_2(q)}{24}. \tag{3.1}
-$$
-
-The nonmodular transformation term of $E_2$ cancels in this combination. Hence $E_p$ is a rational weight-two modular form of level $p$. Expanding gives
-
-$$
-E_p=\frac{p-1}{24}+\sum_{m\ge1}b_mq^m,\qquad
-b_m=\sum_{\substack{d\mid m\\p\nmid d}}d. \tag{3.2}
-$$
-
-Indeed the coefficient of $q^m$ is $\sigma_1(m)$ when $p\nmid m$, while for $m=pr$ it is $\sigma_1(pr)-p\sigma_1(r)$, which removes exactly the divisors divisible by $p$. The same calculation at every $p$-adic valuation of $m$ gives (3.2).
-
-The Atkin--Lehner and level-operator formulas are
-
-$$
-w_pE_p=-E_p,\qquad U_pE_p=E_p. \tag{3.3}
-$$
-
-For the first, use the transformation of the logarithmic derivative of
-
-$$
-\frac{\Delta(pz)}{\Delta(z)};
-$$
-
-$w_p$ exchanges its zero and pole divisors and reverses the logarithmic differential. For the second, (3.2) gives $b_{pm}=b_m$, including repeated powers of $p$, and the constant term is unchanged by the Fourier $U_p$ operator. Thus $E_p$ is the coefficient-one logarithmic Eisenstein eigenform for (2.4).
-
-The constant $(p-1)/24$ is not the final congruence modulus. The exact prime exponents of $n$ are
-
-$$
-\begin{array}{c|c}
-\ell&e_\ell=v_\ell(n)\\ \hline
-2&\max(v_2(p-1)-2,0)\\
-3&\max(v_3(p-1)-1,0)\\
-\ell\ge5&v_\ell(p-1).
-\end{array} \tag{3.4}
-$$
-
-At $2$, the constant term alone is short by one power. The missing step is a divided congruence visible only after both cusps and the wild stack geometry are retained.
-
-### 3.2 The Deligne--Rapoport--Katz theorem
-
-We now state the deep integral theorem which supplies the upper bound. Its strength is maximality through every prime power, including the wild primes $2$ and $3$.
-
-**Two-cusp integral Eisenstein theorem.** Let $p\ge5$ be prime and let $b_m$ be as in (3.2). Suppose
-
-$$
-x\in\mathbf Q/\mathbf Z,\qquad
-g\in S_2(\Gamma_0(p),\mathbf Q)
-$$
-
-satisfy
-
-$$
-a_m(g)-xb_m\in\mathbf Z
-\qquad\text{for every }m\ge1, \tag{3.5}
-$$
-
-where a rational representative of $x$ may be used because the condition is taken modulo $\mathbf Z$. Then
-
-$$
-nx=0\quad\text{in }\mathbf Q/\mathbf Z. \tag{3.6}
-$$
-
-Prime by prime, if $x$ has $\ell$-power order, that order is at most $\ell^{e_\ell}$ with $e_\ell$ given by (3.4). The assertion includes $\ell=3$ and every higher power of $2$ or $3$ permitted by the table.
-
-The theorem is an established Deligne--Rapoport--Katz input. It is not a consequence of the order of the cuspidal divisor, and its proof does not use the desired Hecke index. It is the independent integral obstruction against a cusp form being too congruent to $E_p$.
-
-### 3.3 Why the theorem needs the stack and both cusps
-
-The construction behind the theorem explains both the denominator $12$ and the exceptional behavior at $2$. One works first on the unrigidified compactified modular stack. The Hodge bundle $\omega$ exists there because the universal generalized elliptic curve exists there. The generic automorphism $[-1]$ acts as $-1$ on $\omega$, so $\omega$ itself does not descend after rigidification by $\{\pm1\}$; only $\omega^2$ does. Weight-two forms must therefore be followed through the descent of $\omega^2$, not through a fictitious descent of $\omega$.
-
-If $D_{\mathrm{cusp}}$ denotes the cusp divisor, Kodaira--Spencer identifies $\omega^2$ with the logarithmic dualizing sheaf $\omega_{\mathrm{dual}}(D_{\mathrm{cusp}})$, while cusp forms are sections of $\omega^2(-D_{\mathrm{cusp}})\simeq\omega_{\mathrm{dual}}$. At nodal fibers $\omega_{\mathrm{dual}}$ is the relative dualizing sheaf, not the sheaf of ordinary Kähler differentials. Replacing it by ordinary differentials at a node loses the residue and base-change exactness which control the integral lattice.
-
-There are two cusp expansions. The global residue theorem makes their residues opposite in characteristic zero, while integral base change and saturation require both completed cusp discs. A one-cusp calculation sees $(p-1)/24$ but cannot decide whether an equal-value Hasse direction is compatible with the opposite boundary value at the other cusp.
-
-Away from $2$ and $3$, the $q$-expansion principle and Katz's filtration theorem show that a putative congruence is bounded by $v_\ell(p-1)$. A missing coefficient at the characteristic prime would put the reduction in the kernel of Katz's $\Theta$ operator. Filtration rules then force a Frobenius pullback and a Hasse factor of incompatible weight.
-
-At $3$, the weight-two Hasse invariant has expansion $1$, but its equal values at the two cusps do not match the opposite Eisenstein residues. Exactly one factor of $3$ is removed. At $2$, the square of the weight-one Hasse invariant has weight two, and equal and opposite residues coincide modulo $2$. It contributes exactly one extra divided-congruence step beyond the raw constant term. The next lift is obstructed on the integral stack, so the exponent is $v_2(p-1)-2$, not $v_2(p-1)-3$ and not $v_2(p-1)-1$.
-
-The proof uses the unrigidified stack, its stabilizer representations, integral divided congruences, and Katz filtration through all powers. It does not model the wild points by diagonal $\mu_2$ or $\mu_3$ quotient charts; such diagonal charts do not describe the non-linearly reductive integral stabilizers and would give an unjustified saturation calculation.
-
-### 3.4 The independent upper bound
-
-Let
-
-$$
-Q=\mathbb T/I.
-$$
-
-Every abstract generator becomes an integer in $Q$, so the additive group of $Q$ is generated by $1$. In particular, an additive character $\varphi:Q\to\mathbf Q/\mathbf Z$ is determined by
-
-$$
-x=\varphi(1).
-$$
-
-The perfect pairing (2.2) represents $\varphi$ by a class
-
-$$
-g+S_2(\mathbf Z)\in
-S_2(\Gamma_0(p),\mathbf Q)/S_2(\mathbf Z), \tag{3.7}
-$$
-
-with
-
-$$
-\varphi(t)=a_1(tg)\pmod{\mathbf Z}.
-$$
-
-Taking $t=1$ gives $a_1(g)\equiv x$. In $Q$, the Hecke relations and $U_p=1$ give
-
-$$
-T_m=b_m
-$$
-
-for every $m\ge1$. This follows first for primes, then for prime powers from the Hecke recurrence, multiplicatively for coprime indices, and at powers of $p$ from $U_p=1$. Consequently
-
-$$
-a_m(g)-xb_m\in\mathbf Z
-$$
-
-for every $m$. The two-cusp integral theorem gives $nx=0$.
-
-Thus every character of $Q$ takes values in the subgroup killed by $n$. The finite-rank algebra $\mathbb T$ makes $Q$ a finitely generated cyclic abelian group. An infinite cyclic $Q$ would admit a character sending $1$ to an element of order greater than $n$, a contradiction. If $Q\simeq\mathbf Z/d\mathbf Z$, its character sending $1$ to $1/d$ shows that $d\mid n$. Therefore
-
-$$
-\#Q\le n. \tag{3.8}
-$$
-
-No fact about the order of $c$ entered this argument. The upper bound belongs entirely to the perfect coefficient pairing and the two-cusp integral theorem.
-
-### 3.5 The cuspidal lower bound and exact index
-
-Book 140 proves independently that $c$ has exact order $n$. It also proves, with the incoming convention,
-
-$$
-T_qc=(q+1)c\quad(q\ne p),\qquad
-U_pc=c. \tag{3.9}
-$$
-
-Hence $I$ annihilates $C=\langle c\rangle$, and restriction gives a surjective ring map
-
-$$
-\mathbb T/I\longrightarrow\operatorname{End}(C)\simeq\mathbf Z/n\mathbf Z. \tag{3.10}
-$$
-
-It is surjective because integral scalars already act by every residue class. Therefore
-
-$$
-n\le\#Q. \tag{3.11}
-$$
-
-Combining (3.8) and (3.11) proves
-
-$$
-\boxed{\mathbb T/I\simeq\mathbf Z/n\mathbf Z.} \tag{3.12}
-$$
-
-The two inequalities have different sources. The cusp gives only the lower bound; the integral two-cusp theorem gives only the upper bound. Their independence is the central logical safeguard in the index calculation.
-
-## 4. The augmented crossing and its numerical meaning
-
-### 4.1 The integral fiber product
-
-The augmented algebra remembers the characteristic-zero boundary branch together with all cuspidal branches. Once (3.12) is known, its integral gluing becomes explicit.
-
-There is a natural inclusion
-
-$$
-\mathbb T^{\mathrm{aug}}\hookrightarrow\mathbb T\times\mathbf Z.
-$$
-
-Every element $(t,a)$ in its image satisfies
-
-$$
-t\equiv a\pmod I,
-$$
-
-so it lies in the fiber product
-
-$$
-\mathbb T\times_{\mathbf Z/n\mathbf Z}\mathbf Z. \tag{4.1}
-$$
-
-Conversely, suppose $(t,a)$ satisfies this congruence. Then $t-a\in I$. By definition, every element of $I$ is the cuspidal image of an element of $\ker\epsilon\subset\mathcal H$. Adding the scalar $a$ produces an abstract operator whose two images are exactly $(t,a)$. Hence
-
-$$
-\boxed{
-\mathbb T^{\mathrm{aug}}
-\simeq\mathbb T\times_{\mathbf Z/n\mathbf Z}\mathbf Z.} \tag{4.2}
-$$
-
-Together with (2.12), this also computes the relative Hecke algebra. The relative Eisenstein quotient is $\mathbf Z$, not $\mathbf Z/n\mathbf Z$, because the boundary branch itself survives there.
-
-### 4.2 Saturated branches at an Eisenstein prime
-
-Fix a prime $\ell\mid n$, put
-
-$$
-a=v_\ell(n),\qquad
-R=(\mathbb T\otimes\mathbf Z_\ell)_{\mathfrak m}
-=\mathbb T_{\mathfrak m},\qquad
-\mathfrak m=(\ell,I),
-$$
-
-where the last notation denotes the complete local factor, and complete the augmented algebra at the maximal ideal determined by $\mathfrak m$ and the boundary augmentation. Formula (4.2) gives
-
-$$
-A=R\times_{\mathbf Z_\ell/\ell^a\mathbf Z_\ell}\mathbf Z_\ell. \tag{4.3}
-$$
-
-After inverting $\ell$, the congruence condition disappears:
-
-$$
-A_{\mathbf Q_\ell}=R_{\mathbf Q_\ell}\times\mathbf Q_\ell.
-$$
-
-The saturated cuspidal and Eisenstein branch lattices are intersections with these two rational factors. They are
-
-$$
-L_{\mathrm c}=I_{\mathfrak m}\times0,\qquad
-L_{\mathrm E}=0\times\ell^a\mathbf Z_\ell. \tag{4.4}
-$$
-
-Indeed an integral point supported only on the cuspidal factor must have zero common residue, hence lies in $I_{\mathfrak m}$; an integral point supported only on the boundary factor must be divisible by $\ell^a$. Therefore
-
-$$
-A/(L_{\mathrm c}+L_{\mathrm E})
-\simeq\mathbf Z_\ell/\ell^a\mathbf Z_\ell. \tag{4.5}
-$$
-
-This is the branch congruence module. Formula (4.4) is a saturation statement inside the rational product, not an arbitrary choice of two embedded submodules.
-
-### 4.3 The conclusion supplied by the numerical criterion
-
-Let $\lambda:A\to\mathbf Z_\ell$ be projection to the boundary factor. Its augmentation ideal is
-
-$$
-I_A=I_{\mathfrak m}\times0,
-$$
-
-and consequently
-
-$$
-I_A/I_A^2\simeq I_{\mathfrak m}/I_{\mathfrak m}^2. \tag{4.6}
-$$
-
-The quotient $R/I_{\mathfrak m}\simeq\mathbf Z_\ell/\ell^a\mathbf Z_\ell$ vanishes after inverting $\ell$, so $I_{\mathfrak m}R_{\mathbf Q_\ell}=R_{\mathbf Q_\ell}$. Since $R$ is $\mathbf Z_\ell$-torsion free, $\operatorname{Ann}_R(I_{\mathfrak m})=0$. It follows directly from the fiber product that
-
-$$
-\operatorname{Ann}_A(I_A)
-=0\times\ell^a\mathbf Z_\ell,
-\qquad
-\lambda(\operatorname{Ann}_A(I_A))
-=\ell^a\mathbf Z_\ell.
-$$
-
-Thus Book 71's congruence module is exactly the cyclic module in (4.5). The algebra $A$ is finite flat over $\mathbf Z_\ell$, and its generic fiber
-
-$$
-A_{\mathbf Q_\ell}
-=R_{\mathbf Q_\ell}\times\mathbf Q_\ell
-$$
-
-has the boundary as an isolated field factor; the hypotheses of the fundamental numerical inequality are therefore satisfied. That inequality says that relative cotangent length dominates congruence length. Applying it gives exactly
-
 $$
-\boxed{
 \operatorname{length}_{\mathbf Z_\ell}
-(I_{\mathfrak m}/I_{\mathfrak m}^2)\ge a.} \tag{4.7}
+(\mathbb T_{\mathfrak m}/I\mathbb T_{\mathfrak m})
+=v_\ell(n_N),
+\qquad \mathfrak m=(\ell,I).
+\tag{2.13}
 $$
 
-This is the full conclusion available from the index theorem alone. Equality would require an independent upper bound for the cotangent module. No such upper bound is supplied merely by knowing $\mathbb T/I$.
+Neither (2.9) nor (2.13) says that $I\mathbb T_{\mathfrak m}$ is principal, that $\mathbb T_{\mathfrak m}$ is a complete intersection, or that it is Gorenstein. The scalar congruence depth measures contact with the boundary character; it does not count generators of the cotangent space or branches of the local algebra.
 
-### 4.4 Why no complete-intersection shortcut is available
+## 3. Cusps, components, and the multiplicative boundary
 
-The projection $A\to R$ kills the boundary lattice
+### 3.1 The cuspidal divisor
 
-$$
-0\times\ell^a\mathbf Z_\ell.
-$$
-
-Every element of this kernel annihilates $I_{\mathfrak m}\times0$. It is therefore a zero divisor whenever the cuspidal factor is nonzero. A theorem about quotients by regular sequences cannot be applied to this projection.
-
-Even if an independent argument proved that the augmented crossing $A$ were a complete intersection, neither complete-intersection structure nor Gorenstein duality could be passed to $R$ through this zero-divisor quotient. The odd Gorenstein theorem for $R$ will instead be proved from multiplicity one and the polarized Tate module. Keeping these arguments separate is essential: branch gluing measures the Eisenstein congruence, while Gorensteinness is a self-duality property of the cuspidal local algebra.
-
-## 5. Cuspidal, Shimura, and component groups
-
-### 5.1 Three cyclic objects with the same order
-
-The exact index has three geometric companions, already constructed in Book 140. We recall their independent origins because the later intersection and torsion proofs use their maps, not only their orders.
-
-The eta quotient and its full multiplier calculation give
+The eta quotient
 
 $$
-C=\langle c\rangle\simeq\mathbf Z/n\mathbf Z. \tag{5.1}
+u(z)=\left(\frac{\eta(z)}{\eta(Nz)}\right)^{24/\gcd(N-1,12)}
+\tag{3.1}
 $$
 
-The multiplier, including the rational descent character, proves exactness; a divisor computation alone would prove only an upper bound.
-
-Let
+has trivial multiplier at level $N$ and divisor
 
 $$
-\pi:X_1(p)\longrightarrow X_0(p)
+\operatorname{div}(u)=n_N([0]-[\infty]).
+\tag{3.2}
 $$
 
-be the compactified forgetful map. The Shimura subgroup is the scheme-theoretic kernel of pullback on Jacobians. Picard descent through the deck group
+Hence $n_Nc=0$. This proves an upper bound for the order of $c$, but not exactness. Exactness comes from specialization at the level prime.
+
+The boundary correspondence calculation gives
 
 $$
-\Delta=(\mathbf Z/p\mathbf Z)^\times/\{\pm1\}
+T_qc=(1+q)c\quad(q\ne N),
+\qquad U_Nc=c,
+\qquad w_Nc=-c.
+\tag{3.3}
 $$
 
-and its cusp and elliptic inertia gives
+Thus $I$ annihilates the cyclic subgroup $C_N=\langle c\rangle$. Once its exact order is known, the map
 
 $$
-\Sigma\simeq\mu_n. \tag{5.2}
+\mathbb T/I\longrightarrow C_N,
+\qquad1\longmapsto c,
+\tag{3.4}
 $$
 
-This is an isomorphism of group schemes. It does not say that $\Sigma(\mathbf Q)$ has $n$ points.
+will be an isomorphism.
 
-At $p$, Book 140 identifies the toric character lattice and its monodromy pairing as
+### 3.2 The weighted special fiber
 
-$$
-X_p=\operatorname{Div}^0(S_p),\qquad
-\langle x,y\rangle=\sum_{s\in S_p}w_sx_sy_s,\qquad
-w_s=\frac{\#\operatorname{Aut}(E_s)}2. \tag{5.3}
-$$
-
-The exact sequence
+For $N\ge5$, the stable coarse fiber of $X_0(N)$ at $N$ consists of two principal components meeting at supersingular points. Resolving a node attached to a supersingular elliptic curve $E$ produces a path of length
 
 $$
-0\longrightarrow X_p
-\longrightarrow X_p^\vee
-\longrightarrow\Phi_p
-\longrightarrow0 \tag{5.4}
+e(E)\in\{1,2,3\}.
+\tag{3.5}
 $$
 
-and the supersingular mass formula give
+The values $2$ and $3$ occur at $j=1728$ and $j=0$ when those invariants are supersingular. These lengths encode the effective automorphisms of the corresponding stacky point; inserting them unconditionally would give the wrong component group.
+
+The weighted mass formula and exceptional product are
 
 $$
-\Phi_p\simeq\mathbf Z/n\mathbf Z. \tag{5.5}
+\sum_E\frac1{e(E)}=\frac{N-1}{12},
+\qquad
+\prod_Ee(E)=\frac{12}{\gcd(N-1,12)}.
+\tag{3.6}
 $$
 
-The two cusp sections meet the two principal components, so $c$ maps to the vertex-difference generator. Hence specialization is an isomorphism
+The dual graph is a weighted theta graph. Its degree-zero vertex lattice maps to its dual by the weighted Laplacian. The discriminant group is the cokernel of that map. Effective resistance between the two principal vertices equals
 
 $$
-\boxed{C\xrightarrow{\sim}\Phi_p.} \tag{5.6}
+\left(\sum_E\frac1{e(E)}\right)^{-1}
+=\frac{12}{N-1}.
+\tag{3.7}
 $$
 
-The explicit component calculation, not equality of cardinalities, proves that this map is an isomorphism.
-
-### 5.2 The quadratic Shimura-character theorem
-
-Constant and multiplicative group schemes can meet at order two, because the mod-$2$ cyclotomic character is trivial. Identifying the actual common point is a deep descent calculation.
-
-The valuation formula (3.4) shows
+The weighted spanning-tree formula gives
 
 $$
-n\text{ is even}
-\quad\Longleftrightarrow\quad
-v_2(p-1)\ge3
-\quad\Longleftrightarrow\quad
-p\equiv1\pmod8. \tag{5.7}
+\#\Phi_N
+=\left(\prod_Ee(E)\right)
+\left(\sum_E\frac1{e(E)}\right)
+=n_N.
 $$
 
-Under this condition the Legendre character
+In lowest terms, the denominator of (3.7) is also $n_N$. The monodromy pairing therefore shows that the endpoint difference has exact order $n_N$. Since this equals the whole discriminant order, the endpoint difference generates the discriminant group, which is cyclic. By the monodromy description of the Néron model, this is the geometric component group $\Phi_N$ of $J$ at $N$.
+
+### 3.3 Exact specialization
+
+The cusps $0$ and $\infty$ specialize to the two principal components. Consequently the specialization of $c$ is the endpoint difference $\delta$. The preceding calculation shows that $\delta$ has order $n_N$. Since (3.2) shows that the order of $c$ divides $n_N$, specialization forces equality.
+
+**Theorem 3.1.** The maps
 
 $$
-\chi_p:\Delta\longrightarrow\{\pm1\},\qquad
-\chi_p(a)=\left(\frac ap\right) \tag{5.8}
+\mathbb T/I\xrightarrow{1\mapsto c}C_N
+\xrightarrow{\operatorname{sp}_N}\Phi_N(\mathbf F_N)
+\tag{3.8}
 $$
 
-is well defined.
+are Hecke-equivariant isomorphisms of cyclic groups of order $n_N$.
 
-**Quadratic Shimura-character theorem.** Assume $p\equiv1\pmod8$. Picard descent of the $\chi_p$-linearized trivial line on $X_1(p)$ defines a point
+**Proof.** The first map is surjective by definition of $C_N$ and has source of order $n_N$ by Theorem 2.3. The second sends $c$ to the generator $\delta$, so its image has order $n_N$. Formula (3.2) bounds the source by the same order. Hence both maps are isomorphisms. Hecke equivariance follows from extension of correspondences to the Néron model and (3.3). $\square$
 
-$$
-\sigma_{\chi_p}\in\Sigma[2](\mathbf Q).
-$$
+Notice the direction of the proof. The component calculation establishes the lower bound for the cusp order; the cusp class is not used to guess the graph discriminant.
 
-Under the embedding $\Sigma\subset J$ and with $c=[0]-[\infty]$,
+### 3.4 The Shimura subgroup
 
-$$
-\boxed{\sigma_{\chi_p}=\frac n2c.} \tag{5.9}
-$$
-
-The theorem is established quadratic descent infrastructure. Its construction uses the compactified cover, Picard descent, and the theta groups supplied by the canonical polarization. The boundary computation is carried out with the full family of Siegel functions. Their exact cusp orders are
+The covering that forgets a generator of a cyclic subgroup,
 
 $$
-\operatorname{ord}_{b/p}g_{(a/p,0)}
-=\frac p2B_2\left(\left\langle\frac{ab}{p}\right\rangle\right), \tag{5.10}
+X_1(N)\longrightarrow X_0(N),
+\tag{3.9}
 $$
 
-and the generalized-Bernoulli pairing obtained by summing (5.10) against $\chi_p(a)$ computes the theta character at every cusp orbit. The multiplier at infinity, the width-$p$ parameter at zero, the elliptic inertia, and the rational descent character are all retained. The result singles out $(n/2)c$ and proves (5.9).
-
-This proof architecture matters. A function transforming through a nontrivial deck character cannot at the same time be used as an invariant rational function downstairs with the same divisor. The theorem does not use such an impossible deck-eigen invariant-divisor identity. The descended object is a line bundle with linearization, and its comparison with the cusp class occurs through Picard descent and theta groups.
-
-### 5.3 The exact cusp--Shimura intersection
-
-We can now prove the intersection completely. Let $G=C\cap\Sigma$ as a finite subgroup scheme over $\mathbf Q$.
-
-If an odd prime $\ell$ divides $\#G$, then $G$ contains a subgroup scheme of order $\ell$. As a subgroup of the constant group $C$, its geometric points carry the trivial Galois character. As a subgroup of $\Sigma\simeq\mu_n$, they carry the mod-$\ell$ cyclotomic character. These two characters are distinct over $\mathbf Q$ for odd $\ell$. Hence $G$ has no odd-order part.
-
-Suppose the $2$-primary part of $G$ has order at least $4$. It then contains a cyclic subgroup of order $4$. The constant action on that subgroup is trivial, while the action on $\mu_4$ is cyclotomic and is nontrivial under complex conjugation. This is again impossible. Thus $G$ has order at most two.
-
-If $n$ is odd, $C[2]=0$, so $G=0$. If $n$ is even, the quadratic theorem gives
+induces a homomorphism of Jacobians. Its kernel contains a canonical diagonalizable subgroup, the prime-level Shimura subgroup $\Sigma_N$. Descent characters identify its character group with a cyclic quotient of $(\mathbf Z/N\mathbf Z)^\times$ of order $n_N$. Consequently
 
 $$
-\frac n2c=\sigma_{\chi_p}\in C\cap\Sigma,
+\Sigma_N\simeq D(\mathbf Z/n_N\mathbf Z),
+\tag{3.10}
 $$
 
-and this is the unique nonzero point of $C[2]$. Therefore
+and, after choosing a generator of the character group, noncanonically
 
 $$
-\boxed{C\cap\Sigma=C[\gcd(n,2)].} \tag{5.11}
+\Sigma_N\simeq\mu_{n_N}.
+\tag{3.11}
 $$
 
-The argument also explains why a character comparison alone was insufficient: it excludes odd and higher $2$-power intersections, but the mod-$2$ characters coincide. The quadratic theorem supplies the missing existence and identifies the point.
+The Hecke action is Eisenstein, so $I\Sigma_N=0$. The word “noncanonically” in (3.11) is important: changing the character generator changes the displayed identification. Arguments about length or Cartier type are canonical; an equation for a Kummer extension requires an orientation.
 
-### 5.4 Monodromy and the variance ledger
-
-The groups $C$, $\Sigma$, and $\Phi_p$ are connected by specialization and polarization, but they are not interchangeable. The monodromy sequence (5.4) compares the character lattice with components. The principal polarization compares the multiplicative Shimura line with a constant quotient. Formula (5.6) compares the rational cusp with the component generator.
-
-The Hecke actions are
+The cusp and Shimura groups thus provide the two basic shapes:
 
 $$
-T_q=q+1\quad(q\ne p),\qquad
-U_p=1
+C_{N,\ell}\text{ is generically constant},
+\qquad
+\Sigma_{N,\ell}\text{ is generically multiplicative}.
+\tag{3.12}
 $$
 
-on $C$ and $\Phi_p$. On $X_p$, the actions are the Brandt correspondence $B_q$ and $\sigma$, respectively. The monodromy map is Hecke equivariant because $B_q$ is self-adjoint for (5.3), while $\sigma$ preserves the automorphism weights and the degree-zero condition.
+For odd $\ell$, their schematic closures over $\mathbf Z[1/N]$ admit filtrations by $\underline{\mathbf Z/\ell}$ and $\mu_\ell$, respectively. At $2$, the generic characters coincide, so the integral endpoint must be read from connectedness after closure.
 
-The precise comparison to be used at an odd Eisenstein prime is
+### 3.5 What equal orders do not imply
+
+We have three cyclic objects of order $n_N$:
 
 $$
-0\longrightarrow X_{p,\ell}^\vee(1)
+C_N,\qquad \Phi_N,\qquad \Sigma_N.
+\tag{3.13}
+$$
+
+Only the first two are identified by (3.8). The Shimura group lies in the generic fiber of $J$ and is Cartier-dual in nature; the component group is a quotient of the special fiber of the Néron model. Equality of their orders supplies no canonical isomorphism.
+
+Nor does it determine $C_N\cap\Sigma_N$. At odd primes their generic characters are distinct, so their flat intersection inside a fixed finite-flat ambient group is trivial. At $2$ the characters are the same and even this character argument disappears. A complete scheme-theoretic intersection formula needs additional geometry and is outside the present scope.
+
+The same warning applies to rational torsion. The inclusion
+
+$$
+C_N\subseteq J(\mathbf Q)_{\mathrm{tors}}
+\tag{3.14}
+$$
+
+is established. Equality is not. The results below prove finiteness for a selected quotient, not an exact classification of $J(\mathbf Q)_{\mathrm{tors}}$.
+
+## 4. Eisenstein primes and local completion
+
+### 4.1 Local factors of a finite Hecke algebra
+
+Fix a prime $\ell\mid n_N$ and put
+
+$$
+\mathfrak m=(\ell,I).
+\tag{4.1}
+$$
+
+Because $\mathbb T$ is finite over $\mathbf Z$, the algebra $\mathbb T\otimes\mathbf Z_\ell$ is semilocal and decomposes as a product of complete local rings. There is a unique idempotent
+
+$$
+e_{\mathfrak m}\in\mathbb T\otimes\mathbf Z_\ell
+\tag{4.2}
+$$
+
+which is $1$ on the $\mathfrak m$-factor and $0$ on every other factor. Thus
+
+$$
+e_{\mathfrak m}(\mathbb T\otimes\mathbf Z_\ell)
+=\mathbb T_{\mathfrak m}.
+\tag{4.3}
+$$
+
+Idempotents lift uniquely through nilpotent quotients, so $e_{\mathfrak m}$ acts compatibly on every finite $\ell$-power torsion level. This is the integral selection used below.
+
+### 4.2 Rational support and the optimal quotient
+
+An idempotent in an $\ell$-adic algebra need not lie in $\mathbb T\otimes\mathbf Q$. To construct an abelian quotient over $\mathbf Q$, collect all characteristic-zero simple Hecke factors whose coefficient rings have a prime above $\mathfrak m$. Their sum defines a rational central projector
+
+$$
+E_{\mathfrak m}\in\mathbb T\otimes\mathbf Q.
+\tag{4.4}
+$$
+
+Choose a positive integer $a$ with $aE_{\mathfrak m}\in\mathbb T$. The connected kernel
+
+$$
+K_{\mathfrak m}=(\ker(aE_{\mathfrak m}:J\to J))^0
+\tag{4.5}
+$$
+
+is independent of the choice of $a$, because changing the denominator changes only a finite subgroup of the same rational image and therefore not the connected kernel. Define the selected optimal quotient
+
+$$
+A_{\mathfrak m}=J/K_{\mathfrak m}.
+\tag{4.6}
+$$
+
+The quotient is nonzero. Indeed, the $\ell$-primary cusp class is a nonzero $I$-torsion class by (3.8), so its Hecke support contains $\mathfrak m$ and the rational support above $\mathfrak m$ cannot be empty. The kernel is connected, so (4.6) is optimal. Over $S_N=\operatorname{Spec}\mathbf Z[1/N]$, where $J$ has good reduction, it extends to an exact sequence of abelian schemes
+
+$$
+0\longrightarrow\mathcal K_{\mathfrak m}
+\longrightarrow\mathcal J
+\longrightarrow\mathcal A_{\mathfrak m}
+\longrightarrow0.
+\tag{4.7}
+$$
+
+### 4.3 Why the two projectors differ
+
+The rational projector $E_{\mathfrak m}$ must retain an entire Galois orbit of newform factors in order to define a quotient over $\mathbf Q$. The local idempotent $e_{\mathfrak m}$ selects one completion above $\ell$. If a coefficient field has several primes above $\ell$, the rational quotient retains all companions while the completed torsion retains only the chosen one.
+
+Symbolically,
+
+$$
+\begin{array}{ccc}
+\text{characteristic-zero factors}&\xrightarrow{E_{\mathfrak m}}&A_{\mathfrak m}\text{ over }\mathbf Q,\\
+\text{$\ell$-adic local factors}&\xrightarrow{e_{\mathfrak m}}&G_{\mathfrak m}\text{ over }\mathbf Z[1/N].
+\end{array}
+\tag{4.8}
+$$
+
+No equality $E_{\mathfrak m}=e_{\mathfrak m}$ is asserted. Their compatibility is instead a theorem about the selected Tate lattice, proved from exactness of the optimal quotient.
+
+### 4.4 The exact local congruence depth
+
+Tensoring (2.9) with $\mathbf Z_\ell$ and projecting to the unique Eisenstein local factor gives
+
+$$
+\boxed{
+\mathbb T_{\mathfrak m}/I\mathbb T_{\mathfrak m}
+\simeq
+\mathbf Z_\ell/\ell^e\mathbf Z_\ell,
+\qquad e=v_\ell(n_N).}
+\tag{4.9}
+$$
+
+Thus the scalar boundary congruence has exact depth $e$. It follows that an Eisenstein maximal ideal exists precisely for $\ell\mid n_N$.
+
+What does not follow is equally important. The vector space $\mathfrak m/(\mathfrak m^2,\ell)$ can have dimension greater than one even when (4.9) is cyclic. Several characteristic-zero branches can meet the Eisenstein point. The localized Tate module can require more than two generators. The algebra can fail to be Gorenstein. Formula (4.9) controls the quotient by $I$, not the whole local singularity.
+
+## 5. The selected finite-flat tower
+
+### 5.1 Construction by integral idempotents
+
+Let $\mathcal J$ be the abelian scheme over $S_N=\operatorname{Spec}\mathbf Z[1/N]$ obtained from the Néron model of $J$. Since $\ell\ne N$, multiplication by $\ell^r$ is faithfully flat and $\mathcal J[\ell^r]$ is finite flat over $S_N$ for every $r\ge1$. Define
+
+$$
+G_r=e_{\mathfrak m}\mathcal J[\ell^r].
+\tag{5.1}
+$$
+
+Because the image of an idempotent is a direct factor,
+
+$$
+\mathcal J[\ell^r]
+=G_r\times(1-e_{\mathfrak m})\mathcal J[\ell^r].
+\tag{5.2}
+$$
+
+Thus $G_r$ is finite flat without any separate flatness theorem for a kernel of Hecke operators. This is why completion precedes torsion: the schematic kernel of the generators of $I$ could acquire vertical nonflat structure, whereas an idempotent image is automatically a direct factor.
+
+The construction is compatible with base change. Over $\mathbf Q$, it selects the generalized $\mathfrak m$-summand of $J[\ell^r]$. Over $\mathbf Z_\ell$, it retains its connected and etale parts. At a prime away from $N\ell$, it is finite etale and carries the usual unramified Frobenius action.
+
+### 5.2 Exact transition maps
+
+The full torsion tower has exact sequences
+
+$$
+0\longrightarrow\mathcal J[\ell^r]
+\longrightarrow\mathcal J[\ell^{r+s}]
+\xrightarrow{\ell^r}\mathcal J[\ell^s]
+\longrightarrow0.
+\tag{5.3}
+$$
+
+The maps commute with $e_{\mathfrak m}$. Applying the direct-factor functor gives
+
+$$
+0\longrightarrow G_r
+\longrightarrow G_{r+s}
+\xrightarrow{\ell^r}G_s
+\longrightarrow0.
+\tag{5.4}
+$$
+
+Exactness here means exactness for the faithfully flat topology: the last arrow is faithfully flat and its kernel is $G_r$. One verifies this by applying the decomposition (5.2) throughout (5.3).
+
+Consequently
+
+$$
+G_{\mathfrak m}=\varinjlim_rG_r
+\tag{5.5}
+$$
+
+is an $\ell$-divisible group over $S_N$. It is not merely a compatible family of generic Galois modules. The flat exactness of (5.4) records integral divisibility at the coefficient prime.
+
+### 5.3 Comparison with the selected quotient
+
+The optimal sequence (4.7) gives, on covariant Tate modules,
+
+$$
+0\longrightarrow T_\ell K_{\mathfrak m}
 \longrightarrow T_\ell J
-\longrightarrow X_{p,\ell}
-\longrightarrow0, \tag{5.12}
+\longrightarrow T_\ell A_{\mathfrak m}
+\longrightarrow0.
+\tag{5.6}
 $$
 
-together with (5.4) tensored with $\mathbf Z_\ell$. Here $X_{p,\ell}=X_p\otimes\mathbf Z_\ell$, and the left term means $\operatorname{Hom}(X_p,\mathbf Z_\ell)(1)$. Relative homology does not enter either sequence.
-
-## 6. Odd Eisenstein multiplicity one
-
-### 6.1 The maximal ideal and the claimed finite group scheme
-
-Let $\ell$ be an odd prime dividing $n$. Then $\ell<p$, and
-
-$$
-\mathfrak m=(\ell,I)
-$$
-
-is a maximal ideal of $\mathbb T$ with residue field $\mathbf F_\ell$. The known finite subgroups supply two lines:
-
-$$
-C[\ell]\simeq\mathbf Z/\ell\mathbf Z,\qquad
-\Sigma[\ell]\simeq\mu_\ell. \tag{6.1}
-$$
-
-They are disjoint by (5.11). The difficult assertion is that there are no additional copies or extensions hidden in $J[\mathfrak m]$. A trace calculation determines only the semisimplification; it cannot prove this multiplicity statement.
-
-### 6.2 The Mazur--Raynaud infrastructure theorem
-
-We state the deep theorem in the exact range used here.
-
-**Mazur--Raynaud odd Eisenstein multiplicity-one theorem.** Let $p\ge5$ be prime, let
-
-$$
-n=\frac{p-1}{\gcd(p-1,12)},\qquad
-\ell\mid n
-$$
-
-with $\ell$ odd, and let $\mathfrak m=(\ell,I)$ in the faithful full cuspidal Hecke algebra. Then the finite group scheme over $\mathbf Q$ cut out by $\mathfrak m$ is
+The rational support of $K_{\mathfrak m}$ is complementary to $E_{\mathfrak m}$. Hence $e_{\mathfrak m}$ acts as zero on $T_\ell K_{\mathfrak m}$. Applying it to (5.6) gives
 
 $$
 \boxed{
-J[\mathfrak m]
-=C[\ell]\oplus\Sigma[\ell]
-\simeq\mathbf Z/\ell\mathbf Z\oplus\mu_\ell.} \tag{6.2}
+e_{\mathfrak m}T_\ell J
+\xrightarrow{\sim}
+e_{\mathfrak m}T_\ell A_{\mathfrak m}.}
+\tag{5.7}
 $$
 
-The isomorphism is compatible with the Weil pairing, the Hecke action, finite-flat closure over $\mathbf Z_\ell$, Raynaud uniformization at $p$, and the constant and multiplicative identifications in (6.1). The theorem includes $\ell=3$. It makes no assertion at $2$.
+The same argument at finite level, using exactness of multiplication on the connected kernel, yields
 
-The proof is established Mazur--Raynaud infrastructure. Its real machinery has four layers. First, the purely toric reduction of $J$ at $p$ gives Raynaud's uniformization (5.12) and identifies its inertia boundary with the monodromy map. Second, because $\ell\ne p$, $J$ has good reduction at $\ell$; the closure of every $\ell$-primary subquotient is finite flat over $\mathbf Z_\ell$. Book 67's odd, unramified, low-weight Raynaud--Fontaine--Laffaille classification gives exactness, unique extension of morphisms, Cartier duality, and the allowed connected--étale extensions. This includes $\ell=3$ because the weight interval $[0,1]$ has length $1\le\ell-2$.
-
-Third, the two possible extension orientations define two distinct global Selmer groups. Their exact calculation is recorded next. Fourth, Mazur's category of admissible group schemes organizes successive constant and multiplicative subquotients. A devissage argument turns every hypothetical extra Jordan--Hölder copy into a new Selmer class. Since the two Selmer calculations leave only the single monodromy class already realized by $J$, no extra copy survives.
-
-This theorem is not being rederived from a few elementary group-scheme observations. Raynaud uniformization, finite-flat classification, the cyclotomic class-group theorem, and admissible-group-scheme devissage are substantive integral results. The consequences in Chapter 7, however, will be proved from (6.2) without using Gorensteinness in advance.
-
-### 6.3 The two Selmer orientations
-
-The Selmer calculation explains why there can be one monodromy extension but no reverse extension. It also fixes the local conditions rather than inferring them from a dimension count.
-
-For the plus orientation, use the coefficient module $\mathbf F_\ell(1)$. Away from $p\ell$ impose the unramified condition. At $\ell$, impose the finite-flat Kummer subgroup
-
-$$
-\mathbf Z_\ell^\times/\mathbf Z_\ell^{\times\ell}
-\subset
-\mathbf Q_\ell^\times/\mathbf Q_\ell^{\times\ell}.
-$$
-
-At $p$, allow the one-dimensional valuation direction generated by $p$. These local conditions define $\mathcal L_+$. Global Kummer theory then gives
-
-$$
-\boxed{
-H^1_{\mathcal L_+}(\mathbf Q,\mathbf F_\ell(1))
-=\mathbf F_\ell[p].} \tag{6.3}
-$$
-
-Indeed unramifiedness away from $p\ell$ makes all other valuations divisible by $\ell$, finite flatness at $\ell$ removes the $\ell$-valuation, and the odd real condition contributes nothing. The class of $p$ is nonzero because its $p$-adic valuation is one.
-
-For the reverse orientation, use $\mathbf F_\ell(-1)$. Again impose unramifiedness away from $p\ell$ and the finite-flat condition at $\ell$, but impose zero monodromy at $p$, equivalently the unramified subgroup there. These conditions define $\mathcal L_-$. The classical calculation is
-
-$$
-\boxed{
-H^1_{\mathcal L_-}(\mathbf Q,\mathbf F_\ell(-1))=0.} \tag{6.4}
-$$
-
-The two groups in (6.3) and (6.4) are not dual copies of one calculation. Their coefficient twists, their connected--étale orientations at $\ell$, and their monodromy conditions at $p$ differ. Book 31's local duality explains their orthogonality, while Books 32 and 33 assemble the stated local permissions into honest global Selmer structures.
-
-### 6.4 The cyclotomic class-group input, including $\ell=3$
-
-The reverse vanishing is where global class groups enter. Put
-
-$$
-K=\mathbf Q(\zeta_\ell),\qquad
-\Delta=\operatorname{Gal}(K/\mathbf Q),\qquad
-\omega:\Delta\to\mathbf F_\ell^\times.
-$$
-
-Restriction identifies a reverse extension with an $\ell$-extension of $K$ in the $\omega^{-1}$ eigenspace. The local conditions in $\mathcal L_-$ make this extension unramified at every finite place, including the primes over $p$ and $\ell$. The unit contribution is removed by the finite-flat local condition and the character. Hence there is an injection
-
-$$
-H^1_{\mathcal L_-}(\mathbf Q,\mathbf F_\ell(-1))
-\hookrightarrow
-\operatorname{Cl}(K)[\ell]^{\omega^{-1}}. \tag{6.5}
-$$
-
-The required cyclotomic theorem is
-
-$$
-\operatorname{Cl}(\mathbf Q(\zeta_\ell))[\ell]^{\omega^{-1}}=0
-\qquad(\ell\ge5). \tag{6.6}
-$$
-
-Its proof uses the integral Stickelberger ideal on the $\omega^{-1}$ branch, or equivalently the nonvanishing modulo $\ell$ of the generalized Bernoulli value controlling that branch. Integrality of Stickelberger elements, annihilation of ideal classes by Gauss-sum resolvents, and passage to the idempotent component are all essential. A formal relation obtained by translating a prime above $p$ would be zero when $p\equiv1\pmod\ell$ and supplies no proof.
-
-For $\ell=3$, one argues separately. The cyclotomic field is
-
-$$
-\mathbf Q(\zeta_3)=\mathbf Q(\sqrt{-3}),
-$$
-
-whose ring of integers is Euclidean for its norm and hence has trivial class group. The root-of-unity Kummer class is not an allowed reverse extension: the finite-flat local condition at $3$ removes it. Thus (6.4) holds at $3$ as well. Notice that $3\mid n$ forces $p\equiv1\pmod9$, which is also the exact wild congruence condition from (3.4).
-
-### 6.5 Admissible-group-scheme devissage
-
-The final infrastructure layer turns the two cohomology calculations into multiplicity one. An admissible object is an $\ell$-primary finite group scheme over $\mathbf Z[1/p]$ whose generic fiber is a Hecke-stable subquotient of $J[\ell^r]$, whose closure at $\ell$ is finite flat of weights $0$ and $1$, and whose local representation at $p$ has the Raynaud monodromy permitted by (5.12). The category is closed under the saturated subobjects, quotients, Cartier duals, and extensions used in the argument.
-
-Eichler--Shimura away from $p\ell$ and Chebotarev show that the only simple constituents in the Eisenstein block are $\mathbf Z/\ell$ and $\mu_\ell$. Raynaud monodromy orders them at $p$, while the finite-flat classification orders them at $\ell$. Choose a shortest admissible filtration containing the known constant and multiplicative lines. An additional adjacent pair would determine either a plus extension independent of $[p]$ or a reverse extension. The quotient of (6.3) by its known monodromy line is zero, and (6.4) is zero. Cartier duality handles the filtration in the opposite direction. Induction on the length leaves exactly the two known factors.
-
-The devissage is where extension classes become a statement about the whole group scheme. It does not assume that every generic extension is finite flat, and it does not infer a subgroup from a semisimplified trace. These are precisely the tasks supplied by Book 67's exact finite-flat category and Mazur's admissibility theorem.
-
-## 7. Tate modules, duality, and the character lattice
-
-### 7.1 From multiplicity one to two generators
-
-We now prove the algebraic consequences of (6.2) in the direction required for a noncircular argument. Put
-
-$$
-R=\mathbb T_{\mathfrak m},\qquad
-M=(T_\ell J)_{\mathfrak m}.
-$$
-
-The principal polarization gives a perfect Weil pairing on the localized Tate module. Every $T_q$ is self-adjoint and $U_p=-w_p$ is self-adjoint, so the pairing is $R$-balanced. Modulo $\ell$, the orthogonal complement of $\mathfrak m J[\ell]$ is $J[\mathfrak m]$. Consequently
-
-$$
-(M/\mathfrak mM)^\vee(1)
-\simeq J[\mathfrak m](\overline{\mathbf Q}). \tag{7.1}
-$$
-
-By (6.2), the right side has dimension two over $\mathbf F_\ell$. Thus
-
-$$
-\dim_{\mathbf F_\ell}M/\mathfrak mM=2. \tag{7.2}
-$$
-
-This conclusion uses the polarization and multiplicity one. It does not use a self-duality of the ring $R$.
-
-### 7.2 Tate-module freeness
-
-Nakayama's lemma applied to (7.2) gives a surjection
-
-$$
-R^2\twoheadrightarrow M. \tag{7.3}
-$$
-
-The generic fiber of $R$ is a product of the coefficient fields of the characteristic-zero newform branches passing through $\mathfrak m$. On each such branch, the covariant Tate module of the associated modular factor has dimension two over that coefficient field. Therefore the source and target of (7.3) have the same $\mathbf Z_\ell$-rank.
-
-The kernel of (7.3) has generic rank zero. Since $R$ is a finite torsion-free $\mathbf Z_\ell$-algebra, $R^2$ is $\mathbf Z_\ell$-torsion free; a rank-zero submodule must be zero. Hence
-
-$$
-\boxed{T_\ell J_{\mathfrak m}\simeq R^2.} \tag{7.4}
-$$
-
-The proof has exactly two inputs beyond finite algebra: residual multiplicity one supplies two generators, and characteristic-zero multiplicity supplies the generic rank. Faithfulness alone would supply neither.
-
-### 7.3 Gorenstein self-duality
-
-The Tate-module result now turns the polarized self-duality of $M$ into a ring-theoretic duality. Let
-
-$$
-R^\vee=\operatorname{Hom}_{\mathbf Z_\ell}(R,\mathbf Z_\ell).
-$$
-
-The Weil pairing identifies $M$ with its $\mathbf Z_\ell$-dual as an $R$-module, apart from the Galois Tate twist, which does not change the $R$-module structure. Using (7.4) gives
-
-$$
-(R^\vee)^2\simeq R^2. \tag{7.5}
-$$
-
-Let $\mu_R(N)$ denote the minimum number of generators of a finite $R$-module. Reducing (7.5) modulo the maximal ideal gives
-
-$$
-2\mu_R(R^\vee)=2,
-$$
-
-so $R^\vee$ is cyclic. Choose a generator to obtain a surjection
-
-$$
-R\twoheadrightarrow R^\vee. \tag{7.6}
-$$
-
-Both sides have the same $\mathbf Z_\ell$-rank. The kernel is therefore a rank-zero submodule of the torsion-free module $R$, hence zero. Thus
-
-$$
-\boxed{R^\vee\simeq R.} \tag{7.7}
-$$
-
-The local Hecke algebra is Gorenstein. This deduction came after Tate-module freeness. It was not imported from the augmented crossing and was not used to prove multiplicity one.
-
-### 7.4 Character-lattice freeness
-
-Localize the Raynaud sequence (5.12) at $\mathfrak m$:
-
-$$
-0\longrightarrow X_{p,\mathfrak m}^\vee(1)
-\longrightarrow M
-\longrightarrow X_{p,\mathfrak m}
-\longrightarrow0. \tag{7.8}
-$$
-
-The finite-level filtration supplied by (6.2) identifies its multiplicative subline with $\Sigma[\ell]$ and its constant quotient with $C[\ell]$. Hence
-
-$$
-\dim_{\mathbf F_\ell}
-X_{p,\mathfrak m}/\mathfrak mX_{p,\mathfrak m}=1. \tag{7.9}
-$$
-
-The Gorenstein isomorphism (7.7) ensures that localization and the required $\mathbf Z_\ell$-dual lattice are identified without replacing the character lattice by an unsaturated dual. Nakayama now gives a surjection
-
-$$
-R\twoheadrightarrow X_{p,\mathfrak m}. \tag{7.10}
-$$
-
-On every characteristic-zero branch the toric character module is one-dimensional over the coefficient field. Thus (7.10) has generic rank one on both sides. By definition, $X_{p,\mathfrak m}$ is the $\mathfrak m$-primary direct factor of the finite free lattice $X_p\otimes\mathbf Z_\ell$; it is therefore $\mathbf Z_\ell$-torsion free. The kernel is again zero, proving
-
-$$
-\boxed{X_{p,\mathfrak m}\simeq R.} \tag{7.11}
-$$
-
-The logical sequence is now explicit:
-
-$$
-J[\mathfrak m]\text{ multiplicity one}
-\Longrightarrow T_\ell J_{\mathfrak m}\simeq R^2
-\Longrightarrow R^\vee\simeq R
-\Longrightarrow X_{p,\mathfrak m}\simeq R. \tag{7.12}
-$$
-
-No arrow points backward.
-
-### 7.5 Why this chapter has no $2$-adic analogue
-
-At $2$, the constant and cyclotomic characters coincide, $\mu_2(\mathbf Q)$ is nontrivial, and the quadratic point (5.9) lies simultaneously in the known constant and multiplicative subgroups. The residual group scheme need not split into two distinguishable character lines. In addition, Book 67's low-ramification theorem assumes $\ell>2$: the weight interval $[0,1]$ is not inside a strict Fontaine--Laffaille full-faithfulness range at $2$, and trace-zero splittings also fail.
-
-We therefore make no assertion that $J[\mathfrak m_2]$ has dimension two, that $T_2J_{\mathfrak m_2}$ is free of rank two over a local Hecke algebra, or that the local algebra is Gorenstein. The two-primary rational fixed line is supplied by a different theorem, stated in the next chapter.
-
-## 8. Rational torsion
-
-### 8.1 The odd rational Eisenstein-support theorem
-
-Multiplicity one can classify rational torsion only after a rational point has been placed in the correct Hecke block. Density-one Frobenius relations do not by themselves recover the operator at the coefficient prime or the operator at the level.
-
-**Odd rational Eisenstein-support theorem.** Let $p\ge5$ be prime, let $\ell$ be odd, and let
-
-$$
-0\ne P\in J_0(p)(\mathbf Q)[\ell].
-$$
-
-Then $\ell\mid n$ and
-
-$$
-\mathfrak mP=0,\qquad \mathfrak m=(\ell,I). \tag{8.1}
-$$
-
-Equivalently, every nonzero rational simple subquotient of odd order is supported at the full Eisenstein maximal ideal, including $U_p-1$.
-
-This is established rational-support infrastructure. Its proof has three distinct stages. At a good prime $q\nmid p\ell$, Eichler--Shimura gives
-
-$$
-F_q^2-T_qF_q+q=0
-$$
-
-on $J[\ell]$. Since $P$ is rational, $F_qP=P$, so
-
-$$
-(T_q-q-1)P=0. \tag{8.2}
-$$
-
-The integral missing-coefficient theorem then recovers $T_\ell-\ell-1$. Its proof uses the perfect $q$-expansion pairing, Hecke recurrences, Katz's $\Theta$ operator, and the two-cusp filtration theorem through the relevant powers. At $\ell=3$, the weight-two Hasse direction is excluded by its two cusp values. This is not a formal application of Chebotarev.
-
-Finally, the actual semistable correspondence theorem analyzes $U_p$ on the torus and components. A rational specialization is fixed by arithmetic Frobenius; with $U_p=\sigma$ on characters and $U_p=1$ on components, the full point is placed on the $U_p=1$ branch. The possible case $\ell=p$ is eliminated during this comparison, and the exact index then forces $\ell\mid n$. No good-prime polynomial is asserted at $p$.
-
-At $\ell=2$, the good-prime argument omits $T_2$, and Katz filtration has the Hasse-square direction described in Chapter 3. The theorem is intentionally odd. The $T_2$ issue is part of the separate two-primary theorem below.
-
-### 8.2 The prime-level two-primary fixed-line theorem
-
-The rational $2$-torsion calculation is deep integral geometry, not the $\ell=2$ specialization of odd multiplicity one.
-
-**Prime-level two-primary fixed-line theorem.** Let $p\ge5$ be prime. Then
-
-$$
-J_0(p)(\mathbf Q)[2]=0
-\qquad\text{if }p\not\equiv1\pmod8, \tag{8.3}
-$$
-
-while
-
-$$
-\boxed{
-J_0(p)(\mathbf Q)[2]
-=C[2]=\Sigma[2]}
-\qquad\text{if }p\equiv1\pmod8. \tag{8.4}
-$$
-
-In the second case the common nonzero point is $\sigma_{\chi_p}=(n/2)c$.
-
-This is established two-primary infrastructure. Its proof begins with the finite-flat closure of a rational fixed line in the good Néron model over $\mathbf Z_2$. It then uses the mod-$2$ Deligne--Rapoport Picard geometry, the Cartier operator on dualizing differentials, and both cusp expansions to classify possible constant finite-flat lines. The missing operator $T_2$ is recovered inside that geometry rather than inserted by a density argument. The semistable $p^2$ correspondence supplies the genuine $U_p$ condition. Finally, quadratic Picard descent and the theta-group calculation of Chapter 5 identify the surviving line with the Legendre line.
-
-The proof works with connected--étale closures over $\mathbf Z_2$ and the actual Cartier geometry of the modular stack. It is not an application of Book 67: Raynaud's odd low-ramification full faithfulness and the Fontaine--Laffaille interval used there do not apply at $2$. Nor is the result a claim that the whole local Hecke block has multiplicity one.
-
-### 8.3 Rational points of exact prime order
-
-Let $\ell$ be odd. If $J(\mathbf Q)[\ell]$ is nonzero, the support theorem gives $\ell\mid n$ and places it in $J[\mathfrak m]$. By (6.2),
-
-$$
-J[\mathfrak m]
-=C[\ell]\oplus\Sigma[\ell].
-$$
-
-The rational points of the multiplicative summand vanish for odd $\ell$:
-
-$$
-\mu_\ell(\mathbf Q)=1.
-$$
-
-Hence
-
-$$
-J(\mathbf Q)[\ell]=C[\ell]. \tag{8.5}
-$$
-
-If $\ell\nmid n$, the support theorem says that both sides are zero. At $2$, equations (8.3)--(8.4) give the same conclusion. Thus for every prime $\ell$,
-
-$$
-\boxed{J(\mathbf Q)[\ell]=C[\ell].} \tag{8.6}
-$$
-
-At this point we know only points killed by $\ell$. A separate divisibility argument is needed for higher powers; a splitting of the $\ell$-divisible group has not been proved and will not be assumed.
-
-### 8.4 The specialization and divisibility argument
-
-Fix a prime $\ell$ and write
-
-$$
-A=J(\mathbf Q)[\ell^\infty],\qquad
-B=C[\ell^\infty].
-$$
-
-Mordell--Weil finite generation makes $A/B$ finite. Suppose it is nonzero. Choose a class of order $\ell$ and represent it by $P\in A$. Then
-
-$$
-b=\ell P\in B. \tag{8.7}
-$$
-
-If $b\in\ell B$, choose $c_1\in B$ with $\ell c_1=b$. Then
-
-$$
-P-c_1\in A[\ell]=B[\ell]
-$$
-
-by (8.6), so $P\in B$, contrary to the choice of its class.
-
-It remains to consider $b\notin\ell B$. Specialize at $p$ and pass to components. The isomorphism (5.6) identifies $B$ with the $\ell$-primary part of the cyclic group $\Phi_p$. Therefore
-
-$$
-\operatorname{sp}_p(b)\notin\ell\Phi_p. \tag{8.8}
-$$
-
-But (8.7) gives
-
-$$
-\ell\operatorname{sp}_p(P)=\operatorname{sp}_p(b), \tag{8.9}
-$$
-
-which is impossible because the right side is not divisible by $\ell$ in $\Phi_p$. Both alternatives are contradictory. Hence $A=B$.
-
-This argument works uniformly at odd primes and at $2$. Its exact inputs are the order-$\ell$ fixed-line equality and the isomorphism $C\simeq\Phi_p$. It does not assume that specialization is injective on all bad-reduction torsion.
-
-### 8.5 The exact torsion theorem and its Hecke action
-
-Applying the preceding argument at every prime gives
-
-$$
-\boxed{
-J_0(p)(\mathbf Q)_{\mathrm{tors}}
-=C
-\simeq\mathbf Z/n\mathbf Z.} \tag{8.10}
-$$
-
-Only now do we conclude that rational torsion is Eisenstein. Book 140's explicit Hecke calculation on the generator $c$ gives
-
-$$
-T_qP=(q+1)P\quad(q\ne p),\qquad
-U_pP=P \tag{8.11}
-$$
-
-for every rational torsion point $P$. Thus
-
-$$
-I\,J(\mathbf Q)_{\mathrm{tors}}=0. \tag{8.12}
-$$
-
-The direction is important. We did not first assume that arbitrary rational torsion was killed by $I$ and then use the index theorem to classify it. Prime-order support, odd multiplicity one, the independent two-primary theorem, and component divisibility proved the torsion theorem; the global Eisenstein action follows afterward because the resulting group is the known cusp group.
-
-For $p=2,3,5,7,13$, equation (8.10) is the genus-zero statement $0=0$. Thus the formula holds at every prime level.
-
-## 9. The absolute winding quotient
-
-### 9.1 From a relative path to a rational absolute class
-
-The path from $0$ to $\infty$ is relative, but the quotient of a Jacobian must be cut out in absolute homology. The bridge is period duality.
-
-Fix the path $\lambda$ from $0$ to $i\infty$ and normalize a cusp form $f$ by the differential $2\pi i f(z)\,dz$. Integration defines
-
-$$
-\Lambda(f)=2\pi i\int_0^{i\infty}f(z)\,dz=-L(f,1). \tag{9.1}
-$$
-
-**Absolute winding comparison theorem.** Poincaré duality for $X(\mathbf C)$ gives a unique plus-class
-
-$$
-e\in H_1(X(\mathbf C),\mathbf R)^+
-$$
-
-whose period functional is $\Lambda$. This class is rational and satisfies
-
-$$
-ne\in H_1(X(\mathbf C),\mathbf Z). \tag{9.2}
-$$
-
-For every normalized weight-two newform $f$ of level $p$, with the period normalization fixed above,
-
 $$
-\boxed{\langle e,f\rangle=-L(f,1).} \tag{9.3}
+G_r\xrightarrow{\sim}
+e_{\mathfrak m}\mathcal A_{\mathfrak m}[\ell^r]
+\quad(r\ge1).
+\tag{5.8}
 $$
 
-The theorem is established absolute-period infrastructure. Its construction begins with the relative path but applies the Poincaré dual of its integration functional. Abel--Jacobi identifies the class of that functional modulo absolute periods with the cusp difference. Since $nc=0$, multiplication by $n$ puts the functional in the integral absolute period lattice, proving (9.2). It does not assert that the relative chain $n\lambda$ has zero boundary.
+This is the promised compatibility of the rational and local selections. It is a saturated integral statement, not an identification of projectors. In particular, no quotient of lattices in (5.7) has hidden $\ell$-torsion.
 
-At positive genus $c\ne0$, so $e\ne0$. If $e$ vanished, every holomorphic differential would integrate to zero along $\lambda$, and Abel--Jacobi would send $c$ to zero.
+### 5.4 Faithfulness and finite-level annihilators
 
-### 9.2 Construction and newform support
+The complete local algebra acts continuously on $G_{\mathfrak m}$. If $t\in\mathbb T_{\mathfrak m}$ acts trivially on every $G_r$, it acts trivially on the Tate module. The Hecke action on the selected Tate summand is faithful, so $t=0$. Thus
 
-Let
-
 $$
-I_{\mathrm w}=\operatorname{Ann}_{\mathbb T}(e).
+\mathbb T_{\mathfrak m}\hookrightarrow
+\operatorname{End}(G_{\mathfrak m})
+\tag{5.9}
 $$
 
-Over $\mathbf Q$, the Hecke algebra is semisimple and prime level has no old cusp forms. Let
+is injective, and
 
 $$
-K_{\mathrm w}=I_{\mathrm w}J
+\bigcap_{r\ge1}\operatorname{Ann}_{\mathbb T_{\mathfrak m}}(G_r)=0.
+\tag{5.10}
 $$
 
-be the connected abelian subvariety generated by the images of the endomorphisms in $I_{\mathrm w}$; rationally it is the product of the newform factors on which $e$ has zero projection. Define the optimal quotient
+Faithfulness at infinite level does not mean that every $G_r$ is faithful. Nor does it imply that $G_{\mathfrak m}$ has height two or is free of rank two over $\mathbb T_{\mathfrak m}$. Those are multiplicity statements, not consequences of separation.
 
-$$
-\pi_{\mathrm w}:J\twoheadrightarrow
-J^{\mathrm w}=J/K_{\mathrm w}. \tag{9.4}
-$$
+## 6. Admissible Eisenstein group schemes
 
-The kernel is connected by construction. Equivalently, intersect the zero-winding rational homology subspace with the integral homology lattice; that intersection is primitive, and its complex subtorus is $K_{\mathrm w}$. This formulation fixes the integral quotient rather than only its isogeny class.
+### 6.1 The two atoms
 
-Equation (9.3) gives the exact support:
+Over $S_N$, the two basic order-$\ell$ finite-flat groups are
 
 $$
-J^{\mathrm w}_{\mathbf Q}
-\sim
-\prod_{L(f,1)\ne0}A_f, \tag{9.5}
+\underline{\mathbf Z/\ell\mathbf Z}
+\quad\text{and}\quad
+\mu_\ell.
+\tag{6.1}
 $$
-
-with one factor for each Galois orbit of newforms. Since $e\ne0$, this product and the optimal quotient are nonzero at every positive-genus prime level.
 
-### 9.3 The Kolyvagin--Logachev rank-zero theorem
+Their generic Galois characters are $1$ and the mod-$\ell$ cyclotomic character $\bar\chi_\ell$. Cartier duality exchanges them. A finite-flat $\ell$-primary group is **Eisenstein-admissible** if it has a finite filtration by finite-flat subgroup schemes whose successive quotients are the two groups in (6.1).
 
-Analytic nonvanishing does not become Mordell--Weil finiteness by a formal comparison. The required arithmetic theorem is the following.
+Admissibility is weaker than splitting. An object may contain a nonsplit extension of a constant quotient by a multiplicative subgroup. It is also weaker than a canonical global connected--etale decomposition: such a decomposition exists over $\mathbf Z_\ell$, but need not globalize over $S_N$ in a prescribed order.
 
-**Kolyvagin--Logachev modular rank-zero theorem.** Let $f$ be a normalized weight-two newform on $\Gamma_0(p)$, let $K_f$ be its coefficient field, and let $A_f$ be the optimal modular abelian variety attached to its Galois orbit. Suppose, for one fixed embedding $K_f\hookrightarrow\mathbf C$,
+The number of constant and multiplicative factors is nevertheless intrinsic. After base change to $\mathbf Z_\ell$, the former contribute to the etale rank and the latter to the connected multiplicative rank. These ranks are independent of a chosen filtration.
 
-$$
-L(f,1)\ne0.
-$$
+### 6.2 From a residual flag to a flat filtration
 
-Then every Galois-conjugate central value is nonzero, the Mordell--Weil rank of $A_f$ is zero, and the relevant Tate--Shafarevich group is finite. In particular,
+Reducing the selected Hecke algebra modulo its radical yields successive modules on which every Hecke operator acts through the Eisenstein character. At a prime $q\nmid N\ell$, (1.4) becomes
 
 $$
-\boxed{A_f(\mathbf Q)\text{ is finite}.} \tag{9.6}
+(F_q-1)(F_q-q)=0
+\tag{6.2}
 $$
 
-The statement is compatible with Galois conjugacy of $f$, optimal quotients, isogenies, and coefficient-field decompositions. It is the exact rank-zero input needed for (9.5).
+on each semisimple radical layer. A density argument applied to the finite Galois quotient generated by that layer and $\bar\chi_\ell$ shows that every simple constituent is either trivial or cyclotomic. Refining the radical filtration therefore gives a Galois- and Hecke-stable composition series of
 
-Its proof architecture passes through imaginary quadratic fields. One chooses a field satisfying the Heegner hypothesis and uses a nonvanishing theorem for quadratic twists so that the base-change $L$-function has the required simple-zero behavior. The Gross--Zagier formula identifies the derivative with the Néron--Tate height of a Heegner point. Norm-compatible Heegner points over ring class fields form the Euler system. Kolyvagin's derivative classes and local reciprocity relations then bound the relevant Selmer groups and the Tate--Shafarevich group. Comparing the plus and minus eigenspaces for the quadratic extension forces the original $\mathbf Q$-factor to have rank zero; Mordell--Weil finite generation then makes its rational points finite.
-
-Each stage is essential: twist nonvanishing supplies a usable auxiliary field, Gross--Zagier supplies a nonzero initial class, the Heegner norm relations supply the Euler system, and Kolyvagin descent turns it into a Selmer bound. No abbreviated modular-unit construction replaces that machinery here.
-
-### 9.4 Finiteness of rational points
-
-Every simple factor in (9.5) has finite rational points by (9.6). A finite product of them has finite rational points, and this property is preserved under isogeny. Therefore
-
 $$
-\boxed{J^{\mathrm w}(\mathbf Q)\text{ is finite}.} \tag{9.7}
+G_1(\overline{\mathbf Q})
+\tag{6.3}
 $$
 
-The conclusion concerns the actual optimal quotient (9.4), not merely a rational Hecke subspace. It does not identify its rational torsion as the image of $C$, nor does it claim that every rational torsion point of $J^{\mathrm w}$ lifts to a rational point of $J$. Those stronger assertions would require a separate descent calculation through the connected kernel.
+with factors $\mathbf F_\ell$ and $\mathbf F_\ell(1)$.
 
-## 10. Integral cotangents and formal immersion
+The decisive point is that a composition series, not merely a semisimplification, has been produced. Trace $1+\bar\chi_\ell$ would determine the semisimplification but would not supply a stable line to close.
 
-### 10.1 The winding-quotient cotangent theorem
+Close each term of the generic flag schematically inside the preceding finite-flat quotient of $G_1$. Schematic closure over the Dedekind base is finite flat, and the represented quotient is finite flat. For odd $\ell$, low-ramification rigidity over $\mathbf Z_\ell$ identifies an order-$\ell$ closure with the endpoint determined by its generic character. At higher level, pull the flag through (5.4) and refine.
 
-Formal immersion is an integral first-order property. A rational isogeny class of quotients is not enough; one must know the actual Néron cotangent lattice.
+**Theorem 6.1.** Every $G_r$ is Eisenstein-admissible. For odd $\ell$, its successive generic trivial and cyclotomic characters close to $\underline{\mathbf Z/\ell}$ and $\mu_\ell$, respectively. At $\ell=2$, every closure is still one of these two endpoints, but its label is determined integrally after closure.
 
-**Integral winding-quotient cotangent theorem.** Let $\pi_{\mathrm w}:J\twoheadrightarrow J^{\mathrm w}$ be the optimal quotient (9.4). For every prime $r\ne p$, let $\mathcal J$ and $\mathcal J^{\mathrm w}$ be the Néron models over $\mathbf Z_r$, with identity sections $e_{\mathcal J}$ and $e_{\mathcal J^{\mathrm w}}$. Define
+**Proof.** The radical filtration and (6.2) give an actual stable generic composition series with the two stated characters. Schematic closure of the first line in $G_1$, followed by closure in each successive finite-flat quotient, gives a finite-flat filtration. When $\ell$ is odd, the ramification index of $\mathbf Z_\ell$ is $1<\ell-1$, so height-one rigidity identifies each closure from its generic character. When $\ell=2$, the unramified order-two classification has only the constant and multiplicative endpoints; inspecting the connected special fiber distinguishes them after closure. Pulling this filtration back through the faithfully flat maps $G_r\to G_1$ and refining the kernels with (5.4) proves the same statement for every $r$. $\square$
 
-$$
-\Omega_{\mathrm w}
-=\operatorname{im}\left(
-e_{\mathcal J^{\mathrm w}}^*\Omega^1_{\mathcal J^{\mathrm w}/\mathbf Z_r}
-\xrightarrow{\ \pi_{\mathrm w}^*\ }
-e_{\mathcal J}^*\Omega^1_{\mathcal J/\mathbf Z_r}
-\right).
-$$
+### 6.3 Mixed extensions
 
-Pullback identifies $\Omega_{\mathrm w}$ with a primitive Hecke-stable sublattice of the integral dualizing cusp forms
+Suppose $\ell$ is odd and a separated height-two subquotient has the form
 
 $$
-S_2(\Gamma_0(p),\mathbf Z_r).
+0\longrightarrow\mu_\ell
+\longrightarrow H
+\longrightarrow\underline{\mathbf Z/\ell}
+\longrightarrow0.
+\tag{6.4}
 $$
 
-Its rational span is the sum of the newform spaces with $L(f,1)\ne0$. For every $m\ge1$ and $f\in\Omega_{\mathrm w}$,
+The fiber over $1$ is a $\mu_\ell$-torsor. Since
 
 $$
-a_1(T_mf)=a_m(f). \tag{10.1}
+\mathbf Z[1/N]^\times=\{\pm N^a:a\in\mathbf Z\}
+\tag{6.5}
 $$
 
-If $0\ne\bar f\in\Omega_{\mathrm w}/r\Omega_{\mathrm w}$, some $m$ satisfies
+and the Picard group of $\mathbf Z[1/N]$ is zero, the fppf Kummer sequence gives
 
 $$
-a_m(\bar f)\ne0. \tag{10.2}
+H^1(S_N,\mu_\ell)
+\simeq \mathbf Z[1/N]^\times/\mathbf Z[1/N]^{\times\ell}.
+\tag{6.6}
 $$
-
-The assertions remain valid at $r=2,3$ when the lattice is interpreted on the compactified modular stack and then pulled back from the Néron model.
-
-This is established integral cotangent infrastructure. The connected optimal kernel determines the rational quotient and a primitive quotient of integral singular homology, but that fact alone does not prove saturation of a Néron cotangent lattice at primes dividing a congruence degree. The integral comparison takes the schematic closure of the optimal kernel in the Néron model, compares invariant differentials with relative dualizing forms on the regular modular stack by Grothendieck duality, and uses the perfect Hecke--$q$-expansion pairing plus base change to prove that the pullback lattice is saturated. Hecke stability and the coefficient identity then give (10.1), while the full $q$-expansion principle gives (10.2).
 
-At $2$ and $3$, the proof includes the wild correction: the Hodge bundle is retained on the unrigidified stack, $\omega^2$ is descended with its stabilizer character, and Katz filtration controls forms whose visible coefficients vanish. A naive coarse cotangent lattice could fail to be primitive and would not justify reduction of (10.1).
+For odd $\ell$, the sign is an $\ell$th power, while valuation at $N$ gives one free class. Compatibility with the group law identifies
 
-### 10.2 Producing the formal immersion
-
-Use $\infty$ as base cusp and define
-
 $$
-h:X\xrightarrow{\iota_\infty}J
-\xrightarrow{\pi_{\mathrm w}}J^{\mathrm w}. \tag{10.3}
+\operatorname{Ext}^1_{S_N}
+(\underline{\mathbf Z/\ell},\mu_\ell)
+\simeq\langle[N]\rangle\simeq\mathbf F_\ell.
+\tag{6.7}
 $$
 
-Fix a residue characteristic $r\ne p$. Choose a primitive $f\in\Omega_{\mathrm w}$ whose reduction is nonzero. By (10.2), choose $m$ with $a_m(f)$ a unit modulo $r$. The pullback of $f$ by the Hecke translate
+After choosing endpoint generators, the extension indexed by $j\in\mathbf F_\ell$ has fiber equation
 
 $$
-h_m=T_m\circ h \tag{10.4}
+T^\ell=N^j.
+\tag{6.8}
 $$
 
-has expansion
-
-$$
-h_m^*f=(T_mf)(q)\frac{dq}{q}
-=\bigl(a_1(T_mf)+O(q)\bigr)dq.
-$$
+It splits exactly when $j=0$. Changing a generator rescales every nonzero $j$, so without orientations there are only split and nonsplit types.
 
-Thus its image in the cotangent line at $\infty$ is
+This calculation does not classify same-type extensions, nor prove that an arbitrary admissible object has a global multiplicative subgroup with constant quotient. Such a separation must be constructed geometrically or from the local connected--etale sequence.
 
-$$
-a_1(T_mf)\,dq=a_m(f)\,dq. \tag{10.5}
-$$
+### 6.4 The dyadic boundary
 
-This is nonzero modulo $r$. Since the cotangent space of the curve at the cusp is one-dimensional, the map on cotangents is surjective. Therefore
+At $\ell=2$,
 
 $$
-\boxed{h_m\text{ is a formal immersion at }\infty.} \tag{10.6}
+1=\bar\chi_2,
+\tag{6.9}
 $$
-
-Applying $w_p$ gives the same statement at $0$. The Hecke translate may depend on $r$; no single coefficient is claimed to be a unit in every characteristic.
 
-### 10.3 Odd good-prime cusp-disk rigidity
+so the generic representations of $\underline{\mathbf Z/2}$ and $\mu_2$ are indistinguishable. The integral groups differ: over $\mathbf Z_2$, one is etale and the other connected. The unramified order-two classification says that these are the only two finite-flat endpoints. Thus each closure in Theorem 6.1 is an atom, but character theory cannot orient it.
 
-The formal immersion becomes a rational-point statement after a specialization kernel has been killed. Let $r$ be an odd prime with
+Mixed extensions carry more information. There is an exact sequence
 
 $$
-r\ne p.
+0\longrightarrow\mu_2(S_N)
+\longrightarrow
+\operatorname{Ext}^1_{S_N}
+(\underline{\mathbf Z/2},\mu_2)
+\longrightarrow
+S_N^\times/S_N^{\times2}
+\longrightarrow0.
+\tag{6.10}
 $$
 
-Then $X$, $J$, and $J^{\mathrm w}$ have good reduction at $r$. Suppose
+The right side is generated by the sign and level-unit classes $[-1]$ and $[N]$; the left side supplies a carry class. Any dyadic descent that records only the generic trivial character loses all three pieces of information.
 
-$$
-x\in X(\mathbf Q)
-$$
+The numerical condition for a dyadic Eisenstein factor is
 
-reduces to the same point as $\infty$ modulo $r$. The difference
-
 $$
-D=h(x)-h(\infty)=h(x)
+v_2(n_N)=v_2(N-1)-2>0.
+\tag{6.11}
 $$
 
-lies in the finite group $J^{\mathrm w}(\mathbf Q)$ and reduces to zero. At an odd good prime, rational torsion specializes injectively: the prime-to-$r$ part is étale, and the formal group over the unramified field $\mathbf Q_r$ has no rational $r$-power torsion. Hence $D=0$.
+At such a level, the integral endpoint check is part of the theorem, not a cosmetic refinement.
 
-It follows that
+## 7. The completed divisible group
 
-$$
-h_m(x)=h_m(\infty).
-$$
+### 7.1 Connected, etale, and multiplicative pieces
 
-Formal immersion at the common reduction point forces the two $\mathbf Z_r$-sections to agree. Therefore
+Base change $G_{\mathfrak m}$ to $\mathbf Z_\ell$. Every $\ell$-divisible group over this complete local base has a canonical connected--etale sequence. Admissibility excludes local-local simple factors and identifies the connected part as multiplicative. Hence
 
 $$
-\boxed{
-x\equiv\infty\pmod r, r\text{ odd}, r\ne p
-\quad\Longrightarrow\quad x=\infty.} \tag{10.7}
+0\longrightarrow G_{\mathfrak m}^{\mathrm{mult}}
+\longrightarrow G_{\mathfrak m}
+\longrightarrow G_{\mathfrak m}^{\mathrm{et}}
+\longrightarrow0.
+\tag{7.1}
 $$
-
-The same holds with $0$ in place of $\infty$. This odd good-prime cusp-disk rigidity is the clean interface exported to Book 148.
-
-### 10.4 Why the Jacobian torsion theorem does not settle the quotient at $2$
-
-At $2$, good reduction alone does not give the same torsion-injectivity statement for a rational formal group. More importantly, (8.10) says nothing by itself about the specialization kernel on $J^{\mathrm w}(\mathbf Q)_{\mathrm{tors}}$.
 
-Let
+At finite level this gives
 
 $$
-0\longrightarrow K_{\mathrm w}
-\longrightarrow J
-\longrightarrow J^{\mathrm w}
+0\longrightarrow G_r^{\mathrm{mult}}
+\longrightarrow G_r
+\longrightarrow G_r^{\mathrm{et}}
 \longrightarrow0
+\tag{7.2}
 $$
 
-be the optimal quotient sequence. Rational points yield a connecting map
+after base change to $\mathbf Z_\ell$. The sequence need not split. Its endpoint heights equal the multiplicative and constant lengths in any admissible filtration of $G_1$. This is the correct ordinary statement here: it supplies no chosen basis and no rank-two theorem over the Hecke algebra.
+
+### 7.2 Cuspidal and Shimura directions
+
+Let $e=v_\ell(n_N)$. The $\ell$-primary cusp and Shimura groups both have order $\ell^e$. Their generic fibers lie in the selected rational support, hence in $G_e$ after (5.8). Taking schematic closures gives finite-flat subgroups
 
 $$
-J^{\mathrm w}(\mathbf Q)
-\longrightarrow H^1(\mathbf Q,K_{\mathrm w}). \tag{10.8}
+\mathcal C_{N,\ell},\ \mathcal\Sigma_{N,\ell}\subseteq G_e.
+\tag{7.3}
 $$
 
-A rational torsion point on the quotient can have a nonzero image in this cohomology set and need not lift to a rational torsion point of $J$. Consequently
+For odd $\ell$, their canonical cyclic filtrations have quotients
 
 $$
-J(\mathbf Q)_{\mathrm{tors}}=C
+\mathcal C_i/\mathcal C_{i-1}\simeq
+\underline{\mathbf Z/\ell},
+\qquad
+\mathcal\Sigma_i/\mathcal\Sigma_{i-1}\simeq\mu_\ell.
+\tag{7.4}
 $$
 
-does not determine either $J^{\mathrm w}(\mathbf Q)_{\mathrm{tors}}$ or its kernel of reduction at $2$.
+They give named constant and multiplicative directions, but need not exhaust the etale and multiplicative heights. Additional congruent characteristic-zero branches can enlarge the completed piece without changing (4.9).
 
-This book supplies no quotient-level $2$-kernel theorem. Book 148 may use (10.7) at an odd good specialization prime. If it wishes to use a $2$-adic cusp disk, it must first prove separately, for this exact optimal quotient, that the relevant rational torsion specialization kernel is zero or identify it completely. The Jacobian torsion theorem cannot be substituted for that missing quotient statement.
+At $2$, the closures remain admissible but their generic labels do not determine every integral endpoint. No formula for their full intersection is used.
 
-## 11. Four diagnostic prime levels
+### 7.3 Duality and height
 
-### 11.1 Levels $11$, $17$, and $19$
-
-The first three positive-genus prime levels are elliptic curves, so every scalar can be checked on the unique normalized newform. The data are
+The principal polarization of $J$ gives a perfect Weil pairing, with its Tate twist. The Rosati involution carries a selected local factor to its adjoint factor. If the selected factor is self-dual, (7.1) is dual to itself with endpoints reversed, and
 
 $$
-\begin{array}{c|c|c|c|c|c}
-p&n&T_2&U_p&\Phi_p&C\cap\Sigma\\ \hline
-11&5&-2&1&\mathbf Z/5&0\\
-17&4&-1&1&\mathbf Z/4&C[2]\\
-19&3&0&1&\mathbf Z/3&0.
-\end{array} \tag{11.1}
+\operatorname{ht}(G_{\mathfrak m}^{\mathrm{mult}})
+=\operatorname{ht}(G_{\mathfrak m}^{\mathrm{et}}).
+\tag{7.5}
 $$
 
-The Eisenstein scalar at $2$ is $3$, so the differences are
+This is conditional on self-duality. Even then it determines only the heights, not that each is one. A self-dual ordinary group can have height $2d$ with $d>1$.
+
+### 7.4 Multiplicity one and Gorenstein boundaries
+
+**Proposition 7.1.** Let $R=\mathbb T_{\mathfrak m}$. Suppose that the selected Tate module is finite free of rank $2$ over $R$, and suppose an integral polarization and primitive endpoint comparison identify
 
 $$
--5,\qquad-4,\qquad-3. \tag{11.2}
+R^\vee=\operatorname{Hom}_{\mathbf Z_\ell}(R,\mathbf Z_\ell)
 $$
 
-They recover the exact congruence moduli. The $U_p$ values agree with the boundary branch, the component orders equal $n$, and the intersection is nonzero only at $17\equiv1\pmod8$.
+with a free rank-one $R$-module. Then $R$ is Gorenstein and the residual selected representation has dimension two.
 
-With the period normalization of (9.1), the winding values are
+**Proof.** For a finite flat local $\mathbf Z_\ell$-algebra, freeness of $R^\vee$ of rank one over $R$ is exactly the Gorenstein self-duality criterion. The Tate-module hypothesis gives $M\simeq R^2$; reducing modulo the maximal ideal gives a two-dimensional residual module. $\square$
 
-$$
-\frac{L(f_{11},1)}{\Omega_{11}^+}=\frac15,\qquad
-\frac{L(f_{17},1)}{\Omega_{17}^+}=\frac14,\qquad
-\frac{L(f_{19},1)}{\Omega_{19}^+}=\frac13. \tag{11.3}
-$$
+These hypotheses are not proved for every Eisenstein maximal ideal here. In particular, (4.9) does not imply rank-two freeness or the displayed dual identification. Therefore no unconditional complete multiplicity-one or Gorenstein assertion is made.
 
-Thus the winding quotient is the whole elliptic Jacobian in each case. The Kolyvagin--Logachev theorem makes its rational points finite, consistently with the torsion orders $5$, $4$, and $3$.
+## 8. Eisenstein descent
 
-### 11.2 Level $37$
+### 8.1 Strict local conditions
 
-At level $37$,
+Fix $A=A_{\mathfrak m}$ and $G_r=e_{\mathfrak m}\mathcal A[\ell^r]$. Kummer theory gives a selected image in $H^1(\mathbf Q,G_r)$. At a finite prime $v\ne N$, impose the finite-flat local condition. At $v=\ell$, this is genuine flat cohomology, not merely the unramified subgroup of generic Galois cohomology.
 
-$$
-n=3,\qquad
-\Phi_{37}\simeq\mathbf Z/3,\qquad
-C\cap\Sigma=0. \tag{11.4}
-$$
+At $N$, strictness means that the local point lies in the identity component of the Néron model before applying Kummer. The relaxed condition allows all local points; their difference is measured by the actual component image. At the real place there is no correction for odd $\ell$. For $\ell=2$, retain the positive identity-component condition.
 
-There are two rational newform factors. Their verified pairs of scalar data are
+Denote the resulting strict Selmer group by $\operatorname{Sel}^{\mathrm{str}}(G_r)$.
+
+### 8.2 Atomic vanishing
+
+For $\mu_\ell$, Kummer theory identifies global classes over $S_N$ with units modulo $\ell$th powers. Strictness removes the valuation at $N$; for odd $\ell$ the sign is an $\ell$th power, and for $\ell=2$ positivity removes it. Hence the strict multiplicative atomic group is zero.
+
+For $\underline{\mathbf Z/\ell}$, a class is a cyclic etale cover of $S_N$. Strictness at $N$ removes its only allowed ramification, while the other local conditions make it everywhere unramified over $\mathbf Q$. There is no nontrivial everywhere-unramified extension of $\mathbf Q$. Thus
 
 $$
-(T_2,U_{37})=(-2,-1),\qquad
-(T_2,U_{37})=(0,1). \tag{11.5}
+\operatorname{Sel}^{\mathrm{str}}
+(\underline{\mathbf Z/\ell})=0,
+\qquad
+\operatorname{Sel}^{\mathrm{str}}(\mu_\ell)=0.
+\tag{8.1}
 $$
 
-Only the second factor supports the full Eisenstein ideal: on the first, the level sign is wrong, while on the second
+### 8.3 Devissage and component defects
+
+For an admissible exact sequence $0\to H'\to H\to H''\to0$, the local conditions are cartesian. The low-degree cohomology sequence gives
 
 $$
-T_2-3=-3,\qquad U_{37}-1=0. \tag{11.6}
+0\longrightarrow\operatorname{Sel}^{\mathrm{str}}(H')
+\longrightarrow\operatorname{Sel}^{\mathrm{str}}(H)
+\longrightarrow\operatorname{Sel}^{\mathrm{str}}(H'').
+\tag{8.2}
 $$
 
-The first factor has vanishing central value and positive rank. The second has
+Induction along an admissible filtration proves
 
 $$
-\frac{L(f,1)}{\Omega^+}=\frac13
+\boxed{\operatorname{Sel}^{\mathrm{str}}(G_r)=0
+\quad(r\ge1).}
+\tag{8.3}
 $$
 
-and is the winding factor. Consequently
+This preserves nonsplit extensions; it never replaces $G_r$ by its semisimplification.
+
+Let $D_{\mathfrak m,N}$ be the selected image of the level-prime component map and $D_{\mathfrak m,\infty}$ the selected real component group when $\ell=2$, zero otherwise. Strict--relaxed comparison yields
 
 $$
-J_0(37)^{\mathrm w}
+\frac{e_{\mathfrak m}(A(\mathbf Q)\otimes\mathbf Z_\ell)}{\ell^r}
+\hookrightarrow
+\frac{D_{\mathfrak m,N}}{\ell^rD_{\mathfrak m,N}}
+\oplus
+\frac{D_{\mathfrak m,\infty}}{\ell^rD_{\mathfrak m,\infty}}.
+\tag{8.4}
 $$
 
-is the optimal rank-zero elliptic quotient, not the whole genus-two Jacobian. The cusp and component generator project to this factor.
+The groups on the right are fixed and finite. We do not replace $D_{\mathfrak m,N}$ by the whole component group unless surjectivity has separately been proved.
 
-### 11.3 What the diagnostics verify
+### 8.4 Rank zero and finiteness
 
-These levels test four independent mechanisms. Level $11$ tests an ordinary odd Eisenstein congruence. Level $17$ tests the extra $2$-adic divided-congruence step and the quadratic point $C[2]=\Sigma[2]$. Level $19$ tests the wild factor at $3$, including the fact that $\ell=3$ remains in odd multiplicity one. Level $37$ tests the distinction among the full Eisenstein support, the winding support, and a positive-rank factor.
+If the selected completion of $A(\mathbf Q)$ had positive $\mathbf Z_\ell$-rank $d$, the left side of (8.4) would contain $(\mathbf Z_\ell/\ell^r)^d$ for arbitrarily large $r$. Its order would be unbounded, contradicting the fixed right side. Thus the selected rank is zero. Rational support and Galois conjugacy carry this vanishing across all companion factors, so
 
-No general matrix is inferred from these examples. The displayed data are scalar eigenvalues on one-dimensional newform factors, cyclic component orders, the proven intersection, and the support of the absolute winding class. Their purpose is diagnostic: each would expose a wrong denominator, a reversed $U_p$ variance, or a false claim that the winding quotient is always the whole Jacobian.
+$$
+\operatorname{rank}A(\mathbf Q)=0.
+\tag{8.5}
+$$
 
-## 12. The exported theorem ledger
+Mordell--Weil finite generation now gives
 
-### 12.1 The prime-level Eisenstein package
+$$
+\boxed{A_{\mathfrak m}(\mathbf Q)\text{ is finite}.}
+\tag{8.6}
+$$
 
-For convenient use in the next book, the conclusions are collected in one place. Let $p$ be prime and $n=(p-1)/\gcd(p-1,12)$.
+The uniformity in $r$, rather than finite-level Selmer finiteness by itself, is what forces rank zero.
 
-1. For $p=2,3,5,7,13$, $J_0(p)=0$ and every finite statement below is trivial with $n=1$.
-2. The faithful full cuspidal algebra with incoming $U_p$ satisfies
+### 8.5 The exact torsion boundary
 
-   $$
-   \mathbb T/I\simeq\mathbf Z/n\mathbf Z.
-   $$
+Good-prime Frobenius, finite-flat endpoint recognition at the coefficient prime, and the level sign show that every maximal ideal in the Hecke support of the finite group $A(\mathbf Q)$ is
 
-3. The four Hecke algebras are the image algebras (2.5)--(2.8),
+$$
+(p,I)\qquad(p\mid n_N).
+\tag{8.7}
+$$
 
-   $$
-   \mathbb T^{\mathrm{rel}}\simeq\mathbb T^{\mathrm{aug}},\qquad
-   \mathbb T^{\mathrm{aug}}\simeq
-   \mathbb T\times_{\mathbf Z/n\mathbf Z}\mathbf Z.
-   $$
+If $s_p$ is the Loewy length of the $p$-primary part, then
 
-4. On cusp and Jacobian realizations $U_p=-w_p$; on the boundary and $\Phi_p$, $U_p=1$; on $X_p$, $U_p=\sigma$.
-5. The finite objects and their intersection are
+$$
+\sqrt{\operatorname{Ann}_{\mathbb T}A(\mathbf Q)}
+=\bigcap_{p\mid\#A(\mathbf Q)}(p,I),
+\tag{8.8}
+$$
 
-   $$
-   C\simeq\mathbf Z/n,\qquad
-   \Sigma\simeq\mu_n,\qquad
-   \Phi_p\simeq\mathbf Z/n,\qquad
-   C\xrightarrow{\sim}\Phi_p,\qquad
-   C\cap\Sigma=C[\gcd(n,2)].
-   $$
+and
 
-6. For every odd $\ell\mid n$,
+$$
+\prod_{p\mid\#A(\mathbf Q)}(p,I)^{s_p}
+\subseteq\operatorname{Ann}_{\mathbb T}A(\mathbf Q).
+\tag{8.9}
+$$
 
-   $$
-   J[\mathfrak m]\simeq\mathbf Z/\ell\oplus\mu_\ell,\qquad
-   T_\ell J_{\mathfrak m}\simeq\mathbb T_{\mathfrak m}^2,\qquad
-   \mathbb T_{\mathfrak m}^\vee\simeq\mathbb T_{\mathfrak m},\qquad
-   X_{p,\mathfrak m}\simeq\mathbb T_{\mathfrak m}.
-   $$
+One cannot replace the power in (8.9) by $I$: an operator may map a quotient constituent into a subconstituent. Nor have we proved that $A(\mathbf Q)$ equals the image of $C_N$, or calculated its order. A quotient torsion point need not lift to a rational torsion point on $J$ because its connecting class in $H^1(\mathbf Q,K_{\mathfrak m})$ may be nonzero. The exact rational torsion of the full Jacobian and of the selected quotient lies beyond this package.
 
-   There is no analogous assertion at $2$.
-7. Rational torsion is exactly cuspidal:
+## 9. The cotangent lattice
 
-   $$
-   J_0(p)(\mathbf Q)_{\mathrm{tors}}=C.
-   $$
+### 9.1 Invariant differentials of an optimal quotient
 
-8. At positive genus the nonzero optimal winding quotient is supported exactly on the newform factors with $L(f,1)\ne0$, and its rational points are finite.
-9. In every good residue characteristic, a Hecke translate of $X_0(p)\to J^{\mathrm w}$ is a formal immersion at either cusp. If a rational point lies in the same cusp disk at an odd good prime, it is that cusp.
+Let $r\ne N$ be a prime. Over $\mathbf Z_r$, both $J$ and $A=A_{\mathfrak m}$ have good reduction. Write $\mathcal J_r$ and $\mathcal A_r$ for their abelian schemes and define their invariant cotangent modules
 
-### 12.2 The infrastructure ledger
+$$
+\omega_J=e_J^*\Omega^1_{\mathcal J_r/\mathbf Z_r},
+\qquad
+\omega_A=e_A^*\Omega^1_{\mathcal A_r/\mathbf Z_r}.
+\tag{9.1}
+$$
 
-The deep inputs used in the proof have exact roles.
+Pullback along the optimal quotient embeds $\omega_A$ into $\omega_J$. The Abel--Jacobi identification and the weight-two Kodaira--Spencer theorem identify
 
-| Infrastructure | Exact output used here | Construction and proof machinery |
+$$
+\omega_J\simeq S_2(\Gamma_0(N);\mathbf Z_r).
+\tag{9.2}
+$$
+
+Define the selected cotangent lattice
+
+$$
+\Omega_{\mathfrak m,r}
+=\operatorname{im}(\omega_A\to\omega_J)
+\subseteq S_2(\Gamma_0(N);\mathbf Z_r).
+\tag{9.3}
+$$
+
+It is Hecke stable because the quotient is defined by rational Hecke support and the endomorphisms extend to the good Néron models. Its rational span is the sum of precisely those newform factors retained by $E_{\mathfrak m}$.
+
+This definition uses invariant differentials of the actual optimal quotient. Taking the intersection of a rational newform subspace with a convenient $q$-expansion lattice could give the wrong answer at a prime dividing a congruence degree.
+
+### 9.2 Primitivity and base change
+
+Dualizing the exact sequence (4.7) over $\mathbf Z_r$ gives an exact sequence of Lie algebras and hence an exact cotangent sequence
+
+$$
+0\longrightarrow\omega_A
+\longrightarrow\omega_J
+\longrightarrow\omega_K
+\longrightarrow0.
+\tag{9.4}
+$$
+
+All three terms are finite free over $\mathbf Z_r$. It follows that $\omega_J/\Omega_{\mathfrak m,r}$ is finite free, so $\Omega_{\mathfrak m,r}$ is primitive. Tensoring (9.4) with any $\mathbf Z_r$-algebra remains exact. Therefore the inclusion (9.3) and its quotient commute with arbitrary base change.
+
+**Theorem 9.1.** For every $r\ne N$, the Néron cotangent lattice $\Omega_{\mathfrak m,r}$ is a primitive Hecke-stable sublattice of $S_2(\Gamma_0(N);\mathbf Z_r)$, and
+
+$$
+\Omega_{\mathfrak m,r}\otimes R
+\hookrightarrow S_2(\Gamma_0(N);\mathbf Z_r)\otimes R
+\tag{9.5}
+$$
+
+is injective with finite free quotient for every $\mathbf Z_r$-algebra $R$.
+
+**Proof.** The quotient map extends to the exact abelian-scheme sequence (4.7) after base change to $\mathbf Z_r$. Smoothness makes the associated Lie sequence exact and locally split. Dualizing gives (9.4), whose cokernel $\omega_K$ is finite free. The identification (9.2) places the first term inside the integral cusp lattice. Hecke stability follows because every selected Hecke endomorphism extends over good reduction and preserves the connected kernel. Tensoring a split exact sequence of finite free modules with $R$ preserves exactness, proving base change and primitivity. $\square$
+
+Primitivity ensures that a nonzero invariant differential on $A$ does not disappear when viewed on $J$ modulo $r$. This is exactly the integral information needed for formal immersion.
+
+### 9.3 The completed comparison
+
+At $r=\ell$, apply the local idempotent to (9.4). The saturated Tate comparison (5.7), together with duality between Tate modules and invariant differentials for abelian schemes, gives
+
+$$
+e_{\mathfrak m}\omega_J
+\xrightarrow{\sim}
+e_{\mathfrak m}\omega_A.
+\tag{9.6}
+$$
+
+This equality is on integral lattices. A rational equality of cotangent spaces would not rule out an $\ell$-power index. It is the connectedness of the optimal kernel, exactness of the abelian-scheme sequence, and the direct-summand nature of $e_{\mathfrak m}$ that remove that index.
+
+The cotangent theorem does not claim that $\Omega_{\mathfrak m,\ell}$ is free of rank one over $\mathbb T_{\mathfrak m}$. It may have larger Hecke rank when several branches occur. Formal immersion needs only a nonzero reduced differential and a Fourier coefficient that detects it.
+
+### 9.4 Fourier coefficients as cotangent coordinates
+
+Let $0\ne\bar f\in\Omega_{\mathfrak m,r}/r\Omega_{\mathfrak m,r}$. Since the inclusion is primitive, $\bar f$ is nonzero as a regular dualizing cusp form modulo $r$. The integral $q$-expansion principle gives some $m\ge1$ with
+
+$$
+a_m(\bar f)\ne0.
+\tag{9.7}
+$$
+
+Using $T_m$, including the incoming $U_N$ in the $N$-power part, the coefficient identity gives
+
+$$
+a_1(T_mf)=a_m(f).
+\tag{9.8}
+$$
+
+Thus a suitable Hecke translate moves a nonzero Fourier coefficient into the cotangent coordinate at the cusp. The integer $m$ may depend on $r$ and on the chosen differential. No uniform first coefficient is required.
+
+At $r=2$ or $3$, (9.7) refers to the regular dualizing lattice on the compactified modular object. Stabilizer descent is already built into the lattice, so reduction does not use a naive coarse differential.
+
+## 10. Formal immersion at an oriented cusp
+
+### 10.1 Why the cusp must be oriented
+
+Formal immersion is needed on the point-level curve $X_1(N)$, not merely on $X_0(N)$. A cusp of $X_1(N)$ remembers how the chosen point of order $N$ sits in the degenerate fiber. At an **outward cusp**, the forgetful map
+
+$$
+\rho:X_1(N)\longrightarrow X_0(N)
+\tag{10.1}
+$$
+
+preserves the smoothing parameter. At the opposite orientation it can be ramified, so a cotangent nonvanishing statement downstairs need not pull back to a nonvanishing statement upstairs.
+
+Fix an outward rational cusp $c_1$ and let $c_0=\rho(c_1)$. Point the Abel--Jacobi map at $c_0$:
+
+$$
+\iota_{c_0}:X_0(N)\longrightarrow J,
+\qquad x\longmapsto[x]-[c_0].
+\tag{10.2}
+$$
+
+Compose it with the selected quotient:
+
+$$
+h:X_1(N)\xrightarrow{\rho}X_0(N)
+\xrightarrow{\iota_{c_0}}J
+\xrightarrow{\pi}A.
+\tag{10.3}
+$$
+
+Then $h(c_1)=0$.
+
+### 10.2 The cotangent calculation
+
+Choose a primitive $f\in\Omega_{\mathfrak m,r}$ with nonzero reduction. By (9.7), choose $m$ such that $a_m(f)$ is a unit modulo $r$, and replace $h$ by the Hecke translate
+
+$$
+h_m=T_m\circ h.
+\tag{10.4}
+$$
+
+Let $q$ be the outward smoothing parameter. The pullback of the invariant differential corresponding to $f$ has first-order expansion
+
+$$
+h_m^*f
+=(T_mf)(q)\frac{dq}{q}
+=\bigl(a_1(T_mf)+O(q)\bigr)dq.
+\tag{10.5}
+$$
+
+By (9.8), its image in the cotangent line at $c_1$ is
+
+$$
+a_m(f)\,dq,
+\tag{10.6}
+$$
+
+which is a basis modulo $r$. Hence the map on cotangent spaces is surjective.
+
+**Theorem 10.1.** For every prime $r\ne N$ and every outward rational cusp of $X_1(N)$, some Hecke translate of (10.3) is a formal immersion at that cusp modulo $r$.
+
+**Proof.** A morphism from a relative curve to a smooth group scheme is a formal immersion at a section if the induced map on cotangent spaces is surjective. Equations (10.5)--(10.6) prove precisely that condition. The outward orientation ensures that $q$ remains a uniformizer after pullback from $X_0(N)$. $\square$
+
+The Hecke translate is not an artificial modification of the geometry. It merely chooses a cotangent coordinate in which the nonzero selected differential has unit first coefficient.
+
+### 10.3 Separation in an odd cusp disk
+
+Formal immersion separates two sections once their images in the finite quotient agree. Let $r$ be odd, $r\ne N$, and let $x\in X_1(N)(\mathbf Q)$ reduce to the same outward cusp $c_1$ modulo $r$. By (8.6), $A(\mathbf Q)$ is finite. The difference
+
+$$
+h(x)-h(c_1)=h(x)
+\tag{10.7}
+$$
+
+is torsion and specializes to zero.
+
+At an odd good prime, rational torsion on an abelian variety specializes injectively. Indeed, prime-to-$r$ torsion is etale and hence injects under reduction. An $r$-power torsion point in the kernel lies in the formal group over the unramified field $\mathbf Q_r$; the formal logarithm on a sufficiently deep subgroup and the torsion-freeness of its additive lattice show that this kernel has no nonzero rational $r$-power torsion. Therefore $h(x)=0$.
+
+It follows that $h_m(x)=h_m(c_1)$. A formal immersion separates two sections with the same special point and the same image: surjectivity on completed cotangent spaces makes the induced map of completed local rings surjective, so equality after composition forces equality of the two local homomorphisms. Hence
+
+$$
+\boxed{x\equiv c_1\pmod r, r\text{ odd}, r\ne N
+\quad\Longrightarrow\quad x=c_1.}
+\tag{10.8}
+$$
+
+This is the cusp-disk rigidity exported by the selected quotient.
+
+### 10.4 Limits of the argument
+
+Three boundaries are essential.
+
+First, at $r=2$ the formal-immersion theorem remains true, but the torsion-specialization argument used in (10.8) is not asserted. The rational formal group can contain subtler two-primary behavior. One needs a quotient-specific specialization-kernel theorem before deriving dyadic cusp-disk rigidity.
+
+Second, an inward cusp is not covered merely by applying (10.1), because the forgetful parameter can be ramified there. One must either reverse the orientation by an available automorphism and check rationality or perform a separate cotangent calculation.
+
+Third, the theorem concerns $A_{\mathfrak m}$. The equality $C_N\simeq\Phi_N$ for the full Jacobian does not determine the component map or torsion kernel for $A_{\mathfrak m}$. The descent and formal-immersion arguments use only the actual selected component images and the finite group (8.6).
+
+## 11. Exceptional primes and diagnostic levels
+
+### 11.1 Trivial Eisenstein levels
+
+For
+
+$$
+N=2,3,5,7,13,
+\tag{11.1}
+$$
+
+one has $n_N=1$ and $J_0(N)=0$. The quotient $\mathbb T/I$ is the zero ring, written $\mathbf Z/1\mathbf Z$, and there is no prime $\ell\mid n_N$. The selected quotient, its divisible group, and its cotangent direction do not exist.
+
+The level $13$ case is an important boundary: the modular curve relevant to point-level questions can have positive genus even though the cyclic-level Jacobian $J_0(13)$ has no Eisenstein factor. Formal immersion through a selected Eisenstein quotient therefore supplies no conclusion there.
+
+The levels $2$ and $3$ are settled by direct genus-zero geometry. We do not force the tame weighted-node argument into wild level characteristic.
+
+### 11.2 Levels eleven, seventeen, and nineteen
+
+The first three nontrivial values are
+
+$$
+n_{11}=5,
+\qquad n_{17}=4,
+\qquad n_{19}=3.
+\tag{11.2}
+$$
+
+At level $11$, the sole Eisenstein prime is $5$. The cusp class and the component group both have order $5$, while the selected quotient is the elliptic Jacobian itself. The completed $5$-divisible tower is governed by distinct constant and cyclotomic characters.
+
+At level $17$, the entire Eisenstein index is dyadic. Formula (1.8) gives $v_2(n_{17})=2$. This level tests both the extra factor of $2$ in the exact congruence modulus and the impossibility of labeling order-two integral closures by generic characters. Any proof based only on the rational constant term $(17-1)/24$ would see too little.
+
+At level $19$, the sole Eisenstein prime is $3$. Although $3$ divides the automorphism denominator $12$, the coefficient-prime finite-flat theory is in the odd low-ramification range and distinguishes $1$ from $\bar\chi_3$. The exact correction has already occurred numerically in $n_{19}=3$.
+
+Two larger checks are
+
+$$
+n_{41}=10,
+\qquad n_{73}=6.
+\tag{11.3}
+$$
+
+They show that different primary completions of the same global quotient must be treated separately. Chinese remaindering reconstructs the cyclic scalar quotient, but it does not identify the associated completed group schemes or extension parameters.
+
+### 11.3 The level prime and the coefficient prime
+
+The level prime $N$ and coefficient prime $\ell$ play opposite roles. The Jacobian has semistable bad reduction at $N$, and its component group measures the failure of strict local points to fill the Néron fiber. At $\ell$, the Jacobian has good reduction because $\ell\ne N$, but connected finite-flat torsion makes ordinary unramified cohomology insufficient.
+
+The operator distinction mirrors the geometry. At $q\ne N$ one has the good-prime polynomial (1.4). At $N$ one uses the incoming $U_N$ and the direct correspondence calculation $U_Nc=c$. Substituting $q=N$ into (1.4) would be invalid.
+
+The formal-immersion prime $r$ is allowed to equal $\ell$, because the primitive cotangent comparison (9.6) prevents the selected differential from vanishing modulo $\ell$. It must differ from $N$, where the quotient does not have good abelian reduction, and it is taken odd for the cusp-disk consequence.
+
+### 11.4 A normalization ledger
+
+The principal conventions and their consequences are:
+
+| Object | Convention | Consequence |
 |---|---|---|
-| Two-cusp Deligne--Rapoport--Katz theorem | (3.5) implies $nx=0$, with the exponent table (3.4) | unrigidified compactified stack, Hodge bundle, descent of $\omega^2$, relative dualizing sheaf, two cusp expansions, base change, saturation, Katz filtration, and wild divided congruences |
-| Perfect Hecke--expansion theorem | $\mathbb T^\vee=S_2(\mathbf Z)$ through $a_1(tf)$ | integral dualizing-form lattice and the full $q$-expansion principle |
-| Semistable $U_p$ theorem | $U_p=-w_p$, $1$, and $\sigma$ on the three stated realizations | neat auxiliary level, normalized $p^2$ correspondence, pullback and trace on dualizing sheaves, newness, monodromy, and descent without dividing a degree |
-| Quadratic Shimura-character theorem | $\sigma_{\chi_p}=(n/2)c$ | Picard descent, theta groups, Siegel functions, generalized-Bernoulli boundary pairing, and rational multiplier control |
-| Mazur--Raynaud odd multiplicity one | $J[\mathfrak m]=\mathbf Z/\ell\oplus\mu_\ell$ | Raynaud uniformization, Book 67 finite-flat classification, the two Selmer orientations, cyclotomic class groups, and admissible-group-scheme devissage |
-| Odd rational support theorem | every rational order-$\ell$ point lies at $(\ell,I)$ | Eichler--Shimura, integral missing coefficients, Katz filtration, and the actual semistable $U_p$ action |
-| Two-primary fixed-line theorem | (8.3)--(8.4) | finite-flat closure over $\mathbf Z_2$, mod-$2$ Deligne--Rapoport Picard and Cartier geometry, $T_2$, semistable $U_p$, and quadratic descent |
-| Absolute winding comparison | rational $e$, integral $ne$, and $\langle e,f\rangle=-L(f,1)$ | Abel--Jacobi periods and Poincaré duality |
-| Kolyvagin--Logachev theorem | $L(f,1)\ne0$ implies $A_f(\mathbf Q)$ finite | imaginary quadratic fields, nonvanishing twists, Gross--Zagier, Heegner Euler systems, and Kolyvagin descent |
-| Integral cotangent theorem | primitive Néron cotangent lattice, (10.1), and formal immersion | optimal quotients, Néron models, dualizing forms, $q$-expansion, and wild corrections at $2$ and $3$ |
+| Exact integer | $n_N=(N-1)/\gcd(N-1,12)$ | correct $2$- and $3$-primary depth |
+| Hecke ideal | $T_q-(1+q)$ and incoming $U_N-1$ | boundary and cusp have the same character |
+| Correspondence | $(\pi_2)_*\pi_1^*$ | covariance agrees on divisors and Jacobians |
+| Frobenius | arithmetic on covariant Tate modules | $F_q^2-T_qF_q+q=0$ |
+| Local selection | $e_{\mathfrak m}$ | integral direct factor of torsion |
+| Rational selection | $E_{\mathfrak m}$ | optimal quotient over $\mathbf Q$ |
+| Coefficient-prime condition | finite flat | connected classes are retained |
+| Level-prime condition | identity-component strict | component error is isolated |
+| Point-level cusp | outward orientation | forgetful map preserves the parameter |
+| Cotangent lattice | Néron dualizing lattice | reduction remains primitive |
 
-These inputs are stated rather than compressed into counterfeit elementary proofs. Every consequence peculiar to the Eisenstein ideal—index, fiber product, intersection, local freeness, Gorensteinness, higher torsion, winding support, and formal immersion—was proved after the relevant input was fixed.
+A change in any row changes a theorem rather than its notation. For example, replacing $U_N-1$ by the opposite sign selects a different local factor, while replacing finite-flat cohomology by unramified cohomology discards the multiplicative atom at $\ell$.
 
-### 12.3 The dependency audit
+## 12. The selected Eisenstein theorem
 
-The formal dependency graph has direct arrows from Books 91 and 140. Book 91 supplies faithful image algebras, localization, Hecke duality, and the congruence-versus-cotangent discipline; Book 140 supplies the prime-level cusp, Shimura subgroup, component group, monodromy lattice, and incoming variance. The proof architectures expose their earlier foundations rather than silently strengthening them: Book 51 for covariant Tate modules, Books 29--33 for continuous and local--global Galois cohomology, Book 67 for odd finite-flat closure and classification, Book 71 for the numerical inequality, Book 122 for correspondence adjoints, and Books 139--140 for integral modular geometry. No conclusion from Book 148 or any later book enters.
+### 12.1 The theorem
 
-The index theorem does not use rational torsion. Its upper bound is the two-cusp theorem, and its lower bound is only the already known cusp class. The augmented fiber product is derived after the index theorem. Book 71 then gives only the inequality (4.7); no equality of cotangent and congruence lengths is asserted without another theorem.
+We can now state the entire package in one place.
 
-The cusp--Shimura intersection uses the quadratic theorem for existence and Galois characters for exclusion. It does not identify a deck-eigen function with an invariant downstairs divisor. The odd multiplicity theorem is prior to Tate freeness. Tate freeness is prior to Gorenstein duality. Gorenstein duality is prior to the final saturated character-lattice identification.
-
-The odd support theorem and the two-primary fixed-line theorem precede the prime-order torsion calculation. Prime-order torsion and $C\simeq\Phi_p$ precede the higher-power argument. Only after all of that is $I$ declared to annihilate rational torsion.
-
-The winding quotient is cut out by an absolute Poincaré-dual class. Its finite rational points come from Kolyvagin--Logachev, not from the Jacobian torsion theorem. The formal-immersion argument uses the actual optimal quotient cotangent lattice. Its rational-point consequence is stated at an odd good prime, where quotient torsion specializes injectively.
-
-### 12.4 The exact interface with Book 148
-
-Book 148 may use the following implication without adding an Eisenstein hypothesis. Let $p$ be a positive-genus prime level, let $r$ be an odd prime with $r\ne p$, and let $x\in X_0(p)(\mathbf Q)$. If the integral moduli argument of Book 139 shows that $x$ reduces to $0$ or $\infty$ modulo $r$, then the winding quotient and formal immersion give
+**Theorem 12.1 (prime-level selected Eisenstein package).** Let $N$ be prime, put
 
 $$
-x=0\quad\text{or}\quad x=\infty
+n_N=\frac{N-1}{\gcd(N-1,12)},
+\qquad
+I=(T_q-(1+q):q\ne N)+(U_N-1),
+\tag{12.1}
 $$
 
-with the same chosen cusp. The required inputs are exactly the finiteness of $J^{\mathrm w}(\mathbf Q)$, odd good-reduction torsion injectivity on that quotient, and the cotangent theorem.
+and use the acting Hecke algebra on $S_2(\Gamma_0(N);\mathbf Z)$ with the incoming level operator.
 
-If the only available cusp disk has residue characteristic $2$, Book 148 must prove a quotient-level specialization-kernel theorem before making the same deduction. It may not infer that theorem from
+1. The exact Eisenstein quotient, index, and scalar congruence ideal are
+
+   $$
+   \mathbb T/I\simeq\mathbf Z/n_N\mathbf Z,
+   \qquad[\mathbb T:I]=n_N,
+   \qquad\eta_E=(n_N).
+   \tag{12.2}
+   $$
+
+2. The cuspidal subgroup $C_N=\langle[0]-[\infty]\rangle$ and the component group at $N$ are cyclic of order $n_N$, and specialization gives
+
+   $$
+   \mathbb T/I\xrightarrow{\sim}C_N
+   \xrightarrow{\sim}\Phi_N(\mathbf F_N).
+   \tag{12.3}
+   $$
+
+3. The auxiliary Shimura subgroup is diagonalizable cyclic of order $n_N$, noncanonically isomorphic to $\mu_{n_N}$, and annihilated by $I$. No full intersection formula with $C_N$ is included.
+
+4. For every $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$,
+
+   $$
+   \mathbb T_{\mathfrak m}/I\mathbb T_{\mathfrak m}
+   \simeq\mathbf Z_\ell/\ell^{v_\ell(n_N)}.
+   \tag{12.4}
+   $$
+
+   The rational support defines an optimal quotient $A_{\mathfrak m}$, while the local idempotent defines finite-flat groups $G_r$ with exact transition maps.
+
+5. The rational and integral selections agree on the selected tower:
+
+   $$
+   e_{\mathfrak m}T_\ell J\simeq
+   e_{\mathfrak m}T_\ell A_{\mathfrak m},
+   \qquad
+   G_r\simeq e_{\mathfrak m}\mathcal A_{\mathfrak m}[\ell^r].
+   \tag{12.5}
+   $$
+
+6. Every $G_r$ is Eisenstein-admissible, filtered by $\underline{\mathbf Z/\ell}$ and $\mu_\ell$. Over $\mathbf Z_\ell$, the direct limit has the canonical sequence
+
+   $$
+   0\to G_{\mathfrak m}^{\mathrm{mult}}
+   \to G_{\mathfrak m}
+   \to G_{\mathfrak m}^{\mathrm{et}}
+   \to0.
+   \tag{12.6}
+   $$
+
+   At $2$, endpoint labels are integral data and extensions retain sign and carry classes.
+
+7. Strict Eisenstein descent gives
+
+   $$
+   \operatorname{Sel}^{\mathrm{str}}(G_r)=0
+   \quad(r\ge1),
+   \qquad
+   A_{\mathfrak m}(\mathbf Q)\text{ finite}.
+   \tag{12.7}
+   $$
+
+   The finite group has Eisenstein residual support and is annihilated by a product of powers as in (8.9); it is not identified exactly.
+
+8. For every prime $r\ne N$, the cotangent lattice of $A_{\mathfrak m}$ is a primitive Hecke-stable sublattice of $S_2(\Gamma_0(N);\mathbf Z_r)$, compatible with base change. At $r=\ell$ it agrees with the completed selected cotangent summand.
+
+9. At every outward rational cusp of $X_1(N)$ and every $r\ne N$, a Hecke translate of
+
+   $$
+   X_1(N)\to X_0(N)\to J_0(N)\to A_{\mathfrak m}
+   \tag{12.8}
+   $$
+
+   is a formal immersion modulo $r$. If $r$ is odd, a rational point in the same cusp disk is the cusp itself.
+
+For $N\in\{2,3,5,7,13\}$, $n_N=1$ and the assertions requiring $\ell\mid n_N$ are vacuous.
+
+### 12.2 Proof
+
+**Proof.** The Eisenstein series (2.4), the integral two-cusp congruence theorem, and the perfect Hecke--Fourier pairing prove (12.2). The eta quotient gives the upper bound for the cusp order. The weighted monodromy graph gives a cyclic component group of order $n_N$ and shows that the specialized cusp is its generator; this proves (12.3). Descent characters for $X_1(N)\to X_0(N)$ give the diagonalizable subgroup in item 3.
+
+Semilocal decomposition of the finite Hecke algebra gives $e_{\mathfrak m}$ and (12.4). Rational characteristic-zero support gives $E_{\mathfrak m}$ and the connected-kernel quotient. Applying the local idempotent to the exact Tate sequence proves (12.5). Applying it to the full finite-flat torsion tower gives exact transition maps.
+
+On the residual radical layers, Eichler--Shimura factors as $(F_q-1)(F_q-q)$. Density forces trivial or cyclotomic simple constituents. Closing an actual stable flag gives admissible finite-flat filtrations; the unramified order-two classification supplies the dyadic endpoints. The connected--etale sequence then yields (12.6).
+
+Kummer theory kills the strict Selmer groups of both atoms. Cartesian devissage preserves this vanishing through every admissible extension. The difference between strict and relaxed Kummer images lies in fixed finite component groups. Uniform boundedness through all $\ell^r$ forces zero rank, and finite generation gives (12.7).
+
+Finally, exactness of the optimal quotient over every good base gives a primitive cotangent sequence. The $q$-expansion principle finds a nonzero coefficient modulo $r$, and a Hecke translate moves it to $a_1$. At an outward cusp this coefficient spans the cotangent line, proving formal immersion. Finiteness of the selected rational group and injectivity of torsion specialization at an odd good prime give cusp-disk separation. $\square$
+
+### 12.3 Dependency and hypothesis audit
+
+The algebraic language of faithful image algebras, localization, completion, congruence modules, and the limits of Gorenstein criteria comes from Book 91. We use it only for the finite torsion-free algebra acting on the stated integral lattice.
+
+Book 119 supplies the integral modular-form lattice, all-cusp $q$-expansion, regular dualizing interpretation in weight two, coefficient formula, and base change. Its stack conditions are retained at $2$ and $3$.
+
+Book 121 supplies the integral correspondence action on Jacobians and Néron models, covariance and Rosati adjunction, the good-prime Eichler--Shimura polynomial, and the Néron cotangent lattice. The polynomial is used only at $q\nmid N\ell$.
+
+Book 140 supplies the pointed Albanese map, optimal quotient formalism, prime-level Néron geometry, and the distinction between finite subgroup schemes, rational points, and components. Its selected-quotient statements have the same incoming $U_N$ convention.
+
+Book 142 proves the exact two-cusp congruence and index, including the distinct $2$- and $3$-primary corrections. It asserts no multiplicity one, Gorenstein property, or rational torsion theorem, and none is inferred here.
+
+Book 143 supplies the exact cusp order, weighted component calculation, specialization isomorphism, Hecke action, and the auxiliary diagonalizable subgroup. It explicitly leaves the full cusp--Shimura intersection and full rational torsion open.
+
+Book 144 supplies schematic-closure devissage, admissible atoms, odd mixed-extension classes, and the dyadic sign and carry. We apply its closure theorem only after Book 145's actual stable generic flag has been produced.
+
+Book 145 supplies the local idempotent, rational-support quotient, saturated Tate comparison, exact finite-flat tower, actual Eisenstein flag, admissibility at all powers, and connected--etale sequence. Its conclusion explicitly excludes complete multiplicity one and freeness over the local Hecke algebra.
+
+Book 146 supplies the strict local conditions, atomic calculations, cartesian devissage, uniform component bound, rank-zero argument, residual support, and power annihilator. We preserve its exact conclusion: finiteness, not identification of the selected rational group.
+
+Book 147 supplies the primitive cotangent comparison and formal immersion at an outward rational cusp of $X_1(N)$. We use its cusp-disk theorem only at odd good primes and do not promote it to an inward or dyadic statement.
+
+All hypotheses match. The level is prime and the character is trivial. The coefficient prime satisfies $\ell\mid n_N$, hence $\ell\ne N$. Torsion group schemes are considered over $\mathbf Z[1/N]$, where the Néron models are abelian schemes. Formal immersion is taken at $r\ne N$, and rational section separation at odd $r$. No later classification theorem enters the proof.
+
+### 12.4 Excluded strengthenings
+
+The following statements are not part of Theorem 12.1:
+
+- $J_0(N)(\mathbf Q)_{\mathrm{tors}}=C_N$;
+
+- $A_{\mathfrak m}(\mathbf Q)$ equals the image of $C_N$;
+
+- $I$ annihilates $A_{\mathfrak m}(\mathbf Q)$ rather than a power determined by its Loewy filtration;
+
+- $C_N\cap\Sigma_N$ has a specified full scheme-theoretic form;
+
+- $J[\mathfrak m]$ has dimension two for every Eisenstein maximal ideal;
+
+- $T_\ell J_{\mathfrak m}$ is free of rank two over $\mathbb T_{\mathfrak m}$;
+
+- $\mathbb T_{\mathfrak m}$ is Gorenstein or a complete intersection;
+
+- the connected--etale sequence (12.6) splits;
+
+- rational torsion specializes injectively on $A_{\mathfrak m}$ at $2$; or
+
+- formal immersion at an outward cusp automatically gives formal immersion at every cusp orientation.
+
+Each omitted assertion requires information not contained in the exact index, admissible filtration, or selected descent. Stating the boundary is part of the theorem: it prevents equal cardinalities, semisimplifications, and rational projectors from being substituted for the integral maps actually proved.
+
+## 13. Conclusion
+
+The Eisenstein ideal begins with the boundary eigenvalues $1+q$ and $1$, but its arithmetic meaning appears only after several integral realizations are compared. The two-cusp modular-form calculation gives the exact scalar collision
 
 $$
-J_0(p)(\mathbf Q)_{\mathrm{tors}}=C.
+\mathbb T/I\simeq\mathbf Z/n_N\mathbf Z.
 $$
 
-The final classification of prime degrees, the treatment of noncuspidal reductions, and the exceptional prime list remain in Book 148.
+The eta multiplier produces a cusp class of bounded order, while the weighted monodromy graph proves that its specialization is a primitive component of exact order $n_N$. The Shimura covering supplies the Cartier-dual multiplicative direction without being confused with either the cusp or the component group.
 
-### 12.5 Conclusion
+At an Eisenstein prime, local completion and rational support solve different problems. The local idempotent creates an integral direct factor of every torsion level. The rational projector creates an optimal quotient over $\mathbf Q$. Exactness of the connected kernel makes their Tate lattices agree. The resulting divisible group has admissible constant and multiplicative constituents, including the full dyadic endpoint, sign, and carry data.
 
-The Eisenstein ideal measures the integral contact between a free boundary eigensystem and the cuspidal Hecke algebra. At prime level that contact has exact order
+Descent then proceeds through actual extensions rather than a semisimplification. The strict Selmer groups of the two atoms vanish; cartesian devissage carries that vanishing through the tower; the remaining level and real component defects are uniformly finite. The selected quotient therefore has rank zero and finite rational points, with precisely Eisenstein residual support but without an unsupported exact torsion formula.
+
+Finally, the optimal quotient has a primitive Néron cotangent lattice. A nonzero reduced differential has a nonzero Fourier coefficient, and a Hecke translate moves that coefficient to the cusp cotangent. At an outward point-level cusp this is the formal-immersion criterion. Finiteness and odd good-prime specialization then turn first-order nondegeneracy into rational cusp-disk rigidity.
+
+The completed package is therefore
 
 $$
-\operatorname{num}\left(\frac{p-1}{12}\right),
+\text{exact congruence}
+\longrightarrow
+\text{cuspidal specialization}
+\longrightarrow
+\text{selected finite-flat tower}
+\longrightarrow
+\text{Eisenstein descent}
+\longrightarrow
+\text{primitive cotangents and formal immersion}.
 $$
 
-but no single calculation explains all of its appearances. The two-cusp modular-stack theorem bounds congruences from above. The eta multiplier supplies a cusp of the same exact order. Picard descent produces the multiplicative Shimura subgroup, monodromy produces the component group, and quadratic descent identifies their sole possible common point.
-
-At odd Eisenstein primes, Raynaud uniformization and finite-flat Selmer theory prove genuine multiplicity one. Only then do Nakayama, generic multiplicity, polarization, and the character lattice yield the free Tate module and Gorenstein local algebra. Rational torsion requires one more separation: odd support comes from Eichler--Shimura plus missing coefficients and the real $U_p$ correspondence, while the prime $2$ comes from its own integral fixed-line theorem. Components then lift the order-$\ell$ result through every higher power.
-
-Absolute winding selects a different structure: the factors with nonzero central $L$-value. Kolyvagin--Logachev makes their rational points finite, and the primitive Néron cotangent lattice turns a nonzero Fourier coefficient into a formal immersion. At an odd good prime, a rational point in a cusp disk is therefore the cusp itself. This is the exact algebraic engine passed to the rational-isogeny argument, with its $2$-primary quotient boundary stated rather than hidden.
+Its strength comes from the precision of each arrow. The exact index is not multiplicity one; equal orders are not an intersection theorem; ordinary constituents are not a split group; residual support is not annihilation by $I$; and a rational quotient is not an integral local projector. With those boundaries fixed, the selected Eisenstein quotient provides the complete algebraic and geometric engine needed for the prime-level rational-point argument.
