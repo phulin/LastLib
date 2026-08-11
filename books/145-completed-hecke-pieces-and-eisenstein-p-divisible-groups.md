@@ -17,14 +17,14 @@
    - [Independence of denominators](#32-independence-of-denominators)
    - [The Neron model](#33-the-neron-model)
    - [Good reduction away from the level](#34-good-reduction-away-from-the-level)
-   - [The exact abelian quotient](#35-the-exact-abelian-quotient)
+   - [What extends over the good-reduction base](#35-what-extends-over-the-good-reduction-base)
    - [Saturation of the selected Tate lattice](#36-saturation-of-the-selected-tate-lattice)
-4. [The completed Hecke piece](#4-the-completed-hecke-piece)
-   - [Finite-level projectors](#41-finite-level-projectors)
-   - [Exact transition maps](#42-exact-transition-maps)
-   - [The resulting divisible group](#43-the-resulting-divisible-group)
-   - [Comparison with the selected quotient](#44-comparison-with-the-selected-quotient)
-   - [Equality of the two finite-flat towers](#45-equality-of-the-two-finite-flat-towers)
+4. [The two completed Hecke towers](#4-the-two-completed-hecke-towers)
+   - [Two finite-level projectors](#41-two-finite-level-projectors)
+   - [Exact transition maps in both towers](#42-exact-transition-maps-in-both-towers)
+   - [The resulting divisible groups](#43-the-resulting-divisible-groups)
+   - [Comparison maps at every torsion power](#44-comparison-maps-at-every-torsion-power)
+   - [The exact scope of the comparison](#45-the-exact-scope-of-the-comparison)
 5. [Faithful completed Hecke action](#5-faithful-completed-hecke-action)
    - [Endomorphisms detected on torsion](#51-endomorphisms-detected-on-torsion)
    - [Faithfulness of the local factor](#52-faithfulness-of-the-local-factor)
@@ -48,7 +48,8 @@
    - [Recognition of the multiplicative part](#82-recognition-of-the-multiplicative-part)
    - [The Eisenstein exact sequence](#83-the-eisenstein-exact-sequence)
    - [Finite levels and heights](#84-finite-levels-and-heights)
-   - [Ordinary structure without a chosen splitting](#85-ordinary-structure-without-a-chosen-splitting)
+   - [Integral recovery of the quotient tower](#85-integral-recovery-of-the-quotient-tower)
+   - [Ordinary structure without a chosen splitting](#86-ordinary-structure-without-a-chosen-splitting)
 9. [Cuspidal and Shimura constituents](#9-cuspidal-and-shimura-constituents)
    - [The two canonical cyclic groups](#91-the-two-canonical-cyclic-groups)
    - [Their closures in the completed piece](#92-their-closures-in-the-completed-piece)
@@ -89,14 +90,14 @@ The correct order of work is therefore
 $$
 \text{local idempotent}
 \Longrightarrow
-\text{direct summands of }J[\ell^r]
+\text{direct summands of abelian-scheme torsion}
 \Longrightarrow
-\text{exact compatible tower}
+\text{exact compatible towers}
 \Longrightarrow
-\ell\text{-divisible group}.
+\ell\text{-divisible groups}.
 $$
 
-Direct summands, rather than arbitrary kernels, are decisive. An idempotent splits every ambient finite-flat torsion group as a product. Flatness, quotient representability, and compatibility then follow formally from the ambient abelian scheme.
+Direct summands, rather than arbitrary kernels, are decisive. An idempotent splits every ambient finite-flat torsion group as a product. Flatness, quotient representability, and compatibility then follow formally from the ambient abelian scheme. There are, however, two ambient abelian schemes: the modular Jacobian and the selected optimal quotient. Their local summands have the same generic Tate lattice, but equality of generic lattices does not by itself identify their finite-flat models at the prime $\ell$. We shall retain both towers and compare them by actual morphisms at every level.
 
 ### 1.2 Prime-level notation
 
@@ -129,26 +130,35 @@ $$
 In particular $\ell\mid N-1$, so $\ell\ne N$. Put
 
 $$
-e=v_\ell(n_N).
+d=v_\ell(n_N).
 $$
 
 We reserve $q$ for primes away from $N\ell$. This separation of the level prime $N$, the Eisenstein prime $\ell$, and an auxiliary good prime $q$ prevents several common normalization errors.
 
 ### 1.3 What will be constructed
 
-There are two related objects.
+There are three related objects, two of them integral.
 
 The first is the **selected Eisenstein quotient** $A_{\mathfrak m}$ of $J$: it is the optimal abelian quotient supported on precisely those characteristic-zero Hecke factors whose integral closures have a prime above $\mathfrak m$. This quotient is canonical as an optimal quotient. A denominator used to write its rational support need not be prime to $\ell$; independence comes from equality of connected kernels, not from cancelling that denominator.
 
-The second is the **completed Hecke piece**
+The quotient carries its own **completed Hecke piece**
 
 $$
-G_{\mathfrak m}=e_{\mathfrak m}\mathcal J[\ell^\infty],
+G_{\mathfrak m}
+=e_{\mathfrak m}\mathcal A_{\mathfrak m}[\ell^\infty].
 $$
 
-where $e_{\mathfrak m}$ is the local idempotent in $\mathbb T\otimes\mathbf Z_\ell$. It is an $\ell$-divisible group over $S$, equipped faithfully with the complete local algebra $\mathbb T_{\mathfrak m}$. Its finite levels are finite flat, and over $\mathbf Z_\ell$ it has a canonical exact sequence with multiplicative kernel and etale quotient.
+Here $e_{\mathfrak m}$ is the local idempotent in $\mathbb T\otimes\mathbf Z_\ell$. This is the tower used for descent on $A_{\mathfrak m}$: its level $G_r$ is exactly the coefficient group scheme in the Kummer sequence for multiplication by $\ell^r$ on the selected quotient.
 
-The completed object is the one needed in descent. The abelian quotient supplies geometric origin, a Neron model, polarizations up to isogeny, and comparison with rational Hecke factors. The divisible group supplies exact integral torsion at every $\ell$-power level.
+There is also the **ambient Jacobian piece**
+
+$$
+P_{\mathfrak m}=e_{\mathfrak m}\mathcal J[\ell^\infty].
+$$
+
+Both are $\ell$-divisible groups over $S$ with faithful $\mathbb T_{\mathfrak m}$-action and finite-flat levels. The principal polarization makes $P_{\mathfrak m}$ integrally self-dual. Initially the quotient map gives a quasi-isogeny $P_{\mathfrak m}\dashrightarrow G_{\mathfrak m}$ and an isomorphism of their generic Tate lattices. A denominator in the rational projector can have positive $\ell$-adic valuation, so generic saturation alone cannot identify isolated finite-flat levels. After admissibility proves that both compatible towers are ordinary, their canonical endpoint sequences supply the missing integral rigidity and upgrade the comparison to an isomorphism at every level.
+
+The quotient tower $G_{\mathfrak m}$ is the completed object needed in descent. The ambient tower $P_{\mathfrak m}$ supplies a canonical integral polarization and a useful comparison object. Keeping them separate during the construction avoids a false single-level argument; proving that they eventually agree is a theorem, not a definition.
 
 ## 2. Finite Hecke algebras and their local idempotents
 
@@ -156,7 +166,7 @@ Localization becomes geometric only after it is represented by an idempotent tha
 
 ### 2.1 The acting algebra
 
-Because $\mathbb T$ is the image of the abstract correspondences on a finite free integral lattice of differentials, it is a finite torsion-free $\mathbf Z$-algebra. The Rosati involution attached to the canonical principal polarization fixes the good Hecke operators and preserves $U_N$ in the present prime-level normalization. Hence it fixes every element of the commutative algebra they generate. The positivity of Rosati is important here: on rational homology it makes every such element self-adjoint for a positive-definite form, and therefore diagonalizable after extending scalars to $\mathbf R$. A nilpotent element is consequently zero. Thus the rational algebra
+Because $\mathbb T$ is the image of the abstract correspondences on a finite free integral lattice of differentials, it is a finite torsion-free $\mathbf Z$-algebra. The Rosati involution attached to the canonical principal polarization fixes every good Hecke operator. At prime level the acting-image identity is $U_N=-w_N$ on weight-two cusp forms. The Atkin--Lehner involution is induced by an involution of the curve, so its Rosati adjoint is its inverse, hence itself. Thus $U_N$ is self-adjoint as well, and Rosati fixes every element of the commutative algebra generated by these operators. The positivity of Rosati is important here: on rational homology it makes every such element self-adjoint for a positive-definite form, and therefore diagonalizable after extending scalars to $\mathbf R$. A nilpotent element is consequently zero. Thus the rational algebra
 
 $$
 \mathbb T_{\mathbf Q}=\mathbb T\otimes\mathbf Q
@@ -227,13 +237,13 @@ E\in\mathbb T_{\mathbf Q},
 \qquad eE=e,
 $$
 
-but $E\otimes1$ can be strictly larger than $e$. Choose any positive integer $a$ such that
+but $E\otimes1$ can be strictly larger than $e$. Choose any positive integer $M$ such that
 
 $$
-u=aE\in\mathbb T.
+u=ME\in\mathbb T.
 $$
 
-No claim is made that $a$ is prime to $\ell$. The rational projector constructs an abelian quotient containing all coefficient conjugates forced by rationality; the integral idempotent subsequently extracts its precise $\mathfrak m$-adic summand. Keeping these two operations separate is essential.
+No claim is made that $M$ is prime to $\ell$. The rational projector constructs an abelian quotient containing all coefficient conjugates forced by rationality; the integral idempotent subsequently extracts its precise $\mathfrak m$-adic summand. Keeping these two operations separate is essential.
 
 ### 2.5 Why the two projectors cannot be identified
 
@@ -244,7 +254,7 @@ K\otimes_{\mathbf Q}\mathbf Q_\ell
 \simeq K_{\lambda_1}\times K_{\lambda_2}\times\cdots . \tag{2.2}
 $$
 
-The characteristic-zero abelian factor carrying the $K$-action is a rational object. It contains all factors in (2.2). The coordinate projector onto $K_{\lambda_1}$ belongs to $K\otimes\mathbf Q_\ell$, but in general it does not belong to $K$, and therefore cannot define a rational abelian subvariety or quotient. Galois conjugacy of the primes above $\ell$ is exactly the obstruction.
+The characteristic-zero abelian factor carrying the $K$-action is a rational object. It contains all factors in (2.2). The coordinate projector onto $K_{\lambda_1}$ belongs to $K\otimes\mathbf Q_\ell$, but in general it does not belong to $K$, and therefore cannot define a rational abelian subvariety or quotient. The obstruction is precisely that the field $K$ has no nontrivial rational idempotents even when its scalar extension to $\mathbf Q_\ell$ splits.
 
 By contrast, the same coordinate projector can preserve the integral $\ell$-adic Tate lattice. It comes from the idempotent $e$ of the finite semilocal ring $\mathbb T\otimes\mathbf Z_\ell$, not from an element of $\mathbb T_{\mathbf Q}$. It consequently acts on every $\ell^r$-torsion group scheme even when it has no meaning as a rational endomorphism of $J$.
 
@@ -263,11 +273,11 @@ $$
 
 The relation $eE=e$ says that the local summand occurs inside the rational support. It does not say $e=E\otimes1$. If the field factor has several primes above $\ell$, the inequality is strict. Any proof that silently replaces $e$ by a rational projector has discarded precisely the companion primes that rationality obliges the quotient to retain.
 
-There is a second possible error. One might choose a denominator $a$ for $E$ and argue that the resulting isogeny has degree prime to $\ell$. No such choice is generally available. The denominator of $E$ records the failure of the rational decomposition to split the integral Hecke lattice, and that failure can be supported at $\ell$. The saturation argument below therefore does not cancel a denominator. It uses the connected kernel of the optimal quotient and exactness of its entire torsion sequence.
+There is a second possible error. One might choose a denominator $M$ for $E$ and argue that the resulting comparison has degree prime to $\ell$. No such choice is generally available. The denominator of $E$ records the failure of the rational decomposition to split the integral Hecke lattice, and that failure can be supported at $\ell$. The saturation theorem below is therefore a theorem about generic Tate lattices. It does not cancel the denominator in the category of finite-flat group schemes.
 
 ## 3. The selected Eisenstein quotient
 
-The completed torsion piece could be studied entirely inside $J$, but later descent also needs a genuine abelian quotient with a Neron model. Rational support produces that quotient. The central question is whether its integral $\ell$-adic lattice agrees with the completed summand already present in $J$. The connected kernel of the optimal quotient will make the answer exact rather than merely up to isogeny.
+The completed torsion piece can be studied inside $J$, but later descent needs a genuine abelian quotient with a Neron model. Rational support produces that quotient. Its generic $\ell$-adic lattice agrees exactly with the selected lattice in $J$. Integral finite-flat models with the same generic lattice can differ at $\ell$ in general, so equality in the present tower requires the separate ordinary-rigidity argument of Chapter 8.
 
 ### 3.1 Optimal quotients attached to rational support
 
@@ -283,7 +293,7 @@ $$
 A_{\mathfrak m}=J/K. \tag{3.1}
 $$
 
-The quotient exists as an abelian variety. The map $\pi:J\to A_{\mathfrak m}$ has connected kernel and is therefore optimal. Since $u$ vanishes on $(1-E)J$ and acts as multiplication by $a$ on $EJ$ up to isogeny, $A_{\mathfrak m}$ has exactly the rational Hecke support meeting the selected complete local factor. It can have companion local factors above $\ell$; its $\mathfrak m$-factor is nevertheless exactly the one selected by $e$.
+The quotient exists as an abelian variety. The map $\pi:J\to A_{\mathfrak m}$ has connected kernel and is therefore optimal. Since $u$ vanishes on $(1-E)J$ and acts as multiplication by $M$ on $EJ$ up to isogeny, $A_{\mathfrak m}$ has exactly the rational Hecke support meeting the selected complete local factor. It can have companion local factors above $\ell$; its $\mathfrak m$-factor is nevertheless exactly the one selected by $e$.
 
 An equivalent denominator-free description uses the saturated ideal
 
@@ -293,17 +303,17 @@ $$
 
 Then $K=(J[\mathfrak a])^0$. Indeed, the elements of $\mathfrak a$ act trivially on the $(1-E)$-support and, after tensoring with $\mathbf Q$, contain an isogeny on every $E$-factor. Their common kernel therefore has $(1-E)J$ as its maximal connected abelian subvariety and only a finite contribution on the $E$-support. Saturation makes this description independent of cleared denominators. Notice that using $(1-E)\mathbb T_{\mathbf Q}\cap\mathbb T$ would select the opposite connected support. The displayed ideal is the canonical denominator-free description of the selected quotient.
 
-The construction is nontrivial exactly when a characteristic-zero Hecke factor lies above $\mathfrak m$. The congruence $\mathbb T/I\ne0$ guarantees that the completed local algebra and completed torsion piece are nonzero, but it does not, by itself, assert that one characteristic-zero branch accounts for the full exponent $e$. Several branches may meet at $\mathfrak m$.
+The construction is nontrivial exactly when a characteristic-zero Hecke factor lies above $\mathfrak m$. The congruence $\mathbb T/I\ne0$ guarantees that the completed local algebra and completed torsion piece are nonzero, but it does not, by itself, assert that one characteristic-zero branch accounts for the full exponent $d$. Several branches may meet at $\mathfrak m$.
 
 ### 3.2 Independence of denominators
 
-Suppose $a'$ is another positive integer with $a'E\in\mathbb T$. The connected kernels of $aE$ and $a'E$ have the same rational tangent space and the same complementary rational support; hence they are equal. More concretely, choose integers $r,s$ with
+Suppose $M'$ is another positive integer with $M'E\in\mathbb T$. The connected kernels of $ME$ and $M'E$ have the same rational tangent space and the same complementary rational support; hence they are equal. More concretely, choose integers $r,s$ with
 
 $$
-ra+sa'=\gcd(a,a').
+rM+sM'=\gcd(M,M').
 $$
 
-The connected kernels of $aE$ and $a'E$ both equal the connected kernel of $\gcd(a,a')E$, because multiplication by a nonzero integer is an isogeny and does not change the maximal connected abelian subvariety on which $E$ vanishes. Therefore (3.1) is independent of the denominator.
+The connected kernels of $ME$ and $M'E$ both equal the connected kernel of $\gcd(M,M')E$, because multiplication by a nonzero integer is an isogeny and does not change the maximal connected abelian subvariety on which $E$ vanishes. Therefore (3.1) is independent of the denominator.
 
 Different choices of an abelian subvariety representing the image of $E$ can differ by isogeny. The optimal quotient removes this ambiguity. Its full $\ell$-divisible group may contain companion local factors, so the integral idempotent must still be applied.
 
@@ -330,9 +340,9 @@ There is also an intrinsic argument. Good reduction of an abelian variety is inv
 
 At $N$, properness generally fails. The component group calculated from the two-component special fiber is essential, and no assertion below treats $\mathcal A_{\mathfrak m}[\ell^r]$ over $\mathbf Z_N$ as torsion of an abelian scheme.
 
-### 3.5 The exact abelian quotient
+### 3.5 What extends over the good-reduction base
 
-The quotient $A_{\mathfrak m}=J/K$ is more useful than an arbitrary abelian variety isogenous to the image of $E$ because its kernel is connected. We now record the exactness that connectedness buys.
+The connected kernel gives an exact quotient over the generic field. It is important to separate that fact from the stronger assertion that the same connected kernel remains the scheme-theoretic kernel over every residue field.
 
 Over $\mathbf Q$ there is an fppf exact sequence
 
@@ -341,53 +351,53 @@ $$
 \xrightarrow{\pi}A_{\mathfrak m}\longrightarrow0. \tag{3.2}
 $$
 
-For every positive integer $n$, it induces
+For every positive integer $n$, it induces an exact sequence
 
 $$
 0\longrightarrow K[n]\longrightarrow J[n]
 \xrightarrow{\pi}A_{\mathfrak m}[n]\longrightarrow0. \tag{3.3}
 $$
 
-The surjectivity at the right is worth proving. Let $y$ be an $n$-torsion point of the quotient over a test scheme. Fppf-locally, lift it to $x\in J$. Then $nx$ lies in $K$. Multiplication by $n$ on the abelian variety $K$ is faithfully flat, so after a further fppf cover there is $k\in K$ with $nk=nx$. The point $x-k$ belongs to $J[n]$ and still maps to $y$. Its ambiguity is exactly $K[n]$. This proves (3.3) as a sequence of group schemes, without counting geometric points.
+The surjectivity at the right is worth proving. Let $y$ be an $n$-torsion point of the quotient over a test scheme. Fppf-locally, lift it to $x\in J$. Then $nx$ lies in $K$. Multiplication by $n$ on the abelian variety $K$ is faithfully flat, so after a further fppf cover there is $k\in K$ with $nk=nx$. The point $x-k$ belongs to $J[n]$ and still maps to $y$. Its ambiguity is exactly $K[n]$. This proves (3.3) as a statement about group schemes, without counting geometric points.
 
-The same argument works over $S$, but exactness of the integral abelian sequence deserves justification. Locally at every prime different from $N$, the abelian subvariety $K$ and the quotient $A_{\mathfrak m}$ have good reduction because good reduction is stable under abelian subvarieties and quotients. Their maps extend uniquely between the abelian-scheme models.
-
-Choose a Poincare complementary homomorphism $s:A_{\mathfrak m}\to J$ and an integer $d>0$ such that
+The denominator used to define $K$ also supplies a comparison in the opposite direction. Recall that $u=ME$ and $K=(\ker u)^0$. The restriction of $u$ to $K$ is zero, so $u$ factors uniquely through $\pi$:
 
 $$
-\pi s=[d]_{A_{\mathfrak m}}. \tag{3.4}
+J\xrightarrow{\pi}A_{\mathfrak m}
+\xrightarrow{s}J,
+\qquad s\pi=u. \tag{3.4}
 $$
 
-Both maps extend over the good-reduction base. Since multiplication by $d$ is faithfully flat on every abelian scheme, (3.4) makes $\pi:\mathcal J\to\mathcal A_{\mathfrak m}$ fiberwise surjective. Its fibers have constant dimension $\dim K$; the fiberwise flatness criterion, applied to the smooth source and target, makes $\pi$ faithfully flat.
-
-We now use the relative-kernel decomposition, whose proof in this case is as follows. If $f:X\to Y$ is a faithfully flat homomorphism of abelian schemes over a DVR, put $H=\ker(f)$. The schematic closure in $H$ of the generic identity component is stable under multiplication and inverse. Translating its smooth locus by sections over a strict henselization shows that this locus meets every geometric fiber in a connected proper subgroup of the generic relative dimension. The fiberwise flatness criterion then makes the closure flat, while rigidity extends the group law from the dense smooth locus. It is proper and smooth with geometrically connected fibers, hence is an abelian scheme $H^{\mathrm{ab}}$. The quotient
+Since $u=ME$ and $E$ is the identity on the selected rational support, we also have
 
 $$
-0\longrightarrow H^{\mathrm{ab}}\longrightarrow H
-\longrightarrow D\longrightarrow0
+\pi s=[M]_{A_{\mathfrak m}}. \tag{3.5}
 $$
 
-has relative dimension zero. Properness and flatness make $D$ finite flat, and its generic fiber is the component group of $H_{\mathbf Q}$. This last quotient must be kept finite flat: at a residue characteristic it need not be etale.
+One can verify (3.5) after composing with the faithfully flat map $\pi$: both composites with $\pi$ equal $M\pi$. The maps $\pi$ and $s$ are Hecke equivariant because the Hecke algebra is commutative and $\pi$ is an epimorphism of fppf sheaves.
 
-Apply the decomposition to $H=\ker(\pi)$. Its generic fiber is the connected abelian variety $K$, so $D$ has trivial generic fiber. A finite-flat group over a connected DVR has constant rank; hence $D$ has rank one and is trivial. Thus the whole kernel is an abelian scheme with generic fiber $K$, and uniqueness of the good model identifies it with $\mathcal K$. Repeating this argument at every localization of the Dedekind base gives
+Good reduction and the extension theorem for homomorphisms of abelian varieties extend both maps uniquely to the abelian schemes over $S$:
+
+$$
+\mathcal J
+\mathop{\longrightarrow}^{\pi}
+\mathcal A_{\mathfrak m}
+\mathop{\longrightarrow}^{s}
+\mathcal J, \tag{3.6}
+$$
+
+and the identities $s\pi=u$ and $\pi s=[M]$ still hold. In particular $\pi$ is fiberwise surjective: multiplication by $M$ on an abelian scheme is fppf surjective, and (3.5) factors it through $\pi$. The fibers of $\pi$ have constant dimension, so the standard flatness criterion for morphisms between smooth schemes makes $\pi$ faithfully flat. Its scheme-theoretic kernel is therefore a proper flat group scheme whose generic fiber is $K$.
+
+This is the point at which one must stop. A proper flat group scheme with smooth connected generic fiber need not have smooth special fiber. Nor does equality of the generic identity component prove that the closure of $K$ is the entire integral kernel. A generic monomorphism between good models can acquire a vertical kernel, and a generic quotient can acquire non-smooth vertical structure. Translation of the smooth locus does not repair this: it describes an open subgroup of a special fiber, not the whole fiber. Thus the preceding facts do **not** prove an exact sequence
 
 $$
 0\longrightarrow\mathcal K\longrightarrow\mathcal J
-\xrightarrow{\pi}\mathcal A_{\mathfrak m}\longrightarrow0 \tag{3.5}
+\longrightarrow\mathcal A_{\mathfrak m}\longrightarrow0
 $$
 
-is exact over $S$, and for every $r$,
+with $\mathcal K$ an abelian scheme, and they do not prove exactness of the corresponding torsion sequence over $S$. Such a conclusion would require an additional integral theorem controlling the kernel at every good residue characteristic, including the characteristic $\ell$ where the denominator of $E$ can be nonunit.
 
-$$
-0\longrightarrow\mathcal K[\ell^r]
-\longrightarrow\mathcal J[\ell^r]
-\longrightarrow\mathcal A_{\mathfrak m}[\ell^r]
-\longrightarrow0 \tag{3.6}
-$$
-
-is fppf exact. This is an exact sequence of torsion of abelian schemes. It is not obtained by taking the kernel of a random endomorphism of a Neron model.
-
-Passing to inverse limits on geometric generic fibers gives an exact sequence of free $\mathbf Z_\ell$-modules
+Nothing needed below is lost. Exact sequence (3.3) over $\mathbf Q$ gives an exact sequence of free $\mathbf Z_\ell$-modules
 
 $$
 0\longrightarrow T_\ell K
@@ -396,19 +406,24 @@ $$
 \longrightarrow0. \tag{3.7}
 $$
 
-Surjectivity survives the inverse limit because the finite transition maps are surjective. Equivalently, (3.6) already says that the quotient lattice $T_\ell A_{\mathfrak m}$ is the honest quotient of $T_\ell J$, not merely a commensurable lattice in the same rational representation.
+Surjectivity survives the inverse limit because the transition maps on the finite generic torsion groups are surjective. This exact generic Tate sequence is the input to the lattice calculation. Integral finite-flat comparison will instead use the extended maps (3.6) directly.
 
 ### 3.6 Saturation of the selected Tate lattice
 
 We can now prove the statement that is lost if one reasons only with rational projectors.
 
-**Theorem 3.1 (integral saturation).** The quotient map induces an isomorphism
+**Theorem 3.1 (generic Tate-lattice saturation).** The quotient map induces an isomorphism
 
 $$
 eT_\ell J\xrightarrow{\sim}eT_\ell A_{\mathfrak m}. \tag{3.8}
 $$
 
-In particular its image is saturated, and for every $r\geq1$ it induces an isomorphism on the corresponding $e$-parts modulo $\ell^r$.
+In particular its image is saturated. For every $r\geq1$ it induces an isomorphism of generic finite etale group schemes
+
+$$
+eJ[\ell^r]\xrightarrow{\sim}eA_{\mathfrak m}[\ell^r]
+\qquad\text{over }\mathbf Q. \tag{3.9}
+$$
 
 **Proof strategy.** Apply the integral idempotent to the exact sequence (3.7). The only point is to show that its part on the connected kernel vanishes integrally. Rational support gives this after tensoring with $\mathbf Q_\ell$; torsion-freeness of the Tate lattice then removes the possible finite error.
 
@@ -421,7 +436,7 @@ $$
 Since $eE=e$, the idempotent $e$ also acts as zero on this rational vector space. The module $eT_\ell K$ is a submodule of the free $\mathbf Z_\ell$-module $T_\ell K$. It is therefore torsion-free. Its scalar extension to $\mathbf Q_\ell$ is zero, so
 
 $$
-eT_\ell K=0. \tag{3.9}
+eT_\ell K=0. \tag{3.10}
 $$
 
 Applying the exact direct-summand functor $e(-)$ to (3.7) now gives
@@ -432,9 +447,9 @@ $$
 \longrightarrow0.
 $$
 
-This proves (3.8). Reducing an isomorphism of finite free $\mathbf Z_\ell$-modules modulo $\ell^r$ proves the finite-level assertion. $\square$
+This proves (3.8). Reducing an isomorphism of finite free $\mathbf Z_\ell$-modules modulo $\ell^r$ proves (3.9). $\square$
 
-The proof did not claim that $e$ is rational. It used $E$ to construct the connected quotient and used $e$ only after passing to the $\ell$-adic exact sequence. If a coefficient field has several primes above $\ell$, all of them remain in $A_{\mathfrak m}$, while (3.8) extracts exactly the chosen prime. This is the promised resolution of the companion-prime problem.
+The proof did not claim that $e$ is rational. It used $E$ to construct the connected quotient and used $e$ only after passing to the generic $\ell$-adic exact sequence. If a coefficient field has several primes above $\ell$, all of them remain in $A_{\mathfrak m}$, while (3.8) extracts exactly the chosen prime.
 
 There is a useful lattice reformulation. Let
 
@@ -442,129 +457,202 @@ $$
 L=T_\ell J,\qquad L_A=T_\ell A_{\mathfrak m}.
 $$
 
-The rational map identifies $e(L\otimes\mathbf Q_\ell)$ with $e(L_A\otimes\mathbf Q_\ell)$. Theorem 3.1 asserts the stronger equality of integral lattices
+The rational map identifies $e(L\otimes\mathbf Q_\ell)$ with $e(L_A\otimes\mathbf Q_\ell)$. Theorem 3.1 asserts the stronger equality of generic integral Tate lattices
 
 $$
-\pi(eL)=eL_A, \tag{3.10}
+\pi(eL)=eL_A. \tag{3.11}
 $$
 
-not merely finite index. Thus there is no residual isogeny kernel to be carried through the later finite-flat arguments.
+This is stronger than equality after tensoring with $\mathbf Q_\ell$, but it is not a theorem about Hopf orders over $\mathbf Z_\ell$. Two finite-flat group schemes can have isomorphic generic Tate data and still be different integral models. Chapter 4 gives the strongest comparison that follows from the available data.
 
-## 4. The completed Hecke piece
+## 4. The two completed Hecke towers
 
-We now apply the local idempotent to finite-flat group schemes. This reverses a common but unsafe order of reasoning: flatness is not deduced from a Hecke kernel. Instead, an idempotent first splits the ambient torsion group, and the desired group is one of the two direct factors. The compatible ambient multiplication sequences then supply divisibility at every level.
+We now apply the local idempotent to the torsion of both abelian schemes. This construction does not ask whether the quotient map has a smooth integral kernel. Each tower is obtained independently as a direct factor of an ambient finite-flat group, and therefore each is exact at every level.
 
-### 4.1 Finite-level projectors
+### 4.1 Two finite-level projectors
 
-For every $r\ge1$, the group $\mathcal J[\ell^r]$ is finite locally free over $S$. The action of $\mathbb T$ on $\mathcal J$ induces an action of
-
-$$
-\mathbb T/\ell^r\mathbb T
-$$
-
-on this group. Reduce $e\in\mathbb T_\ell$ modulo $\ell^r$ and define
+For every $r\ge1$, both $\mathcal J[\ell^r]$ and $\mathcal A_{\mathfrak m}[\ell^r]$ are finite locally free over $S$. Reduce $e\in\mathbb T_\ell$ modulo $\ell^r$ and define
 
 $$
-G_r=e\mathcal J[\ell^r]. \tag{4.1}
+P_r=e\mathcal J[\ell^r],
+\qquad
+G_r=e\mathcal A_{\mathfrak m}[\ell^r]. \tag{4.1}
 $$
 
-This image is represented without any flatness argument: the complementary idempotent gives an isomorphism
+The letter $P$ records the ambient principally polarized Jacobian piece; the letter $G$ records the quotient tower used in descent. The action on $\mathcal A_{\mathfrak m}$ is obtained from the Hecke action on the rational support. Factors not belonging to $E$ act trivially there, while all companion primes above $\ell$ remain until the local idempotent is applied.
+
+The complementary idempotent gives product decompositions
 
 $$
+\begin{aligned}
 \mathcal J[\ell^r]
-\xrightarrow{\sim}
-G_r\times (1-e)\mathcal J[\ell^r],
-\qquad x\longmapsto(ex,(1-e)x). \tag{4.2}
+&\xrightarrow{\sim}
+P_r\times(1-e)\mathcal J[\ell^r],\\
+\mathcal A_{\mathfrak m}[\ell^r]
+&\xrightarrow{\sim}
+G_r\times(1-e)\mathcal A_{\mathfrak m}[\ell^r].
+\end{aligned} \tag{4.2}
 $$
 
-The inverse adds the two components. Thus $G_r$ is finite locally free and both its inclusion and projection are Hecke equivariant. This is stronger than taking the schematic closure of a generic local summand: it constructs the summand simultaneously in every fiber.
+In both lines the map sends $x$ to $(ex,(1-e)x)$ and the inverse adds the components. Thus $P_r$ and $G_r$ are represented finite-flat groups, and all inclusions and projections are Hecke equivariant. This is stronger than taking a kernel of the Eisenstein ideal: it constructs the summands in every fiber before any kernel or closure operation is considered.
 
-Because the base is connected, the rank is constant. On the generic fiber, $e$ projects a free $\mathbf Z_\ell$-Tate lattice of some rank $h$, so
-
-$$
-\operatorname{rank}_S G_r=\ell^{rh}. \tag{4.3}
-$$
-
-The integer $h$ is the height of the completed piece. No rank-two or multiplicity-one assertion is hidden in this notation.
-
-### 4.2 Exact transition maps
-
-Multiplication by $\ell^r$ on the ambient divisible group gives an exact sequence
+Theorem 3.1 identifies their generic Tate lattices. If their common rank is $h$, then the connectedness of $S$ gives
 
 $$
-0\longrightarrow\mathcal J[\ell^r]
-\longrightarrow\mathcal J[\ell^{r+s}]
-\xrightarrow{\ell^r}\mathcal J[\ell^s]
+\operatorname{rank}_S P_r
+=\operatorname{rank}_S G_r
+=\ell^{rh}. \tag{4.3}
+$$
+
+No rank-two or multiplicity-one statement is hidden in $h$.
+
+### 4.2 Exact transition maps in both towers
+
+For either abelian scheme $\mathcal B=\mathcal J$ or $\mathcal A_{\mathfrak m}$, multiplication gives an fppf exact sequence
+
+$$
+0\longrightarrow\mathcal B[\ell^r]
+\longrightarrow\mathcal B[\ell^{r+s}]
+\xrightarrow{\ell^r}\mathcal B[\ell^s]
 \longrightarrow0. \tag{4.4}
 $$
 
-The projector $e$ commutes with multiplication. Applying the exact direct-summand functor $e(-)$ to (4.4) gives
+The projector commutes with multiplication. Applying the direct-summand functor $e(-)$ gives, separately,
+
+$$
+0\longrightarrow P_r
+\longrightarrow P_{r+s}
+\xrightarrow{\ell^r}P_s
+\longrightarrow0, \tag{4.5}
+$$
+
+and
 
 $$
 0\longrightarrow G_r
 \longrightarrow G_{r+s}
 \xrightarrow{\ell^r}G_s
-\longrightarrow0. \tag{4.5}
+\longrightarrow0. \tag{4.6}
 $$
 
-Exactness here is fppf exactness. In particular the last arrow is faithfully flat and its kernel is exactly $G_r$. This checks the divisibility condition that a mere nested tower would not provide.
+The final arrows are faithfully flat and the displayed left terms are their exact scheme-theoretic kernels. Taking $s=1$ shows that multiplication $P_{r+1}\to P_r$ and $G_{r+1}\to G_r$ is faithfully flat with kernel $P_1$ and $G_1$, respectively. These statements come from the two ambient abelian schemes and do not use a torsion exact sequence relating them.
 
-Taking $s=1$ also shows that the transition map $\ell:G_{r+1}\to G_r$ is faithfully flat with kernel $G_1$. Induction recovers (4.5), so either family of exactness statements can be used as the finite-level criterion.
-
-### 4.3 The resulting divisible group
+### 4.3 The resulting divisible groups
 
 Define
 
 $$
-G_{\mathfrak m}=\varinjlim_rG_r. \tag{4.6}
+P_{\mathfrak m}=\varinjlim_rP_r,
+\qquad
+G_{\mathfrak m}=\varinjlim_rG_r. \tag{4.7}
 $$
 
-Equations (4.3) and (4.5) prove that this is an $\ell$-divisible group of height $h$ over $S$. Its $\ell^r$-torsion is precisely $G_r$. Formation commutes with base change because torsion, the Hecke action, and the direct-summand decomposition (4.2) do.
+Equations (4.3), (4.5), and (4.6) prove that both are $\ell$-divisible groups of height $h$ over $S$. Their $\ell^r$-torsion groups are exactly $P_r$ and $G_r$. Formation of either tower commutes with arbitrary base change from $S$, because torsion, Hecke action, and the product decompositions (4.2) commute with base change.
 
-Cartier duality also commutes with the projector. If the principal polarization identifies $\mathcal J[\ell^\infty]^D$ with $\mathcal J[\ell^\infty]$, then
-
-$$
-G_{\mathfrak m}^D\simeq e^\dagger\mathcal J[\ell^\infty], \tag{4.7}
-$$
-
-where $e^\dagger$ is the Rosati adjoint. For the prime-level Hecke algebra $e^\dagger=e$, so the completed piece is self-dual, though the induced polarization can be only a quasi-polarization if one passes through a nonprincipal quotient model.
-
-### 4.4 Comparison with the selected quotient
-
-The saturation theorem removes the ambiguity that usually accompanies a passage from a rational support to an integral quotient. The optimal quotient map induces
+The two duality statements are deliberately different. The principal polarization of $J$ and Rosati self-adjointness of $e$ give an integral isomorphism
 
 $$
-G_{\mathfrak m}\longrightarrow
-\mathcal A_{\mathfrak m}[\ell^\infty]_{\mathfrak m}, \tag{4.8}
+P_{\mathfrak m}^D\simeq P_{\mathfrak m}. \tag{4.8}
 $$
 
-where the right side means the $e$-direct factor, not the kernel of a possibly nonflat ideal action. By Theorem 3.1 this map is an isomorphism. At level $r$ it is the restriction of (3.6) to direct factors and gives
+For the quotient one has instead
 
 $$
-e\mathcal J[\ell^r]
-\xrightarrow{\sim}
-e\mathcal A_{\mathfrak m}[\ell^r]. \tag{4.9}
+G_{\mathfrak m}^D
+\simeq e^\dagger\mathcal A_{\mathfrak m}^{\vee}[\ell^\infty]. \tag{4.9}
 $$
 
-To see the integral assertion directly, apply $e$ to (3.6). Its kernel is $e\mathcal K[\ell^r]$. The Tate-lattice calculation (3.9) says that the generic fiber of this kernel is zero. But $e\mathcal K[\ell^r]$ is a finite-flat direct summand of $\mathcal K[\ell^r]$. A finite-flat group over the connected base $S$ with trivial generic fiber has rank one and is the zero group. Hence the kernel vanishes. The $e$-part of the last map in (3.6) remains faithfully flat, and equal ranks make it an isomorphism.
+A polarization compatible with the selected Hecke factor gives at most a quasi-polarization on this summand, and its degree can be divisible by $\ell$. Hence (4.9) alone does not promote $G_{\mathfrak m}$ to a perfectly self-dual integral summand. Section 8.5 will recover perfect self-duality only after admissibility has supplied canonical ordinary endpoint sequences on both compatible towers.
 
-Thus one may construct the completed piece inside $\mathcal J$ and then identify it with the selected part of the quotient, or construct the quotient first and apply its local idempotent. The first route makes finite flatness transparent; the second makes the geometric meaning transparent.
+### 4.4 Comparison maps at every torsion power
 
-### 4.5 Equality of the two finite-flat towers
-
-It is useful to distinguish three statements that are sometimes all called “the selected quotient.”
-
-First, the rational projector $E$ defines the abelian quotient $A_{\mathfrak m}$. Second, the local projector $e$ defines the finite-flat tower $G_r$ inside $\mathcal J[\ell^r]$. Third, the same $e$ acts on the torsion of $\mathcal A_{\mathfrak m}$. The exact comparison just proved identifies the second and third towers:
+The extended maps (3.6) commute with the Hecke action and therefore preserve the $e$-summands. At every $r$ they give actual morphisms of finite-flat group schemes
 
 $$
-\left(e\mathcal J[\ell^r]\right)_{r\geq1}
-\simeq
-\left(e\mathcal A_{\mathfrak m}[\ell^r]\right)_{r\geq1}. \tag{4.10}
+\pi_r:P_r\longrightarrow G_r,
+\qquad
+s_r:G_r\longrightarrow P_r. \tag{4.10}
 $$
 
-The isomorphisms commute with multiplication by $\ell$, with Hecke operators, with arbitrary base change from $S$, and with Cartier duality after applying the Rosati adjoint to the idempotent. Consequently every later filtration may be built in either ambient abelian scheme without changing its integral model.
+Because $eE=e$, the relations $s\pi=ME$ and $\pi s=[M]$ restrict to
 
-This conclusion would fail for a nonoptimal isogenous representative of the rational support. If one first replaced $A_{\mathfrak m}$ by an abelian variety linked to it through an $\ell$-power isogeny, the induced Tate lattice could have finite index and the finite levels could differ by nontrivial kernels. Optimality is therefore not merely a convenient normalization. Its connected kernel is the geometric source of the saturated lattice in (3.8).
+$$
+s_r\pi_r=[M]_{P_r},
+\qquad
+\pi_rs_r=[M]_{G_r}. \tag{4.11}
+$$
+
+These are scheme-theoretic identities, not identities only on geometric points. They commute with multiplication by $\ell$, with the inclusions of lower torsion, with Hecke operators, and with arbitrary base change. For example, for all $r,s\ge1$ there is a commutative diagram with exact rows
+
+$$
+\begin{array}{ccccccccc}
+0&\longrightarrow&P_r&\longrightarrow&P_{r+s}
+&\xrightarrow{\ell^r}&P_s&\longrightarrow&0\\
+&&\downarrow\pi_r&&\downarrow\pi_{r+s}
+&&\downarrow\pi_s&&\\
+0&\longrightarrow&G_r&\longrightarrow&G_{r+s}
+&\xrightarrow{\ell^r}&G_s&\longrightarrow&0.
+\end{array} \tag{4.12}
+$$
+
+Theorem 3.1 says exactly that $(\pi_r)_{\mathbf Q}$ is an isomorphism. More is true away from $\ell$. Over $S[1/\ell]$ the two groups in (4.10) are finite etale. A morphism between finite etale groups over a normal integral base that is an isomorphism on the generic fiber is an isomorphism. Hence
+
+$$
+\pi_r:P_r\xrightarrow{\sim}G_r
+\qquad\text{over }S[1/\ell]. \tag{4.13}
+$$
+
+All possible discrepancy is therefore concentrated over the closed point of $S$ above $\ell$.
+
+Put $c=v_\ell(M)$. The prime-to-$\ell$ part of $M$ acts invertibly on every $\ell$-power torsion group. After multiplying $s_r$ by its inverse in $\mathbf Z/\ell^r\mathbf Z$, equations (4.11) become
+
+$$
+\widetilde s_r\pi_r=[\ell^c]_{P_r},
+\qquad
+\pi_r\widetilde s_r=[\ell^c]_{G_r}. \tag{4.14}
+$$
+
+Thus the kernel and fppf-sheaf cokernel of $\pi_r$ are killed by $\ell^c$. They need not themselves be finite flat. Passing through the compatible system gives mutually inverse morphisms after tensoring Hom groups with $\mathbf Q_\ell$:
+
+$$
+P_{\mathfrak m}\dashrightarrow G_{\mathfrak m},
+\qquad
+G_{\mathfrak m}\dashrightarrow P_{\mathfrak m}. \tag{4.15}
+$$
+
+In other words, the two completed pieces are quasi-isogenous once a clearing denominator $M$ has been fixed. Their common generic Tate lattice is identified integrally by the canonical quotient map $\pi$, while their integral group-scheme models are, at this stage, controlled only by (4.10)--(4.14).
+
+### 4.5 The exact scope of the comparison
+
+It is tempting to combine generic saturation with equal finite-flat ranks and conclude that $\pi_r$ is an isomorphism over $S$. That implication is false. Over $\mathbf Z_2$, consider
+
+$$
+f:\underline{\mathbf Z/2\mathbf Z}\longrightarrow\mu_2
+$$
+
+which sends the nonzero section to $-1$. It is an isomorphism over $\mathbf Q_2$. On coordinate rings it is
+
+$$
+\mathbf Z_2[t]/(t^2-1)
+\longrightarrow
+\mathbf Z_2\times\mathbf Z_2,
+\qquad
+t\longmapsto(1,-1). \tag{4.16}
+$$
+
+The image consists of pairs congruent modulo $2$, so (4.16) is not surjective. The source group is etale and the target has connected special fiber. Thus a generic isomorphism between finite-flat groups of equal rank can fail to be an integral isomorphism precisely at the residue characteristic.
+
+The example prevents us from excluding the same obstruction in the present comparison merely from Theorem 3.1. The local idempotent need not descend to a rational projector, and a clearing denominator can have positive $\ell$-adic valuation. Generic saturation by itself supplies no full-faithfulness principle for finite-flat models, and no theorem says that the positive-dimensional kernel of $\mathcal J\to\mathcal A_{\mathfrak m}$ is a smooth abelian scheme. Optimality on the generic fiber supplies neither assertion.
+
+The unconditional comparison available before admissibility is therefore:
+
+1. $\pi_r$ and $s_r$ are actual morphisms of finite-flat group schemes at every torsion power and satisfy (4.11).
+2. $\pi_r$ is an isomorphism on the generic fiber and over $S[1/\ell]$.
+3. On coordinate rings, generic isomorphism and torsion-freeness make $\pi_r^*$ injective; its finite torsion cokernel is supported at $\ell$.
+4. In the fppf-sheaf category, every kernel and cokernel defect is killed by $\ell^c$.
+5. If $c=0$, then $[M]$ is invertible on every level, $M^{-1}s_r$ is an actual inverse to $\pi_r$, and the two finite-flat towers are already equal.
+
+This provisional comparison is enough to continue without circularity. Descent on $A_{\mathfrak m}$ uses $G_r=e\mathcal A_{\mathfrak m}[\ell^r]$ itself, whose transition sequences are exact by (4.6). The auxiliary tower $P_r$ supplies integral self-duality. Quasi-isogeny (4.15) identifies their rational Dieudonne modules and hence their Newton slopes and total heights, but it does not yet identify their connected subgroups, etale quotients, or finite-level Hopf orders integrally. After Chapter 7 proves admissibility and Sections 8.1--8.4 extract the ordinary endpoint sequences, Theorem 8.1 will show that every apparent defect in (4.14) vanishes. The counterexample (4.16) remains essential: it explains why that later tower argument cannot be replaced by a single-level appeal to generic saturation.
 
 ## 5. Faithful completed Hecke action
 
@@ -595,7 +683,7 @@ $$
 \operatorname{End}_{\mathbf Z_\ell}(T_\ell J). \tag{5.1}
 $$
 
-Apply the idempotent $e$ on both sides. If $t\in e\mathbb T_\ell=\mathbb T_{\mathfrak m}$ acts trivially on $eT_\ell J$, it acts trivially on $(1-e)T_\ell J$ because $t(1-e)=0$. Hence it acts trivially on the whole Tate module, and (5.1) gives $t=0$. We have proved
+Apply the idempotent $e$ on both sides. If $t\in e\mathbb T_\ell=\mathbb T_{\mathfrak m}$ acts trivially on $eT_\ell J$, it acts trivially on $(1-e)T_\ell J$ because $t(1-e)=0$. Hence it acts trivially on the whole Tate module, and (5.1) gives $t=0$. Thus the action on $P_{\mathfrak m}$ is faithful. Theorem 3.1 identifies $eT_\ell J$ with $eT_\ell A_{\mathfrak m}$ Hecke equivariantly. An operator that vanishes on $G_{\mathfrak m}$ therefore vanishes on this Tate lattice and hence is zero. We have proved
 
 $$
 \boxed{
@@ -626,7 +714,7 @@ These distinctions matter. The exact theorem
 
 $$
 \mathbb T_{\mathfrak m}/I\mathbb T_{\mathfrak m}
-\simeq\mathbf Z_\ell/\ell^e\mathbf Z_\ell \tag{5.4}
+\simeq\mathbf Z_\ell/\ell^d\mathbf Z_\ell \tag{5.4}
 $$
 
 measures the scalar Eisenstein quotient. It does not calculate the rank of the completed Tate module over the local Hecke algebra. The present construction needs only the faithful action, the direct-summand torsion, and the selected Eisenstein filtration described next.
@@ -667,8 +755,10 @@ The completed summand at level one is larger than the ordinary simultaneous eige
 
 $$
 V=G_1(\overline{\mathbf Q})
-=eJ[\ell](\overline{\mathbf Q}). \tag{6.2}
+=eA_{\mathfrak m}[\ell](\overline{\mathbf Q}). \tag{6.2}
 $$
+
+By Theorem 3.1 this module is Hecke- and Galois-equivariantly isomorphic to $P_1(\overline{\mathbf Q})=eJ[\ell](\overline{\mathbf Q})$. We use the quotient realization in the notation because $G_r$ is the descent tower. We use the Jacobian realization to import the Eichler--Shimura operator identity. Equivalently, that identity descends through the generic quotient map, since it is a polynomial identity in commuting Hecke and Frobenius operators.
 
 It is a finite-dimensional $\mathbf F_\ell$-space with commuting actions of $\Gamma_{\mathbf Q}$ and of
 
@@ -718,7 +808,7 @@ $$
 
 for every prime $q\nmid N\ell$. Here $q$ in the second factor means its image in $\mathbf F_\ell$, equivalently $\bar\chi_\ell(\operatorname{Frob}_q)$. Equation (6.7), not a numerical trace, will force the required constituents.
 
-The distinction between $V$ and $J[\mathfrak m]$ is important. The latter is killed by the maximal ideal; the former is the entire generalized local summand and can contain nontrivial Hecke-nilpotent extensions. Filtration (6.4) retains those extensions while reducing their successive layers to honest Eisenstein eigenspaces.
+Via the generic identification with $P_1$, the distinction between $V$ and $J[\mathfrak m]$ is important. The latter is killed by the maximal ideal; the former is the entire generalized local summand and can contain nontrivial Hecke-nilpotent extensions. Filtration (6.4) retains those extensions while reducing their successive layers to honest Eisenstein eigenspaces.
 
 ### 6.3 A quadratic-density lemma
 
@@ -808,7 +898,7 @@ On $W_j$ the Hecke algebra acts by scalars through $\mathbf F_\ell$. Every Galoi
 
 This theorem is the missing selection statement. The adjective “selected” now refers only to the canonical choice of the local Hecke factor and its rational support. It is no longer an additional reducibility hypothesis.
 
-The theorem does not compute multiplicities. If the dimension of $V$ is $h$, it supplies $h$ one-dimensional factors, but it does not say how many are trivial and how many are cyclotomic. That count will be obtained integrally from the connected--etale sequence, and self-duality will equate the two counts. Nor does the theorem identify a canonical first line. The cuspidal and Shimura groups give geometric lines in particular levels, while a composition series of the whole local block remains noncanonical.
+The theorem does not compute multiplicities. If the dimension of $V$ is $h$, it supplies $h$ one-dimensional factors, but it does not say how many are trivial and how many are cyclotomic. That count will be obtained integrally from the connected--etale sequence. The principal self-duality of $P_{\mathfrak m}$, transported at first only through the quasi-isogeny category, will equate the two endpoint heights. The ordinary-tower argument of Section 8.5 will then strengthen this to a perfect integral pairing on $G_{\mathfrak m}$. Nor does the theorem identify a canonical first line. The cuspidal and Shimura groups give geometric lines in particular levels, while a composition series of the whole local block remains noncanonical.
 
 ### 6.5 Stable filtrations at every finite level
 
@@ -878,7 +968,7 @@ Once the generic flag exists, it must be transported into integral geometry one 
 
 ### 7.1 Closing the generic filtration
 
-Fix $r$. Each $G_r$ is contained in the torsion of the abelian scheme $\mathcal J/S$. Close the terms of the generic stable filtration successively inside $G_r$ and inside the successive quotients. Over the Dedekind scheme $S$, saturated schematic closure of a generic subgroup in a finite-flat group is finite flat, and its quotient is finite flat. We obtain
+Fix $r$. Each $G_r$ is a direct factor of the torsion of the abelian scheme $\mathcal A_{\mathfrak m}/S$. Close the terms of the generic stable filtration successively inside $G_r$ and inside the successive quotients. Over the Dedekind scheme $S$, saturated schematic closure of a generic subgroup in a finite-flat group is finite flat, and its quotient is finite flat. We obtain
 
 $$
 0=\mathcal F_0\subset\mathcal F_1\subset\cdots
@@ -940,7 +1030,7 @@ Suppose instead that $H_{\mathbf Z_2}$ is connected. Cartier duality interchange
 
 The proposition does not choose an endpoint from the generic line. It says that the fixed ambient closure must be one of the two admissible endpoints, and its special-fiber connectedness records which one. This is exactly what admissibility requires. A proposed numerical label such as “cuspidal” or “Shimura” still cannot be read from the generic character at two.
 
-The unramified hypothesis is indispensable. Over a dyadic DVR of ramification index greater than one, Oort--Tate exponents can lie strictly between $0$ and $e$, producing local-local order-two models with the same trivial generic character. The present base has completion $\mathbf Z_2$, so those intermediate models do not occur.
+The unramified hypothesis is indispensable. Over a dyadic DVR of ramification index $e_R>1$, Oort--Tate exponents can lie strictly between $0$ and $e_R$, producing local-local order-two models with the same trivial generic character. The present base has completion $\mathbf Z_2$, so those intermediate models do not occur.
 
 ### 7.4 Dyadic admissibility
 
@@ -960,7 +1050,7 @@ Thus $2$ is an Eisenstein prime exactly when $N\equiv1\pmod8$. The exact denomin
 
 ### 7.5 Compatibility with transition maps
 
-The admissibility of isolated levels would be insufficient if multiplication carried an integral atom to a nonflat image. Here multiplication $G_{r+1}\to G_r$ is faithfully flat by (4.5). Its kernel is $G_1$, already admissible. Pulling a filtration of $G_r$ back along this map and inserting a filtration of the kernel gives an admissible filtration of $G_{r+1}$ compatible with the transition map.
+The admissibility of isolated levels would be insufficient if multiplication carried an integral atom to a nonflat image. Here multiplication $G_{r+1}\to G_r$ is faithfully flat by (4.6). Its kernel is $G_1$, already admissible. Pulling a filtration of $G_r$ back along this map and inserting a filtration of the kernel gives an admissible filtration of $G_{r+1}$ compatible with the transition map.
 
 Consequently the entire divisible system is **levelwise Eisenstein-admissible**: all finite levels are admissible, all transition maps are faithfully flat, and their kernels are admissible. Subgroups or quotients formed from terms of the compatible filtration retain these properties.
 
@@ -992,7 +1082,9 @@ The quotient is an etale $\ell$-divisible group and the kernel is a connected $\
 
 ### 8.2 Recognition of the multiplicative part
 
-For an admissible group, every connected order-$\ell$ constituent over $R$ is $\mu_\ell$, and every etale constituent is constant. Cartier duality turns the connected part into an etale group filtered by constant atoms. An $\ell$-divisible group over a complete DVR is etale precisely when its level-one group is etale. Hence $(G_{\mathfrak m}^0)^D$ is etale, so $G_{\mathfrak m}^0$ is of multiplicative type.
+The finite-flat subgroup $G_1^0\subset G_1$ inherits admissibility from $G_1$. Choose an atomic filtration of $G_1^0$. Every term has connected special fiber: a closed subgroup of a finite connected group scheme over a field is connected because its coordinate ring is a quotient of a finite local algebra. Every quotient is connected as well, since the image of a connected finite scheme is connected. A constant atom is etale and nontrivial, so it cannot occur in this filtration. Every factor is therefore $\mu_\ell$.
+
+Cartier duality reverses the filtration and turns every factor into $\underline{\mathbf Z/\ell}$. Extensions of finite etale group schemes over the henselian ring $R$ are finite etale, so $(G_1^0)^D$ is etale. The level-one group of $(G_{\mathfrak m}^0)^D$ is exactly $(G_1^0)^D$. An $\ell$-divisible group over a complete DVR is etale precisely when its level-one group is etale. Hence $(G_{\mathfrak m}^0)^D$ is etale, so $G_{\mathfrak m}^0$ is of multiplicative type.
 
 We therefore write
 
@@ -1025,7 +1117,7 @@ G_{\mathfrak m}^{\mathrm{et}}
 \simeq(\mathbf Q_\ell/\mathbf Z_\ell)^{a}. \tag{8.4}
 $$
 
-The integers $a$ and $b$ are intrinsic. Self-duality of the completed piece gives $a=b$ when the polarization pairs the selected factor with itself. Thus $h=a+b=2a$ in the self-dual case.
+The integers $a$ and $b$ are intrinsic. They are equal in the present prime-level situation, but not because a perfect integral pairing on $G_{\mathfrak m}$ has been constructed. Section 8.4 will use the integral self-duality of the Jacobian tower $P_{\mathfrak m}$ together with the quasi-isogeny $P_{\mathfrak m}\dashrightarrow G_{\mathfrak m}$. Thus $h=a+b=2a$.
 
 Sequence (8.3) need not split over $\mathbf Z_\ell$, and it need not spread to a global sequence over $S$ with split multiplicative kernel and constant quotient. Global monodromy away from $\ell$ can obstruct such a separation. Whenever the global Shimura closure and cuspidal quotient supply an actual separation, the extension calculation of Book 144 applies.
 
@@ -1058,30 +1150,157 @@ $$
 
 Since the connected--etale sequence is canonical, the two integers are independent of every choice made in the generic composition series and its closure. Applying the same argument to $G_r$ gives connected and etale orders $\ell^{rb}$ and $\ell^{ra}$. The transition maps preserve the canonical sequences. Their kernels have the corresponding orders, so the restrictions are faithfully flat and assemble into the two endpoint divisible groups in (8.3).
 
-Self-duality deserves an integral argument. The principal polarization of $J$ gives a perfect Cartier pairing on the full $\ell$-divisible group. Rosati fixes the prime-level Hecke algebra, hence fixes $e$, so the orthogonal complement of the $e$-summand is the $(1-e)$-summand. Restriction gives
+The equality of heights deserves a precise isogeny argument. The principal polarization of $J$ gives a perfect Cartier pairing on the full $\ell$-divisible group. Rosati fixes the prime-level Hecke algebra, hence fixes $e$, so restriction to the direct factor gives
 
 $$
-G_{\mathfrak m}^D\simeq G_{\mathfrak m}. \tag{8.7}
+P_{\mathfrak m}^D\simeq P_{\mathfrak m}. \tag{8.7}
 $$
 
-Duality exchanges the etale quotient and the multiplicative subgroup. It therefore exchanges heights $a$ and $b$. Equality (8.7) forces
+The maps $\pi$ and $s$ of Section 4.4 make $G_{\mathfrak m}$ and $P_{\mathfrak m}$ isomorphic after inverting $\ell$. Reduce to the residue field and pass to rational Dieudonne modules. We obtain isomorphisms
+
+$$
+D(G_{\mathfrak m})_{\mathbf Q}
+\simeq D(P_{\mathfrak m})_{\mathbf Q}
+\simeq D(P_{\mathfrak m}^D)_{\mathbf Q}
+\simeq D(G_{\mathfrak m}^D)_{\mathbf Q}.
+$$
+
+Duality sends a slope $\lambda$ to $1-\lambda$. Sections 8.1--8.2 show that $G_{\mathfrak m}$ has only slope zero, with multiplicity $a$, and slope one, with multiplicity $b$. Its rational Dieudonne module is isomorphic to its dual, so
 
 $$
 a=b,
 \qquad h=2a. \tag{8.8}
 $$
 
-This is a multiplicity equality, but it is not complete multiplicity one. The common integer $a$ can exceed one, and nothing here makes the Tate module free of rank two over $\mathbb T_{\mathfrak m}$.
+At this point we have proved quasi-self-duality of the selected isocrystal, not yet a perfect Cartier pairing on every $G_r$. It is a multiplicity equality but not complete multiplicity one. The common integer $a$ can exceed one, and nothing here makes the Tate module free of rank two over $\mathbb T_{\mathfrak m}$. The ordinary structure just proved now supplies the additional integral rigidity needed to compare the two towers.
 
-### 8.5 Ordinary structure without a chosen splitting
+### 8.5 Integral recovery of the quotient tower
+
+The warning in Section 4.5 concerned an isolated finite-flat level. Our comparison is much more structured: the maps occur at every level, the levels form divisible groups, the generic Tate lattice map is saturated, and admissibility has now identified the canonical slope endpoints. These four facts eliminate the possible vertical defect.
+
+**Theorem 8.1 (ordinary-tower rigidity).** The quotient map induces isomorphisms
+
+$$
+\pi_r:P_r\xrightarrow{\sim}G_r
+\qquad(r\ge1)
+\tag{8.9}
+$$
+
+over $S$, compatible with Hecke operators, base change, inclusions, and multiplication by $\ell$. Hence
+
+$$
+\pi:P_{\mathfrak m}\xrightarrow{\sim}G_{\mathfrak m}.
+\tag{8.10}
+$$
+
+In particular, the quotient tower is integrally self-dual.
+
+**Proof.** We first work over $R=\mathbf Z_\ell$. The quasi-isogeny (4.15) identifies the rational Dieudonne modules of the special fibers. Since $G_{\mathfrak m}$ has only slopes zero and one by Sections 8.1--8.2, the same is true of $P_{\mathfrak m}$. Its canonical connected--etale sequence is therefore ordinary as well. Indeed, its connected term has only slope one; after Cartier duality its special fiber has only slope zero and is etale. The finite-level criterion for etaleness over a complete DVR then shows that the dual connected term is etale over $R$, so the original connected term is multiplicative. Thus there are functorial exact sequences
+
+$$
+\begin{array}{ccccccccc}
+0&\longrightarrow&P_{\mathfrak m}^{\mathrm{mult}}
+&\longrightarrow&P_{\mathfrak m}
+&\longrightarrow&P_{\mathfrak m}^{\mathrm{et}}
+&\longrightarrow&0\\
+&&\downarrow\pi^{\mathrm{mult}}&&\downarrow\pi
+&&\downarrow\pi^{\mathrm{et}}&&\\
+0&\longrightarrow&G_{\mathfrak m}^{\mathrm{mult}}
+&\longrightarrow&G_{\mathfrak m}
+&\longrightarrow&G_{\mathfrak m}^{\mathrm{et}}
+&\longrightarrow&0.
+\end{array}
+\tag{8.11}
+$$
+
+The slope multiplicities are invariant under quasi-isogeny, so the two multiplicative terms have the same height $b$ and the two etale terms have the same height $a$.
+
+Pass to the characteristic-zero generic fiber and take Tate modules. At each finite level all group schemes are etale after extension to $\overline{\mathbf Q}_\ell$, so geometric points preserve the exact rows; inverse limits remain exact because the transition maps are surjective. In the following diagram the subscript $\mathfrak m$ is suppressed from the four divisible groups. We obtain
+
+$$
+\begin{array}{ccccccccc}
+0&\longrightarrow&T_\ell P^{\mathrm{mult}}
+&\longrightarrow&T_\ell P
+&\longrightarrow&T_\ell P^{\mathrm{et}}
+&\longrightarrow&0\\
+&&\downarrow T_\ell\pi^{\mathrm{mult}}
+&&\downarrow T_\ell\pi
+&&\downarrow T_\ell\pi^{\mathrm{et}}&&\\
+0&\longrightarrow&T_\ell G^{\mathrm{mult}}
+&\longrightarrow&T_\ell G
+&\longrightarrow&T_\ell G^{\mathrm{et}}
+&\longrightarrow&0.
+\end{array}
+\tag{8.12}
+$$
+
+Every module in (8.12) is finite free over $\mathbf Z_\ell$, and the endpoint inclusions are saturated because their quotients are free. The middle vertical map is an integral isomorphism by Theorem 3.1. Choose $\mathbf Z_\ell$-bases adapted to the two exact rows. The matrix of $T_\ell\pi$ is block upper triangular, with diagonal blocks the matrices of the two endpoint maps. Consequently
+
+$$
+\det(T_\ell\pi)
+=\det(T_\ell\pi^{\mathrm{mult}})
+ \det(T_\ell\pi^{\mathrm{et}}).
+\tag{8.13}
+$$
+
+The determinant on the left is a unit. Each determinant on the right belongs to $\mathbf Z_\ell$, because both endpoint maps are integral square matrices of the equal ranks just established. Their nonnegative valuations add to zero. Both endpoint determinants are therefore units, and
+
+$$
+T_\ell\pi^{\mathrm{mult}}
+\quad\text{and}\quad
+T_\ell\pi^{\mathrm{et}}
+\quad\text{are isomorphisms}.
+\tag{8.14}
+$$
+
+We now return from Tate lattices to finite-flat groups, but only at the rigid endpoints. For etale $\ell$-divisible groups, reduction modulo $\ell^r$ in (8.14) says that
+
+$$
+P^{\mathrm{et}}[\ell^r]_{\mathbf Q_\ell}
+\longrightarrow
+G^{\mathrm{et}}[\ell^r]_{\mathbf Q_\ell}
+$$
+
+is an isomorphism. Both integral groups are finite etale over $R$. The generic-fiber functor on finite etale schemes over a normal henselian DVR is fully faithful: equivalently, each finite etale coordinate algebra is the integral closure of $R$ in its generic algebra. The generic inverse therefore preserves the integral closures, and the endpoint map is an isomorphism over $R$. Cartier duality gives the same conclusion for the multiplicative endpoints.
+
+Taking $\ell^r$-torsion in (8.11) now yields a diagram of exact fppf sheaves whose outer vertical maps are isomorphisms:
+
+$$
+\begin{array}{ccccccccc}
+0&\longrightarrow&P^{\mathrm{mult}}[\ell^r]
+&\longrightarrow&P_r
+&\longrightarrow&P^{\mathrm{et}}[\ell^r]
+&\longrightarrow&0\\
+&&\downarrow\sim&&\downarrow\pi_r&&\downarrow\sim&&\\
+0&\longrightarrow&G^{\mathrm{mult}}[\ell^r]
+&\longrightarrow&G_r
+&\longrightarrow&G^{\mathrm{et}}[\ell^r]
+&\longrightarrow&0.
+\end{array}
+\tag{8.15}
+$$
+
+The short five lemma in the abelian category of fppf sheaves makes the middle map an isomorphism. Since it is represented by a morphism of finite-flat group schemes, this is an isomorphism of group schemes over $R$.
+
+It remains to globalize. Section 4.4 already proves that $\pi_r$ is an isomorphism over $S[1/\ell]$. The argument above proves it after the faithfully flat completion of the local ring of $S$ at $\ell$. On coordinate Hopf algebras, $\pi_r^*$ is an injection between finite locally free $S$-modules because it is generically an isomorphism. Its finite cokernel vanishes after localization at every prime: away from $\ell$ by (4.13), and at $\ell$ by faithful flatness of completion. Hence the cokernel is zero and (8.9) holds over $S$. Compatibility was built into (4.10)--(4.12), so the levelwise isomorphisms give (8.10).
+
+Finally, transport the perfect Cartier duality (4.8) across (8.10). This gives
+
+$$
+G_{\mathfrak m}^D\simeq G_{\mathfrak m}
+$$
+
+integrally, and perfect pairings on every $G_r$. $\square$
+
+The proof also locates exactly why (4.16) is not a counterexample. That map compares one dyadic level and exchanges the etale and multiplicative models; it does not extend to a map of ordinary divisible towers inducing an isomorphism of integral Tate lattices. Theorem 8.1 is therefore not a general full-faithfulness statement for arbitrary finite-flat groups. It is a rigidity theorem for the compatible ordinary situation constructed here. Notice also that it does not make the positive-dimensional kernel of $\mathcal J\to\mathcal A_{\mathfrak m}$ into an abelian scheme. Only the selected torsion direct factors are identified.
+
+### 8.6 Ordinary structure without a chosen splitting
 
 An $\ell$-divisible group over a perfect field is ordinary when only the etale slope zero and multiplicative slope one occur. Sequence (8.3) shows that the special fiber of the completed Eisenstein piece is ordinary. Every finite connected constituent is multiplicative, so no local-local slope can occur; every quotient constituent is etale. Thus the Newton slopes are
 
 $$
-0^a,1^b,
+0^a,1^a.
 $$
-
-and in the self-dual case $0^a,1^a$.
 
 Over the algebraic closure of the residue field, the ordinary connected--etale sequence splits canonically at the special fiber. Over $\mathbf Z_\ell$, it generally does not split. Its extension class is precisely integral information invisible in the semisimplified generic Galois representation. This is why the conclusion of the book is an exact sequence rather than a product decomposition.
 
@@ -1124,14 +1343,21 @@ $$
 
 so the Hecke action on $C_N$ is faithful through the Eisenstein quotient.
 
-Taking $\ell$-primary parts yields cyclic groups of order $\ell^e$. Since the other local Hecke idempotents annihilate an $\mathfrak m$-primary group, both lie in the generic fiber of $G_e$.
+Taking $\ell$-primary parts yields cyclic groups of order $\ell^d$. Since the other local Hecke idempotents annihilate an $\mathfrak m$-primary group, both first lie in the generic fiber of the Jacobian summand $P_d$. The generic isomorphism
+
+$$
+(\pi_d)_{\mathbf Q}:(P_d)_{\mathbf Q}
+\xrightarrow{\sim}(G_d)_{\mathbf Q}
+$$
+
+transports them to canonical generic subgroups of the quotient tower. We use these transported subgroups below; this places the named endpoints in the same torsion tower that appears in descent on $A_{\mathfrak m}$.
 
 ### 9.2 Their closures in the completed piece
 
-Let $\mathcal C_{\ell}$ and $\mathcal\Sigma_{\ell}$ be their closures in $G_e$. They are finite flat. For odd $\ell$, closing the unique cyclic subgroup of each order gives filtrations
+Let $\mathcal C_{\ell}$ and $\mathcal\Sigma_{\ell}$ be their saturated closures in $G_d$. They are finite flat. For odd $\ell$, closing the unique cyclic subgroup of each order gives filtrations
 
 $$
-0=\mathcal C_0\subset\cdots\subset\mathcal C_e=\mathcal C_\ell,
+0=\mathcal C_0\subset\cdots\subset\mathcal C_d=\mathcal C_\ell,
 \qquad
 \mathcal C_i/\mathcal C_{i-1}\simeq\underline{\mathbf Z/\ell}, \tag{9.2}
 $$
@@ -1139,12 +1365,14 @@ $$
 and
 
 $$
-0=\mathcal\Sigma_0\subset\cdots\subset\mathcal\Sigma_e=\mathcal\Sigma_\ell,
+0=\mathcal\Sigma_0\subset\cdots\subset\mathcal\Sigma_d=\mathcal\Sigma_\ell,
 \qquad
 \mathcal\Sigma_i/\mathcal\Sigma_{i-1}\simeq\mu_\ell. \tag{9.3}
 $$
 
 At $2$, closing the same cyclic chains gives filtrations in which every factor is one of the two atoms by Proposition 7.1. The generic character does not determine which factors in the cuspidal closure are constant or which factors in the Shimura closure are multiplicative. Accordingly, (9.2)--(9.3) are asserted with their displayed orientations only for odd $\ell$.
+
+One may also close the original groups inside $P_d$. Before Theorem 8.1 these closures had to be kept separate, because a generic subgroup has a unique saturated closure only after its finite-flat ambient group has been fixed. The isomorphism $\pi_d:P_d\xrightarrow{\sim}G_d$ now carries each closure to the corresponding closure in $G_d$: an isomorphism preserves schematic closure and the finite-flat quotient property. We continue to formulate extension and descent statements in the quotient ambient $G_d$, because that is the coefficient group scheme attached to $A_{\mathfrak m}$.
 
 The exact specialization $C_N\simeq\Phi_N$ proves that the cuspidal line is primitive at the bad fiber over $N$. For odd $\ell$, the Shimura line supplies the displayed multiplicative filtration. At $2$, primitivity at $N$ and diagonalizability of the generic Shimura group do not by themselves determine the model over $\mathbf Z_2$. In every characteristic no claim is made that the intersection of the two closures is the full intersection predicted by a multiplicity-one theorem.
 
@@ -1179,7 +1407,7 @@ At $2$, the extension group has three binary invariants: a carry parameter, the 
 
 ### 9.4 What is and is not canonical
 
-The completed idempotent, the groups $G_r$, the divisible group $G_{\mathfrak m}$, the connected--etale sequence, and the heights $a,b$ are canonical. The optimal quotient is canonical once the rational support is fixed.
+The completed idempotent, both towers $P_r$ and $G_r$, the divisible groups $P_{\mathfrak m}$ and $G_{\mathfrak m}$, the connected--etale sequence of the quotient tower, and the heights $a,b$ are canonical. The optimal quotient and its quotient map are canonical once the rational support is fixed. Hence the isomorphism $\pi:P_{\mathfrak m}\xrightarrow{\sim}G_{\mathfrak m}$ of Theorem 8.1 is canonical. Choosing an integral multiple $ME$ produces the auxiliary map $s$ and the denominator bound (4.14); changing $M$ changes that displayed auxiliary quasi-inverse, not $\pi$ or the eventual integral identification.
 
 A composition series is not canonical. An identification $\Sigma_N\simeq\mu_{n_N}$ is not canonical. A splitting of (8.3) or (9.4) is not canonical and usually does not exist. The Kummer exponent $j$ is canonical only after endpoint generators have been chosen. These distinctions keep later descent calculations invariant under the automorphisms of the cyclic endpoints.
 
@@ -1199,10 +1427,10 @@ Completion of the exact global quotient (1.1) gives
 
 $$
 \mathbb T_{\mathfrak m}/\widehat I
-\simeq\mathbf Z_\ell/\ell^e\mathbf Z_\ell. \tag{10.1}
+\simeq\mathbf Z_\ell/\ell^d\mathbf Z_\ell. \tag{10.1}
 $$
 
-All other factors above $\ell$ vanish after quotienting by $I$. The $\mathbf Z_\ell$-length of (10.1) is $e$. This is the precise depth of the scalar Eisenstein congruence.
+All other factors above $\ell$ vanish after quotienting by $I$. The $\mathbf Z_\ell$-length of (10.1) is $d$. This is the precise depth of the scalar Eisenstein congruence.
 
 ### 10.2 Control modulo powers
 
@@ -1215,8 +1443,9 @@ $$
 Reduction of the idempotent decomposition modulo $\ell^r$ shows that forming $G_r$ commutes with reduction of the Hecke algebra. Explicitly,
 
 $$
-G_r=e(\mathcal J[\ell^r])
-=\ker(1-e:\mathcal J[\ell^r]\to\mathcal J[\ell^r]). \tag{10.2}
+G_r=e(\mathcal A_{\mathfrak m}[\ell^r])
+=\ker(1-e:\mathcal A_{\mathfrak m}[\ell^r]
+\to\mathcal A_{\mathfrak m}[\ell^r]). \tag{10.2}
 $$
 
 The equality with a kernel is safe because $1-e$ is an idempotent and (4.2) already proves the kernel is a direct factor. It should not be generalized to an arbitrary element of $I$.
@@ -1253,7 +1482,7 @@ On the cuspidal subgroup the annihilator is sharper. Equation (9.1) gives
 $$
 \operatorname{Ann}_{\mathbb T_{\mathfrak m}}(C_N[\ell^r])
 =I\mathbb T_{\mathfrak m}
-+\ell^{\min(r,e)}\mathbb T_{\mathfrak m}
++\ell^{\min(r,d)}\mathbb T_{\mathfrak m}
 $$
 
 on the $\mathfrak m$ factor. This formula concerns the cyclic cuspidal line, not the entire $G_r$.
@@ -1263,12 +1492,15 @@ on the $\mathfrak m$ factor. This formula concerns the cyclic cuspidal line, not
 For any $S$-scheme $S'$, the identity (4.2) base changes to the corresponding identity over $S'$. Thus
 
 $$
-G_r\times_SS'=e(\mathcal J_{S'}[\ell^r]). \tag{10.4}
+G_r\times_SS'
+=e(\mathcal A_{\mathfrak m,S'}[\ell^r]),
+\qquad
+P_r\times_SS'=e(\mathcal J_{S'}[\ell^r]). \tag{10.4}
 $$
 
 Flatness or connectedness hypotheses are not needed for this projector identity. Connected--etale decomposition, however, is used over a henselian or complete local base. We therefore state (8.3) only after base change to $\mathbf Z_\ell$.
 
-Cartier duality changes the Hecke action by Rosati adjunction. Since the prime-level generators are self-adjoint in the chosen normalization, $I$ and $\mathfrak m$ are stable and the dual of the selected piece is selected again. Constant and multiplicative factors are exchanged, and atomic extension orientation is reversed.
+Cartier duality changes the Hecke action by Rosati adjunction. Since the prime-level generators are self-adjoint in the chosen normalization, $I$ and $\mathfrak m$ are stable. The dual of $P_{\mathfrak m}$ is $P_{\mathfrak m}$ integrally. Theorem 8.1 transports that perfect duality to $G_{\mathfrak m}$ and identifies its selected dual piece integrally with $G_{\mathfrak m}$ itself. In either tower, duality exchanges constant and multiplicative factors and reverses atomic extension orientation.
 
 ## 11. Exceptional levels and exceptional primes
 
@@ -1276,7 +1508,7 @@ The construction has two different exceptional directions: the removed level pri
 
 ### 11.1 The level prime
 
-An Eisenstein prime $\ell$ divides $n_N$, hence divides $N-1$. Therefore $\ell\ne N$. This elementary observation is indispensable: it places the connected--etale analysis at a good-reduction prime and lets $\mathcal J[\ell^r]$ be finite flat over $S$.
+An Eisenstein prime $\ell$ divides $n_N$, hence divides $N-1$. Therefore $\ell\ne N$. This elementary observation is indispensable: it places the connected--etale analysis at a good-reduction prime and makes both $\mathcal J[\ell^r]$ and $\mathcal A_{\mathfrak m}[\ell^r]$ finite flat over $S$.
 
 At the level prime $N$, the Neron model is generally not proper. Its component group, rather than an $N$-divisible group, records the specialized cuspidal class. No result in this book asserts finite flatness of all torsion across $N$.
 
@@ -1334,7 +1566,7 @@ $$
 I=(T_q-(1+q):q\ne N)+(U_N-1).
 $$
 
-Fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$. Then the following hold.
+Fix $\ell\mid n_N$, put $d=v_\ell(n_N)$, and let $\mathfrak m=(\ell,I)$. Then the following hold.
 
 1. The finite algebra $\mathbb T\otimes\mathbf Z_\ell$ has a unique idempotent $e_{\mathfrak m}$ selecting its $\mathfrak m$-factor, and
 
@@ -1348,12 +1580,17 @@ Fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$. Then the following hold.
 3. For every $r\ge1$,
 
    $$
-   G_r=e_{\mathfrak m}\mathcal J[\ell^r]
+   P_r=e_{\mathfrak m}\mathcal J[\ell^r],
+   \qquad
+   G_r=e_{\mathfrak m}\mathcal A_{\mathfrak m}[\ell^r]
    $$
 
-   is a finite-flat direct summand of $\mathcal J[\ell^r]$. For all $r,s\ge1$ there is an exact sequence
+   are finite-flat direct summands of their respective ambient torsion groups. For all $r,s\ge1$ there are fppf exact sequences
 
    $$
+   0\to P_r\to P_{r+s}
+   \xrightarrow{\ell^r}P_s\to0,
+   \qquad
    0\to G_r\to G_{r+s}
    \xrightarrow{\ell^r}G_s\to0.
    $$
@@ -1366,16 +1603,33 @@ Fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$. Then the following hold.
    e_{\mathfrak m}T_\ell A_{\mathfrak m}.
    $$
 
-   Consequently
+   Choose $M>0$ with $ME\in\mathbb T$, where $E$ is the rational support projector, and put $c=v_\ell(M)$. At every level there are comparison maps
 
    $$
-   G_r\xrightarrow{\sim}
-   e_{\mathfrak m}\mathcal A_{\mathfrak m}[\ell^r]
+   \pi_r:P_r\longrightarrow G_r,
+   \qquad
+   s_r:G_r\longrightarrow P_r
    $$
 
-   at every level. In particular $G_{\mathfrak m}=\varinjlim_rG_r$ is the actual $\mathfrak m$-part of the quotient's $\ell$-divisible group, not merely an isogenous model.
+   satisfying $s_r\pi_r=[M]$ and $\pi_rs_r=[M]$. The map $\pi_r$ is an isomorphism generically and over $S[1/\ell]$, and every fppf kernel or cokernel defect is killed by $\ell^c$. If $c=0$, these identities already make the two towers isomorphic. These statements are the comparison available before admissibility. After item 8 supplies the ordinary endpoint sequences, ordinary-tower rigidity proves unconditionally that
 
-5. The continuous action
+   $$
+   \pi_r:P_r\xrightarrow{\sim}G_r
+   $$
+
+   over $S$ for every $r$, even when $c>0$.
+
+5. The systems
+
+   $$
+   P_{\mathfrak m}=\varinjlim_rP_r,
+   \qquad
+   G_{\mathfrak m}=\varinjlim_rG_r
+   $$
+
+   are $\ell$-divisible groups of the same height, and the quotient map identifies them integrally. Both are integrally self-dual. The second remains the actual selected $\ell$-divisible group of the quotient and the coefficient object used for descent; its identification with the Jacobian tower is a proved theorem, not a change of definition.
+
+6. The continuous action
 
    $$
    \mathbb T_{\mathfrak m}\hookrightarrow
@@ -1384,11 +1638,11 @@ Fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$. Then the following hold.
 
    is faithful, and the intersection of the finite-level annihilators is zero.
 
-6. The generic module $G_1(\overline{\mathbf Q})$ has an actual Galois- and Hecke-stable composition series with factors $\mathbf F_\ell$ and $\mathbf F_\ell(1)$. It is obtained from the Hecke-radical filtration and the integral Eichler--Shimura annihilating polynomial, not from trace or semisimplification. Pullback through the torsion tower gives compatible such filtrations at every level.
+7. The generic module $G_1(\overline{\mathbf Q})$ has an actual Galois- and Hecke-stable composition series with factors $\mathbf F_\ell$ and $\mathbf F_\ell(1)$. It is obtained from the Hecke-radical filtration and the integral Eichler--Shimura annihilating polynomial, not from trace or semisimplification. Pullback through the exact quotient torsion tower gives compatible such filtrations at every level.
 
-7. Every $G_r$ is Eisenstein-admissible: it has a finite-flat filtration with factors $\underline{\mathbf Z/\ell}$ and $\mu_\ell$. For odd $\ell$ the generic characters determine the endpoint types. At $2$, the unramified Oort--Tate classification proves that every order-two closure is one of the two endpoints, with its label determined by connectedness after closure.
+8. Every $G_r$ is Eisenstein-admissible: it has a finite-flat filtration with factors $\underline{\mathbf Z/\ell}$ and $\mu_\ell$. For odd $\ell$ the generic characters determine the endpoint types. At $2$, the unramified Oort--Tate classification proves that every order-two closure is one of the two endpoints, with its label determined by connectedness after closure.
 
-8. Over $\mathbf Z_\ell$ there is a canonical exact sequence
+9. Over $\mathbf Z_\ell$ there is a canonical exact sequence
 
    $$
    0\to G_{\mathfrak m}^{\mathrm{mult}}
@@ -1397,11 +1651,11 @@ Fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$. Then the following hold.
    \to0.
    $$
 
-   The endpoint heights equal the multiplicative and constant lengths in any admissible level-one filtration. If the selected piece is self-dual, the two heights are equal.
+   The endpoint heights equal the multiplicative and constant lengths in any admissible level-one filtration. They are equal. First, self-duality of $P_{\mathfrak m}$ and quasi-isogeny with $G_{\mathfrak m}$ make the selected isocrystal self-dual; then Theorem 8.1 upgrades the comparison and transports a perfect integral pairing to every $G_r$.
 
-9. The $\ell$-primary cuspidal and Shimura groups have order $\ell^e$, lie in $G_e$ on the generic fiber, and have finite-flat closures. For odd $\ell$, their canonical cyclic filtrations have respectively constant and multiplicative factors. At $2$, each factor is an Eisenstein atom, but its orientation is not inferred from the common generic character. No theorem about the full intersection of the two closures is used.
+10. The $\ell$-primary cuspidal and Shimura groups have order $\ell^d$. They lie generically in $P_d$ and transport through $\pi_d:P_d\xrightarrow{\sim}G_d$, which identifies their saturated closures in the two towers. For odd $\ell$, their canonical cyclic filtrations have respectively constant and multiplicative factors. At $2$, each factor is an Eisenstein atom, but its orientation is not inferred from the common generic character. No theorem about the full intersection of the two closures is used.
 
-10. A separated atomic subquotient with multiplicative kernel and constant quotient is classified, for odd $\ell$, by
+11. A separated atomic subquotient of $G_r$ with multiplicative kernel and constant quotient is classified, for odd $\ell$, by
 
    $$
    \operatorname{Ext}^1_S(
@@ -1411,7 +1665,7 @@ Fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$. Then the following hold.
 
    The dyadic extension has the additional carry and sign data described in Section 9.3.
 
-11. The completed Eisenstein quotient is
+12. The completed Eisenstein quotient is
 
    $$
    \mathbb T_{\mathfrak m}/I\mathbb T_{\mathfrak m}
@@ -1420,29 +1674,39 @@ Fix $\ell\mid n_N$ and $\mathfrak m=(\ell,I)$. Then the following hold.
 
    This controls the scalar Eisenstein depth but asserts neither complete multiplicity one nor freeness of the Tate module over the local Hecke algebra.
 
-**Proof.** Items 1 and 11 follow from the finite-algebra decomposition of Chapter 2 and the exact global Eisenstein index. The rational quotient and its good model are constructed in Chapter 3. The exact torsion sequence of its connected kernel and Theorem 3.1 prove the saturation assertion in item 4, including all finite levels. Item 3 and divisibility follow from the direct-summand identity (4.2) and exact sequence (4.5). Faithfulness is (5.2).
+**Proof.** Items 1 and 12 follow from the finite-algebra decomposition of Chapter 2 and the exact global Eisenstein index. Chapter 3 constructs the rational quotient and its good model. Generic torsion exactness for the connected optimal kernel proves Theorem 3.1. The extended maps $\pi$ and $s$ and the identities $s\pi=ME$, $\pi s=[M]$ prove the preliminary levelwise comparison in item 4. The constant-to-multiplicative example of Section 4.5 explains why generic saturation alone cannot strengthen it.
 
-For item 6, filter the generalized residual summand by the radical of $\mathbb T_{\mathfrak m}/\ell$. On each layer Eichler--Shimura becomes the operator identity $(F_q-1)(F_q-q)=0$. Chebotarev and Lemma 6.1 force every simple Galois factor to be trivial or cyclotomic. Chapter 7 closes the resulting actual flag. Odd-prime rigidity and Proposition 7.1 identify all closures as Eisenstein atoms, proving item 7. The connected--etale sequence and Cartier-dual recognition prove item 8. The exact cusp and Shimura calculations give item 9 within its stated odd and dyadic boundaries. The flat Kummer calculation gives item 10. No step uses a nonflat Hecke kernel, a rational form of the local projector, or an inference from trace to reducibility. $\square$
+The two direct-summand identities (4.2) and the independent transition sequences (4.5)--(4.6) prove item 3 and the divisible-group assertion in item 5. Faithfulness on the Jacobian Tate lattice, transported through Theorem 3.1, proves item 6. For item 7, filter the generalized residual summand by the radical of $\mathbb T_{\mathfrak m}/\ell$. On each layer Eichler--Shimura becomes the operator identity $(F_q-1)(F_q-q)=0$. Finite Chebotarev and Lemma 6.1 force every simple Galois factor to be trivial or cyclotomic.
+
+Chapter 7 closes the resulting actual flag inside the quotient tower. Odd-prime rigidity and Proposition 7.1 identify all closures as Eisenstein atoms, proving item 8. The connected--etale sequence, Cartier-dual recognition, and comparison with the self-dual Jacobian isocrystal first prove the slope and height assertions in item 9. The determinant argument on the two canonical ordinary endpoint sequences then proves Theorem 8.1: the saturated middle Tate map forces integral isomorphisms on both endpoints, and exactness forces $\pi_r$ to be an isomorphism. This completes items 4, 5, and 9 without assuming an integral equality of models in advance. The exact cusp and Shimura calculations give item 10 within its stated odd and dyadic boundaries. The flat Kummer calculation gives item 11. No step uses a nonflat Hecke kernel, a rational form of the local projector, smoothness of the positive-dimensional integral kernel, or an inference from trace to reducibility. $\square$
 
 ### 12.2 Dependency ledger
 
-The construction uses each prerequisite within its stated range.
+The declared direct dependency row is exactly:
 
-Book 38 supplies finite-flat multiplication kernels of abelian schemes, faithfully flat multiplication, finite quotient exactness, extension of homomorphisms over normal good-reduction bases, duality, Weil pairings, and polarization adjunction. In Chapter 3 these facts are applied to the connected abelian kernel $K$, not to the kernel of an arbitrary Hecke operator. The positive-dimensional relative-kernel decomposition needed to extend the optimal exact sequence is proved in Section 3.5; it is not attributed to the finite-kernel quotient theorem. The fppf lifting proof of (3.3) is the precise reason the generic Tate quotient is saturated.
+| Book | Direct prerequisites |
+|---:|---|
+| 145 | 62, 38, 39, 60, 72, 142, 143, 144 |
+
+The proof inputs cited below occur in the transitive development recalled by those direct predecessors. The construction uses each one only within its stated range. Book 63 is mentioned once as a boundary comparison, but it is not in the dependency closure and no result from it is used in a proof.
+
+Book 38 supplies finite-flat multiplication kernels of abelian schemes, faithfully flat multiplication, finite quotient exactness, extension of homomorphisms over normal good-reduction bases, duality, Weil pairings, and polarization adjunction. In Chapter 3 these facts prove exactness of the generic torsion sequence and extend $\pi$ and $s$ between good abelian-scheme models. They do **not** identify the positive-dimensional integral kernel with the good model of $K$. Section 3.5 explicitly leaves that stronger assertion unmade. The generic fppf lifting proof of (3.3) is the precise reason the selected generic Tate quotient is saturated.
 
 Book 39 supplies Neron models, unique extension of Hecke endomorphisms, properness as the criterion for good reduction, component specialization, and the warning that a Neron extension of an isogeny need not be finite at a bad place. We restrict all torsion constructions to $S$, where the Neron models are abelian schemes. The level-prime component group is used only to state primitivity of the cusp; it is never confused with an $\ell$-adic lattice at a different prime.
 
 Book 46 supplies faithfully flat exact sequences of finite-flat groups, represented quotients, rank multiplication, primary decomposition, and saturated schematic closure in a fixed finite-flat ambient group over a Dedekind base. Chapter 7 uses precisely that closure theorem. It never forms an arbitrary scheme-theoretic Hecke kernel and calls it flat.
 
-Book 47 supplies exact Cartier duality, the exchange of constant and multiplicative groups, annihilator filtrations, compatibility of closure with annihilators, and perfect duality on abelian torsion. These results identify the multiplicative part from the dual etale quotient and prove the equality of endpoint heights under self-duality.
+Book 47 supplies exact Cartier duality, the exchange of constant and multiplicative groups, annihilator filtrations, compatibility of closure with annihilators, and perfect duality on abelian torsion. These results identify the multiplicative part from the dual etale quotient and make $P_{\mathfrak m}$ integrally self-dual. Equality of the endpoint heights of $G_{\mathfrak m}$ is first deduced in the quasi-isogeny category; Theorem 8.1 subsequently transports the perfect integral duality itself to $G_{\mathfrak m}$.
 
 Book 56 supplies Oort--Tate classification, height-one low-ramification rigidity, the unramified endpoint theorem, and the dyadic warning. For odd $\ell$, $1<\ell-1$ identifies an order-$\ell$ closure from its generic character. For $\ell=2$, the same inequality is unavailable, but the exponent interval over $\mathbf Z_2$ is $\{0,1\}$; Proposition 7.1 uses that complete classification rather than a character label.
 
-Book 60 supplies the finite-level criterion for an $\ell$-divisible group, connected--etale sequences over complete local bases, height and dimension, Cartier duality at infinite level, and recognition of etale and multiplicative divisible groups. Exact sequence (4.5) verifies the required faithful flatness. Admissibility rules out local-local factors before we call the special fiber ordinary.
+Book 60 supplies the finite-level criterion for an $\ell$-divisible group, connected--etale sequences over complete local bases, height and dimension, Cartier duality at infinite level, recognition of etale and multiplicative divisible groups, and isogeny invariance of the rational Dieudonne module. Exact sequences (4.5) and (4.6) verify the required faithful flatness independently for $P_{\mathfrak m}$ and $G_{\mathfrak m}$. Admissibility rules out local-local factors before the quotient special fiber is called ordinary. Isogeny invariance then makes $P_{\mathfrak m}$ ordinary with the same endpoint heights; the functorial endpoint sequences are the input to the determinant and five-lemma proof of Theorem 8.1.
 
-Book 62 supplies completion as an inverse limit, exactness for finite modules, lifting of idempotents through nilpotent quotients, and separation of completed actions. Together with the finite-algebra decomposition recalled in Book 91, it turns $\mathbb T\otimes\mathbf Z_\ell$ into the product of its complete local factors. We apply this only to the finite torsion-free acting Hecke algebra; no uncontrolled infinite algebra is treated as Noetherian.
+Book 62 supplies completion as an inverse limit, exactness for finite modules, and separation of completed actions. Together with the finite-algebra decomposition and compatible idempotents recalled in Book 91, these facts turn $\mathbb T\otimes\mathbf Z_\ell$ into the product of its complete local factors. Section 2.3 also proves directly the only idempotent-lifting statement used here. We apply this only to the finite torsion-free acting Hecke algebra; no uncontrolled infinite algebra is treated as Noetherian.
 
-Book 63 supplies Carayol descent only under residual absolute irreducibility. Section 6.6 checks that this hypothesis fails in the Eisenstein problem and therefore does not invoke the theorem. Its counterexamples explain why traces cannot supply the missing stable flag. The replacement proved here is the Hecke-radical and quadratic-density argument.
+Book 63 is not a prerequisite. Section 6.6 mentions its Carayol theorem and counterexamples only to audit an unavailable route: residual absolute irreducibility fails in the Eisenstein problem, so no statement from that book is invoked. The stable flag is proved independently by the Hecke-radical and quadratic-density argument.
+
+Book 72 supplies finite Chebotarev density in exactly the form needed in Theorem 6.2. For each radical layer, we pass to the finite image of the residual Galois representation together with the cyclotomic character. Every conjugacy class in that finite image is represented by an unramified Frobenius, so the Eichler--Shimura operator identity holds for every image element. No density statement for an infinite matrix algebra is used.
 
 Book 91 supplies the acting-image convention, faithfulness after localization, generalized local summands, compatible idempotents, and the distinctions among localization, quotient, ordinary eigenspace, and multiplicity one. The radical filtration (6.4) is necessary precisely because the completed summand can be larger than $J[\mathfrak m]$. No reduction of a faithful integral action is assumed faithful without proof.
 
@@ -1452,28 +1716,29 @@ $$
 F_q^2-T_qF_q+q=0
 $$
 
-on every prime-to-$q$ torsion level, and the explicit warning that it is an annihilating polynomial before any rank-two theorem is known. This operator identity is the decisive Galois input in Chapter 6. Finite Chebotarev density is applied only to the finite quotient cut out by the residual module together with $\bar\chi_\ell$.
+on every prime-to-$q$ torsion level, and the explicit warning that it is an annihilating polynomial before any rank-two theorem is known. This operator identity is the decisive Galois input in Chapter 6. It descends to the quotient generic torsion and becomes scalar on each Hecke-radical layer.
 
 Book 142 supplies the faithful prime-level acting algebra, the Eisenstein ideal with $U_N-1$, and the exact quotient $\mathbb T/I\simeq\mathbf Z/n_N\mathbf Z$, including the two- and three-primary exponents. This identifies the residue field and the scalar action on each Hecke-radical layer. It supplies no multiplicity, branch count, Gorenstein property, or stable Galois flag, and none is attributed to it.
 
 Book 143 supplies the exact order and Hecke action of the cuspidal line, its isomorphic specialization in the component group, and the cyclic diagonalizable Shimura kernel of order $n_N$. These objects give named generic subgroups and oriented odd-prime filtrations. We use no theorem about all rational torsion or about the full cuspidal--Shimura intersection.
 
-Book 144 supplies the admissible exact category over $\mathbf Z[1/N]$, the closure criterion for an actual stable generic flag, odd-prime endpoint recognition, filtration independence, inheritance under finite-flat subquotients, and the mixed atomic extension calculation. Its explicitly missing hypothesis is supplied by Theorem 6.2. Its dyadic warning is respected: characters do not label endpoints; Proposition 7.1 instead classifies the actual closures over the unramified base.
+Book 144 supplies the admissible exact category over $\mathbf Z[1/N]$, the closure criterion for an actual stable generic flag, odd-prime endpoint recognition, filtration independence, inheritance under finite-flat subquotients, and the mixed atomic extension calculation. Its explicitly missing hypothesis is supplied by Theorem 6.2. Its two model-theoretic warnings are both respected: generic characters do not label dyadic endpoints, and a generic isomorphism does not by itself identify finite-flat models. Proposition 7.1 handles the first warning. Sections 4.4--4.5 retain two models until admissibility supplies ordinary endpoint sequences; only then does Theorem 8.1 prove equality by data stronger than a generic isomorphism.
 
-The new arguments in this book are therefore sharply located. Section 3.5 proves that the connected optimal kernel remains the whole kernel over the good-reduction base. Theorem 3.1 then proves integral saturation for the optimal quotient and local idempotent. Theorem 6.2 proves the full generic Eisenstein filtration from the radical layers and the Eichler--Shimura operator identity. None of these assertions is imported from an index calculation or a trace-descent theorem.
+The new arguments in this book are therefore sharply located. Theorem 3.1 proves saturation of the selected generic Tate lattice. Section 4.4 constructs comparison maps at every torsion power and proves the precise denominator bound; Section 4.5 proves why saturation and generic equality alone do not identify finite-flat models. Theorem 6.2 proves the full generic Eisenstein composition series from the radical layers and the Eichler--Shimura operator identity. Theorem 8.1 combines the resulting ordinary endpoint sequences with the saturated Tate map to prove integral equality of the two completed towers. None of these assertions is imported from an index calculation, a trace-descent theorem, or an unproved smoothness statement for the integral optimal kernel.
 
 ### 12.3 Conclusion
 
-The completed Eisenstein piece is not obtained by writing an ideal inside a kernel. It is obtained by turning the complete local Hecke factor into an idempotent and applying that idempotent to the entire abelian-scheme torsion tower. This one choice simultaneously resolves flatness, compatibility, and divisibility:
+The completed Eisenstein piece is not obtained by writing an ideal inside a kernel. It is obtained by turning the complete local Hecke factor into an idempotent and applying that idempotent to abelian-scheme torsion. Applied to the quotient, this one choice simultaneously resolves flatness, compatibility, and divisibility:
 
 $$
-\mathcal J[\ell^r]
-=G_r\times(1-e_{\mathfrak m})\mathcal J[\ell^r],
+\mathcal A_{\mathfrak m}[\ell^r]
+=G_r\times(1-e_{\mathfrak m})
+\mathcal A_{\mathfrak m}[\ell^r],
 $$
 
-and multiplication carries these decompositions into one another through faithfully flat exact sequences.
+and multiplication carries these decompositions into one another through faithfully flat exact sequences. Applying the same idempotent to $\mathcal J[\ell^r]$ gives the auxiliary self-dual tower $P_r$.
 
-The rational and local selections then agree integrally. The rational projector retains every coefficient-field conjugate required to define an abelian quotient. The local idempotent selects one completion on the Tate lattice. Exactness of the optimal quotient and vanishing of the complementary $e$-kernel prove that the two selected lattices are equal, even when a rational field factor has several primes above $\ell$.
+The rational and local selections first agree on the generic integral Tate lattice. The rational projector retains every coefficient-field conjugate required to define an abelian quotient, while the local idempotent selects one completion on the Tate lattice. Generic exactness of the optimal quotient proves equality of those selected Tate lattices even when a rational field factor has several primes above $\ell$. This fact alone does not identify finite-flat models: the constant-to-$\mu_2$ example proves that point sharply. The maps $P_r\rightleftarrows G_r$ therefore begin as a denominator-bounded comparison. Once admissibility makes both compatible divisible towers ordinary, the saturated middle Tate map has unit determinant, functoriality splits its determinant into the multiplicative and etale endpoint determinants, and both endpoints must be integral isomorphisms. Exactness then proves $P_r\simeq G_r$ for every $r$. Thus the vertical defect vanishes in this completed Eisenstein tower for a reason unavailable at an isolated level.
 
 The full Eisenstein filtration comes from the modular Jacobian rather than from its trace. On each Hecke-radical layer, the integral Eichler--Shimura relation becomes
 
@@ -1494,4 +1759,4 @@ $$
 
 At odd primes the two endpoint characters identify their integral models. At two, the unramified Oort--Tate interval has only its endpoints, and connectedness supplies the label that the generic character cannot. The exact exponent $v_\ell(n_N)$ controls the scalar Eisenstein congruence, while faithfulness of the completed action retains every Hecke operator visible on the selected tower.
 
-This is the integral package required for Eisenstein descent: an optimal quotient with a good Neron model over $S$, a saturated identification with the canonical completed Hecke summand, finite-flat torsion at every power, exact transition maps, an actual generic Eisenstein flag, admissible constant and multiplicative constituents, controlled atomic extensions, and a faithful complete local endomorphism action. None of these conclusions requires complete multiplicity one, a full Shimura-intersection theorem, a rational incarnation of the local idempotent, or Carayol descent outside its absolutely irreducible range.
+This is the integral package required for Eisenstein descent: an optimal quotient with a good Neron model over $S$; its own canonical finite-flat selected torsion at every power; exact transition maps; a proved integral identification with the self-dual Jacobian tower; an actual generic Eisenstein flag; admissible constant and multiplicative constituents; controlled atomic extensions; and a faithful complete local endomorphism action. Descent still uses the quotient tower directly, and Theorem 8.1 proves rather than assumes that its completed summand has the canonical integral model selected inside the Jacobian. None of these conclusions requires complete multiplicity one, a full Shimura-intersection theorem, a rational incarnation of the local idempotent, smoothness of the positive-dimensional integral optimal kernel, or Carayol descent outside its absolutely irreducible range.
