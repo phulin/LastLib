@@ -37,7 +37,7 @@
   - [7.1 Deep level and group-ring freeness](#71-deep-level-and-group-ring-freeness)
   - [7.2 Integral oldness](#72-integral-oldness)
   - [7.3 Primary and companion branches](#73-primary-and-companion-branches)
-  - [7.4 Exact module and Hecke augmentation](#74-exact-module-and-hecke-augmentation)
+  - [7.4 Exact module augmentation and the Hecke image](#74-exact-module-augmentation-and-the-hecke-image)
 - [8. The finite system and its patch](#8-the-finite-system-and-its-patch)
   - [8.1 The finite-level diagram](#81-the-finite-level-diagram)
   - [8.2 Why the levels do not form a tower](#82-why-the-levels-do-not-form-a-tower)
@@ -123,10 +123,11 @@ $\mathbb T^{\min}$, a faithful automorphic module, and the surjection (1.1).
 This step must precede patching; patching cannot manufacture a Galois
 representation over an incorrectly chosen Hecke order.
 
-Third, adequacy supplies sets of Taylor--Wiles primes that kill the dual
-Selmer group. At a set of $q$ primes one obtains exactly $q$ diamond
-variables. The deep-level automorphic module is free over the corresponding
-finite group algebra, and augmentation recovers the exact minimal objects.
+Third, the split Taylor--Wiles image package supplies sets of auxiliary primes
+that kill the dual Selmer group. At a set of $q$ primes one obtains exactly
+$q$ diamond variables. The deep-level automorphic module is free over the
+corresponding finite group algebra, and augmentation recovers the exact
+minimal deformation problem, module, and named Hecke action.
 
 Fourth, patching yields two power-series sources of the same dimension:
 
@@ -174,12 +175,7 @@ $$
 $$
 
 of $\det\bar\rho$, compatible with a parallel-weight-two central character.
-Put $M=\operatorname{ad}^0\bar\rho$ and assume separately that
-
-$$
-H^0(F,M(1))=0.
-\tag{1.4a}
-$$
+Put $M=\operatorname{ad}^0\bar\rho$.
 
 Assume the following.
 
@@ -195,11 +191,14 @@ Assume the following.
 3. The representation $\bar\rho$ is residually automorphic in an exact
    parallel-weight-two definite-quaternionic realization whose local factors
    match those conditions and the determinant $\delta$.
-4. The localized automorphic modules satisfy finite freeness over
-   $\mathcal O$, effective stabilizer and diamond-torsor control, integral
-   saturation of type lattices and degeneracy maps, a perfect
-   primary--companion pairing, generic reducedness of the Hecke algebra, and
-   branchwise Galois attachment with integral local--global compatibility.
+4. The minimal and auxiliary localized automorphic modules satisfy finite
+   freeness over $\mathcal O$, effective stabilizer and diamond-torsor
+   control, integral saturation of type lattices and degeneracy maps, a
+   perfect primary--companion pairing, generic reducedness of every relevant
+   Hecke algebra, and branchwise Galois attachment with integral
+   local--global compatibility. The named Hecke and diamond actions commute
+   with module augmentation and the named Hecke operators specialize onto the
+   full faithful minimal Hecke image.
 
 Then the canonical map is an isomorphism
 
@@ -237,9 +236,12 @@ integral automorphic realization.
 Each hypothesis has one job. Absolute irreducibility gives the global Schur
 condition and representability. Total oddness supplies the real local
 condition and the sign in the Euler characteristic. Absolute irreducibility
-after cyclotomic restriction supplies adequacy in the group actually used to
-choose auxiliary primes. The bound $\ell\geq7$ makes that implication uniform
-in dimension two.
+after cyclotomic restriction kills the trace-zero cyclotomic self-twist and
+places the group actually used to choose auxiliary primes in the adequate
+range. The bound $\ell\geq7$ makes the image implication uniform in dimension
+two. Section 5.2 checks the additional underlying-prime-field clauses needed
+for cyclotomic disjointness rather than treating them as part of the word
+“adequate.”
 
 The finite-flat hypothesis is not shorthand for being crystalline after
 inverting $\ell$. It is an integral condition on all Artinian quotients and is
@@ -251,9 +253,12 @@ Residual automorphy is also more precise than equality of good-prime traces.
 It selects a non-Eisenstein maximal ideal in a particular integral module.
 The saturation and pairing assumptions ensure that auxiliary-level
 coinvariants return to that same lattice, rather than to a finite-index
-variant. Generic reducedness and branchwise attachment are used to construct
-the Hecke-valued Galois representation; they are not used as a substitute for
-the later proof of faithfulness.
+variant. The named action maps are retained under augmentation so that their
+faithful image on the minimal module is the original minimal Hecke algebra;
+no equality of auxiliary and minimal orders is assumed at this stage.
+Generic reducedness and branchwise attachment are used to construct the
+Hecke-valued Galois representation; they are not used as a substitute for the
+later proof of faithfulness.
 
 A useful mental model is a nodal family. One automorphic branch may pass
 through the residual point while another infinitesimal direction is visible
@@ -683,9 +688,13 @@ $$
 \tag{3.6}
 $$
 
-Here $H^0(F,M)=0$. The cyclotomic restricted-image hypothesis, together with
-the absence of the corresponding trace-zero self-twist in the clean datum,
-gives
+Here $H^0(F,M)=0$. The other global invariant also vanishes directly from the
+cyclotomic restricted-image hypothesis. Indeed, if
+$A\in H^0(F,M(1))$, then the residual cyclotomic character is trivial on
+$G_{F(\zeta_\ell)}$, so $A$ commutes with
+$\bar\rho(G_{F(\zeta_\ell)})$. Absolute irreducibility of that restriction
+makes $A$ scalar. Since $A$ is trace zero and $\ell$ is odd, it is zero.
+Thus
 
 $$
 H^0(F,M(1))=0.
@@ -992,6 +1001,62 @@ package on the cyclotomic restricted image. Adequacy is preserved by finite
 extension of the residual coefficient field, so one may enlarge coefficients
 to split selected residual Frobenius polynomials.
 
+The auxiliary-prime theorem uses a slightly sharper, underlying-prime-field
+form of this package. If
+
+$$
+\Gamma=\bar\rho(G_{F(\zeta_\ell)}),
+$$
+
+then it needs the following four facts about the additive
+$\mathbf F_\ell[\Gamma]$-module underlying $M$:
+
+1. $\Gamma$ has no nontrivial quotient of $\ell$-power order;
+2. $H^1(\Gamma,M)=0$;
+3. no nonzero $\Gamma$-stable $\mathbf F_\ell$-subspace of $M$ has a
+   nonzero trivial quotient;
+4. every such subspace is detected by an eigenprojector of a split regular
+   semisimple element.
+
+The first two are adequacy clauses. The last two must be checked, not hidden
+inside that name. The finite-image classification makes the check uniform in
+the present range. If the projective image has order prime to $\ell$, the
+whole matrix image also has order prime to $\ell$, since its scalar kernel is
+prime to $\ell$. Averaging makes the underlying module semisimple; a trivial
+quotient of one of its submodules would then give a trivial submodule of
+$M$, contrary to
+
+$$
+M^\Gamma=0.
+$$
+
+In the defining-characteristic branch, $\Gamma$ contains a normal
+$\operatorname{SL}_2(k_0)$ for a finite subfield $k_0$, with
+prime-to-$\ell$ quotient. For $\ell\geq7$ the three-dimensional adjoint
+module and all of its Frobenius twists are nontrivial simple modules. After
+extension from $\mathbf F_\ell$ to an algebraic closure, the prime-field
+module underlying $M$ is a direct sum of precisely these twists. It is
+therefore semisimple already over $\mathbf F_\ell$ and has no trivial
+constituent. Every $\Gamma$-stable prime-field subspace is in particular
+stable under this special-linear subgroup, so it has no trivial quotient.
+These two cases exhaust the classification.
+
+Finally, semisimple spanning and the trace pairing detect every nonzero
+$w\in M$. A detecting semisimple matrix is nonscalar and hence regular in
+dimension two. After one finite coefficient extension all the finitely many
+required characteristic polynomials split. If $e_\alpha$ is an
+eigenprojector and the other eigenvalue is $\beta$, then
+
+$$
+g=\beta I+(\alpha-\beta)e_\alpha,
+\qquad
+\operatorname{tr}(wg)
+=(\alpha-\beta)\operatorname{tr}(we_\alpha),
+$$
+
+so the projector detects the same direction. This proves the fourth clause
+and establishes the exact split Taylor--Wiles image package used below.
+
 The prime five is different. A natural characteristic-five representation
 with projective image
 
@@ -1007,9 +1072,11 @@ case. The present route uses the uniform implication and hence begins at
 $\ell=7$.
 
 Adequacy does not imply $H^0(F,M(1))=0$ by definition, nor does it compute the
-Selmer group. Those are separately recorded in (3.7) and (3.5). Adequacy's
-job is to make nonzero dual classes detectable by regular semisimple
-Frobenius elements while satisfying the cyclotomic congruence.
+Selmer group. The former follows instead from cyclotomic absolute
+irreducibility by the argument preceding (3.7), while the latter is defined
+in (3.5). The expanded four-clause package above is what makes nonzero dual
+classes detectable by regular semisimple Frobenius elements compatibly with
+the cyclotomic congruence.
 
 ### 5.3 Detecting the dual Selmer group
 
@@ -1028,7 +1095,8 @@ two roots and retain one eigenline.
 We explain the selection. Choose a basis
 $\phi_1,\ldots,\phi_q$ of the dual Selmer group. A class $\phi_i$ cuts out a
 finite elementary abelian extension over the compositum of the residual and
-cyclotomic fields. Adequacy supplies a regular semisimple residual element
+cyclotomic fields. The split image package supplies a regular semisimple
+residual element
 whose diagonal projection detects $\phi_i$. Linear disjointness from the
 already selected cocycle extensions makes it possible to impose zero
 detection on earlier basis vectors and nonzero detection on the next. The
@@ -1051,16 +1119,21 @@ finite. This fact will determine the compactness form of patching.
 More explicitly, suppose $x_1,\ldots,x_{i-1}$ have been chosen. Take a linear
 combination of the $\phi_j$ vanishing at those places but nonzero in the next
 undetected direction. Its cocycle field is an elementary abelian extension
-over the residual cutout. Adequacy ensures that this extension has an element
-whose semidirect-product component pairs nontrivially with a regular
-semisimple residual matrix. Adjoin the $\ell^N$-cyclotomic field and every
-field used for avoidance. The required element has trivial cyclotomic
-component, the chosen residual matrix component, and the prescribed cocycle
-component. The compatibility statements in adequacy ensure these coordinates
-define an element of the actual compositum rather than merely of a formal
-product. A Frobenius place with that conjugacy class supplies $x_i$. Row
-reduction makes the final localization matrix triangular with nonzero
-diagonal, hence invertible.
+over the residual cutout. The second image clause makes the class restrict
+nontrivially to that cutout kernel, and the fourth supplies a regular
+semisimple residual matrix detecting a translation value. Adjoin the
+$\ell^N$-cyclotomic field and every field used for avoidance. The first clause
+prevents passage up the cyclotomic tower from shrinking the residual image,
+while the third makes the translation extension disjoint from the new
+cyclotomic layer. The fiber-product compatibility lemma therefore produces an
+element of the actual compositum, not merely of a formal product, with trivial
+cyclotomic component, the selected residual matrix component, and the
+prescribed cocycle component. The finite Galois Frobenius-selection theorem
+supplies $x_i$. That source is phrased with arithmetic Frobenius; inversion
+gives the geometric-Frobenius class used here, and the eigenvalue ordering and
+local reciprocity character are inverted together. Row reduction makes the
+final localization matrix triangular with nonzero diagonal, hence
+invertible.
 
 This proof also shows why a slogan such as “large residual image” is
 insufficient. One needs the actual finite-image cohomology vanishings,
@@ -1387,7 +1460,7 @@ modules are free over $\Lambda_N$, invariants and coinvariants agree through
 the norm map; this would be false for an arbitrary module in residue
 characteristic dividing $|\Delta_N|$.
 
-### 7.4 Exact module and Hecke augmentation
+### 7.4 Exact module augmentation and the Hecke image
 
 Let $\mathbb T_N$ be the faithful Hecke image on $M_N$. Branchwise Galois
 attachment and integral local compatibility give a representation over
@@ -1401,24 +1474,37 @@ $$
 
 Module coinvariants alone do not imply exact augmentation of the acting
 order: an order can sit with finite index inside another order acting on a
-rationally identical module. The retained saturation theorem rules this out
-and gives
+rationally identical module. What is available without an order-saturation
+theorem is the exact statement needed here: the named auxiliary operators act
+on the coinvariants (7.4), their specializations are the named minimal
+operators, and their faithful image there is $\mathbb T^{\min}$. Indeed, the
+shared good and type operators specialize identically and generate the
+minimal order. Each auxiliary oriented operator specializes to the Hensel
+lift of its chosen simple residual root, which is already an element of the
+minimal order; diamonds specialize to one. Thus no additional operator
+enlarges the image, while every minimal generator occurs. Consequently
 
 $$
+\operatorname{im}\left(
 \mathbb T_N/\mathfrak a_N\mathbb T_N
-\xrightarrow{\sim}\mathbb T^{\min}.
+\longrightarrow\operatorname{End}_{\mathcal O}(M^{\min})
+\right)=\mathbb T^{\min}.
 \tag{7.7}
 $$
 
-Equations (6.8), (7.4), and (7.7) are three separate control theorems. Ring,
-module, and faithful acting image must all be marked in the patch.
+Equations (6.8), (7.4), and (7.7) are three different control statements.
+The first two are exact quotient isomorphisms; the third identifies an action
+image and does not assert that the displayed quotient order acts faithfully.
+All three maps must be marked in the patch.
 
 To distinguish the last two, consider orders $T'\subset T$ of finite index in
 one semisimple fraction algebra, acting on commensurable lattices. Their
 rational eigensystems and even their module coinvariants can agree, while
 $T'/\mathfrak aT'$ maps to a proper suborder of $T/\mathfrak aT$. Saturated
-type and degeneracy control rules out this index. Equation (7.7) is therefore
-an order theorem, not a formal consequence of (7.4).
+type and degeneracy control does not, by itself, rule out the index. The proof
+below avoids assuming that it does: patched freeness will show that the
+specialized deformation action is faithful, and (7.7) will then identify its
+image with $\mathbb T^{\min}$.
 
 ## 8. The finite system and its patch
 
@@ -1462,9 +1548,11 @@ Instead one fixes an increasing sequence of Artinian precisions. At each
 precision one records a finite diagram: the diamond algebra with ordered
 generators, the deformation quotient, the free module with a marked basis,
 the faithful action image, a finite set of named Hecke operators, the three
-augmentation maps, primary projectors, companion basis, pairing matrix, and
-adjoint involution. On the deformation side one records the entire quotient
-ideal of a fixed source, not merely a guessed tuple of relations.
+specialization maps of (6.8), (7.4), and (7.7), primary projectors, companion
+basis, pairing matrix, adjoint involution, and chosen lifts of the diamond
+parameters to the fixed deformation source. On the deformation side one
+records the entire quotient ideal of that source, not merely a guessed tuple
+of relations.
 
 ### 8.3 Finite shadows and diagonalization
 
@@ -1482,8 +1570,8 @@ every height; an infinite path supplies the compatible system.
 The markings matter. Abstractly isomorphic free modules can have pairing
 matrices differing by a nontrivial unit, and isomorphic rings can have
 different structural diamond maps. Marked bases, ideals, maps, and pairings
-ensure that exact augmentation and adjunction survive the passage to the
-limit.
+ensure that exact ring and module augmentation, the named specialized Hecke
+image, and adjunction survive the passage to the limit.
 
 One convenient precision system is
 
@@ -1501,6 +1589,42 @@ maximal ideal is nilpotent. Recording
 $\ker(P\to R_N)+\mathfrak p_d$ retains the full deformation shadow, including
 relations annihilating the module. Thus the construction does not silently
 replace $R_N$ by $\mathbb T_N$ before faithfulness is proved.
+
+We also construct the structural map between the two sources rather than
+assuming it. Using the common surjections (9.1), choose
+
+$$
+h_{N,i}\in\mathfrak m_P
+$$
+
+lifting the image in $R_N$ of the $i$th diamond parameter. The assignments
+$z_i\mapsto h_{N,i}$ define continuous local maps
+
+$$
+\alpha_N:S_\infty\longrightarrow P
+$$
+
+whose composites with $P\twoheadrightarrow R_N$ are the finite diamond maps.
+Because the corresponding diamond has order $\ell^N$,
+
+$$
+(1+h_{N,i})^{\ell^N}-1\in\ker(P\longrightarrow R_N).
+\tag{8.1b}
+$$
+
+The convergence calculation of Section 6.2 shows that these relations vanish
+in every fixed shadow as $N$ grows. Marking the $h_{N,i}$ and applying the
+same diagonal argument makes them converge at every precision to elements
+$h_i\in\mathfrak m_P$. Hence
+
+$$
+\alpha:S_\infty\longrightarrow P,
+\qquad z_i\longmapsto h_i,
+\tag{8.1c}
+$$
+
+is a well-defined continuous map. It is the first arrow in (8.5); no
+injectivity is assumed before the scalar-action argument.
 
 The diagonal argument produces compatibility rather than canonicity. Different
 infinite paths can give different coordinates $x_i$ or $z_i$. This is
@@ -1559,22 +1683,23 @@ then it annihilates every vector of $S_\infty^{\oplus r}$. Applying it to a
 basis vector gives $s=0$. Thus the positivity of $r$, inherited from residual
 automorphy, has a direct algebraic role.
 
-The marked exact sequences satisfy the Mittag--Leffler condition because all
-shadow transition maps are surjective. Inverse limits therefore give
+The marked exact quotient sequences and action maps satisfy the required
+Mittag--Leffler conditions. Inverse limits therefore give
 
 $$
 \begin{aligned}
 R_\infty/\mathfrak a_\infty R_\infty&\simeq R^{\min},\\
 M_\infty/\mathfrak a_\infty M_\infty&\simeq M^{\min},\\
-A_\infty/\mathfrak a_\infty A_\infty&\simeq\mathbb T^{\min},
+A_\infty/\mathfrak a_\infty A_\infty&\twoheadrightarrow\mathbb T^{\min},
 \end{aligned}
 \tag{8.6}
 $$
 
 where $\mathfrak a_\infty=(z_1,\ldots,z_q)$ and its image is understood
-through the structural map. The first equality is not inferred from an
-unproved flat tensor product; it is the inverse limit of the marked exact
-ring augmentation sequences.
+through the structural map. The last arrow is the specialized action map and
+has image $\mathbb T^{\min}$ by (7.7); injectivity is not asserted here. The
+first equality is not inferred from an unproved flat tensor product; it is the
+inverse limit of the marked exact ring augmentation sequences.
 
 For example, at every retained precision there is an exact sequence
 
@@ -1584,21 +1709,24 @@ $$
 \tag{8.7}
 $$
 
-The transition maps on the finite kernels are eventually surjective because
-the entire quotient diagrams were marked. Hence $\varprojlim^1K_{N,d}=0$,
-and taking inverse limits preserves exactness. The limiting kernel is the
-closed ideal generated by the images of $z_1,\ldots,z_q$; Noetherian
-completeness guarantees closedness. This proves the ring line of (8.6).
-Parallel marked sequences prove the module and order lines. Only after
-Chapter 9 proves freeness may one recover the same statements by ordinary
-Tor-independent tensor product.
+For each fixed precision the kernels form an inverse system of finite groups,
+so their descending images stabilize; the system is Mittag--Leffler and
+$\varprojlim^1K_{N,d}=0$. Taking inverse limits therefore preserves
+exactness. The limiting kernel is the closed ideal generated by the images of
+$z_1,\ldots,z_q$; Noetherian completeness guarantees closedness. This proves
+the ring line of (8.6).
+
+Parallel marked sequences prove the module line, and the marked named actions
+prove the last surjection and its image statement. Only after Chapters 9--10
+prove freeness does the last map become an isomorphism; ordinary
+Tor-independent tensor product then recovers the quotient statements.
 
 Patching only the action images would construct $A_\infty$ but not the full
 deformation ring: a kernel annihilating every module would disappear by
 definition. The separately marked quotient ideals retain precisely that
 possible kernel, allowing (9.4) to prove it zero. Likewise, without order
-augmentation shadows one would recover the minimal module but not necessarily
-its exact faithful Hecke order.
+action shadows one would recover the minimal module without knowing that the
+specialized named action has faithful image $\mathbb T^{\min}$.
 
 ## 9. Equal-variable rigidity
 
@@ -1787,15 +1915,26 @@ Hecke, and augmentation maps were retained in the finite shadows.
 
 ### 10.2 Proof of the minimal comparison
 
-Quotienting an isomorphism by corresponding ideals yields an isomorphism.
-Thus (10.2) proves
+The ring and module lines of (8.6), together with (9.4) and (9.5), first give
+
+$$
+A_\infty/\mathfrak a_\infty A_\infty\simeq R^{\min},
+\qquad
+M^{\min}\simeq(R^{\min})^{\oplus m}.
+\tag{10.3a}
+$$
+
+In particular, the specialized $R^{\min}$-action on $M^{\min}$ is faithful.
+By (7.7), (8.6), and the marked action square (10.2), its faithful image is
+exactly $\mathbb T^{\min}$. The canonical surjection (4.5) is therefore
+injective, and
 
 $$
 \boxed{R^{\min}\xrightarrow{\sim}\mathbb T^{\min}.}
 \tag{10.3}
 $$
 
-Moreover, augmenting (9.5) gives
+The module statement in (10.3a) may now be written over the common ring as
 
 $$
 M^{\min}\simeq(R^{\min})^{\oplus m}.
@@ -2016,8 +2155,9 @@ automorphic component.
 
 Auxiliary residual eigenvalues, type characters, or branch fields may require
 a finite extension $\mathcal O'/\mathcal O$. The represented clean local
-conditions commute with this extension, and so does the global universal
-property:
+conditions commute with this extension after selecting the residual local
+factor corresponding to $\bar\rho\otimes_k k'$, and so does the global
+universal property:
 
 $$
 R^{\min}_{\mathcal O'}
@@ -2086,10 +2226,11 @@ roots and fields, not an enlargement of the modularity conclusion.
 ### 12.3 The boundary at five and below
 
 At $\ell=5$, the icosahedral natural representation can violate the adjoint
-$H^1$ vanishing needed for regular-semisimple detection. Then the localization
-matrix in Section 5.3 may not be made invertible, and the sets $Q_N$ used in
-this proof have not been constructed. Later commutative algebra cannot repair
-missing auxiliary primes.
+$H^1$ vanishing needed to restrict a global class nontrivially before applying
+regular-semisimple detection. Then the localization matrix in Section 5.3 may
+not be made invertible, and the sets $Q_N$ used in this proof have not been
+constructed. Later commutative algebra cannot repair missing auxiliary
+primes.
 
 A theorem at five remains possible after a separate argument verifies the
 full adequate package or eliminates the projective $A_5$ case. It is not a
@@ -2112,8 +2253,8 @@ be recomputed; the present theorem does not cover that problem.
 If auxiliary Frobenius is scalar, no ordered eigenline is uniquely recoverable,
 the old determinant (6.11) vanishes, and exact augmentation fails. If a
 degeneracy image or type lattice is not saturated, generic oldness can leave
-integral torsion and the augmented order may have finite index in the desired
-minimal order.
+integral torsion, so module augmentation may recover a finite-index lattice
+and its specialized named action need not have the desired minimal image.
 
 If generic Hecke branches do not all carry compatible integral Galois
 representations, there is no representation (4.3) over the localized order
@@ -2155,8 +2296,12 @@ wild types and uncontrolled small residue-characteristic cases are excluded.
 
 Residual image classification supplies adequacy from absolute irreducibility
 of the cyclotomic restriction only for $\ell\geq7$, together with the precise
-prime-five exception. The separate adjoint-twist invariant (3.7) is retained
-rather than incorrectly folded into adequacy.
+prime-five exception. The Taylor--Wiles prime theorem supplies the additional
+underlying-prime-field disjointness and split-detection clauses; Section 5.2
+checks them from the same finite-image classification after coefficient
+extension. The adjoint-twist invariant (3.7) is not folded into adequacy: it
+vanishes directly because the cyclotomic restriction is absolutely
+irreducible.
 
 The minimal totally real comparison supplies the ring $R^{\min}$, the faithful
 Hecke order $\mathbb T^{\min}$, the Hecke-valued representation, the
@@ -2172,15 +2317,18 @@ none is weakened to a slogan such as “large image,” “minimal conductor,”
 The minimal lifting theorem is a rigidity statement created by an exact
 arithmetic balance. Finite flatness contributes the sum of the local degrees
 above $\ell$; total oddness subtracts the number of real embeddings. Their
-cancellation makes the primal and dual Selmer dimensions equal. Adequacy turns
-the common dimension $q$ into $q$ ordered auxiliary primes, and fixed
-determinant gives one diamond character at each of them.
+cancellation makes the primal and dual Selmer dimensions equal. The split
+Taylor--Wiles image package turns the common dimension $q$ into $q$ ordered
+auxiliary primes, and fixed determinant gives one diamond character at each
+of them.
 
 On the automorphic side, definite-quaternionic torsors make the deep-level
 module free over the diamond group ring. The unit old-form determinant,
 saturation, ordered roots, and companion adjunction ensure that augmentation
-returns the exact minimal lattice and exact faithful Hecke order. Coherent
-finite shadows replace a nonexistent tower of auxiliary levels.
+returns the exact minimal lattice and that the named action has image the
+minimal Hecke order. Its faithfulness as a deformation action is then proved
+after patching. Coherent finite shadows replace a nonexistent tower of
+auxiliary levels.
 
 The patch then places a nonzero free module between two regular power-series
 sources of dimension $q+1$. Faithful scalar action forces the action image to
@@ -2194,7 +2342,7 @@ $$
 Every minimal characteristic-zero lift is consequently a Hecke point. The
 weight-two packet attached to that point has the prescribed local conditions,
 and residual irreducibility identifies its canonical integral lattice with
-the given lift. Coefficient extension and faithful-flat descent preserve the
+the given lift. Coefficient extension and faithfully flat descent preserve the
 statement. The resulting package is exactly minimal modularity lifting over a
 totally real field in the clean coefficient-prime range $\ell\geq7$: residual
 automorphy propagates to every integral minimal lift, with determinant, local

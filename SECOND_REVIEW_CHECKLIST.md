@@ -178,7 +178,7 @@ any resulting corrections.
 - [x] 152. Mordell–Weil Sieves for Hyperelliptic Curves
 - [ ] 153. Semistable Isogeny Characters and Frey Residual Representations
 - [ ] 154. The Frey Curve and Fermat’s Last Theorem
-- [ ] 155. Minimal Modularity Lifting
+- [x] 155. Minimal Modularity Lifting
 - [ ] 156. Nonminimal Modularity Lifting
 - [x] 157. Integral Local Types and Type Lattices
 - [ ] 158. Ihara Theory and Saturated Degeneracy Maps on Shimura Curves
