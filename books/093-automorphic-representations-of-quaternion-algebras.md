@@ -9,7 +9,7 @@
    - [The route through the book](#14-the-route-through-the-book)
 2. [The adelic group and compactness modulo the center](#2-the-adelic-group-and-compactness-modulo-the-center)
    - [Restricted products and rational points](#21-restricted-products-and-rational-points)
-   - [Why anisotropy gives compactness](#22-why-anisotropy-gives-compactness)
+   - [Adelic reduction for the anisotropic norm form](#22-adelic-reduction-for-the-anisotropic-norm-form)
    - [Totally definite finite-level quotients](#23-totally-definite-finite-level-quotients)
    - [Haar measures and quotient measures](#24-haar-measures-and-quotient-measures)
 3. [Automorphic forms when there are no cusps](#3-automorphic-forms-when-there-are-no-cusps)
@@ -36,9 +36,9 @@
 7. [Multiplicity spaces and quaternionic unit multiplicity](#7-multiplicity-spaces-and-quaternionic-unit-multiplicity)
    - [What compactness proves](#71-what-compactness-proves)
    - [The global multiplicity space](#72-the-global-multiplicity-space)
-   - [The quaternionic transposition kernel](#73-the-quaternionic-transposition-kernel)
-   - [The commutant argument](#74-the-commutant-argument)
-   - [Near-equivalence after unit multiplicity](#75-near-equivalence-after-unit-multiplicity)
+   - [Why the additive theta kernel is not the proof](#73-why-the-additive-theta-kernel-is-not-the-proof)
+   - [The character-clean simple trace identity](#74-the-character-clean-simple-trace-identity)
+   - [Multiplicity one and strong determination](#75-multiplicity-one-and-strong-determination)
 8. [Archimedean weights in the totally definite case](#8-archimedean-weights-in-the-totally-definite-case)
    - [Why weight becomes a local representation](#81-why-weight-becomes-a-local-representation)
    - [The dual forced by the action convention](#82-the-dual-forced-by-the-action-convention)
@@ -56,7 +56,7 @@
     - [The class-set matrix](#103-the-class-set-matrix)
     - [Split unramified eigenvalues](#104-split-unramified-eigenvalues)
     - [Division places and level primes](#105-division-places-and-level-primes)
-    - [Eigenvalues identify near-equivalence blocks, not vectors](#106-eigenvalues-identify-near-equivalence-blocks-not-vectors)
+    - [Good eigenvalues identify the representation, not the vector](#106-good-eigenvalues-identify-the-representation-not-the-vector)
 11. [Conductors, levels, and compact-open invariants](#11-conductors-levels-and-compact-open-invariants)
     - [Why level depends on a family of compact opens](#111-why-level-depends-on-a-family-of-compact-opens)
     - [Split local conductors](#112-split-local-conductors)
@@ -101,7 +101,7 @@
 
 ### 1.1 The question behind the finite modules
 
-Books 89 and 90 constructed finite-dimensional spaces of algebraic quaternionic forms and made compact-open double cosets act on them. Those constructions are deliberately concrete: a form is a function on finite adeles, its values lie in an algebraic weight, and a Hecke operator is a finite sum of right translations. They are exactly the objects needed for arithmetic calculations. Yet an eigensystem on one fixed-level space does not by itself explain why eigenvalues at different places belong to one object, why changing level produces old vectors rather than new global forms, or which local representation is being detected at a ramified place.
+Book 89 constructed finite-dimensional spaces of algebraic quaternionic forms. Compact-open double cosets act on them by finite sums of right translations, as we define and verify directly in Chapter 10. These constructions are deliberately concrete: a form is a function on finite adeles, its values lie in an algebraic weight, and a Hecke operator is a finite sum. They are exactly the objects needed for arithmetic calculations. Yet an eigensystem on one fixed-level space does not by itself explain why eigenvalues at different places belong to one object, why changing level produces old vectors rather than new global forms, or which local representation is being detected at a ramified place.
 
 The missing object is an irreducible representation of the full adelic group. It packages all places at once:
 
@@ -143,7 +143,7 @@ $$
 (R(h)\phi)(g)=\phi(gh).
 $$
 
-Thus $R(h_1)R(h_2)=R(h_1h_2)$. Rational points act on the left and commute with this right action. This convention is the same one used for the finite double-coset operators of Book 90.
+Thus $R(h_1)R(h_2)=R(h_1h_2)$. Rational points act on the left and commute with this right action. The finite double-coset operators below use this same convention.
 
 The reduced norm is denoted
 
@@ -155,13 +155,13 @@ On a central scalar $z$ it is $z^2$. That square controls central characters, tw
 
 ### 1.3 The anisotropic and totally definite hypotheses
 
-The group $PG$ is anisotropic over $F$ exactly when $D$ is a division algebra over $F$. In that case $PG$ has no nontrivial $F$-split torus and no proper $F$-parabolic subgroup. The adelic quotient
+The group $PG$ is anisotropic over $F$ exactly when $D$ is a division algebra over $F$. In that case $PG$ has no nontrivial $F$-split torus and no proper $F$-parabolic subgroup. Section 2.2 proves directly, by reduction of the anisotropic ternary norm form, that
 
 $$
 PG(F)\backslash PG(\mathbf A)
 $$
 
-is compact. This is a global statement. It may hold even when some archimedean factor is split and hence noncompact.
+is compact. This is a global statement and remains true when some archimedean factor is split and hence noncompact. The proof uses the additive adelic lattice theorem, but with an essential extra step: the $F$-action and the norm tensor are retained during lattice reduction. They force the rational changes of basis into finitely many cosets of $PG(F)$. Without that tensor-retention step, additive compactness alone would not prove the assertion.
 
 The case used most often earlier is stronger. Suppose $F$ is totally real and $D$ is ramified at every real place. Then
 
@@ -177,7 +177,7 @@ An important counterexample keeps the hypotheses honest. If $D=M_2(F)$, then $PG
 
 ### 1.4 The route through the book
 
-We first construct the adelic quotient and its measure, then define automorphic forms with a fixed central character. Compactness gives a purely discrete right regular spectrum. We factor its irreducible constituents into local representations and prove admissibility and finite multiplicity. We then isolate the multiplicity spaces and prove that each is a line. The character case is elementary; the noncharacter case uses transposition of the two-sided quaternionic kernel and additive Poisson summation. This proof remains internal to the quaternion algebra.
+We first construct the adelic quotient and its measure, then define automorphic forms with a fixed central character. Compactness gives a purely discrete right regular spectrum. We factor its irreducible constituents into local representations and prove admissibility and finite multiplicity. We then isolate the multiplicity spaces. Characters are elementary; for noncharacters we use a character-clean two-place trace identity, global Whittaker multiplicity one and strong multiplicity one on the split group, and a local elliptic Bessel inequality. No Jacquet--Langlands correspondence is assumed. The argument proves both automorphic multiplicity one and strong determination from the almost-everywhere quaternionic Hecke data.
 
 The second half returns to the finite modules. Archimedean weights select finite-dimensional local factors, stabilizer invariants identify fixed-level spaces exactly, and convolution identifies the abstract local Hecke action with the double-coset action already constructed. Conductors, compact-open invariants, twists, duals, rationality, and newlevel decompositions are then read locally. Finally, matrix coefficients and trace kernels prepare the compact trace formula, and examples over $\mathbf Q$ show how Brandt matrices decompose into global constituents.
 
@@ -204,31 +204,193 @@ $$
 
 Whenever we call the automorphic quotient compact, this quotient modulo the full adelic center is meant.
 
-### 2.2 Why anisotropy gives compactness
+### 2.2 Adelic reduction for the anisotropic norm form
 
-The compactness theorem is the geometric engine of the book.
+Compactness is the geometric engine of the book. We prove the general anisotropic statement here rather than importing it as an unnamed reduction-theory theorem.
 
-**Theorem 2.1 (compactness modulo center).** If $D$ is a division quaternion algebra over $F$, then
+**Theorem 2.1 (anisotropic compactness modulo center).** If $D$ is a quaternion division algebra over a number field $F$, then
 
 $$
-Z(\mathbf A)G(F)\backslash G(\mathbf A)
+\boxed{Z(\mathbf A)G(F)\backslash G(\mathbf A)
+\cong PG(F)\backslash PG(\mathbf A)\text{ is compact}.}
+$$
+
+**Proof strategy.** Conjugation identifies $PG$ with the special orthogonal group of the reduced norm on the trace-zero quaternions. That ternary form is anisotropic. Mahler reduction gives bounded representatives after integral changes of basis; retaining the $F$-module structure and the norm tensor shows that those changes of basis lie in finitely many rational orthogonal cosets. A finite adelic class set then assembles the archimedean reductions into the full quotient.
+
+Put
+
+$$
+V=D^0=\ker(\operatorname{Trd}:D\to F),
+\qquad q=\operatorname{Nrd}|_V.
+$$
+
+The form $q$ is nondegenerate. It is anisotropic over $F$: if $0\ne x\in V(F)$ satisfied $q(x)=0$, then $x$ would be a zero divisor in $D$. Conjugation preserves trace and norm and gives
+
+$$
+\operatorname{Ad}:D^\times/F^\times\longrightarrow\operatorname{SO}(V,q).
+$$
+
+Its kernel is the center. The image is a closed connected subgroup of dimension three, hence is all of the three-dimensional connected group $\operatorname{SO}(V,q)$. In characteristic zero the resulting bijective morphism of these smooth adjoint groups is an isomorphism. We may therefore write $H=PG=\operatorname{SO}(q)$.
+
+We first prove the archimedean reduction needed below.
+
+**Lemma 2.2 (anisotropic orthogonal reduction).** Let $q$ be a nondegenerate anisotropic quadratic form on a three-dimensional $F$-space $V$, let $H=\operatorname{SO}(q)$, and let $K_f\subset H(\mathbf A_f)$ be compact open. Then
+
+$$
+\Gamma_{K_f}\backslash H(F_\infty),
+\qquad \Gamma_{K_f}=H(F)\cap K_f,
 $$
 
 is compact.
 
-**Proof strategy.** Apply the adelic anisotropy criterion to the projective group. In the quaternionic case its only possible escape direction would produce a rational isotropic line for the reduced norm. Division excludes that line.
-
-**Proof.** Reduction theory for a connected semisimple group $H/F$ says that $H(F)\backslash H(\mathbf A)$ is compact exactly when $H$ has no proper $F$-parabolic subgroup. The compactness direction can be seen through the adelic lattice criterion: a sequence escaping every compact fundamental set has, after rational reduction, a shortest vector tending to zero; its limiting rational line is fixed by a proper parabolic. Conversely an $F$-parabolic contains a nontrivial split cocharacter, whose adelic translates escape.
-
-Take $H=PG$. A proper $F$-parabolic of $PG$ is the stabilizer of a nonzero proper right ideal of $D$. Such an ideal exists exactly when $D$ is split. Equivalently, in the four-dimensional norm model, the limiting rational line would be spanned by a nonzero $x\in D(F)$ with $\operatorname{Nrd}(x)=0$. A division algebra has no such element. Hence $PG$ is anisotropic and
+**Proof.** Choose an $\mathcal O_F$-lattice $L\subset V$ on which a scalar multiple of $q$ is integral, and put $K_L=H(\mathbf A_f)\cap\operatorname{GL}(\widehat L)$. The group
 
 $$
-PG(F)\backslash PG(\mathbf A)
+H(F)\cap K_f\cap K_L
 $$
 
-is compact. The identification with $Z(\mathbf A)G(F)\backslash G(\mathbf A)$ proves the theorem. $\square$
+has finite index both in $H(F)\cap K_f$ and in $H(F)\cap K_L$: the two index maps inject into the finite compact-open quotients $K_f/(K_f\cap K_L)$ and $K_L/(K_f\cap K_L)$. Compactness is unchanged by a finite cover or a finite quotient, so it is enough to use
 
-This argument is a quaternionic form of reduction theory. In the split algebra $M_2(F)$ the last contradiction fails: rank-one matrices are nonzero and have determinant zero. They are precisely the limiting shapes that create cusps.
+$$
+\Gamma_L=H(F)\cap\operatorname{GL}(L).
+$$
+
+Regard $L$ as a full $\mathbf Z$-lattice in
+
+$$
+W=\operatorname{Res}_{F/\mathbf Q}V(\mathbf R)
+=\prod_{v\mid\infty}V(F_v).
+$$
+
+Every $h\in H(F_\infty)$ has real determinant one on $W$, so the lattices $h^{-1}L$ all have the same covolume. They also have a uniform lower bound on their shortest nonzero vector. Indeed, after the integral scaling of $q$, for $0\ne x\in L$,
+
+$$
+1\leq
+\left|N_{F/\mathbf Q}(q(x))\right|.
+$$
+
+Since $h$ preserves $q$, with $y=h^{-1}x$ we have $q(y)=q(x)$. For fixed Euclidean norms at infinity there is a constant $C$ such that
+
+$$
+\left|N_{F/\mathbf Q}(q(y))\right|
+\leq C\left(\max_{v\mid\infty}\|y_v\|_v\right)^{2[F:\mathbf Q]}.
+$$
+
+Thus every nonzero vector of every $h^{-1}L$ has length at least
+
+$$
+\varepsilon=C^{-1/(2[F:\mathbf Q])}>0. \tag{2.1}
+$$
+
+We recall the precise lattice reduction being used. A family of real lattices of fixed covolume and with shortest vector at least $\varepsilon$ is relatively compact modulo integral basis change. To prove it, choose successive shortest independent vectors. The elementary basis-reduction lemma replaces them by a lattice basis $b_1,\ldots,b_N$ with
+
+$$
+\prod_j\|b_j\|\leq C_N\operatorname{covol}(L).
+$$
+
+The lower bound on every successive minimum then bounds each $\|b_j\|$ above. The basis matrices are bounded, and their fixed nonzero determinant bounds their inverses. They consequently lie in a compact subset of $\operatorname{GL}(W)$. This is the usual proof of Mahler's compactness lemma and uses no group-specific reduction theorem.
+
+Now take a sequence $h_n\in H(F_\infty)$. Applying this lattice lemma to $h_n^{-1}L$ gives $a_n\in\operatorname{GL}_{\mathbf Z}(L)$ such that
+
+$$
+c_n=h_n^{-1}a_n
+$$
+
+ranges in a fixed compact subset of $\operatorname{GL}(W)$. At this point an ordinary additive-lattice proof would have a gap: $a_n$ need not yet be $F$-linear or preserve $q$. We now retain the tensors that force both properties.
+
+Choose a $\mathbf Z$-basis $\alpha_1,\ldots,\alpha_d$ of $\mathcal O_F$, and let $m(\alpha_j)$ be multiplication by $\alpha_j$ on $L$. Since $h_n$ is $F_\infty$-linear,
+
+$$
+a_n^{-1}m(\alpha_j)a_n
+=c_n^{-1}m(\alpha_j)c_n. \tag{2.2}
+$$
+
+The left side is an integral matrix, while the right side remains bounded. Only finitely many integral matrices are bounded, so after passing to a subsequence every tensor in (2.2) is constant. Likewise
+
+$$
+q(a_nx)=q(c_nx),
+$$
+
+because $h_n$ preserves $q$. The coefficients of $q\circ a_n$ are algebraic integers in fixed fractional ideals and are bounded at every embedding by compactness of the $c_n$. There are only finitely many such coefficients. Passing to one further subsequence makes $q\circ a_n$ constant as well.
+
+Fix an index $0$ in this subsequence and put
+
+$$
+\gamma_n=a_na_0^{-1}.
+$$
+
+The constancy in (2.2) says that $\gamma_n$ commutes with $F$, and constancy of the transported norm says that it preserves $q$. Hence
+
+$$
+\gamma_n\in\operatorname{O}(q)(F)\cap\operatorname{GL}_{\mathbf Z}(L).
+$$
+
+If its $F$-determinant is $-1$, multiply it by the fixed isometry $-1_V$, which also has determinant $-1$ because $\dim_FV=3$. We thereby obtain an element of $\Gamma_L=\operatorname{SO}(q)(F)\cap\operatorname{GL}(L)$, while changing bounded sets only by one fixed matrix. Finally,
+
+$$
+\gamma_n^{-1}h_n=a_0c_n^{-1}
+$$
+
+ranges in a compact set. Every sequence in $\Gamma_L\backslash H(F_\infty)$ therefore has a convergent subsequence. The quotient is metrizable and locally compact, so it is compact. $\square$
+
+We assemble the finite and infinite places. For every compact open $K_f\subset H(\mathbf A_f)$, the class set
+
+$$
+H(F)\backslash H(\mathbf A_f)/K_f \tag{2.3}
+$$
+
+is finite. Here is the reduction to the already proved order theorem. The quotient map
+
+$$
+D^\times(\mathbf A_f)\longrightarrow H(\mathbf A_f)
+$$
+
+is onto. Indeed, local surjectivity follows from $H^1(F_v,\mathbf G_m)=0$, and at almost every place an integral projective point has an integral lift, so the local lifts form a restricted product. The same argument over $F$ identifies $H(F)$ with $D^\times(F)/F^\times$. Choose a compact open $U\subset D^\times(\mathbf A_f)$ whose image lies in $K_f$. Book 89 proves, by the order-ideal argument and without using definiteness at infinity, that
+
+$$
+D^\times(F)\backslash D^\times(\mathbf A_f)/U
+$$
+
+is finite. If $g_1,\ldots,g_r$ represent this last set and $h\in H(\mathbf A_f)$, lift $h$ to $g\in D^\times(\mathbf A_f)$ and write $g=\gamma g_i u$. Projecting gives
+
+$$
+h=\overline\gamma\,\overline g_i\,\overline u,
+\qquad \overline u\in K_f,
+$$
+
+so the finitely many $\overline g_i$ cover (2.3).
+
+Choose representatives $h_1,\ldots,h_r$ for (2.3) and put
+
+$$
+\Gamma_i=H(F)\cap h_iK_fh_i^{-1}.
+$$
+
+Then
+
+$$
+H(\mathbf A)
+=\bigcup_{i=1}^rH(F)h_iK_fH(F_\infty).
+$$
+
+For each $i$, the corresponding part of $H(F)\backslash H(\mathbf A)$ is the continuous image of
+
+$$
+K_f\times\bigl(\Gamma_i\backslash H(F_\infty)\bigr).
+$$
+
+The first factor is compact and the second is compact by Lemma 2.2. A finite union of their images is compact. This proves Theorem 2.1. $\square$
+
+In the totally definite case there is a shorter proof, and it remains useful. Choose $U=\widehat{\mathcal O}^{\times}$ and representatives $g_1,\ldots,g_h$ for the finite order class set. Every adelic element is $\gamma g_iug_\infty$, while
+
+$$
+Z(F_\infty)\backslash G(F_\infty)
+=\prod_{v\mid\infty}F_v^\times\backslash D_v^\times
+$$
+
+is compact because every factor is Hamiltonian. The quotient is therefore covered by the images of finitely many compact products. Lemma 2.2 is exactly what replaces this last compact real factor when $D$ is split at one or more archimedean places.
+
+The split counterexample also identifies the sharp boundary. For $D=M_2(F)$, the ternary determinant form on the trace-zero matrices has nonzero isotropic vectors. The lower bound (2.1) fails, rank-one rational lines survive reduction, and the diagonal cocharacters attached to them escape to cusps.
 
 ### 2.3 Totally definite finite-level quotients
 
@@ -330,10 +492,24 @@ $$
 F_D^\times=\operatorname{Nrd}(D^\times(F))
 $$
 
-consists of the elements of $F^\times$ positive at every real place ramified in $D$. The commutator theorem for $D^\times$ gives
+consists of the elements of $F^\times$ positive at every real place ramified in $D$. The required topological abelianization follows from the local results already available:
 
 $$
 D^\times(\mathbf A)^{\mathrm{ab}}\cong\mathbf A_D^\times.
+$$
+
+At a split place, reduced norm is determinant and elementary matrices generate $\operatorname{SL}_2(F_v)$, the kernel of determinant. At a finite division place, Book 82 proves that the commutator subgroup is the reduced-norm-one group. At a ramified real place,
+
+$$
+\mathbf H^\times\cong\mathbf R_{>0}\times\operatorname{SU}(2),
+$$
+
+and $\operatorname{SU}(2)$ is perfect: its commutator subgroup has Lie algebra $[\mathfrak{su}_2,\mathfrak{su}_2]=\mathfrak{su}_2$, hence is open, and connectedness leaves no nontrivial discrete quotient. Thus every continuous local character factors uniquely through reduced norm.
+
+The global kernel is the closure of the global commutator subgroup. Indeed, if $(g_v)$ has reduced norm one, truncate it to the identity outside a growing finite set of places. Each truncation is a finite product of local commutators, embedded one place at a time in the restricted product. The truncations converge to $(g_v)$ because its omitted components lie in the reference maximal compact. Conversely every commutator has reduced norm one. Since reduced norm is an open map onto its adelic image, it follows that the quotient by the closed commutator subgroup is topologically $\mathbf A_D^\times$. Thus every continuous character factors uniquely as $\psi\circ\operatorname{Nrd}$. Book 87 proves the global identity
+
+$$
+\operatorname{Nrd}(D^\times(F))=F_D^\times.
 $$
 
 Hence one-dimensional automorphic representations are exactly
@@ -343,6 +519,16 @@ g\longmapsto\psi(\operatorname{Nrd}g),
 $$
 
 where $\psi$ is a character of $F_D^\times\backslash\mathbf A_D^\times$. A Hecke character of $F^\times\backslash\mathbf A^\times$ restricts to such a $\psi$, but in the presence of ramified real places this description by a character on the norm image is the intrinsic exhaustive statement.
+
+In fact the inclusion of norm images induces an isomorphism
+
+$$
+F_D^\times\backslash\mathbf A_D^\times
+\xrightarrow{\sim}
+F^\times\backslash\mathbf A^\times. \tag{3.1}
+$$
+
+Injectivity follows because $F^\times\cap\mathbf A_D^\times=F_D^\times$. For surjectivity, use weak approximation to choose $a\in F^\times$ whose signs at the ramified real places make $ax$ positive there for a given idele $x$; then $ax\in\mathbf A_D^\times$. Thus every intrinsic $\psi$ has a unique idele-class character extension. We retain the norm-image notation because it records the local positivity restriction, while (3.1) is what pairs quaternionic norm characters with residual determinant characters in Proposition 7.2.
 
 On the center,
 
@@ -381,7 +567,7 @@ L^2(G,\omega)
 \cong\widehat{\bigoplus}_{\pi}m(\pi)\,\pi.
 $$
 
-Here $\pi$ runs through irreducible unitary representations with central character $\omega$, and $m(\pi)$ is a nonnegative integer. The finite-multiplicity theorem below proves that it is finite; for noncharacters we retain it throughout rather than silently replacing it by one.
+Here $\pi$ runs through irreducible unitary representations with central character $\omega$, and $m(\pi)$ is a nonnegative integer. Chapter 6 first proves it finite; Theorem 7.3 then proves $m(\pi)=1$ for every constituent. We retain the symbol until that theorem has been established.
 
 ### 4.2 Why compactness produces discreteness
 
@@ -409,7 +595,7 @@ and $m(\pi)$ is the dimension of the space of such embeddings. Different vectors
 
 If $\chi=\psi\circ\operatorname{Nrd}$ has central character $\omega$, the function $g\mapsto\chi(g)$ spans a one-dimensional invariant subspace. Its norm is finite because its absolute value is constant on the compact central quotient in the unitary normalization.
 
-Distinct automorphic characters are orthogonal. Indeed, the quotient of two is a nontrivial character of the compact quotient, and its integral is zero. Thus every automorphic character occurs with multiplicity one already by elementary Fourier theory. Higher-dimensional constituents require an additional global theorem before unit multiplicity may be asserted.
+Distinct automorphic characters are orthogonal. Indeed, the quotient of two is a nontrivial character of the compact quotient, and its integral is zero. Thus every automorphic character occurs with multiplicity one already by elementary Fourier theory. The noncharacter assertion is Theorem 7.3.
 
 ## 5. From one adelic representation to its local factors
 
@@ -483,7 +669,7 @@ $$
 \mathcal H(G_v,K_v)
 $$
 
-acts on the line $\pi_v^{K_v}$. Let $T_v$ and $S_v$ be the unnormalized characteristic-double-coset operators of Book 90. If
+acts on the line $\pi_v^{K_v}$. Let $T_v$ and $S_v$ be the unnormalized characteristic-double-coset operators defined by the convolution convention of Chapter 10. If
 
 $$
 T_ve_v=t_ve_v,\qquad S_ve_v=s_ve_v,
@@ -584,64 +770,54 @@ $$
 
 Each occurrence of $\pi$ contributes at least one line to the finite-dimensional $U$-fixed, $\tau$-isotypic space. Therefore $m(\pi)$ is bounded by its dimension. $\square$
 
-This proof deliberately stops at finiteness. Compactness alone cannot force multiplicity one: the regular representation of a general compact quotient may contain an irreducible with multiplicity larger than one. The next chapter brings in the special arithmetic symmetry of the quaternion algebra.
+This proof deliberately stops at finiteness. Compactness alone cannot force multiplicity one: the regular representation of a general compact quotient may contain an irreducible with multiplicity larger than one. The next chapter supplies the additional trace and strong-determination argument which makes every multiplicity space a line in the quaternionic automorphic quotient.
 
 ## 7. Multiplicity spaces and quaternionic unit multiplicity
 
 ### 7.1 What compactness proves
 
-Compactness modulo the center proves discreteness and finite multiplicity, but not unit multiplicity. This distinction is not editorial caution; it is a logical boundary. A compact quotient of a locally compact group can have repeated irreducible summands, and no argument using compactness alone can rule them out.
-
-**Theorem 7.1 (quaternionic multiplicity one).** Let $D$ be a division quaternion algebra over $F$. Every irreducible automorphic representation $\pi$ of $D^\times(\mathbf A)$ occurs with multiplicity one.
-
-We prove the character case immediately. The noncharacter case occupies Sections 7.2--7.4, where the multiplicity space is exposed and the quaternionic transposition lemma supplies the missing arithmetic input.
-
-For a unitary central character $\omega$, write the spectral decomposition more accurately as
+Compactness modulo the center proves discreteness and finite multiplicity, but not unit multiplicity. This distinction is logical, not stylistic: a compact quotient of a locally compact group can contain repeated irreducible summands. We therefore begin with the honest decomposition
 
 $$
 L^2(G,\omega)
 \cong
 \widehat{\bigoplus}_{\pi}
 \mathcal M(\pi)\widehat\otimes\mathcal H_\pi,
-$$
-
-where $\mathcal H_\pi$ is one Hilbert model of $\pi$ and
-
-$$
+\qquad
 \mathcal M(\pi)
 =\operatorname{Hom}_{G(\mathbf A)}
-(\mathcal H_\pi,L^2(G,\omega))
+(\mathcal H_\pi,L^2(G,\omega)), \tag{7.1}
 $$
 
-is its multiplicity space. Chapter 6 proves
+for a unitary central character $\omega$. Chapter 6 proves
 
 $$
-0< m(\pi):=\dim\mathcal M(\pi)<\infty
+0<m(\pi):=\dim\mathcal M(\pi)<\infty
 $$
 
-for every constituent that occurs. The group acts trivially on $\mathcal M(\pi)$ and through $\pi$ on $\mathcal H_\pi$. All local representation-theoretic information belongs to $\pi$; the number of independent automorphic embeddings belongs to $\mathcal M(\pi)$.
+for every constituent which occurs. The group acts trivially on $\mathcal M(\pi)$ and through $\pi$ on $\mathcal H_\pi$.
 
-One-dimensional norm characters are an exceptional case in which unit multiplicity is elementary. If $\chi$ is such a character, the $\chi$-isotypic functions on the compact quotient are multiples of $\chi$ itself. Indeed, if $f(gh)=\chi(h)f(g)$ for every $h$, then setting $g=1$ gives $f(h)=f(1)\chi(h)$. Thus
+The character case is elementary. If $\chi$ is one dimensional and $f(gh)=\chi(h)f(g)$ for every $h$, then $f(h)=f(1)\chi(h)$. Hence
 
 $$
-m(\chi)=1.
+m(\chi)=1. \tag{7.2}
 $$
 
-For higher-dimensional constituents, no analogous one-line argument exists because a copy of $\pi$ is not determined by the value of one scalar function at the identity. The required extra input is a symmetry of two-variable automorphic kernels special to the four-dimensional algebra $D$.
+The noncharacter proof below uses a genuinely global detector. It is important that it not be confused with compactness, local Schur orthogonality, or the tensor-factorization theorem.
 
 ### 7.2 The global multiplicity space
 
-The finite-dimensional shadows make $\mathcal M(\pi)$ concrete. Choose a compact open $U\subset G_f$ and an irreducible infinity type $\tau$ occurring in $\pi_\infty$. Taking $U$-fixed vectors and then the $\tau$-isotypic part gives
+Choose a compact open $U\subset G_f$ and an irreducible infinity type $\tau$ occurring in $\pi_\infty$. The finite-dimensional shadow of (7.1) is
 
 $$
 \mathcal A(U,\tau,\omega)[\pi]
 \cong
 \mathcal M(\pi)\otimes
 \operatorname{Hom}_{K_\infty}(\tau,\pi_\infty)
-\otimes\pi_f^U.
+\otimes\pi_f^U. \tag{7.3}
 $$
 
-This formula proves finite multiplicity again: if both local factors on the right are nonzero, then $\mathcal M(\pi)$ injects into a finite-dimensional fixed-level space. It also separates three numbers that must never be conflated:
+This separates three different dimensions:
 
 $$
 m(\pi),\qquad
@@ -650,145 +826,304 @@ m(\pi),\qquad
 \dim\pi_f^U.
 $$
 
-The first counts global copies, the second counts the chosen archimedean type inside one local factor, and the third counts level vectors inside the finite tensor product. A large Brandt eigenspace can arise from any combination of these sources.
+The first counts global embeddings, the second a compact type inside one archimedean factor, and the third level vectors inside one finite tensor product. Formula (7.3) proves finite multiplicity but cannot make its first factor a line.
 
-There is a useful commutant interpretation. On the $\pi$-isotypic Hilbert summand,
+Indeed, on the $\pi$-isotypic Hilbert summand,
 
 $$
 \operatorname{End}_{G(\mathbf A)}
 (\mathcal M(\pi)\widehat\otimes\mathcal H_\pi)
-\cong\operatorname{End}_{\mathbf C}(\mathcal M(\pi)),
+\cong\operatorname{End}_{\mathbf C}(\mathcal M(\pi)). \tag{7.4}
 $$
 
-because Schur's lemma makes the commutant of $\pi$ scalar. Therefore unit multiplicity is equivalent to commutativity of this full matrix algebra. Local irreducibility of every $\pi_v$ does not prove that assertion: local convolution acts on $\mathcal H_\pi$ and leaves the multiplicity factor untouched.
+Every ordinary automorphic convolution operator is $1_{\mathcal M(\pi)}\otimes\pi(f)$. Thus the convolution algebra, however many local factors it contains, cannot by itself see off-diagonal endomorphisms of the multiplicity space.
 
-### 7.3 The quaternionic transposition kernel
+### 7.3 Why the additive theta kernel is not the proof
 
-The split Whittaker proof from Book 92 cannot simply be copied. A division quaternion algebra has no rational unipotent subgroup. Its replacement is a two-variable kernel on the additive vector space underlying $D$.
-
-Choose a nontrivial character $\psi:F\backslash\mathbf A\to\mathbf C^\times$ and use the nondegenerate symmetric trace pairing
+The tempting additive kernel is
 
 $$
-\langle x,y\rangle_D
-=\psi\bigl(\operatorname{Trd}(xy)\bigr)
+\Theta_\Phi(g,h)=\sum_{x\in D(F)}\Phi(g^{-1}xh),
+\qquad \Phi\in\mathcal S(D(\mathbf A)). \tag{7.5}
 $$
 
-on $D(\mathbf A)$. For $\Phi\in\mathcal S(D(\mathbf A))$, put
+This time Poisson summation is available, but it must be invoked with its complete normalization. Tensoring Book 98's one-dimensional Fourier theorem over an $F$-basis of $D$, and using the trace pairing
 
 $$
-\Theta_\Phi(g,h)
-=\sum_{x\in D(F)}\Phi(g^{-1}xh).
+(x,y)\longmapsto\psi(\operatorname{Trd}(xy)),
 $$
 
-On equal-norm classes this is invariant under $G(F)$ in each variable. The general central-character block is obtained by Mellin decomposition in the quotient of the two norm variables; the two sides carry inverse central characters. The Fourier transform satisfies
+gives a self-dual measure on $D(\mathbf A)$, Fourier inversion, and
+
+$$
+\sum_{x\in D(F)}\Phi(x)
+=\sum_{x\in D(F)}\widehat\Phi(x). \tag{7.6}
+$$
+
+For $(L_gR_h\Phi)(x)=\Phi(g^{-1}xh)$, change of variables gives
 
 $$
 \widehat{L_gR_h\Phi}
-=|\operatorname{Nrd}g|^{2}|\operatorname{Nrd}h|^{-2}
+=|\operatorname{Nrd}g|^2|\operatorname{Nrd}h|^{-2}
 L_hR_g\widehat\Phi,
 $$
 
-where $L_gR_h\Phi(x)=\Phi(g^{-1}xh)$. This follows by changing variables in the four-dimensional additive integral and using
+so (7.6) does transpose the two variables, with the displayed similitude factor.
+
+That valid identity still does not prove multiplicity one. Away from $x=0$, (7.5) is exactly the automorphic kernel obtained by periodizing the test function $\Phi|_{D^\times(\mathbf A)}$. On (7.1) its operator is
 
 $$
-\operatorname{Trd}(g^{-1}xhy)
-=\operatorname{Trd}(xhy g^{-1}).
+1_{\mathcal M(\pi)}\otimes\pi(\Phi|_{D^\times}). \tag{7.7}
 $$
 
-Indeed, the adjoint of $x\mapsto g^{-1}xh$ for this pairing is $y\mapsto hyg^{-1}$, whose inverse is $y\mapsto h^{-1}yg$; the additive determinant is $|\operatorname{Nrd}g|^{-2}|\operatorname{Nrd}h|^2$. Poisson summation gives the explicit transposition identity
+Left and right translates change the second tensor factor and leave the first untouched. Hence these kernels do not separate $\operatorname{End}(\mathcal M(\pi))$. Any argument claiming that their pairings separate all localized two-variable kernels has already assumed that $\mathcal M(\pi)$ is a line. The zero orbit only contributes norm-character functionals and does not cure this obstruction. Poisson summation repairs the analytic identity, not the circular separation step.
+
+### 7.4 The character-clean simple trace identity
+
+We now introduce the global input which does see enough. It is a trace comparison, but it assumes neither local nor global Jacquet--Langlands. Only orbital integrals are matched. The split spectral side is then controlled by the Whittaker and Rankin--Selberg theorems already proved for $\operatorname{GL}_2$.
+
+Let $R$ be the set of places at which $D$ is division. The local-invariant product formula says that $|R|$ is even. Since $D$ is a division algebra, $R$ is nonempty, and therefore
 
 $$
-\Theta_\Phi(g,h)
-=|\operatorname{Nrd}g|^2|\operatorname{Nrd}h|^{-2}
-\Theta_{\widehat\Phi}(h,g).
+|R|\geq2.
 $$
 
-On equal-norm classes the factor is one; Mellin decomposition accounts for it in general.
-
-The rational orbit decomposition is exceptionally small. There is the point $0$, and every $x\ne0$ is invertible. Under
+At $v\in R$, regular conjugacy classes in $D_v^\times$ match elliptic regular classes in $\operatorname{GL}_2(F_v)$ by equality of reduced characteristic polynomials. With compatible quotient measures, write
 
 $$
-(a,b):x\longmapsto a^{-1}xb
+f_v^*\leftrightarrow f_v
 $$
 
-the nonzero set $D(F)^\times$ is one orbit, with diagonal stabilizer. Unfolding that orbit gives the diagonal pairing of automorphic forms. The zero orbit gives a product of integrals over the projective quotient and hence factors through the one-dimensional norm-character spectrum.
-
-The following lemma is the precise analytic consequence. It is stated for smooth vectors; finite-level and fixed-infinity-type cutoffs reduce every assertion in its proof to finite matrices.
-
-**Lemma 7.2 (quaternionic transposition lemma).** Let $\pi$ be a noncharacter irreducible constituent of $L^2(G,\omega)$. The space of automorphic occurrences of $\pi$ and the space of occurrences of $\pi^\vee$ satisfy
+when
 
 $$
-\dim\mathcal M(\pi)\,\dim\mathcal M(\pi^\vee)\le1.
+O_{\gamma_v}(f_v^*)=-O_{\delta_v}(f_v)
 $$
 
-**Proof strategy.** An automorphic occurrence is the same as a rationally invariant distribution vector. A pair of occurrence functionals for $\pi$ and $\pi^\vee$ produces a two-sided matrix-coefficient distribution. Poisson summation makes every such distribution invariant under transposition. The Gelfand--Kazhdan linear-algebra argument then bounds the product of the two occurrence dimensions by one.
+on matching regular classes and the split regular orbital integrals of $f_v^*$ vanish. At a split place the two functions are identical. The local minus sign is the Euler sign of the rank-one building; it disappears from a global product because $|R|$ is even.
 
-**Proof.** Evaluation at the identity turns an automorphic embedding $\iota:\pi\to\mathcal A(G,\omega)$ into the distribution functional
+We need a local geometric transfer and one estimate. Neither identifies a split representation attached to a division representation.
+
+**Lemma 7.1 (local elliptic transfer and Bessel inequality).** Fix $v\in R$ and a unitary central character.
+
+1. Every smooth compact-finite function on $D_v^\times$, compactly supported modulo the center and with the prescribed inverse central covariance, has a regular transfer to $\operatorname{GL}_2(F_v)$. The transfer can be chosen with zero split regular orbital integrals. Consequently its trace on every full normalized principal-series representation is zero.
+
+2. For every irreducible representation $\rho$ of $D_v^\times$, choose a normalized matrix-coefficient pseudo-coefficient $e_\rho$, so
 
 $$
-\ell_\iota(v)=\iota(v)(1),
+\operatorname{tr}\rho'(e_\rho)=\delta_{\rho,\rho'}.
+$$
+
+Choose any regular transfer $e_\rho^*$ as in part 1. If $\sigma$ is an irreducible **generic** unitary representation of $\operatorname{GL}_2(F_v)$, then for every finite set $A$ of such $\rho$,
+
+$$
+\sum_{\rho\in A}
+\left|\operatorname{tr}\sigma(e_\rho^*)\right|^2\leq1. \tag{7.8}
+$$
+
+If $\sigma$ is not square-integrable modulo the center, every term is zero.
+
+**Proof.** We first construct the transfer. The trace--norm map is a submersion on the regular set. On a sufficiently small invariant-coordinate patch, integration along the conjugacy orbit therefore has a smooth local section: multiplying a transverse bump by the reciprocal orbit Jacobian prescribes its orbital integral. A partition of unity gives transfer on every compact regular subset.
+
+Only accumulation at a scalar requires more. There the rank-one slice has precisely two nilpotent orbits, zero and regular nilpotent, so its orbital transform has two germs. On the division side only the zero germ occurs. On the split side use the alternating vertex--edge function on the Bruhat--Tits tree. For an elliptic torus its fixed subtree has a compact quotient and the weighted number of fixed vertices minus fixed edges equals its Euler characteristic; for a split torus the fixed apartment has Euler characteristic zero.
+
+More concretely, separate the even and odd determinant-valuation shells and let $E_m$ be the normalized vertex--edge function on shell $m$. Its split orbital integrals are zero, while its elliptic orbital integral $b_m(t,n)$ is the nonzero weighted Euler characteristic of the fixed core. For the division orbital transform $A_D(t,n)=O_\delta(f_v)$ define, on each elliptic shell,
+
+$$
+A_m(t,n)=-\frac{A_D(t,n)}{b_m(t,n)}.
+$$
+
+Both numerator and denominator are locally constant in the regular trace--norm variables; the two-germ calculation says that $A_m$ has the required locally constant extension through every scalar-reduction annulus. Then
+
+$$
+f_v^*=\sum_m A_m(\operatorname{tr},\det)E_m
+$$
+
+has exactly the required orbital integrals. Only finitely many central shells occur modulo the prescribed central covariance, so the sum is a smooth compact-mod-center function. This completes the nonarchimedean transfer. At a ramified real place, the same construction is the two-term Euler--Poincare function; the elementary elliptic formula is the sine quotient displayed below. These constructions also show that changing the transfer without changing its regular orbital integrals changes no irreducible character trace: Weyl integration sees only the regular set.
+
+The character of a normalized principal series is supported, in the Weyl formula, on split regular tori. Its trace against a transfer is consequently zero. This is trace-level cuspidality. We do not claim that a finite Euler transfer has zero two-sided parabolic operator; the two-place argument in Proposition 7.2 is designed precisely so that no such stronger assertion is needed.
+
+Now the quotient $D_v^\times/F_v^\times$ is compact. Schur orthogonality, with the formal-degree normalization built into $e_\rho$, makes the irreducible division characters an orthonormal basis of its fixed-central-character elliptic trace space.
+
+More explicitly, on either group use the elliptic character pairing
+
+$$
+\langle\Theta_1,\Theta_2\rangle_{\mathrm{ell}}
+=\sum_T\frac1{|W(T)|}
+\int_{F_v^\times\backslash T_{\mathrm{reg}}}
+|D(t)|\Theta_1(t)\overline{\Theta_2(t)}\,dt, \tag{7.8a}
+$$
+
+where $T$ runs over elliptic maximal tori and every measure is the quotient measure used for orbital transfer. Weyl integration identifies the coefficient of $\Theta_\rho$ in this pairing with $\operatorname{tr}\rho(e_{\rho'})$, so the chosen division characters have pairing $\delta_{\rho,\rho'}$.
+
+On the split group, Weyl integration separates split and elliptic tori. The rank-one unitary classification says that a generic irreducible is either induced or square-integrable modulo the center. An induced character is zero on elliptic regular classes. A square-integrable character has elliptic norm one. At a real place this is the elementary sine orthogonality of the discrete-series formula
+
+$$
+\frac{\sin((k-1)\theta)}{\sin\theta}.
+$$
+
+At a nonarchimedean place the same equality follows from the vertex--edge resolution of the Bruhat--Tits tree. Apply the alternating trace to the coefficient system of compact-fixed vectors. Exactness off the invariant vector identifies the boundary complex with the Jacquet module. An elliptic element has no fixed boundary point, so that term vanishes; Schur orthogonality on the remaining compact stabilizers gives one for a square-integrable irreducible and zero between inequivalent ones. For an induced irreducible the coefficient complex is its boundary complex, so its elliptic Euler character is zero. This proves the asserted norms without assigning a division representation to $\sigma$.
+
+Signed regular transfer is an isometry for these elliptic pairings: matching tori, Weyl orders, discriminants, and quotient measures are identical, and the sign has absolute value one. Therefore the numbers $\operatorname{tr}\sigma(e_\rho^*)$ are Fourier coefficients of a vector of norm zero or one against an orthonormal family. Bessel's inequality gives (7.8). $\square$
+
+We next record the global identity in exactly the form needed.
+
+**Proposition 7.2 (character-clean two-place trace identity).** Let $f=\sum_j\otimes_v f_{j,v}$ be a finite sum of smooth test functions on $D^\times(\mathbf A)$ with fixed inverse central character. Assume that it has zero trace on every global norm character in the fixed finite level, infinity-type, and spectral window under consideration. At every $v\in R$, choose regular transfers as in Lemma 7.1. Normalize their scalar germs so that, for the quotient measures in use,
+
+$$
+\operatorname{vol}\bigl(PG(F)\backslash PG(\mathbf A)\bigr)f(1)
+=\operatorname{vol}\bigl(\operatorname{PGL}_2(F)\backslash
+\operatorname{PGL}_2(\mathbf A)\bigr)f^*(1). \tag{7.8b}
+$$
+
+Write the resulting split function as $f^*=\sum_j\otimes_v f_{j,v}^*$. Then
+
+$$
+\boxed{
+\sum_{\sigma\ \mathrm{cuspidal}}
+m_{\mathrm{GL}_2}(\sigma)\operatorname{tr}\sigma(f^*)
+=
+\sum_{\pi\ \mathrm{noncharacter}}
+m_D(\pi)\operatorname{tr}\pi(f).} \tag{7.9}
+$$
+
+Both sums are finite after the stated projectors are imposed. Moreover, inside such a finite window the character-clean and scalar-germ conditions can be imposed while prescribing the trace coordinates of any finite list of noncharacter local tensor types.
+
+**Proof.** We spell out the four independent ingredients.
+
+First, the pre-multiplicity form of Chapter 14 gives the compact quaternionic trace as $\sum_\pi m_D(\pi)\operatorname{tr}\pi(f)$ and as a sum over rational conjugacy classes. Its kernel and geometric expansion use only compactness, so invoking them here does not use Theorem 7.3; Chapter 14 inserts $m_D(\pi)=1$ only after the present proof.
+
+On the split side we use the following rank-one two-place form of the simple trace formula. Suppose a factorizable test has, at two distinct places $a$ and $b$, trace zero on every normalized principal series and zero split regular orbital integrals. After the residual determinant characters are written separately, its spectral and geometric expansions contain only the cuspidal and the central-plus-elliptic terms. Here is the proof. The constant-term spectral expansion from Books 100--103 is an integral of
+
+$$
+\operatorname{tr}\bigl(M(\chi,it)^{-1}M'(\chi,it)I(\chi,it)(f^*)\bigr).
+$$
+
+Factor $M$ and $I(f^*)$ locally and logarithmically differentiate $M$. Each summand has a derivative at one place. If that place is $a$, the undifferentiated trace factor at $b$ is zero; if it is $b$, the factor at $a$ is zero; if it is elsewhere, both are zero. The endpoint terms have the same factorization. On the geometric side, truncation organizes every split or unipotent boundary term as a sum in which at most one local Abel factor is differentiated; the zero split orbital transforms at $a$ and $b$ give the identical cancellation.
+
+For completeness, removal of truncation is absolute here. The finite components confine $(\operatorname{tr}\gamma,\det\gamma)$ to a fixed fractional lattice and finitely many determinant ideals. The lattice count in a height ball is polynomial. Every archimedean factor and all of its derivatives decrease faster than any chosen power after the smoothing multiplier is inserted, while the torus-volume and local-orbital coefficients have polynomial growth by the idele-class and reduction estimates of Books 4 and 102. Taking the decay exponent larger than the sum of those polynomial exponents makes the elliptic series and its differentiated truncation tails summable. The trace-class factorization of Book 100 and the cusp-tail and constant-term bounds of Books 101--103 then justify taking the trace, differentiating the product, and passing to the limit. Thus two trace-cuspidal places suffice even when neither local operator is strongly cuspidal. Since $|R|\ge2$, Lemma 7.1 supplies $a$ and $b$ in every summand.
+
+Second, rational regular classes on both sides are classified by the same trace and norm. A split rational class which has no division partner is split at some $v\in R$, where its orbital integral is zero. Matching classes have the same quadratic centralizer and the same adelic torus-volume coefficient. The product of the local transfer signs is $(-1)^{|R|}=1$. The split-torus and unipotent boundary terms are exactly the terms removed by the two-place cancellation just proved.
+
+Third, the residual terms and the division characters match before they are removed. Identify a norm character with its unique idele-class extension $\eta$ by (3.1). If $\eta_v$ has the prescribed central square, Weyl integration and the local transfer sign give
+
+$$
+\operatorname{tr}(\eta_v\circ\det)(f_v^*)
+=-\operatorname{tr}(\eta_v\circ\operatorname{Nrd})(f_v)
+\qquad(v\in R).
+$$
+
+At split places the traces are equal. Multiplying over all places removes the signs because $|R|$ is even. Hence the trace of every residual determinant character on $f^*$ equals the trace of the corresponding quaternionic norm character on $f$. The character-clean hypothesis kills both, rather than pretending that an Euler function annihilates a residual quotient operator.
+
+Fourth, regular transfer does not by itself determine the scalar term. Near a scalar, the split orbital transform has the zero and regular-nilpotent germs, while the division transform has only the zero germ. The alternating vertex--edge function makes the regular-nilpotent coefficient zero. A matching central bump changes the remaining coefficient by a nonzero scalar, so the resulting triangular two-germ system imposes equality of the two scalar distributions without disturbing matching away from that neighborhood.
+
+It remains to justify the interpolation clause. Only finitely many irreducible characters and norm characters occur in the chosen window. Their local character distributions are linearly independent. The scalar distribution is a point mass, so it is independent of those locally integrable character distributions. Choose finitely many regular neighborhoods, disjoint from the scalar neighborhood, on which the resulting character-value matrix has full rank; local slice functions supported there give its inverse matrix. Tensoring these functions at finitely many auxiliary places separates the required global tensor types and the finitely many norm characters. The central bump then solves the last scalar equation. This finite triangular linear system prescribes the noncharacter coordinates, makes every character coordinate zero, and keeps the regular transfers matched. After these choices, the two trace formulas have equal central and regular terms, no continuous term, and no residual or norm-character term. Their remaining spectral expansions are exactly (7.9). Absolute convergence justifies the regrouping. $\square$
+
+Nothing in Proposition 7.2 asserts a representation correspondence. Its inputs are the compact trace formula, the rank-one simple split trace formula, and orbital matching. In particular, it neither cites Book 94 nor assumes the theorem to be proved below.
+
+### 7.5 Multiplicity one and strong determination
+
+**Theorem 7.3 (quaternionic multiplicity one and strong determination).** Let $D$ be a quaternion division algebra over a number field $F$.
+
+1. Every irreducible automorphic representation $\pi$ of $D^\times(\mathbf A)$ occurs with multiplicity one:
+
+   $$
+   \boxed{m_D(\pi)=1.} \tag{7.10}
+   $$
+
+2. If two irreducible automorphic representations $\pi$ and $\pi'$ are locally isomorphic at all but finitely many places, then
+
+   $$
+   \boxed{\pi\cong\pi'.} \tag{7.11}
+   $$
+
+**Proof strategy.** Localize the compact spectrum at one almost-everywhere spherical Hecke character. The split trace identity has at most one cuspidal constituent, occurring once, by global Whittaker multiplicity one and strong multiplicity one for $\operatorname{GL}_2$. Expand its ramified elliptic characters in the orthonormal division-character bases. A quaternionic multiplicity is one coefficient of that tensor expansion. Bessel bounds its absolute value by one, while occurrence makes it a positive integer.
+
+**Proof.** The character assertion in (7.10) is (7.2), so let $\pi$ be a noncharacter and first make its central character unitary. Some local factor $\pi_u$ is not one dimensional; otherwise the restricted tensor product itself would be one dimensional. Choose a finite set $S$ containing $u$, all archimedean places, the ramification set $R$, and every finite place where $\pi$ is not spherical. Choose finite level, compact types, and a bounded infinitesimal-character window detecting $\pi$. The resulting automorphic space is finite dimensional.
+
+The exact bounded window is legitimate in the trace identity. On each fixed level and compact type, the positive elliptic operator has discrete spectrum and trace-class heat kernel. Its Riesz projector onto a bounded interval is finite rank and is a trace-norm limit of rapidly decreasing functional-calculus multipliers. The kernel and orbital identities are continuous under that limit by the diagonal estimates used in Proposition 7.2. At split archimedean places the same Casimir multiplier is placed on both sides; at a ramified real place the finite-dimensional character projector and its discrete-series Euler transfer already select the desired infinitesimal character. Thus no formal infinite spectral projector is being inserted into (7.9).
+
+The corresponding fixed-level, fixed-type, bounded window on the split cuspidal side is finite dimensional by the cuspidal compactness theorem of Book 102. Outside $S$, the spherical Hecke operators and their adjoints generate a commuting finite-dimensional $*$-algebra on the direct sum of the quaternionic window and this split window. Only finitely many characters of that algebra occur. For every character different from the full tail of $\pi$, choose one good place where it differs; finitely many such places and Lagrange interpolation then produce the exact projector onto
+
+$$
+\lambda^S=(\lambda_{\pi_v})_{v\notin S}. \tag{7.12}
+$$
+
+Apply this projector in (7.9), retaining arbitrary separating test functions at the places in $S$. On the split side, Book 104's global Whittaker theorem gives
+
+$$
+m_{\mathrm{GL}_2}(\sigma)=1
+$$
+
+for every cuspidal $\sigma$, and Book 106's Rankin--Selberg strong multiplicity-one theorem says that at most one such $\sigma$ has the good local data (7.12).
+
+To prove existence without a scalar-term ambiguity, let $\mathscr P$ be the finite set of quaternionic constituents left by the window and (7.12). Irreducible local characters remain linearly independent when restricted to the regular noncentral set. Hence local slice functions at the finitely many places in $S$ give a finite tensor trace selector which is one on $\pi$ and zero on every other member of $\mathscr P$. At $u$, require it also to vanish on every one-dimensional local factor in the window; this is compatible with trace one on the non-one-dimensional $\pi_u$. Choose one slice support away from the scalar set. Its transfer is supplied by the regular slice construction in Lemma 7.1 and is also supported away from scalars. Thus both central terms are zero, while the factor at $u$ makes the test character-clean. The right side of (7.9) is $m_D(\pi)>0$, so a split cuspidal constituent exists. Call the unique one $\sigma$.
+
+We now extract the tensor coefficient. Keep the character-killing condition at $u$ and vary the other local slice functions through the regular noncentral sets; at $u$ vary within the finite-codimension subspace annihilating the one-dimensional characters. Equation (7.9) is therefore an equality of finite sums of locally integrable tensor-character distributions on this regular product. The omitted scalar and singular sets have Haar measure zero. Cutting off successively smaller neighborhoods of them and using the finite elliptic $L^2$ norms in Lemma 7.1 extends the equality to the elliptic character Hilbert spaces. This is why the scalar interpolation in Proposition 7.2 introduces no extra coefficient here.
+
+At a split place in $S$, transfer is the identity. Local character independence in the preceding distribution identity forces $\sigma_v\cong\pi_v$; otherwise a dual regular slice would make the quaternionic coefficient nonzero and the split coefficient zero. At $v\in R$, put
+
+$$
+c_v(\rho)=\operatorname{tr}\sigma_v(e_\rho^*)
+$$
+
+and express the same statement as the elliptic character expansion
+
+$$
+\Theta_{\sigma_v}^{\mathrm{ell},*}
+=\sum_{\rho}c_v(\rho)\Theta_\rho,
 \qquad
-\ell_\iota(\pi(\gamma)v)=\ell_\iota(v)
-\quad(\gamma\in G(F)).
+\sum_{\rho\in A}|c_v(\rho)|^2\leq1 \tag{7.13}
 $$
 
-Conversely such a functional recovers the embedding by
+for every finite set $A$, by Lemma 7.1. Evaluating the selected tensor in (7.9) now gives
 
 $$
-\iota_\ell(v)(g)=\ell(\pi(g)v).
+m_D(\pi)=\prod_{v\in R}c_v(\pi_v). \tag{7.14}
 $$
 
-Compactness supplies the required continuity on smooth vectors and square integrability. Hence $\mathcal M(\pi)$ is the space of automorphic $G(F)$-invariant distribution functionals on $\pi$.
-
-Take such functionals $\ell$ for $\pi$ and $\widetilde\ell$ for $\pi^\vee$. Their generalized matrix coefficient is a distribution on $G(\mathbf A)$, bi-invariant under $G(F)$ and carrying the prescribed central characters. Sandwiching with compact-open and infinity-type projectors turns it into a smooth finite-rank kernel $K(g,h)$ on a compact product. Pair $K-K^{\mathrm t}$, where $K^{\mathrm t}(g,h)=K(h,g)$, with $\Theta_\Phi$ and all its left and right translates. Unfolding the nonzero rational orbit identifies the two orders of the generalized matrix coefficient. Poisson summation and the Fourier formula above make those orders equal. The $x=0$ term is a product of invariant scalar integrals and vanishes on a noncharacter block.
-
-These pairings separate the localized kernels. To see this without a hidden density assumption, prescribe a finite set of places containing those at which the vectors and levels vary. On the open set $D^\times$ there, extension by zero identifies compactly supported smooth functions with Schwartz--Bruhat functions supported away from the norm-zero locus. At all other finite places use the maximal-order characteristic function. Independent left and right translates then prescribe every compact-type matrix coefficient in the two variables. Those coefficients span the finite matrix space selected by the projectors. Thus vanishing of all the pairings gives $K=K^{\mathrm t}$. Increasing the finite set and the type projectors proves transposition invariance for the original generalized coefficient distribution.
-
-For completeness, the final linear algebra is as follows. If two independent $G(F)$-invariant functionals $\ell_1,\ell_2$ existed on $\pi$ and a nonzero invariant functional $\widetilde\ell$ existed on $\pi^\vee$, their three generalized coefficients would be transposition invariant. Convolve on the left and right by test functions carrying one chosen smooth vector to arbitrary vectors in its irreducible cyclic span. The transposition identities then force
+All split-place coefficients are one. The left side of (7.14) is a positive integer, whereas (7.13) gives $|c_v(\pi_v)|\leq1$. Hence
 
 $$
-\ell_1(v)\ell_2(w)=\ell_2(v)\ell_1(w)
+1\leq m_D(\pi)
+=\left|\prod_{v\in R}c_v(\pi_v)\right|
+\leq1.
 $$
 
-for all smooth $v,w$. Choosing $w$ with $\ell_1(w)\ne0$ makes $\ell_2$ proportional to $\ell_1$, a contradiction. Interchanging $\pi$ and $\pi^\vee$ gives the same conclusion on the dual side. Therefore
+This proves (7.10). Notice that no local character identity was assumed: equality forces every coefficient occurring in (7.14) to have absolute value one after the global argument is complete.
+
+It remains to prove (7.11) in all character cases. The central characters of nearly equivalent representations agree: their quotient is an idele-class character whose local components are trivial outside a finite set, and weak approximation in the product of the remaining local multiplicative groups forces it to be trivial.
+
+If both representations are characters, write them as $\psi\circ\operatorname{Nrd}$ and $\psi'\circ\operatorname{Nrd}$. Local equality outside a finite set and surjectivity of reduced norm there make $\psi_v/\psi_v'$ trivial outside that set; the same weak-approximation argument gives $\psi=\psi'$. If exactly one representation is a character, apply the preceding split detector to the noncharacter one. At almost every split place its good local representation is then one dimensional. The unique spherical representation with that full $T_v,S_v$ Hecke character is the same one-dimensional representation, whereas every local factor of the cuspidal $\sigma$ is generic and hence infinite dimensional by Book 104. This contradiction rules out the mixed case.
+
+Finally suppose both $\pi$ and $\pi'$ are noncharacters. Put them in the same localized window. They produce the same split cusp $\sigma$ by Book 106. The coefficient extraction above forces $\pi_v\cong\sigma_v\cong\pi_v'$ at every split place in $S$. If they differed at a ramified place $w$, formulas (7.10)--(7.14) would give
 
 $$
-\dim\mathcal M(\pi)\,\dim\mathcal M(\pi^\vee)\le1.
+|c_w(\pi_w)|=|c_w(\pi_w')|=1,
 $$
 
-Every smooth vector lies in one of the finite projectors used above, so removing the cutoffs loses no vector. $\square$
-
-The last density step concerns two-variable theta kernels, not the one-variable convolution algebra. This distinction is essential: ordinary convolution alone acts trivially on $\mathcal M(\pi)$ and cannot prove unit multiplicity.
-
-### 7.4 The commutant argument
-
-**Proof of Theorem 7.1.** First suppose the central character is unitary. The norm-character case was proved in Section 7.1. Suppose $\pi$ is a noncharacter. Complex conjugation of automorphic functions identifies the occurrence space of the unitary representation $\pi$ with that of its contragredient, so
+contradicting the Bessel inequality
 
 $$
-m(\pi^\vee)=m(\pi).
+|c_w(\pi_w)|^2+|c_w(\pi_w')|^2\leq1.
 $$
 
-Lemma 7.2 gives $m(\pi)^2\le1$. Since $\pi$ occurs, $m(\pi)>0$, and therefore $m(\pi)=1$. For a nonunitary algebraic normalization, remove the common real norm power as in Section 2.4. Twisting is an isomorphism of automorphic spaces and preserves occurrence dimensions, so the same conclusion holds before normalization. $\square$
+Thus all local factors agree, and restricted tensor uniqueness gives (7.11).
 
-Combining this theorem with Chapters 4--6 gives the exact package used below: the spectrum is discrete; every constituent has a unique restricted tensor factorization; every constituent occurs once; and fixed level, fixed infinity type, and bounded infinitesimal character select only finitely many constituents.
+Finally, an algebraic nonunitary normalization differs by a common real reduced-norm power. Twisting the automorphic space is an isomorphism, preserves occurrence dimensions and near equivalence, and reduces to the unitary case. $\square$
 
-We shall often retain the symbol $\mathcal M(\pi)$ in canonical decompositions. Theorem 7.1 says that it is a line, but there is no preferred nonzero automorphic embedding with which to identify that line with $\mathbf C$.
+Consequently every $\mathcal M(\pi)$ in (7.1) is a line, though it has no preferred basis. A complete good-place Hecke character determines the unique global constituent, but it still does not determine a vector: infinity-type multiplicity and local oldvectors remain.
 
-### 7.5 Near-equivalence after unit multiplicity
-
-Two global constituents $\pi$ and $\pi'$ are **nearly equivalent** if $\pi_v\cong\pi'_v$ for all but finitely many places. At every good split place, a spherical Hecke character determines the local representation by the rank-two Satake calculation recalled from Book 92. Hence a complete system of good-place eigenvalues determines a near-equivalence class.
-
-Unit multiplicity and strong determination are different statements. Theorem 7.1 says that each constituent occurs once; it does not say that a near-equivalence class contains only one constituent. Fix a finite set $S$ containing the archimedean places, division places, level places, and the ramification of the central character. For an away-from-$S$ spherical character $\lambda^S$, the simultaneous eigenspace at fixed weight and level is
+Here are the two downstream interfaces in exact form. Book 94 may begin its compact spectral comparison with $\sum_\pi m_D(\pi)\operatorname{tr}\pi(f)$ in order to track origins, but it must replace $m_D(\pi)$ by one using (7.10); neither Book 94's representation correspondence nor its later global theorem is used to obtain that value. For the one-split-real-place division algebra of Book 132, Matsushima's summand is
 
 $$
-\mathcal A[\lambda^S]
-\cong
-\bigoplus_{\substack{\pi:\ \pi_v\text{ has character }\lambda_v\\v\notin S}}
-\mathcal M(\pi)\otimes
-\text{(the selected infinity and level factors)}.
+\mathcal M(\pi)\otimes\pi_f^U\otimes A^1(\pi_\infty),
+\qquad
+\dim\mathcal M(\pi)=1,
+\quad \dim A^1(\pi_\infty)=2,
 $$
 
-The sum is finite, and every $\mathcal M(\pi)$ is a line. Ramified local operators may separate the summands. A theorem identifying the entire near-equivalence block with one constituent requires the later global comparison and must not be smuggled into unit multiplicity. Thus an eigensystem can have a multidimensional eigenspace because of oldvectors, infinity-type multiplicity, or several nearly equivalent constituents, even though no constituent is repeated automorphically.
+and therefore has the exact dimension $2\dim\pi_f^U$. This invocation uses the trace proof above, not the rejected additive-kernel argument of Section 7.3, and it requires no total-definiteness hypothesis.
 
 ## 8. Archimedean weights in the totally definite case
 
@@ -925,7 +1260,7 @@ The remaining covariance laws are checked coordinatewise. The two constructions 
 
 ### 9.3 The spectral formula at fixed level and weight
 
-Insert the multiplicity-line decomposition
+Insert the multiplicity-free decomposition, retaining each canonical occurrence line,
 
 $$
 \mathcal A(\omega)
@@ -945,7 +1280,7 @@ S(U,W,\omega_f)
 \otimes\pi_f^U.}
 $$
 
-Only finitely many $\pi$ contribute. If $W$ is irreducible, the first factor is one dimensional precisely when $\pi_\infty\cong W^\vee$, and is zero otherwise. Thus in the standard irreducible-weight case,
+Only finitely many $\pi$ contribute. If $W$ is irreducible, the archimedean Hom factor is one dimensional precisely when $\pi_\infty\cong W^\vee$, and is zero otherwise. Thus in the standard irreducible-weight case,
 
 $$
 S(U,W,\omega_f)
@@ -955,17 +1290,16 @@ S(U,W,\omega_f)
 \mathcal M(\pi)\otimes\pi_f^U.
 $$
 
-This is the fundamental fixed-level dictionary. It separates three dimensions that are easily confused:
+This is the fundamental fixed-level dictionary. Theorem 7.3 makes every $\mathcal M(\pi)$ a line, so the exact dimension formula is
 
 $$
 \dim S(U,W,\omega_f)
 =\sum_\pi
-m(\pi)\cdot
 \dim\operatorname{Hom}_{G(F_\infty)}(W^\vee,\pi_\infty)
 \cdot\dim\pi_f^U.
 $$
 
-The factor $m(\pi)$ counts automorphic embeddings, whereas an oldspace dimension belongs to $\pi_f^U$. They are conceptually independent. Theorem 7.1 gives $m(\pi)=1$ for every constituent, so any remaining dimension comes from the infinity-type Hom space or local fixed vectors. We retain $\mathcal M(\pi)$ in the isomorphism because its one-dimensional space has no preferred basis.
+The line $\mathcal M(\pi)$ remains in the canonical isomorphism because it has no preferred nonzero vector, but it contributes no numerical factor. Any dimension greater than one comes from the archimedean Hom space or from local fixed vectors, not from repeated automorphic occurrence.
 
 ### 9.4 Evaluation, stabilizers, and central equations
 
@@ -1051,7 +1385,7 @@ Thus a local tensor product is not an extra structure placed beside ideal classe
 
 ### 10.1 Why compatibility is not automatic from notation
 
-There are two apparent Hecke actions. The local representation $\pi_v$ admits convolution by compactly supported functions. The finite algebraic module admits the right-coset sums of Book 90. Their symbols agree only after Haar measure, right translation, and the choice of right cosets have been audited.
+There are two apparent Hecke actions. The local representation $\pi_v$ admits convolution by compactly supported functions. The finite algebraic module admits the right-coset sums defined below. Their symbols agree only after Haar measure, right translation, and the choice of right cosets have been audited.
 
 Normalize $dx_v$ by $\operatorname{vol}(U_v)=1$. For $\phi_v\in\mathcal H(G_v,U_v)$ define
 
@@ -1168,9 +1502,9 @@ as a double-coset identity. There is no $q_v+1$ neighbor operator. At smaller le
 
 At a split $K_0$-level, the operator usually called $U_v$ is likewise a characteristic-double-coset sum, generally of degree $q_v$. Its adjoint is the inverse-oriented operator $V_v$, not automatically a scalar multiple of $U_v$. These local asymmetries remain visible in the abstract action on $\pi_v^{U_v}$.
 
-### 10.6 Eigenvalues identify near-equivalence blocks, not vectors
+### 10.6 Good eigenvalues identify the representation, not the vector
 
-The complete spherical Hecke character away from a finite set identifies the local factors there and therefore a near-equivalence block. For one constituent $\pi$ in that block, its contribution at level $U$ is
+The complete spherical Hecke character away from a finite set identifies the local factors there. Strong determination in Theorem 7.3 says that at most one global quaternionic constituent has those factors. Its contribution at level $U$ is
 
 $$
 \mathcal M(\pi)\otimes
@@ -1178,7 +1512,7 @@ $$
 \otimes\pi_f^U.
 $$
 
-The full good-place eigenspace is the direct sum of these contributions over all nearly equivalent constituents that meet the chosen weight and level. Even one contribution can have dimension greater than one because of infinity-type multiplicity or oldvectors, though not because of repeated automorphic occurrence. Adding level-prime operators may separate constituents or vectors, but repeated roots or a noncommutative local Hecke algebra can prevent a simultaneous eigenbasis. Thus good-place eigenvalues identify a finite spectral block at fixed weight and level; they do not, at this stage, select a unique global representation or a unique vector.
+The occurrence line $\mathcal M(\pi)$ has dimension one. The eigenspace can nevertheless be larger because the selected infinity type occurs more than once or because $\pi_f^U$ contains oldvectors. Level-prime operators act on those local fixed-vector factors and may separate vectors; they act trivially on the occurrence line. Repeated roots or a noncommutative local Hecke algebra can also prevent a simultaneous eigenbasis. Thus complete good-place eigenvalues select the global representation and its unique automorphic occurrence, but not a vector inside its fixed-level realization.
 
 ## 11. Conductors, levels, and compact-open invariants
 
@@ -1301,13 +1635,13 @@ $$
 \pi_v^{U_v}\ne0\text{ for every finite }v,
 $$
 
-and the central character matches. Its full isotypic contribution has dimension
+and the central character matches. Its full isotypic contribution has the exact dimension
 
 $$
-\prod_{v<\infty}\dim\pi_v^{U_v},
+\boxed{\prod_{v<\infty}\dim\pi_v^{U_v}.}
 $$
 
-because $m(\pi)=1$ by Theorem 7.1.
+There is no automorphic multiplicity factor: Theorem 7.3 gives $m(\pi)=1$ for characters and noncharacters alike.
 
 For reducible $W$, multiply further by $\dim\operatorname{Hom}_{G(F_\infty)}(W^\vee,\pi_\infty)$ and replace the displayed equality of infinity types by nonvanishing of that Hom space.
 
@@ -1388,13 +1722,20 @@ $$
 
 where $N_U(\pi_f)$ is the tensor product of split generic newvector lines, split character-type lines, and division newlevel blocks. One may add another type-isotypic factor only after proving the corresponding local first-occurrence and oldspace-spanning statement. The oldspace is the sum of degeneracy images from proper coarser levels in these specified towers.
 
-With an invariant positive-definite inner product, the orthogonal complement of the oldspace equals this representation-theoretic newspace. Indeed, the spectral decomposition is orthogonal by isomorphism class, and every degeneracy map acts as the identity on $\mathcal M(\pi)$ while applying the local inclusion or translate on $\pi_f$. Local invariant theory therefore decides, independently in every copy of $\pi$, whether every vector comes from a coarser level or whether a first-occurrence summand remains.
+Because $\mathcal M(\pi)$ is a line, the numerical contribution of $\pi$ to the newlevel space is exactly
+
+$$
+\dim\operatorname{Hom}_{G(F_\infty)}(W^\vee,\pi_\infty)
+\cdot\dim N_U(\pi_f). \tag{12.1}
+$$
+
+With an invariant positive-definite inner product, the orthogonal complement of the oldspace equals this representation-theoretic newspace. Indeed, the spectral decomposition is orthogonal by isomorphism class, and every degeneracy map acts as the identity on the occurrence line $\mathcal M(\pi)$ while applying the local inclusion or translate on $\pi_f$. Local invariant theory therefore decides whether every vector in the unique occurrence comes from a coarser level or whether a first-occurrence summand remains.
 
 Over an integral coefficient ring, the sum of old images may fail to be saturated, and its orthogonal complement may not split the module. The honest integral object is then the old submodule and the quotient by its saturation. Characteristic-zero newspace formulas must not be asserted unchanged after reduction.
 
 ### 12.5 A dimension formula and its limit
 
-If all varying places are split, use $K_1$ towers, and all constituents being counted are generic at those places, write $D(\mathfrak n)$ for the fixed-level dimension. Let $N(\mathfrak d)$ include the archimedean multiplicity and every fixed local invariant dimension away from the varying split places for representations of exact conductor $\mathfrak d$. Automorphic multiplicity contributes no extra factor by Theorem 7.1. Then
+If all varying places are split, use $K_1$ towers, and all constituents being counted are generic at those places, write $D(\mathfrak n)$ for the fixed-level dimension. Let $N(\mathfrak d)$ be the sum, over representations of exact conductor $\mathfrak d$, of the archimedean multiplicity times every fixed local invariant dimension away from the varying split places. Automorphic multiplicity contributes no factor by Theorem 7.3. Then
 
 $$
 D(\mathfrak n)
@@ -1509,7 +1850,7 @@ $$
 
 For an algebraic infinity type, choose a number-field model of $W$, the central character, and the finite module. The Hecke operators then have matrices over a number field. Their eigenvalues are algebraic, and finitely many operators generate the image algebra. Hence every eigensystem occurring in $S(U,W,\omega_f)$ is valued in a finite extension.
 
-The almost-everywhere spherical Hecke character has its own rationality field, generated by the $T_v$ and $S_v$ eigenvalues outside a finite set. Every automorphism fixing $\pi_f$ fixes this field. The converse need not be asserted here: an automorphism can preserve the good-place character while permuting nearly equivalent constituents. One must include both $T_v$ and the central value $S_v$, or else representations with different central characters can be conflated even at the level of near-equivalence.
+The almost-everywhere spherical Hecke character has its own rationality field, generated by the $T_v$ and $S_v$ eigenvalues outside a finite set. Every automorphism fixing $\pi_f$ fixes this field. Conversely, if an automorphism fixes those good-place values, the conjugate constituent is nearly equivalent to $\pi$ and Theorem 7.3 identifies it with $\pi$. Thus the good Hecke field is the field of rationality of $\pi_f$. Both $T_v$ and the central value $S_v$ must be included; traces alone do not determine determinants when the central character is not fixed.
 
 A field of rationality need not be a field of definition for the entire representation. Descent can be obstructed by a nontrivial endomorphism division algebra, and a particular ramified type may require a larger splitting field. What the finite Hecke calculation gives immediately is a number-field model of the eigencharacter and, when the eigenspace is a line, of that line.
 
@@ -1523,7 +1864,7 @@ t_v^\sigma=\sigma(t_v),
 s_v^\sigma=\sigma(s_v)
 $$
 
-at unramified places in the raw algebraic normalization. The conjugate eigenspace is nonzero because the defining matrices and eigenvector equations are conjugated together. It decomposes into constituents in the conjugate near-equivalence block; without strong determination there is no reason to label one of them canonically as $\pi^\sigma$. The infinity type is transported through the algebraic coefficient system, not by applying $\sigma$ to analytic square roots $q_v^{1/2}$.
+at unramified places in the raw algebraic normalization. The conjugate eigenspace is nonzero because the defining matrices and eigenvector equations are conjugated together. Strong determination gives one constituent, canonically denoted $\pi^\sigma$, with those conjugate good local factors. Its infinity type is transported through the algebraic coefficient system, not by applying $\sigma$ to analytic square roots $q_v^{1/2}$.
 
 For a norm character $\psi\circ\operatorname{Nrd}$, the rationality field is generated by the relevant character values. Two characters can have the same central character $\psi^2$ but different rationality fields. This is another reason the character parameter itself, not only its restriction to the center, must be retained.
 
@@ -1600,11 +1941,10 @@ Integrating the diagonal kernel gives the spectral expansion
 
 $$
 \operatorname{tr}R(f)
-=\sum_\pi m(\pi)\operatorname{tr}\pi(f)
-=\sum_\pi\operatorname{tr}\pi(f),
+=\boxed{\sum_\pi\operatorname{tr}\pi(f)},
 $$
 
-where $\pi$ runs only over constituents of central character $\omega$ and the second equality is Theorem 7.1. On the other hand, grouping rational elements by conjugacy gives
+where $\pi$ runs only over constituents of central character $\omega$. Theorem 7.3 is exactly what removes the automorphic multiplicity coefficient. On the other hand, grouping rational elements by conjugacy gives
 
 $$
 \operatorname{tr}R(f)
@@ -1623,7 +1963,13 @@ O_\gamma(f)=
 f(x^{-1}\gamma x)\,dx.
 $$
 
-Here $[\gamma]$ runs over $G(F)$-conjugacy classes in $Z(F)\backslash G(F)$. The same quotient measures must be used in the coefficient and orbital integral. For regular noncentral $\gamma$, the centralizer is the multiplicative group of the quadratic field $F(\gamma)$, and the displayed central quotient has finite volume. In $Z(F)\backslash G(F)$ all central rational elements give the single identity class; its orbital integral is $f(1)$ and its coefficient is the volume of $[PG]$.
+Here $[\gamma]$ runs over $G(F)$-conjugacy classes in $Z(F)\backslash G(F)$. The same quotient measures must be used in the coefficient and orbital integral. For regular noncentral $\gamma$, put $E=F(\gamma)$. Its centralizer is $E^\times$, and the coefficient quotient is
+
+$$
+Z(\mathbf A)E^\times\backslash\mathbf A_E^\times.
+$$
+
+It is compact, hence has finite volume. To prove this from Book 4, note that scalar extension sends an idele of $F$ with module $t$ to an idele of $E$ with module $t^2$. Thus every class modulo $Z(\mathbf A)$ has a norm-one representative. The norm-one idele class group $C_E^1$ is compact, so its continuous image covers the displayed quotient. In $Z(F)\backslash G(F)$ all central rational elements give the single identity class; its orbital integral is $f(1)$ and its coefficient is the volume of $[PG]$.
 
 Because the quotient is compact, there are no truncation operators, continuous spectral integrals, or parabolic terms. This is the simple trace distribution prepared for later use. Nothing in its construction compares orbital integrals with those of another group.
 
@@ -1637,7 +1983,7 @@ f_f^\omega(g)
 \mathbf1_{UaU}(zg)\omega_f(z)\,dz,
 $$
 
-with the central measure normalized compatibly with quotient integration. Then $f_f^\omega(z_0g)=\omega_f(z_0)^{-1}f_f^\omega(g)$ and its support is compact modulo $Z_f$. Weil's formula shows that convolution by $f_f^\omega$ on the $\omega_f$-space is exactly convolution by $\mathbf1_{UaU}$, hence the unnormalized double-coset operator of Book 90. Choose the corresponding normalized central-character projector onto $W^\vee$ at infinity. The resulting global test function satisfies the equivariance required in Section 14.3. For irreducible $W$, the spectral trace is
+with the central measure normalized compatibly with quotient integration. Then $f_f^\omega(z_0g)=\omega_f(z_0)^{-1}f_f^\omega(g)$ and its support is compact modulo $Z_f$. Weil's formula shows that convolution by $f_f^\omega$ on the $\omega_f$-space is exactly convolution by $\mathbf1_{UaU}$, hence the unnormalized double-coset operator of Chapter 10. Choose the corresponding normalized central-character projector onto $W^\vee$ at infinity. The resulting global test function satisfies the equivariance required in Section 14.3. For irreducible $W$, the spectral trace is
 
 $$
 \sum_{\substack{\pi_\infty\cong W^\vee\\
@@ -1685,7 +2031,7 @@ This factorization is not evidence of a hidden two-dimensional constituent. It i
 
 ### 15.2 A ray-level two-class calculation
 
-Keep the Hurwitz algebra but impose principal level at $3$. In the elementary model of Book 90,
+Keep the Hurwitz algebra but impose principal level at $3$. The level-three calculation of Book 89 gives
 
 $$
 X_{U(3)}\cong\mathbf F_3^\times=\{1,-1\},
@@ -1733,7 +2079,7 @@ $$
 \frac{b_{ij}}{e_i}=\frac{b_{ji}}{e_j}.
 $$
 
-The commuting matrices $B_p$ are simultaneously diagonalizable for the positive mass pairing. Each common eigenpacket belongs to the finite near-equivalence block described in Section 7.5. If its class function factors through the reduced-norm class quotient, it lies in the norm-character subspace; the converse holds for every norm character visible at this weight and level. Outside that subspace, isolating one global constituent requires either additional ramified operators or the later strong-determination comparison.
+The commuting matrices $B_p$ are simultaneously diagonalizable for the positive mass pairing. The complete good-prime eigenpacket determines one global constituent by Theorem 7.3. If its class function factors through the reduced-norm class quotient, it lies in the norm-character subspace; the converse holds for every norm character visible at this weight and level. At maximal trivial weight every local invariant factor which occurs is a line, so the simultaneous good-prime eigenspace itself is a line. At deeper level the same unique constituent can instead have a larger oldspace.
 
 ### 15.4 A two-class matrix worked symbolically
 
@@ -1761,7 +2107,7 @@ $$
 
 This equality is a strong check on a neighbor enumeration.
 
-One matrix does not determine whether the second line is a norm character. Compute the norm map on the two ideal classes. If they have distinct norm classes and the vector is the pullback of a character of that two-element quotient, the line lies in the one-dimensional character spectrum. If the two ideal classes lie in the same norm fiber, every nonconstant function on them is outside the norm-character subspace. In either case, the complete family of good $B_\ell$ determines the near-equivalence block containing the line, not one global constituent on the results proved here, and the single number $\lambda_p$ determines still less.
+One matrix does not determine whether the second line is a norm character. Compute the norm map on the two ideal classes. If they have distinct norm classes and the vector is the pullback of a character of that two-element quotient, the line lies in the one-dimensional character spectrum. If the two ideal classes lie in the same norm fiber, every nonconstant function on them is outside the norm-character subspace. The complete family of good $B_\ell$ determines the unique global constituent containing the line; the single number $\lambda_p$ determines much less.
 
 ### 15.5 Nontrivial weights
 
@@ -1807,9 +2153,9 @@ These statements compare geometry and invariant theory only. They do not pair an
 
 ### 16.3 The boundary of this book
 
-No theorem in this book transports $\pi$ to an automorphic representation of $\operatorname{GL}_2(\mathbf A_F)$. We have not asserted that local conductors match across such a comparison, that a division character becomes a special representation, that character values differ by a sign, or that unramified Hecke polynomials are preserved by a global transfer. Those are conclusions requiring the transfer theorem reserved for Book 94.
+The proof of Theorem 7.3 uses the split cuspidal spectrum as a detector. For a noncharacter quaternionic constituent it forces a unique auxiliary cuspidal $\operatorname{GL}_2$ constituent with the same almost-everywhere spherical Hecke character. The equality case in the Bessel estimate says that, for this global pair, each ramified elliptic functional has one division-character coefficient. We do **not** promote that observation to a place-by-place correspondence for arbitrary local representations, compute its character sign, prove surjectivity onto a local or global image, or compare conductors, epsilon factors, and newvectors. Those are the transfer conclusions reserved for Book 94.
 
-What has been established independently is the complete quaternionic input to which such a theorem can later be applied: a discrete unit-multiplicity global spectrum, canonical multiplicity lines, local tensor factors, fixed-level vectors, exact Hecke normalization, and trace distributions.
+What has been established before that transfer theorem is the complete intrinsic input it needs: a discrete unit-multiplicity quaternionic spectrum, canonical occurrence lines, strong determination from almost all local factors, local tensor factors, fixed-level vectors, exact Hecke normalization, and the compact trace distribution. Book 94 may retain multiplicities while comparing traces; Theorem 7.3 supplies the exact quaternionic value one independently of its later local identifications.
 
 ## 17. The final representation dictionary
 
@@ -1828,7 +2174,7 @@ M(U,W,\omega_f)
 =\left(\bigoplus_iW^{\Gamma_i}\right)_{\omega_f}.
 $$
 
-Simultaneously decompose the commuting good-place Hecke action. A characteristic-zero eigensystem determines a finite near-equivalence block at the chosen weight and level. A constituent $\pi$ contributes precisely when
+Simultaneously decompose the commuting good-place Hecke action. A complete characteristic-zero good-place eigensystem determines one global constituent by strong determination. It contributes precisely when
 
 $$
 \pi_\infty\cong W^\vee,
@@ -1838,7 +2184,7 @@ $$
 \pi_v^{U_v}\ne0\quad (v<\infty).
 $$
 
-Its contribution is $\mathcal M(\pi)\otimes\pi_f^U$ in the irreducible-weight case. Since $\mathcal M(\pi)$ is a line, its dimension is the product of the local invariant dimensions.
+Its contribution is $\mathcal M(\pi)\otimes\pi_f^U$ in the irreducible-weight case. Since $\mathcal M(\pi)$ is a line, its dimension is exactly the product of the local invariant dimensions.
 
 ### 17.2 The dictionary in one table
 
@@ -1849,7 +2195,7 @@ Its contribution is $\mathcal M(\pi)\otimes\pi_f^U$ in the irreducible-weight ca
 | class-set dimension | fixed-vector sum over constituents | $\sum_\pi\dim\pi_f^U$ for irreducible $W$ |
 | right-coset sum $[UaU]$ | convolution on $\pi_f^U$ | $\sum_r\pi_f(a_r)$ |
 | $T_v,S_v$ at a good split place | spherical Hecke character | $1-t_vX+q_vs_vX^2$ |
-| Brandt common eigensystem | finite near-equivalence block | one or more $\mathcal M(\pi)\otimes\pi_f^U$ contributions |
+| Brandt common eigensystem | unique global constituent | $\mathcal M(\pi)\otimes\pi_f^U$ with $\dim\mathcal M(\pi)=1$ |
 | level $U_v$ | local invariant condition | $\pi_v^{U_v}\ne0$ |
 | standard exact level | conductor exponent | generic $K_1$, split character type, or division congruence data |
 | degeneracy image | oldvector | translate of a smaller-level invariant |
@@ -1879,11 +2225,11 @@ be an irreducible automorphic representation of $D^\times(\mathbf A)$. To realiz
 5. identify the $\pi$-isotypic summand with $\mathcal M(\pi)\otimes\pi_f^U$;
 6. read each local Hecke action from $\pi_v^{U_v}$.
 
-If $\pi$ is a norm character, the resulting class function factors through reduced norm and may occur only in a compatible one-dimensional infinity weight. Every constituent, character or noncharacter, occurs once. At deeper level, several vectors may realize that one automorphic copy; their number is governed by local invariants, not by automorphic multiplicity.
+If $\pi$ is a norm character, the resulting class function factors through reduced norm and may occur only in a compatible one-dimensional infinity weight. Characters and noncharacters both occur exactly once. Deeper level can nevertheless supply several vectors in that occurrence; their number is governed entirely by local invariant spaces.
 
 ### 17.4 Conclusion
 
-For an anisotropic quaternion algebra, compactness modulo the center changes the nature of automorphic theory. There are no cuspidal ends, no parabolic constant terms, and no continuous spectrum. The right regular representation breaks discretely into irreducible tensor products, each with a one-dimensional multiplicity space. Norm characters and higher-dimensional constituents alike occur once; the two cases require different proofs.
+For an anisotropic quaternion algebra, compactness modulo the center changes the nature of automorphic theory. There are no cuspidal ends, no parabolic constant terms, and no continuous spectrum. The right regular representation breaks discretely into irreducible tensor products, each with a one-dimensional occurrence space. Characters are handled directly; noncharacters require the character-clean trace and elliptic Bessel argument. The same argument proves that one near-equivalence class contains at most one global constituent.
 
 In the totally definite case, the global spectrum is visible through finite algebra. The exact identity
 
@@ -1895,6 +2241,6 @@ $$
 \mathcal M(\pi)\otimes\pi_f^U
 $$
 
-places ideal classes, stabilizer invariants, algebraic weights, multiplicity spaces, and local fixed vectors in one formula. Under this identity the Brandt operator is literally local convolution, its eigenvalues are the local spherical eigenvalues in the raw integral normalization, and its common eigenpackets are finite near-equivalence blocks. Conductors describe first occurrence only relative to specified compact-open towers; split generic factors supply newvector lines, split characters require matching types, and division principal levels supply finite-dimensional newlevel blocks.
+places ideal classes, stabilizer invariants, algebraic weights, occurrence lines, and local fixed vectors in one formula. Under this identity the Brandt operator is literally local convolution, its eigenvalues are the local spherical eigenvalues in the raw integral normalization, and a complete common eigenpacket determines one global constituent. Conductors describe first occurrence only relative to specified compact-open towers; split generic factors supply newvector lines, split characters require matching types, and division principal levels supply finite-dimensional newlevel blocks.
 
-The resulting picture is both finite and global. A vector can be evaluated on finitely many ideal classes, yet its translates generate a representation spanning every place. A Hecke matrix can be computed by finitely many neighbor reductions, yet its eigencharacter records the unramified tail of an adelic tensor product. A compact trace can be counted through rational conjugacy classes or summed through irreducible representations with their multiplicities. This is the quaternionic automorphic representation: one coherent global symmetry whose finite shadows are exactly the algebraic modules constructed earlier.
+The resulting picture is both finite and global. A vector can be evaluated on finitely many ideal classes, yet its translates generate a representation spanning every place. A Hecke matrix can be computed by finitely many neighbor reductions, yet its eigencharacter records and determines the unramified tail of an adelic tensor product. A compact trace can be counted through rational conjugacy classes or summed once through each irreducible representation. This is the quaternionic automorphic representation: one coherent global symmetry whose finite shadows are exactly the algebraic modules constructed earlier.
