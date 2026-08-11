@@ -85,7 +85,7 @@ any resulting corrections.
 - [ ] 059. Integral Fontaine–Laffaille Equivalence and Base Change
 - [ ] 060. p-divisible Groups and Serre–Tate Theory
 - [ ] 061. Ramification and Discriminants of Finite-Flat Representations
-- [ ] 062. Artinian and Complete Local Coefficient Rings
+- [x] 062. Artinian and Complete Local Coefficient Rings
 - [ ] 063. Pseudocompact Trace Algebras and Carayol Descent
 - [ ] 064. Deformation Functors of Representations
 - [ ] 065. Representability of Deformation Problems
