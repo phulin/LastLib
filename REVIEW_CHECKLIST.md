@@ -219,7 +219,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 152. Mordell–Weil Sieves for Hyperelliptic Curves
 - [ ] 153. Semistable Isogeny Characters and Frey Residual Representations
 - [ ] 154. The Frey Curve and Fermat’s Last Theorem
-- [ ] 155. Minimal Modularity Lifting
+- [x] 155. Minimal Modularity Lifting
 - [ ] 156. Nonminimal Modularity Lifting
 - [x] 157. Integral Local Types and Type Lattices
 - [x] 158. Ihara Theory and Saturated Degeneracy Maps on Shimura Curves

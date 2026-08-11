@@ -2,2176 +2,2200 @@
 
 ## Contents
 
-1. [Scope, imports, and logical order](#1-scope-imports-and-logical-order)
-   - [1.1 The claim](#11-the-claim)
-   - [1.2 Imported results and new infrastructure](#12-imported-results-and-new-infrastructure)
-   - [1.3 The clean rational datum](#13-the-clean-rational-datum)
-   - [1.4 Exclusions](#14-exclusions)
-   - [1.5 The noncircular route](#15-the-noncircular-route)
-2. [The global and local deformation problem](#2-the-global-and-local-deformation-problem)
-   - [2.1 Coefficients, determinant, and Frobenius](#21-coefficients-determinant-and-frobenius)
-   - [2.2 Unramified minimality](#22-unramified-minimality)
-   - [2.3 Nonzero Steinberg minimality](#23-nonzero-steinberg-minimality)
-   - [2.4 Finite flatness at the coefficient prime](#24-finite-flatness-at-the-coefficient-prime)
-   - [2.5 Oddness and the real place](#25-oddness-and-the-real-place)
-   - [2.6 The global ring and Selmer structures](#26-the-global-ring-and-selmer-structures)
-3. [Integral quaternionic Taylor--Wiles control](#3-integral-quaternionic-taylor--wiles-control)
-   - [3.1 Definite class-set modules](#31-definite-class-set-modules)
-   - [3.2 The automorphic control theorem](#32-the-automorphic-control-theorem)
-   - [3.3 Why the theorem is integral](#33-why-the-theorem-is-integral)
-   - [3.4 Proof architecture](#34-proof-architecture)
-4. [Integral definite-to-curve Hecke reciprocity](#4-integral-definite-to-curve-hecke-reciprocity)
-   - [4.1 Why generic Jacquet--Langlands is insufficient](#41-why-generic-jacquet--langlands-is-insufficient)
-   - [4.2 The reciprocity theorem](#42-the-reciprocity-theorem)
-   - [4.3 Construction and proof architecture](#43-construction-and-proof-architecture)
-5. [The Hecke representation and the map from deformation to Hecke](#5-the-hecke-representation-and-the-map-from-deformation-to-hecke)
-   - [5.1 The minimal Hecke algebra](#51-the-minimal-hecke-algebra)
-   - [5.2 Local verification of the Hecke family](#52-local-verification-of-the-hecke-family)
-   - [5.3 The canonical surjection](#53-the-canonical-surjection)
-6. [Taylor--Wiles primes and auxiliary deformation rings](#6-taylor--wiles-primes-and-auxiliary-deformation-rings)
-   - [6.1 Killing dual Selmer](#61-killing-dual-selmer)
-   - [6.2 Ordered roots and diamond groups](#62-ordered-roots-and-diamond-groups)
-   - [6.3 Local auxiliary rings](#63-local-auxiliary-rings)
-   - [6.4 Global auxiliary rings and augmentation](#64-global-auxiliary-rings-and-augmentation)
-7. [Full auxiliary modules and diamond freeness](#7-full-auxiliary-modules-and-diamond-freeness)
-   - [7.1 Lower, Iwahori, and deep levels](#71-lower-iwahori-and-deep-levels)
-   - [7.2 Free diamond action](#72-free-diamond-action)
-   - [7.3 Integral pairings at deep level](#73-integral-pairings-at-deep-level)
-8. [Exact degeneracy and full Iwahori oldness](#8-exact-degeneracy-and-full-iwahori-oldness)
-   - [8.1 Degeneracy maps and trace adjoints](#81-degeneracy-maps-and-trace-adjoints)
-   - [8.2 The Gram matrix](#82-the-gram-matrix)
-   - [8.3 Saturation and vanishing of the new quotient](#83-saturation-and-vanishing-of-the-new-quotient)
-   - [8.4 The Iwahori operator after oldness](#84-the-iwahori-operator-after-oldness)
-9. [Primary and companion branches](#9-primary-and-companion-branches)
-   - [9.1 Hensel projectors and the primary old line](#91-hensel-projectors-and-the-primary-old-line)
-   - [9.2 The deep primary and companion blocks](#92-the-deep-primary-and-companion-blocks)
-   - [9.3 Adjointness, not self-adjointness](#93-adjointness-not-self-adjointness)
-   - [9.4 Augmentation and ordered Galois control](#94-augmentation-and-ordered-galois-control)
-10. [The Taylor--Wiles axiom ledger](#10-the-taylor--wiles-axiom-ledger)
-    - [10.1 The paired finite-level system](#101-the-paired-finite-level-system)
-    - [10.2 Verification of the axioms](#102-verification-of-the-axioms)
-    - [10.3 What has not yet been proved](#103-what-has-not-yet-been-proved)
-11. [The framed ledger and absolute patching](#11-the-framed-ledger-and-absolute-patching)
-    - [11.1 The exact global generator formula](#111-the-exact-global-generator-formula)
-    - [11.2 Local framed dimensions](#112-local-framed-dimensions)
-    - [11.3 Gauge variables and the framed presentation](#113-gauge-variables-and-the-framed-presentation)
-    - [11.4 Exact frame removal and the square presentation](#114-exact-frame-removal-and-the-square-presentation)
-    - [11.5 The exact unframed auxiliary count](#115-the-exact-unframed-auxiliary-count)
-    - [11.6 Patching from the minimal absolute source](#116-patching-from-the-minimal-absolute-source)
-    - [11.7 Regularity, freeness, and faithful descent](#117-regularity-freeness-and-faithful-descent)
-12. [Post-comparison cotangent and congruence theory](#12-post-comparison-cotangent-and-congruence-theory)
-    - [12.1 The common complete-intersection presentation](#121-the-common-complete-intersection-presentation)
-    - [12.2 The deformation cotangent complex](#122-the-deformation-cotangent-complex)
-    - [12.3 The automorphic congruence complex](#123-the-automorphic-congruence-complex)
-    - [12.4 The conormal--dualizing comparison](#124-the-conormal--dualizing-comparison)
-    - [12.5 Integral normalization and the global unit](#125-integral-normalization-and-the-global-unit)
-    - [12.6 The Fitting--congruence equality](#126-the-fitting--congruence-equality)
-13. [The numerical audit and structural consequences](#13-the-numerical-audit-and-structural-consequences)
-    - [13.1 The specialization square](#131-the-specialization-square)
-    - [13.2 The Wiles--Lenstra criterion as an audit](#132-the-wiles--lenstra-criterion-as-an-audit)
-    - [13.3 Consequences proved only after equality](#133-consequences-proved-only-after-equality)
-14. [Modularity extraction and the reusable theorem](#14-modularity-extraction-and-the-reusable-theorem)
-    - [14.1 From a minimal point to an eigenform](#141-from-a-minimal-point-to-an-eigenform)
-    - [14.2 Equality of Galois representations](#142-equality-of-galois-representations)
-    - [14.3 Minimal modularity lifting over the rationals](#143-minimal-modularity-lifting-over-the-rationals)
-15. [The elliptic-curve theorem](#15-the-elliptic-curve-theorem)
-    - [15.1 Translating the hypotheses](#151-translating-the-hypotheses)
-    - [15.2 The conclusion](#152-the-conclusion)
-16. [What changes over a totally real field](#16-what-changes-over-a-totally-real-field)
-    - [16.1 The parts that formally persist](#161-the-parts-that-formally-persist)
-    - [16.2 The new global and automorphic work](#162-the-new-global-and-automorphic-work)
-17. [Failure modes and diagnostic boundaries](#17-failure-modes-and-diagnostic-boundaries)
-    - [17.1 Local failures](#171-local-failures)
-    - [17.2 Automorphic and integral failures](#172-automorphic-and-integral-failures)
-    - [17.3 Numerical and logical failures](#173-numerical-and-logical-failures)
-18. [The interface with nonminimal lifting](#18-the-interface-with-nonminimal-lifting)
-    - [18.1 What the minimal theorem exports](#181-what-the-minimal-theorem-exports)
-    - [18.2 What Book 156 must rebuild](#182-what-book-156-must-rebuild)
-    - [18.3 Final perspective](#183-final-perspective)
+- [1. The lifting problem](#1-the-lifting-problem)
+  - [1.1 From one automorphic point to every minimal lift](#11-from-one-automorphic-point-to-every-minimal-lift)
+  - [1.2 The logical shape of the argument](#12-the-logical-shape-of-the-argument)
+  - [1.3 The exact theorem](#13-the-exact-theorem)
+  - [1.4 A guide to the hypotheses](#14-a-guide-to-the-hypotheses)
+- [2. The residual and local datum](#2-the-residual-and-local-datum)
+  - [2.1 Coefficients, determinant, and Frobenius](#21-coefficients-determinant-and-frobenius)
+  - [2.2 Total oddness and residual automorphy](#22-total-oddness-and-residual-automorphy)
+  - [2.3 Finite flatness at the coefficient prime](#23-finite-flatness-at-the-coefficient-prime)
+  - [2.4 Minimal conditions away from the coefficient prime](#24-minimal-conditions-away-from-the-coefficient-prime)
+  - [2.5 What minimal does not mean](#25-what-minimal-does-not-mean)
+- [3. The global minimal deformation problem](#3-the-global-minimal-deformation-problem)
+  - [3.1 Representability and tangent spaces](#31-representability-and-tangent-spaces)
+  - [3.2 The dual Selmer group](#32-the-dual-selmer-group)
+  - [3.3 The totally real balance](#33-the-totally-real-balance)
+  - [3.4 Framed and unframed counts](#34-framed-and-unframed-counts)
+- [4. The automorphic side and the comparison map](#4-the-automorphic-side-and-the-comparison-map)
+  - [4.1 Definite quaternionic forms](#41-definite-quaternionic-forms)
+  - [4.2 Integral types, companions, and pairings](#42-integral-types-companions-and-pairings)
+  - [4.3 The Hecke-valued representation](#43-the-hecke-valued-representation)
+  - [4.4 The surjection from deformations to Hecke operators](#44-the-surjection-from-deformations-to-hecke-operators)
+- [5. Adequacy and Taylor--Wiles primes](#5-adequacy-and-taylor--wiles-primes)
+  - [5.1 Why cyclotomic irreducibility is the right image hypothesis](#51-why-cyclotomic-irreducibility-is-the-right-image-hypothesis)
+  - [5.2 The coefficient-prime bound](#52-the-coefficient-prime-bound)
+  - [5.3 Detecting the dual Selmer group](#53-detecting-the-dual-selmer-group)
+  - [5.4 The exact auxiliary ledger](#54-the-exact-auxiliary-ledger)
+- [6. Auxiliary local conditions and diamond variables](#6-auxiliary-local-conditions-and-diamond-variables)
+  - [6.1 Ordered regular branches](#61-ordered-regular-branches)
+  - [6.2 Group algebras and their limit](#62-group-algebras-and-their-limit)
+  - [6.3 Exact deformation augmentation](#63-exact-deformation-augmentation)
+  - [6.4 The old-form determinant](#64-the-old-form-determinant)
+- [7. Auxiliary automorphic modules](#7-auxiliary-automorphic-modules)
+  - [7.1 Deep level and group-ring freeness](#71-deep-level-and-group-ring-freeness)
+  - [7.2 Integral oldness](#72-integral-oldness)
+  - [7.3 Primary and companion branches](#73-primary-and-companion-branches)
+  - [7.4 Exact module and Hecke augmentation](#74-exact-module-and-hecke-augmentation)
+- [8. The finite system and its patch](#8-the-finite-system-and-its-patch)
+  - [8.1 The finite-level diagram](#81-the-finite-level-diagram)
+  - [8.2 Why the levels do not form a tower](#82-why-the-levels-do-not-form-a-tower)
+  - [8.3 Finite shadows and diagonalization](#83-finite-shadows-and-diagonalization)
+  - [8.4 The patched objects](#84-the-patched-objects)
+- [9. Equal-variable rigidity](#9-equal-variable-rigidity)
+  - [9.1 The sharp absolute source](#91-the-sharp-absolute-source)
+  - [9.2 The dimension argument](#92-the-dimension-argument)
+  - [9.3 Freeness and faithfulness](#93-freeness-and-faithfulness)
+  - [9.4 Why weaker support arguments fail](#94-why-weaker-support-arguments-fail)
+- [10. Descent and the minimal equality](#10-descent-and-the-minimal-equality)
+  - [10.1 Regular augmentation](#101-regular-augmentation)
+  - [10.2 Proof of the minimal comparison](#102-proof-of-the-minimal-comparison)
+  - [10.3 Complete intersections and congruences](#103-complete-intersections-and-congruences)
+- [11. Recovering automorphic representations](#11-recovering-automorphic-representations)
+  - [11.1 A characteristic-zero point of the Hecke algebra](#111-a-characteristic-zero-point-of-the-hecke-algebra)
+  - [11.2 Equality of Galois representations](#112-equality-of-galois-representations)
+  - [11.3 Lattices and finite-flat quotients](#113-lattices-and-finite-flat-quotients)
+  - [11.4 The lifting theorem proved](#114-the-lifting-theorem-proved)
+- [12. Coefficient changes, descent, and exceptional cases](#12-coefficient-changes-descent-and-exceptional-cases)
+  - [12.1 Extension of coefficients](#121-extension-of-coefficients)
+  - [12.2 Descent to the original coefficient ring](#122-descent-to-the-original-coefficient-ring)
+  - [12.3 The boundary at five and below](#123-the-boundary-at-five-and-below)
+  - [12.4 Local and automorphic failures](#124-local-and-automorphic-failures)
+- [13. The minimal modularity package](#13-the-minimal-modularity-package)
+  - [13.1 Dependency and hypothesis audit](#131-dependency-and-hypothesis-audit)
+  - [13.2 Final synthesis](#132-final-synthesis)
 
-## 1. Scope, imports, and logical order
+## 1. The lifting problem
 
-The difficulty in a minimal lifting theorem is not naming its two rings but keeping the reasons for every comparison independent. This chapter fixes the exact rational datum, marks the boundary of the theorem, and assigns every deep assertion to a visible source. The resulting order will be used as a dependency check throughout the proof.
+### 1.1 From one automorphic point to every minimal lift
 
-### 1.1 The claim
-
-Minimal modularity lifting compares two moduli problems. The Galois problem classifies lifts of a fixed residual representation with a fixed determinant and exact local conditions. The automorphic problem records the Hecke eigensystems occurring at the matching weight, level, and local types. The conclusion is the scheme-theoretic equality
+Let $F$ be a totally real number field and let
 
 $$
-R^{\min}\simeq\mathbb T^{\min},
+\bar\rho:G_F\longrightarrow\operatorname{GL}_2(k)
+$$
+
+be a continuous residual representation in characteristic $\ell$. Suppose that
+$\bar\rho$ is already known to come from a parallel-weight-two automorphic
+representation. Residual automorphy gives one point on an arithmetic moduli
+space. A modularity-lifting theorem asks for much more: is every
+characteristic-zero lift of that point, subject to the same determinant and
+the same minimal local conditions, automorphic?
+
+There are two natural rings. The universal minimal deformation ring
+$R^{\min}$ records all such Galois lifts. The localized Hecke algebra
+$\mathbb T^{\min}$ records the automorphic eigensystems with the matching
+weight, determinant, level, and local types. A Hecke-valued Galois
+representation produces a canonical surjection
+
+$$
+R^{\min}\twoheadrightarrow\mathbb T^{\min}.
 \tag{1.1}
 $$
 
-not merely equality of dimensions, equality after inverting $\ell$, or equality of reduced quotients.
+Surjectivity says that the Hecke operators are functions of the universal
+Galois representation. It does not say that every Galois point is
+automorphic. The lifting theorem is the assertion that (1.1) has zero kernel.
+That is an integral, scheme-theoretic assertion. Equality after inverting
+$\ell$, equality of reduced quotients, or equality of dimensions would all
+leave room for congruence information or nilpotents invisible to
+characteristic-zero points.
 
-Residual modularity supplies the common closed point. It does not by itself control every characteristic-zero lift through that point. The canonical map goes in the useful direction only after an integral Hecke-valued representation has been constructed and checked at every bad prime:
+The word *minimal* is equally important. It does not mean merely that the
+Artin conductor is numerically smallest. It means that a represented local
+condition has been chosen at every place: finite flat of weights $\{0,1\}$
+above $\ell$, and an exact unramified, fixed-type, or named special component
+away from $\ell$. These conditions must match the integral local types on the
+automorphic side.
+
+### 1.2 The logical shape of the argument
+
+The proof has four independent pieces.
+
+First, global deformation theory constructs $R^{\min}$ and computes its
+tangent and obstruction spaces by Selmer groups. The totally real Euler
+characteristic is balanced: the positive finite-flat contributions at places
+above $\ell$ cancel the negative contributions of all real places.
+
+Second, residual automorphy and integral local--global compatibility construct
+$\mathbb T^{\min}$, a faithful automorphic module, and the surjection (1.1).
+This step must precede patching; patching cannot manufacture a Galois
+representation over an incorrectly chosen Hecke order.
+
+Third, adequacy supplies sets of Taylor--Wiles primes that kill the dual
+Selmer group. At a set of $q$ primes one obtains exactly $q$ diamond
+variables. The deep-level automorphic module is free over the corresponding
+finite group algebra, and augmentation recovers the exact minimal objects.
+
+Fourth, patching yields two power-series sources of the same dimension:
 
 $$
-R^{\min}\twoheadrightarrow\mathbb T^{\min}.
+P=\mathcal O[[x_1,\ldots,x_q]],
+\qquad
+S_\infty=\mathcal O[[z_1,\ldots,z_q]].
 \tag{1.2}
 $$
 
-The kernel of (1.2) is the central issue. A support argument can miss nilpotents, and a characteristic-zero packet comparison can miss integral congruences. This book kills the kernel by patching the **absolute unframed** auxiliary rings from a power-series source having exactly as many variables as the diamond source. Diamond freeness then forces the patched action to have full dimension; regularity of the absolute source turns that dimension equality into injectivity, and Auslander--Buchsbaum turns the patched module into a faithful free module. Cotangent--congruence equality is derived only after $R^{\min}=\mathbb T^{\min}$ is known.
-
-### 1.2 Imported results and new infrastructure
-
-The proof uses the preceding books with sharply delimited roles.
-
-| Source | Role used here |
-|---|---|
-| Books 29--33, 48, 62, and 64--66 | continuous representations, local and global deformation functors, tangent spaces, duality, and representability |
-| Book 67 | the finite-flat type-$(0,1)$ deformation ring over $\mathbf Q_\ell$, applied only after Infrastructure II supplies an integral curve factor |
-| Book 68 | Poitou--Tate presentations, the exact formulas for $g_T$ and $q_T$, and framed gauge counts |
-| Books 71 and 75 | congruence ideals, cotangent modules, Fitting ideals, and the numerical Wiles--Lenstra criterion |
-| Books 72 and 73 | ordered Taylor--Wiles local rings, prime selection, diamond augmentation, and the companion-module form of the Taylor--Wiles axioms |
-| Book 74 | perfect complexes, regular frame extensions, and derived augmentation |
-| Books 89--91 | definite class-set lattices, mass pairings, adjoints, degeneracy maps, and the distinction between faithfulness, freeness, and saturation |
-| Books 92--94 | local automorphic types, old/new decompositions, and the scope of generic Jacquet--Langlands |
-| Books 120, 122, and 135 | Hecke packets, integral Galois representations, determinants, and local--global compatibility |
-
-Two stronger integral comparison results are needed in addition. They are stated in Chapters 3 and 4 as **Infrastructure I** and **Infrastructure II**. They are standard infrastructure for this clean rational case, but they are not consequences of the cited books as presently stated. Their hypotheses and proof mechanisms are therefore exposed rather than hidden in the phrase “standard Taylor--Wiles theory.” Neither asserts (1.1), injectivity of (1.2), or patched faithfulness.
-
-The logical division is important. Infrastructure I is integral control on definite quaternionic class sets. Its generic new-quotient contradiction may apply Book 135 to individual characteristic-zero constituents, but it constructs no Hecke-valued Galois family and makes no deformation-ring comparison. Infrastructure II transfers the relevant packet to integral curve cohomology and constructs that family. Chapters 6--11 then prove the kernel-killing theorem from the sharp auxiliary tangent count, finite marked shadows, exact augmentation, and commutative algebra. Separate self-dualities on the Galois and automorphic sides are not used to manufacture a cross-complex map.
-
-The theorem ledger is therefore:
-
-| Result | Positive conclusion | Conclusion deliberately absent |
-|---|---|---|
-| Infrastructure I | integral lattices, old/new control, diamond freeness, primary--companion duality, augmentation | no Galois representation and no deformation ring comparison |
-| Infrastructure II | equality of integral automorphic orders and a locally verified Hecke-valued representation | no injectivity of $R\to\mathbb T$ |
-| Sharp absolute auxiliary presentation | every $R_n$ is a quotient of $P=\mathcal O[[X_1,\ldots,X_q]]$ | no uniform relation tuple and no finite-level $R_n=\mathbb T_n$ |
-| Equal-variable patching, proved in Chapter 11 | $R_\infty=P$, patched freeness, faithful descent, and $R^{\min}=\mathbb T^{\min}$ | no pre-equality determinant comparison |
-| Book 71 after equality | the intrinsic complete-intersection Fitting--congruence equality | no role in eliminating the kernel |
-
-Reading any entry upward would be circular. In particular, the structural properties delivered after equal-variable patching cannot be used to establish the integral saturation or exact augmentation that the patch itself needs.
-
-### 1.3 The clean rational datum
-
-Fix a prime $\ell\ge7$, a finite extension $E/\mathbf Q_\ell$ with ring of integers $\mathcal O$, uniformizer $\varpi$, and residue field $k$. Let
-
-$$
-\bar\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(k)
-\tag{1.3}
-$$
-
-be continuous, absolutely irreducible, and odd. We impose all of the following conditions.
-
-1. The determinant is cyclotomic:
-   $$
-   \det\bar\rho=\bar\chi_\ell.
-   \tag{1.4}
-   $$
-2. With $W=\operatorname{ad}^0\bar\rho$,
-   $$
-   H^0(\mathbf Q,W(1))=0.
-   \tag{1.5}
-   $$
-3. The image satisfies the split large-image hypotheses of Book 72. In particular, Taylor--Wiles primes with prescribed distinct residual Frobenius eigenvalues can be selected so as to kill dual Selmer.
-4. The prime-to-$\ell$ Artin conductor $N$ is squarefree and nontrivial.
-5. At every $p\mid N$, residual tame monodromy is nonzero. A fixed unramified quadratic character $\epsilon_p$ specifies the Steinberg sign, and
-   $$
-   p\not\equiv\pm1\pmod\ell.
-   \tag{1.6}
-   $$
-6. The restriction $\bar\rho|_{G_{\mathbf Q_\ell}}$ is finite flat of type $(0,1)$ and has scalar endomorphism ring:
-   $$
-   \operatorname{End}_{k[G_{\mathbf Q_\ell}]}
-   \bigl(\bar\rho|_{G_{\mathbf Q_\ell}}\bigr)=k.
-   \tag{1.7}
-   $$
-7. The residual eigensystem occurs in an exact-level weight-two newform of level $N$, trivial central character, and the prescribed Steinberg signs. “Exact-level” means new at every $p\mid N$; it is stronger than merely occurring at a level divisible by $N$.
-8. Choose one prime $p_0\mid N$. Let $B/\mathbf Q$ be the definite quaternion algebra ramified exactly at $p_0$ and infinity, with the finite local type at $p_0$ corresponding to the prescribed discrete-series packet.
-
-The coefficient field is enlarged once, if necessary, to contain the values of the fixed source eigensystem, the residual Frobenius eigenvalues, and the fixed local signs. No common splitting field for all auxiliary levels is assumed. The Hensel roots at an auxiliary prime live in the corresponding localized Hecke order, and the finite-order tame characters live in the group algebra $\mathcal O[\Delta_v(n)]$. Thus the infinitely many Taylor--Wiles levels do not require one finite coefficient extension containing all of their generic eigenvalues.
-
-### 1.4 Exclusions
-
-The theorem does not cover $\ell<7$, small or exceptional residual image, failure of (1.5), scalar residual Frobenius at a Taylor--Wiles prime, or a coefficient-prime restriction with nonscalar endomorphisms. It excludes $N=1$, nonsquarefree conductor, primes $p\mid N$ with zero residual monodromy, and the vexing congruences $p\equiv\pm1\pmod\ell$. It also excludes a change of Steinberg sign, a determinant other than the fixed cyclotomic determinant, and a residual source that is only old at level $N$.
-
-These boundaries are structural. If residual monodromy is zero, “nonzero Steinberg” is not a closed condition on Artinian points. If $p\equiv\pm1\pmod\ell$, the local tangent calculation or the primitive integral newvector control used below can fail. If the source is old, the localized class-set module need not isolate the desired packet. If the residual image is too small, the auxiliary primes required by Book 72 may not exist.
-
-The definite algebra must be ramified at a conductor prime. Since $N$ is nontrivial, $p_0$ exists; this is why the apparently harmless case $N=1$ is not folded into the theorem. The curve realization in Infrastructure II is likewise part of the hypotheses, not an automatic consequence of generic Jacquet--Langlands.
-
-The theorem is also not asserted if either Infrastructure I or Infrastructure II is unavailable: residual multiplicity greater than one, $\ell$-torsion in a class-set or curve lattice, a nonsaturated old image, failure of equality of integral Hecke orders, or failure of ordered integral local--global compatibility all lie outside its scope. It also requires the exact unpadded auxiliary tangent count and the exact ring, module, action, and augmentation shadows proved in Chapter 11; a merely relative framed presentation does not replace them. Characteristic-zero packet comparison, equality of dimensions, or equality of reduced supports is not accepted as a substitute. Finally, the theorem is over $\mathbf Q$; Chapter 16 explains why a totally real analogue requires new local and automorphic theorems.
-
-### 1.5 The noncircular route
-
-The proof follows this order:
-
-$$
-\begin{array}{c}
-\text{exact local and global deformation theory}\\
-\Downarrow\\
-\text{Infrastructure I: integral automorphic control}\\
-\Downarrow\\
-\text{Infrastructure II: integral curve reciprocity}\\
-\Downarrow\\
-R^{\min}\twoheadrightarrow\mathbb T^{\min}\\
-\Downarrow\\
-\text{Taylor--Wiles sets and full lower/Iwahori/deep modules}\\
-\Downarrow\\
-\text{old/new control, then primary $U$/companion $V$ blocks}\\
-\Downarrow\\
-\text{paired Taylor--Wiles system and exact absolute tangent count}\\
-\Downarrow\\
-P=\mathcal O[[X_1,\ldots,X_q]]\twoheadrightarrow R_\infty,
-\quad S_\infty=\mathcal O[[Z_1,\ldots,Z_q]]\curvearrowright M_\infty\\
-\Downarrow\\
-\text{equal-variable dimension rigidity and Auslander--Buchsbaum}\\
-\Downarrow\\
-R^{\min}\simeq\mathbb T^{\min}\\
-\Downarrow\\
-\text{complete intersection, post hoc Fitting equality, and modularity.}
-\end{array}
-\tag{1.8}
-$$
-
-No later arrow is used to prove an earlier one. In particular, the curve lattice is constructed before the map $R^{\min}\to\mathbb T^{\min}$; full Iwahori oldness is proved before a root projector is applied; the $U$- and $V$-blocks remain distinct until adjunction identifies their acting orders; and the fixed-source patch uses the exact absolute tangent count rather than a relation determinant. Only after (1.2) is proved injective are the deformation conormal complex and automorphic Frobenius duality placed over their common ring.
-
-## 2. The global and local deformation problem
-
-The word “minimal” becomes meaningful only after it has been translated into represented local conditions. This chapter performs that translation at unramified primes, nonzero Steinberg primes, $\ell$, and infinity, and then assembles the conditions into one global deformation functor. The local tangent dimensions recorded here are the arithmetic inputs to the framed ledger in Chapter 11.
-
-### 2.1 Coefficients, determinant, and Frobenius
-
-Every deformation is taken in the category of complete Noetherian local $\mathcal O$-algebras with residue field $k$. The determinant is fixed to the $\ell$-adic cyclotomic character $\chi_\ell$. We use arithmetic Frobenius. Thus at a good prime $r\nmid N\ell$, the general Hecke polynomial is
-
-$$
-X^2-S_r^{-1}T_rX+rS_r^{-1},
-\tag{2.1}
-$$
-
-where $S_r$ is the central operator. On the trivial-central-character quotient, $S_r=1$ and (2.1) becomes
-
-$$
-X^2-T_rX+r.
-\tag{2.2}
-$$
-
-The inverse powers of $S_r$ in (2.1) are forced by the arithmetic-Frobenius and covariant-representation conventions. Suppressing them before imposing $S_r=1$ changes both trace and determinant.
-
-Put $S=\{\ell,\infty\}\cup\{p:p\mid N\}$. A deformation is unramified outside $S$ and satisfies the following local conditions.
-
-### 2.2 Unramified minimality
-
-At a finite prime $r\nmid N\ell$, minimality means unramifiedness. On tangent spaces the condition is
-
-$$
-L_r=H^1_{\mathrm{ur}}(\mathbf Q_r,W)
-=\ker\bigl(H^1(\mathbf Q_r,W)\to H^1(I_r,W)\bigr).
-\tag{2.3}
-$$
-
-Its dimension is $h^0(\mathbf Q_r,W)$. There is no independent choice of a Frobenius trace: the universal trace is a function on the global deformation ring. Minimality is therefore a ramification condition, not the assertion that the characteristic-zero trace equals the residual trace.
-
-Indeed, an unramified cocycle is determined by its value on arithmetic Frobenius, and changing a strict basis changes that value by $(\operatorname{Frob}_r-1)W$. Hence
-
-$$
-H^1_{\mathrm{ur}}(\mathbf Q_r,W)
-\simeq W/(\operatorname{Frob}_r-1)W.
-\tag{2.3a}
-$$
-
-For an endomorphism of a finite-dimensional vector space, the cokernel of $F-1$ has the same dimension as its kernel, which proves the dimension assertion. This calculation also explains why an unramified local direction must not be counted again as a free Hecke eigenvalue after the global presentation has already included the good-prime trace functions.
-
-### 2.3 Nonzero Steinberg minimality
-
-Fix $p\mid N$. After choosing a basis adapted to the residual monodromy line, the residual restriction has the form
-
-$$
-\bar\rho|_{G_{\mathbf Q_p}}
-\sim
-\begin{pmatrix}
-\bar\chi_\ell\bar\epsilon_p&\bar c_p\\
-0&\bar\epsilon_p
-\end{pmatrix},
-\qquad
-\bar c_p|_{I_p}\ne0,
-\tag{2.4}
-$$
-
-where $\bar\epsilon_p$ is unramified quadratic. The minimal lift keeps the same ordered filtration and sign:
-
-$$
-\rho_A|_{G_{\mathbf Q_p}}
-\sim
-\begin{pmatrix}
-\chi_\ell\epsilon_p&c_{p,A}\\
-0&\epsilon_p
-\end{pmatrix},
-\qquad
-c_{p,A}|_{I_p}\ne0\pmod{\mathfrak m_A}.
-\tag{2.5}
-$$
-
-The last condition is meaningful on every Artinian quotient because the residual monodromy is already nonzero. It fixes the constant-conductor component; it is not the open condition obtained by asking a zero residual extension class to become nonzero in characteristic zero.
-
-The local calculation can be seen on the tame quotient. Choose a tame $\ell$-power generator $\tau$ and arithmetic Frobenius $\varphi$ with
-
-$$
-\varphi\tau\varphi^{-1}=\tau^p.
-\tag{2.5a}
-$$
-
-On the fixed Steinberg line a lift may be written
-
-$$
-\rho_A(\tau)=
-\begin{pmatrix}1&t_A\\0&1\end{pmatrix},
-\qquad
-\rho_A(\varphi)=
-\begin{pmatrix}p\epsilon_p(\varphi)&a_A\\0&\epsilon_p(\varphi)\end{pmatrix}.
-\tag{2.5b}
-$$
-
-The relation (2.5a) is exactly compatible with the ratio $p$ of the diagonal Frobenius characters. Since $t_A$ reduces to a nonzero element, it is a unit. A strict diagonal conjugation normalizes it to a fixed lift of the residual monodromy, while a strict upper-triangular conjugation removes $a_A$ because $p-1$ is a unit. The nonzero nilpotent recovers its stable line, so there is no separate line parameter. Thus no unframed parameter survives once determinant, sign, and nonzero monodromy have been fixed. The congruence $p\not\equiv1\pmod\ell$ is the condition used in this rigidity calculation; the additional exclusion $p\not\equiv-1\pmod\ell$ is needed for the primitive integral Steinberg newvector lattice and pairing used by Infrastructure I.
-
-For fixed determinant, fixed sign, and nonzero residual monodromy, the unframed local functor has no free character parameter. Its framed ring is formally smooth over $\mathcal O$ of relative dimension $3$:
-
-$$
-R_p^{\square,\mathrm{st},\epsilon_p}
-\simeq\mathcal O[[x_{p,1},x_{p,2},x_{p,3}]].
-\tag{2.6}
-$$
-
-The three variables are framing directions: the framed condition is the formal orbit of the rigid unframed object under $\operatorname{PGL}_2$. The residual centralizer is scalar. The congruence $p\not\equiv1\pmod\ell$ makes this orbit calculation transverse, while the full pair of exclusions $p\not\equiv\pm1\pmod\ell$ makes the integral Steinberg newvector lattice and pairing primitive.
-
-The tangent condition $L_p\subset H^1(\mathbf Q_p,W)$ is the image of the tangent space of (2.5). Since $p\not\equiv1\pmod\ell$, an endomorphism commuting with both the nonzero monodromy and Frobenius is scalar; hence $h^0(\mathbf Q_p,W)=0$. The normalization above gives $L_p=0$, so
-
-$$
-\dim_kL_p=h^0(\mathbf Q_p,W)=0.
-\tag{2.6a}
-$$
-
-This equality is the local numerical expression of minimality at $p$.
-
-### 2.4 Finite flatness at the coefficient prime
-
-At $\ell$, require that every Artinian quotient of the lift arise from a finite flat group scheme of type $(0,1)$, equivalently from the finite-flat deformation condition of Book 67 with determinant $\chi_\ell$. The scalar-endomorphism hypothesis (1.7) makes the unframed functor representable and removes hidden infinitesimal automorphisms.
-
-In the present rational, weight-two case, Book 67 gives
-
-$$
-R_\ell^{\mathrm{fl}}\simeq\mathcal O[[z_\ell]],
-\qquad
-R_\ell^{\square,\mathrm{fl}}
-\simeq\mathcal O[[z_\ell,x_{\ell,1},x_{\ell,2},x_{\ell,3}]].
-\tag{2.7}
-$$
-
-Thus the unframed condition contributes one genuine finite-flat coordinate and the framed ring has relative dimension $4$. The tangent space $L_\ell$ is the finite-flat subspace of $H^1(\mathbf Q_\ell,W)$. This single genuine direction is indispensable in the global Euler characteristic balance.
-
-The two dimensions in (2.7) have different origins. The one-dimensional unframed tangent is the extension parameter in the integral finite-flat, equivalently Fontaine--Laffaille, category for weights $0$ and $1$. Passing to a frame adds the three dimensions of $\operatorname{PGL}_2$: the fourth matrix coordinate is the scalar stabilizer, and (1.7) says there are no further local automorphisms. This is why the coefficient-prime entry in the local ledger is $1+3=4$, whereas the partially framed gauge calculation in Chapter 11 still begins with four matrix entries at every chosen place.
-
-Finite flatness of a Hecke-valued family will not be inferred from its characteristic-zero Hodge--Tate weights. Infrastructure II realizes every Artinian Hecke quotient through an actual integral curve factor, to which Book 67 applies.
-
-### 2.5 Oddness and the real place
-
-For complex conjugation $c$, oddness says
-
-$$
-\det\bar\rho(c)=-1.
-\tag{2.8}
-$$
-
-Since the determinant is fixed, the odd local condition has no deformation parameter. For $\ell>2$,
-
-$$
-h^0(\mathbf R,W)=1,
-\tag{2.9}
-$$
-
-and the real term in the fixed-determinant Wiles formula is $-1$. Omitting this term produces the wrong global relation count by one.
-
-### 2.6 The global ring and Selmer structures
-
-Let $\mathcal D^{\min}$ be the fixed-determinant deformation functor defined by (2.3), (2.5), (2.7), and oddness. Absolute irreducibility and the scalar local endomorphism condition give a universal ring $R^{\min}$ and a universal representation
-
-$$
-\rho^{\mathrm{univ}}:G_{\mathbf Q}\longrightarrow
-\operatorname{GL}_2(R^{\min}).
-\tag{2.10}
-$$
-
-Let $\mathcal L=(L_v)$ denote the resulting Selmer structure on $W$ and let $\mathcal L^\perp$ be its local Tate-orthogonal structure on $W(1)$. Write
-
-$$
-H^1_{\mathcal L}(\mathbf Q,W)
-=\ker\!\left(
-H^1(G_{\mathbf Q,S},W)
-\longrightarrow
-\bigoplus_{v\in S}
-H^1(\mathbf Q_v,W)/L_v
-\right)
-\tag{2.11}
-$$
-
-and define $H^1_{\mathcal L^\perp}(\mathbf Q,W(1))$ dually. Set
-
-$$
-q=h^1_{\mathcal L^\perp}(\mathbf Q,W(1)).
-\tag{2.12}
-$$
-
-The group in (2.12) measures relations not yet removed by auxiliary primes. It does not directly equal the number of relations in an arbitrary framed presentation. Chapter 11 keeps the unframed Selmer count, local framed dimensions, gauge variables, and padding relations in separate columns before combining them.
-
-## 3. Integral quaternionic Taylor--Wiles control
-
-The definite quaternion algebra converts weight-two automorphic forms into functions on a finite set, making stabilizers, pairings, and level maps directly visible. That advantage is useful only integrally: the proof later needs saturated lattices and free diamond modules, not merely characteristic-zero packets. Infrastructure I packages precisely this automorphic work and nothing from deformation theory.
-
-### 3.1 Definite class-set modules
-
-Let $U\subset(B\otimes\mathbf A_f)^\times$ be a compact open with the prescribed minimal local type. For an $\mathcal O$-algebra $A$, the weight-two definite module is a space of functions on the finite class set
-
-$$
-X_U=B^\times\backslash(B\otimes\mathbf A_f)^\times/U,
-\tag{3.1}
-$$
-
-with the fixed central character and local coefficient system. Denote it by $M(U,A)$. Evaluation on representatives identifies it with a direct sum of invariant submodules indexed by $X_U$. In the localized noncharacter block, all relevant stabilizer orders are prime to $\ell$; hence
-
-$$
-M(U,\mathcal O)\otimes_{\mathcal O}A
-\xrightarrow{\sim}M(U,A)
-\tag{3.2}
-$$
-
-for the coefficient changes used below.
-
-Here the phrase “prescribed minimal local type” has exact content. At $r\nmid N\ell$, take the maximal compact. At $\ell$, take $\operatorname{GL}_2(\mathbf Z_\ell)$ and the trivial algebraic coefficient system corresponding to weight two. At a split prime $p\mid N$, $p\ne p_0$, take Iwahori level and localize the oriented $U_p$-operator at the sign $\epsilon_p$, thereby retaining the one-dimensional new line. At $p_0$, use maximal-compact level in $B_{p_0}^\times$ and retain the division-uniformizer operator: local Jacquet--Langlands identifies its selected eigenspace with the character $\epsilon_{p_0}\circ\operatorname{Nrd}$ corresponding to $\operatorname{St}\otimes\epsilon_{p_0}$. The uniformizer operator is essential because the two unramified quadratic signs have the same restriction to the maximal compact. The central character is trivial. These choices make the generic packet have conductor exactly $N$ and match (2.5) place by place.
-
-The residual exact-level hypothesis ensures that localization at the chosen maximal ideal does not merely recover an old packet imported from a proper divisor of $N$. The noncharacter qualifier removes the one-dimensional norm-character spectrum that would otherwise survive on a definite class set and interfere with packet isolation and multiplicity one.
-
-Because the source newform is Steinberg at $p_0$, generic Jacquet--Langlands transfers its characteristic-zero packet to $B^\times$. Choosing a stable lattice and reducing produces the required nonzero localized class-set block. This generic nonvanishing starts the construction, but it does not prove the integral multiplicity-one or order statements of Infrastructure I.
-
-The mass pairing is
-
-$$
-\langle f,g\rangle_U
-=\sum_{x\in X_U}
-\frac{\langle f(x),g(x)\rangle}{|\Gamma_x|},
-\tag{3.3}
-$$
-
-with the local coefficient pairing and the level-specific normalization understood. In the rational definite case every effective projective stabilizer has order divisible only by primes at most $5$. Hence $\ell\ge7$ makes all denominators in (3.3) units at the outset, and passing to deeper level can only shrink a stabilizer. The pairing is therefore integral and perfect. Localization at the noncharacter block removes norm-character packets; it is not being used to invert an $\ell$-divisible stabilizer order. Different levels are normalized separately. One must not silently transport one mass normalization through a degeneracy map; trace factors are part of its adjoint.
-
-### 3.2 The automorphic control theorem
-
-**Infrastructure I (integral quaternionic Taylor--Wiles control).** Assume the clean datum of Section 1.3, including exact-level residual modularity and the definite algebra $B$. Let $Q$ be any Taylor--Wiles set whose primes $v$ satisfy
-
-$$
-v\equiv1\pmod{\ell^n},
-\qquad
-\bar\rho(\operatorname{Frob}_v)
-\text{ has distinct eigenvalues }
-\bar\alpha_v,\bar\beta_v.
-\tag{3.4}
-$$
-
-At every subset of $Q$, form the full lower, Iwahori, and deep class-set modules before applying any $U$-operator projector. Localize at the noncharacter maximal ideal determined by $\bar\rho$ and the prescribed types. Then:
-
-1. all localized class-set lattices are finite free over $\mathcal O$ and carry perfect integral mass pairings;
-2. residual multiplicity one holds, and the minimal module $M^{\min}$ is cyclic and regular over its faithful acting order $\mathbb T^{\min}$:
-   $$
-   M^{\min}\simeq\mathbb T^{\min};
-   \tag{3.5}
-   $$
-   at every distinguished characteristic-zero source point the generic branch has rank one and satisfies the integral branch-saturation equality of Book 75;
-3. the deck group $\Delta_Q$ acts freely on the relevant deep class set, and each full deep module is finite free over $\mathcal O[\Delta_Q]$;
-4. the two degeneracy maps from lower to Iwahori level have the exact trace adjoints and Gram matrix computed in Chapter 8; their old image is split and saturated;
-5. after localization, the Iwahori new quotient is zero: it is torsion-free over $\mathcal O$, while its generic fiber would consist of Steinberg representations whose residual Frobenius polynomial has a repeated root, contradicting (3.4);
-6. after full Iwahori oldness has been proved, the primary generalized $U_v$-blocks and companion generalized $V_v$-blocks may be formed at deep level; they are finite free over $\mathcal O[\Delta_Q]$ and pair perfectly with diamond inversion;
-7. both systems augment, by saturated coinvariants and degeneracy control, to the same minimal module $M^{\min}$; and
-8. the corresponding primary and companion Hecke orders are identified by adjunction; and
-9. for a sequence of Taylor--Wiles sets placed under the common presentation sources of Book 73, the adjoint maps, group-ring pairings, and augmentation pairings admit pairing-compatible finite marked shadows along one coherent diagonal subsequence, with the fixed old-level and frame normalizations preserved.
-
-This theorem is an automorphic control statement only. It constructs no Galois representation, makes no assertion about a deformation ring, and does not imply $R=\mathbb T$.
-
-### 3.3 Why the theorem is integral
-
-Each adjective in Infrastructure I prevents a specific gap. Generic multiplicity one does not imply (3.5): two lattices can span the same one-dimensional generic eigenspace and have different integral indices. Generic oldness does not imply a saturated old lattice. Freeness over $\mathcal O$ does not imply freeness over $\mathcal O[\Delta_Q]$. Faithfulness of the Hecke action does not imply that the module is rank one. Finally, the identity $U_v^*=V_v$ does not make a $U_v$-eigenspace self-dual.
-
-The theorem resolves these issues before deformation theory enters. This prevents a later $R=\mathbb T$ conclusion from being used, even implicitly, to supply the lattice freeness, saturation, or adjoint control needed in its own proof. Gorensteinness of the common deformation--Hecke ring is not used here and is deduced only in Section 13.3.
-
-### 3.4 Proof architecture
-
-The proof begins with class-set evaluation. The classification of finite projective stabilizers over $\mathbf Q$, together with $\ell\ge7$, shows directly that their orders are units in $\mathcal O$. Evaluation and averaging therefore give finite free lattices and the perfect mass pairing (3.3). The noncharacter localization has the separate job of deleting the one-dimensional norm-character spectrum.
-
-Geometric mod-$\ell$ multiplicity one identifies the localized residual packet with a single line. Lifting a generator and applying Nakayama shows that $M^{\min}$ is cyclic over its faithful Hecke order. The perfect pairing identifies its congruence dual, and the saturated one-dimensional residual branch forces the cyclic map $\mathbb T^{\min}\to M^{\min}$ to be an isomorphism. This is a theorem about the automorphic order acting on the class-set lattice, not a comparison with $R^{\min}$.
-
-At a deep prime, class-set evaluation also identifies fibers of the map from deep to lower level with $\Delta_v$. The stabilizer calculation shows that the action is free. Orbit representatives then give a basis over $\mathcal O[\Delta_v]$; tensoring over all $v\in Q$ proves the group-ring freeness.
-
-The double-coset calculation gives the degeneracy Gram matrix of Chapter 8. Its residual determinant is a unit, so the old image is split and saturated. Local newvector theory describes the generic new quotient. A generic constituent new at $v$ is Steinberg, and because $v\equiv1\pmod\ell$, its two residual Frobenius eigenvalues coincide. The residual Hecke system away from $v$ is the one attached to $\bar\rho$; applying Book 135 separately to that characteristic-zero constituent, or equivalently using the residual degree-two determinant forced by its good-prime Hecke data, identifies the two residual systems. This contradicts the distinct eigenvalues in (3.4). No Hecke-valued family or deformation-ring comparison is used in this generic contradiction. The integral new quotient is torsion-free by class-set saturation, hence vanishes when its generic fiber vanishes.
-
-Only then are the Hensel projectors applied. The inverse-coset adjoint calculation pairs the $U$-primary and $V$-companion blocks. Exact coinvariants, the saturated degeneracy image, and Nakayama identify each augmentation with $M^{\min}$. At every finite precision the presentation data, adjoint maps, and group-ring pairing matrices form a finite marked set; diagonal stabilization is therefore carried out on these paired shadows simultaneously, rather than appended after patching. These are precisely the ingredients later used for Taylor--Wiles axiom TW8.
-
-## 4. Integral definite-to-curve Hecke reciprocity
-
-Finite class sets give exact automorphic control but do not themselves carry the two-dimensional Galois representation needed for universality. Curve cohomology supplies that representation and the finite-flat geometry at $\ell$. The task of this chapter is to cross between those realizations without losing the integral Hecke order in the crossing.
-
-### 4.1 Why generic Jacquet--Langlands is insufficient
-
-The definite module is ideal for finite-set geometry, but a genuine two-dimensional integral Galois representation is obtained from the cohomology of a Shimura or modular curve. Generic Jacquet--Langlands matches irreducible characteristic-zero packets. By itself it does not identify the integral Hecke order acting on a definite lattice with the order acting on curve cohomology. Two orders can have the same product of fraction fields and differ by a congruence index.
-
-Nor does a stable lattice in a generic Galois representation prove finite flatness of every Artinian specialization at $\ell$. That local condition must come from geometry over $\mathbf Z_\ell$. The required bridge is therefore an integral, saturated packet comparison.
-
-### 4.2 The reciprocity theorem
-
-**Infrastructure II (integral definite-to-curve Hecke reciprocity).** Under the clean datum and the levels occurring in Infrastructure I, there are saturated curve-realizable lattices $C(U)$ with the following properties.
-
-1. After inverting $\ell$, $C(U)$ and the localized definite module $M(U,\mathcal O)$ contain exactly the same automorphic packet and local refinements. Here multiplicity is compared on the automorphic multiplicity space: the universal two-dimensional Galois factor occurring in curve $H^1$ is not counted as a second automorphic copy.
-2. Inside their common reduced generic Hecke algebra, the two integral acting orders are equal:
-   $$
-   \mathbb T_C(U)=\mathbb T_B(U).
-   \tag{4.1}
-   $$
-3. This common order is finite flat over $\mathcal O$, and its generic fiber is reduced.
-4. There is a genuine continuous representation
-   $$
-   \rho_{\mathbb T(U)}:G_{\mathbf Q}\longrightarrow
-   \operatorname{GL}_2(\mathbb T(U))
-   \tag{4.2}
-   $$
-   lifting $\bar\rho$, not merely a determinant or pseudorepresentation.
-5. On the fixed trivial-central quotient its determinant is $\chi_\ell$. Retaining the ambient Hecke labels, at $r\nmid NQ\ell$ its arithmetic-Frobenius polynomial is
-   $$
-   X^2-S_r^{-1}T_rX+rS_r^{-1}.
-   \tag{4.3}
-   $$
-   Here $S_r$ maps to $1$ in the common acting order, so the displayed constant term is $r$, as required by the stated determinant.
-6. At every $p\mid N$, (4.2) satisfies the integral nonzero Steinberg condition (2.5), with the fixed unramified quadratic sign $\epsilon_p$.
-7. At every $v\in Q$, the primary refinement supplies a $G_{\mathbf Q_v}$-stable ordered line. Its unramified factor records the ordered root $\alpha_v$, and its tame factor is the universal diamond character; fixed determinant places the inverse tame character on the complementary line. The companion order records the adjoint $V_v$-refinement and yields the same ordered Galois deformation after adjunction.
-8. For every Artinian quotient $A$ of $\mathbb T(U)$, the representation $\rho_{\mathbb T(U)}\otimes A$ at $\ell$ factors through an actual integral good-reduction curve factor. Book 67 therefore proves that it is finite flat of type $(0,1)$.
-
-Infrastructure II asserts reciprocity and local--global compatibility, not $R=\mathbb T$. Equality (4.1) compares two automorphic Hecke orders. It says nothing about the kernel of a deformation-to-Hecke map.
-
-### 4.3 Construction and proof architecture
-
-One first changes the quaternionic ramification set so that the same discrete automorphic packet occurs in degree-one cohomology of an appropriate curve. Idempotents for the fixed local types and the noncharacter residual block cut out a torsion-free curve lattice. Its image in the common generic packet is saturated by taking the intersection of the packet subspace with integral cohomology.
-
-Generic Jacquet--Langlands identifies the fraction algebras. To descend that identification to orders, one compares trace-dual lattices under Poincaré duality on the curve and the mass pairing on the definite class set. Residual multiplicity one makes the packet branch primitive on both sides. The degeneracy maps and their integral adjoints show that the conductor and congruence indices agree prime by prime. Since both lattices are torsion-free, equality after reduction and equality of trace-dual indices force (4.1). This torsion-free packet/order comparison is the step absent from a purely generic argument.
-
-The curve Jacobian or its localized Tate module then gives a two-dimensional determinant with the polynomial (4.3). Absolute residual irreducibility upgrades it uniquely to the matrix representation (4.2). The Weil--Deligne description at $p\mid N$, together with saturated monodromy and the exact-level newvector, proves the integral Steinberg filtration; nonzero residual monodromy prevents degeneration on Artinian quotients. At $v\in Q$, the integral refined correspondence identifies the $U_v$-line and diamond character in the required order.
-
-Finally, the curve has an integral model with the required good reduction at $\ell$. The localized finite-flat group scheme and its Tate module realize every Artinian quotient of the Hecke order. Book 67 applies to those actual integral factors. This is stronger than checking finite flatness at the characteristic-zero points and is exactly what is needed for universality in Chapter 5.
-
-## 5. The Hecke representation and the map from deformation to Hecke
-
-With the automorphic lattice and the curve-valued Galois family separately established, the first comparison map can finally be written. This chapter verifies that the family occupies every local deformation condition before invoking universality, then proves surjectivity from named Hecke generators. It stops deliberately before any claim of injectivity.
-
-### 5.1 The minimal Hecke algebra
-
-Begin with the faithful localized Hecke order on the packet cut out by $\bar\rho$ and the fixed Steinberg signs, keeping the central operators $S_r$ visible so that the normalization (2.1) remains meaningful. Impose the trivial-central equations $S_r=1$ and let $M^{\min}$ be the resulting minimal definite module. Define $\mathbb T^{\min}$ to be the faithful image on $M^{\min}$ of the good Hecke operators and the prescribed bad-prime operators. Thus $\mathbb T^{\min}$ is already the trivial-central-character quotient, although formulas inherited from the ambient order continue to display $S_r$ before specialization.
-
-Infrastructure I gives
-
-$$
-M^{\min}\simeq\mathbb T^{\min}
-\tag{5.1}
-$$
-
-as a module over this automorphic order. Infrastructure II gives finite flatness over $\mathcal O$, reduced generic fiber, and a representation
-
-$$
-\rho_{\mathbb T^{\min}}:G_{\mathbf Q}\longrightarrow
-\operatorname{GL}_2(\mathbb T^{\min}).
-\tag{5.2}
-$$
-
-Neither statement compares $\mathbb T^{\min}$ with $R^{\min}$.
-
-### 5.2 Local verification of the Hecke family
-
-The representation (5.2) has determinant $\chi_\ell$ and is unramified outside $N\ell$. At a good prime $r$, its polynomial is (4.3), hence (2.2) on the trivial-central quotient. At each $p\mid N$, it has the filtration (2.5) with fixed $\epsilon_p$ and nonzero integral monodromy. At $\ell$, every Artinian specialization is finite flat of type $(0,1)$ by the curve factor and Book 67. At infinity, its determinant is odd.
-
-These verifications precede the use of universality. A determinant with the right good-prime traces would not suffice: the local deformation problem is a problem of representations, including an ordered nonzero extension at $p$ and finite-flat integral structure at $\ell$.
-
-### 5.3 The canonical surjection
-
-Universality now gives a unique local homomorphism
-
-$$
-\phi^{\min}:R^{\min}\longrightarrow\mathbb T^{\min}
-\tag{5.3}
-$$
-
-such that $\rho^{\mathrm{univ}}\otimes_{R^{\min}}\mathbb T^{\min}$ is isomorphic to (5.2). At every good $r$,
-
-$$
-\phi^{\min}\bigl(\operatorname{tr}\rho^{\mathrm{univ}}(
-\operatorname{Frob}_r)\bigr)=S_r^{-1}T_r.
-\tag{5.4}
-$$
-
-The right side is written in the ambient normalization; its image in $\mathbb T^{\min}$ is simply $T_r$ because $S_r=1$ there.
-
-The faithful localized Hecke order is topologically generated by these good-prime traces together with the fixed central and local-type data. Chebotarev and absolute residual irreducibility therefore imply that (5.3) is surjective:
-
-$$
-R^{\min}\twoheadrightarrow\mathbb T^{\min}.
-\tag{5.5}
-$$
-
-At this point only surjectivity is known. Finite flatness of $\mathbb T^{\min}$ does not make $R^{\min}$ flat, and (5.1) does not make the kernel of (5.5) act faithfully on any patched module. The remaining chapters construct the exact auxiliary system and the absolute fixed-source patch that proves this kernel is zero.
-
-## 6. Taylor--Wiles primes and auxiliary deformation rings
-
-Dual Selmer classes obstruct sharp control of the auxiliary deformation rings. Taylor--Wiles primes trade each such global class for a controlled local tame character. This chapter carries out that exchange on the Galois side, including the ordered Frobenius line and the exact finite diamond quotient that later appears geometrically.
-
-### 6.1 Killing dual Selmer
-
-Recall
-
-$$
-q=h^1_{\mathcal L^\perp}(\mathbf Q,W(1)).
-\tag{6.1}
-$$
-
-The split image hypothesis and Book 72 give, for every $n\ge1$, a set $Q_n$ of exactly $q$ primes, disjoint from $N\ell$, such that
-
-$$
-v\equiv1\pmod{\ell^n}
-\qquad(v\in Q_n),
-\tag{6.2}
-$$
-
-$\bar\rho(\operatorname{Frob}_v)$ has distinct eigenvalues, and the corresponding localization classes kill the dual Selmer group for the auxiliary local problem. The sets can be chosen with norms tending to infinity and with the uniform presentation bounds required in Book 73.
-
-This use of Chebotarev is not a dimension slogan. A basis of dual Selmer is chosen, one detects each basis vector at a regular semisimple Frobenius element in the residual image, and the split image hypothesis makes those detection conditions simultaneous. The resulting localization matrix is invertible. Distinct eigenvalues at each selected prime are used twice later: to define an ordered local component and to make the degeneracy determinant a unit.
-
-If $q=0$, take $Q_n=\varnothing$ for every $n$, $\Delta_n=\{1\}$, and $\Lambda_n=\mathcal O$. Every assertion about an auxiliary prime is then vacuous, while the numerical formulas below still hold with $t=s+1$.
-
-### 6.2 Ordered roots and diamond groups
-
-For $v\in Q_n$, choose an ordering
-
-$$
-\bar\alpha_v,\bar\beta_v
-\tag{6.3}
-$$
-
-of the eigenvalues of $\bar\rho(\operatorname{Frob}_v)$. The first root is the primary root. Since the determinant is cyclotomic,
-
-$$
-\bar\alpha_v\bar\beta_v=v\quad\text{in }k.
-\tag{6.4}
-$$
-
-Let $\Delta_v(n)$ be the quotient of the $\ell$-Sylow subgroup of $\mathbf F_v^\times$ of exact order $\ell^n$, and put
-
-$$
-\Delta_n=\prod_{v\in Q_n}\Delta_v(n),
-\qquad
-\Lambda_n=\mathcal O[\Delta_n],
-\qquad
-\mathfrak a_n=\ker(\Lambda_n\to\mathcal O).
-\tag{6.5}
-$$
-
-The augmentation sends every diamond element to $1$. The ordering in (6.3) is separate data: the group algebra alone does not distinguish the two residual Frobenius lines.
-
-### 6.3 Local auxiliary rings
-
-The ordered Taylor--Wiles functor at $v$ preserves a line lifting the $\bar\alpha_v$-line. On that line inertia acts through the tautological character
-
-$$
-I_v\twoheadrightarrow\mathbf F_v^\times
-\twoheadrightarrow\Delta_v(n)
-\longrightarrow\mathcal O[\Delta_v(n)]^\times.
-\tag{6.6}
-$$
-
-Let $\eta_{X_v}$ be the unramified character sending arithmetic Frobenius to $\widetilde\alpha_v(1+X_v)$. The two ordered characters are
-
-$$
-\eta_{X_v}\boldsymbol\theta_v,
-\qquad
-\chi_\ell\eta_{X_v}^{-1}\boldsymbol\theta_v^{-1}.
-\tag{6.7}
-$$
-
-Thus fixed determinant puts the inverse diamond character on the complementary line. Book 72 gives
-
-$$
-R_v^{\mathrm{TW}}
-\simeq\mathcal O[\Delta_v(n)][[X_v]],
-\tag{6.8}
-$$
-
-and the framed ring is formally smooth of relative dimension $3$ over the diamond algebra, equivalently of relative dimension $2$ over (6.8):
-
-$$
-R_v^{\square,\mathrm{TW}}
-\simeq
-\mathcal O[\Delta_v(n)][[X_v,Y_v,Z_v]].
-\tag{6.9}
-$$
-
-The variable $X_v$ changes the ordered unramified Frobenius root; it is not a second diamond variable. The variables $Y_v,Z_v$ move the eigenline inside a frame. They are deliberately not denoted $U_v,V_v$, which below name the two opposite Hecke operators. Under augmentation of $\mathcal O[\Delta_v(n)]$, (6.8) maps to the unramified local deformation ring with the selected Hensel root.
-
-### 6.4 Global auxiliary rings and augmentation
-
-Let $R_n=R_{Q_n}$ be the universal fixed-determinant deformation ring obtained by using (6.8) at every $v\in Q_n$ and the minimal conditions at $N\ell$. It is a local $\Lambda_n$-algebra. The tautological inertia characters define the structure map
-
-$$
-\Lambda_n\longrightarrow R_n.
-\tag{6.10}
-$$
-
-Killing $\mathfrak a_n$ makes every auxiliary inertia character trivial. Because the ordered unramified component specializes to the original minimal local condition, universality gives an exact augmentation identity
-
-$$
-R_n/\mathfrak a_nR_n\simeq R^{\min}.
-\tag{6.11}
-$$
-
-This is a statement about represented local deformation functors. The corresponding automorphic module and Hecke augmentations require separate proofs in Chapters 7--9.
-
-Infrastructure II constructs a representation over the auxiliary Hecke order only after its integral curve lattice has been built. Its ordered line and diamond inertia at $v$ verify (6.6)--(6.7), so universality will give compatible surjections $R_n\twoheadrightarrow\mathbb T_n^+$. No such map is inferred merely from the presence of an operator called $U_v$.
-
-## 7. Full auxiliary modules and diamond freeness
-
-The automorphic side must realize the same finite diamond groups by an honest free action. Before selecting any Frobenius root, this chapter defines the lower, Iwahori, and deep modules on which old/new decomposition makes sense. The class-set torsor and its mass pairing then produce the free group-ring modules and duality needed later.
-
-### 7.1 Lower, Iwahori, and deep levels
-
-Fix $v\in Q_n$ and identify $B_v^\times$ with $\operatorname{GL}_2(\mathbf Q_v)$. Define
-
-$$
-K_v=\operatorname{GL}_2(\mathbf Z_v),
-\tag{7.1}
-$$
-
-$$
-I_v=U_0(v)
-=\left\{
-\begin{pmatrix}a&b\\c&d\end{pmatrix}\in K_v:
-c\equiv0\pmod v
-\right\},
-\tag{7.2}
-$$
-
-and, using the projective diagonal-ratio convention compatible with (6.6),
-
-$$
-U_1(v,n)
-=\ker\!\left(
-I_v\longrightarrow\mathbf F_v^\times
-\longrightarrow\Delta_v(n)
-\right),
-\qquad
-g\longmapsto a(g)d(g)^{-1}\bmod v.
-\tag{7.3}
-$$
-
-The ratio convention makes every scalar matrix act trivially and matches the pair of tame characters $\boldsymbol\theta_v,\boldsymbol\theta_v^{-1}$ in (6.7): an Iwahori type with trivial central character transforms by $\boldsymbol\theta_v(a/d)$. Using the upper-left entry alone would leave a central quotient in the deck action and would invalidate the freeness argument below.
-
-At all other places retain the fixed minimal compact open. For a subset $J\subseteq Q_n$, use $I_v$ at $v\in J$ and $K_v$ at $v\notin J$. At full deep level use $U_1(v,n)$ for every $v\in Q_n$.
-
-Before selecting any root or applying any projector, define the localized full modules
-
-$$
-M_{K,n},\qquad M_{I,n},\qquad M_{1,n}
-\tag{7.4}
-$$
-
-at lower, full Iwahori, and full deep level. Here $M_{I,n}$ means Iwahori at every prime of $Q_n$. Intermediate mixed-level modules are retained for induction over $Q_n$. This order matters: the old/new quotient belongs to the full Iwahori module, not to a branch that has already discarded half of it.
-
-### 7.2 Free diamond action
-
-The quotient $I_v/U_1(v,n)$ acts on the right on the deep class set and factors through $\Delta_v(n)$. Suppose an $\ell$-power diamond fixes a class. It then lifts to an element of an arithmetic stabilizer whose projective image has $\ell$-power order. The definite stabilizer classification and $\ell\ge7$ make that projective image trivial, so the lift is central. But the diagonal-ratio map in (7.3) kills every scalar, and therefore the diamond itself is trivial. Hence $\Delta_n$ acts freely on the deep class-set fibers. Noncharacter localization is still needed to isolate the intended packet, but not to remove an $\ell$-divisible stabilizer.
-
-Choosing one representative in each orbit and using class-set evaluation gives
-
-$$
-M_{1,n}\simeq\Lambda_n^{\oplus d_n}
-\tag{7.5}
-$$
-
-for some $d_n$. This is genuine group-ring freeness, not a comparison of $\mathcal O$-ranks. Infrastructure I makes the construction compatible with localization and with every mixed level.
-
-At this stage (7.5) concerns the full deep module. A direct summand selected later by a Hensel idempotent will again be $\Lambda_n$-projective and, because $\Lambda_n$ is local in the localized block, free. Applying the projector before proving full oldness would conceal whether the complementary new quotient was integral torsion.
-
-### 7.3 Integral pairings at deep level
-
-Normalize the mass pairing independently at each lower, Iwahori, and deep level. On the full deep module it is perfect and satisfies
-
-$$
-\langle\langle\delta\rangle x,y\rangle
-=\langle x,\langle\delta^{-1}\rangle y\rangle
-\qquad(\delta\in\Delta_n).
-\tag{7.6}
-$$
-
-Thus the induced $\Lambda_n$-duality uses the involution
-
-$$
-\iota:\Lambda_n\longrightarrow\Lambda_n,
-\qquad
-\iota(\delta)=\delta^{-1}.
-\tag{7.7}
-$$
-
-For $x,y$ in the full deep module, package the coefficient-valued pairing into
-
-$$
-[x,y]_n
-=\sum_{\delta\in\Delta_n}
-\langle\delta^{-1}x,y\rangle[\delta]
-\in\Lambda_n.
-\tag{7.8}
-$$
-
-Then
-
-$$
-[\lambda x,y]_n=\lambda[x,y]_n,
-\qquad
-[x,\lambda y]_n=[x,y]_n\iota(\lambda).
-\tag{7.9}
-$$
-
-The Frobenius self-duality of the finite group algebra and the freeness in (7.5) make (7.8) a perfect $\Lambda_n$-pairing. The inverse in (7.6) is not a normalization choice. It follows from the inverse-double-coset adjoint formula of Book 90. The same formula will give $U_v^*=V_v$ rather than $U_v^*=U_v$.
-
-## 8. Exact degeneracy and full Iwahori oldness
-
-Augmentation from deep level first lands at Iwahori level, not directly at the minimal hyperspecial module. The gap is closed by a two-map degeneracy calculation. Its Gram determinant proves integral saturation, while local newvector theory kills the remaining torsion-free new quotient; only after both steps is it safe to select an ordered branch.
-
-### 8.1 Degeneracy maps and trace adjoints
-
-It is enough to work at one auxiliary prime while holding every other local level fixed. Put
-
-$$
-\beta=\begin{pmatrix}1&0\\0&v\end{pmatrix}.
-\tag{8.1}
-$$
-
-With the convention (7.2), one has $I_v\subset\beta K_v\beta^{-1}$, which is the subgroup inclusion needed for the second map below. The opposite diagonal matrix $\operatorname{diag}(v,1)$ defines the oriented Hecke operator $U_v$; using it here without inverting the translation would make the displayed restriction map undefined.
-
-Let $M_K$ and $M_I$ be the localized modules with level $K_v$ and $I_v$. There are two restriction maps
-
-$$
-\delta_0=\operatorname{res}_{K_v}^{I_v},
-\qquad
-\delta_1=
-\operatorname{res}_{\beta K_v\beta^{-1}}^{I_v}\circ R_\beta,
-\tag{8.2}
-$$
-
-and the degeneracy map is
-
-$$
-\delta=(\delta_0,\delta_1):M_K\oplus M_K\longrightarrow M_I.
-\tag{8.3}
-$$
-
-Because the mass pairings at the two levels were separately normalized, their adjoints contain the exact trace maps:
-
-$$
-\delta_0^*=\operatorname{Tr}_{I_v}^{K_v},
-\qquad
-\delta_1^*=R_{\beta^{-1}}
-\circ\operatorname{Tr}_{I_v}^{\beta K_v\beta^{-1}}.
-\tag{8.4}
-$$
-
-Dropping either trace or replacing it by an unnormalized averaging operator changes the diagonal entries of the next calculation.
-
-### 8.2 The Gram matrix
-
-The double-coset decompositions of $K_v\beta K_v$ and $I_v\backslash K_v$ give
-
-$$
-\delta^*\delta
-=
-\begin{pmatrix}
-v+1&T_v\\
-T_v&v+1
-\end{pmatrix}.
-\tag{8.5}
-$$
-
-The diagonal composites count the $v+1$ points of $\mathbf P^1(\mathbf F_v)$. One off-diagonal composite gives $K_v\beta K_v$. Since $\beta=vI\cdot\operatorname{diag}(v^{-1},1)$, the central factor $S_v$ cancels the $S_v^{-1}$ in the inverse-coset formula, and this operator is $T_v$. The other off-diagonal entry is its adjoint $S_v^{-1}T_v$; it is also $T_v$ because the modules in this chapter already have trivial central character. This identifies every entry of (8.5); no scalar may be absorbed into the pairing because the trace adjoints were fixed in (8.4).
-
-Modulo the residual maximal ideal, $v=1$, $T_v=\bar\alpha_v+\bar\beta_v$, and $\bar\alpha_v\bar\beta_v=v$. Therefore
-
-$$
-\det(\delta^*\delta)
-\equiv(v+1)^2-T_v^2
-=-(\bar\alpha_v-\bar\beta_v)^2
-\pmod{\mathfrak m}.
-\tag{8.6}
-$$
-
-The right side is a unit. Consequently $\delta^*\delta$ is invertible. An explicit left inverse of $\delta$ is
-
-$$
-(\delta^*\delta)^{-1}\delta^*:M_I\longrightarrow M_K\oplus M_K.
-\tag{8.7a}
-$$
-
-Thus $\delta$ is a split injection, and
-
-$$
-M_I^{\mathrm{old}}=\operatorname{im}\delta
-\tag{8.7}
-$$
-
-is a direct summand. In particular, it is saturated and $M_I/M_I^{\mathrm{old}}$ is $\mathcal O$-torsion-free.
-
-### 8.3 Saturation and vanishing of the new quotient
-
-Suppose the generic fiber of the localized new quotient were nonzero. It would contain an eigenpacket whose local representation at $v$ is Steinberg. The associated local Galois representation has Frobenius eigenvalues in ratio $v$. Since $v\equiv1\pmod\ell$, their reductions coincide. But the residual localization was defined by the two distinct roots $\bar\alpha_v$ and $\bar\beta_v$. This is impossible.
-
-Thus
-
-$$
-(M_I/M_I^{\mathrm{old}})\otimes_{\mathcal O}E=0.
-\tag{8.8}
-$$
-
-The quotient is torsion-free by (8.6), so (8.8) kills it integrally:
-
-$$
-M_I=M_I^{\mathrm{old}}.
-\tag{8.9}
-$$
-
-Repeating the argument one prime at a time proves full Iwahori oldness at all primes of $Q_n$. The order of the two steps is essential: generic vanishing alone cannot kill an integral torsion quotient, and saturation alone does not identify its generic packet.
-
-### 8.4 The Iwahori operator after oldness
-
-Only now use (8.9) to calculate the Iwahori operator $U_v=[I_v\operatorname{diag}(v,1)I_v]$. With the conventions of (8.1)--(8.4), the direct right-coset calculation gives
-
-$$
-U_v\delta(x,y)
-=\delta(T_vx+vy,-x).
-\tag{8.10}
-$$
-
-Hence on the old module
-
-$$
-U_v^2-T_vU_v+v=0.
-\tag{8.11}
-$$
-
-The matrix in the coordinates $M_K\oplus M_K$ is
-
-$$
-\begin{pmatrix}T_v&v\\-1&0\end{pmatrix}.
-\tag{8.12}
-$$
-
-Formula (8.10), not a remembered sign convention, determines which old vector belongs to the primary root in the next chapter.
-
-## 9. Primary and companion branches
-
-The ordered Taylor--Wiles deformation remembers one residual Frobenius line, so the automorphic module must select the matching $U_v$-branch. Duality sends that branch to a $V_v$-branch rather than back to itself. This chapter constructs both modules, keeps them distinct, and proves the paired augmentation required by Book 73.
-
-### 9.1 Hensel projectors and the primary old line
-
-Because the residual roots are distinct, Hensel's lemma factors (8.11) in the localized Hecke order:
-
-$$
-X^2-T_vX+v=(X-\alpha_v)(X-\beta_v),
-\qquad
-\alpha_v\equiv\bar\alpha_v,
-\quad
-\beta_v\equiv\bar\beta_v.
-\tag{9.1}
-$$
-
-Define
-
-$$
-e_{\alpha_v}^U
-=\frac{U_v-\beta_v}{\alpha_v-\beta_v}.
-\tag{9.2}
-$$
-
-From (8.10), the primary $U_v$-old line is explicitly
-
-$$
-M_K\longrightarrow e_{\alpha_v}^UM_I,
-\qquad
-z\longmapsto\delta(-\alpha_vz,z),
-\tag{9.3}
-$$
-
-since the vector $(-\alpha_v,1)$ is an $\alpha_v$-eigenvector for (8.12). This formula fixes the primary convention; replacing it by $(1,-\alpha_v)$ would correspond to a different matrix convention.
-
-### 9.2 The deep primary and companion blocks
-
-At full deep level, define the primary generalized block $M_n^+$ by localizing the full module at the maximal ideal containing
-
-$$
-U_v-\bar\alpha_v
-\qquad(v\in Q_n).
-\tag{9.4}
-$$
-
-Let $V_v$ be the inverse-double-coset operator adjoint to $U_v$. Define the companion block $M_n^-$ by the adjoint maximal ideal containing
-
-$$
-V_v-\bar\alpha_v
-\qquad(v\in Q_n).
-\tag{9.5}
-$$
-
-Infrastructure I and (7.5) give finite free $\Lambda_n$-modules $M_n^+$ and $M_n^-$. Let $\mathbb T_n^+$ and $\mathbb T_n^-$ be their faithful acting Hecke orders. The labels $+$ and $-$ distinguish primary and companion; they do not assert that the modules are equal.
-
-### 9.3 Adjointness, not self-adjointness
-
-Book 90 gives the exact identity
-
-$$
-U_v^*=V_v.
-\tag{9.6}
-$$
-
-Consequently
-
-$$
-(e_{\alpha_v}^U)^*=e_{\alpha_v}^V,
-\qquad
-e_{\alpha_v}^V
-=\frac{V_v-\beta_v}{\alpha_v-\beta_v},
-\tag{9.7}
-$$
-
-not $(e_{\alpha_v}^U)^*=e_{\alpha_v}^U$. The mass pairing therefore restricts to a perfect coefficient-valued pairing
-
-$$
-M_n^+\times M_n^-
-\longrightarrow\mathcal O
-\tag{9.8}
-$$
-
-satisfying
-
-$$
-\langle\lambda x,y\rangle
-=\langle x,\iota(\lambda)y\rangle
-\qquad(\lambda\in\Lambda_n),
-\tag{9.9}
-$$
-
-with $\iota$ from (7.7).
-
-Equivalently, restricting (7.8) gives a perfect sesquilinear pairing
-
-$$
-[\ ,\ ]_n:M_n^+\times M_n^-
-\longrightarrow\Lambda_n,
-\qquad
-[\lambda x,y]_n=\lambda[x,y]_n,
-\quad
-[x,\lambda y]_n=[x,y]_n\iota(\lambda).
-\tag{9.9a}
-$$
-
-This is the precise sense in which the two branch modules are paired perfectly over $\Lambda_n$ with diamond inversion.
-
-For $t\in\mathbb T_n^+$, adjunction defines a unique operator $t^\dagger$ on $M_n^-$ by
-
-$$
-\langle tx,y\rangle=\langle x,t^\dagger y\rangle.
-\tag{9.10}
-$$
-
-Adjunction reverses products. The selected acting orders are the commutative suborders generated by the away operators, diamonds, and the one oriented operator at each auxiliary place, so the resulting anti-isomorphism may be written as an isomorphism
-
-$$
-\mathbb T_n^+\xrightarrow{\sim}\mathbb T_n^-,
-\qquad t\longmapsto t^\dagger,
-\tag{9.11}
-$$
-
-This is compatible with diamond inversion. We use (9.11) to compare actions; we do not identify $M_n^+$ with $M_n^-$.
-
-### 9.4 Augmentation and ordered Galois control
-
-Taking $\Delta_n$-coinvariants first descends the full deep module to the full Iwahori module. Full oldness (8.9), followed by the explicit primary line (9.3), then gives saturated isomorphisms
-
-$$
-M_n^+/\mathfrak a_nM_n^+
-\xrightarrow{\sim}M^{\min},
-\qquad
-M_n^-/\mathfrak a_nM_n^-
-\xrightarrow{\sim}M^{\min}.
-\tag{9.12}
-$$
-
-The second map uses the adjoint degeneracy diagram. It is not obtained by declaring $M_n^-=M_n^+$. Derived coinvariants are ordinary because both modules are $\Lambda_n$-free, and the augmentation of (9.9a) is the perfect minimal mass pairing between the two copies of $M^{\min}$. Thus the companion duality descends together with the modules, not after them as an unrelated choice.
-
-In particular,
-
-$$
-\operatorname{rank}_{\Lambda_n}M_n^+
-=\operatorname{rank}_{\Lambda_n}M_n^-
-=\operatorname{rank}_{\mathcal O}M^{\min},
-\tag{9.12a}
-$$
-
-so the normalized module rank is independent of $n$. This is the size condition needed for the finite-shadow construction.
-
-Because the branch lattices and their images are saturated, (9.12) also controls the faithful acting orders:
-
-$$
-\mathbb T_n^+/\mathfrak a_n\mathbb T_n^+
-\xrightarrow{\sim}\mathbb T^{\min},
-\qquad
-\mathbb T_n^-/\mathfrak a_n\mathbb T_n^-
-\xrightarrow{\sim}\mathbb T^{\min}.
-\tag{9.13}
-$$
-
-Module coinvariants without saturation would yield only a map between Hecke images, not the isomorphisms (9.13).
-
-Infrastructure II identifies these saturated definite acting orders with the curve acting orders before and after augmentation. Hence (9.13) also controls the integral order over which the Galois family is defined; generic Jacquet--Langlands cannot insert an unseen congruence index at this step.
-
-Infrastructure II supplies a genuine representation over $\mathbb T_n^+$. Its ordered $G_{\mathbf Q_v}$-stable line has residual Frobenius root $\bar\alpha_v$, and tame inertia acts through the tautological diamond character. Thus it lies on the ordered local ring (6.8), and universality gives a compatible surjection
-
-$$
-R_n\twoheadrightarrow\mathbb T_n^+.
-\tag{9.14}
-$$
-
-Surjectivity in (9.14) is a generator statement, not part of universality. Good-prime traces produce the operators $S_r^{-1}T_r$; the tame characters produce every diamond operator; and Frobenius on the ordered line produces the selected $U_v$-root. The remaining original-level operators are fixed by the prescribed local types. These elements generate the faithful localized order, so the universal map has image $\mathbb T_n^+$.
-
-Via (9.11), the companion order carries the adjoint description of the same ordered Galois condition. Under augmentation, (9.14) becomes (5.5).
-
-## 10. The Taylor--Wiles axiom ledger
-
-Prime selection, deformation rings, class-set modules, Hecke actions, augmentation, and duality come from different arguments. A Taylor--Wiles system is valid only when their maps commute and their ranks are uniform. This chapter records that verification line by line and states plainly what the system has not yet proved.
-
-### 10.1 The paired finite-level system
-
-For every $n$ we now have
-
-$$
-(R_n,\mathbb T_n^+,M_n^+;
-\mathbb T_n^-,M_n^-;\Lambda_n)
-\tag{10.1}
-$$
-
-together with the minimal datum
-
-$$
-(R^{\min},\mathbb T^{\min},M^{\min};\mathcal O).
-\tag{10.2}
-$$
-
-The primary module carries the deformation-theoretic Hecke action. The companion module supplies the exact dual object demanded by Book 73, axiom TW8. This is the correct replacement for a nonexistent self-adjointness of $U_v$.
-
-### 10.2 Verification of the axioms
-
-The labels below are exactly those of Book 73, Definition 16.1.
-
-1. **TW1: auxiliary arithmetic.** Section 6.1 gives an ordered set $Q_n$ of the fixed cardinality $q$, split regular residual Frobenius, and $v\equiv1\pmod{\ell^n}$. Section 6.2 supplies named generators and the exact quotients $\Delta_v(n)$ of order $\ell^n$, hence $\Delta_n\simeq(\mathbf Z/\ell^n\mathbf Z)^q$ with the declared reciprocity convention.
-2. **TW2: rings and covariance.** The maps
-   $$
-   \Lambda_n\longrightarrow R_n\twoheadrightarrow\mathbb T_n^+
-   $$
-   commute because Infrastructure II identifies the geometric diamond character with (6.6), and (9.14) is surjective by the listed Hecke generators. The companion order carries the $\iota$-twisted diamond structure under the adjoint isomorphism (9.11).
-3. **TW3: factorized module action.** By definition $\mathbb T_n^+$ acts faithfully on $M_n^+$. Its $R_n$-action is the composite through (9.14), and its diamond action is the composite from $\Lambda_n$; no second action is introduced. The analogous statements hold for the companion after transport by adjunction.
-4. **TW4: all three augmentations.** Equation (6.11) is TW4a, the first isomorphism in (9.12) is TW4b, and the first isomorphism in (9.13) is TW4c. The last uses saturation of acting orders and is not inferred merely from module coinvariants. These maps commute with (5.5), (9.14), and the two module actions.
-5. **TW5: diamond size.** Infrastructure I makes $M_n^+$ finite free over $\Lambda_n$. Equation (9.12a) gives one fixed rank, independent of $n$. The same assertions hold for $M_n^-$.
-6. **TW6: deformation control.** Book 72 kills the enlarged dual Selmer group. The minimal datum is balanced by the local calculation recorded at the start of Chapter 11. The $q$ ordered local quotients and the $q$-dimensional dual localization matrix cancel in the exact Poitou--Tate sequence, giving the sharp auxiliary primal dimension $q$ in (11.15). Book 68 and the complete effective local complexes separately give the relative generator and relation-complex ranks computed in (11.3)--(11.12).
-7. **TW7: presentation coordinates.** Named diamond generators put every $\Lambda_n$ under $S_\infty=\mathcal O[[Z_1,\ldots,Z_q]]$. Uniform cotangent lifts and variable--linear-relation padding put the framed deformation presentations under one fixed source. Since the sets $Q_n$ are not nested, the only transitions are the coherent finite-shadow pseudo-transitions obtained after the diagonal subsequence of Book 73; no arithmetic map between two original levels is asserted.
-8. **TW8: companion duality.** The module $M_n^-$ is finite free over $\Lambda_n$, its faithful order is identified with $\mathbb T_n^+$ by (9.11), and it has its own exact augmentation. Equations (9.8)--(9.9a) give perfect coefficient- and group-ring-valued pairings with diamond inversion. The adjoint maps, augmentation pairing, and pairing-compatible finite shadows are supplied by Infrastructure I; the fixed frame normalization is the one used in Sections 6.3 and 11.3. This is the companion-module form of TW8, not a self-pairing of the primary $U_v$-block.
-
-The automorphic realization clauses (A1)--(A8) of Book 73, Section 17.3, are thereby accounted for as well. Infrastructure I supplies the torsion-free lattices, the geometric diamond action and freeness, the named Hecke action, exact module and order control, uniform multiplicity, duality, and the automorphic old-branch and adjoint normalizations (A1--A3, A5--A7, and the automorphic part of A8). Infrastructure II identifies that geometric diamond action with the reciprocity normalization in (6.6), supplies the genuine family representation, every local verification, and the generator proof of the surjection (the remaining part of A2 and A4), and supplies the curve-order saturation used in A5. Sections 2, 6.3, and 11.3 fix the determinant, auxiliary eigenline coordinates, and framing convention completing A8.
-
-The compatibility maps used in patching are chosen after the orders have been identified by adjunction. No arbitrary isomorphism $M_n^+\simeq M_n^-$ is introduced.
-
-The prime sets $Q_n$ are not nested and there are no arithmetic transition maps between their class sets. Book 73 instead places the abstract diamond groups under one power-series source, chooses uniform presentation coordinates, and stabilizes finite quotient shadows by a diagonal subsequence. Every patched transition below refers to those presentation models. It does not pretend that a prime in $Q_{n+1}$ lies above a prime in $Q_n$.
-
-### 10.3 What has not yet been proved
-
-The axiom ledger proves neither $R_n=\mathbb T_n^+$ nor $R^{\min}=\mathbb T^{\min}$. It does not prove that a patched module is faithful over a patched deformation ring. It also does not show that $R^{\min}$ is finite flat or reduced. At present the known finite-flat ring is the Hecke quotient.
-
-The paired system supplies more than two separately self-dual complexes: its unpadded absolute deformation rings have a sharp tangent count, and its free diamond modules carry exact augmented actions. Chapter 11 patches those data simultaneously. The relative framed ledger remains useful as an audit, but it is not the kernel-killing input; injectivity of (5.5) will come from the absolute fixed-source patch.
-
-## 11. The framed ledger and absolute patching
-
-This chapter first audits the framed relation count, separating absolute dual Selmer, relative obstruction rank, local-ring dimensions, and gauge directions. It then returns to the unpadded absolute auxiliary rings. Their exact $q$-dimensional tangent spaces give a fixed source with $q$ variables, while the diamond algebra also has $q$ variables. Patching from these equal-dimensional sources proves regularity and faithfulness directly.
-
-### 11.1 The exact global generator formula
-
+The patched module is free and nonzero over $S_\infty$. Its scalar action
+embeds $S_\infty$ into the image of $P$. Since $P$ is a regular local domain
+of the same dimension, no nonzero ideal of $P$ can lie in the kernel. This
+equal-variable argument kills nilpotents as well as generic components.
+Freeness and exact augmentation then descend the equality to minimal level.
+
+This order prevents three common circles. Residual automorphy is used only to
+make the automorphic module nonzero, not to assert that every component is
+automorphic. Faithfulness is proved from regularity and depth, not assumed
+from topological support. Cotangent--congruence equality is derived after
+$R=\mathbb T$ and is not used to establish that equality.
+
+### 1.3 The exact theorem
+
+We now state the result in the form proved in this volume. The phrase *clean
+minimal datum* is unpacked completely in Chapters 2 and 4.
+
+**Theorem 1.1 (minimal modularity lifting).** Let $F$ be totally real, let
+$\ell\geq7$, and let $(\mathcal O,\varpi,k)$ be the ring of integers,
+uniformizer, and residue field of a finite extension of $\mathbf Q_\ell$.
 Let
 
 $$
-s=\#\{p:p\mid N\},
-\qquad
-q=h^1_{\mathcal L^\perp}(\mathbf Q,W(1)),
-\tag{11.1}
+\bar\rho:G_F\longrightarrow\operatorname{GL}_2(k)
+\tag{1.3}
 $$
 
-and set
+be continuous, absolutely irreducible, and totally odd. Assume that
+$\bar\rho|_{G_{F(\zeta_\ell)}}$ is absolutely irreducible. Fix a continuous
+determinant lift
 
 $$
-\mathscr T_n=\{\ell\}\cup\{p:p\mid N\}\cup Q_n,
-\qquad
-t=|\mathscr T_n|=s+1+q.
-\tag{11.2}
+\delta:G_F\longrightarrow\mathcal O^\times
+\tag{1.4}
 $$
 
-We reserve $\mathscr T_n$ for the set of framed places and $\mathbb T_n$ for a Hecke algebra.
+of $\det\bar\rho$, compatible with a parallel-weight-two central character.
+Put $M=\operatorname{ad}^0\bar\rho$ and assume separately that
 
-Before passing to the relative problem, audit the absolute defect. Absolute irreducibility gives $h^0(\mathbf Q,W)=0$, while (1.5) gives $h^0(\mathbf Q,W(1))=0$. At $\ell$, (1.7) and Book 67 give
-
-$$
-\dim L_\ell-h^0(\mathbf Q_\ell,W)=1-0=1.
-\tag{11.2a}
-$$
-
-At every $p\mid N$, (2.6a) gives zero; every unramified place also contributes zero; and the real place contributes $-1$. The Wiles formula therefore gives
-
-$$
-h^1_{\mathcal L}(\mathbf Q,W)
--h^1_{\mathcal L^\perp}(\mathbf Q,W(1))
-=1-1=0,
-\qquad
-h^1_{\mathcal L}(\mathbf Q,W)=q.
-\tag{11.2b}
-$$
-
-Thus the minimal datum is balanced. Each of the $q$ ordered auxiliary conditions has a one-dimensional quotient over the unramified condition, while the selected localization matrix kills the entire auxiliary dual Selmer group. The exact Poitou--Tate sequence in Section 11.5 shows that these two effects cancel rather than add: the unframed auxiliary tangent dimension remains exactly $q$. This is the sharp absolute assertion in TW6; it is separate from the relative number $q_{\mathscr T_n}$ below.
-
-The absolute number $q$ in (11.1) selects auxiliary primes. The relative number $q_{\mathscr T_n}$ below measures the obstruction rank after the full local rings have been placed in the base. They are different cohomology groups and are never substituted for one another.
-
-Use the definitions of Book 68 exactly:
-
-$$
-g_{\mathscr T_n}
-=h^1_{\mathcal L,\mathscr T_n}(\mathbf Q,W)
-+\sum_{v\in\mathscr T_n}h^0(\mathbf Q_v,\operatorname{ad}\bar\rho)
--h^0(\mathbf Q,\operatorname{ad}\bar\rho),
-\tag{11.3}
-$$
-
-and
-
-$$
-q_{\mathscr T_n}
-=\dim_k
-H^1_{(\mathcal L^0_{\mathscr T_n})^\perp}
-(\mathbf Q,W(1)).
-\tag{11.4}
-$$
-
-Here $\mathcal L^0_{\mathscr T_n}$ is the locally based condition used for the partially framed problem; it is not obtained by replacing every $L_v$ with zero in the unframed Selmer group without the framing terms in (11.3).
-
-Book 68 first gives the strict/relaxed duality identity
-
-$$
-\begin{aligned}
-h^1_{\mathcal L,\mathscr T_n}(\mathbf Q,W)
--q_{\mathscr T_n}
-={}&h^0(\mathbf Q,W)-h^0(\mathbf Q,W(1))\\
-&+\sum_{v\notin\mathscr T_n}
-\bigl(\dim L_v-h^0(\mathbf Q_v,W)\bigr)
--\sum_{v\in\mathscr T_n}h^0(\mathbf Q_v,W).
-\end{aligned}
-\tag{11.4a}
-$$
-
-Because $\ell$ is odd, $\operatorname{ad}\bar\rho=k\oplus W$. Hence
-
-$$
-h^0(\mathbf Q_v,\operatorname{ad}\bar\rho)
-=1+h^0(\mathbf Q_v,W),
-\qquad
-h^0(\mathbf Q,\operatorname{ad}\bar\rho)=1,
-\tag{11.4b}
-$$
-
-the last equality using absolute irreducibility. Adding the framing correction in (11.3) to (11.4a) cancels the local $W$-invariants at every place of $\mathscr T_n$. The resulting fixed-determinant formula is
-
-$$
-g_{\mathscr T_n}-q_{\mathscr T_n}
-=|\mathscr T_n|-1-h^0(\mathbf Q,W(1))
-+\sum_{v\notin\mathscr T_n}
-\bigl(\dim L_v-h^0(\mathbf Q_v,W)\bigr),
-\tag{11.5}
-$$
-
-where the sum runs over the remaining places of the global deformation problem, including infinity. Every finite conditioned place is in $\mathscr T_n$. By (1.5) the global dual invariant term is zero. At the real place $L_\infty=0$ and $h^0(\mathbf R,W)=1$. Hence
-
-$$
-g_{\mathscr T_n}-q_{\mathscr T_n}
-=t-1-1=t-2.
-\tag{11.6}
-$$
-
-The second subtraction in (11.6) is the real oddness term. Losing it produces $t-1$ and destroys the final square presentation.
-
-### 11.2 Local framed dimensions
-
-The relative dimensions of the framed local bases are:
-
-| Place | Framed local base | Relative dimension |
-|---|---|---:|
-| $\ell$ | finite flat of type $(0,1)$ | $4$ over $\mathcal O$ |
-| $p\mid N$ | fixed-sign nonzero Steinberg | $3$ over $\mathcal O$ |
-| $v\in Q_n$ | ordered Taylor--Wiles | $3$ over $\Lambda_v$ |
-
-The dimension $4$ at $\ell$ consists of the genuine finite-flat coordinate and three framing directions. At $p\mid N$, the local type has no genuine unframed parameter, leaving three framing directions. At $v\in Q_n$, the ordered unramified coordinate $X_v$ and the two eigenline-position coordinates $Y_v,Z_v$ give dimension $3$ over $\Lambda_v$. The ordered residual centralizer is a torus, so only two new frame directions are added to the one-dimensional unframed ring.
-
-### 11.3 Gauge variables and the framed presentation
-
-The partially framed global functor remembers a local basis at each of the $t$ places. Its gauge extension count is
-
-$$
-c_{\mathscr T_n}
-=4t-h^0(\mathbf Q,\operatorname{ad}\bar\rho)
-=4t-1,
-\tag{11.7}
-$$
-
-because absolute irreducibility gives
-
-$$
-h^0(\mathbf Q,\operatorname{ad}\bar\rho)=1.
-\tag{11.8}
-$$
-
-The count is not $3t$. Fixed determinant controls deformations of the representation, but a change of a chosen $2\times2$ local basis has four matrix entries. Only the single global scalar stabilizer is divided out. Confusing local fixed-determinant tangent dimensions with gauge torsors loses $t-1$ variables.
-
-The completed framed local base is, noncanonically,
-
-$$
-R_{\mathrm{loc},n}
-\simeq
-\Lambda_n[[L_1,\ldots,L_{d_{\mathrm{loc}}}]],
-\qquad
-d_{\mathrm{loc}}=4+3s+3q.
-\tag{11.8a}
-$$
-
-No coordinate in (11.8a) is counted in the relative tangent rank (11.3). The complete relative Selmer complex gives a finite free presentation complex over this base. If its source and obstruction ranks at one level are $G_n^\square$ and $b_n^\square$, then (11.6) gives
-
-$$
-G_n^\square-b_n^\square=t-2.
-\tag{11.8b}
-$$
-
-This is an equality of the chosen complex ranks, not an assertion that $b_n^\square$ is the minimal number of equations. A complete effective obstruction space gives a generating relation map with possible redundant rows. Uniform boundedness permits simultaneous padding: adding a variable $Z$ together with the actual linear relation $Z=0$ raises both ranks by one and contributes an acyclic unit block. Choose one padded pair of ranks $G^\square,b^\square$ for every $n$, padding further if necessary so that $G^\square\ge s+q$. Then
-
-$$
-b^\square=G^\square-t+2.
-\tag{11.9}
-$$
-
-Adding a variable with a zero relation would instead change the represented ring and falsify the rank count. Appending a redundant relation row without a variable does not change the ring, but it can make a presentation determinant zero. The three ranks $d_{\mathrm{loc}}$, $G^\square$, and $b^\square$ therefore remain in separate columns. None of this padded relative data is substituted for the minimal absolute source used in Section 11.6.
-
-### 11.4 Exact frame removal and the square presentation
-
-Now remove all $\mathscr T_n$-frames by the regular frame-extension map of Books 68 and 74. The partially framed global ring is a formally smooth extension of the unframed ring by exactly $c_{\mathscr T_n}=4t-1$ variables. Before frame removal, the absolute presentation source has
-
-$$
-d_{\mathrm{loc}}+G^\square
-$$
-
-variables over $\Lambda_n$ and $b^\square$ relation rows. Choosing coordinates on the regular frame torsor and deleting its $4t-1$ smooth variables leaves
-
-$$
-\begin{aligned}
-d_{\mathrm{loc}}+G^\square-c_{\mathscr T_n}
-&=(4+3s+3q)+G^\square-(4t-1)\\
-&=G^\square-s-q+1
-\end{aligned}
-\tag{11.9a}
-$$
-
-source variables and introduces no relation. This calculation, rather than an informal subtraction of three variables per place, counts every local-base and gauge coordinate once. Set
-
-$$
-G=G^\square-s-q.
-\tag{11.10}
-$$
-
-Frame removal deletes those smooth source variables but introduces no new obstruction relation, so
-
-$$
-b=b^\square.
-\tag{11.11}
-$$
-
-Using $t=s+1+q$ in (11.9),
-
-$$
-b=b^\square
-=G^\square-(s+1+q)+2
-=G+1.
-\tag{11.12}
-$$
-
-Equations (11.9a) and (11.12) show that the frame-removed source and relation modules have the same rank $b=G+1$. The surviving one is the net finite-flat direction at $\ell$: the $+1$ coefficient-prime contribution in (11.2a) balances the $-1$ real contribution in (11.2b), while the other local and gauge coordinates cancel. After derived diamond augmentation and cancellation of every acyclic padding pair, the minimal ring has a stable square presentation
-
-$$
-R^{\min}
-\simeq
-\mathcal O[[Y_1,\ldots,Y_b]]/(f_1,\ldots,f_b),
-\qquad
-b=G+1.
-\tag{11.13}
-$$
-
-At this stage (11.13) is a presentation with a square relation matrix, not a proof that the $f_i$ form a regular sequence and not a proof that $R^{\min}$ is finite over $\mathcal O$. In particular, the determinant of this chosen presentation cannot eliminate the kernel. Those conclusions will instead follow from the unpadded absolute patch below.
-
-### 11.5 The exact unframed auxiliary count
-
-Write $\mathcal L_{Q_n}$ for the auxiliary Selmer condition and $L_v^{\mathrm{ur}}$ for the unramified tangent condition at $v\in Q_n$. Poitou--Tate gives the exact segment
-
-$$
-\begin{aligned}
-0\longrightarrow H^1_{\mathcal L}(\mathbf Q,W)
-&\longrightarrow H^1_{\mathcal L_{Q_n}}(\mathbf Q,W)
-\longrightarrow
-\bigoplus_{v\in Q_n}L_v^{\mathrm{TW}}/L_v^{\mathrm{ur}}\\
-&\longrightarrow
-H^1_{\mathcal L^\perp}(\mathbf Q,W(1))^\vee
-\longrightarrow
-H^1_{\mathcal L_{Q_n}^\perp}(\mathbf Q,W(1))^\vee
-\longrightarrow0.
-\end{aligned}
-\tag{11.14}
-$$
-
-Each summand in the middle is one-dimensional. The final group is zero by the choice of $Q_n$, and the preceding localization map is the $q$-by-$q$ matrix made invertible in Section 6.1. It is therefore an isomorphism. Exactness of (11.14), together with (11.2b), gives
-
-$$
-H^1_{\mathcal L}(\mathbf Q,W)
-\xrightarrow{\sim}
-H^1_{\mathcal L_{Q_n}}(\mathbf Q,W),
-\qquad
-h^1_{\mathcal L_{Q_n}}(\mathbf Q,W)=q.
-\tag{11.15}
-$$
-
-The tangent space of the absolute unframed ring $R_n$ is the right-hand group in (11.15). Hence
-
-$$
-\dim_k
-\frac{\mathfrak m_{R_n}}
-{\mathfrak m_{R_n}^2+\varpi R_n}=q.
-\tag{11.16}
-$$
-
-Choose a tangent basis and lifts. Topological Nakayama gives a continuous surjection of complete local $\mathcal O$-algebras
-
-$$
-\beta_n:P:=\mathcal O[[X_1,\ldots,X_q]]
-\twoheadrightarrow R_n.
-\tag{11.17}
-$$
-
-This is an **absolute** presentation with exactly $q$ source variables; it is not the relative framed source of Sections 11.2--11.4. No assertion is made that $\ker\beta_n$ has a uniformly bounded number of generators. If $q=0$, (11.17) reads $\mathcal O\twoheadrightarrow R_n$.
-
-### 11.6 Patching from the minimal absolute source
-
-Set
-
-$$
-S:=S_\infty=\mathcal O[[Z_1,\ldots,Z_q]],
-\qquad
-\mathfrak a=(Z_1,\ldots,Z_q).
-\tag{11.18}
-$$
-
-The named diamond generators give maps $S\to\Lambda_n\to R_n$. For each $i$, choose $h_{n,i}\in\mathfrak m_P$ lifting the image of $Z_i$ through (11.17), and let
-
-$$
-\alpha_n:S\longrightarrow P,
-\qquad Z_i\longmapsto h_{n,i}.
-\tag{11.19}
-$$
-
-Then $\beta_n\alpha_n$ is the diamond map. The level equation
-
-$$
-(1+h_{n,i})^{\ell^n}-1\in\ker\beta_n
-\tag{11.20}
-$$
-
-records that the $i$-th diamond generator has order $\ell^n$.
-
-We now spell out the finite-shadow patch, because retaining only modules would lose the augmentation needed below. At precision $d$, take the standard finite quotient $C_d=S/\mathfrak b_d$ of Book 74. For sufficiently large $n$, put
-
-$$
-A_{n,d}=\operatorname{im}\!\left(
-P\longrightarrow
-\operatorname{End}_{C_d}(M_n^+/\mathfrak b_dM_n^+)
-\right).
-$$
-
-After a $\Lambda_n$-basis is chosen, the module is $C_d^r$. Each $A_{n,d}$ is a finite local quotient of $P$. Only finitely many image subalgebras of the fixed finite ring $\operatorname{End}_{C_d}(C_d^r)$ occur, so their maximal-ideal nilpotence exponents have one uniform bound. Choose an increasing cofinal function $\nu(d)$ beyond that bound and set
-
-$$
-P_d=P/\mathfrak m_P^{\nu(d)},
-\qquad
-R_{n,d}=R_n/\mathfrak m_{R_n}^{\nu(d)}
-=P/\bigl(\ker\beta_n+\mathfrak m_P^{\nu(d)}\bigr).
-\tag{11.20a}
-$$
-
-The last equality uses $\beta_n(\mathfrak m_P)=\mathfrak m_{R_n}$. These ring shadows are defined independently of the action image $A_{n,d}$. The local surjection $R_n\to R^{\min}$ and the free module augmentation give finite exact sequences
-
-$$
-\begin{gathered}
-0\longrightarrow\mathfrak a_nR_{n,d}
-\longrightarrow R_{n,d}
-\longrightarrow
-R^{\min}/\mathfrak m_{R^{\min}}^{\nu(d)}
-\longrightarrow0,\\
-0\longrightarrow
-\mathfrak a(M_n^+/\mathfrak b_dM_n^+)
-\longrightarrow M_n^+/\mathfrak b_dM_n^+
-\longrightarrow M^{\min}/\varpi^dM^{\min}
-\longrightarrow0.
-\end{gathered}
-\tag{11.20b}
-$$
-
-Mark simultaneously:
-
-1. the ideal $\ker(P_d\to R_{n,d})$;
-2. the elements $h_{n,i}$ in $P_d$;
-3. the matrices of the $P$-action on the marked $C_d$-basis of $M_n^+/\mathfrak b_dM_n^+\simeq C_d^r$;
-4. both exact sequences in (11.20b), their action square, and the saturated acting-order quotient implementing (9.13) at finite precision; and
-5. the fixed canonical action of $R^{\min}/\mathfrak m_{R^{\min}}^{\nu(d)}$ on the corresponding quotient of $M^{\min}/\varpi^dM^{\min}$, together with the pairing-compatible companion shadows required by TW8.
-
-Here $r=\operatorname{rank}_{\mathcal O}M^{\min}>0$. Every ring, module, ideal set, and matrix set at fixed precision is finite because $k$ is finite. In particular, a finite ring has only finitely many ideals, so the diagonal argument needs no uniform relation tuple for $\ker\beta_n$. Refine the Book 73 finite tree so that the marked diagram at precision $d+1$ reduces to the one at precision $d$. The cofinality of $\nu(d)$ ensures that the bottom ring shadows recover all of $R^{\min}$. This is precisely where the pairing-compatible shadows in Infrastructure I, clause 9, are used; the new marks are ideals, actions, and augmentations of the same finite diagrams.
-
-Taking inverse limits gives
-
-$$
-R_\infty=P/I_\infty,
-\qquad
-M_\infty\simeq S^r,
-\qquad
-P\longrightarrow R_\infty
-\longrightarrow A_\infty\subseteq\operatorname{End}_S(M_\infty),
-\tag{11.21}
-$$
-
-where $A_\infty$ is the image of the patched action. It also gives elements $h_i\in\mathfrak m_P$ and a map
-
-$$
-\alpha:S\longrightarrow P,
-\qquad Z_i\longmapsto h_i,
-\tag{11.22}
-$$
-
-such that the composite $S\xrightarrow{\alpha}P\to A_\infty$ is scalar multiplication on $M_\infty$. Finite Mittag--Leffler exactness gives the quotient and action maps in (11.21); it does not create arithmetic transition maps between the original, nonnested $Q_n$. The relations (11.20) disappear in the inverse limit because $(1+h)^{\ell^n}-1$ tends to zero at every fixed Artinian precision for $h\in\mathfrak m_P$.
-
-Let $H=(h_1,\ldots,h_q)P$. At finite level, the images of the $h_{n,i}$ generate $\mathfrak a_nR_n$, so
-
-$$
-\frac{\ker\beta_n+(h_{n,1},\ldots,h_{n,q})}
-{\ker\beta_n}
-=\mathfrak a_nR_n.
-\tag{11.23}
-$$
-
-Consequently the finite-level control is represented on this absolute source by
-
-$$
-P/\bigl(\ker\beta_n+(h_{n,1},\ldots,h_{n,q})\bigr)
-\xrightarrow{\sim}R^{\min},
-\qquad
-M_n^+/(h_{n,1},\ldots,h_{n,q})M_n^+
-\xrightarrow{\sim}M^{\min}.
-\tag{11.23a}
-$$
-
-The exact finite sequences (11.20b), together with the finite reductions of the ideal and action identities (11.23)--(11.23a), were retained in every shadow; no infinite augmentation target was inserted into a finite diagram. Their finite kernels are Mittag--Leffler, and finitely generated ideals in the complete rings are closed. Passing along the cofinal $\nu(d)$-filtration therefore gives the **exact**, action-compatible augmentations
-
-$$
-R_\infty/\mathfrak aR_\infty
-=R_\infty/HR_\infty
-\xrightarrow{\sim}R^{\min},
-\qquad
-M_\infty/HM_\infty
-\xrightarrow{\sim}M^{\min}.
-\tag{11.24}
-$$
-
-Thus neither equality in (11.24) is inferred from ordinary tensoring of an unknown flat deformation ring.
-
-### 11.7 Regularity, freeness, and faithful descent
-
-We first isolate the commutative algebra that turns equal variable counts into rigidity.
-
-**Lemma 11.1 (equal-variable rigidity).** Let $S=\mathcal O[[Z_1,\ldots,Z_q]]$ and $P=\mathcal O[[X_1,\ldots,X_q]]$. Let $L\ne0$ be finite free over $S$. Suppose $\alpha:S\to P$ is a continuous local $\mathcal O$-algebra map and $\psi:P\to\operatorname{End}_S(L)$ is a continuous unital action homomorphism, giving
-
-$$
-S\xrightarrow{\alpha}P
-\xrightarrow{\psi}\operatorname{End}_S(L)
-\tag{11.25}
-$$
-
-Assume $\psi(\alpha(s))=s\operatorname{id}_L$ for every $s\in S$. Then $\psi$ is injective, $P$ is finite free over $S$, and $L$ is finite free over $P$.
-
-**Proof.** Put $A=\psi(P)$. It is an $S$-submodule of the finite free module $\operatorname{End}_S(L)$, hence is finite over the Noetherian ring $S$. Since $L$ is nonzero and $S$-free, scalar multiplication is faithful, so $S\hookrightarrow A$. The finite integral extension has
-
-$$
-\dim A=\dim S=q+1.
-\tag{11.26}
-$$
-
-The surjection $P\twoheadrightarrow A$ and $\dim P=q+1$ force $\ker\psi=0$: if it contained $0\ne f$, then the regular domain $P$ would give $\dim A\le\dim P/(f)\le q$. Hence $A=P$, and $P$ is finite over $S$.
-
-The ideal $\mathfrak m_SP$ is $\mathfrak m_P$-primary, so depth is unchanged when computed over either local ring. Since $P$ is regular of dimension $q+1$,
-
-$$
-\operatorname{depth}_SP
-=\operatorname{depth}_PP=q+1.
-\tag{11.27}
-$$
-
-Auslander--Buchsbaum over the regular ring $S$ makes $P$ finite free over $S$. Likewise $L$ is $S$-free, so
-
-$$
-\operatorname{depth}_PL
-=\operatorname{depth}_SL=q+1;
-\tag{11.28}
-$$
-
-Auslander--Buchsbaum over $P$ makes $L$ finite free over $P$. $\square$
-
-Apply the lemma to (11.21)--(11.22). The action map $P\to\operatorname{End}_S(M_\infty)$ is injective. Since it factors through $P/I_\infty$, necessarily
-
-$$
-q+1=\dim A_\infty
-\le\dim R_\infty
-\le\dim P=q+1.
-\tag{11.28a}
-$$
-
-Thus $\dim R_\infty=\dim P$. A nonzero $I_\infty$ would contain a nonzero nonzerodivisor of the regular domain $P$ and force $\dim(P/I_\infty)\le q$. Equivalently, injectivity of the action already forces
-
-$$
-I_\infty=0,
-\qquad
-R_\infty=P=A_\infty,
-\qquad
-M_\infty\simeq P^e
-\quad(e>0).
-\tag{11.29}
-$$
-
-This proves patched faithfulness rather than assuming it. Combining (11.24) and (11.29) yields
-
-$$
-M^{\min}\simeq
-(R^{\min})^e.
-\tag{11.30}
-$$
-
-The canonical action on $M^{\min}$ factors through the surjection $R^{\min}\twoheadrightarrow\mathbb T^{\min}$, and $\mathbb T^{\min}$ acts faithfully by definition. Therefore
-
-$$
-\ker(R^{\min}\to\mathbb T^{\min})
-=\operatorname{Ann}_{R^{\min}}M^{\min}=0.
-\tag{11.31}
-$$
-
-Together with (5.5), this proves
-
-$$
-\boxed{R^{\min}\xrightarrow{\sim}\mathbb T^{\min}.}
-\tag{11.32}
-$$
-
-Infrastructure I gives $M^{\min}\simeq\mathbb T^{\min}$, so comparison with (11.30) forces $e=1$. The same argument shows $P$ is finite free over $S$. Consequently $h_1,\ldots,h_q$, the images of the regular parameters $Z_1,\ldots,Z_q$, form a $P$-regular sequence and
-
-$$
-B:=R^{\min}=\mathbb T^{\min}
-\simeq P/(h_1,\ldots,h_q)
-\tag{11.33}
-$$
-
-is a finite-flat complete intersection over $\mathcal O$.
-
-The exact tangent count is essential. The two-branch model $S[[u]]/(u(u-\varpi))$ acting on its quotient $S$ has one more residual tangent generator than the $q$ diamond variables. Its minimal absolute source has dimension $q+2$, so the dimension argument in (11.26) cannot make that source inject into the acting quotient. The finite model $\mathcal O[[u]]/(u(u-\varpi))\twoheadrightarrow\mathcal O$ is excluded for the same reason: it cannot occur in a tower satisfying (11.15)--(11.17) and carrying the faithful free $S$-diamond action. Thus (11.32) is not a disguised component-coverage assumption.
-
-## 12. Post-comparison cotangent and congruence theory
-
-The equality (11.32) has already been proved by absolute patching. Only now do deformation cotangents and automorphic congruences live over one ring. This order matters: Tate self-duality of a Selmer complex and mass/Poincaré self-duality of an automorphic complex do not, by themselves, supply a cross-complex morphism or make a global period a unit. The comparison below is the intrinsic complete-intersection comparison over the common ring; it is a consequence of $R=\mathbb T$, not an input to it.
-
-### 12.1 The common complete-intersection presentation
-
-Write
-
-$$
-B=R^{\min}=\mathbb T^{\min}
-=P/(g_1,\ldots,g_q),
-\qquad g_i=h_i=\alpha(Z_i),
-\tag{12.1}
-$$
-
-using (11.33). The map $\alpha:S\to P$ is finite free, so the images of the regular parameters $Z_1,\ldots,Z_q$ form a $P$-regular sequence. Thus (12.1) is a complete-intersection presentation, not merely a square presentation.
-
-Fix the characteristic-zero source character
-
-$$
-\lambda:B\longrightarrow\mathcal O.
-\tag{12.2}
-$$
-
-After translating the $X_j$ by elements of $\varpi\mathcal O$, assume $\lambda(X_j)=0$. The target $B=\mathbb T^{\min}$ is finite flat with reduced generic fiber by Infrastructure II. It follows that $B$ is reduced, since a nilpotent dies in the generic fiber and $B$ is $\mathcal O$-torsion-free. Being a finite-flat complete intersection, $B$ is also Gorenstein over $\mathcal O$.
-
-### 12.2 The deformation cotangent complex
-
-Let $I=\ker\lambda$ and $\Phi_B=I/I^2$. The correct linear object attached to (12.1) is the evaluated conormal complex
-
-$$
-C_\lambda=
-\left[
-\frac{(g_1,\ldots,g_q)}{(g_1,\ldots,g_q)^2}
-\otimes_{B,\lambda}\mathcal O
-\xrightarrow{d}
-\Omega_{P/\mathcal O}\otimes_{P,\lambda}\mathcal O
-\right].
-\tag{12.3}
-$$
-
-With the ordered bases $g_1,\ldots,g_q$ and $dX_1,\ldots,dX_q$, its matrix is
-
-$$
-J_\lambda=
-\left(
-\lambda\!\left(\frac{\partial g_i}{\partial X_j}\right)
-\right)_{1\le i,j\le q}.
-\tag{12.4}
-$$
-
-The conormal sequence gives
-
-$$
-\mathcal O^q\xrightarrow{J_\lambda}
-\mathcal O^q\longrightarrow\Phi_B\longrightarrow0,
-\qquad
-\operatorname{Fitt}_{\mathcal O}^0(\Phi_B)=(\det J_\lambda).
-\tag{12.5}
-$$
-
-This complex is the linearization of the regular sequence. The Koszul complex $K(g;P)$ itself resolves $B$ over $P$, but after evaluation at $\lambda$ its multiplication differentials are zero; it must not be confused with (12.3) or claimed to present $\Phi_B$.
-
-### 12.3 The automorphic congruence complex
-
-Let $K=\operatorname{Frac}(\mathcal O)$ and let $e_\lambda$ be the idempotent of the distinguished factor of $B\otimes K$. Put
-
-$$
-M_\lambda=M^{\min}\cap e_\lambda(M^{\min}\otimes K),
-\qquad
-P_\lambda=e_\lambda M^{\min}.
-\tag{12.6}
-$$
-
-The primary--companion pairing, with the adjoint identification of the two acting orders, identifies $P_\lambda$ with $M_\lambda^\vee$. The resulting two-term branch complex is
-
-$$
-A_\lambda=[M_\lambda\longrightarrow M_\lambda^\vee].
-\tag{12.7}
-$$
-
-Infrastructure I supplies the separate branch-saturation statement
-
-$$
-M_\lambda=\eta_BP_\lambda,
-\qquad
-\eta_B=\lambda(\operatorname{Ann}_B I).
-\tag{12.8}
-$$
-
-Thus $\det A_\lambda$ is the congruence ideal $\eta_B$. Perfect self-duality alone would identify the projected lattice with a dual lattice; it would not imply (12.8). The companion block remains essential because the adjoint of the primary auxiliary operator is the companion operator, not itself.
-
-### 12.4 The conormal--dualizing comparison
-
-Because $g_1,\ldots,g_q$ is regular, $K(g;P)$ is a finite free resolution of $B$. Its Koszul self-duality, followed by the relative residue of Book 71, gives a complete-intersection dualizing generator
-
-$$
-\theta_{\mathrm{CI}}:B\xrightarrow{\sim}
-\operatorname{Hom}_{\mathcal O}(B,\mathcal O).
-\tag{12.9}
-$$
-
-The top exterior linearization of this construction is $\det J_\lambda$. Equivalently, the distinguished generic idempotent has residue $1/\det J_\lambda$, so
-
-$$
-B\cap Ke_\lambda=(\det J_\lambda)e_\lambda.
-\tag{12.10}
-$$
-
-On the automorphic side, the adjoint involution is the identity on the minimal commutative order: at a good prime $T_r^*=S_r^{-1}T_r=T_r$ after the trivial-central-character specialization, and the retained bad-prime operators act through their fixed local-type scalars. Choose $B$-bases $m_+$ and $m_-$ under the identifications of the augmented primary and companion modules with $B$. Define
-
-$$
-\theta_{\mathrm{aut}}(a)(c)
-=\langle acm_+,m_-\rangle.
-$$
-
-Adjointness makes this map $B$-linear, and perfectness makes it an isomorphism. Thus it is another integral dualizing generator
-
-$$
-\theta_{\mathrm{aut}}:B\xrightarrow{\sim}
-\operatorname{Hom}_{\mathcal O}(B,\mathcal O).
-\tag{12.11}
-$$
-
-There is therefore a unique $b\in B^\times$ with
-
-$$
-\theta_{\mathrm{aut}}=b\theta_{\mathrm{CI}}.
-\tag{12.12}
-$$
-
-Book 71's residue normalization identifies the $\lambda$-weight of $\theta_{\mathrm{CI}}$ with $1/\det J_\lambda$. After the Koszul orientation is fixed, the induced comparison between the determinant line of $C_\lambda$ and that of the branch complex $A_\lambda$ therefore has scalar $\pm\lambda(b)\in\mathcal O^\times$. This is the promised global period-unit statement. Its proof is that both integral maps are generators of the same rank-one $B$-module after $R=\mathbb T$; it is not inferred from two unrelated self-dualities, from scalar residual endomorphisms, or from a product of unnamed local factors. This is a determinant-line comparison, not a claimed quasi-isomorphism between $C_\lambda$ and $A_\lambda$, whose terms have ranks $q$ and $1$ respectively.
-
-### 12.5 Integral normalization and the global unit
-
-The generators in (12.9)--(12.11) use the normalizations already fixed before patching: arithmetic Frobenius and cyclotomic determinant; the adapted Steinberg basis with primitive residual monodromy; the oriented split-prime sign and the division-uniformizer at $p_0$; ordered Taylor--Wiles eigenlines and named diamond generators; and the primary--companion mass pairing with diamond inversion. Changing a basis, a Koszul orientation, a primitive monodromy lift, or a class-set representative multiplies the corresponding generator by a unit. The finite-flat scalar-endomorphism hypothesis at $\ell$ supplies representability and the sharp local tangent calculation, but it is not asserted to control the global period.
-
-The exact augmentation used here is (11.24). Before regularity was proved, derived tensor was the safe language for relation complexes; the patch instead retained the finite exact ideal and module sequences and passed them through Mittag--Leffler inverse limits. After (11.29), $P$ is finite free over $S$, so
-
-$$
-P\otimes_S^{\mathbf L}\mathcal O
-\simeq P\otimes_S\mathcal O=B,
-\qquad
-M_\infty\otimes_S^{\mathbf L}\mathcal O
-\simeq M_\infty\otimes_S\mathcal O=M^{\min},
-\tag{12.13}
-$$
-
-and no hidden higher $\operatorname{Tor}$ remains. This derived base-change compatibility is a consequence of patched freeness.
-
-### 12.6 The Fitting--congruence equality
-
-The Jacobian congruence formula of Book 71 applied to (12.1), or equivalently (12.8)--(12.12), gives
-
-$$
-\boxed{
-\operatorname{Fitt}_{\mathcal O}^0(\Phi_{R^{\min}})
-=(\det J_\lambda)
-=\eta_B
-=\eta_{\mathbb T^{\min}}.}
-\tag{12.14}
-$$
-
-The ideal is nonzero because the distinguished point is an isolated factor of the reduced generic fiber. Branch saturation is required to identify the automorphic module determinant with the ring congruence ideal; without (12.8), a nonunit lattice index could intervene.
-
-Equation (12.14) is deliberately post hoc. It checks that the now common complete intersection has the expected cotangent and congruence invariants. Neither (12.14) nor the unit in (12.12) appears anywhere in the proof of (11.32).
-
-## 13. The numerical audit and structural consequences
-
-The kernel was eliminated in Section 11.7. This chapter records how the resulting complete intersection fits the numerical framework of Books 71 and 75 and collects the structural consequences without reversing the logical order.
-
-### 13.1 The specialization square
-
-The common augmentation gives the square
-
-$$
-\begin{array}{ccc}
-R^{\min}&\xrightarrow{\sim}&\mathbb T^{\min}\\
-\lambda\downarrow&&\downarrow\lambda\\
-\mathcal O&=&\mathcal O.
-\end{array}
-\tag{13.1}
-$$
-
-Infrastructure II gives finite flatness and generically reducedness on the Hecke side; Section 11.7 transports them to the deformation side and proves the complete-intersection presentation. Infrastructure I gives a faithful rank-one module, its perfect primary--companion duality, and the saturated distinguished branch. Section 12.4 compares the two dualizing generators only after all these objects are over $B$.
-
-### 13.2 The Wiles--Lenstra criterion as an audit
-
-The numerical hypothesis of Book 75, Theorem 16.2, is
-
-$$
-\operatorname{length}_{\mathcal O}\Phi_{R^{\min}}
-\le
-\operatorname{length}_{\mathcal O}
-(\mathcal O/\eta_{\mathbb T^{\min}}),
-\tag{13.2}
-$$
-
-equivalently
-
-$$
-\eta_{\mathbb T^{\min}}
-\subseteq
-\operatorname{Fitt}_{\mathcal O}^0(\Phi_{R^{\min}}).
-\tag{13.3}
-$$
-
-Equation (12.14) verifies this with equality. Thus the specialization square passes the Wiles--Lenstra audit, but this is a consistency check, not the kernel-killing step: the criterion is not invoked to prove the equality already obtained in (11.32). For later reference,
-
-$$
-\boxed{R^{\min}\xrightarrow{\sim}\mathbb T^{\min}.}
-\tag{13.4}
-$$
-
-### 13.3 Consequences proved only after equality
-
-The common ring $B$ is finite flat and a complete intersection by (11.33), reduced by Section 12.1, and therefore Gorenstein. Infrastructure I and (11.32) give
-
-$$
-M^{\min}\simeq B
-\tag{13.5}
-$$
-
-as a free rank-one deformation module. The stronger patched conclusion was proved before descent:
-
-$$
-R_\infty=P=A_\infty,
-\qquad
-M_\infty\simeq P.
-\tag{13.6}
-$$
-
-Thus finite-level freeness is not being used to infer patched faithfulness. Rather, exact tangent count and equal-variable rigidity first prove patched freeness and faithfulness; exact augmentation then descends them. Finally, (12.14) records the common ring's intrinsic Fitting--congruence equality.
-
-## 14. Modularity extraction and the reusable theorem
-
-An equality of universal rings becomes a lifting theorem by evaluating it at a characteristic-zero Galois point. This chapter turns such a point into a Hecke character, transfers the corresponding quaternionic packet to a classical newform, and identifies the two Galois representations. It then collects the precise hypotheses and conclusions into the reusable rational theorem.
-
-### 14.1 From a minimal point to an eigenform
-
-Let $E'/E$ be finite with ring of integers $\mathcal O'$, and let
-
-$$
-\rho:G_{\mathbf Q}\longrightarrow\operatorname{GL}_2(\mathcal O')
-\tag{14.1}
-$$
-
-be a lift of $\bar\rho$ satisfying the minimal deformation problem. Universality gives a point
-
-$$
-x_\rho:R^{\min}\longrightarrow\mathcal O'.
-\tag{14.2}
-$$
-
-Through (13.4), this is a Hecke character of $\mathbb T^{\min}$. Since the Hecke order acts faithfully on the exact-level definite packet and has the equal saturated curve realization, the character occurs in a weight-two automorphic eigenpacket of level $N$, trivial central character, and the prescribed Steinberg signs. Jacquet--Langlands transfers it to a weight-two newform $f$ on $\operatorname{GL}_2/\mathbf Q$.
-
-The newform has exact level $N$: it is Steinberg at every $p\mid N$ and unramified away from $N\ell$. The local sign is $\epsilon_p$, and its determinant is cyclotomic.
-
-### 14.2 Equality of Galois representations
-
-For every $r\nmid N\ell$, (5.4) gives
-
-$$
-\operatorname{tr}\rho(\operatorname{Frob}_r)=a_r(f),
-\qquad
-\det\rho(\operatorname{Frob}_r)=r.
-\tag{14.3}
-$$
-
-Equivalently, before trivializing the central operator, the common polynomial is
-
-$$
-X^2-S_r^{-1}T_rX+rS_r^{-1}.
-\tag{14.4}
-$$
-
-Chebotarev makes the Frobenius classes dense, so (14.3) identifies the semisimplifications over the fraction field. A lift of an absolutely irreducible residual representation is itself irreducible, and its stable lattice is unique up to homothety. More directly, the equality of the points through (13.4) makes both representations the same specialization of the universal representation in (2.10). Hence the identification is integral, not merely an equality of characteristic-zero semisimplifications:
-
-$$
-\rho\simeq\rho_f.
-\tag{14.5}
-$$
-
-The local statements at $N$ and $\ell$ were built into both families before the comparison map was defined; they are not reconstructed from (14.3).
-
-### 14.3 Minimal modularity lifting over the rationals
-
-**Theorem 14.1 (minimal modularity lifting over $\mathbf Q$).** Let $\ell\ge7$ and let
-
-$$
-\bar\rho:G_{\mathbf Q}\to\operatorname{GL}_2(k)
-$$
-
-be absolutely irreducible and odd, with determinant $\bar\chi_\ell$. Assume
-
 $$
-H^0(\mathbf Q,\operatorname{ad}^0\bar\rho(1))=0,
+H^0(F,M(1))=0.
+\tag{1.4a}
 $$
 
-the split image hypotheses of Book 72, and all parts of the clean datum in Section 1.3: nontrivial squarefree prime-to-$\ell$ conductor $N$; nonzero residual tame monodromy, fixed unramified quadratic Steinberg sign, and $p\not\equiv\pm1\pmod\ell$ at every $p\mid N$; finite-flat type $(0,1)$ and scalar endomorphisms at $\ell$; an exact-level weight-two newform source; and a definite quaternion algebra ramified at one $p_0\mid N$ and infinity.
+Assume the following.
 
-Assume, in addition, Infrastructure I at the minimal, Iwahori, and deep levels, including its pairing-compatible finite marked shadows, and Infrastructure II for the same localized packets and ordered refinements.
+1. For every $v\mid\ell$, the extension $F_v/\mathbf Q_\ell$ is unramified,
+   and the residual restriction belongs to the low-weight finite-flat range
+   with weights $\{0,1\}$. The fixed-determinant framed condition is the clean
+   formally smooth finite-flat condition.
+2. At every finite $v\nmid\ell$ in the controlling set, the minimal condition
+   is one of the represented clean conditions: unramified, a fixed
+   prime-to-$\ell$ integral inertial type with all required labels, or the
+   schematic closure of a named minimal-special component with its line,
+   sign, and monodromy relation.
+3. The representation $\bar\rho$ is residually automorphic in an exact
+   parallel-weight-two definite-quaternionic realization whose local factors
+   match those conditions and the determinant $\delta$.
+4. The localized automorphic modules satisfy finite freeness over
+   $\mathcal O$, effective stabilizer and diamond-torsor control, integral
+   saturation of type lattices and degeneracy maps, a perfect
+   primary--companion pairing, generic reducedness of the Hecke algebra, and
+   branchwise Galois attachment with integral local--global compatibility.
 
 Then the canonical map is an isomorphism
 
 $$
-R^{\min}\simeq\mathbb T^{\min}.
-\tag{14.6}
+\boxed{R^{\min}\xrightarrow{\sim}\mathbb T^{\min}.}
+\tag{1.5}
 $$
 
-Both sides are finite flat, reduced, complete-intersection, and Gorenstein $\mathcal O$-algebras. The minimal automorphic module is free of rank one over this common ring.
+The common ring is finite free and a relative complete intersection over
+$\mathcal O$, hence Gorenstein. The minimal automorphic module is finite free
+of positive rank over it, and its primary--companion pairing is perfect with
+the prescribed adjoints.
 
-For every finite extension $E'/E$ with ring of integers $\mathcal O'$, every lift
-
-$$
-\rho:G_{\mathbf Q}\to\operatorname{GL}_2(\mathcal O')
-$$
-
-that is continuous, reduces to $\bar\rho$, has determinant $\chi_\ell$, is unramified outside $N\ell$, is finite flat of type $(0,1)$ at $\ell$, and has the fixed nonzero Steinberg type at every $p\mid N$, is isomorphic to the Galois representation attached to a weight-two newform of exact level $N$, trivial central character, and the prescribed local signs.
-
-**Proof.** Chapters 2--5 construct the exact deformation problem, the integral Hecke family, and the surjection (5.5). Chapters 6--10 construct the paired auxiliary system in the full-level-first order. Sections 11.1 and 11.5 prove the sharp equality $h^1_{\mathcal L_{Q_n}}=q$, and Sections 11.6--11.7 patch the resulting absolute $q$-variable presentations together with the separate $q$-variable diamond action. Equal-variable rigidity gives $R_\infty=P$, Auslander--Buchsbaum gives patched freeness, and exact augmentation gives (11.32), restated as (13.4). Sections 12--13 then prove the structural and post-comparison numerical conclusions; Sections 14.1--14.2 give modularity. Neither infrastructure theorem assumes the conclusion, and Book 75 is used only as an audit after equality. $\square$
-
-## 15. The elliptic-curve theorem
-
-For an elliptic curve, the determinant and weight-two finite-flat condition come from the Tate module, while multiplicative reduction supplies the Steinberg local type. This chapter translates the abstract hypotheses carefully, especially the residual nonvanishing that semistability alone does not guarantee. The resulting statement illustrates exactly what the minimal lifting theorem contributes.
-
-### 15.1 Translating the hypotheses
-
-Let $A/\mathbf Q$ be an elliptic curve and let $\ell\ge7$. Suppose $A$ has good reduction at $\ell$ and semistable reduction of nontrivial squarefree conductor $N$ away from $\ell$. The representation
+Let $\mathcal O'/\mathcal O$ be the ring of integers in a finite extension of
+coefficient fields. Every lift
 
 $$
-\rho_{A,\ell}:G_{\mathbf Q}\longrightarrow
-\operatorname{GL}_2(T_\ell A)
-\tag{15.1}
+\rho:G_F\longrightarrow\operatorname{GL}_2(\mathcal O')
+\tag{1.6}
 $$
 
-has determinant $\chi_\ell$, is finite flat of type $(0,1)$ at $\ell$, and is Steinberg at every multiplicative prime.
+of $\bar\rho$, with determinant $\delta$ after scalar extension and satisfying
+the same minimal local conditions on every Artinian quotient, is attached to
+a cuspidal parallel-weight-two automorphic representation with the prescribed
+central character and local types. The attached stable lattice may be chosen
+so that its integral Galois representation is isomorphic to $\rho$.
 
-To place it in Theorem 14.1, require the following residual conditions:
+No conclusion is asserted by this theorem at $\ell=5$ from absolute
+irreducibility alone, when the cyclotomic restriction is reducible, for a
+local condition outside the named clean components, or without the exact
+integral automorphic realization.
 
-1. $A[\ell]$ is absolutely irreducible and odd, satisfies the split image hypotheses of Book 72, and
-   $$
-   H^0(\mathbf Q,\operatorname{ad}^0A[\ell](1))=0;
-   \tag{15.2}
-   $$
-2. $\operatorname{End}_{k[G_{\mathbf Q_\ell}]}A[\ell]=k$;
-3. at every $p\mid N$, the Tate-curve extension remains nonzero modulo $\ell$, its split or nonsplit multiplicative sign is fixed, and $p\not\equiv\pm1\pmod\ell$;
-4. $A[\ell]$ occurs in an exact-level weight-two newform of level $N$ with those signs; and
-5. Infrastructures I and II hold for the resulting localized packet, including the exact auxiliary-level and finite-shadow clauses stated in those theorems.
+### 1.4 A guide to the hypotheses
 
-The nonzero Tate extension is exactly the nonzero residual tame monodromy in (2.4). Semistability alone does not imply it after reduction modulo $\ell$.
+Each hypothesis has one job. Absolute irreducibility gives the global Schur
+condition and representability. Total oddness supplies the real local
+condition and the sign in the Euler characteristic. Absolute irreducibility
+after cyclotomic restriction supplies adequacy in the group actually used to
+choose auxiliary primes. The bound $\ell\geq7$ makes that implication uniform
+in dimension two.
 
-### 15.2 The conclusion
+The finite-flat hypothesis is not shorthand for being crystalline after
+inverting $\ell$. It is an integral condition on all Artinian quotients and is
+the source of the exact local tangent contribution. The local conditions away
+from $\ell$ are not specified merely by conductors. Their integral labels and
+component closures ensure representability and exact automorphic matching.
 
-**Theorem 15.1.** Under the hypotheses of Section 15.1, $\rho_{A,\ell}$ is attached to a weight-two newform of exact level $N$. Hence $A$ is modular.
+Residual automorphy is also more precise than equality of good-prime traces.
+It selects a non-Eisenstein maximal ideal in a particular integral module.
+The saturation and pairing assumptions ensure that auxiliary-level
+coinvariants return to that same lattice, rather than to a finite-index
+variant. Generic reducedness and branchwise attachment are used to construct
+the Hecke-valued Galois representation; they are not used as a substitute for
+the later proof of faithfulness.
 
-**Proof.** The representation (15.1) defines a point of $R^{\min}$. Theorem 14.1 turns that point into a newform character of $\mathbb T^{\min}$, and (14.5) identifies the two Galois representations. The equality of their good Euler factors gives equality of the $L$-function of $A$ with the newform $L$-function. $\square$
+A useful mental model is a nodal family. One automorphic branch may pass
+through the residual point while another infinitesimal direction is visible
+only in the completed local ring. Knowing the generic points on one branch
+does not control that local scheme. The Taylor--Wiles construction replaces
+the singular picture by a regular patched source whose dimension is forced
+independently by diamond operators. Proving that this source has no kernel is
+exactly what rules out an invisible direction.
 
-This theorem isolates the lifting argument. It does not claim that the residual modular source or Infrastructures I--II follow from the geometry of an arbitrary elliptic curve; those are independent inputs.
+There are also three meanings of “the same local behavior.” Equality of
+conductors is the weakest. Equality of characteristic-zero inertial types is
+stronger but still ignores lattices. Equality in a represented integral local
+functor is strongest: it retains every torsion quotient, determinant,
+ordering, component label, and monodromy closure. The theorem uses the third
+meaning. That is why it recovers an integral representation rather than only
+a semisimple representation over a fraction field.
 
-## 16. What changes over a totally real field
+## 2. The residual and local datum
 
-The rational proof suggests a template over a totally real field, but several dimensions and geometric realizations change at once. This chapter separates the formal deformation-theoretic pattern from the new local $\ell$-adic Hodge theory, quaternionic parity, and integral cohomology theorems that a totally real version would require.
+### 2.1 Coefficients, determinant, and Frobenius
 
-### 16.1 The parts that formally persist
+Fix a finite set $S$ containing every real place, every place above $\ell$,
+and every finite place at which $\bar\rho$, $\delta$, the quaternion algebra,
+the automorphic level, or a chosen local type ramifies. All representations
+factor through $G_{F,S}$.
 
-Over a totally real field $F$, one can still define fixed-determinant local deformation conditions, Selmer and dual Selmer groups, ordered Taylor--Wiles primes, diamond algebras, and primary--companion pairings. If the exact absolute auxiliary tangent dimension equals the number of diamond variables and exact marked augmentations are available, the equal-variable patching lemma of Section 11.7 formally persists.
-
-The logical prohibitions also persist: local conditions must be checked before writing $R\to\mathbb T$; generic Jacquet--Langlands does not identify integral orders; branch projectors follow full old/new control; $U_v^*=V_v$ requires a companion block; and exact augmentation must be retained in the patch rather than inferred by tensoring a ring not yet known to be flat.
-
-### 16.2 The new global and automorphic work
-
-The rational proof cannot be transported by replacing $\mathbf Q$ with $F$. There are $[F:\mathbf Q]$ real terms in the Euler characteristic, and oddness contributes one balancing term at every real place. Primes above $\ell$ can be ramified and have different residue degrees, so the one-variable finite-flat calculation (2.7) must be replaced by the appropriate integral $p$-adic Hodge deformation rings.
-
-The parity of the ramification set of a quaternion algebra also changes. A totally definite algebra is ramified at every real place, and its finite ramification set must be chosen to satisfy the global parity condition while realizing the desired local packet. The definite-to-curve comparison may involve Shimura curves only when the algebra can be split at exactly one real place; in other signatures, higher-dimensional Shimura varieties and torsion cohomology enter.
-
-Residual multiplicity one, Ihara saturation, integral Jacquet--Langlands, and local--global compatibility must be proved for Hilbert modular packets. Most importantly for this proof, the real-place and coefficient-prime terms must yield the exact absolute tangent count matching the diamond-variable count. Therefore Theorem 14.1 is a theorem over $\mathbf Q$, while the totally real version is a new theorem with analogous architecture and a separately verified ledger.
-
-## 17. Failure modes and diagnostic boundaries
-
-All exclusions from Theorem 14.1 were stated in Section 1.4, before the theorem. This chapter introduces no new hypothesis. It diagnoses which proved arrow fails when one of those stated boundaries is crossed.
-
-### 17.1 Local failures
-
-**Zero residual monodromy.** If $\bar c_p|_{I_p}=0$, the demand that a lift have nonzero Steinberg monodromy is generically open, not represented by the closed minimal quotient used here. The framed ring (2.6), the local tangent term in (11.2b), and the automorphic saturation argument all change.
-
-**Vexing congruences.** If $p\equiv1\pmod\ell$, the local conjugacy calculation acquires the exceptional directions excluded in Section 2.3. If $p\equiv1$ or $-1\pmod\ell$, the primitive integral Steinberg newvector lattice and pairing used in Infrastructure I can fail.
-
-**Scalar coefficient-prime endomorphisms fail.** Then the finite-flat unframed functor may have automorphisms, the framed-to-unframed passage is not (2.7), and the count $b=G+1$ is unsupported.
-
-**A wrong Frobenius convention.** For arithmetic Frobenius the general polynomial is (2.1). Writing $X^2-T_rX+r$ is valid only after imposing $S_r=1$.
-
-### 17.2 Automorphic and integral failures
-
-**Generic packet comparison only.** Generic Jacquet--Langlands can leave two different integral Hecke orders inside the same fraction algebra. Without the torsion-free order comparison of Infrastructure II, the Galois representation may live over the wrong order.
-
-**Generic oldness only.** A new quotient with zero generic fiber can still be nonzero torsion. The unit Gram determinant and saturation in (8.6)--(8.9) are required before it is killed.
-
-**Premature branch selection.** Projecting to $U_v-\bar\alpha_v$ before proving full Iwahori oldness can discard or conceal an integral new quotient. It also makes the source of the old-line formula (9.3) invisible.
-
-**False self-adjointness.** Book 90 says $U_v^*=V_v$. Treating $e_\alpha^U$ as self-adjoint destroys TW8 and can change the congruence determinant. The companion module is not cosmetic.
-
-**Module control without order control.** Coinvariants of $M_n^+$ can equal $M^{\min}$ while the image of the auxiliary Hecke order has a nonsaturated index in $\mathbb T^{\min}$. Equation (9.13) uses integral branch saturation to rule this out.
-
-### 17.3 Numerical and logical failures
-
-**The count $3t$.** Three is the number of framing directions in several fixed-determinant local rings; it is not the partially framed gauge count. The correct number is $4t-1$.
-
-**Missing the real term.** The formula (11.5) gives $t-2$, not $t-1$. This is exactly what changes $b=G$ into the required $b=G+1$ after frame removal.
-
-**Padding by zero relations.** Adding a source variable without the linear relation that kills it changes the represented ring and adds a zero row to the Jacobian. Uniform presentations use acyclic variable--relation pairs.
-
-**Ordinary augmentation of a nonflat ring.** Before (11.29), ordinary tensoring need not preserve a ring exact sequence. Section 11.6 instead marks the finite ideal and module augmentation sequences and passes them through a Mittag--Leffler inverse limit. Only after $P$ is proved $S$-free does (12.13) identify ordinary and derived augmentation.
-
-**Separate self-dualities treated as a cross-map.** Tate self-duality and primary--companion self-duality do not construct a morphism between the two complexes, and scalar residual endomorphisms do not make a global period a unit. This book makes no such pre-equality comparison. The unit in (12.12) is proved only after both dualizing generators live over the common complete intersection.
-
-**Support used as faithfulness.** Even full support can miss nilpotent annihilators. Here faithfulness comes instead from $S\hookrightarrow A_\infty$, the equality $\dim S=\dim P$, and regular-domain rigidity in Lemma 11.1.
-
-**An extra absolute generator.** The two-branch example after (11.33) has the same apparent component support but one extra residual tangent generator. Replacing the sharp count (11.15) by a framed square-presentation count would allow that example and destroy the dimension proof.
-
-These diagnostics locate the first invalid arrow in a failed argument. They are more informative than a final dimension mismatch, because several of the errors above preserve Krull dimension while changing the integral scheme structure.
-
-## 18. The interface with nonminimal lifting
-
-Minimal equality is the base point for allowing new ramification, not a license to ignore new local geometry. This final chapter records the exact package exported to Book 156 and identifies the local, automorphic, and patching comparisons that must be rebuilt when the level changes.
-
-### 18.1 What the minimal theorem exports
-
-Book 156 may take the following package as its base point:
+Put
 
 $$
-R^{\min}\simeq\mathbb T^{\min},
-\tag{18.1}
+M=\operatorname{ad}^0\bar\rho.
+\tag{2.1}
 $$
 
-the finite-flat complete-intersection and Gorenstein structure of this ring, the rank-one minimal module with its perfect pairing, the exact local tangent spaces, the normalized good-prime polynomial (2.1), the paired Taylor--Wiles system, and the equality
+Since $\ell$ is odd, the scalar and trace-zero summands of
+$\operatorname{ad}\bar\rho$ split. The trace pairing identifies
+$M^*(1)$ with $M(1)$. Absolute irreducibility gives
 
 $$
-\operatorname{Fitt}_{\mathcal O}^0
-(\Phi_{R^{\min}})
-=\eta_{\mathbb T^{\min}}.
-\tag{18.2}
+H^0(F,M)=0.
+\tag{2.2}
 $$
 
-It may also reuse the split-image prime-selection mechanism and the distinction among deformation augmentation, module coinvariants, and saturated Hecke-order augmentation.
+We use geometric Frobenius $\Phi_v$. At a good finite place the automorphic
+and Galois characteristic polynomial is
 
-### 18.2 What Book 156 must rebuild
+$$
+X^2-T_vX+q_vS_v,
+\tag{2.3}
+$$
 
-At a newly allowed prime, the nonminimal argument must choose a represented local quotient: a specified inertial type, a closed special component, or another precise local deformation condition. If residual monodromy is zero, the generic nonzero special locus must be distinguished from its closed component. The new local tangent quotient changes both Selmer and dual Selmer, so the auxiliary-prime count must be recomputed from Poitou--Tate rather than obtained by adding a guessed local dimension.
+where $q_v$ is the residue cardinality and $S_v$ is the central operator. The
+determinant compatibility is therefore
 
-On the automorphic side, raising the level requires new degeneracy maps, adjoints, Gram determinants, Ihara injectivity, and saturation. A level-raising congruence proves that a point exists on a component; it does not prove that the full integral Hecke order realizes every component. The Hecke-valued Galois representation must again be checked against the chosen local quotient before the upper map in a comparison diagram is written.
+$$
+\delta(\Phi_v)=q_vS_v.
+\tag{2.4}
+$$
 
-When the local natural transformations exist, the guiding square is
+The factor $S_v$ must be retained unless the central character has actually
+been trivialized. Dropping it changes the fixed-determinant deformation
+problem. Replacing geometric by arithmetic Frobenius would invert all three
+normalizations: Frobenius, reciprocity, and the diamond involution. Any one
+convention works, but they cannot be mixed.
+
+The determinant is fixed throughout. Consequently the deformation
+coefficient module is $M$, not all of $\operatorname{ad}\bar\rho$, and there
+is only one independent tame character at each auxiliary prime. A twist by a
+fixed character changes both $\delta$ and the central character; twisting only
+one side would destroy (2.4).
+
+### 2.2 Total oddness and residual automorphy
+
+For every real place $v$, choose a complex conjugation $c_v$. Total oddness is
+
+$$
+\det\bar\rho(c_v)=-1.
+\tag{2.5}
+$$
+
+Because $2$ is invertible, $\bar\rho(c_v)$ has a $+1$ and a $-1$ line. The
+odd conjugacy class is rigid in deformations with determinant $-1$, but
+conjugation fixes the trace-zero diagonal endomorphism. Hence
+
+$$
+L_v=0,
+\qquad h^0(F_v,M)=1
+\tag{2.6}
+$$
+
+at every real place. The resulting contribution $-1$ will be essential.
+
+Residual automorphy means that a specified definite-quaternionic Hecke module
+$M^{\min}$ has a non-Eisenstein maximal ideal $\mathfrak m$ such that
+
+$$
+T_v\bmod\mathfrak m=\operatorname{tr}\bar\rho(\Phi_v),
+\qquad
+q_vS_v\bmod\mathfrak m=\det\bar\rho(\Phi_v)
+\tag{2.7}
+$$
+
+away from $S$. Its residue field is $k$ after a permitted finite coefficient
+extension. At least one characteristic-zero branch through $\mathfrak m$ is
+cuspidal, noncharacter, and parallel weight two, with the declared local
+types. Every generic branch in the localization must lie in the range where
+a rank-two Galois representation and integral local compatibility are known.
+
+The first clause makes the localized module nonzero. The last clause is needed
+because the Hecke order can contain several congruent branches. Constructing a
+representation over the entire order requires control of every branch, not
+only the distinguished residual source.
+
+### 2.3 Finite flatness at the coefficient prime
+
+Let $v\mid\ell$ and put $f_v=[F_v:\mathbf Q_\ell]$. We assume that
+$F_v/\mathbf Q_\ell$ is unramified and that $\bar\rho|_{G_v}$ belongs to the
+rank-two finite-flat range of weights $\{0,1\}$. An Artinian lift belongs to
+the local condition if it is the generic fiber of a finite locally free group
+with coefficient action, height two, the specified weights at every residue
+embedding, and determinant $\delta|_{G_v}$.
+
+This condition is imposed on every Artinian quotient. If a single
+characteristic-zero representation is crystalline, an arbitrary stable
+lattice need not have all of its torsion quotients represented by the required
+finite flat groups. The integral condition is therefore genuinely stronger
+than a generic-fiber statement.
+
+For an elliptic curve with good reduction over an unramified extension of
+$\mathbf Q_\ell$, the finite flat group schemes of $\ell^n$-torsion provide
+the model example. Their generic fibers form the quotients of the Tate module,
+and their determinant has the required cyclotomic normalization. The local
+condition here is not restricted to elliptic curves: it is the deformation
+functor characterized by the same low-weight integral linear algebra. Height,
+coefficient action, and the models on all quotients keep its rank fixed under
+arbitrary Artinian base change.
+
+The unramified-base hypothesis is visible in the tangent formula. There is one
+Hodge-filtration direction for each residue embedding, giving the $f_v$ in
+(2.9); the three remaining framed directions move a basis. Ramification can
+couple filtration and descent data, so this elementary count cannot be
+carried outside the stated range without a different local theorem.
+
+The clean local theorem gives a formally smooth framed fixed-determinant ring
+of relative dimension
+
+$$
+f_v+3.
+\tag{2.8}
+$$
+
+If $L_v\subset H^1(F_v,M)$ is its unframed tangent condition, then
+
+$$
+\dim_kL_v-h^0(F_v,M)=f_v.
+\tag{2.9}
+$$
+
+To see the compatibility of these two formulas, framed cocycles add the
+coboundary space, whose dimension is $3-h^0(F_v,M)$. Thus the framed tangent
+has dimension
+
+$$
+\dim_kL_v+3-h^0(F_v,M)=f_v+3.
+$$
+
+This remains valid when the local residual centralizer is larger than the
+scalars. In that case the framed local functor is the safe represented object;
+one does not assume an unframed local coarse ring.
+
+### 2.4 Minimal conditions away from the coefficient prime
+
+At a finite $v\nmid\ell$ there are three clean possibilities.
+
+If the residual representation is unramified, require every lift to be
+unramified. Then
+
+$$
+L_v=H^1_{\mathrm{ur}}(F_v,M)
+\simeq M/(\Phi_v-1)M.
+\tag{2.10}
+$$
+
+The kernel and cokernel of the square operator $\Phi_v-1$ have equal
+dimension, so
+
+$$
+\dim_kL_v=h^0(F_v,M).
+\tag{2.11}
+$$
+
+If inertia factors through a finite group $J_v$ of order prime to $\ell$, fix
+an integral lift of the precise inertia representation, including any
+ordering, finite character, or dihedral return datum. Averaging over $J_v$
+makes inertia rigid, and
+
+$$
+L_v\simeq M^{J_v}/(\Phi_v-1)M^{J_v}.
+\tag{2.12}
+$$
+
+The same kernel--cokernel argument proves (2.11).
+
+At a minimal-special place, retain a named invariant line, a sign or
+Frobenius eigenvalue compatible with $\delta$, and a nilpotent monodromy
+operator satisfying
+
+$$
+N^2=0,
+\qquad
+\rho(\Phi_v)N\rho(\Phi_v)^{-1}=q_v^{-1}N.
+\tag{2.13}
+$$
+
+The condition is the schematic closure of the named special component. We
+assume its represented framed ring is smooth in the chosen convention and
+its tangent is neutral:
+
+$$
+\dim_kL_v=h^0(F_v,M).
+\tag{2.14}
+$$
+
+This hypothesis excludes collisions of signs, uncontrolled Kummer
+directions, and other singular residual charts.
+
+In a basis adapted to the invariant line, a typical special representation
+has the schematic shape
+
+$$
+\rho(\sigma)=
+\begin{pmatrix}1&t_\ell(\sigma)n\\0&1\end{pmatrix},
+\qquad
+\rho(\Phi_v)=
+\begin{pmatrix}a&b\\0&q_va\end{pmatrix},
+\tag{2.14a}
+$$
+
+up to fixed scalar inertia and normalization. The relation among $a,b,n$ and
+monodromy is polynomial. The locus $n\ne0$ is not closed, whereas the
+component through a chosen residual point is. Reduction modulo an ideal
+containing $n$ produces zero monodromy; the closure retains that specialization
+without forgetting its component of origin.
+
+The fixed-type case has a similarly concrete rigidity proof. Since $|J_v|$
+is a unit, averaging splits invariants and kills positive cohomology of
+$J_v$. A deformation of its inertia representation is therefore conjugate to
+the chosen integral lift. All remaining first-order freedom lies in the
+centralizer and is unramified, which proves (2.12) without appealing to
+constancy of a conductor.
+
+Thus every clean finite place away from $\ell$ contributes zero to the global
+defect. That equality is a consequence of the actual local equations, not of
+the numerical conductor.
+
+### 2.5 What minimal does not mean
+
+Several tempting formulations fail to define deformation conditions.
+
+Requiring special monodromy to be nonzero is open, not closed. If its parameter
+is $n\in A$, reduction modulo an ideal containing $n$ makes the monodromy zero.
+The resulting quotient must remain in a deformation functor. The schematic
+component closure includes it; the condition $n\ne0$ does not.
+
+Likewise, an inertial type over the fraction field does not specify an
+integral type lattice. Two lattices in the same rational representation can
+have different reductions and congruence indices. Ordering characters and
+choosing primary and companion lattices are part of the datum whenever the
+reduction does not distinguish the branches.
+
+Finally, allowing ramification at a place is not the same as imposing the
+unramified minimal condition. Enlarging $S$ only changes the ambient Galois
+group. One must still cut out the unramified quotient. These distinctions are
+what make the global functor stable under coefficient quotients and what make
+the later augmentation maps exact.
+
+Several examples test the distinctions. Over $F=\mathbf Q$, take a
+semistable elliptic curve with good reduction at $\ell$. At a multiplicative
+prime $p\ne\ell$, its Tate module has a special filtration and a split or
+nonsplit sign. If the residual extension class remains nonzero, the named
+special component is the natural minimal condition. If the extension class
+vanishes modulo $\ell$, the residual point can lie on several closures; the
+phrase “multiplicative conductor one” no longer selects a unique represented
+component. The clean theorem requires that choice to have been made and its
+tangent neutrality proved.
+
+For a fixed tame principal type, suppose inertia characters $\theta_1$ and
+$\theta_2$ are distinct in characteristic zero but become congruent modulo
+$\varpi$. The rational unordered pair does not remember which residual line
+lifts $\theta_1$. An ordered integral type lattice does. The two choices can
+have identical conductor and generic inertial semisimplification while giving
+different integral projectors. This is the same phenomenon that later forces
+ordered roots at auxiliary primes.
+
+At an unramified place where Frobenius on $M$ has eigenvalues $1,a,b$, with
+$a,b\ne1$, both $M^{\Phi_v=1}$ and
+$M/(\Phi_v-1)M$ are one-dimensional. If $a=1$, both dimensions jump to two.
+The local centralizer has grown, but neutrality survives because kernel and
+cokernel dimensions of one square matrix remain equal. This example explains
+why neutrality is compatible with residual centralizer jumps even though an
+unframed local moduli space may cease to be representable.
+
+Finally, consider two stable lattices in the same unramified
+characteristic-zero representation whose Frobenius eigenvalues are congruent.
+Their reductions can be a split sum or a nonsplit extension. Good-prime
+characteristic polynomials do not distinguish them. The finite-flat and type
+lattice conditions do, which is why good traces alone cannot establish the
+integral local factorization used in Chapter 4.
+
+## 3. The global minimal deformation problem
+
+### 3.1 Representability and tangent spaces
+
+For an Artinian local $\mathcal O$-algebra $A$ with residue field $k$, let
+$D^{\min}(A)$ be the set of strict-equivalence classes of lifts
+
+$$
+\rho_A:G_{F,S}\longrightarrow\operatorname{GL}_2(A)
+$$
+
+such that $\rho_A\bmod\mathfrak m_A=\bar\rho$,
+$\det\rho_A=\delta$, and every restriction belongs to its named local
+condition. Absolute irreducibility gives
+$\operatorname{End}_{k[G_F]}(\bar\rho)=k$. Together with closed represented
+local conditions and global cohomological finiteness, this Schur condition
+proves that $D^{\min}$ is represented by a complete Noetherian local
+$\mathcal O$-algebra $R^{\min}$.
+
+For dual numbers, write
+
+$$
+\rho_\epsilon(g)=(1+\epsilon c(g))\bar\rho(g).
+$$
+
+The homomorphism equation says that $c$ is a $1$-cocycle. Fixing determinant
+forces $\operatorname{tr}c=0$, and strict conjugacy changes $c$ by a
+coboundary. Therefore
+
+$$
+t_{R^{\min}}\simeq H^1_{\mathcal L}(F,M),
+\tag{3.1}
+$$
+
+where
+
+$$
+H^1_{\mathcal L}(F,M)=
+\ker\left(
+H^1(G_{F,S},M)\longrightarrow
+\bigoplus_{v\in S}H^1(F_v,M)/L_v
+\right).
+\tag{3.2}
+$$
+
+This is the primal Selmer group. It measures actual first-order minimal
+deformations. Summing local tangent dimensions does not compute it, because
+global classes satisfy localization relations.
+
+Representability does not require $H^2$ to vanish. Obstruction classes give
+relations in the universal ring. The global deformation theory supplies a
+presentation whose generator space is (3.1) and whose relation number is
+bounded by the corresponding obstruction space. That distinction will matter
+when auxiliary conditions are introduced.
+
+To see the obstruction mechanism, let $A'\twoheadrightarrow A$ be a small
+extension with square-zero kernel $I$. Choose arbitrary matrix lifts to $A'$
+of a representation over $A$. Their failure to multiply is a continuous
+$2$-cocycle with values in $M\otimes_k I$. Changing the provisional lifts
+changes it by a coboundary. Vanishing of its class lets one correct the
+matrices into a representation. Local obstruction classes and the mismatch
+between global and local corrections are recorded by the mapping cone of the
+global-to-local cochain map. A complete obstruction space therefore bounds
+equations even when it is nonzero. Formal smoothness means that the actual
+obstruction map vanishes; it need not mean that the ambient $H^2$ is zero.
+
+Frames fit this construction without adding arithmetic. A local frame retains
+a basis, so cocycles are not divided by local coboundaries. Restriction maps
+are then representable even if a local residual centralizer is nonscalar. The
+global Schur condition removes the frames later with correction (3.10).
+
+### 3.2 The dual Selmer group
+
+Local Tate duality gives perfect pairings
+
+$$
+H^1(F_v,M)\times H^1(F_v,M(1))\longrightarrow k.
+\tag{3.3}
+$$
+
+Let $L_v^\perp$ be the exact annihilator of $L_v$. The dual Selmer group is
+
+$$
+H^1_{\mathcal L^\perp}(F,M(1))=
+\ker\left(
+H^1(G_{F,S},M(1))\longrightarrow
+\bigoplus_{v\in S}H^1(F_v,M(1))/L_v^\perp
+\right).
+\tag{3.4}
+$$
+
+At $v\mid\ell$, $L_v^\perp$ is defined as this exact annihilator. It must not
+be identified with another geometric finite-flat condition unless an integral
+duality theorem proves that identification.
+
+Set
+
+$$
+q=\dim_kH^1_{\mathcal L^\perp}(F,M(1)).
+\tag{3.5}
+$$
+
+The integer $q$ is the number of dual conditions to be killed, the number of
+Taylor--Wiles primes, and ultimately the number of diamond variables. It is
+an absolute unframed number. Relative obstruction dimensions computed after
+placing framed local rings in the base are different quantities and must not
+be substituted for it.
+
+### 3.3 The totally real balance
+
+Poitou--Tate duality gives the Wiles formula
+
+$$
+\begin{aligned}
+&h^1_{\mathcal L}(F,M)-h^1_{\mathcal L^\perp}(F,M(1))\\
+&\quad=h^0(F,M)-h^0(F,M(1))
++\sum_{v\in S}\bigl(\dim_kL_v-h^0(F_v,M)\bigr).
+\end{aligned}
+\tag{3.6}
+$$
+
+Here $H^0(F,M)=0$. The cyclotomic restricted-image hypothesis, together with
+the absence of the corresponding trace-zero self-twist in the clean datum,
+gives
+
+$$
+H^0(F,M(1))=0.
+\tag{3.7}
+$$
+
+Every finite place away from $\ell$ contributes zero by (2.11), (2.12), or
+(2.14). The places above $\ell$ contribute
+
+$$
+\sum_{v\mid\ell}[F_v:\mathbf Q_\ell]=[F:\mathbf Q].
+\tag{3.8}
+$$
+
+There are $[F:\mathbf Q]$ real places, each contributing $-1$ by (2.6). Thus
+the sum in (3.6) vanishes and
+
+$$
+h^1_{\mathcal L}(F,M)
+=h^1_{\mathcal L^\perp}(F,M(1))=q.
+\tag{3.9}
+$$
+
+This proves the balance. It is not a formal consequence of total reality: it
+uses unramifiedness of every $F_v/\mathbf Q_\ell$, weights $\{0,1\}$, and
+neutrality of every other finite local condition. For a real quadratic field
+where $\ell$ is inert, one coefficient-prime place contributes $2$ and two
+real places contribute $-1-1$. When $\ell$ splits, two coefficient-prime
+places contribute $1+1$. The cancellation is by total degree, not by pairing
+individual places.
+
+We recall why (3.6) has exactly this sign. The Poitou--Tate localization
+sequence compares the kernel defined by $L_v$ with the dual kernel defined by
+$L_v^\perp$. Taking alternating dimensions leaves the global invariant terms
+$h^0(F,M)-h^0(F,M(1))$. At a local place, replacing all of
+$H^1(F_v,M)$ by the allowed subspace $L_v$ changes the Euler characteristic
+by $\dim L_v-h^0(F_v,M)$. The $h^2$ term becomes the $h^0$ term of the Tate
+dual and cancels because $L_v^\perp$ is the exact annihilator. This derives
+(3.6) without assuming a geometric description of the dual finite-flat
+condition.
+
+The balance has a determinant-line version. The minimal Selmer complex is the
+mapping fiber
+
+$$
+C^\bullet_{\mathcal L}(F,M)=
+\operatorname{Cone}\left(
+C^\bullet(G_{F,S},M)\oplus\bigoplus_{v\in S}L_v^\bullet
+\longrightarrow\bigoplus_{v\in S}C^\bullet(F_v,M)
+\right)[-1].
+\tag{3.9a}
+$$
+
+Its determinant line has virtual degree zero because the finite-flat local
+degrees sum to $[F:\mathbf Q]$ and the real degrees sum to its negative. This
+does not canonically trivialize the line: a degree-zero line still needs a
+basis. Separate deformation and automorphic self-dualities therefore do not
+supply a comparison basis before patching.
+
+### 3.4 Framed and unframed counts
+
+Frames are retained locally to remove local automorphisms. If $T$ is a
+nonempty framing set, raw changes of two-dimensional bases contribute four
+directions at each place, while the single global scalar stabilizer acts
+trivially. Thus the comparison between compatible framed and unframed global
+problems has relative dimension
+
+$$
+4|T|-1.
+\tag{3.10}
+$$
+
+It is incorrect to replace this by $3|T|$. The number three is the dimension
+of $M=\operatorname{ad}^0\bar\rho$ and also the relative dimension of several
+fixed-determinant framed local rings away from $\ell$; it is not the number of
+raw frame coordinates.
+
+Relative presentations over a completed tensor product of framed local rings
+have strict Selmer generators and relaxed dual-Selmer relation bounds. Those
+two counts may vary with the auxiliary level. One can stabilize them by adding
+a variable together with a linear equation, but such a padded pair contributes
+no geometric dimension. The kernel-killing proof below instead removes frames
+and uses the exact absolute tangent dimension $q$ from (3.9). This produces a
+common $q$-variable source without claiming that each finite auxiliary ring is
+smooth or has no relations.
+
+It is useful to retain the relative ledger as an audit. Let
+
+$$
+R_{\mathrm{loc}}^{\min}
+=\widehat\bigotimes_{v\in T,\mathcal O}R_v^{\square,\min}.
+\tag{3.11}
+$$
+
+The framed global ring has a presentation
+
+$$
+R^{\square_T,\min}\simeq
+R_{\mathrm{loc}}^{\min}[[Y_1,\ldots,Y_{g_T}]]/(r_1,\ldots,r_s),
+\qquad s\leq q_T,
+\tag{3.12}
+$$
+
+where $g_T$ is a strict primal tangent count and $q_T$ a relaxed dual count.
+Global duality computes their difference after inserting the local dimensions
+and the $4|T|-1$ gauge correction; it does not identify them separately. At
+auxiliary level they can vary even though the absolute tangent dimension is
+always $q$. If a displayed presentation is padded by a new variable $Y$ and
+the relation $Y=0$, that acyclic pair contributes no geometric dimension.
+
+After removing the genuine smooth frame torsor, the absolute cotangent space
+is exactly (5.5). Topological Nakayama then gives the source (9.1). This route
+allows whole quotient ideals to be patched without inventing a uniform
+minimal relation tuple, while (3.12) continues to certify effective
+obstruction theory and correct variance.
+
+## 4. The automorphic side and the comparison map
+
+### 4.1 Definite quaternionic forms
+
+Choose a totally definite quaternion algebra $B/F$, a compact open level
+$U\subset(B\otimes_F\mathbf A_{F,f})^\times$, and a parallel-weight-two
+coefficient lattice whose local factors realize the conditions of Chapter 2.
+The parity of the ramification set of $B$ is part of this choice. It cannot be
+deduced from the Galois conductor alone.
+
+Because $B$ is totally definite, the relevant automorphic module is a finite
+module of functions on a finite double-coset groupoid. After localization at
+the non-Eisenstein maximal ideal $\mathfrak m$, denote the selected primary
+module by $M^{\min}$. The standing integral hypotheses give
+
+$$
+M^{\min}\text{ finite free over }\mathcal O.
+\tag{4.1}
+$$
+
+Let $\mathbb T^{\min}$ be the faithful image of the Hecke operators on this
+module. By definition its action is faithful; this says nothing yet about the
+faithfulness of $R^{\min}$. We assume, as supplied by the exact automorphic
+realization, that $\mathbb T^{\min}$ is a complete local finite-flat
+$\mathcal O$-algebra and that its generic fiber is reduced.
+
+### 4.2 Integral types, companions, and pairings
+
+A rational local type does not determine the lattice used in congruence
+arguments. At every type place choose a primary lattice and the companion
+lattice dictated by the adjoint involution. The retained local theory supplies
+a perfect pairing
+
+$$
+\mathcal H^{\min}:M^{\min}\times M^{\min,\dagger}
+\longrightarrow\mathcal O.
+\tag{4.2}
+$$
+
+Hecke operators are adjoint under inverse double cosets. At an oriented place,
+the adjoint of the operator selecting one ordered root generally selects the
+companion root. The primary projector is therefore not silently
+self-adjoint. This is why a second module is carried through patching.
+
+Saturation has two roles. A saturated type lattice has the intended reduction
+inside the integral automorphic module. A saturated degeneracy image has
+torsion-free quotient, so a generic old/new splitting descends integrally.
+Without these statements, augmentation could recover a lattice of finite
+index rather than $M^{\min}$, changing its congruence ideal.
+
+### 4.3 The Hecke-valued representation
+
+Every generic branch of $\mathbb T^{\min}[1/\ell]$ supplies a rank-two Galois
+representation with characteristic polynomial (2.3) at good places. Since
+the generic algebra is reduced, their product is a representation over the
+total generic algebra. Residual absolute irreducibility allows traces to
+descend through the integral Hecke order: a trace algebra with scalar residual
+centralizer carries an actual rank-two representation, unique up to strict
+conjugacy. Thus one obtains
+
+$$
+\rho_{\mathbb T}:G_{F,S}\longrightarrow
+\operatorname{GL}_2(\mathbb T^{\min})
+\tag{4.3}
+$$
+
+with determinant $\delta$.
+
+The integral local--global compatibility hypotheses do more than identify
+generic Weil--Deligne representations. They show that every Artinian quotient
+of (4.3) belongs to the represented finite-flat condition above $\ell$ and to
+the named closed local component away from $\ell$. This is precisely what is
+needed to apply the universal property of $R^{\min}$.
+
+The construction explains why the canonical lattice and finite-flat quotient
+theory is indispensable. A characteristic-zero branch alone supplies a vector
+space representation. Integral realization provides a stable lattice, and
+finite-flat full faithfulness shows that all its coefficient-prime torsion
+quotients lie in the desired finite-flat functor. Only then is (4.3) a point
+of the global integral deformation problem.
+
+The descent from branches to the order deserves emphasis. Write the reduced
+generic algebra as $\prod_iE_i$ and let $\rho_i$ be the representation on the
+$i$th factor. Their traces lie in $\mathbb T^{\min}$ because good traces are
+Hecke operators and density extends the identity continuously to all Galois
+elements. The residual trace is absolutely irreducible. The trace-algebra
+descent theorem then turns the resulting two-dimensional pseudorepresentation
+over the complete local order into an actual representation, unique up to
+strict conjugacy. Thus the result is independent of bases on the generic
+factors.
+
+There are two integral checks after trace descent. For each closed local
+quotient $R_v^\square\twoheadrightarrow R_v^{\square,\min}$, branchwise
+compatibility says that the map to every $E_i$ kills its defining ideal. The
+Hecke order is torsion-free and embeds in $\prod_iE_i$, so that ideal is killed
+integrally. At coefficient-prime places, generic crystalline behavior alone
+does not give the factorization; canonical lattices and their finite-flat
+quotients supply it on every Artinian quotient. These checks put (4.3) in the
+integral functor rather than only on its generic fiber.
+
+### 4.4 The surjection from deformations to Hecke operators
+
+Universality applied to (4.3) gives
+
+$$
+\theta:R^{\min}\longrightarrow\mathbb T^{\min}.
+\tag{4.4}
+$$
+
+At every good place, the universal trace maps to $T_v$ and the universal
+determinant maps to $q_vS_v$. The faithful Hecke algebra is generated by these
+good traces together with the fixed central and local operators already
+determined by the local types. Hence the image of $\theta$ contains all
+generators, so
+
+$$
+R^{\min}\twoheadrightarrow\mathbb T^{\min}.
+\tag{4.5}
+$$
+
+The direction follows the contravariance of representing rings: an
+automorphic family is an object of the deformation functor, hence determines
+a map from the universal deformation ring to its coefficient ring.
+
+Nothing in this proof gives injectivity. The target being finite flat and
+generically reduced does not prevent the source from having an extra
+component or a nilpotent kernel. Pairing self-duality on the automorphic side
+and Tate duality on the Galois side do not by themselves construct a
+comparison of determinant lines. The kernel is eliminated only after the
+auxiliary system has been built.
+
+For example, the surjection
+
+$$
+\mathcal O[[u]]/(u^2)\twoheadrightarrow\mathcal O,
+\qquad u\longmapsto0,
+$$
+
+has a finite-flat reduced target and is an isomorphism on its visible generic
+branch, but its nilpotent kernel is nonzero. Replacing the source by its
+reduction would erase precisely the information an integral congruence
+theorem must retain.
+
+## 5. Adequacy and Taylor--Wiles primes
+
+### 5.1 Why cyclotomic irreducibility is the right image hypothesis
+
+Taylor--Wiles primes must satisfy a cyclotomic congruence
+$q_x\equiv1\pmod{\ell^N}$. Their Frobenius elements therefore lie in a
+cyclotomic restricted Galois group. It is the image of
+$G_{F(\zeta_\ell)}$, not merely the full image of $G_F$, that must detect
+adjoint cohomology classes.
+
+An absolutely irreducible representation can become reducible on a normal
+subgroup: a dihedral representation induced from a quadratic extension is the
+standard example. Thus global absolute irreducibility supplies the Schur
+condition but does not imply the image property needed for prime selection.
+The separate hypothesis
+
+$$
+\bar\rho|_{G_{F(\zeta_\ell)}}\text{ absolutely irreducible}
+\tag{5.1}
+$$
+
+closes this gap.
+
+For a finite image $G\subset\operatorname{GL}_2(k)$, adequacy consists of the
+relevant scalar and adjoint $H^1$ vanishings together with the assertion that
+semisimple elements span $\operatorname{End}(k^2)$. The spanning condition
+implies regular-semisimple detection: a nonzero trace-zero adjoint direction
+pairs nontrivially with some nonscalar semisimple element, which in dimension
+two has distinct eigenvalues after a finite coefficient extension.
+
+The spanning clause is easy to interpret. If every semisimple image element
+paired trivially with a nonzero $w\in\operatorname{ad}^0(k^2)$, then $w$
+would pair trivially with their span, hence with all of
+$\operatorname{End}(k^2)$, contradicting nondegeneracy of the trace pairing.
+A detecting semisimple element cannot be scalar because trace-zero $w$ pairs
+trivially with scalars. It is therefore regular semisimple in dimension two.
+The cohomology vanishings ensure that the finite cocycle extensions used in
+the selection do not collapse into scalar or cyclotomic directions.
+
+### 5.2 The coefficient-prime bound
+
+In characteristic $\ell\geq7$, every absolutely irreducible two-dimensional
+finite image is adequate. Applied to (5.1), this gives the exact adequacy
+package on the cyclotomic restricted image. Adequacy is preserved by finite
+extension of the residual coefficient field, so one may enlarge coefficients
+to split selected residual Frobenius polynomials.
+
+The prime five is different. A natural characteristic-five representation
+with projective image
+
+$$
+A_5\simeq\operatorname{PSL}_2(\mathbf F_5)
+$$
+
+can have nonzero adjoint first cohomology. Absolute irreducibility therefore
+does not give adequacy uniformly at five. Some prime-to-five dihedral,
+$A_4$, or $S_4$ images remain adequate, and an individual theorem at five can
+proceed after checking every adequacy clause or excluding the icosahedral
+case. The present route uses the uniform implication and hence begins at
+$\ell=7$.
+
+Adequacy does not imply $H^0(F,M(1))=0$ by definition, nor does it compute the
+Selmer group. Those are separately recorded in (3.7) and (3.5). Adequacy's
+job is to make nonzero dual classes detectable by regular semisimple
+Frobenius elements while satisfying the cyclotomic congruence.
+
+### 5.3 Detecting the dual Selmer group
+
+Let $q$ be as in (3.5). For each $N\geq1$, choose a set $Q_N$ of exactly $q$
+finite places, disjoint from $S$ and from any prescribed finite avoidance set,
+such that
+
+$$
+q_x\equiv1\pmod{\ell^N}
+\tag{5.2}
+$$
+
+and $\bar\rho(\Phi_x)$ has two distinct eigenvalues. At each $x$, order the
+two roots and retain one eigenline.
+
+We explain the selection. Choose a basis
+$\phi_1,\ldots,\phi_q$ of the dual Selmer group. A class $\phi_i$ cuts out a
+finite elementary abelian extension over the compositum of the residual and
+cyclotomic fields. Adequacy supplies a regular semisimple residual element
+whose diagonal projection detects $\phi_i$. Linear disjointness from the
+already selected cocycle extensions makes it possible to impose zero
+detection on earlier basis vectors and nonzero detection on the next. The
+cyclotomic congruence, residual conjugacy class, and avoidance conditions are
+conditions in one finite Galois compositum. The density theorem for Frobenius
+classes then supplies a place realizing them simultaneously.
+
+Inductively, the localization matrix of the $\phi_i$ at the selected ordered
+eigenlines is invertible. Hence the auxiliary dual Selmer group vanishes:
+
+$$
+H^1_{\mathcal L_{Q_N}^\perp}(F,M(1))=0.
+\tag{5.3}
+$$
+
+The sets for different $N$ need not be nested and may be chosen disjoint. A
+fixed prime cannot serve at all depths because the valuation of $q_x-1$ is
+finite. This fact will determine the compactness form of patching.
+
+More explicitly, suppose $x_1,\ldots,x_{i-1}$ have been chosen. Take a linear
+combination of the $\phi_j$ vanishing at those places but nonzero in the next
+undetected direction. Its cocycle field is an elementary abelian extension
+over the residual cutout. Adequacy ensures that this extension has an element
+whose semidirect-product component pairs nontrivially with a regular
+semisimple residual matrix. Adjoin the $\ell^N$-cyclotomic field and every
+field used for avoidance. The required element has trivial cyclotomic
+component, the chosen residual matrix component, and the prescribed cocycle
+component. The compatibility statements in adequacy ensure these coordinates
+define an element of the actual compositum rather than merely of a formal
+product. A Frobenius place with that conjugacy class supplies $x_i$. Row
+reduction makes the final localization matrix triangular with nonzero
+diagonal, hence invertible.
+
+This proof also shows why a slogan such as “large residual image” is
+insufficient. One needs the actual finite-image cohomology vanishings,
+semisimple detection, compatibility with the cyclotomic quotient, and an
+avoidance theorem. Conversely, containing a full special linear group is
+stronger than necessary; prime-to-$\ell$ dihedral or exceptional images may
+also be adequate.
+
+### 5.4 The exact auxiliary ledger
+
+At $x\in Q_N$, replacing the unramified local condition by the ordered
+Taylor--Wiles condition adds one tangent direction. Comparison of Selmer
+structures gives an exact segment
+
+$$
+\begin{aligned}
+0\to H^1_{\mathcal L}(F,M)
+&\to H^1_{\mathcal L_{Q_N}}(F,M)
+\to\bigoplus_{x\in Q_N}L_x^{\mathrm{TW}}/L_x^{\mathrm{ur}}\\
+&\to H^1_{\mathcal L^\perp}(F,M(1))^\vee
+\to H^1_{\mathcal L_{Q_N}^\perp}(F,M(1))^\vee\to0.
+\end{aligned}
+\tag{5.4}
+$$
+
+The middle direct sum and the minimal dual Selmer group both have dimension
+$q$. The connecting map is the transpose of the invertible localization
+matrix used above, and the final term vanishes by (5.3). Exactness therefore
+gives
+
+$$
+H^1_{\mathcal L}(F,M)
+\xrightarrow{\sim}H^1_{\mathcal L_{Q_N}}(F,M),
+\qquad
+h^1_{\mathcal L_{Q_N}}(F,M)=q.
+\tag{5.5}
+$$
+
+This is the sharp absolute count. The auxiliary local group rings still have
+finite-order equations, so (5.3) does not say that the finite-level global
+ring is a power-series ring. It says only that the universal auxiliary ring
+has exactly $q$ topological generators over $\mathcal O$.
+
+There are two complementary facts in (5.4). Killing the auxiliary dual group
+removes obstruction directions, while the $q$ relaxed local tangent lines
+replace exactly the $q$ minimal dual conditions. Exactness then says that the
+primal tangent group does not grow. The same $q$ therefore counts the original
+minimal tangent, the original dual tangent, the number of auxiliary places,
+and the number of tame diamond coordinates. Confusing any of these with the
+relative framed relation count breaks the equal-variable proof.
+
+The local quotient in the middle of (5.4) is concrete. With the ordered
+eigenline fixed, an unramified deformation lets the Frobenius eigenvalue vary.
+The Taylor--Wiles condition retains that direction and adds the differential
+of one tame character; fixed determinant forces the character on the second
+line to be its inverse. Thus
+$L_x^{\mathrm{TW}}/L_x^{\mathrm{ur}}$ is one-dimensional. The dual local
+condition imposes one scalar equation: the detected diagonal projection must
+vanish. This explains why the localization matrix has one row per prime.
+
+The auxiliary and minimal rings can have the same tangent dimension without
+being isomorphic before augmentation. The elementary algebra
+$\mathcal O[\mathbf Z/\ell^N\mathbf Z]$ has a residual group direction and
+the nonsmooth equation $(1+z)^{\ell^N}=1$; augmentation kills $z$. Its
+finite-order equation survives at every level and disappears only in bounded
+shadows as $N$ grows. This is the local algebraic model for the patch.
+
+## 6. Auxiliary local conditions and diamond variables
+
+### 6.1 Ordered regular branches
+
+Fix $x\in Q_N$ and let $\alpha_x\ne\beta_x$ be the ordered residual
+Frobenius roots. The local auxiliary functor remembers a rank-one direct
+summand lifting the $\alpha_x$-line. Tame inertia acts on it through a
+character $\chi_x$, while the determinant determines the character on the
+complementary line:
+
+$$
+\rho|_{I_x}\sim
+\begin{pmatrix}
+\chi_x&0\\0&\delta|_{I_x}\chi_x^{-1}
+\end{pmatrix}.
+\tag{6.1}
+$$
+
+Let $\Delta_x$ be the quotient of order $\ell^N$ of the maximal
+$\ell$-power quotient of the residue multiplicative group. Local reciprocity
+makes $\chi_x$ its universal character. The ordered unframed local rings have
+the form
+
+$$
+R_x^{\mathrm{ur},\delta,\alpha_x}\simeq\mathcal O[[X_x]],
+\qquad
+R_x^{\mathrm{TW},\delta,\alpha_x}
+\simeq\mathcal O[\Delta_x][[X_x]].
+\tag{6.2}
+$$
+
+The fixed determinant explains why only one group-ring direction occurs. The
+ordered line removes the Weyl ambiguity. Distinct residual roots ensure that
+an augmented unramified lift has a unique decomposition lifting its residual
+eigenspaces.
+
+### 6.2 Group algebras and their limit
+
+Put
+
+$$
+\Delta_N=\prod_{x\in Q_N}\Delta_x
+\simeq(\mathbf Z/\ell^N\mathbf Z)^q,
+\qquad
+\Lambda_N=\mathcal O[\Delta_N].
+\tag{6.3}
+$$
+
+After choosing generators,
+
+$$
+\Lambda_N\simeq
+\mathcal O[[z_1,\ldots,z_q]]/
+\bigl((1+z_i)^{\ell^N}-1:1\leq i\leq q\bigr).
+\tag{6.4}
+$$
+
+The limiting diamond source is
+
+$$
+S_\infty=\mathcal O[[z_1,\ldots,z_q]],
+\qquad \dim S_\infty=q+1.
+\tag{6.5}
+$$
+
+Why do the finite-order equations disappear in the patch? Fix an Artinian
+precision $(\varpi^d,z_1^d,\ldots,z_q^d)$. In one variable,
+
+$$
+(1+z)^{\ell^N}-1
+=\ell^Nz+\binom{\ell^N}{2}z^2+\cdots+z^{\ell^N}.
+\tag{6.6}
+$$
+
+Terms of degree at least $d$ vanish at this precision. For fixed $j<d$,
+the valuation of $\binom{\ell^N}{j}$ tends to infinity, as follows from
+
+$$
+\binom{\ell^N}{j}
+=\frac{\ell^N}{j}\binom{\ell^N-1}{j-1}.
+$$
+
+Thus every remaining coefficient eventually vanishes modulo $\varpi^d$.
+The assertion is topological: no finite group becomes $\mathbf Z_\ell$, but
+every fixed finite-precision observation eventually stops seeing its exponent.
+
+### 6.3 Exact deformation augmentation
+
+Let $R_N$ represent the global auxiliary problem. The universal tame
+characters give a map
+
+$$
+\Lambda_N\longrightarrow R_N.
+\tag{6.7}
+$$
+
+Let $\mathfrak a_N$ be the augmentation ideal. Quotienting by it makes all
+tame characters trivial, so the representation becomes unramified at
+$Q_N$. Forgetting the ordered lines then gives a minimal deformation.
+
+Conversely, an unramified minimal deformation has Frobenius characteristic
+polynomial whose two factors remain coprime modulo the maximal ideal. Hensel's
+lemma lifts the residual factorization uniquely, and the corresponding
+idempotent recovers the chosen $\alpha_x$-line. These constructions commute
+with all Artinian base changes and are inverse. Therefore
+
+$$
+R_N/\mathfrak a_NR_N\xrightarrow{\sim}R^{\min}.
+\tag{6.8}
+$$
+
+This is equality of represented functors, not merely of tangent spaces. If
+the residual roots were equal, the lifted eigenline would not be unique and
+(6.8) could fail.
+
+The inverse construction can be written with idempotents. Suppose the lifted
+Frobenius polynomial factors as $P_x(X)=A(X)B(X)$ with $A$ and $B$ coprime
+and $A$ lifting the factor $X-\alpha_x$. Choose $U,V$ with $UA+VB=1$.
+Evaluating $VB$ at Frobenius gives the projector onto the $A$-factor. Its
+uniqueness follows from coprimeness, and the formula commutes with quotienting
+the coefficient algebra. If the ordering were forgotten, the two projectors
+would be interchanged by the Weyl group; the quotient local problem would
+have different augmentation behavior.
+
+### 6.4 The old-form determinant
+
+At $x$, the two degeneracy maps from hyperspecial to oriented level have an
+adjoint Gram matrix
+
+$$
+G_x=
+\begin{pmatrix}
+q_x+1&T_x\\
+S_x^{-1}T_x&q_x+1
+\end{pmatrix}.
+\tag{6.9}
+$$
+
+Its determinant is
+
+$$
+D_x=(q_x+1)^2-S_x^{-1}T_x^2.
+\tag{6.10}
+$$
+
+Modulo the localized maximal ideal, use $q_x\equiv1\pmod\ell$ and
+$\alpha_x\beta_x=q_xS_x$ to compute
+
+$$
+D_x\equiv
+4-\frac{(\alpha_x+\beta_x)^2}{\alpha_x\beta_x}
+=-\frac{(\alpha_x-\beta_x)^2}{\alpha_x\beta_x}\ne0.
+\tag{6.11}
+$$
+
+Thus $D_x$ is a unit. This calculation simultaneously uses the geometric
+Frobenius convention, the central operator, and distinct roots. Omitting
+$S_x^{-1}$ would make it false except when the central character happens to
+be trivial.
+
+## 7. Auxiliary automorphic modules
+
+### 7.1 Deep level and group-ring freeness
+
+At each $x\in Q_N$, let $U_0(x)$ be the oriented level and let $U_1(x,N)$
+be the deeper subgroup with quotient $\Delta_x$. Their products define the
+deep auxiliary level. Right translation gives an action of $\Delta_N$.
+
+A group action alone does not imply freeness over the group algebra. The
+effective stabilizer hypotheses say that the fibers from deep to oriented
+class groupoids are genuine $\Delta_N$-torsors and that coefficient
+stabilizers do not grow. Functions on a torsor form a regular representation.
+After localization and primary projection, finite projective summands remain
+projective over the local ring $\Lambda_N$, and hence free. Thus, for one
+positive integer $r$ independent of $N$,
+
+$$
+M_N\simeq\Lambda_N^{\oplus r},
+\qquad
+M_N^\dagger\simeq\Lambda_N^{\oplus r}.
+\tag{7.1}
+$$
+
+The rank is positive because residual automorphy makes the minimal localized
+module nonzero. A zero patched module would provide no information about the
+deformation ring.
+
+### 7.2 Integral oldness
+
+Let
+
+$$
+d=(d_0,d_1):M^{\min}\oplus M^{\min}\longrightarrow M_0(x)
+$$
+
+be the degeneracy map to oriented level. Since $d^*d=G_x$ and $D_x$ is a
+unit, the formula
+
+$$
+e_{\mathrm{old}}=d(d^*d)^{-1}d^*
+\tag{7.2}
+$$
+
+defines an integral idempotent. Direct calculation gives
+$e_{\mathrm{old}}^2=e_{\mathrm{old}}$, it is the identity on
+$\operatorname{im}d$, and its kernel is $\ker d^*$. Hence
+
+$$
+M_0(x)=\operatorname{im}d\oplus\ker d^*.
+\tag{7.3}
+$$
+
+The second summand is the integral new part. On every characteristic-zero new
+constituent the level-raising relation forces $D_x=0$. But $D_x$ is a unit in
+the localization. Since the module is $\mathcal O$-torsion-free, the new part
+must vanish. Therefore the localized oriented module is entirely old.
+
+Indeed, every characteristic-zero localization of the new summand is zero
+because $D_x$ acts there both as zero and as a unit. The summand is therefore
+$\varpi$-power torsion. But it is a direct summand of the saturated
+$\mathcal O$-free module, so it is torsion-free and must vanish. Without
+saturation, a quotient such as $\mathcal O/\varpi$ could survive while being
+invisible after inverting $\varpi$.
+
+Saturation is decisive here. Without it, the splitting might hold only after
+inverting $\varpi$ and a torsion new quotient could remain. The proof kills
+that possibility integrally.
+
+### 7.3 Primary and companion branches
+
+On the old image, the oriented operator has a polynomial whose reduction has
+the distinct roots $\alpha_x$ and $\beta_x$. Hensel factorization gives two
+integral idempotents. Selecting the $\alpha_x$-factor yields one copy of the
+hyperspecial module. On the adjoint companion side, inverse-double-coset
+adjunction selects the matching companion root, not necessarily the same
+operator eigenvalue.
+
+Removing the primes of $Q_N$ one at a time gives commuting projections because
+they lie at distinct local factors. Consequently diamond coinvariants and
+primary projection recover the exact minimal module:
+
+$$
+M_N/\mathfrak a_NM_N\xrightarrow{\sim}M^{\min}.
+\tag{7.4}
+$$
+
+The torsor pairing gives a perfect group-ring-valued pairing
+
+$$
+\mathcal H_N:M_N\times M_N^\dagger\longrightarrow\Lambda_N,
+\tag{7.5}
+$$
+
+linear in the first variable and semilinear in the second for
+$[\gamma]\mapsto[\gamma^{-1}]$. Augmentation recovers (4.2). Because the
+modules are free over $\Lambda_N$, invariants and coinvariants agree through
+the norm map; this would be false for an arbitrary module in residue
+characteristic dividing $|\Delta_N|$.
+
+### 7.4 Exact module and Hecke augmentation
+
+Let $\mathbb T_N$ be the faithful Hecke image on $M_N$. Branchwise Galois
+attachment and integral local compatibility give a representation over
+$\mathbb T_N$ satisfying the auxiliary local conditions, and hence a
+surjection
+
+$$
+R_N\twoheadrightarrow\mathbb T_N.
+\tag{7.6}
+$$
+
+Module coinvariants alone do not imply exact augmentation of the acting
+order: an order can sit with finite index inside another order acting on a
+rationally identical module. The retained saturation theorem rules this out
+and gives
+
+$$
+\mathbb T_N/\mathfrak a_N\mathbb T_N
+\xrightarrow{\sim}\mathbb T^{\min}.
+\tag{7.7}
+$$
+
+Equations (6.8), (7.4), and (7.7) are three separate control theorems. Ring,
+module, and faithful acting image must all be marked in the patch.
+
+To distinguish the last two, consider orders $T'\subset T$ of finite index in
+one semisimple fraction algebra, acting on commensurable lattices. Their
+rational eigensystems and even their module coinvariants can agree, while
+$T'/\mathfrak aT'$ maps to a proper suborder of $T/\mathfrak aT$. Saturated
+type and degeneracy control rules out this index. Equation (7.7) is therefore
+an order theorem, not a formal consequence of (7.4).
+
+## 8. The finite system and its patch
+
+### 8.1 The finite-level diagram
+
+The auxiliary objects fit into
+
+$$
+\begin{array}{ccccc}
+\Lambda_N&\longrightarrow&R_N&\twoheadrightarrow&\mathbb T_N\\
+&&&&\downarrow\\
+&&&&\operatorname{End}_{\Lambda_N}(M_N).
+\end{array}
+\tag{8.1}
+$$
+
+The upper-left map is the universal tame character. The lower action is the
+geometric diamond action. Integral local--global compatibility identifies
+them on every generic branch; generic reducedness and torsion-freeness then
+identify them in the integral order. Equality only modulo the maximal ideal
+would not suffice.
+
+The map $R_N\to\mathbb T_N$ is surjective because good traces and the fixed
+local data generate the faithful Hecke image. No faithfulness of the $R_N$
+action has yet been proved.
+
+### 8.2 Why the levels do not form a tower
+
+The sets $Q_N$ are chosen independently and cannot be nested indefinitely.
+There are therefore no arithmetic maps
+
+$$
+R_{N+1}\longrightarrow R_N
+\quad\text{or}\quad
+M_{N+1}\longrightarrow M_N
+$$
+
+in general. Patching cannot be an inverse limit of the original levels.
+
+Instead one fixes an increasing sequence of Artinian precisions. At each
+precision one records a finite diagram: the diamond algebra with ordered
+generators, the deformation quotient, the free module with a marked basis,
+the faithful action image, a finite set of named Hecke operators, the three
+augmentation maps, primary projectors, companion basis, pairing matrix, and
+adjoint involution. On the deformation side one records the entire quotient
+ideal of a fixed source, not merely a guessed tuple of relations.
+
+### 8.3 Finite shadows and diagonalization
+
+At fixed precision the coefficient ring is finite. A free module of fixed
+rank is a finite set, its endomorphism ring has only finitely many subrings and
+tuples of named elements, and a finite quotient of a power-series ring has
+only finitely many ideals. Thus only finitely many marked diagrams occur.
+
+Choose a subsequence on which the precision-one diagram stabilizes, then a
+subsequence of it on which precision two stabilizes, and so on. The diagonal
+subsequence yields compatible shadows at every precision. Equivalently, the
+stabilized diagrams form a finitely branching rooted tree with vertices at
+every height; an infinite path supplies the compatible system.
+
+The markings matter. Abstractly isomorphic free modules can have pairing
+matrices differing by a nontrivial unit, and isomorphic rings can have
+different structural diamond maps. Marked bases, ideals, maps, and pairings
+ensure that exact augmentation and adjunction survive the passage to the
+limit.
+
+One convenient precision system is
+
+$$
+\mathfrak b_d=(\varpi^d,\mathfrak m_{S_\infty}^d),
+\qquad
+\mathfrak p_d=(\varpi^d,\mathfrak m_P^{\nu(d)}),
+\tag{8.1a}
+$$
+
+where $\nu(d)$ grows fast enough that the action visible on the
+$d$th module shadow factors through $P/\mathfrak p_d$. Such a choice exists
+because every action image at fixed precision is a finite local ring and its
+maximal ideal is nilpotent. Recording
+$\ker(P\to R_N)+\mathfrak p_d$ retains the full deformation shadow, including
+relations annihilating the module. Thus the construction does not silently
+replace $R_N$ by $\mathbb T_N$ before faithfulness is proved.
+
+The diagonal argument produces compatibility rather than canonicity. Different
+infinite paths can give different coordinates $x_i$ or $z_i$. This is
+harmless: after augmentation they all represent the same universal minimal
+functor and the same faithful Hecke image. Canonicity of the finite map comes
+from those universal properties, not from canonical patched coordinates.
+
+### 8.4 The patched objects
+
+Taking inverse limits of the coherent shadows gives a quotient
+
+$$
+R_\infty=P/I_\infty,
+\tag{8.2}
+$$
+
+a module
+
+$$
+M_\infty\simeq S_\infty^{\oplus r},
+\tag{8.3}
+$$
+
+and its perfectly paired companion. Here the source $P$ will be identified in
+Chapter 9. Let
+
+$$
+A_\infty=\operatorname{im}\left(
+P\longrightarrow R_\infty
+\longrightarrow\operatorname{End}_{S_\infty}(M_\infty)
+\right).
+\tag{8.4}
+$$
+
+It is finite over $S_\infty$. Compatibility of the two diamond actions makes
+the composite
+
+$$
+S_\infty\longrightarrow P\longrightarrow A_\infty
+\hookrightarrow\operatorname{End}_{S_\infty}(M_\infty)
+\tag{8.5}
+$$
+
+ordinary scalar multiplication. Since $M_\infty$ is nonzero and free over
+$S_\infty$, the first composite is injective.
+
+The asserted finiteness of $A_\infty$ is also elementary. After choosing an
+$S_\infty$-basis of $M_\infty$, its endomorphism algebra is a finite matrix
+algebra over $S_\infty$. The image $A_\infty$ is an $S_\infty$-submodule
+because scalar diamonds lie in its center. A submodule of a finite module over
+the Noetherian ring $S_\infty$ is finite. No finiteness of $R_\infty$ has been
+assumed at this stage.
+
+The scalar injection is just as concrete. If $s\in S_\infty$ maps to zero,
+then it annihilates every vector of $S_\infty^{\oplus r}$. Applying it to a
+basis vector gives $s=0$. Thus the positivity of $r$, inherited from residual
+automorphy, has a direct algebraic role.
+
+The marked exact sequences satisfy the Mittag--Leffler condition because all
+shadow transition maps are surjective. Inverse limits therefore give
+
+$$
+\begin{aligned}
+R_\infty/\mathfrak a_\infty R_\infty&\simeq R^{\min},\\
+M_\infty/\mathfrak a_\infty M_\infty&\simeq M^{\min},\\
+A_\infty/\mathfrak a_\infty A_\infty&\simeq\mathbb T^{\min},
+\end{aligned}
+\tag{8.6}
+$$
+
+where $\mathfrak a_\infty=(z_1,\ldots,z_q)$ and its image is understood
+through the structural map. The first equality is not inferred from an
+unproved flat tensor product; it is the inverse limit of the marked exact
+ring augmentation sequences.
+
+For example, at every retained precision there is an exact sequence
+
+$$
+0\longrightarrow K_{N,d}\longrightarrow R_{N,d}
+\longrightarrow R^{\min}_d\longrightarrow0.
+\tag{8.7}
+$$
+
+The transition maps on the finite kernels are eventually surjective because
+the entire quotient diagrams were marked. Hence $\varprojlim^1K_{N,d}=0$,
+and taking inverse limits preserves exactness. The limiting kernel is the
+closed ideal generated by the images of $z_1,\ldots,z_q$; Noetherian
+completeness guarantees closedness. This proves the ring line of (8.6).
+Parallel marked sequences prove the module and order lines. Only after
+Chapter 9 proves freeness may one recover the same statements by ordinary
+Tor-independent tensor product.
+
+Patching only the action images would construct $A_\infty$ but not the full
+deformation ring: a kernel annihilating every module would disappear by
+definition. The separately marked quotient ideals retain precisely that
+possible kernel, allowing (9.4) to prove it zero. Likewise, without order
+augmentation shadows one would recover the minimal module but not necessarily
+its exact faithful Hecke order.
+
+## 9. Equal-variable rigidity
+
+### 9.1 The sharp absolute source
+
+By (5.5), the cotangent space of every unframed auxiliary ring $R_N$ has
+dimension $q$. Choose lifts of a cotangent basis. Topological Nakayama gives a
+surjection
+
+$$
+P=\mathcal O[[x_1,\ldots,x_q]]\twoheadrightarrow R_N.
+\tag{9.1}
+$$
+
+For completeness, let $B$ be the closed $\mathcal O$-subalgebra generated by
+the chosen lifts. Surjectivity on cotangent spaces says
+
+$$
+\mathfrak m_{R_N}=\mathfrak m_BR_N+\mathfrak m_{R_N}^2.
+$$
+
+Ordinary Nakayama applied modulo every power of $\mathfrak m_{R_N}$ shows that
+$B$ maps onto each Artinian quotient. Completeness then gives $B=R_N$ and
+proves (9.1).
+
+No claim is made that the kernel of (9.1) has a uniform generating tuple or
+that $R_N$ is flat, reduced, or smooth. The full kernel ideal is retained at
+each finite precision. After diagonalization these ideals define $I_\infty$
+in (8.2). Both source rings now have the same dimension:
+
+$$
+\dim P=q+1=\dim S_\infty.
+\tag{9.2}
+$$
+
+### 9.2 The dimension argument
+
+We isolate the algebraic heart of the proof.
+
+**Lemma 9.1 (equal-variable rigidity).** Let $S$ and $P$ be regular local
+domains of the same dimension. Let $M$ be a nonzero finite free $S$-module.
+Suppose a quotient $A$ of $P$ is a finite $S$-subalgebra of
+$\operatorname{End}_S(M)$ and that the structural map $S\to A$ acts on $M$
+by scalars. Then $P\to A$ is an isomorphism.
+
+**Proof.** If an element of $S$ maps to zero in $A$, it kills the nonzero free
+$S$-module $M$, so it is zero. Thus $S\hookrightarrow A$. Since $A$ is finite
+over $S$, the extension is integral and
+
+$$
+\dim A=\dim S=\dim P.
+$$
+
+Write $A=P/J$. If $J\ne0$, choose $0\ne f\in J$. Because $P$ is a domain,
+$f$ is a nonzerodivisor, and the principal ideal theorem gives
+
+$$
+\dim A\leq\dim P/(f)=\dim P-1,
+$$
+
+a contradiction. Hence $J=0$. $\square$
+
+Apply the lemma with $S=S_\infty$, $M=M_\infty$, and $A=A_\infty$.
+Equations (8.3)--(8.5) verify its hypotheses, and (9.2) verifies the equal
+dimension. Therefore
+
+$$
+P\xrightarrow{\sim}A_\infty.
+\tag{9.3}
+$$
+
+Since $P\to A_\infty$ factors through $R_\infty=P/I_\infty$, the ideal
+$I_\infty$ lies in the zero kernel. Consequently
+
+$$
+R_\infty=P=A_\infty.
+\tag{9.4}
+$$
+
+The patched deformation ring is thus regular of dimension $q+1$.
+
+### 9.3 Freeness and faithfulness
+
+The ring $P=A_\infty$ is finite over $S_\infty$. It is Cohen--Macaulay of
+dimension $q+1$, so
+
+$$
+\operatorname{depth}_{S_\infty}P=q+1.
+$$
+
+The Auslander--Buchsbaum formula over the regular local ring $S_\infty$ gives
+projective dimension zero. Thus $P$ is finite projective, hence finite free,
+over $S_\infty$.
+
+Likewise $M_\infty$ is free over $S_\infty$, so it has depth $q+1$ over
+$P$ as well. Since $P$ is regular, Auslander--Buchsbaum again gives
+
+$$
+M_\infty\simeq P^{\oplus m}
+\tag{9.5}
+$$
+
+for some $m>0$. A nonzero free module is faithful, hence
+
+$$
+\operatorname{Ann}_{R_\infty}(M_\infty)=0.
+\tag{9.6}
+$$
+
+This proves scheme-theoretic full support. It detects nilpotent thickenings,
+not merely irreducible components.
+
+Here is the depth change in detail. Since $P$ is finite over $S_\infty$, the
+extended maximal ideal $\mathfrak m_{S_\infty}P$ is primary for the maximal
+ideal of $P$. Regular sequences from that ideal compute the same depth over
+either ring. The free $S_\infty$ structure therefore gives
+$\operatorname{depth}_PM_\infty=q+1$. Since a regular local ring of dimension
+$q+1$ has finite global dimension, Auslander--Buchsbaum applies:
+
+$$
+\operatorname{pd}_P(M_\infty)+\operatorname{depth}_P(M_\infty)
+=\operatorname{depth}P=q+1.
+\tag{9.7}
+$$
+
+Thus the projective dimension is zero, and a finite projective module over a
+local ring is free. No generic multiplicity-one hypothesis is needed. The
+rank $m$ can differ from the diamond rank $r$ because $P$ is itself finite
+free of some rank over $S_\infty$.
+
+If $q=0$, then $S_\infty=P=\mathcal O$. The scalar action already gives
+$P=A_\infty$, and the same argument applies. Thus no positive-dimensional
+auxiliary system is hidden in the theorem.
+
+### 9.4 Why weaker support arguments fail
+
+If one replaced $P$ by $S_\infty[[u]]$ and let $u$ act as zero, the action
+image would still contain $S_\infty$ faithfully, but the extra source
+dimension would allow a nonzero kernel. This is why the sharp absolute count
+$q$, rather than a padded presentation, is essential.
+
+Topological support alone also misses nilpotents. The ring
+
+$$
+B=S_\infty[\epsilon]/(\epsilon^2)
+$$
+
+can act on $S_\infty$ with $\epsilon$ acting by zero. The module meets the
+only irreducible component, yet the action is not faithful. The proof avoids
+this trap by taking the regular domain $P$ as source. In a domain every
+nonzero kernel lowers dimension.
+
+Finally, a perfect pairing does not force faithfulness: an element can
+annihilate both paired modules. The pairing is used for integral control and
+congruences; regularity and depth prove faithfulness.
+
+## 10. Descent and the minimal equality
+
+### 10.1 Regular augmentation
+
+Because $R_\infty=P$ is finite free over $S_\infty$, the sequence
+
+$$
+z_1,\ldots,z_q
+\tag{10.1}
+$$
+
+is regular on $R_\infty$ and on $M_\infty$. Here $z_i$ means its image under
+the structural map $S_\infty\to R_\infty$; it need not equal the coordinate
+$x_i$. Therefore augmentation has no higher Tor terms.
+
+Quotienting (9.4) by the image of $\mathfrak a_\infty$ and using (8.6) gives
+a commutative square
 
 $$
 \begin{array}{ccc}
-R^{P}&\twoheadrightarrow&\mathbb T^{P}\\
+R_\infty&\xrightarrow{\sim}&A_\infty\\
 \downarrow&&\downarrow\\
-R^{\min}&\xrightarrow{\sim}&\mathbb T^{\min}.
+R^{\min}&\twoheadrightarrow&\mathbb T^{\min}.
 \end{array}
-\tag{18.3}
+\tag{10.2}
 $$
 
-The vertical arrows point in the direction dictated by the actual local deformation maps and saturated level maps; they are not formal decorations. The upper kernel still requires a newly balanced absolute patch or another genuine kernel-killing theorem. Complete-intersection and Gorenstein properties do not automatically survive a singular change of local component.
+The bottom map is the canonical map (4.4), because all structural Galois,
+Hecke, and augmentation maps were retained in the finite shadows.
 
-### 18.3 Final perspective
+### 10.2 Proof of the minimal comparison
 
-The clean minimal proof works because its local and global sources of rigidity are independent and exactly balanced. Nonzero residual monodromy makes the Steinberg condition closed. The finite-flat line at $\ell$ balances the real oddness term. Large image converts dual Selmer classes into ordered auxiliary primes. Definite class-set geometry supplies free diamond lattices and exact oldness. Integral curve reciprocity supplies the genuine Galois family. The sharp Poitou--Tate sequence then leaves exactly $q$ absolute deformation generators against exactly $q$ diamond variables.
+Quotienting an isomorphism by corresponding ideals yields an isomorphism.
+Thus (10.2) proves
 
-Equal-variable rigidity, patched freeness, and exact augmentation prove
+$$
+\boxed{R^{\min}\xrightarrow{\sim}\mathbb T^{\min}.}
+\tag{10.3}
+$$
+
+Moreover, augmenting (9.5) gives
+
+$$
+M^{\min}\simeq(R^{\min})^{\oplus m}.
+\tag{10.4}
+$$
+
+Since $R_\infty$ is finite free over $S_\infty$ and the augmentation sequence
+has length $q$, $R^{\min}$ is finite free over $\mathcal O$. It is a quotient
+of the regular local ring $R_\infty$ by the regular sequence (10.1), hence a
+relative complete intersection. Every local complete intersection is
+Cohen--Macaulay and Gorenstein. The perfect primary--companion pairing descends
+because its finite-level matrices and adjoints were marked and because the
+augmentation is Tor-independent.
+
+The finite-freeness assertion can be read directly from a basis. Since
+$R_\infty$ is finite free over $S_\infty$, reducing an $S_\infty$-basis
+modulo $(z_1,\ldots,z_q)$ gives an $\mathcal O$-basis of $R^{\min}$. The
+sequence is regular because free modules are flat and
+$z_1,\ldots,z_q$ is regular on $S_\infty$. The quotient has codimension $q$
+inside a regular ring and is defined by exactly $q$ regular equations, which
+is the relative complete-intersection assertion.
+
+Gorensteinness follows concretely from the Koszul resolution. For one
+nonzerodivisor $z$, applying $\operatorname{Hom}(-,R_\infty)$ to
+
+$$
+0\longrightarrow R_\infty\xrightarrow{z}R_\infty
+\longrightarrow R_\infty/(z)\longrightarrow0
+$$
+
+identifies the relative dualizing module of the quotient with the quotient.
+Iterating over the regular sequence preserves rank-one duality. This proof
+also produces the determinant generator used in the congruence calculation.
+
+This proves the ring-theoretic portion of Theorem 1.1. Notice that no
+cotangent determinant was used to kill the kernel.
+
+### 10.3 Complete intersections and congruences
+
+After equality, a generically isolated integral branch
+$\lambda:R^{\min}\to\mathcal O$ has cotangent module
+
+$$
+\Phi_R=I/I^2,
+\qquad I=\ker\lambda.
+\tag{10.5}
+$$
+
+Choose a complete-intersection presentation near the branch,
+
+$$
+R^{\min}\simeq
+\mathcal O[[X_1,\ldots,X_q]]/(f_1,\ldots,f_q),
+$$
+
+with $f_i$ vanishing at the branch. The conormal sequence presents
+$\Phi_R$ by the Jacobian matrix
+
+$$
+D=\left(\frac{\partial f_i}{\partial X_j}\right)_\lambda.
+$$
+
+Hence
+
+$$
+\operatorname{Fitt}_{\mathcal O}^0(\Phi_R)=(\det D).
+\tag{10.6}
+$$
+
+The Koszul resolution on the regular sequence identifies the relative
+dualizing generator. Its restriction to the branch is multiplied by
+$\det D$. The image of the branch annihilator is therefore the same ideal,
+which is the intrinsic Hecke congruence ideal $\eta_{\mathbb T}$. Thus
+
+$$
+\operatorname{Fitt}_{\mathcal O}^0(\Phi_R)=\eta_{\mathbb T}.
+\tag{10.7}
+$$
+
+When the quotients have finite length, (10.7) becomes equality of their
+$\mathcal O$-lengths. If the automorphic branch has multiplicity $m$, the
+module congruence length is $m$ times the ring congruence length, provided the
+branch lattice is saturated and the pairing primitive. Without those
+hypotheses a lattice-index or discriminant term appears.
+
+Equation (10.7) is a consequence and an audit of (10.3), not its proof. Before
+equality, the deformation and automorphic determinant lines are separately
+defined but no canonical comparison unit has been constructed.
+
+## 11. Recovering automorphic representations
+
+### 11.1 A characteristic-zero point of the Hecke algebra
+
+Let $\mathcal O'/\mathcal O$ be finite and let $\rho$ be a lift as in (1.6).
+The universal property gives a local homomorphism
+
+$$
+x_\rho:R^{\min}\longrightarrow\mathcal O'.
+\tag{11.1}
+$$
+
+Through (10.3), this is a character of $\mathbb T^{\min}$. After passing to
+fraction fields, the reduced finite Hecke algebra is a product of fields
+generated by characteristic-zero eigenpackets. The character $x_\rho$ selects
+one of these packets after a further finite coefficient extension if
+necessary.
+
+Indeed, tensor $x_\rho$ with the fraction field $E'$ of $\mathcal O'$. A map
+from a finite reduced $E$-algebra to a field factors through one field factor.
+On that factor the commuting Hecke operators have a simultaneous eigenvector
+after a finite extension. Since $\mathbb T^{\min}$ is the faithful image on
+$M^{\min}$, this eigenvector occurs in the automorphic module rather than in
+an abstract quotient algebra. Finite freeness ensures that no generic factor
+disappears on passage from the lattice to its fraction-space.
+
+Because $\mathbb T^{\min}$ is the faithful image on the exact localized
+definite-quaternionic module, the selected system occurs in that module. The
+fixed local type lattices show that its local components have precisely the
+declared unramified, finite-type, and minimal-special behavior. Transfer from
+the definite quaternion algebra yields a cuspidal automorphic representation
+$\pi$ of $\operatorname{GL}_2(\mathbf A_F)$ of parallel weight two and the
+prescribed central character. This transfer does not change the good Hecke
+polynomials and carries the named local packets to their matching
+$\operatorname{GL}_2$ packets.
+
+Cuspidality is not inferred from irreducibility of the Galois representation.
+It belongs to the noncharacter quaternionic realization and its transfer.
+The non-Eisenstein localization rules out a residual sum of characters, while
+the branchwise attachment hypothesis rules out generic character branches.
+Exact type matching, not conductor comparison, determines the packet at each
+ramified place.
+
+### 11.2 Equality of Galois representations
+
+Let $\rho_\pi$ be the rank-two Galois representation attached to $\pi$. At
+every $v\notin S$,
+
+$$
+\operatorname{charpol}(\rho(\Phi_v);X)
+=X^2-x_\rho(T_v)X+x_\rho(q_vS_v)
+=\operatorname{charpol}(\rho_\pi(\Phi_v);X).
+\tag{11.2}
+$$
+
+Density of Frobenius conjugacy classes and Brauer--Nesbitt identify the
+semisimplifications over the coefficient field. A lift whose residual
+representation is absolutely irreducible is itself irreducible: a stable line
+over the fraction field has an intersection with a stable lattice whose
+reduction, after saturation, gives a nonzero proper residual stable subspace.
+Thus both representations are irreducible and their generic fibers are
+isomorphic.
+
+This density argument uses both trace and determinant. Equality of the
+polynomials on a dense set makes the continuous pseudorepresentations equal
+on all of $G_F$, after which Brauer--Nesbitt applies. The local statements at
+bad places are not reconstructed from density: they were imposed on the
+universal deformation and the Hecke family before (4.4) was defined. Good
+traces cannot by themselves recover an integral finite-flat model or a
+monodromy parameter.
+
+There is a stronger integral explanation. The Hecke-valued representation
+(4.3) is the pushforward of the universal representation along (10.3).
+Specializing it by $x_\rho$ produces the same strict-equivalence class as
+$\rho$ by the universal property. The canonical stable lattice in
+$\rho_\pi$ used to construct (4.3) specializes to that representation.
+Consequently, after conjugation,
+
+$$
+\rho\simeq\rho_\pi
+\tag{11.3}
+$$
+
+over $\mathcal O'$, not merely after inverting $\ell$.
+
+### 11.3 Lattices and finite-flat quotients
+
+We make the lattice step explicit because generic automorphy alone would not
+prove the integral lifting statement. Let $V$ be the irreducible coefficient-
+field representation underlying $\rho_\pi$. Any two stable lattices $L$ and
+$L'$ with absolutely irreducible residual representation are homothetic.
+
+Indeed, scale so that $L'\subseteq L$ but $L'\nsubseteq\varpi L$. The image of
+$L'$ in $L/\varpi L$ is a nonzero stable subspace, hence all of the irreducible
+residual representation. Nakayama gives $L'=L$. Undoing the scale proves
+homothety. Thus the lattice selected by the Hecke-valued family and the lattice
+underlying $\rho$ agree up to a scalar, which does not change the integral
+representation after a choice of basis.
+
+At $v\mid\ell$, the canonical lattice theorem supplies finite-flat models for
+all quotients $L/\varpi^nL$ in the low-weight range, and these models are
+compatible in $n$ and under finite coefficient extension. Conversely, the
+hypothesis on $\rho$ says its quotients lie in the same represented local
+functor. The homothety above and full faithfulness of the integral finite-flat
+realization identify the two systems. Hence coefficient-prime local
+compatibility survives the passage from generic representation to stable
+lattice; it is not reconstructed from good-prime traces.
+
+### 11.4 The lifting theorem proved
+
+We can now finish Theorem 1.1.
+
+**Proof of the lifting assertion.** The local hypotheses place $\rho$ in the
+functor represented by $R^{\min}$, yielding (11.1). The minimal equality
+(10.3) turns this point into a Hecke character. Section 11.1 extracts the
+parallel-weight-two cuspidal representation $\pi$ with the required central
+character and exact local types. Equation (11.2) identifies the generic
+Galois representations, and Sections 11.2--11.3 identify their integral
+lattices and finite-flat quotients. Thus $\rho\simeq\rho_\pi$. $\square$
+
+Residual automorphy has therefore propagated from the closed point to every
+point of the clean minimal deformation space. It was not necessary to assume
+that the given characteristic-zero lift was itself known to lie on an
+automorphic component.
+
+## 12. Coefficient changes, descent, and exceptional cases
+
+### 12.1 Extension of coefficients
+
+Auxiliary residual eigenvalues, type characters, or branch fields may require
+a finite extension $\mathcal O'/\mathcal O$. The represented clean local
+conditions commute with this extension, and so does the global universal
+property:
+
+$$
+R^{\min}_{\mathcal O'}
+\simeq R^{\min}_{\mathcal O}
+\widehat\otimes_{\mathcal O}\mathcal O'.
+\tag{12.1}
+$$
+
+The exact integral automorphic module, faithful Hecke image, type lattices,
+and primary--companion pairing also base-change. Regular sequences, finite
+freeness, and the patched equality are preserved. Thus
+
+$$
+R^{\min}\widehat\otimes_{\mathcal O}\mathcal O'
+\xrightarrow{\sim}
+\mathbb T^{\min}\widehat\otimes_{\mathcal O}\mathcal O'.
+\tag{12.2}
+$$
+
+Adequacy is preserved under extension of the residual field: the relevant
+cohomology and semisimple spans extend scalars. Absolute irreducibility of the
+cyclotomic restriction must hold before extension; changing coordinates does
+not change its kernel.
+
+Raw numerical lengths are not invariant under ramified coefficient extension.
+If the ramification index is $e$, then
+
+$$
+\operatorname{length}_{\mathcal O'}
+(N\otimes_{\mathcal O}\mathcal O')
+=e\,\operatorname{length}_{\mathcal O}N
+\tag{12.3}
+$$
+
+for finite-length $N$ under the respective uniformizer normalizations.
+Fitting and congruence ideals base-change in the invariant manner; one should
+not claim that their raw valuations remain numerically unchanged.
+
+### 12.2 Descent to the original coefficient ring
+
+Suppose the equality has been proved after a finite faithfully flat extension
+$\mathcal O'/\mathcal O$. Let $K$ and $C$ be the kernel and cokernel of the
+original map $R^{\min}\to\mathbb T^{\min}$. Completed base change is exact on
+these finite modules, and (12.2) gives
+
+$$
+K\otimes_{\mathcal O}\mathcal O'=0,
+\qquad
+C\otimes_{\mathcal O}\mathcal O'=0.
+$$
+
+Faithful flatness implies $K=C=0$. Hence the equality descends. The same
+argument descends finite projectivity, and over a local ring finite projective
+modules are free. Complete-intersection and Gorenstein conclusions descend
+here through the explicit regular-sequence presentation.
+
+For an individual lift, one may extract $\pi$ after enlarging coefficients.
+The compatible good-prime Hecke eigenvalues are the values of the original
+Hecke character, so their field of definition is finite over the original
+coefficient field. The Galois representation (11.3) descends with its trace
+and determinant. If two descended forms become isomorphic after scalar
+extension, strong multiplicity one identifies their automorphic
+representations. Thus coefficient enlargement is a device for splitting
+roots and fields, not an enlargement of the modularity conclusion.
+
+### 12.3 The boundary at five and below
+
+At $\ell=5$, the icosahedral natural representation can violate the adjoint
+$H^1$ vanishing needed for regular-semisimple detection. Then the localization
+matrix in Section 5.3 may not be made invertible, and the sets $Q_N$ used in
+this proof have not been constructed. Later commutative algebra cannot repair
+missing auxiliary primes.
+
+A theorem at five remains possible after a separate argument verifies the
+full adequate package or eliminates the projective $A_5$ case. It is not a
+consequence of absolute irreducibility alone, so the theorem proved here makes
+no coefficient-five claim.
+
+At $\ell=3$, further exceptional projective coincidences prevent a uniform
+adequacy statement. At $\ell=2$, trace zero contains the scalar matrix,
+$-1=1$ in the residue field, and the odd fixed-determinant deformation
+calculation changes fundamentally. None of these primes can be included by
+altering the inequality $\ell\geq7$ without replacing essential arguments.
+
+### 12.4 Local and automorphic failures
+
+If $F_v/\mathbf Q_\ell$ is ramified or the weights leave the low finite-flat
+range, the local ring can be singular or reducible and the contribution
+(2.9) can change. The equality of source dimensions in Chapter 9 then has to
+be recomputed; the present theorem does not cover that problem.
+
+If auxiliary Frobenius is scalar, no ordered eigenline is uniquely recoverable,
+the old determinant (6.11) vanishes, and exact augmentation fails. If a
+degeneracy image or type lattice is not saturated, generic oldness can leave
+integral torsion and the augmented order may have finite index in the desired
+minimal order.
+
+If generic Hecke branches do not all carry compatible integral Galois
+representations, there is no representation (4.3) over the localized order
+and hence no map (4.4). Patching modules cannot create that missing map. If
+the automorphic module is zero, its scalar action cannot detect a kernel.
+
+Finally, a nonminimal condition introduces new local components and changes
+both Selmer groups and automorphic level control. Minimal equality is an input
+to that later comparison, not a proof of it. The new problem requires its own
+component-support and patching argument.
+
+## 13. The minimal modularity package
+
+### 13.1 Dependency and hypothesis audit
+
+The proof uses the established foundations in exact forms.
+
+Global deformation theory supplies representability, Selmer tangent spaces,
+Poitou--Tate duality, frame corrections, and presentation bounds under a
+finite controlling set, fixed determinant with $\ell\ne2$, a Schur residual
+representation, and represented base-change-stable local conditions. Those
+hypotheses are recorded in Chapters 2--3.
+
+The abstract comparison theory supplies depth transfer, regular-sequence
+descent, congruence ideals, and the distinction between support and
+faithfulness. Its hypotheses are met only after the finite free diamond
+module, exact augmentation, and regular source have been constructed; none is
+assumed prematurely.
+
+Weight-two Galois attachment supplies branchwise representations with
+polynomial (2.3), total oddness, and the fixed determinant. Canonical lattice
+and finite-flat quotient theory supplies the integral representation at
+$v\mid\ell$. These results are used only for branches in their stated
+parallel-weight-two, noncharacter, integral-realization range.
+
+Integral type theory supplies primary and companion lattices, saturation, and
+closed represented tame or special components away from $\ell$. Primitive
+wild types and uncontrolled small residue-characteristic cases are excluded.
+
+Residual image classification supplies adequacy from absolute irreducibility
+of the cyclotomic restriction only for $\ell\geq7$, together with the precise
+prime-five exception. The separate adjoint-twist invariant (3.7) is retained
+rather than incorrectly folded into adequacy.
+
+The minimal totally real comparison supplies the ring $R^{\min}$, the faithful
+Hecke order $\mathbb T^{\min}$, the Hecke-valued representation, the
+surjection, exact local matching, the balanced integer $q$, and the auxiliary
+numerical ledger. Minimal patching supplies the deep-level system, coherent
+finite shadows, equal-variable rigidity, exact descent, and the structural
+consequences. Every hypothesis of those two results appears in Theorem 1.1;
+none is weakened to a slogan such as “large image,” “minimal conductor,” or
+“standard local compatibility.”
+
+### 13.2 Final synthesis
+
+The minimal lifting theorem is a rigidity statement created by an exact
+arithmetic balance. Finite flatness contributes the sum of the local degrees
+above $\ell$; total oddness subtracts the number of real embeddings. Their
+cancellation makes the primal and dual Selmer dimensions equal. Adequacy turns
+the common dimension $q$ into $q$ ordered auxiliary primes, and fixed
+determinant gives one diamond character at each of them.
+
+On the automorphic side, definite-quaternionic torsors make the deep-level
+module free over the diamond group ring. The unit old-form determinant,
+saturation, ordered roots, and companion adjunction ensure that augmentation
+returns the exact minimal lattice and exact faithful Hecke order. Coherent
+finite shadows replace a nonexistent tower of auxiliary levels.
+
+The patch then places a nonzero free module between two regular power-series
+sources of dimension $q+1$. Faithful scalar action forces the action image to
+have full dimension; the domain property of the deformation source forces its
+kernel to vanish. Maximal depth gives freeness, and regular augmentation gives
 
 $$
 R^{\min}=\mathbb T^{\min}.
 $$
 
-Only afterward do complete-intersection duality and the primitive primary--companion pairing identify cotangent and congruence determinants up to a proved global unit. The equality says exactly what minimal modularity lifting requires: every characteristic-zero point satisfying the stated local conditions is automorphic of the matching exact level and type. Book 156 changes those local conditions, so it must earn the balance again at each newly permitted prime.
+Every minimal characteristic-zero lift is consequently a Hecke point. The
+weight-two packet attached to that point has the prescribed local conditions,
+and residual irreducibility identifies its canonical integral lattice with
+the given lift. Coefficient extension and faithful-flat descent preserve the
+statement. The resulting package is exactly minimal modularity lifting over a
+totally real field in the clean coefficient-prime range $\ell\geq7$: residual
+automorphy propagates to every integral minimal lift, with determinant, local
+types, finite-flat quotients, and coefficient descent all retained.
