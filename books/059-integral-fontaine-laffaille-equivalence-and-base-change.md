@@ -96,7 +96,7 @@ Book 58 constructed a contravariant functor from divided filtered torsion module
 
 Full faithfulness reconstructs a morphism $M\to N$ once both $M$ and $N$ have been supplied. It cannot manufacture an object representing a Galois-stable subgroup of $T_{\mathrm{FL}}(M)$. Using it that way would assume essential surjectivity in the step intended to prove essential surjectivity.
 
-There are therefore two constructions to make. Starting from a finite-flat group $\mathcal G$, its crystalline extension module must be equipped with a Hodge step and divided Frobenius. Starting from a divided filtered module $M$, its syntomic solutions must be shown to form a representable finite locally free group, not merely a finite group on a geometric stalk. The two constructions will then be compared by actual natural morphisms.
+There are therefore two constructions to make. Starting from a finite-flat group $\mathcal G$, its crystalline extension module must be equipped with a Hodge step and divided Frobenius. Starting from a divided filtered module $M$, the syntomic solutions of a free presentation must first be represented by finite locally free groups; the subgroup cut out on the generic fiber must then be extended by schematic closure. The two constructions will be compared by actual natural morphisms.
 
 The desired chain has two contravariant arrows:
 
@@ -142,7 +142,13 @@ The superscript “ff” is an existence condition, not a chosen model. Book 48 
 
 ### 1.4 The proof architecture
 
-Chapters 3--6 establish the two constructions independently. Chapter 3 forms $\mathbf D_{\mathrm{FL}}(\mathcal G)$ from crystalline extensions. Chapters 4--5 represent the syntomic solution sheaf by a group $\mathcal G(M)$. Chapter 6 proves that evaluation identifies the generic points of either construction with the realization of Book 58.
+Chapters 3--6 establish the two constructions independently. Chapter 3
+forms $\mathbf D_{\mathrm{FL}}(\mathcal G)$ from crystalline extensions.
+Chapters 4--5 represent the solution sheaf for free reductions and then
+use saturated schematic closure to construct the unique finite-flat
+model $\mathcal G(M)$ of every geometric solution module. Chapter 6
+proves that evaluation identifies the generic points of the group-crystal
+construction with the realization of Book 58.
 
 Only after those steps does Chapter 7 prove the anti-equivalence. Chapters 8--9 identify its essential image and transport exactness, duality, pairings, and coefficient actions. Chapters 10--13 prove ground-field base change and the coefficient statements at the correct variance. Chapters 14--15 package compatible finite quotients of stable lattices, especially rank two and Hodge type $(0,1)$.
 
@@ -259,22 +265,57 @@ D(\mathcal G).
 \tag{3.1}
 $$
 
-The lift $\mathcal G/W$ supplies a Hodge map from invariant differentials of the Cartier dual:
+The lift $\mathcal G/W$ supplies a Hodge map from its own invariant
+differentials:
 
 $$
-\omega_{\mathcal G^D}\longrightarrow D(\mathcal G).
+\omega_{\mathcal G}\longrightarrow D(\mathcal G).
 \tag{3.2}
 $$
 
-Its image is denoted $F_{\mathcal G}$. Equivalently, $F_{\mathcal G}$ is the kernel of the evaluation map to the Lie algebra of $\mathcal G$ in the universal-extension sequence
+Its image is denoted $F_{\mathcal G}$. Equivalently,
+$F_{\mathcal G}$ is the kernel of the evaluation map to the Lie algebra
+of the Cartier dual in the universal-extension sequence
 
 $$
-0\longrightarrow F_{\mathcal G}longrightarrow D(\mathcal G)
-\longrightarrow\operatorname{Lie}(\mathcal G)\longrightarrow0.
+0\longrightarrow F_{\mathcal G}\longrightarrow D(\mathcal G)
+\longrightarrow\operatorname{Lie}(\mathcal G^D)\longrightarrow0.
 \tag{3.3}
 $$
 
-For a torsion group the terms need not be free. Formula (3.3) is a strict sequence of finite $W$-modules obtained from a free resolution, not a claim that the displayed submodule is always a direct summand.
+For a torsion group the terms need not be free. Formula (3.3) is the
+degree-zero sequence of the conormal complex obtained from a smooth
+two-term resolution; it is a strict sequence of finite $W$-modules, not
+a claim that the displayed submodule is always a direct summand. This
+variance is forced by the two endpoints. For
+$\underline{\mathbf Z/p^n}$ one has $\omega_{\mathcal G}=0$, so the
+Hodge step is zero. For $\mu_{p^n}$ one has
+$\omega_{\mathcal G}=W/p^n$, so the Hodge step is the whole module.
+Using $\omega_{\mathcal G^D}$ would interchange the constant and
+multiplicative lines and would contradict (2.6).
+
+We record why the conormal description supplies the free presentations
+required in Book 58. Fppf locally on $W$, resolve the rigidified
+extension functor defining the crystal by two smooth commutative formal
+groups. On coordinate rings this is obtained by choosing finite sets of
+generators for the augmentation ideals of the Hopf algebra of
+$\mathcal G$ and of its dual, adjoining free primitive coordinates,
+and then adjoining generators for the multiplication and
+comultiplication relations. The first stage is formally smooth; the
+second records the relations. Finite projectivity of the original Hopf
+algebra makes the two resulting conormal modules finite projective.
+Over the local ring $W$ they are free.
+
+Applying rigidified crystalline extensions to this resolution gives a
+strict two-term complex of finite free crystalline modules. Applying
+the conormal functor gives its first filtered subcomplex. Its kernel is
+$\omega_{\mathcal G}$, while Cartier duality identifies the quotient
+with $\operatorname{Lie}(\mathcal G^D)$, proving (3.3). If the chosen
+generators are enlarged, the added primitive coordinates form a split
+contractible summand. Two choices are therefore dominated by their
+union and give canonically isomorphic filtered cokernels. This is the
+smooth-resolution calculation used below; it does not assume a
+classification of mixed-characteristic lifts.
 
 The construction is contravariant. A map $u:\mathcal G\to\mathcal H$ pulls rigidified extensions back and carries $F_{\mathcal H}$ into $F_{\mathcal G}$.
 
@@ -321,9 +362,10 @@ is an admissible torsion divided filtered module of weights $[0,1]$.
 **Proof strategy.** Resolve the crystalline extension sheaf locally by
 smooth commutative formal groups, so that it is represented by a
 two-term complex of finite free crystalline modules. The conormal
-sequences of relative Frobenius and Verschiebung identify the Hodge
-direction on each free term. Strong divisibility can then be checked
-modulo $p$.
+sequences identify the reduction of the Hodge step with
+$\operatorname{im}V=\ker F_{\mathrm D}$. The relation
+$F_{\mathrm D}V=p$ then proves surjectivity of the normal map modulo
+$p$; equal ranks and Nakayama finish the argument.
 
 **Proof.** The smooth-resolution construction of the crystalline
 Dieudonné crystal gives finite free modules $L_1,L_0$ and a strict map
@@ -333,22 +375,18 @@ strict presentation by crystallinity and PD descent.
 
 On a free term $L$, the conormal sequence for relative Frobenius
 identifies the reduction of the Hodge submodule with the Verschiebung
-direction. Applying the same statement to the Cartier dual identifies
-the complementary quotient with the Frobenius direction. Thus, for the
-liftable free presentation,
+direction. Thus, for the liftable free presentation,
 
 $$
-\overline F=\operatorname{im}V=\ker F_{\mathrm D},
-\qquad
-\operatorname{im}F_{\mathrm D}=\ker V.
+\overline F=\operatorname{im}V=\ker F_{\mathrm D}.
 \tag{3.8}
 $$
 
-These equalities come from the Hodge conormal sequences of the supplied
-finite-flat lift; they are not asserted for an arbitrary finite
-Dieudonné module. Together with
-$F_{\mathrm D}V=VF_{\mathrm D}=p$ before reduction, they control both
-output directions.
+This equality comes from the Hodge conormal sequence of the supplied
+finite-flat lift; it is not asserted for an arbitrary filtration on a
+finite Dieudonné module. The relation
+$F_{\mathrm D}V=VF_{\mathrm D}=p$ before reduction controls the divided
+map on this Hodge direction.
 
 Choose a complement $L=C\oplus F$ and reduce the normal map
 
@@ -358,16 +396,31 @@ $$
 \tag{3.9}
 $$
 
-modulo $p$. Ordinary Frobenius maps the quotient direction onto
-$\operatorname{im}F_{\mathrm D}$, while divided Frobenius on the Hodge
-step maps onto the complementary $\ker V$ direction. Equations (3.8)
-show that their dimensions add to $\dim_k(L/pL)$ and their intersection
-is zero. Thus $\overline\Psi$ is an isomorphism. Nakayama makes $\Psi$
-an isomorphism over $W$.
+modulo $p$. Let $\bar y\in L/pL$, choose a lift $y\in L$, and choose
+$f\in F$ lifting $V\bar y\in\overline F$. At the torsion-free
+crystalline level there is a $z\in L$ with
+
+$$
+f=Vy+pz.
+$$
+
+Applying Frobenius and dividing on $F$ gives
+
+$$
+\overline{\varphi _1(f)}
+=\bar y+\overline{\varphi _0(z)}.
+$$
+
+Write $z=c+f_0$ with $c\in C$ and $f_0\in F$. Since
+$\varphi _0(F)\subset pL$, the last term is
+$\overline{\varphi _0(c)}$. Hence every $\bar y$ is in the image of
+$\overline\Psi$. Source and target have the same dimension, so
+$\overline\Psi$ is an isomorphism. Nakayama makes $\Psi$ an isomorphism
+over $W$.
 
 The local free resolutions glue because crystalline extensions and the Hodge map satisfy fppf descent. They give a strict two-term free presentation of (3.7). Equations (3.5)--(3.6) descend through it, proving admissibility. $\square$
 
-The proof also shows why an arbitrary filtration on the special-fiber Dieudonné module is not enough. It must be the Hodge filtration of a lift for (3.5) and the complementary-image calculation to hold.
+The proof also shows why an arbitrary filtration on the special-fiber Dieudonné module is not enough. It must be the Hodge filtration of a lift for (3.5) and the normal-map calculation to hold.
 
 ### 3.4 Torsion presentations and exactness
 
@@ -394,17 +447,54 @@ $$
 \tag{3.12}
 $$
 
-**Proof.** Crystalline Dieudonné extensions are exact contravariantly by Book 57. Applying invariant differentials to the dual of (3.10), and using the universal-extension sequence (3.3), proves exactness on first filtered steps. Thus (3.11) is strict. The length formula holds on the special fiber by finite Dieudonné classification. Finite local freeness preserves group order under specialization, so the same order is that of $\mathcal G$. $\square$
+**Proof.** Crystalline Dieudonné extensions are exact contravariantly
+by Book 57. Apply the conormal complexes to (3.10), and simultaneously
+apply them to its Cartier dual. The resulting two exact rows, joined by
+(3.3), show that the underlying crystalline sequence and its Hodge
+steps are exact in the displayed reversed order. Thus (3.11) is strict;
+using invariant differentials of the dual alone would give the wrong
+filtration. The length formula holds on the special fiber by finite
+Dieudonné classification. Finite local freeness preserves group order
+under specialization, so the same order is that of $\mathcal G$.
+$\square$
 
 The proposition implies compatibility with multiplication by $p^r$, kernels, and level reduction whenever the corresponding group sequence is faithfully flat exact.
 
+The Cartier pairing is already compatible with the added Hodge step.
+Indeed Book 57 identifies the crystals of $\mathcal G$ and
+$\mathcal G^D$ by the crystalline evaluation pairing. The annihilator
+of $\omega_{\mathcal G}$ under that pairing is the step complementary
+to $\omega_{\mathcal G^D}$, and the conormal sequences show that the
+two steps have complementary weights. The adjoint identities for
+relative Frobenius and Verschiebung become the two divided-Frobenius
+identities of Book 58. Consequently there is a functorial isomorphism
+
+$$
+\mathbf D_{\mathrm{FL}}(\mathcal G^D)
+\simeq\mathbf D_{\mathrm{FL}}(\mathcal G)^\vee,
+\tag{3.13}
+$$
+
+and the corresponding evaluation pairing is perfect. This fact is
+proved here, before it is used to test injectivity of the period map in
+Chapter 6.
+
 ## 4. The finite-flat solution functor
 
-The generic realization of Book 58 takes solutions in a geometric period ring. Essential surjectivity requires retaining those solutions over every test algebra and proving that the resulting sheaf is a finite-flat group over $W$. The construction here is integral from the start.
+The generic realization of Book 58 takes solutions in a geometric
+period ring. Essential surjectivity requires an integral model of that
+finite solution module. We first represent the full solution sheaf for
+free reductions, where normal coordinates control every equation, and
+then use saturated closure for a general torsion object. The construction
+is integral from the start.
 
 ### 4.1 Solutions as a sheaf
 
-Let $M$ be an admissible torsion divided filtered module killed by $p^n$. For a syntomic $W$-algebra $R$, let $\mathscr A_n(R)$ denote the finite crystalline divided-power envelope attached to $R/pR$, equipped with the modified first filtration and divided Frobenius of Book 55. Define
+Let $M$ be an admissible torsion divided filtered module killed by
+$p^n$. For a syntomic $W$-algebra $R$, let $\mathscr A_n(R)$ denote
+the finite crystalline divided-power envelope attached to $R/pR$,
+equipped with the modified first filtration and divided Frobenius of
+Book 55. Define the solution sheaf
 
 $$
 \mathscr S_M(R)=
@@ -415,7 +505,12 @@ $$
 
 Addition in the target makes this an abelian-group-valued sheaf. A morphism $M\to N$ induces $\mathscr S_N\to\mathscr S_M$. The construction is independent of $n$ once $p^nM=0$, because the transition maps on the modified filtered period terms are surjective and the equations commute with reduction.
 
-At a geometric generic point, (4.1) is precisely $T_{\mathrm{FL}}(M)$. The issue is representability over the integral base.
+At a geometric generic point, (4.1) is precisely
+$T_{\mathrm{FL}}(M)$. For free reductions we represent this whole
+sheaf by coordinates. For a general torsion object we construct the
+unique finite-flat model of its geometric solution module by schematic
+closure. This distinction avoids the false inference that a raw kernel
+of finite-flat groups is automatically flat.
 
 ### 4.2 Normal coordinates
 
@@ -441,7 +536,12 @@ The matrix $U$ is invertible integrally. This is what permits simultaneous solut
 
 The following lemma is the representability engine. It is the scheme-theoretic refinement of the small-weight lifting calculation in Book 58.
 
-**Lemma 4.1 (integral coordinate lemma).** Let $U\in\operatorname{GL}_d(W)$ and let $\epsilon_i\in\{0,1\}$. The sheaf of solutions of (4.3) modulo $p^n$ is represented by a finite locally free commutative $W$-scheme of rank $p^{nd}$. Its coordinate algebra has, syntomically locally, a basis indexed by
+**Lemma 4.1 (integral coordinate lemma).** Let
+$U\in\operatorname{GL}_d(W)$ and let $\epsilon_i\in\{0,1\}$. The
+sheaf of solutions of (4.3) for the free reduction $L/p^nL$ is
+represented by a finite locally free commutative $W$-group
+$\mathcal H_n(L)$ of rank $p^{nd}$. Its coordinate algebra has,
+syntomically locally, a basis indexed by
 
 $$
 X_1^{a_1}\cdots X_d^{a_d},\qquad 0\le a_i<p^n.
@@ -450,99 +550,185 @@ $$
 
 The construction commutes with reduction in $n$, with an integral change of normal basis, and with unramified extension of $W$.
 
-**Proof strategy.** At level one, eliminate the highest additive terms using the invertibility of $U$. The monic relations reduce every monomial to (4.4), and a highest-degree filtration proves independence. Lift one $p$-adic digit at a time. The weight-one logarithmic coordinate is formed in the divided-power envelope before reduction, so no division in a torsion algebra occurs.
+**Proof strategy.** At level one, filter the coefficient and
+divided-power layers and use the invertibility of $U$ to obtain a
+coupled monic system. Weight-zero rows have Artin--Schreier-type linear
+parts; weight-one rows allow a purely inseparable root initial form. In
+either case the leading monomial in row $i$ is $Z_i^p$. Those relatively
+prime leading monomials make the relations a monic Gröbner basis, so
+they reduce every monomial to (4.4), and the associated graded proves
+independence. Lift one $p$-adic digit at a time. The weight-one
+coordinate is formed in the modified divided-power term before
+reduction, so no division in a torsion algebra occurs.
 
-**Proof.** Modulo $p$, choose additive coordinates on the weight-zero terms and divided-power logarithmic coordinates on the weight-one terms. After the invertible linear change given by $U$, the equations have the form
+**Proof.** Modulo $p$, choose additive coordinates on the weight-zero
+terms and modified divided-power coordinates on the weight-one terms.
+After the invertible change of relation generators given by $U$, and
+after filtering the finite regular-immersion generators and their
+divided monomials, the equations have the schematic forms
 
 $$
-Z_i^p-Z_i=b_i+P_i(Z_1,\ldots,Z_{i-1})
+Z_i^p+\ell_i(Z)=P_i(Z),
+\qquad
+Z_i^p+\ell_i'(Z)=Q_i(Z),
 \tag{4.5}
 $$
 
-on the crystalline chart. In a weight-one coordinate, $Z_i$ is the logarithmic coordinate of a multiplicative parameter; equation (4.5) is an equation in the divided-power chart, not a claim that the special fiber of the descended group is étale.
+Here $Z=(Z_1,\ldots,Z_d)$, the $\ell_i$ and $\ell_i'$ are coupled
+linear forms, and every term on the right has filtered degree strictly
+below the leading term $Z_i^p$. In a weight-zero row the combined
+linear part is the Artin--Schreier part determined by the invertible
+normal matrix. In a weight-one row its relevant coefficient may
+vanish; the atomic initial equation is then $Z_i^p=0$, exactly as in
+the weight-one lifting calculation of Book 55. Thus (4.5) does not
+claim that the special fiber of a weight-one factor is étale.
+The logarithmic notation is used only inside the divided-power chart;
+the descended atomic group is $\mu_p$, whose special fiber is
+nonreduced.
 
-Each equation is monic of degree $p$ in $Z_i$. Repeated division expresses the chart algebra in the span of monomials with $0\le a_i<p$. Filter by lexicographic weighted degree. The initial relations have distinct leading monomials $Z_i^p$, so no nontrivial linear combination of the reduced monomials lies in the relation ideal. They are therefore a basis. The Hopf addition formulas respect the relations because the Frobenius equations are additive in weight zero and multiplicative before logarithm in weight one.
+Choose a monomial order refining the filtered degree. Each relation is
+monic with leading monomial $Z_i^p$. These leading monomials are
+pairwise relatively prime, so every $S$-polynomial reduces to zero;
+the monic Buchberger argument works over the chart ring because no
+leading coefficient is inverted. Thus the relations form a monic
+Gröbner basis. Division expresses the chart algebra uniquely in the
+monomials with $0\le a_i<p$, so those monomials are a basis. This
+argument permits arbitrary coupling among the $Z_j$; it does not
+triangularize $U$. The Hopf addition formulas respect the relations
+because the Frobenius equations are additive in weight zero and
+multiplicative before logarithm in weight one.
 
-Suppose the algebra has been constructed modulo $p^r$. Write a lift of a solution as $z+p^rw$. Substitution into (4.3), division of the defect by $p^r$ at the torsion-free crystalline level, and reduction modulo $p$ give the same system (4.5) for $w$. Thus each old basis element acquires $p^d$ lifts. Induction produces the basis (4.4) and rank $p^{nd}$.
+Suppose the chart algebra $A_r$ has been constructed through the first
+$r$ digits. Write the next universal lift as $z+p^rw$. Substitution
+into (4.3), division of the defect by $p^r$ at the torsion-free
+crystalline level, and reduction modulo $p$ give the same coupled monic
+system (4.5) in the new variables $w_1,\ldots,w_d$, with coefficients
+in $A_r$. Therefore
 
-The transition algebra from one crystalline chart to another is obtained by divided-power Taylor transport. Its determinant is a unit because it is the identity on the associated highest-term basis. Hence the finite free chart algebras descend. A normal-basis change conjugates the equations and preserves the reduced-monomial filtration. Witt base change carries $U$ to the same invertible matrix and all divided-power polynomials to their scalar extensions. $\square$
+$$
+A_{r+1}=A_r[w_1,\ldots,w_d]/(R_{r,1},\ldots,R_{r,d}),
+$$
+
+where the $R_{r,i}$ have pairwise relatively prime leading monomials
+$w_i^p$. The same monic Gröbner argument makes $A_{r+1}$ free of rank
+$p^d$ over $A_r$, with basis
+$w_1^{a_1}\cdots w_d^{a_d}$ for $0\le a_i<p$. Induction, followed by
+the usual recombination of the $p$-adic digit variables into
+$X_1,\ldots,X_d$, produces exactly the basis (4.4) and rank $p^{nd}$.
+
+The group law is obtained by adding filtered Frobenius solutions; in a
+weight-one chart this is the divided-power logarithm of multiplication.
+The equations are stable under that law, so the descended algebra is a
+Hopf algebra.
+
+The transition algebra from one crystalline chart to another is
+obtained by divided-power Taylor transport. On the associated graded
+reduced-monomial basis its transition matrix is block triangular with
+unit diagonal. Hence the finite free chart algebras, their Hopf maps,
+and their identity sections satisfy effective syntomic descent. A
+normal-basis change conjugates the equations and preserves the
+reduced-monomial filtration. Witt base change carries $U$ and all the
+divided-power polynomials to their scalar extensions. $\square$
 
 The proof establishes local freeness, not just equality of geometric cardinalities. That distinction is indispensable for multiplicative and local--local special fibers.
 
 ### 4.4 Descent and independence of choices
 
-For a general admissible torsion object, choose a strict presentation
+For a general admissible torsion object killed by $p^n$, choose a strict
+presentation
 
 $$
 0\to L_1\xrightarrow{a}L_0\to M\to0.
 \tag{4.6}
 $$
 
-Applying the sheaf of solutions reverses it. The lifting lemma of Book 58 gives an exact sequence of sheaves
+The quotient map factors strictly through $L_0/p^nL_0\twoheadrightarrow
+M$. Its kernel is admissible: it is the strict quotient
+$a(L_1)/p^nL_0$, with the induced filtered structure, and the closure
+properties of the admissible category proved in Book 58 apply. Exactness
+from that book therefore gives an injection of geometric
+solution modules
 
 $$
-0\to\mathscr S_M\to\mathscr S_{L_0}	o\mathscr S_{L_1}\to0
+T_{\mathrm{FL}}(M)\lhook\joinrel\longrightarrow
+T_{\mathrm{FL}}(L_0/p^nL_0).
 \tag{4.7}
 $$
 
-in the appropriate finite-level interpretation. The kernel is taken after both free terms have been reduced to a common annihilating level.
-
-Different presentations admit a common strict refinement. On that refinement, exactness identifies their kernels canonically. The cocycle condition follows from uniqueness of the induced map on solutions. Thus the descended sheaf depends only on $M$.
-
-We write
+The finite étale subgroup on the left therefore sits in the generic
+fiber of the finite-flat group $\mathcal H_n(L_0)$ from Lemma 4.1.
+Define
 
 $$
-\mathcal G(M)=\mathscr S_M.
+\mathcal G(M)=
+\overline{T_{\mathrm{FL}}(M)}^{\,\mathcal H_n(L_0)},
 \tag{4.8}
 $$
 
-The next chapter proves that this notation names a finite-flat group scheme rather than only a sheaf.
+where the bar is schematic closure of the corresponding generic finite
+étale subgroup. Book 48 proves that this closure is a finite locally
+free closed subgroup.
+
+At this point (4.8) appears to depend on the presentation. It does not:
+two choices have the same marked generic group
+$T_{\mathrm{FL}}(M)$, and Raynaud full faithfulness over $W$ applies
+because $1<p-1$. The generic identity extends uniquely in both
+directions, and the extensions are inverse by generic-fiber
+faithfulness. The same argument extends every map induced on generic
+solutions and proves the cocycle condition. Thus (4.8) is a functor,
+well defined up to the unique isomorphisms appropriate to an
+anti-equivalence. The closure construction, rather than the raw kernel
+of a morphism between two finite-flat groups, is essential: Book 48
+shows that a raw scheme-theoretic kernel can have vertical torsion.
 
 ## 5. Representability and exactness
 
-The coordinate lemma handles free reductions. Torsion objects require kernels formed through strict presentations. This chapter proves that these kernels remain finite locally free and that the resulting construction is exact in the reversed direction.
+The coordinate lemma handles free reductions. For a general torsion
+object, taking the raw kernel attached to a strict presentation would be
+unsafe: a generically correct kernel of finite-flat groups can have
+vertical torsion. This chapter instead uses schematic closure and
+Raynaud rigidity to prove finite local freeness, independence, and exactness
+in the reversed direction.
 
 ### 5.1 Finite local freeness
 
-**Theorem 5.1 (representability).** For every $M\in\mathrm{MF}^{[0,1]}_{\mathrm{tor}}(W)$, the sheaf $\mathcal G(M)$ is represented by a finite locally free commutative $W$-group scheme. Moreover
+**Theorem 5.1 (integral model of the solution module).** For every
+$M\in\mathrm{MF}^{[0,1]}_{\mathrm{tor}}(W)$, the construction
+$\mathcal G(M)$ is a finite locally free commutative $W$-group scheme
+whose geometric generic points are canonically $T_{\mathrm{FL}}(M)$.
+Moreover
 
 $$
 |\mathcal G(M)|=p^{\ell_W(M)}.
 \tag{5.1}
 $$
 
-**Proof strategy.** Resolve $M$ strictly by free objects, represent the two solution sheaves by Lemma 4.1, and show that the map between them is faithfully flat onto its image. Strict solution lifting supplies formal smoothness at each finite torsion layer; the rank calculation then identifies the kernel as finite locally free.
+**Proof strategy.** Embed the generic solution module in the free
+finite-flat solution group supplied by Lemma 4.1 and take schematic
+closure. Saturation over the DVR proves flatness; Book 58's independent
+length calculation computes the rank.
 
-**Proof.** Choose (4.6) and a common level $p^n$. Lemma 4.1 represents the solution sheaves of $L_i/p^nL_i$ by finite locally free groups. The morphism induced by $a$ is a homomorphism between them. On every syntomic test algebra, strict lifting from Book 58 says that a solution on the kernel extends across the presentation; equivalently, the relevant map of solution sheaves is an epimorphism onto the quotient appearing in (4.7).
-
-On coordinate algebras, the local normal forms of Lemma 4.1 filter the
-map by level-one additive-polynomial maps. To calculate the kernel rank,
-put the underlying injection $a$ in Smith form over the DVR $W$. Its
-source and target have the same rank, and its elementary divisors are
-$p^{r_1},\ldots,p^{r_d}$ with
+**Proof.** Construction (4.8) and the closure theorem of Book 48 give
+finite local freeness. By definition its generic fiber is the finite
+étale group attached to $T_{\mathrm{FL}}(M)$. Book 58 proves
 
 $$
-\ell_W(M)=r_1+\cdots+r_d.
+|T_{\mathrm{FL}}(M)|=p^{\ell_W(M)}.
 \tag{5.2}
 $$
 
-The Smith bases need not be filtered Frobenius bases, so they are used
-only to filter the cokernel by length. After passing to a common strict
-free refinement, lower one positive $r_i$ at a time. Every resulting
-quotient has $W$-length one and inherits a strict filtered presentation.
-The level-one coordinate calculation of Lemma 4.1 says that the
-corresponding solution kernel is finite free of rank $p$. Induction shows
-that the full kernel algebra is finite projective of rank
-$p^{r_1+\cdots+r_d}=p^{\ell_W(M)}$. Over the local ring $W$ it is finite
-free. The Hopf ideal property follows because (4.7) is a kernel of group
-sheaves. Hence the kernel is a finite locally free commutative group
-representing $\mathscr S_M$. $\square$
+A finite locally free group and its characteristic-zero generic fiber
+have the same rank, so (5.1) follows. Independence of the embedding and
+functoriality were proved after (4.8) by Raynaud full faithfulness. No
+raw kernel has been declared flat, and the size formula is not being
+used as a substitute for saturation: flatness comes first from
+schematic closure. $\square$
 
 ### 5.2 The group law and generic fiber
 
 Addition of filtered Frobenius morphisms defines the group law. In weight one, this additive law is the logarithm of multiplication in the period thickening, so the atomic object $\mathbf1_n(1)$ gives $\mu_{p^n}$, not an additive infinitesimal group. The inverse is negation in the logarithmic coordinate, corresponding to multiplicative inversion.
 
-At the chosen geometric generic point, evaluation gives
+By the generic marking in (4.8), evaluation gives
 
 $$
 \mathcal G(M)(\overline K_0)
@@ -570,18 +756,29 @@ $$
 
 is faithfully flat exact.
 
-**Proof.** The solution functor gives exactness of (5.5) as syntomic sheaves by the strict lifting theorem of Book 58. Theorem 5.1 represents all three sheaves by finite locally free groups. A sheaf epimorphism between finite locally free group schemes is faithfully flat: on Hopf algebras, fiberwise surjectivity of the group map gives constant kernel rank, and the finite module criterion makes the target algebra locally free over the source Hopf algebra. Thus sheaf exactness is the declared finite-flat exactness. $\square$
+**Proof.** Book 58 gives the reversed exact sequence of generic
+solution modules. Functoriality of (4.8) extends its two maps uniquely
+to the three finite-flat models. Close the generic first term inside
+$\mathcal G(M)$. Its marked model is uniquely isomorphic to
+$\mathcal G(M'')$, so the first map in (5.5) is a finite-flat closed
+immersion. The represented quotient by this closure has generic module
+$T(M')$. Raynaud uniqueness identifies that quotient with
+$\mathcal G(M')$, and the quotient map is faithfully flat. Hence (5.5)
+is finite-flat exact. $\square$
 
 ### 5.4 Length and order
 
-The equality (5.1) agrees with the generic calculation
+The equality (5.1) is the integral form of the generic calculation
 
 $$
 |T_{\mathrm{FL}}(M)|=p^{\ell_W(M)}
 \tag{5.6}
 $$
 
-from Book 58. Neither equality is being used to prove the other: (5.1) comes from the reduced-monomial basis of the integral coordinate algebra, while (5.6) comes from the geometric solution calculation. Their agreement is an important audit against a lost connected component.
+from Book 58. For free reductions, Lemma 4.1 independently gives the
+same reduced-monomial rank. For a general object, saturation supplies
+flatness and (5.6) supplies the rank. Thus no connected component is
+lost, and no geometric special-fiber point count is used.
 
 For the two atomic lines,
 
@@ -644,12 +841,12 @@ Thus (6.2) is again an isomorphism. These calculations fix the Tate twist and ex
 
 ### 6.3 The local--local calculation
 
-Over an algebraic closure of $k$, a simple local--local Dieudonné factor killed by $p$ has a basis in which both Frobenius and Verschiebung are nilpotent and the Hodge step is neither an étale nor a multiplicative direct factor. Point counting on the special fiber is useless. Instead choose a normal basis of its lifted filtered module. Its solutions satisfy the coupled level-one system from Lemma 4.1.
+Over an algebraic closure of $k$, a local--local BT$_1$ factor of height two has a basis in which both Frobenius and Verschiebung are nilpotent and the Hodge step is neither an étale nor a multiplicative direct factor. Point counting on the special fiber is useless. Instead choose a normal basis of its lifted filtered module. Its solutions satisfy the coupled level-one system from Lemma 4.1.
 
-**Lemma 6.1 (local--local period calculation).** Let $\mathcal H/W$ be a finite-flat group killed by $p$ whose special-fiber Dieudonné module is simple local--local. Then (6.2) is an isomorphism.
+**Lemma 6.1 (local--local period calculation).** Let $\mathcal H/W$ be a finite-flat group killed by $p$ whose special-fiber Dieudonné module is a local--local BT$_1$ of height two. Then (6.2) is an isomorphism.
 
 **Proof.** After a faithfully flat unramified extension, choose a normal
-basis of $D(\mathcal H)$ and a basis of the simple Dieudonné module.
+basis of $D(\mathcal H)$ and a basis of its BT$_1$ Dieudonné module.
 Evaluation sends a geometric generic point to the solution vector obtained
 from its universal crystalline extension. Suppose this vector is zero.
 For every $y\in\mathcal H^D(\overline K_0)$, compatibility of crystalline
@@ -669,10 +866,10 @@ map is injective.
 
 The source has $|\mathcal H|=p^{\ell_WD(\mathcal H)}$ elements on the characteristic-zero geometric fiber. The target has the same number by the length formula of Book 58. Hence the injection is bijective. This cardinality argument is legitimate only after injectivity has been proved without counting special-fiber points. Faithfully flat descent removes the auxiliary residue-field extension. $\square$
 
-The same pairing argument does not use simplicity. Simplicity merely
-isolates why it is needed: special-fiber points cannot test injectivity in
-the local--local case, whereas Cartier duality on the characteristic-zero
-generic fiber can.
+The same pairing argument does not use the height-two hypothesis. The
+lemma isolates the first case in which special-fiber points cannot test
+injectivity, whereas Cartier duality on the characteristic-zero generic
+fiber still can.
 
 ### 6.4 The comparison theorem
 
@@ -781,8 +978,11 @@ with the direction dictated by contravariance.
 
 The logical order deserves explicit verification.
 
-1. Lemma 4.1 constructs an integral coordinate algebra directly from the divided Frobenius equations.
-2. Theorem 5.1 proves that this algebra represents a finite-flat group $\mathcal G(M)$.
+1. Lemma 4.1 constructs integral coordinate algebras for free reductions
+   directly from the divided Frobenius equations.
+2. Theorem 5.1 embeds every $T(M)$ in such a free solution group and
+   takes its saturated finite-flat closure, producing $\mathcal G(M)$
+   without declaring a raw kernel flat.
 3. Theorem 6.2 compares an independently supplied group with its filtered crystal.
 4. Only then does (7.3) place two existing filtered objects in the domain of Book 58's full-faithfulness theorem.
 
@@ -1004,13 +1204,16 @@ $$
 \tag{10.5}
 $$
 
-**Proof.** Crystalline Dieudonné theory commutes with PD base change, and the Hodge exact sequence commutes with flat base change. This proves (10.5), including both divided Frobenius maps. Apply the quasi-inverse $\mathcal G$ over $W'$ to obtain (10.4). Alternatively, Lemma 4.1 shows directly that the integral coordinate algebra and its reduced-monomial basis scalar-extend to $W'$. $\square$
+**Proof.** Crystalline Dieudonné theory commutes with PD base change, and the Hodge exact sequence commutes with flat base change. This proves (10.5), including both divided Frobenius maps. Apply the quasi-inverse $\mathcal G$ over $W'$ to obtain (10.4). Alternatively, Lemma 4.1 shows directly that the integral coordinate algebra and its reduced-monomial basis scalar-extend to $W'$, and schematic closure commutes with this flat extension of DVRs. $\square$
 
 No tensor formula for Frobenius fixed points is used in this proof.
 
 ### 10.3 Base change of generic realization
 
-Choose compatible embeddings of algebraic closures, so $G_{K_0'}\subset G_{K_0}$. The map left open in Book 58 is now an isomorphism:
+Assume in this subsection that $k'/k$ is finite. Then $K_0'/K_0$ is
+a finite unramified extension. Choose compatible embeddings of
+algebraic closures, so $G_{K_0'}\subset G_{K_0}$. The map left open in
+Book 58 is now an isomorphism:
 
 **Corollary 10.2.** There is a natural $G_{K_0'}$-equivariant isomorphism
 
@@ -1027,9 +1230,24 @@ This proof explains why (10.6) is integral: it compares two finite-flat groups b
 
 ### 10.4 Transitivity and infinite residue extensions
 
-For $k\subset k'\subset k''$, the base-change isomorphisms satisfy the cocycle identity. It holds on crystalline evaluations by associativity of tensor product and hence on groups by full faithfulness. For an infinite perfect extension $k'/k$, write $W(k')$ as the $p$-adic completion of the filtered union of Witt rings of finitely generated perfect subextensions. Finite presentation of $\mathcal G(M)$ descends it to one finite stage, and passage to the limit proves (10.4)--(10.6).
+For $k\subset k'\subset k''$, the base-change isomorphisms satisfy the
+cocycle identity. It holds on crystalline evaluations by associativity
+of tensor product and hence on groups by the anti-equivalence.
 
-The Galois subgroup in (10.6) depends on compatible embeddings, but a different choice conjugates both sides in the same way.
+The integral formulas (10.4)--(10.5) remain valid for an arbitrary
+extension of perfect fields, including an infinite one. Their proof is
+the direct PD base-change proof of Theorem 10.1; it does not require the
+false assertion that every Witt vector in $W(k')$ descends to a finite
+residue subextension. By contrast, (10.6) is a restriction statement
+for absolute Galois groups and is asserted here only for finite
+unramified extensions. For a general infinite perfect extension,
+$W(k')[1/p]$ need not embed in the chosen algebraic closure of $K_0$,
+so there need not be a subgroup $G_{K_0'}\subset G_{K_0}$ to which one
+could restrict.
+
+In the finite case the Galois subgroup in (10.6) depends on compatible
+embeddings, but a different choice conjugates both sides in the same
+way.
 
 ## 11. Unramified descent
 
@@ -1061,11 +1279,27 @@ Because $\delta$ commutes with Witt Frobenius, these conditions are type-correct
 2. a finite-flat $W'$-group with descent datum descends to a unique finite-flat $W$-group;
 3. a finite-flat generic representation with compatible generic descent datum descends together with its integral model.
 
-**Proof.** Finite faithfully flat descent applies to the underlying finite modules and to the first filtered submodules. The maps $\varphi_i$ descend because their graphs are stable under the datum; strong divisibility descends because the normal map becomes an isomorphism after the faithfully flat extension $W'/W$. Strict free presentations descend after taking a common finite free refinement.
+**Proof.** Affine faithfully flat descent applies to the finite Hopf
+algebra of a group and preserves finite projectivity. The multiplication,
+coproduct, unit, counit, antipode, and cocycle identities all descend.
+This proves assertion 2.
 
-Affine faithfully flat descent applies to the finite Hopf algebra of a group and preserves finite projectivity. The group laws and cocycle identities descend with the algebra. This proves the first two assertions independently.
+For assertion 1, apply $\mathcal G$ over $W'$ to the filtered descent
+datum. Contravariance reverses each arrow but not the cocycle after the
+standard reindexing by $\delta^{-1}$, so it gives a descent datum on
+$\mathcal G(M')$. Descend that group by assertion 2 to a finite-flat
+group $\mathcal H/W$ and put $M=\mathbf D_{\mathrm{FL}}(\mathcal H)$.
+The base-change isomorphism (10.5) and the upstairs anti-equivalence
+identify $W'\otimes_WM$ with $M'$, including the original datum.
+Uniqueness follows from faithful flatness. This argument also proves
+that admissibility descends; it does not assume that an arbitrarily
+chosen free presentation already carries compatible descent data.
 
-For the third, begin with an upstairs finite-flat model. Raynaud full faithfulness over $W'$ extends every generic comparison in the descent datum uniquely to the group. The cocycle holds integrally because it holds generically and generic fiber is faithful. Apply the second assertion. $\square$
+For assertion 3, begin with an upstairs finite-flat model. Raynaud full
+faithfulness over $W'$ extends every generic comparison in the descent
+datum uniquely to the group. The cocycle holds integrally because it
+holds generically and generic fiber is faithful. Apply assertion 2.
+$\square$
 
 ### 11.3 Galois descent and invariants
 
@@ -1113,7 +1347,10 @@ B^\vee=\operatorname{Hom}_A(B,A).
 \tag{12.2}
 $$
 
-It is a finite projective $B$-module through $(b\lambda)(x)=\lambda(bx)$. Define the **contravariant scalar extension** of $M$ by
+It is finite projective as an $A$-module and carries the natural
+$B$-action $(b\lambda)(x)=\lambda(bx)$. It need not be projective as a
+$B$-module unless the finite flat algebra has an additional Gorenstein
+hypothesis. Define the **contravariant scalar extension** of $M$ by
 
 $$
 B\boxtimes_AM=B^\vee\otimes_AM.
@@ -1122,7 +1359,9 @@ $$
 
 The filtration and divided Frobenius act on the $M$ factor. Finite projectivity preserves strict presentations and normal decompositions.
 
-**Proposition 12.1 (correct coefficient extension formula).** If $B$ is finite projective over $A$, then
+**Proposition 12.1 (correct coefficient extension formula).** If $B$
+is finite projective over $A$ and $B^\vee\otimes_AM$ is admissible,
+then
 
 $$
 T(B\boxtimes_AM)
@@ -1139,7 +1378,8 @@ T(B^\vee\otimes_AM)
 =\operatorname{Hom}_A(B^\vee,T(M)).
 $$
 
-For a finite projective $B$, evaluation gives the canonical isomorphism
+For the finite projective $A$-module $B$, evaluation gives the
+canonical isomorphism
 
 $$
 B\otimes_AT(M)\xrightarrow{\sim}
@@ -1153,7 +1393,10 @@ Thus extension of a stable Galois lattice corresponds to dual scalar extension o
 
 ### 12.3 Finite flat coefficient change
 
-**Theorem 12.2 (integral coefficient base change).** Let $A\to B$ be finite flat, let $M$ be an admissible $A$-object, and assume its strict presentations are finite projective over $A$. Then:
+**Theorem 12.2 (integral coefficient base change).** Let $A\to B$ be
+finite flat, let $M$ be an admissible $A$-object, and assume that $M$
+has a strict presentation whose free $W$-terms and filtered summands are
+finite projective as $A$-modules. Then:
 
 1. $B\boxtimes_AM$ is admissible and exact in $M$;
 2. its finite-flat group has generic points $B\otimes_AT(M)$;
@@ -1165,19 +1408,49 @@ Thus extension of a stable Galois lattice corresponds to dual scalar extension o
    \tag{12.5}
    $$
 
-4. the construction commutes with unramified ground-field base change and with Cartier duality, with the natural dual coefficient action.
+4. the construction commutes with unramified ground-field base change,
+   while Cartier duality exchanges tensor extension and contravariant
+   scalar extension:
 
-**Proof.** Over a finite ring, finite flat means finite projective. Tensoring with $B^\vee$ preserves the underlying and filtered exact sequences. The normal map is the tensor product of an isomorphism with a projective module and remains an isomorphism. This proves admissibility and exactness.
+   $$
+   (B\boxtimes_AM)^\vee\simeq B\otimes_AM^\vee,
+   \qquad
+   (B\otimes_AM)^\vee\simeq B\boxtimes_AM^\vee.
+   \tag{12.6}
+   $$
+
+**Proof.** A finite flat algebra is finite projective. As an
+$A$-module, $B^\vee$ is therefore finite projective. It is a direct
+summand of a finite free $A$-module, so tensoring the chosen presentation
+with $B^\vee$ preserves its injections, its filtered exact sequences,
+and finite $W$-freeness of its terms. The normal map is the tensor
+product of an isomorphism with a projective module and remains an
+isomorphism. This proves admissibility and exactness. The projectivity
+hypothesis is what prevents a hidden Tor term; finite flatness of
+$A\to B$ alone would not control an unrelated presentation of $M$.
 
 Part 2 is Proposition 12.1 followed by Theorem 8.1. For transitivity, finite-projective duality gives
 
 $$
 C^\vee_A\simeq C^\vee_B\otimes_BB^\vee_A
-\tag{12.6}
+\tag{12.7}
 $$
 
 as the adjoint form of $\operatorname{Hom}_A(C,A)\simeq
-\operatorname{Hom}_B(C,\operatorname{Hom}_A(B,A))$. Tensor with $M$. Ground-field base change commutes because all coefficient modules are constant for Witt Frobenius. Duality follows from the tensor--Hom adjunction and the perfect evaluation pairing. $\square$
+\operatorname{Hom}_B(C,\operatorname{Hom}_A(B,A))$. Tensor with $M$.
+Ground-field base change commutes because all coefficient modules are
+constant for Witt Frobenius. Finally, tensor--Hom adjunction and
+finite-projective biduality give
+
+$$
+\operatorname{Hom}_W(B^\vee\otimes_AM,E_W)
+\simeq B\otimes_A\operatorname{Hom}_W(M,E_W),
+$$
+
+and the same calculation with $B$ and $B^\vee$ interchanged gives the
+second identity in (12.6). The filtrations and divided Frobenius maps
+are the adjoint ones of Book 58, so these underlying-module
+isomorphisms are isomorphisms of divided filtered objects. $\square$
 
 The theorem is fully integral. No rational trace pairing is used to erase $B^\vee$.
 
@@ -1187,14 +1460,14 @@ If $B/A$ is finite étale, the trace pairing
 
 $$
 B\times B\to A,\qquad (x,y)\mapsto\operatorname{Tr}_{B/A}(xy)
-\tag{12.7}
+\tag{12.8}
 $$
 
 is perfect and canonically identifies $B\simeq B^\vee$. In that case
 
 $$
 B\boxtimes_AM\simeq B\otimes_AM,
-\tag{12.8}
+\tag{12.9}
 $$
 
 so the familiar tensor formula is correct.
@@ -1203,7 +1476,7 @@ For a ramified extension of coefficient DVRs, the trace dual is the inverse diff
 
 $$
 B^\vee\simeq\mathfrak D_{B/A}^{-1}.
-\tag{12.9}
+\tag{12.10}
 $$
 
 It is an invertible $B$-module but need not equal $B$ as a distinguished lattice inside $B\otimes_A\operatorname{Frac}(A)$. Choosing a generator of the inverse different gives a noncanonical identification; changing the generator rescales the integral lattice by a unit. Formula (12.3) retains the canonical object and prevents a hidden different from entering coefficient base change.
@@ -1337,14 +1610,38 @@ $$
 
 After choosing the customary level labels, this is the coefficient sequence for reductions of one free $\mathbf Z_p$-lattice.
 
-A finite free strongly divisible module $L$ supplies the system $M_n=L/p^nL$. Conversely, compatible strict presentations lift bases successively: the obstruction to lifting a basis lies in a finite free level-one module and vanishes because (14.1) is strict. The inverse limit
+A finite free strongly divisible module $L$ supplies the system
+$M_n=L/p^nL$. Conversely, use in (14.1) the quotient maps
+$M_{n+1}\twoheadrightarrow M_n$ obtained by taking the first index to
+be $1$. They are surjective, and associativity makes them an inverse
+system. Put
 
 $$
 L=\varprojlim_nM_n
 \tag{14.3}
 $$
 
-is finite free over $W$, its filtration is the inverse limit of the filtered steps, and its divided Frobenius is strongly divisible by passage to the limit.
+Choose a $k$-basis of $M_1$ and lift it successively through the
+surjections. Exactness of (14.1) shows by induction that
+$\ell_W(M_n)=n\dim_kM_1$ and that the resulting map
+$W^{\dim_kM_1}\to L$ is an isomorphism modulo every $p^n$. Completeness
+and separatedness make it an isomorphism. In particular $L$ is finite
+free and $L/p^nL=M_n$; no unrelated choice of a free presentation at
+each level is involved.
+
+Strictness gives the same inverse system on $F_{M_n}$. Its limit $F_L$
+and the limit of the quotients $M_n/F_{M_n}$ are finite free, and
+
+$$
+0\longrightarrow F_L\longrightarrow L\longrightarrow
+\varprojlim_n(M_n/F_{M_n})\longrightarrow0
+$$
+
+is exact. Hence $F_L$ is a direct summand. The maps $\varphi_0$ and
+$\varphi_1$ pass to the limit. After choosing a compatible complement,
+their normal maps are inverse systems of isomorphisms; their limit is
+therefore an isomorphism. Thus $L$ is strongly divisible and recovers
+the original system.
 
 ### 14.2 Recovering a stable lattice
 
@@ -1355,7 +1652,13 @@ T_p(L)=\varprojlim_nT_{\mathrm{FL}}(L/p^nL)
 \tag{14.4}
 $$
 
-with transition maps induced by (14.1). The finite-level rank calculation shows that $T_p(L)$ is finite free over $\mathbf Z_p$ of rank $\operatorname{rank}_WL$, and
+where the transition $T(L/p^{n+1}L)\twoheadrightarrow T(L/p^nL)$ is
+contravariantly induced by the strict injection
+$L/p^nL\xrightarrow{p}L/p^{n+1}L$. The exact sequences (14.2) show
+inductively that the inverse limit is $p$-torsion-free and complete,
+with a free rank-$\operatorname{rank}_WL$ reduction modulo every
+$p^n$. Topological Nakayama therefore makes $T_p(L)$ finite free of
+that rank, and
 
 $$
 T_p(L)/p^nT_p(L)
@@ -1365,7 +1668,22 @@ $$
 
 Continuity follows because every finite quotient is continuous and the action on the inverse limit is continuous for the $p$-adic topology.
 
-Conversely, suppose $T$ is a finite free $\mathbf Z_p$-module with continuous $G_{K_0}$-action and every $T/p^nT$ is finite flat. Theorem 8.1 gives a unique $M_n$ realizing each quotient. The coefficient maps among the quotients lift uniquely by full faithfulness. Exactness and essential surjectivity turn the usual coefficient sequences into (14.1). Thus $(M_n)$ comes from a unique free strongly divisible $L$, and $T=T_p(L)$.
+Conversely, suppose $T$ is a finite free $\mathbf Z_p$-module with
+continuous $G_{K_0}$-action and every $T/p^nT$ is finite flat. Theorem
+8.1 gives a unique $M_n$ realizing each quotient. The injection and
+quotient maps in
+
+$$
+0\longrightarrow T/p^mT\xrightarrow{p^n}
+T/p^{m+n}T\longrightarrow T/p^nT\longrightarrow0
+$$
+
+lift uniquely by full faithfulness. Theorem 8.1 applied to the supplied
+finite-flat middle term, followed by exactness of the anti-equivalence,
+turns these into (14.1); the identities among three levels lift because
+$T_{\mathrm{FL}}$ is faithful. The preceding inverse-limit argument
+then gives a unique free strongly divisible $L$, and (14.5) identifies
+$T$ with $T_p(L)$.
 
 **Theorem 14.1 (stable-lattice equivalence).** Finite free strongly divisible $W$-modules of weights $[0,1]$ are anti-equivalent to finite free $\mathbf Z_p$-lattices $T$ for which every quotient $T/p^nT$ is finite flat. The equivalence commutes with duality and unramified ground-field base change.
 
@@ -1403,7 +1721,11 @@ The general equivalence applies in every finite height, but the later arithmetic
 
 ### 15.1 Rank two and Hodge type zero--one
 
-Let $\mathcal O$ be a finite flat local $\mathbf Z_p$-algebra. A free strongly divisible module $L$ has **height two and Hodge type $(0,1)$** when it is free of rank two over $W\otimes_{\mathbf Z_p}\mathcal O$ and
+Let $\mathcal O$ be the ring of integers in a finite extension of
+$\mathbf Q_p$, and put
+$R_{\mathcal O}=W\otimes_{\mathbf Z_p}\mathcal O$. A coefficient-linear
+strongly divisible module $L$ has **height two and Hodge type $(0,1)$**
+when it is finite projective of rank two over $R_{\mathcal O}$ and
 
 $$
 \operatorname{rank}F_L=1,\qquad
@@ -1411,12 +1733,17 @@ $$
 \tag{15.1}
 $$
 
-over the appropriate coefficient components. Locally choose $L=We_0\oplus We_1$ with $F_L=We_1$. Strong divisibility says that
+as $R_{\mathcal O}$-modules. Locally on
+$\operatorname{Spec}R_{\mathcal O}$ choose
+$L=R_{\mathcal O}e_0\oplus R_{\mathcal O}e_1$ with
+$F_L=R_{\mathcal O}e_1$. With Frobenius $\sigma\otimes1$ on the
+coefficient ring, strong divisibility says that
 
 $$
 \varphi_0(e_0)=ae_0+ce_1,\qquad
 \varphi_1(e_1)=be_0+de_1,\qquad
-\begin{pmatrix}a&b\\c&d\end{pmatrix}\in\operatorname{GL}_2(W).
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\in\operatorname{GL}_2(R_{\mathcal O}).
 \tag{15.2}
 $$
 
@@ -1426,16 +1753,27 @@ The associated stable Galois lattice has rank two over $\mathcal O$, and every f
 
 ### 15.2 Ordinary and local--local fibers
 
-Modulo the maximal ideal, the special-fiber Dieudonné module has two geometric possibilities when it is a BT$_1$ of height two and dimension one.
+Let $\kappa$ be the residue field of $\mathcal O$. After extending $k$
+so that $k\otimes_{\mathbf F_p}\kappa$ splits, the residual coefficient
+idempotents decompose the special-fiber Dieudonné module into
+two-dimensional BT$_1$ factors of dimension one. Each factor has two
+geometric possibilities.
 
 * In the ordinary case it has an étale line and a multiplicative line. The filtered module may still be a nonsplit extension; ordinary does not mean that the mixed-characteristic group or its generic representation splits.
-* In the local--local case both Frobenius and Verschiebung are nilpotent on the simple plane. There is no étale or multiplicative direct factor, but the normal matrix (15.2) remains invertible and the generic representation still has two independent torsion directions.
+* In the local--local case both Frobenius and Verschiebung are nilpotent on that plane. There is no étale or multiplicative direct factor, but the normal matrix (15.2) remains invertible and the generic representation still has two independent torsion directions.
 
-These cases are stable under algebraic extension of the residue field. Over a nonalgebraically closed perfect field, unramified forms carry semilinear descent data and should not be collapsed to one chosen normal form.
+These cases are stable under algebraic extension of the residue field.
+Different coefficient factors can have different types; the unqualified
+word **ordinary** means that every factor is ordinary, while
+**local--local** means that every factor is local--local. Over a
+nonalgebraically closed perfect field, forms carry semilinear descent
+data and should not be collapsed to one chosen normal form.
 
 ### 15.3 Stable lines and reducible representations
 
-Let $T/p^nT$ contain a stable line $U$. Theorem 8.1 constructs the unique admissible quotient
+Let a finite coefficient quotient of $T$ contain a stable **line**
+$U$, meaning a rank-one direct summand over that quotient coefficient
+ring. Theorem 8.1 constructs the unique admissible quotient
 
 $$
 M_n\twoheadrightarrow Q_U,\qquad T(Q_U)=U.
@@ -1448,15 +1786,35 @@ If the stable lines are compatible in $n$, uniqueness makes the quotients $Q_{U,
 
 ### 15.4 A height-two equivalence theorem
 
-**Theorem 15.1 (height-two integral package).** Let $p>2$, let $K_0=W(k)[1/p]$ with $k$ perfect, and let $\mathcal O$ be finite flat local over $\mathbf Z_p$. The following data are equivalent, with arrows reversed on the filtered side:
+**Theorem 15.1 (height-two integral package).** Let $p>2$, let
+$K_0=W(k)[1/p]$ with $k$ perfect, and let $\mathcal O$ be the ring of
+integers in a finite extension of $\mathbf Q_p$. The following data are
+equivalent, with arrows reversed on the filtered side:
 
 1. a height-two strongly divisible $W\otimes\mathcal O$-lattice of Hodge type $(0,1)$;
-2. a rank-two $\mathcal O$-stable $G_{K_0}$-lattice whose every open-ideal quotient is finite flat and whose filtered Hodge numbers are $(1,1)$;
-3. a compatible system of coefficient-linear finite-flat group schemes representing all quotients $T/IT$.
+2. a rank-two $\mathcal O$-stable $G_{K_0}$-lattice whose every
+   open-ideal quotient is finite flat and whose uniquely attached
+   divided filtered objects have a rank-one Hodge step and rank-one
+   quotient over the corresponding coefficient ring;
+3. a compatible system of coefficient-linear finite-flat group schemes
+   representing $T/IT$ for all open ideals $I\subset\mathcal O$, whose
+   contravariant filtered crystals have that same Hodge type.
 
-The equivalence preserves unramified base change, duality, perfect alternating pairings, determinant, stable lines, and ordinary or local--local special-fiber type.
+The equivalence preserves unramified base change, duality, perfect
+alternating pairings, stable lines, and each coefficientwise ordinary
+or local--local special-fiber type. A supplied perfect alternating
+pairing forces the cyclotomic determinant as in Section 9.4.
 
-**Proof.** The equivalence of the first two data is Theorem 14.1 with coefficients transported by Chapters 12--13. The second datum gives the third by Theorem 13.1, and the groups recover the filtered objects through $\mathbf D_{\mathrm{FL}}$. Compatibility in $I$ is (13.6), so the construction is independent of choices. Duality and pairings are Chapter 9, base change is Chapter 10, and special-fiber type is read from Frobenius and Verschiebung on the crystalline module. $\square$
+**Proof.** The equivalence of the first two data is Theorem 14.1 with
+the commuting $\mathcal O$-action transported by full faithfulness as
+in Section 9.3. No trace self-duality of $\mathcal O/\mathbf Z_p$ is
+needed merely to retain an existing action. The second datum gives the
+third by Theorem 13.1, and the groups recover the filtered objects
+through $\mathbf D_{\mathrm{FL}}$. Compatibility in $I$ is (13.6), so
+the construction is independent of choices. Duality and pairings are
+Chapter 9, base change is Chapter 10, and each special-fiber factor is
+read from Frobenius and Verschiebung on the crystalline module.
+$\square$
 
 The Hodge-number condition in item 2 means that the associated integral filtered object has (15.1); it is not inferred from the abstract mod-$p$ representation alone.
 
@@ -1489,8 +1847,8 @@ Theorem 14.1 begins with a chosen stable lattice whose all reductions are finite
 | divided filtered category | $W=W(k)$, $k$ perfect | missing canonical semilinear Frobenius |
 | mixed weight $[0,1]$ | $p>2$ | loss of strict small-weight contraction |
 | group-crystal strong divisibility | actual finite-flat lift and Hodge step | arbitrary special-fiber filtration |
-| solution representability | admissible strict presentation | nonflat kernel or artificial torsion filtration |
-| local coordinate rank | invertible normal matrix | lost solutions or vertical torsion |
+| free solution representability | free reduction and invertible normal matrix | lost solutions in a coordinate chart |
+| general integral solution model | strict presentation, saturated closure, and $e<p-1$ rigidity | nonflat raw kernel or presentation dependence |
 | integral period comparison | all étale, multiplicative, and local--local factors | proof by endpoint factors only |
 | reconstruction from generic fiber | $e=1<p-1$ | multiple integral models |
 | unramified base change | Witt extension of perfect fields | changed ramification and divisibility |
@@ -1515,7 +1873,9 @@ All three integral languages are now interchangeable in the safe range. This fin
    \tag{17.1}
    $$
 
-2. The quasi-inverse represents the syntomic solution sheaf, and
+2. On free reductions the quasi-inverse represents the syntomic
+   solution sheaf; for every admissible torsion object it is the unique
+   finite-flat model of the geometric solution module, and
 
    $$
    \mathcal G(M)(\overline K_0)=T_{\mathrm{FL}}(M),
@@ -1533,18 +1893,30 @@ All three integral languages are now interchangeable in the safe range. This fin
    \tag{17.3}
    $$
 
-   and generic realization commutes with restriction to $G_{W(k')[1/p]}$.
-6. Unramified descent data are effective and are detected equally on groups, filtered modules, or generic representations with a supplied upstairs model.
-7. For a finite projective coefficient extension $A\to B$, the operation corresponding to $B\otimes_A-$ on Galois modules is
+   For finite $k'/k$, generic realization also commutes with restriction
+   to $G_{W(k')[1/p]}$.
+6. Finite unramified descent data are effective and are detected equally
+   on groups, filtered modules, or generic representations with a
+   supplied upstairs model.
+7. For a finite projective coefficient extension $A\to B$, whenever
+   the displayed scalar object is admissible, the operation
+   corresponding to $B\otimes_A-$ on Galois modules is
 
    $$
    B\boxtimes_AM=B^\vee\otimes_AM.
    \tag{17.4}
    $$
 
-8. For every coefficient ideal $I$, the quotient $T(M)/IT(M)$ is represented by the unique admissible subobject $M[I]_{\mathrm{adm}}\hookrightarrow M$. These objects are functorial and compatible for nested ideals and unramified base change.
-9. Finite free strongly divisible lattices are anti-equivalent to stable $\mathbf Z_p$-lattices all of whose finite reductions are finite flat. With finite flat coefficients, every open-ideal quotient belongs to one canonical compatible system.
-10. In rank two and Hodge type $(0,1)$, the equivalence preserves ordinary and local--local type, stable lines, perfect alternating pairings, and cyclotomic determinant.
+8. If a finite commutative $\mathbf Z_p$-algebra $A$ acts on $M$, then for every ideal $I\subset A$ the quotient $T(M)/IT(M)$ is represented by the unique admissible subobject $M[I]_{\mathrm{adm}}\hookrightarrow M$. These objects are functorial and compatible for nested ideals and unramified base change.
+9. Finite free strongly divisible lattices are anti-equivalent to stable
+   $\mathbf Z_p$-lattices all of whose finite reductions are finite
+   flat. If the lattice is finite free over the ring of integers
+   $\mathcal O$ in a finite extension of $\mathbf Q_p$, every
+   open-ideal quotient belongs to one canonical compatible system.
+10. In rank two and Hodge type $(0,1)$, the equivalence preserves
+    coefficientwise ordinary and local--local type, stable lines, and
+    perfect alternating pairings. When such a pairing is supplied, it
+    forces the cyclotomic determinant.
 
 **Proof.** Parts 1--2 are Theorems 7.1, 5.1, and 6.2. Part 3 is Theorem 8.1 and Section 8.2. Duality and coefficients are Chapter 9. Ground-field base change and descent are Theorems 10.1 and 11.1. Coefficient extension is Theorem 12.2. Nonflat quotients are Theorem 13.1. Stable lattices are Theorem 14.1, and height two is Theorem 15.1. $\square$
 
@@ -1552,11 +1924,24 @@ All three integral languages are now interchangeable in the safe range. This fin
 
 The proof uses the direct prerequisites in the following exact forms.
 
+* Book 47 supplies schematic Cartier duality, its exactness, the
+  perfect evaluation pairing, and the Tate-twisted formula on an étale
+  generic fiber.
 * Book 48 supplies the finite étale--Galois correspondence, the definition of a marked finite-flat model, exactness of generic points, schematic closure of stable subgroups, represented finite-flat quotients, coefficient actions on models, and the warning that existence and uniqueness differ.
 * Book 55 supplies the modified first filtration, integral divided Frobenius, the weight-zero and weight-one fundamental exact sequences, divided-power logarithm and exponential, syntomic descent, coefficient-level exact sequences, and unramified pullback of period constructions.
 * Book 58 supplies the category of admissible torsion divided filtered modules, normal decompositions, the small-weight lifting lemma, exactness and full faithfulness of $T_{\mathrm{FL}}$, its length formula, duality, coefficients, and the comparison map under unramified ground-field extension.
 
-Two transitive inputs were verified in their earlier sources. Book 57 proves finite Dieudonné classification over a perfect field, exactness and PD base change of crystalline Dieudonné theory, the Hodge description for degree-one crystals, and Raynaud full faithfulness when $e<p-1$. Over $W$ this inequality is (1.3). Ordinary background supplies finite projective descent, Nakayama's lemma, tensor--Hom adjunction, inverse limits of finite free modules, and the finite locally free criterion for Hopf algebras.
+Two transitive inputs were verified in their earlier sources. Book 57
+proves finite Dieudonné classification over a perfect field, exactness,
+Cartier duality, and PD base change of crystalline Dieudonné theory,
+the Hodge description for abelian degree-one crystals, and Raynaud full
+faithfulness when $e<p-1$. Over $W$ this inequality is (1.3). The
+Hodge step for an arbitrary finite-flat lift and its strong divisibility
+are constructed in Chapter 3 of this book; they are not attributed to
+the abelian comparison of Book 57. Ordinary background supplies finite
+projective descent, Nakayama's lemma, tensor--Hom adjunction, inverse
+limits of finite free modules, and the finite locally free criterion for
+Hopf algebras.
 
 No later book, ramified classification theorem, or rational comparison theorem is used to prove (17.1).
 
@@ -1577,10 +1962,20 @@ For a finite torsion representation or a stable lattice, the following order avo
 
 ### 17.4 Conclusion
 
-In the absolutely unramified low-weight range, divided filtered modules are not merely a faithful linear shadow of finite-flat geometry. Their syntomic equations possess finite locally free integral coordinate algebras, and every finite-flat group supplies exactly such a module through its crystalline extensions and Hodge step. The integral period comparison identifies the geometric generic points with the solutions of divided Frobenius. Raynaud rigidity then turns that comparison into mutually inverse constructions.
+In the absolutely unramified low-weight range, divided filtered modules
+are not merely a faithful linear shadow of finite-flat geometry. The
+syntomic equations of free reductions possess finite locally free
+integral coordinate algebras; saturated closure inside those groups
+gives every torsion object its unique finite-flat model. Conversely,
+every finite-flat group supplies a divided filtered module through its
+crystalline extensions and its correctly oriented Hodge step
+$\omega_{\mathcal G}$. The integral period comparison identifies the
+geometric generic points with the solutions of divided Frobenius.
+Raynaud rigidity then turns that comparison into mutually inverse
+constructions.
 
 The resulting anti-equivalence explains every arrow. A finite-flat subgroup becomes a filtered quotient; a finite-flat quotient becomes a filtered subobject; Cartier duality exchanges weights zero and one; and two contravariant functors recover the covariant generic-point representation. Local--local groups are retained because rank is proved on the coordinate algebra rather than guessed from special-fiber points.
 
-Base change is equally integral. Extending the perfect residue field commutes with the group and its filtered crystal, so the generic realization really does restrict to the enlarged unramified field. Extending a coefficient ring follows a different rule: contravariance inserts the finite-projective dual. Nonflat coefficient reduction is controlled by the admissible annihilator, constructed from an actual finite-flat quotient and characterized by its generic module.
+Base change is equally integral. Extending the perfect residue field commutes with the group and its filtered crystal. For a finite residue extension, the generic realization is the restriction to the corresponding enlarged unramified Galois group. Extending a coefficient ring follows a different rule: contravariance inserts the finite-projective dual. Nonflat coefficient reduction is controlled by the admissible annihilator, constructed from an actual finite-flat quotient and characterized by its generic module.
 
-Finally, a stable lattice is recovered from all its finite levels, and every open-ideal quotient belongs to one compatible system. In height two with Hodge type $(0,1)$, this system records ordinary and local--local specialization, reducible lines and their extension classes, duality, and cyclotomic determinant. These are precisely the integral classification, base-change, and compatible-quotient tools needed to carry finite flatness through changes of coefficients without pretending that rational data determine a lattice.
+Finally, a stable lattice is recovered from all its finite levels, and every open-ideal quotient belongs to one compatible system. In height two with Hodge type $(0,1)$, this system records coefficientwise ordinary and local--local specialization, reducible lines and their extension classes, duality, and the cyclotomic determinant forced by a supplied perfect alternating pairing. These are precisely the integral classification, base-change, and compatible-quotient tools needed to carry finite flatness through changes of coefficients without pretending that rational data determine a lattice.
