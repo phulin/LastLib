@@ -509,6 +509,8 @@ $$
 
 where $\operatorname{Br}(L/K)$ is the kernel of restriction $\operatorname{Br}(K)\to\operatorname{Br}(L)$. The generator matters: replacing $\sigma$ by $\sigma^r$ changes the numerical invariant by the inverse of $r$ modulo $n$. This dependence is precisely why Frobenius normalization must be fixed.
 
+For completeness, surjectivity onto the relative Brauer group is part of the assertion and is not being hidden in the word “cyclic.” Let $A$ be central simple over $K$ and split by $L$, and choose $A\otimes_KL\cong\operatorname{End}_L(V)$. A lift of the semilinear action of $\sigma$ is an invertible semilinear operator $T$ on $V$, unique up to an $L$-linear scalar after changing the splitting. The operator $T^n$ is $L$-linear and commutes with the full matrix algebra, so it is multiplication by some $a\in K^\times$. Descent with respect to $T$ identifies $A$, up to a matrix factor, with $(L/K,\sigma,a)$. Replacing $T$ by $bT$ changes $a$ to $N_{L/K}(b)a$, and every change of splitting has this form after an inner conjugation. Thus the parameter is unique modulo norms, proving both surjectivity and injectivity of the displayed map. This is the cyclic specialization of the crossed-product descent written out for a general Galois group in Section 4.5.
+
 ### 3.5 The unramified cyclic computation
 
 Let $L/K$ be unramified of degree $n$ and let $\sigma=\operatorname{Frob}_{L/K}$ be arithmetic Frobenius. Units are norms and valuations of norms are multiples of $n$, so
@@ -552,7 +554,7 @@ $$
 \operatorname{Nrd}_{D/K}:D^\times\to K^\times
 $$
 
-extends the ordinary determinant after passing to a splitting field. Define
+is obtained as follows. Over an algebraic closure, $D$ becomes $M_d$; a matrix presentation uses only finitely many coefficients and therefore descends to a finite splitting field $S/K$. For $x\in D$, take the determinant of its image in $M_d(S)$. A second matrix presentation differs after a common scalar extension by an inner automorphism, which leaves determinant unchanged. Galois conjugation also gives another presentation and therefore fixes the determinant, so it lies in $K$. This proves independence of $S$ and of the presentation. It also proves multiplicativity and shows that the resulting map extends the ordinary determinant after every splitting. The same construction applied to the characteristic polynomial defines the reduced characteristic polynomial. Define
 
 $$
 w_D(x)=\frac1d\,v_K(\operatorname{Nrd}(x)).
@@ -612,36 +614,170 @@ $$
 
 then terms belonging to different $i$ have values in different cosets modulo $\mathbf Z$. Among the terms in the least coset, scaling to value zero and reducing gives a $k$-linear relation among the residues of the $y_j$. Hence every coefficient in that coset vanishes; induction proves independence. Conversely, subtracting an appropriate $K$-linear combination of the $x_iy_j$ cancels the leading residue of any $z\in D$. Iteration raises the value without bound, and completeness gives a convergent expansion. Thus the $e_Df_D$ products form a $K$-basis and $[D:K]=e_Df_D$.
 
-Centrality sharpens the equality. Conjugation by a value-coset representative preserves $\mathcal O_D$ and induces an automorphism of the finite field $\overline D$. If two representatives have the same value modulo $\mathbf Z$, their quotient differs by a central scalar and a unit; conjugation by the residue of a unit is trivial because $\overline D$ is commutative. Thus there is a well-defined homomorphism
+Centrality sharpens the equality. Conjugation by an element of $D^\times$ preserves $\mathcal O_D$ and $\mathfrak P_D$, hence induces an automorphism of the finite field $\overline D$ fixing $k$. If $x$ and $y$ have the same value modulo $\mathbf Z$, then, after multiplying $xy^{-1}$ by a power of the central element $\pi$, it is a unit. Conjugation by its residue is trivial because $\overline D$ is commutative. Thus there is a well-defined homomorphism
 
 $$
-w_D(D^\times)/\mathbf Z
-\longrightarrow\operatorname{Gal}(\overline D/k).
+\theta:w_D(D^\times)/\mathbf Z
+\longrightarrow\operatorname{Gal}(\overline D/k). \tag{4.1}
 $$
 
-The fixed field of its image is $k$. To prove this, let $\bar z\in\overline D$ be fixed and lift its minimal polynomial over $k$ to a monic polynomial over $\mathcal O$. Hensel iteration in $\mathcal O_D$ gives a root $z$ reducing to $\bar z$, unique among roots with that residue. Conjugation by a unit of $\mathcal O_D$ preserves the polynomial and the residue of $z$, because $\overline D$ is commutative, so it fixes $z$. Conjugation by a representative of a value coset also preserves the residue by the fixedness of $\bar z$, and therefore fixes $z$ by the same uniqueness. The products used in the basis count above show that units and value representatives span $D$, so $z$ is central. Hence $z\in K$ and $\bar z\in k$.
+The decisive point is to prove, rather than presume, that this action is faithful and has fixed field $k$. We do this by constructing an inertial lift of $\overline D$ and then correcting conjugacy one valuation layer at a time.
 
-The image consequently has fixed field $k$, so it is all of the cyclic group $\operatorname{Gal}(\overline D/k)$. Thus $f_D\leq e_D$. On the other hand,
+**Graded-center lemma.** There is an unramified maximal subfield $E/K$ of $D$ with residue field $\overline D$ and an element $\Pi_D\in D^\times$ of least positive value such that
+
+$$
+\Pi_DE\Pi_D^{-1}=E.
+$$
+
+For this choice, conjugation by $\Pi_D$ induces a generator of $\operatorname{Gal}(\overline D/k)$. Consequently (4.1) is an isomorphism; in particular it is faithful and its fixed field in $\overline D$ is exactly $k$.
+
+**Proof.** We first lift the whole residue field. Choose a primitive element $\bar a$ of the finite separable extension $\overline D/k$, let $\bar p\in k[T]$ be its minimal polynomial, and choose a monic lift $p\in\mathcal O[T]$. Pick any $a_0\in\mathcal O_D$ reducing to $\bar a$. The subfield $K(a_0)$ is commutative and complete. In its valuation ring,
+
+$$
+p(a_0)\in\mathfrak P_D\cap K(a_0),
+\qquad
+p'(a_0)\in\mathcal O_D^\times,
+$$
+
+because $\bar p$ is separable. Ordinary Hensel lifting inside the commutative field $K(a_0)$ therefore gives $a\equiv a_0\pmod{\mathfrak P_D}$ with $p(a)=0$. Since $\bar p$ is irreducible, so is $p$, and
+
+$$
+E=K(a)
+$$
+
+is unramified of degree $f_D$ with residue field $k(\bar a)=\overline D$.
+
+Any separable commutative subfield of a central division algebra of degree $d$ has degree at most $d$: after extending scalars to a separable closure, its primitive idempotents embed as nonzero orthogonal idempotents in $M_d$, and there can be at most $d$ of them. Hence $f_D\leq d$. On the other hand,
 
 $$
 w_D(D^\times)\subseteq\frac1d\mathbf Z
 $$
 
-gives $e_D\leq d$, while $d^2=e_Df_D$ gives $f_D\geq d$. Therefore
+gives $e_D\leq d$, while $d^2=e_Df_D$ gives $f_D\geq d$. Thus
 
 $$
-e_D=f_D.
+e_D=f_D=d. \tag{4.2}
 $$
 
-In fact all intervening inequalities are equalities, so
+In particular, $E$ has degree $d$ and is a maximal commutative subfield.
+
+We next record and prove the close-conjugacy statement needed to make $E$ stable. Let $\phi,\psi:E\hookrightarrow D$ be two $K$-embeddings inducing the same map on residue fields. We claim that there is a $c\in1+\mathfrak P_D$ such that
 
 $$
-e_D=f_D=d.
+c\phi(x)c^{-1}=\psi(x)\qquad(x\in E). \tag{4.3}
 $$
 
-Choose a primitive element of $\overline D/k$ and lift its separable minimal polynomial to $\mathcal O[T]$. Newton iteration takes place inside the complete ring $\mathcal O_D$ because the derivative is a unit and the coefficients are central. It produces a root whose field $E\subset D$ is unramified of degree $d$. Since $[E:K]=d$ equals the degree of $D$, $E$ is a maximal commutative subfield and its centralizer in $D$ is $E$.
+Choose an element $\Pi$ of least positive value $1/d$, and set
 
-The residue-conjugation homomorphism is now a surjection between groups of the same order $d$, hence an isomorphism. Hensel uniqueness shows that conjugation carries each distinguished lift in $E$ to the distinguished lift of its residue conjugate, so every value representative normalizes $E$. A parameter $\Pi_D$ of least positive $D$-value therefore conjugates $E$ by a generator of $\operatorname{Gal}(E/K)$, hence by $F^s$ for some $s$ prime to $d$, where $F$ is arithmetic Frobenius. The elements
+$$
+\mathfrak P_D^r=\{x\in D:w_D(x)\geq r/d\}\qquad(r\geq1).
+$$
+
+These are the ordinary powers of $\mathfrak P_D$. We construct $c_r\in1+\mathfrak P_D$ such that, with $\phi_r=\operatorname{Ad}(c_r)\circ\phi$,
+
+$$
+\psi(x)-\phi_r(x)\in\mathfrak P_D^r
+\qquad(x\in\mathcal O_E). \tag{4.4}
+$$
+
+For $r=1$, take $c_1=1$; equality of the residue embeddings gives (4.4). Suppose $c_r$ has been constructed. Modulo $\mathfrak P_D^{r+1}$, the discrepancy
+
+$$
+\delta_r(x)=\psi(x)-\phi_r(x)
+$$
+
+descends to a $k$-derivation from $\overline E=\overline D$ to the $\overline E$-bimodule
+
+$$
+M_r=\mathfrak P_D^r/\mathfrak P_D^{r+1}.
+$$
+
+Indeed, multiplication by $\pi$ carries $\mathfrak P_D^r$ into $\mathfrak P_D^{r+d}\subseteq\mathfrak P_D^{r+1}$, so the discrepancy depends only on the residue class of $x\in\mathcal O_E$. Expanding it on a product and using (4.4) gives
+
+$$
+\delta_r(xy)=x\delta_r(y)+\delta_r(x)y
+$$
+
+in $M_r$; the two embeddings give the same left and right residue actions there. Every derivation of the finite separable field $\overline E/k$ into an $\overline E$-bimodule is inner. To verify this explicitly, choose a separability idempotent
+
+$$
+\sum_i a_i\otimes b_i\in\overline E\otimes_k\overline E,
+\qquad
+\sum_i a_ib_i=1,
+$$
+
+with
+
+$$
+\sum_i xa_i\otimes b_i=\sum_i a_i\otimes b_ix
+\qquad(x\in\overline E).
+$$
+
+Such an element is concrete here: since finite fields are Galois,
+
+$$
+\overline E\otimes_k\overline E
+\xrightarrow{\sim}
+\prod_{\tau\in\operatorname{Gal}(\overline E/k)}\overline E,
+\qquad
+x\otimes y\longmapsto(x\tau(y))_\tau.
+$$
+
+Take the idempotent that is $1$ in the identity component and $0$ in all the others. Its product under multiplication is $1$, and the displayed commutation identity follows componentwise.
+
+For a derivation $\delta$, applying $a\otimes b\mapsto a\delta(b)$ to the last identity shows, with $m=\sum_i a_i\delta(b_i)$, that
+
+$$
+\delta(x)=xm-mx.
+$$
+
+Thus $\delta(x)=tx-xt$ with $t=-m$.
+
+Apply this to $\delta_r$ and lift the resulting element of $M_r$ to $t_r\in\mathfrak P_D^r$. Put
+
+$$
+c_{r+1}=(1+t_r)c_r.
+$$
+
+Since $t_r^2\in\mathfrak P_D^{r+1}$,
+
+$$
+(1+t_r)\phi_r(x)(1+t_r)^{-1}
+\equiv\phi_r(x)+t_r\phi_r(x)-\phi_r(x)t_r
+\pmod{\mathfrak P_D^{r+1}}.
+$$
+
+The choice of $t_r$ cancels $\delta_r$, proving (4.4) with $r+1$. The infinite product of the factors $1+t_r$ converges because $t_r\in\mathfrak P_D^r$; its limit $c$ lies in $1+\mathfrak P_D$, and passage to the limit gives (4.3). This constructs and verifies every successive correction.
+
+Return to the embedded field $E$ above and let $\Pi$ have value $1/d$. Conjugation by $\Pi$ induces some $\tau\in\operatorname{Gal}(\overline D/k)$. The unramified classification gives a unique $\sigma\in\operatorname{Gal}(E/K)$ inducing $\tau$ on residues. The two embeddings
+
+$$
+x\longmapsto\Pi x\Pi^{-1},
+\qquad
+x\longmapsto\sigma(x)
+$$
+
+have the same reduction, so (4.3) supplies $c\in1+\mathfrak P_D$ for which
+
+$$
+c\Pi x\Pi^{-1}c^{-1}=\sigma(x).
+$$
+
+Replacing $\Pi$ by $\Pi_D=c\Pi$ preserves its least positive value and gives
+
+$$
+\Pi_Dx\Pi_D^{-1}=\sigma(x)\qquad(x\in E). \tag{4.5}
+$$
+
+It remains to prove that $\sigma$ has full order $d$. If its order were $m<d$, then $\Pi_D^m$ would centralize $E$. Here the centralizer of $E$ is exactly $E$, as can be checked directly after a separable scalar extension splitting $D$. The algebra $E$ then becomes a product of $d$ copies of the splitting field, acting on a $d$-dimensional space through $d$ nonzero orthogonal idempotents. Each idempotent has one-dimensional image, so the commuting matrices are precisely the diagonal matrices, a space of dimension $d$. Descending gives a centralizer of $K$-dimension $d$, already filled by $E$. Hence $\Pi_D^m\in E$. But $E/K$ is unramified, so every value on $E^\times$ is integral, whereas
+
+$$
+w_D(\Pi_D^m)=m/d\notin\mathbf Z.
+$$
+
+This contradiction proves that $\sigma$ has order $d$. By (4.2), both the source and target of (4.1) have order $d$, and the least positive value class maps to the generator induced by $\sigma$. Thus (4.1) is an isomorphism. Its image is the full Galois group of the finite field $\overline D/k$, whose fixed field is $k$. This proves all assertions. $\square$
+
+Let $F$ denote arithmetic Frobenius on $E/K$. By the lemma, conjugation by $\Pi_D$ acts as $F^s$ for some $s$ prime to $d$. The elements
 
 $$
 1,\Pi_D,\ldots,\Pi_D^{d-1}
@@ -653,9 +789,25 @@ $$
 \Pi_D^d=\pi.
 $$
 
-Consequently $D\cong(E/K,F^s,\pi)$.
+Consequently
 
-If $r$ is inverse to $s$ modulo $d$, the same Brauer class is represented as $(E/K,F,\pi^r)$; replacing the crossed-product generator verifies this, with any extra factor $\pi^d$ absorbed as a norm. This is the local cyclic presentation of every central division algebra.
+$$
+D\cong(E/K,F^s,\pi).
+$$
+
+If $r$ is inverse to $s$ modulo $d$, write $rs=1+td$. In the cyclic algebra $(E/K,F,\pi^r)$, if $z$ is its crossed-product generator, then
+
+$$
+\Pi'=\pi^{-t}z^s
+$$
+
+conjugates $E$ by $F^s$ and satisfies $(\Pi')^d=\pi$. It therefore gives an isomorphism
+
+$$
+(E/K,F,\pi^r)\cong(E/K,F^s,\pi)\cong D.
+$$
+
+This is the local cyclic presentation of every central division algebra, with both the residue action and the parameter normalization now determined.
 
 ### 4.3 Unramified splitting and the invariant
 
@@ -681,7 +833,22 @@ $$
 \operatorname{inv}_K(A_{r,d})=\frac rd\pmod{\mathbf Z}.
 $$
 
-If the same class is represented with denominator $md$, unramified base change and the tower relation replace $r/d$ by $mr/(md)$, so the value is independent of the presentation. Tensor products add the fractions. The splitting criterion says $A_{r,d}$ is split exactly when $d\mid r$, exactly when its proposed invariant is zero.
+We make independence of the denominator explicit. If $d\mid N$, the cyclic tower relation gives
+
+$$
+[A_{r,d}]=[A_{rN/d,N}]. \tag{4.6}
+$$
+
+To see the relation without using an invariant, inflate the crossed-product cocycle from
+$\operatorname{Gal}(K_d/K)$ to $\operatorname{Gal}(K_N/K)$. In the regular crossed-product module, the $N/d$ cosets of the subgroup give matrix units, while the product around one quotient cycle is still $\pi^r$. The inflated crossed product is therefore $M_{N/d}(A_{r,d})$; writing the same cocycle with the degree-$N$ Frobenius generator gives $A_{rN/d,N}$. Thus (4.6) is a Brauer equivalence proved at the algebra level.
+
+Any two denominators have a common multiple. Equation (4.6) therefore identifies the union of the relative groups split by unramified extensions with the direct limit
+
+$$
+\varinjlim_d\frac1d\mathbf Z/\mathbf Z=\mathbf Q/\mathbf Z.
+$$
+
+Tensor products of cyclic algebras multiply their parameters after passage to a common denominator, so they add the corresponding fractions. The splitting criterion says $A_{r,d}$ is split exactly when $d\mid r$, exactly when its proposed invariant is zero.
 
 When $\gcd(r,d)=1$, the algebra $A_{r,d}$ is visibly a division algebra. Write its elements uniquely as
 
@@ -696,7 +863,7 @@ $$
 w(x)=\min_i\left(v_{K_d}(x_i)+\frac{ri}{d}\right).
 $$
 
-The fractional parts $ri/d$ are distinct modulo $\mathbf Z$, so a nonzero sum has a unique least-valued term. In a product, the product of the two least terms remains uniquely least after using $zx=F(x)z$ and $z^d=\pi^r$. Hence $w(xy)=w(x)+w(y)$ and there are no zero divisors. A finite-dimensional central simple algebra without zero divisors is a division algebra. If $g=\gcd(r,d)$, the same argument after reducing the fraction shows that the underlying division algebra has degree $d/g$; the invariant is therefore naturally the reduced fraction $r/d$.
+The fractional parts $ri/d$ are distinct modulo $\mathbf Z$, so a nonzero sum has a unique least-valued term. In a product, the product of the two least terms remains uniquely least after using $zx=F(x)z$ and $z^d=\pi^r$. Hence $w(xy)=w(x)+w(y)$ and there are no zero divisors. A finite-dimensional central simple algebra without zero divisors is a division algebra. If $g=\gcd(r,d)$, equation (4.6), applied in a common unramified splitting field, identifies the Brauer class with that of $A_{r/g,d/g}$. The latter is a division algebra by the preceding argument, so the underlying division algebra has degree $d/g$; the invariant is therefore naturally the reduced fraction $r/d$.
 
 **Theorem 4.1 (local invariant theorem).** The preceding construction gives a canonical isomorphism
 
@@ -711,9 +878,22 @@ $$
 =n\operatorname{inv}_K(\alpha).
 $$
 
-**Proof.** Surjectivity follows because $A_{r,d}$ realizes $r/d$. The cyclic presentation just proved shows that every central division algebra has one of these classes. If its invariant is zero, the parameter is a norm and the cyclic splitting criterion makes it a matrix algebra; hence the invariant is injective.
+**Proof.** Surjectivity follows because $A_{r,d}$ realizes $r/d$. The cyclic presentation just proved shows that every central division algebra has one of these classes. The common-denominator relation (4.6) proves that the assigned fraction is independent of every presentation and that addition agrees with tensor product. If the invariant is zero, a common-denominator parameter is a norm and the cyclic splitting criterion makes the algebra a matrix algebra; hence the invariant is injective.
 
-It remains to verify restriction. First suppose $L/K$ is unramified of degree $m$. In $K_d\otimes_KL$, the common unramified part produces $g=\gcd(d,m)$ equal field factors. On each factor the relative arithmetic Frobenius is $F^m$, and rewriting it with the standard generator multiplies the numerator of $r/d$ by $m$. The matrix multiplicity from the $g$ factors does not change the Brauer class. Hence
+It remains to verify restriction. First suppose $L/K$ is unramified of degree $m$. Put
+
+$$
+g=\gcd(d,m),\qquad d'=d/g,\qquad m'=m/g.
+$$
+
+The algebra $K_d\otimes_KL$ is a product of $g$ copies of the unramified extension of $L$ of degree $d'$. The crossed-product generator cyclically permutes these factors. Taking a full corner removes that permutation matrix factor; going once around the resulting degree-$d'$ cycle applies relative arithmetic Frobenius and contributes the parameter $\pi^{m'r}$. Thus
+
+$$
+\operatorname{res}_{L/K}A_{r,d}
+\sim A^{\,L}_{m'r,d'},
+$$
+
+where the superscript indicates that the cyclic algebra is formed over $L$. This calculation includes both the common unramified factors and the change from base Frobenius to relative Frobenius. Hence
 
 $$
 \operatorname{inv}_L(\operatorname{res}A_{r,d})=m\frac rd.
@@ -1035,7 +1215,22 @@ $$
 G^{\mathrm{ab}}\cong\operatorname{Gal}(M/K),
 $$
 
-finite reciprocity for $L$ and $M$ gives the same quotient of $K^\times$. Their kernels are therefore equal.
+norm transitivity first gives the inclusion
+
+$$
+N_{L/K}(L^\times)
+=N_{M/K}\bigl(N_{L/M}(L^\times)\bigr)
+\subseteq N_{M/K}(M^\times).
+$$
+
+The fundamental-class isomorphism for $L/K$ shows that the first subgroup has index
+$|G^{\mathrm{ab}}|$. Finite reciprocity for the abelian extension $M/K$ shows that the second has index
+
+$$
+[M:K]=|G^{\mathrm{ab}}|.
+$$
+
+An inclusion of finite-index subgroups with equal index is equality. This proves norm limitation without anticipating the quotient-functoriality results of Chapter 9.
 
 **Theorem 5.3 (norm limitation).** For a finite Galois extension $L/K$ with maximal abelian subextension $M/K$,
 
@@ -1391,10 +1586,16 @@ Every upper ramification break of $G$ is an integer. In particular, if $G^m=1$, 
 **Proof.** We record the norm calculation, including the two facts often concealed under the names “Herbrand's theorem” and “abelian integrality.” For $\sigma\ne1$ put
 
 $$
-i(\sigma)=v_M(\sigma(\pi_M)-\pi_M),
+i(\sigma)=\min_{a\in\mathcal O_M}v_M(\sigma(a)-a).
 $$
 
-and set $G_t=\{\sigma:i(\sigma)\geq t+1\}$ for real $t\geq0$. Define
+Then $i(\sigma)=0$ outside inertia, while for $\sigma\in G_0$ one may compute it from any uniformizer:
+
+$$
+i(\sigma)=v_M(\sigma(\pi_M)-\pi_M).
+$$
+
+Set $G_t=\{\sigma:i(\sigma)\geq t+1\}$ for real $t\geq0$. Define
 
 $$
 \varphi(u)=\int_0^u\frac{dt}{[G_0:G_t]},
@@ -1422,7 +1623,7 @@ $$
 
 shows that $c_b$ is additive, because inertia acts trivially on residues. At $b=0$, the same argument with $\overline{\sigma(\pi_M)/\pi_M}$ gives an injection $G_0/G_1\hookrightarrow l^\times$. Thus the tame quotient is cyclic of order prime to $p$, and every positive quotient is an elementary abelian $p$-group. These elementary ramification facts have now been proved inside the present argument.
 
-Because $G$ is abelian, a residue Frobenius lift centralizes every ramification quotient. On the coordinates $c_b$ it acts semilinearly. If the resulting scalar is $\lambda\in l^\times$, the relation over one residue-Frobenius orbit has norm $1$; finite-field Hilbert 90 gives $\mu\in l^\times$ with $\lambda=\mu^{q-1}$. Replacing $c_b$ by $\mu c_b$ makes its image Frobenius-fixed. We may therefore regard that image as an additive subgroup of $k$, and similarly normalize the tame coordinate. This is the only descent from $l$ to $k$ used below.
+There is no need to choose a Frobenius lift or to force these coordinates to descend from $l$ to $k$. Let $E=M^{G_0}$ be the maximal unramified subextension. Compute first for the totally ramified extension $M/E$, whose source and target residue fields are both $l$. The subsequent norm $N_{E/K}$ is surjective on residue units and, on every positive unit layer, induces the surjective trace $l^+\to k^+$. It therefore introduces no new unit index. This two-stage calculation also avoids choosing a splitting of $G\to G/G_0$.
 
 We next justify the one-step norm calculation. For $x$ of positive valuation, expand
 
@@ -1433,22 +1634,22 @@ $$
 retain the first term at the relevant depth, and group the factors first by $G_{b+1}$ and then by $G_b/G_{b+1}$. Away from a break, the first nonzero term is linear with nonzero coefficient, so the induced map between the corresponding residue layers is bijective. At a positive break, conjugation changes the leading coefficient by translation through the finite additive subgroup
 
 $$
-C_b=c_b(G_b/G_{b+1})\subseteq k.
+C_b=c_b(G_b/G_{b+1})\subseteq l.
 $$
 
-After multiplying the source and target coordinates by nonzero residue scalars, the surviving polynomial is
+After multiplying the source and target coordinates by nonzero elements of $l$, the surviving polynomial is
 
 $$
 P_{C_b}(X)=\prod_{c\in C_b}(X+c).
 $$
 
-This is an additive polynomial. Indeed, for fixed $y$ the polynomial
+This is an additive polynomial on $l$. Indeed, for fixed $y$ the polynomial
 
 $$
 P_{C_b}(X+y)-P_{C_b}(X)-P_{C_b}(y)
 $$
 
-has degree less than $|C_b|$ in $X$ and vanishes at every $X\in C_b$, because translation by an element of $C_b$ permutes the factors. It is therefore zero. The kernel of $P_{C_b}$ on $k$ is exactly $C_b$. Because $k$ is finite, its image has index $|C_b|=|G_b/G_{b+1}|$. This is the point at which the finiteness of the residue field is essential; replacing $P_{C_b}$ by an ordinary trace sum would give the wrong kernel. At the tame break, the corresponding residue map is, up to nonzero scalars, the $|G_0/G_1|$th-power map on the cyclic group $k^\times$, and its image has index $|G_0/G_1|$.
+has degree less than $|C_b|$ in $X$ and vanishes at every $X\in C_b$, because translation by an element of $C_b$ permutes the factors. It is therefore zero. The kernel of $P_{C_b}$ on $l$ is exactly $C_b$. Because $l$ is finite, its image has index $|C_b|=|G_b/G_{b+1}|$. This is the point at which finiteness of the residue field is essential; replacing $P_{C_b}$ by an ordinary trace sum would give the wrong kernel. At the tame break, the corresponding residue map is, up to nonzero scalars, the $|G_0/G_1|$th-power map on the cyclic group $l^\times$, and its image has index $|G_0/G_1|$. Composing afterward with the unramified norm $E/K$ preserves these indices by the surjectivity just recalled.
 
 We now do the indexing rather than appeal to it. Suppose the lower group is constant and equal to $H$ on an interval of lower length $d$. Traversing that interval consumes $d$ source layers. The norm reaches one new target layer after $[G_0:H]$ source layers, so the number of target layers traversed is
 
@@ -1861,13 +2062,19 @@ $$
 
 for every normal subgroup $H$.
 
-For a finite Galois extension $L/K$ with group $G$, choose a uniformizer $\pi_L$ and define the lower function
+For a finite Galois extension $L/K$ with group $G$, define the lower function
 
 $$
-i_G(\sigma)=v_L(\sigma(\pi_L)-\pi_L)
+i_G(\sigma)=\min_{a\in\mathcal O_L}v_L(\sigma(a)-a)
 $$
 
-for $\sigma\ne1$, with the equivalent definition using all of $\mathcal O_L$. The lower groups are
+for $\sigma\ne1$. It is $0$ outside inertia. If $\sigma$ lies in inertia and $\pi_L$ is any uniformizer, then
+
+$$
+i_G(\sigma)=v_L(\sigma(\pi_L)-\pi_L),
+$$
+
+so the familiar uniformizer formula remains valid exactly where it is meant to be used. The lower groups are
 
 $$
 G_t=\{\sigma:i_G(\sigma)\geq t+1\}\qquad(t\geq0),
@@ -1886,7 +2093,20 @@ $$
 G^v=G_{\psi_{L/K}(v)}.
 $$
 
-Then $G^{-1}=G$, $G^0=I$, and $G^{0+}$ is wild inertia. We need this much of the ramification filtration solely to state the exact compatibility with units.
+Then $G^{-1}=G$, $G^0=I$, and $G^{0+}$ is wild inertia. We also need the quotient property, so we include its numerical proof. Let $H\triangleleft G$, put $E=L^H$, and write a bar for passage to $G/H$. For $\bar\sigma\ne1$, conjugate differences satisfy
+
+$$
+i_{E/K}(\bar\sigma)
+=\frac1{e(L/E)}\sum_{\tau\mapsto\bar\sigma}i_{L/K}(\tau). \tag{8.1}
+$$
+
+To verify (8.1), choose an integral generator for $E/K$, lift it through an integral generator of $L/E$, and factor the norm of its conjugate difference over the $H$-orbit. Taking valuations gives the displayed sum; restriction of normalized valuations supplies the factor $e(L/E)$. The minimum over integral generators is unchanged, so the formula is intrinsic. Sum (8.1) over the cosets surviving at a fixed lower depth. On each interval where the lower groups are constant, the numerator counts the elements of $G_tH/H$ and the denominator is $[G_0:G_t]$. Integrating these constant slopes and then applying the inverse Herbrand functions gives
+
+$$
+(G/H)^v=G^vH/H \tag{8.2}
+$$
+
+for every real $v\geq-1$. Thus upper numbering, unlike lower numbering, passes unchanged to quotient extensions. We need precisely (8.2) below to state the exact compatibility with units.
 
 ### 8.4 The unit and ramification theorem
 
@@ -1910,7 +2130,7 @@ For $n=0$ this is the inertia statement just proved. For $n\geq1$ it says that s
 
 $$
 [U_K^0:N_{L/K}(U_L^0)U_K^n]
-=[G^0:G^n]. \tag{8.1}
+=[G^0:G^n]. \tag{8.3}
 $$
 
 It remains to identify the subgroup, not only its order. Put $E=L^{G^n}$. Quotient compatibility of upper numbering gives
@@ -1931,7 +2151,7 @@ $$
 \operatorname{rec}_{L/K}(U_K^n)\subseteq G^n.
 $$
 
-On the other hand, (8.1) says
+On the other hand, (8.3) says
 
 $$
 [G^0:\operatorname{rec}_{L/K}(U_K^n)]

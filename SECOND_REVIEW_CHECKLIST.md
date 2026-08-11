@@ -28,7 +28,7 @@ any resulting corrections.
 - [x] 002. Finite Extensions of Local Fields
 - [x] 003. Ramification Theory
 - [x] 004. Adeles and Ideles
-- [ ] 005. Local Class Field Theory
+- [x] 005. Local Class Field Theory
 - [ ] 006. Global Class Field Theory
 - [x] 007. Analytic Foundations for Odlyzko–Poitou Bounds
 - [x] 008. Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers
