@@ -86,7 +86,7 @@ any resulting corrections.
 - [ ] 060. p-divisible Groups and Serre–Tate Theory
 - [ ] 061. Ramification and Discriminants of Finite-Flat Representations
 - [x] 062. Artinian and Complete Local Coefficient Rings
-- [ ] 063. Pseudocompact Trace Algebras and Carayol Descent
+- [x] 063. Pseudocompact Trace Algebras and Carayol Descent
 - [ ] 064. Deformation Functors of Representations
 - [ ] 065. Representability of Deformation Problems
 - [ ] 066. Local Deformation Conditions Away from (\ell)
