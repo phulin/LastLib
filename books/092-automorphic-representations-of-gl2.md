@@ -491,24 +491,59 @@ $$
 
 For a nonunitary central quasi-character, first remove its real norm power as in Section 3.2; the same estimate then holds for the normalized form, while the original form retains the prescribed scalar norm factor. Thus rapid decay concerns escape toward the parabolic cusp, not arbitrary escape along the center.
 
-**Proof strategy.** Expand along $F\backslash\mathbf A$. Cuspidality deletes the zero frequency. Every remaining frequency is nontrivial, so differentiation in the compact unipotent variable gains powers of its frequency. Conjugation by the diagonal turns frequency size into cusp height. Finite-level and $K_\infty$-finiteness make the estimates uniform.
+**Proof strategy.** At fixed finite level, the adelic unipotent fiber becomes a compact real torus. Cuspidality removes its zero mode. The diagonal height expands every invariant transverse derivative, so the torus Poincaré inequality gives an arbitrarily small cuspidal tail after enough derivatives. Sobolev embedding on fixed-height cylinders converts those tail estimates into pointwise rapid decay.
 
-**Proof.** Choose a nontrivial additive character $\psi:F\backslash\mathbf A\to\mathbf C^\times$. Fourier inversion gives
-
-$$
-\phi(n(x)g)=\sum_{\alpha\in F}W_\alpha(g)\psi(\alpha x),
-\qquad
-W_\alpha(g)=\int_{F\backslash\mathbf A}
-\phi(n(u)g)\psi(-\alpha u)\,du.
-$$
-
-The term $W_0$ is $\phi_N$ and vanishes. On a Siegel set write the diagonal coordinate as $a(y)$. Since
+**Proof.** Fix a finite level for $\phi$ and one of the finitely many cusp charts supplied by
+reduction theory. If $n=[F:\mathbf Q]$ and $H\ge H_0$ is the cusp height, the finite level turns
+the adelic unipotent fiber into a compact real torus
 
 $$
-a(y)^{-1}n(u)a(y)=n(y^{-1}u),
+\mathcal Y=\Lambda\backslash F_\infty
 $$
 
-differentiating in $u$ transfers a power of the archimedean size of $\alpha y$ to a fixed derivative of $\phi$. Integrating by parts gives arbitrary inverse powers. At finite places, the fixed level forces the coefficient to vanish unless $\alpha y$ lies in a fixed fractional lattice, and lattice counting is polynomial. Choosing more integrations than the counting exponent yields arbitrary decay. The same argument applies after $D$. $\square$
+for one of finitely many lattices $\Lambda$. Cuspidality says that the zero Fourier coefficient
+on every such fiber vanishes.
+
+Reduction by the norm-one torus keeps the remaining diagonal directions in a compact set. As a
+result, when the invariant transverse fields $X_1,\ldots,X_n$ are written in fixed torus
+coordinates, every nonzero Fourier character has frequency at least $cH^{1/n}$ in one of those
+fields. The constant $c>0$ is uniform because only finitely many cusp lattices occur. Fourier
+inversion and integration by parts therefore give, for every $r$ and every ordinary torus
+derivative $D_0$,
+
+$$
+\sup_{x\in\mathcal Y}|D_0\phi(n(x)g)|
+\le C_{r,D_0}H^{-r/n}
+\max_{|I|\le r+s}\sup_{x\in\mathcal Y}|X^I\phi(n(x)g)|,
+\tag{4.1}
+$$
+
+where $s>n/2$ is a fixed Sobolev loss. Indeed each nonzero coefficient gains the inverse $r$th
+power of its frequency, and the remaining series is summable after the extra $s$ derivatives.
+
+There is one analytic point needed to use (4.1). The definition gives moderate growth derivative
+by derivative, but $K_\infty$-finiteness and finiteness under the infinitesimal center upgrade it
+to one common polynomial exponent on a fixed automorphic representation. To see this, cover each
+logarithmic-height cylinder by uniformly bounded invariant charts. The finite set of
+$K_\infty$-types and a positive elliptic combination of the infinitesimal-center operators give
+an interior elliptic estimate that bounds every higher derivative on the middle cylinder by the
+supremum of finitely many generating derivatives on a slightly larger cylinder. Those finitely
+many derivatives have a common moderate-growth exponent $N$. Hence
+
+$$
+\sup_{x\in\mathcal Y}|X^I\phi(n(x)g)|\le C_IH^N
+$$
+
+for every $I$, with $N$ independent of $I$. Insert this in (4.1) and choose
+$r>n(M+N)$. The result is
+
+$$
+|D\phi(g)|\ll_{D,M}H(g)^{-M}.
+$$
+
+The compact part of a Siegel set is harmless, and there are finitely many cusp charts. No
+$L^2$ estimate has been used, so the rapid-decay theorem now implies square-integrability rather
+than assuming it. $\square$
 
 Consequently every cusp form of unitary central character is square integrable on $X_G$. Cuspidality does not make the quotient compact; it makes the function decay as if the missing boundary were infinitely far away.
 
@@ -537,15 +572,40 @@ where $E(f)$ is an Eisenstein series in a region of convergence. Hence cusp form
 
 ### 4.5 Poincaré series as a source of cusp forms
 
-Cuspidality can be built into a function. Let $h$ be smooth, compactly supported modulo $Z(\mathbf A)N(\mathbf A)$, transform under $N(\mathbf A)$ by $\psi$, and have sufficiently small finite support. Form
+Cuspidality can be built into a Poincaré series, but compact support by itself is not enough: one
+needs a seed with zero local Jacquet module. Choose a finite place $v_0$, a supercuspidal
+representation $\sigma$ of $G(F_{v_0})$ with trivial central character, and a
+compactly supported-modulo-center matrix coefficient $f_{v_0}$ of $\sigma$. Complete it to a
+factorizable smooth function $f=\otimes_vf_v$ on $G(\mathbf A)$, compactly supported modulo
+$Z(\mathbf A)$ and invariant under the center. Form
 
 $$
-P_h(g)=\sum_{\gamma\in N(F)\backslash G(F)}h(\gamma g).
+P_f(g)=\sum_{\gamma\in Z(F)\backslash G(F)}f(\gamma g).
 $$
 
-Properness and compact support make the sum locally finite. Its left $G(F)$-invariance is immediate. Averaging along $N(F)\backslash N(\mathbf A)$ and unfolding reduces its constant term to integrals of a nontrivial additive character; with the support chosen off the degenerate Bruhat contribution, these vanish. Thus $P_h$ is cuspidal.
+Discreteness of $G(F)$ and compactness of the support modulo the center make the sum locally
+finite, and left $G(F)$-invariance is immediate. To calculate a proper-parabolic constant term,
+insert the sum and unfold it by the two Bruhat cells. Every resulting orbital integral contains,
+at $v_0$, an integral of a translate of $f_{v_0}$ along the unipotent radical of a proper
+parabolic. Such an integral is zero: if one were nonzero, the matrix coefficient would define a
+nonzero functional on the Jacquet module of $\sigma$, contradicting supercuspidality. Hence every
+proper constant term of $P_f$ vanishes.
 
-Its first Whittaker coefficient unfolds to an integral of $h$ and can be made nonzero. This verifies concretely that the global Whittaker functional is not formal: the open Bruhat cell creates nonzero Fourier coefficients, while the closed Borel cell is exactly where constant terms live.
+The series can be made nonzero. Choose $f_{v_0}(1)\ne0$. The support of this local matrix
+coefficient is compact modulo the center. Discreteness of $G(F)/Z(F)$ in
+$G(\mathbf A)/Z(\mathbf A)$ then lets us shrink the compact supports at the remaining places so
+that the resulting global support meets no nonidentity rational translate at the identity. Thus
+$P_f(1)=f(1)\ne0$.
+
+At this stage $P_f$ is a nonzero smooth cuspidal $L^2$-vector; a compactly supported
+archimedean seed need not be finite under the infinitesimal center and therefore need not itself
+be an automorphic form in the narrower definition of Section 3.1. The discrete decomposition of
+Theorem 5.1 below gives a nonzero projection of $P_f$ to some irreducible cuspidal summand.
+Choose a nonzero smooth vector there that is $K_\infty$-finite and fixed by a compact open
+subgroup at the finite adeles. It is automatically finite under the infinitesimal center and is
+a cuspidal automorphic form. Its Fourier expansion has a nonzero Whittaker coefficient, since
+otherwise Theorem 8.1 would reconstruct it as zero. This supplies the cuspidal and generic
+objects used later without confusing a Poincaré seed with a finite automorphic vector.
 
 ### 4.6 Equivalent forms of the cusp condition
 
@@ -649,11 +709,28 @@ where $\pi$ runs over irreducible unitary representations of $G(\mathbf A)$ with
 
 **Proof strategy.** First freeze level and compact type so that the problem lives on a finite union of locally symmetric quotients. A positive elliptic operator from the archimedean center controls derivatives. Cuspidal rapid decay prevents mass from escaping into the cusps. Compact resolvent gives a discrete eigenspace decomposition, and commuting right translations assemble the eigenspaces into irreducible representations.
 
-**Proof.** Let $U\subset G(\mathbf A_f)$ be compact open and let $\tau$ be a finite set of $K_\infty$-types. On the $U$-fixed, $\tau$-isotypic cuspidal subspace, choose a positive elliptic combination $\Delta$ of Casimir operators. Local elliptic estimates control a Sobolev norm on compact truncations. The rapid-decay theorem controls the complement uniformly, so the inclusion of the first Sobolev domain into $L^2$ is compact. Hence $(1+\Delta)^{-1}$ is compact and has discrete spectrum with finite-dimensional eigenspaces.
+**Proof.** Let $U\subset G(\mathbf A_f)$ be compact open and let $\tau$ be a finite set of
+$K_\infty$-types. On the $U$-fixed, $\tau$-isotypic cuspidal subspace, choose a positive
+elliptic combination $\Delta$ of Casimir and compact-direction operators. Local elliptic
+estimates control a first Sobolev norm on compact truncations. In a cusp, the same mean-zero
+torus spectral gap used in the proof of Theorem 4.1, now in its $L^2$ Poincaré form, gives the uniform
+tail bound
 
-Taking the increasing union over $U$ and $\tau$, and decomposing the unitary action into irreducibles, gives the asserted Hilbert sum. Finite dimensionality of the frozen eigenspaces gives finite multiplicities and the stated local finiteness. $\square$
+$$
+\|u\|_{L^2(H\ge Y)}
+\le CY^{-1/[F:\mathbf Q]}\|u\|_{H^1(H\ge Y)}.
+$$
 
-Later strong multiplicity one will imply $m(\pi)=1$. It would be circular to use that here: discreteness and finite multiplicity are analytic facts, whereas multiplicity one uses the special Fourier theory of $\mathrm{GL}_2$.
+This estimate is uniform on the $H^1$ unit ball and over the finitely many cusps. Rellich
+compactness on a fixed truncation and uniform smallness of the tails therefore make the global
+inclusion of the first cuspidal Sobolev domain into $L^2$ compact. Hence
+$(1+\Delta)^{-1}$ is compact and has discrete spectrum with finite-dimensional eigenspaces.
+
+The compact-convolution argument of Section 5.6 converts these typewise compact embeddings into
+an actual Hilbert direct sum of irreducibles and proves finite multiplicity. The finite-dimensional
+frozen eigenspaces give the stated local finiteness. $\square$
+
+Later automorphic multiplicity one, proved from global Whittaker uniqueness, will imply $m(\pi)=1$. Strong multiplicity one is a different theorem: it recognizes a global representation from almost all local components and cannot by itself rule out two copies of the same representation. It would be circular to use automorphic multiplicity one here, since discreteness and finite multiplicity are analytic facts needed before the Whittaker argument can be applied to individual summands.
 
 ### 5.3 Admissibility of global constituents
 
@@ -693,66 +770,70 @@ Combining these projectors isolates the finite-dimensional shadows used in the d
 
 ### 5.6 Atomicity and finite multiplicity in detail
 
-The final sentence of the proof of Theorem 5.1 conceals a subtle point. A general unitary
-representation decomposes as a direct integral, not a direct sum. Compact resolvent at each fixed
-level and compact type must therefore be shown to eliminate both non-atomic measure and infinite
-multiplicity.
+The final sentence of the proof of Theorem 5.1 conceals a subtle point. Compact resolvent at
+fixed level and compact type must be converted into a representation-theoretic direct sum; it is
+not enough to invoke an unspecified direct-integral decomposition. The compact-convolution
+argument gives that conversion directly.
 
-Begin with the type-I direct-integral decomposition
+Let $\mathcal D$ be the convolution algebra generated by tensors $f_\infty\otimes f_f$ for
+which $f_\infty$ is smooth, compactly supported, and finite under left and right
+$K_\infty$-translation, while $f_f$ is compactly supported, locally constant, and bi-invariant
+under some compact open subgroup. On the cuspidal Hilbert space, $R(f)$ has image in one finite
+level and finitely many $K_\infty$-types. Differentiating under the integral gives
 
 $$
-L^2_{\rm cusp}(\omega)
-\cong\int_{\widehat G_\omega}^{\oplus}
-M_\rho\otimes\mathcal H_\rho\,d\mu(\rho),
+\|D R(f)u\|_2\le \|D_Lf_\infty\|_1\|f_f\|_1\|u\|_2.
 \tag{5.1}
 $$
 
-where $M_\rho$ is the multiplicity space. Fix a compact open $U_f$, a maximal-compact type
-$\tau$, and a bounded spectral interval $[0,L]$ for the positive elliptic operator used in
-Section 5.2. Let $P_{U_f,\tau,L}$ be the product of the level projector, the type projector, and
-the spectral projector. Compact resolvent makes $P_{U_f,\tau,L}$ finite rank.
+Thus $R(f)$ maps boundedly into the first cuspidal Sobolev space at those fixed types. The
+compact cuspidal embedding used in Section 5.2 shows that its inclusion back into $L^2$ is
+compact. Hence every $R(f)$ is compact.
 
-The operator is decomposable in (5.1):
+Let
 
 $$
-P_{U_f,\tau,L}
-=\int^{\oplus}
-1_{M_\rho}\otimes P_{\rho,U_f,\tau,L}\,d\mu(\rho).
+\mathfrak A=\overline{R(\mathcal D)}^{\|\cdot\|}.
+$$
+
+Then $\mathfrak A$ is a separable $C^*$-algebra of compact operators. It acts nondegenerately,
+because $\mathcal D$ contains an $L^1$ approximate identity whose right-convolution operators
+converge strongly to the identity.
+
+We use the elementary structure theorem for such an algebra. If $0\ne a\in\mathfrak A$ is
+positive, a continuous function supported away from zero produces by functional calculus a
+nonzero finite-rank projection in $\mathfrak A$. A minimal projection exists in its
+finite-dimensional corner. Group equivalent minimal projections and use the partial isometries
+between them as matrix units. A maximal orthogonal family of the resulting elementary ideals has
+zero annihilator; otherwise the same construction in the annihilator would produce another
+minimal projection. Separability makes the family countable. Therefore
+
+$$
+L^2_{\rm cusp}(\omega)
+\cong\widehat\bigoplus_\rho M_\rho\otimes\mathcal H_\rho,
 \tag{5.2}
 $$
 
-Suppose the set on which the fiber projector is nonzero contained a non-atomic subset of positive
-measure. Split that subset into infinitely many disjoint measurable pieces of positive measure.
-On each piece choose a measurable unit vector in the nonzero fiber and normalize its characteristic
-section. The resulting global sections are orthonormal and all lie in the range of
-$P_{U_f,\tau,L}$, contradicting finite rank. The same argument rules out infinitely many atoms
-contributing to one projector. Thus each triple $(U_f,\tau,L)$ detects only finitely many atoms.
+where $\mathfrak A$ acts on each summand as
+$1_{M_\rho}\otimes\mathcal K(\mathcal H_\rho)$. Each $M_\rho$ is finite dimensional: if it
+were infinite dimensional, $1_{M_\rho}\otimes b$ would fail to be compact for every nonzero
+finite-rank $b$.
 
-To show that no continuous part escapes all such projectors, choose a countable decreasing
-cofinal family of compact opens $(U_j)$ and enumerate the irreducible $K_\infty$-types
-$(\tau_k)$. Smooth finite-adelic vectors are dense in every nonzero irreducible unitary
-representation, so some $U_j$ fixes a nonzero vector. Peter--Weyl theory supplies a nonzero
-$\tau_k$-component. The increasing bounded spectral projectors exhaust that type space, so some
-integer $L$ detects it. Consequently the countable family
+Finally, invariant subspaces for $\mathfrak A$ are exactly invariant subspaces for
+$G(\mathbf A)$. One direction follows by integration. Conversely, left translates of an
+approximate identity belong to $\mathfrak A$: although a translate need not remain finite under
+the originally chosen left $K_\infty$-action, Peter--Weyl truncation on the two compact sides
+approximates it in $L^1$ by elements of $\mathcal D$, and the integrated representation is
+$L^1$-contractive. Moreover they satisfy
 
 $$
-\{P_{U_j,\tau_k,L}:j,k,L\ge1\}
+R(L_g\eta_j)u\longrightarrow R(g)u,
 $$
 
-has strong supremum equal to the identity. A non-atomic part invisible to every member would be
-invisible to their supremum and hence zero. Therefore $\mu$ is purely atomic and supported on a
-countable set.
-
-Now fix an atom $\rho$. Choose $(U_f,\tau,L)$ for which
-$P_{\rho,U_f,\tau,L}\ne0$. The global range contains
-
-$$
-M_\rho\otimes
-\operatorname{ran}P_{\rho,U_f,\tau,L}.
-$$
-
-The second factor is nonzero. Since the global range is finite dimensional, $M_\rho$ must be
-finite dimensional. This proves finite automorphic multiplicity. Notice that it does not prove
+so an $\mathfrak A$-invariant closed subspace is group invariant. The irreducible modules in
+(5.2) are therefore precisely irreducible unitary group representations, and equivalence for
+the algebra is equivalence for the group. This proves atomicity and finite automorphic
+multiplicity without importing an unproved type-I decomposition. It does not prove
 $\dim M_\rho=1$; that sharper statement requires the Whittaker argument of Chapter 9.
 
 We have proved the precise form of Theorem 5.1:
@@ -808,7 +889,10 @@ For almost every finite $v$, $\pi_v^{K_v}$ is one dimensional, and a choice of n
 
 Here $\pi^{\mathrm{fin}}$ denotes the vectors that are $K_\infty$-finite and fixed by some compact open subgroup of $G(\mathbf A_f)$.
 
-**Proof strategy.** The needed algebraic input is the factorization lemma for an irreducible admissible module over a restricted product: finite sets of local groups separate by the ordinary external-tensor-product theorem, while the hyperspecial tail is recovered from its commuting spherical Hecke characters. The local factors obtained for different finite sets are compatible, and their spherical lines supply the reference vectors. This route does not assume that an arbitrarily chosen global vector is already a pure tensor.
+**Proof strategy.** Apply the product-group factorization theorem to the irreducible unitary
+summand, then pass to its admissible smooth finite vectors. Compatibility as the finite set of
+places grows and the one-dimensional spherical lines produce the restricted tensor product.
+This route does not assume that an arbitrarily chosen global vector is already a pure tensor.
 
 **Proof.** We first record the restricted-product factorization lemma. Let
 
@@ -816,15 +900,49 @@ $$
 H=H_\infty\times\prod_{v<\infty}'(H_v,K_v)
 $$
 
-and let $V$ be an irreducible admissible module in the archimedean finite-vector and nonarchimedean smooth categories. Then there are unique irreducible admissible $V_v$, spherical with a one-dimensional $K_v$-fixed space for almost every finite $v$, such that
+and let $\mathcal V$ be an irreducible unitary representation whose archimedean finite-vector
+and nonarchimedean smooth module $V=\mathcal V^{\rm fin}$ is admissible. Then there are unique
+irreducible admissible $V_v$, spherical with a one-dimensional $K_v$-fixed space for almost every
+finite $v$, such that
 
 $$
 V\cong V_\infty\otimes\bigotimes_{v<\infty}'V_v.
 $$
 
-Here is the algebra behind the lemma. Choose a nonzero vector fixed by a product compact open $U=\prod_vU_v$, with $U_v=K_v$ outside a finite set $S$. The convolution algebra acting on the cyclic module is the directed union of the algebras obtained by allowing nontrivial kernels at only finitely many places. For a finite set $T\supset S$, its relevant finite-level quotient is a tensor product of the local convolution algebras at $T$ and the commuting spherical algebras outside $T$. Admissibility makes every compact-type shadow finite dimensional. On such a shadow, the ordinary double-commutant theorem separates the factors at the places in $T$; each unused spherical algebra acts through a character on an irreducible simultaneous summand. The spherical classification recovers from that character a unique irreducible spherical $V_v$ and its unique $K_v$-fixed line.
+Here is the algebra behind the lemma. For a finite set $T$ containing the archimedean places, write
 
-If $T$ is enlarged, the new decomposition restricts to the old one because the local convolution algebra at each previously isolated place and the algebra of its commuting complement are mutual commutants on every irreducible finite-level summand. Thus the $V_v$ are compatible as $T$ varies. Choosing $0\ne e_v\in V_v^{K_v}$ outside $S$, the transition from $T$ to $T\cup\{v\}$ is tensoring with $e_v$. The directed union is therefore $V_\infty\otimes\bigotimes'V_v$, and its map to the original cyclic module is nonzero and surjective. Its kernel is stable under every finite set of local convolution algebras; irreducibility of the finite tensor factors makes that kernel zero. This proves the lemma. The same mutual-commutant argument shows uniqueness: a second factorization has the same module for the local convolution algebra supported at $v$, hence the same $V_v$.
+$$
+H_T=\prod_{v\in T}H_v,
+\qquad
+H^T=\prod_{v\notin T}'(H_v,K_v).
+$$
+
+The product-group factorization theorem proved in the earlier global Whittaker package, and
+recalled in the direct global-newform prerequisite, applies to these admissible representations
+of products of local reductive groups. It gives
+
+$$
+\mathcal V\cong\mathcal V_T\widehat\otimes\mathcal V^T
+$$
+
+with both factors irreducible. Its local type-I and admissibility hypotheses are part of that
+proved theorem; scalarity of the joint commutant alone would not suffice for arbitrary groups.
+Iterating inside the finite product and then taking finite vectors gives
+
+$$
+V_T\cong\bigotimes_{v\in T}V_v.
+$$
+
+If $T\subset T'$, factor $\mathcal V^T$ once more. Uniqueness in the product-group theorem, equivalently Schur's lemma applied to the two commuting factor actions, shows that the already extracted $V_v$ do not change. Thus the local factors are compatible as $T$ grows.
+
+Choose a nonzero smooth vector. It is fixed by $K_v$ outside a finite set $S$. The compatible factorization of its cyclic span then gives $V_v^{K_v}\ne0$ for $v\notin S$. The spherical multiplicity-one theorem makes this line one dimensional; choose $0\ne e_v\in V_v^{K_v}$. Compatible finite tensor stages now give a nonzero equivariant map
+
+$$
+V_\infty\otimes\bigotimes_{v<\infty}'(V_v,e_v)
+\longrightarrow V^{\rm fin}.
+$$
+
+The source is irreducible: a nonzero vector lies in a finite tensor stage, finite-product irreducibility generates that stage, and acting at one new place generates the next. The image contains a cyclic smooth vector and is therefore all of $V^{\rm fin}$; irreducibility makes the kernel zero. This proves existence. If a second restricted factorization existed, currying an isomorphism while fixing nonzero vectors in every factor except one would produce a nonzero intertwiner between the two factors at that place. Schur's lemma makes it an isomorphism, proving uniqueness place by place.
 
 Apply the lemma to the irreducible finite-vector module of the cuspidal constituent $\pi$. Admissibility was proved in Section 5.3. We obtain the displayed factorization and one-dimensional spherical lines at almost every finite place. Completing the algebraic tensor product with the product inner product gives the Hilbert restricted tensor product, because the automorphic realization is unitary. $\square$
 
@@ -833,6 +951,8 @@ The proof explains both factorization and almost-everywhere unramifiedness. It i
 ### 6.3 Finite and archimedean local components
 
 At a finite place, $\pi_v$ is an irreducible admissible smooth representation of $\mathrm{GL}_2(F_v)$. It is therefore a principal-series constituent, a special representation, a supercuspidal representation, or one dimensional. A cuspidal global representation is infinite dimensional and generic, and its finite local components are generic; hence no finite component is one dimensional. The generic local possibilities are irreducible principal series, special representations, and supercuspidals.
+
+The classification sentence uses only the rank-one Jacquet alternative, not a classification of primitive supercuspidals. If the normalized Jacquet module $(\pi_v)_N$ vanishes, then $\pi_v$ is supercuspidal by definition. If it does not vanish, it has a character quotient $\chi_1\otimes\chi_2$ because the torus is abelian and the Jacquet module is finite dimensional. Normalized Frobenius reciprocity gives a nonzero map between $\pi_v$ and $I(\chi_1,\chi_2)$ in the appropriate direction. Irreducibility makes $\pi_v$ an irreducible constituent of that principal series. Away from the two reducibility ratios it is the irreducible principal series itself; at a reducibility ratio the constituents are a one-dimensional determinant character and a generic special representation. Global genericity excludes the first. This proves the stated list without attaching an inducing datum to an arbitrary supercuspidal representation.
 
 At an archimedean place, $\pi_v$ is an irreducible admissible representation of $\mathrm{GL}_2(\mathbf R)$ or $\mathrm{GL}_2(\mathbf C)$, with a unitary completion in the $L^2$ normalization. Principal series, limits, and discrete series may occur according to the infinity type. Holomorphic modular forms select lowest-weight discrete series at real places; general Maass forms usually select principal series.
 
@@ -984,9 +1104,14 @@ At a finite place the generic possibilities and their elementary invariants are 
 
 The table uses the unitary representation normalization. In the principal-series row, a ramified
 character contributes the factor $1$ to its degree-one local $L$-function, so the displayed
-product can have degree zero, one, or two. The supercuspidal factor is $1$ because an irreducible
-two-dimensional local parameter cannot have a nonzero inertia-fixed line: such a line would be
-stable under the whole Weil group by normality of inertia and would contradict irreducibility.
+product can have degree zero, one, or two. The assertion for every supercuspidal, including a
+primitive wild one for which no parameter has been invoked, follows directly from the zeta-ideal
+definition. Its Kirillov functions are compactly supported in $F_v^\times$ because the Jacquet
+module is zero. Their Mellin integrals are Laurent polynomials in $q_v^{-s}$,
+and translating a compactly supported unit-shell function produces every Laurent monomial. The
+generated fractional ideal is therefore the whole Laurent polynomial ring, whose normalized
+generator is $1$. In parameterized supercuspidal classes this agrees with the inertia-invariant
+definition, but the parameter is a compatibility check rather than an input to the general row.
 
 The conductor and standard factor do not classify the local representation. For instance, let
 $\chi_1$ and $\chi_2$ both have conductor one. The principal series has exponent two and standard
@@ -1334,13 +1459,36 @@ W_{\phi,\alpha}(g)
 =W_\phi\left(\begin{pmatrix}\alpha&0\\0&1\end{pmatrix}g\right).
 $$
 
-Set $x=0$. The rapid-decay estimates used in Chapter 4 imply rapid decay of the coefficients in the archimedean lattice directions, uniformly on compact sets and after differentiation. This justifies the displayed convergence. $\square$
+Set $x=0$. To justify this pointwise operation, fix a compact set of $g$ and a compact open
+subgroup fixing $\phi$ at the finite places. The finite Fourier integral forces $\alpha$ into one
+fixed fractional ideal. On the resulting compact archimedean torus let
+
+$$
+\Delta_N=1-\sum_{j=1}^{[F:\mathbf Q]}X_j^2
+$$
+
+for a basis of invariant unipotent fields. On the $\alpha$-character,
+$\Delta_N^r$ acts by a multiplier comparable to $(1+\|\alpha\|^2)^r$. Integration by parts on
+the torus gives
+
+$$
+|W_{\phi,\alpha}(g)|
+\le C_{r,K}(1+\|\alpha\|)^{-2r}
+\sup_{g'\in K'}|\Delta_N^r\phi(g')|.
+$$
+
+The enlarged set $K'$ is compact. Taking $2r>[F:\mathbf Q]$ makes the fractional-ideal sum
+absolutely and locally uniformly convergent. Applying the same estimate after a right-invariant
+derivative proves normal convergence of every derived series. $\square$
 
 In particular, $W_\phi=0$ implies $\phi=0$. The single Whittaker coefficient is not merely an invariant; on the cuspidal space it is a faithful coordinate system.
 
 ### 8.3 Global and local uniqueness
 
-Let $\pi$ be an irreducible cuspidal representation. A global Whittaker functional is a linear map
+Let $\pi$ be an irreducible cuspidal representation. A global Whittaker functional is the
+restriction to $\pi^{\mathrm{fin}}$ of a continuous linear functional on the smooth
+Casselman--Wallach globalization at infinity, with the usual inductive smooth topology at the
+finite adeles, such that
 
 $$
 \Lambda:\pi^{\mathrm{fin}}\longrightarrow\mathbf C,
@@ -1348,11 +1496,19 @@ $$
 \Lambda(\pi(n(x))v)=\psi(x)\Lambda(v).
 $$
 
-The integral above gives a nonzero one. Local Whittaker uniqueness says
+The integral above gives a nonzero continuous functional of this kind. Merely algebraic,
+possibly discontinuous functionals are not included; archimedean uniqueness would not justify a
+claim about that larger space. Local Whittaker uniqueness says
 
 $$
 \dim\operatorname{Hom}_{N(F_v)}(\pi_v,\psi_v)\le1.
 $$
+
+At a finite place this is the rank-one distribution theorem from the local $\mathrm{GL}_2$
+theory. At a real or complex place it is the Casselman--Wallach Whittaker multiplicity-one
+theorem used in the earlier global Whittaker package; continuity is understood in the smooth
+Fréchet topology. The archimedean assertion is not obtained by repeating the nonarchimedean
+Bruhat-cell argument without its regularity input.
 
 Every local component of a cuspidal representation is generic. To see this without assuming it, first write a vector on which $\Lambda$ is nonzero as a finite sum of pure tensors; at least one summand $v=\otimes_uv_u$ still has $\Lambda(v)\ne0$. For a chosen place $v$, holding every other factor fixed turns
 
@@ -1362,6 +1518,12 @@ w_v\longmapsto
 $$
 
 into a nonzero local Whittaker functional.
+
+This proves genericity for the chosen $\psi_v$. Every other nontrivial additive character has
+the form $x\mapsto\psi_v(ax)$ for some $a\in F_v^\times$, and conjugation by
+$\operatorname{diag}(a,1)$ transports a $\psi_v$-functional to a
+$\psi_v(a\,\cdot)$-functional. Hence genericity holds for every nontrivial local additive
+character, as asserted below.
 
 **Theorem 8.2 (global uniqueness and factorization).** The space of global Whittaker functionals on $\pi$ is one dimensional. After choosing nonzero local functionals $\lambda_v$ and normalizing them by $\lambda_v(e_v)=1$ at almost every unramified finite place,
 
@@ -1379,14 +1541,32 @@ $$
 
 **Proof strategy.** On each finite tensor stage, successive local uniqueness bounds a Whittaker functional by a tensor product of the local lines. The spherical normalization makes these finite-stage scalars compatible when a new unramified place is added. The restricted tensor product is the union of the finite stages.
 
-**Proof.** Fix a finite set $S$ containing the archimedean and ramified places. On
+**Proof.** First construct the product functional. At almost every finite place, the spherical
+generic representation has a unique Whittaker functional nonzero on its spherical line; scale it
+so that $\lambda_v(e_v)=1$. Choose any nonzero local functional at each exceptional place. Then
 
 $$
-\bigotimes_{v\in S}\pi_v\otimes
-\bigotimes_{v\notin S}\mathbf Ce_v,
+\Lambda^{\rm prod}\left(\bigotimes_vv_v\right)
+=\prod_v\lambda_v(v_v)
 $$
 
-equivariance under $N(F_v)$ for each $v\in S$ implies, one place at a time, that the restriction of $\Lambda$ lies in the tensor product of the one-dimensional spaces $\operatorname{Hom}_{N(F_v)}(\pi_v,\psi_v)$, with the reference vectors held fixed outside $S$. Hence it is a scalar multiple of $\otimes_{v\in S}\lambda_v$, evaluated as $1$ outside $S$. Enlarge $S$. At a spherical generic place the spherical vector has nonzero Whittaker value, so normalizing $\lambda_v(e_v)=1$ makes the old and new scalars agree. Thus the formula holds on the union of all finite stages and global uniqueness follows. $\square$
+is a well-defined $N(\mathbf A)$-equivariant functional on the algebraic restricted tensor
+product, since almost every factor is one on a reference tensor. It is continuous on each finite
+tensor stage, hence on the restricted smooth inductive limit.
+
+Now let $\Lambda$ be any global Whittaker functional. Choose a pure tensor $v^0$ with
+$\Lambda^{\rm prod}(v^0)\ne0$ and enlarge a finite set $S_0$ until $v^0$ is standard outside
+$S_0$. On the tensor space obtained by varying the factors in a finite $S\supseteq S_0$ and
+fixing the others as in $v^0$, successive local uniqueness makes the restriction of $\Lambda$
+a scalar multiple $c_S$ of the restriction of $\Lambda^{\rm prod}$. Evaluation at $v^0$
+shows that $c_S$ is independent of $S$. The union of these finite tensor spaces is the whole
+restricted tensor product, so $\Lambda=c\Lambda^{\rm prod}$ globally.
+
+This argument also covers the case in which $\Lambda$ vanishes on the original spherical
+reference tensor: the comparison tensor $v^0$ is chosen where the product functional is nonzero,
+not assumed in advance. The automorphic Whittaker integral is a nonzero global functional, so
+after one overall rescaling it equals $\Lambda^{\rm prod}$. Applying it to $\pi(g)v$ gives the
+factorization of Whittaker functions. $\square$
 
 ### 8.4 The spherical Whittaker function
 
@@ -1475,8 +1655,11 @@ representation of $\mathrm{GL}_2(\mathbf A_F)$. Then:
    in a common right half-plane.
 
 **Proof.** Parts 1--3 were proved in Sections 8.2 and 8.3; it remains to justify the analytic
-factorization in part 4. In a right half-plane, rapid decrease at infinity and compact support in
-the valuation direction at every ramified nonarchimedean place make the absolute integral
+factorization in part 4. A ramified principal-series or special Whittaker function need not be
+compactly supported in the valuation direction, so compact support cannot be used here. Instead
+start with the Mellin integral of the rapidly decreasing automorphic cusp form over
+$F^\times\backslash\mathbf A^\times$ and unfold its normally convergent Whittaker expansion.
+In a sufficiently far right half-plane this proves that the absolute adelic integral
 
 $$
 \int_{\mathbf A^\times}
@@ -1484,8 +1667,10 @@ $$
 |y|_{\mathbf A}^{\operatorname{Re}(s)-1/2}\,d^\times y
 $$
 
-finite. Tonelli's theorem then separates it into the product of local absolute integrals. Almost
-every local integral is the normalized spherical series of Section 8.4 and equals
+is finite. Finite-stage Fubini followed by monotone convergence for the absolute values then
+separates it into the product of local absolute integrals. Equivalently, the convergence of the
+unramified Euler tail is deduced from the global integral, not from an unproved bound on individual
+Satake roots. Almost every local integral is the normalized spherical series of Section 8.4 and equals
 $L(s,\pi_w)$. Only the finite set $S$ leaves a different factor. This proves the formula.
 $\square$
 
@@ -1547,7 +1732,7 @@ $$
 
 The common-central-character hypothesis is what makes the integrand descend to $X_G$: the two unitary central factors cancel. For unequal central characters one uses the corresponding character-adjusted Rankin--Selberg datum, but strong multiplicity one below first proves that no adjustment is needed.
 
-Unfolding the Eisenstein series, then inserting the Whittaker expansions, gives an Euler product. For factorizable newvectors and suitable local sections,
+Unfolding the Eisenstein series, then inserting the Whittaker expansions, gives an Euler product. For factorizable pure vectors and suitable local Schwartz data,
 
 $$
 I(s)=\prod_vZ_v(s,W_v,\overline{W_v'},f_{v,s}),
@@ -1560,28 +1745,59 @@ L(s,\pi_v\times\pi_v'{}^\vee)
 =\prod_{i,j=1}^2(1-\alpha_{i,v}\alpha_{j,v}'{}^{-1}q_v^{-s})^{-1}.
 $$
 
-At the finitely many remaining places the local data can be chosen so that the local integrals are holomorphic and nonzero at $s=1$. The quotient of each such integral by the declared local $L$-factor is then a meromorphic correction factor. This is more than the formal existence of an Euler product: unfolding identifies the analytic continuation of the partial product with that of an Eisenstein integral divided by finitely many explicitly controlled corrections.
-
-The decisive analytic facts are these:
-
-1. $E(g,s)$ continues meromorphically and, in the chosen normalization, has a simple pole at $s=1$ with constant nonzero residue;
-2. the unfolded integral continues meromorphically and has no pole on $\operatorname{Re}(s)=1$ except the possible pole at $s=1$ inherited from $E$;
-3. that residue is a nonzero constant times $\langle\phi,\phi'\rangle$;
-4. the finitely many correction factors can be chosen holomorphic and nonzero at $s=1$, and the omitted local $L$-factors have neither zeros nor poles there for unitary generic data.
-
-The constant residue follows from the constant term of $E(g,s)$ and the simple pole of the global intertwining scalar. Cuspidal rapid decay justifies moving contours and ensures that no boundary integrals survive. Dividing the unfolded identity by the nonvanishing finite corrections shows that a pole of the partial Euler product at $1$ is equivalent to a nonzero residue of the Eisenstein integral. Consequently
+At a ramified place, however, a preferred local integral can vanish. The safe canonical argument
+uses the full local zeta ideal. Every local integral is the normalized local factor times a
+Laurent-polynomial correction, and finitely many corrections $P_j$ satisfy a Bezout identity
 
 $$
-L^S(s,\pi\times\pi^\vee)
+\sum_jA_jP_j=1.
 $$
 
-has a simple pole at $s=1$, whereas
+At infinity an analogous finite polynomial-Gaussian family removes common gamma corrections.
+Tensoring the finitely many choices gives global integrals $I_j(s)$ and entire coefficient
+functions $A_j(s)$ such that
 
 $$
-L^S(s,\pi\times\pi'{}^\vee)
+\Lambda(s,\pi\times\pi'{}^\vee)
+=\sum_jA_j(s)I_j(s).
+\tag{9.1}
 $$
 
-is holomorphic there if $\pi\not\cong\pi'$. In the latter case the cusp forms belong to orthogonal irreducible summands, so the Eisenstein residue pairing vanishes. Because the finite corrections are nonzero at $1$, that vanishing cannot conceal a pole of the partial product. This pole criterion is the analytic input to strong multiplicity one; it has not been inferred merely from the formal Euler factors.
+No division by a possibly vanishing preferred correction is involved.
+
+The Eisenstein series continues meromorphically and has at most a simple pole at $s=1$ in the
+untwisted unitary case. Its residue is a nonzero constant, so
+
+$$
+\operatorname*{Res}_{s=1}I(s)
+=c\langle\phi,\phi'\rangle,
+\qquad c\ne0.
+\tag{9.2}
+$$
+
+Cuspidal rapid decay justifies the pairing and the unfolding. If $\pi'\not\cong\pi$, the
+invariant pairing vanishes by irreducibility; if $\pi'=\pi$, paired nonzero vectors make it a
+positive multiple of their norm. The finite-family identity (9.1) transfers both continuation
+and this exact pole alternative to the canonical completed function. Finally, every finite or
+archimedean local factor deleted in forming an incomplete product is finite and nonzero at
+$s=1$ for unitary generic data. Therefore deletion does not change the polar order.
+
+The analytic input can consequently be stated without auxiliary vectors:
+
+Write $\operatorname{pord}_{s=1}$ for the nonnegative polar order: it is one for a simple pole
+and zero for a function holomorphic at $1$, whether or not that function vanishes there. Then
+
+$$
+\boxed{
+\operatorname{pord}_{s=1}L^S(s,\rho\times\pi^\vee)
+=\dim\operatorname{Hom}_{G(\mathbf A)}(\rho,\pi),}
+\tag{9.3}
+$$
+
+for unitary irreducible cuspidal $\rho,\pi$ and every finite $S$ containing the archimedean
+places. The right side is zero or one. This is the Rankin--Selberg criterion used below; it is a
+theorem about the canonical incomplete product, not an inference from formal Euler factors or
+from one lucky test vector.
 
 ### 9.4 Strong multiplicity one
 
@@ -1627,34 +1843,13 @@ L^S(s,\pi\times\pi'^\vee)
 $$
 
 Absolute convergence for $\operatorname{Re}(s)>1$ makes this an honest product there. The
-Rankin--Selberg integral supplies its meromorphic continuation after multiplication by a finite
-factor $C_S(s)$ that is holomorphic and nonzero at $s=1$. Therefore
-
-$$
-\operatorname{ord}_{s=1}L^S(s,\pi\times\pi'^\vee)
-=\operatorname{ord}_{s=1}I(s),
-\tag{9.1}
-$$
-
-where a negative order denotes a pole. The equality would be false if one only knew that
-$C_S(s)$ was meromorphic: a zero could cancel a pole. The nonvanishing choice of the local test
-data is precisely what rules out that gap.
-
-The residue of the Eisenstein series is constant, so
-
-$$
-\operatorname*{Res}_{s=1}I(s)
-=c\langle\phi,\phi'\rangle,
-\qquad c\ne0.
-\tag{9.2}
-$$
-
-When $\pi'=\pi$, choose $\phi'=\phi\ne0$ and obtain a nonzero residue. When $\pi'$ is not
-isomorphic to $\pi$, their isotypic subspaces are orthogonal in the discrete cuspidal spectrum,
-so (9.2) vanishes for every pair of vectors. The Rankin--Selberg continuation theorem asserts
-that the only possible pole on the line at this point is simple. Hence vanishing of the residue
-means holomorphy, not the presence of a higher-order pole with zero residue. This proves the
-self-pole/cross-holomorphy dichotomy used above.
+canonical continuation and polar order are supplied by (9.3). The finite Bezout family in
+(9.1), rather than a claim that one preferred correction never vanishes, is what transfers the
+Eisenstein residue calculation to the canonical local-factor product. Local unitarity then shows
+that every factor removed in forming $L^S$ is finite and nonzero at one. Consequently the
+incomplete product has a simple pole exactly in the self case and is holomorphic in the cross
+case. It may vanish in the cross case; the proof requires only its polar order and makes no
+unproved nonvanishing assertion.
 
 One may also remove unequal central characters without the density shortcut. If the unramified
 local representations agree outside $S$, their local central characters agree there. Thus
@@ -1887,6 +2082,19 @@ m-a(\pi_v)+1,&m\ge a(\pi_v).
 \end{cases}
 $$
 
+The generality here is deliberate. The earlier local volume proves this formula directly for
+principal series, special representations, depth-zero supercuspidals, and tame dihedral
+supercuspidals, but explicitly does not claim it for primitive wild supercuspidals. The direct
+global-newform prerequisite closes that boundary for every irreducible
+admissible generic representation by the two-filtration argument in the Kirillov model. Upper
+unipotent and unit invariance put the Kirillov function in one valuation flag; lower-unipotent
+invariance puts its Weyl transform in the opposite flag. Each new shell has dimension at most
+one. The compactly supported Kirillov core proves that the two flags meet at some finite level,
+and diagonal translates of the first nonzero line meet every successive shell. Hence the first
+intersection is one dimensional and the dimension at level $m$ is exactly
+$m-a(\pi_v)+1$. Thus no unclassified wild local component is omitted from the theorem used
+below.
+
 Only finitely many exponents are nonzero for an automorphic representation, so its finite conductor is the ideal
 
 $$
@@ -2079,7 +2287,21 @@ with multiplicity one. Therefore its dimension is the sum, over representations 
 
 ### 12.3 The new subspace
 
-At exact level $\mathfrak n$, the **new subspace** is the direct sum of the lines belonging to representations with $\mathfrak f(\pi)=\mathfrak n$, together with their prescribed archimedean lowest-weight or $K$-type lines. Equivalently, after choosing the standard invariant inner product, it is the orthogonal complement of the images of all degeneracy maps from proper divisor levels. The equivalence rests on the local oldvector basis and multiplicity one.
+At exact level $\mathfrak n$, the **new subspace** is
+
+$$
+\widehat\bigoplus_{\pi:\,\mathfrak f(\pi)=\mathfrak n}
+\mathcal H_{\pi,\infty}\widehat\otimes\mathbf Cv_f^{\rm new}.
+$$
+
+After fixing an archimedean type $\tau$, its $\pi$-contribution is
+$\mathcal H_{\pi,\infty}(\tau)\otimes\mathbf Cv_f^{\rm new}$. This is a line only when the
+chosen archimedean type space is one dimensional, as for a specified holomorphic lowest-weight
+line. Equivalently, after choosing the standard invariant inner product, the newspace is the
+orthogonal complement of the closed span of the images of all degeneracy maps from proper
+divisor levels. The closure matters before an archimedean spectral window is fixed; in every
+finite-dimensional window it is automatic. The
+equivalence rests on the local oldvector basis and multiplicity one.
 
 **Proof strategy.** Decompose the fixed-level space by irreducible cuspidal representations. Inside each summand, local newvector theory describes exactly which lower levels map into it. If the representation conductor is a proper divisor, its entire fixed space is old. If its conductor equals the level, its fixed space is the tensor of new lines and has no lower-level source.
 
@@ -2151,9 +2373,10 @@ automorphic representation of $\mathrm{GL}_2(\mathbf A_F)$.
    $$
 
    form a basis; only finitely many $j_v$ are nonzero.
-5. In a fixed archimedean type, the orthogonal complement of all degeneracy images from proper
-   divisor levels is the direct sum of the newvector lines for precisely those $\pi$ with
-   $\mathfrak f(\pi)=\mathfrak n$.
+5. In a fixed archimedean type $\tau$, the orthogonal complement of the closed span of all
+   degeneracy images from proper divisor levels is the direct sum of
+   $\mathcal H_{\pi,\infty}(\tau)\otimes\mathbf Cv_f^{\rm new}$ for precisely those $\pi$
+   with $\mathfrak f(\pi)=\mathfrak n$.
 
 **Proof strategy.** Sphericality almost everywhere makes the conductor product finite. The local
 newvector theorem gives the first line and the translate basis at each exceptional place.
@@ -2183,9 +2406,10 @@ For the last part, decompose the fixed-level cuspidal space into its multiplicit
 summands. If $\mathfrak f(\pi)$ properly divides $\mathfrak n$, choose a prime $v$ at which
 $n_v>a(\pi_v)$. The local translate basis at exponent $n_v$ is the sum of the two images from
 exponent $n_v-1$; tensoring with the other local factors shows that the whole $\pi$-summand is
-old. If $\mathfrak f(\pi)=\mathfrak n$, the fixed space is the minimal tensor line and no lower
-level has a nonzero $\pi$-fixed vector. It therefore lies in the orthogonal complement. Distinct
-irreducible summands are orthogonal, proving the claimed decomposition. $\square$
+old. If $\mathfrak f(\pi)=\mathfrak n$, the finite fixed space is the minimal tensor line and no
+lower level has a nonzero $\pi$-fixed vector. Tensoring that finite line with the selected
+archimedean type space therefore lies in the orthogonal complement. Distinct irreducible
+summands are orthogonal, proving the claimed decomposition. $\square$
 
 The proof reveals three different uniqueness statements. The local theorem makes each minimal
 finite line unique. Their tensor product makes the finite global line unique inside one
@@ -2824,9 +3048,20 @@ shift is $q_\mathfrak p^{1/2}$ per root, and the finite minimal level is the con
 
 ### 15.1 What finite-dimensionality proves
 
-For holomorphic classical or Hilbert forms of cohomological weight, fixed level and fixed nebentype, the relevant space admits a model over a number field generated by the values of the nebentype. Fourier expansions give a lattice over its ring of integers after denominators are controlled, and the standard Hecke correspondences preserve that rational structure. Therefore the eigenvalues of a simultaneous Hecke eigenform are algebraic numbers.
+The analytic automorphic theory developed so far does not by itself construct a number-field
+model of a space of forms. In this chapter assume that a holomorphic classical or Hilbert space
+of fixed cohomological weight, level, and nebentype has been equipped with its arithmetic
+$q$-expansion structure: a finite-dimensional model over a number field $E_0$ containing the
+nebentype values, together with Hecke operators defined over $E_0$. Constructing this structure
+from integral models and proving the $q$-expansion principle are separate arithmetic inputs; no
+result in Chapters 1--14 or 16--17 depends on them.
 
-Concretely, each Hecke operator has a matrix with entries in a number field on a finite-dimensional space. Its eigenvalues satisfy its characteristic polynomial and are algebraic. Since the image of the full commuting Hecke algebra is finite dimensional, finitely many operators generate it, so all eigenvalues of one eigensystem lie in a finite extension.
+Under this explicit hypothesis, the eigenvalues of a simultaneous Hecke eigenform are algebraic
+numbers. Indeed, extend scalars from the $E_0$-space to $\mathbf C$. Each Hecke operator has a
+matrix over $E_0$, so every eigenvalue is a root of its characteristic polynomial in $E_0[X]$.
+The image of the full commuting Hecke algebra is a finite-dimensional $E_0$-algebra and is
+therefore generated by finitely many elements. The values of one eigencharacter consequently
+lie in the finite extension generated by the eigenvalues of those finitely many generators.
 
 Define the **Hecke field** of a normalized cohomological eigenform by
 
@@ -2839,7 +3074,13 @@ or include the finitely many bad-place eigenvalues when the complete finite eige
 
 ### 15.2 Field of rationality versus field of definition
 
-The **field of rationality** of $\pi_f$ is the fixed field of automorphisms $\sigma\in\operatorname{Aut}(\mathbf C)$ for which the finite representation $\pi_f^\sigma$ is isomorphic to $\pi_f$. For a cohomological cuspidal representation, the unramified Hecke eigenvalues and central-character values identify this field with the corresponding Hecke field, after the normalization data are included.
+The **field of rationality** of $\pi_f$ is the fixed field of automorphisms
+$\sigma\in\operatorname{Aut}(\mathbf C)$ for which the finite representation $\pi_f^\sigma$
+is isomorphic to $\pi_f$. When the arithmetic structure of Section 15.1 is present, Galois
+conjugation produces the conjugate eigensystems, and strong multiplicity one shows that fixing
+the unramified Hecke eigenvalues and central-character values is equivalent to fixing the finite
+isomorphism class. Under that hypothesis the field of rationality is the corresponding Hecke
+field, after the normalization data are included.
 
 A **field of definition** is a number field $E$ over which a representation model and its group action can actually be realized. A field of rationality need not automatically be a field of definition: descent can be obstructed by a nontrivial division algebra of endomorphisms, and choosing a particular local type or archimedean model can enlarge the necessary field. For the one-dimensional newvector eigensystem, the normalized eigenline is often defined over the Hecke field; this does not by itself descend the entire infinite-dimensional representation.
 
@@ -2847,7 +3088,10 @@ This distinction prevents a common overstatement. Algebraic Hecke eigenvalues pr
 
 ### 15.3 Galois conjugation of eigenforms
 
-Let $\sigma\in\operatorname{Aut}(\mathbf C)$. Applying $\sigma$ to the algebraic Fourier coefficients and nebentype values of a cohomological eigenform gives another eigenform, with
+Retain the arithmetic $q$-expansion structure assumed in Section 15.1 and let
+$\sigma\in\operatorname{Aut}(\mathbf C)$. Applying $\sigma$ to the algebraic Fourier
+coefficients, the defining $E_0$-linear relations, and the nebentype values gives another
+eigenform, with
 
 $$
 a_\mathfrak p(f^\sigma)=\sigma(a_\mathfrak p(f)),
@@ -2857,7 +3101,10 @@ $$
 
 The associated finite automorphic representation has unramified Satake polynomials obtained by applying $\sigma$ to the algebraically normalized coefficients. At infinity one must retain the cohomological weight through its algebraic coefficient system; applying a wild automorphism directly to analytic quantities such as $q_v^{1/2}$ is not a meaningful replacement for this rational structure.
 
-The orbit of $f$ under such conjugation is finite because its coefficients lie in a number field. A form with rational coefficients has Hecke field $\mathbf Q$, but this still does not imply that all analytic normalizations are rational: periods, Petersson norms, and unitary square-root scalings generally are not.
+The orbit of the eigensystem under such conjugation is finite because its values lie in a number
+field. A form with rational coefficients has Hecke field $\mathbf Q$, but this still does not
+imply that all analytic normalizations are rational: periods, Petersson norms, and unitary
+square-root scalings generally are not.
 
 ### 15.4 The boundary of the algebraicity assertion
 
