@@ -18,12 +18,13 @@
   - [3.2 Duality and the polarization module](#32-duality-and-the-polarization-module)
   - [3.3 The determinant condition](#33-the-determinant-condition)
   - [3.4 Torsion and pairings](#34-torsion-and-pairings)
-  - [3.5 Which polarization types this construction reaches](#35-which-polarization-types-this-construction-reaches)
+  - [3.5 The tensor component and the exact catalog reduction](#35-the-tensor-component-and-the-exact-catalog-reduction)
 - [4. Real local points](#4-real-local-points)
   - [4.1 Real points are component data](#41-real-points-are-component-data)
-  - [4.2 An explicit real construction](#42-an-explicit-real-construction)
-  - [4.3 Odd involutions and paired frames](#43-odd-involutions-and-paired-frames)
-  - [4.4 Openness at infinity](#44-openness-at-infinity)
+  - [4.2 The underlying tensor real point](#42-the-underlying-tensor-real-point)
+  - [4.3 The cyclotomic-split auxiliary level](#43-the-cyclotomic-split-auxiliary-level)
+  - [4.4 Odd involutions and paired frames](#44-odd-involutions-and-paired-frames)
+  - [4.5 Openness at infinity](#45-openness-at-infinity)
 - [5. Good integral points away from the level primes](#5-good-integral-points-away-from-the-level-primes)
   - [5.1 Smooth special fibers give good points](#51-smooth-special-fibers-give-good-points)
   - [5.2 Producing points after an unramified extension](#52-producing-points-after-an-unramified-extension)
@@ -46,7 +47,8 @@
   - [8.2 Tensoring the Tate curve](#82-tensoring-the-tate-curve)
   - [8.3 Torsion and the Kummer class](#83-torsion-and-the-kummer-class)
   - [8.4 Finite flatness at the coefficient prime](#84-finite-flatness-at-the-coefficient-prime)
-  - [8.5 Semistable neighborhoods](#85-semistable-neighborhoods)
+  - [8.5 The full-dimensional Mumford chart](#85-the-full-dimensional-mumford-chart)
+  - [8.6 Semistable neighborhoods](#86-semistable-neighborhoods)
 - [9. Twisted two-prime covers and local solvability](#9-twisted-two-prime-covers-and-local-solvability)
   - [9.1 What a point of the twist says](#91-what-a-point-of-the-twist-says)
   - [9.2 The determinant obstruction](#92-the-determinant-obstruction)
@@ -77,7 +79,7 @@
   - [13.4 Failure modes](#134-failure-modes)
 - [14. Conclusion](#14-conclusion)
   - [14.1 The local dictionary](#141-the-local-dictionary)
-  - [14.2 The package established](#142-the-package-established)
+  - [14.2 The package established and its boundaries](#142-the-package-established-and-its-boundaries)
 
 ## 1. From a global moduli space to local arithmetic
 
@@ -87,11 +89,50 @@ The preceding construction of Hilbert--Blumenthal moduli solves a global geometr
 
 This changes the nature of the question. It is not enough to know that some Hilbert--Blumenthal abelian variety exists over an algebraic closure. One needs an object over a specified local field, on the specified twist and component, and one must know that nearby objects retain the desired condition. At a real place, “nearby” refers to the ordinary real topology. At a finite place, it refers to the topology defined by the valuation. At a residue-characteristic level prime, generic torsion is etale but its integral model is not, so a basis of geometric points does not see the finite-flat condition. At a semistable place, the abelian variety need not extend as an abelian scheme at all.
 
-The purpose of this book is to turn those distinctions into a reusable local package. We construct seed points of five kinds: real, good, ordinary, nonordinary finite-flat, and semistable. We then put each seed inside an explicit local neighborhood and prove persistence under the field extensions that occur after specialization. The endpoint is not a vague assertion of local solvability. It is a theorem whose hypotheses say exactly when the local point lies on the required two-prime twist and whose conclusion supplies the open subsets demanded by arithmetic approximation.
+The purpose of this book is to turn those distinctions into a reusable local package. We construct seed points of five kinds: real, good, ordinary, nonordinary finite-flat, and semistable, put them on one corrected auxiliary-level component, and place each in a full-dimensional local neighborhood. The correction has three parts. The auxiliary principal level is given a cyclotomic-split source, so it has real points. A rank-$d$ Mumford period torus is algebraized at the tensor cusp, so the one-parameter Tate ray sits inside an ambient semistable chart. Finally, the polarization and component used in the potential-automorphy catalog are proved to be auxiliary choices and are reduced to the single tensor component. The endpoint is an unconditional local-open package with exactly the inputs required by arithmetic approximation.
 
 ### 1.2 Standing data and conventions
 
-Fix a totally real field $F$ of degree $d$, with ring of integers $\mathcal O_F$, different $\mathfrak d_F$, and discriminant $D_F$. Fix an ordered invertible fractional ideal $(\mathfrak c,\mathfrak c^+)$, auxiliary principal level $\mathfrak n=N\mathcal O_F$ with $N\geq3$, and two distinct prime ideals
+Fix a totally real field $F$ of degree $d$, with ring of integers $\mathcal O_F$, different $\mathfrak d_F$, and discriminant $D_F$. Fix an invertible fractional $\mathcal O_F$-ideal $I$ and put
+
+$$
+\mathfrak c_I=\mathfrak d_F^{-1}I^{-2},
+\qquad
+\mathfrak c_I^\vee
+=\mathfrak d_F^{-1}\mathfrak c_I^{-1}
+=I^2.
+\tag{1.0}
+$$
+
+The ordered cone is the totally positive cone $\mathfrak c_I^+$. Fix an auxiliary integer $N\geq3$, write $\mathfrak n=N\mathcal O_F$, and assume $N$ is prime to every prime at which integral geometry will be used. The tensor PEL lattice is
+
+$$
+L_I=I\oplus I,
+\qquad
+\psi_I((a,b),(a',b'))=ab'-a'b\in I^2=\mathfrak c_I^\vee.
+\tag{1.1a}
+$$
+
+Unlike the constant paired orientation in Book 172, the auxiliary level source used here is the finite etale local system
+
+$$
+\mathscr L_{I,N}^{\natural}
+=(I/NI)\oplus(I/NI)(1),
+\tag{1.1b}
+$$
+
+with its perfect alternating pairing
+
+$$
+\psi_{I,N}^{\natural}((a,b),(a',b'))
+=ab'-a'b
+\in(I^2/NI^2)(1).
+\tag{1.1c}
+$$
+
+Thus $\det\mathscr L_{I,N}^{\natural}=(I^2/NI^2)(1)$ before any trivialization. This is the decisive real-level correction.
+
+Fix two distinct prime ideals
 
 $$
 \mathfrak p\mid p,
@@ -99,32 +140,51 @@ $$
 \mathfrak q\mid q
 $$
 
-of distinct rational residue characteristics. Unless a section explicitly studies one of $p$ or $q$ as the residue characteristic, all primes dividing $D_FNpq\mathfrak c\mathfrak n$ are excluded. Thus the coefficient algebra is unramified, the polarization pairing is perfect, and the displayed prime-to-residue-characteristic torsion is finite etale.
+of distinct rational residue characteristics. Unless a section explicitly studies one of $p$ or $q$ as the residue characteristic, we exclude every rational prime below the support of $D_F$, $N$, $pq$, or the numerator or denominator of $I$. Thus the coefficient algebra is unramified, the polarization pairing is perfect, and the displayed prime-to-residue-characteristic torsion is finite etale.
 
-Write $H=H_{\mathfrak c,\mathfrak n}$ for the fine Hilbert--Blumenthal scheme. Its points are quadruples
+Write $H_I^{\natural}$ for the corrected fine Hilbert--Blumenthal scheme. Its points are quadruples
 
 $$
-(A,\iota,\lambda,\eta_{\mathfrak n}),
+(A,\iota,\lambda,\eta_{\mathfrak n}^{\natural}),
 $$
 
-where $A$ has relative dimension $d$, $\iota:\mathcal O_F\to\operatorname{End}(A)$ satisfies the Hilbert determinant condition, $\lambda$ identifies $(\mathfrak c,\mathfrak c^+)$ with the ordered polarization module and makes $A\otimes_{\mathcal O_F}\mathfrak c\to A^\vee$ an isomorphism, and $\eta_{\mathfrak n}$ is the fixed neat auxiliary level. The two-prime twist $Y\to H$ additionally carries pairing-preserving isomorphisms
+where $A$ has relative dimension $d$, $\iota:\mathcal O_F\to\operatorname{End}(A)$ satisfies the Hilbert determinant condition, $\lambda$ identifies $(\mathfrak c_I,\mathfrak c_I^+)$ with the ordered polarization module and makes $A\otimes_{\mathcal O_F}\mathfrak c_I\to A^\vee$ an isomorphism, and
+
+$$
+\eta_{\mathfrak n}^{\natural}:
+\mathscr L_{I,N}^{\natural}\xrightarrow{\sim}A[N]
+\tag{1.1d}
+$$
+
+is an isometry. No separate orientation from a constant line to a Tate twist occurs. Chapter 4 proves that this functor is a smooth fine scheme and that, geometrically, it is the fixed-pairing orientation subfunctor of the principal-level scheme of Book 172. From Section 3.5 onward, $H_I^{\mathrm{ten}}\subset H_I^{\natural}$ denotes the single component containing the tensor locus. The two-prime twist $Y_I^{\mathrm{ten}}\to H_I^{\mathrm{ten}}$ additionally carries pairing-preserving isomorphisms
 
 $$
 \alpha_{\mathfrak p}:V_{\mathfrak p}\xrightarrow{\sim}A[\mathfrak p],
 \qquad
 \alpha_{\mathfrak q}:V_{\mathfrak q}\xrightarrow{\sim}A[\mathfrak q].
-\tag{1.1}
+\tag{1.1e}
 $$
 
 Here each $V_{\mathfrak r}$ has determinant equal, as a local system with a specified isomorphism, to
 
 $$
 \mathscr D_{\mathfrak r}
-=(\mathfrak d_F^{-1}\mathfrak c^{-1}\otimes k_{\mathfrak r})(1).
+=(I^2\otimes k_{\mathfrak r})(1).
 \tag{1.2}
 $$
 
 This determinant identification is part of the datum. Equality of determinant characters without a chosen identification does not define the paired twist.
+
+For the rest of the book, unless an arbitrary-polarization variant is explicitly discussed, write
+
+$$
+H=H_I^{\mathrm{ten}},
+\qquad
+Y=Y_I^{\mathrm{ten}},
+\qquad
+\mathfrak c=\mathfrak c_I.
+\tag{1.3}
+$$
 
 At a finite place let $K$ be a finite extension of $\mathbf Q_r$, let $R$ be its valuation ring, $\pi$ a uniformizer, and $k$ its finite residue field. We normalize $v_K(\pi)=1$. An **unramified local base** means $K=W(k)[1/r]$, equivalently $v_K(r)=1$. Completion, henselization, and unramified extension are never silently identified.
 
@@ -132,7 +192,7 @@ At a finite place let $K$ be a finite extension of $\mathbf Q_r$, let $R$ be its
 
 The words used in the catalog have precise meanings.
 
-A **real point** is a point of a selected real connected component of $Y(\mathbf R)$. For odd torsion primes its prescribed representations must be odd: complex conjugation has eigenvalues $1$ and $-1$ and determinant $-1$.
+A **real point** is a point of the tensor component $Y_I^{\mathrm{ten}}(\mathbf R)$. For odd torsion primes its prescribed representations must be odd: complex conjugation has eigenvalues $1$ and $-1$ and determinant $-1$. The corrected auxiliary source (1.1b) has the same $+1,-1$ involution, so there is no additional archimedean orientation obstruction.
 
 A **good point** over $K$ is one whose underlying abelian variety, real multiplication, polarization, and prime-to-$r$ auxiliary level extend over $R$ to the corresponding smooth integral moduli problem. In particular, $A$ has good reduction.
 
@@ -214,7 +274,7 @@ Let $f:Y\to X$ be finite etale over $K$. A point $y\in Y(K)$ has neighborhoods o
 
 **Proof.** Choose affine neighborhoods and write the chosen factor of the finite etale algebra near $y$ in the form $A[T]/(g)$ with $g'(y)$ a unit after shrinking. For points of $X(K)$ sufficiently close to $x$, the coefficients of $g$ remain close to their original values. The simple-root form of Hensel's lemma gives a unique root close to $y$, continuously in the coefficients. This root defines the inverse section. $\square$
 
-This is the precise reason a fixed torsion representation is locally constant on a framed moduli space. Once (1.1) exists at one point, the finite etale isomorphism scheme gives it throughout a sufficiently small neighborhood. No choice of matrices has to be continued by hand.
+This is the precise reason a fixed torsion representation is locally constant on a framed moduli space. Once the frames (1.1e) exist at one point, the finite etale isomorphism schemes give them throughout a sufficiently small neighborhood. No choice of matrices has to be continued by hand.
 
 At a residue-characteristic level prime the integral frame cover is not etale, but its generic fiber still is: the characteristic of $K$ is zero. Proposition 2.3 therefore preserves the generic representation. Finite flatness is then preserved because the same generic representation retains its already constructed finite flat model. This reasoning proves existence of a finite-flat model nearby; it does not identify that model with the torsion of a good integral abelian scheme unless goodness is imposed separately.
 
@@ -267,7 +327,7 @@ A^\vee\simeq E\otimes I^\dagger.
 \tag{3.3}
 $$
 
-An $\mathcal O_F$-linear symmetric map $A\to A^\vee$ is therefore multiplication by an element of
+Assume first that $S$ is connected. An $\mathcal O_F$-linear symmetric map $A\to A^\vee$ is therefore multiplication by an element of
 
 $$
 \operatorname{Hom}_{\mathcal O_F}(I,I^\dagger)
@@ -276,7 +336,7 @@ $$
 \tag{3.4}
 $$
 
-There is a small point hidden in this assertion: an elliptic curve can have extra endomorphisms, especially after supersingular reduction. They do not create extra symmetric directions. Choose a prime $\ell$ invertible on the base. Under the canonical principal polarization, the Rosati adjoint on the rank-two Tate module is adjoint with respect to its perfect alternating form. If a $2\times2$ matrix $M$ is self-adjoint for such a form, then
+There is a small point hidden in this assertion: an elliptic curve can have extra endomorphisms, especially after supersingular reduction. They do not create extra symmetric directions. On a geometric fiber choose a prime $\ell$ different from its characteristic. Under the canonical principal polarization, the Rosati adjoint on the rational rank-two Tate module is adjoint with respect to its perfect alternating form. If a $2\times2$ matrix $M$ is self-adjoint for such a form, then
 
 $$
 M^tJ=JM,
@@ -284,13 +344,13 @@ M^tJ=JM,
 J=\begin{pmatrix}0&1\\-1&0\end{pmatrix},
 $$
 
-and direct multiplication forces $M$ to be scalar. Faithfulness of the Tate module action makes every symmetric rational endomorphism of $E$ a rational scalar; integrality makes it an integer. Hence
+and direct multiplication forces $M$ to be scalar. Faithfulness of the Tate module action makes every symmetric rational endomorphism of that fiber a rational scalar; integrality makes it an integer. A homomorphism of abelian schemes that is multiplication by $n$ on one geometric fiber is multiplication by the same $n$ on the connected base: the equalizer is closed, and rigidity for homomorphisms of abelian schemes makes it open. Hence
 
 $$
 \operatorname{End}^{\mathrm{sym}}(E)=\mathbf Z
 $$
 
-even in the CM and supersingular cases. Tensor--Hom adjunction now gives exactly (3.4), with no additional symmetric factor.
+even in the CM and supersingular cases. Tensor--Hom adjunction now gives exactly (3.4), with no additional symmetric factor. On a disconnected base the same assertion is read componentwise, so the polarization module is the corresponding locally constant sheaf.
 
 Positivity of the product Riemann form says exactly that this element is totally positive. Put
 
@@ -369,20 +429,67 @@ Since $\mathfrak c_I^{-1}=\mathfrak d_F I^2$, this coefficient line is $I^2\otim
 
 If $s$ equals the residue characteristic, formula (3.9) remains valid as a formula for finite flat group schemes when $E$ has good reduction and as a generic-fiber formula for a Tate curve. It must not be replaced by a count of geometric points: $\mu_s$ and local--local group schemes can be nonreduced in the special fiber.
 
-### 3.5 Which polarization types this construction reaches
+### 3.5 The tensor component and the exact catalog reduction
 
-The explicit tensor family reaches the ordered types
+The explicit tensor family reaches exactly the ordered types
 
 $$
-\mathfrak c=\mathfrak d_F^{-1}I^{-2}.
+\mathfrak c\simeq\mathfrak d_F^{-1}I^{-2}
+\quad\text{through multiplication by a totally positive element.}
 \tag{3.10}
 $$
 
-Not every narrow ideal class need have this form. It would be false to claim that tensoring one elliptic curve supplies a point on every fixed polarization component. For a general $\mathfrak c$, Book 172's complex uniformization describes precisely the determinant components selected by the moduli datum. At a finite place, Chapter 5 supplies local points on such a component after suitable residue extension once its chosen integral model has been verified to possess a special-fiber point. The tensor construction is used when (3.10) holds or when the polarization type is free to be chosen, as it is in the standard two-prime potential-modularity setup.
+Equivalently, the narrow class of $\mathfrak d_F\mathfrak c$ is a square. This restriction is real: if the narrow class group has a nonsquare class, the corresponding Hilbert moduli problem is legitimate but no tensor power of one elliptic curve has that ordered polarization module.
 
-In ideal-class language, (3.10) says that the narrow class of $\mathfrak d_F\mathfrak c$ is a square. If the narrow class group has a nonsquare class, choosing $\mathfrak c$ in that class produces a legitimate Hilbert component that no one-elliptic-curve tensor construction reaches. This is an illuminating counterexample to the tempting assertion that every Hilbert--Blumenthal abelian variety is a power of an elliptic curve with a changed lattice.
+The restriction does not leave a component ambiguity in the range used below. Let $\mathcal M_N^{\natural}$ be the fine modular curve classifying an elliptic curve together with an isometry
 
-This boundary matters in applications. One must either choose $\mathfrak c$ to fit the seed point, or first exhibit a point on the desired component by another construction. Isogeny of generic abelian varieties is not enough: it can change the integral polarization module and the determinant coefficient line.
+$$
+(\mathbf Z/N\mathbf Z)\oplus\mu_N
+\xrightarrow{\sim}E[N]
+\tag{3.11}
+$$
+
+for the standard pairing with values in $\mu_N$. Let $B_I$ be the good base obtained by also inverting every rational prime below the numerator or denominator of $I$. Tensoring (3.11) with $I$ defines a morphism over $B_I$
+
+$$
+t_I:\mathcal M_N^{\natural}\longrightarrow H_I^{\natural},
+\qquad E\longmapsto E\otimes I.
+\tag{3.12}
+$$
+
+After base change to an algebraic closure and a choice of primitive $N$th root, the source is the connected analytic curve $\Gamma(N)\backslash\mathfrak H$. Hence its image lies in one geometric component of $H_I^{\natural}$; denote that component by $H_I^{\mathrm{ten}}$.
+
+**Proposition 3.2 (the tensor component).** The component $H_I^{\mathrm{ten}}$ is defined over $\mathbf Q$. Every real, good, ordinary, supersingular, and Tate tensor seed constructed in this book, with the tensor-induced corrected auxiliary level, lies on this component. For monodromy-admissible $\mathfrak p$ and $\mathfrak q$, the determinant-compatible two-prime twist over it is smooth and geometrically connected.
+
+**Proof.** The curve $\mathcal M_N^{\natural}$ and the morphism (3.12) are defined over $\mathbf Q$. If $C$ is the unique geometric component containing the connected image, then for every $\sigma\in G_{\mathbf Q}$ the component $\sigma C$ contains the same image, because (3.12) is equivariant. Components are disjoint, so $\sigma C=C$; the open-and-closed component therefore descends to $\mathbf Q$. Each tensor seed is, by construction, the image of its elliptic seed with (3.11), proving the second assertion. Over an algebraic closure the corrected auxiliary level becomes one fixed-pairing orientation of the principal level for the lattice $I\oplus I$. Book 172's simultaneous congruence theorem on that geometric component therefore gives full
+
+$$
+\operatorname{SL}_2(k_{\mathfrak p})
+\times\operatorname{SL}_2(k_{\mathfrak q})
+$$
+
+monodromy on $C$. Its frame torsor is geometrically connected, and an arithmetic determinant-compatible twist is geometrically isomorphic to it. Smoothness follows from smoothness of the base and finite etaleness of the two generic frame covers. $\square$
+
+We now isolate why this one component covers the intended catalog rather than merely one convenient example.
+
+**Theorem 3.3 (exact component reduction).** Consider a two-prime realization problem in which the prescribed data are $F$, two rank-two residual systems with specified cyclotomic determinant isomorphisms, their local conditions, and the desired field-theoretic output, while the ordered polarization ideal, PEL lattice, neat auxiliary level, and Hilbert component are auxiliary choices. Then one may, without changing any prescribed representation or local conclusion, take
+
+$$
+I=\mathcal O_F,
+\qquad
+\mathfrak c=\mathfrak d_F^{-1},
+\qquad
+\mathfrak c^\vee=\mathcal O_F,
+\qquad
+H^{\circ}=H_{\mathcal O_F}^{\mathrm{ten}}.
+\tag{3.13}
+$$
+
+Thus every such catalog case is covered by the component in Proposition 3.2. If an external application prescribes a nonsquare narrow polarization class, the reduction does not apply and this book makes no universal seed claim for that different problem.
+
+**Proof.** In the realization space the polarization ideal and auxiliary level serve only to make a smooth fine PEL scheme, normalize the Weil-pairing determinant, and select a geometrically connected component. They do not occur in the desired residual representations or in the final automorphy statement. Choose $N\geq3$ prime to the finite set of coefficient and controlled residue characteristics. With the choice (3.13), the determinant coefficient line in (1.2) is the constant line with its cyclotomic twist, exactly the cyclotomic determinant required of both residual systems. Proposition 3.2 supplies a $\mathbf Q$-defined smooth component, the corrected level supplies real points, and all five local tensor seeds lie on it. Replacing a previously provisional auxiliary polarization, level, and component by these choices therefore changes none of the prescribed arithmetic data. Conversely, if $\mathfrak c$ is externally fixed, changing it would change the moduli problem and the coefficient line; that is why the final sentence is necessary. $\square$
+
+From here on the word **intended component** means the tensor component of Proposition 3.2, with (3.13) in the catalog application. This is an exact scope statement, not an assertion that all narrow polarization classes are squares.
 
 ## 4. Real local points
 
@@ -390,9 +497,9 @@ This boundary matters in applications. One must either choose $\mathfrak c$ to f
 
 At a real place there is no valuation ring and no reduction. The local condition is membership in a connected component of the real manifold $Y(\mathbf R)$. Complex uniformization writes a geometric Hilbert component as an arithmetic quotient of a product of upper and lower half-planes. Complex conjugation reverses every half-plane. A real structure is therefore an antiholomorphic involution compatible with the lattice, polarization, level, and torsion descent.
 
-Not every complex component need have a real point over the chosen field of definition. The local theorem consequently begins with a **real-admissible component**: a component stable under conjugation whose PEL and twist descent data possess a fixed point. We now give an explicit fixed point for the tensor polarization types and identify the exact condition on torsion representations.
+Not every complex component need have a real point over its field of definition. For the intended component this is no longer an assumption: Proposition 3.2 defines it over $\mathbf Q$, the tensor construction supplies the underlying real PEL object, the cyclotomic-split level supplies its auxiliary rigidification, and oddness supplies the two residual frames. We prove those four assertions separately so that real component data are not confused with a determinant-character calculation.
 
-### 4.2 An explicit real construction
+### 4.2 The underlying tensor real point
 
 Let $E/\mathbf R$ be
 
@@ -405,9 +512,46 @@ Its discriminant is nonzero, so it is an elliptic curve. Equivalently, over $\ma
 
 For a more flexible analytic description, choose positive real numbers $y_\tau$ indexed by embeddings $\tau:F\hookrightarrow\mathbf R$ and put $z_\tau=iy_\tau$. The lattice determined by $I$ and its trace dual is stable under conjugation because $\bar z_\tau=-z_\tau$. The trace alternating form changes sign together with the complex structure and hence defines the same real polarization. Varying the $y_\tau$ fills a real cell inside the selected fixed component.
 
-Auxiliary level must carry its natural real descent action. A literal constant symplectic basis with a trivially acted-on determinant line is generally incompatible with conjugation on roots of unity. The invariant level convention pairs the standard lattice with the cyclotomic target, and under that convention the tensor point acquires level after choosing the prescribed equivariant orbit. If a finer literal basis is required, a real point exists only when its descent involution matches that of the torsion.
+### 4.3 The cyclotomic-split auxiliary level
 
-### 4.3 Odd involutions and paired frames
+We first record why the literal Book 172 level cannot be retained. Its auxiliary orientation includes an isomorphism
+
+$$
+\delta_{\mathfrak n}:
+(\mathfrak c^\vee/\mathfrak n\mathfrak c^\vee)_{\mathbf R}
+\xrightarrow{\sim}
+(\mathfrak c^\vee/\mathfrak n\mathfrak c^\vee)_{\mathbf R}(1).
+\tag{4.2a}
+$$
+
+Complex conjugation acts trivially on the source and by $-1$ on the cyclotomic target. If (4.2a) were equivariant, every element in its image would satisfy $x=-x$. For $N\geq3$ the subgroup killed by $2$ is a proper subgroup of the target, so no isomorphism can have this property. Consequently the literal full paired auxiliary-level scheme $H_{\mathfrak c,\mathfrak n}$ of Book 172 has no real points.
+
+The correction is (1.1b), not a choice of a root of unity. Complex conjugation acts trivially on its first summand and by inversion on its second. Its determinant is already $(I^2/NI^2)(1)$, so an isometry to $A[N]$ requests no impossible orientation.
+
+**Theorem 4.1 (corrected principal level).** The functor $H_I^{\natural}$ is represented by a smooth quasi-projective fine scheme of relative dimension $d$ over the good base and carries a universal tuple. After base change to an algebraic closure and a choice of primitive $N$th root, it is isomorphic to the fixed-pairing orientation subfunctor of Book 172's principal-level scheme for the PEL lattice $L_I=I\oplus I$. It has a real tensor point, and Book 172's geometric component and two-prime product-monodromy assertions hold on each resulting geometric component.
+
+**Proof.** The local system $\mathscr L_{I,N}^{\natural}$ is finite etale where $N$ is invertible, and (1.1c) is perfect because $I$ is invertible. Its isometry sheaf to $A[N]$ is therefore a finite etale level sheaf on the unlevelled PEL stack. Choose over an algebraic closure a primitive $N$th root of unity. This trivializes the Tate-twisted second summand and the value line, turning (1.1b)--(1.1c) into the constant paired lattice $(L_I/NL_I,\psi_I)$ with one fixed value-line orientation in Book 172. Thus the corrected problem becomes exactly that open-and-closed orientation subfunctor.
+
+An automorphism preserving $\eta_{\mathfrak n}^{\natural}$ acts trivially on $A[N]$. The principal-congruence torsion-freeness argument for $N\geq3$ makes it the identity. The PEL stack is therefore a scheme with a universal object. The level sheaf is finite etale, so it adds no infinitesimal deformation; lifting one Hodge line for every embedding gives smoothness of relative dimension $d$, exactly as for Book 172. Quasi-projectivity follows from the same polarized Hilbert parameter construction.
+
+For the curve $E=\mathbf C/(\mathbf Z+i\mathbf Z)$, let $P$ be the class of $1/N$. It spans a constant cyclic subgroup, while the class of $i/N$ spans its anti-invariant complement. The map
+
+$$
+Q\longmapsto e_N(P,Q)
+$$
+
+identifies that complement $G_{\mathbf R}$-equivariantly with $\mu_N$; use its inverse for the second level vector. Hence there is a paired $G_{\mathbf R}$-equivariant isomorphism
+
+$$
+(\mathbf Z/N\mathbf Z)\oplus\mu_N\xrightarrow{\sim}E[N].
+\tag{4.2b}
+$$
+
+Tensoring (4.2b) with $I$ gives (1.1d) on $E\otimes I$. This is the promised real point. Finally, geometric isomorphism of the auxiliary levels identifies their arithmetic stabilizers after conjugation. The determinant component calculation and simultaneous reduction onto the two special-linear factors are therefore unchanged. $\square$
+
+The same correction is integral away from $N$. Both summands of (1.1b) are finite etale, and a corrected level on a good special fiber lifts uniquely through nilpotent thickenings. At a Tate cusp the constant summand is represented by a chosen $N$th root of the period and the cyclotomic summand by toric $N$-torsion; Section 8.5 builds both into the algebraized chart.
+
+### 4.4 Odd involutions and paired frames
 
 Let $s$ be odd and let $c\in G_{\mathbf R}=\{1,c\}$ be complex conjugation. On $E[s]$, the determinant of $c$ is the mod-$s$ cyclotomic value $-1$. Since $c^2=1$ and $2$ is invertible in $\mathbf F_s$, the representation splits into its $+1$ and $-1$ eigenspaces. Their product is $-1$, so each has dimension one. In a suitable paired basis,
 
@@ -419,21 +563,21 @@ $$
 
 After scalar extension, the same is true on $A[\mathfrak r]$ for every $\mathfrak r\mid s$.
 
-**Proposition 4.1 (real frame criterion).** Let $s$ be odd. A determinant-compatible rank-two $k_{\mathfrak r}$-representation $V_{\mathfrak r}$ of $G_{\mathbf R}$ admits a paired isomorphism to $A[\mathfrak r]$ if and only if $\det(c)=-1$. When it does, any isomorphism between the $+1$ lines, followed by the uniquely normalized isomorphism between the $-1$ lines, gives a paired frame.
+**Proposition 4.2 (real frame criterion).** Let $s$ be odd. A determinant-compatible rank-two $k_{\mathfrak r}$-representation $V_{\mathfrak r}$ of $G_{\mathbf R}$ admits a paired isomorphism to $A[\mathfrak r]$ if and only if $\det(c)=-1$. When it does, any isomorphism between the $+1$ lines, followed by the uniquely normalized isomorphism between the $-1$ lines, gives a paired frame.
 
 **Proof.** Necessity follows from the pairing determinant. Conversely, $c^2=1$ makes $V_{\mathfrak r}$ semisimple with eigenvalues in $\{1,-1\}$. Determinant $-1$ forces one of each. Choose nonzero $v_+$ and $v_-$ in the two eigenspaces. Their pairing is nonzero by perfectness: each eigenline is isotropic, and if the cross-pairing vanished the form would be degenerate. Rescale $v_-$ so the pairing equals that of a chosen eigenbasis of $A[\mathfrak r]$. The resulting map is equivariant and paired. $\square$
 
 At $s=2$, $1=-1$ and this eigenspace argument disappears. Oddness cannot be encoded by the determinant of a two-dimensional $\mathbf F_2$-representation. A dyadic real frame requires the actual involution and pairing to be compared, not merely their characters.
 
-For two odd primes, Proposition 4.1 applies independently. Thus a tensor real point lifts to the two-prime twist exactly when both prescribed local systems are odd and their determinant identifications match (1.2).
+For two odd primes, Proposition 4.2 applies independently. Theorem 4.1 has already supplied the auxiliary level on the same tensor point. Thus the tensor point lifts to $Y(\mathbf R)$ exactly when both prescribed local systems are odd and their determinant identifications match (1.2). In particular the intended twist has a real point at every real place of its totally real base.
 
-### 4.4 Openness at infinity
+### 4.5 Openness at infinity
 
-The real points of a smooth variety form a real manifold. Connected components are open because manifolds are locally connected, and they are closed because components always are. The paired frame map is finite etale, hence a local diffeomorphism. Therefore a real point $y\in Y(\mathbf R)$ has a small open neighborhood contained in its chosen component and carrying the same frame descent.
+The real points of a smooth variety form a real manifold. Connected components are open because manifolds are locally connected, and they are closed because components always are. The paired frame map is finite etale, hence a local diffeomorphism. Therefore a point $y\in Y(\mathbf R)$ constructed above has a small open neighborhood contained in its chosen component and carrying the same auxiliary and residual frame descent.
 
 Sign conditions are also open: positivity of a real number survives a small perturbation, and the positive cone in $F\otimes\mathbf R\simeq\mathbf R^d$ is the open orthant. Consequently polarization positivity, orientation of every half-plane, and the real component label remain fixed in a sufficiently small neighborhood.
 
-This proves the archimedean input needed for a totally real specialization: one supplies such a nonempty open at every real place. Supplying it at only one real place does not prevent other embeddings of the eventual field from becoming complex.
+This proves the archimedean input for totally real specialization: one supplies this nonempty open at every real place. Supplying it at only one real place does not prevent other embeddings of the eventual field from becoming complex. The literal Book 172 level remains empty over $\mathbf R$; all downstream uses in this book are of the corrected scheme $H_I^{\natural}$ and its tensor component.
 
 ## 5. Good integral points away from the level primes
 
@@ -448,7 +592,7 @@ $$
 
 An $R$-point of $\mathcal Y$ is already the desired good local point with both frames. Thus local existence reduces to the elementary problem of finding a special-fiber point and lifting it.
 
-**Theorem 5.1 (good lifting criterion).** Let $R$ be a complete DVR of residue characteristic $r\nmid D_FNpq\mathfrak c\mathfrak n$. If $\bar y\in\mathcal Y(k)$, then $\bar y$ lifts to $y\in\mathcal Y(R)$. Its image is a Hilbert--Blumenthal abelian scheme with good reduction and the prescribed two paired frames. The full residue tube $]\bar y[_{\mathcal Y}$ is a nonempty open set of such points.
+**Theorem 5.1 (good lifting criterion).** Let $R$ be a complete DVR whose residue characteristic $r$ lies below none of the primes in the support of $D_F$, $N$, $pq$, or the numerator or denominator of $\mathfrak c$. If $\bar y\in\mathcal Y(k)$, then $\bar y$ lifts to $y\in\mathcal Y(R)$. Its image is a Hilbert--Blumenthal abelian scheme with good reduction and the prescribed two paired frames. The full residue tube $]\bar y[_{\mathcal Y}$ is a nonempty open set of such points.
 
 **Proof.** The base $\mathcal H_R$ is smooth. A finite etale morphism is smooth, so $\mathcal Y/R$ is smooth at $\bar y$. Theorem 2.2 lifts $\bar y$ to an $R$-point. The universal abelian scheme and all its structures pull back to $R$, proving good reduction. Proposition 2.1 makes the tube open, and every point of that tube is integral on the same moduli scheme and retains both universal frames. $\square$
 
@@ -491,7 +635,7 @@ This distinction lets one tune the local condition. To require only good reducti
 
 ### 6.1 Ordinary means multiplicative plus etale
 
-Now let the residue characteristic be an odd prime $p$, assume $K/\mathbf Q_p$ is unramified, and assume $p\nmid D_F\mathfrak c\mathfrak n$. The coefficient algebra decomposes
+Now let the residue characteristic be an odd prime $p$, assume $K/\mathbf Q_p$ is unramified, and assume that $p$ is unramified in $F$ and lies below neither the support of the numerator or denominator of $\mathfrak c$ nor the auxiliary level $\mathfrak n$. The coefficient algebra decomposes
 
 $$
 \mathcal O_F\otimes\mathbf Z_p
@@ -501,7 +645,7 @@ $$
 
 There is an integral Hilbert moduli scheme $\mathcal H^{(p)}/R$ obtained by retaining the determinant condition, $\mathfrak c$-polarization, and auxiliary level but forgetting the $\mathfrak p$-frame integrally. Neat auxiliary level still removes automorphisms. Its smoothness follows from the same infinitesimal calculation as at primes away from the frame levels: after the etale coefficient algebra is split, de Rham cohomology is a sum of rank-two symplectic modules and the Hodge bundle selects one line in each. Across a square-zero thickening, every line in a rank-two alternating module is isotropic and lifts in an affine one-dimensional family. The $d$ factors lift independently, so there are no obstructions and the relative dimension is $d$. The generic fiber of $\mathcal H^{(p)}$ is $H_K$. What fails integrally is only the claim that paired $\mathfrak p$-frames form a finite etale cover.
 
-For an abelian scheme $A/R$ with Hilbert determinant condition, the $p$-divisible group decomposes accordingly. The $\mathfrak r$-factor has height two and dimension one over $\mathcal O_{F,\mathfrak r}$. It is **ordinary** if its connected--etale sequence has a multiplicative height-one connected part and an etale height-one quotient. At level one this has the form
+For an abelian scheme $A/R$ with Hilbert determinant condition, the $p$-divisible group decomposes accordingly. The $\mathfrak r$-factor has $\mathcal O_{F,\mathfrak r}$-height two and $\mathcal O_{F,\mathfrak r}$-dimension one; as an ordinary $p$-divisible group its height and dimension are multiplied by $[F_{\mathfrak r}:\mathbf Q_p]$. It is **ordinary** if its connected--etale sequence has an $\mathcal O_{F,\mathfrak r}$-height-one multiplicative connected part and an $\mathcal O_{F,\mathfrak r}$-height-one etale quotient. At level one this has the form
 
 $$
 0\longrightarrow G^{\mathrm{mult}}[p]
@@ -569,7 +713,7 @@ $$
 
 The connected--etale sequence of $E[p]$ scalar-extends to (6.2), so all $\mathfrak r$-directions are ordinary.
 
-Prime-to-$p$ auxiliary level and the $\mathfrak q$-frame become rational after a finite unramified extension because their isomorphism schemes are finite etale. A prescribed $\mathfrak p$-frame at the residue characteristic is more restrictive: it exists precisely when the generic representation $V_{\mathfrak p}$ is paired-isomorphic to the generic fiber of (6.6). Finite flatness or equality of semisimplifications alone does not supply that isomorphism.
+Choose the corrected elliptic $N$-level after a finite unramified extension and tensor it with $I$; this is the level (3.12), so the seed lies on $H_I^{\mathrm{ten}}$. That auxiliary level and the $\mathfrak q$-frame become rational after a finite unramified extension because their isomorphism schemes are finite etale. A prescribed $\mathfrak p$-frame at the residue characteristic is more restrictive: it exists precisely when the generic representation $V_{\mathfrak p}$ is paired-isomorphic to the generic fiber of (6.6). Finite flatness or equality of semisimplifications alone does not supply that isomorphism.
 
 The displayed formula has a typographical role as well as a mathematical one: $A[\mathfrak r]$ is a group scheme, not just the two-dimensional space of geometric generic points. Its multiplicative subgroup can have only one geometric special-fiber point.
 
@@ -656,7 +800,7 @@ For $p=3$, the Legendre argument still works, although short Weierstrass shortcu
 
 ### 7.3 Local--local finite-flat torsion
 
-Let $A=E\otimes I$ for the supersingular lift. Then $A/R'$ is good and, for each $\mathfrak r\mid p$, its special-fiber $\mathfrak r$-torsion is local--local. Indeed $E[p]$ has neither an etale nor a multiplicative height-one direct factor in the supersingular case; Frobenius and Verschiebung are nilpotent on its height-two Dieudonne plane. Scalar extension by $I/\mathfrak rI$ preserves this property.
+Let $A=E\otimes I$ for the supersingular lift. After a finite unramified extension choose the corrected elliptic $N$-level and tensor it with $I$; Proposition 3.2 places the resulting object on the intended component. Then $A/R'$ is good and, for each $\mathfrak r\mid p$, its special-fiber $\mathfrak r$-torsion is local--local. Indeed $E[p]$ has neither an etale nor a multiplicative height-one direct factor in the supersingular case; Frobenius and Verschiebung are nilpotent on its height-two Dieudonne plane. Scalar extension by $I/\mathfrak rI$ preserves this property.
 
 The group $A[\mathfrak r]$ is finite flat of rank $|k_{\mathfrak r}|^2$. Its generic fiber is etale because $K$ has characteristic zero, but that generic fiber does not determine the number of special-fiber points or the local--local type. This is precisely the phenomenon for which integral finite-flat theory is needed.
 
@@ -684,7 +828,7 @@ E[p]\otimes_{\mathbf F_p}I/\mathfrak pI
 \tag{7.2}
 $$
 
-for one of the constructed ordinary or supersingular lifts. Under (7.2), the frame in (1.1) exists and the point lies on the exact twist. This is stronger than asking that $V_{\mathfrak p}$ and the right side have the same semisimplification.
+for one of the constructed ordinary or supersingular lifts. Under (7.2), the corresponding frame in (1.1e) exists and the point lies on the exact twist. This is stronger than asking that $V_{\mathfrak p}$ and the right side have the same semisimplification.
 
 There is nevertheless an important local escape that is legitimate in a specialization theorem allowing a prescribed finite completion extension. Given any two finite representations, one can pass to the compositum of their finite splitting fields. Both then become constant. If their paired determinant lines agree, symplectic bases give a paired isomorphism. Thus a finite-flat $V_{\mathfrak p}$ need not be realized by the chosen seed over $K$ itself: after a finite extension splitting both $V_{\mathfrak p}$ and the seed torsion, it is realized exactly. Finite flatness and ordinary or local--local reduction persist under that extension. Section 9.4 formulates this distinction between unramified realization over a small field and unconditional realization after a finite completion extension.
 
@@ -819,7 +963,7 @@ $$
 
 Each component is finite free of rank $p$. Multiply a point on component $i$ by a point on component $j$ by multiplying their $T$-coordinates; if $i+j\geq p$, divide the product by the unit $u$ and put it on component $i+j-p$. Associativity follows from ordinary multiplication together with the rule $T_{i+p}=uT_i$. Component $0$ is $\mu_p$, and the component index gives the quotient $\mathbf Z/p\mathbf Z$. On the generic fiber send $T_i=z$ to the Tate parameter $(\pi^s)^iz$. Its $p$th power is $q_0^i$, so it represents the points in the fiber of (8.4) above $i$. This identifies the generic fiber of (8.8) with $E_{q_0}[p]$ and proves the sufficiency in scheme-theoretic form.
 
-Over an unramified odd-prime base, the two inertia characters $\overline\chi_p$ and $1$ are distinct. Hence the multiplicative line is intrinsic, its schematic closure is $\mu_p$, and any finite flat model respects the canonical filtration. Under these hypotheses (8.6) is therefore a criterion for the abstract residual representation, not only for a chosen extension presentation.
+Over an unramified odd-prime base, the two inertia characters $\overline\chi_p$ and $1$ are distinct, so the multiplicative generic line is intrinsic. To turn this observation into an assertion about integral models one needs the rigidity proved in the finite-flat books. Suppose $\mathcal G/R$ is any finite flat model of the abstract Tate representation. The schematic closure $\mathcal H$ of the intrinsic line in $\mathcal G$ is finite flat: on coordinate rings, quotienting by the saturated Hopf ideal gives a finite torsion-free, hence free, $R$-module. Its generic fiber is $\mu_{p,K}$. Raynaud full faithfulness in ramification index $1<p-1$, together with the rank-$p$ classification, identifies $\mathcal H$ with $\mu_p$. The fppf quotient $\mathcal G/\mathcal H$ is finite flat with constant generic fiber and is therefore the constant group $\mathbf Z/p\mathbf Z$ by the same rigidity. Thus every finite flat model would extend the canonical Tate filtration. The necessity already proved for that filtration now applies. Under these hypotheses (8.6) is therefore a criterion for the abstract residual representation, not only for a chosen extension presentation.
 
 After tensoring by $I/\mathfrak pI$, the same criterion makes $A_{q_0}[\mathfrak p]$ finite flat. The abelian variety remains multiplicative. At $p=2$, the cyclotomic character modulo $2$ is trivial and the intrinsic-line argument fails; even valuation still constructs the canonical model, but abstract necessity needs separate dyadic classification.
 
@@ -833,35 +977,189 @@ $$
 
 Then $E_{q_0}$ has split multiplicative reduction with minimal discriminant exponent $p$, while $E_{q_0}[p]$ is finite flat. The generic representation is normally ramified because its multiplicative line carries $\overline\chi_p$; finite flat is therefore not synonymous with unramified. If instead $q_1=\pi u$, the two curves have the same coarse reduction type and the same diagonal characters, but $E_{q_1}[p]$ is not finite flat over an unramified odd-prime base. The exponent distinguishes the integral torsion models.
 
-### 8.5 Semistable neighborhoods
+### 8.5 The full-dimensional Mumford chart
 
-Semistability is open in the local topology around a fixed semiabelian model. We isolate the exact form used here.
-
-For the tensor Tate point, the needed chart can be described directly from periods. Choose dual $\mathbf Z$-bases of $I$ and $I^\dagger$. The totally degenerate semiabelian object is encoded by a one-motive
+We now construct the missing ambient chart. Put
 
 $$
-[,I\longrightarrow\mathbf G_m\otimes I^\dagger,],
+I^\dagger=\mathfrak d_F^{-1}I^{-1},
+\qquad
+T_I=\underline{\operatorname{Hom}}_{\mathbf Z}(I^\dagger,\mathbf G_m).
 \tag{8.10}
 $$
 
-whose period pairing sends $(a,b)$ to a power of $q_0$ determined by $\operatorname{Tr}_{F/\mathbf Q}(ab)$. The polarization says that this pairing is symmetric after the identification (3.6), and positivity says its valuation form is positive definite. Real multiplication imposes linear equalities
+The character lattice of $T_I$ is $I^\dagger$ and its cocharacter lattice is $I$. The Fourier-exponent lattice at the tensor cusp is
 
 $$
-q(ax,b)=q(x,ab)
+\mathfrak M=I I^\dagger=\mathfrak d_F^{-1},
 \tag{8.11}
 $$
 
-on the period coordinates. Consequently the independent logarithmic period directions form the rank-$d$ lattice of symmetric $\mathcal O_F$-linear homomorphisms, the same lattice that gives the $d$ tangent directions of the Hilbert moduli space.
+which has rank $d$ over $\mathbf Z$. To carry full level $N$, use $\mathfrak M_N=N^{-1}\mathfrak M$. Write $Q^\xi$ for the character indexed by $\xi\in\mathfrak M_N$.
 
-Choose a rational polyhedral cone containing the positive valuation form of the diagonal tensor period. The corresponding completed monoid algebra has one boundary monomial for each primitive ray. Over it, the quotient construction for (8.10) is obtained by the same convergent products as the one-dimensional Tate curve, applied to the character monomials. Positive valuation makes every product converge; (8.11) makes the $\mathcal O_F$-action descend; symmetry gives the polarization; and a change of dual bases acts by integral monomials, so the construction glues. Inverting the boundary monomials gives an abelian scheme and a map to $H$. The tangent characters are the full rank-$d$ PEL lattice, so this map is etale at the tensor Tate point. The completed monoid chart therefore supplies the scheme $\mathcal U$ in the next theorem. This argument is the higher-dimensional version of building $E_q$ from $K^\times/q^{\mathbf Z}$; the cone records which multi-periods tend to zero.
+Trace duality identifies $\mathfrak M^\vee$ with $\mathcal O_F$. Let $C^\vee$ be the open cone of real homomorphisms $\nu:\mathfrak M\to\mathbf R$ that are positive on every nonzero totally positive element of $\mathfrak M$. The tensor functional
 
-**Theorem 8.1 (semistable local persistence).** Let $A/K$ be a polarized abelian variety with real multiplication and split semiabelian reduction. Suppose there is a finite-type $R$-scheme $\mathcal U$, a semiabelian scheme over $\mathcal U$, and an open immersion $\mathcal U_K\hookrightarrow H_K$ whose universal generic abelian scheme is the given semiabelian scheme's generic fiber near the point $A$. Assume that on $\mathcal U$ the torus has a fixed split character lattice and that the boundary is cut out by normal-crossing parameters. Then there is an open neighborhood $\Omega_A\subset H(K)$ such that every point in $\Omega_A$ has semistable reduction with the same toric rank. If the generic paired frames exist at $A$, the neighborhood may be chosen to preserve them.
+$$
+\nu_{\mathrm{ten}}(\xi)=\operatorname{Tr}_{F/\mathbf Q}(\xi)
+\tag{8.12}
+$$
 
-**Proof strategy.** A split semiabelian scheme is an extension of an abelian scheme by a split torus. Both pieces and the extension law are given by finitely many regular functions. Smoothness of the torus and abelian part makes their defining unit and discriminant conditions stable under small changes. The boundary parameters must remain nonzero with positive valuation; valuation is locally constant on $K^\times$. These conditions give the desired open chart.
+is integral and lies in $C^\vee$. Choose a full-dimensional regular rational polyhedral cone $\sigma\subset C^\vee$ having $\nu_{\mathrm{ten}}$ in its interior. Begin with a rational simplicial cone around the fixed ray and apply toric desingularization, choosing subdivision centers away from that ray; this gives a unimodular cone still containing it in the interior. If cusp units are retained, take all their translates and a common locally finite refinement. Dirichlet's unit theorem makes the projectivized positive cone modulo totally positive units compact, so only finitely many cone orbits are needed. For the local chart one cone containing (8.12) suffices.
 
-**Proof.** Choose the stipulated basis of the character lattice. On $\mathcal U$, the semiabelian group law is described by the abelian part, copies of $\mathbf G_m$, and finitely many biextension transition functions, all units. Smoothness of the abelian part is the invertibility of a finite Jacobian determinant; preservation of the fixed character lattice is built into the chart. The normal-crossing parameters $t_1,\ldots,t_a$ cut out its boundary divisors. The given generic point has $0<v_K(t_i)<\infty$ for the degenerating directions and unit parameters for the others. Each equality $v_K(t_i)=m_i$ is open because a sufficiently small perturbation of a nonzero element has the same valuation. Keeping all Jacobian determinants and transition functions units gives a finite intersection of open conditions. By the universal property assumed for $\mathcal U$, every resulting generic point is the generic fiber of the displayed semiabelian scheme and has the same toric rank. Finally intersect with the local images of the finite etale generic frame covers, as in Proposition 2.3. $\square$
+Let $R$ be a complete DVR on the good PEL base. Put
 
-For the tensor Tate point, one may take all boundary parameters equal to $q_0$ after a choice of tensor basis. Thus $v(q_0)>0$ is the visible semistable condition. If finite flatness at $p$ is also required, choose $v(q_0)$ divisible by $p$ and restrict to the valuation shell $v(q)=v(q_0)$. Every point of that smaller neighborhood retains (8.6).
+$$
+P_\sigma=\sigma^\vee\cap\mathfrak M_N,
+\qquad
+A_\sigma=\widehat{R[P_\sigma]}
+\tag{8.13}
+$$
+
+where completion is along the ideal generated by the nonzero boundary monomials. Regularity of $\sigma$ gives parameters $t_1,\ldots,t_d$ and an isomorphism, after a finite etale coefficient extension if the cusp label requires one,
+
+$$
+A_\sigma\simeq R'[[t_1,\ldots,t_d]].
+\tag{8.14}
+$$
+
+This is a complete algebraic base, not merely a list of period formulas.
+
+Over the locus where all boundary monomials are invertible, define the universal period map
+
+$$
+u_Q:I\longrightarrow T_I,
+\qquad
+x(u_Q(a))=Q^{ax}
+\quad(a\in I, x\in I^\dagger).
+\tag{8.15}
+$$
+
+The exponent $ax$ belongs to $\mathfrak d_F^{-1}$, so (8.15) is defined over $A_\sigma$. It is $\mathcal O_F$-balanced. For $c\in\mathfrak c_I^+$, the map
+
+$$
+I\longrightarrow I^\dagger,
+\qquad a\longmapsto ca
+\tag{8.16}
+$$
+
+gives the multiplicative period form
+
+$$
+(a,b)\longmapsto Q^{abc}.
+\tag{8.17}
+$$
+
+It is symmetric, and for every $\nu\in\sigma$ its valuation on $(a,a)$ is $\nu(a^2c)>0$ when $a\ne0$. Thus (8.17) is a positive Riemann form. As $c$ ranges through $\mathfrak c_I$, (8.16) identifies $I\otimes\mathfrak c_I$ with $I^\dagger$, exactly the tensor-polarization isomorphism.
+
+**Theorem 8.1 (algebraized tensor-cusp chart).** After possibly replacing $\sigma$ by a rational subdivision that still contains $\nu_{\mathrm{ten}}$ in the interior, the data (8.10)--(8.17) have the following algebraization over $A_\sigma$.
+
+1. There is a projective flat Mumford family $\overline{\mathcal A}_\sigma\to\operatorname{Spec}A_\sigma$ with an open semiabelian group locus $\mathcal G_\sigma$. Over
+   $$
+   U_\sigma=\operatorname{Spec}A_\sigma[(t_1\cdots t_d)^{-1}]
+   $$
+   it is an abelian scheme; write this restriction as $\mathcal A_\sigma$. Over the closed cusp stratum $t_1=\cdots=t_d=0$, the identity component of $\mathcal G_\sigma$ is the split torus $T_I$ of dimension $d$.
+2. Multiplication on $I$ gives an $\mathcal O_F$-action, (8.16)--(8.17) give the ordered $\mathfrak c_I$-polarization and a relatively ample symmetric bundle, and the Lie algebra satisfies the Hilbert determinant condition.
+3. The $N$-division periods give the cyclotomic-split level
+   $$
+   \mathscr L_{I,N}^{\natural}\xrightarrow{\sim}\mathcal A_\sigma[N]
+   $$
+   on the abelian locus and the corresponding level of the boundary one-motive.
+4. The classifying map from the punctured $d$-dimensional period polydisc to $H_I^{\mathrm{ten}}$ is etale in every period direction. Its tensor ray is $A_{q_0}=E_{q_0}\otimes I$.
+
+**Proof.** We give the construction because an individual Tate variety would not prove the theorem. Start with an $I$-periodic rational triangulation of $I\otimes\mathbf R$. Add a generic $I$-periodic rational piecewise-linear perturbation to the quadratic support function defined by (8.17), small enough that it remains strictly convex for $\nu_{\mathrm{ten}}$. Convexity and compatibility across faces are finitely many strict rational linear inequalities modulo $I$. They therefore remain valid on a full-dimensional rational cone containing $\nu_{\mathrm{ten}}$ in its interior. Intersect that cone with $\sigma$, subdivide without putting the tensor ray on a wall, and take a common regular refinement of the triangulation. This proves the simultaneous fan assertion rather than assuming a fan adapted to every period independently. There are finitely many cells modulo $I$.
+
+Each cell gives the standard toric formal chart for $T_I$ over $A_\sigma$; translation by $a\in I$ changes its character $x$ by the monomial $Q^{ax}$ from (8.15). The period identity
+
+$$
+Q^{(a+a')x}=Q^{ax}Q^{a'x}
+$$
+
+is exactly the cocycle on triple overlaps. The finitely many cell orbits therefore glue to a proper formal quotient. Fullness follows because every $\nu\in\sigma$ makes the pairing (8.17) positive definite, so a tropical point can be translated into a fixed finite union of cells. This is the higher-dimensional valuative argument used for Raynaud quotients.
+
+Before completion, each toric chart algebra is a direct sum of copies of the base indexed by a saturated monoid. It is therefore $A_\sigma$-flat; completion and the open gluings preserve flatness. Hence the proper formal quotient is flat over $\operatorname{Spf}A_\sigma$.
+
+The positive quadratic form (8.17) gives an integral strictly convex support function after multiplying by one positive integer. Its automorphy factors glue a relatively ample symmetric formal line bundle. The ample-line algebraization theorem for proper formal schemes algebraizes the quotient and that bundle uniquely to the projective $A_\sigma$-scheme $\overline{\mathcal A}_\sigma$. Equivalently, theta sections of a high power give the relative Proj; quadratic growth of (8.17) is their convergence and finite-generation estimate. This is the point at which the formal quotient becomes an algebraic family. Faithful completion transfers the formal flatness just proved to the algebraization. The toric action and period translations are monomial on the finitely many charts, so they algebraize the open semiabelian group locus $\mathcal G_\sigma$. More precisely, the polarized Raynaud quotient and periodic polyhedral model are the construction of Book 35, and algebraization of the proper formal scheme with its ample line bundle is the theorem of Book 18. Multiplying the support function only supplies an ample algebraizing bundle; it does not replace the exact maps (8.16). Those formal homomorphisms and their tensor-perfectness identities algebraize by graph effectivity. No compactification is being inferred from the open Hilbert scheme.
+
+Multiplication by $b\in\mathcal O_F$ acts on the cocharacter lattice $I$, on the character lattice $I^\dagger$ contragrediently, and preserves (8.15). It therefore acts on $\mathcal G_\sigma$ and on the abelian generic locus. The equality $I\mathfrak c_I=I^\dagger$ proves tensor perfectness, while (8.17) proves symmetry and positivity. Since
+
+$$
+\operatorname{Lie}T_I\simeq I\otimes_{\mathbf Z}A_\sigma
+$$
+
+is locally free of rank one over $\mathcal O_F\otimes A_\sigma$, the universal determinant polynomial holds on the boundary formal chart. It is a closed identity and hence holds on the algebraization and its abelian locus.
+
+The $N$-torsion of the one-motive $[I\xrightarrow{u_Q}T_I]$ fits into
+
+$$
+0\longrightarrow T_I[N]
+\longrightarrow [I\to T_I][N]
+\longrightarrow I/NI\longrightarrow0.
+\tag{8.18}
+$$
+
+Here $T_I[N]=(I/NI)(1)$. Because the base contains every monomial $Q^{\xi/N}$ for $\xi\in\mathfrak M$, the rule
+
+$$
+x(u_Q(a/N))=Q^{ax/N}
+$$
+
+splits the quotient term in (8.18). Together with toric $N$-torsion it gives (1.1b), and the one-motive Weil pairing is (1.1c). Thus the determinant, PEL, and auxiliary-level data all extend on the same chart.
+
+It remains to check dimension rather than merely count parameters. The cotangent space of a Hilbert--Blumenthal deformation is the rank-$d$ module of symmetric $\mathcal O_F$-balanced bilinear forms on the Hodge lattice. The logarithmic differentials of the period torus are
+
+$$
+d\log Q^\xi\qquad(\xi\in\mathfrak M),
+$$
+
+and (8.15) identifies the Kodaira--Spencer map with the identity on $\mathfrak M\otimes K$. It is therefore an isomorphism. The auxiliary level is etale and adds no tangent directions, so the classifying map is etale on the punctured polydisc.
+
+Finally choose $q_N\in K$ with $v_K(q_N)>0$, put $q_0=q_N^N$, and specialize by
+
+$$
+Q^{\xi/N}\longmapsto q_N^{\operatorname{Tr}(\xi)}.
+\tag{8.19}
+$$
+
+Then $Q^{ax}$ maps to $q_0^{\operatorname{Tr}(ax)}$, which is the period evaluation for $E_{q_0}\otimes I$. The ring in (8.14) is a domain, so $U_\sigma$ is connected. Its classifying map meets the open-and-closed component $H_I^{\mathrm{ten}}$ along this tensor specialization and therefore factors through that component everywhere. This proves the tensor-ray and component assertions and completes the construction. $\square$
+
+The theorem also gives the correct multivariable finite-flat criterion. A $K$-point of the chart determines a valuation homomorphism
+
+$$
+\nu_Q:\mathfrak d_F^{-1}\longrightarrow\mathbf Z.
+\tag{8.20}
+$$
+
+At an unramified odd coefficient prime $p$, the canonical $p$-torsion of its one-motive extends finite flat if and only if
+
+$$
+\nu_Q(\mathfrak d_F^{-1})\subset p\mathbf Z.
+\tag{8.21}
+$$
+
+Indeed, pulling (8.18) back along $a\bmod p$ and evaluating by $x\bmod p$ gives the Kummer class $Q^{ax}$; it comes from a unit precisely when $p$ divides its valuation. After choosing bases, the resulting unit Kummer extensions assemble into a finite flat extension of the constant lattice by the toric $\mu_p$-lattice. The products $ax$ generate $II^\dagger=\mathfrak d_F^{-1}$, proving necessity and sufficiency. On the tensor ray, (8.20) is $v_K(q_0)\operatorname{Tr}$. The element $1\in\mathcal O_F$ is primitive as a $\mathbf Z$-lattice vector, so evaluation at $1$ maps $\operatorname{Hom}_{\mathbf Z}(\mathcal O_F,\mathbf Z)=\mathfrak d_F^{-1}$ onto $\mathbf Z$. Hence (8.21) is equivalent to $p\mid v_K(q_0)$, recovering (8.6).
+
+### 8.6 Semistable neighborhoods
+
+**Theorem 8.2 (full-dimensional semistable openness).** Let $y\in Y(K)$ be a tensor Tate point with corrected auxiliary level and both exact generic frames. Then there is a nonempty open neighborhood
+
+$$
+\Omega_y\subset Y(K)
+\tag{8.22}
+$$
+
+all of whose underlying abelian varieties have split totally toric semistable reduction. The toric rank is $d$, equivalently one over $\mathcal O_F$. Any prescribed finite list of torsion Kummer classes and valuation shells can be retained. At an unramified odd coefficient prime, if (8.21) holds at $y$, the neighborhood may be chosen so that it holds throughout.
+
+**Proof.** Use (8.19) to place $y$ on the algebraized chart. Because $\nu_{\mathrm{ten}}$ lies in the interior of $\sigma$, all regular boundary parameters $t_1,\ldots,t_d$ have positive valuation at $y$. Require
+
+$$
+v_K(t_i)=v_K(t_i(y))>0
+\qquad(1\leq i\leq d).
+\tag{8.23}
+$$
+
+These are open conditions. Every resulting point reduces to the same deepest boundary stratum, whose identity component is $T_I$; pulling back $\mathcal G_\sigma$ gives split semistable reduction of toric rank $d$. The etale Kodaira--Spencer calculation in Theorem 8.1 and the nonarchimedean inverse function theorem identify a small parameter polydisc around $y$ with an open subset of $H(K)$. Thus this is an ambient $d$-dimensional open, not the one-dimensional tensor ray.
+
+The quotients $K^\times/(K^\times)^n$ are finite and their power subgroups are open, so finitely many Kummer classes remain fixed after shrinking. Conditions (8.23) fix the homomorphism (8.20), hence preserve (8.21). Finally intersect with the local images of the two finite etale generic frame schemes. The intersection contains $y$, so it is nonempty and gives (8.22). $\square$
 
 ## 9. Twisted two-prime covers and local solvability
 
@@ -870,12 +1168,12 @@ For the tensor Tate point, one may take all boundary parameters equal to $q_0$ a
 A $K$-point of the two-prime twist is a tuple
 
 $$
-(A,\iota,\lambda,\eta_{\mathfrak n},
+(A,\iota,\lambda,\eta_{\mathfrak n}^{\natural},
 \alpha_{\mathfrak p},\alpha_{\mathfrak q})
 \tag{9.1}
 $$
 
-with the isomorphisms (1.1). It realizes the prescribed representations exactly, including extension classes and pairings. There is no weakening to semisimplification.
+with the isomorphisms (1.1d)--(1.1e). It realizes the prescribed representations exactly, including extension classes and pairings. There is no weakening to semisimplification.
 
 The local geometry and the twisting operation solve different problems. The Hilbert scheme supplies abelian varieties and reduction types. The twist asks whether their two torsion modules equal the prescribed local systems. A beautiful ordinary or semistable abelian variety that lacks either frame is not a local point of $Y$.
 
@@ -896,19 +1194,17 @@ $$
 
 for $\mathfrak r=\mathfrak p,\mathfrak q$. In rank two, (9.2) gives the unique alternating pairing inducing that determinant map. It is also sufficient to define the twist, but not sufficient for the twist to have a $K$-point.
 
-At a real place, local solvability reduces to oddness by Proposition 4.1. At a good finite place away from $p$ and $q$, it is a simultaneous Frobenius realization problem. At a coefficient prime, it is an exact finite-flat PEL realization problem. At a semistable place, it includes the Kummer extension class.
+At a real place, Theorem 4.1 supplies the corrected auxiliary level and Proposition 4.2 solves the two residual frames. At a good finite place away from $p$ and $q$, local solvability is a simultaneous Frobenius realization problem. At a coefficient prime, it is an exact finite-flat PEL realization problem. At a semistable place, Theorems 8.1--8.2 supply the ambient chart in addition to the Kummer extension class.
 
 ### 9.3 Good-prime solvability
 
 Let $r\ne p,q$ be good for all integral data. The finite etale twist extends as in (5.1).
 
-**Theorem 9.1 (good-prime local point).** If the special fiber of the chosen integral twist has a point over some finite extension $k'/k$, then the twist has a good point over the corresponding unramified extension $K'/K$. This point possesses an open residue neighborhood on which good reduction and both exact frames persist.
+**Theorem 9.1 (good-prime local point).** Assume $r\ne p,q$ is good for $F$, $I$, and $N$, and the restrictions of both prescribed systems to $G_K$ are unramified. Then after a finite unramified extension $K'/K$, the intended twist has a good point. It has a nonempty open residue neighborhood on which good reduction, corrected auxiliary level, component, and both exact frames persist.
 
-Alternatively, suppose a good PEL seed of the selected polarization type is available over a finite extension of $K$, without frames. Then any two determinant-compatible finite local systems are realized on that seed after a further finite extension. The resulting point again has a good open neighborhood.
+**Proof.** Choose any smooth elliptic curve over a finite extension of $k$. After a further finite residue extension choose its corrected elliptic $N$-level (3.11), and tensor both curve and level with $I$. Proposition 3.2 puts the resulting good PEL object on the intended component. The two seed torsion representations and the two prescribed unramified representations have finite image. After replacing arithmetic Frobenius by a common positive power, all four actions and their determinant lines are trivial. Paired bases then give both frames on the same special-fiber seed. Theorem 5.1 lifts that point over the corresponding unramified extension, and its residue tube gives the asserted neighborhood. $\square$
 
-**Proof.** The first assertion is Theorem 5.1 after unramified base change. For the alternative, take a finite compositum splitting the two prescribed local systems, the two seed torsion modules, the auxiliary level, and the determinant coefficient lines. Over that field choose symplectic bases and match them at each prime. Base change preserves the good abelian scheme. Its integral residue tube, intersected with the generic local frame images, is the desired neighborhood. $\square$
-
-The hypothesis is directly verifiable. One may construct a special-fiber tensor point and compare its two Frobenius representations, or find a closed point on the entire twist. Geometric connectedness of the generic cover helps ensure that no constant-field obstruction is hidden, but local special-fiber nonemptiness is still checked rather than inferred.
+If ramification of a prescribed prime-to-$r$ system is allowed initially, pass first to the recorded finite completion extension killing that inertia. The theorem then applies over its maximal unramified stage; no descent to the original field is asserted.
 
 ### 9.4 Coefficient-prime solvability
 
@@ -931,7 +1227,7 @@ $$
 
 as well as the finite field needed for the auxiliary level and the roots of unity occurring in the determinant targets. Over $L$, all four torsion local systems in (9.3) and their coefficient lines are constant. A perfect alternating form on a two-dimensional vector space over a field has a symplectic basis: choose a nonzero first vector, choose a second with nonzero pairing, and rescale it to the prescribed value. Applying this separately at $\mathfrak p$ and $\mathfrak q$ gives the two paired frames on the same seed. Good reduction and ordinary or local--local type persist by base change. Since $V_{\mathfrak p}$ was the generic fiber of a finite flat group over $R$, its restriction is represented by that group's base change to the valuation ring of $L$. Proposition 6.1 or Theorem 7.1, together with the local frame sections of Proposition 2.3, gives the required open neighborhood. $\square$
 
-Finite flatness of $V_{\mathfrak p}$ alone is intentionally not asserted to imply the hypotheses. The gap from an abstract finite flat group to a polarized abelian variety on a selected component is a genuine PEL realization problem.
+Finite flatness of $V_{\mathfrak p}$ alone is intentionally not asserted to give assertion 1 over the original field or over an unramified extension. Assertion 2 works because the tensor PEL seed has been constructed independently on the intended component and a general finite splitting extension is allowed. On an externally fixed component for which no seed is known, the PEL realization problem remains genuine.
 
 ### 9.5 Simultaneous frames
 
@@ -941,7 +1237,7 @@ Once one simultaneous point exists, however, openness is straightforward. Each g
 
 This order prevents a common circular argument. We do not prove the intersection nonempty by observing that all its factors are individually nonempty. We first construct one tuple (9.1), then shrink around it.
 
-The finite-splitting argument also applies to a semistable seed. Starting from $A_{q_0}$ on the correct polarization component, pass to a finite field splitting both prescribed local systems, both seed torsion modules, and the auxiliary level. Symplectic bases give simultaneous frames. Semistability and split toric reduction persist; if $V_{\mathfrak p}$ was finite flat, its restriction remains finite flat. If the seed's own Tate $p$-torsion is required to be finite flat, choose $p\mid v(q_0)$ before extending. The exact valuation after extension is then $e(L/K)v(q_0)$, so only divisibility and semistability, not the original normalized exponent, are claimed to persist.
+The finite-splitting argument also applies to a semistable seed. Choose $q_0=q_N^N$ so the corrected auxiliary level is already present on the boundary chart. Since $N$ is prime to $p$ and $q$, raising to the $N$th power is an automorphism of every relevant residual Kummer quotient; this restriction loses no prescribed compatible pair of $p$- and $q$-Kummer classes. Pass to a finite extension splitting both prescribed local systems and both seed torsion modules. Symplectic bases give simultaneous frames. Theorem 8.2 then gives an ambient semistable neighborhood. If $V_{\mathfrak p}$ was finite flat, its restriction remains finite flat. If the seed's own one-motive $p$-torsion is required to be finite flat over the unramified starting field, impose (8.21) before extending. Exact valuations rescale by $e(L/K)$, so only divisibility and semistability, not the original normalized exponents, are claimed to persist.
 
 ## 10. Openness of the exact local conditions
 
@@ -969,7 +1265,7 @@ $$
 \tag{10.1}
 $$
 
-Because there are finitely many $\tau$, (10.1) is open. Its inverse image under reduction is therefore open in $H(K)$. The tensor ordinary points of Chapter 6 show that it is nonempty on every tensor-admissible component that they meet.
+Because there are finitely many $\tau$, (10.1) is open. Its inverse image under reduction is therefore open in $H(K)$. The tensor ordinary points of Chapter 6 show that it is nonempty on the intended component.
 
 **Proposition 10.1.** Around a good ordinary point there is a basic open set determined by finitely many conditions
 
@@ -1014,16 +1310,21 @@ The intersection of $U$ with (10.3) is the exact nonordinary finite-flat neighbo
 
 ### 10.4 Semistable and Kummer conditions
 
-For a Tate curve, $v(j)<0$ is stable under small perturbation of $j$ because valuation is locally constant on $K^\times$. On the tensor Tate locus the same condition is read in each elliptic factor. In a general semiabelian chart, Theorem 8.1 uses boundary parameters $t_i$. Conditions
+For a Tate curve, $v(j)<0$ is stable under small perturbation of $j$ because valuation is locally constant on $K^\times$. On the tensor Tate locus the same condition is read in each elliptic factor. On the Mumford chart of Theorem 8.1, conditions
 
 $$
 v_K(t_i)=m_i>0
 \tag{10.4}
 $$
 
-are open shells. Keeping the remaining parameters and determinant functions units preserves the toric rank and polarization type.
+are open shells. Keeping the remaining parameters and determinant functions units preserves the toric rank and polarization type. The numbers $m_i$ determine the valuation homomorphism $\nu_Q$ in (8.20), but the invariant finite-flat condition is not the basis-dependent assertion that each displayed $m_i$ is divisible by $p$. It is
 
-At the coefficient prime, canonical finite flatness of Tate $p$-torsion is the divisibility condition $p\mid m_i$. Divisibility by itself is a union of valuation shells and is open among nonzero parameters: each point has one fixed valuation. If the exact Kummer class must be preserved, valuation is not enough. The class lies in the finite group
+$$
+\nu_Q(\mathfrak d_F^{-1})\subset p\mathbf Z.
+\tag{10.5}
+$$
+
+Because (10.4) fixes $\nu_Q$, condition (10.5) persists on the whole shell. On the tensor ray it reduces to $p\mid v_K(q_0)$ by trace duality. If an exact Kummer class must also be preserved, valuation is not enough. Each character evaluation gives a class in the finite group
 
 $$
 K^\times/(K^\times)^p.
@@ -1035,15 +1336,13 @@ $$
 K^\times=\pi^{\mathbf Z}\times\mu_{|k|-1}\times U^1.
 $$
 
-On a sufficiently deep principal-unit group $U^n$, the $p$-adic logarithm identifies the $p$th-power map with multiplication by $p$, whose image contains another open subgroup. Hence every Kummer class is open. A sufficiently small neighborhood of $q_0$ therefore preserves both $v(q_0)$ and $[q_0]$.
+On a sufficiently deep principal-unit group $U^n$, the $p$-adic logarithm identifies the $p$th-power map with multiplication by $p$, whose image contains another open subgroup. Hence every Kummer class is open. A sufficiently small neighborhood therefore preserves both the valuation homomorphism and any prescribed finite list of evaluated Kummer classes.
 
 For a prime $\ell\ne p$, the same conclusion is easier: raising to the $\ell$th power is an automorphism on a sufficiently deep principal-unit group. Thus $K^\times/(K^\times)^\ell$ is finite and discrete, and the Tate extension class is locally constant.
 
 ### 10.5 Frame conditions are locally constant
 
-Let $T$ be a connected local analytic neighborhood in $H(K)$ and let $\mathcal A[\mathfrak r]$ be the generic finite etale torsion family. Choosing a point $t_0$ identifies its fiber with a finite set carrying a $k_{\mathfrak r}$-module structure and pairing. The monodromy of this finite local system factors through a finite quotient. After replacing $T$ by the open neighborhood corresponding to the kernel of that quotient, the local system is constant. In particular all fibers are paired-isomorphic.
-
-This topological argument is equivalent to using the isomorphism scheme and Proposition 2.3. The scheme-theoretic version is preferable because it retains descent and works simultaneously for two primes.
+Let $t_0\in H(K)$ and fix a paired identification between a prescribed $V_{\mathfrak r}$ and $\mathcal A[\mathfrak r]_{t_0}$. The paired isomorphism scheme is finite etale over $H_K$. Proposition 2.3 gives a neighborhood of the chosen point of that scheme mapping homeomorphically to an open neighborhood of $t_0$. Thus every fiber in that neighborhood has the prescribed paired isomorphism. Applying this construction to both primes and intersecting the two images proves simultaneous local constancy without invoking a topological covering space for an arbitrary analytic subset.
 
 **Theorem 10.2 (openness theorem).** Let $y\in Y(K)$ be a local point of one of the following kinds:
 
@@ -1051,11 +1350,11 @@ This topological argument is equivalent to using the isomorphism scheme and Prop
 - good away from the level primes;
 - good ordinary at an unramified odd coefficient prime;
 - good nonordinary finite-flat at such a prime;
-- split semistable, with any stated Tate Kummer class.
+- a split totally toric tensor-cusp point, with any stated Tate Kummer classes.
 
-Assume the relevant integral or semiabelian model exists at $y$. Then there is a nonempty open neighborhood $\Omega_y\subset Y(K)$ on which the same listed local condition, both exact paired frames, the polarization type, the auxiliary level, and the geometric component all persist.
+Then there is a nonempty open neighborhood $\Omega_y\subset Y(K)$ on which the same listed local condition, both exact paired frames, the polarization type, the auxiliary level, and the geometric component all persist. At an odd unramified coefficient prime, the neighborhood also preserves canonical finite flatness whenever (10.5) holds at $y$.
 
-**Proof.** At a real place use Section 4.4. At a good point use an integral residue tube and, for ordinarity, intersect with (10.1). For nonordinary type fix the special point as in (10.3). At a semistable point use the boundary-parameter chart and, when needed, fix the Kummer classes by Section 10.4. The frames and auxiliary level are universal on $Y$; if one works downstairs on $H$, intersect with their finite etale local images. A sufficiently small neighborhood cannot cross an open-and-closed component. Every intersection contains $y$, so it is nonempty. $\square$
+**Proof.** At a real place use Section 4.5. At a good point use an integral residue tube and, for ordinarity, intersect with (10.1). For nonordinary type fix the special point as in (10.3). At a tensor-cusp point Theorem 8.2 supplies the full-dimensional semistable neighborhood; Section 10.4 retains the requested Kummer classes and (10.5). The frames and auxiliary level are universal on $Y$; if one works downstairs on $H$, intersect with their finite etale local images. A sufficiently small neighborhood cannot cross an open-and-closed component. Every intersection contains $y$, so it is nonempty. $\square$
 
 ## 11. Persistence under extension of local fields
 
@@ -1068,8 +1367,6 @@ A_S=A\times_RS
 $$
 
 is an abelian scheme. The real multiplication, polarization-module isomorphism, determinant condition, and prime-to-residue-characteristic level all commute with base change. Hence good reduction persists under every finite extension.
-
-Good reduction also descends through a finite unramified extension when the generic object and all its structures descend to $K$. Indeed $S/R$ is finite etale and faithfully flat. The smooth proper group scheme over $S$, together with its canonical descent datum from the generic fiber, descends effectively; smoothness and properness descend faithfully flat. Ramified descent is more delicate because a good model upstairs need not carry effective descent data and potential good reduction is common.
 
 For a frame already defined over $K$, restriction gives a frame over $L$. A frame that appears only over $L$ need not descend: its obstruction is the corresponding torsor class.
 
@@ -1110,13 +1407,20 @@ Finite flatness is preserved by arbitrary base change, so the restricted represe
 
 At an unramified ground-field extension in the Fontaine--Laffaille range, the filtered module base-changes by tensoring with the larger Witt ring. Ordinary or local--local type, duality, determinant, and stable lines are preserved. This is stronger than the abstract base-change observation because it identifies the classified integral object.
 
-For Tate $p$-torsion, if $p\mid v_K(q_0)$ then
+On a Mumford chart, base change multiplies the valuation homomorphism by the ramification index:
+
+$$
+\nu_{Q,L}=e(L/K)\nu_{Q,K}.
+\tag{11.2}
+$$
+
+Consequently $\nu_{Q,K}(\mathfrak d_F^{-1})\subset p\mathbf Z$ implies the same inclusion over $L$, so the canonical finite-flat one-motive torsion of (8.21) persists. On the tensor ray this says that if $p\mid v_K(q_0)$, then
 
 $$
 p\mid v_L(q_0)=e(L/K)v_K(q_0),
 $$
 
-so canonical finite flatness persists. The converse after restriction fails: a ramification index divisible by $p$ can make $p\mid v_L(q_0)$ even when $p\nmid v_K(q_0)$. Finite flatness acquired after ramified extension need not descend.
+as expected. The converse after restriction fails: a ramification index divisible by $p$ can force (8.21) over $L$ even when it fails over $K$. Finite flatness acquired after ramified extension need not descend.
 
 ### 11.5 What is not persistent
 
@@ -1139,15 +1443,17 @@ Let $\Omega_1,\ldots,\Omega_m$ be nonempty open subsets of $Y(K)$. Their interse
 
 The safe construction begins with one point $y$ satisfying all desired conditions. Each condition then supplies an open neighborhood of $y$, and the finite intersection remains nonempty because it contains $y$. This elementary order of reasoning prevents separate local existence statements from being combined illegitimately.
 
-For two frames, the seed must already lie on the fiber product twist. For finite flatness and semistability at the same coefficient prime, the Tate seed must satisfy the divisibility criterion (8.6) before shrinking. For a nonordinary good point, one uses a supersingular seed, not an ordinary point plus a separate closed condition.
+For two frames, the seed must already lie on the fiber product twist. For finite flatness and semistability at the same coefficient prime, the Mumford seed must satisfy (8.21) before shrinking; on the tensor ray this is (8.6). For a nonordinary good point, one uses a supersingular seed, not an ordinary point plus a separate closed condition.
 
 ### 12.2 Component bookkeeping
 
-The geometric components of the Hilbert moduli space are indexed by determinant classes in a narrow adelic quotient. A twist does not alter them after algebraic closure, but Galois may permute them. A local point belongs to one definite arithmetic orbit of geometric components.
+The geometric components of an arbitrary Hilbert moduli space are indexed by determinant classes in a narrow adelic quotient. A twist does not alter them after algebraic closure, but Galois may permute them. This warning is the reason the component was fixed before any local construction.
 
-Let $Y^\circ$ be the component used in the global approximation theorem. Every local neighborhood must meet $Y^\circ(K_v)$, not merely $Y(K_v)$. If $Y^\circ$ is open and closed over $K$, then a sufficiently small neighborhood of a point in it stays in it. If it is defined only after an extension, it cannot be used as a $K$-variety without descending its Galois orbit.
+For the corrected datum, the bookkeeping has already been completed. Proposition 3.2 proves that $H_I^{\mathrm{ten}}$ is defined over $\mathbf Q$, that every tensor seed with corrected level lies on it, and that the determinant-compatible two-prime twist $Y_I^{\mathrm{ten}}$ is geometrically connected. Passing to a completion or to a finite extension does not change that algebraic component. Once simultaneous frames have been chosen, the seed is therefore a point of this one $K$-defined twist, not merely a point somewhere on a union of conjugate components.
 
-Tensoring by an ideal or changing polarization type can move the determinant class. Thus the calculation $\mathfrak c_I=\mathfrak d_F^{-1}I^{-2}$ is part of local component verification. A prime-to-level isogeny does not automatically preserve the ordered polarization-module identification.
+Theorem 3.3 makes this uniform for the potential-automorphy catalog: choose $I=\mathcal O_F$ and $\mathfrak c=\mathfrak d_F^{-1}$ before declaring the auxiliary PEL datum. Real, good, ordinary, supersingular, and tensor-cusp seeds then all have the same determinant class. There is no component intersection left to prove downstream.
+
+If a different application externally fixes a nonsquare narrow class of $\mathfrak d_F\mathfrak c$, this reduction is unavailable. It must supply its own common seeds and component descent; a prime-to-level isogeny does not automatically transport the ordered polarization-module identification.
 
 ### 12.3 Avoiding degeneracy loci
 
@@ -1165,16 +1471,16 @@ The last assertion has a direct algebraic proof. A nonzero polynomial on an affi
 
 ### 12.4 A simultaneous local-neighborhood theorem
 
-**Theorem 12.1 (simultaneous local neighborhood).** Let $K$ be $\mathbf R$ or a finite extension of $\mathbf Q_r$, let $Y^\circ$ be a $K$-defined open-and-closed smooth component of the two-prime twist, and let $Z\subsetneq Y^\circ$ be closed. Suppose there is a point
+**Theorem 12.1 (simultaneous local neighborhood).** Let $K$ be $\mathbf R$ or a finite extension of $\mathbf Q_r$, let $Y=Y_I^{\mathrm{ten}}$ be the corrected determinant-compatible twist, and let $Z\subsetneq Y$ be closed. Suppose there is a point
 
 $$
-y\in(Y^\circ\setminus Z)(K)
+y\in(Y\setminus Z)(K)
 $$
 
-equipped, at a finite place, with the integral or semiabelian model required for one of the five local conditions. Then there is a nonempty open
+which is real, good, good ordinary, good nonordinary finite-flat, or a split totally toric tensor-cusp point. Then there is a nonempty open
 
 $$
-\Omega_y\subset(Y^\circ\setminus Z)(K)
+\Omega_y\subset(Y\setminus Z)(K)
 \tag{12.1}
 $$
 
@@ -1183,9 +1489,9 @@ such that:
 1. every point has the same two prescribed paired torsion representations;
 2. every point retains the auxiliary level, ordered polarization type, and component;
 3. every point has the same selected real, good, ordinary, nonordinary finite-flat, or semistable condition;
-4. any finitely many locally constant valuation, Kummer, splitness, or reduction constraints satisfied by $y$ also persist after shrinking.
+4. any finitely many locally constant valuation, Kummer, splitness, or reduction constraints satisfied by $y$ also persist after shrinking; at an odd unramified coefficient prime this includes (8.21).
 
-**Proof.** Theorem 10.2 gives an open neighborhood for the principal local condition and frames. The component is already the ambient space. The complement of $Z(K)$ is open and contains $y$. Each additional locally constant invariant supplies an open neighborhood by Sections 10.4--10.5. Intersect the finitely many neighborhoods. Their intersection is open and contains $y$, proving nonemptiness. $\square$
+**Proof.** Theorem 10.2 gives an open neighborhood for the principal local condition and frames; in the semistable case its chart is the constructed chart of Theorems 8.1--8.2. Proposition 3.2 makes the intended geometrically connected twist the ambient space. The complement of $Z(K)$ is open and contains $y$. Each additional locally constant invariant supplies an open neighborhood by Sections 10.4--10.5. Intersect the finitely many neighborhoods. Their intersection is open and contains $y$, proving nonemptiness. $\square$
 
 The theorem is intentionally point-centered. It does not assert that arbitrary separately specified local conditions have a common point.
 
@@ -1193,36 +1499,39 @@ The theorem is intentionally point-centered. It does not assert that arbitrary s
 
 ### 13.1 The input ledger
 
-Before local neighborhoods can be passed to arithmetic approximation, the following facts must be recorded at every controlled place.
+Before local neighborhoods can be passed to arithmetic approximation, the following facts must be recorded at every controlled place. The corrected level, the ambient tensor-cusp chart, and membership in the tensor component are now constructions, not entries to be assumed.
 
 | place | seed point | condition retained | essential compatibility |
 |---|---|---|---|
-| real | real PEL point | real component and signs | odd paired involutions |
-| $r\ne p,q$ | integral point on the twist | good reduction | special-fiber twist nonempty |
-| $r=p$ ordinary | ordinary good point | ordinary finite-flat type | finite-flat $V_{\mathfrak p}$; exact frame after the allowed splitting field |
-| $r=p$ nonordinary | local--local good point | fixed nonordinary finite-flat reduction | a PEL seed plus finite-flat $V_{\mathfrak p}$ |
-| semistable | tensor Tate or supplied semiabelian point | toric rank, splitness, Kummer class | correct component; frames over the allowed splitting field |
+| real | $E/\mathbf R\otimes I$ with (4.2b) | real component and signs | both prescribed involutions are odd |
+| $r\ne p,q$ | good tensor point after a recorded inertia-killing extension and a finite unramified stage | good reduction | both prescribed systems are then unramified |
+| $r=p$ or $q$, ordinary | ordinary tensor lift | ordinary finite-flat type | finite-flat $V_{\mathfrak r}$ and the permitted frame field |
+| $r=p$ or $q$, nonordinary | supersingular tensor lift | fixed local--local finite-flat reduction | finite-flat $V_{\mathfrak r}$ and the permitted frame field |
+| semistable | $q_0=q_N^N$ on the algebraized tensor cusp | toric rank, splitness, Kummer classes, (8.21) when required | any Kummer classes retained before extension come from one tensor Tate parameter |
 
-For every row, the point must lie on the same $K$-defined component $Y^\circ$ used globally. At every real place a row is required if the output field is to be totally real. At finite places the local field can sometimes be enlarged unramified in advance; when that is done, the desired completion algebra in the global theorem must record the enlargement.
+Proposition 3.2 puts every row on the same $\mathbf Q$-defined component and makes its two-prime twist geometrically connected. At every real place a row is required if the output field is to be totally real. At finite places every enlargement used to obtain the frames is recorded in the completion algebra. Away from $p$ and $q$, after any recorded inertia-killing extension, the remaining enlargement can be taken unramified by Theorem 9.1. At a coefficient prime an arbitrary determinant-compatible finite representation becomes framed after a finite splitting extension by Theorem 9.2; if a downstream lifting theorem permits only an unramified extension, exact realization over such an extension is a representation-theoretic input and cannot be replaced by ramified splitting.
 
 ### 13.2 The local construction theorem
 
-We can now state the complete result of the book.
-
-**Theorem 13.1 (local geometry package for Hilbert--Blumenthal specialization).** Fix the two-prime Hilbert--Blumenthal datum of Section 1.2 and a $K_0$-defined smooth geometrically connected component $Y^\circ$ of its determinant-compatible twist. Let $S$ be a finite set of places of a totally real number field $K_0$. Assume all coefficient, polarization, and auxiliary-level primes are unramified wherever the corresponding integral assertion is made, and assume coefficient residue characteristics are odd.
-
-For each $v\in S$, suppose one of the following verified local inputs is given.
-
-1. If $v$ is real, $Y^\circ(K_{0,v})$ contains a real-admissible point; equivalently in the explicit tensor case, both prescribed odd torsion involutions admit paired frames.
-2. If $v\nmid pq$, either the good integral model of $Y^\circ$ has a smooth special-fiber point on the twist after a specified finite residue extension, or a good PEL seed on the selected component is given and a finite splitting extension for the frames is allowed.
-3. If $v\mid p$ or $v\mid q$ and ordinary reduction is required, there is an ordinary tensor seed or another PEL-realized ordinary point on the selected component; the prescribed residue-characteristic representation is finite flat, and a finite splitting extension for the two frames is allowed when they do not already exist.
-4. If nonordinary finite-flat reduction is required, there is a supersingular tensor seed or another PEL-realized local--local point on the selected component; again the prescribed residue-characteristic representation is finite flat and the necessary finite splitting extension is allowed.
-5. If semistable reduction is required, there is a tensor Tate point or another supplied semiabelian point on $Y^\circ$ with the required toric rank and Kummer class, and a finite splitting extension for the frames is allowed; at an odd coefficient prime, finite flatness of the canonical Tate torsion is imposed by divisibility of the Tate valuation.
-
-Then, after making only the finite local extensions explicitly included in these inputs, there is for every $v\in S$ a nonempty open subset
+**Theorem 13.1 (local geometry package for Hilbert--Blumenthal specialization).** Fix the corrected tensor datum of Section 1.2, take monodromy-admissible odd primes $\mathfrak p$ and $\mathfrak q$, and let
 
 $$
-\Omega_v\subset Y^\circ(K_{0,v}')
+Y=Y_I^{\mathrm{ten}}
+$$
+
+be its determinant-compatible two-prime twist. Let $S$ be a finite set of places of a totally real number field $K_0$. At every integral place assume the exclusions stated in Section 1.2; at a coefficient prime assume the unramified odd-prime hypotheses of Chapters 6--8.
+
+Choose at each $v\in S$ one of the five rows in Section 13.1. Require only the corresponding representation-theoretic compatibility:
+
+1. at a real place both prescribed residual systems are odd;
+2. at a good place away from $p$ and $q$ both are unramified, or an explicitly permitted finite preliminary extension kills their inertia;
+3. at an ordinary or nonordinary coefficient place the prescribed residue-characteristic system is finite flat, and either arbitrary finite splitting is allowed or the exact frame is known over the more restrictive permitted completion extension;
+4. at a semistable place, any nontrivial residual Kummer classes that must be retained over the chosen completion are the scalar extensions of one class $[q_0]$; if arbitrary finite splitting is allowed, no further frame hypothesis is needed. When semistable coefficient-prime torsion must already be finite flat over the unramified starting field, impose (8.21); finite flatness acquired only after a ramified splitting extension is not asserted to descend.
+
+Then there are finite local extensions $K_v'/K_{0,v}$ obeying those permissions and nonempty open subsets
+
+$$
+\Omega_v\subset Y(K_v')
 \tag{13.1}
 $$
 
@@ -1233,17 +1542,25 @@ such that every point in $\Omega_v$ has the required exact local condition, both
 - exact frames restrict to the larger local Galois group;
 - normalized valuations rescale by the ramification index, and no stronger invariance is asserted.
 
-If a proper closed degeneracy locus is to be avoided, the neighborhoods may be chosen in its complement provided every seed point lies outside it.
+If $Z\subsetneq Y$ is a proper closed degeneracy locus, the neighborhoods may be chosen in $Y(K_v')\setminus Z(K_v')$, after enlarging a finite residue field when necessary.
 
-**Proof strategy.** The construction of seed points and the proof of openness are logically separate. Chapters 4--8 provide the five seeds. Chapters 9--10 put them on the exact twist and turn each into an open neighborhood. Chapter 11 proves the persistence statements. Chapter 12 keeps all intersections on the chosen component and outside the degeneracy locus.
+**Proof.** Theorem 4.1 constructs the corrected auxiliary level on the real tensor point, Proposition 4.2 gives both frames exactly from oddness, and Section 4.5 gives the real open. At a good prime away from $p$ and $q$, first make any recorded inertia-killing extension and then apply Theorem 9.1 over that field; the remaining enlargement is unramified and produces a simultaneous point with its good residue neighborhood.
 
-**Proof.** At real places apply Proposition 4.1 and Section 4.4. At a good prime away from $p$ and $q$, use the first or second construction of Theorem 9.1 and then take its good residue tube. At an ordinary or nonordinary coefficient prime use Theorem 9.2; in the latter case its residue tube supplies openness even though the nonordinary special locus is closed. At a semistable place use the simultaneous splitting construction of Section 9.5 and Theorem 8.1, shrinking further to preserve the Kummer class as in Section 10.4. In every case, exact paired frames are retained by finite etale local sections on the generic fiber. The simultaneous component and avoidance assertions are Theorem 12.1. Finally Chapter 11 proves every stated base-change property and also explains the listed qualifications. $\square$
+Chapters 6 and 7 construct ordinary and supersingular tensor PEL seeds. If the exact frames are not already available over a restricted permitted field, take the finite compositum splitting both prescribed systems, both seed torsion modules, their determinant targets, and the corrected auxiliary level. Paired symplectic bases then give simultaneous frames. Restriction preserves the given finite-flat model, while Proposition 11.1 preserves the seed's ordinary or local--local reduction. Theorem 9.2 and the relevant residue tube give the desired open.
 
-The theorem's seed hypotheses are part of its mathematical content. A determinant-compatible representation need not equal the torsion of a fixed seed over the original local field. The finite-splitting construction proves that it does become exactly that torsion after an explicitly allowed finite completion extension. What must still be constructed geometrically is a real, good, ordinary, nonordinary, or semistable PEL seed on the selected polarization component; the tensor constructions provide such seeds on every tensor-admissible component.
+For the semistable row, the $N$th-power map is invertible on both residual Kummer quotients because $N$ is prime to $p$ and $q$. If nontrivial classes are to be retained, choose a simultaneous preimage class $[q_N]$ of the compatible prescribed tensor Tate classes, and multiply a representative by a sufficiently large $(pq)$th power of a uniformizer so that it has positive valuation without changing either residual class. If the frames will instead be split, choose any $q_N$ of positive valuation. Put $q_0=q_N^N$. Theorem 8.1 places $E_{q_0}\otimes I$ on the algebraized full-dimensional tensor cusp with its corrected level. Take the permitted simultaneous frame field as in Section 9.5. If arbitrary splitting is used at a coefficient prime, enlarge it to contain the needed $p$th division periods; the canonical sequence then splits into finite flat constant and multiplicative pieces over the enlarged valuation ring, and its valuation homomorphism is automatically $p$-divisible. Theorem 8.2 supplies the ambient semistable open and retains all stated Kummer classes and valuation shells.
+
+Proposition 3.2 puts every construction on the same geometrically connected $K_0$-defined twist. Theorem 12.1 intersects the exact frame and reduction neighborhoods. Since $Y$ is smooth of positive dimension, a proper closed subset has empty interior in each analytic neighborhood; Section 12.3 permits a point outside $Z$ after a finite residue extension and another application of Theorem 12.1. Chapter 11 proves the persistence statements. $\square$
+
+The restriction on semistable Kummer classes is exact. Two arbitrary triangular residual systems need not be scalar extensions of the same Tate parameter, and no Hilbert moduli argument can make them so. Likewise, an unramified-only coefficient-prime policy cannot use a ramified splitting field. These are prescribed-representation constraints, not missing real-level, component, or compactification geometry.
+
+**Corollary 13.2 (potential-automorphy catalog interface).** In every catalog problem in which the polarization ideal, PEL lattice, neat level, and Hilbert component are auxiliary, take the datum (3.13) and the corrected level (1.1b). Then the moduli variety supplied to arithmetic approximation is smooth and geometrically connected, and Theorem 13.1 supplies its five required kinds of nonempty local opens. Thus the catalog's local-seed clause is discharged in the stated unramified odd-prime and tensor-Tate ranges once its exact representation compatibility and completion-extension policy have been checked; no separate hypothesis of real auxiliary descent, a toroidal chart, or seed existence on a chosen polarization component remains.
+
+**Proof.** Theorem 3.3 makes the catalog reduction without changing either residual system or any desired local conclusion. Proposition 3.2 gives smooth geometric connectedness of the determinant-compatible twist. Theorem 13.1 gives nonempty local opens on that same twist, so the hypotheses of Book 168's simultaneous Moret--Bailly theorem are exactly the recorded local algebras, avoidance fields, and those opens. $\square$
 
 ### 13.3 Passing from neighborhoods to every conjugate
 
-An arithmetic approximation theorem uses (13.1) in one of two ways. If a place is required to split completely, the local algebra is a product of copies of $K_{0,v}$ and every conjugate point is required to lie in $\Omega_v$. If a prescribed field extension $K_{0,v}'/K_{0,v}$ is part of the seed, the local algebra must contain that factor and the point is evaluated in $Y^\circ(K_{0,v}')$.
+An arithmetic approximation theorem uses (13.1) in one of two ways. If a place is required to split completely, the local algebra is a product of copies of $K_{0,v}$ and every conjugate point is required to lie in $\Omega_v$. If a prescribed field extension $K_v'/K_{0,v}$ is part of the seed, the local algebra must contain that factor and the point is evaluated in $Y(K_v')$.
 
 These are different inputs. Constructing a point after an unramified extension does not prove that the original local field has a point. Nor does one chosen embedding control all conjugates. The global local-algebra datum must place every factor in the desired neighborhood.
 
@@ -1257,9 +1574,11 @@ The local package fails in recognizable ways.
 
 **Wrong determinant.** If (9.2) is absent, the paired twist is empty even if the unpaired representations are isomorphic.
 
-**Wrong component.** A point on another polarization or determinant component does not give a local point on $Y^\circ$.
+**Reverting to the literal Book 172 orientation.** Its constant value line cannot be identified over $\mathbf R$ with its cyclotomic twist. The corrected source (1.1b) is essential; using the obsolete orientation would make the real row empty again.
 
-**Finite flat but not realized.** A finite-flat $V_{\mathfrak p}$ need not be the torsion of a polarized real-multiplication abelian variety on the selected component. PEL realization must be constructed or assumed.
+**Wrong external component.** Theorem 3.3 covers the catalog because its PEL data are auxiliary. An application that externally fixes a nonsquare narrow polarization class cannot substitute a tensor seed from $Y_I^{\mathrm{ten}}$.
+
+**An extension policy too small for the frame.** A finite-flat $V_{\mathfrak p}$ need not equal the torsion of a fixed seed over the original or an unramified local field. A general finite splitting extension solves the frame problem, but a downstream theorem that forbids it must verify exact realization over its permitted field.
 
 **Separate frames.** Realizing $V_{\mathfrak p}$ and $V_{\mathfrak q}$ on different abelian varieties does not give a point of the fiber-product twist.
 
@@ -1269,11 +1588,13 @@ The local package fails in recognizable ways.
 
 **Semistable is not good.** Tate $p$-torsion can be finite flat while the Tate curve remains multiplicative.
 
+**Discarding the ambient chart.** The tensor Tate ray has one parameter and by itself is not open when $d>1$. Theorems 8.1--8.2 repair this by placing it in an algebraized $d$-parameter Mumford chart; a bare Tate point cannot replace those theorems in another component.
+
 **Unramified is not arbitrary.** Local solvability after an unramified extension must be encoded in the global completion algebra; it cannot be silently descended.
 
 **Persistence is not constancy.** Semistability persists under ramification, but discriminant valuation and component counts rescale.
 
-Each failure identifies a concrete repair: change the determinant datum, choose the correct component, construct a PEL seed, solve the two frames simultaneously, pass to a residue tube, retain an integral model, or strengthen the prescribed local algebra.
+Each failure identifies a concrete repair: use the corrected level, change the determinant datum, invoke the exact catalog reduction or supply the externally fixed component, solve the two frames simultaneously over an allowed field, pass to a residue tube, retain an integral model, or use the algebraized Mumford chart.
 
 ## 14. Conclusion
 
@@ -1284,18 +1605,18 @@ The five local conditions are controlled by five different pieces of geometry:
 $$
 \begin{array}{c|c}
 \text{condition}&\text{controlling datum}\\ \hline
-\text{real}&\text{fixed real component and odd involution},\\
+\text{real}&\text{cyclotomic-split auxiliary level and odd involution},\\
 \text{good}&\text{smooth integral moduli point},\\
 \text{ordinary}&\text{nonvanishing partial Hasse invariants},\\
 \text{nonordinary finite flat}&\text{fixed local--local special point plus generic frame},\\
-\text{semistable}&\text{semiabelian boundary parameters and Kummer class}.
+\text{semistable}&\text{algebraized Mumford chart, valuation homomorphism, and Kummer classes}.
 \end{array}
 \tag{14.1}
 $$
 
-The topology required by arithmetic approximation is obtained correspondingly from a real component, an integral residue tube, an ordinary open tube, a fixed nonordinary residue disk, or a semistable valuation shell. Paired torsion frames are then preserved by finite etale local sections on the characteristic-zero generic fiber.
+The controlling data in the first and fifth rows were constructed in Theorems 4.1 and 8.1 rather than assumed. The required topology is obtained correspondingly from a real component, an integral residue tube, an ordinary open tube, a fixed nonordinary residue disk, or a semistable valuation shell in the boundary chart. Paired torsion frames are then preserved by finite etale local sections on the characteristic-zero generic fiber.
 
-### 14.2 The package established
+### 14.2 The package established and its boundaries
 
 We constructed explicit local points by tensoring elliptic curves with invertible $\mathcal O_F$-ideals. Trace duality computed their polarization module as
 
@@ -1303,8 +1624,18 @@ $$
 \mathfrak c_I=\mathfrak d_F^{-1}I^{-2},
 $$
 
-proved the Hilbert determinant condition, and recovered the correct inverse-different coefficient line in torsion pairings. Real tensor points gave the odd-involution criterion. Smooth special-fiber points lifted to good points after controlled unramified extension. Ordinary and supersingular Legendre curves produced the two good residue-characteristic types, with finite-flat torsion treated scheme-theoretically. Tate curves supplied split semistable points, exact triangular torsion representations, and the criterion $p\mid v(q)$ for finite flat residual Tate torsion over an unramified odd-prime base.
+proved the Hilbert determinant condition, and recovered the correct inverse-different coefficient line in torsion pairings. Replacing the impossible constant orientation by
 
-The openness proofs retain exactly what specialization needs. Ordinary reduction is open by Hasse invariants. Nonordinary reduction is retained on an open residue tube despite being closed in the special fiber. Semistability is retained by keeping boundary parameters in fixed valuation shells. Exact torsion representations and both frames are locally constant through finite etale isomorphism schemes. All conditions are intersected only after one common point on the chosen twist and component has been exhibited.
+$$
+(I/NI)\oplus(I/NI)(1)
+$$
 
-Finally, the persistence theorem separates stable properties from changing numerical data. Good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. With these qualifications visible, the neighborhoods produced here are precisely legitimate local-open inputs for a Moret--Bailly specialization: they are nonempty, component-correct, determinant-compatible, stable under the allowed completions, and strong enough to recover the intended arithmetic condition at every resulting conjugate.
+made the principal level compatible with complex conjugation while leaving its geometric paired-level scheme and product monodromy unchanged. The real tensor point therefore carries the auxiliary level and both odd residual frames over $\mathbf R$.
+
+The tensor polarization restriction was resolved exactly rather than ignored. Proposition 3.2 places every constructed seed on one $\mathbf Q$-defined component. Theorem 3.3 proves that every catalog problem in which PEL data are auxiliary may choose $I=\mathcal O_F$ and $\mathfrak c=\mathfrak d_F^{-1}$, so all five seed types occur on that component. An externally prescribed nonsquare narrow polarization class remains a different problem and is outside the stated reduction.
+
+The semistable construction is genuinely $d$-dimensional. The period lattice $\mathfrak d_F^{-1}$, a regular cone containing the tensor valuation, and a periodic polyhedral decomposition give a proper polarized Mumford formal quotient. The polarized Raynaud-quotient construction of Book 35 and the ample formal algebraization theorem of Book 18 turn it into the projective algebraic family of Theorem 8.1. Its $\mathcal O_F$-action, ordered polarization, determinant condition, corrected $N$-level, and boundary one-motive are constructed on the same chart. Its Kodaira--Spencer map is an isomorphism in all $d$ directions, and the multivariable finite-flat condition is the intrinsic inclusion (8.21).
+
+Ordinary reduction is open by partial Hasse invariants. Nonordinary reduction is retained on an open residue tube despite being closed in the special fiber. Semistability is retained in the full-dimensional chart by fixed positive valuation shells. Exact torsion representations and both frames are locally constant through finite etale isomorphism schemes, after only the completion extensions explicitly allowed in the datum. Proposition 3.2 and Theorem 12.1 ensure that every intersection is witnessed on the same geometrically connected twist.
+
+Finally, good reduction, ordinary or local--local type, semistability, toric rank, and finite flatness survive finite extension. Splitness can improve, frames need not descend, and valuations rescale. Theorem 13.1 and Corollary 13.2 therefore provide all five nonempty local-open inputs required by simultaneous Moret--Bailly specialization in the unramified odd-prime, monodromy-admissible catalog range. The remaining qualifications—an externally fixed nonsquare polarization class, a dyadic coefficient prime, an unramified-only frame not realized over an unramified field, or two incompatible prescribed Tate Kummer classes—are explicit changes of scope, not unresolved dependencies of the package proved here.
