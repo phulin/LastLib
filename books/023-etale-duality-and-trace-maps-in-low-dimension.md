@@ -49,11 +49,12 @@
   - [10.2 Smooth proper curves](#102-smooth-proper-curves)
   - [10.3 Smooth surface families and open pairs](#103-smooth-surface-families-and-open-pairs)
   - [10.4 Specialization of pairings](#104-specialization-of-pairings)
-- [11. Semistable curves and the limits of ordinary Poincaré duality](#11-semistable-curves-and-the-limits-of-ordinary-poincaré-duality)
+- [11. Semistable fibers and the limits of ordinary Poincaré duality](#11-semistable-fibers-and-the-limits-of-ordinary-poincaré-duality)
   - [11.1 The normalization complex](#111-the-normalization-complex)
   - [11.2 The dualizing complex of a nodal fiber](#112-the-dualizing-complex-of-a-nodal-fiber)
   - [11.3 Relative semistable duality](#113-relative-semistable-duality)
   - [11.4 What specialization preserves](#114-what-specialization-preserves)
+  - [11.5 The strictly semistable surface form](#115-the-strictly-semistable-surface-form)
 - [12. Exact torsion and adic duality](#12-exact-torsion-and-adic-duality)
   - [12.1 Perfectness at finite level](#121-perfectness-at-finite-level)
   - [12.2 Passage to integral adic coefficients](#122-passage-to-integral-adic-coefficients)
@@ -87,11 +88,11 @@ for a smooth $d$-dimensional variety over a separably closed field. Cup product 
 
 Two features of the formula are structural. The subscript $c$ is forced by nonproper spaces: a top-degree class must not escape through infinity. The Tate twist $(d)$ is forced by descent: the untwisted top class transforms nontrivially under the ground-field Galois group. Once both corrections are present, the trace is canonical and equivariant.
 
-This book constructs that mechanism in dimensions one and two. The aim is not merely a list of pairings. We need a system in which traces compose, base change preserves them, correspondences have transposes, and passage from $\mathbf Z/\ell^n\mathbf Z$ to $\mathbf Z_\ell$ retains every torsion term. Curves reveal residues and boundary classes; surfaces reveal intersection pairings and two-dimensional boundaries; semistable curves show exactly why smoothness cannot be erased from Poincaré duality.
+This book constructs that mechanism in dimensions one and two. The aim is not merely a list of pairings. We need a system in which traces compose, base change preserves them, correspondences have transposes, and passage from $\mathbf Z/\ell^n\mathbf Z$ to $\mathbf Z_\ell$ retains every torsion term. Curves reveal residues and boundary classes; surfaces reveal intersection pairings and two-dimensional boundaries; semistable fibers show exactly why smoothness cannot be erased from Poincaré duality.
 
 ### 1.2 Conventions, coefficients, and normalizations
 
-Schemes are locally noetherian. Morphisms used for compact support are separated and of finite type. Fix a prime $\ell$ invertible on every scheme in sight, and write
+Schemes are locally noetherian. Morphisms used for compact support are separated and of finite type and are assumed compactifiable; Book 22 proves compactifiability in the noetherian situations used here. “Low-dimensional” means absolute schemes of dimension at most two or relative morphisms with geometric fibers of dimension at most two. Bases in the relative statements are excellent noetherian schemes, or limits obtained from them by the continuity arguments of that book. Fix a prime $\ell$ invertible on every scheme in sight, and write
 
 $$
 \Lambda_n=\mathbf Z/\ell^n\mathbf Z,
@@ -159,7 +160,7 @@ Compact support is not a topological decoration added after cohomology. It is a 
 
 ### 2.2 Independence of compactification
 
-The definition appears to depend on $\overline X$. We now remove that dependence. Given two compactifications $j_i:X\hookrightarrow\overline X_i$, take the schematic closure of the diagonal image of $X$ in $\overline X_1\times_S\overline X_2$. It is proper over $S$ and maps properly to both compactifications; after replacing it by the open union containing $X$, both maps restrict to the identity on $X$. Thus it is enough to compare a compactification with a proper refinement
+The definition appears to depend on $\overline X$. We now remove that dependence. Given two compactifications $j_i:X\hookrightarrow\overline X_i$, take the schematic closure of the diagonal image of $X$ in $\overline X_1\times_S\overline X_2$. It is proper over $S$ and maps properly to both compactifications. Its intersection with the open $X\times_SX$ is the diagonal, and separatedness shows that the inverse image of $X$ under either projection is exactly this diagonal. Thus $X$ is open in the closure and both projections restrict to its identity. It is enough to compare a compactification with a proper refinement
 
 $$
 p:\overline X'\longrightarrow\overline X.
@@ -265,25 +266,55 @@ The adjunction tells us why the theory is organized at the level of complexes. A
 
 ### 3.2 Construction in the required range
 
-For a proper map, $Rf_!$ is $Rf_*$. On bounded constructible complexes in the noetherian torsion setting, $Rf_*$ admits a right adjoint. Its existence is not a merely formal consequence of having enough injectives, because a right adjoint must preserve constructibility. In the range used here one proves it by a finite support induction.
+The construction cannot be obtained merely by declaring a map smooth on a stratification: a singular map need not become smooth after stratifying only its source, and such a declaration would already presuppose purity. We instead use a local adjoint construction whose one geometric input is proved without a trace.
 
-Choose a stratification on which the map and all coefficient cohomology sheaves have one of three elementary forms: a finite map of zero-dimensional strata, a smooth curve map, or a smooth map of relative dimension at most two. On a finite stratum the right adjoint is the stalkwise coinduced dual; on a smooth stratum it is $f^*(d)[2d]$. If $j:U\hookrightarrow X$ is the top stratum and $i:Z\hookrightarrow X$ its complement, the recollement triangle
+**Affine-line duality lemma.** Let $p:\mathbf A^1_S\to S$, with finite coefficients of order invertible on $S$. For $M\in D_c^b(\mathbf A^1_S,\Lambda_n)$ and $L\in D_c^b(S,\Lambda_n)$ there is a functorial isomorphism
 
 $$
-i_*i^!K\longrightarrow K\longrightarrow Rj_*j^*K\longrightarrow
+R\mathcal Hom_S(Rp_!M,L)
+\simeq
+Rp_*R\mathcal Hom_{\mathbf A^1_S}
+(M,p^*L(1)[2]). \tag{3.1}
 $$
 
-glues the right adjoints already constructed on $U$ and $Z$. The obstruction to gluing lies in the boundary Hom group, and the adjunction identifies the required connecting arrow uniquely. Since dimension drops on $Z$, the process terminates after at most two geometric steps here. Finite cohomological dimension keeps every object bounded, and constructibility of direct images keeps every glued cohomology sheaf constructible. Refining the stratification gives the same functor because both candidates represent the same Hom functor.
+Here is the proof, including the normalization that will later become the trace. Noetherian induction on the base and the support filtration of Book 21 reduce to a lisse sheaf on the complement of finitely many relative points and a sheaf on those points; vertical exceptional loci lie over a smaller closed subset of the base and enter the induction. After an étale change of base the finite monodromy data are constant. On a geometric fiber, the free prime-to-characteristic cochain presentation for the punctured affine line has one generator for each puncture and one relation supplied by infinity. Dualizing that two-term presentation reverses its incidence map. The Kummer boundary of a uniformizer is $1$, so the reversed map is exactly the residue map with target $\Lambda_n(-1)[-2]$. A sheaf on a point is handled by finite adjunction. Thus (3.1) holds on every piece and the two localization triangles glue it for $M$.
 
-For an open immersion $j:U\hookrightarrow X$, the right adjoint to $j_!$ is $j^*=j^!$. For a general separated finite-type $f$, choose $f=\bar f\circ j$ and set
+The construction is uniform in an étale neighborhood of every geometric point of $S$: all monodromy matrices, punctures, inertia operators, and residue maps are finite data. Over a strict localization, the proper compactification and boundary-presentation arguments of Book 22 identify both sides of (3.1) with these dual finite matrices. This is a strict-local calculation; it does not replace ordinary cohomology of an open family by geometric-fiber cohomology without boundary control. Since geometric stalks are strict-local complexes, they prove (3.1). For $M=\Lambda_n(1)[2]$, its adjoint sends the compact class whose residue at infinity is $1$ to $1$. No trace or purity theorem has been used in this argument.
+
+Iterating (3.1) and using Künneth gives affine-space duality with $p^*L(d)[2d]$. An étale map has $u^!=u^*$, and the residue normalization is unchanged by an étale coordinate change. Hence, for a smooth morphism of pure relative dimension $d$, the local affine-space right adjoints descend to
+
+$$
+f^!L=f^*L(d)[2d]. \tag{3.2}
+$$
+
+We now construct the adjoint for an arbitrary map in the stated low-dimensional category. For a closed immersion $i:Z\hookrightarrow P$, the exact functor $i_*$ has a right adjoint on sheaves, namely sections supported on $Z$ restricted to $Z$; deriving it gives $i^!$. If $j:P\setminus Z\hookrightarrow P$, the triangle
+
+$$
+i_*i^!L\longrightarrow L\longrightarrow Rj_*j^*L\longrightarrow
+$$
+
+and the constructibility and boundedness theorem for $Rj_*$ in Book 22 show that $i^!$ carries bounded constructible complexes to bounded constructible complexes in the required range. Locally on $X$, every finite-type map factors as
+
+$$
+X\xrightarrow{i}\mathbf A^N_Y\xrightarrow{p}Y
+$$
+
+with $i$ closed. Define the local candidate as $i^!p^!$. On overlaps the two candidates represent the same functor
+
+$$
+K\longmapsto
+R\mathcal Hom_Y(Rf_!K,L),
+$$
+
+so the unique representing isomorphisms satisfy the cocycle condition. A finite support filtration glues them across the chosen affine cover. Boundedness follows from the closed-support bound and (3.2), and constructibility follows by the same finite localization induction. This produces $f^!$ and the adjunction on $D_c^b$.
+
+For an open immersion $j:U\hookrightarrow X$, this construction gives $j^!=j^*$. For a compactification $f=\bar f\circ j$, it gives
 
 $$
 f^!=j^*\bar f^!.
 $$
 
-If another compactification is chosen, compare both through a proper common refinement. The adjunction with the already intrinsic functor $Rf_!$ identifies the two results uniquely. Thus $f^!$ is intrinsic.
-
-This construction proves existence for the constructible bounded categories used by curves, surfaces, and their relative families. It is not a claim about arbitrary unbounded coefficients or nonconstructible sheaves. Those larger categories require additional finiteness machinery that plays no role here.
+Another compactification gives the same object because both candidates are right adjoint to the intrinsic functor $Rf_!$; uniqueness of a right adjoint supplies the canonical comparison and all cocycle compatibilities. This proves existence in the bounded constructible range used by curves, surfaces, and the relative families below. No assertion is made here for arbitrary unbounded or nonconstructible coefficients.
 
 ### 3.3 Composition, base change, and dualizing complexes
 
@@ -295,13 +326,13 @@ $$
 
 The order reverses because right adjoints reverse composition. The isomorphism is associative: both ways of treating three maps are right adjoint to the same compactly supported composite.
 
-In a cartesian square with the usual constructibility and invertibility assumptions, the compact-support base-change isomorphism has a mate
+In a cartesian square with the stated constructibility and invertibility assumptions, there is an exchange morphism
 
 $$
 g'^*f^!L\longrightarrow f'^!g^*L.
 $$
 
-It is an isomorphism in the smooth and proper low-dimensional situations used below. One must not promote this to an unrestricted slogan. Extraordinary base change across a singular degeneration can acquire a local defect; Chapter 11 makes that defect visible for a node.
+It is an isomorphism when the horizontal map is étale, and in the transverse smooth and proper low-dimensional squares used below. It is not the formal right-adjoint mate of proper base change: that mate involves direct image on the other side. Consequently this exchange map must not be promoted to an unrestricted base-change slogan. Pullback through a singular or nontransverse fiber square can acquire a local defect; Chapter 11 makes that defect visible for a node.
 
 For $a:X\to S$, the relative dualizing complex is
 
@@ -336,7 +367,7 @@ $$
 K\longrightarrow D_XD_XK
 $$
 
-is an isomorphism. Reduce by a support filtration to a lisse finite sheaf on a smooth stratum. There the assertion is finite-module biduality together with purity. Extension by zero and proper pushforward transport it across strata, and the five lemma closes the induction through localization triangles.
+is an isomorphism. Nilpotents do not change the étale site. Excellence and noetherian induction give a finite filtration by regular locally closed strata. Embed such a stratum into a smooth affine scheme. The regular-immersion calculation of Section 4.2, whose proof is independent of biduality, identifies its dualizing complex; the assertion there is ordinary biduality for a finite module. Extension by zero and proper pushforward transport the result across strata, and the five lemma closes the induction through localization triangles.
 
 This proof strategy explains both constructibility and finite dimensionality assumptions. Without finite stalks, biduality of modules can fail; without a finite stratification, the induction need not terminate.
 
@@ -366,27 +397,27 @@ $$
 f^!K\simeq f^*K(d)[2d]
 $$
 
-for bounded constructible $K$. Étale-locally, $f$ factors as an étale map followed by a projection from affine space. Étale maps have $f^!=f^*$. It is therefore enough to orient $\mathbf A^1_S$.
-
-Compactify the affine line in $\mathbf P^1_S$. The point at infinity and the class of a section show that
+for bounded constructible $K$. This is the isomorphism (3.2), but we now verify its normalization and independence of coordinates. Étale-locally, $f$ factors as an étale map followed by a projection from affine space. Étale maps have $f^!=f^*$. The affine-line duality lemma reduced the projection to the Kummer residue calculation at infinity and showed that
 
 $$
 R^2p_!\Lambda_n(1)\simeq\Lambda_n,
 $$
 
-with all other compactly supported direct images zero. This trace class identifies the right adjoint of $Rp_!$ with $p^*(1)[2]$. Products orient affine $d$-space, and étale descent glues the local orientations. Compatibility of the point class with change of coordinates shows that the gluing is canonical rather than dependent on chosen coordinates.
+with all other compactly supported direct images zero. Its chosen generator is the unique class having residue $1$ at infinity. If $t$ and $u$ are two étale coordinates, the ratio of their local Kummer symbols is a unit; a unit has zero residue. The two generators therefore agree. Products orient affine $d$-space, and étale descent glues the local orientations. This proves that the isomorphism is canonical rather than dependent on coordinates.
 
 The twist is indispensable. Over a nonclosed field, a local parameter changes the Kummer generator by the cyclotomic character. The Tate twist cancels precisely that transformation.
 
 ### 4.2 Regular immersions and Gysin maps
 
-Let $i:Z\hookrightarrow X$ be a regular closed immersion of pure codimension $c$, with both schemes regular in the required neighborhood. Absolute purity gives
+Let $i:Z\hookrightarrow X$ be a regular closed immersion of pure codimension $c\leq2$, with both schemes regular in the required neighborhood. These are exactly the codimensions needed for curves, surfaces, and graphs between them. Low-dimensional absolute purity gives
 
 $$
 i^!\Lambda_n\simeq\Lambda_n(-c)[-2c].
 $$
 
-The case $c=1$ follows from the Kummer sequence. If $t$ cuts out $Z$, its Kummer class on $X\setminus Z$ has a boundary supported on $Z$; that boundary is the local fundamental class. A regular sequence $t_1,\ldots,t_c$ reduces the general case to repeated codimension one. Independence from the regular sequence follows because changing generators changes the Koszul orientation and the Kummer symbols by inverse determinants.
+We give the proof because absolute purity is not supplied by the preceding books. In codimension one, a local equation $t$ gives a Kummer class on $X\setminus Z$. On a strict localization at a geometric point of $Z$, the punctured normal trait has the two-term tame-inertia complex; the Kummer boundary of $t$ is its residue generator. It follows there that supported cohomology vanishes outside degree two and equals $\Lambda_n(-1)$ in degree two. Geometric stalks give the asserted complex globally. Multiplying $t$ by a unit does not change the residue, so the class glues.
+
+In codimension two, regularity of both local rings lets one choose generators $t_1,t_2$ of the ideal of $Z$ that are part of a regular system of parameters. The intermediate divisor $Z_1=V(t_1)$ is regular. Apply codimension-one purity first to $Z_1\hookrightarrow X$ and then to $Z\hookrightarrow Z_1$; composition of extraordinary inverse images gives $\Lambda_n(-2)[-4]$. Independence of parameters is checked on the elementary changes generating a change of regular parameters. Multiplying a parameter by a unit does not change its residue; replacing $t_2$ by $t_2+at_1$ does not change the iterated residue; interchanging $t_1,t_2$ changes the Kummer symbol and the Koszul interchange by the same sign. Hence the local identifications glue and are transitive. This establishes the displayed purity isomorphism in every regular codimension used here without assuming the desired trace.
 
 Adjunction yields the Gysin map
 
@@ -408,7 +439,7 @@ $$
 
 Additivity extends the definition to cycles. Proper pushforward and flat pullback commute with cycle classes. For transverse regular immersions, cup product of fundamental classes equals the class of the intersection. The proof reduces étale-locally to concatenating regular sequences, where the product of Kummer boundary symbols is the symbol of the combined sequence.
 
-Nontransverse intersections require an excess bundle and cannot be treated by naive multiplication of multiplicities. Likewise, a singular closed subscheme is not automatically covered by the displayed purity isomorphism. In dimensions at most two, the cycle classes used later can be obtained by resolving a divisor into regular components, separating finitely many singular points, and using localization and additivity. This is enough for divisors, points, graphs of finite maps, and the correspondences considered here.
+Nontransverse intersections require an excess bundle and cannot be treated by naive multiplication of multiplicities. Likewise, a singular closed subscheme is not automatically covered by the displayed purity isomorphism. The cases used later avoid that leap. On a regular scheme every codimension-one cycle is locally Cartier, so its class is defined by the Kummer boundary of a local equation and additivity. Closed points on a smooth surface are regular immersions. The graph of a map between smooth schemes is a regular immersion into the product. Thus divisors, points, and the finite correspondences considered here have cycle classes without invoking purity for an arbitrary singular subscheme.
 
 ## 5. Trace maps
 
@@ -452,20 +483,26 @@ $$
 
 when the degree is constant.
 
-For a finite locally free map that is not étale, the duality counit remains canonical, while a trace on ordinary constant coefficients uses its finite-flat fundamental class. In the prime-to-residue-characteristic situations used here, it agrees on the étale locus with summing sheets and extends across the lower-dimensional branch locus by purity. Its composite with pullback is multiplication by the scheme-theoretic degree. If flatness is dropped, degrees may jump and no such simple untwisted formula is asserted; the counit with $f^!$ is still valid.
+For a finite locally free map that is not étale, the duality counit remains canonical, but a trace on ordinary constant coefficients requires an orientation. In the applications, $X$ and $Y$ are regular and $f$ is finite lci—in particular this holds for a finite map between smooth curves, or for a finite flat correspondence explicitly presented as lci. Factoring the graph as a regular immersion followed by a smooth projection gives
+
+$$
+\Lambda_n\longrightarrow f^!\Lambda_n.
+$$
+
+Composing with the counit defines the oriented finite trace. It agrees on the étale locus with summing sheets and extends across the branch locus by localization and purity. Its composite with pullback is multiplication by the constant scheme-theoretic degree. Without such an orientation, or when flatness is dropped and degrees jump, no untwisted formula is asserted; only the counit from $f^!$ remains canonical.
 
 This distinction matters for correspondences. A finite étale Hecke branch has an immediate transfer. A merely proper branch acts by duality and orientation data, not by pretending that all geometric fibers are a fixed finite set.
 
-Consider the map $f:\mathbf A^1\to\mathbf A^1$ given by $t\mapsto t^m$. If $m$ is invertible in the ground field, the map is finite étale away from the origin, and there trace is the sum over the $m$ roots. At the origin all roots coalesce scheme-theoretically. Purity extends the trace uniquely, and $\operatorname{Tr}_f(f^*1)=m$ still holds. If the characteristic divides $m$, the map has an inseparable part. Prime-to-characteristic étale topology does not see its sheets separately, but the finite-flat fundamental class remembers the scheme-theoretic degree; the trace is therefore still multiplication by $m$ on the unit. This example separates geometric points from degree.
+Consider the lci map $f:\mathbf A^1\to\mathbf A^1$ given by $t\mapsto t^m$. If $m$ is invertible in the ground field, the map is finite étale away from the origin, and there trace is the sum over the $m$ roots. At the origin the purity construction extends the oriented trace, and $\operatorname{Tr}_f(f^*1)=m$ still holds. If the characteristic divides $m$, the map has an inseparable part. Factor it into a radicial power map followed by a generically separable map. A finite universal homeomorphism induces an equivalence of prime-to-characteristic étale topoi; its oriented trace is multiplication by its inseparable degree, as follows from the Kummer-normalized fundamental class. Transitivity then again gives multiplication by $m$. This example separates geometric points from scheme-theoretic degree.
 
-For a tower of finite locally free maps $X\xrightarrow fY\xrightarrow gZ$, the equality
+For a tower of oriented finite locally free lci maps $X\xrightarrow fY\xrightarrow gZ$, the equality
 
 $$
 \operatorname{Tr}_{g\circ f}
 =\operatorname{Tr}_g\circ g_*\operatorname{Tr}_f
 $$
 
-can be checked over the common étale locus by summing twice. Purity extends it over the branch loci. Thus the familiar transitivity of field trace is the generic-point shadow of the cohomological composition law.
+follows from transitivity of regular-immersion and smooth orientations and from the counit composition law. On the common étale locus it is summation twice. Thus the familiar transitivity of field trace is the generic-point shadow of the cohomological composition law, including a purely inseparable factor where no dense étale locus exists.
 
 ### 5.3 Smooth maps and integration along fibers
 
@@ -505,7 +542,7 @@ $$
 
 For a proper local-complete-intersection map between regular schemes, factor it as a regular immersion followed by a smooth map. Purity for the immersion and smooth orientation produce the same formula with $d$ the virtual relative dimension. Independence of factorization follows by comparing two factorizations after embedding them diagonally into a common smooth ambient space; the excess intersection identity cancels the auxiliary normal bundle.
 
-For a finite flat map, $d=0$, recovering the degree trace. For the projection $X\times Y\to Y$ with $X$ smooth proper of dimension $d$, the map is ordinary integration over $X$. The composition law is Fubini's theorem in this setting.
+For an oriented finite flat lci map, $d=0$, recovering the degree trace. For the projection $X\times Y\to Y$ with $X$ smooth proper of dimension $d$, the map is ordinary integration over $X$. The composition law is Fubini's theorem in this setting.
 
 ## 6. Products, projection, and Künneth duality
 
@@ -558,7 +595,7 @@ R\Gamma_c(X,K)\otimes^L_{\Lambda_n}R\Gamma_c(Y,L)
 R\Gamma_c(X\times Y,K\boxtimes^LL)
 $$
 
-in the finite constructible range. Compactify both factors, apply the proper Künneth theorem there, and observe that extension by zero on the product is the external product of the two extensions by zero. Finite Tor terms are part of the derived tensor product.
+in the finite constructible range. We recall the proof rather than importing a Künneth theorem. Choose finite étale hypercovers adapted to common constructibility stratifications of $K$ and $L$. The bisimplicial hypercover of $X\times Y$ is their product. The shuffle and Alexander--Whitney maps are inverse up to homotopy, so its total cochain complex is the derived tensor product of the two factor complexes. Finiteness and the dimension bounds of Book 21 make every relevant totalization finite. Dévissage from lisse sheaves to the constructible complexes gives the displayed isomorphism. Compactifying both factors and observing that extension by zero on the product is the external product of the two extensions proves the compact-support version. Finite Tor terms remain part of the derived tensor product.
 
 The trace of a product is the tensor product of traces. In particular, the fundamental class of a smooth product is the external product of the fundamental classes. This proves Poincaré duality in dimension two for products of curves once it is known for each curve, and it provides a decisive local model for general surfaces.
 
@@ -570,7 +607,7 @@ $$
 x\smile y=(-1)^{ab}y\smile x
 $$
 
-after switching coefficient factors. Twists add but do not contribute a sign. On a curve the middle pairing on $H^1$ is alternating when $2$ is invertible. On a surface the middle pairing on $H^2$ is symmetric. In characteristic two coefficients, “alternating” must be checked by the vanishing of $x\smile x$ rather than inferred from skew-symmetry.
+after switching coefficient factors. Twists add but do not contribute a sign. On a curve the middle pairing on $H^1$ is skew-symmetric when $2$ is invertible; for the constant locally free coefficients used below it is in fact alternating for every $\ell$, as Section 7.2 checks separately. On a surface the middle pairing on $H^2$ is symmetric. With coefficients of characteristic two, “alternating” must always mean $x\smile x=0$ and cannot be inferred from skew-symmetry.
 
 The trace has cohomological degree $-2d$ and twist $-d$. Writing it as a map from a shifted complex makes it degree zero. This is why
 
@@ -607,7 +644,7 @@ The pairing is cup product, evaluation $\mathcal F\otimes\mathcal F^\vee\to\Lamb
 
 The proof has three decisive steps. Smooth purity identifies the dualizing complex. Constructible finiteness makes both sides bounded finite complexes. Biduality reduces étale-locally to the ordinary dual of a finite free module. None of these steps uses properness; properness only permits removal of the subscript $c$.
 
-Perfection can also be tested one degree at a time. If a class $x\in H_c^i(C,\mathcal F)$ pairs to zero with every complementary class, its image in the finite dual complex vanishes. The truncation triangle then moves $x$ to the next lower support stratum. Repeating at the finitely many missing or ramified points kills it. The same argument on the coefficient dual proves surjectivity onto all functionals. This support induction is useful when the sheaf is lisse only after a finite étale cover: trace descent compares the local pairings without dividing by the degree.
+Perfection can also be read one degree at a time. Exactness of $\operatorname{Hom}_{\Lambda_n}(-,\Lambda_n)$ identifies the complementary cohomology group with the full module dual of $H_c^i$. Hence a class pairing to zero with every complementary class is zero, and every functional is represented. If the sheaf becomes constant only after a finite étale cover, this conclusion does not divide by the covering degree: the adjunction and its sheet-summing trace descend the derived isomorphism itself.
 
 ### 7.2 Proper curves
 
@@ -628,7 +665,7 @@ H^1(C,\Lambda_n)\times H^1(C,\Lambda_n(1))
 \longrightarrow\Lambda_n.
 $$
 
-After choosing a trivialization of the twist over the separably closed field, this is the familiar symplectic form. The trivialization is not Galois invariant over the original field, so the untwisted-looking version is not canonical arithmetically.
+For odd $\ell$, alternation follows from graded commutativity. For $\ell=2$, the free calculations of Book 22 lift $x\in H^1(C,\Lambda_n)$ to $\widetilde x\in H^1(C,\mathbf Z_2)$ and identify $H^2(C,\mathbf Z_2)$ with the torsion-free module $\mathbf Z_2(-1)$. Graded commutativity gives $2\widetilde x^2=0$, hence $\widetilde x^2=0$, and reduction gives $x^2=0$. Thus no exceptional coefficient prime is being suppressed. After choosing a trivialization of the twist over the separably closed field, this is the familiar symplectic form. The trivialization is not Galois invariant over the original field, so the untwisted-looking version is not canonical arithmetically.
 
 For $C=\mathbf P^1$, the middle group vanishes and duality pairs only degrees zero and two. For an elliptic curve, the middle group has rank two and the pairing agrees with the alternating form dual to the Weil pairing on torsion. These examples show that duality fixes the form, not just the ranks.
 
@@ -640,7 +677,7 @@ $$
 \langle x,f_*y\rangle_{C'}.
 $$
 
-Taking $y=f^*z$ yields $f_*f^*z=mz$. Ramification does not alter the degree formula; it is absorbed by the fundamental class of the finite flat map.
+Taking $y=f^*z$ yields $f_*f^*z=mz$. Ramification does not alter the degree formula; it is absorbed by the oriented fundamental class of the finite flat map.
 
 ### 7.3 Open curves and residues
 
@@ -693,7 +730,15 @@ $$
 
 For $U=\mathbf G_m$, $g=0$ and $r=2$. The class of the oriented path between $0$ and $\infty$ generates $H_c^1$, while the Kummer class of $t$ generates $H^1(U,\Lambda_n(1))$. Their pairing is $1$ after compatible choices of orientation.
 
-For $\mathbf P^1\setminus\{0,1,\infty\}$, the ordinary degree-one group has rank two. Residues may be written $(a,b,c)$ with $a+b+c=0$. Compact degree-one classes are degree-zero combinations of the three punctures modulo the diagonal description above. The perfect pairing is the natural evaluation between these two rank-two modules.
+For $\mathbf P^1\setminus\{0,1,\infty\}$, the ordinary degree-one group has rank two. Residues may be written $(a,b,c)$ with $a+b+c=0$. Compact degree-one classes form the quotient $\Lambda_n^3/\Delta\Lambda_n$. The perfect pairing is the evaluation
+
+$$
+(\Lambda_n^3/\Delta\Lambda_n)
+\times\ker(\Lambda_n^3\xrightarrow{\sum}\Lambda_n)
+\longrightarrow\Lambda_n,
+$$
+
+which is well defined because every residue vector has sum zero.
 
 A useful counterexample is a varying open family whose boundary points collide. The rank $2g+r-1$ then changes. Smoothness of the open total space does not preserve the pairing as a lisse family unless the compactification and boundary remain a relative normal-crossings pair. Compact support still obeys proper base change through the compactification, but ordinary boundary cohomology can jump.
 
@@ -816,7 +861,7 @@ $$
 =D\cdot E\pmod{\ell^n}.
 $$
 
-Move the cycles so that intersections are isolated, use purity at each point, and apply the finite trace from its residue field. The local length is the intersection multiplicity, so summing gives the formula. This is the bridge from geometric intersection theory to the cohomological pairing.
+This equality is local and needs no moving argument. Near a proper intersection point, choose local equations $u,v$ for the two Cartier divisors. The cup product of their Kummer boundary classes is the two-variable local fundamental class, multiplied by the length of $\mathcal O_{X,x}/(u,v)$. The trace from the residue field contributes its residue degree. Summing these local terms is exactly $D\cdot E$, proving the formula. This is the bridge from geometric intersection theory to the cohomological pairing.
 
 If $h\in H^2(X,\Lambda_n(1))$ is the class of a hyperplane section, one may consider the orthogonal complement of $h$. Calling it a primitive summand integrally requires that the line generated by $h$ split. If $h\smile h$ is divisible by $\ell$, the rational orthogonal decomposition need not descend to a direct sum over $\mathbf Z_\ell$. Duality detects this denominator issue rather than removing it.
 
@@ -834,21 +879,24 @@ $$
 \langle[E],[E]\rangle=-1.
 $$
 
-Hence the new summand is unimodular and orthogonal to the pullback of $H^2(X)$. The sign is geometric: the normal bundle of $E\cong\mathbf P^1$ has degree $-1$. This calculation checks simultaneously the surface trace, Gysin map, projection formula, and compatibility of cycle classes with a proper birational map.
+Hence the new summand is unimodular and orthogonal to the pullback of $H^2(X)$. In the two standard blowup charts, the transition between the two normal coordinates is the inverse projective coordinate; consequently $E\cong\mathbf P^1$ and $N_{E/\widetilde X}\cong\mathcal O_{\mathbf P^1}(-1)$. This proves the sign rather than importing it: the self-intersection is the degree $-1$ of that normal bundle. The calculation checks simultaneously the surface trace, Gysin map, projection formula, and compatibility of cycle classes with a proper birational map.
 
 ### 9.4 Normal-crossings boundaries
 
-Let $j:U\hookrightarrow X$ be the complement of a strict normal-crossings divisor $D=\bigcup D_i$ in a smooth proper surface. The boundary has smooth one-dimensional strata and finitely many crossing points. Successive localization expresses the boundary complex through
+Let $j:U\hookrightarrow X$ be the complement of a strict normal-crossings divisor $D=\bigcup D_i$ in a smooth proper surface. The boundary has smooth one-dimensional strata and finitely many crossing points. If $i_i:D_i\hookrightarrow X$ and $i_{ij}:D_i\cap D_j\hookrightarrow X$, purity and Mayer--Vietoris for supports give the triangle
 
 $$
-\bigoplus_i\Lambda_{D_i}(-1)[-2]
-\quad\text{and}\quad
-\bigoplus_{i<j}\Lambda_{D_i\cap D_j}(-2)[-4],
+\bigoplus_{i<j}i_{ij*}\Lambda_n(-2)[-4]
+\longrightarrow
+\bigoplus_i i_{i*}\Lambda_n(-1)[-2]
+\longrightarrow
+R\Gamma_D(\Lambda_n)
+\longrightarrow.
 $$
 
-with incidence maps recording which branches meet. Applying duality reverses the incidence complex and exchanges $j_!$ with $Rj_*$. Hence the pairing between $H_c^*(U)$ and $H^*(U)$ is compatible with residues first along divisors and then at crossings.
+The first arrow is the signed incidence map recording which branches meet. There are no triple intersections in a strict normal-crossings divisor on a surface. Applying duality reverses this triangle and exchanges $j_!$ with $Rj_*$. Hence the pairing between $H_c^*(U)$ and $H^*(U)$ is compatible with residues first along divisors and then at crossings.
 
-The normal-crossings hypothesis makes this two-step description valid. If the boundary is singular or components self-intersect, one first resolves the pair or retains the full local boundary complex. Merely listing irreducible components can lose branch information at a singular point.
+The normal-crossings hypothesis makes this two-step description valid. If the boundary is singular or components self-intersect, the full local boundary complex must be retained; a separately supplied resolution may be used to compute it, but no resolution is assumed here. Merely listing irreducible components can lose branch information at a singular point.
 
 ## 10. Relative duality
 
@@ -940,7 +988,7 @@ The scalar sheaf is constant after the compensating twist, so the right side is 
 
 If smoothness fails, proper base change still identifies fiber cohomology and constructs specialization, but it does not say the map is an isomorphism or preserve a constant-sheaf Poincaré form. The relative dualizing complex is the correct object; the next chapter describes the simplest failure.
 
-## 11. Semistable curves and the limits of ordinary Poincaré duality
+## 11. Semistable fibers and the limits of ordinary Poincaré duality
 
 ### 11.1 The normalization complex
 
@@ -1014,9 +1062,9 @@ Rf_*R\mathcal Hom(K,f^!\Lambda_n)
 R\mathcal Hom(Rf_*K,\Lambda_n).
 $$
 
-On the smooth locus, $f^!\Lambda_n$ is $\Lambda_n(1)[2]$. The regular total-space orientation extends across the node, but its comparison with the intrinsic dualizing complex of the singular fiber contains the branch correction of Section 11.2. This is the exact point at which extraordinary pullback cannot be replaced by an unqualified constant twist after singular base change.
+On the smooth locus, $f^!\Lambda_n$ is $\Lambda_n(1)[2]$. In fact the lci orientation of the regular total space extends this identification across the node, but its exchange map to the intrinsic dualizing complex of the singular fiber contains the branch correction of Section 11.2. This is the exact point at which extraordinary pullback cannot be replaced by an unqualified constant twist after singular base change.
 
-The extension across the node uses the regularity of the total space. Embed $\mathcal C$ locally as the hypersurface $xy-\pi=0$ in the smooth relative plane over $T$. The hypersurface immersion is regular of codimension one. Composing its purity isomorphism $(-1)[-2]$ with the plane orientation $(2)[4]$ produces the relative orientation $(1)[2]$. After restriction to the special fiber, however, the square is not cohomologically transverse at the node; the base-change mate to the intrinsic fiber dualizing complex has the nonzero cone described by the two branches. Thus relative orientation and fiberwise singular duality are compatible without being identical.
+The extension across the node uses the regularity of the total space. Embed $\mathcal C$ locally as the hypersurface $xy-\pi=0$ in the smooth relative plane over $T$. The hypersurface immersion is regular of codimension one. Composing its purity isomorphism $(-1)[-2]$ with the plane orientation $(2)[4]$ produces the relative orientation $(1)[2]$. After restriction to the special fiber, however, the square is not cohomologically transverse at the node; the exchange morphism to the intrinsic fiber dualizing complex has the nonzero cone described by the two branches. Thus relative orientation and fiberwise singular duality are compatible without being identical.
 
 One can prove the local assertion directly from $xy=\pi$. Remove the node, apply smooth purity on the punctured neighborhood, and use localization for the closed point. The punctured special fiber has two branches, whereas the punctured generic fiber has one annular cycle. The boundary map is the difference of the two branch residues. Its cone is rank one and is precisely the node correction.
 
@@ -1034,6 +1082,44 @@ but it need not be an isomorphism. Relative duality makes specialization compati
 The normalization sequence separates component cohomology from graph cohomology. Each normalized component has its usual curve pairing. Incidence duality pairs vertices and edges in the graph complex. The remaining rank-one local term at each smoothed node accounts for the vanishing class on the generic fiber. This is the semistable duality package needed here. A systematic monodromy filtration and nearby-cycle spectral sequence belong to the next volume.
 
 For a tree of smooth components, graph $H^1$ vanishes, but multiple top classes remain on the special fiber. For a polygon of projective lines, graph $H^1$ has rank one. Neither case has the same constant-sheaf duality as a smooth connected curve, although the dualizing-complex statement is perfect in both.
+
+### 11.5 The strictly semistable surface form
+
+The surface form needed later follows from the same mechanism, with one additional incidence level. Let $f:\mathcal X\to T$ be proper and strictly semistable of relative dimension two over a strictly henselian trait. Assume $\mathcal X$ is regular. Étale-locally the equation is
+
+$$
+x_1\cdots x_r=\pi,
+\qquad 1\leq r\leq3.
+$$
+
+Write the special fiber as $Y=\bigcup_aY_a$. Let $Y^{(1)}$ be the disjoint union of its smooth surface components, $Y^{(2)}$ the disjoint union of the double curves, and $Y^{(3)}$ the finite set of triple points. With the evident finite maps $u_r:Y^{(r)}\to Y$, the augmented incidence complex
+
+$$
+\Lambda_{n,Y}
+\longrightarrow u_{1*}\Lambda_n
+\longrightarrow u_{2*}\Lambda_n
+\longrightarrow u_{3*}\Lambda_n
+$$
+
+is exact, with alternating restriction maps. This is checked at a geometric point: if $r$ components pass through it, the stalk is the augmented cochain complex of an $(r-1)$-simplex.
+
+Dualizing this exact complex reverses the incidence arrows. Smooth purity on the strata gives
+
+$$
+D_Y(u_{1*}\Lambda_n)\simeq u_{1*}\Lambda_n(2)[4],\qquad
+D_Y(u_{2*}\Lambda_n)\simeq u_{2*}\Lambda_n(1)[2],\qquad
+D_Y(u_{3*}\Lambda_n)\simeq u_{3*}\Lambda_n,
+$$
+
+as the three terms of the reversed total complex. Relative duality for each finite $u_r$ gives these identifications with the stratum dualizing complexes. The totalization is $\omega_Y^\bullet$. Thus restriction from a component to a double curve is dual to its Gysin map, the two restrictions at a double curve occur with opposite signs, and the three branch incidences at a triple point satisfy the alternating relation. This is the semistable surface dualizing complex; the constant sheaf $\Lambda_n(2)[4]$ is not substituted on $Y$.
+
+The total space is lci of virtual relative dimension two, so regular-immersion purity and smooth orientation give
+
+$$
+f^!\Lambda_n\simeq\Lambda_n(2)[4].
+$$
+
+Its exchange morphism on the special fiber lands in the incidence totalization just described and fails to be an isomorphism precisely along double curves and triple points. The local equations above reduce that assertion to the two- and three-branch residue complexes. Relative duality remains perfect, and all restriction--Gysin adjunctions have the displayed incidence signs. This is the semistable surface form promised here. Filtrations from nearby cycles, monodromy operators, and weights require further constructions and are not used in its proof.
 
 ## 12. Exact torsion and adic duality
 
@@ -1158,7 +1244,7 @@ Rational perfection should not be used backward to infer integral perfection. A 
 
 ### 13.1 Base change for compact support and duality
 
-Compactly supported direct image commutes with arbitrary base change in the finite constructible setting. Smooth purity is stable under base change, and proper trace is compatible with proper base change. Therefore a cartesian square carries the trace and duality pairing on $X/S$ to those on $X'/S'$.
+Compactly supported direct image commutes with arbitrary base change in the finite constructible setting. Smooth purity is stable under arbitrary base change of a smooth map, so its trace and duality pairing are carried to the corresponding objects after base change. A proper lci orientation has the same compatibility for Tor-independent squares; in particular this covers flat and smooth changes of base and the correspondence squares used below. For a nontransverse square only the universal counit is automatic, and an excess term may alter an oriented pull-push formula.
 
 For smooth proper curves and surfaces, this follows on geometric stalks from absolute Poincaré duality and then globally because the direct images are lisse. For open pairs, the compact side always transports through a proper compactification; the ordinary side transports under the relative normal-crossings and tame hypotheses stated earlier. At the adic level, uniform bounds and Mittag--Leffler permit the same conclusion after derived inverse limit.
 
@@ -1207,18 +1293,27 @@ $$
 q_*p^*:H^*(X,\mathcal F)\longrightarrow H^*(Y,\mathcal F).
 $$
 
-For a cycle $\Gamma\subset X\times Y$ of the dimension making degree zero, the equivalent formula is
+For a regular lci cycle $\Gamma\subset X\times Y$ of the dimension making degree zero, the equivalent formula is
 
 $$
 \Gamma_*(x)=p_{Y*}
 (p_X^*x\smile\operatorname{cl}(\Gamma)).
 $$
 
-The codimension of $\Gamma$, the twist of its class, and the relative dimension of $p_Y$ cancel. If they do not cancel, the correspondence changes degree and twist; suppressing that shift changes the operator.
+The codimension of $\Gamma$, the twist of its class, and the relative dimension of $p_Y$ cancel. If they do not cancel, the correspondence changes degree and twist; suppressing that shift changes the operator. Divisorial cycles are also allowed through their Kummer classes. An arbitrary singular codimension-two closure is not silently assigned a purity class; the correspondences used here have a regular pull-push presentation or a regular lci cycle representative.
 
 Composition follows by forming the fiber product of correspondences, intersecting the pulled-back cycle classes, and applying the projection formula. Properness of the relevant projection ensures that the composite support remains proper.
 
-If the intersection defining a composite is not transverse, one must use the refined intersection class. In the curve case, distinct finite correspondences meet in isolated points and local lengths give the correction. On a smooth surface, an excess component can have positive dimension; its normal bundle contributes a Chern class. The cohomological composition law remains valid because refined cycle classes satisfy the excess formula. Replacing the refined product by a set-theoretic fiber product can therefore give the wrong multiplicity even though the underlying correspondence has the expected points.
+If the intersection defining a composite is not transverse, one must use the refined intersection class. Its compatibility follows from deformation to the normal bundle. For a regular immersion $Z\hookrightarrow W$, use
+
+$$
+\operatorname{Bl}_{Z\times\{0\}}(W\times\mathbf A^1)
+\setminus\widetilde{W\times\{0\}}.
+$$
+
+The complement of the special fiber is $W\times\mathbf G_m$ and the special fiber is $N_{Z/W}$. Localization, affine-line duality, and the residue-one normalization identify the generic fundamental class with the zero-section class on the special fiber. Apply this simultaneously to the two immersions being intersected. If their normal directions overlap, quotienting by the normal bundle of the actual fiber product leaves the excess bundle $E$, and the zero-section calculation multiplies its class by $c_{\mathrm{top}}(E)$. Here $c_{\mathrm{top}}(E)$ is defined by zero-section pullback followed by its Gysin map, so no separate Chern-class theorem is assumed. This proves the excess formula and hence associativity of the cohomological composite. In the curve case, the formula is the local intersection length. On a smooth surface, an excess component can have positive dimension and its excess Chern class cannot be omitted. A set-theoretic fiber product can therefore give the wrong multiplicity even when it has the expected points.
+
+The two asserted fibers can be checked without importing an intersection theorem. Locally, if $I$ is the ideal of $Z$, the displayed open blowup is described by the Rees algebra generated by $s$ and $I/s$. Inverting $s$ gives $\mathcal O_W[s,s^{-1}]$. Setting $s=0$ gives $\operatorname{gr}_I\mathcal O_W$, and regularity of the immersion identifies this graded algebra with $\operatorname{Sym}_{\mathcal O_Z}(I/I^2)$. Its spectrum is the normal bundle. The specialization and excess calculation are therefore reductions to the already proved coordinate zero-section calculation.
 
 Base change commutes with the action when the correspondence and its proper support base-change correctly. For a finite étale correspondence this is immediate from pullback and finite trace. For a compactified open correspondence, it follows from proper base change on the closure and compatibility of the boundary triangle. If a closure acquires an extra vertical component, that component contributes a genuine cycle class; it may not be silently discarded.
 
@@ -1238,20 +1333,20 @@ For the graph of a finite map $f:X\to X$, this says that pullback and pushforwar
 
 ### 14.3 Cycle classes and projection
 
-Cycle classes commute with flat pullback, proper pushforward, and exterior product. For a proper map $f:X\to Y$ and a cycle $Z$ on $X$ in the regular low-dimensional range,
+Cycle classes commute with flat pullback, proper pushforward, and exterior product. Let $f:X\to Y$ be a proper oriented map between smooth proper schemes in the low-dimensional range, and let $Z$ be a cycle for which the classes above are defined. Then
 
 $$
 f_*\operatorname{cl}_X(Z)
 =\operatorname{cl}_Y(f_*Z).
 $$
 
-Test both sides against a complementary class. Projection reduces equality to the local degree formula at closed points, where finite trace is multiplication by residue degree and scheme-theoretic length. Perfect duality then identifies the classes.
+Test both sides against a complementary class. Projection reduces equality to the local degree formula at closed points, where the oriented finite trace is multiplication by residue degree and scheme-theoretic length. Perfect duality then identifies the classes. Flat pullback is proved on local Kummer symbols, exterior products by concatenating them, and localization extends these identities to properly supported classes on open smooth schemes.
 
 The diagonal class recovers the identity correspondence. On a smooth proper curve, its Künneth components encode the unit, the identity on $H^1$, and the fundamental class. On a surface, the diagonal also acts on $H^2$, including transcendental classes not generated by divisors. Cycle classes define the action; they do not imply that all middle cohomology is algebraic.
 
 ### 14.4 Hecke-type correspondences
 
-In the low-dimensional moduli spaces used later, prime-to-level correspondences are finite étale on the open space and proper over both factors after a compatible compactification or refinement. Their actions therefore exist on ordinary and compactly supported cohomology, commute with the boundary map, and preserve interior cohomology
+In the low-dimensional moduli spaces used later, the prime-to-level correspondences under consideration are finite étale on the open space and admit, after a compatible compactification or refinement, a regular lci pull-push model proper over both factors. Their actions therefore exist on ordinary and compactly supported cohomology, commute with the boundary map, and preserve interior cohomology
 
 $$
 H_!^i=\operatorname{im}(H_c^i\to H^i).
@@ -1270,7 +1365,7 @@ We collect the results in a form designed for repeated application.
 **Low-dimensional étale duality theorem.** Let $k$ be a field, let $\ell$ be invertible in $k$, and let $X/k$ be a separated finite-type scheme of dimension at most two. Work with bounded constructible $\ell$-primary coefficients.
 
 1. Compactly supported cohomology is defined intrinsically by compactification, satisfies localization and composition, and commutes with base change at finite and adic levels under the established uniform finiteness hypotheses.
-2. The functor $Rf_!$ has the extraordinary right adjoint $f^!$ in the required range. Its counit is functorial, transitive, and compatible with the valid base-change maps.
+2. For every compactifiable map in the low-dimensional absolute or relative category, the functor $Rf_!$ has the extraordinary right adjoint $f^!$ on bounded constructible complexes. Its counit is functorial, transitive, and compatible with the valid base-change maps.
 3. If $X$ is smooth of pure dimension $d$, then $a^!\Lambda_n=\Lambda_n(d)[2d]$. For finite locally free lisse $\mathcal F_n$, cup product and trace give perfect finite-level pairings
 
    $$
@@ -1279,10 +1374,10 @@ We collect the results in a form designed for repeated application.
    \longrightarrow\Lambda_n.
    $$
 
-4. The normalized inverse limit is a perfect duality of $\mathbf Z_\ell$-complexes. Free quotients pair in degrees summing to $2d$; torsion has a perfect $\mathbf Q_\ell/\mathbf Z_\ell$-valued linking pairing in degrees summing to $2d+1$. Rationalization gives perfect complementary-degree $\mathbf Q_\ell$-pairings.
+4. For a normalized lisse finite-free $\mathbf Z_\ell$-system, the inverse limit is a perfect duality of $\mathbf Z_\ell$-complexes. Free quotients pair in degrees summing to $2d$; torsion has a perfect $\mathbf Q_\ell/\mathbf Z_\ell$-valued linking pairing in degrees summing to $2d+1$. Rationalization gives perfect complementary-degree $\mathbf Q_\ell$-pairings. For a general constructible complex, the same statement uses its Verdier dual rather than an elementary sheaf dual.
 5. Smooth proper relative curves and surfaces satisfy relative duality fiberwise and over the base. Open smooth families satisfy the compact-versus-ordinary form when equipped with controlled normal-crossings boundary.
-6. A proper nodal curve is dual with respect to its dualizing complex. Its normalization, graph, and node correction describe the semistable form; the constant shifted sheaf is not substituted at a node.
-7. Traces and pairings commute with base change, Galois action, the stated Frobenius normalization, finite and oriented proper maps, cycle classes, and properly supported algebraic correspondences. Transpose correspondences are adjoint.
+6. A proper nodal curve is dual with respect to its dualizing complex. Its normalization, graph, and node correction describe the curve form. A strictly semistable surface has the three-level component, double-curve, and triple-point dualizing complex of Section 11.5. In neither case is the constant shifted sheaf substituted on the singular fiber.
+7. Traces and pairings commute with base change, Galois action, and the stated Frobenius normalization. Pull-push compatibility holds for finite étale maps, for oriented proper maps in the transverse or Tor-independent squares specified above, and for the resulting cycle classes and properly supported regular lci algebraic correspondences used here. Transpose correspondences are adjoint.
 
 Every clause is derived from the constructions above. The finite-level theorem rests on compactification, purity, and finite biduality. The adic theorem rests on uniform amplitude, finite-level compatibility, and derived completeness. The relative statement rests on adjunction and the projection formula. The semistable statement rests on normalization and the two-branch local calculation.
 
@@ -1300,6 +1395,7 @@ Before applying the package, one should make the following checks.
 8. Does a correspondence have proper support over the target, and do its degree and codimension give the asserted shift and twist?
 9. Is the transpose truly the desired arithmetic adjoint, or is a polarization or involution also involved?
 10. Is Frobenius arithmetic or geometric? Top-degree eigenvalues and characteristic polynomials invert when the convention changes.
+11. If an oriented lci map is base-changed, is the square Tor-independent, or has the excess class been included?
 
 These are not cosmetic qualifications. Dropping proper support loses compactness, dropping smoothness loses the constant orientation, dropping derived limits loses torsion, and dropping the Tate twist destroys Galois equivariance.
 
@@ -1307,8 +1403,8 @@ These are not cosmetic qualifications. Dropping proper support loses compactness
 
 Duality turns cohomology from a collection of groups into a geometry of adjoints. Compactification creates the functor that remembers support. Its extraordinary right adjoint creates the dualizing complex. Purity identifies that complex on smooth spaces, and the counit becomes integration. Cup product then converts integration into perfect pairings.
 
-For curves, this structure explains the symplectic middle cohomology, the residue theorem, and the exact contribution of punctures. For surfaces, it identifies the middle cup product with geometric intersection and keeps boundary strata in their proper degrees. In families, it travels through base change and specialization. At a semistable node it does not conceal the singularity: normalization and the two branches contribute the correction that ordinary Poincaré duality lacks.
+For curves, this structure explains the symplectic middle cohomology, the residue theorem, and the exact contribution of punctures. For surfaces, it identifies the middle cup product with geometric intersection and keeps boundary strata in their proper degrees. In families, it travels through base change and specialization. At a semistable node it does not conceal the singularity: normalization and the two branches contribute the correction that ordinary Poincaré duality lacks. On a strictly semistable surface, component surfaces, double curves, and triple points form the corresponding reversed incidence dualizing complex.
 
 The integral theory retains more than its rational shadow. Finite-level pairings see exact torsion; the adic derived dual separates free duality from the one-degree-shifted linking form. Galois actions, Frobenius, cycle classes, and algebraic correspondences respect the same trace because all arise from one adjunction and one projection formula.
 
-The resulting package is deliberately low-dimensional but complete for its purpose. Smooth curves and surfaces carry canonical fundamental classes; proper and open versions are distinguished by support; semistable curves carry their true dualizing complexes; and every trace, twist, shift, and adjoint remains visible under arithmetic descent. This is the duality framework on which nearby cycles, trace formulas, and the cohomological actions of later geometric correspondences can safely build.
+The resulting package is deliberately low-dimensional but complete for its purpose. Smooth curves and surfaces carry canonical fundamental classes; proper and open versions are distinguished by support; semistable curve and surface fibers carry their true dualizing complexes; and every trace, twist, shift, and adjoint remains visible under arithmetic descent. This is the duality framework on which nearby cycles, trace formulas, and the cohomological actions of later geometric correspondences can safely build.
