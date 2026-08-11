@@ -105,13 +105,10 @@
     - [Local--global optimality and selectivity](#176-local--global-optimality-and-selectivity)
     - [Embedding classes as double quotients](#177-embedding-classes-as-double-quotients)
     - [Examples and counterexamples](#178-examples-and-counterexamples)
-18. [Reduced-norm fibers and strong approximation](#18-reduced-norm-fibers-and-strong-approximation)
+18. [Reduced-norm packets](#18-reduced-norm-packets)
     - [The norm quotient attached to a level](#181-the-norm-quotient-attached-to-a-level)
     - [The norm map on an ideal class set](#182-the-norm-map-on-an-ideal-class-set)
-    - [Strong approximation for the norm-one group](#183-strong-approximation-for-the-norm-one-group)
-    - [The indefinite fiber theorem](#184-the-indefinite-fiber-theorem)
-    - [Approximation away from one split finite place](#185-approximation-away-from-one-split-finite-place)
-    - [Why total definiteness changes the answer](#186-why-total-definiteness-changes-the-answer)
+    - [What reduced norm does not classify](#183-what-reduced-norm-does-not-classify)
 19. [Finite double-coset sets for definite quaternionic forms](#19-finite-double-coset-sets-for-definite-quaternionic-forms)
     - [The finite arithmetic skeleton](#191-the-finite-arithmetic-skeleton)
     - [Representatives, ideals, and stabilizers](#192-representatives-ideals-and-stabilizers)
@@ -633,7 +630,15 @@ $$
 \operatorname{End}_A(L)=gM_2(A)g^{-1}.
 $$
 
-The order $M_2(A)$ is maximal because any integral matrix algebra containing all matrix units and lying in $M_2(K)$ cannot enlarge one coefficient without multiplication by matrix units enlarging a scalar corner beyond $A$. This proves the theorem.
+To prove that $M_2(A)$ is maximal, let $\Lambda$ be an order containing it and take $x=(x_{ij})\in\Lambda$. Multiplication by matrix units gives
+
+$$
+E_{ii}xE_{jj}=x_{ij}E_{ij}\in\Lambda,
+\qquad
+x_{ij}E_{ij}E_{ji}=x_{ij}E_{ii}\in\Lambda.
+$$
+
+Every element of an order has integral reduced trace, so $x_{ij}=\operatorname{Trd}(x_{ij}E_{ii})$ lies in $A$. Thus $x\in M_2(A)$ and $\Lambda=M_2(A)$. This proves the theorem.
 
 ### 5.4 The division case has one maximal order
 
@@ -1325,7 +1330,7 @@ We postpone the proof until the adelic description turns local generators into o
 
 ### 11.1 The restricted product attached to integrality
 
-Book 4 built finite adeles by requiring integrality at almost every place. The same construction applies to the four-dimensional vector space $B$. Fix any order $\mathcal O$. The finite adelic algebra is
+Finite adeles are formed by requiring integrality at almost every place. Applying this construction to the four-dimensional vector space $B$, and fixing any order $\mathcal O$, gives the finite adelic algebra
 
 $$
 \widehat B=B\otimes_F\mathbf A_{F,f}
@@ -1551,7 +1556,7 @@ This formula will later turn a double-coset representative into a finite arithme
 
 ### 13.1 The general finiteness theorem
 
-**Theorem 13.1 (finiteness).** Let $F$ be a number field, let $A$ be a finite-dimensional semisimple $F$-algebra, and let $\Lambda\subset A$ be an $R$-order. Then the set of isomorphism classes in any fixed genus of full right $\Lambda$-lattices is finite. In particular, for every quaternion order $\mathcal O$,
+**Theorem 13.1 (finiteness).** For every order $\mathcal O$ in a quaternion algebra $B$ over a number field $F$, the class set
 
 $$
 B^\times\backslash\widehat B^\times/
@@ -1560,15 +1565,97 @@ $$
 
 is finite.
 
-No definiteness hypothesis is needed for this algebraic finiteness statement. The hypotheses that matter are that $F$ is a number field, $A$ is semisimple, and $\Lambda$ is an order. Over more general global rings, or for nonsemisimple ambient algebras, a separate argument is required.
+No definiteness hypothesis is needed. The proof separates the two possible rational algebras and then passes from a maximal order to the given order by a finite-index argument.
 
-**Proof strategy.** This is the lattice finiteness theorem often called the Jordan--Zassenhaus principle. Embed every lattice in one rational vector space, clear denominators within its genus, and use archimedean reduction to choose a basis whose coordinates lie in a bounded region. Discreteness then leaves finitely many multiplication tables.
+**Proof strategy.** If $B$ is division, every nonzero vector is invertible, so Minkowski reduction supplies a short element with which to normalize an ideal into one of finitely many bounded over-lattices of $\mathcal O$. If $B$ is split, Morita equivalence reduces maximal-order classes to Steinitz classes of rank-two projective $R$-modules. A finite unit-index argument then handles every suborder.
 
-Here is the reduction mechanism in the present setting. A locally principal right ideal $I$ is locally isomorphic to $\mathcal O$ as a right $\mathcal O$-module. Central scaling, which does not change its class because $F^\times\subset B^\times$, first makes $I$ integral. The possible Steinitz classes of its underlying $R$-module lie in the finite ideal class group of $F$. After fixing one of them, Minkowski reduction chooses a pseudobasis whose successive minima are balanced by an $A$-linear rational automorphism. Decompose the rational module into its finitely many simple summands. On each isotypic part, the relations expressing right multiplication by a fixed $R$-basis of $\mathcal O$, together with the fixed multiplicities, give the standard reduction bound on the ratios of those minima. Thus the reduced pseudobasis vectors may be taken in a fixed archimedean compact set and a fixed finite-adelic lattice.
+**Proof.** Suppose first that $B$ is a division algebra. Fix a Euclidean norm on
 
-The adelic lattice finiteness result from Book 4 then applies: a compact adelic set meets diagonal $A$ in only finitely many points. Hence only finitely many reduced pseudobases, and therefore only finitely many right $\mathcal O$-lattices, occur. This is the content of the Jordan--Zassenhaus reduction argument; semisimplicity is what supplies the uniform bound after decomposing the rational module into simple summands.
+$$
+B_\infty=B\otimes_{\mathbf Q}\mathbf R
+$$
 
-Finally, an isomorphism $I\to J$ of right $\mathcal O$-lattices extends after tensoring with $F$ to an endomorphism of the regular right $B$-module $B$. Such an endomorphism is left multiplication by a unique $b\in B$, and invertibility of the isomorphism gives $b\in B^\times$. Thus module isomorphism is exactly the equivalence $J=bI$. This proves the stated finiteness of the double quotient.
+and compatible Lebesgue measure. If $d=[F:\mathbf Q]$, Minkowski's convex-body theorem gives, for every fractional right ideal $I$, a nonzero $a\in I$ such that
+
+$$
+\lVert a\rVert\le C_1\operatorname{covol}(I)^{1/(4d)}.
+$$
+
+The absolute determinant of left multiplication by $a$ on the $4d$-dimensional real vector space $B_\infty$ is
+
+$$
+\left|N_{F/\mathbf Q}(\operatorname{Nrd}(a))\right|^2.
+$$
+
+It is a homogeneous polynomial of degree $4d$ in the real coordinates of $a$, so its absolute value is bounded on the Euclidean unit sphere. Consequently
+
+$$
+\left|N_{F/\mathbf Q}(\operatorname{Nrd}(a))\right|^2
+\le C_2\lVert a\rVert^{4d}
+\le C_3\operatorname{covol}(I).
+$$
+
+Division makes $a$ invertible. Put $J=a^{-1}I$. Since $a\mathcal O\subset I$, one has $\mathcal O\subset J$, while the determinant formula gives
+
+$$
+\operatorname{covol}(J)
+=\left|N_{F/\mathbf Q}(\operatorname{Nrd}(a))\right|^{-2}
+\operatorname{covol}(I)
+\ge C_3^{-1}.
+$$
+
+Hence
+
+$$
+|J/\mathcal O|
+=\frac{\operatorname{covol}(\mathcal O)}
+{\operatorname{covol}(J)}
+$$
+
+is bounded independently of the class of $I$. There are only finitely many over-lattices of $\mathcal O$ of bounded index: the exponent of each finite group $J/\mathcal O$ is bounded, so all such $J$ lie between $\mathcal O$ and one fixed fractional multiple of it. Thus the division case is finite.
+
+Now suppose $B=M_2(F)$ and let $\mathcal M$ be a maximal order. Choose a rank-two lattice $P_0\subset F^2$ and put $P=\mathcal M P_0$. Then $P$ is a rank-two projective $R$-lattice stabilized by $\mathcal M$, so
+
+$$
+\mathcal M\subset\operatorname{End}_R(P).
+$$
+
+Maximality makes this an equality. Morita equivalence sends a locally principal right $\mathcal M$-ideal $I$ to the rank-two projective module $I\otimes_{\mathcal M}P$, and its inverse is $Q\mapsto\operatorname{Hom}_R(P,Q)$. It identifies ideal equivalence with module isomorphism: a right $\mathcal M$-module isomorphism $I\to J$ extends over $F$ to an endomorphism of the regular right $B$-module, hence is left multiplication by an element $b\in B^\times$ and gives $J=bI$; the converse is immediate. To recall the needed Dedekind-module classification, a pseudobasis writes every rank-two projective module as $\mathfrak a\oplus\mathfrak b$ for fractional ideals $\mathfrak a,\mathfrak b$, and elementary pseudobasis changes give
+
+$$
+\mathfrak a\oplus\mathfrak b
+\cong R\oplus\mathfrak a\mathfrak b.
+$$
+
+The ideal class of $\mathfrak a\mathfrak b$, equivalently the determinant class, is unchanged by isomorphism and completely determines it. These classes form the finite ideal class group of $F$. The maximal-order class set is therefore finite.
+
+Finally choose a maximal order $\mathcal M\supset\mathcal O$. The inclusion
+
+$$
+\widehat{\mathcal O}^\times
+\subset\widehat{\mathcal M}^\times
+$$
+
+has finite index. Indeed, the local orders agree away from the finite support of $\mathcal M/\mathcal O$, and at each remaining place the smaller unit group is open in the compact larger unit group. The natural map from the $\mathcal O$-class set to the $\mathcal M$-class set has fibers that are quotients of the finite set
+
+$$
+\widehat{\mathcal M}^\times/
+\widehat{\mathcal O}^\times.
+$$
+
+The source is therefore finite. By Theorem 12.1 it is exactly the stated double quotient. $\square$
+
+The same argument gives the form needed for arbitrary level subgroups.
+
+**Corollary 13.2.** For every compact open subgroup $K\subset\widehat B^\times$, the set
+
+$$
+B^\times\backslash\widehat B^\times/K
+$$
+
+is finite.
+
+**Proof.** Fix an order $\mathcal O$ and put $U=K\cap\widehat{\mathcal O}^\times$. The intersection of two compact open subgroups has finite index in each. The quotient with right level $U$ maps to the finite $\widehat{\mathcal O}^\times$-quotient with fibers bounded by $[\widehat{\mathcal O}^\times:U]$, and it surjects onto the quotient with right level $K$. $\square$
 
 ### 13.2 Why definiteness gives a sharper compactness proof
 
@@ -1608,29 +1695,6 @@ $$
 
 Consequently the additive index $|J/\mathcal O|$ is bounded independently of the ideal class. There are only finitely many over-lattices of $\mathcal O$ of bounded index: if $|J/\mathcal O|\le M$, the exponent of $J/\mathcal O$ divides one fixed integer depending on $M$, so every such $J$ lies between $\mathcal O$ and one fixed fractional multiple of it. This proves finiteness directly and makes clear exactly where definiteness is used.
 
-There is a complementary topological packaging of the same reduction. At each real place, $B_v\cong\mathbf H$, and
-
-$$
-B_v^\times/F_v^\times
-$$
-
-is compact. Globally, the projective group $PB^\times=B^\times/F^\times$ is anisotropic: it has no nontrivial $F$-split torus. The definite reduction argument just given is the lattice form, in this quaternionic case, of the compactness statement
-
-$$
-PB^\times(F)\backslash PB^\times(\mathbf A_F)
-$$
-
-is compact.
-
-To extract the desired finite set, quotient this compact adelic space on the right by the full archimedean projective group and by the image of the compact open $\widehat{\mathcal O}^\times$. The quotient remains compact. It is also discrete, because $\widehat{\mathcal O}^\times$ is open in the finite adelic group. Hence it is finite. Passing from $PB^\times$ back to $B^\times$ introduces only fibers that are quotients of
-
-$$
-F^\times\backslash\mathbf A_{F,f}^\times/\widehat R^\times
-\cong\operatorname{Cl}(F),
-$$
-
-which is finite. This yields the desired finite double-coset set.
-
 This proof explains why total definiteness is especially valuable later. General class-set finiteness does not require it, but definiteness makes the archimedean projective quotient compact, so no continuous archimedean parameter survives. Quaternionic automorphic spaces at finite level can then be built from a finite set with finite stabilizers modulo central units.
 
 ### 13.3 Stabilizers in the definite case
@@ -1643,7 +1707,7 @@ $$
 
 is finite. Indeed, after scaling by a central unit, its image at infinity lies in a compact norm-one sphere, while it remains in an arithmetic lattice. A compact set meets a lattice in finitely many points.
 
-Here is the unit-scaling step precisely. For $u\in\mathcal O_L(I)^\times$, the reduced norm is a totally positive unit of $R$. The quotient of the totally positive unit group by squares of units is finite. Choose representatives $\eta_1,\ldots,\eta_s$. After multiplying $u$ by the inverse of a suitable central unit, its reduced norm is one of the $\eta_j$. At every real place it therefore lies on one of finitely many fixed norm spheres. Those spheres are compact, while all finite components remain in $\widehat{\mathcal O_L(I)}$. Book 4's compact-set intersection theorem for the diagonal lattice in the adelic vector space $B(\mathbf A_F)$ now leaves only finitely many representatives modulo $R^\times$.
+Here is the unit-scaling step precisely. For $u\in\mathcal O_L(I)^\times$, the reduced norm is a totally positive unit of $R$. The quotient of the totally positive unit group by squares of units is finite. Choose representatives $\eta_1,\ldots,\eta_s$. After multiplying $u$ by the inverse of a suitable central unit, its reduced norm is one of the $\eta_j$. At every real place it therefore lies on one of finitely many fixed norm spheres. Those spheres are compact, while the integrality conditions put every representative in the fixed lattice $\mathcal O_L(I)\subset B_\infty$. A bounded subset of a Minkowski space meets a fixed lattice in finitely many points, leaving only finitely many representatives modulo $R^\times$.
 
 The central unit group $R^\times$ itself can be infinite when $F\ne\mathbf Q$, so one must say “modulo central units.” Over $\mathbf Q$, the center contributes only $\{\pm1\}$ and the full unit group of a definite order is finite.
 
@@ -1720,7 +1784,7 @@ This group is sometimes denoted $K_0(\mathfrak N)$ once $B$ and the local matrix
 
 In the standard split model, the embedded unit group remembers the level exponent. Indeed, $K_0(\mathfrak p_v^n)$ consists of integral invertible matrices whose lower-left entries have valuation at least $n$, and the unipotent matrix with lower-left entry $\pi_v^n$ shows that this bound is sharp. In the division case, the unique maximal compact subgroup is the value-zero part of $D_v^\times$, and adjoining $0$ and the positive valuation layers recovers the valuation ring.
 
-This does not justify a general assertion that an abstract unit group determines an additive order, or even that an order is always additively generated by its units. In residue characteristic two, for example, the units of the edge order reduce to upper triangular matrices with both diagonal entries equal to $1$, so their additive span does not recover the whole reduced order. The safe statement is that, after fixing the ambient local algebra and the standard maximal-order coordinates, the displayed $K_0$ subgroup records the same exponent $n$ as the Eichler order.
+This does not justify a general assertion that an abstract unit group determines an additive order, or even that an order is always additively generated by its units. When the residue field is $\mathbf F_2$, for example, the units of the edge order reduce to upper triangular matrices with both diagonal entries equal to $1$, so their additive span does not recover the whole reduced order. The safe statement is that, after fixing the ambient local algebra and the standard maximal-order coordinates, the displayed $K_0$ subgroup records the same exponent $n$ as the Eichler order.
 
 Nevertheless, the conceptual direction in this book is
 
@@ -2460,7 +2524,7 @@ At the prime $2$, the algebra is division and the Hurwitz order is maximal. Prop
 
 Finally, rational embeddability does not imply integral embeddability at a chosen level. A quadratic field may be nonsplit at every ramified place of $B$ and therefore embed in $B$, while its maximal local order at an unramified quadratic place cannot embed into an Eichler order of positive exponent there. Rational ramification conditions and integral level conditions solve different problems and must both be checked.
 
-## 18. Reduced-norm fibers and strong approximation
+## 18. Reduced-norm packets
 
 ### 18.1 The norm quotient attached to a level
 
@@ -2531,131 +2595,11 @@ with $\operatorname{Nrd}(b)\in F_{B,+}^\times$ by the global reduced norm theore
 
 For $K=\widehat{\mathcal O}^\times$, this is the norm-ideal map on locally principal right ideal classes. It sends $[I(g)]$ to the class of $\operatorname{nrd}(I(g))$, with principal generators restricted by positivity at ramified real places. The ordinary ideal-class invariant from Chapter 9 is its coarser shadow when signs are forgotten.
 
-Surjectivity does not imply injectivity. Two quaternionic ideals may have norm ideals in the same narrow class and still be inequivalent. The fibers are controlled by the norm-one group.
+Surjectivity does not imply injectivity. If two representatives have the same norm class, adjusting by the rational and level factors in that equality leaves a finite-adelic element of reduced norm one. Deciding whether the representatives are equivalent therefore requires information about the norm-one group that the surjectivity argument does not supply.
 
-### 18.3 Strong approximation for the norm-one group
+### 18.3 What reduced norm does not classify
 
-For every $F$-algebra $E$, let
-
-$$
-B^1(E)=\ker\bigl(\operatorname{Nrd}:
-(B\otimes_FE)^\times\to E^\times\bigr).
-$$
-
-Thus $B^1(F)$ is the group of rational norm-one quaternions and $B^1(F_v)=B_v^1$ is its local group. When $B_v$ is split this is $\operatorname{SL}_2(F_v)$; at a Hamiltonian real place it is the compact three-sphere. As an algebraic group, $B^1$ is connected, simply connected, and absolutely almost simple. These hypotheses are exactly those for which strong approximation has its cleanest form.
-
-**Theorem 18.2 (strong approximation).** Let $S$ be a finite nonempty set of places of $F$ containing all archimedean places. Suppose that $B$ splits at at least one place $v_0\in S$. Then the diagonal subgroup $B^1(F)$ is dense in the restricted product
-
-$$
-B^1(\mathbf A_F^S)=\prod_{v\notin S}'B_v^1.
-$$
-
-Equivalently, for every open compact $U^S\subset B^1(\mathbf A_F^S)$,
-
-$$
-B^1(\mathbf A_F^S)=B^1(F)U^S.
-$$
-
-The splitting hypothesis is a noncompactness hypothesis: $B_{v_0}^1\cong\operatorname{SL}_2(F_{v_0})$ is noncompact. If every factor in $S$ is compact, the conclusion can fail.
-
-**Proof architecture.** This is the strong-approximation input for the present theory. Its proof has two structural steps. First, simply connectedness removes the central obstruction that appears for the projective group. Second, isotropy at the split place supplies a noncompact local factor in which opposite unipotent groups move denominators.
-
-Over the split field $F_{v_0}$, the elementary subgroups
-
-$$
-u_+(t)=\begin{pmatrix}1&t\\0&1\end{pmatrix},
-\qquad
-u_-(t)=\begin{pmatrix}1&0\\t&1\end{pmatrix}.
-$$
-
-Their conjugates generate $B_{v_0}^1$. The denominator-moving lemma for simply connected groups uses this unconstrained $v_0$-coordinate to clear the finitely many bad denominators of a rational approximation while preserving prescribed neighborhoods away from $S$. Applied to a basic open set $W\subset B^1(\mathbf A_F^S)$, it produces an element of $B^1(F)\cap W$. Hence the diagonal image is dense. The lemma is the decisive strengthening of weak approximation: weak approximation alone controls finitely many places but does not guarantee integrality at every omitted place. No global rational unipotent subgroup is being asserted when $B$ is a division algebra over $F$.
-
-The simply connected covering is already $B^1$, so the denominator-moving argument leaves no spinor-norm or central-isogeny quotient. For the projective group that last sentence would be false; its covering obstruction is exactly why the theorem is stated for $B^1$.
-
-One should not replace $B^1$ by $B^\times$ in the theorem. The reduced norm of $B^\times$ has an idele-class quotient, and that abelian quotient is precisely what strong approximation cannot remove.
-
-### 18.4 The indefinite fiber theorem
-
-Assume that $B$ splits at some archimedean place. Taking $S$ to be all archimedean places in Theorem 18.2 gives
-
-$$
-B^1(F)\text{ dense in }\widehat B^1.
-$$
-
-This density collapses every norm fiber.
-
-**Theorem 18.3 (norm classification in the indefinite case).** If $B$ splits at an archimedean place, then for every compact open $K\subset\widehat B^\times$, reduced norm induces a bijection
-
-$$
-\boxed{
-B^\times\backslash\widehat B^\times/K
-\xrightarrow{\sim}
-F_{B,+}^\times\backslash
-\mathbf A_{F,f}^\times/\operatorname{Nrd}(K).}
-$$
-
-**Proof strategy.** Surjectivity is Proposition 18.1. For injectivity, adjust two representatives with equal norm class until their quotient has norm one, then use density of $B^1(F)$ modulo a suitable conjugate of $K\cap\widehat B^1$.
-
-**Proof.** Suppose $g_1$ and $g_2$ have the same norm class. There are $b\in B^\times$ and $k\in K$ such that
-
-$$
-\operatorname{Nrd}(g_2)
-=\operatorname{Nrd}(b)\operatorname{Nrd}(g_1)
-\operatorname{Nrd}(k).
-$$
-
-Set
-
-$$
-d=b^{-1}g_2k^{-1}g_1^{-1}\in\widehat B^1.
-$$
-
-The subgroup
-
-$$
-U=g_1(K\cap\widehat B^1)g_1^{-1}
-$$
-
-is open in $\widehat B^1$. Strong approximation gives $d=\gamma u$ with $\gamma\in B^1(F)$ and $u\in U$. Write $u=g_1k_1g_1^{-1}$ with $k_1\in K\cap\widehat B^1$. Then
-
-$$
-g_2=b\gamma g_1k_1k,
-$$
-
-so $g_1$ and $g_2$ define the same double coset. $\square$
-
-For $B=M_2(F)$ and $K=\operatorname{GL}_2(\widehat R)$, this recovers the determinant classification of rank-two lattices by their Steinitz class. Over $\mathbf Q$ the ideal class group is trivial, giving the one-class calculation of Section 16.1.
-
-### 18.5 Approximation away from one split finite place
-
-Total definiteness prevents us from taking only the archimedean places in Theorem 18.2. Nevertheless a totally definite quaternion algebra splits at all but finitely many finite places. Choose one split finite place $w$ and put
-
-$$
-S=\{v:v\mid\infty\}\cup\{w\}.
-$$
-
-Then
-
-$$
-B^1(F)\text{ is dense in }
-\prod_{v\ne w,\,v<\infty}'B_v^1.
-$$
-
-This is the strong-approximation interface used when one place is allowed to vary. Away from $w$, norm again classifies double cosets by the proof of Theorem 18.3. At $w$, the omitted split factor
-
-$$
-B_w^1\cong\operatorname{SL}_2(F_w)
-$$
-
-retains its lattice tree. Restoring a compact subgroup at $w$ turns that free local motion into vertices, edges, or finite segments according to the chosen level.
-
-The role of $w$ is therefore twofold. It supplies the noncompact factor needed for approximation, and it is the place where local combinatorics remain visible. Changing $w$ changes the presentation of the argument, not the global algebra.
-
-This theorem does not say that one rational element can satisfy arbitrary conditions at every place including $w$. The $w$-coordinate is deliberately left uncontrolled. Forgetting that omission leads to the false claim that strong approximation makes the definite class set a single norm class.
-
-### 18.6 Why total definiteness changes the answer
-
-If $F$ is totally real and $B$ is totally definite, every archimedean group $B_v^1$ is compact. There is no archimedean split place with which to prove density in all finite norm-one adeles. The norm map
+The norm map
 
 $$
 \nu_K:X_K\to C_K
@@ -2663,9 +2607,9 @@ $$
 
 remains surjective, but its fibers can have more than one element.
 
-Those fibers are not a defect in the norm theorem. Reduced norm is abelian data; distinct ideal classes, left-order types, and lattice configurations can share it. Strong approximation away from a split finite place can compare them through local moves, but once a compact condition is restored at that place, a finite residual set remains.
+Those fibers are not a defect in the norm theorem. Reduced norm is abelian data; distinct ideal classes, left-order types, and lattice configurations can share it. The preceding argument proves surjectivity and no more. Injectivity would require an additional approximation theorem for the norm-one group, which is not part of the integral order theory developed here.
 
-The Hurwitz order happens to have one ideal class, so its sole norm packet is a singleton. That example is exceptional, not evidence for a general norm classification. Definite maximal and Eichler orders of larger discriminant or level commonly have several ideal classes even over $\mathbf Q$, where the narrow class group itself is trivial. Thus every class then lies in the same norm packet, and the entire class number measures information invisible to reduced norm.
+The Hurwitz order has one ideal class, so its sole norm packet is a singleton. This does not prove a general norm classification. Over $\mathbf Q$ the narrow class group is trivial, so whenever a definite maximal or Eichler order has class number greater than one, all of its distinct classes lie in the same norm packet. The class number then measures information invisible to reduced norm. No injectivity assertion is needed for the finite definite package below.
 
 ## 19. Finite double-coset sets for definite quaternionic forms
 
@@ -2740,6 +2684,15 @@ $$
 
 It is finite. Indeed, finite components of $\Gamma_i$ lie in the compact set $g_iKg_i^{-1}$, while total definiteness makes the archimedean image compact modulo the center. After quotienting by $Z_K$, the diagonal arithmetic subgroup is discrete in a compact set and therefore finite.
 
+Here are the central and denominator steps explicitly. For each finite $v$, the valuation of $\operatorname{Nrd}(\Gamma_i)$ is a subgroup of $\mathbf Z$ contained in the bounded valuation image of the compact group $g_iKg_i^{-1}$. It is therefore zero. Thus
+
+$$
+\operatorname{Nrd}(\Gamma_i)
+\subset R^\times\cap F_+^\times.
+$$
+
+The central subgroup $Z_K$ has finite index in $R^\times$: its defining finite-adelic condition is an open subgroup condition on $\widehat R^\times$, hence has finite quotient when restricted to $R^\times$. It follows that $(Z_K)^2$ has finite index in the totally positive unit group. After multiplication by an element of $Z_K$, the norm of any element of $\Gamma_i$ may consequently be put into one fixed finite set of unit representatives. At infinity the resulting elements lie on finitely many compact norm spheres, and at finite places they remain in $g_iKg_i^{-1}$. Bounding the finite denominators places their diagonal representatives in one fractional $R$-lattice in $B$; its Minkowski image meets the compact archimedean set in finitely many points. This proves the finiteness of $\Gamma_i/Z_K$.
+
 Over $\mathbf Q$, $R^\times=\{\pm1\}$ and even the full unit group of a definite order is finite. Over a larger totally real field, the distinction is essential: Dirichlet units make $R^\times$ infinite, although the effective stabilizer remains finite.
 
 These stabilizers are not incidental bookkeeping. Whenever one assigns data to the points of $X_K$, the datum at $[g_i]$ must be invariant under $\Gamma_i$ or under its effective action after a central character has been fixed. Different ideal classes can have stabilizers of different orders.
@@ -2762,7 +2715,7 @@ Thus every ideal class has a narrow norm class, and every narrow class occurs. I
 
 This partition is useful but must not be mistaken for a classification. If $F=\mathbf Q$, then $\operatorname{Cl}^+(\mathbf Q)$ is trivial, so all points of every definite class set lie in one norm packet. Class numbers greater than one are therefore direct counterexamples to injectivity of $\nu_K$.
 
-At an archimedean-split algebra, Theorem 18.3 says every packet has one point. Total definiteness is exactly the setting in which nontrivial packet fibers survive. The contrast isolates the contribution of the norm-one group from the abelian ideal-class contribution.
+The packet decomposition separates the abelian ideal-class contribution from the remaining quaternionic information. The latter is exactly the information that reduced norm alone does not see.
 
 ### 19.5 Changing level
 
@@ -2937,7 +2890,7 @@ Then:
 5. modulo central units, every $\Gamma_i$ is finite;
 6. reduced norm partitions $X_K$ into packets indexed by the narrow ideal class group of $F$;
 7. a quadratic order embeds optimally only after both the rational ramification test and the local conductor--level tests have been passed;
-8. strong approximation away from any chosen split finite place relates global classes to the local lattice tree at that place.
+8. at every split finite place, the local lattice tree records the maximal-order vertices and Eichler segments underlying the chosen level.
 
 These statements are precisely the integral and finite-combinatorial input needed to define functions on $X_K$ with prescribed algebraic behavior at infinity. No automorphic form or Hecke operator has been defined here; the present endpoint is the arithmetic set on which those later structures will act.
 
@@ -2962,9 +2915,9 @@ B^\times\backslash\widehat B^\times/
 \widehat{\mathcal O}^\times
 $$
 
-turns ideal arithmetic into a finite double-coset set. For totally definite $B$, compactness at infinity explains why this set and its stabilizers are especially concrete. The ambient algebra from Book 87, the restricted products from Book 4, and the integral structures developed here have therefore converged on one reusable object: a compact-open level inside $\widehat B^\times$ together with the finite arithmetic quotient it defines.
+turns ideal arithmetic into a finite double-coset set. For totally definite $B$, compactness at infinity explains why this set and its stabilizers are especially concrete. The ambient algebra from Book 87, the finite restricted product, and the integral structures developed here have therefore converged on one reusable object: a compact-open level inside $\widehat B^\times$ together with the finite arithmetic quotient it defines.
 
-Unit groups refine this quotient without replacing the orders behind them. Locally, radical filtrations linearize units and every Eichler unit group has full unit reduced norm. Globally, positivity at ramified real places survives in the norm-class quotient, while norm-one strong approximation explains exactly when norm classes already classify double cosets. It does so in the archimedean-split case; in the totally definite case nontrivial finite norm fibers remain and carry the genuinely quaternionic class information.
+Unit groups refine this quotient without replacing the orders behind them. Locally, radical filtrations linearize units and every Eichler unit group has full unit reduced norm. Globally, positivity at ramified real places survives in the norm-class quotient. Reduced norm always gives the proved surjection onto norm classes, but in the totally definite case its finite fibers can retain genuinely quaternionic class information.
 
 Quadratic orders supply a complementary probe. Rational embedding is controlled by the ramification set of $B$, but optimal integral embedding is the sharper intersection equation $L\cap\mathcal O=S$. In split local algebras this becomes a problem about multiplier orders at the endpoints of a lattice segment. At division places it forces the quadratic order to be maximal. Local conditions construct an optimal embedding somewhere in the genus, while selectivity records the possible failure in one chosen global conjugacy class.
 

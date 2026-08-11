@@ -111,7 +111,7 @@ any resulting corrections.
 - [ ] 085. Local Jacquet–Langlands for Special and Dihedral Packets
 - [ ] 086. Cyclic Base Change: Local Theory
 - [x] 087. Quaternion Algebras over Number Fields
-- [ ] 088. Orders in Quaternion Algebras
+- [x] 088. Orders in Quaternion Algebras
 - [ ] 089. Automorphic Forms on Definite Quaternion Algebras
 - [ ] 090. Hecke Operators on Quaternionic Forms
 - [ ] 091. Hecke Algebras and Congruences
