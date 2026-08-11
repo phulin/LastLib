@@ -328,7 +328,7 @@ The unit compatibilities follow from $\Delta(1)=1\otimes1$ and $\varepsilon(1)=1
 
 **Theorem 2.1 (dual Hopf algebra).** If $A$ is a commutative, cocommutative Hopf $R$-algebra finite projective over $R$, then $A^\vee$ with (2.2)--(2.6) is again a commutative, cocommutative Hopf $R$-algebra finite projective over $R$.
 
-Finite projectivity of $A^\vee$ follows from the finite-projective dual-basis theory recalled in Book 45. Its rank equals that of $A$. The proof also shows exactly what fails outside the stated category: without finite projectivity the tensor-dual comparison can fail, and without cocommutativity the convolution algebra need not be commutative.
+For completeness, if $(a_i,f_i)$ is a finite dual basis of $A$, then $(f_i,\operatorname{ev}_{a_i})$ is a dual basis of $A^\vee$. Tensoring two dual bases proves the first isomorphism in (2.1), and evaluation proves the second. Thus $A^\vee$ is finite projective of the same rank as $A$. The proof also shows exactly what fails outside the stated category: without finite projectivity the tensor-dual comparison can fail, and without cocommutativity the convolution algebra need not be commutative.
 
 ## 3. The Cartier dual and the character functor
 
@@ -898,7 +898,60 @@ $$
 
 Moreover $A^\vee$ is finite locally free and faithfully flat over $C^\vee$. These conclusions commute with arbitrary extension of scalars.
 
-Here is why finite projectivity is essential in this lemma. The inclusion $B\to A$ is universally injective, so its finitely presented cokernel is flat and hence projective; the quotient $A\to C$ also splits as an $R$-module map because $C$ is projective. Their transposes are therefore respectively surjective and universally injective. After localizing on $R$, choose dual bases compatible with these two split sequences. Expanding the equations $C=A/AB^+$ and $B=A^{\operatorname{co}C}$ in those bases identifies the first quotient in (7.6). Expanding the canonical map in (7.4), together with its antipode-defined inverse, identifies the second map in (7.6). The same calculation exhibits $A^\vee$ locally as a projective $C^\vee$-module of rank $\operatorname{rk}_R B$; the counits show that it is faithful. This proves the lemma. Notice that all three parts of (7.5) are used: dualizing a raw equalizer alone would not justify the result after a nonflat base change.
+Here is why finite projectivity is essential in this lemma. The inclusion $B\to A$ is universally injective, so its finitely presented cokernel is flat and hence projective; the quotient $A\to C$ also splits as an $R$-module map because $C$ is projective. Their transposes are therefore respectively surjective and universally injective. The remaining claims are the following torsor matrix calculation.
+
+We give the basis calculation more explicitly, because this is the decisive exactness step. Let
+
+$$
+r:A^\vee\longrightarrow B^\vee
+$$
+
+be restriction and let $j:C^\vee\hookrightarrow A^\vee$ be precomposition with $A\twoheadrightarrow C$. Put
+
+$$
+J=A^\vee j((C^\vee)^+).
+$$
+
+If $b\in B=A^{\operatorname{co}C}$, $u\in A^\vee$, and $v\in(C^\vee)^+$, then
+
+$$
+(u\,j(v))(b)
+=\sum u(b_{(1)})v(\overline{b_{(2)}})
+=u(b)v(1)=0. \tag{7.6a}
+$$
+
+Thus restriction induces a surjection
+
+$$
+\overline r:A^\vee/J\longrightarrow B^\vee. \tag{7.6b}
+$$
+
+To prove that it is injective and simultaneously obtain the torsor identity, localize on $R$ so that the three split module sequences have compatible bases. In those bases write the original canonical map and its inverse as
+
+$$
+\begin{aligned}
+\beta(a\otimes a')&=\sum aa'_{(1)}\otimes\overline{a'_{(2)}},\\
+\beta^{-1}(a\otimes\overline c)&=
+\sum aS(\widetilde c_{(1)})\otimes \widetilde c_{(2)},
+\end{aligned} \tag{7.6c}
+$$
+
+where $\widetilde c\in A$ is any lift of $\overline c\in C$; changing the lift by $AB^+$ changes the displayed tensor by the balancing relation over $B$. Now transpose the matrix coefficients in the $A$-, $B$-, and $C$-slots, using multiplication in $A$ to identify the transpose coproduct on $A^\vee$. The two identities $\beta^{-1}\beta=1$ and $\beta\beta^{-1}=1$ become, respectively,
+
+$$
+\ker r=J
+$$
+
+and bijectivity of
+
+$$
+\Theta:A^\vee\otimes_{C^\vee}A^\vee
+\longrightarrow A^\vee\otimes_RB^\vee,\qquad
+x\otimes y\longmapsto
+\sum xy_{(1)}\otimes r(y_{(2)}). \tag{7.6d}
+$$
+
+No dimension count is being substituted here: (7.6c) supplies inverse matrices for (7.6d), while (7.6a) is exactly the balancing relation that removes $(C^\vee)^+$. Consequently $\overline r$ is an isomorphism and $\Theta$ is the canonical torsor map. The same inverse matrices exhibit $A^\vee$ locally as a finite projective $C^\vee$-module of the constant positive rank $\operatorname{rk}_RB$; it is therefore faithful. This proves (7.6) and faithful flatness. Every construction used a split finite-projective sequence, so tensoring with an arbitrary $R$-algebra preserves the calculation. Notice that all three parts of (7.5) are used: dualizing a raw equalizer alone would not justify the result after a nonflat base change.
 
 The exact Hopf-algebra criterion from Book 45 says that (7.3)--(7.4) satisfy the hypotheses of the lemma. In particular, the transpose
 
@@ -1254,11 +1307,11 @@ $$
 
 This also follows on Hopf algebras: the $n$-fold convolution power on $A$ transposes to the $n$-fold convolution power on $A^\vee$. Negative $n$ are handled by the antipode.
 
-If $G$ is killed by $n$, then so is $G^D$. More generally, exactly the same integers annihilate $G$ and $G^D$, because $[n]_{G^D}=0$ dualizes back to $[n]_G=0$ under biduality. Thus they have the same exponent whenever that terminology is being used. The primary decomposition of Book 46 is preserved:
+If $G$ is killed by a positive integer $n$, then so is $G^D$. More generally, exactly the same integers annihilate $G$ and $G^D$, because $[n]_{G^D}=0$ dualizes back to $[n]_G=0$ under biduality. Thus they have the same exponent whenever that terminology is being used. The primary decomposition of Book 46 is preserved:
 
 $$
-\left(\prod_{\ell\mid N}G[\ell^{v_\ell(N)}]\right)^D
-\simeq\prod_{\ell\mid N}G[\ell^{v_\ell(N)}]^D. \tag{10.2}
+\left(\prod_{\ell\mid n}G[\ell^{v_\ell(n)}]\right)^D
+\simeq\prod_{\ell\mid n}G[\ell^{v_\ell(n)}]^D. \tag{10.2}
 $$
 
 ### 10.2 Dual of a multiplication kernel
@@ -1295,7 +1348,7 @@ An alternating self-duality is more restrictive than an arbitrary one. A symmetr
 
 ### 10.4 Kernels of dual isogenies
 
-The dual abelian scheme and its Poincaré bundle are described and justified from their line-bundle construction in §14.1. We isolate their finite-kernel consequence here because it is the bridge from abstract multiplication kernels to Weil pairings.
+The dual abelian scheme and its Poincaré bundle are constructed from rigidified line bundles in §14.1. We isolate their finite-kernel consequence here because it is the bridge from abstract multiplication kernels to Weil pairings. The argument below uses only that construction, its base-change property, and faithfully flat descent; it does not use the torsion perfectness later deduced from it.
 
 Let $A$ and $B$ be abelian schemes over $S$, and let
 
@@ -1317,7 +1370,7 @@ $$
 \chi(h+h')=\chi(h)\chi(h'),
 $$
 
-so $\chi:H_{T'}\to\mathbf G_{m,T'}$ is a character. Changing the chosen trivialization multiplies it by a unit pulled back from $T'$ and does not change $\chi$. Conversely, a character of $H$ twists the canonical descent datum on the trivial line bundle over $A$ and descends it to a rigidified line bundle on $B$ whose pullback is trivial. These constructions are inverse, compatible with further base change, and descend from $T'$ to $T$. Thus the character functor of $H$ is canonically represented by $\ker\varphi^\vee$:
+so $\chi:H_{T'}\to\mathbf G_{m,T'}$ is a character. Changing the chosen trivialization multiplies it by a unit pulled back from $T'$ and does not change $\chi$. Conversely, a character of $H$ twists the canonical descent datum on the trivial line bundle over $A$ and descends it to a rigidified line bundle $M$ on $B$ whose pullback is trivial. For every section $b$ of $B$, lift $b$ fppf-locally to a section $a$ of $A$. Then the pullback of $t_b^*M\otimes M^{-1}$ to $A$ is $t_a^*\varphi^*M\otimes(\varphi^*M)^{-1}$ and is trivial. Faithful descent makes $t_b^*M\otimes M^{-1}$ trivial; the translation criterion proved in §14.1 therefore puts $M$ in $\operatorname{Pic}^0_{B/S}$. These constructions are inverse, compatible with further base change, and descend from $T'$ to $T$. Thus the character functor of $H$ is canonically represented by $\ker\varphi^\vee$:
 
 $$
 H^D\xrightarrow{\sim}\ker\varphi^\vee. \tag{10.5}
@@ -1729,7 +1782,13 @@ $$
 \det\rho(\sigma)=\chi_n(\sigma)^g. \tag{13.12}
 $$
 
-One way to see the sign is to observe that the symplectic similitude group is generated locally by the symplectic group, whose determinant is $1$, and the diagonal similitudes with determinant equal to the $g$th power of the multiplier. In rank two this becomes
+This identity remains valid over the possibly nonreduced coefficient ring $\mathbf Z/n\mathbf Z$ and has no hidden sign. Apply the Pfaffian identity
+
+$$
+\operatorname{Pf}(U^{\mathsf t}JU)=\det(U)\operatorname{Pf}(J)
+$$
+
+to (13.10). Since $\operatorname{Pf}(aJ)=a^g\operatorname{Pf}(J)$ and the standard $J$ has unit Pfaffian, one obtains $\det(U)=a^g$ for every symplectic similitude of multiplier $a$. In rank two this becomes
 
 $$
 \det\rho=\chi_n. \tag{13.13}
@@ -1766,7 +1825,34 @@ is finite locally free of rank $n^{2g}$ when $A$ has relative dimension $g$. It 
 
 The dual abelian scheme $A^\vee$ parametrizes algebraically trivial line bundles on $A$. Its universal Poincaré line bundle carries a biextension structure: it is multiplicative separately in the $A$- and $A^\vee$-variables. Restricting this structure to $n$-torsion produces the finite pairing that identifies the Cartier dual.
 
-We recall and justify exactly the part of abelian duality needed here. Rigidify a line bundle on $A_T$ along the zero section, and among such bundles take those whose restrictions to geometric fibers are algebraically equivalent to zero. The resulting sheaf is represented by a smooth proper group $A^\vee/S$ of the same relative dimension as $A$. There is a universal rigidified line bundle
+We now prove exactly the part of abelian duality needed here. For an $S$-scheme $T$, let $\operatorname{Pic}^0_{A/S}(T)$ be the group of line bundles on $A_T$, rigidified along the zero section, whose restriction to every geometric fiber is algebraically equivalent to zero. Rigidification removes the ambiguity of tensoring by a line bundle from $T$: an isomorphism between two rigidified bundles, if it exists, is unique because every function on a proper geometrically connected fiber is constant.
+
+The first required fact is representability. We recall its construction rather than treating it as an unnamed input. Work locally on $S$ and choose a symmetric relatively very ample bundle $L$. We first need the cube lemma. For any rigidified line bundle $N$ on $A$, the alternating tensor product of its pullbacks along the three-variable sum, the three two-variable sums, and the three projections is canonically trivial on $A^3$. On each coordinate plane cancellation gives a rigidified trivialization. The scheme of extensions of such a trivialization is affine, while every function on a proper geometrically connected fiber of $A$ is constant; applying this rigidity successively in the three variables extends the trivializations uniquely and makes them agree. Restricting one variable gives the theorem of the square.
+
+We shall also use its translation criterion. On a geometric fiber, a rigidified line bundle $N$ is algebraically equivalent to zero if and only if $t_a^*N\otimes N^{-1}$ is trivial for every point $a$ after every field extension. The forward implication follows by applying the square identity to a connected family joining $N$ to the identity. Conversely, in the divisor-pair chart constructed below, the displayed trivializations identify all translates of the point defined by $N$; the unique rigidified local slices therefore place that point in the connected identity slice. This criterion is stable under extension of the ground field.
+
+Now embed $A$ in a projective space by a power of $L$. For each Hilbert polynomial $P$, choose $d$ beyond the uniform regularity bound. Degree-$d$ equations in the homogeneous coordinate ring then describe a quotient of fixed rank; the condition that multiplication by every homogeneous coordinate preserves the quotient is closed, and regularity recovers the entire saturated ideal from this degree. Thus a closed subscheme of a Grassmannian represents flat closed subschemes of $A$ with polynomial $P$. On the open locus of relative effective Cartier divisors, the universal ideal is invertible and gives a universal line bundle.
+
+Every fiberwise algebraically trivial bundle $M$ is, locally on its parameter scheme, a difference
+
+$$
+M\simeq\mathcal O(D_1-D_2) \tag{14.0a}
+$$
+
+of two such relative divisors with the same Hilbert polynomial: after tensoring by a sufficiently high power of $L$, relative Serre vanishing makes both $M\otimes L^r$ and $L^r$ generated by sections with vanishing higher direct images, and a section avoiding the associated points gives the required Cartier divisor. The rank and multiplication conditions just used are determinantal, so the construction works uniformly on each quasi-compact parameter chart and commutes with base change. Pairs $(D_1,D_2)$ therefore give a smooth cover of the desired functor.
+
+Two pairs give the same rigidified bundle precisely when the quotient of their universal invertible sheaves is pulled back from the parameter and its rigidification is $1$. The isomorphism scheme between the two rigidified bundles is then either empty or a single section; hence this equivalence relation is closed, separated, and effective on the Grassmannian charts. Gluing the resulting quotients gives a separated group scheme locally of finite presentation representing $\operatorname{Pic}^0_{A/S}$. Tensor product, inversion, and pullback commute with the equivalence relation and give its group law.
+
+It remains to identify the representing group geometrically. The theorem of the square makes
+
+$$
+\phi_L:A\longrightarrow\operatorname{Pic}^0_{A/S},\qquad
+x\longmapsto t_x^*L\otimes L^{-1} \tag{14.0b}
+$$
+
+a homomorphism. On every geometric fiber its kernel is finite: a positive-dimensional stabilizer would make the ample class of $L$ trivial along a positive-dimensional orbit. Intersecting $g$ general translates of a divisor in a high power of $L$ computes a positive finite kernel length and shows that the image has dimension $g$. The local slices in the divisor construction show that every algebraically trivial class lies in this image after a finite extension of the geometric ground field. Hence $\phi_L$ is surjective on every geometric fiber. Because $A$ is proper and the Picard space is separated, $\phi_L$ is proper; its finite fibers make it finite. Its kernel length is locally constant by the same intersection calculation, so the fiberwise flatness criterion makes $\phi_L$ finite locally free and faithfully flat. Properness and smoothness descend from $A$ along this cover. Thus the representing group is an abelian scheme $A^\vee/S$ of relative dimension $g$. The construction commutes with arbitrary base change, since the Grassmannian equations, divisor opens, rigidifications, intersection calculation, and quotient torsors all do.
+
+There is consequently a universal rigidified line bundle
 
 $$
 \mathcal P\quad\text{on}\quad A\times_SA^\vee,
@@ -1774,14 +1860,7 @@ $$
 
 the **Poincaré bundle**. Its restriction to $A\times\{y\}$ is the line bundle represented by $y$, and its restrictions along either zero section are trivialized.
 
-Here is the construction in the amount needed for torsion. After choosing a relatively ample line bundle $L$ on $A$, translation defines
-
-$$
-\phi_L:A\longrightarrow \operatorname{Pic}_{A/S},\qquad
-x\longmapsto t_x^*L\otimes L^{-1}.
-$$
-
-The theorem of the square makes $\phi_L$ a homomorphism and shows that its image lies in the algebraically trivial component. Fiberwise, $\phi_L$ has finite kernel and projective image of dimension $g$. The relative Picard construction for a projective smooth family represents this component; descent from a projective cover and the fiberwise dimension calculation show that it is an abelian scheme. Rigidification removes scalar automorphisms and supplies the universal object $\mathcal P$. Applying the theorem of the cube to $\mathcal P$ gives canonical isomorphisms
+The universal property supplies $\mathcal P$, and applying the theorem of the cube to it gives canonical isomorphisms
 
 $$
 (m_A\times1)^*\mathcal P
@@ -1805,17 +1884,25 @@ $$
 \phi_L^\vee\circ\delta_A=\phi_L.
 $$
 
-Both $\phi_L$ and $\phi_L^\vee$ are isogenies, and the intersection-theoretic degree formula for $L$ gives $\deg\phi_L^\vee=\deg\phi_L$. Multiplicativity of degree forces $\deg\delta_A=1$, so $\delta_A$ is an isomorphism. Since this holds on every geometric fiber, the relative morphism is an isomorphism as well. Finally, pullback by $[n]_A$ sends a line bundle represented by $y$ to the one represented by $ny$, so
+Both $\phi_L$ and $\phi_L^\vee$ are isogenies. If $c_1(L)$ has alternating Riemann form matrix $E_L$ on a prime-to-characteristic torsion level, the two maps have transpose matrices $E_L$ and $E_L^{\mathsf t}$; hence their degrees are equal. The equality is integral and remains valid in every characteristic because both degrees are the top-intersection number
+
+$$
+\frac{c_1(L)^g}{g!}
+$$
+
+squared, a formula obtained by pulling back $c_1(L)^g$ along the finite map $\phi_L$. Multiplicativity of degree in $\phi_L^\vee\delta_A=\phi_L$ forces $\deg\delta_A=1$, so $\delta_A$ is an isomorphism on every geometric fiber. The fiberwise isomorphism criterion for a proper finitely presented morphism then shows that $\delta_A$ is an isomorphism over $S$. Finally, pullback by $[n]_A$ sends a line bundle represented by $y$ to the one represented by $ny$, so
 
 $$
 ([n]_A)^\vee=[n]_{A^\vee}.
 $$
 
-These facts prove the abelian-duality input used below; no duality for the positive-dimensional schemes is being conflated with Cartier duality. Cartier duality enters only after restricting to finite isogeny kernels.
+These facts prove the abelian-duality input used below; no later theory of abelian varieties is being invoked, and no duality for the positive-dimensional schemes is being conflated with Cartier duality. Cartier duality enters only after restricting to finite isogeny kernels.
 
 ### 14.2 Construction of the group-scheme Weil pairing
 
 Let $x\in A[n](T)$ and $y\in A^\vee[n](T)$. The point $y$ represents a rigidified algebraically trivial line bundle $L_y$ on $A_T$, obtained from the Poincaré bundle. The equality $ny=0$ says that $L_y^{\otimes n}$ is trivial in the relative Picard group, but it does not by itself choose a trivialization. Locally one may choose the translation and tensor trivializations needed to compare $L_y$ along the $n$-torsion point $x$. The biextension commutator is independent of those choices and descends to a unit whose $n$th power is $1$.
+
+Concretely, the biextension laws give two ways to trivialize the $n$th tensor power of the fiber $\mathcal P_{x,y}$: add $x$ to itself $n$ times and use $nx=0$, or add $y$ to itself $n$ times and use $ny=0$. Their ratio is a unit. Associativity of the two biextension laws shows that changing either local trivialization multiplies numerator and denominator by the same unit, so the ratio descends. Repeating either addition once more shows that its $n$th power is $1$. Interchanging the order of the two additions in three variables proves multiplicativity in each argument.
 
 Carrying this construction out universally gives the **Weil pairing**
 
@@ -1853,19 +1940,38 @@ No invertibility hypothesis on $n$ appears. If a residue characteristic divides 
 
 ### 14.4 Polarizations and self-duality
 
-A polarization $\lambda:A\to A^\vee$ turns (14.1) into a pairing on $A[n]$:
+A **polarization** is a homomorphism $\lambda:A\to A^\vee$ which, on every geometric fiber, is induced by an ample line bundle. It is an isogeny and is symmetric under abelian biduality. Such a polarization turns (14.1) into a pairing on $A[n]$:
 
 $$
 e_n^\lambda(x,y)=e_n(x,\lambda(y)). \tag{14.4}
 $$
 
-The morphism to the Cartier dual associated with (14.4) is the composite of $\lambda[n]:A[n]\to A^\vee[n]$ with the canonical identification $A^\vee[n]\simeq A[n]^D$. Consequently (14.4) is perfect exactly when $\lambda[n]$ is an isomorphism; in particular it is perfect for a principal polarization. The symmetry and positivity built into a polarization make the pairing alternating in the standard sense:
+Write
+
+$$
+\beta_n:A^\vee[n]\xrightarrow{\sim}A[n]^D,\qquad
+\beta_n(z)(x)=e_n(x,z). \tag{14.4a}
+$$
+
+Symmetry of $\lambda$ and antisymmetry of the Poincaré commutator give
+
+$$
+e_n(x,\lambda y)=e_n(y,\lambda x)^{-1}. \tag{14.4b}
+$$
+
+Therefore the adjoint $A[n]\to A[n]^D$ of (14.4) is
+
+$$
+[-1]\circ\beta_n\circ\lambda[n], \tag{14.4c}
+$$
+
+not the unsigned composite. The sign does not affect perfectness, so (14.4) is perfect exactly when $\lambda[n]$ is an isomorphism; in particular it is perfect for a principal polarization. Alternation is stronger than (14.4b) when $n$ is even. The normalized cubical structure of an ample bundle canonically trivializes the commutator on the diagonal, and hence gives, for every $n$ including $n=2$,
 
 $$
 e_n^\lambda(x,x)=1. \tag{14.5}
 $$
 
-Thus a principally polarized abelian scheme has a canonical self-duality of its $n$-torsion, dependent on the chosen principal polarization. A general abelian scheme has the canonical duality (14.3) with the torsion of $A^\vee$, not a canonical self-duality with itself.
+Thus a principally polarized abelian scheme has a canonical alternating self-duality of its $n$-torsion, dependent on the chosen principal polarization and carrying the sign in (14.4c). A general abelian scheme has the canonical duality (14.3) with the torsion of $A^\vee$, not a canonical self-duality with itself.
 
 If $e_n^\lambda$ is perfect—for example, if $\lambda$ is principal—and $K\subset A[n]$ is finite locally free, its orthogonal has rank
 

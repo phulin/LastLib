@@ -70,7 +70,7 @@ any resulting corrections.
 - [x] 044. Finite Locally Free Schemes and Algebras
 - [x] 045. Affine Group Schemes and Hopf Algebras
 - [x] 046. Finite Flat Commutative Group Schemes
-- [ ] 047. Cartier Duality
+- [x] 047. Cartier Duality
 - [ ] 048. Finite-Flat Galois Representations
 - [x] 049. Elliptic Curves over DVRs
 - [ ] 050. Tate Curves and Multiplicative Reduction
