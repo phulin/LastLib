@@ -198,9 +198,14 @@ This parameter is denoted $\operatorname{Sp}_2$. For a character $\mu$, write $\
 Finally, choose a nontrivial additive character $\psi:F\to\mathbf C^\times$. Its conductor exponent $n(\psi)$ is defined by
 
 $$
-\ker\psi=\mathfrak p^{-n(\psi)}.
+\mathfrak p^{-n(\psi)}
+\text{ is the largest fractional ideal on which $\psi$ is trivial}.
 \tag{1.6}
 $$
+
+The qualification by fractional ideals matters: the additive kernel itself need not be an
+$\mathcal O$-submodule. With this convention $n(\psi_c)=n(\psi)+v_F(c)$ for
+$\psi_c(x)=\psi(cx)$.
 
 Every additive integral uses the self-dual measure for the displayed character, and multiplicative measure gives $\mathcal O^\times$ volume one. The common convenient case is $n(\psi)=0$.
 
@@ -324,19 +329,39 @@ D(E,\theta)|_{W_E}\simeq\theta\oplus\theta^\sigma.
 \tag{2.8}
 $$
 
-**Proposition 2.1.** The representation $D(E,\theta)$ is irreducible if and only if $\theta\ne\theta^\sigma$. Moreover
+**Proposition 2.1.** The representation $D(E,\theta)$ is irreducible if and only if $\theta\ne\theta^\sigma$. For fixed $E$,
 
 $$
-D(E,\theta)\simeq D(E',\theta')
+D(E,\theta)\simeq D(E,\theta')
 $$
 
-if and only if the pairs are carried to one another by an $F$-isomorphism; for fixed $E$, this means $\theta'=\theta$ or $\theta^\sigma$.
+if and only if $\theta'=\theta$ or $\theta^\sigma$. Among the tame admissible pairs of
+Section 7.1, isomorphic induced representations come from equivalent pairs.
 
 **Proof strategy.** Restriction to the index-two subgroup exposes the two conjugate characters. A stable line would have to select a character fixed by the other coset. Conversely an invariant character extends after choosing a square root of its value on a coset representative.
 
 **Proof.** Choose $s\in W_F\setminus W_E$. In the standard induced basis, $W_E$ acts diagonally through $\theta$ and $\theta^\sigma$, while $s$ exchanges the two lines. If the characters are distinct, every $W_E$-stable line is one of the two eigenspaces, and neither is stable under $s$; hence the induction is irreducible. If the characters agree, the $W_E$-action is scalar and the matrix of $s$ is diagonalizable over $\mathbf C$, so the representation splits into two characters.
 
-For equivalence, restriction recovers the unordered pair of characters and its index-two subgroup. In the selected quadratic class, the projective kernel recovers the quadratic extension. An equivalence therefore identifies $E$ with $E'$ and then identifies $\theta'$ with one of the two conjugates of $\theta$. The converse follows from conjugating the induced model. $\square$
+For fixed $E$, restriction recovers the unordered pair
+$\{\theta,\theta^\sigma\}$, which proves the second assertion.
+
+For the assertion about admissible pairs, first observe that $D(E,\theta)$ has the quadratic
+self-twist $\omega_{E/F}$. If this is its only nontrivial quadratic self-twist, its kernel
+recovers $W_E$ and the fixed-field assertion follows. Distinct self-twist characters occur as
+one-dimensional constituents of $D\otimes D^\vee$, so there are at most four. If there is
+another nontrivial one, closure under multiplication gives exactly four, and the corresponding
+projective intertwiners give the exceptional Klein-four dihedral image. If the residue
+characteristic is odd, wild inertia is pro-$p$ and
+therefore has trivial image in this group of order four. It acts only by scalars. Of the three
+quadratic fields cut out by the self-twists, one is unramified and two are ramified. In either
+ramified presentation, scalar action of wild inertia says exactly that
+$\theta/\theta^\sigma$ is trivial on $U_E^1$, contrary to admissibility. The unramified
+presentation is the only possible admissible one. In residue characteristic two, the ramified
+quadratic fields are wild and are outside the tame selected range, again leaving only the
+unramified presentation. Thus at most one presentation is admissible. After its field is
+recovered, the fixed-field argument gives
+$\theta'=\theta$ or $\theta^\sigma$. Conversely, an $F$-isomorphism of pairs conjugates the
+induced models. $\square$
 
 The conductor induction formula gives
 
@@ -522,7 +547,17 @@ $$
 
 and direct sum is insensitive to order. Uniqueness of the unordered Jacquet exponents shows that no other pair gives the same representation.
 
-The character and special rows are well-defined because $\mu$ is recovered from the central character together with the class: within each row, equality of representations forces equality of $\mu$.
+The character and special rows are well-defined because $\mu$ is recovered from the
+representation. For a character row, surjectivity of the determinant shows directly that
+$\mu\circ\det=\mu'\circ\det$ implies $\mu=\mu'$. For a special row, the unique normalized
+Jacquet exponent is
+
+$$
+\mu|\cdot|^{1/2}\boxtimes\mu|\cdot|^{-1/2},
+$$
+
+so it also recovers $\mu$. The central character alone would recover only $\mu^2$ and is not
+being used as a square-root choice.
 
 For the dihedral row, replacing $\theta$ by $\theta^\sigma$ does not change either induction. An $F$-isomorphism of quadratic pairs conjugates both constructions. The rectifier is itself invariant under the same equivalence. Thus every assignment depends only on the isomorphism class of the representation.
 
@@ -1013,7 +1048,12 @@ $$
 \theta^{-1}=\theta^\sigma.
 $$
 
-The second alternative is the familiar conjugate-inverse condition; the first is generally excluded by tame admissibility but is retained in the exact equivalence criterion. Essential self-duality is obtained by allowing the same identities after a norm twist. These tests agree word for word on both sides of the correspondence because of (8.2) and (8.3).
+The second alternative is the familiar conjugate-inverse condition. The first
+requires $\theta$ itself to be quadratic and must still be tested against
+admissibility; it is neither discarded nor accepted by a general shortcut.
+Essential self-duality is obtained by allowing the same identities after a norm
+twist. These tests agree word for word on both sides of the correspondence
+because of (8.2) and (8.3).
 
 ## 9. Conductors
 
@@ -1160,26 +1200,87 @@ The theorem is not asserted for $\mu\circ\det$, which is nongeneric and exhibits
 
 ### 10.2 Proof through the Kirillov model
 
-**Proof strategy for Theorem 10.1.** In the Kirillov model, upper-unipotent invariance controls the support of a function and lower-unipotent invariance controls the support of its Weyl transform. The functional equation reverses valuations and shifts them by the conductor. The overlap is an interval of $r-n+1$ shells.
+**Proof strategy for Theorem 10.1.** The three classes require two concrete
+calculations. In an induced representation, the $K_1$-orbits on the projective
+line leave an interval whose endpoints are the conductors of the two inducing
+characters. At a reducibility point, exactness of compact invariants separates
+the determinant and special constituents. For a tame quadratic type, the
+congruence-intersection calculation leaves the same kind of interval, shifted by
+the trace-dual defect. In the Kirillov model these surviving terms occupy
+successive valuation shells.
 
-**Proof.** Fix a conductor-zero additive character and realize $\pi$ in its Kirillov model. Upper unipotents act by
+**Proof.** First let $\pi=I(\chi_1,\chi_2)$ be irreducible and put
+$a_i=a(\chi_i)$. By Iwasawa decomposition, a fixed section is determined on
+$K$. The double cosets
 
 $$
-(n(b)\phi)(y)=\psi(by)\phi(y).
+(B\cap K)\backslash K/K_1(\mathfrak p^r)
 $$
 
-The upper-unipotent part of $K_1(\mathfrak p^r)$ therefore forces $\phi$ to be constant at the required unit precision and supported on one side of a valuation bound. The lower-unipotent part is conjugate to the upper part by the Weyl element. The local functional equation says that the Weyl transform reverses the valuation coordinate and shifts the bound by $n$, the exponent of the epsilon monomial.
-
-After a harmless common translation of the valuation coordinate, the simultaneous conditions leave exactly the shells
+are represented by the successive relative positions of a primitive row modulo
+$\mathfrak p^r$. Index them by $j=0,\ldots,r$. On the stabilizer of the
+$j$th representative, covariance of the section restricts to $\chi_1$ on the
+first unit congruence quotient and to $\chi_2$ on the opposite one. Direct
+matrix multiplication shows that this covariance is trivial precisely when
 
 $$
-0\le j\le r-n.
-\tag{10.2}
+a_1\le j\le r-a_2.
+\tag{10.2a}
 $$
 
-For each integer $j$ in this interval, the characteristic function of $\varpi^j\mathcal O^\times$, modified by the required unit character when the central character is ramified, satisfies both invariance conditions. Their supports are disjoint, so they are independent. Finite Fourier inversion on the unit quotients shows that every invariant function is a linear combination of these shell functions. If $r<n$, the interval is empty; if $r\ge n$, it has $r-n+1$ integers. This proves (10.1). $\square$
+When the inequalities hold, the value of the section at that representative is
+free and determines one invariant line; when either fails, a diagonal unit in
+the stabilizer acts through a nontrivial character and forces the value to be
+zero. The representatives have disjoint support in the compact picture. Hence
 
-The argument works uniformly because the class of the representation affects only the asymptotic tails and the Weyl shift. Principal series have two tails, special representations one, and supercuspidals none; the functional equation packages all three into the same conductor displacement.
+$$
+\dim I(\chi_1,\chi_2)^{K_1(\mathfrak p^r)}
+=\max\{0,r-a_1-a_2+1\}.
+\tag{10.2b}
+$$
+
+This proves the assertion for irreducible principal series because
+$n=a_1+a_2$. It also calculates both reducible induced representations at the
+wall. Compact-group averaging makes $K_1(\mathfrak p^r)$-invariants exact. If
+$\mu$ is ramified, the constituent $\mu\circ\det$ has no fixed vector at any
+level, so the special constituent inherits the dimension
+$\max\{0,r-2a(\mu)+1\}$. If $\mu$ is unramified, the determinant constituent
+contributes one fixed line at every level; subtracting it from the $r+1$
+induced fixed lines gives $0$ at $r=0$ and $r$ lines at $r\ge1$. These are
+exactly (10.1) with the conductor in (9.7).
+
+For $\pi=\pi(E,\vartheta)$, Mackey decomposition expresses the fixed space as
+
+$$
+\bigoplus_{JgK_1}
+\operatorname{Hom}_{J\cap gK_1g^{-1}}(\Lambda_\vartheta,1).
+$$
+
+The tame-type congruence-intersection calculation compares the upper and lower
+root lattices with the trace annihilator. Before
+
+$$
+n=v_F(\mathfrak d_{E/F})+f(E/F)a_E(\vartheta)
+$$
+
+one of the intersections contains a unit layer on which the type character is
+nontrivial. For $r\ge n$, the only surviving double cosets are represented,
+after the fixed initial lattice shift, by
+
+$$
+\begin{pmatrix}\varpi^j&0\\0&1\end{pmatrix},
+\qquad 0\le j\le r-n.
+$$
+
+At each such coset the intersection is a polarization of the finite Heisenberg
+quotient and its fixed space is one-dimensional. Thus there are exactly
+$r-n+1$ lines. This proves (10.1) in the dihedral case as well.
+
+Finally, restriction to the diagonal in the Whittaker model identifies these
+double-coset lines with successive valuation shells. Upper-root invariance gives
+the left endpoint and the Weyl-conjugate lower-root condition gives the right
+endpoint. This supplies the asserted Kirillov interpretation without assuming
+that an arbitrary shell characteristic function is itself fixed. $\square$
 
 ### 10.3 Essential Whittaker functions
 
@@ -1204,6 +1305,28 @@ W\!\left(\begin{pmatrix}y&0\\0&1\end{pmatrix}\right)
 |y|^{s-1/2}\,d^\times y.
 $$
 
+Here both the nonvanishing at the identity and the integral identity follow from
+the fixed-line calculations in the proof of Theorem 10.1. For a principal
+series, take the unique section supported on the first allowed double coset in
+(10.2a) and apply the Jacquet integral. Its identity value is a primitive finite
+Fourier coefficient and is nonzero. On successive diagonal shells, each
+unramified inducing character contributes its geometric tail, while a ramified
+one has zero unit average. After normalizing the identity value to one, shell
+summation gives
+
+$$
+L(s,\chi_1)L(s,\chi_2).
+$$
+
+At the reducibility wall the Whittaker functional kills the determinant
+constituent. Exactness of invariants therefore carries the same calculation to
+the special constituent: an unramified $\mu$ leaves the one tail
+$L(s+1/2,\mu)$, while a ramified $\mu$ leaves a compact unit-shell term whose
+integral is $1$. For a tame dihedral type, the sole endpoint polarization in the
+Mackey calculation is the matching Whittaker line; its diagonal restriction is
+(10.4). This proves (10.3) in every selected generic class rather than assuming
+a separate test-vector statement.
+
 For an unramified principal series this is the normalized spherical Whittaker vector. Its diagonal values satisfy the two-root recurrence and sum to the product of two Euler factors. For an unramified Steinberg twist, the single tail gives $L(s+1/2,\mu)$. For a dihedral supercuspidal, the first shell is
 
 $$
@@ -1226,7 +1349,13 @@ v_j=\pi\!\left(\begin{pmatrix}\varpi^{-j}&0\\0&1\end{pmatrix}\right)v_0,
 \tag{10.5}
 $$
 
-form a basis of the level-$r$ fixed space, up to the common shift dictated by the action convention. In the Kirillov model they occupy the shells in (10.2). Passing from $r$ to $r+1$ retains all old vectors and adds one endpoint shell.
+form a basis of the level-$r$ fixed space. Indeed
+$g_j^{-1}K_1(\mathfrak p^r)g_j\subseteq K_1(\mathfrak p^n)$ for
+$g_j=\operatorname{diag}(\varpi^{-j},1)$ and $0\le j\le r-n$, so every displayed
+vector is fixed. Their successive leading Kirillov terms lie on distinct
+valuation shells, which proves independence; Theorem 10.1 gives the matching
+dimension. Passing from $r$ to $r+1$ retains all old vectors and adds one
+endpoint shell.
 
 Together with (9.4), this gives the promised newvector compatibility:
 
@@ -1682,7 +1811,8 @@ $$
 \tag{13.14}
 $$
 
-For every generic selected $\pi$, base change consequently has its newvector at the same exponent:
+If $\pi$ and its base change are both generic selected representations, base
+change consequently has its newvector at the same exponent:
 
 $$
 \dim\operatorname{BC}_{L/F}(\pi)^{K_{1,L}(\mathfrak p_L^{a(\pi)})}=1.
@@ -1701,11 +1831,16 @@ $$
 The tame term must be recomputed:
 
 $$
-a_L(D_L)=operatorname{codim}V^{I_L}
+a_L(D_L)=\operatorname{codim}V^{I_L}
 +e\operatorname{Sw}_F(D)
 +\dim V^{I_L}-\dim(\ker N)^{I_L}.
 \tag{13.17}
 $$
+
+Here $\operatorname{Sw}_F(D)$ means the Swan conductor of the Weil action in
+$D$. If restriction lands on a nongeneric determinant character, the conductor
+identity still holds, but it no longer has a fixed-vector interpretation: a
+ramified determinant character has no $K_1$-fixed vector at any level.
 
 The first and third terms have been left separate to show their origins: finite-inertia tame defect and monodromy defect. They may simplify in a particular case, but $I_L$ can kill a tame character and create invariant vectors. For wild $L/F$, the full Herbrand transition is required; no linear scaling is valid.
 
@@ -1796,7 +1931,12 @@ $$
 \tag{13.25}
 $$
 
-Both follow because restriction commutes with tensor products and duals. Equations (13.5), (13.14)--(13.18), and (13.21)--(13.22) then show that central characters, conductors, newvector levels, Euler factors, and epsilon factors transform exactly as their restricted parameters require.
+Both follow because restriction commutes with tensor products and duals. Equations
+(13.5), (13.14)--(13.18), and (13.21)--(13.22) then show that central
+characters, conductors, Euler factors, and epsilon factors transform exactly as
+their restricted parameters require. When the restricted representation is
+generic, its newvector level is the transformed conductor. At a nongeneric
+determinant boundary, only the epsilon-conductor statement survives.
 
 ## 14. Characterization and final synthesis
 
@@ -1876,7 +2016,14 @@ L(s,\pi)=L(s,\operatorname{rec}_2(\pi)),
 =\epsilon(s,\operatorname{rec}_2(\pi),\psi).
 $$
 
-For every generic selected representation, the common conductor is its first newvector level and the first fixed space is one-dimensional. Under finite extension, restriction defines base change, preserves special monodromy, carries characters through norms, and transforms quadratic induction by Mackey decomposition. The exact cyclic product identities record the change in Euler and epsilon factors.
+For every generic selected representation, the common conductor is its first
+newvector level and the first fixed space is one-dimensional. Under finite
+extension, restriction defines base change, preserves special monodromy, carries
+characters through norms, and transforms quadratic induction by Mackey
+decomposition. Whenever the result remains generic, its newvector is again at
+the restricted-parameter conductor; a determinant boundary is governed only by
+the epsilon conductor. The exact cyclic product identities record the change in
+Euler and epsilon factors.
 
 The boundary remains explicit. Primitive wild supercuspidals and the additional type theory needed for wildly ramified quadratic extensions in residue characteristic two are not included. Nor has an assertion about a selected quadratic pair after an extension been made when that pair leaves the selected tame range. These are limits of scope, not unproved cases hidden inside a theorem.
 
