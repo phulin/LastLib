@@ -946,7 +946,7 @@ If $H$ is normal, restricting the result back to $H$ produces the sum of the con
 characters
 
 $$
-h\longmapsto\sum_{g\in G/H}g,f(g^{-1}hg).
+h\longmapsto\sum_{g\in G/H}g f(g^{-1}hg).
 $$
 
 For trivial coefficients and abelian $G$, this is $[G:H]f$. For nontrivial conjugation or
@@ -1446,39 +1446,33 @@ This proof recovers the corestriction formula of Chapter 5 by following $T$ with
 
 ### 9.4 Infinite index and acyclic modules
 
-For closed $H$ of infinite index, Shapiro remains valid for the discrete coinduced module of
-continuous equivariant functions:
+For closed $H$ of infinite index, there is generally no continuous transversal for
+$H\backslash G$, so the finite-transversal proof cannot simply be repeated. Shapiro nevertheless remains
+valid for the discrete coinduced module of continuous equivariant functions. Its proof requires
+the cochain--derived comparison and is given in Section 10.5, after the needed comparison theorem
+has been established. What already remains clear is the limitation: there is no finite trace sum
+over $G/H$. Thus Shapiro survives at infinite index, but corestriction does not.
 
-$$
-H^n(G,\operatorname{Coind}_H^G A)\simeq H^n(H,A).
-$$
-
-One proof refines the open-subgroup argument. A continuous cochain has finite image and is
-uniformly locally constant in all its $G$-variables. Choose an open normal subgroup $U$ fine
-enough to control those variables, the finitely many values, and the finitely many coboundary
-relations being considered. The relevant part of the calculation then takes place over the
-finite set of double cosets determined by $H$ and $U$. On each clopen piece choose a
-representative, apply the same evaluation and coset-retraction maps as in Section 9.2, and glue
-the results. The pieces are disjoint and clopen, so the glued maps are continuous. Refining $U$
-does not change the induced cohomology map, because the two choices are joined by the same prism
-homotopy. Passing through all $U$ proves the isomorphism.
-
-Equivalently, continuous coinduction is right adjoint to exact restriction in the discrete
-module category, and the evaluation identity in degree zero extends to derived functors by the
-comparison theorem of Chapter 10. The finite-partition proof verifies the required exactness and
-also identifies the abstract isomorphism with evaluation.
-
-What fails at infinite index is the identification of induction with coinduction and the finite
-trace map used for corestriction. There is no finite sum over $G/H$, so Shapiro survives but
-transfer does not.
-
-With $H=\{1\}$, Shapiro gives
+For $H=\{1\}$, the desired conclusion is
 
 $$
 H^n(G,\operatorname{Coind}_{1}^{G}A)=0\qquad(n>0).
 $$
 
-Coinduced modules are therefore acyclic for invariants. Concretely, translation and evaluation contract their cocycles. This supplies the engine for dimension shifting without requiring abstract machinery.
+This special case does not need the deferred theorem. In homogeneous cochains, identify a
+cochain with a continuous function of the simplex variables and one final $G$-variable. Moving
+the final variable to the origin by equivariance and then inserting it as a new first vertex
+defines an extra degeneracy. The alternating omission differential $D$ satisfies
+
+$$
+Ds+sD=1
+$$
+
+in positive degrees: every interior omission occurs twice with opposite signs, while the two end
+terms leave the original cochain. Coordinate insertion, multiplication, and inversion are
+continuous, so this is a contraction inside the continuous complex. Hence coinduced modules from
+the trivial subgroup are acyclic for invariants. This supplies the engine for dimension shifting
+and for the comparison theorem without using infinite-index Shapiro circularly.
 
 ## 10. The derived-functor meaning of continuous cohomology
 
@@ -1634,6 +1628,57 @@ remain valuable: they determine signs, exhibit continuity, and describe low-degr
 uniqueness often proves relations among the resulting maps without repeating a bar-complex
 calculation.
 
+We can now complete the infinite-index form of Shapiro promised in Section 9.4. For every closed
+subgroup $H\leq G$, continuous coinduction is right adjoint to restriction, and evaluation at
+$1$ identifies invariants:
+
+$$
+(\operatorname{Coind}_H^G A)^G\simeq A^H.
+$$
+
+Explicitly, a $G$-map $u:B\to\operatorname{Coind}_H^G A$ is sent to the $H$-map
+$b\mapsto u(b)(1)$. Conversely, an $H$-map $v:B\to A$ gives
+
+$$
+u_v(b)(x)=v(xb).
+$$
+
+The orbit map of each $b$ is continuous with finite image, so $u_v(b)$ is continuous; the
+$H$-equivariance and the right-translation action give respectively the coinduction relation and
+$G$-equivariance. These two constructions are inverse. Taking $B=\mathbf Z$ with trivial action
+gives the displayed identity on invariants.
+
+Two exactness points deserve proof. Restriction is exact because it changes only the action.
+Continuous coinduction is also exact on discrete modules. Given a surjection $B\to C$ and an
+$H$-equivariant continuous function $f:G\to C$, first use local constancy of $f$ and open
+stabilizers of chosen lifts of its finitely many values. For every $x\in G$, choose an open
+subgroup $U_x$ such that $f$ is constant on $xU_x$ and the chosen lift of $f(x)$ is fixed by
+$H\cap xU_x x^{-1}$. The sets $HxU_x$ are $H$-stable and clopen; compactness gives a finite
+cover, whose Boolean refinement is a finite disjoint $H$-stable clopen partition subordinate to
+these sets. On a piece contained in $HxU_x$, define the lift at $hxu$ to be $h$ times the chosen
+lift at $x$. The stabilizer condition makes this independent of the presentation $hxu$, and the
+finite clopen partition makes the resulting lift continuous. Thus
+$\operatorname{Coind}_H^G B\to\operatorname{Coind}_H^G C$ is surjective.
+
+Because restriction is exact, its right adjoint carries injective $H$-modules to injective
+$G$-modules. Because coinduction is exact, applying it to an injective resolution
+$A\to I^\bullet$ gives an injective resolution of $\operatorname{Coind}_H^G A$. Termwise
+evaluation identifies the two invariant complexes:
+
+$$
+\bigl(\operatorname{Coind}_H^G I^\bullet\bigr)^G=(I^\bullet)^H.
+$$
+
+Taking cohomology and using the comparison theorem gives the full statement
+
+$$
+H^n(G,\operatorname{Coind}_H^G A)\simeq H^n(H,A)
+$$
+
+for every closed $H$, and the isomorphism is induced by evaluation. For open $H$ it therefore
+agrees with the explicit map of Chapter 9 by uniqueness of the derived extension of the
+degree-zero map.
+
 Third, the comparison identifies Yoneda extension groups with continuous cohomology. In
 particular, $H^1(G,A)$ may be read as equivalence classes of extensions of the trivial module
 $\mathbf Z$ by $A$ in the discrete $G$-module category, while $H^2$ records two-fold extensions.
@@ -1772,7 +1817,27 @@ $$
 
 The torsion hypothesis in the $H^1$ formula is essential. With trivial action on a discrete torsion module, an element $a$ of order $m$ defines a continuous homomorphism $\widehat{\mathbf Z}\to A$ by sending $1$ to $a$; it factors through $\mathbf Z/m\mathbf Z$. Thus every element contributes. With $A=\mathbf Z$ discrete and trivial, however, every continuous homomorphism from compact $\widehat{\mathbf Z}$ has finite image and is zero, whereas $A/(\sigma-1)A=\mathbf Z$. The naive formula fails.
 
-To prove the torsion statement, use the finite-quotient theorem. Each element and each cochain is visible in some cyclic quotient. Under inflation from $C_m$ to $C_{mr}$, the periodic even classes are multiplied through a norm along the larger kernel; after refining by a multiple of their torsion orders they die. Degree-one classes stabilize to the cokernel of $\sigma-1$: the finite-order condition needed to close a cocycle is achieved in some quotient. Hence the direct limit of finite cyclic cohomology has the asserted form.
+To prove the torsion statement, use the finite-quotient theorem. Each element and each cochain is
+visible in some cyclic quotient. The transition maps can be read directly from the periodic
+complex, which removes any ambiguity about higher degrees. Suppose the action on the coefficient
+elements under consideration factors through $C_m$, and inflate along
+$C_{mr}\twoheadrightarrow C_m$, sending the chosen generator upstairs to the chosen generator
+downstairs. The two periodic complexes have the same operator $D=\sigma-1$, while
+
+$$
+N_{mr}=rN_m.
+$$
+
+A comparison map is multiplication by $r^j$ in degrees $2j$ and $2j+1$. Indeed, across a
+$D$-arrow both adjacent multipliers are $r^j$, and across an $N$-arrow the extra factor $r$ is
+exactly the identity $N_{mr}=rN_m$. In degree zero and one the comparison is the identity; in
+every degree at least two it contains a positive power of $r$. This comparison induces the
+inflation map because it is the identity in degree zero and is compatible with the augmentations.
+Since every coefficient element is torsion, choosing $r$ divisible by the orders of the finitely
+many representatives kills every class in degree at least two after one refinement. Thus the
+filtered colimit vanishes in those degrees. Degree-one classes stabilize to the cokernel of
+$\sigma-1$: the finite-order condition needed to close a cocycle is achieved in some quotient.
+Hence the direct limit of finite cyclic cohomology has the asserted form.
 
 The degree-one assertion can be checked without taking the direct limit on faith. Given $a\in A$,
 the orbit of $a$ under $\sigma$ is finite, so $\sigma^r a=a$ for some $r$. The partial norm
@@ -1786,12 +1851,11 @@ cocycle on $C_{rt}$ sending its generator to $a$. Inflation gives a continuous c
 $\widehat{\mathbf Z}$. Two choices $a,a'$ define the same class exactly when
 $a-a'=(\sigma-1)b$, by the degree-one coboundary formula. This proves the cokernel description.
 
-For higher degree, a class at a finite cyclic level is represented by either an invariant modulo
-a norm or an element killed by a norm. Refine the quotient by a cyclic kernel whose order is a
-multiple of the orders of the finitely many coefficient elements involved. The inflation formula
-introduces the norm along that kernel, so the class becomes zero. What matters is not that any
-one finite cyclic group has small cohomology—it does not—but that no positive-degree periodic
-class above degree one survives all refinements.
+For higher degree, the comparison just computed is the decisive point: inflation to
+$C_{mr}$ multiplies a degree-$n$ representative by $r^{\lfloor n/2\rfloor}$. A refinement with
+$r$ divisible by its order therefore kills it when $n\geq2$. What matters is not that any one
+finite cyclic group has small cohomology—it does not—but that no positive-degree periodic class
+above degree one survives all refinements.
 
 This is a striking continuity effect. Every finite cyclic quotient has periodic higher cohomology, but those classes do not persist coherently through all refinements.
 
@@ -2016,8 +2080,8 @@ $V/T$ is discrete. A continuous map $G^n\to V/T$ has finite image; choose a lift
 value. The resulting locally constant map is continuous. Hence there is a long exact sequence
 
 $$
-\cdots\to H^n(G,T)\to H^n(G,V)\to H^n(G,V/T)
-\xrightarrow{\delta}H^{n+1}(G,T)\to\cdots.
+\cdots\to H^n_{\mathrm{cts}}(G,T)\to H^n_{\mathrm{cts}}(G,V)\to H^n(G,V/T)
+\xrightarrow{\delta}H^{n+1}_{\mathrm{cts}}(G,T)\to\cdots.
 $$
 
 This useful success should not be generalized from algebraic exactness alone.
@@ -2062,7 +2126,11 @@ $$
 H^1(G,(\mathbf Z_\ell)_{\mathrm{discrete}})=0.
 $$
 
-For $V=\mathbf Q_\ell$ with its natural topology, continuous homomorphisms $\mathbf Z_\ell\to\mathbf Q_\ell$ are again determined by the image of $1$, but that image can be any element of $\mathbf Q_\ell$. Hence $H^1(G,V)\simeq\mathbf Q_\ell$. These three answers—finite level, profinite lattice, and vector space—fit together only because their topologies were kept explicit.
+For $V=\mathbf Q_\ell$ with its natural topology, continuous homomorphisms
+$\mathbf Z_\ell\to\mathbf Q_\ell$ are again determined by the image of $1$, but that image can
+be any element of $\mathbf Q_\ell$. Hence
+$H^1_{\mathrm{cts}}(G,V)\simeq\mathbf Q_\ell$. These three answers—finite level, profinite
+lattice, and vector space—fit together only because their topologies were kept explicit.
 
 ### 12.7 Exact sequences in the topological setting
 
@@ -2073,12 +2141,13 @@ $$
 0\longrightarrow M'\longrightarrow M\xrightarrow{q}M''\longrightarrow0
 $$
 
-**$G$-cochain-exact** if, for every $n\geq0$, every continuous map $G^n\to M''$ has a continuous
-lift to $M$. Then
+**$G$-cochain-exact** if $M'$ has the subspace topology under its identification with
+$\ker(q)$ and, for every $n\geq0$, every continuous map $G^n\to M''$ has a continuous lift to
+$M$. Then
 
 $$
-0\longrightarrow C^n(G,M')\longrightarrow C^n(G,M)
-\longrightarrow C^n(G,M'')\longrightarrow0
+0\longrightarrow C^n_{\mathrm{cts}}(G,M')\longrightarrow C^n_{\mathrm{cts}}(G,M)
+\longrightarrow C^n_{\mathrm{cts}}(G,M'')\longrightarrow0
 $$
 
 is exact, and the proof of Chapter 4 gives a natural long exact sequence. It is enough that $q$
@@ -2134,7 +2203,7 @@ $$
 for a profinite tower when the $\varprojlim^1$ term vanishes, and
 
 $$
-H^n(G,T)\otimes\mathbf Q_\ell
+H^n_{\mathrm{cts}}(G,T)\otimes\mathbf Q_\ell
 $$
 
 for passage from a stable lattice to its vector space. The first uses exact filtered colimits,
@@ -2215,19 +2284,29 @@ whose successive quotients are $E_\infty^{i,n-i}$. Because the spectral sequence
 first quadrant, only finitely many terms contribute to a fixed total degree; no completeness or
 conditional-convergence issue occurs.
 
-The most conceptual construction uses the composite of left exact functors
+The construction uses the composite of left exact functors
 
 $$
 A\longmapsto A^N\longmapsto (A^N)^Q=A^G.
 $$
 
-Coinduced discrete $G$-modules are acyclic for $G$-invariants. Their restrictions and the
-corresponding $N$-cohomology objects provide the acyclicity needed to resolve the composite.
-Filtering the resulting double complex by the number of quotient variables gives the displayed
-$E_2$ page. A direct construction filters homogeneous cochains according to the quotient
-directions; its associated double complex has horizontal differential computing $Q$-cohomology
-and vertical differential computing $N$-cohomology. The two differentials anticommute because of
-the usual total-complex sign.
+Here are the hypotheses behind the composite-functor argument. The inflation functor from
+discrete $Q$-modules to discrete $G$-modules is exact and is left adjoint to $N$-invariants.
+Consequently $N$-invariants carry injective $G$-modules to injective, hence acyclic,
+$Q$-modules. Resolve $A$ by injective discrete $G$-modules, apply $N$-invariants, and then resolve
+the resulting complex for $Q$-invariants. The first filtration computes $H^j(N,A)$ and then
+$H^i(Q,-)$, giving
+
+$$
+E_2^{i,j}=H^i(Q,H^j(N,A)).
+$$
+
+The other filtration computes the derived functors of the composite, which are $H^{i+j}(G,A)$
+by Chapter 10. This proves both the asserted page and its abutment using the ordinary spectral
+sequence of a first-quadrant double complex. Equivalently, one may filter homogeneous cochains
+by quotient directions; the horizontal differential computes $Q$-cohomology and the vertical
+differential computes $N$-cohomology. The total differential uses $d_h+(-1)^i d_v$, so its two
+parts anticommute and fix the sign of transgression.
 
 ### 13.5 Edges, differentials, and low degrees
 
@@ -2297,7 +2376,7 @@ Cup products respect the filtration. On the $E_2$ page they combine the cup prod
 $Q$, with the sign imposed when horizontal and vertical degrees cross. Consequently
 
 $$
-d_r(xy)=d_r(x)y+(-1)^{\deg x}x,d_r(y)
+d_r(xy)=d_r(x)y+(-1)^{\deg x}x\,d_r(y)
 $$
 
 for total degree. In particular, transgression interacts with products by the same Leibniz
@@ -2439,8 +2518,10 @@ $$
 $$
 
 In characteristics dividing $\dim V$, scalar and trace-zero subspaces need not split, so one must
-use this kernel rather than assume a direct-sum decomposition. Section 14.7 develops the fixed-
-determinant and framed variants in detail.
+use this kernel rather than assume a direct-sum decomposition. There is a second subtlety:
+unframed strict conjugacy still allows every $X\in\operatorname{ad}(\bar\rho)$, not only
+trace-zero $X$. Thus trace-zero cocycles do not always give $H^1(G,\operatorname{ad}^0)$ after
+quotienting. Section 14.7 gives the exact fixed-determinant formulation.
 
 ### 14.3 The obstruction cocycle for a small extension
 
@@ -2621,11 +2702,26 @@ $$
 \operatorname{ad}^0(\bar\rho)=\ker\bigl(\operatorname{tr}:\operatorname{ad}(\bar\rho)\to k\bigr).
 $$
 
-Hence the fixed-determinant unframed tangent space is
-$H^1(G,\operatorname{ad}^0(\bar\rho))$, provided the determinant itself has been fixed as a
-continuous lift. This kernel statement is valid in every characteristic. What can fail when the
-characteristic divides $\dim V$ is the convenient decomposition
-$\operatorname{ad}=\operatorname{ad}^0\oplus k$: scalar matrices may already have trace zero.
+Framed fixed-determinant cocycles therefore form $Z^1(G,\operatorname{ad}^0)$. For unframed
+deformations, however, strict conjugation by $1+\varepsilon X$ is allowed for every
+$X\in\operatorname{ad}$ and changes the cocycle by $-dX$. Since trace is invariant under
+conjugation, $dX$ is trace zero even when $X$ is not. The unframed fixed-determinant tangent
+space is consequently
+
+$$
+\frac{Z^1(G,\operatorname{ad}^0)}{d(\operatorname{ad})}
+\simeq
+\ker\left(H^1(G,\operatorname{ad})
+\xrightarrow{\operatorname{tr}}H^1(G,k)\right).
+$$
+
+The second description follows from the long exact sequence of
+$0\to\operatorname{ad}^0\to\operatorname{ad}\xrightarrow{\operatorname{tr}}k\to0$.
+It is naturally $H^1(G,\operatorname{ad}^0)$ if the map
+$H^0(G,\operatorname{ad})\to k$ is surjective. This holds, for example, when
+$\operatorname{char}k$ does not divide $\dim V$, because a scalar matrix of trace $1$ then
+exists. In characteristic dividing $\dim V$, the scalar and trace-zero subspaces need not split,
+and the kernel formula above is the statement valid without an extra hypothesis.
 
 Framing retains a basis and forbids quotienting by strict conjugacy. Its tangent space is
 $Z^1(G,\operatorname{ad})$. The exact sequence
@@ -2680,7 +2776,7 @@ H^2(G,M)=0,
 $$
 
 then every obstruction class with coefficients in $M\otimes_k I$ vanishes for every finite
-$k$-space $I$, because cochains commute with finite direct sums and
+$k$-space $I$ carrying the trivial $G$-action, because cochains commute with finite direct sums and
 
 $$
 H^2(G,M\otimes_k I)\simeq H^2(G,M)\otimes_k I.

@@ -52,7 +52,7 @@ any resulting corrections.
 - [ ] 026. Weights, Hard Lefschetz, and Weil Bounds in Low Dimension
 - [ ] 027. Betti, de Rham, and Étale Comparison for Curves
 - [ ] 028. fppf Cohomology and Kummer Theory
-- [ ] 029. Continuous Cohomology of Profinite Groups
+- [x] 029. Continuous Cohomology of Profinite Groups
 - [ ] 030. Local Galois Cohomology
 - [ ] 031. Tate Local Duality
 - [ ] 032. Global Galois Cohomology and Selmer Groups
