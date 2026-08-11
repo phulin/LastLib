@@ -264,9 +264,11 @@ A\otimes_R\Omega^1_{R/T}\longrightarrow
 \Omega^1_{A/T}\longrightarrow\Omega^1_{A/R}\longrightarrow0. \tag{2.6}
 $$
 
-If $R/T$ is smooth and $A$ is flat over $R$, the first arrow is injective locally in the smooth
-situation relevant here. Sheafifying gives (1.1). It says that an absolute differential consists
-of a base component and a relative component, although there is generally no canonical splitting.
+Flatness of $A$ over $R$ alone does not make the first arrow injective: in characteristic $p$, the
+finite free map $k[t]\to k[x]$ with $t\mapsto x^p$ kills $dt$. In the smooth tower used here,
+where both $R/T$ and $A/R$ are smooth, the cotangent transitivity sequence is short exact and
+sheafifies to (1.1). It says that an absolute differential consists of a base component and a
+relative component, although there is generally no canonical splitting.
 Choosing a splitting would amount to choosing a horizontal distribution; the Gauss--Manin
 connection will be canonical precisely because it is extracted without choosing one.
 
@@ -824,9 +826,12 @@ $$
 change by coherent base change and relative duality. The differentials vanish universally by
 Theorem 6.1. The finite filtration on each abutment has finite locally free graded pieces. Locally
 on $S$, successive short exact sequences of modules with projective quotient split, so the
-abutments are finite locally free. Pulling the filtered complex to $S'$ identifies every graded
-piece and every zero differential. Induction on the filtration length, using the five lemma on the
-successive short exact sequences, proves (6.8). $\square$
+abutments are finite locally free. Because both $\mathcal O_C$ and $\omega_{C/S}$ are flat over
+$S$, Book 15's derived base-change theorem applies term by term and gives a morphism of filtered
+derived pushforwards after every $S'\to S$. On the $E_1$ pages it is the base-change isomorphism
+for each of the four terms, and every differential on both sides is zero. Induction on the finite
+abutment filtration, using the five lemma on successive short exact sequences, proves (6.8).
+$\square$
 
 The local splitting used in the proof establishes projectivity only. It does not select a
 canonical splitting of (6.6).
@@ -862,10 +867,25 @@ $$
 $$
 
 The pairing is alternating. Away from characteristic two this follows from graded commutativity.
-In characteristic two one checks the stronger diagonal assertion on the two-step Cech--de Rham
-model: the square of a total degree-one cocycle is the total differential of its product correction,
-while the form--form term vanishes because $\Omega^2_{C/S}=0$. Thus $\langle x,x\rangle_C=0$ in
-every characteristic.
+In characteristic two, skew-symmetry alone would not prove the diagonal assertion, so a separate
+calculation is necessary. Alternation is local on the base, so use the relative principal-parts
+model of Book 9 to represent the function-cocycle part of a degree-one class by meromorphic
+functions $g$ and choose one-forms that complete it to a Cech--de Rham cocycle. The trace of its
+cup square is then a sum of local terms $\operatorname{Res}(g\,dg)$; the form--form term is zero because
+$\Omega^2_C=0$, and Cech coboundaries contribute a global residue sum. For a Laurent expansion
+$g=\sum_na_nt^n$ one has
+
+$$
+\operatorname{Res}(g\,dg)=
+\sum_{m+n=0}n a_ma_n=0.
+$$
+
+Indeed the terms indexed by $(m,n)$ and $(n,m)$ cancel, and the only diagonal possibility is
+$m=n=0$, whose coefficient is zero. This coefficient identity is valid over an arbitrary base
+ring and descends from an etale localization with parameters; the parameter-free residue
+construction of Book 9 gives the same identity without choosing or splitting closed points.
+Hence $\langle x,x\rangle_C=0$ over the original base in every characteristic, so (7.2) is
+genuinely alternating rather than merely skew-symmetric.
 
 ### 7.2 The perfect pairing in degree one
 
@@ -916,32 +936,47 @@ motion is the Higgs map of Chapter 10.
 ### 7.4 Maps of curves and adjointness
 
 Let $u:C\to D$ be a finite locally free morphism between smooth proper curves over $S$. Pullback
-of forms gives $u^*$ on de Rham cohomology. Relative duality supplies a trace on differentials,
-and trace on functions is defined by the finite locally free algebra. Compatibility
-$d\,\operatorname{Tr}(a)=\operatorname{Tr}(da)$ makes these maps a morphism of de Rham complexes
-and gives
+of forms gives $u^*$ on de Rham cohomology. A pushforward must be defined more carefully in
+positive characteristic: for a purely inseparable map, the finite-algebra trace on functions and
+the duality trace on differentials do not in general form a termwise map of the naive de Rham
+complex.
+
+The perfect pairings give the characteristic-free construction. In degrees $0,1,2$, define
+$u_*y$ uniquely by
 
 $$
-u_*:\mathcal H^n_{\mathrm{dR}}(C/S)
-\longrightarrow\mathcal H^n_{\mathrm{dR}}(D/S).
+\operatorname{Tr}_{D,\mathrm{dR}}(u_*y\smile z)
+=\operatorname{Tr}_{C,\mathrm{dR}}(y\smile u^*z) \tag{7.4}
 $$
 
-Residue compatibility proves the projection formula
+for every complementary-degree class $z$. Perfection in degrees zero and two is (6.5) and (7.1),
+and perfection in degree one is Theorem 7.1, so this defines $u_*$ over the base and commutes with
+arbitrary base change. For a finite etale map it agrees with the familiar termwise trace.
+
+The defining adjointness immediately gives the projection formula
 
 $$
-u_*(u^*x\smile y)=x\smile u_*y. \tag{7.4}
+u_*(u^*x\smile y)=x\smile u_*y. \tag{7.5}
 $$
 
-Consequently pullback and trace are adjoint for (7.2). If $u$ is finite locally free of degree
-$d$, then
+The remaining numerical input is the top-degree formula
 
 $$
-u_*u^*=d \tag{7.5}
+\operatorname{Tr}_{C,\mathrm{dR}}(u^*z)
+=d\,\operatorname{Tr}_{D,\mathrm{dR}}(z), \tag{7.6}
 $$
 
-on de Rham cohomology. The equality is checked on the de Rham complex: trace of multiplication by
-a pulled-back section is $d$ times that section, and compatibility with differentials passes it to
-hypercohomology. If $d$ is invertible on $S$, pullback is a split injection.
+where $d$ is the finite locally free degree. This is relative duality applied to the identity
+section of the algebra $u_*\mathcal O_C$: evaluation after pullback is multiplication by its
+rank $d$. Pairing $u_*u^*x$ against every complementary class and using (7.4) and (7.6) now gives
+
+$$
+u_*u^*=d. \tag{7.7}
+$$
+
+Thus if $d$ is invertible on $S$, pullback is a split injection. When the curves vary over
+$S/T$, pullback is horizontal; the pairings are horizontal by Chapter 9, so its adjoint $u_*$ is
+horizontal as well.
 
 ## 8. Connections as algebraic differentiation
 
@@ -1086,7 +1121,7 @@ $f^*\Omega^1_{S/T}$ as in (2.7). The associated graded complex is
 $$
 \operatorname{gr}^a_F\Omega^\bullet_{X/T}
 \simeq f^*\Omega^a_{S/T}\otimes
-\Omega^{\bullet-a}_{X/S}[-a]. \tag{9.1}
+\Omega^\bullet_{X/S}[-a]. \tag{9.1}
 $$
 
 Apply $Rf_*$. If $\Omega^a_{S/T}$ is finite locally free, the projection formula gives
@@ -1118,8 +1153,9 @@ $$
 \Omega^1_{S/T}\otimes\mathcal H^n_{\mathrm{dR}}(X/S). \tag{9.4}
 $$
 
-**Theorem 9.1.** If the relative de Rham sheaf in (9.4) is finite locally free and its formation is
-compatible with the local base changes used above, then (9.4) is a $T$-connection.
+**Theorem 9.1.** The map (9.4) satisfies the Leibniz rule and hence is a $T$-connection on the
+relative de Rham sheaf. When that sheaf is finite locally free, it is a connection on a vector
+bundle in the sense of Chapter 8.
 
 **Proof.** The filtered complex is a module over $\Omega^\bullet_{S/T}$ by pullback and wedge
 product. On the associated graded, the absolute differential applied to $f^*a\cdot\alpha$ is
@@ -1132,7 +1168,7 @@ The first term raises the base-form filtration by one; the second contains the r
 differential and the derivative of $\alpha$. Passing to relative de Rham cohomology yields
 
 $$
-d_1(a[\alpha])=da\otimes[\alpha]+a,d_1[\alpha],
+d_1(a[\alpha])=da\otimes[\alpha]+a\,d_1[\alpha],
 $$
 
 which is the Leibniz rule. Independence of representatives follows because $d_1$ is a spectral
@@ -1165,9 +1201,12 @@ $$
 $$
 
 with the evident placement of the base one-form. In particular, the de Rham trace for a curve is
-horizontal: under $\mathcal H^2_{\mathrm{dR}}\simeq\mathcal O_S$, its connection is the ordinary
-$d$ on $\mathcal O_S$. Combining this with (9.6) proves that the symplectic pairing (7.2) is
-horizontal.
+horizontal. The isomorphism
+$\mathcal H^2_{\mathrm{dR}}\simeq R^1f_*\omega_{C/S}$ comes from the filtered complex, and the
+relative-duality trace is compatible with the absolute differential and base change. Under the
+resulting identification $\mathcal H^2_{\mathrm{dR}}\simeq\mathcal O_S$, the connection is the
+ordinary $d$ on $\mathcal O_S$. Combining this with (9.6) proves that the symplectic pairing
+(7.2) is horizontal.
 
 ### 9.4 Base change
 
@@ -1214,13 +1253,33 @@ $$
 \subseteq\Omega^1_{S/T}\otimes F^{p-1}. \tag{10.1}
 $$
 
-**Proof.** Represent a class in $F^p$ by relative forms of degree at least $p$. Lift those forms
-locally to absolute forms. The absolute differential has a relative part, which preserves the
-relative form degree, and a base part, which contributes one base differential while removing at
-most one relative differential. Modulo relative boundaries, the connection term therefore has
-relative form degree at least $p-1$. This representative calculation is exactly the compatibility
-between the base-form filtration of Chapter 9 and the form-degree filtration of Chapter 5. It
-descends to (10.1). $\square$
+**Proof.** Let $L$ denote the filtration of the absolute complex by base-form degree. The first two
+steps give an exact sequence of complexes
+
+$$
+0\longrightarrow L^1/L^2
+\longrightarrow\Omega^\bullet_{X/T}/L^2
+\longrightarrow\Omega^\bullet_{X/S}\longrightarrow0,
+$$
+
+with
+
+$$
+L^1/L^2\simeq
+f^*\Omega^1_{S/T}\otimes\Omega^\bullet_{X/S}[-1].
+$$
+
+After $Rf_*$, the connecting morphism of this sequence is exactly (9.4). Now also filter every term by
+relative form degree. In $L^1/L^2$, one of the absolute differential slots is occupied by the
+base form; under the displayed shift, a boundary lifted from relative form degree at least $p$
+therefore has relative form degree at least $p-1$. Equivalently, the connecting morphism of the
+doubly filtered sequence sends the $p$th Hodge truncation into
+$\Omega^1_{S/T}\otimes F^{p-1}$.
+
+Degeneration and the subbundle hypothesis identify these truncation images with the Hodge
+subbundles themselves, so the filtered connecting morphism descends to (10.1). This argument uses
+no splitting of the cotangent sequence; a local splitting merely writes the same connecting map in
+coordinates. $\square$
 
 Passing to graded pieces gives the Higgs operators
 
@@ -1351,14 +1410,32 @@ $$
 R^bp_*\mathcal O_A\simeq\bigwedge^bR^1p_*\mathcal O_A. \tag{11.2}
 $$
 
-In degree one the Hodge-to-de Rham differentials vanish. The map
-$p_*\mathcal O_A\to p_*\Omega^1$ kills constants. For
-$R^1p_*\mathcal O_A\to R^1p_*\Omega^1$, use translation and the group law: a coherent
-degree-one class is primitive under addition, while exterior differentiation commutes with
-addition. Its image would be simultaneously primitive in the cohomological factor and divisible
-by a nonzero invariant one-form factor; comparing the two Kunneth components forces it to vanish.
-Fiberwise this is an equality of finite-dimensional spaces, and coherent base change makes it
-relative. Thus
+The group law gives a clean proof that every $d_1$ leaving total degree one vanishes, including
+the differential on invariant one-forms. By (11.1), (11.2), and the projection formula, the whole
+$E_1$ page is the bigraded exterior algebra
+
+$$
+E_1^{a,b}\simeq
+\bigwedge^a\omega_A\otimes
+\bigwedge^bR^1p_*\mathcal O_A.
+$$
+
+Addition on $A$ makes every element of the two degree-one summands primitive. Naturality of
+exterior differentiation says that $d_1$ is compatible with this coproduct, while
+multiplicativity says that it is a derivation. It must therefore send a primitive degree-one
+element to a primitive degree-two element. There are no such elements in an exterior Hopf
+algebra. Locally choose a basis $v_i$ of the degree-one module. The reduced coproduct of
+$\sum_{i<j}a_{ij}v_i\wedge v_j$ is
+
+$$
+\sum_{i<j}a_{ij}
+(v_i\otimes v_j-v_j\otimes v_i),
+$$
+
+and the ordered basis tensors force every $a_{ij}$ to vanish. The argument is unchanged in
+characteristic two, where the two ordered tensors remain distinct. Hence $d_1$ vanishes on both
+degree-one summands, and therefore everywhere on the displayed exterior algebra. In total degree
+one this gives
 
 $$
 0\longrightarrow\omega_A
@@ -1388,13 +1465,53 @@ $$
 In particular, $\mathcal H^n_{\mathrm{dR}}$ has rank $\binom{2g}{n}$.
 
 **Proof strategy and proof.** Addition and the diagonal make
-$R p_*\Omega^\bullet_{A/S}$ a commutative Hopf object. The primitive part in degree one is all of
-$\mathcal H^1_{\mathrm{dR}}$: on the Hodge graded pieces this follows from (11.1), (11.2), and the
-fact that invariant one-forms and $H^1(\mathcal O_A)$ are primitive. Cup product therefore gives
-the Hopf morphism (11.5).
+$R p_*\Omega^\bullet_{A/S}$ a commutative Hopf object, and the Hodge filtration respects both its
+product and coproduct. We first prove degeneration, then use the same Hopf structure to justify the
+exterior power in characteristic two, where graded commutativity alone is insufficient.
 
-We prove it is an isomorphism by filtering both sides. The filtration induced on the left by
-(11.3) has graded pieces
+The calculation preceding (11.3) has already proved $d_1=0$. Every later page is consequently
+still the exterior Hopf algebra displayed there until a differential is found. Its differential
+is a derivation and is compatible with the coproduct. A primitive degree-one generator can only
+map to a primitive element of total degree two. But there are no such elements: the reduced
+coproduct of $x\wedge y$ is
+
+$$
+x\otimes y-y\otimes x,
+$$
+
+and the basis calculation preceding (11.3) shows that no nonzero linear combination has zero
+reduced coproduct. Thus the differential vanishes on the degree-one generators and hence on the
+algebra they generate. Induction on the page proves degeneration at $E_1$.
+
+Apply the same argument to $A\times_SA$. External product identifies its $E_1$ page with the
+tensor product of the two Hodge pages by (11.1), (11.2), and the coherent Kunneth formula.
+Finite filtered comparison therefore gives the de Rham Kunneth isomorphism for this product. We
+may consequently write the coproduct in tensor notation without assuming the exterior theorem
+being proved.
+
+The abutment itself has no primitive element in degree two. Indeed, if $z$ were primitive, choose
+the deepest Hodge step $F^p$ containing it. Its nonzero image in
+$\operatorname{gr}^p_F\mathcal H^2_{\mathrm{dR}}$ would be primitive, because the coproduct
+preserves the filtration. The associated graded Hopf algebra is the exterior algebra on the two
+degree-one Hodge pieces, where the preceding reduced-coproduct calculation rules this out.
+Descending through the finite filtration forces $z=0$.
+
+Every element $x$ of $\mathcal H^1_{\mathrm{dR}}$ is primitive. Indeed, the degree-one Kunneth
+decomposition just established writes $m^*x$ as a pair of classes. Pulling back along
+$a\mapsto(a,e)$ and $a\mapsto(e,a)$ recovers the two components, and both composites with
+multiplication are the identity of $A$. Thus
+$m^*x=\operatorname{pr}_1^*x+\operatorname{pr}_2^*x$. In the graded tensor-product algebra the
+two cross terms in the square cancel with their Koszul signs, so
+
+$$
+\Delta(x^2)=x^2\otimes1+1\otimes x^2.
+$$
+
+Thus $x^2$ is primitive of degree two and must vanish. This proves genuine alternation even in
+characteristic two, so cup product factors canonically through the Hopf morphism (11.5).
+
+It remains to prove that this morphism is an isomorphism. Filter its source using (11.3). Its
+graded pieces are
 
 $$
 \bigwedge^a\omega_A\otimes
@@ -1408,29 +1525,11 @@ $$
 R^bp_*\Omega^a_{A/S}, \tag{11.7}
 $$
 
-the terms of total degree $n$ on the Hodge page.
-
-It remains to rule out differentials and extension losses. On the $E_1$ page, (11.6)--(11.7) show
-that the algebra is the exterior algebra on the two total-degree-one pieces
-$\omega_A$ and $R^1p_*\mathcal O_A$. The differential $d_1$ vanishes on those generators by the
-argument preceding (11.3), hence vanishes everywhere by the derivation rule.
-
-Every later page retains the Hopf structure induced by addition. Its differential is both a
-derivation and compatible with the coproduct. A primitive degree-one generator can only map to a
-primitive element of total degree two. But the exterior Hopf algebra on primitive generators has
-no primitive elements in degree two: expanding
-$\Delta(x\wedge y)$ produces the nonzero mixed terms
-$x\otimes y-y\otimes x$, and a basis expansion shows that no nonzero linear combination cancels
-all mixed terms. This calculation remains valid in characteristic two, where the two ordered mixed
-terms are still distinct basis tensors. Hence every later differential vanishes on the
-degree-one generators and therefore on the algebra they generate. Induction on the page proves
-degeneration at $E_1$.
-
-Thus (11.7) are the associated graded pieces of both sides of (11.5), and the induced graded map is
-the identity under the coherent exterior-algebra identifications. Finite filtered comparison makes
-(11.5) an isomorphism. Since the graded pieces are finite locally free and commute with base
-change, the same filtration argument as in Theorem 6.2 proves local freeness and arbitrary base
-change for the abutment. $\square$
+the total-degree-$n$ terms of the Hodge page. The induced graded map is the identity under these
+coherent exterior-algebra identifications. Finite filtered comparison makes (11.5) an
+isomorphism. Since the graded pieces are finite locally free and commute with base change, the
+same filtration argument as in Theorem 6.2 proves local freeness and arbitrary base change for
+the abutment. $\square$
 
 The proof uses the full group law. A general smooth proper variety need not have de Rham
 cohomology generated in degree one.
@@ -1448,18 +1547,18 @@ $$
 \bigwedge^*(\mathcal H^1_{\mathrm{dR}}(A/S),\nabla). \tag{11.8}
 $$
 
-Multiplication acts on degree one by $n$. To prove this, check the Hodge graded pieces: pullback by
-$[n]$ multiplies invariant one-forms by $n$, and it multiplies
-$R^1p_*\mathcal O_A$ by $n$ under the coherent exterior theorem. Filtered comparison gives
-$[n]^*=n$ on $\mathcal H^1_{\mathrm{dR}}$, hence
+The proof of Theorem 11.1 showed that every degree-one class is primitive. Since $[n]$ is the
+composite of the diagonal into $A^n$ with $n$-fold addition, pulling a primitive class back by
+$[n]$ gives the sum of $n$ identical copies. Thus $[n]^*=n$ on
+$\mathcal H^1_{\mathrm{dR}}$. The exterior algebra isomorphism then gives
 
 $$
 [n]^*=n^r\quad\text{on }\mathcal H^r_{\mathrm{dR}}. \tag{11.9}
 $$
 
 No invertibility of $n$ is needed for the equality. If an isogeny has invertible degree on $S$,
-trace and pullback show that it induces an isomorphism on de Rham cohomology; Section 12.4 sharpens
-the statement in degree one.
+the quasi-inverse identities of Book 38 and pullback show that it induces an isomorphism on de
+Rham cohomology; Section 12.4 gives the precise degree-one argument.
 
 ### 11.4 The universal vector extension viewpoint
 
@@ -1479,11 +1578,31 @@ $$
 \simeq\mathcal H^1_{\mathrm{dR}}(A/S). \tag{11.11}
 $$
 
-Here is the construction. An $S$-point of $A^\vee$ is a rigidified algebraically trivial line
-bundle on $A$. Lifting it to $E(A^\vee)$ amounts to equipping that line bundle with an integrable
-relative connection. Two such connections differ by a global invariant one-form on $A$, so the
-fiber of $E(A^\vee)\to A^\vee$ is the vector group with Lie algebra $\omega_A$. Infinitesimally,
-the tangent sequence of (11.10) is
+Here is the construction, including the point at which integrability enters. For an $S$-scheme
+$U$, let $E(A^\vee)(U)$ consist of rigidified algebraically trivial line bundles $L$ on $A_U$
+equipped with an integrable $U$-relative connection compatible with the rigidification. Tensor
+product makes this an fppf sheaf of groups, and forgetting the connection maps it to $A^\vee$.
+
+The obstruction to a relative connection on $L$ is its Atiyah class in
+$H^1(A_U,\Omega^1_{A_U/U})$. On the universal Poincare family, both this class and the de Rham
+class $c_1^{\mathrm{dR}}(L)$ are additive in the $A^\vee$-variable. By base change they therefore
+define homomorphisms from $A^\vee$ to the vector groups attached respectively to
+$R^1p_*\Omega^1_{A/S}$ and $\mathcal H^2_{\mathrm{dR}}(A/S)$. Each homomorphism is zero by
+rigidity: a morphism from a proper connected group to an affine vector group is constant, and its
+value at the identity is zero because the corresponding line bundle is trivial. Thus the Atiyah
+obstruction vanishes, connections exist fppf locally on $U$, and
+$c_1^{\mathrm{dR}}(L)=0$.
+
+Two relative connections differ by a global one-form, hence by a section of $\omega_A$ by
+(11.1). Such invariant one-forms are closed: the exterior derivative of an invariant form is
+given at the identity by the Lie bracket, and the Lie algebra of the commutative group $A$ is
+abelian. Finally, the curvature of any chosen connection is a global two-form whose image in
+de Rham cohomology is $c_1^{\mathrm{dR}}(L)=0$. Theorem 11.1 makes
+$H^0(\Omega^2)\to\mathcal H^2_{\mathrm{dR}}$ injective, so the curvature itself is zero.
+
+It follows that the fiber of $E(A^\vee)\to A^\vee$ is a torsor under $V(\omega_A)$. Such a torsor
+is represented by an affine bundle, and tensor product makes it the vector-group extension
+(11.10). Infinitesimally, its tangent sequence is
 
 $$
 0\to\omega_A\to\operatorname{Lie}(E(A^\vee)/S)
@@ -1491,8 +1610,17 @@ $$
 $$
 
 Since $\operatorname{Lie}(A^\vee/S)=R^1p_*\mathcal O_A=\omega_{A^\vee}^\vee$, this has the same
-graded terms as (11.4). The Cech description of a line bundle with connection identifies its
-extension class with the de Rham extension class, proving (11.11).
+graded terms as (11.4). More precisely, over a square-zero thickening a rigidified line bundle is
+represented by a Cech cocycle $a_{ij}$ in $\mathcal O_A$, while a connection is represented by
+one-forms $\beta_i$ satisfying
+
+$$
+\beta_j-\beta_i=d a_{ij}.
+$$
+
+Pairs $(a_{ij},\beta_i)$ modulo changes of trivialization are exactly total degree-one cocycles
+of $[\mathcal O_A\to\Omega^1_{A/S}]$. This identifies the tangent extension itself, not only its
+graded terms, with (11.4), and proves (11.11).
 
 This viewpoint explains why $\mathcal H^1_{\mathrm{dR}}$ is the natural linear realization of an
 abelian scheme: it simultaneously records invariant differentials on $A$ and infinitesimal line
@@ -1514,7 +1642,10 @@ c_1^{\mathrm{dR}}(\mathcal P)
 \in\mathcal H^2_{\mathrm{dR}}(A\times A^\vee/S). \tag{12.1}
 $$
 
-The Kunneth decomposition from Theorem 11.1 places the normalized class entirely in
+Theorem 11.1 applied to $A\times A^\vee$, together with
+$\mathcal H^1_{\mathrm{dR}}(A\times A^\vee/S)=
+\mathcal H^1_{\mathrm{dR}}(A/S)\oplus\mathcal H^1_{\mathrm{dR}}(A^\vee/S)$, gives the degree-two
+Kunneth decomposition. It places the normalized class entirely in
 
 $$
 \mathcal H^1_{\mathrm{dR}}(A/S)
@@ -1566,11 +1697,15 @@ $$
 V\otimes V\longrightarrow\mathcal O_S. \tag{12.5}
 $$
 
-The symmetry condition $\lambda^\vee\delta_A=\lambda$ and antisymmetry of the Poincare
-biextension imply that (12.5) is alternating. It is perfect by construction. More generally, the
-same formula defines a perfect pairing after inverting $\deg\lambda$: a quasi-inverse to the
-isogeny shows that $\lambda^*$ becomes invertible there. Before that degree is inverted, it is
-safer to retain the integral map $V^\vee\to V$ rather than claim a perfect form.
+The symmetry condition $\lambda^\vee\delta_A=\lambda$ identifies the transpose of the Poincare
+tensor with its pullback under interchange of the two factors. The biextension commutator reverses
+under that interchange, so (12.5) is skew-symmetric. More is needed in characteristic two: the
+commutator has a canonical trivialization on the diagonal, and its first-order de Rham
+linearization says $\psi_\lambda(x,x)=0$. Thus the form is genuinely alternating in every
+characteristic. It is perfect by construction. More generally, the same formula defines a perfect
+pairing after inverting $\deg\lambda$: a quasi-inverse to the isogeny shows that $\lambda^*$
+becomes invertible there. Before that degree is inverted, it is safer to retain the integral map
+$V^\vee\to V$ rather than claim a perfect form.
 
 The Hodge bundle $\omega_A$ is isotropic. On the Hodge graded pairing, it pairs only with the
 quotient $R^1p_*\mathcal O_A$, not with itself. Under a principal polarization it is a rank-$g$
@@ -1608,17 +1743,29 @@ $$
 =\langle x,(u^\vee)^*y\rangle_B. \tag{12.7}
 $$
 
-The trace map satisfies $u_*u^*=(\deg u)$ on de Rham cohomology. Hence, if $\deg u$ is invertible
-on $S$,
+Put $d=\deg u$. Book 38 supplies a quasi-inverse homomorphism $u':B\to A$ satisfying
+
+$$
+u'u=[d]_A,\qquad uu'=[d]_B.
+$$
+
+Contravariance and (11.9) therefore give
+
+$$
+u^*(u')^*=d,\qquad (u')^*u^*=d
+$$
+
+on degree-one de Rham cohomology. Hence, if $d$ is invertible on $S$,
 
 $$
 u^*: \mathcal H^1_{\mathrm{dR}}(B/S)
 \xrightarrow{\sim}\mathcal H^1_{\mathrm{dR}}(A/S) \tag{12.8}
 $$
 
-with inverse $(\deg u)^{-1}u_*$. It is horizontal and strictly compatible with the Hodge
-filtration because pullback of invariant forms is the cotangent map at the identity and the same
-is true on the coherent quotient.
+with inverse $d^{-1}(u')^*$. It is horizontal because both pullbacks are horizontal. It is
+strictly compatible with the Hodge filtration because $u^*$ and its displayed inverse preserve
+that filtration; on invariant forms this is the cotangent map at the identity, and on the
+coherent quotient it is the induced map on $R^1\mathcal O$.
 
 Without invertibility, (12.8) can fail. In characteristic $p$, the differential of a purely
 inseparable $p$-isogeny may vanish on invariant forms. The group schemes still have the same
@@ -1656,10 +1803,20 @@ $$
 
 The form $\omega$ extends regularly across the point at infinity and generates the Hodge line.
 The class of $\eta$ is a differential of the second kind: it may be represented on the affine
-chart and has zero residue at infinity. The two classes form a basis of
-$\mathcal H^1_{\mathrm{dR}}(E/S)$. Indeed the first lies in $F^1$, while the image of the second in
-$R^1f_*\mathcal O_E$ is nonzero; the Hodge exact sequence has rank two, so they form a basis after
-the displayed discriminant is inverted.
+chart and has zero residue at infinity. To see that the two classes form a basis rather than only
+fiberwise generators, use the parameter $t=-x/y$ at infinity. Its leading expansions are
+
+$$
+x=t^{-2}+O(1),\qquad
+\omega=2\,dt+O(t^2)dt,\qquad
+\eta=2t^{-2}dt+O(1)dt.
+$$
+
+A local primitive for the polar part of $\eta$ is therefore $-2t^{-1}$. Under the Serre-duality
+description of the quotient in the Hodge sequence, pairing the image of $\eta$ with $\omega$
+has leading residue $\operatorname{Res}(-4\,dt/t)=-4$. This is a unit on $S$. Hence $\omega$
+generates $F^1$, the image of $\eta$ generates the quotient $R^1f_*\mathcal O_E$, and the two
+classes form a basis of $\mathcal H^1_{\mathrm{dR}}(E/S)$ over the displayed base ring.
 
 ### 13.2 Reduction of differentials
 
