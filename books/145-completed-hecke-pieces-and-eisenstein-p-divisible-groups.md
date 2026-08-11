@@ -156,13 +156,13 @@ Localization becomes geometric only after it is represented by an idempotent tha
 
 ### 2.1 The acting algebra
 
-Because $\mathbb T$ is the image of the abstract correspondences on a finite free integral lattice of differentials, it is a finite torsion-free $\mathbf Z$-algebra. The Rosati involution attached to the canonical principal polarization fixes the good Hecke operators and preserves $U_N$ in the present prime-level normalization. Consequently the rational algebra
+Because $\mathbb T$ is the image of the abstract correspondences on a finite free integral lattice of differentials, it is a finite torsion-free $\mathbf Z$-algebra. The Rosati involution attached to the canonical principal polarization fixes the good Hecke operators and preserves $U_N$ in the present prime-level normalization. Hence it fixes every element of the commutative algebra they generate. The positivity of Rosati is important here: on rational homology it makes every such element self-adjoint for a positive-definite form, and therefore diagonalizable after extending scalars to $\mathbf R$. A nilpotent element is consequently zero. Thus the rational algebra
 
 $$
 \mathbb T_{\mathbf Q}=\mathbb T\otimes\mathbf Q
 $$
 
-is reduced: a nilpotent self-adjoint endomorphism is zero. Being finite, commutative, and reduced over $\mathbf Q$, it is a product of number fields.
+is reduced. Being finite, commutative, and reduced over $\mathbf Q$, it is a product of number fields. Mere invariance under an arbitrary involution would not prove this conclusion; it is the positive Rosati form that rules out nilpotent self-adjoint operators.
 
 This semisimplicity is used only on the rational side. Integrally, $\mathbb T\otimes\mathbf Z_\ell$ can have ramification and nonreduced special fiber. We shall never replace it by the product of its residue fields.
 
@@ -203,10 +203,10 @@ $$
 raises the order of the error, because $(2a-1)^2=1+4(a^2-a)$ is a unit. Completeness gives a limiting idempotent. Uniqueness follows because two congruent idempotents $e,f$ satisfy
 
 $$
-e-f=(e-f)(e+f-1),
+(e-f)(e+f-1)=0,
 $$
 
-while $e+f-1$ is a unit when $e-f$ is in the Jacobson radical.
+while $e+f-1$ is a unit when $e-f$ is in the Jacobson radical. Multiplication by its inverse gives $e=f$.
 
 Thus (2.1) supplies pairwise orthogonal idempotents $e_{\mathfrak n}$ with sum $1$. We fix
 
@@ -288,10 +288,10 @@ The quotient exists as an abelian variety. The map $\pi:J\to A_{\mathfrak m}$ ha
 An equivalent denominator-free description uses the saturated ideal
 
 $$
-\mathfrak a=(1-E)\mathbb T_{\mathbf Q}\cap\mathbb T.
+\mathfrak a=E\mathbb T_{\mathbf Q}\cap\mathbb T.
 $$
 
-Then $K=(J[\mathfrak a])^0$. Saturation ensures that no finite subgroup is accidentally inserted into the connected kernel. This is the canonical description of the selected quotient.
+Then $K=(J[\mathfrak a])^0$. Indeed, the elements of $\mathfrak a$ act trivially on the $(1-E)$-support and, after tensoring with $\mathbf Q$, contain an isogeny on every $E$-factor. Their common kernel therefore has $(1-E)J$ as its maximal connected abelian subvariety and only a finite contribution on the $E$-support. Saturation makes this description independent of cleared denominators. Notice that using $(1-E)\mathbb T_{\mathbf Q}\cap\mathbb T$ would select the opposite connected support. The displayed ideal is the canonical denominator-free description of the selected quotient.
 
 The construction is nontrivial exactly when a characteristic-zero Hecke factor lies above $\mathfrak m$. The congruence $\mathbb T/I\ne0$ guarantees that the completed local algebra and completed torsion piece are nonzero, but it does not, by itself, assert that one characteristic-zero branch accounts for the full exponent $e$. Several branches may meet at $\mathfrak m$.
 
@@ -358,7 +358,18 @@ $$
 \pi s=[d]_{A_{\mathfrak m}}. \tag{3.4}
 $$
 
-Both maps extend over the good-reduction base. Since multiplication by $d$ is faithfully flat on every abelian scheme, (3.4) makes $\pi:\mathcal J\to\mathcal A_{\mathfrak m}$ fiberwise surjective. Its fibers have constant dimension $\dim K$; smoothness of source and target and the fiberwise flatness criterion make its kernel flat. The identity component of that kernel is an abelian scheme with generic fiber $K$. The extended map from the good model $\mathcal K$ to this identity component is generically an isomorphism. The extension theorem for isogenies makes it an isogeny of degree one, hence an isomorphism. Finally the component quotient of the kernel is finite etale with trivial generic fiber, so it is trivial. Thus the entire kernel is $\mathcal K$, and
+Both maps extend over the good-reduction base. Since multiplication by $d$ is faithfully flat on every abelian scheme, (3.4) makes $\pi:\mathcal J\to\mathcal A_{\mathfrak m}$ fiberwise surjective. Its fibers have constant dimension $\dim K$; the fiberwise flatness criterion, applied to the smooth source and target, makes $\pi$ faithfully flat.
+
+We now use the relative-kernel decomposition, whose proof in this case is as follows. If $f:X\to Y$ is a faithfully flat homomorphism of abelian schemes over a DVR, put $H=\ker(f)$. The schematic closure in $H$ of the generic identity component is stable under multiplication and inverse. Translating its smooth locus by sections over a strict henselization shows that this locus meets every geometric fiber in a connected proper subgroup of the generic relative dimension. The fiberwise flatness criterion then makes the closure flat, while rigidity extends the group law from the dense smooth locus. It is proper and smooth with geometrically connected fibers, hence is an abelian scheme $H^{\mathrm{ab}}$. The quotient
+
+$$
+0\longrightarrow H^{\mathrm{ab}}\longrightarrow H
+\longrightarrow D\longrightarrow0
+$$
+
+has relative dimension zero. Properness and flatness make $D$ finite flat, and its generic fiber is the component group of $H_{\mathbf Q}$. This last quotient must be kept finite flat: at a residue characteristic it need not be etale.
+
+Apply the decomposition to $H=\ker(\pi)$. Its generic fiber is the connected abelian variety $K$, so $D$ has trivial generic fiber. A finite-flat group over a connected DVR has constant rank; hence $D$ has rank one and is trivial. Thus the whole kernel is an abelian scheme with generic fiber $K$, and uniqueness of the good model identifies it with $\mathcal K$. Repeating this argument at every localization of the Dedekind base gives
 
 $$
 0\longrightarrow\mathcal K\longrightarrow\mathcal J
@@ -563,7 +574,7 @@ A local factor is useful only if its operators remain visible on the selected to
 
 We need a rigidity lemma.
 
-**Lemma 5.1.** Let $B$ be an abelian scheme over a connected characteristic-zero base and let $f\in\operatorname{End}(B)$. If $f$ vanishes on $B[\ell^r]$ for every $r$, then $f=0$.
+**Lemma 5.1.** Let $B$ be an abelian scheme over a connected integral base with characteristic-zero generic point, and let $f\in\operatorname{End}(B)$. If $f$ vanishes on $B[\ell^r]$ for every $r$, then $f=0$.
 
 **Proof.** Vanishing on $B[\ell^r]$ means that $f$ factors uniquely through the quotient by this kernel, which is multiplication by $\ell^r$. Thus
 
@@ -968,7 +979,7 @@ $$
 \longrightarrow0. \tag{8.1}
 $$
 
-Compatibility of connected components with the transition maps passes (8.1) to the limit:
+The connected--etale theorem for divisible groups over a complete local base applies directly to $G_{\mathfrak m}$. It says that the finite-level sequences are compatible with the inclusions and multiplication maps, that their connected kernels and etale quotients separately satisfy the divisibility criterion, and that they assemble into
 
 $$
 0\longrightarrow G_{\mathfrak m}^0
@@ -977,7 +988,7 @@ $$
 \longrightarrow0. \tag{8.2}
 $$
 
-The quotient is an etale $\ell$-divisible group. The connected kernel is an $\ell$-divisible group because its finite levels have multiplicative ranks growing linearly with $r$ and the restricted transition maps remain faithfully flat.
+The quotient is an etale $\ell$-divisible group and the kernel is a connected $\ell$-divisible group. Thus no rank-growth assertion is being used to manufacture divisibility; compatibility and faithful flatness are conclusions of the connected--etale theorem. Admissibility will identify the connected term as multiplicative in the next section.
 
 ### 8.2 Recognition of the multiplicative part
 
@@ -1195,7 +1206,7 @@ All other factors above $\ell$ vanish after quotienting by $I$. The $\mathbf Z_\
 
 ### 10.2 Control modulo powers
 
-The action on $G_r$ is continuous and therefore factors through
+Because $G_r$ is killed by $\ell^r$, its continuous action factors through
 
 $$
 \mathbb T_{\mathfrak m}/\ell^r\mathbb T_{\mathfrak m}.
@@ -1240,11 +1251,12 @@ This is the exact endomorphism-control statement: the completed Hecke algebra is
 On the cuspidal subgroup the annihilator is sharper. Equation (9.1) gives
 
 $$
-\operatorname{Ann}_{\mathbb T}(C_N[\ell^r])
-=I+(\ell^{\min(r,e)})
+\operatorname{Ann}_{\mathbb T_{\mathfrak m}}(C_N[\ell^r])
+=I\mathbb T_{\mathfrak m}
++\ell^{\min(r,e)}\mathbb T_{\mathfrak m}
 $$
 
-after passing to the $\mathfrak m$ factor. This formula concerns the cyclic cuspidal line, not the entire $G_r$.
+on the $\mathfrak m$ factor. This formula concerns the cyclic cuspidal line, not the entire $G_r$.
 
 ### 10.4 Base change and duality
 
@@ -1416,7 +1428,7 @@ For item 6, filter the generalized residual summand by the radical of $\mathbb T
 
 The construction uses each prerequisite within its stated range.
 
-Book 38 supplies finite-flat multiplication kernels of abelian schemes, faithfully flat multiplication, quotient exactness, extension of homomorphisms over normal good-reduction bases, duality, Weil pairings, and polarization adjunction. In Chapter 3 these facts are applied to the connected abelian kernel $K$, not to the kernel of an arbitrary Hecke operator. The fppf lifting proof of (3.3) is the precise reason the Tate quotient is saturated.
+Book 38 supplies finite-flat multiplication kernels of abelian schemes, faithfully flat multiplication, finite quotient exactness, extension of homomorphisms over normal good-reduction bases, duality, Weil pairings, and polarization adjunction. In Chapter 3 these facts are applied to the connected abelian kernel $K$, not to the kernel of an arbitrary Hecke operator. The positive-dimensional relative-kernel decomposition needed to extend the optimal exact sequence is proved in Section 3.5; it is not attributed to the finite-kernel quotient theorem. The fppf lifting proof of (3.3) is the precise reason the generic Tate quotient is saturated.
 
 Book 39 supplies Neron models, unique extension of Hecke endomorphisms, properness as the criterion for good reduction, component specialization, and the warning that a Neron extension of an isogeny need not be finite at a bad place. We restrict all torsion constructions to $S$, where the Neron models are abelian schemes. The level-prime component group is used only to state primitivity of the cusp; it is never confused with an $\ell$-adic lattice at a different prime.
 
@@ -1448,7 +1460,7 @@ Book 143 supplies the exact order and Hecke action of the cuspidal line, its iso
 
 Book 144 supplies the admissible exact category over $\mathbf Z[1/N]$, the closure criterion for an actual stable generic flag, odd-prime endpoint recognition, filtration independence, inheritance under finite-flat subquotients, and the mixed atomic extension calculation. Its explicitly missing hypothesis is supplied by Theorem 6.2. Its dyadic warning is respected: characters do not label endpoints; Proposition 7.1 instead classifies the actual closures over the unramified base.
 
-The two new arguments in this book are therefore sharply located. Theorem 3.1 proves integral saturation for the optimal quotient and local idempotent. Theorem 6.2 proves the full generic Eisenstein filtration from the radical layers and the Eichler--Shimura operator identity. Neither assertion is imported from an index calculation or a trace-descent theorem.
+The new arguments in this book are therefore sharply located. Section 3.5 proves that the connected optimal kernel remains the whole kernel over the good-reduction base. Theorem 3.1 then proves integral saturation for the optimal quotient and local idempotent. Theorem 6.2 proves the full generic Eisenstein filtration from the radical layers and the Eichler--Shimura operator identity. None of these assertions is imported from an index calculation or a trace-descent theorem.
 
 ### 12.3 Conclusion
 

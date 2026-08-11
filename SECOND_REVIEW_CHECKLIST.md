@@ -168,7 +168,7 @@ any resulting corrections.
 - [x] 142. Eisenstein Series, Congruences, and the Eisenstein Ideal
 - [x] 143. Cuspidal Divisors and Specialization on Modular Jacobians
 - [x] 144. Mazur–Raynaud Admissible Group Schemes
-- [ ] 145. Completed Hecke Pieces and Eisenstein p-divisible Groups
+- [x] 145. Completed Hecke Pieces and Eisenstein p-divisible Groups
 - [ ] 146. Eisenstein Descent and the Mordell–Weil Group of the Eisenstein Quotient
 - [ ] 147. Eisenstein Cotangent Lattices and Formal Immersion
 - [ ] 148. Rational Isogenies of Prime Degree
