@@ -98,7 +98,9 @@ for a fixed $0<c<1$. Nothing requires $k$ to be finite or perfect unless said so
 
 The rigid-analytic and formal results used from the preceding theory are these: affinoid spaces glue along rational domains; coherent objects descend over admissible covers; admissible formal blowups preserve generic fibers; proper rigid spaces admit useful formal models; and proper analytic varieties with ample line bundles algebraize. From the algebraic theory of abelian schemes we use dual abelian schemes, the Poincare bundle, isogenies, and the construction $L\mapsto\lambda_L$. We recall each interface when it is used.
 
-A **lattice** always means a free abelian group of finite rank together with a specified embedding into an analytic group. It is not a lattice over $R$. A **torus** over a base is a smooth affine group which becomes a power of $\mathbf G_m$ after an étale extension. A **semiabelian scheme** is an extension of an abelian scheme by a torus. The word **semistable** for an abelian variety means that the identity component of its smooth integral model has semiabelian special fiber; in Chapter 8 we give the equivalent uniformization formulation that does not depend on having named that model in advance.
+A **lattice** in a split analytic group means a free abelian group of finite rank together with a specified discrete embedding. It is not a lattice over $R$. For a nonsplit group the invariant object is instead a free abelian group with continuous Galois action whose embedding becomes a lattice after a finite separable splitting extension; calling only its $K$-fixed points the lattice would lose periods. A **torus** over a base is a smooth affine group which becomes a power of $\mathbf G_m$ after an étale extension. A **semiabelian scheme** is an extension of an abelian scheme by a torus.
+
+An abelian variety has **semistable reduction** if it admits a smooth separated integral group model, with generic fiber the given abelian variety, whose connected special fiber is semiabelian. Only the formal identity neighborhood of such a model enters the construction below. Chapter 8 proves that the resulting analytic datum is independent of the chosen model and that, conversely, positive Raynaud data construct such a formal identity neighborhood. Thus the definition does not smuggle in any later theory of universal smooth models or component groups.
 
 ### 1.3 The three layers of uniformization
 
@@ -115,6 +117,7 @@ $$
 $$
 
 Here $T$ is a $K$-torus of rank $r$, $B$ is an abelian variety with good reduction, $E$ is the analytic generic fiber of a formal semiabelian extension, and $M\simeq\mathbf Z^r$ is discrete. The first sequence is algebraic or formal before taking its generic fiber; the second is genuinely analytic, because an infinite constant group cannot be the kernel of a finite-type algebraic morphism.
+The display is literal after a finite splitting extension. Over $K$, $M$ is interpreted as the descended étale lattice sheaf with Galois action, as in Section 2.4.
 
 The dimensions add as expected:
 
@@ -290,7 +293,7 @@ $$
 
 **Proof strategy.** Properness is detected by whether every valuation direction has a compact fundamental region. Fullness gives such a region; failure of fullness leaves an unbounded real direction and hence an analytic boundary.
 
-Suppose first that (3.3) holds. The finitely many closed polyannuli covering $P$ descend to a finite affinoid cover of the quotient. After every complete extension $L/K$, tropicalization still identifies valuation vectors modulo the full lattice $\ell(M)$, so every point has a representative in the fixed compact polytope. The valuative criterion follows: a point over the fraction field of a complete valuation extension may be translated by a unique period up to bounded ambiguity so that its character valuations lie in $P$; its unit coordinates then extend to the valuation ring. Uniqueness follows from separatedness of the quotient, proved in Chapter 4. Thus the quotient is proper.
+Suppose first that (3.3) holds. The finitely many closed polyannuli covering $P$ descend to a finite affinoid cover of the quotient. After every complete extension $L/K$, tropicalization still identifies valuation vectors modulo the full lattice $\ell(M)$. A valuation-ring point of the quotient's generic fiber can therefore be translated into one of finitely many closed polyannuli meeting $P$. The standard integral model of a closed polyannulus is obtained from equations $X_iY_i=a_i$ together with bounded coordinates; the valuation inequalities say exactly that the translated point extends to one of these formal charts. On overlaps two extensions agree because the union of the period-translation graphs is closed, as verified in the next paragraph. This is the valuative criterion for properness. Notice that a coordinate of nonzero valuation need not itself be a unit: it is the polyannular formal chart, rather than the affine torus model, that supplies the extension.
 
 For completeness, representability is not being assumed in this step. Cover a slight enlargement of $P$ by finitely many closed rational polyannuli. Glue any two along the finitely many rational subdomains related by a period translation. Local finiteness follows because a bounded polytope meets only finitely many translates of $\ell(M)$. The cocycle is the addition law of $M$. Affinoid gluing therefore constructs the quotient used above. Chapter 4 verifies its universal sheaf property and separatedness; alternatively, separatedness here follows directly because the locally finite union of the closed translation graphs is closed.
 
@@ -454,7 +457,15 @@ Positive definiteness makes (5.10) tend to $+\infty$ quadratically. Linear chara
 
 **Proposition 5.1.** If $q_\lambda$ is positive definite and $\lambda(M)$ has finite index in $X$, then the theta functions attached to (5.3) form a finite-dimensional space. After a sufficiently large tensor power, they have no common zero and separate points and tangent directions on $Q$.
 
-**Proof strategy.** The coefficient recurrence leaves one free leading coefficient for each coset of $\lambda(M)$ in $X$, so finite index gives finite dimension. For $L^n$, the relevant cosets are those of $n\lambda(M)$, producing enough independent leading characters. Given two points not differing by a period, choose a character whose tropical or unit value distinguishes them; for $n$ large, select a theta function with that leading character. Quadratic convergence makes all other terms strictly smaller on a suitable rational neighborhood, so the leading term controls its value. The same argument with first-order differences separates tangent vectors. A finite affinoid cover of the proper quotient makes one value of $n$ work globally. $\square$
+**Proof.** Comparing the coefficient of a character in (5.9) shows that coefficients in one coset of $\lambda(M)$ determine one another and that coefficients in distinct cosets are independent. The quadratic estimate (5.10) proves convergence for every initial coefficient. Hence
+
+$$
+\dim_K H^0(Q,L)=[X:\lambda(M)]. \tag{5.11}
+$$
+
+For $L^n$ the same calculation uses $n\lambda(M)$. We explain why large $n$ gives an embedding, since dimension alone would not suffice. Subdivide a fundamental parallelotope into finitely many rational cells so that, on the inverse image of each cell, every theta series has a well-defined finite set of terms of smallest valuation. For each cell $\sigma$ and each vertex of its dual character polytope, choose the theta series whose initial character is that vertex. Positive definiteness implies a uniform gap between these initial terms and all remaining terms after replacing $L$ by a sufficiently high power. Dividing by one nonvanishing initial theta series, the ratios reduce on the formal chart of $\sigma$ to the character monomials of the dual polytope.
+
+For a sufficiently fine multiple, those monomials generate the semigroup of every tangent cone of the polytope. Consequently the ratios have no common zero, distinguish points in the reduction of the chart, and generate its cotangent space. If two analytic points have the same reduction, the same ratios distinguish their residue-disc coordinates because their differentials form a basis; if their reductions differ, a vertex section vanishes at one reduction and not the other. Points lying in different translates are first moved into the finite fundamental cover, and the automorphy relation makes the conclusion independent of the chosen representatives. There are finitely many cells modulo $M$, so one multiple works for all of them. The resulting map to projective space is proper and an immersion with singleton geometric fibers, hence a closed immersion. $\square$
 
 The proof explains why positive definiteness, rather than nondegeneracy, is required. An indefinite form makes coefficients grow in one direction and decay in another, so the formal theta expression fails to converge on fixed polyannuli.
 
@@ -499,13 +510,20 @@ $$
 \qquad z\longmapsto t_z^*L\otimes L^{-1}. \tag{6.2}
 $$
 
-The square identity for automorphy factors proves that this is a homomorphism. Its effect on periods and characters is governed by (6.1). More precisely, the kernel has a filtration whose two finite pieces are dual to one another and whose common order is $[X:\lambda(M)]$. Hence
+The square identity for automorphy factors proves that this is a homomorphism. Its effect on periods and characters is governed by (6.1). Put $C=X/\lambda(M)$. The lifted map of covering tori has character map $\lambda:M\to X$, so its kernel is the diagonalizable group $D(C)$. A point of the quotient kernel maps on the dual covering torus to a dual period in $X$; recording that period modulo $\lambda(M)$ gives an exact sequence of finite flat sheaves
+
+$$
+0\longrightarrow D(C)\longrightarrow\ker\lambda_L
+\longrightarrow \underline C\longrightarrow0. \tag{6.3a}
+$$
+
+The two end terms are Cartier dual and both have order $|C|=[X:\lambda(M)]$. Hence
 
 $$
 \deg\lambda_L=[X:\lambda(M)]^2. \tag{6.3}
 $$
 
-To justify the filtration, choose representatives in $T$ for a kernel point of (6.2). Translation preserves the automorphy class exactly when its character on $M$ belongs to the image of restriction $X\to\operatorname{Hom}(M,K^\times)$ modulo the subgroup generated by $\lambda(M)$. The connected multiplicative part and the quotient of character lattices each have order $[X:\lambda(M)]$; Cartier duality identifies the two. Multiplying their ranks gives (6.3). This is a scheme-theoretic statement and remains valid when the residue characteristic divides the index.
+To see exactness in (6.3a), choose a representative in $T$ of a kernel point of (6.2). Its image on the dual covering torus is a dual period, giving the right arrow. Changing the representative by $m\in M$ changes that period by $\lambda(m)$, and the fiber over zero is exactly the kernel of the lifted torus map. This also proves fppf surjectivity. The description is scheme-theoretic and remains valid when the residue characteristic divides the index; in that case $D(C)$ need not be étale.
 
 Thus $L$ gives a principal polarization precisely when
 
@@ -521,7 +539,7 @@ The algebraization step used here is not confined to curves.
 
 **Projective algebraization lemma.** A closed analytic subspace $Z\hookrightarrow\mathbf P_K^{N,\mathrm{an}}$ is the analytification of a unique closed algebraic subspace of $\mathbf P_K^N$.
 
-**Proof.** Let $\mathcal I$ be its coherent analytic ideal. Cover projective space by the standard affinoid charts and use analytic coherent descent to obtain a finite presentation on their intersections. Twist by $\mathcal O(n)$ for $n$ large. The usual monomial Čech complex computes analytic cohomology: convergent division splits every term involving a negative exponent exactly as in the algebraic computation. Hence $H^1(\mathcal I(n))=0$, and $\mathcal I(n)$ is generated by finitely many global analytic sections.
+**Proof.** Let $\mathcal I$ be its coherent analytic ideal and cover projective space by the standard affinoid charts. We first recall the analytic Serre argument in the form needed here. Finite presentations on the charts involve only finitely many convergent coefficients. On an overlap, expand those coefficients into Laurent series and split each series according to the first negative exponent. Multiplying by a sufficiently high homogeneous coordinate clears the finitely many bounded negative parts; the remaining tails tend uniformly to zero and are removed by the convergent Čech contracting homotopy. Noetherianity makes the bounds uniform for the finitely many relations. It follows that, for $n$ large, $H^1(\mathcal I(n))=0$ and the restrictions of global sections generate $\mathcal I(n)$ on every standard chart. This is the usual Serre generation-and-vanishing proof, with convergent Laurent division replacing polynomial division; it does not presuppose algebraization of $\mathcal I$.
 
 Global analytic sections of $\mathcal O(n)$ on projective space are homogeneous polynomials of degree $n$. Indeed, on each standard chart they have convergent power-series expansions; compatibility on the torus overlaps forbids all Laurent exponents outside the finite degree-$n$ simplex. Thus the chosen generators of $\mathcal I(n)$ are algebraic homogeneous forms. Let $I$ be the homogeneous ideal generated by all such forms, increasing $n$ finitely many times to capture the kernels of the presentations. Its analytification has ideal sheaf $\mathcal I$ on every standard chart by coherent generation. It therefore defines $Z$. Uniqueness follows because an algebraic homogeneous form vanishing analytically vanishes coefficientwise. $\square$
 
@@ -533,7 +551,9 @@ $$
 
 Every analytic homomorphism between two such quotients is the analytification of a unique algebraic homomorphism.
 
-**Proof.** A quadratic refinement gives, after finite extension, an ample analytic line bundle by Theorem 5.2. The theta sections of a high power embed $Q$ into projective space. Proper analytic algebraization turns the image and its coherent ideal into a projective algebraic variety $A$. The analytic group law is a morphism between proper analytifications, so its graph algebraizes uniquely; the same is true for inverse and identity. Smoothness and geometric connectedness may be checked after analytification and finite extension. Thus $A$ is an abelian variety. The construction and its uniqueness descend because the projective model, group law, and polarization carry effective finite Galois descent data.
+**Proof.** A quadratic refinement gives an ample analytic line bundle after a finite Galois splitting extension $L/K$. To descend enough positivity, tensor its Galois conjugates. Permuting the factors supplies a canonical semilinear descent datum on the tensor product, and the product remains ample. A further power removes the scalar cocycle in a chosen theta basis. Proposition 5.1 then gives a Galois-equivariant closed immersion of $Q_L$ into a projective space over $L$; projective descent produces the corresponding closed immersion over $K$.
+
+The projective algebraization lemma turns its image and coherent ideal into a projective algebraic variety $A$. The analytic group law is a morphism between proper analytifications, so its graph algebraizes uniquely; the same is true for inverse and identity. Smoothness and geometric connectedness may be checked after analytification and finite extension. Thus $A$ is an abelian variety. This descent argument uses an actual linearized tensor product, not merely a Galois-invariant numerical class, which by itself would not be effective descent data.
 
 For the last assertion, the graph of an analytic homomorphism is a closed analytic subspace of the proper product. Proper comparison algebraizes it. Its first projection is analytically an isomorphism, hence algebraically an isomorphism, and the second projection is the required homomorphism. Uniqueness follows from density of analytic points or faithfulness of analytification on proper varieties. $\square$
 
@@ -635,7 +655,7 @@ $$
 c:X\longrightarrow B^\vee(K) \tag{7.6}
 $$
 
-as its algebraic generic extension. Having good reduction in the abelian part means more: the points $c(x)$ extend to sections of $\mathcal B^\vee/R$. By the extension theorem for homomorphisms of abelian schemes, this integrality is independent of a chosen presentation once it holds generically.
+as its algebraic generic extension. Having good reduction in the abelian part means more: the points $c(x)$ extend to sections of $\mathcal B^\vee/R$. Properness of $\mathcal B^\vee$ and the valuative criterion give existence and uniqueness for each $x$; uniqueness preserves the additive relations in $X$. Thus the extension is an integral homomorphism $X\to\mathcal B^\vee(R)$, independently of coordinates.
 
 The dual extension will use a second lattice $M$. A homomorphism $u:M\to E(K)$ projects to points of $B(K)$. The Poincare pairing between those projected points and $c(X)\subset B^\vee(K)$ supplies the cross-term which replaces the elementary evaluation $x(u(m))$ of the pure torus case. This is why the general period pairing is naturally expressed with a trivialization of a pulled-back Poincare bundle, not only with coordinates.
 
@@ -652,22 +672,36 @@ $$
 \longrightarrow B_s\longrightarrow0. \tag{8.1}
 $$
 
-The smooth model need not be proper; indeed a positive-dimensional torus in (8.1) obstructs properness. Smoothening and the group law make the identity component canonical among such models. The toric rank is $r=\dim T_s$.
+The chosen smooth model need not be proper; indeed a positive-dimensional torus in (8.1) obstructs properness. The construction uses only its formal identity neighborhood. Section 8.4 compares two choices by common formal refinement, so no universal mapping property for a later smooth model is being invoked. The toric rank is $r=\dim T_s$.
 
-After a finite unramified extension splitting $T_s$, the formal identity neighborhood admits a canonical structure theorem. It produces a formal Raynaud extension
+After a finite unramified extension whose residue extension splits $T_s$, the formal identity neighborhood admits a canonical structure theorem. It produces a formal Raynaud extension
 
 $$
 0\longrightarrow\mathfrak T\longrightarrow\mathfrak E
 \longrightarrow\mathfrak B\longrightarrow0. \tag{8.2}
 $$
 
-Here $\mathfrak T$ is the formal torus together with its translated charts. Its generic fiber is the analytic extension (7.5), with $B$ having good reduction.
+Here the completion of $\mathfrak T$ at its bounded identity chart is the formal torus; its translated toric charts recover every valuation direction on the generic fiber. The generic fiber is the analytic extension (7.5), with $B$ having good reduction.
 
 **Formal structure lemma.** Let $\mathcal G/R$ be smooth with generic fiber an abelian variety and with semiabelian identity component (8.1). There are a formal abelian scheme $\mathfrak B/R$, a formal torus $\mathfrak T/R$, and an extension (8.2) whose restriction to the special fiber is (8.1). The extension is unique up to unique isomorphism after admissible refinement.
 
-**Proof strategy.** Work successively modulo $\pi^{n+1}$. The maximal torus in the special fiber is characterized as the maximal connected affine subgroup, so every automorphism preserves it. Smoothness lifts its characters and multiplication law through square-zero thickenings; the obstruction would lie in the deformation group of a split diagonalizable group, which vanishes because its Hopf algebra is graded by the free lattice $X$. Quotient the completed group by this lifted formal torus. The quotient is proper at level zero. A relatively ample cubical bundle on its special fiber lifts, after a fixed tensor power, together with the cube trivialization. Formal projectivity and the infinitesimal lifting criterion then make every thickened quotient proper and smooth. The compatible system is the formal abelian scheme $\mathfrak B$.
+**Proof.** We give the infinitesimal construction because simply asserting that the special-fiber torus lifts would conceal the main point. Put $R_n=R/\pi^{n+1}$ and let $\widehat{\mathcal G}_n$ be the reduction of the formal identity neighborhood modulo $\pi^{n+1}$. Over $R_0=k$, the extension (8.1) is classified, character by character, by a homomorphism
 
-The original completed group is now a formal $\mathfrak T$-torsor over $\mathfrak B$. Characterwise pushout gives rigidified algebraically trivial formal line bundles. The formal Poincare bundle identifies these with a homomorphism $X\to\mathfrak B^\vee$, and its biextension law reconstructs (8.2). At each stage, two lifts differ by a homomorphism into an infinitesimal vector group. Properness of the abelian quotient makes such a homomorphism constant, and its value at the identity is zero. This gives uniqueness. Changes made to choose affine formal charts are reconciled by admissible blowups, which do not change the analytic generic fiber. $\square$
+$$
+c_0:X^*(T_s)\longrightarrow B_s^\vee(k),
+$$
+
+as in Proposition 7.1. Assume that a split torus $T_n$ has been embedded in $\widehat{\mathcal G}_n$ compatibly with $T_s$. We first lift the embedding across the square-zero extension $R_{n+1}\to R_n$. On affine formal charts meeting $T_n$, the torus action decomposes the coordinate algebra into $X$-weight spaces. Because $X$ is free, lifts of its basis characters extend this grading across the square-zero ideal. The possible failure of the lifted comultiplication to respect addition is a normalized homomorphism from a diagonalizable group to the additive vector group defined by that ideal. Such a homomorphism is zero: on Hopf algebras a primitive element in a group algebra has every Laurent coefficient zero. Thus the lifted weight maps satisfy the group law. Affineness of the torus kills the Čech obstruction to gluing the local lifts. The same primitive-element calculation shows uniqueness. We obtain a compatible closed formal torus $T_{n+1}\subset\widehat{\mathcal G}_{n+1}$.
+
+Form the fppf quotient
+
+$$
+B_{n+1}=\widehat{\mathcal G}_{n+1}/T_{n+1}. \tag{8.2a}
+$$
+
+It is represented: choose affine torsor charts modulo $\pi^{n+2}$, take the character-degree-zero subalgebras, and glue them by translation. Reduction modulo $\pi$ is $B_s$. Smoothness follows from the torsor charts, and properness lifts across a nilpotent thickening by the valuative criterion, since existence and uniqueness can be checked after reduction and then lifted by smoothness and separatedness. Hence $B_{n+1}$ is a proper smooth group with connected fibers, an abelian scheme over $R_{n+1}$. The quotient maps for varying $n$ are compatible by uniqueness.
+
+Characterwise pushout of $\widehat{\mathcal G}_{n+1}\to B_{n+1}$ gives rigidified algebraically trivial line bundles. The Poincare bundle identifies them with $c_{n+1}:X\to B_{n+1}^\vee$, and its biextension law records additivity. Proposition 7.1 reconstructs the extension and identifies it with the completed group. A relatively ample symmetric bundle on $B_s$, replaced once by a fixed power, lifts with its cube structure through the system; formal existence algebraizes the proper quotient system to $\mathfrak B$. Passing to the inverse limit gives (8.2). Translated toric charts are then attached using $X$; two rational choices have a common subdivision. This proves existence, uniqueness up to unique admissible refinement, and compatibility with the original formal identity neighborhood. $\square$
 
 The lemma does not claim that an arbitrary abelian variety $B_s/k$ has a distinguished lift. The lift here is forced by the completed group $\mathcal G$; this dependence is essential.
 
@@ -690,7 +724,7 @@ M\otimes\mathbf R\xrightarrow{\sim}
 \operatorname{Hom}(X^*(T),\mathbf R). \tag{8.4}
 $$
 
-Injectivity follows from discreteness and the properness of the bounded kernel: a period with zero tropicalization lies in the bounded formal group, where (8.3) is locally injective; a torsion-free discrete kernel has no nonzero such element. Surjectivity follows from properness of $A$: if a valuation direction were missing, the punctured-disc argument of Theorem 3.2 would give a nonextendable map to $A^{\mathrm{an}}$. Hence $M$ is free of rank $r$ and full.
+The map on the kernel has no tropical kernel. Indeed, the zero-tropicalization subgroup of $E$ is the generic fiber of the bounded formal semiabelian identity group. The comparison used to define (8.3) identifies this whole formal group, not merely its tangent germ, with the formal identity neighborhood in $\mathcal G$. Hence a kernel point of zero tropicalization is the identity. The tropical map is injective, so its kernel is torsion-free. If its real span were proper, an integral linear functional annihilating that span would give the same escaping cocharacter ray as in Theorem 3.2. Its image in $A^{\mathrm{an}}$ could not extend over the missing point of a valuation disc, contradicting properness. The tropical image is therefore full, and $M$ is free of rank $r$.
 
 ### 8.3 The uniformization exact sequence
 
@@ -701,7 +735,7 @@ $$
 \xrightarrow{p}A^{\mathrm{an}}\longrightarrow0. \tag{8.5}
 $$
 
-Surjectivity deserves explanation. The image of $p$ is an admissible open subgroup because $p$ is locally an isomorphism at the identity. Its complement, if nonempty, would be a union of cosets. But $A^{\mathrm{an}}$ is connected and quasi-compact; finitely many translates of the identity neighborhood cover it, and inductively each translate lifts through $E$. Thus $p$ is locally surjective and hence an epimorphism of analytic sheaves. The fiber identity
+Surjectivity deserves explanation. The image sheaf of $p$ contains an admissible identity neighborhood because $p$ is an isomorphism on the bounded formal identity chart. It is a subgroup, so all its cosets are admissible open. If there were more than one coset, they would partition $A^{\mathrm{an}}$ into disjoint nonempty admissible opens, contradicting geometric connectedness. After every complete extension the same argument applies. Thus $p$ is an epimorphism of analytic sheaves. The fiber identity
 
 $$
 M\times E\simeq E\times_{A^{\mathrm{an}}}E
@@ -732,7 +766,7 @@ A **polarizable Raynaud datum** over $K$ consists of:
 - a torus $T/K$ with character lattice $X$ after finite separable splitting;
 - an abelian variety $B/K$ with good reduction;
 - an analytic extension $0\to T^{\mathrm{an}}\to E\to B^{\mathrm{an}}\to0$ arising from an integral formal semiabelian extension;
-- a free abelian group $M$ of rank $\operatorname{rank}T$ and a discrete homomorphism $u:M\to E$ with full tropical image;
+- after a finite Galois extension $L/K$ splitting $T$, a free abelian group $M$ of rank $\operatorname{rank}T$ with continuous Galois action and a Galois-equivariant discrete homomorphism $u:M\to E(L)$ with full tropical image;
 - descent data and a symmetric positive period datum inducing an ample line bundle on $E/M$.
 
 Morphisms are compatible maps on $T,E,B$, and $M$. Finite extensions may be used to split the tori, but all data and compatibilities must descend.
@@ -759,7 +793,7 @@ Starting from $A$, the formal structure lemma constructs $E$, $B$, and $T$. The 
 
 Choose an ample symmetric line bundle $L$ on $A$. Pull it back to $E$. Because $M$ is the kernel of $E\to A^{\mathrm{an}}$, the pullback has canonical $M$-descent data. Pushout by characters and the Poincare biextension decompose this descent datum into a lattice map and a bilinear period pairing. Symmetry of $L$ makes the pairing symmetric. The cocycle identity on triple period overlaps is exactly the biextension identity, so no extra associativity condition is being suppressed.
 
-To prove positivity, restrict $L$ to analytic one-dimensional subquotients generated by nonzero period directions. Its degree is positive because $L$ is ample. The automorphy calculation of Theorem 5.2 identifies that degree with a positive multiple of the diagonal period value. Hence the period form is positive definite. All data are canonical under base change, and a polarization defined over $K$ makes their Galois descent effective.
+To prove positivity, choose a periodic rational polyhedral formal model. For a nonzero $m\in M$, the segment from a point of the tropical space to its translate by $\ell(m)$ closes to a one-cycle in the quotient cell complex. After subdivision, its inverse image is an effective chain of one-dimensional toric strata. The degree of $L$ on that chain is positive, while the automorphy calculation in Theorem 5.2 identifies it with a positive integral multiple of the diagonal period value $q(m,m)$. Hence the period form is positive definite. This argument does not assume the existence of an algebraic one-dimensional subvariety in every period direction. All data are canonical under base change, and a polarization defined over $K$ makes their Galois descent effective.
 
 This proves that every semistable abelian variety produces a polarizable datum. Notice that positivity was derived from ampleness rather than inferred from properness; the distinction closes a common logical gap.
 
@@ -777,7 +811,9 @@ Proper algebraization produces a projective variety $A/K$ with $A^{\mathrm{an}}\
 
 It remains to prove semistable reduction. Choose a rational polyhedral decomposition $\Sigma$ of $N_\mathbf R=\operatorname{Hom}(X,\mathbf R)$ which is periodic under the tropical lattice $\ell(M)$. Such a decomposition is obtained by subdividing the translates of one rational parallelotope; only finitely many cells occur modulo $M$. For a cell cut out by inequalities $\langle x_i,n\rangle\ge c_i$, take the corresponding toric formal chart whose generic fiber is the inverse-image polyannulus. Twist this chart over the good-reduction model of $B$ using the extension class $c:X\to\mathcal B^\vee$ and the Poincare bundle. Face inclusions become formal open immersions, so the charts glue to an admissible formal scheme $\mathfrak Q_\Sigma$.
 
-Translation by $M$ sends a chart to the chart indexed by the translated cell. The automorphy cocycle supplies the compatible descent on overlaps. Because $\Sigma/M$ is finite, the quotient is a quasi-compact proper formal scheme; the valuative argument is the same compact-fundamental-domain argument as Theorem 3.2. Its analytic generic fiber is $E/M=Q$. Near the identity cell the smooth locus is precisely the given formal extension of $\mathfrak B$ by $\mathfrak T$. Reduction therefore has semiabelian identity component. Changing $\Sigma$ only performs an admissible formal subdivision, so the conclusion is independent of this choice. The algebraization of the generic fiber is $A$, proving that $A$ has semistable reduction with toric rank $\operatorname{rank}T$.
+Translation by $M$ sends a chart to the chart indexed by the translated cell. The automorphy cocycle supplies compatible descent on overlaps. Because $\Sigma/M$ is finite, the quotient is quasi-compact. It is separated because only finitely many translation graphs meet any pair of charts. For a valuation-ring point, fullness moves its tropical coordinate into one of the finitely many cells, and the defining inequalities then extend it to the associated toric formal chart; uniqueness follows from separatedness. The formal valuative criterion therefore proves properness, and the analytic generic fiber is $E/M=Q$.
+
+Choose $\Sigma$ so that the origin lies in the interior of a cell and so that the support function of a high power of $L$ is integral and strictly convex on $\Sigma$. This is achieved by taking the common rational refinement of the finitely many domains of linearity modulo $M$. The identity chart then has smooth formal torus part, and its extension over the good-reduction model of $B$ is precisely the given formal semiabelian extension. The union of its smooth translates is an open formal group whose connected special fiber is an extension of $B_s$ by $T_s$. Strict convexity supplies a relatively ample formal bundle; formal algebraization produces a proper algebraic model with this smooth identity component. Changing $\Sigma$ by a compatible refinement performs an admissible modification and does not alter the generic fiber or the identity semiabelian group. Hence $A$ has semistable reduction with toric rank $\operatorname{rank}T$.
 
 ### 9.4 Uniqueness and functoriality
 
@@ -844,9 +880,11 @@ The rank of $M$ equals that of $X$, and positivity means $q(m,m)>0$ for $m\ne0$.
 
 It is principal if and only if $\lambda_B$ is principal and $\lambda:M\to X$ is an isomorphism.
 
-**Proof.** If the descended bundle is ample, its restriction to the good-reduction abelian part is ample, giving condition 1. Restriction to every period direction gives positive degree and hence condition 2. Conversely, choose a high tensor power. On formal charts above $B$, positivity of $\lambda_B$ gives enough sections in the horizontal directions. Theta sums over $M$ converge because $q$ has quadratic growth, and their leading toric characters separate vertical points and tangents. Products of the two types of sections embed the quotient, proving ampleness.
+**Proof.** If the descended bundle is ample, its restriction to the zero section of the toric formal chart is ample on $B$, giving condition 1. For $m\ne0$, close a tropical segment from $n$ to $n+\ell(m)$ in a periodic formal model and refine it into one-dimensional toric strata. The degree on the resulting effective cycle is a positive multiple of $q(m,m)$, just as in Theorem 5.2. Ampleness therefore gives condition 2.
 
-For principality, the polarization kernel has a filtration by the kernel on $B$, the finite cokernel of $\lambda$, and its Cartier dual. Its rank is
+Conversely, choose a high tensor power and a periodic decomposition adapted to its support function. Positivity of $\lambda_B$ supplies sections separating points and tangent vectors on the proper horizontal base. Above each of the finitely many formal charts modulo $M$, theta sums converge because $q$ has quadratic growth; their initial characters generate the tangent-cone semigroup and therefore separate vertical reductions and vertical tangent vectors. Tensoring horizontal sections with these theta sections also separates pairs having both horizontal and vertical displacement. A finite chart cover gives one common power. The resulting projective map is a closed immersion, proving ampleness.
+
+For principality, apply the covering maps to the polarization and use the snake lemma as fppf sheaves. The polarization kernel has a finite filtration whose graded pieces are $\ker\lambda_B$, $X/\lambda(M)$, and its Cartier dual. Consequently its rank is
 
 $$
 \deg\lambda_A
@@ -865,13 +903,14 @@ $$
 0\to T\to E\to B\to0,
 $$
 
-then the dual extension has abelian part $B^\vee$ and torus with character lattice $M$. Its period lattice is $X$. The Poincare trivialization transposes, so the period pairing is
+then the dual extension has abelian part $B^\vee$ and torus with character lattice $M$. Its period lattice is $X$. Before choosing a polarization, the intrinsic valuation pairing is
 
 $$
-q^\vee(x,m)=q(m,x)
+b:M\times X\longrightarrow\mathbf Z,
+\qquad b(m,x)=v(\tau(m,x)). \tag{10.7}
 $$
 
-after identifying the data correctly. Biduality returns the original extension.
+The Poincare trivialization transposes, so the dual pairing is $b^\vee(x,m)=b(m,x)$. If a polarization supplies $\lambda:M\to X$, the symmetric form of Section 10.2 is $q(m,n)=b(n,\lambda(m))$; the dual formula becomes its transpose. Biduality returns the original extension.
 
 For a polarization, the maps $\lambda_B:B\to B^\vee$ and $\lambda:M\to X$ assemble into the uniformized form of $A\to A^\vee$. Symmetry is literal transposition of these maps and the biextension trivialization. This proves compatibility of Raynaud uniformization with duality and explains geometrically why a principal polarization identifies the period and character lattices.
 
@@ -970,7 +1009,7 @@ $$
 
 To prove the rational isomorphism, choose a quasi-inverse $g$ and an integer $d>0$ with $gf=[d]$ and $fg=[d]$. Apply uniformization functorially. On $M_i\otimes\mathbf Q$ and $X_i\otimes\mathbf Q$, multiplication by $d$ is invertible, so the induced maps are inverse up to $d$. The same relation on $B_i$ proves it is an isogeny. No point-counting argument is involved.
 
-An isogeny can alter the integral index of the period lattice and the splitting behavior of the torus. Thus the full Raynaud datum is not an isogeny invariant, while its rational ranks are.
+An isogeny can alter the integral character and period lattices and hence the isomorphism class of the torus. It does not alter their rational Galois modules. In particular, one torus is split over a given extension exactly when the other is: an element acting trivially on a rationalized lattice acts trivially on the torsion-free integral lattice. Thus the full Raynaud datum is not an isogeny invariant, while its rational Galois representation, splitting field, and reduction ranks are.
 
 ## 12. Semistable Jacobians
 
@@ -978,7 +1017,7 @@ Semistable curves provide the most geometric source of Raynaud data. Their dual 
 
 ### 12.1 The graph and the normalization
 
-Let $C/K$ be a smooth proper geometrically connected curve with a split semistable model $\mathcal C/R$. Write $C_s$ for its reduced nodal special fiber, let $\nu:\widetilde C_s\to C_s$ be its normalization, and let $\Gamma$ be the dual graph. Its vertices are the irreducible components of $C_s$, and we denote the corresponding smooth normalized components by $\widetilde C_v$. Its edges are nodes. Choose an orientation on each edge. Then
+Let $C/K$ be a smooth proper geometrically connected curve with a split semistable model $\mathcal C/R$. Here **split** means that the geometric irreducible components are defined over $k$ and geometrically irreducible, every node and both of its branches are defined over $k$, and the normalized components are smooth over $k$. Write $C_s$ for the reduced nodal special fiber, let $\nu:\widetilde C_s\to C_s$ be its normalization, and let $\Gamma$ be the dual graph. Its vertices are the irreducible components of $C_s$, and we denote the corresponding smooth normalized components by $\widetilde C_v$. Its edges are nodes. Choose an orientation on each edge. Then
 
 $$
 C_1(\Gamma,\mathbf Z)=\bigoplus_e\mathbf Z e,
@@ -1026,18 +1065,19 @@ $$
 **Proof.** A line bundle on $C_s$ is a line bundle on each normalized component together with an identification of the two fibers above every node. Rescaling the bundle on a component changes all adjacent gluing scalars simultaneously. Hence the group of gluing parameters is
 
 $$
-(\mathbf G_m)^E/(\mathbf G_m)^V/\mathbf G_m,
+T_\Gamma=\operatorname{coker}\bigl((\mathbf G_m)^V
+\longrightarrow(\mathbf G_m)^E\bigr), \tag{12.5a}
 $$
 
-where the final diagonal accounts for the common scalar. Applying characters identifies its character group with the kernel of the incidence boundary, namely $H_1(\Gamma,\mathbf Z)$. Forgetting the gluing maps gives the arrow to $\prod_v\operatorname{Pic}^0(C_v)$, and every collection of degree-zero bundles can be glued. This proves exactness. $\square$
+where $(a_v)_v$ maps on an oriented edge $e$ to $a_{t(e)}a_{s(e)}^{-1}$. The diagonal $\mathbf G_m\subset(\mathbf G_m)^V$ is the kernel of this map; it is not a second subgroup by which one should quotient the cokernel. Applying characters to (12.5a) identifies $X^*(T_\Gamma)$ with the kernel of the incidence boundary, namely $H_1(\Gamma,\mathbf Z)$. Forgetting the gluing maps gives the arrow to $\prod_v\operatorname{Pic}^0(\widetilde C_v)$, and every collection of degree-zero bundles can be glued. This proves exactness. $\square$
 
-Thus the good-reduction abelian part of the Jacobian uniformization is
+Let $\mathcal B/R$ be the good-reduction abelian scheme in the Raynaud datum. The conclusion over the residue field is
 
 $$
-B=\prod_v\operatorname{Jac}(\widetilde C_v), \tag{12.6}
+\mathcal B_s\simeq\prod_v\operatorname{Jac}(\widetilde C_v). \tag{12.6}
 $$
 
-and the toric rank is $b_1(\Gamma)$. The extension class remembers the pairs of points above each node through Abel--Jacobi differences on the component Jacobians.
+Thus $B=\mathcal B_K$ has good reduction, while the toric rank of $J$ is $b_1(\Gamma)$. There is generally no canonical lift of an individual $k$-variety $\operatorname{Jac}(\widetilde C_v)$ to $K$, so replacing (12.6) by an isomorphism over $K$ would be ill-typed. The extension class remembers the pairs of points above each node through Abel--Jacobi differences on the component Jacobians.
 
 ### 12.3 The Jacobian period pairing
 
@@ -1069,7 +1109,7 @@ $$
 $$
 X^*(T)\simeq M\simeq H_1(\Gamma,\mathbf Z),
 \qquad
-B\simeq\prod_v\operatorname{Jac}(\widetilde C_v), \tag{12.10}
+\mathcal B_s\simeq\prod_v\operatorname{Jac}(\widetilde C_v), \tag{12.10}
 $$
 
 and under these identifications the valuation of its period pairing is $q_\Gamma$. The map $M\to X^*(T)$ is the identity, so the induced polarization is principal.
@@ -1087,13 +1127,15 @@ $$
 
 where the last map takes the ratio of the two branch values. Taking cohomology and separating multidegrees gives (12.4). Its torus character sequence is the cellular complex of $\Gamma$, so (12.5) follows without a choice of coordinates. Formal deformation of this Picard sequence through the powers of $\pi$ supplies the Raynaud extension with abelian part (12.6).
 
+We justify the last passage. Over $R_n=R/\pi^{n+1}$, consider line bundles on $\mathcal C_{R_n}$ rigidified along a section after an étale localization and having multidegree zero on the normalized components. A line bundle and its gluing maps lift across $R_{n+1}\to R_n$ because the obstruction lies in $H^2(C_s,\mathcal O_{C_s})=0$. Two lifts form a torsor under $H^1(C_s,\mathcal O_{C_s})$, so these functors are formally smooth. Tensor product gives compatible commutative formal groups. The normalization sequence separates their maximal formal torus, with character group $H_1(\Gamma,\mathbf Z)$, from the proper formal quotient. On the special fiber the quotient is the product in (12.6); a lifted product polarization and the cube identity algebraize the compatible proper quotients to the abelian scheme $\mathcal B/R$. Characterwise gluing at the two branches of every node then gives the extension class $X^*(T)\to\mathcal B^\vee$. Proposition 7.1 reconstructs the formal Raynaud extension. Thus no later representability theorem for relative Picard schemes is being used as an unproved input.
+
 To find its kernel, represent a cycle $c=\sum c_ee$ by gluing trivial bundles across the annuli with transition monomials of slopes $c_e$. Going once around the cycle returns the componentwise bundle to itself but changes its analytic gluing constants; this is a period. Every period arises this way because the quotient of gluing cochains by component rescalings has integral cocharacter lattice $H_1(\Gamma,\mathbf Z)$. Thus $M\simeq H_1(\Gamma,\mathbf Z)$.
 
 At the node $e$, use $y=\pi^{\ell_e}u_ex^{-1}$ on the annulus. Pairing transitions of slopes $c_e$ and $c'_e$ contributes the factor $(\pi^{\ell_e}u_e)^{c_ec'_e}$. Its valuation is $\ell_ec_ec'_e$; the unit $u_e$ changes the multiplicative refinement but not the valuation. Multiplying over all nodes gives (12.8).
 
 Finally, the theta polarization specializes on the normalization to the product of the canonical polarizations and on the gluing torus to the evaluation pairing between cycles and characters. It therefore identifies both $M$ and $X^*(T)$ with $H_1(\Gamma,\mathbf Z)$ by the identity. The period form is positive by (12.9), and the abelian component is principally polarized. The principal criterion of Theorem 10.1 proves the claim. $\square$
 
-Blowing up a node subdivides an edge and distributes its thickness among the new edges. Sending a cycle constantly along the subdivided chain preserves (12.8). Hence the lattice and metric pairing are independent of the chosen semistable refinement.
+An admissible semistable annular modification at an integral intermediate radius subdivides an edge and distributes its thickness among the new edges. Sending a cycle constantly along the subdivided chain preserves (12.8). Hence the lattice and metric pairing are independent of such a semistable refinement. An arbitrary blowup of a closed node can introduce a multiple exceptional component and is not covered by this assertion; one first passes to a common semistable modification.
 
 ### 12.4 Compact type and total degeneration
 
@@ -1127,7 +1169,7 @@ $$
 (T,E,B,M)_L=(T_L,E_L,B_L,M), \tag{13.1}
 $$
 
-where $u:M\to E(K)\subset E(L)$ is unchanged as an abstract homomorphism. Character lattices acquire the restricted Galois action, and valuations scale by the ramification index:
+as a statement about the descended lattice sheaf: the abstract lattice is unchanged and its Galois action is restricted to $G_L$. If the datum is already split with rational periods, this says literally that $u:M\to E(K)\subset E(L)$ is unchanged. In general one chooses a common finite Galois splitting field for the base-changed datum and uses the same equivariant embedding there. Character lattices likewise acquire the restricted Galois action, and normalized integral valuations scale by the ramification index:
 
 $$
 v_L(a)=e(L/K)v_K(a). \tag{13.2}
@@ -1142,7 +1184,7 @@ Formal base change can introduce nonnormal special fibers, so normalization or a
 Suppose $L/K$ is finite Galois and splits $T$. The split datum over $L$ carries actions
 
 $$
-G\curvearrowright X,qquad G\curvearrowright M,
+G\curvearrowright X,\qquad G\curvearrowright M,
 $$
 
 and semilinear actions on $E_L$ and $B_L$. Compatibility means
@@ -1153,7 +1195,7 @@ $$
 q(\sigma m,\sigma n)=q(m,n). \tag{13.3}
 $$
 
-The extension class $c:X\to B_L^\vee(L)$ and Poincare trivialization must also be equivariant. These conditions descend $T$, $E$, and the quotient sheaf. Positivity supplies an ample bundle after a tensor power; averaging its algebraic class over $G$ gives a $G$-invariant ample class, and projective descent produces the abelian variety over $K$.
+The extension class $c:X\to B_L^\vee(L)$ and Poincare trivialization must also be equivariant. These conditions descend $T$, $E$, and the quotient sheaf. For projective descent, choose an ample bundle inducing the positive class and tensor all its Galois conjugates. The permutation of tensor factors gives an actual semilinear descent datum, not just an invariant class. After a high power, its theta sections give an equivariant projective embedding, and projective descent produces the abelian variety over $K$.
 
 Conversely, data obtained from an abelian variety over $K$ satisfy (13.3) automatically because the torus, bounded abelian quotient, and period kernel are intrinsic. Thus no choice of splitting field enters the resulting uniformization.
 
@@ -1164,8 +1206,8 @@ Let $A_i^{\mathrm{an}}=E_i/M_i$. A homomorphism $f:A_1\to A_2$ lifts uniquely to
 The lift induces
 
 $$
-f_T:T_1\to T_2,qquad
-f_B:B_1\to B_2,qquad
+f_T:T_1\to T_2,\qquad
+f_B:B_1\to B_2,\qquad
 f_M:M_1\to M_2, \tag{13.4}
 $$
 
@@ -1237,7 +1279,7 @@ $$
 For a semistable Jacobian this is concrete:
 
 $$
-B=\prod_v\operatorname{Jac}(\widetilde C_v),
+\mathcal B_s=\prod_v\operatorname{Jac}(\widetilde C_v),
 \qquad M=X=H_1(\Gamma,\mathbf Z),
 \qquad q(c,c')=\sum_e\ell_ec_ec'_e. \tag{14.3}
 $$
