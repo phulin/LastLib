@@ -225,10 +225,26 @@ The following classification is the form needed later.
 
 **Proposition 2.2.** Let $E/k$ be an elliptic curve and let $C\subset E[p]$ be cyclic of rank $p$ in the divisor-theoretic sense.
 
-1. If $E$ is ordinary, $C$ is either $\ker(F_E)$ or the unique etale order-$p$ subgroup after strict henselian splitting.
+1. If $E$ is ordinary and $k$ is algebraically closed, $C$ is either $\ker(F_E)$ or the unique etale order-$p$ subgroup.
 2. If $E$ is supersingular, $C=\ker(F_E)\simeq\alpha_p$.
 
-**Proof.** In the ordinary case, project $C$ to the maximal etale quotient. Its rank is $1$ or $p$. If it is $1$, then $C$ lies in the connected rank-$p$ subgroup and must equal it. If it is $p$, the projection is an isomorphism; its inverse gives the etale subgroup after the connected--etale sequence is split over the strict henselian field. No intermediate rank exists because $p$ is prime. In the supersingular case every order-$p$ subgroup is local-local and the preceding one-dimensionality argument gives uniqueness. The Drinfeld cyclicity condition includes $\mu_p$, $\mathbf Z/p\mathbf Z$, and $\alpha_p$: for $\alpha_p$, the generator scheme is the finite flat divisor cut out by the equation making the indexed sum of translates equal to $T^p=0$. $\square$
+**Proof.** For an ordinary elliptic curve over a perfect field, relative Frobenius and Verschiebung split the height-one connected and etale directions after passing to an algebraic closure:
+
+$$
+E[p]\simeq \mu_p\oplus\mathbf Z/p\mathbf Z.
+$$
+
+One way to see the splitting without choosing an isomorphism $E\simeq E^{(p)}$ is to apply Verschiebung to the inverse Frobenius twist $E^{(p^{-1})}$; its kernel maps etale-isomorphically onto the maximal etale quotient of $E[p]$. Moreover
+
+$$
+\operatorname{Hom}(\mathbf Z/p\mathbf Z,\mu_p)=0
+$$
+
+over an algebraically closed field of characteristic $p$, since a homomorphism is determined by a $k$-point of $\mu_p$, and its only such point is the identity. Thus the etale complement is unique.
+
+Now project $C$ to the maximal etale quotient. The scheme-theoretic image has rank $1$ or $p$. In the first case $C$ lies in the connected subgroup of rank $p$ and equals $\ker F_E$. In the second case the projection is an isomorphism and $C$ is the unique etale complement.
+
+If $E$ is supersingular, both $E[p]$ and its dual are connected, so every order-$p$ subgroup is local-local and hence isomorphic to $\alpha_p$. Such subgroups are the images of nonzero maps $\alpha_p\to E[p]$. The space of those maps killed by both Frobenius and Verschiebung is the $a$-number space; for a supersingular elliptic curve it is one-dimensional. All nonzero vectors in that one-dimensional space have the same image, namely $\ker F_E$. This proves uniqueness. Finally, all three groups $\mu_p$, $\mathbf Z/p\mathbf Z$, and $\alpha_p$ are cyclic in the Drinfeld divisor sense established in Book 116, so the subgroup classification applies to the present moduli problem. $\square$
 
 The uniqueness at a supersingular point is exactly why two ordinary components can meet there without producing a third component.
 
@@ -268,35 +284,61 @@ $$
 
 after choosing local trivializations of the Hodge lines. With prime-to-$p$ rigidifying branch data that kill automorphisms, this hull represents the deformation functor. Changing the Hodge trivializations changes $x$ and $y$ by inverse units and leaves the isomorphism class of the ring and the two ideals $(x)$ and $(y)$ unchanged.
 
-**Proof strategy.** The relation (2.6) is forced by the dual isogeny. To prove that no further relation occurs, one computes the isogeny on the one-dimensional formal groups and solves its coefficients recursively. The two coefficients of the linear terms are $x$ and $y$; all higher coefficients are determined by them.
+**Proof strategy.** The relation (2.6) is forced by the dual isogeny. The real issue is versality: one must show that the formal-group equations determine the two elliptic deformations and all higher coefficients from $x,y$, without making an illicit division by $p$. We isolate the precise coefficient calculation and then algebraize its kernel.
 
-**Proof.** Proposition 2.1 gives universal Weierstrass deformations of $E_0$ and $E_0'$ over $R[[t]]$ and $R[[t']]$. Choose parameters $T,T'$ at their identities compatible with local trivializations of the Hodge lines. A homomorphism between their formal completions is a power series whose coefficients satisfy closed equations, so the isogeny deformation functor is a closed formal subfunctor of the product of the two elliptic deformation functors together with the coefficients of that series. Over the special fiber, $\phi_0$ and $\widehat\phi_0$ have initial terms $T^p$ and $(T')^p$. A lift therefore has expansions
+**Formal-group coefficient lemma.** Let $G_0$ and $G_0'$ be one-dimensional height-two formal groups over a perfect field, and let $f_0:G_0\to G_0'$ and $g_0:G_0'\to G_0$ be dual height-one isogenies with $g_0f_0=[p]$. After fixing invariant differentials, the functor of simultaneous deformations $(G,G',f,g)$ with $gf=[p]$ is represented by
 
 $$
-f(T)=xT+T^p+\sum_{i>p}a_iT^i,
+W(k)[[x,y]]/(xy-p),
+$$
+
+where $x$ and $y$ are the linear coefficients of $f$ and $g$.
+
+**Proof of the coefficient lemma.** We give the recursion carefully enough to identify every possible denominator. In total degree $n$, the associativity equation says that the undetermined homogeneous part of a one-dimensional formal group law is a symmetric additive $2$-cocycle. Changing the coordinate by $T\mapsto T+cT^n$ changes it by
+
+$$
+c\big((S+T)^n-S^n-T^n\big).
+$$
+
+The ideal generated by the intermediate binomial coefficients $\binom ni$, $0<i<n$, is the unit ideal in $\mathbf Z_{(p)}$ unless $n$ is a power of $p$; when $n=p^r$ its only nonunit common factor is $p$. Indeed a prime divides all those coefficients exactly when $n$ is a power of that prime. Consequently strict coordinate changes eliminate every non-$p$-power homogeneous term without dividing by $p$, while at each degree $p^r$ precisely one scalar coefficient remains. This is the elementary one-dimensional $p$-typicalization recursion.
+
+Now impose the fixed height-two reduction. The identities $[p]_G(F_G(S,T))=F_G([p]_G(S),[p]_G(T))$ and associativity allow the coefficient of $T^{p^2}$ in the special $p$-series to be normalized to a unit. At degree $p$, one coefficient $u$ remains free. At every later $p$-power degree, the new coefficient occurs linearly with that height-two unit, so it is determined by the lower coefficients. This proves, rather than assumes, the usual height-two normal form and gives the deformation ring $W(k)[[u]]$ for one formal group. After a finite unramified scalar extension, normalize likewise the unit coefficients of $T^p$ in $f_0$ and $g_0$ by changing target coordinates. Write
+
+$$
+f(T)=xT+T^p+\sum_{r\geq2}a_rT^{p^r},
 \qquad
-g(T')=yT'+(T')^p+\sum_{i>p}b_i(T')^i,
+g(T')=yT'+(T')^p+\sum_{r\geq2}b_r(T')^{p^r}.
 \tag{2.8}
 $$
 
-after rescaling the parameters by units. The formal group laws have one deformation coefficient after strict coordinate change; take it to be the coefficient of the first term not removable by a strict isomorphism.
-
-Impose successively
+These are $p$-typical expressions: the displayed ordinary powers abbreviate the corresponding terms in the chosen formal-group coordinates. Compare, in increasing $p$-power degree, the identities
 
 $$
-f(F_E(S,T))=F_{E'}(f(S),f(T)),
+f(F_G(S,T))=F_{G'}(f(S),f(T)),
 \quad
-g(F_{E'}(S,T))=F_E(g(S),g(T)),
+g(F_{G'}(S,T))=F_G(g(S),g(T)),
 \quad
-g(f(T))=[p]_E(T).
+g(f(T))=[p]_G(T).
 \tag{2.9}
 $$
 
-Order monomials by total degree. At degree one, the last identity is $xy=p$. Suppose all coefficients below degree $n$ have been found. In degree $n$, the first two identities are linear in the new coefficient of $f$ or $g$ and in the next strict-coordinate coefficient. If $n$ is not a power of $p$, the coefficient to be divided by is a unit. At a $p$-power degree, the third identity supplies the missing equation; its leading Frobenius coefficient is a unit because the special formal group has height two. Thus exactly one new coefficient is determined at every stage and no new equation in $x,y$ appears.
+The degree-one coefficient of the last identity is $xy=p$. At degree $p$, the first two identities express the free coefficients of $G$ and $G'$ in terms of $x,y$. Suppose the laws and maps are known below degree $p^r$. Insert the next law, map, and residual strict-coordinate coefficients into (2.9), and order them by source law, $f$, target law, and $g$. Modulo the maximal ideal the system is triangular after the coordinate-change coefficient has removed the coboundary term. Every diagonal entry is a power of one of three special-fiber coefficients: the coefficient of $T^p$ in $f_0$, that in $g_0$, or the coefficient of $T^{p^2}$ in $g_0f_0=[p]_{G_0}$. Each is a unit. The new coefficients are therefore uniquely determined over every infinitesimal thickening. The composite identity is automatic in the next degree after this comparison: its difference from $[p]_G$ is an endomorphism whose first possible coefficient is killed by the same height-two unit. Induction constructs a compatible system to every order.
 
-The same triangular equations eliminate $t,t'$ and every coefficient $a_i,b_i$ successively in favor of $x,y$. The elimination ideal in the coefficient ring is therefore generated by $xy-p$. Conversely the recursion over $B=R[[x,y]]/(xy-p)$ gives compatible power series $f,g$ on the pullbacks of the two universal Weierstrass deformations. Since $f(T)$ reduces to $T^p$, Weierstrass preparation writes it as a unit times a monic distinguished polynomial of degree $p$; that polynomial cuts out a finite locally free subgroup of the universal elliptic curve. The quotient theorem for finite subgroup schemes algebraizes the formal homomorphism to an isogeny, and uniqueness of the quotient identifies its target with the recursively constructed deformation of $E_0'$. Thus maps from $B$ and isogeny deformations are mutually inverse.
+Conversely, every deformation can be put into such normalized coordinates by the preceding strict-coordinate recursion. Residual strict changes act triangularly on the already determined coefficients, so they give isomorphic systems rather than additional parameters. The linear coefficients satisfy only $xy=p$, and the unit-determinant induction recovers the isomorphism class from them. Passing to inverse limits is valid because at the $r$th stage only finitely many coefficients occur. Galois descent from the harmless unramified scalar extension only rescales $x$ and $y$ by inverse units, so the descended ring is again $W(k)[[x,y]]/(xy-p)$. This proves the coefficient lemma. Notice that the height-two unit, not a division by $p$, is the decisive step.
 
-A change $\eta\mapsto u\eta$, $\eta'\mapsto u'\eta'$ sends $x$ to $u'u^{-1}x$ and $y$ to $u(u')^{-1}y$, proving independence of the trivializations. $\square$
+**Proof of the theorem.** We first justify passage between elliptic curves and formal groups in precisely this supersingular case. For a square-zero extension with kernel $I$, lifts of an elliptic curve form a torsor under $H^1(E_0,T_{E_0})\otimes I$, as in Proposition 2.1. The same $p$-typical recursion with no isogeny present shows that lifts of its one-dimensional height-two formal group have one free first coefficient and no obstruction; its deformation ring is therefore $R[[u]]$. Completion defines a natural transformation from elliptic deformations to formal-group deformations, hence a homomorphism $R[[u]]\to R[[t]]$ of their representing rings. On tangent spaces its linear part is pairing with the square of a nonzero invariant differential: changing a Cech gluing derivation changes the coefficient of $T^p$ by exactly that pairing. Since
+
+$$
+H^1(E_0,T_{E_0})^\vee\simeq H^0(E_0,\omega_{E_0}^{\otimes2})
+$$
+
+and the last space is generated by that square, the linear coefficient of the resulting homomorphism $R[[u]]\to R[[t]]$ is a unit. The formal inverse-function recursion now constructs an inverse power series coefficient by coefficient. Completion therefore identifies the two deformation functors, not merely their tangent spaces. The effective Weierstrass construction in Proposition 2.1 algebraizes the inverse system. Prime-to-$p$ rigidifying level lifts uniquely and adds no deformation parameter.
+
+Apply the coefficient lemma to the formal completions of $E_0,E_0'$ and to $\phi_0,\widehat\phi_0$. The comparison just proved brings the resulting source and target formal groups from unique elliptic deformations, and gives the claimed hull $B=R[[x,y]]/(xy-p)$.
+
+It remains to check that the formal isogeny is an elliptic isogeny rather than only a homomorphism of completions. The power series $f(T)$ reduces to a unit times $T^p$. Weierstrass preparation therefore cuts out a finite locally free rank-$p$ subgroup $C$ of the formal neighborhood of the identity. Translation of its defining Cartier divisor by the formal group law shows that $C$ is a subgroup. The closed immersion of the formal neighborhood into the completed elliptic curve places it in $E[p]$, and the finite-subgroup quotient theorem gives an elliptic curve $E/C$ and an isogeny $E\to E/C$. Its formal completion is the constructed target $G'$. Two proper elliptic deformations with the same completed group and special-fiber identification are uniquely isomorphic, so $E/C\simeq E'$. This algebraizes $f$, and its quotient dual algebraizes $g$.
+
+Finally, a change $\eta\mapsto u\eta$, $\eta'\mapsto u'\eta'$ sends $x$ to $u'u^{-1}x$ and $y$ to $u(u')^{-1}y$. Thus it preserves $xy=p$ and the branch ideals, proving independence of the trivializations. $\square$
 
 The proof is a one-dimensional calculation; it does not assume a later theory of deformations of higher-dimensional abelian varieties. Its height-two step is precisely where supersingularity enters.
 
@@ -339,41 +381,55 @@ The last condition is relative ampleness. On a smooth elliptic curve it is autom
 
 Every clause survives arbitrary base change. Finite locally free subgroup schemes descend, the generator equation is equality of monic Cartier divisors, and ampleness is faithfully flat local. Hence $\mathscr F_0(p)$ is an fppf stack. It retains inversion and possibly exceptional automorphisms. To obtain a fine scheme, add $\mathcal P$ only on the dense smooth locus and normalize its closure over this stack. Book 117's boundary rigidity shows that no automorphism appears on a chosen normalization branch.
 
+We need two global facts before taking that cover.
+
+**Proposition 3.1 (integral stack).** The stack $\mathscr F_0(p)$ is algebraic, proper, and of finite presentation over $R$, with finite separated diagonal.
+
+**Proof.** Algebraicity and finite presentation use exactly the integral parameter spaces constructed in Book 116. The ample degree-$p$ divisor bounds the polygon size by $p$. A sufficiently high multiple embeds every fiber; generalized-elliptic actions and finite subgroup divisors are imposed in a finite union of Hilbert schemes, while Drinfeld generation is equality of monic divisor equations. The isomorphism functor is a closed subfunctor of the bounded projective isomorphism scheme. Ampleness rules out contractions in a level-preserving generic isomorphism, so the valuative criterion makes that diagonal proper; it is also quasi-finite, hence finite.
+
+For properness, use the stack-valuative criterion. After a finite extension of a valuation field, an elliptic curve has good or split multiplicative reduction, as proved in Book 117. In the good case the generic subgroup closes inside the fixed finite-flat group $E[p]$; Book 56 proves that this closure $C$ is finite flat. After one further finite extension, choose a Drinfeld generator $P_K$ of the generic subgroup. Properness of the good elliptic model extends it to a section $P$, and separatedness extends $[p]P_K=0$ to $[p]P=0$. The relative Cartier divisor
+
+$$
+D=\sum_{a\in\mathbf Z/p\mathbf Z}[aP]
+$$
+
+is finite flat of degree $p$ and has generic fiber $C_K$. It is therefore the schematic closure of $C_K$, so $D=C$ and cyclicity extends. In the multiplicative case, Tate uniformization measures the component image of the generic cyclic group. Its order is $1$ or $p$. The first choice gives the one-gon with subgroup $\mu_p$; the second gives the $p$-gon with the component subgroup. Book 116 proves that these are the two exhaustive ample extensions. Uniqueness follows because the level divisor has positive degree on every component: the generalized curve is recovered from a high power of its ample level line, and the subgroup is the schematic closure inside the smooth torsion. Thus the valuative existence and uniqueness conditions hold. $\square$
+
+Now apply the finite auxiliary-decontraction construction of Book 117 with a full level $M\geq3$ prime to $p$. It is important that the full $M$-basis lives on its decontracted auxiliary curve and that its contraction to $(E,C)$ is retained; simultaneous ampleness on the same polygon is not required. The resulting cover is representable and finite over $\mathscr F_0(p)$. Full level $M$ kills its object automorphisms. It is therefore a proper fine scheme, and its Hilbert construction makes it projective. Normalize it in its generic function algebra. Excellence makes the normalization finite, so the result remains a projective fine scheme. This normalized scheme is what we denote by $\mathscr X$.
+
 ### 3.2 Closure from the generic modular curve
 
-There are two compatible constructions, and comparing them is a valuable correctness check. First take the generic fine curve $X_0(p;\mathcal P)_{\mathbf Q}$ obtained by adjoining the auxiliary basis to the smooth prime-level problem. Embed it projectively, form its schematic closure over $R$, remove base torsion, and normalize in the generic function field. Book 10 proves that this normalization is finite because $R$ is excellent. Denote the resulting normal projective flat curve by
+There are two compatible constructions, and comparing them is a valuable correctness check. Take the generic fine curve $X_0(p;\mathcal P)_{\mathbf Q}$ obtained by adjoining the auxiliary basis to the smooth prime-level problem. Embed it projectively, form its schematic closure over $R$, remove base torsion, and normalize in the generic function field. Book 10 proves that this normalization is finite because $R$ is excellent. Denote the resulting normal projective flat curve by
 
 $$
 \mathscr X^{\mathrm{nor}}.
 \tag{3.1}
 $$
 
-Second, form the moduli stack $\mathscr F_0(p)$ directly. The boundedness argument of Book 117 applies integrally: the ample divisor $C$ of degree $p$ bounds polygon size, a sufficiently large multiple embeds every fiber, and subgroup conditions are closed equations in a finite Hilbert scheme. Thus the stack is algebraic and of finite presentation. Add $\mathcal P$ on its dense smooth locus and normalize the projective closure. This produces the same candidate fine curve.
-
-There is a rational map
+The fine cover constructed in Section 3.1 gives a projective closure of the same generic curve together with its map to $\mathscr F_0(p)$. Normalizing it and normalizing any other projective closure both mean taking the integral closure in the same finite product of generic function fields. The universal property of normalization therefore gives a unique isomorphism
 
 $$
-\mathscr X^{\mathrm{nor}}\dashrightarrow\mathscr F_0(p)
+\mathscr X^{\mathrm{nor}}\simeq\mathscr X.
 \tag{3.2}
 $$
 
-which forgets the auxiliary basis on the generic fiber. To extend it, take the closure of its graph. At every height-one point, the valuative extension theorem for generalized elliptic curves supplies an object with ample cyclic level after a finite extension. Uniqueness follows from the ample divisor and contraction. The graph projection to the normal source is therefore finite and birational, hence an isomorphism. Thus (3.2) is a morphism. The chosen point of $\mathscr X^{\mathrm{nor}}$ over a cusp remembers which branch of the auxiliary generic cover approached that cusp.
+This comparison is the safe way to obtain the integral moduli map. A rational map from a normal surface need not extend across codimension two merely because it extends at height one; Book 10's example $[x:y]:\mathbf A^2\dashrightarrow\mathbf P^1$ shows why that shortcut is false. Here the morphism exists before normalization, on the finite auxiliary moduli cover, and hence survives normalization by composition. A point over a cusp remembers the decontracted auxiliary full-level curve and its contraction, equivalently the selected normalization branch.
 
 ### 3.3 Agreement with the modular functor
 
-The preceding morphism is an isomorphism, not merely a map to a possibly larger moduli space.
+The preceding construction is intrinsic, not tied to an embedding.
 
-**Proposition 3.1.** The normal closure $\mathscr X^{\mathrm{nor}}$ is the fine normalized $\mathcal P$-branch cover of $\mathscr F_0(p)$. It is independent of the chosen projective embedding and carries a finite map to the stack.
+**Proposition 3.2.** The normal closure $\mathscr X^{\mathrm{nor}}$ is the normalized $\mathcal P$-branch cover of $\mathscr F_0(p)$. It is independent of the chosen projective embedding and carries a finite representable map to the stack.
 
-**Proof.** Let $T$ be normal and integral, let $(E,C)$ be an object over $T$, and suppose a lift to the auxiliary cover is chosen on the dense smooth generic open. Properness of the normalized closure extends this lift across every valuation ring centered on a codimension-one point. The generic subgroup $C$ closes uniquely inside $E[p]$ by the finite-flat closure theorem of Book 56, so the extended map has the prescribed integral subgroup rather than another model of the same generic group. At a boundary valuation, the component image of $C$ selects uniquely the one-gon or $p$-gon model, while integral closure selects the auxiliary normalization branch.
+**Proof.** The auxiliary decontraction cover is finite and representable before normalization. Normalization is finite by excellence, so its composite with the cover remains finite and representable. Its generic fiber is the prescribed auxiliary cover. If another projective embedding is used, normalize the closure of the diagonal generic curve in the product of the two projective closures. Each projection is finite because both targets are already integral closures in the same generic algebra; the finite birational maps to the two normal targets are isomorphisms. This proves independence.
 
-Normality extends the resulting map across codimension at least two: regular functions defining an affine chart lie in every height-one local ring and therefore in the normal intersection of those rings. This gives a unique map $T\to\mathscr X^{\mathrm{nor}}$. Conversely every map to the normalization supplies the stack object and its generic auxiliary branch. These constructions are inverse and respect descent. $\square$
+Over a valuation ring, the modular meaning agrees with schematic closure. In the good case $C$ is the unique closure inside $E[p]$; at a cusp its component image selects the one-gon or $p$-gon, and the auxiliary decontraction selects the branch. These are checks on the already constructed finite cover, not an attempted codimension-two extension principle. $\square$
 
-The proof uses schematic closure only inside the fixed ambient group $E[p]$. It does not claim that an abstract generic cyclic group has a unique integral model; Book 56 shows that such a claim would be false over a ramified base.
+The construction uses schematic closure only inside the fixed ambient group $E[p]$. It does not claim that an abstract generic cyclic group has a unique integral model; Book 56 shows that such a claim would be false over a ramified base.
 
 ### 3.4 Properness, flatness, and projectivity
 
-**Theorem 3.2.** The integral prime-level model $\mathscr X$ is projective, proper, flat, and normal over $R$. Its generic fiber is the compactified modular curve $X_0(p;\mathcal P)_{\mathbf Q}$.
+**Theorem 3.3.** The integral prime-level model $\mathscr X$ is projective, proper, flat, and normal over $R$. Its generic fiber is the compactified modular curve $X_0(p;\mathcal P)_{\mathbf Q}$.
 
 **Proof.** Projectivity and normality come from the normalized projective closure. The coordinate ring of every affine chart injects into its generic fiber, so it is $R$-torsion-free; over a discrete valuation ring this is flatness. Properness follows from projectivity.
 
@@ -397,7 +453,7 @@ $$
 
 is finite etale. In particular $\mathscr X[1/p]$ is smooth over the base wherever $X(\mathcal P)$ is smooth.
 
-**Proof.** Finiteness follows from the finite list of cyclic lines in $E[p]$ and properness after compactification. Formal etaleness is the unique lifting statement just proved. A finite locally presented formally etale map is etale. Smoothness is preserved by etale base change. $\square$
+**Proof.** Since $E[p]$ is finite etale, it becomes the constant group $(\mathbf Z/p\mathbf Z)^2$ after an etale cover. Its cyclic rank-$p$ subgroups are then the $p+1$ constant lines, so the subgroup functor is finite etale and this property descends. Formal etaleness is also the unique lifting statement just proved. Smoothness is preserved by etale base change. $\square$
 
 ### 4.2 Cusp charts away from $p$
 
@@ -492,7 +548,7 @@ There is no third ordinary stratum.
 
 **Theorem 5.2.** Every geometric ordinary point of $\mathscr X_k$ lies in exactly one of $U_F$ and $U_V$.
 
-**Proof.** Let $C\subset E[p]$ have rank $p$. Its image in the maximal etale quotient has rank dividing $p$, hence rank $1$ or $p$. In the first case $C$ lies in $E[p]^0$, which also has rank $p$, so equality follows. In the second case the map $C\to E[p]^{\mathrm{et}}$ has equal finite flat ranks and is an isomorphism. Thus $C$ is the etale direction. The alternatives are disjoint by connectedness. $\square$
+**Proof.** Let $C\subset E[p]$ have rank $p$. Its image in the maximal etale quotient has rank dividing $p$, hence rank $1$ or $p$. In the first case $C$ lies in $E[p]^0$, which also has rank $p$, so equality follows. In the second case the map $C\to E[p]^{\mathrm{et}}$ has equal finite flat ranks and is an isomorphism. At the geometric point, Proposition 2.2 says that the complement of the connected subgroup is unique, so $C$ is the etale direction. The alternatives are disjoint by connectedness. $\square$
 
 This rank argument is stronger than counting geometric points. It remains valid when the connected subgroup has only the identity as a geometric point and when the base contains nilpotents.
 
@@ -515,7 +571,7 @@ $$
 
 Finiteness follows from properness and quasi-finiteness: a fixed level object has only finitely many preimages, and the source is proper. Because $X_k$ is smooth and hence normal, these maps factor through the normalizations of the components. Chapter 6 will show that the branches are already smooth at their missing supersingular points; consequently (5.5) will identify $X_k$ with each normalization.
 
-At this stage we know that every ordinary point belongs to one of two irreducible branches and that any additional component would have to be supported entirely over the finite supersingular locus. Flatness forbids such a vertical irreducible component in the total surface, while purity of one-dimensional fibers forbids a zero-dimensional component of the special fiber. Hence $C_F$ and $C_V$ exhaust the irreducible components once the supersingular local ring is calculated.
+At this stage every ordinary point belongs to one of two irreducible branches. An additional special-fiber component could still be contracted by both degeneracy maps to a supersingular point; flatness alone does **not** rule out such an exceptional vertical curve. What rules it out is the completed local ring in Chapter 6: $k[[x,y]]/(xy)$ has exactly two minimal primes and no exceptional component. Purity only excludes a zero-dimensional irreducible component. Thus exhaustion of the fiber is deliberately postponed until the supersingular calculation is complete.
 
 ## 6. Supersingular points and the crossing theorem
 
@@ -552,7 +608,19 @@ $$
 
 up to interchanging $x$ and $y$.
 
-**Proof.** A cyclic subgroup $C_0$ determines the quotient isogeny $\phi_0:E_0\to E_0/C_0$. Conversely a deformation of this isogeny determines its finite flat kernel, and the kernel is cyclic by the Oort--Tate description: its generator equation is fppf-locally the rank-$p$ divisor equation. These constructions are inverse and preserve the prime-to-$p$ rigidifying level, which lifts uniquely.
+**Proof.** A cyclic subgroup $C_0$ determines the quotient isogeny $\phi_0:E_0\to E_0/C_0$. Conversely a deformation of this isogeny determines its finite flat kernel. To check cyclicity rather than assume it, pass to the finite etale cover on which the Oort--Tate weight-one coordinate and the Teichmuller scalars are defined. The kernel then has coordinate equation $Z^p-aZ=0$, with $[c]Z=[c]_{\mathrm{Teich}}Z$. The monic cover
+
+$$
+A[U]/(U^{p-1}-a)
+$$
+
+is finite faithfully flat, and on it
+
+$$
+\prod_{c\in\mathbf F_p}(Z-[c]U)=Z^p-aZ.
+$$
+
+Thus $U$ is a Drinfeld generator, including when all its geometric values coalesce. The kernel is cyclic fppf-locally. Kernel and quotient are inverse constructions and preserve the prime-to-$p$ rigidifying level, which lifts uniquely.
 
 Trivialize the two Hodge lines on the complete local hull. Theorem 2.3 represents the isogeny deformation problem by $W(k)[[x,y]]/(xy-p)$. Changing the trivializations acts by inverse unit rescaling and does not change the underlying complete local ring. The rigidifying branch cover removes automorphisms of the elliptic curves, so no further invariant quotient is taken. Hence the fine moduli ring is (6.2).
 
@@ -634,7 +702,7 @@ where:
 
 Equivalently, $\mathscr X/R$ is a regular semistable curve.
 
-**Proof.** Away from the special fiber, regularity follows from the good-prime theorem. Proposition 5.3 gives a one-variable smooth deformation ring over $R$ at every ordinary point. At a supersingular point, Corollary 6.2 proves regularity and the nodal equation. At a cusp, the Tate calculation of Chapter 10 gives a one-variable smooth ring. These loci cover $\mathscr X$.
+**Proof.** Away from the special fiber, regularity follows from the good-prime theorem. Proposition 5.3 gives a one-variable smooth deformation ring over $R$ at every ordinary point. At a supersingular point, Corollary 6.2 proves regularity and the nodal equation. At a cusp, Book 116's universal framed Tate charts already give $R'[[q]]$ and $R'[[t]]$ with $R'/R$ finite unramified; Chapter 10 records their level and degeneracy formulas but is not needed as a future premise. These loci cover $\mathscr X$.
 
 The ordinary exhaustion theorem shows that the only possible components are the closures $C_F,C_V$. The supersingular crossing theorem shows that they meet there and that the fiber is reduced. It also shows that every singular special-fiber point is one of those crossings. Finally Section 7.1 identifies the smooth component normalizations. $\square$
 
@@ -642,7 +710,7 @@ The theorem is a construction, not merely a semistable-reduction assertion after
 
 ### 7.3 Geometric connectedness and genus
 
-The special fiber is connected because the proper flat family has geometrically connected generic fiber and $f_*\mathcal O_{\mathscr X}=\mathcal O_R$. Equivalently, the two components meet whenever supersingular elliptic curves exist, as they do in every characteristic. The dual graph has two vertices and one edge for each geometric supersingular point.
+The special fiber is connected. Indeed Stein factorization makes $f_*\mathcal O_{\mathscr X}$ a finite $R$-algebra inside the function field of the geometrically connected generic curve. Its generic fiber is $K$, and $R$ is integrally closed, so this finite algebra is $R$. Connectedness of every fiber follows. Equivalently in the present description, the two components meet because supersingular elliptic curves exist in every characteristic. The dual graph has two vertices and one edge for each geometric supersingular point.
 
 Let $g_X$ be the genus of $X_k$ and let $s=|\mathrm{SS}(\bar k)|$ on the rigidified fine curve. Book 12's normalization formula gives
 
@@ -977,22 +1045,24 @@ h(y)=\chi(h)^{-1}y,
 \tag{12.1}
 $$
 
-because $xy=p$ is fixed. If $H$ is tame and the effective character has order $e$, the invariant monomials of smallest branch orders are
+because $xy=p$ is fixed. The absence of a branch exchange is part of this particular quotient. An element of $H$ is an automorphism of the cyclic-level object: it acts on the source elliptic curve, preserves its kernel, and induces an automorphism of the quotient. It therefore scales the two Hodge pullback maps separately and cannot interchange $x$ with $y$. A larger quotient containing the dual-isogeny involution can exchange the branches and must be analyzed as a different moduli problem.
+
+After strict henselization the coefficient ring is fixed, and tameness diagonalizes the action. If the effective character has order $e$, the invariant monomials of smallest branch orders are
 
 $$
 X=x^e,\qquad Y=y^e,\qquad XY=p^e.
 \tag{12.2}
 $$
 
-More precisely, the completed invariant ring is
+More precisely, before descending the coefficient field the completed invariant ring is
 
 $$
-R'[[x,y]]/(xy-p)^H
-\simeq R'^H[[X,Y]]/(XY-u p^e)
+\left(R'[[x,y]]/(xy-p)\right)^H
+\simeq R'[[X,Y]]/(XY-p^e).
 \tag{12.3}
 $$
 
-after an unramified coefficient descent and absorption of a unit $u$. Every invariant series is a sum of monomials $x^ay^b$ with $a-b\equiv0\pmod e$; using $xy=p$ reduces it to a series in $x^e,y^e$, which proves (12.3).
+Every invariant series is a sum of monomials $x^ay^b$ with $a-b\equiv0\pmod e$; using $xy=p$ reduces it to a series in $x^e,y^e$, which proves (12.3). Descending the unramified coefficient ring can replace the right side by $R'^H[[X,Y]]/(XY-u p^e)$ for a unit $u$; the thickness remains $e$.
 
 Thus the coarse special fiber still has two branches, but the total-space node has thickness $e$. It is regular only when $e=1$.
 
@@ -1071,7 +1141,7 @@ obtained by normalizing the compactification of the generic auxiliary cover of t
 
 8. The construction descends to the compactified modular stack. A tame coarse stabilizer of effective order $e$ changes a unit node into a node of thickness $e$; its minimal regular resolution inserts a chain of $e-1$ rational curves.
 
-**Proof.** Existence, uniqueness, properness, flatness, and normality are Theorems 3.2 and Proposition 3.1. The good-prime assertion is Theorem 4.2. Ordinary exhaustion is Theorem 5.2, the local ring is Theorem 6.1, and their global synthesis is Theorem 7.1. Igusa normalization is Theorem 8.2. Degeneracy and cusp formulas are Theorem 9.1 and (10.3). Intersections are (11.3), (11.6), and (11.7). Coarse thickness and resolution are Proposition 12.1. $\square$
+**Proof.** Existence, uniqueness, properness, flatness, and normality are Proposition 3.1, Proposition 3.2, and Theorem 3.3. The good-prime assertion is Theorem 4.2. Ordinary exhaustion is Theorem 5.2, the local ring is Theorem 6.1, and their global synthesis is Theorem 7.1. Igusa normalization is Theorem 8.2. Degeneracy and cusp formulas are Theorem 9.1 and (10.3). Intersections are (11.3), (11.6), and (11.7). Coarse thickness and resolution are Proposition 12.1. $\square$
 
 Every statement carries the version of the model to which it belongs. In particular, item 8 is not used to retroactively claim that an unrigidified coarse surface has only two components after regular resolution.
 
