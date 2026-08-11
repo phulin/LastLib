@@ -129,7 +129,13 @@ Other useful equivalent conditions are:
 - $B$ is flat and $\operatorname{Spec}B\to\operatorname{Spec}A$ is surjective;
 - for every $M$, the map $M\to B\otimes_AM$, $m\mapsto1\otimes m$, is injective.
 
-For the first equivalence, $(A/I)\otimes_AB\simeq B/IB$. Thus faithfulness forces $IB\ne B$. Conversely, if a nonzero module $M$ is chosen and $m\ne0$, the cyclic submodule $Am\simeq A/I$ has proper annihilator $I$. Flatness injects $B\otimes_AAm$ into $B\otimes_AM$, while $B/IB$ is nonzero. For the spectral formulation, a proper ideal of $B$ lies in a prime, and contraction shows that every prime of $A$ is reached. The converse follows because a proper $I$ contained in a prime $\mathfrak p$ cannot extend to the unit ideal if a prime of $B$ lies over $\mathfrak p$.
+For the first equivalence, $(A/I)\otimes_AB\simeq B/IB$. Thus faithfulness forces $IB\ne B$. Conversely, if a nonzero module $M$ is chosen and $m\ne0$, the cyclic submodule $Am\simeq A/I$ has proper annihilator $I$. Flatness injects $B\otimes_AAm$ into $B\otimes_AM$, while $B/IB$ is nonzero. For the spectral formulation, suppose first that $B$ is faithful and let $\mathfrak p\subset A$. The fiber
+
+$$
+B\otimes_A\kappa(\mathfrak p)
+$$
+
+is nonzero, so a prime of this fiber gives a prime of $B$ contracting to $\mathfrak p$. Conversely, if every prime of $A$ is reached and $I\subsetneq A$, choose $\mathfrak p\supset I$ and a prime $\mathfrak q$ of $B$ above it. Then $IB\subseteq\mathfrak q$, so $IB\ne B$. This proves the equivalence without silently replacing containment of contractions by equality.
 
 These equivalences explain the name. Flatness guarantees that no algebraic relation is introduced by base change; faithfulness guarantees that no nonzero relation or object disappears.
 
@@ -249,7 +255,13 @@ $$
 
 In words, $A$ is the equalizer of the two maps from $B$ to $B\otimes_AB$.
 
-The proof illustrates the standard descent technique: make a faithfully flat base change until a splitting appears. Tensor the sequence with $B$. In the resulting augmented complex, insert $1$ as the first tensor factor. This gives a contracting homotopy: multiplication removes the inserted factor at one end, and the alternating terms cancel in pairs. The base-changed complex is exact. Faithful flatness reflects exactness, proving the assertion downstairs.
+The proof illustrates the standard descent technique: make a faithfully flat base change until a splitting appears. The alternating differential in degree $n$ is
+
+$$
+\partial^n=\sum_{i=0}^{n+1}(-1)^id^i,
+$$
+
+where $d^i$ inserts $1$ in the $i$th position. Tensor the augmented complex with $B$ over $A$. The new leftmost $B$-factor supplies an extra degeneracy: multiply it into the next factor. The identities between insertions and this multiplication give $h\partial+\partial h=1$ in positive degrees and the augmented identity in degree zero. Thus the base-changed complex is contractible beyond its augmentation. Faithful flatness reflects exactness, proving the assertion downstairs.
 
 More generally, for every $A$-module $M$ the augmented Amitsur complex begins exactly:
 
@@ -294,7 +306,7 @@ For $A\to A_f$, the Amitsur equalizer need not recover $A$: it recovers the part
 Let $p:T\to S$ be a cover. Its Cech nerve (usually written “Čech nerve”) is the sequence
 
 $$
-T,qquad T^{[1]}=T\times_ST,qquad
+T,\qquad T^{[1]}=T\times_ST,\qquad
 T^{[2]}=T\times_ST\times_ST,\qquad\ldots
 $$
 
@@ -393,26 +405,49 @@ $$
 
 is an equivalence from $A$-modules to $B$-modules with descent datum.
 
-The proof strategy is to test $\varepsilon$ after tensoring once more with $B$. Faithful flatness will then reflect that it is an isomorphism. After base change, the cover $B\to B\otimes_AB$ has a section given by multiplication $B\otimes_AB\to B$. Descent along a split cover is elementary: transport an element along the datum and then pull it back through the section.
+The proof strategy is to test $\varepsilon$ after tensoring once more with $B$. Faithful flatness
+will then reflect that it is an isomorphism. We isolate the elementary split calculation which
+makes this test work.
 
-Here are the decisive details. Regard $B\otimes_AN$ as obtained from $N$ by the first copy of $B$. The datum supplies a map which, in symbolic Sweedler notation, writes
-
-$$
-\theta(n\otimes1)=\sum n_{(0)}\otimes n_{(1)}.
-$$
-
-Apply the datum once more over $B^{[2]}$. The cocycle says that transporting first from position $1$ to $2$ and then from $2$ to $3$ equals direct transport from $1$ to $3$. Pulling back along multiplication of the first two positions shows that the transported element satisfies the equalizer condition defining $M$. This construction gives an inverse to
+**Split-cover lemma.** Let $C\to D$ have a $C$-algebra retraction $s:D\to C$. If a $D$-module
+$Q$ has descent datum, put $Q_0=C\otimes_{D,s}Q$. Pulling the datum back along the two maps
 
 $$
-B\otimes_A\varepsilon:
-B\otimes_AB\otimes_AM\longrightarrow B\otimes_AN.
+D\longrightarrow D\otimes_CD
 $$
 
-The two inverse identities reduce respectively to the normalization of $\theta$ on the diagonal and to the cocycle. Therefore $B\otimes_A\varepsilon$ is an isomorphism. Its kernel and cokernel become zero after tensoring with $B$, so $\varepsilon$ is an isomorphism.
+and then along $1\otimes s$ gives a $D$-linear isomorphism
+
+$$
+D\otimes_CQ_0\xrightarrow{\sim}Q.
+$$
+
+On $D\otimes_CD\otimes_CD$, the assertion that this isomorphism respects the datum is exactly the
+cocycle. Pulling the cocycle along the diagonal defined by $s$ proves one inverse identity; its
+normalization on the diagonal proves the other. Thus every datum for a split cover is effective,
+and its invariant module is canonically $Q_0$.
+
+Apply this lemma after the faithfully flat base change $A\to B$. The pulled-back cover is
+
+$$
+B\longrightarrow B\otimes_AB,
+$$
+
+and multiplication $\mu(b_1\otimes b_2)=b_1b_2$ is a retraction of either structural map. Because
+$B$ is flat over $A$, tensoring preserves the equalizer defining $M$. Consequently
+$B\otimes_AM$ is the invariant module of the pulled-back datum. The split-cover lemma identifies
+the base change of
+
+$$
+\varepsilon:B\otimes_AM\longrightarrow N
+$$
+
+with an isomorphism. Hence the kernel and cokernel of $\varepsilon$ vanish after tensoring with
+$B$; faithful flatness makes both vanish before tensoring.
 
 Finally, the definition of $M$ says exactly that $\varepsilon$ intertwines the canonical datum with $\theta$. This proves essential surjectivity. Notice how each hypothesis enters: flatness lets kernels and cokernels commute with the test, faithfulness brings the conclusion back, and the cocycle constructs the inverse after the split base change.
 
-An alternative proof organizes the same calculation through the exact Amitsur complex
+Equivalently, the same calculation is organized by the exact Amitsur equalizer
 
 $$
 0\to M\to N\rightrightarrows N_2.
@@ -480,13 +515,19 @@ This proof also shows the correct relative statement. Given $A\to R$ and a faith
 
 ### 6.3 Finite projective modules
 
-A module is finite projective if and only if it is finitely presented and flat. One direction follows because a direct summand of a finite free module is finitely presented and flat. For the other, choose a finite presentation
+A module is finite projective if and only if it is finitely presented and flat. One direction follows because a direct summand of a finite free module is finitely presented and flat. For the other, localize at a prime and choose elements whose residues form a basis of $M/\mathfrak mM$. They give a surjection from a finite free module onto $M$. If $K$ is its kernel, flatness of $M$ makes
 
 $$
-A^m\to A^n\to M\to0.
+0\longrightarrow K\otimes k(\mathfrak m)
+\longrightarrow k(\mathfrak m)^r
+\longrightarrow M\otimes k(\mathfrak m)\longrightarrow0
 $$
 
-Flatness makes the kernel locally a direct summand; equivalently, localization at each prime gives a finite free module. Around each prime a suitable minor becomes invertible and supplies a splitting. These neighborhoods cover the spectrum, and the local splittings show that $M$ is finite locally free, hence projective.
+exact. The last map is an isomorphism, so $K/\mathfrak mK=0$. The finite-presentation hypothesis
+makes $K$ finitely generated, and Nakayama gives $K=0$. Thus $M$ is free at every prime. Clearing
+the finitely many coefficients in a chosen presentation makes it free on a neighborhood, so it
+is finite locally free. A finite affine cover then supplies a finite dual basis, or equivalently
+an idempotent matrix exhibiting $M$ as a direct summand of a finite free module.
 
 Since both finite presentation and flatness descend, finite projectivity descends. Thus if $B\otimes_AM$ is finite projective over $B$, then $M$ is finite projective over $A$. More generally, the effective descent equivalence restricts to an equivalence between finite projective modules and finite projective modules with datum.
 
@@ -537,7 +578,7 @@ Passing to spectra reverses arrows. The algebra theorem says:
 
 **Affine descent theorem.** Let $T\to S$ be fpqc. Affine $T$-schemes with descent datum relative to $T/S$ are precisely pullbacks of affine $S$-schemes, and compatible morphisms descend uniquely.
 
-When $S=\operatorname{Spec}A$ and $T=\operatorname{Spec}B$, an affine $T$-scheme is $\operatorname{Spec}C$. Its scheme datum is opposite to an algebra datum on $C$, so the result is immediate. If $T$ is not affine, cover $S$ by affines, refine the inverse image by finitely many affines, apply ring descent, and glue the resulting affine schemes. Independence of refinement follows from full faithfulness.
+When $S=\operatorname{Spec}A$ and $T=\operatorname{Spec}B$, an affine $T$-scheme is $\operatorname{Spec}C$. Its scheme datum is opposite to an algebra datum on $C$, so the result is immediate. For a general fpqc cover over this affine $S$, choose a finite affine refinement $T'=\operatorname{Spec}B\to S$. Since affineness is preserved by base change, $X_T\times_TT'$ is affine. Its algebra datum relative to $T'/S$ descends to an $A$-algebra $R$. On $T'\times_ST$ the two affine $T'\times_ST$-schemes $\operatorname{Spec}R$ and $X_T$ are canonically identified. Affine full faithfulness on an affine cover of $T$ descends these identifications and their inverse, so $\operatorname{Spec}R\times_ST\simeq X_T$. This also proves independence of the chosen refinement. The same construction over affine opens of a general $S$ glues, by uniqueness, to an affine $S$-scheme.
 
 Affineness itself descends under fpqc base change: if $X_T\to T$ is affine, then the canonical descent datum on $X_T$ lies in the affine subcategory, so its effective affine descent is an affine $S$-scheme. Full faithfulness identifies it with $X$. This concise proof depends on having already established effectivity, not merely on affineness being visible on fibers.
 
@@ -545,7 +586,7 @@ Affineness itself descends under fpqc base change: if $X_T\to T$ is affine, then
 
 An affine morphism $X=\operatorname{Spec}_S\mathcal A\to S$ is finite when $\mathcal A$ is a finite module, finite presentation when it is a finitely presented algebra, and finite locally free of rank $r$ when $\mathcal A$ is finite locally free of rank $r$ as a module. Chapters 5 and 6 therefore give effective descent for each class.
 
-In particular, if $X_T\to T$ is finite and the datum is effective as an affine scheme, then $X\to S$ is finite. If it is finite and flat, it is finite locally free. The key local algebra is that a finitely generated flat module over a local ring is free: choose a minimal generating set from a basis modulo the maximal ideal; the equational criterion for flatness forces every relation among those generators to have all coefficients zero. Localizing and clearing the finitely many coefficients in the chosen generators gives freeness on a neighborhood. The rank then descends. Stating “finite locally free” remains useful because it records this conclusion and its locally constant rank at once.
+In particular, if $X_T\to T$ is finite and the datum is effective as an affine scheme, then $X\to S$ is finite. If it is finite and flat, it is finite locally free. The key local algebra is that a finitely generated flat module over a local ring is free. One proves this by the equational criterion for flatness: a basis modulo the maximal ideal lifts to generators, and every finite relation factors through relations whose coefficients vanish modulo the maximal ideal; the resulting determinant argument eliminates the kernel. Localizing the finite generating data gives freeness on a neighborhood. The rank then descends. Stating “finite locally free” remains useful because it records this conclusion and its locally constant rank at once.
 
 Closed immersions descend as well. Affine-locally they correspond to surjective ring maps, and surjectivity is reflected by faithful flatness. Thus a compatible closed subscheme upstairs has a unique closed subscheme downstairs. This fact will repeatedly convert equations imposed after a cover into equations on the original family.
 
@@ -652,7 +693,20 @@ $$
 
 is an equalizer for an fpqc cover $T\to S$. This is descent of morphisms. A map on $X_T$ descends exactly when its two pullbacks agree.
 
-First assume $X$ and $Y$ affine over an affine $S$. The assertion is the full-faithfulness part of algebra descent with arrows reversed. If only $Y$ is affine over $S$, a map $X\to Y$ is an $\mathcal O_S$-algebra map from the coordinate algebra of $Y$ to the direct image of $\mathcal O_X$; it can be checked on affine opens of $X$, where module equalizers apply. For general $Y$, cover it by affine opens. The inverse images upstairs descend as open subsets once one observes that the condition of a point landing in an open is compatible and fpqc local. The local maps descend and glue. Uniqueness follows because equal maps after a surjective base change agree on underlying points and on functions over affine neighborhoods.
+First assume $X$ and $Y$ affine over an affine $S$. The assertion is the full-faithfulness part of algebra descent with arrows reversed. If only $Y$ is affine over $S$, a map $X\to Y$ is an $\mathcal O_S$-algebra map from the coordinate algebra of $Y$ to the direct image of $\mathcal O_X$; it can be checked on affine opens of $X$, where module equalizers apply.
+
+We also need the elementary descent of opens. A surjective fpqc morphism $q:Z'\to Z$ is a
+quotient map on underlying spaces: a subset $U\subseteq Z$ is open exactly when $q^{-1}U$ is open.
+Indeed, after restricting to affines, flatness gives going-down and hence lifts every
+generalization, while quasi-compactness makes the image of the complement of a quasi-compact open
+stable under specialization; affine-local finite reduction then gives the assertion for an
+arbitrary open. Consequently a saturated open $U'\subseteq Z'$—one whose two inverse images to
+$Z'\times_ZZ'$ agree—is the inverse image of the unique open $q(U')\subseteq Z$.
+
+For general $Y$, cover it by affine opens. Their inverse images under the upstairs map are
+saturated, so the preceding paragraph descends them to opens of $X$. The maps into the affine
+members of the cover descend there and glue. Uniqueness follows because equal maps after a
+surjective base change agree on underlying points and on functions over affine neighborhoods.
 
 As a consequence, sections descend. A section of $X_T\to T$ is a map $T\to X$ after base change, and the overlap equality is exactly its descent condition. Automorphisms form a sheaf: compatible automorphisms descend, and the inverse descends with them.
 
@@ -664,7 +718,11 @@ $$
 \Delta_f:X\longrightarrow X\times_SX.
 $$
 
-The morphism is separated when $\Delta_f$ is a closed immersion, unramified when the diagonal is an open immersion together with a finite-presentation condition, and a monomorphism when the diagonal is an isomorphism. Since diagonals commute with base change, descent of closed immersions, open immersions, and isomorphisms yields descent of these properties.
+The morphism is separated when $\Delta_f$ is a closed immersion, unramified when it is locally of
+finite type and the diagonal is an open immersion, and a monomorphism when the diagonal is an
+isomorphism. Smoothness and étaleness, unlike unramifiedness in this generality, include local
+finite presentation. Since diagonals commute with base change, descent of closed immersions, open
+immersions, and isomorphisms yields descent of these properties.
 
 Open immersions require a short argument. If $U_T\to X_T$ is an open immersion with compatible datum and its source descends to $U\to X$, then it is a monomorphism locally of finite presentation and flat. These three properties descend; such a morphism is an open immersion. Alternatively, its image is a subset whose inverse image is open. Flat morphisms locally of finite presentation are open, so the descended image is open, and the map identifies $U$ with it after a cover, hence already downstairs.
 
@@ -690,7 +748,8 @@ For a morphism $f:X\to S$, the following properties are fpqc local on the base, 
 | monomorphism | none beyond fpqc | diagonal is an isomorphism |
 | open, closed, or locally closed immersion | none beyond fpqc | affine equations and open-image descent |
 | proper | finite type and separated are part of the definition | universal closedness descends |
-| smooth, étale, unramified | locally of finite presentation | infinitesimal or differential criterion |
+| smooth and étale | locally of finite presentation | infinitesimal or differential criterion |
+| unramified | locally of finite type | diagonal is an open immersion |
 
 Quasi-affine and quasi-projective morphisms are postponed because their proofs use global functions or ample bundles. Projective morphisms are treated there as well. Noetherianity is not needed for the entries above unless it is built into a chosen alternative definition.
 
@@ -702,7 +761,7 @@ Local finite type and local finite presentation reduce to affine charts after us
 
 For properness, finite type and separatedness have already descended. It remains to descend universal closedness. After any $S'\to S$, the induced $T\times_SS'\to S'$ is fpqc. A closed subset $Z\subset X_{S'}$ has closed inverse image in $X_{T\times_SS'}$, whose image in $T\times_SS'$ is closed because the upstairs morphism is proper. This closed subset is saturated for the cover. A subset of $S'$ is closed if its inverse image under an fpqc morphism is closed: reduce to affine faithfully flat maps, where specialization lifts by going-down for flat maps and surjectivity supplies a point over the initial prime. Thus the image of $Z$ is closed.
 
-For smoothness and étaleness, first descend local finite presentation and flatness. Smoothness may be characterized, for a finitely presented flat morphism, by geometrically regular fibers. A point of $S$ lifts after the cover, and geometric regularity of the fiber can be checked after a faithfully flat field extension. Étaleness is smoothness of relative dimension zero, or equivalently flatness plus unramifiedness. Unramifiedness descends through the diagonal criterion. This proves the table without assuming the base is noetherian or a field.
+For smoothness and étaleness, first descend local finite presentation and flatness. Smoothness may be characterized, for a finitely presented flat morphism, by geometrically regular fibers. A point of $S$ lifts after the cover, and geometric regularity of the fiber can be checked after a faithfully flat field extension. Étaleness is smoothness of relative dimension zero, or equivalently flatness plus unramifiedness. For unramifiedness by itself, local finite type descends and the diagonal is an open immersion exactly when its base change is. This proves the table without assuming the base is noetherian or a field.
 
 Some properties are only local on the source, others only on the target, and some on both. The phrase “fpqc local on the base” means exactly
 
@@ -724,13 +783,68 @@ No separatedness, quasi-compactness, finite type, or noetherian hypothesis is im
 
 ### 11.2 Descending affine opens
 
-The assertion is local on $S$. Over an affine open of $S$, choose finitely many affine opens in $T$ whose images cover it and replace them by their disjoint union. Restricting the datum gives an affine faithfully flat cover. If a scheme is constructed from that refinement, its pullback to the original $T$ is identified with $X_T$ after the fpqc cover formed by the pairwise fiber products; full faithfulness then supplies the identification on $T$. We may therefore assume for the central argument that both $S$ and $T$ are affine.
+The assertion is local on $S$. Over an affine open of $S$, choose finitely many affine opens in
+$T$ whose images cover it and replace them by their disjoint union. Restricting the datum gives
+an affine faithfully flat cover. If a scheme is constructed from that refinement, its pullback
+to the original $T$ is identified with $X_T$ after the fpqc cover formed by the pairwise fiber
+products; morphism full faithfulness then supplies the identification on $T$. We may therefore
+assume in the central argument that $S=\operatorname{Spec}A$,
+$T=\operatorname{Spec}B$, and $A\to B$ is faithfully flat.
 
-Fix $x\in X_T$. Choose an affine neighborhood $W$ of $x$. Over $T^{[1]}$, the datum compares the two pullbacks of $W$, but they need not coincide. Their intersection is open. Because the projections $T^{[1]}\to T$ are affine and quasi-compact, the relevant inverse images admit finite covers by quasi-compact pieces. Shrinking on these finitely many pieces makes the two transports lie in a common quasi-compact open.
+We record the geometric lemma on which effectivity rests.
 
-Repeat over the triple overlap and intersect the finitely many resulting opens. The cocycle ensures stability under further transport. We obtain a quasi-compact open $V\subset X_T$ whose two inverse images correspond under the datum. Refining $V$ by finitely many principal affine opens and replacing their defining functions by finite products of all transported functions produces a datum-stable affine open around the chosen equivalence class. The algebra behind the last step is the principal-open identity $D(f)\cap D(g)=D(fg)$; affineness of the cover makes every transport describable by tensor-product localization, and quasi-compactness ensures that only finitely many functions occur.
+**Affine-neighborhood lemma.** Let $X_B$ be a $B$-scheme with descent datum for
+$A\to B$. Every point of $X_B$ lies in an affine open $V$ such that
 
-Thus every point has a datum-stable affine neighborhood after an fpqc refinement of the base. This statement, often called the affine-neighborhood lemma for descent, is the geometric heart of the proof. Its finite choices explain exactly why an arbitrary surjective flat map without quasi-compact control is insufficient for this direct argument.
+$$
+\theta(p_1^{-1}V)=p_2^{-1}V
+$$
+
+inside the two pullbacks to $B\otimes_AB$. Such opens cover $X_B$.
+
+Here is the simultaneous-shrinking proof. The datum turns
+
+$$
+R=X_B\times_{\operatorname{Spec}B}\operatorname{Spec}(B\otimes_AB)
+\rightrightarrows X_B
+$$
+
+into a groupoid: one arrow is projection and the other is projection after $\theta$. Both arrows
+are affine and quasi-compact, normalization gives the identity arrows, and the cocycle gives
+composition over $B^{[2]}$.
+
+Two simultaneous-shrinking facts are used. First, the whole orbit of a chosen point, not only the
+point itself, has an affine neighborhood. The source fiber of the orbit is quasi-compact, so its
+target is covered by finitely many affine opens $W_i$. Pull the $W_i$ back by both arrows and
+refine their overlaps by principal affines. On triple overlaps the cocycle identifies the two
+localizations obtained by successive transport. The corresponding finite diagram of coordinate
+rings therefore has an Amitsur equalizer, and affine algebra descent identifies its spectrum with
+one affine neighborhood $W$ of the whole orbit. This is the affine-communication calculation;
+without the cocycle, the localizations would not glue to one ring.
+
+Second, stability can be achieved inside $W$. Pulling $W$ back by the two arrows and intersecting
+gives an open containing every arrow over the chosen orbit. Since both arrows are quasi-compact,
+the complements relevant over a principal neighborhood of that orbit are controlled by finitely
+many affine charts. On each chart, shrink $W$ by a principal open so that membership in $W$ is
+preserved in both directions.
+
+Perform the same finite shrinking after pulling to $B^{[2]}$. If the principal functions obtained
+are $f_1,\ldots,f_m$, replace them by their product. The identity
+
+$$
+D(f_1)\cap\cdots\cap D(f_m)=D(f_1\cdots f_m)
+$$
+
+keeps the result affine. The cocycle says that transporting one of these conditions twice gives
+the condition already obtained by direct transport; hence no new condition appears over
+$B^{[3]}$. The final principal open $V\subseteq W$ therefore has equal source and target inverse
+images. Repeating at each point proves the lemma. Notice that the only finiteness used is
+quasi-compactness of the two groupoid arrows; no intersection of arbitrary affine opens of
+$X_B$ is asserted to be quasi-compact. This is why the argument also covers nonseparated and
+non-quasi-separated $X_B$.
+
+The lemma is the one genuinely geometric step in scheme descent. Everything after it is affine
+algebra and ordinary Zariski gluing.
 
 ### 11.3 Gluing the quotient
 
@@ -794,7 +908,9 @@ the meaning of exactness is sheaf-theoretic for the fppf topology: the first map
 
 ### 12.4 Actions and quotients in the finite case
 
-An action $a:G\times_SX\to X$ is another morphism satisfying identity and associativity diagrams, so compatible actions descend. Fixed-point subschemes defined as equalizers descend whenever the relevant equalizer is representable; for a separated $X$, the fixed locus of a finite group action is closed because it is pulled back from a diagonal.
+An action $a:G\times_SX\to X$ is another morphism satisfying identity and associativity diagrams,
+so compatible actions descend. A fixed-point construction descends whenever its representing
+equalizer has been formed; no general representability claim is needed here.
 
 Let a finite locally free group scheme $G$ act on an affine $X=\operatorname{Spec}R$. The affine quotient is
 
@@ -804,7 +920,15 @@ $$
 R^G=\{r:a^*(r)=1\otimes r\}.
 $$
 
-This is an equalizer and commutes with flat base change when the finite projectivity needed to control the coaction is present. If the action is free in the torsor sense, $X\to\operatorname{Spec}(R^G)$ is finite locally free and the expected orbit relation is effective. For nonaffine $X$, existence of a scheme quotient needs invariant affine neighborhoods or a separate representability theorem; descent alone must not be cited as producing all group quotients.
+This is an equalizer and commutes with flat base change because flat tensor product preserves
+equalizers; finite local freeness of $G$ ensures that the coaction is represented by the finite
+projective Hopf algebra. If the action is free in the torsor sense,
+$X\to\operatorname{Spec}(R^G)$ is finite locally free and the expected orbit relation is
+effective.
+
+For nonaffine $X$, representability of either a quotient or a fixed-point functor may require
+invariant affine neighborhoods or a separate theorem. Descent preserves such an object once it
+has been constructed; it must not be cited as constructing every group quotient.
 
 ## 13. Torsors
 
@@ -813,8 +937,8 @@ This is an equalizer and commutes with flat base change when the finite projecti
 Let $G$ be an $S$-group scheme acting on the right on an $S$-scheme $P$. The action is **simply transitive over the base** when
 
 $$
-G\times_SP\longrightarrow P\times_SP,
-\qquad(g,p)\longmapsto(p,pg)
+P\times_SG\longrightarrow P\times_SP,
+\qquad(p,g)\longmapsto(p,pg)
 $$
 
 is an isomorphism. A **$G$-torsor for the fpqc topology** is an $S$-scheme $P$ with this identity such that $P\to S$ is an fpqc cover. For an fppf torsor one asks $P\to S$ to be fppf.
@@ -827,26 +951,33 @@ If $G\to S$ is finite locally free of positive rank and $P$ is a torsor, then af
 
 Conversely, suppose $P_T\simeq G_T$ over a cover $T\to S$, with transition maps that are $G$-equivariant and satisfy the cocycle. Scheme descent gives $P$, action descent gives the action, and the torsor identity descends because being an isomorphism is fpqc local. The cover $P\to S$ is fpqc or fppf when this property is verified after $T\to S$. Hence torsors are exactly locally trivial $G$-spaces equipped with coherent transition data.
 
-Choose trivializations $P_{T_i}\simeq G_{T_i}$. A $G$-equivariant automorphism of the right regular $G$-space is left translation by a unique element $g_{ij}\in G(T_i\times_ST_j)$. The cocycle becomes
+Choose trivializations $P_{T_i}\simeq G_{T_i}$. We retain the convention of Section 4.4 that
+$\theta_{ij}$ transports from the $i$th trivialization to the $j$th. A $G$-equivariant
+automorphism of the right regular $G$-space is left translation by a unique element
+$g_{ij}\in G(T_i\times_ST_j)$. Since composition of left translations reverses the written
+transport order, the cocycle is
 
 $$
-g_{ik}=g_{ij}g_{jk}
+g_{ik}=g_{jk}g_{ij}.
 $$
 
-with the order depending on the left/right convention. Changing trivializations by $h_i\in G(T_i)$ changes $g_{ij}$ by
+If the new $i$th trivialization is left translation by $h_i$ followed by the old one, then
 
 $$
-g'_{ij}=h_i g_{ij}h_j^{-1}.
+g'_{ij}=h_jg_{ij}h_i^{-1}.
 $$
 
-This is the noncommutative cocycle description of torsors. It is a pointed classification: the trivial torsor corresponds to the identity cocycle.
+These two displayed orders follow from the declared right-action and $i$-to-$j$ conventions; using
+the opposite convention reverses both formulas. This is the noncommutative cocycle description
+of torsors. It is a pointed classification: the trivial torsor corresponds to the identity
+cocycle.
 
 ### 13.3 Contracted products and twisting
 
-If $P$ is a right $G$-torsor and $G$ acts on the left on $X$, the contracted product is locally the quotient of $P\times_SX$ by
+If $P$ is a right $G$-torsor and $G$ acts on the left on $X$, the contracted product is locally the quotient of $P\times_SX$ by the right action
 
 $$
-(p,x)g=(pg,g^{-1}x).
+(p,x)\cdot g=(pg,g^{-1}x).
 $$
 
 It can be constructed without first proving a general quotient theorem. Trivialize $P$ fpqc-locally. On each trivializing member the desired object is $X$, and on overlaps the torsor cocycle acts on $X$. The action law supplies the triple cocycle, so scheme descent produces
@@ -865,7 +996,7 @@ For $G=\mathbf G_m$, torsors and line bundles encode one another. From a line bu
 
 For $G=\operatorname{GL}_r$, the frame bundle of a rank-$r$ vector bundle is a torsor, and the associated bundle for the standard representation recovers the vector bundle. For $\mu_n$, the equation $z^n=a$ gives a torsor where $a$ is a unit; when $n$ is not invertible on the base it is generally fppf rather than étale. This is one reason finite-flat descent, not only étale descent, is indispensable in integral moduli problems.
 
-A transitive action on geometric points is not enough to be a torsor. Infinitesimal stabilizers may remain invisible on geometric points. The scheme isomorphism $G\times P\simeq P\times P$ detects them. Likewise a quotient on topological spaces does not supply the structure sheaf or its effectivity; torsor descent is a scheme-theoretic statement.
+A transitive action on geometric points is not enough to be a torsor. Infinitesimal stabilizers may remain invisible on geometric points. The scheme isomorphism $P\times G\simeq P\times P$ detects them. Likewise a quotient on topological spaces does not supply the structure sheaf or its effectivity; torsor descent is a scheme-theoretic statement.
 
 ## 14. Quasi-affine descent
 
@@ -913,13 +1044,21 @@ This finiteness is useful in parameter problems. Conditions imposed by nonvanish
 
 ### 14.4 The precise reusable criterion
 
-The criterion used later can be stated without mentioning a chosen embedding. Let $f:X\to S$ be quasi-compact and quasi-separated. Then the following are equivalent:
+The criterion used later can be stated without mentioning a chosen embedding. Let $f:X\to S$ be
+quasi-compact and quasi-separated. Then the following are equivalent:
 
 1. $f$ is quasi-affine;
 2. $j_X:X\to\operatorname{Spec}_S(f_*\mathcal O_X)$ is a quasi-compact open immersion;
-3. every point of $X$ has a neighborhood of the form $X_s\cap D(g)$, for finitely many relative functions whose principal loci are affine over $S$ locally.
+3. after restricting to any affine open $U\subseteq S$, finitely many relative functions
+   $g_i\in\Gamma(X_U,\mathcal O_{X_U})$ have affine principal opens $(X_U)_{g_i}$ which cover
+   $X_U$.
 
-The implication $1\Rightarrow2$ was proved by principal opens; $2\Rightarrow1$ is immediate. For $2\Rightarrow3$, pull back standard principal opens of the affine envelope. Conversely, the local principal-open condition makes $j_X$ an isomorphism on an open cover, and monomorphism follows because global functions separate the same affine charts. The criterion is stable under flat base change and therefore ideal for descent.
+The implication $1\Rightarrow2$ was proved by principal opens; $2\Rightarrow1$ is immediate. For
+$2\Rightarrow3$, pull back finitely many standard principal opens of the affine envelope.
+Conversely, on $(X_U)_{g_i}$ the canonical map identifies the coordinate ring with the
+localization of $\Gamma(X_U,\mathcal O)$ at $g_i$. These identifications agree on
+$D(g_ig_j)$, so $j_X$ is an open immersion. This criterion is stable under flat base change and
+is therefore suited to descent.
 
 ## 15. Quasi-projective and projective descent
 
@@ -935,19 +1074,29 @@ $$
 \mathcal L_T\text{ is }f_T\text{-ample}.
 $$
 
-It follows that a **polarized quasi-projective object** $(X,\mathcal L)$ satisfies effective fpqc descent when $f$ is of finite presentation and $\mathcal L$ is relatively ample. The word polarized means that the overlap datum includes the line bundle and its cocycle, not merely that some ample line bundle exists after the cover.
+It follows that a **polarized quasi-projective object** $(X,\mathcal L)$ satisfies effective fpqc descent when $f$ is of finite presentation and $\mathcal L$ is relatively ample. If $S$ is quasi-compact, one sufficiently high power gives one finite-rank projective-bundle embedding over all of $S$; without that hypothesis the conclusion and embedding are local on $S$. The word polarized means that the overlap datum includes the line bundle and its cocycle, not merely that some ample line bundle exists after the cover.
 
 ### 15.2 Very ampleness and closed immersions
 
-Suppose $\mathcal L_T$ is relatively very ample with a compatible finite locally free space of generating sections $\mathcal E_T\twoheadrightarrow(f_T)_*\mathcal L_T$ in the form needed for an embedding
+Suppose $\mathcal L_T$ is relatively very ample and the datum includes a finite locally free
+sheaf $\mathcal E_T$ on $T$, its descent datum, and a compatible surjection
+
+$$
+f_T^*\mathcal E_T\twoheadrightarrow\mathcal L_T
+$$
+
+whose associated morphism is an immersion
 
 $$
 X_T\hookrightarrow\mathbf P_T(\mathcal E_T).
 $$
 
-Descend $\mathcal E_T$, the quotient map, and the induced morphism to projective space. Closed immersion is fpqc local, so the descended map is a closed immersion. Hence very ampleness with its finite system of sections descends.
+Descend $\mathcal E_T$, the quotient map, and the induced morphism to projective space. If the
+upstairs immersion is closed, closed immersion is fpqc local, so the descended map is closed.
+Thus very ampleness with its compatible finite system of sections descends; for a proper
+$X_T/T$, the immersion is automatically closed.
 
-For an ample line bundle, a sufficiently high power becomes very ample when $f$ is quasi-projective of finite presentation and the relevant finite generation theorem applies. Book 8 supplies this relative embedding result. Once one power and a finite set of sections have been chosen compatibly, the preceding paragraph descends the embedding. In particular, projectivity descends for a projective object equipped with compatible ample polarization data; properness of the descended morphism also follows independently from Chapter 10.
+For an ample line bundle, a sufficiently high power becomes very ample when $f$ is quasi-projective of finite presentation and the relevant finite generation theorem applies. Book 8 supplies this relative embedding result. Once one power and a finite set of sections have been chosen compatibly, the preceding paragraph descends the embedding. On a quasi-compact base the finite data give one global projective-bundle embedding. On an arbitrary base they do so locally on the base, which is the form used in local moduli constructions. Properness of the descended morphism follows independently from Chapter 10.
 
 The distinction between a closed and an open immersion is stable under descent. Thus if $X_T$ is exhibited as a locally closed subscheme of a projective bundle by compatible data, the locally closed immersion and its image descend, giving a quasi-projective $X$.
 
@@ -962,16 +1111,59 @@ N_q(\mathcal M)
 =\det(q_*\mathcal M)\otimes\det(q_*\mathcal O_{X_T})^{-1}.
 $$
 
-It is a line bundle and is multiplicative in $\mathcal M$. This is checked after a cover on which $q_*\mathcal O_{X_T}$ and $q_*\mathcal M$ are free, where the norm is the determinant of multiplication and transition determinants multiply. If $\mathcal M$ is relatively ample over $T$, then $N_q(\mathcal M)$ is relatively ample over $S$. Here is a proof that does not assume a ramified finite cover becomes a disjoint union. Take a sufficiently high power of $\mathcal M$ and finitely many sections whose nonvanishing loci are affine and cover $X_T$. The determinant norm sends each section to a section of the corresponding norm line bundle. Cayley--Hamilton applied to multiplication on the finite locally free algebra shows that the nonvanishing locus of a norm section is the largest locus over which the original section is invertible on every point of the finite fiber. Finite products of suitably chosen norm sections give a covering by affine loci: their inverse images are finite intersections of affine principal loci, and affineness descends along the finite faithfully flat map. The affine-open criterion from Book 8 proves ampleness. Thus quasi-projectivity and projectivity descend along finite locally free surjective base change without a preselected polarization.
+It is a line bundle and is multiplicative in $\mathcal M$. This is checked after a cover on which
+$q_*\mathcal O_{X_T}$ and $q_*\mathcal M$ are free, where transition determinants give the norm
+and multiplication of transition functions gives its monoidal law.
 
-Second, in moduli problems the object carries a canonical positive divisor or polarization. A marked effective Cartier divisor $D_T$ that is compatible with descent gives $\mathcal O(D_T)$ with descent datum. If a fixed power is ample—for example, a sufficiently positive multiple of the identity divisor on a family of genus-one curves—polarized descent applies. For an abelian scheme with a specified polarization represented fpqc-locally by an ample line bundle, rigidification and symmetry remove the scalar ambiguity; a fixed tensor power then has a genuine cocycle and descends. The precise power is chosen as part of the moduli construction, so no general assertion about arbitrary polarization classes is required.
+We need the following precise positivity fact.
+
+**Norm-ampleness lemma.** If $q:Y\to X$ is finite locally free and surjective and
+$Y\to S$ is of finite presentation, then a line bundle $\mathcal M$ ample relative to $S$ has
+$N_q(\mathcal M)$ ample relative to $S$.
+
+Work over an affine open of $S$. For a point $x\in X$, the finite fiber $q^{-1}(x)$ is contained
+in an affine nonvanishing locus $Y_s$ of one homogeneous section $s$ of a sufficiently high power
+of $\mathcal M$. To obtain one $s$ for the whole finite fiber, take a common degree in the section
+algebra and apply finite prime avoidance to the finitely many primes in that fiber. The
+affine-open criterion for ampleness ensures that $Y_s$ is affine. Taking determinants of
+multiplication sends $s$ to
+
+$$
+N(s)\in\Gamma(X,N_q(\mathcal M)^{\,n}).
+$$
+
+On an affine trivialization of the finite locally free algebra, Cayley--Hamilton says that
+$N(s)$ is invertible exactly where multiplication by $s$ is invertible on the whole finite
+fiber. It also expresses the inverse-image of $X_{N(s)}$ as a finite intersection of principal
+opens inside $Y_s$, hence as an affine. The map
+$q^{-1}(X_{N(s)})\to X_{N(s)}$ is finite faithfully flat, so affine descent makes
+$X_{N(s)}$ affine. These opens contain every $x$ and therefore prove the lemma by the
+affine-open criterion.
+
+Apply the lemma with $Y=X_T$. A line bundle ample relative to $T$ is also ample relative to $S$
+when $T\to S$ is finite, since over an affine of $S$ the scheme $T$ is affine and the same
+nonvanishing loci test ampleness. Thus $N_q(\mathcal M)$ is relatively ample on $X/S$. It follows
+that quasi-projectivity, and projectivity in the proper case, descend along a finite locally free
+surjective base change without a preselected polarization.
+
+Second, in moduli problems the object may carry compatible positive data. A marked effective
+Cartier divisor $D_T$ gives $\mathcal O(D_T)$ with descent datum. If a fixed power is ample,
+polarized descent applies. On a reducible curve the divisor must meet every geometric component;
+the identity divisor alone does not do so on a polygon with more than one component. For an
+abelian scheme, an ample rigidified line bundle may be used only when its overlap isomorphisms and
+triple cocycle are part of the data. Rigidification removes scalar automorphisms of an already
+chosen overlap isomorphism, but does not by itself create an isomorphism between two unrelated
+line bundles. Thus no general assertion about arbitrary polarization classes is being smuggled
+into the argument.
 
 ### 15.4 Limits of the statement
 
 One must not argue: “$X_T$ has some ample line bundle, therefore that line bundle descends.” Its two pullbacks may not even be isomorphic, and chosen isomorphisms may fail the cocycle. The safe statements proved here are:
 
-- quasi-projectivity descends with a compatible relatively ample line bundle;
-- it descends without a chosen line bundle along a finite locally free surjective cover, by the norm construction;
+- quasi-projectivity descends with a compatible relatively ample line bundle, globally when the
+  finite embedding data are uniform and otherwise locally on the base;
+- it descends without a chosen line bundle along a finite locally free surjective cover, by the
+  norm construction, with the same local/global qualification;
 - it descends in a moduli problem when a canonical divisor, rigidified polarization, or explicitly chosen tensor power supplies compatible positive data.
 
 These are exactly the forms used below. No unrestricted claim that an arbitrary locally existing polarization descends is needed. Similarly, proper plus quasi-projective implies projective because a quasi-projective immersion into projective space is locally closed and proper, hence closed. Properness alone does not produce a projective embedding over an arbitrary base.
@@ -982,17 +1174,56 @@ These are exactly the forms used below. No unrestricted claim that an arbitrary 
 
 A generalized elliptic curve over $S$ consists, in the range relevant here, of a proper flat finitely presented family $E\to S$ whose geometric fibers are smooth genus-one curves or prescribed Néron polygons, a section $e:S\to E$ in the smooth locus, and a commutative group action of the smooth locus extending the usual translation action with the required behavior on components. Each clause is fpqc local once expressed scheme-theoretically.
 
-Given such an object over $T$ with descent datum, descend the scheme $E$, the section $e$, the smooth open, the multiplication/action maps, and all incidence morphisms. Properness, flatness, finite presentation, smoothness of the indicated locus, and the finite locally free component conditions descend by Chapter 10. The group and action identities descend as equalities of morphisms. The fiber condition can be tested after residue-field extension: nodal singularities, the number and cyclic incidence of geometrically irreducible components, and arithmetic genus are preserved and reflected after faithfully flat field extension when the family is finitely presented and flat.
+Given such an object over $T$ with descent datum, descend the scheme $E$, the section $e$, the smooth open, the multiplication/action maps, and all incidence morphisms. Properness, flatness, finite presentation, smoothness of the indicated locus, and the finite locally free component conditions descend by Chapter 10. The group and action identities descend as equalities of morphisms.
 
-For projectivity, use the marked divisor. In a genus-one family, a fixed sufficiently large multiple $n[e]$ has relatively ample associated line bundle; on an $m$-gon one includes the orbit of the identity section, or an invariant divisor meeting every component, so positive degree occurs on every component. The divisor and its line bundle carry descent data because the section and action do. Book 8 then descends ampleness and the resulting projective embedding. This avoids selecting an unrelated ample bundle upstairs.
+The geometric fiber condition is unchanged by the residue-field extensions occurring here. After
+passing two field extensions to a common algebraic closure, their geometric fibers become the
+same scheme. Thus geometric irreducible components and their incidence graph agree. A node is
+the étale-local plane singularity $uv=0$; that description is preserved and reflected by a
+faithfully flat field extension. Finally, cover the proper separated fiber by finitely many
+affines. Their finite intersections are affine, so the finite Čech complex computes coherent
+cohomology. Tensoring that complex with a field extension is exact and gives the Čech complex of
+the base-changed cover. The dimensions of the resulting finite-dimensional cohomology spaces are
+unchanged, so
 
-Level structures are morphisms from finite locally free group schemes into the smooth group locus or its torsion. Their homomorphism identities descend. Conditions such as being a closed immersion, being finite locally free of a given rank, or giving a full set of sections are fpqc local. Exactness of subgroup sequences is interpreted in the fppf sense as in Section 12.3. Thus level structures at primes not invertible on the base are handled without pretending they are etale.
+$$
+\chi(\mathcal O)=\sum_i(-1)^i\dim H^i(\mathcal O),
+$$
+
+is unchanged. Thus the arithmetic genus agrees. This verifies, rather than assumes, descent of
+the smooth genus-one and prescribed polygon alternatives.
+
+For projectivity, the input to descent is a compatible finite effective Cartier divisor $D$ and
+an integer $n>0$ for which $\mathcal O(nD)$ has already been verified relatively ample over $T$.
+This verification is part of the particular moduli presentation, not a consequence of descent.
+On a smooth genus-one fiber the identity divisor is the usual candidate. On an $m$-gon with
+$m>1$, however, the identity section lies on only one component, so its multiples cannot serve;
+one instead uses a divisor in the smooth locus meeting every geometric irreducible component,
+for example an orbit under specified level data when that orbit meets all components.
+Compatibility of $D$ and its line bundle is part of the descent datum. Book 8 then reflects the
+already verified ampleness and supplies the projective embedding. This avoids both an unrelated
+ample bundle upstairs and the false use of the identity divisor on a polygon.
+
+Level structures are morphisms from finite locally free group schemes into the smooth group locus or its torsion. Their homomorphism identities descend. Conditions such as being a closed immersion, being finite locally free of a given rank, or giving a full set of sections are fpqc local. Exactness of subgroup sequences is interpreted in the fppf sense as in Section 12.3. Thus level structures at primes not invertible on the base are handled without pretending they are étale.
 
 ### 16.2 PEL objects
 
 A PEL object comprises an abelian scheme $A\to S$, an action $\iota:\mathcal O\to\operatorname{End}_S(A)$ by a fixed finite algebra with involution, a polarization $\lambda:A\to A^\vee$, and a level structure, subject to determinant and compatibility conditions. Descent treats these pieces in a rigid order.
 
-First descend the proper smooth group scheme and its identity. Geometric connectedness of fibers descends after field extension, so the result is an abelian scheme. The polarization is encoded here by its rigidified relatively ample line bundle; its associated homomorphism and the bidual comparison then commute with base change by their universal construction. Endomorphisms $\iota(a)$ descend by full faithfulness. Since $\mathcal O$ is finitely generated as an abelian group in the applications, finitely many multiplication and involution identities suffice, and all are equalities of maps.
+First descend the proper smooth group scheme and its identity. Geometric connectedness of fibers
+descends after field extension, so the result is an abelian scheme. Endomorphisms $\iota(a)$
+descend by full faithfulness. Since $\mathcal O$ is finitely generated as an abelian group in the
+applications, finitely many multiplication and involution identities suffice, and all are
+equalities of maps.
+
+For the polarization there are two safe presentations. It may be included as a rigidified
+relatively ample line bundle with its genuine cocycle, in which case line-bundle descent and
+ampleness apply directly. Alternatively, if the moduli problem uses a homomorphism
+$\lambda:A\to A^\vee$, then the dual abelian scheme, its evaluation structure, and $\lambda$ are
+included among the compatible objects and maps being descended. The present argument uses only
+effectivity and full faithfulness for those supplied schemes and maps; it does not import a
+construction of $A^\vee$ or infer descent of an inducing line bundle merely from the
+homomorphism.
 
 The relation
 
@@ -1000,13 +1231,16 @@ $$
 \lambda\circ\iota(a)=\iota(a^*)^\vee\circ\lambda
 $$
 
-descends because both sides are morphisms. Being an isogeny is detected by finiteness, flatness, and surjectivity of $\lambda$; the degree or rank of its kernel descends. Positivity is encoded by the ample rigidified bundle used to define the polarization, not by an order relation on geometric points.
+descends because both sides are morphisms. Being an isogeny is detected by finiteness and
+surjectivity of $\lambda$ and, in the finite-flat presentation used here, by flatness as well; the
+degree or rank of its kernel descends. Positivity is encoded by the compatible ample rigidified
+bundle when that presentation is used, not by an order relation on geometric points.
 
 The determinant condition compares the characteristic polynomial of the $\mathcal O$-action on the Lie bundle with a prescribed polynomial. The Lie bundle is finite locally free and commutes with base change for a smooth group scheme. Characteristic-polynomial coefficients are polynomial expressions in the action matrix and hence descend. Equality with the prescribed coefficients can be checked after faithful base change. Alternating pairings, isotropic subgroup conditions, and similitude factors are likewise equations or perfectness conditions on finite locally free sheaves.
 
 ### 16.3 Representability after descent
 
-Descent does not by itself prove that a moduli functor is represented. It supplies the sheaf condition and lets locally constructed representing schemes glue. A typical argument proceeds as follows. After an fppf cover, trivialize the relevant vector bundles and choose a projective embedding supplied by an ample canonical line bundle. The choices place the objects in a Hilbert scheme or a locally closed parameter space of the kind constructed in Book 8. Equations expressing group laws, endomorphism actions, polarizations, and determinant conditions cut out closed loci; nondegeneracy and smoothness cut out open loci.
+Descent does not by itself prove that a moduli functor is represented. It supplies the sheaf condition and lets locally constructed representing schemes glue. Under the noetherian, projective, finite-presentation, and fixed-polynomial hypotheses of the parameter theorems in Book 8, a typical argument proceeds as follows. After an fppf cover, trivialize the relevant vector bundles and choose a projective embedding supplied by an ample canonical line bundle. The choices place the objects in the corresponding Hilbert scheme or locally closed parameter space. Equations expressing group laws, endomorphism actions, polarizations, and determinant conditions cut out closed loci; nondegeneracy and smoothness cut out open loci.
 
 On overlaps, changing the trivialization produces canonical isomorphisms between the parameter spaces and universal objects. The triple identity follows from composition of changes of basis. Effective descent glues the universal families and morphisms. Full faithfulness guarantees that the glued object represents the original functor rather than only its objects after a cover.
 
@@ -1056,7 +1290,7 @@ The results established in this book may be used in the following precise form.
 - Affine, finite, finite locally free, quasi-compact, quasi-separated, separated, finite-type, finite-presentation, flat, proper, smooth, étale, and unramified morphisms are fpqc local on the base with the qualifications stated in Chapter 10.
 - Line bundles, vector bundles, tensors, pairings, sections, effective Cartier divisors, finite-flat group schemes, actions, and torsors descend when their structure maps and cocycles are included.
 - Quasi-affineness descends for quasi-compact quasi-separated morphisms through the intrinsic affine envelope.
-- Quasi-projective and projective objects descend with compatible ample data; a finite locally free cover permits an unpolarized descent by norms; canonical positive divisors and rigidified polarizations cover the generalized elliptic and PEL cases.
+- Quasi-projective and projective objects descend with compatible ample data in the local-on-the-base form, and globally when one finite embedding system is available; a finite locally free cover permits unpolarized descent by norms; compatible positive divisors and rigidified ample line bundles cover the stated generalized elliptic and PEL cases.
 
 Each assertion includes both effectivity and full faithfulness. Properties are not confused with objects: after constructing the descended object, the relevant local-on-the-base theorem must still be applied.
 

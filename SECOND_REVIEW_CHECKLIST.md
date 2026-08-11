@@ -36,7 +36,7 @@ any resulting corrections.
 - [ ] 010. Normalization and Regular Models of Arithmetic Curves
 - [ ] 011. Blowups and Intersection Theory on Arithmetic Surfaces
 - [ ] 012. Semistable Curves, Dual Graphs, and Component Groups
-- [ ] 013. Faithfully Flat Descent in Algebraic Geometry
+- [x] 013. Faithfully Flat Descent in Algebraic Geometry
 - [ ] 014. Moduli Stacks for Modular and PEL Problems
 - [ ] 015. Coherent Cohomology in Proper Families
 - [x] 016. Arithmetic Spectral Sequences and Derived Cohomology
