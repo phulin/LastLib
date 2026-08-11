@@ -31,7 +31,7 @@ any resulting corrections.
 - [ ] 005. Local Class Field Theory
 - [ ] 006. Global Class Field Theory
 - [x] 007. Analytic Foundations for Odlyzko–Poitou Bounds
-- [ ] 008. Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers
+- [x] 008. Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers
 - [ ] 009. Divisors, Riemann–Roch, and Duality on Relative Curves
 - [ ] 010. Normalization and Regular Models of Arithmetic Curves
 - [ ] 011. Blowups and Intersection Theory on Arithmetic Surfaces
