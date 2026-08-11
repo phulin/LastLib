@@ -250,7 +250,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 183. Supported Galois Cohomology and Selmer Calculations
 - [x] 184. Relation Obstructions and Poitou–Tate Corrections
 - [x] 185. Finite Image and the Balanced Minimal-Lift Argument
-- [ ] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
+- [x] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
 - [ ] 187. Brauer Induction for Automorphy Families
 - [ ] 188. Brauer Characters and Effectivity of Compatible Families
 - [ ] 189. Compatible Systems over the Base Field
