@@ -134,7 +134,7 @@ any resulting corrections.
 - [x] 108. Cuspidal Trace-Formula Kernels for Rank Two
 - [ ] 109. The Cuspidal Spectral Side of the GL₂ Trace Formula
 - [ ] 110. The Geometric Side of the GL₂ Trace Formula
-- [ ] 111. Orbital Integrals for GL₂ and Quaternion Algebras
+- [x] 111. Orbital Integrals for GL₂ and Quaternion Algebras
 - [ ] 112. Transfer of Test Functions and the Rank-Two Fundamental Lemma
 - [ ] 113. Twisted Conjugacy and Geometric Trace Distributions
 - [ ] 114. Twisted Cuspidal Trace Kernels and Spectral Expansion

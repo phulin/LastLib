@@ -177,9 +177,9 @@ $$
 
 **Proof strategy.** The minimal polynomial has degree two exactly away from scalar elements, and separability is measured by its discriminant.
 
-**Proof.** If $\Delta\ne0$, the two roots of $P_\gamma$ over a separable closure are distinct. Hence the minimal polynomial equals $P_\gamma$, the algebra $F[\gamma]$ has dimension two and is étale, and the commutant of a cyclic degree-two element in the ambient central simple algebra has dimension two. It is therefore $F[\gamma]$; taking units gives the centralizer. Conversely, if $\Delta=0$, then over a splitting field $\gamma$ has a repeated eigenvalue. It is either scalar or has a nontrivial nilpotent part, so it is not semisimple regular. $\square$
+**Proof.** If $\Delta\ne0$, the two roots of $P_\gamma$ over a separable closure are distinct. Hence the minimal polynomial equals $P_\gamma$, the algebra $F[\gamma]$ has dimension two and is étale, and the commutant of a cyclic degree-two element in the ambient central simple algebra has dimension two. It is therefore $F[\gamma]$; taking units gives the centralizer. Conversely, if $\Delta=0$, the reduced characteristic polynomial is not separable. If it has a root in $F$, the element is scalar or becomes a nontrivial Jordan element on the split side. In characteristic two it may instead be irreducible and purely inseparable. None of these cases is regular semisimple. $\square$
 
-The last alternative occurs in $M_2(F)$ but not in a division algebra. Indeed, if $(\gamma-z)^2=0$ in a division ring, then $\gamma=z$. Thus every nonregular element of $D^\times$ is central. This clean fact is one reason the quaternionic singular analysis is simpler.
+The nontrivial Jordan alternative occurs in $M_2(F)$ but not in a division algebra: if $(\gamma-z)^2=0$ with $z\in F$ in a division ring, then $\gamma=z$. When $\operatorname{char}F\ne2$, this proves that every nonregular element of $D^\times$ is central. In characteristic two, however, $D$ may contain a purely inseparable quadratic field, and its noncentral generators have inseparable reduced characteristic polynomial. They are nonregular and must be excluded explicitly. The quaternionic singular analysis below concerns approaches through separable regular tori; it does not silently turn these inseparable elements into central classes.
 
 ### 2.2 Split, elliptic, and singular elements
 
@@ -404,7 +404,7 @@ Orbital integrals are not auxiliary decorations: they are precisely the radial p
 $$
 \int_H f(h)\,dh
 =\sum_{T\in\mathcal T(H)}\frac1{|W(H,T)|}
-\int_T |D_H(t)|,O_t(f)\,dt.
+\int_T |D_H(t)|O_t(f)\,dt.
 \tag{4.5}
 $$
 
@@ -412,7 +412,9 @@ The singular set has Haar measure zero and may be omitted.
 
 **Proof strategy.** Apply change of variables to the conjugation map $T\times T\backslash H\to H$, then compute its transverse Jacobian.
 
-**Proof.** On the regular locus the map $(t,\dot x)\mapsto x^{-1}tx$ is a local analytic isomorphism modulo the finite Weyl group. Its differential in an orbit direction $X\bmod\mathfrak t$ is $(1-\operatorname{Ad}(t)^{-1})X$, whose absolute determinant equals $|D_H(t)|$. The map has generic degree $|W(H,T)|$. Change of variables therefore gives the summand in (4.5). The discriminant-zero locus is the zero set of a nonzero polynomial in local coordinates and has measure zero. Summing over the finitely many torus types meeting the compact support completes the proof. $\square$
+**Proof.** On the regular locus the map $(t,\dot x)\mapsto x^{-1}tx$ is a local analytic isomorphism modulo the finite Weyl group. Its differential in an orbit direction $X\bmod\mathfrak t$ is $(1-\operatorname{Ad}(t)^{-1})X$, whose absolute determinant equals $|D_H(t)|$. The map has generic degree $|W(H,T)|$. Change of variables therefore gives the summand in (4.5). The discriminant-zero locus is the zero set of a nonzero polynomial in local coordinates and has measure zero.
+
+In characteristic different from two only finitely many quadratic torus types occur. In equal characteristic two there can be infinitely many Artin--Schreier quadratic extensions, so the last sum must not be called finite. Apply the change-of-variables identity first to $|f|$: the resulting nonnegative sum over torus types is bounded by $\int_H|f(h)|\,dh$ and hence converges. Absolute convergence then permits the same sum for $f$. $\square$
 
 In terms of normalized orbital integrals, the integrand is $|D_H(t)|^{1/2}I_t(f)$. This symmetric placement of the square root is the form suited to comparison with characters, whose regular singularities have the reciprocal square-root size.
 
@@ -817,7 +819,7 @@ $$
 
 with $L/F$ unramified quadratic. If $\delta\in\mathcal O_L^\times$ has residue outside $k^\times$, then $F[\delta]=L$. Since $v_D(L^\times)=2\mathbf Z$, the two valuation representatives $1$ and $\Pi$ survive in $L^\times\backslash D^\times/\mathcal O_D^\times$. Both conjugates remain units, so the orbital integral is $2$.
 
-For a ramified quadratic field $E=F[\Pi u]$ with a suitable unit $u\in\mathcal O_L^\times$, an $E$-uniformizer has $D$-valuation one. Hence $v_D(E^\times)=\mathbf Z$ and only the representative $1$ survives. The orbital integral is $1$. This derivation also shows why one must use $v_D=v\circ\operatorname{Nrd}$: the half-integral alternative would hide the index that produces the factor two.
+If the residue characteristic is odd, a ramified quadratic field may be displayed as $E=F[\Pi u]$ for a suitable unit $u\in\mathcal O_L^\times$; the same display applies whenever a ramified quadratic field admits this cyclic coordinate. Its uniformizer has $D$-valuation one. In arbitrary residue characteristic the coordinate need not exist, but the intrinsic norm-valuation calculation gives the same conclusion: $v_D(E^\times)=\mathbf Z$. Thus only the representative $1$ survives and the orbital integral is $1$. This derivation also shows why one must use $v_D=v\circ\operatorname{Nrd}$: the half-integral alternative would hide the index that produces the factor two.
 
 The same coordinate model computes type matrix coefficients. On the first quotient,
 
@@ -845,59 +847,74 @@ To analyze the limit, translate by $z^{-1}$ and use a small neighborhood of the 
 
 Let $\mathfrak g_0=\mathfrak{sl}_2(F)$. There are two nilpotent conjugacy strata: $0$ and the regular nilpotent orbit. The latter is a single $G$-orbit; every nonzero nilpotent matrix is conjugate to $N=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$.
 
-Fix compatible measures on its centralizer and define
+Fix the measure on its centralizer
 
 $$
-\mu_N(\phi)=\int_{G_N\backslash G}\phi(x^{-1}Nx)\,d\dot x.
+G_N=Z U,
+\qquad
+U=\left\{\begin{pmatrix}1&s\\0&1\end{pmatrix}:s\in F\right\}
 $$
 
-**Theorem 8.1 (rank-one germ expansion).** For $f\in C_c^\infty(G)$ and fixed $z\in Z$, there is a neighborhood of $0$ in the regular trace-zero set such that
+by giving $Z$ its compact-unit multiplicative measure and $U$ the additive measure for which $\mathcal O$ has volume one. The quotient formula then defines the translated regular-nilpotent distribution
 
 $$
-O_{z(1+X)}(f)
-=a_z(X)f(z)+b_z(X)\mu_N(f_z^{\mathrm{Lie}}),
+\mu_{N,z}(f)
+=\int_{G_N\backslash G} f\bigl(z(1+x^{-1}Nx)\bigr)\,d\dot x,
+$$
+
+The integral converges by the same compact-support argument as a regular orbital integral. If one uses a smaller Lie neighborhood in the slice proof, extending its cutoff changes the displayed germ coefficients but not their sum on that neighborhood.
+
+**Theorem 8.1 (rank-one two-germ expansion).** Fix a regular quadratic-algebra type $\mathcal A$ in $M_2(F)$. For $f\in C_c^\infty(G)$ and $z\in Z$, there are functions $\Gamma_{0,\mathcal A}$ and $\Gamma_{N,\mathcal A}$, determined by the group, torus, and nilpotent-centralizer measures fixed above, such that on every sufficiently small regular annulus of type $\mathcal A$,
+
+$$
+I_{z(1+X)}(f)
+=\Gamma_{0,\mathcal A}(X)f(z)
++\Gamma_{N,\mathcal A}(X)\mu_{N,z}(f).
 \tag{8.1}
 $$
 
-where $f_z^{\mathrm{Lie}}(Y)=f(z(1+Y))$ on a sufficiently small neighborhood, $b_z$ is locally bounded, and
+The coefficients are locally constant on sufficiently small valuation annuli and satisfy
 
 $$
-|D_G(z(1+X))|^{1/2}a_z(X)\longrightarrow1.
+\Gamma_{0,\mathcal A}(X)\longrightarrow0,
+\qquad
+\Gamma_{N,\mathcal A}(X)=c_{\mathcal A}
 \tag{8.2}
 $$
 
-The quotient measures are chosen so that the limit in (8.2) is one. Rescaling them changes this common scalar but does not exchange the two germs.
+on every sufficiently deep ray of fixed type, for a nonzero constant $c_{\mathcal A}$ fixed by the declared measures. Thus the normalized singular limit detects the regular-nilpotent orbital distribution, not the raw point value $f(z)$. In the unnormalized orbital integral the regular-nilpotent coefficient has size $|D_G(1+X)|^{-1/2}$, while the zero-orbit coefficient stays bounded.
 
-**Proof strategy.** Slice the conjugation action by the companion matrices $\left(\begin{smallmatrix}0&u\\1&0\end{smallmatrix}\right)$ and decompose the integral into valuation shells of the off-diagonal coordinate.
+**Proof strategy.** Use companion matrices as a transverse slice and sum the conjugation integral by the valuation of one off-diagonal coordinate. Shells that collapse to zero and shells that converge toward the nonzero nilpotent orbit give the two terms. Finite Fourier inversion shows there can be no third term.
 
-**Proof.** On the open set where the lower-left entry is nonzero, conjugation by the upper unipotent and diagonal torus puts a trace-zero matrix into companion form. The change-of-variables determinant is the root value, whose absolute value is the square root of the discriminant. For a locally constant $f$, the shells collapsing all the way to the origin contribute $f(z)$ times the reciprocal root Jacobian. Their coefficient is therefore $|D_G|^{-1/2}$ to leading order. The remaining stable shells converge to the regular nilpotent orbital distribution and have bounded coefficient. This gives (8.1) and (8.2). $\square$
-
-Consequently
+**Proof.** Write
 
 $$
-\lim_{X\to0,\ X\ \mathrm{regular}}I_{z(1+X)}(f)
-=f(z).
+X=\begin{pmatrix}x&y\\c&-x\end{pmatrix},
+\qquad -\det X=x^2+yc=u.
 \tag{8.3}
 $$
 
-The limit is the same from split and elliptic regular directions once the common quotient normalization is used. The bounded regular-nilpotent term disappears after multiplication by $|D|^{1/2}$.
+On the chart $c\ne0$, conjugation by the upper unipotent changes $x$ affinely; after $x$ is eliminated, $y$ is forced by (8.3). Diagonal conjugation changes the valuation of $c$ and contributes the root Jacobian. Thus the orbital integral is a finite sum of valuation shells once the support of $f$ is fixed. The bounded shells collapsing to zero see $f(z)$. The growing string of shells parallel to the nonzero nilpotent orbit, after a fixed rescaling, samples that orbit and gives $\mu_{N,z}(f)$. Multiplication by $|D|^{1/2}$ kills the bounded zero-orbit coefficient and turns the growing regular-nilpotent coefficient into the nonzero constant $c_{\mathcal A}$.
 
-One can inspect the shell calculation more concretely. Write
+To see that these are the only distributions, note that the singular fiber $u=0$ consists exactly of $0$ and the one nonzero nilpotent orbit. On each finite quotient of a small Lie lattice, Fourier inversion in the transverse coordinate expresses any invariant shell sum as a linear combination of evaluation at zero and the sum over the nonzero nilpotent orbit. Passing through the nested finite quotients gives (8.1). Finally choose $f$ supported in a small thickening of a compact-open piece of the regular nilpotent orbit, disjoint from $z$, with $\mu_{N,z}(f)\ne0$. The root-coordinate change of variables has positive nonzero Jacobian on that piece, so its normalized limiting coefficient is nonzero. This proves $c_{\mathcal A}\ne0$. The construction also proves local constancy on annuli and preserves the declared measures. $\square$
+
+The theorem deliberately does not assign $c_{\mathcal A}$ the value one. Compact-unit normalization of different tori was fixed in Chapter 3 and cannot now be rescaled separately to manufacture such a value. For example, the lattice count for $\mathbf1_K$ grows as the order $\mathcal O[1+X]$ becomes less maximal; after Weyl normalization its leading constant depends on whether the limiting quadratic torus is split, unramified elliptic, or ramified elliptic. Formula (5.2) computes that constant without ambiguity.
+
+There is an especially important cancellation phenomenon. A linear combination of vertex and edge functions can kill $\mu_{N,z}$ while retaining a nonzero value at $z$. Its ordinary regular orbital integral may then remain bounded, and its normalized orbital integral tends to zero. Consequently
 
 $$
-X=\begin{pmatrix}x&y\\z&-x\end{pmatrix},
-\qquad -\det X=x^2+yz=u.
+I_{z(1+X)}(f)\longrightarrow0
 $$
 
-On the chart where the lower-left coordinate is nonzero, conjugation by $\left(\begin{smallmatrix}1&s\\0&1\end{smallmatrix}\right)$ changes $x$ by an affine function of $s$ and then determines $y$ from $u=x^2+yz$. Integration in $s$ removes the $x$-coordinate. What remains is a sum over the valuation of the lower-left coordinate. The shells that contract to the origin form a geometric series with leading size $|u|^{-1/2}$ and see only the constant value $f(z)$. The shells that remain on the nonzero nilpotent orbit contribute a bounded term. Since $|D(1+X)|^{1/2}$ is $|u|^{1/2}$ times a unit near the identity, the product has the limit in (8.3).
+does **not** imply $f(z)=0$. This distinction is essential at the interface with transfer.
 
-This coordinate proof also explains why local constancy on the regular set does not imply a locally constant extension across the center. As $u$ crosses valuation thresholds, the number of contributing shells changes. The normalized leading term is stable, but the bounded remainder can jump. Singular limits are therefore statements about germs, not pointwise continuation of the original locally constant function.
+The shell proof also explains why local constancy on the regular set does not give a locally constant extension across the center. As $v(u)$ crosses a threshold, a new nilpotent-direction shell enters the sum. Singular limits are therefore identities among measured germs, not pointwise continuation statements.
 
 ### 8.3 Elliptic germs
 
-An elliptic family can approach a scalar only when its discriminant tends to zero through nonsquares, or through the corresponding separable quadratic invariant in residue characteristic two. The same slice proof applies. The companion matrix does not care whether its nonzero invariant fiber is split or elliptic; only the square class of the parameter changes. Hence (8.1)--(8.3) remain valid along elliptic regular elements.
+An elliptic family can approach a scalar only when its discriminant tends to zero through nonsquares, or through the corresponding separable quadratic invariant in residue characteristic two. The same slice proof applies. The companion matrix does not care whether its nonzero invariant fiber is split or elliptic; only the square class of the parameter changes. Hence the two-germ expansion (8.1) remains valid along elliptic regular elements.
 
-This assertion concerns stable normalization. If quotient measures are rescaled separately in different torus classes, artificial constants appear. Likewise, using $|\Delta|^{1/2}$ rather than $|D_G|^{1/2}$ introduces the central factor $|\det\gamma|^{1/2}$. Near $zI_2$ that factor tends to $|z|$, so the two conventions have different central limits.
+Here “the same slice proof” means the same two-dimensional space of germs, not identical numerical coefficient functions for every torus. If quotient measures are rescaled separately in different torus classes, further artificial constants appear. Likewise, using $|\Delta|^{1/2}$ rather than $|D_G|^{1/2}$ introduces the central factor $|\det\gamma|^{1/2}$. Near $zI_2$ that factor tends to $|z|$, so the two conventions have different singular coefficients.
 
 ### 8.4 Central values and the two nilpotent germs
 
@@ -906,20 +923,10 @@ The phrase “two nilpotent germs” refers to the two nilpotent **orbits** $\{0
 $$
 f\longmapsto f(z),
 \qquad
-f\longmapsto\mu_N(f_z^{\mathrm{Lie}}).
+f\longmapsto\mu_{N,z}(f).
 $$
 
-They scale differently. Under $X\mapsto aX$, the zero-orbit distribution is unchanged, while the regular nilpotent orbital measure scales by the root modulus. Because the regular semisimple orbit has the same dimension as the regular nilpotent orbit, the regular-nilpotent Shalika germ has degree zero and stays bounded. The zero orbit has smaller dimension, so its coefficient has degree $-1$ in the root coordinate, namely $|D|^{-1/2}$. This homogeneity both forces the two-term form of (8.1) and identifies which coefficient is singular.
-
-The measure on $G_N\backslash G$ can be fixed directly. The centralizer is
-
-$$
-G_N=Z\,U,
-\qquad
-U=\left\{\begin{pmatrix}1&s\\0&1\end{pmatrix}:s\in F\right\}.
-$$
-
-Give $U$ the additive measure with $\operatorname{vol}(\mathcal O)=1$ and $Z$ the multiplicative measure with $\operatorname{vol}(\mathcal O^\times)=1$. Their product gives $G_N$ its measure and hence fixes $\mu_N$ and the bounded coefficient $b_z$. The regular semisimple quotient measure fixed in Chapter 3 independently fixes the leading coefficient $a_z$ in (8.2). Stating both choices is necessary: nilpotent centralizers are not tori, so the compact-unit torus rule does not determine them automatically.
+They have different homogeneity as distributions, and their coefficient functions have the complementary homogeneity. In the **normalized** expansion (8.1), the zero-orbit coefficient tends to zero and the regular-nilpotent coefficient has degree zero. Before Weyl normalization, the latter carries the reciprocal square-root growth. Reversing these roles gives the false conclusion that a normalized singular limit recovers $f(z)$.
 
 On $D^\times$, there is no nonzero nilpotent element. Moreover $E^\times\backslash D^\times$ is compact. For a regular $\delta\to z$ within a fixed torus type,
 
@@ -948,14 +955,14 @@ $$
 
 on matching regular elliptic classes, with zero split regular normalized orbital integrals for $f$. The sign is the rank-two inner-form transfer sign; one may instead absorb it into the definition of transfer.
 
-Letting matching elements approach the center and using (8.3)--(8.4) forces
+Letting matching elements approach the center and using (8.1), (8.2), and (8.4) forces
 
 $$
-f(z)=0.
+c_{\mathcal A}\mu_{N,z}(f)=0
 \tag{8.6}
 $$
 
-Thus vanishing of the split function's central germ is a necessary boundary condition for a function whose split regular orbital integrals vanish and whose elliptic orbital integrals transfer to the anisotropic group under the square-root normalization. The bounded regular-nilpotent coefficient is subleading and is not determined by taking this normalized limit. Central distributions on the two groups must still be handled separately in a trace formula; regular matching does not equate raw point values across inner forms.
+for every elliptic approach type occurring in the matching. Since $c_{\mathcal A}\ne0$, regular transfer kills the split regular-nilpotent germ. It neither forces $f(z)=0$ nor identifies $f(z)$ with $f_D(z)$. In applications, an alternating vertex--edge function kills $\mu_{N,z}$ while having a nonzero central value. Central distributions on the two groups must therefore be computed separately with their actual global coefficients. This conclusion is normalization-independent and is the correct singular interface for the transfer theorem.
 
 ## 9. Characters as local distributions
 
@@ -1002,7 +1009,7 @@ $$
 
 On the elliptic regular set it is zero because an elliptic element fixes no $F$-rational line. The denominator is the fixed-point Jacobian combined with normalized induction, exactly as in the real calculation of Book 99.
 
-At the reducibility wall there is an exact sequence whose constituents are $\mu\circ\det$ and $\operatorname{St}\otimes\mu$. Character additivity and the vanishing of the induced character on elliptic elements yield
+At the reducibility wall there is an exact sequence whose constituents are $\mu\circ\det$ and $\operatorname{St}\otimes\mu$, where the latter abbreviates $\operatorname{St}\otimes(\mu\circ\det)$. Character additivity and the vanishing of the induced character on elliptic elements yield
 
 $$
 \Theta_{\operatorname{St}\otimes\mu}(\gamma)
@@ -1057,7 +1064,7 @@ on the corresponding regular torus shell. Here too $c_D(t)$ is the trace of the 
 
 ### 9.5 The selected regular character identity
 
-**Theorem 9.1.** For the special and selected quadratic-dihedral pairs with the common Weil--Deligne parameter of Books 77, 80, and 82, matching regular elements satisfy
+**Theorem 9.1.** For the special pairs and for the depth-zero or tame quadratic-dihedral pairs constructed in the selected range of Books 77 and 82, matching regular elements satisfy
 
 $$
 \boxed{\Theta_{\pi}(\gamma)=-\Theta_{\rho}(\delta).}
@@ -1066,11 +1073,11 @@ $$
 
 Moreover the split regular character of $\pi$ has no quaternionic partner.
 
-**Proof strategy.** The special row follows from an exact sequence. The dihedral row follows by comparing the two compact-induction sums term by term; the single sign comes from the complementary root direction in the split algebra.
+**Proof strategy.** The special row follows from an exact sequence. For the dihedral row, use the paired tame-type trace calculation already proved in Book 77 after checking that its rectifier, additive character, valuation, and pointwise-character conventions agree with the inducing data of Book 82 and the self-dual measures of Book 80. We recall the terminal finite calculation to make the sign visible, but do not replace the earlier full compact-induction proof by a two-coset approximation near the center.
 
 **Proof.** If $\pi=\operatorname{St}\otimes\mu$ and $\rho=\mu\circ\operatorname{Nrd}$, equations (9.4) and (9.7), together with $\det\gamma=\operatorname{Nrd}\delta$, prove the identity.
 
-For a quadratic-dihedral pair, matching identifies the two copies of $E$, the two normalizer positions, and the values $\theta(t),\theta(t^\sigma)$. The congruence filtrations on the two groups have the same trace pairing $\operatorname{Tr}_{E/F}$ and the same annihilator lattice. Their finite Fourier sums therefore agree in magnitude. In the split algebra the tangent space transverse to $E^\times$ is the difference of the two $E$-lines, while in the division algebra its invariant quadratic form is the nonsplit inner twist. The change of the one-dimensional Weil index is $-1$. Hence $c_G(t)=-c_D(t)$, proving (9.9). At depth zero the same assertion is the elementary identity between the two Frobenius-orbit character sums, with the sign arising because the split induced representation has one additional permutation direction. $\square$
+For a quadratic-dihedral pair, the rectified torus character used on the two sides is the same one. Matching identifies the two copies of $E$, the values at $t$ and $t^\sigma$, the trace-dual congruence lattices, and the Heisenberg commutator pairings. Book 77 proves that every nonterminal compact-induction contribution cancels in paired finite Fourier fibers, including the extra fibers that occur when the element is close to the center. The terminal transverse plane is hyperbolic for $M_2(F)$ and anisotropic for $D$. Its normalized Fourier sums have ratio $-1$, as (9.10)--(9.11) below verify. Thus the scalar traces satisfy $c_G(t)=-c_D(t)$ and (9.9) follows. This use is genuine prior-library mathematics: Book 80 supplies only the trace-character and self-dual-measure normalization, while Book 82 supplies the division type and its finite character formula; neither is being silently promoted into the comparison theorem. $\square$
 
 Here is the finite calculation behind the sign. On a residue quotient of odd characteristic, the split transverse plane has hyperbolic quadratic form $Q_s(x,y)=xy$, whereas the anisotropic transverse plane has a norm form $Q_a(u)=N_{k_{q^2}/k}(u)$ multiplied by a nonsquare scalar. For a nontrivial additive character $\bar\psi$ of $k$,
 
@@ -1132,7 +1139,7 @@ For the split torus $A$, use $d^\times a\,d^\times b$. The real Weyl group has o
 
 ### 10.2 Weyl formulas and regular orbital integrals
 
-The elliptic orbit of $rR_\theta$ in the positive component is parametrized by the upper half-plane. If $g_z$ carries $i$ to $z=x+iy$, then
+The elliptic orbit of $rR_\theta$ in the positive component is parametrized by the upper half-plane. Since the orbital quotient is the **left** quotient $T\backslash G$, choose $g_z$ so that $g_z^{-1}$ carries $i$ to $z=x+iy$. Then
 
 $$
 O_{rR_\theta}(f)
@@ -1140,7 +1147,7 @@ O_{rR_\theta}(f)
 \tag{10.3}
 $$
 
-for a function supported in the positive component. This is independent of the chosen measurable section because changing $g_z$ on the left by the elliptic centralizer does not change the conjugate.
+for a function supported in the positive component. This is independent of the chosen measurable section because changing $g_z$ on the left by the elliptic centralizer does not change the conjugate. Choosing instead a matrix that carries $i$ to $z$ parametrizes a right quotient and reverses the section convention; the integral is the same only after replacing that matrix by its inverse.
 
 For a positive split element $ra_t$, where
 
@@ -1247,7 +1254,7 @@ $$
 
 has a $|t|^{-1}$ singularity. Multiplication by the Weyl denominator removes it and gives limit $2\operatorname{sgn}(r)^k$. These observations illustrate an important distinction: orbital integrals of the specially constructed projector are bounded, whereas arbitrary orbital integrals and pointwise characters can display root singularities. “Singular limit” must always name the object being normalized.
 
-At $k=1$, (10.8) has zero elliptic term. This is not a harmless endpoint: Book 99 proves that the limit-of-discrete series is not square-integrable and has formal degree zero. It cannot serve as the cuspidal archimedean projector used here.
+At $k=1$, (10.8) has zero elliptic term. This is not a harmless endpoint: Book 99 proves that the limit-of-discrete series is not square-integrable, so formal degree is not defined for it. The formula $(k-1)/(4\pi)$ merely tends to zero at the boundary; it does not assign a zero formal degree to $D_1$. The limit representation cannot serve as the cuspidal archimedean projector used here.
 
 ## 11. The real quaternion inner form
 
@@ -1256,7 +1263,7 @@ At $k=1$, (10.8) has zero elliptic term. This is not a harmless endpoint: Book 9
 Let $D_\infty=\mathbf H$, Hamilton's quaternion algebra. Every nonzero quaternion has a unique polar decomposition
 
 $$
-q=r u,\qquad r=\sqrt{\operatorname{Nrd}(q)}>0,\qquad u\in\mathrm{SU}(2),
+q=\rho u,\qquad \rho=\sqrt{\operatorname{Nrd}(q)}>0,\qquad u\in\mathrm{SU}(2),
 $$
 
 together with the central sign already contained in $u$. Modulo $\mathbf R^\times$, one obtains
@@ -1265,14 +1272,14 @@ $$
 \mathbf H^\times/\mathbf R^\times\simeq\mathrm{SO}(3).
 $$
 
-Give this compact quotient volume one, and give the center $d^\times r=dr/|r|$. This defines Haar measure on $\mathbf H^\times$. A regular element is nonreal and is conjugate to
+Give this compact quotient volume one, and give the center $d^\times r=dr/|r|$. This defines Haar measure on $\mathbf H^\times$. A regular element is nonreal and may be represented, compatibly with the real-matrix notation, by
 
 $$
 \delta=r(\cos\theta+i\sin\theta),
-\qquad 0<\theta<\pi.
+\qquad r\in\mathbf R^\times,\quad 0<\theta<\pi.
 $$
 
-Its centralizer is $\mathbf C^\times$, and it matches $rR_\theta$ in $\mathrm{GL}_2(\mathbf R)$. The discriminant formula is again
+This parametrization has the expected Weyl redundancy: changing the sign of $r$ replaces the angle by its supplementary angle after conjugating $i$ to $-i$. The positive radial coordinate in the polar decomposition is $|r|$. Its centralizer is $\mathbf C^\times$, and it matches $rR_\theta$ in $\mathrm{GL}_2(\mathbf R)$. The discriminant formula is again
 
 $$
 |D_{\mathbf H^\times}(\delta)|^{1/2}=2|\sin\theta|.
@@ -1280,7 +1287,7 @@ $$
 
 ### 11.2 Characters and orbital integrals
 
-Irreducible representations of $\mathbf H^\times$ with algebraic compact type are obtained from the $(m+1)$-dimensional representation $V_m=\operatorname{Sym}^m(\mathbf C^2)$ of $\mathrm{SU}(2)$, extended across the center with the required parity. Its regular character is
+Irreducible representations of $\mathbf H^\times$ with algebraic compact type are obtained from the $(m+1)$-dimensional representation $V_m=\operatorname{Sym}^m(\mathbf C^2)$ of $\mathrm{SU}(2)$, extended across the center with the required parity. In the untwisted normalization its central character on $\mathbf R^\times$ is $\operatorname{sgn}^m$; an absolute-value twist may be added independently. Its regular character is
 
 $$
 \Theta_{V_m}(r(\cos\theta+i\sin\theta))
@@ -1291,22 +1298,22 @@ $$
 
 with the central exponent adjusted if an absolute-value twist is present.
 
-Because the quotient by the center is compact, Schur orthogonality gives an explicit trace-one character projector. With quotient volume one, put
+Because the quotient by the center is compact, Schur orthogonality gives an explicit trace-one character projector. This statement is made in the Hecke space with the fixed central character: functions are compactly supported modulo $\mathbf R^\times$ and transform by the inverse central character. This qualification is essential when $m$ is odd, since $V_m(-1)=(-1)^m$ and its character is not an ordinary function on $\mathbf H^\times/\mathbf R^\times$. With quotient volume one, put
 
 $$
 p_m(u)=\overline{\Theta_{V_m}(u)}
 $$
 
-on the compact quotient, with a compactly supported central factor if one works without fixing a central character. Then
+on a section of the compact quotient and extend it by the required central equivariance. If one works with genuinely compactly supported functions on $\mathbf H^\times$ instead, multiply by a central cutoff of multiplicative integral one; all formulas then acquire that explicitly chosen cutoff at the central coordinate. In the fixed-central-character space,
 
 $$
 \operatorname{tr}V_j(p_m)=\delta_{jm}.
 \tag{11.2}
 $$
 
-Indeed, Schur orthogonality gives $V_m(p_m)=(m+1)^{-1}\operatorname{id}$, whose trace is one; for $j\ne m$ it gives zero. The actual convolution idempotent is $(m+1)p_m$, and its trace on $V_m$ is $m+1$. Keeping these two normalizations separate prevents a dimension error.
+Here $V_j$ ranges over representations in the same fixed-central-character Hecke space; after an absolute-value twist this means the same central exponent and parity. Schur orthogonality gives $V_m(p_m)=(m+1)^{-1}\operatorname{id}$, whose trace is one; for $j\ne m$ it gives zero. The actual convolution idempotent is $(m+1)p_m$, and its trace on $V_m$ is $m+1$. Keeping these two normalizations separate prevents a dimension error.
 
-Since $p_m$ is conjugation invariant,
+Since $p_m$ is conjugation invariant and has the declared central equivariance,
 
 $$
 O_\delta(p_m)=p_m(\delta)
@@ -1335,6 +1342,8 @@ Normalize the quaternionic idempotent using the same group and centralizer measu
 
 ### 12.1 The trace--determinant quotient
 
+For this chapter we return to the nonarchimedean field $F$ and the normalizations of Chapters 1--9. The archimedean Fourier transform is not needed for the selected comparison.
+
 The map
 
 $$
@@ -1345,31 +1354,57 @@ $$
 
 organizes conjugacy-invariant integration. Its Jacobian vanishes exactly on the discriminant divisor $t^2-4n=0$. Away from that divisor, the coarea formula says that pushing forward a test function along $c$ gives the orbital integral times the Weyl Jacobian.
 
-More precisely, for a regular fiber with representative $\gamma$,
+One must specify which measures occur in this assertion. Let $dX_0$ give $M_2(\mathcal O)$ volume one. On $G$,
 
 $$
-c_*(f\,dX)(t,n)
-=C\,|\Delta(\gamma)|^{1/2}O_\gamma(f),
+dg=\frac{|\det g|^{-2}}{(1-q^{-1})(1-q^{-2})}\,dX_0.
 \tag{12.2}
 $$
 
-where $C$ is determined by the relation between additive measure $dX$ on $M_2(F)$ and the group/centralizer measures. Since $|D_G|^{1/2}=|\Delta|^{1/2}|n|^{-1/2}$, the extra factor $|n|^{1/2}$ is exactly the conversion from additive matrices to the multiplicative group. Equation (12.2) is why the square-root normalization is natural from invariant theory, not only from character estimates.
-
-### 12.2 Descent near a semisimple element
-
-Let $s$ be semisimple. Choose an $F$-linear complement $\mathfrak q$ to its centralizer Lie algebra. The map
+Indeed the expression on the right is left and right invariant, while the additive volume of $K$ is
 
 $$
-H_s\times\mathfrak q\longrightarrow H,
-\qquad(h,X)\longmapsto h^{-1}s(1+X)h
+\frac{|\mathrm{GL}_2(k)|}{q^4}=(1-q^{-1})(1-q^{-2});
+$$
+
+thus (12.2) is forced by $\operatorname{vol}(K)=1$. On a quadratic centralizer, formula (1.1) gives the corresponding conversion from additive measure to the compact-unit multiplicative measure. Applying these two explicit conversions and then the coarea formula shows, on each regular quadratic-algebra chart, that
+
+$$
+c_*(f\,dX_0)(t,n)
+=J_{\mathcal A}(t,n)\,I_\gamma(f),
 \tag{12.3}
 $$
 
-is a submersion near $(1,0)$. Its transverse derivative is $1-\operatorname{Ad}(s)$, so the Jacobian is the Weyl discriminant. Integration along the fibers transfers invariant distributions near $s$ to invariant distributions on the centralizer.
+where $J_{\mathcal A}$ is the nonvanishing locally constant density obtained from (1.1) and (12.2). It is determined by the declared measures and should not be replaced by one universal constant across split, ramified, and unramified charts. The essential singular factor in (12.3) is exactly
+
+$$
+|D_G(\gamma)|^{1/2}=|\Delta(\gamma)|^{1/2}|n(\gamma)|^{-1/2}.
+$$
+
+This is why the square-root normalization is natural from invariant theory, not only from character estimates.
+
+### 12.2 Descent near a semisimple element
+
+Let $s$ be semisimple and write $H_s$ and $\mathfrak h_s$ for its group and Lie-algebra centralizers. Choose a sufficiently small $H_s$-stable neighborhood $\mathcal U$ of $0$ in $\mathfrak h_s$. The correct descent space is the associated bundle
+
+$$
+H_s\backslash\bigl(H\times(s+\mathcal U)\bigr),
+\qquad
+a\cdot(h,Y)=(ah,aYa^{-1}),
+\tag{12.4}
+$$
+
+with map
+
+$$
+[h,Y]\longmapsto h^{-1}Yh.
+$$
+
+It is a submersion near $[1,s]$. The orbit part of its derivative is $1-\operatorname{Ad}(s)$ on $\mathfrak h/\mathfrak h_s$, while the $\mathfrak h_s$ direction supplies the transverse slice. Hence its orbit Jacobian is the Weyl discriminant. Integration along the fibers transfers invariant distributions near $s$ to invariant distributions near $s$ in the centralizer.
 
 For regular $s$, the centralizer is a torus and descent merely proves smoothness or local constancy of orbital integrals. For central $s$, the centralizer is all of $H$ and the first nontrivial transverse invariant is the quadratic discriminant. This is the conceptual origin of the germ calculation in Chapter 8.
 
-The submersion claim follows from the derivative: tangent directions from $H/H_s$ map through $1-\operatorname{Ad}(s)$, which is invertible on $\mathfrak q$ when $s$ is regular. At a general semisimple $s$, choose $\mathfrak q$ as the sum of nontrivial generalized eigenspaces. The implicit-function theorem over $\mathbf R$ and its Henselian analogue over a nonarchimedean field produce the local product chart.
+The submersion claim follows directly from the derivative. Choose an $\operatorname{Ad}(s)$-stable complement $\mathfrak q$ to $\mathfrak h_s$. Semisimplicity makes $1-\operatorname{Ad}(s)$ invertible on $\mathfrak q$, so the orbit directions cover $\mathfrak q$ and the slice directions cover $\mathfrak h_s$. The ordinary implicit-function theorem over $\mathbf R$ and the nonarchimedean analytic inverse-function theorem produce the local chart. The associated-bundle quotient in (12.4) is what records both the orbit directions and the residual conjugation action of $H_s$.
 
 ### 12.3 Compatibility with self-dual additive measure
 
@@ -1389,7 +1424,7 @@ to define Fourier transform on $M_2(F)$. If $dX_0$ gives $M_2(\mathcal O)$ volum
 
 $$
 dX_\psi=q^{-2n(\psi)}dX_0,
-\tag{12.4}
+\tag{12.5}
 $$
 
 because the space has dimension four. On a quadratic field centralizer, trace descent uses $\psi_E=\psi\circ\operatorname{Tr}_{E/F}$, whose conductor exponent is
@@ -1403,6 +1438,8 @@ The different therefore supplies precisely the volume correction between the sel
 ## 13. Local test-function identities
 
 ### 13.1 What it means to have the same regular data
+
+We remain over the nonarchimedean field $F$ in Sections 13.1--13.4; the real analogue is the projector identity of Chapter 11.
 
 Let $f\in C_c^\infty(G)$ and $f_D\in C_c^\infty(D^\times)$. With the geometric-sign convention of Chapter 8, call their regular data compatible if
 
@@ -1420,7 +1457,7 @@ $$
 
 for every split regular $\gamma$. Since matching discriminants agree, one may replace normalized integrals by unnormalized ones in (13.1), but only because the same centralizer measure has been transported through the common quadratic field.
 
-The Weyl formula does not contain a separate integral over central elements, because they form a Haar-null set, but distributions supported on the center can still occur as separate geometric terms. Regular germs constrain how a locally constant function approaches the center: in the elliptic-transfer situation, (8.6) forces the split central value to vanish. They do not identify that value with the quaternionic central value. A separately declared central distribution is therefore still required when a global trace identity includes central classes.
+The Weyl formula does not contain a separate integral over central elements, because they form a Haar-null set, but distributions supported on the center can still occur as separate geometric terms. For exact inner-form matching, the normalized singular limit kills the split regular-nilpotent germ; it neither forces the split central value to vanish nor identifies it with the quaternionic central value. A separately declared central distribution is therefore still required when a global trace identity includes central classes.
 
 ### 13.2 The unit, Iwahori, and level packages
 
@@ -1486,7 +1523,7 @@ At a finite place, the reusable calculation proceeds in the following logically 
 4. Compute $|D_H(\gamma)|=|\Delta/n|$.
 5. For $\mathrm{GL}_2$, translate support into stable lattices, chains, or segments and apply the stabilizer weight (3.1).
 6. For $D^\times$, use uniqueness of the maximal order, the valuation quotient (7.5), and the finite congruence filtration.
-7. Near the center, multiply by $|D_H|^{1/2}$ and check the zero-orbit germ on the split side; the regular nilpotent germ is the bounded secondary term.
+7. Near the center, multiply by $|D_H|^{1/2}$ and check the regular-nilpotent germ on the split side; the zero-orbit coefficient tends to zero after normalization but its raw central distribution remains separate.
 8. For a selected representation pair, apply the regular character identity with sign $-1$.
 
 Every step has now been proved. The only input left for a general fundamental lemma is the combinatorial identity equating the two finite recipes for the specifically constructed pair of functions.
@@ -1535,7 +1572,7 @@ and its square root produces the normalization compatible with invariant coordin
 
 At a nonarchimedean place, split orbital integrals become finite weighted counts of stable lattices, chains, and segments. The weights are exact reciprocal stabilizer volumes. Quaternionic orbital integrals become finite valuation and congruence sums because the maximal order is unique and the central quotient is compact. The unit calculation already reveals a genuine ramification-dependent discrepancy, explaining why transfer requires carefully chosen linear combinations rather than an informal identification of compact units.
 
-Near a scalar, the split group has a regular nilpotent germ and the division group does not. This is the complete singular boundary in rank one. On the representation side, the special and selected dihedral characters differ across matching elliptic classes by the inner-form sign $-1$. Combined with the geometric transfer sign, Weyl integration produces equality of traces.
+Near a scalar, the split group has both the zero and regular-nilpotent germs, while the division group has only the zero germ. Weyl normalization detects the regular-nilpotent coefficient and leaves the raw central distribution as a separate term; this, rather than a point-value identity, is the complete singular boundary in rank one. On the representation side, the special and selected dihedral characters differ across matching elliptic classes by the inner-form sign $-1$. Combined with the geometric transfer sign, Weyl integration produces equality of traces.
 
 At the real place, elliptic classes are rotations, the Weyl factor is $2|\sin\theta|$, and the weight-$k$ cuspidal projector has the finite-dimensional sine quotient as its elliptic orbital integral and zero split orbital integral. Hamilton quaternions supply the same compact character, while the discrete-series character carries the opposite sign. In parallel weight two, the entire identity reduces to the values $1$, $-1$, and $1$.
 
