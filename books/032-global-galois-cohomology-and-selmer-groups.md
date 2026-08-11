@@ -185,7 +185,7 @@ The set $S$ is the bookkeeping device that separates finitely many exceptional p
 * every finite place at which the $G_K$-action on $M$ is ramified;
 * every place at which a later local condition is not the unramified one.
 
-If $M$ is a vector space over a finite field $k$ of characteristic $\ell$, “coefficient-characteristic places” means the places above $\ell$. For an $\ell$-adic lattice the same convention applies. A theorem may require fewer places, but this enlarged $S$ is stable under the standard constructions and gives uncluttered finiteness and cohomological-dimension statements.
+If $M$ is a vector space over a finite field $k$ of characteristic $\ell$, “coefficient-characteristic places” means the places above $\ell$. For an $\ell$-adic lattice the same convention applies. A theorem may require fewer places, but this enlarged $S$ is stable under the standard constructions. It gives the ordinary $\ell$-cohomological-dimension bound when $\ell$ is odd or $K$ is totally imaginary, and only the virtual bound when $\ell=2$ and $K$ has a real place.
 
 There is no mathematical virtue in taking $S$ minimal. Enlarging $S$ allows more ramification globally and transfers a formerly automatic unramified condition into an explicit local choice. A correct Selmer group is unchanged if the transferred condition is imposed at the new place. We will prove this independence rather than treat it as a notational slogan.
 
@@ -239,7 +239,13 @@ The equivalence is not merely terminology. By the description of $N_S$, conditio
 
 For a discrete torsion module $A=\bigcup A_n$, the same equivalence holds provided “unramified outside $S$” means that every inertia group outside $S$ acts trivially on all of $A$. It is not enough that every element be ramified at only finitely many places depending on the element. A single quotient $G_{K,S}$ requires one uniform finite set.
 
-**Counterexample.** Let $A$ be the direct sum of quadratic characters ramified at one new prime each. Every element of $A$ lies in a finite subsum and is ramified at finitely many primes, but no finite $S$ makes the whole action factor through $G_{K,S}$. Pointwise finite ramification is weaker than uniformly bounded ramification.
+**Counterexample.** Over $K=\mathbf Q$, choose quadratic characters $\chi_p$ whose quadratic fields ramify at distinct odd primes $p$, and put
+
+$$
+A=\bigoplus_p\mathbf F_3(\chi_p).
+$$
+
+The discrete action is continuous because every element lies in a finite subsum and therefore has an open stabilizer. Each element is ramified at only finitely many primes, but inertia at every selected $p$ acts nontrivially on the $p$th line. No finite $S$ makes the whole action factor through $G_{\mathbf Q,S}$. Pointwise finite ramification is weaker than uniformly bounded ramification.
 
 ### 2.4 Enlarging $S$
 
@@ -302,9 +308,73 @@ The global theory is useful because restricted ramification turns finite coeffic
 
 **Finiteness theorem.** Let $K$ be a number field, let $M$ be a finite discrete $G_{K,S}$-module, and suppose that $S$ is finite, contains the archimedean places, and contains every finite place whose residue characteristic divides $|M|$. Then $H^i(G_{K,S},M)$ is finite for every $i\geq0$.
 
-The inclusion of coefficient-characteristic places is a convenient sufficient hypothesis. Specialized finiteness results sometimes omit some of them, but no such sharpening will be used without being stated.
+The inclusion of coefficient-characteristic places is a convenient sufficient hypothesis. Specialized finiteness results sometimes omit some of them, but no such sharpening will be used without being stated. The word “finite” in the theorem is essential: the cohomological-dimension theorem below applies to arbitrary discrete primary torsion modules, but their groups in degrees zero, one, and two need not be finite.
 
-Here is the mechanism. After a finite extension unramified outside $S$, the action on $M$ becomes trivial. Inflation--restriction then reduces degree one to continuous homomorphisms into a finite group. Restricted ramification and bounded exponent allow only finitely many such abelian extensions; global class field theory expresses them through a finite ray-class quotient together with a finitely generated $S$-unit group. Higher degrees are controlled by finite cohomological dimension away from the real $2$-primary tail and by finite-group cohomology at that tail. Devissage through the prime-primary parts of $M$ completes the argument.
+We first record the precise arithmetic input. Let $F$ be a number field, let $T$ be a finite set containing infinity and every place dividing $d$, and put $A_d=\mathbf Z/d\mathbf Z$ with trivial action. The finite arithmetic-duality theorem proved in Book 6, Section 4.2, uses the complex
+
+$$
+C_{T,c}^\bullet(N)
+=\operatorname{Cone}\left(
+C^\bullet(G_{F,T},N)\longrightarrow
+\bigoplus_{w\in T}C_+^\bullet(F_w,N)
+\right)[-1], \tag{3.1a}
+$$
+
+where $C_+^\bullet$ is the ordinary continuous local complex at a finite place, a complete Tate complex at a real place, and the zero complex at a complex place. The theorem proves perfect finite pairings for the Cartier-dual pair $A_d,\mu_d$. In particular,
+
+$$
+H^b(G_{F,T},A_d)
+\quad\text{and}\quad
+H^b(G_{F,T},\mu_d) \tag{3.1b}
+$$
+
+are finite for $b=0,1,2$. Its proof is the explicit $T$-units--divisors--$T$-ideal-classes calculation, with the real $2$-primary terms retained. Thus (3.1b) is a prior exact theorem, not an appeal to the arbitrary-coefficient Poitou--Tate sequence.
+
+We now reduce the stated theorem to this cyclic input and to the cohomological-dimension bound proved independently in Section 3.3. There is nothing to prove when $M=0$, so let $e>1$ be the exponent of $M$, and let $L_0/K$ be the finite Galois extension cut out by the action on $M$. It lies in $K_S$ because the action factors through $G_{K,S}$. We may also make the trivializing field totally imaginary without leaving $K_S$. If $e$ is even, adjoin $\mu_4$; if $e$ is odd, choose a prime $\ell\mid e$ and adjoin $\mu_\ell$. A field containing a primitive root of unity of order greater than two has no real embedding. Moreover, the cyclotomic discriminant is supported only at $2$, respectively $\ell$, so after base change these extensions are unramified at every finite place away from those primes, all of which belong to $S$. Let $L$ be the compositum with $L_0$. Then $L/K$ is finite Galois, $L\subseteq K_S$, $L$ is totally imaginary, and $M$ is trivial over $L$.
+
+Put
+
+$$
+S_L=\{w:w\mid v\text{ for some }v\in S\},
+\qquad
+\Delta=\operatorname{Gal}(L/K).
+$$
+
+Inside the fixed algebraic closure,
+
+$$
+G_{L,S_L}=\operatorname{Gal}(K_S/L). \tag{3.1c}
+$$
+
+Indeed, every finite subextension of $K_S/L$ is unramified outside $S_L$. Conversely, if a finite extension of $L$ is unramified outside $S_L$, its normal closure over $K$ and all its $K$-conjugates are unramified outside $S$, so that normal closure lies in $K_S$.
+
+Decompose $M$ into its primary components. Because $L$ is totally imaginary and $S_L$ contains every place above each prime dividing $e$, Section 3.3 applied to each component gives
+
+$$
+H^b(G_{L,S_L},M)=0\qquad(b>2). \tag{3.1d}
+$$
+
+As a trivial finite abelian group, $M$ is a finite direct sum of cyclic groups $A_d$ with $d\mid e$. Formula (3.1b) therefore makes $H^b(G_{L,S_L},M)$ finite for $b=0,1,2$. Hochschild--Serre for
+
+$$
+1\longrightarrow G_{L,S_L}\longrightarrow G_{K,S}
+\longrightarrow\Delta\longrightarrow1
+$$
+
+now gives
+
+$$
+H^a\bigl(\Delta,H^b(G_{L,S_L},M)\bigr)
+\Longrightarrow H^{a+b}(G_{K,S},M). \tag{3.1e}
+$$
+
+Only the rows $b=0,1,2$ occur, and every term on the second page is finite because both $\Delta$ and its coefficient group are finite. For each total degree the finite filtration on the abutment has finite successive quotients. Hence every $H^i(G_{K,S},M)$ is finite. When $K$ has real places and $M$ has $2$-primary torsion, (3.1e) also explains why finiteness survives in arbitrarily high degrees even though ordinary cohomological dimension is infinite; no vanishing of that periodic tail has been assumed. More precisely, restriction to $K(i)$ vanishes in degrees above two and $\operatorname{cor}\circ\operatorname{res}=2$, so
+
+$$
+2H^i(G_{K,S},M)=0\qquad(i>2).
+$$
+
+This annihilation is not a vanishing statement; it is asserted here under the real $2$-primary hypotheses of the preceding sentence.
 
 Without restricted ramification, finiteness fails dramatically. For example,
 
@@ -316,13 +386,92 @@ contains the class of $\mathbf Q(\sqrt p)$ for every prime $p$ and is infinite. 
 
 ### 3.3 Cohomological dimension and the real-place exception
 
-Let $M$ be $\ell$-primary and assume that $S$ contains the places above $\ell$ and infinity. If either $\ell$ is odd or $K$ is totally imaginary, then
+For a prime $\ell$, the assertion $\operatorname{cd}_\ell(G_{K,S})\leq2$ means
 
 $$
-H^i(G_{K,S},M)=0\qquad(i>2). \tag{3.1}
+H^i(G_{K,S},A)=0\qquad(i>2) \tag{3.1}
 $$
 
-For $\ell=2$ and a real place, ordinary cohomology does not vanish above degree two because $C_2$ has periodic $2$-primary cohomology. In that case $G_{K,S}$ has virtual $2$-cohomological dimension two: after passage to a totally imaginary finite extension, the higher groups vanish. Equivalently, the only higher-degree tail comes from real decomposition groups.
+for **every discrete $\ell$-primary torsion** $G_{K,S}$-module $A$, not only for finite modules or modules with trivial action.
+
+**Global cohomological-dimension theorem.** Let $K$ be a number field, let $S$ be finite, and suppose that $S$ contains every archimedean place and every finite place above $\ell$. If either $\ell$ is odd or $K$ is totally imaginary, then
+
+$$
+\operatorname{cd}_\ell(G_{K,S})\leq2. \tag{3.1f}
+$$
+
+If $\ell=2$ and $K$ has a real place, then ordinary $\operatorname{cd}_2(G_{K,S})$ is infinite, but $G_{K,S}$ has an open subgroup of $2$-cohomological dimension at most two. Thus its virtual $2$-cohomological dimension is at most two.
+
+**Proof of the nonexceptional bound.** We use only the cyclic compact-support duality theorem (3.1a), not arbitrary-coefficient global duality. Put
+
+$$
+A_\ell=\mathbf Z/\ell\mathbf Z,
+\qquad A_\ell^D=\mu_\ell.
+$$
+
+Book 6, Section 4.2, proves (3.1a) for $A_\ell$ and $\mu_\ell$ and explicitly proves the same statement with the two modules interchanged. Taking the interchanged pairing in compact-support degree zero gives
+
+$$
+H^0_{S,c}(K,\mu_\ell)\times
+H^3(G_{K,S},A_\ell)
+\longrightarrow\tfrac1\ell\mathbf Z/\mathbf Z. \tag{3.1g}
+$$
+
+Here the first group is the degree-zero cohomology of (3.1a). Under either hypothesis in (3.1f), the real Tate complexes have zero $\ell$-primary cohomology: there are no real places when $K$ is totally imaginary, and when $\ell$ is odd multiplication by $2$ is invertible and the complete $C_2$-complex is acyclic. Finite local cochain complexes start in degree zero and complex places contribute the zero complex. The cone long exact sequence therefore begins
+
+$$
+0\longrightarrow H^0_{S,c}(K,\mu_\ell)
+\longrightarrow H^0(G_{K,S},\mu_\ell)
+\longrightarrow
+\bigoplus_{v\in S_f}H^0(K_v,\mu_\ell). \tag{3.1h}
+$$
+
+The final map is injective: $S_f$ contains at least one place $v\mid\ell$, and global fixed elements form a subgroup of the fixed elements for its decomposition group. Hence $H^0_{S,c}(K,\mu_\ell)=0$, and perfectness of (3.1g) gives
+
+$$
+H^3(G_{K,S},A_\ell)=0. \tag{3.1i}
+$$
+
+The same argument works after every finite extension inside $K_S$. More precisely, if $U\subseteq G_{K,S}$ is open and $F=K_S^U$, then, with $S_F$ the places above $S$,
+
+$$
+U=G_{F,S_F}. \tag{3.1j}
+$$
+
+The proof is the normal-closure argument used for (3.1c). The set $S_F$ contains infinity and the places above $\ell$. If $K$ is totally imaginary, then so is $F$; if $\ell$ is odd, its real Tate terms are again acyclic. Repeating (3.1g)--(3.1i) gives
+
+$$
+H^3(U,A_\ell)=0
+\qquad\text{for every open }U\subseteq G_{K,S}. \tag{3.1k}
+$$
+
+The open-subgroup criterion proved in Book 30, Section 6.3, now applies: if $H^{d+1}(U,\mathbf F_\ell)=0$ for every open subgroup $U$ of a profinite group $G$, then $\operatorname{cd}_\ell(G)\leq d$. Its proof uses Shapiro on the permutation modules $\mathbf F_\ell[G/U]$ and dimension shifting, so it applies to arbitrary finite $\ell$-primary actions rather than only the trivial module. Book 29, Section 13.8, then passes from finite modules to every discrete $\ell$-primary torsion module by filtered unions of finite stable submodules. Taking $d=2$ in (3.1k) proves (3.1f) and the full statement (3.1).
+
+**The real $2$-primary case.** Suppose that $K$ has a real place. Because $S$ contains the places above $2$, the extension
+
+$$
+K'=K(\mu_4)=K(i)
+$$
+
+is contained in $K_S$: it is unramified at every finite place away from $2$, while complexification is allowed at infinity. It is totally imaginary. Hence
+
+$$
+G_{K',S_{K'}}=\operatorname{Gal}(K_S/K')
+$$
+
+is open in $G_{K,S}$ and has $2$-cohomological dimension at most two by (3.1f). This proves the virtual bound. For every discrete $2$-primary torsion module $A$, restriction to this open subgroup and $\operatorname{cor}\circ\operatorname{res}=2$ also give
+
+$$
+2H^i(G_{K,S},A)=0\qquad(i>2).
+$$
+
+On the other hand, choose a real geometric place. Its decomposition group maps injectively to $G_{K,S}$: complex conjugation acts nontrivially on $i\in K_S$, so it is not killed by the quotient. Thus $G_{K,S}$ contains $C_2$. A profinite group containing an element of order $2$ has infinite $2$-cohomological dimension by the periodic cohomology calculation of Book 29. Therefore
+
+$$
+\operatorname{cd}_2(G_{K,S})=\infty \tag{3.1l}
+$$
+
+when $K$ has a real place.
 
 This is why later global duality uses a modified complex at infinity. It would be false to state (3.1) for arbitrary $2$-primary $M$ over a field with real embeddings. For example, with trivial $M=\mathbf Z/2\mathbf Z$,
 
@@ -330,11 +479,11 @@ $$
 H^i(\mathbf R,M)\simeq\mathbf Z/2\mathbf Z
 $$
 
-for every $i>0$, and this periodic phenomenon cannot be erased by notation.
+for every $i>0$. The precise localization theorem identifying the high ordinary global groups with the sum of the real Tate tails is stronger than the dimension bound and is a consequence of arbitrary-coefficient Poitou--Tate duality. It is not needed, and is not being assumed, here. What is already forced is the convention: a later Poitou--Tate complex must retain complete Tate cochains at real places. Degree-one Selmer groups are unchanged because $H^1(C_2,M)=\widehat H^1(C_2,M)$.
 
 ### 3.4 Inflation back to the absolute group
 
-Apply inflation--restriction to (2.1). Since $N_S$ acts trivially on a module that factors through $G_{K,S}$, the beginning is
+Let $M$ be a discrete continuous $G_K$-module whose action factors through $G_{K,S}$; finiteness is not needed for the five-term sequence. Apply inflation--restriction to (2.1). Since $N_S$ acts trivially on $M$, the beginning is
 
 $$
 0\to H^1(G_{K,S},M)\xrightarrow{\inf}H^1(K,M)
@@ -342,24 +491,60 @@ $$
 \to H^2(G_{K,S},M). \tag{3.2}
 $$
 
-Thus inflation is injective in degree one. Its image consists of classes trivial on $N_S$, equivalently classes unramified outside $S$. For torsors this means that, after accounting for the coefficient action, no new inertia appears away from $S$.
+Thus inflation is injective in degree one. Its image consists of classes whose restriction to $N_S$ is zero. For a finite module, or for any uniformly unramified discrete torsion module as in Section 2.3, this is equivalent to being unramified at every finite place outside $S$. Indeed, inertia acts trivially on the coefficients there, so the restriction of a cocycle to inertia is a homomorphism and represents zero only when it is the zero homomorphism. The restriction to $N_S$ is also a homomorphism; it vanishes because $N_S$ is the closed normal subgroup generated by those inertia groups. Conversely, vanishing on $N_S$ plainly gives unramified localization outside $S$.
 
 The same statement should not be promoted to all degrees without checking the higher cohomology of $N_S$. Degree one is special because the five-term sequence supplies an unconditional injection.
 
 ### 3.5 Finite fields, lattices, and vector spaces
 
-If $M$ is finite-dimensional over a finite field $k$, all $H^i(G_{K,S},M)$ in the finite range are finite-dimensional $k$-vector spaces. A local condition must then be specified as a $k$-subspace if linear Selmer theory is intended; an arbitrary additive subgroup need not respect scalar multiplication.
+If $M$ is finite-dimensional over a finite field $k$ and $S$ contains the places above $\operatorname{char}k$, every $H^i(G_{K,S},M)$ is a finite-dimensional $k$-vector space. It vanishes for $i>2$ when $\operatorname{char}k$ is odd or $K$ is totally imaginary; no such ordinary vanishing is asserted in characteristic two over a field with real places. A local condition must be a $k$-subspace if linear Selmer theory is intended; an arbitrary additive subgroup need not respect scalar multiplication.
 
-Let $\mathcal O$ be the integers of a finite extension $E/\mathbf Q_\ell$, with uniformizer $\varpi$, and let $T$ be a finite free $\mathcal O$-module with continuous $G_{K,S}$-action. Its topology is profinite, not discrete. Under the usual continuous-cohomology definition and with $S$ containing the places above $\ell$, the groups $H^i(G_{K,S},T)$ for $i=0,1,2$ are finitely generated $\mathcal O$-modules. One obtains them from the finite quotients $T/\varpi^mT$, but an inverse limit may carry a $\varprojlim^1$ correction unless the transition systems satisfy the required Mittag--Leffler condition.
-
-For $V=T\otimes_{\mathcal O}E$, continuous cohomology is finite-dimensional over $E$, and in this setting
+Let $\mathcal O$ be the integers of a finite extension $E/\mathbf Q_\ell$, with uniformizer $\varpi$, and let $T$ be a finite free $\mathcal O$-module with its $\varpi$-adic topology and a continuous $G_{K,S}$-action. Assume that $S$ contains infinity and the places above $\ell$. Put $T_m=T/\varpi^mT$. Section 3.2 makes every $H^i(G_{K,S},T_m)$ finite. The Milnor sequence of Book 29 is
 
 $$
-H^i(G_{K,S},T)\otimes_{\mathcal O}E
-\simeq H^i(G_{K,S},V)
+0\longrightarrow
+\varprojlim_m{}^1H^{i-1}(G_{K,S},T_m)
+\longrightarrow H^i_{\mathrm{cts}}(G_{K,S},T)
+\longrightarrow\varprojlim_mH^i(G_{K,S},T_m)
+\longrightarrow0. \tag{3.1m}
 $$
 
-in the standard finite range. These assertions are not licenses to treat $T$, $V$, and $V/T$ as the same topological coefficient object. Their cochains and duals live in different categories.
+An inverse system of finite groups is Mittag--Leffler: its images in any fixed finite level form a descending chain and stabilize. Hence the derived limit in (3.1m) vanishes and
+
+$$
+H^i_{\mathrm{cts}}(G_{K,S},T)
+\simeq\varprojlim_mH^i(G_{K,S},T_m) \tag{3.1n}
+$$
+
+for every $i$. The right side is compact and separated. The cochain-exact sequence
+
+$$
+0\longrightarrow T\xrightarrow{\varpi}T\longrightarrow T_1\longrightarrow0
+$$
+
+gives an injection
+
+$$
+H^i_{\mathrm{cts}}(G_{K,S},T)/\varpi
+\hookrightarrow H^i(G_{K,S},T_1).
+$$
+
+The quotient on the left is therefore finite. Topological Nakayama, applied to the compact module in (3.1n), makes $H^i_{\mathrm{cts}}(G_{K,S},T)$ a finitely generated $\mathcal O$-module. If $\ell$ is odd or $K$ is totally imaginary, finite-level vanishing and (3.1n) also give
+
+$$
+H^i_{\mathrm{cts}}(G_{K,S},T)=0\qquad(i>2). \tag{3.1o}
+$$
+
+If $\ell=2$ and $K$ has a real place, restriction to $K(i)$ and the finite-level identity $\operatorname{cor}\circ\operatorname{res}=2$ instead show that $2$ kills $H^i_{\mathrm{cts}}(G_{K,S},T)$ for $i>2$. These groups can be nonzero, but they are finite because they are finitely generated $\mathcal O$-modules killed by $2$.
+
+For $V=T\otimes_{\mathcal O}E$, compactness of the cochain domain shows that every continuous cochain has bounded image. The scalar-extension theorem of Book 29 therefore gives
+
+$$
+H^i_{\mathrm{cts}}(G_{K,S},T)\otimes_{\mathcal O}E
+\simeq H^i_{\mathrm{cts}}(G_{K,S},V) \tag{3.1p}
+$$
+
+for every $i$. Thus the groups on the right are finite-dimensional over $E$. They vanish for $i>2$ for every number field: this follows directly from (3.1o) in the nonexceptional case, while in the real $2$-adic case the high lattice groups are killed by $2$ and disappear after tensoring with $E$. These assertions are not licenses to treat $T$, $V$, and $V/T$ as the same topological coefficient object. Their cochains and duals live in different categories.
 
 ### 3.6 Euler accounting at the present stage
 
@@ -715,6 +900,8 @@ for all places $v$, such that $\mathcal L_v=H^1_{\mathrm{ur}}(K_v,M)$ for all bu
 
 A **controlling set** for $(M,\mathcal L)$ is a finite set $S$ containing infinity, the coefficient-characteristic and ramified places of $M$, and every place at which $\mathcal L_v$ is not unramified. Then $M$ factors through $G_{K,S}$.
 
+The hypotheses of the finiteness theorem in Section 3.2 now hold. Thus $H^1(G_{K,S},M)$ is finite, and every Selmer group defined below is finite as a subgroup of it. This conclusion remains valid for $2$-primary coefficients over a number field with real places; only high-degree vanishing, not degree-one finiteness, fails there.
+
 If coefficients are in a ring $R$, an $R$-linear Selmer structure requires every $\mathcal L_v$ to be an $R$-submodule. Without that phrase, the resulting group is only an abelian group.
 
 ### 6.3 The kernel and fiber-product formulations
@@ -828,7 +1015,7 @@ The comparison map in (6.5) becomes more informative when its image is named. Su
 $$
 J(\mathcal L,\mathcal L')
 =\operatorname{im}\left(
-H^1_{\mathcal L'}(K,M)longrightarrow
+H^1_{\mathcal L'}(K,M)\longrightarrow
 \bigoplus_v\mathcal L'_v/\mathcal L_v
 \right). \tag{6.7}
 $$
@@ -1168,13 +1355,13 @@ As a worked check, take trivial $M=\mathbf Z/n\mathbf Z$. A global character $\c
 
 A local condition describes permitted classes. Tate local duality converts it into the classes on the dual module that detect none of those permitted directions. This is the correct notion of a dual local condition.
 
-Let $M$ be finite, killed by $n$, and assume the local duality hypotheses: at nonarchimedean places $n$ is prime to the characteristic of the local field, automatic for number fields, and at real places use the finite Tate pairing. Put
+Let $M$ be finite and killed by $n$. At a nonarchimedean completion of a number field the local field has characteristic zero, so the characteristic hypothesis in finite-level Tate local duality is automatic. At a real place we use the finite Tate pairing for $C_2=\operatorname{Gal}(\mathbf C/\mathbf R)$; when $n$ is odd both positive-degree groups vanish, and on the $2$-primary part the complete periodic resolution and coefficient evaluation give the perfect pairing. Put
 
 $$
 M^*(1)=\operatorname{Hom}(M,\mu_n).
 $$
 
-For finite $v$, Book 31 supplies a perfect pairing
+For finite $v$, Tate local duality established in Book 31 supplies a perfect pairing
 
 $$
 \langle\ ,\ \rangle_v:
@@ -1182,7 +1369,7 @@ H^1(K_v,M)\times H^1(K_v,M^*(1))
 \longrightarrow\mathbf Q/\mathbf Z. \tag{9.1}
 $$
 
-At a real place the analogous pairing uses Tate cohomology of $C_2$; in degree one this has the same underlying group as ordinary $H^1$. Complex places contribute zero.
+At a real place the analogous pairing is the Tate pairing just recalled. Periodicity identifies the complementary degree with degree one, and $\widehat H^1(C_2,-)=H^1(C_2,-)$. Complex places contribute zero. Thus (9.1), interpreted with the archimedean convention, is available at every place.
 
 ### 9.2 Finite coefficients and exact orthogonals
 
@@ -1203,7 +1390,7 @@ $$
 (\mathcal L_v^\perp)^\perp=\mathcal L_v. \tag{9.3}
 $$
 
-For vector spaces over a finite field, after using the trace to the prime field if necessary, orthogonals are vector subspaces and dimensions add to the ambient dimension. The subgroup definition (9.2), rather than a guessed dimension, determines the dual condition.
+For vector spaces over a finite field $k$, choose a nonzero additive character $k\to\mathbf Q/\mathbf Z$, for example one obtained from $\operatorname{Tr}_{k/\mathbf F_\ell}$. The resulting scalar form is $k$-linear in the appropriate dual variable, so orthogonals are $k$-subspaces and dimensions add to the ambient dimension. Changing the nonzero additive character rescales the form and leaves its zero locus unchanged. The subgroup definition (9.2), rather than a guessed dimension, determines the canonical dual condition.
 
 ### 9.3 The dual Selmer structure
 
@@ -1218,7 +1405,9 @@ H^1(K_v,M^*(1))/\mathcal L_v^\perp
 \right). \tag{9.4}
 $$
 
-Choose $S$ to control both $M$ and its Tate dual. Away from $S$, where the residue characteristic does not divide $n$ and both modules are unramified, the unramified subgroups are exact orthogonal complements. Hence $\mathcal L^\perp$ is again unramified almost everywhere and is a genuine Selmer structure.
+Choose $S$ to control both $M$ and its Tate dual and to contain every finite place dividing $n$. Away from $S$, the residue characteristic does not divide $n$ and both modules are unramified, so the unramified subgroups are exact orthogonal complements. Hence $\mathcal L^\perp$ is again unramified almost everywhere and is a genuine Selmer structure.
+
+Because this common controlling set contains every prime dividing $n$, Section 3.2 makes both global degree-one groups finite. Hence both the original and dual Selmer kernels are finite, including in the real $2$-primary case.
 
 At coefficient-characteristic places, the unramified subgroup need not be its own complementary condition. This is one reason those places lie in $S$ and their conditions are specified individually.
 
@@ -1243,23 +1432,23 @@ $$
 Thus the unramified subgroup on the dual is contained in the annihilator. Local Euler--Poincaré gives
 
 $$
-\dim H^1(K_v,M)=h_v^0(M)+h_v^2(M).
+|H^1(K_v,M)|=|H^0(K_v,M)|\,|H^2(K_v,M)|.
 $$
 
-Local duality identifies $h_v^2(M)$ with $h_v^0(M^*(1))$. On the other hand, kernel--cokernel equality for Frobenius gives
+Local duality identifies $H^2(K_v,M)$ with the Pontryagin dual of $H^0(K_v,M^*(1))$, so these groups have the same order. Kernel--cokernel equality for Frobenius gives
 
 $$
-\dim H^1_{\mathrm{ur}}(K_v,M)=h_v^0(M),
+|H^1_{\mathrm{ur}}(K_v,M)|=|H^0(K_v,M)|,
 $$
 
-and the same equality for the dual. Hence the two unramified dimensions add to the dimension of the ambient $H^1(K_v,M)$. Perfectness upgrades containment to equality:
+and the same equality for the dual. Hence the product of the orders of the two unramified subgroups is $|H^1(K_v,M)|$. The two ambient degree-one groups have equal order by perfectness. Consequently the contained dual unramified subgroup has exactly the order of the annihilator, and containment is equality:
 
 $$
 H^1_{\mathrm{ur}}(K_v,M)^\perp
 =H^1_{\mathrm{ur}}(K_v,M^*(1)). \tag{9.6}
 $$
 
-The hypothesis $\ell\ne p$ is decisive. At $v\mid\ell$, principal units enlarge $H^1$ by $[K_v:\mathbf Q_\ell]\dim M$, so the two unramified subspaces usually do not have complementary dimensions. For example, if $M=\mathbf F_\ell$ is trivial and $\mu_\ell\subset K_v$, both unramified lines have dimension one, while the ambient $H^1$ has dimension $[K_v:\mathbf Q_\ell]+2$. Their orthogonal complements are therefore much larger than unramified lines.
+The hypothesis $\ell\ne p$ is decisive. For coefficients over a finite field $k$ of characteristic $\ell$ and $v\mid\ell$, principal units add $[K_v:\mathbf Q_\ell]\dim_k M$ to the local Euler formula, so the two unramified subspaces usually do not have complementary dimensions. For example, if $M=\mathbf F_\ell$ is trivial and $\mu_\ell\subset K_v$, both unramified lines have dimension one, while the ambient $H^1$ has dimension $[K_v:\mathbf Q_\ell]+2$. Their orthogonal complements are therefore much larger than unramified lines.
 
 Restriction and corestriction are adjoint:
 
@@ -1281,7 +1470,7 @@ $$
 
 Indeed there is no evident sum of local pairings on two global classes: every summand vanishes because each localization lies in an orthogonal pair, and obtaining a meaningful global exact sequence requires a subtler compact-support construction. Nor does local perfectness imply equality of the two Selmer orders or any numerical difference formula.
 
-Identifying global-to-local cokernels or deriving any numerical comparison between the two global kernels requires the global duality theory of the next book. Here we have constructed the two kernels and proved only that their local conditions are exact orthogonals. That is precisely the input the later global theorem will relate.
+Identifying global-to-local cokernels or deriving any numerical comparison between the two global kernels requires the global duality theory of the next book. In the real $2$-primary case that theorem must be formed from the modified local complexes $C_+^\bullet(K_v,-)$ of Section 4.5; ordinary cochains at infinity would leave the periodic tail unaccounted for. This does not alter the degree-one Selmer kernels because $H^1(\mathbf R,-)=\widehat H^1(\mathbf R,-)$. Here we have constructed the two kernels and proved only that their local conditions are exact orthogonals. That is precisely the input the later global theorem will relate.
 
 ## 10. Kummer theory, units, and class groups
 
@@ -1449,6 +1638,28 @@ $$
 
 A controlling set contains infinity, the places dividing $n$, and the places of bad reduction. Outside it, $E[n]$ is unramified and the Kummer image agrees with the unramified subgroup. Hence (11.1) may be computed from $H^1(G_{K,S},E[n])$ using only finitely many explicit quotient conditions.
 
+Here is the local argument behind that last assertion. At a finite place of good reduction with residue characteristic prime to $n$, reduction gives
+
+$$
+0\longrightarrow E_1(K_v)\longrightarrow E(K_v)
+\longrightarrow\widetilde E(k_v)\longrightarrow0,
+$$
+
+and multiplication by $n$ is an automorphism of the formal group $E_1(K_v)$. Therefore
+
+$$
+E(K_v)/nE(K_v)\simeq\widetilde E(k_v)/n\widetilde E(k_v).
+$$
+
+The finite étale group $E[n]$ extends over $\mathcal O_v$ and specializes to $\widetilde E[n]$. Over the finite field $k_v$, the map $x\mapsto\operatorname{Frob}_v(x)-x$ is surjective on $\widetilde E(\overline{k_v})$; its fibers are translates of $\widetilde E(k_v)$, which is the degree-one case of the finite-field isogeny argument. The Kummer sequence over $k_v$ consequently identifies
+
+$$
+\widetilde E(k_v)/n\widetilde E(k_v)
+\simeq H^1(k_v,\widetilde E[n]).
+$$
+
+Inflation identifies the group on the right with $H^1_{\mathrm{ur}}(K_v,E[n])$. Following the connecting map through reduction shows that this isomorphism is exactly the local Kummer map, so the Kummer and unramified conditions agree at every such place.
+
 ### 11.2 Why the local Kummer image is the right condition
 
 A class in $H^1(K,E[n])$ represents a choice of local $n$-division data with a Galois twisting. Its image in $H^1(K,E)$ is the associated principal homogeneous space under $E$. From the local long exact sequence,
@@ -1494,15 +1705,17 @@ $$
 
 It is the group of cyclic characters of exponent dividing $n$ unramified outside $S$. If the strict condition is imposed at a place $v$, the character is trivial on the entire decomposition group there, so $v$ splits completely in the corresponding cyclic extension. If only the unramified condition is imposed, inertia is trivial but Frobenius may remain nontrivial.
 
-With $S$ consisting only of archimedean places and with strict conditions at real places, global class field theory identifies (11.4) with the $n$-torsion character group of the ordinary ideal class group. Relaxing real places instead sees the narrow version. Thus unramified character Selmer groups are dual in the elementary character-group sense to class-group quotients, even before any general global cohomological duality theorem is invoked.
+Let $S$ consist only of the archimedean places. The subgroup of (11.4) cut out by strict conditions at every real place is, by global class field theory, the exponent-$n$ character group of the ordinary ideal class group. The full group (11.4), equivalently the Selmer group with relaxed real conditions, is the corresponding character group of the narrow class group. Thus unramified character Selmer groups are dual in the elementary character-group sense to class-group quotients, even before any general global cohomological duality theorem is invoked.
 
 ### 11.5 Strict and relaxed auxiliary primes
 
 Let $T$ be a finite set disjoint from a controlling set $S$. Enlarge to $S\cup T$. At $v\in T$ one may keep the unramified condition, relax it, or make it strict. The comparison sequence (6.5) shows exactly what changes:
 
+Write $H^1_{\mathcal L^{\mathrm{ur},T}}(K,M)$ for the Selmer group with the chosen background conditions and the unramified condition at every $v\in T$, and write $H^1_{\mathcal L^{\mathrm{rel},T}}(K,M)$ for the same structure relaxed at $T$. Then
+
 $$
-0\to H^1_{\mathrm{ur}}(K,M)
-\to H^1_{\mathrm{rel},T}(K,M)
+0\to H^1_{\mathcal L^{\mathrm{ur},T}}(K,M)
+\to H^1_{\mathcal L^{\mathrm{rel},T}}(K,M)
 \to\bigoplus_{v\in T}H^1(K_v,M)/H^1_{\mathrm{ur}}(K_v,M). \tag{11.5}
 $$
 
@@ -1522,11 +1735,25 @@ $$
 H^1(K,T)=\varprojlim_m H^1(K,T/\varpi^mT)
 $$
 
-is a theorem under hypotheses, not the definition in every context.
+is a theorem under hypotheses, not the definition in every context. For the number-field lattice setting below, those hypotheses were verified in Section 3.5; they should not be silently exported to an arbitrary profinite group or an arbitrary inverse system.
 
 ### 12.2 Lattices
 
-Let $T$ be a finite free $\mathcal O$-module with its $\varpi$-adic topology and continuous $G_{K,S}$-action. Define $H^1(G_{K,S},T)$ using continuous cochains with topological coefficients, or equivalently by a derived inverse-limit construction that retains any $\varprojlim^1$ term. If the transition maps on invariants satisfy the Mittag--Leffler condition, the expected comparison with finite quotients holds.
+Let $T$ be a finite free $\mathcal O$-module with its $\varpi$-adic topology and continuous $G_{K,S}$-action, where $S$ is finite and contains infinity and the places above $\ell$. Put $T_m=T/\varpi^mT$. Continuous cohomology is the coefficient theory intended here. Section 3.5 proves, for every $i$,
+
+$$
+H^i_{\mathrm{cts}}(G_{K,S},T)
+\simeq\varprojlim_mH^i(G_{K,S},T_m),
+$$
+
+because all finite-level groups are finite and hence their inverse systems are Mittag--Leffler. The same argument applies to every completion $K_v$: finite-level local cohomology is finite by Books 30 and 31, including the mixed-characteristic $\ell$-primary case, while real and complex places are finite-group calculations. Consequently
+
+$$
+H^i_{\mathrm{cts}}(K_v,T)
+\simeq\varprojlim_mH^i(K_v,T_m)
+$$
+
+for every place $v$ and every $i$. There is no residual $\varprojlim^1$ ambiguity under these hypotheses.
 
 A lattice local condition is a **closed** $\mathcal O$-submodule
 
@@ -1534,23 +1761,37 @@ $$
 \mathcal L_v(T)\subseteq H^1(K_v,T).
 $$
 
-The corresponding Selmer group is the kernel of the continuous map to the finite product of topological quotients. It is closed in $H^1(G_{K,S},T)$ and, under the standard finiteness hypotheses, finitely generated over $\mathcal O$.
+The corresponding Selmer group is the kernel of the continuous map to the finite product over $v\in S$ of topological quotients. It is closed in $H^1(G_{K,S},T)$ and is finitely generated over $\mathcal O$, because Section 3.5 makes the ambient global group finitely generated and $\mathcal O$ is noetherian.
 
-Suppose conditions $\mathcal L_v(T/\varpi^mT)$ are compatible under reduction and cartesian:
+Now suppose finite-level $\mathcal O/\varpi^m$-submodules $\mathcal L_{v,m}\subseteq H^1(K_v,T_m)$ satisfy
 
 $$
-\mathcal L_v(T/\varpi^mT)
-=\text{inverse image of }\mathcal L_v(T/\varpi^{m-1}T).
+\mathcal L_{v,m}\longrightarrow\mathcal L_{v,m-1}
 $$
 
-Then, subject to the same inverse-limit exactness hypotheses,
+under reduction. Define the infinite-level condition, rather than guessing it independently, by
+
+$$
+\mathcal L_v(T)=\varprojlim_m\mathcal L_{v,m}
+\subseteq H^1(K_v,T).
+$$
+
+This is closed. Since inverse limits commute with kernels, the fiber-product definition (6.3) gives the unconditional comparison
 
 $$
 H^1_{\mathcal L}(K,T)
-\simeq\varprojlim_m H^1_{\mathcal L_m}(K,T/\varpi^mT). \tag{12.1}
+\simeq\varprojlim_m H^1_{\mathcal L_m}(K,T_m). \tag{12.1}
 $$
 
-Without cartesianness or Mittag--Leffler control, kernels need not commute with the inverse limit in the asserted form.
+Indeed, a compatible global family belongs to the kernel on the left exactly when its localization belongs to $\mathcal L_{v,m}$ at every level. No surjectivity of the transition maps on Selmer groups is needed. The stronger **cartesian** requirement
+
+$$
+\mathcal L_{v,m}
+=\{x\in H^1(K_v,T_m):
+x\bmod\varpi^{m-1}\in\mathcal L_{v,m-1}\}
+$$
+
+is often imposed to ensure that the finite-level conditions themselves are obtained by pullback, but it is not the reason kernels commute with inverse limits. If an independently defined $\mathcal L_v(T)$ is used, (12.1) requires the explicit equality $\mathcal L_v(T)=\varprojlim_m\mathcal L_{v,m}$; ambient Mittag--Leffler finiteness does not prove that compatibility of local conditions.
 
 ### 12.3 Discrete torsion modules
 
@@ -1567,9 +1808,33 @@ H^i(G_{K,S},A)
 \simeq\varinjlim_mH^i(G_{K,S},A[\varpi^m]). \tag{12.2}
 $$
 
-A torsion local condition $\mathcal L_v(A)$ is usually the union or image of compatible finite-level conditions. To conclude that the Selmer kernel is the direct limit of finite Selmer groups, one must check that the local quotient maps and their kernels commute with the filtered colimit. Filtered colimits of abelian groups are exact, so this works for genuinely compatible image conditions; it can fail if an independently defined infinite-level condition is larger than the union.
+A torsion local condition can be propagated without ambiguity. Suppose $\mathcal L_{v,m}\subseteq H^1(K_v,A[\varpi^m])$ is an $\mathcal O$-submodule and maps into $\mathcal L_{v,m+1}$, and define
 
-The resulting Selmer group is typically a discrete cofinitely generated $\mathcal O$-module, not a finite group. Its Pontryagin dual is compact. Statements about its corank belong to this topological category.
+$$
+\mathcal L_v(A)
+=\operatorname{im}\left(
+\varinjlim_m\mathcal L_{v,m}
+\longrightarrow H^1(K_v,A)
+\right).
+$$
+
+Filtered colimits of abelian groups are exact, so they commute with both the local quotients and the defining Selmer kernel. Therefore
+
+$$
+H^1_{\mathcal L}(K,A)
+\simeq\varinjlim_m
+H^1_{\mathcal L_m}(K,A[\varpi^m]). \tag{12.2a}
+$$
+
+If an independently defined infinite-level local condition is larger than the displayed image, (12.2a) need not hold; the failure is a mismatch of local conditions, not a failure of exactness of filtered colimits.
+
+In the present arithmetic setting the resulting Selmer group is a discrete cofinitely generated $\mathcal O$-module, not necessarily a finite group. To see the ambient finiteness, use the cochain-exact sequence $0\to T\to V\to A\to0$, finite generation from Section 3.5, and the scalar-extension isomorphism (3.1p). The long exact sequence shows that $H^1(G_{K,S},A)$ is an extension of
+
+$$
+H^1(G_{K,S},V)/\operatorname{im}H^1(G_{K,S},T)
+$$
+
+by $\ker(H^2(G_{K,S},T)\to H^2(G_{K,S},V))$. The first group is cofinitely generated because the image of the finitely generated lattice group spans the vector-space group by (3.1p); the second is finite because it is the torsion submodule of a finitely generated $\mathcal O$-module. Hence $H^1(G_{K,S},A)$ is cofinitely generated, and so is every subgroup, by Pontryagin duality. Its Pontryagin dual is compact and finitely generated. Statements about corank belong to this topological category.
 
 ### 12.4 Vector-space coefficients
 
@@ -1579,20 +1844,20 @@ $$
 \mathcal L_v(V)\subseteq H^1(K_v,V).
 $$
 
-Often it is obtained by tensoring a saturated lattice condition:
+Suppose it is obtained by tensoring a lattice condition under the local scalar-extension isomorphism:
 
 $$
 \mathcal L_v(V)=\mathcal L_v(T)\otimes_{\mathcal O}E.
 $$
 
-Then, under finite generation and compatibility,
+Because $E$ is flat over $\mathcal O$, tensoring the defining kernel sequence is exact. The global and local instances of (3.1p) then give
 
 $$
 H^1_{\mathcal L}(K,V)
 \simeq H^1_{\mathcal L}(K,T)\otimes_{\mathcal O}E. \tag{12.3}
 $$
 
-If the lattice condition is not saturated, tensoring forgets finite-index information. Different lattices can therefore yield the same vector-space Selmer group but different integral Selmer groups.
+No saturation hypothesis is needed for (12.3). Saturation instead determines whether $\mathcal L_v(T)$ is the full integral preimage of $\mathcal L_v(V)$ and whether the local quotient has torsion. If the lattice condition is not saturated, tensoring forgets finite-index information. Different lattices can therefore yield the same vector-space Selmer group but different integral Selmer groups.
 
 Every $H^1(K_v,V)$ in the relevant number-field setting is finite-dimensional over $E$, and the global Selmer group is finite-dimensional. It carries its natural finite-dimensional topology. This is the coefficient regime used for characteristic-zero deformation tangent calculations; residual tangent spaces instead use a finite field.
 
@@ -1614,7 +1879,7 @@ As at finite level, these are local statements. Pontryagin duality at every plac
 
 ### 13.1 The global tangent cocycle
 
-Let $k$ be a finite field of characteristic $\ell$, and let
+Let $k$ be a finite field of characteristic $\ell$. Let $S$ be finite and contain the archimedean places and every place above $\ell$, and let
 
 $$
 \overline\rho:G_{K,S}\longrightarrow\operatorname{GL}(W)
@@ -1675,7 +1940,7 @@ H^1_{\mathcal L}
 \bigl(K,\operatorname{ad}(\overline\rho)\bigr). \tag{13.3}
 $$
 
-This identification is the endpoint of the global Selmer framework. It explains why local deformation theory produces subspaces, why restricted ramification produces $G_{K,S}$, and why a kernel rather than a direct sum assembles the global problem.
+This identification is the endpoint of the global Selmer framework. It explains why local deformation theory produces subspaces, why restricted ramification produces $G_{K,S}$, and why a kernel rather than a direct sum assembles the global problem. The space is finite-dimensional by Section 3.2. If $\operatorname{char}k=2$ and $K$ has a real place, the formula still uses ordinary degree one because it equals modified degree one; it does not imply that the whole ordinary global complex is concentrated in degrees at most two.
 
 For framed deformations one does not quotient by all infinitesimal conjugations at the framed places, so the tangent space acquires additional local coboundary directions. Those directions must be added according to the framing convention; they are not hidden inside the unframed Selmer group (13.3).
 
@@ -1688,9 +1953,42 @@ $$
 =\{X\in\operatorname{End}_k(W):\operatorname{tr}X=0\}. \tag{13.4}
 $$
 
-When the characteristic of $k$ divides $\dim W$, scalar endomorphisms may lie in $\operatorname{ad}^0$, so trace zero is not the same as quotienting out scalars. The local fixed-determinant tangent spaces must be subspaces of $H^1(K_v,\operatorname{ad}^0)$, and the global fixed-determinant tangent space is their Selmer group.
+Fixing the determinant restricts cocycles, whereas passing to an unframed deformation quotient divides by infinitesimal conjugations. These operations must be kept in that order. Since trace is conjugation-invariant,
 
-If a short exact sequence relating scalar, adjoint, and trace-zero modules is used, Chapter 7 applies: local conditions must be checked for cartesianness, and correction terms cannot be dismissed merely because the coefficient modules form an exact sequence.
+$$
+\operatorname{tr}(gX-X)=0,
+$$
+
+every adjoint coboundary lies in $Z^1(\operatorname{ad}^0)$. With no further local conditions, the actual unframed fixed-determinant tangent space is therefore
+
+$$
+t^{\det}
+=\frac{Z^1(G_{K,S},\operatorname{ad}^0(\overline\rho))}
+{B^1(G_{K,S},\operatorname{ad}(\overline\rho))}
+\simeq
+\ker\left(
+H^1(G_{K,S},\operatorname{ad}(\overline\rho))
+\xrightarrow{\operatorname{tr}}H^1(G_{K,S},k)
+\right). \tag{13.4a}
+$$
+
+For the second description, the scalar module $k$ has trivial conjugation action, so $B^1(G_{K,S},k)=0$. An adjoint class lies in the displayed kernel exactly when the trace of any representing cocycle is identically zero, and every adjoint coboundary already has trace zero. With local fixed-determinant conditions, let $Z^1_{\mathcal L,0}$ be the trace-zero global cocycles whose local classes belong to the specified tangent images. Then
+
+$$
+t^{\det}_{\mathcal L}
+=Z^1_{\mathcal L,0}/B^1(G_{K,S},\operatorname{ad}(\overline\rho)). \tag{13.4b}
+$$
+
+The familiar trace-zero Selmer formula needs an extra hypothesis. If
+
+$$
+H^0(K,\operatorname{ad}(\overline\rho))
+\xrightarrow{\operatorname{tr}}k
+$$
+
+is surjective, every adjoint endomorphism differs from an invariant endomorphism by a trace-zero one. Hence $B^1(G_{K,S},\operatorname{ad})=B^1(G_{K,S},\operatorname{ad}^0)$, and (13.4b) is precisely the Selmer group formed in $H^1(K,\operatorname{ad}^0)$. This surjectivity holds whenever $\operatorname{char}k$ does not divide $\dim W$, because $(\dim W)^{-1}I$ is invariant and has trace one.
+
+When $\operatorname{char}k$ divides $\dim W$, scalar endomorphisms lie in $\operatorname{ad}^0$, the trace sequence need not split, and $H^1_{\mathcal L}(K,\operatorname{ad}^0)$ can be strictly larger than the actual tangent (13.4b). Thus trace zero is neither quotienting out scalars nor an unconditional license to replace (13.4b) by a trace-zero Selmer group. If a coefficient exact sequence involving $\operatorname{ad}^0$, $\operatorname{ad}$, and $k$ is used, the cartesianness and boundary corrections of Chapter 7 must also be checked locally.
 
 ### 13.5 The dual tangent condition
 
@@ -1717,6 +2015,8 @@ $$
 is the **dual tangent Selmer group**.
 
 It models the dual local directions that later measure failure of global lifting and the need for auxiliary primes. At this stage (13.5) is a well-defined Selmer kernel assembled from local orthogonals. No dimension formula comparing (13.3) and (13.5) has yet been established.
+
+For a fixed-determinant problem, the safest construction is to regard (13.4b) as a subspace of ambient adjoint cohomology and take its local annihilators in the Tate dual of the ambient adjoint module. Only under the trace-surjectivity hypothesis above may one replace the coefficient module by $\operatorname{ad}^0$ and then dualize it. In particular, the trace form on $\operatorname{ad}^0$ is degenerate when the coefficient characteristic divides $\dim W$, so the usual trace-zero self-duality is unavailable in that case.
 
 ### 13.6 The unramified deformation condition
 
@@ -1757,7 +2057,14 @@ $$
 
 Thus the unramified tangent dimension is the dimension of the Frobenius centralizer. If Frobenius has distinct eigenvalues on a two-dimensional residual space, its centralizer consists of diagonal matrices and has dimension two; the fixed-determinant centralizer has dimension one when $\ell\ne2$. If Frobenius is scalar, the centralizer has dimension four and the unramified framed problem has a corresponding jump. This jump is real arithmetic information, not a defect of the parameterization.
 
-The same calculation covers a representation that is ramified but whose *new extension data* are required to be unramified: replace the coefficient module in (13.7) by its inertia invariants. What it does not cover is a minimal ramification condition that permits a fixed nontrivial inertial action. Such a condition must be linearized from its own local deformation problem; it need not equal the kernel of restriction to inertia on the whole adjoint module.
+For a ramified coefficient module $N$, the corresponding cohomological unramified subgroup is instead
+
+$$
+H^1_{\mathrm{ur}}(K_v,N)
+\simeq N^{I_v}/(\operatorname{Frob}_v-1)N^{I_v}.
+$$
+
+This formula can describe a problem in which only the new extension class is required to be unramified, provided its linearization really is the kernel of restriction to inertia. It does not describe a minimal ramification condition that permits a fixed nontrivial inertial action. Such a condition must be linearized from its own local deformation problem; it need not equal the inertia kernel on the whole adjoint module.
 
 ### 13.7 A two-character calculation away from $\ell$
 
@@ -1831,27 +2138,61 @@ $$
 
 Formula (13.12) is the precise framed correction for one retained global basis. Several independent local framings produce a different quotient of local change-of-basis directions and require their own diagonal automorphism calculation. Merely adding $d^2$ once for each framed place double-counts global scalar and centralizer directions.
 
-For fixed determinant, replace the adjoint module by $\operatorname{ad}^0$ throughout (13.11)--(13.12). This remains valid when $\ell$ divides $\dim W$; what changes is the invariant space, because scalar matrices may then be trace zero.
+For a fixed determinant, the framed tangent space is $Z^1_{\mathcal L,0}$ itself: framing forbids the quotient by infinitesimal conjugacy, while fixing determinant imposes trace zero on cocycles. Combining this with (13.4b) gives the always-valid exact sequence
+
+$$
+0\longrightarrow B^1(G_{K,S},\operatorname{ad}(\overline\rho))
+\longrightarrow Z^1_{\mathcal L,0}
+\longrightarrow t^{\det}_{\mathcal L}
+\longrightarrow0, \tag{13.12a}
+$$
+
+and hence
+
+$$
+\dim_k Z^1_{\mathcal L,0}
+=\dim_k t^{\det}_{\mathcal L}
++\dim_k\operatorname{ad}(\overline\rho)
+-\dim_kH^0(K,\operatorname{ad}(\overline\rho)). \tag{13.12b}
+$$
+
+If $H^0(\operatorname{ad})\to k$ is surjective, then $t^{\det}_{\mathcal L}=H^1_{\mathcal L}(K,\operatorname{ad}^0)$ and $B^1(\operatorname{ad})=B^1(\operatorname{ad}^0)$, so (13.12b) can equivalently be written with the trace-zero module throughout. Without that hypothesis, the blanket replacement of $\operatorname{ad}$ by $\operatorname{ad}^0$ in (13.11)--(13.12) is false.
 
 ### 13.9 Obstructions and the limit of the tangent calculation
 
-Let $R'\twoheadrightarrow R$ be a small square-zero extension of coefficient rings with kernel $I$, and suppose a global deformation over $R$ has been chosen. Choosing set-theoretic matrix lifts to $R'$ produces a multiplicative defect
+Let $R'\twoheadrightarrow R$ be a surjection of local Artinian coefficient rings with common residue field $k$, inducing the identity on $k$, and put $I=\ker(R'\to R)$. Here **small square-zero** means
 
 $$
-c(g,h)=\widetilde\rho(g)\widetilde\rho(h)
+\mathfrak m_{R'}I=0,
+$$
+
+so $I$ is a finite-dimensional $k$-space, $I^2=0$, and the residual Galois action on $I$ is trivial. Suppose a continuous global deformation over $R$ has been chosen. Because these Artinian rings are finite over the finite residue field, continuous set-theoretic matrix lifts to $R'$ can be chosen. Their multiplicative defect lies in $1+\operatorname{M}_{\dim W}(I)$; write
+
+$$
+1+c(g,h)=\widetilde\rho(g)\widetilde\rho(h)
 \widetilde\rho(gh)^{-1}.
 $$
 
-Associativity makes $c$ a $2$-cocycle with values in $\operatorname{ad}(\overline\rho)\otimes_k I$. Changing the provisional lifts changes $c$ by a coboundary. Hence there is a well-defined obstruction class
+Because $I^2=0$, the identification $1+X\leftrightarrow X$ turns multiplication in this kernel into addition. Associativity then makes $c$ a continuous $2$-cocycle with values in $\operatorname{ad}(\overline\rho)\otimes_k I$. Changing the provisional lifts changes $c$ by a coboundary. Hence there is a well-defined obstruction class
 
 $$
 o(\rho,R'/R)\in
-H^2(G_{K,S},\operatorname{ad}(\overline\rho))\otimes_k I. \tag{13.13}
+H^2\bigl(G_{K,S},\operatorname{ad}(\overline\rho)\otimes_k I\bigr)
+\simeq H^2(G_{K,S},\operatorname{ad}(\overline\rho))\otimes_k I. \tag{13.13}
 $$
 
-It vanishes exactly when a global lift exists before local deformation conditions are imposed. If local lifts are required, the global class must vanish and the chosen lift must then be adjustable into every local condition; Chapter 7 shows that this second requirement is a separate lifting defect. Thus even vanishing of the ambient $H^2$ does not automatically prove that an arbitrarily prescribed local deformation problem is unobstructed.
+The displayed isomorphism in (13.13) uses the trivial action and finite dimension of $I$. The class vanishes exactly when a global lift exists before local deformation conditions are imposed. If local lifts are required, the global class must vanish and the chosen lift must then be adjustable into every local condition; Chapter 7 shows that this second requirement is a separate lifting defect. Thus even vanishing of the ambient $H^2$ does not automatically prove that an arbitrarily prescribed local deformation problem is unobstructed.
 
-For a fixed determinant, determinant-compatible provisional lifts make (13.13) take values in $H^2(G_{K,S},\operatorname{ad}^0(\overline\rho))\otimes I$. Without determinant-compatible lifts, projecting an arbitrary adjoint obstruction onto a trace-zero direct summand is invalid when the trace sequence does not split.
+For a fixed determinant, first choose the prescribed lift of that determinant to $R'$. Determinant-compatible provisional matrix lifts then make (13.13) take values in $H^2(G_{K,S},\operatorname{ad}^0(\overline\rho))\otimes I$. Without a lifted determinant and determinant-compatible provisional lifts, projecting an arbitrary adjoint obstruction onto a trace-zero direct summand is invalid when the trace sequence does not split.
+
+The coefficient module in (13.13) is finite and $S$ contains the places above $\ell$, so Section 3.2 makes the obstruction group finite. If $\ell$ is odd or $K$ is totally imaginary, Section 3.3 also gives
+
+$$
+H^i(G_{K,S},\operatorname{ad}(\overline\rho))=0
+\qquad(i>2).
+$$
+
+If $\ell=2$ and $K$ has a real place, only virtual cohomological dimension is available: the higher ordinary groups are killed by $2$ but need not vanish. The small-extension obstruction still lies in degree two because the multiplicative defect is a $2$-cocycle, not because the ordinary global complex has amplitude $[0,2]$. Any later derived deformation or Poitou--Tate formula in this case must retain the modified real complexes.
 
 The dual tangent Selmer group (13.5) is expected to measure the global relations among locally allowable lifts. That expectation is deliberately not turned into an equality here. Establishing it requires identifying the cokernel of localization by a global perfect pairing. The present book supplies both sides of that later theorem—the tangent kernel and its locally orthogonal dual—but does not use the desired conclusion as part of their construction.
 
@@ -1870,7 +2211,8 @@ A reliable Selmer construction proceeds in the following order.
 7. For a coefficient morphism, check image compatibility. For a short exact sequence, additionally audit cartesianness, degree-zero boundaries, global $H^2$ boundaries, and local lifting defects.
 8. For a field extension, include every place above each place and use sums of local corestrictions.
 9. For a dual condition, take exact local orthogonals under Tate pairings; do not infer a global pairing.
-10. At lattice or torsion level, state topology, closure, and the limit hypotheses before passing between finite levels.
+10. At lattice or torsion level, state topology and closure. Use the finite-level finiteness proof of Section 3.5 to remove $\varprojlim^1$, and require the infinite local condition to equal the stated inverse limit or direct-limit image.
+11. Before truncating a global complex above degree two, verify that the coefficient prime is odd or that the number field is totally imaginary. For real $2$-primary coefficients, use virtual dimension only and retain complete Tate cochains at real places in every Poitou--Tate construction.
 
 This order keeps ramification, localization, and local permission logically distinct.
 
@@ -1913,13 +2255,13 @@ Before claiming exactness for a new coefficient sequence, check four distinct po
 
 Failure at the second point creates the defect (7.6). Failure at the third creates (7.9), even when the global $H^2$ boundary vanishes. Therefore arbitrary assignments of local conditions do not form exact functors.
 
-What remains beyond this audit is sharply defined. A theorem identifying the cokernel in (6.6), relating it to (9.4), or deriving a numerical difference between a Selmer group and its dual is a global duality theorem. Those statements have not been assumed here.
+What remains beyond this audit is sharply defined. A theorem identifying the cokernel in (6.6), relating it to (9.4), or deriving a numerical difference between a Selmer group and its dual is a global duality theorem. Those statements have not been assumed here. In particular, virtual $2$-cohomological dimension alone neither identifies the higher ordinary global groups with real local terms nor licenses an ordinary three-term truncation. A later Poitou--Tate theorem must prove that localization statement from its modified compact-support complex.
 
 ### 14.4 Conclusion
 
 Global Galois cohomology begins by removing unwanted inertia. The quotient $G_{K,S}$ remembers every Frobenius outside $S$ while allowing ramification only at finitely many controlled places. Its cohomology with finite coefficients is finite under explicit hypotheses, and localization carries each global class to compatible shadows in the completions. Choices of geometric places introduce only canonical conjugacy, while real places contribute a genuine $2$-primary phenomenon that requires Tate modification outside degree one.
 
-A Selmer structure adds arithmetic meaning to this finite global arena. Unramified, strict, relaxed, Kummer, and integral conditions are subgroups of local $H^1$, and their global assembly is the inverse image of their product, equivalently the kernel of a map to local quotients. This kernel description explains independence of the controlling set, comparison under stronger and weaker conditions, and the exact correction terms required when coefficients vary. Restriction, corestriction, and Shapiro show that the construction survives change of number field only when all places above a place are retained.
+A Selmer structure adds arithmetic meaning to this finite degree-one global arena. Unramified, strict, relaxed, Kummer, and integral conditions are subgroups of local $H^1$, and their global assembly is the inverse image of their product, equivalently the kernel of a map to local quotients. This kernel description explains independence of the controlling set, comparison under stronger and weaker conditions, and the exact correction terms required when coefficients vary. Restriction, corestriction, and Shapiro show that the construction survives change of number field only when all places above a place are retained.
 
 Kummer theory makes the framework concrete: valuations produce restricted ramification, units form the kernel, and class-group torsion forms the quotient. Elliptic curves replace units by local points and yield the familiar finite $n$-Selmer group between Mordell--Weil classes and locally trivial torsors. Character groups record cyclic extensions, while adjoint modules turn first-order global deformations into Selmer classes cut out by local tangent subspaces.
 
