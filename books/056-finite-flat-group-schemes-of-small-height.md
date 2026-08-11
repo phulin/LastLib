@@ -431,10 +431,10 @@ The three subquotients have distinct roles:
 
 $$
 \begin{array}{c|c}
-\text{subquotient}&\text{type}\
+\text{subquotient}&\text{type}\\
 \hline
-G^{\mathrm{mult}}&\text{multiplicative type}\
-G^0/G^{\mathrm{mult}}&\text{local-local}\
+G^{\mathrm{mult}}&\text{multiplicative type}\\
+G^0/G^{\mathrm{mult}}&\text{local-local}\\
 G/G^0&\text{finite étale}.
 \end{array}
 \tag{4.5}
@@ -442,7 +442,14 @@ $$
 
 Here **local-local** means that the special fiber of the group and that of its Cartier dual are connected.
 
-To prove the middle assertion, connectedness of $G^0/G^{\mathrm{mult}}$ follows because it is a quotient of a group with connected special fiber. Dualize its defining exact sequence. A nontrivial étale quotient of its dual would dualize to a multiplicative subgroup of $G^0$ strictly larger than $G^{\mathrm{mult}}$, contradicting maximality. Thus its dual also has connected special fiber.
+To prove the middle assertion, connectedness of $G^0/G^{\mathrm{mult}}$ follows because it is a quotient of a group with connected special fiber. Put $Q=G^0/G^{\mathrm{mult}}$. If $Q^D$ had a nontrivial étale quotient $E$, duality would give a nontrivial multiplicative subgroup $E^D\subset Q$. Its inverse image $M\subset G^0$ would fit into
+
+$$
+0\longrightarrow G^{\mathrm{mult}}\longrightarrow M
+\longrightarrow E^D\longrightarrow0.
+$$
+
+Finite groups of multiplicative type are closed under extensions: after duality this is the corresponding closure of finite étale groups under extensions. Hence $M$ would be a multiplicative subgroup of $G$ strictly larger than $G^{\mathrm{mult}}$, contradicting maximality. Thus $Q^D$ has connected special fiber as claimed.
 
 Duality reverses (4.4). The étale quotient of $G$ corresponds to the multiplicative subgroup of $G^D$; the multiplicative subgroup of $G$ corresponds to the étale quotient of $G^D$; and the local-local middle term stays in the local-local class. In general (4.4) is a filtration, not a direct product.
 
@@ -487,7 +494,7 @@ Every intermediate binomial coefficient is nonzero in $k$, and minimality makes 
 
 Finally, the three groups are pairwise nonisomorphic: one is étale, one is connected with étale dual, and one is connected with connected dual. $\square$
 
-The primitive-element Hopf argument in the last paragraph is the characteristic-$p$ shadow of the universal calculation carried out in Chapter 6. Over a nonalgebraically closed perfect field, the three types can have forms; type, rather than a chosen split coordinate, is the invariant statement.
+The primitive-element Hopf argument in the last paragraph is the characteristic-$p$ shadow of the universal calculation carried out in Chapter 6. Over a nonalgebraically closed perfect field, the étale group can be a nonconstant form of $\underline{\mathbf Z/p\mathbf Z}$, and its dual can be a corresponding form of $\mu_p$. The local-local group is still $\alpha_p$: its geometric automorphism group is $\mathbf G_m$, and its forms are classified by $H^1(k,\mathbf G_m)=0$. Thus geometric type, rather than a chosen splitting of the two endpoint forms, is the invariant statement.
 
 ## 5. The first structure of a group of order $p$
 
@@ -509,7 +516,7 @@ $$
 \sum_{x\in G_T}(x+a)=\sum_{x\in G_T}x+pa.
 $$
 
-Comparison yields $pa=0$. This is natural in every $T$, so $[p]_G=0$. The summation uses the trace of the finite locally free algebra and therefore counts nilpotent length; no assumption about geometric points enters. $\square$
+Comparison yields $pa=0$. This is natural in every $T$, so $[p]_G=0$. The finite-flat sum is the symmetric-power construction established for finite locally free group schemes; its base-change compatibility makes it count scheme-theoretic length, including nilpotents. No assumption about geometric points enters. $\square$
 
 Consequently every $c\in\mathbf F_p$ acts on $G$ by $[c]$. The units $\mathbf F_p^\times$ act by automorphisms. This scalar action is intrinsic; it does not require a choice of generator of the generic group.
 
@@ -592,19 +599,48 @@ $$
 I_1^{\otimes i}\longrightarrow I_i.
 $$
 
-They are isomorphisms. This is the delicate coefficient step. Choose generators $z_i$ of the weight summands, with $z_1=x$, and write every product and reduced coproduct in these generators. The identity
+They are isomorphisms. To see the integral point in this assertion, make a finite extension of DVRs over which the generic group is constant and choose a generic weight-one function $X$. The functions
 
 $$
-\Delta(z_1z_i)=\Delta(z_1)\Delta(z_i)
+1,X,\ldots,X^{p-1}
 $$
 
-shows inductively that the coefficient of $z_{i+1}$ in $z_1z_i$ and the coefficient of $z_1\otimes z_i$ in the reduced coproduct of $z_{i+1}$ multiply to $i+1$ modulo coefficients already normalized at earlier stages. For $i+1<p$, this integer is a unit. Both coefficients lie in $R$, so each is a unit. Rescale $z_{i+1}$ so that $z_1z_i=z_{i+1}$. Beginning with $i=1$ produces
+are a generic eigenbasis. Choose integral generators $z_i=q_iX^i$ of the base-changed weight lines, with $z_1=x=q_1X$. Multiplication shows that
+
+$$
+\frac{q_1q_{i-1}}{q_i}\in R'
+\qquad(2\le i\le p-1).
+\tag{5.5a}
+$$
+
+Scalar equivariance gives
+
+$$
+\Delta(X)=X\otimes1+1\otimes X+
+\sum_{j=1}^{p-1}d_jX^j\otimes X^{p-j}.
+$$
+
+Indeed a mixed monomial has exponents between $1$ and $p-1$ and total scalar weight one, so its total degree is $p$. Write $X^p=\alpha X$. Interpolation on the $p$ generic points shows that every $\alpha d_j$ is divisible by $p$: modulo $p$, Teichmuller representatives add as their residue classes, and the Vandermonde matrix of the $p$ distinct representatives has unit determinant. A term using $m$ degree-$p$ corrections has excess total degree $m(p-1)$; to return to the basis exponents it must use the relation $X^p=\alpha X$ exactly $m$ times in total. Its coefficient therefore contains $m$ factors $\alpha d_j$ and is divisible by $p$. Hence the coefficient of $X\otimes X^{i-1}$ in $\Delta(X^i)$ is congruent to the binomial contribution $i$ modulo the maximal ideal. Call this unit coefficient $u_i$. Since $\Delta(z_i)$ is integral, its coefficient in the integral tensor basis $z_1\otimes z_{i-1}$ gives
+
+$$
+\frac{u_i q_i}{q_1q_{i-1}}\in R'.
+\tag{5.5b}
+$$
+
+The coefficient $u_i$ is a unit because $i<p$. The two inclusions (5.5a) and (5.5b) force
+
+$$
+v(q_i)=v(q_1)+v(q_{i-1}).
+$$
+
+Thus both displayed coefficients are units and multiplication
+$I_1\otimes I_{i-1}\to I_i$ is an isomorphism after the faithfully flat extension $R'/R$. It was therefore already an isomorphism over $R$. Rescaling the generator of each target line gives inductively
 
 $$
 z_i=x^i\qquad(1\le i\le p-1).
 $$
 
-This induction divides only by $2,\ldots,p-1$, never by $p$.
+This argument divides only by $2,\ldots,p-1$, never by $p$.
 
 The remaining product has weight one:
 
@@ -634,13 +670,19 @@ $$
 \tag{6.1}
 $$
 
-where $C_p(X,Y)$ is homogeneous of total degree $p$ with no pure terms. Associativity, compatibility with $x^p=ax$, and the antipode identity determine both $C_p$ and the product $ab$ up to one harmless unit normalization.
+where $C_p(X,Y)$ is homogeneous of total degree $p$ with no pure terms. The clean way to find the coefficients is to interpolate addition on the constant generic group. This proves the Hopf identities at the same time, instead of treating associativity as a second unexplained recursion.
 
 We isolate the polynomial calculation so that no classification theorem is hidden in notation.
 
-Fix a generator of $\mathbf F_p^\times$. Let $\Lambda_p$ be the finite étale $\mathbf Z_{(p)}$-algebra generated by its universal Teichmuller lift; for $p=2$, take $\Lambda_2=\mathbf Z_{(2)}$. A henselian local ring of residue characteristic $p$ receives the corresponding map from the relevant local factor of $\Lambda_p$, because the chosen residue roots lift uniquely. Changing the generator only changes the universal coordinate normalization.
+Fix a generator of $\mathbf F_p^\times$, with $p$ odd. Let $\Lambda_p$ be the corresponding finite étale $\mathbf Z_{(p)}$-algebra containing elements
 
-**Lemma 6.1 (universal Oort--Tate calculation).** For every prime $p$ there are
+$$
+[c]\qquad(c\in\mathbf F_p)
+$$
+
+with $[0]=0$, $[1]=1$, $[c][d]=[cd]$, and $[c]\equiv c\pmod p$. Concretely, one adjoins a root of $T^{p-1}-1$ lifting the chosen generator and takes the relevant local factor. A henselian local ring of residue characteristic $p$ receives the corresponding map because these simple residue roots lift uniquely. Changing the generator only changes the universal coordinate normalization.
+
+**Lemma 6.1 (universal Oort--Tate calculation).** For every odd prime $p$ there are
 
 $$
 w_p\in p\Lambda_p^\times,
@@ -650,7 +692,7 @@ C_p(X,Y)=\sum_{i=1}^{p-1}c_iX^iY^{p-i}
 \tag{6.2}
 $$
 
-and a polynomial $J_p(X)\in\Lambda_p[B,X]$ with no constant term, having the following property. For every $\Lambda_p$-algebra $R$ and every $a,b\in R$ satisfying
+having the following property. For every $\Lambda_p$-algebra $R$ and every $a,b\in R$ satisfying
 
 $$
 ab=w_p,
@@ -664,69 +706,74 @@ $$
 A_{a,b}&=R[x]/(x^p-a x),\\
 \Delta(x)&=x\otimes1+1\otimes x+bC_p(x\otimes1,1\otimes x),\\
 \varepsilon(x)&=0,\\
-S(x)&=J_p(b,x)
+S(x)&=-x
 \end{aligned}
 \tag{6.4}
 $$
 
-make $A_{a,b}$ a commutative, cocommutative Hopf algebra. The constants can be normalized so that duality interchanges $a$ and $b$. Any weight-one Hopf structure on (5.5) is uniquely of this form after a unique rescaling compatible with (5.6).
+make $A_{a,b}$ a commutative, cocommutative Hopf algebra. The constants can be normalized so that duality interchanges $a$ and $b$. Once the weight-one coordinate and this universal normalization are fixed, any weight-one Hopf structure on (5.5) is of this form with a unique $b$.
 
-**Proof.** Begin over the universal ring
-
-$$
-U=\Lambda_p[A,B]/(AB-W),
-$$
-
-where $W$ is initially undetermined and is required to generate the same ideal as $p$. Before introducing $B$, write the most general symmetric reduced coproduct as
+**Proof.** Let $V$ be the free $\Lambda_p$-module of polynomials of degree at most $p-1$. Evaluation at the $p$ elements $[c]$ identifies $V$ with the module of functions on $\mathbf F_p$: the Vandermonde determinant is a product of differences $[c]-[d]$, all of which are units because their residues are distinct. The same argument in two variables gives a unique reduced polynomial $\Phi_p(X,Y)$, of degree at most $p-1$ in each variable, such that
 
 $$
-\Delta(X)=X+Y+\sum_{i=1}^{p-1}D_iX^iY^{p-i},
-$$
-
-with $D_i=D_{p-i}$. Compatibility of $\Delta$ with multiplication, compared first in bidegrees $(1,p-1)$ and $(p-1,1)$ and then successively inward, shows that the ideals generated by the nonzero $D_i$ coincide and that their ratios are units determined universally. Over the universal principal chart choose their common factor $B$ and write the normalized law
-
-$$
-\Delta(X)=X+Y+B\sum_{i=1}^{p-1}c_iX^iY^{p-i}.
+\Phi_p([c],[d])=[c+d].
 \tag{6.5}
 $$
 
-There are no lower-degree mixed terms to eliminate. A monomial $X^iY^j$ in the reduced coproduct must have scalar weight one, so
+Uniqueness of interpolation proves directly that $\Phi_p$ is symmetric, has zero as identity, and is associative under substitution modulo $X^p-X$, $Y^p-Y$, and $Z^p-Z$: both sides represent addition of three elements of $\mathbf F_p$. It also gives
 
 $$
-i+j\equiv1\pmod{p-1}.
-$$
-
-For $1\le i,j\le p-1$, the only possible total degree is $p$. This is the crucial economy supplied by the $\mathbf F_p^\times$-action.
-
-Insert (6.5) into
-
-$$
-\Delta(X)^p=A\Delta(X)
-\quad\text{modulo }(X^p-AX,Y^p-AY).
+\Phi_p([u]X,[u]Y)=[u]\Phi_p(X,Y)
+\qquad(u\in\mathbf F_p^\times).
 \tag{6.6}
 $$
 
-For a mixed monomial $X^iY^{p-i}$, the binomial coefficient $\binom pi$ is divisible by $p$ and $\binom pi/p$ is a unit of $\Lambda_p$. After the outer coefficients have been fixed, the next equation is linear in the next $c_i$ with coefficient $i$ or $p-i$. Those integers are units. The coefficient equations therefore solve recursively for $c_i$, except for the one common scalar already named $B$. The final unsolved equation is
+Put $D_p=\Phi_p-X-Y$. There are no pure terms because zero is the identity. By (6.6), a mixed monomial $X^iY^j$ in $D_p$ has $i+j\equiv1\pmod{p-1}$. Since $1\le i,j\le p-1$, its total degree is $p$. Moreover $D_p$ reduces to zero modulo $p$, because the Teichmuller representatives then add as their residue classes. The same unit Vandermonde matrix shows coefficient by coefficient that
 
 $$
-AB=W,
+D_p(X,Y)\in p\Lambda_p[X,Y].
+\tag{6.6a}
 $$
 
-where $W/p$ is a unit. Fixing the common scalar fixes $W=w_p$ and the $c_i$. Symmetry gives cocommutativity.
-
-Next compare the two substitutions of (6.5) into three variables. Order mixed tridegrees lexicographically. In the first tridegree at which the two expressions could differ, every coefficient involving a later $c_i$ cancels, while the remaining coefficient is one of the same two-variable recursion equations just solved. It therefore vanishes. Induction through the tridegrees proves that the difference between
+The coefficients are not all in $p^2\Lambda_p$. Otherwise $c\mapsto[c]\pmod {p^2}$ would be additive as well as multiplicative; additivity would give $p[1]=0$ modulo $p^2$, a contradiction. Thus the common coefficient ideal of $D_p$ has valuation one. Choose its generator $w_p\in p\Lambda_p^\times$ and put
 
 $$
-(X\star Y)\star Z
-\quad\text{and}\quad
-X\star(Y\star Z)
+C_p=D_p/w_p.
+\tag{6.6b}
 $$
 
-is governed by the same recursion already solved from (6.6); hence it vanishes. At total degree at least $p$, reduce with $X^p=AX$, $Y^p=AY$, $Z^p=AZ$ and use $AB=w_p$. This proves coassociativity. The zero coordinate gives the counit. Solving $X\star J=0$ recursively determines $J_p(B,X)$; the same unit denominators occur, and associativity makes it both a left and right inverse.
+At least one coefficient of $C_p$ is a unit. This primitivity is what will recover $b$ from an integral coproduct.
 
-All identities are polynomial identities over $U$, so every specialization satisfying (6.3) inherits them. Conversely, the coefficient eliminations show that any weight-one Hopf law is brought uniquely to (6.5), compatibility with the relation forces (6.3), and the recursive equations force the same constants. Finally, applying the finite dual Hopf construction exchanges multiplication and comultiplication. Choosing the initial common scalar so that the resulting coordinate has coefficient one makes this operation send $(A,B)$ to $(B,A)$. This is the asserted self-dual normalization. $\square$
+Now work over
+
+$$
+U=\Lambda_p[A,B]/(AB-w_p)
+$$
+
+and set $H=U[x]/(x^p-Ax)$. After inverting $A$ and adjoining $t$ with $t^{p-1}=A$, put $X=x/t$. Then $X^p=X$, and
+
+$$
+t\Phi_p(X,Y)
+=x+y+\frac{w_p}{A}C_p(x,y)
+=x+y+BC_p(x,y).
+\tag{6.6c}
+$$
+
+Thus (6.4) is just the interpolated addition law on the constant group after this faithfully flat generic extension. Associativity, commutativity, the identity law, and the inverse $X\mapsto-X$ follow from addition in $\mathbf F_p$. Each local factor of $U$ injects into its localization at $A$, and $H$ and all of its tensor powers are free over $U$. The identities therefore already hold over $U$, and hence after every specialization $A\mapsto a$, $B\mapsto b$. This proves the construction without a separate associativity assumption.
+
+Conversely, start with a weight-one Hopf law on $R[x]/(x^p-a x)$. Here $a\ne0$, because the generic algebra is étale. After splitting the generic group and adjoining a $(p-1)$st root of $a$, its group law is addition on $\mathbf F_p$, so uniqueness of interpolation makes its reduced coproduct
+
+$$
+\frac{w_p}{a}C_p(x,y).
+$$
+
+The coproduct is integral, and $C_p$ has a unit coefficient. Hence $b=w_p/a$ lies in $R$, $ab=w_p$, and the law is uniquely (6.4).
+
+It remains only to fix the harmless unit in $w_p$. In the bases dual to $1,x,\ldots,x^{p-1}$, the same unit-Vandermonde calculation applied to the finite dual Hopf algebra exchanges the relation coefficient with the primitive coproduct coefficient. Rescaling the universal weight-one coordinate by a unit makes the two coefficients exactly $B$ and $A$, rather than unit multiples of them. We make that self-dual choice once and for all; it gives $(A,B)\leftrightarrow(B,A)$. $\square$
 
 Only three properties of the constants will be used later: $v(w_p)=v(p)$, the construction is functorial, and the normalized duality swaps the two parameters. Their individual numerical values depend on the chosen universal weight-one coordinate and carry no arithmetic meaning.
+
+For $p=2$, take $\Lambda_2=\mathbf Z_{(2)}$ and $w_2=2$. The weight interpolation above is unavailable because $\mathbf F_2^\times$ is trivial; the direct rank-two calculation in §6.5 supplies the same datum and the same self-dual parameter convention.
 
 ### 6.2 Oort--Tate data
 
@@ -772,7 +819,7 @@ $$
 (x')^p-a'x'=u^p(x^p-a x).
 $$
 
-Formula (6.1) is also preserved: the correction term has $p$ copies of $x$, while $b$ changes by $u^{1-p}$, producing the required overall factor $u$. The counit and antipode follow from uniqueness in Lemma 6.1. Hence the local Hopf algebras glue.
+Formula (6.1) is also preserved: the correction term has $p$ copies of $x$, while $b$ changes by $u^{1-p}$, producing the required overall factor $u$. The counit and antipode follow from Lemma 6.1 for odd $p$ and from the formulas of §6.5 for $p=2$. Hence the local Hopf algebras glue.
 
 Denote the resulting group by
 
@@ -810,7 +857,7 @@ $$
 
 Let $f:G_{L,a,b}\to G_{L',a',b'}$ be an isomorphism. Pullback commutes with $[c]$, so it preserves Teichmuller weights. Its restriction to the weight-one summand is therefore an isomorphism $L'\to L$. In local frames it sends $x'$ to $ux$ with $u$ a unit. Compatibility with the relation and coproduct gives precisely (6.10). Conversely such an isomorphism of data makes $x'\mapsto ux$ a Hopf isomorphism. This proves full faithfulness.
 
-The normalized dual Hopf calculation in Lemma 6.1 exchanges the two coefficients and dualizes the weight-one line, proving (6.12). $\square$
+The normalized dual Hopf calculation in Lemma 6.1, and the explicit dual-basis calculation at the end of §6.5 when $p=2$, exchange the two coefficients and dualize the weight-one line, proving (6.12). $\square$
 
 The local hypotheses are the ones needed in this book. The line-bundle formulation explains how the theorem globalizes when the same universal constants and descent hypotheses are available. Over a local ring every invertible module is free, but retaining $L$ makes base change and duality transparent.
 
@@ -849,7 +896,40 @@ $$
 (X\star Y)\star Z=X\star(Y\star Z).
 $$
 
-Moreover $X\star X=2X-bX^2=(2-ab)X=0$, so every point is its own inverse. This proves the Hopf identities. A general rank-two augmented free algebra has a basis $1,x$ with $x^2=ax$ after translating $x$ into the augmentation ideal; writing the most general coproduct and imposing the same identities produces one coefficient $b$ and the relation $ab=2$. Hence (6.13) is the full order-two classification.
+Moreover $X\star X=2X-bX^2=(2-ab)X=0$, so every point is its own inverse. This proves the Hopf identities.
+
+Conversely, a rank-two augmented free algebra splits as $R\oplus I$, with $I$ free of rank one. For a generator $x$ of $I$, multiplication has the form $x^2=ax$, and the counit conditions force the most general cocommutative coproduct to be
+
+$$
+\Delta(x)=X+Y+dXY.
+$$
+
+The group is killed by $2$ by Proposition 5.1. Hence its doubling law is
+
+$$
+X\star X=2X+dX^2=(2+ad)X=0.
+$$
+
+The basis element $x$ is nonzero, so $ad=-2$. Putting $b=-d$ gives $ab=2$ and exactly (6.13). With this relation, the calculation already made proves compatibility with $x^2=ax$ and all the Hopf identities. Thus (6.13) is the full order-two classification, not merely a family of examples.
+
+The dual swap is equally explicit. Let $1^\vee,y$ be the basis of
+$A_{a,b}^\vee$ dual to $1,x$, so $y(1)=0$ and $y(x)=1$. Convolution and the dual of multiplication give
+
+$$
+y^2=-by,
+\qquad
+\Delta(y)=y\otimes1+1\otimes y+a\,y\otimes y.
+$$
+
+For $z=-y$ these become
+
+$$
+z^2=bz,
+\qquad
+\Delta(z)=z\otimes1+1\otimes z-a\,z\otimes z.
+$$
+
+Therefore $G_{a,b}^D\simeq G_{b,a}$ also at $p=2$.
 
 For $a=2,b=1$, setting $x=1-T$ identifies the group with $\mu_2$. For $a=1,b=2$, the polynomial $x^2-x$ is split étale and gives the constant group. Intermediate valuation pairs occur when $v(2)>1$.
 
@@ -1658,7 +1738,7 @@ $$
 
 Over a henselian base, the connected subgroup and étale quotient lift canonically, although the resulting integral sequence need not split. A principal polarization identifies $E[p]^D$ with $E[p]$, so the two endpoint directions are dual.
 
-Suppose in addition that $R$ is unramified. Any finite-flat order-$p$ subgroup of $E[p]$ must be étale or multiplicative by Corollary 7.4. A Galois-stable generic line closes to one of those types. When its character is unramified, it closes to the étale direction; when its character is cyclotomic, it closes to the multiplicative direction, subject to the stated unit twists.
+Suppose in addition that $R$ is unramified. Any finite-flat order-$p$ subgroup of $E[p]$ must be étale or multiplicative by Corollary 7.4. A Galois-stable generic line closes to one of those types. If the unramified and cyclotomic inertia characters are distinct, its inertia distinguishes the directions: unramified means étale and cyclotomic means multiplicative, subject to the stated unramified unit twists. At $p=2$ the two generic characters coincide, so connectedness of the integral closure, not the character, supplies the label.
 
 If the special fiber is supersingular, $E_k[p]$ is local-local of height two. Its Frobenius kernel is an $\alpha_p$ subgroup of the special fiber, but over an unramified mixed-characteristic base there is no local-local height-one group to lift it. Thus a special-fiber subgroup need not lift to an integral subgroup. This does not contradict closure: closure begins with a subgroup of the **generic** fiber, while the Frobenius kernel exists only in the special fiber unless extra structure supplies a lift.
 
@@ -1682,7 +1762,7 @@ $$
 
 whose generic and special fibers have different étaleness behavior. These groups belong to equal-characteristic additive geometry, not to the mixed-characteristic Kummer dictionary (8.1).
 
-The Oort--Tate relation formally degenerates because $p=0$ and hence $ab=0$. Treating that degenerate equation alone as a classification would lose additional additive possibilities and the generic inseparability issue. The mixed-characteristic hypothesis in Theorem 6.2 is therefore structural, not cosmetic. Over perfect fields themselves, Theorem 4.2 remains the complete rank-$p$ classification; over an equal-characteristic DVR, families between the fibers require a separate analysis.
+The Oort--Tate relation formally degenerates because $p=0$ and hence $ab=0$. Treating that degenerate equation alone as a classification would lose additional additive possibilities and the generic inseparability issue. The mixed-characteristic hypothesis in Theorem 6.2 is therefore structural, not cosmetic. Over an algebraically closed field, Theorem 4.2 remains the complete rank-$p$ classification; over a nonclosed perfect field the two endpoint types can be twisted as explained after that theorem. Over an equal-characteristic DVR, families between the fibers require a separate analysis.
 
 ## 12. The small-height package
 
