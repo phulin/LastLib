@@ -13,7 +13,7 @@
   - [2.4 Transversality on a smooth scheme](#24-transversality-on-a-smooth-scheme)
 - [3. Compact support and the Künneth theorem](#3-compact-support-and-the-künneth-theorem)
   - [3.1 Why products must be derived](#31-why-products-must-be-derived)
-  - [3.2 Finite-coefficient Künneth](#32-finite-coefficient-kunneth)
+  - [3.2 Finite-coefficient Künneth](#32-finite-coefficient-künneth)
   - [3.3 Integral and rational coefficients](#33-integral-and-rational-coefficients)
   - [3.4 Compatibility with trace and Frobenius](#34-compatibility-with-trace-and-frobenius)
 - [4. Cycle classes, graphs, and correspondences](#4-cycle-classes-graphs-and-correspondences)
@@ -53,7 +53,7 @@
 - [11. Trace formulas for correspondences](#11-trace-formulas-for-correspondences)
   - [11.1 Properly supported correspondences](#111-properly-supported-correspondences)
   - [11.2 Fixed points of a correspondence](#112-fixed-points-of-a-correspondence)
-  - [11.3 Finite étale and Hecke-type diagrams](#113-finite-etale-and-hecke-type-diagrams)
+  - [11.3 Finite étale and Hecke-type diagrams](#113-finite-étale-and-hecke-type-diagrams)
   - [11.4 Projectors and simultaneous Frobenius traces](#114-projectors-and-simultaneous-frobenius-traces)
 - [12. Zeta functions and rationality](#12-zeta-functions-and-rationality)
   - [12.1 The Euler product and point-count exponential](#121-the-euler-product-and-point-count-exponential)
@@ -118,6 +118,8 @@ The second stage is arithmetic. For Frobenius, the differential vanishes, so the
 
 The last stage is duality. Reciprocal eigenvalue pairs give functional equations, but only under properness and smoothness in the self-dual form. Open varieties instead pair compactly supported cohomology with ordinary cohomology, and singular varieties use a dualizing complex. Stating this boundary correctly is part of the theorem, not an editorial qualification.
 
+The imported foundation is precise. Derived étale cohomology supplies bounded constructible and normalized adic complexes, perfectness, cup products, and continuous Galois actions. Proper and smooth base change supply compactification independence and transport in families. Low-dimensional duality supplies $Rf_!$, $f^!$, Verdier duality, trace maps, smooth and regular-immersion purity, and the regular lci cycle classes and refined intersections used below. What is not imported is the product theorem in the form required here, the passage from a cohomological correspondence to a class on its fixed locus, the equality of its local and global traces, the Frobenius point-count formula, or the zeta-function arguments. Those are proved here.
+
 ## 2. Frobenius and its fixed points
 
 Finite fields supply a canonical endomorphism, but two inverse conventions coexist. This chapter fixes the geometry before cohomology enters and explains why the geometric normalization is the one that counts points.
@@ -130,7 +132,7 @@ $$
 \operatorname{Fr}_{X_0}:X_0\longrightarrow X_0.
 $$
 
-After base change, it is convenient to separate the relative Frobenius on the geometric scheme from the Galois descent automorphism. The endomorphism whose fixed geometric points are $X_0(\mathbf F_q)$ is the geometric Frobenius correspondence; its action on cohomology is the inverse of the action induced by arithmetic Frobenius in the absolute Galois group. We denote this cohomological and geometric operator by $F$.
+After passing to $\bar X$, one must distinguish two constructions. Base-changing the absolute Frobenius as a morphism of $\mathbf F_q$-schemes gives the relative $q$-power endomorphism: it fixes scalars in $\bar{\mathbf F}_q$ and sends a coordinate $t$ to $t^q$. It is therefore a $\bar{\mathbf F}_q$-morphism, and its geometric fixed points are $X_0(\mathbf F_q)$. On the other hand, the descent action of $\operatorname{Gal}(\bar{\mathbf F}_q/\mathbf F_q)$ on cohomology is contravariant. With the left-action convention for geometric cohomology, pullback by this relative Frobenius is the action of the inverse of arithmetic Galois Frobenius. We denote both the relative endomorphism and its pullback on cohomology by $F$; this is geometric Frobenius.
 
 This choice passes two consistency tests. On $\mathbf A^1$, the only nonzero compactly supported group is $H_c^2(\mathbf A^1_{\bar k},E)=E(-1)$, and $F$ acts on it by $q$, so its trace is $q=\#\mathbf A^1(\mathbf F_q)$. On a smooth proper $d$-fold, $F$ acts by $q^d$ on top cohomology, matching the leading scale of the point count.
 
@@ -266,7 +268,9 @@ $$
 
 by checking geometric stalks. We may therefore assume $X$ and $Y$ proper.
 
-For proper schemes, form the external-product map and test its cone after pulling back to a geometric point of either factor. Proper base change identifies the stalk with the corresponding cohomology complex of the other fiber. For a finite locally free coefficient sheaf the assertion reduces, by a finite affine étale cover and Čech totalization, to the tensor identity for finite complexes of modules. Finite Tor-amplitude lets us resolve $K$ and $L$ by bounded complexes of such sheaves locally. Constructible dévissage across finitely many strata and the five lemma extend the result to the stated complexes. Applying proper global sections and undoing the compactifications proves the theorem. $\square$
+For proper schemes, choose étale hypercovers adapted to finite constructibility stratifications of $K$ and $L$, with finitely many quasi-compact objects in every degree relevant to the bounded calculation. A single Čech cover would not suffice, because its intersections need not be acyclic. The product of the two hypercovers is a bisimplicial hypercover of $X\times Y$. After replacing one coefficient variable by a bounded K-flat representative, its cochain bicomplex is the derived tensor product of the two factor cochain complexes. The shuffle and Alexander--Whitney maps give mutually inverse maps up to homotopy between that tensor product and the total cochain complex of the product hypercover.
+
+The finite Tor-amplitude hypotheses and the uniform cohomological-dimension bounds make every totalization finite in each relevant degree. Cohomological descent therefore identifies the three cochain complexes with the three derived global-section complexes in the statement. First this proves the claim for lisse finite locally free sheaves on a common pair of strata. The localization triangles for extension by zero, followed by induction over the finitely many strata and truncation triangles, prove it for $K$ and $L$. Reinstating the compactifications proves the compact-support theorem. $\square$
 
 The proof also establishes associativity and symmetry because those identities hold for external products before global sections. When two odd-degree classes are exchanged, the symmetry contributes the Koszul sign $(-1)^{ab}$.
 
@@ -274,7 +278,7 @@ The proof also establishes associativity and symmetry because those identities h
 
 Arithmetic representations use $\mathbf Z_\ell$-lattices and $\mathbf Q_\ell$-vector spaces, so a finite-level product is not the endpoint. The issue is to pass through the coefficient tower without losing a derived-limit term; uniform finiteness and perfectness are what make that passage legitimate.
 
-At level $m$, Theorem 3.1 is compatible with reduction $\Lambda_{m+1}\to\Lambda_m$. For curves and surfaces the complexes have a uniform bounded range and finite cohomology. Their towers are therefore Mittag--Leffler, and derived inverse limit gives
+At level $m$, Theorem 3.1 is compatible with reduction $\Lambda_{m+1}\to\Lambda_m$. For curves and surfaces the complexes have a uniform bounded range and finite cohomology. Their fixed-degree cohomology towers are therefore Mittag--Leffler. For the normalized constant coefficient systems, finite-level reduction identifies the derived inverse limits modulo every $\ell^m$, and the natural integral external-product map is
 
 $$
 R\Gamma_c(X,\mathbf Z_\ell)
@@ -284,7 +288,7 @@ R\Gamma_c(Y,\mathbf Z_\ell)
 R\Gamma_c(X\times Y,\mathbf Z_\ell).
 $$
 
-Here perfectness is decisive: represent both sides by bounded complexes of finite free $\mathbf Z_\ell$-modules, reduce modulo every $\ell^m$, and observe that the cone has zero reduction at every level. Derived completeness forces the cone to vanish.
+Here perfectness is decisive. Represent the two factor complexes by bounded complexes of finite free $\mathbf Z_\ell$-modules; their derived tensor product is again perfect and derived complete. The cone of the displayed map reduces to the zero cone by finite-level Künneth for every $m$. Derived completeness then forces the integral cone to vanish. This argument uses normalization as well as Mittag--Leffler: finiteness of the cohomology groups alone would not identify reduction of an ordinary inverse limit with the finite levels.
 
 Tensoring afterward with $E$ yields rational Künneth. Because $E$ is a field, the spectral sequence degenerates to the direct-sum formula. Nothing in this passage says that the integral cohomology groups themselves are free; it is the complexes that are perfect.
 
@@ -361,7 +365,7 @@ For a nonproper $X$, an arbitrary graph need not define an endomorphism of compa
 
 Graphs are too restrictive for Hecke-type operators, whose source parametrizes several images of one point. A cycle on a product is the correct replacement, but its codimension must determine the degree and Tate-twist shift rather than be hidden in notation.
 
-Let $X$ and $Y$ be smooth of pure dimensions $d_X,d_Y$. A cycle $\Gamma\subset X\times Y$ of codimension $r$ defines
+Let $X$ and $Y$ be smooth of pure dimensions $d_X,d_Y$. Let $\Gamma$ be a codimension-$r$ cycle on $X\times Y$ whose cohomology class has been constructed: in the applications this means that $\Gamma$ is represented by a regular lci cycle, by divisors, or by a regular oriented pull--push diagram. Then $\Gamma$ defines
 
 $$
 \Gamma_*:H^i(X,E(s))
@@ -375,7 +379,7 @@ $$
 \Gamma_*(x)=p_{Y*}(p_X^*x\smile[\Gamma]).
 $$
 
-A **degree-zero correspondence** from a pure $d$-fold to itself therefore has codimension $d$. Suppressing the shift for other codimensions would identify different operators and is never harmless.
+A **degree-zero correspondence** from a pure $d$-fold to itself therefore has codimension $d$. Suppressing the shift for other codimensions would identify different operators and is never harmless. Nor may one silently assign a purity class to an arbitrary singular codimension-two closure: such a closure must instead be supplied with a regular lci representative, an oriented pull--push presentation, or a cohomological correspondence.
 
 The cycle formula agrees with a pull–push diagram. If
 
@@ -395,7 +399,7 @@ This equality is the practical bridge between a moduli-theoretic correspondence 
 
 The kernel dictionary is useful only if it respects composition, adjoints, and change of field. These compatibilities turn geometric convolution into operator multiplication and ensure that a finite-field correspondence commutes with Frobenius.
 
-Suppose $\Gamma\subset X\times Y$ and $\Theta\subset Y\times Z$ have proper support in the necessary directions. Their composite cycle is
+Suppose $\Gamma\subset X\times Y$ and $\Theta\subset Y\times Z$ have the just-stated cycle classes and proper support in the necessary directions. Assume their refined intersection is defined by the regular lci or oriented pull--push presentations under consideration. Their composite class is
 
 $$
 \Theta\circ\Gamma
@@ -535,7 +539,7 @@ $$
 
 The last arrow is the counit for $c_2$ and uses $Rc_{2!}$, so $c_2$ need not be proper merely for that arrow to exist. In the standard pull--push situations both legs are proper, or the correspondence has a compactification for which the indicated support condition holds. Equivalently one may begin with a map $Rc_{2!}c_1^*K\to K$ whose support is proper over the point. We denote the induced endomorphism by $R\Gamma_c(u)$.
 
-For the graph of a proper endomorphism $f$, take $C=X$, $c_1=f$, $c_2=\operatorname{id}$, and the natural pullback map. For a finite étale diagram, the identification $c_2^!=c_2^*$ makes $u$ the evident coefficient transport. For a cycle correspondence on a smooth variety, purity and the cycle class create the same operator as the pull--cup--push formula of Chapter 4.
+For the graph of a proper endomorphism $f$, take $C=X$, $c_1=f$, and $c_2=\operatorname{id}$. One must also supply a map $f^*K\to K$: it is canonical for the constant sheaf, is part of a Frobenius structure for an arithmetic coefficient complex, and is not present for an arbitrary $K$. For a finite étale diagram, the identification $c_2^!=c_2^*$ makes $u$ the specified coefficient transport. For a regular lci cycle correspondence on a smooth variety, purity and the cycle class create the same operator as the pull--cup--push formula of Chapter 4.
 
 ### 6.2 The global trace class
 
@@ -555,7 +559,29 @@ $$
 \in H^0(\operatorname{Fix}(c),a^!E).
 $$
 
-This notation is compact, so we unfold the construction. Verdier duality gives an evaluation $DK\otimes^L K\to\omega_X^\bullet$. The correspondence $u$, by adjunction, is a kernel pairing between $c_1^*DK$ and $c_2^*K$. Pulling to the fixed locus identifies $c_1$ and $c_2$. Evaluation then lands in the pullback of the dualizing complex, and extraordinary base change maps it to $a^!E$. Every arrow is canonical; in particular no orientation of a singular $X$ is guessed.
+This notation is compact, so we unfold the construction. Put $D_XK=R\mathcal Hom(K,\omega_X^\bullet)$. Evaluation is the canonical map
+
+$$
+D_XK\otimes^LK\longrightarrow\omega_X^\bullet.
+$$
+
+Using $u$, the projection formula for $c_2^!$, and this evaluation produces the kernel pairing
+
+$$
+c_2^*D_XK\otimes^Lc_1^*K
+\xrightarrow{1\otimes u}
+c_2^*D_XK\otimes^Lc_2^!K
+\longrightarrow c_2^!\omega_X^\bullet
+=\omega_C^\bullet. \tag{6.1}
+$$
+
+Let $b=c_1\delta=c_2\delta$. Pulling (6.1) to the cartesian square with the diagonal identifies both coefficient factors with the corresponding pullbacks along $b$. The diagonal coevaluation for Verdier duality, followed by (6.1) and extraordinary base change for that square, gives
+
+$$
+E_{\operatorname{Fix}(c)}\longrightarrow a^!E.
+$$
+
+Its image of $1$ is $\operatorname{Tr}_c(u)$. This description is first made on strata where $K$ is a shifted lisse sheaf, where it is ordinary matrix coevaluation and evaluation. The localization triangles for a constructibility filtration uniquely extend it to every bounded constructible $K$; additivity on a triangle follows because the matrix traces on the stratumwise kernels add. Thus no tensor-dualizability of an arbitrary constructible sheaf is being assumed. Every arrow is canonical, and in particular no orientation of a singular $X$ is guessed.
 
 If the fixed locus is proper, its structural trace
 
@@ -602,11 +628,21 @@ $$
 
 If the fixed locus is a disjoint union of proper components $Z_\alpha$, the right side is $\sum_\alpha LT_{Z_\alpha}(c,u)$.
 
-**Proof.** First compactify $X$ and the proper support of $c$. Extension by zero replaces $K$ by $j_!K$ on a proper space. Independence of compactification and proper base change show that both the induced operator and its fixed-locus trace class are unchanged. Thus we may work with proper direct images.
+**Proof.** First compactify $X$ and the proper support of $c$. Extension by zero replaces $K$ by $j_!K$ on a proper space, and the cohomological correspondence extends by zero on the added support. Any new boundary fixed component then has zero trace class because one of its coefficient factors is the zero boundary stalk of $j_!K$. Independence of compactification, localization, and proper base change show that both the induced operator and the original fixed-locus trace class are unchanged. Thus we may work with proper direct images.
 
-Verdier duality identifies the dual of $R\Gamma_c(X,K)$ with $R\Gamma(X,DK)$. Künneth identifies their tensor product with compactly supported global sections of $DK\boxtimes K$ on $X\times X$. Under this identification, coevaluation of the perfect complex $R\Gamma_c(X,K)$ is the diagonal coevaluation class. The cohomological correspondence $u$ gives a functional on this kernel by pullback to $C$, application of $u$, and the trace for $c_2$.
+Write $V=R\Gamma_c(X,K)$. Verdier duality identifies $V^\vee$ with $R\Gamma(X,D_XK)$. The mixed-support Künneth isomorphism identifies
 
-By Section 5.3, evaluating that functional on coevaluation is the alternating linear trace of $R\Gamma_c(u)$. On the other hand, the cartesian square defining $\operatorname{Fix}(c)$ is precisely the pullback of $C$ along the diagonal. Proper base change moves the kernel evaluation to that square. The projection formula then contracts the coefficient factors by $DK\otimes K\to\omega_X^\bullet$, and transitivity of extraordinary traces integrates the result along the fixed locus. This is exactly $\int\operatorname{Tr}_c(u)$.
+$$
+V^\vee\otimes^LV
+\simeq
+R\Gamma_c(X\times X,D_XK\boxtimes^LK).
+$$
+
+Under this identification, coevaluation $E\to V^\vee\otimes^LV$ is the diagonal coevaluation class: pulling it back by the diagonal and applying $D_XK\otimes K\to\omega_X^\bullet$ gives the structural trace $R\Gamma_c(X,\omega_X^\bullet)\to E$. This characterization proves the assertion first for a lisse sheaf and then, by the localization induction of Section 6.2, for every bounded constructible $K$.
+
+The cohomological correspondence supplies a functional on the displayed kernel complex. Pull back to $C$, apply the pairing (6.1), and integrate $\omega_C^\bullet$ by the structural trace. The support hypothesis is exactly what makes this compactly supported functional defined. Unwinding the adjunctions shows that evaluation of this functional after inserting $R\Gamma_c(u)$ is the categorical trace of the endomorphism $R\Gamma_c(u)$, hence its alternating cohomological trace by Section 5.1.
+
+On the other hand, the cartesian square defining $\operatorname{Fix}(c)$ is precisely the pullback of $C$ along the diagonal. Proper base change moves the kernel evaluation to that square. The projection formula contracts the two coefficient factors, and transitivity of extraordinary traces integrates the resulting map $E\to a^!E$. By the explicit construction in Section 6.2, this map is $\operatorname{Tr}_c(u)$. Hence the categorical trace is $\int\operatorname{Tr}_c(u)$.
 
 Therefore the two scalars are equal. Decomposing a proper fixed locus into open-and-closed components and using additivity gives the final assertion. $\square$
 
@@ -656,7 +692,7 @@ i_x(\Gamma_f,\Delta)
 (\mathcal O_{\Gamma_f,x},\mathcal O_{\Delta,x}).
 $$
 
-The refined intersection theorem and purity give $LT_x(f,E)=i_x(\Gamma_f,\Delta)$. For regular complementary intersections the higher Tor groups vanish and this is the quotient length. With a lisse coefficient action constant along the infinitesimal fixed scheme, the local term is this multiplicity times the stalk trace. In greater generality the coefficient action and derived intersection must be contracted together.
+The refined intersection theorem and purity give $LT_x(f,E)=i_x(\Gamma_f,\Delta)$. Here graph and diagonal are regular of complementary codimension in a regular local ring. If their intersection is isolated, the combined local equations form a system of parameters and hence a regular sequence; the higher Tor groups vanish and the intersection number is the quotient length. A lisse sheaf is insensitive to nilpotent thickening, but the coefficient morphism must also restrict to one endomorphism on the connected infinitesimal fixed scheme before the local term factors as this multiplicity times a stalk trace. Without that condition, the coefficient morphism and the derived intersection must be contracted together.
 
 For example, on an affine chart the map $t\mapsto t+t^m$ has a fixed point at $0$ of multiplicity $m$. A set-theoretic count records one point, while its Lefschetz local term records the scheme-theoretic multiplicity. Frobenius avoids this complication because its linear fixed equations have identity Jacobian.
 
@@ -711,13 +747,15 @@ Rational points satisfy the same decomposition. Theorem 8.1 treats $U$. Inductio
 
 Replacing the constant sheaf by a coefficient system turns a variety into a function on its finite-field points. The purpose of the sheaf--function formula is to show that the sum of those local values is still one global cohomological trace.
 
-Let $K_0\in D_c^b(X_0,E)$ carry a Frobenius structure, and let $K$ be its pullback to $\bar X$. At $x\in X_0(\mathbf F_{q^n})$, define
+Let $K_0\in D_c^b(X_0,E)$ carry its descent, equivalently Frobenius, structure, and let $K$ be its pullback to $\bar X$. A point $x\in X_0(\mathbf F_{q^n})$ and a geometric lift $\bar x$ give an endomorphism of the stalk complex by transporting $\bar x$ once around $F^n$. Define its supertrace by
 
 $$
-\operatorname{Tr}(F_x^n\mid K_{\bar x})
+\operatorname{Tr}(F_{x,n}\mid K_{\bar x})
 =\sum_j(-1)^j\operatorname{Tr}
-(F_x^n\mid\mathcal H^j(K)_{\bar x}).
+(F_{x,n}\mid\mathcal H^j(K)_{\bar x}).
 $$
+
+Changing the geometric lift conjugates this endomorphism, so the scalar is well defined. If $x$ comes from a closed point of degree $r\mid n$, then $F_{x,n}$ is the $(n/r)$th power of geometric Frobenius at that closed point.
 
 **Theorem 8.3 (sheaf--function trace formula).** One has
 
@@ -725,7 +763,7 @@ $$
 \sum_i(-1)^i\operatorname{Tr}
 \left(F^n\mid H_c^i(\bar X,K)\right)
 =\sum_{x\in X_0(\mathbf F_{q^n})}
-\operatorname{Tr}(F_x^n\mid K_{\bar x}).
+\operatorname{Tr}(F_{x,n}\mid K_{\bar x}).
 $$
 
 **Proof.** Stratify $X_0$ into finitely many Frobenius-stable smooth locally closed subschemes on which every cohomology sheaf of $K_0$ is lisse. Localization and trace additivity reduce to one smooth stratum and one lisse sheaf in one degree. Proposition 7.1 identifies each local term with the stalk trace; a shift supplies $(-1)^j$. Summing strata proves the formula. $\square$
@@ -887,7 +925,7 @@ $$
 \operatorname{Tr}_S([D]\smile[E])=D\cdot E.
 $$
 
-To prove the formula, move the cycles to proper intersection, use purity at each point, and apply the finite trace from its residue field. The local length is the intersection multiplicity, so their sum is $D\cdot E$. Consequently a correspondence built from divisor products has a middle-degree trace computable from the intersection matrix.
+If $D$ and $E$ meet properly, purity at each intersection point and the finite trace from its residue field identify the local cup product with the local intersection length; summing gives $D\cdot E$. No moving lemma is needed. If the divisors share a component, use the refined Gysin product: deformation to the normal bundle replaces the common component by the zero section, and the excess factor is the first Chern class of its normal line. This is exactly the self-intersection term in the divisor intersection product. The refined cycle-class compatibility of Chapter 4 therefore gives the displayed formula in general. Consequently a correspondence built from divisor products has a middle-degree trace computable from the intersection matrix.
 
 The full $H^2$ may contain nonalgebraic classes. A cycle correspondence still acts on them through its class on $S\times S$, and the Lefschetz number includes their trace. Replacing $H^2$ by a divisor span requires a separate justification.
 
@@ -985,7 +1023,7 @@ where $Z$ ranges over proper connected components of the fixed locus.
 
 If the fixed points are isolated, $X$ and $C$ are smooth there, and the two legs meet the Frobenius-twisted diagonal transversely, each local term is the trace on the corresponding coefficient fiber. Nontransverse points carry refined intersection multiplicity. Thus “count fixed points of the correspondence” is accurate only after multiplicities and coefficient traces have been specified.
 
-For a codimension-$d$ cycle $\Gamma$ on a smooth proper $X\times X$, the same formula takes the intersection form
+For a codimension-$d$ cycle $\Gamma$ on a smooth proper $X\times X$ equipped with one of the regular lci or oriented pull--push classes of Chapter 4, the same formula takes the intersection form
 
 $$
 L(\Gamma_*F^n,X)
@@ -1379,7 +1417,7 @@ $$
 \log L(X_0,K_0,t)
 =\sum_{n\ge1}\frac{t^n}{n}
 \sum_{y\in X_0(\mathbf F_{q^n})}
-\operatorname{Tr}(F^n\mid K_{\bar y}).
+\operatorname{Tr}(F_{y,n}\mid K_{\bar y}).
 $$
 
 Theorem 8.3 therefore proves
@@ -1464,7 +1502,7 @@ Later arguments need a single citation that preserves every support, smoothness,
    $$
 
    More generally, a constructible Frobenius complex satisfies the sheaf--function trace formula with stalk supertraces.
-6. Properly supported algebraic correspondences act by pull--cup--push, compose by refined convolution, commute with Frobenius when defined over $\mathbf F_q$, and satisfy the corresponding fixed-locus trace formula. Transpose correspondences are adjoint under Poincaré duality.
+6. Properly supported regular lci or oriented pull--push algebraic correspondences, and more generally supplied cohomological correspondences, act by pull--cup--push, compose by their defined refined convolution, commute with Frobenius when defined over $\mathbf F_q$, and satisfy the corresponding fixed-locus trace formula. Transpose correspondences are adjoint under Poincaré duality.
 7. The zeta function is rational and has the cohomological expression
 
    $$
@@ -1482,7 +1520,7 @@ Later arguments need a single citation that preserves every support, smoothness,
    $$
 
    For curves $\varepsilon_X=1$; for surfaces it is $(-1)^{\chi(X)}$ times the normalized determinant sign on $H^2$.
-9. All statements commute with smooth proper base change and with specialization at good reduction. A properly extending correspondence is transported with them.
+9. The cohomology complexes, Künneth maps, traces, duality pairings, and properly extending correspondence actions commute with smooth proper base change and with specialization at good reduction. Fiberwise point counts and zeta functions are then computed from the specialized Frobenius operators; no assertion that point counts are constant in an arbitrary family is intended.
 
 **Proof.** Clause 1 is the bounded finiteness and perfectness package for compact support. Clause 2 is Theorem 3.1 and its derived-limit passage. Clause 3 is Theorem 6.1, while Clause 4 is Proposition 7.1 and refined intersection. Clause 5 follows from Frobenius transversality on smooth strata and localization induction. Clause 6 follows from cycle-class compatibility, projection, and the cohomological-correspondence theorem. Clause 7 is the trace-of-powers determinant identity, with rationality over $\mathbf Q$ obtained from the Hankel-rank argument. Clause 8 is Theorem 13.1. Clause 9 follows from proper and smooth base change for compact support, duality, trace, and correspondences. $\square$
 

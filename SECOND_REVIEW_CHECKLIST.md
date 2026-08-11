@@ -48,7 +48,7 @@ any resulting corrections.
 - [x] 022. Proper and Smooth Base Change
 - [x] 023. Étale Duality and Trace Maps in Low Dimension
 - [x] 024. Nearby Cycles and Monodromy in Dimensions One and Two
-- [ ] 025. Lefschetz Trace Formulas for Curves and Surfaces
+- [x] 025. Lefschetz Trace Formulas for Curves and Surfaces
 - [ ] 026. Weights, Hard Lefschetz, and Weil Bounds in Low Dimension
 - [ ] 027. Betti, de Rham, and Étale Comparison for Curves
 - [x] 028. fppf Cohomology and Kummer Theory
