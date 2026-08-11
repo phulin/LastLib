@@ -470,7 +470,9 @@ $$
 \xrightarrow{n}(K^s)^\times\longrightarrow1
 $$
 
-is exact precisely under (1.1). Hilbert's Theorem 90 and surjectivity of multiplication by $n$ on $\mathbf Q/\mathbf Z$ give
+is exact precisely under (1.1). In its long exact sequence, Hilbert's Theorem 90 makes
+$H^2(K,\mu_n)\to\operatorname{Br}(K)$ injective, and exactness identifies its image with the
+kernel of multiplication by $n$. The local invariant then gives
 
 $$
 H^2(K,\mu_n)\xrightarrow{\sim}\operatorname{Br}(K)[n]
@@ -794,33 +796,85 @@ The last sentence is the form we shall use. It is stronger than an equality of H
 
 ### 7.4 Proof from the class-formation axioms
 
-Choose a complete resolution $P_\bullet$ of $\mathbf Z$ by finitely generated free $\mathbf Z[\Delta]$-modules. A cocycle representing $u$ defines, by the cup formula, a degree-two chain map from the complete cochain complex with coefficients in a lattice $X$ to the one with coefficients in $X\otimes C_0$. Let $Q_\bullet(X)$ be its mapping cone. Proving Tate--Nakayama amounts to proving that $Q_\bullet(X)$ is exact for every $X$.
+Represent $u$ by a two-extension
 
-Begin with the trivial lattice over a subgroup $J$. In Tate degrees $-1$ and $0$, the comparison is respectively
+$$
+0\longrightarrow C_0\longrightarrow B\longrightarrow
+\mathbf Z[\Delta]\xrightarrow{\varepsilon}\mathbf Z\longrightarrow0. \tag{7.8}
+$$
+
+It is obtained by representing $u\in\operatorname{Ext}^2_{\mathbf Z[\Delta]}(\mathbf Z,C_0)$
+and using the augmentation module for the last projective term. For every subgroup $J$, the
+connecting map across the restricted two-extension is cup product with
+$\operatorname{res}^{\Delta}_{J}u$. In Tate degrees $-1$ and $0$, that map is respectively
 
 $$
 0=\widehat H^{-1}(J,\mathbf Z)
 \longrightarrow H^1(J,C_0)
 \quad\text{and}\quad
 \mathbf Z/|J|\mathbf Z=\widehat H^0(J,\mathbf Z)
-\xrightarrow{\,1\mapsto\operatorname{res}_J u\,}H^2(J,C_0). \tag{7.8}
+\xrightarrow{\,1\mapsto\operatorname{res}_J u\,}H^2(J,C_0). \tag{7.9}
 $$
 
-The first map is an isomorphism because both groups vanish, and the second is an isomorphism because the restricted fundamental class has exact order $|J|$ and generates. Thus the cone is exact in two adjacent degrees for the trivial lattice over every subgroup. This is the only base calculation; in particular, it is not a disguised assertion of local duality for arbitrary coefficients.
-
-For a permutation lattice $\mathbf Z[\Delta/J]$, Shapiro identifies its cone with the cone for the trivial lattice over $J$. For a general lattice $X$, embed it equivariantly into a finite sum $P$ of regular permutation lattices so that the quotient $X'$ is again $\mathbf Z$-free. Concretely, the diagonal map
-
-$$
-x\longmapsto\sum_{g\in\Delta}g\otimes g^{-1}x
-$$
-
-embeds $X$ in $\mathbf Z[\Delta]\otimes_{\mathbf Z}X$, where $\Delta$ acts only on the left factor; projection to the coefficient of the identity is a retraction of underlying abelian groups, so the quotient is free. We obtain
+Both are isomorphisms by (7.6). The two long exact sequences obtained by breaking (7.8) into
+short exact sequences consequently give
 
 $$
-0\longrightarrow X\longrightarrow P\longrightarrow X'\longrightarrow0 \tag{7.9}
+\widehat H^0(J,B)=\widehat H^1(J,B)=0
 $$
 
-with $P$ permutation. The long exact Tate-cohomology sequences for (7.9), together with the corresponding sequence after tensoring with $C_0$, form a ladder whose vertical arrows are cup product with $u$. The permutation term is already known, so the comparison for $X$ in one degree is equivalent to the comparison for $X'$ in the preceding degree. The analogous surjection from a permutation lattice onto $X$ shifts in the other direction. Iterating along the complete resolution propagates the two base degrees through every degree. This proves (7.7). It is precisely here that the hypothesis for every subgroup is used: every permutation summand is $\mathbf Z[\Delta/J]$, and Shapiro sends it to the $J$-calculation. The mapping cone records actual isomorphisms, not merely equalities of Herbrand quotients.
+for every $J$. We use the following elementary cohomological-triviality criterion, including the
+tensor form needed below.
+
+**Dimension-shifting criterion.** If a $\Delta$-module $D$ satisfies
+$\widehat H^0(J,D)=\widehat H^1(J,D)=0$ for every subgroup $J$, then
+$\widehat H^i(J,D)=0$ for every $i\in\mathbf Z$ and every $J$. Moreover, if $X$ is a
+finitely generated $\mathbf Z$-free $\Delta$-module, then $D\otimes_{\mathbf Z}X$ is also
+cohomologically trivial.
+
+Here is the two-sided dimension shift. For any $J$-module $D$ there are explicit equivariant
+maps
+
+$$
+D\longrightarrow\mathbf Z[J]\otimes_{\mathbf Z}D,
+\qquad d\longmapsto\sum_{h\in J}h\otimes h^{-1}d
+$$
+
+and
+
+$$
+\mathbf Z[J]\otimes_{\mathbf Z}D\longrightarrow D,
+\qquad h\otimes d\longmapsto hd. \tag{7.9a}
+$$
+
+The first is injective and split as a map of abelian groups by projection to the identity
+coefficient; the second is surjective and split as a map of abelian groups by
+$d\mapsto1\otimes d$. In both cases the middle module is induced and has zero Tate cohomology.
+Taking successive kernels of the second map and cokernels of the first, the long exact Tate
+sequences shift any desired degree into degree $0$ or $1$. The two assumed vanishings pass at
+each step, proving that $D$ is cohomologically trivial. The use of both maps is what treats
+negative as well as positive Tate degrees.
+
+The same successive maps form a complete resolution of $D$ by induced modules, exact and split
+as a complex of abelian groups. Tensor it with the $\mathbf Z$-free module $X$. Exactness is
+preserved, and every middle term remains induced: the coordinate change
+$h\otimes d\otimes x\mapsto h\otimes d\otimes h^{-1}x$ moves the diagonal action to the left
+factor. The tensored complete resolution is therefore Tate-acyclic, which proves that
+$D\otimes X$ is cohomologically trivial. This proves the tensor assertion of the criterion
+rather than merely assuming it.
+
+Thus $B$ and $B\otimes X$ are cohomologically trivial. Tensoring (7.8) with $X$ remains exact
+because $X$ is $\mathbf Z$-free and hence flat. The other middle term is
+$\mathbf Z[\Delta]\otimes X$, which is induced after the change of
+coordinates $g\otimes x\mapsto g\otimes g^{-1}x$ and is therefore cohomologically trivial.
+The connecting map across the tensored two-extension is exactly cup product with $u$. Its long
+exact Tate sequence now makes that connecting map an isomorphism in every degree, proving
+(7.7).
+
+This proof also explains why (7.6) is required for every subgroup: the dimension shifts use
+permutation modules $\mathbf Z[\Delta/J]$, and Shapiro sends each summand to the
+$J$-calculation. The argument proves actual isomorphisms, not merely equalities of Herbrand
+quotients.
 
 For the local class formation, (7.4)--(7.5) verify (7.6) with $C_0=L^\times$ and $u=u_{L/F}$. In the unramified cyclic case the construction reduces to the familiar two-periodic complex alternating $\varphi-1$ and the norm, and $u$ is represented by $(L/F,\varphi,\pi_F)$. That computation fixes the sign and shows that the abstract chain map has invariant $1/[L:F]$, not an unspecified generator.
 
@@ -1038,7 +1092,7 @@ $$
 \chi_K^\times(M)=
 \begin{cases}
 1,&\ell\neq p,\\
-|M|^{-[K:\mathbf Q_p]},&\ell=p\text{ and }M\text{ is measured over }\mathbf F_p.
+|M|^{-[K:\mathbf Q_p]},&\ell=p\text{ and }K/\mathbf Q_p.
 \end{cases} \tag{8.8}
 $$
 
@@ -1069,13 +1123,57 @@ $$
 
 Kernel and cokernel of an endomorphism of a finite group have equal order, so both ratios cancel.
 
-Now let $K/\mathbf Q_p$ and first take $M=\mathbf F_p(1)$ after a prime-to-$p$ extension containing $\mu_p$. Kummer theory, the structure of $K^\times$, and (4.3) give dimensions
+Now let $K/\mathbf Q_p$. Book 30 proves the mixed-characteristic formula independently of
+duality; we recall the argument because the finite-group step cannot be replaced by a filtration
+over a Sylow subgroup. For the basic module $\mu_p$, Kummer theory, the structure of $K^\times$,
+and (4.3) give
 
 $$
-(h^0,h^1,h^2)=(1,[K:\mathbf Q_p]+2,1).
+|H^0(K,\mu_p)|=u,\qquad
+|H^1(K,\mu_p)|=p^{[K:\mathbf Q_p]+1}u,\qquad
+|H^2(K,\mu_p)|=p,
 $$
 
-Thus the Euler characteristic is $-[K:\mathbf Q_p]$. For a general module killed by $p$, choose a finite quotient controlling the action. Restriction to a Sylow $p$-subgroup gives a filtration with trivial simple factors; the complementary quotient is semisimple by averaging. Shapiro's lemma and additivity then reduce to the trivial calculation over finite extensions. Since $[L:\mathbf Q_p]=[L:K][K:\mathbf Q_p]$, division by the induction degree gives the displayed formula over $K$. Devissage along powers of the coefficient uniformizer proves (8.9). This proof uses no perfectness assertion, so the Euler formula is an independent numerical check on duality.
+where $u=|\mu_p(K)|$. Hence $\chi_K^\times(\mu_p)=p^{-[K:\mathbf Q_p]}$ without first
+adjoining $\mu_p$. Reciprocity and descent through the prime-to-$p$ extension $K(\mu_p)/K$
+give the same formula for the constant module $\mathbf F_p$.
+
+For completeness, let $N$ be a finite-dimensional representation over a finite field of
+characteristic $p$, and put
+
+$$
+e_K(N)=\sum_{i=0}^2(-1)^i\dim H^i(K,N).
+$$
+
+This function is additive, invariant under extension of the coefficient field, and satisfies
+$e_K(\operatorname{Ind}_{G_F}^{G_K}N)=e_F(N)$ by Shapiro. If $\theta$ is a
+one-dimensional character of prime-to-$p$ order, cyclic permutation representations over the
+subextensions of the field cut out by $\theta$, followed by induction over the divisors of its
+order, give
+
+$$
+e_K(\theta)=-[K:\mathbf Q_p].
+$$
+
+For a general finite quotient $\Gamma$ controlling the action, modular Brauer induction says that
+the rational Grothendieck group of finite-dimensional representations is spanned by
+$\operatorname{Ind}_H^\Gamma\theta$, with $\theta$ one-dimensional. One quick proof uses Brauer
+characters on the $p$-regular conjugacy classes: they inject the Grothendieck group into the
+space of class functions, and induced characters from cyclic subgroups give a triangular
+spanning matrix on the classes of cyclic $p$-regular subgroups. For $F$ fixed by $H$, Shapiro
+and the preceding line give
+
+$$
+e_K(\operatorname{Ind}_H^\Gamma\theta)
+=e_F(\theta)
+=-[F:\mathbf Q_p]
+=-[\Gamma:H][K:\mathbf Q_p].
+$$
+
+Thus $e_K(N)=-[K:\mathbf Q_p]\dim N$ on a rational spanning set and hence on the whole
+Grothendieck group. Devissage through $p^jM/p^{j+1}M$, and then along powers of the coefficient
+uniformizer, proves (8.8)--(8.9). No perfectness assertion enters this proof, so the Euler formula
+remains an independent numerical check on duality.
 
 Using degree-two duality, (8.7) becomes the particularly useful identity
 
@@ -1458,7 +1556,18 @@ H^{2-r}(K,T^\vee(1)/\ell^mT^\vee(1))
 \longrightarrow\tfrac1{\ell^m}\mathbf Z/\mathbf Z. \tag{12.4}
 $$
 
-The transition map on the first factor is induced by reduction; the adjoint transition on the second is induced by the inclusion of one torsion level into the next. The projection formula for coefficient maps verifies this adjointness.
+The transition map on the first factor is induced by reduction. Under
+
+$$
+T^\vee(1)/\ell^mT^\vee(1)
+\xrightarrow{\sim}D(T)[\ell^m],
+\qquad \bar f\longmapsto \ell^{-m}f\bmod T^\vee(1),
+$$
+
+the adjoint transition on the second factor is the inclusion of one torsion level into the next;
+in quotient coordinates it is $\bar f\mapsto\ell\bar f$. The projection formula for these
+coefficient maps verifies the adjointness. Confusing that map with ordinary reduction would
+reverse the finite-level system.
 
 Finite-level cohomology is finite in the range (12.1). The inverse systems are therefore Mittag--Leffler, and
 
@@ -1489,7 +1598,22 @@ H^r(K,T)\xrightarrow{\sim}
 \bigl(H^{2-r}(K,D(T)),\mathbf Q_\ell/\mathbf Z_\ell\bigr), \tag{12.8}
 $$
 
-and conversely. The group on the left is compact and finitely generated over $\mathbf Z_\ell$; the opposite group is discrete and cofinitely generated. A continuous character of the compact inverse limit has finite image and therefore factors through a finite level, which proves surjectivity in (12.8). This last observation is the topological step that an abstract inverse-limit argument misses.
+and conversely. The group on the left is compact and finitely generated over $\mathbf Z_\ell$;
+the opposite group is discrete and cofinitely generated. Indeed,
+
+$$
+\operatorname{Hom}\!\left(\varinjlim_m B_m,\mathbf Q_\ell/\mathbf Z_\ell\right)
+\simeq
+\varprojlim_m\operatorname{Hom}(B_m,\mathbf Q_\ell/\mathbf Z_\ell)
+$$
+
+for the finite groups $B_m$ in (12.6), so finite perfectness and (12.5) prove (12.8).
+Conversely, a continuous character from the compact inverse limit to the discrete group
+$\mathbf Q_\ell/\mathbf Z_\ell$ has open kernel, hence finite image, and factors through a
+finite-level image. It extends from that finite subgroup to the whole finite level because
+$\mathbf Q_\ell/\mathbf Z_\ell$ is divisible, and finite perfectness supplies the corresponding
+class in the direct system. This proves the reverse duality. These two different limit arguments are the
+topological steps that an abstract inverse-limit slogan misses.
 
 ### 12.3 Starting with a discrete torsion module
 
@@ -1517,13 +1641,22 @@ $$
 
 The first cohomology group is given its natural discrete topology and the second its profinite topology. Divisible subgroups are not to be discarded: under Pontryagin duality they correspond to torsion-free quotients on the compact side.
 
-More generally, if $A$ is any discrete $\ell$-primary module that is a filtered union of finite $G_K$-submodules and has finite corank, its continuous Tate dual $D(A)$ is compact. Passing through the finite submodules gives
+More generally, let $A$ be a **cofinitely generated** discrete $\mathbf Z_\ell$-module with
+continuous $G_K$-action; equivalently, its Pontryagin dual is a finitely generated compact
+$\mathbf Z_\ell$-module. Such an $A$ is a filtered union of finite $G_K$-submodules, and its
+continuous Tate dual $D(A)$ is compact and finitely generated. Choosing a finite submodule that
+contains the finite reduced part and then the successive $\ell^m$-torsion levels gives a
+cofinal sequential system. Finite local duality, exactness of Pontryagin duality, and the
+Mittag--Leffler argument for the resulting finite cohomology groups give
 
 $$
 H^r(K,A)^D\simeq H^{2-r}(K,D(A)). \tag{12.11}
 $$
 
-Without finite-corank or finite-level finiteness hypotheses, (12.11) requires additional control of limits and need not be a statement about finitely generated groups.
+Finite corank alone is not a substitute for cofinite generation: a reduced discrete
+$\ell$-primary module can have corank zero and still require infinitely many generators. Without
+cofinite generation or an independently verified limit theorem, (12.11) requires additional
+control and need not involve finitely generated groups.
 
 ### 12.4 Coefficients in a finite extension of $\mathbf Q_\ell$
 
@@ -2000,7 +2133,41 @@ $$
 \qquad(P'\in E'(K),\ Q\in E(K)).
 $$
 
-This is not a formal consequence of finite-module duality. It follows from the defining adjunction of $\phi$ and $\widehat\phi$ for the Poincaré biextension: pull the biextension back along the two isogenies, use its canonical trivializations, and take Galois boundaries. The resulting two-cocycle is exactly the cup of the two Kummer boundary cocycles, while the biextension trivialization makes it a coboundary. Hence the two Kummer images are orthogonal. This establishes the required containment before any comparison of orders.
+This is not a formal consequence of finite-module duality, so we spell out the boundary
+calculation. We use the canonical principal polarizations to identify each elliptic curve with
+its dual. Let $\mathcal P_E$ and $\mathcal P_{E'}$ be the Poincaré biextensions on
+$E\times E^\vee$ and $E'\times E'^\vee$. The definition of the dual isogeny is the canonical
+adjunction
+
+$$
+(\phi\times1)^*\mathcal P_{E'}
+\simeq(1\times\widehat\phi)^*\mathcal P_E. \tag{14.10}
+$$
+
+Restricting (14.10) to $E[\phi]\times E'[\widehat\phi]$ gives the isogeny Weil pairing. Choose
+lifts $P\in E(K^s)$ and $Q'\in E'(K^s)$ with $\phi(P)=P'$ and
+$\widehat\phi(Q')=Q$. Their Kummer cocycles are
+
+$$
+c_\sigma=\sigma P-P,\qquad d_\sigma=\sigma Q'-Q'.
+$$
+
+Choose a nonzero vector in the one-dimensional biextension fiber above $(P,Q')$. The two
+bilinear laws of a biextension and (14.10) compare that vector with each of its Galois
+translates; write the resulting scalar as $b_\sigma\in(K^s)^\times$. Comparing successively
+under $\sigma$ and $\tau$, the biextension cocycle law gives
+
+$$
+(db)_{\sigma,\tau}
+=e_\phi(c_\sigma,\sigma d_\tau). \tag{14.11}
+$$
+
+The right side is exactly the inhomogeneous cup cocycle representing
+$\delta_\phi(P')\smile\delta_{\widehat\phi}(Q)$. Thus that cup is a coboundary in
+$H^2(K,(K^s)^\times)$ and has invariant zero. Changing a lift or the fiber vector changes $b$
+by a one-coboundary, so the conclusion is independent of all choices. Hence the two Kummer
+images are orthogonal. This establishes the required containment before any comparison of
+orders.
 
 To see that the containment is exact, normalize $|x|_K=q^{-v_K(x)}$. For an elliptic curve choose a Néron invariant differential and let $\mu_A$ be the resulting Haar measure on $A(K)$. If $\psi:A\to B$ is an isogeny and $\psi^*\omega_B=a_\psi\omega_A$, put $|d\psi(0)|_K=|a_\psi|_K$. Changing either Néron differential by a unit changes neither the measure nor this number. The local index formula is
 
@@ -2008,21 +2175,49 @@ $$
 \frac{|\operatorname{coker}(\psi:A(K)\to B(K))|}
 {|\ker(\psi:A(K)\to B(K))|}
 =\frac{\mu_B(B(K))}{\mu_A(A(K))}
-|d\psi(0)|_K^{-1}. \tag{14.10}
+|d\psi(0)|_K^{-1}. \tag{14.12}
 $$
 
-It follows by comparing Haar measure on sufficiently small formal neighborhoods and then the finite reduction quotients; it remains valid when the residue characteristic divides the degree. When (14.10) is multiplied for $\phi$ and $\widehat\phi$, the two total-volume ratios cancel. Since $d\widehat\phi(0)d\phi(0)=m$, this gives
+To prove it, choose a sufficiently small formal neighborhood $U_A\subset A(K)$ containing no
+nonzero point of $\ker\psi$ and on which $\psi$ is analytically injective. Change of variables
+in a formal parameter gives
+
+$$
+\mu_B(\psi U_A)=|d\psi(0)|_K\mu_A(U_A).
+$$
+
+Both $A(K)/U_A$ and $B(K)/\psi U_A$ are finite, and
+
+$$
+[A(K):U_A]=|\ker\psi|\,[\psi A(K):\psi U_A],
+$$
+
+$$
+[B(K):\psi U_A]=|\operatorname{coker}\psi|\,
+[\psi A(K):\psi U_A].
+$$
+
+Multiplying these index identities by the measures of the small neighborhoods and cancelling
+the common finite index proves (14.12). The proof remains valid when the residue characteristic
+divides the degree; that contribution is retained by $|d\psi(0)|_K$.
+
+When (14.12) is multiplied for $\phi$ and $\widehat\phi$, the two total-volume ratios cancel.
+Since $d\widehat\phi(0)d\phi(0)=m$, this gives
 
 $$
 |E'(K)/\phi E(K)|\,|E(K)/\widehat\phi E'(K)|
-=|E[\phi](K)|\,|E'[\widehat\phi](K)|\,|m|_K^{-1}. \tag{14.11}
+=|E[\phi](K)|\,|E'[\widehat\phi](K)|\,|m|_K^{-1}. \tag{14.13}
 $$
 
-The local Euler characteristic for $E[\phi]$, together with degree-zero and degree-two duality, identifies the right side of (14.11) with $|H^1(K,E[\phi])|$: the factor $|m|_K^{-1}$ is $1$ away from the residue characteristic and is exactly the mixed-characteristic Euler factor otherwise. Perfectness now upgrades the established orthogonal containment to
+The local Euler characteristic for $E[\phi]$, together with degree-zero and degree-two duality,
+identifies the right side of (14.13) with $|H^1(K,E[\phi])|$: the factor
+$|m|_K^{-1}$ is $1$ away from the residue characteristic and is exactly the
+mixed-characteristic Euler factor otherwise. Perfectness now upgrades the established
+orthogonal containment to
 
 $$
 \delta_\phi(E'(K)/\phi E(K))^\perp
-=\delta_{\widehat\phi}(E(K)/\widehat\phi E'(K)). \tag{14.12}
+=\delta_{\widehat\phi}(E(K)/\widehat\phi E'(K)). \tag{14.14}
 $$
 
 Taking $\phi=[n]=\widehat\phi$ gives (14.9). Thus the familiar finite local condition furnished by local points is not merely isotropic; it is its full annihilator. The hypotheses are essential: $K$ is local, the isogeny is separable in the coefficient range, the opposite kernel is that of the dual isogeny, and the pairing is normalized by the isogeny Weil pairing. An arbitrary self-dual finite module or arbitrary subgroup of its $H^1$ has no analogous automatic self-annihilator statement.
@@ -2031,7 +2226,7 @@ Passing to $T_\ell E$ and $V_\ell E$ uses Chapter 12. The Weil pairing identifie
 
 $$
 T_\ell E^\vee(1)\simeq T_\ell E,
-\qquad V_\ell E^*(1)\simeq V_\ell E. \tag{14.13}
+\qquad V_\ell E^*(1)\simeq V_\ell E. \tag{14.15}
 $$
 
 These identifications yield compact--discrete and $\ell$-adic self-dualities in complementary degrees. Good, multiplicative, or additive reduction affects the Kummer local subspace and inertia action, but not the existence of the perfect ambient pairing.
@@ -2042,13 +2237,13 @@ Let $K/\mathbf Q_p$ have degree $d_K$, take $M=\mu_{p^r}$, and put $u_r=|\mu_{p^
 
 $$
 |H^0(K,\mu_{p^r})|=u_r,
-\qquad |H^2(K,\mu_{p^r})|=p^r, \tag{14.14}
+\qquad |H^2(K,\mu_{p^r})|=p^r, \tag{14.16}
 $$
 
 while the Euler characteristic gives
 
 $$
-|H^1(K,\mu_{p^r})|=p^{r(d_K+1)}u_r. \tag{14.15}
+|H^1(K,\mu_{p^r})|=p^{r(d_K+1)}u_r. \tag{14.17}
 $$
 
 The Tate dual is the constant module $\mathbf Z/p^r\mathbf Z$. Consequently
@@ -2057,7 +2252,7 @@ $$
 |H^2(K,\mathbf Z/p^r\mathbf Z)|=u_r,
 $$
 
-and its $H^1$ has the same order as (14.15). The factors have distinct origins: $p^r$ from valuation, $p^{rd_K}$ from principal units, and $u_r$ from roots of unity in the kernel of the power map.
+and its $H^1$ has the same order as (14.17). The factors have distinct origins: $p^r$ from valuation, $p^{rd_K}$ from principal units, and $u_r$ from roots of unity in the kernel of the power map.
 
 For $r=1$ and $\mu_p\subset K$, both coefficient modules are trivial. Nevertheless the orthogonal of the unramified line in $H^1(K,\mu_p)$ has dimension $d_K+1$, not one. Under Kummer theory it is the full image of $\mathcal O_K^\times$. This example simultaneously checks the Tate twist, the $p$-adic Euler term, and the warning in Section 10.3.
 

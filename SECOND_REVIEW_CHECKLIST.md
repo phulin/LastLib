@@ -54,7 +54,7 @@ any resulting corrections.
 - [x] 028. fppf Cohomology and Kummer Theory
 - [x] 029. Continuous Cohomology of Profinite Groups
 - [x] 030. Local Galois Cohomology
-- [ ] 031. Tate Local Duality
+- [x] 031. Tate Local Duality
 - [ ] 032. Global Galois Cohomology and Selmer Groups
 - [ ] 033. Poitou–Tate Duality
 - [x] 034. Rigid Analytic Curves and Formal Models
