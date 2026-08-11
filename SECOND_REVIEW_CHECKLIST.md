@@ -183,7 +183,7 @@ any resulting corrections.
 - [x] 157. Integral Local Types and Type Lattices
 - [ ] 158. Ihara Theory and Saturated Degeneracy Maps on Shimura Curves
 - [ ] 159. Integral Level Change and Jacquet–Langlands Comparison
-- [ ] 160. Deep-Level Quaternionic Modules and Diamond Actions
+- [x] 160. Deep-Level Quaternionic Modules and Diamond Actions
 - [ ] 161. Hecke-Valued Galois Representations and Nonminimal Reciprocity
 - [x] 162. Dickson Classification and Adequate Residual Image
 - [ ] 163. The Minimal Totally-Real Deformation–Hecke Problem

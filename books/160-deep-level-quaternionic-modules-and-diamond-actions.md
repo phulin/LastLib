@@ -107,7 +107,7 @@
 
 Taylor--Wiles level is useful only when its extra symmetry is visible integrally. At a finite auxiliary set one wants a module carrying an action of a finite abelian $\ell$-group $\Delta$, and one wants much more than an action. The module must be free over the group ring $\mathcal O[\Delta]$; killing the augmentation ideal must recover the chosen lower-level module exactly; Hecke operators must commute with diamonds; duality must pair the chosen primary factor with the correct companion factor; and all these structures must agree as one moves through a genuinely nested tower.
 
-Each adjective matters. A module can be free over $\mathcal O$ and fail to be projective over $\mathcal O[\Delta]$. Invariants can agree with lower level while coinvariants do not. A nominal diamond group can have a central kernel. Two auxiliary prime sets of the same cardinality can have isomorphic abstract group rings without admitting any map of arithmetic levels. The purpose of this book is to isolate exact hypotheses that prevent these failures and to prove the complete finite-level package from them.
+Each adjective matters. A module can be free over $\mathcal O$ and fail to be projective over $\mathcal O[\Delta]$. Invariants can agree with lower level while coinvariants do not. A nonprojectivized residue quotient can collapse against the fixed center, and a projective nominal diamond group can still have arithmetic isotropy. Two auxiliary prime sets of the same cardinality can have isomorphic abstract group rings without admitting any map of arithmetic levels. The purpose of this book is to isolate exact hypotheses that prevent these failures and to prove the complete finite-level package from them.
 
 The construction is quaternionic and finite. Because the quaternion algebra is totally definite, automorphic forms are functions on finite class groupoids. Deep-level freeness will therefore come from a torsor theorem, not from a dimension count. This gives a proof that remains valid with nontrivial algebraic weights and central character, provided stabilizers and the effective diamond quotient are treated correctly.
 
@@ -119,10 +119,10 @@ Fix the following data throughout.
 - $D/F$ is a quaternion algebra ramified at every real place.
 - $\ell$ is a rational prime.
 - $\mathcal O$ is a complete discrete valuation ring with uniformizer $\varpi$, fraction field $E$, and residue field $k$ of characteristic $\ell$.
-- $W$ is a finite free $\mathcal O$-lattice in the chosen algebraic representation, with action $\rho$ of $D^\times$ through its archimedean components and with any declared compatible finite-level action.
+- $W$ is a finite free $\mathcal O$-lattice in the chosen algebraic representation, with action $\rho$ of $D^\times$ through its archimedean components. The finite compact-open level acts trivially on $W$.
 - $\chi_f:F_f^\times\to\mathcal O^\times$ is a finite-adelic central character compatible with the algebraic weight and trivial on the central part of every chosen compact-open level.
 
-The last condition includes two different requirements. For $a\in F^\times$, the finite character and the algebraic central action must agree so that the transformation law is consistent. For $z\in U\cap F_f^\times$, one must have $\chi_f(z)=1$; otherwise right invariance by $U$ contradicts the central transformation law.
+The last condition includes two different requirements. For $a\in F^\times$, the finite character and the algebraic central action must agree so that the transformation law is consistent. For $z\in U\cap F_f^\times$, one must have $\chi_f(z)=1$; otherwise right invariance by $U$ contradicts the central transformation law. A finite type lattice would require its own central compatibility and invariant-lattice theorem. It is not silently included in the present coefficient system.
 
 We write $D_f^\times=(D\otimes_F\mathbb A_{F,f})^\times$. All level actions and double cosets use right translation. At a split unramified place $v$, the spherical polynomial is normalized as
 
@@ -171,7 +171,7 @@ Define the exact integral quaternionic module by the convention
 $$
 M(U;W,\chi_f)
 =\left\{f:D_f^\times\longrightarrow W:
-f(\gamma guz)=\chi_f(z)\rho(\gamma)f(g)\cdot u
+f(\gamma guz)=\chi_f(z)\rho(\gamma)f(g)
 \right\},
 $$
 
@@ -181,7 +181,7 @@ $$
 \rho(a)=\chi_f(a_f)\quad(a\in F^\times),
 $$
 
-so the two ways of moving a rational scalar give the same value. If a finite central element belongs to $U$, the assumption $\chi_f|_{U\cap F_f^\times}=1$ gives the same consistency. In the common case in which the finite level acts trivially on $W$, the formula with $z=1$ is simply
+so the two ways of moving a rational scalar give the same value. If a finite central element belongs to $U$, the assumption $\chi_f|_{U\cap F_f^\times}=1$ gives the same consistency. The formula with $z=1$ is
 
 $$
 f(\gamma gu)=\rho(\gamma)f(g).
@@ -211,7 +211,7 @@ Explicitly,
 
 $$
 W_i=
-\{w\in W:\chi_f(z)\rho(\gamma)w\cdot u=w
+\{w\in W:\chi_f(z)\rho(\gamma)w=w
 \text{ for every such }(\gamma,u,z)\}.
 $$
 
@@ -226,7 +226,7 @@ $$
 Conversely, choose $w_i\in W_i$. Define
 
 $$
-f(\gamma g_iuz)=\chi_f(z)\rho(\gamma)w_i\cdot u.
+f(\gamma g_iuz)=\chi_f(z)\rho(\gamma)w_i.
 $$
 
 If the same element has two presentations, their ratio is a stabilizer presentation of $g_i$, and the defining equation for $W_i$ makes the two values equal. Hence $f$ is well defined and satisfies the transformation law. The two constructions are inverse. $\square$
@@ -271,15 +271,25 @@ K_0(v)=
 \right\}.
 $$
 
-Reduction of the lower-right entry defines a surjective homomorphism
+There are two superficially similar residue quotients, and the central-character convention decides which one is usable. Lower-right reduction alone is the quotient used for ordinary $K_1$-level before a central character is fixed. On a fixed-central-character module it is scalar: the class of $\operatorname{diag}(1,d)$ differs from the scalar $dI$ by an element whose lower-right entry is one. It therefore cannot act faithfully, much less make a nonzero module free over its group ring.
+
+The Taylor--Wiles quotient with fixed determinant is instead projective. Reduction modulo $\mathfrak p_v$ makes both diagonal entries nonzero, and we define
 
 $$
-\nu_v:K_0(v)\longrightarrow k_v^\times,
+\nu_v^{\mathrm{proj}}:K_0(v)\longrightarrow k_v^\times,
 \qquad
-\nu_v\begin{pmatrix}a&b\\c&d\end{pmatrix}=\bar d.
+\nu_v^{\mathrm{proj}}
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+=\bar d\,\bar a^{-1}.
 $$
 
-It is a homomorphism because the lower-left entries vanish modulo $\mathfrak p_v$, so the lower-right entry of a product reduces to the product of the lower-right entries. This elementary observation is the origin of the diamond action.
+It is a surjective homomorphism. Modulo $\mathfrak p_v$, products of upper-triangular matrices multiply their two diagonal entries separately, so the ratios multiply; surjectivity follows from $\operatorname{diag}(1,d)$. Most importantly,
+
+$$
+\nu_v^{\mathrm{proj}}(zI)=1.
+$$
+
+Thus the quotient survives passage to the projective class groupoid and records the one independent tame character left after the determinant, hence the central character, has been fixed. At the auxiliary places under consideration the fixed determinant is unramified, so on residue units an ordered pair has the form $(\theta,\theta^{-1})$. Its character on $\operatorname{diag}(1,d)$ is $\theta^{-1}(d)$; the projective ratio therefore matches the inverse tame coordinate. Choosing the inverse ratio instead matches $\theta$ and merely inverts every diamond label, but it must be accompanied by the same change in reciprocity and pairing conventions.
 
 ### 3.2 Exact $\ell$-power quotients
 
@@ -292,7 +302,7 @@ $$
 when $\ell^n\mid q_v-1$. Define
 
 $$
-K_1(v,n)=\ker\bigl(K_0(v)\xrightarrow{\nu_v}k_v^\times
+K_1(v,n)=\ker\bigl(K_0(v)\xrightarrow{\nu_v^{\mathrm{proj}}}k_v^\times
 \twoheadrightarrow\Delta_v(n)\bigr).
 $$
 
@@ -325,15 +335,11 @@ Thus a fixed prime with $a_v\ge N$ supplies a genuine tower through depth $N$. I
 
 ### 3.4 Central and ineffective diamonds
 
-A scalar matrix $zI\in K_0(v)$ has $\nu_v(zI)=\bar z$. Consequently the nominal quotient $\Delta_v(n)$ can meet the center. On automorphic forms a central scalar is governed by $\chi_f$, so its diamond can be scalar or trivial instead of acting as a free deck transformation.
+The projective quotient removes the local center at the source: every scalar matrix has ratio one. This is not an optional cosmetic improvement. For the lower-right quotient, every residue class has a scalar representative, so after fixing a central character the whole putative diamond group acts through scalars. Twisting and then dividing by that scalar kernel would leave the trivial group, not the $\ell^n$-element group needed for Taylor--Wiles patching.
 
-If a nonidentity diamond $\delta$ acts by a scalar $u\in\mathcal O^\times$, then $([\delta]-u)M=0$. Since $[\delta]-u$ is nonzero in the group ring, a nonzero module with this action cannot be free over the nominal group ring. Thus a nontrivial scalar action is just as obstructive as a trivial one.
+Projectivizing does not by itself remove global arithmetic isotropy. A noncentral element of $D^\times$ can still identify two lifts of a class, and its image in the projective residue quotient can stabilize a point. Let the **effective diamond group** be the quotient of the nominal group by the kernel of its action on the weighted class groupoid, meaning on both objects and coefficient lines. The torsor theorem will require more: every point stabilizer, not just the common kernel, must be trivial.
 
-There are two legitimate treatments. One may choose the local quotient so that no nonidentity central class survives. Alternatively, if the scalar character of the central diamond subgroup extends to a character of the whole nominal diamond group, one may twist the diamond action by the inverse extension; the central subgroup then acts trivially and can be quotiented out. The twist must be declared, because it changes the labels of diamond eigensystems and their companions.
-
-After either treatment, the correct group is the **effective diamond group**: quotient the nominal product by the full central and arithmetic kernel that has been made trivial on both objects and coefficients. We use the untwisted first treatment unless a twist is explicitly stated.
-
-If this kernel is nontrivial, the module cannot be free of positive rank over the nominal group ring. Indeed, if $1\ne\delta$ acts trivially, then $(\delta-1)M=0$, whereas multiplication by $\delta-1$ is nonzero on a free regular module. Every freeness theorem below therefore uses the effective group and separately states when it has the desired exact order.
+If the common kernel is nontrivial, the module cannot be free of positive rank over the nominal group ring. Indeed, if $1\ne\delta$ acts trivially, then $(\delta-1)M=0$, whereas multiplication by $\delta-1$ is nonzero on a free regular module. If a nonidentity diamond acts by a scalar $u\in\mathcal O^\times$, then $([\delta]-u)M=0$ gives the same obstruction. Every freeness theorem below therefore uses the effective group and separately states when the projective nominal action is fully effective.
 
 ## 4. The global diamond tower
 
@@ -379,7 +385,7 @@ $$
 \Delta_{Q,n}\cong(\mathbb Z/\ell^n\mathbb Z)^q.
 $$
 
-One must not infer full effective rank from the abstract local quotient. It is a global assertion about central identifications and arithmetic stabilizers.
+One must not infer full effective rank from the abstract local quotient. Projectivization has removed local scalar classes, but global arithmetic stabilizers can still make the action ineffective.
 
 ### 4.3 The action on class sets
 
@@ -405,7 +411,7 @@ $$
 \gamma g\tilde\delta=gu_nz,
 $$
 
-where $\tilde\delta\in U_0(Q)$ represents $\delta$. Thus the extended stabilizer represented by $g^{-1}\gamma gz^{-1}\in U_0(Q)$ maps to $\delta^{-1}$ in the quotient. Arithmetic and central stabilizers measure exactly the failure of free action.
+where $\tilde\delta\in U_0(Q)$ represents $\delta$. Thus the extended stabilizer represented by $g^{-1}\gamma gz^{-1}\in U_0(Q)$ maps to $\delta^{-1}$ in the quotient. After projectivization, the remaining arithmetic stabilizers measure exactly the failure of free action.
 
 ### 4.4 The clean stabilizer condition
 
@@ -417,7 +423,7 @@ $$
 \gamma\in D^\times,\ u\in U_0(Q),\ z\in Z_f\},
 $$
 
-modulo central redundancies acting identically on the character line. Projection of the $U_0(Q)$-component gives a map from $\Gamma_0^\chi(g)$ to the nominal diamond group. After the central treatment prescribed by Section 3.4, call its image $I_n(g)$.
+modulo central redundancies acting identically on the character line. Projection of the $U_0(Q)$-component through the projective quotient gives a map from $\Gamma_0^\chi(g)$ to the nominal diamond group. Call its image $I_n(g)$.
 
 The datum is **clean through depth $N$** if:
 
@@ -426,17 +432,17 @@ The datum is **clean through depth $N$** if:
 3. the effective diamond group has full rank;
 4. the lower-level module and its dual satisfy the perfect-duality condition.
 
-In item 1, every central stabilizer must already have been removed by the procedure of Section 3.4; a central element acting through a nontrivial scalar is not ignored. Thus cleanliness excludes both object stabilizers and scalar coefficient stabilizers.
+The projective quotient kills central stabilizers before this test. Item 1 concerns the remaining projective arithmetic stabilizers; item 2 records that their action on the algebraic coefficient line imposes no new equation at deep level. Item 1 already forces the common kernel $C_{Q,n}$ to be trivial; item 3 records the resulting exact numerical rank explicitly because that rank is used later in the power-series presentation.
 
-The second condition follows from the first when the finite weight action is trivial at $Q$ and all removed central actions agree. It is stated separately because nontrivial weights can otherwise introduce a coefficient stabilizer even when the underlying object action is free.
+In the present coefficient convention, the finite auxiliary level acts trivially on $W$, so item 2 follows from item 1: equality of the deep and oriented stabilizers gives literally the same equations on $W$. It remains in the definition because it is the exact coefficient hypothesis used by the proof and prevents an undeclared finite type from being inserted later.
 
-A useful sufficient condition is that every effective arithmetic stabilizer has order prime to $\ell$. Its image in the $\ell$-group $\Delta_{Q,n}^{\mathrm{nom}}$ is then trivial. This argument does not remove a central kernel of $\ell$-power order; that kernel must still be divided out or excluded.
+A useful sufficient condition is that every effective projective arithmetic stabilizer has order prime to $\ell$. Its image in the $\ell$-group $\Delta_{Q,n}^{\mathrm{nom}}$ is then trivial.
 
-Here is a practical version of the criterion. Let $\overline\Gamma_0(g)$ denote the effective projective image of $\Gamma_0^\chi(g)$. Suppose it is finite of order prime to $\ell$ for every class, and suppose every central stabilizer has been treated as in Section 3.4. Then the datum is clean on objects. Indeed, the stabilizer image is a quotient of $\overline\Gamma_0(g)$ and also a subgroup of an $\ell$-group. Its order divides both a number prime to $\ell$ and a power of $\ell$, so it is one.
+Here is a practical version of the criterion. Let $\overline\Gamma_0(g)$ denote the effective projective image of $\Gamma_0^\chi(g)$. Suppose it is finite of order prime to $\ell$ for every class. Then the datum is clean on objects. Indeed, the stabilizer image is a quotient of $\overline\Gamma_0(g)$ and also a subgroup of an $\ell$-group. Its order divides both a number prime to $\ell$ and a power of $\ell$, so it is one.
 
-The coefficient condition must still be checked. If $U_0(Q)$ acts trivially on $W$ at the places of $Q$, then an element in the lower stabilizer and its realization in the deep stabilizer impose the same equation on $W$. If the auxiliary local level acts through a nontrivial type, the kernel of the quotient can change the type invariants. In that situation one must compare the two invariant lattices directly; object-level freeness alone does not imply weighted freeness.
+The coefficient conclusion uses the standing trivial finite-level action. With a nontrivial auxiliary type, the kernel of the quotient can change type invariants, and the comparison would require an additional prior theorem not used here.
 
-Cleanliness is stable under decreasing the depth. If the stabilizer image is trivial in $\Delta_{Q,N}$, its image in every quotient $\Delta_{Q,n}$ is trivial. Likewise, a central element trivial at depth $N$ remains trivial at depth $n$. Thus it is enough to verify the group-theoretic part at the deepest level, provided the effective quotients themselves have been chosen compatibly.
+Cleanliness is stable under decreasing the depth. If the stabilizer image is trivial in $\Delta_{Q,N}$, its image in every quotient $\Delta_{Q,n}$ is trivial. Thus it is enough to verify the group-theoretic part at the deepest level, provided the effective quotients themselves have been chosen compatibly.
 
 ## 5. Torsors of class groupoids
 
@@ -456,7 +462,7 @@ $$
 \gamma g\tilde\delta=g\tilde\delta'u_nz.
 $$
 
-After moving the central factor, one sees that $g^{-1}\gamma gz^{-1}\in U_0(Q)$ and that its image in the quotient is $\delta'\delta^{-1}$. Therefore the stabilizer of any point of the fiber is exactly the image $I_n(g)$, together with any already treated central kernel.
+After moving the central factor, one sees that $g^{-1}\gamma gz^{-1}\in U_0(Q)$ and that its image in the projective quotient is $\delta'\delta^{-1}$. Therefore the stabilizer of any point of the fiber is exactly the image $I_n(g)$.
 
 This calculation is the essential arithmetic step. It replaces a misleading count of double cosets by an exact description of the isotropy group.
 
@@ -470,7 +476,7 @@ $$
 
 is a $\Delta_{Q,n}$-torsor. Thus every fiber has exactly $|\Delta_{Q,n}|$ points, and the diamond action on each fiber is simply transitive.
 
-**Proof.** Surjectivity was proved in Section 4.3, and the action is transitive on each fiber by the representative calculation of Section 5.1. If $\delta$ fixes $[g]_n$, the same calculation realizes $\delta$ as the image of an arithmetic stabilizer, up to the central kernel. Cleanliness makes the arithmetic image trivial, while passage to the effective group removes the central kernel. Hence $\delta=1$. A transitive free action is simply transitive. $\square$
+**Proof.** Surjectivity was proved in Section 4.3, and the action is transitive on each fiber by the representative calculation of Section 5.1. If $\delta$ fixes $[g]_n$, the same calculation realizes $\delta$ as the projective image of an arithmetic stabilizer. Cleanliness makes that image trivial, so $\delta=1$. A transitive free action is simply transitive. $\square$
 
 When full effective rank holds, each fiber has $\ell^{nq}$ elements. This numerical consequence comes after the freeness proof; it cannot replace it.
 
@@ -502,7 +508,7 @@ This equality proves that the coefficient lattice $W_g$ is constant across every
 
 Suppose instead that a subgroup $H\subseteq\Delta_{Q,n}^{\mathrm{nom}}$ stabilizes a point. Its fiber is then a copy of $H\backslash\Delta_{Q,n}^{\mathrm{nom}}$, not a copy of the group. Functions on that fiber form a permutation module induced from the trivial $H$-module. If $H\ne1$ is an $\ell$-group, this permutation module is not free over $\mathcal O[\Delta_{Q,n}^{\mathrm{nom}}]$: its $\mathcal O$-rank is $|\Delta|/|H|$, not divisible by $|\Delta|$.
 
-Even when $H$ has order prime to $\ell$, it can twist the coefficient lattice. The effective $\ell$-quotient may still act freely, but the correct lower-level summand is then a stabilizer invariant lattice. One must verify its compatibility at both levels rather than suppress the stabilizer from the notation.
+A projective arithmetic stabilizer of order prime to $\ell$ has trivial image in the diamond $\ell$-group, but it can still act nontrivially on the algebraic coefficient lattice. The fiber may then be a genuine torsor carrying the invariant lattice $W_i$ rather than all of $W$. The freeness proof remains valid when that same $W_i$ occurs at both levels, while coefficient reduction and perfect duality require their own invariant-lattice checks. The order of the point stabilizer $H\subseteq\Delta_{Q,n}^{\mathrm{nom}}$ itself, by contrast, is necessarily an $\ell$-power.
 
 ## 6. Finite group rings
 
@@ -680,6 +686,8 @@ $$
 
 Section 7.1 identifies the $i$th summand with $\Lambda_n\otimes W_i$. Summing and using $M_0\cong\bigoplus W_i$ proves the stated isomorphism. Since $M_0$ is finite free over $\mathcal O$, the right side is finite free over $\Lambda_n$. $\square$
 
+The same decomposition propagates perfect coefficient duality rather than assuming it anew at every depth. Use on every point above a lower class the same unit stabilizer weight used at depth zero. The deep finite-sum pairing is then the orthogonal direct sum of $|\Delta_{Q,n}|$ copies of the corresponding lower coefficient-lattice pairing. Its matrix is block diagonal with unit-determinant blocks, so it is perfect over $\mathcal O$. Diamond translation permutes the blocks and has adjoint diamond inversion. Thus $(\mathrm{PD})_{U_0(Q)}$ and cleanliness prove $(\mathrm{PD})_{U_n(Q)}$ for all $n\le N$.
+
 ### 7.3 Rank and base change
 
 If $r=\operatorname{rank}_{\mathcal O}M_0$, then
@@ -816,7 +824,7 @@ $$
 \cong M_0\otimes A.
 $$
 
-This is a statement about reduction of the chosen exact lattices. It does not assert that $M_n\otimes k$ equals the automorphic module constructed directly with coefficient module $W\otimes k$ unless stabilizer invariant formation is known to commute with reduction. Clean stabilizers of order prime to $\ell$ give that extra conclusion by the averaging idempotent; bad stabilizer primes do not.
+This is a statement about reduction of the chosen exact lattices. It does not assert that $M_n\otimes k$ equals the automorphic module constructed directly with coefficient module $W\otimes k$ unless stabilizer invariant formation is known to commute with reduction. Effective projective arithmetic stabilizers of order prime to $\ell$ give that extra conclusion by the averaging idempotent; bad stabilizer primes do not.
 
 ## 9. Hecke and diamond operators
 
@@ -894,7 +902,27 @@ The proof uses right-coset representatives consistently. With left-coset represe
 
 ### 9.3 The oriented operator and diamonds
 
-At $v\in Q$, choose the forward oriented double coset defining $U_v$. The diagonal representatives normalize the lower-right residue quotient, and that quotient is abelian. Consequently $U_v$ commutes with the chosen diamonds on the standard $K_1(v,n)$-level module. This conclusion depends on the standard local model; it is not a statement that every element of a full Iwahori algebra is central.
+At $v\in Q$, choose the forward oriented double coset defining $U_v$. A projective diamond has a representative $h_a=\operatorname{diag}(1,a)$, while the forward coset has representatives
+
+$$
+r_u=\begin{pmatrix}\pi_v&u\\0&1\end{pmatrix}.
+$$
+
+The identity
+
+$$
+h_ar_u=r_{ua^{-1}}h_a
+$$
+
+permutes the residue-class representatives as $u$ varies. Hence the two double-coset actions commute. This conclusion depends on the standard local model; it is not a statement that every element of a full Iwahori algebra is central.
+
+The same representatives $r_u$ define the forward operator at every depth because conjugation by $\operatorname{diag}(\pi_v,1)$ preserves the projective diagonal ratio. Pullback between two depths therefore commutes term by term with $U_v$. The trace $c_{m,n}$ is a sum over the kernel diamonds, and the commutation just proved gives
+
+$$
+c_{m,n}U_v=U_vc_{m,n}.
+$$
+
+Thus the selected forward operators, as well as the away Hecke family, belong to the common transition-compatible algebra.
 
 Under the coefficient pairing, a diamond has adjoint
 
@@ -1029,7 +1057,7 @@ $$
 \bar\alpha_v\bar\beta_v=\overline{q_vs_v}\ne0.
 $$
 
-It implies that $\bar\alpha_v-\bar\beta_v$ is a unit in the residue field. After a finite unramified coefficient extension if necessary, both roots may be regarded as residue scalars. The two maximal ideals at oriented level are then distinguished by
+It implies that $\bar\alpha_v-\bar\beta_v$ is a unit in the residue field. After a finite unramified coefficient extension if necessary, both roots may be regarded as residue scalars. In the algebra acting on the degeneracy source, the two residual maximal ideals are distinguished by
 
 $$
 U_v-\bar\alpha_v
@@ -1037,7 +1065,7 @@ U_v-\bar\alpha_v
 U_v-\bar\beta_v.
 $$
 
-They are distinct maximal ideals because their difference is the nonzero scalar $\bar\beta_v-\bar\alpha_v$. The finite image algebra therefore has orthogonal idempotents separating the two residual factors. No division by a characteristic-zero root difference is needed; coprimality in the special fiber supplies the integral idempotents.
+They are distinct because their difference is the nonzero scalar $\bar\beta_v-\bar\alpha_v$, and both occur on the companion source computed in Section 11.3. Its finite image algebra therefore has orthogonal idempotents separating the two residual factors. On the full oriented module, either ideal is used only if it lies in the support; the finite acting-image convention then supplies its idempotent factor. No division by a characteristic-zero root difference is needed: coprimality in the special fiber supplies the integral idempotents.
 
 For a set $Q$, a primary refinement is a tuple $\bar\alpha=(\bar\alpha_v)_{v\in Q}$. It determines the maximal ideal obtained by adjoining all relations $U_v-\bar\alpha_v$. Replacing every selected root by the other root gives the second-root refinement. Adjoint duality will identify which of these is the companion; it is not safe to declare this before accounting for $S_v$ and the dual central character.
 
@@ -1089,13 +1117,13 @@ which is exactly the displayed matrix when columns record the images of the two 
 
 If one replaces $d_1$ by $-d_1$, the two minus signs move to different entries. The characteristic polynomial is unchanged. This is why branch statements should be expressed using $Y^2-T_vY+q_vS_v$, not by memorizing one matrix without its basis convention.
 
-Modulo a regular residual ideal, the two factors $A_v-\bar\alpha_v$ and $A_v-\bar\beta_v$ are coprime. Bézout therefore splits the old source into two direct summands. Each summand has the same coefficient rank as the original hyperspecial module: after extending scalars to the residue field, the companion matrix has two distinct eigenspaces, each obtained from one copy of the base module, and projectivity lifts the rank integrally.
+Modulo a regular residual ideal, the two factors $A_v-\bar\alpha_v$ and $A_v-\bar\beta_v$ are coprime. Bézout therefore splits the degeneracy source into two direct summands. Each source summand has the same coefficient rank as the original hyperspecial module: after extending scalars to the residue field, the companion matrix has two distinct eigenspaces, each obtained from one copy of the base module, and projectivity lifts the rank integrally. The corresponding assertion for the old **image** additionally requires injectivity of the degeneracy map. This distinction cannot be omitted over an integral ring.
 
 ### 11.4 Primary and second-root branches
 
-**Proposition 11.1.** On the old module, regular refinement at every $v\in Q$ gives a direct sum of $2^{|Q|}$ integral refined factors. Each refined factor is isomorphic as an away-Hecke module to the original hyperspecial module after localization at $\mathfrak m$.
+**Proposition 11.1.** On the $2^{|Q|}$-fold degeneracy source, regular refinement at every $v\in Q$ gives a direct sum of $2^{|Q|}$ integral refined factors. Each source factor is isomorphic as an away-Hecke module to the original hyperspecial module after localization at $\mathfrak m$. The degeneracy map carries each source factor onto the correspondingly refined old-image factor; this map is an isomorphism if the localized degeneracy map is injective.
 
-**Proof.** At one prime, the two coprime residual factors give complementary idempotents $e_{v,\alpha}$ and $e_{v,\beta}$. They commute with away Hecke operators. The companion-matrix calculation shows that each factor has one copy of the base module in every fiber. More explicitly, over the local factor the cyclic algebra generated by $A_v$ is free of rank two over the base and splits as the product of its two local factors; tensoring its regular rank-one module with the base module yields one copy on each factor.
+**Proof.** At one prime, the two coprime residual factors give complementary idempotents $e_{v,\alpha}$ and $e_{v,\beta}$ on the source. They commute with away Hecke operators. The companion-matrix calculation shows that each factor has one copy of the base module. More explicitly, over the local factor the cyclic algebra generated by $A_v$ is free of rank two over the base and splits as the product of its two local factors; tensoring its regular rank-one module with the base module yields one copy on each factor.
 
 To justify the last sentence, let $A$ be the complete local base Hecke algebra. The polynomial $F_v(Y)\in A[Y]$ has two distinct simple roots modulo the maximal ideal. Hensel's lemma lifts its factorization uniquely to
 
@@ -1109,7 +1137,7 @@ $$
 A[Y]/(F_v)\cong A\times A
 $$
 
-by the Chinese remainder theorem. The old companion module is
+by the Chinese remainder theorem. The companion source is
 
 $$
 \bigl(A[Y]/(F_v)\bigr)\otimes_A M_\mathfrak m,
@@ -1132,9 +1160,9 @@ e_{1,\varepsilon_1}\cdots e_{q,\varepsilon_q},
 \qquad \varepsilon_i\in\{\alpha,\beta\},
 $$
 
-are orthogonal and sum to one on the old module. Repeated application of the one-prime result identifies every product summand with the base localized module. $\square$
+are orthogonal and sum to one on the degeneracy source. Repeated application of the one-prime result identifies every product summand with the base localized module. The intertwining identities of Section 11.3 make the degeneracy map equivariant for these idempotents, hence identify their images with the refined old-image factors. If the degeneracy map is injective, its restriction to every factor is injective and therefore isomorphic onto that image. $\square$
 
-This proposition concerns the old submodule. It does not state that the entire oriented-level module is old. Exact passage from the full oriented module to minimal level requires the control criterion proved in Chapter 16.
+This proposition splits the source before it identifies the old image. It neither supplies degeneracy injectivity nor states that the entire oriented-level module is old. Exact passage from the full oriented module to minimal level requires the control criterion proved in Chapter 16.
 
 ## 12. Duality and the companion module
 
@@ -1297,7 +1325,7 @@ Summing over classes proves perfectness on the full modules. The primary idempot
 
 An alternative proof uses reduction modulo the maximal ideal $(\varpi,\mathfrak a_n)$ of $\Lambda_n$. The reduced pairing is the perfect lower-level pairing, so Nakayama's lemma makes the adjoint map surjective; equality of free ranks makes it an isomorphism.
 
-Here are the details of that alternative. Let
+Here are the details of that alternative. Write $P_n=M_n^{\mathrm{pri}}$ and $C_n=M_n^{\mathrm{cmp}}$, and let
 
 $$
 \Phi:C_n\longrightarrow\operatorname{Hom}_{\Lambda_n}(P_n,\Lambda_n)^\iota
@@ -1321,9 +1349,9 @@ This descends to coinvariants in both variables with the inversion convention. U
 Consequently perfectness survives augmentation:
 
 $$
-M_n^{\mathrm{pri}}/\mathfrak a_n
+M_n^{\mathrm{pri}}/\mathfrak a_nM_n^{\mathrm{pri}}
 \quad\text{is perfectly paired with}\quad
-M_n^{\mathrm{cmp}}/\mathfrak a_n,
+M_n^{\mathrm{cmp}}/\mathfrak a_nM_n^{\mathrm{cmp}},
 $$
 
 and these are identified with $M_0^{\mathrm{pri}}$ and $M_0^{\mathrm{cmp}}$. The raw coefficient pairing on pullbacks would instead introduce the factor $|\Delta_{Q,n}|$; the group-ring-valued normalization avoids it.
@@ -1424,7 +1452,7 @@ $$
 c_{m,n}\circ c_{r,m}=c_{r,n}.
 $$
 
-Pullbacks satisfy $p_{m,r}p_{n,m}=p_{n,r}$. Group-ring maps satisfy $\rho_{m,n}\rho_{r,m}=\rho_{r,n}$. All diagrams with away Hecke operators commute because their representatives occupy disjoint local components.
+Pullbacks satisfy $p_{m,r}p_{n,m}=p_{n,r}$. Group-ring maps satisfy $\rho_{m,n}\rho_{r,m}=\rho_{r,n}$. All diagrams with away Hecke operators commute because their representatives occupy disjoint local components. The diagrams with the selected $U_v$ commute by the fixed-representative and diamond-sum calculation of Section 9.3.
 
 The perfect pairing also descends by base change. Under the isomorphisms of Theorem 14.1,
 
@@ -1446,7 +1474,7 @@ A **clean Taylor--Wiles datum of depth $N$** consists of:
 3. the standard nested levels $U_n(Q)$ for $0\le n\le N$;
 4. full effective diamond groups $\Delta_{Q,n}\cong(\mathbb Z/\ell^n\mathbb Z)^q$;
 5. the clean stabilizer and coefficient conditions of Section 4.4;
-6. perfect integral pairings with the dual coefficient system;
+6. a perfect integral pairing with the dual coefficient system at oriented depth zero, with the stabilizer weights transported unchanged along every clean fiber;
 7. a common adjoint-stable finite image Hecke algebra on all levels;
 8. a primary residual maximal ideal $\mathfrak m$ and its adjoint companion $\mathfrak m^*$;
 9. when root refinements are used, distinct nonzero residual roots at every $v\in Q$.
@@ -1509,7 +1537,7 @@ Finally, the maps $U_m(Q)\subseteq U_n(Q)$ form genuine torsors with kernel $H_{
 
 Changing a representative for a diamond class changes a torsor trivialization by a group element, hence by a unit of $\Lambda_n$. Changing the chosen lift of a lower-level class does the same independently in each direct summand. Therefore freeness, rank, exact augmentation, and perfectness do not depend on these choices.
 
-Changing the splitting $D_v^\times\cong\mathrm{GL}_2(F_v)$, the orientation, or the generator of $\Delta_v(n)$ changes the labeled diamond action by an automorphism of the group. The resulting group rings are canonically isomorphic only after that automorphism is recorded. Formulas involving $U_v$, the lower-right quotient, and primary roots must all be transported together.
+Changing the splitting $D_v^\times\cong\mathrm{GL}_2(F_v)$, the orientation, or the generator of $\Delta_v(n)$ changes the labeled diamond action by an automorphism of the group. The resulting group rings are canonically isomorphic only after that automorphism is recorded. Formulas involving $U_v$, the projective diagonal ratio, and primary roots must all be transported together.
 
 The primary maximal ideal is genuine data, not an auxiliary choice that disappears. A different residual root gives a different refined module. Adjoint duality dictates the companion factor and prevents arbitrary identification of the two.
 
@@ -1531,7 +1559,7 @@ $$
 K_0(v)/K_1(v,n),
 $$
 
-whereas the change from hyperspecial $K(v)=\mathrm{GL}_2(\mathcal O_v)$ to $K_0(v)$ is governed by two degeneracy maps and an old--new problem. The first step is a finite torsor calculation. The second step is a saturation and support calculation.
+whereas the change from hyperspecial $K(v)=\mathrm{GL}_2(\mathcal O_v)$ to $K_0(v)$ is governed by two degeneracy maps and an old--new problem. The first step is a finite torsor calculation. The second step is an integral splitting and support calculation.
 
 ### 16.2 The two degeneracy maps
 
@@ -1547,10 +1575,18 @@ $$
 d=(d_0,d_1):M\oplus M\longrightarrow M_0(v).
 $$
 
-Let $d^*=(d_0^*,d_1^*)^t$ be the adjoint map. In the standard unnormalized convention, the Gram operator on the source has the shape
+Let
 
 $$
-G_v=d^*d=
+r=(r_0,r_1)^t:M_0(v)\longrightarrow M\oplus M
+$$
+
+be the reverse correspondence: trace after the appropriate inverse translation. This map is defined on the same coefficient system as $d$. Under a declared self-dual pairing it is the adjoint $d^*$; for primary--companion pairings, adjunction instead relates it to the corresponding reverse map on the companion system. Keeping the notation $r$ avoids silently identifying a module with its dual.
+
+In the standard unnormalized convention, the Gram operator on the source has the shape
+
+$$
+G_v=rd=
 \begin{pmatrix}
 q_v+1&T_v\\
 S_v^{-1}T_v&q_v+1
@@ -1563,20 +1599,20 @@ $$
 D_v=(q_v+1)^2-S_v^{-1}T_v^2.
 $$
 
-The old image is $\operatorname{im}(d)$. The integral new module is safest defined as $\ker(d^*)$, while the old quotient is $M_0(v)/\operatorname{im}(d)$. These agree with orthogonal complements or quotient duals only after saturation and perfectness have been proved.
+The old image is $\operatorname{im}(d)$. For this same-coefficient control argument, the complementary kernel is $\ker(r)$, while the old quotient is $M_0(v)/\operatorname{im}(d)$. On the paired companion system, the adjoint kernel is the orthogonal new lattice. These notions agree only after the coefficient identifications, saturation, and perfectness required for that comparison have been proved.
 
-We justify the Gram entries. The composite $d_i^*d_i$ pulls a form to oriented level and traces it back along a fiber of size $q_v+1$, so
+We justify the Gram entries. The composite $r_id_i$ pulls a form to oriented level and traces it back along a fiber of size $q_v+1$, so
 
 $$
-d_i^*d_i=(q_v+1)\operatorname{id}.
+r_id_i=(q_v+1)\operatorname{id}.
 $$
 
 For $i\ne j$, pulling along one endpoint and tracing along the other follows the length-one adjacency correspondence. With the first orientation this is $T_v$. Reversing the orientation changes the central displacement and gives $S_v^{-1}T_v$. Hence
 
 $$
-d_0^*d_1=T_v,
+r_0d_1=T_v,
 \qquad
-d_1^*d_0=S_v^{-1}T_v.
+r_1d_0=S_v^{-1}T_v.
 $$
 
 Putting these four composites into a $2$-by-$2$ matrix gives $G_v$. Its determinant is computed in the commutative away-Hecke algebra:
@@ -1593,45 +1629,50 @@ The asymmetry of the off-diagonal terms is expected. It records the central one-
 
 Fix a primary oriented maximal ideal $\mathfrak m_\alpha$ above a hyperspecial ideal $\mathfrak m$. Consider the following conditions.
 
-1. The degeneracy map $d_\mathfrak m$ is injective with saturated image.
-2. The determinant $D_v$ is a unit on the localized source.
-3. The localized oriented module is generated by the old image, or equivalently the localized new summand is zero.
-4. The chosen root is regular, so the old image splits into its $\alpha$- and $\beta$-factors.
+1. The determinant $D_v$ is a unit on the localized source.
+2. The selected oriented factor has no support in the old quotient:
 
-Condition 1 is an integral injectivity theorem. Condition 2 says the old lattice is a direct summand with no self-congruence at $v$. Condition 3 is a support theorem excluding an additional oriented packet at the same maximal ideal. Condition 4 selects one of the two old copies.
+   $$
+   \bigl(M_0(v)/\operatorname{im}(d)\bigr)_{\mathfrak m_\alpha}=0.
+   $$
 
-**Theorem 16.1 (minimal-level control criterion).** If Conditions 1--4 hold, then the selected degeneracy map induces a Hecke-equivariant isomorphism
+   Equivalently, the $\mathfrak m_\alpha$-factor is generated by the old image.
+3. The chosen root is regular, so the degeneracy source splits into its $\alpha$- and $\beta$-factors.
+
+Condition 1 says the old lattice is a direct summand with no self-congruence at $v$. It already forces localized degeneracy injectivity and saturation; adding those as a separate hypothesis would be redundant. Condition 2 is the genuinely additional support theorem excluding an oriented packet outside the old image on the selected root branch. It is deliberately not strengthened to vanishing of every other oriented factor. Condition 3 selects one of the two old copies.
+
+**Theorem 16.1 (minimal-level control criterion).** If Conditions 1--3 hold, then the selected degeneracy map induces a Hecke-equivariant isomorphism
 
 $$
 M_\mathfrak m\xrightarrow{\sim}M_0(v)_{\mathfrak m_\alpha}.
 $$
 
-**Proof.** Since $D_v$ is a unit, $G_v=d^*d$ is invertible. Therefore
+**Proof.** Since $D_v$ is a unit, $G_v=rd$ is invertible. Therefore
 
 $$
-e_{\mathrm{old}}=dG_v^{-1}d^*
+e_{\mathrm{old}}=dG_v^{-1}r
 $$
 
 is an idempotent on the localized oriented module. Its image is the old image: it is visibly contained there, and on an element $d(x)$ it gives
 
 $$
-dG_v^{-1}d^*d(x)=d(x).
+dG_v^{-1}rd(x)=d(x).
 $$
 
-Its kernel is $\ker(d^*)$. Thus
+Also $G_vx=0$ whenever $d(x)=0$, so invertibility of $G_v$ makes $d$ injective. The displayed formula supplies a left inverse $G_v^{-1}r$ to $d$, proving at once that the old image is a direct summand and hence saturated. The kernel of $e_{\mathrm{old}}$ is $\ker(r)$. Thus
 
 $$
 M_0(v)_\mathfrak m
-=\operatorname{im}(d)_\mathfrak m\oplus\ker(d^*)_\mathfrak m.
+=\operatorname{im}(d)_\mathfrak m\oplus\ker(r)_\mathfrak m.
 $$
 
-Condition 3 kills the second summand. Condition 4 and Proposition 11.1 split the first into the two regular root factors, each isomorphic to $M_\mathfrak m$. Localizing at $\mathfrak m_\alpha$ selects the $\alpha$-factor. $\square$
+Condition 2 says that localization at $\mathfrak m_\alpha$ identifies the oriented module with this old image. Condition 3 and Proposition 11.1 split the injectively embedded source into the two regular root factors, each isomorphic to $M_\mathfrak m$. Localization selects the $\alpha$-old factor. $\square$
 
-Condition 1 is logically visible in this proof even though invertibility of $G_v$ already forces injectivity after localization: saturation is needed to compare integral old submodules and quotients before localization and to transport the conclusion through coefficient reduction.
+The support condition is not a formal consequence of the unit determinant. The determinant controls the old lattice and its canonical complement; it does not prove that the complement has no Hecke support at $\mathfrak m_\alpha$. A Galois level-lowering theorem, a local representation-theoretic support theorem, or a direct finite-module calculation must supply that assertion in an application.
 
 ### 16.4 Exact minimal-level augmentation
 
-Apply Theorem 16.1 successively at the primes of $Q$, with commuting root idempotents. If the four control conditions hold at every stage, there is an isomorphism
+Apply Theorem 16.1 successively at the primes of $Q$, with commuting root idempotents. If the three control conditions hold at every stage, there is an isomorphism
 
 $$
 P_0(Q)\cong M_{\mathfrak m},
@@ -1644,13 +1685,13 @@ $$
 P_n/\mathfrak a_nP_n\cong M_{\mathfrak m}.}
 $$
 
-The same argument on the adjoint side gives
+Assuming the corresponding support condition for the adjoint companion factor, the same argument there gives
 
 $$
 C_n/\mathfrak a_nC_n\cong M^\vee_{\mathfrak m^*}.
 $$
 
-**Corollary 16.2.** Under clean deep-level hypotheses and minimal-level control at every auxiliary prime, the primary and companion modules satisfy the full Taylor--Wiles augmentation property with a base module independent of $Q$.
+**Corollary 16.2.** Under clean deep-level hypotheses and minimal-level control on both adjoint sides at every auxiliary prime, the primary and companion modules satisfy the full Taylor--Wiles augmentation property with a base module independent of $Q$.
 
 **Proof.** The deep-to-oriented augmentation is canonical and exact by Theorem 10.1. Minimal-level control identifies the oriented primary factor with the same base factor at each prime. The maps commute because the local degeneracy correspondences occupy distinct adelic components. Their composite is therefore independent of the order in which the primes are removed. The dual statement follows by adjunction. $\square$
 
@@ -1668,11 +1709,11 @@ $$
 
 inside $B\otimes E$. Generic injectivity does not imply saturation: multiplication by $\varpi$ on $\mathcal O$ is generically invertible but has nonsaturated image.
 
-A geometric Ihara theorem can supply saturation for the two degeneracy maps on first cohomology of a compact quaternionic curve under a specific collection of hypotheses: the quaternion algebra is split at exactly one real place, the level is neat or is descended through a finite quotient of order prime to $\ell$, the changed prime is split, hyperspecial before the change, and away from $\ell$, the localization is non-Eisenstein, coefficients are constant, and $\ell\ge7$. Those hypotheses must travel with the theorem. For a nontrivial local system, the arithmetic kernel consists of crossed homomorphisms rather than ordinary additive characters, so the constant-coefficient proof does not transfer formally.
+A geometric Ihara theorem can supply saturation for the two degeneracy maps on first cohomology of a compact quaternionic curve, but its full hypothesis list must travel with it. The quaternion algebra is a division algebra split at exactly one real place; the chosen proper component union is correspondence-stable and is represented at neat level or descended through a quotient of order prime to $\ell$; the changed prime is split, hyperspecial before the change, and away from $\ell$; the rank-two PEL datum there is unramified with self-dual lattice and the required flat incidence local model; $\mathcal O$ is finite over $\mathbb Z_\ell$ with $\ell\ge7$; the central character is trivial on the selected connected block; coefficients are constant; and the localization is non-Eisenstein. For a nontrivial local system, the arithmetic kernel consists of crossed homomorphisms rather than ordinary additive characters, so the constant-coefficient proof does not transfer formally.
 
 Under precisely those curve hypotheses, residual injectivity of the combined two-map degeneracy morphism implies integral saturation. The implication is elementary once the residual theorem is known. Let $A$ be the source and $B$ the target, both finite free over $\mathcal O$. If the reduction of $A\to B$ is injective, Smith normal form over the DVR shows that every nonzero invariant factor is a unit: a factor divisible by $\varpi$ would create a residual kernel. Hence the integral map is injective and its cokernel is torsion-free. Localization at a Hecke idempotent preserves the conclusion because it takes direct summands.
 
-Our totally definite class-set module is not that first-cohomology module. The geometric saturation theorem is therefore not silently transferred to it. For definite modules, saturation must be proved by the finite groupoid calculation, by an explicit matrix argument, or included as the stated control input of Chapter 16. This boundary is part of dependency closure, not a technical inconvenience.
+Our totally definite class-set module is not that first-cohomology module. The geometric saturation theorem is therefore not silently transferred to it. In the regular Taylor--Wiles regime of Chapter 16, the unit Gram determinant gives a split injection and hence saturation directly. Outside that unit-determinant regime, saturation for definite modules must be proved by the finite groupoid calculation or by an explicit matrix argument; the curve theorem does not supply it. This boundary is part of dependency closure, not a technical inconvenience.
 
 ### 17.2 The Gram determinant
 
@@ -1712,7 +1753,7 @@ $$
 =-(\bar\alpha_v-\bar\beta_v)^2.
 $$
 
-Thus distinct nonzero residual roots make $D_v$ a unit. This proves Condition 2 of Section 16.3 in the regular Taylor--Wiles situation. It does not prove the support-vanishing Condition 3.
+Thus distinct nonzero residual roots make $D_v$ a unit. This proves Condition 1 of Section 16.3 in the regular Taylor--Wiles situation. It does not prove the support-vanishing Condition 2.
 
 ### 17.3 The cases $q\equiv1$ and $q\equiv-1$
 
@@ -1726,11 +1767,11 @@ These facts are compatible rather than contradictory. Saturation of the combined
 
 ### 17.4 Small residue characteristics and stabilizers
 
-Finite quaternionic stabilizers can contain elements of orders $2$, $3$, $4$, $5$, or $6$, depending on the field and order. At residue characteristics $2$, $3$, and sometimes $5$, their orders may not be units. Three consequences follow.
+Finite quaternionic stabilizers can contain elements of orders $2$, $3$, $4$, $5$, or $6$, depending on the field and order, and this list is not exhaustive as the totally real base field varies. At any coefficient characteristic dividing an actual stabilizer order, that order is not a unit. Three consequences follow.
 
 First, averaging over a stabilizer may be nonintegral, so invariant formation can fail to commute with reduction. Second, the mass pairing may have nonunit denominators and fail to be a perfect $\mathcal O$-pairing. Third, an effective stabilizer can map nontrivially to the diamond $\ell$-group, destroying the torsor.
 
-There are three honest remedies: impose a neat level that removes effective stabilizers; quotient by a projectively neat central subgroup while checking the central character; or state and verify directly that every effective stabilizer has order prime to $\ell$. Merely assuming that $\ell$ is odd does not exclude orders $3$ or $5$. A clean range such as $\ell\ge7$ is often convenient, but even then the exact stabilizer classification and central kernel must be checked for the level in question.
+There are three honest remedies: impose a neat level that removes effective stabilizers; pass to a projectively neat level while checking the central character; or state and verify directly that every effective stabilizer has order prime to $\ell$. Merely assuming that $\ell$ is odd does not exclude orders $3$ or $5$. Even $\ell\ge7$ is not a field-independent substitute for the stabilizer calculation: the exact projective stabilizers at the chosen level must be checked.
 
 ## 18. Compatible presentations without false transitions
 
@@ -1926,19 +1967,30 @@ The proof chain has no hidden step.
 
 1. Total definiteness makes the quaternionic class groupoid finite.
 2. Exact integral forms decompose into stabilizer coefficient lattices.
-3. Standard oriented local level has the lower-right residue quotient.
+3. Fixed-central-character level uses the projective diagonal-ratio quotient; the lower-right quotient would be scalar.
 4. Exact $\ell$-power quotients give groups of order $\ell^n$ at depth $n$.
-5. Removing central kernels and imposing clean stabilizers makes every global fiber a genuine torsor.
+5. Projectivizing removes the local center, and clean projective stabilizers make every global fiber a genuine torsor.
 6. Functions with constant coefficient lattice on a torsor are regular group-ring modules.
 7. Orbit sum is augmentation on the regular module, giving an exact quotient.
 8. The finite complete image Hecke algebra supplies compatible idempotent primary factors.
 9. A direct summand of a free module over the local group ring is free.
 10. Adjoint idempotents select the companion, and the coefficient pairing promotes to a perfect group-ring-valued pairing.
 11. Nested subgroups at a fixed auxiliary set give genuine transitive trace maps and exact group-ring base change.
-12. Degeneracy saturation, Gram invertibility, new-support vanishing, and regular refinement are precisely the extra inputs for minimal-level control.
+12. A unit Gram determinant supplies degeneracy injectivity and saturation; new-support vanishing and regular refinement are the remaining extra inputs for minimal-level control.
 13. Independently chosen auxiliary sets share a power-series presentation but no arithmetic transition unless separate geometry provides one.
 
-Every conclusion in Theorem 15.1 is attached to the step that proves it. In particular, rank counts do not substitute for torsors, generic injectivity does not substitute for saturation, and a common abstract group ring does not substitute for a map of levels.
+The prior-book boundary is exact:
+
+| Prior book | Result used here | Boundary retained here |
+|---|---|---|
+| Book 73, Taylor--Wiles systems | exact-level diamond algebras, augmentation covariance, pairing conventions, and the distinction between presentations and transitions | it leaves diamond freeness, module control, and automorphic duality to the realization |
+| Book 88, orders in quaternion algebras | finite definite class sets, projective stabilizers, and change-of-level fibers | it supplies no weighted automorphic module or Hecke action |
+| Book 89, definite quaternionic forms | exact stabilizer-lattice description, central-character compatibility, pullback, trace, and integral pairings | bad stabilizer primes and perfectness remain explicit hypotheses |
+| Book 90, quaternionic Hecke operators | right-coset normalization, $T_v,S_v,U_v$, degeneracy matrices, Gram determinant, and inverse-diamond adjunction | its lower-right diamond becomes scalar after fixing the center, so this book replaces it by the projective ratio rather than misusing it |
+| Book 91, Hecke algebras and congruences | finite image algebras, residual idempotents, primary localization, adjoint factors, and formal old--new criteria | localization does not prove degeneracy injectivity or absence of new support |
+| Book 158, saturated Ihara theory | the constant-coefficient Shimura-curve saturation theorem quoted in Section 17.1 | it does not apply to the totally definite class-set module and is not used to prove Theorem 16.1 |
+
+Every conclusion in Theorem 15.1 is attached to the step that proves it. In particular, rank counts do not substitute for torsors, generic injectivity does not substitute for saturation, and a common abstract group ring does not substitute for a map of levels. The minimal-level corollary is explicitly conditional on new-support vanishing; no predecessor among these six proves that assertion for the definite module in the generality of this book.
 
 ### 20.3 A final normalization audit
 
@@ -1946,7 +1998,7 @@ The conventions used throughout are the following.
 
 - Levels vary contravariantly: $U_m\subseteq U_n$ for $m\ge n$, so class sets and pullbacks go from level $n$ to level $m$.
 - Forms and Hecke correspondences use right translation.
-- The local diamond quotient is obtained from the lower-right residue entry on $K_0(v)$.
+- The local diamond quotient is the lower-right-to-upper-left residue ratio on $K_0(v)$; it is trivial on scalars.
 - The group at depth $n$ has exact order $\ell^n$ per auxiliary prime before any effective quotient.
 - The group ring acts on the left, and its involution sends $[\delta]$ to $[\delta^{-1}]$.
 - Orbit sum realizes coinvariants; pullback realizes invariants; norm identifies the two for projective modules.
