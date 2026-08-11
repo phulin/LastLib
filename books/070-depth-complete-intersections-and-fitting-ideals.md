@@ -446,6 +446,43 @@ Moreover $\operatorname{Hom}_R(R/I,M)=0$, since an element annihilated by $I$ wo
 
 The theorem requires finite generation for associated primes and prime avoidance, and locality to keep regular elements inside the Jacobson radical. Ext can be defined much more generally, but this clean equivalence should not be exported without its hypotheses.
 
+This also completes the proof of the Koszul depth formula stated in Section 3.4. Let
+$x_1,\ldots,x_r$ generate $I$, and put
+
+$$
+s(M)=\sup\{i:H_i(x_1,\ldots,x_r;M)\ne0\}.
+$$
+
+If $\operatorname{depth}_I(M)=0$, the depth-zero test supplies a nonzero element annihilated
+by all of $I$. It lies in the top Koszul homology, so $s(M)=r$. If $y\in I$ is
+$M$-regular and $\overline M=M/yM$, multiplication by $y$ on the Koszul complex is
+null-homotopic, because $y$ is an $R$-linear combination of the $x_i$. The long exact
+homology sequence of
+
+$$
+0\longrightarrow K(\mathbf x;M)\xrightarrow{y}K(\mathbf x;M)
+\longrightarrow K(\mathbf x;\overline M)\longrightarrow0
+$$
+
+therefore breaks into short exact sequences
+
+$$
+0\longrightarrow H_i(\mathbf x;M)
+\longrightarrow H_i(\mathbf x;\overline M)
+\longrightarrow H_{i-1}(\mathbf x;M)\longrightarrow0.
+$$
+
+Thus $s(\overline M)=s(M)+1$, while depth drops by one. Quotient successively by a
+maximal regular sequence in $I$. The last quotient has depth zero, so the preceding
+calculation gives
+
+$$
+\operatorname{depth}_I(M)=r-s(M).
+$$
+
+This proof also shows directly that the right side is independent of the chosen generating
+tuple: it equals the Ext invariant just established.
+
 ### 4.4 The local formula and first computations
 
 Taking $I=\mathfrak m$ gives
@@ -682,7 +719,24 @@ $$
 M_{\mathfrak p}\text{ is Cohen--Macaulay over }R_{\mathfrak p}.
 $$
 
-This statement uses Noetherian locality and finite generation. Its proof chooses parameters adapted to a chain through $\mathfrak p$ and localizes the corresponding regular sequence.
+This statement uses Noetherian locality and finite generation. Here is the dimension step that
+must not be hidden. Put $e=\dim_{R_{\mathfrak p}}M_{\mathfrak p}$. Prime avoidance, applied
+successively to the primes in $\operatorname{Supp}M$ which survive at $\mathfrak p$, produces a
+system of parameters for $M$ adapted to $\mathfrak p$: after a permutation, exactly $e$ of its
+members lie in $\mathfrak p$, and their images form a system of parameters for
+$M_{\mathfrak p}$; the other members become units after localization. One constructs it by
+choosing at each stage an element in $\mathfrak p$ outside the minimal primes of the current
+localized support until that support is zero-dimensional, and then completing the list outside
+$\mathfrak p$. The principal ideal theorem verifies one dimension drop at each of the first
+$e$ stages. Every system of parameters of the Cohen--Macaulay module $M$ is regular. Permutability
+puts the $e$ members of $\mathfrak p$ first, and localization preserves their regularity. Hence
+
+$$
+e\leq\operatorname{depth}_{R_{\mathfrak p}}M_{\mathfrak p}
+\leq\dim_{R_{\mathfrak p}}M_{\mathfrak p}=e,
+$$
+
+which proves the assertion with the required equality of dimensions.
 
 ### 5.4 Flat base change of regular sequences
 
@@ -704,6 +758,32 @@ $$
 $$
 
 The formula is best understood by concatenating a regular sequence from the base with lifts of a maximal regular sequence from the closed fiber, and then using Ext to prove maximality. No Cohen--Macaulay assumption on the fiber is needed; Cohen--Macaulayness is relevant when one wants to replace its depth by its dimension.
+
+For completeness, the Koszul calculation proving maximality is as follows. Choose finite
+generating tuples $\mathbf x$ of $\mathfrak m$ and $\overline{\mathbf y}$ of the maximal ideal
+of $S/\mathfrak mS$, and lift the latter to a tuple $\mathbf y$ in $S$. The concatenated tuple
+generates an $\mathfrak n$-primary ideal. Filter
+
+$$
+K(\mathbf x,\mathbf y;M\otimes_RS)
+\simeq K(\mathbf y;S)\otimes_S
+\bigl(K(\mathbf x;M)\otimes_RS\bigr)
+$$
+
+by the $\mathbf y$-degree. Flatness identifies the homology of the second factor with
+$H_q(\mathbf x;M)\otimes_RS$. Every such homology module is annihilated by $\mathfrak m$,
+so its Koszul homology for $\mathbf y$ is a direct sum of copies of the corresponding Koszul
+homology over the closed fiber. In the resulting bounded spectral sequence, the corner in the
+largest nonzero $\mathbf x$-degree and largest nonzero fiber degree has neither an incoming nor
+an outgoing differential; all terms of larger total degree vanish. Consequently
+
+$$
+\sup H_*(\mathbf x,\mathbf y;M\otimes_RS)
+=\sup H_*(\mathbf x;M)+
+\sup H_*(\overline{\mathbf y};S/\mathfrak mS).
+$$
+
+Applying the Koszul depth formula to the three tuples gives the displayed depth equality.
 
 For example, adjoining a formal variable gives a flat local map
 
@@ -1083,7 +1163,23 @@ $$
 =\operatorname{pd}_{\overline R}k+1
 $$
 
-whenever either side is finite. One obtains the construction by lifting a minimal resolution over $\overline R$ and adjoining the two-term complex for multiplication by $x$; conversely, reducing a finite minimal resolution over $R$ and cancelling the one degree-one class represented by $x$ recovers a finite resolution over $\overline R$. The condition $x\notin\mathfrak m^2$ is what makes this class minimal.
+whenever either side is finite. More precisely, multiplication by $x$ on a minimal resolution
+of $k$ is null-homotopic, since it acts as zero on $k$. Because $x$ is one member of a minimal
+generating set of $\mathfrak m$, the degree-one component of the homotopy contains a unit in
+exactly the summand represented by $x$. Reduce modulo $x$ and cancel that summand and its
+contractible partner degree by degree. The remaining complex is a minimal free resolution of
+$k$ over $\overline R$. Reversing the mapping-cone construction recovers the original
+resolution and gives
+
+$$
+\beta_i^R(k)=\beta_i^{\overline R}(k)
++\beta_{i-1}^{\overline R}(k).
+$$
+
+Thus one resolution terminates exactly when the other does, and their last nonzero degrees
+differ by one. This proves the asserted projective-dimension formula. The condition
+$x\notin\mathfrak m^2$ is what permits the indicated minimal cancellation; for an element in
+$\mathfrak m^2$ the Betti-number relation is different.
 
 Now suppose $k$ has finite projective dimension. Auslander--Buchsbaum gives
 
@@ -1163,6 +1259,21 @@ $$
 
 The first equality follows by successive principal ideal theorem together with regularity; the second follows because regular local rings are Cohen--Macaulay and regular quotients preserve Cohen--Macaulayness; the third comes from the Koszul resolution and Auslander--Buchsbaum.
 
+We will repeatedly compare an $A$-module with the same module over the presenting ring $Q$.
+For the surjection $Q\twoheadrightarrow A=Q/I$ and every nonzero finite $A$-module $M$,
+
+$$
+\operatorname{depth}_QM=\operatorname{depth}_AM,
+\qquad
+\dim_QM=\dim_AM.
+$$
+
+Indeed elements of $I$ act as zero, while a sequence in the maximal ideal of $A$ is regular
+on $M$ exactly when any chosen lifts are regular on $M$ over $Q$. This proves the depth
+equality directly from regular sequences. Primes in the $Q$-support all contain $I$ and
+correspond, with their chains unchanged, to primes in the $A$-support, proving the dimension
+equality. Chapter 15 extends both comparisons from surjections to arbitrary finite local maps.
+
 A presentation is **minimal** if $I\subseteq\mathfrak n^2$. In that case the map on cotangent spaces is an isomorphism and
 
 $$
@@ -1212,7 +1323,54 @@ $$
 
 relations.
 
-**Proof strategy.** Minimality identifies the embedding dimensions of $Q$ and $A$. If the kernel is generated by a regular sequence, dimension drops by its length, giving the intrinsic formula for $c$. For two minimal Cohen presentations, lift minimal cotangent bases in both directions. After adjoining the same number of formal variables, the resulting comparison maps between the complete regular sources become isomorphisms: surjectivity is detected on cotangent spaces, and equal source dimensions kill the kernel. Under this common source the two kernel ideals differ by an automorphism. Thus their minimal generator numbers agree. Since a regular local source is Cohen--Macaulay, an ideal whose generator number equals its height is generated by a regular sequence, by Section 10.5. Complete-intersection quality therefore transfers from one minimal presentation to every other one. $\square$
+**Proof strategy.** Minimality identifies the embedding dimension of $Q$ with that of $A$.
+The only nonformal point is that the minimal number of kernel generators does not depend on
+the chosen minimal regular source. We recover that number from the first two Betti numbers of
+the residue field over $A$.
+
+**Proof.** Put $e=\operatorname{edim}A$ and $I=\ker(Q\to A)$. Choose a regular system of
+parameters $X_1,\ldots,X_e$ of $Q$ whose images minimally generate the maximal ideal of $A$.
+The beginning of a minimal $A$-free resolution of the residue field is
+
+$$
+A^{\beta_2^A(k)}\longrightarrow A^e
+\xrightarrow{(\overline X_1,\ldots,\overline X_e)}A
+\longrightarrow k\longrightarrow0.
+$$
+
+The minimal first syzygies of the row $(\overline X_1,\ldots,\overline X_e)$ have two
+sources. There are the $\binom e2$ Koszul commutation syzygies, and every minimal generator
+$f$ of $I$ gives one further syzygy by writing $f=\sum a_iX_i$ and reducing
+$(a_1,\ldots,a_e)$ modulo $I$. Conversely, lift any syzygy to $Q^e$. Its dot product with
+$(X_1,\ldots,X_e)$ lies in $I$; subtracting the chosen kernel-generator syzygies leaves a
+syzygy of the regular sequence $X_1,\ldots,X_e$, hence a combination of the Koszul ones.
+Reducing modulo the maximal ideal also shows that the two displayed families are independent.
+Therefore
+
+$$
+\beta_2^A(k)=\binom e2+\mu_Q(I).
+$$
+
+Both Betti numbers on the right side of
+
+$$
+\mu_Q(I)=\beta_2^A(k)-\binom{\beta_1^A(k)}2
+$$
+
+are intrinsic to $A$. Thus every minimal regular-local presentation has the same minimal
+relation number.
+
+If one minimal presentation has regular-sequence kernel of length $c$, dimension drop gives
+
+$$
+c=\dim Q-\dim A=\operatorname{edim}A-\dim A.
+$$
+
+For any other minimal presentation $Q'\twoheadrightarrow A$ with kernel $I'$, the intrinsic
+calculation gives $\mu_{Q'}(I')=c$, while regularity of $Q'$ gives
+$\operatorname{ht}I'=\dim Q'-\dim A=c$. Section 10.5 makes a minimal generating tuple of
+$I'$ regular. The converse is immediate by applying the same argument to the displayed
+presentation. $\square$
 
 This theorem is why “number of equations equals codimension” is meaningful only for a minimal presentation. A nonminimal presentation can add a variable $z$ and the relation $z$, increasing both source dimension and relation count without changing $A$.
 
@@ -1418,6 +1576,48 @@ $$
 is $Q$-regular. Hence $A/(x)$ is a regular-local quotient by a regular sequence of length $c+1$.
 
 The converse requires care. If $x$ is regular and $A/(x)$ is complete intersection, then $A$ is complete intersection under the usual Noetherian local hypotheses; one lifts a regular presentation and uses the conormal criterion to remove the final equation. If $x$ is a zerodivisor, no such conclusion is valid.
+
+Here is the lifting argument behind that converse. Completion preserves the hypotheses, so take
+a minimal regular-local presentation $A=Q/I$ and lift $x$ to $g\in Q$. Regularity of $x$
+is the colon equality
+
+$$
+(I:g)=I.
+$$
+
+There are two cotangent cases. If $x\notin\mathfrak m_A^2$, choose $g$ as a member of a
+regular system of parameters of $Q$. Then $Q'=Q/(g)$ is regular, and
+
+$$
+A/(x)=Q'/I',
+\qquad
+I'=I/gI,
+$$
+
+because $I\cap(g)=g(I:g)=gI$. This is a minimal presentation, and
+$I'/\mathfrak m_{Q'}I'\simeq I/\mathfrak m_QI$. If $A/(x)$ is complete intersection,
+$I'$ has height-many minimal generators forming a regular sequence. Lift them to $I$.
+Nakayama makes the lifts generate $I$; adjoining $g$ first gives a regular sequence in $Q$,
+and permutability then shows that the lifted generators themselves are $Q$-regular.
+
+If $x\in\mathfrak m_A^2$, choose $g\in\mathfrak m_Q^2$. Then
+$J=I+(g)\subseteq\mathfrak m_Q^2$ gives a minimal presentation of $A/(x)$. The colon equality
+shows that
+
+$$
+0\longrightarrow I/\mathfrak m_QI
+\longrightarrow J/\mathfrak m_QJ
+\longrightarrow k\longrightarrow0
+$$
+
+is exact: if $a g\in I$ with $a\in\mathfrak m_Q$, then $a\in I$, so no old relation dies;
+and $g\notin I+\mathfrak m_QJ$, so its class supplies the final $k$. Hence
+$\mu_Q(J)=\mu_Q(I)+1$. Write $c=\operatorname{edim}A-\dim A=\operatorname{ht}I$.
+The regular quotient lowers dimension by one without changing embedding dimension, so the
+complete-intersection presentation of $A/(x)$ has $c+1$ relations. Therefore
+$\mu_Q(I)=c=\operatorname{ht}I$, and Section 10.5 makes $I$ a regular-sequence ideal.
+This proves the converse in both cases. For a zerodivisor, the colon equality fails and neither
+relation-count argument is valid.
 
 ### 11.2 Flat base change
 
@@ -2446,13 +2646,42 @@ $$
 
 **Proof strategy.** The forward implication is immediate. For the converse, use the equational criterion for flatness and Nakayama over $B$. A minimal unsolved coefficient relation over $A$ would survive after reduction modulo $\mathfrak m$, producing a nonzero class in the displayed Tor group.
 
-**Proof.** Present any finitely generated ideal $I\subseteq A$ by $A^s\to I$. Tensoring with $N$ shows that failure of injectivity of
+**Proof.** We use the following adic form of the local flatness lemma. If $C$ is Noetherian,
+$D$ is a Noetherian $C$-algebra, $JD$ lies in the Jacobson radical of $D$, and $L$ is finite
+over $D$ and $JD$-adically separated, then
 
 $$
-I\otimes_AN\longrightarrow N
+L/JL\text{ flat over }C/J
+\quad\text{and}\quad
+\operatorname{Tor}_1^C(C/J,L)=0
 $$
 
-is measured by $\operatorname{Tor}_1^A(A/I,N)$. Choose a finite set of $B$-generators for the kernel of a coefficient relation; such finiteness is available because $N$ is finite over the Noetherian ring $B$. Reduction modulo $\mathfrak n$ turns a minimal generating family into a nonzero family over $l$. Since the structural map is local, $\mathfrak mB\subseteq\mathfrak n$. The long exact Tor sequences associated to a finite presentation of $A/I$, followed by reduction to $k$, show that a nonzero minimal kernel class maps to a nonzero element of $\operatorname{Tor}_1^A(k,N)\otimes_kl$. The assumed vanishing therefore forces every map $I\otimes_AN\to N$ to be injective. The ideal criterion for flatness now proves that $N$ is $A$-flat. $\square$
+imply that $L$ is flat over $C$. To prove the lemma, use the exact sequences
+
+$$
+0\longrightarrow J^r/J^{r+1}\longrightarrow C/J^{r+1}
+\longrightarrow C/J^r\longrightarrow0.
+$$
+
+Induction, starting from the two displayed hypotheses, shows that $L/J^rL$ is flat over
+$C/J^r$ and that
+
+$$
+(J^r/J^{r+1})\otimes_{C/J}L/JL
+\xrightarrow{\sim}J^rL/J^{r+1}L
+$$
+
+for every $r$. Now let $H\subseteq C$ be finitely generated. The kernel of
+$H\otimes_CL\to L$ is finite over $D$: both source and target are finite $D$-modules.
+The preceding finite-level flatness makes its image zero modulo $J^r$ for every $r$.
+Krull intersection for the finite $D$-module kernel, using $JD$ inside the Jacobson radical,
+makes the kernel zero. The ideal criterion for flatness proves the lemma.
+
+Apply it with $C=A$, $D=B$, $J=\mathfrak m$, and $L=N$. The quotient $N/\mathfrak mN$ is
+a vector space over $k$, hence flat over $A/\mathfrak m$. The assumed Tor vanishing is the
+second hypothesis. Since $\mathfrak mB\subseteq\mathfrak n$, Krull intersection gives the
+required separatedness for the finite $B$-module $N$. The adic lemma therefore makes $N$
+flat over $A$. $\square$
 
 The finiteness over a Noetherian **local algebra** is essential to this one-fiber test. For arbitrary $A$-modules, one residue Tor group need not control all coefficient relations.
 
