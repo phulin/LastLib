@@ -63,7 +63,7 @@
 11. [Duality, twisting, and level symmetry](#11-duality-twisting-and-level-symmetry)
     - [Contragredient newforms](#111-contragredient-newforms)
     - [Twists and conductor change](#112-twists-and-conductor-change)
-    - [Atkin--Lehner symmetry](#113-atkinlehner-symmetry)
+    - [Atkin--Lehner symmetry](#113-atkin--lehner-symmetry)
     - [Normalization audits and counterexamples](#114-normalization-audits-and-counterexamples)
 12. [The complete global newform package](#12-the-complete-global-newform-package)
     - [The main theorem in one statement](#121-the-main-theorem-in-one-statement)
@@ -101,7 +101,7 @@ $$
 At a finite place $v$, write
 
 $$
-F_v,qquad \mathcal O_v,qquad \mathfrak p_v=(\varpi_v),qquad
+F_v,\qquad \mathcal O_v,\qquad \mathfrak p_v=(\varpi_v),\qquad
 q_v=|\mathcal O_v/\mathfrak p_v|,
 $$
 
@@ -149,7 +149,7 @@ L^2_{\mathrm{cusp},\omega}
 =L^2_{\mathrm{cusp}}\bigl(Z(\mathbf A)G(F)\backslash G(\mathbf A),\omega\bigr).
 $$
 
-Book 102 proves that it is a discrete Hilbert sum with finite multiplicities. Books 104 and 105 provide, respectively, the global Whittaker uniqueness used for automorphic multiplicity one and the exact Rankin--Selberg pole criterion used for strong multiplicity one. Book 77 provides the local $K_1$-newvector theorem. We recall every imported statement at its point of use with the hypotheses needed here.
+Book 102 proves that it is a discrete Hilbert sum with finite multiplicities. Book 104 proves restricted tensor factorization, local genericity of every finite component of a cuspidal representation, global Whittaker uniqueness, and automorphic multiplicity one. Book 105 proves the exact Rankin--Selberg pole criterion used for strong multiplicity one. Book 77 supplies the Kirillov-model input and proves the $K_1$ theorem in the principal-series, special, depth-zero, and tame-dihedral cases. Its stated theorem does not cover primitive wild supercuspidals. Section 5.3 therefore proves the generic $K_1$ theorem in the generality needed here instead of silently enlarging Book 77's interface.
 
 ### 1.3 The three multiplicity statements
 
@@ -235,7 +235,7 @@ $$
 
 Its elements are finite linear combinations of pure tensors $\otimes_vx_v$ with $x_v=e_v$ almost everywhere. The restricted product group acts because any adelic element belongs to $K_v$ almost everywhere and hence fixes $e_v$ there.
 
-Changing finitely many $e_v$ merely changes the finite tensor description. Rescaling $e_v$ at infinitely many places is not harmless, which is why the standard normalization matters. For a unitary representation we choose $\|e_v\|=1$. In a Whittaker model we instead choose $W_{e_v}(1)=1$; the two choices differ by a well-defined positive scalar at each place, but an infinite simultaneous conversion is not made without fixing a global convention.
+Changing finitely many $e_v$ merely changes the finite tensor description. Rescaling $e_v$ at infinitely many places is not harmless, which is why the standard normalization matters. For a unitary representation we choose $\|e_v\|=1$. At a place where the additive character has conductor $\mathcal O_v$, a Whittaker model instead permits $W_{e_v}(1)=1$; the two choices differ by a well-defined nonzero scalar, but an infinite simultaneous conversion is not made without fixing a global convention.
 
 **Proposition 2.1 (irreducibility of the restricted product).** If every $\pi_v$ is irreducible and the spherical line is one dimensional outside a finite set, then the smooth restricted tensor product in (2.1) is irreducible.
 
@@ -266,17 +266,15 @@ $$
 
 into irreducible admissible unitary local representations. At almost every finite $v$, $\pi_v$ is unramified and $\dim\pi_v^{K_v}=1$.
 
-**Proof strategy.** First factor the unitary representation across a finite product and its commuting complement. This is the product-group commutant theorem. Compatibility as the finite set grows produces the local factors. A fixed smooth vector is spherical outside finitely many places, supplying the reference lines and the restricted-product structure.
+**Proof strategy.** This is the factorization theorem proved in Book 104, before that book invokes Whittaker uniqueness. We recall its construction to make clear that neither multiplicity-one theorem is being used. One factors across a finite product and its commuting complement, checks compatibility while the finite set grows, and uses a smooth vector to supply the spherical reference lines.
 
-**Proof.** We begin with the finite-product lemma. If $H_1$ and $H_2$ are second-countable type-I groups, every irreducible unitary representation of $H_1\times H_2$ is an external tensor product $\tau_1\widehat\otimes\tau_2$ of irreducible unitary representations. Indeed, decompose the restriction to $H_1$ as a direct integral of irreducibles. The commuting $H_2$ action preserves the measure class and acts on the multiplicity field. If more than one $H_1$ isomorphism class occurred on sets of positive measure, a nontrivial measurable subset invariant under the induced $H_2$ action would give a nontrivial projection commuting with both groups. On the single surviving isomorphism class, the representation has the form $\tau_1\widehat\otimes M$; irreducibility of the product action forces the $H_2$-representation on $M$ to be irreducible. This proves the lemma. Iteration treats any finite product.
-
-Fix a finite set $S$ containing the archimedean places. The adelic group is the product of $G_S=\prod_{v\in S}G(F_v)$ and the restricted complementary group $G^S$. Applying the lemma gives
+**Proof.** For a finite set $S$ containing the archimedean places, write $G_S=\prod_{v\in S}G(F_v)$ and let $G^S$ be the restricted complementary group. The product-group factorization theorem established in Book 104 gives
 
 $$
 \pi\simeq\pi_S\widehat\otimes\pi^S,
 $$
 
-with both factors irreducible; iterating inside $G_S$ gives $\pi_S=\widehat\otimes_{v\in S}\pi_v$. If $S\subset S'$, apply the same factorization to the complementary factor. Uniqueness in the product-group lemma, obtained from Schur's lemma by restricting to the old factors, shows that the previously extracted $\pi_v$ do not change.
+with both factors irreducible; iterating inside $G_S$ gives $\pi_S=\widehat\otimes_{v\in S}\pi_v$. If $S\subset S'$, factor the complementary representation once more. The uniqueness clause of the same theorem, proved from the two commuting von Neumann algebras and Schur's lemma, shows that the previously extracted $\pi_v$ do not change.
 
 Choose a nonzero smooth vector. It is fixed by $K_v$ outside one finite set $S_0$. Factorization of that vector across a finite stage shows that $\pi_v^{K_v}\ne0$ for $v\notin S_0$. Local spherical multiplicity one makes this a one-dimensional line $\mathbf Ce_v$. The compatible finite tensor maps therefore give a nonzero equivariant map
 
@@ -286,7 +284,7 @@ $$
 
 Proposition 2.1 makes the source irreducible, while construction from the cyclic smooth vectors makes the image dense and equal to the smooth representation. The map is therefore an isomorphism on smooth vectors. Completing the unitary tensor norm yields (2.2). $\square$
 
-The proof uses only the structural admissibility already available locally and the discrete irreducibility of the global summand. It does not use strong multiplicity one. Thus local components are defined before they are used in the recognition theorem.
+Book 104 also proves local admissibility by putting each compact level and local type inside a finite global spectral window. Thus the proof uses only local structural theory and the discrete irreducibility of the global summand. It uses neither strong nor automorphic multiplicity one, so local components are defined before either theorem refers to them.
 
 ### 2.4 Factorization of compact invariants
 
@@ -319,7 +317,7 @@ $$
 \tag{2.5}
 $$
 
-as representations of $G(\mathbf A)$. Restrict to the copy of $G(F_w)$ supported at one place $w$ and fix standard vectors elsewhere. The resulting $G(F_w)$-module is a direct sum of copies of $\pi_w$ on one side and of $\rho_w$ on the other. Applying a compact-open projector away from $w$ reduces both multiplicity spaces to one dimension after a sufficiently large finite set is fixed. Schur's lemma then yields
+as representations of $G(\mathbf A)$. Fix a place $w$ and a finite stage containing every nonstandard reference vector needed to represent the isomorphism and its inverse on chosen nonzero pure tensors. Apply linear functionals to all tensor factors at that stage except the $w$-factor, choosing the functionals to be nonzero on the selected coordinates. Currying the global intertwiner then gives a nonzero $G(F_w)$-map $\pi_w\to\rho_w$. Repeating the construction with the inverse gives a nonzero map in the other direction. Irreducibility and Schur's lemma yield
 
 $$
 \pi_w\simeq\rho_w.
@@ -438,7 +436,7 @@ Thus equality of both eigenvalues almost everywhere implies (3.5). If the two re
 
 ### 3.5 Why the hypotheses cannot be weakened carelessly
 
-Cuspidality is essential. One-dimensional automorphic characters and constituents of Eisenstein series can have different global induction data while sharing misleading portions of their unramified Hecke data; their Rankin--Selberg poles are governed by a different residual calculation.
+Cuspidality is essential to the pole criterion in the form (3.3). For characters, Eisenstein constituents, and more general isobaric sums, the self- and cross-poles count common constituents and residual terms rather than an irreducible cuspidal pairing. Recognition theorems exist in those settings, but they require a differently stated isobaric argument; (3.3) cannot simply be reused unchanged.
 
 Unitarity is also doing real work. For arbitrary nonunitary twists, a deleted local factor can itself have a pole at $s=1$. Then removing that place may change polar order, breaking the passage from the completed pole criterion to (3.3). One may handle essentially unitary representations by first applying the unique real norm twist that makes them unitary and translating $s$ accordingly.
 
@@ -569,7 +567,7 @@ The principal congruence subgroup $1+\mathfrak p^nM_2(\mathcal O)$ is too symmet
 
 ### 5.2 The conductor exponent
 
-Let $\sigma$ be an infinite-dimensional irreducible smooth representation of $G_K$. It is generic, so it admits a Whittaker model. Define
+Let $\sigma$ be an irreducible admissible generic representation of $G_K$. Genericity gives a Whittaker model, and it also excludes one-dimensional representations. Define
 
 $$
 a(\sigma)=\min\{n\geq0:\sigma^{K_1(\mathfrak p^n)}\ne0\}.
@@ -587,13 +585,13 @@ $$
 
 This divisibility will globalize to the assertion that the conductor of the central character divides the conductor of the representation.
 
-One-dimensional representations are excluded from (5.2). If $\mu$ is ramified, then $\mu\circ\det$ has no $K_1(\mathfrak p^n)$-fixed vector for any $n$, because $\operatorname{diag}(u,1)$ belongs to every $K_1(\mathfrak p^n)$ while $\mu(u)$ need not be one. Cuspidal local components are infinite dimensional, so this exclusion creates no gap in the global theory.
+One-dimensional representations are excluded from (5.2). If $\mu$ is ramified, then $\mu\circ\det$ has no $K_1(\mathfrak p^n)$-fixed vector for any $n$, because $\operatorname{diag}(u,1)$ belongs to every $K_1(\mathfrak p^n)$ while $\mu(u)$ need not be one. More importantly, Book 104 proves that every local component of a cuspidal global representation is generic. Thus the local theorem below applies to every representation that will be globalized, without any appeal to a complete local classification.
 
 ### 5.3 The local newvector theorem revisited
 
 The local result needed globally is stronger than uniqueness at the first level: it describes every later fixed space.
 
-**Theorem 5.1 (local newvector and oldvector theorem).** Let $\sigma$ be an infinite-dimensional irreducible smooth representation of $G_K$. Then $a=a(\sigma)$ is finite and
+**Theorem 5.1 (local newvector and oldvector theorem).** Let $\sigma$ be an irreducible admissible generic representation of $G_K$. Then $a=a(\sigma)$ is finite and
 
 $$
 \dim\sigma^{K_1(\mathfrak p^n)}=
@@ -614,9 +612,9 @@ $$
 
 form a basis of $\sigma^{K_1(\mathfrak p^n)}$.
 
-**Proof strategy.** We recall the decisive Kirillov-model argument. Upper-unipotent invariance bounds the support of a Kirillov function on one side, unit invariance makes it constant on valuation shells, and lower-unipotent invariance constrains its Weyl transform. After the asymptotic tails forced by the Jacquet module are separated off, the free shell data form an interval whose length grows by one whenever the level grows by one.
+**Proof strategy.** Upper-unipotent invariance bounds a Kirillov function, unit invariance makes it constant on valuation shells, and lower-unipotent invariance bounds its Weyl transform. These are two transverse one-step filtrations. Their first intersection is a line, and each subsequent level can add at most one dimension; diagonal translates of the first line add exactly one.
 
-**Proof.** Fix an additive character $\psi_K$ of conductor $\mathcal O$ and realize $\sigma$ in its Kirillov model. To a vector $v$ associate
+**Proof.** Fix an additive character $\psi_K$ of conductor $\mathcal O$ and realize $\sigma$ in its Kirillov model $\mathcal K(\sigma,\psi_K)$. To a vector $v$ associate
 
 $$
 \phi_v(y)=W_v\left(\begin{pmatrix}y&0\\0&1\end{pmatrix}\right),
@@ -630,17 +628,78 @@ $$
 \tag{5.6}
 $$
 
-Since $n(\mathcal O)\subset K_1(\mathfrak p^n)$, invariance forces $\phi(y)=0$ unless $y\in\mathcal O$. Invariance under $\operatorname{diag}(u,1)$ for $u\in\mathcal O^\times$ makes $\phi$ constant on each shell $\varpi^r\mathcal O^\times$.
+Since $n(\mathcal O)\subset K_1(\mathfrak p^n)$, (5.6) forces $\phi(y)=0$ unless $y\in\mathcal O$. Invariance under $\operatorname{diag}(u,1)$ for $u\in\mathcal O^\times$ makes $\phi$ constant on each shell $\varpi^r\mathcal O^\times$.
 
-The lower unipotents $\bar n(c)$ with $c\in\mathfrak p^n$ are conjugate by the Weyl element to upper unipotents. Their invariance places a support condition on the Weyl transform of $\phi$. Apply finite Fourier duality on successive quotients $\mathfrak p^{-r}/\mathfrak p^m$. It shows that, after values on earlier shells have been fixed, at most one new scalar can appear when $n$ is increased to $n+1$.
+We isolate the remaining filtration calculation. Let $\mathcal A_r$ be the space of $\mathcal O^\times$-invariant Kirillov functions supported on
 
-There is one necessary qualification. For a supercuspidal representation every Kirillov function is compactly supported, so these scalars can literally be viewed as values on a finite interval of shells. For a principal series or a special representation, the quotient of the Kirillov model by $C_c^\infty(K^\times)$ is controlled by the Jacquet module. The values on the infinite tail are character-exponential sequences, with a possible valuation factor when two exponents coincide. They are not additional free variables: the Weyl condition determines their coefficients from the boundary shell data. Thus in every case the free data, rather than the full support, occupy an integer interval.
+$$
+\{y\in K^\times:v(y)\geq r\}.
+$$
 
-For small $n$ this interval of free data is empty. Let $a$ be the first $n$ for which it is nonempty. At that point there is one free scalar. Increasing $n$ by one adds at most one scalar. On the other hand, diagonal translates of a nonzero vector at level $a$ give $n-a+1$ vectors at level $n$ with distinct first free shells. They are independent, so the upper bound is attained and (5.4) follows.
+Successive shell evaluation gives
 
-Right translation by $\operatorname{diag}(\varpi^{-j},1)$ shifts the first free shell by $j$. A direct conjugation shows that the vectors in (5.5) are fixed at level $n$ when $0\leq j\leq n-a$. Their distinct leading data make them independent, and the dimension count makes them a basis.
+$$
+\dim(\mathcal A_r/\mathcal A_{r+1})=1.
+$$
 
-It remains only to prove that some fixed space is nonzero. Every infinite-dimensional irreducible representation of $G_K$ is generic, and its Kirillov model contains $C_c^\infty(K^\times)$. Choose a nonzero compactly supported function, average it over a sufficiently small unit quotient, and translate its support into $\mathcal O$. Smoothness of its Weyl transform makes it invariant under $\bar n(\mathfrak p^n)$ for all sufficiently large $n$. The elementary upper, diagonal, and lower subgroups generate $K_1(\mathfrak p^n)$, so the averaged vector is fixed at a finite level. $\square$
+Let $\mathcal W$ denote the action of a Weyl element. Since $\bar n(c)=\mathcal W^{-1}n(-c)\mathcal W$ up to a central element, (5.6) and finite Fourier duality say that invariance under every $\bar n(c)$ with $c\in\mathfrak p^n$ is equivalent to
+
+$$
+\operatorname{supp}(\mathcal W\phi)
+\subseteq\{y:v(y)\geq-n\}.
+$$
+
+The opposite filtration has a character that must not be discarded. From
+
+$$
+w^{-1}\begin{pmatrix}u&0\\0&1\end{pmatrix}w
+=\begin{pmatrix}1&0\\0&u\end{pmatrix}
+=uI_2\begin{pmatrix}u^{-1}&0\\0&1\end{pmatrix}
+$$
+
+one obtains
+
+$$
+(\mathcal W\phi)(uy)=\omega_\sigma(u)(\mathcal W\phi)(y)
+\qquad(u\in\mathcal O^\times).
+$$
+
+Let $\mathcal B_r$ denote the functions with this unit-character law and support in $v(y)\geq r$. Shell evaluation again gives $\dim(\mathcal B_r/\mathcal B_{r+1})=1$.
+
+The diagonal generators add exactly the remaining central-character condition. Gaussian elimination writes every element of $K_1(\mathfrak p^n)$ as a product of an upper unipotent in $n(\mathcal O)$, a lower unipotent in $\bar n(\mathfrak p^n)$, a matrix $\operatorname{diag}(u,1)$ with $u\in\mathcal O^\times$, and a scalar in $1+\mathfrak p^n$. The last factor acts trivially exactly when $n\geq a(\omega_\sigma)$. Consequently the fixed space is the part of
+
+$$
+\mathcal A_0\cap\mathcal W^{-1}\mathcal B_{-n}
+$$
+
+on which the scalar condition is satisfied; it is zero when $n<a(\omega_\sigma)$.
+
+Here is the two-bound argument in full. Put $E_n=\sigma^{K_1(\mathfrak p^n)}$. Finite Fourier duality on the last quotient $\mathfrak p^{-n}/\mathfrak p^{-n+1}$, with the scalar-character condition included, gives an injection
+
+$$
+E_n/E_{n-1}\hookrightarrow
+\mathcal B_{-n}/\mathcal B_{-n+1}.
+$$
+
+The one-dimensional shell quotient therefore gives $\dim E_n-\dim E_{n-1}\leq1$. The universal Kirillov-model theorem proved in Book 77 says that $C_c^\infty(K^\times)$ lies in $\mathcal K(\sigma,\psi_K)$ and that the quotient is the finite-dimensional asymptotic space controlled by the Jacquet module. In particular the characteristic function of one integral unit shell is available. It is $\mathcal O^\times$-invariant, has the required upper support, and its Weyl transform is bounded below in valuation. For sufficiently large $n$, also with $n\geq a(\omega_\sigma)$, the two bounds and the subgroup factorization above show that this vector belongs to $E_n$. Hence some $E_n$ is nonzero.
+
+Let $a$ be the first such $n$. The one-step bound makes $E_a$ one dimensional. Choose $0\ne v^{\mathrm{new}}\in E_a$. A direct conjugation gives
+
+$$
+\begin{pmatrix}\varpi^j&0\\0&1\end{pmatrix}
+K_1(\mathfrak p^n)
+\begin{pmatrix}\varpi^{-j}&0\\0&1\end{pmatrix}
+\subseteq K_1(\mathfrak p^a)
+\qquad(0\leq j\leq n-a),
+$$
+
+so the vectors in (5.5) lie in $E_n$. In the two flags above, right translation by $\operatorname{diag}(\varpi^{-j},1)$ moves the lower support boundary through exactly $j$ successive one-dimensional shell quotients. Minimality of $a$ says that the boundary coefficient of $v^{\mathrm{new}}$ is nonzero; its $j$th translate therefore has nonzero image in $E_{a+j}/E_{a+j-1}$. The translates are independent. Thus
+
+$$
+n-a+1\leq\dim E_n\leq\dim E_a+(n-a)=n-a+1.
+$$
+
+This proves (5.4) and the basis assertion. $\square$
 
 The interval argument explains both uniqueness and linear oldform growth. It also explains why rank two is special: the valuation set is one dimensional. In higher rank, a cone of several valuation parameters replaces the interval.
 
@@ -648,7 +707,7 @@ The interval argument explains both uniqueness and linear oldform growth. It als
 
 A one-dimensional fixed line still has an arbitrary scalar. The Whittaker model provides the normalization used in Euler products and global Fourier expansions.
 
-**Proposition 5.2 (normalized local newvector).** Assume $\psi_K$ has conductor $\mathcal O$. If $v^\mathrm{new}$ is a nonzero local newvector, then its Whittaker function satisfies
+**Proposition 5.2 (normalized local newvector).** Assume $\psi_K$ has conductor $\mathcal O$. If $v^\mathrm{new}$ is a nonzero local newvector in the generic representation $\sigma$, then its Whittaker function satisfies
 
 $$
 W_{v^\mathrm{new}}(1)\ne0.
@@ -662,11 +721,21 @@ W_{v^\circ}(1)=1.
 \tag{5.8}
 $$
 
-**Proof strategy.** In the shell filtration, the first invariant line has one free initial value; every compactly supported part and every Jacquet-module tail is determined from it. With the conductor-zero additive character and the $K_1$ convention, that initial value is evaluation on the unit shell.
+**Proof.** In the two-bound proof, the first quotient $E_a/E_{a-1}$ is the unit-shell quotient of $\mathcal A_0$: finite Fourier duality identifies its boundary coefficient with $\phi(1)=W(1)$. That identification is an isomorphism, since the Fourier transform on the finite quotient at the boundary has nonzero Gauss determinant. The image of a nonzero vector spanning $E_a$ is therefore nonzero. Thus $W(1)\ne0$, and unique scaling on the one-dimensional line gives (5.8). $\square$
 
-**Proof.** Upper and diagonal invariance make the minimal Kirillov function constant on $\mathcal O^\times$. The finite Fourier calculation for the lower-unipotent condition uses a Gauss sum at the conductor boundary. That Gauss sum is nonzero, so all later compactly supported values and, in the nonsupercuspidal cases, all character-exponential tail coefficients are determined by the value on $\mathcal O^\times$. If this value were zero, the unique free datum would vanish and the entire Kirillov function would be zero. Hence a nonzero newvector has $W(1)\ne0$. Scaling gives (5.8), and uniqueness follows from the one-dimensionality of the newvector line. $\square$
+For an arbitrary nontrivial $\psi_K$, choose $c\in K^\times$ such that $x\mapsto\psi_K(cx)$ has conductor $\mathcal O$. If $W$ is in the $\psi_K$-Whittaker model, then
 
-If $\psi_K$ has conductor $\mathfrak p^{-r}$ in the convention that it is trivial on $\mathfrak p^r$, conjugation by $\operatorname{diag}(\varpi^{-r},1)$ transports the model to conductor zero. The intrinsic line is unchanged, but the point at which its Whittaker function is normalized shifts. This is why a formula involving $W(1)$ must state the additive-character convention.
+$$
+W^{(c)}(g)=W\left(\begin{pmatrix}c&0\\0&1\end{pmatrix}g\right)
+$$
+
+is in the $\psi_K(c\,\cdot)$-model. Hence the intrinsic newvector line is normalized by
+
+$$
+W\left(\begin{pmatrix}c&0\\0&1\end{pmatrix}\right)=1.
+$$
+
+This states the shift without attaching competing sign conventions to an additive conductor exponent.
 
 At an unramified place, $a(\sigma)=0$ and $v^\circ$ is the normalized spherical vector. If its Satake parameters are $\alpha,\beta$, then
 
@@ -685,7 +754,7 @@ The value at $m=0$ is one, checking compatibility between spherical and newvecto
 
 The abstract definition (5.2) becomes calculable through the local classification.
 
-**Proposition 5.3 (conductor formulas).** The following formulas hold.
+**Proposition 5.3 (conductor formulas).** The following formulas, proved for these selected classes in Book 77, hold.
 
 1. For an irreducible principal series $I(\chi_1,\chi_2)$,
 
@@ -714,7 +783,7 @@ The abstract definition (5.2) becomes calculable through the local classificatio
 
    where $\Delta(L/K)$ is the discriminant exponent and $f(L/K)$ the residue degree.
 
-**Proof.** For the principal series, the double cosets
+**Proof.** We recall the calculations from Book 77. For the principal series, the double cosets
 
 $$
 (B\cap K_0)\backslash K_0/K_1(\mathfrak p^n)
@@ -785,10 +854,10 @@ $$
 t=\begin{pmatrix}\varpi^{-1}&0\\0&1\end{pmatrix}.
 $$
 
-If $v\in V_{n-1}$, then $\sigma(t)v\in V_n$. To check this, for $k\in K_1(\mathfrak p^n)$ compute $t^{-1}kt$. The lower-left entry loses one power of $\varpi$ and remains in $\mathfrak p^{n-1}$; the upper-right entry gains one; and the lower-right congruence remains at least $n-1$. Hence
+If $v\in V_{n-1}$, then $\sigma(t)v\in V_n$. To check this, for $k\in K_1(\mathfrak p^n)$ compute $t^{-1}kt$. The lower-left entry loses one power of $\varpi$ and remains in $\mathfrak p^{n-1}$; the upper-right entry gains one and remains integral; and the lower-right congruence remains at least $n-1$. Hence
 
 $$
-t^{-1}K_1(\mathfrak p^n)t\cap K_0
+t^{-1}K_1(\mathfrak p^n)t
 \subseteq K_1(\mathfrak p^{n-1}),
 $$
 
@@ -820,7 +889,7 @@ For $n>a$, define
 
 $$
 d_0,d_1:V_{n-1}\longrightarrow V_n,
-\qquad d_0(v)=v,quad d_1(v)=\sigma(t)v.
+\qquad d_0(v)=v,\qquad d_1(v)=\sigma(t)v.
 \tag{6.3}
 $$
 
@@ -854,7 +923,7 @@ Define the algebraic new quotient at level $n$ by
 
 $$
 Q_n(\sigma)=
-V_n\big/igl(d_0(V_{n-1})+d_1(V_{n-1})\bigr).
+V_n\big/\bigl(d_0(V_{n-1})+d_1(V_{n-1})\bigr).
 \tag{6.5}
 $$
 
@@ -885,7 +954,7 @@ satisfy
 
 $$
 c_{m+2}=(\alpha+\beta)c_{m+1}-\alpha\beta c_m,
-\qquad c_0=1,quad c_1=\alpha+\beta.
+\qquad c_0=1,\qquad c_1=\alpha+\beta.
 \tag{6.7}
 $$
 
@@ -897,7 +966,7 @@ At ramified level, operators supported on $K_1(\mathfrak p^n)tK_1(\mathfrak p^n)
 
 ### 7.1 The conductor ideal
 
-Let $\pi=\otimes_v'\pi_v$ be an irreducible cuspidal automorphic representation. Almost every finite $\pi_v$ is spherical, so $a(\pi_v)=0$ almost everywhere. The product
+Let $\pi=\otimes_v'\pi_v$ be an irreducible cuspidal automorphic representation. Book 104 proves that every $\pi_v$ is generic, so Theorem 5.1 applies at every finite place. Almost every finite $\pi_v$ is spherical, so $a(\pi_v)=0$ almost everywhere. The product
 
 $$
 \mathfrak c(\pi)=\prod_{v<\infty}\mathfrak p_v^{a(\pi_v)}
@@ -965,7 +1034,7 @@ When divisibility holds,
 
 $$
 \dim\pi_f^{K_1(\mathfrak n)}
-=\prod_{v<\infty}igl(n_v-a(\pi_v)+1\bigr).
+=\prod_{v<\infty}\bigl(n_v-a(\pi_v)+1\bigr).
 \tag{7.7}
 $$
 
@@ -997,14 +1066,20 @@ $$
 \tag{7.8}
 $$
 
-It is spanned by the pure tensor
+For each finite $v$, choose $c_v\in F_v^\times$ so that $x\mapsto\psi_v(c_vx)$ has conductor $\mathcal O_v$, and normalize the local newvector by
 
 $$
-v_f^\mathrm{new}=\bigotimes_{v<\infty}v_v^\circ,
+W_v^\circ\left(\begin{pmatrix}c_v&0\\0&1\end{pmatrix}\right)=1.
+$$
+
+Both $\psi_v$ and $\pi_v$ are unramified at almost every finite place, so $c_v=1$ may be taken there and $v_v^\circ$ is the normalized spherical reference vector. Consequently the pure tensor
+
+$$
+v_f^\mathrm{new}=\bigotimes_{v<\infty}v_v^\circ
 \tag{7.9}
 $$
 
-where $v_v^\circ$ is the local newvector and is the spherical reference vector almost everywhere. The tensor is meaningful because of those reference choices.
+is meaningful and spans the line. The line itself is independent of $\psi$; only this scalar normalization uses the additive character.
 
 The associated global newform space inside the representation is
 
@@ -1017,14 +1092,14 @@ It is generally infinite dimensional: no archimedean vector has yet been selecte
 
 ### 7.5 Normalized global Whittaker functions
 
-Choose each finite local newvector by $W_v^\circ(1)=1$. At every archimedean place choose a nonzero Whittaker vector $W_v$. Global Whittaker uniqueness permits one overall normalization for which the pure-tensor automorphic Whittaker function factors:
+Use the finite normalizations from Section 7.4, and at every archimedean place choose a nonzero Whittaker vector $W_v$. Global Whittaker uniqueness permits one overall normalization for which the pure-tensor automorphic Whittaker function factors:
 
 $$
 W(g)=\prod_vW_v(g_v).
 \tag{7.11}
 $$
 
-Almost every factor at $g_v=1$ is one. If the archimedean product is normalized at the identity as well, then $W(1)=1$. More generally it is often preferable to normalize an archimedean vector by its $L^2$ norm or lowest-weight coefficient; (7.11) then records the remaining explicit scalar.
+Almost every factor at $g_v=1$ is one. Let $c_f=(c_v)_{v<\infty}$, a finite idele, and put $a(c_f)_v=\operatorname{diag}(c_v,1)$ at finite places and $a(c_f)_v=1$ at infinity. If the archimedean product is normalized at the identity, then $W(a(c_f))=1$. When every finite $\psi_v$ already has conductor $\mathcal O_v$, this is the familiar statement $W(1)=1$. More generally it is often preferable to normalize an archimedean vector by its $L^2$ norm or lowest-weight coefficient; (7.11) then records the remaining explicit scalar.
 
 The automorphic form is reconstructed by
 
@@ -1160,7 +1235,7 @@ The theorem is exact even when $\mathfrak n$ is divisible by high prime powers. 
 
 ### 8.5 Dimension and multiplicity formulas
 
-At a fixed archimedean compact type $\tau$ and fixed infinitesimal character, all spaces in sight are finite dimensional. Let
+At a fixed archimedean compact type $\tau$ and infinitesimal character $\lambda$, all spaces in sight are finite dimensional. Let
 
 $$
 m_\infty(\pi,\tau)=\dim\mathcal H_{\pi,\infty}(\tau).
@@ -1254,11 +1329,11 @@ Let $\mathfrak n$ be a level and fix an archimedean irreducible compact type and
 
 **Proof strategy.** Attach a global summand to each eigenvector, reconstruct almost every Satake polynomial, use strong multiplicity one, and then use the one-dimensional finite newvector line.
 
-**Proof.** Decomposition (8.7) writes each newvector as a finite orthogonal sum of vectors from representations of conductor $\mathfrak n$. The commuting unramified Hecke algebra acts on every summand through its Satake character. Simultaneous eigenprojection therefore places $\phi$ and $\phi'$ in summands $\pi$ and $\rho$ with the recorded eigencharacters. Since the central characters agree, equality of $T_v$ eigenvalues gives equality of the $S_v$ eigenvalues and hence of the local Hecke polynomials outside a finite set. Corollary 3.2 yields $\pi\simeq\rho$.
+**Proof.** Decomposition (8.7) writes each newvector as a finite orthogonal sum of components from representations of conductor $\mathfrak n$. Every nonzero component of a simultaneous eigenvector has that same unramified Hecke character, because the Hecke operators preserve each orthogonal summand. Choose nonzero components of $\phi$ and $\phi'$ in summands $\pi$ and $\rho$. Since the central characters agree, equality of $T_v$ eigenvalues gives equality of the $S_v$ eigenvalues and hence of the local Hecke polynomials outside a finite set. Corollary 3.2 yields $\pi\simeq\rho$. The same argument identifies any other nonzero component with $\pi$, and automorphic multiplicity one says that there is only one such summand.
 
 The finite newvector space of this representation is one dimensional. Thus the only remaining freedom lies in the chosen archimedean type space. If that type has multiplicity one, the entire tensor line is one dimensional and the two vectors are proportional. $\square$
 
-The first sentence of the proof may also be made without choosing one summand in advance. If one eigencharacter occurred in two orthogonal summands, their unramified polynomials would agree almost everywhere, so strong multiplicity one would identify the summands; automorphic multiplicity one then says there were not two copies. Hence every occurring unramified eigensystem has one global source.
+Thus every occurring unramified eigensystem has one global source. This is stronger than merely saying that every individual summand has a Hecke character: it rules out a linear combination of distinct global sources with the same almost-everywhere eigenvalues.
 
 ### 9.4 Ramified operators and what they do not determine
 
@@ -1296,14 +1371,14 @@ f(z)=\sum_{m\geq1}a_m e^{2\pi imz},
 \tag{10.2}
 $$
 
-the coefficient $a_1$ is the classical shadow of the global Whittaker coefficient at the identity, after the fixed archimedean Whittaker function has been normalized. Scaling $f$ so that
+the coefficient $a_1$ is the classical shadow of the global Whittaker coefficient at the identity for the standard character of $\mathbf Q\backslash\mathbf A$, whose finite local components have conductor $\mathbf Z_p$, after the fixed archimedean Whittaker function has been normalized. Scaling $f$ so that
 
 $$
 a_1=1
 \tag{10.3}
 $$
 
-corresponds to choosing the product normalization in which the finite local newvectors satisfy $W_v(1)=1$ and the remaining global scalar is absorbed at infinity.
+corresponds to choosing the product normalization in which the finite local newvectors satisfy $W_p(1)=1$ and the remaining global scalar is absorbed at infinity. For a different global additive character, Section 7.5 replaces the identity by $a(c_f)$.
 
 The Hecke recurrence for a normalized eigenform at a prime $p\nmid N$ is the classical form of (6.7). In a common algebraic normalization,
 
@@ -1319,7 +1394,7 @@ $$
 \tag{10.5}
 $$
 
-are the algebraically normalized Satake parameters. Twisting the automorphic representation by $|\det|^{(k-1)/2}$ or its inverse converts between (10.5) and the unitary polynomial (1.1). The recurrence itself makes the normalization visible and prevents an unnoticed half-power shift.
+are the algebraically normalized Satake parameters. The appropriate power of $|\det|$ converts between (10.5) and the unitary polynomial (1.1); the sign of that power depends on which direction the conversion is made. The recurrence itself makes the normalization visible and prevents an unnoticed half-power shift.
 
 **Corollary 10.1 (classical strong multiplicity one).** Let $f$ and $g$ be normalized cuspidal newforms of the same weight and nebentype, not necessarily initially presented with the same level. If
 
@@ -1489,11 +1564,11 @@ w_a=\begin{pmatrix}0&1\\-\varpi^a&0\end{pmatrix}.
 \tag{11.5}
 $$
 
-This matrix exchanges the two directed lattice filtrations. It conjugates the $K_0(\mathfrak p^a)$ level to itself, but it exchanges the lower-right nebentype with the corresponding upper-left character. The Weyl transform and the invariant pairing compare the resulting one-dimensional line with the dual newvector line. Thus $w_a$ determines a nonzero scalar after the newvectors and the dual pairing are normalized.
+This matrix exchanges the two directed lattice filtrations. It conjugates the $K_0(\mathfrak p^a)$ level to itself, but it exchanges the lower-right nebentype with the corresponding upper-left character. The Weyl transform carries the standard line to the opposite line inside the same representation; the invariant pairing compares this construction with the parallel construction in the contragredient. Thus Whittaker normalizations determine a nonzero comparison scalar.
 
-The local functional equation identifies that scalar, up to the explicit Haar and additive-character factors, with the local epsilon factor at the center. The structural statement needed here is simpler:
+The local functional equation identifies the comparison scalar between Whittaker-normalized standard and opposite vectors, up to the explicit Haar and additive-character factors, with the local epsilon factor at the center. The structural statement needed here is simpler:
 
-**Proposition 11.1 (newline symmetry).** The action of $w_a$ carries the normalized $K_0$-newvector character line of $\pi_v$ isomorphically to the opposite newvector character line. Under the canonical identification of the latter with the newvector line of $\widetilde\pi_v$, the map is multiplication by a nonzero scalar.
+**Proposition 11.1 (newvector symmetry).** The action of $w_a$ carries the $K_0$-newvector character line of $\pi_v$ isomorphically to its opposite newvector character line. It does the same for $\widetilde\pi_v$, and the invariant pairing is perfect on the two transported opposite lines.
 
 To state the identification precisely, put
 
@@ -1502,7 +1577,7 @@ K_1'(\mathfrak p^a)=w_aK_1(\mathfrak p^a)w_a^{-1}.
 \tag{11.6}
 $$
 
-The opposite line means $\pi_v^{K_1'(\mathfrak p^a)}$. In the $K_0$ formulation, if the standard line transforms by $k\mapsto\omega_v(d)$, the opposite line transforms by $k\mapsto\omega_v(a)$. It is the local Weyl transform in the Whittaker functional equation, not bare equality of these two characters, that compares the opposite line with the standard $\widetilde\pi_v$-newvector line.
+The opposite line means $\pi_v^{K_1'(\mathfrak p^a)}$. In the $K_0$ formulation, if the standard line transforms by $k\mapsto\omega_v(d)$, the opposite line transforms by $k\mapsto\omega_v(a)$. There is no canonical identification of a line in $\pi_v$ with a line in the different representation $\widetilde\pi_v$. What is canonical is the invariant pairing after both lines are transported, together with the Whittaker functional equation that compares their chosen normalizations.
 
 **Proof.** If $v$ is fixed by $K_1(\mathfrak p^a)$ and $k'=w_akw_a^{-1}$ belongs to $K_1'(\mathfrak p^a)$, then
 
@@ -1512,7 +1587,14 @@ $$
 =\pi_v(w_a)v.
 $$
 
-Thus $\pi_v(w_a)$ maps the standard line into the opposite line. Applying $w_a^{-1}$ proves that the map is an isomorphism, so the opposite line is one dimensional. Direct conjugation gives the asserted exchange of the two $K_0$ characters. The invariant pairing between the $\psi_v$-Whittaker model of $\pi_v$ and the $\psi_v^{-1}$-model of $\widetilde\pi_v$, followed by the Weyl transform, is nonzero on these one-dimensional lines; hence it identifies them up to one nonzero scalar. $\square$
+Thus $\pi_v(w_a)$ maps the standard line into the opposite line. Applying $w_a^{-1}$ proves that the map is an isomorphism, so the opposite line is one dimensional. Direct conjugation gives the asserted exchange of the two $K_0$ characters. Choose standard newvectors with $\langle v,\widetilde v\rangle_v=1$. Invariance of the pairing gives
+
+$$
+\left\langle\pi_v(w_a)v,\widetilde\pi_v(w_a)\widetilde v\right\rangle_v
+=\langle v,\widetilde v\rangle_v=1,
+$$
+
+so its restriction to the transported opposite lines is perfect. $\square$
 
 Globally, choose an idele representing the conductor ideal and form the product of the local matrices (11.5) at ramified places. The resulting Fricke operator sends a global newform to the corresponding dual or character-conjugate newform. If the representation is identified with that dual by a specified self-duality, the newform line is stable and the operator has an Atkin--Lehner eigenvalue. Without such an identification it is better to call the scalar a comparison constant between two lines, not an eigenvalue on one line.
 
