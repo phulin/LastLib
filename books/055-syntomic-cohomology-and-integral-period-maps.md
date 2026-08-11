@@ -99,7 +99,7 @@ $$
 
 The first is finite etale even in residue characteristic $p$; the second is finite locally free but usually nonreduced on the special fiber. Thus weight zero is controlled by Artin--Schreier-type fixed points, while weight one is controlled by Kummer theory in the flat topology. The mapping-fiber construction explains why these apparently different coefficients arise from the same crystalline pattern.
 
-Book 28 established fppf torsors, Kummer sequences, cup products, and finite-flat boundary maps. Book 53 constructed divided-power ideals, crystalline sites, crystals, and divided Frobenius. Book 54 supplied perfect crystalline complexes, Frobenius, base change, products, trace, and the degree-one theory of curves and abelian schemes. The schematic Weil pairing used with abelian torsion is the perfect finite-flat pairing of Book 38. We shall use precisely those results, with their hypotheses recalled when they enter. Everything specific to syntomic complexes and period morphisms is proved here.
+Book 28 established fppf torsors, Kummer sequences, cup products, and finite-flat boundary maps. Book 47 supplied Cartier duality, evaluation, exactness, and character pushout for arbitrary finite locally free commutative groups. Book 53 constructed divided-power ideals, crystalline sites, crystals, and divided Frobenius. Book 54 supplied perfect crystalline complexes, Frobenius, base change, products, trace, and the degree-one theory of curves and abelian schemes. The schematic Weil pairing used with abelian torsion is the perfect finite-flat pairing of Book 38. We shall use precisely those results, with their hypotheses recalled when they enter. Everything specific to syntomic complexes and period morphisms is proved here.
 
 ### 1.2 Standing hypotheses
 
@@ -121,7 +121,7 @@ for its finite levels, special fiber, and generic fiber. The completion organize
 
 The unramified choice $V=W(k)$ is substantive. It provides a canonical Frobenius on the base and gives the clean divisibility needed for weights $0$ and $1$. Ramified bases require additional divided-power envelopes and, in general, a ramification bound or logarithmic theory. No theorem below is silently extended to that setting.
 
-We use the small syntomic topology on the finite levels: a covering is jointly surjective and consists of flat, locally finitely presented morphisms which are local complete intersections. Etale covers are syntomic, and the finite-flat root covers used in Kummer theory are syntomic. For the two coefficients used here, $\mathbf Z/p^n$ and $\mu_{p^n}$, degree-one torsors have the same classification in the syntomic and fppf topologies: both coefficient schemes, and hence their torsors locally, are finite locally free complete intersections. No such comparison is asserted for an arbitrary finite locally free group scheme without the local-complete-intersection hypothesis.
+We use the small $p$-adic syntomic site attached to $X$. Its algebraic objects are syntomic morphisms $U\to X$; the period sheaves evaluate their compatible reductions $U_m\to X_m$ and the divided-power thickenings of $U_1$. A covering is jointly surjective and consists of syntomic morphisms. This convention is important: the coefficient sheaves below classify torsors on the integral model, not torsors on the special fiber alone. Etale covers are syntomic, and the finite-flat root covers used in Kummer theory are syntomic. For the two coefficients used here, $\mathbf Z/p^n$ and $\mu_{p^n}$, degree-one torsors have the same classification in the syntomic and fppf topologies: both coefficient schemes, and hence their torsors locally, are finite locally free complete intersections. No such comparison is asserted for an arbitrary finite locally free group scheme without the local-complete-intersection hypothesis.
 
 Complexes are cohomological. For a map $f:A^\bullet\to B^\bullet$, the complex
 
@@ -153,7 +153,7 @@ when the special fiber is embedded by $(p)$. Frobenius carries a $q$-form into a
 Our convention is covariant on coefficients:
 
 $$
-\mathbf Z_p(0)=\mathbf Z_p,qquad
+\mathbf Z_p(0)=\mathbf Z_p,\qquad
 \mathbf Z_p(1)=\varprojlim_n\mu_{p^n}.
 $$
 
@@ -185,10 +185,10 @@ To compare Frobenius with the identity, both operators must act on one intrinsic
 
 ### 2.1 Finite divided-power levels
 
-The syntomic complex is built locally and then sheafified. Let $U\to X_1$ be an object of the small syntomic site. Choose, locally on $U$, a closed immersion
+The syntomic complex is built locally and then sheafified. Let $U\to X$ be an object of the small $p$-adic syntomic site and put $U_1=U\times_Vk$. Choose, locally on $U_1$, a closed immersion
 
 $$
-U\hookrightarrow Z_n
+U_1\hookrightarrow Z_n
 $$
 
 into a scheme smooth over $V_n$. Let $D_n(U,Z)$ be the divided-power envelope, compatible with the canonical divided powers on $(p)\subset V_n$, of the defining ideal. The envelope and its de Rham complex are independent of the chosen embedding after passage through the diagonal-envelope comparisons of Book 53.
@@ -203,7 +203,7 @@ $$
 locally, with descent on overlaps. More invariantly, $\mathscr O_n^{\mathrm{cr}}$ is the direct image of the crystalline structure sheaf from the crystalline site to the syntomic site. Its defining ideal is
 
 $$
-\mathscr J_n=\ker(\mathscr O_n^{\mathrm{cr}}\to\mathcal O_{X_n}),
+\mathscr J_n=\ker(\mathscr O_n^{\mathrm{cr}}\to\mathcal O_{X_1}),
 $$
 
 and $\mathscr J_n^{[r]}$ denotes its $r$th divided-power filtration. The notation does not assert that one chosen envelope is final; the sheaf is obtained by the crystalline descent which compares all embeddings.
@@ -250,13 +250,15 @@ r=1:&\quad
 \tag{2.2}
 $$
 
-On the global smooth lift $X/V$, crystalline--de Rham comparison identifies these with the ordinary de Rham complex and its first filtered subcomplex
+On the global smooth lift $X/V$, crystalline--de Rham comparison identifies the completed objects with the ordinary de Rham complex and its first integral filtered subcomplex
 
 $$
 F^1\Omega^\bullet_{X/V}
 =[p\mathcal O_X\longrightarrow\Omega^1_{X/V}\longrightarrow\cdots].
 \tag{2.3}
 $$
+
+At coefficient level $n$, the first term means the derived reduction of this lattice: the abstract copy $p\mathcal O_X/p^{n+1}\mathcal O_X$, mapped to $\mathcal O_{X_n}$ by inclusion. It is not the literal image ideal $p\mathcal O_{X_n}$. The modified filtration of Section 2.4 is the intrinsic envelope-theoretic realization of that derived reduction.
 
 For a local embedding with a larger ideal, (2.1), not the simplified formula (2.3), is the intrinsic definition.
 
@@ -305,16 +307,24 @@ At a finite level, however, division by $p$ is ambiguous: if an element is known
 
 ### 2.4 Why a modified filtration is necessary
 
-Let $\mathscr O^{\mathrm{cr}}=\varprojlim_m\mathscr O_m^{\mathrm{cr}}$, which is $p$-torsion-free in the smooth unramified local models used here. Define
+Finite-level division is defined one level higher, where its ambiguity can be measured. For $s\geq1$, let $E_{n,s}$ be the subsheaf of $\mathscr J_{n+s}$ consisting of sections $x$ for which $\varphi(x)$ belongs to $p\mathscr O_{n+s}^{\mathrm{cr}}$, and set
 
 $$
 \mathscr J_n^{\langle1\rangle}
-=\operatorname{image}\left(
-\{x\in\mathscr J^{[1]}:\varphi(x)\in p\mathscr O^{\mathrm{cr}}\}
-\longrightarrow\mathscr O_n^{\mathrm{cr}}
-\right).
+=E_{n,s}/p^n\mathscr J_{n+s}.
 \tag{2.7}
 $$
+
+Here $p^n\mathscr J_{n+s}\subseteq E_{n,s}$ by (2.5). The quotient is an abstract source module, equipped with a structural map
+
+$$
+\iota_n:\mathscr J_n^{\langle1\rangle}
+\longrightarrow\mathscr O_n^{\mathrm{cr}}
+$$
+
+induced by inclusion followed by reduction. It need not be a subsheaf of $\mathscr O_n^{\mathrm{cr}}$. For example, on the smooth lift it is $p\mathcal O_X/p^{n+1}\mathcal O_X$, while $\iota_n$ is multiplication by $p$ after identifying this abstract module with $\mathcal O_{X_n}$. This is exactly the extra digit which the image ideal $p\mathcal O_{X_n}$ would discard.
+
+The quotient in (2.7) is independent of $s\geq1$. In weight one, formula (2.5), followed by the PD sum and product identities, in fact shows $E_{n,s}=\mathscr J_{n+s}$; retaining $E_{n,s}$ in the notation records the divisibility needed to define the quotient map. Locally, a syntomic object is a regular immersion into a smooth $V$-scheme. The divided-power monomials in a regular sequence filter its envelope with flat graded pieces, so reduction from level $n+s+1$ to $n+s$ identifies $\mathscr J_{n+s+1}/p^n\mathscr J_{n+s+1}$ with $\mathscr J_{n+s}/p^n\mathscr J_{n+s}$. Thus the transition maps induce isomorphisms on (2.7), proving stabilization without treating an image ideal as the filtered lattice.
 
 More generally $\mathscr J_n^{\langle r\rangle}$ would require divisibility of $\varphi(x)$ by $p^r$, but only $r=0,1$ is used. Put
 
@@ -322,16 +332,14 @@ $$
 \mathscr J_n^{\langle0\rangle}=\mathscr O_n^{\mathrm{cr}}.
 $$
 
-If $x$ is represented in (2.7), set
+If $x$ is represented in (2.7), choose $\widetilde x\in E_{n,s}$ and set
 
 $$
 \varphi_1(x)=\frac{\varphi(\widetilde x)}p\pmod {p^n}.
 \tag{2.8}
 $$
 
-This is independent of the lift $\widetilde x$ chosen in the inverse-limit sheaf. Two lifts differ by $p^ny$ with $y$ in the first divided-power ideal. Formula (2.5) gives $\varphi(y)=pz$, so division by $p$ changes (2.8) by $p^nz$, which is zero at level $n$. Equivalently, one may define (2.7) from level $n+1$ and take the image of elements whose Frobenius is divisible by $p$ modulo $p^{n+1}$; the two definitions agree by surjectivity of transition maps.
-
-For $p>2$ in the smooth range, ordinary $\mathscr J_n^{[1]}$ already has the required divisibility and the modified filtration agrees with it. At $p=2$, retaining brackets $\langle1\rangle$ prevents an invalid cancellation of $2$. All subsequent statements use the modified object, so no exceptional-prime shortcut is hidden.
+If the representative changes by $p^ny$ with $y\in\mathscr J_{n+s}$, then (2.5) writes $\varphi(y)=pz$, so the quotient changes by $p^nz$ and has the same image modulo $p^n$. Together with stabilization, this proves that (2.8) is independent of every choice. Notice that divisibility of an element already reduced in $\mathscr O_n^{\mathrm{cr}}$ would not suffice: its quotient would be defined only modulo $p^{n-1}$. The abstract quotient one level higher is what retains the missing digit. We use the modified object at every prime, including $p=2$, so no exceptional-prime cancellation is hidden.
 
 The full weight-one filtered de Rham complex is denoted
 
@@ -340,7 +348,7 @@ $$
 \tag{2.9}
 $$
 
-Its degree-zero term is (2.7). In degree $q\geq1$ the source is $\mathscr O_n^{\mathrm{cr}}\otimes\Omega^q$ and the map is $p^{-1}\varphi^*$. Frobenius pullback of a $q$-form is divisible by $p^q$, so this quotient is integral. The map $\varphi_1$ is a chain map because $d\varphi=p\varphi_1d$ in degree zero and the degreewise divisibilities are compatible with the de Rham differential.
+Its degree-zero term is (2.7), and its structural map to the ordinary crystalline de Rham complex is $\iota_n$. In degree $q\geq1$ the source is $\mathscr O_n^{\mathrm{cr}}\otimes\Omega^q$ and the divided Frobenius map is $p^{-1}\varphi^*$. Frobenius pullback of a $q$-form is divisible by $p^q$, so this quotient is integral. The map $\varphi_1$ is a chain map because $d\varphi=p\varphi_1d$ in degree zero and the degreewise divisibilities are compatible with the de Rham differential.
 
 ## 3. The weight-zero and weight-one complexes
 
@@ -348,7 +356,7 @@ The period sheaves become cohomology only after their filtration and Frobenius a
 
 ### 3.1 Mapping fibers and conventions
 
-The syntomic complex measures simultaneous filtration and Frobenius fixedness. For $r=0,1$, define on the syntomic site of $X_1$
+The syntomic complex measures simultaneous filtration and Frobenius fixedness. For $r=0,1$, define on the small $p$-adic syntomic site of $X$
 
 $$
 \mathscr S_n(r)=
@@ -361,7 +369,7 @@ $$
 \tag{3.1}
 $$
 
-where $\varphi_0=\varphi$. When only the sheaf-level two-term presentation is needed, the crystalline Poincare lemma contracts the de Rham directions and gives
+where $\varphi_0=\varphi$ and the symbol $1$ in weight one means the structural map $\iota_n$ in degree zero and the ordinary filtered inclusion in positive degrees. When only the sheaf-level two-term presentation is needed, the crystalline Poincare lemma contracts the de Rham directions and gives
 
 $$
 \mathscr S_n(r)\simeq
@@ -520,16 +528,17 @@ $$
 
 **Proof strategy.** Reduce first modulo the divided-power ideal and $p$, where the equation is $a^p=a$. Then lift through successive square-zero layers.
 
-**Proof.** Over a connected characteristic-$p$ syntomic object, $a^p-a=0$ defines a finite etale algebra because the derivative is $-1$. Its solutions are locally the $p$ elements of $\mathbf F_p$. Hence the kernel modulo the first nilpotent layer is the constant sheaf $\mathbf F_p$.
-
-Suppose a fixed element has been identified modulo $p^m$ with an integer $c$. Write it as $c+p^m y$ modulo $p^{m+1}$. Witt Frobenius fixes $c$, and semilinearity gives
+**Proof.** Work first on a finite mixed quotient by $p^n$ and by sufficiently high divided-power order. Filter it by the combined $p$-adic and positive divided-power order. On the quotient by the positive part and by $p$, fixedness is the equation
 
 $$
-(1-\varphi)(c+p^m y)
-=p^m(y-\varphi(y))\pmod {p^{m+1}}.
+a^p-a=0.
 $$
 
-Modulo $p$, the remaining equation is again Artin--Schreier. Syntomically locally it has a solution, and two solutions differ by $\mathbf F_p$. Induction yields exactly one compatible $p$-adic digit at each stage. Thus the fixed elements form the constant sheaf $\mathbf Z/p^n\mathbf Z$. The same induction through the PD filtration handles nilpotent envelope directions, because Frobenius sends a positive PD-order element into a deeper $p$-divisible layer. $\square$
+The algebra adjoining a solution is finite etale because the derivative is $-1$, so syntomically locally the solutions are precisely the $p$ constant sections in $\mathbf F_p$.
+
+There are two kinds of successive layer. On a coefficient layer, write a lift as $c+p^my$ modulo $p^{m+1}$. Since Witt Frobenius fixes the integer $c$, fixedness reduces modulo $p$ to $y^p-y=0$; the next digit is therefore locally an element of $\mathbf F_p$. On a positive divided-power layer, (2.5) and the product formula show that Frobenius strictly raises the combined filtration. Hence its induced map on the first nonzero associated-graded layer is nilpotent. If a fixed element has zero coefficient digits, its initial positive graded term $z$ satisfies $z=\bar\varphi(z)$; iterating until the nilpotence exponent gives $z=0$. Induction removes every positive layer.
+
+The fixed sections at the finite mixed quotient are thus exactly the locally constant Witt integers modulo $p^n$. Passing through the separated mixed completion introduces no new fixed section, since a nonzero difference would have a first nonzero finite quotient. This proves (4.6). $\square$
 
 The conclusion is sheaf-theoretic. On global sections a base may have several connected components, in which case one obtains locally constant functions with values in $\mathbf Z/p^n\mathbf Z$.
 
@@ -545,13 +554,19 @@ u\longmapsto\ell_n(u),
 \tag{4.7}
 $$
 
-constructed as follows. Syntomically locally, extend $u$ to a compatible tower
+constructed as follows. On a finite mixed quotient, only finitely many divided powers enter the logarithm. Syntomically locally, choose a finite root tower long enough for that quotient,
 
 $$
-u=u_n,\qquad u_{m+1}^p=u_m\quad(m\geq n).
+u=u_n,\qquad u_{m+1}^p=u_m\quad(n\leq m\leq N).
 $$
 
-Such extensions are obtained by the finite free root covers $T^p-u_m$. Choose compatible multiplicative representatives in the completed divided-power envelope. The representative of the tower is congruent to $1$ along the special-fiber augmentation, so its divided-power logarithm converges. Its image modulo $p^n$ is $\ell_n(u)$. Changing the tower or the representatives after a common refinement changes the logarithm by a term which is zero modulo $p^n$; the cocycle calculation is the identity $\log(ab)=\log a+\log b$. Hence the local elements descend. This construction, rather than the logarithm of an arbitrary lift of $u$, is what the notation $\log_{\mathrm{PD}}u$ means below.
+Such extensions are obtained successively by the finite free root covers $T^p-u_m$. Choose multiplicative representatives $\widetilde u_m$ in the corresponding divided-power envelopes. One must not claim that $\widetilde u_m-1$ lies in $\mathscr J$: on a nonreduced special fiber the root itself can remain infinitesimal. Instead use the Frobenius defects
+
+$$
+d_m=\varphi(\widetilde u_{m+1})\widetilde u_m^{-1}\in1+\mathscr J.
+$$
+
+The inclusion holds because both factors have the same image $u_{m+1}^p=u_m$ on the special-fiber object. Apply the finite truncation of $\operatorname{Log}_{\mathrm{PD}}$ to the $d_m$ and descend the resulting additive recursion along the root tower. This produces an element of the abstract quotient (2.7); the terminal term is invisible once $N$ exceeds the chosen divided-power order. A longer tower gives the same element because the added defects contribute either a multiple of $p^n\mathscr J$ or divided-power order beyond the quotient. Two towers acquire a common refinement, and (4.4) shows that changing representatives changes the result by the corresponding additive coboundary. The constructions are compatible as the mixed quotient varies, so they define $\ell_n(u)$ in the completed sheaf. Only finitely many root adjunctions occur in each sheaf-local calculation; no infinite cover is being treated as a syntomic object.
 
 **Lemma 4.3.** The logarithm identifies
 
@@ -563,7 +578,7 @@ $$
 \tag{4.8}
 $$
 
-**Proof.** For a compatible root tower, Frobenius shifts the multiplicative representatives and raises the represented root one level to the $p$th power. Therefore
+**Proof.** On each finite quotient, Frobenius shifts the chosen finite root tower. The terminal ambiguity is invisible by the choice of its length, and therefore
 
 $$
 \varphi(\ell_n(u))=p\ell_n(u),
@@ -571,20 +586,20 @@ $$
 
 so $\varphi_1(\ell_n(u))=\ell_n(u)$. This proves that (4.7) lands in the kernel.
 
-Conversely, let $x$ be fixed by $\varphi_1$ and put $v=\operatorname{Exp}_{\mathrm{PD}}(x)$ in the completed envelope. Then
+Conversely, let $x$ be fixed by $\varphi_1$. Choose a representative $\widetilde x$ one level higher as in (2.7), and put $v=\operatorname{Exp}_{\mathrm{PD}}(\widetilde x)$; all following equalities are read in the level-$n$ quotient. Changing the representative by $p^n\mathscr J$ changes the logarithm by zero in the modified source and hence does not change the resulting coefficient section. Fixedness gives
 
 $$
-\varphi(v)=\operatorname{Exp}_{\mathrm{PD}}(\varphi x)
-=\operatorname{Exp}_{\mathrm{PD}}(px)=v^p.
+\varphi(v)=\operatorname{Exp}_{\mathrm{PD}}(\varphi\widetilde x)
+=\operatorname{Exp}_{\mathrm{PD}}(p\widetilde x)=v^p.
 $$
 
-Successive Frobenius descent reads $v$ as a compatible root tower on a syntomic refinement. At level $n$, multiplication of $x$ by $p^n$ is zero, so its $n$th component satisfies
+The equation says that the successive Frobenius pullbacks of $v$ form the same finite root data used in the construction of $\ell_n$. Evaluate $v$ on the tautological level-$n$ thickening of the syntomic object and call the resulting unit $u$. Since multiplication of $x$ by $p^n$ is zero in the modified source, Lemma 4.1 gives
 
 $$
 u^{p^n}=\operatorname{Exp}_{\mathrm{PD}}(p^nx)=1.
 $$
 
-Thus $u\in\mu_{p^n}$. Lemma 4.1 shows after the same refinement that logarithm and exponential are inverse, and descent makes the inverse canonical. The use of the modified filtration guarantees that $\varphi x/p$ is an actual finite-level element throughout. $\square$
+Thus $u$ belongs to $\mu_{p^n}$. Lemma 4.1 shows on every finite mixed quotient that the two constructions are inverse. Compatibility of those inverses gives the assertion on the completion, and descent makes it canonical. The modified filtration guarantees throughout that $\varphi(x)/p$ is an actual level-$n$ section rather than a quotient defined only modulo $p^{n-1}$. $\square$
 
 This proof retains the nonreduced structure of $\mu_{p^n}$. Counting geometric roots would give only the identity in characteristic $p$ and would miss the theorem.
 
@@ -602,35 +617,49 @@ $$
 
 is an epimorphism of sheaves on the small syntomic site.
 
-**Proof strategy.** Filter source and target simultaneously by powers of $p$ and divided-power order. On each square-zero graded layer, the lifting equation becomes an additive polynomial with invertible derivative. Adjoining a root is therefore finite etale, hence a permitted cover. A finite induction solves the original equation.
+**Proof strategy.** Filter source and target simultaneously by powers of $p$ and divided-power order. In weight zero the graded lifting equations have invertible derivative and give finite-etale covers. In weight one the extra source digit instead produces monic $p$-power equations; their root algebras are finite free complete intersections and hence syntomic. The finitely many generators of a local PD presentation solve all divided monomials compatibly.
 
-**Proof.** At the first characteristic-$p$ layer in weight zero, solving $(1-\varphi)x=b$ is solving
+**Proof.** Work locally with a regular immersion into a smooth algebra, choose its finite regular sequence of generators, and first pass to a finite mixed quotient. Filter source and target by the combined $p$-adic and divided-power order. In weight zero, every associated-graded correction module is finite locally free and the equation has the form
+
+$$
+z_i-F_i(z_1,\ldots,z_d)=a_i\qquad(1\leq i\leq d).
+\tag{4.10a}
+$$
+
+Here each $F_i$ is an additive $p$th-power polynomial. The resulting map $1-F$ of vector groups is finite etale: its differential is the identity, its geometric fibers are translates of its finite kernel, and the monic coordinate equations bound their degree by $p^d$. Its image is an open subgroup of a connected vector group and hence the whole group. It is therefore a finite-etale epimorphism. In the first layer this is the familiar equation
 
 $$
 x-x^p=b.
-\tag{4.10}
+\tag{4.10b}
 $$
 
-The algebra $A[T]/(T-T^p-b)$ is finite free of rank $p$ and etale because the derivative is $1$. It gives a syntomic cover on which a solution exists.
-
-For weight one, write an element of the first filtered source locally as a PD generator times an unknown plus higher-order terms. Formula (2.5) shows that the induced divided Frobenius on the first graded piece has the form $z\mapsto c z^p$ for a known coefficient $c$. The equation is
+Weight one is different because the symbol $1$ is the structural map $\iota_n$. On the extra coefficient digit, $\iota_n$ vanishes modulo $p$, whereas divided Frobenius is the $p$th-power map. The first equation is therefore, up to a unit,
 
 $$
-z-cz^p=a.
+z^p=a.
+\tag{4.10c}
+$$
+
+For a regular-immersion generator, (2.5) adds terms depending only on earlier divided-power order. Ordering the regular generators and then the divided monomials consequently makes the system triangular, with equations either (4.10a) or a monic equation $z^p+bz=a$ in the current variable. Adjoining their roots successively gives a finite free algebra: division by a monic polynomial supplies the free basis. The equations form a regular sequence in that free algebra, so the resulting faithfully flat cover is a local complete intersection, hence syntomic. This includes the purely inseparable root covers which weight one genuinely needs.
+
+Order the finitely many coefficient layers. Suppose a solution has been found modulo the next layer. Its defect lies in a square-zero graded module. The preceding finite-etale or finite-free root algebra supplies a correction, and triangularity ensures that the correction does not disturb earlier layers. A finite succession of syntomic refinements therefore solves every coefficient-layer equation.
+
+No infinite tower of covers is needed for the divided-power completion. The local PD algebra is generated by the divided monomials in the same finite regular sequence. Once roots for those generators and the finitely many coefficient digits have been adjoined, the PD identities determine the correction in every higher monomial. Equivalently, on the residual positive-order part the triangular operator has continuous inverse obtained, on each strictly order-raising block, from
+
+$$
+1+\bar\varphi_r+\bar\varphi_r^2+\cdots.
 \tag{4.11}
 $$
 
-Its derivative is $1$, so adjoining a root again gives a finite etale cover. If $c=0$, it is simply a linear equation.
+The series is finite on every divided-power quotient and hence converges in the mixed completion. It corrects the residual defect on the same finite syntomic refinement. This produces an exact solution of (4.9) and proves sheaf surjectivity. $\square$
 
-Now order the finitely many layers by increasing $p$-adic and PD degree. Suppose a solution has been found modulo the next layer. Its defect lies in a square-zero module $M$. Correcting by $z\in M$ changes the defect by $z-\bar\varphi_r(z)$, which is locally solvable by (4.10) or (4.11). The correction does not disturb earlier layers. Nilpotence makes the induction finite at level $n$. In the completed model, solve at every finite level and use surjectivity of transition maps to obtain a compatible system. $\square$
-
-The derivative-one argument is the exact reason for using the syntomic topology. Zariski localization alone need not solve (4.10), while no ramified inseparable cover is required.
+Weight zero uses the etale part of the syntomic topology, while weight one also uses its finite-flat complete-intersection covers. Zariski localization alone need solve neither (4.10b) nor (4.10c).
 
 ### 4.5 The fundamental exact sequences
 
 Combining the kernel and surjectivity calculations gives the local theorem on which the rest of the book rests.
 
-**Theorem 4.5 (low-weight fundamental exact sequences).** On the small syntomic site of $X_1$, there are natural short exact sequences
+**Theorem 4.5 (low-weight fundamental exact sequences).** On the small $p$-adic syntomic site of $X$, there are natural short exact sequences
 
 $$
 0\longrightarrow\mathbf Z/p^n\mathbf Z
@@ -644,7 +673,7 @@ and
 
 $$
 0\longrightarrow\mu_{p^n}
-\xrightarrow{\log_{\mathrm{PD}}}
+\xrightarrow{\lambda_n}
 \mathscr J_n^{\langle1\rangle}
 \xrightarrow{1-\varphi_1}
 \mathscr O_n^{\mathrm{cr}}
@@ -671,7 +700,7 @@ Local exactness identifies the coefficient sheaves, while arithmetic application
 
 ### 5.1 Hypercohomology
 
-Let $\epsilon$ denote the projection from the syntomic-crystalline site used above to the small etale site of $X_1$. The site remembers the compatible thickenings $X_m$, even though its underlying open objects lie over $X_1$. Define the derived syntomic complex on $X_1$ by
+Let $\epsilon$ denote the morphism of topoi from the small $p$-adic syntomic site of $X$ to the small etale site of $X_1$ induced by special-fiber reduction. Concretely, the inverse image of an etale sheaf is evaluated on the special fibers $U_1$ of syntomic objects $U\to X$; this does not assert that $U_1\to X_1$ is itself etale. The crystalline sheaves on $U$ retain all compatible divided-power levels. Define the derived syntomic complex on $X_1$ by
 
 $$
 R\mathscr S_n(r)=R\epsilon_*\mathscr S_n(r),
@@ -808,7 +837,7 @@ $$
 
 There is deliberately no tensor product with $V'_n$ in (5.10). Although the two crystalline complexes are complexes of $V_n$-modules, $1-\varphi_r$ is only $\mathbf Z/p^n$-linear because Frobenius is semilinear. Its mapping fiber is therefore naturally a complex of $\mathbf Z/p^n$-modules. Moreover fixed points and torsors can change after extending the residue field, so pullback is not an isomorphism without an additional geometric comparison theorem.
 
-Reduction in the coefficient level gives a triangle
+When $X$ is proper, Chapter 13 constructs the completed complex and proves the reduction triangle
 
 $$
 R\Gamma_{\mathrm{syn}}(r)\xrightarrow{p^n}
@@ -818,7 +847,7 @@ R\Gamma_{\mathrm{syn}}(r)
 \tag{5.11}
 $$
 
-after the completed complex has been constructed in Chapter 13. Thus
+Thus, under this properness hypothesis,
 
 $$
 0\to H^q_{\mathrm{syn}}(r)/p^n
@@ -889,24 +918,25 @@ If $X$ is normal and connected, restriction of a finite etale torsor from $X$ to
 
 ### 6.4 An affine calculation
 
-Let $X=\operatorname{Spec}V[t]$. Its connected finite-etale $\mathbf Z/p$-torsors on the special fiber are locally given by
+Take the affine henselian base itself, $X=\operatorname{Spec}V$. Finite-etale covers of $V$ and of its residue field $k$ are equivalent, so
 
 $$
-y^p-y=f(t).
+H^1_{\mathrm{syn}}(V,\mathbf Z/p)
+\simeq H^1_{\mathrm{et}}(k,\mathbf Z/p).
 \tag{6.5}
 $$
 
-Changing $y$ by $g(t)$ changes $f$ by $g^p-g$. Therefore
+The Artin--Schreier sequence on the affine scheme $\operatorname{Spec}k$ gives
 
 $$
-H^1(X_1,\mathbf Z/p)
-\simeq k[t]/(F-1)k[t]
+H^1_{\mathrm{syn}}(V,\mathbf Z/p)
+\simeq k/(F-1)k.
 \tag{6.6}
 $$
 
-in the affine Artin--Schreier calculation. The crystalline mapping fiber lifts the same equation through the Witt levels. A monomial $t^m$ with $p\nmid m$ is not of the form $g^p-g$ by degree comparison, so it gives a nontrivial class. This example shows that even affine weight-zero degree one need not vanish.
+This is exactly the degree-zero cokernel in (6.4): the crystalline complex of $V$ is $V_n$ in degree zero, and reduction of $1-\sigma$ modulo $p$ is $1-F$. For a finite field $k$, the quotient is one-dimensional over $\mathbf F_p$; for algebraically closed $k$, it vanishes. Thus even the simplest affine calculation records arithmetic of the coefficient base rather than merely geometric fixed vectors.
 
-Properness changes the calculation because global functions become constant, but it does not force all geometric $H^1$ to vanish. On a proper curve, finite etale $p$-covers can still contribute through the fixed part of crystalline degree one.
+On larger affine schemes geometric Artin--Schreier classes may also occur, while on proper curves finite-etale $p$-covers can contribute through the fixed part of crystalline degree one. No special-fiber calculation is silently identified here with integral syntomic cohomology.
 
 ## 7. Weight one as Kummer theory
 
@@ -959,15 +989,7 @@ P_u=\operatorname{Spec}
 \tag{7.5}
 $$
 
-Under (7.3), this torsor has a crystalline representative. Choose a local root $v$. Its transition ratio on overlaps lies in $\mu_{p^n}$; applying $\log_{\mathrm{PD}}$ gives a cocycle of fixed elements of $\mathscr J_n^{\langle1\rangle}$. Equivalently, choose a crystalline lift $\widetilde u$ and use the compatible pair
-
-$$
-d\log\widetilde u,qquad
-\frac1{p^n}\log_{\mathrm{PD}}(\widetilde u^{p^n}/u)
-\tag{7.6}
-$$
-
-on a root cover. The apparent division is harmless because the numerator is constructed as a $p^n$th-power defect; changing a lift alters (7.6) by a mapping-fiber coboundary.
+Under (7.3), this torsor has a crystalline representative. Choose a syntomic cover on which there is a root $v$, choose multiplicative crystalline lifts of the local roots, and compare them on double overlaps. Their ratios lie in $\mu_{p^n}$; the map $\ell_n$ of (4.7) turns those ratios into fixed elements of $\mathscr J_n^{\langle1\rangle}$. Together with the local forms $d\log\widetilde v$, these fixed overlap elements form the total Cech--mapping-fiber cocycle. Its cone component is computed from the Frobenius defects of the chosen lifts exactly as in Section 4.3. Changing a lift multiplies a defect by an element of $1+\mathscr J$, whose PD logarithm is a mapping-fiber coboundary. This description uses neither $\ell_n$ on a nontorsion root nor an unproved division of a finite-level logarithm by $p^n$.
 
 For a local or semilocal base, the Picard group vanishes and Theorem 7.1 yields
 
@@ -976,10 +998,10 @@ H^1_{\mathrm{syn}}(X,\mathbf Z/p^n(1))
 \simeq
 \mathcal O_X(X)^\times/
 \mathcal O_X(X)^{\times p^n}.
-\tag{7.7}
+\tag{7.6}
 $$
 
-For a general scheme, (7.7) is incomplete because $p^n$-torsion line bundles contribute.
+For a general scheme, (7.6) is incomplete because $p^n$-torsion line bundles contribute.
 
 ### 7.3 Line bundles and the degree-two boundary
 
@@ -992,21 +1014,21 @@ $$
 \longrightarrow H^1_{\mathrm{syn}}(X,1;n)
 \longrightarrow\operatorname{Pic}(X)[p^n]
 \longrightarrow0.
-\tag{7.8}
+\tag{7.7}
 $$
 
 A class over a torsion line bundle $L$ consists of an isomorphism
 
 $$
 \tau:L^{\otimes p^n}\xrightarrow{\sim}\mathcal O.
-\tag{7.9}
+\tag{7.8}
 $$
 
 Its torsor is the spectrum of the graded algebra
 
 $$
 \mathcal O\oplus L^{-1}\oplus\cdots\oplus L^{-(p^n-1)},
-\tag{7.10}
+\tag{7.9}
 $$
 
 with multiplication across the last degree defined by $\tau$. This construction remains valid in residue characteristic $p$ because it uses the grading of the diagonalizable group scheme, not eigenspaces of its geometric points.
@@ -1018,7 +1040,7 @@ $$
 \longrightarrow H^2_{\mathrm{fppf}}(X,\mu_{p^n})
 \longrightarrow\operatorname{Br}'(X)[p^n]
 \to0.
-\tag{7.11}
+\tag{7.10}
 $$
 
 Whenever the topology comparison in degree two is available, (7.1) identifies this with $H^2_{\mathrm{syn}}$. We will only use the canonical map from the left term, which can be constructed directly by the gerbe of $p^n$th roots and therefore requires no blanket degree-two topology comparison.
@@ -1030,7 +1052,7 @@ For a line bundle $L$, define
 $$
 c^{\mathrm{syn}}_{1,n}(L)
 \in H^2_{\mathrm{syn}}(X,\mathbf Z/p^n(1))
-\tag{7.12}
+\tag{7.11}
 $$
 
 as the boundary of $L$ in the Kummer sequence. Locally choose transition functions $g_{ij}$ and crystalline lifts $\widetilde g_{ij}$. The Cech--mapping-fiber representative has differential-form component $d\log\widetilde g_{ij}$ and divided-power logarithm component measuring
@@ -1046,7 +1068,7 @@ The logarithm converts multiplication on triple overlaps to addition, so the tot
 $$
 c^{\mathrm{syn}}_{1,n}(L\otimes M)
 =c^{\mathrm{syn}}_{1,n}(L)+c^{\mathrm{syn}}_{1,n}(M),
-\tag{7.13}
+\tag{7.12}
 $$
 
 is functorial under pullback, vanishes on $p^n$th powers, and maps under the crystalline edge morphism to the crystalline Chern class modulo $p^n$.
@@ -1218,24 +1240,24 @@ $$
 
 It is bilinear and depends only on the unit classes modulo $p^n$th powers. If a primitive $p^n$th root of unity is chosen on the generic fiber, one may identify the tensor square with one Tate twist and recover the usual symbol algebra description. Without that choice, the tensor twist in (9.4) is the correct canonical target.
 
-The Steinberg relation
+On the generic fiber, where $p$ is invertible, Book 28 gives the Steinberg relation
 
 $$
-\{u,1-u\}_{p^n}=0
+\{u_K,1-u_K\}_{p^n}=0
 \tag{9.5}
 $$
 
-holds whenever both entries are units. One proof is the norm identity
+whenever both entries are units. One proof is the norm identity
 
 $$
 N(1-\sqrt[p^n]{u})=1-u
 $$
 
-in the corresponding cyclic etale algebra after making the standard root-of-unity base change; faithful descent brings the vanishing back. The argument is the same Kummer cup-product calculation proved in Book 28 and does not use a weight-two syntomic complex.
+in the corresponding cyclic etale algebra after making the standard root-of-unity base change. We do not infer from this a vanishing statement in integral fppf degree two: Book 28 proved the displayed relation in the invertible-coefficient range, and generic restriction on $H^2$ has not been proved injective here. Establishing an integral Steinberg relation would require an additional weight-two or norm-residue input and is outside the present low-weight package.
 
 ### 9.3 Compatibility of period maps with products
 
-**Theorem 9.1.** Integral period morphisms commute with every product defined in (9.2), with Kummer cup products, and with first Chern classes. In particular,
+**Theorem 9.1.** Integral period morphisms commute with every product defined in (9.2) and with first Chern classes. Generic restriction also carries the fppf cup product of two Kummer classes to the corresponding generic etale cup product. If $X$ is proper over $V$, so that (8.5) identifies the period target with generic etale cohomology, then in particular
 
 $$
 \alpha_{1,n}^2(c^{\mathrm{syn}}_{1,n}(L))
@@ -1243,15 +1265,15 @@ $$
 \tag{9.6}
 $$
 
-and
+For every smooth $X$, independently of properness,
 
 $$
-\alpha(\{u,v\}_{p^n})
+\operatorname{res}_{X_K/X}(\{u,v\}_{p^n})
 =\{u_K,v_K\}_{p^n}.
 \tag{9.7}
 $$
 
-**Proof strategy and proof.** The fundamental maps (4.14) are multiplicative: in weight one the identity $\log(uv)=\log u+\log v$ identifies tensoring root torsors with addition in the mapping fiber. Generic restriction is a morphism of ringed topoi and therefore preserves derived cup products. Equation (9.6) follows by applying naturality to the Kummer boundary of a line bundle. Equation (9.7) follows by applying it twice to unit boundaries. $\square$
+**Proof strategy and proof.** The fundamental maps (4.14) are multiplicative in the constructed weights: in weight one the identity $\log(uv)=\log u+\log v$ identifies tensoring root torsors with addition in the mapping fiber. Generic restriction is a morphism of ringed topoi and therefore preserves derived cup products. Naturality carries the Kummer boundary of a line bundle to the nearby first Chern class; under proper base change this is (9.6). Applying generic restriction to the two fppf unit boundaries and then cupping proves (9.7) without a properness hypothesis; no weight-two syntomic mapping fiber is used. $\square$
 
 This compatibility is more informative than equality after rationalization: it states that the actual integral Kummer torsor and its products are preserved.
 
@@ -1263,7 +1285,7 @@ $$
 \operatorname{Pic}(X)=\mathbf Z[\mathcal O(1)].
 $$
 
-Because this Picard group has no $p^n$-torsion, (7.8) gives
+Because this Picard group has no $p^n$-torsion, (7.7) gives
 
 $$
 H^1_{\mathrm{syn}}(X,\mathbf Z/p^n(1))
@@ -1295,24 +1317,27 @@ K_n=R\Gamma(C_n,[\mathcal O_{C_n}\xrightarrow d
 \tag{10.1}
 $$
 
-The weight-one filtered complex is
+The weight-one filtered complex is the derived reduction of the integral lattice $[p\mathcal O_C\to\Omega^1_{C/V}]$. It may be represented as
 
 $$
 F^1K_n=R\Gamma(C_n,
-[p\mathcal O_{C_n}\xrightarrow d
+[\mathcal O_{C_n}\xrightarrow{p\,d}
 \Omega^1_{C_n/V_n}]),
 \tag{10.2}
 $$
 
-with the modified finite-level interpretation of Chapter 2. There is a triangle
+where the map from (10.2) to (10.1) is multiplication by $p$ in degree zero and the identity in degree one. Under the identification $\mathcal O_{C_n}\simeq p\mathcal O_C/p^{n+1}\mathcal O_C$, this is exactly the modified finite-level interpretation of Chapter 2. In particular, the degree-zero term is not the smaller literal ideal $p\mathcal O_{C_n}$.
+
+There is a triangle
 
 $$
 F^1K_n\longrightarrow K_n\longrightarrow
-R\Gamma(C_1,\mathcal O_{C_1})\longrightarrow.
+R\Gamma(C_1,\mathcal O_{C_1})\otimes_V^LV_n
+\longrightarrow.
 \tag{10.3}
 $$
 
-Indeed the quotient of (10.1) by (10.2) is $\mathcal O_{C_n}/p$ in degree zero and zero in positive de Rham degrees. This simple triangle is useful because it computes the filtered complex without pretending that a filtration on cohomology is automatically strict.
+Indeed this is the derived reduction of the integral triangle obtained by quotienting $[p\mathcal O_C\to\Omega^1]$ inside $[\mathcal O_C\to\Omega^1]$. The last term is derived: it has the familiar two-row contribution coming from the complex $[V_n\xrightarrow pV_n]$ tensored with $\mathcal O_{C_1}$. Replacing it by ordinary $R\Gamma(C_1,\mathcal O_{C_1})$ would lose the Tor row and precisely the finite-level digit retained by the modified filtration. Triangle (10.3) computes the filtered complex without pretending that a filtration on cohomology is automatically strict.
 
 The Hodge-to-de Rham sequence of Book 54 is
 
@@ -1324,7 +1349,7 @@ $$
 \tag{10.4}
 $$
 
-Its outer terms are finite locally free of rank $g$. On the filtered complex, the first term is the same space of differentials, while the degree-zero contribution has been multiplied by $p$. The distinction controls the integral lattice in the syntomic mapping fiber.
+Its outer terms are finite locally free of rank $g$. On the filtered complex, the differential-form term is unchanged, while the map from the degree-zero copy to the ordinary de Rham complex is multiplication by $p$. The distinction controls the integral lattice in the syntomic mapping fiber.
 
 ### 10.2 The weight-one exact sequence
 
@@ -1365,7 +1390,7 @@ The units are $V^\times$ because a global function on a proper geometrically con
 
 **Proof.** A unit $u$ has no nontrivial transition functions. Its root torsor is described entirely by choosing local roots, and the discrepancy among possible crystalline logarithms changes by $(1-\varphi_1)$ of a degree-zero section. Hence it lies in the cokernel term.
 
-For a pair $(L,\tau:L^{p^n}\simeq\mathcal O)$, choose frames $e_i$ of $L$ and transition units $g_{ij}$. The $p^n$th-power trivialization makes $g_{ij}^{p^n}$ a Cech coboundary. Applying the divided-power logarithm produces a degree-one filtered crystalline cocycle. The equality $\varphi\log=p\log$ says that its class is fixed by $\varphi_1$. Changing frames changes it by a filtered coboundary, and changing $\tau$ by a unit adds precisely the degree-zero cokernel class already described. This is exactly the extension relation in (10.6). $\square$
+For a pair $(L,\tau:L^{p^n}\simeq\mathcal O)$, choose frames $e_i$ of $L$ and transition units $g_{ij}$. The $p^n$th-power trivialization makes $g_{ij}^{p^n}$ a Cech coboundary, so after a syntomic refinement one may choose compatible local roots. Their ratios on overlaps belong to $\mu_{p^n}$. Applying $\ell_n$ to those torsion ratios, and using $d\log$ only on multiplicative crystalline lifts, produces the degree-one filtered crystalline cocycle of Section 7.2. Lemma 4.3 says that its class is fixed by $\varphi_1$. Changing frames changes it by a filtered coboundary, and changing $\tau$ by a unit adds precisely the degree-zero cokernel class already described. This is exactly the extension relation in (10.6). $\square$
 
 The proposition does not split either exact sequence. A choice of splitting would amount to choosing Frobenius-compatible logarithms of all units or power trivializations of all torsion line bundles, and no natural choice exists.
 
@@ -1419,11 +1444,25 @@ $$
 \tag{10.10}
 $$
 
-Therefore if $x$ and $y$ lie in the appropriate weight-one filtered pieces, divided Frobenius is adjoint without introducing a denominator beyond the single weight-one twist. The Hodge submodule $H^0(\Omega^1)$ is Lagrangian, so two differential classes pair to zero.
+Equation (10.10) is the undivided Frobenius compatibility. One must not divide both arguments by $p$ formally: doing so would introduce $p^{-1}$ in the target. Integrality of any pairing on filtered pieces must instead use the actual filtration and its isotropy. The Hodge submodule $H^0(\Omega^1)$ is Lagrangian, so two differential classes pair to zero.
 
-**Proposition 10.2.** The period morphism carries the syntomic first Chern class of a line bundle on $C$ to its generic etale Chern class and is compatible with pull-push along a finite locally free map of smooth proper curves.
+**Proposition 10.2.** The period morphism carries the syntomic first Chern class of a line bundle on $C$ to its generic etale Chern class. If $f:C\to D$ is finite locally free, then on the Chern-class subgroup the norm square
 
-**Proof.** Chern compatibility is (9.6). Let $f:C\to D$ be finite locally free. Norm of line bundles commutes with Kummer boundaries by Book 28, while crystalline trace commutes with $c_1$ because both are computed by trace of logarithmic differentials. Generic etale corestriction has the same norm description. Thus the square with $f_*$ on syntomic cohomology and corestriction on generic etale cohomology commutes. $\square$
+$$
+\begin{array}{ccc}
+\operatorname{Pic}(C)/p^n&\xrightarrow{c^{\mathrm{syn}}_{1,n}}&
+\operatorname{im}(c^{\mathrm{syn}}_{1,n})\\
+\downarrow N_f&&\downarrow N_f^{c_1}\\
+\operatorname{Pic}(D)/p^n&\xrightarrow{c^{\mathrm{syn}}_{1,n}}&
+\operatorname{im}(c^{\mathrm{syn}}_{1,n})
+\end{array}
+$$
+
+commutes, and its generic period is the analogous etale norm-corestriction square.
+
+Here $N_f^{c_1}$ is defined on the displayed image by $c_1(L)\mapsto c_1(N_fL)$.
+
+**Proof.** Chern compatibility is (9.6). The Kummer sequence makes $c^{\mathrm{syn}}_{1,n}$ injective on $\operatorname{Pic}/p^n$, so $N_f^{c_1}$ is well defined. Book 28 proves that norm of line bundles commutes with the Kummer boundary. Thus the left and right routes in the displayed square both classify the gerbe of roots of the normed line bundle; on Cech representatives they both take the norm of the transition functions. Generic restriction commutes with the norm functor, and generic etale corestriction on these Kummer classes has the same description. This proves the final compatibility. No pushforward on all syntomic cohomology is being asserted. $\square$
 
 No division by $\deg f$ occurs. If one wants an inverse to pullback, the degree must separately be a unit.
 
@@ -1447,7 +1486,7 @@ $$
 \tag{11.1}
 $$
 
-It also proves that Frobenius is an isogeny and that
+It also constructs the semilinear finite-level Frobenius, compatible with reduction, and proves that the completed Frobenius becomes an isogeny over the $p$-torsion-free Witt ring. At one finite level, where $p$ is nilpotent, calling Frobenius an isogeny would be meaningless. Finally, Book 54 proves that
 
 $$
 H^*_{\mathrm{cr}}(A_1/V_n)
@@ -1482,7 +1521,7 @@ $$
 \tag{11.4}
 $$
 
-If $L$ is algebraically trivial, it corresponds to a point of $A^\vee[p^n](V)$. The Poincare bundle $\mathcal P$ on $A\times A^\vee$ is universal for these line bundles. Pulling its syntomic Chern class back along $1\times y$, for $y\in A^\vee[p^n](V)$, produces the class of the associated torsion line bundle.
+If $L$ is algebraically trivial, it corresponds to a point of $A^\vee[p^n](V)$. The Poincare bundle $\mathcal P$ on $A\times A^\vee$ is universal for these line bundles. For $y\in A^\vee[p^n](V)$, pull back $\mathcal P$ along $1\times y$ to obtain a rigidified line bundle $L_y$ on $A$. Since $[p^n]y=0$ in the rigidified Picard functor, $L_y^{\otimes p^n}$ has a unique rigidified trivialization $\tau_y$: an automorphism of a rigidified line bundle on a proper geometrically connected group is a base unit whose value at the identity is $1$, hence is the identity. The pair $(L_y,\tau_y)$, not the degree-two Chern class of $L_y$, produces the desired degree-one root torsor.
 
 **Proposition 11.1.** The construction
 
@@ -1494,9 +1533,9 @@ $$
 
 is a homomorphism after power trivializations are rigidified along the identity, and its period is the generic Kummer class of the corresponding line bundle.
 
-**Proof.** The biextension law for $\mathcal P$ identifies the line bundle attached to $y+y'$ with the tensor product of those attached to $y$ and $y'$. Rigidification at the identity removes the scalar ambiguity in the power trivialization. Additivity of $c_1^{\mathrm{syn}}$ gives the homomorphism. Period compatibility follows from Theorem 9.1. $\square$
+**Proof.** The biextension law for $\mathcal P$ identifies the rigidified line bundle attached to $y+y'$ with $L_y\otimes L_{y'}$. By uniqueness, its power trivialization is $\tau_y\otimes\tau_{y'}$. The graded-algebra construction (7.9) therefore identifies the associated root torsor with the contracted product of the two root torsors, proving additivity in $H^1$. Generic restriction carries $(L_y,\tau_y)$ to $(L_{y,K},\tau_{y,K})$, so Theorem 8.2 identifies its period with the generic Kummer class. $\square$
 
-Without a rigidification, changing $\tau$ by a unit changes the class by the left term of (7.8). The homomorphism statement must therefore include this normalization.
+Without a rigidification, changing $\tau$ by a unit changes the class by the left term of (7.7). The homomorphism statement must therefore include this normalization.
 
 ### 11.3 Isogenies and division torsors
 
@@ -1554,7 +1593,7 @@ $$
 \tag{11.11}
 $$
 
-At finite level the Weil pairing identifies $A[p^n]$ with its Cartier dual. The compatibility of crystalline and syntomic Chern classes of the Poincare bundle yields the same adjointness on both sides of the period morphism.
+At finite level the Weil pairing identifies $A[p^n]$ with its Cartier dual. Because the pairing is defined by the Poincare biextension over $V$, torsor pushout by it commutes with both completion and generic restriction.
 
 **Theorem 11.3.** For a principally polarized abelian scheme, the diagram
 
@@ -1571,7 +1610,7 @@ $$
 
 commutes. The top and bottom arrows are pushout by the Weil pairing.
 
-**Proof.** The Weil pairing is induced by the commutator of the Poincare biextension. It is defined over $V$ and restricts to the generic Weil pairing. Cup product and torsor pushout are functorial in the coefficient pairing. Theorem 9.1 says that the period map preserves these products, which proves the square. $\square$
+**Proof.** The Weil pairing is induced by the commutator of the Poincare biextension. It is defined over $V$ and restricts to the generic Weil pairing. Pushout of a torsor is the contracted product with the target coefficient; contracted products commute with flat base change. Hence restricting the upper pushout to $K$ gives the lower pushout. The right vertical period map is generic restriction under Theorem 7.1, so the square commutes. $\square$
 
 For a nonprincipal polarization, the pairing need not be perfect integrally. All compatibility remains valid with the actual finite-flat pairing, but identifying a module with its dual requires inverting the polarization degree.
 
@@ -1706,7 +1745,7 @@ $$
 
 **Proposition 13.1.** The triangles (13.2) commute with crystalline reduction, period morphisms, Kummer boundaries, and finite-flat character pushouts.
 
-**Proof.** On the coefficient side all maps come from (13.1). The logarithm satisfies $\log(u^{p^m})=p^m\log(u)$, so the fundamental diagrams commute in weight one. Mapping fibers transport the coefficient sequence to (13.2). Generic restriction commutes with powers and with pushout, proving the remaining assertions. $\square$
+**Proof.** On the coefficient side all maps come from (13.1). Additivity of the Frobenius-defect construction gives $\ell(u^{p^m})=p^m\ell(u)$, so the fundamental diagrams commute in weight one. Mapping fibers transport the coefficient sequence to (13.2). Generic restriction commutes with powers and with pushout, proving the remaining assertions. $\square$
 
 The long exact sequence of (13.2) contains Bockstein maps. They record the obstruction to lifting a mod-$p^n$ class to level $m+n$. A class at one level does not define a $p$-adic class unless all these obstructions vanish compatibly.
 
@@ -1768,9 +1807,26 @@ $$
 
 It agrees with the derived inverse limit (13.3).
 
-**Proof strategy and proof.** Choose compatible bounded finite free models for $K_n$ as in Book 54. On a smooth lift the filtered subcomplex is represented termwise by finite locally free differential forms with the degree-zero divisibility condition; the modified filtration gives compatible finite-level subcomplexes. Frobenius maps these systems compatibly. Taking inverse limits produces the $\mathbf Z_p$-linear arrow $1-\varphi_r:F^rK\to K$.
+**Proof strategy and proof.** Work first over the $p$-torsion-free ring $V$. The de Rham complex of the smooth proper lift is a bounded complex of vector bundles, and so is its first filtered subcomplex
 
-Derived inverse limits commute with finite homotopy limits such as a mapping fiber. Hence the inverse limit of the finite-level fibers is the fiber of the inverse-limit arrow. The chosen crystalline complexes have degreewise surjective transition maps, so their derived limits are their ordinary termwise limits. Derived reduction over $\mathbf Z_p$ recovers the level-$n$ arrow and therefore its fiber. This proves (13.7) and derived completeness. $\square$
+$$
+[p\mathcal O_X\longrightarrow\Omega^1_{X/V}
+\longrightarrow\Omega^2_{X/V}\longrightarrow\cdots],
+$$
+
+because multiplication by $p$ identifies the abstract module $\mathcal O_X$ with $p\mathcal O_X$. Proper coherent finiteness makes the derived global sections $K$ and $F^1K$ perfect over $V$. Choose bounded finite free representatives. The integral divisibility from Chapter 2 defines compatible maps $\varphi_r:F^rK\to K$.
+
+The finite-level source is the **derived reduction** of this integral filtered lattice. In degree zero,
+
+$$
+p\mathcal O_X\otimes_VV_n
+\simeq p\mathcal O_X/p^{n+1}\mathcal O_X,
+\tag{13.8}
+$$
+
+which is a free copy of $\mathcal O_{X_n}$ mapped into $\mathcal O_{X_n}$ by multiplication by $p$. It is not the literal ideal $p\mathcal O_{X_n}$, whose last $p$-adic digit has been lost. Definition (2.7) retains exactly that extra digit, so (13.8) identifies the derived reduction of $F^1K$ with the modified finite-level filtered complex. The same comparison is immediate in positive de Rham degrees, and Book 54 identifies $K\otimes_V^LV_n$ with $K_n$. The divided Frobenius maps agree because (2.8) was defined by division one level higher. Therefore derived reduction of the arrow $1-\varphi_r$ is the finite-level arrow defining $R\Gamma_{\mathrm{syn}}(X,\mathbf Z/p^n(r))$.
+
+Derived tensor product commutes with a finite homotopy limit, so reducing the mapping fiber gives the mapping fiber of the reduced arrow. This proves (13.7). The bounded finite free representatives are derived $p$-complete and have degreewise surjective quotient towers. Their inverse limits therefore have no $R^1\!\varprojlim$ term. Since derived inverse limits also commute with mapping fibers, (13.6) agrees with (13.3) and is derived $p$-complete. $\square$
 
 Taking cohomology of (13.7) still yields the correction term (5.12). The theorem is a statement about complexes, not automatic torsion-freeness of their cohomology.
 
@@ -1783,9 +1839,9 @@ After tensoring (13.6) with $K$, Frobenius becomes invertible on crystalline coh
 - the cokernels of $1-\varphi_r$ on lattices;
 - compatible torsors at every finite level.
 
-For example, replacing a rank-one weight-one lattice $Ve$ with $pVe$ leaves the rational line unchanged. If $\varphi(e)=pe$, then $\varphi_1$ fixes $e$, while the fixed vectors in $pVe$ have a different reduction at level one. The rational fixed space cannot distinguish the two integral coefficient systems.
+For example, a rational weight-one line $Ke$ with $\varphi(e)=pe$ contains every homothetic lattice $p^aVe$. Rational Frobenius does not single out one of them or canonically identify their embedded finite quotients inside a chosen ambient representation. The finite-level systems and their period maps require an actual lattice together with its filtered embedding; forgetting that embedding erases the datum the construction is meant to recover.
 
-Similarly, the generic Kummer classes of a unit $u$ and of $pu$ are both one-dimensional after rational linearization, but only the first root torsor is finite flat under $\mu_{p^n}$ over $V$. The valuation of the second class is precisely the integral obstruction. Thus rational comparison is a consequence one may later extract; it cannot serve as the definition of the lattice.
+The Kummer example is even more concrete. A unit $u\in V^\times$ defines a $\mu_{p^n}$-torsor over $V$, while $pu\in K^\times$ defines only a generic root torsor: the equation $T^{p^n}=pu$ is not a $\mu_{p^n}$-torsor on the special fiber. This valuation obstruction is invisible if one retains only an unspecified rational comparison object. Rational comparison is therefore a consequence one may later extract; it cannot serve as the definition of the lattice.
 
 ## 14. Descent, base change, and exactness
 
