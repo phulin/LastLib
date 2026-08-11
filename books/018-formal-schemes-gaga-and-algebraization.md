@@ -185,7 +185,7 @@ $$
 k[[t]]\longrightarrow k[[t,u]],
 $$
 
-with the $(t)$-adic topology on the source and the $(t,u)$-adic topology on the target, is continuous: $t^n$ lands in $(t,u)^n$. It is not adic, because $(t)$ is not an ideal of definition of the target; no power of $(t,u)$ lies inside $(t)$. The target topology is strictly finer than the one induced by the source.
+with the $(t)$-adic topology on the source and the $(t,u)$-adic topology on the target, is continuous: $t^n$ lands in $(t,u)^n$. It is not adic, because $(t)$ is not an ideal of definition of the target; no power of $(t,u)$ lies inside $(t)$. Since $(t^n)\subsetneq(t,u)^n$, the $(t)$-adic topology induced on the target ring is strictly finer than its chosen $(t,u)$-adic topology.
 
 Completed tensor products express base change. If $A\to B$ and $A\to C$ are compatible continuous maps and the indicated adic topologies are noetherian, then
 
@@ -228,6 +228,15 @@ $$
 and both inclusions are usually strict.
 
 There is another instructive limiting case. If $A$ is discrete, so that zero is an ideal of definition, convergence of coefficients to zero means that only finitely many coefficients are nonzero. Hence $A\langle T_1,\ldots,T_r\rangle=A[T_1,\ldots,T_r]$. Restricted series interpolate between polynomial and formal series according to the topology on the coefficients.
+
+If $A$ is noetherian and $I$-adically complete, then $A\langle\mathbf T\rangle$ is again noetherian, $I$-adically complete, and separated. Completeness is built into the inverse limit. For noetherianity, the $I$-adic associated graded ring is
+
+$$
+\operatorname{gr}_I(A\langle\mathbf T\rangle)
+\simeq (\operatorname{gr}_I A)[\mathbf T].
+$$
+
+The ring $\operatorname{gr}_I A$ is a finite-type algebra over $A/I$, because $I$ is finitely generated, and is noetherian. The polynomial ring on the right is therefore noetherian. Given an ideal of $A\langle\mathbf T\rangle$, choose finitely many elements whose initial forms generate its graded initial ideal. Successively subtract their multiples to raise the $I$-adic order of any element of the ideal; completeness takes the corrections to a convergent finite-generator expression. Hence the original ideal is finitely generated. This is the topological Hilbert-basis argument used below.
 
 ### 2.4 Continuous substitution and examples
 
@@ -377,7 +386,7 @@ This identity is local and exact enough for coherent calculations because of noe
 
 Let $f:\mathfrak X\to\mathfrak S$ be a morphism of locally noetherian formal schemes. It is **adic** if, for an ideal of definition $\mathcal K$ on $\mathfrak S$, the ideal $\mathcal K\mathcal O_{\mathfrak X}$ is an ideal of definition on $\mathfrak X$. This is independent of the chosen $\mathcal K$.
 
-An adic morphism is **of finite type** if locally it comes from a continuous map $A\to B$ for which $B/J$ is a finite-type $A/I$-algebra, equivalently in the noetherian setting $B$ is a quotient of some $A\langle T_1,\ldots,T_r\rangle$. It is **of finite presentation** when the kernel can be taken finitely generated; over noetherian bases these notions coincide in the expected finite setting.
+An adic morphism is **of finite type** if locally it comes from a continuous map $A\to B$ for which $B/J$ is a finite-type $A/I$-algebra, equivalently in the noetherian setting $B$ is a quotient of some $A\langle T_1,\ldots,T_r\rangle$. It is **of finite presentation** when the kernel can be taken finitely generated. Here the restricted power-series ring is noetherian, so its kernel is finitely generated and the two notions coincide for these noetherian adic morphisms.
 
 Separatedness is defined by requiring the diagonal
 
@@ -449,13 +458,19 @@ $$
 
 On noetherian affine charts this is the sheaf associated with the completed finite module. Artin--Rees makes the operation exact on coherent sheaves. In particular, if $Z\hookrightarrow X$ is a closed subscheme with ideal $\mathcal K$, then its completion along $Z\cap Y$ is a closed formal subscheme of $\widehat X_Y$, defined by the closure of $\mathcal K\mathcal O_{\widehat X_Y}$.
 
-Completion commutes with flat base change under the expected noetherian finite-presentation hypotheses. More generally, if $X'\to X$ is any morphism and $Y'=X'\times_XY$, there is a natural map
+Completion commutes with base change when the fiber product on the formal side is completed. Precisely, let $X'\to X$ be a morphism of locally noetherian schemes, assume $Y'=X'\times_XY$ is defined by the extended ideal, and form the fiber product in locally noetherian formal schemes. Then the natural map
 
 $$
 \widehat {X'}_{Y'}\longrightarrow X'\times_X\widehat X_Y.
 $$
 
-It is an isomorphism when the completed tensor comparison is valid, for example under flat base change or in standard finite-type noetherian situations with the completed fiber product on the right. Ordinary fiber products must not be substituted for completed ones.
+is an isomorphism. Affinely, for $A\to B$ and $I\subset A$, both sides are
+
+$$
+\operatorname{Spf}\!\left(\varprojlim_nB/I^{n+1}B\right),
+$$
+
+because the completed tensor product is defined by these quotients. No flatness is needed for this identity. Flatness enters a different assertion, namely comparison of an uncompleted tensor product with completion. Ordinary scheme fiber products must not be substituted for completed formal ones.
 
 ### 5.4 Examples and boundaries
 
@@ -588,7 +603,18 @@ $$
 0\to\mathcal F'\to\mathcal F\to\mathcal F''\to0
 $$
 
-be a sequence of coherent formal sheaves. Exactness can be tested on all sufficiently high reductions. Because completion is exact on finite modules, an exact algebraic sequence remains exact after completion. Conversely, if the compatible reductions are exact, the inverse-limit sequence is exact: the transition maps on the quotient systems are surjective, so no first derived-limit obstruction appears.
+be a sequence of coherent formal sheaves. Exactness is tested on affine charts by exactness of the corresponding sequence of finite complete modules. Because completion is exact on finite modules, an exact algebraic sequence remains exact after completion.
+
+Naive reduction is not left exact and must not be used as an exactness test. If the displayed sequence is short exact and $\mathcal F_n'=\mathcal F'/\mathcal J^{n+1}\mathcal F'$, then reduction gives the exact segment
+
+$$
+\operatorname{Tor}_1^{\mathcal O_{\mathfrak X}}
+(\mathcal F'',\mathcal O_{X_n})
+\longrightarrow\mathcal F'_n\longrightarrow\mathcal F_n
+\longrightarrow\mathcal F''_n\longrightarrow0,
+$$
+
+so $\mathcal F'_n\to\mathcal F_n$ can fail to be injective. What can be tested infinitesimally is the coherent homology formed first in the formal category: a coherent kernel, cokernel, or homology sheaf is zero exactly when its reduction modulo an ideal of definition is zero, by Nakayama. Equivalently, one may use the full compatible pro-system including the displayed Tor terms. This distinction prevents a false passage from exact formal data to termwise exact reductions.
 
 Tensor products are completed implicitly in the formal category. For coherent sheaves this causes no ambiguity:
 
@@ -644,7 +670,7 @@ Projective formal morphisms are those admitting a closed immersion into a formal
 For a coherent sheaf $\mathcal F$ on a proper noetherian formal scheme $\mathfrak X$ over $\operatorname{Spf}A$, define formal cohomology by the sheaf cohomology of $\mathcal F$. There are natural maps
 
 $$
-H^q(\mathfrak X,\mathcal F)longrightarrow H^q(X_n,\mathcal F_n).
+H^q(\mathfrak X,\mathcal F)\longrightarrow H^q(X_n,\mathcal F_n).
 $$
 
 The proper formal-functions theorem states
@@ -747,7 +773,16 @@ $$
 
 and formal functions identifies it with the completion of $H^0(X,\mathcal F^\vee\otimes\mathcal G)$. This module is finite and $A$ is complete, so completion changes nothing.
 
-For general $\mathcal F$, choose locally a finite presentation and compare the kernels of the two maps between Hom groups from finite free sheaves. Properness makes all global Hom modules finite, and exactness of completion identifies the kernels. Gluing gives full faithfulness.
+For general $\mathcal F$, finite presentation gives an affine-local isomorphism
+
+$$
+\widehat{\mathcal H om_X(\mathcal F,\mathcal G)}
+\simeq
+\mathcal H om_{\widehat X}
+(\widehat{\mathcal F},\widehat{\mathcal G}).
+$$
+
+Indeed, both sides are the same kernel after completing a finite presentation of $\mathcal F$; exactness of completion identifies those kernels. Apply formal functions in degree zero to the coherent sheaf $\mathcal H om_X(\mathcal F,\mathcal G)$. Its global sections are finite over $A$ and hence complete, which gives the desired Hom isomorphism without requiring a global vector-bundle resolution.
 
 This proof yields more than injectivity. A compatible family of maps $\mathcal F_n\to\mathcal G_n$ is not merely approximated by algebraic maps; it comes from one unique algebraic map. Consequently, equations between maps may be checked after completion. If two composites agree at every finite level, they agree on $X$.
 
@@ -778,7 +813,16 @@ The decisive point is uniformity. It would not suffice to generate each $\mathfr
 
 The existence theorem remains true when $X$ is proper but not assumed projective. The proof is not obtained by pretending proper means projective. One uses a projective modification $p:X'\to X$ that is an isomorphism over a dense open, algebraizes the pullback data on $X'$, and descends across the exceptional locus by noetherian induction on its support.
 
-More concretely, coherent ideals cutting out the failure locus are algebraized by the projective case. Exact sequences compare the sheaf with its restriction to a thickening of that locus and with its transform on $X'$. The latter is effective by projectivity; the former is effective by induction on dimension of support. Formal full faithfulness identifies the overlap maps and proves that the glued algebraic sheaf completes to the original one.
+Here is the dévissage that makes the descent effective. Choose a coherent ideal $\mathcal J$ supported on $X\setminus U$, where $p$ is an isomorphism over $U$, and replace it by a power so that the natural map from $\mathcal J\mathfrak F$ to its transform under $p$ is injective. This is possible because the kernel is supported outside $U$ and Artin--Rees kills it after multiplication by a high power of $\mathcal J$. The proper-reduction argument of Book 15 gives the same construction algebraically and shows that the cokernel and every positive higher direct image are coherent and supported on $V(\mathcal J)$.
+
+On $X'$ the transformed formal sheaf is effective by the projective case. Its direct image, the cokernel of the injection, and the quotient $\mathfrak F/\mathcal J\mathfrak F$ are therefore reduced to coherent data on $V(\mathcal J)$. Noetherian induction on the support algebraizes those terms. The two exact sequences
+
+$$
+0\to\mathcal J\mathfrak F\to\mathfrak F
+\to\mathfrak F/\mathcal J\mathfrak F\to0
+$$
+
+and the corresponding transform sequence then reconstruct an algebraic extension. Full faithfulness algebraizes the boundary and extension maps and says that the two possible composites agree. Exactness may be checked after forming their coherent homology and completing it; Nakayama kills that homology. Thus the resulting algebraic sheaf completes to $\mathfrak F$. The induction terminates because $V(\mathcal J)$ contains no generic point of the support.
 
 This reduction is why the final theorem requires properness, not a hidden global polarization. Projectivity is a proof device for coherent effectivity. It will reappear as a genuine hypothesis when the object to algebraize is the formal space itself.
 
@@ -826,7 +870,7 @@ $$
 E=H^0(\mathfrak X,\mathfrak L^d)
 $$
 
-a finite $A$-module whose reductions control the corresponding sections on $X_n$ after increasing $d$ if necessary. A finite set of generators gives a morphism
+a finite $A$-module. Formal global generation says that its evaluation map is surjective, and reducing that one map supplies a common finite linear system on every $X_n$. This does not assert that $E/I^{n+1}E$ equals all of $H^0(X_n,L_n^d)$ at each fixed level. A finite set of generators of $E$ gives a morphism
 
 $$
 \mathfrak X\longrightarrow\widehat{\mathbf P}^N_A.
@@ -840,17 +884,27 @@ $$
 X=V(\mathcal a)\subseteq\mathbf P^N_A.
 $$
 
-Exactness of completion identifies $\widehat X$ with $\mathfrak X$. The tautological bundle restricts to an algebraization of a suitable power of $\mathfrak L$; the original $\mathfrak L$ itself then algebraizes by coherent existence on $X$.
+Exactness of completion identifies $\widehat X$ with $\mathfrak X$. The tautological bundle restricts to an algebraization of a suitable power of $\mathfrak L$; the original $\mathfrak L$ itself then algebraizes by coherent existence on $X$. The algebraized coherent sheaf is invertible: its non-locally-free locus is closed and proper over $A$, while its completion is empty; the closed-support argument of Section 10.4 forces that locus to be empty.
 
 This proof displays the distinct jobs of the hypotheses. Noetherian completeness makes formal sections finite and effective. Properness gives formal finiteness and vanishing. Ampleness creates the embedding. Omitting any one breaks a specific step.
 
 ### 10.4 Uniqueness and algebraization of morphisms
 
-Suppose $X$ and $X'$ are proper $A$-schemes and an isomorphism $\widehat X\simeq\widehat {X'}$ is given. When the graph can be treated inside the proper product $X\times_AX'$, its coherent ideal algebraizes uniquely. The resulting closed subscheme $\Gamma$ has projections to $X$ and $X'$ whose completions are isomorphisms. Properness and the finite-level criterion show these projections are isomorphisms. Thus the formal isomorphism comes from a unique algebraic isomorphism.
+**Proper formal full faithfulness.** Let $X$ and $Y$ be proper $A$-schemes. Completion induces a bijection
 
-More generally, if $X$ is proper over $A$ and $Y$ is separated of finite type over $A$, a formal morphism $\widehat X\to\widehat Y$ induced along the same closed base is algebraic under the standard effectivity hypotheses. Its graph is a closed formal subscheme; compactifying or projectively embedding the relevant target neighborhood allows coherent existence to algebraize the graph. The projection to $X$ is an isomorphism because that is true formally and the discrepancy would be a coherent kernel or cokernel annihilated at every order.
+$$
+\operatorname{Hom}_A(X,Y)
+\xrightarrow{\sim}
+\operatorname{Hom}_{\operatorname{Spf}A}(\widehat X,\widehat Y).
+$$
 
-Separatedness of the target is essential for the graph to be closed and for uniqueness. Properness of the source supplies effectivity. Without it, distinct maps may have identical restrictions to a chosen formal neighborhood.
+Indeed, the graph of a formal morphism is a closed formal subscheme of the completion of the proper scheme $X\times_AY$. Grothendieck existence algebraizes its coherent ideal to a closed subscheme $\Gamma\subset X\times_AY$. The first projection $p:\Gamma\to X$ is proper and is an isomorphism after completion. Its non-quasi-finite locus is closed, and its image in $\operatorname{Spec}A$ is closed. If nonempty, that image contains a closed point. The ideal $I$ lies in the Jacobson radical of $A$: for $a\in I$, the partial sums of $1+a+a^2+\cdots$ converge to $(1-a)^{-1}$. Hence every closed point contains $I$, contradicting the formal isomorphism. Thus $p$ is proper and quasi-finite, so it is finite.
+
+Now $\mathcal O_X\to p_*\mathcal O_\Gamma$ is a map of coherent algebras whose completed kernel and cokernel vanish. If either support were nonempty, its proper image in $\operatorname{Spec}A$ would again contain a closed point over $V(I)$, contradicting that vanishing. Thus the algebra map is an isomorphism, $p$ is an isomorphism, and the second projection gives the desired morphism. The same support argument proves uniqueness.
+
+Taking a formal isomorphism and applying the theorem in both directions shows that two proper algebraizations are uniquely isomorphic. The theorem also algebraizes sections, products, and every structure map in this book, because all their sources and targets are proper over $A$. If a separated finite-type target is supplied with an open immersion into a proper $A$-scheme, the same graph proof works: the algebraized graph cannot meet the boundary, since such an intersection would be proper over $A$ and would meet the completed closed locus. No compactification theorem is being assumed for a completely arbitrary target.
+
+Separatedness of the target is essential for a graph to be closed and for uniqueness. Properness of the source supplies coherent effectivity. Without it, distinct maps may have identical restrictions to a chosen formal neighborhood.
 
 ### 10.5 Properties recovered after algebraization
 
@@ -955,7 +1009,9 @@ $$
 
 is an isomorphism of finite-dimensional complex vector spaces.
 
-Projectivity gives the preceding proof directly. For proper $X$, take a projective modification $p:X'\to X$ that is an isomorphism on a dense open. Comparison holds on $X'$. The kernel and cokernel of $\mathcal F\to p_*p^*\mathcal F$ are supported on a smaller closed subset. The algebraic and analytic long exact sequences, together with noetherian induction on support, reduce comparison to that subset. Proper direct-image finiteness ensures the process remains coherent.
+Projectivity gives the preceding proof directly. Two analytic facts extend it to a proper $X$. First, a proper holomorphic map sends a coherent analytic sheaf to coherent higher direct images. Locally on the target, place the inverse image of a relatively compact polydisc in finitely many Weierstrass charts. Division replaces its Čech complex by a bounded complex of finite modules over the polydisc algebra, whose kernels and cokernels remain finite. Second, for a projective morphism this direct-image construction agrees with analytification, by the projective calculation already made.
+
+Now take a projective modification $p:X'\to X$ that is an isomorphism over a dense open. Comparison holds on $X'$. Apply the algebraic and analytic Leray sequences to $p$ and $p^{\mathrm{an}}$. The kernel and cokernel of $\mathcal F\to p_*p^*\mathcal F$, and the sheaves $R^jp_*p^*\mathcal F$ for $j>0$, are coherent and supported on the smaller closed subset where $p$ is not an isomorphism; the analytic direct-image fact supplies the corresponding analytic coherent sheaves. Noetherian induction on that support and the two long exact sequences prove comparison for $\mathcal F$. This includes the higher-direct-image terms omitted by a bare kernel--cokernel argument.
 
 The theorem is functorial in $\mathcal F$ and compatible with connecting homomorphisms, cup products, pullback, and proper pushforward wherever those operations are defined. It is stronger than equality of dimensions: it identifies the naturally corresponding classes.
 
@@ -972,9 +1028,27 @@ $$
 (\mathcal F^{\mathrm{an}},\mathcal G^{\mathrm{an}}).
 $$
 
-When $\mathcal F$ is locally free, this is the $q=0$ cohomology comparison for $\mathcal F^\vee\otimes\mathcal G$. A finite presentation of general $\mathcal F$ reduces to that case. Thus analytification on coherent sheaves is fully faithful.
+Finite presentation and flatness of analytic local rings give
 
-Essential surjectivity is the deeper direction. Let $\mathfrak F$ be a coherent analytic sheaf on $X^{\mathrm{an}}$. In the projective case, twist by a sufficiently positive analytic line bundle. Analytic versions of Serre vanishing and global generation give a finite presentation by analytifications of sums of algebraic twists. Full faithfulness algebraizes the presentation map; its algebraic cokernel analytifies to $\mathfrak F$. For proper $X$, projective modification and induction on support again descend the result.
+$$
+\mathcal H om_X(\mathcal F,\mathcal G)^{\mathrm{an}}
+\simeq
+\mathcal H om_{X^{\mathrm{an}}}
+(\mathcal F^{\mathrm{an}},\mathcal G^{\mathrm{an}}):
+$$
+
+affine-locally both are the same kernel obtained from a finite presentation of $\mathcal F$. The $q=0$ cohomology comparison for this coherent internal Hom gives the displayed global Hom isomorphism. Thus analytification on coherent sheaves is fully faithful without assuming a global vector-bundle resolution of $\mathcal F$.
+
+Essential surjectivity is the deeper direction. Let $\mathfrak F$ be a coherent analytic sheaf on $X^{\mathrm{an}}$. In the projective case, compactness gives a finite Stein cover subordinate to the standard projective charts. Repeated Cauchy division on this cover proves analytic Serre vanishing and global generation for $\mathfrak F(m)$ when $m$ is sufficiently large. Choose finitely many generators, take their coherent kernel, and repeat once. This gives a presentation
+
+$$
+\mathcal O_{X^{\mathrm{an}}}(-m_1)^{\oplus a}
+\longrightarrow
+\mathcal O_{X^{\mathrm{an}}}(-m_0)^{\oplus b}
+\longrightarrow\mathfrak F\longrightarrow0.
+$$
+
+Full faithfulness algebraizes the first arrow; the algebraic cokernel analytifies to $\mathfrak F$. For proper $X$, use a projective modification. The analytic coherent direct-image theorem keeps the transform, its positive higher direct images, and the exceptional-locus quotients coherent. The same $\mathcal J$-adic dévissage as in Section 9.4 algebraizes the transform upstairs and the smaller-support terms downstairs; full faithfulness algebraizes the gluing maps. Noetherian induction therefore descends the analytic sheaf to $X$.
 
 Therefore analytification gives an equivalence
 
@@ -995,15 +1069,15 @@ because invertibility can be tested stalkwise and is preserved in both direction
 
 A coherent analytic ideal $\mathfrak a\subset\mathcal O_{X^{\mathrm{an}}}$ algebraizes uniquely to a coherent algebraic ideal $\mathcal a\subset\mathcal O_X$. Full faithfulness algebraizes its inclusion, and exactness shows that multiplication closes its image under products. Hence every closed analytic subspace of a proper algebraic $X$ is the analytification of a unique closed algebraic subscheme.
 
-Morphisms follow from graphs. Let $X$ be proper over $\mathbf C$ and $Y$ separated and of finite type over $\mathbf C$. An analytic morphism
+Morphisms follow from graphs. Let $X$ be proper over $\mathbf C$ and let $Y$ be a separated finite-type scheme supplied with an open immersion into a proper complex scheme $\overline Y$; in particular, $Y$ may be proper or quasi-projective. An analytic morphism
 
 $$
 u:X^{\mathrm{an}}\longrightarrow Y^{\mathrm{an}}
 $$
 
-has a closed analytic graph in $(X\times Y)^{\mathrm{an}}$. The graph is proper over $\mathbf C$ because it is isomorphic to $X^{\mathrm{an}}$. After placing the relevant part of $Y$ in a proper compactification and using graph closure, coherent GAGA algebraizes this graph. The first projection is an isomorphism: analytically it is, and its algebraic inverse is forced by full faithfulness. The second projection therefore yields a unique algebraic morphism $X\to Y$ whose analytification is $u$.
+has a closed analytic graph in $(X\times Y)^{\mathrm{an}}$. Viewed inside $(X\times\overline Y)^{\mathrm{an}}$, the graph is compact and hence closed; no boundary points are added. Coherent GAGA algebraizes its ideal to a closed algebraic subscheme $\Gamma\subset X\times\overline Y$. The first projection is an isomorphism because its analytification is. The intersection of $\Gamma$ with $X\times(\overline Y\setminus Y)$ has empty analytification and is therefore empty. The second projection consequently lands in $Y$ and yields a unique algebraic morphism $X\to Y$ whose analytification is $u$.
 
-Thus analytification is fully faithful on proper complex schemes. If both $X$ and $Y$ are proper, this is the simplest form. The separatedness of $Y$ ensures the graph is closed; finite type keeps the algebraization finite. Properness of $X$ is the source of compactness and effectivity.
+Thus analytification is fully faithful on proper complex schemes. The extension to the displayed nonproper targets is recorded only when a proper compactification is part of the available geometry; no general compactification theorem is hidden in the proof. Separatedness of $Y$ ensures the graph is closed. Properness of $X$ is the source of compactness and effectivity.
 
 As an application, every holomorphic automorphism of a proper complex algebraic variety is algebraic, and every holomorphic homomorphism between complex abelian varieties is algebraic. The assertion includes uniqueness, not merely existence.
 
@@ -1089,7 +1163,7 @@ $$
 
 be a proper, flat, finitely presented formal scheme whose fibers have pure dimension one. Assume the special fiber $C_0$ is projective. Then $\mathfrak C$ is algebraizable once it carries a formal invertible sheaf restricting to an ample line bundle on $C_0$. In fact, for curves such a formal lift can be constructed from any ample $L_0$.
 
-The resulting algebraization is a projective flat $A$-scheme $C$ with completion $\mathfrak C$. If the formal curve is smooth, then $C$ is smooth. If the fibers are nodal and the formal family satisfies the usual flat finite-presentation condition, the algebraization is a nodal curve. Properness ensures that checking these properties near the closed fiber checks the whole family over the local base.
+The resulting algebraization is a projective flat finitely presented $A$-scheme $C$ with completion $\mathfrak C$. If the formal morphism is smooth, then $C$ is smooth. If the special fiber has only ordinary double points, then $C\to\operatorname{Spec}A$ is a nodal curve. Properness ensures that these open finite-presentation properties, once valid along the closed fiber, hold over the whole local base.
 
 Why dimension one matters is cohomological. The obstruction to lifting a line bundle across a square-zero thickening lies in degree two of the structure sheaf. Coherent cohomology above degree one vanishes on a proper curve. Thus polarization data can be created, not merely assumed.
 
@@ -1129,13 +1203,7 @@ Flatness of $C$ follows from formal flatness. Locally, a finite $A$-module $M$ i
 
 If every $C_n\to\operatorname{Spec}A_n$ is smooth, the infinitesimal lifting criterion makes the completed morphism formally smooth. The algebraized morphism is of finite presentation, so formal smoothness implies smoothness in a neighborhood of $C_0$. The nonsmooth locus is closed; its image under the proper map is closed in $\operatorname{Spec}A$. Every nonempty closed subset of the spectrum of a local ring meets the closed point, so the nonsmooth locus must be empty.
 
-For nodal curves, the completed local equation at a node has the form
-
-$$
-A'[[x,y]]/(xy-a)
-$$
-
-after an appropriate étale localization, with $a$ in the maximal ideal of the base. Algebraization recovers a finite-presentation local equation with the same completed singularity. Excellence, or the standard finite-presentation nodal criterion, permits passage from the completed equation to an actual nodal neighborhood. Marked sections avoiding the nodes algebraize as morphisms, and disjointness can be checked on the closed fiber.
+For nodal curves, use the finite-presentation fiber criterion rather than descending a completed equation. In a flat finitely presented family of curves, the locus where the geometric fiber is either smooth or an ordinary double point is open. Its complement is closed in $C$. If the special fiber is nodal, this complement misses the closed fiber. Its proper image in the local base is closed; if nonempty it would meet the closed point, a contradiction. Thus every geometric fiber of the algebraization is nodal. Étale-locally at a node the completed equation then has the familiar form $A'[[x,y]]/(xy-a)$, with $a$ in the maximal ideal of the étale-local base, as a consequence rather than an unproved descent step. Marked sections avoiding the nodes algebraize as morphisms, and disjointness can be checked on the closed fiber.
 
 Stability is then finite-level. Properness and nodality are already known, while ampleness of
 
@@ -1147,7 +1215,7 @@ can be checked on the special fiber. Hence a compatible formal stable marked cur
 
 ### 14.4 Uniqueness and marked structures
 
-A formal section $\operatorname{Spf}A\to\mathfrak C$ is a compatible system of sections $s_n:\operatorname{Spec}A_n\to C_n$. Its graph is a closed formal subscheme because $\mathfrak C$ is separated. On the algebraization $C$, Grothendieck existence algebraizes the graph ideal. The first projection is an isomorphism, yielding a unique algebraic section $s:\operatorname{Spec}A\to C$.
+A formal section $\operatorname{Spf}A\to\mathfrak C$ is a compatible system of sections $s_n:\operatorname{Spec}A_n\to C_n$. Both $\operatorname{Spec}A$ and the algebraization $C$ are proper over $A$, so proper formal full faithfulness gives a unique algebraic section $s:\operatorname{Spec}A\to C$ directly. Its completion is the prescribed compatible system.
 
 The same graph argument algebraizes morphisms between proper formal curves, finite maps, involutions, and group actions by a fixed finite group. Relations such as $u^2=1$ hold algebraically because they hold at every finite level and morphisms are unique. Effective Cartier divisors algebraize through their invertible ideals; their flatness over $A$ must still be checked, usually from the finite levels.
 
@@ -1171,7 +1239,7 @@ $$
 \widehat G\simeq\mathfrak A.
 $$
 
-Formal smoothness and finite presentation imply that $G\to\operatorname{Spec}A$ is smooth, while properness is built into the projective construction. Geometric connectedness of fibers follows from the special fiber and proper smooth base change for connected components. The remaining task is to recover the group structure.
+Formal smoothness and finite presentation imply that $p:G\to\operatorname{Spec}A$ is smooth, while properness is built into the projective construction. Geometric connectedness requires no separate component theorem. On the geometrically connected smooth special fiber, $H^0(\mathcal O)=k$. The class of $1$ makes degree-zero base change surjective, so Book 15's exact base-change criterion makes $p_*\mathcal O_G$ a line bundle commuting with every base change near the closed point. An open neighborhood of the closed point of a local spectrum is the whole spectrum, and the unit map $\mathcal O_A\to p_*\mathcal O_G$ is therefore an isomorphism. Every geometric fiber is smooth, hence reduced, and has one-dimensional global functions; properness then forces it to be connected. The remaining task is to recover the group structure.
 
 The polarization is not decoration. It creates the projective embedding that makes the formal space effective. A polarization on the special fiber alone is not the same as a compatible formal polarization: lifting a line bundle on a higher-dimensional variety can be obstructed in $H^2(\mathcal O)$.
 
@@ -1217,7 +1285,7 @@ $$
 x\longmapsto t_x^*L\otimes L^{-1}.
 $$
 
-Its completion is the formal polarization. If the formal map is an isogeny, finiteness and surjectivity can be checked on the special fiber and transferred to $G$. Its degree, kernel rank, and principal character are consequently preserved. A principal formal polarization algebraizes to a principal polarization.
+Its completion is the formal polarization. Book 15 proves that a relatively ample rigidified line bundle on an abelian scheme makes $\lambda_L$ an isogeny with finite locally free kernel, compatibly with base change. Since the base is local, the kernel rank is the rank on the special fiber. Thus degree and polarization type are preserved, and rank one makes $\lambda_L$ an isomorphism. A principal formal polarization therefore algebraizes to a principal polarization.
 
 Suppose two polarized abelian schemes over $A$ have isomorphic formal completions. Proper full faithfulness algebraizes the formal isomorphism uniquely. Compatibility with multiplication and polarization is an equality of algebraic maps or line-bundle morphisms and can be checked after completion. Hence the polarized algebraization is unique, including all group data.
 
@@ -1231,11 +1299,11 @@ $$
 H^2(A_0,\mathcal K),
 $$
 
-which need not vanish when the relative dimension is at least two. A chosen polarization restricts the deformation problem and can itself be obstructed. Therefore the theorem proved here assumes a compatible formal ample line bundle, or equivalently polarization data strong enough to supply one.
+which need not vanish when the relative dimension is at least two. A polarization homomorphism need not by itself choose a globally inducing line bundle, and a chosen inducing bundle can be obstructed. Therefore the theorem proved here assumes a compatible formal relatively ample line bundle, with its rigidification and symmetry when those are required. No weaker polarization datum is silently treated as equivalent.
 
 There are broader algebraization theorems for formal group objects under additional hypotheses, but they require arguments beyond the ample-line criterion. No such theorem is silently invoked. In applications where a polarization is intrinsic—principally polarized Jacobians, PEL structures, or abelian schemes equipped with a fixed polarization type—the stated criterion is exactly the needed one.
 
-Level structure and endomorphisms behave more simply once the polarized object exists. A finite collection of formal endomorphisms algebraizes uniquely, and their ring relations persist. A finite étale level structure can be algebraized from its compatible finite-level sections under the relevant invertibility assumption on its order. These additions do not replace polarization; they are extra structures carried through full faithfulness.
+Level structure and endomorphisms behave more simply once the polarized object exists. A finite collection of formal endomorphisms algebraizes uniquely, and their ring relations persist. If $n$ is invertible on the base, $G[n]$ is finite étale; a full formal level-$n$ structure is a finite list of compatible sections and equalities in this proper finite scheme. Proper formal full faithfulness algebraizes the sections, and equality after completion preserves the group-law and basis relations. These additions do not replace polarization; they are extra structures carried through full faithfulness.
 
 ## 16. Synthesis
 
@@ -1287,9 +1355,9 @@ For safe later use, the main results can be read through the following ledger.
 
 **Algebraization of a formal space.** If $\mathfrak X$ is proper over $\operatorname{Spf}A$ and has an invertible sheaf ample on the special fiber, it has a projective algebraization. The polarized algebraization and its compatible morphisms are unique. Properness without ampleness is not being asserted sufficient here.
 
-**Complex GAGA.** If $X$ is proper of finite type over $\mathbf C$, algebraic and analytic coherent sheaves are equivalent and their cohomology agrees. Analytic morphisms from a proper algebraic source to a separated finite-type algebraic target are algebraic. These conclusions fail in general for nonproper sources.
+**Complex GAGA.** If $X$ is proper of finite type over $\mathbf C$, algebraic and analytic coherent sheaves are equivalent and their cohomology agrees. Analytification is fully faithful on proper complex schemes. The graph argument also algebraizes a morphism to a separated finite-type target when a proper compactification of that target is supplied, as for a quasi-projective target. These conclusions fail in general for nonproper sources.
 
-**Curves and abelian schemes.** On a proper curve, $H^2$ vanishes, so an ample line bundle on the special fiber lifts successively and the formal curve algebraizes. For abelian varieties in dimension at least two, that vanishing argument is unavailable; a compatible formal polarization or ample bundle is retained as a hypothesis. Group operations then algebraize by proper full faithfulness.
+**Curves and abelian schemes.** On a proper curve, $H^2$ vanishes, so an ample line bundle on the special fiber lifts successively and the formal curve algebraizes. For abelian varieties in dimension at least two, that vanishing argument is unavailable; a compatible formal relatively ample line bundle is retained as a hypothesis. Group operations then algebraize by proper full faithfulness.
 
 ### 16.3 Conclusion
 
