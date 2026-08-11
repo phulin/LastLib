@@ -68,7 +68,7 @@ any resulting corrections.
 - [ ] 042. Descent and Weak Mordell–Weil for Abelian Varieties
 - [ ] 043. Heights and the Mordell–Weil Theorem
 - [x] 044. Finite Locally Free Schemes and Algebras
-- [ ] 045. Affine Group Schemes and Hopf Algebras
+- [x] 045. Affine Group Schemes and Hopf Algebras
 - [ ] 046. Finite Flat Commutative Group Schemes
 - [ ] 047. Cartier Duality
 - [ ] 048. Finite-Flat Galois Representations

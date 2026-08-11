@@ -347,13 +347,13 @@ Thus an antipode is structure, but never a choice once it exists.
 **Proof strategy.** We translate the three structure maps and then reverse each diagram. Let $G=\operatorname{Spec}A$. The multiplication map gives $\Delta$, the identity gives $\varepsilon$, and inversion gives $S$. Since a composite of scheme maps pulls back functions in reverse order, the associativity diagram becomes coassociativity. The left and right identity diagrams become the two counit equations. Finally the maps
 
 $$
-G\xrightarrow{(i,\operatorname{id})}G\times_SG\xrightarrow mG
+G\xrightarrow{(i,\operatorname{id})}G\times_SG\xrightarrow{m}G
 $$
 
 and
 
 $$
-G\xrightarrow pS\xrightarrow eG
+G\xrightarrow{p}S\xrightarrow{e}G
 $$
 
 pull back to $m_A(S\otimes\operatorname{id})\Delta$ and $u\varepsilon$ respectively. This gives one antipode identity; the other inverse diagram gives the other.
@@ -810,6 +810,12 @@ A precise sufficient criterion is immediate from finite-algebra theory.
 
 **Proposition 6.1.** Let $G$ be finite locally free over $S$, and let $K\hookrightarrow G$ be a closed subgroup. If $\mathcal O(K)$ is flat and finitely presented as an $R$-module, then $K$ is finite locally free. Over a noetherian base, flatness alone suffices; over a DVR, torsion-freeness of $\mathcal O(K)$ suffices.
 
+**Proof.** The closed immersion makes $\mathcal O(K)$ a quotient of the finite $R$-module
+$\mathcal O(G)$, so it is finite. A finitely presented flat module is finite projective, proving
+the first assertion. Over a noetherian ring, every finite module is finitely presented. Over a
+DVR, a finite torsion-free module is free. These arguments are affine-local on the base and
+therefore prove the corresponding scheme statements. $\square$
+
 This criterion is intentionally not replaced by a blanket assertion. Later structural theorems may prove flatness of kernels in special categories, but it is not a formal consequence of being a closed subgroup of a finite flat group scheme.
 
 If $f:G\to H$ is faithfully flat and both are finite locally free of constant ranks $g$ and $h$, then its kernel is finite locally free and
@@ -1086,6 +1092,93 @@ Independence from a lift of $\bar c$ and landing in the relative tensor product 
 
 The quotient case needed most often later is the following affine theorem.
 
+We first isolate the effectivity input and prove it in the form required here.
+
+**Finite-relation lemma.** Let
+
+$$
+R_1\mathrel{\substack{\xrightarrow{s}\\[-.35em]\xrightarrow[t]{}}}X
+$$
+
+be an equivalence relation over $S$. Suppose that $X$ is affine over $S$, both $s$ and $t$ are
+finite locally free of the same rank $n$ locally on $S$, and $(s,t):R_1\to X\times_SX$ is a
+closed immersion. Then the faithfully flat quotient sheaf $X/R_1$ is affine over $S$. If
+$S=\operatorname{Spec}R$,
+$X=\operatorname{Spec}A$, and $R_1=\operatorname{Spec}D$, its coordinate algebra is
+
+$$
+B=\operatorname{Eq}\bigl(A\mathrel{\substack{\xrightarrow{s^*}\\[-.35em]
+\xrightarrow[t^*]{}}}D\bigr).
+$$
+
+Moreover, $A$ is finite locally free and faithfully flat over $B$, and the relation map induces
+
+$$
+A\otimes_BA\xrightarrow{\sim}D. \tag{9.1}
+$$
+
+**Proof.** The assertion is local on $S$, so work with the displayed rings. We recall the
+finite-orbit calculation rather than hiding the decisive step in a descent citation. Restricting
+to a clopen stratum of $S$, let $D$ have rank $n$ as an $A$-module through $s^*$. For $a\in A$, form the
+characteristic polynomial
+
+$$
+P_a(Z)=\det\bigl(Z-m_{t^*(a)};D\bigr)\in A[Z].
+$$
+
+The identity arrow pulls Cayley--Hamilton back to $P_a(a)=0$. The composition and inverse arrows
+of the relation identify the two pullbacks of the finite family of targets of a source fiber.
+Functoriality of characteristic polynomials under base change therefore gives
+
+$$
+s^*(\operatorname{coeff}P_a)=t^*(\operatorname{coeff}P_a);
+$$
+
+all coefficients of $P_a$ lie in $B$.
+
+We now give the finite-orbit determinant argument that supplies effectivity. Because $(s,t)$ is a
+closed immersion, the map $A\otimes_RA\to D$ is surjective. Choose finitely many tensors whose
+images generate the rank-$n$ $A$-module $D$. On an open where its determinant line is trivial,
+the $n$-fold wedges of those images give finitely many minors $d_\nu\in A$ generating the unit
+ideal. The open $D(d_\nu)$ is the locus where the corresponding $n$ images form a basis of $D$.
+
+Transport a minor around the relation and take its norm along the finite locally free source
+map. Composition says that transporting twice is the same as transporting once around the
+composite arrow, so the resulting norm has equal pullbacks by $s^*$ and $t^*$. It is therefore
+an element $b_\nu\in B$. The invariant principal opens $D(b_\nu)\subseteq\operatorname{Spec}A$
+are saturated for the relation. They cover: over any source point, one of the minors is
+invertible at every point of its finite relation class after replacing the chosen finite family
+by the union of its finitely many transports, and its norm is then invertible at that source
+point.
+
+Localize at one $b_\nu$. The adjugate identities for the chosen invertible minor express every
+element of $D$ uniquely in its $n$ basis columns. Pulling those identities to the double relation
+and using composition shows that their transition coefficients have equal $s^*$- and
+$t^*$-pullbacks. Pulling back by the identity arrow therefore gives elements
+$u_1,\ldots,u_n\in A_{b_\nu}$ such that
+
+$$
+A_{b_\nu}=\bigoplus_{i=1}^nB_{b_\nu}u_i.
+$$
+
+Before applying the identity arrow, the same adjugate identities say that the surjection
+
+$$
+A\otimes_BA\longrightarrow D,\qquad a\otimes a'\longmapsto s^*(a)t^*(a'),
+$$
+
+maps the left $A_{b_\nu}$-basis $1\otimes u_i$ to the chosen $A_{b_\nu}$-basis of
+$D_{b_\nu}$. It is therefore an isomorphism on every $D(b_\nu)$. These invariant opens cover,
+so they prove globally that $A$ is finite locally free of rank $n$ over $B$ and that (9.1) is an
+isomorphism. Its rank is positive because the relation has identity arrows, so $A$ is faithfully
+flat over $B$.
+
+Equation (9.1) says exactly that two maps into $X$ have the same image in
+$\operatorname{Spec}B$ precisely when they are related by $R_1$, after a faithfully flat cover.
+Faithful flatness of $B\to A$ gives local lifts of every point of $\operatorname{Spec}B$.
+Therefore $\operatorname{Spec}B$ represents the quotient sheaf. The construction commutes with
+localization on $S$, so the affine quotients glue over a nonaffine base. $\square$
+
 **Theorem 9.1 (finite locally free affine quotient).** Let $G$ be an affine group scheme over an arbitrary base scheme $S$, and let $H\hookrightarrow G$ be a closed subgroup that is finite locally free over $S$. Then the faithfully flat quotient sheaf $G/H$ is represented by an affine $S$-scheme. On an affine base, it is
 
 $$
@@ -1100,15 +1193,25 @@ $$
 G\times_SH\rightrightarrows G
 $$
 
-a finite locally free equivalence relation: the arrows are projection and action, and the map to $G\times_SG$ is a closed immersion because $H\hookrightarrow G$ is. The affine theorem for a finite locally free equivalence relation constructs its effective quotient as the spectrum of the equalizer of functions. In the present notation this equalizer is exactly $B=A^{\operatorname{co}H}$.
-
-Here is the algebra behind effectivity. Since $C=\mathcal O(H)$ is finite projective, a finite dual basis permits every coaction coefficient of $A\to A\otimes C$ to be extracted by finitely many $R$-linear functionals on $C$. The relations saying that two elements of $G$ lie in one orbit are therefore controlled by a finite projective algebra. The equalizer $B$ is stable under localization, and after the faithfully flat cover that supplies a local orbit representative, the relation becomes the split relation
+a finite locally free equivalence relation: the arrows are projection and action. The automorphism
 
 $$
-(G/H)\times_SH\rightrightarrows (G/H)\times_SH.
+G\times_SG\longrightarrow G\times_SG,\qquad(g,x)\longmapsto(g,g^{-1}x)
 $$
 
-In that split case the equalizer is visibly the coordinate algebra of $G/H$, the extension to the total space is finite locally free with underlying module obtained from $C$, and the canonical map is an isomorphism. Faithful descent carries these three assertions—affineness, finite local freeness, and the canonical-map isomorphism—back to $B\subseteq A$. Thus $G\to\operatorname{Spec}B$ is an $H$-torsor and §9.2 identifies its target with the quotient sheaf. Normality makes multiplication and inversion invariant on cosets, hence descends the group structure uniquely. $\square$
+carries the image of the relation to $G\times_SH$, so the relation map to $G\times_SG$ is a
+closed immersion because $H\hookrightarrow G$ is. The finite-relation lemma applies. Its
+equalizer is exactly $B=A^{\operatorname{co}H}$, and (9.1) becomes the canonical torsor
+isomorphism
+
+$$
+A\otimes_BA\xrightarrow{\sim}A\otimes_RC.
+$$
+
+Thus $G\to\operatorname{Spec}B$ is finite locally free and faithfully flat, and §9.2 identifies
+its target with the quotient sheaf. If $H$ is normal, multiplication, identity, and inversion
+are constant on cosets. They descend uniquely through the torsor, and their group identities
+descend by faithful flatness. $\square$
 
 The finite locally free conclusion can be seen after pulling back along the faithfully flat cover $G\to G/H$. There the map becomes
 
@@ -1510,9 +1613,24 @@ On dual-number points $k[\epsilon]/(\epsilon^2)$, both have a one-dimensional ta
 
 ### 14.4 Frobenius and its kernel
 
-For any affine scheme over a field of characteristic $p$, raising functions to $p$th powers defines the absolute Frobenius on the scheme with its characteristic-$p$ base behavior. For group schemes it is a group morphism because $(xy)^p=x^py^p$ in commutative coordinate rings. Relative Frobenius keeps track of the Frobenius twist of the base and is the base-compatible version.
+For a scheme in characteristic $p$, the absolute Frobenius is the identity on the underlying
+topological space and sends every function to its $p$th power. It is a morphism of schemes, but
+over a field $k$ it is generally not a $k$-morphism: on scalars it induces
+$a\mapsto a^p$. For a $k$-scheme $G$, the base-compatible map is the relative Frobenius
 
-For $\mathbf G_a$, the coordinate pullback is $T\mapsto T^p$ and the kernel is $\alpha_p$. For $\mathbf G_m$, it is $T\mapsto T^p$ and the kernel is $\mu_p$. Both maps are finite locally free of rank $p$ and are torsor quotients in the faithfully flat topology. Their kernels have the same rank and geometric-point count but different coproducts.
+$$
+F_{G/k}:G\longrightarrow G^{(p)},
+$$
+
+where $G^{(p)}$ is the pullback along Frobenius of $k$. If $G$ is a group scheme, functoriality of
+absolute Frobenius with respect to multiplication, identity, and inversion makes $F_{G/k}$ a
+$k$-group morphism. This fixes both its variance and its scalar convention.
+
+For $\mathbf G_a$, after using the standard coordinate on the Frobenius twist, the pullback is
+$T\mapsto T^p$ and the kernel is $\alpha_p$. For $\mathbf G_m$, it is $T\mapsto T^p$ and the
+kernel is $\mu_p$. Both relative Frobenius maps are finite locally free of rank $p$ and are
+torsor quotients in the faithfully flat topology. Their kernels have the same rank and
+geometric-point count but different coproducts.
 
 The relative Frobenius of an étale group scheme is an isomorphism, while nontrivial Frobenius kernels signal infinitesimal structure. We use this only as illumination; a systematic classification of finite flat group schemes in characteristic $p$ lies beyond the present scope.
 
@@ -1556,7 +1674,9 @@ $$
 P(T)=a_0T+a_1T^p+\cdots+a_rT^{p^r}
 $$
 
-occur. Their kernels are closed subgroup schemes with coordinate algebra $R[T]/(P(T))$. When the leading coefficient is a unit and $P$ is monic of degree $p^r$, the kernel is finite locally free of rank $p^r$.
+occur. Their kernels are closed subgroup schemes with coordinate algebra $R[T]/(P(T))$. If the
+leading coefficient $a_r$ is a unit, scaling $P$ by $a_r^{-1}$ makes it monic without changing
+its ideal, so the kernel is finite locally free of rank $p^r$.
 
 The derivative $P'(0)=a_0$ controls the cotangent space at the identity. If $a_0$ is a unit, the kernel has no infinitesimal tangent direction and is étale in the finite locally free field case. If $a_0=0$, nonreduced behavior can occur. The polynomial $T^p$ gives $\alpha_p$.
 
@@ -1586,15 +1706,33 @@ $$
 I=A\cap I_K\subseteq A_K.
 $$
 
-Because $A/I$ injects into $A_K/I_K$, it is $R$-torsion-free. If it is finite over $R$, it is therefore finite free. The Hopf conditions descend from $I_K$: for example, flatness makes the relevant maps inject into the generic-fiber tensor products, allowing one to show
+Because $A/I$ injects into $A_K/I_K$, it is $R$-torsion-free. If it is finite over $R$, it is
+therefore finite free. Put $C=A/I$. The quotient $A\to C$ then splits as a map of $R$-modules,
+so the kernel of
+
+$$
+A\otimes_RA\longrightarrow C\otimes_RC
+$$
+
+is exactly the image of $I\otimes_RA+A\otimes_RI$. For $x\in I$, the image of $\Delta(x)$ in
+$C\otimes_RC$ vanishes after tensoring with $K$, because $I_K$ is a Hopf ideal. The module
+$C\otimes_RC$ is torsion-free, so the image already vanishes over $R$. Hence
 
 $$
 \Delta(I)\subseteq I\otimes A+A\otimes I
 $$
 
-under the finite flat quotient hypotheses. Thus the closure is a finite flat subgroup when finiteness and tensor-intersection conditions are established.
+inside $A\otimes_RA$. Likewise $\varepsilon(x)$ vanishes in $K$ and hence in $R$, while the
+class of $S(x)$ in the torsion-free module $C$ vanishes after tensoring with $K$ and hence is
+zero. Thus $I$ is a Hopf ideal. We have proved the precise statement: if the contracted quotient
+$A/I$ is finite over the DVR, then the schematic closure is a finite locally free subgroup.
 
-Those qualifications are important. An arbitrary subalgebra of a finite-dimensional generic fiber need not be finite over $R$, and intersection with a generic Hopf ideal does not by itself resolve every tensor-purity issue over a general base. Over a DVR, torsion-freeness supplies much of the missing control once finiteness is known. A systematic theory of finite-flat schematic closure belongs to the next stage of the subject.
+The finiteness qualification is important. An arbitrary subalgebra of a finite-dimensional
+generic fiber need not be finite over $R$. If $G$ itself is finite locally free, finiteness of
+$C$ is automatic because it is a quotient of $A$, so the closure theorem applies without an
+extra condition. Over a general base, contraction need not make the quotient flat and the
+torsion-free argument above is unavailable. A systematic use of finite-flat schematic closure
+belongs to the next stage of the subject.
 
 ## 16. The translation dictionary for torsion subgroup schemes
 
@@ -1817,7 +1955,14 @@ $$
 \widehat A_I\,\widehat\otimes_R\,\widehat A_I.
 $$
 
-This is the coordinate form of completion along the identity.
+Here the completed tensor product means the completion of $A\otimes_RA$ for the total filtration
+
+$$
+F^n(A\otimes_RA)=\sum_{r+s=n}I^r\otimes_RI^s.
+$$
+
+The estimate of §17.2 is exactly what gives the continuous map to this completion. This is the
+coordinate form of completion along the identity.
 
 Completion notation hides hypotheses. Tensor product need not commute with inverse limit, completion need not preserve exact sequences, and base change of a completion need not equal completion after base change. Finite presentation, noetherian hypotheses, or explicit power-series coordinates repair these issues when needed. Here completion only synthesizes the finite quotients already constructed.
 
@@ -1961,7 +2106,8 @@ An affine group scheme acts on algebraic families, not merely on sets of points.
 
 ### 19.1 Why representations become coactions
 
-Let $G=\operatorname{Spec}H$ and let $M$ be an $R$-module. A linear representation is a functorial action of $G(C)$ on $M\otimes_RC$ by $C$-linear automorphisms. When $M$ is finite locally free, it is equivalently a morphism $G\to\mathrm{GL}(M)$. Algebraically it is a coaction
+Let $G=\operatorname{Spec}H$ and let $M$ be an $R$-module. A linear representation on $M$ is a
+coaction
 
 $$
 \delta:M\longrightarrow M\otimes_RH
@@ -1975,6 +2121,12 @@ $$
 \qquad
 (\operatorname{id}\otimes\varepsilon)\delta=\operatorname{id}_M.
 $$
+
+It induces, functorially in every $R$-algebra $C$, an action of $G(C)$ on $M\otimes_RC$ by
+$C$-linear automorphisms. Conversely, when $M$ is finite locally free, every such functorial
+linear action is represented by a morphism $G\to\mathrm{GL}(M)$ and hence yields this coaction.
+For an arbitrary module, taking the coaction as the definition avoids imposing an unproved
+representability assertion on its automorphism functor.
 
 If $\delta(m)=\sum m_{(0)}\otimes m_{(1)}$ and $g:H\to C$, then
 
@@ -2067,11 +2219,16 @@ $$
 X\times_SG\longrightarrow X
 $$
 
-with right multiplication on the second factor is the trivial $G$-torsor. Its canonical isomorphism sends
+with right multiplication on the second factor is the trivial $G$-torsor. The inverse of its
+canonical torsor map is
 
 $$
-(x,g_1,g_2)\longmapsto(x,g_1,g_1^{-1}g_2).
+(X\times_SG)\times_X(X\times_SG)\longrightarrow
+(X\times_SG)\times_SG.
 $$
+
+A point $(x,g_1,g_2)$ is sent to $(x,g_1,g_1^{-1}g_2)$. This specifies the direction and the
+factor order.
 
 A section $s:X\to P$ of a $G$-torsor trivializes it by $(x,g)\mapsto s(x)g$. The inverse sends $p$ to the unique $g$ with $p=s(\pi(p))g$. The torsor identity guarantees existence and uniqueness as a morphism, not merely on points.
 
@@ -2224,7 +2381,7 @@ For a finite group $\Gamma$, a point of $\underline\Gamma$ over $C$ is a family 
 A homomorphism $u:\Gamma\to\Lambda$ pulls functions back by
 
 $$
-R^\Lambda\longrightarrow R^\Gamma,qquad f\longmapsto f\circ u.
+R^\Lambda\longrightarrow R^\Gamma,\qquad f\longmapsto f\circ u.
 $$
 
 Its kernel group scheme is $\underline{\ker u}$. If $u$ is surjective, the map is finite locally free and faithfully flat, with quotient $\underline\Lambda$. The rank formula recovers the ordinary order formula over every connected component of the base.
@@ -2338,7 +2495,10 @@ $$
 
 gives $A\otimes_BA\cong A\otimes_RH$, and faithful descent identifies $B$ with invariants.
 
-A finite locally free subgroup defines a finite locally free equivalence relation. Effective affine descent constructs its quotient and the torsor identity; normality descends the group operations. Torsor trivialization after a faithfully flat cover proves rank multiplication using Book 44.
+A finite locally free subgroup defines a finite locally free closed equivalence relation. The
+finite-orbit calculation in §9.4 constructs its affine quotient and proves the torsor identity;
+normality then descends the group operations. Torsor trivialization after a faithfully flat cover
+proves rank multiplication using Book 44.
 
 Finally, the counit splits $A=R\oplus I$. Multiplicativity of $\Delta$ gives the filtration estimate, which gives the convolution order law. Duals commute with base change exactly in the finite projective cases already isolated. This proves every clause with its stated scope.
 
