@@ -25,7 +25,6 @@
   - [4.2 One local zero forces a global zero](#42-one-local-zero-forces-a-global-zero)
   - [4.3 Vanishing of kernel constant terms](#43-vanishing-of-kernel-constant-terms)
   - [4.4 Annihilation of the noncuspidal spectrum](#44-annihilation-of-the-noncuspidal-spectrum)
-  - [4.5 Rapid decay in both variables](#45-rapid-decay-in-both-variables)
 - [5. Smoothing and finite analytic support](#5-smoothing-and-finite-analytic-support)
   - [5.1 Invariant differentiation of convolution](#51-invariant-differentiation-of-convolution)
   - [5.2 Finite level and finite compact type](#52-finite-level-and-finite-compact-type)
@@ -46,35 +45,20 @@
   - [8.2 Traces on irreducible summands](#82-traces-on-irreducible-summands)
   - [8.3 Absolute convergence of the spectral side](#83-absolute-convergence-of-the-spectral-side)
   - [8.4 The spectral kernel identity](#84-the-spectral-kernel-identity)
-- [9. Rational conjugacy in rank two](#9-rational-conjugacy-in-rank-two)
-  - [9.1 Central, split, unipotent, and elliptic elements](#91-central-split-unipotent-and-elliptic-elements)
-  - [9.2 Centralizers and quotient measures](#92-centralizers-and-quotient-measures)
-  - [9.3 Elliptic orbital distributions](#93-elliptic-orbital-distributions)
-  - [9.4 The central term](#94-the-central-term)
-- [10. Truncation and parabolic cancellation](#10-truncation-and-parabolic-cancellation)
-  - [10.1 Compact truncations](#101-compact-truncations)
-  - [10.2 Stable rational lines](#102-stable-rational-lines)
-  - [10.3 Unfolding the nonelliptic part](#103-unfolding-the-nonelliptic-part)
-  - [10.4 Removal of the truncation](#104-removal-of-the-truncation)
-- [11. Absolute convergence of the elliptic expansion](#11-absolute-convergence-of-the-elliptic-expansion)
-  - [11.1 Arithmetic height of a projective conjugacy class](#111-arithmetic-height-of-a-projective-conjugacy-class)
-  - [11.2 Coarse counting and torus-volume bounds](#112-coarse-counting-and-torus-volume-bounds)
-  - [11.3 Decay of orbital integrals](#113-decay-of-orbital-integrals)
-  - [11.4 Summability](#114-summability)
-- [12. Equality of the two expansions](#12-equality-of-the-two-expansions)
-  - [12.1 The geometric expansion](#121-the-geometric-expansion)
-  - [12.2 The simple cuspidal trace formula](#122-the-simple-cuspidal-trace-formula)
-  - [12.3 Independence of auxiliary truncations](#123-independence-of-auxiliary-truncations)
-  - [12.4 Factorization without evaluation](#124-factorization-without-evaluation)
-- [13. Examples, boundaries, and failure modes](#13-examples-boundaries-and-failure-modes)
-  - [13.1 A weight-$k$ kernel over the rationals](#131-a-weight-k-kernel-over-the-rationals)
-  - [13.2 Adding finite-place Hecke conditions](#132-adding-finite-place-hecke-conditions)
-  - [13.3 What fails without a cuspidal factor](#133-what-fails-without-a-cuspidal-factor)
-  - [13.4 What this formula does not yet compute](#134-what-this-formula-does-not-yet-compute)
-- [14. Final synthesis](#14-final-synthesis)
-  - [14.1 The proof ledger](#141-the-proof-ledger)
-  - [14.2 The reusable kernel theorem](#142-the-reusable-kernel-theorem)
-  - [14.3 Conclusion](#143-conclusion)
+- [9. Equality of the spectral and geometric kernel expansions](#9-equality-of-the-spectral-and-geometric-kernel-expansions)
+  - [9.1 Compact truncations of the geometric kernel](#91-compact-truncations-of-the-geometric-kernel)
+  - [9.2 The simple cuspidal kernel identity](#92-the-simple-cuspidal-kernel-identity)
+  - [9.3 Independence of auxiliary truncations](#93-independence-of-auxiliary-truncations)
+  - [9.4 The boundary with the orbital geometric side](#94-the-boundary-with-the-orbital-geometric-side)
+- [10. Examples, boundaries, and failure modes](#10-examples-boundaries-and-failure-modes)
+  - [10.1 A fixed-weight kernel over the rationals](#101-a-fixed-weight-kernel-over-the-rationals)
+  - [10.2 Adding finite-place Hecke conditions](#102-adding-finite-place-hecke-conditions)
+  - [10.3 What fails without a cuspidal factor](#103-what-fails-without-a-cuspidal-factor)
+  - [10.4 What this formula does not yet compute](#104-what-this-formula-does-not-yet-compute)
+- [11. Final synthesis](#11-final-synthesis)
+  - [11.1 The proof ledger](#111-the-proof-ledger)
+  - [11.2 The reusable kernel theorem](#112-the-reusable-kernel-theorem)
+  - [11.3 Conclusion](#113-conclusion)
 
 ## Introduction
 
@@ -85,14 +69,15 @@ eigenvectors belong to infinitely many automorphic representations, the geometri
 sum over rational matrices, and the quotient on which its diagonal is integrated is noncompact.
 None of the three infinite operations is automatically legitimate.
 
-For $mathrm{GL}_2$ there is a particularly clean way to remove the obstruction.  Choose the
+For $\mathrm{GL}_2$ there is a particularly clean way to remove the obstruction.  Choose the
 archimedean test function to be cuspidal at one real place.  Its parabolic averages vanish.  The
 resulting global convolution operator kills the Eisenstein and residual subspaces, and its range
 lies in the discrete cuspidal space.  Cuspidal decay prevents mass from escaping into the unique
 rank-one cusp.  Elliptic smoothing then makes the operator trace class, so its spectral trace and
-its diagonal trace are ordinary absolutely convergent quantities.  Finally, rank-two rational
-conjugacy separates the diagonal into a central term and elliptic orbital terms; all proper
-parabolic terms vanish.
+its diagonal trace are ordinary absolutely convergent quantities.  The result is the analytic
+simple trace formula: the absolutely convergent cuspidal spectral trace equals the integral of
+the canonical geometric kernel.  Regrouping that kernel by rational conjugacy is a further
+geometric problem, deliberately left to the later volume devoted to the geometric side.
 
 The word *simple* in “simple trace formula” refers to this removal of the parabolic channel.  It
 does not mean that convergence may be ignored.  In fact, the purpose of this book is to prove
@@ -106,8 +91,7 @@ $$
 
 into a theorem.  The proof is organized so that each infinity has a separate control:
 rational-point counting controls periodization, constant-term cancellation controls the cusp,
-Sobolev smoothing controls singular values, and arithmetic height controls elliptic conjugacy
-classes.
+and Sobolev smoothing controls singular values and the canonical diagonal.
 
 The preceding books supply four exact foundations.  The Hilbert-space theory supplies
 Hilbert--Schmidt factorizations, trace ideals, and safe diagonal formulas.  The Sobolev theory
@@ -118,11 +102,12 @@ constant-term theory supplies the decisive theorem that one strongly cuspidal lo
 annihilates all Eisenstein wave packets and all residues.  We recall each interface when it is
 used and prove the additional kernel and geometric arguments here.
 
-Detailed evaluation of the cuspidal characters is not part of the present task, nor is detailed
-evaluation of central and elliptic orbital integrals.  Those computations require their own
-normalization and local harmonic analysis.  Here the goal is prior and indispensable: to prove
-that both expansions exist, converge absolutely in their natural grouped forms, and equal the
-same operator trace.
+Detailed evaluation of cuspidal characters is not part of the present task.  Neither is the
+classification and convergence of rational conjugacy-class contributions: those are the
+subject of the later geometric-side volume and cannot be imported backward here.  The goal is
+prior and indispensable: construct the canonical automorphic kernel, prove that its diagonal is
+absolutely integrable, and identify its integral with an absolutely convergent cuspidal spectral
+sum.
 
 ## 1. The simple trace-formula problem
 
@@ -146,13 +131,16 @@ The eventual identity will have the form
 $$
 \operatorname{tr}R_\omega(f)
 =\sum_{\pi}m(\pi)\operatorname{tr}\pi(f)
-=\operatorname{vol}([\overline G])f(1)
- +\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f).
+=\int_{[\overline G]}\sum_{\gamma\in Z(F)\backslash G(F)}
+f(x^{-1}\gamma x)\,dx.
 \tag{1.1}
 $$
 
-The middle sum is the spectral expansion and the right side is the geometric expansion.  The
-main theorem will state the test-function hypotheses under which both sums converge absolutely.
+The middle expression is the spectral expansion and the right side is the geometric kernel
+expansion.  The spectral series and the diagonal integral will be absolutely convergent.  The
+rational sum converges absolutely and locally uniformly before integration, but we do not claim
+that the sum of its absolute values is globally integrable; cuspidal cancellation can be lost
+under absolute values.
 
 ### 1.2 Standing global notation
 
@@ -243,15 +231,16 @@ $$
 \tag{1.6}
 $$
 
-All orbital quotient measures below are obtained from the same Haar measures by iterated
-quotient integration.  This convention is essential: an orbital integral and the volume of its
-centralizer quotient must use complementary measures for their product to be intrinsic.
+Every quotient measure below is obtained from these Haar measures by iterated quotient
+integration.  This convention makes the central quotient, convolution operator, and kernel
+integral use one compatible normalization.
 
 ### 1.4 Scope of the theorem
 
-We shall prove (1.1) for factorizable Schwartz test functions that are finite under the left and
-right maximal compact actions, compactly supported modulo the center at finite places, and
-strongly cuspidal at $v_0$.  Finite sums of such tensors are allowed by linearity.
+We shall prove (1.1) for factorizable kernel-admissible Schwartz test functions that are finite
+under the left and right maximal compact actions, compactly supported modulo the center at
+finite places, and strongly cuspidal at $v_0$.  Kernel admissibility is the explicit fixed-power
+decay condition in Section 2.1.  Finite sums of such tensors are allowed by linearity.
 
 The theorem includes:
 
@@ -260,12 +249,12 @@ The theorem includes:
 3. trace-classness on the whole fixed-central-character $L^2$ space;
 4. an absolutely integrable canonical diagonal;
 5. an absolutely convergent cuspidal spectral expansion;
-6. an absolutely convergent central-plus-elliptic geometric expansion;
-7. equality of those expansions without regularization.
+6. equality of the spectral and geometric kernel expansions without regularization.
 
-It does not evaluate $\operatorname{tr}\pi(f)$ or $O_\gamma(f)$.  Keeping existence separate
-from evaluation prevents a circular argument: local character and orbital calculations may use
-the trace formula only after the trace formula itself has been analytically justified.
+It does not evaluate $\operatorname{tr}\pi(f)$, classify rational conjugacy classes, or unfold
+the diagonal into orbital integrals.  Keeping the kernel theorem separate prevents a circular
+argument: the later spectral and geometric volumes may use this trace identity only after its
+analytic justification has been completed.
 
 For later reference, here is the precise dependency contract.  From Book 100 we use the
 Hilbert--Schmidt kernel theorem, the characterization of trace class as a product of two
@@ -289,20 +278,28 @@ Let $v$ be a place of $F$.  Write $G_v=G(F_v)$ and $Z_v=Z(F_v)$.  At a finite pl
 $\mathcal H(G_v,\omega_v^{-1})$ to be the smooth, locally constant functions satisfying (1.5)
 whose support has compact image in $Z_v\backslash G_v$.  At an archimedean place let
 $\mathcal C(G_v,\omega_v^{-1})$ be the Harish--Chandra Schwartz space modulo $Z_v$, again with
-central transformation (1.5).
-
-For the arguments below it is useful to state the decay concretely.  Choose a proper
-submultiplicative norm $\|\cdot\|_v\geq1$ on $Z_v\backslash G_v$.  For every left-right invariant
-differential operator $D$ and every $A>0$, an archimedean Schwartz function satisfies
+central transformation (1.5).  For the pointwise Poincare series we use a smaller
+**kernel-admissible** subspace.  Choose proper symmetric submultiplicative algebraic heights
+$\|\cdot\|_v\geq1$ on $Z_v\backslash G_v$.  Algebraic-height balls have polynomial Haar
+volume, and the rational-point lemma below has a polynomial exponent depending only on $F$ and
+these heights; finite-adelic support changes its constant, not its exponent.  Choose $A_F$ at
+least as large as both exponents and fix $Q>A_F+1$.  Kernel admissibility means that, for every
+left-right invariant differential operator $D$,
 
 $$
-|Df_v(g)|\leq C_{D,A}\|g\|_v^{-A}.
+|Df_v(g)|\leq C_D\|g\|_v^{-Q}.
 \tag{2.1}
 $$
 
-Equivalent norms give the same space.  We additionally require finite left and right
-$K_v$-type.  This makes the eventual global operator land in finitely many compact types; it is
-not needed merely to define the local integral.
+Replacing the heights by equivalent ones only changes the admissible threshold.  Compactly
+supported functions modulo $Z_v$ are kernel-admissible.  This extra condition must not be
+confused with the defining Harish--Chandra Schwartz estimates: a Harish--Chandra Schwartz
+function need not decrease faster than every algebraic power, and only one sufficiently large
+fixed power is required here.  The volume choice in $A_F$ also makes (2.1), and every derivative
+version of it, integrable modulo the center.  We additionally require finite left and right
+$K_v$-type.  This
+makes the eventual global operator land in finitely many compact types; it is not needed merely
+to define the local integral.
 
 At almost every finite place, $\omega_v$ is unramified and the distinguished function is the
 normalized central-character extension of the characteristic function of $K_v$.  Its precise
@@ -338,38 +335,54 @@ resulting integral is another instance of (2.2).
 
 The representation-theoretic meaning is exact.
 
-**Proposition 2.2.** If $f_v$ is strongly cuspidal, then every representation smoothly induced
-from $B_v$ satisfies
+**Proposition 2.2.** If $f_v$ is strongly cuspidal, then every unitary representation smoothly
+induced from $B_v$ satisfies
 
 $$
 I_v(\chi_v,s)(f_v)=0.
 \tag{2.4}
 $$
 
-**Proof.** In the compact picture the operator kernel between compact-picture points $x$ and
-$y$ is
+**Proof.** On the unitary axis, the compact-picture kernel between compact-picture points $x$
+and $y$ is
 
 $$
-\int_{T_v}\chi_v(t)|\alpha(t)|_v^{s}\delta_B(t)^{1/2}
+\int_{Z_v\backslash T_v}\chi_v(t)|\alpha(t)|_v^{s}\delta_B(t)^{1/2}
  \left(\int_{N_v}f_v(x^{-1}tny)\,dn\right)dt.
 $$
 
-The inner integral is zero.  This proves (2.4) in the chamber of absolute convergence.
-Meromorphic continuation of the finite-dimensional compact-type matrix coefficients proves it
-for all $s$.  $\square$
+The central quotient is required for the integrand to descend and prevents an infinite central
+factor.  Absolute convergence holds for the honest tempered action, and the inner integral is
+zero.  This proves (2.4) for unitary induction.  If $v$ is nonarchimedean and $f_v$ is compactly
+supported modulo the center, the compact-picture matrix entries are Laurent transforms of
+compactly supported data, so the zero extends meromorphically to every parameter.  No such
+off-axis assertion is made for a general archimedean Schwartz coefficient: at a nonunitary
+reducibility point formal continuation need not agree with honest convolution.  $\square$
 
 ### 2.3 Cuspidal factors at a real place
 
-At $v_0$, choose a discrete-series representation $D$ of $\mathrm{GL}_2(\mathbf R)$ with the
-central character compatible with $\omega_{v_0}^{-1}$.  A compact-finite matrix coefficient of
-$D$, or a finite linear combination forming a pseudo-coefficient, belongs to the Schwartz space
-modulo the center and is strongly cuspidal.
+At $v_0$, the local constant-term theory supplies strongly cuspidal compact-finite matrix
+coefficients of discrete-series representations of $\mathrm{GL}_2(\mathbf R)$ with central
+character $\omega_{v_0}^{-1}$.  This supply meets the kernel condition rather than merely making
+it a formal hypothesis.  For lowest weight $k$, the lowest-weight coefficient in Cartan
+coordinates is, up to a unitary central factor and compact phases,
+$\big(\cosh(t/2)\big)^{-k}$.  Invariant derivatives of a compact-finite coefficient are finite
+sums of coefficients in the same representation and have the same exponential rate, up to a
+polynomial in $t$.  Algebraic height is comparable to $e^{c|t|}$ for a fixed $c>0$.
+Consequently, choosing $k$ sufficiently large in the parity prescribed by
+$\omega_{v_0}(-1)$ makes (2.1) hold for the fixed $Q$.  There are arbitrarily large weights in
+either parity, so admissible strongly cuspidal factors exist for every unitary real central
+character.  A compactly supported strongly cuspidal function modulo the center, when chosen,
+is also allowed.
 
-The last assertion is the archimedean constant-term theorem established in the preceding
-constant-term theory.  Its hypotheses match ours: the coefficient is square-integrable modulo
-the center, compact-finite, and its unipotent integrals are absolutely convergent.  Orthogonality
-of discrete series to parabolically induced representations makes the compact-picture kernel in
-Proposition 2.2 zero, and left-right translates give the full two-sided condition (2.2).
+Strong cuspidality is the archimedean constant-term theorem established in the preceding
+constant-term theory: compact-finite discrete-series coefficients are square-integrable modulo
+the center, their unipotent integrals converge absolutely, and every left-right translate has
+zero constant term.  Kernel admissibility is an additional convergence condition here; it is
+not inferred merely from membership in the Harish--Chandra Schwartz space.  The high-weight
+calculation above proves that the condition is nonempty but does not claim packet selection.
+Constructing packet-selecting pseudo-coefficients belongs to the later spectral-side analysis
+and is not smuggled in as a proof input here.
 
 This construction explains the phrase “cuspidal archimedean factor.”  We use actual
 operator-level cuspidality, not merely a function whose induced characters happen to have trace
@@ -386,7 +399,8 @@ f=\bigotimes_v f_v
 $$
 
 with $f_v$ in the local space just defined, distinguished spherical factors almost everywhere,
-and $f_{v_0}$ strongly cuspidal.  We call such an $f$ an **admissible cuspidal test function**.
+every archimedean factor kernel-admissible, and $f_{v_0}$ strongly cuspidal.  We call such an $f$
+an **admissible cuspidal test function**.
 A finite sum of admissible tensors will be called admissible as well, provided every tensor has
 a strongly cuspidal factor at the same real place.
 
@@ -407,8 +421,10 @@ I(\chi,s)(f)=\bigotimes_v I_v(\chi_v,s)(f_v).
 \tag{2.7}
 $$
 
-Since the $v_0$ factor is zero, the global induced operator is zero.  Continuation preserves the
-identity.
+On the unitary axis the $v_0$ factor is zero, so the global induced operator is zero.  This is
+exactly the range needed for Eisenstein wave packets.  Residual determinant characters are
+annihilated separately by the vanishing parabolic transform, as in Book 103; we do not pass the
+archimedean convolution operator through a nonunitary reducibility point.
 
 ### 2.5 Adjoint, convolution, and finite type
 
@@ -420,6 +436,9 @@ $$
 =\langle u,R_\omega(f^*)v\rangle.
 \tag{2.8}
 $$
+
+Inversion exchanges left and right derivatives, and the heights in Section 2.1 are symmetric;
+hence $f^*$ is again kernel-admissible, compact-finite, and of the required finite support.
 
 If $f,h$ have compatible central character conventions and their convolution is defined on the
 central quotient, Fubini gives
@@ -486,12 +505,12 @@ for a fixed $c$.  One may take the product over places of the maximum of the ent
 entries of the inverse, minimized over scalar multiplication.
 
 **Lemma 3.1.** For compact sets $C_1,C_2$ in $G(\mathbf A)$ modulo the center, and for a fixed
-compact finite-adelic set $C_f$, there are constants $A,C$ such that
+compact finite-adelic set $C_f$, there are constants $A_F,C$ such that
 
 $$
 \#\{\gamma\in Z(F)\backslash G(F):
  x^{-1}\gamma y\in C_fG_\infty,\ H(x^{-1}\gamma y)\leq X\}
-\leq CX^A
+\leq CX^{A_F}
 \tag{3.4}
 $$
 
@@ -501,14 +520,15 @@ for $x\in C_1$, $y\in C_2$, and $X\geq1$.
 fractional ideal.  Modulo a scalar, choose a primitive representative, meaning that the entries
 generate one of finitely many ideal classes.  Multiplying by one of finitely many class
 representatives puts the four entries in a fixed lattice in $F_\infty^4$.  The height bound puts
-that lattice point in a box of side at most a fixed power of $X$.  A lattice has at most
-$O(X^A)$ points in such a box.  The determinant-zero locus is discarded, and passing from
+that lattice point in a box of side at most a fixed power of $X$.  Its power depends only on
+$F$ and the fixed height, while the lattice depends on $C_f$.  A lattice therefore has at most
+$O(X^{A_F})$ points in such a box.  The determinant-zero locus is discarded, and passing from
 primitive matrices to projective classes only decreases the count.  Multiplication by $x$ and
 $y$ in fixed compact sets changes all bounds by a constant.  Summing over the finitely many
 ideal classes proves (3.4).  $\square$
 
-The exponent is intentionally coarse.  Arbitrary power decay of a Schwartz function makes any
-fixed polynomial exponent sufficient.
+The exponent is intentionally coarse.  Its role is only to choose the fixed admissibility
+threshold $Q>A_F+1$ in Section 2.1.
 
 ### 3.3 Absolute and differentiated convergence
 
@@ -519,14 +539,14 @@ locally constant in the finite variables.
 
 **Proof.** Fix compact sets for $x$ and $y$.  Divide the rational elements into height shells
 $2^j\leq H(x^{-1}\gamma y)<2^{j+1}$.  Lemma 3.1 bounds the number in the $j$-th shell by
-$C2^{Aj}$.  For any $M$, (2.1) bounds a differentiated summand by $C_M2^{-Mj}$.  Taking $M>A+1$
-makes
+$C2^{A_Fj}$.  The product of the local bounds (2.1) bounds a differentiated summand by
+$C_D2^{-Qj}$.  Since $Q>A_F+1$,
 
 $$
-\sum_{j\geq0}C2^{Aj}2^{-Mj}
+\sum_{j\geq0}C2^{A_Fj}2^{-Qj}
 $$
 
-converge.  The constants are uniform on the chosen compact sets.  The Weierstrass criterion
+converges.  The constants are uniform on the chosen compact sets.  The Weierstrass criterion
 gives local uniform convergence, and applying it to every derivative justifies termwise
 differentiation.  $\square$
 
@@ -619,14 +639,17 @@ fixed $x$, the conjugate-dual section $y\mapsto K_f(x,y)$ is cuspidal.  All diff
 constant terms vanish as well.
 
 **Proof.** Average (3.1) over $N(F)\backslash N(\mathbf A)$.  Rational elements are grouped by
-$B(F)\backslash G(F)$, which parametrizes rational lines.  Within one group, the sum over
-$N(F)$ and the quotient integral unfold to the full $N(\mathbf A)$ integral in (4.1).  Absolute
-convergence on truncated cusp regions follows from Theorem 3.2; Schwartz decay then permits the
-truncation to tend to infinity.  Each unfolded term is zero by (4.3).  Thus the constant term in
-$x$ vanishes.  Applying (3.5) and the same argument to $f^*$ proves the assertion in $y$.
-Differentiation is permitted by Theorem 3.2 and only replaces $f$ by a derivative, whose
-parabolic transform is still zero because (2.2) allows arbitrary left and right translates.
-$\square$
+$B(F)\backslash G(F)$, which parametrizes rational lines.  More explicitly, after choosing a
+representative $\delta$ of such a line, the elements in its fiber are represented by
+$t n(a)\delta$ with $t\in Z(F)\backslash T(F)$ and $a\in F$.  The sum over $a$ and the quotient
+integral over $F\backslash\mathbf A$ unfold, after the harmless torus change of variable, to the
+full $N(\mathbf A)$ integral in (4.1), with $\delta$ absorbed into the free right variable.
+The unipotent quotient is compact.  Thus Theorem 3.2 gives uniform absolute convergence while
+the averaging variable runs over it, and Tonelli justifies the grouping and unfolding.  Every
+unfolded term is zero by (4.3), so the constant term in $x$ vanishes.  Applying (3.5) and the
+same argument to $f^*$ proves the assertion in $y$.  Differentiation is permitted by Theorem 3.2;
+differentiating the identically zero transform (2.2) in its free left and right variables shows
+that the transformed derivatives are still zero.  $\square$
 
 ### 4.4 Annihilation of the noncuspidal spectrum
 
@@ -634,9 +657,12 @@ There is a second, spectral proof of the range statement, and it supplies more i
 rank-one constant-term theory classifies the noncuspidal closed subspace, at fixed level and
 finite type, as the closure of unitary Eisenstein wave packets and one-dimensional residual
 characters.  Proposition 2.2 and restricted tensor factorization make $R_\omega(f)$ zero on
-every induced representation.  Convolution through the Eisenstein sum, followed by continuation,
-makes it zero on every Eisenstein series; integration makes it zero on wave packets; taking
-residues makes it zero on residual characters.
+every unitary induced representation, so it kills every genuine $L^2$ Eisenstein wave packet.
+The parabolic transform of the strongly cuspidal factor is zero; the residual calculation in
+Book 103 therefore makes its scalar on every determinant-character residue zero as well.  This
+uses the honest archimedean action on the unitary axis and a direct one-dimensional calculation
+on residues, not an invalid meromorphic continuation of archimedean convolution through a
+nonunitary reducibility point.
 
 Therefore
 
@@ -652,36 +678,6 @@ same statement to $f^*$ gives the left equality.
 This argument verifies the exact dependency hypotheses.  The central character is unitary, the
 test is factorizable and finite-level, and the local hypothesis is the strong two-sided condition,
 not merely trace-level vanishing.  Hence no residual contribution is left untreated.
-
-### 4.5 Rapid decay in both variables
-
-Cuspidal smooth vectors of fixed level and type decay rapidly in every cusp with all invariant
-derivatives.  Applied to the kernel, this gives a two-variable form.
-
-**Proposition 4.3.** Let $\operatorname{ht}(x)\geq1$ be the adelic cusp height from reduction
-theory.  For invariant differential operators $D_x,D_y$ and integers $A,B\geq0$, there is a
-continuous seminorm $\nu$ on the admissible test space such that
-
-$$
-|D_xD_yK_f(x,y)|
-\leq \nu(f)\operatorname{ht}(x)^{-A}\operatorname{ht}(y)^{-B}.
-\tag{4.5}
-$$
-
-The estimate is uniform after $x,y$ are reduced into the finitely many cusp charts belonging to
-the fixed finite level.
-
-**Proof.** First fix $y$ in a compact set.  Proposition 4.2 gives zero constant term in $x$;
-the invariant Sobolev bounds obtained by differentiating the periodization are locally uniform
-in $y$.  The transverse Poincare inequality and Sobolev embedding from cuspidal Sobolev theory
-then give arbitrary power decay in $\operatorname{ht}(x)$.  Apply the same argument to (3.5) for
-decay in $y$.  To make the bounds simultaneous, apply the first argument to the finitely many
-$y$-Sobolev derivatives required by the second Sobolev embedding.  The differentiated
-periodization seminorms are bounded by finitely many Schwartz seminorms of $f$.  Iterating with
-arbitrary orders proves (4.5).  $\square$
-
-Because the quotient measure has cusp density comparable to $dH/H^2$, any sufficiently large
-choice of $A$ and $B$ makes the right side integrable in either or both variables.
 
 ## 5. Smoothing and finite analytic support
 
@@ -704,7 +700,11 @@ $$
 $$
 
 where $\nu_s$ is a finite sum of $L^1$ norms of derivatives of $f$.  Applying this to $f^*$ and
-duality shows that $R_\omega(f)$ maps $H^{-s}$ continuously to $L^2$.  Combining the two sides,
+duality shows that $R_\omega(f)$ maps $H^{-s}$ continuously to $L^2$.  To gain output
+derivatives and allow a negative-order source simultaneously, pair $D R_\omega(f)u$ with a
+smooth vector $v$.  After moving $D$ to the test function and taking the adjoint, the resulting
+operator on $v$ is again convolution by a differentiated admissible test; (5.2), now with $s$
+derivatives, bounds it in $H^s$.  Sobolev duality therefore gives
 
 $$
 R_\omega(f):H^{-s}\longrightarrow H^t
@@ -859,9 +859,9 @@ $$
 is continuous on each fixed finite-level, finite-type admissible Schwartz space.  If $f_n\to f$
 in that topology, then $R_\omega(f_n)\to R_\omega(f)$ in trace norm and their traces converge.
 
-This continuity permits compactly supported archimedean approximations to be removed without
-changing the identity.  It is also what makes finite sums of factorizable tests harmless: prove
-the formula tensor by tensor and use linearity and (6.4).
+This continuity also makes finite sums of factorizable tests harmless: prove the formula tensor
+by tensor and use linearity and (6.4).  No density assertion for compactly supported
+archimedean tests is needed in the stronger algebraic-weight topology of Section 2.1.
 
 ### 6.4 Why typewise trace class is enough here
 
@@ -897,79 +897,66 @@ by (6.2) and that its diagonal is integrable.
 
 ### 7.2 Identification of the canonical kernel
 
-Let $H_r(x,y)$ be the smooth rapidly decreasing cuspidal kernel of $A^{-r}$, taking $r$ larger if
-necessary to obtain continuity with all derivatives used below.  The kernel of (6.2) is the
-iterated contraction
+Fix first a finite derivative order.  Since (5.8) holds for every exponent, increase $r$ in
+(6.2) until the inverse-power kernel theorem gives a cuspidal kernel $H_r(x,y)$ with that many
+continuous derivatives and the corresponding rapid-decay bounds.  Put $B=A^{-r}$ and define
+the $L^2$ row vector
 
 $$
-L_f(x,y)=\int\!\!\int H_r(x,u)S(u,v)H_r(v,y)\,du\,dv,
+h_x(y)=\overline{H_r(x,y)}.
 \tag{7.1}
 $$
 
-where $S(u,v)$ is understood distributionally if $S$ itself has no pointwise kernel.  Equivalently,
-expand $A^{-r}$ in its eigenbasis and interpret (7.1) as an absolutely convergent Sobolev
-pairing.  Elliptic smoothing makes $L_f$ smooth.
-
-Both $L_f$ and $K_f$ represent $R_\omega(f)$ by Proposition 3.3 and (6.2).  Their difference is a
-smooth kernel representing the zero operator.  Fix $x$.  Pairing the difference against every
-compactly supported smooth function in $y$ gives zero.  A smooth function defining the zero
-distribution is identically zero.  Hence
+Then $(Bu)(x)=\langle u,h_x\rangle$.  The high inverse-power kernel estimates from cuspidal
+Sobolev theory say that $x\mapsto h_x$ has the chosen number of continuous $L^2$-valued
+derivatives and that each decreases rapidly in every cusp.  Since $S$ is bounded,
 
 $$
-L_f(x,y)=K_f(x,y)
+L_f(x,y)=\overline{\big(BS^*h_x\big)(y)}
 \tag{7.2}
 $$
 
-for all $x,y$.  This argument upgrades almost-everywhere kernel uniqueness to pointwise equality
-using the independently proved smoothness of the Poincare series.
-
-Here is a finite-rank version that makes the construction of $L_f$ explicit.  Let $E_n$ be the
-spectral projection of $A$ onto its first $n$ eigenvectors and put
+defines a kernel with the chosen differentiability and decay in both variables.  Moreover,
 
 $$
-R_n=E_nA^{-r}SA^{-r}E_n.
-\tag{7.2a}
+(BSB u)(x)=\langle SB u,h_x\rangle
+=\langle u,BS^*h_x\rangle
+=\int L_f(x,y)u(y)\,dy,
 $$
 
-Its kernel is the finite sum
+first for smooth compactly supported $u$ and then for every $u\in L^2$.  This construction does
+not pretend that the middle bounded operator $S$ has a pointwise kernel.
+
+Indeed, self-adjointness of $B$ gives
 
 $$
-L_n(x,y)=\sum_{i,j\leq n}
-\lambda_i^{-r}\lambda_j^{-r}
-\langle S\phi_j,\phi_i\rangle
-\phi_i(x)\overline{\phi_j(y)}.
-\tag{7.2b}
+L_f(x,y)=\langle h_y,S^*h_x\rangle,
 $$
 
-The two outer inverse powers gain as many Sobolev orders as desired after $r$ is increased.
-Polynomial spectral counting and elliptic pointwise bounds therefore show that $L_n$ is Cauchy,
-with all prescribed derivatives, uniformly on compact subsets.  In the cusps the same argument,
-combined with rapid decay of the eigenfunctions and their derivatives, is Cauchy in weighted
-supremum norms.  Its limit is the smooth kernel denoted $L_f$.  On the other hand,
-$R_n\to R_\omega(f)$ in trace norm: spectral projections converge strongly, and finite-rank
-compression converges in trace norm for every trace-class operator.  Hence $L_f$ represents
-$R_\omega(f)$ and the preceding uniqueness argument applies.
+so every differentiated value is bounded by $\|S\|$ times the corresponding rapidly decreasing
+$L^2$ row norms at $x$ and $y$.  This proves the asserted simultaneous decay rather than only
+separate smoothness.
 
-This approximation also settles a possible diagonal ambiguity.  Every $L_n(x,x)$ is a genuine
-finite-dimensional diagonal.  The weighted convergence just proved gives
+Both $L_f$ and $K_f$ represent $R_\omega(f)$ by Proposition 3.3 and (6.2).  Taking the chosen
+order at least zero, their difference is continuous.  Pairing the two operator formulas against
+compactly supported smooth vectors in both variables shows that this difference is the zero
+distribution on $[\overline G]\times[\overline G]$.  A continuous function defining the zero
+distribution for a measure of full support vanishes everywhere.  Hence
 
 $$
-L_n(x,x)\longrightarrow L_f(x,x)=K_f(x,x)
-$$
-
-pointwise and in $L^1([\overline G])$.  Thus the diagonal used below is the limit of honest
-finite-rank diagonals, not an arbitrary representative of an almost-everywhere kernel.
-
-### 7.3 Absolute diagonal integrability
-
-Set $y=x$ in (4.5).  Choosing $A+B$ larger than the exponent needed for the cusp measure gives
-
-$$
-\int_{[\overline G]}|K_f(x,x)|\,dx<\infty.
+L_f(x,y)=K_f(x,y)
 \tag{7.3}
 $$
 
-There is also a purely ideal-theoretic estimate.  Write (6.2) as $UV$ with
+for all $x,y$.  This upgrades almost-everywhere kernel uniqueness to pointwise equality.  It also
+proves rapid two-variable decay through the chosen derivative order at the correct logical
+point: after a global smoothing factorization has supplied $L^2$ row estimates.  Repeating the
+argument with larger $r$ proves the statement for every order; the result is always the same
+canonical kernel $K_f$.  Local convergence of the Poincare series alone would not have done so.
+
+### 7.3 Absolute diagonal integrability
+
+Write (6.2) as $UV$ with
 $U=A^{-r}S$ and $V=A^{-r}$.  Both are Hilbert--Schmidt.  If $K_U,K_V$ are their $L^2$ kernels,
 the diagonal contraction
 
@@ -979,21 +966,31 @@ x\longmapsto\int K_U(x,y)K_V(y,x)\,dy
 $$
 
 belongs to $L^1$, because Cauchy--Schwarz on the product gives norm at most
-$\|U\|_2\|V\|_2$.  By (7.2), (7.4) is the canonical diagonal $K_f(x,x)$.  This second proof does
-not depend on the visual plausibility of a pointwise series.
-
-More precisely, approximate $U$ and $V$ in Hilbert--Schmidt norm by their spectral
-compressions.  Their contractions converge in $L^1$ by
+$\|U\|_2\|V\|_2$.  With the row convention above,
 
 $$
-\|K_{U_n}K_{V_n}^{\mathrm{op}}-K_UK_V^{\mathrm{op}}\|_{L^1}
-\leq \|U_n-U\|_2\|V_n\|_2+\|U\|_2\|V_n-V\|_2.
-\tag{7.4a}
+K_U(x,y)=\overline{(S^*h_x)(y)},
+\qquad K_V(y,x)=h_x(y).
 $$
 
-The finite contractions are exactly $L_n(x,x)$.  The preceding weighted convergence identifies
-their $L^1$ limit with the pointwise diagonal of $K_f$.  This supplies the missing bridge between
-the Hilbert--Schmidt equivalence class and the canonical smooth representative.
+Thus the contraction is defined for every $x$ and equals
+
+$$
+\int \overline{(S^*h_x)(y)}h_x(y)\,dy
+=\langle h_x,S^*h_x\rangle
+=L_f(x,x)=K_f(x,x).
+\tag{7.5}
+$$
+
+Consequently
+
+$$
+\int_{[\overline G]}|K_f(x,x)|\,dx<\infty.
+\tag{7.6}
+$$
+
+This supplies the bridge between the Hilbert--Schmidt equivalence class and the canonical smooth
+representative without relying on the visual plausibility of a pointwise diagonal.
 
 ### 7.4 The diagonal trace theorem
 
@@ -1002,14 +999,14 @@ the Hilbert--Schmidt equivalence class and the canonical smooth representative.
 $$
 \operatorname{tr}R_\omega(f)
 =\int_{[\overline G]}K_f(x,x)\,dx,
-\tag{7.5}
+\tag{7.7}
 $$
 
 and the integral is absolutely convergent.
 
 **Proof.** Use the Hilbert--Schmidt product formula on $UV$ from Section 7.3.  It identifies the
-operator trace with the integral of the contraction (7.4).  Pointwise kernel identification
-(7.2) turns that contraction into $K_f(x,x)$, and (7.3) gives absolute convergence.  $\square$
+operator trace with the integral of the contraction (7.4).  Identity (7.5) turns that
+contraction into $K_f(x,x)$, and (7.6) gives absolute convergence.  $\square$
 
 The order of proof is decisive: trace ideal, canonical kernel, integrable diagonal, trace
 identity.  Reversing that order would assume the main analytic conclusion.
@@ -1095,7 +1092,7 @@ m(\pi)\operatorname{tr}\pi(f),
 \tag{8.6}
 $$
 
-and both sides are absolutely convergent in the senses of (7.3) and (8.5).
+and both sides are absolutely convergent in the senses of (7.6) and (8.5).
 
 **Proof.** Equation (4.4) makes the operator zero off the cuspidal space.  Take the trace in the
 orthogonal decomposition (8.1), use (8.2), and apply the direct-sum trace identity justified by
@@ -1104,576 +1101,123 @@ orthogonal decomposition (8.1), use (8.2), and apply the direct-sum trace identi
 This completes the spectral half of the trace formula without invoking a Plancherel formula for
 the full automorphic space.
 
-## 9. Rational conjugacy in rank two
+## 9. Equality of the spectral and geometric kernel expansions
 
-### 9.1 Central, split, unipotent, and elliptic elements
+The spectral expansion has now been justified as an ordinary trace.  What remains in this book
+is to identify the same number with the geometric object that was used to construct the
+operator.  At this stage “geometric expansion” means the diagonal of the rational Poincare
+kernel.  It does not yet mean a sum of orbital integrals.  That distinction preserves the
+dependency order: rational conjugacy, centralizer measures, orbital convergence, and the
+central-plus-elliptic regrouping are the work of the later geometric-side volume.
 
-The geometric expansion is governed by a classification peculiar to degree two.  For
-$\gamma\in G(F)$ let
+### 9.1 Compact truncations of the geometric kernel
+
+Let $\chi_T$ be a smooth reduction-theoretic cutoff which is one below cusp height $T$, zero
+above height $2T$, and has invariant derivatives bounded independently of $T$.  Define
 
 $$
-p_\gamma(X)=X^2-\operatorname{tr}(\gamma)X+\det(\gamma),
-\qquad
-\Delta(\gamma)=\operatorname{tr}(\gamma)^2-4\det(\gamma).
+I_T(f)=
+\int_{[\overline G]}
+\chi_T(x)
+\sum_{\gamma\in Z(F)\backslash G(F)}
+f(x^{-1}\gamma x)\,dx.
 \tag{9.1}
 $$
 
-Exactly one of the following occurs.
-
-1. **Central:** $\gamma=zI$.
-2. **Split regular:** $\Delta(\gamma)$ is a nonzero square in $F$; there are two distinct
-   $F$-eigenlines.
-3. **Noncentral nonsemisimple:** $\Delta(\gamma)=0$ but $\gamma$ is not central; there is one
-   $F$-eigenline and $\gamma$ is a scalar times a nontrivial unipotent element.
-4. **Elliptic:** $p_\gamma$ is irreducible over $F$; there is no $F$-eigenline.
-
-**Proof.** The minimal polynomial has degree at most two.  If it has degree one, $\gamma$ is
-central.  If it has two distinct roots in $F$, their eigenspaces give case 2.  A repeated root
-gives either a scalar matrix or one Jordan block, case 3.  If there is no root in $F$, the
-quadratic characteristic polynomial is irreducible, case 4.  These alternatives are exhaustive
-and disjoint.  $\square$
-
-Multiplication by a rational scalar does not change the classification.  Thus it descends to
-$Z(F)\backslash G(F)$.
-
-### 9.2 Centralizers and quotient measures
-
-For noncentral $\gamma$, let $G_\gamma$ be its algebraic centralizer and put
-$\overline G_\gamma=G_\gamma/Z$.  If $\gamma$ is regular, then
-
-$$
-F[\gamma]\simeq
-\begin{cases}
-F\times F,&\gamma\text{ split},\\
-E,&\gamma\text{ elliptic},
-\end{cases}
-$$
-
-where $E/F$ is quadratic, and $G_\gamma\simeq F[\gamma]^\times$ as an $F$-torus.  In the elliptic
-case $\overline G_\gamma$ is anisotropic over $F$, so
-
-$$
-\overline G_\gamma(F)\backslash\overline G_\gamma(\mathbf A)
-\tag{9.2}
-$$
-
-is compact and has finite volume.  This compactness is the torus analogue of the compactness of
-the norm-one idele class group: after quotienting scalars, the remaining torus is a norm-one
-torus up to a finite isogeny.
-
-Choose Haar measure $dg_\gamma$ on $\overline G_\gamma(\mathbf A)$ and the complementary quotient
-measure on $\overline G_\gamma(\mathbf A)\backslash\overline G(\mathbf A)$, where
-$\overline G=G/Z$.  Define
-
-$$
-a(\gamma)=\operatorname{vol}\big(
-\overline G_\gamma(F)\backslash\overline G_\gamma(\mathbf A)
-\big).
-\tag{9.3}
-$$
-
-Rescaling $dg_\gamma$ rescales $a(\gamma)$ and the quotient orbital measure inversely, so their
-product below is independent of that auxiliary scalar.
-
-### 9.3 Elliptic orbital distributions
-
-For elliptic $\gamma$ define
-
-$$
-O_\gamma(f)=
-\int_{\overline G_\gamma(\mathbf A)\backslash\overline G(\mathbf A)}
-f(g^{-1}\gamma g)\,d\dot g.
-\tag{9.4}
-$$
-
-The integral is absolutely convergent.  At finite places compact support restricts the orbit to
-a compact set modulo the centralizer.  At archimedean places a regular semisimple orbit map is
-proper modulo its centralizer up to polynomial Jacobian factors, and Schwartz decay dominates
-those factors.  A detailed uniform estimate over varying rational $\gamma$ will be proved in
-Chapter 11.
-
-For a factorizable function and compatible product measures, Fubini gives
-
-$$
-O_\gamma(f)=\prod_vO_{\gamma_v}(f_v).
-\tag{9.5}
-$$
-
-Only finitely many factors differ from their normalized unramified values.  Formula (9.5) records
-factorization; it does not evaluate the local factors.
-
-### 9.4 The central term
-
-Modulo $Z(F)$ all rational scalar matrices give one element, represented by $1$.  Its summand in
-the diagonal kernel is constant:
-
-$$
-f(x^{-1}1x)=f(1).
-$$
-
-Therefore its contribution is
-
-$$
-I_{\mathrm{cent}}(f)=\operatorname{vol}([\overline G])f(1).
-\tag{9.6}
-$$
-
-The finite volume and the value $f(1)$ use the normalizations of Chapter 1.  There is no sum over
-rational scalars because the kernel was correctly indexed by $Z(F)\backslash G(F)$.
-
-## 10. Truncation and parabolic cancellation
-
-### 10.1 Compact truncations
-
-Although $K_f(x,x)$ is absolutely integrable, the raw nonnegative majorant
-
-$$
-\sum_\gamma|f(x^{-1}\gamma x)|
-\tag{10.1}
-$$
-
-need not be integrable on the whole quotient.  Cuspidal cancellation may be destroyed by the
-absolute values.  Thus one may not invoke Tonelli on (10.1) and simply group the full sum by
-conjugacy classes.
-
-Let $[\overline G]_{\leq T}$ be the compact truncation defined by cusp height at most $T$, with a
-smooth cutoff $\chi_T$ equal to one below $T$ and zero above $2T$.  Set
+For fixed $T$, the support of $\chi_T$ is compact on the fixed-level quotient.  Theorem 3.2
+gives absolute, uniform convergence of the rational sum there.  It follows that (9.1) is an
+ordinary integral and that sum, differentiation, and integration may be interchanged on this
+truncation.  In particular,
 
 $$
 I_T(f)=\int_{[\overline G]}\chi_T(x)K_f(x,x)\,dx.
-\tag{10.2}
+\tag{9.2}
 $$
 
-On the compact support of $\chi_T$, Theorem 3.2 permits integration and rearrangement of the
-rational sum.  By (7.3), dominated convergence gives
-
-$$
-\lim_{T\to\infty}I_T(f)=\operatorname{tr}R_\omega(f).
-\tag{10.3}
-$$
-
-### 10.2 Stable rational lines
-
-Every noncentral nonelliptic element stabilizes at least one rational line.  Let $\mathscr L$
-be the set of $F$-lines in $F^2$.  Then $\mathscr L\simeq B(F)\backslash G(F)$.  A split regular
-element fixes exactly two members of $\mathscr L$; a nontrivial unipotent element fixes exactly
-one.
-
-Consequently a sum over noncentral nonelliptic elements can be rewritten as a sum over pairs
-$(\gamma,L)$ with $\gamma L=L$, with weight $1/2$ on the split regular pairs and weight $1$ on
-the unipotent pairs.  Conjugating $L$ to the standard line puts $\gamma$ in $B(F)$.  This is the
-rank-two replacement for the general combinatorics of parabolic subgroups.
-
-To see that the weights introduce no hidden choice, define
-
-$$
-e(\gamma)=\#\{L\in\mathscr L:\gamma L=L\}.
-$$
-
-Then $e(\gamma)=2$ in the split regular case and $e(\gamma)=1$ in the noncentral
-nonsemisimple case.  For any finitely supported function $\Phi$ on the noncentral nonelliptic
-set,
-
-$$
-\sum_\gamma\Phi(\gamma)
-=\sum_{L\in\mathscr L}
-\sum_{\substack{\gamma L=L\\ \gamma\ \mathrm{noncentral}}}
-e(\gamma)^{-1}\Phi(\gamma).
-\tag{10.3a}
-$$
-
-This is double counting.  We apply it first after both geometric and cusp truncation, where the
-support is finite, and only afterward remove the truncations.  No conditional infinite
-rearrangement is concealed in the stable-line argument.
-
-### 10.3 Unfolding the nonelliptic part
-
-**Proposition 10.1.** After the stable-line regrouping of Section 10.2, the main term obtained by
-replacing the truncation cutoff with its full unipotent translate is a finite linear combination
-of integrals of the global parabolic transform (4.1).  Hence this main term is zero for an
-admissible cuspidal test function.  The difference from the truncated contribution is supported
-in the truncation boundary band.
-
-**Proof.** We give the mechanism, including the convergence order.  For the standard line, write
-an element of $B(F)$ modulo $Z(F)$ as $tn(u)$ with $t\in T(F)/Z(F)$ and $u\in N(F)$, separating
-the repeated-root locus when necessary.  In the conjugacy sum, conjugation by a rational element
-carrying the standard line to $L$ unfolds the sum over $B(F)\backslash G(F)$ against the
-automorphic quotient.  The remaining $N(F)$ sum is paired with integration over
-$N(F)\backslash N(\mathbf A)$.  For a compact truncation all sums and integrals are absolutely
-convergent, so
-
-$$
-\sum_{u\in N(F)}\int_{N(F)\backslash N(\mathbf A)}
- f(x^{-1}t n(u)n(v)y)\,dv
-=\int_{N(\mathbf A)}f(x^{-1}tny)\,dn.
-\tag{10.4}
-$$
-
-The right side, with its modular factor, is $f_B(x,y;t)$ and is zero by Lemma 4.1.  The split
-regular weight $1/2$ corrects the two choices of stable line; the unipotent weight is one.  The
-central locus was removed before this regrouping, so its infinitely many stable lines cause no
-overcount.  Passing from compact support to Schwartz decay is justified by cutting the
-archimedean height, applying (10.4), and using arbitrary power decay to remove that cutoff.
-$\square$
-
-There is a small algebraic point in the notation $tn(u)$.  If
-$t=\operatorname{diag}(a,d)$ with $a\ne d$, every element
-$\begin{psmallmatrix}a&b\\0&d\end{psmallmatrix}$ is conjugate inside $N(F)$ to $t$, since
-
-$$
-n(v)^{-1}tn(v)=t n((1-d/a)v),
-$$
-
-and $1-d/a\ne0$.  The sum over $u$ is therefore the rational orbit inside the Borel.  If
-$a=d$, the central element corresponds to $u=0$ and has already been removed; the remaining
-$u\ne0$ form the nontrivial unipotent locus.  Thus the same unipotent unfolding covers both the
-split and repeated-root cases, with exactly the weights in (10.3a).
-
-The proposition explains why strong cuspidality is the right local condition.  It annihilates
-the full two-sided transform appearing after unfolding, before any character or orbital trace is
-taken.
-
-### 10.4 Removal of the truncation
-
-The cutoff $\chi_T$ in (10.2) prevents (10.4) from being an exact full unipotent unfolding near
-the truncation boundary.  We must show that the discrepancy tends to zero.
-
-**Lemma 10.2.** Let $I_T^{\mathrm{par}}(f)$ be the stable-line-regrouped noncentral nonelliptic
-part of (10.2).  There are $C>0$ and $\eta>0$ such that
-
-$$
-|I_T^{\mathrm{par}}(f)|\leq C T^{-\eta}.
-\tag{10.5}
-$$
-
-**Proof.** Insert and subtract the full unipotent integral (10.4), which is zero.  The difference
-is supported where conjugation by $n(v)$ moves a point across the band $T\leq\operatorname{ht}
-\leq2T$.  Reduction theory expresses that band in Iwasawa coordinates with measure
-$dH/H^2$ times compact factors.  If $v$ is small relative to the shrinking unipotent
-cross-section, the cutoff difference is bounded by a derivative of $\chi_T$ times a power of
-$|v|/H$; if $v$ is large, Schwartz decay of $f(x^{-1}tn(v)y)$ gives an arbitrary negative power
-of $|v|$.  Split the $v$-integral at $|v|=H^{1/2}$.  Use the first estimate in the
-small range and the second in the large range.  Since all invariant derivatives of $f$ are
-Schwartz, the resulting integrand is $O(H^{-2-\eta})$ for some $\eta>0$.  Integration for $H\geq T$
-gives (10.5).  The finitely many cusp charts and finite-place supports only change $C$.
-$\square$
-
-We spell out the estimate behind the phrase “repeatedly use.”  In a cusp chart write
-$x=n(q)a(H)k$, where $q$ lies in a fixed compact fundamental set,
-$|\alpha(a(H))|_{\mathbf A}=H$, and the measure is bounded by a compact density times
-$dH/H^2$.  Choose the cutoff as $\chi_T(x)=\chi(H/T)$.  Conjugation gives
-
-$$
-a(H)^{-1}n(v)a(H)=n(\alpha(a(H))^{-1}v).
-\tag{10.5a}
-$$
-
-For $|v|\leq H^{1/2}$, the mean-value theorem and the uniform derivative bounds on $\chi$ give
-
-$$
-|\chi_T(n(v)x)-\chi_T(x)|
-\leq C H^{-1}(1+|v|).
-\tag{10.5b}
-$$
-
-The first moment of the relevant unipotent translate of $f$ is finite uniformly up to fixed
-polynomial factors in the torus variable.  Thus the small range gains one negative root-height
-power.  For
-$|v|>H^{1/2}$, (2.1) gives
-
-$$
-|Df(x^{-1}tn(v)y)|\leq C_N(1+|v|)^{-N}
-\tag{10.5c}
-$$
-
-times fixed polynomial factors in $H$ and $t$.  Taking $N$ large makes the tail gain at least the
-same negative root-height power.  Finite support bounds the nonarchimedean $t$-denominators, while summation over the
-remaining rational $t$ is controlled by the lattice-shell estimate of Lemma 3.1.  Finally,
-
-$$
-\int_T^\infty H^{-\eta}\frac{dH}{H^2}\leq C_\eta T^{-1-\eta}.
-$$
-
-This proves (10.5) and shows explicitly where the rank-one cusp density and
-Schwartz derivatives enter.
-
-Combining Proposition 10.1 and Lemma 10.2 shows that no split or unipotent distribution survives
-the limit in (10.3).  This is a genuine cancellation statement, not an assertion that every
-summand in (10.1) vanishes.
-
-## 11. Absolute convergence of the elliptic expansion
-
-### 11.1 Arithmetic height of a projective conjugacy class
-
-For a noncentral projective element define the invariant
-
-$$
-j(\gamma)=\frac{\operatorname{tr}(\gamma)^2}{\det(\gamma)}.
-\tag{11.1}
-$$
-
-It is unchanged by scalar multiplication and conjugacy.  Together with the isomorphism class of
-the quadratic algebra $F[\gamma]$, it controls a regular projective conjugacy class up to a
-finite ambiguity.  Choose a multiplicative Weil height $H_j(\gamma)$ of $j(\gamma)$ and put
-
-$$
-H_{\mathrm{ell}}(\gamma)=H_j(\gamma)\,
-N_{F/\mathbf Q}(\mathfrak d_{F[\gamma]/F}).
-\tag{11.2}
-$$
-
-Any other standard projective height is polynomially comparable on the finite-support set
-defined by $f$.  Precise exponents are immaterial; the test function decays faster than every
-power.
-
-The quadratic algebra is genuinely additional rational information.  For example, projective
-elements with trace zero all have $j=0$, while the square class of their determinant can produce
-different quadratic centralizers.  This is why (11.2) includes the relative discriminant rather
-than trying to count classes by $j$ alone.  Finite orbital support bounds the permitted local
-square classes outside finitely many places, and the discriminant height measures the remaining
-variation.
-
-### 11.2 Coarse counting and torus-volume bounds
-
-**Lemma 11.1.** There are constants $C,A$ depending on $F$ and the finite support of $f$ such
-that
-
-$$
-\#\{[\gamma]_{\mathrm{ell}}:H_{\mathrm{ell}}(\gamma)\leq X,
-\ O_{\gamma_f}(f_f)\ne0\}\leq CX^A.
-\tag{11.3}
-$$
-
-Moreover, for some $B$,
-
-$$
-a(\gamma)\leq C H_{\mathrm{ell}}(\gamma)^B.
-\tag{11.4}
-$$
-
-**Proof.** Finite orbital support bounds denominators of the coefficients of the characteristic
-polynomial in fixed fractional ideals.  Bounded height then places those coefficients in a box
-in a fixed Minkowski lattice.  Lattice-point counting gives a polynomial bound.  For each
-polynomial there are only finitely many rational conjugacy classes: a regular semisimple
-$2\times2$ matrix is determined up to rational conjugacy by its characteristic polynomial.
-This proves (11.3).
-
-For (11.4), identify the centralizer quotient, up to finite kernel and cokernel, with the adelic
-quotient of the norm-one torus of the quadratic extension $E=F[\gamma]$.  A fundamental region
-is built from ideal classes and a logarithmic unit lattice.  Minkowski's theorem supplies an
-integral ideal of norm at most a fixed power of $N(\mathfrak d_{E/F})$ in every ideal class.
-Counting lattice points in the corresponding bounded Minkowski boxes gives a polynomial bound
-for the number of such classes.  A basis of the logarithmic unit lattice may be chosen with
-lengths bounded by a fixed power of the discriminant by applying successive minima to the
-logarithmic embedding; its covolume, the regulator, obeys the same coarse bound.  The remaining
-roots of unity and local component groups have order bounded by a fixed power of $[E:\mathbf Q]$
-and the discriminant.  Multiplying these factors proves (11.4).  No class-number formula is
-needed.  $\square$
-
-These deliberately rough estimates are enough for convergence and avoid importing any analytic
-information about quadratic $L$-values.
-
-### 11.3 Decay of orbital integrals
-
-**Lemma 11.2.** For every $M>0$ there is a Schwartz seminorm $\nu_M$ such that
-
-$$
-|O_\gamma(f)|\leq \nu_M(f)H_{\mathrm{ell}}(\gamma)^{-M}
-\tag{11.5}
-$$
-
-for every elliptic class meeting the fixed finite support.
-
-**Proof.** At finite places, meeting the compact support bounds the denominators and contributes
-at most a fixed polynomial in the local discriminant.  This follows by covering the compact
-support with finitely many cosets on which the orbit map has constant Jacobian valuation; the
-number and inverse Jacobians of the relevant cosets are polynomial in the discriminant
-valuation.
-
-At the distinguished real place, a nonzero orbital integral of a cuspidal Schwartz function
-requires the class to be elliptic there; locally split regular classes have zero orbital integral
-by the parabolic-transform condition.  On the elliptic set, conjugate $\gamma$ to a rotation
-times a scalar.  The quotient by its compact-mod-center centralizer has polar coordinates whose
-Jacobian grows at most exponentially in the polar distance, while the Harish--Chandra Schwartz
-estimates give arbitrary exponential decay in that distance and arbitrary polynomial decay in
-the semisimple parameter.  At every other archimedean place, the same orbit-coordinate argument
-gives a fixed polynomial Jacobian absorbed by arbitrary Schwartz decay.
-
-The product formula relates the archimedean size of the characteristic coefficients to their
-finite denominators and to the discriminant norm.  Hence, after absorbing the fixed polynomial
-losses just described, the product of local estimates is smaller than every negative power of
-(11.2).  The required constants use only finitely many local Schwartz seminorms, yielding
-(11.5).  $\square$
-
-We justify the orbit-coordinate estimate used in the proof.  Over a local field $k$, let $t$ be
-regular semisimple and let $\mathfrak g=\mathfrak t\oplus\mathfrak q$ be a vector-space
-decomposition.  In exponential or algebraic coordinates near the identity, the derivative of
-
-$$
-\mathfrak q\longrightarrow G_t\backslash G\cdot t,
-\qquad X\longmapsto \exp(-X)t\exp(X),
-$$
-
-is $X\mapsto[t,X]$.  On the two root directions its determinant is, up to a unit and a scalar
-power removed by the center,
-
-$$
-D(t)=(\lambda_1/\lambda_2-1)(\lambda_2/\lambda_1-1).
-\tag{11.5a}
-$$
-
-The inverse-function theorem therefore gives coordinate charts whose Jacobians and inverse
-Jacobians are bounded by fixed powers of $|D(t)|^{-1}$.  A compact set is covered by finitely
-many such charts after subdivision according to the valuation of $D(t)$ at a nonarchimedean
-place.  The number of subdivisions up to valuation $m$ is polynomial in $q^m$, which proves the
-finite-place polynomial loss asserted above.
-
-At an archimedean place use Cartan coordinates $g=k_1a(s)k_2$.  Haar measure is bounded by
-$Ce^{cs}ds\,dk_1\,dk_2$.  Conjugating a fixed regular element by $a(s)$ makes a matrix norm grow
-at least $c_t e^{c's}$ off its centralizer.  The constant $c_t^{-1}$ is bounded by a power of
-$|D(t)|^{-1}$ by (11.5a).  A Schwartz seminorm of order $N$ then bounds the orbital integrand by
-
-$$
-C_N|D(t)|^{-C_N}e^{-(N-c)s}(1+\|t\|)^{-N}.
-\tag{11.5b}
-$$
-
-Taking $N$ large makes the $s$-integral converge and leaves only polynomial powers of the orbit
-discriminant.  At the cuspidal real place, locally split $t$ has orbital integral zero: Iwasawa
-integration writes it as an integral of the parabolic transform (2.2).  For elliptic $t$, its
-centralizer is compact modulo center and the same estimate is easier.  Multiplying the local
-bounds, using the product formula to exchange inverse local discriminants for positive powers at
-the remaining places, and then increasing $N$ proves (11.5) with any prescribed $M$.
-
-This derivation also covers classes approaching the singular set $D(t)=0$.  Their local orbital
-integrals may have polynomial or logarithmic growth, but a logarithm is bounded by every small
-negative power and is absorbed by the discriminant factors in (11.5b).  No uniform regularity at
-the singular orbit has been assumed.
-
-The lemma is a convergence estimate, not an explicit orbital-integral formula.  It is stable
-under invariant differentiation and under finite sums of tensors.
-
-### 11.4 Summability
-
-**Theorem 11.3.** The elliptic geometric series
-
-$$
-\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f)
-\tag{11.6}
-$$
-
-converges absolutely.
-
-**Proof.** Divide the classes into dyadic shells
-$2^k\leq H_{\mathrm{ell}}(\gamma)<2^{k+1}$.  Lemma 11.1 bounds the number of classes by
-$C2^{Ak}$ and the volume by $C2^{Bk}$.  Lemma 11.2 bounds each orbital integral by
-$C_M2^{-Mk}$.  Choose $M>A+B+1$.  The absolute contribution of the $k$-th shell is at most
-$C2^{-k(M-A-B)}$, and the resulting geometric series converges.  $\square$
-
-Absolute convergence here applies after rational elements have been grouped into elliptic
-conjugacy classes.  It does not assert the generally false integrability of the raw majorant
-(10.1).
-
-## 12. Equality of the two expansions
-
-### 12.1 The geometric expansion
-
-Define
-
-$$
-I_{\mathrm{geom}}(f)=
-\operatorname{vol}([\overline G])f(1)
-+\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f).
-\tag{12.1}
-$$
-
-Theorem 11.3 makes this an ordinary absolutely convergent sum.  It is continuous in the
-admissible Schwartz topology: the proof of Lemma 11.2 bounds all terms by one summable majorant
-formed from finitely many Schwartz seminorms.
-
-### 12.2 The simple cuspidal trace formula
-
-**Theorem 12.1 (simple trace formula for a cuspidal archimedean factor).** Let $F$ be a number
-field with a real place $v_0$, let $\omega$ be a unitary idele class character, and let $f$ be a
-finite sum of factorizable admissible test functions of inverse central character
-$\omega^{-1}$.  Assume every tensor has a strongly cuspidal factor at $v_0$ and is finite under
-the left and right maximal compact actions.  Then $R_\omega(f)$ is trace class on $L^2_\omega$,
-annihilates the noncuspidal subspace, and
+This is the safe finite-height geometric expansion.  Notice what has not been asserted:
+$\sum_\gamma |f(x^{-1}\gamma x)|$ need not be globally integrable.  Strong cuspidality creates
+cancellation after periodization, and absolute values can destroy it.
+
+### 9.2 The simple cuspidal kernel identity
+
+**Theorem 9.1 (simple cuspidal kernel trace formula).** Let $F$ have a real place, let
+$\omega$ be a unitary idele class character, and let $f$ be a finite sum of factorizable
+admissible cuspidal tests of inverse central character $\omega^{-1}$.  Then
+$R_\omega(f)$ is trace class on $L^2_\omega$, is zero on the noncuspidal subspace, and
 
 $$
 \boxed{
 \sum_{\pi\in\mathcal A_{\mathrm{cusp}}(G,\omega)}
 m(\pi)\operatorname{tr}\pi(f)
-=\operatorname{vol}([\overline G])f(1)
-+\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f).}
-\tag{12.2}
+=
+\int_{[\overline G]}
+\sum_{\gamma\in Z(F)\backslash G(F)}
+f(x^{-1}\gamma x)\,dx.}
+\tag{9.3}
 $$
 
-The spectral series and the elliptic series converge absolutely.  The common value also equals
-$\int_{[\overline G]}K_f(x,x)\,dx$, whose absolute value is integrable.
+The spectral series is absolutely convergent, the Poincare series is absolutely and locally
+uniformly convergent with every derivative, and its canonical diagonal is absolutely integrable.
+The right side means the integral of that canonical summed kernel, not an unproved exchange of
+the global integral with the rational sum.
 
-**Proof.** Theorem 3.2 constructs the smooth automorphic kernel.  Chapter 4 proves cuspidal range
-and annihilation of every continuous and residual term.  Chapters 5 and 6 prove trace class.
-Theorem 7.1 identifies its trace with the absolutely convergent diagonal integral, and Theorem
-8.1 identifies that trace with the absolutely convergent cuspidal spectral series.
+**Proof.** Theorem 3.2 constructs the smooth Poincare kernel and Proposition 3.3 identifies its
+operator with $R_\omega(f)$.  Chapter 4 puts both the operator and its adjoint in the cuspidal
+space and annihilates the Eisenstein and residual complement.  Chapters 5 and 6 prove trace
+class.  Theorem 7.1 identifies the trace with the absolutely convergent diagonal integral, while
+Theorem 8.1 identifies the same trace with the absolutely convergent cuspidal spectral series.
+Substitution gives (9.3).  Every equality is therefore an equality of already-defined ordinary
+quantities. $\square$
 
-For the geometric side, insert a compact truncation as in (10.2).  On the truncation, group the
-rational sum by the four cases of Section 9.1.  The central part tends to (9.6).  The
-noncentral nonelliptic part tends to zero by Proposition 10.1 and Lemma 10.2.  Each elliptic
-class unfolds by quotient integration:
+This is exactly the analytic simple-trace-formula setting promised by the book: no regularized
+operator, truncated spectral distribution, or continuous-spectrum correction survives.
 
-$$
-\int_{\overline G_\gamma(F)\backslash\overline G(\mathbf A)}
-f(x^{-1}\gamma x)\,dx
-=a(\gamma)O_\gamma(f).
-\tag{12.3}
-$$
+### 9.3 Independence of auxiliary truncations
 
-Theorem 11.3 permits passage to the limit through the elliptic class sum.  Thus the diagonal
-trace equals (12.1).  Combining with the spectral identity proves (12.2).  Linearity handles a
-finite sum of tensors.  $\square$
-
-### 12.3 Independence of auxiliary truncations
-
-The final formula contains no truncation parameter.  Suppose $\chi_T$ and $\chi'_T$ are two
-families of smooth cutoffs with the standard support and derivative bounds.  Their difference is
-supported in a cusp band whose lower height tends to infinity.  Proposition 4.3 makes the
-integral of $|K_f(x,x)|$ over that band tend to zero.  Lemma 10.2 does the same for the
-parabolic regrouping, and Theorem 11.3 supplies a cutoff-independent majorant for the elliptic
-terms.  Hence both procedures have the same limit.
-
-The identity is likewise independent of the chosen scalar normalization on a centralizer:
-$a(\gamma)$ and $O_\gamma(f)$ change inversely.  It does depend, as it must, on the original
-Haar measure on $G(\mathbf A)$ and on the induced quotient measure used on both sides.
-
-### 12.4 Factorization without evaluation
-
-For a tensor $f=\otimes_vf_v$, equation (9.5) rewrites the geometric term as
+Since $0\leq\chi_T\leq1$, $\chi_T(x)\to1$, and $K_f(x,x)\in L^1$, dominated convergence
+gives
 
 $$
-a(\gamma)\prod_vO_{\gamma_v}(f_v).
-\tag{12.4}
+\lim_{T\to\infty}I_T(f)
+=
+\int_{[\overline G]}K_f(x,x)\,dx.
+\tag{9.4}
 $$
 
-On the spectral side, restricted tensor product theory gives
+The same conclusion holds for any other family of cutoffs with pointwise limit one and a
+uniform bound.  Thus the right side of (9.3) is independent of the reduction coordinates,
+smooth transition band, or chosen exhaustion.
 
-$$
-\pi(f)=\bigotimes_v\pi_v(f_v)
-\tag{12.5}
-$$
+This argument is deliberately shorter than an orbital truncation argument.  Trace class and the
+canonical $L^1$ diagonal have already absorbed the cusp analysis.  No stable-line regrouping is
+needed to remove the auxiliary cutoff at the kernel level.
 
-on the finite-dimensional range selected by the level and types.  Formula (12.2) is therefore
-already compatible with later local comparison.  What is not yet supplied is a numerical or
-character-theoretic evaluation of the factors in (12.4) or (12.5).  Their existence,
-factorization, measures, and absolute summability have all been settled here.
+### 9.4 The boundary with the orbital geometric side
 
-## 13. Examples, boundaries, and failure modes
+The diagonal in (9.3) contains rational elements of four familiar kinds: central, split regular,
+noncentral nonsemisimple, and elliptic.  Classifying them algebraically is elementary, but three
+further assertions are not:
 
-### 13.1 A weight-$k$ kernel over the rationals
+1. regrouping the noncompact diagonal integral by rational conjugacy classes;
+2. proving that split and unipotent distributions vanish after the correct parabolic unfolding;
+3. proving absolute convergence of the remaining elliptic orbital distributions with compatible
+   centralizer measures.
 
-Take $F=\mathbf Q$, $v_0=\infty$, and let $f_\infty$ be a compact-finite pseudo-coefficient of a
-discrete series $D_k$ of lowest weight $k\geq2$.  Choose at every finite prime a compactly
-supported Hecke function, spherical almost everywhere.  The resulting kernel
+Those results are neither consequences of trace class nor supplied by Books 100--103.  Proving
+them here would silently import the content of the later geometric-side book into one of its own
+prerequisites.  Accordingly, (9.3) is the terminal geometric statement of this volume.  The later
+geometric analysis starts from its canonical $L^1$ diagonal and performs the conjugacy-class
+regrouping with the additional arithmetic and local orbital estimates it establishes there.
+
+## 10. Examples, boundaries, and failure modes
+
+### 10.1 A fixed-weight kernel over the rationals
+
+Take $F=\mathbf Q$, $v_0=\infty$, and choose a sufficiently high fixed discrete-series weight
+with the desired central character.  Section 2.3 supplies a kernel-admissible, compact-finite,
+strongly cuspidal coefficient $f_\infty$ at that weight.
+Choose at every finite prime a compactly supported Hecke function, spherical almost everywhere.
+The resulting kernel
 
 $$
 K_f(x,y)=\sum_{\gamma\in\mathbf Q^\times\backslash
@@ -1681,29 +1225,27 @@ K_f(x,y)=\sum_{\gamma\in\mathbf Q^\times\backslash
 $$
 
 is smooth, cuspidal in both variables, and rapidly decreasing in the modular cusp.  Its trace is
-a sum over cuspidal automorphic representations whose real component is detected by $D_k$.
+the absolutely convergent sum over the cuspidal representations detected by the chosen
+archimedean factor.
 
-Geometrically, the identity class contributes the quotient volume times $f(1)$.  A rational
-matrix with irreducible characteristic polynomial contributes through the torus of a quadratic
-field.  Split matrices and nontrivial unipotent matrices contribute nothing after parabolic
-regrouping.  Thus the familiar “identity plus elliptic” shape follows from the local discrete
-series factor before any elliptic orbital integral is calculated.
+The geometric expression at this stage is the integral of the displayed Poincare kernel on its
+diagonal.  Its later division into central, split, unipotent, and elliptic conjugacy terms is not
+being assumed here.
 
-### 13.2 Adding finite-place Hecke conditions
+### 10.2 Adding finite-place Hecke conditions
 
 At a prime $p$ away from the level, replace the spherical identity by a compactly supported
 spherical Hecke function.  This does not disturb strong cuspidality at infinity.  On the spectral
-side it inserts the corresponding Hecke operator $\pi_p(f_p)$; on the geometric side it changes
-which rational elliptic classes meet the finite support and weights them by
-$O_{\gamma_p}(f_p)$.  All convergence proofs remain uniform on a fixed finite-dimensional
-subspace of the spherical Hecke algebra.
+side it inserts the corresponding Hecke operator $\pi_p(f_p)$; in the Poincare kernel it changes
+the finite-place support of the rational summands.  All convergence proofs remain uniform on a
+fixed finite-dimensional subspace of the spherical Hecke algebra.
 
 At ramified primes one may instead impose compact-open projectors or matrix coefficients.  The
 left-right invariance subgroups change, hence so does the finite level $\mathcal H_0$, but the
 trace-class proof is unchanged.  This flexibility is why the cuspidal factor is placed at one
 archimedean place: the finite factors remain free for level and comparison conditions.
 
-### 13.3 What fails without a cuspidal factor
+### 10.3 What fails without a cuspidal factor
 
 If the archimedean factor is a general Schwartz function, the periodized kernel may still
 converge locally and define a bounded smoothing operator.  Three later conclusions fail.
@@ -1719,21 +1261,20 @@ character.  The averaged local condition $f^B=0$ kills induced traces but need n
 operators, so it is insufficient for the two-variable kernel proof.  Strong cuspidality (2.2)
 is exactly the hypothesis used at every cancellation step.
 
-### 13.4 What this formula does not yet compute
+### 10.4 What this formula does not yet compute
 
-The theorem isolates, but does not evaluate, two families of terms.  On the spectral side one
-must still compute $\operatorname{tr}\pi(f)$ with multiplicities and compatible local
-normalizations.  On the geometric side one must classify rational elliptic classes more
-explicitly and calculate their local orbital integrals.  Comparison with an inner form further
-requires matching functions and local transfer identities.
+The theorem does not compute $\operatorname{tr}\pi(f)$, and it does not yet regroup the rational
+diagonal by conjugacy.  The spectral side, the orbital geometric side, and comparison with an
+inner form require their own multiplicity, centralizer-measure, orbital-integral, matching, and
+local transfer arguments.
 
-Those are subsequent tasks.  The present theorem ensures that their answers may be substituted
-into genuine absolutely convergent expansions.  It also establishes the measure framework that
-prevents a later local scalar from being hidden in a global quotient volume.
+Those are subsequent tasks.  The present theorem supplies the trace-class operator and canonical
+$L^1$ diagonal from which they begin, with a measure framework that prevents a later local scalar
+from being hidden in a global quotient volume.
 
-## 14. Final synthesis
+## 11. Final synthesis
 
-### 14.1 The proof ledger
+### 11.1 The proof ledger
 
 Every arrow in the construction has a distinct source:
 
@@ -1751,60 +1292,54 @@ $$
 &&\Longrightarrow \text{the diagonal trace formula},\\
 &\text{discrete finite-multiplicity cuspidal spectrum}+\text{trace class}
 &&\Longrightarrow \text{absolute spectral expansion},\\
-&\text{rank-two stable-line regrouping}+\text{parabolic cancellation}
-&&\Longrightarrow \text{central and elliptic terms only},\\
-&\text{arithmetic height counting}+\text{Schwartz orbital decay}
-&&\Longrightarrow \text{absolute elliptic expansion}.
+&\text{canonical Poincare kernel}+\text{integrable diagonal}
+&&\Longrightarrow \text{the geometric kernel expansion}.
 \end{aligned}
-\tag{14.1}
+\tag{11.1}
 $$
 
 No arrow is redundant.  Local convergence does not imply diagonal integrability; discreteness
 does not imply trace class; trace class does not by itself justify a chosen pointwise diagonal;
 and cuspidal spectral annihilation does not by itself prove geometric orbital convergence.
 
-### 14.2 The reusable kernel theorem
+### 11.2 The reusable kernel theorem
 
 The argument may be summarized in a form useful for later comparison.
 
-**Theorem 14.1 (cuspidal kernel package).** Under the hypotheses of Theorem 12.1, the Poincare
-series $K_f$ is the unique smooth kernel of $R_\omega(f)$ and is rapidly decreasing with all
-derivatives in both variables.  The operator is trace class, has range and adjoint range in the
-cuspidal space, and has three equal descriptions:
+**Theorem 11.1 (cuspidal kernel package).** Under the hypotheses of Theorem 9.1, the Poincare
+series $K_f$ is the unique smooth representative of the distribution kernel of $R_\omega(f)$
+and is rapidly decreasing with all derivatives in both variables.  The operator is trace class,
+has range and adjoint range in the cuspidal space, and has three equal descriptions:
 
 $$
 \begin{aligned}
 \operatorname{tr}R_\omega(f)
 &=\int_{[\overline G]}K_f(x,x)\,dx\\
-&=\sum_\pi m(\pi)\operatorname{tr}\pi(f)\\
-&=\operatorname{vol}([\overline G])f(1)
-+\sum_{[\gamma]_{\mathrm{ell}}}a(\gamma)O_\gamma(f).
+&=\sum_\pi m(\pi)\operatorname{tr}\pi(f).
 \end{aligned}
-\tag{14.2}
+\tag{11.2}
 $$
 
-The diagonal integral and both displayed series are absolutely convergent in their stated
-groupings.  All measures arise from the fixed local Haar measures by quotient integration, and
-both spectral and orbital terms factor for tensor-product tests.
+The diagonal integral and spectral series are absolutely convergent.  The Poincare series is
+absolutely locally uniformly convergent with every derivative, and all measures arise from the
+fixed local Haar measures by quotient integration.
 
-**Proof.** This is the conjunction of Theorems 3.2, 7.1, 8.1, 11.3, and 12.1, together with the
-two-variable decay of Proposition 4.3.  $\square$
+**Proof.** This is the conjunction of Theorems 3.2, 7.1, 8.1, and 9.1, together with the
+two-variable decay proved in Section 7.2.  $\square$
 
-### 14.3 Conclusion
+### 11.3 Conclusion
 
-The trace formula in rank two becomes an ordinary trace identity when one archimedean factor
+The kernel trace formula in rank two becomes an ordinary trace identity when one archimedean factor
 removes the single proper parabolic channel.  That local cancellation has three global effects:
 the kernel is cuspidal in both variables, the convolution operator annihilates every Eisenstein
-wave packet and residue, and the nonelliptic rational conjugacy terms vanish after stable-line
-unfolding.
+wave packet and residue, and the trace needs no continuous-spectrum regularization.
 
 The remaining analysis is exact rather than formal.  Projective counting constructs the kernel;
 cuspidal Sobolev theory confines it; elliptic half-powers make it trace class; a
-Hilbert--Schmidt contraction legitimizes its diagonal; and arithmetic height makes the elliptic
-orbital sum absolutely convergent.  The spectral and geometric expansions are therefore not
-competing definitions.  They are two absolutely convergent evaluations of the same canonical
-operator trace.
+Hilbert--Schmidt contraction legitimizes and integrates its diagonal.  The spectral expansion
+and geometric kernel expansion are therefore not competing definitions.  They are two ordinary
+evaluations of the same canonical operator trace.
 
 This completes the analytic kernel foundation for the rank-two simple trace formula.  The
-cuspidal representations, central term, and elliptic orbital terms now stand in one measure-
-compatible identity, ready for their separate spectral and local geometric computations.
+cuspidal spectral distribution and canonical $L^1$ Poincare diagonal now stand in one
+measure-compatible identity, ready for their separate spectral and orbital geometric analyses.
