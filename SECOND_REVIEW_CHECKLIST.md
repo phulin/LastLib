@@ -25,7 +25,7 @@ any resulting corrections.
 ## All-books second-review ledger
 
 - [x] 001. Valuations, DVRs, and Completions
-- [ ] 002. Finite Extensions of Local Fields
+- [x] 002. Finite Extensions of Local Fields
 - [ ] 003. Ramification Theory
 - [x] 004. Adeles and Ideles
 - [ ] 005. Local Class Field Theory
