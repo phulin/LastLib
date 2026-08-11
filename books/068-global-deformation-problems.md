@@ -1103,7 +1103,7 @@ H^0(K_v,A_{\mathrm{gauge}})}
 \tag{7.7}
 $$
 
-The denominator maps diagonally by restriction. It is injective because $T$ is nonempty. To prove (7.7), let a strict Selmer class be represented by $c$. At every $v\in T$, its restriction is a coboundary $dX_v$, and the $X_v$ trivialize the local framed tangent. Two choices differ by a local invariant. A global change of representative changes all $X_v$ by the same global invariant. This gives exactly the left term.
+The denominator maps diagonally by restriction. It is injective because $T$ is nonempty. To prove (7.7), let a strict Selmer class be represented by $c$. At every $v\in T$, its restriction is a coboundary $dX_v$, and the $X_v$ trivialize the local framed tangent. Replacing $c$ by $c-dX$ replaces every $X_v$ by $X_v-X$; this is exactly the infinitesimal simultaneous equivalence in (3.1), so the resulting relative tangent vector is unchanged. Once $c$ is fixed, two choices of $X_v$ differ by a local invariant. The stabilizers of the global representative are the global invariants, and they act diagonally on those local differences. This proves both surjectivity onto the strict Selmer group and the left-hand kernel in (7.7).
 
 Consequently the minimal number of relative tangent generators is
 
@@ -1221,7 +1221,7 @@ Thus $H^2(G_{K,S},M)=0$ does not make an arbitrary conditioned global problem sm
 
 The cleanest relation bound is obtained after putting all possibly singular local conditions into the base ring $R_{\mathrm{loc}}$. A relative small-extension problem then supplies the local conditioned lifts over $A'$ in advance. What remains is to globalize them.
 
-At the linear level, replace the local tangent condition by zero at every $v\in T$ and retain $L_v$ at every $v\notin T$. Denote this modified structure by $\mathcal L_T^0$. A deformation Selmer complex for the relative problem is the mapping fiber of global cochains to the forbidden local quotient complexes. In the basic case where $T$ contains every finite conditioned place, its essential part is
+At the linear level, replace the local tangent condition by zero at every $v\in T$ and retain $L_v$ at every $v\notin T$. Denote this modified structure by $\mathcal L_T^0$. A tangent subspace by itself does not determine a cochain-level quotient. Suppose for the moment that the local conditions outside $T$ come with compatible condition complexes whose first cohomology is $L_v$ and whose higher cohomology records their actual lifting obstructions. A deformation Selmer complex for the relative problem is then the mapping fiber of global cochains to the forbidden local quotient complexes. In the basic case where $T$ contains every finite conditioned place, its essential part is
 
 $$
 C_{\mathcal D,T}^\bullet(M)
@@ -1236,7 +1236,7 @@ $$
 
 At real places the quotient complex uses the chosen local condition and the modified convention required for global duality. The raw representation deformation uses ordinary nonnegative cochains; the comparison with modified duality retains the corresponding archimedean correction rather than declaring the real terms zero.
 
-The first cohomology of (8.3) has an exact sequence analogous to (7.7), with $M$-invariants. The difference between $M$ and the full gauge module contributes only formally smooth scalar-frame directions in the fixed-determinant split case. Its second cohomology is a complete receptacle for the relative obstruction: the localized degree-two defects and the degree-one mismatch of local lifts are the two adjacent pieces of the cone exact sequence.
+The first cohomology of (8.3) has an exact sequence analogous to (7.7), with $M$-invariants. The difference between $M$ and the full gauge module contributes only formally smooth scalar-frame directions in the fixed-determinant split case. When the chosen local complexes are compatible with the actual small-extension lifting problems, its second cohomology is a complete receptacle for the relative obstruction: the localized degree-two defects and the degree-one mismatch of local lifts are the two adjacent pieces of the cone exact sequence.
 
 To make those two pieces visible, let $Q_T^\bullet$ denote the direct sum of the local quotient complexes: the full local complex at $v\in T$ and the quotient by the chosen condition outside $T$. The cone sequence contains
 
@@ -1264,7 +1264,7 @@ A datum is **cohomologically controlled relative to $T$** if:
 4. the resulting Selmer-complex obstruction is effective for minimal relations;
 5. the chosen local condition complexes carry perfect local duality pairings with the complexes defining the exact orthogonals $L_v^\perp$, compatibly with the global Poitou--Tate pairing.
 
-If $T$ contains every nontrivially obstructed local condition, the supplied points of $R_{\mathrm{loc}}$ make the first two requirements automatic at those places. Unramified odd real conditions and the standard smooth local conditions satisfy the remaining requirements. More elaborate conditions must bring their own lifting theorem.
+If $T$ contains every nontrivially obstructed local condition, the supplied points of $R_{\mathrm{loc}}$ remove the need to solve those local lifting problems again. For an unramified prime-to-$\ell$ condition, the usual unramified cochain complex has first cohomology $H^1_{\mathrm{ur}}$ and local Tate duality identifies its dual with the unramified complex for $M'$. For a rigid odd real condition, the condition complex has zero tangent and the modified real complex supplies the duality correction. These standard cases therefore satisfy the relevant compatibility directly. Any other condition, even if its representing ring happens to be smooth, must supply the cochain-level comparison and lifting theorem required above.
 
 Under these hypotheses, vanishing of the class in
 
@@ -1274,7 +1274,7 @@ $$
 
 is equivalent to solving the relative global lifting problem. This is the complete obstruction space used in the presentation theorem.
 
-Poitou--Tate duality for the local condition complexes gives a perfect pairing
+Hypothesis 5, together with global Poitou--Tate duality, gives a perfect pairing
 
 $$
 H^2(C_{\mathcal D,T}^\bullet(M))
@@ -1284,7 +1284,7 @@ H^1_{(\mathcal L_T^0)^\perp}(K,M')
 \tag{8.3b}
 $$
 
-At a place of $T$, the primal condition in the relative fiber is strict, so the dual condition in (8.3b) is relaxed. Outside $T$, it is exactly $L_v^\perp$. The Tate twist in $M'$ and this strict/relaxed reversal are both forced by local duality. Under the completeness hypotheses, (8.3b) identifies the dimension of the chosen relative obstruction space with $q_T$ of (9.12); without compatible local obstruction complexes, tangent orthogonals alone do not justify this identification.
+At a place of $T$, the primal condition in the relative fiber is strict, so the dual condition in (8.3b) is relaxed. Outside $T$, it is exactly $L_v^\perp$. The Tate twist in $M'$ and this strict/relaxed reversal are both forced by local duality. Under the completeness hypotheses, (8.3b) identifies the dimension of the chosen relative obstruction space with $q_T$ of (9.12). The module-level Poitou--Tate theorem of Chapter 9 always supplies the numerical identity for tangent subspaces; it supplies (8.3b) for deformation complexes only after the cochain-level compatibility in hypothesis 5 has been proved. Thus tangent orthogonals alone do not justify the relation bound.
 
 ### 8.6 Complete and minimal obstruction spaces
 
@@ -2387,17 +2387,34 @@ $$
 \bar\rho'=\bar\rho\otimes_k k'.
 $$
 
-Assume that all local conditions commute with this scalar extension and that the relevant Schur and representability hypotheses remain true after extending $k$. Then the base-changed functor is represented by
+Assume that all local conditions are preserved by scalar extension and that the relevant Schur and representability hypotheses remain true after extending $k$. Extending the universal family over $R_{\mathcal D}$ gives a natural transformation from the functor represented by
+
+$$
+R_{\mathcal D}\widehat\otimes_{\mathcal O}\mathcal O'
+$$
+
+to the intrinsic deformation functor $D_{\mathcal D'}$ of $\bar\rho'$. By Yoneda, the direction on representing rings is
 
 $$
 \boxed{
 R_{\mathcal D'}
-\simeq R_{\mathcal D}
-\widehat\otimes_{\mathcal O}\mathcal O'.}
+\longrightarrow
+R_{\mathcal D}\widehat\otimes_{\mathcal O}\mathcal O'.}
 \tag{14.1}
 $$
 
-If the residue extension produces several residual points in a more general tensor product, (14.1) means the completion at the point corresponding to $\bar\rho'$. In the usual extension of discrete valuation coefficient rings, that point is specified by the chosen embedding of residue fields.
+If a more general tensor product has several closed points, the target in (14.1) means its completion at the point corresponding to $\bar\rho'$. In the usual extension of discrete valuation coefficient rings, that point is specified by the chosen embedding of residue fields.
+
+The map (14.1) is an isomorphism in either of two precise situations. First, if the residue field is unchanged and $\mathcal D'$ is merely the same functor restricted to $\mathcal O'$-algebras, completed base change has the asserted universal property. Second, for a genuine residue extension, one may have a separate effective scalar-extension theorem saying that, for every Artinian local $\mathcal O'$-algebra, specialization of the old universal family gives a bijection onto $D_{\mathcal D'}$. Under that stronger hypothesis, Yoneda gives
+
+$$
+R_{\mathcal D'}
+\simeq
+R_{\mathcal D}\widehat\otimes_{\mathcal O}\mathcal O'.
+\tag{14.1a}
+$$
+
+Preservation of the local conditions proves only that the natural transformation exists. It does not prove its surjectivity: after enlarging the residual field, a deformation of $\bar\rho'$ need not descend to the old coefficient field. Thus (14.1a) must not be inferred from flatness and local compatibility alone.
 
 Continuous cochain complexes with finite-dimensional residual coefficients commute with the finite scalar extension. Hence
 
@@ -2407,9 +2424,9 @@ H^i(G,M\otimes_k k')
 \tag{14.2}
 $$
 
-and similarly for local cohomology, Selmer groups, and dual Selmer groups, provided the local tangent subspaces base change. Their dimensions over the new residue field equal the old dimensions over $k$. The defect and the generator--relation inequalities are therefore unchanged.
+and similarly for local cohomology, Selmer groups, and dual Selmer groups, provided the local tangent subspaces base change. Their dimensions over the new residue field equal the old dimensions over $k$, so the numerical defect is unchanged. If the complete effective obstruction complexes also commute with scalar extension, the presentation theorem gives the same numerical generator--relation bounds for $\mathcal D'$. Tangent-space base change alone does not transport the obstruction bound.
 
-Flatness in this statement is doing real work. For a non-flat coefficient quotient, completed tensor product can create torsion and higher derived terms. A quotient may still represent the intended specialized problem, but (14.2), dimension preservation, and flat local-factor formulas must be proved anew. Likewise, a local condition defined through an integral model does not automatically commute with arbitrary ramified coefficient extension; base-change stability is part of the hypothesis.
+The finite field extension $k'/k$ in (14.2) is flat, and that flatness is doing real work in the cohomology calculation. For a non-flat coefficient quotient, tensor product can create torsion and higher derived terms. A quotient may still represent the intended specialized problem, but (14.2), dimension preservation, and flat local-factor formulas must be proved anew. Likewise, a local condition defined through an integral model does not automatically commute with a change of coefficient field; base-change stability is part of the hypothesis, while effective descent is the additional input required for (14.1a).
 
 ### 14.2 Twisting by a fixed character
 
@@ -2542,7 +2559,7 @@ At first order, (14.9) is the ordinary restriction map on global cohomology toge
 
 ### 14.6 Compatibility of the local tensor product with operations
 
-All preceding operations can be performed before or after assembling the local base only when they commute with each local condition. For flat coefficient extension, the expected comparison is
+All preceding operations can be performed before or after assembling the local base only when they commute with each local condition. Under the effective functorial base-change hypothesis used for (14.1a), the comparison is
 
 $$
 R_{\mathrm{loc}}(\mathcal D')
@@ -2551,6 +2568,17 @@ R_{\mathrm{loc}}(\mathcal D)
 \widehat\otimes_{\mathcal O}\mathcal O'.
 \tag{14.11}
 $$
+
+Without that hypothesis, scalar extension of the old local universal families gives only the canonical map
+
+$$
+R_{\mathrm{loc}}(\mathcal D')
+\longrightarrow
+R_{\mathrm{loc}}(\mathcal D)
+\widehat\otimes_{\mathcal O}\mathcal O',
+$$
+
+obtained by completed tensoring of the factorwise comparison maps. Local preservation alone does not turn it into an isomorphism.
 
 For twisting or contragredients, the transported local rings are isomorphic factor by factor, hence so are their completed tensor products. For a strengthened condition at one framed place, (13.6) is the corresponding base change of one factor.
 
