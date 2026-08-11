@@ -32,7 +32,7 @@ any resulting corrections.
 - [ ] 006. Global Class Field Theory
 - [x] 007. Analytic Foundations for Odlyzko–Poitou Bounds
 - [x] 008. Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers
-- [ ] 009. Divisors, Riemann–Roch, and Duality on Relative Curves
+- [x] 009. Divisors, Riemann–Roch, and Duality on Relative Curves
 - [ ] 010. Normalization and Regular Models of Arithmetic Curves
 - [ ] 011. Blowups and Intersection Theory on Arithmetic Surfaces
 - [ ] 012. Semistable Curves, Dual Graphs, and Component Groups

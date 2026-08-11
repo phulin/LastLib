@@ -133,6 +133,16 @@ $$
 
 No algebraic closure is silently assumed. Degrees of closed points always include residue-field degrees.
 
+We use the elementary noetherian facts that a one-dimensional normal local domain is a discrete
+valuation ring, that a regular local ring is factorial, and that coherent cohomology on a proper
+curve is finite-dimensional and vanishes above degree one. Valuations are normalized by
+$\operatorname{ord}_x(t)=1$, and finite local lengths are module lengths. The substantial
+projective inputs are the results of Book 8: Serre vanishing, polynomiality and constancy of Euler
+characteristics in flat projective families, and the universal-divisor description of symmetric
+powers of smooth relative curves.
+Whenever a relative statement needs projectivity rather than properness alone, that hypothesis is
+stated in the theorem.
+
 ## 2. Cartier divisors
 
 ### 2.1 Local equations modulo units
@@ -374,7 +384,13 @@ $$
 
 The residue-field factor makes degree invariant under extending scalars and then summing geometric points with multiplicity. A $k$-rational point has degree one; a closed point cut out by an irreducible polynomial of degree $r$ on $\mathbf P^1_k$ has degree $r$.
 
-Principal divisors have degree zero. One proof regards a nonconstant $f$ as a finite morphism $X\to\mathbf P^1_k$: the zero and pole divisors are fibers over $0$ and $\infty$, and every fiber of a finite flat map of curves has the same length. If $f$ is inseparable, length still records inseparable multiplicity, so no separability assumption is needed. Consequently degree descends to $\operatorname{Pic}(X)$.
+Principal divisors have degree zero. A constant function is immediate. A nonconstant $f$ gives a
+finite morphism $X\to\mathbf P^1_k$: properness makes the quasi-finite rational-function map
+finite. Its direct image is torsion-free over every local discrete valuation ring of
+$\mathbf P^1$, hence is flat. The zero and pole divisors are the fibers over $0$ and $\infty$,
+and finite flat fibers have the same length. If $f$ is inseparable, length still records
+inseparable multiplicity, so no separability assumption is needed. Consequently degree descends
+to $\operatorname{Pic}(X)$.
 
 For a possibly singular proper curve, define the degree of a line bundle by
 
@@ -401,14 +417,19 @@ $$
 \chi(\mathcal O_X(D))-\chi(\mathcal O_X)=\deg D.
 $$
 
-Differences of effective divisors give the general case. This argument also proves additivity:
+Differences of effective divisors give the general case. On a proper Cohen--Macaulay curve, every
+line bundle has a rational section generating it at all associated points, because there are no
+embedded associated points. Its divisor represents the bundle. After adding a sufficiently
+positive effective Cartier divisor, that divisor becomes a difference of effective Cartier
+divisors, so the same length calculation applies. It also proves additivity:
 
 $$
 \deg(\mathcal L\otimes\mathcal M)
 =\deg\mathcal L+\deg\mathcal M
 $$
 
-whenever line bundles on the curve are represented by divisors. On a proper Gorenstein curve the same statement follows directly from Euler characteristics and a finite locally free resolution.
+for all line bundles on such a curve. Thus the Euler-characteristic definition is a homomorphism
+$\operatorname{Pic}(X)\to\mathbf Z$, not merely a numerical convention.
 
 ### 5.3 Degree in a proper flat family
 
@@ -419,9 +440,21 @@ $$
 \chi(X_s,\mathcal L_s)-\chi(X_s,\mathcal O_{X_s}).
 $$
 
-Book 8 showed that the Hilbert polynomial of a flat projective family is locally constant. Apply that result to $\mathcal L\otimes\mathcal A^n$ and $\mathcal A^n$, where $\mathcal A$ is relatively ample. Their Hilbert polynomials have the same linear leading term, and their constant difference is $\deg_s\mathcal L$. Therefore $s\mapsto\deg_s\mathcal L$ is locally constant on $S$.
+Book 8 showed that the Hilbert polynomial of a flat projective family is locally constant. Apply
+that result to $\mathcal L\otimes\mathcal A^n$ and $\mathcal A^n$, where $\mathcal A$ is
+relatively ample. Its Euler-characteristic polynomial lemma says that tensoring by $\mathcal L$
+changes the polynomial on a curve by a constant: the first difference is supported in dimension
+zero. Evaluating that constant at $n=0$ identifies it with
+$\chi(\mathcal L_s)-\chi(\mathcal O_{X_s})=\deg_s\mathcal L$. Both Hilbert polynomials are
+locally constant in $s$, so $s\mapsto\deg_s\mathcal L$ is locally constant on $S$.
 
 The conclusion uses flatness of $X$ and invertibility of $\mathcal L$, hence flatness of $\mathcal L$ over $S$. In a nonflat family the arithmetic genus can jump. For a coherent sheaf that is not flat over the base, torsion supported on a special fiber can change the Euler characteristic. Constancy is a theorem with hypotheses, not a property of notation.
+
+The projective hypothesis loses none of the promised smooth or nodal cases. Section 9.3 proves,
+without using Riemann--Roch, that a proper flat finitely presented family with geometrically
+reduced fibers is projective after an fpqc cover of the base. Apply the preceding argument there.
+Fiber degree is unchanged by that cover, and local constancy descends, so the same conclusion
+holds for every proper smooth or nodal relative curve in the standing conventions.
 
 If fibers are reducible, total degree is locally constant but degree on an individual component need not even be globally labelable because components can permute. After a base change that labels components, one obtains a multidegree, and specialization can redistribute it. Later component-group theory measures precisely this extra information.
 
@@ -512,7 +545,22 @@ For a section $p:S\to X$, repeated addition gives the diagonal divisor $dp$. Loc
 
 For a nodal relative curve, the functor of relative effective Cartier divisors is still open inside the length-$d$ Hilbert space. Being locally principal by a regular element is an open condition in a flat finite presentation. But the open subset need not be proper: a Cartier point approaching a node may have a non-Cartier limit.
 
-Consider the smoothing $xy=a$ over a discrete valuation ring with parameter $a$. A section through the generic fiber can specialize to the node only after its coordinates have compatible positive valuations. Its closure may fail to be Cartier at the node. The Hilbert compactification remembers the limit, while the Cartier-divisor space omits it. This boundary distinction is essential when constructing compactified Jacobians; it is not present for smooth families.
+The failure appears after a ramified base change of the standard smoothing. Let $R$ be a discrete
+valuation ring with uniformizer $\pi$ and consider
+
+$$
+C=\operatorname{Spec}R[x,y]/(xy-\pi^2).
+$$
+
+Its generic fiber is smooth and its special fiber is nodal. The generic-fiber point $(x,y)=(\pi,\pi)$
+extends to a section through the node, with ideal $(x-\pi,y-\pi)$. At the local ring of the node
+the two displayed generators have independent images in $\mathfrak m/\mathfrak m^2$; the relation
+$xy-\pi^2$ has no linear term. Since $\mathfrak mI\subseteq\mathfrak m^2$, they remain independent
+in $I/\mathfrak mI$. Nakayama therefore says that $I$ needs two generators. Hence this
+height-one ideal is not principal, and the section is
+not Cartier on the total space. The Hilbert compactification remembers the limit, while the
+Cartier-divisor space omits it. This boundary distinction is essential when constructing
+compactified Jacobians; it is not present for smooth families.
 
 On the smooth locus $X^{\mathrm{sm}}\subset X$, symmetric powers still give Cartier divisors supported away from nodes. Many later arguments deliberately choose cusps or marked points in this locus so that their divisor and Abel constructions remain ordinary even when the fiber is nodal.
 
@@ -596,7 +644,9 @@ $$
 (A\,dx\oplus A\,dy)/(y\,dx+x\,dy).
 $$
 
-This module is not locally free. It has torsion: $x\,dy=-y\,dx$ is killed in ways supported at the node. A family can therefore have an invertible differential bundle on smooth fibers but a noninvertible $\Omega^1$ on the nodal fiber.
+This module is not locally free. It has torsion: the nonzero element $x\,dy=-y\,dx$ is killed by
+the regular element $x+y$, since $x^2dy=-xy\,dx=0$. A family can therefore have an invertible
+differential bundle on smooth fibers but a noninvertible $\Omega^1$ on the nodal fiber.
 
 At the cusp $k[[t^2,t^3]]$, the image of ordinary differentials inside $k[[t]]dt$ is generated by $2t\,dt$ and $3t^2dt$. In characteristic not two, it misses $dt$; in small characteristic its behavior changes further. The singularity is visible in the failure of ordinary differentials to capture all regular differentials on the normalization.
 
@@ -606,71 +656,104 @@ Duality calls for a different object: a sheaf that is allowed controlled poles o
 
 ### 8.1 The local residue
 
-Let $X$ be a smooth curve over $k$, $x$ a closed point, and choose a uniformizer $t$ in the completed local ring. A rational differential has a Laurent expansion
+Let $X$ be a smooth integral curve over $k$ and let $x$ be a closed point. A subtlety matters over an
+imperfect field: although $X/k$ is smooth, the finite extension $\kappa(x)/k$ need not be
+separable. The residue must therefore be defined before invoking a field trace.
+
+The point $x$ is an effective Cartier divisor. For every $n\geq1$, adjunction for the finite
+Cartier subscheme $nx$ identifies the principal-part quotient with its finite dualizing module:
+
+$$
+\Omega^1_{X/k}(nx)/\Omega^1_{X/k}
+\simeq \omega_{nx/k}
+=\operatorname{Hom}_k(\mathcal O_{nx},k). \tag{8.1}
+$$
+
+Here the sheaves are supported at $x$, and the last Hom is understood on global sections of the
+finite scheme. The isomorphism is the one-equation Koszul calculation: dualize
+$0\to\mathcal O_X(-nx)\to\mathcal O_X\to\mathcal O_{nx}\to0$ against
+$\Omega^1_{X/k}$ and use the conormal determinant to identify the resulting Ext module with the
+$k$-linear dual of $\mathcal O_{nx}$. This is local algebra and does not use global duality.
+Under the inclusions for increasing $n$, the right side
+restricts along $\mathcal O_{(n+1)x}\twoheadrightarrow\mathcal O_{nx}$. Evaluation at $1$ is
+therefore compatible. Passing to the direct limit defines the canonical $k$-linear residue
+
+$$
+\operatorname{Res}_x:
+\Omega^1_{k(X)/k}\longrightarrow k, \tag{8.2}
+$$
+
+which kills regular differentials. The parameter calculation below shows directly that it also
+kills exact differentials.
+
+When $\kappa(x)/k$ is separable, choose a coefficient field in the completion and a uniformizer
+$t$. Then
 
 $$
 \eta=\left(\sum_{n\gg-\infty}a_nt^n\right)dt,
-\qquad a_n\in\kappa(x)
+\qquad a_n\in\kappa(x),
 $$
 
-after passing to the completed coefficient field in the equicharacteristic case. Its residue at $x$ is
+and (8.1) identifies $a\,dt/t$ with the functional
+$b\mapsto\operatorname{Tr}_{\kappa(x)/k}(ab)$. Hence in this case
 
 $$
-\operatorname{res}_x(\eta)=
-\operatorname{Tr}_{\kappa(x)/k}(a_{-1})\in k. \tag{8.1}
+\operatorname{Res}_x(\eta)
+=\operatorname{Tr}_{\kappa(x)/k}(a_{-1}). \tag{8.3}
 $$
 
-It is often useful first to retain the local residue $a_{-1}\in\kappa(x)$ and apply the field trace only when summing over closed points.
-
-An algebraic definition avoids choosing a coefficient field. The quotient of differentials with at most a simple pole by regular differentials is canonically $\kappa(x)$:
-
-$$
-\Omega^1_X(x)_x/\Omega^1_{X,x}
-\longrightarrow\kappa(x),\qquad
-a\frac{dt}{t}\longmapsto\bar a. \tag{8.2}
-$$
-
-This is the residue map. Higher-order polar terms contribute zero.
+For an inseparable residue extension, (8.1)--(8.2), not the possibly zero field trace, is the
+definition.
 
 ### 8.2 Independence of parameter
 
-Why should the coefficient of $t^{-1}dt$ be geometric? Let $u$ be another parameter, so $u=ct+\text{higher terms}$ with $c$ a unit. Then
+The adjunction definition (8.1) is parameter-free. In the separable coefficient-field
+description, its independence is also visible directly. If $u$ is another parameter, write
+$u=tv$ with $v$ a unit. Then
 
 $$
-\frac{du}{u}=\frac{dt}{t}+d(\log(u/t)),
+\frac{du}{u}=\frac{dt}{t}+\frac{dv}{v},
 $$
 
-where the last expression means the formal derivative of a unit; it has no $t^{-1}$ term. More generally, exact differentials have residue zero because
+and $dv/v$ is regular. More generally, termwise differentiation of a Laurent series gives
 
 $$
-d(t^n)=nt^{n-1}dt
+d\!\left(\sum a_nt^n\right)=\sum n a_nt^{n-1}dt,
 $$
 
-never contributes a $t^{-1}dt$ term. Expanding a rational differential in either parameter gives the same coefficient.
+whose $t^{-1}dt$ coefficient is zero: it could only come from $n=0$. This calculation is valid
+in every characteristic. Any change of parameter is a composition of multiplication by a unit
+and formal substitution, and the chain rule now shows that the residue is unchanged.
 
-This proof works in every characteristic if phrased through formal substitution rather than division by integers. The residue map is characterized by
-
-$$
-\operatorname{res}_x\left(a\frac{dt}{t}\right)=\bar a,
-\qquad
-\operatorname{res}_x(db)=0.
-$$
-
-These properties also show compatibility with extension of the residue field once the trace in (8.1) is included.
+Thus coefficient extraction gives the same $k$-valued functional in every parameter. Termwise
+differentiation proves $\operatorname{Res}_x(db)=0$ in the separable coefficient-field case. In
+general the same identity is the elementary Koszul calculation behind (8.1): the functional
+corresponding to $db$ evaluates to zero on $1$.
 
 ### 8.3 The global residue theorem
 
 If $X$ is a smooth proper geometrically connected curve over $k$ and $\eta$ a rational differential, then
 
 $$
-\sum_{x\in X^{(1)}}
-\operatorname{Tr}_{\kappa(x)/k}
-\operatorname{res}^{\mathrm{loc}}_x(\eta)=0. \tag{8.3}
+\sum_{x\in X^{(1)}}\operatorname{Res}_x(\eta)=0. \tag{8.4}
 $$
 
 Only finitely many terms are nonzero. Properness is essential: $dt/t$ on $\mathbf G_m$ has residues visible at the omitted points $0$ and $\infty$, and discarding either boundary destroys the cancellation.
 
-A proof first treats $\mathbf P^1$. Partial fractions show that the sum of finite residues is the negative coefficient at infinity. For a general curve, choose a nonconstant separable function $z:X\to\mathbf P^1$ when one exists and use the compatibility of residues with trace of differentials. In the inseparable case one descends to a separating transcendence element after separating the constant-field contribution, or proves (8.3) directly from the principal-parts exact sequence. The latter proof is uniform: the obstruction to realizing prescribed principal parts is one-dimensional, and its linear functional is precisely the sum of residues.
+A proof first treats $\mathbf P^1$. Write the differential as $h(T)dT$ and perform partial
+fractions over $k[T]$, without splitting the irreducible denominators. For a power $P(T)^n$, the
+adjunction isomorphism (8.1) identifies its principal part with the $k$-dual of
+$k[T]/(P^n)$; evaluation at $1$ is exactly the coefficient contributed by that partial fraction.
+Euclidean division shows that the sum of these finite evaluations is the negative of the
+$T^{-1}dT$ coefficient after putting $T=U^{-1}$ at infinity. This proves the formula over an
+arbitrary field, including inseparable closed points.
+
+For a general $X$, smoothness makes $k(X)/k$ a separably generated function field of
+transcendence degree one. A separating element $z\in k(X)$ therefore gives a finite generically
+separable morphism $\pi:X\to\mathbf P^1_k$. Apply the local trace formula (8.5) below to $\eta$
+and sum first over points above each point of $\mathbf P^1$. The result is the residue sum of
+$\operatorname{Tr}_{k(X)/k(z)}\eta$ on $\mathbf P^1$, hence is zero. This proves (8.4) without
+using Riemann--Roch or duality.
 
 The conceptual consequence is more important than the chosen proof. A collection of local polar parts can be the polar part of a global rational differential only if its total residue is zero; duality will show that this is the only obstruction when the allowed poles are sufficiently specified.
 
@@ -686,16 +769,29 @@ $$
 For every closed point $x\in X$,
 
 $$
-\operatorname{res}_x\!\left(\operatorname{Tr}\eta\right)
-=
-\sum_{y\mapsto x}
-\operatorname{Tr}_{\kappa(y)/\kappa(x)}
-\operatorname{res}_y(\eta). \tag{8.4}
+\operatorname{Res}_x(\operatorname{Tr}_\pi\eta)
+=\sum_{y\mapsto x}\operatorname{Res}_y(\eta). \tag{8.5}
 $$
 
-To prove this, complete at $x$, decompose the finite algebra into the completed local fields at points $y$, and reduce to a finite extension of complete discretely valued fields. A direct calculation with a uniformizer proves the formula in the separable case; transitivity handles towers.
+This local trace formula remains valid when residue extensions are inseparable. To prove it,
+complete at $x$ and decompose the finite algebra into the branches at the points $y$. For finite
+Cartier thickenings of those branches, finite duality is the elementary identity
 
-For a purely inseparable map, ordinary field trace can be zero and (8.4) is not the correct mechanism. The duality trace on dualizing sheaves remains meaningful for every finite map satisfying the appropriate Cohen--Macaulay hypotheses. This is one reason later arguments formulate functoriality through dualizing sheaves rather than only through Kähler differentials.
+$$
+\omega_{B/A}=\operatorname{Hom}_A(B,\omega_A),
+$$
+
+and trace is evaluation at $1\in B$. Under the adjunction identifications (8.1), evaluation at
+$1$ on the product algebra is the sum of evaluation at $1$ on its factors. Passing through the
+compatible thickenings proves (8.5). When the function-field extension is separable, this finite
+duality trace is the usual trace on rational differentials. If the residue extensions are also
+separable, (8.3) rewrites (8.5) as the familiar formula with residue-field traces of Laurent
+coefficients.
+
+For a purely inseparable map, ordinary field trace can be zero and does not define the required
+map on Kähler differentials. The finite-duality trace remains meaningful for every finite map
+between Cohen--Macaulay curves. This is why later functoriality is formulated through dualizing
+sheaves rather than only through field traces.
 
 ## 9. Dualizing sheaves
 
@@ -728,7 +824,37 @@ $$
 \simeq H^0(X,\mathcal T)^\vee, \tag{9.1}
 $$
 
-together with the global trace and the full perfect pairing described above. One construction embeds $X$ into projective space and obtains $\omega_X$ from the last nonzero term of a finite locally free resolution of $\mathcal O_X$. Independence of the embedding follows from the representing property.
+together with the global trace and the full perfect pairing described above. Here is a
+construction and not merely an existence assertion. A proper curve over a field is projective;
+choose a closed immersion $i:X\hookrightarrow\mathbf P^N_k$. Since $X$ is Cohen--Macaulay of
+codimension $N-1$, a finite locally free resolution of $i_*\mathcal O_X$ has dual cohomology
+against $\omega_{\mathbf P^N}$ in only that codimension. Put
+
+$$
+i_*\omega_X=
+\mathcal Ext^{N-1}_{\mathbf P^N}
+(i_*\mathcal O_X,\omega_{\mathbf P^N}).
+$$
+
+The projective-space calculation is explicit. Laurent monomials in the standard Cech complex pair
+the degree-$q$ term for $\mathcal O(m)$ perfectly with the degree-$(N-q)$ term for
+$\mathcal O(-m-N-1)$ by taking the coefficient of
+$(x_0\cdots x_N)^{-1}$. Resolving $i_*\mathcal F$ by finite sums of twists extends this pairing,
+by exactness, to every coherent $\mathcal F$. The change-of-rings calculation for the
+codimension-$(N-1)$ Cohen--Macaulay immersion identifies the resulting complex on $\mathbf P^N$
+with the Ext sheaf just defined on $X$. Thus one obtains the natural quasi-isomorphism
+
+$$
+R\operatorname{Hom}_k(R\Gamma(X,\mathcal F),k)
+\simeq
+R\operatorname{Hom}_X(\mathcal F,\omega_X[1]). \tag{9.2}
+$$
+
+For $\mathcal F=\mathcal O_X$, the image of $1$ under (9.2) is the trace
+$H^1(X,\omega_X)\to k$. For a zero-dimensional $\mathcal T$, taking degree zero in (9.2) gives
+(9.1); taking cohomology for general $\mathcal F$ gives the full pairing. If a second embedding
+is chosen, the two sheaves represent the same functor in (9.2), so the representing isomorphism
+is unique and respects trace. This proves independence of all choices.
 
 The Cohen--Macaulay hypothesis excludes embedded zero-dimensional components. Without it, duality is represented by more than one sheaf degree; a single $\omega_X$ cannot encode the whole theory. Pure reduced curves are Cohen--Macaulay because every local ring has dimension one and a function avoiding the finitely many minimal primes is a non-zero-divisor.
 
@@ -736,24 +862,64 @@ A curve is **Gorenstein** if its dualizing sheaf is invertible. Smooth curves, l
 
 ### 9.3 The relative dualizing sheaf
 
-Let $f:X\to S$ be a proper flat finitely presented Cohen--Macaulay morphism of pure relative dimension one, with $S$ locally noetherian. There is a relative dualizing sheaf $\omega_{X/S}$ and a trace
+We first remove a possible projectivity ambiguity. If a proper flat finitely presented family of
+curves has geometrically reduced fibers, then it is projective fpqc-locally on the base. Indeed,
+after an étale extension around a chosen geometric fiber, choose sections through smooth points on
+every irreducible component of that fiber. Their sum is a relative effective Cartier divisor
+$D$. Its restriction has positive degree on every component, hence $\mathcal O(D)$ is ample on
+that fiber. The curve criterion used here is elementary: on a proper reduced curve, positivity
+on every component is equivalent to ampleness; it follows by passing to the finite normalization
+and applying the affine-nonvanishing criterion componentwise. A finite set of affine
+nonvanishing witnesses persists after shrinking the base, so $\mathcal O(D)$ is relatively ample
+there. Book 8 then supplies a projective embedding. This applies in particular to smooth and
+nodal families and does not use Riemann--Roch.
+
+Let $f:X\to S$ be a proper flat finitely presented Cohen--Macaulay morphism of pure relative
+dimension one with geometrically reduced fibers, with $S$ locally noetherian. There is a relative
+dualizing sheaf $\omega_{X/S}$ and a trace
 
 $$
-\operatorname{tr}_f:R^1f_*\omega_{X/S}\longrightarrow\mathcal O_S. \tag{9.2}
+\operatorname{tr}_f:R^1f_*\omega_{X/S}\longrightarrow\mathcal O_S. \tag{9.3}
 $$
 
-Its defining property is relative duality: locally on $S$, it represents the dual of the two-term cohomology theory of $f$. In particular, for a vector bundle $\mathcal E$ on $X$, multiplication and (9.2) induce the duality statements of Chapter 14.
+Its defining property is relative duality. For every vector bundle $\mathcal E$ on $X$, cup
+product and (9.3) give a quasi-isomorphism
 
-Construction may again be made concrete. Locally embed $X$ into a projective space $P$ over $S$, resolve $\mathcal O_X$ relative to $P$, and take the appropriate Ext sheaf against the top differential bundle of $P/S$. Flat Cohen--Macaulay fibers force concentration in one codimension, so the result is a sheaf. Comparing two embeddings through their product proves independence. This curve-specific construction needs no general duality machinery.
+$$
+R f_*(\mathcal E^\vee\otimes\omega_{X/S})[1]
+\simeq
+R\mathcal Hom_S(Rf_*\mathcal E,\mathcal O_S). \tag{9.4}
+$$
+
+We give the construction because base change is part of the theorem. By the preceding paragraph
+we may pass to a faithfully flat cover of $S$ and choose
+$i:X\hookrightarrow P=\mathbf P^N_S$. Relative Cohen--Macaulayness says that the finite locally
+free resolution of $i_*\mathcal O_X$ is perfect of pure codimension $N-1$. Define
+
+$$
+i_*\omega_{X/S}=
+\mathcal Ext^{N-1}_{P}
+(i_*\mathcal O_X,\omega_{P/S}).
+$$
+
+The same Laurent-monomial pairing works over the base ring and commutes with tensor product.
+Apply it to a finite locally free resolution of $i_*\mathcal E$ and then use the
+pure-codimension change-of-rings calculation. This gives (9.4) and its evaluation-at-one trace.
+The same pure-codimension assertion after tensoring with an arbitrary
+$\mathcal O_S$-algebra shows that this Ext sheaf, the trace, and (9.4) commute with that tensor
+product. Two embeddings give the same representing object in (9.4); the unique comparison
+satisfies the cocycle condition, so the local sheaves and traces descend. Thus the construction
+also covers a proper family not supplied with a global projective embedding.
 
 The formation of $\omega_{X/S}$ commutes with arbitrary base change $S'\to S$ under these hypotheses:
 
 $$
 \omega_{X/S}|_{X_{S'}}
-\simeq\omega_{X_{S'}/S'}. \tag{9.3}
+\simeq\omega_{X_{S'}/S'}. \tag{9.5}
 $$
 
-Flatness and the relative Cohen--Macaulay property are the decisive assumptions. Formula (9.3) includes specialization to every fiber.
+Flatness and the relative Cohen--Macaulay property are the decisive assumptions. Formula (9.5)
+includes specialization to every fiber, and (9.4) specializes to (9.2).
 
 ### 9.4 Smooth and Gorenstein families
 
@@ -771,10 +937,10 @@ For a relative hypersurface $X=(F=0)$ in a smooth $S$-scheme $P$ of relative dim
 
 $$
 \omega_{X/S}\simeq
-\left(\omega_{P/S}\otimes\mathcal O_P(X)\right)|_X. \tag{9.4}
+\left(\omega_{P/S}\otimes\mathcal O_P(X)\right)|_X. \tag{9.6}
 $$
 
-Unlike $\Omega^1_{X/S}$, the right side stays invertible when a smooth fiber acquires a node. Formula (9.4) is the practical construction of invariant differentials on many modular and plane-curve families.
+Unlike $\Omega^1_{X/S}$, the right side stays invertible when a smooth fiber acquires a node. Formula (9.6) is the practical construction of invariant differentials on many modular and plane-curve families.
 
 ## 10. Nodes, normalization, and opposite residues
 
@@ -827,26 +993,41 @@ $$
 
 where the last map is $(f',f'')\mapsto f'(q')-f''(q'')$.
 
-Over a nonclosed field, the preimage of a node is a degree-two étale algebra over its residue field when the branches are not individually rational. The last term remains the residue field of the node, and the difference map is replaced by the quotient of branch values by the diagonal. Formula (10.2) is thus Galois invariant.
-
-Taking Euler characteristics gives
+Over a nonclosed field, put
+$B_q=H^0(\nu^{-1}(q),\mathcal O_{\nu^{-1}(q)})$; this is a degree-two étale algebra over
+$\kappa(q)$. The intrinsic discrepancy line is
 
 $$
-p_a(C)=p_a(\widetilde C)+\#\{\text{nodes}\}
--\#\{\text{connected-component corrections}\}
+Q_q=B_q/\kappa(q),
 $$
 
-in the split case. More precisely, if $C$ is connected and $\widetilde C$ has $r$ connected components and $\delta$ split nodes, then
+where $\kappa(q)$ is embedded diagonally. Thus the last term in (10.2) must in general be
+replaced by $\bigoplus_q i_{q*}Q_q$. It is a one-dimensional $\kappa(q)$-vector space, but it is
+not canonically the residue field: ordering two split branches identifies it with
+$\kappa(q)$ and reversing the order changes the sign. This formulation is Galois invariant.
+
+Taking Euler characteristics is now unambiguous. If $C$ is connected and $\widetilde C$ has
+connected components $\widetilde C_1,\ldots,\widetilde C_r$, then
+
+$$
+p_a(C)=\sum_i p_a(\widetilde C_i)
++\sum_q[\kappa(q):k]-r+1.
+$$
+
+In the split case, when the normalization components are smooth of genera $g_i$ and there are
+$\delta$ nodes, this becomes
 
 $$
 p_a(C)=\sum_i g(\widetilde C_i)+\delta-r+1. \tag{10.3}
 $$
 
-The final term is the first Betti number of the dual graph.
+The term $\delta-r+1$ is the first Betti number of the connected dual graph. The preceding general
+formula shows explicitly that residue-field degrees are not lost before splitting.
 
 ### 10.3 Rosenlicht differentials
 
-The dualizing sheaf of a nodal curve has an explicit normalization description:
+The dualizing sheaf of a nodal curve has an explicit normalization description. After splitting
+the branches, write $\operatorname{res}$ for the Laurent coefficient of $dt/t$ on a branch. Then
 
 $$
 \omega_C=
@@ -858,9 +1039,37 @@ $$
 \right\}. \tag{10.4}
 $$
 
-Thus sections are regular differentials on the normalization allowed simple poles over nodes, with opposite residues on the two branches. At a node, (10.1) shows that this module is free of rank one. Away from the nodes, normalization is an isomorphism and (10.4) is the ordinary canonical bundle.
+When the nodes and branches are rational, the residues in (10.4) are the literal Laurent
+coefficients of Section 8. In general, (10.4) means the same condition after a field extension
+that splits the branches; it is invariant under descent. Intrinsically it says
 
-There is an exact sequence
+$$
+\sum_{p\mapsto q}\operatorname{Res}_p(f\eta)=0
+\quad\text{for every }f\in\mathcal O_{C,q},
+$$
+
+where the residues are the canonical $k$-valued functionals (and the condition may equivalently
+be tested after scalar extension). Thus sections are regular differentials on the normalization
+allowed simple poles over nodes, with opposite residues on the two geometric branches. At a
+node, (10.1) shows that this module is free of rank one. Away from the nodes, normalization is an
+isomorphism and (10.4) is the ordinary canonical bundle.
+
+The local calculation proves equality with the dualizing sheaf. In the completed split local ring,
+write a pair with at most simple poles as
+
+$$
+\left(a(x)\frac{dx}{x},\,b(y)\frac{dy}{y}\right).
+$$
+
+The residue condition is $a(0)+b(0)=0$. Put $g(y)=-b(y)$; then
+$a(0)=g(0)$, so $(a(x),g(y))$ is an element of
+$k[[x,y]]/(xy)\subset k[[x]]\oplus k[[y]]$, and the displayed pair is that element times
+$\theta$ from (10.1). Conversely every multiple of $\theta$ has opposite residues. Hence the
+right side of (10.4) has the completed dualizing stalk at every node and the ordinary canonical
+stalk elsewhere. Coherent sheaves on a noetherian curve are detected by these completed stalks,
+which proves (10.4); descent gives the nonsplit case.
+
+In the split situation there is an exact sequence
 
 $$
 0\longrightarrow\nu_*\omega_{\widetilde C}
@@ -872,14 +1081,22 @@ $$
 
 where the displayed residue may be taken on either branch, the other being its negative. Surjectivity is local: multiples of (10.1) realize any residue. Globally, the individual component residue theorems impose relations on global sections, exactly matching cycles in the dual graph.
 
-The description also works for a reduced Gorenstein curve with more general singularities if one replaces opposite residues by the condition
+Without a chosen splitting, replace $k_q$ in (10.5) by the one-dimensional residue line obtained
+by descending the anti-diagonal branch residues. It is dual, under finite local duality, to the
+discrepancy line $Q_q$ above. No orientation of the branches is needed for the descended exact
+sequence; only an identification of its last line with $\kappa(q)$ requires such a choice.
+
+The description also works for a reduced curve with more general singularities if one replaces
+opposite residues by the condition
 
 $$
-\sum_{p\mapsto q}\operatorname{res}_p(f\eta)=0
+\sum_{p\mapsto q}\operatorname{Res}_p(f\eta)=0
 \quad\text{for every }f\in\mathcal O_{C,q}.
 $$
 
-At a node, testing $f=1$ gives the opposite-residue rule and the other tests enforce no additional condition.
+This is the Rosenlicht description of the dualizing sheaf; it need not be invertible when the
+curve is not Gorenstein. At a split rational node, testing $f=1$ gives the opposite-residue rule
+and the other tests enforce no additional condition.
 
 ### 10.4 Families of nodal curves
 
@@ -955,7 +1172,8 @@ This proof reveals why regularity was convenient: it represented every line bund
 
 A line bundle of negative degree has no nonzero section. Indeed a nonzero section defines an effective divisor and hence has nonnegative degree. This uses integrality; on a reducible curve a line bundle of negative total degree can have a section supported on components where its degree is positive.
 
-Apply (11.2) to $D=0$. Since $\ell(0)=1$,
+Using the duality theorem proved independently in Chapter 12, apply (11.2) to $D=0$. Since
+$\ell(0)=1$,
 
 $$
 h^0(X,\omega_X)=g. \tag{11.3}
@@ -1003,7 +1221,14 @@ h^0(C,\mathcal L)-h^0(C,\omega_C\otimes\mathcal L^{-1})
 =\deg\mathcal L+1-g. \tag{11.6}
 $$
 
-Moreover $\deg\omega_C=2g-2$. For a connected nodal curve, normalization makes the formula visible. Tensor (10.2) by $\mathcal L$ and take Euler characteristics. Each node subtracts one from $\chi$, while gluing component constants produces the graph contribution in (10.3). Applying ordinary Riemann--Roch on normalized components and adding yields (11.5). The opposite-residue description yields the dual term.
+Moreover $\deg\omega_C=2g-2$. Indeed duality exchanges $H^0(\omega_C)$ with
+$H^1(\mathcal O_C)^\vee$ and $H^1(\omega_C)$ with $H^0(\mathcal O_C)^\vee$, so
+$\chi(\omega_C)=-\chi(\mathcal O_C)$; the Euler-characteristic definition of degree gives the
+formula. For a connected nodal curve, normalization makes the formula visible. Tensor (10.2) by
+$\mathcal L$ and take Euler characteristics. Each node subtracts one from $\chi$, while gluing
+component constants produces the graph contribution in (10.3). Applying ordinary
+Riemann--Roch on normalized components and adding yields (11.5). The opposite-residue description
+yields the dual term.
 
 On a reducible curve, negative total degree does not force vanishing. A section may vanish identically on some components, so its zero is a zero-divisor rather than a Cartier divisor. A safe vanishing criterion is componentwise: if $\mathcal L$ has negative degree on every irreducible component of a reduced connected curve, then $H^0(C,\mathcal L)=0$. More refined inequalities must account for nodes where a nonzero componentwise section is forced to vanish.
 
@@ -1017,7 +1242,7 @@ For $\eta\in H^0(X,\omega_X(-D))$, define
 
 $$
 \langle[g],\eta\rangle
-=\sum_{x\in X\setminus V}\operatorname{res}_x(g\eta). \tag{12.1}
+=\sum_{x\in X\setminus V}\operatorname{Res}_x(g\eta). \tag{12.1}
 $$
 
 Changing $g$ by a function regular on $U$ contributes residues of a regular differential. Changing it by a function on $V$ changes the chosen partial sum by the negative of its complement; the global residue theorem makes the total zero. Thus (12.1) is well defined. In sheaf language it is cup product followed by trace:
@@ -1038,7 +1263,27 @@ H^1(X,\mathcal O_X(D))^\vee
 \simeq H^0(X,\omega_X(-D)). \tag{12.3}
 $$
 
-One proof proceeds by induction on divisors. For a closed point $p$, compare the exact sequences for $D$ and $D+p$. The quotient $\mathcal O_X(D+p)/\mathcal O_X(D)$ is a one-dimensional $\kappa(p)$-space of principal parts. The dual exact sequence for differentials is obtained by restricting $\omega_X(-D)$ to $p$. The local residue pairing between the new principal part and the restricted differential is perfect. Starting in a sufficiently positive range, where $H^1$ vanishes by projective vanishing, descend one point at a time. Exactness then proves perfectness for every $D$.
+This is now a theorem rather than a dimension count. In the construction of Section 9.2, the
+dualizing sheaf on a smooth curve is identified with $\Omega^1_{X/k}$ by the local generator
+$dt$. Under this identification, local duality for the skyscraper sheaf at a closed point sends
+the class of $t^{-1}$ paired with $dt$ to $1$. Consequently the trace furnished by (9.2) is
+exactly the residue trace of (12.2): both are compatible with restriction and connecting maps,
+and they agree on these local generators. Formula (9.2), applied to
+$\mathcal F=\mathcal O_X(D)$ and then read in degree zero, is therefore precisely (12.3).
+
+For completeness, the usual divisor devissage makes the mechanism explicit. For a closed point
+$p$, compare
+
+$$
+0\to\mathcal O_X(D)\to\mathcal O_X(D+p)\to\mathcal Q_p\to0
+$$
+
+with its dual triangle against $\omega_X[1]$. Local duality identifies the dual of the
+zero-dimensional quotient $\mathcal Q_p$ with its principal-part residue functional. The two
+long exact cohomology sequences are therefore transposes. The finite resolution on projective
+space supplies the initial calculation; adding or removing closed points one at a time and using
+the two-out-of-three property recovers the same pairing in divisor language. This argument
+proves both cohomological degrees together and does not assume Riemann--Roch.
 
 The decisive local calculation, over a rational point, is
 
@@ -1047,7 +1292,11 @@ $$
 \qquad (a/t,b\,dt)\longmapsto ab.
 $$
 
-At a nonrational point the algebraic residue pairing is naturally over $\kappa(p)$; the dualizing module of the finite extension supplies the final dual over $k$. This formulation remains correct for inseparable residue extensions and avoids a hidden perfection assumption.
+At a nonrational point the local principal-part quotient is paired with
+$\operatorname{Hom}_k(\kappa(p),k)$ as in (8.1), and evaluation supplies the perfect $k$-pairing.
+When $\kappa(p)/k$ is separable this is the familiar field-trace formula; in the inseparable case
+the finite dualizing module replaces the degenerate field trace. Thus no perfection assumption on
+$k$ is hidden.
 
 ### 12.3 Duality for line bundles and vector bundles
 
@@ -1069,7 +1318,9 @@ H^i(X,\mathcal E)^\vee
 \qquad i=0,1. \tag{12.5}
 $$
 
-Resolve $\mathcal E$ using sums of sufficiently negative line bundles and apply the line-bundle result to the exact sequences. For an arbitrary coherent sheaf $\mathcal F$, the precise form is
+These formulas are the two cohomology degrees of (9.2). For a vector bundle, internal Hom into
+$\omega_X$ is $\mathcal E^\vee\otimes\omega_X$ and its higher sheaf Ext groups vanish. For an
+arbitrary coherent sheaf $\mathcal F$, the precise form is instead
 
 $$
 H^i(X,\mathcal F)^\vee
@@ -1093,7 +1344,7 @@ $$
 \mathcal Hom_X(\pi_*\mathcal O_Y,\omega_X).
 $$
 
-Evaluation at $1$ gives the trace. On smooth generically separable curves this recovers the trace of rational differentials and (8.4). Pullback of functions and trace of differentials are adjoint:
+Evaluation at $1$ gives the trace. On smooth generically separable curves this recovers the trace of rational differentials and (8.5). Pullback of functions and trace of differentials are adjoint:
 
 $$
 \langle \pi^*\alpha,\eta\rangle_Y
@@ -1118,7 +1369,15 @@ $$
 K^0\otimes_A B\longrightarrow K^1\otimes_A B. \tag{13.2}
 $$
 
-To construct this model, choose a relatively very ample bundle $\mathcal A$. For $n$ large, $\mathcal E(n)$ is generated by finitely many relative sections and has no higher cohomology after base change. Present it by a sum of twists of $\mathcal A$, repeat with the kernel, and take global sections. Projective vanishing truncates the result to two finite projective terms; shrinking $U$ makes them free. Flatness of $\mathcal E$ over $S$ is what permits universal tensoring.
+Here is why one matrix really suffices. Proper coherence makes $Rf_*\mathcal E$ a
+pseudo-coherent complex on $S$. Resolve after a projective embedding by finite sums of twists of
+a relatively very ample bundle, using Book 8's relative Serre vanishing to make every sufficiently
+high twisted pushforward finite locally free and base-change compatible. Because $X$ and
+$\mathcal E$ are flat over $S$, tensoring this resolution with any $A$-algebra computes the
+corresponding resolution on the base-changed curve. Every such curve has coherent cohomology only
+in degrees zero and one. The finite-complex criterion therefore splits off contractible finite
+projective summands and shortens the resolution to $K^0\to K^1$. Shrinking $U$ makes the two
+projective modules free. This proves (13.2) for every $A$-algebra, not only for residue fields.
 
 The model is stronger than a fiberwise dimension statement. It records every specialization by one matrix with entries in $A$. It is exactly the cohomological amount demanded by dimension one.
 
@@ -1157,7 +1416,8 @@ In particular, if $H^1(X_s,\mathcal E_s)=0$ for every $s$, then $R^1f_*\mathcal 
 
 ### 13.3 Relative Riemann--Roch
 
-Assume that the geometric fibers are connected of constant arithmetic genus $g$. For a line bundle $\mathcal L$ of relative degree $d$,
+Assume that the geometric fibers are connected and reduced of constant arithmetic genus $g$. For
+a line bundle $\mathcal L$ of relative degree $d$,
 
 $$
 \chi(X_s,\mathcal L_s)=d+1-g \tag{13.6}
@@ -1171,11 +1431,42 @@ $$
 \chi(X_s,\mathcal E_s)=\deg(\mathcal E_s)+r(1-g). \tag{13.7}
 $$
 
-Additivity in exact sequences and the fact that rank and determinant control the class relevant to Euler characteristic on a curve reduce this to the line-bundle formula. The finite free model has virtual rank equal to the right side. Neither $h^0$ nor $h^1$ need be constant separately; their jumps cancel.
+We include the reduction to line bundles. It is enough to extend the fiber field to an algebraic
+closure, since cohomology dimensions, determinant, and degree are unchanged by that extension.
+Choose an effective divisor $D$ so positive on every component that $\mathcal E(D)$ is generated
+by global sections. If $r>1$, a section can be chosen nonzero at every point. Indeed, in the
+incidence variety of pairs $(s,x)$ with $s(x)=0$, the fibers over $x$ have codimension $r$ in the
+section space; since the curve has dimension one, its image is a proper closed subset. Such a
+section is a subbundle inclusion. After untwisting, it gives
+
+$$
+0\longrightarrow\mathcal O_X(-D)
+\longrightarrow\mathcal E
+\longrightarrow\mathcal E'\longrightarrow0,
+$$
+
+where $\mathcal E'$ is a vector bundle of rank $r-1$ and
+$\det\mathcal E'=\det\mathcal E\otimes\mathcal O_X(D)$. Induction on $r$, additivity of Euler
+characteristic, and the line-bundle formula give
+
+$$
+\begin{aligned}
+\chi(\mathcal E)
+&=(-\deg D+1-g)
+ +(\deg\det\mathcal E+\deg D+(r-1)(1-g))\\
+&=\deg\det\mathcal E+r(1-g).
+\end{aligned}
+$$
+
+The incidence argument works component by component on any reduced projective curve, so it covers every
+fiber considered here. The finite free model has virtual rank equal to the right side. Neither
+$h^0$ nor $h^1$ need be constant separately; their jumps cancel.
 
 ### 13.4 Useful vanishing ranges
 
-Let $f:X\to S$ be a smooth proper curve of genus $g$. If $\deg(\mathcal L_s)>2g-2$ on every geometric fiber, duality and negative-degree vanishing give
+Let $f:X\to S$ be a smooth proper curve with geometrically connected fibers of genus $g$. Work
+locally on $S$, where Section 9.3 supplies a projective embedding. If
+$\deg(\mathcal L_s)>2g-2$ on every geometric fiber, duality and negative-degree vanishing give
 
 $$
 R^1f_*\mathcal L=0.
@@ -1183,20 +1474,36 @@ $$
 
 Consequently $f_*\mathcal L$ is locally free of rank $d+1-g$ and commutes with arbitrary base change. Degree at least $2g$ makes the evaluation map $f^*f_*\mathcal L\to\mathcal L$ surjective; degree at least $2g+1$ separates every length-two divisor and gives a relative projective embedding.
 
-For nodal or reducible fibers, a total-degree bound alone is insufficient. A bundle may be very negative on one component and very positive on another. A useful sufficient condition is
+For nodal or reducible fibers, a total-degree bound alone is insufficient. A bundle may be very
+negative on one component and very positive on another. A useful sufficient condition is
 
 $$
 \deg(\mathcal L_s|_Z)>
-2p_a(Z)-2+\#(Z\cap\overline{X_s\setminus Z})
+2p_a(Z)-2
 $$
 
-for every connected proper subcurve $Z$ of every geometric fiber, counting intersection branches. Normalization and the gluing sequence then give $H^1=0$. Any application using reducible fibers must verify such componentwise control or prove vanishing separately.
+for every nonempty connected union $Z$ of irreducible components of every geometric fiber,
+including the whole fiber. To prove the claim, suppose a nonzero section of
+$\omega_{X_s}\otimes\mathcal L_s^{-1}$ exists and let $Z$ be a connected component of the union
+of components on which it is not identically zero. At every boundary branch of $Z$, gluing to
+the zero section on the complementary component forces one zero. Since
+
+$$
+\deg(\omega_{X_s}|_Z)=2p_a(Z)-2+\#\partial Z,
+$$
+
+the induced nonzero section on $Z$ has degree
+$2p_a(Z)-2-\deg(\mathcal L_s|_Z)$ after those boundary zeros are removed. The displayed
+inequality makes this negative, a contradiction. Duality gives $H^1=0$. Any application using
+reducible fibers must verify such componentwise control or prove vanishing separately.
 
 ## 14. Relative duality and base change
 
 ### 14.1 Trace and the relative pairing
 
-Let $f:X\to S$ be a proper flat finitely presented Gorenstein relative curve over a locally noetherian scheme. Relative duality supplies
+Let $f:X\to S$ be a proper flat finitely presented Gorenstein relative curve with geometrically
+reduced fibers over a locally noetherian scheme. This includes the smooth and nodal families of
+the standing conventions. Relative duality supplies
 
 $$
 \operatorname{tr}_f:R^1f_*\omega_{X/S}\longrightarrow\mathcal O_S.
@@ -1250,17 +1557,23 @@ $$
 f_*\omega_{X/S}\simeq(R^1f_*\mathcal O_X)^\vee. \tag{14.5}
 $$
 
-When the genus is constant, both sides of (14.5) are locally free of rank $g$ and commute with arbitrary base change.
+Indeed, fiberwise $h^0(\mathcal O)=1$, while constancy of Euler characteristic makes $h^1$
+locally constant. Section 13.2 therefore makes both pushforwards locally free and base-change
+compatible; the unit $\mathcal O_S\to f_*\mathcal O_X$ is an isomorphism on every fiber and hence
+an isomorphism. When the genus is constant, both sides of (14.5) are locally free of rank $g$ and
+commute with arbitrary base change.
 
 ### 14.3 The Hodge bundle in smooth and nodal families
 
-For a proper smooth curve, the **Hodge bundle** is
+For a proper smooth family with geometrically connected fibers of genus $g$, the **Hodge bundle** is
 
 $$
 \mathbb E=f_*\Omega^1_{X/S}=f_*\omega_{X/S}.
 $$
 
-It is locally free of rank $g$, with fiber $H^0(X_s,\Omega^1_{X_s/\kappa(s)})$. For a proper nodal Gorenstein family the correct definition is still
+It is locally free of rank $g$, with fiber $H^0(X_s,\Omega^1_{X_s/\kappa(s)})$. For a proper
+nodal Gorenstein family with geometrically connected fibers of constant arithmetic genus $g$,
+the correct definition is still
 
 $$
 \mathbb E=f_*\omega_{X/S}.
@@ -1314,7 +1627,19 @@ $$
 T_DX^{(d)}\simeq H^0(D,\mathcal O_D(D)). \tag{15.2}
 $$
 
-The tangent space to the degree-zero Picard object at the identity is $H^1(X,\mathcal O_X)$. The differential of (15.1) is the connecting map in
+Indeed an embedded deformation of the quotient
+$\mathcal O_X\twoheadrightarrow\mathcal O_D$ over $k[\epsilon]/(\epsilon^2)$ is obtained by
+changing its ideal through an $\mathcal O_X$-linear map
+$\mathcal I_D\to\mathcal O_D$. Two changes give the same deformation exactly when the maps
+agree. Since $\mathcal I_D=\mathcal O_X(-D)$, this Hom group is
+$H^0(D,\mathcal O_D(D))$. Book 8 identifies the length-$d$ Hilbert functor with $X^{(d)}$, so
+this calculation also covers nonreduced divisors.
+
+The tangent space to the degree-zero Picard object at the identity is $H^1(X,\mathcal O_X)$.
+Indeed a line bundle on $X\times\operatorname{Spec}k[\epsilon]/(\epsilon^2)$ reducing to the
+trivial bundle has transition functions $1+\epsilon f_{ij}$. The cocycle condition says that the
+$f_{ij}$ form an additive Cech $1$-cocycle, and changing trivializations adds a coboundary. The
+differential of (15.1) is the connecting map in
 
 $$
 0\longrightarrow\mathcal O_X
@@ -1328,6 +1653,12 @@ da_D:
 H^0(D,\mathcal O_D(D))
 \xrightarrow{\delta_D}H^1(X,\mathcal O_X). \tag{15.3}
 $$
+
+To check the sign, trivialize $\mathcal O_X(D)$ and lift the infinitesimal normal section on each
+member of an affine cover. On an overlap, the difference of two lifts is a regular function; the
+Cech cocycle of these differences is exactly the displayed boundary. It is also the first-order
+change of the transition functions of $\mathcal O_X(D)$, so the convention
+$D\mapsto\mathcal O_X(D)$ introduces no minus sign.
 
 Under Serre duality, its transpose is restriction:
 
@@ -1347,7 +1678,14 @@ $$
 \widehat{\mathcal O}_{Y,x}
 $$
 
-is surjective. This implies surjectivity on cotangent spaces, equivalently injectivity on tangent spaces. Conversely, if residue fields agree and the cotangent map is surjective, lifts of cotangent generators generate every infinitesimal quotient by Nakayama; completeness gives the required surjection.
+is surjective. This implies surjectivity on cotangent spaces, equivalently injectivity on tangent
+spaces. Conversely, suppose the residue fields agree and the cotangent map is surjective. Choose
+lifts in $\mathfrak m_{Z,z}$ of generators of
+$\mathfrak m_{Y,x}/\mathfrak m_{Y,x}^2$. Nakayama says their images generate
+$\mathfrak m_{Y,x}$. Induction on $n$ then shows that
+$\mathcal O_{Z,z}\to\mathcal O_{Y,x}/\mathfrak m_{Y,x}^n$ is surjective for every $n$: degree
+$n$ monomials in the chosen lifts generate the next associated-graded piece. Taking inverse
+limits and using noetherian completeness gives the required surjection of completed local rings.
 
 For the Abel map at $D$, the following are therefore equivalent:
 
