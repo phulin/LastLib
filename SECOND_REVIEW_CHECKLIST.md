@@ -152,7 +152,7 @@ any resulting corrections.
 - [x] 126. Shimura Data and Canonical Models in the FLT Cases
 - [x] 127. Quaternionic PEL Functors and Representability
 - [x] 128. Uniformization, Components, and Hecke Descent for Shimura Curves
-- [ ] 129. Unitary Shimura Surfaces and the Modèles Étranges Construction
+- [x] 129. Unitary Shimura Surfaces and the Modèles Étranges Construction
 - [ ] 130. Good Integral Models of Shimura Curves and Surfaces
 - [ ] 131. Semistable Models and Monodromy of Shimura Varieties
 - [ ] 132. Automorphic Decomposition of Shimura-Curve H¹
