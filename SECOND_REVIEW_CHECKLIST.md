@@ -122,7 +122,7 @@ any resulting corrections.
 - [ ] 096. Cyclic Base Change for (GL_2)
 - [ ] 097. Solvable Base Change and Descent
 - [ ] 098. Schwartz–Bruhat Analysis and Tate’s Thesis
-- [ ] 099. Archimedean GL₂ and Discrete Series
+- [x] 099. Archimedean GL₂ and Discrete Series
 - [ ] 100. Hilbert-Space Spectral and Trace-Class Theory
 - [ ] 101. Sobolev Theory and Elliptic Regularity on Arithmetic Quotients
 - [ ] 102. Reduction Theory and the Cuspidal Spectrum of GL₂

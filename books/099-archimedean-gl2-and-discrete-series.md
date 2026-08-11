@@ -1,4 +1,4 @@
-# Archimedean GL2 and Discrete Series
+# Archimedean GL₂ and Discrete Series
 
 ## Contents
 
@@ -175,7 +175,7 @@ $$
 
 where $\mathcal P$ is the cone of positive-definite symmetric matrices.
 
-This proves more than a factorization. The cone $\mathcal P$ is contractible, so $K$ is a deformation retract of $G$. It also proves maximality: if a compact subgroup $C$ contains $K$, averaging the standard inner product over $C$ gives a $C$-invariant positive form; after conjugation, $C$ lies in $K$, hence equals it. The same averaging argument shows that every compact subgroup is conjugate into $K$. Consequently every maximal compact subgroup of $G$ is conjugate to $\mathrm O(2)$.
+This proves more than a factorization. The cone $\mathcal P$ is contractible, so $K$ is a deformation retract of $G$. It also proves maximality. If a compact subgroup $C$ contains $K$, average the standard inner product over $C$. The resulting $C$-invariant positive form is already $K$-invariant; invariance under all rotations and one reflection forces its Gram matrix to be a positive scalar multiple of the identity. Hence every element of $C$ preserves the standard inner product and $C\subseteq K$, so $C=K$. The same averaging argument, followed by a change of orthonormal basis for the averaged form, shows that every compact subgroup is conjugate into $K$. Consequently every maximal compact subgroup of $G$ is conjugate to $\mathrm O(2)$.
 
 The word “maximal” cannot be replaced by “maximum.” There is no preferred maximal compact before choosing a positive form: conjugating $K$ by a nonorthogonal matrix gives a different maximal compact. What is canonical is the conjugacy class. Nor is $K^0$ maximal compact in $G$, since it is properly contained in $K$. It is maximal connected compact, a distinction that later accounts for the two cohomological sign lines.
 
@@ -210,7 +210,7 @@ $$
 The Iwasawa decomposition makes this explicit. Put
 
 $$
-n(x)=\begin{pmatrix}1&x\\0&1\end{pmatrix},qquad
+n(x)=\begin{pmatrix}1&x\\0&1\end{pmatrix},\qquad
 a(y)=\begin{pmatrix}y^{1/2}&0\\0&y^{-1/2}\end{pmatrix}.
 $$
 
@@ -252,7 +252,7 @@ $$
 
 Negative-determinant regular elements are necessarily split.
 
-The existence of an elliptic Cartan modulo the center is the structural reason discrete series exist. Indeed, $T/Z$ is compact, whereas $A/Z$ is not. In higher rank, equality of the complex ranks of a group and a maximal compact subgroup is the corresponding criterion. Here one can see the phenomenon directly in the rotation-weight construction of Chapter 6.
+The existence of an elliptic Cartan modulo the center is the structural reason discrete series exist. Indeed, $T/Z$ is compact, whereas $A/Z$ is not. Here the connection is proved directly in the rotation-weight construction of Chapter 6, so no general existence criterion for discrete series is required.
 
 The two Cartans also explain why one formula cannot be recovered from the other by real conjugacy. The matrices $a_t$ and $r(\theta)$ become conjugate only after complexification and analytic continuation. A principal series is induced from real eigenlines, so its character is naturally visible on the split regular set. A discrete series is detected on the compact Cartan as well. The elliptic formula is therefore what distinguishes a discrete constituent from the principal series containing it.
 
@@ -269,8 +269,8 @@ $$
 where $\mathfrak k=\mathfrak{so}_2(\mathbf R)$ consists of skew-symmetric matrices and $\mathfrak p$ consists of symmetric matrices. The brackets satisfy
 
 $$
-[\mathfrak k,\mathfrak k]\subseteq\mathfrak k,qquad
-[\mathfrak k,\mathfrak p]\subseteq\mathfrak p,qquad
+[\mathfrak k,\mathfrak k]\subseteq\mathfrak k,\qquad
+[\mathfrak k,\mathfrak p]\subseteq\mathfrak p,\qquad
 [\mathfrak p,\mathfrak p]\subseteq\mathfrak k.
 $$
 
@@ -295,14 +295,14 @@ These relations are the algebraic engine of the entire representation theory. On
 Put $W=E-F$, so that $r(\theta)=\exp(\theta W)$. Over $\mathbf C$, define
 
 $$
-X_+=\frac12\bigl(H+i(E+F)\bigr),qquad
+X_+=\frac12\bigl(H+i(E+F)\bigr),\qquad
 X_-=\frac12\bigl(H-i(E+F)\bigr).
 $$
 
 A direct calculation gives
 
 $$
-[W,X_+]=2iX_+,qquad [W,X_-]=-2iX_-.
+[W,X_+]=2iX_+,\qquad [W,X_-]=-2iX_-.
 $$
 
 If $v$ has $K^0$-weight $m$, meaning $r(\theta)v=e^{im\theta}v$, then $X_+v$ has weight $m+2$ and $X_-v$ has weight $m-2$. Thus the noncentral noncompact tangent space decomposes as
@@ -333,6 +333,14 @@ $$
 
 Centrality follows by commuting the displayed expression with $H,E,F$ and using the three bracket relations. For example, the terms in $[E,H^2+2H]$ cancel those in $4[E,FE]$; the calculation for $F$ is symmetric.
 
+It also generates the whole center. Filter the enveloping algebra by degree. The leading symbol of a central element is an adjoint-invariant polynomial on $\mathfrak{sl}_2$. Writing a traceless matrix as
+
+$$
+\begin{pmatrix}h&e\\ f&-h\end{pmatrix}
+$$
+
+shows directly, first on the dense semisimple set and then polynomially everywhere, that every invariant polynomial is a polynomial in $h^2+ef$, equivalently in the determinant. The leading symbol of $\Omega$ is the corresponding quadratic invariant. Subtracting a polynomial in $\Omega$ cancels the leading symbol of any central element; induction on the filtration degree leaves only a scalar. Hence $Z(U(\mathfrak{sl}_2))=\mathbf C[\Omega]$.
+
 On the irreducible finite-dimensional module of highest weight $n\ge0$, a highest-weight vector $v$ satisfies $Ev=0$ and $Hv=nv$, whence
 
 $$
@@ -358,13 +366,21 @@ an infinitesimal character for $G$ is determined by the scalar for $\zeta$ and t
 
 ### 4.1 Smooth and compact-finite vectors
 
-Let $(\pi,V)$ be a continuous representation of $G$. A vector $v$ is smooth if $g\mapsto\pi(g)v$ is smooth, and is $K$-finite if the span of $\pi(K)v$ is finite-dimensional. The Peter--Weyl projections
+Let $(\pi,V)$ be a continuous representation of $G$. A vector $v$ is smooth if $g\mapsto\pi(g)v$ is smooth, and is $K$-finite if the span of $\pi(K)v$ is finite-dimensional. For $K=\mathrm O(2)$, density of such vectors is an elementary Fourier statement. Restrict the orbit map to the rotations and form its Fejér sums
 
 $$
-v\longmapsto d_\tau\int_K\overline{\chi_\tau(k)}\,\pi(k)v\,dk
+\sigma_N(v)=\frac1{2\pi}\int_0^{2\pi}
+F_N(\theta)\pi(r(\theta))v\,d\theta,
 $$
 
-show that $K$-finite vectors are dense in the smooth vectors whenever the representation has the usual moderate-growth properties. Here $dk$ has total mass one and $\tau$ runs over irreducible representations of $K$.
+where $F_N$ is the Fejér kernel. Each $\sigma_N(v)$ is a finite sum of rotation weights; adjoining its translates by the reflection $j$ makes it $K$-finite. The Fejér kernels are a positive approximate identity, so $\sigma_N(v)\to v$. Applying the same argument after any differential operator on the smooth orbit map gives convergence in the smooth topology. Thus the $K$-finite vectors are dense, with no compact-group decomposition theorem left implicit. Projection to an individual weight is the Fourier integral
+
+$$
+P_m(v)=\frac1{2\pi}\int_0^{2\pi}
+e^{-im\theta}\pi(r(\theta))v\,d\theta;
+$$
+
+the pair $P_m(v),P_{-m}(v)$ is stable under $K$.
 
 Differentiation makes the space $V_K$ of $K$-finite smooth vectors a module for $U(\mathfrak g_\mathbf C)$. The compatibility
 
@@ -378,13 +394,13 @@ turns it into a $(\mathfrak g,K)$-module. This small algebraic object retains th
 
 A $(\mathfrak g,K)$-module $M$ is **admissible** if every irreducible $K$-type occurs with finite multiplicity. It is a **Harish--Chandra module** if it is admissible and finitely generated over $U(\mathfrak g_\mathbf C)$.
 
-Both conditions matter. Finite generation alone permits an infinite-dimensional multiplicity at one compact type; admissibility alone permits unrelated ladders with no finite set of generators. Together they imply strong finiteness. Since the center of the enveloping algebra commutes with $K$ and $\mathfrak g$, a finitely generated irreducible Harish--Chandra module has an infinitesimal character: each central element acts by a scalar. More generally, on a finite-length module the center acts locally finitely and decomposes the module into generalized infinitesimal-character summands.
+Both conditions matter. Finite generation alone permits an infinite-dimensional multiplicity at one compact type; admissibility alone permits unrelated ladders with no finite set of generators. Together they imply strong finiteness. An irreducible Harish--Chandra module has an infinitesimal character for an elementary reason. A central element preserves each finite-dimensional $K$-isotypic space, so it has an eigenvector there. The kernel of the corresponding scalar difference is nonzero and stable under both $\mathfrak g$ and $K$; irreducibility makes it the whole module. Thus every central element acts by a scalar. More generally, on a finite-length module a product of the scalar differences from its composition factors annihilates the module, so the center acts locally finitely and the module decomposes into generalized infinitesimal-character summands.
 
 For $\mathrm{GL}_2(\mathbf R)$ the multiplicities in an irreducible principal or discrete series are at most one after restriction to $K^0$. This is not part of the definition; it is a rank-one consequence of the compact picture and the ladder relations.
 
 The hypotheses should not be weakened casually. The Hilbert direct sum of countably many trivial representations is smooth but not admissible, because the trivial $K$-type has infinite multiplicity. An algebraic direct sum of infinitely many modules with unrelated infinitesimal characters cannot be finitely generated. Neither object has the finite-length behavior required here. By contrast, every principal series below is generated by one or two compact types, and every rotation weight occurs with multiplicity at most one.
 
-In rank one, finite generation plus admissibility leads concretely to finite length. Choose finitely many generators and follow their ladders. The fixed Casimir gives a quadratic relation among successive raising and lowering arrows, so only finitely many breaks occur. Each break creates a finite or one-sided string, and induction on the number of strings gives a finite composition series.
+For the fixed-infinitesimal-character modules used below, finite length is concrete rather than an additional assumption. Choose finitely many generators and follow their ladders. The Casimir relation makes each product of successive raising and lowering arrows a fixed quadratic polynomial in the compact weight, so only finitely many breaks occur. Away from those breaks a nonzero weight generates the whole intervening string. The finitely many resulting two-sided, one-sided, and finite strings therefore give a finite composition series. This argument applies in particular to every principal series and every subquotient constructed in Chapters 5 and 6; no general finite-length theorem is being used implicitly.
 
 ### 4.3 Infinitesimal and central characters
 
@@ -396,9 +412,9 @@ The trivial representation and $D_2$ give a sharper warning. They have the same 
 
 ### 4.4 Irreducibility and globalization
 
-If a continuous admissible representation is irreducible, its $K$-finite module is irreducible. To see the point, a nonzero $(\mathfrak g,K)$-submodule generates a nonzero closed $G$-invariant subspace after completion; irreducibility forces that closure to be all of $V$. Admissibility and the compact projections then recover every $K$-type, so the algebraic submodule was already all of $V_K$.
+For the representations in this book, algebraic irreducibility is proved from the explicit ladder and then implies topological irreducibility of the realization. Indeed, let $V_K$ be irreducible and let $W\subset V$ be a nonzero closed $G$-invariant subspace. Smoothing a nonzero vector of $W$ by a compactly supported function on $G$, and then applying a nonzero compact Fourier projection, produces a vector in $W\cap V_K$. That intersection is a nonzero $(\mathfrak g,K)$-submodule, hence equals $V_K$. Since the compact-finite vectors are dense, $W=V$.
 
-Conversely, an irreducible Harish--Chandra module has canonical minimal and maximal smooth completions, and all standard moderate-growth completions have the same $K$-finite vectors. In this book every module is constructed inside an explicit principal series or Hilbert-space representation, so existence of a completion is concrete. The general principle is used only to justify moving freely among the compact picture, the Hilbert representation, and the algebraic ladder.
+The reverse implication for an arbitrary completion is subtler and is not needed here. Every algebraic module below is realized explicitly either in a principal-series compact picture or in the holomorphic Hilbert space of Section 6.1, and its ladder is checked inside that realization. Thus no general completion theorem is hidden in the later irreducibility arguments.
 
 ## 5. Principal series in rank one
 
@@ -470,6 +486,23 @@ $$
 
 where $\nu=t_1-t_2$ after moving any sign in the ratio into the parity condition. The precise placement of harmless factors of $i$ depends on the chosen $X_\pm$ and basis vectors, but the zeros do not. A ladder breaks exactly when $m=\nu+1$ or $m=-\nu-1$ is an allowed compact weight.
 
+The coefficients come directly from the induced transformation law, rather than from a classification theorem. Represent $v_m$ in the compact picture by $e^{im\theta}$. Factoring $r(\theta)\exp(tH)$ and $r(\theta)\exp(t(E+F))$ into an upper triangular matrix times a rotation and retaining the terms linear in $t$ gives
+
+$$
+\begin{aligned}
+d\pi(H)f&=(\nu+1)\cos(2\theta)f+\sin(2\theta)f',\\
+d\pi(E+F)f&=(\nu+1)\sin(2\theta)f-\cos(2\theta)f'.
+\end{aligned}
+$$
+
+Combining these formulas according to
+
+$$
+X_\pm=\frac12(H\pm i(E+F))
+$$
+
+gives respectively $(\nu+1+m)/2$ and $(\nu+1-m)/2$. Rescaling all $v_m$ by the same nonzero parity-dependent constant changes neither formula. This calculation also shows that there are no unrecorded arrows between compact weights.
+
 The irreducible representations of $K$ make the passage from weights to full compact types explicit. Besides the two one-dimensional characters $1$ and $\det$, there is for every $m\ge1$ a two-dimensional representation $\tau_m$ whose restriction to $K^0$ is
 
 $$
@@ -490,7 +523,13 @@ $$
 \begin{pmatrix}1&x\\0&1\end{pmatrix}g\right)\,dx.
 $$
 
-It maps $I(\chi_1,\chi_2)$ to $I(\chi_2,\chi_1)$ and continues meromorphically. On each compact type it acts by a scalar. The quotient of successive scalars is obtained by applying $M$ to the ladder relations; its zeros and poles occur exactly where a raising or lowering coefficient vanishes. Therefore the same exceptional parameters are detected both algebraically and analytically.
+It maps $I(\chi_1,\chi_2)$ to $I(\chi_2,\chi_1)$. Its continuation on the compact-finite module is elementary in rank one. On the weight-zero or weight-one type from which the ladder starts, the integral is a beta integral and hence a quotient of gamma functions, meromorphic in $t_1-t_2$. If $c_m(\nu)=\frac12(\nu+1+m)$ is the raising coefficient, the intertwining identity gives
+
+$$
+c_m(\nu)a_{m+2}(\nu)=a_m(\nu)c_m(-\nu)
+$$
+
+for its weight scalars $a_m(\nu)$. This recurrence continues every scalar meromorphically, and the lowering relation gives the same continuation in the other direction. Its zeros and poles occur exactly where a raising or lowering coefficient vanishes. Therefore the same exceptional parameters are detected both algebraically and analytically.
 
 For the integral parameters needed here, set
 
@@ -578,16 +617,23 @@ To see why no other reducibility occurs, suppose a nonzero proper submodule exis
 If $\chi_1$ and $\chi_2$ are unitary, normalized induction carries the invariant norm
 
 $$
-\|f\|^2=\int_K|f(k)|^2,dk
+\|f\|^2=\int_K|f(k)|^2\,dk
 $$
 
 and is called unitary principal series. There is also a complementary series. Up to a unitary twist it has the form
 
 $$
-I(|\cdot|^u,|\cdot|^{-u}),qquad 0<|u|<\frac12.
+I(|\cdot|^u,|\cdot|^{-u}),\qquad 0<|u|<\frac12.
 $$
 
-Its invariant positive form is obtained by composing the standard pairing with the normalized intertwining operator. Positivity can be checked on compact types: the intertwining eigenvalues begin positive and their successive ratios remain positive exactly in the displayed interval. At $|u|=1/2$ positivity degenerates; the trivial representation and $D_2$ occur as constituents. Beyond the endpoint a ratio changes sign, so no positive invariant form of this form exists.
+Its invariant positive form is obtained by composing the standard pairing with the normalized intertwining operator. Write $\nu=2u$ and normalize the scalar on weight zero to be positive. The recurrence above gives, for nonnegative even $m$,
+
+$$
+\frac{a_{m+2}(\nu)}{a_m(\nu)}
+=\frac{m+1-\nu}{m+1+\nu}.
+$$
+
+The ratios in both directions are positive exactly when $|\nu|<1$, which is the displayed interval. At $|u|=1/2$ the first ratio vanishes; the invariant form becomes semidefinite and separates the trivial constituent from $D_2$. Beyond the endpoint a ratio is negative. On an irreducible spherical principal series, an invariant Hermitian form gives an intertwiner to the Hermitian dual, and the multiplicity-one compact ladder makes that intertwiner unique up to scalar. Hence the sign change rules out every other positive invariant form, not merely the one initially constructed.
 
 Finite-dimensional irreducible continuous representations are, up to isomorphism,
 
@@ -597,6 +643,14 @@ $$
 \qquad n\ge0,\quad u\in\mathbf C,
 \quad\epsilon\in\{0,1\}.
 $$
+
+This list follows from the ladder relations. In a finite-dimensional irreducible $\mathfrak{sl}_2$-module, choose an $H$-eigenvector at the top of an $E$-string. If its eigenvalue is $\lambda$, then
+
+$$
+E F^r v=r(\lambda-r+1)F^{r-1}v.
+$$
+
+The identity follows by induction from $[E,F]=H$. If $F^{n+1}v=0$ with $F^nv\ne0$, applying $E$ forces $\lambda=n\in\mathbf Z_{\ge0}$. The vectors $v,Fv,\ldots,F^nv$ form the unique irreducible string of dimension $n+1$, namely $\operatorname{Sym}^n(\mathbf C^2)$. Irreducibility rules out any further string. The central Lie-algebra line then acts by a scalar, which is supplied by a unique twist $|\det|^u$ after the scalar action already present on $\operatorname{Sym}^n$ is removed. Finally the other component can act in two ways, differing by $\operatorname{sgn}\det$. This proves the displayed classification.
 
 The symmetric power fixes the derived-group action, the absolute-value twist fixes the positive-center derivative, and the sign twist fixes the action of the other component. Algebraic representations form the integral subfamily described in Section 11.1. Except for unitary characters, finite-dimensional representations are not unitary. They occur at the same integral semisimple infinitesimal characters as discrete series, but on the opposite side of a reducible principal-series exact sequence. This is the first indication that an infinitesimal character alone does not identify a representation.
 
@@ -611,7 +665,7 @@ Up to unitary character twist, the irreducible unitary representations in the ra
 Fix $k\ge1$. A lowest-weight module $D_k^+$ is generated by a vector $v_k$ satisfying
 
 $$
-r(\theta)v_k=e^{ik\theta}v_k,qquad X_-v_k=0,
+r(\theta)v_k=e^{ik\theta}v_k,\qquad X_-v_k=0,
 $$
 
 and has compact weights
@@ -725,7 +779,9 @@ The ladder method gives the relevant classification without invoking the general
 - the weights form one positive and one negative half-ladder exchanged by the negative component, and $M=D_k$ for some $k\ge2$;
 - the same statement holds at the boundary $k=1$, giving $D_1$.
 
-To prove the assertion, choose a compact weight. The Casimir identity expresses the product of a raising and a lowering coefficient as a quadratic polynomial in that weight. Unless this polynomial vanishes, the ladder continues. It has at most two zeros. No zero gives a two-sided principal ladder; two inward-facing zeros enclose a finite-dimensional string; two outward-facing zeros leave the discrete half-ladders; a zero at the boundary parameter gives the limit. Irreducibility prevents a mixture of these patterns. The full group then joins opposite half-ladders through reflection.
+To prove the assertion, first note that every compact weight has multiplicity at most one. Choose a nonzero vector $v$ of one weight. By the PBW ordering and the relations among $W,X_+,X_-$, every word that starts and ends at this weight reduces to a polynomial in $W$ and the Casimir. Both act by scalars on $v$, so the cyclic module generated by $v$ has at most one dimension in each weight. Irreducibility makes this cyclic module all of $M$.
+
+The Casimir identity now expresses the product of a raising and a lowering coefficient as a quadratic polynomial in the weight. Unless this polynomial vanishes, the ladder continues, and the polynomial has at most two zeros. No zero gives a two-sided principal ladder; two inward-facing zeros enclose a finite-dimensional string; two outward-facing zeros leave the discrete half-ladders; a zero at the boundary parameter gives the limit. The explicit coefficients of Section 5.2 identify the two-sided pattern with a principal-series constituent having the same parity, central derivative, and Casimir scalar. Irreducibility prevents a mixture of patterns. The full group then joins opposite half-ladders through reflection. This proves existence and exhaustiveness, rather than merely listing the possible diagrams.
 
 One-dimensional characters are included among the finite-dimensional cases. Complementary series and unitary principal series have the first ladder pattern. The classification deliberately says nothing about arbitrary nonadmissible continuous representations: compact multiplicities and finite generation are essential hypotheses.
 
@@ -791,7 +847,7 @@ Let
 
 $$
 W_{\mathbf R}=\mathbf C^\times\sqcup j\mathbf C^\times,
-\qquad j^2=-1,qquad jzj^{-1}=\bar z.
+\qquad j^2=-1,\qquad jzj^{-1}=\bar z.
 $$
 
 Use the Weil absolute value
@@ -824,7 +880,9 @@ $$
 
 At $m=0$ it is reducible as a Weil representation; this reflects the fact that the limit $D_1$ lies at a principal-series boundary rather than in the genuine discrete series.
 
-The determinant is $|\cdot|_W^{2s}$ on $\mathbf C^\times$ and takes the value $(-1)^{m+1}=(-1)^k$ on $j$. Under real local reciprocity it therefore corresponds to
+The reciprocity convention can be stated without ambiguity on the abelianization of $W_{\mathbf R}$. The image of $z\in\mathbf C^\times$ corresponds to $z\bar z\in\mathbf R_{>0}$, and the image of $j$ corresponds to $-1$. Indeed, the commutator relation kills $z/\bar z$, leaving the norm of $z$, while $j$ supplies the remaining element of order two. Thus $|\cdot|^t$ pulls back to $|\cdot|_W^t$, and $\operatorname{sgn}$ pulls back to the character trivial on $\mathbf C^\times$ and equal to $-1$ on $j$.
+
+The determinant is $|\cdot|_W^{2s}$ on $\mathbf C^\times$ and takes the value $(-1)^{m+1}=(-1)^k$ on $j$. Under this reciprocity convention it therefore corresponds to
 
 $$
 \operatorname{sgn}^k|\cdot|^{2s},
@@ -851,7 +909,13 @@ L(z,D_{k,s})=
 \Gamma_{\mathbf C}\left(z+s+\frac{k-1}{2}\right).
 $$
 
-For the additive character $x\mapsto e^{2\pi i x}$ and $s=0$, the epsilon sign at the central point is $i^k$. These formulas follow from induction from $W_{\mathbf C}$: the angular exponent contributes $(k-1)/2$ and the radial twist contributes $s$. At weight two the local factor is $\Gamma_{\mathbf C}(z+1/2)$ in the unitary normalization. Moving to a classical nonunitary Dirichlet-series normalization shifts the argument; it does not change the underlying Weil representation.
+For the additive character $x\mapsto e^{2\pi i x}$ and $s=0$, the epsilon sign at the central point is $i^k$. Here is the rank-one calculation behind both assertions. Give the angular variable mass one and take multiplicative radial measure $2\,dr/r$. Pair $u^m|\cdot|_W^s$ with the Schwartz function $2\bar w^m e^{-2\pi w\bar w}$. The angular factors cancel, and the radial Mellin integral is, after $y=2\pi r^2$,
+
+$$
+2(2\pi)^{-(z+s+m/2)}\Gamma(z+s+m/2).
+$$
+
+This is $\Gamma_{\mathbf C}(z+s+m/2)$, and induction from $W_{\mathbf C}$ preserves this local factor. The Fourier transform of the angular harmonic of degree $m$ contributes $i^m$, while the passage from the complex character to its two-dimensional real induction contributes the remaining $i$; hence the epsilon factor is $i^{m+1}=i^k$. At weight two the local factor is $\Gamma_{\mathbf C}(z+1/2)$ in the unitary normalization. Twisting by $|\det|^t$ replaces its argument by $z+t$; it does not alter the compact weights.
 
 ## 8. Explicit characters
 
@@ -865,7 +929,7 @@ $$
 \pi(f)=\int_G f(g)\pi(g)\,dg,
 $$
 
-for compactly supported smooth $f$. For an admissible representation of finite length, $\pi(f)$ is trace class and $\Theta_\pi$ is conjugation invariant. On the regular semisimple set it is represented by a real-analytic function, also denoted $\Theta_\pi(g)$.
+for compactly supported smooth $f$. For the admissible finite-length representations in this book, $\pi(f)$ is trace class and $\Theta_\pi$ is conjugation invariant. To see trace class directly, average $f$ on the left and right against compact characters. Repeated integration by parts in the two compact variables makes these Fourier coefficients decay faster than every power of the two compact weights. The compact multiplicities here are at most one, while the ladder operators grow only polynomially; the resulting diagonal trace norm is therefore summable. Conjugating $f$ conjugates $\pi(f)$, proving invariance. The fixed-point calculations below then give a real-analytic representative on each regular semisimple Cartan.
 
 Three rules determine all formulas needed below. Characters are additive in short exact sequences. Twisting multiplies the character pointwise. Finally, the character of normalized induction is computed by the fixed points of an element on $G/B$. The last rule has a simple rank-one interpretation. The flag variety $G/B$ is the real projective line. A regular split element fixes its two eigenlines, producing two terms. An elliptic element has no real eigenline, producing zero. The Jacobian at a fixed line supplies the Weyl denominator.
 
@@ -886,7 +950,14 @@ $$
 =\frac{\chi_1(a)\chi_2(d)+\chi_1(d)\chi_2(a)}{\Delta(g)}.
 $$
 
-On regular elliptic elements it is zero. To justify the denominator, choose a coordinate $u$ near one eigenline in $\mathbf P^1(\mathbf R)$. The derivative of the projective action is $d/a$ there, so the fixed-point Jacobian contributes $|1-d/a|^{-1}$. The normalizing factor in induction contributes $|a/d|^{1/2}$. Their product is $|ad|^{1/2}/|a-d|=\Delta(g)^{-1}$. The other eigenline gives the second term.
+On regular elliptic elements it is zero. To justify the denominator, choose a coordinate $u$ near one eigenline in $\mathbf P^1(\mathbf R)$. The derivative of the projective action is $q=d/a$ there, so the fixed-point Jacobian contributes $|1-q|^{-1}$. Normalized induction acts on the corresponding half-density by the factor $|q|^{1/2}$. Their product is
+
+$$
+\frac{|d/a|^{1/2}}{|1-d/a|}
+=\frac{|ad|^{1/2}}{|a-d|}=\Delta(g)^{-1}.
+$$
+
+The inducing character on the fiber supplies $\chi_1(a)\chi_2(d)$, and the other eigenline gives the second term.
 
 For the special principal series $I_k$ and
 
@@ -1007,7 +1078,7 @@ Let $\pi$ be an irreducible unitary representation with unitary central characte
 $$
 \int_{G/Z}
 \langle\pi(g)v_1,w_1\rangle
-\overline{\langle\pi(g)v_2,w_2\rangle},d\bar g
+\overline{\langle\pi(g)v_2,w_2\rangle}\,d\bar g
 =d(\pi)^{-1}
 \langle v_1,v_2\rangle\overline{\langle w_1,w_2\rangle}.
 $$
@@ -1017,7 +1088,7 @@ This is Schur orthogonality for a noncompact group. The number depends inversely
 We choose the following normalization. On $(G/Z)^0=\mathrm{PSL}_2(\mathbf R)$ the compact subgroup $\mathrm{PSO}(2)$ has volume one, and the quotient measure on $\mathfrak H$ is $dx\,dy/y^2$, equivalently
 
 $$
-\frac{4,du,dv}{(1-u^2-v^2)^2}
+\frac{4\,du\,dv}{(1-u^2-v^2)^2}
 $$
 
 on the unit disk. The other component is given the translate of this measure. Thus the full maximal compact $\mathrm{PO}(2)$ has volume two. This last sentence is part of the normalization, not a convention to be suppressed.
@@ -1035,10 +1106,10 @@ The compact variable contributes one because its measure has total mass one. The
 $$
 \begin{aligned}
 \int_{\mathrm{PSL}_2(\mathbf R)}
-|\langle\pi(g)v,v\rangle|^2,dg
+|\langle\pi(g)v,v\rangle|^2\,dg
 &=\int_0^{2\pi}\int_0^1
 (1-\rho^2)^k\frac{4\rho\,d\rho\,d\theta}{(1-\rho^2)^2}\\
-&=8\pi\int_0^1\rho(1-\rho^2)^{k-2},d\rho\\
+&=8\pi\int_0^1\rho(1-\rho^2)^{k-2}\,d\rho\\
 &=\frac{4\pi}{k-1}.
 \end{aligned}
 $$
@@ -1090,7 +1161,7 @@ $$
 \end{aligned}
 $$
 
-with brackets taken modulo $\mathfrak h$. The Jacobi identity and representation identity give $d^2=0$. The cohomology is denoted $H^q(\mathfrak g,H;V)$.
+with brackets taken modulo $\mathfrak h$. The Jacobi identity and representation identity give $d^2=0$. The cohomology is denoted $H^q(\mathfrak g,H;V)$. The same formula applies to the pair obtained by adjoining the positive split center to $H$: one replaces $\mathfrak h$ by $\mathfrak h\oplus\mathbf R\zeta$ and imposes invariance under that center. This is the only noncompact relative subgroup used below.
 
 This complex has a geometric origin. An $H$-equivariant alternating map from the tangent space $\mathfrak g/\mathfrak h$ to $V$ is the value at the base point of a $G$-equivariant differential form on $G/H$. The displayed differential is the exterior derivative evaluated on invariant vector fields. Relative Lie algebra cohomology is therefore the infinitesimal model for differential forms on an arithmetic quotient, not an unrelated algebraic construction.
 
@@ -1105,7 +1176,38 @@ has compact weights $2$ and $-2$. Consequently a degree-one cochain is determine
 
 ### 10.2 The rank-one calculation
 
-Let $n=k-2\ge0$ and put $F_n=\operatorname{Sym}^n(\mathbf C^2)$. Its $K^0$-weights are $n,n-2,\ldots,-n$. In $D_k^+\otimes F_n$, the lowest possible compact weight is obtained by pairing the lowest weight $k$ with $-n$:
+We first isolate the necessity argument, because counting degree-one cochains alone is insufficient: mismatched coefficient systems can have such cochains whose classes are killed by the differential.
+
+**Infinitesimal-character lemma.** Suppose $A$ is an irreducible $(\mathfrak{sl}_2,K^0)$-module and $B$ is a finite-dimensional irreducible module, with infinitesimal characters $\lambda_A$ and $\lambda_B$. If
+
+$$
+H^q(\mathfrak{sl}_2,K^0;A\otimes B^\vee)\ne0
+$$
+
+for some $q$, then $\lambda_A=\lambda_B$.
+
+To prove the lemma, identify $A\otimes B^\vee$ with $\operatorname{Hom}(B,A)$. The relative complex computing its cohomology is obtained by applying $\operatorname{Hom}_{(\mathfrak{sl}_2,K^0)}(-,A)$ to the relative standard resolution
+
+$$
+U(\mathfrak{sl}_2)\otimes_{U(\mathfrak{so}_2)}
+\bigwedge^q(\mathfrak{sl}_2/\mathfrak{so}_2)\otimes B.
+$$
+
+A central element $z$ can be moved across this resolution in two ways: left multiplication on the enveloping-algebra factor gives its action on the target, while moving it all the way to $B$ gives its action on the source. For a monomial $z=X_1\cdots X_r$, move the factors one at a time. The alternating sum of the $r$ intermediate insertion maps telescopes; the defining differential of the resolution shows that it is a homotopy $h_z$ satisfying
+
+$$
+d h_z+h_zd=(\lambda_A(z)-\lambda_B(z))\operatorname{id}.
+$$
+
+If the two scalars differ, division by their difference contracts the complex. Thus nonzero cohomology forces equality on every central element. For $\mathfrak{sl}_2$, it is enough to use $z=\Omega+1$.
+
+Take $A=D_k^+$ or $D_k^-$ and $B=F_n=\operatorname{Sym}^n(\mathbf C^2)$. The module $F_n$ is self-dual on $\mathrm{SL}_2$, its shifted Casimir scalar is $(n+1)^2$, and that of $D_k^\pm$ is $(k-1)^2$. Since $n\ge0$ and $k\ge2$, equality forces
+
+$$
+n=k-2.
+$$
+
+It remains to calculate the matched complex and prove sufficiency. The $K^0$-weights of $F_n$ are $n,n-2,\ldots,-n$. In $D_k^+\otimes F_n$, the lowest possible compact weight is obtained by pairing the lowest weight $k$ with $-n$:
 
 $$
 k-n=2.
@@ -1114,7 +1216,7 @@ $$
 It occurs once. All other weights in this tensor product are at least $2$. Similarly, all weights in $D_k^-\otimes F_n$ are at most $-2$, with $-2$ occurring once. Therefore
 
 $$
-C^0=0,qquad \dim C^1=2,qquad C^2=0
+C^0=0,\qquad \dim C^1=2,\qquad C^2=0
 $$
 
 for $D_k\otimes F_{k-2}$ relative to $K^0$. Since the neighboring terms vanish, both degree-one cochains are closed and neither is exact. Thus
@@ -1128,7 +1230,7 @@ H^q(\mathfrak{sl}_2,K^0;D_k\otimes F_{k-2})
 \end{cases}
 $$
 
-One line comes from the holomorphic ladder and one from the antiholomorphic ladder. The proof also explains necessity. If $F_n$ is replaced by $F_m$, a degree-one cochain at the extreme can occur only when $k-m=2$, hence $m=k-2$. Equivalently, the infinitesimal characters of the discrete series and coefficient system must agree.
+One line comes from the holomorphic ladder and one from the antiholomorphic ladder. Together with the infinitesimal-character lemma, this proves both necessity and sufficiency; in particular it does not confuse the existence of a cochain with the survival of its cohomology class.
 
 For $k=2$, the coefficient is trivial. The two degree-one cochains send $X_+$ to a lowest-weight vector of $D_2^+$ and $X_-$ to a highest-weight vector of $D_2^-$. For $k=4$, the coefficient is $F_2$: the tensor of the weight $4$ vector with the weight $-2$ coefficient vector has total weight $2$, exactly matching $X_+$. A trivial coefficient at $k=4$ gives no weight $2$ and hence no cohomology. This makes $n=k-2$ visible without infinitesimal-character terminology.
 
@@ -1182,6 +1284,8 @@ E_{n,a}=\operatorname{Sym}^n(\mathbf C^2)\otimes\det^a,
 \qquad n\ge0,\quad a\in\mathbf Z.
 $$
 
+Indeed, restriction to the derived group is the highest-weight string $\operatorname{Sym}^n$ proved in Section 5.4. The remaining central character is algebraic, hence is an integral power on the diagonal torus. If the two torus weights are $b_1\ge b_2$, then $n=b_1-b_2\ge0$ and $a=b_2$, giving exactly the displayed module. Conversely every such symmetric power and determinant twist is algebraic and irreducible, so the list has neither omissions nor repetitions.
+
 Its highest weight is $(n+a,a)$. On a scalar $xI$ it acts by $x^{n+2a}$, so $\zeta$ acts by $n+2a$. Its restriction to $K^0$ has weights $n,n-2,\ldots,-n$; the determinant twist does not alter them because rotations have determinant one.
 
 The dual is
@@ -1194,7 +1298,7 @@ Indeed, $(\operatorname{Sym}^n V)^\vee\simeq\operatorname{Sym}^nV\otimes\det^{-n
 
 ### 11.2 The cohomology criterion
 
-Consider $D_{k,s}\otimes E_{n,a}$ relative to $K^\dagger$. Two independent conditions are forced. Matching compact extremes requires $n=k-2$. Triviality on the positive center requires
+Consider $D_{k,s}\otimes E_{n,a}$ relative to $K^\dagger$. Two independent conditions are forced. The infinitesimal-character lemma of Section 10.2, followed by the matched compact-weight calculation there, requires $n=k-2$. Triviality on the positive center requires
 
 $$
 2s+n+2a=0.
@@ -1212,7 +1316,7 @@ $$
 vanishes unless
 
 $$
-n=k-2,qquad 2s+n+2a=0.
+n=k-2,\qquad 2s+n+2a=0.
 $$
 
 When these conditions hold, it is two-dimensional in degree one and zero in every other degree. For full $K^\dagger$ it is one-dimensional in degree one and zero otherwise.
@@ -1300,14 +1404,14 @@ $$
 \begin{pmatrix}0&-1\\1&0\end{pmatrix}.
 $$
 
-Its determinant corresponds to the trivial character of $\mathbf R^\times$. This is the unitary automorphic normalization. An algebraic normalization may twist by $|\det|^{1/2}$ or its inverse depending on whether geometric Frobenius and a coefficient dual are used; such a twist is not part of the symbol $D_2$ here.
+Its determinant corresponds to the trivial character of $\mathbf R^\times$. This is the unitary automorphic normalization. For comparison, the explicit rule of Section 7.3 shows that twisting to $D_{2,1/2}$ changes the two characters on $\mathbf C^\times$ from $u,u^{-1}$ to $z,\bar z$, while twisting to $D_{2,-1/2}$ gives their inverses. Neither twist is part of the symbol $D_2$ here. Stating the exponent is therefore enough to translate to a dual or nonunitary convention without an implicit reversal.
 
 ### 12.2 Holomorphic and antiholomorphic realizations
 
-$D_2^+$ is the lowest-weight representation generated by a vector of rotation weight $2$; $D_2^-$ is its complex conjugate. A holomorphic differential $f(z),dz$ transforms with weight two because
+$D_2^+$ is the lowest-weight representation generated by a vector of rotation weight $2$; $D_2^-$ is its complex conjugate. A holomorphic differential $f(z)\,dz$ transforms with weight two because
 
 $$
-d(gz)=\det(g)(cz+d)^{-2},dz
+d(gz)=\det(g)(cz+d)^{-2}\,dz
 $$
 
 for $g\in G^+$. Thus the lowest compact type is not an arbitrary label: it is the transformation law of a differential on the upper half-plane.
