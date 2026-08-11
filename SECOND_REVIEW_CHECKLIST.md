@@ -184,7 +184,7 @@ any resulting corrections.
 - [ ] 158. Ihara Theory and Saturated Degeneracy Maps on Shimura Curves
 - [ ] 159. Integral Level Change and Jacquet–Langlands Comparison
 - [x] 160. Deep-Level Quaternionic Modules and Diamond Actions
-- [ ] 161. Hecke-Valued Galois Representations and Nonminimal Reciprocity
+- [x] 161. Hecke-Valued Galois Representations and Nonminimal Reciprocity
 - [x] 162. Dickson Classification and Adequate Residual Image
 - [x] 163. The Minimal Totally-Real Deformation–Hecke Problem
 - [x] 164. Minimal Patching and R=T over Totally Real Fields

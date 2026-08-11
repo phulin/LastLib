@@ -932,7 +932,7 @@ after choosing a local frame. We need to show $f_w(J_w)=0$.
 **Lemma 8.1 (generic points detect a quotient).** Let $A$ be finite flat over $\mathcal O$ and suppose $A_E$ is reduced. Let $f:R\to A$ be a homomorphism from a complete local $\mathcal O$-algebra, and let $J\subseteq R$ be an ideal. If for every field factor $L$ of $A_E$ the composite
 
 $$
-R\xrightarrow fA\longrightarrow A_E\longrightarrow L
+R\xrightarrow{f}A\longrightarrow A_E\longrightarrow L
 $$
 
 kills $J$, then $f(J)=0$.
@@ -1001,7 +1001,7 @@ Likewise, if an integral coefficient algebra has $\mathcal O$-torsion, a relatio
 
 ### 9.1 Finite flatness is integral
 
-Let $w\mid\ell$. A free rank-two representation over an Artinian $\mathcal O$-algebra $A$ is finite flat when it is the generic fiber of a finite locally free group scheme over $\mathcal O_{F_w}$ carrying the given $A$-action. This definition concerns the lattice and its coefficient action. It is stronger than any assertion about the characteristic-zero representation alone.
+Let $w\mid\ell$. A free rank-two representation over an Artinian $\mathcal O$-algebra $A$ is finite flat when it is identified with the geometric points of the generic fiber of a finite locally free group scheme over $\mathcal O_{F_w}$ carrying the given $A$-action. This definition concerns the lattice and its coefficient action. It is stronger than any assertion about the characteristic-zero representation alone.
 
 In particular, the following implications are invalid without further hypotheses:
 
@@ -1518,7 +1518,7 @@ If extra nontrace operators have been adjoined, the same proof reaches only $\ma
 **Theorem 13.2 (nonminimal reciprocity).** Under the clean datum, the Hecke-valued representation (7.1) defines a canonical strict-conjugacy class and a surjection
 
 $$
-R_{\mathcal D^{\mathrm{nm}}}	woheadrightarrow\mathbb T
+R_{\mathcal D^{\mathrm{nm}}}\twoheadrightarrow\mathbb T
 \tag{13.5}
 $$
 
@@ -1671,7 +1671,7 @@ The representation construction itself uses only residual absolute irreducibilit
 
 At $\ell=3$ or $5$, finite quotient orders can fail to be banal, Steinberg signs can meet, stabilizer denominators can cease to be units, and the congruences $q_w\equiv\pm1\pmod\ell$ occur more frequently. Reduction of a type lattice can become reducible or nonsemisimple. These facts do not prove that reciprocity is false; they show that saturation, type selection, and component coverage must be reverified.
 
-If an independent integral comparison establishes all eight clean conditions of Section 2.5 at such a prime, Theorems 5.2, 6.1, 7.1, and the reduced-order factorization lemma apply verbatim. What may not be imported is the $\ell\ge7$ level-change conclusion with its hypothesis erased.
+If an independent integral comparison establishes all eight clean conditions of Section 2.5 at such a prime, Lemma 5.2, Theorems 6.1 and 7.1, and the reduced-order factorization lemma apply verbatim. What may not be imported is the $\ell\ge7$ level-change conclusion with its hypothesis erased.
 
 ### 15.3 Scalar and reducible residual systems
 
@@ -1761,9 +1761,9 @@ The proof uses only the permitted packages, with the following exact roles.
 | Book 136, *Local--Global Compatibility for Weight-Two Galois Representations* | full good, special, finite-descent, and tame-dihedral Weil--Deligne comparison | $w\nmid\ell$, verified models and correspondences, type projectors, monodromy and Frobenius return maps; surface case only with local and global cancellation |
 | Book 157, *Integral Local Types and Type Lattices* | primary and companion lattices, saturation, ordered principal, enhanced special, fixed finite-type deformation rings | $w\nmid\ell$, unit-valued labels, tame quadratic range, stated banality and sign hypotheses; no primitive wild types |
 | Book 159, *Integral Level Change and Jacquet--Langlands Comparison* | saturated old map, free new quotient, equality of faithful inner-form orders, level raising and lowering | clean proper Shimura-curve datum, $\ell\ge7$, non-Eisenstein localization, component and nonexceptional hypotheses |
-| Book 72, *Taylor--Wiles Primes* | finite Galois Frobenius selection with positive lower density | finite Galois extension and removal of a finite set; geometric form obtained by inversion |
+| Book 193, *The Chebotarev Density Theorem* | finite Galois Frobenius selection with positive Dirichlet density and closed-condition transport | finite Galois extension, removal of a finite set, continuity, and a closed target condition; geometric form obtained by inversion |
 
-Book 72 is used only for the density theorem whose consequence was proved explicitly in Lemma 5.2. No later-numbered deformation--Hecke or patching theorem is used.
+Book 193 is used only for the density and transport theorem whose consequence was proved explicitly in Lemma 5.2. No later-numbered deformation--Hecke, support, or patching theorem is used.
 
 ### 16.3 Hypothesis ledger
 
