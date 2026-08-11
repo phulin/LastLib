@@ -201,7 +201,7 @@ any resulting corrections.
 - [ ] 175. Compatible Systems of Galois Representations
 - [ ] 176. Brauer Induction and Descent of Automorphy
 - [ ] 177. Changing the Prime
-- [ ] 178. Discriminants of Galois Representations
+- [x] 178. Discriminants of Galois Representations
 - [ ] 179. Odlyzko Bounds and Fontaine’s Argument
 - [ ] 180. Hardly Ramified (3)-adic Representations
 - [ ] 181. Schoof's Finite-Flat Category over ℤ[1/2]

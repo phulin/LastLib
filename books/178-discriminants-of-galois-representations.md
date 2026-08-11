@@ -92,6 +92,8 @@ where $M$ is finite and $\Lambda$ is a finite coefficient ring. Its kernel cuts 
 
 There are three normalization layers that must not be merged. A local different exponent is measured upstairs. A local discriminant exponent is measured downstairs and contains a residue-degree factor. A global root discriminant divides the exponent of every rational prime by the total absolute degree. Every later constant will be checked against these three layers.
 
+The substantial prior inputs are exact. The earlier ramification theory supplies lower and upper numbering, Herbrand's quotient theorem, Hilbert's different formula, conductor--discriminant identities, and transitivity of differents. The earlier finite-flat discriminant theory supplies the closure and represented-quotient calculus for chosen models, the augmentation-ideal estimate, and the weighted cluster lemma that converts integral separation into an upper-break cutoff. We recall the relevant constructions and reproduce the numerical argument because the three-adic ledger depends on its endpoints and constants; no classification theorem or discriminant lower bound is being inserted tacitly.
+
 ### 1.2 Finite continuous modules and representations
 
 Let $F$ be a field with separable closure $F^s$ and absolute Galois group $G_F$. A **finite continuous $G_F$-module** is a finite abelian group $M$ with continuous $G_F$-action, the target being discrete. Equivalently, the action homomorphism
@@ -563,7 +565,7 @@ $$
 d=(e-1)+(|G_1|-1).
 $$
 
-Its last positive upper break is
+If $G_1\ne1$, its last positive upper break is
 
 $$
 R=\varphi(1)=\frac{|G_1|}{|G_0|},
@@ -577,6 +579,8 @@ $$
 $$
 
 so every normalization agrees.
+
+If $G_1=1$, the extension is tame: there is no positive upper break, and the correct cutoff is $R=0$. Although $\varphi(1)=1/|G_0|$ in that case, this number is not a break because the positive upper groups are already trivial. This edge case is why a value of the Herbrand function should be called a break only after checking that the group actually drops there.
 
 For a totally ramified cyclic extension of order $p$ with one lower and upper break $m>0$,
 
@@ -946,7 +950,7 @@ The generic module remembers the points and their permutations but not these int
 Extend $v_K$ to $\overline K$ with value group in $\mathbf Q$. For a point $P$, define its identity depth
 
 $$
-\nu(P)=\inf_{a\in I}v_K(P(a)),
+\nu(P)=\inf_{a\in I}v_K(P(a)).
 $$
 
 The augmentation splitting $A\simeq R\oplus I$ makes $I$ a finite $R$-module, so the infimum is attained on any finite set of $R$-module generators. We put $\nu(0)=+\infty$. Translation gives
@@ -1051,70 +1055,89 @@ For the constant group $\underline{\mathbf Z/\ell\mathbf Z}$, distinct points ar
 
 We need one bridge from integral separation to quotient-compatible ramification. We state it in the form required here and prove the mechanism.
 
-**Lemma 7.4 (ramification--congruence lemma).** Let $\mathcal G=\operatorname{Spec}B$ be a finite locally free commutative $R$-group with étale generic fiber, killed by $\ell^n$. Suppose distinct geometric points are separated by an integral function at depth at most $c$. Then $G_K^u$ acts trivially on $\mathcal G(\overline K)$ for every
+**Lemma 7.4 (ramification--congruence lemma).** Let $\mathcal G=\operatorname{Spec}B$ be a finite locally free commutative $R$-group with étale generic fiber, killed by $\ell^n$. Suppose $c\geq0$ and that for every pair of distinct geometric points $P,Q$ there is $b\in B$ with
+
+$$
+v_K(P(b)-Q(b))\leq c.
+$$
+
+Then $G_K^u$ acts trivially on $\mathcal G(\overline K)$ for every
 
 $$
 u>e_Kn+c-1.
 $$
 
-**Proof strategy.** Pass to a finite Galois field splitting all points. Filter point differences both by congruence depth and by their $\ell$-power order. Translation makes every congruence class have the same size. Herbrand's weighted count converts the congruence filtration into upper numbering. At the order-$\ell$ layer, passage from integral displacement to the upper clock contributes $e_K-1$ in addition to the separation radius $c$. Each of the preceding $n-1$ multiplication layers contributes another $v_K(\ell)=e_K$. The initial $e_K-1$ must be retained over a ramified base.
+**Proof strategy.** Pass to a finite Galois field splitting all points. Filter point differences both by congruence depth and by their $\ell$-power order. Translation makes every congruence class a coset and hence gives equal block sizes. A finite orbit--stabilizer count then supplies exactly the denominators in Herbrand's function: it cancels the ramification index of the splitting field. One multiplication layer costs at most $e_K$ units of upper time, while the terminal order-$\ell$ layer costs $e_K+c-1$. Iteration gives the stated constant.
 
-Let $L/K$ split $\mathcal G$, let $G=\operatorname{Gal}(L/K)$, and put $E=e(L/K)$. Thus $v_L=E v_K$ on $L$. For $r\geq0$, declare $P\sim_rQ$ if
-
-$$
-v_K(P(b)-Q(b))>r\quad\text{for every }b\in B.
-$$
-
-Because addition and inverse are defined over $R$, the $\sim_r$-class of $P$ is $P+C_r$, where $C_r$ is the class of zero; in particular all nonempty classes have equal cardinality. The classes are $G$-stable as a system. Choose a point and follow its stabilizer as $r$ increases through the finitely many critical distances. A $v_K$-interval of length $a$ is a $v_L$-interval of length $Ea$. On an interval where a congruence class has cardinality $h$, its translates form equal blocks, and the inertia index already separated is the number of those blocks. Herbrand's weighting divides the raw $v_L$-length by that index. Summing over the critical intervals is precisely the finite sum underlying
+Let $L/K$ split $\mathcal G$, let $G=\operatorname{Gal}(L/K)$, and put $E=e(L/K)$. Thus $v_L=Ev_K$ on $L$. For $t\geq0$, set
 
 $$
-\varphi(s)=\int_0^s\frac{dt}{[G_0:G_t]}.
+C_t=\{P\in\mathcal G(L):\nu(P)>t\}.
 $$
 
-At a critical value, the quotient action on blocks is exactly the image of the corresponding upper group. The equality of block sizes is what cancels the otherwise dangerous factor $E$; this is the same orbit count used in the proof of Herbrand's quotient theorem.
+The nonarchimedean inequality and the group law make $C_t$ a $G$-stable subgroup. The points congruent to $P$ at depth $t$ form the coset $P+C_t$, so every congruence block has cardinality $|C_t|$. Only finitely many values of $t$ change this partition.
 
-Refine these classes by
-
-$$
-C_r[j]=C_r\cap\mathcal G[\ell^j](\overline K),
-\qquad0\leq j\leq n.
-$$
-
-On geometric points this is simply the kernel of multiplication by $\ell^j$. If its raw integral kernel is not flat, its schematic closure inside $\mathcal G$ has the same generic points and is finite flat over the DVR, so the congruence count is unaffected. Applying the preceding weighted block count to the multiplication estimate gives
+We first prove the one-layer estimate used in the induction. Let $X$ be a finite $G$-stable subgroup of $\mathcal G(L)$, put $Y=[\ell]X$, and suppose every nonzero point of $\ker([\ell]:X\to Y)$ has depth at most $c$. For a finite $G$-set $Z$, let $b(Z)$ be the last upper parameter at which the action is nontrivial; put $b(Z)=-1$ when inertia is already trivial. Then
 
 $$
-b_1+1\leq e_K+c,
-\qquad
-b_j-b_{j-1}\leq e_K\quad(j>1),
+\boxed{
+b(X)\leq\max\{b(Y)+e_K,\ e_K+c-1\}.}
+\tag{7.1}
 $$
 
-where $b_j$ is the last upper parameter at which the action on the order-$\ell^j$ layer can remain nontrivial. Here is the valuation accounting behind these two inequalities. The estimate
+Here is the weighted count behind (7.1). If $D$ is a finite $G$-stable group and $C\subseteq D$ is $G$-stable, then for every lower group $G_s$,
+
+$$
+|C|\sum_{\sigma\in G_s}
+\left|\ker\bigl(\sigma-1:D/C\to D/C\bigr)\right|
+=\sum_{x\in D}|\operatorname{Stab}_{G_s}(x+C)|.
+\tag{7.2}
+$$
+
+Both sides count pairs $(\sigma,x)$ with $\sigma x-x\in C$: for fixed $\sigma$, a nonempty solution fiber has $|C|$ elements over each fixed coset, while for fixed $x$ the admissible $\sigma$ form the stabilizer of $x+C$. Divide (7.2) by $|G_0||D|$ and multiply by the length of a lower interval on which $G_s$ and the block system are constant. Orbit--stabilizer turns the resulting coefficient into the proportion of the block action that has not yet separated. Summing over the lower intervals gives
+
+$$
+\int\frac{ds}{[G_0:G_s]},
+$$
+
+the upper-time increment in the Herbrand function. Thus time during which quotient blocks move is charged to $D/C$; only time during which points move inside a block is charged to $C$.
+
+Apply this identity successively to the partitions by the subgroups $C_t\cap D$. At a critical depth, every block splits into the same number of subblocks. The continuing part of the charge is multiplied by the reciprocal of that number, and the complementary part becomes the charge of the new quotient blocks. At the next critical depth it is precisely the continuing charge, so the intermediate terms telescope. This is the same finite weighted sum as in Herbrand's quotient theorem, now applied to translation blocks rather than field cosets.
+
+Pull the congruence filtration on $Y$ back to $X$. The augmentation estimate
 
 $$
 [\ell]^*I\subseteq\ell I+I^\ell
+\tag{7.3}
 $$
 
-shows that one lift through multiplication by $\ell$ has raw valuation budget $v_L(\ell)=Ee_K$. Equal block sizes and the Herbrand denominator turn this into an upper-clock budget of at most $e_K$, proving the second inequality. At the terminal order-$\ell$ layer, the linear term supplies the same $e_K$ and separation of a surviving nonzero difference supplies at most $c$. The isolated inertia term in the conductor count contributes the $1$ on the left. Hence $b_1+1\leq e_K+c$, or
+shows that the linear term translates a raw $v_L$-threshold by
+$v_L(\ell)=Ee_K$. Values of the $I^\ell$ term only create intermediate refinements: they are products of $\ell$ augmentation values and therefore occur among the critical depths already paired in the telescoping sum. Hence they add no boundary interval. The raw interval $Ee_K$ is divided by the inertia index in the Herbrand weight; since $E=|G_0|$, its total upper length is at most $e_K$. This proves the alternative $b(X)\leq b(Y)+e_K$.
+
+If the image block has already become a point, motion remains in the order-$\ell$ kernel. Its last nonzero difference has depth at most $c$, and (7.3) gives the same $Ee_K$ linear shift. The terminal raw separation budget is $Ec$. Passing from displacement valuation to lower index removes the first unit interval: membership in $G_s$ means displacement at least $s+1$, while positive upper time begins immediately after index $0$. After Herbrand weighting, the terminal boundary is therefore $e_K+c-1$. These are the only two boundary terms left by the telescoping count, proving (7.1).
+
+Now put
 
 $$
-b_1\leq e_K+c-1.
+X_j=\mathcal G[\ell^j](L),
+\qquad Y_j=[\ell]X_j\subseteq X_{j-1},
+\qquad0\leq j\leq n.
 $$
 
-This last $-1$ is the tame baseline in upper-break normalization. It disappears when $e_K=1$ but cannot be dropped over a ramified base.
-
-For $j>1$, multiplication by $\ell$ sends a moving difference either to a moving difference in the $(j-1)$st layer or to a nonzero point in the order-$\ell$ kernel. The first case gives $b_j\leq b_{j-1}+e_K$; the second is already covered by the bound for $b_1$. Therefore
+If a scheme-theoretic kernel is not flat, its schematic closure in $\mathcal G$ has the same generic points; the point count above is unchanged. Write $b_j=b(X_j)$. The separation hypothesis applies to the kernel of $X_j\to Y_j$, and $b(Y_j)\leq b_{j-1}$. Formula (7.1) gives
 
 $$
 b_1\leq e_K+c-1,
-\qquad
-b_j\leq b_{j-1}+e_K,
-\qquad
-b_n\leq e_Kn+c-1.
 $$
 
-Upper numbering is essential here. It makes the recursion compatible with the successive quotient actions and prevents the ramification index of the splitting field from appearing as an extra factor.
+and, for $j>1$,
 
-Consequently, if $u>e_Kn+c-1$, no nonzero difference survives in the class attached to $G^u$, and $G^u$ fixes every point. Enlarging the splitting field does not change the assertion because upper numbering is compatible with quotients. $\square$
+$$
+b_j\leq\max\{b_{j-1}+e_K,e_K+c-1\}
+\leq je_K+c-1.
+$$
+
+All geometric points lie in $X_n$ because $\mathcal G$ is killed by $\ell^n$. Thus $G^u$ fixes every point when $u>e_Kn+c-1$. Finally, upper numbering is compatible with the quotient from any larger splitting field, so the conclusion is intrinsic to $G_K$. $\square$
 
 The group law is decisive. For an arbitrary finite flat algebra, congruence classes need not be translates of one another, their sizes need not be uniform, and the weighted argument does not give this conclusion.
 
@@ -1353,11 +1376,16 @@ $$
 Tensoring with $M$ presents $M_B$ as the cokernel of a map $M^s\to M^r$. If $\mathcal G$ is an
 $A$-linear finite-flat model of $M$, the product groups $\mathcal G^s$ and $\mathcal G^r$ model the
 two free terms. Take the schematic closure of the generic image of $M^s$ in $\mathcal G^r$ and
-then the represented finite-flat quotient. Its generic fiber is $M_B$. The endomorphisms of the
-free presentation defining the $B$-action preserve the generic relation subgroup, hence preserve
-its closure, and descend to the quotient. The ring identities hold on the generic fiber and
-therefore hold integrally because the coordinate algebras are torsion-free over the DVR. This
-constructs a $B$-linear finite-flat model.
+then the represented finite-flat quotient. Its generic fiber is $M_B$.
+
+To install the $B$-action, let $\pi:A^r\twoheadrightarrow B$ be the chosen surjection. For each
+$b\in B$, multiplication by $b$ on $B$ lifts to an $A$-linear endomorphism of $A^r$: projectivity
+of the free source lifts the map $b\pi:A^r\to B$ through $\pi$. Every such lift preserves
+$\ker\pi$, and hence its induced map on $M^r$ preserves the generic relation subgroup. It
+therefore preserves the schematic closure and descends to the finite-flat quotient. Different
+choices of lifts induce the same quotient endomorphism. Addition, multiplication, and the unit
+law for these endomorphisms hold on the generic fiber; they hold integrally because the coordinate
+algebras are torsion-free over the DVR. This constructs a $B$-linear finite-flat model.
 
 The exponent is preserved in the direction needed for discriminants. If $\ell^nM=0$, then
 $\ell^nM_B=0$. Theorem 8.1 therefore gives the same universal upper cutoff $c_n(K,\ell)$ for
@@ -1534,7 +1562,13 @@ $$
 M=E[\ell]\oplus\mathbf F_\ell(\chi)
 $$
 
-with $E$ of good reduction at places above $\ell$, the cutout field is the compositum of the two fields. At $\ell$ it retains the finite-flat cutoff, provided $\chi$ is unramified there; at $q$ it has the displayed tame contribution. Thus a tame auxiliary prime costs less than one full power of $N v$ in the normalized local discriminant.
+assume in addition that $E[\ell]$ is unramified at $v$ and that $E$ has good reduction at every
+place above $\ell$. The cutout field is the compositum of the two fields. At $\ell$ it retains the finite-flat cutoff,
+provided $\chi$ is unramified there; at $v$ its inertia is exactly the image of $\chi$ and it has
+the displayed tame contribution. Thus a tame auxiliary prime costs less than one full power of
+$Nv$ in the normalized local discriminant. Without the unramifiedness of $E[\ell]$ at $v$, the
+elliptic-curve summand may add its own tame or wild contribution, so the displayed value cannot be
+assigned to the direct sum.
 
 This example also shows why “finite flat at $\ell$” is a local statement. It imposes no restriction on ramification at a different residue characteristic. Auxiliary ramification must be listed and bounded separately when globalizing.
 
