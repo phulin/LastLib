@@ -121,7 +121,22 @@ There is an immediate difficulty. The same curve has many equations, and their d
 
 An **elliptic curve** over a field $F$ is a smooth, proper, geometrically connected curve $E/F$ of genus one together with a specified point $O\in E(F)$. The point is not decoration. It supplies the identity for a unique algebraic group law on $E$, and it selects the linear systems that produce a Weierstrass equation.
 
-The Riemann--Roch spaces $L(nO)$ have dimension $n$ for $n\geq1$. Choose
+The pole spaces $L(nO)$ have dimension $n$ for $n\geq1$. Here is the exact genus-one argument needed for that count. Since a function with a single simple pole would define a degree-one map to $\mathbf P^1$, it would make the curve rational; hence $L(O)=F$. For $n\geq1$, the principal-parts sequence at the rational point $O$ is
+
+$$
+0\longrightarrow F\longrightarrow L(nO)\longrightarrow P_n
+\xrightarrow{\partial}H^1(E,\mathcal O_E)
+\longrightarrow H^1(E,\mathcal O_E(nO))\longrightarrow0,
+$$
+
+where $P_n$ is the $n$-dimensional space spanned in a local parameter by $z^{-1},\ldots,z^{-n}$. The genus-one definition gives $\dim_FH^1(E,\mathcal O_E)=1$. For $n=1$, the equality $L(O)=F$ says that $\partial:P_1\to H^1(E,\mathcal O_E)$ is injective and hence an isomorphism. The map for every $n$ restricts to this one, so it is surjective. Exactness now gives
+
+$$
+\dim_F L(nO)=1+n-1=n,
+\qquad H^1(E,\mathcal O_E(nO))=0. \tag{1.1}
+$$
+
+Thus no general Riemann--Roch formula is being imported. Choose
 
 $$
 x\in L(2O)\setminus L(O),\qquad
@@ -131,19 +146,19 @@ $$
 Then $1,x,y,x^2,xy,x^3,y^2$ lie in spaces of controlled dimensions. Since $L(6O)$ has dimension $6$, these seven functions satisfy one relation. After scaling and replacing $x$ and $y$ by lower-order terms, the relation takes the form
 
 $$
-y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6. \tag{1.1}
+y^2+a_1xy+a_3y=x^3+a_2x^2+a_4x+a_6. \tag{1.2}
 $$
 
 Its projective closure is
 
 $$
 Y^2Z+a_1XYZ+a_3YZ^2
-=X^3+a_2X^2Z+a_4XZ^2+a_6Z^3. \tag{1.2}
+=X^3+a_2X^2Z+a_4XZ^2+a_6Z^3. \tag{1.3}
 $$
 
 The line $Z=0$ meets this cubic only at $O=[0:1:0]$. At that point the partial derivative with respect to $Z$ is $Y^2$, hence is nonzero. Thus $O$ is always smooth, whatever the other coefficients may be.
 
-Conversely, a smooth projective cubic with a rational point becomes a curve of the form (1.2) after choosing that point as $O$ and a tangent-adapted projective coordinate system. Therefore general Weierstrass equations are not an arbitrary normal form: their weights reflect pole orders at the marked point.
+Conversely, a smooth projective cubic with a rational point becomes a curve of the form (1.3) after choosing that point as $O$ and a tangent-adapted projective coordinate system. Therefore general Weierstrass equations are not an arbitrary normal form: their weights reflect pole orders at the marked point.
 
 ### 1.3 The chord-and-tangent law
 
@@ -163,7 +178,7 @@ $$
 
 identifies the cubic with its degree-zero Picard group. The familiar ruler-and-compass picture is a computational realization of addition, not the foundation of the group axioms.
 
-The inverse of $(x,y)$ on (1.1) is
+The inverse of $(x,y)$ on (1.2) is
 
 $$
 -(x,y)=(x,-y-a_1x-a_3).
@@ -173,15 +188,15 @@ Indeed, the two points lie on the same vertical line, whose third intersection i
 
 ### 1.4 General and short equations
 
-Over an arbitrary field, (1.1) is the correct equation. If $2$ is invertible, completing the square removes the $xy$ and $y$ terms. If $3$ is also invertible, translating $x$ removes the quadratic term. Thus when $\operatorname{char}F\ne2,3$, every elliptic curve has a **short Weierstrass equation**
+Over an arbitrary field, (1.2) is the correct equation. If $2$ is invertible, completing the square removes the $xy$ and $y$ terms. If $3$ is also invertible, translating $x$ removes the quadratic term. Thus when $\operatorname{char}F\ne2,3$, every elliptic curve has a **short Weierstrass equation**
 
 $$
-y^2=x^3+Ax+B. \tag{1.3}
+y^2=x^3+Ax+B. \tag{1.4}
 $$
 
 The hypotheses are exact. In characteristic $2$, the terms $a_1xy$ and $a_3y$ can contain essential information; dividing by $2$ is impossible. In characteristic $3$, completing the square is harmless but the translation needed to eliminate $x^2$ requires division by $3$. Even in characteristic zero, short form may be unsuitable over a DVR of residue characteristic $2$ or $3$, because the required denominators are not integral. A short equation over $K$ can therefore destroy the local integral information that this book is designed to measure.
 
-For (1.3), partial differentiation gives
+For (1.4), partial differentiation gives
 
 $$
 F_x=-3x^2-A,\qquad F_y=2y
@@ -217,9 +232,9 @@ The same filtration explains why an unpointed isomorphism is not the right notio
 
 ### 1.6 Hypotheses and the boundary of the book
 
-The basic equation theory needs only a DVR. Minimal equations likewise exist without completeness, perfection of the residue field, or characteristic-zero assumptions. When sections are lifted from the special fiber, we assume that $R$ is henselian; when inverse limits of points are discussed, we assume completeness. Assertions about the number of rational component classes will explicitly require a finite residue field. This ledger matters because those hypotheses solve different problems and should not be bundled under the vague phrase “local field.”
+The basic equation theory needs only a DVR. Minimal equations likewise exist without completeness, perfection of the residue field, or characteristic-zero assumptions. When sections are lifted from the special fiber, we assume that $R$ is henselian; when inverse limits of points are discussed, we assume completeness. The construction and uniqueness of a minimal proper regular model will use the additional hypothesis that $R$ is excellent, exactly as in the regular-model theorem recalled from Book 10. Assertions about the number of rational component classes will explicitly require a finite residue field. This ledger matters because those hypotheses solve different problems and should not be bundled under the vague phrase “local field.”
 
-Three earlier bodies of results will be used. The valuation theory of DVRs supplies normalized valuations, unit filtrations, henselian lifting, and behavior under finite extensions. The structure theory of finite extensions supplies ramification indices and residue extensions. The theory of regular models supplies normalization, resolution of surface singularities, and uniqueness of the relatively minimal regular model. Everything special to elliptic cubics—the admissible coordinates, invariants, minimality tests, tangent cones, and the Frey calculation—is developed here.
+Three earlier bodies of results will be used, exactly matching the dependency ledger. The valuation theory of DVRs supplies normalized valuations, unit filtrations, henselian lifting, and behavior under finite extensions. The structure theory of finite extensions supplies ramification indices, residue extensions, and the finite-étale description of unramified extensions. The theory of regular models in Book 10 supplies resolution over an excellent DVR and uniqueness of the relatively minimal regular model. The genus-one pole-space count and cubic reconstruction needed here are proved directly in Sections 1.2 and 6.2. Everything else special to elliptic cubics—the admissible coordinates, invariants, minimality tests, tangent cones, and the Frey calculation—is developed here.
 
 There are also deliberate limits. A complete classification of every additive fiber requires a long case analysis whose small-characteristic branches depend on successively deeper congruences. We will not cite that classification as a black box. Instead, we prove the coarse trichotomy in all residue characteristics, give exact one-step minimization congruences, determine all semistable component information needed here, and say precisely where additive component or conductor data require more input. Likewise, analytic uniformization is not used to prove multiplicative reduction statements: the node, its tangent cone, and its resolution already provide the required geometry.
 
@@ -253,7 +268,7 @@ $$
 
 Then every term in the equation has weight $6$. Later, the basic invariants will have weights $4$, $6$, and $12$. Minimality is ultimately the arithmetic consequence of these weights.
 
-Substitution into (1.1) yields
+Substitution into (1.2) yields
 
 $$
 \begin{aligned}
@@ -429,9 +444,15 @@ For a monic polynomial, the discriminant vanishes exactly when two roots collide
 
 **Theorem 3.1 (smoothness criterion).** A projective Weierstrass cubic over a field $F$ is smooth if and only if $\Delta\ne0$.
 
-**Proof strategy.** Smoothness and the condition $\Delta\ne0$ are unchanged by field extension, so one may pass to an algebraic closure. In characteristics different from $2$ and $3$, reduce to short form and compare with the ordinary cubic discriminant. In characteristics $2$ and $3$, use the general partial derivatives and eliminate the coordinates of a hypothetical singular point; the eliminant is precisely $\Delta$. A universal-polynomial argument then shows that the same identity governs every characteristic.
+**Proof strategy.** Smoothness and the condition $\Delta\ne0$ are unchanged by field extension, so one may pass to an algebraic closure. When $2$ is invertible, complete the square and use the ordinary discriminant of a cubic; this includes characteristic $3$ and requires no depressed cubic. In characteristic $2$, the cases $a_1\ne0$ and $a_1=0$ can be read directly from the partial derivatives. This avoids specializing an elimination argument across primes where its leading coefficients could vanish.
 
-**Proof.** First assume $\operatorname{char}F\ne2,3$. For $y^2=x^3+Ax+B$, a singular point must satisfy
+**Proof.** First suppose that $2$ is invertible. Completing the square gives
+
+$$
+(2y+a_1x+a_3)^2=4x^3+b_2x^2+2b_4x+b_6.
+$$
+
+A singular point has $2y+a_1x+a_3=0$, and its $x$-coordinate is a common root of the cubic on the right and its derivative. The polynomial discriminant of that cubic is $16\Delta$. Hence a singular point exists exactly when $\Delta=0$. This argument includes characteristic $3$. When $3$ is invertible as well, it reduces to the familiar short-form calculation: for $y^2=x^3+Ax+B$, a singular point must satisfy
 
 $$
 y=0,\qquad 3x^2+A=0,\qquad x^3+Ax+B=0.
@@ -443,17 +464,21 @@ $$
 4A^3+27B^2=0,
 $$
 
-which by (2.11) is equivalent to $\Delta=0$. The point $O$ is always smooth, so this handles the whole projective curve.
+which by (2.11) is equivalent to $\Delta=0$.
 
-For the general equation, write its defining polynomial as
+It remains to treat characteristic $2$. Write the affine defining polynomial as
 
 $$
 F=y^2+a_1xy+a_3y-x^3-a_2x^2-a_4x-a_6.
 $$
 
-An affine singular point is a common zero of $F,F_x,F_y$. Eliminating $x$ and $y$ from these three equations gives the polynomial $\Delta$ of (2.7), up to a nonzero universal sign convention already fixed by the short-form calculation. This elimination identity has integer coefficients. Since it holds after inverting $6$, it holds as a polynomial identity over $\mathbf Z$, and therefore after reduction in characteristics $2$ and $3$ as well. If $\Delta=0$, the eliminated equations have a common solution over the algebraic closure; if a common solution exists, the eliminant vanishes. Thus the equivalence holds in every characteristic. $\square$
+Here $F_y=a_1x+a_3$. If $a_1\ne0$, this equation fixes $x_0=a_3/a_1$, and $F_x=0$ then fixes $y_0=(x_0^2+a_4)/a_1$. Direct substitution, using the characteristic-$2$ expression for $\Delta$, gives
 
-The last paragraph is not permission to use short equations in small characteristic. It says only that the integral formulas were designed so that a calculation made universally remains valid there.
+$$
+a_1^6F(x_0,y_0)=\Delta.
+$$
+
+Thus a singular point exists exactly when $\Delta=0$. If $a_1=0$ but $a_3\ne0$, then $F_y$ never vanishes, while $\Delta=a_3^4\ne0$. Finally, if $a_1=a_3=0$, then $F_y=0$ identically. Over the algebraic closure the equation $F_x=0$ has a solution $x_0$, and $F(x_0,y)=0$ then has a solution $y_0$ because it is a square equation. The cubic is singular, in agreement with $\Delta=0$ in this case. The point $O$ is always smooth, so these affine calculations handle the whole projective cubic. $\square$
 
 ### 3.2 Node or cusp
 
@@ -468,13 +493,13 @@ $$
 \end{array} \tag{3.1}
 $$
 
-To see the geometry in characteristic different from $2,3$, translate a repeated root of $x^3+Ax+B$ to $0$. A nodal equation becomes
+To see the geometry when $2$ is invertible, complete the square and translate a repeated root to $0$. A nodal equation becomes
 
 $$
 y^2=x^2(x+\lambda),\qquad \lambda\ne0,
 $$
 
-whose tangent cone is $y^2-\lambda x^2$. A cuspidal equation becomes $y^2=x^3$, whose tangent cone is $y^2$. In the first case $c_4$ is nonzero; in the second it vanishes. The general assertion follows from the invariant formulas and direct tangent-cone calculation, including in characteristics $2$ and $3$.
+whose tangent cone is $y^2-\lambda x^2$. A cuspidal equation becomes $y^2=x^3$, whose tangent cone is $y^2$. In the first case $c_4$ is nonzero; in the second it vanishes. In characteristic $3$, $c_4=b_2^2$, and the completed-square cubic has a double root when $b_2\ne0$ and a triple root when $b_2=0$. In characteristic $2$, $c_4=a_1^4$. At a singular point the quadratic tangent cone has cross term $a_1XY$; if $a_1\ne0$, its slope polynomial is separable and has two distinct roots over an algebraic closure, while if $a_1=0$ the quadratic is a square. This proves (3.1) in every characteristic.
 
 A reducible cubic can also occur in a nonminimal or badly chosen family, but the special fiber of a minimal Weierstrass equation for an elliptic curve has the singular behavior relevant to reduction encoded by the same criterion. Passing later to a regular model may separate components that the plane cubic has contracted.
 
@@ -684,11 +709,11 @@ $$
 \downarrow\ \text{resolve singularities}\\
 \text{minimal proper regular model}\\
 \downarrow\ \text{take smooth locus}\\
-\text{canonical smooth group model}.
+\text{smooth component strata met by sections}.
 \end{array}
 $$
 
-The first object is computational, the second exposes components and intersections, and the third governs maps from smooth schemes and the filtration of local points. In good reduction all three coincide. In bad reduction their difference is precisely the geometry created by degeneration.
+The first object is computational, the second exposes components and intersections, and the third records where sections can specialize. In good reduction all three coincide. In bad reduction their difference is precisely the geometry created by degeneration. A full smooth-model mapping property is a stronger theorem and will not be assumed here.
 
 There is also a warning about terminology. “Minimal model” in this book means a minimal Weierstrass equation unless “regular” is explicitly inserted. The two minimality notions are compatible but not identical: one minimizes discriminant weight among cubic equations, the other contracts exceptional curves among regular surfaces.
 
@@ -726,7 +751,7 @@ $$
 
 Consequently their discriminants differ by a unit twelfth power, their invariant differentials generate the same $R$-lattice, and their special fibers are isomorphic as pointed cubics.
 
-**Proof strategy.** Equality of the two minimal discriminant valuations first forces $u$ to be a unit. One then recovers integrality of $r,s,t$ from the pole filtrations at $O$, or equivalently from the normality of the local rings along the section.
+**Proof strategy.** Equality of the two minimal discriminant valuations first forces $u$ to be a unit. Integrality of $r$ is then detected by the $x$-coordinates of prime-to-residue-characteristic torsion: the two-division cubic works when $2$ is a unit, and the explicit three-division quartic works in residue characteristic $2$. Once $r$ is integral, the first, second, third, and sixth coefficient identities force $s$ and $t$ to be integral by unequal-valuation arguments.
 
 **Proof.** Any pointed isomorphism between the generic fibers has the form (2.1). Formula (2.9) gives
 
@@ -736,9 +761,43 @@ $$
 
 Both discriminant valuations are minimal and hence equal, so $v(u)=0$. Thus $u$ is a unit.
 
-It remains to control translations. On either integral model, functions with pole at most $nO$ form an $R$-lattice inside $L(nO)$. For a minimal equation the pole-$2$ and pole-$3$ lattices are maximal among those whose products satisfy an integral degree-six Weierstrass relation. Indeed, enlarging one of them by a missing $\pi$-division and closing under multiplication reconstructs an equation whose differential lattice is smaller by one step and whose discriminant valuation is lower by $12$, contradicting minimality. The isomorphism carries the maximal pole-$2$ lattice to the maximal pole-$2$ lattice. Since $x-u^2x'=r$ has no pole, maximality and properness force $r\in R$. Comparing the pole-$3$ and pole-$2$ lattices in the $y$ relation then gives $s\in R$, and the remaining constant gives $t\in R$. Hence the change is integral. $\square$
+We first prove $r\in R$. If $2$ is a unit, the polynomial
 
-The pole-lattice argument is the conceptual content of integral uniqueness: minimality chooses maximal integral lattices, and an isomorphism between two maximal lattices cannot introduce denominators.
+$$
+x^3+\frac{b_2}{4}x^2+\frac{b_4}{2}x+\frac{b_6}{4}
+$$
+
+is monic and integral, and its roots are the affine $x$-coordinates of the nonzero points killed by $2$. If $2$ is not a unit, then $3$ is a unit and the chord-and-tangent calculation for tripling gives the three-division polynomial
+
+$$
+\psi_3(x)=3x^4+b_2x^3+3b_4x^2+3b_6x+b_8.
+$$
+
+After division by the unit $3$, this too is monic and integral, and its roots are the $x$-coordinates of the nonzero points killed by $3$. Choose a root in an algebraic closure and transport the corresponding torsion point through the isomorphism. Its two $x$-coordinates, say $\alpha$ and $\alpha'$, are integral over $R$, while (2.1) gives
+
+$$
+r=\alpha-u^2\alpha'.
+$$
+
+Thus $r$ is integral over $R$. Since $r\in K$ and a DVR is integrally closed in $K$, $r\in R$.
+
+Set $A_1'=ua_1'\in R$. The first identity gives $a_1=A_1'-2s$. Substitution in the second identity yields
+
+$$
+u^2a_2'=a_2-sA_1'+s^2+3r.
+$$
+
+If $v(s)<0$, the term $s^2$ has strictly smaller valuation than every other term on the right, which is impossible because the left side is integral. Hence $s\in R$.
+
+Finally set $A_3'=u^3a_3'\in R$. The third identity gives $a_3=A_3'-ra_1-2t$. Substitute this in the sixth identity of (2.2). All terms not displayed below are integral because $r,s$ and the coefficients are integral, while the terms involving $t$ combine as
+
+$$
+-t a_3-rta_1-t^2=-tA_3'+t^2.
+$$
+
+If $v(t)<0$, the term $t^2$ again has uniquely least valuation, a contradiction. Therefore $t\in R$. The change is integral, and all stated consequences follow. $\square$
+
+The torsion polynomials are used only as monic integrality detectors for the translation $r$; no structure theorem about torsion is being imported.
 
 ### 5.3 Immediate valuation criteria
 
@@ -844,14 +903,14 @@ The lattices arising from integral equations are totally ordered because all lat
 
 More precisely, an improvement with parameter of valuation $n$ has $\omega'=\pi^n\varepsilon\omega$ for a unit $\varepsilon$ and therefore replaces $R\omega$ by the smaller lattice $\pi^nR\omega$. There is a smallest lattice arising from an integral Weierstrass equation. Existence follows from the same well-ordering argument as minimal discriminants: shrinking by one step lowers the nonnegative discriminant valuation by $12$, so indefinite shrinking is impossible. An equation is minimal exactly when its differential generates this smallest lattice.
 
-This statement sharpens essential uniqueness. Two minimal equations yield the same differential lattice, so the ratio of their differentials is a unit; this is the assertion $u\in R^\times$. Their pole lattices can then be recovered intrinsically from the smooth generic curve and the chosen differential lattice. In degrees two and three they are
+This statement sharpens essential uniqueness. By Theorem 5.2, two minimal equations yield the same differential lattice and also the same pole lattices. For any one minimal equation these are
 
 $$
 \mathcal L_2=R\oplus Rx,\qquad
 \mathcal L_3=R\oplus Rx\oplus Ry.
 $$
 
-They are saturated because a missing $\pi$-division in either pole lattice would, after multiplying sections and rebuilding the degree-six relation, shrink the differential lattice. Equality of the intrinsic lattices for two minimal equations forces $x-u^2x'$ to lie in $R$, hence $r\in R$, and then forces the $x'$ coefficient and constant in $y-u^3y'$ to be integral, hence $s,t\in R$. This supplies the lattice details used in Theorem 5.2.
+Indeed, an integral unit change sends $x$ to a unit multiple of $x'$ plus an element of $R$, and sends $y$ to a unit multiple of $y'$ plus an $R$-linear combination of $1$ and $x'$. Thus Theorem 5.2 makes these lattices independent of the chosen minimal equation. This consequence, rather than a second proof of integral uniqueness, is what is used in the unramified descent argument of Proposition 9.1.
 
 The formulation also explains base change. Under an unramified extension, the value group does not acquire fractional steps, so the smallest differential lattice simply tensors with the new DVR. Under ramified extension, new intermediate lattices appear. An additive equation may cease to be minimal because one of those smaller lattices supports an integral equation; a multiplicative equation cannot, because its unit $c_4$ prevents any further shrinking.
 
@@ -891,10 +950,26 @@ There is an intrinsic criterion that does not mention a chosen equation.
 **Theorem 6.1 (good-reduction criterion).** The following are equivalent:
 
 1. $E$ has good reduction.
-2. $E$ extends to a smooth proper group curve over $R$ with geometrically connected fibers.
+2. The pointed curve $(E,O)$ extends to a smooth proper relative curve of genus one over $R$ with geometrically connected fibers and a section extending $O$.
 3. Some integral Weierstrass equation for $E$ has unit discriminant.
 
-**Proof.** Conditions 1 and 3 are equivalent by definition and minimality. A unit-discriminant Weierstrass model is smooth by the fiberwise discriminant criterion, proper by construction, and its chord-and-tangent law extends to a group law, giving 2. Conversely, in a smooth proper group curve the line of invariant differentials is free over the local ring $R$. Choose a generator and the corresponding pole-$2$ and pole-$3$ functions. They produce an integral Weierstrass equation whose discriminant is nowhere vanishing, hence a unit. $\square$
+**Proof.** Conditions 1 and 3 are equivalent by definition and minimality. A unit-discriminant Weierstrass model is smooth by the fiberwise discriminant criterion and proper by construction, giving 2. Conversely, let $f:\mathcal E\to\operatorname{Spec}R$ be as in 2. We spell out the relative pole-space step. For every $n>0$, formula (1.1) on the generic and special fibers gives
+
+$$
+H^1(\mathcal E_s,\mathcal O_{\mathcal E_s}(nO_s))=0,
+\qquad
+\dim H^0(\mathcal E_s,\mathcal O_{\mathcal E_s}(nO_s))=n.
+$$
+
+For clarity, the needed base-change step is only the following two-term calculation. Cohomology of a line bundle on a proper flat relative curve is represented over the affine base by a map $C^0\to C^1$ of finite free $R$-modules; one obtains such a complex from a finite affine Cech resolution and finite presentations, and relative dimension one removes higher terms. Reduction of its cokernel is $H^1$ on the special fiber. The displayed fiberwise vanishing therefore makes $C^0\to C^1$ surjective modulo $\mathfrak m$, hence split surjective over the local ring by Nakayama's lemma. Its cokernel vanishes and its kernel is finite free, with formation commuting with every residue-field base change. Applied to $\mathcal O(nO)$, this shows that $f_*\mathcal O(nO)$ is free of rank $n$ and commutes with reduction.
+
+Choose compatible bases $1,x$ and $1,x,y$ in ranks two and three. The seven monomials
+
+$$
+1,x,y,x^2,xy,x^3,y^2
+$$
+
+lie in the rank-six module $f_*\mathcal O(6O)$. Fiberwise, the pole-order argument of Section 1.2 says that the first six appropriate leading terms span and that there is one relation, uniquely normalized to be monic in $y^2$ and $x^3$. Reduction and Nakayama lift that relation over $R$, giving a general integral Weierstrass equation. On each geometric fiber, $x$ has pole divisor $2O$ and $y$ has pole divisor $3O$, so they generate the function field and the relation is the irreducible cubic equation of the image. If that cubic were singular, Section 3.3 would make its normalization $\mathbf P^1$, contradicting that its function field has genus one. Thus every geometric fiber of the equation is smooth. Theorem 3.1 says that its discriminant vanishes in no residue field; over the local ring $R$ it is therefore a unit. $\square$
 
 The properness in condition 2 matters. A smooth open model can discard the singular point of a bad special fiber and therefore exists in bad reduction as well.
 
@@ -1079,7 +1154,7 @@ $$
 E_1(K)\longleftrightarrow\mathfrak m, \tag{7.7}
 $$
 
-as sets. Completeness makes this statement immediate from convergence of the series; henselianity gives the same result through compatible finite-order solutions.
+as sets. Completeness makes this immediate by convergence of $w(z)$. Under henselianity alone, fix $z\in\mathfrak m$ in (7.5) and view the equation as a polynomial in $w$: at $w=0$ its value lies in $\mathfrak m$ and its derivative is a unit, so Hensel's lemma gives the unique $w\in\mathfrak m$ directly.
 
 ### 7.3 The formal group law
 
@@ -1133,7 +1208,7 @@ $$
 [m](T)=mT+\text{terms of degree at least }2. \tag{7.11}
 $$
 
-If the residue characteristic does not divide $m$, the linear coefficient is a unit. The formal inverse-function argument then shows that multiplication by $m$ is an automorphism of $E_1(K)$: solve $[m](T)=Z$ successively modulo powers of $\mathfrak m$, with a unique correction at each step. If the residue characteristic divides $m$, the linear term vanishes after reduction and the higher terms matter; this is the beginning of the much subtler small-prime behavior of torsion.
+If the residue characteristic does not divide $m$, the linear coefficient is a unit. Multiplication by $m$ is then étale at the identity, and the henselian inverse-function property gives, for every $Z\in\mathfrak m$, a unique $T\in\mathfrak m$ with $[m](T)=Z$. Thus multiplication by $m$ is an automorphism of $E_1(K)$. Over a complete ring the same solution can be seen by successive correction modulo powers of $\mathfrak m$. If the residue characteristic divides $m$, the linear term vanishes after reduction and the higher terms matter; this is the beginning of the much subtler small-prime behavior of torsion.
 
 The formal differential is
 
@@ -1159,24 +1234,26 @@ There is no comparable characteristic-zero logarithm argument in equal positive 
 
 ### 7.4 Components and the missing quotient
 
-The quotient $E(K)/E_0(K)$ records points whose sections land on components away from the identity component after singularities are resolved. To describe it intrinsically, take the minimal proper regular model of $E$ and then its smooth locus. This smooth group object satisfies the following extension property: a morphism from the generic fiber of any smooth $R$-scheme extends uniquely over $R$. Its special fiber has an identity component, and the finite component group
+Assume in this section that $R$ is excellent and henselian. Book 10 then supplies the unique minimal proper regular model $\mathcal X/R$. Properness extends each $P\in E(K)$ uniquely to a section. Such a section meets the smooth locus of $\mathcal X/R$: in the two-dimensional regular local ring at its closed point, the retraction to $R$ makes the base parameter part of a regular parameter system, so the fiber is regular along the section.
+
+Let $\Gamma_0$ be the geometric component met by $O$. A section meets $\Gamma_0$ exactly when its image on the minimal cubic lies in the smooth locus: the resolution is an isomorphism over that locus, while the points of $\Gamma_0$ lying above the contracted singularity lie in the nonsmooth locus of the special fiber and cannot be met by a section. Thus this component condition is exactly membership in $E_0(K)$ as defined in (7.1).
+
+Translation by $P$ on the generic curve extends to an automorphism of $\mathcal X$: apply the uniqueness of the minimal regular model to the generic automorphism and then to its inverse. It therefore permutes the geometric components. The components actually met by $K$-sections form a finite group
 
 $$
-\Phi_E=\mathcal E_k/\mathcal E_k^0
+\Phi_E^{\mathrm{sec}}={\tau_P(\Gamma_0):P\in E(K)\},
 $$
 
-organizes the remaining local points.
-
-When $R$ is henselian, reduction gives
+with $\tau_P(\Gamma_0)+\tau_Q(\Gamma_0)=\tau_{P+Q}(\Gamma_0)$. This is well defined because two sections meet the same identity translate exactly when their difference lies in $E_0(K)$. Consequently reduction gives the exact sequence
 
 $$
 0\longrightarrow E_0(K)\longrightarrow E(K)
-\longrightarrow\Phi_E(k). \tag{7.12}
+\longrightarrow\Phi_E^{\mathrm{sec}}\longrightarrow0. \tag{7.12}
 $$
 
-The last map need not be onto over an arbitrary residue field: a rational component class need not contain a rational smooth point. It is onto when $k$ is finite, by the vanishing of torsors under connected algebraic groups over finite fields, and in several other familiar local situations. In all cases $E(K)/E_0(K)$ identifies with the image in $\Phi_E(k)$.
+This formulation deliberately records only component classes represented by sections. Over an arbitrary residue field, a Galois-fixed geometric component need not contain a rational smooth point, so it must not automatically be identified with an element of (7.12). For the multiplicative polygons used below, rational representability over a finite field will be checked directly on the rational components.
 
-For good reduction the smooth proper model already has connected special fiber, so $E(K)=E_0(K)$. The converse “trivial component group implies good reduction” is false: some additive fibers have trivial component group. Properness of the smooth group model, not merely connectedness of its special fiber, is the intrinsic good-reduction criterion.
+For good reduction the smooth proper model already has connected special fiber, so $E(K)=E_0(K)$. The converse “trivial component group implies good reduction” is false: some additive fibers have trivial component group. Existence of a smooth proper model, not merely connectedness of a special fiber, is the intrinsic good-reduction criterion.
 
 In split multiplicative reduction the resolved special fiber is a polygon of rational components. Its number of geometric components equals $v(\Delta_{\min})$; consequently the geometric component group is cyclic of that order. This numerical statement can be proved by successively blowing up the nodal total space. A full analytic description of the curve and of its points will be developed only when multiplicative uniformization is introduced.
 
@@ -1265,21 +1342,15 @@ so it preserves $v(z)$ and every subgroup $E_n(K)$. The formal filtration is the
 
 ### 8.1 Why resolve a minimal cubic
 
-A minimal Weierstrass equation minimizes a weighted arithmetic invariant, but its total space need not be regular. At a singular point of the special fiber, blowing up separates tangent directions and reveals components hidden by the plane cubic. Repeating this process yields a proper regular model with no exceptional component that can be contracted while preserving regularity. The result is unique.
+A minimal Weierstrass equation minimizes a weighted arithmetic invariant, but its total space need not be regular. Assume from now through Section 8.6 that $R$ is excellent. At a singular point of the special fiber, the resolution theorem of Book 10 separates tangent directions and reveals components hidden by the plane cubic. Contracting vertical exceptional curves then yields the unique relatively minimal proper regular model.
 
-The minimal cubic and the minimal regular model answer different questions. The cubic is best for calculating $c_4,c_6,\Delta$ and deciding the coarse reduction type. The regular model is best for intersection theory and component groups. Contracting all components disjoint from the identity section returns the Weierstrass model. Thus the two descriptions are complementary rather than competing.
+The minimal cubic and the minimal regular model answer different questions. The cubic is best for calculating $c_4,c_6,\Delta$ and deciding the coarse reduction type. The regular model is best for intersection theory and component groups. The resolution morphism back to the minimal Weierstrass model contracts the exceptional configuration that it created. Thus the two descriptions are complementary rather than competing.
 
-The smooth locus of the regular model is the canonical smooth group model used in (7.12). Its extension property is the reason it is independent of equations: maps from smooth test schemes cannot be sensitive to a chosen resolution.
+**Theorem 8.1 (minimal regular model in genus one).** Let $R$ be an excellent DVR. The curve $E/K$ has a unique relatively minimal proper regular model $\mathcal X/R$. Every $K$-automorphism of $E$ extends uniquely to an automorphism of $\mathcal X$. In particular, translations by $K$-points act on the components of $\mathcal X_k$.
 
-**Theorem 8.1 (canonical smooth model in genus one).** Assume that $R$ is henselian. Let $\mathcal X$ be the minimal proper regular model of the pointed genus-one curve $E/K$, and let $\mathcal X^{\mathrm{sm}}$ be its smooth locus over $R$. Then the group law on $E$ extends uniquely to a smooth separated group law on $\mathcal X^{\mathrm{sm}}$. Moreover, every map from the generic fiber of a smooth $R$-scheme to $E$ extends uniquely to $\mathcal X^{\mathrm{sm}}$.
+**Proof.** Existence, relative minimality, and uniqueness are the positive-genus minimal-model theorem of Book 10. For a generic automorphism $g:E\to E$, apply that theorem to $\mathcal X$ with generic identification changed by $g$. It gives a morphism $\widetilde g:\mathcal X\to\mathcal X$ inducing $g$. Applying the same construction to $g^{-1}$ and using uniqueness shows that the two extensions are inverse. $\square$
 
-**Proof strategy.** Properness first extends a generic map as a rational map to $\mathcal X$. Regularity of the source and minimality of the target eliminate indeterminacy; smoothness of the source forces the image away from the nonsmooth points of the special fiber. Apply this to translations, inversion, and the addition map.
-
-**Proof.** For a smooth integral $R$-scheme $Y$, a map $Y_K\to E$ has a graph whose closure in $Y\times_R\mathcal X$ is proper and birational over $Y$. Resolve its indeterminacy. Any exceptional vertical curve that remained would map into a point of $\mathcal X_k$ and could be contracted without changing the generic map. The relative minimality of $\mathcal X$, together with regularity of $Y$, rules out such a last exceptional curve. Thus the rational map extends. At a point where the image lay in the nonsmooth locus of $\mathcal X_k\to\operatorname{Spec}R$, the induced map on tangent spaces would send the one-dimensional base direction into a fiber tangent space of excess dimension; the smooth local parameters on $Y$ and the regular two-dimensional local equation on $\mathcal X$ exclude this. Hence the extension lands in $\mathcal X^{\mathrm{sm}}$.
-
-Uniqueness follows from separatedness because two extensions agree on the dense generic fiber. Apply the extension result to $Y=\mathcal X^{\mathrm{sm}}\times_R\mathcal X^{\mathrm{sm}}$ and the generic addition map, and similarly to inversion and the identity section. The group identities hold on the generic fiber and hence everywhere by separatedness. $\square$
-
-This theorem is the genus-one bridge from regular models to the reduction filtration. It also explains why removing only the singular point of a Weierstrass cubic is insufficient in general: after resolution, smooth points on newly created components must be retained.
+This is exactly the regular-model input needed for component calculations. We do not assert here the stronger extension property for maps from every smooth test scheme; that requires an additional smooth-model theorem. Removing only the singular point of a Weierstrass cubic is insufficient for components, because resolution creates further smooth points that the contracted cubic does not display.
 
 ### 8.2 Semistable reduction
 
@@ -1317,30 +1388,31 @@ The converses—integral $j$ gives potentially good reduction and nonintegral $j
 
 ### 8.4 Néron-type criteria without representations
 
-The preceding results give several equation-free tests.
+The preceding results give geometric tests independent of a choice among minimal coordinates.
 
-**Theorem 8.2 (intrinsic reduction criteria).** Let $R$ be henselian.
+**Theorem 8.2 (geometric reduction criteria).** Let $R$ be excellent and henselian, and use the minimal cubic together with its minimal regular resolution.
 
-1. $E$ has good reduction if and only if its canonical smooth group model is proper over $R$.
-2. $E$ has multiplicative reduction if and only if the identity component of its special fiber is a one-dimensional torus.
-3. $E$ has additive reduction if and only if that identity component has a nontrivial unipotent part; for an elliptic curve in the coarse cuspidal case, the first smooth quotient is $\mathbf G_a$.
-4. $E$ is semistable if and only if the identity component is an elliptic curve or a torus, with no additive unipotent part.
+1. $E$ has good reduction if and only if the minimal cubic itself is a smooth proper genus-one model.
+2. $E$ has multiplicative reduction if and only if the smooth locus of the contracted special cubic is a one-dimensional torus.
+3. $E$ has additive reduction if and only if the smooth locus of the contracted special cubic is $\mathbf G_a$.
+4. $E$ is semistable if and only if the contracted special cubic is smooth or nodal; equivalently, its smooth locus is an elliptic curve or a torus rather than an additive group.
 
-**Explanation.** In good reduction the smooth model is the proper elliptic scheme. A torus is affine, so multiplicative reduction cannot be proper. Normalization of a node gives the torus, while normalization of a cusp gives the additive group. Resolution changes the component arrangement but not this identity-component distinction. These observations prove the equivalences once the canonical smooth model is obtained from the minimal regular model.
+**Proof.** The first assertion is Theorem 6.1. Normalization of a node removes two points from $\mathbf P^1$ and gives a torus, split according to the tangent directions. Normalization of a cusp removes one point and gives $\mathbf G_a$, as proved in Section 3.3. Resolution changes the visible component arrangement but not whether the contracted singularity has two tangent branches or one. The last assertion is therefore precisely the good-or-multiplicative definition of semistability. $\square$
 
-This is the level at which smooth-model criteria are most useful here: they translate equation calculations into intrinsic geometry. Criteria phrased through torsion modules, inertia, or conductor exponents require later theories and are intentionally not used.
+This is the Néron-type content justified here: proper smooth genus-one, toric, and additive geometry are separated intrinsically. Criteria phrased through torsion modules or inertia require later theories and are intentionally not used.
 
 ### 8.5 Resolving a node and a cusp
 
-Local equations clarify why nodes are semistable and cusps are not. Near a split nodal point, a minimal surface model is étale-locally governed by an equation resembling
+Local equations clarify why nodes are semistable and cusps are not. Pass to the strict henselization so that a nodal tangent cone splits. The completed local ring at the node of a minimal multiplicative Weierstrass model has the form
 
 $$
-UV=\pi^n. \tag{8.5}
+R^{\mathrm{sh}\,\wedge}[[U,V]]/(UV-\varepsilon\pi^n),
+\qquad \varepsilon\in (R^{\mathrm{sh}\,\wedge})^\times. \tag{8.4}
 $$
 
-The generic fiber is smooth. When $n=1$, the total space is regular and the special fiber has two local branches crossing transversely; globally those branches may belong to the same irreducible component. When $n>1$, the total space is singular at $U=V=\pi=0$. Successive blowups replace the thick node by a chain; globally on an elliptic fiber, the chain closes into a polygon with $n$ components. Each intersection is transverse and every component has multiplicity one. This is semistable geometry.
+The unit can be absorbed into one parameter. The generic fiber is smooth. When $n=1$, the total space is regular and the special fiber has two local branches crossing transversely; globally those branches may belong to the same irreducible component. When $n>1$, the total space is singular at $U=V=\pi=0$. Blowing up the ideal $(U,\pi)$ has one regular chart and one unresolved chart $U_1V=\pi^{n-1}$, exactly as in the surface calculation of Book 10. Repetition inserts a chain of $n-1$ rational curves. Globally the two branches of the original cubic join its ends, producing a polygon with $n$ components, every one of multiplicity one.
 
-The exponent $n$ is $v(\Delta_{\min})$ in split multiplicative reduction. One can see the equality first in a two-root collision, where the discriminant contains the square of the root difference, and then verify that each blowup lowers the local thickness by one. The component polygon retains all $n$ units of collision that the plane cubic compressed into one node.
+The exponent $n$ is $v(\Delta_{\min})$. Indeed, a one-parameter deformation of an ordinary node is formally $UV-a$ up to units and changes of regular parameters; its discriminant divisor is $(a)$. Applying this to the minimal cubic gives $v(a)=v(\Delta_{\min})$. This agrees with the explicit two-root collision, where the square of the root difference is the smoothing parameter up to a unit. The component polygon retains all $n$ units of collision that the plane cubic compressed into one node.
 
 A cusp has local shape resembling
 
@@ -1360,19 +1432,19 @@ Write $n=\delta(E/K)>0$ and suppose that $E$ has multiplicative reduction. After
 
 The assertion follows from the local equation $UV=\pi^n$. Blow up the closed singular point. On one chart the new equation has the same form with exponent $n-1$; the other chart records one exceptional rational component. Repeating reduces the exponent to $1$. The global two branches of the original cubic then join the ends of the chain, closing it into a cycle. No component has multiplicity greater than one. This calculation proves simultaneously that there are $n$ geometric components and that the reduction is semistable.
 
-Choose the component meeting the identity section as $0$ and number successive components around the polygon. Intersection addition makes the geometric component group
+Choose the component meeting the identity section as $0$ and number successive components around the polygon. Over the strict henselization, every component contains a smooth residue point and hence is met by a section. The translation action of Theorem 8.1 therefore turns the component set into the geometric component group
 
 $$
-\Phi_E(\overline k)\cong\mathbf Z/n\mathbf Z. \tag{8.6}
+\Phi_E(\overline k)\cong\mathbf Z/n\mathbf Z. \tag{8.5}
 $$
 
-In split multiplicative reduction both orientations of the polygon are defined over $k$, so the residue action on (8.6) is trivial. In nonsplit multiplicative reduction the quadratic splitting automorphism reverses the polygon and acts by
+In split multiplicative reduction both orientations of the polygon are defined over $k$, so the residue action on (8.5) is trivial. In nonsplit multiplicative reduction the quadratic splitting automorphism reverses the polygon and acts by
 
 $$
-i\longmapsto-i. \tag{8.7}
+i\longmapsto-i. \tag{8.6}
 $$
 
-This gives more precise information than the statement that the identity component is a torus. If $k$ is finite, reduction onto rational component classes is surjective and the local component number
+This gives more precise information than the statement that the identity component is a torus. If, in addition, $R$ is henselian and $k$ is finite, write $\Phi_E(k)$ for the fixed classes in $\Phi_E(\overline k)$. They are all represented by sections. In the split case, each rational component is a $\mathbf P^1$ with at most two rational nodes removed, so it has a rational smooth point, even over $\mathbf F_2$, and henselian lifting supplies a section. In the nonsplit case, the identity class is represented by $O$; when $n$ is even, the opposite class $n/2$ is also fixed, and its two boundary points are exchanged by the splitting involution, while the normalized blowup chart supplies a rational smooth point. Thus $\Phi_E(k)=\Phi_E^{\mathrm{sec}}$, reduction onto these classes is surjective, and the local component number
 
 $$
 c(E/K)=\#\Phi_E(k)
@@ -1386,10 +1458,10 @@ c(E/K)=
 n,&\text{split multiplicative},\\
 1,&\text{nonsplit multiplicative and $n$ odd},\\
 2,&\text{nonsplit multiplicative and $n$ even}.
-\end{cases} \tag{8.8}
+\end{cases} \tag{8.7}
 $$
 
-Indeed, the fixed elements of inversion on $\mathbf Z/n\mathbf Z$ are the solutions of $2i=0$. This calculation also reveals a useful counterexample: the number of rational components does not determine the geometric number of components. A nonsplit $I_{101}$ fiber has $101$ geometric components but only the identity component class is rational.
+The displayed values now follow because the fixed elements of inversion on $\mathbf Z/n\mathbf Z$ are the solutions of $2i=0$. This calculation also reveals a useful counterexample: the number of rational component classes does not determine the geometric number of components. A nonsplit $I_{101}$ fiber has $101$ geometric components but only the identity component class is rational.
 
 Under a ramified extension of index $e$, multiplicative reduction remains multiplicative and its geometric polygon has $en$ components. Under an unramified quadratic extension, a nonsplit polygon becomes split but retains $n$ components. These are the component-theoretic versions of the valuation and tangent statements in Chapter 9.
 
@@ -1398,7 +1470,7 @@ Under a ramified extension of index $e$, multiplicative reduction remains multip
 There are several objects called a conductor. The one relevant to the present equation theory is the geometric local conductor count for a semistable genus-one curve. Let $m$ be the number of geometric irreducible components of the minimal regular special fiber and define
 
 $$
-f_{\mathrm{geom}}=\delta(E/K)+1-m. \tag{8.9}
+f_{\mathrm{geom}}=\delta(E/K)+1-m. \tag{8.8}
 $$
 
 For the semistable fibers just analyzed, this is not an unexplained formula. In good reduction, the discriminant has no zero and the special fiber has one component, so $f_{\mathrm{geom}}=0$. In multiplicative reduction, resolving a node of thickness $n$ produces $m=n$ components while $\delta=n$, so
@@ -1408,12 +1480,12 @@ f_{\mathrm{geom}}=
 \begin{cases}
 0,&\text{good reduction},\\
 1,&\text{multiplicative reduction}.
-\end{cases} \tag{8.10}
+\end{cases} \tag{8.9}
 $$
 
 The count measures loss of smoothness after subtracting the components created merely by resolving thickness. One node contributes one; a smooth fiber contributes none. Thus a semistable global elliptic curve has squarefree geometric conductor support: its bad primes occur to exponent one, regardless of the possibly large exponents in its minimal discriminant.
 
-This conclusion is exactly the conductor information justified by the present geometry. The standard ramification-theoretic conductor is defined from an inertia action and includes a wild term. Identifying it with (8.9) is a comparison theorem, not a consequence of manipulating Weierstrass coefficients. In the semistable case that comparison yields the same values $0$ and $1$; nothing in the direct Frey calculation below needs the comparison itself. We therefore record the squarefree semistable count and do not pretend to compute wild additive exponents.
+This conclusion is exactly the conductor information justified by the present geometry. The standard ramification-theoretic conductor is defined from an inertia action and includes a wild term. Identifying it with (8.8) is a comparison theorem, not a consequence of manipulating Weierstrass coefficients. If that comparison is supplied, (8.9) gives the standard semistable values $0$ and $1$; nothing in the direct Frey calculation below needs it. We therefore record the squarefree geometric count and do not pretend to compute wild additive exponents.
 
 The contrast with the discriminant is worth emphasizing. At a multiplicative prime,
 
@@ -1474,7 +1546,7 @@ This formula is the basic accounting law for extension. Ramification multiplies 
 
 ### 9.2 Unramified base change
 
-When $L/K$ is unramified, $e=1$ and a uniformizer of $R$ remains a uniformizer of $S$. Minimality is preserved.
+Suppose $S/R$ is a finite unramified extension of DVRs; equivalently here, it is finite étale and local. Then $e=1$, a uniformizer of $R$ remains a uniformizer of $S$, and minimality is preserved.
 
 **Proposition 9.1.** A minimal Weierstrass equation over $R$ remains minimal after unramified extension to $S$. In particular,
 
@@ -1484,9 +1556,25 @@ $$
 
 and good, multiplicative, or additive reduction remains of the same coarse type.
 
-**Proof strategy.** If the equation became nonminimal over $S$, integral uniqueness and the divisibility conditions for an improving transformation would descend because $S/R$ is faithfully flat and has the same value scale.
+**Proof strategy.** Completion reduces the descent issue to a complete DVR, where an unramified extension has a finite unramified Galois closure. Essential uniqueness makes the minimal differential and pole lattices stable under that Galois action. Finite-étale descent brings their degree-six relation downstairs, and finite-precision approximation then returns it from the completion to $R$.
 
-**Proof.** Suppose an $S$-integral change with a nonunit scaling parameter improved the equation. Its coefficient equations (2.2) are a finite system of congruences modulo successive powers of the common uniformizer. After passing to a finite unramified subextension containing the parameters, take the corresponding finite free $R$-algebra. Faithful flatness says that the relevant pole lattices were already nonsaturated over $R$; equivalently, the smaller improved differential lattice intersects the $K$-line in a strictly smaller lattice of the same valuation step. Descent of the integral degree-six relation would then give an improving equation over $R$, contrary to minimality. Hence no improvement exists. Equation (9.2) with $e=1$ preserves the invariant valuations and the coarse type. $\square$
+**Proof.** Suppose the equation became nonminimal over $S$. Complete. The completed finite étale algebra $S\otimes_R\widehat R$ is a product of finite unramified complete DVRs; choose a factor through which the improving change maps. A finite unramified Galois extension $T/\widehat R$ contains that factor. Choose a minimal equation over $T$.
+
+Every Galois conjugate is again minimal. Theorem 5.2 says that any two conjugates differ by an integral admissible change with unit scaling. Consequently they have the same differential lattice
+
+$$
+T\omega_{\min}\subset\Omega(E/K)\otimes_K\operatorname{Frac}(T)
+$$
+
+and the same pole lattices $T+Tx$ and $T+Tx+Ty$: the formulas $x=u^2x'+r$ and $y=u^3y'+u^2sx'+t$ make this equality explicit. These three lattices are stable under the semilinear Galois action. Finite Galois descent, expressed by the equalizer
+
+$$
+\widehat R\longrightarrow T\rightrightarrows T\otimes_{\widehat R}T,
+$$
+
+descends them to free $\widehat R$-lattices. Multiplication among the descended pole lattices gives the unique degree-six relation; choosing bases adapted to $1$ puts it in integral Weierstrass form. Since the original equation was nonminimal after extension, the descended differential lattice is strictly smaller than $\widehat R\omega$, so the new discriminant valuation is lower by a positive multiple of $12$.
+
+It remains only to return from $\widehat R$ to $R$. The isomorphism from the original equation to this improved completed equation has parameters $u,r,s,t\in\operatorname{Frac}(\widehat R)$. Integrality of the five expressions in (2.2) is a finite list of valuation inequalities, and $v(u)>0$ is fixed. Approximate the four parameters by elements of $K$ closely enough that all five inequalities and the value of $u$ are unchanged. Formula (2.2) then gives an integral equation over $R$, while (2.9) lowers its discriminant by the same positive multiple of $12$. This contradicts minimality over $R$. Hence the base-changed equation is minimal. Equation (9.2) with $e=1$ preserves the invariant valuations and the coarse type. $\square$
 
 The residue geometry may nevertheless become more explicit. A nonsplit node can acquire its two tangent directions after an unramified quadratic extension, turning nonsplit multiplicative reduction into split multiplicative reduction. The special fiber remains nodal throughout.
 
@@ -1524,7 +1612,7 @@ This example is the model for potential good reduction: a ramified extension mak
 
 ### 9.4 Descent and persistence
 
-Good reduction descends through finite unramified extensions. If an unramified extension admits a smooth proper model, faithful flat descent carries smoothness, properness, the section, and the group law back to $R$. Multiplicative versus additive type also descends unramifiedly, though splitness may not.
+Good reduction descends through finite unramified extensions: Proposition 9.1 gives $\delta(E/L)=\delta(E/K)$, so vanishing upstairs is equivalent to vanishing downstairs. The same proposition shows that multiplicative versus additive type descends unramifiedly, though splitness may not.
 
 Semistability persists under every finite extension. Good reduction stays good. Multiplicative reduction stays multiplicative because $c_4$ remains a unit. Thus once the only singularity is a node, further extension never turns it into a cusp.
 
@@ -1544,7 +1632,13 @@ $$
 c_4=-48\pi,\qquad \Delta=-64\pi^3.
 $$
 
-The equation is minimal and additive. Let $L/K$ have ramification index $4$, with $\pi=u\varpi^4$ for a unit $u$. After replacing $\varpi$ by a unit multiple when a suitable fourth root of $u$ is available, the base-changed equation has coefficient $\varpi^4$ on $x$. Scaling down gives $y'^2=x'^3+x'$, a curve of good reduction. If the unit root is not present, one may make a further unramified extension. This example exhibits potential good reduction with $j=1728$.
+The equation is minimal and additive. Let $L/K$ have ramification index $4$, with $\pi=u\varpi^4$ for a unit $u$. Scaling by $x=\varpi^2x',y=\varpi^3y'$ gives
+
+$$
+y'^2=x'^3+ux',
+$$
+
+whose discriminant is the unit $-64u^3$. Thus the curve has good reduction without any assumption that $u$ has a fourth root. This example exhibits potential good reduction with $j=1728$.
 
 Second, let
 
@@ -1855,13 +1949,13 @@ $$
 y^2=x^2(x+u),\qquad u\in k^\times.
 $$
 
-The tangent cone is
+The tangent cone factors over an algebraic closure as
 
 $$
-(y-\sqrt u,x)(y+\sqrt u,x).
+(y-\sqrt u\,x)(y+\sqrt u\,x).
 $$
 
-It has two $k$-rational lines exactly when $u$ is a square. If $u$ is not a square, the lines are defined over $k(\sqrt u)$ and exchanged by its nontrivial automorphism. The normalization removes the node and deletes these two conjugate points. The resulting smooth locus is the norm-one form of a multiplicative group rather than the split multiplicative group.
+Its two lines are $k$-rational exactly when $u$ is a square. If $u$ is not a square, the lines are defined over $k(\sqrt u)$ and exchanged by its nontrivial automorphism. The normalization removes the node and deletes these two conjugate points. The resulting smooth locus is the norm-one form of a multiplicative group rather than the split multiplicative group.
 
 This computation also explains why splitness is residue-field data. Ramified extension may rescale the collision order, but an unramified residue extension is what makes the tangent directions rational. It is therefore natural that nonsplit multiplicative reduction becomes split over an unramified quadratic extension when the residue field is finite.
 
@@ -2295,7 +2389,7 @@ $$
 \prod_{q\mid abc}q. \tag{12.22}
 $$
 
-This is the characteristic Frey separation: the minimal discriminant remembers the large multiples $2p\,v_q(abc)$, while the semistable conductor remembers each bad prime only once.
+This is the characteristic Frey separation visible here: the minimal discriminant remembers the large multiples $2p\,v_q(abc)$, while the geometric semistable conductor count remembers each bad prime only once.
 
 ### 12.9 Conclusion
 

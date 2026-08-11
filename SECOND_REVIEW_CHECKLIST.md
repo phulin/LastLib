@@ -72,7 +72,7 @@ any resulting corrections.
 - [x] 046. Finite Flat Commutative Group Schemes
 - [ ] 047. Cartier Duality
 - [ ] 048. Finite-Flat Galois Representations
-- [ ] 049. Elliptic Curves over DVRs
+- [x] 049. Elliptic Curves over DVRs
 - [ ] 050. Tate Curves and Multiplicative Reduction
 - [ ] 051. Torsion and Tate Modules of Elliptic Curves
 - [ ] 052. Algebraic de Rham Cohomology and Gauss–Manin Connections
