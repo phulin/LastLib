@@ -2,3038 +2,1249 @@
 
 ## Contents
 
-1. [Why pass from the modular curve to its Jacobian?](#1-why-pass-from-the-modular-curve-to-its-jacobian)
-   - [The arithmetic problem](#11-the-arithmetic-problem)
-   - [The Jacobian $J_0(N)$](#12-the-jacobian-j_0n)
-   - [Abel--Jacobi maps at rational cusps](#13-abel--jacobi-maps-at-rational-cusps)
-   - [Changing the base cusp](#14-changing-the-base-cusp)
-2. [Hecke operators with their variance visible](#2-hecke-operators-with-their-variance-visible)
-   - [The source-to-quotient correspondence](#21-the-source-to-quotient-correspondence)
-   - [Divisors, the Jacobian, and Tate modules](#22-divisors-the-jacobian-and-tate-modules)
-   - [Diamonds and differentials](#23-diamonds-and-differentials)
-   - [Level operators and Atkin--Lehner involutions](#24-level-operators-and-atkin--lehner-involutions)
-3. [Polarization and adjoints](#3-polarization-and-adjoints)
-   - [Why an adjoint needs a polarization](#31-why-an-adjoint-needs-a-polarization)
-   - [Transpose correspondences](#32-transpose-correspondences)
-   - [The Hecke and diamond formulas](#33-the-hecke-and-diamond-formulas)
-   - [Consequences for pairings and stable pieces](#34-consequences-for-pairings-and-stable-pieces)
-4. [Cuspidal divisor classes](#4-cuspidal-divisor-classes)
-   - [Rational and geometric cusps](#41-rational-and-geometric-cusps)
-   - [The cuspidal subgroup](#42-the-cuspidal-subgroup)
-   - [Modular units and Manin--Drinfeld](#43-modular-units-and-manin--drinfeld)
-   - [Hecke action on cusp differences](#44-hecke-action-on-cusp-differences)
-5. [The prime-level cuspidal calculation](#5-the-prime-level-cuspidal-calculation)
-   - [Why divisibility is not enough](#51-why-divisibility-is-not-enough)
-   - [The eta quotient and its divisor](#52-the-eta-quotient-and-its-divisor)
-   - [The converse and exact order](#53-the-converse-and-exact-order)
-   - [Small primes and examples](#54-small-primes-and-examples)
-6. [The Shimura subgroup](#6-the-shimura-subgroup)
-   - [Forgetting a generator](#61-forgetting-a-generator)
-   - [Descent characters and Cartier duality](#62-descent-characters-and-cartier-duality)
-   - [Interaction with the polarization](#63-interaction-with-the-polarization)
-   - [The prime-level Hecke character](#64-the-prime-level-hecke-character)
-7. [Néron models and specialization](#7-néron-models-and-specialization)
-   - [The extension problem](#71-the-extension-problem)
-   - [Identity component and component group](#72-identity-component-and-component-group)
-   - [Extension of Hecke endomorphisms](#73-extension-of-hecke-endomorphisms)
-   - [Specializing finite subgroup schemes](#74-specializing-finite-subgroup-schemes)
-8. [Good reduction away from the level](#8-good-reduction-away-from-the-level)
-   - [The relative Picard scheme](#81-the-relative-picard-scheme)
-   - [Torsion and Tate modules at a good prime](#82-torsion-and-tate-modules-at-a-good-prime)
-   - [Hecke and Frobenius after reduction](#83-hecke-and-frobenius-after-reduction)
-   - [A counterexample at the residue characteristic](#84-a-counterexample-at-the-residue-characteristic)
-9. [Semistable reduction at prime level](#9-semistable-reduction-at-prime-level)
-   - [The two components and their graph](#91-the-two-components-and-their-graph)
-   - [The toric identity component](#92-the-toric-identity-component)
-   - [Supersingular divisor lattices](#93-supersingular-divisor-lattices)
-   - [The monodromy pairing](#94-the-monodromy-pairing)
-10. [The component group at prime level](#10-the-component-group-at-prime-level)
-    - [The discriminant of the supersingular lattice](#101-the-discriminant-of-the-supersingular-lattice)
-    - [Its order](#102-its-order)
-    - [Hecke and Atkin--Lehner action](#103-hecke-and-atkin--lehner-action)
-    - [The cuspidal class specializes to a generator](#104-the-cuspidal-class-specializes-to-a-generator)
-11. [Reducing the Abel--Jacobi map](#11-reducing-the-abel--jacobi-map)
-    - [At a good prime](#111-at-a-good-prime)
-    - [At the level prime](#112-at-the-level-prime)
-    - [Cusps and components](#113-cusps-and-components)
-    - [What specialization can and cannot prove](#114-what-specialization-can-and-cannot-prove)
-12. [Hecke-stable subvarieties and quotients](#12-hecke-stable-subvarieties-and-quotients)
-    - [From a stable image to an abelian subvariety](#121-from-a-stable-image-to-an-abelian-subvariety)
-    - [Quotients and connected kernels](#122-quotients-and-connected-kernels)
-    - [Induced polarizations](#123-induced-polarizations)
-    - [Saturation and a cautionary example](#124-saturation-and-a-cautionary-example)
-13. [Quotients by Hecke ideals](#13-quotients-by-hecke-ideals)
-    - [The image ideal and its abelian image](#131-the-image-ideal-and-its-abelian-image)
-    - [Connected Hecke quotients](#132-connected-hecke-quotients)
-    - [Tate modules and localization](#133-tate-modules-and-localization)
-    - [Coefficient rings and eigenspaces](#134-coefficient-rings-and-eigenspaces)
-14. [Optimal and winding quotients](#14-optimal-and-winding-quotients)
-    - [Abstract quotient data](#141-abstract-quotient-data)
-    - [Existence of an optimal representative](#142-existence-of-an-optimal-representative)
-    - [The winding construction](#143-the-winding-construction)
-    - [Duality between quotients and subvarieties](#144-duality-between-quotients-and-subvarieties)
-15. [Finite subgroups, rational torsion, and low levels](#15-finite-subgroups-rational-torsion-and-low-levels)
-    - [Finite subgroup schemes versus rational points](#151-finite-subgroup-schemes-versus-rational-points)
-    - [Two good primes](#152-two-good-primes)
-    - [Vanishing Jacobians](#153-vanishing-jacobians)
-    - [Elliptic prime levels](#154-elliptic-prime-levels)
-16. [The prime-level geometric package](#16-the-prime-level-geometric-package)
-    - [The package](#161-the-package)
-    - [A worked prime-level ledger](#162-a-worked-prime-level-ledger)
-    - [The Abel--Jacobi interface](#163-the-abel--jacobi-interface)
-    - [The transition to Eisenstein quotients](#164-the-transition-to-eisenstein-quotients)
-17. [The prime-level Eisenstein ideal](#17-the-prime-level-eisenstein-ideal)
-    - [The acting algebra and the boundary character](#171-the-acting-algebra-and-the-boundary-character)
-    - [The exact Eisenstein quotient](#172-the-exact-eisenstein-quotient)
-    - [Cuspidal, component, and Shimura realizations](#173-cuspidal-component-and-shimura-realizations)
-    - [Eisenstein maximal ideals and exceptional levels](#174-eisenstein-maximal-ideals-and-exceptional-levels)
-18. [Constructing the selected Eisenstein quotient](#18-constructing-the-selected-eisenstein-quotient)
-    - [Completion and the local idempotent](#181-completion-and-the-local-idempotent)
-    - [Rational support](#182-rational-support)
-    - [The optimal quotient](#183-the-optimal-quotient)
-    - [Independence, saturation, and Néron models](#184-independence-saturation-and-néron-models)
-19. [Finite-flat Eisenstein torsion](#19-finite-flat-eisenstein-torsion)
-    - [The selected finite subgroup schemes](#191-the-selected-finite-subgroup-schemes)
-    - [Exactness through the tower](#192-exactness-through-the-tower)
-    - [Constant and multiplicative constituents](#193-constant-and-multiplicative-constituents)
-    - [Connected--étale structure and the dyadic boundary](#194-connected--étale-structure-and-the-dyadic-boundary)
-20. [Rational points in the selected quotient](#20-rational-points-in-the-selected-quotient)
-    - [The modular Albanese map](#201-the-modular-albanese-map)
-    - [Good-prime and level-prime reduction](#202-good-prime-and-level-prime-reduction)
-    - [Kummer images and finite subgroup schemes](#203-kummer-images-and-finite-subgroup-schemes)
-    - [Component defects](#204-component-defects)
-21. [Eisenstein descent and rational torsion](#21-eisenstein-descent-and-rational-torsion)
-    - [Strict local conditions](#211-strict-local-conditions)
-    - [Atomic vanishing and devissage](#212-atomic-vanishing-and-devissage)
-    - [Uniform Kummer bounds and finiteness](#213-uniform-kummer-bounds-and-finiteness)
-    - [Hecke support and annihilators](#214-hecke-support-and-annihilators)
-22. [The complete prime-level theorem](#22-the-complete-prime-level-theorem)
-    - [Statement](#221-statement)
-    - [Proof and hypothesis audit](#222-proof-and-hypothesis-audit)
-    - [Exceptional cases and numerical checks](#223-exceptional-cases-and-numerical-checks)
-    - [Conclusion](#224-conclusion)
+1. [From a modular curve to its Jacobian](#1-from-a-modular-curve-to-its-jacobian)
+2. [Hecke correspondences and variance](#2-hecke-correspondences-and-variance)
+3. [Polarization, transpose, and duality](#3-polarization-transpose-and-duality)
+4. [The prime-level cuspidal subgroup](#4-the-prime-level-cuspidal-subgroup)
+5. [The Shimura kernel](#5-the-shimura-kernel)
+6. [Néron models and specialization](#6-néron-models-and-specialization)
+7. [Semistable reduction at the level prime](#7-semistable-reduction-at-the-level-prime)
+8. [Component maps and the Albanese map](#8-component-maps-and-the-albanese-map)
+9. [Hecke-stable subvarieties and quotients](#9-hecke-stable-subvarieties-and-quotients)
+10. [The winding quotient and its Eisenstein boundary](#10-the-winding-quotient-and-its-eisenstein-boundary)
+11. [Reduction and rational torsion](#11-reduction-and-rational-torsion)
+12. [Finite subgroup schemes and Hecke modules](#12-finite-subgroup-schemes-and-hecke-modules)
+13. [Rational points on the modular curve](#13-rational-points-on-the-modular-curve)
+14. [The prime-level Jacobian package](#14-the-prime-level-jacobian-package)
 
-## 1. Why pass from the modular curve to its Jacobian?
+## 1. From a modular curve to its Jacobian
 
-### 1.1 The arithmetic problem
-
-A point of $X_0(N)$ remembers an elliptic curve together with a cyclic subgroup of order $N$. That moduli interpretation makes rational isogenies visible, but the curve itself has no addition law. If two rational points have the same reduction, or if a correspondence sends one point to a sum of several points, there is no intrinsic way to subtract the resulting data on $X_0(N)$.
-
-More precisely, a noncuspidal point represented over a field $K$ by
-$(E,C_N)$ has $C_N$ finite flat, cyclic, and Galois stable, and the quotient
-$E\to E/C_N$ is a $K$-rational cyclic isogeny. Conversely such an isogeny
-defines a $K$-point. A point of the coarse curve is initially only a field
-of moduli. Away from $j=0,1728$, the only automorphisms are $\{\pm1\}$ and
-a quadratic twist removes the descent cocycle without changing the cyclic
-subgroup. At $j=0$ and $1728$, the larger automorphism group requires a
-separate stabilizer check. All arguments below are stated for an actual
-pair $(E,C_N)$ when that moduli interpretation is used; divisor and
-Jacobian constructions apply to every rational point of the coarse curve.
-
-The Jacobian supplies exactly that missing linearity. A point $x$ on a curve determines a degree-one divisor, and the difference of two points has degree zero. Passing to divisor classes turns subtraction into a group operation and turns a many-valued correspondence into a homomorphism. Properness, reduction, duality, and finite subgroup schemes can then be brought to bear on a problem that began with one rational point.
-
-This passage loses information: two distinct points can have the same Abel--Jacobi image, and a genus-zero curve has trivial Jacobian. Its value is therefore not that it replaces the curve, but that it extracts the part of the curve accessible to abelian methods. The guiding diagram is
+Fix an integer $N\geq 1$, and let $X=X_0(N)_{\mathbf Q}$ be the smooth proper coarse modular curve. Its Jacobian
 
 $$
-X_0(N)(K)\xrightarrow{x\mapsto[x]-[\infty]}
-J_0(N)(K)\longrightarrow
-\text{reductions, quotients, and finite Hecke modules}.
+J_0(N)=\operatorname{Pic}^0_{X/\mathbf Q}
 $$
 
-We shall build every arrow in this diagram and keep track of the choices hidden in it.
+is an abelian variety of dimension $g(X)$. A point of $X$ describes an elliptic curve with a cyclic subgroup, but $X$ has no natural addition law. The Jacobian supplies one: divisors can be added, correspondences act linearly, and points may be compared after reduction.
 
-### 1.2 The Jacobian $J_0(N)$
+There are two logically different reasons for making this passage. The first is geometric. A correspondence does not ordinarily send one point to one point; it sends a point to a divisor with multiplicities. Degree-zero divisor classes are therefore the natural target on which pullback and norm become homomorphisms. The second is arithmetic. A proper curve has a reduction map, but equality of two reductions is only a local coincidence. Their difference in a Jacobian lies in a group, where torsion, divisibility, component maps, and finite quotients can measure that coincidence.
 
-Let $X_0(N)$ denote the smooth proper geometrically connected modular curve over $\mathbf Q$. Its Jacobian is
+The passage is not lossless. A quotient of the Jacobian can identify distinct points, and a genus-zero curve has zero Jacobian. The point is not to replace the curve by an abelian variety, but to extract exactly the additive information to which Hecke and Néron methods apply.
+
+The two standard cusps $0$ and $\infty$ are rational. Choosing $\infty$ as base point gives the Albanese, or pointed Abel--Jacobi, map
 
 $$
-J_0(N)=\operatorname{Pic}^0_{X_0(N)/\mathbf Q}.
+\iota_\infty:X\longrightarrow J_0(N),
+\qquad x\longmapsto [x]-[\infty]. \tag{1.1}
 $$
 
-For every extension $K/\mathbf Q$, the $K$-points of the Picard scheme are degree-zero geometric line-bundle classes which descend as Picard classes to $K$; if the relevant Brauer obstruction vanishes, they may be represented by line bundles, and then by divisors, defined over $K$. Over an algebraic closure one may simply write
+For a field extension $K/\mathbf Q$ and $x\in X(K)$, the right side means the degree-zero class of the corresponding $K$-rational divisor. The construction also works for a closed point by taking its divisor and subtracting the same degree at the base cusp.
+
+Over an algebraic closure one may write
 
 $$
 J_0(N)(\overline{\mathbf Q})
-=\operatorname{Div}^0(X_0(N)_{\overline{\mathbf Q}})/\operatorname{Prin}(X_0(N)_{\overline{\mathbf Q}}).
+=\operatorname{Div}^0(X_{\overline{\mathbf Q}})
+/\operatorname{Prin}(X_{\overline{\mathbf Q}}). \tag{1.2}
 $$
 
-The distinction between a rational divisor and a rational divisor class matters. A Galois-invariant geometric class need not possess a Galois-invariant divisor representative. Cuspidal differences avoid this issue when the cusps themselves are rational.
+Over a nonclosed field a rational Picard class need not have a rational divisor representative: the obstruction lies in the Brauer group. Formula (1.1) avoids that issue because both $x$ and $\infty$ are actual rational divisors. Likewise, a closed point $z$ of degree $d$ gives the unambiguous class $[z]-d[\infty]$. None of these divisor-class constructions requires the coarse modular point to lift to a modular object over its residue field.
 
-The dimension is the genus of $X_0(N)$. Thus $J_0(N)=0$ at genus zero, while at genus one a rational cusp identifies $X_0(N)$ with its own Jacobian. In higher genus the Abel--Jacobi image is a curve inside a larger abelian variety.
+The Abel map is universal among pointed maps from $X$ to abelian varieties. If $A$ is an abelian variety and $f:X\to A$ satisfies $f(\infty)=0$, there is a unique homomorphism $\widetilde f:J_0(N)\to A$ with $f=\widetilde f\circ\iota_\infty$. Consequently every quotient $q:J_0(N)\twoheadrightarrow A$ produces a modular map
 
-### 1.3 Abel--Jacobi maps at rational cusps
-
-The Jacobian parametrizes degree-zero classes, while a point has degree one. To bridge the mismatch one must choose a degree-one base divisor. Modular curves provide unusually convenient choices: $0$ and $\infty$ are rational cusps of $X_0(N)$ for every $N$.
-
-For a rational cusp $b$, define
-
-$$
-\iota_b:X_0(N)\longrightarrow J_0(N),
-\qquad x\longmapsto[x]-[b]. \tag{1.1}
-$$
-
-This is a morphism over $\mathbf Q$, not merely a rule on closed points. It sends $b$ to the identity. Its importance is the pointed Albanese property: if $A/\mathbf Q$ is an abelian variety and $f:X_0(N)\to A$ satisfies $f(b)=0$, there is a unique homomorphism $F:J_0(N)\to A$ with $f=F\circ\iota_b$.
-
-The proof explains why divisor classes are the right construction. Extend $f$ additively to sufficiently large effective divisors. It is constant on a complete linear system because a projective space admits no nonconstant map to an abelian variety. It therefore descends through a large symmetric power to the Picard variety, and the normalization at $b$ forces the descended map to be a homomorphism.
-
-For genus at least one, $\iota_b$ is injective on geometric points. Indeed, if $[x]-[b]=[y]-[b]$, then $x-y$ is principal. A nonconstant function with divisor $x-y$ would have degree one and identify the curve with $\mathbf P^1$, contrary to positive genus. This argument also shows the exact exception: on a genus-zero modular curve the target is zero and every point has the same image.
-
-### 1.4 Changing the base cusp
-
-Let $b$ and $b'$ be rational cusps. Then
-
-$$
-\iota_{b'}(x)=\iota_b(x)+[b]-[b']. \tag{1.2}
-$$
-
-Thus changing the basepoint translates the map by a rational point of the Jacobian. It does not alter $J_0(N)$, its origin, its polarization, or any homomorphism induced by a correspondence. It does alter statements about the image of an individual point.
-
-At prime level put
-
-$$
-c_p=[0]-[\infty]\in J_0(p)(\mathbf Q). \tag{1.3}
-$$
-
-Then $\iota_0=\iota_\infty-c_p$. Since the Atkin--Lehner involution $w_p$ exchanges the two cusps,
-
-$$
-w_p\bigl(\iota_\infty(x)\bigr)
-=\iota_\infty(w_px)-c_p. \tag{1.4}
-$$
-
-Formula (1.4) is a useful warning. An automorphism of the pointed curve would commute with its Abel--Jacobi map. But $w_p$ does not preserve the chosen base cusp, so equivariance holds only after a translation. Later we shall prove that this translation is torsion and compute its exact order.
-
-## 2. Hecke operators with their variance visible
-
-### 2.1 The source-to-quotient correspondence
-
-A Hecke operator is not a map of curves: it lists several isogeny-neighbors. Fix a prime $q\nmid N$ and let $Z_q$ classify triples $(E,C_N,D_q)$, where $D_q\subset E[q]$ is cyclic of order $q$. There are two maps
-
-$$
-\pi_1(E,C_N,D_q)=(E,C_N),
-$$
-
-$$
-\pi_2(E,C_N,D_q)
-=(E/D_q,(C_N+D_q)/D_q).
-$$
-
-We use the source-to-quotient convention throughout:
-
-$$
-\boxed{T_q=(\pi_2)_*\pi_1^*.} \tag{2.1}
-$$
-
-Thus $T_q[x]$ is the sum, with ramification and automorphism multiplicities, of the $q+1$ cyclic quotients of $x$. It is not an average. Reversing the two legs gives the transpose correspondence, not a harmless rewriting of (2.1). This convention is also characterized by the fact that pullback on invariant differentials is the standard weight-two Hecke operator.
-
-The convention is tested on a graph. If $f:X\to Y$ is finite, its graph declared from $X$ to $Y$ acts by $f_*$; its transpose acts by $f^*$. Consequently $f_*f^*=[\deg f]$ on $J_Y$, whereas $f^*f_*$ need not be scalar. Any convention that makes both composites scalar has lost the fiber geometry.
-
-### 2.2 Divisors, the Jacobian, and Tate modules
-
-For a finite correspondence $X\xleftarrow{s}Z\xrightarrow{t}Y$, define
-
-$$
-\Gamma_*D=t_*s^*D. \tag{2.2}
-$$
-
-Norms carry principal divisors to principal divisors, so (2.2) descends to
-
-$$
-\Gamma_J=t_*s^*:J_X\longrightarrow J_Y. \tag{2.3}
-$$
-
-It also preserves degree zero: pullback multiplies degree by $\deg s$, while pushforward preserves total degree over the ground field. Applied to (2.1), this constructs $T_q\in\operatorname{End}_{\mathbf Q}(J_0(N))$.
-
-Every endomorphism acts covariantly on torsion and on the covariant Tate module
-
-$$
-T_\ell J_0(N)=\varprojlim_mJ_0(N)[\ell^m](\overline{\mathbf Q}).
-$$
-
-The Kummer identification
-
-$$
-T_\ell J_0(N)\simeq
-H^1(X_0(N)_{\overline{\mathbf Q}},\mathbf Z_\ell(1)) \tag{2.4}
-$$
-
-intertwines (2.3) with pullback along $s$ followed by trace along $t$. Because the correspondence is defined over $\mathbf Q$, all these actions commute with Galois. The same abstract operator may have different kernels on divisors, $J_0(N)$, and a Tate module; “the Hecke algebra” must therefore mean either an abstract correspondence algebra or its stated image.
-
-The geometric fiber products also prove the Hecke relations. If $(m,n)=1$
-and both integers are prime to $N$, then choosing cyclic subgroups of orders
-$m$ and $n$ independently is equivalent to choosing their cyclic direct
-sum, so
-
-$$
-T_mT_n=T_{mn}. \tag{2.4a}
-$$
-
-For a prime $q\nmid N$, separating the cyclic $q$-subgroup which continues
-a $q^r$-isogeny from the unique subgroup which reverses its last step gives
-
-$$
-T_qT_{q^r}=T_{q^{r+1}}
-+q\langle q\rangle T_{q^{r-1}}. \tag{2.4b}
-$$
-
-The factor $q$ counts the reversing choices, and the point-map diamond
-records their effect on level structure. On $X_0(N)$ the diamond is trivial.
-These relations are integral correspondence identities, so they persist on
-the Jacobian, every torsion subgroup, and every good special fiber.
-
-### 2.3 Diamonds and differentials
-
-On $X_1(N)$ let the point-map diamond be
-
-$$
-\langle a\rangle(E,P)=(E,aP),
-\qquad a\in(\mathbf Z/N\mathbf Z)^\times. \tag{2.5}
-$$
-
-In the right-translation normalization compatible with (2.1), the central spherical operator is
-
-$$
-S_q=\langle q\rangle^{-1}. \tag{2.6}
-$$
-
-The inverse in (2.6) records variance: right translation precomposes level, whereas (2.5) multiplies the chosen point. On $X_0(N)$ the usual diamonds are trivial because multiplying a generator does not change its cyclic subgroup. We nevertheless retain (2.6) when discussing $X_1(N)$ or a character quotient; prematurely setting the diamond to one puts inverses on the wrong side of later adjoint formulas.
-
-Invariant differentials are contravariant. Pullback by an Abel--Jacobi map identifies
-
-$$
-H^0(J_X,\Omega^1)\simeq H^0(X,\Omega^1).
-$$
-
-Under this identification the pullback of $\Gamma_J=t_*s^*$ is
-
-$$
-\Gamma_J^*=s_*t^*:H^0(Y,\Omega^1)\longrightarrow H^0(X,\Omega^1), \tag{2.7}
-$$
-
-the action of the transpose correspondence. For $X_0(N)$ and $q\nmid N$, the spherical correspondence is symmetric, so (2.7) is the familiar Hecke action on weight-two cusp forms. For level with a diamond character, the central correction in the transpose must remain visible.
-
-### 2.4 Level operators and Atkin--Lehner involutions
-
-If $q\mid N$ exactly once, the oriented level operator $U_q$ has $q$ forward branches. It is not obtained from the $q+1$-branch correspondence by deleting one term, and its transpose is a distinct opposite operator $V_q$. At level $N=p$, the semistable geometry will later show how $U_p$ acts on the torus and component group, but no good-prime quadratic relation is being asserted at $p$.
-
-For an exact divisor $Q\mid N$, the Atkin--Lehner map $w_Q$ sends an isogeny datum to the appropriate quotient and dual datum. It is an involution on $X_0(N)$ and hence on $J_0(N)$. Its graph transpose equals the graph of its inverse, so
-
-$$
-w_Q^\dagger=w_Q^{-1}=w_Q. \tag{2.8}
-$$
-
-At prime level, $w_p(0)=\infty$ and $w_p(\infty)=0$, whence
-
-$$
-w_p(c_p)=-c_p. \tag{2.9}
-$$
-
-The distinction among $T_q$, $U_q$, and $w_Q$ is geometric. The first is a spherical many-valued relation away from level, the second is an oriented relation at level, and the third is an actual automorphism. Their degrees, transposes, and integral extensions are correspondingly different.
-
-## 3. Polarization and adjoints
-
-### 3.1 Why an adjoint needs a polarization
-
-The dual of an endomorphism of an abelian variety acts on the dual abelian variety, not on the original one. To speak of an adjoint one needs a self-duality. For a Jacobian, the theta construction supplies the canonical principal polarization
-
-$$
-\lambda_N:J_0(N)\xrightarrow{\sim}J_0(N)^\vee. \tag{3.1}
-$$
-
-Although a theta divisor requires choices and may move under translation, its associated homomorphism (3.1) is independent of those choices and descends to $\mathbf Q$. For $u\in\operatorname{End}^0(J_0(N))$, define the Rosati adjoint
-
-$$
-u^\dagger=\lambda_N^{-1}u^\vee\lambda_N. \tag{3.2}
-$$
-
-It reverses products and is involutive. On Tate modules it is characterized by the Weil pairing
-
-$$
-e_{\lambda_N}(ux,y)=e_{\lambda_N}(x,u^\dagger y). \tag{3.3}
-$$
-
-The adjective “principal” matters: (3.2) is then an integral endomorphism whenever $u$ is, rather than merely a rational one obtained by inverting an isogeny.
-
-### 3.2 Transpose correspondences
-
-The decisive geometric theorem is
-
-$$
-(\Gamma^t)_J=(\Gamma_J)^\dagger. \tag{3.4}
-$$
-
-**Proof strategy.** Reduce to a correspondence with one normal component. Pullback of line bundles and norm are dual under the Poincaré bundle. Reversing the two legs exchanges those operations, while the theta polarizations identify each Jacobian with its dual.
-
-**Proof.** Write $\Gamma_J=t_*s^*$. Duality of pullback and norm gives $(s^*)^\vee=s_*$ and $(t_*)^\vee=t^*$ after making the canonical Jacobian identifications. Therefore
-
-$$
-\lambda_X^{-1}(t_*s^*)^\vee\lambda_Y
-=s_*t^*,
-$$
-
-which is precisely the pull--push attached to $\Gamma^t$. Linearity treats a correspondence with several components and multiplicities. $\square$
-
-The same proof, read on cohomology, is the projection formula for Poincaré duality. Thus one transpose operation controls theta, Weil, cup-product, and differential adjoints at once.
-
-### 3.3 The Hecke and diamond formulas
-
-For $q\nmid N$, the inverse-double-coset computation in the point-map diamond convention gives
-
-$$
-T_q^\dagger=S_qT_q. \tag{3.5}
-$$
-
-Since $S_q=\langle q\rangle^{-1}$ in the point-map convention, this is
-
-$$
-T_q^\dagger=\langle q\rangle^{-1}T_q \tag{3.6}
-$$
-
-on $X_1(N)$. On $J_0(N)$ the diamond is trivial, and hence
-
-$$
-T_q^\dagger=T_q. \tag{3.7}
-$$
-
-For the point-map diamond itself, transpose of its graph is the graph of the inverse automorphism, so
-
-$$
-\langle a\rangle^\dagger=\langle a\rangle^{-1}. \tag{3.8}
-$$
-
-Atkin--Lehner formula (2.8) gives $w_Q^\dagger=w_Q$. At a level prime, $U_q^\dagger=V_q$; without an additional local identity, one must not replace $V_q$ by $U_q$ or a guessed scalar multiple.
-
-These formulas depend on notation. If diamonds had been defined by $P\mapsto a^{-1}P$, every displayed diamond would invert. What is invariant is the statement that transpose correspondence equals Rosati adjoint.
-
-### 3.4 Consequences for pairings and stable pieces
-
-Suppose a commutative Hecke algebra $\mathbb T$ acting on $J_0(N)$ is stable under Rosati. Then the orthogonal complement of a $\mathbb T$-stable abelian subvariety is again $\mathbb T$-stable. Indeed, if $B\subset J$ and $x$ is orthogonal to $B$, then for $t\in\mathbb T$ and $b\in B$,
-
-$$
-e(tx,b)=e(x,t^\dagger b)=1.
-$$
-
-This produces complementary factors up to isogeny. It does not produce an integral direct sum: the intersection of a subvariety with its orthogonal complement can be a nontrivial finite group scheme.
-
-On a simultaneous character space of $X_1(N)$, (3.6) pairs a character $\chi$ with its contragredient. A nonreal diamond character need not yield a self-paired two-dimensional piece. On $X_0(N)$ the absence of a diamond correction makes the Hecke operators self-adjoint, but self-adjointness still does not imply that their reductions modulo a prime are diagonalizable.
-
-## 4. Cuspidal divisor classes
-
-### 4.1 Rational and geometric cusps
-
-Let $\operatorname{Cusp}_0(N)$ be the reduced finite cusp scheme of $X_0(N)$. Over $\overline{\mathbf Q}$ its points are the $\Gamma_0(N)$-orbits in $\mathbf P^1(\mathbf Q)$. A representative $a/d$ with $d\mid N$ has residue field
-
-$$
-\mathbf Q(\zeta_{h_d}),
-\qquad h_d=\gcd(d,N/d). \tag{4.1}
-$$
-
-Thus $0$ and $\infty$ are rational for every $N$, and all cusps are rational when $N$ is squarefree. For nonsquarefree $N$, a rational fraction representing a geometric cusp need not define a $\mathbf Q$-rational point. This is why the words “cuspidal divisor” and “rational cuspidal divisor” cannot be interchanged.
-
-Let $\operatorname{Div}^0_{\mathrm{cusp}}$ be the group of geometric degree-zero divisors supported on cusps. Its Galois invariants map to $J_0(N)(\mathbf Q)$, but the image is most cleanly described through the Picard scheme when a divisor class has no invariant divisor representative.
-
-### 4.2 The cuspidal subgroup
-
-The **geometric cuspidal subgroup** is
-
-$$
-C_0(N)_{\mathrm{geom}}
-=\operatorname{im}\left(
-\operatorname{Div}^0_{\mathrm{cusp}}
-\longrightarrow J_0(N)(\overline{\mathbf Q})
-\right). \tag{4.2}
-$$
-
-The **rational cuspidal subgroup** is the subgroup of $J_0(N)(\mathbf Q)$ generated by degree-zero divisors made from rational cusps and Galois traces of geometric cusps. It is contained in the Galois-fixed part of (4.2), but equality is not automatic: taking invariants need not commute with taking a quotient by principal divisors.
-
-At prime level there are exactly two cusps and both are rational, so no ambiguity remains:
-
-$$
-C_0(p)=\langle c_p\rangle,
-\qquad c_p=[0]-[\infty]. \tag{4.3}
-$$
-
-The point of Manin--Drinfeld is that (4.2) is finite. The result is surprising because a general difference of two rational points on a positive-genus curve has infinite order. Modular cusps are special because modular units provide enough principal relations among them.
-
-### 4.3 Modular units and Manin--Drinfeld
-
-A **modular unit** on a modular curve is a nonzero rational function whose zeros and poles are all cuspidal. Its divisor lies in $\operatorname{Div}^0_{\mathrm{cusp}}$. To prove that every cuspidal difference is torsion, it is enough to prove that divisors of modular units form a finite-index sublattice of $\operatorname{Div}^0_{\mathrm{cusp}}$.
-
-We give the construction rather than citing the conclusion. Pass first to a full-level curve $X(M)$ with $M$ divisible by $N$ and $M\ge3$. For every nonzero $a=(a_1,a_2)\in M^{-1}\mathbf Z^2/\mathbf Z^2$, the Siegel unit $g_a$ is defined on the upper half-plane by a convergent product beginning
-
-$$
-g_a(\tau)=
--q^{\frac12B_2(a_1)}
-e^{\pi i a_2(a_1-1)}
-(1-q^{a_1}e^{2\pi ia_2})
-\prod_{n\ge1}(1-q^{n+a_1}e^{2\pi ia_2})
-(1-q^{n-a_1}e^{-2\pi ia_2}), \tag{4.4}
-$$
-
-with $B_2(T)=T^2-T+1/6$. A fixed power, depending only on $M$, removes the multiplier and is a rational function on $X(M)$. Formula (4.4), after applying a matrix carrying a chosen cusp to $\infty$, computes its order at every cusp. The orders are rational multiples of Bernoulli values; after the fixed power they are integers.
-
-Why do these divisors have full rank? If a degree-zero cusp divisor paired to zero with all the Bernoulli order vectors obtained from (4.4), finite Fourier inversion on $(\mathbf Z/M\mathbf Z)^2$ would force every coefficient of the divisor to be equal. Degree zero then forces every coefficient to vanish. Hence the divisors of the powered $g_a$ span
-
-$$
-\operatorname{Div}^0_{\mathrm{cusp}}(X(M))\otimes\mathbf Q.
-$$
-
-Now use the degeneracy map $\pi:X(M)\to X_0(N)$. Given a degree-zero cusp divisor $D$ downstairs, pull it back. Some positive multiple of $\pi^*D$ is the divisor of a product $u$ of powered Siegel units. Taking the field norm gives a modular unit $\operatorname{Nm}_\pi(u)$ downstairs, and
-
-$$
-\operatorname{div}(\operatorname{Nm}_\pi u)
-=\pi_*\operatorname{div}(u)
-=m\pi_*\pi^*D
-=m(\deg\pi)D. \tag{4.5}
-$$
-
-Thus a nonzero integer kills the class of every degree-zero cuspidal divisor. Since the cusp set is finite, its image in the Jacobian is a finite group. This proves Manin--Drinfeld. The proof also explains the theorem's shape: full level supplies enough explicit units, and pullback followed by norm transports their principal relations through degeneracy.
-
-### 4.4 Hecke action on cusp differences
-
-Hecke correspondences preserve the cusp locus, so $C_0(N)_{\mathrm{geom}}$ is Hecke stable. At prime level and $q\ne p$, a Tate-parameter calculation with the source-to-quotient correspondence gives
-
-$$
-T_qc_p=(q+1)c_p. \tag{4.6}
-$$
-
-Here multiplicities matter. Above either standard cusp the $q+1$ cyclic subgroups consist of one subgroup in the component direction and $q$ occurrences in the multiplicative direction after accounting for cusp widths; their images yield the same degree-zero difference with total coefficient $q+1$.
-
-At the level prime, in the standard source-to-quotient orientation,
-
-$$
-U_pc_p=c_p, \tag{4.7}
-$$
-
-and (2.9) gives $w_pc_p=-c_p$. These are integral identities on the cyclic subgroup generated by $c_p$. Chapter 17 packages them as the boundary character of the prime-level Hecke algebra.
-
-## 5. The prime-level cuspidal calculation
-
-### 5.1 Why divisibility is not enough
-
-Let $p$ be prime and write
-
-$$
-n_p=\operatorname{num}\left(\frac{p-1}{12}\right)
-=\frac{p-1}{\gcd(p-1,12)}, \tag{5.1}
-$$
-
-where $\operatorname{num}(a/b)$ means the positive numerator in lowest terms. We shall prove
-
-$$
-\boxed{\operatorname{ord}(c_p)=n_p.} \tag{5.2}
-$$
-
-The discriminant quotient $\Delta(p\tau)/\Delta(\tau)$ has divisor $(p-1)([\infty]-[0])$. It therefore proves only that the order divides $p-1$. That is far too weak: at $p=17$ it gives $16$, while the exact order is $4$. Even producing a function with divisor $n_pc_p$ proves only an upper bound. Exactness requires showing that every principal multiple of $c_p$ is divisible by $n_p$.
-
-The denominator $12$ is not accidental. It records the multiplier of the eta function, together with the fact that a weight-zero eta quotient must have trivial rational character. Ignoring the character can incorrectly improve the answer by a factor of two.
-
-### 5.2 The eta quotient and its divisor
-
-Recall
-
-$$
-\eta(\tau)=q^{1/24}\prod_{m\ge1}(1-q^m),
-\qquad q=e^{2\pi i\tau},
-$$
-
-and put
-
-$$
-k_p=\frac{24}{\gcd(p-1,12)}. \tag{5.3}
-$$
-
-This is the least positive **even** integer $k$ such that $24\mid k(p-1)$. Consider
-
-$$
-u_p(\tau)=\left(\frac{\eta(p\tau)}{\eta(\tau)}\right)^{k_p}. \tag{5.4}
-$$
-
-The two eta exponents in (5.4) sum to zero, so the weight is zero. The eta transformation law shows that a quotient with exponents $(-k,k)$ is invariant under $\Gamma_0(p)$ precisely when the two congruences
-
-$$
--k+pk\equiv0\pmod {24},
-\qquad -pk+k\equiv0\pmod {24} \tag{5.5}
-$$
-
-hold and the rational character condition $p^k\in(\mathbf Q^\times)^2$ holds. The congruences say $24\mid k(p-1)$; the character condition says $k$ is even. Thus $k_p$ is minimal, and $u_p$ is a rational modular unit on $X_0(p)$.
-
-At $\infty$, whose local parameter is $q$, the product gives
-
-$$
-\operatorname{ord}_\infty(u_p)
-=\frac{k_p(p-1)}{24}=n_p. \tag{5.6}
-$$
-
-There are only two cusps. Since a rational function has divisor of degree zero and $u_p$ has no zero or pole on the upper half-plane,
-
-$$
-\operatorname{div}(u_p)
-=n_p([\infty]-[0])=-n_pc_p. \tag{5.7}
-$$
-
-One can also check the order at $0$ directly. The width there is $p$, and the transformation $\tau\mapsto-1/(p\tau)$ exchanges the two eta factors; the factor $(-i\tau)^{1/2}$ cancels because the total weight is zero. The remaining power is the negative of (5.6). Equation (5.7) proves $n_pc_p=0$.
-
-### 5.3 The converse and exact order
-
-We now prove that no smaller positive multiple is principal. A classification
-of every two-cusp modular unit would require a delicate integral index
-calculation. The special fiber gives a cleaner lower bound.
-
-**Theorem 5.1.** The class $c_p=[0]-[\infty]$ has exact order $n_p$.
-
-**Proof strategy.** Equation (5.7) gives the upper bound. At the level prime,
-the cusp sections land on the two principal components of the semistable
-fiber. The weighted dual graph has cyclic Jacobian of order $n_p$, and its
-vertex difference is a generator. Specialization carries $c_p$ to that
-generator, which supplies the reverse divisibility.
-
-**Proof.** Chapters 9 and 10 construct the weighted supersingular lattice
-
-$$
-X_p=\left\{(a_s)_{s\in S_p}\in\mathbf Z^{S_p}:\sum_sa_s=0\right\}
-$$
-
-with monodromy form $\langle a,b\rangle=\sum_se_sa_sb_s$, where
-$e_s\in\{1,2,3\}$ is the edge length at $s$. They prove, without using the
-order of $c_p$, that
-
-$$
-\Phi_p=X_p^\vee/X_p\simeq\mathbf Z/n_p\mathbf Z \tag{5.8}
-$$
-
-and that the difference $\delta$ of the two principal vertices has exact
-order $n_p$. The cusp sections meet those two components, so the horizontal
-divisor $[0]-[\infty]$ has multidegree equal to the vertex difference.
-Functoriality of the relative Picard construction gives
-
-$$
-\operatorname{sp}_p(c_p)=\delta. \tag{5.9}
-$$
-
-If $m c_p=0$, then $m\delta=0$, and hence $n_p\mid m$. Thus
-$\operatorname{ord}(c_p)\ge n_p$. Equation (5.7) gives the opposite
-inequality, so equality holds. $\square$
-
-The two halves of the proof are independent: the eta multiplier constructs
-a characteristic-zero relation, while the weighted graph detects that no
-proper divisor of that relation vanishes.
-
-### 5.4 Small primes and examples
-
-Formula (5.2) includes the small primes as a statement about the smooth proper coarse curve:
-
-| $p$ | $(p-1)/12$ in lowest terms | $n_p$ | conclusion |
-|---:|---:|---:|---|
-| $2$ | $1/12$ | $1$ | $J_0(2)=0$ and $c_2=0$ |
-| $3$ | $1/6$ | $1$ | $J_0(3)=0$ and $c_3=0$ |
-| $5$ | $1/3$ | $1$ | $J_0(5)=0$ and $c_5=0$ |
-| $7$ | $1/2$ | $1$ | $J_0(7)=0$ and $c_7=0$ |
-| $11$ | $5/6$ | $5$ | $c_{11}$ has exact order $5$ |
-| $13$ | $1$ | $1$ | $J_0(13)=0$ and $c_{13}=0$ |
-| $17$ | $4/3$ | $4$ | $c_{17}$ has exact order $4$ |
-| $19$ | $3/2$ | $3$ | $c_{19}$ has exact order $3$ |
-
-The coarse curves at $p=2,3$ have stack stabilizers which make a uniform integral eta argument awkward, but their genus-zero conclusion verifies the formula directly. The eta proof above may safely be read for $p\ge5$; the remaining primes are the displayed direct cases.
-
-The example $p=13$ is instructive. The rational number $(p-1)/12$ is integral, but its numerator is $1$, not $12$. The two cusps on the genus-zero curve are linearly equivalent, so their difference vanishes. Conversely, at $p=11$ the discriminant quotient only gives $10c_{11}=0$, while the eta character calculation cuts the exact answer to $5$.
-
-## 6. The Shimura subgroup
-
-### 6.1 Forgetting a generator
-
-The cyclic subgroup recorded by $X_0(N)$ may have many generators, recorded upstairs by $X_1(N)$. Let
-
-$$
-\pi:X_1(N)\longrightarrow X_0(N) \tag{6.1}
-$$
-
-be the forgetful map on smooth proper curves. It induces pullback and norm
-
-$$
-\pi^*:J_0(N)\longrightarrow J_1(N),
-\qquad
-\pi_*:J_1(N)\longrightarrow J_0(N), \tag{6.2}
-$$
-
-with
-
-$$
-\pi_*\pi^*=[\deg\pi]. \tag{6.3}
-$$
-
-The **Shimura subgroup** is the finite group scheme
-
-$$
-\Sigma(N)=\ker\bigl(\pi^*:J_0(N)\to J_1(N)\bigr). \tag{6.4}
-$$
-
-Equation (6.3) proves finiteness: $\Sigma(N)$ is killed by $\deg\pi$. Scheme-theoretic kernel is essential. In residue characteristics dividing its order it can be nonreduced, and its geometric points do not determine it.
-
-Why should a pullback kernel exist at all? A line bundle downstairs can become trivial upstairs because a trivialization acquires a descent character under the deck group. The Shimura subgroup measures precisely that failure of faithful pullback.
-
-### 6.2 Descent characters and Cartier duality
-
-Away from ramification, the deck group is
-
-$$
-\Delta_N=(\mathbf Z/N\mathbf Z)^\times/\{\pm1\}. \tag{6.5}
-$$
-
-If $L\in\ker\pi^*$ and a trivialization of $\pi^*L$ is chosen, every deck transformation changes it by a scalar. The scalars form a character
-
-$$
-\chi_L:\Delta_N\longrightarrow\mathbf G_m. \tag{6.6}
-$$
-
-Changing the trivialization does not change $\chi_L$. At a ramified cusp or elliptic point, descent requires $\chi_L$ to be trivial on the corresponding inertia subgroup. Thus there is an injection
-
-$$
-\Sigma(N)\hookrightarrow D(\Delta_N), \tag{6.7}
-$$
-
-where $D(\Delta_N)$ is the diagonalizable group with character group $\Delta_N$, and the image is cut out by the inertia relations.
-
-Cartier dualizing reverses the arrow. There is a canonical surjection from the constant group scheme attached to $\Delta_N$ onto $\Sigma(N)^D$; its kernel is generated by the inertia subgroups occurring in the compactified cover, together with any relation forced by connected components. In particular, $\Sigma(N)$ is of multiplicative type and $\Sigma(N)^D$ is finite constant over $\mathbf Q$. This is the structural description needed later. It is more accurate than asserting that the full deck-character group always survives: ramification can kill characters.
-
-At prime level this description is exact. Let $p\ge5$, let $\Delta_p$ be
-the cyclic group of order $(p-1)/2$, and let $H_p$ be the subgroup generated
-by the inertia images at all elliptic and cuspidal points of the compactified
-cover. The cuspidal widths upstairs and downstairs show that cusp inertia
-adds no new generator. The only remaining stabilizers have orders $2$ and
-$3$. In the cyclic group $\Delta_p$, their images generate the unique
-subgroup of order
-
-$$
-\#H_p=\gcd\left(\frac{p-1}{2},6\right). \tag{6.7a}
-$$
-
-Indeed an elliptic point of order $r\in\{2,3\}$ exists precisely when the
-corresponding element of order $r$ lies in $\Delta_p$; a cyclic group has a
-unique subgroup of each possible order, so the subgroup generated by all
-existing stabilizers has the displayed order. A line bundle trivialized
-upstairs descends exactly when its deck character is trivial on these
-inertia groups. Hence the descent-character calculation gives
-
-$$
-\Sigma(p)^D\simeq
-\Delta_p/H_p
-\simeq\mathbf Z/n_p\mathbf Z,
-\qquad
-n_p=\frac d{\gcd(d,6)}
-=\operatorname{num}\left(\frac{p-1}{12}\right). \tag{6.8}
-$$
-
-Equivalently, $\Sigma(p)$ is the diagonalizable group
-$D(\Delta_p/H_p)$. Since its character group is cyclic of order $n_p$,
-there exists an isomorphism
-
-$$
-\boxed{\Sigma(p)\simeq\mu_{n_p},} \tag{6.9}
-$$
-
-but it is not canonical: choosing it amounts to choosing a generator of
-$\Delta_p/H_p$. The canonical statement is
-$X^*(\Sigma(p))=\Delta_p/H_p$. It is an isomorphism of group schemes, not
-an assertion that all of its points are rational.
-
-### 6.3 Interaction with the polarization
-
-The canonical principal polarization identifies the Cartier dual of a finite subgroup of $J_0(N)$ with a finite quotient of $J_0(N)$. Concretely, if $G\subset J=J_0(N)$, the composite
-
-$$
-J\xrightarrow{\lambda_N}J^\vee\longrightarrow G^D \tag{6.10}
-$$
-
-has kernel $G^\perp$, the orthogonal complement for the Weil pairing. Hence
-
-$$
-J/G^\perp\simeq G^D. \tag{6.11}
-$$
-
-Applied to $G=\Sigma(N)$, this places the constant Cartier dual of the multiplicative-type Shimura subgroup naturally on the quotient side of the principally polarized Jacobian. At prime level the cuspidal subgroup is constant, while the Shimura subgroup is of multiplicative type; their appearance as opposite objects under duality is therefore natural even before any theorem identifies their precise pairing.
-
-The cover $X_1(N)\to X_0(N)$ is Hecke equivariant away from $N$, so $\Sigma(N)$ is stable under those Hecke operators and diamonds. This stability is formal from (6.4). Determining the exact annihilator in the Hecke algebra is not formal.
-
-### 6.4 The prime-level Hecke character
-
-At prime level the descent-character description also determines the Hecke
-action. For $q\ne p$, a cyclic $q$-isogeny has degree $q$ on the chosen
-trivialization and has $q+1$ quotient branches. Pulling a descent character
-through the source map and taking its norm through the quotient map therefore
-raises it by the scalar $q+1$. At the level prime the oriented correspondence
-preserves the character, while $w_p$ interchanges the two degeneracy
-directions. Consequently
-
-$$
-T_q=q+1,\qquad U_p=1,\qquad w_p=-1
-\quad\text{on }\Sigma(p). \tag{6.12}
-$$
-
-One may verify the same statement after Cartier duality, where all groups
-are constant and the calculation is an ordinary calculation on
-$\Delta_p/H_p$. Since Cartier duality is faithful, the result returns to
-$\Sigma(p)$. Thus the constant cuspidal group, the multiplicative Shimura
-group, and the component group already exhibit the same prime-level Hecke
-character. Chapter 17 identifies its kernel and proves its exact index.
-
-## 7. Néron models and specialization
-
-### 7.1 The extension problem
-
-Let $R$ be a discrete valuation ring with fraction field $K$ and residue field $k$, and let $A/K$ be an abelian variety. Even if a proper model of a curve defining $A$ is singular, one wants to extend points and homomorphisms of $A$ across the closed point. An arbitrary proper model is unsuitable because its singular locus destroys the group law.
-
-The Néron model $\mathcal A/R$ is the smooth separated group scheme of finite type with generic fiber $A$ characterized by
-
-$$
-\operatorname{Hom}_R(\mathcal Y,\mathcal A)
-\simeq\operatorname{Hom}_K(\mathcal Y_K,A) \tag{7.1}
-$$
-
-for every smooth $R$-scheme $\mathcal Y$. Taking $\mathcal Y=\operatorname{Spec}R$ gives
-
-$$
-\mathcal A(R)=A(K). \tag{7.2}
-$$
-
-The model need not be proper. Failure of properness is exactly what permits tori to occur in bad reduction.
-
-For $A=J_0(N)$ we write $\mathcal J/R$. A regular proper model of $X_0(N)$ has a relative degree-zero Picard functor; after removing its nonseparated part and taking the smooth separated quotient, its identity component agrees with $\mathcal J^0$. This gives the bridge from the geometry of the special curve to the Néron model of its Jacobian.
-
-### 7.2 Identity component and component group
-
-The special fiber has an open connected subgroup $\mathcal A_k^0$. The quotient
-
-$$
-\Phi_A=\mathcal A_k/\mathcal A_k^0 \tag{7.3}
-$$
-
-is a finite étale group scheme, the component group. Over a henselian DVR, reduction gives
-
-$$
-A(K)=\mathcal A(R)\longrightarrow\Phi_A(k). \tag{7.4}
-$$
-
-Its kernel consists of points whose sections meet the identity component. The map need not be onto for an arbitrary residue field; over a finite field it is onto because torsors under a connected algebraic group have rational points.
-
-If $A$ has semistable reduction, then $\mathcal A_k^0$ is semiabelian:
-
-$$
-0\longrightarrow T\longrightarrow\mathcal A_k^0
-\longrightarrow B\longrightarrow0, \tag{7.5}
-$$
-
-with $T$ a torus and $B$ an abelian variety. Good reduction means $T=0$ and $\Phi_A=0$. Purely toric reduction means $B=0$. A trivial component group does not by itself imply good reduction.
-
-### 7.3 Extension of Hecke endomorphisms
-
-Every $K$-endomorphism $u:A\to A$ extends uniquely to an $R$-endomorphism of the Néron model. Indeed, $\mathcal A$ is smooth, so the generic map $\mathcal A_K\to A$ extends by (7.1); uniqueness makes it a group homomorphism. Consequently every Hecke operator, diamond, and Atkin--Lehner involution of $J_0(N)$ acts on
-
-$$
-\mathcal J_k^0,\qquad T,\qquad B,\qquad\Phi_{J_0(N)}. \tag{7.6}
-$$
-
-This conclusion does not require the curve correspondence itself to extend flatly. Extending an endomorphism of the generic abelian variety is automatic; computing its special-fiber action from a curve correspondence is not. For that computation one needs a controlled integral correspondence or a description on the dual graph.
-
-Rosati adjoints also extend. When the canonical polarization extends as a polarization of a semiabelian degeneration, its monodromy pairing identifies the special actions of $u$ and $u^\dagger$ as adjoints on the character and cocharacter lattices.
-
-There is an equally important infinitesimal action. For a regular proper
-curve model $\mathcal X/R$ representing the Jacobian, the cotangent space at
-the identity has the canonical integral description
-
-$$
-e^*\Omega^1_{\mathcal J/R}
-\simeq H^0(\mathcal X,\omega_{\mathcal X/R}). \tag{7.6a}
-$$
-
-At good reduction this is the lattice of regular differentials; at
-semistable reduction it is the lattice of dualizing differentials, allowing
-simple poles on normalization branches with opposite residues at each node.
-Pullback of a Néron endomorphism on the left agrees with pullback followed by
-trace for its correspondence on the right. Thus the source-to-quotient
-normalization acts on the integral cotangent lattice by the standard
-weight-two Hecke operator, not merely after extending scalars to the generic
-fiber.
-
-### 7.4 Specializing finite subgroup schemes
-
-Let $G\subset A$ be finite of order prime to $\operatorname{char}k$. When $A$ has good reduction, its schematic closure in the abelian scheme is finite étale; sections then specialize without collision. At semistable reduction the closure can meet the torus or different components, and a subgroup of order divisible by the residue characteristic can acquire connected parts.
-
-For a point $P\in A(K)$ of order $m$ prime to $\operatorname{char}k$, reduction into the smooth special fiber is injective on the cyclic group it generates. If $P$ reduced to zero, it would lie in the formal kernel, on which multiplication by $m$ is an automorphism. Thus $P=0$.
-
-This is the safe specialization principle:
-
-$$
-A(K)[m]\hookrightarrow\mathcal A_k(k^s)[m]
-\quad\text{when }(m,\operatorname{char}k)=1. \tag{7.7}
-$$
-
-It says nothing about residue-characteristic torsion. The failure is genuine rather than technical: a finite flat group such as $\mu_p$ in characteristic $p$ has only one geometric point although it has rank $p$.
-
-## 8. Good reduction away from the level
-
-### 8.1 The relative Picard scheme
-
-Let $q\nmid N$. If also $q\nmid6$, the coarse curve has a smooth proper model $\mathcal X_0(N)/\mathbf Z_q$, and its relative Picard identity component
-
-$$
-\operatorname{Pic}^0_{\mathcal X_0(N)/\mathbf Z_q} \tag{8.1}
-$$
-
-is an abelian scheme with generic fiber $J_0(N)$ and special fiber $J_{\mathcal X_0(N)_{\mathbf F_q}}$. By uniqueness it is the Néron model. In residue characteristics $2$ and $3$, one instead works on the smooth proper moduli stack or a prime-to-$q$ rigid cover and descends the invariant Picard factor after checking stabilizers; one must not simply call the naive coarse quotient smooth. This gives the same conclusion: $J_0(N)$ has good reduction at every $q\nmid N$.
-
-In the smooth coarse range a rational cusp extends to a section, and the relative divisor $[x]-[b]$ defines a relative Abel--Jacobi map; at $2$ and $3$ one makes the same construction upstairs before descent. Formation of the relative Picard object, the polarization, and prime-to-$q$ torsion commute with base change. At a good prime there is therefore no correction term between the generic Jacobian and the appropriate special Picard factor.
-
-### 8.2 Torsion and Tate modules at a good prime
-
-For $\ell\ne q$, the finite group schemes $\mathcal J[\ell^r]$ are étale over $\mathbf Z_q$, and specialization identifies their geometric generic and special fibers. Passing to inverse limits gives
-
-$$
-T_\ell J_0(N)\simeq
-T_\ell\mathcal J_{\overline{\mathbf F}_q}. \tag{8.2}
-$$
-
-When the smooth coarse model is available, the right side is the Tate module of $J_{\mathcal X_0(N)_{\overline{\mathbf F}_q}}$; in the small-characteristic stack construction it means the descended invariant Picard factor.
-
-Inertia at $q$ acts trivially. Write $J_0(N)(\mathbf F_q)$ here for $\mathcal J_{\mathbf F_q}(\mathbf F_q)$. For rational torsion, (7.7) gives
-
-$$
-J_0(N)(\mathbf Q)_{\mathrm{tors}}[q']
-\hookrightarrow J_0(N)(\mathbf F_q), \tag{8.3}
-$$
-
-where $[q']$ denotes the prime-to-$q$ part.
-
-Over the unramified field $\mathbf Q_q$, the formal logarithm shows more when $q>2$: the kernel of reduction has no torsion. Thus
-
-$$
-J_0(N)(\mathbf Q)_{\mathrm{tors}}
-\hookrightarrow J_0(N)(\mathbf F_q)
-\qquad(q>2,\ q\nmid N). \tag{8.4}
-$$
-
-The restriction $q>2$ is not decorative; shallow two-adic formal groups can contain torsion not controlled by the first-order logarithm.
-
-### 8.3 Hecke and Frobenius after reduction
-
-For $r\nmid Nq$, the $T_r$ correspondence extends with finite locally free legs over $\mathbf Z_q$. Norm and pullback commute with base change, so its action specializes to the same source-to-quotient pull--push on the special curve. The same holds for diamonds and Atkin--Lehner maps whose integral moduli description is defined at $q$.
-
-Let $F_q$ denote arithmetic Frobenius on the covariant Tate module. In the $\Gamma_0$ case the good-fiber correspondence calculation gives
-
-$$
-F_q^2-T_qF_q+q=0 \tag{8.5}
-$$
-
-on $T_\ell J_0(N)$ for $\ell\ne q$. This is an operator identity on the whole Tate module; it is not automatically the characteristic polynomial on a chosen piece until that piece is known to have dimension two.
-
-The convention matters. On untwisted first cohomology it is geometric Frobenius which satisfies the displayed Hecke polynomial. The Tate twist in (2.4) converts that statement into (8.5) for arithmetic Frobenius on the covariant Tate module.
-
-### 8.4 A counterexample at the residue characteristic
-
-It is tempting to extend (8.2) to $\ell=q$. That is false. Even for an ordinary elliptic curve with good reduction, the $q$-divisible group of the special fiber has a connected multiplicative part and an étale part. Geometric points see the étale part but not the full connected thickness. Consequently
-
-$$
-A[q^r](\overline{\mathbf Q}_q)
-\quad\text{and}\quad
-\mathcal A_k[q^r](\overline{\mathbf F}_q)
-$$
-
-need not have the same point sets, although the finite flat group schemes fit into a meaningful integral theory.
-
-Similarly, a rational point of $q$-power order may reduce to zero over a sufficiently ramified local field. Good reduction alone protects prime-to-$q$ torsion; the stronger rational injection (8.4) uses that the base is the unramified field $\mathbf Q_q$ and $q>2$. These distinctions will matter when two auxiliary good primes are used to bound rational torsion.
-
-## 9. Semistable reduction at prime level
-
-### 9.1 The two components and their graph
-
-Fix a prime $p\ge5$. The semistable moduli stack at $\Gamma_0(p)$-level has two principal components, each a Frobenius twist of the level-one stack. On the coarse curve their normalizations are copies of $X_0(1)\simeq\mathbf P^1$, and they meet over the supersingular classes. To justify local intersection calculations one may pull back to an auxiliary fine prime-to-$p$ level. The components of that auxiliary cover are higher-level curves, not copies of $\mathbf P^1$; after the calculation one descends the relevant invariant lattice to $X_0(p)$. At a lifted crossing the completed local equation is
-
-$$
-\widehat{\mathcal O}\simeq
-W(\overline{\mathbf F}_p)[[x,y]]/(xy-p). \tag{9.1}
-$$
-
-One component parametrizes $\ker F$, the other the Verschiebung direction. The involution $w_p$ exchanges them. If $\sigma$ denotes the permutation of supersingular classes induced by $p$-power Frobenius, then, after orienting every edge from the first component to the second,
-
-$$
-w_p(e_s)=-e_{\sigma(s)}.
-$$
-
-The minus sign reverses the edge, while $\sigma$ records that quotienting a supersingular curve by Frobenius replaces it by its Frobenius twist. Suppressing $\sigma$ would incorrectly make $w_p$ scalar on the entire character lattice.
-
-The dual graph $\mathcal G_p$ has two vertices $v_0,v_\infty$, one for each component, and one edge $e_s$ for each supersingular isomorphism class $s$. Every edge joins the two vertices. If there are $r$ supersingular classes, then
-
-$$
-H_1(\mathcal G_p,\mathbf Z)
-=\left\{\sum_sa_se_s:\sum_sa_s=0\right\}, \tag{9.2}
-$$
-
-a free group of rank $r-1$. The genus formula is visible here: because both normalized components have genus zero, the genus of the generic curve is $r-1$ after stack weights and exceptional resolutions are correctly included.
-
-On the coarse model, the points $j=0$ and $1728$ can have stabilizers. Rather than pretending that every coarse node has thickness one, define
-
-$$
-e_s=\frac{\#\operatorname{Aut}(E_s)}2
-\in\{1,2,3}. \tag{9.3}
-$$
-
-Usually $e_s=1$; $e_s=2$ at the supersingular class $j=1728$, and $e_s=3$ at $j=0$. These edge lengths contain exactly the quotient information lost when auxiliary rigidification is removed.
-
-The literal minimal regular coarse model can contain short rational chains resolving quotient singularities at these exceptional classes. Such trees do not contribute cycles to the dual graph, but contracting them to weighted edges changes the integral length by $e_s$. All character-lattice and component-group statements below refer either to the rigidified model followed by descent or, equivalently, to this weighted contraction. They do not assert that an unrigidified coarse fiber literally has only two irreducible components in every presentation.
-
-### 9.2 The toric identity component
-
-For a semistable curve, the identity component of the Jacobian's special fiber is an extension of the product of the Jacobians of the normalized components by the graph torus. Here both components are projective lines, so their Jacobians vanish. Consequently $J_0(p)$ has purely toric reduction at $p$:
-
-$$
-\mathcal J_{\overline{\mathbf F}_p}^0=T_p. \tag{9.4}
-$$
-
-The torus need not split over $\mathbf F_p$; its splitting and Frobenius action remember how the supersingular points are permuted. It does split over a finite unramified extension, and geometrically
-
-$$
-X^*(T_p)\simeq H_1(\mathcal G_p,\mathbf Z). \tag{9.5}
-$$
-
-This statement follows directly from gluing line bundles. A degree-zero line bundle on the nodal curve pulls back trivially to each normalized $\mathbf P^1$ after its component degrees are fixed. What remains is a nonzero scalar identifying the two fibers over each node. Simultaneous rescaling on the two components removes one common parameter, leaving a torus of dimension $r-1$. A character records an integral product of gluing scalars whose total exponent is zero, exactly (9.2).
-
-The cocharacter lattice is
-
-$$
-X_*(T_p)=\operatorname{Hom}(X^*(T_p),\mathbf Z). \tag{9.6}
-$$
-
-It is not canonically the same integral lattice as $X^*(T_p)$ until the monodromy pairing is supplied. Confusing characters with cocharacters would erase the component group, which measures the failure of that pairing to be unimodular.
-
-### 9.3 Supersingular divisor lattices
-
-Let $S_p$ be the set of supersingular elliptic-curve classes over $\overline{\mathbf F}_p$ and put
-
-$$
-X_p=\operatorname{Div}^0(S_p)
-=\left\{\sum_{s\in S_p}a_s[s]:\sum_sa_s=0\right\}. \tag{9.7}
-$$
-
-Orient every edge from $v_0$ to $v_\infty$. Then (9.2) identifies $X^*(T_p)$ with $X_p$. Reversing every orientation multiplies this identification by $-1$ but changes neither the pairing nor its cokernel.
-
-Prime-to-$p$ Hecke correspondences act on $S_p$ by supersingular isogenies. With the source-to-quotient convention, $T_q[s]$ is the weighted sum of cyclic quotients of $s$. The automorphism weights make the transpose action adjoint for the pairing below. It preserves degree and hence $X_p$.
-
-This is the meeting point of two geometries. In characteristic zero, $T_q$ is a correspondence on the modular curve. In characteristic $p$, the same integral correspondence becomes an adjacency operator on supersingular vertices. Extension to the Néron model ensures that the resulting action on $X_p$ is the character-lattice action of the original endomorphism.
-
-### 9.4 The monodromy pairing
-
-The canonical polarization gives an injective homomorphism
-
-$$
-\mu_p:X^*(T_p)\longrightarrow X_*(T_p) \tag{9.8}
-$$
-
-whose associated symmetric form is the monodromy pairing. In the supersingular-divisor normalization it is
-
-$$
-\left\langle\sum_sa_s[s],\sum_sb_s[s]\right\rangle
-=\sum_se_sa_sb_s. \tag{9.9}
-$$
-
-The coefficient is $e_s$, not $1/e_s$. On a rigidified regular model every lifted edge has length one; passing to the coarse quotient combines an orbit of edges and gives the stabilizer length (9.3). This derivation fixes the normalization.
-
-The pairing is positive definite on $X_p$. If $x=\sum a_s[s]$ is nonzero, then
-
-$$
-\langle x,x\rangle=\sum_se_sa_s^2>0.
-$$
-
-It is usually not perfect. The exact sequence
-
-$$
-0\longrightarrow X_p
-\xrightarrow{x\mapsto\langle x,-\rangle}
-X_p^\vee
-\longrightarrow\Phi_p(\overline{\mathbf F}_p)
-\longrightarrow0 \tag{9.10}
-$$
-
-identifies its discriminant group with the geometric component group of the Néron model. Formula (9.10) is the precise sense in which the component group records monodromy.
-
-## 10. The component group at prime level
-
-### 10.1 The discriminant of the supersingular lattice
-
-Enumerate $S_p=\{s_1,\ldots,s_r\}$ and write $e_i=e_{s_i}$. A basis of $X_p$ is
-
-$$
-e_i=[s_i]-[s_r],\qquad1\le i<r.
-$$
-
-Its Gram matrix is
-
-$$
-G_{ij}=e_i\delta_{ij}+e_r. \tag{10.1}
-$$
-
-The matrix determinant lemma gives
-
-$$
-\det G
-=\left(\prod_{i=1}^re_i\right)
-\left(\sum_{i=1}^r\frac1{e_i}\right). \tag{10.2}
-$$
-
-For clarity, factor the diagonal matrix $D=\operatorname{diag}(e_1,\ldots,e_{r-1})$ from $G=D+e_r\mathbf1\mathbf1^t$. Then
-
-$$
-\det(G)=\det(D)
-\left(1+e_r\mathbf1^tD^{-1}\mathbf1\right),
-$$
-
-which simplifies to (10.2). By (9.10), this determinant is $\#\Phi_p(\overline{\mathbf F}_p)$.
-
-### 10.2 Its order
-
-The supersingular mass formula is
-
-$$
-\sum_{s\in S_p}\frac1{e_s}=\frac{p-1}{12}. \tag{10.3}
-$$
-
-Here is a proof with the stabilizers visible. On the compactified moduli
-stack of elliptic curves in characteristic $p$, the Hasse invariant is a
-section of $\omega^{p-1}$. Its zero at every supersingular point is simple:
-the Serre--Tate deformation parameter is a uniformizer, and the first
-nonzero coefficient of the Hasse invariant is a unit times that parameter.
-The discriminant is a section of $\omega^{12}$ with a simple zero at the
-cusp. Because the generic elliptic curve has the automorphisms $\{\pm1\}$,
-the cusp has stack degree $1/2$, and therefore
-
-$$
-\deg\omega=\frac1{24}. \tag{10.3a}
-$$
-
-Taking degrees of the Hasse divisor gives
-
-$$
-\sum_{s\in S_p}\frac1{\#\operatorname{Aut}(E_s)}
-=\frac{p-1}{24}. \tag{10.3b}
-$$
-
-Since $e_s=\#\operatorname{Aut}(E_s)/2$, multiplying by $2$ proves
-(10.3). This argument also shows why the exceptional terms occur with
-denominators $2$ and $3$ rather than being added as corrections afterward.
-
-There is at most one weight $3$ term, occurring when $j=0$ is supersingular, and at most one weight $2$ term, occurring when $j=1728$ is supersingular. All other weights are one. Multiplying (10.3) by the product of the exceptional weights clears exactly the reduced denominator of $(p-1)/12$. Therefore (10.2) gives
-
-$$
-\boxed{\#\Phi_p(\overline{\mathbf F}_p)
-=\operatorname{num}\left(\frac{p-1}{12}\right)=n_p.} \tag{10.4}
-$$
-
-Section 10.4 will exhibit an element of this order, proving at once that the
-group is cyclic. Formula (10.4) is asserted for the Néron model of $J_0(p)$
-with $p\ge5$. It is not an unchanged formula for $p^2$-level, for $J_1(p)$,
-or for an unrepaired singular coarse surface.
-
-### 10.3 Hecke and Atkin--Lehner action
-
-For every prime $q\ne p$, the integral $T_q$ correspondence acts on the weighted graph and therefore on the cokernel (9.10). Directly counting the two degeneracy maps on component degrees gives
-
-$$
-T_q=(q+1)\quad\text{on }\Phi_p. \tag{10.7}
-$$
-
-The involution $w_p$ exchanges the two vertices and reverses orientation. On $X_p$ and $X_p^\vee$ its action is negative the Frobenius permutation $\sigma$, not generally scalar $-1$. The vertex-difference class is fixed by $\sigma$ and changes sign when the vertices are exchanged, so the induced action on the cyclic component group is nevertheless scalar:
-
-$$
-w_p=-1\quad\text{on }\Phi_p. \tag{10.8}
-$$
-
-In the standard source-to-quotient level orientation, the special-fiber degeneracy calculation gives
-
-$$
-U_p=1\quad\text{on }\Phi_p. \tag{10.9}
-$$
-
-These formulas require the standard $\Gamma_0(p)$ integral model and unnormalized operators. A differently oriented $U_p$ is its opposite correspondence and must be recalculated. Nor does (10.9) assert a good-prime Frobenius polynomial at $p$.
-
-The adjoint relation is consistent with monodromy: $T_q$ is self-adjoint on $J_0(p)$ and the scalar $q+1$ is self-adjoint; $w_p$ is a self-adjoint involution; and the actions induced on characters and cocharacters are adjoint for (9.9).
-
-### 10.4 The cuspidal class specializes to a generator
-
-The cusps $0$ and $\infty$ extend to sections of the regular model and meet the smooth loci of the two different principal components. Thus the horizontal divisor $[0]-[\infty]$ has component multidegree $(1,-1)$. Under the graph description of the relative Picard functor, its specialization is the class $\delta$ measuring the difference of the two vertices.
-
-We compute its order independently of the eta quotient. Regard the weighted graph as two vertices joined by resistors of lengths $e_s$ in parallel. A unit current from one vertex to the other divides among the edges with conductances $1/e_s$, so its energy, or effective resistance, is
-
-$$
-R_{\mathrm{eff}}
-=\left(\sum_{s\in S_p}\frac1{e_s}\right)^{-1}
-=\frac{12}{p-1}. \tag{10.10}
-$$
-
-The component pairing sends $(\delta,\delta)$ to
-$R_{\mathrm{eff}}\bmod\mathbf Z$. In lowest terms the denominator of
-$12/(p-1)$ is $n_p$. If $t\delta=0$, bilinearity forces
-$t(\delta,\delta)=0$ in $\mathbf Q/\mathbf Z$, so $n_p\mid t$.
-On the other hand $t$ divides $\#\Phi_p=n_p$. Hence $t=n_p$. Thus $\delta$
-generates the whole component group, proving simultaneously that
-
-$$
-\Phi_p(\overline{\mathbf F}_p)\simeq\mathbf Z/n_p\mathbf Z. \tag{10.10a}
-$$
-
-Therefore
-
-$$
-\operatorname{sp}_p(c_p)
-\text{ generates }\Phi_p(\overline{\mathbf F}_p). \tag{10.11}
-$$
-
-Combining this lower bound with the eta relation of Chapter 5 proves that
-$c_p$ itself has order $n_p$. Specialization is therefore an isomorphism:
-
-$$
-\langle c_p\rangle\xrightarrow{\sim}
-\Phi_p(\overline{\mathbf F}_p). \tag{10.12}
-$$
-
-Equality of cardinalities alone would not prove this assertion; the
-effective-resistance calculation is indispensable.
-
-## 11. Reducing the Abel--Jacobi map
-
-### 11.1 At a good prime
-
-Let $q\nmid N$, choose a rational cusp $b$, and assume a justified smooth proper curve model over $\mathbf Z_q$ has been chosen. This is automatic for the coarse model when $q\nmid6N$; at $2$ and $3$ the same construction is read on a rigid cover and descended only after the stabilizers have been checked. The divisor of two sections defines a morphism
-
-$$
-\widetilde\iota_b:\mathcal X_0(N)\longrightarrow\mathcal J,
-\qquad x\longmapsto[x]-[b], \tag{11.1}
-$$
-
-whose two fibers are the Abel--Jacobi maps of the generic and special curves. Hence for $x\in X_0(N)(\mathbf Q_q)$,
-
-$$
-\operatorname{red}(\iota_b(x))
-=\widetilde\iota_{\bar b}(\bar x). \tag{11.2}
-$$
-
-No smoothness assumption on the section is needed beyond the smoothness of the total family, which is already available at a good prime. If two rational points have distinct Abel--Jacobi reductions, they were distinct upstairs. The converse fails: distinct points may reduce to the same point, and their divisor difference can lie nontrivially in the formal group.
-
-For genus at least one, injectivity of the geometric Abel map gives a useful implication:
-
-$$
-\widetilde\iota_{\bar b}(\bar x)=0
-\quad\Longrightarrow\quad
-\bar x=\bar b. \tag{11.3}
-$$
-
-It is false in genus zero, where the special Jacobian is zero.
-
-### 11.2 At the level prime
-
-At $p\mid N$, the curve model is not smooth, so (11.1) does not extend over the singular nodes merely by invoking the Néron property. It does extend from the smooth locus of the regular model, because that locus is a smooth $\mathbf Z_p$-scheme.
-
-A section through a strict semistable local equation $xy=p$ cannot meet the node: if $v(x),v(y)\ge0$ are integral and sum to one, exactly one is zero. Thus every $\mathbf Z_p$-section of a regular semistable model meets its smooth locus. At an exceptional coarse supersingular class, it may meet one of the rational components introduced by resolving a quotient singularity rather than one of the two principal components. The generic Abel--Jacobi point nevertheless has a well-defined reduction in the Néron model.
-
-There are two layers of its reduction:
-
-$$
-J_0(p)(\mathbf Q_p)
-\longrightarrow\Phi_p(\mathbf F_p),
-$$
-
-which records the component, and, after that component is translated to the identity,
-
-$$
-\mathcal J_p^0(\mathbf F_p)=T_p(\mathbf F_p),
-$$
-
-which records gluing data at the supersingular nodes. Knowing only the first layer is generally insufficient to recover the reduced divisor class.
-
-### 11.3 Cusps and components
-
-Take $b=\infty$. The cusp $\infty$ meets its own principal component, so
-
-$$
-\operatorname{sp}_p(\iota_\infty(\infty))=0.
-$$
-
-The cusp $0$ meets the other component, and
-
-$$
-\operatorname{sp}_p(\iota_\infty(0))
-=\operatorname{sp}_p(c_p), \tag{11.4}
-$$
-
-the generator of $\Phi_p$. Thus the Abel--Jacobi map distinguishes the two cusps in the component group exactly when $n_p>1$.
-
-For a noncuspidal rational point $x$ with ordinary, nonexceptional reduction, its reduction lies on the Frobenius or Verschiebung principal component according to the connected or étale type of its order-$p$ subgroup. Relative to $\infty$, this determines whether the component-group image of $\iota_\infty(x)$ is $0$ or the vertex-difference class, with the sign fixed by the labeling of the two cusps. At an exceptional supersingular coarse class, one must instead record the position on the resolution chain, or equivalently use the weighted graph; a binary principal-component label is insufficient. In either case the toric coordinate still depends on the actual reduced point, not only on its component.
-
-The Atkin--Lehner relation (1.4) is compatible with reduction: $w_p$ exchanges the components and acts by $-1$ on $\Phi_p$, while subtracting $c_p$ shifts the chosen origin from one cusp component to the other.
-
-### 11.4 What specialization can and cannot prove
-
-Specialization is strongest when combined with a quotient. Suppose $\varphi:J_0(p)\to A$ is a quotient extending to Néron models. If the image of $\iota_\infty(x)$ is known to be torsion or to lie in a controlled finite subgroup, its reductions at good primes constrain it. At $p$, the component image supplies an additional congruence determined by which branch contains $\bar x$.
-
-But three shortcuts are invalid:
-
-- equality in the component group does not imply equality in the Néron special fiber, because points can differ in the torus;
-- equality in the special fiber does not imply equality in the generic fiber, because the formal kernel can be nonzero;
-- reduction of a $p$-power finite group cannot be read from its geometric special-fiber points.
-
-The productive method is to combine independent pieces: component information at the level prime, injective torsion reduction at auxiliary good primes, and Hecke-stable quotients which discard irrelevant parts of the Jacobian. The following chapters construct those quotients carefully.
-
-## 12. Hecke-stable subvarieties and quotients
-
-### 12.1 From a stable image to an abelian subvariety
-
-Let $J=J_0(N)$ and let $\mathbb T\subset\operatorname{End}(J)$ be a chosen commutative image algebra. If $f:A\to J$ is a homomorphism of abelian varieties, its scheme-theoretic image is connected and proper, hence an abelian subvariety. Thus sums of images of endomorphisms are again abelian subvarieties: for $t_1,\ldots,t_r\in\mathbb T$,
-
-$$
-B=\operatorname{im}\left(J^r\to J,
-(x_i)\mapsto\sum_it_ix_i\right) \tag{12.1}
-$$
-
-is connected.
-
-If $B\subset J$ is $\mathbb T$-stable, every $t\in\mathbb T$ restricts to an endomorphism of $B$ and descends to the quotient $J/B$. Stability must hold scheme-theoretically, not only on rational points. A finite set of rational points can be stable without its Zariski closure being the intended connected factor.
-
-The principal polarization constructs a complement up to isogeny. Let
-
-$$
-B^\perp=\ker\left(J\xrightarrow{\lambda_N}J^\vee
-\longrightarrow B^\vee\right)^0. \tag{12.2}
-$$
-
-Then $B\cap B^\perp$ is finite and addition gives an isogeny
-
-$$
-B\times B^\perp\longrightarrow J. \tag{12.3}
-$$
-
-If $\mathbb T$ is Rosati stable and $B$ is $\mathbb T$-stable, then $B^\perp$ is also stable. This is the geometric source of Hecke decompositions up to isogeny.
-
-### 12.2 Quotients and connected kernels
-
-For an abelian subvariety $B\subset J$, the fppf quotient
-
-$$
-q:J\longrightarrow A=J/B \tag{12.4}
-$$
-
-is an abelian variety, and $\ker q=B$ is connected. We call such a quotient **optimal** for the specified quotient factor. The word does not mean that its degree is smallest; a positive-dimensional-kernel quotient is not an isogeny at all. It means that no finite subgroup remains hidden in the kernel after the connected part has been removed.
-
-An arbitrary surjective homomorphism $f:J\to A'$ has kernel $K$ with identity component $K^0$. It factors as
-
-$$
-J\longrightarrow J/K^0\longrightarrow A', \tag{12.5}
-$$
-
-where the first map has connected kernel and the second is an isogeny. Thus every specified surjection has a canonical optimalization, determined by $K^0$. This does not make an optimal quotient unique from the target isogeny class alone: different quotient subspaces of $J$ can have isogenous targets. Uniqueness requires the rational factor, equivalently the connected kernel, to have been fixed.
-
-At the level of Tate modules, (12.4) gives, for every prime $\ell$ in characteristic zero, an exact sequence
-
-$$
-0\longrightarrow T_\ell B
-\longrightarrow T_\ell J
-\longrightarrow T_\ell A
-\longrightarrow0. \tag{12.6}
-$$
-
-Thus $T_\ell B$ is saturated in $T_\ell J$. Connectedness of the kernel is exactly what removes a finite lattice cokernel.
-
-### 12.3 Induced polarizations
-
-Restricting the principal polarization of $J$ to $B$ gives
-
-$$
-\lambda_B:B\longrightarrow B^\vee. \tag{12.7}
-$$
-
-It is a polarization but is rarely principal. Its kernel is $B\cap B^\perp$ with the appropriate scheme structure. On the quotient $A=J/B$, the dual map
-
-$$
-q^\vee:A^\vee\hookrightarrow J^\vee\simeq J \tag{12.8}
-$$
-
-identifies $A^\vee$ with the annihilator of $B$, whose identity component is $B^\perp$. Hence $A$ is isogenous to $(B^\perp)^\vee$, and the restricted polarization on $B^\perp$ transports to a polarization of $A$ after a finite isogeny.
-
-There is generally no principal polarization on $A$ whose pullback is simply $\lambda_N$. Indeed, $q^*L_A$ is trivial along $B$, whereas an ample theta line bundle on $J$ cannot be. What descends is the appropriate rational polarization or a positive integral multiple after the finite intersection $B\cap B^\perp$ is cleared.
-
-For a Hecke-stable quotient, the descended action and the dual subvariety action are adjoint: if $t_Aq=qt$, then
-
-$$
-q^\vee t_A^\vee=t^\vee q^\vee. \tag{12.9}
-$$
-
-After the theta identification, $t^\vee$ becomes $t^\dagger$. This is why quotient stability naturally corresponds to adjoint stability of a subvariety.
-
-### 12.4 Saturation and a cautionary example
-
-There are two different objects attached to an ideal $I\subset\mathbb T$:
-
-$$
-I(T_\ell J)=\sum_{t\in I}t(T_\ell J),
-$$
-
-and
-
-$$
-T_\ell(IJ),
-\qquad IJ=\sum_{t\in I}t(J). \tag{12.10}
-$$
-
-The second is the saturation of the geometric image contributed by $I$; the first can have finite index in it. They agree after tensoring with $\mathbf Q_\ell$, but not necessarily integrally.
-
-The simplest counterexample is $I=(\ell)$ acting on a nonzero abelian variety $J$. Geometrically $[\ell]:J\to J$ is surjective, so $IJ=J$ and $T_\ell(IJ)=T_\ell J$. Algebraically,
-
-$$
-I(T_\ell J)=\ell T_\ell J,
-$$
-
-which is not saturated. Thus an ideal quotient of a lattice cannot be identified blindly with the Tate module of the corresponding abelian quotient. Connected geometric images and saturated lattices must be formed before reduction.
-
-## 13. Quotients by Hecke ideals
-
-### 13.1 The image ideal and its abelian image
-
-Fix the acting Hecke algebra
-
-$$
-\mathbb T=\operatorname{im}\bigl(
-\mathbb T^{\mathrm{abs}}\to\operatorname{End}_{\mathbf Q}(J)
-\bigr). \tag{13.1}
-$$
-
-Using the image algebra makes its action faithful. Let $I\subset\mathbb T$ be an ideal generated by $t_1,\ldots,t_r$. Define
-
-$$
-IJ=\operatorname{im}\left(J^r\to J,
-(x_i)\mapsto\sum_it_ix_i\right). \tag{13.2}
-$$
-
-This does not depend on the chosen generators. It is an abelian subvariety because the source is connected. Since $\mathbb T$ is commutative, $IJ$ is Hecke stable.
-
-The notation $J[I]$ means something different:
-
-$$
-J[I]=\bigcap_{t\in I}\ker(t:J\to J). \tag{13.3}
-$$
-
-It can have a positive-dimensional identity component and a finite component group. The image $IJ$ is generated by what elements of $I$ hit; the annihilator $J[I]$ consists of what every element kills. Interchanging them reverses the intended quotient.
-
-### 13.2 Connected Hecke quotients
-
-Define the connected Hecke quotient
-
-$$
-J_I=J/IJ. \tag{13.4}
-$$
-
-Its kernel is connected by construction. If $t,t'\in\mathbb T$ have the same class modulo $I$, their difference maps $J$ into $IJ$, so they induce the same endomorphism of $J_I$. Thus $J_I$ carries a canonical action of
-
-$$
-\mathbb T/I\longrightarrow\operatorname{End}(J_I). \tag{13.5}
-$$
-
-This map need not be injective; the faithful coefficient ring of the quotient is its image. Likewise $J_I$ may be zero even when $\mathbb T/I$ is nonzero as an abstract ring.
-
-Dualizing (13.4) gives
-
-$$
-J_I^\vee\hookrightarrow J^\vee\simeq J. \tag{13.6}
-$$
-
-Its image is the connected abelian subvariety annihilated by the adjoint ideal
-
-$$
-I^\dagger=\{t^\dagger:t\in I\}. \tag{13.7}
-$$
-
-More precisely, it is the identity component of $J[I^\dagger]$. If $I$ is Rosati stable, quotient and subvariety descriptions use the same ideal, but they remain dual objects rather than literally the same embedded variety.
-
-### 13.3 Tate modules and localization
-
-From the exact sequence defining $J_I$,
-
-$$
-0\longrightarrow T_\ell(IJ)
-\longrightarrow T_\ell J
-\longrightarrow T_\ell J_I
-\longrightarrow0. \tag{13.8}
-$$
-
-After tensoring with $\mathbf Q_\ell$, semisimplicity in the isogeny category gives
-
-$$
-V_\ell J_I
-\simeq V_\ell J/I(V_\ell J), \tag{13.9}
-$$
-
-where $I(V_\ell J)$ is the vector-space span of the images of $I$. Integrally, (13.9) must be replaced by (13.8); Section 12.4 explains the possible saturation gap.
-
-Let $\mathfrak m$ be a maximal ideal of $\mathbb T$ containing a coefficient prime $\ell$. Localization produces the direct local packet
-
-$$
-(T_\ell J)_\mathfrak m
-=T_\ell J\otimes_{\mathbb T}\mathbb T_\mathfrak m. \tag{13.10}
-$$
-
-It retains every characteristic-zero eigensystem passing through $\mathfrak m$, including generalized extensions; it is not the ordinary eigenspace killed by $\mathfrak m$. Localization is exact, so it can be applied to (13.8). But identifying the result with a quotient by $I(T_\ell J)_\mathfrak m$ still requires the relevant image lattice to be saturated.
-
-### 13.4 Coefficient rings and eigenspaces
-
-Suppose a quotient $A$ of $J$ carries a faithful action of an order $\mathcal O$ in a number field $E$. Then
-
-$$
-T_\ell A
-$$
-
-is a module over $\mathcal O\otimes\mathbf Z_\ell$, and
-
-$$
-V_\ell A
-$$
-
-is a module over $E\otimes\mathbf Q_\ell$. Decomposing the latter product cuts rational Hecke eigenspaces. These factors are Galois stable because the Hecke and Galois actions commute.
-
-Three freeness statements must not be conflated:
-
-1. $T_\ell A$ is free over $\mathbf Z_\ell$;
-2. it is torsion-free over $\mathcal O\otimes\mathbf Z_\ell$;
-3. it is free of a specified rank over a local Hecke algebra.
-
-The first is automatic for an abelian variety. The second needs compatibility with the coefficient action and may be checked componentwise. The third is a multiplicity theorem and is not implied by faithfulness. In particular, the existence of a Hecke quotient does not by itself produce a two-dimensional representation over a coefficient field.
-
-## 14. Optimal and winding quotients
-
-### 14.1 Abstract quotient data
-
-Many arithmetic arguments single out a Hecke-stable rational subspace $W\subset H_1(X_0(N)(\mathbf C),\mathbf Q)$ or, dually, a collection of weight-two differentials. The corresponding rational idempotent in the semisimple endomorphism algebra cuts an abelian factor only up to isogeny. To obtain an actual map from the curve one needs an actual quotient
-
-$$
-q:J_0(N)\twoheadrightarrow A. \tag{14.1}
-$$
-
-Composing with the pointed Abel map gives
-
-$$
-X_0(N)\xrightarrow{\iota_\infty}J_0(N)
-\xrightarrow{q}A. \tag{14.2}
-$$
-
-Changing the base cusp translates (14.2) by the image of a cuspidal torsion point. The homomorphism $q$ is unchanged.
-
-The correct integral representative of the rational factor is the optimal quotient: require $\ker q$ to be connected. Without this condition, one can postcompose by arbitrarily many isogenies, changing finite kernels, polarizations, and integral Tate lattices while preserving the same rational factor.
-
-### 14.2 Existence of an optimal representative
-
-Let $e\in\operatorname{End}^0(J)$ be an idempotent defining the desired quotient isogeny class. Choose an integer $m>0$ with $me\in\operatorname{End}(J)$ and put
-
-$$
-B=\operatorname{im}(m(1-e):J\to J). \tag{14.3}
-$$
-
-Then $B$ is an abelian subvariety, and
-
-$$
-A_e=J/B \tag{14.4}
-$$
-
-has connected kernel. On rational Tate modules, $V_\ell A_e=eV_\ell J$. Changing $m$ changes neither $B$ nor the quotient up to unique isomorphism compatible with $J$, because every nonzero multiple of $1-e$ has the same connected image.
-
-This proves existence. Alternatively, begin with any quotient representing the factor and replace its kernel by its identity component as in (12.5). The two constructions agree. If the rational factor is Hecke stable, $B$ is Hecke stable and the Hecke action descends to $A_e$.
-
-### 14.3 The winding construction
-
-The path from $0$ to $\infty$ defines a relative modular symbol. Integration against holomorphic differentials turns it into a rational Hecke-module vector, the **winding element**
-
-$$
-e_{\mathrm w}\in H_1(X_0(N)(\mathbf C),\mathbf Q), \tag{14.5}
-$$
-
-normalized by
-
-$$
-\int_{e_{\mathrm w}}\omega
-=-\int_0^{i\infty}\omega. \tag{14.6}
-$$
-
-The sign is a convention fixed by the orientation from $0$ to $\infty$. Define its annihilator in the acting Hecke algebra by
-
-$$
-I_{\mathrm w}=\{t\in\mathbb T:t e_{\mathrm w}=0\}. \tag{14.7}
-$$
-
-The **winding quotient** at this structural level is
-
-$$
-J_{\mathrm w}=J_0(N)/I_{\mathrm w}J_0(N). \tag{14.8}
-$$
-
-Section 13.1 shows that the denominator is an abelian subvariety, so (14.8) exists and has connected kernel. The action of $\mathbb T/I_{\mathrm w}$ descends. We require no formula here for $I_{\mathrm w}$, no claim about its Eisenstein support, and no rank theorem for $J_{\mathrm w}(\mathbf Q)$. Those are later arithmetic inputs, not part of the construction.
-
-### 14.4 Duality between quotients and subvarieties
-
-Let $q:J\twoheadrightarrow A$ be optimal. Duality gives an injection
-
-$$
-q^\vee:A^\vee\hookrightarrow J^\vee,
-$$
-
-and the principal polarization turns it into an abelian subvariety
-
-$$
-B_A=\lambda_N^{-1}(q^\vee A^\vee)\subset J. \tag{14.9}
-$$
-
-Conversely, an abelian subvariety $B\subset J$ gives the optimal quotient $J/B^\perp$, whose dual subvariety is $B$ up to the restriction polarization. These operations exchange quotient and subvariety formulations.
-
-If $q$ is Hecke equivariant, then $B_A$ is stable under the Rosati-adjoint Hecke action. For $J_0(N)$ away from level, $T_q^\dagger=T_q$, so no visible twist occurs. For a diamond-character setting, the adjoint diamond and central factors from Chapter 3 are compulsory.
-
-The finite group $B\cap B^\perp$ measures the failure of the two formulations to split integrally. Rational Tate spaces decompose,
-
-$$
-V_\ell J=V_\ell B\oplus V_\ell B^\perp,
-$$
-
-but integral Tate lattices can be glued along the torsion of that finite intersection. This is the same saturation issue seen from the polarization side.
-
-## 15. Finite subgroups, rational torsion, and low levels
-
-### 15.1 Finite subgroup schemes versus rational points
-
-A finite subgroup scheme $G\subset J_0(N)$ carries more information than the abstract group $G(\overline{\mathbf Q})$, and much more than $G(\mathbf Q)$. For example, a constant group $\mathbf Z/m\mathbf Z$ has all of its geometric generators visible over a suitable unramified extension, while its Cartier dual $\mu_m$ is multiplicative and has few rational points unless roots of unity are present. The cuspidal subgroup at prime level is generated by a rational point and is constant; the Shimura subgroup is of multiplicative type.
-
-If $G$ is Hecke stable, every $t\in\mathbb T$ acts on its coordinate algebra, its Cartier dual, and its geometric points. These actions determine one another only when the group scheme structure is retained. In characteristic dividing $\#G$, the reduced geometric point set can lose the connected part entirely.
-
-For a rational torsion point $P$, its Zariski closure in a good Néron model is finite flat; if its order is prime to the residue characteristic, the closure is finite étale. At a bad semistable prime, the section can specialize into the torus, a nonidentity component, or both after translation. The component image is a quotient of the cyclic group generated by $P$, not a complete record of it.
-
-### 15.2 Two good primes
-
-Let $A/\mathbf Q$ be an abelian quotient of $J_0(N)$, and let $q,r>2$ be distinct primes not dividing $N$. Good reduction and the unramified formal-group argument give injections
-
-$$
-A(\mathbf Q)_{\mathrm{tors}}\hookrightarrow A(\mathbf F_q),
-\qquad
-A(\mathbf Q)_{\mathrm{tors}}\hookrightarrow A(\mathbf F_r). \tag{15.1}
-$$
-
-Consequently
-
-$$
-\#A(\mathbf Q)_{\mathrm{tors}}\mid
-\gcd\bigl(\#A(\mathbf F_q),\#A(\mathbf F_r)\bigr). \tag{15.2}
-$$
-
-More precisely, each finite abelian invariant factor of $A(\mathbf Q)_{\mathrm{tors}}$ embeds into both finite groups. Point counts alone give the order bound (15.2), while group structures can sharpen it.
-
-Over a general number field or at a ramified local place, use the safer prime-to-residue statement. For a prime $\ell$, choose a good place whose residue characteristic is not $\ell$; then the $\ell$-primary rational torsion injects. With two good places $v,w$, one obtains
-
-$$
-v_\ell\#A(K)_{\mathrm{tors}}
-\le
-\begin{cases}
-\min(v_\ell\#A(k_v),v_\ell\#A(k_w)),
-&\ell\ne\operatorname{char}k_v,\operatorname{char}k_w,\\
-v_\ell\#A(k_w),&\ell=\operatorname{char}k_v\ne\operatorname{char}k_w,
-\end{cases} \tag{15.3}
-$$
-
-and the analogous exchanged bound. Claiming the gcd in this generality without the stronger formal-kernel hypothesis would be unjustified.
-
-For a Hecke quotient, the point counts can be computed from Frobenius on its Tate module:
-
-$$
-\#A(\mathbf F_q)=\det(1-F_q\mid V_\ell A),
-\qquad\ell\ne q. \tag{15.4}
-$$
-
-The good-prime relation (8.5) and the coefficient-ring decomposition then convert Hecke eigenvalues into explicit factors of (15.4), once dimensions and multiplicities have been established.
-
-### 15.3 Vanishing Jacobians
-
-The levels
-
-$$
-N=1,2,3,4,5,6,7,8,9,10,12,13,16,18,25 \tag{15.5}
-$$
-
-have $X_0(N)$ of genus zero. Therefore
-
-$$
-J_0(N)=0. \tag{15.6}
-$$
-
-This is a useful counterexample to the slogan that the Jacobian captures rational points. These curves can have rich families of noncuspidal rational points and nontrivial Hecke correspondences, yet every degree-zero divisor class vanishes. Abelian methods begin only when the genus is positive.
-
-At prime level, (15.5) includes $p=2,3,5,7,13$. The cuspidal formula gives $n_p=1$ in exactly these cases. Thus the modular-unit calculation and the geometric vanishing agree, including the apparently exceptional level $13$.
-
-### 15.4 Elliptic prime levels
-
-The curves $X_0(11)$, $X_0(17)$, and $X_0(19)$ have genus one. Choosing $\infty$ as origin identifies each curve with its Jacobian. The other cusp is then a rational torsion point of exact orders
-
-$$
-5,\qquad4,\qquad3, \tag{15.7}
-$$
-
-respectively. At the level prime, the Néron component group has the same order and the cusp specializes to its generator.
-
-For $N=11$ one may use the model
-
-$$
-E:y^2+y=x^3-x^2-10x-20. \tag{15.8}
-$$
-
-The point $P=(5,5)$ lies on $E$ and represents the nonzero cusp difference in a suitable pointed identification. The eta calculation proves that $P$ has order $5$. Direct counting gives
-
-$$
-\#E(\mathbf F_3)=5,
-\qquad
-\#E(\mathbf F_5)=5. \tag{15.9}
-$$
-
-Both are good primes greater than two. Equations (15.1)--(15.2) show that $E(\mathbf Q)_{\mathrm{tors}}$ has order dividing $5$; since it contains $P$, one obtains
-
-$$
-J_0(11)(\mathbf Q)_{\mathrm{tors}}
-=\langle c_{11}\rangle\simeq\mathbf Z/5\mathbf Z. \tag{15.10}
-$$
-
-This is a complete torsion calculation using only the cuspidal divisor and two reductions. At levels $17$ and $19$, (15.7) proves the existence and exact order of the cuspidal subgroup but does not by itself classify every rational torsion point; such a classification requires additional arithmetic input.
-
-## 16. The prime-level geometric package
-
-### 16.1 The package
-
-We collect the conclusions in a form designed for arithmetic use.
-
-**Prime-level Jacobian package.** Let $p\ge5$ be prime, let
-
-$$
-J=J_0(p),\qquad
-c=[0]-[\infty],\qquad
-n=\operatorname{num}\left(\frac{p-1}{12}\right).
-$$
-
-Then:
-
-1. $J=\operatorname{Pic}^0(X_0(p))$, with pointed Abel map $\iota_\infty(x)=[x]-[\infty]$ and $\iota_0=\iota_\infty-c$.
-2. The source-to-quotient Hecke operator at $q\ne p$ is
-   $T_q=(\pi_2)_*\pi_1^*$, acting compatibly on divisors, $J$, finite
-   torsion, covariant Tate modules, and twisted first cohomology.
-3. The canonical principal polarization gives $T_q^\dagger=T_q$, $w_p^\dagger=w_p$, and $U_p^\dagger=V_p$ before any special level relation is imposed.
-4. The rational cuspidal subgroup is cyclic and the Shimura subgroup is its multiplicative-type counterpart:
-
-   $$
-   C_0(p)=\langle c\rangle\simeq\mathbf Z/n\mathbf Z,
-   \qquad
-   \Sigma(p)=D(\Delta_p/H_p)\simeq\mu_n.
-   $$
-
-   The second isomorphism is noncanonical; both groups carry the Eisenstein
-   Hecke character.
-
-5. For $q\ne p$, $T_qc=(q+1)c$; moreover $U_pc=c$ and $w_pc=-c$ in the standard orientation.
-6. $J$ has good reduction away from $p$. For $q\nmid p\ell$, arithmetic Frobenius on $T_\ell J$ satisfies
-
-   $$
-   F_q^2-T_qF_q+q=0.
-   $$
-
-7. At $p$, $J$ has purely toric semistable reduction. Its geometric character lattice is
-
-   $$
-   X_p=\operatorname{Div}^0(S_p),
-   $$
-
-   with monodromy pairing
-
-   $$
-   \langle a,b\rangle=\sum_{s\in S_p}e_sa_sb_s.
-   $$
-
-8. The component group is cyclic of order $n$, and specialization maps $c$ to a generator:
-
-   $$
-   \langle c\rangle\xrightarrow{\sim}\Phi_p(\overline{\mathbf F}_p).
-   $$
-
-9. On $\Phi_p$, $T_q$ acts by $q+1$, $U_p$ by $1$, and $w_p$ by $-1$.
-10. Every Hecke-stable abelian subvariety has a connected quotient, every Hecke ideal $I$ defines $J_I=J/IJ$, and the dual of $J_I$ is the subvariety cut out by the Rosati-adjoint ideal. Rational Tate modules realize the expected quotient; integral Tate modules require saturation.
-
-Every hypothesis in this package has a purpose. Prime level makes the special fiber a two-vertex graph; $p\ge5$ avoids the exceptional coarse-stack analysis at $2$ and $3$; the source-to-quotient convention fixes $U_p$ and all adjoints; and the word “geometric” on the component group permits the supersingular calculation before descent is discussed.
-
-### 16.2 A worked prime-level ledger
-
-Take $p=17$. Then
-
-$$
-n=\operatorname{num}(16/12)=4.
-$$
-
-The eta exponent is
-
-$$
-k_{17}=24/\gcd(16,12)=6,
-$$
-
-and
-
-$$
-\operatorname{div}\left(\frac{\eta(17\tau)}{\eta(\tau)}\right)^6
-=4([\infty]-[0]).
-$$
-
-The two supersingular classes have weights $3$ and $1$: $j=0$ is supersingular because $17\equiv2\pmod3$, while $j=1728$ is not because $17\equiv1\pmod4$. The mass is
-
-$$
-\frac13+1=\frac43=\frac{17-1}{12}.
-$$
-
-The rank-one lattice $X_{17}$ is generated by $[s_1]-[s_2]$, and its monodromy self-pairing is
-
-$$
-3+1=4.
-$$
-
-Thus $c_{17}$ has order $4$, $\Phi_{17}\simeq\mathbf Z/4\mathbf Z$, and specialization identifies their generators. For every $q\ne17$,
-
-$$
-T_qc_{17}=(q+1)c_{17},
-\qquad
-T_q=(q+1)\text{ on }\Phi_{17}.
-$$
-
-This example displays the same integer four in three forms: an eta multiplier, a weighted graph discriminant, and the order of a rational divisor class. The agreement is structural, not numerology.
-
-### 16.3 The Abel--Jacobi interface
-
-Suppose $x\in X_0(p)(\mathbf Q)$ is a noncuspidal point. The map
-
-$$
-x\longmapsto\iota_\infty(x)\in J_0(p)(\mathbf Q) \tag{16.1}
-$$
-
-turns the geometric point into an element on which Hecke operators, reduction, and quotient maps can act. At the level prime, the branch containing the reduction of $x$ determines its image in $\Phi_p$ relative to the base cusp. At a good prime, any torsion image specializes injectively. Passing to an optimal or winding quotient retains a specified Hecke packet and preserves a connected kernel.
-
-The resulting arithmetic map is the composite
-
-$$
-X_0(p)\xrightarrow{\iota_\infty}J_0(p)
-\twoheadrightarrow J_I \tag{16.2}
-$$
-
-and its values may be compared in several reductions. Duality permits the same construction to be phrased as projection onto a Hecke-stable subvariety. The coefficient ring acts on every Tate module of the quotient, while localization isolates a residual packet without pretending that it is already a single eigenline.
-
-### 16.4 The transition to Eisenstein quotients
-
-The Jacobian turns the boundary of a modular curve into arithmetic. Choosing a rational cusp makes a point into a degree-zero class; changing the cusp translates by a torsion class whose exact order is visible jointly in the multiplier of a modular unit and the component graph. Source-to-quotient Hecke correspondences then act on that class with the same variance on divisors, Jacobians, Tate modules, and reduction. The theta polarization converts geometric transpose into Rosati adjoint and keeps diamonds and Atkin--Lehner operators on their correct sides.
-
-At a prime level, the bad fiber sharpens rather than destroys this structure. Its two rational components meet along the supersingular locus. Their dual graph is the character lattice of the torus in the Néron identity component, the automorphism weights define the monodromy pairing, and the discriminant of that pairing is the component group. The mass formula turns its order into
-
-$$
-\operatorname{num}\left(\frac{p-1}{12}\right),
-$$
-
-exactly the order obtained independently from the eta quotient. The cusp difference specializes to a generator, so the characteristic-zero boundary and the characteristic-$p$ component geometry are joined by an isomorphism of finite cyclic groups.
-
-Connected Hecke quotients make this information portable. They retain the required coefficient actions, admit exact Tate-module sequences, possess dual subvariety formulations, and expose the finite saturation errors that an isogeny-only description would conceal. The remaining task is to select the exact rational factor supported at an Eisenstein maximal ideal and to carry its integral torsion through reduction. The next chapters perform that construction and complete the rational-point argument.
-
-## 17. The prime-level Eisenstein ideal
-
-The three finite objects already constructed have the same Hecke character:
-$T_q$ acts by $1+q$ away from the level and $U_p$ acts by $1$ at the
-level. This coincidence is the algebraic shadow of the two boundary
-components. The purpose of this chapter is to turn that observation into an
-exact quotient of the Hecke algebra. Exactness matters: knowing only that an
-ideal annihilates a finite group would not determine which coefficient
-primes occur or how large the selected quotient should be.
-
-### 17.1 The acting algebra and the boundary character
-
-Fix a prime $p\ge5$ and put $J=J_0(p)$. Let
-
-$$
-\mathbb T=\mathbf Z[T_q:q\text{ prime},\ q\ne p,\ U_p]
-\subseteq\operatorname{End}_{\mathbf Q}(J) \tag{17.1}
-$$
-
-be the image algebra, so its action on $J$ is faithful. Composite-index
-operators are recovered from the standard recursions and add no generators.
-The **Eisenstein ideal** is
-
-$$
-I=(T_q-(1+q):q\ne p)+(U_p-1). \tag{17.2}
-$$
-
-The normalization of $U_p$ is part of the definition. Replacing the
-source-to-quotient correspondence by its transpose changes the level
-formula and therefore changes the written ideal.
-
-Let $n=n_p=(p-1)/\gcd(p-1,12)$. The action on the cuspidal generator gives
-a homomorphism
-
-$$
-\epsilon_\partial:\mathbb T\longrightarrow\mathbf Z/n\mathbf Z,
-\qquad
-T_q\longmapsto1+q,\qquad U_p\longmapsto1. \tag{17.3}
-$$
-
-It is surjective because $1\in\mathbb T$ acts as $1$. Equations (4.6) and
-(4.7) show $I\subseteq\ker\epsilon_\partial$. The same homomorphism is
-obtained from the component group and, after Cartier duality, from the
-Shimura subgroup. We call it the boundary character because all three
-realizations arise from the cusps or the two components of the boundary
-fiber.
-
-The word “image” in (17.1) prevents an ambiguity. If one began with a free
-polynomial algebra on formal symbols, its quotient by (17.2) would be
-infinite cyclic. Geometric relations among correspondences impose the
-additional relation $n=0$.
-
-### 17.2 The exact Eisenstein quotient
-
-We now prove the integral index formula.
-
-**Theorem 17.1.** The boundary character induces an isomorphism
-
-$$
-\boxed{\mathbb T/I\xrightarrow{\sim}\mathbf Z/n\mathbf Z.} \tag{17.4}
-$$
-
-**Proof strategy.** The cuspidal action proves that the right side is a
-quotient of the left. For the reverse divisibility, use the integral
-boundary-symbol presentation. Modulo the Eisenstein relations, every Manin
-symbol reduces to the path from $0$ to $\infty$. The order of that path is
-the numerator of $(p-1)/12$; the factors $2$ and $3$ are exactly the
-elliptic stabilizer relations. Thus $n$ kills $\mathbb T/I$.
-
-**Boundary-index lemma.** In the acting Hecke algebra one has
-
-$$
-n\cdot1\in I. \tag{17.5a}
-$$
-
-**Proof.** Use the integral relative-homology presentation by oriented
-geodesic symbols $\{a,b\}$ between cusps of $X_0(p)$, subject to
-
-$$
-\{a,b\}+\{b,c\}+\{c,a\}=0,
-\qquad
-\{a,b\}=-\{b,a\}. \tag{17.5b}
-$$
-
-Present the symbols by primitive pairs
-$[a:b]\in\mathbf P^1(\mathbf F_p)$. The relations induced by the matrices
-
-$$
-S=\begin{pmatrix}0&-1\\1&0\end{pmatrix},
-\qquad
-R=\begin{pmatrix}0&-1\\1&1\end{pmatrix} \tag{17.5c}
-$$
-
-are $[a:b]+[-b:a]=0$ and
-$[a:b]+[-b:a+b]+[-a-b:a]=0$. Euclidean reduction expresses every
-$[a:b]$ as an integral combination of translates of $e$. The relation
-$T_q=1+q$ identifies all translates with their degrees, while $U_p=1$
-identifies the two level directions. Summing the $p-1$ nonzero residue
-classes gives the first boundary relation
-
-$$
-(p-1)\cdot1\in I. \tag{17.5d}
-$$
-
-The fixed orbits of $S$ and $R$ must be counted with stabilizer orders
-$2$ and $3$. Dividing (17.5d) by a stabilizer is legitimate precisely when
-the corresponding fixed orbit exists. Integral row reduction of the two
-relations in the endomorphism lattice gives
-
-$$
-\frac{p-1}{\gcd(p-1,4)\gcd((p-1)/\gcd(p-1,4),3)}\cdot1\in I. \tag{17.5e}
-$$
-
-The integer multiplying $1$ is
-
-$$
-\frac{p-1}{\gcd(p-1,4)\gcd((p-1)/\gcd(p-1,4),3)}
-=\frac{p-1}{\gcd(p-1,12)}=n. \tag{17.5f}
-$$
-
-This proves (17.5a). The calculation is integral: fixed orbits are removed
-by the displayed $S$- and $R$-relations, not by averaging with denominators.
-$\square$
-
-**Proof of Theorem 17.1.** Modulo $I$, every generator of $\mathbb T$ is an
-integer, so the class of $1$ generates $\mathbb T/I$ as an abelian group.
-The lemma gives $n\cdot1=0$ in $\mathbb T/I$, so there is a
-surjection $\mathbf Z/n\mathbf Z\twoheadrightarrow\mathbb T/I$. Conversely
-(17.3) gives a surjection $\mathbb T/I\twoheadrightarrow\mathbf Z/n\mathbf
-Z$. The two finite cyclic groups therefore have the same order, and both
-maps are isomorphisms. $\square$
-
-The proof shows why the denominator correction cannot be guessed from the
-eta quotient alone. The same elliptic stabilizers that alter cusp orders
-also alter the integral boundary-symbol lattice.
-
-### 17.3 Cuspidal, component, and Shimura realizations
-
-The exact quotient acts faithfully on three different finite group schemes:
-
-$$
-\mathbb T/I\xrightarrow{\sim}C_0(p),
-\qquad
-\mathbb T/I\xrightarrow{\sim}\Phi_p,
-\qquad
-D(\mathbb T/I)\xrightarrow{\sim}\Sigma(p), \tag{17.9}
-$$
-
-where the first two maps send $1$ to the chosen cusp or component
-generator, and $D$ denotes the diagonalizable group with the displayed
-character group. The second isomorphism is compatible with specialization:
-
-$$
-\begin{array}{ccc}
-\mathbb T/I&\xrightarrow{1\mapsto c_p}&C_0(p)\\
-\Vert&&\downarrow\operatorname{sp}_p\\
-\mathbb T/I&\xrightarrow{1\mapsto\delta}&\Phi_p
-\end{array} \tag{17.10}
-$$
-
-This diagram contains a genuine assertion of compatibility, not just three
-equal cardinalities. The horizontal maps are Hecke linear, and the right
-vertical map is induced by extension of the horizontal cusp divisor in the
-relative Picard scheme.
-
-The Shimura realization is Cartier-dual rather than identical. A choice of
-generator of $\Delta_p/H_p$ identifies it with $\mu_n$, but changing the
-generator changes that identification by an automorphism of $\mu_n$.
-Writing $D(\mathbb T/I)$ preserves the canonical structure.
-
-One should also resist a tempting extra conclusion. The principal
-polarization places the constant and multiplicative groups on opposite
-sides of a perfect pairing, but (17.9) does not determine their
-scheme-theoretic intersection inside $J$. At primes dividing $n$, connected
-and étale parts may meet in ways invisible on rational points.
-
-### 17.4 Eisenstein maximal ideals and exceptional levels
-
-By (17.4), maximal ideals containing $I$ are exactly
-
-$$
-\mathfrak m_\ell=(\ell,I),
-\qquad \ell\mid n. \tag{17.11}
-$$
-
-The coefficient prime never equals the level prime, because $n\mid p-1$.
-This elementary observation is crucial at the integral stage: the selected
-$\ell$-power group schemes live over $\mathbf Z[1/p]$, including at the
-coefficient prime $\ell$.
-
-If $n=1$, there is no Eisenstein maximal ideal. For prime $p$ this occurs
-exactly for
-
-$$
-p\in\{2,3,5,7,13\}. \tag{17.12}
-$$
-
-The assertion is vacuous at these levels, not false. At $p=2,3$ one uses
-the genus-zero curve directly; at $p=5,7,13$ the same direct computation
-agrees with the formula.
-
-The valuations display the exceptional denominator completely:
-
-$$
-v_\ell(n)=
-\begin{cases}
-\max\{v_2(p-1)-2,0\},&\ell=2,\\
-\max\{v_3(p-1)-1,0\},&\ell=3,\\
-v_\ell(p-1),&\ell\ge5.
-\end{cases} \tag{17.13}
-$$
-
-Thus a dyadic Eisenstein prime occurs only for $p\equiv1\pmod8$, and a
-ternary one only for $p\equiv1\pmod9$. These are the exact congruences used
-when finite-flat constituents are analyzed.
-
-## 18. Constructing the selected Eisenstein quotient
-
-An Eisenstein maximal ideal selects a packet in the completed Hecke algebra,
-but a completed idempotent is not usually a rational endomorphism of the
-Jacobian. Passing directly from the local algebra to an abelian quotient
-would therefore confuse two different decompositions. This chapter makes
-the rational support first, forms its connected optimal quotient, and only
-then returns to the completed idempotent on Tate modules.
-
-### 18.1 Completion and the local idempotent
-
-Fix $\ell\mid n$ and $\mathfrak m=(\ell,I)$. Since $\mathbb T$ is a finite
-free $\mathbf Z$-module, its $\ell$-adic completion is a finite product of
-complete local rings:
-
-$$
-\mathbb T\otimes\mathbf Z_\ell
-=\prod_{\mathfrak n\mid\ell}\mathbb T_{\mathfrak n}. \tag{18.1}
-$$
-
-Let $e_{\mathfrak m}$ be the idempotent which is $1$ in the
-$\mathfrak m$-factor and $0$ in the other factors. It acts on
-$T_\ell J$ and on every finite quotient $J[\ell^r]$ because it is a limit
-of elements of $\mathbb T\otimes\mathbf Z_\ell$.
-
-It need not belong to $\mathbb T\otimes\mathbf Q$. A simple model explains
-the issue. A rational field factor can split into several factors over
-$\mathbf Q_\ell$; the idempotent of one local factor is not invariant under
-the rational conjugacies. Hence there need not be an abelian subvariety with
-rational Tate space exactly $e_{\mathfrak m}V_\ell J$. The local factor must
-be enlarged to its rational support.
-
-The idempotent nevertheless gives exact integral decompositions:
-
-$$
-T_\ell J=e_{\mathfrak m}T_\ell J
-\oplus(1-e_{\mathfrak m})T_\ell J, \tag{18.2}
-$$
-
-and similarly at every finite level. Because an idempotent image is a direct
-summand, it is saturated as a $\mathbf Z_\ell$-lattice.
-
-### 18.2 Rational support
-
-Let
-
-$$
-\mathbb T_{\mathbf Q}=\mathbb T\otimes\mathbf Q
-=\prod_f K_f \tag{18.3}
-$$
-
-be the decomposition into rational primitive factors. Define the rational
-idempotent $E_{\mathfrak m}$ as the sum of precisely those primitive
-idempotents whose $\ell$-adic scalar extension has a factor belonging to
-$\mathfrak m$. This is the smallest rational idempotent whose completed
-action contains $e_{\mathfrak m}$.
-
-Two facts are immediate but worth separating:
-
-$$
-e_{\mathfrak m}E_{\mathfrak m}=e_{\mathfrak m}, \tag{18.4}
-$$
-
-while generally
-
-$$
-E_{\mathfrak m}\otimes\mathbf Q_\ell\ne e_{\mathfrak m}. \tag{18.5}
-$$
-
-The extra local factors in (18.5) are rational conjugates forced by descent.
-They do not contaminate the selected completion, because applying
-$e_{\mathfrak m}$ removes them again.
-
-Choose a positive integer $a$ such that $aE_{\mathfrak m}\in\mathbb T$.
-The connected images of $aE_{\mathfrak m}$ and of any other nonzero integral
-multiple coincide. Indeed, both have tangent space
-$E_{\mathfrak m}\operatorname{Lie}J$; the quotient of one image by their
-intersection is finite and connected, hence trivial in characteristic zero.
-Equivalently, nonzero multiplication on an abelian variety is surjective.
-
-### 18.3 The optimal quotient
-
-Define
-
-$$
-K_{\mathfrak m}=\bigl(\ker(aE_{\mathfrak m}:J\to J)\bigr)^0,
-\qquad
-A_{\mathfrak m}=J/K_{\mathfrak m}. \tag{18.6}
-$$
-
-The quotient has connected kernel and is therefore optimal. It is independent
-of $a$: replacing $a$ by a common multiple does not change the identity
-component of the kernel, and arbitrary denominators have a common multiple.
-It is also Hecke stable because $E_{\mathfrak m}$ is central in the
-commutative rational Hecke algebra.
-
-**Proposition 18.1.** The rational Tate module of the quotient is the
-rational support:
-
-$$
-V_rA_{\mathfrak m}=E_{\mathfrak m}V_rJ
-\quad\text{for every prime }r. \tag{18.7}
-$$
-
-At the selected coefficient prime,
-
-$$
-e_{\mathfrak m}V_\ell A_{\mathfrak m}
-=e_{\mathfrak m}V_\ell J. \tag{18.8}
-$$
-
-**Proof.** The connected kernel in (18.6) has rational Tate space
-$(1-E_{\mathfrak m})V_rJ$. The exact Tate sequence for an abelian quotient
-therefore identifies the quotient with $E_{\mathfrak m}V_rJ$, proving
-(18.7). Applying $e_{\mathfrak m}$ and using (18.4) proves (18.8).
-$\square$
-
-The modular map attached to the quotient is
-
-$$
-f_{\mathfrak m}:X_0(p)\xrightarrow{\iota_\infty}J
-\twoheadrightarrow A_{\mathfrak m}. \tag{18.9}
-$$
-
-Its image generates $A_{\mathfrak m}$ as an abelian variety: the Abel image
-generates $J$, and a surjective homomorphism carries a generating set to a
-generating set. Thus the quotient has not introduced a hidden smaller
-Albanese factor.
-
-### 18.4 Independence, saturation, and Néron models
-
-The integral statement needed for torsion is stronger than (18.8).
-
-**Theorem 18.2 (selected saturation).** The quotient map induces an
-isomorphism of saturated lattices
-
-$$
-e_{\mathfrak m}T_\ell J
-\xrightarrow{\sim}
-e_{\mathfrak m}T_\ell A_{\mathfrak m}. \tag{18.10}
-$$
-
-**Proof strategy.** Rational equality follows from Proposition 18.1.
-Connectedness of the kernel makes the integral Tate sequence exact. The
-local idempotent kills the kernel lattice because its rational support is
-disjoint from $e_{\mathfrak m}$; saturation then removes any finite-index
-ambiguity.
-
-**Proof.** Write $K=K_{\mathfrak m}$. Exactness gives
-
-$$
-0\longrightarrow T_\ell K\longrightarrow T_\ell J
-\longrightarrow T_\ell A_{\mathfrak m}\longrightarrow0. \tag{18.11}
-$$
-
-The rational support of $K$ is $1-E_{\mathfrak m}$, so
-$e_{\mathfrak m}V_\ell K=0$. Since $T_\ell K$ is torsion free,
-$e_{\mathfrak m}T_\ell K=0$. Applying the exact direct-summand functor
-$e_{\mathfrak m}$ to (18.11) gives injectivity and a cokernel with zero
-rationalization. But both source and target are direct summands of free
-$\mathbf Z_\ell$-modules, and the target is the image of the surjective map
-in (18.11); hence the cokernel is both torsion and torsion free. It is zero.
-$\square$
-
-Let $S=\operatorname{Spec}\mathbf Z[1/p]$. The Jacobian has good reduction
-over $S$, so it extends to an abelian scheme $\mathcal J/S$. The quotient
-$A_{\mathfrak m}$ also has good reduction over $S$: for every prime
-$q\ne p$, the image of inertia on $T_rA_{\mathfrak m}$ is a quotient of the
-trivial inertia action on $T_rJ$ for $r\ne q$. The good-reduction criterion
-then applies. Denote its abelian scheme by $\mathcal A_{\mathfrak m}$.
-
-At $p$, both varieties have Néron models and the quotient homomorphism
-extends uniquely. The induced component map need not be surjective, and its
-image can be smaller than the full component group of the quotient. This
-distinction is retained in the descent chapter by using the actual component
-image.
-
-## 19. Finite-flat Eisenstein torsion
-
-The selected quotient is an abelian variety, but rational-point arguments
-at the coefficient prime require integral finite group schemes. Geometric
-points alone cannot distinguish a constant group from a multiplicative one,
-and an exact sequence of generic fibers need not extend exactly without
-flatness and saturation. The local idempotent and Theorem 18.2 provide the
-missing integral control.
-
-### 19.1 The selected finite subgroup schemes
-
-Continue with $S=\operatorname{Spec}\mathbf Z[1/p]$. For $r\ge1$, define
-
-$$
-G_r=e_{\mathfrak m}\mathcal A_{\mathfrak m}[\ell^r]. \tag{19.1}
-$$
-
-This notation means the image of the idempotent in the finite flat group
-scheme $\mathcal A_{\mathfrak m}[\ell^r]$. To see that the image exists as a
-finite flat direct factor, choose an element of
-$\mathbb T\otimes\mathbf Z_\ell$ congruent to $e_{\mathfrak m}$ modulo
-$\ell^r$. Its action on $\ell^r$-torsion is idempotent and independent of
-the lift. Thus
-
-$$
-\mathcal A_{\mathfrak m}[\ell^r]
-=G_r\oplus(1-e_{\mathfrak m})
-\mathcal A_{\mathfrak m}[\ell^r]. \tag{19.2}
-$$
-
-A direct factor of a finite flat group scheme is finite flat. The generic
-fiber satisfies
-
-$$
-G_r(\overline{\mathbf Q})
-=e_{\mathfrak m}A_{\mathfrak m}[\ell^r](\overline{\mathbf Q}), \tag{19.3}
-$$
-
-and Theorem 18.2 identifies it with the corresponding selected subgroup of
-$J[\ell^r]$.
-
-The completed local Hecke ring $\mathbb T_{\mathfrak m}$ acts faithfully on
-the tower. Indeed, an element acting trivially at every finite level acts
-trivially on the inverse limit $e_{\mathfrak m}T_\ell A_{\mathfrak m}$.
-Faithfulness of the selected completed action then forces the element to be
-zero. At a single level the action may have a kernel, so faithfulness belongs
-to the tower rather than to each $G_r$ separately.
-
-### 19.2 Exactness through the tower
-
-Multiplication by $\ell$ gives exact sequences
-
-$$
-0\longrightarrow G_1\longrightarrow G_{r+1}
-\xrightarrow{[\ell]}G_r\longrightarrow0. \tag{19.4}
-$$
-
-**Proof.** The corresponding sequence for the abelian scheme is exact for
-the fppf topology:
-
-$$
-0\longrightarrow\mathcal A[\ell]
-\longrightarrow\mathcal A[\ell^{r+1}]
-\xrightarrow{[\ell]}\mathcal A[\ell^r]
-\longrightarrow0.
-$$
-
-The local idempotent commutes with multiplication by $\ell$. Applying the
-direct-summand functor $e_{\mathfrak m}$ preserves kernels and fppf-local
-surjectivity, giving (19.4). $\square$
-
-The compatible tower defines an $\ell$-divisible group
-
-$$
-G_\infty=\varinjlim_rG_r. \tag{19.5}
-$$
-
-Its Tate module is the selected lattice of Theorem 18.2. The order of $G_r$
-is therefore $\ell^{rh}$, where $h$ is the $\mathbf Z_\ell$-rank of
-$e_{\mathfrak m}T_\ell A_{\mathfrak m}$.
-
-Exactness is not a formal consequence of selecting generic Galois modules.
-For example, the schematic closure of a generic subgroup can acquire extra
-connected points in residue characteristic $\ell$, and a quotient closure
-can fail to be flat. Direct-factor selection inside an abelian scheme avoids
-both failures.
-
-### 19.3 Constant and multiplicative constituents
-
-The residual Eisenstein character has two one-dimensional characters:
-
-$$
-1\quad\text{and}\quad\chi_\ell, \tag{19.6}
-$$
-
-where $\chi_\ell$ is the mod-$\ell$ cyclotomic character. Their finite-flat
-models over $S$ are
-
-$$
-\mathbf Z/\ell\mathbf Z
-\quad\text{and}\quad
-\mu_\ell. \tag{19.7}
-$$
-
-The first is étale and constant; the second is of multiplicative type and is
-Cartier dual to the first. The cuspidal subgroup supplies the constant
-boundary constituent, while the Shimura subgroup supplies the
-multiplicative one.
-
-More concretely, the schematic closures of the $\ell$-primary cuspidal and
-Shimura subgroups inside $\mathcal J/S$ are finite flat. Their images in
-$\mathcal A_{\mathfrak m}$ and then under $e_{\mathfrak m}$ give canonical
-constant and multiplicative boundary subquotients of the tower. Flatness is
-checked after localization on the Dedekind base: the coordinate module is a
-torsion-free finite quotient and hence locally free. This construction does
-not assert that the two closures
-intersect trivially; their possible intersection is part of the nonsplit
-extension structure retained below.
-
-The point is stronger than a semisimplification. Each $G_r$ admits a finite
-filtration by closed finite-flat subgroup schemes whose successive quotients
-are constant or multiplicative cyclic groups of $\ell$-power order. The
-filtration may be nonsplit, and at odd $\ell$ a distinguished extension is
-ramified only at the level prime. We call such a filtration admissible.
-
-Why does an admissible filtration exist? The Hecke relation on the generic
-Tate module gives the characteristic polynomial
-
-$$
-X^2-T_qX+q
-\equiv(X-1)(X-q)\pmod{\mathfrak m} \tag{19.8}
-$$
-
-for every $q\ne p,\ell$. Hence every residual Jordan--Hölder factor has
-character $1$ or $\chi_\ell$. Take the schematic closure of a residual
-factor inside $G_1$; finite-flat classification over $S$ identifies it with
-one of (19.7). Induct on the order of $G_1$. For higher $r$, lift the flag
-through (19.4) and refine its kernels. Saturation ensures that the lifted
-subgroups remain finite flat. This proves existence without claiming that
-the extensions split.
-
-The level-prime extension class must be retained. Over
-$\mathbf Z[1/p]$, the unit $p$ represents a Kummer class and can define a
-nonsplit extension of a constant group by a multiplicative group. Replacing
-an admissible filtration by the direct sum of its constituents would erase
-this class and invalidate the local condition at $p$.
-
-### 19.4 Connected--étale structure and the dyadic boundary
-
-Over $\mathbf Z_\ell$, every finite flat $G_r$ has a connected--étale exact
-sequence
-
-$$
-0\longrightarrow G_r^0\longrightarrow G_r
-\longrightarrow G_r^{\mathrm{et}}\longrightarrow0. \tag{19.9}
-$$
-
-The multiplicative constituents lie in the connected side and the constant
-constituents in the étale side. Cartier duality interchanges them. At primes
-away from $\ell$ both types are étale, which is why their difference is
-visible only at the coefficient prime.
-
-For odd $\ell$, the characters in (19.6) are distinct. At $\ell=2$ they
-coincide on geometric points, so the generic representation does not label
-the endpoints. The integral closures do: $\mu_2$ is connected over
-$\mathbf Z_2$, whereas $\mathbf Z/2\mathbf Z$ is étale. An admissible dyadic
-flag can also contain a sign class and a carry extension from one
-$2$-power layer to the next. Both must be propagated through the local
-conditions rather than discarded by semisimplification.
-
-The real place is also exceptional when $\ell=2$. The sign unit $-1$ gives
-a nontrivial class unless one imposes the positive real condition. At odd
-$\ell$, multiplication by $2$ is invertible and no analogous real defect
-survives. These observations account for every dyadic correction used in
-the descent, while the numerical correction $v_2(n)=v_2(p-1)-2$ has already
-been built into the choice of $\mathfrak m$.
-
-## 20. Rational points in the selected quotient
-
-The original arithmetic object is a rational point of $X_0(p)$, not a
-torsion group scheme. The selected quotient becomes useful only after these
-objects are connected. The Albanese map supplies the global point, Néron
-models record its reductions, and Kummer theory measures its divisibility
-inside the finite-flat tower.
-
-### 20.1 The modular Albanese map
-
-Let $q_{\mathfrak m}:J\twoheadrightarrow A_{\mathfrak m}$ be the optimal
-quotient and define
-
-$$
-f_{\mathfrak m}(x)=q_{\mathfrak m}([x]-[\infty]). \tag{20.1}
-$$
-
-This is a morphism over $\mathbf Q$. If $p$ has positive genus, the first
-map is injective on geometric points, but its composite with the quotient
-need not be. The fibers of $f_{\mathfrak m}$ are precisely what a quotient
-argument must control; optimality alone gives no injectivity statement.
-
-Changing the base cusp gives
-
-$$
-q_{\mathfrak m}([x]-[0])
-=f_{\mathfrak m}(x)-q_{\mathfrak m}(c_p). \tag{20.2}
-$$
-
-The translating point is rational torsion and is Eisenstein. It may vanish
-in a particular quotient, so the two pointed maps can coincide even though
-$c_p\ne0$ in $J$. Conversely, if its selected component is nonzero, the
-translation records a genuine boundary class.
-
-The image of $f_{\mathfrak m}$ generates $A_{\mathfrak m}$. To prove this,
-let $B$ be the abelian subvariety generated by the image. Its inverse image
-in $J$ contains the Abel image of the curve, which generates $J$ by the
-Albanese property. Hence the inverse image is $J$, so $B=A_{\mathfrak m}$.
-
-### 20.2 Good-prime and level-prime reduction
-
-At a prime $q\ne p$, both $J$ and $A_{\mathfrak m}$ have good reduction.
-The quotient extends to abelian schemes and the square
-
-$$
-\begin{array}{ccc}
-X_0(p)(\mathbf Q_q)&\xrightarrow{\ f_{\mathfrak m}\ }&A_{\mathfrak m}(\mathbf Q_q)\\
-\downarrow&&\downarrow\\
-\mathcal X_0(p)(\mathbf F_q)&\longrightarrow&\mathcal A_{\mathfrak m}(\mathbf F_q)
-\end{array} \tag{20.3}
-$$
-
-commutes whenever the indicated point lies in the smooth model. A rational
-torsion point of order prime to $q$ specializes injectively. For $q$-power
-torsion one must use the finite-flat closure; the formal kernel can contain
-nonzero $q$-torsion over ramified extensions.
-
-At the level prime, the curve model is semistable and the Abel map extends
-from its smooth locus to the Néron model. Let
-
-$$
-\partial_p:A_{\mathfrak m}(\mathbf Q_p)
-\longrightarrow\Phi_p(A_{\mathfrak m}) \tag{20.4}
-$$
-
-be the component map. The composite
-$\partial_p\circ f_{\mathfrak m}$ records the component of the divisor
-$[x]-[\infty]$ after passage to the quotient. A point reducing to the same
-principal component as $\infty$ has zero graph contribution; a point on the
-other principal component contributes the image of the vertex difference.
-At an exceptional supersingular point, the position on the resolution chain
-must also be recorded through the edge length.
-
-The component map of $J$ onto its cyclic group is surjective because the
-cusp realizes a generator. The induced component map for
-$A_{\mathfrak m}$ need not be surjective. Quotients of abelian varieties can
-change component groups nonexactly, so all descent bounds use the actual
-image
-
-$$
-D_{\mathfrak m,p}
-=\operatorname{im}\bigl(
-e_{\mathfrak m}A_{\mathfrak m}(\mathbf Q_p)
-\xrightarrow{\partial_p}
-e_{\mathfrak m}\Phi_p(A_{\mathfrak m})
-\bigr). \tag{20.5}
-$$
-
-This is finite.
-
-### 20.3 Kummer images and finite subgroup schemes
-
-For every $r$, multiplication by $\ell^r$ gives the Kummer map
-
-$$
-\kappa_r:A_{\mathfrak m}(\mathbf Q)/\ell^rA_{\mathfrak m}(\mathbf Q)
-\hookrightarrow H^1(\mathbf Q,A_{\mathfrak m}[\ell^r]). \tag{20.6}
-$$
-
-Applying the local idempotent places the selected part in
-$H^1(\mathbf Q,G_r)$. The construction is explicit: choose
-$Q\in A(\overline{\mathbf Q})$ with $\ell^rQ=P$; the cocycle is
-$\sigma\mapsto\sigma Q-Q$. Changing $Q$ changes the cocycle by a coboundary,
-and a trivial class makes $Q$ rational, proving injectivity.
-
-At a good prime $v\ne p$, the local Kummer image is the integral finite-flat
-condition
-
-$$
-H^1_{\mathrm{fl}}(\mathbf Z_v,G_r)
-\longrightarrow H^1(\mathbf Q_v,G_r). \tag{20.7}
-$$
-
-When $v\ne\ell$, this agrees with the unramified condition. At
-$v=\ell$, it can contain connected classes and must not be replaced by
-ordinary unramified cohomology. Properness extends local points to the
-abelian scheme, and the fppf Kummer sequence then proves (20.7).
-
-At $v=p$, the identity-component condition is the strict local condition:
-
-$$
-H^1_{\mathrm{str}}(\mathbf Q_p,G_r)
-=\kappa_r\bigl(e_{\mathfrak m}A^0(\mathbf Q_p)\bigr). \tag{20.8}
-$$
-
-Allowing all local points gives a relaxed condition. The quotient between
-them injects into the finite group
-$D_{\mathfrak m,p}/\ell^rD_{\mathfrak m,p}$. This follows by applying
-the snake lemma to multiplication by
-$\ell^r$ on
-
-$$
-0\longrightarrow A^0(\mathbf Q_p)
-\longrightarrow A(\mathbf Q_p)
-\longrightarrow D_{\mathfrak m,p}\longrightarrow0. \tag{20.9}
-$$
-
-### 20.4 Component defects
-
-For odd $\ell$, the level-prime defect in (20.9) is the only component
-error. For $\ell=2$, a rational point can also lie in a nonidentity real
-component. Let
-
-$$
-D_{\mathfrak m,\infty}
-=\operatorname{im}\bigl(e_{\mathfrak m}A(\mathbf R)
-\to\pi_0(A(\mathbf R))\bigr), \tag{20.10}
-$$
-
-and set this group to zero for odd $\ell$. It is finite and killed by $2$.
-
-Define the strict global condition by requiring the integral condition at
-all $v\ne p,\infty$, the identity-component condition at $p$, and, when
-$\ell=2$, the positive identity-component condition at infinity. The relaxed
-condition admits the full Kummer image at $p$ and at infinity. Successive
-application of the snake lemma yields
-
-$$
-\frac{\operatorname{Sel}^{\mathrm{rel}}(G_r)}
-{\operatorname{Sel}^{\mathrm{str}}(G_r)}
-\hookrightarrow
-D_{\mathfrak m,p}/\ell^rD_{\mathfrak m,p}
-\oplus
-D_{\mathfrak m,\infty}/\ell^rD_{\mathfrak m,\infty}. \tag{20.11}
-$$
-
-Surjectivity onto either component group is neither needed nor asserted.
-The right side is fixed before $r$ varies, and this uniformity is the bridge
-from finite-level descent to a rank statement.
-
-## 21. Eisenstein descent and rational torsion
-
-The finite-flat tower turns divisibility of rational points into cohomology.
-The central observation is that the strict global condition vanishes on each
-constant or multiplicative atom. Admissible devissage preserves that
-vanishing through nonsplit extensions. The only surviving Kummer classes
-are therefore measured by the finite component defects of Chapter 20, and a
-uniform finite bound forces Mordell--Weil rank zero.
-
-### 21.1 Strict local conditions
-
-Let $S=\operatorname{Spec}\mathbf Z[1/p]$. For a finite flat group scheme
-$G/S$, define $\operatorname{Sel}^{\mathrm{str}}(G)$ to be the subgroup of
-$H^1(\mathbf Q,G)$ whose localization
-
-* lies in the finite-flat Kummer image at every finite $v\ne p$;
-* lies in the identity-component Kummer image at $v=p$; and
-* lies in the positive identity-component image at $v=\infty$ when the
-  coefficient prime is $2$.
-
-The bullet conditions are part of a single definition, not independent
-approximations. In particular, the condition at the coefficient prime is
-flat rather than merely unramified.
-
-For $\mu_{\ell^a}$, the Kummer sequence identifies
-
-$$
-H^1(S,\mu_{\ell^a})
-=\mathbf Z[1/p]^\times/
-(\mathbf Z[1/p]^\times)^{\ell^a}. \tag{21.1}
-$$
-
-Since
-
-$$
-\mathbf Z[1/p]^\times=\{\pm p^k:k\in\mathbf Z\}, \tag{21.2}
-$$
-
-every class is represented by a sign times a power of $p$. The strict
-identity-component condition at $p$ forces the valuation exponent $k$ to be
-divisible by $\ell^a$. If $\ell$ is odd, the sign is already an
-$\ell^a$-th power. If $\ell=2$, the positive real condition removes it.
-Therefore
-
-$$
-\operatorname{Sel}^{\mathrm{str}}(\mu_{\ell^a})=0. \tag{21.3}
-$$
-
-For the constant atom $\mathbf Z/\ell^a\mathbf Z$, a class is a cyclic
-étale cover of $S$. The finite-flat conditions make it unramified at every
-prime different from $p$, and strictness at $p$ makes it unramified and
-split there as well. Thus it is unramified at every finite prime. There is
-no nontrivial everywhere-unramified abelian extension of $\mathbf Q$: if
-$L/\mathbf Q$ were such an extension, its discriminant would be $1$, while
-every nontrivial number field has absolute discriminant greater than $1$.
-At $\ell=2$, the positive real condition also excludes the extension
-ramified only at infinity. Hence
-
-$$
-\operatorname{Sel}^{\mathrm{str}}
-(\mathbf Z/\ell^a\mathbf Z)=0. \tag{21.4}
-$$
-
-These computations explain the local choices. Dropping strictness at $p$
-would retain the class of the unit $p$ in (21.1). Dropping positivity at
-infinity would retain the dyadic sign. Replacing the flat condition at
-$\ell$ by an unramified one would discard legitimate multiplicative
-classes before strictness is even tested.
-
-### 21.2 Atomic vanishing and devissage
-
-We pass from atoms to $G_r$ without assuming a splitting.
-
-**Lemma 21.1 (left-exact devissage).** Suppose
-
-$$
-0\longrightarrow G'\longrightarrow G\longrightarrow G''
-\longrightarrow0 \tag{21.5}
-$$
-
-is an exact sequence of finite flat group schemes over $S$, and the local
-conditions on $G'$ and $G''$ are obtained from that on $G$ by pullback and
-pushforward. If the strict Selmer groups of $G'$ and $G''$ vanish, then the
-strict Selmer group of $G$ vanishes.
-
-**Proof.** Let $x\in H^1(\mathbf Q,G)$ satisfy the strict local conditions.
-Its image $x''\in H^1(\mathbf Q,G'')$ satisfies the propagated conditions,
-so $x''=0$. Exactness of nonabelian cohomology, which here is ordinary
-abelian cohomology, lifts $x$ to some $x'\in H^1(\mathbf Q,G')$. We must
-check its local conditions. At each place, the chosen condition on $G'$ is
-the inverse image of the condition on $G$; changing the lift by a local
-connecting class changes it within this inverse image. Thus the global
-lift $x'$ is strict. Its Selmer group vanishes, so $x'=0$ and hence $x=0$.
-$\square$
-
-The propagation hypothesis is essential. Arbitrarily assigning separate
-conditions to the three terms can create a local obstruction to lifting.
-The finite-flat, identity-component, and positive real conditions used here
-are cartesian: they are defined as Kummer images in exact group-scheme or
-component sequences, so the hypothesis holds.
-
-**Theorem 21.2.** For every $r\ge1$,
-
-$$
-\boxed{\operatorname{Sel}^{\mathrm{str}}(G_r)=0.} \tag{21.6}
-$$
-
-**Proof.** Choose an admissible finite-flat filtration of $G_r$. Its
-successive quotients are constant or multiplicative cyclic groups, with
-local conditions propagated from $G_r$. Equations (21.3) and (21.4) give
-vanishing for every quotient. Apply Lemma 21.1 successively up the
-filtration. Nonsplit level-prime, sign, and carry extensions remain inside
-the exact sequences throughout; no semisimplification is used. $\square$
-
-The filtration can depend on $r$. This causes no loss because the conclusion
-is exact zero at every level; no constant depending on the length of the
-filtration is introduced.
-
-### 21.3 Uniform Kummer bounds and finiteness
-
-The global Kummer image lies in the relaxed Selmer group. Combining
-Theorem 21.2 with (20.11) gives injections
-
-$$
-\frac{e_{\mathfrak m}\bigl(A_{\mathfrak m}(\mathbf Q)
-\otimes\mathbf Z_\ell\bigr)}{\ell^r}
-\hookrightarrow
-D_{\mathfrak m,p}/\ell^rD_{\mathfrak m,p}
-\oplus D_{\mathfrak m,\infty}/\ell^rD_{\mathfrak m,\infty}. \tag{21.7}
-$$
-
-The order of the right side is bounded independently of $r$. Let
-
-$$
-e_{\mathfrak m}\bigl(A_{\mathfrak m}(\mathbf Q)
-\otimes\mathbf Z_\ell\bigr)
-\simeq\mathbf Z_\ell^d\oplus F \tag{21.8}
-$$
-
-with $F$ finite. The quotient modulo $\ell^r$ has order at least
-$\ell^{rd}$ for all sufficiently large $r$. Uniform boundedness in (21.7)
-therefore forces $d=0$.
-
-This is initially a statement about the selected completion. It implies the
-full rational rank statement because $A_{\mathfrak m}$ was defined by the
-rational support of that completion. More explicitly, every rational simple
-factor of $A_{\mathfrak m}$ has an $\ell$-adic place meeting
-$\mathfrak m$. If its rational Mordell--Weil space were nonzero, tensoring
-with that place and applying $e_{\mathfrak m}$ would produce a nonzero
-$\mathbf Q_\ell$-vector in (21.8), contrary to $d=0$. Hence
-
-$$
-\operatorname{rank}A_{\mathfrak m}(\mathbf Q)=0. \tag{21.9}
-$$
-
-The Mordell--Weil theorem says that $A_{\mathfrak m}(\mathbf Q)$ is a
-finitely generated abelian group. A finitely generated group of rank zero is
-finite, so
-
-$$
-\boxed{A_{\mathfrak m}(\mathbf Q)\text{ is finite}.} \tag{21.10}
-$$
-
-No assertion about a Tate--Shafarevich group is involved. The strict Selmer
-groups have specially selected finite coefficients and local conditions;
-their vanishing is used only to bound the Kummer images of rational points.
-
-### 21.4 Hecke support and annihilators
-
-Finiteness permits a second conclusion: every residual Hecke constituent of
-the rational group is Eisenstein. Let $\mathfrak n$ be a maximal ideal in
-the support of $A_{\mathfrak m}(\mathbf Q)$, of residue characteristic $r$.
-The socle of the localized finite group contains a nonzero vector $P$ killed
-by $\mathfrak n$. It is rational and therefore fixed by arithmetic
-Frobenius.
-
-For a prime $q\ne p,r$ of good reduction, the integral
-Eichler--Shimura relation is
-
-$$
-T_q=F_q+V_q,
-\qquad F_qV_q=q. \tag{21.11}
-$$
-
-On the line spanned by the rational point $P$, $F_q=1$ and therefore
-$V_q=q$. Hence
-
-$$
-T_q\equiv1+q\pmod{\mathfrak n}. \tag{21.12}
-$$
-
-At $q=r$, one cannot use an $r$-adic étale Tate module. Instead take the
-finite-flat closure of the line generated by $P$. Its residual atom is
-constant or multiplicative. On the constant endpoint, Frobenius contributes
-$1$ and Verschiebung $r$; on the multiplicative endpoint the two
-contributions are reversed. In either case their sum is $1+r\equiv1$ in
-the residue field, so (21.12) holds for $q=r$ as well.
-
-At the level prime, the prime-level sign relation on the selected rational
-torsion gives
-
-$$
-U_p\equiv1\pmod{\mathfrak n}. \tag{21.13}
-$$
-
-Indeed the two possible Steinberg signs differ by $2$; the wrong sign would
-force the residue characteristic to divide both $p$ and the Eisenstein
-index $n$, impossible because $n\mid p-1$. In characteristic $2$ the signs
-coincide and the conclusion is automatic. Equations (21.12)--(21.13) show
-
 $$
-\mathfrak n=(r,I). \tag{21.14}
+X\xrightarrow{\iota_\infty}J_0(N)\xrightarrow{q}A. \tag{1.3}
 $$
 
-By (17.4), this is a maximal ideal only when $r\mid n$.
+Here is the mechanism behind universality. Extend a pointed morphism $f:X\to A$ additively to effective divisors of sufficiently large degree. Two effective divisors in one complete linear system are joined by a projective space, and every morphism from a projective space to an abelian variety is constant. The additive map therefore descends to the appropriate Picard component. Translating that component to $\operatorname{Pic}^0$ gives a morphism $J_0(N)\to A$; the theorem of the square makes it a homomorphism. Since the Abel image generates the Jacobian, the factorization is unique.
 
-Set $C=A_{\mathfrak m}(\mathbf Q)$ and let $C_r$ be its $r$-primary part.
-The image of $\mathbb T_{(r,I)}$ in $\operatorname{End}(C_r)$ is a finite
-local Artinian ring, so its maximal ideal is nilpotent. Let $s_r$ be the
-least exponent such that
+Changing the base cusp changes only a translation. Put
 
 $$
-(r,I)^{s_r}C_r=0. \tag{21.15}
+c_N=[0]-[\infty]\in J_0(N)(\mathbf Q).
 $$
 
 Then
 
 $$
-1\le s_r\le\log_r\#C_r \tag{21.16}
+\iota_0(x)=[x]-[0]=\iota_\infty(x)-c_N. \tag{1.4}
 $$
 
-when $C_r\ne0$, because each strict step of the Loewy filtration has at
-least $r$ elements. Standard primary decomposition now gives
+The homomorphism induced on Jacobians is independent of the base point; the map from the curve is not. This distinction matters after passage to a quotient, because the translating point $q(c_N)$ need not vanish.
+
+If $X$ has genus zero, its Jacobian is zero and (1.1) carries no information. If $X$ has genus one, choosing $\infty$ identifies $X$ with its Jacobian. In higher genus, the Abel map is a closed immersion. Indeed, equality $\iota_\infty(x)=\iota_\infty(y)$ would make $x-y$ principal. A nonconstant function with that divisor has degree one and forces $X\simeq\mathbf P^1$. The differential is injective because the canonical system of a positive-genus smooth curve has no base point; otherwise Riemann--Roch again produces a degree-one function. Properness then upgrades the injective immersion to a closed immersion.
+
+These cases should not be blurred. Geometric injectivity of $X\to J$ does not imply injectivity after a Hecke quotient, and it does not say that reduction on rational points is injective. Those are precisely the two arithmetic questions for which the later constructions are needed.
+
+## 2. Hecke correspondences and variance
+
+Let $q\nmid N$ be prime. The auxiliary modular curve classifying a cyclic $N$-subgroup together with a cyclic $q$-subgroup has two degeneracy maps
 
 $$
-\sqrt{\operatorname{Ann}_{\mathbb T}C}
-=\bigcap_{r\mid\#C}(r,I), \tag{21.17}
+X_0(Nq)\mathrel{\substack{\xrightarrow{\ \alpha\ }\\[-2mm]
+\xrightarrow[\ \beta\ ]{}}}X_0(N). \tag{2.1}
 $$
 
-and
+The map $\alpha$ forgets the $q$-subgroup; the map $\beta$ divides by it and transports the $N$-subgroup. We use the source-to-quotient convention
 
 $$
-\prod_{r\mid\#C}(r,I)^{s_r}
-\subseteq\operatorname{Ann}_{\mathbb T}C. \tag{21.18}
+T_q=\beta_*\alpha^*. \tag{2.2}
 $$
 
-In particular, with $s=\max_{C_r\ne0}s_r$,
+Thus a point is pulled back to all cyclic $q$-subgroups and each lift is then sent to the quotient elliptic curve. Formula (2.2) acts on divisors, respects principal divisors, preserves degree, and therefore induces an endomorphism of $J_0(N)$.
+
+The assertion about principal divisors is a norm calculation, not a set-theoretic count. If $g$ is a rational function on $X_0(N)$, then
 
 $$
-I^sC=0. \tag{21.19}
+\beta_*\alpha^*\operatorname{div}(g)
+=\operatorname{div}\!\left(
+N_{K(X_0(Nq))/K(X_0(N))}(\alpha^*g)
+\right). \tag{2.3}
 $$
 
-If $C=0$, the empty intersection is the unit ideal. One must not replace
-(21.18) by $IC=0$: a module such as $R/\mathfrak m^2$ has all composition
-factors killed by $\mathfrak m$ although $\mathfrak m$ does not kill the
-module. Finite-flat admissibility controls constituents, not the splitting
-of their extensions.
-
-## 22. The complete prime-level theorem
-
-All constructions can now be stated in one theorem. Gathering them is more
-than a convenience: it makes the normalizations, small-level exceptions,
-and logical dependencies visible at the point of use.
-
-### 22.1 Statement
-
-**Theorem 22.1 (prime-level modular Jacobian and Eisenstein quotient).** Let
-$p\ge5$ be prime and put
+Ramification indices enter pullback and residue degrees enter the norm, so (2.3) retains the multiplicity of every branch. For a geometric point $x$ away from ramification one obtains the transparent divisor formula
 
 $$
-J=J_0(p),\qquad c=[0]-[\infty],\qquad
-n=\frac{p-1}{\gcd(p-1,12)}. \tag{22.1}
+T_q([x]-[b])
+=\sum_{z\in\alpha^{-1}(x)}[\beta(z)]
+-\sum_{z\in\alpha^{-1}(b)}[\beta(z)]. \tag{2.4}
 $$
 
-Use the source-to-quotient convention
-$T_q=(\pi_2)_*\pi_1^*$ for $q\ne p$ and the corresponding oriented
-$U_p$. Then the following assertions hold.
+This is the precise Hecke compatibility of the pointed Albanese map. It should not be shortened to $T_q\iota_b(x)=\sum\iota_b(\beta z)$ unless the second sum has first been evaluated: the base cusp contributes a genuine correction divisor.
 
-1. The map $\iota_\infty(x)=[x]-[\infty]$ is the pointed Albanese map.
-   For positive genus it is injective on geometric points, and
-   $\iota_0=\iota_\infty-c$.
-2. The canonical principal polarization identifies transpose
-   correspondences with Rosati adjoints. On $X_0(p)$,
-   $T_q^\dagger=T_q$ and $w_p^\dagger=w_p$; with point-map diamonds on
-   $X_1(p)$, $T_q^\dagger=\langle q\rangle^{-1}T_q$.
-3. The cuspidal subgroup is constant cyclic of exact order $n$, while the
-   Shimura subgroup is canonically
-   $D(\Delta_p/H_p)$ and noncanonically $\mu_n$.
-4. The Néron model has good reduction away from $p$. At $p$ its identity
-   component is a torus with character lattice
-   $X_p=\operatorname{Div}^0(S_p)$ and monodromy form
-   $\sum_se_sa_sb_s$, where $e_s=1,2,3$ according to the ordinary,
-   $j=1728$, and $j=0$ supersingular cases.
-5. The component group at $p$ is cyclic of order $n$, and specialization
-   induces a Hecke-linear isomorphism
-   $\langle c\rangle\xrightarrow{\sim}\Phi_p$.
-6. For
-   $I=(T_q-(1+q):q\ne p)+(U_p-1)$,
+The same symbol on different realizations is justified by functoriality, but its variance must remain visible. For a finite map $f:Y\to X$:
+
+* pullback of divisor classes gives $f^*:J_X\to J_Y$;
+* norm gives $f_*:J_Y\to J_X$;
+* the covariant Tate module follows homomorphisms in the same direction;
+* pullback on differentials and ordinary cohomology is contravariant.
+
+Accordingly (2.2) acts covariantly on $T_\ell J_0(N)$. Under the standard comparison with curve cohomology, a dual or Tate twist appears according to the chosen cohomological convention. Writing the maps before simplifying prevents an accidental reversal of $T_q$.
+
+At a prime dividing the level, the analogous source-to-quotient correspondence defines $U_q$. The reverse correspondence will be denoted $V_q$ when both are needed. They must not be identified before a level-specific relation has been proved.
+
+An automorphism of the level structure gives a diamond operator $\langle a\rangle$. On $X_0(N)$ diamonds are trivial, but retaining them for a moment records the adjoint formulas correctly. The Atkin--Lehner involution $w_N$ sends a cyclic isogeny to its dual. It is an involution on the coarse curve and hence on the Jacobian.
+
+At a good prime $q\nmid N\ell$, the integral correspondence and the two Tate quotient types give the Eichler--Shimura relation on the covariant Tate module:
+
+$$
+F_q^2-T_qF_q+q\langle q\rangle=0, \tag{2.5}
+$$
+
+where $F_q$ is arithmetic Frobenius. The convention agrees with the Frobenius endomorphism of the special abelian variety under good-reduction comparison. For $X_0(N)$ the diamond is $1$.
+
+The relation is first an identity on the good special fiber:
+
+$$
+T_q=F_q+\langle q\rangle V_q,
+\qquad F_qV_q=V_qF_q=[q]. \tag{2.6}
+$$
+
+Multiplication by $F_q$ gives (2.5). This derivation explains both the sign and the constant term, and it shows why the polynomial remains an integral annihilating polynomial on every stable finite torsion quotient. It does not by itself say that a selected module has rank two or that the polynomial is its characteristic polynomial. The hypotheses are essential: (2.5) is a good-reduction relation, and it is not a substitute for the geometry at a prime dividing $N$.
+
+## 3. Polarization, transpose, and duality
+
+The theta divisor gives the Jacobian its canonical principal polarization
+
+$$
+\lambda:J_0(N)\xrightarrow{\sim}J_0(N)^\vee. \tag{3.1}
+$$
+
+For an endomorphism $u$ of the Jacobian, its Rosati adjoint is
+
+$$
+u^\dagger=\lambda^{-1}u^\vee\lambda. \tag{3.2}
+$$
+
+If a correspondence is written as $\beta_*\alpha^*$, its transpose is $\alpha_*\beta^*$. Compatibility of the Picard and Albanese constructions with the theta polarization gives
+
+$$
+(\beta_*\alpha^*)^\dagger=\alpha_*\beta^*. \tag{3.3}
+$$
+
+For $q\nmid N$, the transpose correspondence is identified with the original one after the standard dual-isogeny involution. On $J_0(N)$ this yields
+
+$$
+T_q^\dagger=T_q. \tag{3.4}
+$$
+
+More generally diamonds satisfy
+
+$$
+\langle a\rangle^\dagger=\langle a\rangle^{-1}, \tag{3.5}
+$$
+
+and an Atkin--Lehner involution is self-adjoint. At a level prime, (3.3), rather than a guessed scalar formula, says that $U_q^\dagger=V_q$.
+
+These identities control both pairings and quotients. On $\ell^r$-torsion over a field of characteristic different from $\ell$, the polarization Weil pairing satisfies
+
+$$
+e_{\ell^r}(ux,y)=e_{\ell^r}(x,u^\dagger y). \tag{3.6}
+$$
+
+If $B\subset J_0(N)$ is an abelian subvariety, define
+
+$$
+B^\perp=\ker\bigl(J_0(N)\xrightarrow{\lambda}J_0(N)^\vee
+\longrightarrow B^\vee\bigr)^0. \tag{3.7}
+$$
+
+Then $B^\perp$ is complementary to $B$ up to isogeny, while $B\cap B^\perp$ is finite. If $B$ is stable under an algebra of endomorphisms, $B^\perp$ is stable under the adjoint algebra. Thus a Hecke-stable quotient and its dual subvariety involve the same ideal only when that ideal is Rosati stable.
+
+To see the stability assertion, let $uB\subseteq B$. The composite $J\xrightarrow{u}J\xrightarrow{\lambda}J^\vee\to B^\vee$ is, after adjunction, the composite defining $B^\perp$ followed by $u|_B^\vee$. It therefore vanishes on $u^\dagger B^\perp$. Taking identity components gives $u^\dagger B^\perp\subseteq B^\perp$. This short calculation is why transpose conventions cannot be suppressed when passing from a quotient to its dual subvariety.
+
+There are three integral objects here and they need not coincide. The quotient by a connected Hecke-stable subvariety is an abelian variety; the intersection of kernels of an ideal can have a finite component group; and the orthogonal complement is defined by the polarization. They agree only after the hypotheses needed for the corresponding ideal and saturation statements have been checked.
+
+## 4. The prime-level cuspidal subgroup
+
+From now on let $p$ be prime, put
+
+$$
+X=X_0(p),\qquad J=J_0(p),\qquad c=[0]-[\infty]. \tag{4.1}
+$$
+
+There are exactly two cusps and both are rational, so the rational cuspidal subgroup is simply
+
+$$
+C(p)=\langle c\rangle\subset J(\mathbf Q). \tag{4.2}
+$$
+
+This statement defines the subgroup; it does not yet determine its order. The first task is to prove torsion without appealing to a later Eisenstein-index theorem or to a component-group cardinality.
+
+The discriminant supplies a useful first relation. The weight-twelve form has expansion
+
+$$
+\Delta(\tau)=q\prod_{n\geq1}(1-q^n)^{24}.
+$$
+
+The quotient
+
+$$
+u_p(\tau)=\frac{\Delta(p\tau)}{\Delta(\tau)} \tag{4.3}
+$$
+
+has weight zero. If $\gamma=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)\in\Gamma_0(p)$, then $c/p$ is integral and the transformation law for $\Delta$, applied to
+
+$$
+\begin{pmatrix}a&bp\\c/p&d\end{pmatrix}\in\operatorname{SL}_2(\mathbf Z),
+$$
+
+shows that the factors of $(c\tau+d)^{12}$ cancel. Hence $u_p$ is a rational function on $X_0(p)$. It has no zero or pole away from the cusps, and its $q$-expansion at $\infty$ begins $q^{p-1}$. The involution $w_p$ exchanges the cusps and gives
+
+$$
+u_p(w_p\tau)=p^{-12}u_p(\tau)^{-1}.
+$$
+
+Therefore
+
+$$
+\operatorname{div}(u_p)=(p-1)([\infty]-[0]), \tag{4.4}
+$$
+
+so
+
+$$
+(p-1)c=0. \tag{4.5}
+$$
+
+The factor $p-1$ is not sharp. The eta multiplier removes exactly the part that the discriminant quotient misses. Put
+
+$$
+d_p=\gcd(p-1,12),
+\qquad
+n_p=\frac{p-1}{d_p}
+=\operatorname{num}\!\left(\frac{p-1}{12}\right), \tag{4.6}
+$$
+
+and, for $p\geq5$, set
+
+$$
+k_p=\frac{24}{d_p}. \tag{4.7}
+$$
+
+This is the least positive even integer $k$ for which $24$ divides $k(p-1)$. Indeed, if $g=\gcd(24,p-1)$, the divisibility alone requires $24/g\mid k$, so the least even choice is
+
+$$
+\operatorname{lcm}\!\left(2,\frac{24}{g}\right).
+$$
+
+Because $p-1$ is even, its $3$-adic contribution to this least common multiple is $3/\gcd(3,p-1)$, and its $2$-adic contribution is $2^{3-\min(v_2(p-1),2)}$. These are exactly the primary factors of $24/\gcd(p-1,12)$, proving (4.7) and its minimality.
+
+Recall Dedekind's eta function
+
+$$
+\eta(\tau)=q^{1/24}\prod_{m\geq1}(1-q^m).
+$$
+
+Consider the weight-zero eta quotient
+
+$$
+v_p(\tau)
+=\left(\frac{\eta(p\tau)}{\eta(\tau)}\right)^{k_p}. \tag{4.8}
+$$
+
+We verify its descent rather than infer it from its expansion. For an eta product $\eta(\tau)^{r_1}\eta(p\tau)^{r_p}$ of total weight zero, the eta transformation law leaves two cusp-multiplier congruences
+
+$$
+r_1+pr_p\equiv0\pmod {24},
+\qquad
+pr_1+r_p\equiv0\pmod {24}, \tag{4.9}
+$$
+
+and a residual quadratic character attached to $p^{r_p}$. This criterion follows by applying
+
+$$
+\eta\!\left(\frac{a\tau+b}{c\tau+d}\right)
+=\varepsilon(a,b,c,d)(c\tau+d)^{1/2}\eta(\tau),
+\qquad \varepsilon^{24}=1,
+$$
+
+both to $\tau$ and to $p\tau$. The half-weight factors cancel because $r_1+r_p=0$. Collecting the two Dedekind multipliers gives (4.9); after those congruences hold, the multiplier on a matrix with lower-right entry $d_\gamma$ is the Kronecker character
+
+$$
+d_\gamma\longmapsto
+\left(\frac{p^{r_p}}{d_\gamma}\right).
+$$
+
+This specialized eta-quotient criterion follows from the two transformations $\eta(\tau+1)=e^{\pi i/12}\eta(\tau)$ and $\eta(-1/\tau)=(-i\tau)^{1/2}\eta(\tau)$, which generate the displayed Dedekind multiplier formula. For $(r_1,r_p)=(-k_p,k_p)$, both congruences say $24\mid k_p(p-1)$, while $k_p$ even makes $p^{k_p}$ a rational square and hence makes the Kronecker character trivial. Thus (4.8) is invariant under $\Gamma_0(p)$ and defines an algebraic meromorphic function on $X_0(p)_{\mathbf C}$.
+
+Its expansion has rational coefficients. To apply the holomorphic q-expansion principle without concealing the pole, choose $M$ large enough that multiplication by the pullback of $\Delta^M$ clears the poles of both $v_p$ and $1$ at every cusp. The two sections
+
+$$
+\Delta^Mv_p,qquad \Delta^M
+$$
+
+then lie in rationally defined powers of the Hodge line, and their quotient is $v_p$. For every $\sigma\in\operatorname{Aut}(\mathbf C/\mathbf Q)$, the sections $\sigma(\Delta^Mv_p)$ and $\Delta^Mv_p$ have the same expansion at the rational cusp $\infty$. Their difference is a holomorphic section with zero expansion, so q-expansion injectivity makes it zero. Since $\Delta^M$ is rational, $\sigma(v_p)=v_p$. Hence $v_p$ lies in the rational function field of the coarse curve; rationality has not been inferred merely from one formal series.
+
+At $\infty$ one has
+
+$$
+v_p(q)=q^{k_p(p-1)/24}
+\prod_{m\geq1}
+\left(\frac{1-q^{pm}}{1-q^m}\right)^{k_p}
+=q^{n_p}(1+O(q)). \tag{4.10}
+$$
+
+Eta has no zero on the upper half-plane. The Fricke involution exchanges the two eta factors up to a nonzero constant, so $v_p\circ w_p$ is a constant times $v_p^{-1}$. There are only two cusps. Consequently
+
+$$
+\operatorname{div}(v_p)
+=n_p([\infty]-[0]),
+\qquad
+n_pc=0. \tag{4.11}
+$$
+
+For $p=2,3$, the coarse curves have genus zero and the same conclusion holds because $n_p=1$ and $J_0(p)=0$. Thus for every prime $p$ the cuspidal group is finite cyclic of order dividing $n_p$.
+
+This is the sharp modular-unit upper bound, but it is still only an upper bound. Minimality of the exponent among eta quotients does not prove minimality among all rational functions. Proving that $c$ has exact order $n_p$ requires a lower bound, obtained from an exact weighted component calculation. That exact order and the resulting identification with the component group belong to the later cuspidal-specialization development; neither will be assumed in this book.
+
+The first levels make the distinction concrete:
+
+| $p$ | $n_p$ | conclusion proved here |
+|---:|---:|---|
+| $5$ | $1$ | $c=0$ |
+| $7$ | $1$ | $c=0$ |
+| $11$ | $5$ | $\operatorname{ord}(c)$ divides $5$ |
+| $13$ | $1$ | $c=0$ |
+| $17$ | $4$ | $\operatorname{ord}(c)$ divides $4$ |
+| $19$ | $3$ | $\operatorname{ord}(c)$ divides $3$ |
+
+For the rows with $n_p>1$, the table intentionally does not replace “divides” by “equals.” That replacement is exactly the lower-bound theorem deferred above.
+
+The Hecke action on $C(p)$ can be computed without knowing its order. At a standard cusp, the $q+1$ cyclic subgroups in the source-to-quotient correspondence have two Tate types. Keeping their multiplicities and subtracting the two cusp images gives
+
+$$
+T_qc=(q+1)c\qquad(q\ne p). \tag{4.12}
+$$
+
+More explicitly, over the Tate chart the $q+1$ subgroup directions are $\mu_q$ and the $q$ groups generated after adjoining $q^{1/q}$ by $\zeta_q^a q^{1/q}$. Quotienting by the first replaces the Tate parameter by its $q$th power; quotienting by the others replaces it by a chosen $q$th root. After compactification every branch returns to the same cusp type. Pullback ramification and norm degree make the total coefficient $q+1$ at both $0$ and $\infty$, proving (4.12) with the variance of (2.2).
+
+The level operator needs a separate argument. On weight-two cusp forms at prime level, the trace to level one is
+
+$$
+\operatorname{Tr}_{\Gamma_0(p)}^{\operatorname{SL}_2(\mathbf Z)}(f)
+=f+U_pw_pf. \tag{4.13}
+$$
+
+Here is the normalization check. For a positive-determinant matrix put
+
+$$
+(f|_2\gamma)(z)=\det(\gamma)(cz+d)^{-2}f(\gamma z).
+$$
+
+Represent the nonidentity cosets of $\Gamma_0(p)$ in
+$\operatorname{SL}_2(\mathbf Z)$ by
+
+$$
+\gamma_j=\begin{pmatrix}0&-1\\1&j\end{pmatrix}
+\qquad(0\leq j<p),
+$$
+
+and set
+
+$$
+W_p=\begin{pmatrix}0&-1\\p&0\end{pmatrix},
+\qquad
+A_j=\begin{pmatrix}1&j\\0&p\end{pmatrix}.
+$$
+
+The identity $W_pA_j=p\gamma_j$ and the trivial action of scalar matrices give
+
+$$
+\sum_{j=0}^{p-1}f|_2\gamma_j
+=\sum_{j=0}^{p-1}(f|_2W_p)|_2A_j
+=U_pw_pf.
+$$
+
+Indeed, the determinant factor in $|_2A_j$ is $p^{-1}$, so the last sum has $q$-expansion $\sum_na_{pn}q^n$, which is the normalized $U_p$. Adding the identity coset proves (4.13). Since $S_2(\operatorname{SL}_2(\mathbf Z))=0$, it gives $U_p=-w_p$ on regular differentials. An endomorphism of a characteristic-zero abelian variety that pulls every invariant differential back to zero has zero-dimensional connected image and is therefore zero. Hence the same equality holds in $\operatorname{End}(J)$.
+
+The involution exchanges the cusps, so $w_pc=-c$, and therefore
+
+$$
+U_pc=c, \tag{4.14}
+$$
+
+with
+
+$$
+w_pc=-c. \tag{4.15}
+$$
+
+Let $\mathbb T$ be the image of the commutative Hecke algebra in $\operatorname{End}(J)$. The boundary relations generate the prime-level Eisenstein ideal
+
+$$
+I_{\mathrm{Eis}}=(T_q-(q+1):q\ne p,\ U_p-1)\subset\mathbb T. \tag{4.16}
+$$
+
+Equations (4.12) and (4.14) say $I_{\mathrm{Eis}}C(p)=0$. They do not determine $\mathbb T/I_{\mathrm{Eis}}$, nor do they identify the order of $C(p)$ with the index of the ideal. Even if one separately knew that both objects were killed by $n_p$, that common annihilator would not identify them. The exact congruence modulus requires the integral two-cusp weight-two calculation, including separate $2$- and $3$-primary corrections; that calculation begins only in the Eisenstein-series books.
+
+There is nevertheless an existence statement strong enough to make the later quotient construction nonvacuous. Suppose $J\ne0$. Then $X$ has positive genus, so Chapter 1 makes the Abel map injective. The two cusps are distinct, hence $c\ne0$. Let $m_c>1$ be its order and choose a prime $\ell\mid m_c$. The action on the cyclic group $\langle c\rangle$ gives a ring homomorphism
+
+$$
+\mathbb T\longrightarrow\operatorname{End}(\langle c\rangle)
+\simeq\mathbf Z/m_c\mathbf Z, \tag{4.17}
+$$
+
+and (4.12), (4.14) identify its values on the Hecke generators with the Eisenstein character. Reduction modulo $\ell$ is surjective because integers act as scalars. Its kernel is therefore a maximal ideal
+
+$$
+\mathfrak m_c\supseteq(\ell,I_{\mathrm{Eis}}). \tag{4.18}
+$$
+
+Since $m_c\mid n_p$, one has $\ell\mid n_p$ and in particular $\ell\ne p$. Thus at least one actual Eisenstein maximal ideal exists whenever the prime-level Jacobian is nonzero. What has not been proved is that every prime dividing $n_p$ occurs, that $m_c=n_p$, or that the local congruence depth is $v_\ell(n_p)$. Those are exactly the strengthenings excluded above.
+
+## 5. The Shimura kernel
+
+Let
+
+$$
+\pi:X_1(p)\longrightarrow X_0(p)
+$$
+
+forget the chosen generator of the cyclic subgroup. On smooth proper curves it induces pullback and norm
+
+$$
+\pi^*:J_0(p)\longrightarrow J_1(p),
+\qquad
+\pi_*:J_1(p)\longrightarrow J_0(p). \tag{5.1}
+$$
+
+Their composite is multiplication by the degree $d$ of $\pi$:
+
+$$
+\pi_*\pi^*=[d]. \tag{5.2}
+$$
+
+The **Shimura kernel** is the scheme-theoretic kernel
+
+$$
+\Sigma(p)=\ker(\pi^*:J_0(p)\to J_1(p)). \tag{5.3}
+$$
+
+Equation (5.2) shows that it is a finite subgroup scheme killed by $d$. This is stronger and more useful than a statement only about geometric points.
+
+Indeed, the kernel is a closed subgroup of the proper variety $J_0(p)$, and its identity component would be an abelian subvariety killed by $[d]$. Multiplication by $d$ is an isogeny on every positive-dimensional abelian variety, so that identity component is zero. In characteristic zero the remaining finite group scheme is étale, though its character description below is more naturally expressed as a group of multiplicative type.
+
+There is also a descent description. Away from the ramification points, the cover has deck group
+
+$$
+D=(\mathbf Z/p\mathbf Z)^\times/\{\pm1\}.
+$$
+
+A degree-zero line bundle $L$ whose pullback is trivial acquires descent data on the trivial bundle upstairs. Choose a trivialization $\varphi:\pi^*L\simeq\mathcal O$. For $g\in D$, the ratio between $g^*\varphi$ and $\varphi$ is a global unit on the proper connected curve $X_1(p)$ and hence a scalar. The cocycle rule makes these scalars a character of $D$. Changing $\varphi$ changes no character, and the trivial character descends the chosen trivialization, forcing $L$ itself to be trivial. This proves injectivity.
+
+At a ramification point, its inertia subgroup fixes a point upstairs. Descent of the trivialized fiber forces the corresponding character to be trivial on that inertia group. Thus one obtains, more precisely, an injection
+
+$$
+\Sigma(p)\hookrightarrow \operatorname{Diag}(D/H), \tag{5.4}
+$$
+
+where $H$ is generated by the inertia groups and $\operatorname{Diag}(M)$ denotes the diagonalizable group with character group $M$. The character construction is a homomorphism on geometric points and commutes with the Galois action. Over a characteristic-zero field, finite group schemes are finite étale, and the fiber functor identifies finite étale group schemes with finite continuous Galois modules. The Galois-equivariant injection just constructed therefore comes from a unique scheme-theoretic monomorphism (5.4). Dually, $\Sigma(p)^\vee$ is a quotient of the constant group $D/H$. Thus $\Sigma(p)$ is of multiplicative type. This argument deliberately gives no assertion that every allowed character occurs; proving equality and calculating the exact order require an additional divisor-descent calculation.
+
+The away-from-$p$ Hecke correspondences lift through $X_1(p)$ and commute with $\pi$. Hence $\Sigma(p)$ is stable under every $T_q$ with $q\ne p$. We do not promote this to a scalar formula for $U_p$, or even to full-Hecke stability, without calculating the level correspondence on the descent characters. Cartier duality reverses arrows and changes an action to its adjoint under the principal polarization. In particular, comparing $\Sigma(p)$ with the constant cuspidal subgroup requires both the Rosati formula and an order calculation; it is not licensed by the vague slogan that the two groups are dual.
+
+The two boundary objects therefore have complementary forms:
+
+$$
+C(p)\text{ is generated by a rational point},
+\qquad
+\Sigma(p)\text{ is of multiplicative type}. \tag{5.5}
+$$
+
+Their exact orders, their possible intersection, and the precise Eisenstein character on every constituent are not consequences of the structural construction alone.
+
+The contrast in (5.5) is scheme-theoretic. If $c$ has order $m$, then $1\mapsto c$ embeds the constant group $(\mathbf Z/m\mathbf Z)_{\mathbf Q}$ in $J$. A multiplicative-type group can have the same geometric order while carrying the Cartier-dual Galois character. Equality of orders, even if later established, neither identifies the groups nor determines their intersection inside $J$.
+
+## 6. Néron models and specialization
+
+Let $K$ be a discretely valued field with ring of integers $R$ and residue field $k$. For an abelian variety $A/K$, its Néron model $\mathcal A/R$ is the smooth separated group scheme characterized by the extension property
+
+$$
+\operatorname{Hom}_K(Y_K,A)
+\simeq\operatorname{Hom}_R(Y,\mathcal A)
+$$
+
+for every smooth $R$-scheme $Y$. In particular, every $K$-endomorphism of $A$ extends uniquely to $\mathcal A$. Thus the Hecke action on a modular Jacobian extends without choosing equations for the special fiber.
+
+Uniqueness carries more structure than individual maps. If two generic endomorphisms satisfy a polynomial relation, their extensions satisfy it because both sides are extensions of the same generic homomorphism. Products, dual maps, and a principal polarization extend as well. The established good-level modular-Jacobian theory gives an abelian scheme over $\mathbf Z[1/p]$ with generic fiber $J_0(p)$, and uniqueness identifies it with the Néron model there. Thus $J_0(p)$ has good reduction away from $p$, while the fiber at $p$ is the sole level-prime component calculation in this book. At residue characteristics $2$ and $3$, this is a statement about the Jacobian obtained from the verified stack or rigidified charts and their descent; it is not a claim that every naive unrigidified coarse modular surface is smooth.
+
+The canonical polarization extends to an isomorphism of Néron models. Consequently transpose correspondences remain adjoint on identity components, toric character lattices, and component pairings. This does not mean that the Néron model is proper at $p$; it means that duality survives in the smooth separated model that replaces properness.
+
+Write $\mathcal A_k^0$ for the identity component and
+
+$$
+\Phi_A=\mathcal A_k/\mathcal A_k^0 \tag{6.1}
+$$
+
+for the finite étale component group. A point $P\in A(K)=\mathcal A(R)$ has a reduction in $\mathcal A_k(k)$ and a component class
+
+$$
+\operatorname{sp}_v(P)\in\Phi_A(k). \tag{6.2}
+$$
+
+The component map is a homomorphism and is equivariant for every extended endomorphism. It records only the component of a section; a point specializing to the identity component need not be zero.
+
+Over a henselian DVR with finite residue field, smoothness and Hensel lifting make $\mathcal A(R)\to\mathcal A_k(k)$ surjective, and Lang's theorem makes $\mathcal A_k(k)\to\Phi_A(k)$ surjective. Hence
+
+$$
+0\longrightarrow\mathcal A^0(R)
+\longrightarrow A(K)
+\longrightarrow\Phi_A(k)
+\longrightarrow0. \tag{6.3}
+$$
+
+Over a more general residue field the last arrow need not be onto, so later quotient arguments use the actual image. Even in (6.3), the kernel is the group of sections meeting the identity component, not the formal kernel of reduction to the identity point.
+
+If $X/R$ is a regular semistable model of a smooth curve and $J$ its Jacobian, the identity component of the Néron model is the separated quotient of the relative degree-zero Picard functor. Vertical divisors account for the failure of the naive Picard functor to be separated. The component group is computed from the intersection matrix, or equivalently from the weighted dual graph.
+
+Finite subgroup schemes require a separate caution. If $A$ has good reduction, then $\mathcal A$ is an abelian scheme and $\mathcal A[m]$ is finite flat over $R$. When $m$ is invertible in $R$, it is finite étale; the closure of a generic finite étale subgroup inside this finite ambient group is then finite étale, and specialization preserves its geometric order. When the residue characteristic divides $m$, the ambient torsion remains finite flat but can have connected or multiplicative parts, so geometric points alone can lose information.
+
+At bad reduction the first sentence is false without an extra hypothesis. Even for $m$ invertible, $\mathcal A[m]$ is in general only quasi-finite étale and need not be finite: torsion can escape through the missing boundary of the nonproper Néron model. A schematic closure in $\mathcal A$ must therefore be proved finite and flat in the particular ambient model before one uses its rank or connected--étale sequence. A subgroup may also meet several components. Component specialization and schematic closure answer different questions, and neither construction repairs a failure of finiteness in the other.
+
+At a good prime, $\mathcal A$ is an abelian scheme and $\Phi_A=0$. At a semistable prime there is an exact sequence
+
+$$
+0\longrightarrow T\longrightarrow\mathcal A_k^0
+\longrightarrow B\longrightarrow0, \tag{6.4}
+$$
+
+with $T$ a torus and $B$ an abelian variety. The character lattice of $T$ and its monodromy pairing determine the component group. This is the form needed at the level prime.
+
+Functoriality is exact only at the level of morphisms. A homomorphism $A\to A'$ extends and induces $\Phi_A\to\Phi_{A'}$, but applying component groups to an exact sequence of generic abelian varieties need not produce an exact sequence. Kernels can acquire components and component classes can disappear in a quotient. Later component arguments will therefore use the actual induced map, never an assumed surjection.
+
+## 7. Semistable reduction at the level prime
+
+Assume now $p\geq5$, and make the geometric calculation after strict henselization so that the nodes and their branches are split. Three models must be distinguished. On a rigidified fine chart, the level-$p$ fiber has two normalized components, corresponding to the multiplicative and étale order-$p$ subgroup types, and the completed equation at a supersingular crossing is $xy=p$. The stable coarse model still has the same two principal components, but an effective stabilizer of order $e$ changes the completed equation, after absorbing a unit, to
+
+$$
+XY=p^e. \tag{7.1}
+$$
+
+For $e>1$ this total space is not regular. Its minimal regular resolution inserts a chain of $e-1$ rational curves, replacing the thick edge by a path of $e$ unit edges. It is this resolved model that is regular semistable. Thus the convenient weighted two-vertex graph belongs to the stable coarse model, while the ordinary subdivided graph belongs to the regular model. They give the same cycle lattice and pairing. Calling the thick model regular would erase exactly the exceptional correction at $j=0$ and $1728$.
+
+Let $S_p$ be the set of geometric supersingular classes and put
+
+$$
+X_p=\operatorname{Div}^0(S_p)
+=\left\{\sum_{s\in S_p}a_s[s]:\sum_sa_s=0\right\}. \tag{7.2}
+$$
+
+Why is this the correct lattice? Orient every weighted edge from the multiplicative component to the étale component. A graph $1$-cycle assigns an integer $a_s$ to each edge, and the boundary at either vertex is $\sum_sa_s$. The cycle condition is therefore exactly the degree-zero condition in (7.2). Subdivision of a length-$e$ edge forces the same coefficient on all $e$ segments, so it changes neither the lattice nor its rank.
+
+The normalization of each principal component is the level-one coarse modular curve, hence $\mathbf P^1$. The normalized components contribute no abelian Jacobian. The generalized-Jacobian exact sequence therefore identifies (7.2) with the character lattice of the entire geometric identity component of the Néron model of $J_0(p)$. In particular, the reduction is purely toric:
+
+$$
+\mathcal J_{\overline{\mathbf F}_p}^0\simeq\operatorname{Hom}(X_p,\mathbf G_m). \tag{7.3}
+$$
+
+For a supersingular elliptic curve represented by $s$, define
+
+$$
+e_s=\#\operatorname{Aut}(E_s)/2.
+$$
+
+For $p\geq5$, the possible values are $1,2,3$: the generic value is $1$, while $j=1728$ and $j=0$ can contribute $2$ and $3$. On the resolved graph a coefficient $a_s$ occurs on each of the $e_s$ unit segments, so its contribution to intersection length is $e_sa_sb_s$. The monodromy pairing is therefore
+
+$$
+\left\langle\sum_sa_s[s],\sum_sb_s[s]\right\rangle
+=\sum_se_sa_sb_s. \tag{7.4}
+$$
+
+It induces an injection
+
+$$
+X_p\longrightarrow X_p^\vee,
+\qquad a\longmapsto\langle a,-\rangle, \tag{7.5}
+$$
+
+and the geometric component group is
+
+$$
+\Phi_p(\overline{\mathbf F}_p)
+\simeq\operatorname{coker}(X_p\to X_p^\vee). \tag{7.6}
+$$
+
+Equations (7.1)--(7.6) give the geometric lattice presentation needed in this book. They specify the group by an explicit integral lattice map and are sufficient for functorial component computations. Determining a closed formula for its order, proving cyclicity in every case, identifying a distinguished generator, and recording its full residue-field descent require the exact weighted discriminant calculation; those facts will not be silently imported here.
+
+The same lattice controls inertia, not only components. Fix $\ell\ne p$. Because the normalized principal components have zero Jacobian, the canonical monodromy filtration on $T_\ell J$ has graded pieces
+
+$$
+\operatorname{gr}_{-2}T_\ell J
+\simeq X_p^\vee\otimes\mathbf Z_\ell(1),
+\qquad
+\operatorname{gr}_{-1}T_\ell J=0,
+\qquad
+\operatorname{gr}_{0}T_\ell J
+\simeq X_p\otimes\mathbf Z_\ell. \tag{7.7}
+$$
+
+The monodromy operator
+
+$$
+N:T_\ell J\longrightarrow T_\ell J(-1) \tag{7.8}
+$$
+
+kills the lower filtration step, satisfies $N^2=0$, and induces between the outer graded pieces the completed lattice map (7.5). If $t_\ell:I_p\to\mathbf Z_\ell(1)$ is the tame character, then
+
+$$
+\sigma(v)=v+t_\ell(\sigma)N(v) \tag{7.9}
+$$
+
+for inertia $\sigma$. Thus the component group is the integral cokernel of the same map that measures tame inertia. In particular, knowing only $\Phi_p$ would lose the pairing and would not recover monodromy.
+
+An elementary model illustrates both the calculation and the boundary. If there are $r$ unit edges, then $X_p$ is the root lattice
+
+$$
+A_{r-1}=\{(a_1,\ldots,a_r):\sum a_i=0\}
+$$
+
+with its ordinary dot product, and its discriminant group is $\mathbf Z/r\mathbf Z$. With edge lengths $e_1,\ldots,e_r$, a basis $[s_i]-[s_r]$ has Gram matrix
+
+$$
+G_{ij}=e_i\delta_{ij}+e_r. \tag{7.10}
+$$
+
+Thus
+
+$$
+\#\Phi_p(\overline{\mathbf F}_p)
+=\det G
+=\left(\prod_{i=1}^re_i\right)
+\left(\sum_{i=1}^r\frac1{e_i}\right). \tag{7.11}
+$$
+
+Formula (7.11) is exact once the supersingular list and weights are known. This book does not evaluate the weighted mass in closed form or compute the Smith normal form in all congruence classes. In particular, (7.11) is not being used to infer the exact order of the cusp class.
+
+Away-from-$p$ Hecke correspondences extend through a resolved closure and act on the supersingular module. Their action on $X_p$ preserves (7.4) up to the adjoint relation dictated by polarization, so it descends to (7.6), preserves (7.7), and commutes with $N$. The Atkin--Lehner involution exchanges the two principal components. A scalar formula on the component group must be proved from this graph action; it cannot be inferred merely from the scalar action on one known cusp class. No graph formula for the level correspondence is being smuggled into this statement; its generic endomorphism still extends to the Néron model by Chapter 6.
+
+## 8. Component maps and the Albanese map
+
+Let $\mathcal X/\mathbf Z_p$ be the regular semistable model and let $v_\infty$ be the component met by the cusp $\infty$. A section $x\in X(\mathbf Q_p)$ meets the smooth locus of one component after passing to the regular model. The divisor $[x]-[\infty]$ has multidegree equal to the difference of the two component vertices. Its class in the graph Jacobian is exactly the component of the Albanese image:
+
+$$
+\operatorname{sp}_p(\iota_\infty(x))
+=[v(x)-v_\infty]\in\Phi_p. \tag{8.1}
+$$
+
+Here the bracket means the class obtained from the intersection lattice, not a formal subtraction in the free vertex group. Formula (8.1) follows by extending the horizontal divisor to the regular model, taking its multidegree on the irreducible components, and then passing from the relative Picard functor to its separated quotient.
+
+Write the irreducible components of the special fiber as $Y_i$ and let $M=((Y_i\cdot Y_j))$ be their intersection matrix. If the horizontal closures of $x$ and $\infty$ meet $Y_a$ and $Y_b$, their intersection vector is
+
+$$
+d_i=(\overline x-\overline\infty)\cdot Y_i
+=\delta_{i,a}-\delta_{i,b}. \tag{8.2}
+$$
+
+The component group is the degree-zero vertex lattice modulo $M\mathbf Z^{\{Y_i\}}$, with the usual adjustment for total-fiber multiplicities. If a divisor representative is changed by $\operatorname{div}(g)$ on the generic curve, then on the regular surface
+
+$$
+\operatorname{div}_{\mathcal X}(g)
+=\overline{\operatorname{div}_X(g)}+\sum_i a_iY_i. \tag{8.3}
+$$
+
+Intersecting this principal divisor with every $Y_j$ shows that the horizontal multidegree changes by $-M(a_i)$. It therefore has the same class in the component cokernel. This proves both well-definedness and (8.1), rather than merely describing what the formula should be.
+
+If a section meets a thick coarse crossing, passing to the regular resolution locates it on one of the inserted components according to the valuations of the two local parameters. Formula (8.2) is then applied on the subdivided graph. Contracting back to the weighted graph gives the same class because subdivision preserves the graph Jacobian and monodromy pairing.
+
+The cusp $0$ meets the other principal component. If $\delta_p$ denotes the resulting endpoint-difference class, then
+
+$$
+\operatorname{sp}_p(c)=\delta_p. \tag{8.4}
+$$
+
+This is an identification of a particular class, not a proof that $\delta_p$ generates $\Phi_p$ or has any prescribed order. Indeed, (4.11) only implies $n_p\delta_p=0$, which is compatible with many possible component groups.
+
+The formula is Hecke equivariant. If $t\in\mathbb T$, then
+
+$$
+\operatorname{sp}_p(t\iota_\infty(x))
+=t\operatorname{sp}_p(\iota_\infty(x)). \tag{8.5}
+$$
+
+For a quotient $q:J\twoheadrightarrow A$, the Néron mapping property extends $q$ to the Néron models and gives a component map
+
+$$
+\Phi_J\longrightarrow\Phi_A. \tag{8.6}
+$$
+
+This map need not be surjective and its kernel is not determined solely by the connected kernel of $q$ on the generic fiber. Component-group functoriality is not exact in arbitrary short exact sequences of abelian varieties.
+
+At a good prime $r\ne p$, there is no component group. If $x$ and $y$ have the same reduction on a smooth proper model, then
+
+$$
+\iota_y(x)=[x]-[y]
+$$
+
+reduces to the origin in the abelian scheme. The conclusion is only that the class lies in the formal kernel. For torsion of order prime to $r$, that kernel contains no nonzero such torsion; for $r$-primary torsion, an additional local argument is required.
+
+These observations separate three pieces of information that are often conflated:
+
+1. the component met by a point of the curve;
+2. the reduction of its Jacobian class inside the identity component;
+3. the image of that class in a chosen quotient.
+
+Only the first is read directly from the dual graph. The other two use the Picard and Néron functoriality.
+
+## 9. Hecke-stable subvarieties and quotients
+
+Let $J$ be an abelian variety with an action of a commutative ring $\mathbb T$ that is finite as a $\mathbf Z$-module. If $u:J^r\to J$ is a homomorphism, the image of $u$ is connected, proper, and smooth; hence it is an abelian subvariety. This elementary fact constructs the images of Hecke ideals without an appeal to rational eigenspace decompositions.
+
+For an ideal $I=(t_1,\ldots,t_r)\subset\mathbb T$, define
+
+$$
+IJ=\operatorname{im}\left(J^r\longrightarrow J,
+(x_i)\longmapsto\sum_it_ix_i\right). \tag{9.1}
+$$
+
+The result is independent of the chosen generators and is Hecke stable. The connected quotient
+
+$$
+J_I=J/IJ \tag{9.2}
+$$
+
+is an abelian variety, and the action descends through $\mathbb T/I$. Its faithful coefficient ring is the image of $\mathbb T/I$ in $\operatorname{End}(J_I)$; that map need not be injective.
+
+The notation
+
+$$
+J[I]=\bigcap_{t\in I}\ker(t:J\to J) \tag{9.3}
+$$
+
+means something different. It is the scheme annihilated by $I$, possibly with a positive-dimensional identity component and a finite component group. The image $IJ$ records what the ideal generates; $J[I]$ records what it kills.
+
+There is a decisive warning when $I$ has finite additive index in $\mathbb T$. Then $I$ contains a nonzero integer $m$. Since multiplication by $m$ is surjective on an abelian variety,
+
+$$
+mJ=J\subset IJ,
+$$
+
+and therefore
+
+$$
+J_I=0. \tag{9.4}
+$$
+
+Thus quotienting an abelian variety by the image of the classical finite-index Eisenstein ideal cannot produce a positive-dimensional Eisenstein quotient. A nonzero quotient must be selected by a characteristic-zero factor, an annihilator ideal that contains no nonzero integer, or equivalent rational idempotent data.
+
+The simplest example is already decisive. For $I=(m)\subset\mathbf Z$ acting on a positive-dimensional abelian variety, $IJ=mJ=J$, so $J_I=0$, whereas
+
+$$
+J[I]=J[m]
+$$
+
+is a nontrivial finite group scheme of rank $m^{2\dim J}$. Thus “quotient by the ideal” and “torsion killed by the ideal” point in opposite directions. The same distinction remains at an Eisenstein ideal even when both constructions carry the same residue eigensystem.
+
+Dualizing (9.2) and using the principal polarization identifies $J_I^\vee$ with the connected subvariety
+
+$$
+J[I^\dagger]^0\subset J. \tag{9.5}
+$$
+
+For a Rosati-stable ideal the symbols on the two sides agree, but quotient and subvariety remain dual constructions rather than the same embedded object.
+
+For every prime $\ell$, the exact sequence of abelian varieties gives an exact sequence of covariant Tate modules
+
+$$
+0\longrightarrow T_\ell(IJ)
+\longrightarrow T_\ell J
+\longrightarrow T_\ell J_I
+\longrightarrow0. \tag{9.6}
+$$
+
+Surjectivity on the right can be checked at every finite level. Given $a\in J_I[\ell^n](\overline{\mathbf Q})$, lift it to $x\in J(\overline{\mathbf Q})$. Then $\ell^nx$ lies in $IJ$. Multiplication by $\ell^n$ is surjective on the abelian subvariety $IJ$, so choose $b\in IJ$ with $\ell^nb=\ell^nx$. The point $x-b$ is an $\ell^n$-torsion lift of $a$. Passing to inverse limits proves (9.6) without assuming a splitting.
+
+After tensoring with $\mathbf Q_\ell$, the image of the first map is exactly the vector-space span of the images of the elements of $I$, and therefore
+
+$$
+V_\ell J_I\simeq
+V_\ell J/I(V_\ell J). \tag{9.7}
+$$
+
+Integrally, the quotient by $I(T_\ell J)$ can differ from (9.6) by a finite saturation defect. Likewise, localization at a maximal ideal retains an entire local Hecke packet, not merely the vectors killed by that maximal ideal. Freeness over $\mathbf Z_\ell$ is automatic; freeness of a specified rank over a local Hecke algebra is a separate multiplicity assertion.
+
+Concretely, two full lattices in one rational eigenspace can differ by an $\ell$-power index. They define the same $V_\ell$ but different reductions modulo $\ell$, so one can contain a residual line that the other does not. A rational idempotent detects the common vector space and is blind to this index. Only a connected-kernel exact sequence, or an independently proved saturation theorem, identifies the integral selected lattice.
+
+An arbitrary quotient $q:J\twoheadrightarrow A$ can be made **optimal** by replacing its kernel with its identity component. Equivalently, if a rational idempotent $e\in\operatorname{End}^0(J)$ selects an isogeny factor, choose $m$ with $me$ integral and put
+
+$$
+B=\operatorname{im}(m(1-e)),\qquad A_e=J/B. \tag{9.8}
+$$
+
+Then $B$ is independent of $m$, $A_e$ has connected kernel, and $V_\ell A_e=eV_\ell J$. Optimality fixes the integral representative of the rational factor and prevents an unnoticed postcomposition by an isogeny.
+
+Independence from the denominator is elementary but important. If both $m(1-e)$ and $m'(1-e)$ are integral, their images have the same rational tangent space. After replacing $m,m'$ by a common multiple, each image is the image of a nonzero multiplication map on the same abelian subvariety, hence is that whole subvariety. Rational support alone does not name a completed local factor. Once a maximal ideal is specified, however, the distinction between the two projectors can already be stated exactly.
+
+Return to the prime-level acting algebra $\mathbb T$. Its generators are commuting Rosati-self-adjoint operators: the away-level operators are self-adjoint by (3.4), and the trace calculation following (4.13) gives $U_p=-w_p$. Every element of the resulting commutative rational algebra is therefore self-adjoint. A nilpotent self-adjoint operator for a positive Hodge metric is zero. Hence $\mathbb T\otimes\mathbf Q$ is reduced and therefore is a product of number fields,
+
+$$
+\mathbb T\otimes\mathbf Q=\prod_iK_i. \tag{9.9}
+$$
+
+Let $\mathfrak m\subset\mathbb T$ be a maximal ideal of residue characteristic $\ell$. The finite $\mathbf Z_\ell$-algebra
+
+$$
+\mathbb T_\ell=\mathbb T\otimes\mathbf Z_\ell
+\simeq\prod_{\mathfrak n\mid\ell}\widehat{\mathbb T}_{\mathfrak n}. \tag{9.10}
+$$
+
+is a product of complete local factors. Here is the integral algebra behind the decomposition. Modulo a sufficiently high power of $\ell$, powers of the distinct maximal ideals are pairwise comaximal, so the Chinese remainder theorem splits the finite quotient into its local factors. The transition maps have nilpotent kernels. Coordinate idempotents lift uniquely through such a kernel: if $x^2-x$ lies in the kernel, the usual correction by the unit $2x-1$ raises the nilpotence order of the error. Passing to the inverse limit gives (9.10), because the finite $\mathbf Z_\ell$-module $\mathbb T_\ell$ is $\ell$-adically complete.
+
+Let $e_{\mathfrak m}\in\mathbb T_\ell$ be $1$ on the $\mathfrak m$-factor and $0$ on the others. This is a **completed idempotent**. The integral Hecke action extends continuously to $\mathbb T_\ell$, so $e_{\mathfrak m}$ acts on $T_\ell J$, but it need not be an algebraic endomorphism of $J$ over $\mathbf Q$.
+
+For each factor $K_i$, let $\mathcal O_i$ be the image of $\mathbb T$ in $K_i$. Retain $K_i$ if some maximal ideal of $\mathcal O_i$ contracts to $\mathfrak m$, and let
+
+$$
+E_{\mathfrak m}\in\mathbb T\otimes\mathbf Q \tag{9.11}
+$$
+
+be the sum of the corresponding field idempotents. This is the **rational-support idempotent**. It retains a whole characteristic-zero factor, including every companion prime above $\ell$, whereas $e_{\mathfrak m}$ retains only one completed branch. Thus no equality $E_{\mathfrak m}=e_{\mathfrak m}$ is asserted; the exact compatibility is
+
+$$
+e_{\mathfrak m}E_{\mathfrak m}=e_{\mathfrak m}
+\quad\text{in }\mathbb T\otimes\mathbf Q_\ell. \tag{9.12}
+$$
+
+Using (9.8), the rational projector constructs an optimal quotient
+
+$$
+A_{\mathfrak m}
+=J/\operatorname{im}\bigl(a(1-E_{\mathfrak m})\bigr) \tag{9.13}
+$$
+
+for any denominator $a$ making $aE_{\mathfrak m}$ integral. The connected-kernel Tate sequence is exact. Its kernel has rational Tate space $(1-E_{\mathfrak m})V_\ell J$, which the completed idempotent kills. Since its integral Tate module is torsion free, applying $e_{\mathfrak m}$ gives the integral comparison
+
+$$
+e_{\mathfrak m}T_\ell J
+\xrightarrow{\ \sim\ }
+e_{\mathfrak m}T_\ell A_{\mathfrak m}. \tag{9.14}
+$$
+
+This does not yet produce the finite-flat completed tower used in Eisenstein descent. If $\mathfrak m$ contains $I_{\mathrm{Eis}}$, then (9.13) is the rational Eisenstein-support quotient attached to $\mathfrak m$. Equations (4.17)--(4.18) produce at least one such nonzero quotient whenever $J\ne0$. This book has not proved that $(\ell,I_{\mathrm{Eis}})$ is proper for every $\ell\mid n_p$, calculated its local depth, or compared (9.14) with images on every finite-flat torsion level. Those are precisely the later congruence and completed-tower inputs. In particular, the eta-quotient annihilator is used only together with the proved nonzero cuspidal class, not by itself, to obtain existence.
+
+## 10. The winding quotient and its Eisenstein boundary
+
+The boundary path from $0$ to $\infty$ is a relative homology class. Integration against holomorphic differentials defines a unique **winding element**
+
+$$
+e_{\mathrm w}\in H_1(X_0(p)(\mathbf C),\mathbf R) \tag{10.1}
+$$
+
+by
+
+$$
+\int_{e_{\mathrm w}}\omega
+=-\int_0^{i\infty}\omega
+\qquad
+(\omega\in H^0(X_0(p)_{\mathbf C},\Omega^1)). \tag{10.2}
+$$
+
+The right side converges because a holomorphic differential on the compact curve corresponds to a weight-two cusp form. The perfect real period pairing proves existence and uniqueness. Its rationality is a further arithmetic statement, proved next from the cuspidal relation rather than assumed from the analytic definition.
+
+In fact the eta-quotient relation proves the stronger rationality that the abbreviated construction would miss. Let $\delta$ be the relative path from $0$ to $\infty$. Its Abel--Jacobi period class is $[\infty]-[0]=-c$. Since $n_pc=0$ by (4.11), Abel's theorem gives an absolute integral cycle $\gamma\in H_1(X(\mathbf C),\mathbf Z)$ such that
+
+$$
+\int_\gamma\omega
+=n_p\int_\delta\omega
+\qquad\text{for every holomorphic }\omega. \tag{10.3}
+$$
+
+Comparing (10.2) and (10.3), and using perfection of the real period pairing, yields
+
+$$
+n_pe_{\mathrm w}=-\gamma,
+\qquad
+e_{\mathrm w}\in H_1(X(\mathbf C),\mathbf Q). \tag{10.4}
+$$
+
+Thus the winding element is a rational absolute homology class whose denominator divides the proved modular-unit bound. No exact cuspidal order was used.
+
+Let
+
+$$
+I_{\mathrm w}=\{t\in\mathbb T:t e_{\mathrm w}=0\}. \tag{10.5}
+$$
+
+Because the Hecke operators commute, this is an ideal. It is saturated as an additive subgroup: if $nt e_{\mathrm w}=0$ for a nonzero integer $n$, then $te_{\mathrm w}=0$ in the real vector space. In particular, when $e_{\mathrm w}\ne0$, the ideal contains no nonzero integer.
+
+The **winding quotient** is
+
+$$
+J_{\mathrm w}=J_0(p)/I_{\mathrm w}J_0(p). \tag{10.6}
+$$
+
+Chapter 9 proves that this is an abelian variety with connected kernel. If $e_{\mathrm w}=0$, the definition gives the zero quotient. When $e_{\mathrm w}\ne0$, it is nonzero. Indeed, use the field decomposition (9.9). On a factor where the component of $e_{\mathrm w}$ is nonzero, its annihilator is zero. Formula (9.7) therefore retains that factor in $J_{\mathrm w}$.
+
+The rational support is read from the map
+
+$$
+\mathbb T\otimes\mathbf Q\longrightarrow
+H_1(X(\mathbf C),\mathbf R),
+\qquad t\longmapsto te_{\mathrm w}, \tag{10.7}
+$$
+
+whose kernel is $I_{\mathrm w}\otimes\mathbf Q$. On any simultaneous Hecke-factor decomposition, the surviving factors are precisely those on which the winding period is nonzero. The construction of (10.6), however, needs no choice of such a decomposition.
+
+There is a familiar analytic reading of the same support. If
+
+$$
+\omega_f=2\pi i f(z)\,dz
+$$
+
+is the differential attached to a normalized weight-two eigenform, then
+
+$$
+-\int_0^{i\infty}\omega_f=L(f,1). \tag{10.8}
+$$
+
+The endpoint and summation convention in this formula can be checked directly. For $\varepsilon>0$, uniform convergence on $\operatorname{Im}z\geq\varepsilon$ gives
+
+$$
+-\int_{i\varepsilon}^{i\infty}\omega_f
+=\sum_{n\geq1}\frac{a_n}{n}e^{-2\pi n\varepsilon}. \tag{10.8a}
+$$
+
+The cusp expansion after the Fricke change $z\mapsto-1/(pz)$ shows exponential decay as $z$ approaches $0$ vertically, so the integral has a limit as $\varepsilon\to0^+$. For completeness, put $g=f|_2W_p$ and $y_0=p^{-1/2}$. The slash normalization gives
+
+$$
+g(it)=-\frac{1}{pt^2}f\!\left(\frac{i}{pt}\right).
+$$
+
+Consequently the Mellin integral, initially compared with the Fourier series in a right half-plane, can be split as
+
+$$
+\int_0^\infty f(iy)y^{s-1}\,dy
+=\int_{y_0}^\infty f(iy)y^{s-1}\,dy
+-p^{1-s}\int_{y_0}^\infty g(it)t^{1-s}\,dt. \tag{10.8b}
+$$
+
+Both integrals on the right are entire functions of $s$ because $f$ and $g$ decay exponentially at infinity. For real part of $s$ sufficiently large, termwise integration at the cusp $\infty$ gives
+
+$$
+\int_0^\infty f(iy)y^{s-1}\,dy
+=(2\pi)^{-s}\Gamma(s)\sum_{n\geq1}a_nn^{-s}.
+$$
+
+Equation (10.8b) therefore continues the Dirichlet series to $s=1$. Since $\Gamma(1)=1$, evaluating there shows that its value is the Abel limit in (10.8a), proving (10.8) without formally integrating at a boundary where the Fourier series is not uniformly convergent. Consequently the $f$-factor survives precisely when its winding period, equivalently this central value, is nonzero. Equation (10.8) identifies the factors; it does not convert analytic nonvanishing into a theorem about rational Mordell--Weil rank.
+
+The boundary of the construction is Eisenstein in a limited and precise sense. In the relative homology sequence
+
+$$
+H_1(X,\mathbf Z)\longrightarrow H_1(X,\{0,\infty\};\mathbf Z)
+\xrightarrow{\partial}\operatorname{Div}^0\{0,\infty\}
+\longrightarrow0, \tag{10.9}
+$$
+
+the modular path has boundary $[\infty]-[0]$. The divisor-level calculation behind (4.12) shows that every $T_q-(q+1)$ with $q\ne p$ kills this free boundary class, so its action sends the path into absolute homology. Equation (4.14), by contrast, is an equality in the Jacobian; by itself it does not calculate $U_p$ on the free boundary module. Thus the boundary origin explains the away-level Eisenstein relations, while the level relation has only been proved on the cuspidal class. This deliberately falls short of proving that $I_{\mathrm w}=I_{\mathrm{Eis}}$, or that the two ideals have the same index or support. The terminology therefore remains **winding quotient**: it is not the rational Eisenstein-support quotient (9.13), and it is not the completed local Eisenstein factor used in the later finite-flat theory.
+
+The associated modular map is
+
+$$
+f_{\mathrm w}:X_0(p)\longrightarrow J_{\mathrm w},
+\qquad
+x\longmapsto q_{\mathrm w}([x]-[\infty]). \tag{10.10}
+$$
+
+Changing the base point to $0$ translates it by $-q_{\mathrm w}(c)$. Its differential is the quotient of the weight-two differential space selected by the support map (10.7). Its Tate module is governed by the exact sequence (9.6), not by a naive quotient of the integral lattice.
+
+The construction alone makes no assertion that $J_{\mathrm w}(\mathbf Q)$ is finite, that every rational point is torsion, or that a particular Eisenstein maximal ideal occurs. Proving finiteness from (10.8) would require an analytic-rank-zero theorem not present among the prerequisites. The later finite-flat development instead specializes (9.13) at an actual Eisenstein maximal ideal and obtains finiteness by descent. Keeping both boundaries explicit prevents the existence of a quotient from being mistaken for a Mordell--Weil theorem and prevents the winding quotient from being identified with a rational or completed Eisenstein factor.
+
+## 11. Reduction and rational torsion
+
+Let $A/\mathbf Q$ be a quotient of $J_0(p)$ with good reduction at a prime $r$. The reduction map fits into
+
+$$
+0\longrightarrow A_1(\mathbf Q_r)
+\longrightarrow A(\mathbf Q_r)
+\longrightarrow\widetilde A(\mathbf F_r), \tag{11.1}
+$$
+
+where $A_1$ is the formal kernel. For $m$ prime to $r$, multiplication by $m$ is an automorphism of the formal group. Hence reduction is injective on prime-to-$r$ torsion:
+
+$$
+A(\mathbf Q)[m]\hookrightarrow\widetilde A(\mathbf F_r)
+\qquad((m,r)=1). \tag{11.2}
+$$
+
+For $r>2$ over the unramified field $\mathbf Q_r$, the formal logarithm also rules out nonzero torsion in the formal kernel, so all rational torsion injects. The more robust statement is (11.2), which remains valid without that strengthening.
+
+Using two good primes of different residue characteristics bounds every primary part. If $r,s>2$ are good, then
+
+$$
+\#A(\mathbf Q)_{\mathrm{tors}}
+\mid\gcd\bigl(\#\widetilde A(\mathbf F_r),
+\#\widetilde A(\mathbf F_s)\bigr). \tag{11.3}
+$$
+
+Point counts are obtained from Frobenius:
+
+$$
+\#\widetilde A(\mathbf F_r)
+=\det(1-F_r\mid V_\ell A),
+\qquad\ell\ne r. \tag{11.4}
+$$
+
+For a Hecke quotient, (2.5) constrains this determinant. An explicit numerical count still requires the dimensions, eigenvalues, and multiplicities of the selected factor; they do not follow from the abstract quotient construction.
+
+At the level prime $p$, reduction has two layers:
+
+$$
+A(\mathbf Q_p)\longrightarrow\mathcal A_{\mathbf F_p}(\mathbf F_p)
+\longrightarrow\Phi_A(\mathbf F_p). \tag{11.5}
+$$
+
+The second arrow detects a component defect. A point with nonzero component class cannot be the identity, but a point with zero component class may remain nonzero in the torus. For the Albanese image, (8.1) computes the first obstruction from the component of the reduced modular point. Passing to a quotient applies (8.6), which may kill that obstruction.
+
+The cuspidal point illustrates all three layers. It is torsion by (4.11), its component at $p$ is the endpoint class $\delta_p$ by (8.4), and its image in a quotient may have smaller order or vanish. None of these observations determines its exact order in $J(\mathbf Q)$.
+
+## 12. Finite subgroup schemes and Hecke modules
+
+For an ideal $I\subset\mathbb T$ and an integer $m\geq1$, the scheme
+
+$$
+J[I,m]=J[I]\cap J[m] \tag{12.1}
+$$
+
+is a finite commutative group scheme carrying compatible Hecke and Galois actions. Retaining the scheme structure distinguishes constant, multiplicative, and connected constituents that may have identical orders.
+
+If $P\in J(\mathbf Q)$ has order $m$, the morphism
+
+$$
+(\mathbf Z/m\mathbf Z)_{\mathbf Q}\longrightarrow J,
+\qquad1\longmapsto P \tag{12.2}
+$$
+
+is a closed immersion onto a constant cyclic subgroup scheme. If an ideal $I$ kills $P$, this subgroup lies in $J[I,m]$. Its Cartier dual is of multiplicative type. Conversely, a multiplicative subgroup can have very few rational geometric generators; rational points do not recover its scheme structure.
+
+Write $\mathcal C(p)$ for the constant cyclic subgroup scheme that is the image of (12.2) with $P=c$ and $m=\operatorname{ord}(c)$; it is trivial when $c=0$. The prime-level boundary then gives two natural subgroup schemes:
+
+$$
+\mathcal C(p)\subset J[n_p],
+\qquad
+\Sigma(p)\subset J[d], \tag{12.3}
+$$
+
+with the first constant and the second of multiplicative type. The first is stable under the full prime-level Hecke algebra; the second has been proved stable under the away-from-$p$ operators. The displayed ambient torsion bounds are all that has been proved here; replacing them by exact orders or a full level-prime action would strengthen the result.
+
+Torsion points are not the only honest bridge to finite coefficients. Let $A$ be any Hecke-stable quotient of $J$ and let $m\geq2$. The multiplication sequence gives the Kummer injection
+
+$$
+\kappa_m:A(\mathbf Q)/mA(\mathbf Q)
+\hookrightarrow H^1(\mathbf Q,A[m]). \tag{12.4}
+$$
+
+If $P\in A(\mathbf Q)$ and $Q\in A(\overline{\mathbf Q})$ satisfies $mQ=P$, then $\kappa_m(P)$ is represented by
+
+$$
+\sigma\longmapsto\sigma Q-Q\in A[m]. \tag{12.5}
+$$
+
+Changing $Q$ changes the cocycle by a coboundary, while a trivial cocycle makes a translate of $Q$ rational and hence makes $P$ divisible by $m$. This proves injectivity directly. Hecke endomorphisms commute with multiplication, so
+
+$$
+\kappa_m(tP)=t\kappa_m(P). \tag{12.6}
+$$
+
+Weak Mordell--Weil says $A(\mathbf Q)/mA(\mathbf Q)$ is finite. Consequently every rational point, whether torsion or not, generates a finite Hecke module
+
+$$
+M_m(P)=\mathbb T\cdot(P\bmod mA(\mathbf Q)) \tag{12.7}
+$$
+
+whose Kummer realization has coefficients in the finite group scheme $A[m]$. This is the unconditional finite-module interface promised by the catalog. If an ideal $I$ kills $M_m(P)$, the exact conclusion is $IP\subseteq mA(\mathbf Q)$, not $IP=0$.
+
+For $m$ invertible at a good prime $r$, the finite subgroup schemes occurring above extend inside the finite étale group $\mathcal A[m]$ of the abelian scheme, and their geometric Hecke modules specialize faithfully. This assertion concerns subgroup schemes of torsion; a Kummer class instead extends as a torsor when its local point is integral. At $r\mid m$, the special fiber of a finite flat closure has the connected--étale sequence
+
+$$
+0\longrightarrow G^0\longrightarrow G
+\longrightarrow G^{\mathrm{et}}\longrightarrow0, \tag{12.8}
+$$
+
+and that sequence must be retained. Cartier duality exchanges the connected multiplicative part with an étale quotient. Counting geometric points sees $G^{\mathrm{et}}$ but can miss $G^0$.
+
+At a good prime $r\nmid m$, the local image of (12.4) is unramified: the finite étale group $A[m]$ and its torsors extend over $\mathbf Z_r$, and Lang's theorem identifies integral Kummer classes with the unramified subgroup. At $r\mid m$, “unramified” is generally too small because connected finite-flat classes can occur.
+
+At the semistable prime one can form a schematic closure in the Néron model, but Section 6 warns that it need not be finite. If finiteness and flatness have been established for a particular closure, its intersection with the identity component may lie in the torus and its component image is a quotient group. There is no automatic exact sequence obtained by applying “component group” to a short exact sequence of generic-fiber group schemes.
+
+The same caution applies to Hecke modules. The rational representation
+
+$$
+V_\ell A
+$$
+
+of a quotient is a direct summand in the isogeny category, whereas $T_\ell A$ is an integral lattice that can be glued to its complement along finite torsion. A residual eigensystem in $A[\ell]$ is therefore not, by itself, evidence that the whole Tate module is free of rank two over a local Hecke algebra.
+
+## 13. Rational points on the modular curve
+
+A noncuspidal rational point $x\in X_0(p)(\mathbf Q)$ is first a rational point of the coarse curve. It comes from a rational cyclic subgroup scheme of rank $p$, equivalently a rational cyclic $p$-isogeny, exactly when its moduli gerbe is neutral. Neutrality is automatic away from the exceptional values $j=0,1728$ in characteristic zero, and it is automatic in the direction used for an actual elliptic curve with a given Galois-stable line, because the pair is constructed before its coarse point. At the exceptional fibers an arbitrary coarse point requires a stabilizer or descent check.
+
+Even after neutrality, the subgroup need not have a rational generator. Passing from $X_0(p)$ to $X_1(p)$ asks for that additional generator and hence for triviality of the kernel character. The three notions—coarse point, rational cyclic subgroup, and rational generator—will not be identified.
+
+Send $x$ to
+
+$$
+P_x=\iota_\infty(x)=[x]-[\infty]\in J(\mathbf Q) \tag{13.1}
+$$
+
+or to its winding image
+
+$$
+P_{x,\mathrm w}=q_{\mathrm w}(P_x)\in J_{\mathrm w}(\mathbf Q). \tag{13.2}
+$$
+
+The construction relates a modular point to the previous structures as follows:
+
+$$
+\begin{array}{c}
+x\in X_0(p)(\mathbf Q)\\
+\downarrow\ \iota_\infty\\
+P_x\in J(\mathbf Q)\\
+\swarrow\qquad\searrow\\
+\text{reduction and components}\qquad
+\text{Hecke quotients and finite Kummer modules}.
+\end{array} \tag{13.3}
+$$
+
+The vertical arrow is unconditional: it uses only the rational divisor $x-\infty$, not a modular lift of $x$. From $P_x$ there are then three different finite interfaces.
+
+First, for every $m\ge2$ its class modulo $mJ(\mathbf Q)$ lies in the finite Hecke module $M_m(P_x)$ of (12.7), and its Kummer cocycle has coefficients in $J[m]$. The same statement holds after passage to $J_{\mathrm w}$ or any other Hecke quotient. This needs no torsion or rank-zero hypothesis.
+
+Second, at a good prime $r$, reduction gives a point of the finite group $\widetilde J(\mathbf F_r)$. The subgroup generated by its Hecke orbit is a finite Hecke module in the special fiber. This reduction module records only a local image; an annihilator found there need not annihilate $P_x$ globally.
+
+Third, if an independent argument proves that an image of $P_x$ is torsion, its actual cyclic closure is a constant finite subgroup scheme over $\mathbf Q$. This is stronger than either of the first two interfaces and must not be inferred from them.
+
+At a good prime, equality of reductions of $x$ and $\infty$ puts $P_x$ in the formal kernel. If $P_x$ is known independently to be prime-to-residue torsion, (11.2) forces it to vanish. At the level prime, the component met by $x$ gives $\operatorname{sp}_p(P_x)$ through (8.1). In the winding quotient one then applies the induced component map (8.6).
+
+If a Hecke ideal kills $P_{x,\mathrm w}$ and the point has finite order $m$, its cyclic closure is a constant subgroup of
+
+$$
+J_{\mathrm w}[I,m]. \tag{13.4}
+$$
+
+This is the strongest form of the bridge from rational modular points to finite subgroup schemes. Both hypotheses in the preceding sentence matter. Construction of $J_{\mathrm w}$ does not prove that $P_{x,\mathrm w}$ is torsion, and a relation in a reduction group does not automatically lift to a global Hecke annihilator. Without those hypotheses, the unconditional statement is instead the finite Kummer module (12.4)--(12.7).
+
+Low genus must be handled separately. If $g(X_0(p))=0$, then $J=0$ and every $P_x$ vanishes, even though the curve may have many rational points. If $g=1$, the base cusp identifies $X$ with $J$, so information about $P_x$ is information about $x$ itself. In genus at least two, the Abel image is a proper curve in $J$ and quotient maps can identify distinct points. A formal-immersion or Mordell--Weil argument requires extra hypotheses beyond the present structural package.
+
+## 14. The prime-level Jacobian package
+
+We can now state exactly what has been constructed and proved.
+
+**Theorem 14.1.** Let $p\geq5$ be prime. Put $X=X_0(p)$, $J=J_0(p)$, and $c=[0]-[\infty]$. Then:
+
+1. The pointed Albanese map $x\mapsto[x]-[\infty]$ is compatible with Hecke correspondences through the divisor formula (2.4), with quotient maps, and with Néron specialization. Changing the base cusp translates it by $c$.
+
+2. With the source-to-quotient convention, $T_q=\beta_*\alpha^*$ for $q\ne p$. The canonical polarization makes $T_q$ self-adjoint, sends diamonds to their inverses, and identifies the adjoint of a level operator with the transpose correspondence.
+
+3. The cuspidal subgroup $C(p)=\langle c\rangle$ is finite. More precisely,
 
    $$
-   \mathbb T/I\simeq\mathbf Z/n\mathbf Z. \tag{22.2}
+   n_pc=0,
+   \qquad n_p=\frac{p-1}{\gcd(p-1,12)},
    $$
 
-   This quotient acts faithfully on the cuspidal and component groups, and
-   its diagonalizable dual is the Shimura subgroup.
-7. For each $\ell\mid n$ and $\mathfrak m=(\ell,I)$, the rational support
-   $E_{\mathfrak m}$ defines an optimal quotient
-   $A_{\mathfrak m}=J/(\ker(aE_{\mathfrak m}))^0$, independent of the
-   denominator $a$. The completed idempotent satisfies
+   and $T_qc=(q+1)c$, $U_pc=c$, and $w_pc=-c$.
+
+4. The Shimura kernel $\Sigma(p)=\ker(J_0(p)\to J_1(p))$ is a finite subgroup scheme of multiplicative type, killed by the degree of the forgetful map and stable under every away-from-$p$ Hecke operator. No full level-prime action or exact order is included.
+
+5. At $p$, the geometric identity component of the Néron model is a torus with character lattice $X_p=\operatorname{Div}^0(S_p)$. Its monodromy pairing is
 
    $$
-   e_{\mathfrak m}T_\ell J
-   \simeq e_{\mathfrak m}T_\ell A_{\mathfrak m}. \tag{22.3}
+   \langle a,b\rangle=\sum_{s\in S_p}e_sa_sb_s,
    $$
-8. Over $\mathbf Z[1/p]$, the groups
-   $G_r=e_{\mathfrak m}\mathcal A_{\mathfrak m}[\ell^r]$ are finite flat,
-   form an exact $\ell$-divisible tower, and have admissible filtrations by
-   constant and multiplicative constituents, with nonsplit and dyadic
-   extension data retained.
-9. Strict Eisenstein descent gives
-   $\operatorname{Sel}^{\mathrm{str}}(G_r)=0$ for every $r$. The selected
-   Kummer quotients inject into the fixed finite sum of the actual
-   level-prime component image and, dyadically, the real component image.
-   Consequently
+
+   and the geometric component group is the cokernel of $X_p\to X_p^\vee$. For $\ell\ne p$, the outer graded pieces of the monodromy filtration are $X_p^\vee\otimes\mathbf Z_\ell(1)$ and $X_p\otimes\mathbf Z_\ell$, and the monodromy operator between them is the completed pairing map.
+
+6. The component of $[x]-[\infty]$ is the weighted graph class of the difference between the components met by $x$ and $\infty$. In particular, $c$ specializes to the endpoint-difference class.
+
+7. Every Hecke ideal $I$ defines the connected quotient $J/IJ$ and the finite annihilator schemes $J[I,m]$. If $I$ contains a nonzero integer, the connected quotient is zero. Rational and integral Tate-module quotients differ by a possible saturation defect. A maximal ideal $\mathfrak m$ of residue characteristic $\ell$ has separately defined completed and rational-support idempotents $e_{\mathfrak m}$ and $E_{\mathfrak m}$; the latter defines the optimal quotient $A_{\mathfrak m}$, and the connected-kernel sequence gives $e_{\mathfrak m}T_\ell J\simeq e_{\mathfrak m}T_\ell A_{\mathfrak m}$. If $J\ne0$, the nonzero cuspidal class produces at least one Eisenstein maximal ideal $\mathfrak m_c$ and hence a nonzero rational Eisenstein-support quotient $A_{\mathfrak m_c}$. No assertion for every $\ell\mid n_p$ and no finite-flat completed tower are included.
+
+8. The winding element is rational and satisfies $n_pe_{\mathrm w}\in H_1(X(\mathbf C),\mathbf Z)$. Its annihilator $I_{\mathrm w}$ defines an optimal winding quotient
 
    $$
-   A_{\mathfrak m}(\mathbf Q)\text{ is finite}. \tag{22.4}
+   J_{\mathrm w}=J/I_{\mathrm w}J
    $$
-10. Every maximal ideal in the Hecke support of this finite group is
-    $(r,I)$ for a prime $r\mid n$, and its radical annihilator and power
-    annihilator are given by (21.17) and (21.18).
 
-No stronger assertion about the exact group
-$A_{\mathfrak m}(\mathbf Q)$ is implicit: it need not have been identified
-with the image of the cuspidal subgroup, and $I$ itself need not annihilate
-all nonsplit extensions in it.
+   and a modular map $X\to J_{\mathrm w}$. The quotient carries the induced Hecke action and has the Néron, component, duality, and Tate-module structures described above.
 
-### 22.2 Proof and hypothesis audit
+9. For every Hecke quotient $A$ and every $m\ge2$, weak Mordell--Weil makes $A(\mathbf Q)/mA(\mathbf Q)$ a finite Hecke module, and Kummer theory injects it into $H^1(\mathbf Q,A[m])$. A rational torsion image gives the stronger object of a constant cyclic finite subgroup scheme. Good reduction injects its prime-to-residue part, while level-prime reduction maps it to the weighted component group.
 
-**Proof.** The relative Picard construction, the pointed Albanese property,
-and the theta polarization prove assertions 1 and 2. The full-level modular
-unit argument proves finiteness of cusp differences. The eta quotient gives
-$nc=0$, while the weighted component pairing gives a specialization of
-order $n$; this proves the exact cuspidal order. Descent characters for
-$X_1(p)\to X_0(p)$ prove the Shimura description, establishing assertion 3.
+**Proof.** The Picard and Albanese statements are proved in Chapter 1. Chapters 2 and 3 establish the correspondence convention and adjoints. The eta quotient proves the cuspidal annihilator in Chapter 4, while the Tate-cusp and trace calculations prove its Hecke character; Abel injectivity then supplies the nonzero class that produces $\mathfrak m_c$. Pullback, norm, and descent prove the limited Shimura assertions in Chapter 5. Chapters 6--8 apply the Néron mapping property, the semistable Picard description, the weighted dual graph, and the monodromy filtration. Chapter 9 constructs connected Hecke quotients, proves the finite-index warning, and separates rational support from completed local selection. Chapter 10 proves rationality of the winding element and constructs its distinct winding quotient. Chapters 11--13 give reduction, Kummer, and finite-group-scheme interfaces. No assertion in the list uses an exact cuspidal order, an exact Eisenstein index, a selected completed finite-flat tower, or a Mordell--Weil finiteness theorem. $\square$
 
-The semistable two-component model at $p$ gives the toric character lattice.
-Resolving the coarse elliptic points produces edge lengths $2$ and $3$, and
-the mass formula computes the discriminant. Effective resistance proves
-that the vertex difference is a generator. This establishes assertions 4
-and 5 without using a cardinality coincidence.
+The dependency closure is exact. Betti--de Rham comparison supplies the integral period lattice, Abel's period criterion, and rational correspondence action used by the winding element. Relative Picard theory supplies the Abel map, Albanese property, theta polarization, pullback, norm, and transpose. The theory of abelian schemes supplies finite multiplication kernels, duality, Weil pairings, and quotient formation. Néron theory supplies extension, component maps, the separated Picard quotient, and the weighted graph discriminant. Weak Mordell--Weil supplies only the finiteness of $A(\mathbf Q)/mA(\mathbf Q)$ and its Kummer realization, not finite generation or rank zero. Integral modular forms supply the discriminant, cusp expansions, and normalized away-level Hecke operators. The modular-Jacobian correspondence theory supplies integral variance, Eichler--Shimura, cotangent compatibility, and the bad-fiber monodromy lattice. The preceding modular-curve book supplies the compactification, two cusp types, level-prime model, and the exact coarse-point neutrality caveat. These are precisely Books 27, 36, 38, 39, 42, 119, 121, and 139 in the dependency row.
 
-The integral boundary-symbol lemma and the faithful boundary character prove
-assertion 6. Completion at $\mathfrak m$, passage to rational support, and
-connected-kernel quotient formation prove the existence and independence in
-assertion 7. The exact Tate sequence and direct-summand saturation prove
-(22.3).
+The forward boundary is equally exact:
 
-Good reduction away from $p$ extends the quotient to an abelian scheme. The
-completed idempotent selects finite-flat direct factors, and compatibility
-with multiplication by $\ell$ proves the exact tower. The Eisenstein
-Frobenius polynomial and finite-flat closure classification give admissible
-constant--multiplicative filtrations, including the level-prime and dyadic
-extensions. This proves assertion 8.
+| Later book | New result not used here |
+|---|---|
+| 141 | Synthesis of the selected prime-level Eisenstein package |
+| 142 | Exact congruence modulus and $\mathbb T/I_{\mathrm{Eis}}\simeq\mathbf Z/n_p\mathbf Z$ |
+| 143 | Exact order of $c$, cyclic component group, generator specialization, and the limited exact Shimura calculation |
+| 144 | Admissible constant--multiplicative finite-flat filtrations and their extension theory |
+| 145 | Selection at every Eisenstein prime, scheme-level comparison at each torsion power, and the exact finite-flat tower |
+| 146 | Eisenstein descent and finiteness of the selected quotient's rational points |
+| 147 | Primitive cotangent lattices, oriented formal immersion, and cusp-disk rigidity |
+| 148 | Prime-isogeny and prime-torsion classification, exceptional genus-two calculations, and semistable full-two residual irreducibility |
 
-For each atomic constituent, units and everywhere-unramified covers compute
-the strict Selmer group as zero. Cartesian devissage proves the same for
-$G_r$. Strict--relaxed comparison bounds the Kummer image by the actual
-finite component defects, uniformly in $r$. Growth of
-$\mathbf Z_\ell^d/\ell^r$ forces selected rank zero; rational support forces
-total rank zero; and finite generation gives assertion 9. Finally,
-good-prime Frobenius, finite-flat endpoint recognition at the coefficient
-prime, and the level sign prove Eisenstein residual support. Artinian local
-algebra proves assertion 10. $\square$
+Thus the lattice presentation (7.6) has not been replaced by a closed order formula; the annihilator (4.11) has not been promoted to the exact order of $c$; $I_{\mathrm{Eis}}$ has not been assigned an index; a completed idempotent has not been promoted to a finite-flat tower; the winding quotient has not been identified with either Eisenstein projector; and its rational points have not been claimed finite. Those are not missing proofs inside Theorem 14.1. They are the stated inputs and conclusions of the later books.
 
-Every substantial hypothesis has been used with its stated scope. The
-relative Picard and Néron results apply to smooth proper generic curves and
-regular semistable models. The component sequence is used only through its
-actual image over $\mathbf Q_p$, not through an unjustified surjectivity
-claim. Good-prime Eichler--Shimura uses arithmetic Frobenius on the covariant
-Tate module and is never evaluated at the level prime. The coefficient prime
-satisfies $\ell\ne p$, so the finite-flat tower lies over
-$\mathbf Z[1/p]$. Saturation is asserted only after applying the selected
-completed idempotent. Rational support is kept distinct from that idempotent.
+The direct downstream contract is narrower than that forward list. Book 141 uses the pointed Albanese map, the connected optimal-quotient construction, the prime-level Néron and monodromy geometry, the $U_p=-w_p$ convention, and the distinction among rational points, finite subgroup schemes, and components. Books 142--147 do not depend on Book 140; they prove the specialist chain independently and Book 141 assembles it. Book 148 directly uses only pointed Abel maps, Jacobian specialization, connected optimal quotients, and prime-level cuspidal geometry, never finiteness of the whole Jacobian. Book 154 reaches this material only through Book 148's residual-irreducibility package. Consequently no exact index, exact subgroup order, completed finite-flat tower, finiteness theorem, formal immersion, prime-isogeny classification, or Fermat conclusion flows from Theorem 14.1 alone.
 
-The proof also preserves variance. The Hecke operator pulls back along the
-source map and norms along the quotient map. Its transpose is its Rosati
-adjoint, giving the inverse point-map diamond in the $X_1$ formula. On
-$X_0(p)$ the diamond disappears and self-adjointness results. The same
-orientation gives $U_pc=c$ and therefore $U_p-1$ in $I$.
-
-### 22.3 Exceptional cases and numerical checks
-
-When $p\in\{5,7,13\}$, one has $n=1$. The curves have genus zero, the
-Jacobian and the three boundary groups are trivial, and there is no maximal
-ideal $(\ell,I)$. Assertions involving a selected quotient are therefore
-empty. At $p=2,3$ the same conclusions hold by direct genus-zero
-computation; these two wild levels lie outside the hypothesis of Theorem
-22.1 and are not forced into the tame weighted model.
-
-At $p=11$, $n=5$ and $J_0(11)$ is an elliptic curve. The cusp has exact
-order $5$, the component group has order $5$, and the only Eisenstein
-coefficient prime is $5$. At $p=17$, $n=4$; the exceptional supersingular
-edge lengths are $3$ and $1$, whose parallel conductance is $4/3$ and whose
-effective resistance is $3/4$. The denominator $4$ recovers the cusp and
-component orders. At $p=19$, $n=3$; the corresponding cusp has order $3$.
-
-The denominator corrections can be checked at larger levels:
+The two quotient branches constructed in this volume fit into the common chain
 
 $$
-n_{41}=10,\qquad n_{73}=6. \tag{22.5}
+X_0(p)
+\xrightarrow{\ \iota_\infty\ }
+J_0(p)
+\longrightarrow
+\begin{cases}
+A_{\mathfrak m_c},&\text{rational Eisenstein support when }J\ne0,\\
+J_{\mathrm w},&\text{winding-period support},
+\end{cases}
+\longrightarrow
+\begin{cases}
+\text{finite Kummer--Hecke modules and torsion subgroup schemes},\\
+\text{good-prime reduction},\\
+\text{level-prime component classes}.
+\end{cases} \tag{14.1}
 $$
 
-Thus level $41$ retains one factor of $2$, while level $73$ retains one
-factor each of $2$ and $3$. These are checks of the Eisenstein index, not
-claims about the exact cardinality of the selected rational group.
-
-At a supersingular point with $j=1728$, the edge length $2$ occurs only when
-that invariant is supersingular; similarly the edge length $3$ at $j=0$
-occurs only in its supersingular congruence class. If neither exceptional
-invariant is supersingular, all edge lengths are one. These cases are built
-into the mass formula and must not be added unconditionally.
-
-### 22.4 Conclusion
-
-The prime-level modular Jacobian unifies four forms of arithmetic that look
-unrelated on the curve itself. Divisor classes linearize rational points and
-correspondences. The theta polarization fixes adjoints. The semistable fiber
-turns cuspidal specialization into a weighted graph calculation. The Hecke
-algebra records the common boundary character of the cusp, component, and
-Shimura groups.
-
-The exact integer
-
-$$
-\frac{p-1}{\gcd(p-1,12)}
-$$
-
-appears in each description for a different reason: as an eta multiplier,
-as a graph discriminant, as an effective-resistance denominator, and as an
-integral Hecke index. Their agreement proves more than an order formula. It
-identifies the constant cuspidal group with the component group, places the
-multiplicative Shimura group on the Cartier-dual side, and determines exactly
-which Eisenstein coefficient primes exist.
-
-Selecting one such prime requires both a rational projector and a completed
-local idempotent. The rational projector creates the optimal abelian
-quotient; the completed idempotent creates its saturated finite-flat torsion
-tower. Constant and multiplicative atoms then control local divisibility,
-while actual Néron and real component images record the only relaxed errors.
-Their uniform finiteness forces the selected Mordell--Weil group to be
-finite, and Frobenius identifies its residual Hecke support.
-
-Consequently a rational point of $X_0(p)$ can be passed through the Albanese
-map into a precisely selected finite Hecke module, compared at good and bad
-primes, and measured against finite subgroup schemes without losing the
-exceptional factors at $2$, $3$, or the level prime. This is the complete
-prime-level Jacobian framework required for arithmetic arguments with
-rational isogenies.
+This is the Jacobian framework required for arithmetic arguments with rational points: it is functorial, convention-conscious, integral where integrality has been proved, and explicit about every conclusion that still needs an exact boundary or descent calculation.

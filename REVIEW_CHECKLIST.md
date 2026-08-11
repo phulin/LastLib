@@ -204,7 +204,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 137. Compatible Coefficient Systems and Purity
 - [x] 138. Canonical Galois Lattices and Finite-Flat Quotients
 - [x] 139. Modular Curves (X_0(N)) and (X_1(N))
-- [ ] 140. Jacobians of Modular Curves
+- [x] 140. Jacobians of Modular Curves
 - [x] 141. The Eisenstein Ideal
 - [x] 142. Eisenstein Series, Congruences, and the Eisenstein Ideal
 - [x] 143. Cuspidal Divisors and Specialization on Modular Jacobians
