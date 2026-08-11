@@ -283,11 +283,13 @@ This group may be nontrivial even when it acts trivially on the deformation para
 
 ### 3.4 The algebraicity theorem
 
-**Theorem 3.1.** The stable unlevelled stack $\overline{\mathcal M}_{1,1}$ and each compactified level stack $\overline{\mathcal M}(\Gamma)$ are algebraic stacks of finite presentation over $B_\Gamma$. Their diagonals are finite and separated. The smooth elliptic locus is open and dense, the boundary is of pure relative codimension one, and these stacks are normal.
+**Theorem 3.1.** The stable unlevelled stack $\overline{\mathcal M}_{1,1}$ and each compactified level stack $\overline{\mathcal M}(\Gamma)$ are algebraic stacks of finite presentation over $B_\Gamma$. Their diagonals are finite and separated. They are smooth, hence flat and normal, of pure relative dimension one. The smooth-elliptic locus is open and dense, and its boundary has pure relative codimension one.
 
 **Proof.** The bounded ample divisor gives finitely many framed Hilbert parameter schemes. Section 3.2 makes each desired moduli condition locally closed and produces a smooth atlas. Section 3.3 proves that the diagonal is finite and separated. Finite presentation follows from the finite equations and the finite list of Hilbert polynomials. Smoothness of $E/S$ is open, so the elliptic locus is open; density was proved in Section 2.3. On a Tate chart the boundary is cut out by one non-zero-divisor, giving relative codimension one.
 
-For normality, cover the stack by the elliptic locus and cusp charts. Since $N$ is invertible on $B_\Gamma$, the level functor on a smooth elliptic curve is finite etale. The elliptic locus is therefore finite etale over the smooth normal stack $\mathcal M_{1,1}$ and is normal. After a finite framing, a cusp chart has ring $A[[t]]$, where $A$ is a normal finite etale coefficient algebra over the base. A power-series ring over a normal excellent ring is normal. Normality descends through the etale framing and is local for the smooth topology. These opens cover, so the stack is normal. $\square$
+On the elliptic locus, level is finite etale over the smooth relative curve $\mathcal M_{1,1}$; for the unlevelled problem this is the identity statement. At a boundary point, choose the finite etale framing of Book 116. The completed local ring of the framed algebraic chart is $A[[t]]$, where $A$ is finite etale over the stated base. Thus the completed structural map is formally smooth of relative dimension one. For morphisms of finite presentation, smoothness can be tested after completion at geometric points, so the boundary charts are smooth as well. The elliptic locus and these boundary neighborhoods cover the stack. It follows that the stack is smooth, flat, and of pure relative dimension one.
+
+For completeness, normality can also be read directly from the same charts. The ring $A$ is excellent and normal, hence so is $A[[t]]$. The uncompleted local ring is excellent, its completion is faithfully flat, and normality descends from that completion. It then descends through the etale framing and is local for the smooth topology. Finally, $t$ is one relative parameter, so $t=0$ has pure relative codimension one. $\square$
 
 The theorem is deliberately over the good-level base. The same Drinfeld functor is defined integrally, but algebraic closure, normality, and special-fiber structure at primes dividing $N$ require additional deformation calculations. This separation prevents the later integral-model theory from being assumed prematurely.
 
@@ -303,9 +305,7 @@ It is enough to work with discrete valuation rings in the noetherian finite-pres
 
 Separatedness has its own valuative meaning. If two extensions are generically isomorphic, the isomorphism is a point of the finite diagonal over the generic point of $\operatorname{Spec}R$. Properness of that finite morphism extends it, and separatedness makes the extension unique. Thus once existence is established, there is no second boundary value hidden behind the same generic family.
 
-Elliptic semistable reduction gives, after finite extension, two cases: good reduction or split multiplicative reduction. This standard one-dimensional reduction theorem can be reached by taking a minimal regular model and a finite extension that makes the stable fiber smooth or nodal. We now show that the level extends in both cases.
-
-For dependency closure, we prove the elliptic reduction statement in the form used here.
+The needed elliptic reduction statement has two outcomes after finite extension: good reduction or split multiplicative reduction. For dependency closure, the next lemma proves it from Weierstrass coefficients and the Tate inverse series. We then extend the level in each outcome.
 
 **Lemma 4.0 (potential semistability in genus one).** Let $K$ be the fraction field of a complete DVR and let $E/K$ be an elliptic curve. After a finite extension of $K$, the curve has good or split multiplicative reduction.
 
@@ -317,23 +317,50 @@ $$
 j(q)^{-1}=q+O(q^2)
 $$
 
-has an inverse convergent on the maximal ideal. Over an algebraic closure, elliptic curves with the same $j$ are isomorphic. Since negative valuation excludes the exceptional constants $j=0,1728$, the isomorphism is a quadratic twist and is defined over a finite extension. After that extension $E\simeq E_q$, which has split multiplicative reduction by the integral Tate equation.
+has an inverse convergent on the maximal ideal. Over an algebraic closure, elliptic curves with the same $j$ are isomorphic. The isomorphism is a solution of finitely many algebraic coefficient equations, so it is defined over a finite extension; this formulation also covers residue characteristics $2$ and $3$ without using the language of quadratic twists. After that extension $E\simeq E_q$, which has split multiplicative reduction by the integral Tate equation.
 
-Now suppose $v(j)\geq0$. Start with an integral minimal Weierstrass equation and invariants $c_4,c_6,\Delta$. After a finite ramified extension, choose $u$ with
+Now suppose $v(j)\geq0$. Start with an integral minimal generalized Weierstrass equation and invariants $c_4,c_6,\Delta$. We use the following integral reconstruction step, including its small-characteristic content.
+
+> Let $\rho$ have positive valuation $h$ in a finite extension. If a generalized
+> Weierstrass equation has $v(c_4)\geq4h$, $v(c_6)\geq6h$, and
+> $v(\Delta)\geq12h$, then, after a further finite extension, admissible
+> translations of $x$ and $y$ put its coefficients in valuation at least
+> $ih$ in weights $i=1,2,3,4,6$. Dividing the weight-$i$ coefficient by
+> $\rho^i$ then gives another integral equation, with invariants
+> $\rho^{-4}c_4$, $\rho^{-6}c_6$, and $\rho^{-12}\Delta$.
+
+Here is the coefficient argument. Reduce the cubic and adjoin the coordinates of its singular point; translating that point to $(0,0)$ kills the constant and linear terms modulo the maximal ideal. Adjoin a slope of the repeated tangent and make the admissible change $y\mapsto y+sx$; this kills the remaining quadratic tangent term. The identities
 
 $$
-12v(u)=v(\Delta). \tag{4.0a}
+b_2=a_1^2+4a_2,\quad
+b_4=a_1a_3+2a_4,\quad
+b_6=a_3^2+4a_6,
 $$
 
-Under $x=u^2x'$ and $y=u^3y'$, the new invariants are $u^{-4}c_4$, $u^{-6}c_6$, and $u^{-12}\Delta$. The last is a unit. Moreover
+together with $c_4=b_2^2-24b_4$, $c_6=-b_2^3+36b_2b_4-216b_6$, and the discriminant identity then determine successively the weighted residues of $a_1,a_2,a_3,a_4,a_6$. Repeat this calculation through the finitely many valuation layers below $h,2h,3h,4h,6h$. If a residue does not yet vanish, adjoining a root of the corresponding monic tangent or translation polynomial and repeating the admissible translation makes it vanish. Only finitely many weighted residues occur, so all required elements lie in one finite extension and the result is
+
+$$
+v(a_1)\geq h,\quad v(a_2)\geq2h,\quad v(a_3)\geq3h,
+\quad v(a_4)\geq4h,\quad v(a_6)\geq6h. \tag{4.0a}
+$$
+
+This uses no division by $2$ or $3$; those primes are exactly why the singular-point and repeated-tangent translations precede the weighted division. Substituting $x=\rho^2x'$ and $y=\rho^3y'$ proves the reconstruction step.
+
+After a finite ramified extension, choose $\rho$ with
+
+$$
+12v(\rho)=v(\Delta). \tag{4.0b}
+$$
+
+The invariant identities give
 
 $$
 v(c_4^3/\Delta)=v(j)\geq0,
 \qquad
-v(c_6^2/\Delta)=v(j-1728)\geq0, \tag{4.0b}
+v(c_6^2/\Delta)=v(j-1728)\geq0, \tag{4.0c}
 $$
 
-so the scaled $c_4$ and $c_6$ are integral. The integral reconstruction theorem for generalized Weierstrass equations now supplies, after a further finite extension in residue characteristics $2$ and $3$, integral coefficients with these invariants. Its proof solves successively for the generalized coefficients $a_1,a_2,a_3,a_4,a_6$ after adjoining the finitely many roots required by completing the square and cube; integrality follows from (4.0b). Since the resulting discriminant is a unit, the model is smooth and $E$ has good reduction.
+and hence $v(c_4)\geq4v(\rho)$ and $v(c_6)\geq6v(\rho)$. The reconstruction step gives an integral equation with invariants $\rho^{-4}c_4$, $\rho^{-6}c_6$, and $\rho^{-12}\Delta$. The last is a unit. Its projective cubic is therefore smooth, so $E$ has good reduction.
 
 For a noncomplete henselian DVR the same finite equations descend from the completion after a finite extension; a general DVR is handled after henselization, which is faithfully flat. Thus a finite extension suffices in every valuative case used here. $\square$
 
@@ -341,15 +368,11 @@ The proof also recovers the sharper dichotomy: integral $j$ leads to potentially
 
 ### 4.2 Potentially good reduction
 
-Assume $E_K$ extends to an elliptic curve $E/R$. Let $C_K\subset E_K$ be a finite subgroup of rank $N$. Its schematic closure $C\subset E$ is finite over $R$. It is flat after replacing $R$ by the normalization in a further finite extension if necessary: over a valuation ring, a finite module is flat exactly when it is torsion-free, and taking the closure inside the flat group eliminates vertical torsion. Its rank remains $N$ because generic rank and finite flat rank agree.
+Assume $E_K$ extends to an elliptic curve $E/R$. We are proving properness over $B_\Gamma$, so $N$ is invertible in $R$. Consequently $E[N]\to\operatorname{Spec}R$ is finite etale of rank $N^2$. After a finite extension of $K$ and normalization of $R$, all the finitely many torsion sections occurring in the level become rational. Because a finite morphism is proper, each of these sections extends uniquely over the new valuation ring.
 
-Here is a local proof of finiteness. Choose an affine neighborhood $V$ of the identity in $E$. Finitely many translates of $V_K$ cover $C_K$, and properness extends the translating torsion points after a finite field extension. The closure of $C_K\cap V_K$ in $V$ has coordinate algebra equal to the image of $\mathcal O(V)$ in the finite $K$-algebra $\mathcal O(C_K)$. This image is finite over $R$: its elements are integral over $R$, and integral closure is finite over the excellent DVR. The translated affine pieces glue to a finite closure. Their coordinate modules inject into their generic fibers, hence are torsion-free and therefore flat over $R$.
+For cyclic level, a split generic subgroup is generated by one of the extended sections; the union of its $N$ disjoint translates is a finite etale subgroup of rank $N$. For point and full level, the generator or basis extends in the same way. The group, torsion, and Weil-pairing equations are equalities between sections of separated finite schemes, so equality on the generic point implies equality over the valuation ring. The Drinfeld divisor equalities reduce here to the ordinary lists of distinct torsion sections and hence extend as well.
 
-The finite flat closure is unique. Two such closed subgroup schemes with the same generic fiber have defining ideals whose difference is $R$-torsion. Flatness of the quotient algebras forces that torsion to vanish. Consequently closure commutes with further flat extensions of valuation rings.
-
-The group laws extend to $C$. For example, the composite $C\times_R C\to E$ has generic image in $C$; the defining ideal of $C$ pulls back to a section vanishing generically. Torsion-freeness makes it vanish everywhere. Inversion and the identity are similar. Thus $C$ is a finite locally free subgroup.
-
-If a generator $P_K$ or a full basis is part of the data, take the integral closure of $R$ in a field over which the sections extend. Properness of $E$ extends each section. The Drinfeld divisor equality extends because both sides are finite flat Cartier divisors and agree generically. Locally they have monic equations of the same degree; equality of generic coefficients and torsion-freeness of $R$ give equality over $R$.
+This good-level argument intentionally uses etaleness. At a prime dividing $N$, schematic closure of a generic subgroup requires a separate finite-flat analysis; torsion-freeness of a closure alone does not prove all the needed subgroup and base-change assertions. Those primes are outside the properness theorem of this book.
 
 There is only one component, so every nonempty finite level divisor is ample. Hence good reduction supplies an object of the compactified level stack.
 
@@ -391,7 +414,7 @@ This argument proves more than existence of a limiting point. It determines the 
 
 **Proof strategy.** Finite presentation and separatedness are already known. It remains to prove the existence part of the valuative criterion, then uniqueness.
 
-**Proof.** After finite extension, semistable reduction gives the good and multiplicative cases. Sections 4.2 and 4.3 extend the curve and the level in each case. For the unlevelled problem, contract any polygon to its stable one-gon.
+**Proof.** Lemma 4.0 gives the good and split multiplicative cases after finite extension. Sections 4.2 and 4.3 extend the curve and the level in each case. For the unlevelled problem, contract any polygon to its stable one-gon.
 
 For uniqueness, suppose two extensions become objects over a common dominating valuation ring. On the generic fiber they are isomorphic. The ample level divisor, or $3[e]$ in the stable unlevelled case, gives each extension as relative Proj of its section algebra. The generic isomorphism identifies the divisors and their section algebras inside the common function field. Integral closure across the valuation ring and equality in sufficiently high degrees identify the two Proj models. Equivalently, the finite separated diagonal is proper, so the generic isomorphism extends uniquely. Thus the valuative criterion holds. $\square$
 
@@ -411,15 +434,21 @@ An object of $U_M$ is a smooth $\Gamma$-object together with a full $M$-basis. I
 
 One must not compactify this cover by requiring the two levels to be ample on the same polygon. Full level $M$ forces an $M$-gon, whereas cyclic level $N$ forces polygon size dividing $N$. When $(M,N)=1$, those conditions can be incompatible. The correct construction retains the finite extension of the smooth modular function algebra and normalizes at the boundary.
 
-Embed the fine smooth curve $U_M$ in projective space, take its scheme-theoretic projective closure, and normalize that closure in the function algebra of $U_M$. Denote the result by $Y_M$. Book 10 gives finiteness of normalization over the excellent arithmetic bases in use, so $Y_M$ is a normal projective scheme.
+The modular meaning of a normalization branch must nevertheless be stated. Over a Tate chart, adjoining the auxiliary basis also adjoins a root of the smoothing parameter. The resulting generalized curve $E'$ is the unique **decontraction** of the original compactified curve $E$ on which the full $M$-divisor is ample. It carries full level $M$ and a compatible contraction
 
-The generic moduli map extends over $Y_M$. To justify this without hiding an indeterminacy, close its graph over $Y_M$. Properness of the target makes the graph closure proper over $Y_M$. The Tate extension at every boundary valuation supplies a point above every codimension-one point, and the chosen normalization branch makes that extension unique. Its fibers are finite by the local root calculation below, so the graph closure is finite. A finite birational morphism to the normal scheme $Y_M$ is an isomorphism. Hence the second graph projection gives
+$$
+E'\longrightarrow E. \tag{5.1a}
+$$
+
+Book 14 constructs this finite decontraction datum, and Book 116 identifies it in the Tate charts. Thus a boundary point of the auxiliary compactification is not merely an unlabeled branch of a function field: it is a decontracted generalized elliptic curve with rigid full level and its contraction to the original $\Gamma$-object. Forgetting (5.1a) would leave room for special-fiber automorphisms that do not extend to the generic auxiliary basis.
+
+Book 14's finite decontraction construction represents these data by a fine quasi-projective scheme $Y_M$ and gives a representable finite surjective map
 
 $$
 f_M:Y_M\longrightarrow\overline{\mathcal M}(\Gamma). \tag{5.2}
 $$
 
-The map is finite. It is proper by construction. Its fibers are finite because they are the finitely many branches obtained by extending an auxiliary basis around a fixed compactified object; on a Tate chart these branches come from adjoining finitely many roots of unity and roots of the Tate parameter. Hence it is quasi-finite, and proper quasi-finite morphisms are finite.
+The elliptic part is $U_M$. At the boundary the finite choices are precisely the decontractions, roots of the Tate parameter, roots of unity, and full bases just described. Since the target is proper, the finite scheme $Y_M$ is proper over the base. A proper quasi-projective scheme is projective. It is normal: this holds on $U_M$, while the completed local rings on the boundary branches are the normal rings in the following calculation. Excellence and faithful flatness of completion return normality of the algebraic local rings. Equivalently, $Y_M$ is the normalization of any projective closure of $U_M$ in its finite modular function algebra; Book 10 makes that normalization finite.
 
 Locally, suppose the original framed cusp has completed ring $A[[q]]$. An auxiliary branch has a parameter $s$ with
 
@@ -431,27 +460,27 @@ and a finite cyclotomic coefficient extension $A'/A$. The branch ring $A'[[s]]$ 
 
 Surjectivity follows from properness. The image of $Y_M$ is closed and contains the dense smooth open after the finite etale extension that supplies an auxiliary basis. Every irreducible component of the compactified stack meets the smooth open, so the image contains every component and hence every boundary orbit.
 
-The normalization description also explains a boundary point of $Y_M$. It is a branch of auxiliary smooth level approaching the original compactified $\Gamma$-object. The auxiliary basis need not remain a second ample basis on that same polygon; it records the normalization branch and its monodromy. This rigidifies the base without changing the original boundary functor.
+The normalization description also explains a boundary point of $Y_M$. It is a branch of auxiliary smooth level approaching the original compactified $\Gamma$-object, represented by the decontraction (5.1a). The auxiliary basis is ample on $E'$, not necessarily on the original polygon $E$. Its contraction records the normalization branch and its monodromy while returning the original boundary object.
 
 ### 5.2 Killing automorphisms
 
 **Lemma 5.1.** The normalized compactification $Y_M$ of the smooth auxiliary full-level cover has no residual object automorphisms.
 
-**Proof.** On the dense smooth open, an automorphism fixing a basis of $E[M]$ acts trivially on $M$-torsion. An origin-preserving elliptic automorphism has finite order. Its action on a prime-to-characteristic Tate module is an integral finite-order matrix congruent to the identity modulo $M$. The principal congruence subgroup of level $M\geq3$ is torsion-free: if $A=1+MB$ has prime order $\ell$, expansion of $A^\ell=1$ and division by the lowest power of $M$ for which $B$ is nonzero gives $\ell B\equiv0$ modulo $M$, and iteration at primes dividing $M\ell$ forces $B$ to be divisible by every power of a prime. Hence $B=0$ and $A=1$. Faithfulness of the Tate-module action gives the identity automorphism.
+**Proof.** On the dense smooth open, an automorphism fixing a basis of $E[M]$ acts trivially on $M$-torsion. An origin-preserving elliptic automorphism has finite order. If an odd prime $\ell$ divides $M$, its faithful action on the $\ell$-adic Tate module lies in $1+\ell M_2(\mathbf Z_\ell)$; if $M$ has no odd prime divisor, then $4\mid M$ and the action lies in $1+4M_2(\mathbf Z_2)$. Both congruence groups are torsion-free. Indeed, after reducing to an element of prime order, the first nonzero term in the binomial expansion of $(1+\ell^aB)^r-1$ has strictly smaller $\ell$-adic valuation than the later terms, for odd $\ell$ with $a\geq1$ and for $\ell=2$ with $a\geq2$. It therefore cannot vanish unless $B=0$. Faithfulness of the Tate-module action gives the identity automorphism.
 
-At a boundary branch of $Y_M$, any residual automorphism restricts to an automorphism at the generic smooth point and is therefore the identity there. The diagonal of the compactified stack is separated, so two automorphisms agreeing on a schematically dense open agree everywhere. No automorphism can appear only at the boundary of the chosen branch. $\square$
+At a boundary point, use the decontracted curve $E'$ of (5.1a). Its ample full $M$-basis fixes both the toric and component directions. Book 116's polygon calculation therefore makes every automorphism of $(E',\text{full }M\text{-level})$ the identity. Compatibility with the contraction then fixes the entire auxiliary object. This direct special-fiber argument is necessary: a new automorphism of one special fiber need not extend to the generic point of an arbitrary family, so density alone would not rule it out. $\square$
 
 The bound is sharp in the relevant sense: inversion fixes full level two. Smaller point levels can also retain exceptional automorphisms.
 
 ### 5.3 Representability and projectivity
 
-The construction already makes $Y_M$ a normal projective scheme. Lemma 5.1 explains its modular fineness. Pulling back the tautological generalized elliptic curve and original $\Gamma$-data gives an honest universal family on $Y_M$. Over the dense smooth open it also carries the auxiliary full $M$-basis; at the boundary that basis is encoded by the normalization branch rather than by a second ample divisor on the same polygon.
+The construction already makes $Y_M$ a normal projective scheme. Lemma 5.1 explains its modular fineness. It carries the universal decontracted curve with full $M$-level, its contraction, and therefore the pullback of the tautological generalized elliptic curve with the original $\Gamma$-data. Over the dense smooth open the contraction is the identity. At the boundary the auxiliary basis lives on the decontraction rather than being forced onto an incompatible original polygon.
 
-Projectivity follows from normalized projective closure. Normalization is finite, a finite morphism over a projective scheme is projective, and composites of projective morphisms are projective.
+Projectivity follows because the finite map to the proper stack makes $Y_M$ proper and its Hilbert construction makes it quasi-projective. The normal-projective-closure description gives the same scheme by the boundary calculation above.
 
 This proves:
 
-**Theorem 5.2.** After adjoining auxiliary full level $M\geq3$ on the smooth locus and taking normalized projective closure, one obtains a projective fine scheme $Y_M$, finite and surjective over the original compactified stack. It carries the pullback universal generalized elliptic curve and compactified $\Gamma$-data, and its dense smooth open carries the auxiliary full level.
+**Theorem 5.2.** On a base on which $M\geq3$ is invertible, adjoining auxiliary full level $M$ on the smooth locus and taking normalized projective closure with its boundary decontraction produces a projective fine scheme $Y_M$, finite and surjective over the restricted compactified stack. It carries the universal decontraction with full $M$-level, its contraction, and the pullback compactified $\Gamma$-data.
 
 No universal object has yet been asserted on the eventual coarse quotient. The universal object on $Y_M$ is the datum from which descent obstructions will be read.
 
@@ -471,7 +500,7 @@ Auxiliary level is therefore a construction device. It rigidifies the moduli pro
 
 ### 6.1 The change-of-level action
 
-Let $Y_M$ be the normalized fine cover. The finite change-of-basis group $G_M$ acts on its dense smooth open by changing the auxiliary basis while leaving the original $\Gamma$-data fixed. Every such automorphism extends uniquely to the normalization, so $G_M$ acts on all of $Y_M$. In the symplectic case it preserves the chosen Weil pairing; in the similitude formulation the determinant acts simultaneously on the cyclotomic datum.
+Throughout Sections 6.1--6.3, restrict to an open of $B_\Gamma$ on which the chosen $M$ is invertible. Let $Y_M$ be the normalized fine cover there. The finite change-of-basis group $G_M$ acts on its dense smooth open by changing the auxiliary basis while leaving the original $\Gamma$-data fixed. Every such automorphism extends uniquely to the normalization, so $G_M$ acts on all of $Y_M$. In the symplectic case it preserves the chosen Weil pairing; in the similitude formulation the determinant acts simultaneously on the cyclotomic datum.
 
 There is an equivalence
 
@@ -479,7 +508,7 @@ $$
 \overline{\mathcal M}(\Gamma)\simeq[Y_M/G_M]. \tag{6.1}
 $$
 
-Over the smooth locus this is the usual torsor proof: the sheaf of auxiliary bases is a $G_M$-torsor, and equivariant descent forgets that basis. At the boundary, take the normalized closure of this equivalence. On a Tate chart, the branches of $Y_M$ are exactly the roots and level labels permuted by $G_M$; their quotient returns the original Tate chart together with its cusp stabilizer. The two quotient stacks are finite over the original chart and agree on its dense smooth open. Normality of the branch rings and uniqueness of integral closure identify them. The local identifications agree on overlaps by uniqueness, proving (6.1). This is an equivalence of groupoids, not only a bijection on geometric points.
+Over the smooth locus this is the usual torsor proof: the sheaf of auxiliary bases is a $G_M$-torsor, and equivariant descent forgets that basis. At the boundary, a quotient-stack object consists fppf-locally of the decontraction (5.1a), its full $M$-basis, and its contraction to the original $\Gamma$-curve. Changing the basis permutes exactly these finite choices. Descent of the contraction therefore returns a $\Gamma$-object. Conversely, Book 14's finite decontraction construction gives such data fppf-locally on every $\Gamma$-object, and two choices differ by a unique element of $G_M$. The overlap elements satisfy the torsor cocycle. These two constructions are inverse, proving (6.1) as an equivalence of groupoids rather than merely a bijection on geometric points. The Tate branch rings $A'[[s]]/A[[q]]$ computed in Section 5.1 verify the same statement on completed boundary charts.
 
 At a point $y\in Y_M$, the stabilizer in $G_M$ is naturally the automorphism group of the underlying $\Gamma$-object together with its action on the chosen branch. Thus (6.1) retains exactly the inertia that auxiliary level removed.
 
@@ -527,9 +556,11 @@ $$
 
 A suitable power descends to an ample bundle on the quotient. Equivalently, a finite surjective image of a projective scheme is projective in this setting.
 
+The quotient is also normal. On every invariant affine chart this is Lemma 12.1 applied to the normal ring upstairs, componentwise if the group permutes components. It is flat over $B_\Gamma$: an invariant subring of a torsion-free algebra is torsion-free, and over the Dedekind bases in Section 1.2 finite-type torsion-free modules are flat. These properties are local on the base and therefore survive the gluing below.
+
 ### 6.3 The coarse universal property
 
-**Theorem 6.1.** The map
+**Theorem 6.1.** On the open base fixed in Section 6.1, the map
 
 $$
 \pi:\overline{\mathcal M}(\Gamma)\longrightarrow X(\Gamma) \tag{6.6}
@@ -547,9 +578,28 @@ The proof also explains why the stack-to-coarse map need not be representable: i
 
 The coarse universal property makes $X(\Gamma)$ independent, up to unique isomorphism, of $M$, of the projective closure, and of every common refinement used in the construction. Any two candidates receive the stack and are universal for the same maps, so their universal arrows are inverse.
 
-One auxiliary integer need not be invertible on the entire natural arithmetic base. This causes no global gap. The two opens $\operatorname{Spec}\mathbf Z[1/2]$ and $\operatorname{Spec}\mathbf Z[1/3]$ cover $\operatorname{Spec}\mathbf Z$. Use auxiliary level $4$ on the first and level $3$ on the second. Their coarse quotients agree uniquely over $\mathbf Z[1/6]$ and therefore glue. The resulting proper morphism is projective locally on this finite open cover. Projectivity is Zariski-local on a quasi-compact base in the form proved in Book 8: after taking suitable powers, finitely many local projective embeddings combine into one global projective-bundle embedding. Thus the glued curve is globally projective. The same argument works after finite base change.
+One auxiliary integer need not be invertible on the entire natural arithmetic base. This causes no global gap. The two opens $\operatorname{Spec}\mathbf Z[1/2]$ and $\operatorname{Spec}\mathbf Z[1/3]$ cover $\operatorname{Spec}\mathbf Z$. Use auxiliary level $4$ on the first and level $3$ on the second. Their coarse quotients agree uniquely over $\mathbf Z[1/6]$ and therefore glue. The same construction works after finite base change. Notice that this gives local quotient presentations; it does not falsely assert one global presentation $[Y_M/G_M]$ when no single $M$ is invertible on the entire base.
 
-Since the stack is proper and the coarse curve is obtained as a finite quotient of the proper fine cover, $X(\Gamma)$ is proper. Since the fine cover is projective and the quotient finite, $X(\Gamma)$ is projective. Its geometric fibers have dimension one: a finite surjective map preserves dimension, and the fine modular scheme has one-dimensional geometric fibers by the elliptic deformation parameter on the smooth locus and the one-parameter Tate charts at the boundary.
+More explicitly, let $B'$ be the disjoint union of these two opens after base change to $B_\Gamma$. Then $B'\to B_\Gamma$ is faithfully flat, and the disjoint union of the level-$4$ and level-$3$ fine curves is projective over $B'$ and finite surjective over $\overline{\mathcal M}(\Gamma)_{B'}$. Thus arguments on ordinary projective curves may always be made after this faithfully flat base cover and descended. What is unavailable in general is a single projective fine curve over $B_\Gamma$ carrying one constant auxiliary level.
+
+There is also a direct global projectivity check which avoids asking local auxiliary polarizations to agree. On the stable unlevelled stack, the generalized Weierstrass invariants give
+
+$$
+\overline{\mathcal M}_{1,1}\longrightarrow\mathbf P^1_{\mathbf Z},
+\qquad E\longmapsto[c_4(E)^3:\Delta(E)]. \tag{6.6a}
+$$
+
+Admissible coordinate changes multiply both entries by the same twelfth power, and they never vanish simultaneously on a smooth or nodal generalized elliptic curve. On the smooth chart their ratio is the $j$-invariant, while the Tate equation sends the cusp to $[1:0]$. The coarse universal property on the two auxiliary opens therefore factors (6.6a) through a global map $X(1)\to\mathbf P^1_{\mathbf Z}$. It is proper and quasi-finite: over an algebraically closed field, $j$ classifies elliptic curves and there is one nodal orbit at infinity. Hence it is finite. The local invariant quotients are normal by Lemma 12.1 below, so $X(1)$ is normal; its dense characteristic-zero fiber has the usual $j$ as a coordinate, making the finite map birational. A finite birational map to the normal integral scheme $\mathbf P^1_{\mathbf Z}$ is an isomorphism. Thus $X(1)=\mathbf P^1_{\mathbf Z}$ without importing a later modular-form calculation.
+
+For general $\Gamma$, forgetting level and contracting invisible components is representable, proper, and quasi-finite: a fixed stable generalized elliptic curve has only finitely many decontractions and finite level choices. Properness follows from the valuative extension already proved, and quasi-finiteness from the component and torsion bounds. Hence the induced coarse map
+
+$$
+X(\Gamma)\longrightarrow X(1)_{B_\Gamma} \tag{6.6b}
+$$
+
+is finite, as can be checked on the finite auxiliary covers. A finite morphism to the projective line is projective. Thus the glued coarse curve is globally projective even when no single auxiliary integer is invertible on the whole base.
+
+On every auxiliary open, the coarse curve is the finite quotient of a proper fine cover and is therefore proper, normal, and flat. These properties are local on the base, so the glued $X(\Gamma)$ has them as well. Global projectivity follows from the finite map (6.6b) to $\mathbf P^1_{B_\Gamma}$. Its geometric fibers have dimension one: this may be checked on an auxiliary fine cover, where the elliptic deformation parameter on the smooth locus and the one-parameter Tate charts at the boundary give pure dimension one.
 
 We have constructed a projective coarse modular curve over $B_\Gamma$. At wild exceptional quotient points, projectivity says nothing by itself about the completed invariant ring. At primes outside $B_\Gamma$, no integral coarse model has yet been claimed. Projectivity is global; regularity and integral extension are local questions.
 
@@ -564,7 +614,7 @@ $$
 \overline{\mathcal M}(\Gamma)\setminus\mathcal M(\Gamma) \tag{7.1}
 $$
 
-with its scheme-theoretic boundary structure. Smoothness of a proper flat curve is open, so the complement is closed. The level bound leaves only finitely many polygon sizes, and the automorphism and level data on a polygon form finite moduli over the base. Hence the boundary is quasi-finite. Properness of the compactified stack and the valuative cusp charts make it proper; a proper quasi-finite morphism is finite. Thus the cusp stack is finite over $B_\Gamma$.
+first as the closed complement on underlying substacks; Section 7.3 gives it its canonical Cartier structure. The locus where the universal generalized elliptic curve is smooth is open, so the complement is closed. The level bound leaves only finitely many polygon sizes, and after a finite framing the level and automorphism data on a polygon form a finite scheme over the base. Hence the boundary stack is proper, flat, and quasi-finite over $B_\Gamma$: on a framed chart it is $t=0$ in $A[[t]]$, hence is $\operatorname{Spec}A$ with $A$ finite etale over the base. Its pullback to every fine cover is finite. It is important not to call the morphism $\mathcal C(\Gamma)\to B_\Gamma$ finite: a finite morphism of algebraic stacks is representable, whereas a cusp can retain nontrivial inertia. Its coarse cusp, constructed below, is finite over the base.
 
 Geometrically, its connected pieces are classified by Tate level data modulo automorphisms. For $\Gamma_1(N)$ a cusp may be represented after finite extension by a pair of Tate parameters
 
@@ -614,7 +664,7 @@ Thus the forgetful map has boundary order $1$ on the first chart and $p$ on the 
 
 ### 7.3 The Cartier divisor theorem
 
-**Theorem 7.1.** The boundary $\mathcal C(\Gamma)$ is an effective Cartier divisor on the compactified modular stack in every Tate chart. Globally these local divisors glue to a canonical effective Cartier divisor.
+**Theorem 7.1.** The boundary $\mathcal C(\Gamma)$ is a relative effective Cartier divisor on the compactified modular stack. Its equations on the framed Tate charts glue to a canonical global divisor.
 
 **Proof.** On the framed chart $\operatorname{Spf}A[[t]]$, the ideal is $(t)$. Multiplication by $t$ is injective even if $A$ has nilpotents: if $t\sum a_nt^n=0$, comparison of coefficients gives every $a_n=0$. Hence $t$ is a non-zero-divisor and defines an effective Cartier divisor.
 
@@ -630,13 +680,13 @@ on that branch. This is an equality of Cartier divisors, not merely of sets.
 
 ### 7.4 The cusp on the coarse curve
 
-The image of the cusp stack is a finite closed subscheme
+The quotient of the framed cusp locus, equivalently the scheme-theoretic image of the cusp stack in the coarse curve, is a finite closed subscheme
 
 $$
 C(\Gamma)\subset X(\Gamma). \tag{7.7}
 $$
 
-On a quotient chart $[\operatorname{Spec}B/G]$, its ideal downstairs is the contraction of the boundary ideal to $B^G$. Set-theoretically it is exactly the image of $t=0$. On a tame chart where the effective stabilizer is cyclic of order $e$ and acts by $t\mapsto\zeta t$, one has
+On a quotient chart $[\operatorname{Spec}B/G]$, its ideal downstairs is the contraction of the boundary ideal to $B^G$. Set-theoretically it is exactly the image of $t=0$. After strict henselization and completion at a tame geometric cusp, the stabilizer fixes the coefficient field, its effective image is cyclic of order $e$, and a linearized parameter has action $t\mapsto\zeta t$. On that completed chart one has
 
 $$
 B^G\simeq A[[t^e]],\qquad C(\Gamma)=(t^e). \tag{7.8}
@@ -673,7 +723,7 @@ After rigidification, the residual stabilizer in characteristic different from $
 The Weierstrass equation displays why the generic involution is ineffective on the base. In characteristic different from $2$ and $3$, write
 
 $$
-E_{a,b}:y^2=x^3+ax+b,qquad
+E_{a,b}:y^2=x^3+ax+b,\qquad
 \Delta=-16(4a^3+27b^2). \tag{8.1a}
 $$
 
@@ -683,7 +733,7 @@ At $j=1728$ one has $b=0$ and $a\neq0$. After using scaling to hold $a$ fixed, $
 
 ### 8.3 Completed local rings in the tame case
 
-Let $x$ be a geometric point of a fine cover above an exceptional point, let $H$ be its stabilizer after removing ineffective inertia, and let
+Let $x$ be a geometric point of a fine cover above an exceptional point, let $H$ be its stabilizer after removing ineffective inertia, and take the completed local ring in the geometric fiber. Write
 
 $$
 R_x\simeq k[[t]] \tag{8.2}
@@ -707,7 +757,7 @@ To prove this, write a series $f=\sum c_nu^n$. Invariance under a generator with
 
 This calculation explains the exceptional stack/coarse comparison. The coarse curve can be smooth even though the coarse map has nontrivial stabilizer behavior. The stack has fractional local degrees and stabilizer-weighted divisors; the coarse curve has an ordinary DVR whose parameter is the invariant power.
 
-For the rigidified unlevelled stack in characteristic different from $6$, the preceding Weierstrass calculation gives
+For the rigidified unlevelled stack in characteristic different from $6$, the preceding Weierstrass calculation gives, on geometric fibers,
 
 $$
 \widehat{\mathcal O}_{X(1),1728}\simeq k[[u^2]],
@@ -725,7 +775,7 @@ The tame proof uses division by $|H|$. In characteristics $2$ and $3$, the excep
 
 First, the coarse scheme still exists by the finite quotient construction. Second, flat base change of invariants remains valid, but arbitrary base change can fail. Third, regularity of the invariant ring cannot be inferred from (8.4); it requires a direct calculation of the actual deformation action.
 
-There is an additional subtlety: the stabilizer group scheme may have infinitesimal directions invisible in its geometric point set. A claim based only on the number of automorphisms over an algebraic closure can therefore miss inertia. The finite diagonal records the group scheme, and the quotient presentation must retain it.
+There is an additional subtlety: even an etale stabilizer of order divisible by the characteristic is not linearly reductive, so counting its geometric automorphisms does not justify averaging or exactness of invariants. The finite diagonal records the whole stabilizer and its deformation action, and the quotient presentation must retain both.
 
 This is the exact boundary of the current theorem. Exceptional characteristics are included in the proper stack and coarse-scheme constructions, but their detailed regularity and special-fiber equations are not smuggled in from the tame calculation.
 
@@ -841,7 +891,7 @@ g^*E_{Y_M}\simeq E_{Y_M},\qquad
 g^*(E_{Y_M}/C_{Y_M})\simeq E_{Y_M}/C_{Y_M}. \tag{10.4}
 $$
 
-under which $g^*\Phi_{Y_M}$ equals $\Phi_{Y_M}$. The cocycle condition holds because all isomorphisms are determined on the dense smooth locus. Thus the source, target, and morphism carry descent data along the action groupoid.
+under which $g^*\Phi_{Y_M}$ equals $\Phi_{Y_M}$. These isomorphisms come functorially from changing the auxiliary basis and from the universal property of the quotient by $C_{Y_M}$, so they satisfy the cocycle condition over arbitrary, including nonreduced, test schemes. Thus the source, target, and morphism carry descent data along the action groupoid.
 
 Effective descent produces (10.1) on the quotient stack. This is the precise descent of the universal isogeny: it descends from the auxiliary fine scheme to the original moduli stack, independently of the auxiliary level.
 
@@ -953,7 +1003,7 @@ is a map to an algebraic space, so it factors uniquely through $X$. Thus all for
 
 Compatibility is automatic. If two composites of stack maps agree, their induced maps of coarse spaces agree by uniqueness. In particular the two degeneracy maps and diamond actions satisfy on coarse curves all relations already proved on the stack.
 
-Finiteness can be checked on fine covers. A change-of-level map has finite fibers because only finitely many level structures occur on a fixed generalized curve, and properness turns quasi-finiteness into finiteness. Therefore the standard degeneracy maps between compactified coarse modular curves are finite in the finite-level situations considered here.
+Finiteness can be checked on compatible fine covers. A change-of-level map is representable and has finite fibers because an automorphism preserving the larger level injects into the automorphism group preserving the retained level, and only finitely many larger level structures occur on a fixed generalized curve. It is proper: its graph is closed because the target has finite separated diagonal, while the source is proper over the base. Thus it is proper and quasi-finite, hence finite. Taking finite quotients on compatible covers shows that the standard induced maps between compactified coarse modular curves are finite.
 
 ### 11.4 Graphs and finite correspondences
 
@@ -973,14 +1023,14 @@ The correspondence descends even when the universal isogeny does not. It records
 
 ### 12.1 Finite maps between compactified stacks
 
-Let $\Gamma'\subset\Gamma$ be finite-index level types with the usual contraction inserted after forgetting level. The induced map
+Let $\Gamma'$ denote a finer finite-index level type than $\Gamma$, with the usual contraction inserted after forgetting level. The induced map
 
 $$
 \overline{\mathcal M}(\Gamma')\longrightarrow
 \overline{\mathcal M}(\Gamma) \tag{12.1}
 $$
 
-is proper and quasi-finite. Properness follows because both stacks are proper and the map satisfies the valuative extension property. Quasi-finiteness follows from finite level choices over a fixed curve together with uniqueness of the contraction selected by the retained divisor. Hence it is finite.
+is representable, proper, and quasi-finite. Representability follows from injectivity on level-preserving automorphisms together with the level-parameter schemes of Book 116. Properness follows from the closed-graph argument just used, or directly from the valuative extension property. Quasi-finiteness follows from finite level choices over a fixed curve together with uniqueness of the contraction selected by the retained divisor. Hence it is finite.
 
 At a cusp, finiteness is visible from $q=t^w$: the inclusion of complete local rings $A[[q]]\to A'[[t]]$ is finite when $A'/A$ is finite and $t$ satisfies $T^w-q=0$. This calculation also gives the ramification index along the cusp divisor.
 
@@ -1025,22 +1075,22 @@ This boundary is logically important. Properness is a valuative statement, coars
 
 **Theorem 13.1 (compactified stack and coarse curve).** Let $\Gamma$ be one of the full, point, or cyclic level types defined by ample Drinfeld data, and work over the good-level base $B_\Gamma$ specified in Section 1.2. Then:
 
-1. $\overline{\mathcal M}(\Gamma)$ is a normal proper algebraic stack of finite presentation with finite separated diagonal;
+1. $\overline{\mathcal M}(\Gamma)$ is a smooth, hence flat and normal, proper algebraic stack of pure relative dimension one and finite presentation, with finite separated diagonal;
 2. its open dense substack $\mathcal M(\Gamma)$ classifies smooth elliptic curves with the same level;
-3. after adjoining auxiliary full level $M\geq3$ on the smooth locus and taking normalized projective closure, there is a projective fine moduli scheme $Y_M$ finite and surjective over the stack;
-4. for the finite change-of-level group $G_M$,
+3. Zariski-locally on $B_\Gamma$, after choosing an auxiliary full level $M\geq3$ invertible there and its boundary decontraction, there is a projective fine moduli scheme $Y_M$ finite and surjective over the restricted stack; these fine curves form one projective cover after a faithfully flat disjoint-union base change, and whenever one such $M$ is invertible on all of $B_\Gamma$, the cover is global over $B_\Gamma$;
+4. on every such open, for the finite change-of-level group $G_M$,
 
    $$
    \overline{\mathcal M}(\Gamma)\simeq[Y_M/G_M],
    \qquad X(\Gamma)=Y_M/G_M;
    $$
 
-5. $X(\Gamma)$ is a projective coarse modular curve, independent of $M$;
-6. the stack boundary is a finite effective Cartier divisor, locally cut out by a Tate parameter; its coarse image is finite and is Cartier with the computed invariant parameter on tame charts;
+5. the local quotients glue uniquely to a normal flat projective coarse modular curve $X(\Gamma)$ of pure relative dimension one, independent of every auxiliary choice;
+6. the stack boundary is a flat proper quasi-finite relative effective Cartier divisor, locally cut out by a Tate parameter; its pullback to a fine cover and its coarse image are finite over the base, and the coarse image is Cartier with the computed invariant parameter on tame completed charts;
 7. universal cyclic isogenies descend from fine covers to the moduli stack, while their source and target maps always descend to coarse curves;
-8. at tame exceptional automorphism points, the completed coarse local ring is the invariant subring of the stack chart, explicitly $k[[t^e]]$ when the effective stabilizer acts by $t\mapsto\zeta_et$.
+8. at tame exceptional automorphism points, the completed local ring on the geometric coarse fiber is the invariant subring of the framed stack chart, explicitly $k[[t^e]]$ when the effective stabilizer acts by $t\mapsto\zeta_et$.
 
-**Proof.** Algebraicity and finite diagonal are Theorem 3.1. Properness is Theorem 4.1. The fine projective cover is Theorem 5.2. The quotient-stack presentation and coarse construction are Theorem 6.1 and Section 6.4. The boundary assertions are Theorem 7.1 and Section 7.4. Chapters 10 and 11 prove isogeny and degeneracy descent. The invariant complete-local calculation is Section 8.3. Every item retains the hypotheses stated there. $\square$
+**Proof.** Algebraicity, smoothness, dimension, normality, and finite diagonal are Theorem 3.1. Properness is Theorem 4.1. The local fine projective covers are Theorem 5.2 applied wherever the chosen $M$ is invertible. The quotient-stack presentation, faithfully flat cover, gluing, and global projectivity are Theorem 6.1 and Section 6.4. The boundary assertions are Theorem 7.1 and Section 7.4. Chapters 10 and 11 prove isogeny and degeneracy descent. The invariant complete-local calculation is Section 8.3. Every item retains the hypotheses stated there. $\square$
 
 ### 13.2 A hypothesis ledger
 
@@ -1071,9 +1121,9 @@ This ledger is part of the theorem package: removing one hypothesis changes the 
 
 ### 13.4 Dependency closure
 
-No compactification conclusion has been imported from a later book. The projective parameter and finite quotient arguments are exactly the results of Book 8. The normalization statements and ramified-base-change warning are exactly the results of Book 10. The quotient-stack, rigidification, coarse universal property, and tame descent criteria are exactly the results of Book 14. The polygon arithmetic, Drinfeld level, contraction, boundary quotient, Tate deformation, and cusp formulas are exactly the results of Book 116.
+No compactification conclusion has been imported from a later book. The projective parameter and finite quotient arguments are exactly the results of Book 8. The normalization statements and ramified-base-change warning are exactly the results of Book 10. The quotient-stack, rigidification, finite auxiliary decontraction, coarse universal property, and tame descent criteria are exactly the results of Book 14. The polygon arithmetic, Drinfeld level, contraction, boundary quotient, Tate deformation, and cusp formulas are exactly the results of Book 116.
 
-The only ordinary background beyond those books is the valuative criterion for proper algebraic stacks and the integral reconstruction of a generalized Weierstrass equation from scaled invariants. Potential semistability for elliptic curves was proved in Lemma 4.0 from that reconstruction and the Tate inverse series. The finite-group invariant calculations needed at issue were also proved explicitly here. No regularity or special-fiber theorem from a later stage has been used.
+The only ordinary background beyond those books is the valuative criterion for proper algebraic stacks and the elementary algebra of generalized Weierstrass coordinate changes. Lemma 4.0 proves potential semistability from that coefficient algebra and the Tate inverse series, including the weighted reconstruction step in residue characteristics $2$ and $3$. The finite-group invariant calculations needed at issue were also proved explicitly here. No regularity or special-fiber theorem from a later stage has been used.
 
 ## 14. Conclusion
 
@@ -1081,7 +1131,7 @@ The only ordinary background beyond those books is the valuative criterion for p
 
 The compactification begins with one geometric fact: a degenerating elliptic curve retains a group on its smooth locus and records valuation classes in a polygon. Drinfeld divisors allow level to survive collisions, and ampleness forces that level to see every component. These conditions bound the boundary and turn it into a finite-presentation moduli problem.
 
-Projective embeddings then provide algebraic charts. The valuative analysis fills every punctured family by a good or Tate boundary object and proves properness. Auxiliary full level removes automorphisms and turns the stack into a projective fine scheme. A finite change-of-level quotient restores the original moduli problem as a quotient stack and produces its projective coarse curve.
+Projective embeddings then provide algebraic charts. The valuative analysis fills every punctured family by a good or Tate boundary object and proves properness. Auxiliary full level removes automorphisms and gives projective fine schemes locally on the arithmetic base, and globally whenever one auxiliary order is invertible everywhere. Finite change-of-level quotients restore the original moduli problem and glue to its projective coarse curve.
 
 Thus the route is
 

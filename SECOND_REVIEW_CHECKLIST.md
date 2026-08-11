@@ -140,7 +140,7 @@ any resulting corrections.
 - [ ] 114. Twisted Cuspidal Trace Kernels and Spectral Expansion
 - [ ] 115. Twisted Orbital Matching and the Cyclic Fundamental Lemma
 - [x] 116. Generalized Elliptic Curves and Level Structures
-- [ ] 117. Compactified Modular Stacks and Coarse Modular Curves
+- [x] 117. Compactified Modular Stacks and Coarse Modular Curves
 - [ ] 118. Deligne–Rapoport Integral Models of Modular Curves
 - [ ] 119. Integral Modular Forms and q-Expansion
 - [ ] 120. Modular and Shimura Curves
