@@ -160,13 +160,14 @@ $$
 
 and let $\bar V=k^d$ with its induced action. A lift over $A$ is a free $A$-module $V_A$ of rank $d$, equipped with a continuous $A$-linear $G_K$-action and an identification $V_A\otimes_Ak\simeq\bar V$. In the fixed residual basis this is a homomorphism $\rho_A:G_K\to\operatorname{GL}_d(A)$ reducing exactly to $\bar\rho$.
 
-The preceding theory enters in five precise forms. Book 48 supplies marked
+The preceding theory enters in six precise forms. Book 48 supplies marked
 finite-flat models, saturated closure of a generic subgroup in a fixed
 model, represented quotients, coefficient actions, and Cartier duality.
 Book 30 supplies finiteness and Euler characteristics for local Galois
-cohomology. Book 64 supplies strict equivalence, adjoint tangent spaces, and
-the complete matrix obstruction across a small extension. Book 65 supplies
-the fiber-product criteria for hulls and universal rings. In the
+cohomology, while Book 31 supplies Tate local duality and its functoriality.
+Book 64 supplies strict equivalence, adjoint tangent spaces, and the complete
+matrix obstruction across a small extension. Book 65 supplies the
+fiber-product criteria for hulls and universal rings. In the
 unramified low-weight range, Book 59 supplies the exact contravariant
 Fontaine--Laffaille anti-equivalence, unramified base change, and the
 admissible-annihilator construction for nonflat coefficient quotients. The
@@ -628,7 +629,13 @@ $$
 
 is a $k$-linear subspace.
 
-**Proof strategy.** Construct Baer sums without identifying the endpoint models. Put two integral middle terms into one direct-sum ambient model, perform the generic pullback and pushout there, and use saturated closure and represented quotient to keep every intermediate object finite flat.
+**Proof strategy.** Construct the underlying Baer sum without identifying
+the endpoint models. Put two integral middle terms into one direct-sum
+ambient model, perform the generic pullback and pushout there, and use
+saturated closure and represented quotient to keep the resulting generic
+middle module finite flat. The componentwise dual-number action is not the
+right action on the Baer sum; after the underlying model has been built, the
+coefficient-saturation lemma supplies the required $k[\epsilon]$-action.
 
 **Proof.** The split self-extension has the product model, so zero is present. Suppose $\xi_1$ and $\xi_2$ are represented by finite-flat $k[\epsilon]$-linear middle terms $\mathcal H_1$ and $\mathcal H_2$. Their direct product models the direct sum of the two generic self-extensions. The Baer sum first pulls back along the diagonal
 
@@ -636,9 +643,31 @@ $$
 \bar V\longrightarrow\bar V\oplus\bar V
 $$
 
-on the quotient side. Close the resulting generic fiber product inside $\mathcal H_1\times\mathcal H_2$. Next push out the subobject $\bar V\oplus\bar V$ along addition. This is achieved by closing the generic kernel of addition and taking the represented quotient. The coefficient action preserves every generic subgroup involved, hence every closure. The resulting finite-flat middle term has generic class $\xi_1+\xi_2$.
+on the quotient side. Close the resulting generic fiber product inside
+$\mathcal H_1\times\mathcal H_2$. Next push out the subobject
+$\bar V\oplus\bar V$ along addition. This is achieved by closing the generic
+kernel of addition and taking the represented quotient. The $k$-action
+preserves every generic subgroup involved, hence every closure. The
+resulting finite-flat middle term has generic class $\xi_1+\xi_2$.
 
-For $a\in k$, scalar multiplication of a class is the pushout along $a:\bar V\to\bar V$ on the subobject. Perform the same closure-and-quotient construction inside a supplied model. It gives an integral representative of $a\xi$. Therefore the image is closed under addition and scalar multiplication. $\square$
+The componentwise $\epsilon$-action must not be retained. On a point lying
+over the diagonal class $v$, it gives $(v,v)$ in the two kernel copies, and
+pushout along addition would send this to $2v$. This is not the
+quotient--identity--inclusion map required for the dual-number module of the
+Baer sum. The underlying generic middle term nevertheless has its canonical
+free $k[\epsilon]$-module structure: $\epsilon$ is quotient, followed by the
+identity of $\bar V$, followed by inclusion. The coefficient-saturation
+lemma of §2.1 replaces the model just constructed, if necessary, by a
+finite-flat model carrying exactly this $k[\epsilon]$-action. Hence
+$\xi_1+\xi_2$ lies in the existential tangent condition.
+
+For $a\in k$, scalar multiplication of a class is the pushout along
+$a:\bar V\to\bar V$ on the subobject. Perform the same
+closure-and-quotient construction inside a supplied model. Its generic
+middle term is the self-extension $a\xi$ and so has its canonical free
+$k[\epsilon]$-module structure. Applying coefficient saturation once more
+gives a compatible integral model. Therefore the image is closed under
+addition and scalar multiplication. $\square$
 
 This proof is stronger than the assertion that each chosen-model image is a subspace. It explains why varying endpoint models does not destroy linearity: two choices can always be compared inside a larger direct-sum ambient object, where closure is unique.
 
@@ -1174,6 +1203,23 @@ $$
 for a closed ideal $I_{\mathrm{fl}}$. The same proof applies to the fixed-determinant and unframed rings whenever they exist.
 
 This argument proves closedness from representability and monomorphism. It does not say that a parameter space of all models is proper, nor does it require such a space.
+
+It also gives the relative form needed when local conditions are imposed on
+a supplied family. If a complete Noetherian local ring $T$ carries an
+ambient framed family through a map $R^{\square}\to T$, then the pullback of
+the finite-flat subfunctor is represented by
+
+$$
+T\widehat\otimes_{R^{\square}}S
+\simeq T/\overline{I_{\mathrm{fl}}T}. \tag{9.1}
+$$
+
+Indeed, maps from the completed tensor product to an Artinian test ring are
+exactly ambient $T$-points whose induced $R^{\square}$-point factors through
+$S$. Thus finite flatness is closedly relatively representable, not merely
+represented at the residual point. The same base-change argument applies to
+fixed-determinant and unframed families whenever their ambient and
+finite-flat functors are represented.
 
 ### 9.4 Complete coefficient rings
 
@@ -1971,7 +2017,7 @@ integral identities. The second assertion is (14.2). For the third, extend
 the endomorphisms occurring in both sides of the proposed identity; the two
 composites agree generically and therefore agree integrally. For the final
 assertion, regard a pairing as a map to a Cartier dual, use the compatibility
-of Cartier duality with generic fibers from Book 47, and apply the first
+of Cartier duality with generic fibers from Book 48, and apply the first
 three assertions. $\square$
 
 Since $e(K)=1$, Corollary 14.2 applies to every model in our deformation
@@ -2348,7 +2394,7 @@ projective coefficient-flat module into the weight-one coefficient object
 gives the internal $A$-linear dual in (14.11). Its annihilator filtration
 gives complementary ranks, and inverse-adjoint divided Frobenius gives the
 dual structure. Exactness of ordinary Cartier duality is inherited from
-Book 47; generic compatibility of the internal coefficient-linear dual was
+Book 48; generic compatibility of the internal coefficient-linear dual was
 proved in Theorem 14.3. Determinants in rank two are
 then exterior pairings into a rank-one weight-one object; the determinant
 of a divided-Frobenius matrix is therefore the correct scalar, not a formal
@@ -3259,7 +3305,7 @@ that data is not a decomposition of the full ring.
 
 Only now do we pass from the explicit lifting and tangent calculations to
 universal rings. The representability results of Chapter 9, built from the
-coefficient-ring and Schlessinger theory of Books 62 and 64--65, convert formal
+coefficient-ring and Schlessinger theory of Books 64--65, convert formal
 smoothness plus the calculated tangent dimension into a power-series ring.
 
 **Theorem 17.1 (finite-flat local rings over an unramified base).** Let
@@ -3332,7 +3378,7 @@ All displayed power-series isomorphisms are noncanonical.
 **Proof.** The general framed representability theorem is Theorem 9.1. The
 explicit construction of §16.1 proves formal smoothness without using an
 ambient obstruction group. The tangent dimension is (15.28). The
-power-series criterion of Books 62 and 65 therefore gives (17.1).
+power-series criterion of Book 65 therefore gives (17.1).
 
 If $h=1$, Theorem 9.2 gives unframed pro-representability. Forgetting a
 frame after the lift constructed in §16.1 proves unframed formal smoothness,
