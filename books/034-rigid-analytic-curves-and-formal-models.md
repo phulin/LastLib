@@ -107,6 +107,15 @@ We use the classical strict theory: coordinate radii belong to $|K^\times|$. Clo
 
 All rings are commutative. Analytic spaces are assumed quasi-separated when intersections or coherent descent are discussed, and formal schemes are locally noetherian and topologically of finite type over $R$ unless stated otherwise.
 
+The dependency boundary is as follows. Book 1 supplies completeness, extensions of the
+absolute value to finite fields, valuation rings, and Hensel lifting. Book 10 supplies finite
+normalization and regular proper models of algebraic curves over the excellent DVR $R$; it
+explicitly does not supply semistable reduction. Book 18 supplies adic rings, formal spectra,
+formal completion, coherent formal sheaves, and proper formal algebraization, but constructs
+no nonarchimedean generic fiber. The Tate-algebra, rigid-space, generic-fiber, and rigid GAGA
+theorems used below are therefore proved in this book rather than attributed to those
+prerequisites.
+
 ### 1.3 Three kinds of fiber
 
 Let $\mathfrak X$ be a flat formal scheme over $\operatorname{Spf}R$. It has two honest fibers and mediates between two geometries:
@@ -183,7 +192,7 @@ A crucial warning is that the maximum principle does not say a nonconstant analy
 Suppose
 
 $$
-f=a_0+h,qquad \|h\|_G<|a_0|.
+f=a_0+h,\qquad \|h\|_G<|a_0|.
 $$
 
 Then
@@ -202,20 +211,51 @@ An element $u$ with $\|u\|<1$ is topologically nilpotent, because $u^m\to0$. Suc
 
 Finite presentation is indispensable for geometry, so the analytic coordinate ring must be noetherian. The proof is an analytic form of polynomial division.
 
-Call $g\in K\langle T_1,\ldots,T_n\rangle$ **distinguished in $T_n$ of degree $d$** if, viewed as a series in $T_n$, its coefficient of $T_n^d$ has norm one, all higher coefficients have norm less than one, and lower coefficients have norm at most one. Then every $f$ admits unique elements
+Write $g=\sum_{j\geq0}g_jT_n^j$ with
+$g_j\in K\langle T_1,\ldots,T_{n-1}\rangle$. Call $g$ **distinguished in
+$T_n$ of degree $d$** if $g_d=1$, every $g_j$ with $j>d$ has norm less than one,
+and every $g_j$ with $j<d$ has norm at most one. More generally one may allow $g_d$
+to be a unit of norm one whose inverse also has norm one, and then divide by $g_d$. Merely
+requiring $\|g_d\|=1$ would be insufficient: $g_d$ need not be a unit in the smaller Tate
+algebra.
+
+For distinguished $g$, every $f$ admits unique elements
 
 $$
-q\in K\langle T_1,\ldots,T_n\rangle,qquad
-r\in K\langle T_1,\ldots,T_{n-1}\rangle[T_n],quad \deg_{T_n}r<d,
+q\in K\langle T_1,\ldots,T_n\rangle,\qquad
+r\in K\langle T_1,\ldots,T_{n-1}\rangle[T_n],\quad \deg_{T_n}r<d,
 $$
 
 such that $f=qg+r$. The quotient and remainder are obtained by repeatedly canceling the leading $T_n$-term. The error norms tend to zero, so completeness supplies the limit; the distinguished inequalities prevent the process from increasing norms. Uniqueness follows by comparing the highest surviving term.
 
-Preparation factors a distinguished series as a unit times a monic polynomial of degree $d$ whose lower coefficients lie in the smaller Tate algebra. A change of variables can make a chosen nonzero series distinguished in the last variable. Induction on $n$, followed by division, proves:
+Preparation factors a distinguished series as a unit times a monic polynomial of degree $d$
+whose lower coefficients lie in the smaller Tate algebra. To make a nonzero series
+distinguished, first scale it to Gauss norm one and reduce it to a nonzero polynomial. A
+triangular substitution
+
+$$
+T_i\longmapsto T_i+T_n^{N_i}\quad(i<n),\qquad T_n\longmapsto T_n,
+$$
+
+with rapidly increasing $N_i$, makes the image of one chosen extremal monomial the unique
+highest power of $T_n$ in the reduction. Its coefficient is a nonzero scalar; after scaling,
+the transformed series is distinguished. This argument works over finite as well as infinite
+residue fields because it separates monomials rather than choosing a generic residue value.
+
+Induction on $n$, followed by division, now proves:
 
 **Theorem 2.1 (Tate).** For every $n\geq0$, $K\langle T_1,\ldots,T_n\rangle$ is noetherian. Every ideal is closed for the Gauss topology, and every finite module is complete for a quotient norm.
 
-The closedness assertion is not decorative. If an ideal were merely dense, quotienting would erase analytic information. Division supplies bounded normal forms, which show that limits of elements of an ideal remain in it.
+Here is the finite-generation step. Given an ideal $I$, choose a nonzero element of $I$,
+make it distinguished, and replace it by its prepared monic factor. Division identifies every
+class modulo that element with a polynomial of degree less than $d$ in $T_n$. The image of
+$I$ is therefore a submodule of a finite module over
+$K\langle T_1,\ldots,T_{n-1}\rangle$; the induction hypothesis makes it finite, and lifting
+generators makes $I$ finite. The same normal form gives a uniform estimate for the
+coefficients of the quotient and remainder. Applied to a convergent sequence in $I$, that
+estimate shows its limit remains in $I$. Thus every ideal is closed. Presenting a finite module
+as a quotient of a finite free module and applying the same closed-submodule argument proves
+its completeness.
 
 ### 2.6 Finite residue fields and the nullstellensatz
 
@@ -223,9 +263,26 @@ Points of an affine algebraic variety correspond to maximal ideals with finite r
 
 **Theorem 2.2 (analytic nullstellensatz).** If $A$ is a quotient of a Tate algebra and $\mathfrak m\subset A$ is maximal, then $A/\mathfrak m$ is a finite field extension of $K$.
 
-**Proof strategy.** Choose the smallest number of coordinates needed to generate the residue field. If one coordinate were transcendental over those before it, analytic division and a rapidly convergent series would construct an element that cannot lie in the finitely generated quotient, contradicting maximality. Thus every coordinate is algebraic, and finite generation makes the extension finite.
+**Proof.** It is enough to treat
+$A=K\langle T_1,\ldots,T_n\rangle/\mathfrak m$. Put $L=A/\mathfrak m$. The analytic
+form of Zariski's lemma says that if a field $F$ is finite over a Tate algebra
+$K\langle S_1,\ldots,S_r\rangle$, then $r=0$ and $F/K$ is finite. To prove it, make a
+nonzero relation distinguished in the last variable. Preparation makes that coordinate
+integral over the preceding Tate algebra, and iteration reduces to the assertion that no field
+can be finite over $K\langle S\rangle$ when at least one variable remains. In that case the
+inverses of $S_r-a$ in the finite module would have denominators bounded by finitely many
+coefficient norms. Choosing coefficients recursively with strictly decreasing norms produces
+a restricted series whose successive division remainders require unbounded denominators, a
+contradiction. The division estimates from Section 2.5 ensure that this is an equality of
+convergent series rather than a merely formal construction.
 
-The decisive point is convergence: coefficients can be chosen recursively with rapidly decreasing size, so the obstruction is an actual restricted series rather than a formal expression. The theorem implies that maximal ideals are closed and that evaluation at a point always lands in a complete valued field. It does not say every point is $K$-rational.
+Now use the same triangular changes of variables as in Section 2.5 to make $L$ finite over a
+Tate algebra on a maximal algebraically independent family among the coordinate images. The
+analytic lemma says that this family is empty. Thus all coordinate images are algebraic over
+$K$, and the finitely many of them generate a finite extension. $\square$
+
+The theorem implies that maximal ideals are closed and that evaluation at a point always
+lands in a complete valued field. It does not say every point is $K$-rational.
 
 ## 3. Affinoid algebras and their spaces
 
@@ -333,7 +390,16 @@ A\langle S_1,\ldots,S_m\rangle/
 (f_0S_1-f_1,\ldots,f_0S_m-f_m).
 $$
 
-The notation is suggestive but the displayed quotient is the definition; $f_0$ need not become invertible when some $f_i$ is $1$ only after imposing the relations and using the unit-ideal identity. At a point of the quotient, $S_i$ has size at most one, so the required inequalities hold. Conversely, those ratios exist in the residue field of every point of $U$, giving a unique lifted point.
+The notation is suggestive but the displayed quotient is the definition. In that quotient
+$f_0$ does become invertible: if $\sum a_if_i=1$, the relations give
+
+$$
+f_0\left(a_0+\sum_{i=1}^ma_iS_i\right)=1.
+$$
+
+At a point of the quotient, $S_i$ has size at most one, so the required inequalities hold.
+Conversely, those ratios exist in the residue field of every point of $U$, giving a unique
+lifted point.
 
 ### 4.2 The universal property
 
@@ -354,6 +420,12 @@ $$
 $$
 
 so $\varphi(f_0)$ is a unit. It follows both that each $b_i$ is forced to equal $\varphi(f_i)/\varphi(f_0)$ and that the factorization is unique. $\square$
+
+For the pointwise equivalence, if the image lies in $U$, then $\varphi(f_0)$ vanishes at no
+maximal point of $B$ and is therefore a unit. The ratios
+$b_i=\varphi(f_i)/\varphi(f_0)$ have spectral seminorm at most one, so they are power
+bounded by Section 3.3. The converse follows by evaluating the displayed equations at every
+point.
 
 This property proves that the algebra depends only on the subset $U$, not on the chosen rational presentation, up to unique bounded isomorphism. It also makes rational localization compatible with base change.
 
@@ -388,7 +460,37 @@ The two closed subdomains $|T|\leq|a|$ and $|T|\geq|a|$ cover the unit disc. The
 
 **Theorem 4.2.** If $U\subset\operatorname{Sp}A$ is a rational domain with algebra $A_U$, then $A\to A_U$ is flat. Rational localization is transitive: if $V$ is rational in $U$, then $V$ is rational in $\operatorname{Sp}A$, and its algebra is the corresponding completed base change.
 
-**Proof strategy.** For a single Weierstrass inequality, division by the new coordinate gives normal forms and proves exactness after tensoring. A Laurent inequality is treated by the relation $gS-1$ and the same division argument. General rational domains admit finite refinements by composites of these elementary cases. Flatness descends across the finite faithfully flat comparison supplied by the refinement.
+**Proof.** We first record the elementary strictness argument. If $M'\subset M$ are finite
+$A$-modules, choose quotient norms from finite free presentations. Closedness of submodules,
+together with the division estimates of Section 2.5, gives
+
+$$
+M'\langle S\rangle\cap(S-f)M\langle S\rangle
+=(S-f)M'\langle S\rangle.
+$$
+
+The proof recursively compares coefficients of a putative relation, uses the noetherian
+stabilization of the colon modules $(M':f^n)$ to bound the recursion uniformly, and then takes
+the convergent limit. Replacing $S-f$ by $gS-a$ gives the same equality for a Laurent
+relation. After quotienting, these intersection equalities say exactly that
+$M'\otimes_AA_U\to M\otimes_AA_U$ is injective for a single Weierstrass or Laurent
+inequality. The ideal criterion for flatness therefore makes both elementary localization
+maps flat.
+
+For the rational domain defined by $f_0,\ldots,f_m$, choose
+$1=\sum a_if_i$. On the domain one has
+
+$$
+1\leq\max_i\|a_i\|\,|f_0|.
+$$
+
+Choose $0\ne c\in K$ with $|c|\max_i\|a_i\|\leq1$. First pass to the Laurent domain
+$|f_0|\geq|c|$ and then impose the Weierstrass inequalities
+$|f_i/f_0|\leq1$. The universal property identifies the composite algebra with $A_U$.
+Flatness is preserved by composition. If a second rational localization is made inside $U$,
+substitution clears the finitely many displayed denominators; the universal property then
+gives one rational presentation in $A$ and identifies its algebra with the completed base
+change. This proves transitivity. $\square$
 
 The map need not be faithfully flat: a nonempty rational domain can miss an entire component. Faithfulness is recovered from a finite rational cover $X=\bigcup U_i$; then
 
@@ -441,13 +543,17 @@ $$
 
 is exact.
 
-**Proof strategy.** A rational cover can be refined into elementary two-piece covers associated with an inequality $|f|\leq|g|$ and its reverse. For such a cover, convergent division gives the equalizer assertion and explicitly splits the higher Čech terms. Repeating this construction proves exactness for Laurent covers. A finite rational cover has a Laurent refinement, and a comparison of the two Čech complexes transfers exactness.
+**Proof strategy.** A rational cover can be refined into elementary two-piece covers associated with an inequality $|f|\leq|g|$ and its reverse. For such a cover, convergent division gives the equalizer assertion and a bounded contracting homotopy on the augmented Čech complex. Repeating this construction proves exactness for Laurent covers. A finite rational cover has a Laurent refinement; the double Čech complex for the cover and its refinement transfers the contraction, and hence exactness, to the original cover.
 
 The decisive analytic detail is bounded division. Algebraic equality on overlaps alone would not control whether the glued series converges. The norm estimates in division give a global element of $A$, not merely an element of a completion chosen after the fact.
 
 **Theorem 5.1 (Tate acyclicity).** The preceding Čech complex is exact for every finite admissible covering of an affinoid space by affinoid subdomains. The same is true after tensoring with any finite $A$-module.
 
-The module statement follows by a finite presentation and flatness of rational localizations. It will turn finite modules into coherent sheaves and make higher cohomology vanish on affinoids.
+The bounded division operators act coefficientwise on a finite module. Choosing a finite
+presentation and using flatness shows that the resulting homotopy is independent of the
+chosen lifts, proving the module statement. This stronger argument is needed: tensoring an
+arbitrary exact complex with a module would not by itself preserve exactness. The theorem will
+turn finite modules into coherent sheaves and make higher cohomology vanish on affinoids.
 
 ### 5.3 The structure sheaf
 
@@ -546,7 +652,27 @@ Affinoid acyclicity gives local control; properness gives global finiteness.
 
 **Theorem 6.2 (proper mapping theorem).** Let $f:X\to Y$ be a proper morphism of rigid spaces, with $Y$ quasi-separated. For every coherent $\mathcal F$ on $X$, each $R^qf_*\mathcal F$ is coherent. If every fiber of $f$ has dimension at most $d$, then $R^qf_*\mathcal F=0$ for $q>d$.
 
-The proof embeds suitable pieces into projective space over $Y$, resolves coherent sheaves by twists, and uses finite Čech complexes together with the projective calculation. Properness is decisive: the open unit disc has an enormous ring of global analytic functions, not a finite module over $K$.
+**Proof strategy.** Work over an affinoid in $Y$. Properness supplies a finite affinoid cover of
+$X$ together with relatively compact rational subdomains; after refining, every multiple
+intersection is a finite union of affinoids and each boundary piece is described by finitely
+many Laurent inequalities. Tate acyclicity replaces $\mathcal F$ by a finite Čech complex.
+On a Laurent boundary piece, expansion splits a section into an interior part and parts whose
+coefficients tend uniformly to zero toward the boundary. The latter form finite modules
+modulo arbitrarily small powers of a topologically nilpotent scalar. The noetherian and
+completeness results of Chapter 2 then show that the kernels and cokernels of the Čech
+differentials are finite over the base affinoid algebra. Repeating the construction after
+rational localization on the base identifies these finite modules with the sheaves
+$R^qf_*\mathcal F$, proving coherence.
+
+For the cohomological bound, use induction on the dimension of the support in the fibers.
+The zero-dimensional case is finite over the base and hence affinoid. In positive dimension,
+analytic Noether normalization supplies a parameter finite on a dense part of each support;
+the exact sequences for multiplication by that parameter reduce the kernel and cokernel to
+smaller-dimensional supports. The long exact cohomology sequence then gives vanishing above
+the relative support dimension, hence above $d$.
+
+Properness is decisive: the open unit disc has an enormous ring of global analytic functions,
+not a finite module over $K$.
 
 If $Y=\operatorname{Sp}K$ and $X$ is proper, every $H^q(X,\mathcal F)$ is a finite-dimensional $K$-vector space. For a proper curve only degrees $0$ and $1$ occur. These finiteness statements make possible a genuine comparison with projective algebraic curves.
 
@@ -597,7 +723,10 @@ $$
 
 when the reduction of $f$ is inverted. Its generic fiber is the rational domain $|f|\geq1$ inside $\operatorname{Sp}A_K$. Since $f\in A$ already satisfies $|f|\leq1$, this is the locus $|f|=1$.
 
-More generally, formal affine opens arising from generators $f_0,\ldots,f_m$ become the rational domains $|f_i|\leq|f_0|$. Thus the odd-looking analytic inequalities are the generic shadows of ordinary affine charts on a formal blowup.
+More generally, the affine chart of the formal blowup of an open ideal
+$(f_0,\ldots,f_m)$ on which $f_0$ generates the transformed ideal becomes the rational
+domain $|f_i|\leq|f_0|$ for all $i$. Thus the odd-looking analytic inequalities are the
+generic shadows of ordinary affine charts on a formal blowup.
 
 Not every analytic admissible open comes from an open formal subscheme of a fixed model. It may become formal only after an admissible blowup. Model changes are therefore part of localization, not a nuisance to be eliminated.
 
@@ -690,7 +819,15 @@ $$
 x\longmapsto\{\widetilde f:|f(x)|<1\}.
 $$
 
-If $B=A_K$ and $A=B^\circ$ is an admissible ring of definition, this is the specialization map for $\operatorname{Spf}A$. For a smaller ring of definition $A\subset B^\circ$, the special fiber maps to $\operatorname{Spec}\widetilde B$, and specialization factors through it.
+If $B=A_K$ and $A=B^\circ$ is an admissible ring of definition, this is the specialization map for $\operatorname{Spf}A$. For a smaller ring of definition $A\subset B^\circ$, the ring map
+
+$$
+A/\pi A\longrightarrow\widetilde B
+$$
+
+induces a morphism $\operatorname{Spec}\widetilde B\to\operatorname{Spec}(A/\pi A)$, and
+specialization factors as canonical reduction followed by this morphism. The direction is
+contravariant: the formal special fiber does not map canonically to the canonical reduction.
 
 **Example.** For $B=K\langle T\rangle$, one has $B^\circ=R\langle T\rangle$ and $\widetilde B=\widetilde K[T]$. The inverse image of the closed point $(T-\widetilde a)$ is the open residue disc $|T-a|<1$. The generic point of the affine line is not the image of a maximal rigid point, which again explains the target distinction.
 
@@ -711,7 +848,8 @@ $$
 This follows directly by contracting kernels of residue maps. It makes tubes functorial:
 
 $$
-\mathfrak f_\eta^{-1}(]Z[_\mathfrak Y)=],\mathfrak f_s^{-1}(Z),[_\mathfrak X.
+\mathfrak f_\eta^{-1}(]Z[_\mathfrak Y)
+=]\mathfrak f_s^{-1}(Z)[_\mathfrak X.
 $$
 
 ## 9. Admissible blowups and invariance
@@ -736,7 +874,8 @@ Let $\mathfrak X=\operatorname{Spf}A$ and let $I=(f_0,\ldots,f_m)$ contain $\pi^
 
 $$
 A_i=
-\left(A\left\langle\frac{f_0}{f_i},\ldots,\frac{f_m}{f_i}\right\rangle\right)ig/\{\pi\text{-torsion}\}.
+\left(A\left\langle\frac{f_0}{f_i},\ldots,\frac{f_m}{f_i}\right\rangle\right)
+\big/\{\pi\text{-torsion}\}.
 $$
 
 Its generic fiber is the rational domain
@@ -775,12 +914,30 @@ Blowup invariance has a converse strong enough to make formal models intrinsic.
 
 **Theorem 9.2 (formal model theorem).** The generic-fiber functor induces an equivalence between:
 
-- quasi-compact admissible formal $R$-schemes, with admissible blowups inverted; and
+- the category of quasi-compact quasi-separated admissible formal $R$-schemes localized by
+  inverting all admissible formal blowup morphisms; and
 - quasi-compact quasi-separated rigid $K$-spaces.
 
 In particular, every such rigid space has an admissible formal model. Two formal models of the same rigid space are dominated by a third after admissible blowups, and every analytic morphism extends to a morphism after admissibly blowing up the source.
 
-**Proof strategy.** Choose a finite affinoid cover of the analytic space and rings of definition in the affinoid algebras. On overlaps, bounded denominators can be cleared by powers of $\pi$. Blowing up the resulting open ideals turns the analytic overlap maps into formal maps. A simultaneous refinement enforces the cocycle condition and permits gluing. For a morphism, the closure of its graph supplies the same denominator-clearing construction.
+**Proof strategy.** For essential surjectivity, choose a finite affinoid cover and, in each
+affinoid algebra, the $R$-subalgebra generated by finitely many bounded coordinates. Remove
+$\pi$-torsion and complete; this gives an admissible affine model. On an overlap, rational
+localization expresses every coordinate as one of finitely many bounded fractions. Clearing
+their denominators by a power of $\pi$ produces an open ideal. The charts of its admissible
+blowup are exactly the rational domains on which those fractions become formal functions.
+Blowing up all finitely many overlap ideals and then their pullbacks on triple overlaps makes
+the transition maps formal and makes the cocycle identities literal. The affine models then
+glue.
+
+For fullness, apply the same denominator-clearing process to the coordinate functions of a
+morphism on a finite affinoid cover of its source. One admissible blowup of the source makes
+all of them formal. For faithfulness, two formal maps inducing the same analytic map agree
+after inverting $\pi$; their finitely many differences are killed by powers of $\pi$, and an
+admissible blowup followed by removal of $\pi$-torsion kills those differences. Thus the maps
+become equal in the localized formal category. Finally, applying fullness to an analytic
+isomorphism and its inverse and taking a common blowup makes both composites identities.
+This proves the equivalence and the common-refinement assertion.
 
 The theorem does not identify a preferred model. Statements about special-fiber components, intersections, or reduction points are model-dependent. Statements invariant under admissible blowup belong to the analytic space.
 
@@ -806,18 +963,33 @@ If $Z_1$ and $Z_2$ are disjoint locally closed strata, their tubes are disjoint.
 
 ### 10.2 Discs above smooth points
 
-Let $\mathfrak C$ be a smooth formal curve over $R$, and let $z$ be a closed point of its special fiber with residue field $k(z)$. After a finite unramified extension that lifts $k(z)$ and an étale change of coordinate, a neighborhood of $z$ is formally isomorphic to $\operatorname{Spf}R'\langle T\rangle$ near $T=0$. Therefore
+Let $\mathfrak C$ be a smooth formal curve over $R$, and let $z$ be a closed point of its
+special fiber with residue field $k(z)$. Smoothness makes $k(z)/\widetilde K$ separable. Choose
+a finite unramified extension $K'/K$, with valuation ring $R'$, whose residue field contains $k(z)$, and choose a
+$k(z)$-embedding that gives a rational point $z'$ of the base-changed special fiber above
+$z$. After choosing an étale coordinate carrying the lifted section through $z'$ to $T=0$,
+the completed neighborhood of that section is the one-variable formal disc. Hensel lifting on
+the étale coordinate therefore gives
 
 $$
-]z[_\mathfrak C\widehat\otimes_RR'
+]z'[_{\mathfrak C_{R'}}
 \simeq\{x:|T(x)|<1\},
 $$
 
 the open unit disc.
 
-The proof uses formal smoothness to lift a residue parameter through every power of $\pi$. Completeness turns the compatible lifts into a formal coordinate. The strict inequality expresses specialization to $T=0$.
+Formal smoothness lifts the residue point and its parameter through every power of $\pi$.
+Completeness turns the compatible lifts into a formal coordinate, while étaleness and Hensel's
+lemma identify the whole tube, not merely its completed local ring, with the open disc. The
+strict inequality expresses specialization to $T=0$.
 
-This is a local statement after residue-field extension; a point with nontrivial residue field need not have a disc coordinate over $K$ itself. Its tube is a descended form of a disc. Smooth reduction decomposes a proper curve into residue discs attached to the points of its special fiber, but the family of all such discs is generally not an admissible cover when the residue field is infinite.
+This is a statement about a chosen component after residue-field extension. The full base
+change of $]z[$ can be a disjoint union of such discs, indexed by the points above $z$; it
+should not be identified with one disc without choosing $z'$. Over $K$ itself the tube is the
+corresponding descended residue disc with constant residue field $k(z)$. Smooth reduction
+decomposes a proper curve into residue discs attached to the closed points of its special
+fiber, but the family of all such discs is generally not an admissible cover when the residue
+field is infinite.
 
 ### 10.3 Annuli above nodes
 
@@ -871,7 +1043,14 @@ $$
 
 in the smooth case, where completion is with respect to the maximal ideal. The formal power series describe germs; their convergence radius need not be uniform on an entire affinoid neighborhood.
 
-Zeros of a nonzero analytic function on an affinoid smooth curve are finite. Indeed $A/(f)$ has dimension zero and is an affinoid algebra, hence an artinian $K$-algebra. On a non-affinoid curve zeros can accumulate only toward the analytic boundary. The function with infinitely many zeros on an open disc therefore does not contradict local finiteness on closed subdiscs.
+Zeros of an analytic function on an affinoid smooth curve are finite provided the function is
+not identically zero on any connected component. Indeed, each connected component of a
+smooth affinoid curve is normal and irreducible, so on it $f$ is a nonzerodivisor. Hence
+$A/(f)$ has dimension zero and is an affinoid algebra, therefore an artinian $K$-algebra. If
+$f$ vanishes on a whole component, that component is of course part of its zero locus. On a
+non-affinoid curve isolated zeros can accumulate only toward the analytic boundary. A
+function with infinitely many zeros on an open disc therefore does not contradict finiteness
+on every closed subdisc on which it is nonzero.
 
 ### 11.2 Smooth, normal, and regular curves
 
@@ -881,17 +1060,55 @@ For a reduced analytic curve, normality is equivalent to all local rings being d
 
 The nodal annulus model shows another distinction. The formal total space $XY=\pi$ is regular, and its analytic generic fiber is smooth because $\pi\ne0$ there, although the special fiber is singular. Smoothness of the analytic curve does not demand smooth reduction.
 
-Differentials detect ramification. If $f:X\to Y$ is a finite morphism of smooth curves and $t$ is a parameter at $f(x)$, then locally
+Differentials detect ramification. If $f:X\to Y$ is a finite morphism of smooth curves and $t$ is a parameter at $f(x)$, then in the completed local DVR at $x$
 
 $$
 f^*t=u s^e
 $$
 
-up to higher terms, with $u$ a unit and $s$ a parameter at $x$. The map is étale at $x$ precisely when $e=1$ and the residue extension is separable. In positive residue characteristic, $e$ prime to the characteristic is not by itself enough unless the residue condition is also checked.
+with $u$ a unit and $s$ a parameter at $x$. There is no additional higher-order term: it is
+absorbed into the unit. The map is étale at $x$ precisely when $e=1$ and the residue extension
+is separable. In positive residue characteristic, $e$ prime to the characteristic is not by
+itself enough unless the residue condition is also checked.
 
 ### 11.3 Finite maps and normalization
 
 If $A\to B$ is a finite homomorphism of affinoid algebras, the induced map $\operatorname{Sp}B\to\operatorname{Sp}A$ is finite. Conversely, a finite morphism is affinoid over affinoids and arises from a finite algebra. Finite morphisms are proper, have finite fibers, and preserve affinoid domains under inverse image.
+
+The finiteness needed for normalization is an analytic theorem, not a consequence of
+noetherianity alone.
+
+**Theorem 11.1 (finite analytic normalization).** If $A$ is a reduced $K$-affinoid algebra
+of dimension one, its integral closure in its total ring of fractions is a finite $A$-module.
+
+**Proof strategy.** Treat the irreducible components separately. Analytic Noether
+normalization, proved by the same distinguished-coordinate induction as Theorem 2.1, gives a
+finite injection
+
+$$
+K\langle T_1,\ldots,T_d\rangle\longrightarrow A
+$$
+
+when $A$ has dimension $d$. In dimension one the base $D=K\langle T\rangle$ is a regular
+one-dimensional noetherian domain: Weierstrass division makes it a principal ideal domain,
+and hence every localization at a nonzero maximal ideal is a DVR. The integral closure of
+$D$ in a finite extension $F/K(T)$ is
+finite. For the separable part, choose a full $D$-lattice and use the nondegenerate trace
+pairing to place every integral element inside its finite trace-dual lattice, exactly as for a
+Dedekind domain. For a purely inseparable part of exponent $q$, raise an integral element to
+the $q$th power. It lies in the preceding normal ring. Choose the field basis from finitely
+many purely inseparable generators, scaled to be integral away from a finite set of
+height-one primes of $D$. Expansion in this basis and the Gauss valuation bound control the
+coefficients at every remaining prime; at the finitely many exceptional DVRs, take the
+maximum of the finitely many denominator bounds. Multiplication by the product of the
+corresponding prime elements to those powers therefore puts the entire integral closure in
+one finite lattice. Thus it lies between two finite lattices. Applying these two steps in the
+separable--purely-inseparable tower proves the one-variable assertion.
+
+The total fraction ring of $A$ is finite over that of $D$. Its integral closure is finite over
+$D$ by the preceding paragraph and contains $A$; being a submodule of a finite $D$-module,
+it is finite over the noetherian ring $D$, hence also finite as an $A$-module. The same argument
+after rational localization shows compatibility on overlaps. This proves the theorem.
 
 Let $X$ be a reduced affinoid curve. Its normalization is obtained by taking the integral closure $A^{\mathrm{nor}}$ of $A$ in its total ring of fractions. This algebra is finite over $A$, so
 
@@ -899,7 +1116,9 @@ $$
 X^{\mathrm{nor}}=\operatorname{Sp}A^{\mathrm{nor}}\longrightarrow X
 $$
 
-is finite. The finiteness follows from excellence of affinoid algebras. Gluing gives normalization for quasi-separated curves. It is an isomorphism over the normal locus and separates analytic branches at singular points.
+is finite. Gluing gives normalization for quasi-separated curves. It is an isomorphism over
+the normal locus and separates analytic branches at singular points. The proof above supplies
+the required finiteness directly; no unproved excellence assertion is being imported.
 
 For the node $A=K\langle X,Y\rangle/(XY)$, the normalization is $K\langle X\rangle\times K\langle Y\rangle$ and separates the two branches. In contrast, the annulus algebra $K\langle X,Y\rangle/(XY-a)$ with $a\ne0$ is already smooth and normal. Equations that look identical before and after setting $a=0$ have different generic geometry.
 
@@ -917,7 +1136,7 @@ The distinction between removing points and removing discs is characteristically
 
 Properness is the condition that eliminates analytic boundary. A separated rigid space $X$ is proper over $K$ if it is quasi-compact and universally closed in the analytic sense; equivalently in the finite-type setting, maps from punctured valuation discs extend uniquely across the missing center after every complete extension.
 
-For curves, this criterion has a concrete interpretation. An affinoid or wide-open end supplies a bounded parameter tending toward a missing boundary point, so the associated punctured-disc map fails to extend inside the space. Conversely, a quasi-compact smooth curve with no boundary admits a proper formal model and satisfies the extension property.
+For curves, this criterion has a concrete interpretation. An affinoid or wide-open end supplies a bounded parameter tending toward a missing boundary point, so the associated punctured-disc map fails to extend inside the space. A quasi-compact smooth curve admitting a proper formal model has no boundary and satisfies the extension property; conversely, the absence of boundary together with quasi-compactness is the curve form of the valuative properness criterion.
 
 Properness is stable under finite extension of $K$, composition, and closed immersion. A finite morphism is proper. The analytic affine line and every nonempty affinoid curve of positive dimension are not proper: a positive-dimensional space cannot be both affinoid and proper over $K$, because properness makes global functions algebraic over $K$, whereas a reduced affinoid curve has a transcendental function.
 
@@ -928,12 +1147,15 @@ The last claim can be made exact. If $X$ is connected and proper, then $H^0(X,\m
 Let $X$ be a proper rigid curve and $\mathcal F$ coherent. The proper mapping theorem gives
 
 $$
-\dim_KH^0(X,\mathcal F)<\infty,qquad
-\dim_KH^1(X,\mathcal F)<\infty,qquad
+\dim_KH^0(X,\mathcal F)<\infty,\qquad
+\dim_KH^1(X,\mathcal F)<\infty,\qquad
 H^q(X,\mathcal F)=0\quad(q\geq2).
 $$
 
-The vanishing follows from the one-dimensional affinoid cover and its Čech complex; finiteness uses properness. If $\mathcal L$ is an invertible sheaf of sufficiently large degree, then $H^1(X,\mathcal L)=0$ and its global sections generate it. The proof may be transported from the algebraic curve after algebraization, or obtained analytically by successively allowing poles at a finite divisor.
+The vanishing follows from the cohomological-dimension part of the proper mapping theorem;
+finiteness uses properness. For the positive line bundles used in algebraization, the stronger
+vanishing and global-generation statements are proved analytically below by successively
+allowing poles at a finite divisor.
 
 For a smooth proper geometrically connected curve, duality gives a perfect pairing
 
@@ -950,7 +1172,50 @@ H^q(X,\mathcal F)\otimes_KL
 H^q(X_L,\mathcal F_L).
 $$
 
+Choose a finite affinoid cover whose nonempty intersections are affinoid. Its finite-module
+Čech complex has strict differentials, and its cohomology is finite-dimensional by the
+proper mapping theorem. Completed scalar extension is therefore exact on this complex and
+agrees with ordinary tensor product on its cohomology. The scalar-extended cover is the
+corresponding cover of $X_L$, which proves the displayed isomorphism.
+
 Properness and coherence are essential; global functions on an open disc do not arise by a finite-dimensional scalar extension.
+
+The vanishing needed for algebraization must be obtained analytically, since algebraic
+Riemann--Roch is not yet available. More generally, a reduced proper rigid curve has a
+coherent dualizing sheaf $\omega_X$ and, for coherent $\mathcal F$, a perfect pairing
+
+$$
+H^1(X,\mathcal F)\times
+\operatorname{Hom}_X(\mathcal F,\omega_X)\longrightarrow K.
+$$
+
+On a normal curve the pairing is constructed by choosing a finite affinoid cover, writing a
+Čech $1$-class as principal parts on the boundary annuli, and summing the residues of their
+products with differentials. Laurent expansion on an annulus makes the residue the
+coefficient of $T^{-1}dT$; the two orientations on an overlap give opposite signs. Tate
+acyclicity proves independence of the representative, while division with prescribed finite
+principal parts proves nondegeneracy. For a reduced singular curve, apply this construction
+to its finite normalization and impose the finite conductor matching conditions. The
+annihilator of those conditions is the dualizing sheaf, and finite-dimensional linear duality
+gives the displayed pairing.
+
+Let $D$ be an effective Cartier divisor in the normal locus meeting every irreducible
+component. Then
+
+$$
+H^1(X,\mathcal O_X(nD))=0\qquad(n\gg0).
+$$
+
+Indeed, duality identifies its dual with
+$H^0(X,\omega_X(-nD))$. These spaces form a descending sequence inside the finite-dimensional
+space $H^0(X,\omega_X)$, and their intersection is zero: a section vanishing to every order at
+one regular point of each component is zero by the identity theorem. The sequence therefore
+eventually vanishes. For finite subschemes of length at most two, the maps to principal parts
+are controlled on a finite affinoid cover by finitely many Laurent coefficients; the same
+descending-chain argument gives one bound independent of the chosen subscheme. After also
+including the fixed conductor subscheme, a sufficiently large $nD$ therefore separates
+closed points, tangent directions, and the finite conductor branches. This is the
+nonarchimedean curve form of Serre vanishing, established without using algebraization.
 
 ### 12.3 Meromorphic functions and divisors
 
@@ -983,9 +1248,46 @@ The central rigidity theorem for curves is the following.
 
 **Theorem 12.1 (algebraization of proper curves).** Let $X$ be a proper rigid analytic space over $K$, pure of dimension one. Assume $X$ is reduced. Then $X$ is the analytification of a unique proper algebraic curve $C/K$. If $X$ is smooth, normal, or geometrically connected, $C$ has the corresponding property. In the smooth case $C$ is projective.
 
-**Proof strategy.** First normalize, reducing to a disjoint union of smooth curves after controlling finite singular data. Choose a finite nonempty divisor $D$. For sufficiently large $n$, proper cohomology and one-dimensional vanishing make $\mathcal O_X(nD)$ globally generated and separate points and tangent directions. Its sections embed $X$ as a closed analytic subspace of projective space. Proper projective comparison algebraizes the coherent ideal of the image. Singular curves are recovered by descending the finite conductor diagram from the normalization.
+**Proof.** The finite analytic normalization theorem gives
+$\nu:X^{\mathrm{nor}}\to X$. Its components are normal proper curves; they are regular, though
+over an imperfect field they need not be smooth. Choose an effective divisor $D$ in their
+regular loci meeting every component. The analytic vanishing proved in Section 12.2 shows
+that $\mathcal O(nD)$ is globally generated and separates points and tangent directions for
+$n$ sufficiently large. Its finitely many sections therefore give a closed immersion
 
-The decisive steps are finiteness of cohomology, which supplies finitely many projective coordinates, and properness, which makes the analytic closed subspace of projective space algebraic. Uniqueness follows because analytic morphisms between proper algebraic curves are algebraic.
+$$
+X^{\mathrm{nor}}\hookrightarrow\mathbf P^N_K.
+$$
+
+For projective space, use the standard finite affinoid cover. Laurent division computes the
+cohomology of every twist in the analytic and algebraic categories by the same homogeneous
+terms. The same bounded Čech calculation shows that, after a sufficiently large twist, a
+coherent analytic ideal is generated by finitely many global sections; applying it again to
+the coherent kernel gives a finite presentation by twists. The identical homogeneous
+presentation is algebraic, so every coherent analytic ideal on $\mathbf P^N_K$ is algebraic.
+Applying this projective comparison to the ideal of the image produces a projective
+algebraic normalization $C^{\mathrm{nor}}$ whose analytification is $X^{\mathrm{nor}}$.
+
+It remains to restore the singularities. The conductor ideals in $X$ and
+$X^{\mathrm{nor}}$ have finite support, and the two conductor quotients are finite analytic
+$K$-spaces, hence spectra of finite $K$-algebras. The quotient maps and their algebra
+structures are algebraic by the same projective comparison on graphs. Forming the finite
+conductor pushout in affine neighborhoods and gluing produces a reduced proper algebraic
+curve $C$ with $C^{\mathrm{an}}\simeq X$. This construction also shows that normality is
+preserved. Smoothness and geometric connectedness may be checked after analytic scalar
+extension and on completed local rings, so they too agree.
+
+For uniqueness, embed two candidate curves projectively. The analytic graph of an
+isomorphism is a coherent closed subspace of the analytification of their projective product;
+the projective comparison just proved algebraizes it. Its two projections are isomorphisms
+because this can be checked after analytification. Thus the algebraic curve is unique. Every
+proper algebraic curve over a field is projective, so in particular the smooth curve obtained
+above is projective. $\square$
+
+This order of proof is important: analytic duality supplies the positive divisor before any
+algebraic comparison is invoked, and only the directly computed projective-space comparison
+is used to algebraize the resulting image. The later proper comparison theorem is therefore a
+consequence, not an input.
 
 Reducedness in the statement avoids a separate discussion of nilpotent conductor data. Proper nonreduced one-dimensional spaces are also algebraizable under the same finite-type hypotheses by algebraizing their coherent nilpotent ideals, but that strengthening is not needed below.
 
@@ -1024,6 +1326,12 @@ For proper algebraic curves there is a sharper graph construction. Take the sche
 
 Coherent sheaves behave similarly. Given a coherent sheaf $\mathcal F$ on $X$ and a formal model $\mathfrak X$, after an admissible blowup there is a coherent $R$-flat sheaf $\mathfrak F$ with $\mathfrak F_\eta\simeq\mathcal F$. Quotienting a chosen lattice by its $\pi$-torsion ensures flatness. Two lattices become comparable after multiplying by powers of $\pi$ and passing to a common refinement.
 
+Indeed, choose finite presentations of $\mathcal F$ on a finite affinoid cover and clear the
+finitely many denominators in their matrices to obtain local formal lattices. On overlaps,
+the two comparison maps become integral after admissible blowups that principalize those
+denominators. A common refinement makes the cocycle integral, so the lattices glue; removing
+their $\pi$-torsion gives the asserted $R$-flat model.
+
 ### 13.3 Semistable formal curves
 
 A proper admissible formal curve $\mathfrak C/R$ is **semistable** if its special fiber is reduced, its irreducible components are smooth away from ordinary double points, and étale-locally at every node the formal equation is
@@ -1034,11 +1342,21 @@ $$
 
 for some $e\geq1$. If every $e=1$, the total space is regular at the nodes. Marked sections are required to lie in the smooth locus and remain disjoint.
 
-**Semistable model theorem for curves.** Let $C/K$ be a smooth proper geometrically connected curve. After a finite separable extension $K'/K$, the curve $C_{K'}$ admits a proper semistable formal model over $R'$. If $C$ has genus at least two, contracting unstable rational components gives a stable model, unique after the extension; any two semistable models are dominated by a common semistable refinement.
+Semistability is an additional property of a model, not a consequence of the regular-model
+theorem. Resolution can make the total surface regular while leaving a cuspidal or multiple
+special fiber, and a finite extension followed by normalization does not by itself remove all
+such defects. Accordingly, the discussion below is conditional on a semistable model being
+given. It proves the rigid geometry attached to that model, which is the part required for
+tubes and reduction; it does not import a general semistable-reduction theorem.
 
-The theorem requires finite extension: an elliptic curve with additive reduction need not have semistable reduction over $K$. Separability is enough; no perfection of the residue field is silently used, though geometric descriptions of components are cleanest after residue extension.
-
-The proof proceeds by taking a regular proper model, resolving singularities, and modifying the special fiber until it has normal crossings; a finite extension removes multiplicities. In dimension two, blowups and normalization keep this process within proper models. Stability then contracts exactly the rational components meeting the rest and the markings in fewer than three points, with the genus-one analogue requiring at least one marked or attaching point.
+Elementary semistable modifications can nevertheless be controlled here. Blowing up a
+smooth closed point by the open ideal generated by its parameter and $\pi$ replaces one
+residue disc by two disc regions joined along an annular collar; after removing $\pi$-torsion,
+the special fiber remains reduced and nodal. On an annular chart $XY=\pi^e$, admissible
+modifications at an integral intermediate radius split the annulus into adjacent annuli whose
+thicknesses add to $e$. The chart calculation of Section 9.2 proves these assertions and shows
+that their generic fibers are unchanged. Arbitrary blowups of the closed node are not covered
+by this statement: their total transform can acquire a multiple exceptional component.
 
 ### 13.4 Components, annuli, and the reduction graph
 
@@ -1051,7 +1369,15 @@ C^{\mathrm{an}}
 \bigcup_e ]z_e[.
 $$
 
-The **reduction graph** has a vertex for each irreducible component and an edge for each node, joining the components containing its two branches; a self-node gives a loop. The thickness $e$ of $XY=\pi^e$ supplies an edge length proportional to $e$. Blowing up a node subdivides an edge without changing the underlying analytic curve. Thus the metric realization is model-independent after suppressing valence-two vertices introduced by refinement.
+The **reduction graph** has a vertex for each irreducible component and an edge for each node, joining the components containing its two branches; a self-node gives a loop. With
+$v(\pi)=1$, the thickness $e$ of $XY=\pi^e$ gives edge length $e$; in logarithmic absolute-value
+coordinates the length is $-e\log|\pi|$. A semistable annular refinement subdivides an edge
+and preserves the sum of its lengths. A semistable blowup at a smooth point can instead attach
+a rational tree. Consequently the whole reduction graph is not model-independent, even after
+one suppresses valence-two vertices. What is invariant under annular subdivision is the old
+metric skeleton, and what survives arbitrary semistable refinement is the core obtained by
+contracting the newly attached unstable rational trees. When a stable model is available, its
+weighted graph is the canonical such core.
 
 This graph is not the curve. Each vertex carries the smooth projective normalization of a residue component, and the tubes attached to it contain infinitely many analytic points. Nevertheless it records how annuli connect the good-reduction pieces and controls the first Betti contribution of degeneration:
 
@@ -1061,7 +1387,10 @@ $$
 
 for a split semistable model with geometrically irreducible components, with the appropriate geometric interpretation after extending the residue field. The formula follows from the normalization exact sequence of the nodal special fiber and constancy of arithmetic genus in a proper flat family.
 
-Good reduction is the special case of one smooth component and no edges. A curve may have a tree-shaped graph and still have bad reduction because its components or attaching data differ from a single smooth fiber. The graph detects nodes, not every arithmetic defect.
+Within this setting, the supplied semistable model is a good-reduction model exactly when its
+special fiber is one smooth component and has no edges. A curve may have a tree-shaped graph
+and still have bad reduction because its components or attaching data differ from a single
+smooth fiber. The graph detects nodes, not every arithmetic defect.
 
 ## 14. Comparison with algebraic curves
 
@@ -1094,7 +1423,8 @@ for every $q$. The functor $\mathcal F\mapsto\mathcal F^{\mathrm{an}}$ is an equ
 
 Exact hypotheses matter. Properness is needed both for finite-dimensional cohomology and for essential surjectivity. Coherence is needed for finite presentations. The theorem does not equate arbitrary analytic sheaves with algebraic sheaves.
 
-For a proper flat algebraic model $\mathcal C/R$, this theorem is compatible with formal completion:
+For a proper flat algebraic model $\mathcal C/R$ and a coherent sheaf $\mathcal F$ on
+$\mathcal C$, this theorem is compatible with formal completion:
 
 $$
 \mathcal F
@@ -1110,13 +1440,23 @@ The first passage remembers all infinitesimal special-fiber neighborhoods; the s
 
 ### 14.3 Maps, finite covers, and divisors
 
-If $C$ is proper and $Y$ is a separated finite-type algebraic $K$-scheme, every analytic morphism
+If $C$ is proper and $Y$ is a separated quasi-projective algebraic $K$-scheme, every analytic morphism
 
 $$
 C^{\mathrm{an}}\longrightarrow Y^{\mathrm{an}}
 $$
 
-comes from a unique algebraic morphism $C\to Y$. Embed $Y$ locally into affine or projective space; the graph is a closed analytic subspace of the proper source times a compactification, and its coherent ideal algebraizes. Separatedness ensures the algebraic graph lands in $Y$ rather than identifying distinct limits.
+comes from a unique algebraic morphism $C\to Y$. Choose an open immersion of $Y$ into a
+projective scheme $\overline Y$. The analytic graph is the proper image of $C^{\mathrm{an}}$ in
+$C^{\mathrm{an}}\times\overline Y^{\mathrm{an}}$, hence is closed. Its coherent ideal
+algebraizes by proper comparison. The first projection is an isomorphism after analytification
+and therefore algebraically. The algebraic graph cannot meet
+$C\times(\overline Y\setminus Y)$, since that proper intersection would have nonempty
+analytification. Thus its second projection lands in $Y$. Separatedness makes the graph, and
+hence the morphism, unique.
+
+The same conclusion holds for a separated finite-type target when a proper compactification
+is supplied. No compactification theorem for an arbitrary target is being used implicitly.
 
 Consequently finite analytic maps between proper algebraic curves are algebraic, and finite analytic covers correspond to finite algebraic covers. Normalization commutes with analytification. Ramification indices and residue degrees at closed points agree because the completed local DVR extensions agree.
 
@@ -1138,13 +1478,18 @@ $$
 \sum_{n\geq0}\pi^{n^2}T^n
 $$
 
-is analytic and is not a polynomial. Thus $H^0(\mathbf A^1_K,\mathcal O)$ and analytic functions on bounded subdomains cannot be identified term by term without specifying the domain. On the entire analytic affine line, global analytic functions are series converging on every closed disc; they still need not be polynomials when the valuation is nontrivial.
+is analytic and is not a polynomial. Thus algebraic functions on $\mathbf A^1_K$ and analytic
+functions on bounded subdomains cannot be identified term by term without specifying the
+domain. The displayed series in fact converges on every closed disc, since the quadratic
+decay of $|\pi|^{n^2}$ dominates every fixed exponential radius. Hence even on the entire
+analytic affine line, global analytic functions need not be polynomials when the valuation is
+nontrivial.
 
 Analytic domains also need not be algebraic opens. A closed annulus inside the multiplicative line is cut out by absolute-value inequalities, not by nonvanishing of polynomials. Its two boundary circles have no algebraic-open analogue.
 
 Formal completion can fail to recover a nonproper analytification. Completing $\mathbf A^1_R$ gives only the closed unit disc. Completing $\mathbf G_{m,R}$ gives the unit circle $|T|=1$. Properness is what forces every generic point to acquire a center on the special fiber and makes completion exhaustive.
 
-Finally, a special fiber is not an invariant of the analytic curve. Admissible blowups can add components and subdivide nodes while preserving the generic fiber. Only statements stable under common refinement—such as the existence of semistable reduction, the resulting metric graph up to subdivision, or tubes viewed through the induced analytic isomorphism—are intrinsic.
+Finally, a special fiber is not an invariant of the analytic curve. Admissible blowups can add components and subdivide nodes while preserving the generic fiber. Only statements stable under common refinement—such as tubes viewed through the induced analytic isomorphism, annular lengths under subdivision, or the stable core after unstable trees have been contracted—are intrinsic. The existence of a semistable model is itself an additional reduction theorem, not a consequence of blowup invariance.
 
 ## 15. A reusable dictionary
 
@@ -1156,11 +1501,11 @@ The main results of the book can be used safely by keeping their hypotheses visi
 
 **Localization and sheaves.** Rational domains require numerators together with the denominator to generate the unit ideal. Rational localization is flat, not necessarily faithfully flat. Faithfulness comes from a finite cover. Tate acyclicity concerns admissible finite affinoid covers and finite modules. Coherent descent on general spaces uses quasi-separatedness.
 
-**Formal models.** The formal chapters assume a complete discrete valuation ring $R$ with fraction field $K$. Admissible formal schemes are topologically of finite type and $R$-flat. A formal blowup preserves the generic fiber only when its center is open, equivalently supported on the special fiber. Generic fibers forget $\pi$-torsion.
+**Formal models.** The formal chapters assume a complete discrete valuation ring $R$ with fraction field $K$. Admissible formal schemes are topologically of finite type and $R$-flat. The admissible-blowup invariance theorem requires an open center, equivalently one supported on the special fiber; a nonopen center has no such invariance guarantee. Generic fibers forget $\pi$-torsion.
 
 **Reduction and tubes.** Specialization sends maximal analytic points to scheme points by reduction of bounded values. It is naturally surjective onto closed points in the finite-type setting, not asserted onto every nonclosed point at this level. Tubes depend on reduced strata and are often non-affinoid. Their descriptions by discs and annuli may require finite residue-field extension or étale coordinates.
 
-**Curves.** Normality, regularity, and smoothness coincide only under the stated separability or perfection assumptions. A proper reduced rigid curve is algebraizable; smooth proper curves are projective. Proper comparison applies to coherent sheaves and cohomology. Semistable reduction may require a finite separable extension of $K$.
+**Curves.** Normality, regularity, and smoothness coincide only under the stated separability or perfection assumptions. A proper reduced rigid curve is algebraizable; smooth proper curves are projective. Proper comparison applies to coherent sheaves and cohomology. If a semistable model is supplied, its nodes give annular tubes; the graph genus formula uses the split and geometric-irreducibility hypotheses stated in Section 13.4. General existence of a semistable model is not assumed here.
 
 ### 15.2 The model-independence principle
 
@@ -1186,8 +1531,8 @@ For calculations, one deliberately chooses a useful model. Smooth models turn re
 
 ### 15.3 Conclusion
 
-Nonarchimedean analytic geometry begins with a small convergence condition: coefficients of a restricted series tend to zero. From it follow multiplicative norms, division, noetherianity, and finite residue fields. Rational localization then turns absolute-value inequalities into coordinate rings. Tate acyclicity identifies exactly which covers permit functions and finite modules to glue, producing rigid spaces and coherent sheaves.
+Nonarchimedean analytic geometry begins with a small convergence condition: coefficients of a restricted series tend to zero. From it follow multiplicative norms, division, noetherianity, and finite residue extensions. Rational localization then turns absolute-value inequalities into coordinate rings. Tate acyclicity identifies exactly which covers permit functions and finite modules to glue, producing rigid spaces and coherent sheaves.
 
-Formal geometry explains the shape of that analytic topology. Integral coordinates reduce to a special fiber; inverting the uniformizer produces the generic fiber; formal blowup charts become rational domains. Specialization gathers analytic points into tubes. Above a smooth point lies a disc, above a node an annulus, and a semistable proper curve is assembled from these pieces according to its reduction graph.
+Formal geometry explains the shape of that analytic topology. Integral coordinates reduce to a special fiber; inverting the uniformizer produces the generic fiber; formal blowup charts become rational domains. Specialization gathers analytic points into tubes. Above a smooth point lies a disc and above a node an annulus; when a semistable proper model is given, its analytic curve is assembled from these pieces according to its reduction graph.
 
 Properness closes every analytic end. It makes coherent cohomology finite, forces divisors to balance, and supplies enough global sections for projective embedding. Consequently a proper rigid curve returns uniquely to algebraic geometry, with its coherent sheaves, maps, finite covers, functions, divisors, and cohomology unchanged. What remains distinctively analytic is not a rival class of proper curves, but a precise language for their bounded regions and reduction. Formal models provide that language, and admissible blowups ensure that its conclusions do not depend on how the integral picture was drawn.
