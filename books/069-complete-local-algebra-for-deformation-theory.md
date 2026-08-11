@@ -142,7 +142,7 @@
 
 Book 62 established the coefficient rings on which deformation theory lives: local Artinian rings record finite infinitesimal thickness, and complete Noetherian local rings assemble all thicknesses at once. We now study what can be deduced whenever a deformation problem is represented by such a complete ring. Existence and the calculation of particular tangent and obstruction spaces are separate inputs; the question here is what their algebra says once they are available.
 
-Three transitions drive the subject. A tangent calculation should become a count of formal coordinates. An obstruction calculation should, under additional effectiveness hypotheses, become a bound on equations. A map between deformation problems should become a local homomorphism whose finiteness, dimension, or surjectivity can be checked. None of these transitions is automatic. They require a careful distinction between absolute and coefficient-relative directions, between a chosen presentation and a minimal one, and between a finite map and a faithfully finite map.
+Three transitions drive the subject. A tangent calculation should become a count of formal coordinates. A complete, functorial linear obstruction theory should become a bound on equations. A map between deformation problems should become a local homomorphism whose finiteness, dimension, or surjectivity can be checked. None of these transitions is automatic. They require a careful distinction between absolute and coefficient-relative directions, between a chosen presentation and a minimal one, and between a finite map and a faithfully finite map.
 
 The purpose of this book is to make those transitions reliable. The guiding picture is a presentation
 
@@ -941,18 +941,40 @@ isolates one relation direction. This statement can be made into an explicit sma
 
 $$
 E_N=
-\frac{P}{I\mathfrak n+\mathfrak n^N+\ker(\lambda)},
+\frac{P}{L_\lambda+\mathfrak n^N},
 $$
 
-where $\ker(\lambda)$ denotes the inverse image in $I$ of the kernel of the functional. The image of $I$ in $E_N$ is one-dimensional over $k$ and is killed by the maximal ideal. Quotienting it out gives an Artinian quotient of $R$. Hence
+where
 
 $$
-E_N\twoheadrightarrow E_N/(I)
+L_\lambda
+=\ker\left(I\longrightarrow I/\mathfrak nI
+\xrightarrow{\lambda}k\right).
 $$
 
-is a principal small extension. It asks whether the universal object can be lifted while relaxing precisely the equation selected by $\lambda$.
+Artin--Rees permits $N$ to be chosen so large that
 
-Different sufficiently large $N$ give compatible tests. This is the algebra behind the injection from the dual relation space into an effective obstruction space in Chapter 13. The construction also explains why the dual appears: a relation itself is an element of a kernel, while pushing that kernel out to a one-dimensional small extension requires a linear functional on its residue fiber.
+$$
+I\cap\mathfrak n^N\subseteq\mathfrak nI\subseteq L_\lambda.
+$$
+
+Consequently the image $K_\lambda$ of $I$ in $E_N$ is canonically $I/L_\lambda\simeq k$. It is killed by the maximal ideal because $\mathfrak nI\subseteq L_\lambda$. Quotienting it out gives the Artinian quotient
+
+$$
+A_N=P/(I+\mathfrak n^N)
+$$
+
+of $R$. Hence
+
+$$
+E_N\twoheadrightarrow A_N
+$$
+
+is a principal small extension. It asks whether the universal object over $A_N$ can be lifted while relaxing precisely the equation selected by $\lambda$.
+
+This extension is genuinely nontrivial from the viewpoint of the represented functor. Suppose the universal map $R\to A_N$ lifted to $R\to E_N$. Compare the two maps $P\to E_N$: the quotient map and the composite through the alleged lift. Their difference takes values in the square-zero kernel $K_\lambda$ and is an $\mathcal O$-derivation. Such a derivation factors through $C_{P/\mathcal O}$. Since the presentation is relatively minimal, $I$ maps to zero in that cotangent space, so the derivation vanishes on $I$. But the quotient map sends some $f\in I$ with $\lambda(\bar f)\neq0$ to a nonzero element of $K_\lambda$, whereas the map through $R=P/I$ sends it to zero. This contradiction proves that no lift exists.
+
+Different sufficiently large $N$ give equivalent tests under pushout. This is the algebra behind the injection from the dual relation space into a complete obstruction space in Chapter 13. The construction also explains why the dual appears: a relation itself is an element of a kernel, while pushing that kernel out to a one-dimensional small extension requires a linear functional on its residue fiber.
 
 ## 6. Krull dimension in the complete local setting
 
@@ -1868,13 +1890,26 @@ If $R$ is finite over $\mathcal O$, then $\dim R\leq1$. When $R$ is nonzero and 
 
 ### 10.11 Exactness under completed scalar extension
 
-Let $\mathcal O\to\mathcal O'$ be a flat local map of complete Noetherian coefficient rings, and let
+Let $\mathcal O\to\mathcal O'$ be a flat local map of complete Noetherian coefficient rings. Let $R$ be a topologically finite-type complete $\mathcal O$-algebra, put
+
+$$
+R'=R\widehat\otimes_{\mathcal O}\mathcal O',
+$$
+
+and assume that $R'$ is flat over $R$. This last hypothesis holds in the coefficient extensions used below, such as finite flat local extensions and extensions of coefficient fields, but it must not be inferred from the completion symbol alone. If
 
 $$
 0\longrightarrow M'\longrightarrow M\longrightarrow M''\longrightarrow0
 $$
 
-be an exact sequence of finite modules over a topologically finite-type complete $\mathcal O$-algebra. Ordinary tensoring with $\mathcal O'$ is exact. The resulting finite modules are complete for the induced adic topology, so completion changes none of them. Hence
+is an exact sequence of finite $R$-modules, finite presentation gives natural identifications
+
+$$
+M\widehat\otimes_{\mathcal O}\mathcal O'
+\simeq M\otimes_RR',
+$$
+
+and similarly for $M'$ and $M''$. Tensoring the sequence over $R$ with the flat $R$-algebra $R'$ therefore gives
 
 $$
 0\longrightarrow
@@ -1886,9 +1921,9 @@ M''\widehat\otimes_{\mathcal O}\mathcal O'
 \longrightarrow0
 $$
 
-is exact.
+as an exact sequence.
 
-This is the legitimate reason flat coefficient extension preserves kernels, relation modules, and regular sequences. Completion alone is not exact on arbitrary modules, and a nonflat coefficient quotient can create a kernel. The map $\mathcal O\to k$ sends the injection $\mathcal O\xrightarrow{\varpi}\mathcal O$ to the zero map $k\to k$, the smallest possible counterexample.
+This is the legitimate reason the indicated flat completed coefficient extensions preserve kernels, relation modules, and regular sequences. Ordinary flatness of $\mathcal O'$ over $\mathcal O$ does not by itself justify claiming that an uncompleted tensor product is already complete. Completion alone is not exact on arbitrary modules, and a nonflat coefficient quotient can create a kernel. The map $\mathcal O\to k$ sends the injection $\mathcal O\xrightarrow{\varpi}\mathcal O$ to the zero map $k\to k$, the smallest possible counterexample.
 
 ## 11. Completed tensor products
 
@@ -2181,12 +2216,10 @@ $$
 C_D\simeq C_A\oplus C_B.
 $$
 
-The same direct-sum formula holds relatively over a coefficient ring when both maps to the common quotient kill precisely the respective relative closed-point directions.
-
 For a general common quotient $C$, the cotangent space is the fiber product of the first-order compatibility conditions, with an additional term measuring the two kernels. It is safer to compute from
 
 $$
-\mathfrak m_D/mathfrak m_D^2
+\mathfrak m_D/\mathfrak m_D^2
 $$
 
 or from a presentation than to assert a direct sum. Directions already identified in $C$ must be identified, while kernel directions from the two sides remain independent.
@@ -2326,7 +2359,21 @@ as an $A$-algebra. The isomorphism is noncanonical.
 
 **Proof strategy.** Tangent lifts give a surjection from the power-series ring. Formal smoothness constructs inverse maps at every Artinian order; tangent minimality permits the errors to be corrected one layer at a time. Completeness passes the compatible inverses to the limit.
 
-**Proof.** Let $P=A[[\mathbf Y]]\twoheadrightarrow B$ be induced by the chosen lifts. Relative cotangent spaces are isomorphic. Suppose compatible inverse maps have been constructed modulo the $n$th maximal-ideal powers. Formal smoothness lifts the $B$-map across the next quotient of $P$. The lifted composite can differ from the identity only by a derivation into the new square-zero layer. Because the variables give a relative cotangent basis, changing their lifts by the corresponding derivation removes this difference. Induction produces mutually inverse compatible maps on all finite quotients. Passing to inverse limits gives $P\simeq B$. $\square$
+**Proof.** Let $\phi:P=A[[\mathbf Y]]\twoheadrightarrow B$ be induced by the chosen lifts. Its relative cotangent map is an isomorphism. We construct compatible $A$-maps
+
+$$
+s_n:B\longrightarrow P/\mathfrak m_P^n
+$$
+
+such that the composite of $s_n$ with the map $P/\mathfrak m_P^n\to B/\mathfrak m_B^n$ induced by $\phi$ is the residue of the identity of $B$. Begin with the common residue map. Given $s_n$, formal smoothness lifts it across
+
+$$
+P/\mathfrak m_P^{n+1}\twoheadrightarrow P/\mathfrak m_P^n.
+$$
+
+The new composite with $\phi$ can differ from the identity modulo order $n+1$ only by an $A$-derivation into the square-zero layer $\mathfrak m_B^n/\mathfrak m_B^{n+1}$. Such a derivation factors through $C_{B/A}$. The map $C_{P/A}\to C_{B/A}$ is an isomorphism, and the surjection $P\to B$ is surjective on every graded layer. We may therefore lift the values of the derivation to $\mathfrak m_P^n/\mathfrak m_P^{n+1}$ and change the lifted map by the resulting derivation $B\to\mathfrak m_P^n/\mathfrak m_P^{n+1}$. This cancels the error without changing the preceding stage. Thus the $s_n$ may be chosen compatibly with the asserted composite property.
+
+Passing to inverse limits gives an $A$-map $s:B\to P$ with $\phi\circ s=\operatorname{id}_B$. The endomorphism $\alpha=s\circ\phi$ of $P$ induces the identity on relative cotangent spaces, so the relative cotangent surjectivity criterion makes $\alpha$ surjective. A surjective endomorphism of the Noetherian ring $P$ is an automorphism. Since $\alpha^2=\alpha$, an idempotent automorphism is the identity. Hence $s\circ\phi=\operatorname{id}_P$, and $\phi$ is an isomorphism. $\square$
 
 The zero-dimensional relative case says that a formally smooth map with no relative tangent directions is an isomorphism. Thus formal etaleness at one complete local point has no hidden finite extension when the residue field is fixed.
 
@@ -2381,16 +2428,15 @@ R=P/I,
 P=\mathcal O[[X_1,\ldots,X_r]],
 $$
 
-be a minimal presentation. Suppose $F$ has a finite-dimensional obstruction space $V$ with a complete obstruction theory for principal small extensions. Completeness means that an obstruction vanishes exactly when the desired lift exists, not merely that liftability forces vanishing.
+be a minimal presentation. Suppose $F$ has a finite-dimensional obstruction space $V$ with a complete obstruction theory for small extensions. Completeness means that an obstruction vanishes exactly when the desired lift exists, not merely that liftability forces vanishing.
 
-Even completeness alone does not automatically count relations. For the numerical bound, require also:
+For the numerical bound, the phrase **complete obstruction theory in $V$** includes the following standard linearity data:
 
 1. obstruction classes are functorial under morphisms and pushouts of small extensions;
-2. they are additive in the square-zero kernel;
-3. lift ambiguities are compatible with the tangent action;
-4. a universal relation direction on which the obstruction vanishes can actually be removed from a minimal presentation.
+2. for a small extension with kernel $J$, the obstruction to lifting $\xi$ is an element of $V\otimes_kJ$;
+3. this assignment is additive in $J$ and vanishes if and only if $\xi$ lifts.
 
-The last condition is often called effectiveness of the obstruction theory for relations. Under this package, universal obstructions define an injection
+It is equivalent to give the theory on principal small extensions together with pushout functoriality and additivity. Under this package, universal obstructions define an injection
 
 $$
 \operatorname{Rel}_P(R)^\vee
@@ -2405,23 +2451,44 @@ s:=\mu_P(I)
 \leq\dim_kV.
 $$
 
-**Proof strategy.** Work on Artinian truncations of $P$, where a functional on $I/\mathfrak nI$ pushes out the conormal kernel to a principal small extension. Functoriality and additivity make the resulting obstruction depend linearly on the functional. If a nonzero direction had zero obstruction at every sufficiently deep truncation, effectiveness would remove that relation from the inverse-limit presentation, contradicting minimality.
+**Proof strategy.** Work on one sufficiently deep Artinian truncation of $P$. Its universal small extension has kernel $I/\mathfrak nI$. The universal obstruction is therefore a tensor in $V\otimes_k(I/\mathfrak nI)$, hence a linear map from the dual relation space to $V$. Pushing out along any nonzero functional gives the principal extension of Section 5.9, which cannot admit a lift. Completeness forces the corresponding obstruction to be nonzero, proving injectivity.
 
-**Proof.** Choose a basis of $I/\mathfrak nI$ and minimal lifts $f_1,\ldots,f_s$ generating $I$. At each sufficiently deep quotient of $P$, loosen the equations by one socle layer and push the resulting square-zero kernel out along a functional
-
-$$
-\lambda:I/\mathfrak nI\longrightarrow k.
-$$
-
-These are Artinian principal small extensions, so the obstruction theory assigns classes in $V$. Pushout functoriality and additivity make the assignment linear in $\lambda$, and compatibility of the truncations makes the classes independent of the chosen sufficiently deep level. This constructs the displayed map
+**Proof.** Write $\mathfrak n=\mathfrak m_P$. By Artin--Rees, choose $N$ so large that
 
 $$
-\operatorname{Rel}_P(R)^\vee\longrightarrow V.
+I\cap\mathfrak n^N\subseteq\mathfrak nI.
 $$
 
-If a nonzero $\lambda$ lay in its kernel, completeness would solve all the corresponding finite-level lifting problems. The tangent compatibility makes those solutions compatible after correction, and effectiveness then passes them to the inverse limit and deletes the relation direction selected by $\lambda$. After changing the basis of $I/\mathfrak nI$, one of the $f_j$ would be unnecessary, contradicting Nakayama minimality. The map is therefore injective. $\square$
+Set
 
-The proof explains why the hypotheses are substantive. An arbitrarily enlarged obstruction space still gives a true but weak bound. An incomplete obstruction space might miss genuine failures. A complete existence obstruction without compatible universal effectiveness need not identify minimal relation directions.
+$$
+E=P/(\mathfrak nI+\mathfrak n^N),
+\qquad
+A_N=P/(I+\mathfrak n^N).
+$$
+
+Then $E\twoheadrightarrow A_N$ is a small extension with kernel
+
+$$
+J=I/(\mathfrak nI+I\cap\mathfrak n^N)
+\simeq I/\mathfrak nI.
+$$
+
+Let $\xi_N\in F(A_N)$ be induced by the representing map $R\to A_N$. Its obstruction
+
+$$
+\omega_N\in V\otimes_kJ
+$$
+
+corresponds to a linear map $J^\vee\to V$. Given $0\neq\lambda\in J^\vee$, push the extension out along $\lambda:J\to k$. Functoriality identifies the resulting obstruction with $(1\otimes\lambda)(\omega_N)$. The pushed-out ring is exactly the principal extension constructed in Section 5.9, and that section proves directly from relative minimality that $\xi_N$ cannot lift to it. Completeness of the obstruction theory therefore gives
+
+$$
+(1\otimes\lambda)(\omega_N)\neq0.
+$$
+
+Every nonzero functional has nonzero image, so $J^\vee\to V$ is injective. Since $J\simeq\operatorname{Rel}_P(R)$, this is the required injection. $\square$
+
+The proof explains why the hypotheses are substantive. An arbitrarily enlarged obstruction space still gives a true but weak bound. An incomplete obstruction assignment might miss genuine failures, while an obstruction assignment lacking pushout linearity does not produce a linear map from the dual relation space.
 
 ### 13.3 The basic dimension bound
 
@@ -2497,7 +2564,7 @@ $$
 \dim_kV=o
 $$
 
-means “at most $o$ effective universal relation directions” only under the hypotheses above, not “exactly $o$ equations.”
+means “at most $o$ universal relation directions” only under the complete linear obstruction hypotheses above, not “exactly $o$ equations.”
 
 Nor does the numerical equality $s=o$ identify the equations canonically. The injection of dual relation space into $V$ may become an isomorphism, but changing tangent coordinates or obstruction coordinates changes the displayed functions. Cohomology controls their number and sometimes their leading operations, not their unique formulas.
 
@@ -2541,7 +2608,7 @@ noncanonically. Both dimension and relative embedding dimension increase by $q$;
 
 Fixing a determinant usually replaces the ambient tangent space by the kernel of the differential of determinant. When the coefficient characteristic divides the representation dimension, that kernel must be calculated exactly; it need not be obtained by a naive direct-sum removal of scalar matrices. Once the correct tangent space $t^{\delta}$ is known, its dimension counts the variables of the fixed-determinant ring.
 
-The corresponding obstruction space must also be the one controlling determinant-preserving lifts. If its dimension is $o^{\delta}$ and the effective relation hypotheses hold, then
+The corresponding obstruction space must also be the one controlling determinant-preserving lifts. If its dimension is $o^{\delta}$ and the complete functorial linear obstruction hypotheses hold, then
 
 $$
 \dim R^{\delta}
@@ -2569,7 +2636,7 @@ $$
 A[[X_1,\ldots,X_g]]\twoheadrightarrow R.
 $$
 
-Suppose a finite-dimensional space $V_{R/A}$ carries a complete, functorial, additive, effective obstruction theory for lifting the global object while the local object over $A$ is held fixed. The universal relation argument applies word for word relative to $A$, and gives
+Suppose a finite-dimensional space $V_{R/A}$ carries a complete, functorial, additive obstruction theory for lifting the global object while the local object over $A$ is held fixed. The universal relation argument applies word for word relative to $A$, and gives
 
 $$
 \operatorname{Rel}_{A[[\mathbf X]]/A}(R)^\vee
@@ -2615,7 +2682,7 @@ $$
 R_{\mathrm{loc}}\longrightarrow R_{\mathrm{glob}}.
 $$
 
-If the relative tangent space has dimension $g$ and an effective relative obstruction space has dimension $r$, then
+If the relative tangent space has dimension $g$ and a complete functorial linear relative obstruction space has dimension $r$, then
 
 $$
 R_{\mathrm{glob}}
@@ -2634,7 +2701,7 @@ $$
 
 This formula is exact about what is local and what is global. Equations already cutting out the $R_v$ sit inside $R_{\mathrm{loc}}$. The $g$ new variables measure global tangent classes invisible to the fixed local base, while the at most $r$ new equations measure global compatibility obstructions.
 
-In arithmetic applications the relative tangent space is often a Selmer group and the effective obstruction space injects into the dual of a dual Selmer group, possibly with explicit local correction terms. The local algebra uses only the resulting finite dimensions and the effectiveness map; it does not identify a cohomology group with equations without that map.
+In arithmetic applications the relative tangent space is often a Selmer group and the chosen obstruction space may inject into the dual of a dual Selmer group, possibly with explicit local correction terms. The local algebra uses only the resulting finite dimensions and the complete functorial obstruction assignment; it does not identify a cohomology group with equations without that assignment.
 
 ### 13.9 Balanced presentations
 
@@ -2787,7 +2854,7 @@ with relative tangent dimension three and dimension $2+2-1=3$. The shared unifor
 
 ### 15.1 Reading cohomology as a presentation
 
-Suppose a deformation problem over $\mathcal O$ has been proved representable by $R$, with tangent space $t$ and an effective complete obstruction theory in $V$. Write
+Suppose a deformation problem over $\mathcal O$ has been proved representable by $R$, with tangent space $t$ and a complete functorial linear obstruction theory in $V$. Write
 
 $$
 r=\dim_kt,
@@ -2801,7 +2868,7 @@ $$
 \text{deformation-theoretic datum}&\text{ring-theoretic conclusion}\\ \hline
 t& C_{R/\mathcal O}^\vee\\
 \dim_kt=r&\text{exactly }r\text{ minimal relative variables}\\
-V\text{ compatible, effective, and complete}&
+V\text{ functorial, linear, and complete}&
 \mu(I)\leq o\text{ in a minimal presentation}\\
 V=0\text{ with complete theory}&R\simeq\mathcal O[[X_1,\ldots,X_r]]\\
 \text{formally smooth relative map of tangent size }q&
@@ -2882,7 +2949,7 @@ When a deformation ring enters a patching argument, the following order keeps th
 2. Prove representability or specify that only a hull is available.
 3. Identify the exact tangent space and compute its dimension $r$.
 4. Choose dual cotangent lifts to obtain a minimal power-series source in $r$ variables.
-5. State the exact obstruction theory. Verify completeness, functoriality, additivity, and effectiveness before bounding relations.
+5. State the exact obstruction theory. Verify completeness, pushout functoriality, and additivity in the small-extension kernel before bounding relations.
 6. Obtain $s\leq o$ and then the lower bound $\dim R\geq\dim\mathcal O+r-o$.
 7. Keep equality conditional until height $s$, flatness, or another dimension theorem proves it.
 8. For every ring map, decide separately whether it is surjective, finite, injective, or faithful.
@@ -2938,7 +3005,7 @@ It is minimally generated by $g$ elements after redundancies are removed, so the
 
 Let $a_1,\ldots,a_d$ be a regular system of parameters of $A$. Because $R$ is finite local over $A$, the ideal $(a_1,\ldots,a_d)R$ is $\mathfrak m_R$-primary, so the $a_i$ form a system of parameters of $R$. Cohen--Macaulayness makes them an $R$-regular sequence. We prove freeness over $A$ by induction on $d$. For $d=0$, $A$ is a field. For $d>0$, $R/a_1R$ is finite free over $A/a_1A$ by induction. Lift a basis to obtain a surjection $A^n\twoheadrightarrow R$. If $K$ is its kernel, reduction modulo $a_1$ remains left exact because $a_1$ is a non-zero-divisor on $R$. The reduced map is an isomorphism, so $K/a_1K=0$. Nakayama gives $K=0$. Thus $R\simeq A^n$. $\square$
 
-For $A=\mathcal O$, the injectivity hypothesis can be replaced by the assertion that $\varpi$ is not nilpotent. The complete-intersection conclusion makes $R$ one-dimensional and Cohen--Macaulay, hence unmixed. A vertical minimal component would be finite over $k$ and have dimension zero, contradicting unmixedness. Thus $\varpi$ belongs to no associated prime, is a non-zero-divisor, and $R$ is $\mathcal O$-flat and therefore finite free.
+For $A=\mathcal O$, the injectivity hypothesis can be replaced by the assertion that $\varpi$ is not nilpotent. Indeed, every nonzero ideal of the discrete valuation ring is $(\varpi^n)$ for some $n$; a nonzero kernel of $\mathcal O\to R$ would therefore make $\varpi$ nilpotent in $R$. Thus nonnilpotence gives injectivity, and the theorem applies. Geometrically, the resulting one-dimensional Cohen--Macaulay ring is unmixed, so it has no vertical zero-dimensional component; equivalently, $\varpi$ lies in no associated prime and $R$ is $\mathcal O$-flat.
 
 Each hypothesis has a job. Without balance there may be too many equations. Without finiteness there is no upper dimension bound. Without injectivity, a quotient such as $A/(a)$ can satisfy a presentation while living over a smaller base. Without regularity of $A$, its parameters need not form the regular sequence required for freeness.
 
@@ -3085,6 +3152,6 @@ Krull dimension measures something different. It follows prime chains, so equati
 
 Over a coefficient discrete valuation ring, flatness is exactly absence of coefficient torsion. This criterion explains when special fibers drop dimension by one, when completed tensor-product dimensions subtract a single shared coefficient direction, and when finite coefficient algebras are free. Fiber products serve a different purpose: they glue compatible quotients and create unions of branches, with dimension given by a maximum rather than a sum.
 
-The global presentation over $R_{\mathrm{loc}}$ now has a precise reading. Relative tangent classes give variables; an effective relative obstruction theory bounds global equations; duality supplies the balance; and a patched module free over an auxiliary regular ring can force the patched ring to be finite, faithful, and equal in dimension to that base. Balance plus finiteness turns the equations into a regular sequence. Augmentation then returns to the original coefficient level, with faithfulness and kernel control checked rather than assumed.
+The global presentation over $R_{\mathrm{loc}}$ now has a precise reading. Relative tangent classes give variables; a complete functorial linear obstruction theory bounds global equations; duality supplies the balance; and a patched module free over an auxiliary regular ring can force the patched ring to be finite, faithful, and equal in dimension to that base. Balance plus finiteness turns the equations into a regular sequence. Augmentation then returns to the original coefficient level, with faithfulness and kernel control checked rather than assumed.
 
-The resulting dictionary is exact: tangent dimension gives variables, effective obstructions bound relations, height detects complete intersections, torsion detects coefficient flatness, completed tensor products combine independent local conditions, fiber products glue common reductions, and faithful free modules convert numerical balance into structural theorems. These are the complete-local algebraic moves by which local and global deformation calculations become the ring statements used in patching.
+The resulting dictionary is exact: tangent dimension gives variables, complete functorial obstructions bound relations, height detects complete intersections, torsion detects coefficient flatness, completed tensor products combine independent local conditions, fiber products glue common reductions, and faithful free modules convert numerical balance into structural theorems. These are the complete-local algebraic moves by which local and global deformation calculations become the ring statements used in patching.
