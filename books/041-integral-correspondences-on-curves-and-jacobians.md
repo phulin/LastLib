@@ -85,7 +85,7 @@ The generic cycle alone does not answer these questions. If one simply closes it
 
 There are two complementary solutions. The first is canonical and group-theoretic. A generic correspondence gives a homomorphism of Jacobians, and every homomorphism of abelian varieties extends uniquely to their Néron models. This route proves existence, uniqueness, composition, and independence of all choices. The second is geometric and computational. Close the correspondence, normalize, resolve, and use pullback, proper pushforward, intersection theory, and the separated relative Picard quotient. This route calculates specialization and component groups. Much of this book is devoted to proving that the two routes give the same map.
 
-The guiding square is
+The guiding display is
 
 $$
 \begin{array}{ccc}
@@ -95,7 +95,7 @@ J_C&\xrightarrow{\Gamma_J}&J_D\\
 \end{array}
 $$
 
-where the upper arrow is defined from the generic cycle and the lower arrow is its unique integral extension. The vertical arrows mean “take the Néron model,” not a morphism from the generic fiber to the model. On special fibers, the lower arrow preserves identity components and therefore induces a finite-group map
+where the upper arrow is defined from the generic cycle and the lower arrow is its unique integral extension. The vertical marks mean “pass to the Néron model”; they are not morphisms from a generic fiber to an integral model. Formally, the assertion represented by the display is $(\mathcal \Gamma)_K=\Gamma_J$. On special fibers, the lower arrow preserves identity components and therefore induces a finite-group map
 
 $$
 \Phi(\Gamma):\Phi_{J_C}\longrightarrow\Phi_{J_D}.
@@ -105,7 +105,7 @@ Our task is to make every arrow in this picture explicit and to prove all compat
 
 ### 1.2 Standing hypotheses and notation
 
-Unless stated otherwise, $S$ is an excellent connected Dedekind scheme, $eta=\operatorname{Spec}K$ is its generic point, and a **regular model** of a smooth proper geometrically connected $K$-curve $C$ is a regular, proper, flat $S$-scheme $\mathcal X$ with generic fiber $C$. Local arguments take place over an excellent discrete valuation ring $R$ with fraction field $K$, uniformizer $\pi$, and residue field $k$. We pass to the strict henselization when geometric components are required. Excellence is used for finite normalization and resolution of the surfaces that arise from closures.
+Unless stated otherwise, $S$ is an excellent connected Dedekind scheme, $\eta=\operatorname{Spec}K$ is its generic point, and a **regular model** of a smooth proper geometrically connected $K$-curve $C$ is a regular, proper, flat $S$-scheme $\mathcal X$ with generic fiber $C$. Local arguments take place over an excellent discrete valuation ring $R$ with fraction field $K$, uniformizer $\pi$, and residue field $k$. We pass to the strict henselization when geometric components are required. Excellence is used for finite normalization and resolution of the surfaces that arise from closures.
 
 For a curve $C/K$, write $J_C=\operatorname{Pic}^0_{C/K}$ and write $\mathcal J_C$ for its Néron model. At a closed point $s$ of $S$,
 
@@ -226,9 +226,22 @@ $$
 (\Delta\circ\Gamma)_J=\Delta_J\circ\Gamma_J. \tag{2.4}
 $$
 
-**Proof strategy.** The fiber product is the geometric place where the middle pullback and norm meet. The assertion is the projection formula, with lengths at nontransverse points producing the intersection multiplicities.
+**Proof strategy.** The fiber product is the geometric place where the middle pullback and norm meet. Finite flat base change for the norm proves the identity without a separability assumption; the lengths of the possibly nonreduced fiber product are exactly the cycle multiplicities.
 
-On the locus where all maps are étale and the two cycles meet transversely, a point $x$ is sent through every pair $(h,l)$ satisfying $\beta(h)=\gamma(l)$. Both sides of (2.4) sum the resulting points $\delta(l)$ with the same residue degrees. The complement is finite. At a point of ramification or nontransverse intersection, the local ring of $H\times_D L$ has a finite length on each isolated branch. The norm of a local parameter counts that length, while cycle composition assigns it as intersection multiplicity. Thus the equality holds on divisors. Principal divisors are respected on both sides, so it descends to Jacobians. Linearity handles arbitrary integer combinations. $\square$
+Every nonconstant finite map between the smooth curves in question is finite locally free. Put $P=H\times_D L$, with projections $r:P\to H$ and $s:P\to L$. Base change for determinant norms gives
+
+$$
+\gamma^*\beta_*=s_*r^*
+$$
+
+on Picard groups. Therefore
+
+$$
+\delta_*\gamma^*\beta_*\alpha^*
+=(\delta s)_*(\alpha r)^*.
+$$
+
+The finite scheme $P$ over either curve can be nonreduced, especially for inseparable maps. At each generic point of its one-dimensional support, its local artinian ring has a length. Decomposing the determinant norm along these generic primary pieces gives the norm from the normalization of that component raised to precisely this length. Those are exactly the scheme-theoretic multiplicities in the cycle defining $\Delta\circ\Gamma$. Thus the last displayed map is $(\Delta\circ\Gamma)_J$. Principal divisors are respected because the norm of a rational function has divisor equal to its finite pushforward. Linearity handles arbitrary integer combinations. $\square$
 
 Composition is in the displayed order: first $\Gamma$, then $\Delta$. This matters once correspondence algebras are identified with endomorphism algebras.
 
@@ -305,13 +318,13 @@ extending $\alpha$ and $\beta$.
 
 **Proposition 3.1 (regular extension of a correspondence).** Every finite generic correspondence between smooth proper curves admits a diagram (3.3). Any two such diagrams admit a common regular domination.
 
-**Proof.** The closure, finite normalization, and resolution just described give existence for every integral component; take disjoint unions and multiplicities for a general correspondence. For two choices $\mathcal H_1$ and $\mathcal H_2$, the generic identity on $H$ gives a birational map between them. Take the closure of its graph in $\mathcal H_1\times_S\mathcal H_2$, normalize, and resolve. The resulting regular surface maps properly and birationally to both. $\square$
+**Proof.** The closure, finite normalization, and resolution just described give existence for every integral component. A correspondence with several components is treated componentwise and the resulting maps are added with their integer coefficients; a negative coefficient is not interpreted as a geometric multiplicity on one model. For two choices $\mathcal H_1$ and $\mathcal H_2$ for the same integral component, the generic identity on $H$ gives a birational map between them. Take the closure of its graph in $\mathcal H_1\times_S\mathcal H_2$, normalize, and resolve. The resulting regular surface maps properly and birationally to both. Taking disjoint unions gives a simultaneous domination for finitely many components. $\square$
 
 The common domination is the mechanism behind independence of resolution. Pulling a divisor to a further blowup changes it by controlled exceptional terms; those terms are vertical and disappear in the separated Picard quotient.
 
 ### 3.3 When finite models exist
 
-The diagram becomes much simpler if $a$ and $b$ are finite flat. A finite morphism between regular flat curves over $S$ is flat when the source is Cohen--Macaulay and every fiber has pure dimension one: this is the dimension criterion for flatness. Thus finiteness plus absence of isolated vertical components often gives finite local freeness.
+The diagram becomes much simpler if $a$ and $b$ are finite flat. The relevant flatness criterion is local on the target. If $f:\mathcal U\to\mathcal X$ is finite and dominant between regular integral surfaces, then $\mathcal O_{\mathcal U,u}$ is Cohen--Macaulay and has the same dimension as the regular local ring $\mathcal O_{\mathcal X,f(u)}$. It is therefore a maximal Cohen--Macaulay module over that regular local ring, hence finite free. Thus such a finite morphism is flat, and finite presentation makes it finite locally free. This argument requires finiteness over the surface $\mathcal X$; merely knowing that both schemes have one-dimensional fibers over $S$ does not prove flatness of the map between them.
 
 One systematic construction starts with a target model $\mathcal X$ and a finite map $H\to C$. Normalize $\mathcal X$ in $K(H)$. Excellence makes the normalization finite over $\mathcal X$, and it is flat over $S$. It may be singular, however. Resolving it destroys finiteness by introducing exceptional curves. Hence one usually has either a finite normal model or a regular proper model, not automatically both.
 
@@ -510,9 +523,9 @@ $$
 
 that commutes with base change and carries vertical divisors to vertical divisors. It therefore descends to $Q_{\mathcal H}\to Q_{\mathcal Y}$.
 
-In the general resolved diagram, $b$ is proper and generically finite but can contract vertical curves. A determinant norm on every line bundle is then not the right primitive construction. There are two equivalent safe routes.
+In the general resolved diagram, $b$ is proper and generically finite but can contract vertical curves. A determinant norm on every line bundle is then not the right primitive construction. There are two compatible routes, with different logical roles.
 
-The first route uses the generic norm $\beta_*:J_H\to J_D$ and extends it uniquely to the Néron models. The second route acts on a horizontal divisor $A$ on $\mathcal H$ by proper cycle pushforward $b_*A$. Regularity of $\mathcal Y$ turns the resulting codimension-one cycle into a Cartier divisor. If $A$ is changed by a principal divisor, its pushforward changes by the divisor of the field norm; if it is changed by a vertical divisor, its pushforward is vertical or zero. Thus the divisor operation descends through the separated quotient wherever horizontal representatives exist. Such representatives exist locally in the Picard topology and the local maps glue by separatedness.
+The first route uses the generic norm $\beta_*:J_H\to J_D$ and extends it uniquely to the Néron models. This defines the morphism on every smooth test family. The second route proves the calculation on divisor representatives. It acts on a horizontal divisor $A$ on $\mathcal H$ by proper cycle pushforward $b_*A$. Regularity of $\mathcal Y$ turns the resulting codimension-one cycle into a Cartier divisor. If $A$ is changed by a principal divisor, its pushforward changes by the divisor of the field norm; if it is changed by a vertical divisor, its pushforward is vertical or zero. Thus the divisor operation gives the same map through the separated quotient wherever horizontal representatives exist. The high-degree divisor presentation of the Picard functor supplies such representatives fppf-locally on every smooth test scheme, and separatedness makes the local formulas agree. We do not use proper pushforward of arbitrary line bundles along a nonfinite morphism.
 
 We obtain a canonical morphism
 
@@ -624,7 +637,7 @@ $$
 \sum_i d_{ai}\deg(L|_{X_i}). \tag{6.8}
 $$
 
-Thus the matrix $D_f=(d_{ai})$ carries multidegrees on $\mathcal X$ to multidegrees on $\mathcal U$. In particular it defines
+Thus the matrix $D_f=(d_{ai})$ carries multidegrees on $\mathcal X$ to multidegrees on $\mathcal U$. If $x$ is a multidegree vector, the weighted sum of the entries of $D_fx$ is the degree on the generic fiber of the pulled-back line bundle. It equals $\deg(f_K)$ times the generic degree represented by $x$. Consequently $D_f$ carries the weighted degree-zero lattice into the weighted degree-zero lattice and defines
 
 $$
 f^\Phi:\Lambda_{\mathcal X}\longrightarrow\Lambda_{\mathcal U}. \tag{6.9}
@@ -667,7 +680,7 @@ $$
 f_\Phi=E_f^t:\Lambda_{\mathcal U}\longrightarrow\Lambda_{\mathcal X}. \tag{6.13}
 $$
 
-The map respects the degree-zero conditions. One way to see this is to apply (6.12) to the full fibers and use preservation of the generic degree under proper pushforward. It respects matrix images because the transpose of (6.10), together with symmetry of the intersection matrices, gives
+The map respects the degree-zero conditions. Indeed the weighted sum of the intersection vector of a horizontal divisor is its generic degree, and proper pushforward of zero-cycles preserves degree over the common ground field. It respects matrix images because the transpose of (6.10), together with symmetry of the intersection matrices, gives
 
 $$
 M_{\mathcal X}D_f^t=E_f^tM_{\mathcal U}. \tag{6.14}
@@ -685,9 +698,9 @@ All matrices are integral. Passing to rational component spaces before taking th
 
 ### 6.4 Birational invariance
 
-Suppose $r:\mathcal X'\to\mathcal X$ is a point blowup. Its generic degree is one and its generic Jacobian map is the identity. Hence $r^\Phi$ and $r_\Phi$ are inverse isomorphisms on component groups. This can also be seen directly.
+Suppose first that $r:\mathcal X'\to\mathcal X$ is a point blowup. Its generic degree is one and its generic pullback and norm are both the identity. Hence their Néron extensions show that $r^\Phi$ and $r_\Phi$ are inverse isomorphisms on component groups. This can also be seen directly.
 
-The exceptional curve adds one generator to the vertical lattice and one negative direction to the intersection form. Total pullback is orthogonal to the exceptional curve. In the presentation (6.3), the new generator and its relation cancel, leaving the same finite quotient. Iterating proves invariance under regular birational modification.
+The exceptional curve adds one generator to the vertical lattice and one negative direction to the intersection form. Total pullback is orthogonal to the exceptional curve. In the presentation (6.3), the new generator and its relation cancel, leaving the same finite quotient. Iteration handles a displayed sequence of regular point blowups. For an arbitrary proper birational morphism between regular models, invariance follows directly from the generic identity and the Picard--Néron comparison; no unproved factorization into point blowups is required.
 
 Consequently (6.15) is independent of the selected resolution. On a common domination, the two matrix calculations are conjugate by these canonical birational identifications. This is the lattice counterpart of the Picard–Néron comparison.
 
@@ -749,75 +762,102 @@ Thus a correspondence can be calculated separately on normalized-component Jacob
 
 ### 7.2 Harmonicity from finite flatness
 
-Let $f:\mathcal U\to\mathcal X$ be finite flat between semistable curves and assume nodes map to nodes after a suitable semistable modification. A component $U_v$ maps to $X_w$ with degree $d_v$. For an oriented branch $e'$ at $w$, sum the local branch degrees $m_e$ over branches $e$ at $v$ mapping to $e'$. Flatness gives
+Let $f:\mathcal U\to\mathcal X$ be finite locally free between semistable curves over the same discrete valuation ring. For the direct edge formula we impose the admissibility condition proved sufficient in the semistable graph theory: nodes map to nodes, no smooth point lies above a target node, and after strict henselization a node $e$ above $e'$ has compatible coordinates
 
 $$
-\sum_{e\mapsto e'}m_e=d_v, \tag{7.5}
+uv=\pi^{n_{e'}},\qquad xy=\pi^{n_e},\qquad
+f^*u=\alpha x^{m_e},\qquad f^*v=\beta y^{m_e},
+\tag{7.5}
+$$
+
+with units $\alpha,\beta$. Comparison of the smoothing equations gives
+
+$$
+n_{e'}=m_en_e. \tag{7.6}
+$$
+
+A component $U_v$ maps to $X_w$ with degree $d_v$. For an oriented branch $e'$ at $w$, sum the local branch degrees $m_e$, including residue degrees when working with closed rather than geometric branches, over branches $e$ at $v$ mapping to $e'$. Flatness gives
+
+$$
+\sum_{e\mapsto e'}m_e=d_v, \tag{7.7}
 $$
 
 independent of $e'$. This is harmonicity.
 
-**Proof.** Choose a smooth point of the branch $e'$ near the node. Its inverse image on $U_v$ is a finite divisor of total degree $d_v$. As the point approaches the node along that branch, flatness preserves the length of the fiber, while the local maps on the branches contribute their ramification degrees $m_e$. Their sum is therefore $d_v$. The same total degree is obtained on every branch. $\square$
+**Proof.** Choose a smooth point of the branch $e'$ near the node. Its inverse image on $U_v$ is a finite divisor of total degree $d_v$. As the point approaches the node along that branch, flatness preserves the length of the fiber, while the local maps on the branches contribute their ramification and residue degrees. Their sum is therefore $d_v$. The same total degree is obtained on every branch. Equation (7.6) follows by multiplying the two parameter identities in (7.5) and comparing valuations of $\pi$. $\square$
 
-The smoothing equations impose the corresponding metric relation. It should be derived from the local parameters rather than memorized, because ramification of the base changes edge lengths. Over the same base, an admissible local map sends branch parameters to units times powers, and equality of the two pulled-back smoothing equations makes the branch degrees and thicknesses compatible.
+The hypotheses preceding (7.5) are not automatic for an arbitrary resolved closure. They are exactly what licenses an edge-by-edge harmonic formula. Without them, the canonical component action still exists and is calculated by Chapter 6; one must not manufacture a harmonic graph map from a projection that contracts vertical curves.
 
 ### 7.3 Pullback and pushforward on cycles
 
-Harmonicity defines integral maps
+Under the admissibility hypotheses of Section 7.2, harmonicity defines integral maps
 
 $$
 f^*:X(G_X)\longrightarrow X(G_U),
 \qquad
-f_*:X(G_U)\longrightarrow X(G_X). \tag{7.6}
+f_*:X(G_U)\longrightarrow X(G_X). \tag{7.8}
 $$
 
-For pullback, lift an oriented edge with its local branch multiplicities. Relation (7.5) makes the boundary of a lifted cycle vanish at every vertex. Pushforward sends an oriented source edge to its target edge with the appropriate residue and local degrees; reversal changes the sign. Loops must be retained, since their boundary is already zero and they can carry the entire toric action.
+For pullback, lift an oriented edge with its local branch multiplicities. Relation (7.7) makes the boundary of a lifted cycle vanish at every vertex. Pushforward sends an oriented source edge to its target edge with the appropriate residue and local degrees; reversal changes the sign. Loops must be retained, since their boundary is already zero and they can carry the entire toric action.
 
 The decisive identity is
 
 $$
-q_U(f^*c,d)=q_X(c,f_*d). \tag{7.7}
+q_U(f^*c,d)=q_X(c,f_*d). \tag{7.9}
 $$
 
 **Proof strategy.** Expand both sides edge by edge. Each target edge contribution on the right is distributed among its inverse branches on the left. Harmonicity supplies conservation of degree and the local smoothing equations supply equality of metric weights.
 
-Indeed the coefficient of $c_{e'}d_e$ on the left is the pullback multiplicity of $e'$ along $e$, multiplied by the source length. The local parameter relation identifies this product with the pushforward multiplicity of $e$ times the target length, which is the coefficient on the right. Summing over all oriented edges proves (7.7). $\square$
+Indeed the coefficient of $c_{e'}d_e$ on the left is the pullback multiplicity of $e'$ along $e$, multiplied by the source length. Equation (7.6) identifies this product with the pushforward multiplicity of $e$ times the target length, which is the coefficient on the right. Summing over all oriented edges proves (7.9). $\square$
 
-For a resolved correspondence, define the covariant graph-lattice map
-
-$$
-u_\Gamma=\beta_*\alpha^*:X(G_C)\longrightarrow X(G_D), \tag{7.8}
-$$
-
-and let
+We now separate the general construction from this direct formula. For an arbitrary correspondence between curves with semistable Jacobians, the Néron homomorphism $\mathcal \Gamma^0$ maps the maximal torus $T_C$ into $T_D$. Because characters are contravariant, define
 
 $$
-v_\Gamma=\alpha_*\beta^*:X(G_D)\longrightarrow X(G_C). \tag{7.9}
+v_\Gamma=X^*(\mathcal \Gamma|_{T_C}):
+X(G_D)\longrightarrow X(G_C). \tag{7.10}
 $$
 
-The second is the graph map of the transpose, and (7.7) says that $u_\Gamma$ and $v_\Gamma$ are adjoint. Because $X(G)$ is the character lattice of the graph torus while torus morphisms act contravariantly on characters, one must not identify a Néron homomorphism with a single character-lattice arrow without stating the variance. On the discriminant presentation, the covariant component map attached to $\Gamma$ is induced by the dual map
+Define $u_\Gamma:X(G_C)\to X(G_D)$ in the same way from the transpose correspondence. If a diagram for $\alpha$ and $\beta$ has admissible finite locally free semistable extensions, then the preceding edge calculation gives the concrete formulas
 
 $$
-v_\Gamma^\vee:X(G_C)^\vee\longrightarrow X(G_D)^\vee. \tag{7.10}
+u_\Gamma=\beta_*\alpha^*,
+\qquad
+v_\Gamma=\alpha_*\beta^*. \tag{7.11}
 $$
 
-Adjunction gives $v_\Gamma^\vee q_C=q_Du_\Gamma$, so (7.10) carries $q_CX(G_C)$ into $q_DX(G_D)$. Its map on the cokernels of (7.3) is $\Phi(\Gamma)$.
+In general, (7.10), rather than a possibly nonexistent edge map on a resolved projection, is the definition. It is still geometric. Apply the resolved Picard map to line bundles described by gluing scalars at the nodes. The normalization--conductor sequence identifies its restriction to the graph torus and hence its character map. The component and intersection matrices of Chapter 6 then calculate the induced map on the discriminant quotient. This procedure retains torus information even when the component group is trivial.
+
+The projection formula proves
+
+$$
+q_D(u_\Gamma x,y)=q_C(x,v_\Gamma y). \tag{7.12}
+$$
+
+For completeness, take a common regular domination of the closure. The normalization--conductor sequence presents the torus by gluing units modulo componentwise units, so its character lattice is the integral cycle lattice. Pullback of a gluing unit and the field norm of a gluing unit are adjoint by the same valuation-and-residue-degree projection formula used for divisors. On a regular domination, the pullback and pushforward matrices satisfy (6.10) and (6.14); exceptional tree directions introduced by further blowups carry no cycle character and are orthogonal to total pullbacks. Passing from the expanded regular graph to the weighted cycle lattice therefore gives (7.12). In the admissible case this argument reduces edge by edge to (7.9); thus it neither assumes that an arbitrary resolved projection is finite nor changes the directly computed map when one is available.
+
+On the discriminant presentation, the covariant component map attached to $\Gamma$ is induced by the dual map
+
+$$
+v_\Gamma^\vee:X(G_C)^\vee\longrightarrow X(G_D)^\vee. \tag{7.13}
+$$
+
+Adjunction gives $v_\Gamma^\vee q_C=q_Du_\Gamma$, so (7.13) carries $q_CX(G_C)$ into $q_DX(G_D)$. Its map on the cokernels of (7.3) is $\Phi(\Gamma)$. This last identification follows equally from the intersection presentation (6.15), so it remains valid without an admissible edge model.
 
 ### 7.4 Normalized components and the connected part
 
-A finite map between semistable curves also maps normalizations of special components. On their Jacobians it induces the ordinary pullback and norm. Together with (7.6), these maps fit into a diagram of semiabelian extensions
+An admissible finite map between semistable curves maps normalizations of special components. On their Jacobians it induces the ordinary pullback and norm. For a general correspondence, the Néron homomorphism between semiabelian identity components maps maximal tori to maximal tori and therefore induces a map on their abelian quotients. In either case there is a diagram
 
 $$
 \begin{array}{ccccccccc}
 0&\to&T_C&\to&\mathcal J_{C,k}^0&\to&\prod_vJ(C_v^\nu)&\to&0\\
 &&\downarrow&&\downarrow&&\downarrow&&\\
 0&\to&T_D&\to&\mathcal J_{D,k}^0&\to&\prod_wJ(D_w^\nu)&\to&0.
-\end{array} \tag{7.11}
+\end{array} \tag{7.14}
 $$
 
-For a correspondence, compose the pullback diagram for $\alpha$ with the norm diagram for $\beta$. The middle arrow is the special fiber of $\mathcal \Gamma^0$. Equality can be checked on the generic fiber through the Néron property, or on line bundles by gluing across nodes.
+When $\alpha$ and $\beta$ have admissible finite semistable extensions, the right arrow is the composite of ordinary pullback and norm on the normalized-component Jacobians, and the left arrow has character map (7.10). For a general resolved correspondence, the middle arrow is still the special fiber of $\mathcal \Gamma^0$, but its two outer maps are calculated through the resolved Picard and intersection construction rather than by applying an edge formula to contracted components. Equality can be checked on generic line bundles and then through the separated Picard quotient.
 
-The extension class in (7.4) means that the middle map is not generally the direct product of the torus map and normalized-component maps. Diagram (7.11), rather than a noncanonical splitting, is the correct integral statement.
+The extension class in (7.4) means that the middle map is not generally the direct product of the torus map and normalized-component maps. Diagram (7.14), rather than a noncanonical splitting, is the correct integral statement.
 
 ### 7.5 Descent and saturation
 
@@ -889,7 +929,7 @@ $$
 
 To verify (8.5), choose dual-lattice lifts and use (8.4) after extending scalars to $\mathbf Q$. The difference between either side and that rational equality is integral, so the equality survives modulo $\mathbf Z$.
 
-Apply this to graph pullback and pushforward using (7.7). We obtain
+Apply this to graph pullback and pushforward using (7.9). We obtain
 
 $$
 \langle f^*x,y\rangle_U
@@ -915,7 +955,7 @@ The canonical principal polarization identifies a Jacobian with its dual on the 
 2. on the toric cycle lattices for the weighted monodromy pairings;
 3. on component groups for the discriminant pairings.
 
-**Proof.** The generic statement is (2.7). Resolve the correspondence compatibly with semistable models. Edgewise projection proves the lattice statement (7.7) for each finite map, hence for their pull–norm composite. The discriminant statement follows from (8.5). Independence of resolution follows from subdivision invariance and the uniqueness of the Néron extension. $\square$
+**Proof.** The generic statement is (2.7). The torus character maps of the correspondence and its transpose satisfy (7.12), proved from the projection formula on a common regular domination. When admissible finite semistable extensions exist, this is the edgewise identity (7.9); in general the intersection matrices give the same identity without assigning a harmonic map to a contracted edge. The discriminant statement follows from (8.5) and the identification (7.13) of the component map. Birational invariance of Chapter 6 proves independence of the domination. $\square$
 
 This theorem is stronger than a determinant identity. It controls actual finite-group homomorphisms and their kernels, including nonsaturated phenomena invisible over $\mathbf Q$.
 
@@ -1079,23 +1119,39 @@ $$
 
 These formulas require semistable reduction and unchanged geometric combinatorics apart from scaling. Outside that range, normalization can split components and additive parts can change; the old component group alone does not determine the new one.
 
+There are two natural arrows between the two discriminant groups, and they must not be confused. Sequence (10.4) uses the quotient
+
+$$
+\pi_e:X^\vee/eqX\longrightarrow X^\vee/qX,
+\qquad [z]\longmapsto[z]. \tag{10.6}
+$$
+
+The component map of the canonical Néron base-change morphism goes in the opposite direction:
+
+$$
+i_e:X^\vee/qX\longrightarrow X^\vee/eqX,
+\qquad [z]\longmapsto[ez]. \tag{10.7}
+$$
+
+It is injective, with cokernel $X^\vee/eX^\vee$, and $\pi_ei_e=[e]$ on the old group while $i_e\pi_e=[e]$ on the new one. The quotient $\pi_e$ is the contraction map supplied by the nested monodromy lattices; it is not the component map of base change.
+
 ### 10.3 Compatibility of correspondence actions with ramification
 
 There is a canonical comparison morphism
 
 $$
-\mathcal J_C\times_RR'\longrightarrow\mathcal J_{C_{K'}}. \tag{10.6}
+\mathcal J_C\times_RR'\longrightarrow\mathcal J_{C_{K'}}. \tag{10.8}
 $$
 
-For a correspondence, the square formed by (10.6) for $C$ and $D$ commutes. Both composites extend the base-changed generic homomorphism, and uniqueness supplies the equality.
+For a correspondence, the square formed by (10.8) for $C$ and $D$ commutes. Both composites extend the base-changed generic homomorphism, and uniqueness supplies the equality.
 
 In the semistable lattice description, multiplying both source and target pairings by $e$ preserves the adjunction identity
 
 $$
-e q_D(\Gamma x,y)=e q_C(x,\Gamma^ty). \tag{10.7}
+e q_D(\Gamma x,y)=e q_C(x,\Gamma^ty). \tag{10.9}
 $$
 
-Thus the maps induced on the enlarged discriminant groups remain transposes. The new kernels contributed by $X/eX$ are stable under the correspondence algebra, and the action on them is the reduction modulo $e$ of the action on the cycle lattice.
+Thus the maps induced on the enlarged discriminant groups remain transposes. The kernel $X/eX$ of the contraction quotient in (10.4) is stable under the correspondence algebra, and the action on it is the reduction modulo $e$ of the action on the cycle lattice.
 
 ### 10.4 Subdivision, contraction, and stable models
 
@@ -1118,7 +1174,7 @@ J_C(K)&\xrightarrow{\Gamma_J}&J_D(K)\\
 \displaystyle\bigoplus_{s\notin U}\Phi_{C,s}(k(s))
 &\xrightarrow{\oplus\Phi_s(\Gamma)}&
 \displaystyle\bigoplus_{s\notin U}\Phi_{D,s}(k(s)).
-\end{array} \tag{10.8}
+\end{array} \tag{10.10}
 $$
 
 No surjectivity of the vertical arrows is implied. Global points need not realize arbitrary tuples of local components.
@@ -1174,7 +1230,7 @@ $$
 
 which can be much smaller than the geometric group.
 
-Under ramified base change of index $e$, the new component group is $\mathbf Z/en\mathbf Z$. The reduction map to the old group is reduction modulo $n$, and its kernel has order $e$, agreeing with (10.4).
+Under ramified base change of index $e$, the new component group is $\mathbf Z/en\mathbf Z$. The contraction quotient $\pi_e$ to the old group is reduction modulo $n$, and its kernel has order $e$, agreeing with (10.4). By contrast, the component map of the canonical Néron base-change morphism sends $x\bmod n$ to $ex\bmod en$, as in (10.7).
 
 ### 11.3 Two components joined by parallel edges
 
@@ -1362,11 +1418,11 @@ The preceding theory can be summarized as a checklist internal to the mathematic
 2. all generic additive and multiplicative relations hold on $\mathcal J_C$, its identity components, and its component groups;
 3. over a finite locally free locus the action is relative pullback followed by norm;
 4. at every remaining place a normalized resolved closure calculates the same action through intersection matrices;
-5. in the semistable case the action is the map on the weighted graph discriminant induced by the dual of the transpose graph-lattice map, equivalently by the adjoint pair attached to the correspondence;
+5. in the semistable case the action is the map on the weighted graph discriminant induced by the dual of the transpose torus-character map; when admissible finite semistable models exist, the two adjoint character maps are computed edgewise by pullback and pushforward, while in general they are computed from the resolved intersection matrices;
 6. unramified base change commutes with the action, while ramified base change commutes through the canonical Néron comparison;
 7. transpose is the polarized adjoint generically and the discriminant adjoint on semistable component groups.
 
-**Proof.** Items 1 and 2 are Theorem 4.1. Item 3 is Section 5.5. Items 4 and 5 are Theorem 5.1, formula (6.15), and (7.3)--(7.10). Item 6 follows from Sections 4.3 and 10. Item 7 is Theorems 4.3 and 8.1. $\square$
+**Proof.** Items 1 and 2 are Theorem 4.1. Item 3 is Section 5.5. Items 4 and 5 are Theorem 5.1, formula (6.15), and (7.3), (7.10)--(7.13). Item 6 follows from Sections 4.3 and 10. Item 7 is Theorems 4.3 and 8.1. $\square$
 
 This theorem is the precise meaning of an integral Hecke action in the present setting. It asserts an action on canonical integral geometry, not merely a collection of operators on a rational cohomology space.
 
@@ -1396,7 +1452,7 @@ be a finite correspondence with $H$ smooth and proper.
    $$
 
    For a resolved correspondence, pullback is represented by component-degree matrices, pushforward by the transpose of divisor-pullback multiplicity matrices, and their composite gives $\Phi(\Gamma)$.
-6. If the curves are semistable, their component groups are discriminants of the weighted cycle pairings. The covariant graph-lattice operator is $u_\Gamma=\beta_*\alpha^*$, including branch and residue degrees; the component map is induced on dual lattices by $v_\Gamma^\vee$, where $v_\Gamma=\alpha_*\beta^*$ is its adjoint. This discriminant map is $\Phi(\Gamma)$.
+6. If the curves are semistable, their component groups are discriminants of the weighted cycle pairings. Let $v_\Gamma:X(G_D)\to X(G_C)$ be the character map of $\mathcal \Gamma:T_C\to T_D$, and let $u_\Gamma:X(G_C)\to X(G_D)$ be the character map of the transpose. They are adjoint, the component map is induced on dual lattices by $v_\Gamma^\vee$, and this discriminant map is $\Phi(\Gamma)$. If $\alpha$ and $\beta$ admit admissible finite semistable extensions, then $u_\Gamma=\beta_*\alpha^*$ and $v_\Gamma=\alpha_*\beta^*$ edgewise, with all branch and residue degrees included. Without that hypothesis, the intersection-matrix calculation of item 5 is the asserted computation.
 7. Transpose is adjoint for canonical polarizations, weighted cycle pairings, and semistable component pairings. All these statements are Galois equivariant.
 8. Specialization of divisor classes commutes with $\Gamma$. Étale base change commutes directly; ramified base change commutes through canonical Néron comparison maps and scales semistable edge lengths by the ramification index.
 
