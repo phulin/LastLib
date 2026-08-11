@@ -30,7 +30,7 @@ any resulting corrections.
 - [x] 004. Adeles and Ideles
 - [ ] 005. Local Class Field Theory
 - [ ] 006. Global Class Field Theory
-- [ ] 007. Analytic Foundations for Odlyzko–Poitou Bounds
+- [x] 007. Analytic Foundations for Odlyzko–Poitou Bounds
 - [ ] 008. Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers
 - [ ] 009. Divisors, Riemann–Roch, and Duality on Relative Curves
 - [ ] 010. Normalization and Regular Models of Arithmetic Curves

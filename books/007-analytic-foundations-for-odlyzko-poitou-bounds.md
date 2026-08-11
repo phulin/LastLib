@@ -162,7 +162,7 @@ These conclusions require strict bookkeeping. If arithmetic gives $\operatorname
 
 ### 1.4 Scope and standing conventions
 
-Only discriminant bounds are developed here. No distribution theorem for Frobenius classes enters any proof. The foundational tools are real and complex integration, Fourier inversion and Poisson summation for rapidly decreasing functions, the residue theorem, standard gamma-function identities, geometry of numbers, unique factorization of ideals, and the elementary arithmetic of number-field discriminants.
+Only discriminant bounds are developed here. No distribution theorem for Frobenius classes enters any proof. The foundational tools are real and complex integration, Fourier inversion and Poisson summation for rapidly decreasing functions, the residue theorem, standard gamma-function identities, geometry of numbers, unique factorization of ideals, Dirichlet's unit theorem, and the elementary arithmetic of number-field discriminants. Finiteness of the ideal class group also follows from Theorem 2.1, because only finitely many integral ideals have bounded norm.
 
 Fourier transforms use angular frequency:
 
@@ -267,13 +267,34 @@ For a totally real field the factor $\pi/4$ disappears. For arbitrary signature 
 
 The later finite cutoffs use the fact that $M_n$ increases. This deserves proof rather than numerical assumption.
 
-Put $a_n=(n!)^{1/n}/n$, so $M_n=a_n^{-2}$. It is enough to prove $a_{n+1}\leq a_n$. Raising to the positive power $n(n+1)$ reduces this to
+Put $a_n=(n!)^{1/n}/n$, so $M_n=a_n^{-2}$. It is enough to prove $a_{n+1}\leq a_n$. Raising to the positive power $n(n+1)$ shows that this is equivalent to
 
 $$
-\left(1+\frac1n\right)^{n^2}\geq n+1.
+\left(1+\frac1n\right)^{n^2}\geq\frac{n^n}{n!}.
 $$
 
-The binomial theorem gives $(1+1/n)^n\geq2$, hence the left side is at least $2^n\geq n+1$. Thus $M_{n+1}\geq M_n$.
+Both sides admit elementary estimates in the needed direction. Since $\log x$ is increasing,
+
+$$
+\log(n!)=\sum_{k=1}^n\log k
+\geq\int_1^n\log x\,dx
+=n\log n-n+1,
+$$
+
+so $\log(n^n/n!)\leq n-1$. On the other hand,
+
+$$
+\log(1+u)\geq u-\frac{u^2}{2}
+\qquad(0\leq u\leq1),
+$$
+
+because the derivative of the difference is $u^2/(1+u)\geq0$. With $u=1/n$ this gives
+
+$$
+n^2\log\left(1+\frac1n\right)\geq n-\frac12\geq n-1.
+$$
+
+The required comparison follows, and therefore $M_{n+1}\geq M_n$.
 
 Stirling's formula, with its usual two-sided remainder, gives
 
@@ -401,14 +422,15 @@ $$
 =\pi^{-s/2}\Gamma\left(\frac s2\right),
 $$
 
-and
+and, with angular measure normalized in the indicated way,
 
 $$
-\int_{\mathbf C}e^{-2\pi|z|^2}|z|^{2s}\,\frac{2\,dx\,dy}{|z|^2}
-=2(2\pi)^{-s}\Gamma(s).
+\int_{\mathbf C}e^{-2\pi|z|^2}|z|^{2s}\,
+\frac{dx\,dy}{\pi|z|^2}
+=(2\pi)^{-s}\Gamma(s).
 $$
 
-After quotienting by units, the harmless factor $2$ is absorbed into the measure normalization. This leads to
+This leads to
 
 $$
 \Gamma_{\mathbf R}(s)=\pi^{-s/2}\Gamma(s/2),
@@ -430,71 +452,123 @@ The powers of $2$ and $\pi$ are fixed here once and for all. Moving them between
 
 ### 4.2 Theta kernels and dual lattices
 
-We now prove the continuation and symmetry rather than treating them as black boxes. On $K_{\mathbf R}$ use the trace pairing
+We now prove the continuation and symmetry rather than treating them as black boxes. The Fourier normalization must be chosen with care. On
 
 $$
-\langle x,y\rangle=\operatorname{Tr}_{K/\mathbf Q}(x\overline y).
+K_{\mathbf R}\simeq\mathbf R^{r_1}\times\mathbf C^{r_2}
 $$
 
-For a fractional ideal $\mathfrak a$, its dual lattice is
+use the positive pairing
 
 $$
-\mathfrak a^*=\mathfrak d_K^{-1}\mathfrak a^{-1},
+\langle x,y\rangle
+=\sum_{v\text{ real}}x_vy_v
++2\sum_{v\text{ complex}}\Re(x_v\overline{y_v}).
 $$
 
-where $\mathfrak d_K$ is the different. Let $Y$ be the group of positive archimedean scalings of weighted product one. The logarithmic image of the unit group is a full lattice in the hyperplane defining $Y$; fix a measurable fundamental parallelepiped $P$.
+For this Fourier calculation, give each complex coordinate twice ordinary Lebesgue measure. This is the self-dual measure for the trace character, and the covolume of a fractional ideal $\mathfrak a$ becomes
+
+$$
+\Delta_{\mathfrak a}=\sqrt{D_K}\,N(\mathfrak a).
+$$
+
+The ordinary-measure covolume $2^{-r_2}\sqrt{D_K}N(\mathfrak a)$ used in Chapter 2 has not changed; the factor $2^{r_2}$ here comes solely from changing to self-dual measure. The coordinate dual of $\mathfrak a$ is the coordinatewise conjugate of
+
+$$
+\mathfrak a^*=\mathfrak d_K^{-1}\mathfrak a^{-1}.
+$$
+
+Coordinatewise conjugation is an isometry, so it may be suppressed in the theta notation.
+
+Normalize the ideal lattice to covolume one:
+
+$$
+L_{\mathfrak a}=\Delta_{\mathfrak a}^{-1/n}\mathfrak a.
+$$
+
+Its dual is, up to the preceding isometry, $L_{\mathfrak a^*}$. Indeed,
+
+$$
+N(\mathfrak a^*)=D_K^{-1}N(\mathfrak a)^{-1},
+\qquad
+\Delta_{\mathfrak a^*}=\Delta_{\mathfrak a}^{-1}.
+$$
+
+Let $Y$ be the group of positive diagonal archimedean scalings of determinant one:
+
+$$
+Y=\left\{(y_v):
+\prod_{v\text{ real}}y_v
+\prod_{v\text{ complex}}y_v^2=1\right\}.
+$$
+
+Dirichlet's unit theorem says that the logarithmic image of the units modulo roots of unity is a full lattice in $\log Y$. Fix a measurable fundamental parallelepiped $P$ and normalize Haar measure by $\operatorname{vol}(P)=1$.
 
 For $y\in Y$ and $t>0$, set
 
 $$
 \Theta_{\mathfrak a}(t,y)
-=\sum_{x\in\mathfrak a}
-\exp\left(-\pi t\|yx\|^2\right),
+=\sum_{x\in L_{\mathfrak a}}
+\exp\left(-\pi\left\|t^{1/n}yx\right\|^2\right).
 $$
 
-where complex coordinates have weight $2$ in $\|\cdot\|^2$. Gaussian decay makes the series and all its $t$-derivatives locally uniform. Poisson summation on the lattice gives
+Gaussian decay makes the series and all its $t$-derivatives locally uniform. For completeness, the lattice form of Poisson summation used here follows from the one-dimensional Schwartz formula: choose a real basis carrying $\mathbf Z^n$ to the lattice, apply the one-dimensional identity successively in the $n$ coordinates, and change variables in the Fourier integral. The determinant of the basis produces the covolume, and the transpose inverse produces the dual lattice. Since the determinant of $t^{1/n}y$ is $t$, applying that identity to the self-dual Gaussian and to the covolume-one lattice above gives
 
 $$
 \Theta_{\mathfrak a}(t,y)
-=\frac{t^{-n/2}}{\operatorname{covol}(\mathfrak a)}
-\Theta_{\mathfrak a^*}(t^{-1},y^{-1}).
+=t^{-1}\Theta_{\mathfrak a^*}(t^{-1},y^{-1}).
 \tag{4.1}
 $$
 
-The determinant in this identity is exactly
+This choice of radial parameter is essential: $t$ is the determinant scale, not the square of a common coordinate scale. It is what makes the Mellin exponent independent of the degree.
+
+To connect (4.1) with ideals, integrate over $P$. A nonzero vector arising from $x_0\in\mathfrak a$ is counted once modulo the free part of the unit group, with the common roots-of-unity multiplicity absorbed below, and its orbit corresponds to the integral ideal $x_0\mathfrak a^{-1}$ in the inverse ideal class. The normalized archimedean product of that vector is
 
 $$
-\operatorname{covol}(\mathfrak a)=2^{-r_2}\sqrt{D_K}\,N(\mathfrak a).
+D_K^{-1/2}N(x_0\mathfrak a^{-1}).
 $$
 
-To connect (4.1) with ideals, integrate over $P$. Each nonzero $x\in\mathfrak a$ is counted once modulo units, and its orbit corresponds to the integral ideal $x\mathfrak a^{-1}$ in a fixed ideal class. Separating radial scale from the norm-one variables and using the two Gaussian Mellin integrals yields, initially for $\Re(s)>1$,
+Passing from $(t,y)$ to the independent positive archimedean scales and applying the Mellin integrals of §4.1 therefore gives, initially for $\Re(s)>1$,
 
 $$
 \int_0^\infty\int_P
 \bigl(\Theta_{\mathfrak a}(t,y)-1\bigr)
-t^{s/2}\,d^\times y\,\frac{dt}{t}
-=c_K\,D_K^{s/2}
+t^s\,d^\times y\,\frac{dt}{t}
+=c_KD_K^{s/2}
 \Gamma_{\mathbf R}(s)^{r_1}
 \Gamma_{\mathbf C}(s)^{r_2}
 \zeta_{[\mathfrak a]^{-1}}(s).
 \tag{4.2}
 $$
 
-Here $c_K>0$ is independent of the ideal class and $\zeta_C$ is the partial ideal-class zeta function. The orbit statement proves (4.2): the radial integral contributes $(N\mathfrak b)^{-s}$ for the ideal represented by the orbit, while the unit fundamental domain contributes the common constant. No unproved counting identity is concealed in the formula.
+Here $c_K>0$ depends only on the chosen Haar normalization and the number of roots of unity, not on $s$ or the ideal class. Formula (4.2) is now dimensionally exact: the determinant scale contributes $t^s$, normalization of the lattice contributes $D_K^{s/2}$, and each orbit contributes precisely $(N\mathfrak b)^{-s}$.
 
 ### 4.3 Continuation and functional equation
 
-Split the $t$-integral in (4.2) at $1$. On $(0,1)$ apply (4.1) and substitute $t\mapsto1/t$. The nonzero-vector parts then become integrals over $(1,\infty)$ with $s$ replaced by $1-s$ and with the inverse dual ideal class. They converge absolutely and locally uniformly for every $s$, because the theta series minus its zero term decays exponentially as $t\to\infty$.
-
-Only the two zero-vector integrals remain. They are elementary:
+Write the left side of (4.2) as $I_{\mathfrak a}(s)$ and split its $t$-integral at $1$. On $(0,1)$ apply (4.1) and substitute $t\mapsto1/t$. Inversion carries $P$ to another unit fundamental parallelepiped, over which the integral of the unit-invariant theta kernel is the same. One obtains
 
 $$
-\int_0^1 t^{s/2}\,\frac{dt}{t}=\frac2s,
-\qquad
-\int_0^1 t^{(1-s)/2}\,\frac{dt}{t}=\frac2{1-s}.
+\begin{aligned}
+I_{\mathfrak a}(s)={}&
+\int_1^\infty\int_P
+\bigl(\Theta_{\mathfrak a}(t,y)-1\bigr)t^s
+\,d^\times y\,\frac{dt}{t}\notag\\
+&+\int_1^\infty\int_P
+\bigl(\Theta_{\mathfrak a^*}(t,y)-1\bigr)t^{1-s}
+\,d^\times y\,\frac{dt}{t}
++\frac1{s-1}-\frac1s.
+\tag{4.3}
+\end{aligned}
 $$
 
-Thus each completed partial zeta has meromorphic continuation with possible simple poles only at $0$ and $1$. Summing over ideal classes and using that duality permutes those classes proves:
+The two integrals on the right are entire in $s$, because the theta series minus its zero term decays exponentially as $t\to\infty$. The rational term is the zero-vector contribution:
+
+$$
+\int_0^1(t^{-1}-1)t^s\,\frac{dt}{t}
+=\frac1{s-1}-\frac1s.
+$$
+
+Thus each completed partial zeta has meromorphic continuation with simple poles only at $0$ and $1$, and (4.3) is invariant under simultaneously replacing $(\mathfrak a,s)$ by $(\mathfrak a^*,1-s)$. Duality permutes the finite ideal class group. Summing over its classes proves:
 
 **Theorem 4.1 (Dedekind functional equation).** The function $\Lambda_K(s)$ continues meromorphically to $\mathbf C$, has simple poles at $0$ and $1$, and satisfies
 
@@ -504,13 +578,13 @@ $$
 
 The residues are opposite under this symmetry. Their exact positive magnitude is immaterial for logarithmic derivatives, but positivity of the residue at $1$ also follows from the positive Dirichlet series and (4.2).
 
-The case $K=\mathbf Q$ is a useful model for the construction. There is one ideal class, the unit logarithm space is zero-dimensional, and the theta kernel is
+The case $K=\mathbf Q$ is a useful model for the construction. There is one ideal class and the unit logarithm space is zero-dimensional. If the traditional parameter $u=t^2$ is used, the theta kernel becomes
 
 $$
-\theta(t)=\sum_{m\in\mathbf Z}e^{-\pi tm^2}.
+\theta(u)=\sum_{m\in\mathbf Z}e^{-\pi um^2}.
 $$
 
-Poisson summation reads $\theta(t)=t^{-1/2}\theta(1/t)$. Mellin transformation of $\theta(t)-1$ gives
+Poisson summation reads $\theta(u)=u^{-1/2}\theta(1/u)$. One-half of the Mellin transform of $\theta(u)-1$ against $u^{s/2}\,du/u$ gives
 
 $$
 \pi^{-s/2}\Gamma(s/2)\zeta(s),
@@ -518,7 +592,7 @@ $$
 
 and splitting at $1$ gives its symmetry under $s\mapsto1-s$. The number-field argument is the same mechanism with three additions: ideal classes replace positive integers, the trace-dual lattice inserts the different, and norm-one archimedean scalings account for units. These additions complicate the bookkeeping but do not alter the source of the functional equation.
 
-It is also worth seeing why the discriminant has exponent $s/2$. Poisson summation contributes the inverse covolume $D_K^{-1/2}$ when $t$ is inverted. Multiplication by $D_K^{s/2}$ makes this factor transform into $D_K^{(1-s)/2}$. No other exponent is compatible with the symmetry. In this sense the discriminant is forced by Fourier duality.
+It is also worth seeing why the discriminant has exponent $s/2$. Before covolume normalization, Poisson summation contributes the inverse covolume $D_K^{-1/2}$ when the lattice is inverted. Normalizing to covolume one transfers that factor into the archimedean product of each orbit, where Mellin transformation produces $D_K^{s/2}$. Under duality it becomes $D_K^{(1-s)/2}$. No other exponent is compatible with the symmetry. In this sense the discriminant is forced by Fourier duality.
 
 ### 4.4 Poles, zeros, and growth
 
@@ -536,18 +610,18 @@ $$
 \xi_K(\overline s)=\overline{\xi_K(s)}.
 $$
 
-Its zeros lie in the critical strip $0<\Re(s)<1$. Indeed, the Euler product has no zeros for $\Re(s)>1$, and symmetry excludes $\Re(s)<0$ after the trivial gamma cancellations are accounted for. These zeros, with multiplicity, are the nontrivial zeros of $\zeta_K$.
+Its zeros lie in the closed critical strip $0\leq\Re(s)\leq1$. Indeed, the Euler product has no zeros for $\Re(s)>1$, and symmetry excludes $\Re(s)<0$ after the trivial gamma cancellations are accounted for. Proving that no zero lies on the two boundary lines is a separate zero-free-line theorem and is unnecessary here; the positivity argument in Chapter 7 includes the endpoints. The zeros of $\xi_K$, with multiplicity, are the nontrivial zeros used below.
 
 The gamma poles are canceled by the trivial zeros of $\zeta_K$. It is safer in the explicit formula to retain their aggregate contribution inside the archimedean integrals than to enumerate them. The factors $s(s-1)$ remove the two poles of $\Lambda_K$ and create the finite-degree pole term seen later.
 
 The order-one bound also gives a symmetric zero-counting estimate
 
 $$
-N_K(T+1)-N_K(T)\ll n\log(D_K(T+3)^n),
-\tag{4.3}
+N_K(T+1)-N_K(T)\ll \log D_K+n\log(T+3),
+\tag{4.4}
 $$
 
-where $N_K(T)$ counts zeros with $|\Im\rho|\leq T$. To prove (4.3), apply the argument principle to $\xi_K$ on a unit-width rectangle, use Stirling's formula on the gamma factors, and bound $\zeta_K$ on the right by $\zeta(1+1/\log(T+3))^n$; the functional equation controls the left. This estimate is enough to justify every symmetric zero limit below.
+where $N_K(T)$ counts zeros with $|\Im\rho|\leq T$. To prove (4.4), apply the argument principle to $\xi_K$ on a unit-width rectangle, use Stirling's formula on the gamma factors, and bound $\zeta_K$ on the right by $\zeta(1+1/\log(T+3))^n$; the functional equation controls the left. This estimate is enough to justify every symmetric zero limit below.
 
 ### 4.5 Discriminant and analytic conductor
 
@@ -557,7 +631,7 @@ $$
 Q_K(t)=D_K(|t|+3)^n.
 $$
 
-Different conventions replace $3$ by another fixed positive number, but the exponent of $D_K$ and the $n$ archimedean degrees do not change. The bound (4.3) is naturally logarithmic in $Q_K(t)$. The explicit formula isolates $\log D_K$; the height part is spent only in controlling contour edges and zero sums.
+Different conventions replace $3$ by another fixed positive number, but the exponent of $D_K$ and the $n$ archimedean degrees do not change. The bound (4.4) is naturally logarithmic in $Q_K(t)$. The explicit formula isolates $\log D_K$; the height part is spent only in controlling contour edges and zero sums.
 
 ## 5. Transforms and admissible test functions
 
@@ -605,7 +679,7 @@ $$
 \Phi_F(\sigma+it)=O_F((1+|t|)^{-2})
 $$
 
-uniformly for $\sigma$ in a fixed bounded interval. Together with (4.3), this makes the symmetric zero sum convergent.
+uniformly for $\sigma$ in a fixed bounded interval. Together with (4.4), this makes the symmetric zero sum convergent.
 
 For lower bounds we additionally require $F(x)\geq0$. Positivity of the zero term requires a further condition, which differs between the unconditional and conditional arguments.
 
@@ -670,15 +744,15 @@ The rest of this chapter proves (6.1). The detail is important because a wrong f
 Choose $c>1$, and first suppose that $F$ is even and $C^\infty$ with compact support. Let $R_T$ be the rectangle with vertical sides $\Re(s)=c$ and $\Re(s)=1-c$ and horizontal sides at heights $\pm T$. Avoid the ordinates of zeros. Apply the residue theorem to
 
 $$
--\frac{\xi_K'}{\xi_K}(s)\Phi_F(s).
+\frac{\xi_K'}{\xi_K}(s)\Phi_F(s).
 $$
 
-The poles of the logarithmic derivative are simple, with residue equal to minus the multiplicity of the corresponding zero. With the positive orientation of $R_T$, moving the left vertical integral to the right therefore gives a positive sum of $\Phi_F(\rho)$. More precisely,
+The poles of the logarithmic derivative are simple, with residue equal to the multiplicity of the corresponding zero. With the positive orientation of $R_T$, the right vertical side is traversed upward and the left one downward. Thus, after placing both displayed vertical integrals in the upward direction, the residue theorem gives
 
 $$
 \frac1{2\pi i}\left(
-\int_{c-iT}^{c+iT}-\frac{\xi_K'}{\xi_K}(s)\Phi_F(s)\,ds
--\int_{1-c-iT}^{1-c+iT}-\frac{\xi_K'}{\xi_K}(s)\Phi_F(s)\,ds
+\int_{c-iT}^{c+iT}\frac{\xi_K'}{\xi_K}(s)\Phi_F(s)\,ds
+-\int_{1-c-iT}^{1-c+iT}\frac{\xi_K'}{\xi_K}(s)\Phi_F(s)\,ds
 \right)
 =\sum_{|\Im\rho|<T}\Phi_F(\rho)+E_T,
 \tag{6.2}
@@ -699,7 +773,7 @@ $$
 \qquad \Phi_F(1-s)=\Phi_F(s).
 $$
 
-Substituting $s\mapsto1-s$ in the left vertical integral in (6.2) shows that the two vertical integrals are equal. Thus the limiting contour identity is twice the integral on $\Re(s)=c$. This is the source of the factor $2$ in the prime-power term.
+Substituting $s\mapsto1-s$ in the left vertical integral in (6.2) shows that it is the negative of the right vertical integral when both are oriented upward. Their difference is therefore twice the right vertical integral. This is the source of the factor $2$ in the prime-power term.
 
 ### 6.3 Prime and discriminant terms
 
@@ -709,14 +783,14 @@ $$
 \xi_K(s)=\frac12s(s-1)D_K^{s/2}\Gamma_{\mathbf R}(s)^{r_1}\Gamma_{\mathbf C}(s)^{r_2}\zeta_K(s)
 $$
 
-separates five contributions. On $\Re(s)=c$, the zeta part may be expanded normally. For $y>0$, bilateral Laplace inversion in our convention says
+separates five contributions. On $\Re(s)=c$, the zeta part may be expanded normally as $\zeta_K'/\zeta_K$, whose prime-power coefficients are negative. For $y>0$, bilateral Laplace inversion in our convention says
 
 $$
 \frac1{2\pi i}\int_{c-i\infty}^{c+i\infty}\Phi_F(s)e^{-y(s-1/2)}\,ds=F(y).
 \tag{6.3}
 $$
 
-Putting $y=m\log N\mathfrak p$ and interchanging the absolutely convergent series and integral gives the prime-power term in (6.1). The derivative of $D_K^{s/2}$ is $\frac12\log D_K$; doubling the right vertical line turns it into $\log D_K$. Solving the contour identity for this term places it on the left.
+Putting $y=m\log N\mathfrak p$ and interchanging the absolutely convergent series and integral gives a negative prime-power contribution on the contour side. The derivative of $D_K^{s/2}$ is $\frac12\log D_K$; doubling the right vertical line turns it into $\log D_K$. Solving the contour identity for this discriminant term moves the negative prime contribution to the other side, giving its positive sign in (6.1).
 
 There is no conditional rearrangement here. If $F$ is supported in $[-T_0,T_0]$, only prime powers with $(N\mathfrak p)^m\leq e^{T_0}$ occur. This also explains why known splitting data can be inserted one prime at a time.
 
@@ -732,7 +806,7 @@ $$
 
 To prove it, expand $(1-e^{-x})^{-1}=\sum_{k\geq0}e^{-kx}$ on $[\varepsilon,\infty)$, integrate termwise, and let $\varepsilon\downarrow0$. The singular terms cancel. The resulting series is $-\gamma+\sum_{k\geq0}(1/(k+1)-1/(k+z))$, the logarithmic derivative of Euler's product for $\Gamma$. Absolute convergence after pairing justifies all passages.
 
-Apply (6.4) to $s/2$ and $s$, pair the values at $s$ and $1-s$, and use (6.3). A real place contributes
+Apply (6.4) to $s/2$ and $s$ on the right line $\Re(s)=c>1$, double the right-line contribution as in §6.2, and use (6.3). Thus the integral representation is invoked only where its hypothesis $\Re(z)>0$ holds. A real place contributes
 
 $$
 \gamma+\log(8\pi)+\frac\pi2
@@ -763,7 +837,7 @@ Their sum enters with the opposite sign after solving for $\log D_K$, giving the
 
 ### 6.5 Removing the truncations
 
-For smooth $F$, §6.2 supplies rectangles whose horizontal edges vanish. The zero count (4.3) and rapid decay of $\Phi_F$ show absolute convergence in horizontal bands, so the symmetric value is independent of the selected heights.
+For smooth $F$, §6.2 supplies rectangles whose horizontal edges vanish. The zero count (4.4) and rapid decay of $\Phi_F$ show absolute convergence in horizontal bands, so the symmetric value is independent of the selected heights.
 
 For basically admissible $F$, smooth by even convolution with a nonnegative compactly supported approximate identity, then correct the value at zero by a factor tending to one. Uniform bounded variation gives a common $O((1+|t|)^{-2})$ transform majorant. Dominated convergence handles the zero sum, (5.1) handles the $\sinh$ kernel at zero, and compact support handles the prime sum. Formula (6.1) follows. This also covers triangles; their endpoint convention has no effect once the universal prime sum is discarded.
 
@@ -796,11 +870,40 @@ $$
 \tag{7.1}
 $$
 
-At $a=\pm1/2$ this holds as a limit of nonnegative measures.
+At $a=\pm1/2$, one has $H_a=1$, which is of positive type as a tempered measure.
 
-**Proof strategy.** Integrate $H_a(z)e^{-itz}$ around a rectangle of height $2\pi i$. The denominator has simple zeros at $(2k+1)\pi i$, and the translated horizontal edge gains $e^{2\pi t}$. The vertical sides vanish since $|a|<1/2$. Summing the enclosed residues gives (7.1). Its denominator is $2(\sinh^2(\pi t)+\cos^2(\pi a))$, and its numerator is nonnegative. Weak convergence gives the endpoints. $\square$
+**Proof.** First evaluate the transform of $S(x)=\operatorname{sech}(x/2)$. Integrating $S(z)e^{-itz}$ around a rectangle of height $2\pi i$ uses
 
-Products of positive-type integrable functions are of positive type because the Fourier transform of a product is $(2\pi)^{-1}$ times the convolution of the nonnegative transforms.
+$$
+S(z+2\pi i)=-S(z)
+$$
+
+and the simple pole at $z=\pi i$. The vertical sides vanish by exponential decay, and the residue identity gives
+
+$$
+\widehat S(t)=\frac{2\pi}{\cosh(\pi t)}
+\qquad(t\in\mathbf R).
+$$
+
+Both the integral and the right side are holomorphic for $|\Im t|<1/2$, so the identity theorem extends this formula throughout that strip. Since
+
+$$
+H_a(x)=\frac12\left(e^{ax}+e^{-ax}\right)S(x),
+$$
+
+we may substitute $t+ia$ and $t-ia$ in the transform of $S$. Hence
+
+$$
+\widehat H_a(t)
+=\pi\left(
+\frac1{\cosh(\pi(t+ia))}
++\frac1{\cosh(\pi(t-ia))}
+\right),
+$$
+
+which simplifies to (7.1). Its denominator is $2(\sinh^2(\pi t)+\cos^2(\pi a))$, and its numerator is nonnegative. $\square$
+
+Products of positive-type integrable functions are of positive type because the Fourier transform of a product is $(2\pi)^{-1}$ times the convolution of the nonnegative transforms. At the endpoints $a=\pm1/2$, the product used below is simply $G$, so no product with a nonintegrable function is required.
 
 ### 7.3 The unconditional argument
 
@@ -988,6 +1091,36 @@ $$
 \tag{10.3}
 $$
 
+The remainder in (10.3) can be checked directly rather than imported as a numerical convention. Let $\widetilde B_j(x)=B_j(x-\lfloor x\rfloor)$ be the periodic Bernoulli polynomial. Starting from the integral comparison for $H_M-H_N$ and integrating by parts repeatedly, using $B_j'=jB_{j-1}$ on each unit interval, gives the displayed coefficients from the Bernoulli numbers
+
+$$
+B_2=\frac16,
+\qquad B_4=-\frac1{30},
+\qquad B_6=\frac1{42}.
+$$
+
+After letting $M\to\infty$, the remainder has the form
+
+$$
+R_N=\pm\int_N^\infty\frac{\widetilde B_8(x)}{x^9}\,dx.
+$$
+
+Here
+
+$$
+B_8(x)=x^8-4x^7+\frac{14}{3}x^6
+-\frac73x^4+\frac23x^2-\frac1{30}.
+$$
+
+Elementary differentiation on $[0,1]$ gives $|B_8(x)|\leq1/30$, with equality only at isolated endpoints. Therefore
+
+$$
+|R_N|<\frac1{30}\int_N^\infty x^{-9}\,dx
+=\frac1{240N^8},
+$$
+
+which proves the directed error bound used below.
+
 With $N=10^4$ and (10.1)--(10.2), directed rational arithmetic yields
 
 $$
@@ -1023,7 +1156,7 @@ T&A_T&B_T&C_T\\
 \tag{10.6}
 $$
 
-The omitted series contribution is at most $(2/T)(1+T)e^{-5T}/(1-e^{-2T})$, below $10^{-7}$ even in the first row. Twenty terms after range reduction make every Taylor remainder smaller than the unused interval width.
+The omitted series contribution is at most $(2/T)(1+T)e^{-5T}/(1-e^{-2T})$, below $1.1\cdot10^{-7}$ even in the first row. Twenty terms after range reduction make every Taylor remainder smaller than the unused interval width.
 
 ### 10.3 Tail bounds and interval propagation
 
@@ -1177,6 +1310,15 @@ $$
 
 This is a separate certificate from (11.3). Multiplying a ceiling by $2^{2/3}$ invalidates the degree-$53$ Minkowski comparison and requires the degree-$21$ explicit-formula crossing just proved.
 
+Because $3^{3/2}<3^{3/2}2^{2/3}$, the stronger analytic calculation at the larger ceiling also improves the conclusion at the smaller one:
+
+$$
+\boxed{\operatorname{rd}(K)<3^{3/2}\Longrightarrow [K:\mathbf Q]\leq20.}
+\tag{11.8a}
+$$
+
+Thus (11.3) remains an independent geometric certificate, but it is not the strongest final degree bound available in this book.
+
 ### 11.5 Totally real certificates
 
 For $5^{5/4}$ take $T=17/5$, $n=7$, and $\alpha=1$. The upper endpoints in (10.6) give
@@ -1268,7 +1410,7 @@ with only terms inside the support. Ramification indices do not multiply this co
 
 Minkowski has no pole cost and can be sharper at small degree. The explicit formula has the larger asymptotic constant and wins when the ceiling exceeds the geometric limit. The safe bound is their maximum.
 
-Thus $4$ and $3^{3/2}$ are handled by factorial inequalities, whereas $5^{5/4}$ and $3^{3/2}2^{2/3}$ require the unconditional explicit formula. The choice is dictated by the numerical comparison, not by a desire to use one method everywhere.
+Thus $4$ and $3^{3/2}$ have independent factorial certificates, whereas $5^{5/4}$ and $3^{3/2}2^{2/3}$ require the unconditional explicit formula. The larger two-prime certificate also supplies the strongest final cap recorded here at the smaller $3^{3/2}$ ceiling. The choice is dictated by the numerical comparison, not by a desire to use one method everywhere.
 
 There is also a scale diagnostic. For fixed support, the test-function bound approaches a constant exponentially fast in neither degree nor support: its finite-degree deficit is exactly $2T/n$, whereas its archimedean deficit approaches its limit roughly like $1/T$. Balancing these crude sizes suggests $T$ on the order of $\sqrt n$ for the unconditional triangle. Near a particular ceiling, however, the best rational support can differ substantially because the exponentially small terms in (8.5) and the available logarithmic margin matter. The finite search of §12.2 resolves this without appealing to asymptotic guesswork.
 
@@ -1278,7 +1420,13 @@ For the GRH triangle, the pole cost grows like $e^{T/2}/(nT)$ while the archimed
 
 ### 13.1 The abstract comparison theorem
 
-**Theorem 13.1.** Let $U>0$, $0\leq\alpha_0\leq1$, and let $F$ be admissible with nonnegative zero term in the chosen regime. If
+**Theorem 13.1.** Let $U>0$, $0\leq\alpha_0\leq1$, and let $F$ be unconditionally admissible. Alternatively, assume GRH for every field under consideration and let $F$ be GRH-admissible. Suppose in either case that
+
+$$
+C(F)\leq\frac\pi2.
+$$
+
+If
 
 $$
 \gamma+\log(8\pi)+\alpha_0\frac\pi2
@@ -1288,7 +1436,7 @@ $$
 
 then every $K$ with $\operatorname{rd}(K)\leq U$ and $\alpha(K)\geq\alpha_0$ has degree less than $N$.
 
-**Proof.** If $n\geq N$, degree and signature monotonicity make (8.2) at least the left side of (13.1), contradicting the ceiling. $\square$
+**Proof.** Admissibility gives $A(F)>0$, so the right side of (8.2) is nondecreasing with the degree. The displayed hypothesis on $C(F)$ makes its coefficient of $\alpha$ nonnegative. Thus, if $n\geq N$ and $\alpha(K)\geq\alpha_0$, (8.2) is at least the left side of (13.1), contradicting the ceiling. $\square$
 
 If arithmetic gives the strict ceiling $\operatorname{rd}(K)<U$, an analytic lower bound equal to $U$ suffices. The ledger uses positive margins, so it remains valid for weak ceilings.
 
@@ -1391,7 +1539,7 @@ $$
 \exp\left(\gamma+\log(8\pi)+\alpha\frac\pi2-\frac{2T}{n}-B_T-\alpha C_T\right),
 $$
 
-with exact formulas (8.5) and tail (8.6). Under GRH for $\zeta_K$, any nonnegative admissible $F$ with $\widehat F\geq0$ gives (8.2); for $F=G_T$, the pole cost is $16(\cosh(T/2)-1)/(nT)$.
+with exact formulas (8.5) and tail (8.6). Under GRH for $\zeta_K$, any basically admissible $F$ with $F\geq0$ and $\widehat F\geq0$ gives (8.2); for $F=G_T$, the pole cost is $16(\cosh(T/2)-1)/(nT)$.
 
 **Proof.** Chapters 4, 6, 7, and 8 prove respectively the functional equation, explicit formula, zero positivity, and archimedean evaluation. Their combination is (8.2), specialized as stated. $\square$
 
@@ -1404,7 +1552,7 @@ $$
 \text{root-discriminant ceiling}&\text{degree conclusion}\\
 \hline
 \operatorname{rd}(K)<4&[K:\mathbf Q]\leq11\\
-\operatorname{rd}(K)<3^{3/2}&[K:\mathbf Q]\leq52\\
+\operatorname{rd}(K)<3^{3/2}&[K:\mathbf Q]\leq20\\
 \operatorname{rd}(K)<5^{5/4}&[K:\mathbf Q]\leq16\\
 \operatorname{rd}(K)<3^{3/2}2^{2/3}&[K:\mathbf Q]\leq20.
 \end{array}
@@ -1413,7 +1561,7 @@ $$
 
 For totally real $K$, the first three caps improve to $5,12,6$.
 
-**Proof.** The first two rows and their totally real refinements are §§11.1--11.2. The remaining arbitrary-signature rows are §§11.3--11.4, and the final totally real row is §11.5. Each crossing has a certified positive margin, and monotonicity extends it to all larger degrees. $\square$
+**Proof.** The first row is §11.1. Section 11.2 gives the independent Minkowski cap $52$ at $3^{3/2}$, while (11.8a) improves it to $20$ using the larger-ceiling calculation of §11.4. The remaining arbitrary-signature rows are §§11.3--11.4, and the totally real refinements are §§11.1--11.2 and §11.5. Each crossing has a certified positive margin, and monotonicity extends it to all larger degrees. $\square$
 
 ### 15.3 Unconditional and conditional ledgers
 
@@ -1437,6 +1585,6 @@ The root discriminant is the scale on which ramification and degree can be compa
 
 The explicit formula makes that balance exact. Under GRH, Fourier positivity controls zeros on the central line. Unconditionally, the strip-positive kernel $\cosh(ax)/\cosh(x/2)$ controls symmetric zero pairs throughout the strip. Its exact archimedean cost changes $8\pi e^{\gamma+\alpha\pi/2}$ into $4\pi e^{\gamma+\alpha}$.
 
-Finite support turns asymptotic pressure into reproducible certificates. Exact formulas for $B_T,C_T$, geometric tail bounds, and rational enclosures certify every displayed cutoff. In particular, $3^{3/2}$ and $3^{3/2}2^{2/3}$ yield the exact arbitrary-signature degree interfaces $52$ and $20$, while $5^{5/4}$ demonstrates the gain beyond Minkowski's reach.
+Finite support turns asymptotic pressure into reproducible certificates. Exact formulas for $B_T,C_T$, geometric tail bounds, and rational enclosures certify every displayed cutoff. Minkowski independently gives the cap $52$ at $3^{3/2}$, while the stronger explicit-formula calculation at the larger ceiling $3^{3/2}2^{2/3}$ gives cap $20$ and therefore also improves the smaller-ceiling cap to $20$. The threshold $5^{5/4}$ demonstrates the gain beyond Minkowski's reach.
 
 The logical boundary is equally important. A uniform ceiling below the threshold bounds degree; nestedness or uniform closure under finite composita then forces stabilization. A growing ceiling, bounded step degrees, an unverified signature, or a missing base-field factor defeats the argument. Within the stated scope, every contour, sign, archimedean constant, positivity mechanism, numerical remainder, and monotonicity step needed for discriminant bounds is now explicit.
