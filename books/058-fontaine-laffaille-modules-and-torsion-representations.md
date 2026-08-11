@@ -86,7 +86,7 @@ $$
 
 The divided operator $\varphi _1$ is not auxiliary notation. It remembers an integral quotient which cannot be recovered from $\varphi _0$ after reducing modulo $p^n$. The pair of operators, together with the requirement that their images generate $M$, is the algebraic core of a Fontaine--Laffaille module in weights zero and one.
 
-The generic realization will be constructed as a space of filtered Frobenius-compatible maps into crystalline period coefficients. This is a syntomic fixed-point construction: in weight zero it solves $1-\varphi$, while in weight one it solves $1-\varphi _1$. Book 55 proved the two fundamental exact sequences underlying those equations. Here they are assembled with an arbitrary divided filtered module, and the resulting solutions are shown to be exact and fully faithful.
+The generic realization will be constructed as a space of filtered Frobenius-compatible maps into crystalline period coefficients. This is a syntomic fixed-point construction: in weight zero it solves $1-\varphi$, while in weight one it solves $\iota-\varphi _1$ on the modified first filtered term. Book 55 proved the two fundamental exact sequences underlying those equations. Here they are assembled with an arbitrary divided filtered module, and the resulting solutions are shown to be exact and fully faithful.
 
 ### 1.2 Standing hypotheses and conventions
 
@@ -321,7 +321,35 @@ $$
 \tag{3.6}
 $$
 
-For a finite-length $W$-module, write $\ell_W(M)$ for its length. Any admissible object has a finite filtration by the kernels of powers of $p$; strictness follows from a free presentation. Its successive quotients are killed by $p$. This dévissage will reduce rank and exactness calculations to level one, but it does not say that the category is semisimple. Extensions between the two weights carry genuine arithmetic information.
+For a finite-length $W$-module, write $\ell_W(M)$ for its length. Any
+admissible object has a finite filtration by the kernels of powers of
+$p$. To see the exact structure, put
+
+$$
+P_r=\{x\in L_0:p^rx\in a(L_1)\}
+$$
+
+in a presentation (3.1). The modules $P_r$ and
+$P_r\cap F_{L_0}$ are free over the DVR $W$ and are stable under the
+appropriate divided operators. Apply the two normal isomorphisms (2.4)
+to the inclusion $a$. Elementary-divisor reduction of this commuting
+square shows that the induced normal map for
+$P_r=(p^{-r}a(L_1))\cap L_0$ is again an isomorphism; the filtered part
+is the corresponding intersection because $a$ is strict. Hence
+$a(L_1)\subset P_r$ is a strict morphism of free divided filtered
+modules. Its quotients are
+
+$$
+M[p^r],\qquad F_M\cap M[p^r].
+$$
+
+The same intersection calculation for two consecutive lattices shows
+that the quotient filtration is the image filtration. Thus the kernel
+filtration is admissible and strict, and its successive quotients are
+killed by $p$.
+This dévissage will reduce rank and exactness calculations to level one,
+but it does not say that the category is semisimple. Extensions between
+the two weights carry genuine arithmetic information.
 
 ## 4. The two atomic weights
 
@@ -390,13 +418,14 @@ The target of the realization must simultaneously contain divided-power infinite
 
 ### 5.1 The geometric period object
 
-Let $\mathcal O_{\overline K_0}$ be the integral closure of $W$ in $\overline K_0$, and let $\widehat{\mathcal O}_{\overline K_0}$ be its $p$-adic completion. The compatible system of crystalline divided-power envelopes of
-
-$$
-\mathcal O_{\overline K_0}/p^n
-$$
-
-over $W/p^n$ gives a $p$-adically complete crystalline period object $\mathscr A_{\mathrm{cris}}$. It may equivalently be obtained by completing the universal divided-power thickening of the canonical map from the Witt vectors of the tilt to $\widehat{\mathcal O}_{\overline K_0}$. The universal description shows that it is independent of coordinates.
+Let $\mathcal O_{\overline K_0}$ be the integral closure of $W$ in
+$\overline K_0$, and let $\widehat{\mathcal O}_{\overline K_0}$ be its
+$p$-adic completion. Evaluate Book 55's compatible crystalline period
+sheaves on the geometric syntomic stalk determined by
+$\overline K_0$. Their inverse system is the period object denoted
+$\mathscr A_{\mathrm{cris}}$. Its construction through all local
+divided-power envelopes, together with crystalline descent, makes it
+independent of an embedding or a Frobenius lift.
 
 It carries:
 
@@ -415,15 +444,38 @@ $$
 
 The same divided-power calculation handles sums and completed limits. At finite level one uses the modified filtration of Book 55, so division is independent of a lift.
 
-For torsion realizations set
+At level $n$, write $\mathscr A_n$ for the ordinary crystalline period
+module on the geometric syntomic stalk. Weight one requires a second
+module, not merely a submodule of $\mathscr A_n$. We write
+
+$$
+\mathscr F_n^1=\mathscr J_n^{\langle1\rangle},
+\qquad
+\iota_n:\mathscr F_n^1\longrightarrow\mathscr A_n,
+\qquad
+\varphi _1:\mathscr F_n^1\longrightarrow\mathscr A_n.
+\tag{5.2}
+$$
+
+Here $\mathscr F_n^1$ is Book 55's modified first filtered term. It is
+formed one $p$-adic digit higher before Frobenius is divided by $p$. The
+structural map $\iota_n$ can have a kernel, so replacing
+$\mathscr F_n^1$ by the literal image ideal in $\mathscr A_n$ would lose
+the last digit of a weight-one torsion solution.
+
+For compact notation one may assemble the ordinary terms by setting
 
 $$
 \mathscr A_{\mathrm{cris},\infty}
 =\mathscr A_{\mathrm{cris}}[1/p]/\mathscr A_{\mathrm{cris}}.
-\tag{5.2}
+\tag{5.3}
 $$
 
-Its filtration is the image filtration, with the finite-level modification implicit before division by $p$. Every element is killed by a power of $p$, and all structures commute with passage to the $p^n$-torsion subgroup.
+The notation $\operatorname{Fil}^1\mathscr A_{\mathrm{cris},\infty}$
+will always mean the compatible system $(\mathscr F_n^1,\iota_n)$, not a
+naive image filtration on this quotient. Every solution is killed by a
+power of $p$ and is therefore computed from one of these finite-level
+pairs.
 
 ### 5.2 Filtration and divided Frobenius
 
@@ -433,21 +485,31 @@ $$
 \varphi(\operatorname{Fil}^1)\subset p\mathscr A_{\mathrm{cris}},
 \qquad
 \varphi _0|_{\operatorname{Fil}^1}=p\varphi _1
-\tag{5.3}
-$$
-
-are used. A $W$-linear map $f:M\to\mathscr A_{\mathrm{cris},\infty}$ is a morphism of divided filtered objects when
-
-$$
-f(F_M)\subseteq\operatorname{Fil}^1,
-\qquad
-f\varphi _0=\varphi f,
-\qquad
-f\varphi _1=\varphi _1f|_{F_M}.
 \tag{5.4}
 $$
 
-The second equality restricted to $F_M$ follows from the third after multiplication by $p$, but in a torsion target it is safer to retain both; cancellation of $p$ is not legitimate.
+are used. If $p^nM=0$, a morphism from $M$ to the level-$n$ period
+coefficient is a pair of $W$-linear maps
+
+$$
+f_0:M\longrightarrow\mathscr A_n,
+\qquad
+f_1:F_M\longrightarrow\mathscr F_n^1
+$$
+
+such that $\iota_nf_1=f_0|_{F_M}$ and
+
+$$
+f_0\varphi _0=\varphi f_0,
+\qquad
+f_0\varphi _1=\varphi _1f_1.
+\tag{5.5}
+$$
+
+The first equality restricted to $F_M$ follows from the second only after
+multiplication by $p$; it is retained because cancellation of $p$ is not
+legitimate in a torsion target. We continue to denote such a compatible
+pair simply by $f$.
 
 Choose a compatible system of $p$-power roots of unity and let $t$ be its divided-power logarithmic period. Then
 
@@ -456,14 +518,13 @@ t\in\operatorname{Fil}^1\mathscr A_{\mathrm{cris}},
 \qquad \varphi(t)=pt.
 $$
 
-Changing the compatible system multiplies $t$ by a unit and does not change any descent statement. The total period algebra
-
-$$
-\mathscr B_{\mathrm{cris}}
-=\mathscr A_{\mathrm{cris}}[1/p,1/t]
-$$
-
-is used only to invert evaluation matrices. All descended morphisms and all realized torsion groups remain integral; inverting $t$ is a proof device, not part of the definition (6.1).
+Changing the compatible system multiplies $t$ by a unit and does not
+change any descent statement. The period $t$ fixes the cyclotomic
+normalization. We will not turn torsion solution entries into a matrix
+over a rational period ring: representatives modulo
+$\mathscr A_{\mathrm{cris}}$ are noncanonical, so such a matrix would not
+support an integral descent argument. All lifting and reconstruction below
+take place at the finite levels.
 
 ### 5.3 The two fundamental sequences
 
@@ -474,28 +535,40 @@ $$
 \longrightarrow\mathscr A_n
 \xrightarrow{1-\varphi}\mathscr A_n
 \longrightarrow0,
-\tag{5.5}
+\tag{5.6}
 $$
 
 and
 
 $$
 0\longrightarrow\mu_{p^n}
-\longrightarrow\operatorname{Fil}^1\mathscr A_n
-\xrightarrow{1-\varphi _1}\mathscr A_n
+\longrightarrow\mathscr F_n^1
+\xrightarrow{\iota_n-\varphi _1}\mathscr A_n
 \longrightarrow0.
-\tag{5.6}
+\tag{5.7}
 $$
 
-In (5.6), a root of unity is sent by the divided-power logarithm to its filtered period. Exactness on the right is local for the syntomic topology. The proof solves the Frobenius-difference equation successively; its linear term has derivative one, and the divided-power filtration makes the correction converge. These are not merely rational exact sequences.
+In (5.7), a root of unity is sent by the divided-power logarithm to its
+modified filtered period. Exactness on the right is local for the
+syntomic topology. In weight zero the lifting equations are
+Artin--Schreier equations with invertible derivative. In weight one one
+also encounters monic $p$th-root equations; their finite free
+local-complete-intersection covers are syntomic, though not étale on the
+special fiber. These are not merely rational exact sequences.
 
-The injections identify the kernels with the indicated finite-flat coefficients. In particular, (5.5) and (5.6) are $G_{K_0}$-equivariant. They are the rank-one cases of the lifting lemma in Chapter 7.
+The injections identify the kernels with the indicated finite-flat coefficients. In particular, (5.6) and (5.7) are $G_{K_0}$-equivariant. They are the rank-one cases of the lifting lemma in Chapter 7.
 
 ### 5.4 Finite levels and continuity
 
-The transition maps $\mathscr A_{n+1}\to\mathscr A_n$ are surjective on the relevant modified filtered terms. Consequently compatible solutions form inverse systems without a hidden choice of divided Frobenius. A solution killed by $p^n$ is defined over a finite syntomic extension of a finite level, so its stabilizer in $G_{K_0}$ is open. Hence every realization constructed from these coefficients is a continuous discrete representation.
+The transition maps $\mathscr A_{n+1}\to\mathscr A_n$ and
+$\mathscr F_{n+1}^1\to\mathscr F_n^1$ are surjective and commute with
+$\iota$ and divided Frobenius. Consequently compatible solutions form
+inverse systems without a hidden choice of division. A solution killed by
+$p^n$ is defined over a finite syntomic extension of a finite level, so
+its stabilizer in $G_{K_0}$ is open. Hence every realization constructed
+from these coefficients is a continuous discrete representation.
 
-One must distinguish finite-level reduction from naive reduction of a completed fixed-point group. Fixed points need not commute with tensor product because they are kernels of $1-\varphi_i$. The correct finite-level object is the $p^n$-torsion in (5.2), equipped with the modified filtration inherited from the compatible crystalline levels. This distinction will also govern base change in Chapter 12.
+One must distinguish finite-level reduction from naive reduction of a completed fixed-point group. Fixed points need not commute with tensor product because they are kernels of the displayed Frobenius differences. The correct finite-level object is the pair $(\mathscr A_n,\mathscr F_n^1)$, not merely the $p^n$-torsion of (5.3) with an image filtration. This distinction will also govern base change in Chapter 12.
 
 ## 6. The syntomic solution functor
 
@@ -512,18 +585,23 @@ T_{\mathrm{FL}}(M)
 \tag{6.1}
 $$
 
-If $p^nM=0$, the image of every map lies in the $p^n$-torsion of the period object. Thus (6.1) is computed at a finite level. It is an abelian group under pointwise addition and is killed by $p^n$.
+Here the Hom symbol means the compatible pair $(f_0,f_1)$ of Section
+5.2. If $p^nM=0$, formula (6.1) is computed from
+$(\mathscr A_n,\mathscr F_n^1,\iota_n,\varphi,\varphi_1)$. It is an
+abelian group under pointwise addition and is killed by $p^n$.
 
-The description as a syntomic solution becomes explicit after choosing a normal decomposition $M=C\oplus F$. A map $f$ is determined by its values on bases of $C$ and $F$. Filtration requires the values on $F$ to lie in $\operatorname{Fil}^1$, and Frobenius compatibility gives the vector equations
+The description as a syntomic solution becomes explicit after choosing a normal decomposition $M=C\oplus F$. A map is determined by the values of $f_0$ on a basis of $C$ and the values of $f_1$ on a basis of $F$; the latter lie in $\mathscr F_n^1$. Frobenius compatibility gives the vector equations
 
 $$
-\varphi(f(c))=f(\varphi _0(c)),
+\varphi(f_0(c))=f_0(\varphi _0(c)),
 \qquad
-\varphi _1(f(f_1))=f(\varphi _1(f_1)).
+\varphi _1(f_1(x))=f_0(\varphi _1(x)).
 \tag{6.2}
 $$
 
-The same letter $f$ occurs as the morphism and, temporarily, as an element $f_1\in F$; the equations are type-correct because the left sides use the period operators and the right sides use the divided filtered operators on $M$. In matrix form, (6.2) is a coupled system built from the two rank-one maps $1-\varphi$ and $1-\varphi _1$.
+The structural equation $\iota_nf_1=f_0|_F$ is also imposed. In matrix
+form, (6.2) is a coupled system built from the two rank-one maps
+$1-\varphi$ and $\iota_n-\varphi _1$.
 
 ### 6.2 The Galois action and variance
 
@@ -534,7 +612,7 @@ $$
 \tag{6.3}
 $$
 
-This preserves (5.4), so $T_{\mathrm{FL}}(M)$ is a $G_{K_0}$-module. Section 5.4 proves continuity.
+This preserves (5.5), so $T_{\mathrm{FL}}(M)$ is a $G_{K_0}$-module. Section 5.4 proves continuity.
 
 For a morphism $u:M\to N$, precomposition gives
 
@@ -582,17 +660,50 @@ is a free $\mathbf Z/p^n$-module of rank $d$.
 
 **Proof strategy.** At level one, a normal decomposition turns the solution space into the kernel of a syntomic map of $d$-dimensional additive groups. Its linearized Frobenius term has full rank, so the kernel is finite flat of rank $p^d$ on the generic stalk. Higher levels follow by lifting one $p$-adic digit at a time. General finite-length objects follow from a strict free presentation and the lifting argument proved in Chapter 7. We include the calculation now and isolate the lifting input there.
 
-**Proof.** Let $L=C\oplus F$ be free of rank $d$. Modulo $p$, Proposition 2.1 makes the output matrix of $\varphi _0|_C$ and $\varphi _1|_F$ invertible. Equations (6.2), together with (5.5) and (5.6), therefore define locally a torsor under a kernel with $p^d$ geometric elements. Starting with a solution modulo $p^m$, the error modulo $p^{m+1}$ is a level-one vector equation with the same invertible output matrix. The fundamental sequences solve it syntomically, and its homogeneous solutions form $(\mathbf Z/p)^d$. Induction gives exactly $p^{nd}$ solutions modulo $p^n$ and shows that multiplication by $p$ has kernel and cokernel of the expected size. Hence the solution group is free of rank $d$ over $\mathbf Z/p^n$.
+**Proof.** Let $L=C\oplus F$ be free of rank $d$. Modulo $p$, Proposition 2.1 makes the output matrix of $\varphi _0|_C$ and $\varphi _1|_F$ invertible. Equations (6.2), together with (5.6) and (5.7), therefore give the mixed monic system analyzed in Chapter 7. On the characteristic-zero geometric stalk its homogeneous kernel has $p^d$ elements. Starting with a solution modulo $p^m$, the error modulo $p^{m+1}$ is a level-one system with the same invertible output matrix. Solving it syntomically gives exactly $p^d$ lifts. Induction gives $p^{nd}$ solutions modulo $p^n$, and the digit calculation shows that multiplication by $p$ has kernel $(\mathbf Z/p)^d$ and image the level-$(n-1)$ solutions. Hence the solution group is free of rank $d$ over $\mathbf Z/p^n$.
 
-For a general $M$, choose a strict presentation (3.1). The relative lifting statement of Theorem 7.1 makes the induced sequence of solution groups exact. Applying the already established free calculation to $L_0$ and $L_1$ gives
+It remains to pass from free reductions to every admissible torsion
+object. First suppose $pM=0$. Then $M$ is a finite-dimensional
+$k$-space and $F_M$ is a subspace. Choose a complement $M=C\oplus F_M$.
+The quotient of strong divisibility along a strict presentation makes
+
+$$
+\sigma^*C\oplus\sigma^*F_M\longrightarrow M,
+\qquad(c,f)\longmapsto\varphi_0(c)+\varphi_1(f)
+$$
+
+surjective. Its source and target have the same $k$-dimension, so it is
+an isomorphism. Lift bases of $C$ and $F_M$ to free $W$-modules and lift
+the resulting invertible normal matrix from $\operatorname{GL}_d(k)$ to
+$\operatorname{GL}_d(W)$. Proposition 2.1 constructs a free divided
+filtered module $L$ with $M\simeq L/pL$. The free calculation therefore
+gives
+
+$$
+\ell_{\mathbf Z_p}T(M)=\dim_kM=\ell_W(M).
+$$
+
+For arbitrary $M$, use the strict kernel filtration from Section 3.4,
+where $M[p^r]=\ker(p^r:M\to M)$. Every sequence
+
+$$
+0\longrightarrow M[p^r]\longrightarrow M[p^{r+1}]
+\longrightarrow M[p^{r+1}]/M[p^r]\longrightarrow0
+$$
+
+is admissibly exact, and its last term is killed by $p$. Part 1 of
+Theorem 7.1, together with left exactness, makes the corresponding
+sequence of solution groups short exact. Additivity of length and the
+level-one calculation now give
 
 $$
 \ell_{\mathbf Z_p}T(M)
-=\ell_{\mathbf Z_p}T(L_0/aL_1)
-=\ell_W(L_0/aL_1)=\ell_W(M).
+=\sum_r\dim_k(M[p^{r+1}]/M[p^r])
+=\ell_W(M).
 $$
 
-Finiteness follows from the equality of finite lengths. $\square$
+Finiteness follows at each step from the finite level-one kernels.
+$\square$
 
 The use of Theorem 7.1 is forward only in exposition, not circular in proof: that theorem is proved directly from the period equations, without Proposition 6.1.
 
@@ -615,11 +726,13 @@ Every major theorem in this book rests on one local fact: a partial filtered Fro
 
 ### 7.1 Statement of the local lemma
 
-Write $\mathscr A_\infty=\mathscr A_{\mathrm{cris},\infty}$. The following is the integral engine of the theory.
+Write $\mathscr A_\infty=\mathscr A_{\mathrm{cris},\infty}$, with its
+finite-level meaning from Chapter 5. The following is the integral engine
+of the theory.
 
 **Theorem 7.1 (small-weight lifting and descent lemma).** Assume (1.1). In the exact category of admissible torsion divided filtered modules of weights $[0,1]$:
 
-1. If $M\twoheadrightarrow Q$ is an admissible epimorphism, every filtered Frobenius map from its kernel to $\mathscr A_\infty$ extends to $M$ after solving a syntomic-local equation. On a geometric stalk the extension exists.
+1. If $0\to M'\to M\to M''\to0$ is admissibly exact, every filtered Frobenius solution on $M'$ extends to $M$ on the geometric syntomic stalk.
 2. If $M$ and $N$ are admissible torsion objects, every $G_{K_0}$-equivariant homomorphism
 
    $$
@@ -628,28 +741,119 @@ Write $\mathscr A_\infty=\mathscr A_{\mathrm{cris},\infty}$. The following is th
    $$
 
    is induced by at most one $W$-linear filtered Frobenius map $M\to N$.
-3. After choosing strict free presentations, the coefficient matrix of (7.1) descends to $W/p^n$ at every common annihilating level $p^n$ and satisfies the filtration and divided-Frobenius equations. Hence it is induced by such a map.
+3. Every map (7.1) is induced by a divided filtered morphism $M\to N$.
 
-Parts 2 and 3 are separated to emphasize uniqueness and existence. Together they are the matrix form of period descent.
+Parts 2 and 3 separate faithfulness from fullness. The proof uses two
+finite-level calculations, which we now establish without rationalizing a
+torsion period.
 
-Before proving the theorem, we record the local vector calculation which prevents any circular use of the later rank theorem. Let $L=C\oplus F$ be free of rank $d$ and let $U$ be its normal Frobenius matrix. Work first modulo $p$. Choose additive crystalline coordinates for the weight-zero entries and divided-power logarithmic coordinates for the weight-one entries. In these coordinates the coupled solution equation has the form
+Let $L=C\oplus F$ be free of rank $d$, choose a normal basis
+$e_1,\ldots,e_d$, and put $\epsilon_i=0$ for a basis vector in $C$ and
+$\epsilon_i=1$ for one in $F$. The normal Frobenius map has a matrix
+$U\in\operatorname{GL}_d(W)$. At level one, filter a local crystalline
+chart simultaneously by coefficient digit and divided-power order. After
+multiplying by the inverse normal output matrix, its current-coordinate
+equations have the form
 
 $$
-\mathcal L_U(z)=z-Uz^{(p)}-b=0
+Z_i^p+\sum_{j=1}^d b_{ij}Z_j=a_i
+\qquad(1\le i\le d).
 \tag{7.2}
 $$
 
-after an invertible linear change of variables. Here $z^{(p)}$ means coordinatewise $p$th power, with the Witt-semilinear coefficient action included in $U$. The Jacobian matrix of $\mathcal L_U$ is the identity because the differential of $z\mapsto z^p$ is zero in characteristic $p$. Its highest additive term has invertible matrix $U$, so the coordinate algebra is finite free of rank $p^d$: eliminate the variables successively after triangularizing $U$ over a faithfully flat extension, or observe that the monomials
+For a pure weight-zero block the linear coefficient matrix is invertible;
+this is the vector Artin--Schreier system. A weight-one row can instead
+have zero current linear term, and then (7.2) includes the root equation
+$Z_i^p=a_i$ supplied by the modified term $\mathscr F_1^1$. Every row is
+monic of degree $p$ in its own variable. The pure weight-zero system
+defines a finite étale cover. The mixed system defines a finite free
+local-complete-intersection cover and is therefore syntomic, but it need
+not be étale on the special fiber.
+
+Give every degree-$p$ monomial higher order than every linear term. The
+initial terms of the $d$ equations are then the pairwise coprime
+monomials $Z_i^p$. Their mutual reductions introduce no new initial
+relation, and repeated monic division shows that
 
 $$
-z_1^{a_1}\cdots z_d^{a_d},
+Z_1^{a_1}\cdots Z_d^{a_d},
 \qquad 0\le a_i<p,
 \tag{7.3}
 $$
 
-span and remain linearly independent by the highest-term filtration. Thus $\mathcal L_U$ is finite étale of degree $p^d$. Its geometric fiber is a torsor under its homogeneous kernel, a $d$-dimensional $\mathbf F_p$-vector space.
+span the local solution algebra. Their initial monomials are distinct,
+so the highest-term filtration proves linear independence. The algebra
+therefore has rank $p^d$. On the characteristic-zero geometric stalk its
+homogeneous solutions form an $\mathbf F_p$-vector space of dimension
+$d$.
 
-At level $p^n$, lift a solution modulo $p^r$ by writing $z'=z+p^rw$. Substitution and division of the error by $p^r$ reduce the new equation for $w$ to (7.2) modulo $p$. The weight-one entries use $\varphi_1$ before reduction, so no cancellation in a torsion ring occurs. Induction shows that the solution sheaf is finite locally free of rank $p^{nd}$ and is locally a free $\mathbf Z/p^n$-module of rank $d$. In particular, after a syntomic cover it admits a solution basis. The determinant of its evaluation matrix is $t^{h^1(L)}$ times a unit in the total period algebra, so the matrix becomes invertible in $\mathscr B_{\mathrm{cris}}$. This conclusion comes directly from (7.2), (5.5), and (5.6), not from Proposition 6.1.
+For level $p^{r+1}$, lift a solution at level $p^r$ in the torsion-free
+crystalline envelope, substitute it in the equations, divide its defect
+there by $p^r$, and only then reduce modulo $p$. The new digit satisfies
+the same monic vector system (7.2). The modified source makes this
+operation well defined in weight one. Induction gives $p^{nd}$ geometric
+solutions at level $n$ and makes the homogeneous solution group a free
+$\mathbf Z/p^n$-module of rank $d$. This is the size calculation used in
+Proposition 6.1; it uses only (5.6)--(5.7) and the normal matrix.
+
+We also need the linear, rather than merely numerical, consequence of
+the same calculation. For $m\in L/p^nL$, evaluation is the period-valued
+function $f\mapsto f_0(m)$ on $T(L/p^nL)$; if $m$ lies in its first
+filtered step, its filtered
+evaluation is $f\mapsto f_1(m)$ before $\iota_n$ is applied. Call a
+period-polynomial function on the homogeneous solution set
+**primitive of filtered degree at most one** if it is additive under the
+solution group law and has such a representative in $\mathscr F_n^1$ in
+a weight-one coordinate. Thus the original normal coordinates are
+precisely evaluation functions.
+
+At level one every period-polynomial function has a unique expression in
+the reduced basis (7.3). Comparing its value on the sum of two universal
+solutions with the sum of its two values shows that a primitive has no
+monomial of total degree at least two: the least such monomial would
+produce a cross term which cannot be cancelled by a term of lower order.
+A $p$th power is reduced by (7.2) to its prescribed Frobenius-linear
+term. Hence the primitives are exactly the linear combinations of the
+normal evaluation coordinates. At level $p^{r+1}$, subtract a lift of a
+primitive known modulo $p^r$; after division by $p^r$ its remainder is a
+level-one primitive. Induction therefore gives:
+
+**Lemma 7.2 (integral coefficient reconstruction).** Let $L$ and $L'$ be
+free divided filtered modules. Every $G_{K_0}$-equivariant homomorphism
+
+$$
+T(L'/p^nL')\longrightarrow T(L/p^nL)
+$$
+
+pulls the normal evaluation functions of the target back to unique
+primitive evaluation functions of the source. Their coefficients define
+a unique $W/p^n$-linear map
+
+$$
+L/p^nL\longrightarrow L'/p^nL'
+$$
+
+which preserves the first filtered step and commutes separately with
+$\varphi_0$ and $\varphi_1$.
+
+**Proof.** The reduced-monomial and digit arguments preceding the
+statement show that the pullback of each additive evaluation function is
+a unique linear combination of normal evaluation coordinates. It remains
+to identify the coefficient ring and its structural equations.
+
+The assertion about coefficients follows in the same induction. Galois
+equivariance makes the pullback descend on the geometric stalk; in the
+first nonzero coefficient or PD layer, equations (7.2) say that a
+descended primitive has a constant Witt coefficient. The weight-one
+structural equation rules out a term living only in the kernel of
+$\iota_n$. Subtracting that constant linear term moves the difference to
+the next layer. Separatedness of the mixed filtration finishes level one,
+and the digit induction finishes level $n$. Substitution in the normal
+Frobenius equations gives commutation with both divided operators. This
+is the integral replacement for the invalid procedure of choosing
+representatives of torsion periods and inverting an evaluation matrix.
+Uniqueness of the reduced expression gives uniqueness of the resulting
+map. $\square$
 
 ### 7.2 Successive approximation
 
@@ -660,68 +864,104 @@ $$
 \tag{7.4}
 $$
 
-and a solution $f':M'\to\mathscr A_\infty$. Choose strict free presentations and normal decompositions. It is enough to work modulo a common $p^n$ and then pass through the presentations.
+and a solution $f'$ on $M'$. Choose strict free presentations and normal decompositions. It is enough to work modulo a common $p^n$ and then pass through the presentations.
 
-Choose an arbitrary $W$-linear extension $f_0$ of $f'$ whose restriction to $F_M$ lands in $\operatorname{Fil}^1$. Such an extension exists because strictness makes
+Choose an arbitrary pair of $W$-linear extensions
+$g_0:M\to\mathscr A_n$ and $g_1:F_M\to\mathscr F_n^1$ satisfying
+$\iota_ng_1=g_0|_{F_M}$. Here is why such a pair exists even when the
+underlying torsion sequence does not split. Book 55's divided-monomial
+filtration makes both $\mathscr A_n$ and $\mathscr F_n^1$ flat over the
+principal Artin ring $W/p^n$ on the geometric stalk. Flat modules over
+that ring are projective, and the ring is self-injective, so these two
+coefficient modules are injective. Strictness makes
 
 $$
 0\to F_{M'}\to F_M\to F_{M''}\to0
 $$
 
-exact: extend independently on a complement of $F_{M'}$ in a lifted filtered presentation and on a complement of $M'$ compatible with the quotient. The map $f_0$ need not commute with Frobenius. Its defects are
+exact. First extend $f_1'$ from $F_{M'}$ to $F_M$. On the sum
+$M'+F_M$, the prescriptions $f_0'$ on $M'$ and $\iota_ng_1$ on $F_M$
+agree on $M'\cap F_M=F_{M'}$, so they define one map to $\mathscr A_n$.
+Injectivity of $\mathscr A_n$ extends it to $M$. The resulting pair
+$(g_0,g_1)$ need not commute with
+Frobenius. Its defects are
 
 $$
-\delta _0(c)=\varphi(f_0(c))-f_0(\varphi _0c),
+\delta _0(c)=\varphi(g_0(c))-g_0(\varphi _0c),
 \qquad
-\delta _1(x)=\varphi _1(f_0(x))-f_0(\varphi _1x).
+\delta _1(x)=\varphi _1(g_1(x))-g_0(\varphi _1x).
 \tag{7.5}
 $$
 
-They vanish on $M'$ and therefore factor through $M''$. We seek a correction $h$ vanishing on $M'$ such that $f_0+h$ has zero defect. In a normal decomposition of $M''$, this is a vector Frobenius-difference equation. Modulo $p$, the output matrix is invertible by Proposition 2.1. The two components are precisely of the forms in (5.5) and (5.6), so a correction exists on the geometric syntomic stalk.
+They vanish on $M'$ and therefore factor through $M''$. We seek a
+compatible correction pair vanishing on $M'$ whose addition kills both
+defects. In a normal decomposition of $M''$, this is the monic vector
+system (7.2). Successively adjoining its roots gives the finite free
+syntomic cover proved above; equivalently, the fundamental sequences
+(5.6)--(5.7), coupled by the invertible normal matrix, give a correction
+on the geometric syntomic stalk.
 
-Suppose inductively that the defect vanishes modulo $p^r$. Divide the defect by $p^r$ and reduce modulo $p$. The same level-one equation produces a correction $p^rh_r$. On the filtered component, (5.1) shows that applying $\varphi$ gains the required factor of $p$ before $\varphi _1$ is formed. The new error is divisible by $p^{r+1}$. Iterating to $r=n$ gives an exact solution modulo $p^n$.
+Suppose inductively that the defect vanishes modulo $p^r$. Lift the
+calculation to the torsion-free envelope, divide the defect by $p^r$, and
+reduce modulo $p$. The same level-one system produces a correction in the
+next digit. On the filtered component, (5.1) gives the required factor of
+$p$ before $\varphi_1$ is formed. The new error is divisible by
+$p^{r+1}$. Iterating to $r=n$ gives an exact solution modulo $p^n$.
 
-Why does a correction not destroy the equation already solved in the other weight? With weights $0$ and $1$, the off-diagonal term crosses the filtration at most once. Such a crossing contributes a factor of $p$, while the divided Frobenius removes at most one factor. Since $p>2$ places the interval in the range $1\le p-2$, the remaining divided-power terms have strictly higher $p$-adic or PD order. Thus the alternating corrections converge and terminate at finite level. This proves Part 1.
+Why does a correction not destroy the equation already solved in the
+other weight? With weights $0$ and $1$, an off-diagonal term crosses the
+filtration at most once. That crossing contributes a factor of $p$, while
+divided Frobenius removes at most one factor. The remaining nonlinear
+term has divided-power degree at least $p$; because $1\le p-2$, it lies
+in a strictly later mixed layer. Thus the ordered corrections improve the
+filtration and terminate at finite level. This proves Part 1.
 
 ### 7.3 Descent of matrices
 
-We next reconstruct a map from (7.1). Choose a common level $p^n$ and strict free presentations of $M$ and $N$. Choose normal decompositions and bases. Evaluation of all syntomic solutions gives period matrices
+We next reconstruct a map from (7.1). Choose a common annihilating level
+$p^n$, strict free presentations of $M$ and $N$, and normal coordinates
+on all free terms. A Galois homomorphism $\alpha:T(N)\to T(M)$ is a
+morphism of the finite étale generic solution groups. Pullback by
+$\alpha$ therefore carries an additive coordinate function on $T(M)$ to
+an additive function on $T(N)$.
+
+Apply Lemma 7.2 to these pulled-back coordinate
+functions. It gives, on every free term, a unique matrix over $W/p^n$.
+The source and target conventions show that the resulting matrix has the
+direction
 
 $$
-X_M\in\operatorname{Mat}_{d_M}(\mathscr B_{\mathrm{cris}}),
-\qquad
-X_N\in\operatorname{Mat}_{d_N}(\mathscr B_{\mathrm{cris}}),
+B:M\longrightarrow N.
 \tag{7.6}
 $$
 
-whose rows record bases of the solution modules after a syntomic cover; compatible representatives of the torsion entries are chosen before passing to the total period algebra. Their determinants are $t^{h^1}$ times units because the normal Frobenius matrices are invertible and the homogeneous level-one solution group has full rank. Thus they are invertible in $\mathscr B_{\mathrm{cris}}$.
-
-A homomorphism $\alpha:T(N)\to T(M)$ is represented in these solution bases by a matrix $A$ with entries in $\mathbf Z/p^n$: its rows express the images of the chosen basis of $T(N)$ in the chosen basis of $T(M)$. If $B$ is the desired matrix $M\to N$, precomposition says $X_NB=AX_M$. Thus transporting $\alpha$ back across evaluation gives
+The filtered-degree assertion gives $B(F_M)\subseteq F_N$. Substituting
+the pulled-back coordinates in the two normal equations gives
 
 $$
-B=X_N^{-1} A X_M.
+B\varphi _0^M=\varphi _0^N B,
+\qquad
+B\varphi _1^M=\varphi _1^N B|_{F_M}.
 \tag{7.7}
 $$
 
-Although the individual period matrices live after a syntomic extension, $G_{K_0}$-equivariance of $\alpha$ makes $B$ invariant under descent. We now show that its entries lie in $W/p^n$ and that it respects all structure.
+It remains to check that the matrices on free presentations descend to
+the cokernels. Let $R_M$ be a relation in a chosen presentation of $M$.
+Every solution annihilates $R_M$, so its pullback under $\alpha$ also
+annihilates $R_M$. Coefficient reconstruction in Lemma 7.2 is unique;
+consequently
+$B(R_M)$ lies in the relation module for $N$. Thus $B$ descends to a
+well-defined map of the torsion cokernels. A common strict refinement of
+two presentations gives the same map, again by uniqueness. This proves
+Part 3.
 
-Normalize each block of $B$ by the power of $t$ dictated by the difference of its source and target weights. The requirement that the resulting map preserve filtration says that no negative power remains, so the normalized blocks lie in the integral period lattice and may be reduced modulo $p$. The weight-zero invariant calculation in (5.5) says that an invariant coefficient whose Frobenius defect is zero is constant. On a coefficient carrying one filtered input, (5.6) says that the only additional invariant is the weight-one root coordinate, and the condition that $B$ map $F_M$ into $F_N$ removes the forbidden negative-weight term. Therefore $B$ modulo $p$ lies in $\operatorname{Mat}(k)$ with the required filtration blocks.
-
-Assume $B$ has descended modulo $p^r$. Subtract a lift $B_r$ over $W/p^{r+1}$. The remaining matrix is $p^rE$. Frobenius compatibility of the period matrices turns the descent condition into a level-one equation for $E$ modulo $p$. Equations (5.5) and (5.6) again force $E$ to have constant coefficients and the correct filtered blocks. This lifts $B$ modulo $p^{r+1}$. Induction gives a matrix over $W/p^n$.
-
-Finally, substitute (7.7) into the Frobenius equations satisfied by $X_M$ and $X_N$. Cancelling the invertible period matrices yields
-
-$$
-B\varphi _i^M=\varphi _i^N B
-\quad(i=0,1),
-\qquad
-B(F_M)\subseteq F_N.
-\tag{7.8}
-$$
-
-Thus $B$ defines a divided filtered morphism $M\to N$. Compatibility with the relations in the strict free presentations follows because the original map $\alpha$ is defined on their kernels and cokernels; Part 1 gives the necessary lift, and equality on all solution vectors forces the presentation relations. This proves Part 3.
-
-For uniqueness, if two descended matrices induce the same map on solutions, their difference $D$ satisfies $X_ND=0$. The period matrix $X_N$ is invertible after the syntomic cover, so $D=0$. Faithfully flat descent then gives $D=0$ over $W/p^n$. This proves Part 2. $\square$
+For Part 2, suppose $B$ induces the zero map on solutions. At level one,
+the pullback of every normal coordinate is zero. The independence of the
+linear primitive coordinates in (7.3) forces every coefficient of $B$
+modulo $p$ to vanish. If $B$ vanishes modulo $p^r$, divide a lift by
+$p^r$ and repeat the level-one argument for the next digit. Hence $B=0$
+modulo $p^n$. The same argument applied to the difference of two maps
+proves uniqueness. This completes the theorem. $\square$
 
 ### 7.4 Why the weight bound is sharp for the proof
 
@@ -815,7 +1055,11 @@ $$
 
 The direction is important. A map $M\to N$ acts on solutions by precomposition, so the generic arrow goes from $T(N)$ to $T(M)$.
 
-Faithfulness can already be seen from period matrices. If $u$ induces zero on all solutions, choose a syntomic cover on which a solution basis gives an invertible evaluation matrix. Then the matrix of $u$ multiplied by this evaluation matrix is zero, so $u=0$ after the faithfully flat cover and hence before it.
+Faithfulness is the primitive-coordinate calculation of Chapter 7. If
+$u$ induces zero on all solutions, every normal coordinate pulled back by
+$u$ is the zero primitive function. Independence of the linear primitive
+coordinates forces $u=0$ modulo $p$, and the digit induction forces
+$u=0$ at the common annihilating level.
 
 ### 9.2 Integral reconstruction
 
@@ -825,13 +1069,16 @@ $$
 \alpha:T(N)\to T(M),
 $$
 
-choose a common annihilating level and strict free presentations. On a syntomic cover, evaluation identifies both solution groups with standard free $\mathbf Z/p^n$-modules. Formula (7.7) transports $\alpha$ to a matrix between the divided filtered modules.
+choose a common annihilating level and strict free presentations. Pullback
+by $\alpha$ carries primitive normal coordinates to primitive coordinates.
+Coefficient reconstruction in Chapter 7 transports these functions to a
+matrix between the divided filtered modules.
 
 Three conditions must descend simultaneously:
 
-1. $G_{K_0}$-equivariance forces the entries to descend from periods to $W/p^n$.
-2. Preservation of the weight-one solution equation forces the matrix to carry $F_M$ into $F_N$.
-3. Compatibility with both period Frobenii forces commutation with $\varphi _0$ and $\varphi _1$ separately.
+1. $G_{K_0}$-equivariance and the mixed-filtration induction force the coefficients to lie in $W/p^n$.
+2. Filtered degree at most one forces the matrix to carry $F_M$ into $F_N$.
+3. Substitution in both solution equations forces commutation with $\varphi _0$ and $\varphi _1$ separately.
 
 The separate $\varphi _1$ condition cannot be recovered by cancelling $p$ in the $\varphi _0$ equation. The matrix descent proof retains it at each finite level, which is why the result is genuinely integral.
 
@@ -839,7 +1086,7 @@ The separate $\varphi _1$ condition cannot be recovered by cancelling $p$ in the
 
 **Theorem 9.1 (Fontaine--Laffaille full faithfulness in weights zero and one).** Under (1.1), for all admissible torsion divided filtered modules $M,N$ of weights $[0,1]$, the map (9.1) is an isomorphism.
 
-**Proof.** Injectivity is the evaluation argument of Section 9.1, equivalently the uniqueness assertion in Theorem 7.1. Given a Galois map $\alpha$, Part 3 of Theorem 7.1 descends its period matrix to a unique $W$-linear map $u:M\to N$ satisfying (2.6). By construction, precomposition with $u$ is $\alpha$. Hence (9.1) is surjective as well. $\square$
+**Proof.** Injectivity is Section 9.1, equivalently Part 2 of Theorem 7.1. Given a Galois map $\alpha$, Part 3 of Theorem 7.1 reconstructs a unique $W$-linear map $u:M\to N$ satisfying (2.6). By construction, precomposition with $u$ is $\alpha$. Hence (9.1) is surjective as well. $\square$
 
 **Corollary 9.2.** Isomorphisms, idempotents, and direct-sum decompositions are detected by $T_{\mathrm{FL}}$. If $T(M)\simeq T(N)$ as Galois modules, the isomorphism comes from a unique isomorphism $N\simeq M$ in the reversed variance.
 
@@ -902,7 +1149,11 @@ Passing to $L/p^nL$ identifies $L^*(1)/p^n$ with (10.1).
 
 ### 10.2 Constructing the divided Frobenius on the dual
 
-The Frobenius maps on the dual are characterized by requiring evaluation to be a morphism into the weight-one line. Explicitly, for $x\in F_M$ and $f\in M^\vee$, and for $x\in M$ and $f\in F_{M^\vee}$, require
+For a free object, the Frobenius maps on its integral dual are
+characterized by requiring evaluation to be a morphism into the
+weight-one line. The torsion maps will then be obtained from a dual strict
+presentation. Explicitly, for $x\in F_M$ and $f\in M^\vee$, and for
+$x\in M$ and $f\in F_{M^\vee}$, require
 
 $$
 \langle\varphi _1x,\varphi _0^\vee f\rangle
@@ -916,7 +1167,10 @@ $$
 \tag{10.6}
 $$
 
-These equations determine $\varphi _0^\vee$ and $\varphi _1^\vee$ uniquely because the images of $\varphi _1(F_M)$ and $\varphi _0(C_M)$ form a basis under a normal decomposition. They also show
+On a free normal decomposition these equations determine
+$\varphi _0^\vee$ and $\varphi _1^\vee$ uniquely because the images of
+$\varphi _1(F_M)$ and $\varphi _0(C_M)$ form a basis. After passage
+through a strict presentation they also show
 
 $$
 \varphi _0^\vee|_{F_{M^\vee}}=p\varphi _1^\vee.
@@ -949,28 +1203,33 @@ Equation (10.2) dualizes the exact sequence of filtered steps, so the displayed 
 
 ### 10.3 Compatibility with generic duality
 
-The quotient $\mathscr A_{\mathrm{cris},\infty}$ is an additive torsion object, not a ring, so its elements must not be multiplied naively. On its $p^n$-torsion define the normalized product
+The pairing must be formed before forgetting the modified first filtered
+term. Book 55's period multiplication gives
 
 $$
-x\star_n y=p^n\widetilde x\widetilde y\pmod {\mathscr A_{\mathrm{cris}}},
+\mathscr A_n\otimes\mathscr F_n^1\longrightarrow\mathscr F_n^1
 $$
 
-where $\widetilde x,\widetilde y\in p^{-n}\mathscr A_{\mathrm{cris}}$ represent $x,y$. This is well defined: changing either representative by an integral element changes $p^n\widetilde x\widetilde y$ by an integral element. It again lies in the $p^n$-torsion subgroup.
+and commutes with $\iota_n$, Frobenius, and Galois. First take
+$M=L/p^nL$ and choose a basis $e_i$ adapted to $L=C\oplus F$, with
+Cartier-dual basis $e_i^\vee$. The two basis vectors $e_i$ and
+$e_i^\vee$ have complementary weights. For solutions $x$ and $y$, pair
+their ordinary and modified-filtered values in the corresponding order
+and sum over $i$. Every summand lies in $\mathscr F_n^1$.
 
-Choose a strict free presentation of $M$, or first treat $M=L/p^nL$. For a basis $e_i$ of $L$ with Cartier-dual basis $e_i^\vee$, two solutions $x$ and $y$ pair by
-
-$$
-\sum_i x(e_i)\star_n y(e_i^\vee).
-$$
-
-The contraction is independent of the basis and descends through a strict presentation. Equations (10.5)--(10.6) put it in the weight-one fixed kernel. The fundamental sequence (5.6) therefore gives a Galois-equivariant pairing
+This contraction is independent of the adapted basis and descends through
+a strict presentation. Equations (10.5)--(10.6) put it in the kernel of
+$\iota_n-\varphi_1$. The fundamental sequence (5.7) therefore gives a
+Galois-equivariant pairing
 
 $$
 T(M)\times T(M^\vee)\longrightarrow\mu_{p^n}
 \tag{10.9}
 $$
 
-when $p^nM=0$. The filtration conditions and (10.5)--(10.6) show that the product lies in the kernel of $1-\varphi _1$, which is $\mu_{p^n}$ by (5.6).
+when $p^nM=0$. This construction uses the genuine finite-level filtered
+product and never multiplies two arbitrary classes in the additive
+quotient $\mathscr A_{\mathrm{cris},\infty}$.
 
 **Theorem 10.2 (duality).** The pairing (10.9) is perfect and induces a natural isomorphism
 
@@ -989,7 +1248,25 @@ T_{\mathrm{FL}}(M^\vee)\simeq T_{\mathrm{FL}}(M)^\vee(1).
 \tag{10.11}
 $$
 
-**Proof.** The construction gives the map (10.10). Choose a strict free presentation and pass to a syntomic cover on which the associated solution matrices are invertible. Equations (10.5)--(10.6) say that the solution matrix for $M^\vee$ is, up to the fixed weight-one period, the inverse transpose of the solution matrix for $M$. Thus the matrix of (10.9) has unit determinant on that cover. Faithfully flat descent makes the pairing nondegenerate before the cover, so (10.10) is injective. Proposition 6.1 gives both sides the same finite length $\ell_W(M)$, hence (10.10) is an isomorphism. The Galois action is compatible because multiplication and the fundamental weight-one sequence are equivariant. $\square$
+**Proof.** The construction gives the map (10.10). For a free reduction
+$L/p^nL$, use dual normal bases. At level one, the mixed monic equations
+of (7.2) for $L$ and $L^*(1)$ are adjoint under the filtered period
+product. The reduced-monomial basis (7.3) then shows that their homogeneous
+kernels pair nondegenerately: a nonzero linear primitive has a dual
+coordinate on which its contraction is the nonzero weight-one primitive.
+Lifting one digit at a time preserves this assertion, because the new
+homogeneous kernels are the same dual level-one systems. Thus (10.9) is
+nondegenerate for every free reduction.
+
+For a general admissible object, choose a strict presentation and its
+dual presentation. The primitive-coordinate argument passes to the two
+cokernels because the relation module on one side is the annihilator of
+the relation module on the other. Thus a solution in the radical of
+(10.9) would give a zero primitive coordinate on the dual presentation,
+and coefficient reconstruction forces the solution itself to vanish.
+Hence (10.10) is injective. Proposition 6.1 gives both sides the same
+finite length $\ell_W(M)$, so it is an isomorphism. Galois compatibility
+follows from equivariance of period multiplication and (5.7). $\square$
 
 For the atomic objects, $\mathbf1^\vee=\mathbf1(1)$ and $\mathbf1(1)^\vee=\mathbf1$, exactly as (6.7) requires.
 
@@ -1098,19 +1375,70 @@ $$
 
 It commutes with change of level, homomorphisms of abelian schemes, Cartier duality, and the Weil pairing.
 
-**Proof strategy.** Both sides arise from the same crystalline extension class. The Dieudonné comparison identifies the special-fiber crystal with $H_n$, while the low-weight syntomic period map evaluates that crystal on the generic torsion section. We check the normalization on the étale and multiplicative lines and then use exactness.
+**Proof strategy.** Both sides arise from the same crystalline extension
+class. Evaluation gives a map from geometric torsion points to solutions.
+We prove it injective using the perfect Cartier pairing and the injective
+weight-one logarithm, then compare the independently known orders. This
+also treats local--local special fibers, whose geometric points cannot be
+used for dévissage.
 
-**Proof.** Book 57 identifies the crystalline Dieudonné crystal of $A_0[p^n]$ with $H_n$, contravariantly in the group. Evaluating a torsion point of the generic fiber on the universal crystalline extension gives a filtered Frobenius morphism
+**Proof.** Book 57 identifies the crystalline Dieudonné crystal of
+$A_0[p^n]$ with $H_n$, contravariantly in the group. To spell out the
+period evaluation, choose a finite extension $K'/K_0$ over which a given
+torsion point $x$ is rational. Properness extends $x$ uniquely to the
+integral closure of $W$ in $K'$. Evaluate the rigidified universal
+extension used in Book 57's comparison on the compatible divided-power
+thickenings of that integral point. The ordinary evaluation gives a map
+to $\mathscr A_n$, while evaluation on the Hodge submodule lifts to
+$\mathscr F_n^1$. Horizontality and Frobenius functoriality give (5.5),
+and the rigidification makes the two evaluations compatible under
+$\iota_n$. Since $[p^n]x=0$, the pair factors through $H_n$.
+
+Refining $K'$ pulls back the same rigidified extension, so the resulting
+pair is independent of the field of definition. Crystalline descent on
+the geometric syntomic stalk then makes the construction Galois
+equivariant and functorial. Thus evaluation gives a filtered Frobenius
+morphism
 
 $$
 H_n\longrightarrow\mathscr A_{\mathrm{cris},\infty},
 $$
 
-hence a map from the right side of (11.6) to the left. On a maximal étale factor this is (5.5) and sends a constant point to its weight-zero fixed period. On the multiplicative dual factor it is (5.6) and sends a root of unity through the divided-power logarithm. Thus the map has the stated normalization.
+hence a homomorphism
 
-Over the perfect special fiber, the finite Dieudonné module has a finite composition series. Exactness of crystalline Dieudonné theory from Book 57 and exactness of $T_{\mathrm{FL}}$ from Theorem 8.1 reduce bijectivity to the simple level-one factors; the local--local factors are handled by the same vector Frobenius equation in Theorem 7.1 rather than by geometric points of the special fiber. At each factor, Proposition 6.1 gives the correct length. Therefore the comparison is an isomorphism.
+$$
+\operatorname{per}_A:A[p^n](\overline K_0)
+\longrightarrow T_{\mathrm{FL}}(H_n).
+\tag{11.6a}
+$$
 
-The construction uses the universal extension, so it is functorial in $A$ and compatible with multiplication by $p$. The evaluation pairing on a group and its Cartier dual is carried by the divided-power logarithm to (10.9); hence Cartier duality and the Weil pairing commute with (11.6). $\square$
+For the constant line it is the kernel map in (5.6); for the
+multiplicative line it is the divided-power logarithm in (5.7). These
+calculations fix the normalization.
+
+We prove injectivity without choosing a composition series. Let $x$ lie
+in the kernel of $\operatorname{per}_A$, and let
+$y\in A^\vee[p^n](\overline K_0)$. Book 57 identifies the crystalline
+Cartier pairing with the Poincaré pairing, while the finite-level period
+product of Chapter 10 identifies evaluation of that pairing with
+
+$$
+\log_{\mathrm{PD}} e_{p^n}(x,y)
+=\bigl\langle\operatorname{per}_A(x),
+\operatorname{per}_{A^\vee}(y)\bigr\rangle=0.
+\tag{11.6b}
+$$
+
+The first arrow of (5.7) is injective, so $e_{p^n}(x,y)=1$ for every
+$y$. The generic Weil pairing between $A[p^n]$ and $A^\vee[p^n]$ is
+perfect; hence $x=0$.
+
+The source of (11.6a) has order $p^{2gn}$. Proposition 6.1 gives the
+target the same order because $H_n$ has $W$-length $2gn$. Thus (11.6a)
+is bijective, and its inverse is (11.6). Construction from the universal
+extension makes the maps functorial in $A$ and compatible with level
+change. Equation (11.6b) proves compatibility with Cartier duality and the
+Weil pairing. $\square$
 
 This theorem starts with an actual abelian scheme and identifies its already existing torsion. It does not assert that an arbitrary divided filtered module is the crystalline module of a finite-flat group.
 
@@ -1315,9 +1643,9 @@ This theorem does not include essential surjectivity, arbitrary integral scalar-
 The construction uses the preceding books in the following precise forms.
 
 - Book 52 supplies the Hodge filtration on degree-one de Rham cohomology of curves and abelian schemes, its finite local freeness, duality, and base change. These are used in (11.2) and in the geometric pairing.
-- Book 53 supplies divided-power envelopes, the crystalline site, crystals, finite torsion levels, Frobenius lifts, and the divisibility calculation which makes $\varphi/p$ integral. These underlie (5.1)--(5.3).
+- Book 53 supplies divided-power envelopes, the crystalline site, crystals, finite torsion levels, Frobenius lifts, and the divisibility calculation behind (5.1) and (5.4).
 - Book 54 supplies finite free degree-one crystalline cohomology, crystalline--de Rham comparison, Frobenius, Poincaré duality, and polarizations. These are used in (11.1), (11.7), and (11.8).
-- Book 55 supplies the modified first filtration at finite level, the weight-zero and weight-one fundamental exact sequences, the divided-power logarithm, coefficient reduction, and the integral period morphism. These are used in (5.5)--(5.6) and in every successive-approximation step of Chapter 7.
+- Book 55 supplies the modified first filtration at finite level, the weight-zero and weight-one fundamental exact sequences, the divided-power logarithm, coefficient reduction, and the integral period morphism. These are used in (5.2), (5.6)--(5.7), and in every successive-approximation step of Chapter 7.
 - Book 57 supplies contravariant Dieudonné theory, its exactness and Cartier duality, the comparison of abelian $p^n$-torsion with $H^1_{\mathrm{cris}}/p^n$, the relation between Frobenius, Verschiebung, and the Hodge subspace, and Raynaud full faithfulness in its stated ramification range. Only the Dieudonné and comparison results are used to prove Chapter 11; Raynaud's theorem provides compatible orientation but is not used to prove Fontaine--Laffaille full faithfulness.
 
 The algebra of finite free modules over a complete DVR, Nakayama's lemma, exactness of duality into $K_0/W$, and faithfully flat descent of matrices are ordinary commutative-algebra background. No later classification theorem is used in Chapters 7--9.
