@@ -117,7 +117,7 @@ $$
 \operatorname{Gal}(E^{\mathrm{ab}}/E),                              \tag{1.2}
 $$
 
-and a uniformizer maps to arithmetic Frobenius. Only the finite part of an idele enters a reciprocity morphism. This is the convention of Books 4 and 125.
+and a uniformizer maps to arithmetic Frobenius. Only the finite part of an idele enters the displayed adelic translation. For the CM reflex field of a special point the archimedean group is connected, so no sign choice occurs. For an ambient reflex field with real places, however, we first choose an equivalent idele whose real components are positive. Two such representatives differ, on their finite parts, by a totally positive principal element and a connected archimedean element. This normalization is essential for narrow component quotients and is compatible with the conventions of Books 4 and 125.
 
 If $h:\mathbb S\to G_{\mathbf R}$, then after identifying
 
@@ -270,13 +270,13 @@ is symmetric positive definite after the consistent sign choice.
 
 **Proof strategy.** Compute the adjoint bidegrees inside $\operatorname{End}(V)$, then identify conjugation by $h(i)$ with the adjoint involution for the positive form (2.4).
 
-**Proof.** The two types on $V$ differ by $(1,-1)$. Therefore $\operatorname{End}(V)$ has only types $(-1,1)$, $(0,0)$, and $(1,-1)$, and the same is true of every stable Lie subalgebra. The weight acts as one scalar on $V$, hence trivially by conjugation. For an endomorphism $u$, the form
+**Proof.** The two types on $V$ differ by $(1,-1)$. Therefore $\operatorname{End}(V)$ has only types $(-1,1)$, $(0,0)$, and $(1,-1)$, and the same is true of every stable Lie subalgebra. The weight acts as one scalar on $V$, hence trivially by conjugation. Let $u^{\dagger_h}$ denote adjoint for the positive form (2.4). On the adjoint symplectic Lie algebra, a direct calculation with $J=h(i)$ gives
 
 $$
-\operatorname{Tr}(u u^{\dagger_h})
+\operatorname{Int}(h(i))(u)=-u^{\dagger_h}.                         \tag{2.5}
 $$
 
-is positive definite, where $\dagger_h$ is adjoint for (2.4). Directly from the symplectic adjoint identity, $\dagger_h$ is the compact real form induced on the adjoint Lie algebra by conjugation with $h(i)$. Thus that conjugation is a Cartan involution. The stated nontriviality condition is the remaining axiom. $\square$
+Indeed, $J^{-1}=-J$, and substituting the symplectic adjoint identity in $(x,y)_h=\psi(x,Jy)$ yields (2.5), modulo the scalar similitude direction. The involution $u\mapsto-u^{\dagger_h}$ is the standard Cartan involution: the trace form $\operatorname{Tr}(uu^{\dagger_h})$ is positive definite. Since $h(i)$ lies in the reductive stabilizer, its Lie algebra is stable under this involution, whose restriction is therefore Cartan. The stated nontriviality condition is the remaining axiom. $\square$
 
 Book 123 supplies the symplectic representations and positivity choices for the quaternionic groups used below. For unitary groups, the trace of the imaginary part of a Hermitian form supplies $\psi$. Proposition 2.1 will often reduce a matrix calculation to a transparent weight-one calculation.
 
@@ -296,6 +296,8 @@ A **Shimura datum** is a pair $(G,X)$ consisting of a connected reductive group 
 
 2. conjugation by $h(i)$ is a Cartan involution of $G_{\mathbf R}^{\mathrm{ad}}$;
 3. no nontrivial $\mathbf Q$-simple factor of $G^{\mathrm{ad}}$ receives the trivial projection of $h$.
+
+Some formulations also require the central weight $w_h$ to be defined over $\mathbf Q$. We do not build that extra condition into the term *Shimura datum*: the basic mixed quaternionic datum has a perfectly valid adjoint Shimura datum even when its central weight is not rational. Whenever a polarized weight-one realization is asserted below, rationality of its scalar weight is imposed separately and explicitly. This distinction is the reason central modifications occur in the FLT constructions.
 
 An involution $\theta$ of a real reductive group is Cartan when its fixed subgroup is maximal compact, equivalently when the Killing form modified by $\theta$ is positive definite on the semisimple Lie algebra. Axiom 2 permits compact adjoint factors: on a compact factor the identity is a Cartan involution. Axiom 3 does not say that every real factor must be noncompact. It says that a whole rational simple factor may not be invisible; restriction of scalars can have compact real factors as long as at least one conjugate real factor is active.
 
@@ -391,15 +393,17 @@ The stabilizer is open. Indeed, a cocharacter and a conjugating element are defi
 
 The fixed-field definition agrees with the usual field-of-definition formulation.
 
-**Proposition 4.2.** The conjugacy class $[\mu_h]$, viewed as a rational point of the cocharacter conjugacy variety, is defined over $E(G,X)$ and over no smaller subfield of $\overline{\mathbf Q}$.
+**Proposition 4.2.** The $G(\overline{\mathbf Q})$-conjugacy class $[\mu_h]$ is defined over $E(G,X)$ and over no smaller subfield of $\overline{\mathbf Q}$.
 
-**Proof.** A geometric point of a finite-type scheme over $\mathbf Q$ descends to a field $L$ exactly when its isomorphism class is fixed by $\operatorname{Gal}(\overline{\mathbf Q}/L)$. For a reductive group, the orbit of a cocharacter is the homogeneous variety
+**Proof strategy.** Replace the infinite conjugacy orbit by the finite Weyl-orbit datum in a split maximal torus. This avoids the false inference that a Galois-stable geometric isomorphism class automatically has effective descent.
+
+**Proof.** Choose a finite Galois extension $L/\mathbf Q$ splitting $G$ and a split maximal torus $T\subset G_L$ to which $\mu_h$ is conjugate. Two cocharacters of $T$ are conjugate in $G_L$ exactly when they belong to the same Weyl-group orbit. Thus $[\mu_h]$ is represented by the finite subset
 
 $$
-G_{\overline{\mathbf Q}}/Z_G(\mu),
+W(G_L,T)\mu_h\subset X_*(T).
 $$
 
-while its induced filtration lies in $G_{\overline{\mathbf Q}}/P_\mu$, with $P_\mu$ the parabolic of nonnegative weights. The former retains the cocharacter and is the space relevant here. Its orbit descends precisely under the stabilizer (4.1). Galois descent therefore gives definition over its fixed field, and any smaller field would have a larger Galois group fixing the class, contrary to the definition. $\square$
+Transporting $T$ back to itself after a Galois conjugation changes the resulting action only by the Weyl group. Consequently the subgroup of $\operatorname{Gal}(L/\mathbf Q)$ preserving this finite orbit is exactly the image of the stabilizer in (4.1). Finite Galois descent of the orbit datum defines the conjugacy class over its fixed field. Conversely, if the class were defined over a smaller field $L_0$, every element of $\operatorname{Gal}(\overline{\mathbf Q}/L_0)$ would preserve its Weyl orbit and hence lie in (4.1). The fixed-field correspondence would then force $E(G,X)\subseteq L_0$. $\square$
 
 One must use conjugacy classes, not a chosen cocharacter. A chosen $\mu_h$ can require a splitting field of a maximal torus, while its conjugacy class may be rational. This is exactly what happens for the Hilbert datum: individual embedding coordinates are not rational, but their uniform collection is.
 
@@ -509,13 +513,15 @@ $$
 K(\ell^n)=\ker\bigl(K\to\operatorname{GL}(\Lambda/\ell^n\Lambda)\bigr)
 $$
 
-is compact open, normal, and finite index. Let $\gamma\in G(\mathbf Q)\cap gK(\ell^n)g^{-1}$. Conjugation does not change eigenvalues. Every eigenvalue of $\rho(\gamma)$ is therefore $\ell$-adically congruent to $1$ to depth $n$. If a product of their integral powers is a root of unity $\zeta$, then $\zeta$ lies in the splitting field of a degree-$\dim V$ characteristic polynomial and is also congruent to $1$ to depth $n$. The degrees of these splitting fields are bounded in terms of $\dim V$, so only finitely many roots of unity can occur. Taking $n$ larger than every valuation of $\zeta-1$ for the nontrivial possibilities forces $\zeta=1$. Hence $\Lambda(\gamma)$ is torsion-free. The same argument works for every $g$, so sufficiently deep $K(\ell^n)$ is neat. $\square$
+is compact open, normal, and finite index. Let $\gamma\in G(\mathbf Q)\cap gK(\ell^n)g^{-1}$. Conjugation does not change eigenvalues. If $d=\dim V$, the characteristic polynomial of $\rho(\gamma)-1$ has its coefficient of degree $j$ divisible by $\ell^{n(d-j)}$; its Newton polygon therefore gives a lower bound tending to infinity with $n$, for example $v_\ell(\lambda-1)\geq n/d$ after normalizing valuations in a splitting field, for every eigenvalue $\lambda$. If a product of their integral powers is a root of unity $\zeta$, then $\zeta$ lies in the splitting field of a degree-$d$ characteristic polynomial and is likewise arbitrarily close to $1$ as $n$ grows. The degrees of these splitting fields are bounded by $d!$, so only finitely many roots of unity can occur. Taking $n$ larger than the finitely many possible valuations of $\zeta-1$ forces $\zeta=1$. Hence $\Lambda(\gamma)$ is torsion-free. The same argument works for every $g$, so sufficiently deep $K(\ell^n)$ is neat. $\square$
 
-**Corollary 5.2.** At neat level, every stabilizer (5.2) is trivial modulo any central subgroup acting trivially on $X$; if the central action is included faithfully in the level representation, it is trivial outright.
+**Corollary 5.2.** At neat level, the image of every stabilizer (5.2) in $G^{\mathrm{ad}}(\mathbf Q)$ is trivial. Equivalently, the effective arithmetic group acting on $X$ is torsion-free.
 
-**Proof.** A stabilizer has finite image modulo the center. Every eigenvalue of a finite-order image is a root of unity, forbidden by neatness unless it is $1$. The remaining central element is handled by the faithful central character. $\square$
+**Proof.** The adjoint image of a stabilizer is finite. If its order is $m$, every eigenvalue of a faithful adjoint representation is an $m$th root of unity. Neatness forces the subgroup generated by those eigenvalues to be torsion-free, so every eigenvalue is $1$. A finite-order unipotent element in characteristic zero is the identity. $\square$
 
-Neatness is stronger than torsion-freeness of the abstract subgroup $K$. The point is that a rational stabilizer can become finite only after projection to the adjoint group; a central root of unity may survive even when no chosen local factor visibly has finite order. The eigenvalue definition detects it simultaneously in every representation. Conversely, neatness does not rule out nontrivial unipotent elements of a compact $p$-adic group: their eigenvalues are all $1$, so the subgroup they generate is torsion-free. Such an element cannot stabilize a point of $X$ in a finite adjoint stabilizer, which is why Corollary 5.2 remains valid.
+Neatness is stronger than torsion-freeness of the abstract subgroup $K$. The point is that a rational stabilizer becomes finite only after projection to the adjoint group; a central root of unity may survive even when no chosen local factor visibly has finite order. The eigenvalue definition detects it simultaneously in every representation. Conversely, neatness does not rule out nontrivial unipotent elements of a compact $p$-adic group: their eigenvalues are all $1$, so the subgroup they generate is torsion-free. Such an element cannot stabilize a point of $X$ in a finite adjoint stabilizer, which is why Corollary 5.2 remains valid.
+
+Central stabilizers require separate bookkeeping. For example, totally positive units in the center of a Hilbert group can lie in $G(\mathbf Q)\cap K$ and act trivially on $X$; they are not torsion and neatness does not remove them. They form an ineffective kernel of the analytic action and therefore do not create quotient singularities. A fine PEL moduli problem kills its actual automorphisms by fixing a polarization and sufficiently deep rigid level, not by pretending that every central arithmetic unit has disappeared from the double-coset presentation.
 
 For example, full level $N\geq3$ in a faithful integral representation is neat after possibly increasing $N$ by one auxiliary prime power. Level $2$ is not enough in general because $-1$ can act trivially modulo $2$. This is the same obstruction that makes full level at least three useful in the rigidified CM descent of Book 125.
 
@@ -529,7 +535,7 @@ $$
 \qquad[h,gK']\longmapsto[h,gK].                                     \tag{5.3}
 $$
 
-When $K'$ is normal in $K$ and both are neat, its deck group is the quotient of $K/K'$ by the subgroup acting trivially through rational central elements. This qualification is necessary: the right action of $K/K'$ can meet the left rational action.
+When $K'$ is normal in $K$ and both are neat, the effective deck group is the quotient of $K/K'$ by the subgroup whose right action is induced by rational central elements. This qualification is necessary: the right action of $K/K'$ can meet the left rational action, and the kernel can contain nontorsion central units even though the finite quotient $K/K'$ is of course finite.
 
 For $a\in G(\mathbf A_f)$, right translation gives
 
@@ -551,14 +557,24 @@ $$
 G(\mathbf Q)_+=\{q\in G(\mathbf Q):qX^+=X^+\}.                      \tag{6.1}
 $$
 
-Every connected component of the double quotient has a representative with first coordinate in $X^+$. Two such representatives lie in the same connected component exactly when their finite adelic coordinates differ by $G(\mathbf Q)_+$ on the left and $K$ on the right. Thus
+Assume first that $G(\mathbf Q)$ acts transitively on $\pi_0(X)$. Then every connected component of the double quotient has a representative with first coordinate in $X^+$. Two such representatives lie in the same connected component exactly when their finite adelic coordinates differ by $G(\mathbf Q)_+$ on the left and $K$ on the right. Thus
 
 $$
 \pi_0\bigl(\operatorname{Sh}_K(G,X)(\mathbf C)\bigr)
 \simeq G(\mathbf Q)_+\backslash G(\mathbf A_f)/K.                  \tag{6.2}
 $$
 
-**Proof.** Each component of $X$ is a $G(\mathbf R)$-translate of $X^+$. The defining axioms imply that the image of $G(\mathbf Q)$ in the component group is the relevant rational action; after moving into $X^+$, continuous paths cannot change the discrete finite adelic coset. Conversely, a relation by $q\in G(\mathbf Q)_+$ and $k\in K$ identifies the two quotients of the connected space $X^+$. $\square$
+**Proof.** Transitivity supplies a rational element moving the first coordinate of any representative into $X^+$. Once there, a continuous path cannot change the discrete finite adelic coset. A rational identification between two representatives stays in $X^+$ exactly when its rational element belongs to $G(\mathbf Q)_+$. Conversely, a relation by $q\in G(\mathbf Q)_+$ and $k\in K$ identifies the two quotients of the connected space $X^+$. $\square$
+
+Without transitivity the correct formula is
+
+$$
+\pi_0\bigl(\operatorname{Sh}_K(G,X)(\mathbf C)\bigr)
+=G(\mathbf Q)\backslash
+\bigl(\pi_0(X)\times G(\mathbf A_f)/K\bigr).                     \tag{6.2a}
+$$
+
+The Shimura axioms alone do not improve (6.2a) to (6.2). In the three families here, transitivity is a separate arithmetic verification. For Hilbert data, weak approximation chooses a determinant with any prescribed real sign pattern. For the basic quaternionic group, the Hasse--Schilling reduced-norm theorem gives arbitrary signs at the split real places and forces positivity only at Hamiltonian places; those are precisely the signs needed to move among the components of $X$. For the unitary similitude groups selected below, the determinant--multiplier torus and weak approximation give the required sign changes at the indefinite factors. Central modifications are required to satisfy the same transitivity statement before (6.2) is used for them.
 
 Formula (6.2) is exact but not yet computable. The next step removes the nonabelian derived group.
 
@@ -574,21 +590,28 @@ We need the following rank-one form of strong approximation.
 
 **Rank-one strong approximation theorem.** Let $H/F$ be $\operatorname{SL}_2$, the reduced-norm-one group of a quaternion algebra, or the special unitary group of a two-dimensional Hermitian space. Assume $H$ is simply connected and $H(F_v)$ is noncompact for at least one archimedean place $v$. Then the diagonal $H(F)$ is dense in $H(\mathbf A_{F,f})$.
 
-**Proof strategy.** The split case is Gaussian elimination plus additive approximation. The two inner rank-one cases are norm quadrics; an isotropic archimedean coordinate supplies the free denominator needed to impose integrality away from finitely many places.
+**Proof strategy.** Strong approximation is an integral, not merely a weak, approximation assertion: outside a prescribed finite set the approximant must remain in a fixed compact open. We prove the split case with root subgroups. The other two groups are simply connected forms of type $A_1$; the norm-quadric approximation lemma below supplies the missing integrality and is the rank-one form of the standard strong-approximation argument.
 
 **Proof.** For $\operatorname{SL}_2$, use the two root subgroups
 
 $$
 u(x)=\begin{pmatrix}1&x\\0&1\end{pmatrix},
 \qquad
-u^-(y)=\begin{pmatrix}1&0\\y&1\end{pmatrix}.                       \tag{6.2a}
+u^-(y)=\begin{pmatrix}1&0\\y&1\end{pmatrix}.                       \tag{6.2c}
 $$
 
 Over every field these root subgroups generate $\operatorname{SL}_2$, and near any fixed local element a word of bounded length in $u(x)$ and $u^-(y)$ gives an open set; the usual row-reduction identities prove both assertions. Given finitely many local neighborhoods, choose the finitely many parameters in such words. Additive approximation supplies global parameters simultaneously close to them and integral at every finite place outside the chosen set. The resulting word lies in the required neighborhoods and in $\operatorname{SL}_2(\mathcal O_w)$ everywhere else. This proves density without invoking strong approximation for $\mathbf G_m$, which would be false.
 
-For $H=B^1$, write reduced norm in a quaternion basis as a nondegenerate four-variable quadratic form $N$. The affine quadric $N=1$ has the rational point $1$. Projection from that point parametrizes a dense open subset by three affine coordinates; its inverse has one quadratic denominator. Prescribe the three parameters at the finitely many places in question by additive approximation. At every other finite place choose them integral. The only possible common denominator is the value of one nonzero quadratic polynomial. Because $N$ is isotropic at the chosen noncompact archimedean place, its real parameter can be varied without bound while keeping all finite congruences fixed; applying the Chinese remainder theorem successively to the finitely many prime divisors of the denominator replaces the parameters by congruent ones for which that denominator is a unit outside the prescribed set. The resulting rational point lies in the required finite adelic neighborhood and is integral elsewhere.
+We isolate the form of the norm-quadric argument that is actually needed. Let $Q$ be a nondegenerate four-dimensional quadratic form over $F$, let $Y:Q=1$, and suppose $Q$ is isotropic over one completion $F_v$ with $v$ outside a set $S$ of finite places. Then, for every smooth integral model $\mathcal Y$ away from a finite enlargement of $S$, the diagonal set $Y(F)$ is dense in
 
-The special unitary group in two variables is another simply connected three-dimensional norm quadric. After choosing a vector and its orthogonal complement, the same stereographic parametrization applies to the equation expressing Hermitian determinant one. Noncompactness at $v$ is precisely isotropy of the corresponding real quadratic form, so the denominator-removal argument is unchanged. Restriction of scalars identifies $H(\mathbf A_{F,f})$ with the corresponding rational finite adelic group. Products are handled factor by factor. $\square$
+$$
+\prod_{w\in S}Y(F_w)\times
+\prod_{w\notin S\cup\{v\}}\mathcal Y(\mathcal O_w).             \tag{6.2b}
+$$
+
+To prove this integral approximation lemma, choose an isotropic pair $e,f$ at $v$ with $(e,f)=1$ and use projection from the rational point of $Y$ to obtain affine coordinates whose inverse has denominator $D$, a nonzero quadratic polynomial. Clear the finitely many coefficients of this chart once and for all. Additive approximation chooses the affine coordinates in the prescribed $w$-adic neighborhoods and integral away from a finite set. The remaining requirement is that $D$ be a unit away from that set. Replace one coordinate by $x+cM$ where $M$ is divisible by every prescribed finite modulus and $c\in F$ varies in the isotropic $e$-direction at $v$. For each new prime divisor $\mathfrak p$ of $D$, nondegeneracy makes the reduction of $D(x+cM)$ a nonzero polynomial of degree at most two in $c$; choose $c$ modulo $\mathfrak p$ away from its at most two roots. Chinese remaindering preserves all earlier choices. The norm of the part of $(D)$ supported outside the prescribed set strictly decreases after cancelling those prime factors from numerator and denominator. Induction on that nonnegative norm terminates and makes $D$ an outside unit. Substitution in the inverse chart proves (6.2b). Points outside the chosen chart are reached by first making an arbitrarily small local perturbation, permissible because the chart is dense and every local $Y(F_w)$ is smooth.
+
+For $H=B^1$, reduced norm is such a four-dimensional $Q$, and $B$ split at the chosen archimedean place is exactly the required isotropy. Multiplication on the quadric identifies its integral points with the required compact-open conditions after enlarging $S$; conjugating lattices handles an arbitrary compact open. A two-dimensional special unitary group is a simply connected form of type $A_1$. Type $A_1$ has no outer forms, so the degree-two classification identifies it with $B'^1$ for a quaternion algebra $B'/F$; noncompactness at $v$ says that $B'$ splits there. The same norm-quadric argument applies. Restriction of scalars and finite products preserve density. $\square$
 
 We may therefore assume that $G^{\mathrm{der}}$ is simply connected and satisfies this approximation theorem. This holds for the Hilbert, indefinite quaternionic, and indefinite unitary groups considered below: their derived groups are restrictions of scalars of $\operatorname{SL}_2$, $B^1$, and $\operatorname{SU}(V)$, respectively.
 
@@ -629,21 +652,24 @@ r_{(G,X)}:\operatorname{Res}_{E/\mathbf Q}\mathbf G_m
 \longrightarrow T.                                                    \tag{6.4}
 $$
 
-Its construction is given in Chapter 10. On the component quotient (6.3), arithmetic reciprocity acts by
+Its construction is given in Chapter 10. Choose an idele $s$ representing the desired Artin element with positive component at every real place of $E$. On the component quotient (6.3), arithmetic reciprocity acts by
 
 $$
 [t]^{\operatorname{Art}_E(s)}=[r_{(G,X)}(s_f)t].                     \tag{6.5}
 $$
 
-This action is well defined. A principal idele changes $r_{(G,X)}(s_f)$ by a rational point of $T$ arising from the cocharacter norm, and a level stabilizer maps into $\nu(K)$. Continuity implies that the action factors through a finite ray class quotient because the component set is finite and discrete.
+This action is well defined. If two positive-at-infinity representatives give the same Artin element, their finite parts differ by a totally positive principal element. The labelled-embedding formula for $r_{(G,X)}$ expresses every active real coordinate as a monomial in positive real coordinates; it therefore lifts to an element preserving $X^+$. Hence its image lies in $T(\mathbf Q)^\dagger=\nu(G(\mathbf Q)_+)$. More generally, an open subgroup fixing the given finite component set may be chosen to map into $\nu(K)$. Thus both principal ambiguity and level ambiguity disappear in (6.3). Without the positivity normalization this is false already for a negative rational principal idele acting on a Hilbert narrow-class quotient. Continuity implies that the action factors through a finite ray class quotient because the component set is finite and discrete.
 
 The field of definition of one geometric component is therefore the abelian extension of $E$ corresponding to the open subgroup
 
 $$
-E^\times\backslash
+U_C=E^\times
 r_{(G,X)}^{-1}\bigl(T(\mathbf Q)^\dagger\nu(K)\bigr)
-\subseteq\mathbf A_E^\times/E^\times.                               \tag{6.6}
+E_\infty^{\times,0}/E^\times
+\subseteq\mathbf A_E^\times/E^\times,                              \tag{6.6}
 $$
+
+where the inverse image is taken on finite ideles.
 
 This is generally larger than $E$. A canonical model over $E$ need not have geometrically connected components defined over $E$ individually.
 
@@ -657,7 +683,7 @@ Three notions must be separated:
 - its arithmetic quotient can be connected over $\mathbf C$;
 - the corresponding component can require an abelian extension of $E$ for its field of definition.
 
-Even when the whole canonical model is defined over $E$, Galois can permute its geometric components transitively. Conversely, a component fixed by Galois need not be geometrically irreducible if the level is non-neat and a quotient identifies branches. In our smooth neat-level cases, each analytic component is irreducible because a connected Hermitian symmetric domain is irreducible as an analytic manifold after quotient by a properly discontinuous group, and its algebraic model is normal.
+Even when the whole canonical model is defined over $E$, Galois can permute its geometric components transitively. At neat level each component is a connected complex manifold and hence analytically irreducible. At arbitrary level it is a finite image of such a component and remains irreducible; the normal coarse model can acquire quotient singularities, but it does not acquire a second irreducible branch inside the same connected component. Field of definition, geometric connectedness, smoothness, and irreducibility are therefore four separate issues.
 
 ## 7. Hilbert modular data
 
@@ -1023,14 +1049,14 @@ For $[F:\mathbf Q]=3$, signatures $(1,1),(1,1),(2,0)$ give dimension two. The de
 
 ### 9.4 Components and compact surfaces
 
-Let $T=G/G^{\mathrm{der}}$. It is a quotient of the torus
+Let $T=G/G^{\mathrm{der}}$. Determinant together with the multiplier identifies it with the torus
 
 $$
 \{(a,c)\in\operatorname{Res}_{K/\mathbf Q}\mathbf G_m\times
 \mathbf G_m:a\bar a=c^2\}
 $$
 
-by a finite central subgroup; equivalently one may use determinant together with the multiplier, subject to
+subject to
 
 $$
 N_{K/F}(\det_K g)=\nu(g)^2.                                         \tag{9.8}
@@ -1098,7 +1124,7 @@ The ambient map generally contains less information than $r_h$ for a special poi
 
 ### 10.2 Special-point reciprocity
 
-**Theorem 10.1.** Let $x=[h,g]\in\operatorname{Sh}_K(G,X)(\mathbf C)$ be special, let $T=\operatorname{MT}(h)$, and let $E(h)$ be its reflex field. For $s\in\mathbf A_{E(h)}^\times$, the canonical Galois action is
+**Theorem 10.1.** Let $x=[h,g]\in\operatorname{Sh}_K(G,X)(\mathbf C)$ be special in one of the selected Hilbert, quaternionic, or unitary data, with its compatible PEL-exact realization directly or through the chosen central modification. Let $T=\operatorname{MT}(h)$ and let $E(h)$ be its reflex field. For $s\in\mathbf A_{E(h)}^\times$, the canonical Galois action is
 
 $$
 x^{\operatorname{Art}_{E(h)}(s)}
@@ -1109,7 +1135,7 @@ The right side depends only on the idele class and is compatible with changing l
 
 **Proof strategy.** Realize the torus as the Mumford--Tate torus of a polarized CM Hodge structure and invoke the CM comparison theorem, then check principal ideles and level directly.
 
-**Proof.** In each of the three families, the faithful symplectic representation identifies $h$ with the Hodge structure on a polarized CM abelian variety, possibly with a product CM algebra and prescribed endomorphisms. Book 125 proves that arithmetic Artin acts on its finite adelic lattice by the reflex norm, giving exactly (10.3) in the quotient convention (1.1).
+**Proof.** In each selected family, the compatible PEL-exact realization, directly or on the chosen central modification, identifies $h$ with the Hodge structure on a polarized CM abelian variety, possibly with a product CM algebra and prescribed endomorphisms. Book 125 proves that arithmetic Artin acts on its finite adelic lattice by the reflex norm, giving exactly (10.3) in the quotient convention (1.1).
 
 If $s$ is replaced by $as$ with $a\in E(h)^\times$, then $\operatorname{Art}(a)=1$. The toric reflex construction sends $a$ to $r_h(a)\in T(\mathbf Q)$, and left multiplication by that rational point identifies the two right-hand representatives. If $s$ changes within the open subgroup mapping into $gKg^{-1}\cap T(\mathbf A_f)$, the level coset is unchanged. Thus the formula depends only on the appropriate idele class. For a morphism $f:G\to G'$, applying $f$ to (10.3) and using $r_{f(h)}=f\circ r_h$ proves functoriality. Projection of $gK'$ to $gK$ proves level compatibility. $\square$
 
@@ -1138,7 +1164,13 @@ $$
 
 on ideles, with the evident interpretation if the fields are embedded conjugately.
 
-**Proof.** Both sides are morphisms from $\operatorname{Res}_{E(h)/\mathbf Q}\mathbf G_m$ to $G^{\mathrm{ab}}$. On the distinguished cocharacter, the left side gives $\nu\mu_h$. The norm to $E(G,X)$ sends the distinguished basis cocharacter to the sum over embeddings above the distinguished embedding; applying $r_{(G,X)}$ gives the same Galois orbit sum. Equality on the permutation basis proves equality of torus morphisms. $\square$
+**Proof.** Both sides are morphisms from $\operatorname{Res}_{E(h)/\mathbf Q}\mathbf G_m$ to $G^{\mathrm{ab}}$. Let $e_\tau$ be the cocharacter basis vector indexed by an embedding $\tau:E(h)\hookrightarrow\overline{\mathbf Q}$. The norm morphism sends
+
+$$
+(N_{E(h)/E})_*e_\tau=e_{\tau|_E};
+$$
+
+the sum over extensions occurs on the contravariant character lattice, not on this cocharacter basis. The right side of (10.4) therefore sends $e_\tau$ to $\tau(\nu\mu_h)$. By the defining equivariance of the special reciprocity map, the left side has the same value. Equality on every $e_\tau$ proves equality of torus morphisms. $\square$
 
 Global reciprocity is norm-functorial, so (10.4) shows that the action of $\operatorname{Gal}(\overline{\mathbf Q}/E(h))$ on the component containing $x$ is the restriction of the ambient action (6.5). This agreement is crucial: canonical descent of points and canonical descent of components are not two unrelated prescriptions.
 
@@ -1161,16 +1193,22 @@ $$
 \sigma(x)=[h,r_h(s_f)g].                                              \tag{11.2}
 $$
 
-The formula is interpreted after base change to $\overline{\mathbf Q}$. It determines the field of definition of $x$ from the open stabilizer
+The formula is interpreted after base change to $\overline{\mathbf Q}$. It determines the field of definition of $x$ from an open idele-class stabilizer. If $T=\operatorname{MT}(h)$, put
 
 $$
-U_x=
-E(h)^\times\backslash
-E(h)^\times r_h^{-1}\bigl(T(\mathbf Q)
-(T(\mathbf A_f)\cap gKg^{-1})\bigr)                                 \tag{11.3}
+C_{x,f}=r_h^{-1}\!\left(T(\mathbf Q)
+\bigl(T(\mathbf A_f)\cap gKg^{-1}\bigr)\right)
+\subset\mathbf A_{E(h),f}^{\times}
 $$
 
-in the idele class group, with unrestricted connected archimedean factor understood because $r_h$ uses $s_f$. By global class field theory, $U_x$ cuts out a finite abelian extension of $E(h)$.
+and
+
+$$
+U_x=E(h)^\times C_{x,f}E(h)_\infty^{\times,0}/E(h)^\times
+\subset\mathbf A_{E(h)}^\times/E(h)^\times.                       \tag{11.3}
+$$
+
+The connected archimedean factor is present because $r_h$ uses only $s_f$. By global class field theory, $U_x$ cuts out a finite abelian extension of $E(h)$.
 
 Normality is part of the definition because the construction at coarse level uses normalization and because equality of rational maps is then controlled in codimension one. Quasi-projectivity permits effective finite Galois descent.
 
@@ -1182,54 +1220,70 @@ We need a density statement.
 
 **Lemma 11.1 (density of special points).** In each Hilbert, quaternionic, or unitary domain considered here, special points are analytically dense in every connected component and hence Zariski dense in every algebraic component.
 
-**Proof strategy.** Approximate the defining negative planes or complex structures by ones whose stabilizers contain a rational maximal torus.
+**Proof strategy.** Construct one special point in each component, then use rational conjugates. This makes both rationality and density explicit and avoids the unjustified claim that a nearby rational endomorphism automatically has a CM centralizer compatible with every prescribed tensor.
 
-**Proof.** In a matrix realization, a point of the domain is a compatible complex structure $J$ on a real symplectic or Hermitian space. Rational semisimple endomorphisms are dense among real endomorphisms. Choose a rational regular semisimple endomorphism $a$ sufficiently close to one commuting with $J$, with characteristic polynomial having the required conjugate nonreal roots and with adjoint $a^*$ matching complex conjugation. Its commutative centralizer is then a CM algebra $L$, and the nearby choice of one root from each conjugate pair gives a complex structure $J_a$ in the same domain. Positivity is open, so sufficiently close choices remain in the chosen component. The Mumford--Tate group of $J_a$ lies in the torus $\operatorname{Res}_{L/\mathbf Q}\mathbf G_m$ and is therefore a torus. Such $J_a$ approximate $J$.
+**Proof.** First choose a special point $h_0$ in the component. In the Hilbert case, choose a CM quadratic extension of $F$ with one complex embedding above each real embedding and let it act on its two-dimensional $F$-space. In the quaternionic case, choose a CM quadratic extension nonsplit at every ramified place of $B$ and with the orientations prescribed by $X^+$; weak approximation and the local quaternion embedding criterion give an embedding into $B$. In the unitary case, choose a maximal commutative CM algebra stable under the adjoint involution and choose its CM type with multiplicities equal to the signature function. The local sign conditions are open, and weak approximation in the self-adjoint subspace globalizes the choice. In every case the centralizer of the chosen regular element is a torus and the resulting Hodge map factors through it, so $h_0$ is special.
 
-For quaternionic factors, impose additionally that the generated quadratic extension embed in $B$; the local nonsplitting conditions are open and weak approximation supplies a global element. For unitary factors, impose $a^*=a$ or $a^*=-a$ as appropriate inside the rational adjoint subspace; regular elements are dense there and their eigenvalue multiplicities preserve the signature. Thus special points are analytically dense. A proper algebraic closed subset of a complex algebraic variety has empty interior in each irreducible analytic component, so analytic density implies Zariski density. $\square$
+Now the groups occurring here have weak approximation at the archimedean places. For $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$ and $\operatorname{Res}_{F/\mathbf Q}B^\times$ this is ordinary additive weak approximation in the ambient matrix or quaternion algebra, since invertibility is open. For the unitary group, the Cayley transform
+
+$$
+Y\longmapsto(1-Y)(1+Y)^{-1}
+$$
+
+is a rational chart from the skew-adjoint Lie algebra to a neighborhood of the identity; additive weak approximation in that Lie algebra gives density near the identity, and translates give density in the required real component. Hence $G(\mathbf Q)\cap G(\mathbf R)^+$ is dense in $G(\mathbf R)^+$. The rational conjugates $q h_0q^{-1}$ are still special and are dense in the orbit $X^+$. Repeating the construction in each component proves analytic density. An algebraic closed subset is analytically closed; if it contained all special points, analytic density would force it to contain the whole component. Thus the special points are Zariski dense as well. $\square$
 
 **Theorem 11.2 (uniqueness).** A canonical model, if it exists, is unique up to a unique $E$-isomorphism compatible with (11.1).
 
-**Proof.** Let $S$ and $S'$ be two models. Their complex identifications give a birational correspondence that is the identity on the analytic Shimura variety. Choose a common finite extension $L/E$ over which the correspondence is represented algebraically. For $\sigma\in\operatorname{Gal}(L/E)$, the conjugate correspondence and the original have the same value on every special point by (11.2). Lemma 11.1 makes those points Zariski dense, so the two rational maps agree. Hence the correspondence descends to $E$.
+**Proof.** Let $S$ and $S'$ be two models. Their chosen complex identifications give a complex-algebraic isomorphism $f_\mathbf C:S_\mathbf C\to S'_\mathbf C$. Every special point is $\overline{\mathbf Q}$-rational by (11.2), and $f_\mathbf C$ carries it to the correspondingly labelled special point. If $\tau\in\operatorname{Aut}(\mathbf C/\overline{\mathbf Q})$, then $f_\mathbf C$ and ${}^\tau f_\mathbf C$ agree on all special points. Lemma 11.1 makes those points dense, so the two morphisms agree. The graph of $f_\mathbf C$ is therefore fixed by $\operatorname{Aut}(\mathbf C/\overline{\mathbf Q})$ and descends to $\overline{\mathbf Q}$. Since its equations use finitely many algebraic coefficients, it is defined over a finite extension $L/E$.
 
-It is regular: at neat level both models are smooth and the complex correspondence is everywhere an analytic isomorphism; the graph closure has projections that become isomorphisms over $\mathbf C$, hence are isomorphisms by faithful flatness. At arbitrary level use the normal finite quotient construction of Chapter 12. Any two descended isomorphisms agree on the dense set of special points and therefore agree everywhere. $\square$
+For $\sigma\in\operatorname{Gal}(L/E)$, the maps $f$ and ${}^\sigma f$ have the same value on every special point: both values are forced by (11.2). Density gives ${}^\sigma f=f$. Faithfully flat Galois descent therefore produces an $E$-morphism $S\to S'$. Apply the same argument to $f_\mathbf C^{-1}$; the two descended composites become the identity over $\mathbf C$ and hence are the identity over $E$. Thus the descended map is an isomorphism. Any two such isomorphisms agree on the dense special set and are equal. $\square$
 
 ### 11.3 Existence in the three families
 
 The existence argument uses the following algebraization lemma, proved here in the form needed.
 
-**Lemma 11.3 (symplectic algebraization).** Let $(G,X)$ be one of the three data above. Suppose either that there is a faithful symplectic representation
+**Lemma 11.3 (PEL-exact algebraization).** Let $(G,X)$ be one of the three data above. Suppose either that there is a faithful symplectic representation
 
 $$
 \rho:(G,X)\longrightarrow
 (\operatorname{GSp}(V,\psi),\mathfrak H_g^\pm)                       \tag{11.4}
 $$
 
-whose Hodge types on $V$ are $(-1,0)$ and $(0,-1)$, or that $(G,X)$ admits a central modification $(G^\natural,X^\natural)$ with this property, the same adjoint datum, and an isogeny on derived groups. At a sufficiently small neat level, the analytic quotient $\operatorname{Sh}_K(G,X)(\mathbf C)$ has a unique normal quasi-projective algebraization. In the first case it is finite over its image in a fine Siegel moduli variety; in the second it is assembled from finitely many translates of such images.
+whose Hodge types on $V$ are $(-1,0)$ and $(0,-1)$ and which is **PEL-exact** in the following sense: there are a semisimple rational algebra $D$, a positive involution $*$, and a determinant polynomial such that $G$ is exactly the group of $D$-linear similitudes of $(V,\psi)$ and $X$ is exactly the positive Hodge locus with that determinant polynomial. Alternatively, suppose $(G,X)$ admits a central modification $(G^\natural,X^\natural)$ with this property, the same adjoint datum and reflex field, and an isogeny on derived groups. At a sufficiently small neat level, $\operatorname{Sh}_K(G,X)(\mathbf C)$ has a normal quasi-projective algebraization. In the direct case it is an open-and-closed union in a fine PEL scheme; in the central-modification case it is obtained from finitely many such components by finite central quotients.
 
-**Proof.** Choose an integral lattice $\Lambda\subset V$ on which a multiple of $\psi$ is integral, and choose full level $N\geq3$ contained in $\rho(K)$. The fine Siegel space classifies polarized complex tori
+**Proof strategy.** First represent the exact PEL functor. Then prove that its analytic uniformization is the desired double quotient in both directions. Only after that identification may normalization and finite central descent be used.
+
+**Proof.** Choose a $*$-stable order $\mathcal O\subset D$, a lattice $\Lambda\subset V$ stable under $\mathcal O$, and an integral multiple of $\psi$. Shrinking level, choose a full similitude level $N\geq3$. The PEL functor classifies polarized abelian schemes with $\mathcal O$-action, Rosati involution $*$, the prescribed characteristic polynomial on the Lie algebra, and level. Its diagonal is finite because polarized automorphisms are finite. A sufficiently high symmetric polarization power embeds every object in a fixed projective space; the Hilbert scheme represents the embedded family, while the group law, $\mathcal O$-action, Rosati equality, determinant polynomial, and level are closed or locally closed conditions. Quotienting the framing group after level has killed inertia gives a fine quasi-projective scheme.
+
+Over $\mathbf C$, its points yield polarized Hodge structures
 
 $$
-V_{\mathbf R}/(\Lambda,h)
+(V_{\mathbf R}/\Lambda,J_h)
 $$
 
-with the prescribed level. The Riemann bilinear relations, supplied by positivity, make them abelian varieties. The image of $X$ is cut out by the condition that the rational tensors whose common stabilizer is $G$ have Hodge type $(0,0)$, together with the fixed determinant multiplicities on the tangent space. In the Hilbert case these tensors are the $F$-action; in the quaternionic case they are the algebra action and involution furnished by Book 123; in the unitary case they are the $K$-action and Hermitian adjoint.
+with the prescribed level. Positivity gives the Riemann bilinear relations. PEL-exactness says that a Hodge structure occurring in this moduli problem factors through $G$ and belongs to $X$; conversely every $(h,g)$ supplies the lattice $g\widehat\Lambda\cap V(\mathbf Q)$, the stated endomorphisms, polarization, determinant multiplicities, and level. Changing the rational trivialization acts by $G(\mathbf Q)$ and changing the integral trivialization acts by $K$. These inverse constructions identify the selected open-and-closed union of complex points with
+
+$$
+G(\mathbf Q)\backslash(X\times G(\mathbf A_f)/K).
+$$
+
+This two-sided verification is what the former phrase “the Hodge condition is algebraic” failed to supply: a faithful symplectic representation alone would not identify the tensor stabilizer with $G$.
 
 There are two equivalent level conventions. A chosen primitive $N$th root of unity gives a symplectic basis and an ambient fine moduli scheme over $\mathbf Q(\zeta_N)$. Alternatively, a similitude level identifies the Weil pairing with the group scheme $\mu_N$ without selecting one generator and is defined over $\mathbf Q$. In the first convention, Galois permutes the cyclotomic components through the multiplier; taking their union gives the second convention. Thus the auxiliary cyclotomic field does not enlarge the reflex field.
 
-The Hodge condition is algebraic: an endomorphism is of type $(0,0)$ exactly when it acts on the universal Lie subbundle, and the characteristic polynomial on that bundle gives polynomial equations for the determinant condition. Polarization compatibility is an equality of homomorphisms of the universal abelian scheme. Hence the image is a locally closed algebraic subvariety of the fine Siegel moduli variety. Normalize it in the function field of the analytic quotient. The level is neat, so no quotient stabilizer remains; the resulting finite analytic map is the original quotient map. Normalization is finite because the Siegel moduli variety is excellent and the field extension is finite. It is quasi-projective because a finite morphism to a quasi-projective variety is quasi-projective.
+In the central-modification case, the two groups have the same connected domain and commensurable arithmetic images in the common adjoint group. Indeed, the isogeny on derived groups has finite kernel and cokernel on each arithmetic lattice after shrinking level. Thus every connected component for $G$ is finitely dominated by a PEL component for $G^\natural$; the component sets themselves are finite by Chapter 6. Take the normal finite quotient of each dominating PEL component by its effective deck group and then take the finite disjoint union indexed by the components of $G$. Its analytification is the required quotient and it is quasi-projective. Two choices of central modification have a common refinement given by the connected fiber product over the adjoint group. The resulting finite birational comparisons between normal algebraizations are isomorphisms. $\square$
 
-In the central-modification case, $G^\natural$ and $G$ have the same connected symmetric domain. The component theorem expresses both adelic component sets through their torus quotients. After making the levels compatible, each component for $G$ is the image of a component for $G^\natural$ after a finite central level change, and only finitely many adelic translates are needed. Algebraize those components by the first case and glue their disjoint union through the finite central identifications. On overlaps the maps agree because they agree on the common analytic quotient. The resulting normal quasi-projective algebraization is independent of the modification: two choices are dominated by their fiber product over the common adjoint group, and normalization gives the same algebraic component. $\square$
+The final independence statement is important. A tensor-corestriction representation and a hyperbolically enlarged representation can land in Siegel spaces of different dimensions, and their ambient universal abelian schemes need not agree. The common-refinement argument in the proof, not equality of function fields by itself, gives finite birational maps in both directions; normality then makes them inverse. Canonical descent therefore belongs to $(G,X)$, not to the auxiliary representation.
 
-The final independence statement is important. A tensor-corestriction representation and a hyperbolically enlarged representation can land in Siegel spaces of different dimensions. Their moduli interpretations are not isomorphic as ambient abelian schemes. Nevertheless, the normalized subvarieties have the same function field because both analytically equal the same arithmetic quotient. Normality then gives a unique algebraic identification. Canonical descent will therefore belong to $(G,X)$, not to the auxiliary representation.
+For the common-norm Hilbert group, the rational multiplier makes the symplectic representation direct because every real factor is active with the same determinant. The full group $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$ is treated by the central-modification clause. In the mixed quaternionic case, a common-norm lift is not automatic, as Section 8.1 explained. One instead uses a compatible trace-pairing or tensor-corestriction central modification supplied by the rank-two structure, and one must verify PEL-exactness rather than infer it from faithfulness. When a split corestriction gives the smaller tensor representation, odd tensor parity is symplectic and even tensor parity is repaired by the hyperbolic construction. This choice affects the auxiliary abelian dimension, not the adjoint Shimura datum or its canonical model.
 
-For the common-norm Hilbert group, the rational multiplier makes the symplectic representation direct because every real factor is active with the same determinant. The full group $\operatorname{Res}_{F/\mathbf Q}\operatorname{GL}_2$ is treated by the central-modification clause. In the mixed quaternionic case, a common-norm lift is not automatic, as Section 8.1 explained. One instead uses a compatible trace-pairing or tensor-corestriction central modification supplied by the rank-two structure. When a split corestriction gives the smaller tensor representation, odd tensor parity is symplectic and even tensor parity is repaired by the hyperbolic construction. This choice affects the auxiliary abelian dimension, not the adjoint Shimura datum or its canonical model.
+For the realizations retained in the FLT route, that exactness is a calculation, not a new hypothesis hidden in terminology. In the Hilbert case the commutant of the $F$-action on $F^2$ gives precisely the common-determinant similitude group. In the quaternion trace-pairing construction, left and right multiplication are mutual commutants; imposing right-$B^{\mathrm{op}}$ linearity, the adjoint involution, and a rational multiplier recovers exactly the common-norm group of Book 123. A tensor-corestriction realization is used only after quotienting or detecting its recorded finite central kernel, so its stabilizer is the stated central modification rather than a larger orthogonal group. In the unitary case, $K$-linearity and preservation of the Hermitian adjoint recover (9.1) by definition. The determinant polynomial then selects exactly the Hodge conjugacy class computed in Chapters 7--9.
 
-**Theorem 11.4 (existence of canonical models).** For every neat compact open $K$ and every Hilbert, quaternionic, or unitary datum of Chapters 7--9 satisfying the symplectic-representation or central-modification hypothesis of Lemma 11.3, that algebraization admits a canonical model over $E(G,X)$. It satisfies (11.2).
+**Theorem 11.4 (existence of canonical models).** For every sufficiently small neat compact open $K$ and every Hilbert, quaternionic, or unitary datum of Chapters 7--9 satisfying the PEL-exact or central-modification hypothesis of Lemma 11.3, that algebraization admits a canonical model over $E(G,X)$. It satisfies (11.2).
 
 **Proof strategy.** First descend over a finite Galois extension by transporting the algebraic tensor data. Then identify the descent action on a dense set of CM points using Book 125. The cocycle follows on that dense set and hence everywhere.
 
-**Proof.** All tensors, the group, and the cocharacter class are defined over some finite Galois extension $L/E(G,X)$. Lemma 11.3 gives a normal quasi-projective $L$-model $S_{K,L}$. We first construct algebraic descent maps without appealing to their desired values on points.
+**Proof.** Choose a finite Galois extension $L/E(G,X)$ that splits the determinant labels, defines the finitely many geometric components, and dominates the fields used by the PEL-exact central modification. Lemma 11.3 gives a normal quasi-projective $L$-model $S_{K,L}$. We first construct algebraic descent maps without appealing to their desired values on points.
 
 The moduli locus used in Lemma 11.3 is specified by two kinds of equations. The endomorphism, adjoint, and polarization tensors are rational and hence unchanged by Galois. The determinant condition says that for every element $a$ of the acting semisimple algebra, its characteristic polynomial on the Lie bundle is
 
@@ -1237,9 +1291,9 @@ $$
 P_a(T)=\prod_{\varphi}(T-\varphi(a))^{r_\varphi},                   \tag{11.5}
 $$
 
-where the multiplicity tuple $(r_\varphi)$ is the tuple encoded by $\mu_h$. The coefficients of all $P_a$ are fixed by precisely the stabilizer of the cocharacter conjugacy class, hence lie in $E(G,X)$. For quaternionic data, the same statement is read after a splitting: the active-place indicator replaces $(r_\varphi)$, and its symmetric coefficients lie in the stabilizer field (8.4). Therefore every defining equation is stable under $\operatorname{Gal}(L/E)$.
+where the multiplicity tuple $(r_\varphi)$ is encoded by $\mu_h$. Its coefficients are fixed by the stabilizer of the cocharacter conjugacy class and hence lie in $E(G,X)$. For quaternionic data, the active-place indicator replaces $(r_\varphi)$ after a splitting. Thus Galois transports the PEL component union according to the same permutation of labels by which it transports the analytic component set.
 
-Transport of the universal polarized abelian variety, its tensors, and its level now gives an algebraic isomorphism
+Transport of the universal polarized abelian variety, its tensors, and its level gives algebraic isomorphisms on the PEL-exact cover. They commute with the finite effective deck groups used in Lemma 11.3, so normal finite quotient descent gives
 
 $$
 \phi_\sigma:S_{K,L}^\sigma\longrightarrow S_{K,L}.                 \tag{11.6}
@@ -1251,7 +1305,7 @@ $$
 \phi_{\sigma\tau}=\phi_\sigma\circ{}^\sigma\!\phi_\tau           \tag{11.7}
 $$
 
-already on the ambient fine moduli scheme. Normalization is functorial for dominant maps, so (11.6)--(11.7) lift uniquely to the normalized Shimura locus. Thus they form an algebraic Galois descent datum.
+on the fine PEL scheme and therefore on its normal finite quotients. Thus they form an algebraic Galois descent datum on $S_{K,L}$.
 
 It remains to identify this algebraically constructed datum as the canonical one. Let $x=[h,g]$ be special. Its symplectic realization is a polarized CM abelian variety with the tensors and level used above. Book 125 proves that transport by $\operatorname{Art}_{E(h)}(s)$ is the reflex transform $r_h(s_f)$, respecting precisely those tensors, the polarization multiplier, and the level. Hence (11.6) acts on every special point by (11.2). Lemma 11.1 shows that no different descent isomorphism could have the same property. Proposition 11.5 makes the descent effective, producing $S_K/E$. $\square$
 
@@ -1281,7 +1335,7 @@ A canonical model is most useful as part of a compatible tower. Level changes, f
 
 Passing to a smaller compact open remembers more level structure. Canonical models should preserve this forgetful relation over the reflex field, not only after embedding into $\mathbf C$.
 
-Let $K'\subset K$ be neat. The analytic map (5.3) sends a special point $[h,gK']$ to $[h,gK]$. By (10.3), Galois conjugation before or after this projection gives the same result. The uniqueness theorem therefore descends (5.3) to an $E(G,X)$-morphism
+Let $K'\subset K$ lie in the cofinal system of sufficiently small neat levels covered by Theorem 11.4. The analytic map (5.3) sends a special point $[h,gK']$ to $[h,gK]$. By (10.3), Galois conjugation before or after this projection gives the same result. The uniqueness theorem therefore descends (5.3) to an $E(G,X)$-morphism
 
 $$
 S_{K'}\longrightarrow S_K.                                          \tag{12.1}
@@ -1299,7 +1353,7 @@ Uniqueness yields an $E$-morphism between the corresponding levels. This element
 
 ### 12.2 Finite quotients and non-neat level
 
-Let $K$ be arbitrary and choose a neat normal $K'\triangleleft K$. The finite group $\Delta=K/K'$ acts algebraically on $S_{K'}$ over $E$ by the descended right action. Define
+Let $K$ be arbitrary and choose a sufficiently small neat normal $K'\triangleleft K$ in the cofinal system of Theorem 11.4. The finite group $\Delta=K/K'$ acts algebraically on $S_{K'}$ over $E$ by the descended right action. Define
 
 $$
 S_K=S_{K'}/\Delta,                                                     \tag{12.2}
@@ -1359,7 +1413,7 @@ The symplectic representation has an independent parity issue. For a tensor of $
 2. a quaternionic datum for $\operatorname{Res}_{F/\mathbf Q}B^\times$, or a connected central modification to which its adjoint Hodge map lifts, with at least one split real place;
 3. a rank-two unitary similitude datum for a CM extension $K/F$, with at least one indefinite real place and with every rational simple adjoint factor active.
 
-Assume in cases 2 and 3 that the selected rational group carries the polarized weight-one symplectic realization specified by the algebra with involution and that the multiplier is rational. Then:
+Assume in cases 2 and 3 that the selected rational group, or a central modification with the same adjoint datum and reflex field, carries the PEL-exact polarized weight-one realization specified by the algebra with involution, with rational multiplier. Assume also the rational transitivity on $\pi_0(X)$ verified in Section 6.1 when the simplified component formula is used. Then:
 
 - $(G,X)$ is a Shimura datum and
 
@@ -1398,10 +1452,11 @@ The central statements depend on different hypotheses, and none should be carrie
 | Shimura axioms | connected reductive $G$, Hodge types (3.1), Cartan involution, active rational factors | the orbit need not be Hermitian or effective |
 | quaternionic positive dimension | at least one split real place | the proposed $h$ is adjoint-trivial |
 | unitary dimension formula | nondegenerate Hermitian form and fixed signatures | the domain and cocharacter are undefined |
-| symplectic algebraization | faithful polarized weight-one representation, directly or through a compatible central modification | no map to polarized abelian moduli is available |
+| symplectic algebraization | PEL-exact polarized weight-one representation, directly or through a compatible central modification with the same reflex field | faithfulness alone does not identify the Shimura quotient with a PEL locus |
 | component reduction | strong approximation for the simply connected derived group | the torus quotient may miss a derived obstruction |
+| simplified component labels | transitivity of $G(\mathbf Q)$ on $\pi_0(X)$ | one must retain the orbit set (6.2a) |
 | basic quaternionic narrow formula | rational reduced-norm theorem and every split real place active | Hamiltonian sign restrictions are lost, producing a false one-sign quotient |
-| manifold at level $K$ | neatness, including the center | finite arithmetic stabilizers remain |
+| effective manifold at level $K$ | neatness of the adjoint arithmetic action | adjoint torsion produces quotient singularities; ineffective central units are separate |
 | special reciprocity | arithmetic Artin convention and the CM comparison theorem | the Galois action or its inverse is undetermined |
 | canonical descent | algebraization, density, reciprocity, effective finite descent | a rule on CM points alone is not a variety over $E$ |
 | individual component over $E_C$ | openness of the stabilizer in (6.6) | a component need not be defined over the ambient reflex field |
