@@ -162,7 +162,7 @@ any resulting corrections.
 - [ ] 136. Local–Global Compatibility for Weight-Two Galois Representations
 - [ ] 137. Compatible Coefficient Systems and Purity
 - [ ] 138. Canonical Galois Lattices and Finite-Flat Quotients
-- [ ] 139. Modular Curves (X_0(N)) and (X_1(N))
+- [x] 139. Modular Curves (X_0(N)) and (X_1(N))
 - [ ] 140. Jacobians of Modular Curves
 - [ ] 141. The Eisenstein Ideal
 - [ ] 142. Eisenstein Series, Congruences, and the Eisenstein Ideal

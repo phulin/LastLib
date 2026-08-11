@@ -302,7 +302,7 @@ $$
 \prod_{a\bmod N}(T-t_{aP})=F_C(T)
 $$
 
-in a smooth local coordinate, where $F_C$ is the monic equation of the subgroup divisor. Equality of the coefficients is closed. Taking the flat quotient by $(\mathbf Z/N\mathbf Z)^\times$ forgets the local generator. This is the integral replacement for dividing a set of primitive vectors by the number of its generators.
+in a smooth local coordinate, where $F_C$ is the monic equation of the subgroup divisor. Equality of the coefficients is closed. Taking the fppf sheaf quotient by $(\mathbf Z/N\mathbf Z)^\times$ forgets the local generator. This is the integral replacement for dividing a set of primitive vectors by the number of its generators; no assertion that the quotient morphism is flat is being made.
 
 For generalized elliptic curves, one adds ampleness. On any stratum of fixed polygon size, ampleness is the condition that the component image of the subgroup be surjective. It is open and closed on that stratum. The resulting parameter space is finite on each fixed stratum, but it need not be proper while the underlying polygon is held fixed: a component-direction point may approach a node and force a change to a larger polygon. Compactified moduli permit precisely that change. This explains why a level structure over a fixed curve is only one local ingredient in the global modular curve.
 
@@ -377,7 +377,7 @@ These are prime-to-level assertions. At a prime dividing $N$, a Drinfeld basis c
 
 On a fine space $Y$, a $K$-rational point really does pull the universal family back to an elliptic curve with the stated level over $K$. This simple sentence is one of the chief benefits of rigidification.
 
-The automorphism calculation explains the bounds. An origin-preserving automorphism of an elliptic curve has finite order. If it fixes a full basis of $E[N]$ with $N\ge3$, its action on the prime-to-characteristic Tate module is a finite-order matrix congruent to the identity modulo $N$. The principal congruence subgroup of level at least three is torsion-free, so the automorphism is the identity. For a point of exact order $N\ge4$, the possible automorphism orders $2,3,4,6$ and their fixed-point kernels show that no nonidentity automorphism fixes the point in the stated prime-to-level range.
+The automorphism calculation explains the bounds. An origin-preserving automorphism of an elliptic curve has finite order. If it fixes a full basis of $E[N]$ with $N\ge3$, its action on the prime-to-characteristic Tate module is a finite-order matrix congruent to the identity modulo $N$. The principal congruence subgroup of level at least three is torsion-free, so the automorphism is the identity. For a point $P$ of exact order $N\ge4$, let a nonidentity automorphism $g$ fix $P$. The possible element orders are $2,3,4,6$, including for the larger automorphism groups in characteristics $2$ and $3$. In order two one has $g=[-1]$, so $2P=0$. In order three the relation $1+g+g^2=0$ gives $3P=0$. In orders four and six, respectively $g^2=[-1]$ and $g^3=[-1]$, again giving $2P=0$. Every case contradicts the exact order of $P$. This proves point-level rigidity over all of $\mathbf Z[1/N]$, not only in characteristics different from $2$ and $3$.
 
 At $N=2$, inversion fixes the full two-torsion and every point of order two. At $N=3$, exceptional automorphisms can fix point-level data. These are real exclusions, not artifacts of the proof. At a level prime, a Drinfeld generator can specialize to the identity as a geometric point while retaining length $N$ as a divisor, so the prime-to-level fixed-point argument no longer applies.
 
@@ -455,21 +455,23 @@ We now collect the construction that justifies the notation used throughout the 
 
 For $\Gamma_0(N)$ and $\Gamma_1(N)$ we write the coarse curves as $X_0(N)$ and $X_1(N)$ and their opens as $Y_0(N)$ and $Y_1(N)$.
 
-**Proof strategy.** An ample level divisor bounds the number of components of every polygon. A high power of its line bundle embeds every object in one of finitely many projective Hilbert schemes. Properness is then a valuative extension theorem, and the coarse curve is a finite quotient of a rigidified projective cover.
+**Proof strategy.** An ample level divisor bounds the number of components of every polygon. A high power of its line bundle embeds every object in one of finitely many projective Hilbert schemes. Properness is then a valuative extension theorem. To construct the coarse curve one adds auxiliary full level only on an arithmetic open where that auxiliary order is invertible, normalizes its boundary branches, and retains the decontraction carrying the auxiliary basis. The resulting local finite quotients glue by their coarse universal property.
 
 **Proof.** Let $D$ be the level divisor, of degree $N$ for point or cyclic level. Since $D$ has positive degree on every component, a geometric polygon has at most $N$ components. For a uniform integer $m$, the line bundle $\mathcal O(mD)$ has positive degree large enough on every component to separate points, tangent vectors, and the two branches at each node. The normalization exact sequence for a polygon proves this component by component. Thus it gives a projective embedding with one of finitely many Hilbert polynomials.
 
 Inside the corresponding finite union of Hilbert schemes, being a smooth genus-one curve or a polygonal genus-one curve is locally closed. The identity, action, subgroup, and generator data are represented by sections and finite Hilbert schemes. The group identities and Drinfeld divisor equalities are closed equations, while ampleness is open on each component stratum. Choosing a basis of the pushforward of $\mathcal O(mD)$ gives a scheme atlas; changing the basis gives the quotient presentation. Automorphisms preserving ample level form a finite separated scheme, so the diagonal is finite and separated. This proves algebraicity and finite presentation.
 
-For properness, take a level object over the fraction field of a DVR. After finite extension, the elliptic curve has good or split multiplicative reduction. In the good case, the schematic closure of the prime-to-residue-characteristic level is finite étale; at a level characteristic its saturated closure is finite flat and retains the Drinfeld divisor equation. In the multiplicative case, Tate uniformization determines the component image of the level and hence the unique polygon on which its divisor is ample. These constructions give existence. The ample line bundle reconstructs the curve as a relative Proj, so a generic isomorphism extends uniquely; this gives separated uniqueness. Normality follows from the normal smooth charts and the power-series cusp charts.
+For properness, take a level object over the fraction field of a DVR over $\mathbf Z[1/N]$. After finite extension, the elliptic curve has good or split multiplicative reduction. In the good case $N$ is invertible and the level extends uniquely inside the finite étale group $E[N]$. In the multiplicative case, Tate uniformization determines the component image of the level and hence the unique polygon on which its divisor is ample. These constructions give existence. The ample line bundle reconstructs the curve as a relative Proj, so a generic level-preserving isomorphism extends uniquely; this gives separated uniqueness. On the elliptic locus the deformation is one-dimensional and smooth, while a framed cusp has completed ring $A[[t]]$ with $A$ finite étale over the base. These charts prove normality.
 
-To construct a scheme quotient, add a prime-to-$N$ full level $M\ge3$ on the smooth locus and normalize its projective closure. The resulting projective scheme $Y_M$ has no object automorphisms. The finite change-of-basis group $G_M$ acts, and
+It remains to construct the coarse scheme without making a false global auxiliary-level assertion. Cover the arithmetic base by the opens on which $2$ and $3$ are respectively invertible. On the first use auxiliary full level $4$, and on the second use auxiliary full level $3$. Add that level on the smooth locus and normalize the projective closure. At a boundary branch the auxiliary basis lives on its canonical decontraction $E'\to E$; it is not required to be ample on the original $\Gamma$-polygon. The normalized branch scheme $Y_M$ is projective and has no object automorphisms. The finite change-of-basis group $G_M$ acts, and on the corresponding arithmetic open there is an equivalence
 
 $$
 \mathcal X(\Gamma)\simeq[Y_M/G_M]. \tag{3.4}
 $$
 
-The finite invariant-theoretic quotient $Y_M/G_M$ is projective and has the coarse universal property. On a framed cusp, the boundary is $t=0$ in $A[[t]]$; since $t$ is a non-zero-divisor, these local equations glue to a Cartier divisor. Quotient and contraction of generalized elliptic curves commute with base change, so the natural maps exist on the stack. Composing with a coarse map and invoking its universal property gives the descended maps of coarse curves. $\square$
+The invariant-theoretic quotient $Y_M/G_M$ is projective and has the coarse universal property. On the overlap the two quotients are uniquely isomorphic because they are coarse for the same stack; these isomorphisms satisfy the cocycle condition and glue to $X(\Gamma)$. Thus no single auxiliary integer is being treated as invertible over all of $\mathbf Z[1/N]$.
+
+On a framed cusp, the boundary is $t=0$ in $A[[t]]$; since $t$ is a non-zero-divisor, these local equations glue to a Cartier divisor. Quotient and contraction of generalized elliptic curves commute with base change, so the natural maps exist on the stack. Composing with a coarse map and invoking its universal property gives the descended maps of coarse curves. $\square$
 
 This theorem explains two conventions that will recur. A universal generalized elliptic curve exists on $\mathcal X(\Gamma)$ and on $Y_M$, not in general on $X(\Gamma)$. Conversely, every natural map whose value is only an isomorphism class, such as the two maps to the $j$-line, does descend to $X(\Gamma)$. Statements about families belong upstairs; statements about rational points and finite maps can be made downstairs once descent of individual objects has been addressed.
 
@@ -943,7 +945,13 @@ $$
 P=[\zeta_N^a t]. \tag{5.15}
 $$
 
-Its multiples visit each component $e$ times. Within one component the repeated toric coordinates must fill a cyclic divisor of rank $e$; this is the remaining Drinfeld primitivity condition on $a$. The formula includes the extremes $d=1$, where the level is wholly multiplicative, and $d=N$, where the generator runs once around every component.
+Its multiples visit each component $e$ times. The indices of the multiples on one fixed component differ by $d$, so their toric coordinates differ by powers of $\zeta_N^{ad}$. They fill the full rank-$e$ multiplicative divisor precisely when this is a Drinfeld primitive $e$th root, equivalently
+
+$$
+\gcd(a,e)=1. \tag{5.15a}
+$$
+
+Thus the pair $(d,a)$, subject to $d\mid N$ and (5.15a), gives the framed $X_1(N)$ cusp labels; changing the polygon framing gives the finite equivalence relation already used in the stabilizer recipe of Section 5.4. Cyclotomic Galois sends $a$ to $ua$ when $\zeta_N\mapsto\zeta_N^u$, and the residue field of the descended cusp is exactly the fixed field of the stabilizer of its framing orbit. This makes the recipe of Section 5.4 effective without incorrectly claiming that every $X_1(N)$ cusp has the full cyclotomic residue field. The formula includes the extremes $d=1$, where (5.15a) is the usual primitive-root condition, and $d=N$, where $e=1$ and the generator runs once around every component.
 
 The completed chart also proves proper boundary uniqueness. A generic Tate level determines its component image and hence $d$. Choosing fewer components would force the generator into a node; choosing more would make its divisor nonample. Once $d$ is fixed, the framed deformation parameter is unique up to a unit. Thus the cusp is not an arbitrary point added to the curve: it is the unique extension of the level object with exactly the polygon seen by its divisor.
 
@@ -1704,11 +1712,11 @@ $$
 xy=p. \tag{8.10}
 $$
 
-It remains to prove that there is no second relation. Complete the source and target curves at their identities and choose formal parameters $T,T'$ compatible with the differential frames. The special isogenies are Frobenius-like, so after unit rescaling their lifts have the form
+It remains to prove that there is no second relation. This is exactly the supersingular isogeny-deformation theorem established for the prime-level integral model. We recall its decisive coefficient argument so that the imported conclusion and its hypotheses remain visible. Complete the source and target curves at their identities and choose formal parameters $T,T'$ compatible with the differential frames. Strict coordinate changes remove every homogeneous term whose degree is not a power of $p$: the intermediate binomial coefficients $\binom ni$, $0<i<n$, generate the unit ideal in $\mathbf Z_{(p)}$ unless $n$ is a power of $p$. The formal groups and the two maps may therefore be written in $p$-typical coordinates. After unit normalization their leading terms are
 
 $$
-f(T)=xT+T^p+\sum_{n>p}a_nT^n,\qquad
-g(T')=yT'+(T')^p+\sum_{n>p}b_n(T')^n. \tag{8.11}
+f(T)=xT+T^p+\sum_{r\ge2}a_rT^{p^r},\qquad
+g(T')=yT'+(T')^p+\sum_{r\ge2}b_r(T')^{p^r}. \tag{8.11}
 $$
 
 They must respect the two formal group laws and satisfy
@@ -1717,7 +1725,7 @@ $$
 g(f(T))=[p](T). \tag{8.12}
 $$
 
-Solve these identities degree by degree. Away from powers of $p$, a new coefficient occurs linearly with a unit coefficient and is uniquely determined. At a $p$-power degree, the composition identity (8.12) supplies the missing equation. The coefficient of the height-two term is a unit because $E_0$ is supersingular. Hence every higher coefficient of $f$, $g$, and the two deformed formal group laws is determined recursively by $x$ and $y$, and the only equation on the two free linear coefficients is $xy=p$.
+At degree one, (8.12) is precisely $xy=p$. At degree $p$, the two homomorphism identities express the deformation parameters of the source and target formal groups in terms of $x$ and $y$. Inductively at degree $p^r$, order the new unknowns as the source-law coefficient, the coefficient of $f$, the target-law coefficient, and the coefficient of $g$. Modulo the maximal ideal the resulting linear system is triangular. Its diagonal entries are powers of the leading $T^p$ coefficients of the two special isogenies or of the $T^{p^2}$ coefficient of $[p]$ on the supersingular formal group. All are units: the last is exactly the height-two condition. Thus every new coefficient is determined without division by $p$. The composition equation at the next degree has no independent remainder, since its first possible coefficient is killed by the same height-two unit. Induction proves that every higher coefficient of $f$, $g$, and the two deformed formal group laws is determined by $x,y$, and that $xy=p$ is the only relation.
 
 Conversely, over
 
@@ -1725,7 +1733,7 @@ $$
 B=R[[x,y]]/(xy-p),
 $$
 
-the same recursion constructs compatible formal group homomorphisms. The series $f$ reduces to $T^p$, so Weierstrass preparation cuts out a finite locally free kernel of rank $p$. Quotienting the universal elliptic curve by this kernel algebraizes the formal homomorphism and produces the target deformation. Thus $B$ both maps to and represents the isogeny deformation functor. Rigidifying branch data eliminate a further quotient by automorphisms, giving
+the same unit-triangular recursion constructs compatible formal group homomorphisms to every infinitesimal order. The deformation theory of a supersingular elliptic curve agrees with that of its height-two formal group: both are formally smooth of dimension one, and the tangent map is the nonzero pairing with the square of an invariant differential. The inverse-function recursion therefore recovers unique source and target elliptic deformations. The series $f$ reduces to a unit times $T^p$, so Weierstrass preparation cuts out a finite locally free kernel of rank $p$. Quotienting the source elliptic curve by this kernel algebraizes the formal homomorphism and produces the target deformation. Thus $B$ represents the isogeny deformation functor. Prime-to-$p$ branch data lift uniquely and eliminate any further quotient by automorphisms, giving
 
 $$
 \widehat{\mathcal O}_{\mathscr X,z}\simeq R[[x,y]]/(xy-p). \tag{8.13}
