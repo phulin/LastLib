@@ -238,7 +238,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 171. Galois and Solvable Refinements of Arithmetic Approximation
 - [x] 172. Hilbert–Blumenthal Moduli and Two-Prime Level Covers
 - [x] 173. Local Geometry of Hilbert–Blumenthal Moduli
-- [ ] 174. Auxiliary Dihedral Data and Residual Potential Modularity
+- [x] 174. Auxiliary Dihedral Data and Residual Potential Modularity
 - [ ] 175. Compatible Systems of Galois Representations
 - [ ] 176. Brauer Induction and Descent of Automorphy
 - [ ] 177. Changing the Prime
