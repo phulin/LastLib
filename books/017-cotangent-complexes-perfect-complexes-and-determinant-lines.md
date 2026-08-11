@@ -163,7 +163,7 @@ $$
 T^0(B/A;M)=\operatorname{Der}_A(B,M).
 $$
 
-The notation $\det(E)$ will mean a graded determinant line, not the determinant of an endomorphism. For a finite projective module $P$ of constant rank $r$,
+The notation $\operatorname{Det}(E)$ will mean the graded determinant object of a perfect complex, while $\det(E)$ denotes its underlying line. Neither notation means the determinant of an endomorphism. For a finite projective module $P$ of constant rank $r$,
 
 $$
 \det(P)=\bigwedge^rP.
@@ -331,9 +331,9 @@ An instructive boundary case is an inseparable field extension $K\subset L$ of c
 
 A projective resolution of a module resolves additive relations. Here the relations concern multiplication itself, so we resolve $B$ by free $A$-algebras. A single polynomial presentation is not enough: relations among its equations require a second stage, relations among those relations a third, and so on.
 
-The convenient bookkeeping device is a simplicial $A$-algebra $P_\bullet$ augmented to $B$. Each $P_n$ is polynomial over $A$, and the augmented simplicial set underlying $P_\bullet\to B$ is contractible in positive homotopical degrees. One constructs it inductively. Choose polynomial generators mapping onto $B$ in degree $0$; add degree-$1$ generators to kill the kernel; add degree-$2$ generators to kill relations among those generators; continue. Degeneracy maps insert repetitions, while face maps record sources, targets, and compositions of relations.
+The convenient bookkeeping device is a simplicial $A$-algebra $P_\bullet$ augmented to $B$. Each $P_n$ is polynomial over $A$, and the augmentation has $\pi_0(P_\bullet)\cong B$ and vanishing positive homotopy groups. One constructs such a resolution skeletally. Choose polynomial generators mapping onto $B$ in degree $0$; attach free degree-$1$ generators to kill the kernel on $\pi_0$; attach free degree-$2$ generators to kill $\pi_1$; and continue. At stage $n$, the attaching map is prescribed on the boundary of the simplicial $n$-simplex, and freeness extends it across the simplex. Degeneracy maps insert repetitions, while face maps record sources, targets, and compositions of relations.
 
-The important point is not a preferred resolution—there is none—but the abundance of free ones and the fact that any two admit comparison maps unique up to simplicial homotopy after refinement.
+The same skeletal induction proves the comparison lemma used below. If $P_\bullet\to B$ is degreewise free and $Q_\bullet\to B$ is a resolution, a map already defined through the $(n-1)$-skeleton extends over every free $n$-generator because the matching obstruction is a positive homotopy class of $Q_\bullet$, hence vanishes. Given two extensions, perform the induction with the simplicial cylinder $P_\bullet\times\Delta^1$; the same vanishing extends their prescribed endpoint maps to a simplicial homotopy. Consequently comparison maps exist and are unique up to simplicial homotopy. This is the precise sense in which there is no preferred resolution but the resulting derived object is independent of one.
 
 ### 3.2 The simplicial construction
 
@@ -361,7 +361,9 @@ The negative cohomology groups retain higher relations. Their tensor with a coef
 
 **Theorem (independence of resolution).** Let $P_\bullet\to B$ and $Q_\bullet\to B$ be free simplicial $A$-algebra resolutions. Then the normalized differential complexes obtained from them are canonically isomorphic in the derived category of $B$-modules. The isomorphism is functorial in $A\to B$.
 
-**Proof strategy.** Free algebras lift against degreewise surjections. Use that lifting property inductively to construct comparison maps $P_\bullet\to Q_\bullet$ and $Q_\bullet\to P_\bullet$ over $B$. Any two lifts are joined by a simplicial homotopy. Applying differentials and normalization turns simplicial homotopies into cochain homotopies. The two composites are homotopic to the respective identities, so the normalized complexes are quasi-isomorphic. A common free refinement removes dependence on chosen comparisons. $\square$
+**Proof.** Apply the comparison lemma in both directions to obtain maps $u:P_\bullet\to Q_\bullet$ and $v:Q_\bullet\to P_\bullet$ over $B$. The uniqueness clause makes $vu$ homotopic to $\operatorname{id}_{P_\bullet}$ and $uv$ homotopic to $\operatorname{id}_{Q_\bullet}$. Kähler differentials, extension of scalars to $B$, and normalization carry a simplicial homotopy to a cochain homotopy. Thus the two normalized complexes are homotopy equivalent.
+
+If $u'$ is another comparison, the same uniqueness gives a homotopy from $u$ to $u'$, so they induce the same morphism in the derived category. For a composable diagram of algebra maps, a direct comparison and the composite of two comparisons are likewise homotopic. Hence the isomorphism is independent of all choices and functorial. $\square$
 
 There is also a characterization by derived derivations:
 
@@ -376,13 +378,13 @@ is the complex governing $A$-derivations from a free resolution of $B$ into $M$.
 Suppose $P\twoheadrightarrow B$ is a polynomial $A$-algebra with kernel $I$. Resolving the presentation through one relation stage gives a canonical identification after truncation in degrees at least $-1$:
 
 $$
-\tau_{\ge-1}L_{B/A}simeq
+\tau_{\ge-1}L_{B/A}\simeq
 [I/I^2\longrightarrow\Omega_{P/A}\otimes_PB].
 $$
 
 One must not claim this two-term complex is always the full cotangent complex. It is full when the quotient is cut out by a regular sequence, and more generally under the lci hypotheses of Chapter 7. For an arbitrary ideal, higher syzygies can contribute below degree $-1$.
 
-This limitation explains the role of the simplicial construction. A presentation supplies a fast low-degree calculation; the free resolution supplies an invariant object and remembers every higher relation.
+To verify the truncation, use transitivity for $A\to P\to B$. Since $P$ is polynomial, its relative cotangent complex is $\Omega_{P/A}[0]$. For the surjection $P\to B$, degree-zero derivations vanish and the first normalized relation module is $I/I^2$ in degree $-1$. The resulting long exact sequence gives the displayed two-term truncation and identifies its differential with $f\mapsto df$. Terms further left are exactly the higher relation modules of the free resolution. Thus a presentation supplies a fast low-degree calculation; the free resolution supplies an invariant object and remembers every higher relation.
 
 ### 3.5 Basic calculations
 
@@ -399,7 +401,7 @@ The construction gives the following anchors.
 
 3. If $B=A/I$ and $I^2=0$, then the leading truncation is $I[1]$, which places $I$ in cohomological degree $-1$. More generally, for any quotient one has $\tau_{\ge-1}L_{B/A}\simeq(I/I^2)[1]$; this need not be the full complex unless the immersion has the required regularity.
 
-4. If $K\subset L$ is a separable algebraic field extension, then $L_{L/K}\simeq0$. For finite separable extensions this follows from étaleness; the algebraic case follows by filtered colimits. For a purely inseparable extension, degree-zero differentials can be nonzero.
+4. If $K\subset L$ is a separable algebraic field extension, then $L_{L/K}\simeq0$. For finite separable extensions this follows from étaleness. The general algebraic extension is the filtered union of its finite separable subextensions; taking the filtered colimit of their skeletal free resolutions shows directly that formation of the cotangent complex commutes with this union, because differentials and normalization commute with filtered colimits. For a purely inseparable extension, degree-zero differentials can be nonzero.
 
 ### 3.6 Sheafification
 
@@ -433,7 +435,16 @@ $$
 
 It is functorial in commutative diagrams of triples and compatible with longer composites.
 
-**Proof strategy.** Resolve $B$ freely over $A$, then resolve $C$ by algebras free over the chosen resolution of $B$. Degreewise Jacobi--Zariski sequences are split exact because polynomial variables over $A$ separate into variables used for $B$ and relative variables used for $C$. Normalization and scalar extension give a short exact sequence of representative complexes. Its cone triangle is the displayed triangle. Independence of free resolutions makes it canonical. $\square$
+**Proof.** Choose a free simplicial resolution $P_\bullet\to B$ over $A$, and over it a free simplicial resolution $Q_\bullet\to C$ whose variables consist of the variables inherited from $P_\bullet$ and new relative variables. Degreewise, polynomial differentials give a split exact sequence
+
+$$
+0\longrightarrow
+\Omega_{P_\bullet/A}\otimes_{P_\bullet}Q_\bullet
+\longrightarrow\Omega_{Q_\bullet/A}
+\longrightarrow\Omega_{Q_\bullet/P_\bullet}\longrightarrow0.
+$$
+
+Tensor through the augmentation with $C$. The first normalized complex is $L_{B/A}\otimes_B^LC$: the degreewise free construction is a flat representative for the scalar extension. The middle normalized complex is $L_{C/A}$, and the last is $L_{C/B}$. Normalization is exact on simplicial modules because every simplicial module is the direct sum of its normalized and degenerate parts. The resulting short exact sequence of complexes gives the displayed distinguished triangle. The comparison lemma shows that changing either resolution gives the same triangle, and applying it to a diagram of triples proves functoriality and compatibility with longer composites. $\square$
 
 Two special cases are fundamental. If $B\to C$ is étale, then $L_{C/B}=0$, so
 
@@ -488,7 +499,20 @@ $$
 
 then the comparison map is an isomorphism. In particular, it is an isomorphism if either $B$ or $A'$ is flat over $A$.
 
-**Proof strategy.** Base-change a free resolution of $B$ over $A$. Tor independence says its augmentation after tensoring with $A'$ still resolves the ordinary tensor product $B'$, rather than an object with extra negative homology. Differential modules of polynomial algebras commute with scalar extension degreewise. Normalize to obtain the comparison. $\square$
+**Proof.** Base-change a free simplicial resolution $P_\bullet\to B$ from $A$ to $A'$. Its derived augmentation represents $B\otimes_A^LA'$. The homology spectral sequence of the normalized underlying flat simplicial module has
+
+$$
+H^{-i}(B\otimes_A^LA')=\operatorname{Tor}_i^A(B,A').
+$$
+
+Tor independence therefore says that the base-changed augmentation resolves the ordinary tensor product $B'$. Degreewise, polynomial differentials satisfy
+
+$$
+\Omega_{(P_n\otimes_AA')/A'}
+\cong\Omega_{P_n/A}\otimes_AA'.
+$$
+
+After extension of scalars to $B'$ and normalization, this identification is precisely the comparison map and is an isomorphism of representative complexes. $\square$
 
 The hypothesis is not merely technical. Without it, the correct pushout retains higher Tor information, whereas the ordinary tensor product discards it.
 
@@ -509,13 +533,20 @@ $$
 
 Thus amplitude and perfectness specialize exactly in flat families.
 
-For adic completion, let $A\to B$ be a map of noetherian rings, let $J\subset B$, and suppose $B$ is essentially of finite type over $A$. Write $\widehat B$ for the $J$-adic completion. Flatness of noetherian completion and finite presentation of the cotangent data give
+For adic completion, let $A\to B$ be a map of noetherian rings, let $J\subset B$, and suppose $B$ is essentially of finite presentation over $A$. Write $\widehat B$ for the $J$-adic completion. Define the continuous cotangent complex by derived completion,
+
+$$
+L_{\widehat B/A}^{\mathrm{cont}}
+=R\varprojlim_n L_{(B/J^n)/A}.
+$$
+
+The finite-presentation hypothesis makes every fixed truncation of $L_{B/A}$ pseudo-coherent. Artin--Rees makes its finitely generated homology towers Mittag--Leffler, while noetherian completion is flat. Applying the transitivity and base-change triangles modulo $J^n$ and then passing to the inverse limit therefore gives
 
 $$
 L_{B/A}\otimes_B^L\widehat B\simeq L_{\widehat B/A}^{\mathrm{cont}}
 $$
 
-in the finite-type range, where the right side represents continuous derivations. If the base is completed as well, the ideals and topologies must be compatible. Without noetherianity, finite presentation, or derived completeness, ordinary completion can lose inverse-limit and Tor terms.
+where the right side represents continuous $A$-derivations. If the base is completed as well, the ideals and topologies must be compatible and the relative complex must be formed over the completed base. Without noetherianity, finite presentation, or derived completeness, ordinary completion can lose inverse-limit and Tor terms.
 
 ### 4.6 A base-change failure
 
@@ -568,7 +599,16 @@ $$
 T^0(B/A;M)=\operatorname{Der}_A(B,M).
 $$
 
-**Proof strategy.** Pull an extension back along a free simplicial resolution of $B$. Freeness permits degreewise splittings. Differences between compatible splittings form a degree-one cocycle in the Hom complex from $L_{B/A}$ to $M$; changing splittings adds a coboundary. Conversely, a cocycle twists multiplication and descent along the resolution. The cocycle equation supplies associativity, and coboundaries give isomorphic extensions. Degree-zero cocycles are exactly automorphisms. $\square$
+**Proof.** Let $P_\bullet\to B$ be a free simplicial resolution and pull an extension $E\to B$ back to every $P_n$. Polynomial freeness permits an $A$-algebra section in each degree. A section need not commute with the face maps. The difference between its two transports across a face lands in the square-zero kernel $M$ and is an $A$-derivation, hence a $B$-linear map from $\Omega_{P_n/A}\otimes_{P_n}B$ to $M$. The simplicial identities say exactly that these discrepancies form a normalized degree-one cocycle in
+
+$$
+\operatorname{Hom}_B
+\bigl(N(\Omega_{P_\bullet/A}\otimes_{P_\bullet}B),M\bigr).
+$$
+
+Changing the degreewise sections changes the cocycle by the differential of a degree-zero cochain. Thus the extension gives a well-defined class in $\operatorname{Ext}^1_B(L_{B/A},M)$.
+
+Conversely, a representative cocycle changes the face compatibilities of the split algebras $P_n\oplus M$ by those derivations. The cocycle equation is precisely the condition that all simplicial identities, and hence associativity after descent to degree zero, remain valid. Taking the coequalizer of the first two face maps produces the required extension of $B$. A coboundary changes the chosen splittings and yields an isomorphic extension. These constructions undo one another. Degree-zero cocycles are compatible derivations and give exactly the automorphisms inducing the identity on $B$ and $M$. $\square$
 
 For a polynomial algebra $P/A$, $L_{P/A}$ is projective in degree $0$, so $T^1(P/A;M)=0$. Every square-zero extension of $P$ by $M$ splits as an $A$-algebra. This is the infinitesimal lifting freedom of affine space.
 
@@ -586,34 +626,52 @@ $$
 T^0(B/A;J)=\operatorname{Der}_A(B,J).
 $$
 
-Indeed, a lift is precisely a splitting of the pulled-back extension. Two splittings differ by a derivation. The torsor may be empty; once a base lift is chosen, adding derivations identifies it noncanonically with the derivation group.
+**Proof.** A lift is precisely a splitting of the pulled-back extension. The extension class vanishes exactly when such a splitting exists. Two splittings differ by an $A$-derivation $B\to J$, and adding any such derivation to one splitting gives another. Thus the action is simply transitive whenever the set of lifts is nonempty. $\square$
 
 For a presentation $B=P/I$, choose arbitrary lifts to $C'$ of the images of polynomial generators of $P$. The equations in $I$ then land in $J$. Their values define a $B$-linear map $I/I^2\to J$. Its class modulo changes of generator lifts is exactly the obstruction computed from the two-term truncation. When $B/A$ is lci, no lower terms are missing and this Jacobian calculation is complete.
 
 ### 5.4 Deforming algebras and schemes
 
-Let $A'\twoheadrightarrow A$ have square-zero kernel $J$, and let $B$ be an $A$-algebra. A flat deformation of $B$ to $A'$ is an $A'$-algebra $B'$ flat over $A'$ together with $B'\otimes_{A'}A\cong B$. The obstruction is not merely an arbitrary element of $T^1(B/A,-)$: the change of base supplies a canonical class through transitivity. Under standard flatness hypotheses, its vanishing is tested in
+Let $A'\twoheadrightarrow A$ have square-zero kernel $J$, and let $B$ be an $A$-flat algebra. A flat deformation of $B$ to $A'$ is an $A'$-algebra $B'$ flat over $A'$ together with $B'\otimes_{A'}A\cong B$. Base change identifies the kernel forced on a deformation with $B\otimes_AJ$. For the quotient $A'\to A$, the presentation calculation supplies a canonical truncation map
+
+$$
+L_{A/A'}\longrightarrow\tau_{\geq-1}L_{A/A'}
+\simeq J[1].
+$$
+
+Compose it with the connecting morphism in the transitivity triangle for $A'\to A\to B$. The result is
+
+$$
+L_{B/A}\longrightarrow (B\otimes_AJ)[2],
+$$
+
+where $A$-flatness of $B$ identifies the coefficient module with $B\otimes_AJ$ without higher Tor. Its class is the canonical obstruction in
 
 $$
 \operatorname{Ext}^2_B(L_{B/A},B\otimes_AJ),
 $$
 
-while isomorphism classes of deformations, if nonempty, form a torsor under $\operatorname{Ext}^1$, and automorphisms reducing to the identity are $\operatorname{Ext}^0$. The shift relative to lifting a map comes from deforming the source algebra itself rather than splitting a fixed extension over it.
+and is the canonical obstruction class. It vanishes exactly when the triangle can be realized by a square-zero $A'$-algebra extension that is flat over $A'$. If it vanishes, changing the realization adds a morphism $L_{B/A}\to(B\otimes_AJ)[1]$, so isomorphism classes form a torsor under $\operatorname{Ext}^1_B(L_{B/A},B\otimes_AJ)$; automorphisms reducing to the identity are $\operatorname{Ext}^0_B(L_{B/A},B\otimes_AJ)$. The shift relative to lifting a map comes from deforming the source algebra itself rather than splitting a fixed extension over it.
 
-For schemes, replace Ext by global Ext:
+Here is the resolution argument for the exact assertions. Lift the generators of a free simplicial $A$-algebra resolution of $B$ to free $A'$-algebras. Lift its face and degeneracy maps skeletally. The failures of the lifted simplicial identities land in the square-zero module $B\otimes_AJ$; the identities one degree higher say that these failures form the degree-$2$ cocycle represented by the displayed connecting morphism. A zero of its cohomology class permits alteration by a degree-$1$ cochain so that all identities hold. The degree-zero coequalizer is then an $A'$-algebra $B'$ reducing to $B$, and its multiplication map identifies $J\otimes_{A'}B'$ with the kernel of $B'\to B$. The square-zero flatness criterion—proved by tensoring $0\to J\to A'\to A\to0$ and using the $A$-flatness of $B$—then makes $B'$ flat over $A'$. Conversely, a flat deformation lifts the resolution compatibly and hence supplies a null-homotopy of the cocycle. Two null-homotopies differ by a degree-$1$ cocycle and their identifications differ by a degree-$0$ cocycle, which gives precisely the stated torsor and automorphism groups. If $B$ is not $A$-flat, the kernel need not be $B\otimes_AJ$ and additional Tor terms must be retained.
+
+For schemes, let $X\to S$ be flat and let $S\hookrightarrow S'$ be a square-zero thickening with quasi-coherent ideal $\mathcal J$. The same construction on the ringed space of $X$ replaces module Ext by global Ext, with coefficients $\mathcal O_X\otimes_{\mathcal O_S}\mathcal J$:
 
 $$
-\operatorname{Ext}^i_X(L_{X/S},\mathcal M).
+\operatorname{Ext}^i_X
+\bigl(L_{X/S},\mathcal O_X\otimes_{\mathcal O_S}\mathcal J\bigr).
 $$
+
+Degrees $0,1,2$ again give automorphisms, the torsor of deformations, and the obstruction. Quasi-coherence and the usual quasi-compact, quasi-separated hypotheses keep these groups in the quasi-coherent derived category.
 
 The local-to-global spectral sequence
 
 $$
 H^p\bigl(X,\mathcal Ext^q(L_{X/S},\mathcal M)\bigr)
-\Longrightarrow \operatorname{Ext}^{p+q}_X(L_{X/S},\mathcal M)
+\Longrightarrow \operatorname{Ext}^{p+q}_X(L_{X/S},\mathcal M),
 $$
 
-separates local singularity obstructions from the obstruction to gluing local choices. Affine vanishing can eliminate the latter, but proper moduli problems often retain it.
+where $\mathcal M=\mathcal O_X\otimes_{\mathcal O_S}\mathcal J$, separates local singularity obstructions from the obstruction to gluing local choices. Affine vanishing can eliminate the latter, but proper moduli problems often retain it.
 
 ### 5.5 Relative and constrained deformations
 
@@ -686,7 +744,32 @@ Finite presentation cannot be dropped: lifting against nilpotent ideals controls
 
 In this case that module is $\Omega_{B/A}$.
 
-**Proof strategy.** Smoothness gives local standard-smooth presentations; the Jacobian criterion splits the conormal map and identifies the remaining differential module as finite projective. This collapses the cotangent complex to degree $0$. Conversely, if $L_{B/A}$ is projective in degree $0$, then $\operatorname{Ext}^1_B(L_{B/A},M)=0$ for every $M$, so every square-zero lifting obstruction vanishes. Finite presentation converts formal smoothness to smoothness. $\square$
+**Proof.** For finitely presented algebras, the infinitesimal lifting criterion identifies formal smoothness with smoothness. We derive the local Jacobian form needed for the cotangent calculation rather than assume it. Choose a finite polynomial presentation $P=A[x_1,\ldots,x_n]\twoheadrightarrow B$ with kernel $I$. Formal smoothness lifts the identity of $B$ across the square-zero surjection $P/I^2\twoheadrightarrow B$, giving an $A$-algebra section. Relative to this section, projection onto the square-zero ideal $I/I^2$ is an $A$-derivation. Its universal factorization supplies a left inverse to the conormal map
+
+$$
+I/I^2\longrightarrow\Omega_{P/A}\otimes_PB,
+\qquad \bar f\longmapsto df.
+$$
+
+Thus this map is a split injection; both $I/I^2$ and its cokernel $\Omega_{B/A}$ are finite projective locally on $B$.
+
+Fix a prime of $B$. After localizing, choose $f_1,\ldots,f_r\in I$ whose classes form a basis of $I/I^2$. Nakayama's lemma makes them generators of the localized ideal. Since the conormal map is split injective, some $r\times r$ minor of the matrix $(\partial f_i/\partial x_j)$ is a unit. Rename the corresponding variables $x_1,\ldots,x_r$, put $Q=A[x_{r+1},\ldots,x_n]$, and consider
+
+$$
+Q[t_1,\ldots,t_r]\longrightarrow Q[x_1,\ldots,x_r]=P,
+\qquad t_i\longmapsto f_i.
+$$
+
+The same Jacobian minor makes this map standard étale after a further localization, hence flat. The polynomial variables $t_1,\ldots,t_r$ form a regular sequence over the arbitrary ring $Q$; flat base change therefore makes $f_1,\ldots,f_r$ a regular sequence in the localized $P$. The successive one-equation relation calculation gives
+
+$$
+L_{B/A}\simeq
+\left[I/I^2\longrightarrow\Omega_{P/A}\otimes_PB\right]
+$$
+
+in degrees $-1,0$: for a non-zero-divisor $f$, the only relation generator is $\bar f$ in degree $-1$, and a class one degree farther left would be a coefficient annihilating $f$; iterating proves the regular-sequence case. The already established splitting cancels the degree-$-1$ term with its image and leaves $\Omega_{B/A}$ in degree $0$. This module is finite projective.
+
+Conversely, if $L_{B/A}$ is a finite projective module in degree $0$, then $\operatorname{Ext}^1_B(L_{B/A},M)=0$ for every $M$, so every square-zero lifting obstruction vanishes. Thus $B$ is formally smooth, and finite presentation makes it smooth. $\square$
 
 The projectivity clause matters. Vanishing negative cohomology alone makes $L_{B/A}\simeq\Omega_{B/A}$, but if $\Omega_{B/A}$ is not projective, its first Ext can still obstruct lifting.
 
@@ -713,7 +796,7 @@ $$
 
 **Proof.** An étale map is smooth with $\Omega_{B/A}=0$, so the smoothness theorem gives the vanishing. Conversely, vanishing makes every square-zero lifting problem exist uniquely. Hence the map is formally étale, and finite presentation makes it étale. $\square$
 
-This criterion is stable under arbitrary composition and under Tor-independent base change by the triangles of Chapter 4. It also explains why adjoining étale coordinates never changes a deformation complex.
+This criterion is stable under composition by transitivity. It is stable under arbitrary base change because an étale algebra is flat over its base, so the Tor-independence condition of Chapter 4 is automatic. It also explains why adjoining étale coordinates never changes a deformation complex.
 
 ### 6.5 Jacobians and standard smooth maps
 
@@ -767,7 +850,76 @@ $$
 
 in cohomological degrees $-1,0$. Both terms are finite locally free if $P/A$ and the regular sequence are of finite presentation. Consequently $L_{B/A}$ is perfect of Tor amplitude contained in $[-1,0]$.
 
-**Proof strategy.** First handle a quotient by one non-zero-divisor. The free resolution has no higher relation homology, and transitivity identifies the quotient cotangent complex with $(I/I^2)[1]$. Add the equations one at a time. At each step transitivity extends the two-term complex by one locally free conormal summand. Regularity ensures no unexpected Tor term appears. Finally compose with the smooth map $A\to P$, whose cotangent complex is $\Omega_{P/A}$ in degree $0$. $\square$
+**Proof.** First handle a quotient by one non-zero-divisor, then add the equations one at a time. At each step transitivity extends the quotient cotangent complex by one locally free conormal summand. Finally compose with the smooth map $A\to P$, whose cotangent complex is $\Omega_{P/A}$ in degree $0$.
+
+Here is the relation calculation behind the first sentence. For $B=P/(f)$, the first free relation generator gives $B\bar f$ in degree $-1$. A normalized class one degree farther left is represented by a coefficient $a$ with $af=0$; changing the representative changes $a$ by an evident degenerate relation. Thus a non-zero-divisor leaves no class below degree $-1$ and gives $L_{B/P}\simeq B[1]$. For a regular sequence, apply this calculation successively in
+
+$$
+P\longrightarrow P/(f_1)\longrightarrow\cdots
+\longrightarrow P/(f_1,\ldots,f_r).
+$$
+
+Each new equation remains a non-zero-divisor, so transitivity adds one free conormal summand in degree $-1$ and no lower homology. This proves $L_{B/P}\simeq(I/I^2)[1]$. The triangle for $A\to P\to B$ then has exactly the displayed two-term representative, with differential induced by $f\mapsto df$. $\square$
+
+We shall also need the converse form of this calculation.
+
+**Quotient rigidity lemma.** Let $(P,\mathfrak n)$ be noetherian local, let $I\subsetneq P$ be finitely generated, and put $B=P/I$. Then
+
+$$
+L_{B/P}\text{ is perfect of Tor amplitude }[-1,-1]
+$$
+
+if and only if $I$ is generated by a regular sequence.
+
+**Proof.** The complete-intersection calculation shows that a regular sequence gives the stated amplitude. Conversely, amplitude $[-1,-1]$ and $H^{-1}(L_{B/P})=I/I^2$ identify
+
+$$
+L_{B/P}\simeq(I/I^2)[1]
+$$
+
+and make $I/I^2$ finite free over the local ring $B$. Choose $f_1,\ldots,f_r\in I$ whose conormal classes are a basis. Nakayama makes them generators of $I$.
+
+The Koszul complex used here is the finite chain complex
+
+$$
+K_j(f_1,\ldots,f_r)=\bigwedge^jP^r,
+$$
+
+with
+
+$$
+d(e_{i_1}\wedge\cdots\wedge e_{i_j})
+=\sum_{t=1}^j(-1)^{t-1}f_{i_t}
+e_{i_1}\wedge\cdots\widehat{e_{i_t}}\cdots\wedge e_{i_j}.
+$$
+
+The terms with two omitted basis vectors cancel in pairs, so $d^2=0$. We now show that this Koszul complex resolves $B$. Take a free simplicial $P$-algebra resolution $P_\bullet\to B$. The powers of the augmentation ideal in $B\otimes_PP_\bullet$ give an exhaustive multiplicative filtration. For a polynomial algebra, the associated graded is the symmetric algebra on its module of relative differentials. Normalizing degreewise therefore gives a convergent spectral sequence whose first indecomposable layer is $L_{B/P}$ and whose higher layers are its derived symmetric powers; it converges to $\operatorname{Tor}^P_*(B,B)$. This construction is obtained by sorting monomials in the free resolution by their number of augmentation generators, so its degree-$1$ edge map is the usual identification $\operatorname{Tor}^P_1(B,B)=I/I^2$.
+
+Since $L_{B/P}\simeq(I/I^2)[1]$ and $I/I^2$ is free, the derived symmetric powers have no further differential or extension: the odd shift makes the alternating part in weight $j$ equal to $\bigwedge_B^j(I/I^2)$ in degree $j$. Consequently the edge maps give an isomorphism of graded $B$-algebras
+
+$$
+\bigwedge_B^*(I/I^2)\xrightarrow{\sim}
+\operatorname{Tor}^P_*(B,B).
+$$
+
+Let $k=P/\mathfrak n$. The change-of-rings spectral sequence
+
+$$
+\operatorname{Tor}^B_p
+\bigl(\operatorname{Tor}^P_q(B,B),k\bigr)
+\Longrightarrow\operatorname{Tor}^P_{p+q}(B,k)
+$$
+
+collapses because every displayed exterior power is free over $B$. Hence
+
+$$
+\operatorname{Tor}^P_j(B,k)
+\cong\bigwedge_k^j k^r,
+$$
+
+and these groups vanish for $j>r$. Choose a minimal free $P$-resolution $F_\bullet\to B$. Its $j$-th rank is the dimension of this Tor group. A comparison $K_P(f_1,\ldots,f_r)\to F_\bullet$ lifting the identity of $B$ induces the identity in degree $1$ after tensoring with $k$; multiplicativity and the exterior-algebra description make it an isomorphism in every degree. Both reduced differentials are zero, so the comparison is degreewise an isomorphism modulo $\mathfrak n$, and Nakayama makes it a degreewise isomorphism over $P$. Thus the positive Koszul homology vanishes.
+
+For completeness, Koszul acyclicity implies regularity by induction on $r$. Write the full Koszul complex as the cone of multiplication by $f_r$ on $K_P(f_1,\ldots,f_{r-1})$. Its long exact homology sequence says that multiplication by $f_r$ is surjective on every positive homology module of the shorter complex. Those modules are finite and $f_r\in\mathfrak n$, so Nakayama makes them zero. Induction makes $f_1,\ldots,f_{r-1}$ regular. The same long exact sequence in degrees $1$ and $0$ then says that $f_r$ acts injectively on $P/(f_1,\ldots,f_{r-1})$. Thus the full sequence is regular. $\square$
 
 The differential is still the Jacobian map. The theorem says that there are no terms further left; it does not say the Jacobian is injective.
 
@@ -778,9 +930,16 @@ The differential is still the Jacobian map. The theorem says that there are no t
 - If $f$ is lci, then $L_{X/S}$ is perfect of Tor amplitude contained in $[-1,0]$.
 - Conversely, if $X$ and $S$ are locally noetherian and $f$ is essentially of finite type, then perfectness of $L_{X/S}$ with Tor amplitude in $[-1,0]$ implies that $f$ is lci.
 
-Versions of the converse hold beyond the noetherian setting under finite-presentation and finite-presentation-of-relations hypotheses; the stated form is the one used here.
+Only the stated noetherian converse is used here; without it, one must supply a separate regular-immersion criterion rather than infer lci from amplitude alone.
 
-**Proof strategy for the converse.** Locally factor $f$ through affine space, so $B=P/I$ with $P$ smooth over $A$. Transitivity identifies the relative quotient part. The amplitude hypothesis forces $I/I^2$ to be finite projective and eliminates higher cotangent homology. In the noetherian local ring $P_\mathfrak p$, the resulting homological criterion implies that $I_\mathfrak p$ has finite projective dimension equal to its minimal number of generators and grade. The Auslander--Buchsbaum and depth criteria then show that a minimal generating set is a regular sequence. $\square$
+**Proof.** The forward implication is the complete-intersection model, applied on the local factorizations in the definition of lci. For the converse, work at a point and factor through an affine space, so $B=P/I$ with $P$ smooth over $A$. The transitivity triangle is
+
+$$
+L_{P/A}\otimes_PB\longrightarrow L_{B/A}
+\longrightarrow L_{B/P}\longrightarrow.
+$$
+
+The first term is finite projective in degree $0$, and the second has amplitude $[-1,0]$; a cone representative therefore makes $L_{B/P}$ perfect of amplitude $[-1,0]$. Its degree-zero cohomology is $\Omega_{B/P}=0$. On a local strict two-term model $[E^{-1}\to E^0]$, this says the differential is surjective. Since $E^0$ is free, the surjection splits, the contractible summand cancels, and $L_{B/P}$ has amplitude $[-1,-1]$. The quotient rigidity lemma makes $I$ locally generated by a regular sequence. Hence the factorization is lci. $\square$
 
 This theorem turns a geometric factorization condition into an intrinsic statement. It is one of the principal reasons to retain Tor amplitude rather than just cohomology degrees.
 
@@ -798,11 +957,13 @@ Take $B=k[x]/(x^n)$. If the characteristic does not divide $n$, the differential
 
 ### 7.5 Composition and flat base change
 
-If $X\to Y$ and $Y\to S$ are lci, then $X\to S$ is lci. The transitivity triangle combines two perfect complexes of amplitude $[-1,0]$, but a naive cone could have amplitude $[-2,0]$. The sharper assertion uses local factorizations: compose regular immersions after pulling back a smooth factorization, and use that regular sequences concatenate under the required flatness supplied by smooth maps. Thus geometry improves the coarse triangle bound.
+If $X\to Y$ and $Y\to S$ are lci, then $X\to S$ is lci. After derived pullback, the outer terms of the transitivity triangle are perfect of amplitude $[-1,0]$. Tensoring the triangle with an arbitrary module and taking its long exact cohomology sequence shows that the middle term has the same amplitude: a fixed interval is closed under extensions. Thus the intrinsic cotangent condition is preserved, and the noetherian converse criterion already gives composition in its range.
+
+For a geometric factorization without invoking that converse, factor $Y\hookrightarrow Q\to S$ as regular then smooth and $X\hookrightarrow P\to Y$ in the same way. A standard-smooth presentation of $P\to Y$ lifts locally across the closed immersion $Y\hookrightarrow Q$: lift its finitely many equations and retain the open set on which the chosen Jacobian minor is a unit. This gives a smooth $\widetilde P\to Q$ with $P\cong\widetilde P\times_QY$. The immersion $P\hookrightarrow\widetilde P$ is the flat base change of $Y\hookrightarrow Q$, hence regular. Its regular sequence concatenates with the one for $X\hookrightarrow P$, making $X\hookrightarrow\widetilde P$ regular; the map $\widetilde P\to S$ is smooth. This is an lci factorization of the composite.
 
 An lci morphism remains lci after flat base change. Algebraically, a regular sequence stays regular after flat scalar extension; the two-term model then base-changes term by term. Under a merely Tor-independent base change, the cotangent complex still has amplitude $[-1,0]$, giving an intrinsic route to the same conclusion where the converse criterion applies.
 
-A regular immersion followed by an arbitrary lci map also composes to an lci map when the evident Tor-independence conditions needed to preserve the regular sequence hold. Suppressing them can turn an intersection into a derived self-intersection and create excess homology.
+No extra Tor hypothesis is needed for composition of two lci morphisms: the smooth maps appearing in local factorizations provide the flat pullbacks needed to preserve the regular sequences. Tor independence enters instead when an lci factorization is pulled back along an unrelated, possibly nonflat map. Suppressing it there can turn an intersection into a derived self-intersection and create excess homology.
 
 ### 7.6 Non-lci singularities
 
@@ -854,11 +1015,19 @@ If $P^\bullet$ is strictly perfect and $P^i=0$ outside $[a,b]$, then it has Tor 
 
 **Amplitude-shortening lemma.** Let $(R,\mathfrak m)$ be local and let $P^\bullet$ be a bounded complex of finite free modules. If $H^i(P^\bullet\otimes_RM)=0$ for every $M$ and every $i<a$, then $P^\bullet$ is homotopy equivalent to a complex vanishing below $a$. A dual statement holds above $b$.
 
-**Proof strategy.** At the leftmost nonzero term, test against the residue field $k$. Vanishing says the reduced differential is injective in the needed position. A matrix minor is therefore a unit, so a free direct summand maps isomorphically onto a direct summand in the next degree. Split off this contractible pair. Repeat. The right endpoint is treated dually. $\square$
+**Proof.** Suppose $n<a$ is the leftmost degree with $P^n\ne0$. Testing against the residue field $k$ gives
+
+$$
+\ker(P^n\otimes_Rk\longrightarrow P^{n+1}\otimes_Rk)=0.
+$$
+
+Thus the reduced differential has full column rank. Some maximal minor is nonzero in $k$, hence the corresponding minor over $R$ is a unit. Row and column operations split the differential as an identity map from $P^n$ onto a free direct summand of $P^{n+1}$. Because the next composite is zero, this identity pair is a direct contractible summand. Cancel it and repeat until all degrees below $a$ vanish. For the right endpoint, start with the rightmost term and use surjectivity of the reduced incoming differential; a unit minor again splits a contractible pair. $\square$
 
 It follows that a perfect complex has Tor amplitude in $[a,b]$ exactly when locally it has a strict representative supported in those degrees.
 
 ### 8.4 Recognition by fibers
+
+A complex is **pseudo-coherent** if locally it admits a bounded-above finite-free model to any prescribed finite cohomological depth. It has **finite Tor dimension** if it has Tor amplitude in some finite interval.
 
 **Fiber criterion.** Let $R$ be a ring and $K$ a pseudo-coherent complex of finite Tor dimension. Then $K$ is perfect. If $R$ is local and $K$ is perfect, its Tor amplitude is the smallest interval containing the degrees in which
 
@@ -868,7 +1037,7 @@ $$
 
 is nonzero, where $k$ is the residue field.
 
-Pseudo-coherence supplies finite free approximations on the left, while finite Tor dimension permits the amplitude-shortening argument to terminate on the right. Neither hypothesis alone suffices.
+**Proof.** Pseudo-coherence supplies a bounded-above finite-free model through every fixed degree. Choose a Tor interval $[a,b]$ and a model extending below $a$. The vanishing after tensoring with all modules lets the shortening lemma cancel every term below $a$ and above $b$; only finitely many finite free terms remain, so $K$ is perfect. Over a local ring, first cancel every unit entry in a strict model. The resulting minimal model has zero differential after tensoring with $k$, so its term in degree $i$ is exactly $H^i(K\otimes_R^Lk)$. Its first and last nonzero terms therefore give the minimal Tor interval. $\square$
 
 For a morphism of schemes and a point $x\in X$, the fiber
 
@@ -889,7 +1058,7 @@ $$
 If $K\to L\to M\to K[1]$ is a distinguished triangle and two terms are perfect, so is the third. Coarse amplitude bounds follow from the long exact Tor sequence; for example, if $K$ has $[a,b]$ and $L$ has $[c,d]$, then the cone has amplitude contained in
 
 $$
-[\min(c,a-1),\max(d,b)].
+[\min(c,a-1),\max(d,b-1)].
 $$
 
 Pullback preserves perfectness and amplitude because a bounded finite projective model remains such after scalar extension. Pushforward does not preserve perfectness without hypotheses; properness alone is insufficient over arbitrary bases. In the geometric situations used later, one assumes a proper perfect morphism and suitable finite Tor dimension before asserting that a pushforward is perfect.
@@ -910,7 +1079,8 @@ $$
 Perfectness makes base change finite and determinant lines available. The amplitude distinguishes free parameters from equations. In a two-term lci model, the virtual rank
 
 $$
-\operatorname{rk}(L_{B/A})=operatorname{rk}\Omega_{P/A}\otimes B-operatorname{rk}I/I^2
+\operatorname{rk}(L_{B/A})
+=\operatorname{rk}(\Omega_{P/A}\otimes_P B)-\operatorname{rk}(I/I^2)
 $$
 
 is the expected relative dimension.
@@ -1127,7 +1297,14 @@ $$
 \cong \det(K)^{\otimes s}\otimes\det(L)^{\otimes r}.
 $$
 
-For negative exponents one uses dual lines. The grade on the left is $rs$ and is recorded separately; putting the natural grades on both factors on the right would double-count it. The graded symmetry supplies the signs needed to make the line formula symmetric in $K$ and $L$. Writing it without recording an ordering can conceal a factor of $-1$.
+For negative exponents one uses dual lines. The full graded statement is that the underlying line displayed on the right is equipped with the single grade $rs$. One must not tensor the natural graded objects $\operatorname{Det}(K)^{\otimes s}$ and $\operatorname{Det}(L)^{\otimes r}$, since their grades would add to $2rs$. On strict models, expand $K\otimes L$ into the ordered pairs of terms $(K^i,L^j)$ and apply
+
+$$
+\det(P\otimes Q)\cong\det(P)^{\otimes\operatorname{rk}Q}
+\otimes\det(Q)^{\otimes\operatorname{rk}P}.
+$$
+
+Collecting all factors gives the formula, and the graded symmetry supplies the signs needed to make it independent of the collection order.
 
 ### 10.6 Base change and descent
 
@@ -1184,13 +1361,20 @@ $$
 \operatorname{Det}(K)\otimes\operatorname{Det}(M).
 $$
 
-**Proof strategy.** Represent the triangle locally by the cone of a cochain map $K\to L$. Since
+**Proof.** Represent the triangle locally by the cone of a cochain map $K\to L$. Since
 
 $$
 \operatorname{Cone}(K\to L)^i=L^i\oplus K^{i+1},
 $$
 
-the defining alternating product cancels the shifted $K$ factors against the inverse of $\operatorname{Det}(K)$. Reorder factors using graded symmetry. Invariance under replacement of cone models follows from the canonical trivialization of acyclic cones. $\square$
+the ordered direct-sum isomorphisms in each degree give
+
+$$
+\operatorname{Det}(M)
+\cong\operatorname{Det}(L)\otimes\operatorname{Det}(K)^{-1}.
+$$
+
+Move the last factor to the other side and reorder it using graded symmetry; this gives the stated map with $K$ first and $M$ second. If a strict cone model is replaced by a quasi-isomorphic one, the comparison cone is acyclic and its canonical trivialization identifies the two maps. A general distinguished triangle is, by definition, isomorphic to a cone triangle, so the construction is independent of its presentation and functorial. $\square$
 
 Rotation is a useful sign test. Rotating gives
 
@@ -1219,7 +1403,7 @@ ordered by the filtration. Refining the filtration does not change the result.
 If every $H^i(K)$ is finite projective, the truncation triangles give
 
 $$
-\operatorname{Det}(K)cong
+\operatorname{Det}(K)\cong
 \bigotimes_i\operatorname{Det}(H^i(K))^{(-1)^i}.
 $$
 
@@ -1261,19 +1445,21 @@ $$
 =\sum_i a_i=v_R(\det d).
 $$
 
-The determinant section therefore records the total torsion length. Over a normal integral scheme, applying this calculation at each height-one point produces a Cartier divisor whenever the section is regular and generically nonzero. Without normality or a non-zero-divisor condition, a determinant section still defines a degeneracy subscheme, but it need not determine a Cartier divisor.
+The determinant section therefore records the total torsion length. More generally, a regular section of a line bundle defines an effective Cartier divisor exactly when it is a non-zero-divisor in every local trivialization. On an integral scheme, every nonzero regular section satisfies this condition. On a normal integral noetherian scheme, its order at each height-one discrete valuation gives the associated Weil divisor, but an arbitrary Weil divisor on a normal scheme need not be Cartier. On a reducible or nonreduced scheme, a generically nonzero determinant section may still vanish identically on an embedded or irreducible component; it then defines a degeneracy subscheme but not a Cartier divisor.
 
 ## 12. Determinant lines of cotangent complexes
 
 ### 12.1 The cotangent determinant
 
-If $f:X\to S$ has perfect cotangent complex, define its **cotangent determinant line** or **virtual canonical line** by
+If $f:X\to S$ has perfect cotangent complex, define its graded cotangent determinant and its underlying **virtual canonical line** by
 
 $$
+\operatorname{Det}_f^{\mathrm{cot}}=\operatorname{Det}(L_{X/S}),
+\qquad
 \omega_f^{\mathrm{vir}}=\det(L_{X/S}).
 $$
 
-Its grading is the virtual relative dimension. For a smooth morphism of relative dimension $d$,
+The grade of $\operatorname{Det}_f^{\mathrm{cot}}$ is the virtual relative dimension. For a smooth morphism of relative dimension $d$,
 
 $$
 \omega_f^{\mathrm{vir}}=\bigwedge^d\Omega_{X/S},
@@ -1289,7 +1475,7 @@ The inverse is forced by the placement of the conormal bundle in degree $-1$.
 
 ### 12.2 Transitivity as multiplicativity
 
-Let $X\xrightarrow fY\xrightarrow gS$, and assume the three cotangent complexes are perfect. The transitivity triangle gives
+Let $X\xrightarrow{f}Y\xrightarrow{g}S$, and assume the three cotangent complexes are perfect. The transitivity triangle gives
 
 $$
 \omega_{g\circ f}^{\mathrm{vir}}
@@ -1306,11 +1492,19 @@ $$
 Its grading says that virtual dimensions add. For a factorization of an lci map as a regular immersion $i:X\hookrightarrow P$ followed by a smooth map $p:P\to S$,
 
 $$
+\operatorname{Det}(L_{X/S})
+\cong i^*\operatorname{Det}(\Omega_{P/S})
+\otimes\operatorname{Det}(I/I^2)^{-1}.
+$$
+
+This is the factor order supplied by transitivity. Passing to underlying ungraded lines and using ordinary symmetry gives the conventional writing
+
+$$
 \omega_{X/S}^{\mathrm{vir}}
 \cong\det(I/I^2)^{-1}\otimes i^*\det(\Omega_{P/S}).
 $$
 
-Although the right side uses a factorization, transitivity and coherence show that the resulting line is intrinsic.
+Reordering the graded objects themselves contributes $(-1)^{nr}$ when the smooth rank is $n$ and the conormal rank is $r$. Although the right side uses a factorization, transitivity and coherence show that the resulting line is intrinsic.
 
 ### 12.3 Base change
 
@@ -1348,6 +1542,8 @@ $$
 \cong\det(N^*_{X/P})^{-1}\otimes\omega_{P/S}|_X.
 $$
 
+This displayed adjunction formula concerns the underlying line. In graded form, $\operatorname{Det}(\Omega_{P/S}|_X)$ occurs first, as in Section 12.2.
+
 If $X/S$ is smooth on an open subset $U$, this line restricts to $\bigwedge^{n-r}\Omega_{U/S}$. Thus the lci formula extends the canonical line across singular complete-intersection fibers.
 
 For a Cartier divisor $X=(f)\subset P$, $N^*_{X/P}\cong\mathcal O_X(-X)$. Therefore
@@ -1361,7 +1557,7 @@ which is the adjunction formula. The cotangent triangle explains both the twist 
 
 ### 12.5 Smooth and regular-immersion cases
 
-Two extreme cases serve as consistency checks. If $f$ is étale, $L_{X/S}=0$ and $\omega_f^{\mathrm{vir}}$ is canonically trivial of grade $0$. If $i$ is the zero section of a vector bundle $V\to S$, then $N^*\cong V^\vee$ and
+Two extreme cases serve as consistency checks. If $f$ is étale, $L_{X/S}=0$, the graded determinant is the canonical unit of grade $0$, and $\omega_f^{\mathrm{vir}}$ is canonically trivial. If $i$ is the zero section of a vector bundle $V\to S$, then $N^*\cong V^\vee$ and
 
 $$
 \omega_i^{\mathrm{vir}}\cong\det(V^\vee)^{-1}\cong\det(V).
@@ -1377,26 +1573,26 @@ as required. This simple example detects an incorrect inversion convention immed
 
 ### 12.6 A complete-intersection calculation
 
-Let
+Let $A$ be noetherian and complete for an ideal $\mathfrak a$, give the power-series ring its $(\mathfrak a,x_1,\ldots,x_n)$-adic topology, and let
 
 $$
 B=A[[x_1,\ldots,x_n]]/(f_1,\ldots,f_r),
 $$
 
-where $A$ is noetherian complete, the $f_i$ form a regular sequence, and continuous differentials are used. The chosen equations and coordinates identify
+with the quotient topology, where the $f_i$ form a regular sequence. Using continuous differentials, the chosen equations and coordinates identify the continuous cotangent complex
 
 $$
-L_{B/A}\simeq[B^r\xrightarrow{J}B^n],
+L_{B/A}^{\mathrm{cont}}\simeq[B^r\xrightarrow{J}B^n],
 $$
 
-so
+Write $\omega_{B/A}^{\mathrm{vir,cont}}=\det(L_{B/A}^{\mathrm{cont}})$. Then
 
 $$
-\omega_{B/A}^{\mathrm{vir}}
+\omega_{B/A}^{\mathrm{vir,cont}}
 \cong\det(B^r)^{-1}\otimes\det(B^n)\cong B
 $$
 
-after these choices, with grade $n-r$. A change of equations by a matrix $U$ and coordinates by a Jacobian matrix $V$ changes the generator by
+after these choices. The associated graded determinant has grade $n-r$. A change of equations by a matrix $U$ and coordinates by a Jacobian matrix $V$ changes the generator by
 
 $$
 \det(U)^{-1}\det(V).
@@ -1404,7 +1600,7 @@ $$
 
 Thus the trivialization is coordinate-dependent even though the line is intrinsic.
 
-When $n=r$, $\det(J)$ is a section of this line. At primes where it is a unit, the map is étale. Over a discrete valuation ring, if $J$ is generically invertible, the valuation of $\det(J)$ is the length of the cotangent cokernel. This is the determinant-line form of a congruence or ramification calculation.
+When $n=r$, $\det(J)$ is a section of this line. At primes where it is a unit, the continuous cotangent complex vanishes, so the map is formally étale for the adic topology. It is étale in the ordinary scheme-theoretic sense only when the underlying map is also of finite presentation. If $B$ is a discrete valuation ring and $J$ is generically invertible, the valuation of $\det(J)$ is the length of its cotangent cokernel. This is the determinant-line form of a congruence or ramification calculation.
 
 ## 13. Smoothness calculations in PEL-type moduli
 
@@ -1450,7 +1646,15 @@ in degrees $0,1$, dual to the cotangent lci model. Surjectivity of $E\to F$ kill
 
 An endomorphism action requires the varying Hodge subbundle to be stable under the order. Infinitesimally, this restricts an ambient Hom space to equivariant homomorphisms. A polarization identifies a quotient with a dual subbundle and imposes an isotropy condition; its derivative is a symmetry or alternating condition on the corresponding bilinear map. At primes where the relevant order is semisimple and the polarization degree is invertible, idempotent decompositions and perfect pairings make these restrictions direct summands.
 
-A determinant condition prescribes the characteristic polynomial of the order action on the Hodge bundle. Its first derivative is a collection of trace maps on the eigensummands. When the order is étale over the base and the signature ranks are locally constant, those trace maps split into the expected direct summands. At ramified primes or when a rank jumps, this splitting can fail; then the determinant condition may introduce obstruction or nonreduced structure.
+A determinant condition prescribes the characteristic polynomial of the order action on the Hodge bundle. If an endomorphism $T$ varies by $T+\epsilon X$, its exact first derivative is the polynomial identity
+
+$$
+\det(z-T-\epsilon X)
+=\det(z-T)-\epsilon\operatorname{tr}
+\bigl(\operatorname{adj}(z-T)X\bigr).
+$$
+
+When the order is étale over the base, its idempotents decompose the Hodge bundle into locally free eigensummands of the prescribed signature ranks. On each summand $T$ is scalar for the corresponding embedding, and the coefficients in the displayed derivative reduce to trace maps on the appropriate component of $X$. The idempotent projections split these trace maps when the indicated ranks are locally constant and the relevant scalar ranks are invertible. At ramified primes, when a needed integer is not invertible, or when a rank jumps, this splitting can fail; then the determinant condition may introduce obstruction or nonreduced structure.
 
 These assertions are linear-algebraic once a deformation theorem identifies deformations of the abelian object with lifts of its Hodge filtration. Such an identification requires its own hypotheses—typically an appropriate nilpotent divided-power thickening, or a separately established infinitesimal deformation theorem. The cotangent calculation begins after that input and does not replace it.
 
@@ -1488,7 +1692,21 @@ $$
 \det(R^n)\otimes\det(R^r)^{-1}
 $$
 
-records how local coordinates and equations transform. If $n=r$, the determinant section cuts out the nonsmooth locus scheme-theoretically when the zeroth Fitting ideal of $\Omega_{R/A}$ is generated by $\det J$.
+records how local coordinates and equations transform. If $n=r$, the presentation of $\Omega_{R/A}$ is square and
+
+$$
+\operatorname{Fitt}_0(\Omega_{R/A})=(\det J).
+$$
+
+Hence the determinant section cuts out the nonsmooth locus scheme-theoretically. If $n>r$, the relevant ideal is instead
+
+$$
+\operatorname{Fitt}_{n-r}(\Omega_{R/A}),
+$$
+
+generated by the $r\times r$ minors of $J$; the zeroth Fitting ideal is then zero.
+
+Here $\operatorname{Fitt}_j$ of a module presented by $R^r\to R^n$ is generated by the $(n-j)\times(n-j)$ minors, with the usual conventions when that size is outside the matrix. Section 14.5 proves that this ideal is independent of the presentation.
 
 For $n>r$, all maximal minors are needed. A single chosen minor describes one standard-smooth chart, not the entire degeneracy locus. Gluing the charts is naturally expressed by the determinant line and the exterior-power map
 
@@ -1500,7 +1718,7 @@ $$
 
 Three failures recur at bad primes. First, the order acting on the Hodge bundle may cease to be étale, so eigenspace projectors acquire denominators and equivariant summands are no longer direct. Second, a polarization pairing may degenerate when its degree is not invertible, so isotropy equations lose independent differentials. Third, the determinant condition may impose fewer first-order equations than higher-order equations, producing a non-lci or nonreduced local model.
 
-The cotangent complex distinguishes them. Failure of the Jacobian map to be surjective leaves $H^1$ in the tangent complex. Failure of the equations to be a regular sequence produces cotangent homology below degree $-1$. Failure of flatness can invalidate fiberwise base change. These are different diagnoses and require different repairs.
+The cotangent complex distinguishes them. Failure of the Jacobian map to be surjective leaves $H^1$ in the tangent complex. Failure of the defining ideal to be locally generated by any regular sequence produces cotangent homology below degree $-1$ under the noetherian finite-type hypotheses of the lci criterion; a merely redundant chosen list of equations does not. Failure of flatness can invalidate fiberwise base change. These are different diagnoses and require different repairs.
 
 ## 14. Perfect complexes in patching
 
@@ -1526,27 +1744,35 @@ $$
 
 for every $i$. Equivalently, $F^\bullet\otimes_Rk$ has zero differential.
 
-**Minimal-model theorem.** Every bounded finite free complex over $R$ is isomorphic in the homotopy category to a direct sum of a minimal complex and contractible complexes of the form $[R\xrightarrow{1}R]$. The ranks of the terms in the minimal complex are uniquely determined and equal
+**Minimal-model theorem.** Every bounded finite free complex $F^\bullet$ over $R$ is isomorphic in the homotopy category to a direct sum of a minimal complex $G^\bullet$ and contractible complexes of the form $[R\xrightarrow{1}R]$. The ranks of the terms in the minimal complex are uniquely determined and satisfy
 
 $$
-\operatorname{rk}_RF^i=\dim_kH^i(F^\bullet\otimes_Rk).
+\operatorname{rk}_RG^i=\dim_kH^i(F^\bullet\otimes_Rk).
 $$
 
-**Proof strategy.** If a differential matrix has a unit entry, elementary row and column operations isolate an identity summand $R\to R$. The condition $d^2=0$ makes this pair a direct contractible summand. Remove such pairs until every entry lies in $\mathfrak m$. Reduction modulo $\mathfrak m$ then has zero differential, proving both the rank formula and uniqueness. $\square$
+**Proof.** If a differential matrix has a unit entry, elementary row and column operations isolate an identity summand $R\to R$. The condition $d^2=0$ makes this pair a direct contractible summand. Remove such pairs until every entry lies in $\mathfrak m$. The process terminates because the complex has finite total rank. Reduction modulo $\mathfrak m$ then has zero differential, so the surviving rank in degree $i$ is $\dim_kH^i(F^\bullet\otimes_Rk)$. Any minimal model has these same ranks, proving uniqueness of the rank sequence. $\square$
 
 Minimality makes amplitude visible on the special fiber. It also prevents artificial free summands from corrupting determinant or rank counts.
 
 ### 14.3 Amplitude, depth, and support
 
-Suppose $(R,\mathfrak m)$ is noetherian local and a finite $R$-module $M$ has a finite free resolution of length $l$. If $R$ is Cohen--Macaulay and $M$ has finite projective dimension, the Auslander--Buchsbaum formula gives
+**Depth estimate.** Suppose $(R,\mathfrak m)$ is noetherian local of depth $d$, and a nonzero finite $R$-module $M$ has a finite free resolution of length $l$. Then
 
 $$
-\operatorname{depth}_RM=\operatorname{depth}R-\operatorname{pd}_RM.
+\operatorname{depth}_RM\geq d-l.
 $$
 
-Thus a short perfect resolution forces large depth. If $R$ is regular of dimension $d$ and $M$ has finite length, then $\operatorname{depth}M=0$, so every finite free resolution has length at least $d$.
+**Proof.** Write $K_0=M$ and let $K_{i+1}$ be the kernel of $F_i\to K_i$ in a length-$l$ free resolution. The last nonzero $K_l$ is free. Starting from $\operatorname{depth}K_l=d$ and applying the depth lemma to
 
-The corresponding intersection statement for a nonzero perfect complex is: if all its homology has finite length over a noetherian local ring $R$, then the difference between the largest and smallest degrees of a minimal finite free representative is at least $\dim R$. Its proof reduces by improved intersection inequalities to the module case after suitable truncations. This result should be applied only when total homology is supported at the closed point; arbitrary support requires localization and a codimension computed at each prime.
+$$
+0\longrightarrow K_{i+1}\longrightarrow F_i\longrightarrow K_i\longrightarrow0
+$$
+
+gives $\operatorname{depth}K_i\geq d-(l-i)$ by descending induction. At $i=0$ this is the claimed estimate. $\square$
+
+Thus a short perfect resolution forces large depth. If $R$ is Cohen--Macaulay of dimension $d$ and $M$ has finite length, then $\operatorname{depth}M=0$: a nonzero element in the last nonzero power of $\mathfrak mM$ is killed by $\mathfrak m$. Hence every finite free resolution of $M$ has length at least $d$. The same conclusion applies to a perfect complex whose homology is concentrated in one degree and has finite length, after shifting that module to degree zero.
+
+For a perfect complex with several nonzero homology modules, this elementary module argument does not prove that its total amplitude is at least $\dim R$. Such a stronger intersection assertion requires an additional theorem and is not used here. Likewise, arbitrary support requires localization and a codimension calculation at each prime.
 
 In patching, an amplitude bound from topology and a depth bound from a large regular auxiliary ring can meet at equality. Equality is powerful: it can force concentration in one degree or maximal Cohen--Macaulay behavior. It is not automatic from determinant data alone.
 
@@ -1561,7 +1787,16 @@ $$
 
 If $R\to S$ is a quotient, higher Tor in the cohomology groups is already encoded by the specialized complex; one must not replace the left side with alternating determinants of $H^i(C)\otimes_RS$ unless cohomology base change has separately been proved.
 
-Suppose a finite group $\Delta$ acts and $R$ is finite free over a group ring $\mathcal O[\Delta]$. Specializing by the augmentation $\mathcal O[\Delta]\to\mathcal O$ gives a determinant comparison for the specialized perfect complex. If freeness or finite Tor dimension over the group ring fails, ordinary coinvariants can have higher Tor and the same formula must be read with derived tensor product.
+Suppose a finite abelian group $\Delta$ acts and $C$ is perfect over the commutative group ring $\mathcal O[\Delta]$. Specializing by the augmentation $\mathcal O[\Delta]\to\mathcal O$ gives
+
+$$
+\operatorname{Det}_{\mathcal O}
+\bigl(C\otimes^L_{\mathcal O[\Delta]}\mathcal O\bigr)
+\cong
+\operatorname{Det}_{\mathcal O[\Delta]}(C)\otimes_{\mathcal O[\Delta]}\mathcal O.
+$$
+
+If $C$ has no finite-Tor-dimension model over the group ring, ordinary coinvariants can have higher Tor; the specialization must then still be formed with derived tensor product, and a determinant comparison is available only if the specialized complex is perfect.
 
 This distinction is central in patching: determinant lines commute with specialization because the complex is perfect, while individual cohomology modules may not.
 
@@ -1573,7 +1808,15 @@ $$
 R^m\xrightarrow{A}R^n\longrightarrow M\longrightarrow0
 $$
 
-be a finite presentation. The zeroth Fitting ideal $\operatorname{Fitt}_0(M)$ is generated by the $n\times n$ minors of $A$ when $m\ge n$, and is zero when $m<n$. It is independent of the presentation and commutes with arbitrary base change.
+be a finite presentation. For $i\geq0$, the Fitting ideal $\operatorname{Fitt}_i(M)$ is generated by the $(n-i)\times(n-i)$ minors of $A$; it is the unit ideal when $i\geq n$. In particular, $\operatorname{Fitt}_0(M)$ is generated by the $n\times n$ minors when $m\ge n$, and is zero when $m<n$.
+
+These ideals are independent of the presentation. Indeed, changing bases performs invertible row or column operations and therefore replaces every minor by a linear combination of minors of the same size in both directions. Adding a relation already generated by the old relations adds a column which is their linear combination and changes no minors ideal. Adding a redundant module generator together with the relation identifying it adds an identity row and column; Laplace expansion shows that this stabilization also leaves the indicated ideals unchanged. Lifting the generators of either presentation through the other and then lifting their relation generators expresses any two finite presentations through these reversible moves. Thus the minors define an invariant of $M$. After a ring map $R\to S$, the same matrices present $M\otimes_RS$, and their minors are the images of the old minors. Hence
+
+$$
+\operatorname{Fitt}_i(M\otimes_RS)=\operatorname{Fitt}_i(M)S
+$$
+
+for arbitrary base change; no flatness is required.
 
 If $m=n$, then
 
@@ -1581,7 +1824,7 @@ $$
 \operatorname{Fitt}_0(M)=(\det A).
 $$
 
-The map $A$ is also a section of the determinant line of $[R^n\xrightarrow A R^n]$. If it is generically invertible over a domain, this section measures the codimension-one torsion of $M$. Over a discrete valuation ring its valuation equals $\operatorname{length}M$.
+The map $A$ is also a section of the determinant line of $[R^n\xrightarrow A R^n]$. If it is generically invertible over a normal noetherian domain, its orders at height-one primes measure the codimension-one torsion of $M$. Over a discrete valuation ring its valuation equals $\operatorname{length}M$.
 
 For a nonsquare presentation, the determinant line alone does not generate the Fitting ideal. Exterior powers of the map supply all maximal minors. Claims equating a determinant with a Fitting ideal therefore require a square presentation or an explicitly chosen determinant of a perfect torsion complex.
 
@@ -1639,7 +1882,7 @@ $$
 \cong\det(I/I^2)^{-1}\otimes i^*\det(\Omega_{P/S}).
 $$
 
-The package is stable under flat base change. Under Tor-independent base change, the intrinsic complex and determinant base-change correctly; a geometric lci conclusion follows wherever the converse cotangent criterion is available. For a composition, use transitivity and a geometric factorization rather than relying only on the coarse amplitude of a cone.
+The package is stable under flat base change. Under Tor-independent base change, the intrinsic complex and determinant base-change correctly; a geometric lci conclusion follows wherever the converse cotangent criterion is available. For a composition, transitivity preserves the intrinsic amplitude because it presents the composite complex as an extension; the lifted local factorization proves the geometric statement without noetherian hypotheses.
 
 ### 15.2 The deformation package
 
@@ -1649,7 +1892,7 @@ $$
 T^i(B/A;M)=\operatorname{Ext}^i_B(L_{B/A},M).
 $$
 
-Then $T^0$ is derivations and acts simply transitively on lifts of a fixed map once a lift exists; $T^1$ classifies square-zero extensions and contains the obstruction to lifting a map across a square-zero ideal. For deformations of the algebra $B$ over a square-zero enlargement of the base, the automorphism, deformation, and obstruction groups occur in degrees $0,1,2$ respectively, subject to the flatness and base-change hypotheses that construct the canonical obstruction class.
+Then $T^0$ is derivations and acts simply transitively on lifts of a fixed map once a lift exists; $T^1$ classifies square-zero extensions and contains the obstruction to lifting a map across a square-zero ideal. If $B$ is flat over $A$, then for deformations over a square-zero enlargement $A'\twoheadrightarrow A$ the automorphism, deformation, and obstruction groups with coefficients $B\otimes_A\ker(A'\to A)$ occur in degrees $0,1,2$ respectively. Without this flatness, the derived coefficient complex and its Tor terms must replace the ordinary tensor product.
 
 For a scheme, use global Ext. Before concluding unobstructedness from local amplitude, inspect the local-to-global spectral sequence: sheaf Ext above degree $1$ may vanish for an lci morphism while global $H^p$ still creates higher total Ext.
 
@@ -1671,7 +1914,7 @@ $$
 
 All tensor products of determinant factors are ordered, and exchanging factors of grades $r,s$ contributes $(-1)^{rs}$. Exact triangles are compatible with rotation, composition, and the octahedral diagram. If the cohomology modules are finite projective, determinant may be computed from their alternating product; otherwise compute from a strict perfect representative.
 
-A generically acyclic perfect complex has a generic trivialization of its determinant. Converting that trivialization into a Cartier divisor requires codimension-one regularity assumptions. A square two-term presentation converts it into the ordinary determinant and zeroth Fitting ideal; a rectangular presentation requires maximal minors.
+A generically acyclic perfect complex has a generic trivialization of its determinant. A resulting regular determinant section gives a Cartier divisor precisely when it is a non-zero-divisor in every local trivialization; normality separately identifies its height-one orders with a Weil divisor. A square two-term presentation converts the section into the ordinary determinant and zeroth Fitting ideal; a rectangular presentation requires maximal minors.
 
 ### 15.4 The base-change protocol
 

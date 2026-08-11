@@ -40,7 +40,7 @@ any resulting corrections.
 - [x] 014. Moduli Stacks for Modular and PEL Problems
 - [x] 015. Coherent Cohomology in Proper Families
 - [x] 016. Arithmetic Spectral Sequences and Derived Cohomology
-- [ ] 017. Cotangent Complexes, Perfect Complexes, and Determinant Lines
+- [x] 017. Cotangent Complexes, Perfect Complexes, and Determinant Lines
 - [ ] 018. Formal Schemes, GAGA, and Algebraization
 - [ ] 019. Finite Étale Covers and Fundamental Groups
 - [ ] 020. Étale Sheaves and Cohomology on Curves
