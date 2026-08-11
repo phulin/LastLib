@@ -117,7 +117,7 @@ any resulting corrections.
 - [x] 091. Hecke Algebras and Congruences
 - [x] 092. Automorphic Representations of (GL_2)
 - [x] 093. Automorphic Representations of (D^\times)
-- [ ] 094. Global Jacquet–Langlands
+- [x] 094. Global Jacquet–Langlands
 - [ ] 095. Hecke Characters and Automorphic Induction from (GL_1)
 - [ ] 096. Cyclic Base Change for (GL_2)
 - [ ] 097. Solvable Base Change and Descent

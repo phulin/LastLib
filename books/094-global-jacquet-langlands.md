@@ -106,7 +106,7 @@ $$
 
 But a restricted tensor of admissible local representations need not occur automorphically. Automorphy is a global condition, and cuspidality is even more global: it is expressed by an integral over $F\backslash\mathbf A_F$, not by a condition on each component. The main work of this book is to prove that the formal tensor is indeed a cuspidal automorphic representation for the noncharacter, selected weight-two packets used in the FLT route, and that every cusp form satisfying the corresponding selected local conditions arises this way.
 
-The proof compares two trace formulas. On $D^\times$, compactness modulo the center makes the kernel and its trace completely discrete. On $\mathrm{GL}_2$, the quotient has cusps, so continuous and parabolic terms ordinarily appear. The strongly cuspidal archimedean projector of Books 109 and 110 kills both the continuous and residual spectrum. On the compact side one must therefore subtract the norm-character trace. Book 112's singular-germ calculation makes precisely this subtraction visible in the central distribution. After that correction, matching regular orbital integrals forces the desired cuspidal representation to exist.
+The proof compares two trace formulas. On $D^\times$, compactness modulo the center makes the kernel and its trace completely discrete. On $\mathrm{GL}_2$, the quotient has cusps, so continuous and parabolic terms ordinarily appear. Books 109 and 110 prove a one-place simple formula when a strongly cuspidal real factor also satisfies their global kernel-admissibility estimate. Their theorem does not automatically include a low-weight coefficient merely because it is a valid local pseudo-coefficient. For parallel weight two, the closed input is instead Book 93's character-clean two-place identity: two ramified transfer factors have zero induced trace and zero split regular orbital integrals, so differentiated continuous and boundary terms cancel place by place. One factor is the cuspidal archimedean weight-two projector. On the compact side the same identity removes the norm-character trace. Book 112's singular-germ calculation and Book 93's finite interpolation then normalize the scalar distribution. After that correction, matching regular orbital integrals forces the desired cuspidal representation to exist.
 
 This route explains more than existence. It shows why the image condition is discrete series at every ramified place, why the local minus signs disappear globally, why Hecke eigenvalues are unchanged at good places, and why the quaternionic character subspace must be removed before claiming a cuspidal bijection.
 
@@ -132,7 +132,7 @@ $$
 
 Changing $\iota_v$ conjugates it and hence changes neither local representation classes nor orbital integrals. At finite $v\in R$, write $\operatorname{JL}_v$ for the selected local correspondence of Book 84, with the archimedean correspondence constructed from the real discrete-series character formula at a ramified real place.
 
-For the trace-formula theorem proved from the stated prerequisites, assume that $F$ is totally real and that $D$ is totally definite. This is the weight-two setting used in the FLT route and supplies a ramified real place at which the strongly cuspidal projector of Books 109 and 110 is available. Since $D$ is then a division algebra, $R\ne\varnothing$ and
+For the trace-formula theorem proved from the stated prerequisites, assume that $F$ is totally real and that $D$ is totally definite. This is the weight-two setting used in the FLT route and supplies a ramified real place carrying the cuspidal weight-two projector. Since $D$ is then a division algebra, $R\ne\varnothing$; reciprocity makes $|R|$ even, so in fact $|R|\ge2$. These two ramified places supply the two trace-cuspidal factors in the low-weight comparison. Moreover
 
 $$
 [G]=Z(\mathbf A)G(F)\backslash G(\mathbf A)
@@ -171,6 +171,8 @@ $$
 All other irreducible automorphic representations will be called **noncharacters**. A noncharacter is **selected** if, at every finite $v\in R$, its local factor is a norm character or one of the depth-zero or tame positive-depth dihedral factors covered by Book 84. The theorem will give a bijection between selected noncharacters on $G$ and cuspidal representations on $G^*$ whose ramified finite factors are the corresponding selected special or dihedral discrete series and whose ramified real factors have the prescribed algebraic discrete-series type. Parallel weight two is obtained from the trivial compact type at every real place. Norm characters are genuinely exceptional and will be treated in Chapter 10.
 
 We use $\Pi$ for a quaternionic representation and $\pi$ for a representation of $G^*(\mathbf A)$. Their local components are $\Pi_v$ and $\pi_v$. At a split place, the assertion $\pi_v\cong\Pi_v$ always means that $\Pi_v$ has been transported through $\iota_v$.
+
+Trace comparison is carried out one central character and one infinity type at a time. Fix a unitary Hecke character $\omega$ and, for every real $v$, an irreducible algebraic automorphic type $\tau_v$ of $D_v^\times$ whose scalar action is $\omega_v$. In the parallel-weight-two range, $\tau_v$ is trivial on the norm-one subgroup of $D_v^\times$; a common norm twist accounts for the chosen scalar action. Write $\tau_v^*=\operatorname{JL}_v(\tau_v)$ for the corresponding full-group discrete series. The algebraic, possibly nonunitary normalization is recovered after the Hilbert-space argument by undoing the common real norm twist.
 
 ### 1.3 A normalization ledger
 
@@ -250,7 +252,7 @@ $$
 P_{\gamma^*}(X)=X^2-\operatorname{tr}(\gamma^*)X+\det(\gamma^*).
 $$
 
-Noncentral regular semisimple classes on either side are determined by this polynomial. We say that $\gamma$ and $\gamma^*$ match if $P_\gamma=P_{\gamma^*}$. The common algebra
+Ordinary noncentral regular semisimple conjugacy classes on either side are determined by this polynomial. We say that $\gamma$ and $\gamma^*$ match if $P_\gamma=P_{\gamma^*}$. Multiplying both representatives by $z\in F^\times$ preserves matching and passes to the projective rational classes that occur in the fixed-central-character kernels. The common algebra
 
 $$
 E=F[X]/(P_\gamma)
@@ -263,7 +265,29 @@ G_\gamma\cong\operatorname{Res}_{E/F}\mathbf G_m
 \cong G^*_{\gamma^*}.
 $$
 
-The equality of centralizers is the reason the global volume coefficient can match. Equality merely of traces and norms without compatible torus measures would not suffice.
+The equality of connected centralizers is the reason the global volume coefficient can match. Equality merely of traces and norms without compatible torus measures would not suffice.
+
+Projective orbit unfolding has one additional finite coefficient. Let $\overline G=G/Z$, and for a regular $\gamma$ define its rational projective stabilizer by
+
+$$
+C_\gamma(F)=
+\{\bar x\in\overline G(F):x^{-1}\gamma x\in F^\times\gamma\}.
+$$
+
+The connected subgroup is $\overline G_\gamma(F)=G_\gamma(F)/Z(F)$. If $\operatorname{Trd}(\gamma)\ne0$, taking traces in $x^{-1}\gamma x=z\gamma$ forces $z=1$. If $\operatorname{Trd}(\gamma)=0$, determinants force $z=\pm1$, and Skolem--Noether supplies an element implementing the nontrivial automorphism of $F[\gamma]$, which sends $\gamma$ to $-\gamma$. Therefore
+
+$$
+\kappa(\gamma):=
+[C_\gamma(F):\overline G_\gamma(F)]^{-1}
+=
+\begin{cases}
+\frac12,&\operatorname{Trd}(\gamma)=0,\\
+1,&\operatorname{Trd}(\gamma)\ne0.
+\end{cases}
+\tag{2.1}
+$$
+
+The identical proof on $G^*$ uses the same trace. Hence matching classes have the same $\kappa$. This factor belongs to rational projective orbit unfolding, not to the local orbital integral.
 
 Scalar classes require separate language. After quotienting by the full adelic center, all rational scalar elements represent the identity class. Their contribution is the volume of the projective automorphic quotient times the test function's central germ. Regular orbital integrals do not determine the value of a function at a scalar, so the singular part of local transfer must also be normalized. Book 112 separates the zero and regular-nilpotent germs and supplies the triangular correction used in Section 7.3.
 
@@ -338,10 +362,12 @@ $$
 the compatible Tamagawa measures satisfy
 
 $$
-\operatorname{vol}\bigl(PG(F)\backslash PG(\mathbf A)\bigr)=2
+\operatorname{vol}\bigl(PG(F)\backslash PG(\mathbf A)\bigr)
+=\operatorname{vol}\bigl(PG^*(F)\backslash PG^*(\mathbf A)\bigr)
+=2
 $$
 
-for the anisotropic inner form, and the corresponding finite-volume statement on $PG^*$. Equality of these Tamagawa numbers identifies the volume factor in the two central terms. It does not identify the local point values of transferred functions; that separate singular-germ normalization is carried out in Section 7.3. One could divide both global measures by two; every volume coefficient on both sides would change together.
+for the compatible Tamagawa measures. Equality of these Tamagawa numbers identifies the volume factor in the two central terms. It does not identify the local point values of transferred functions; that separate singular-germ normalization is carried out in Section 7.3. One could divide both global measures by two; every volume coefficient on both sides would change together.
 
 For finite-level calculations we instead require
 
@@ -480,12 +506,12 @@ I_D(f')=
 \int_{[G]}K_{f'}(x,x)\,dx.
 $$
 
-Group the rational elements by conjugacy class. One obtains
+Group the rational elements by conjugacy class in $Z(F)\backslash G(F)$. One obtains
 
 $$
 I_D(f')=
 \sum_{[\gamma]}
-a_D(\gamma)O_\gamma(f'),
+\kappa(\gamma)a_D(\gamma)O_\gamma(f'),
 $$
 
 where
@@ -505,11 +531,11 @@ O_\gamma(f')=
 f'(x^{-1}\gamma x)\,dx.
 $$
 
-The same centralizer measure occurs in both expressions. For regular noncentral $\gamma$, the centralizer is $E^\times$ for the quadratic field $E=F(\gamma)$. For the central class it is all of $G$.
+The same connected-centralizer measure occurs in both expressions. For regular noncentral $\gamma$, the centralizer is $E^\times$ for the quadratic field $E=F(\gamma)$. For the central class it is all of $G$. We put $\kappa=1$ on that class.
 
-**Proof strategy.** Absolute convergence allows the sum and integral to be interchanged. Each orbit of $G(F)$ is unfolded against its stabilizer. Weil's quotient formula then separates the volume of the rational centralizer quotient from the adelic orbital integral.
+**Proof strategy.** Absolute convergence allows the sum and integral to be interchanged. Each projective orbit is unfolded against its full rational projective stabilizer. Passing to the connected centralizer contributes $\kappa(\gamma)$, and Weil's quotient formula then separates its adelic volume from the orbital integral.
 
-**Proof.** Insert the kernel on the diagonal and integrate. Compact support and compactness of $[G]$ give absolute convergence. For a fixed $\gamma$, sum over $G_\gamma(F)\backslash G(F)$ and change variables. The quotient by $G_\gamma(F)$ unfolds to $G_\gamma(F)\backslash G(\mathbf A)$; applying Weil's formula along $G_\gamma(\mathbf A)$ gives the coefficient and orbital integral displayed above. Summing over conjugacy classes proves the formula. $\square$
+**Proof.** Insert the kernel on the diagonal and integrate. Compact support and compactness of $[G]$ give absolute convergence. For a fixed projective class, the rational orbit is $C_\gamma(F)\backslash\overline G(F)$. The summand descends to this quotient because replacing $\gamma$ by $z\gamma$ for $z\in F^\times$ multiplies it by $\omega(z)^{-1}=1$. Replacing $C_\gamma(F)$ by its connected subgroup $\overline G_\gamma(F)$ is a cover of degree $\kappa(\gamma)^{-1}$. Weil's formula along $\overline G_\gamma(\mathbf A)$ then gives $\kappa(\gamma)a_D(\gamma)O_\gamma(f')$. Summing over projective conjugacy classes proves the formula. $\square$
 
 The argument is elementary once compactness is known. Its importance lies in exposing exactly the geometric data that local transfer can compare.
 
@@ -539,9 +565,9 @@ The absence of other terms is structural. It is not achieved by cancellation aft
 
 For $G^*=\mathrm{GL}_2$, the quotient by the center has finite volume but is not compact. The naive kernel has a cuspidal part, a continuous Eisenstein part, and residual contributions. Geometrically there are central, unipotent, split regular, and elliptic regular classes. Integrating the diagonal without modification does not justify exchanging sums and integrals near the cusp.
 
-Books 109 and 110 prove the required smaller formula under a precise hypothesis: one real local factor is **strongly cuspidal**, meaning that its two-sided parabolic transform vanishes. Its convolution operator is then zero on every representation induced from the Borel. This operator-level assertion propagates through Eisenstein continuation and its Laurent coefficients, so it annihilates both the continuous spectrum and the one-dimensional residual spectrum. The geometric formula consequently retains only the central and elliptic distributions.
+Books 109 and 110 prove a smaller formula under a precise hypothesis: one real local factor is **strongly cuspidal**, meaning that its two-sided parabolic transform vanishes, and it belongs to their kernel-admissible global test class. Its convolution operator is then zero on every representation induced from the Borel. This kills the continuous channel, while the zero parabolic transform kills residual characters directly. The geometric formula consequently retains only the central and elliptic distributions.
 
-Because $D$ is totally definite, every real place is ramified and the real weight projector transferred from the compact factor is strongly cuspidal. In parallel weight two it is the projector for the weight-two discrete series. This is the exact point at which the totally real, algebraic-weight hypothesis enters the proof.
+The local discrete-series projector transferred from a compact real factor is strongly cuspidal and isolates the required infinity type. There is nevertheless a separate global analytic condition: Book 109 proves its fixed kernel estimate automatically only in sufficiently high lowest weight and explicitly requires low weights to be checked independently. We do not assume that missing check at weight two. Instead we use Book 93, Proposition 7.2. It proves the needed simple identity from two ramified factors whose traces on normalized principal series and whose split regular orbital integrals vanish. Because $|R|\ge2$, such a pair is always available; because $D$ is totally definite, one member can be the archimedean weight-two projector. Thus the exact low-weight proof still uses a cuspidal archimedean test function, but its global cancellation is the proved two-place argument rather than an unstated extension of the one-place kernel theorem.
 
 ### 5.2 Cuspidal local test functions
 
@@ -552,21 +578,21 @@ h_B(t)=\delta_B(t)^{1/2}
 \int_{N(K)}h(tn)\,dn.
 $$
 
-For the trace formula one uses the stronger conjugation-stable condition that
+For the one-place trace formula one uses the stronger conjugation-stable condition that
 
 $$
 \int_{N(K)}h(x^{-1}tnx)\,dn=0
 $$
 
-for every $x\in\mathrm{GL}_2(K)$ and $t\in T(K)$, with the evident archimedean smooth analogue, and require the opposite-Borel transform to vanish as well. We call such an $h$ **strongly cuspidal**. It acts by zero on every normalized representation induced from $B$; mere vanishing of trace would be weaker and would not control intertwining derivatives or residual Laurent coefficients. In rank one this is also reflected geometrically by vanishing split regular orbital integrals together with the appropriate singular-germ condition.
+for every $x\in\mathrm{GL}_2(K)$ and $t\in T(K)$, with the evident archimedean smooth analogue, and require the opposite-Borel transform to vanish as well. We call such an $h$ **strongly cuspidal**. It acts by zero on every normalized representation induced from $B$; mere vanishing of trace is weaker and cannot kill a logarithmic derivative at the same place. In rank one this is also reflected geometrically by vanishing split regular orbital integrals together with the appropriate singular-germ condition.
 
-The real discrete-series pseudo-coefficients used here are canonical examples. They isolate the selected discrete series and act by zero on principal series and their residual subquotients. At finite division places the Euler--Poincare functions of Book 112 provide regular orbital matching, but the global operator-level vanishing invoked here comes from the real factor.
+The real discrete-series pseudo-coefficients used here are canonical local examples. They isolate the selected discrete series and act by zero on principal series and their one-dimensional quotients. At finite division places the Euler--Poincare functions of Book 112 provide regular orbital matching and trace zero on full normalized principal series. In the two-place formula, trace-level vanishing is enough: each differentiated global term has its derivative at at most one place, so the undifferentiated zero trace at the other selected place kills it.
 
 The converse warning matters: support on matrices whose characteristic polynomial happens to be irreducible does not by itself imply vanishing constant term. Cuspidality is a distributional statement stable under conjugation and passage through the singular boundary.
 
 ### 5.3 The simple trace identity
 
-Let $f=\bigotimes_vf_v$ be a global test function on $G^*(\mathbf A)$ with fixed central character, and suppose $f_{v_0}$ is strongly cuspidal at a real place. Then the simple trace formula of Books 109 and 110 is
+There are two proved forms of the simple identity, and their hypotheses must not be conflated. Let $f=\bigotimes_vf_v$ be a global test function on $G^*(\mathbf A)$ with fixed central character. If $f_{v_0}$ is strongly cuspidal at a real place and satisfies the kernel-admissibility estimate of Books 109 and 110, their one-place formula is
 
 $$
 I_{G^*}(f)
@@ -575,21 +601,23 @@ m_{G^*}(\pi)\operatorname{tr}\pi(f)
 =I_{\mathrm{cent}}(f)+I_{\mathrm{ell}}(f).
 $$
 
-**Proof strategy.** Insert the truncation used in Book 110. Its parabolic main term factors through the two-sided constant term, while the continuous and residual spectral channels factor through the induced local operator. Strong cuspidality makes all of them zero. The remaining elliptic series is handled by the independent absolute-convergence estimates of Book 110.
+**Proof strategy.** Insert the truncation used in Book 110. Its parabolic main term factors through the two-sided constant term, while the continuous channel factors through the induced local operator. Strong cuspidality kills both, and the zero parabolic transform kills residual characters. The remaining elliptic series is handled by Book 110's absolute-convergence estimates.
 
-**Proof.** The kernel theorem gives a trace-class operator and an absolutely convergent cuspidal spectral trace. At $v_0$, the induced operator is zero. Tensor factorization therefore kills every Eisenstein wave packet. Taking Laurent coefficients at the reducibility points kills the residual determinant characters as well. On the geometric side, stable-line unfolding expresses split regular, unipotent, and weighted terms through the same two-sided parabolic transform; they vanish. The central class remains, and elliptic orbit unfolding gives the absolutely convergent sum $I_{\mathrm{ell}}(f)$. This proves the identity. $\square$
+**Proof.** The kernel theorem gives a trace-class operator and an absolutely convergent cuspidal spectral trace. At $v_0$, the induced operator is zero. Tensor factorization therefore kills every Eisenstein wave packet, and direct integration of a residual determinant character through the parabolic transform gives zero. On the geometric side, stable-line unfolding expresses split regular, unipotent, and weighted terms through the same two-sided parabolic transform; they vanish. The central class remains, and elliptic orbit unfolding gives the absolutely convergent sum $I_{\mathrm{ell}}(f)$. This proves the identity. $\square$
 
-Notice the asymmetry with the compact inner form: norm characters do occur in its discrete trace. The comparison must remove them on the quaternionic side; it cannot pair them with residual split characters, because the strongly cuspidal split operator has already annihilated those characters.
+For the weight-two theorem, choose two distinct ramified places $a,b\in R$. At each, use a transfer with zero split regular orbital integrals and trace zero on every full normalized principal series. Book 93, Proposition 7.2 proves that, after residual characters are displayed separately, the same identity holds. That proposition uses the signed orbital convention; multiplying the split function by $-1$ at every place of $R$ gives the signless convention of Chapter 6 and changes the global tensor by $(-1)^{|R|}=1$. Each logarithmically differentiated continuous term differentiates an intertwiner at only one place. If that place is $a$, the undifferentiated trace at $b$ is zero; if it is $b$, the trace at $a$ is zero; and if it is elsewhere, both vanish. The split, unipotent, and weighted geometric boundary terms have the identical two-place cancellation. The convergence estimates proved there justify removal of truncation. This is the form used from Chapter 7 onward.
+
+Notice the asymmetry with the compact inner form: norm characters occur in its discrete trace. In the one-place formula the split residual characters have already vanished. In the two-place formula residual determinant characters and quaternionic norm characters first have equal traces, after multiplication of all ramified local signs, and the character-clean condition then kills both. Either way, a cuspidal correspondence is obtained only after the character spectrum has been removed.
 
 ### 5.4 Why unwanted terms vanish
 
 It is useful to separate three mechanisms that are often compressed into the word “cuspidal.”
 
-- Split regular classes vanish because their local orbital integral is zero at the strongly cuspidal transfer place.
-- Unipotent and weighted parabolic terms vanish because the two-sided parabolic transform is zero.
-- Continuous and residual spectral terms vanish because the induced local operator itself is zero.
+- In the one-place formula, split regular classes, unipotent and weighted terms, and the continuous spectrum vanish through the strongly cuspidal factor; residual characters vanish through its zero parabolic transform.
+- In the weight-two two-place formula, each split or unipotent boundary term and each differentiated continuous term has an undifferentiated zero orbital or trace factor at one of the two selected places.
+- Residual determinant characters are retained long enough to be matched with norm characters, then both are annihilated by character-clean interpolation.
 
-These are compatible consequences of strong cuspidality, but they occur on different sides of the trace formula.
+These mechanisms lead to the same simple distribution, but they use different hypotheses and occur on different sides of the trace formula.
 
 **Counterexample.** If every local factor is the hyperspecial unit, no factor is cuspidal. The identity operator on the spherical spectrum has a nonzero Eisenstein trace, split semisimple classes contribute, and the quotient has an uncancelled cusp. Equating that trace with a compact quaternionic trace would be false even though the two groups agree at almost every place.
 
@@ -723,7 +751,7 @@ $$
 \end{array}\right\}.
 $$
 
-This is an honest rational-class bijection in degree two. There is no additional sum over rational classes inside a stable class because characteristic polynomial already determines conjugacy for regular elements in both algebras.
+This is an honest ordinary rational-class bijection in degree two, compatible with simultaneous scalar multiplication and hence with the projective classes in the kernels. There is no additional sum over ordinary rational classes inside a stable class because characteristic polynomial already determines conjugacy for regular elements in both algebras. On the trace-zero projective fiber the orbit has the extra order-two stabilizer of (2.1), with the same reciprocal factor on both sides.
 
 ### 7.2 Classes that do not come from the quaternion algebra
 
@@ -733,7 +761,7 @@ If the polynomial splits over $F$, it splits over every $F_v$. At any chosen $v\
 
 If the polynomial defines a quadratic field $E/F$ that does not embed in $D$, the embedding criterion gives a ramified place $v\in R$ that splits in $E$. The local matrix is split regular there, and again its orbital integral is zero.
 
-Unipotent terms have no division-side counterpart. They factor through a parabolic constant term and vanish because the local transfer function at a ramified place is cuspidal. Weighted split-torus terms vanish for the same reason.
+Unipotent terms have no division-side counterpart. In the one-place formula they factor through the strongly cuspidal parabolic transform. In the weight-two formula the two-place cancellation of Section 5.3 kills them, as well as the weighted split-torus terms. Zero regular orbital integrals at one place alone would not justify this conclusion.
 
 This reasoning is stronger than saying that “only elliptic terms survive.” A globally elliptic class may still be locally split at a ramified finite place and must be removed. The exact survivor condition is ellipticity at **every** ramified place.
 
@@ -745,7 +773,7 @@ $$
 O_{\gamma^*}(f)=O_\gamma(f').
 $$
 
-Their volume coefficients are equal because their rational and adelic centralizers are the same torus with the same measure:
+Their volume and projective-stabilizer coefficients are equal because their rational and adelic connected centralizers are the same torus with the same measure and their traces agree:
 
 $$
 a_{G^*}(\gamma^*)
@@ -753,22 +781,24 @@ a_{G^*}(\gamma^*)
 =a_D(\gamma).
 $$
 
+Moreover $\kappa(\gamma^*)=\kappa(\gamma)$ by (2.1). Thus the complete coefficients $\kappa a$ agree, including the trace-zero fiber; omitting $\kappa=1/2$ there would double both individual trace-formula terms.
+
 The displayed quotient suppresses the standard identification of $E^\times$ with $G_\gamma(F)$ and the central embedding of $\mathbf A^\times$. Its finite volume is a torus Tamagawa volume.
 
-The central class is different. Book 112 proves explicitly that regular transfer does not determine the central value: for the finite Euler function, for example, the split value at $1$ is $q-1$ while the division unit has value $1$. The two rank-two germs form a triangular system. A correction supported in a sufficiently small central neighborhood changes the scalar distribution, while an alternating vertex-edge correction controls the regular nilpotent germ. Hence one can preserve the already fixed regular elliptic orbital integrals and impose one chosen central identity.
+The central class is different. Book 112 proves explicitly that regular transfer does not determine the central value: for its signed finite Euler function, the split value at $1$ is $q-1$ while the division unit has value $1$. After the sign change of Section 6.1 the split value is $1-q$; in either convention it is not forced to equal the division value. Book 112 also proves an important restriction: one cannot change a single function's central value while keeping all its regular orbital integrals fixed. A matching bump changes the division and split functions together near the scalar, preserving equality of their regular orbital integrals rather than preserving their former numerical values. The two rank-two germs form a triangular system, so this paired change controls the scalar distribution without creating a regular-nilpotent mismatch.
 
-At fixed central character, level, and infinity type, only finitely many norm characters occur. Given a selected noncharacter constituent to be detected, local character independence and finite-dimensional interpolation produce a finite linear combination of tensor-product operators $f'$ whose trace is unchanged on that constituent and zero on every norm character in the block. We call such a test **character-clean**. This construction is not circular: two inequivalent restricted tensor products differ at some place, and there are only finitely many competitors in the fixed block.
+At fixed central character, level, infinity type, and spectral window, only finitely many norm characters occur. Book 93, Proposition 7.2 proves the required interpolation statement before global Jacquet--Langlands: local character distributions are linearly independent, the scalar point mass is independent of their locally integrable distributions, and regular slice functions together with one matching central bump solve the resulting finite triangular system. Consequently one may prescribe finitely many noncharacter trace coordinates, make every norm-character coordinate zero, and normalize the scalar distribution while retaining regular matching. We call such a test **character-clean**. This is not circular: the proposition uses compactness, local orbital transfer, and the split trace formula, but assumes no representation correspondence.
 
-Transfer each tensor summand locally. Book 112's triangular germ correction adjusts the split and division functions simultaneously near the singular fiber, retaining their selected trace matching, and permits the scalar terms to be normalized by
+Transfer each tensor summand locally. The interpolation theorem just cited, using Book 112's matching bump, adjusts the split and division functions simultaneously near the singular fiber, retains their cross-inner-form regular and selected trace matching, and permits the scalar terms to be normalized by
 
 $$
 I_{G^*,\mathrm{cent}}(f)=I_{D,\mathrm{cent}}(f')
 \tag{7.1}
 $$
 
-without changing the selected regular transfer identities. This is the subtract-the-central-representations alternative of Book 112, realized here by a character-clean source test. It is forced by Book 109: the strongly cuspidal split operator annihilates residual determinant characters, so the compact test must annihilate norm characters.
+without changing the selected regular transfer identities. In the one-place version this removes the compact norm characters left after residual split characters vanish. In the weight-two two-place version, the residual determinant trace equals the corresponding norm-character trace before subtraction, and the character-clean condition kills both.
 
-**Theorem 7.1 (character-clean geometric comparison).** For selected globally matching functions $(f,f')$ with a strongly cuspidal real factor, a character-clean quaternionic factor, and central normalization (7.1),
+**Theorem 7.1 (character-clean geometric comparison).** For selected globally matching functions $(f,f')$ with either a kernel-admissible strongly cuspidal real factor or the two trace-cuspidal ramified factors of Section 5.3, a character-clean quaternionic test, and central normalization (7.1),
 
 $$
 I_{G^*,\mathrm{geom}}(f)
@@ -777,7 +807,7 @@ $$
 
 **Proof strategy.** Pair the regular classes through their common polynomial, kill every unmatched split class locally, and then use (7.1) for the only distribution not determined by regular transfer.
 
-**Proof.** Proposition 2.1 pairs the regular classes that can contribute. Equality of their centralizer volumes and products of local orbital integrals gives equality term by term. Section 7.2 kills every remaining split semisimple, unipotent, and parabolic term. The singular-germ calculation of Book 112 shows that no regular nilpotent distribution remains. Equation (7.1) compares the scalar terms. Absolute convergence of the compact expansion and of Book 110's elliptic expansion permits the reindexing. $\square$
+**Proof.** Proposition 2.1 pairs the regular classes that can contribute. Equality of their centralizer volumes and products of local orbital integrals gives equality term by term. Section 7.2 kills every remaining split semisimple, unipotent, and parabolic term. The singular-germ calculation of Book 112 shows that no regular nilpotent distribution remains. Equation (7.1) compares the scalar terms. Absolute convergence of the compact expansion and of the applicable split elliptic expansion permits the reindexing. $\square$
 
 ### 7.4 The global trace identity
 
@@ -800,7 +830,7 @@ There is no uncancelled global sign. If one rewrites each ramified local trace t
 
 ### 8.1 Factorized spectral traces
 
-Fix a finite set $S$ containing $R$, every archimedean place, and every finite place where the central character or chosen representation is ramified. Outside $S$, use spherical unit functions except at finitely many auxiliary places where arbitrary spherical Hecke operators may be inserted. Inside $S$, use functions supported in selected Bernstein or compact-type blocks, with a cuspidal transfer factor at one ramified place.
+Fix a finite set $S$ containing $R$, every archimedean place, and every finite place where the central character or chosen representation is ramified. Outside $S$, use spherical unit functions except at finitely many auxiliary places where arbitrary spherical Hecke operators may be inserted. Inside $S$, use functions supported in selected Bernstein or compact-type blocks. For the weight-two comparison retain trace-cuspidal transfer factors at two ramified places, one of them archimedean.
 
 For a constituent $\Pi$, its contribution factors as
 
@@ -820,9 +850,9 @@ Let $\Pi$ be a selected noncharacter automorphic representation of $G(\mathbf A)
 
 **Proof strategy.** At a finite set of places choose local matrix-coefficient projectors that have nonzero trace on $\Pi_v$ and zero trace on the other local types occurring in the fixed-level space. At a ramified place use a transferred elliptic projector. Outside the set vary spherical Hecke operators. The quaternionic spectral side then has a nonzero $\Pi$ contribution. Equality of traces forces at least one cuspidal split constituent with the same good-place Hecke character.
 
-Choose a level and archimedean type detecting $\Pi$. The resulting automorphic space is finite dimensional. Book 93 proves only that a good-place eigensystem determines a finite near-equivalence block; it explicitly does not prove strong determination, which would be circular here. Instead list the finitely many constituents in the chosen block. If $\Pi'\not\cong\Pi$, uniqueness of restricted tensor factorization gives a place $v(\Pi')$ with $\Pi_{v(\Pi')}'\not\cong\Pi_{v(\Pi')}$. The local convolution characters of two inequivalent admissible irreducibles are distinct, so a local test function separates them. Taking the union of these finitely many places and using finite-dimensional linear algebra produces a finite linear combination of pure tensors whose trace is one on $\Pi$ and zero on every other noncharacter constituent in the block. At ramified finite places only selected type functions are used, so Book 112 transfers every tensor in the combination.
+Choose a level and archimedean type detecting $\Pi$. The resulting automorphic space is finite dimensional. Book 93, Theorem 7.3 proves, independently of global Jacquet--Langlands, that a complete good-place quaternionic Hecke character determines one global constituent. For the finite separation used here, one may equivalently list the constituents in the chosen block. If $\Pi'\not\cong\Pi$, uniqueness of restricted tensor factorization gives a place $v(\Pi')$ with $\Pi_{v(\Pi')}'\not\cong\Pi_{v(\Pi')}$. The local convolution characters of two inequivalent admissible irreducibles are distinct, so a local test function separates them. Taking the union of these finitely many places and using the interpolation clause of Book 93, Proposition 7.2 produces a finite linear combination of pure tensors whose trace is one on $\Pi$, zero on every other noncharacter constituent in the block, and zero on every norm character. At ramified finite places only selected type functions are used, so Book 112 transfers every tensor in the combination.
 
-At a ramified real place $v_0$, use the transferred algebraic discrete-series projector. It is strongly cuspidal on the split side. At the remaining separating places use local character independence, and at finite ramified places use the selected special or dihedral functions. Expanding the projector as a finite linear combination of factorizable functions preserves the strongly cuspidal factor at $v_0$ in every summand.
+At a ramified real place $v_0$, use the transferred algebraic discrete-series projector. It is locally strongly cuspidal. Retain a second ramified trace-cuspidal factor in every tensor summand, as required by the proved low-weight simple identity. At the remaining separating places use local character independence, and at finite ramified places use the selected special or dihedral functions.
 
 The quaternionic trace of this finite combination on $\Pi$ is nonzero and its trace on every other noncharacter constituent in the block is zero. Apply the character-clean identity of Section 7.4. If the split cuspidal side were empty, that identity would give zero, a contradiction. Therefore some cuspidal $\pi$ occurs. Varying the finitely many auxiliary spherical operators and using linear independence of their characters shows that it has the same spherical Hecke character as $\Pi$ at almost every split place. Hence
 
@@ -836,7 +866,7 @@ The noncharacter hypothesis is essential in the isolation step. The projector mu
 
 Agreement at almost all places is not the full theorem. Let $w$ be any place.
 
-The character-clean constraint does not prevent this variation. Normally one holds fixed an auxiliary interpolation operator at places different from $w$. If $w$ is the only place at which the target differs from a norm character in the chosen block, vary $f_w'$ in the quotient of the local cocenter by the finite span of those character traces and reapply finite interpolation. On a division group, equality in this quotient still determines the selected elliptic character: adding a norm character cannot turn one selected higher-dimensional character into another, and in the special case the label is recovered from central twists and the elliptic Steinberg identity. Thus the separating family remains large enough.
+The character-clean constraint does not prevent this variation. Hold fixed the two trace-cuspidal factors and all isolating coordinates away from $w$, and invoke the interpolation clause of Book 93, Proposition 7.2 again. If $w\in R$ is itself one of the two places, every regular transfer used while varying $f_w'$ still has zero split regular orbital integrals and trace zero on full normalized principal series, so the other selected place supplies the second zero factor. The proposition explicitly permits prescribed noncharacter local tensor coordinates while annihilating the finite norm-character list and solving the scalar equation. Thus no unproved assertion about a quotient of the local cocenter is needed.
 
 If $w\notin R$, vary $f_w=f_w'$ through the full local Hecke algebra while keeping isolating functions elsewhere. Equality of the resulting trace distributions gives equality of the characters of $\pi_w$ and $\Pi_w$, hence
 
@@ -884,20 +914,21 @@ Strong multiplicity one alone cannot prove existence. Nor is local multiplicity 
 
 We can now state the theorem with its exceptional clause visible.
 
-**Theorem 9.1 (global Jacquet--Langlands in the selected weight-two range).** Let $F$ be totally real and let $D/F$ be totally definite, with ramification set $R$. There is a unique bijection
+**Theorem 9.1 (global Jacquet--Langlands in the selected weight-two range).** Let $F$ be totally real and let $D/F$ be totally definite, with ramification set $R$. Fix $\omega$ and the compatible parallel-weight-two types $\tau_v,\tau_v^*$ as in Section 1.2. There is a unique bijection
 
 $$
 \operatorname{JL}_D:
 \left\{\begin{array}{c}
 \text{irreducible selected noncharacter automorphic}\\
-\text{representations }\Pi\text{ of }D^\times(\mathbf A_F)
+\text{representations }\Pi\text{ of }D^\times(\mathbf A_F)\\
+\text{with central character }\omega\text{ and }\Pi_v\cong\tau_v\ (v\mid\infty)
 \end{array}\right\}
 \xrightarrow{\sim}
 \left\{\begin{array}{c}
 \text{irreducible cuspidal automorphic representations }\pi\\
 \text{of }\mathrm{GL}_2(\mathbf A_F)\text{ such that at finite }v\in R\\
-\pi_v\text{ is selected special or dihedral, and at real }v\\
-\pi_v\text{ has the prescribed algebraic discrete-series type}
+\pi_v\text{ is selected special or dihedral, }\omega_\pi=\omega,\\
+\text{and }\pi_v\cong\tau_v^*\text{ at every real }v
 \end{array}\right\}.
 $$
 
@@ -911,7 +942,7 @@ $$
 \end{cases}
 $$
 
-At a ramified real place, the appropriate holomorphic or antiholomorphic realization is determined by the chosen algebraic infinity type. For parallel weight two the quaternionic type is trivial and the split factor has minimal compact weight two. Each representation occurs with the same automorphic multiplicity. In the present groups both multiplicities are one.
+At a ramified real place, the representation of the full group $\mathrm{GL}_2(\mathbf R)$ is the discrete-series representation determined by the algebraic infinity type. Its restriction to the positive-determinant component contains the holomorphic and antiholomorphic orientations exchanged by an element of negative determinant; they are not two choices of the full local representation. For parallel weight two the quaternionic type is trivial and the split factor has minimal compact weight two. Each representation occurs with the same automorphic multiplicity. In the present groups both multiplicities are one.
 
 If $D=M_2(F)$, no inner-form comparison is needed: global Jacquet--Langlands is, by definition, the identity on the cuspidal spectrum of $\mathrm{GL}_2(\mathbf A_F)$. This split boundary case is stated separately because the phrase “noncharacter automorphic representation of $D^\times$” would otherwise also admit noncuspidal induced representations, which are not in the source of the displayed bijection.
 
@@ -995,7 +1026,7 @@ $$
 =\operatorname{St}_v\otimes(\chi_v\circ\det).
 $$
 
-If $\chi_v$ is unramified, the division character is fixed by $\mathcal O_{D_v}^\times$ and has prepared conductor zero, whereas its Steinberg transfer has conductor exponent one. If $a(\chi_v)>0$, both prepared and split exponents equal $2a(\chi_v)$.
+If $\chi_v$ is unramified, the division character is fixed by $\mathcal O_{D_v}^\times$ and has raw maximal-order level zero, whereas its Steinberg transfer has conductor exponent one. On the transfer-facing prepared scale both exponents are one. If $a(\chi_v)>0$, both prepared and split exponents equal $2a(\chi_v)$.
 
 At a ramified real place, the trivial representation of $\mathbf H^\times$ transfers to the lowest member of the real discrete-series family, of weight two in the algebraic convention. More general norm powers and signs preserve the common central character. Thus the slogan “a norm character transfers to Steinberg” includes the real discrete-series analogue.
 
@@ -1003,16 +1034,16 @@ These local statements remain correct even though their restricted tensor does n
 
 ### 10.3 How the trace comparison accounts for them
 
-Locally, the reducible normalized principal series still explains the character identity: its character constituent and Steinberg constituent have opposite elliptic traces, and the division norm character is paired with the Steinberg constituent. Globally, however, Books 109 and 110 use a strongly cuspidal real factor. That operator kills the entire induced representation and every Laurent coefficient, including the residual determinant character. There is consequently no split one-dimensional term to pair with a quaternionic norm character.
+Locally, the reducible normalized principal series still explains the character identity: its character constituent and Steinberg constituent have opposite elliptic traces, and the division norm character is paired with the Steinberg constituent. In the one-place formula of Books 109 and 110, the strongly cuspidal real factor kills the continuous induced operator and its zero parabolic transform kills the residual determinant character. There is then no split one-dimensional term to pair with a quaternionic norm character.
 
-The compact trace must instead be projected away from its norm-character subspace. On every fixed block this projection is realized by the character-clean interpolation of Section 7.3. Geometrically, regular transfer does not determine central values, and Book 112's two-germ calculation permits the central correction (7.1). For these separating tests the resulting identity is
+In the low-weight two-place formula used here, residual determinant characters are first matched with norm characters: their local trace signs multiply to $+1$ because $|R|$ is even. Character-clean interpolation then annihilates both spectra. On every fixed block this projection is realized by Section 7.3. Geometrically, regular transfer does not determine central values, and Book 112's two-germ calculation together with Book 93's interpolation permits the central correction (7.1). For these separating tests the resulting identity is
 
 $$
 I_{G^*,\mathrm{cusp}}(f)
 =I_D(f'),
 $$
 
-because every norm-character trace on $f'$ is zero. Equivalently, as an abstract spectral distribution, the right side is the restriction of $I_D$ to the orthogonal complement of the character spectrum. Thus the exceptional spectrum is accounted for once, on the compact side. Trying simultaneously to retain residual split characters and to invoke Book 109's strongly cuspidal formula would count incompatible spectral conventions.
+because every norm-character trace on $f'$ is zero. Equivalently, as an abstract spectral distribution, the right side is the restriction of $I_D$ to the orthogonal complement of the character spectrum. Thus the exceptional spectrum is accounted for exactly once. In the one-place formula it remains only on the compact side before subtraction; in the two-place formula the matched residual and norm-character terms are subtracted together.
 
 On the quaternionic side it is often convenient to define
 
@@ -1116,8 +1147,6 @@ $$
 $$
 
 using the usual split exponent off $R_f$. Then
-
-Then
 
 $$
 \boxed{
@@ -1425,7 +1454,7 @@ For maximal division level in the totally definite case, the relevant local fact
 
 Operators at primes in the discriminant are not identified with good spherical operators. The division valuation operator and the split $U_v$ or Atkin--Lehner action require their own local normalization. The robust common algebra is the spherical algebra away from $\Sigma$; refined bad-place compatibility is expressed through the identified local representations and types.
 
-Every comparison in this chapter is over characteristic zero. Book 107 supplies integral lattices separately on each weight-two packet, but the rational correspondence does not identify those lattices, prove saturation of a level-change map, or compute a congruence index. Even the quotient by the norm-character submodule need not split integrally. Those assertions belong to the later theory of integral level change; using them here would exceed both the theorem and its dependencies.
+Every comparison in this chapter is over characteristic zero. Book 107 constructs integral packet lattices when a Hecke-stable integral module is supplied; the finite quaternionic class module provides such a source, while its split-side statements retain their stated lattice hypothesis. The rational correspondence does not identify the two lattices, prove saturation of a level-change map, or compute a congruence index. Even the quotient by the norm-character submodule need not split integrally. Those assertions belong to the later theory of integral level change; using them here would exceed both the theorem and its dependencies.
 
 ## 15. Rationality and conjugation
 
@@ -1671,10 +1700,10 @@ These facts are exactly what is needed before one performs operations on the spl
 
 Global Jacquet--Langlands begins with a local geometric coincidence. A regular quaternion generates a quadratic field, and the same polynomial generates an elliptic matrix class. At every ramified place the division algebra retains exactly the elliptic classes and discards the split ones. Matching orbital integrals with transfer factor $+1$ turns this coincidence into a product of local identities.
 
-The global trace formula supplies what local correspondence cannot. Compactness makes the quaternionic trace a sum over a discrete spectrum and quadratic-field conjugacy classes. A strongly cuspidal real transfer function makes the split trace equally simple: continuous and residual spectrum, unipotent terms, split tori, and quadratic fields that fail to embed all acquire a zero local factor. The surviving regular centralizers are literally the same tori with the same Tamagawa measures. Character-clean interpolation removes quaternionic norm characters, and the scalar germ is then normalized separately.
+The global trace formula supplies what local correspondence cannot. Compactness makes the quaternionic trace a sum over a discrete spectrum and quadratic-field conjugacy classes. At sufficiently admissible weights, one strongly cuspidal real transfer function makes the split trace equally simple. In the weight-two theorem proved here, two ramified trace-cuspidal transfers instead kill differentiated continuous and boundary terms by leaving an undifferentiated zero factor. Split tori and quadratic fields that fail to embed also acquire a zero local orbital factor. The surviving regular centralizers are literally the same tori with the same Tamagawa measures. Character-clean interpolation removes the matched residual and quaternionic character terms, and a paired singular bump normalizes the scalar distribution.
 
 On the spectral side every ramified local transfer contributes a minus sign. Global reciprocity makes the number of ramified places even, so the signs multiply to one. Varying test functions then isolates representations, proves existence, recovers every local component, and preserves multiplicity. Strong multiplicity one turns agreement away from finitely many places into global uniqueness and makes the transfer detectable by good Hecke eigenvalues.
 
-The exceptional character spectrum reveals one boundary of the theorem. A norm character has legitimate local Steinberg transfers at division places, but its almost-everywhere one-dimensional tensor cannot be cuspidal. Removing that spectrum on the compact side is the counterpart of the strongly cuspidal annihilation of the Eisenstein boundary on the split side. The other boundary is local: the proved bijection covers exactly the selected special and tame-dihedral finite packets with the prescribed algebraic infinity type, not primitive wild packets.
+The exceptional character spectrum reveals one boundary of the theorem. A norm character has legitimate local Steinberg transfers at division places, but its almost-everywhere one-dimensional tensor cannot be cuspidal. Character-clean subtraction removes it together with the corresponding residual determinant trace. The other boundary is local: the proved bijection covers exactly the selected special and tame-dihedral finite packets with the prescribed algebraic infinity type, not primitive wild packets.
 
 The resulting rational dictionary preserves multiplicity, central characters, twists, contragredients, local factors, root numbers, good Hecke polynomials, rationality fields, and algebraic conjugation. It changes raw maximal division level by the explicit discriminant factor and turns compact archimedean weights into discrete-series weights shifted by two. It does not identify integral lattices or congruence indices. Within the selected weight-two range, a computable quaternionic eigensystem becomes a unique split cuspidal representation; that is the durable content established here.
