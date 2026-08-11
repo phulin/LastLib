@@ -129,23 +129,31 @@ $$
 
 The Galois action is arithmetic. Over $\mathbf F_q$, the element $\sigma_q:x\mapsto x^q$ is arithmetic Frobenius; geometric Frobenius is $\sigma_q^{-1}$. Arithmetic Frobenius acts on $\mathbf Z_\ell(1)$ by $q$.
 
-At a split hyperspecial place of residue cardinality $q$, the undecorated $T_q$ is the unnormalized double-coset sum of degree $q+1$. The central operator $S_q$ is the one-coset translation by the scalar uniformizer. Its local polynomial is
+At a split hyperspecial place of residue cardinality $q$, the undecorated $T_q$ is the unnormalized double-coset sum of degree $q+1$. The central operator $S_q$ is the one-coset translation by the scalar uniformizer. The associated monic Hecke polynomial is
 
 $$
 P_q(X)=X^2-T_qX+qS_q.
 $$
 
+The reciprocal generating-series convention is
+
+$$
+1-T_qX+qS_qX^2=X^2P_q(X^{-1}).
+$$
+
+These two expressions have the same three Hecke coefficients but are not the same polynomial in the same root variable. Frobenius operators below are substituted into the monic polynomial; Euler-factor variables use the reciprocal expression.
+
 On a central-character space, $S_q$ becomes the appropriate diamond or central-character scalar. At a prime in the level, $U_q$ denotes an oriented degree-$q$ correspondence and is never silently substituted for $T_q$.
 
 ### 1.3 Finite correspondences and multiplicity
 
-A **finite effective correspondence** from $X$ to $Y$ is a proper curve $Z$, possibly disconnected, with finite maps
+A **finite effective correspondence** from $X$ to $Y$ is a finite disjoint union $Z$ of smooth proper integral curves, with finite maps
 
 $$
 s:Z\to X,\qquad t:Z\to Y.
 $$
 
-An integral correspondence may equivalently be represented by an integral curve in $X\times Y$ finite over both factors, together with its normalization. A general finite correspondence is an integral linear combination
+Over the perfect fields occurring in the modular and Shimura applications, an integral correspondence may equivalently be represented by an integral curve in $X\times Y$ finite over both factors, together with its normalization. A general finite correspondence is an integral linear combination
 
 $$
 \Gamma=\sum_i m_i[Z_i],\qquad m_i\in\mathbf Z.
@@ -1022,7 +1030,7 @@ H^1(X_{k^s},\mathbf Z_\ell(1)),\quad
 H^1(X_{k^s},\mathbf Q_\ell).
 $$
 
-Under Kummer, the Tate-module and twisted-cohomology actions are identical. The divisor action descends to the Jacobian because principal divisors are preserved. The same abstract Hecke algebra also acts on the corresponding automorphic modules through right-coset sums, and Chapter 7 identifies the geometric spans with those double cosets. When the adelic quotient is a finite class set, this specializes exactly to the stabilizer-sensitive construction of Books 89--90.
+Under Kummer, the Tate-module and twisted-cohomology actions are identical. The divisor action descends to the Jacobian because principal divisors are preserved. The same abstract Hecke algebra also acts through right-coset sums on adelic-function or weight-bundle modules formed from the same group and level, and Section 8.5 gives the weight-two modular differential realization. Chapter 7 identifies the geometric spans with those double cosets. When the same finite double-coset datum is realized by a finite class set, this specializes exactly to the stabilizer-sensitive construction of Books 89--90. No automorphic decomposition or transfer between different inner forms is asserted.
 
 The phrase “one Hecke algebra acts” means that all maps originate from the same abstract correspondence algebra. It does not mean that the kernels in every realization coincide. We may form a common faithful image by mapping diagonally to a product of endomorphism rings, but even that depends on which realizations are included.
 
@@ -1134,9 +1142,9 @@ For a PEL curve, the prime-to-$p$ subgroup selected by $h$ is finite étale, sta
 
 The correspondence whose local modification is *at* $p$ requires a different argument. For the modular $p$-isogeny correspondence over a base curve with prime-to-$p$ level, the compactified Deligne--Rapoport moduli space represents cyclic finite locally free subgroups of rank $p$. Properness and quasi-finiteness give finite projections to the compactified base curve. The target is regular, while the source is Cohen--Macaulay: at a crossing its completed local ring is $W(k)[[x,y]]/(xy-p)$, and away from the crossings it is regular. A parameter system from the target remains a parameter system in the finite source ring and is therefore a regular sequence. Thus the source is a maximal Cohen--Macaulay module over the regular target ring, hence finite free. Its rank is the generic degree $p+1$. The maps are generically étale but are inseparable on one special-fiber branch. Finite local freeness, not étaleness, is what the norm and trace require.
 
-For the quaternionic $p$-neighbor correspondence, assume the full unramified minuscule PEL hypotheses of Section 12.1. The Iwahori modification functor is proper over the hyperspecial curve because a finite subgroup of the prescribed type has a proper parameter space. Its local model is finite over the hyperspecial local model and has completed equation $xy=u\varpi$ at the crossing points. It is therefore Cohen--Macaulay of the same dimension as the regular target. The preceding maximal Cohen--Macaulay argument makes both projections finite locally free, and their generic lattice-neighbor index gives rank $q+1$. Without that local-model theorem, properness and generic degree would not be enough.
+For the quaternionic $p$-neighbor correspondence, assume the full unramified minuscule PEL hypotheses of Section 12.1, including the standard rank-one incidence local model for the added Iwahori modification. The exact modification functor includes a universal finite locally free subgroup of the prescribed rank; its quotient abelian scheme and transported PEL structure exist and commute with base change. The modification functor is proper over the hyperspecial curve because the subgroup parameter space is proper. Section 12.2 proves, from the two branch maps rather than from the nodal equation alone, that neither projection contracts a special-fiber component. Both projections are consequently quasi-finite and hence finite. At a crossing the completed source ring has equation $xy=u\varpi$, so it is Cohen--Macaulay of the same dimension as the regular target. The preceding maximal Cohen--Macaulay argument makes both projections finite locally free, and their generic lattice-neighbor index gives rank $q+1$. Without the noncontraction argument, properness and generic degree would not be enough.
 
-At cusps of a modular curve, finiteness is checked on Tate parameters. Quotient by the multiplicative subgroup sends $q$ to $q^p$, while a component-direction quotient is expressed after adjoining a $p$th root of $q$. These finite maps extend across the completed cusp disk, and their ramification indices supply the missing scheme lengths. Thus compactification does not add a vertical component or alter the generic rank.
+At cusps of a modular curve, finiteness is checked on a Tate parameter $q_{\mathrm T}$. Quotient by the multiplicative subgroup sends $q_{\mathrm T}$ to $q_{\mathrm T}^p$, while a component-direction quotient is expressed after adjoining a $p$th root of $q_{\mathrm T}$. These finite maps extend across the completed cusp disk, and their ramification indices supply the missing scheme lengths. Thus compactification does not add a vertical component or alter the generic rank.
 
 Finite local freeness is decisive. It ensures constant scheme-theoretic degree, defines norm on relative Picard schemes, and makes both norm and trace commute with base change. A proper extension that is merely generically finite does not suffice.
 
@@ -1174,9 +1182,9 @@ Thus a cycle relation proved on the special fiber becomes an operator relation o
 
 Smooth proper base change makes the vertical maps in (9.1) isomorphisms for $\ell\ne p$. It also shows that inertia acts trivially on generic-fiber $H^1$. The relative Jacobian is an abelian scheme, and prime-to-$p$ torsion specializes isomorphically.
 
-**Specialization theorem.** Under the hypotheses of Section 9.1, every polynomial relation among the specialized correspondences on $H^1(X_{\bar s},\mathbf Q_\ell)$ holds for their generic-fiber operators under the canonical specialization identification.
+**Specialization theorem.** Under the hypotheses of Section 9.1, every polynomial relation among the specializations of the relative correspondence operators on $H^1(X_{\bar s},\mathbf Q_\ell)$ holds for their generic-fiber operators under the canonical specialization identification. A relation that also contains arithmetic or geometric residue Frobenius transfers to the matching unramified Galois Frobenius on the generic fiber.
 
-**Proof.** Pullback commutes with arbitrary base change, trace does so for finite locally free maps, and proper smooth base change identifies the two cohomology groups. Therefore every word in the correspondence operators commutes with specialization. Apply this to the polynomial relation. $\square$
+**Proof.** Pullback commutes with arbitrary base change, trace does so for finite locally free maps, and proper smooth base change identifies the two cohomology groups. Therefore every word in the correspondence operators commutes with specialization. The base-change isomorphism is also equivariant for the quotient of the decomposition group by inertia, identified with the residue-field Galois group, so it matches the two named Frobenius actions. Apply these compatibilities to the polynomial relation. $\square$
 
 If the model is only semistable, proper base change alone compares the generic fiber with nearby cycles, not directly with ordinary $H^1$ of the special fiber. Vanishing cycles and monodromy can intervene. This is the principal reason the theorem does not cover $U_q$ at a level prime.
 
@@ -1205,7 +1213,7 @@ $$
 
 Thus all generic Hecke relations and all transpose identities extend over every point of $S$, including points at which no finite flat model of the two-legged curve exists. This is the canonical meaning of an integral Hecke action on the Jacobian.
 
-The proof deliberately does not take the scheme-theoretic closure of the correspondence. Such a closure in a product of regular curve models is proper and generically finite, but a projection may contract a vertical curve. Normalization can restore finiteness while introduce singularities; resolution can restore regularity while destroy finiteness. Neither defect affects (9.2), because its construction uses the generic Jacobian homomorphism. To calculate (9.2) from curve models, normalize the closure, choose a regular proper domination, pull back horizontal divisors, push them forward as cycles, and pass to the separated Picard quotient. Different resolutions differ by vertical line bundles and give the same Néron map.
+The proof deliberately does not take the scheme-theoretic closure of the correspondence as its definition. Such a closure in a product of regular curve models is proper and generically finite, but a projection may contract a vertical curve. Normalizing a target model in the correspondence function field gives a finite normal model that may be singular; resolving that model restores regularity but can destroy finiteness by introducing exceptional curves. Neither defect affects (9.2), because its construction uses the generic Jacobian homomorphism. To calculate (9.2) from curve models, normalize the closure, choose a regular proper domination, pull back horizontal divisors, push them forward as cycles, and pass to the separated Picard quotient. Different resolutions differ by vertical line bundles and give the same Néron map.
 
 When both legs do extend finite locally freely,
 
@@ -1282,7 +1290,7 @@ $$
 The whole fiber is principal, so $M_{\mathscr X}\mathbf Z^I\subset\Lambda_{\mathscr X}$. Under the regular-model hypotheses of the separated Picard description,
 
 $$
-\Phi_J(k^s)simeq
+\Phi_J(k^s)\simeq
 \Lambda_{\mathscr X}/M_{\mathscr X}\mathbf Z^I. \tag{9.7}
 $$
 
@@ -1324,13 +1332,13 @@ $$
 \longrightarrow\Phi_J(k^s)\longrightarrow0. \tag{9.9}
 $$
 
-Finite flat maps of semistable curves are harmonic on graphs: the sum of branch degrees above any target branch equals the component degree. Harmonicity and the local smoothing equations give pullback and pushforward maps satisfying
+For an admissible finite locally free map of semistable curves, meaning that nodes map to nodes with compatible local smoothing equations, the induced graph map is harmonic: the sum of branch degrees above any target branch equals the component degree. Harmonicity and the local smoothing equations give pullback and pushforward maps satisfying
 
 $$
 q_H(a^*x,y)=q_X(x,a_*y).
 $$
 
-For a correspondence, the graph operator $u_\Gamma=b_*a^*$ and the transpose graph operator $u_{\Gamma^t}=a_*b^*$ are adjoint. Because tori act contravariantly on character groups, the covariant component map is induced on discriminant groups by the dual of the transpose graph map. This variance is forced by (9.9); reducing the visibly covariant cycle map without dualizing can give the transpose of the correct answer.
+When both legs admit such semistable models, the graph operator $u_\Gamma=b_*a^*$ and the transpose graph operator $u_{\Gamma^t}=a_*b^*$ are adjoint. For a general resolved closure whose projections contract vertical components, one instead obtains the same two adjoint maps on the cycle lattices from the normalization--conductor sequence or from the intersection matrices; an edgewise harmonic formula is not asserted for the contracted projection itself. Because tori act contravariantly on character groups, the covariant component map is induced on discriminant groups by the dual of the transpose graph map. This variance is forced by (9.9); reducing the visibly covariant cycle map without dualizing can give the transpose of the correct answer.
 
 All of these calculations take place on the geometric graph with residue Galois action retained. A nonsplit node can reverse an oriented loop, and a closed node can split into an orbit of edges. Quotienting the graph before recording this action can change both rational component points and adjoints. Likewise one must retain the integral cycle lattice: rational diagonalization erases saturation quotients that survive in $\Phi_J$.
 
@@ -1338,7 +1346,7 @@ All of these calculations take place on the geometric graph with residue Galois 
 
 The preceding machinery gives a precise three-case policy for integral Hecke correspondences.
 
-At a place of good reduction away from the support of the double coset, both legs extend finite étale, the Jacobian is an abelian scheme, and specialization is literal pull--norm on the smooth special curve. At the residue characteristic of a good spherical operator, the base curve remains smooth but the intermediate $q$-isogeny curve is semistable; its finite locally free legs and two reduced branches give the congruence relation of Chapters 11 and 12. At a place in the level or of bad reduction, the base curve can itself be semistable. The generic operator still extends to the Néron model, but its special action must be calculated from a normalized resolved closure or a harmonic graph map. Smooth proper base change is unavailable.
+At a place of good reduction away from the support of the double coset, both legs extend finite locally freely, the Jacobian is an abelian scheme, and specialization is literal pull--norm on the smooth special curve. On a compact quaternionic curve the prime-to-residue legs are finite étale at neat level. On a compactified modular curve they can ramify at cusps even when the level modification is prime to the residue characteristic, so finite étaleness must not be asserted there. At the residue characteristic of a good spherical operator, the base curve remains smooth but the intermediate $q$-isogeny curve is semistable; its finite locally free legs and two reduced branches give the congruence relation of Chapters 11 and 12. At a place in the level or of bad reduction, the base curve can itself be semistable. The generic operator still extends to the Néron model, but its special action must be calculated from a normalized resolved closure or, when an admissible semistable model is available, a harmonic graph map. Smooth proper base change is unavailable.
 
 For the squarefree modular $X_0(q)$ model with fine auxiliary level, the geometric special fiber has two normalized components joined at supersingular points. Away-from-$q$ Hecke operators act on the vertices and edges by the same prime-to-$q$ isogeny correspondence on each component. The Atkin--Lehner involution exchanges the two vertices and reverses the distinguished orientation. The forward $U_q$ correspondence is calculated by its resolved pull--push and is not obtained by specializing the spherical $T_q$. These are the component and monodromy actions already available from the modular-Jacobian geometry, now placed in the right-coset variance by taking transposes where required.
 
@@ -1445,7 +1453,7 @@ Let $F$ be arithmetic Frobenius on $T_\ell J$ and put $A=q^{-1}F$ for arithmetic
 | untwisted $H^1$, arithmetic $A=q^{-1}F$ | $X^2-q^{-1}S^{-1}TX+q^{-1}S^{-1}$ |
 | untwisted $H^1$, geometric $G=A^{-1}$ | $X^2-TX+qS$ |
 
-The first two rows use that $S$ is invertible, as it is for a central correspondence. Multiplying either by $S$ gives a useful nonmonic integral form. On an eigenspace where $S$ acts by $s$, the determinant on the Tate module is $q/s$, while the determinant of geometric Frobenius on untwisted $H^1$ is $qs$.
+The first two rows use that $S$ is invertible, as it is for a central correspondence. Multiplying either by $S$ gives a useful nonmonic integral form. On a two-dimensional Frobenius-stable simultaneous eigenspace where $S$ acts by $s$ and the displayed quadratic is the full characteristic polynomial, the determinant on the Tate module is $q/s$, while the determinant of geometric Frobenius on untwisted $H^1$ is $qs$. Without those dimension and characteristic-polynomial hypotheses, these are only the constant terms of annihilating quadratics.
 
 For trivial diamond $S=1$, the first and third polynomials coincide. This accidental symmetry is why the pull--push reversal remains invisible on $X_0(N)$ and appears only when the central action is retained.
 
@@ -1535,7 +1543,7 @@ This is a derivation from the special-fiber moduli description: the two terms ar
 
 ### 11.4 The exact polynomial in every realization
 
-Let $\ell\ne q$. Smooth proper base change transports the cycle identity, and hence both (11.4) and (11.5), from the special fiber to generic cohomology. Since $S_q$ is invertible, the covariant Tate-module and twisted-cohomology relation has the monic form
+Let $\ell\ne q$. Smooth proper base change identifies the specialized $T_q$ and $S_q$ operators with their generic counterparts and identifies residue Frobenius with the matching unramified Galois action. It therefore transports the operator relations (11.4)--(11.5), not the special Frobenius graphs themselves, to generic cohomology. Since $S_q$ is invertible, the covariant Tate-module and twisted-cohomology relation has the monic form
 
 $$
 \boxed{
@@ -1592,9 +1600,11 @@ Assume:
 - the polarization lattice is self-dual and its degree is prime to the residue characteristic;
 - $K_{\mathfrak q}$ is hyperspecial and all auxiliary level at the residue characteristic is hyperspecial;
 - the determinant local model is the smooth one-dimensional unramified model;
+- the added $\mathfrak q$-neighbor problem has the standard rank-one incidence local-model diagram for the adjacent lattice chain;
+- the rank-one Hasse invariant is not identically zero on any selected geometric component, equivalently the $\mu$-ordinary locus is dense there;
 - the prime-to-residue level is neat, or the argument is made on the stack and descended through a tame neat cover.
 
-Under these hypotheses the integral curve is smooth proper, and the $\mathfrak q$-neighbor correspondence extends with finite locally free legs. These assumptions are part of the theorem. A bare statement about the discriminant of the quaternion algebra would not justify them.
+Under these hypotheses the integral curve is smooth proper. The branch calculation below proves quasi-finiteness of both neighbor legs; Section 9.2 then proves that they are finite locally free. Density is stated separately because the smooth hyperspecial local model controls deformations but, by itself, does not prove that a selected global component contains a $\mu$-ordinary point. These assumptions are part of the theorem. A bare statement about the discriminant of the quaternion algebra would not justify them.
 
 ### 12.2 The local subgroup calculation
 
@@ -1617,6 +1627,8 @@ $$
 $$
 
 for a unit $u$. Its special fiber is therefore the union of the two reduced branches $x=0$ and $y=0$, each with coefficient one. The complement of the $\mu$-ordinary locus is finite on a curve, so equality of one-cycles extends across it.
+
+The same description proves the quasi-finiteness promised in Section 12.1. On each of the two irreducible special-fiber branches, either forgetful leg is generically the identity direction or relative Frobenius direction of the relevant one-dimensional factor, possibly followed by the central translation. Both maps are nonconstant. Hence neither leg contracts an irreducible component of the special fiber. The generic fiber is already a finite lattice-neighbor correspondence, so no horizontal component is contracted either. A positive-dimensional fiber of a proper morphism from this relative curve would contain an irreducible component of one of these fibers. There is none; both legs are quasi-finite and therefore finite.
 
 Here is the rank-two calculation behind the quoted local equation. After an unramified strict-henselian extension, isolate the active factor of the PEL lattice and choose a basis $e_1,e_2$. The minuscule modification is represented by the adjacent lattice chain
 
@@ -1702,6 +1714,7 @@ Relations (12.2)--(12.3) are not asserted at:
 - an Iwahori or deeper level place;
 - a place where the auxiliary PEL algebra or polarization lattice is ramified;
 - a place where the integral model is merely semistable;
+- a chosen component on which the rank-one Hasse invariant is identically zero, or an incidence local model having an additional or contracted branch;
 - the coefficient prime when prime-to-characteristic étale comparison is unavailable in the stated form.
 
 At a division place there is no $q+1$-neighbor spherical correspondence. At Iwahori level the local modification is oriented and has $q$ branches. At a semistable place nearby cycles, rather than ordinary special-fiber cohomology, control the generic fiber. None of these failures is repaired by retaining the same formal polynomial.
@@ -1824,11 +1837,11 @@ $$
 
 This is not inferred from the dimension alone. It follows because the correspondence relation descends through the quotient and because the determinant of Frobenius on the polarized Tate module is $q$. The Weil pairing gives the determinant: $F_q$ scales it by the action of arithmetic Frobenius on $\mathbf Z_\ell(1)$, namely $q$.
 
-An actual elliptic curve over the ground field cannot acquire a nontrivial factor $s_q$ in this determinant: its Weil pairing forces $\det(F_q\mid V_\ell A)=q$, so the preceding elliptic example necessarily has $s_q=1$. Nontrivial nebentype occurs instead on a two-dimensional coefficient-field factor cut from the Tate module of a typically higher-dimensional modular quotient. Such a factor can be paired with its contragredient rather than with itself; once a later eigensystem argument proves that the quadratic relation is its full characteristic polynomial, its Tate-module determinant is $q/s_q$. With $S_q=\langle q\rangle^{-1}$ and diamond eigenvalue $\chi(q)$, this is $q\chi(q)$. This distinction prevents the central factor from being incorrectly attached to the Tate module of an elliptic curve.
+For an actual elliptic curve over the ground field, the Weil pairing forces $\det(F_q\mid V_\ell A)=q$. Thus, if a Hecke annihilating quadratic on that two-dimensional space is also its full characteristic polynomial, its central scalar must satisfy $s_q=1$. A relation with $s_q\ne1$ could still annihilate a scalar Frobenius whose minimal polynomial has degree one, but then its constant term is not the determinant. In the present $J_0(N)$ example there is no ambiguity because the geometric central correspondence is already trivial. Nontrivial nebentype occurs instead on a two-dimensional coefficient-field factor cut from the Tate module of a typically higher-dimensional modular quotient. Such a factor can be paired with its contragredient rather than with itself; once a later eigensystem argument proves that the quadratic relation is its full characteristic polynomial, its Tate-module determinant is $q/s_q$. With $S_q=\langle q\rangle^{-1}$ and diamond eigenvalue $\chi(q)$, this is $q\chi(q)$. This distinction prevents the central factor from being incorrectly read as the determinant of an elliptic curve.
 
 ### 14.3 A compact Shimura curve
 
-Let $B/\mathbf Q$ be the indefinite quaternion algebra ramified at $2$ and $3$, and choose neat Eichler level $M$ prime to $6$. The resulting Shimura curve $X_K$ is compact. At a prime $q\nmid6M$, $B_q\simeq M_2(\mathbf Q_q)$ and $K_q$ is hyperspecial. The correspondence is
+Let $B/\mathbf Q$ be the indefinite quaternion algebra ramified at $2$ and $3$. Choose a neat compact open $K$ contained in the units of an Eichler order, and let $M$, prime to $6$, have as its prime divisors exactly the split primes where $K_q$ is smaller than the maximal-order unit group. The resulting Shimura curve $X_K$ is compact. At a prime $q\nmid6M$, $B_q\simeq M_2(\mathbf Q_q)$ and $K_q$ is hyperspecial. The correspondence is
 
 $$
 X_K\xleftarrow{\pi}X_{K\cap hKh^{-1}}
@@ -1897,6 +1910,8 @@ We assemble the constructions in the form needed for the next stage.
 3. For $v\notin\Sigma$, the local group is split hyperspecial, the unnormalized correspondences $T_v,S_v$ extend over a smooth proper integral model, and $S_v$ is the central scalar correspondence.
 4. The adelic tower uses right multiplication, and the geometric span is oriented by $\mathcal T_h=\pi_*r_h^*$.
 
+For a quaternionic curve, condition 3 includes all the unramified self-dual PEL and rank-one incidence hypotheses of Section 12.1; split hyperspecial level by itself is not enough. For a modular curve, it includes the prime-to-fixed-level and auxiliary-rigidification hypotheses of Chapter 11.
+
 Then the abstract algebra
 
 $$
@@ -1904,7 +1919,7 @@ $$
 =\mathbf Z[T_v,S_v,S_v^{-1}:v\notin\Sigma]
 $$
 
-acts compatibly on divisors modulo principal divisors, the Picard group, the Jacobian $J_X$, every prime-to-characteristic torsion group, $T_\ell J_X$, and $H^1(X_{\overline E},\mathbf Z_\ell)$ and $H^1(X_{\overline E},\mathbf Q_\ell)$. It also acts by the same right-double-coset formulas on the corresponding automorphic modules. In the finite class-set realizations of Books 89--90, this assertion includes the full stabilizer and right-coset multiplicities, rather than a set-theoretic orbit count. More precisely:
+acts compatibly on divisors modulo principal divisors, the Picard group, the Jacobian $J_X$, every finite torsion group $J_X[n]$ over $E$ and every such group with $n$ invertible on an integral base under consideration, $T_\ell J_X$, and $H^1(X_{\overline E},\mathbf Z_\ell)$ and $H^1(X_{\overline E},\mathbf Q_\ell)$. It also acts by the same right-double-coset formulas on adelic-function or weight-bundle modules formed from the same group and level, and on weight-two modular differentials through Section 8.5. When the same finite double-coset datum is realized by the finite class sets of Books 89--90, this assertion includes the full stabilizer and right-coset multiplicities, rather than a set-theoretic orbit count. No automorphic decomposition or transfer between distinct inner forms is asserted. More precisely:
 
 $$
 T_h=\pi_*r_h^*=[KhK]
@@ -1926,9 +1941,9 @@ $$
 
 and every geometric Hecke operator commutes with $G_E$.
 
-Over every excellent Dedekind base on which $X$ is the generic fiber of a proper regular model, the Jacobian action extends uniquely to its Néron model. It preserves the identity component and induces an action on every Néron component group. At a finite-locally-free place this is relative pull--norm; on a regular bad model it is calculated by (9.8); in the semistable case it is equivalently the discriminant action of the adjoint harmonic graph maps in (9.9). Transpose remains adjoint for the finite component pairing. These integral assertions do not require the bad-fiber curve correspondence itself to have finite flat legs.
+Over every excellent Dedekind base on which $X$ is the generic fiber of a proper regular model, the Jacobian action extends uniquely to its Néron model. It preserves the identity component and induces an action on every Néron component group. At a finite-locally-free place this is relative pull--norm; on a regular bad model it is calculated by (9.8); in the semistable case it is equivalently the discriminant action of the adjoint cycle-lattice maps in (9.9), computed edgewise by harmonic pull--push when admissible finite semistable models exist. In that semistable setting, transpose remains adjoint for the finite component pairing. These integral assertions do not require the bad-fiber curve correspondence itself to have finite flat legs.
 
-At every good place $v$ of residue cardinality $q_v$, geometric Frobenius $G_v$ on untwisted $H^1$ commutes with the Hecke action and satisfies the polynomial in the normalization of Books 89--90:
+At every $v\notin\Sigma$ of residue cardinality $q_v$—so in particular away from the fixed coefficient prime—geometric Frobenius $G_v$ on untwisted $H^1$ commutes with the Hecke action and satisfies the polynomial in the normalization of Books 89--90:
 
 $$
 \boxed{
@@ -1991,7 +2006,7 @@ The theorem is dependency-closed in the following precise sense.
 | Modular Jacobians and Néron models | outgoing modular action, Deligne--Rapoport branches, integral Eichler--Shimura, squarefree-level component and monodromy calculations | prime away from fixed level for Eichler--Shimura; fine or stack calculation before coarse descent; $\ell\ne p$ for Tate specialization | the incoming dictionary (5.2) and all resulting inversions of diamonds and Frobenius polynomials |
 | Quaternionic uniformization and Hecke descent | exact intersection level, translated-then-forgotten leg, component routing, universal quasi-isogeny, transpose, convolution, canonical descent | genuine PEL realization; stable component union; fine level for a universal family, stack otherwise | integral extension at good places and the unramified minuscule two-branch calculation |
 
-No later volume supplies a proof used here. Proper smooth base change, Kummer theory, norms, traces, and Poincaré duality are used as ordinary foundational results with their displayed coefficient and smoothness hypotheses. The quaternionic polynomial is conditional on the complete list in Section 12.1; the modular polynomial is conditional on good reduction and prime-to-level auxiliary rigidification. At level primes the book asserts only the generic $U_v$ correspondence, its Néron and graph actions when models are supplied, and its adjoint, not a spherical polynomial.
+No volume outside the five declared prerequisite packages supplies a proof used here. Numerical order in the library is topical rather than logical: the quaternionic uniformization package numbered 128 is an explicit prerequisite, not an implicit later import. Proper smooth base change, Kummer theory, norms, traces, and Poincaré duality are used as ordinary foundational results with their displayed coefficient and smoothness hypotheses. The quaternionic polynomial is conditional on the complete list in Section 12.1; the modular polynomial is conditional on good reduction and prime-to-level auxiliary rigidification. At level primes the book asserts only the generic $U_v$ correspondence, its Néron and graph actions when models are supplied, and its adjoint, not a spherical polynomial.
 
 Several boundary tests are worth recording. If the selected component union is not stable, the operator belongs between two products of Jacobians, not in one endomorphism ring. If a coarse stabilizer has order divisible by the coefficient prime, no integral stack--coarse identification is asserted. If the base model is semistable rather than smooth, nearby cycles replace ordinary special-fiber cohomology. If the local PEL model has more than one moving embedding, the rank-two equation $xy=u\varpi$ and hence the two-branch quaternionic relation require a new proof. If $\ell$ equals the residue characteristic, the prime-to-characteristic Tate-module comparison used here does not describe the connected finite-flat torsion.
 
