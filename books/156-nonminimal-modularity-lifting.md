@@ -52,25 +52,40 @@
    - [9.2 Two disjoint kinds of auxiliary level](#92-two-disjoint-kinds-of-auxiliary-level)
    - [9.3 Diamond actions and paired $U/V$ modules](#93-diamond-actions-and-paired-uv-modules)
    - [9.4 The framed, gauge, and relation ledger](#94-the-framed-gauge-and-relation-ledger)
-10. [The three nonminimal infrastructure theorems](#10-the-three-nonminimal-infrastructure-theorems)
-    - [10.1 Infrastructure NM-I: integral level and type control](#101-infrastructure-nm-i-integral-level-and-type-control)
-    - [10.2 Infrastructure NM-II: integral reciprocity and local compatibility](#102-infrastructure-nm-ii-integral-reciprocity-and-local-compatibility)
-    - [10.3 Infrastructure NM-III: determinant lines and component support](#103-infrastructure-nm-iii-determinant-lines-and-component-support)
-    - [10.4 Logical separation of the three inputs](#104-logical-separation-of-the-three-inputs)
-11. [Direct nonminimal patching](#11-direct-nonminimal-patching)
-    - [11.1 The finite-level system](#111-the-finite-level-system)
-    - [11.2 Verification of the Taylor--Wiles axioms](#112-verification-of-the-taylor--wiles-axioms)
-    - [11.3 The patched pair and its dimension](#113-the-patched-pair-and-its-dimension)
-    - [11.4 Coverage, faithfulness, and nilpotents](#114-coverage-faithfulness-and-nilpotents)
-12. [The nonminimal $R=T$ theorem](#12-the-nonminimal-rt-theorem)
-    - [12.1 Full equality](#121-full-equality)
-    - [12.2 Reduced equality](#122-reduced-equality)
-    - [12.3 Componentwise equality](#123-componentwise-equality)
-    - [12.4 The numerical variant](#124-the-numerical-variant)
-13. [Extracting modularity of a specified lift](#13-extracting-modularity-of-a-specified-lift)
-    - [13.1 From a Galois point to a Hecke character](#131-from-a-galois-point-to-a-hecke-character)
-    - [13.2 Identification and exact local type](#132-identification-and-exact-local-type)
-    - [13.3 The controlled nonminimal lifting theorem](#133-the-controlled-nonminimal-lifting-theorem)
+10. [The selected conductor-two family](#10-the-selected-conductor-two-family)
+    - [10.1 The minimal special face and the tame family](#101-the-minimal-special-face-and-the-tame-family)
+    - [10.2 Determinants in a scalar-twist family](#102-determinants-in-a-scalar-twist-family)
+    - [10.3 The primary and companion type complexes](#103-the-primary-and-companion-type-complexes)
+    - [10.4 Exact fixed-prime augmentation](#104-exact-fixed-prime-augmentation)
+    - [10.5 A broader integral level-and-type criterion](#105-a-broader-integral-level-and-type-criterion)
+    - [10.6 A broader reciprocity criterion](#106-a-broader-reciprocity-criterion)
+    - [10.7 Determinant lines and component support beyond the selected family](#107-determinant-lines-and-component-support-beyond-the-selected-family)
+    - [10.8 Logical separation of the broader inputs](#108-logical-separation-of-the-broader-inputs)
+11. [One-prime patching on the selected component](#11-one-prime-patching-on-the-selected-component)
+    - [11.1 Two independent augmentation algebras](#111-two-independent-augmentation-algebras)
+    - [11.2 Patching the complex](#112-patching-the-complex)
+    - [11.3 Amplitude collapse](#113-amplitude-collapse)
+    - [11.4 From support to faithfulness](#114-from-support-to-faithfulness)
+    - [11.5 The general finite-level comparison system](#115-the-general-finite-level-comparison-system)
+    - [11.6 Verification of the general comparison axioms](#116-verification-of-the-general-comparison-axioms)
+    - [11.7 The general patched pair and its dimension](#117-the-general-patched-pair-and-its-dimension)
+    - [11.8 Coverage, faithfulness, and nilpotents in the general criterion](#118-coverage-faithfulness-and-nilpotents-in-the-general-criterion)
+12. [The one-prime $R=T$ theorem](#12-the-one-prime-rt-theorem)
+    - [12.1 Patched equality](#121-patched-equality)
+    - [12.2 Auxiliary augmentation](#122-auxiliary-augmentation)
+    - [12.3 Tame-character specialization](#123-tame-character-specialization)
+    - [12.4 The minimal face and the numerical factor](#124-the-minimal-face-and-the-numerical-factor)
+    - [12.5 Conditional variants beyond the selected family](#125-conditional-variants-beyond-the-selected-family)
+    - [12.6 Reduced equality in the general criterion](#126-reduced-equality-in-the-general-criterion)
+    - [12.7 Componentwise equality in the general criterion](#127-componentwise-equality-in-the-general-criterion)
+    - [12.8 The relative numerical criterion](#128-the-relative-numerical-criterion)
+13. [The fixed-character modularity-lifting theorem](#13-the-fixed-character-modularity-lifting-theorem)
+    - [13.1 The exact clean datum](#131-the-exact-clean-datum)
+    - [13.2 From a deformation point to an automorphic point](#132-from-a-deformation-point-to-an-automorphic-point)
+    - [13.3 Integral identification and the theorem](#133-integral-identification-and-the-theorem)
+    - [13.4 The general point-to-character argument](#134-the-general-point-to-character-argument)
+    - [13.5 Identification and exact local type in the general criterion](#135-identification-and-exact-local-type-in-the-general-criterion)
+    - [13.6 A conditional controlled lifting criterion](#136-a-conditional-controlled-lifting-criterion)
 14. [The minimal-level route down and back up](#14-the-minimal-level-route-down-and-back-up)
     - [14.1 Lowering the residual source](#141-lowering-the-residual-source)
     - [14.2 Raising a congruent automorphic point](#142-raising-a-congruent-automorphic-point)
@@ -87,15 +102,15 @@
     - [16.3 Modularity after restriction](#163-modularity-after-restriction)
     - [16.4 Recursive descent and the character fiber](#164-recursive-descent-and-the-character-fiber)
     - [16.5 Recovering the original local components](#165-recovering-the-original-local-components)
-17. [The ordinary residually reducible maneuver](#17-the-ordinary-residually-reducible-maneuver)
+17. [The Skinner--Wiles class-field-theoretic reduction](#17-the-skinner--wiles-class-field-theoretic-reduction)
     - [17.1 Why it is a different theorem](#171-why-it-is-a-different-theorem)
     - [17.2 The exact deep input](#172-the-exact-deep-input)
-    - [17.3 Proof architecture](#173-proof-architecture)
-    - [17.4 Interaction with base change](#174-interaction-with-base-change)
+    - [17.3 The class-field-theoretic reduction](#173-the-class-field-theoretic-reduction)
+    - [17.4 Solvable base change and descent](#174-solvable-base-change-and-descent)
 18. [Hardly ramified representations](#18-hardly-ramified-representations)
     - [18.1 A precise definition](#181-a-precise-definition)
-    - [18.2 The absolutely irreducible theorem](#182-the-absolutely-irreducible-theorem)
-    - [18.3 The $3$-adic boundary](#183-the-3-adic-boundary)
+    - [18.2 The fixed-determinant finite-flat theorem](#182-the-fixed-determinant-finite-flat-theorem)
+    - [18.3 The coefficient-five boundary](#183-the-coefficient-five-boundary)
     - [18.4 Elliptic curves and geometric representations](#184-elliptic-curves-and-geometric-representations)
 19. [Four hostile diagnostics](#19-four-hostile-diagnostics)
     - [19.1 One added Steinberg prime](#191-one-added-steinberg-prime)
@@ -161,9 +176,21 @@ The question is:
 
 There are two parts to the phrase “the same local types.” First, the automorphic and Galois parameters must match after the fixed normalization of local reciprocity. Second, the point defined by $\rho$ must lie on a component that the automorphic module actually meets. The first assertion is generic local compatibility. The second is an integral support assertion. Neither implies the other.
 
+The central case is deliberately exact.  At one place $v\nmid\ell$, the
+minimal automorphic datum is conductor-one special.  A nontrivial scalar tame
+character of conductor exponent one changes it to a selected special twist of
+conductor exponent two.  The theorem patches the integral incidence family
+joining those faces and proves modularity for every retained nontrivial
+character fiber when $\ell\ge7$.  No coefficient-five conclusion is drawn.
+
 ### 1.2 Standing arithmetic data
 
-Fix an odd prime $\ell$, a finite extension $E/\mathbf Q_\ell$ with ring of integers $\mathcal O$, uniformizer $\varpi$, and residue field $k$. Let $F$ be totally real. Arithmetic Frobenius is used throughout. Let
+For the local comparison chapters, fix an odd prime $\ell$, a finite extension
+$E/\mathbf Q_\ell$ with ring of integers $\mathcal O$, uniformizer $\varpi$,
+and residue field $k$.  The main lifting theorem will impose $\ell\ge7$.  Let
+$F$ be totally real. Arithmetic Frobenius is used throughout.  When a
+reciprocity statement is quoted with geometric Frobenius, Frobenius and all
+normalizing factors are inverted together. Let
 
 $$
 \bar\rho:G_F\to\operatorname{GL}_2(k)
@@ -194,7 +221,14 @@ $$
 
 whenever the balanced Taylor--Wiles calculation is invoked. Absolute irreducibility gives the first equality; the second excludes a global cyclotomic self-twist.
 
-Let $S_0$ contain the archimedean places, the places above $\ell$, and every place at which $\bar\rho$ or $\delta$ is ramified, and write $S_f$ for its finite places. A minimal datum $\mathcal D^{\min}$ chooses at each finite place the exact minimal condition of Books 66--68. Let $P$ be a finite set of fixed nonminimal places, disjoint from the Taylor--Wiles sets that will vary later. At $v\in P$ choose one precise represented condition $\mathcal D_v^P$ and, when necessary, one generic component of its local ring.
+Let $S_0$ contain the archimedean places, the places above $\ell$, and every
+place at which $\bar\rho$ or $\delta$ is ramified, and write $S_f$ for its
+finite places. A minimal datum $\mathcal D^{\min}$ chooses an exact represented
+minimal component at each finite place.  A finite set $P$ is allowed in the
+general comparison formalism.  In the proved theorem, however, $P=\{v\}$ and
+$v$ carries the selected conductor-two enhanced-special family of Chapter 10,
+whose augmentation is a named conductor-one minimal-special component.
+Taylor--Wiles sets are disjoint from $P$.
 
 At a good place $v\nmid\ell$, write $q_v$ for the residue cardinality. In the ambient central-character normalization, the good Hecke polynomial is
 
@@ -213,9 +247,20 @@ trivial-central-character case and then translated by (1.7).
 
 There are three legitimate routes from residual modularity to modularity of (1.3).
 
-The **direct route** builds the nonminimal deformation ring and matching Hecke algebra at the enlarged level, adds Taylor--Wiles primes disjoint from $P$, and patches the resulting modules. In the balanced smooth-neutral range, reusing Book 155's sharp absolute method with a newly proved $q_P$-generator count gives faithfulness and full equality directly. In a broader singular or nonbalanced range, a support argument instead gives a full, reduced, or componentwise equality under the additional coverage and nilpotent-control hypotheses stated below. Neither direct argument uses a minimal determinant comparison.
+The **proved one-prime route** builds the selected nonminimal deformation ring
+and its faithful trace order over the tame character algebra $\Lambda_v$, adds
+Taylor--Wiles primes disjoint from $v$, and patches a two-term primary/companion
+type complex.  Exact fixed-prime augmentation identifies its special fiber with
+the minimal patched module.  Amplitude collapse, component support, and
+reducedness then prove faithfulness and the full equality.  This is the catalog
+theorem of Chapters 10--13.
 
-The **relative route** first lowers the residual automorphic source to a minimal level, applies the minimal theorem there, raises a congruent automorphic point back to the desired local components, and compares the extra cotangent and congruence factors one fixed prime at a time. The last comparison is essential: level raising alone produces some congruent form, not the target lift.
+The **relative route** is a comparison criterion.  It first lowers the residual
+automorphic source to a minimal level, applies the minimal theorem there, raises
+a congruent automorphic point, and compares the extra cotangent and congruence
+factors.  Level raising alone produces some congruent form, not the target
+lift.  Outside the selected family this route is conditional on an exact
+type-specific incidence and determinant theorem.
 
 The **base-change route** restricts to a carefully chosen solvable totally real extension on which troublesome local components become accessible, proves modularity there, and descends. Descent is recursive. Invariance of the top automorphic representation is not, for a noncyclic solvable group, by itself a descent theorem.
 
@@ -240,36 +285,37 @@ The diagram records strategies, not automatic ring maps. In particular, the vert
 
 The foundational results already available have sharply limited roles.
 
-| Source | Result used here |
-|---|---|
-| Books 29--33, 48, 62, and 64--65 | finite-flat representations, continuous cohomology, duality, deformation functors, and representability |
-| Book 66 | unramified, prime-to-$\ell$ fixed type, tame matrix, and enhanced special conditions, with only the smoothness and dimension claims actually proved there |
-| Book 67 | the full finite-flat type-$(0,1)$ ring over an unramified extension of $\mathbf Q_\ell$ for $\ell>2$, and only a quotient presentation outside that range |
-| Book 68 | global assembly, functorial ring directions, Selmer comparison, relative generator and relation counts, and framing corrections |
-| Books 71--75 | numerical criteria, Taylor--Wiles systems, patching, support, and the full/reduced/componentwise comparison theorems |
-| Books 76--77, 82, 84, and 91--94 | integral Hecke modules, old/new algebra, local types, and characteristic-zero Jacquet--Langlands |
-| Books 86 and 96--97 | local and global cyclic base change, solvable iteration, descent fibers, and descent obstructions |
-| Books 120, 122, and 135 | degeneracy correspondences, curve cohomology, Hecke-valued determinants, and weight-two Galois representations in the stated geometric range |
-| Book 155 | in its clean rational cyclotomic range, the proved minimal equality from sharp absolute $q$-generator patching, finite-flat complete-intersection and Gorenstein structure, the faithful free rank-one minimal module with perfect pairing, and the post-equality Fitting--congruence equality |
+| Source | Result used here | Boundary retained here |
+|---|---|---|
+| Book 97 | cyclic and solvable base change, the exact recursive descent criterion, norm-character fibers, and descent selected by an extending irreducible representation | no assertion that invariance under a noncyclic solvable group alone gives descent |
+| Book 155 | the clean minimal equality, the minimal patched free module and pairing, finite-flat weight-$\{0,1\}$ local conditions, and exact auxiliary augmentation | $\ell\ge7$, cyclotomic absolute irreducibility, separate adjoint-invariant vanishing, unramified coefficient-prime fields, and the exact named minimal datum |
+| Book 157 | primary and companion type lattices, enhanced special charts, primitive saturation, and exact type occurrence | the selected line, sign, character, monodromy label, and component are retained; primitive wild and ramified dyadic types are absent |
+| Book 158 | two-map Ihara theory and saturation on the relevant Shimura curves | full-Iwahori saturation is not silently promoted to selected-type saturation; $q_v\equiv\pm1\pmod\ell$ remains exceptional for the signed refinement |
+| Book 159 | integral level change, monodromy and component-group control, and equality of the faithful curve and definite Hecke orders | the one-prime selected special comparison is used; no automatic multi-prime or selected-dihedral extension is asserted |
+| Book 161 | construction of the Hecke-valued representation and exact nonminimal local reciprocity | the faithful order is a flat reduced trace order, all generic branches are attached, and coefficient-prime finite-flatness uses a separate lattice comparison |
+| Book 165 | the one-prime primary/companion type complex, its Tor formula, selected-family support, determinant comparison, and exact fixed-prime augmentation | support is not called faithfulness; augmentation of the acting image and primitive incidence comparison are separate hypotheses |
+| Book 166 | amplitude collapse, support-to-faithfulness, the universal and fixed-character one-prime equalities, and the conductor-two finite-flat lifting theorem | precisely one tamely twisted special place, one selected component over each character factor, $\ell\ge7$, and no coefficient-five assertion |
 
-Three new infrastructure theorems, NM-I through NM-III, will be stated in
-Chapter 10. NM-I and NM-II extend Book 155's two integral infrastructure
-theorems to the added level and types. NM-III records only what is genuinely
-new after the minimal theorem: relative determinant factors at the added
-places and nonminimal component support. Book 155 did not assume a common
-determinant to prove its minimal equality; it proved that equality by the
-sharp absolute patch and derived the base Fitting--congruence equality
-afterward. Accordingly no new hypothesis in this book is allowed to
-reassume that proved base comparison.
-
-The principal theorems of this book are conditional on the applicable parts
-of those inputs exactly where the preceding books stop. This is mathematical
-information: it marks the difference between a proved local equation and a
-desired global packet comparison.
+Chapters 10--13 reprove the logical synthesis of these results in the order in
+which it is needed.  The one-prime complex supplies support and exact
+augmentation; the minimal theorem identifies the augmented patched fiber;
+amplitude collapse gives a free module over the combined base; uniqueness of
+the selected generic charts upgrades support to full support; reducedness then
+gives faithfulness; and reciprocity supplies the canonical surjection whose
+kernel faithfulness kills.  Sections 10.5--13.6 record broader conditional
+criteria only to mark the boundary of that proved chain.  They are not used to
+enlarge the catalog theorem.
 
 ### 1.5 Scope and exclusions
 
-The clean direct theorem assumes $\ell>2$, absolute residual irreducibility, adequate Taylor--Wiles prime selection, a fixed determinant, and represented local conditions. Its simplest rational specialization retains the $\ell\ge7$ and nonvexing hypotheses of Book 155. A totally real version requires the Hilbert or quaternionic analogues of the integral control theorems; it is not obtained by replacing $\mathbf Q$ with $F$ in the rational proof.
+The theorem of this book assumes $\ell\ge7$, absolute irreducibility after
+restriction to $G_{F(\zeta_\ell)}$, the separate vanishing of
+$H^0(F,\operatorname{ad}^0\bar\rho(1))$, and represented named local
+components.  It treats exactly one selected conductor-two special twist at a
+place $v\nmid\ell$.  One has $q_v\not\equiv\pm1\pmod\ell$, and all places above
+$\ell$ are in the unramified finite-flat weight-$\{0,1\}$ range.  A totally
+real application requires the exact Hilbert or quaternionic integral
+realization listed in Section 13.1.
 
 The following cases are not silently included:
 
@@ -279,9 +325,13 @@ The following cases are not silently included:
 - vexing congruences at which the two level-raising branches or integral determinant factors cease to be primitive;
 - wildly ramified inertial types not covered by an explicit local comparison theorem;
 - a local component that no automorphic module is proved to meet;
-- an ordinary or residually reducible argument unless the separate theorem of Chapter 17 applies;
+- an ordinary or residually reducible target; Chapter 17 explains the separate
+  class-field-theoretic reduction and its additional deep input;
 - generic Jacquet--Langlands without an integral order comparison;
-- solvable invariance without a compatible recursive descent chain.
+- solvable invariance without a compatible recursive descent chain;
+- a second nonminimal prime without an iterated clean theorem or a proved
+  Tor-independent multi-prime complex; and
+- coefficient characteristic five. No theorem at five is asserted here.
 
 These boundaries will reappear as diagnostics rather than being buried in the final theorem.
 
@@ -379,7 +429,10 @@ This intersection formalism is also required for two fixed inertial types, two c
 
 ### 2.3 Global deformation data and canonical maps
 
-Let $\mathcal D=(S,\delta,(\mathcal D_v)_{v\in S})$ be a fixed-determinant global datum. Its unframed universal ring exists because $\bar\rho$ is absolutely irreducible; local conditions with large centralizers are imposed through their framed quotients as in Book 68.
+Let $\mathcal D=(S,\delta,(\mathcal D_v)_{v\in S})$ be a fixed-determinant
+global datum. Its unframed universal ring exists because $\bar\rho$ is
+absolutely irreducible; local conditions with large centralizers are imposed
+through their framed quotients.
 
 If $T$ is a nonempty set of framed places, put
 
@@ -838,7 +891,7 @@ $$
 
 This includes irreducible, supersingular, and nonsplit ordinary residual shapes. It does not require ambient $H^2(K,W)$ to vanish. At a split sum of distinct characters the framed ring is still smooth of dimension $f_v+3$, but a coarse unframed universal ring is not asserted.
 
-For ramified $K/\mathbf Q_\ell$, Book 67 gives only
+For ramified $K/\mathbf Q_\ell$, the general local theory used here gives only
 
 $$
 R_v^{\mathrm{fl},\delta}
@@ -1620,7 +1673,8 @@ t\longmapsto t^\dagger.
 \tag{9.7c}
 $$
 
-This is the companion-module form of duality in Book 73. It does not declare the primary $U$-projector self-adjoint.
+This is the companion-module form of duality. It does not declare the primary
+$U$-projector self-adjoint.
 
 Both branch modules must be finite free over $\Lambda_n$. Freeness is proved from an actual free action on class-set fibers in the definite case, or from the corresponding finite étale covering together with torsion control in the curve case. Equality of $\mathcal O$-ranks after augmentation is not enough. Put $M^{P,+}=M^P$ and let $M^{P,-}$ be its adjoint base-level type lattice. The augmentation identities required for patching are
 
@@ -1731,17 +1785,280 @@ The cancellation explains why adding a fixed smooth neutral prime changes $t$, t
 
 If a fixed local factor is singular, (9.11) cannot be used. Its complete local deformation complex, including every equation, belongs in the local base. The global relative complex must then be combined with it in the derived sense. A numerical equality of Krull dimensions does not supply the missing determinant line or prove that the resulting patched ring is Cohen--Macaulay.
 
-## 10. The three nonminimal infrastructure theorems
+## 10. The selected conductor-two family
 
-The minimal theorem imported from Book 155 proves its conclusion, its faithful
-rank-one module, and its post-equality numerical package for its clean datum.
-It does not supply integral level raising, a type-selected Hecke-valued
-representation at new primes, relative determinant factors there, or
-component coverage at an enlarged level. We now state the three additional
-inputs in a form that can be checked independently in any chosen automorphic
-realization.
+The minimal theorem supplies the augmented endpoint, but it does not identify
+the conductor-two family.  We first construct the exact tame incidence family
+and its primary--companion complex, then prove the patched equality.  Broader
+conditional comparison packages are recorded only after this selected family
+has been treated.
 
-### 10.1 Infrastructure NM-I: integral level and type control
+### 10.1 The minimal special face and the tame family
+
+The theorem proved in this book concerns one particular nonminimal move.  Fix a
+place $v\nmid\ell$ at which the minimal datum is already special of conductor
+one.  The residual local representation comes with an invariant line $L_v$, a
+special sign $\varepsilon_v$, a scalar finite label $\bar\xi_v$ of order prime
+to $\ell$ whose chosen multiplier on the conductor-one augmentation is
+unramified, and nonzero residual monodromy.  We do not replace this
+datum by an unramified condition.  Instead we twist the whole special parameter
+by a congruent scalar tame character of conductor one.
+
+Let $\Delta_v$ be a finite $\ell$-power quotient of tame inertia on which the
+$q_v$-power relation is compatible with the desired characters, and put
+
+$$
+\Lambda_v=\mathcal O[\Delta_v],
+\qquad
+\epsilon_v:\Lambda_v\longrightarrow\mathcal O.
+\tag{10.1}
+$$
+
+Write $\boldsymbol\chi_v$ for the tautological character.  On the selected
+enhanced-special chart the inertia action has the form
+
+$$
+\rho_A(\sigma)=
+\xi_v(\sigma)\boldsymbol\chi_v(\sigma)
+\exp\bigl(t_\ell(\sigma)N_A\bigr),
+\tag{10.2}
+$$
+
+where $N_A^2=0$, $\operatorname{im}N_A\subseteq L_A\subseteq\ker N_A$, and,
+for arithmetic Frobenius $\varphi$,
+
+$$
+\rho_A(\varphi)N_A\rho_A(\varphi)^{-1}=q_vN_A.
+\tag{10.3}
+$$
+
+With geometric Frobenius the factor in (10.3) is $q_v^{-1}$.  This conversion
+is made everywhere at once; the Hecke polynomial and adjoint convention are
+not changed independently of it.
+
+The represented condition is the schematic closure of the rank-one-monodromy
+locus with its line and sign retained.  It contains points with $N_A=0$ on its
+boundary because $N_A\ne0$ is open and is not stable under arbitrary
+coefficient quotients.  A characteristic-zero point used in the theorem is
+required separately to satisfy $N_A\ne0$.
+
+At the augmentation $\boldsymbol\chi_v=1$, (10.2) is the named minimal
+conductor-one special component.  At a nontrivial character
+$\chi:\Delta_v\to\mathcal O_\chi^\times$ of conductor exponent one, it is the
+special twist by $\chi$.  The conductor formula is
+
+$$
+a(\operatorname{St}\otimes\mu)=
+\begin{cases}
+1,&a(\mu)=0,\\
+2a(\mu),&a(\mu)>0.
+\end{cases}
+\tag{10.4}
+$$
+
+Thus the augmentation face has conductor one and every retained nontrivial
+character face has conductor two.  The superscript “two” used below names the
+nontrivial generic faces of this incidence family; it is not a statement that
+the augmentation face also has conductor two.
+
+This is the selected conductor-two condition of the catalog.  It is not the
+level-raising condition of Section 3.4, which starts from an unramified
+residual representation and adds conductor one.  It is not an ordered
+principal-series condition, and it is not a tame-dihedral condition.  Those
+local types have their own integral lattices, but the one-prime complex used
+here has been proved only for the special-to-tamely-twisted-special incidence.
+
+### 10.2 Determinants in a scalar-twist family
+
+A scalar twist changes a two-dimensional determinant by its square.  Therefore
+the universal tame family cannot have the minimal determinant held artificially
+constant.  It comes with a continuous character
+
+$$
+\delta_{\Lambda_v}:G_F\longrightarrow\Lambda_v^\times
+\tag{10.5}
+$$
+
+whose augmentation is the minimal determinant $\delta^{\min}$ and whose local
+specialization satisfies
+
+$$
+\delta_{\Lambda_v}|_{G_{F_v}}
+=\delta^{\min}|_{G_{F_v}}\boldsymbol\chi_v^{,2}.
+\tag{10.6}
+$$
+
+The clean datum assumes that (10.6) is part of a compatible global determinant
+and central-character family.  For a fixed character $\chi$, the corresponding
+problem again has a fixed determinant
+
+$$
+\delta_\chi=\delta_{\Lambda_v}\otimes_{\Lambda_v,\chi}\mathcal O_\chi.
+\tag{10.7}
+$$
+
+This distinction is essential.  “Fixed determinant” means fixed on each
+character fiber; it does not mean constant while the universal scalar twist
+varies.  If a determinant-neutral parameterization is used instead, its
+neutrality must be proved in the local model.
+
+The group algebra is deliberately kept integral.  For example, if
+$\Delta_v=\langle g\rangle$ has order $\ell$ and $X=g-1$, then
+
+$$
+\Lambda_v\simeq
+\mathcal O[X]/\bigl((1+X)^\ell-1\bigr).
+\tag{10.8}
+$$
+
+After inverting $\varpi$ and adjoining the character values, its factors are
+indexed by roots of unity.  Modulo $\varpi$ all those roots become $1$, so the
+generic character factors meet at the augmentation point.  Splitting the
+generic fiber and choosing unrelated lattices would lose this integral
+intersection.  The single family over $\Lambda_v$ is what makes specialization
+and congruence meaningful.
+
+Let $R_v^{\mathrm{sp},2}$ denote the represented enhanced-special family.  Exact
+local augmentation is the identity
+
+$$
+R_v^{\mathrm{sp},2}/\ker(\epsilon_v)R_v^{\mathrm{sp},2}
+\simeq R_v^{\mathrm{sp},1},
+\tag{10.9}
+$$
+
+where the right side retains the same line, sign, determinant specialization,
+and monodromy relation.  Applying this at $v$ and leaving the other local
+conditions fixed gives
+
+$$
+R_{\Lambda_v}^{(2)}/\ker(\epsilon_v)R_{\Lambda_v}^{(2)}
+\simeq R^{\min}.
+\tag{10.10}
+$$
+
+The kernel assertion in (10.10) is part of exact augmentation.  Equality only
+after inverting $\varpi$ would not control the integral patch.
+
+### 10.3 The primary and companion type complexes
+
+The automorphic carrier at $v$ is not obtained by applying a nonintegral
+projector to a characteristic-zero packet.  Integral local type theory supplies
+a primitive primary lattice and an adjoint companion lattice.  They are finite
+free over their coefficient algebras and are perfectly paired with the
+involution $g\mapsto g^{-1}$ on $\Delta_v$.
+
+The two degeneracy maps between the adjacent levels form a two-term primary
+complex
+
+$$
+C_v^{\mathrm{pri}}
+=\bigl[P_v^0\xrightarrow{d_v}P_v^1\bigr]
+\tag{10.11}
+$$
+
+and an adjoint companion complex $C_v^{\mathrm{cmp}}$.  We place $P_v^0$ in
+degree zero and $P_v^1$ in degree one.  The differential retains both
+degeneracy maps until saturation is proved.  Its degree-one cohomology is the
+saturated quotient-new type lattice.  The possible degree-zero cohomology after
+base change records the failure of ordinary base change, not an unwanted
+automorphic packet.
+
+For a coefficient algebra $A$ and an $A$-algebra $B$, the exact sequence for a
+two-term complex gives
+
+$$
+0\longrightarrow
+H^0(C)\otimes_AB
+\longrightarrow H^0(C\otimes_A^LB)
+\longrightarrow
+\operatorname{Tor}_1^A(H^1(C),B)
+\longrightarrow0,
+\tag{10.12}
+$$
+
+and
+
+$$
+H^1(C\otimes_A^LB)\simeq H^1(C)\otimes_AB.
+\tag{10.13}
+$$
+
+These formulas follow by replacing $C$ by its displayed free terms, taking
+the kernel and cokernel of the base-changed differential, and applying the
+long exact Tor sequence to
+$0\to\operatorname{im}d_v\to P_v^1\to H^1(C)\to0$.
+At finite level the clean saturation theorem gives $H^0(C_v^{\mathrm{pri}})=0$
+and makes $H^1$ $\mathcal O$-free.  Formula (10.12) explains why one must patch
+the differential: a later specialization can create exactly the displayed
+$\operatorname{Tor}_1$ even when the original kernel is zero.
+
+The component theorem for (10.11) has three precise conclusions.  Its support
+is contained in the selected enhanced-special family; every generic component
+that occurs is met at primitive integral scale; and fixed-prime augmentation
+recovers the named minimal-special carrier.  It does **not** say that the
+complex is faithful over the whole deformation source.  Faithfulness will
+require amplitude collapse, nonvanishing on every tame factor, uniqueness of
+the selected component over each factor, and reducedness.
+
+Full-Iwahori saturation by itself proves only that the image of the two-map
+degeneracy morphism is saturated.  Passing to a type-selected summand requires
+the primitive primary and companion lattice theorem just used.  In particular,
+one may not infer selected-type saturation from the full-Iwahori statement by
+applying a characteristic-zero idempotent whose denominator is divisible by
+$\ell$.
+
+### 10.4 Exact fixed-prime augmentation
+
+Let $\mathfrak a_v=\ker\epsilon_v$.  The fixed-prime exact-augmentation theorem
+gives a derived identification
+
+$$
+C_v^{\mathrm{pri}}\otimes_{\Lambda_v}^{L}\mathcal O
+\simeq C^{\min,\mathrm{sp}}
+\tag{10.14}
+$$
+
+and the analogous companion identification.  The augmented minimal degeneracy
+map is injective, so (10.12) yields
+
+$$
+\operatorname{Tor}_1^{\Lambda_v}
+\bigl(H^1(C_v^{\mathrm{pri}}),\mathcal O\bigr)=0.
+\tag{10.15}
+$$
+
+The faithful Hecke image also augments exactly:
+
+$$
+\mathbb T_{\Lambda_v}^{(2)}/\mathfrak a_v
+\mathbb T_{\Lambda_v}^{(2)}\simeq\mathbb T^{\min}.
+\tag{10.16}
+$$
+
+Equation (10.16) is stronger than termwise augmentation of modules.  The image
+of an algebra in an endomorphism ring can acquire a larger kernel on
+specialization; augmentation-saturation of the acting image is the additional
+input that rules this out.
+
+The minimal theorem applies to the right sides of (10.10), (10.14), and
+(10.16) only under its exact hypotheses: $\ell\ge7$, cyclotomic absolute
+irreducibility, the separate adjoint invariant vanishing, unramified
+coefficient-prime fields with weights $\{0,1\}$, named clean minimal
+components, and the exact integral automorphic realization.  It then gives
+
+$$
+R^{\min}\simeq\mathbb T^{\min},
+\qquad
+M_\infty^{\min}\text{ finite free over its minimal patching base}.
+\tag{10.17}
+$$
+
+The equalities in (10.17) identify the augmented fiber.  They do not prove the
+nonminimal equality by Nakayama: a nonzero kernel can lie inside
+$\mathfrak a_v$.  The next chapter eliminates that possibility.
+
+### 10.5 A broader integral level-and-type criterion
 
 **Infrastructure Theorem NM-I.** Fix a controlled datum $\mathcal D^P$, a selected tuple of local components, and Taylor--Wiles sets $Q_n$ as in Section 9.1. Assume the following geometric assertions.
 
@@ -1756,11 +2073,20 @@ realization.
 
 Then the paired modules $M_n^{P,+},M_n^{P,-}$, their diamond actions, adjoint Hecke orders, and augmentation maps form the automorphic half of a Taylor--Wiles system for the fixed nonminimal datum. At every clean level-raising prime, the local congruence module has determinant (8.10); at a general controlled type it has determinant (8.12).
 
-**Proof.** Clauses 1--4 construct the fixed-level lattices without replacing a saturated type lattice by its fraction-field span. Clause 5 supplies genuine $\Lambda_n$-freeness and the primary--companion inverse-diamond duality required by Book 73, axiom TW8, before finite shadows are chosen. Clause 6 identifies both augmentations with the original fixed-$P$ primary and adjoint problems rather than the minimal problem. Clause 7 makes the selected primary block nonzero. Clause 8 supplies the compactness needed to choose pairing-compatible diagonal shadows. These are exactly the module, duality, augmentation, boundedness, and nonvanishing assertions in the Taylor--Wiles axioms. The local determinant statement follows from the perfect comparison complexes of clauses 2--4. $\square$
+**Proof.** Clauses 1--4 construct the fixed-level lattices without replacing a
+saturated type lattice by its fraction-field span. Clause 5 supplies genuine
+$\Lambda_n$-freeness and the primary--companion inverse-diamond duality before
+finite shadows are chosen. Clause 6 identifies both augmentations with the
+original fixed-$P$ primary and adjoint problems rather than the minimal
+problem. Clause 7 makes the selected primary block nonzero. Clause 8 supplies
+the compactness needed to choose pairing-compatible diagonal shadows. These
+are exactly the module, duality, augmentation, boundedness, and nonvanishing
+assertions in the comparison axioms. The local determinant statement follows
+from the perfect comparison complexes of clauses 2--4. $\square$
 
 The theorem is conditional on concrete Ihara, saturation, and type-lattice results. Characteristic-zero multiplicity one proves none of clauses 2--6 by itself.
 
-### 10.2 Infrastructure NM-II: integral reciprocity and local compatibility
+### 10.6 A broader reciprocity criterion
 
 Write $\mathbb T_n^P=\mathbb T_n^{P,+}$ and $\mathbb T^P=\mathbb T^{P,+}$ for the primary orders; the companion orders remain present through (9.7c).
 
@@ -1771,14 +2097,14 @@ Write $\mathbb T_n^P=\mathbb T_n^{P,+}$ and $\mathbb T^P=\mathbb T^{P,+}$ for th
    $$
    \rho_{\mathbb T_n}:G_F\longrightarrow
    \operatorname{GL}_2(\mathbb T_n^P)
-   \tag{10.1}
+   \tag{10.18}
    $$
 
    reducing to $\bar\rho$ and having determinant $\delta$;
 2. for $v$ outside the level, its characteristic polynomial is the Hecke polynomial (1.7);
-3. at every $v\mid\ell$, every Artinian quotient of (10.1) is finite flat of type $(0,1)$, not merely crystalline at characteristic-zero points;
+3. at every $v\mid\ell$, every Artinian quotient of (10.18) is finite flat of type $(0,1)$, not merely crystalline at characteristic-zero points;
 4. at every $v\in(S_f\cup P)$ with $v\nmid\ell$, the restriction of
-   (10.1), together with its line or finite-type data when applicable,
+   (10.18), together with its line or finite-type data when applicable,
    factors through the exact named minimal or nonminimal local quotient; at
    $v\in P$ this is the selected quotient $R_v^{\square,P}$, character
    ordering is integral, and nonzero monodromy and conductor are checked on
@@ -1792,21 +2118,21 @@ Then universality gives compatible surjections
 
 $$
 R_n^P\twoheadrightarrow\mathbb T_n^P
-\tag{10.2}
+\tag{10.19}
 $$
 
 whose reduction modulo $\mathfrak a_n$ is
 
 $$
 R^P\twoheadrightarrow\mathbb T^P.
-\tag{10.3}
+\tag{10.20}
 $$
 
-**Proof.** Clause 1 supplies the matrix representation and absolute residual irreducibility makes strict equivalence unambiguous. Clauses 2--5 verify, place by place and on every Artinian quotient, the global deformation functor represented by $R_n^P$. Thus its universal property gives a map in (10.2). Clause 7, not faithfulness of the action by itself, proves that this map is surjective. Clause 6 transports the assertion integrally when an inner form intervenes. Augmentation and (9.7), (9.9) give (10.3). $\square$
+**Proof.** Clause 1 supplies the matrix representation and absolute residual irreducibility makes strict equivalence unambiguous. Clauses 2--5 verify, place by place and on every Artinian quotient, the global deformation functor represented by $R_n^P$. Thus its universal property gives a map in (10.19). Clause 7, not faithfulness of the action by itself, proves that this map is surjective. Clause 6 transports the assertion integrally when an inner form intervenes. Augmentation and (9.7), (9.9) give (10.20). $\square$
 
 The proof separates existence of a genuine representation from exact local compatibility. A characteristic-zero local Langlands parameter at every classical point does not automatically prove clauses 3--5 for the whole Hecke order.
 
-### 10.3 Infrastructure NM-III: determinant lines and component support
+### 10.7 Determinant lines and component support beyond the selected family
 
 **Infrastructure Theorem NM-III.** Assume NM-I and NM-II. This theorem has
 two independent parts; an argument invokes only the part it uses.
@@ -1845,7 +2171,7 @@ Clause 3 computes their determinants, and clause 4 multiplies them without
 discarding derived torsion. These are precisely the new ratios in
 (8.13)--(8.16); combining them with the already proved base equality gives
 (8.16a). For the support part, clause 5 is the independent arithmetic coverage statement required
-by Book 75. Dimension equality, Cohen--Macaulayness, and near faithfulness
+by the abstract support theorem. Dimension equality, Cohen--Macaulayness, and near faithfulness
 are deduced from it only after patching. Clause 6 prevents a patch-defined
 union of components from being silently identified with a different finite
 deformation quotient. $\square$
@@ -1853,15 +2179,15 @@ deformation quotient. $\square$
 Component support is an independent clause. Equality of determinant lines controls multiplicity and congruence length at an augmentation; it does not force a module to meet a different component with the same generic inertial type.
 
 The two halves of NM-III have disjoint uses. Clauses 1--4 are needed for the
-relative numerical route of Sections 12.4 and 14.4, but not for a direct
+relative numerical route of Sections 12.8 and 14.4, but not for a direct
 support proof. Clauses 5--6 are needed for the support-based direct route,
 but not for the numerical criterion at one augmentation. The sharp balanced
-absolute patch of Section 11.3 needs neither half: it proves faithfulness
+absolute patch of Section 11.7 needs neither half: it proves faithfulness
 directly. Outside Book 155's clean base range, a relative argument must first
 supply its own base Fitting--congruence theorem; that is a hypothesis on the
 base theorem, not part of the new local content of NM-III.
 
-### 10.4 Logical separation of the three inputs
+### 10.8 Logical separation of the broader inputs
 
 The division of labor is exact.
 
@@ -1879,18 +2205,227 @@ analogues of NM-I and NM-II, the relevant nonminimal clauses of NM-III, and
 any base theorem used by the relative route are hypotheses until the
 relevant integral geometry has established them.
 
-## 11. Direct nonminimal patching
+## 11. One-prime patching on the selected component
 
 We now carry the fixed datum $\mathcal D^P$ through the patching argument. The proof does not say that the minimal construction is unchanged. It replaces the minimal local base, absolute dual Selmer group, automorphic module, augmentation, determinant line, and support statement by the objects constructed in Chapters 8--10.
 
-### 11.1 The finite-level system
+### 11.1 Two independent augmentation algebras
+
+Taylor--Wiles patching introduces a second family of group algebras.  For an
+auxiliary set $Q_N$, let
+
+$$
+\Delta_N=\prod_{w\in Q_N}\Delta_w,
+\qquad
+\Lambda_N=\mathcal O[\Delta_N].
+\tag{11.1}
+$$
+
+The factor $\Lambda_v$ varies the fixed local type at $v$; $\Lambda_N$ varies
+auxiliary level at primes disjoint from $v$.  Their arithmetic meanings and
+augmentations are different:
+
+| algebra | variation | augmentation |
+|---|---|---|
+| $\Lambda_v$ | conductor-one/conductor-two special incidence at $v$ | $\boldsymbol\chi_v\mapsto1$ |
+| $\Lambda_N$ | ordered Taylor--Wiles characters at $Q_N$ | all auxiliary characters map to $1$ |
+
+Set $B_N=\Lambda_v\widehat\otimes_{\mathcal O}\Lambda_N$.  At every auxiliary
+level retain the primary and companion complexes
+
+$$
+C_N^{\mathrm{pri}},\qquad C_N^{\mathrm{cmp}}
+\tag{11.2}
+$$
+
+as perfect amplitude-$[0,1]$ complexes of $B_N$-modules.  Each term is finite
+free over $\Lambda_N$, the pairing is semilinear for inversion in both group
+factors, and the deformation and faithful trace-order actions commute with the
+differential.
+
+The two augmentations are exact and commute.  Auxiliary augmentation gives the
+fixed-$v$ complex at base auxiliary level, while fixed-prime augmentation gives
+the minimal special complex at the same Taylor--Wiles level.  Applying both in
+either order gives the same minimal complex.  This commutative square must be
+part of the finite data; it cannot be reconstructed from the cohomology after
+patching.
+
+The auxiliary primes are chosen for the dual Selmer group of the minimal
+global datum with the fixed relative incidence direction retained in both the
+source and coefficient algebra.  The assumptions
+
+$$
+\bar\rho|_{G_{F(\zeta_\ell)}}\text{ absolutely irreducible},
+\qquad
+H^0(F,\operatorname{ad}^0\bar\rho(1))=0,
+\tag{11.3}
+$$
+
+and $\ell\ge7$ give the required ordered primes.  The first hypothesis is not
+replaced by absolute irreducibility over $F$, and the second is not deduced
+from it.
+
+### 11.2 Patching the complex
+
+The sets $Q_N$ are not nested, so there are generally no transition maps
+between their automorphic spaces.  Fix a precision in the coefficient,
+maximal-ideal, group-algebra, differential, pairing, deformation-action, and
+Hecke-action data.  Only finitely many marked isomorphism classes occur at that
+precision.  A diagonal subsequence supplies compatible representatives for
+every precision.  Passing to their inverse limit produces
+
+$$
+C_\infty^{\mathrm{pri}}
+=[P_\infty^0\xrightarrow{d_\infty}P_\infty^1]
+\tag{11.4}
+$$
+
+and its companion over
+
+$$
+B_\infty=\Lambda_v\widehat\otimes_{\mathcal O}
+\mathcal O[[z_1,\ldots,z_q]].
+\tag{11.5}
+$$
+
+The inverse limit is taken in the category of the marked finite quotients, not
+as an inverse limit of the original levels.  Consequently (11.4) retains the
+differential, both augmentation ideals, both group actions, the primary--
+companion duality, and the canonical maps
+
+$$
+P_\infty^{(2)}\twoheadrightarrow R_\infty^{(2)}
+\twoheadrightarrow\mathbb T_\infty^{(2)}.
+\tag{11.6}
+$$
+
+Here $P_\infty^{(2)}$ is the selected global presentation source.  The clean
+local charts and the sharp Selmer calculation make it $\mathcal O$-flat and
+equidimensional of dimension $\dim B_\infty$.  After splitting
+$\Lambda_v[1/\varpi]$, it has exactly one named enhanced-special generic
+component over every tame-character factor, and those components are reduced.
+The completed tensor of the other named minimal factors is assumed to remain
+generically reduced.  Thus
+
+$$
+P_\infty^{(2)}[1/\varpi]\text{ is reduced}.
+\tag{11.7}
+$$
+
+Flatness over the discrete valuation ring and (11.7) imply that
+$P_\infty^{(2)}$ is reduced: if $x$ is nilpotent, it vanishes after inverting
+$\varpi$, so $\varpi^nx=0$ for some $n$; flatness makes multiplication by
+$\varpi$ injective and hence $x=0$.
+
+Nonminimal reciprocity supplies the second arrow in (11.6).  The Hecke-valued
+representation exists over the faithful trace order because the generic Hecke
+order is reduced, all its branches carry the required representations, the
+common determinant is fixed on each character fiber, and residual absolute
+irreducibility permits trace descent.  At $v$, generic-point detection proves
+the full enhanced-special relation because the Hecke order is flat with reduced
+generic fiber.  At the coefficient prime, a separate integral lattice
+comparison proves that every Artinian quotient is finite flat.  These are the
+matching hypotheses of nonminimal local reciprocity; characteristic-zero trace
+identities alone would not suffice.
+
+### 11.3 Amplitude collapse
+
+We use a simple local-algebra lemma.
+
+**Lemma 11.1 (minimal-complex collapse).** Let $(B,\mathfrak m)$ be a complete
+local ring and let $C$ be a perfect complex of finite free $B$-modules.  If
+
+$$
+C\otimes_B^LB/\mathfrak m
+$$
+
+has cohomology in one degree $d$, then $C$ is quasi-isomorphic to a finite free
+$B$-module placed in degree $d$.
+
+**Proof.** Split every contractible direct summand from a bounded free model of
+$C$.  The remaining minimal model has every differential matrix with entries
+in $\mathfrak m$; otherwise a unit entry would split another contractible
+summand.  After tensoring with $B/\mathfrak m$, all differentials are zero.
+Hence each nonzero term of the minimal model is a cohomology group of the
+residue complex.  By hypothesis only the degree-$d$ term is nonzero.  The
+minimal model is therefore one finite free module in degree $d$. $\square$
+
+Apply fixed-prime augmentation to (11.4).  Exact augmentation identifies the
+result with the minimal patched complex.  The minimal modularity theorem makes
+that object a nonzero finite free module in degree one.  Applying auxiliary
+augmentation and then the residue field preserves concentration in that degree.
+Lemma 11.1 therefore gives a nonzero finite free $B_\infty$-module
+$M_\infty^{(2)}$ and an equivariant quasi-isomorphism
+
+$$
+C_\infty^{\mathrm{pri}}\simeq M_\infty^{(2)}[-1].
+\tag{11.8}
+$$
+
+Duality gives the analogous statement for the companion.  Because
+$M_\infty^{(2)}$ is free over the whole combined base, every auxiliary
+augmentation, the fixed-prime augmentation, every tame character
+specialization, and every composite of them is Tor-independent.  In
+particular, the possible degree-zero term described by (10.12) vanishes after
+every retained specialization.
+
+The order of this reasoning matters.  Exact augmentation identifies the
+residue fiber; the minimal-complex lemma collapses the patched complex; only
+then may one replace the complex by its degree-one module.  Patching
+$H^1(C_N)$ from the beginning would erase the Tor term whose vanishing has just
+been proved.
+
+### 11.4 From support to faithfulness
+
+Freeness over $B_\infty$ makes the fiber of $M_\infty^{(2)}$ nonzero above
+every generic tame character.  The component-support theorem for the one-prime
+type complex confines that fiber to the named enhanced-special family and says
+that occurrence is primitive.  The clean local chart has exactly one named
+generic component over each character factor.  Since the source and module
+have the same dimension, the support contains that entire component.  Running
+over all character factors shows
+
+$$
+\operatorname{Supp}_{P_\infty^{(2)}}M_\infty^{(2)}
+=\operatorname{Spec}P_\infty^{(2)}.
+\tag{11.9}
+$$
+
+This is the step that upgrades the earlier “support is contained in the
+selected family” statement to full support on the selected source.  It uses
+both base freeness and uniqueness of the selected generic component; neither
+follows from the type theorem alone.
+
+For a finite module $M$ over a noetherian ring $A$,
+
+$$
+\operatorname{Supp}_A(M)=V(\operatorname{Ann}_A M).
+\tag{11.10}
+$$
+
+Thus (11.9) implies that $\operatorname{Ann}M_\infty^{(2)}$ is contained in the
+nilradical.  The source is reduced by Section 11.2, so the nilradical is zero.
+Consequently
+
+$$
+\operatorname{Ann}_{P_\infty^{(2)}}M_\infty^{(2)}=0.
+\tag{11.11}
+$$
+
+The selected source acts faithfully.  This argument explains all four
+necessary ingredients: component support locates the module, freeness makes
+every tame factor occur, uniqueness covers every selected component, and
+reducedness removes the nilpotent annihilator.  A determinant equality or
+generic packet comparison cannot replace the last step.
+
+### 11.5 The general finite-level comparison system
 
 For each $n$, let
 
 $$
 (R_n^P,\mathbb T_n^{P,+},M_n^{P,+};
 \mathbb T_n^{P,-},M_n^{P,-};\Lambda_n)
-\tag{11.1}
+\tag{11.12}
 $$
 
 be the paired system attached to $P\cup Q_n$. The primary objects carry the following maps and actions:
@@ -1899,7 +2434,7 @@ $$
 \Lambda_n\longrightarrow R_n^P
 \twoheadrightarrow\mathbb T_n^{P,+}
 \longrightarrow\operatorname{End}_{\mathcal O}(M_n^{P,+}),
-\tag{11.2}
+\tag{11.13}
 $$
 
 where the last action is faithful by the definition of the Hecke order. The companion action and order are transported by (9.7b)--(9.7c), not by an identification of the two modules. The augmentation ideal $\mathfrak a_n$ satisfies
@@ -1912,14 +2447,14 @@ R_n^P/\mathfrak a_nR_n^P\simeq R^P,
 \quad
 M_n^{P,\pm}/\mathfrak a_nM_n^{P,\pm}
 \simeq M^{P,\pm}.
-\tag{11.3}
+\tag{11.14}
 $$
 
 The first identity is deformation-theoretic; both order and both module identities are integral automorphic assertions from NM-I. All are needed.
 
 The sets $Q_n$ are not nested. Consequently there is generally no arithmetic map from the system at $n+1$ to the system at $n$. Patching uses finite shadows: for fixed integers $r$ and $m$, reduce the rings, both modules, their adjoint orders, and the pairing modulo $\varpi^m$ and the $r$th powers of their maximal ideals, note that only finitely many isomorphism classes occur, and choose a diagonal subsequence with compatible representatives. The resulting pseudo-transitions are maps between the chosen pairing-compatible finite shadows, not maps between the original spaces of automorphic forms.
 
-### 11.2 Verification of the Taylor--Wiles axioms
+### 11.6 Verification of the general comparison axioms
 
 The seven finite-level system checks and the additional route-specific
 support check can be displayed without abbreviation.
@@ -1928,8 +2463,8 @@ support check can be displayed without abbreviation.
 2. **Auxiliary groups.** The groups $\Delta_n$ have $q_P$ named cyclic factors of growing $\ell$-power order, and their group algebras receive compatible maps from one fixed power-series algebra after finite-shadow choices.
 3. **Module freeness.** NM-I gives that both $M_n^{P,+}$ and $M_n^{P,-}$ are finite free over $\Lambda_n$, with one rank bounded independently of $n$. A rank equality after tensoring with $E$ is not used as a replacement.
 4. **Companion duality.** The perfect pairing (9.7b) identifies the companion with the $\Lambda_n$-dual of the primary using diamond inversion and pairs every $U_v$ correspondence with $V_v$. The type projectors at $P$ are self-adjoint or occur with their explicitly identified adjoints. No self-pairing of the primary block is asserted.
-5. **Augmentation.** Every exact identity in (11.3) holds and the pairing augments to the base primary--companion pairing. In particular, augmentation retains all fixed conditions at $P$.
-6. **Deformation control.** The ordered primes $Q_n$ kill the dual Selmer group (9.1). NM-II gives the surjection in (11.2) and verifies its local condition at every finite place.
+5. **Augmentation.** Every exact identity in (11.14) holds and the pairing augments to the base primary--companion pairing. In particular, augmentation retains all fixed conditions at $P$.
+6. **Deformation control.** The ordered primes $Q_n$ kill the dual Selmer group (9.1). NM-II gives the surjection in (11.13) and verifies its local condition at every finite place.
 7. **Uniform presentations.** The complete effective complexes and the ledger (9.11)--(9.17) give uniformly bounded square presentations. Coordinates are padded only by variable--linear-relation pairs.
 8. **Automorphic support.** For the support-based direct route, NM-III
    clauses 5--6 place the patched primary module on every selected component
@@ -1939,13 +2474,13 @@ support check can be displayed without abbreviation.
    consequence of faithfulness.
 
 Items 1--7 verify the Taylor--Wiles system, with companion duality supplying
-the role of the eighth axiom in Book 73; item 8 is the extra arithmetic
+the role of the companion-duality axiom; item 8 is the extra arithmetic
 support input for the support-based comparison theorem. These checks also
 explain the division between fixed and varying primes. Items 3--5 concern
 the diamond tower at $Q_n$, while items 4 and 8 retain the integral component
 data at $P$ throughout that tower.
 
-### 11.3 The patched pair and its dimension
+### 11.7 The general patched pair and its dimension
 
 Let
 
@@ -1953,14 +2488,14 @@ $$
 S_\infty=\mathcal O[[z_1,\ldots,z_{q_P}]],
 \qquad
 \mathfrak a_\infty=(z_1,\ldots,z_{q_P}).
-\tag{11.4}
+\tag{11.15}
 $$
 
 After passing to the diagonal subsequence, patching produces a complete local $S_\infty$-algebra $R_\infty^P$, finite primary and companion modules $M_\infty^{P,+},M_\infty^{P,-}$, their perfect inverse-diamond pairing, and adjoint faithful orders $\mathbb T_\infty^{P,+}\simeq\mathbb T_\infty^{P,-}$. The primary order is a quotient of $R_\infty^P$ acting faithfully on $M_\infty^{P,+}$. Their augmentations are
 
 $$
 R_\infty^P/\mathfrak a_\infty R_\infty^P\simeq R^P,
-\tag{11.5}
+\tag{11.16}
 $$
 
 $$
@@ -1970,7 +2505,7 @@ M_\infty^{P,\pm}/\mathfrak a_\infty M_\infty^{P,\pm}
 \mathbb T_\infty^{P,\pm}/\mathfrak a_\infty
 \mathbb T_\infty^{P,\pm}
 \simeq\mathbb T^{P,\pm}.
-\tag{11.6}
+\tag{11.17}
 $$
 
 Both modules are finite free over $S_\infty$. From now on $M_\infty^P=M_\infty^{P,+}$ and $\mathbb T_\infty^P=\mathbb T_\infty^{P,+}$ denote the primary objects in support and ring comparisons; the companion remains present in every adjoint and determinant statement. In the smooth neutral range of Section 9.4, the ring has a square presentation
@@ -1979,17 +2514,26 @@ $$
 R_\infty^P
 \simeq
 S_\infty[[Z_1,\ldots,Z_b]]/(F_1,\ldots,F_b).
-\tag{11.7}
+\tag{11.18}
 $$
 
 Therefore
 
 $$
 \dim R_\infty^P\ge\dim S_\infty=q_P+1.
-\tag{11.8}
+\tag{11.19}
 $$
 
-Since a nonzero $S_\infty$-free module has support of dimension $q_P+1$, (11.8) is only the lower half of the dimension argument. If NM-III gives coverage of every minimal prime, Book 75's sharp patched comparison supplies the reverse inequality on every component. It then proves that $R_\infty^P$ is equidimensional of dimension $q_P+1$, that the $F_i$ form a regular sequence, that $M_\infty^P$ is maximal Cohen--Macaulay, and that $R_\infty^P$ is finite free over $S_\infty$. If only selected components are covered, those conclusions require an independent dimension ceiling on the corresponding component quotient. They do not follow merely by ignoring the uncovered components.
+Since a nonzero $S_\infty$-free module has support of dimension $q_P+1$,
+(11.19) is only the lower half of the dimension argument. If NM-III gives
+coverage of every minimal prime, the sharp support comparison supplies the
+reverse inequality on every component. It then proves that $R_\infty^P$ is
+equidimensional of dimension $q_P+1$, that the $F_i$ form a regular sequence,
+that $M_\infty^P$ is maximal Cohen--Macaulay, and that $R_\infty^P$ is finite
+free over $S_\infty$. If only selected components are covered, those
+conclusions require an independent dimension ceiling on the corresponding
+component quotient. They do not follow merely by ignoring the uncovered
+components.
 
 In the smooth neutral range there is a stronger direct argument, and this is
 the exact point at which the final method of Book 155 can be reused. The
@@ -2007,7 +2551,7 @@ by (1.6). Hence
 $$
 h^1_{\mathcal L_P}(F,W)=
 h^1_{\mathcal L_P^\perp}(F,W(1))=q_P.
-\tag{11.8a}
+\tag{11.19a}
 $$
 
 The Poitou--Tate sequence for the ordered conditions at $Q_n$ has a
@@ -2016,21 +2560,21 @@ group in (9.1), by the prime-selection condition. Consequently
 
 $$
 h^1_{\mathcal L_{P,Q_n}}(F,W)=q_P.
-\tag{11.8b}
+\tag{11.19b}
 $$
 
 Absolute residual irreducibility identifies the tangent space of the
-unframed auxiliary functor with the group in (11.8b). Choosing a basis and
+unframed auxiliary functor with the group in (11.19b). Choosing a basis and
 lifts, topological Nakayama therefore gives the sharp absolute source
 
 $$
 \mathscr P=\mathcal O[[X_1,\ldots,X_{q_P}]]
 \twoheadrightarrow R_n^P.
-\tag{11.8c}
+\tag{11.19c}
 $$
 
 Retain the kernels of these source maps, lifts of the diamond parameters,
-the actions, and all three exact augmentations (11.3) in the finite shadows.
+the actions, and all three exact augmentations (11.14) in the finite shadows.
 The same marked inverse-limit argument as in Book 155 gives
 
 $$
@@ -2038,7 +2582,7 @@ S_\infty\longrightarrow\mathscr P
 \longrightarrow R_\infty^P
 \longrightarrow A_\infty^P
 \subseteq\operatorname{End}_{S_\infty}(M_\infty^P),
-\tag{11.8d}
+\tag{11.19d}
 $$
 
 where $A_\infty^P$ is the action image and the composite from $S_\infty$ is
@@ -2054,7 +2598,7 @@ R_\infty^P=\mathscr P=A_\infty^P,
 \qquad
 M_\infty^P\simeq\mathscr P^{\,e}
 \quad(e>0).
-\tag{11.8e}
+\tag{11.19e}
 $$
 
 Exact augmentation then gives
@@ -2063,86 +2607,234 @@ $$
 R^P\simeq\mathbb T^P,
 \qquad
 M^P\simeq(R^P)^e.
-\tag{11.8f}
+\tag{11.19f}
 $$
 
-Indeed, the $R^P$-action on the free module in (11.8f) factors through the
+Indeed, the $R^P$-action on the free module in (11.19f) factors through the
 faithful Hecke order, so the kernel of $R^P\twoheadrightarrow\mathbb T^P$ is
-zero. This route uses NM-I and NM-II and the sharp balance (11.8a)--(11.8c).
+zero. This route uses NM-I and NM-II and the sharp balance (11.19a)--(11.19c).
 It uses neither a minimal theorem, NM-III's determinant clauses, NM-III's
 coverage clauses, nor an independent reducedness hypothesis.
 
-When (11.8a)--(11.8c) are unavailable, the preceding square-presentation and
+When (11.19a)--(11.19c) are unavailable, the preceding square-presentation and
 support argument remains a distinct direct route. It is then the coverage
 statement, not the minimal equality, that supplies the missing dimension
 ceiling.
 
 For a singular local component, the patched source is built over the completed tensor product of its actual local rings. The same conclusion follows only after constructing a presentation $R_\infty^P=P_\infty/J_\infty$ in which $P_\infty$ is Cohen--Macaulay, catenary, and equidimensional of the required dimension, the dimension formula holds at primes minimal over $J_\infty$, and $J_\infty$ has the asserted generator bound. The local rings' perfect obstruction complexes must produce that presentation. One may not replace them by smooth rings having the same generic dimension.
 
-### 11.4 Coverage, faithfulness, and nilpotents
+### 11.8 Coverage, faithfulness, and nilpotents in the general criterion
 
 Let $A$ be a Noetherian ring and $M$ a finite $A$-module. Full support means
 
 $$
 \operatorname{Supp}_A(M)=\operatorname{Spec}A.
-\tag{11.9}
+\tag{11.20}
 $$
 
 It implies only
 
 $$
 \sqrt{\operatorname{Ann}_A(M)}=\sqrt{(0)}.
-\tag{11.10}
+\tag{11.21}
 $$
 
 Thus the action has nilpotent kernel. If $A$ is reduced, the action is faithful. More generally, if $A$ is equidimensional Cohen--Macaulay and the action is faithful at every minimal prime, then $A$ has no embedded associated primes on which a nonzero annihilator can hide, and the action is faithful.
 
 These observations give three distinct outputs:
 
-- coverage of every component gives near faithfulness and hence equality of reduced quotients after the exact augmentation argument of Book 75;
+- coverage of every component gives near faithfulness and hence equality of
+  reduced quotients after exact regular augmentation;
 - coverage of a selected union, together with a compatible patched component quotient and an independent dimension ceiling, gives a reduced componentwise equality; and
 - source reducedness, generic reducedness plus $S_\infty$-torsion-freeness, or a direct annihilator theorem upgrades the corresponding reduced equality to full equality.
 
-The sharp balanced route adds a fourth output: (11.8e) proves faithful action
+The sharp balanced route adds a fourth output: (11.19e) proves faithful action
 before any component argument, so full support and absence of a kernel are
 consequences rather than hypotheses.
 
-Patching does not manufacture coverage. If the type module misses a local component, the corresponding global component is absent from (11.9), even when it has the same characteristic-zero inertial type as a component that is present.
+Patching does not manufacture coverage. If the type module misses a local component, the corresponding global component is absent from (11.20), even when it has the same characteristic-zero inertial type as a component that is present.
 
-## 12. The nonminimal $R=T$ theorem
+## 12. The one-prime $R=T$ theorem
 
 We can now separate two mechanisms for full equality from the reduced,
 componentwise, and numerical variants. In every statement, the map is the
 canonical surjection (10.3). Its direction comes from the Hecke-valued
 Galois representation satisfying the deformation problem.
 
-### 12.1 Full equality
+### 12.1 Patched equality
 
-**Theorem 12.1A (sharp balanced full nonminimal $R=T$).** Let $F$,
+The maps retained in (11.6) act on $M_\infty^{(2)}$.  Their composite is the
+action of the selected source.  By (11.11) that composite is injective, while
+both displayed arrows are surjective.  Therefore both kernels vanish.
+
+**Theorem 12.1 (patched one-prime equality).** For the clean selected
+one-prime datum,
+
+$$
+P_\infty^{(2)}\xrightarrow{\sim}R_\infty^{(2)}
+\xrightarrow{\sim}\mathbb T_\infty^{(2)}.
+\tag{12.1}
+$$
+
+**Proof.** If $x$ belongs to the kernel of the first arrow, then it acts as
+zero on $M_\infty^{(2)}$ and (11.11) gives $x=0$.  If $y$ belongs to the
+kernel of the second arrow, choose a preimage $x$ in $P_\infty^{(2)}$.
+Again $x$ acts as zero, so $x=0$ and $y=0$.  Surjectivity was built into the
+global presentation and nonminimal reciprocity. $\square$
+
+The proof is scheme-theoretic.  It rules out a nilpotent kernel and an embedded
+selected-direction kernel, not merely a discrepancy of generic fibers.  It
+does not cover components omitted from $P_\infty^{(2)}$ by the named local
+conditions.
+
+### 12.2 Auxiliary augmentation
+
+Let $\mathfrak a_\infty=(z_1,\ldots,z_q)$ be the auxiliary augmentation ideal
+in (11.5).  The module in (11.8) is free over $B_\infty$, so the $z_i$ form an
+$M_\infty^{(2)}$-regular sequence.  By faithful action and the equality
+(12.1), they form the required regular augmentation sequence on the selected
+ring as well.  The marked finite-shadow identities identify the quotient with
+the finite-level objects:
+
+$$
+R_\infty^{(2)}/\mathfrak a_\infty R_\infty^{(2)}
+\simeq R_{\Lambda_v}^{(2)},
+\qquad
+\mathbb T_\infty^{(2)}/\mathfrak a_\infty\mathbb T_\infty^{(2)}
+\simeq\mathbb T_{\Lambda_v}^{(2)}.
+\tag{12.2}
+$$
+
+Quotienting (12.1) therefore gives the canonical finite-level equality
+
+$$
+\boxed{
+R_{\Lambda_v}^{(2)}\xrightarrow{\sim}
+\mathbb T_{\Lambda_v}^{(2)}.
+}
+\tag{12.3}
+$$
+
+The arrow in (12.3) is the reciprocity map: universal good traces, determinant,
+tame action, line, and local operators were marked before patching.  The result
+is not merely the existence of some abstract isomorphism between two rings.
+
+### 12.3 Tame-character specialization
+
+Let $\chi:\Delta_v\to\mathcal O_\chi^\times$ be a retained nontrivial tame
+character after a finite extension of coefficient discrete valuation rings.
+Define
+
+$$
+R_\chi^{(2)}=
+R_{\Lambda_v}^{(2)}\widehat\otimes_{\Lambda_v,\chi}\mathcal O_\chi,
+\qquad
+\mathbb T_\chi^{(2)}=
+\mathbb T_{\Lambda_v}^{(2)}\widehat\otimes_{\Lambda_v,\chi}\mathcal O_\chi.
+\tag{12.4}
+$$
+
+Amplitude collapse proves that specialization has no hidden
+$\operatorname{Tor}_1$.  Base changing the marked equality (12.3) gives
+
+$$
+\boxed{
+R_\chi^{(2)}\xrightarrow{\sim}\mathbb T_\chi^{(2)}.
+}
+\tag{12.5}
+$$
+
+Because $\chi$ is nontrivial of conductor exponent one, the generic special
+points of (12.5) have conductor exponent two by (10.4).  If a finite coefficient
+extension is needed to contain the values of $\chi$, all type lattices,
+pairings, local conditions, and the equality commute with that faithfully flat
+extension.  Equality can therefore be checked after the extension and descends
+to the original coefficient ring whenever both objects were originally defined
+there.
+
+### 12.4 The minimal face and the numerical factor
+
+Specializing instead through the augmentation $\epsilon_v$ gives, by
+(10.10), (10.16), and (12.3), the already known minimal equality
+
+$$
+R^{\min}\xrightarrow{\sim}\mathbb T^{\min}.
+\tag{12.6}
+$$
+
+This compatibility is a stringent consistency check: the universal family has
+not acquired a hidden quotient at its minimal face.  Logically, however,
+(12.6) entered the proof through amplitude collapse and did not by itself imply
+(12.3).
+
+The signed Gram calculation remains useful for measuring congruences.  In
+trivial-central normalization the two degeneracy maps have Gram matrix
+
+$$
+G_v=
+\begin{pmatrix}
+q_v+1&T_v\\
+T_v&q_v+1
+\end{pmatrix}.
+\tag{12.7}
+$$
+
+If $a_v$ is the $T_v$-eigenvalue and $\varepsilon_v$ is the selected sign, the
+selected factor is
+
+$$
+c_v^{\varepsilon_v}=q_v+1-\varepsilon_va_v.
+\tag{12.8}
+$$
+
+The companion factor is a unit when
+
+$$
+q_v\not\equiv\pm1\pmod\ell.
+\tag{12.9}
+$$
+
+Smith normal form then identifies the length of the one-prime selected
+congruence module with
+$\operatorname{ord}_\varpi(c_v^{\varepsilon_v})$.  With nontrivial central
+character the lower-left entry of (12.7) is $S_v^{-1}T_v$ and every sign and
+trace is translated through the good Hecke polynomial.  The scalar formula is
+not used to prove (12.3); it records the same local incidence divisor on the
+deformation and automorphic sides.  At $q_v\equiv-1\pmod\ell$ both signed
+factors may be nonunits, so the one-factor statement is unavailable even though
+the full two-map saturation theorem remains meaningful.
+
+### 12.5 Conditional variants beyond the selected family
+
+These are comparison criteria, not additional catalog theorems. Within this
+book they are applied only for $\ell\ge7$ after every listed input has been
+proved. In particular, they make no coefficient-five claim.
+
+**Criterion 12.5A (sharp balanced full comparison).** Let $F$,
 $\ell$, $\bar\rho$, $\delta$, and $\mathcal D^P$ satisfy the standing
 hypotheses and the smooth neutral hypotheses of Section 9.4. Assume that the
-calculation (11.8a)--(11.8b) applies, the residual image supplies the ordered
+calculation (11.19a)--(11.19b) applies, the residual image supplies the ordered
 sets $Q_n$, and NM-I and NM-II hold with the pairing-compatible finite
 shadows and exact ring, module, order, and action augmentations of Sections
 11.1 and 11.3. Then
 
 $$
 R^P\xrightarrow{\sim}\mathbb T^P.
-\tag{12.1}
+\tag{12.10}
 $$
 
 The common ring is finite flat and a complete intersection over $\mathcal O$,
 and $M^P$ is finite free of positive rank over it. If the selected type
 module is independently cyclic, this rank is one.
 
-**Proof.** Equations (11.8a)--(11.8c) give an absolute source with exactly
+**Proof.** Equations (11.19a)--(11.19c) give an absolute source with exactly
 $q_P$ variables, matching the $q_P$ diamond variables. Equal-variable
-rigidity gives (11.8e), and exact augmentation and faithful definition of the
-Hecke order give (11.8f), which is (12.1). Since $\mathscr P$ is finite free
+rigidity gives (11.19e), and exact augmentation and faithful definition of the
+Hecke order give (11.19f), which is (12.10). Since $\mathscr P$ is finite free
 over $S_\infty$, the diamond parameters form a regular sequence in
 $\mathscr P$; its augmentation is therefore finite flat and
 complete-intersection. The module statement follows by augmenting the free
-module in (11.8e). $\square$
+module in (11.19e). $\square$
 
 This is the closest nonminimal analogue of Book 155's kernel-killing proof.
 It does not descend to minimal level, and it does not use a determinant or
@@ -2151,7 +2843,9 @@ component-coverage theorem.
 For local conditions outside this sharp balanced range, one can instead use
 the following support-based result.
 
-**Theorem 12.1B (support-based full nonminimal $R=T$).** Let $F$, $\ell$, $\bar\rho$, $\delta$, and $\mathcal D^P$ satisfy the standing hypotheses. Assume:
+**Criterion 12.5B (support-based full comparison).** Let $F$, $\ell$,
+$\bar\rho$, $\delta$, and $\mathcal D^P$ satisfy the standing hypotheses.
+Assume:
 
 1. the finite-flat local theorem of Section 4.2 applies at all $v\mid\ell$;
 2. every $v\in P$ has a smooth neutral controlled local condition, or the actual singular local base yields a presentation
@@ -2175,39 +2869,55 @@ the following support-based result.
    \text{ is reduced},
    \qquad
    R^P\text{ is reduced}.
-   \tag{12.1a}
+   \tag{12.10a}
    $$
 
-Then (12.1) holds.
+Then (12.10) holds.
 
 The ring is finite flat over $\mathcal O$. In the smooth neutral case it is a complete intersection and the corresponding automorphic module is maximal Cohen--Macaulay. That module is free of rank one over the Hecke order only if it is independently known to be cyclic and faithful, or if another criterion such as finite projective dimension proves freeness; generic multiplicity one alone does not suffice.
 
-**Proof.** Sections 11.1--11.3 and clause 5 verify the sharp patched comparison theorem of Book 75. It gives a nilpotent kernel for
+**Proof.** Sections 11.5--11.7 and clause 5 verify the sharp support comparison
+criterion. It gives a nilpotent kernel for
 
 $$
 R_\infty^P\twoheadrightarrow\mathbb T_\infty^P
-\tag{12.2}
+\tag{12.11}
 $$
 
-and proves that $R_\infty^P$ is finite free over $S_\infty$. Under the first alternative in (12.1a), the nilpotent kernel is zero. Under the second, $S_\infty$-freeness injects the source into its reduced generic fiber, so the source is reduced and the same conclusion follows. Under the third, exact augmentation gives a nilpotent kernel in the reduced finite source $R^P$, hence zero. Book 75's regular augmentation theorem now gives (12.1), finite flatness, and the complete-intersection and maximal Cohen--Macaulay conclusions. Freeness of the module requires the additional criterion stated after the theorem. $\square$
+and proves that $R_\infty^P$ is finite free over $S_\infty$. Under the first
+alternative in (12.10a), the nilpotent kernel is zero. Under the second,
+$S_\infty$-freeness injects the source into its reduced generic fiber, so the
+source is reduced and the same conclusion follows. Under the third, exact
+augmentation gives a nilpotent kernel in the reduced finite source $R^P$,
+hence zero. The regular augmentation theorem now gives (12.10), finite
+flatness, and the complete-intersection and maximal Cohen--Macaulay
+conclusions. Freeness of the module requires the additional criterion stated
+after the theorem. $\square$
 
-### 12.2 Reduced equality
+### 12.6 Reduced equality in the general criterion
 
-**Theorem 12.2 (reduced nonminimal $R=T$).** Retain clauses 1--5 of
-Theorem 12.1B, but omit every alternative in (12.1a). Then
+**Criterion 12.6 (reduced general comparison).** Retain clauses 1--5 of
+Criterion 12.5B, but omit every alternative in (12.10a). Then
 
 $$
 (R^P)_{\mathrm{red}}\xrightarrow{\sim}(\mathbb T^P)_{\mathrm{red}}.
-\tag{12.3}
+\tag{12.12}
 $$
 
 If the generic Hecke algebra is a product of fields and $\mathbb T^P$ is $\mathcal O$-torsion-free, then $\mathbb T^P$ is already reduced, so the right side may be written $\mathbb T^P$.
 
-**Proof.** Apply Book 75's sharp patched comparison theorem, not the generally false rule that reduction commutes with an arbitrary quotient by the augmentation ideal. Component coverage makes the patched action nearly faithful; the square presentation then gives Cohen--Macaulayness and finite $S_\infty$-freeness, so the augmentation sequence is regular and exact control carries the nilpotent kernel to finite level. This proves (12.3). A torsion-free order inside a product of characteristic-zero fields has no nonzero nilpotent, proving the last assertion. $\square$
+**Proof.** Apply the sharp support comparison theorem, not the generally false
+rule that reduction commutes with an arbitrary quotient by the augmentation
+ideal. Component coverage makes the patched action nearly faithful; the square
+presentation then gives Cohen--Macaulayness and finite $S_\infty$-freeness, so
+the augmentation sequence is regular and exact control carries the nilpotent
+kernel to finite level. This proves (12.12). A torsion-free order inside a
+product of characteristic-zero fields has no nonzero nilpotent, proving the
+last assertion. $\square$
 
 This reduced theorem suffices for characteristic-zero modularity of every point: a homomorphism from $R^P$ to a domain kills nilpotents. It does not identify infinitesimal deformation structure.
 
-### 12.3 Componentwise equality
+### 12.7 Componentwise equality in the general criterion
 
 Let $\mathcal C$ be a union of irreducible components of $\operatorname{Spec}R^P[1/\ell]$, and let
 
@@ -2215,13 +2925,13 @@ $$
 R^{P,\mathcal C}
 =R^P/\ker\bigl(R^P\to
 \prod_{\mathfrak p\in\mathcal C}R^P[1/\ell]/\mathfrak p\bigr)
-\tag{12.4}
+\tag{12.13}
 $$
 
 be the schematic closure quotient of the selected generic components. Assume a saturated Hecke-stable quotient $M^{P,\mathcal C}$ has been constructed whose generic constituents are exactly the automorphic points on $\mathcal C$, and let $\mathbb T^{P,\mathcal C}$ be its faithful Hecke order. The existence and saturation of this quotient are integral automorphic assertions, not consequences of the notation.
 
-**Theorem 12.3 (componentwise nonminimal $R=T$).** Suppose the presentation
-and module hypotheses of Theorem 12.2 hold on a patched union $\Sigma$ of
+**Criterion 12.7 (componentwise general comparison).** Suppose the presentation
+and module hypotheses of Criterion 12.6 hold on a patched union $\Sigma$ of
 minimal primes. Let $P_\Sigma$ be the kernel of the map from the patched
 deformation ring to the product of its quotients by the primes in $\Sigma$.
 Assume the patched module has exactly that generic support, an independent
@@ -2233,30 +2943,36 @@ $$
 (R^{P,\mathcal C})_{\mathrm{red}}
 \xrightarrow{\sim}
 (\mathbb T^{P,\mathcal C})_{\mathrm{red}}
-\tag{12.5}
+\tag{12.14}
 $$
 
-Since the quotient (12.4) embeds in a product of domains, it is already reduced. Thus one always obtains
+Since the quotient (12.13) embeds in a product of domains, it is already reduced. Thus one always obtains
 
 $$
 R^{P,\mathcal C}
 \xrightarrow{\sim}
 (\mathbb T^{P,\mathcal C})_{\mathrm{red}}.
-\tag{12.5a}
+\tag{12.14a}
 $$
 
-If $\mathbb T^{P,\mathcal C}$ is an $\mathcal O$-torsion-free order in a product of fields, it too is reduced, and (12.5a) is the full equality
+If $\mathbb T^{P,\mathcal C}$ is an $\mathcal O$-torsion-free order in a product of fields, it too is reduced, and (12.14a) is the full equality
 
 $$
 R^{P,\mathcal C}
 \xrightarrow{\sim}
 \mathbb T^{P,\mathcal C}.
-\tag{12.5b}
+\tag{12.14b}
 $$
 
-**Proof.** Book 75's componentwise theorem applied to the patch-defined ideal $P_\Sigma$ gives (12.5) after augmentation. NM-III clause 6 is what identifies that augmentation with the independently defined finite quotient (12.4); without it one would have proved a theorem for an unnamed patch-defined quotient. The closure quotient is reduced, giving (12.5a), and the stated generic semisimplicity makes its faithful Hecke order reduced, giving (12.5b). $\square$
+**Proof.** The componentwise support theorem applied to the patch-defined ideal
+$P_\Sigma$ gives (12.14) after augmentation. NM-III clause 6 is what identifies
+that augmentation with the independently defined finite quotient (12.13);
+without it one would have proved a theorem for an unnamed patch-defined
+quotient. The closure quotient is reduced, giving (12.14a), and the stated
+generic semisimplicity makes its faithful Hecke order reduced, giving (12.14b).
+$\square$
 
-### 12.4 The numerical variant
+### 12.8 The relative numerical criterion
 
 Sometimes the minimal post-equality Fitting--congruence package and the local
 cost formulas permit a shorter argument at one augmentation. Make the
@@ -2267,7 +2983,7 @@ $\mathbb T^P$. Let
 $$
 R^P\twoheadrightarrow\mathbb T^P
 \xrightarrow{\lambda_P}\mathcal O'
-\tag{12.6}
+\tag{12.15}
 $$
 
 be the canonical maps. Assume $\mathbb T^P$ is finite flat over $\mathcal O'$, the cotangent module $\Phi_{R^P,\lambda_P}$ is finite, and put
@@ -2275,7 +2991,7 @@ be the canonical maps. Assume $\mathbb T^P$ is finite flat over $\mathcal O'$, t
 $$
 \Psi_{\mathbb T^P,\lambda_P}
 =\mathcal O'/\eta_{\mathbb T^P,\lambda_P}.
-\tag{12.7}
+\tag{12.16}
 $$
 
 The Wiles--Lenstra inequality is
@@ -2284,7 +3000,7 @@ $$
 \operatorname{length}_{\mathcal O'}\Phi_{R^P,\lambda_P}
 \le
 \operatorname{length}_{\mathcal O'}\Psi_{\mathbb T^P,\lambda_P},
-\tag{12.8}
+\tag{12.17}
 $$
 
 equivalently
@@ -2294,14 +3010,14 @@ $$
 \subseteq
 \operatorname{Fitt}_{\mathcal O'}
 \Phi_{R^P,\lambda_P}.
-\tag{12.9}
+\tag{12.18}
 $$
 
-Under (12.8), the numerical criterion gives
+Under (12.17), the numerical criterion gives
 
 $$
 R^P\simeq\mathbb T^P
-\tag{12.10}
+\tag{12.19}
 $$
 
 at the localized augmentation, and both are complete intersections there.
@@ -2312,32 +3028,219 @@ supply the identical new increment
 
 $$
 \sum_{v\in P}\operatorname{ord}_{\varpi'}c_v
-\tag{12.11}
+\tag{12.20}
 $$
 
-on both sides. Hence (12.8) follows. NM-III's coverage clauses are not used
+on both sides. Hence (12.17) follows. NM-III's coverage clauses are not used
 in this numerical proof. If one local factor is missing, if an opposite
 Steinberg factor is nonunit, or if higher $\operatorname{Tor}$ contributes,
 this cancellation fails and the numerical proof stops.
 
-## 13. Extracting modularity of a specified lift
+## 13. The fixed-character modularity-lifting theorem
 
 An equality of rings becomes a modularity statement only after the target representation is turned into a point of the correct ring and then compared with the Galois representation over the Hecke order. Exact local type is recovered from the representation itself, not just from equality of unramified traces.
 
-### 13.1 From a Galois point to a Hecke character
+### 13.1 The exact clean datum
+
+We collect the hypotheses actually used by Theorem 12.1.  A **clean selected
+one-prime datum** consists of the following information.
+
+1. $F$ is totally real, $\ell\ge7$, and $(\mathcal O,\varpi,k)$ is a finite
+   coefficient discrete valuation ring of residue characteristic $\ell$.
+2. The representation
+
+   $$
+   \bar\rho:G_F\longrightarrow\operatorname{GL}_2(k)
+   \tag{13.1}
+   $$
+
+   is absolutely irreducible and totally odd,
+   $\bar\rho|_{G_{F(\zeta_\ell)}}$ is absolutely irreducible, and
+
+   $$
+   H^0(F,\operatorname{ad}^0\bar\rho(1))=0.
+   \tag{13.2}
+   $$
+3. A minimal determinant $\delta^{\min}$ and the global family
+   $\delta_{\Lambda_v}$ of (10.5)--(10.7) are fixed and agree with every local
+   determinant and automorphic central character.
+4. For every $w\mid\ell$, $F_w/\mathbf Q_\ell$ is unramified and the represented
+   fixed-determinant condition is the integral finite-flat weight-$\{0,1\}$
+   condition.  Membership means that every Artinian quotient has a compatible
+   finite-flat model.
+5. At every $w\nmid\ell$, $w\ne v$, the datum is one named clean minimal
+   component: unramified, a fixed integral principal type, a named
+   minimal-special component, or a selected tame-dihedral component only in
+   the range where its primary/companion lattice and reciprocity theorem have
+   been proved.  Primitive wild and ramified dyadic positive-depth types are
+   absent.
+6. At the single selected place $v\nmid\ell$, the minimal face is conductor-one
+   special and the nonminimal family is precisely the enhanced scalar-tame
+   twist of Sections 10.1--10.2.  The line, sign, monodromy relation, scalar
+   finite inertia, tame character, and determinant are all retained, and
+   (12.9) holds.
+7. The residual minimal eigensystem occurs in the exact non-Eisenstein
+   parallel-weight-two compact automorphic realization.  The minimal theorem's
+   primary and companion modules, perfect pairing, exact auxiliary
+   augmentation, and finite-flat local hypotheses all apply.
+8. At $v$, primary and companion type lattices are primitive and perfectly
+   paired; full degeneracy, selected-type saturation, component-group control,
+   and equality of the curve and definite faithful Hecke orders hold.  Fine
+   level is neat, or every stabilizer used in descent has order prime to
+   $\ell$.
+9. The one-prime type-complex theorem supplies (10.11)--(10.16), component
+   support, primitive closure, determinant comparison, and augmentation-
+   saturation of the acting image at every Taylor--Wiles level.
+10. The generic faithful Hecke order is reduced and generated by the good
+    trace values, fixed determinant, and structural tame action.  Every generic
+    branch has an attached representation, and full local--global compatibility
+    holds in the exact principal, special, or selected tame-dihedral range.
+    The resulting Hecke-valued representation satisfies every Artinian local
+    condition, including the integral finite-flat condition.
+11. Taylor--Wiles modules are free over the auxiliary group rings; auxiliary
+    augmentation is exact for rings, complexes, pairings, determinant lines,
+    and acting images; the two augmentations commute in every marked finite
+    shadow.
+12. The selected patched source is $\mathcal O$-flat and equidimensional of the
+    expected dimension, has reduced generic fiber, and has exactly one named
+    selected generic component over each tame-character factor.
+
+Every item is used in Chapters 10--12.  In particular, item 9 gives support but
+not faithfulness, item 10 gives a surjection but not injectivity, and item 12
+turns full support into a zero annihilator.  The list deliberately makes no
+assertion at coefficient characteristic five.
+
+### 13.2 From a deformation point to an automorphic point
+
+Fix a nontrivial conductor-one tame character
+$\chi:\Delta_v\to\mathcal O_\chi^\times$, enlarge coefficients finitely if
+necessary, and let
+
+$$
+\rho:G_F\longrightarrow\operatorname{GL}_2(\mathcal O')
+\tag{13.3}
+$$
+
+be a lift of (13.1).  Suppose that its determinant is $\delta_\chi$; its
+restrictions above $\ell$ are finite flat of weights $\{0,1\}$ on every
+Artinian quotient; its restrictions away from $v$ belong to the named minimal
+components; and its restriction at $v$ belongs to the fixed-$\chi$ enhanced
+special component with the selected line, sign, and nonzero rank-one
+monodromy.
+
+These conditions give a point
+
+$$
+x_\rho:R_\chi^{(2)}\longrightarrow\mathcal O'.
+\tag{13.4}
+$$
+
+Transporting it through (12.5) gives a character of the faithful Hecke order.
+After a further finite coefficient extension it selects a characteristic-zero
+constituent of the compact automorphic carrier.  Integral type occurrence
+identifies the local packet at every controlled place.  At $v$, the primary
+lattice detects the scalar tame character, line, sign, and special monodromy;
+because $N\ne0$ and $a(\chi)=1$, the local representation has conductor two.
+The compact packet transfers to a cuspidal parallel-weight-two representation
+$\pi$ of $\operatorname{GL}_2(\mathbf A_F)$.
+
+At every good finite place $w$, the Hecke-valued representation and the
+universal representation have the same characteristic polynomial.  With the
+geometric-Frobenius convention it is
+
+$$
+X^2-T_wX+q_wS_w,
+\tag{13.5}
+$$
+
+and the arithmetic-Frobenius version is obtained by inversion together with
+the central-character normalization fixed in (1.7).  Density and
+Brauer--Nesbitt give
+
+$$
+\rho\otimes_{\mathcal O'}E'
+\simeq\rho_\pi\otimes_{\mathcal O'}E'.
+\tag{13.6}
+$$
+
+Residual absolute irreducibility is essential here: it turns equality of
+traces into equality of irreducible representations and prevents a reducible
+pseudorepresentation from hiding extension data.
+
+### 13.3 Integral identification and the theorem
+
+The generic isomorphism (13.6) identifies the integral lattices.  Scale an
+intertwiner so that it sends one stable lattice into the other but not into its
+$\varpi'$-multiple.  Its reduction has nonzero image.  That image is a stable
+subspace of the absolutely irreducible residual representation, hence the whole
+space.  Nakayama's lemma makes the lattice map surjective; equality of ranks
+makes it an isomorphism.  Thus
+
+$$
+\rho\simeq\rho_\pi
+\quad\text{as }\mathcal O'[G_F]\text{-modules}.
+\tag{13.7}
+$$
+
+This integral identification transports all finite-flat quotient models and
+all intrinsic local Galois data.  A nonintrinsic line or sign is identified
+because it was retained in both the deformation point and the automorphic type,
+not because an abstract representation isomorphism remembers an arbitrary
+refinement.
+
+**Theorem 13.1 (one-prime finite-flat nonminimal modularity lifting).** Let a
+clean selected one-prime datum satisfy Section 13.1, and fix a nontrivial tame
+character $\chi$ of conductor exponent one.  Let (13.3) be a continuous lift
+such that:
+
+1. $\det\rho=\delta_\chi$;
+2. at every $w\mid\ell$, $F_w/\mathbf Q_\ell$ is unramified and every Artinian
+   quotient of $\rho|_{G_{F_w}}$ belongs to the finite-flat weight-$\{0,1\}$
+   condition;
+3. at every $w\nmid\ell$, $w\ne v$, the restriction belongs to the exact named
+   minimal component;
+4. at $v$, the restriction lies on the fixed-$\chi$ enhanced-special component
+   with the selected scalar inertia, invariant line, sign, determinant, and
+   nonzero rank-one monodromy; and
+5. after any necessary finite coefficient extension, all integral automorphic,
+   saturation, stabilizer, reciprocity, augmentation, and selected-source
+   hypotheses in items 7--12 of Section 13.1 remain valid.
+
+Then there is a cuspidal parallel-weight-two automorphic representation $\pi$
+with the prescribed central character and local types for which
+
+$$
+\rho\simeq\rho_\pi
+$$
+
+integrally.  At $v$, $\pi_v$ is the selected special twist of conductor
+exponent two.
+
+**Proof.** The local hypotheses give (13.4).  Theorem 12.1 and Section 12.3 give the
+fixed-character equality (12.5), so the point occurs in the faithful
+automorphic carrier.  Type occurrence supplies $\pi$ with the exact local
+labels.  Equations (13.5)--(13.6) identify the generic representations, and
+the lattice argument gives (13.7).  Formula (10.4) gives the conductor at $v$.
+$\square$
+
+The coefficient restriction $\ell\ge7$ is part of the theorem.  Nothing in the
+proof allows it to be weakened to $\ell=5$ by assuming only absolute
+irreducibility over $F$.
+
+### 13.4 The general point-to-character argument
 
 Let
 
 $$
 \rho:G_F\longrightarrow\operatorname{GL}_2(\mathcal O')
-\tag{13.1}
+\tag{13.8}
 $$
 
 be a lift of $\bar\rho$ satisfying $\mathcal D^P$ and lying on the selected component tuple. Universality gives
 
 $$
 x_\rho:R^P\longrightarrow\mathcal O'.
-\tag{13.2}
+\tag{13.9}
 $$
 
 For the full and reduced whole-ring theorems, put
@@ -2348,12 +3251,13 @@ $$
 R^\star=R^{P,\mathcal C},
 \qquad
 \mathbb T^\star=\mathbb T^{P,\mathcal C};
-\tag{13.2a}
+\tag{13.9a}
 $$
 
-in this case the component hypothesis makes (13.2) factor through $R^\star$.
-If Theorem 12.1A, Theorem 12.1B, or (12.5b) gives a full equality, transport the resulting
-point directly to a Hecke character. If only (12.3) or (12.5a) gives a
+in this case the component hypothesis makes (13.9) factor through $R^\star$.
+If Criterion 12.5A, Criterion 12.5B, or (12.14b) gives a full equality,
+transport the resulting point directly to a Hecke character. If only (12.12)
+or (12.14a) gives a
 reduced equality, the point still factors through $(R^\star)_{\mathrm{red}}$
 because $\mathcal O'$ is a domain; compose the inverse reduced equality with
 the quotient $\mathbb T^\star\to(\mathbb T^\star)_{\mathrm{red}}$. In every
@@ -2361,20 +3265,20 @@ case one obtains
 
 $$
 \lambda_\rho:\mathbb T^\star\longrightarrow\mathcal O'.
-\tag{13.3}
+\tag{13.10}
 $$
 
 After enlarging $E'$ if necessary, a characteristic-zero simple constituent of the automorphic module affords $\lambda_\rho$. It corresponds to a cuspidal automorphic representation $\pi$ of parallel weight two.
 
-### 13.2 Identification and exact local type
+### 13.5 Identification and exact local type in the general criterion
 
-Let $\rho_\pi$ be the Galois representation obtained by specializing the Hecke-valued family at (13.3). For every finite place outside the deformation set,
+Let $\rho_\pi$ be the Galois representation obtained by specializing the Hecke-valued family at (13.10). For every finite place outside the deformation set,
 
 $$
 \operatorname{tr}\rho(\operatorname{Frob}_v)
 =\lambda_\rho(S_v^{-1}T_v)
 =\operatorname{tr}\rho_\pi(\operatorname{Frob}_v),
-\tag{13.4}
+\tag{13.11}
 $$
 
 and the determinants agree. Frobenius elements at these places are dense. Hence the two pseudorepresentations agree. Their common residual representation is absolutely irreducible, so both representations are irreducible and Chebotarev plus Brauer--Nesbitt gives
@@ -2383,22 +3287,28 @@ $$
 \rho\otimes_{\mathcal O'}E'
 \simeq
 \rho_\pi\otimes_{\mathcal O'}E'.
-\tag{13.5}
+\tag{13.12}
 $$
 
-The stable-lattice uniqueness lemma upgrades (13.5) to an integral isomorphism after scaling the intertwiner. Indeed, place one stable lattice inside the other but not inside its $\varpi'$-multiple. Its image modulo $\varpi'$ is a nonzero stable subspace of the absolutely irreducible residual representation, hence is the whole residual space; Nakayama's lemma makes the two lattices equal. Thus, after the harmless coefficient extension already allowed in Section 13.1,
+The stable-lattice uniqueness lemma upgrades (13.12) to an integral
+isomorphism after scaling the intertwiner. Indeed, place one stable lattice
+inside the other but not inside its $\varpi'$-multiple. Its image modulo
+$\varpi'$ is a nonzero stable subspace of the absolutely irreducible residual
+representation, hence is the whole residual space; Nakayama's lemma makes the
+two lattices equal. Thus, after the harmless coefficient extension already
+allowed in Section 13.4,
 
 $$
 \rho\simeq\rho_\pi
 \qquad\text{as }\mathcal O'[G_F]\text{-modules}.
-\tag{13.5a}
+\tag{13.12a}
 $$
 
-Now restrict (13.5a) to every decomposition group. At $v\mid\ell$, it
+Now restrict (13.12a) to every decomposition group. At $v\mid\ell$, it
 transfers the integral finite-flat property of the chosen Galois lattice. At
 $v\in P$, it transfers the actual inertia action, the monodromy operator, and
 any stable line uniquely determined by the representation. A nonintrinsic
-ordered line or flag is instead matched because (13.2)--(13.3) are the same
+ordered line or flag is instead matched because (13.9)--(13.10) are the same
 point of the retained deformation and Hecke refinement data, as required by
 NM-II; it does not follow from an abstract isomorphism of representations.
 Thus, at every $v\nmid\ell$ covered by the assumed local compatibility theorem,
@@ -2408,16 +3318,17 @@ identification of the automorphic representation $\pi_v$ at $v\mid\ell$ is
 deduced from finite flatness alone; such a conclusion requires a separate
 $\ell$-adic local--global compatibility theorem. Equality of traces at the
 unramified places alone would identify the global semisimplification but
-would not, without (13.5a) and local compatibility, label an integral
+would not, without (13.12a) and local compatibility, label an integral
 component.
 
-### 13.3 The controlled nonminimal lifting theorem
+### 13.6 A conditional controlled lifting criterion
 
-**Theorem 13.1 (controlled nonminimal modularity lifting).** Let $F$ be totally real and let $\ell>2$ be unramified in $F$. Let
+**Criterion 13.2 (conditional controlled lifting beyond the selected
+family).** Let $F$ be totally real and let $\ell\ge7$ be unramified in $F$. Let
 
 $$
 \bar\rho:G_F\to\operatorname{GL}_2(k)
-\tag{13.6}
+\tag{13.13}
 $$
 
 be continuous, absolutely irreducible, totally odd, and adequate for Taylor--Wiles prime selection. Assume $H^0(F,W(1))=0$. Suppose $\bar\rho$ occurs in a non-Eisenstein weight-two automorphic maximal ideal and the required fixed-level type module is independently known to be nonzero. This nonvanishing may come directly from the given automorphic packet or from the level-raising, saturated type-selection, and level-lowering theorems of Chapters 6, 7, and 10; it is not a consequence of the desired nonminimal $R=T$ theorem.
@@ -2435,22 +3346,22 @@ Let $\rho:G_F\to\operatorname{GL}_2(\mathcal O')$ be a lift such that:
 6. the fixed determinant global deformation problem is represented and has no unrecorded local equation; and
 7. NM-I and NM-II hold for the selected component tuple, and one of the
    following route-specific packages is verified: the sharp balance of
-   Theorem 12.1A; NM-III clauses 5--6 together with the applicable coverage,
+   Criterion 12.5A; NM-III clauses 5--6 together with the applicable coverage,
    component-specialization, dimension-ceiling, and nilpotent-control
-   hypotheses of Theorems 12.1B--12.3; or the proved base equality,
-   NM-III clauses 1--4, and the finiteness hypotheses of Section 12.4.
+   hypotheses of Criteria 12.5B--12.7; or the proved base equality,
+   NM-III clauses 1--4, and the finiteness hypotheses of Section 12.8.
 
 Then there is a cuspidal automorphic representation $\pi$ of $\operatorname{GL}_2(\mathbf A_F)$ of parallel weight two such that
 
 $$
 \rho\simeq\rho_\pi.
-\tag{13.7}
+\tag{13.14}
 $$
 
 At every $v\nmid\ell$ covered by the stated local compatibility hypotheses,
 $\pi_v$ has the conductor, inertial type, ordered branch, and monodromy
 prescribed by $\rho_v$ under the fixed reciprocity normalization. At
-$v\mid\ell$, the asserted conclusion is that the Galois lattice in (13.7) is
+$v\mid\ell$, the asserted conclusion is that the Galois lattice in (13.14) is
 finite flat of type $(0,1)$; a stronger assertion about $\pi_v$ is included
 only when a separate $\ell$-adic local--global compatibility theorem is
 assumed. When an ordering is not intrinsic to the isomorphism class of
@@ -2458,13 +3369,19 @@ $\pi_v$, “ordered branch” refers to the retained local eigenline or
 refinement in the automorphic module, whose compatibility is part of NM-I
 and NM-II.
 
-**Proof.** The local properties of $\rho$ define the point (13.2). Adequacy supplies the sets $Q_n$ for the nonminimal dual Selmer group. The hypotheses of Chapters 9--11 verify the Taylor--Wiles system with $P$ fixed. The applicable theorem of Chapter 12 identifies the relevant deformation component, at least after reduction, with its faithful Hecke order. Sections 13.1 and 13.2 then produce $\pi$, prove (13.7), and recover every local property asserted above. $\square$
+**Proof.** The local properties of $\rho$ define the point (13.9). Adequacy
+supplies the sets $Q_n$ for the nonminimal dual Selmer group. The hypotheses
+of Chapters 9--11 verify the stated conditional comparison system with $P$
+fixed. The applicable conditional result of Chapter 12 identifies the
+relevant deformation component, at least after reduction, with its faithful
+Hecke order. Sections 13.4 and 13.5 then produce $\pi$ and recover every local
+property asserted above. $\square$
 
 For $F=\mathbf Q$ with the exact clean nontrivial squarefree nonvexing
 cyclotomic-determinant datum of Book 155, that book supplies the minimal equality, the
 faithful free rank-one module and perfect pairing, and the post-equality base
 Fitting--congruence equality. It also supplies the minimal-level instances of
-the integral control and reciprocity used by NM-I and NM-II. Theorem 13.1
+the integral control and reciprocity used by NM-I and NM-II. Criterion 13.2
 still requires every new integral level/type and local-compatibility clause
 at the added primes. The sharp direct route requires no NM-III clause; the
 support route requires its nonminimal coverage clauses; and the relative
@@ -2540,7 +3457,9 @@ on the desired component tuple $\mathcal C$. This point is congruent to $\pi_{\m
 
 There are exactly two noncircular ways to connect (14.3) to $x_\rho$.
 
-The first is the componentwise direct theorem: prove Theorem 12.3 on $\mathcal C$. Then every characteristic-zero point of $R^{P,\mathcal C}$, including $x_\rho$, is automorphic.
+The first is the componentwise direct criterion: prove Criterion 12.7 on
+$\mathcal C$. Then every characteristic-zero point of
+$R^{P,\mathcal C}$, including $x_\rho$, is automorphic.
 
 The second is a relative numerical comparison. For each added prime, compare the cotangent module at the global deformation augmentation and the congruence module at the raised automorphic augmentation. The comparison must show that both acquire the same factor $c_{v_i}$. Starting from the proved minimal Fitting--congruence equality, the numerical criterion then proves the equality at the enlarged level. Minimal ring equality alone is not the numerical input, although Book 155 proves both statements in the required order.
 
@@ -2745,7 +3664,12 @@ $$
 
 Finite flatness is preserved by base change of finite flat group schemes. Away from $\ell$, the full Weil--Deligne parameter restricts; in particular, nonzero Steinberg monodromy remains nonzero. Conductors can change under ramified restriction, so the local type for the deformation problem over $E$ is the actual restricted type, not the old conductor exponent copied from $F$.
 
-Suppose that for every $w\mid v\in P$, the target point and an available automorphic point lie on the same specified component of the local ring over $E_w$. Suppose also that the analogues of NM-I and NM-II, the route-specific sharp-balance or NM-III clauses, any base equality required by the relative route, and Theorem 13.1 hold over $E$. Then
+For the proved one-prime route, require the selected place $v_0$ to split
+completely in $E$; more generally, verify directly that every $w\mid v_0$
+has the same clean enhanced-special family, tame character, line, sign, and
+determinant specialization.  Suppose the whole restricted datum satisfies
+Section 13.1 over $E$, including the integral automorphic and selected-source
+hypotheses.  Theorem 13.1 then gives
 
 $$
 \rho_E\simeq\rho_{\Pi_E}
@@ -2836,11 +3760,21 @@ enhancement tracked separately.
 
 We record the route as a theorem.
 
-**Theorem 16.1 (solvable switching and descent).** Assume there is an admissible extension $E/F$ satisfying Sections 16.1--16.2; the restricted target and a residual automorphic source are component-compatible at every place as in (16.7); controlled nonminimal modularity lifting holds over every field in the tower where it is invoked; cyclic base change and descent hold with all local compatibility and central-character hypotheses; each twisting character in (16.11) is identified and corrected; and every nonintrinsic ordered refinement claimed at the end is transported through the tower. Then modularity of $\rho|_{G_E}$ implies modularity of $\rho$ over $F$, with the original determinant, the intrinsic local types at places away from $\ell$ covered by local compatibility, and precisely the ordered refinements that were so transported. At $v\mid\ell$, the conclusion is the finite-flat Galois-lattice statement of Theorem 13.1 unless a stronger $\ell$-adic local--global compatibility theorem is assumed.
+**Theorem 16.1 (solvable switching and descent).** Assume there is an
+admissible solvable totally real Galois extension $E/F$ satisfying Sections
+16.1--16.2.  Assume the selected place and every other local condition restrict
+to the clean datum of Section 13.1, the restricted target satisfies Theorem
+13.1, the split-side automorphic endpoint is cuspidal, every cyclic step is in
+the admissible base-change and descent range, and every nonintrinsic refinement
+is transported through the tower.  Then modularity of $\rho|_{G_E}$ implies
+modularity of $\rho$ over $F$, with the original determinant and intrinsic
+local parameters, after correcting at each cyclic step by the character in
+(16.11).  The coefficient-prime conclusion remains the integral finite-flat
+one unless a stronger local compatibility theorem is separately assumed.
 
 **Proof.** Apply Theorem 13.1 over $E$ to obtain (16.6). Equations (16.8)--(16.12) descend it one cyclic layer at a time, correcting the unique character ambiguity by the global representation $\rho$. At the bottom, Chebotarev identifies the resulting Galois representation with $\rho$, and restriction gives the asserted local conclusions. $\square$
 
-## 17. The ordinary residually reducible maneuver
+## 17. The Skinner--Wiles class-field-theoretic reduction
 
 The absolutely irreducible finite-flat theorem and an ordinary residually reducible theorem solve different deformation problems. The former uses the full type-$(0,1)$ local space and Taylor--Wiles prime detection for $\operatorname{ad}^0\bar\rho$. The latter chooses an ordinary line, may localize at an Eisenstein residual ideal, and controls a reducibility ideal by ordinary families. Neither theorem may be substituted for the other.
 
@@ -2929,9 +3863,80 @@ Then $\rho$ is automorphic of the prescribed ordinary weight and local types.
 
 The input is a black-box theorem schema because the preceding books do not develop ordinary families or Eisenstein congruences. An application must name a theorem that supplies clauses 3 and 6--8 with the displayed Selmer structures and ideals. Merely citing an “ordinary modularity theorem” without matching these data does not verify Input O.
 
-### 17.3 Proof architecture
+### 17.3 The class-field-theoretic reduction
 
-The name often attached to this maneuver conceals six logically distinct steps.
+The reduction begins with a finite character problem.  Put
+
+$$
+\bar\theta=\bar\chi_1\bar\chi_2^{-1}
+\tag{17.3a}
+$$
+
+and let $K_\theta/F$ be the finite abelian extension cut out by
+$\bar\theta$.  If an extension $E/F$ is linearly disjoint from $K_\theta$,
+then
+
+$$
+\bar\chi_1|_{G_E}\ne\bar\chi_2|_{G_E}.
+\tag{17.3b}
+$$
+
+Indeed, equality would make $G_E$ lie in the kernel of $\bar\theta$, hence
+$K_\theta\subseteq E$, contradicting disjointness.  The same argument, applied
+to the finite fields cut out by the exceptional ratios
+$\bar\theta$ and $\bar\theta\bar\chi_\ell^{-1}$, preserves the vanishing of the
+degree-zero invariants required by the two off-diagonal Selmer problems.
+
+Class field theory provides the finite bookkeeping.  At one cyclic layer
+$L/K$, the characters killed by restriction are
+
+$$
+X(L/K)=
+\widehat{K^\times\backslash\mathbf A_K^\times/
+N_{L/K}(\mathbf A_L^\times)}.
+\tag{17.3c}
+$$
+
+Prescribing a central character after descent is therefore a square-class
+problem in $X(L/K)$: if one descent has central character $\omega_0$, another
+has central character $\omega_0\eta^2$, and a desired $\omega$ occurs exactly
+when $\omega/\omega_0$ is a square in this finite group.  Local ordinary
+characters impose additional restrictions on the localizations of $\eta$.
+These are finite conditions and must be solved simultaneously; central
+characters alone do not determine the ordinary line.
+
+The auxiliary solvable extension is assembled one cyclic layer at a time from
+narrow ray class quotients.  A prescribed place is made split by killing its
+idele class in the quotient; a prescribed cyclic local character is imposed by
+its image in the corresponding local unit quotient; total reality is enforced
+by using the narrow class group and splitting the real signs.  Extra split
+primes whose Frobenius classes detect every unwanted intersection force
+disjointness from $K_\theta$, the residual cutout field, the cyclotomic field
+used for prime selection, and the finite self-twist fields.  This construction
+works only when the local prescriptions satisfy the product relation in the
+chosen ray class quotient.  The word “solvable” does not make incompatible
+local prescriptions global.
+
+At the end of this construction the class-field-theoretic conclusions are:
+
+$$
+\begin{array}{l}
+\text{the residual ordinary characters remain distinct;}\\
+\text{the prescribed local ordinary refinements and signs are defined;}\\
+\text{the relevant quotient-character groups are finite and explicit;}\\
+\text{the residual image and cyclotomic irreducibility are preserved by
+disjointness.}
+\end{array}
+\tag{17.3d}
+$$
+
+They do not prove an ordinary modularity theorem.  That genuinely deep step is
+Input O.  The reduction shows that, once Input O applies over the chosen field,
+the remaining ascent and descent ambiguities are finite class-field-theoretic
+ones and can be corrected by the extending representation.
+
+The name often attached to this maneuver therefore conceals six logically
+distinct steps.
 
 First, if necessary choose an admissible solvable totally real extension on which the residual characters, ordinary lines, and local signs have the desired shape. Disjointness must preserve the nontrivial character ratio, and descent characters must be recorded from the start.
 
@@ -2947,7 +3952,7 @@ Sixth, if the argument took place after base change, descend recursively and cor
 
 This architecture explains why an irreducible finite-flat representation cannot be declared ordinary and passed through Input O. It also explains why a globally reducible residual representation cannot be passed through Theorem 13.1.
 
-### 17.4 Interaction with base change
+### 17.4 Solvable base change and descent
 
 Base change is useful in the ordinary argument only when it preserves distinction:
 
@@ -2964,36 +3969,54 @@ When Input O is used after such a checked base change, the resulting automorphic
 
 ## 18. Hardly ramified representations
 
-The phrase “hardly ramified” is useful only if it denotes a finite list of local alternatives. Here it means that the lift is minimal except for clean conductor-one special primes. Tame principal-series primes belong to the broader controlled theorem, not to this narrower phrase.
+The phrase “hardly ramified” is useful only if it denotes a finite list of
+local alternatives.  Here the lift is minimal at every place except one named
+special place, where a scalar tame character raises the conductor exponent
+from one to two.  Principal-series and tame-dihedral additions belong to
+different incidence problems and are not included.
 
 ### 18.1 A precise definition
 
-Let $\bar\rho$ be absolutely irreducible and let $\rho$ be a fixed-determinant lift. Let $S_{\mathrm{ft}}$ be a set of places at which $\bar\rho$ has a fixed prime-to-$\ell$ finite inertial type, and let $S_{\mathrm{st}}$ be the set at which it has primitive nonzero unipotent inertia.
+Let $\bar\rho$ be absolutely irreducible and let $\rho$ be a fixed-determinant
+lift. Let $S_{\mathrm{ft}}$ be a set of places at which $\bar\rho$ has a fixed
+prime-to-$\ell$ finite inertial type, and let $S_{\mathrm{st}}$ be the set at
+which it has primitive nonzero unipotent inertia.  Choose one place
+$v_0\in S_{\mathrm{st}}$.
 
 **Definition 18.1.** The lift $\rho$ is **hardly ramified relative to $\bar\rho$** if the following conditions hold.
 
 1. At every $v\mid\ell$, $\rho_v$ is finite flat of type $(0,1)$ in the existential integral sense of Section 4.1.
 2. At $v\in S_{\mathrm{ft}}$, $\rho_v$ has the same specified prime-to-$\ell$ integral inertial type as $\bar\rho_v$ and lies on its minimal component.
-3. At $v\in S_{\mathrm{st}}$, both representations have conductor exponent one, $\bar\rho_v$ has nonzero rank-one monodromy, and $\rho_v$ lies on the same fixed-sign primitive Steinberg component.
-4. There is a finite set $P_{\mathrm{hr}}$, disjoint from $S_{\mathrm{ft}}\cup S_{\mathrm{st}}\cup\{v:v\mid\ell\}$, such that $\bar\rho_v$ is unramified and $\rho_v$ is a generic point of the closed special condition (3.16), with conductor exponent one, for every $v\in P_{\mathrm{hr}}$.
-5. For $v\in P_{\mathrm{hr}}$, residual Frobenius has ordered eigenvalues
+3. At $v\in S_{\mathrm{st}}\setminus\{v_0\}$, both representations have
+   conductor exponent one, $\bar\rho_v$ has nonzero rank-one monodromy, and
+   $\rho_v$ lies on the same fixed-sign primitive Steinberg component.
+4. At the selected place $v_0$, the
+   minimal face is the named conductor-one special component, and
+   $\rho_{v_0}$ is obtained in the enhanced family by a nontrivial scalar tame
+   character $\chi_{v_0}$ of conductor exponent one.  It retains the same
+   invariant line and sign, has nonzero monodromy, and therefore has conductor
+   exponent two.
+5. At $v_0$, residual Frobenius has the ordered special eigenvalues
 
    $$
-   \{\bar\psi_v(\operatorname{Frob}_v)q_v,
-   \bar\psi_v(\operatorname{Frob}_v)\},
+   \{\bar\psi_{v_0}(\operatorname{Frob}_{v_0})q_{v_0},
+   \bar\psi_{v_0}(\operatorname{Frob}_{v_0})\},
    \tag{18.1}
    $$
 
-   and the chosen order is the stable-line order of $\rho_v$.
-6. At every Steinberg place in $S_{\mathrm{st}}\cup P_{\mathrm{hr}}$,
+   and the chosen order is the retained stable-line order of $\rho_{v_0}$.
+6. At $v_0$,
 
    $$
-   q_v\not\equiv\pm1\pmod\ell,
+   q_{v_0}\not\equiv\pm1\pmod\ell,
    \tag{18.2}
    $$
 
-   and all stabilizer, multiplicity, and self-twist exclusions required by the clean integral newvector theorem hold.
-7. Outside the places named above, $\rho$ is unramified. In particular, it has no additional principal-series, supercuspidal, or wild ramification.
+   and all stabilizer, multiplicity, and self-twist exclusions required by the
+   clean selected type-complex theorem hold.
+7. Outside the named minimal places and $v_0$, $\rho$ is unramified.  In
+   particular, there is no second nonminimal prime and no added principal,
+   supercuspidal, or wild ramification.
 
 The prime-to-$\ell$ Artin conductor is consequently
 
@@ -3001,8 +4024,8 @@ $$
 \mathfrak N(\rho)
 =
 \mathfrak N_{\mathrm{ft}}
-\prod_{v\in S_{\mathrm{st}}}v
-\prod_{v\in P_{\mathrm{hr}}}v,
+v_0^2
+\prod_{v\in S_{\mathrm{st}}\setminus\{v_0\}}v,
 \tag{18.3}
 $$
 
@@ -3012,24 +4035,26 @@ $$
 \mathfrak N(\bar\rho)
 =
 \mathfrak N_{\mathrm{ft}}
-\prod_{v\in S_{\mathrm{st}}}v.
+v_0
+\prod_{v\in S_{\mathrm{st}}\setminus\{v_0\}}v.
 \tag{18.4}
 $$
 
-Thus the only conductor increase is one at each prime of $P_{\mathrm{hr}}$. For a semistable representation over $\mathbf Q$, $S_{\mathrm{ft}}$ is empty and both conductors are squarefree away from $\ell$.
+Thus the only conductor increase is one at $v_0$: its exponent changes from
+one to two.  This is why the phrase “hardly ramified” is attached here to one
+tamely twisted special prime, not to an arbitrary set of level-raising primes.
 
 Definition 18.1 is arithmetic and local. A **lifting-admissible hardly
-ramified datum** additionally requires residual modularity and adequacy, the
-coefficient-prime Schur and determinant-twist hypotheses of Sections
-4.1--4.2, the independent Ihara and level-control theorems, NM-I and NM-II,
-and whichever sharp-balance or NM-III clauses the chosen proof route uses on
-the named components, together with any base equality required by the
-relative route. Keeping these global requirements out of the adjective makes
+ramified datum** additionally requires residual modularity, cyclotomic
+absolute irreducibility, the separate adjoint-invariant vanishing, the
+coefficient-prime hypotheses, and every item of the clean selected one-prime
+datum in Section 13.1. Keeping these global requirements out of the adjective makes
 it possible to diagnose which part of an application has failed.
 
-### 18.2 The absolutely irreducible theorem
+### 18.2 The fixed-determinant finite-flat theorem
 
-**Theorem 18.2 (hardly ramified modularity lifting).** Let $F$ be $\mathbf Q$ or a totally real field, let $\ell>2$ be unramified in $F$, and let
+**Theorem 18.2 (fixed-determinant finite-flat hardly ramified lifting).** Let
+$F$ be totally real, let $\ell\ge7$, and let
 
 $$
 \rho:G_F\longrightarrow\operatorname{GL}_2(\mathcal O')
@@ -3038,66 +4063,64 @@ $$
 
 be continuous, irreducible, and totally odd, with determinant $\psi\chi_\ell$. Suppose:
 
-1. $\bar\rho$ is absolutely irreducible, automorphic of parallel weight two, and adequate for the Taylor--Wiles selection used over $F$;
+1. $\bar\rho$ is automorphic of parallel weight two, is absolutely
+   irreducible, and remains absolutely irreducible on
+   $G_{F(\zeta_\ell)}$;
 2. $H^0(F,\operatorname{ad}^0\bar\rho(1))=0$;
-3. the local finite-flat Schur hypotheses of Section 4.2 hold, and for every
-   $v\mid\ell$ the finite-order determinant factor has a square root
-   $\eta_v$ whose twists extend through the finite-flat integral category as
-   in Section 4.1;
+3. for every $v\mid\ell$, $F_v/\mathbf Q_\ell$ is unramified and every
+   Artinian quotient of $\rho_v$ lies in the represented finite-flat
+   weight-$\{0,1\}$ condition with the fixed determinant;
 4. $\rho$ is hardly ramified relative to $\bar\rho$ in the sense of Definition 18.1;
-5. the selected fixed-level type module is independently nonzero, either by
-   a direct automorphic construction or by lowering the residual system to
-   the exact minimal datum and raising to every selected sign through
-   Theorems 7.1 and 6.1 without circular use of this theorem; and
-6. NM-I and NM-II hold on the component tuple containing $\rho$, and one of
-   the three route-specific packages in Theorem 13.1, clause 7, holds.
+5. the determinant is the specialization $\delta_\chi$ of the compatible
+   family (10.5), so its scalar tame factor at $v_0$ occurs with its square;
+   and
+6. all automorphic realization, primary--companion, Ihara saturation,
+   integral level-change, reciprocity, exact-augmentation, selected-source,
+   and Taylor--Wiles hypotheses of Section 13.1 hold.
 
 Then $\rho$ is automorphic of parallel weight two, and its automorphic representation has exactly the conductor and local signs in (18.3).
 
-**Proof.** Every place in $S_{\mathrm{ft}}\cup S_{\mathrm{st}}$ carries its minimal represented condition. Every place of $P_{\mathrm{hr}}$ carries the smooth closed special quotient (3.18) and the target lies in its nonzero-monodromy generic locus. Conditions (18.1)--(18.2) give the integral branch and Ihara hypotheses and, for the relative route, the primitive local determinant setting. Thus the datum is controlled in the sense of Section 5.4. Apply Theorem 13.1 and then (13.5a) to recover nonzero monodromy and the signs. The conductor formula follows from Section 5.1. $\square$
+**Proof.** Definition 18.1 places every $w\ne v_0$ on its named minimal
+component and places $v_0$ on the fixed nontrivial-character enhanced-special
+component.  Conditions (18.1)--(18.2) retain the line and sign in the clean
+range, while clause 3 is exactly the coefficient-prime condition of Theorem
+13.1.  The determinant compatibility is clause 1 of that theorem.  Theorem
+13.1 therefore produces $\pi$ and an integral isomorphism
+$\rho\simeq\rho_\pi$.  The local type at $v_0$ has nonzero monodromy and a
+scalar tame character of conductor one, so (10.4) gives exponent two; every
+other conductor exponent is the named minimal one.  This is precisely
+(18.3). $\square$
 
-For the clean rational cyclotomic realization imported from Book 155, one
-retains its stronger restriction $\ell\ge7$ and all its exact-level
-hypotheses. The theorem over a general totally real field requires the
-Hilbert or quaternionic forms of NM-I and NM-II and whichever independent
-nonminimal determinant or support clauses the chosen route uses; it is not a
-consequence of the rational case.
+An added ordered principal-series or tame-dihedral prime lies outside this
+theorem.  The local type chapters explain what extra data such a condition
+would require, but the selected one-prime complex used in the proof does not
+provide the necessary global incidence theorem.
 
-If a lift has an added ordered tame principal-series prime, it is **suitably
-controlled** rather than hardly ramified. Theorem 13.1 still applies when the
-enhanced local ring, saturated integral type lattice, and exact local
-compatibility have been supplied, together with component support for the
-support route or the determinant factor (8.12) for the numerical route.
+### 18.3 The coefficient-five boundary
 
-### 18.3 The $3$-adic boundary
+The hypotheses of Theorems 13.1 and 18.2 begin with $\ell\ge7$.  At
+$\ell=5$, absolute irreducibility over $F$ does not by itself supply the
+cyclotomic image theorem used to choose the required Taylor--Wiles primes.
+Exceptional projective icosahedral images also interact with multiplicity,
+self-twists, and the selected sign block.  None of those issues is resolved by
+the inequality $q_{v_0}\not\equiv\pm1\pmod5$.
 
-For every residue cardinality $q$ prime to $3$,
+Consequently this book makes **no coefficient-five modularity-lifting claim**.
+In particular, one may not invoke Theorem 18.2 at five by replacing
+$\ell\ge7$ with absolute irreducibility, adequacy asserted without proof, or a
+generic packet comparison.  A five-adic theorem would require, at a minimum,
+an image and prime-selection theorem for every retained residual case, the same
+integral finite-flat and type-lattice results, stabilizer and multiplicity
+control at five, nonminimal reciprocity on the selected component, and an
+exact one-prime complex with both augmentations.  Such a package would be a
+new theorem.
 
-$$
-q\equiv\pm1\pmod3.
-\tag{18.6}
-$$
-
-Hence the clean exclusion (18.2) leaves no away-from-$3$ Steinberg prime at all. Moreover, the rational minimal theorem imported from Book 155 assumes $\ell\ge7$. Theorem 18.2 therefore cannot simply be relabelled as a $3$-adic lifting theorem.
-
-A direct $3$-adic version requires a separate package:
-
-1. a small-image prime-selection or derived-patching theorem replacing adequacy where it fails;
-2. integral automorphic lattices with all $3$-torsion stabilizers removed or explicitly measured;
-3. at $q\equiv1\pmod3$, a framed or line-enhanced treatment of scalar Frobenius and colliding $U_q$ roots;
-4. at $q\equiv-1\pmod3$, a $U_q$-selected Ihara theorem and a two-factor determinant calculation replacing (6.11);
-5. finite-flat local control at $3$ within Sections 4.1--4.2, including the
-   determinant square-root condition and the unramified and Schur
-   hypotheses; and
-6. the small-prime analogues of NM-I and NM-II, together with either the
-   sharp absolute generator count or the applicable relative determinant and
-   component-support clauses of NM-III.
-
-With all six inputs, the proof of Theorem 18.2 applies using the refined ledger. Without them, a hardly ramified $3$-adic representation belongs to the classification problem of the later small-ramification books, not automatically to this lifting theorem.
-
-A frequent safe route is to establish automorphy at a coefficient prime $\ell\ge7$ where Theorem 18.2 applies, place the representation in a compatible system, and then identify its $3$-adic member by common Frobenius polynomials. That route requires the compatible-system and changing-prime theorems; it does not turn the $3$-adic member into an input to the $\ell$-adic proof.
-
-If the residual $3$-adic representation is reducible and the target is ordinary, only Deep Ordinary Input O can apply, with its distinguished-character and Eisenstein-control hypotheses. Absolute irreducibility and ordinary reducibility are not interchangeable cases.
+Coefficient three is farther outside the clean signed range: every residue
+cardinality prime to three is congruent to $\pm1$ modulo three.  This
+observation is a boundary diagnosis only, not a three-adic theorem.  Moving
+automorphy from a coefficient prime at least seven through a compatible family
+is also a separate changing-prime argument and does not enlarge the statement
+proved here.
 
 ### 18.4 Elliptic curves and geometric representations
 
@@ -3115,11 +4138,20 @@ $$
 
 It has conductor exponent one and nonzero monodromy. In the Tate-curve description, the residual monodromy is the reduction of the valuation of the Tate parameter, equivalently of the minimal discriminant valuation up to the standard normalization. Thus:
 
-- if that valuation is nonzero modulo $\ell$, the prime belongs to $S_{\mathrm{st}}$;
-- if it is zero modulo $\ell$, the residual representation can be unramified and the prime belongs to $P_{\mathrm{hr}}$;
-- in the second case, reduction of (18.7) gives the level-raising eigenvalues and sign in (18.1).
+- if that valuation is nonzero modulo $\ell$, the prime belongs to
+  $S_{\mathrm{st}}$ and supplies a conductor-one minimal-special component;
+- if it is zero modulo $\ell$, the residual representation can be unramified,
+  giving the level-raising conductor-one situation of Chapters 6--7 rather
+  than Definition 18.1; and
+- neither case by itself is the scalar-tame conductor-two twist at $v_0$.
 
-Consequently a semistable elliptic curve with good reduction above $\ell$, clean residue cardinalities, and no additive primes gives a hardly ramified representation relative to an absolutely irreducible residual lattice. Theorem 18.2 proves its modularity only after residual modularity, adequacy, level lowering, and the integral infrastructure have been checked.
+An untwisted semistable elliptic curve has conductor exponent one at a
+multiplicative prime, so it does not by itself exhibit the selected
+conductor-two condition.  Theorem 18.2 applies only after the actual local
+representation has been placed on that enhanced component, for example by a
+separately specified scalar tame twist whose square is also inserted in the
+determinant family.  Good reduction above $\ell$ supplies the finite-flat
+condition but not this away-from-$\ell$ type.
 
 If $A$ has multiplicative reduction at a place above $\ell$, its representation is semistable ordinary rather than finite flat of the smooth type used here. If it has additive or wildly ramified reduction away from $\ell$, Definition 18.1 also fails. Those cases require the separately stated ordinary, crystalline-semistable, or wild-type infrastructure; they are not absorbed by calling the curve geometric.
 
@@ -3220,7 +4252,14 @@ $$
 
 Ihara injectivity gives a nonzero residual new class; saturation lifts it to a torsion-free new localization; the integral $U_p=\varepsilon$ projector selects the component. Omitting any of those three assertions stops the argument at a congruence in a quotient that may be torsion.
 
-**Global audit.** Recompute the nonminimal dual Selmer group. In the framed ledger, adding $p$ raises $t$ by one, adds three local-base variables, adds four gauge variables, and changes $G^\square-b^\square$ by one. These changes cancel in (9.16). In the relative route, NM-III clauses 1--4 insert the same new factor (19.8) in the deformation cotangent and automorphic congruence ideals, on top of Book 155's already proved base equality. In the sharp direct route, the exact absolute count instead gives (11.8b), and no determinant calculation is used to kill the kernel.
+**Global audit.** Recompute the nonminimal dual Selmer group. In the framed
+ledger, adding $p$ raises $t$ by one, adds three local-base variables, adds
+four gauge variables, and changes $G^\square-b^\square$ by one. These changes
+cancel in (9.16). In the relative route, NM-III clauses 1--4 insert the same
+new factor (19.8) in the deformation cotangent and automorphic congruence
+ideals, on top of Book 155's already proved base equality. In the sharp direct
+route, the exact absolute count instead gives (11.19b), and no determinant
+calculation is used to kill the kernel.
 
 **Verdict.** The prime is controlled. If one instead draws $R_p^{\mathrm{sp}}\twoheadrightarrow R_p^{\mathrm{ur}}$, omits saturation, or identifies the target merely because a raised form exists, the proof is invalid.
 
@@ -3352,9 +4391,19 @@ The main theorem is deliberately narrower than the set of all potentially semist
 
 ### 20.1 Small coefficient primes and small images
 
-At $\ell=2$, scalars lie in $\operatorname{ad}^0$, the trace pairing is degenerate, and the fixed-determinant dual module is not identified with $W(1)$ by the argument used here. The finite-flat power-series theorem of Section 4.2 also assumes $\ell>2$. Oddness and the real-place correction require a different formulation. None of Theorems 12.1A--12.3, 13.1, or 18.2 includes $\ell=2$.
+At $\ell=2$, scalars lie in $\operatorname{ad}^0$, the trace pairing is
+degenerate, and the fixed-determinant dual module is not identified with
+$W(1)$ by the argument used here. The finite-flat power-series theorem of
+Section 4.2 also assumes $\ell>2$. Oddness and the real-place correction
+require a different formulation. Neither Theorem 13.1 nor Theorem 18.2
+includes $\ell=2$.
 
-At $\ell=3$, the finite-flat theorem can apply locally, but the clean away-from-$\ell$ exclusions collapse as in (18.6), and common residual images may not meet the adequate-image hypotheses. At $\ell=5$, exceptional projective images and stabilizer torsion can still obstruct prime selection or multiplicity one. A small-prime theorem must replace each failed clause explicitly.
+At $\ell=3$, the finite-flat theorem can apply locally, but every away-from-
+$\ell$ residue cardinality is congruent to $\pm1$ modulo $3$, so the clean
+signed exclusion collapses. At $\ell=5$, exceptional projective images and
+stabilizer torsion can obstruct prime selection or multiplicity one.  This
+book proves no theorem at either coefficient prime; Section 18.3 records the
+coefficient-five boundary explicitly.
 
 More generally, a dihedral, exceptional, or otherwise small residual image can have:
 
@@ -3440,7 +4489,7 @@ For a proposed added place $v$, the order of questions is:
 
 The sharp balanced route branches after construction of the canonical map:
 if the absolute auxiliary tangent space has exactly $q_P$ generators and the
-marked free diamond action is available, Theorem 12.1A proves faithfulness
+marked free diamond action is available, Criterion 12.5A proves faithfulness
 without passing through either determinant or support questions.
 
 At a proposed base change, prepend three questions: does the residual image remain adequate, does the packet remain cuspidal without new self-twists, and is the descent fiber compatible with the target determinant? A negative answer changes the theorem, not merely its proof.
@@ -3451,19 +4500,20 @@ The output of this book is an automorphic representation whose Galois representa
 
 ### 21.1 Potential modularity
 
-Book 170 can use Theorem 13.1 only through the following interface. A potential-modularity construction supplies a totally real extension $E/F$ and an auxiliary geometric object whose residual representation is known to be automorphic. To invoke Theorem 13.1 over $E$, the construction must also ensure:
+A potential-modularity argument can use Theorem 13.1 only through the
+following interface.  Its construction supplies a totally real extension
+$E/F$ and an auxiliary geometric object whose residual representation is
+known to be automorphic. To invoke Theorem 13.1 over $E$, it must also ensure:
 
 1. $E$ is disjoint from the residual cutout field, or the image and adequacy of $\bar\rho|_{G_E}$ are recomputed;
 2. the places above $\ell$ are unramified, or preferably split, so that the exact finite-flat local theorem remains available;
 3. every prescribed local point of the moduli construction lands on a named deformation component;
 4. the auxiliary residual automorphic representation is cuspidal and lies in the correct non-Eisenstein block;
-5. the Hilbert or quaternionic forms of NM-I and NM-II and the
-   route-specific sharp-balance or NM-III clauses hold at the levels
-   introduced over $E$, together with any base equality required by the
-   relative route; and
+5. every integral automorphic, type-complex, reciprocity, augmentation, and
+   selected-source hypothesis of Section 13.1 holds over $E$; and
 6. determinant characters of the geometric object and the target have been
-   identified, including finite-order twists and the square-root and integral
-   twisting condition of Section 4.1 at every place above $\ell$.
+   identified, including the square of the scalar tame twist in the family
+   (10.5)--(10.7).
 
 Under these clauses, Theorem 13.1 proves automorphy of $\rho|_{G_E}$. That is the exact output required by potential modularity. It does not descend automorphy to $F$ unless Theorem 16.1 or the later compatible-system descent machinery is applied.
 
@@ -3471,7 +4521,9 @@ The component-switching criterion (16.7) is especially useful here. A moduli con
 
 ### 21.2 Compatible systems and changing prime
 
-Books 175--177 consume the automorphic output by constructing a compatible system, descending it when necessary, and changing the coefficient prime. Once $\rho\simeq\rho_\pi$ has been proved, the automorphic representation $\pi$ supplies common Frobenius polynomials
+Compatible-system and changing-prime arguments consume the automorphic output.
+Once $\rho\simeq\rho_\pi$ has been proved, the automorphic representation
+$\pi$ supplies common Frobenius polynomials
 
 $$
 P_v(X)=X^2-a_vX+\psi(v)q_v
@@ -3509,39 +4561,59 @@ $$
 
 The nonminimal set can change with $\lambda$ because reduction modulo $\lambda$ can kill different monodromy parameters or tame characters. Its Selmer group, Taylor--Wiles sets, and congruence costs must therefore be recomputed.
 
-If automorphy is initially known only over solvable subextensions, compatible-system descent uses Brauer induction and automorphic induction in the later books. That mechanism is distinct from the direct cyclic descent of Chapter 16, although both must control determinant characters and twisting fibers.
+If automorphy is initially known only over solvable subextensions,
+compatible-system descent can use Brauer induction and automorphic induction.
+That mechanism is distinct from the direct cyclic descent of Chapter 16,
+although both must control determinant characters and twisting fibers.
 
 ### 21.3 Hardly ramified $3$-adic representations
 
-Book 180 starts from an integral $3$-adic representation with a sharply bounded ramification set, finite-flat torsion at $3$, and a fixed determinant. Definition 18.1 provides an exact local ledger from which those bounds can be read:
+A small-ramification argument may start from an integral $3$-adic
+representation with finite-flat torsion at $3$ and a fixed determinant.  The
+local ledger relevant to comparison is
 
 $$
 \text{unramified places},\quad
-\text{conductor-one special places},\quad
+\text{minimal conductor-one special places},\quad
+\text{one selected conductor-two place},\quad
 \text{finite flat at }3.
 \tag{21.5}
 $$
 
-The discriminant argument must use the actual set in (18.3), not the adjective alone. If its small-ramification theorem assumes unramifiedness away from $3$, then it applies only when
+The discriminant argument must use the actual conductor in (18.3), not the
+adjective alone.  If it assumes unramifiedness away from $3$, then the datum
+of Definition 18.1 does not satisfy its hypothesis at all: the selected place
+$v_0$ is ramified of exponent two.  Thus the condition
 
 $$
-S_{\mathrm{ft}}=S_{\mathrm{st}}=P_{\mathrm{hr}}=\varnothing.
+S_{\mathrm{ft}}=S_{\mathrm{st}}=\varnothing
 \tag{21.6}
 $$
 
-If it permits one auxiliary tame or conductor-one place, that local contribution must be inserted into its discriminant bound.
+describes a different local problem, not a specialization of Theorem 18.2.
 
-Book 156 supplies automorphy of a $3$-adic representation only under the special small-prime package of Section 18.3 or Deep Ordinary Input O. More commonly, automorphy is first proved at a larger coefficient prime and transported through a compatible system. The $3$-adic classification then studies the resulting member and can constrain its residual image. This order avoids using a nonexistent clean level-raising prime at $3$.
+This book supplies no absolutely irreducible $3$-adic lifting theorem.  Deep
+Ordinary Input O is a separate theorem schema for its distinguished ordinary
+range, not a consequence of the one-prime patch.  In applications, automorphy
+may instead be proved at a coefficient prime at least seven and transported
+through a compatible family by a separate changing-prime theorem.  The
+$3$-adic classification can then study the resulting member; it does not turn
+that member into an input to Theorem 18.2.
 
 The finite-flat hypothesis passed to the discriminant calculation is integral at every torsion level. A statement that the $3$-adic representation is crystalline or has weights $0,1$ is not a replacement unless an integral comparison theorem supplies the finite-flat models.
 
 ### 21.4 The FLT interface
 
-Book 154 must deliver the following input record for its Frey curve before invoking this book.
+A Frey-curve argument must deliver the following input record before invoking
+this book.
 
 1. The determinant of the chosen Tate module is cyclotomic, with every twist explicitly removed.
 2. The representation is finite flat at the lifting prime in the exact local range being used, or a separately proved ordinary theorem applies.
-3. Every multiplicative prime is placed in $S_{\mathrm{st}}$ or $P_{\mathrm{hr}}$ by reducing its Tate parameter, and its sign and residue-cardinality congruence are recorded.
+3. Every multiplicative prime is placed in its actual minimal-special or
+   residual-unramified condition by reducing its Tate parameter.  If the
+   selected theorem is invoked, one named $v_0$ must separately be shown to
+   carry the scalar-tame conductor-two twist, with its line, sign, and
+   determinant square recorded.
 4. Every additive or wild prime is either eliminated by the Frey calculation or supplied with a controlled local theorem.
 5. The residual representation is irreducible by the rational-isogeny branch and is residually automorphic by an independent theorem.
 6. The residual automorphic level is lowered using actual Ihara and saturation results, not conductor numerology.
