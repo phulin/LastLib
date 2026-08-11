@@ -101,9 +101,9 @@
     - [A spherical principal-series calculation](#194-a-spherical-principal-series-calculation)
     - [What the calculation predicts](#195-what-the-calculation-predicts)
 20. [The quaternion division laboratory](#20-the-quaternion-division-laboratory)
-    - [Valuation and compactness modulo the center](#201-valuation-and-compactness-modulo-the-center)
+    - [Projective compactness modulo the center](#201-projective-compactness-modulo-the-center)
     - [Finite dimensionality and admissibility](#202-finite-dimensionality-and-admissibility)
-    - [The maximal-compact Hecke algebra](#203-the-maximal-compact-hecke-algebra)
+    - [Finite compact-mod-center levels](#203-finite-compact-mod-center-levels)
     - [Regular elements and matching classes](#204-regular-elements-and-matching-classes)
     - [Characters from compact-mod-center induction](#205-characters-from-compact-mod-center-induction)
 21. [The character-theoretic bridge to local transfer](#21-the-character-theoretic-bridge-to-local-transfer)
@@ -121,7 +121,7 @@ A group such as $\operatorname{GL}_n(F)$, with $F$ a nonarchimedean local field,
 
 The resulting theory is algebraic in its vectors and topological in its stabilizers. There is no norm on the representation space unless one is separately supplied. Integration occurs only against compactly supported, locally constant functions, so it reduces to finite algebra after suitable subdivision. This makes smooth representations simultaneously flexible enough for local components of automorphic representations and rigid enough to admit Hecke-algebra methods.
 
-This book develops that general language for Hausdorff totally disconnected locally compact groups. The principal examples are multiplicative groups of local fields, matrix groups over them, compact profinite groups, and discrete groups. No classification of irreducible representations of $\operatorname{GL}_2(F)$ or $D^\times$ is attempted; that belongs to the next stage. We do, however, work out their basic spherical algebras, regular classes, compact-mod-center geometry, and character formalism far enough to make the shape of local transfer precise.
+This book develops that general language for Hausdorff totally disconnected locally compact groups. The principal examples are multiplicative groups of local fields, matrix groups over them, compact profinite groups, and discrete groups. No classification of irreducible representations of $\operatorname{GL}_2(F)$ or $D^\times$ is attempted; that belongs to the next stage. We do, however, work out the spherical algebra of $\operatorname{GL}_2(F)$, the compact-mod-center geometry of $D^\times$, their regular-class interface, and the character formalism far enough to make the shape and the exact remaining inputs of local transfer precise.
 
 ### 1.2 Standing conventions
 
@@ -155,7 +155,21 @@ The purpose of explicit conventions is not pedantry. An omitted inverse changes 
 
 ### 2.1 Compact open subgroups as local coordinates
 
-For a Lie group, small neighborhoods are controlled by tangent directions. In a tdlc group, the replacement is a compact open subgroup. The fundamental structural fact is van Dantzig's theorem: compact open subgroups form a neighborhood basis of the identity. Consequently every open subgroup contains a compact open subgroup.
+For a Lie group, small neighborhoods are controlled by tangent directions. In a tdlc group, the replacement is a compact open subgroup. The fundamental structural fact is van Dantzig's theorem: compact open subgroups form a neighborhood basis of the identity. We include the argument because every later finite-level reduction rests on it. A locally compact Hausdorff totally disconnected space has a basis of compact open sets. Indeed one first chooses a compact neighborhood inside a prescribed neighborhood; inside that compact Hausdorff totally disconnected subspace, the connected component of a point is the intersection of its clopen neighborhoods, so compactness supplies a clopen neighborhood contained in the prescribed one.
+
+Now let $U$ be a neighborhood of $1$ in $G$. Choose a neighborhood $W$ with $WW^{-1}\subseteq U$, and then a compact open set $C$ with $1\in C\subseteq W$. Compactness of $C$ and continuity of multiplication give a symmetric identity neighborhood $N$ such that
+
+$$
+NC\subseteq C.
+$$
+
+For $n\in N$, the same inclusion for $n^{-1}$ gives $nC=C$. Thus the set
+
+$$
+K_C=\{g\in G:gC=C\}
+$$
+
+is a subgroup containing the open set $N$, hence is open. It is contained in $CC^{-1}\subseteq U$. An open subgroup is closed, so $K_C$, being a closed subset of the compact set $CC^{-1}$, is compact. This proves van Dantzig's theorem and also shows directly that every open subgroup contains a compact open subgroup.
 
 This has three immediate effects. A locally constant function is constant on right cosets of some compact open subgroup locally on its support. A smooth vector is fixed by some compact open subgroup. A compactly supported calculation can be reduced to finitely many cosets. The topology therefore enters representation theory through finite quotients and finite sums.
 
@@ -177,7 +191,7 @@ $$
 
 This follows by decomposing $K$ into finitely many left $J$-cosets. It is the measure-theoretic form of the denominators that occur in averaging.
 
-The modular character measures the failure of right invariance. It is a continuous homomorphism. Compact subgroups lie in its kernel, since a compact subgroup has compact image in $\mathbf R_{>0}$ and the latter has no nontrivial compact subgroup. Thus every compact group, every discrete group with counting measure, and every abelian locally compact group is unimodular. Reductive groups over nonarchimedean local fields are also unimodular, while their parabolic subgroups generally are not.
+The modular character measures the failure of right invariance. It is a continuous homomorphism. Compact subgroups lie in its kernel, since a compact subgroup has compact image in $\mathbf R_{>0}$ and the latter has no nontrivial compact subgroup. Thus every compact group, every discrete group with counting measure, and every abelian locally compact group is unimodular. The concrete groups needed later are also unimodular for elementary reasons. On $\operatorname{GL}_n(F)$, the measure $|\det g|_F^{-n}$ times additive Haar measure on $M_n(F)$ is invariant under both left and right multiplication. If $G/Z$ is compact with $Z$ central, then $\Delta_G$ is trivial on $Z$ and factors through the compact group $G/Z$, so it is trivial. This will apply to $D^\times$ by Proposition 20.1. Parabolic subgroups such as the upper triangular group generally are not unimodular.
 
 **Example.** Let $F$ be a nonarchimedean local field and $B\subseteq\operatorname{GL}_2(F)$ the upper triangular subgroup. For $t=\operatorname{diag}(a,d)$, conjugation scales the additive coordinate of the unipotent radical by $a/d$. With the convention above,
 
@@ -457,6 +471,20 @@ $$
 
 The second statement is ultimately a finite-support assertion. A function supported on finitely many $H$-cosets, each carrying data supported on finitely many $J$-cosets, has finite support on $J\backslash G$; conversely a finite set of $J$-cosets lies over finitely many $H$-cosets. This simple bookkeeping is the model for later double-coset arguments.
 
+Here are the actual comparison maps. If $f\in\operatorname{Ind}_J^G\tau$, put
+
+$$
+F_f(g)(h)=f(hg).
+$$
+
+The $J$-covariance of $f$ makes $F_f(g)$ an element of $\operatorname{Ind}_J^H\tau$, and $F_f(h_0g)=h_0F_f(g)$ for the right-translation action of $H$ on the inner induction. A common right stabilizer of $f$ is a common right stabilizer of $F_f$, so $F_f$ belongs to the outer smooth induction. Conversely $F$ is recovered from
+
+$$
+f_F(g)=F(g)(1).
+$$
+
+The two assignments are inverse and $G$-equivariant. For open inclusions, the finite-support observation in the preceding paragraph shows that they restrict in both directions to compact induction. Thus neither transitivity statement hides a support or smoothness assumption.
+
 ## 6. Frobenius reciprocity
 
 ### 6.1 Compact induction is a left adjoint
@@ -709,15 +737,16 @@ For surjectivity on the right, a smooth functional on $U$ fixed by $K$ extends a
 
 ### 8.4 Duals of induced representations
 
-Modular factors become unavoidable when induction is dualized. Suppose, for example, that $H\backslash G$ is compact and that the normalized quotient integration needed for the natural pairing exists over the coefficients. Then compact and ordinary induction coincide, and normalized induction has the clean formula
+Modular factors become unavoidable when induction is dualized. There is one completely algebraic case. If $H$ is open of finite index, then the relative modulus is trivial, induction and compact induction coincide, and
 
 $$
-(i_H^G\sigma)^\vee\cong i_H^G(\sigma^\vee).
+(\operatorname{Ind}_H^G\sigma)^\vee
+\cong\operatorname{Ind}_H^G(\sigma^\vee).
 $$
 
-For unnormalized induction, the corresponding formula carries the relative modular character. This is the conceptual reason for normalization: it divides the change-of-variables correction evenly between a representation and its dual. Without cocompactness, a duality formula must also account for the difference between compactly supported and unrestricted sections; there is no blanket identity of the displayed form for an arbitrary closed subgroup.
+Indeed, after choosing representatives for the finite set $H\backslash G$, the induced space is a finite direct sum of copies of $\sigma$. Its algebraic dual is the corresponding finite direct sum of copies of $\sigma^*$, and taking smooth vectors does so coordinatewise because finitely many stabilizers have open intersection. The invariant fiberwise pairing identifies the result with the displayed induction of $\sigma^\vee$.
 
-For open $H$, the relative modulus is trivial. Compact induction and ordinary induction still need not coincide, so duality exchanges the support condition in the expected way: the dual of a direct sum behaves like a product before taking smooth vectors. Any formula identifying the two inductions therefore requires a cocompactness or finiteness hypothesis, not merely openness.
+For a closed nonopen subgroup with compact quotient, such as a parabolic subgroup of a reductive group, the analogous formula uses a quotient integration rule. Normalized induction is designed so that the relative modular factor is divided evenly between the two fibers, but proving that the resulting pairing identifies the full smooth dual requires that measure-theoretic construction. Without cocompactness, one must also account for the difference between compactly supported and unrestricted sections: the dual of a direct sum behaves like a product before taking smooth vectors. Thus there is no blanket induced-dual identity here for an arbitrary closed or merely open subgroup.
 
 ## 9. Matrix coefficients and support modulo the center
 
@@ -757,7 +786,14 @@ An irreducible admissible representation with central character is often called 
 
 ### 9.3 Coefficients of compactly induced representations
 
-Let $J$ be open and compact modulo a central subgroup $Z$, let $\rho$ be a finite-dimensional representation of $J$, and assume $Z\subseteq J$ acts through a character. Vectors in $\mathrm{c\text{-}Ind}_J^G\rho$ have support in finitely many left $J$-cosets. Pair a vector with a vector in the naturally embedded compact induction of $\rho^\vee$. Their coefficient can be nonzero only when the translating element lies in a finite union of sets of the form $JgJ$. Each such set has compact image in $Z\backslash G$ because $J/Z$ is compact. These particular coefficients are therefore compactly supported modulo $Z$.
+Let $J$ be open and compact modulo a central subgroup $Z$, let $\rho$ be a finite-dimensional representation of $J$, and assume $Z\subseteq J$ acts through a character. Vectors in $\mathrm{c\text{-}Ind}_J^G\rho$ have support in finitely many left $J$-cosets. There is a concrete $G$-invariant pairing
+
+$$
+\langle f',f\rangle
+=\sum_{Jx\in J\backslash G}\langle f'(x),f(x)\rangle
+$$
+
+between the compact inductions of $\rho^\vee$ and $\rho$; the sum is finite and is independent of representatives by the two covariance laws. It is nondegenerate, so the first compact induction embeds in the smooth dual of the second. Pairing two such vectors, their coefficient can be nonzero only when the translating element lies in a finite union of sets of the form $JgJ$. Each such set has compact image in $Z\backslash G$ because $J/Z$ is compact. These particular coefficients are therefore compactly supported modulo $Z$.
 
 The qualification about the dual vector is essential. For an infinite discrete group, the full algebraic—and hence smooth—dual of the finitely supported regular representation contains arbitrary coefficient functions, many with noncompact support. If the compact induction is irreducible and admissible and its contragredient is identified with the expected compactly induced dual, the argument applies to all of its matrix coefficients. This explains why compact induction from compact-mod-center subgroups is a natural source of compact-mod-center representations, while not asserting irreducibility or admissibility for free.
 
@@ -968,6 +1004,29 @@ $$
 
 is an isomorphism.
 
+The assertion about the unit follows from exactness, not from an unstated Morita theorem. First,
+
+$$
+P_K^K\cong\mathcal H(G,K)
+$$
+
+as a right $\mathcal H(G,K)$-module: a bi-$K$-invariant vector of $P_K$ is exactly a compactly supported bi-$K$-invariant function, with the right action fixed by the opposite-endomorphism convention. Hence the unit is an isomorphism when $M$ is free. For a general module choose a free presentation
+
+$$
+\mathcal H(G,K)^{(J)}\longrightarrow
+\mathcal H(G,K)^{(I)}\longrightarrow M\longrightarrow0.
+$$
+
+Tensoring with $P_K$ preserves the displayed cokernel, and taking $K$-fixed vectors is exact. It also commutes with direct sums, since an element of a direct sum has finite support and averaging acts componentwise. The free case therefore identifies the two cokernel diagrams and proves the unit is an isomorphism for $M$. The adjunction then gives
+
+$$
+\operatorname{Hom}_G(L_K(M),L_K(N))
+\cong
+\operatorname{Hom}_{\mathcal H(G,K)}(M,N),
+$$
+
+which is the claimed full faithfulness.
+
 There are two boundaries here. First, if $V^K=0$, the Hecke module is zero even when $V\neq0$, so there is no equivalence with all smooth representations. Second, merely assuming that $V$ is generated by $V^K$ makes the evaluation map surjective but does not make it injective for an arbitrary tdlc group. Its kernel can be a nonzero subrepresentation with no $K$-fixed vectors. Thus a blanket Morita equivalence with every representation generated by $K$-fixed vectors would be false.
 
 The reconstruction exposes the exact role of generation. The space $P_K$ carries a right $\mathcal H(G,K)$-action through the opposite-endomorphism convention. Every object in the essential image is generated by its $K$-fixed vectors, but generation alone supplies only the displayed quotient. If, in a specified full subcategory, subrepresentations of $K$-generated objects are again generated by their $K$-fixed vectors, then the kernel is generated by its zero fixed space and vanishes. Under that additional stability hypothesis the Hecke-reconstructible subcategory is exactly the $K$-generated subcategory. This is the situation furnished by a genuine type theorem; it is additional group-specific structure, not a formal consequence of compactness of $K$.
@@ -1040,6 +1099,16 @@ $$
 
 Every endomorphism arises uniquely this way. The identity function is supported on $K$ and has value $\operatorname{vol}(K)^{-1}\tau(k)$ at $k\in K$. Consequently this function algebra identifies with $\operatorname{End}_G(P_\tau)$; its **opposite**, or the same vector space with reversed convolution, is our $\mathcal H(G,\tau)$.
 
+To verify the omitted-looking surjectivity directly, let $T\in\operatorname{End}_G(P_\tau)$ and define
+
+$$
+\Phi_T(g)w=\operatorname{vol}(K)^{-1}T([1,w])(g).
+$$
+
+Choose a basis of $W_\tau$. The finitely many functions $T([1,w])$ attached to that basis have support in finitely many left $K$-cosets, so $\Phi_T$ is compactly supported. Covariance of the output gives $\Phi_T(k_1g)=\tau(k_1)\Phi_T(g)$, while $G$-equivariance of $T$ and the relation $k[1,w]=[1,\tau(k)w]$ give $\Phi_T(gk_2)=\Phi_T(g)\tau(k_2)$. Thus $\Phi_T$ has exactly the displayed bi-equivariance.
+
+Finally, for $[1,w]$ the integral defining $T_{\Phi_T}$ is supported on $gK$ and equals $T([1,w])(g)$; the factor $\operatorname{vol}(K)^{-1}$ cancels the volume of that coset. Since the translates of the $[1,w]$ span $P_\tau$, one has $T_{\Phi_T}=T$. The same calculation recovers $\Phi$ from $T_\Phi$, proving uniqueness. The identity kernel follows by applying this formula to $T=1$.
+
 Other conventions put inverses in the bi-equivariance law by modeling the dual type, or transport reversed convolution through inversion. Such a transport also brings the appropriate modular factor. The endomorphism-opposite definition above is the reference convention against which these formulas should be translated.
 
 ### 12.3 Support and intertwining
@@ -1068,7 +1137,16 @@ $$
 V\longmapsto\operatorname{Hom}_K(\tau,V)
 $$
 
-is its inverse on the essential image. Every representation in that image is generated by its $\tau$-isotypic data. For an arbitrary generated representation, however, the natural evaluation from the tensor reconstruction is only known to be surjective; an invisible kernel can remain. A genuine type theorem supplies the extra assertion that a chosen block is the essential image and hence gives an equivalence with the Hecke-module category. The trivial type recovers Section 11.
+is its inverse on the essential image. Every representation in that image is generated by its $\tau$-isotypic data. For an arbitrary generated representation, however, the natural evaluation from the tensor reconstruction is only known to be surjective; an invisible kernel can remain. A genuine type theorem supplies the extra assertion that a chosen block is the essential image and hence gives an equivalence with the Hecke-module category. The trivial type recovers Chapter 11.
+
+The proof of full faithfulness is the typed version of the free-presentation argument in Section 11.3. Compact Frobenius reciprocity identifies
+
+$$
+\operatorname{Hom}_K(\tau,P_\tau)
+\cong\operatorname{End}_G(P_\tau)
+$$
+
+with the regular left $\mathcal H(G,\tau)$-module after the opposite convention is applied. The functor $\operatorname{Hom}_K(\tau,-)$ is exact: it is the composite of tensoring with the finite-dimensional $\tau^\vee$ and taking $K$-invariants. It commutes with direct sums because $\tau$ is finite-dimensional. The reconstruction unit is therefore an isomorphism on free modules and, by passing through a free presentation, on every module. Adjunction gives full faithfulness exactly as before.
 
 The word “type” is sometimes reserved for a pair $(K,\tau)$ detecting an entire block of representations, a much stronger property than merely choosing an irreducible $K$-representation. Here the algebra exists for every such pair; whether it captures a naturally defined block is additional group-specific information.
 
@@ -1097,7 +1175,7 @@ $$
 \cong V_1^{K_1}\otimes_E V_2^{K_2}.
 $$
 
-Hence external tensor products of admissible representations are admissible. Under standard hypotheses, irreducible admissible representations over an algebraically closed field have irreducible external tensor product, and irreducibles of a product arise this way; without field and finiteness hypotheses, division-algebra effects can obstruct this simple statement.
+Hence external tensor products of admissible representations are admissible. No corresponding irreducibility statement follows from smoothness and admissibility alone: proving that an external tensor product is irreducible, or that every irreducible of a product separates into two factors, requires additional field and endomorphism hypotheses. We will not use such a statement here.
 
 Convolution also factors:
 
@@ -1112,7 +1190,7 @@ with product Haar measure, because a compactly supported locally constant functi
 
 For an abelian tdlc group $A$, a character $\chi:A\to E^\times$ gives a one-dimensional smooth representation exactly when its kernel is open. If $E$ is algebraically closed and an irreducible smooth representation is admissible, Schur's lemma forces every element of $A$ to act by a scalar, so the representation is such a character.
 
-For $F^\times$, every smooth character has an open kernel on $\mathcal O_F^\times$, hence is determined by a finite-level character of the units and an arbitrary nonzero value at a uniformizer. It is **unramified** when it is trivial on $\mathcal O_F^\times$. For $(F,+)$, smooth characters similarly have open kernel, usually a fractional ideal after a nontrivial additive character has been fixed.
+For $F^\times$, every smooth character has an open kernel on $\mathcal O_F^\times$, hence is determined by a finite-level character of the units and an arbitrary nonzero value at a uniformizer. It is **unramified** when it is trivial on $\mathcal O_F^\times$. For $(F,+)$, a smooth character likewise has open kernel, so its kernel contains some fractional ideal $\mathfrak p_F^n$. Equality with a particular fractional ideal is an extra conductor statement, not part of smoothness alone.
 
 Smoothness must not be confused with analytic continuity into a nondiscrete coefficient field. The representation space is algebraic and discrete for the stabilizer condition. A continuous character with no open kernel need not define a smooth one-dimensional representation.
 
@@ -1146,6 +1224,14 @@ Take $\Gamma=\mathbf Z$ and $H=\{0\}$. Compact induction is $E[T,T^{-1}]$ as its
 
 Let $K$ be profinite. Every smooth cyclic representation factors through a finite quotient, since the stabilizer of its generator contains an open normal subgroup after taking the core. Over characteristic zero, averaging and finite-group semisimplicity show that every smooth representation is a direct sum of irreducibles in the sense that each finite set of vectors lies in a semisimple finite-dimensional subrepresentation.
 
+For completeness, the local statement implies the global direct-sum statement. Take the direct sum of all irreducible summands in a family of finite-dimensional cyclic subrepresentations whose images cover $V$, and map it onto $V$. Each finite-dimensional irreducible $\tau$ is projective in the smooth category because
+
+$$
+\operatorname{Hom}_K(\tau,-)\cong(\tau^\vee\otimes_E-)^K
+$$
+
+is exact by averaging. A direct sum of these projectives is projective, so the surjection splits. A direct summand of a direct sum of irreducibles is again a direct sum of irreducibles. Thus there is no hidden finite-generation hypothesis in the semisimplicity assertion.
+
 Admissibility means finite multiplicity of every irreducible $K$-type. Indeed, for an open normal $J$, the space $V^J$ collects precisely the types factoring through $K/J$; finite dimensionality for all $J$ is equivalent to finite multiplicities together with local finiteness. The smooth contragredient reverses each finite-dimensional irreducible and preserves these multiplicities.
 
 In characteristic $p$, representations of a pro-$p$ group behave very differently. Invariants cease to be exact and extensions need not split. This is not a minor coefficient variation but a change in the homological nature of the category.
@@ -1168,7 +1254,7 @@ This example is the local prototype for twisting and central characters. In a no
 
 ### 14.4 Elementary matrix groups
 
-Take $G=\operatorname{GL}_2(F)$ and $K=\operatorname{GL}_2(\mathcal O_F)$. The Cartan decomposition, whose detailed consequences belong to the next book, writes $G$ as double cosets represented by diagonal matrices. It already illustrates why $\mathcal H(G,K)$ is manageable: bi-$K$-invariant compact support involves only finitely many such cosets.
+Take $G=\operatorname{GL}_2(F)$ and $K=\operatorname{GL}_2(\mathcal O_F)$. The Cartan decomposition, proved and used in Chapter 19, writes $G$ as double cosets represented by diagonal matrices. It already illustrates why $\mathcal H(G,K)$ is manageable: bi-$K$-invariant compact support involves only finitely many such cosets.
 
 Let $B$ be the upper triangular subgroup and let $\chi_1,\chi_2$ be smooth characters of $F^\times$. The unnormalized induced representation consists of smooth functions satisfying
 
@@ -1282,7 +1368,7 @@ The next layer of theory will decide which induced representations are reducible
 
 ### 16.4 The quaternionic interface
 
-Let $D$ be a quaternion division algebra over $F$. The group $D^\times$ is tdlc, its center is $F^\times$, and $D^\times/F^\times$ is compact. Compact-mod-center support is therefore natural rather than exceptional. Smooth irreducible representations, their central characters, compact-open types, and contragredients all fit the preceding definitions unchanged.
+Let $D$ be a quaternion division algebra over $F$. As a four-dimensional $F$-vector space, $D$ is locally compact and totally disconnected. Write $x\mapsto\bar x$ for the canonical quaternion involution and $\operatorname{Nrd}(x)=x\bar x$. The subset $D^\times=D\setminus\{0\}$ is open, multiplication is continuous, and the formula $x^{-1}=\bar x/\operatorname{Nrd}(x)$ makes inversion continuous there; hence $D^\times$ is a tdlc group. Its center is $F^\times$, and Proposition 20.1 proves directly that $D^\times/F^\times$ is compact. Compact-mod-center support is therefore natural rather than exceptional. Smooth irreducible representations, their central characters, compact-open types, and contragredients all fit the preceding definitions unchanged.
 
 Because the quotient by the center is compact, fixed-central-character representation theory has stronger finiteness properties than an arbitrary tdlc group. Establishing the actual irreducible representations, levels, and conductors still requires the internal structure of $D$ and its orders. The present book supplies only the categorical and harmonic language in which those facts will be expressed.
 
@@ -1325,7 +1411,7 @@ $$
 D:\mathcal H(G)\longrightarrow E.
 $$
 
-No analytic topology on $\mathcal H(G)$ is needed for the algebraic theory in this book. If $E=\mathbf C$ and one equips the test-function space with its usual inductive-limit topology, one often requires distributions to be continuous; every distribution constructed below has that property. The algebraic definition isolates exactly what smooth representation theory uses.
+No analytic topology on $\mathcal H(G)$ is needed for the algebraic theory in this book. When $E=\mathbf C$ and the test-function space is given its usual inductive-limit topology, continuity is an additional analytic condition. Nothing below uses that topology; all traces and integrals are reduced to finite-dimensional spaces and finite coset sums. The algebraic definition isolates exactly what smooth representation theory uses.
 
 The guiding construction is
 
@@ -1451,13 +1537,13 @@ Additivity means that $\Theta_V$ depends only on the class of $V$ in the Grothen
 
 ### 17.5 When a distribution has a character function
 
-A locally integrable function $\theta:G\to E$ **represents** a distribution $D$ if
+When $E=\mathbf C$, a locally integrable function $\theta:G\to\mathbf C$ **represents** a distribution $D$ if
 
 $$
 D(f)=\int_G f(g)\theta(g)\,dg
 $$
 
-for every test function $f$. Such a function is unique up to Haar-null sets. If it is locally constant on an open set, its values there are uniquely determined pointwise by testing on sufficiently small compact-open neighborhoods.
+for every test function $f$. Such a function is unique up to Haar-null sets. Over a general coefficient field $E$, we use the same formula only for locally constant $E$-valued $\theta$; then $f\theta$ is again a compactly supported locally constant function and the integral is the algebraic finite sum defined in Chapter 10. If $\theta$ is locally constant on an open set, its values there are uniquely determined pointwise by testing on sufficiently small compact-open neighborhoods.
 
 For a finite-dimensional smooth representation, the distribution character is represented by the familiar function
 
@@ -1515,9 +1601,11 @@ $$
 
 provided the integral converges. It averages a test function over the conjugacy class of $\gamma$. Replacing $\gamma$ by a conjugate merely changes the quotient variable, so the resulting distribution depends only on the conjugacy class.
 
+For $E=\mathbf C$ this is the usual measure-theoretic integral. Over a general characteristic-zero coefficient field, the formula is used only with quotient normalizations for which the relevant compact-open pieces have volumes in $E$; on a compact support it then again means a finite coset sum. This is the same coefficient check imposed on convolution in Chapter 10.
+
 Why integrate over $G_\gamma\backslash G$ rather than over $G$? The map $x\mapsto x^{-1}\gamma x$ has exactly the left $G_\gamma$-cosets as fibers. Integrating over $G$ would count each conjugate by the infinite volume of its stabilizer. The quotient removes that redundancy.
 
-For a regular semisimple element of $\operatorname{GL}_2(F)$, and for a regular element of $D^\times$, the centralizer is a torus. Compact support of $f$ and the properness properties of these semisimple orbits give convergence. The exact value still depends on the chosen quotient measure. This dependence is not a nuisance to be ignored: matching orbital integrals across two groups begins by matching their centralizer measures.
+For a regular semisimple element of $\operatorname{GL}_2(F)$, and for a regular element of $D^\times$, the centralizer is a torus. Convergence then follows once the orbit map from the centralizer quotient is known to be proper over compact subsets of the group. That properness is a group-specific semisimple-orbit theorem; it is not a formal consequence of the definition of a tdlc group, so every orbital integral below remains conditional on convergence until that theorem is supplied. The exact value also depends on the chosen quotient measure. This dependence is not a nuisance to be ignored: matching orbital integrals across two groups begins by matching their centralizer measures.
 
 Orbital integrals and character distributions have complementary roles. Orbital integrals organize the geometric side by conjugacy classes. Character distributions organize the spectral side by representations. A local transfer theorem is a rule for comparing these two bases of invariant distributions across related groups.
 
@@ -1548,7 +1636,7 @@ There are two safe ways to recover a character formula.
 
 First, test against $f\in\mathcal H(G)$. If the compact induction is admissible, $\pi(f)$ has finite rank, and its trace is well defined. Decomposing its kernel by $H$-double cosets yields a finite calculation at a common compact-open level.
 
-Second, fix an element $g$ for which only finitely many cosets $Hx$ satisfy $xgx^{-1}\in H$, and suppose this finiteness persists on a small neighborhood of $g$. Then the same block argument gives the local formula
+Second, assume $\sigma$ is finite-dimensional, the compact induction is admissible, and its distribution character is represented by a locally constant function near an element $g$. If only finitely many cosets $Hx$ satisfy $xgx^{-1}\in H$, and this finite set of possible cosets remains fixed after shrinking the neighborhood of $g$, then the same block argument applied to test functions supported in that neighborhood gives the local formula
 
 $$
 \theta_{\mathrm{c\text{-}Ind}_H^G\sigma}(g)
@@ -1557,7 +1645,7 @@ $$
 \theta_\sigma(xgx^{-1}).
 $$
 
-The extra hypotheses are the entire point. Without them the right side can be an infinite formal sum and is not a definition. For compact-mod-center induction on the elliptic regular set, the needed finiteness is often exactly what compactness of the central quotient supplies.
+The extra hypotheses are the entire point. Without admissibility there need not be a distribution character, without local representability there need not be a pointwise value, and without the coset finiteness the right side can be an infinite formal sum. For compact-mod-center induction on the elliptic regular set, the needed finiteness is often exactly what compactness of the central quotient supplies.
 
 ## 19. The $\operatorname{GL}_2(F)$ laboratory
 
@@ -1587,7 +1675,15 @@ for a separable quadratic field extension $L/F$. In the first case $g$ is split;
 
 **Proposition 19.1.** The centralizer of a regular semisimple $g$ is $F[g]^\times$. Its conjugacy class is determined by $P_g$. Moreover $G_g/Z(G)$ is compact exactly in the elliptic case.
 
-**Proof.** A matrix commuting with $g$ is an $F[g]$-linear endomorphism of the two-dimensional cyclic $F[g]$-module $F^2$. It is therefore multiplication by an element of $F[g]$, and it is invertible precisely for an element of $F[g]^\times$. Rational canonical form shows that two regular matrices with the same characteristic polynomial are conjugate.
+**Proof.** The matrix $g$ is not scalar, so some vector $v$ has $v,gv$ linearly independent; otherwise every line would be $g$-stable and applying $g$ to $v+w$ would force the eigenvalues on any two independent vectors to agree. Thus $F^2$ is a cyclic rank-one module over the two-dimensional algebra $F[g]$. A matrix commuting with $g$ is an $F[g]$-linear endomorphism of this module, hence multiplication by an element of $F[g]$, and it is invertible precisely for an element of $F[g]^\times$.
+
+In the basis $(v,gv)$, Cayley--Hamilton gives
+
+$$
+g^2v=\operatorname{tr}(g)gv-\det(g)v.
+$$
+
+The matrix of $g$ in this basis is therefore the companion matrix determined solely by $P_g$. Two regular matrices with the same characteristic polynomial are both conjugate to that companion matrix.
 
 If $F[g]\cong F\times F$, then
 
@@ -1595,7 +1691,7 @@ $$
 G_g/Z(G)\cong(F^\times\times F^\times)/F^\times\cong F^\times,
 $$
 
-which is not compact because valuation maps it onto $\mathbf Z$. If $F[g]=L$ is a quadratic field, then $L^\times/F^\times$ is compact. Indeed valuation leaves at most two cosets, and the quotient of $\mathcal O_L^\times$ by the closed subgroup $\mathcal O_F^\times$ is compact. $\square$
+which is not compact because valuation maps it onto $\mathbf Z$. If $F[g]=L$ is a quadratic field, choose an $F$-basis of $L$. The quotient $L^\times/F^\times$ is the projective line $\mathbf P^1(F)$. Every projective point has coordinates in $\mathcal O_F^2$ with at least one unit coordinate, and that compact set of normalized pairs maps continuously onto $\mathbf P^1(F)$. Hence $L^\times/F^\times$ is compact. $\square$
 
 Thus ellipticity is a compact-mod-center condition. This explains, before any classification, why elliptic classes are the ones that can correspond to classes in a division algebra whose entire multiplicative group is compact modulo center.
 
@@ -1625,7 +1721,15 @@ S=\mathbf1_{\varpi I K},
 T=\mathbf1_{K\left(\begin{smallmatrix}\varpi&0\\0&1\end{smallmatrix}\right)K},
 $$
 
-with $\operatorname{vol}(K)=1$. The element $S$ is invertible in the Hecke algebra because its support is a central coset. Repeated convolution by $T$ moves one step at a time in relative lattice position. Its highest Cartan term after $n$ steps is the double coset of $\operatorname{diag}(\varpi^n,1)$ with nonzero coefficient; every other term has smaller relative distance. Induction on that distance shows that $T,S,S^{-1}$ span every Cartan basis element. Distinct highest supports also show algebraic independence. Consequently
+with $\operatorname{vol}(K)=1$. The element $S$ is invertible in the Hecke algebra because its support is a central coset, and it commutes with every bi-$K$-invariant function. Repeated convolution by $T$ moves one step at a time in relative lattice position. The triangle inequality for lattice distance shows that every term of $T^n$ has distance at most $n$. The path that always moves away from the initial vertex contributes the double coset of $\operatorname{diag}(\varpi^n,1)$ with a nonzero coefficient; all remaining terms have the same determinant valuation $n$ and smaller distance, hence have the form
+
+$$
+K\operatorname{diag}(\varpi^{n-j},\varpi^j)K
+=S^jK\operatorname{diag}(\varpi^{n-2j},1)K
+\qquad(j>0).
+$$
+
+This triangular relation inductively expresses the characteristic function of $K\operatorname{diag}(\varpi^n,1)K$ as a polynomial in $T$ and $S$. Multiplying by $S^b$ then reaches every Cartan double coset. Conversely, the highest support of $S^bT^n$ is the distinct pair $(n+b,b)$, so a nonzero Laurent polynomial in $S$ and polynomial in $T$ cannot vanish. Thus $T,S,S^{-1}$ generate freely, and
 
 $$
 \mathcal H(G,K)\cong E[T,S,S^{-1}].
@@ -1675,7 +1779,9 @@ I(\chi_1,\chi_2)
 =i_B^G(\chi_1\boxtimes\chi_2).
 $$
 
-Iwasawa decomposition $G=BK$ shows that a $K$-fixed function is determined by its value at $1$. Covariance is consistent on $B\cap K$ precisely because the characters are unramified and the modulus is trivial there. Thus $I(\chi_1,\chi_2)^K$ is one-dimensional. Normalize its generator $f_0$ by $f_0(1)=1$.
+Iwasawa decomposition $G=BK$ follows here from elementary lattice algebra. The quotient $B\backslash G$ records the line determined by the bottom row of a matrix. After scaling, that row is a primitive vector of $\mathcal O_F^2$, and every primitive vector extends to an $\mathcal O_F$-basis; hence an element of $K$ carries it to the standard row. Thus every left $B$-coset meets $K$.
+
+It follows that a $K$-fixed function is determined by its value at $1$. Covariance is consistent on $B\cap K$ precisely because the characters are unramified and the modulus is trivial there. Conversely, assigning a value at $1$ and extending by covariance on $BK$ is well defined for exactly the same reason. Thus $I(\chi_1,\chi_2)^K$ is one-dimensional. Normalize its generator $f_0$ by $f_0(1)=1$.
 
 Put
 
@@ -1724,33 +1830,17 @@ The example illustrates the division of labor. Compact-open invariants turn an i
 
 ## 20. The quaternion division laboratory
 
-### 20.1 Valuation and compactness modulo the center
+### 20.1 Projective compactness modulo the center
 
-Let $D$ be a quaternion division algebra over $F$. Write $\operatorname{Trd}$ and $\operatorname{Nrd}$ for reduced trace and reduced norm. There is a discrete valuation
-
-$$
-v_D:D^\times\longrightarrow\mathbf Z
-$$
-
-whose kernel is the unit group $\mathcal O_D^\times$ of the maximal order. Choose a uniformizer $\Pi_D$ with $v_D(\Pi_D)=1$. On the center $F^\times$ one has
-
-$$
-v_D(a)=2v_F(a).
-$$
-
-Hence
-
-$$
-D^\times=\coprod_{n\in\mathbf Z}\Pi_D^n\mathcal O_D^\times,
-$$
-
-while central scalars move the valuation by every even integer.
+Let $D$ be a quaternion division algebra over $F$. Write $\operatorname{Trd}$ and $\operatorname{Nrd}$ for reduced trace and reduced norm. The fact needed by the general representation theory is compactness modulo the center. It has a proof that uses no classification of local division algebras.
 
 **Proposition 20.1.** The quotient $D^\times/F^\times$ is compact.
 
-**Proof.** Every class has a representative of valuation $0$ or $1$: multiply by a suitable power of the central uniformizer $\varpi$, whose $D$-valuation is $2$. The valuation-zero representatives lie in the compact group $\mathcal O_D^\times$, and the valuation-one representatives lie in the compact translate $\Pi_D\mathcal O_D^\times$. Their images cover the quotient. A continuous image of a finite union of compact sets is compact. $\square$
+**Proof.** Choose an $F$-basis of the four-dimensional vector space $D$. Because $D$ is a division algebra, $D^\times=D\setminus\{0\}$. Quotienting by central scalar multiplication therefore identifies the topological space $D^\times/F^\times$ with $\mathbf P^3(F)$.
 
-This elementary parity argument is the structural reason quaternionic representation theory is finite-dimensional after a central character is fixed. It is also the first indication that the division group should correspond only to the elliptic part of $\operatorname{GL}_2(F)$.
+Every projective point has coordinates $(a_0,a_1,a_2,a_3)\in\mathcal O_F^4$ with at least one unit coordinate: scale a nonzero tuple so that the minimum of its coordinate valuations is zero. The set of such normalized tuples is closed in the compact space $\mathcal O_F^4$, hence compact, and it maps continuously and surjectively to $\mathbf P^3(F)$. Thus $D^\times/F^\times$ is compact. $\square$
+
+This projective argument is the structural reason quaternionic representation theory is finite-dimensional after a central character is fixed. It is also the first indication that the division group should correspond only to the elliptic part of $\operatorname{GL}_2(F)$.
 
 ### 20.2 Finite dimensionality and admissibility
 
@@ -1776,25 +1866,23 @@ The cyclic span of $v$ is therefore contained in the finite-dimensional space sp
 
 Applied to $D^\times$, the theorem shows that every irreducible smooth representation with scalar central action has an honest locally constant character function. This is much stronger than the general distribution-character theorem and depends decisively on compactness modulo the center.
 
-### 20.3 The maximal-compact Hecke algebra
+### 20.3 Finite compact-mod-center levels
 
-Put $K_D=\mathcal O_D^\times$. It is normal in $D^\times$ because it is the kernel of $v_D$, and
-
-$$
-D^\times/K_D\cong\mathbf Z.
-$$
-
-Normalize $\operatorname{vol}(K_D)=1$. Every double coset is the single right coset $\Pi_D^nK_D$, so convolution gives
+Let $K\subseteq D^\times$ be any compact open subgroup and put
 
 $$
-\mathcal H(D^\times,K_D)\cong E[U,U^{-1}],
+J=F^\times K.
 $$
 
-where $U=\mathbf1_{\Pi_DK_D}$. If an irreducible representation has a nonzero $K_D$-fixed vector, that vector generates a representation of the abelian quotient $\mathbf Z$. Over an algebraically closed field it follows that the representation is one-dimensional and $U$ acts by a nonzero scalar.
+Centrality of $F^\times$ makes $J$ a subgroup, and openness of $K$ makes $J$ open. Its image in $D^\times/F^\times$ is the compact image of $K$ and is also open. An open subgroup of a compact group has finite index, so
 
-This is a useful contrast with $\operatorname{GL}_2(F)$. The maximal-compact spherical algebra there has two parameters before the center is fixed, reflecting two diagonal directions. For $D^\times$, division collapses the building to one valuation direction, and the maximal-order units are normal.
+$$
+[D^\times:J]<\infty.
+$$
 
-Smaller compact opens inside $\mathcal O_D^\times$ reveal genuinely higher-dimensional representations. Their type Hecke algebras are controlled by which elements of $D^\times$ intertwine the chosen finite-level representation. Thus the general machinery of Chapter 12 becomes essential exactly when the elementary valuation quotient ceases to see enough.
+This gives the finite-level substitute that does not require a maximal-order calculation. If $V$ has central character $\omega$ and $v\in V^K$, then every element $zk\in J$ acts on $v$ by the scalar $\omega(z)$. Choose representatives $g_i$ for the finite right-coset space $D^\times/J$. Writing $g=g_i zk$ shows that $gv=\omega(z)g_iv$. The $D^\times$-orbit of $v$ is therefore spanned by the finitely many $g_iv$. For an irreducible $V$ this recovers finite dimensionality directly.
+
+The ordinary compact-open Hecke algebra $\mathcal H(D^\times,K)$ can still have infinitely many central translates, so compactness modulo the center must not be confused with compactness of $D^\times$. After a central character is fixed, those translates act by prescribed scalars and only finitely many cosets modulo $J$ remain as support data. Smaller compact types inside $K$ reveal higher-dimensional representations through the intertwining algebras of Chapter 12; no normality of $K$ or Laurent-polynomial description is automatic.
 
 ### 20.4 Regular elements and matching classes
 
@@ -1804,9 +1892,28 @@ $$
 P_y(X)=X^2-\operatorname{Trd}(y)X+\operatorname{Nrd}(y).
 $$
 
-Call $y$ regular when this polynomial is separable of degree two. Because $D$ is a division algebra, $F[y]$ cannot be the split algebra $F\times F$: such an algebra contains a nontrivial idempotent, while a division algebra does not. Hence $F[y]$ is a quadratic field. Its multiplicative group is the centralizer of $y$, and its quotient by $F^\times$ is compact.
+Concretely, the canonical quaternion involution $y\mapsto\bar y$ satisfies
+$\operatorname{Trd}(y)=y+\bar y\in F$ and
+$\operatorname{Nrd}(y)=y\bar y=\bar y y\in F$. Expanding
+$(X-y)(X-\bar y)$ gives $P_y$, so $P_y(y)=0$. These identities are the only reduced-algebra facts used in the conjugacy argument below.
 
-Two regular elements of $D^\times$ with the same reduced characteristic polynomial are conjugate. Indeed they define embeddings of the same quadratic field into $D$, and an isomorphism between the embedded fields is carried by an inner automorphism of the central simple algebra. Thus reduced trace and norm classify regular quaternionic conjugacy classes.
+Call $y$ regular when this polynomial is separable of degree two. Because $D$ is a division algebra, $F[y]$ cannot be the split algebra $F\times F$: such an algebra contains a nontrivial idempotent, while a division algebra does not. Hence $F[y]$ is a quadratic field.
+
+The centralizer of $y$ is exactly $F[y]^\times$. Indeed an element $z$ commuting with $y$ makes $F[y,z]$ an algebra over the quadratic field $F[y]$. If $z\notin F[y]$, that algebra has dimension at least two over $F[y]$, hence dimension four over $F$; it must then equal $D$. This would make $D$ commutative, a contradiction. The quotient $F[y]^\times/F^\times$ is compact by the projective-line argument in Proposition 19.1.
+
+Conjugacy for a fixed polynomial also has an elementary proof. Suppose regular $y,z\in D^\times$ have common polynomial $X^2-tX+n$. For $a\in D$ set
+
+$$
+w_a=ya+az-ta.
+$$
+
+Using $y^2=ty-n$ and $z^2=tz-n$ gives
+
+$$
+yw_a=yaz-na=w_az.
+$$
+
+Some $w_a$ is nonzero. Otherwise $w_1=0$ would give $z=t-y$, and then $w_a=ya-ay$ would vanish for every $a$, forcing the noncentral element $y$ to be central. Since $D$ is a division algebra, a nonzero $w_a$ is invertible, and $y=w_azw_a^{-1}$. Thus reduced trace and norm classify regular quaternionic conjugacy classes without an unproved conjugacy-of-embeddings input.
 
 Now let $x\in\operatorname{GL}_2(F)$ be regular semisimple. We say that $x$ and $y\in D^\times$ **match** when
 
@@ -1816,15 +1923,15 @@ $$
 \det(x)=\operatorname{Nrd}(y).
 $$
 
-Equivalently, $P_x=P_y$. Since $P_y$ is irreducible, only elliptic classes in $\operatorname{GL}_2(F)$ can match. Conversely every elliptic polynomial embeds as a quadratic field in the quaternion algebra and yields a regular class in $D^\times$. The matching relation is therefore a bijection
+Equivalently, $P_x=P_y$. Since $P_y$ is irreducible, only elliptic classes in $\operatorname{GL}_2(F)$ can match. The preceding conjugacy results show that the matching relation is an injection
 
 $$
 \{\text{regular classes in }D^\times\}
-\longleftrightarrow
+\longrightarrow
 \{\text{elliptic regular classes in }\operatorname{GL}_2(F)\}.
 $$
 
-This class correspondence is purely algebraic. A representation correspondence requires the additional assertion that characters agree, up to the prescribed transfer sign, on matching classes.
+Its image consists precisely of the elliptic polynomials whose quadratic field embeds in $D$. Surjectivity therefore amounts to the separate local-algebra statement that every separable quadratic extension of $F$ embeds in the quaternion division algebra. That statement is not a consequence of abstract smooth representation theory and is not assumed here. Once an embedding is supplied, any generator with the chosen polynomial gives the matching class, and the injectivity just proved makes it unique. A representation correspondence requires the further assertion that characters agree, up to the prescribed transfer sign, on these matching classes.
 
 ### 20.5 Characters from compact-mod-center induction
 
@@ -1861,18 +1968,18 @@ $$
 f^*\in\mathcal H(G^*),\qquad f'\in\mathcal H(G')
 $$
 
-is called **matching** when its regular orbital integrals agree on corresponding elliptic classes, with the chosen transfer sign or normalization, and the orbital integrals of $f^*$ vanish on regular split classes that have no partner in $G'$. Schematically,
+is called **matching** when its regular orbital integrals agree on the corresponding classes established in Section 20.4, with the chosen transfer sign or normalization, and the orbital integrals of $f^*$ vanish on regular classes that have no partner in $G'$. Schematically,
 
 $$
 O_x(f^*)=O_y(f')
 \quad\text{when }P_x=P_y,
 $$
 
-while $O_x(f^*)=0$ for unmatched split $x$.
+while $O_x(f^*)=0$ for every unmatched regular $x$. In the full local quaternion theory the embedding theorem mentioned in Section 20.4 shows that the unmatched regular classes are exactly the split ones; the present general book does not use that theorem.
 
 This is not merely equality of values $f^*(x)=f'(y)$. Orbital integrals average over conjugacy classes and compensate for different group volumes and centralizers. Transfer is geometric before it is spectral.
 
-The existence of matching functions is a group-specific theorem. The present theory identifies exactly what such a theorem must control: Haar measures, quotient measures on centralizers, support, and the split classes absent from the inner form.
+The existence of matching functions is a group-specific theorem. The present theory identifies exactly what such a theorem must control: Haar measures, quotient measures on centralizers, support, and all classes absent from the inner form.
 
 ### 21.2 Two forms of a character identity
 
@@ -1884,22 +1991,22 @@ $$
 
 for every matching pair, after the sign has been incorporated consistently into the definition of matching or into one side of the identity.
 
-When both distribution characters are represented by locally integrable functions that are locally constant on the regular sets, the same information can be expressed pointwise on matching regular classes:
+When both distribution characters are represented by locally integrable functions that are locally constant on the regular sets, a transfer theorem can instead be formulated pointwise on matching regular classes:
 
 $$
 \theta_{\pi'}(y)=\varepsilon\,\theta_{\pi^*}(x),
 \qquad P_x=P_y,
 $$
 
-where $\varepsilon$ is the transfer sign fixed by convention. For the rank-two Jacquet--Langlands normalization, the nontrivial inner-form comparison carries a minus sign on regular elliptic elements. Moving that sign into the definition of transferred test functions turns the displayed distributional identity into an unsigned equality.
+where $\varepsilon$ is the transfer sign fixed by convention. The later rank-two Jacquet--Langlands theorem will determine $\varepsilon=-1$ for the nontrivial inner-form comparison on regular elliptic elements; that sign is not derived by the abstract theory here. Once determined, it may instead be built into the definition of transferred test functions, turning the distributional identity into an unsigned equality. It must be placed on exactly one side.
 
-The two formulations serve different purposes. The pointwise identity reveals the class correspondence. The distributional identity composes naturally with convolution, trace formulas, and restricted tensor products, and remains meaningful before character functions have been constructed.
+The two formulations serve different purposes. The pointwise identity reveals the class correspondence. The distributional identity composes naturally with convolution, trace formulas, and restricted tensor products, and remains meaningful before character functions have been constructed. Their equivalence is not formal: passing from one to the other requires Weyl integration, convergence of regular orbital integrals, enough matching functions, and control of the singular set. Those group-specific inputs are deliberately outside the present claim.
 
 ### 21.3 Compatibility checks already available
 
 Even before constructing a transfer, several required compatibilities can be checked formally.
 
-Central characters must agree because the two groups have the same center $F^\times$. Twisting by a smooth character $\chi$ of $F^\times$ means twisting $\pi^*$ by $\chi\circ\det$ and $\pi'$ by $\chi\circ\operatorname{Nrd}$. On matching elements,
+A proposed correspondence is compared within the same central-character category because the two groups have the common center $F^\times$; proving that the character identity forces this agreement belongs to the transfer theorem. Once the central characters are aligned, twisting by a smooth character $\chi$ of $F^\times$ means twisting $\pi^*$ by $\chi\circ\det$ and $\pi'$ by $\chi\circ\operatorname{Nrd}$. On matching elements,
 
 $$
 \det(x)=\operatorname{Nrd}(y),
@@ -1913,7 +2020,7 @@ $$
 
 is determined from $P_x$ in exactly the same way as $P_{y^{-1}}$ is determined from $P_y$. Thus matching is preserved under inversion. These observations explain why central character, twists, and contragredients are natural invariants of a local correspondence.
 
-Hecke data behave less formally. A maximal-compact fixed line for $\operatorname{GL}_2(F)$ records two spherical parameters, whereas a maximal-order fixed line on $D^\times$ sees only the valuation quotient. A transfer theorem cannot be obtained by naively identifying the two spherical Hecke algebras. It must first isolate the discrete or elliptic spectral part on the split group, then compare its characters with the compact-mod-center spectrum of the inner form.
+Hecke data behave less formally. A maximal-compact fixed line for $\operatorname{GL}_2(F)$ records two spherical parameters, whereas Section 20.3 shows only that a compact level on $D^\times$ has finitely many support directions after the central character is fixed. A more explicit quaternionic Hecke algebra requires maximal-order and valuation structure not developed here. A transfer theorem therefore cannot be obtained by naively identifying spherical Hecke algebras. It must first isolate the discrete or elliptic spectral part on the split group, then compare its characters with the compact-mod-center spectrum of the inner form.
 
 ### 21.4 The exact boundary of the general theory
 
@@ -1921,11 +2028,11 @@ The general theory now supplies all of the language needed to state local transf
 
 - admissible representations have distribution characters;
 - compact induction and Mackey theory give finite character calculations under explicit finiteness hypotheses;
-- regular elliptic classes in $\operatorname{GL}_2(F)$ match regular classes in $D^\times$ by characteristic polynomial;
+- regular classes in $D^\times$ inject into elliptic regular classes of $\operatorname{GL}_2(F)$ by characteristic polynomial, with the exact missing surjectivity input stated;
 - orbital integrals encode the geometric comparison;
 - central characters, twisting, and contragredience have compatible formulas.
 
-What it does not supply is equally important. It does not classify the relevant irreducible representations of either group. It does not prove local integrability and regular-set formulas for every split-group character. It does not construct matching functions, determine the transfer sign from a global normalization, or prove that the character identity gives a bijection. Those are group-specific theorems, not consequences of abstract smoothness.
+What it does not supply is equally important. It does not classify the relevant irreducible representations of either group. It does not prove that every quadratic field embeds in $D$, local integrability and regular-set formulas for every split-group character, convergence of all regular orbital integrals, or equivalence of pointwise and distributional identities. It does not construct matching functions, determine the transfer sign from a global normalization, or prove that the character identity gives a bijection. Those are group-specific theorems, not consequences of abstract smoothness.
 
 The boundary is productive rather than restrictive. It separates the formal engine, proved here once for all tdlc groups, from the arithmetic and harmonic calculations that distinguish $\operatorname{GL}_2(F)$ from its quaternionic inner form.
 
@@ -1937,6 +2044,6 @@ The theory also marks its own limits. Smoothness is not admissibility. Compact i
 
 With these boundaries in place, the main constructions reinforce one another. Frobenius reciprocity turns invariant or type vectors into maps from compact induction. Mackey theory turns restriction into double-coset intertwiners. Convolution turns locally constant functions into operators. Admissibility turns smooth duality into finite-dimensional duality at every level. Central characters and twisting preserve the data that later transfer theorems must compare.
 
-Distribution characters complete the harmonic picture. A compactly supported test function compresses an admissible representation to finite rank, so trace becomes available without pretending that individual group elements have trace. Orbital integrals organize the same test functions by regular conjugacy classes. For $\operatorname{GL}_2(F)$, lattice geometry produces the spherical Hecke operators and elliptic tori; for $D^\times$, valuation makes the central quotient compact and turns fixed-central-character irreducibles finite-dimensional. Equality of characteristic polynomials then identifies the regular classes on which a local character identity can live.
+Distribution characters complete the harmonic picture. A compactly supported test function compresses an admissible representation to finite rank, so trace becomes available without pretending that individual group elements have trace. Orbital integrals organize the same test functions by regular conjugacy classes whenever the required quotient integrals converge. For $\operatorname{GL}_2(F)$, lattice geometry produces the spherical Hecke operators and elliptic tori; for $D^\times$, projective compactness of the central quotient turns fixed-central-character irreducibles finite-dimensional. Equality of characteristic polynomials then identifies the regular classes on which a local character identity can live, subject to the explicitly isolated quadratic-embedding input for surjectivity.
 
 This is the reusable language required for the next local theories. The specific representation theory of $\operatorname{GL}_2(F)$ will add classification, conductors, and newvectors. The quaternion division group will add compact-mod-center structure arising from orders in $D$. Local and global transfer will add character identities and compatibility theorems. Their common grammar is already complete: a vast nonarchimedean group is read through compact open windows, and each window is encoded by a finite-level Hecke module together with the hypotheses needed to reconstruct the representation behind it.

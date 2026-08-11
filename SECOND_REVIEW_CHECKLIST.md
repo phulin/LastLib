@@ -99,7 +99,7 @@ any resulting corrections.
 - [ ] 073. Taylor–Wiles Systems
 - [ ] 074. Patching Modules and Rings
 - [ ] 075. The Abstract (R=T) Argument
-- [ ] 076. Smooth Representations of (p)-adic Groups
+- [x] 076. Smooth Representations of (p)-adic Groups
 - [ ] 077. Representations of (GL_2(K))
 - [ ] 078. Parabolic Induction, Jacquet Modules, and Whittaker Models for GL₂
 - [ ] 079. Dihedral Supercuspidals, Types, and Newvectors for GL₂
