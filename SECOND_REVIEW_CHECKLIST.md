@@ -103,7 +103,7 @@ any resulting corrections.
 - [ ] 077. Representations of (GL_2(K))
 - [x] 078. Parabolic Induction, Jacquet Modules, and Whittaker Models for GL₂
 - [ ] 079. Dihedral Supercuspidals, Types, and Newvectors for GL₂
-- [ ] 080. Weil–Deligne Representations and Local Constants
+- [x] 080. Weil–Deligne Representations and Local Constants
 - [ ] 081. Local Langlands in the Principal, Special, and Dihedral Cases
 - [ ] 082. Representations of Quaternion Division Algebras
 - [ ] 083. Characters and Dihedral Types on Quaternion Division Algebras

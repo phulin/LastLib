@@ -102,7 +102,7 @@ $$
 
 Arithmetic Frobenius on the algebraic closure of the residue field is $x\mapsto x^q$. Our **geometric Frobenius** is its inverse. Choose a lift $\Phi\in G_K$ of geometric Frobenius. We normalize local reciprocity so that a uniformizer maps to geometric Frobenius. This convention is held fixed everywhere below.
 
-For the algebraic theory, coefficients lie in an algebraically closed field $E$ of characteristic zero. When absolute values, Fourier transforms, and root numbers are discussed, $E=\mathbf C$. All representations are finite-dimensional. A representation of $W_K$ is continuous for the topology defined in Chapter 2 and the usual topology on the coefficient field.
+For the algebraic theory, coefficients lie in an algebraically closed field $E$ of characteristic zero and all representations are finite-dimensional. No topology on an abstract coefficient field is implicit: a Weil representation is required explicitly to have open kernel on inertia. If $E$ is a topological field, the homomorphism is also required to be continuous. When absolute values, Fourier transforms, and root numbers are discussed, $E=\mathbf C$ with its usual topology; in the monodromy theorem the coefficient field is a finite extension of $\mathbf Q_\ell$.
 
 ### 1.3 A normalization ledger
 
@@ -243,7 +243,7 @@ To see this, choose a finite Galois extension containing the normal closure of $
 
 ### 2.5 Reciprocity normalization
 
-Local reciprocity gives a topological isomorphism
+The established arithmetic reciprocity theorem sends a uniformizer to arithmetic Frobenius and identifies the profinite completion of $K^\times$ with $G_K^{\mathrm{ab}}$. Inverting that map gives our geometric convention. Its image consists exactly of the classes whose degree in $\widehat{\mathbf Z}$ is an ordinary integer. This is the image of $W_K$ in the abelian quotient, and therefore reciprocity induces a topological isomorphism
 
 $$
 \operatorname{rec}_K:K^\times\xrightarrow{\sim}W_K^{\mathrm{ab}}
@@ -262,23 +262,25 @@ $$
 \tag{2.6}
 $$
 
-Under a finite extension $L/K$, the inclusion $W_L^{\mathrm{ab}}\to W_K^{\mathrm{ab}}$ corresponds to the norm $N_{L/K}:L^\times\to K^\times$. Thus restriction of a character from $W_K$ to $W_L$ corresponds to composition with the norm. This compatibility will control twists under base change.
+Here $W_K^{\mathrm{ab}}$ means the maximal Hausdorff abelian quotient. To justify the displayed identification without strengthening the reciprocity theorem, take any finite abelian quotient of $W_K$. It extends uniquely to a finite abelian quotient of $G_K$, because its open kernel on inertia together with a positive power of Frobenius contains an open subgroup of $G_K$. Finite reciprocity identifies this quotient with a quotient of $K^\times$. Passing over all such quotients identifies the profinite completion, while the degree maps identify the dense integer subgroups on both sides. The resulting map $K^\times\to W_K^{\mathrm{ab}}$ is bijective and open on $\mathcal O_K^\times$ and on every valuation coset, hence is a topological isomorphism.
+
+Under a finite extension $L/K$, arithmetic reciprocity identifies the inclusion of Galois groups with the norm $N_{L/K}:L^\times\to K^\times$. Inverting both reciprocity maps preserves this square. Therefore the inclusion $W_L^{\mathrm{ab}}\to W_K^{\mathrm{ab}}$ corresponds to the norm. Restriction of a character from $W_K$ to $W_L$ consequently corresponds to composition with the norm. This compatibility will control twists under base change.
 
 ## 3. Linear representations of the Weil group
 
 ### 3.1 Continuity and finite inertia
 
-A **Weil representation** over $E$ is a continuous homomorphism
+A **Weil representation** over $E$ is a homomorphism
 
 $$
 r:W_K\longrightarrow\operatorname{GL}_E(V)
 $$
 
-whose restriction to inertia has open kernel. Since $I_K$ is compact, an open kernel has finite index, and therefore $r(I_K)$ is finite. Conversely, if $r(I_K)$ is finite and the restriction is continuous, its kernel is open. The condition leaves $r(\Phi)$ entirely unrestricted except for its conjugation action on the finite group $r(I_K)$.
+whose restriction to inertia has open kernel; for a topological coefficient field the homomorphism is additionally continuous. Since $I_K$ is compact, an open kernel has finite index, and therefore $r(I_K)$ is finite. Conversely, if $r(I_K)$ is finite and the restriction is continuous, its kernel is open. The condition leaves $r(\Phi)$ entirely unrestricted except for its conjugation action on the finite group $r(I_K)$.
 
 If $E$ is given the discrete topology, continuity already forces every vector to have an open stabilizer; finite dimensionality then gives one open subgroup fixing all of $V$. With the usual topology on $\mathbf C$ or an $\ell$-adic coefficient field, compactness alone need not force finite image. The finite-inertia condition is therefore part of the definition, not a consequence of finite dimension.
 
-Every irreducible Weil representation has finite inertia automatically once it is admissible in the preceding sense. It can still have infinite image because an eigenvalue of Frobenius can have infinite order.
+An irreducible Weil representation can still have infinite total image because an eigenvalue of Frobenius can have infinite order. It is the open-kernel condition, not irreducibility, that makes its inertial image finite.
 
 ### 3.2 Changing a Frobenius lift
 
@@ -328,11 +330,11 @@ This is a representation because $u$ is central in the image. It agrees with $r$
 
 If $(r,N)$ is a Weil--Deligne representation, then $u$ also commutes with $N$. Indeed, conjugation by $r(\Phi)$ sends $N$ to the eigenvector $q^{-1}N$; in the Jordan decomposition of this conjugation operator, its unipotent part must fix every genuine eigenvector. Hence $(r^{\mathrm{F\!-\!ss}},N)$ still satisfies (4.1). Frobenius semisimplification therefore retains monodromy without alteration.
 
-**Proposition 3.1.** Frobenius semisimplification is exact on direct sums, commutes with duality and restriction to finite extensions, preserves the characteristic polynomial on $V^{I_K}$, and is idempotent.
+**Proposition 3.1.** Frobenius semisimplification is additive on direct sums, commutes with duality and restriction to finite extensions, preserves the characteristic polynomial on $V^{I_K}$, and is idempotent.
 
 **Proof.** Direct sums and duals preserve multiplicative Jordan components. On restriction to $W_L$, a Frobenius over $L$ has degree $f$ in $W_K$ and may have the form $i\Phi^f$. The central unipotent factor in its image is $u^f$. After removing it, a positive power of the remaining operator is a product of commuting semisimple operators from a finite inertial image and a power of $s$; it is semisimple. In characteristic zero an operator whose positive power is semisimple is itself semisimple. Thus formula (3.1) agrees with Frobenius semisimplification after restriction, even when the Frobenius lift carries an inertial correction. The invariant space is unchanged because inertia is unchanged, and removing a commuting unipotent factor preserves the characteristic polynomial. Applying the construction twice does nothing. $\square$
 
-Frobenius semisimplification is not ordinary semisimplification of the whole representation. It retains the finite inertial representation exactly. That distinction will matter for inertial types.
+In the finite-inertia setting, $r^{\mathrm{F\!-\!ss}}$ is the ordinary semisimplification of the underlying Weil representation; the inertia-isotypic argument at the start of Theorem 4.1 proves this. Frobenius semisimplification of the pair is nevertheless not semisimplification in the Weil--Deligne category: it retains $N$ and therefore retains extensions carried by monodromy. It also leaves the finite inertial representation itself unchanged, a fact that will matter for inertial types.
 
 For the unramified Jordan block of Section 3.3, the construction replaces Frobenius by the identity and turns the nonsplit extension into $1\oplus1$. By contrast, if inertia acts through two distinct characters exchanged by Frobenius, semisimplification retains that exchange; it does not diagonalize inertia and Frobenius simultaneously. It also never changes $N$. A special block therefore remains indecomposable, because its extension data reside in monodromy rather than in a unipotent Frobenius matrix.
 
@@ -437,7 +439,15 @@ where $m\geq1$ and $\rho$ is an irreducible Weil representation. Each displayed 
 
 **Proof.** Frobenius semisimplicity and finite inertial image imply semisimplicity of $r$: a $W_K$-stable complement can be constructed on each finite inertia-isotypic orbit, where a power of Frobenius is semisimple and central. Decompose $V$ into irreducible constituents. Relation (4.1) says that $N$ carries a constituent isomorphic to $\sigma$ into one isomorphic to $\sigma\otimes|\cdot|$. Hence constituents split into finite chains under twisting by $|\cdot|$.
 
-On a fixed chain, choose a terminal constituent in $\ker N$ and lift it successively through the images of powers of $N$. Schur's lemma says each nonzero map between matching irreducibles is scalar; rescaling the lifts makes those scalars one. This produces a block with the form (4.3), tensored with the centered irreducible representation $\rho$. Jordan block lengths are recovered from the dimensions of $\ker N^j$, so the multiset of blocks is unique. A block has no nontrivial idempotent commuting with both its irreducible coefficient action and its single Jordan chain, hence is indecomposable. $\square$
+Here is the multiplicity-space step hidden by that shorthand. Fix an orbit of an irreducible $\sigma$ under twisting by $|\cdot|$. The twists in this orbit are pairwise nonisomorphic: an isomorphism $\sigma\simeq\sigma\otimes|\cdot|^a$ with $a\ne0$ would give, after taking determinants, $|\cdot|^{a\dim\sigma}=1$, which is impossible on $\Phi$. Write the corresponding part of $V$ as
+
+$$
+\bigoplus_j \sigma\otimes|\cdot|^j\otimes M_j.
+$$
+
+Schur's lemma makes $N$ on this sum the identity on the irreducible factor tensored with linear maps $M_j\to M_{j+1}$. Thus the problem is a finite representation of an equioriented chain. Choose bases successively adapted to kernels and images of all composites. Ordinary Gaussian elimination decomposes the chain into interval modules, each having one-dimensional multiplicity at consecutive vertices and identity arrows between them. Centering the exponents of an interval of length $m$ produces exactly $\operatorname{Sp}_m(\rho)$.
+
+The ranks of every composite $N^a$ between two isotypic pieces recover the number of intervals containing the corresponding subinterval; downward subtraction recovers every interval and its multiplicity. This proves uniqueness. On one interval an idempotent commuting with all arrows is a constant scalar idempotent, hence is zero or one; after tensoring with the irreducible coefficient action, Schur's lemma gives the same conclusion. Each block is therefore indecomposable. $\square$
 
 The theorem is a classification of pairs. The underlying Weil representation of a special block is a direct sum; its indecomposability is carried by $N$.
 
@@ -503,9 +513,9 @@ t_\ell(w\sigma w^{-1})=|w|t_\ell(\sigma)
 \tag{5.1}
 $$
 
-for $w\in W_K$ and $\sigma$ in a sufficiently small inertial subgroup. This normalization matches the chosen geometric Frobenius.
+for $w\in W_K$ and $\sigma\in I_K$, where $|w|$ is viewed as an $\ell$-adic unit. This normalization matches the chosen geometric Frobenius.
 
-On an open subgroup $J$ where $\rho$ is unipotent, the logarithm is a finite sum. Since $J$ maps into a one-dimensional tame quotient, there is a unique nilpotent $N$ such that
+After shrinking $J$, the wild part acts trivially and every prime-to-$\ell$ tame factor does as well. Thus the remaining action factors through an open subgroup of the single factor $\mathbf Z_\ell(1)$. On $J$ the logarithm is a finite sum and is an additive continuous homomorphism. It follows that there is a unique nilpotent $N$ such that
 
 $$
 \rho(\sigma)=\exp\bigl(t_\ell(\sigma)N\bigr)
@@ -519,40 +529,42 @@ $$
 \rho(w)N\rho(w)^{-1}=|w|N.
 $$
 
-Define, first on $J$ and then uniquely on $W_K$, the finite-inertia part by removing this exponential. The resulting representation $r$ has finite image on inertia and satisfies the same scaling relation with $N$. Thus $\rho$ determines a Weil--Deligne representation.
+To remove the exponential on the whole Weil group, extend $t_\ell$ uniquely after choosing $t(\Phi)=0$ by the crossed rule
+
+$$
+t(w_1w_2)=t(w_1)|w_2|^{-1}+t(w_2).
+\tag{5.2a}
+$$
+
+After first shrinking so that (5.2) holds and then extending across the finitely many inertial cosets, put
+
+$$
+r(w)=\rho(w)\exp\bigl(-t(w)N\bigr).
+\tag{5.2b}
+$$
+
+The crossed rule and the conjugation rule for $N$ show directly that $r(w_1w_2)=r(w_1)r(w_2)$. On $J$ it is trivial, so its inertial image is finite. Conjugating (5.2) also gives $r(w)Nr(w)^{-1}=|w|N$. Thus $\rho$ determines a Weil--Deligne representation.
 
 The uniqueness in (5.2) follows because $t_\ell(J)$ contains a nonzero open subgroup of $\mathbf Z_\ell$: evaluating at one element with nonzero coordinate determines $N$, and the homomorphism law makes every other logarithm proportional to it.
 
 ### 5.3 Reconstruction and dependence on choices
 
-Conversely, let $(r,N)$ be a Weil--Deligne representation over $F$. On a sufficiently small subgroup of inertia on which $r$ is trivial, set
+Conversely, let $(r,N)$ be a Weil--Deligne representation over $F$. Choose the crossed extension $t$ above and set on $W_K$
 
 $$
-\rho(\sigma)=\exp\bigl(t_\ell(\sigma)N\bigr).
+\rho_D(w)=r(w)\exp\bigl(t(w)N\bigr).
 \tag{5.3}
 $$
 
-Together with $r$ on a choice of coset representatives, relation (4.1) makes this into a continuous action after a finite extension of $K$. The constructions in (5.2) and (5.3) are inverse up to isomorphism.
+The same calculation as above proves multiplicativity, and the Weil-group topology makes $\rho_D$ continuous with quasi-unipotent inertia. The constructions (5.2b) and (5.3) are inverse up to isomorphism.
+
+There is an essential boundary here. The representation $\rho_D$ is always a representation of $W_K$, but it need not extend continuously to the compact group $G_K$. Such an extension exists exactly when $\rho_D(W_K)$ is relatively compact, equivalently when it preserves an $\mathcal O_F$-lattice. For example, an unramified one-dimensional parameter whose Frobenius value is not an $\ell$-adic unit cannot extend to $G_K$, and no finite extension of $K$ repairs that failure. The construction from a continuous $G_K$-representation automatically lands in the bounded subcategory.
 
 Scaling $t_\ell$ by $c\in\mathbf Z_\ell^\times$ scales $N$ by $c^{-1}$. The pairs are isomorphic after the corresponding change of chosen coordinate in the reconstruction; properties such as $N=0$, its ranks, conductor, and special-block lengths are independent of the choice. Choosing a different Frobenius lift changes representatives but not the isomorphism class.
 
-The precise categorical statement is therefore an equivalence between continuous representations with quasi-unipotent inertia and Weil--Deligne representations after fixing a tame coordinate, with Frobenius semisimplification on the latter side when only semisimplified local data are retained.
+The precise categorical statement is therefore an equivalence, after fixing a tame coordinate, between Weil--Deligne representations and continuous representations of $W_K$ with quasi-unipotent inertia. Continuous representations of $G_K$ correspond to the full subcategory satisfying the boundedness condition just stated. Frobenius semisimplification is applied on the Weil--Deligne side only when semisimplified local data are intended.
 
-The removal of the exponential can be made explicit. Extend the tame coordinate from a small subgroup by choosing a function $t:W_K\to F$ satisfying
-
-$$
-t(w_1w_2)=t(w_1)|w_2|^{-1}+t(w_2)
-\tag{5.3a}
-$$
-
-on the subgroup generated by that inertia and Frobenius. Then
-
-$$
-r(w)=\rho(w)\exp\bigl(-t(w)N\bigr)
-\tag{5.3b}
-$$
-
-is multiplicative: the crossed-homomorphism rule (5.3a) and the conjugation rule for $N$ cancel the exponential terms. On small inertia, (5.3b) removes (5.2), so $r$ is trivial there and has finite inertial image. A different extension of $t$ changes the resulting pair by an isomorphism.
+The crossed extension is not an extra invariant. Requiring $t(\Phi)=0$ determines it from $t_\ell$ and the unique expression $w=i\Phi^n$. Changing the Frobenius lift produces an isomorphic pair. Scaling $t_\ell$ rescales $N$ inversely, as already noted.
 
 This calculation also identifies a common mistake. One cannot put $r=\rho\exp(-t_\ell N)$ on all of $W_K$ without extending $t_\ell$ by the crossed rule. An ordinary homomorphism on the whole group would be incompatible with Frobenius conjugation.
 
@@ -788,7 +800,7 @@ D&\dim(\ker N)^I&\operatorname{Sw}(D)&a(D)\\ \hline
 \chi\text{ of unique break }u>0&0&u&u+1\\
 \operatorname{Sp}_m(\chi),\ \chi\text{ unramified}&1&0&m-1\\
 \operatorname{Sp}_m(\chi),\ \chi\text{ ramified}&0&m\operatorname{Sw}(\chi)&m a(\chi)\\
-\operatorname{Ind}_{W_L}^{W_K}1&\text{depends on }L/K&f(d-e+1)&fd
+\operatorname{Ind}_{W_L}^{W_K}1&f&f(d-e+1)&fd
 \end{array}
 $$
 
@@ -814,7 +826,15 @@ $$
 
 A positive value means a less oscillatory character with a larger kernel. Some accounts attach the opposite integer to the same kernel; formula (8.1) removes the ambiguity.
 
-Every nontrivial additive character is $\psi_a$ for a unique $a\in K^\times$ once one base character has been fixed. This follows from self-duality of the additive group of $K$.
+Every nontrivial additive character is $\psi_a$ for a unique $a\in K^\times$ once one base character has been fixed. Here is a finite-level proof of the self-duality being used. For integers $r,s$ large enough, the pairing
+
+$$
+\mathfrak p_K^{-r}/\mathfrak p_K^s\times
+\mathfrak p_K^{-s-n(\psi)}/\mathfrak p_K^{r-n(\psi)}
+\longrightarrow\mathbf C^\times,\qquad (x,y)\longmapsto\psi(xy)
+$$
+
+is perfect: its left and right kernels are zero by the maximality of the kernel lattice, and the two finite groups have the same cardinality. Any continuous additive character is trivial on some $\mathfrak p_K^s$ and is determined on a sufficiently large compact lattice, so finite-level perfection writes it uniquely as $x\mapsto\psi(ax)$. Compatibility as $r$ grows gives one $a\in K$, and nontriviality gives $a\ne0$.
 
 ### 8.2 Annihilator lattices and self-duality
 
@@ -974,9 +994,30 @@ $$
 \tag{9.6}
 $$
 
-**Proof strategy.** Decompose $K^\times$ into valuation shells. On each shell, local constancy makes the integral finite. Fourier transform exchanges compact support with bounded level, so both sides become rational functions. The quotient in (9.5) is independent of $f$ because multiplicative translates of one nonzero zeta distribution span the one-dimensional space of distributions transforming by $\chi^{-1}|\cdot|^{1-s}$. A direct shell calculation proves that this space is one-dimensional.
+**Proof strategy.** Decompose $K^\times$ into valuation shells. On each shell, local constancy makes the integral finite. Fourier transform exchanges compact support with bounded level, so both sides become rational functions. We now give the finite calculation that makes their quotient independent of $f$.
 
-For uniqueness, choose $f$ with $Z(f,\chi,s)\ne0$. Existence reduces first to characters of the finite quotient $\mathcal O_K^\times/(1+\mathfrak p_K^a)$ and then to a finite Fourier transform. The unramified shells contribute exactly the quotient of the two Euler factors in (9.6); the remaining finite transform is the epsilon factor. This reduction also proves the explicit formulas below. $\square$
+Choose $m$ so that $f$ is constant on cosets of $\mathfrak p_K^m$ and choose $r$ with support in $\mathfrak p_K^{-r}$. The characteristic functions of the finitely many cosets
+
+$$
+x+\mathfrak p_K^m\subseteq\mathfrak p_K^{-r}
+$$
+
+span all such $f$. Formula (8.5) sends one of them to
+
+$$
+\operatorname{vol}(\mathfrak p_K^m)\,
+\psi(xy)\mathbf1_{\mathfrak p_K^{-m-n(\psi)}}(y).
+\tag{9.5a}
+$$
+
+Split the $x$ and $y$ variables into their valuation and unit parts. Integration over units is zero unless the unit character occurring in the phase has conductor at most $a(\chi)$. At the exact level it is the finite Fourier transform on
+$\mathcal O_K^\times/(1+\mathfrak p_K^{a(\chi)})$; at deeper levels its sum is zero by orthogonality. Thus all nonzero terms reduce to one primitive finite transform. Translation of a shell by $\varpi_K$ multiplies $Z(f,\chi,s)$ by $\chi(\varpi_K)q^{-s}$, while (9.5a) translates the dual shell in the opposite direction and multiplies the transformed integral by the corresponding inverse factor. Summing the two geometric tails gives precisely
+
+$$
+\frac{L(1-s,\chi^{-1})}{L(s,\chi)}.
+$$
+
+The remaining primitive finite transform is a scalar independent of the chosen coset and hence, by linearity, independent of $f$. This proves existence of (9.5) on a right half-plane and as an identity of rational functions in $q^{-s}$. If $Z(f,\chi,s)$ is not identically zero, the identity determines the scalar, proving uniqueness. Evaluating the primitive transform gives (9.9), while the geometric-tail calculation with $a(\chi)=0$ gives (9.10). $\square$
 
 The measure in (9.5) is the self-dual measure for the displayed $\psi$. If an arbitrary additive Haar measure is used, the gamma and epsilon factors acquire its scale. Equation (9.5), rather than an isolated Gauss-sum formula, is the definition that survives every change of convention.
 
@@ -1039,7 +1080,26 @@ $$
 \tag{9.11}
 $$
 
-**Proof.** Expand $|\tau|^2$ and put one unit variable equal to the other times $z$. The inner sum over a unit quotient is an additive-character sum. Orthogonality makes it vanish unless $z\equiv1\pmod{\mathfrak p^a}$; the surviving diagonal contributes exactly $q^a$. The count includes the missing zero residue through the cancellation of the nonunit cosets, so the answer is $q^a$, not the cardinality $(q-1)q^{a-1}$ of the unit quotient. $\square$
+**Proof.** Expand $|\tau|^2$ and put one unit variable equal to the other times $z$. Up to a unit scalar in the phase, the inner sum is
+
+$$
+S(z)=\sum_{v\in\mathcal O_K^\times/(1+\mathfrak p_K^a)}
+\psi\bigl(v(z-1)/c\bigr).
+$$
+
+Compute it as the complete sum over $\mathcal O_K/\mathfrak p_K^a$ minus the sum over multiples of a uniformizer. Additive orthogonality gives
+
+$$
+S(z)=
+\begin{cases}
+q^a-q^{a-1},&z\equiv1\pmod{\mathfrak p_K^a},\\
+-q^{a-1},&z\equiv1\pmod{\mathfrak p_K^{a-1}}
+\text{ but }z\not\equiv1\pmod{\mathfrak p_K^a},\\
+0,&\text{otherwise},
+\end{cases}
+$$
+
+with the same interpretation at $a=1$, where the second line ranges over the nonidentity residue units. Because $a$ is the exact conductor, $\chi$ is nontrivial on $(1+\mathfrak p_K^{a-1})/(1+\mathfrak p_K^a)$ when $a>1$, while for $a=1$ it is nontrivial on $k^\times$. The sum of its values on the relevant group is therefore zero. The off-diagonal contribution is $q^{a-1}$ and the diagonal contribution is $q^a-q^{a-1}$. Thus $|\tau|^2=q^a$. $\square$
 
 Consequently the central value
 
@@ -1066,14 +1126,14 @@ $$
 
 To prove this, square the sum, substitute $y=tx$, and evaluate the inner quadratic character sum after completing the square. All $t\ne-1$ cancel in pairs, while $t=-1$ supplies $\bar\chi(-1)q$. The sign of the square root depends on the additive character; equation (9.13), not a chosen square root, is canonical.
 
-Gauss sums obey a useful scaling law. If $b\in\mathcal O_K^\times$, replacing $\psi$ by $\psi_b$ in (9.8) and substituting $u\mapsto b^{-1}u$ gives
+Gauss sums obey a useful scaling law. If $b\in\mathcal O_K^\times$, replacing $\psi$ by $\psi_b$ in (9.8) and substituting $v=bu$ gives
 
 $$
-\tau(\chi,\psi_b;c)=\chi(b)^{-1}\tau(\chi,\psi;c).
+\tau(\chi,\psi_b;c)=\chi(b)\tau(\chi,\psi;c).
 \tag{9.13a}
 $$
 
-The factor $\chi(c)$ in (9.9) turns this inverse into the direct determinant factor in (11.1), because the compatible choice for the scaled character is $bc$. Scaling the phase inside a fixed finite sum and scaling the complete local constant are therefore distinct operations.
+Equivalently, one may use the compatible element $bc$ for $\psi_b$; then the phase and Gauss sum are unchanged while $\chi(bc)$ supplies the same direct factor. Both calculations agree with the determinant factor in (11.1).
 
 If one computes at a level deeper than the actual conductor of $\chi$, the analogous finite sum vanishes. Sum first along the extra kernel on which $\chi$ is trivial; the additive character is nontrivial there, and orthogonality gives zero. The nonzero primitive Gauss sum occurs at exactly $a(\chi)$. This is the finite Fourier reason that the conductor, rather than an arbitrarily chosen level, is the exponent of the epsilon factor.
 
@@ -1140,8 +1200,21 @@ with the following properties:
 
 1. it agrees with Chapter 9 in dimension one;
 2. it is multiplicative in short exact sequences;
-3. it is compatible with induction as in Section 11.4;
+3. if $L/K$ is finite separable, $U$ is a virtual representation of $W_L$ of dimension zero, $\psi_L=\psi_K\circ\operatorname{Tr}_{L/K}$, and both measures are self-dual, then
+   $$
+   \epsilon_K(s,\operatorname{Ind}_{W_L}^{W_K}U,\psi_K)
+   =\epsilon_L(s,U,\psi_L);
+   \tag{10.3a}
+   $$
 4. for the zero representation it equals $1$.
+
+The construction is first made for the self-dual measure. If $dx=b\,dx_\psi$ with $b>0$, set
+
+$$
+\epsilon(s,r,\psi,dx)=b^{\dim r}\epsilon(s,r,\psi,dx_\psi).
+$$
+
+The rank-one Fourier equation forces this rule, and multiplicativity forces the exponent $\dim r$, so it introduces no additional choice.
 
 With the self-dual measure suppressed from the notation,
 
@@ -1151,11 +1224,49 @@ $$
 \tag{10.4}
 $$
 
-**Proof strategy.** Every finite inertial action factors through a finite local quotient. Character induction expresses its character as an integral combination of characters induced from one-dimensional characters of subgroups. Apply the rank-one construction and the induction rule. Relations among induced characters give no ambiguity because the finite Fourier functional equation is additive on virtual characters. Nonnegativity is not needed: one first defines the factor on the character group and then restricts to actual representations. Formula (10.4) follows from the conductor induction formula and (8.9). $\square$
+**Proof strategy.** We first treat finite total image. We use the degree-zero form of monomial induction: if $G$ is finite and $\xi$ is a virtual characteristic-zero character of degree zero, then
 
-There are two points inside the uniqueness assertion. Induction must come from subgroups arising from finite separable extensions, so that trace characters and differents are available. Moreover, every relation among induced characters must yield local constant one. Pairing such a relation with the Artin character kills its monomial exponent, while the corresponding product of finite Fourier transforms kills its central scalar. Both parts are therefore independent of the chosen induction expression.
+$$
+\xi=\sum_j n_j\operatorname{Ind}_{H_j}^G(\theta_j-1),
+\qquad n_j\in\mathbf Z,
+\tag{10.3b}
+$$
 
-Finite inertia does not mean finite total image, so one further reduction is required. For an irreducible $r$, a positive power of Frobenius centralizes the finite inertial image and hence acts by a scalar. Twisting by a suitable unramified character makes that scalar finite order. The twisted representation then has finite image and is covered by character induction. The unramified-twist formula of Section 11.2 restores the original representation. This proves existence for arbitrary Frobenius eigenvalues rather than only for finite-image representations.
+with $\theta_j$ one-dimensional. This is the augmentation-ideal refinement of the monomial induction lemma: apply the elementary-subgroup character criterion to the augmentation ideal, or repeat its denominator-removal proof after replacing every inducing character by its difference from the trivial character. Every subgroup $H_j$ of a finite local Galois quotient is the subgroup belonging to a finite separable extension $L_j/K$.
+
+For a finite-image representation $r$ of dimension $d$, apply (10.3b) to $r-d\cdot1$. Define
+
+$$
+\epsilon_K(s,r,\psi_K)
+=\epsilon_K(s,1,\psi_K)^d
+\prod_j
+\left(
+\frac{\epsilon_{L_j}(s,\theta_j,\psi_K\circ\operatorname{Tr}_{L_j/K})}
+{\epsilon_{L_j}(s,1,\psi_K\circ\operatorname{Tr}_{L_j/K})}
+\right)^{n_j}.
+\tag{10.3c}
+$$
+
+This formula forces uniqueness. Its independence rests on the following finite Fourier relation. Realize every subgroup and character in one finite Galois extension $M/K$, and use $\psi_M=\psi_K\circ\operatorname{Tr}_{M/K}$. Choose two $G=\operatorname{Gal}(M/K)$-stable fractional ideals exchanged by annihilator duality. Fourier transform gives a $G$-equivariant isomorphism between the resulting finite function spaces. Its determinant on a $\theta$-isotypic component is the primitive Gauss scalar for $\theta$, times the monomial already recorded by its conductor. Frobenius reciprocity identifies the determinant on an $H$-isotypic component with the determinant on the corresponding induced $G$-component. Determinants multiply in exact sequences. Consequently a virtual relation
+
+$$
+\sum_j n_j\operatorname{Ind}_{H_j}^G(\theta_j-1)=0
+$$
+
+has product of central Fourier scalars equal to one. Pairing the same relation with the Artin character makes its total conductor exponent zero by the conductor induction formula. Hence every relation has total local constant one, and the right side of (10.3c) is independent of (10.3b). The same determinant argument proves multiplicativity and (10.3a).
+
+For a general finite-inertia irreducible representation, a positive power of Frobenius centralizes the finite inertial image and therefore acts by a scalar. An unramified twist can make that scalar finite order, after which the whole image is finite. Define the factor by undoing this twist using the rank-one formula. Decompose a Frobenius-semisimple representation into irreducibles. For a nonsemisimple representation, use its class in the Grothendieck group, equivalently its Frobenius semisimplification; the classification argument of Section 4.4 shows that the latter is semisimple. Jordan--Hölder multiplicities add in a short exact sequence, so this extension is multiplicative in such sequences. This gives the asserted assignment for every finite-inertia representation.
+
+Finally, in (10.3c) the monomial exponent is additive. Conductor induction and
+$n(\psi_K\circ\operatorname{Tr}_{L/K})=e\,n(\psi_K)+d(L/K)$ reduce it to
+
+$$
+a_K(r)+n(\psi_K)\dim r.
+$$
+
+This proves (10.4). $\square$
+
+The dimension-zero formulation is what prevents circularity. The lambda constant in Section 11.4 is derived from the already constructed epsilon factors; it is not part of their definition. For a virtual $U$ of dimension zero it disappears, exactly as (10.3a) requires.
 
 For the Weil representation $r$ considered in this section, short exact sequences cause no hidden extension term. On the finite inertial image, characteristic zero makes invariants exact. Frobenius may still carry extension data, but Frobenius semisimplification preserves every relevant characteristic polynomial and determinant. After monodromy is added, only direct-sum multiplicativity survives, as the special-block counterexample in Section 10.1 shows.
 
@@ -1366,7 +1477,25 @@ L_K\left(s,\operatorname{Ind}_{W_L}^{W_K}U\right)=L_L(s,U).
 \tag{11.12}
 $$
 
-**Proof strategy.** For (11.12), inertia orbits on the embeddings of $L$ reduce the determinant over $K$ to the determinant of an $f$th power of Frobenius over $L$; $q_L^{-s}=q^{-fs}$ gives the same polynomial. For (11.11), first prove the statement for characters by comparing the two finite Fourier transforms under trace. The discrepancy for the trivial character is exactly (11.10). Multiplicativity and character induction then prove the general case. The operator $N$ is carried pointwise on induced functions; its determinant correction obeys the same orbit calculation as the Euler factor. $\square$
+**Proof strategy.** For (11.12), inertia orbits on the embeddings of $L$ reduce the determinant over $K$ to the determinant of an $f$th power of Frobenius over $L$; $q_L^{-s}=q^{-fs}$ gives the same polynomial. For (11.11), first prove the statement for characters by comparing the two finite Fourier transforms under trace. The discrepancy for the trivial character is exactly (11.10). Multiplicativity and character induction then prove the general case. The operator $N$ is carried pointwise on induced functions; its determinant correction obeys the same orbit calculation as the Euler factor.
+
+More explicitly, before monodromy apply (10.3a) to the virtual representation
+
+$$
+U-(\dim U)1_L.
+$$
+
+Multiplicativity gives
+
+$$
+\frac{\epsilon_K(s,\operatorname{Ind}U,\psi_K)}
+{\epsilon_K(s,\operatorname{Ind}1_L,\psi_K)^{\dim U}}
+=
+\frac{\epsilon_L(s,U,\psi_L)}
+{\epsilon_L(s,1_L,\psi_L)^{\dim U}},
+$$
+
+and (11.10) rearranges this identity to (11.11). This derivation is why the exponent is $\dim U$ and why the definition of $\lambda$ is not circular. For monodromy, Mackey decomposition gives $f$ copies of both $U^{I_L}$ and $(\ker N)^{I_L}$ in the corresponding $I_K$-invariant spaces. The quotient determinant in (10.5) therefore satisfies the same Frobenius-orbit identity, completing the proof for Weil--Deligne representations. $\square$
 
 The lambda constant is not generally one. It is the root number of the permutation representation after the trace-compatible trivial factor is removed. For a split étale algebra it is one; for a ramified field it can be a nontrivial normalized Gauss sum.
 
@@ -1479,14 +1608,14 @@ $$
 
 Here $dx_\psi$ is self-dual and $d^\times x$ gives $\mathcal O_K^\times$ volume one. These normalizations are compatible but logically independent. The first changes with $\psi$; the second does not.
 
-Equation (12.1) proves meromorphic continuation of the zeta integral because its two sides are rational in $q^{-s}$. It also proves uniqueness of the epsilon factor. The conductor is recovered as the degree of its monomial after the additive-character shift is removed:
+The shell calculation preceding (9.5) proves rational continuation of the zeta integral, and (12.1) carries that continuation across $s\leftrightarrow1-s$. It also proves uniqueness of the epsilon factor. The conductor is recovered as the exponent of its monomial after the additive-character shift is removed:
 
 $$
--\deg_{q^{-s}}\epsilon(s,\chi,\psi)
-=a(\chi)+n(\psi).
+\operatorname{ord}_{q^{-s}}\epsilon(s,\chi,\psi)
+=a(\chi)+n(\psi),
 $$
 
-Thus the functional equation contains both ramification depth and Fourier normalization.
+where $\operatorname{ord}_{q^{-s}}$ means the exponent of the monomial in $q^{-s}$, not the order of a zero at a numerical point. Thus $a(\chi)$ is this exponent minus $n(\psi)$, and the functional equation contains both ramification depth and Fourier normalization.
 
 Applying (12.1) twice gives duality directly. The first transform uses $\psi$ and changes $(\chi,s)$ to $(\chi^{-1},1-s)$. The second uses $\psi^{-1}$, so
 
@@ -1512,7 +1641,7 @@ $$
 
 together with direct-sum multiplicativity, induction, and the rank-one Fourier equation. These properties determine all three factors after decomposition into special blocks. For the underlying Weil representations, ordinary character-group relations may be used; relations from nonsplit monodromy extensions may not.
 
-The decisive compatibility is induction. If $D$ is induced from $L$, then (11.12) transports both Euler factors without correction, while (11.11) transports epsilon factors with $\lambda(L/K,\psi)^{\dim D}$. The same constant therefore appears in gamma factors. Omitting it would contradict the rank-one Fourier equation after composing the additive character with trace.
+The decisive compatibility is induction. If $D=\operatorname{Ind}_{W_L}^{W_K}U$, then (11.12) transports both Euler factors without correction, while (11.11) transports epsilon factors with $\lambda(L/K,\psi)^{\dim U}$. The same constant therefore appears in gamma factors. Omitting it would contradict the rank-one Fourier equation after composing the additive character with trace.
 
 Duality supplies the involutive form
 
@@ -1533,7 +1662,13 @@ W(D,\psi)=\epsilon(1/2,D,\psi).
 \tag{12.4}
 $$
 
-If $D$ is unitary, then $|W(D,\psi)|=1$. This follows in rank one from Gauss-sum orthogonality, for finite-image representations from induction, and for special blocks from (10.5). A nonunitary parameter can be written as a unitary parameter times a real power of $|\cdot|$; its central value need not lie on the unit circle unless the center is shifted accordingly.
+For this assertion, a Frobenius-semisimple parameter is called **unitary** when in its centered decomposition every block $\operatorname{Sp}_m(\rho)$ has unitary irreducible coefficient $\rho$. Then
+
+$$
+|W(D,\psi)|=1.
+$$
+
+This follows in rank one from Gauss-sum orthogonality, for finite-image representations from dimension-zero induction, and for special blocks from (10.5): the centered norm exponents sum to zero and the monodromy determinant supplies the balancing half-power. A parameter is **essentially unitary** if one common twist by $|\cdot|^t$, with $t\in\mathbf R$, makes it unitary. For such a parameter the unit-circle statement holds at the shifted center $s=1/2+t$, not necessarily at $1/2$. A general direct sum can have different real exponents on different blocks and need not admit one common unitarizing twist.
 
 Changing the additive character gives
 
