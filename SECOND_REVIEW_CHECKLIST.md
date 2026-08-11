@@ -216,3 +216,4 @@ any resulting corrections.
 - [ ] 190. The Fixed-Three Integral Local Theory
 - [x] 191. Quintic Cyclotomic Units and Kummer Arithmetic
 - [ ] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
+- [ ] 193. The Chebotarev Density Theorem

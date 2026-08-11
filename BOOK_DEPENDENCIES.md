@@ -5,21 +5,20 @@ substantial direct prerequisites for X. Purely transitive edges, routine Mathlib
 shared lemmas are omitted; a subject used directly is retained even when another listed
 prerequisite also depends on it. Topical order in `BOOKS.md` is not a proposed reading order.
 
-The three external reference nodes are:
+The two external reference nodes are:
 
 - `MATHLIB`: the assumed mathematical background visible in the local checkout.
 - `CFT`: the companion Class Field Theory development, including reciprocity, Brauer groups, and invariant maps.
-- `CHEB`: the companion development of the Chebotarev density theorem.
 
-`CFT` and `CHEB` are proof sources, not permitted axioms. The final no-axiom audit must traverse
-all three nodes and reject `sorry`, theorem stubs, or additional mathematical axioms in any
+`CFT` is a proof source, not a permitted axiom. The final no-axiom audit must traverse
+both external nodes and reject `sorry`, theorem stubs, or additional mathematical axioms in any
 transitive import.
 
 ## Critical proof spine
 
 ```mermaid
 flowchart LR
-    U["MATHLIB + CFT + CHEB"] --> D["deformation and automorphic infrastructure"]
+    U["MATHLIB + CFT + Book 193"] --> D["deformation and automorphic infrastructure"]
     D --> ML["Books 155–156: modularity lifting, ℓ ≥ 7"]
     ML --> L["Book 185: balanced hardly-ramified lift"]
     L --> PM["Books 186 and 188–189: potential automorphy and Brauer descent"]
@@ -206,7 +205,7 @@ flowchart LR
 | 127 | 13, 14, 17, 38, 123, 126 |
 | 128 | 18, 41, 126, 127 |
 | 129 | 14, 17, 38, 123, 126, 127 |
-| 130 | 15, 18, 22, 38, 127, 129 |
+| 130 | 15, 18, 22, 38, 40, 60, 127, 129 |
 | 131 | 10, 11, 12, 24, 127, 129, 130 |
 | 132 | 93, 94, 20, 37, 122, 27, 126, 127, 128 |
 | 133 | 93, 94, 25, 26, 27, 129, 130, 131 |
@@ -221,8 +220,8 @@ flowchart LR
 | Book | Direct prerequisites |
 |---|---|
 | 139 | 116, 117, 118, 119 |
-| 140 | 139, 36, 39, 121, 143, 145, 146 |
-| 141 | 91, 140, 142, 143, 144, 145, 146, 147 |
+| 140 | 27, 36, 38, 39, 42, 119, 121, 139 |
+| 141 | 91, 119, 121, 140, 142, 143, 144, 145, 146, 147, 193 |
 | 142 | 91, 119 |
 | 143 | 12, 39, 121, 142 |
 | 144 | 46, 47, 28, 56, 143 |
@@ -235,7 +234,7 @@ flowchart LR
 | 151 | 42, 150 |
 | 152 | 43, 150, 151 |
 | 153 | 6, 49, 50, 51, 48, 38, 56, 147, 152 |
-| 154 | 49, 50, 51, 180, 148, 185, 188, 189, 191, 192, CHEB |
+| 154 | 49, 50, 51, 180, 148, 185, 188, 189, 191, 192, 193 |
 
 ### XI. Integral Automorphic Infrastructure and Modularity Lifting
 
@@ -247,7 +246,7 @@ flowchart LR
 | 158 | 122, 12, 39, 41, 131 |
 | 159 | 91, 84, 94, 158 |
 | 160 | 73, 88, 89, 90, 91, 158 |
-| 161 | 67, 68, 91, 135, 136, 157, 159, 63, CHEB |
+| 161 | 67, 68, 91, 135, 136, 157, 159, 63, 193 |
 | 162 | 3, 6, 51, 48, 29 |
 | 163 | 68, 71, 91, 122, 135, 17, 157, 161, 162 |
 | 164 | 72, 75, 160, 163, 162 |
@@ -294,3 +293,9 @@ flowchart LR
 |---|---|
 | 191 | 1, MATHLIB |
 | 192 | 191 |
+
+### XV. Frobenius Density
+
+| Book | Direct prerequisites |
+|---|---|
+| 193 | 2, 3, 4, 6, 7, 29 |

@@ -1078,3 +1078,14 @@ Diophantine descent.
 descent in fifth cyclotomic fields, valuation control at the prime above 5, primitive-factor
 decompositions, and well-founded norm descent. Conclude with Fermat's Last Theorem for exponent
 five, leaving the modularity-lifting argument to begin at coefficient primes at least seven.
+
+## XV. Frobenius Density
+
+193. **The Chebotarev Density Theorem** — Develop Frobenius conjugacy classes and Dirichlet
+density, then use ray partial zeta functions, Poisson–Mellin analysis, finite-order Hecke
+characters, and logarithmic Euler products to prove the required pole, holomorphy, and
+nonvanishing statements at one. Prove abelian density by character orthogonality and full
+Chebotarev by cyclic fixed-field reduction and centralizer counting. Derive finite-quotient prime
+selection, profinite Frobenius density, and the precise Brauer–Nesbitt and
+representation-transport interfaces, without claiming effective bounds or general Artin
+holomorphy.

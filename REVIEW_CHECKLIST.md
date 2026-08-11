@@ -257,3 +257,4 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 190. The Fixed-Three Integral Local Theory
 - [x] 191. Quintic Cyclotomic Units and Kummer Arithmetic
 - [x] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
+- [x] 193. The Chebotarev Density Theorem
