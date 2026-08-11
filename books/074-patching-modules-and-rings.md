@@ -787,6 +787,30 @@ R_\infty=P_\infty/(f_1,\ldots,f_b).}
 \tag{5.8}
 $$
 
+The displayed list remembers the uniform finite-level relation bound, so it can contain redundant
+or zero entries. The intrinsic number of patched relations is
+
+$$
+c_\infty
+=\mu_{P_\infty}(I_\infty)
+=\dim_k I_\infty/\mathfrak p_\infty I_\infty
+\leq b.
+\tag{5.8a}
+$$
+
+Choose a minimal generating tuple $g_1,\ldots,g_{c_\infty}$ for $I_\infty$. Then the same ring has
+the minimal presentation
+
+$$
+R_\infty=P_\infty/(g_1,\ldots,g_{c_\infty}).
+\tag{5.8b}
+$$
+
+The distinction between $b$ and $c_\infty$ matters only after the limit has been constructed. The
+number $b$ is the uniform compactness input and gives a level-independent lower bound on dimension;
+$c_\infty$ is an invariant of the chosen patched quotient and is the number that enters a sharp
+height-equals-relations or complete-intersection criterion.
+
 The structural maps (2.19) descend to
 
 $$
@@ -1343,18 +1367,18 @@ Here projective dimension is exactly one, rather than merely at most one. Indeed
 
 Coefficient torsion-freeness is also insufficient in dimensions greater than one. Since $S_\infty$ is a domain, a finite torsion-free module has depth at least one, but it need not have depth $q+1$. An ordinary perfect pairing with another torsion-free module likewise gives a duality statement, not the missing regular sequence.
 
-A perfect complex of amplitude $[a,b]$ gives a controlled finite free resolution at the complex level. It should be patched as a complex, with differentials, actions, and derived pairings included in the shadows. Its amplitude controls homological complexity, but a complex of positive amplitude does not become a free module merely because its Euler characteristic has the expected value.
+A perfect complex of amplitude $[a,h]$ gives a controlled finite free resolution at the complex level. It should be patched as a complex, with differentials, actions, and derived pairings included in the shadows. Its amplitude controls homological complexity, but a complex of positive amplitude does not become a free module merely because its Euler characteristic has the expected value.
 
 ### 8.3 Patching bounded perfect complexes
 
 Balancedness remembers only generators and first relations. When classes occupy several adjacent degrees, truncating to one cohomology module throws away precisely the higher syzygies that govern specialization. The stable object is then a bounded perfect complex. Patching it requires no new compactness principle, but it requires more marked data.
 
-Fix integers $a\leq b$. Suppose that at level $N$ there is a strict bounded complex
+Fix integers $a\leq h$. Suppose that at level $N$ there is a strict bounded complex
 
 $$
 C_N^\bullet:
 0\longrightarrow C_N^a\longrightarrow\cdots
-\longrightarrow C_N^b\longrightarrow0
+\longrightarrow C_N^h\longrightarrow0
 \tag{8.7}
 $$
 
@@ -1362,7 +1386,7 @@ of finite free $S_N$-modules, with
 
 $$
 C_N^i\simeq S_N^{r_i}
-\qquad(a\leq i\leq b),
+\qquad(a\leq i\leq h),
 \tag{8.8}
 $$
 
@@ -1430,7 +1454,7 @@ $$
 for one nonzero finite module $L$. Shifting degrees, the finite free complex gives
 
 $$
-\operatorname{pd}_{S_\infty}L\leq b-a.
+\operatorname{pd}_{S_\infty}L\leq h-a.
 \tag{8.13}
 $$
 
@@ -1438,7 +1462,7 @@ Auslander--Buchsbaum then yields the quantitative depth bound
 
 $$
 \operatorname{depth}_{S_\infty}L
-\geq d_S-(b-a).
+\geq d_S-(h-a).
 \tag{8.14}
 $$
 
@@ -1616,10 +1640,11 @@ Auxiliary framing affects $G$ and $d_{\mathrm{loc}}$ according to where the form
 
 ### 9.2 Relations and lower bounds
 
-The patched presentation (5.8) has at most $b$ equations. Krull's height theorem gives
+The marked presentation (5.8) has $b$ displayed equations, while the intrinsic minimal presentation (5.8b) has $c_\infty\leq b$ equations. Krull's height theorem therefore gives the sharper lower bound
 
 $$
 \dim R_\infty
+\geq d_{\mathrm{loc}}+q+G-c_\infty
 \geq d_{\mathrm{loc}}+q+G-b.
 \tag{9.5}
 $$
@@ -1648,7 +1673,7 @@ d_{\mathrm{loc}}+G-b=1,
 \tag{9.8}
 $$
 
-In that case (9.7) gives the global lower bound $\dim R_\infty\geq q+1$. If $P_\infty$ is also equidimensional and catenary, the generalized principal ideal theorem gives the same lower bound for every irreducible component of $R_\infty$. Even then, the inequality need not be an equality: several of the $b$ equations can have dependent height, so a component can have codimension smaller than $b$.
+In that case (9.7) gives the global lower bound $\dim R_\infty\geq q+1$. If $P_\infty$ is also equidimensional and catenary, the generalized principal ideal theorem gives the same lower bound for every irreducible component of $R_\infty$. Even then, the inequality need not be an equality: the marked $b$-tuple can contain redundant equations, and even a minimal $c_\infty$-tuple can have height smaller than $c_\infty$.
 
 The integer $b$ must be an effective relation bound. A cohomology group that merely receives obstruction classes does not suffice. The obstruction theory must be complete, functorial, additive, and effective for removing universal relation directions. Those hypotheses are what turn the relative dual-Selmer dimension into a bound on minimal equations. Patching cannot improve an unproved relation estimate.
 
@@ -1749,21 +1774,29 @@ The existence of the finite $S_\infty$-algebra $A_\infty$ gives only a quotient 
 
 ### 9.5 Complete-intersection consequences
 
-Suppose $P_\infty$ is Cohen--Macaulay and equality holds in the sharp form
+Suppose $P_\infty$ is Cohen--Macaulay and equality holds in the intrinsic sharp form
 
 $$
-\dim R_\infty=\dim P_\infty-b.
+\dim R_\infty=\dim P_\infty-c_\infty.
 \tag{9.18}
 $$
 
-Then the ideal $I_\infty=(f_1,\ldots,f_b)$ has height $b$. Since it is generated by $b$ elements in a Cohen--Macaulay local ring, the sequence
+The complete local Cohen--Macaulay source is catenary and equidimensional, so (9.18) says that $I_\infty$ has height $c_\infty$. Choose the minimal generating tuple in (5.8b). Since grade equals height in a Cohen--Macaulay local ring and $I_\infty$ is generated by exactly $c_\infty$ elements, the complete-intersection criterion shows that
 
 $$
-f_1,\ldots,f_b
+g_1,\ldots,g_{c_\infty}
 \tag{9.19}
 $$
 
-is $P_\infty$-regular after an invertible change among a minimal generating tuple. In particular, $R_\infty$ is Cohen--Macaulay and equidimensional.
+is a $P_\infty$-regular sequence. In particular, $R_\infty$ is Cohen--Macaulay and equidimensional.
+
+The familiar equality $\dim R_\infty=\dim P_\infty-b$ is a stronger numerical hypothesis only because $b$ was permitted to be a padded bound. Indeed it gives
+
+$$
+b=\operatorname{ht}I_\infty\leq c_\infty\leq b,
+$$
+
+so $c_\infty=b$. The marked tuple $f_1,\ldots,f_b$ is then minimal and is itself regular. Thus the usual sharp-$b$ conclusion is a special case of the intrinsic criterion, while a strict inequality $c_\infty<b$ no longer hides a genuine complete-intersection conclusion.
 
 If $P_\infty$ is regular, (9.19) makes $R_\infty$ a complete intersection. If $P_\infty$ is already a complete intersection, quotienting by the regular sequence again gives a complete intersection. If $P_\infty$ is merely Cohen--Macaulay, the conclusion is Cohen--Macaulayness; it does not promote the source to a regular ring.
 
@@ -2758,6 +2791,20 @@ R_\infty=P_\infty/(f_1,\ldots,f_b).
 \tag{16.4}
 $$
 
+If $I_\infty=\ker(P_\infty\to R_\infty)$, its intrinsic relation number is
+
+$$
+c_\infty
+=\mu_{P_\infty}(I_\infty)
+=\dim_k I_\infty/\mathfrak p_\infty I_\infty
+\leq b,
+\qquad
+R_\infty=P_\infty/(g_1,\ldots,g_{c_\infty})
+\tag{16.4a}
+$$
+
+for a minimal generating tuple. Thus $b$ remains the uniform arithmetic bound needed for compactness, while $c_\infty$ records the actual codimension input after patching.
+
 The maps from $R_{\mathrm{loc}}$ and $S_\infty$ are the structural maps induced from $P_\infty$.
 
 **(b) Auxiliary freeness.** One has
@@ -2816,6 +2863,7 @@ and
 
 $$
 \dim R_\infty
+\geq d_{\mathrm{loc}}+q+G-c_\infty
 \geq d_{\mathrm{loc}}+q+G-b.
 \tag{16.11}
 $$
@@ -2882,7 +2930,15 @@ $$
 \tag{16.16}
 $$
 
-and $M_\infty$ is maximal Cohen--Macaulay over $R_\infty$. If $P_\infty$ is Cohen--Macaulay and the sharp codimension is $b$, the patched relations form a regular sequence and $R_\infty$ is Cohen--Macaulay. If $P_\infty$ is regular, $R_\infty$ is a complete intersection. If $R_\infty$ is regular, or if $M_\infty$ separately has finite projective dimension over the Cohen--Macaulay ring $R_\infty$, then $M_\infty$ is $R_\infty$-free of positive rank and therefore faithful, with no reducedness hypothesis.
+and $M_\infty$ is maximal Cohen--Macaulay over $R_\infty$. If $P_\infty$ is Cohen--Macaulay, the two equalities force $c_\infty=b$: indeed $\dim P_\infty-b=q+1=\dim R_\infty$, and Section 9.5 applies. Hence a minimal patched relation tuple is regular and $R_\infty$ is Cohen--Macaulay. If $P_\infty$ is regular, $R_\infty$ is a complete intersection. If $R_\infty$ is regular, or if $M_\infty$ separately has finite projective dimension over the Cohen--Macaulay ring $R_\infty$, then $M_\infty$ is $R_\infty$-free of positive rank and therefore faithful, with no reducedness hypothesis.
+
+**Proof.** Equation (16.15) turns the lower bound (16.11) into $\dim R_\infty\geq q+1$, while the assumed ceiling gives the reverse inequality. Thus (16.16) holds, and (16.12)--(16.13) make $M_\infty$ maximal Cohen--Macaulay. Also
+
+$$
+\dim P_\infty=d_{\mathrm{loc}}+q+G=q+1+b,
+$$
+
+so a Cohen--Macaulay source satisfies the sharp-$b$ equality of Section 9.5. That section gives $c_\infty=b$, regularity of a minimal relation tuple, and the stated Cohen--Macaulay or complete-intersection conclusion. Finally, Section 10.5 and Corollary 11.2 give $R_\infty$-freeness under the two respective projective-dimension hypotheses. The rank is positive because $M_\infty\simeq S_\infty^r$ with $r>0$, and a nonzero free module is faithful. $\square$
 
 Before this final freeness clause is invoked, the dimension and depth clauses alone supply no component coverage. If every minimal component is separately known to occur in the support, the action is nearly faithful. It is faithful when $R_\infty$ is reduced, when the action is faithful at every associated prime, or when the annihilator saturation criterion of Section 11.4 applies.
 
@@ -2912,13 +2968,17 @@ $$
 \quad(i>0)
 $$
 
-and proves that the augmented module is $\mathcal O$-torsion-free, then Proposition 8.2 upgrades $M_\infty$ to a finite free $S_\infty$-module. At that point all free-module conclusions of Theorem 16.1 apply.
+and proves that the augmented module is nonzero and $\mathcal O$-torsion-free, then Proposition 8.2 upgrades $M_\infty$ to a finite free $S_\infty$-module of positive rank. At that point the conclusions of Theorem 16.1 that use auxiliary freeness apply, subject to the same separate hypotheses on the action image, saturation, dimensions, support, and pairings.
+
+**Proof.** Stabilizing the uniformly bounded square presentations by identity blocks and patching their marked matrices gives (16.17), as proved in Section 8.1. The same finite-shadow construction patches the ring action, and the Mittag--Leffler argument of Chapter 7 gives exact ordinary augmentation because those maps were retained. These steps provide no left exactness for (16.17), which is why freeness and maximal depth are absent without further input.
+
+If the left map is injective, (16.17) is a length-one free resolution. Its nonzero cokernel has projective dimension exactly one: an injective square matrix over the domain $S_\infty$ has rank-zero cokernel, so that cokernel cannot be a nonzero free module. Auslander--Buchsbaum therefore gives depth $q$. Under the alternative derived hypotheses, Proposition 8.2 supplies the asserted freeness, after which each additional conclusion is obtained from the same separately named hypothesis used in Theorem 16.1. $\square$
 
 If the natural finite-level objects are perfect complexes, retain them as such. A bounded perfect patched complex whose derived augmentation is a finite free $\mathcal O$-module in one degree is itself a finite free $S_\infty$-module in that degree by Proposition 8.3. If derived augmentation has more than one nonzero degree, the exported object remains a perfect complex with its actual amplitude; no single cohomology module inherits freeness without another concentration theorem.
 
-**Theorem 16.4 (perfect-complex patching).** Retain the ring, presentation, action, and augmentation hypotheses of Theorem 16.1. Replace the modules $M_N$ by strict complexes $C_N^\bullet$ of finite free $\Lambda_N$-modules, all supported in one interval $[a,b]$ and having one fixed rank $r_i$ in each degree. Assume chosen bases, differential matrices, strict chain actions, and derived augmentation comparisons are included in the marked shadows. If a duality is desired, assume companion complexes and chain-level perfect pairings, including their shifts, signs, and adjoints, are also included.
+**Theorem 16.4 (perfect-complex patching).** Retain the ring and presentation hypotheses of Theorem 16.1. Replace its module, action, and augmentation hypotheses by strict complexes $C_N^\bullet$ of finite free $\Lambda_N$-modules, all supported in one interval $[a,h]$ and having one fixed rank $r_i$ in each degree. Assume chosen bases, differential matrices, strict chain actions of $R_N$ compatible with the diamond action, and derived augmentation comparisons with one fixed bounded complex $C^\bullet$ of finite free $\mathcal O$-modules are included in the marked shadows. If a duality is desired, assume companion complexes and chain-level perfect pairings, including their shifts, signs, and adjoints, are also included.
 
-Then diagonal patching produces a perfect complex $C_\infty^\bullet$ of finite free $S_\infty$-modules, supported in $[a,b]$, with the patched action and with exact derived augmentation
+Then diagonal patching produces a perfect complex $C_\infty^\bullet$ of finite free $S_\infty$-modules, supported in $[a,h]$, with the patched action and with exact derived augmentation
 
 $$
 \mathcal O\otimes_{S_\infty}^{\mathbf L}C_\infty^\bullet
@@ -2933,12 +2993,12 @@ C_\infty^\bullet\simeq S_\infty^{\oplus r}[-j].
 \tag{16.20}
 $$
 
-If instead $C_\infty^\bullet\simeq L[-j]$ for one finite module $L$, then
+If instead $C_\infty^\bullet\simeq L[-j]$ for one nonzero finite module $L$, then
 
 $$
-\operatorname{pd}_{S_\infty}L\leq b-a,
+\operatorname{pd}_{S_\infty}L\leq h-a,
 \qquad
-\operatorname{depth}_{S_\infty}L\geq q+1-(b-a).
+\operatorname{depth}_{S_\infty}L\geq q+1-(h-a).
 \tag{16.21}
 $$
 
@@ -2958,7 +3018,8 @@ R_\infty/\mathfrak a_\infty R_\infty\simeq R,
 M_\infty/\mathfrak a_\infty M_\infty\simeq M,\\
 \dim A_\infty=\dim\operatorname{Supp}_{R_\infty}M_\infty=q+1,\\
 \operatorname{depth}_{R_\infty}M_\infty=q+1,\\
-\dim R_\infty\geq d_{\mathrm{loc}}+q+G-b.
+\dim R_\infty\geq d_{\mathrm{loc}}+q+G-c_\infty
+\geq d_{\mathrm{loc}}+q+G-b.
 \end{array}
 \tag{16.22}
 $$
