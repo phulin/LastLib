@@ -137,6 +137,8 @@ $$
 
 is compact. We use this compactness to reduce all global convergence questions to one real variable.
 
+The dependency boundary is narrow and explicit. The earlier adelic foundations establish the product formula, local compactness of the restricted products, discreteness and cocompactness of $K\subset\mathbf A_K$, compactness of $C_K^1$, the standard trace character, and the fact that the annihilator of diagonal $K$ is $K$. We recall their normalizations below and prove all new Fourier, Poisson, and Mellin assertions here. The local class-field input is only the arithmetic reciprocity convention and its unramified dictionary: a uniformizer corresponds to arithmetic Frobenius. No reciprocity theorem is used to prove Poisson summation, analytic continuation, or a functional equation.
+
 At a finite place over the rational prime $p$, let $\mathfrak D_v=\mathfrak p_v^{d_v}$ be the local different. Globally, $D_K$ denotes the absolute discriminant and $\mathfrak D_K$ the different of $K/\mathbf Q$. Thus
 
 $$
@@ -211,7 +213,7 @@ Z(\Phi,\omega,s)
 =Z(\widehat\Phi,\omega^{-1},1-s).
 $$
 
-Both sides continue meromorphically to $s\in\mathbf C$. If $\omega$ is nontrivial, they are entire. If $\omega=1$, the only possible poles are simple poles at $0$ and $1$, with residues determined exactly by $\Phi(0)$, $\widehat\Phi(0)$, and the volume of $C_K^1$ for the induced quotient measure.
+Both sides continue meromorphically to $s\in\mathbf C$. If $\omega$ is nontrivial on $C_K^1$, they are entire. If $\omega=1$, the only possible poles are simple poles at $0$ and $1$, with residues determined exactly by $\Phi(0)$, $\widehat\Phi(0)$, and the volume of $C_K^1$ for the induced quotient measure. More generally, a pure module character $\omega=|\cdot|_{\mathbf A}^{it_0}$ has the same two possible poles shifted to $-it_0$ and $1-it_0$. This is the only exception to the entireness assertion for a nontrivial unitary character.
 
 For a factorizable test function, the integral factors into local zeta integrals. Dividing those local integrals by canonical local $L$-factors produces entire local correction terms. Choosing them to equal $1$ place by place yields the completed Hecke function and its functional equation. The proof is therefore simultaneously global and local: global Poisson summation supplies continuation, while local harmonic analysis identifies the exact Euler, gamma, conductor, and root-number factors.
 
@@ -235,13 +237,19 @@ $$
 
 At a finite place this follows because multiplication by a uniformizer maps $\mathcal O_F$ onto a subgroup of index $q$; at a complex place it is the two-dimensional real Jacobian. The squared complex absolute value is exactly what makes one formula valid at every place.
 
-The uniqueness argument is short and useful. If $dx$ and $dx'$ are two additive Haar measures, choose a nonnegative compactly supported continuous function $h$ with nonzero integral for both. For a compactly supported continuous $f$, apply invariance and Fubini to
+The uniqueness argument is short and useful. If $\mu$ and $\nu$ are two additive Haar measures, choose a nonnegative compactly supported continuous function $h$ with nonzero integral for both. Apply invariance and Fubini to
 
 $$
-\int_F\int_F f(x+y)h(y)\,dx\,dx'.
+\int_F\int_F f(x)h(x-y)\,d\mu(x)\,d\nu(y).
 $$
 
-Integrating first in $x$ produces $(\int f\,dx)(\int h\,dx')$; integrating first in $y$ produces $(\int f\,dx')(\int h\,dx)$. Hence $dx'$ is the fixed scalar $(\int h\,dx')/(\int h\,dx)$ times $dx$. This is why every normalization problem for additive measure reduces to finding one volume.
+Integrating first in $y$ produces $\mu(f)\nu(h)$. If one first writes $x=z+y$ and then integrates in $y$, the result is $\mu(h)\nu(f)$. Hence
+
+$$
+\mu(f)\nu(h)=\nu(f)\mu(h),
+$$
+
+so $\nu$ is the fixed scalar $\nu(h)/\mu(h)$ times $\mu$. This is why every normalization problem for additive measure reduces to finding one volume.
 
 The same reasoning supplies quotient integration. If $H$ is a closed subgroup of a locally compact abelian group $G$, Haar measures on $G$ and $H$ determine a unique quotient measure on $G/H$ such that
 
@@ -372,7 +380,13 @@ $$
 n(\psi_b)=n(\psi)+v(b).
 $$
 
-This relation is a valuable sign check. Multiplying the phase by a uniformizer makes the character less oscillatory, so it becomes trivial on a larger fractional ideal and its exponent increases by one. Indeed, $b\mathfrak p^{-n'}\subseteq\mathfrak p^{-n}$ is equivalent to $n'\le n+v(b)$.
+This relation is a valuable sign check. Multiplying the phase by a uniformizer makes the character less oscillatory, so it becomes trivial on a larger fractional ideal and its exponent increases by one. Indeed, the largest fractional ideal on which $\psi_b$ is trivial is
+
+$$
+b^{-1}\mathfrak p^{-n}=\mathfrak p^{-n-v(b)},
+$$
+
+which gives the displayed equality with no inequality ambiguity.
 
 The local epsilon factor will obey
 
@@ -514,7 +528,7 @@ More precisely, if $n=n(\psi)$, then
 $$
 \mathcal F:\mathcal S_{r,N}(F)
 \longrightarrow
-\mathcal S_{N+n,\,-r+n}(F),
+\mathcal S_{N+n,\,r-n}(F),
 $$
 
 where the first target index records support in $\mathfrak p^{-N-n}$ and the second records invariance under $\mathfrak p^{r-n}$. The notation is less important than the reversal: fine constancy becomes broad Fourier support, while broad original support becomes fine Fourier constancy. This is the nonarchimedean uncertainty principle in exact integer form.
@@ -688,22 +702,32 @@ $$
 \Phi_v=\mathbf 1_{\mathcal O_v}
 $$
 
-for almost every finite $v$. The product is well defined because an adele is integral almost everywhere. Define
+for almost every finite $v$. The product is well defined because an adele is integral almost everywhere.
+
+To define the full space, let $S$ contain all archimedean places and finitely many finite places, put $K_S=\prod_{v\in S}K_v$, and let $\mathcal S(K_S)$ denote the ordinary Schwartz–Bruhat space on this finite product. Set
 
 $$
-\mathcal S(\mathbf A_K)
-=\bigotimes_v'\mathcal S(K_v)
+\mathcal S_S(\mathbf A_K)
+=\left\{\Phi_S(x_S)
+\prod_{v\notin S}\mathbf 1_{\mathcal O_v}(x_v):
+\Phi_S\in\mathcal S(K_S)\right\}.
 $$
 
-to be the finite linear span of elementary tensors, with respect to these standard vectors.
+If $S\subseteq S'$, the transition map tensors with $\mathbf 1_{\mathcal O_v}$ at the new finite places. Define
 
-Equivalently, if $S$ contains all archimedean places and finitely many finite places, a typical element at level $S$ is
+$$
+\mathcal S(\mathbf A_K)=\varinjlim_S\mathcal S_S(\mathbf A_K).
+$$
+
+This is the restricted tensor product with its usual finite-product stages. It is important that $\Phi_S$ may be an arbitrary Schwartz function on the finite product, not merely a finite sum of separated functions. The algebraic span of elementary tensors is dense in each stage, but it is not literally the whole stage when several archimedean coordinates are present.
+
+Thus a typical element at level $S$ is
 
 $$
 \Phi_S(x_S)\prod_{v\notin S}\mathbf 1_{\mathcal O_v}(x_v),
 $$
 
-where $\Phi_S$ is a Schwartz function on the finite product $\prod_{v\in S}K_v$. Enlarging $S$ gives compatible inclusions, and the adelic space is their union.
+where $\Phi_S$ is a Schwartz function on the finite product $\prod_{v\in S}K_v$. Enlarging $S$ gives the compatible inclusions just described.
 
 ### 5.3 Adelic integration and factorization
 
@@ -716,7 +740,7 @@ $$
 
 At almost every place the factor is $1$, because $d_v=0$ and $\operatorname{vol}(\mathcal O_v)=1$. Thus the product is finite in the literal sense outside a finite set.
 
-Fubini's theorem applies after choosing a finite level $S$: the tail is the compact probability space $\prod_{v\notin S}\mathcal O_v$. This reduction avoids any unjustified infinite iteration of integrals.
+Fubini's theorem applies after enlarging a finite level $S$ to contain the primes dividing the different: the tail is then the compact probability space $\prod_{v\notin S}\mathcal O_v$. This reduction avoids any unjustified infinite iteration of integrals.
 
 ### 5.4 The global transform
 
@@ -738,7 +762,7 @@ $$
 \widehat{\mathbf 1_{\mathcal O_v}}=\mathbf 1_{\mathcal O_v},
 $$
 
-so the transformed tensor is again restricted. Hence the global transform is an automorphism of $\mathcal S(\mathbf A_K)$ and
+so the transformed tensor is again restricted. On an arbitrary finite stage, ordinary Fourier transformation on the finite product carries the stage into another stage after the finitely many primes dividing the different are added. Density of elementary tensors, or the finite-product inversion theorem directly, then shows that the global transform is an automorphism of $\mathcal S(\mathbf A_K)$ and
 
 $$
 \widehat{\widehat\Phi}(x)=\Phi(-x).
@@ -748,9 +772,9 @@ The global factorization is one reason for insisting on the trace character. An 
 
 ### 5.5 Approximation by elementary tensors
 
-The definition as a finite span is sufficient for every theorem in this book, but it is useful to understand why it is not artificially small. On a finite product of local fields, finite sums of products of local test functions approximate any test function in the natural Schwartz topology. At finite places this is finite-dimensional linear algebra on compact-open partitions. At archimedean places it follows from polynomial-Gaussian expansions or standard tensor-product approximation.
+On a finite product of local fields, finite sums of products of local test functions approximate any test function in the natural Schwartz topology. At finite places this is finite-dimensional linear algebra on compact-open partitions. At archimedean places it follows from polynomial-Gaussian expansions or standard tensor-product approximation.
 
-Consequently all integral identities may first be proved for elementary tensors, extended by linearity, and then passed through the relevant seminorm limits. This strategy separates local calculations cleanly without assuming that every global test function is a single pure tensor.
+Consequently factorization statements may be proved on elementary tensors, while continuous integral identities may first be checked on their finite sums and then passed through the relevant seminorm limits. The estimates used in Poisson summation are also valid directly for an arbitrary finite-stage function. This strategy separates local calculations cleanly without shrinking the adelic Schwartz space or assuming that every global test function is a single pure tensor.
 
 ## 6. Poisson summation over a number field
 
@@ -883,13 +907,14 @@ The restricted product $d^\times x=\prod_vd^\times x_v$ is well defined because 
 
 A continuous homomorphism $\chi:F^\times\to\mathbf C^\times$ is a quasicharacter. Its absolute value is $|x|_F^\sigma$ for a unique real $\sigma$ times a unitary character. We write the zeta integral using a unitary $\chi$ and a separate complex parameter $s$; this loses no generality.
 
-At a finite place, the conductor exponent $a(\chi)$ is the least $a\ge0$ such that
+At a finite place, put
 
 $$
-\chi(1+\mathfrak p^a)=1,
+U^0=\mathcal O_F^\times,
+\qquad U^a=1+\mathfrak p^a\quad(a\ge1).
 $$
 
-with the convention $1+\mathfrak p^0=\mathcal O_F^\times$ for this sentence. Thus $a(\chi)=0$ exactly when $\chi$ is unramified, meaning trivial on $\mathcal O_F^\times$. If $a>0$, the restriction of $\chi$ to units factors through
+The conductor exponent $a(\chi)$ is the least $a\ge0$ such that $\chi(U^a)=1$. Thus $a(\chi)=0$ exactly when $\chi$ is unramified, meaning trivial on $\mathcal O_F^\times$. If $a>0$, the restriction of $\chi$ to units factors through
 
 $$
 \mathcal O_F^\times/(1+\mathfrak p^a).
@@ -986,7 +1011,7 @@ Write $x=\varpi^nu$ with $u\in\mathcal O^\times$. Since unit volume is one,
 
 $$
 Z(\phi,\chi,s)
-=\sum_{n\in\mathbf Z}chi(\varpi)^nq^{-ns}
+=\sum_{n\in\mathbf Z}\chi(\varpi)^nq^{-ns}
 \int_{\mathcal O^\times}\phi(\varpi^nu)\chi(u)\,d^\times u.
 $$
 
@@ -1057,7 +1082,8 @@ This characterization is more robust than the formula for one test function. It 
 There is also an explicit finite algorithm for an arbitrary test function. Choose $r,N$ so that $\phi$ is supported in $\mathfrak p^{-r}$ and constant on cosets of $\mathfrak p^N$. For each shell $-r\le n<N$, the unit integral is a finite sum on
 
 $$
-\mathcal O^\times/(1+\mathfrak p^{N-n}).
+\mathcal O^\times/
+\bigl(1+\mathfrak p^{\max(N-n,a(\chi))}\bigr).
 $$
 
 For $n\ge N$, replace $\phi(\varpi^nu)$ by $\phi(0)$. If $\chi$ is unramified, the remaining tail is
@@ -1161,7 +1187,23 @@ The squared normalization is therefore visible independently in three places: th
 
 ### 9.4 Holomorphy after division by the local factor
 
-For every $\phi\in\mathcal S(\mathbf R)$ or $\mathcal S(\mathbf C)$, the zeta integral initially converges for $\operatorname{Re}(s)>0$ and extends meromorphically. Taylor-expand $\phi$ at the origin to a sufficiently high order and subtract a compactly supported function having the same finite jet. The remainder vanishes to high order, so its Mellin integral extends farther left. Iterating gives continuation to the whole plane. The subtracted monomials contribute gamma functions with precisely the parity or angular weights above.
+For every $\phi\in\mathcal S(\mathbf R)$ or $\mathcal S(\mathbf C)$, the zeta integral initially converges for $\operatorname{Re}(s)>0$ and extends meromorphically. The Taylor subtraction can be arranged so that it also proves the exact divisibility by the stated gamma factor.
+
+Over $\mathbf R$, only the Taylor terms of parity $m$ survive integration against $\operatorname{sgn}(x)^m$. Subtract a finite linear combination of
+
+$$
+x^{m+2j}e^{-\pi x^2}.
+$$
+
+Its coefficients can match the relevant Taylor jet to arbitrary order. Its Mellin transforms are $\Gamma_{\mathbf R}(s+it+m+2j)$, which by the gamma recurrence are polynomials in $s$ times $\Gamma_{\mathbf R}(s+it+m)$. The remainder vanishes to arbitrarily high order at zero, so its Mellin integral extends arbitrarily far to the left.
+
+Over $\mathbf C$, angular integration retains only Taylor monomials whose angular weight cancels $m$. Their radial degrees are $|m|+2j$. Subtracting the corresponding monomial-Gaussians gives gamma factors
+
+$$
+\Gamma_{\mathbf C}\left(s+it+\frac{|m|}{2}+j\right),
+$$
+
+again polynomial multiples of the basic complex factor. Increasing the matched jet continues the remainder across the whole plane. Thus all possible poles are exactly accounted for by the canonical local factor, with no unsupported cancellation claim.
 
 Consequently
 
@@ -1169,7 +1211,7 @@ $$
 \frac{Z(\phi,\chi,s)}{L(s,\chi)}
 $$
 
-is entire. It is rapidly decreasing in vertical strips after excluding bounded neighborhoods of the poles of the gamma factor. Repeated integration by parts in the logarithmic radial variable proves the decay. This control later justifies multiplying local identities and shifting global Mellin contours.
+is entire. The unnormalized Mellin integral, after its finitely many polar terms on a given strip are removed, is rapidly decreasing there by repeated integration by parts in the logarithmic radial variable. The normalized entire quotient need not itself be rapidly decreasing, because the reciprocal gamma factor has exponential growth. No stronger estimate is used in the global continuation argument.
 
 ## 10. The local functional equation
 
@@ -1284,7 +1326,7 @@ $$
 =\chi(\varpi)^nq^{n(1/2-s)}.
 $$
 
-Here is the decisive ramified calculation. Use $\phi_\chi$ from Section 8.4, for which $Z(\phi_\chi,\chi,s)=1$. Its transform is supported on $c^{-1}\mathcal O^\times$. For $y=c^{-1}u$,
+Here is the decisive ramified calculation. Use $\phi_\chi$ from Section 8.4, for which $Z(\phi_\chi,\chi,s)=1$. Partitioning $\mathcal O^\times$ into additive cosets modulo $\mathfrak p^a$ first shows that the transform vanishes unless $y\in\mathfrak p^{-a-n}$. On the boundary shell, write $y=c^{-1}u$ with $u\in\mathcal O^\times$. The finite Fourier sum below is nonzero only for such unit frequencies: if the frequency is divisible by $\mathfrak p$, exactness of the conductor supplies $h\in1+\mathfrak p^{a-1}$, with the evident interpretation when $a=1$, such that $\chi(h)\ne1$, while multiplication by $h$ fixes the additive phase and multiplies the sum by a nontrivial scalar. Thus $\widehat\phi_\chi$ is supported on $c^{-1}\mathcal O^\times$; the Parseval calculation below shows that it is nonzero throughout that shell. For $y=c^{-1}u$,
 
 $$
 \widehat\phi_\chi(y)
@@ -1309,16 +1351,18 @@ $$
 
 which simplifies to the displayed formula. This derivation explains every exponent.
 
-Changing $c$ by a unit changes the Gauss sum by the inverse character factor, so the product $\chi(c)\tau(\chi,\psi;c)$ is independent of the choice. The magnitude-one assertion follows by multiplying the Gauss sum by its complex conjugate and using additive orthogonality on the finite quotient.
+Changing $c$ by a unit changes the Gauss sum by the inverse character factor, so the product $\chi(c)\tau(\chi,\psi;c)$ is independent of the choice. The magnitude-one assertion follows from finite Parseval, as follows.
 
-Here is that orthogonality calculation. Write the unnormalized sum as $G$. Since $\chi$ is unitary,
+Let $R=\mathcal O/\mathfrak p^a$, extend $\chi^{-1}$ by zero from $R^\times$ to $R$, and use the primitive additive character induced by $x\mapsto\psi(x/c)$. Its unnormalized finite Fourier transform is supported on $R^\times$ by the preceding conductor argument. Multiplication of the frequency by a unit shows that all its nonzero values have the same magnitude $|G|$, where $G$ is the sum at frequency $1$. Finite Parseval gives
 
 $$
-|G|^2
-=\sum_{u,v}\chi(v/u)\psi((u-v)/c).
+|R^\times|\,|G|^2
+=\sum_{y\in R}|\widehat{\chi^{-1}}(y)|^2
+=|R|\sum_{x\in R}|\chi^{-1}(x)|^2
+=q^a|R^\times|.
 $$
 
-Put $v=tu$. For fixed $t$, the inner sum over $u$ is an additive character sum on the unit classes. It vanishes unless $t\equiv1\pmod{\mathfrak p^a}$ at the exact conductor depth, and the surviving contribution is $q^a$. More invariantly, the Fourier transform of a primitive multiplicative character on the finite ring is supported on its unit dual orbit and has constant magnitude $q^{a/2}$. Hence $|G|^2=q^a$ and $|\tau|=1$. If the character were imprimitive at level $a$, the same calculation would vanish; minimality of $a(\chi)$ is essential.
+Hence $|G|=q^{a/2}$ and $|\tau|=1$. Exactness of $a(\chi)$ is essential: it is what kills every nonunit frequency.
 
 The unramified formula can be checked without a limiting convention. For $a=0$, apply the local equation to $\mathbf 1_{\mathcal O}$. Its transform is
 
@@ -1372,14 +1416,14 @@ $$
 over $\mathbf R$. In complex coordinates the trace pairing sends $z=x+iy$ and $w=u+iv$ to $2(xu-yv)$. Differentiating in $u$ and $v$ shows
 
 $$
-\widehat{\bar z,e^{-2\pi|z|^2}}(w)
+\widehat{\bar z\,e^{-2\pi|z|^2}}(w)
 =iw e^{-2\pi|w|^2},
 $$
 
 and
 
 $$
-\widehat{z,e^{-2\pi|z|^2}}(w)
+\widehat{z\,e^{-2\pi|z|^2}}(w)
 =i\bar w e^{-2\pi|w|^2}.
 $$
 
@@ -1426,7 +1470,16 @@ $$
 \qquad \sigma=\operatorname{Re}(s),
 $$
 
-because $|\omega_v(\varpi_v)|=1$. Expanding this product gives a sum over integral ideals prime to $S$ of $(N\mathfrak a)^{-\sigma}$. The number of ideals of norm at most $X$ is $O(X)$: every ideal class has a fixed integral representative, and ideals in that class correspond after multiplication to principal ideals generated by lattice points in a bounded Minkowski region. Partial summation then gives convergence for $\sigma>1$. The finitely many places in $S$ contribute bounded local factors on compact subsets of that half-plane.
+because $|\omega_v(\varpi_v)|=1$. Its convergence can be checked without an ideal-counting asymptotic. If $d=[K:\mathbf Q]$, then above a rational prime $p$ there are at most $d$ finite places and every residue cardinality there is at least $p$. Consequently
+
+$$
+\prod_{v<\infty}(1-q_v^{-\sigma})^{-1}
+\leq\prod_p(1-p^{-\sigma})^{-d}
+=\zeta(\sigma)^d<\infty
+\qquad(\sigma>1).
+$$
+
+Removing the finitely many factors in $S$ only decreases this positive majorant. The finitely many exceptional local integrals are bounded on compact subsets of the same half-plane.
 
 This also explains why a product of locally convergent integrals need not converge globally for $0<\sigma\le1$. Infinitely many harmless geometric series can accumulate into a divergent Euler product.
 
@@ -1753,10 +1806,10 @@ This form follows from the product of local epsilon equations. Applying it twice
 
 $$
 W(\omega)W(\omega^{-1})
-=\omega(-1),
+=\prod_v\omega_v(-1)=1,
 $$
 
-with the local interpretation already encoded in the double-transform relation. For unitary $\omega$, complex conjugation identifies $\omega^{-1}$ with $\overline\omega$.
+because the diagonal element $-1$ lies in $K^\times$. The corresponding local relation has the factor $\omega_v(-1)$, already encoded in the double-transform relation; those local factors cancel globally. For unitary $\omega$, complex conjugation identifies $\omega^{-1}$ with $\overline\omega$.
 
 To see the relation between the global and local equations without suppressing correction factors, take any factorizable $\Phi$ and put
 
@@ -1829,7 +1882,7 @@ The global zeta distribution has simple poles at $0$ and $1$. After choosing sta
 
 ### 13.5 Nontrivial characters
 
-If $\omega$ is nontrivial and not a pure module character shifted into the integration parameter, the global zeta integral is entire. Choose local vectors generating the local factors. The finite product $\Lambda(s,\omega)$ is then entire unless a chosen archimedean gamma factor has a pole canceled by a zero of the finite Euler product; the product as a whole is entire by the global theorem. In particular, nontrivial finite-order Hecke characters have entire completed $L$-functions.
+If $\omega$ is nontrivial and not a pure module character shifted into the integration parameter, the global zeta integral is entire. Choose local vectors generating the local factors. The resulting completed product $\Lambda(s,\omega)$ is therefore entire. At a pole of an individual archimedean gamma factor, this assertion means that the continued finite Euler product has a compensating zero; the factors should not be assigned separate holomorphy there. In particular, nontrivial finite-order Hecke characters have entire completed $L$-functions.
 
 Over $\mathbf Q$, a primitive finite-order idele class character of conductor $N$ is the adelic form of a primitive Dirichlet character $\chi$ modulo $N$, together with a parity $m$ satisfying $\chi(-1)=(-1)^m$. Its completed function is
 
@@ -1918,7 +1971,7 @@ $$
 and
 
 $$
-L\left(s,(z/|z|)^m|z|_{\mathbf C}^{it}\right)
+L\left(s,(z/|z|_{\mathrm{usual}})^m|z|_{\mathbf C}^{it}\right)
 =\Gamma_{\mathbf C}\left(s+it+\frac{|m|}{2}\right),
 \qquad \epsilon=i^{|m|}.
 $$
