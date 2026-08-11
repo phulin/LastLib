@@ -92,11 +92,11 @@ The slogan is useful only after its terms are made precise. A section may exist 
 
 The fppf topology is the natural setting when finite group schemes need not be etale. For example, if the characteristic divides $n$, the roots-of-unity group scheme $\mu_n$ is nonreduced, but taking an $n$th root of a unit still becomes possible after a finite faithfully flat extension. Kummer theory therefore remains exact in the fppf topology without any invertibility hypothesis on $n$. That coefficient-uniform fact is the organizing result of this book.
 
-We assume the descent theory of faithfully flat morphisms, quasi-coherent sheaves, line bundles, group schemes, and torsors, together with the elementary structure theory of finite locally free commutative group schemes. We recall every part needed to build the cohomological argument.
+The substantial geometric inputs are precise. Book 13 supplies effective faithfully flat descent for schemes, quasi-coherent sheaves, line bundles, group schemes, and finite locally free torsors. Book 46 supplies represented quotients and exact sequences of finite locally free commutative group schemes, together with the theorem that multiplication by $n$ on an abelian scheme of relative dimension $g$ is finite locally free and faithfully flat of degree $n^{2g}$. Neither source uses the cohomological conclusions proved here: their torsor and root-cover calculations are obtained directly from descent and finite projective Hopf algebras. We recall the parts needed to build the cohomological argument and use no later Galois-cohomology or duality theorem.
 
 ### 1.2 The fppf site
 
-Fix a scheme $X$. The **small fppf site** $X_{\mathrm{fppf}}$ has as objects morphisms $U\to X$ that are locally of finite presentation. A covering of $U$ is a family $\{U_i\to U\}$ of flat morphisms locally of finite presentation whose images jointly cover $U$. Fiber products supply pullbacks. One may instead use a suitable big fppf site; for the group sheaves considered here the resulting low-degree groups agree. We use the small site to keep notation economical.
+Fix a scheme $X$. The **small fppf site** $X_{\mathrm{fppf}}$ has as objects morphisms $U\to X$ that are locally of finite presentation. A covering of $U$ is a family $\{U_i\to U\}$ of flat morphisms locally of finite presentation whose images jointly cover $U$. Fiber products supply pullbacks. All cohomology in this book is taken on this site. Thus no comparison with a differently sized site is being used silently.
 
 The requirement that objects be locally of finite presentation is stable under base change and composition. A Zariski open cover is an fppf cover, and every etale cover is fppf. A finite locally free surjection of positive rank is fppf. Thus the topology sees ordinary gluing, separable algebraic gluing, and nonreduced finite-flat gluing at once.
 
@@ -128,7 +128,7 @@ $$
 
 the constant sheaf associated with an abelian group, roots of unity $\mu_n=\ker([n]:\mathbf G_m\to\mathbf G_m)$, and the sheaf represented by any commutative group scheme over $X$. A quasi-coherent $\mathcal O_X$-module $\mathcal F$ gives the additive sheaf $U\mapsto\Gamma(U,f^*\mathcal F)$.
 
-A sequence $F'\to F\to F''$ of sheaves is exact when it is exact on sheaf stalks, or equivalently in the local sense: the kernel is pointwise, while a section of $F''(U)$ lying locally in the image must come from $F$ after an fppf cover. Surjectivity as sheaves therefore means **local** liftability, not surjectivity on $U$-valued points. This distinction is indispensable for Kummer theory.
+A sequence $F'\to F\to F''$ of sheaves is exact when its sheaf kernel and image agree. Equivalently, the kernel is computed sectionwise, while a section of $F''(U)$ belongs to the image sheaf exactly when it lifts after an fppf cover of $U$. Surjectivity as sheaves therefore means **local** liftability, not surjectivity on $U$-valued points. This distinction is indispensable for Kummer theory.
 
 ### 1.4 Global sections and cohomology
 
@@ -281,12 +281,20 @@ Degree one is where cohomology becomes unmistakably geometric. The local zero ob
 Let $G$ be a group sheaf on $X_{\mathrm{fppf}}$. A right $G$-torsor is a sheaf $P$ with a right action such that $P$ is locally nonempty and
 
 $$
-P\times G\longrightarrow P\times P,qquad(p,g)\longmapsto(p,pg)
+P\times G\longrightarrow P\times P,\qquad(p,g)\longmapsto(p,pg)
 $$
 
 is an isomorphism. When $G$ is represented by a flat group scheme locally of finite presentation, representable torsors are fppf-locally copies of $G$. For finite locally free $G$, descent proves that every sheaf torsor is represented by a finite locally free $X$-scheme of the same rank.
 
 Choose a cover $U\to X$ and a section $s\in P(U)$. On $U\times_XU$, the two pullbacks $s_1,s_2$ differ uniquely by $g$: $s_2=s_1g$. On the triple overlap, uniqueness gives $g_{13}=g_{12}g_{23}$, with the order adjusted according to the chosen right-action convention. A new section changes $g$ by a coboundary. Thus a torsor determines a nonabelian Cech $1$-cohomology class.
+
+This agrees with the descent convention of Book 13. There the transition from the $i$th right-torsor coordinate to the $j$th is left translation by $h_{ij}=g_{ij}^{-1}$, so
+
+$$
+h_{ik}=h_{jk}h_{ij}
+$$
+
+is exactly the inverse of $g_{ik}=g_{ij}g_{jk}$. We use the point-difference elements $g_{ij}$ below. For abelian coefficients the order disappears, while the projective-linear boundary in Section 7.3 retains the displayed convention explicitly.
 
 ### 3.2 The classification theorem
 
@@ -389,7 +397,7 @@ $$
 H^q_{\mathrm{fppf}}(\operatorname{Spec}R,\mathbf G_a)=0\quad(q>0).
 $$
 
-The affine hypothesis is essential. For a nonaffine scheme, quasi-coherent cohomology can be nonzero; fppf cohomology agrees with the usual quasi-coherent cohomology rather than erasing it.
+The affine hypothesis is essential. For a nonaffine scheme, quasi-coherent cohomology can be nonzero; passage to the fppf site does not provide an affine-acyclicity argument on the whole scheme.
 
 ### 4.3 Consequences for affine descent
 
@@ -459,7 +467,7 @@ Applying fppf cohomology and using $H^1(X,\mathbf G_m)=\operatorname{Pic}(X)$ gi
 $$
 \begin{aligned}
 1&\to\mu_n(X)\to\Gamma(X,\mathcal O_X)^\times
-\xrightarrow{(cdot)^n}\Gamma(X,\mathcal O_X)^\times\\
+\xrightarrow{(\cdot)^n}\Gamma(X,\mathcal O_X)^\times\\
 &\xrightarrow{\delta}H^1(X,\mu_n)
 \to\operatorname{Pic}(X)\xrightarrow{n}\operatorname{Pic}(X)
 \to H^2(X,\mu_n)\to\cdots.
@@ -472,7 +480,7 @@ Exactness yields the central short exact sequence.
 
 $$
 0\longrightarrow
-\Gamma(X,\mathcal O_X)^\times/Gamma(X,\mathcal O_X)^{\times n}
+\Gamma(X,\mathcal O_X)^\times/\Gamma(X,\mathcal O_X)^{\times n}
 \longrightarrow H^1(X,\mu_n)
 \longrightarrow\operatorname{Pic}(X)[n]
 \longrightarrow0.
@@ -508,7 +516,7 @@ $$
 \mathcal A=\mathcal O_X\oplus L^{-1}\oplus\cdots\oplus L^{-(n-1)},
 $$
 
-where multiplication across degree $n$ uses $\varphi$. Then $P=\operatorname{Spec}_X\mathcal A$ is a $\mu_n$-torsor. Conversely, decomposing the regular representation of a $\mu_n$-torsor by the character grading recovers $(L,\varphi)$. Changing $\varphi$ by multiplication by a unit changes the root equation by that unit. This realizes Corollary 5.2 geometrically: the underlying $n$-torsion line bundle is the right-hand invariant, while units measure the possible trivialized case and the ambiguity in $\varphi$.
+where multiplication across degree $n$ uses the inverse of the dual of $\varphi$. Then $P=\operatorname{Spec}_X\mathcal A$ is a $\mu_n$-torsor. Conversely, decomposing the regular representation of a $\mu_n$-torsor by the character grading recovers $(L,\varphi)$. If a basis $e$ of $L$ has $\varphi(e^n)=c$, the corresponding root coordinate satisfies $T^n=c^{-1}$. Thus multiplying $\varphi$ by a unit multiplies the root parameter by its inverse. This realizes Corollary 5.2 geometrically: the underlying $n$-torsion line bundle is the right-hand invariant, while units measure the possible trivialized case and the ambiguity in $\varphi$.
 
 The grading argument is valid even when $n$ is not invertible: diagonalizable group schemes are represented by group-graded algebras, and no decomposition into geometric eigenspaces is being assumed.
 
@@ -532,7 +540,7 @@ $$
 \mathcal A=\bigoplus_{i\in\mathbf Z/n\mathbf Z}\mathcal A_i.
 $$
 
-Fppf-locally, $P$ is $\mu_n$, so each $\mathcal A_i$ is locally free of rank one, multiplication gives isomorphisms $\mathcal A_i\otimes\mathcal A_j\simeq\mathcal A_{i+j}$, and $\mathcal A_0=\mathcal O_X$. These facts descend because they are statements about maps of finite locally free modules. Put $L^{-1}=\mathcal A_1$. Repeated multiplication identifies $L^{-n}$ with $\mathcal O_X$, equivalently gives $\varphi:L^n\simeq\mathcal O_X$.
+Fppf-locally, $P$ is $\mu_n$, so each $\mathcal A_i$ is locally free of rank one, multiplication gives isomorphisms $\mathcal A_i\otimes\mathcal A_j\simeq\mathcal A_{i+j}$, and $\mathcal A_0=\mathcal O_X$. These facts descend because they are statements about maps of finite locally free modules. Put $L^{-1}=\mathcal A_1$. Repeated multiplication gives an isomorphism $L^{-n}\simeq\mathcal O_X$; the inverse of its dual is the equivalent power trivialization $\varphi:L^n\simeq\mathcal O_X$.
 
 Conversely, from $(L,\varphi)$ construct
 
@@ -540,7 +548,7 @@ $$
 \mathcal A=\mathcal O_X\oplus L^{-1}\oplus\cdots\oplus L^{-(n-1)}
 $$
 
-with multiplication reduced modulo $n$ using the dual of $\varphi$. Its grading defines a $\mu_n$-action on $P=\operatorname{Spec}_X\mathcal A$. After an fppf cover trivializing $L$ and its power trivialization, the algebra becomes $\mathcal O_X[T]/(T^n-1)$ with its regular action. Hence the torsor identity holds locally and therefore globally. The two constructions recover one another, and their effect on morphisms is exactly the displayed compatibility. $\square$
+with multiplication reduced modulo $n$ using the inverse of the dual map $\mathcal O_X\to L^{-n}$. Its grading defines a $\mu_n$-action on $P=\operatorname{Spec}_X\mathcal A$. After an fppf cover trivializing $L$ and its power trivialization, the algebra becomes $\mathcal O_X[T]/(T^n-1)$ with its regular action. Hence the torsor identity holds locally and therefore globally. The two constructions recover one another, and their effect on morphisms is exactly the displayed compatibility. $\square$
 
 Under tensor product,
 
@@ -566,7 +574,7 @@ for every $n\ge1$, in every characteristic. The class of $a$ is represented by $
 
 If $n$ is prime to $\operatorname{char}K$, $\mu_n$ is finite etale. After choosing a primitive $n$th root of unity in a separable closure, its geometric points form a cyclic Galois module. The same group may then be calculated by Galois cohomology. If $\operatorname{char}K=p\mid n$, the polynomial $T^p-a$ can be purely inseparable and the corresponding torsor has only one geometric point. A calculation based only on the separable closure would miss it, whereas the fppf calculation remains $K^\times/K^{\times n}$.
 
-As a concrete example, for $K=k(t)$ in characteristic $p$, the class of $t$ in $K^\times/K^{\times p}$ is nonzero because the $t$-adic valuation of a $p$th power is divisible by $p$. The torsor $z^p=t$ is purely inseparable and nontrivial fppf-locally; it is invisible as a nontrivial finite etale cover.
+As a concrete example, for $K=k(t)$ in characteristic $p$, the class of $t$ in $K^\times/K^{\times p}$ is nonzero because the $t$-adic valuation of a $p$th power is divisible by $p$. The torsor $z^p=t$ is purely inseparable and nontrivial over $K$, although it becomes trivial on an fppf cover; it is invisible as a nontrivial finite etale cover.
 
 ### 6.2 Local and semilocal rings
 
@@ -579,14 +587,14 @@ $$
 
 This statement does not assert that a root lies in $R$; it classifies the obstruction to such a root and says that every $\mu_n$-torsor has a global root-equation presentation. Over a general scheme, an $n$-torsion line bundle may prevent a single global equation.
 
-If $R$ is a discrete valuation ring with fraction field $K$, the restriction map sends the class of a unit $u$ to its class in $K^\times/K^{\times n}$. A general element of $K^\times$ has the form $\pi^rv$ with $v\in R^\times$. Its valuation modulo $n$ supplies an extra invariant not present among torsors over $R$: the equation $z^n=\pi$ defines a finite flat cover of $R$, but it is not a $\mu_n$-torsor because the right side is not a unit and the total space is ramified along the closed fiber. This cleanly separates Kummer torsors from arbitrary root covers.
+If $R$ is a discrete valuation ring with fraction field $K$, the restriction map sends the class of a unit $u$ to its class in $K^\times/K^{\times n}$. A general element of $K^\times$ has the form $\pi^rv$ with $v\in R^\times$. For $n>1$, its valuation modulo $n$ supplies an extra invariant not present among torsors over $R$: the equation $z^n=\pi$ defines a finite flat cover of $R$, but it is not a $\mu_n$-torsor. Indeed, on the special fiber the point $z=0$ is fixed by the whole rank-$n$ group scheme $\mu_n$, contradicting simple transitivity. This cleanly separates Kummer torsors from arbitrary root covers. For $n=1$, both the coefficient group and every Kummer quotient are trivial, as the general exact sequence already shows.
 
 ### 6.3 Characteristic dividing the exponent
 
 Let $k$ be a field of characteristic $p$. Frobenius gives the fppf-exact sequence
 
 $$
-1\to\mu_p\to\mathbf G_m\xrightarrow{(cdot)^p}\mathbf G_m\to1.
+1\to\mu_p\to\mathbf G_m\xrightarrow{(\cdot)^p}\mathbf G_m\to1.
 $$
 
 Consequently $H^1(k,\mu_p)=k^\times/k^{\times p}$. If $k$ is perfect this group is zero, although $\mu_p$ is still nonreduced. If $k$ is imperfect it can be large.
@@ -616,6 +624,24 @@ H^1_{\mathrm{et}}(X,G)\simeq H^1_{\mathrm{fppf}}(X,G)
 $$
 
 for smooth $G$.
+
+The comparison extends to all cohomological degrees for smooth commutative coefficients:
+
+**Proposition 6.1 (smooth change of topology).** If $G\to X$ is a smooth commutative group scheme, then the natural maps
+
+$$
+H^q_{\mathrm{et}}(X,G)\longrightarrow H^q_{\mathrm{fppf}}(X,G)
+$$
+
+are isomorphisms for every $q\ge0$.
+
+**Proof.** Let $\epsilon:X_{\mathrm{fppf}}\to X_{\mathrm{et}}$ be the comparison morphism. The direct image satisfies $\epsilon_*G=G$. We use the local-effacement criterion for its higher derived images. Represent a positive-degree fppf class on a hypercover and construct a refinement one matching level at a time. At each fixed level, the choices that correct the cocycle form a torsor under a finite product of pullbacks of $G$. That torsor is smooth over the matching object. A nonempty smooth fiber has a point after a finite separable residue-field extension, and the smooth-coordinate presentation then extends that point to a section over an etale neighborhood. Thus every matching lift can be made after an etale refinement. Induction through the finitely many levels relevant to the given degree produces an etale hypercover on which the class is zero. This proves
+
+$$
+R^q\epsilon_*G=0\qquad(q>0).
+$$
+
+The Leray spectral sequence for $\epsilon$ then has only its row $q=0$, and its edge maps are the displayed comparison maps. $\square$
 
 For $\mu_n$, smoothness holds exactly where $n$ is invertible. Thus the etale Kummer sequence is exact when $n\in\mathcal O_X^\times$. If $n$ is not invertible, its last map need not be locally surjective etale. Over a field of characteristic $p$, no etale extension can adjoin a purely inseparable $p$th root. The fppf topology is therefore not a technical embellishment but the minimal familiar topology in which Kummer exactness is coefficient-uniform.
 
@@ -685,10 +711,11 @@ $$
 
 A $\operatorname{PGL}_r$-torsor twists the matrix algebra $M_r(\mathcal O_X)$ under conjugation and produces an Azumaya algebra of degree $r$. Conversely, the sheaf of algebra isomorphisms from $M_r$ to an Azumaya algebra of degree $r$ is a $\operatorname{PGL}_r$-torsor. The class $\partial(P)$ is its Brauer class.
 
-To see the boundary, choose local lifts $g_{ij}\in\operatorname{GL}_r$ of a $\operatorname{PGL}_r$ cocycle. On triple overlaps their defect is scalar:
+To see the boundary, use the right-torsor convention $g_{ik}=g_{ij}g_{jk}$ and choose local lifts $\widetilde g_{ij}\in\operatorname{GL}_r$ of the $\operatorname{PGL}_r$ cocycle. On triple overlaps their defect is scalar:
 
 $$
-g_{ij}g_{jk}g_{ki}=c_{ijk}I_r,
+\widetilde g_{ij}\widetilde g_{jk}\widetilde g_{ik}^{-1}
+=c_{ijk}I_r,
 \qquad c_{ijk}\in\mathbf G_m.
 $$
 
@@ -704,7 +731,9 @@ $$
 \operatorname{Br}(K)\simeq H^2_{\mathrm{fppf}}(K,\mathbf G_m).
 $$
 
-Here is the essential surjectivity argument. Because $\mathbf G_m$ is smooth, its fppf cohomology agrees in degree two with etale cohomology. A degree-two class becomes trivial over a finite separable extension $L/K$: represent the class on an etale hypercover, then observe that the finitely many functions and compatibility equations occurring in a representative are defined over one finite subextension of a separable closure. Replacing $L$ by a finite Galois extension with group $\Gamma$, the class is represented by a $2$-cocycle
+Here is the essential surjectivity argument. Proposition 6.1 identifies fppf and etale cohomology for $\mathbf G_m$. Cohomology classes are locally effaceable, so a degree-two class is killed by an etale covering of $\operatorname{Spec}K$. Quasi-compactness reduces the cover to a finite separable $K$-algebra, and one finite Galois extension $L/K$ dominates all of its field factors. Put $\Gamma=\operatorname{Gal}(L/K)$.
+
+The Cech-to-derived spectral sequence for $\operatorname{Spec}L\to\operatorname{Spec}K$ now makes the descent calculation explicit. Every term of the Cech nerve is a finite product of fields, so its Picard group is zero. Hence a degree-two class whose restriction to $L$ vanishes comes from a Cech $2$-cocycle. After identifying the components of the nerve by $\Gamma$, this is a map
 
 $$
 c:\Gamma\times\Gamma\longrightarrow L^\times,
@@ -717,7 +746,7 @@ $$
 =c(\sigma,\tau)c(\sigma\tau,\rho).
 $$
 
-Form the crossed-product algebra
+Multiplying by a coboundary if necessary, take $c(1,\sigma)=c(\sigma,1)=1$. Form the crossed-product algebra
 
 $$
 A_c=\bigoplus_{\sigma\in\Gamma}Lu_\sigma,
@@ -735,7 +764,7 @@ $$
 
 Thus $A_c$ is central simple. Replacing $c$ by a coboundary rescales the $u_\sigma$ and gives an isomorphic algebra, while addition of cocycles corresponds to tensor product up to Morita equivalence. Its descent boundary is $[c]$. Hence every cohomology class comes from a central simple algebra, and the construction is inverse to the projective-frame cocycle map.
 
-The right side is already torsion. Consequently Theorem 7.1 becomes
+Proposition 7.2 below shows that the class of $A_c$ is killed by its degree. Thus the right side is already torsion. Consequently Theorem 7.1 becomes
 
 $$
 0\to 0\to H^2(K,\mu_n)\to\operatorname{Br}(K)[n]\to0,
@@ -761,7 +790,7 @@ $$
 1\to\mu_r\to\operatorname{SL}_r\to\operatorname{PGL}_r\to1.
 $$
 
-The last map is locally surjective: a projective matrix can be represented by an invertible matrix $g$; after adjoining an $r$th root of $\det(g)^{-1}$ by a finite free cover, a scalar multiple of $g$ has determinant one. Given the $\operatorname{PGL}_r$-torsor of trivializations of $A$, its boundary therefore lies in $H^2(X,\mu_r)$. Its image under $\mu_r\hookrightarrow\mathbf G_m$ is the Brauer class of $A$, by naturality of the two central-extension boundaries. The Kummer long exact sequence shows that every element in this image is killed by $r$. $\square$
+The last map is locally surjective. First lift a projective matrix fppf-locally to an invertible matrix $g$; then adjoin an $r$th root of $\det(g)^{-1}$ by a finite free cover. Multiplying $g$ by that root gives determinant one. Given the $\operatorname{PGL}_r$-torsor of trivializations of $A$, its boundary therefore lifts to $H^2(X,\mu_r)$. Its image under $\mu_r\hookrightarrow\mathbf G_m$ is the Brauer class of $A$, by naturality of the two central-extension boundaries. The Kummer long exact sequence shows that every element in this image is killed by $r$. $\square$
 
 Thus the period divides the degree. Tensor powers have classes
 
@@ -771,7 +800,7 @@ $$
 
 so the period is the least positive $m$ for which $A^{\otimes m}$ is Morita-trivial. A finite faithfully flat map $Y\to X$ **splits** $A$ if $A_Y\simeq\operatorname{End}(E)$ for some vector bundle $E$ on $Y$. Every Azumaya algebra is split by its own $\operatorname{PGL}_r$-torsor, but a splitting over $Y$ alone does not make the class zero on $X$: the descent data of $E$ may close only projectively, and its scalar triple-overlap defect is the original Brauer cocycle.
 
-For a finite etale map of constant degree $d$, restriction followed by corestriction multiplies a Brauer class by $d$. Hence if the map splits $A$, then $d[A]=0$. This is a second period bound, arising from the size of a splitting cover rather than the matrix degree. It also illustrates why restriction can destroy a class without faithfully flatness being able to recover a chosen trivialization.
+For a finite etale map of constant degree $d$, the transfer constructed in Section 12.2 satisfies that restriction followed by corestriction multiplies a Brauer class by $d$. Hence if the map splits $A$, then $d[A]=0$. This is a second period bound, arising from the size of a splitting cover rather than the matrix degree. It also illustrates why restriction can destroy a class without faithfully flatness being able to recover a chosen trivialization.
 
 ## 8. Cup products and symbol classes
 
@@ -803,10 +832,11 @@ Connecting homomorphisms satisfy the corresponding Leibniz rule. These formal pr
 
 ### 8.2 Kummer symbols
 
-Assume for the moment that a chosen primitive $n$th root of unity identifies the etale sheaf $\mu_n$ with the constant cyclic sheaf $\mathbf Z/n\mathbf Z$; in particular, $n$ is invertible on $X$. Multiplication of roots gives
+Assume for the moment that a chosen primitive $n$th root $\zeta$ identifies the etale sheaf $\mu_n$ with the constant cyclic sheaf $\mathbf Z/n\mathbf Z$; in particular, $n$ is invertible on $X$. The universal tensor pairing gives
 
 $$
-\mu_n\otimes\mu_n\longrightarrow\mu_n^{\otimes2}.
+\mu_n\times\mu_n\longrightarrow\mu_n^{\otimes2},
+\qquad (u,v)\longmapsto u\otimes v.
 $$
 
 For units $a,b$, define
@@ -816,7 +846,15 @@ $$
 \in H^2(X,\mu_n^{\otimes2}).
 $$
 
-Without choosing a primitive root, the natural target is the Tate-twisted coefficient $\mu_n^{\otimes2}$; it must not be casually replaced by $\mu_n$. Over a field containing the chosen root $\zeta_n$, the identification sends the symbol to an element of $H^2(K,\mu_n)\simeq\operatorname{Br}(K)[n]$.
+Without choosing a primitive root, the natural target is the Tate-twisted coefficient $\mu_n^{\otimes2}$; it must not be casually replaced by $\mu_n$. The chosen $\zeta$ fixes the coefficient isomorphism
+
+$$
+\beta_\zeta:\mu_n^{\otimes2}\xrightarrow{\sim}\mu_n,
+\qquad
+\zeta^i\otimes\zeta^j\longmapsto\zeta^{ij}.
+$$
+
+Over a field containing $\zeta$, applying $\beta_\zeta$ sends the symbol to an element of $H^2(K,\mu_n)\simeq\operatorname{Br}(K)[n]$. This convention fixes the sign of the cyclic algebra below.
 
 Bilinearity follows immediately:
 
@@ -839,9 +877,25 @@ $$
 
 has dimension $n^2$. After adjoining an $n$th root $\alpha$ of $a$, the element $x$ becomes diagonalizable and the algebra becomes a matrix algebra; explicitly, $x$ acts diagonally on a basis and $y$ acts by cyclic shift with the final step multiplied by $b$. Hence it is central simple.
 
-**Proposition 8.1.** Under $H^2(K,\mu_n)\simeq\operatorname{Br}(K)[n]$ and the choice of $\zeta$, the Kummer cup product $(a,b)_n$ is the Brauer class of $(a,b)_{n,\zeta}$, up to the harmless inverse dictated by whether cocycles act on the left or right.
+For completeness, over a field containing $\alpha$, take a basis $e_0,\ldots,e_{n-1}$ and set
 
-**Proof.** Trivialize the root torsor of $a$ over $L=K(\alpha)$ and represent the first Kummer class by the cocycle measuring $\sigma(\alpha)/\alpha$. Cup with the cocycle of $b$. The resulting scalar $2$-cocycle is the factor set for the crossed-product algebra with basis $1,y,\ldots,y^{n-1}$ over $L$, relations $y\ell=\sigma(\ell)y$ and $y^n=b$. Under $x=\alpha$ and $\sigma(\alpha)=\zeta\alpha$, these are exactly the displayed symbol relations. $\square$
+$$
+xe_i=\alpha\zeta^{-i}e_i,\qquad
+ye_i=e_{i+1}\ (i<n-1),\qquad
+ye_{n-1}=be_0.
+$$
+
+Then $x^n=a$, $y^n=b$, and $yx=\zeta xy$. The distinct eigenvalues of $x$ give all diagonal matrix units, and $y$ cycles them, so these operators generate $M_n$. Both algebras have dimension $n^2$, proving that the symbol algebra becomes $M_n$ after a finite separable extension and is therefore central simple.
+
+**Proposition 8.1.** Under $H^2(K,\mu_n)\simeq\operatorname{Br}(K)[n]$ and the coefficient isomorphism $\beta_\zeta$, the Kummer cup product $(a,b)_n$ is exactly the Brauer class of $(a,b)_{n,\zeta}$.
+
+**Proof.** Trivialize the root torsor of $a$ and use the right-torsor cocycle $\sigma(\alpha)/\alpha=\zeta^{i(\sigma)}$. With the initial-face/final-face cup convention of Section 8.1 and the map $\beta_\zeta$, cup product with the root cocycle of $b$ produces the scalar factor set for the crossed product in which a lift $y$ satisfies
+
+$$
+y\alpha=\zeta\alpha y,\qquad y^n=b.
+$$
+
+These are $yx=\zeta xy$, $x^n=a$, and $y^n=b$. If the root torsor is disconnected, perform the same calculation on its finite etale coordinate algebra: after splitting that algebra, the cocycle permutes its $n$ primitive idempotents cyclically and gives the same diagonal-and-shift matrices. Descent then gives the displayed symbol algebra over $K$. Thus the stated coefficient and torsor conventions produce the class itself, not its inverse. $\square$
 
 ### 8.4 Formal identities
 
@@ -859,13 +913,25 @@ $$
 (a,1-a)_n=0
 $$
 
-for $a,1-a\in K^\times$ when $n$ is invertible and the usual coefficient identifications have been made. One proof interprets the symbol algebra as a norm cyclic algebra: it splits exactly when $1-a$ is a norm from $K(\sqrt[n]{a})$. But
+for $a,1-a\in K^\times$ when $n$ is invertible and the coefficient isomorphism $\beta_\zeta$ has been fixed. This includes the cases in which $a$ has smaller Kummer order. Put
 
 $$
-N_{K(\sqrt[n]{a})/K}(1-\sqrt[n]{a})=1-a
+E=K[t]/(t^n-a).
 $$
 
-when $T^n-a$ has the expected cyclic splitting description, and the general case follows after the standard etale decomposition and descent. This identity is a theorem about the cup-product symbol, not a consequence of bilinearity alone.
+The algebra $E$ is finite etale of rank $n$. Let $\sigma(t)=\zeta t$ and define an operator on $E$ by
+
+$$
+Y=m_{1-t}\circ\sigma,
+$$
+
+where $m_{1-t}$ denotes multiplication by $1-t$. Since
+
+$$
+\prod_{i=0}^{n-1}(1-\zeta^it)=1-t^n=1-a,
+$$
+
+we have $Y^n=1-a$. If $X=m_t$, then $YX=\zeta XY$. The resulting action of $(a,1-a)_{n,\zeta}$ on the $n$-dimensional space $E$ becomes the diagonal-and-cyclic-shift action after a separable splitting field. It therefore identifies the symbol algebra with $\operatorname{End}_K(E)$, so its Brauer class is zero. By Proposition 8.1 this is exactly the Steinberg relation for the cup-product symbol, not merely a consequence of bilinearity.
 
 ### 8.5 Quaternion and norm examples
 
@@ -907,7 +973,13 @@ L\oplus Ly\oplus\cdots\oplus Ly^{n-1},
 \qquad y\ell=\sigma(\ell)y,\quad y^n=b.
 $$
 
-The same descent calculation proves
+If $b=N_{L/K}(z)$, replace $y$ by $z^{-1}y$; the new semilinear generator has $n$th power one and acts as $\sigma$ on the $K$-space $L$. Multiplication by $L$ together with this action identifies the algebra with $\operatorname{End}_K(L)$. Conversely, if the algebra is split, take its simple $n$-dimensional module $V$. Restriction to the degree-$n$ field $L$ makes $V$ one-dimensional over $L$. For an $L$-basis vector $v$, write $yv=zv$. Semilinearity gives
+
+$$
+y^nv=N_{L/K}(z)v,
+$$
+
+while the defining relation gives $y^nv=bv$. Hence $b=N_{L/K}(z)$. We have proved
 
 $$
 (a,b)_{n,\zeta}=0
@@ -1185,7 +1257,15 @@ on $H^q(X,\mathbf G_m)$. For finite separable field extensions this is the usual
 
 ### 12.3 Norms and Kummer classes
 
-Since $N(u^n)=N(u)^n$, norm of line bundles with power trivializations sends a $\mu_n$-torsor on $Y$ to one on $X$. Naturality of the root-torsor construction yields
+Since $N(u^n)=N(u)^n$ and the norm functor is monoidal, a pair $(L,\varphi:L^n\simeq\mathcal O_Y)$ is sent to
+
+$$
+\bigl(N_{Y/X}L,\,
+N_{Y/X}(L)^n\simeq N_{Y/X}(L^n)
+\xrightarrow{N(\varphi)}\mathcal O_X\bigr).
+$$
+
+Theorem 5.3 therefore turns the norm into a degree-one corestriction for $\mu_n$-torsors. Naturality of the root-torsor construction yields
 
 $$
 \operatorname{cor}_{Y/X}(\delta_Y(u))
@@ -1232,13 +1312,13 @@ The general exact sequences become useful only after their outer terms are under
 
 ### 13.1 Projective space and factorial schemes
 
-Let $k$ be a field. The global units on projective space are $k^\times$, and
+Let $k$ be a field and $r\ge1$. The global units on projective space are $k^\times$, and
 
 $$
 \operatorname{Pic}(\mathbf P^r_k)\simeq\mathbf Z,
 $$
 
-generated by $\mathcal O(1)$. For $r\ge1$, the first statement follows because a regular function on projective space restricts to a polynomial on each standard affine chart and compatibility at infinity forces degree zero. For the second, a Cartier divisor is linearly equivalent to a multiple of a hyperplane: intersect with a line to obtain its degree, then divide a homogeneous rational function to remove the degree-zero divisor. Equivalently, transition functions on the standard cover reduce to powers of the homogeneous coordinates.
+generated by $\mathcal O(1)$. The first statement follows because a regular function on projective space restricts to a polynomial on each standard affine chart and compatibility at infinity forces degree zero. For the second, the homogeneous coordinate ring $k[X_0,\ldots,X_r]$ is a unique factorization domain. Hence every prime divisor is cut out by an irreducible homogeneous polynomial $f$ of some degree $d$, and the rational function $f/X_0^d$ shows that this divisor is linearly equivalent to $d$ times the hyperplane $X_0=0$. Additivity handles every divisor and proves that the degree map identifies $\operatorname{Pic}(\mathbf P^r_k)$ with $\mathbf Z$. The omitted case $r=0$ is $\operatorname{Spec}k$, whose Picard group is zero and whose Kummer groups were computed in Section 6.1.
 
 Since $\mathbf Z[n]=0$, degree-one Kummer theory gives
 
@@ -1292,7 +1372,7 @@ $$
 I^n=(a)
 $$
 
-for some $a\in K^\times$. The pair $(I,a)$, with $a$ viewed as a trivialization of $I^{\otimes n}$, determines a $\mu_n$-torsor. Replacing $I$ by $bI$ changes $a$ to $b^na$; replacing the trivialization by a unit multiplies $a$ by that unit. This is precisely the equivalence encoded by the exact sequence.
+for some $a\in K^\times$. Division by $a$ is the power trivialization $I^{\otimes n}\simeq R$, so the pair $(I,a)$ determines a $\mu_n$-torsor. In the convention of Theorem 5.3 its generic root equation is $T^n=a$. Replacing $I$ by $bI$ changes $a$ to $b^na$; multiplying the power trivialization by a unit changes $a$ by the inverse unit. This is precisely the equivalence encoded by the exact sequence.
 
 The generic restriction sends $(I,a)$ to the class of $a$ in $K^\times/K^{\times n}$. Which field classes extend over $R$? Write $v_{\mathfrak p}$ for normalized valuations. From $I^n=(a)$ one obtains
 
@@ -1300,7 +1380,13 @@ $$
 v_{\mathfrak p}(a)\equiv0\pmod n
 $$
 
-for every nonzero prime $\mathfrak p$. Conversely, if all valuations of $a$ are divisible by $n$, the divisor $(a)$ is $nD$ for a fractional ideal divisor $D$, and the associated ideal $I$ satisfies $I^n=(a)$, up to the sign convention relating ideals and divisors. Hence the image of
+for every nonzero prime $\mathfrak p$. Conversely, if all valuations of $a$ are divisible by $n$, define the fractional ideal
+
+$$
+I=\prod_{\mathfrak p}\mathfrak p^{\,v_{\mathfrak p}(a)/n}.
+$$
+
+Unique factorization of fractional ideals gives $I^n=(a)$ with no sign ambiguity. Hence the image of
 
 $$
 H^1(X,\mu_n)\to H^1(K,\mu_n)
@@ -1339,7 +1425,7 @@ Every Azumaya algebra over a strictly henselian local ring is split. To prove th
 The roots-of-unity schemes for varying exponents fit into exact sequences. For positive integers $m,n$, the power map gives
 
 $$
-1\to\mu_m\to\mu_{mn}\xrightarrow{(cdot)^m}\mu_n\to1.
+1\to\mu_m\to\mu_{mn}\xrightarrow{(\cdot)^m}\mu_n\to1.
 $$
 
 The kernel is visibly $\mu_m$. Local surjectivity follows by adjoining an $m$th root of a given $n$th root, again using a finite free monic algebra. Thus the sequence is fppf-exact without invertibility assumptions. Its long exact sequence compares Kummer classes at levels $m$, $n$, and $mn$.
@@ -1376,7 +1462,7 @@ $$
 has transition maps and exact quotients controlled by the preceding sequence. The map on degree-one unit classes is the evident passage between
 
 $$
-\Gamma(X,\mathcal O_X)^\times/Gamma(X,\mathcal O_X)^{\times p^r}.
+\Gamma(X,\mathcal O_X)^\times/\Gamma(X,\mathcal O_X)^{\times p^r}.
 $$
 
 The Picard components track $p^r$-torsion line bundles together with compatible power trivializations. One must retain both pieces; inverse systems of unit quotients alone do not describe all $\mu_{p^r}$-torsors on a scheme with nontrivial Picard group.
@@ -1392,9 +1478,9 @@ The following implications summarize where the main assumptions enter.
 | $H^1(X,\mu_n)=\Gamma(X,\mathcal O_X)^\times/(-)^n$ | $\operatorname{Pic}(X)[n]=0$ | degree-one Kummer sequence |
 | $H^2(X,\mu_n)=\operatorname{Br}'(X)[n]$ | $\operatorname{Pic}(X)/n=0$ | degree-two Kummer sequence |
 | $H^q(X,\widetilde M)=0$ for $q>0$ | $X$ affine, $\widetilde M$ quasi-coherent | Amitsur acyclicity |
-| fppf and etale $H^1(X,G)$ agree | $G$ smooth | smooth torsors have etale-local sections |
+| fppf and etale $H^q(X,G)$ agree for every $q$ | $G$ smooth and commutative | smooth change of topology |
 | $A(S)/nA(S)\hookrightarrow H^1(S,A[n])$ | $A/S$ abelian, any $n$ | $[n]$ is finite locally free surjective |
-| a finite-flat class is detected by geometric points | coefficient group finite etale | connected infinitesimal structure must be absent |
+| a finite group over a field is recovered from geometric points with descent action | coefficient group finite etale | connected infinitesimal structure must be absent |
 | $\operatorname{Br}(X)=\operatorname{Br}'(X)$ | additional geometric hypotheses, or $X$ a field | not true by definition on arbitrary schemes |
 
 The ledger is not merely a list of technicalities. Each hypothesis corresponds to a geometric mechanism: invertibility gives separability, affineness kills quasi-coherent gluing, smoothness produces etale sections, and finite flatness preserves infinitesimal torsion.
