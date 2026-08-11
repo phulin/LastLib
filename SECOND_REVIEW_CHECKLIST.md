@@ -34,7 +34,7 @@ any resulting corrections.
 - [x] 008. Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers
 - [x] 009. Divisors, Riemann–Roch, and Duality on Relative Curves
 - [x] 010. Normalization and Regular Models of Arithmetic Curves
-- [ ] 011. Blowups and Intersection Theory on Arithmetic Surfaces
+- [x] 011. Blowups and Intersection Theory on Arithmetic Surfaces
 - [ ] 012. Semistable Curves, Dual Graphs, and Component Groups
 - [x] 013. Faithfully Flat Descent in Algebraic Geometry
 - [x] 014. Moduli Stacks for Modular and PEL Problems

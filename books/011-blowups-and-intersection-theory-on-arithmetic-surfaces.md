@@ -23,7 +23,7 @@
 5. [Blowing up regular surfaces](#5-blowing-up-regular-surfaces)
    - [Regularity of the new surface](#51-regularity-of-the-new-surface)
    - [The exceptional curve and its normal bundle](#52-the-exceptional-curve-and-its-normal-bundle)
-   - [Factorization and contraction](#53-factorization-and-contraction)
+   - [Numerical recognition of inverse point blowups](#53-numerical-recognition-of-inverse-point-blowups)
 6. [Resolution steps in arithmetic geometry](#6-resolution-steps-in-arithmetic-geometry)
    - [What resolution must preserve](#61-what-resolution-must-preserve)
    - [Thickness singularities](#62-thickness-singularities)
@@ -116,9 +116,17 @@ $$
 
 Thus residue-field degrees are built into every global fiberwise intersection. If $x$ is a closed point of $C$, a length at $x$ contributes its length multiplied by $[\kappa(x):k]$.
 
-Regularity is essential for the clean Cartier--Weil dictionary and for finite free resolutions at intersections. Properness of vertical curves is essential for degree. Flatness makes fibers effective Cartier divisors and relates their multiplicities to the base valuation. Excellence is used for finite normalization, resolution, and contraction, but not for elementary blowup charts. When a statement needs only a noetherian scheme or a regular local surface, it will say so.
+Regularity is essential for the clean Cartier--Weil dictionary and for finite free resolutions at intersections. Properness of vertical curves is essential for degree. Flatness makes fibers effective Cartier divisors and relates their multiplicities to the base valuation. Excellence is used for finite normalization and resolution, but not for elementary blowup charts. When a statement needs only a noetherian scheme or a regular local surface, it will say so.
 
-Book 9 supplies Cartier divisors, line bundles, degree, dualizing sheaves, and Riemann--Roch on proper curves. Book 10 supplies normalization, resolution of excellent surfaces, regular proper models, and the existence of contractions of exceptional curves. We recall these inputs only where their conventions matter and prove the intersection calculations that were deliberately deferred.
+Book 9 supplies Cartier divisors, line bundles, degree, dualizing sheaves, and Riemann--Roch on proper curves. Book 10 supplies normalization, resolution of excellent surfaces, and regular proper models. We recall these inputs only where their conventions matter and prove the intersection calculations that were deliberately deferred.
+
+We use the quotient convention for projective bundles:
+
+$$
+\mathbf P_Z(\mathcal E)=\operatorname{Proj}_Z(\operatorname{Sym}\mathcal E)
+$$
+
+parametrizes invertible quotients of $\mathcal E$. Thus, if $\mathcal N_{Z/X}$ is a normal bundle, the projectivized normal directions are written $\mathbf P_Z(\mathcal N_{Z/X}^{\vee})$. Keeping this dual visible prevents a variance error in the description of an exceptional divisor.
 
 ## 2. The Rees algebra
 
@@ -213,7 +221,7 @@ $$
 
 Over an excellent finite-type surface this normalization is finite. It follows that the normalized blowup remains projective and birational. This construction is needed when one starts from a normal singular surface. When one blows up a regular surface at a regular closed point, the ordinary blowup is already regular, so normalization adds nothing.
 
-Integral closure also explains why different ideals can determine the same normalized blowup. Divisorial valuations $v$ centered on $A$ test integral dependence by inequalities $v(f)\geq v(I)$. The exceptional prime divisors of the normalized blowup are precisely the finite collection of valuations needed to record the asymptotic orders of powers of $I$. In this book that viewpoint is used only to understand resolution steps; no higher-dimensional theory of Rees valuations is required.
+Integral closure also explains why ideals with the same integral closures of all positive powers determine the same normalized blowup. No classification of exceptional valuations is needed below: every resolution calculation will instead use the explicit normalized blowup supplied by Book 10 and the component intersections developed here.
 
 ## 3. Blowups from relative Proj
 
@@ -294,10 +302,19 @@ $$
 
 Arbitrary base change is not safe: tensoring can introduce torsion, and the natural map $I^n\otimes B\to(IB)^n$ need not be injective. The fiber of a blowup over a point is therefore best computed through the associated graded algebra, not by an unqualified base-change slogan.
 
-For a regular closed immersion $Z\hookrightarrow X$, the normal cone is a vector bundle and
+For a regular closed immersion $Z\hookrightarrow X$, put
 
 $$
-b^{-1}(Z)=\mathbf P(N_{Z/X}).
+\mathcal C_{Z/X}=\mathcal I/\mathcal I^2,
+\qquad
+\mathcal N_{Z/X}=\mathcal C_{Z/X}^{\vee}.
+$$
+
+The normal cone is a vector bundle and, in our quotient convention,
+
+$$
+b^{-1}(Z)=\mathbf P_Z(\mathcal C_{Z/X})
+=\mathbf P_Z(\mathcal N_{Z/X}^{\vee}).
 $$
 
 For a singular center it is instead $\operatorname{Proj}\operatorname{gr}_{\mathcal I}(\mathcal O_X)$, the projectivized normal cone, which may be nonreduced or reducible. This distinction explains why exceptional loci of normalized blowups of singular surfaces can be more complicated than projective spaces.
@@ -315,12 +332,13 @@ $$
 Set-theoretically, $E$ is the inverse image of the center, though its scheme structure records multiplicity. If the center is a regular closed subscheme, then
 
 $$
-E\simeq\mathbf P(N_{Z/X}),
+E\simeq\mathbf P_Z(\mathcal I/\mathcal I^2)
+=\mathbf P_Z(\mathcal N_{Z/X}^{\vee}),
 \qquad
-\mathcal O_E(-E)\simeq\mathcal O_{\mathbf P(N_{Z/X})}(1).
+\mathcal O_E(-E)\simeq\mathcal O_E(1).
 $$
 
-At a regular closed point $x$ of a surface, $N_{x/X}$ is a two-dimensional vector space over $\kappa(x)$, so $E\simeq\mathbf P^1_{\kappa(x)}$. Its points are one-dimensional tangent directions. A curve through $x$ meets $E$ in the projectivized tangent cone of that curve; a smooth curve chooses one direction, while a curve of multiplicity $m$ meets $E$ in a divisor of degree $m$.
+At a regular closed point $x$ of a surface, $\mathcal N_{x/X}$ is a two-dimensional vector space over $\kappa(x)$, so $E\simeq\mathbf P^1_{\kappa(x)}$. Its points are one-dimensional tangent directions. A curve through $x$ meets $E$ in the projectivized tangent cone of that curve; a smooth curve chooses one direction, while a curve of multiplicity $m$ meets $E$ in a divisor of degree $m$.
 
 ### 4.2 Total and strict transforms
 
@@ -336,7 +354,7 @@ $$
 
 For a general closed subscheme, the scheme-theoretic strict transform is obtained from the inverse image by removing sections killed by a power of the exceptional ideal; algebraically this is saturation. Simply taking the inverse image gives the total transform and usually adds an unwanted exceptional component.
 
-If an effective Cartier divisor $D$ has multiplicity $m$ along the center, then
+Suppose the center is regular and integral and the order of a local equation of an effective Cartier divisor $D$ is generically the constant $m$ along it. Then
 
 $$
 b^*D=\widetilde D+mE. \tag{4.1}
@@ -348,7 +366,7 @@ $$
 m_x(D)=\max\{m:f\in\mathfrak m_x^m\}.
 $$
 
-The equality follows on each chart by dividing the pulled-back equation by the largest common exceptional factor. It is an equality of Cartier divisors, not merely supports.
+The equality follows on each chart by dividing the pulled-back equation by the largest common exceptional factor. It is an equality of Cartier divisors, not merely supports. We use it below chiefly for a closed regular point; for a reducible or nonregular center, a single integer $m$ and a single exceptional prime need not describe the total transform.
 
 ### 4.3 Multiplicity at a regular point
 
@@ -424,19 +442,19 @@ $$
 
 The frequently written formula $E^2=-1$ assumes the center is rational over the ground residue field, or measures degree over $\kappa(x)$. Formula (5.1) is the correct integral convention on an arithmetic surface.
 
-The negative normal degree says that $E$ cannot move in a family inside $Y$. Infinitesimal deformations of $E$ are sections of its normal bundle, and $H^0(\mathbf P^1,\mathcal O(-1))=0$. This rigidity is the geometric reason an exceptional curve can be contracted.
+The negative normal degree says that $E$ cannot move in a family inside $Y$. Infinitesimal deformations of $E$ are sections of its normal bundle, and $H^0(\mathbf P^1,\mathcal O(-1))=0$. This rigidity explains why such curves, and not arbitrary negative curves, occur as the exceptional loci of inverse point blowups.
 
-### 5.3 Factorization and contraction
+### 5.3 Numerical recognition of inverse point blowups
 
-Book 10 established that a vertical projective line with normal degree $-1$ can be contracted to a regular point, and that the contraction is inverse to a point blowup. Intersection theory sharpens the criterion. Over an algebraically closed residue field, a vertical integral curve $E$ on a regular surface is exceptional of the first kind precisely when
+A point blowup produces a vertical projective line with normal bundle $\mathcal O(-1)$. Consequently any curve known to be the exceptional locus of the inverse of a regular point blowup must have that geometry. Over an algebraically closed residue field, the numerical signature is
 
 $$
 E\simeq\mathbf P^1,\qquad E^2=-1.
 $$
 
-Over a nonclosed field one must retain the actual form of the curve and its normal bundle; the numerical equality over the smaller field becomes $E^2=-[H^0(E,\mathcal O_E):k]$ when $E$ is a projective line over its constant field. A negative self-intersection alone is not enough: a $(-2)$-curve cannot be contracted to a regular point, and a curve of positive genus remains nonexceptional regardless of negativity.
+Over a nonclosed field one must retain the actual form of the curve and its normal bundle; the numerical equality over the smaller field becomes $E^2=-[H^0(E,\mathcal O_E):k]$ when $E$ is a projective line over its constant field. A negative self-intersection alone is not enough: a $(-2)$-curve is not the exceptional curve of a regular point blowup, and a curve of positive genus remains nonexceptional regardless of negativity.
 
-A proper birational morphism between regular surfaces that is an isomorphism on a dense open can, in the surface situations used here, be factored into point blowups and inverse contractions after resolving its graph. This reduces comparison questions to the formulas for one point blowup. Factorization is not claimed for arbitrary higher-dimensional birational maps.
+When a birational comparison is already presented as a sequence of regular point blowups and their given inverse morphisms, every numerical change is therefore reduced to the formulas for one point. General common dominations may also contain normalized blowups used to resolve singular intermediate surfaces; their intersection comparisons are handled on the final regular domination by the projection formula. We do not silently replace that construction by an unproved factorization into regular point blowups or assert that numerical data alone construct a contraction.
 
 ## 6. Resolution steps in arithmetic geometry
 
@@ -496,7 +514,7 @@ Resolution of a model is not semistable reduction. A regular total space can hav
 
 Normalization and blowup also play different roles. Normalization separates integral branches and repairs failure of integral closure; blowup changes birational geometry and tangent directions. The normalization of a curve cusp resolves the curve, but normalization alone does not generally resolve a two-dimensional surface singularity. A normalized blowup deliberately combines both operations.
 
-Finally, resolution is not minimality. Blowing up a perfectly regular point creates a new exceptional curve and makes the model less minimal. The numerical theory below tells when a component is the artificial $(-1)$-curve of such a step and when a negative component is intrinsic to the fiber.
+Finally, resolution is not minimality. Blowing up a perfectly regular point creates a new exceptional curve and makes the model less minimal. The numerical theory below distinguishes the signature of the artificial $(-1)$-curve created by such a step from that of a negative component intrinsic to the fiber.
 
 ## 7. Local intersection multiplicity
 
@@ -654,7 +672,7 @@ Self-intersection is not the number of points at which a curve meets itself. It 
 
 ### 8.4 Horizontal self-intersection and the base
 
-Let $H$ be a horizontal Cartier curve. Its normal bundle $N_{H/X}=\mathcal O_X(H)|_H$ is a line bundle on the finite $S$-scheme $H$, or on its normalization when needed. This is the intrinsic self-intersection datum. Taking its norm produces a line-bundle class on $S$ under the usual finite-flat hypotheses.
+Let $H$ be a horizontal Cartier curve. Its normal bundle $N_{H/X}=\mathcal O_X(H)|_H$ is a line bundle on the finite flat $S$-scheme $H$. This line on $H$ itself, not merely its pullback to the normalization, is the intrinsic self-intersection datum. Its finite-flat norm is a line-bundle class on $S$.
 
 There is no canonical integer $H^2$ over an arbitrary Dedekind scheme. Over a proper base curve over a field, one may take the degree of the norm. Over the spectrum of a discrete valuation ring, a rational trivialization gives a local order, but changing the trivialization changes that order by a principal divisor on the base. In arithmetic intersection theory one adds archimedean or metric data to obtain a global real number; that theory lies outside our scope.
 
@@ -749,7 +767,7 @@ For a finite flat map, the pullback of an effective Cartier divisor agrees with 
 
 ### 10.3 The projection formula
 
-**Theorem 10.1 (projection formula).** Let $f:Y\to X$ be proper, with $X$ and $Y$ regular surfaces, let $D$ be a Cartier divisor on $X$, and let $C$ be an integral proper curve on $Y$ for which the indicated degrees are defined. Then
+**Theorem 10.1 (projection formula).** Let $f:Y\to X$ be proper, with $X$ and $Y$ regular surfaces, let $D$ be a Cartier divisor on $X$, and let $C$ be an integral proper curve on $Y$. Assume that $C$ and its one-dimensional image are proper over the same field, or work fiberwise over one closed point of a common Dedekind base. Then
 
 $$
 (f^*D\mathbin{\cdot}C)
@@ -794,23 +812,23 @@ $$
 and the fundamental equality for the corresponding discrete valuations gives
 
 $$
-f_*f^*B=nB
+f_*f^*B=nB.
 $$
 
-when the function-field extension is separable or, more generally, when inseparable degrees are included in the residue degrees. Hence
+Here the residue degrees are the full field degrees, including any inseparable part; no separability hypothesis is needed. Hence
 
 $$
 f_*f^*D=nD. \tag{10.5}
 $$
 
-If $D$ and $G$ are divisors on $X$ with proper intersection, projection gives
+If, in addition, $f$ is flat and $D$ and $G$ are divisors on $X$ with proper intersection, projection gives
 
 $$
 (f^*D\mathbin{\cdot}f^*G)
 =n(D\mathbin{\cdot}G) \tag{10.6}
 $$
 
-after pushing to the same base and taking the appropriate degrees. Flatness ensures that scheme-theoretic inverse images have the expected lengths; without flatness, (10.5) at the cycle level may still hold under suitable normality, but naive tensor-product lengths can acquire torsion.
+after pushing to the same base and taking the appropriate degrees. Flatness ensures that scheme-theoretic inverse images have the expected lengths. Without flatness, (10.5) at the divisor-cycle level remains valid in the normal finite setting just described, but the length identity (10.6) is not being asserted.
 
 Under a finite extension of discrete valuation rings, ramification changes the scheme-theoretic fiber: $\pi=u(\pi')^e$. Consequently pullback multiplies the total fiber divisor by $e$. Residue extension multiplies degrees in the other direction. Formulas (10.3)--(10.6), rather than visual counting of geometric components, keep both effects consistent.
 
@@ -880,7 +898,7 @@ Formula (11.6) is the separation theorem for intersection multiplicity. The firs
 Taking $D=G$ in the global or vertical setting yields
 
 $$
-\widetilde D^{,2}=D^2-m^2d_x. \tag{11.7}
+\widetilde D^2=D^2-m^2d_x. \tag{11.7}
 $$
 
 If $x$ is a smooth point of $D$, then $m=1$: blowing up a point on a curve lowers its self-intersection by $d_x$. If $x\notin D$, the strict transform is the pullback and its self-intersection is unchanged.
@@ -906,7 +924,7 @@ $$
 
 Here $D_j,G_j$ are strict transforms, and $i_{\mathrm{res}}$ is the remaining intersection after the chosen sequence. Once the transforms are disjoint, the residual term is zero.
 
-Exceptional curves also transform. If $E_i$ is created with square $-d_i$ and a later point of residue degree $e$ on its strict transform is blown up, its square decreases by $e$. If the later center lies at the intersection of two components, both squares decrease and the new exceptional curve meets both. These **proximity rules** allow an entire resolution matrix to be computed without returning to local equations at every stage.
+Exceptional curves also transform. If $E_i$ is created with square $-d_i$ and a later point $y$ on its strict transform is blown up, its square decreases by $[\kappa(y):\kappa(s)]$, where $s$ is the underlying closed point of the base. If the later center lies at the intersection of two components, both squares decrease and the new exceptional curve meets both. These **proximity rules** allow an entire resolution matrix to be computed without returning to local equations at every stage.
 
 One caution is decisive: self-intersections belong to a particular surface. The label $-1$ attached when a curve is created changes after subsequent blowups on that curve. A resolution graph must therefore record the final strict transforms, not the creation-time labels.
 
@@ -914,7 +932,15 @@ One caution is decisive: self-intersections belong to a particular surface. The 
 
 ### 12.1 Relative canonical divisors
 
-Let $X\to S$ be a regular arithmetic surface. It is a flat local complete-intersection morphism of relative dimension one locally over each discrete valuation ring, hence Gorenstein. Its relative dualizing sheaf $\omega_{X/S}$ is invertible. A **relative canonical divisor** $K_{X/S}$ is any Cartier divisor with
+Let $X\to S$ be a regular arithmetic surface. The fibers need not be reduced, so we record why the needed relative dualizing line still exists. Locally factor $X\to S$ as a closed immersion into a scheme $P$ smooth over $S$. The local rings of $P$ and $X$ are regular, and the dimension formula shows that the defining ideal is generated by a regular sequence. Thus $X\to S$ is a flat local complete-intersection morphism of relative dimension one. If $\mathcal I$ is the ideal of such an immersion, the Koszul calculation gives
+
+$$
+\omega_{X/S}
+=\det(\mathcal I/\mathcal I^2)^{\vee}
+\otimes\det(\Omega^1_{P/S})|_X. \tag{12.1}
+$$
+
+Conormal exact sequences identify these lines for two factorizations, so they glue. The same Koszul resolution identifies this line with the relative dualizing sheaf and shows compatibility with local-complete-intersection base change. In particular $X/S$ is Gorenstein. A **relative canonical divisor** $K_{X/S}$ is any Cartier divisor with
 
 $$
 \mathcal O_X(K_{X/S})\simeq\omega_{X/S}.
@@ -922,41 +948,50 @@ $$
 
 It is determined only up to a principal divisor, which is enough for intersection with proper vertical curves.
 
-Under a point blowup $b:Y\to X$, the canonical bundle changes by
+Under a point blowup $b:Y\to X$, compatible canonical divisors may be chosen so that
 
 $$
-K_{Y/S}=b^*K_{X/S}+E. \tag{12.1}
+K_{Y/S}=b^*K_{X/S}+E. \tag{12.2}
 $$
 
-To see the coefficient, use regular parameters $(u,v)$ at the center. On the chart $v=ut$, a local generator $du\wedge dv$ of the absolute two-dimensional canonical module transforms as
+To see the coefficient without assuming a differential on the base, trivialize the determinant line (12.1) near the center and choose regular parameters $(u,v)$ in the two-dimensional regular local ring. On the chart $v=ut$, the conormal-determinant comparison for the presentation $A[t]/(v-ut)$ sends a local generator $\tau$ downstairs to
 
 $$
-du\wedge d(ut)=u\,du\wedge dt.
+b^*\tau=u\tau_Y,
 $$
 
-It vanishes once along $E=(u=0)$. Dividing out the base differential gives the same relative formula. The other chart agrees. The coefficient is $+1$; a minus sign would contradict adjunction on $E$.
+where $\tau_Y$ generates $\omega_{Y/S}$ on that chart. Hence the image of $b^*\omega_{X/S}$ in $\omega_{Y/S}$ vanishes once along $E=(u=0)$. The $v$-chart gives the same comparison. Therefore
+
+$$
+\omega_{Y/S}\simeq b^*\omega_{X/S}\otimes\mathcal O_Y(E),
+$$
+
+which proves (12.2) and fixes the sign.
 
 By projection and (11.2),
 
 $$
-(K_{Y/S}\mathbin{\cdot}E)=E^2=-d_x. \tag{12.2}
+(K_{Y/S}\mathbin{\cdot}E)=E^2=-d_x. \tag{12.3}
 $$
 
 Over $\kappa(x)$ this is $-1$, as expected for an exceptional projective line.
 
 ### 12.2 Adjunction
 
-Let $C$ be an effective integral Cartier curve on $X$ that is proper over $k=\kappa(s)$; in particular, a vertical component qualifies. The conormal sequence and duality for a Cartier immersion give
+Let $C$ be an effective integral Cartier curve on $X$ supported over $s$, and put $k=\kappa(s)$. The transitivity of the two Cartier immersions $C\hookrightarrow X\to S$ and $s\hookrightarrow S$ gives the precise vertical adjunction isomorphism
 
 $$
-\omega_{C/k}simeq
-\left(\omega_{X/S}\otimes\mathcal O_X(C)\right)|_C. \tag{12.3}
+\omega_{C/k}\simeq
+\left(\omega_{X/S}\otimes\mathcal O_X(C)\right)|_C
+\otimes_k(\mathfrak m_s/\mathfrak m_s^2). \tag{12.4}
 $$
+
+The final factor is the one-dimensional conormal space of $s$ in $S$. A choice of uniformizer trivializes it, which explains the commonly written version without that factor, but the isomorphism is not canonical until such a choice is made. Its degree on $C$ is zero, so it disappears from the numerical formula.
 
 Taking degrees yields the **adjunction formula**
 
 $$
-2p_a(C)-2=(K_{X/S}+C\mathbin{\cdot}C), \tag{12.4}
+2p_a(C)-2=(K_{X/S}+C\mathbin{\cdot}C), \tag{12.5}
 $$
 
 where
@@ -971,14 +1006,14 @@ $$
 \deg_k\omega_{C/k}=-2\chi(C,\mathcal O_C)=2p_a(C)-2.
 $$
 
-This convention remains valid if the constant field of $C$ is a finite extension of $k$; all dimensions and degrees then acquire the same residue-field factor.
+This convention remains valid if the constant field of $C$ is a finite extension of $k$: Euler characteristics and degrees are both computed as $k$-dimensions and therefore acquire the same residue-field factor. The definition $p_a(C)=1-\chi(C,\mathcal O_C)$ then still gives $2p_a(C)-2=-2\chi(C,\mathcal O_C)$.
 
-The proof requires $C$ to be Cartier and the ambient surface to have an invertible dualizing sheaf. On a singular non-Gorenstein surface, a correction term can appear and (12.4) must not be used unchanged.
+The proof requires $C$ to be Cartier and the ambient surface to have an invertible dualizing sheaf. On a singular non-Gorenstein surface, a correction term can appear and (12.5) must not be used unchanged.
 
 Adjunction also holds for a relative effective Cartier divisor $H$ finite and flat over $S$ as an isomorphism of dualizing line bundles:
 
 $$
-\omega_{H/S}simeq
+\omega_{H/S}\simeq
 (\omega_{X/S}\otimes\mathcal O_X(H))|_H.
 $$
 
@@ -1005,7 +1040,7 @@ Therefore
 
 $$
 p_a(\widetilde D)
-=p_a(D)-\frac{m(m-1)}2d_x. \tag{12.5}
+=p_a(D)-\frac{m(m-1)}2d_x. \tag{12.6}
 $$
 
 For a smooth branch, $m=1$ and genus is unchanged. For a singular curve, the decrease measures part of the singularity defect resolved at that point. A double point can lower arithmetic genus by one per rational center, but whether it does so depends on how the strict transform and exceptional divisor meet.
@@ -1017,19 +1052,19 @@ b_*\mathcal O_Y=\mathcal O_X,
 \qquad R^1b_*\mathcal O_Y=0.
 $$
 
-The second assertion follows by covering the exceptional projective line and using $H^1(\mathbf P^1,\mathcal O(n))=0$ for $n\geq-1$ on successive infinitesimal neighborhoods. Thus Euler characteristics of the total fibers agree. The strict transform of one component may change genus, but the exceptional component and new incidence data restore the genus of the whole fiber.
+On the inverse image of an affine neighborhood of the center, the two standard blowup charts give $b_*\mathcal O_Y=\mathcal O_X$ and a direct Cech calculation gives $R^1b_*\mathcal O_Y=0$: Laurent terms on the overlap split into the nonnegative terms from one chart and the nonpositive terms from the other. Equivalently, the filtration by infinitesimal neighborhoods of $E$ has quotients $\mathcal O_{\mathbf P^1}(n)$ with $n\geq0$, whose first cohomology vanishes. Applying the same calculation after tensoring by $\mathcal O_X(-F)$ and pushing forward the exact sequence of the total transform $b^*F$ shows that its structure sheaf has the same Euler characteristic as that of $F$. The strict transform of one component may change genus, but the exceptional component and new incidence data restore the genus of the whole fiber.
 
 ### 12.4 The numerical test for exceptional curves
 
 If $E\simeq\mathbf P^1_k$ is a rational vertical curve, then $p_a(E)=0$, and adjunction says
 
 $$
-K_{X/S}\mathbin{\cdot}E+E^2=-2. \tag{12.6}
+K_{X/S}\mathbin{\cdot}E+E^2=-2. \tag{12.7}
 $$
 
 For a $(-1)$-curve, $K\cdot E=-1$. For a $(-2)$-curve, $K\cdot E=0$. This distinction is ubiquitous: $(-1)$-curves are removable artifacts of regular point blowups, while chains of $(-2)$-curves often occur in minimal resolutions of rational double points.
 
-The converse contraction criterion needs geometry as well as numbers. A curve satisfying $E^2=-1$ and $K\cdot E=-1$ is contractible to a regular point when it is a projective line with the correct constant field and normal bundle. Numerical equalities alone do not prove that a non-geometrically integral curve is a projective line.
+The converse numerical recognition needs geometry as well as numbers. If a curve is the exceptional locus of the inverse of a regular point blowup, then it is a projective line with the correct constant field and normal bundle, not merely a curve satisfying $E^2=-1$ and $K\cdot E=-1$. Numerical equalities alone neither prove that a non-geometrically integral curve is a projective line nor construct a contraction.
 
 ## 13. Special fibers and their intersection matrices
 
@@ -1071,7 +1106,7 @@ $$
 =\deg(D|_{X_K}). \tag{13.3}
 $$
 
-The last equality is constancy of degree in the proper flat family. For a horizontal section, it is $1$. For a divisor of degree zero on the generic fiber, it is $0$; this is exactly the compatibility condition for vertical correction.
+Here is a proof that requires no unrecorded cohomological base-change theorem. Since $X$ is regular, write $D$ as a Weil divisor. A vertical prime has zero intersection with $F$ because $F$ is principal on every proper vertical component. A horizontal prime $H$ is finite flat over a neighborhood of $s$; the length of its closed fiber is its finite-flat rank, which is the degree of $H_K$. The local-length formula identifies that length with $(H\cdot F)$. Bilinearity proves (13.3) for $D$. For a horizontal section the value is $1$. For a divisor of degree zero on the generic fiber it is $0$; this is exactly the compatibility condition for vertical correction.
 
 ### 13.2 The weighted Laplacian identity
 
@@ -1130,7 +1165,7 @@ $$
 (\Gamma_i\mathbin{\cdot}\Gamma_j)<0. \tag{13.7}
 $$
 
-The quotient negativity is the numerical foundation for uniqueness of vertical corrections and for contraction arguments.
+The quotient negativity is the numerical foundation for uniqueness of vertical corrections and for detecting the negative directions introduced by birational modifications.
 
 ### 13.4 Examples of fiber matrices
 
@@ -1148,7 +1183,7 @@ $$
 
 Its eigenvalues are $0$ and $-2r$; the kernel is spanned by $(1,1)$. If the intersection points have residue degrees $d_1,\ldots,d_q$, replace $r$ by $\sum d_j$.
 
-For a reduced normal-crossing fiber whose dual graph is a chain and whose edge intersections are rational and transverse, $M$ is the negative graph Laplacian: the diagonal entry is minus the valency and adjacent off-diagonal entries are $1$. A component at the end has square $-1$ in the total fiber configuration. Such an end component is contractible only if it is also a projective line and contraction is compatible with the desired model; after contraction the remaining fiber multiplicities and intersections must be recomputed.
+For a reduced normal-crossing fiber whose dual graph is a chain and whose edge intersections are rational and transverse, $M$ is the negative graph Laplacian: the diagonal entry is minus the valency and adjacent off-diagonal entries are $1$. A component at the end has square $-1$ in the total fiber configuration. It has the signature of an inverse point blowup only if it is also a projective line with normal bundle $\mathcal O(-1)$; numerical data alone do not supply the inverse morphism.
 
 For a multiple irreducible fiber $F=m\Gamma$, relation (13.1) gives $m\Gamma^2=0$, hence $\Gamma^2=0$. The matrix alone does not detect the multiplicity $m$; the labeled fiber divisor is part of the data.
 
@@ -1189,15 +1224,22 @@ A normalization such as $\sum_i m_iv_i=0$, or the requirement that one chosen co
 
 ### 14.2 Integral data and rational corrections
 
-The intersection vector $d$ is integral, but the solution $v$ need not be. This is not a defect. The lattice map
+The intersection vector $d$ is integral, but the solution $v$ need not be. This is not a defect. Put
 
 $$
-M:\mathbf Z^r/\mathbf Zm
+g=\gcd(m_1,\ldots,m_r),
+\qquad m^{\mathrm{prim}}=g^{-1}m.
+$$
+
+The integral kernel of $M$ is $\mathbf Zm^{\mathrm{prim}}$, even when the scheme-theoretic fiber is a multiple fiber and $m$ itself is not primitive. Hence the correct lattice map is
+
+$$
+M:\mathbf Z^r/\mathbf Zm^{\mathrm{prim}}
 \longrightarrow
 \{d\in\mathbf Z^r:m\cdot d=0\}
 $$
 
-usually has finite cokernel, and its failure to be surjective forces denominators.
+and it has finite cokernel. Indeed both sides are free of rank $r-1$, and the rationalized map is an isomorphism by (13.5). Its failure to be surjective forces denominators. Quotienting only by $\mathbf Zm$ would leave spurious $g$-torsion in the source when the fiber is multiple.
 
 For the two-component matrix
 
@@ -1260,26 +1302,39 @@ Changing $v$ or $w$ by a multiple of $m$ changes nothing. This finite-dimensiona
 
 ### 14.4 Functoriality and base change
 
-Let $f:Y\to X$ be a finite morphism of regular arithmetic surfaces over the same Dedekind scheme $S$. Pullback sends horizontal degree-zero divisors to degree-zero divisors after multiplying generic degree appropriately, and pushforward sends vertical components with residue-field degrees. Projection gives
+Let $f:Y\to X$ be a finite flat morphism of regular arithmetic surfaces over the same Dedekind scheme $S$. Pullback sends horizontal degree-zero divisors to degree-zero divisors, and pushforward sends vertical components with residue-field degrees. Projection gives
 
 $$
 (f^*D\mathbin{\cdot}C)=(D\mathbin{\cdot}f_*C).
 $$
 
-Therefore the component intersection vector upstairs is obtained from the downstairs vector by the transpose of the pushforward matrix on components. The vertical correction equations commute with these linear maps after tensoring with $\mathbf Q$.
+Therefore the component intersection vector upstairs is obtained from the downstairs vector by the transpose of the pushforward matrix on components. More concretely, if $\Phi_s(D)$ corrects $D$ downstairs, then $f^*\Phi_s(D)$ corrects $f^*D$: for every vertical component $C$ upstairs,
 
-If $f$ has generic degree $n$ and the models are chosen so that the relevant pullbacks and pushforwards are defined without unresolved singularities, the corrected pairing satisfies the expected projection relation
+$$
+(f^*(D+\Phi_s(D))\mathbin{\cdot}C)
+=(D+\Phi_s(D)\mathbin{\cdot}f_*C)=0.
+$$
+
+Uniqueness modulo the fiber identifies this with the correction class upstairs. Thus the vertical correction equations commute with pullback and pushforward after tensoring with $\mathbf Q$.
+
+If $H$ is a degree-zero horizontal divisor upstairs with the proper-intersection hypotheses needed for the raw terms, then
 
 $$
 \langle f^*D,H\rangle
 =\langle D,f_*H\rangle,
 $$
 
-and in particular pullback against pullback scales by $n$. This follows from the ordinary projection formula plus uniqueness of balanced corrections modulo fibers.
+because both sides are the projection formula applied to $D+\Phi_s(D)$. In particular, if $f$ has generic degree $n$, then pullback against pullback scales by $n$, by (10.6). Flatness is retained here precisely because that length-scaling formula was proved under flatness.
 
 Base change deserves caution. An unramified residue extension may split components and closed intersection points; residue-degree weights ensure their total contribution is preserved. A ramified extension changes fiber multiplicities and can make the base-changed total space singular. One must normalize and resolve before forming its regular component matrix. The new matrix is related to the old one through pullback and pushforward on a common regular domination, not by simply copying the old graph.
 
-Birational invariance is similarly controlled. If $b:Y\to X$ is a point blowup, adding the exceptional component enlarges the vertical matrix by one negative direction, while pullbacks remain orthogonal to it. Degree-zero corrected pairings of divisors pulled back from $X$ are unchanged: the new correction is the total pullback of the old one, adjusted by the forced exceptional coefficient. This is the numerical reason component pairings depend on the underlying curve and chosen fiber data rather than on superfluous regular point blowups.
+Birational invariance is similarly controlled. If $b:Y\to X$ is a point blowup, adding the exceptional component enlarges the vertical matrix by one negative direction, while total pullbacks remain orthogonal to it. For a degree-zero horizontal divisor $D$, write $b^*D=\widetilde D+mE$. The balanced divisor upstairs is
+
+$$
+\widetilde D+\bigl(b^*\Phi_s(D)+mE\bigr)=b^*(D+\Phi_s(D)).
+$$
+
+The correction of the strict transform is therefore $b^*\Phi_s(D)+mE$, modulo the new full fiber. Projection then shows that corrected pairings of strict transforms are unchanged. This is the numerical reason component pairings are insensitive to superfluous regular point blowups.
 
 ## 15. A reusable intersection package
 
@@ -1294,12 +1349,13 @@ We can now collect the results in the form used by subsequent geometry.
 3. If a Cartier divisor has multiplicity $m$ at $x$, then $b^*D=\widetilde D+mE$, $(\widetilde D\cdot E)=m[\kappa(x):\kappa(s)]$, and $\widetilde D^2=D^2-m^2[\kappa(x):\kappa(s)]$ whenever the square is numerical.
 4. Effective curves meeting properly at $x$ have local intersection $\operatorname{length}\mathcal O_{X,x}/(f,g)$. Global fiberwise intersections multiply this length by $[\kappa(x):\kappa(s)]$.
 5. For a vertical integral curve $C$, $(D\cdot C)=\deg\mathcal O_X(D)|_C$. This extends intersection to common vertical components and makes it symmetric and bilinear.
-6. Proper pushforward and Cartier pullback satisfy $(f^*D\cdot C)=(D\cdot f_*C)$. For a finite map of generic degree $n$, pullback intersections scale by $n$ after degrees are taken on the same base.
-7. Relative canonical divisors obey $K_Y=b^*K_X+E$, and every proper Cartier curve satisfies $2p_a(C)-2=(K_X+C)\cdot C$.
+6. Proper pushforward and Cartier pullback satisfy $(f^*D\cdot C)=(D\cdot f_*C)$. For a finite flat map of generic degree $n$, pullback intersections scale by $n$ after degrees are taken on the same base.
+7. Relative canonical divisors obey $K_Y=b^*K_X+E$. Every integral vertical Cartier curve satisfies $2p_a(C)-2=(K_X+C)\cdot C$; a relative horizontal Cartier divisor satisfies the corresponding line-bundle adjunction without an automatic integer degree.
 8. For a connected fiber $F=\sum m_i\Gamma_i$, the component matrix is negative semidefinite with rational kernel exactly $\mathbf Q(m_i)$. It is negative definite modulo the whole fiber.
-9. Every generic degree-zero divisor has a rational vertical correction balanced on all components, unique modulo $\mathbf QF$. The induced component energy is nonnegative and the corrected pairing is symmetric and rational.
+9. Every generic degree-zero divisor has a rational vertical correction balanced on all components, unique modulo $\mathbf QF$. For divisors with disjoint generic supports, the induced component energy is nonnegative and the corrected local pairing is symmetric and rational.
+10. The resolution theorem of Book 10 applies by normalized blowups supported on the singular locus. For $xy=\pi^n$, the explicit charts reduce $n$ one step at a time and give the $(-2)$-chain described in Chapter 6; after the total space is regular, point blowups resolve the marked fiber boundary while transporting every multiplicity by total transform.
 
-Every adjective in the theorem has a job. Regularity supplies Cartier components and regular sequences. Properness supplies degrees on vertical curves. Flatness makes the fiber Cartier and gives degree constancy. Connectedness makes the radical one-dimensional. Excellence supports the resolution and contraction operations around the numerical theory.
+Every adjective in the theorem has a job. Regularity supplies Cartier components and regular sequences. Properness supplies degrees on vertical curves. Flatness makes the fiber Cartier and makes horizontal prime divisors finite flat near a closed fiber. Connectedness makes the radical one-dimensional. Excellence supports the resolution operations around the numerical theory.
 
 ### 15.2 A calculation protocol
 
@@ -1335,7 +1391,7 @@ Local length does not define the intersection of curves sharing a component. Sel
 
 The special-fiber matrix is not negative definite: the full multiplicity vector is always in its kernel. It becomes negative definite only after quotienting by the fiber, and only a connected fiber gives a one-dimensional kernel. Integral intersection vectors can require rational vertical corrections.
 
-Finally, a negative rational curve is not automatically contractible to a regular point. The first-kind criterion requires the projective-line geometry and normal degree $-1$. Contracting a $(-2)$-curve creates a singularity rather than reversing a regular point blowup.
+Finally, a negative rational curve is not automatically the exceptional curve of an inverse regular point blowup. That recognition requires the projective-line geometry and normal degree $-1$. A $(-2)$-curve has a different numerical signature, and the present intersection theory does not construct its contraction.
 
 ### 15.4 Conclusion
 
