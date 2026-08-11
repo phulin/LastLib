@@ -135,7 +135,7 @@ $$
 
 Thus $\alpha=0$ is the safe unrestricted signature, while $\alpha=1$ means totally real. A field with $r_1=0$ need not possess any special involution; the analytic formula sees the signature and nothing more.
 
-For a finite extension $L/K$, discriminant transitivity gives
+For a finite extension $L/K$, let $\mathfrak d_{L/K}\subseteq\mathcal O_K$ denote the relative discriminant ideal. Discriminant transitivity gives
 
 $$
 D_L=D_K^{[L:K]}N_{K/\mathbf Q}(\mathfrak d_{L/K}),
@@ -220,7 +220,7 @@ $$
 |N_{K/\mathbf Q}(x)|\leq\left(\frac Tn\right)^n.
 $$
 
-Letting $T$ decrease to the critical volume and substituting the covolume gives
+For every $T$ above the critical value, the constructed integral ideal has integral norm bounded by the corresponding right-hand side. Since positive integral ideal norms are discrete, letting $T$ decrease to the critical value and substituting the covolume gives
 
 $$
 \frac{|N(x)|}{N(I)}\leq
@@ -613,7 +613,7 @@ $$
 
 Its zeros lie in the closed critical strip $0\leq\Re(s)\leq1$. Indeed, the Euler product has no zeros for $\Re(s)>1$, and symmetry excludes $\Re(s)<0$ after the trivial gamma cancellations are accounted for. Proving that no zero lies on the two boundary lines is a separate zero-free-line theorem and is unnecessary here; the positivity argument in Chapter 7 includes the endpoints. The zeros of $\xi_K$, with multiplicity, are the nontrivial zeros used below.
 
-The gamma poles are canceled by the trivial zeros of $\zeta_K$. It is safer in the explicit formula to retain their aggregate contribution inside the archimedean integrals than to enumerate them. The factors $s(s-1)$ remove the two poles of $\Lambda_K$ and create the finite-degree pole term seen later.
+Away from the residual simple pole of $\Lambda_K$ at $s=0$, the gamma poles are canceled by the trivial zeros of $\zeta_K$; the other simple pole is at $s=1$. It is safer in the explicit formula to retain the aggregate trivial-zero contribution inside the archimedean integrals than to enumerate it. The factors $s(s-1)$ remove the two poles of $\Lambda_K$ and create the finite-degree pole term seen later.
 
 The order-one bound also gives a symmetric zero-counting estimate
 
@@ -622,7 +622,7 @@ N_K(T+1)-N_K(T)\ll \log D_K+n\log(T+3),
 \tag{4.4}
 $$
 
-where $N_K(T)$ counts zeros with $|\Im\rho|\leq T$. To prove (4.4), apply the argument principle to $\xi_K$ on a unit-width rectangle, use Stirling's formula on the gamma factors, and bound $\zeta_K$ on the right by $\zeta(1+1/\log(T+3))^n$; the functional equation controls the left. This estimate is enough to justify every symmetric zero limit below.
+for $T\geq2$, where $N_K(T)$ counts zeros with $|\Im\rho|\leq T$. To prove (4.4), apply the argument principle to $\xi_K$ on a unit-width rectangle, use Stirling's formula on the gamma factors, and bound $\zeta_K$ on the right by $\zeta(1+1/\log(T+3))^n$; the functional equation controls the left. This estimate is enough to justify every symmetric zero limit below.
 
 ### 4.5 Discriminant and analytic conductor
 
@@ -874,7 +874,7 @@ the $\sinh$ kernel at zero, and compact support handles the prime sum. Formula (
 
 ### 6.6 Normalization diagnostics
 
-Four checks expose most errors in (6.1): the prime term and zero term have positive signs; the pole term is negative and becomes a finite-degree penalty; and the extra real-place constant is $\pi/2$. The factor $8\pi$ is tied to the completion in §4.1. Altering one convention without recomputing the other fails the asymptotic checks in Chapter 9.
+Four checks expose most errors in (6.1): the prime term and zero term have positive signs; the pole term enters with a minus sign and is therefore a nonpositive finite-degree penalty when $F\geq0$; and the extra real-place constant is $\pi/2$. The factor $8\pi$ is tied to the completion in §4.1. Altering one convention without recomputing the other fails the asymptotic checks in Chapter 9.
 
 There is a fifth, more conceptual check. Set aside the prime and zero sums and let an unconditional triangular support grow with the degree. The remaining constant must tend to $\log(4\pi)+\gamma+\alpha$. If it tends instead to $\log(8\pi)+\gamma+\alpha$, the universal $B$-loss was omitted. If the coefficient of $\alpha$ tends to $\pi/2$, the $C$-loss was omitted. This limiting check simultaneously tests the gamma constants, both kernels, and their signature multiplicities.
 
@@ -1045,7 +1045,7 @@ This follows from $(1+jT)/j^2\leq1+T$ and a geometric series.
 
 ### 8.4 Smoothing corners without changing the bound
 
-Choose even nonnegative $\kappa\in C_c^\infty(\mathbf R)$ with $\int\kappa=1$, set
+Choose even nonnegative $\kappa\in C_c^\infty([-1,1])$ with $\int\kappa=1$, set
 $\kappa_\varepsilon(x)=\varepsilon^{-1}\kappa(x/\varepsilon)$, and smooth the interval indicator
 by $h_\varepsilon=\mathbf 1_{[-T/2,T/2]}*\kappa_\varepsilon$. Its normalized autocorrelation
 
@@ -1056,9 +1056,31 @@ G_{T,\varepsilon}=
 $$
 
 is smooth, even, nonnegative, compactly supported, and has nonnegative Fourier transform.
-As $\varepsilon\downarrow0$, it converges to $G_T$ uniformly and in $L^1$. The common compact
-support and the local estimate below dominate the $A$, $B$, and $C$ integrands, so all three
-weighted integrals converge to their triangular values. Near zero,
+Take, for example, $\varepsilon_j=T/(8j)$. Then $h_{\varepsilon_j}$ converges to the interval
+indicator in $L^1$ and $L^2$, so $G_{T,\varepsilon_j}$ converges to $G_T$ uniformly and in
+$L^1$; all supports lie in $[-T-T/4,T+T/4]$. There is also a common majorant at the singular
+endpoint. Indeed, $0\leq h_\varepsilon\leq1$, its total variation is at most $2$, and, for
+$0<\varepsilon\leq T/8$,
+
+$$
+(h_\varepsilon*\widetilde h_\varepsilon)(0)\geq T-2\varepsilon\geq\frac{3T}{4},
+\qquad
+\|h_\varepsilon(\,\cdot+x)-h_\varepsilon\|_1\leq2|x|.
+$$
+
+The identity
+
+$$
+(h_\varepsilon*\widetilde h_\varepsilon)(0)
+-(h_\varepsilon*\widetilde h_\varepsilon)(x)
+=\frac12\|h_\varepsilon(\,\cdot+x)-h_\varepsilon\|_2^2
+$$
+
+therefore gives $0\leq1-G_{T,\varepsilon}(x)\leq4|x|/(3T)$. After division by
+$\cosh(x/2)$ the same linear bound, with an $O(x^2)$ addition independent of $\varepsilon$,
+dominates the singular $B$-kernel; common compact support handles the other kernels. Thus all
+three weighted integrals converge to their triangular values by dominated convergence. For the
+limit itself, as $x\downarrow0$,
 
 $$
 1-F_T^{\mathrm{un}}(x)=\frac{x}{T}+O(x^2),
@@ -1107,7 +1129,7 @@ For fixed $F$, the logarithm in (8.2) is $c_F+\alpha(\pi/2-C(F))-4A(F)/n$. It in
 
 ### 9.5 Threshold and stabilization principles
 
-**Theorem 9.2 (threshold principle).** If $U<4\pi e^{\gamma+\alpha_0}$, there is an explicit integer $N(U,\alpha_0)$ such that $\operatorname{rd}(K)\leq U$ and $\alpha(K)\geq\alpha_0$ imply $[K:\mathbf Q]<N(U,\alpha_0)$.
+**Theorem 9.2 (threshold principle).** If $0<U<4\pi e^{\gamma+\alpha_0}$, there is an explicit integer $N(U,\alpha_0)$ such that $\operatorname{rd}(K)\leq U$ and $\alpha(K)\geq\alpha_0$ imply $[K:\mathbf Q]<N(U,\alpha_0)$.
 
 **Proof.** Choose rational $T$ so the infinite-degree part of (9.1) exceeds $\log U$, then choose $N$ so $2T/N$ is smaller than the gap. Formulas (8.5)--(8.6) make both choices effective. $\square$
 
@@ -1321,7 +1343,7 @@ The gap is large enough that the five-decimal enclosure for $B_T$ is more than s
 The decisive two-prime ceiling is
 
 $$
-U_{2,3}=3^{3/2}2^{2/3}=8.248377821991616\ldots.
+U_{2,3}=3^{3/2}2^{2/3}=8.248377821991615758\ldots.
 $$
 
 Take $T=6$, $n=21$, and $\alpha=0$. From (10.6), $B_6<1.10356$, so
@@ -1352,7 +1374,7 @@ Exponentiating only for readability,
 
 $$
 \operatorname{rd}(K)>8.38461535304387
->8.248377821991616=U_{2,3}.
+>8.248377821991615758\ldots=U_{2,3}.
 $$
 
 Consequently,
@@ -1433,7 +1455,7 @@ $$
 r_1\in\{n,n-2,n-4,\ldots\},
 $$
 
-so the continuous threshold is rounded upward to the next admissible $r_1/n$. This produces a finite signature-by-degree grid with no new analytic input.
+so the continuous threshold is rounded upward to the least admissible $r_1/n$ strictly greater than it. If no admissible value is strictly greater, that degree is not excluded by this comparison. This produces a finite signature-by-degree grid with no new analytic input.
 
 The signature belongs to the field being bounded. A totally real base may acquire no real embeddings in an extension, so its signature alone cannot justify using $\alpha=1$ upstairs.
 

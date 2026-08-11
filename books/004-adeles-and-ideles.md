@@ -2044,7 +2044,7 @@ $$
 
 while the finite coordinates give an element of $\widehat{\mathbf Z}^\times$. Thus the first coordinate of the displayed decomposition is canonically the idele module, even though the normalization process used principal representatives.
 
-For the modulus $N\infty$, where the real place is included, the ray class group is
+For an integer $N\geq1$, the modulus $N\infty$ includes the real place, and its ray class group is
 
 $$
 \operatorname{Cl}_{N\infty}(\mathbf Q)\cong(\mathbf Z/N\mathbf Z)^\times.
@@ -2148,7 +2148,7 @@ It is surjective: take $(b,1,\ldots,1)$. At an inert unramified place, by contra
 
 ### 12.6 Quadratic splitting as an adelic product
 
-Let $K=\mathbf Q(\sqrt d)$ with squarefree $d$. For an odd prime $p\nmid d$, reduction of $X^2-d$ has either two roots or no root modulo $p$. Hensel lifting gives
+Let $K=\mathbf Q(\sqrt d)$ with squarefree nonsquare $d$. For an odd prime $p\nmid d$, reduction of $X^2-d$ has either two roots or no root modulo $p$. Hensel lifting gives
 
 $$
 K\otimes_{\mathbf Q}\mathbf Q_p\cong

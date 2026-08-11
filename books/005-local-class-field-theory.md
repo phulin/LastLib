@@ -342,7 +342,7 @@ $$
 
 is false outside the abelian case. If $L/K$ is finite Galois, the correct index is the degree of its maximal abelian subextension; for a finite separable nonnormal extension there is no comparable formula obtained merely by naming a maximal abelian intermediate field. Even for a cyclic wildly ramified extension, direct calculation on all unit layers is possible only after developing substantial ramification machinery.
 
-The way forward is to recognize $K^\times/NL^\times$ as a cohomology group and then compute it through a canonical invariant. This shifts the problem from tracking every unit norm separately to understanding one two-dimensional obstruction.
+For brevity write $NL^\times=N_{L/K}(L^\times)$. The way forward is to recognize $K^\times/NL^\times$ as a cohomology group and then compute it through a canonical invariant. This shifts the problem from tracking every unit norm separately to understanding one two-dimensional obstruction.
 
 ## 3. Cyclic extensions, norms, and Hilbert 90
 
@@ -509,7 +509,18 @@ $$
 
 where $\operatorname{Br}(L/K)$ is the kernel of restriction $\operatorname{Br}(K)\to\operatorname{Br}(L)$. The generator matters: replacing $\sigma$ by $\sigma^r$ changes the numerical invariant by the inverse of $r$ modulo $n$. This dependence is precisely why Frobenius normalization must be fixed.
 
-For completeness, surjectivity onto the relative Brauer group is part of the assertion and is not being hidden in the word “cyclic.” Let $A$ be central simple over $K$ and split by $L$, and choose $A\otimes_KL\cong\operatorname{End}_L(V)$. A lift of the semilinear action of $\sigma$ is an invertible semilinear operator $T$ on $V$, unique up to an $L$-linear scalar after changing the splitting. The operator $T^n$ is $L$-linear and commutes with the full matrix algebra, so it is multiplication by some $a\in K^\times$. Descent with respect to $T$ identifies $A$, up to a matrix factor, with $(L/K,\sigma,a)$. Replacing $T$ by $bT$ changes $a$ to $N_{L/K}(b)a$, and every change of splitting has this form after an inner conjugation. Thus the parameter is unique modulo norms, proving both surjectivity and injectivity of the displayed map. This is the cyclic specialization of the crossed-product descent written out for a general Galois group in Section 4.5.
+For completeness, surjectivity onto the relative Brauer group is part of the assertion and is not
+being hidden in the word “cyclic.” Let $A$ be central simple over $K$ and split by $L$, and choose
+$A\otimes_KL\cong\operatorname{End}_L(V)$. A lift of the semilinear action of $\sigma$ is an
+invertible semilinear operator $T$ on $V$, unique up to an $L$-linear scalar after changing the
+splitting. The operator $T^n$ is $L$-linear and commutes with the full matrix algebra, so it is
+multiplication by some $a\in L^\times$. It also commutes with $T$, whose semilinearity sends
+multiplication by $a$ to multiplication by $\sigma(a)$; hence $\sigma(a)=a$ and $a\in K^\times$.
+Descent with respect to $T$ identifies $A$, up to a matrix factor, with $(L/K,\sigma,a)$.
+Replacing $T$ by $bT$ changes $a$ to $N_{L/K}(b)a$, and every change of splitting has this form
+after an inner conjugation. Thus the parameter is unique modulo norms, proving both surjectivity
+and injectivity of the displayed map. This is the cyclic specialization of the crossed-product
+descent written out for a general Galois group in Section 4.5.
 
 ### 3.5 The unramified cyclic computation
 
@@ -576,7 +587,7 @@ w_D(a)=\frac1m v_K(N_{E/K}(a))
 =\frac1{e(E/K)}v_E(a).
 $$
 
-In particular, $w_D(a)\geq0$ exactly when $a$ is integral over $\mathcal O$. Now suppose $w_D(x)\leq w_D(y)$. Multiplicativity of reduced norm gives $w_D(x^{-1}y)\geq0$, so $x^{-1}y$ is integral. The element $1+x^{-1}y$ is integral in the same commutative field, and therefore has nonnegative $w_D$-value. Thus
+In particular, $w_D(a)\geq0$ exactly when $a$ is integral over $\mathcal O$. Now suppose $w_D(x)\leq w_D(y)$. If $x=0$, then also $y=0$ and the desired inequality is immediate, so assume $x\ne0$. Multiplicativity of reduced norm gives $w_D(x^{-1}y)\geq0$, so $x^{-1}y$ is integral. The element $1+x^{-1}y$ is integral in the same commutative field, and therefore has nonnegative $w_D$-value. Thus
 
 $$
 w_D(x+y)=w_D(x)+w_D(1+x^{-1}y)\geq w_D(x).
@@ -883,7 +894,10 @@ $$
 
 **Proof.** Surjectivity follows because $A_{r,d}$ realizes $r/d$. The cyclic presentation just proved shows that every central division algebra has one of these classes. The common-denominator relation (4.6) proves that the assigned fraction is independent of every presentation and that addition agrees with tensor product. If the invariant is zero, a common-denominator parameter is a norm and the cyclic splitting criterion makes the algebra a matrix algebra; hence the invariant is injective.
 
-It remains to verify restriction. First suppose $L/K$ is unramified of degree $m$. Put
+It remains to verify restriction. We first treat finite separable extensions. Such an extension has
+a maximal unramified subextension, followed by a totally ramified extension, and restriction is
+transitive. It is therefore enough to handle those two cases. First suppose $L/K$ is unramified of
+degree $m$. Put
 
 $$
 g=\gcd(d,m),\qquad d'=d/g,\qquad m'=m/g.
@@ -902,7 +916,95 @@ $$
 \operatorname{inv}_L(\operatorname{res}A_{r,d})=m\frac rd.
 $$
 
-Now suppose $L/K$ is totally ramified of degree $e$. It is linearly disjoint from $K_d$, so $LK_d/L$ remains unramified of degree $d$ with the same Frobenius. Write $\pi=u\pi_L^e$. The unit $u$ is a norm from the unramified extension $LK_d/L$, so the restricted cyclic algebra has parameter equivalent to $\pi_L^{er}$. Its invariant is $er/d$. Every finite extension is an unramified stage followed by a totally ramified stage, and multiplication of the two factors gives $[L:K]r/d$. $\square$
+Now suppose $L/K$ is totally ramified and separable of degree $e$. It is linearly disjoint from
+$K_d$, so $LK_d/L$ remains unramified of degree $d$ with the same arithmetic Frobenius. Write
+$\pi=u\pi_L^e$. The unit $u$ is a norm from the unramified extension $LK_d/L$, so the restricted
+cyclic algebra has parameter equivalent to $\pi_L^{er}$. Its invariant is $er/d$. Combining the
+unramified and totally ramified stages gives the restriction formula for every finite separable
+extension.
+
+We next prove the missing purely inseparable case. We will use explicitly that scalar extension of
+a central simple algebra remains central simple over an arbitrary field extension, not merely a
+separable one. Indeed, after extending further to an algebraic closure it becomes a full matrix
+algebra. Any two-sided ideal after the first scalar extension becomes either zero or the whole
+matrix algebra after the second, and faithful scalar extension descends that conclusion. The same
+conclusion holds for the center because commuting with a basis of the algebra is a system of linear
+equations: its solution space commutes with scalar extension, and the center of a full matrix
+algebra consists only of scalars. Thus the center has dimension one over the new ground field. The
+scalar extension consequently has a Brauer class and a well-defined **index**, the degree of the
+unique central division algebra in that class.
+
+Let $P/K$ be finite purely inseparable of degree $a$. The case $a=1$ is immediate; a nontrivial
+case occurs only in characteristic $p>0$. Its residue extension is purely inseparable, hence
+trivial because the finite residue field $k$ is perfect. The fundamental equality therefore gives
+
+$$
+e(P/K)=a.
+$$
+
+The separable extension $K_d/K$ and the purely inseparable extension $P/K$ are linearly disjoint:
+an element in their intersection is both separable and purely inseparable over $K$, and hence lies
+in $K$. Consequently $P_d=PK_d$ has degree $d$ over $P$. It is the unramified extension of $P$ of
+degree $d$. Indeed, the residue field $k_d$ of $K_d$ embeds in the residue field of $P_d$, while
+the residue field of $P$ is still $k$. Thus $f(P_d/P)\geq d$; the opposite inequality follows from
+$f(P_d/P)\leq[P_d:P]=d$. Hence $f=d$ and $e=1$. The automorphism that is the identity on $P$ and
+arithmetic Frobenius $F$ on $K_d$ reduces to $x\mapsto x^{|k|}$, so it is precisely the arithmetic
+Frobenius $F_P$ of $P_d/P$.
+
+Scalar extension preserves the displayed cyclic presentation, not just its Brauer class. If $z$
+is the crossed-product generator, its defining relations after base change are still
+
+$$
+zx=F_P(x)z\quad(x\in P_d),
+\qquad z^d=\pi^r.
+$$
+
+Hence
+
+$$
+A_{r,d}\otimes_KP\cong(P_d/P,F_P,\pi^r).
+$$
+
+Choose a uniformizer $\varpi$ of $P$. Since $v_P(\pi)=a$, one has
+$\pi=u\varpi^a$ for some $u\in\mathcal O_P^\times$. Units are norms from the unramified extension
+$P_d/P$, and changing $z$ to $bz$ multiplies $z^d$ by $N_{P_d/P}(b)$. The unit factor can therefore
+be removed, giving
+
+$$
+[A_{r,d}\otimes_KP]=[A^{\,P}_{ar,d}]
+\quad\text{in }\operatorname{Br}(P).
+$$
+
+This also records exactly what happens to the Brauer index. If $h=\gcd(d,ar)$, the reduction of a
+cyclic class to lowest terms proved above says that the division algebra in this class is
+$A^{\,P}_{ar/h,d/h}$ and has degree, hence index, $d/h$. This is the order of $ar/d$ in
+$\mathbf Q/\mathbf Z$. With the arithmetic Frobenius and uniformizer normalization used to define
+$\operatorname{inv}_P$, the preceding scalar extension therefore has invariant
+
+$$
+\operatorname{inv}_P(A_{r,d}\otimes_KP)
+=\frac{ar}{d}
+=a\operatorname{inv}_K(A_{r,d}).
+$$
+
+Every class in $\operatorname{Br}(K)$ has an $A_{r,d}$ representative, so this proves the formula
+for every finite purely inseparable extension.
+
+Finally let $L/K$ be any finite extension, and let $S$ be the maximal separable subextension of
+$L/K$. Then $S/K$ is separable and $L/S$ is purely inseparable: in characteristic $p$, a suitable
+$p$-power of every element of $L$ is separable over $K$ and therefore belongs to $S$.
+Transitivity of scalar extension, followed by the two cases just proved, gives
+
+$$
+\begin{aligned}
+\operatorname{inv}_L(\operatorname{res}_{L/K}\alpha)
+&=[L:S]\operatorname{inv}_S(\operatorname{res}_{S/K}\alpha)\\
+&=[L:S][S:K]\operatorname{inv}_K(\alpha)\\
+&=[L:K]\operatorname{inv}_K(\alpha).
+\end{aligned}
+$$
+
+This proves the restriction formula for arbitrary finite extensions. $\square$
 
 For a finite separable extension $L/K$, the proof also gives the corestriction formula
 
@@ -1546,7 +1648,7 @@ $$
 
 The distinct primitive points are all roots of the separable polynomial $Q_n$, so it splits in $K_n$ and these maps exhaust the Galois group. This simultaneously proves normality rather than assuming it.
 
-**Theorem 6.3.** The extension $K_n/K$ is finite, totally ramified, and abelian, with canonical isomorphism
+**Theorem 6.3.** Relative to the fixed uniformizer, Lubin--Tate series, and torsion-coordinate system, the extension $K_n/K$ is finite, totally ramified, and abelian, with an isomorphism
 
 $$
 \operatorname{Gal}(K_n/K)
@@ -2886,7 +2988,7 @@ For a nonprofinite target, retain only the characters that extend continuously t
 
 ### 12.6 Conclusion
 
-Local class field theory begins with a striking mismatch. On one side lies the concrete topological group $K^\times$, decomposed by valuation, residue units, and infinitesimal units. On the other lies the apparently remote collection of all finite abelian extensions of $K$. Reciprocity proves that the mismatch is an illusion: every finite Galois quotient is already encoded by a norm quotient of $K^\times$.
+Local class field theory begins with a striking mismatch. On one side lies the concrete topological group $K^\times$, decomposed by valuation, residue units, and infinitesimal units. On the other lies the apparently remote collection of all finite abelian extensions of $K$. Reciprocity proves that the mismatch is an illusion: every finite abelian Galois quotient is already encoded by a norm quotient of $K^\times$.
 
 The proof reveals why the correspondence is rigid. Hilbert 90 removes the first cohomological obstruction. The local Brauer invariant turns every remaining norm obstruction into a rational number modulo one. Its fundamental classes identify Galois abelianizations with norm quotients, while the explicit unramified and formal-module towers show that these quotients are cofinal and realize every open finite-index subgroup. Topology then assembles the finite maps into a dense embedding
 

@@ -124,7 +124,7 @@ $$
 k[x_0/x_i,\ldots,\widehat{x_i/x_i},\ldots,x_r/x_i],
 $$
 
-so the construction recovers $\mathbf P^r_k$. If $A_+=0$, Proj is empty. If $A=k[x]$ with $\deg x=2$, Proj is still one point: the grading affects twists even when the underlying scheme is unchanged.
+so the construction recovers $\mathbf P^r_k$. If $A_+=0$, Proj is empty. If $A=k[x]$ with $\deg x=2$, Proj is $\operatorname{Spec}k$: the grading affects twists even when the underlying scheme is unchanged.
 
 ### 1.3 The construction of relative Proj
 
@@ -209,7 +209,7 @@ M\longrightarrow\bigoplus_{n\in\mathbf Z}
 \Gamma(\operatorname{Proj}A,\widetilde M(n)).
 $$
 
-It need not be an isomorphism in small degrees; saturation again intervenes. In sufficiently high degrees, finite generation and Serre vanishing will make it behave as expected.
+It need not be an isomorphism in small degrees; saturation again intervenes. If $A$ is a noetherian standard graded algebra and $M$ is finitely generated, the map is an isomorphism in all sufficiently high degrees. More general finite gradings reduce to this statement after passing to a suitable Veronese algebra.
 
 ### 1.6 Veronese algebras and presentations
 
@@ -254,7 +254,7 @@ $$
 
 The convention matters. Some accounts use lines in $\mathcal E$ and write the symmetric algebra of $\mathcal E^\vee$. Here points are rank-one quotients of $\mathcal E$, so formulas should be read accordingly.
 
-For $\mathcal E=\mathcal O_S^{r+1}$ we write $\mathbf P^r_S$. It is covered by $r+1$ standard affine spaces. The transition functions divide coordinates by the chosen nonzero coordinate, exactly as over a field.
+For $\mathcal E=\mathcal O_S^{r+1}$ we write $\mathbf P^r_S$. It is covered by $r+1$ standard affine spaces. On the $i$th chart the image of the $i$th basis vector generates the universal invertible quotient, and the transition functions divide the other coordinates by that generator, exactly as over a field.
 
 ### 2.2 Invertible quotients
 
@@ -431,7 +431,7 @@ $$
 
 where $n>0$, $s\in\Gamma(X_U,\mathcal L^n)$, and every $X_s$ is affine.
 
-Allowing $n$ to depend on $s$ makes the definition local and robust. If $X$ is quasi-compact, one may choose finitely many $s$ and replace their powers by a common multiple. The resulting sections define a quasi-projective immersion. Conversely, the standard opens of projective space are affine, so a very ample bundle is ample.
+Allowing $n$ to depend on $s$ makes the definition local and robust. If $X\to S$ is quasi-compact and of finite type, one may choose finitely many $s$ and replace their powers by a common multiple. The resulting sections define a quasi-projective immersion. Conversely, the standard opens of projective space are affine, so a very ample bundle is ample.
 
 The trivial bundle on an affine morphism is ample: the section $1$ has affine nonvanishing locus all of $X$. Thus ampleness is relative and does not mean numerical positivity on an absolute variety. On a proper positive-dimensional variety over a field, the trivial bundle is not ample because the only nonvanishing locus of a constant section is the nonaffine whole variety.
 
@@ -545,7 +545,7 @@ Finally, “very ample after taking a power” descends to ampleness, but it nee
 
 Hilbert polynomials arise from an asymmetry: positive twists acquire many sections while their higher cohomology eventually disappears. We begin where the calculation is visible.
 
-Cover $\mathbf P^r_A$ by $U_i=D_+(x_i)$. Every finite intersection is affine, so the alternating Cech complex computes the cohomology of a quasi-coherent sheaf. For $\mathcal O(n)$ its terms are degree-$n$ parts of localizations of $A[x_0,\ldots,x_r]$. Sorting Laurent monomials by the set of variables with negative exponent gives
+Cover $\mathbf P^r_A$ by $U_i=D_+(x_i)$. Every nonempty finite intersection is affine, so the alternating Cech complex computes the cohomology of a quasi-coherent sheaf. For $\mathcal O(n)$ its terms are degree-$n$ parts of localizations of $A[x_0,\ldots,x_r]$. Sorting Laurent monomials by the set of variables with negative exponent gives
 
 $$
 H^i(\mathbf P^r_A,\mathcal O(n))=0
@@ -628,7 +628,7 @@ H^0(\mathcal F(n))\otimes_AH^0(\mathcal O(1))
 \quad(n\geq m).
 $$
 
-One chooses a hyperplane avoiding the relevant associated points and inducts on $r$; over a finite residue field, make a faithfully flat extension to choose the hyperplane and descend the result. Regularity packages all high-degree behavior into one integer. For ideals with a fixed Hilbert polynomial, a uniform regularity bound exists. Chapter 12 proves the bounded form needed to construct the Hilbert scheme.
+One chooses a hyperplane avoiding the relevant associated points and inducts on $r$; over a finite residue field, pass faithfully flatly to an infinite field, make the choice there, and descend the resulting vanishing and generation statements by faithful flatness. Regularity packages all high-degree behavior into one integer. For ideals with a fixed Hilbert polynomial, a uniform regularity bound exists. Chapter 12 proves the bounded form needed to construct the Hilbert scheme.
 
 ## 7. Hilbert functions and Hilbert polynomials
 
@@ -736,9 +736,9 @@ $$
 
 ### 7.4 Dependence on the polarization
 
-The polynomial belongs to $(\mathcal F,\mathcal L)$. Replacing $\mathcal L$ by $\mathcal L^q$ replaces $P(t)$ by $P(qt)$. Different ample bundles can produce different leading coefficients, or polarized degrees; the polynomial degree remains the support dimension. A moduli problem must therefore fix an embedding or polarization before specifying a Hilbert polynomial.
+The polynomial belongs to $(\mathcal F,\mathcal L)$. For $q\geq1$, replacing $\mathcal L$ by $\mathcal L^q$ replaces $P(t)$ by $P(qt)$. Different ample bundles can produce different leading coefficients, or polarized degrees; the polynomial degree remains the support dimension. A moduli problem must therefore fix an embedding or polarization before specifying a Hilbert polynomial.
 
-Dimension is independent of the polarization. For curves the linear coefficient is the degree of the chosen bundle. For finite schemes the constant polynomial is total length and is independent of any polarization. This explains why length-$d$ Hilbert functors have an intrinsic meaning even when a projective embedding is used to construct them.
+Dimension is independent of the polarization. For an integral projective curve $C$, the linear coefficient of $P_{\mathcal O_C,\mathcal L}$ is $\deg_C\mathcal L$; for a locally free sheaf of rank $r$ it is $r\deg_C\mathcal L$, and in general it is the corresponding one-dimensional multiplicity. For finite schemes the constant polynomial is total length and is independent of any polarization. This explains why length-$d$ Hilbert functors have an intrinsic meaning even when a projective embedding is used to construct them.
 
 ## 8. Hilbert polynomials in families
 
@@ -932,7 +932,7 @@ high power.
 Fix an integer $d\geq0$.
 A closed subscheme $Z\subseteq X_T$ is a family of length $d$ over $T$ if $Z\to T$ is finite locally free of rank $d$. Every geometric fiber is zero-dimensional of scheme-theoretic length $d$. Rank is stronger than counting points: one nonreduced point can have length $d$.
 
-If $X\to S$ is separated, these families form a set-valued functor: an isomorphism between two closed subschemes over $X_T$ is unique. A tuple of sections produces the disjoint union of their graphs only while the graphs remain disjoint. When points collide, the union loses rank; retaining multiplicity requires an infinitesimal thickening.
+If $X\to S$ is separated, these families form a set-valued functor: an isomorphism between two closed subschemes over $X_T$ is unique. A tuple of sections produces the disjoint union of their graphs only while the graphs remain disjoint. When points collide, the reduced union loses points; the scheme-theoretic union may acquire a thickening and retain rank, but it need not remain flat. A length-$d$ family must retain the scheme structure and satisfy finite local freeness over the base.
 
 ### 10.2 Relative effective Cartier divisors
 
@@ -1473,23 +1473,27 @@ $$
 
 Suppose $X\to S$ is projective flat and finitely presented and $Y\to S$ is projective. Fix a
 Hilbert polynomial $P$ for graphs in a chosen projective embedding of $X\times_SY$. The Hilbert
-scheme of that product represents all flat closed families with polynomial $P$. For its universal
-family $\Gamma$, consider the proper finitely presented projection
-$p:\Gamma\to X$.
+scheme of that product represents all flat closed families with polynomial $P$. Write $H$ for
+this Hilbert scheme. For its universal family $\Gamma$, consider the proper finitely presented
+projection
+$p:\Gamma\to X\times_S H$.
 
-The locus in the parameter base where $p$ is an isomorphism is open. Indeed, near a point where
-$p$ is an isomorphism on the fiber, upper semicontinuity of fiber dimension removes the closed
-non-quasi-finite locus. The resulting proper quasi-finite morphism is finite. It is then controlled
-by the map of coherent algebras
+The locus in the parameter base where $p$ is an isomorphism is open. Indeed, near a parameter
+where $p$ is an isomorphism on the fiber, upper semicontinuity of fiber dimension removes the
+closed non-quasi-finite locus. The resulting proper quasi-finite morphism is finite. Both
+$\Gamma$ and $X\times_S H$ are flat over $H$, so the fiberwise isomorphism criterion for a finite
+finitely presented morphism, obtained from the local flatness criterion and Nakayama's lemma
+applied to
 
 $$
-\mathcal O_X\longrightarrow p_*\mathcal O_\Gamma.
+\mathcal O_{X\times_S H}\longrightarrow p_*\mathcal O_\Gamma.
 $$
 
-Its kernel and cokernel vanish on the chosen fiber. Their supports are closed in $X$, and their
-images in the parameter base are closed because $X$ is proper. Removing those images makes the
-algebra map, hence $p$, an isomorphism. Conversely an isomorphism is a graph, and composing its
-inverse with $\Gamma\hookrightarrow X\times Y$ gives the unique morphism $X\to Y$. Thus this open
+shows that $p$ is an isomorphism over a neighborhood of that fiber. Equivalently, the non-isomorphism
+locus is closed in $X\times_S H$; its image in $H$ is closed because $X$ is proper. Removing that
+image makes the algebra map, hence $p$, an isomorphism. Conversely an isomorphism is a graph, and composing its
+inverse with $\Gamma\hookrightarrow (X\times_S Y)\times_S H$ gives the unique family of morphisms
+$X\times_S H\to Y\times_S H$. Thus this open
 subscheme represents morphisms whose graphs have polynomial $P$.
 
 This construction is used only with bounded graph polynomials. There is no single finite-type scheme of all morphisms of arbitrary degree. Fixing degree or Hilbert polynomial is the finiteness datum that makes a parameter space possible.
@@ -1520,13 +1524,13 @@ detects infinitesimal test schemes.
 
 Fix $r$ and a polynomial $P(n)=en+c$. The scheme $\operatorname{Hilb}^P(\mathbf P^r_S/S)$ carries the universal projective flat family. The open locus on which the fibers are smooth of pure dimension one parametrizes smooth embedded curves with that polynomial. If one also requires geometric connectedness, this is open in a proper smooth family. Additional marked effective divisors of degree $d$ are parametrized by the relative symmetric power of the universal curve.
 
-This is the precise Hilbert apparatus needed for embedded curves: a fixed polynomial, its universal family, open smooth and connected loci, and relative length-$d$ subschemes. Abelian families can likewise be placed in a Hilbert scheme after fixing a polarization type, a relatively very ample power, and the resulting Hilbert polynomial; group laws are morphisms whose graphs live in bounded Hilbert loci, and the identity and associativity equations cut out closed loci. Establishing the full moduli problem requires further descent and rigidity, but no broader parameter functor is needed here.
+This is the precise Hilbert apparatus needed for embedded curves: a fixed polynomial, its universal family, open smooth and connected loci, and relative length-$d$ subschemes. Abelian families can likewise be placed in a Hilbert scheme after fixing a polarization type, a relatively very ample power, and the resulting Hilbert polynomial; multiplication, inverse, and identity are morphisms whose graphs live in bounded Hilbert loci, while the two unit laws, inverse laws, associativity, commutativity, and compatibility with the fixed polarization cut out closed loci. Establishing the full moduli problem requires further descent and rigidity, but no broader parameter functor is needed here.
 
 ### 13.4 Boundary distinctions
 
 Before using one of these parameter spaces, four distinctions prevent most errors.
 
-First, decide whether the object is an ordered tuple, a cycle, or an embedded finite subscheme. They are represented respectively by $X^d$, $\operatorname{Sym}^d(X)$, and $\operatorname{Hilb}^d(X)$. Only on a smooth curve do the last two agree.
+First, decide whether the object is an ordered tuple, a cycle, or an embedded finite subscheme. They are represented respectively by $X^d$, $\operatorname{Sym}^d(X)$, and $\operatorname{Hilb}^d(X)$. They always agree in degree one, and on a smooth relative curve they agree in every degree; outside that setting there is no general identification.
 
 Second, distinguish a functor from its representing scheme and from its universal family. A $T$-point of a Hilbert scheme is a subscheme of $X_T$; it is not a point of $X$.
 
@@ -1583,8 +1587,9 @@ On a smooth relative curve, the last two entries in constant degree coincide wit
 
 For later use, the conclusions can be read as one chain. Relative Proj commutes with arbitrary base change and carries its twisting sheaf. A finite graded presentation gives a projective embedding. Ample line bundles are characterized by affine nonvanishing opens, eventual generation, and Serre vanishing; a sufficiently high power is very ample. Positivity pulls back under every base change and descends under fpqc covers with the stated quasi-compactness and polarization hypotheses.
 
-For a projective flat family over a locally noetherian base, high twisted pushforwards are locally
-free and commute with base change locally on the base. The fiber Hilbert polynomial is locally
+For a projective flat family over a locally noetherian base, a coherent sheaf flat over the base
+and twisted by high powers of a fixed relatively ample line bundle has locally free pushforward
+commuting with base change locally on the base. The fiber Hilbert polynomial is locally
 constant. Over a noetherian base, fixing that polynomial gives a projective finitely presented
 Hilbert scheme with a universal flat closed family. The constant polynomial $d$ gives the
 intrinsic space of finite locally free length-$d$ subschemes.

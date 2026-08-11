@@ -109,7 +109,7 @@ $$
 x=p^n\frac ab,
 $$
 
-where $a,b$ are integers not divisible by $p$. The exponent $n$, denoted $v_p(x)$, is the $p$-adic order. Thus $v_p(xy)=v_p(x)+v_p(y)$, while
+where $a,b$ are coprime integers not divisible by $p$ and $b>0$. The exponent $n$, denoted $v_p(x)$, is the $p$-adic order. Set $v_p(0)=+\infty$. Thus $v_p(xy)=v_p(x)+v_p(y)$, while
 
 $$
 v_p(x+y)\geq \min\{v_p(x),v_p(y)\}.
@@ -135,6 +135,8 @@ $$
 \operatorname{ord}_0(f/g)=\operatorname{ord}_0(f)-\operatorname{ord}_0(g).
 $$
 
+Set $\operatorname{ord}_0(0)=+\infty$.
+
 This is well defined: replacing $f/g$ by $fh/gh$ adds the same order to numerator and denominator. The value is the zero order if positive and the negative of the pole order if negative.
 
 The inequality for sums is visible from factorizations. If $f=t^m u$ and $g=t^n w$, with $u(0),w(0)\ne0$ and $m\leq n$, then
@@ -153,7 +155,7 @@ $$
 
 This strengthening of the triangle inequality is one of the small facts that makes nonarchimedean analysis unusually rigid.
 
-The point $0$ has no special status. Replacing $t$ by $t-a$ defines $\operatorname{ord}_a$ at any $a\in k$. On a smooth algebraic curve a local parameter plays the role of $t-a$. The resulting order is intrinsic even though the parameter is not: two parameters differ by a local unit.
+The point $0$ has no special status. Define $\operatorname{ord}_a(f)$ as the order at zero of $f(a+t)$, equivalently as the multiplicity of $t-a$ in $f$. On a smooth algebraic curve a local parameter plays the role of $t-a$. The resulting order is intrinsic even though the parameter is not: two parameters differ by a local unit.
 
 ### 1.3 What should count as integral?
 
@@ -277,7 +279,7 @@ $$
 
 If $v(x+y)>v(x)$, both terms in this minimum would exceed $v(x)$, a contradiction. Hence equality holds. $\square$
 
-This short argument is used constantly. Cancellation is possible only among terms of equal value. In a finite sum, a term whose value is strictly smaller than all others controls the sum. In particular, if a finite sum is zero, its least value must occur at least twice.
+This short argument is used constantly. Cancellation is possible only among terms of equal value. In a finite sum, a term whose value is strictly smaller than all others controls the sum. In particular, in a nonempty finite sum of nonzero terms whose sum is zero, the least value must occur at least twice.
 
 ### 2.4 Equivalence and normalization
 
@@ -945,7 +947,7 @@ $$
 a_0+a_1p+a_2p^2+\cdots,\qquad 0\leq a_i<p.
 $$
 
-Its fraction field $\mathbf Q_p$ consists of expansions $\sum_{i=N}^\infty a_ip^i$ with $N\in\mathbf Z$. The valuation is the first index with nonzero digit.
+Its fraction field $\mathbf Q_p$ consists of expansions $\sum_{i=N}^\infty a_ip^i$ with $N\in\mathbf Z$. For a nonzero element, the valuation is the first index with nonzero digit; the all-zero expansion represents $0$, whose valuation is $+\infty$.
 
 Negative ordinary integers have infinite $p$-adic expansions. Since
 
@@ -1553,7 +1555,7 @@ $$
 B=S\otimes_R A=S_{R\setminus\mathfrak p}.
 $$
 
-All primes of $S$ not above $\mathfrak p$ disappear. The remaining maximal ideals encode exactly the ways of extending the $\mathfrak p$-adic valuation.
+All nonzero primes of $S$ not above $\mathfrak p$ disappear. The remaining maximal ideals encode exactly the ways of extending the $\mathfrak p$-adic valuation.
 
 ### 11.2 Finiteness hypotheses
 

@@ -986,7 +986,7 @@ At a real place $v$, the image of $\mathbf R^\times$ is trivial if every place a
 
 ### 5.3 Compatibility in quotients and towers
 
-Let $K\subseteq E\subseteq L$ with $L/K$ finite abelian. Restriction of automorphisms and the identity map on $C_K$ give a commutative square
+Let $E/K$ and $L/K$ be finite abelian extensions in a common separable closure. When $E\subseteq L$, restriction of automorphisms and the identity map on $C_K$ give a commutative square
 
 $$
 \begin{array}{ccc}
@@ -996,7 +996,9 @@ C_K&\xrightarrow{\operatorname{Art}_{E/K}}&\operatorname{Gal}(E/K).
 \end{array}
 $$
 
-Hence inclusion of fields reverses inclusion of norm subgroups:
+Hence $E\subseteq L$ implies the reverse inclusion of norm subgroups. Conversely, if the
+norm-subgroup inclusion holds, apply finite reciprocity to the abelian compositum $EL/K$: the
+subgroup fixing $E$ contains the subgroup fixing $L$, so $E\subseteq L$. Therefore
 
 $$
 E\subseteq L
@@ -1346,7 +1348,7 @@ $$
 \longrightarrow1.
 $$
 
-The first map records residue classes and signs. The middle map chooses, by weak approximation, an element with the given residues and signs and sends the corresponding principal ideal, with its congruence defect retained, to a ray class. A different choice changes it by the image of a global unit. Forgetting congruence and sign gives the last map, and its surjectivity follows by representing an ideal class with an ideal prime to $\mathfrak m_0$.
+The first map records residue classes and signs. The middle map chooses, by weak approximation, an element with the given residues and signs and sends the corresponding principal ideal, with its congruence defect retained, to a ray class. Two choices with the same residue and sign data have ray-trivial quotient and therefore define the same ray class. Global units instead describe the kernel of this middle map. Forgetting congruence and sign gives the last map, and its surjectivity follows by representing an ideal class with an ideal prime to $\mathfrak m_0$.
 
 Exactness can be checked directly. A ray class maps trivially to $\operatorname{Cl}(K)$ exactly when it is represented by $(a)$. Its remaining information is the residue of $a$ modulo $\mathfrak m_0$ and its selected real signs. It is trivial as a ray class precisely when those data can be corrected to $(1,+)$ by a unit. Thus the units are not a nuisance quotient: they are the global compatibility among finite congruences and real signs.
 
@@ -1434,7 +1436,7 @@ $$
 
 The discriminant tower formula gives $N_{K/\mathbf Q}(\mathfrak d_{H_K/K})=1$, hence the relative discriminant is the unit ideal. Thus $H_K/K$ is quadratic and unramified at every finite place, and maximality identifies it with the Hilbert class field.
 
-For a real quadratic field, ordinary and narrow class fields may differ. If there is a unit of norm $-1$, its two real signs differ and the sign map is large enough to identify ordinary and narrow classes. If no such unit exists, the narrow class number is twice the ordinary class number. The extra quadratic extension is unramified at finite places but complexifies the real embeddings. This example shows why “everywhere unramified” must specify whether infinite places count.
+For a real quadratic field, ordinary and narrow class fields may differ. If there is a unit of norm $-1$, its two real signs differ and the sign map is large enough to identify ordinary and narrow classes. If no such unit exists, the narrow class number is twice the ordinary class number. The narrow Hilbert class field is then a quadratic extension of the ordinary Hilbert class field; it is unramified at finite places but complexifies the real embeddings. This example shows why “everywhere unramified” must specify whether infinite places count.
 
 ### 8.4 Cyclotomic fields as ray class fields
 
@@ -1652,7 +1654,7 @@ This follows directly by taking inverse limits of the finite isomorphisms. Unlik
 
 ### 10.2 The connected component of the idele class group
 
-Let $C_K^0$ be the identity component. Every map from a connected group to a finite discrete group is trivial, so $C_K^0$ lies in every open finite-index subgroup. Conversely, choose one archimedean coordinate and a continuous positive one-parameter subgroup on which the idele module is the identity. It splits the exact sequence
+Let $C_K^0$ be the identity component. Every continuous map from a connected group to a finite discrete group is trivial, so $C_K^0$ lies in every open finite-index subgroup. Conversely, choose one archimedean coordinate and a continuous positive one-parameter subgroup on which the idele module is the identity. It splits the exact sequence
 
 $$
 1\longrightarrow C_K^1\longrightarrow C_K
@@ -1828,7 +1830,7 @@ The square on the complex absolute value matches the normalized adelic conventio
 
 ### 11.4 Algebraic infinity types
 
-Fix the set $\Sigma_K$ of embeddings $\tau:K\hookrightarrow\mathbf C$. A Hecke character is **algebraic** if there are integers $n_\tau$ such that on a sufficiently small connected subgroup of $K_\infty^\times$ its archimedean component is
+Fix the set $\Sigma_K$ of embeddings $\tau:K\hookrightarrow\mathbf C$. A Hecke character is **algebraic** if there are integers $n_\tau$ such that on the identity component of $K_\infty^\times$ its archimedean component is
 
 $$
 \chi_\infty(x)=\prod_{\tau\in\Sigma_K}\tau(x)^{-n_\tau}.
