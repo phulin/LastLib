@@ -211,7 +211,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 144. Mazur–Raynaud Admissible Group Schemes
 - [x] 145. Completed Hecke Pieces and Eisenstein p-divisible Groups
 - [x] 146. Eisenstein Descent and the Mordell–Weil Group of the Eisenstein Quotient
-- [ ] 147. Eisenstein Cotangent Lattices and Formal Immersion
+- [x] 147. Eisenstein Cotangent Lattices and Formal Immersion
 - [ ] 148. Rational Isogenies of Prime Degree
 - [x] 149. Genus-Two Curves, Jacobians, and Abel–Jacobi Geometry
 - [x] 150. Mumford Representations and Exact Genus-Two Jacobian Arithmetic
