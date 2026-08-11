@@ -183,11 +183,11 @@ called the **normalization of $X$ in $L$**. When $L=F$, this is simply the norma
 
 The normalization is not merely a repair chosen from equations. It is characterized by every dominant map from a normal source.
 
-**Theorem 2.3 (universal property).** Let $X$ be integral with function field $F$, let $L/F$ be finite, and let $\nu:X'\to X$ be the normalization in $L$. Suppose $Y$ is normal and integral, $f:Y\to X$ is dominant, and the induced embedding $F\hookrightarrow K(Y)$ factors through $L$. If the resulting rational map $Y\dashrightarrow X'$ sends each point into an affine chart on which it is defined—for example if $f$ is a morphism and $K(Y)=L$—then there is a unique $X$-morphism $Y\to X'$ inducing the chosen field embedding.
+**Theorem 2.3 (universal property).** Let $X$ be integral with function field $F$, let $L/F$ be finite, and let $\nu:X'\to X$ be the normalization in $L$. Suppose $Y$ is normal and integral, $f:Y\to X$ is dominant, and an $F$-embedding $L\hookrightarrow K(Y)$ is fixed. Then there is a unique $X$-morphism $Y\to X'$ inducing that embedding.
 
 **Proof strategy.** A map to an affine normalization amounts contravariantly to showing that every integral element is regular on the normal source. This can be checked in its local rings.
 
-Take $U=\operatorname{Spec}A\subset X$ and a point $y\in f^{-1}(U)$. Every $b\in A_L$ is integral over $A$, hence its image in $K(Y)$ is integral over $\mathcal O_{Y,y}$. Since this local ring is integrally closed, the image lies in $\mathcal O_{Y,y}$. Thus $b$ is regular near every point of $f^{-1}(U)$ and defines a map to $\operatorname{Spec}A_L$. These maps agree on overlaps by Proposition 2.2. Uniqueness follows because $X'\to X$ is separated and two $X$-maps from an integral scheme that agree at its generic point agree everywhere. $\square$
+Take $U=\operatorname{Spec}A\subset X$ and a point $y\in f^{-1}(U)$. Every $b\in A_L$ satisfies a monic equation over $A$, hence its image in $K(Y)$ satisfies the same equation over $\mathcal O_{Y,y}$. Since the normal local domain $\mathcal O_{Y,y}$ is integrally closed in $K(Y)$, that image lies in $\mathcal O_{Y,y}$. It is therefore regular near $y$. As this holds at every point of $f^{-1}(U)$, the embedding $A_L\hookrightarrow K(Y)$ lands in $\Gamma(f^{-1}(U),\mathcal O_Y)$ and defines a map $f^{-1}(U)\to\operatorname{Spec}A_L$. These maps agree on overlaps by Proposition 2.2. Uniqueness follows because $X'\to X$ is separated and two $X$-maps from an integral scheme that agree at its generic point agree everywhere. $\square$
 
 The normality of $Y$ cannot be omitted. The identity map from the cusp to itself does not factor through its normalization: such a factorization would place $t$ in $k[t^2,t^3]$.
 
@@ -211,11 +211,11 @@ An integral morphism need not be finite, even over a noetherian base. For arithm
 
 A domain $A$ is Japanese if for every finite field extension $L/\operatorname{Frac}(A)$, its integral closure in $L$ is finite over $A$. A noetherian ring $A$ is Nagata if $A/\mathfrak p$ is Japanese for every prime $\mathfrak p$. A noetherian scheme is Nagata when its affine coordinate rings are.
 
-**Theorem 3.1 (finite normalization criterion).** Let $X$ be a reduced finite-type scheme over a Nagata scheme $S$. Then the normalization $X^{\mathrm{nor}}\to X$ is finite. More generally, the normalization of each irreducible component of $X$ in a finite extension of its function field is finite.
+**Theorem 3.1 (finite normalization criterion).** Let $X$ be a reduced noetherian Nagata scheme. Then the normalization $X^{\mathrm{nor}}\to X$ is finite. More generally, the normalization of each irreducible component of $X$ in a finite extension of its function field is finite.
 
-**Proof.** The assertion is affine-local on $X$. Write $X=\operatorname{Spec}B$ over $\operatorname{Spec}A\subset S$. A finite-type algebra over a Nagata ring is Nagata. After quotienting $B$ by each minimal prime, the Japanese condition says exactly that its integral closure in the relevant finite field extension is module-finite. A finite product of these closures is finite over the reduced ring $B_{\mathrm{red}}$, and $B_{\mathrm{red}}$ is finite over $B$ because $B$ is noetherian. Hence the normalization is finite. $\square$
+**Proof.** The assertion is affine-local on $X$. Write $X=\operatorname{Spec}B$. After quotienting $B$ by each of its finitely many minimal primes, the Japanese condition says exactly that the integral closure in the relevant finite field extension is module-finite. A finite product of these closures is finite over the reduced ring $B$. Hence the componentwise normalization is finite. $\square$
 
-The one nontrivial permanence assertion used here—that finite-type algebras over a Nagata ring remain Nagata—can be reduced to the domain case. Noether normalization makes a finite-type domain finite over a polynomial ring after inverting one element; the Japanese condition for the polynomial ring and a conductor argument handle that open, while noetherian induction handles its closed complement. This proof also explains why the condition must be imposed on every prime quotient.
+To apply the criterion to a finite-type scheme over a base, one still needs a permanence theorem for the base condition. That permanence is supplied below in the excellent case actually used here: finite-type algebras over an excellent ring are excellent, and excellent rings are Nagata. Merely assuming that the base is Nagata would require the separate theorem that finite-type algebras over a Nagata ring remain Nagata.
 
 ### 3.2 Excellent rings
 
@@ -243,7 +243,13 @@ The relevant one-dimensional finiteness can be seen more concretely. Let $A$ be 
 
 Every local factor $B_{\mathfrak q}$ is a noetherian normal local domain of dimension one, hence a discrete valuation ring. Therefore the integral closure of an excellent Dedekind domain in a finite separable extension is again Dedekind and finite over the original ring. This recovers, in the global form needed here, the local valuation picture of Book 1.
 
-There is also a useful trace argument when $L/K$ is separable and $A$ is a Dedekind domain with suitable finiteness. Choose a $K$-basis $e_i$ of $L$ and the trace-dual basis $e_i^*$. Any integral $x$ has $\operatorname{Tr}(xe_i)$ integral after denominators are cleared, so the integral closure lies in a fixed finitely generated fractional $A$-module spanned by the $e_i^*$. Since $A$ is noetherian, it is finite. The trace form degenerates for inseparable extensions, which is why the Japanese formulation is the correct general hypothesis.
+There is also a useful trace argument when $L/K$ is separable. Choose a $K$-basis $e_1,\ldots,e_n$ of $L$ and multiply its elements by nonzero scalars of $A$ so that every $e_i$ is integral over $A$. If $e_1^*,\ldots,e_n^*$ is the trace-dual basis and $x$ is integral over $A$, then every product $xe_i$ is integral. Its field trace, being a coefficient of the characteristic polynomial of multiplication by $xe_i$, is integral over $A$ and lies in $K$; because $A$ is integrally closed, $\operatorname{Tr}_{L/K}(xe_i)\in A$. Hence
+
+$$
+x=\sum_i\operatorname{Tr}_{L/K}(xe_i)e_i^*
+$$
+
+lies in the finite free fractional $A$-module $\sum_iAe_i^*$. The integral closure, as an $A$-submodule of that module, is finite because $A$ is noetherian. Thus every Dedekind domain is Japanese for finite separable extensions. The trace form degenerates for inseparable extensions, which is why the Japanese formulation is the correct general hypothesis.
 
 ### 3.4 The two-dimensional cases used here
 
@@ -253,7 +259,7 @@ This proves the central finiteness statement for arithmetic surfaces:
 
 **Theorem 3.3.** If $X$ is a reduced finite-type scheme over an excellent Dedekind scheme $S$, then $X^{\mathrm{nor}}\to X$ is finite. If $X\to S$ is proper, respectively projective, then its normalization is proper, respectively projective, over $S$.
 
-**Proof.** Finiteness is Theorem 3.1. A finite morphism is projective and proper. Composing it with a proper morphism gives a proper morphism. If $X\hookrightarrow\mathbf P^n_S$, a finite morphism $Y\to X$ is projective; composing projective morphisms proves projectivity of $Y/S$. $\square$
+**Proof.** Every affine coordinate ring of $X$ is a finite-type algebra over an excellent ring, hence is excellent and therefore Nagata by Theorem 3.2. Finiteness is now Theorem 3.1. A finite morphism is projective and proper. Composing it with a proper morphism gives a proper morphism. If $X\hookrightarrow\mathbf P^n_S$, a finite morphism $Y\to X$ is projective; composing projective morphisms proves projectivity of $Y/S$. $\square$
 
 The theorem remains valid for two-dimensional schemes of finite type over a field or over a complete noetherian local ring. These cases cover local surface charts and completed local calculations.
 
@@ -437,9 +443,9 @@ $$
 
 finite. Therefore $X_1$ is projective over $S$. It is integral and normal by construction, and it remains flat because it dominates $S$. Its generic fiber is $C$: a smooth curve is normal, so normalization is an isomorphism there.
 
-**Theorem 6.2 (normal model theorem).** Every smooth projective geometrically connected curve over the function field of an excellent Dedekind scheme has a normal flat projective model. Given a smooth model over a nonempty open $U\subset S$, the normal model may be chosen to restrict to it.
+**Theorem 6.2 (normal model theorem).** Every smooth projective geometrically connected curve over the function field of an excellent Dedekind scheme has a normal flat projective model. Given a smooth projective model over a nonempty open $U\subset S$, the normal model may be chosen to restrict to it.
 
-For the relative clause, embed and close compatibly with the given projective $U$-model. Since the model over $U$ is normal, normalization changes nothing there. If the given smooth model is only proper, a relatively ample line bundle after shrinking $U$ produces the required embedding; alternatively one first chooses any generic embedding and uses the closure of its graph to compare the two models.
+For the relative clause, choose a relatively very ample bundle on the given projective $U$-model, embed it in $\mathbf P^N_U$, and extend its finitely many equations after shrinking the ambient trivializations only outside $U$. The schematic closure in $\mathbf P^N_S$ then restricts exactly to the given model. Since that model is normal, normalization changes nothing there. The word projective is necessary: the restriction of a projective $S$-model is projective, so an arbitrary nonprojective regular model over $U$ cannot be prescribed in this statement.
 
 ### 6.5 Existence and uniqueness up to modification
 
@@ -648,9 +654,9 @@ A cusp requires more than branch separation. Normalizing $k[t^2,t^3]$ resolves t
 
 Combining closure, normalization, and resolution gives the main existence theorem.
 
-**Theorem 9.1 (regular model theorem).** Let $S$ be an excellent Dedekind scheme with function field $K$, and let $C/K$ be a smooth projective geometrically connected curve. Then there exists a regular flat projective $S$-scheme $\mathcal X$ with generic fiber $C$. If a regular model is prescribed over a nonempty open $U\subset S$, $\mathcal X$ may be chosen to restrict to it.
+**Theorem 9.1 (regular model theorem).** Let $S$ be an excellent Dedekind scheme with function field $K$, and let $C/K$ be a smooth projective geometrically connected curve. Then there exists a regular flat projective $S$-scheme $\mathcal X$ with generic fiber $C$. If a regular projective model is prescribed over a nonempty open $U\subset S$, $\mathcal X$ may be chosen to restrict to it.
 
-**Proof.** Embed $C$ in projective space, take its schematic closure $X_0$, and normalize to obtain the normal flat projective model $X_1$. Its generic fiber is smooth and hence regular. Resolve $X_1$ with centers contained in the finite union of singular closed points outside $U$. The result is regular and projective and has unchanged generic fiber. It remains flat because it is integral and dominates the Dedekind base. $\square$
+**Proof.** If no model over $U$ is prescribed, embed $C$ in projective space and take its schematic closure. In the relative case, use the compatible embedding and closure constructed in Theorem 6.2. Normalize the closure to obtain a normal flat projective model $X_1$ which is unchanged over $U$. Its generic fiber, and its restriction to $U$ in the relative case, are regular. Resolve $X_1$ with centers in its singular locus, which is disjoint from $X_{1,U}$. The result is regular and projective and has unchanged generic fiber and unchanged restriction over $U$. It remains flat because it is integral and dominates the Dedekind base. $\square$
 
 If $C$ is merely proper, it is projective because every smooth proper curve over a field possesses a divisor of positive degree and a sufficiently large multiple is very ample. Thus no separate proper-only case is needed for smooth curves.
 
@@ -664,9 +670,9 @@ The bad set $S\setminus U$ is finite when $S$ is the spectrum of a Dedekind doma
 
 ### 9.3 Dominating finitely many models
 
-**Theorem 9.2.** Any finite collection of proper $S$-models of the same smooth curve is dominated by a regular projective model, provided $S$ is excellent.
+**Theorem 9.2.** Any finite collection of projective $S$-models of the same smooth curve is dominated by a regular projective model, provided $S$ is excellent.
 
-**Proof.** Repeatedly take the closure of the diagonal generic curve in the fiber product, as in Proposition 6.3, and call the result $Z$. The curve $C$ is a dense quasi-projective open of $Z$. The relative form of Chow's lemma gives a projective modification $Z'\to Z$: to see the needed case, cover $Z$ by finitely many affine opens, choose generators for their boundary ideals, and use the closure of the graph of the resulting maps to projective spaces; the graph projections glue after taking the product of those projective spaces. Over the dense open where all chosen ideals are invertible this is an isomorphism. Normalize $Z'$ and resolve the resulting normal surface. The final regular projective scheme maps to $Z$, hence to every original model, and is the identity on the generic fiber. $\square$
+**Proof.** The fiber product of finitely many projective $S$-schemes is projective. Take in that product the schematic closure $Z$ of the diagonally embedded generic curve. It is integral, flat, and projective by Proposition 6.1, and every projection $Z\to X_i$ is proper and induces the identity on the generic fiber. Normalize $Z$ and resolve the resulting normal surface. Both operations are projective and preserve the generic fiber. The final regular projective model maps to every $X_i$ and induces the identity on $C$. $\square$
 
 This is the correct way to compare equations, moduli compactifications, and models adapted to correspondences. One does not identify them prematurely; one moves to a common regular domination.
 
@@ -682,7 +688,7 @@ A section of a regular arithmetic surface is a Cartier divisor. At a point of th
 
 ### 10.1 Integral closure of the base
 
-Let $K'/K$ be finite and let $S'$ be the normalization of $S$ in $K'$. When $S$ is excellent Dedekind, $S'\to S$ is finite, and $S'$ is a finite disjoint union of excellent Dedekind schemes after separating field factors. Locally at $s\in S$, its points correspond to extensions of the associated discrete valuation, exactly as in Book 1.
+Let $K'/K$ be a finite field extension and let $S'$ be the normalization of $S$ in $K'$. When $S$ is excellent Dedekind, $S'\to S$ is finite and $S'$ is an excellent Dedekind scheme. More generally, normalizing in a finite reduced $K$-algebra gives the finite disjoint union belonging to its field factors. Locally at $s\in S$, the points of $S'$ correspond to extensions of the associated discrete valuation, exactly as in Book 1.
 
 Given a model $X/S$, form $X_{S'}=X\times_SS'$. It is proper or projective when $X$ is, and flat when $X$ is flat because flatness survives base change. It may fail to be integral, reduced, normal, or regular. The generic fiber is $C\times_KK'$, which can itself split unless $C$ is geometrically integral.
 
@@ -711,7 +717,7 @@ By contrast, normalization commutes with smooth base change. Étale localization
 The safe operation after a finite extension is
 
 $$
-X'=operatorname{Nor}\bigl((X\times_SS')_{\mathrm{red}}\bigr),
+X'=\operatorname{Nor}\bigl((X\times_SS')_{\mathrm{red}}\bigr),
 $$
 
 taking the component or components with the desired generic fiber. Since $S'$ is excellent, $X'\to X\times_SS'$ is finite. If $X$ was proper or projective, so is $X'$. Resolve $X'$ if a regular model is required.
@@ -730,7 +736,22 @@ $$
 \pi=u(\pi')^e
 $$
 
-for a unit $u\in R'$. If a vertical component $\Gamma$ of $X_s$ has multiplicity $m$, its pullback before reduction carries generic multiplicity divisible according to $em$. Normalization can then split the component and divide multiplicities by ramification indices of the induced divisorial valuations.
+for a unit $u\in R'$. Let $E$ be a prime component of the normalization of the base change lying over a vertical component $\Gamma$, and let $r(E/\Gamma)$ be the ramification index of their normalized divisorial valuations, so that
+
+$$
+v_E(f)=r(E/\Gamma)v_\Gamma(f)
+\qquad(f\in K(X)^\times).
+$$
+
+If $\Gamma$ has multiplicity $m=v_\Gamma(\pi)$, then
+
+$$
+e\,v_E(\pi')=v_E(\pi)=r(E/\Gamma)m,
+\qquad
+v_E(\pi')=\frac{r(E/\Gamma)m}{e}.
+$$
+
+This integer is the multiplicity of $E$ in the normalized special fiber. The formula, rather than a blanket multiplication by $e$, accounts simultaneously for splitting and ramification of the divisorial valuation.
 
 The local semistable equation illustrates both creation and repair:
 
@@ -815,7 +836,7 @@ The preceding results can be collected in the form actually needed later.
 
 1. there is a normal flat projective model $X/S$ extending $\mathcal C_U$;
 2. there is a regular flat projective model $\mathcal X/S$ and a projective birational map $\mathcal X\to X$, identical over $U$;
-3. any finite collection of proper models, rational maps, and finite generic correspondences is dominated by such a regular model on which their graph closures are defined as proper correspondences;
+3. any finite collection of projective models, rational maps, and finite generic correspondences is dominated by such a regular model on which their graph closures are defined as proper correspondences;
 4. after a finite extension $K'/K(S)$, with $S'$ the normalized base, normalization of the reduced base change followed by resolution gives a regular projective $S'$-model;
 5. if the supplied model over an open of $S'$ is semistable, all centers can be kept outside that open;
 6. if $g(C)>0$, contracting vertical exceptional curves produces the unique minimal regular proper model.
@@ -848,9 +869,9 @@ For quaternionic or PEL constructions defined after a finite extension of the re
 
 ### 12.4 Semistable reduction input
 
-Suppose a finite separable extension $K'/K$ has been chosen so that $C_{K'}$ has semistable reduction. Let $S'$ be the normalization of $S$ in $K'$. A semistable model on an open or locally at each completed discrete valuation ring can be globalized as follows.
+Suppose a finite separable extension $K'/K$ has been chosen and a projective semistable model has been supplied over an open $V\subseteq S'$, where $S'$ is the normalization of $S$ in $K'$. The model can be extended without changing its semistable locus as follows.
 
-Take a projective normal $S'$-model dominating the local candidates by closing their generic graphs. Resolve away from the semistable loci. At every node the completed local equation is
+Apply Theorem 12.1 with the supplied model over $V$, and resolve only outside $V$. At every node the completed local equation is
 
 $$
 \widehat{\mathcal O}_{\mathcal X,x}
@@ -859,7 +880,7 @@ $$
 
 possibly after an étale extension. This ring is regular, so resolution does not alter it. Marked sections can be separated from the nodes by point blowups. Contract rational components that meet the remainder and markings in too few points if a stable rather than a regular semistable model is desired.
 
-The local-to-global assertion uses properness and uniqueness of the generic identifications. Two models over overlapping localizations have a common regular domination; minimality then identifies their relatively minimal regular forms in positive genus. Thus local models patch without choosing equations uniformly at all primes.
+This statement deliberately starts from an algebraic model over an open subscheme. A model known only over completed local rings does not automatically algebraize or glue: compatible algebraic descent data, or a separate approximation and algebraization theorem, must first supply the model over an open of $S'$. Common domination compares algebraic models once they exist; it is not a substitute for that algebraization step.
 
 ### 12.5 Finite correspondences
 
@@ -871,7 +892,7 @@ $$
 
 is proper over both factors. Normalize the graph and resolve it to obtain a regular surface $Z$ with morphisms to both models.
 
-If the target model is normal, the universal property of normalization often extends $f$ directly once the map is defined in codimension one. Properness supplies extension at valuation rings; normality then extends across codimension two when the associated rational functions have no poles. But finiteness on the generic fiber does not automatically imply that the extended map is finite: vertical curves may be contracted. Passing to the Stein factor—the spectrum of the direct image of the structure sheaf—separates a connected-fiber contraction from a finite map.
+The universal property of normalization factors a morphism from a normal source through a normalization once that morphism already exists. It does not remove codimension-two indeterminacy of a rational map: for example, the rational map $\mathbf A^2\dashrightarrow\mathbf P^1$ given by $[x:y]$ is undefined at the origin although the source is normal. Thus the graph construction is essential. After resolving the normalized graph, the two projections are honest proper morphisms. Finiteness on the generic fiber still does not imply that either projection is finite, because it may contract vertical curves. Passing to the Stein factor—the spectrum of the direct image of the structure sheaf—separates a connected-fiber contraction from a finite map.
 
 For a correspondence, keep both projections from the normalized graph. A common regular domination makes their compositions honest. Later intersection and cohomological theories may act with the correspondence even if neither projection is a morphism between preselected minimal models. This is why domination, rather than forced functoriality of minimal models, is the robust construction.
 

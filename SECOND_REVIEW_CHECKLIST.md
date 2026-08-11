@@ -33,7 +33,7 @@ any resulting corrections.
 - [x] 007. Analytic Foundations for Odlyzko–Poitou Bounds
 - [x] 008. Ample Line Bundles, Hilbert Polynomials, and Symmetric Powers
 - [x] 009. Divisors, Riemann–Roch, and Duality on Relative Curves
-- [ ] 010. Normalization and Regular Models of Arithmetic Curves
+- [x] 010. Normalization and Regular Models of Arithmetic Curves
 - [ ] 011. Blowups and Intersection Theory on Arithmetic Surfaces
 - [ ] 012. Semistable Curves, Dual Graphs, and Component Groups
 - [x] 013. Faithfully Flat Descent in Algebraic Geometry
