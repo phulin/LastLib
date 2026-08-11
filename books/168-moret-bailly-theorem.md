@@ -138,7 +138,7 @@ First, local points are expanded into reduced effective zero-cycles of one commo
 
 The last step is decisive. Approximation alone naturally produces zero-cycles. Hilbert irreducibility is what turns an unordered collection into the conjugates of a single field-valued point. Book 167 established the simultaneous local and Hilbert machinery; here it is applied to a geometric parameter space whose universal fiber is the desired point.
 
-The geometric inputs have equally precise roles. Book 8 supplies symmetric powers, configuration spaces, and their universal finite étale families. Book 13 supplies the effective descent used for finite free families and quotients by the free permutation action. Book 18 supplies the passage from completed local intersection patterns to algebraic marked curves and divisors once properness and an ample line bundle are present. In the moving argument below we use the finite-order form of that passage: prescribe a sufficiently long jet in a completed smooth neighborhood, lift it by a positive line bundle, and then use openness to retain its geometry. These ingredients are not alternate proofs of the arithmetic step; together they construct the family to which the arithmetic step applies.
+The geometric inputs have equally precise roles. Book 8 supplies ample embeddings, symmetric powers, configuration spaces, and their universal finite étale families. Book 13 supplies the effective descent used for finite free families and quotients by the free permutation action. Book 18 explains why a compatible *infinite* formal construction would require proper algebraization and an ample line bundle. We do not need that stronger passage here: all interpolation below is of finite order and takes place in finite-dimensional spaces of sections. The decisive moving argument first slices out one global curve meeting every local open and then moves a divisor in a sufficiently divisible power of one line bundle on that fixed curve. This separation is important; trying to concentrate a complete intersection by prescribing a jet of order equal to its whole intersection number would exceed the available section space in dimension greater than one.
 
 ## 2. Closed points and finite extensions
 
@@ -308,7 +308,7 @@ For a smooth curve, $\operatorname{Sym}^d(X)$ itself is smooth, even along repea
 None of that additional boundary geometry is needed here. Our local cycles are chosen reduced and with pairwise distinct geometric support, so they lie in the common open locus
 
 $$
-Q_d(X)\simeq \operatorname{Hilb}^d(X)_{\mathrm{red}}.
+Q_d(X)\simeq \operatorname{Hilb}^d(X)_{\mathrm{reduced\ fibers}}.
 $$
 
 On this locus the universal family is finite étale. Allowing collisions would replace a finite étale algebra by an algebra with nilpotents and would destroy the direct Hilbert interpretation of connectedness. The reduced locus is therefore not a cosmetic simplification; it is the exact domain on which “connected fiber” means “one separable closed point.”
@@ -550,73 +550,147 @@ The same construction applies to nonsplit packet conditions when enlargement by 
 
 This presentation, rather than rationality of $Q_d(X)$, is the crucial geometric assertion. Symmetric powers of curves of positive genus already show why one must not claim that $Q_d(X)$ itself is an open of affine space. The affine space $H$ parametrizes fibers of one carefully constructed finite map; it need not dominate the whole symmetric power.
 
-Here is the construction in six steps. Its purpose is not to prove that a symmetric power is rational; that assertion is false in general. It constructs one rational parameter space carrying the local configurations that were chosen.
+Here is the construction. It builds one pencil on one global curve whose fibers carry the required local configurations; it does not assert that a symmetric power is rational.
 
-**Step 1: projective placement and jet interpolation.** Choose an immersion $X\hookrightarrow\bar X$ into a projective variety and replace the boundary by a closed subset. Let $\mathcal L$ be very ample on $\bar X$. For every finite reduced subscheme $D$ contained in the smooth locus, the exact sequence
+If the set of designated places is empty, choose by Bertini a geometrically integral complete-intersection curve in $X$, normalize its projective closure, and take a general basepoint-free pair of sections of a sufficiently positive line bundle on that curve. One member has a reduced divisor disjoint from the boundary. Removing the branch values and boundary images gives the required geometrically integral finite étale family. We may therefore assume below that at least one $v$ is present.
 
-$$
-0\longrightarrow\mathcal I_D^2\otimes\mathcal L^n
-\longrightarrow\mathcal L^n
-\longrightarrow\mathcal L^n|_{2D}\longrightarrow0
-$$
+**Step 1: slicing out a global curve through all local opens.** Choose $a_v\in\Omega_v$. Put $r=\dim X$, choose a projective closure $X\hookrightarrow\bar X$, and choose a very ample line bundle $\mathcal L$ on $\bar X$. When $r>1$, sufficiently high powers of $\mathcal L$ separate values and first derivatives at $a_v$. Over each $K_v$ choose $r-1$ sections whose common zero set has a smooth one-dimensional germ through $a_v$. The full-rank Jacobian condition persists when the section tuple and the intersection point are perturbed.
 
-shows, once $n$ is large enough, that global sections prescribe values and first derivatives independently along $D$. Indeed, the first cohomology of the left term vanishes for large $n$, so the right-hand restriction map is surjective. Only finitely many local configurations are involved; after increasing $n$ once, the same conclusion holds for all of them after scalar extension to every $K_v$.
+All these local tuples belong to scalar extensions of the same finite-dimensional $K$-space of sections. Weak approximation chooses one $K$-tuple close to every local tuple and outside the Bertini loci where a successive cut fails to be geometrically integral. Indeed, a proper algebraic subset of affine coefficient space has empty local interior; shrink the local boxes off the bad locus before applying approximation. Bertini irreducibility, in the form proved for affine linear sections in Book 167, shows that its complement is nonempty.
 
-Choose many pairwise distinct points inside each $\Omega_v$. In local coordinates, prescribe sections whose common zero set passes through the selected points and whose differentials have full rank there. Surjectivity to $2D$ realizes these conditions. Full rank is the nonvanishing of a Jacobian minor, hence persists on a local neighborhood of the section tuple.
-
-We also need to concentrate an entire intersection, not just some of its points, in the chosen open. Around $a_v\in\Omega_v$, choose étale coordinates $z_1,\ldots,z_r$. On the completed local neighborhood the equations
+The intersection inside $X$ is a geometrically integral curve, smooth at all the selected local germs. Normalize its projective closure and call the resulting smooth projective geometrically integral curve $\bar C$. The normalization map identifies a dense open $C^{\mathrm{emb}}\subset\bar C$ with a locally closed smooth curve in $X$; its complement is finite. Every selected germ lies in this open. After taking a sufficiently small neighborhood of the lifted point, we therefore obtain, for every $v$, a nonempty open
 
 $$
-z_2=\cdots=z_r=0,
-\qquad
-\prod_{j=1}^d(z_1-c_j)=0
+\Omega_{C,v}\subset C^{\mathrm{emb}}(K_v)
 $$
 
-cut out $d$ distinct points in $\Omega_v$ when the $c_j$ are sufficiently small and distinct. Begin with $z_1^d,z_2,\ldots,z_r$, which define a length-$d$ complete intersection supported at $a_v$. For sufficiently positive sections, restriction to the necessary finite-order neighborhood is surjective, so these completed equations lift to projective hypersurface sections over $K_v$. Choose their remaining coefficients so that no common component lies in the boundary. Intersection length is constant in the resulting flat complete-intersection family and is already exhausted at $a_v$, so no residual zero-dimensional component occurs elsewhere. Perturbing $z_1^d$ to the split product and applying the inverse function theorem gives the desired reduced split intersection. This is the local concentration argument used below.
+on which the map to $X(K_v)$ is injective and has image in $\Omega_v$.
 
-**Step 2: descending the local section tuples.** The required sections at different places lie in the finite-dimensional $K_v$-spaces obtained from the same global section space. Weak approximation in that coefficient space gives one tuple of sections over $K$ simultaneously close to all local tuples. The values and Jacobian minors therefore retain the desired local behavior. This is the first, geometric use of weak approximation.
+When $r=1$, take $\bar C$ to be the normalization of the projective closure of $X$; it is already isomorphic to $X$ over the smooth open under consideration. This step uses only first jets. It does not attempt to encode the final degree-$d$ divisor in one jet.
 
-**Step 3: geometric integrality of the successive cuts.** We also choose the tuple outside the bad Bertini loci. For completeness, the relevant form of Bertini says: if $V$ is geometrically integral and smooth on a dense open and a finite-dimensional linear system has no fixed component and separates tangent directions there, then the members whose intersection with $V$ is not geometrically integral and generically smooth lie in a proper closed subset of the coefficient projective space. To see this, form the universal hyperplane section. It is integral over the generic point because the generic linear equation is irreducible in the function field, and generic smoothness follows from surjectivity of the differential of the evaluation map. Openness of geometric integrality and smoothness in a flat family then removes a proper closed subset. Prescribed first jets impose a linear subspace; taking $n$ larger ensures that this subspace still separates points and tangents away from $D$, so the same argument applies within it.
+**Step 2: the moving-divisor fact on a local curve.** We need the following one-dimensional fact.
 
-Apply this statement successively. After $\dim X-1$ cuts, we obtain a geometrically integral curve $C\subset X$ on a dense open, smooth at every selected local point. Boundary components and unwanted singular points are avoided by including them in the proper closed exceptional locus at each stage. When $X$ is already a curve, this step simply takes $C=X$.
+> Let $k$ be a completion of a number field, let $C/k$ be a smooth projective geometrically connected curve, let $\mathcal A$ be an ample line bundle of degree $e>0$, and let $U\subset C(k)$ be nonempty and open. For every sufficiently large integer $n$ in a suitable arithmetic progression, $\mathcal A^n$ has a section whose zero divisor is reduced, split over $k$, and supported in $U$.
 
-**Step 4: a moving divisor on the curve.** Include the last equation of the local concentration construction in the coefficient approximation of Step 2. The resulting global complete intersection gives a geometrically integral curve $C$ and a global section $s_0$ on the smooth projective curve obtained by normalizing its projective closure. Its divisor, after scalar extension to every $K_v$, is reduced, split, disjoint from the boundary, and supported in $\Omega_v$. The curve and divisor have been constructed simultaneously; fixing an arbitrary curve and divisor class first could introduce a genuine Picard-class obstruction.
+We prove the fact, including the divisibility qualification. Fix $P\in U$. If $g=0$, the point $P$ identifies $C$ with $\mathbf P^1_k$, whose degree-zero divisor-class group is trivial. Any $ne$ distinct points of $U$ then form a divisor linearly equivalent to $\mathcal A^n$, so the assertion is immediate. Assume $g>0$ and write $J(k)$ for the degree-zero divisor-class group of $C$.
 
-Choose a second global section $s_\infty$ with no common zero with $s_0$ and with no forbidden boundary behavior. These conditions define a nonempty open in a sufficiently positive section space. The ratio
-
-$$
-f=[s_0:s_\infty]:\bar C\longrightarrow\mathbf P^1
-$$
-
-is finite of degree $d=\deg\operatorname{div}(s_0)$, and its fiber over $0$ is $\operatorname{div}(s_0)$. Remove the branch values, the images of singular and boundary points, and $\infty$. Over the resulting open $H_0\subset\mathbf A^1_K$, the map
+We spell out the piece of curve theory used here, rather than importing an unrecorded Picard theorem. For an effective divisor $D$, the space of principal parts $H^0(C,\mathcal O(D)/\mathcal O)$ pairs with $H^0(C,\omega_C)$ by summing local residues. The residue theorem shows that the principal parts of a rational function annihilate every regular differential. Conversely, eliminating polar coefficients one point and one order at a time shows that these residue equations are the only obstruction. The differentials annihilating the whole principal-parts space are exactly $H^0(C,\omega_C(-D))$. Counting dimensions therefore gives
 
 $$
-\mathcal T_0=f^{-1}(H_0)\longrightarrow H_0
+h^0(\mathcal O(D))-1
+=\deg D-g+h^0(\omega_C(-D)).
 $$
 
-is finite étale of degree $d$. Its total space is geometrically integral because $C$ is geometrically integral and only finitely many points have been removed. For every $v$, parameters sufficiently close to $0$ have all $d$ inverse images in $\Omega_v$ and split over $K_v$, by simple-root stability at the reduced fiber over $0$.
-
-**Step 5: an affine parameter space and local submersivity.** Choose local parameters $h_v\in H_0(K_v)$ sufficiently close to $0$ and small neighborhoods on which the entire fiber remains in $\Omega_v$. Set $H=H_0$ after shrinking around the finitely many forbidden values; it is a nonempty open of the affine line. If further transverse coefficient directions are needed for nonsplit packets, retain several coefficient directions instead of a pencil and take a sufficiently general affine linear slice through the relevant local coefficient neighborhoods. Jet-surjectivity makes the coefficient-to-cycle map a submersion at the chosen points, so a general slice retains the needed local directions and geometric integrality.
-
-The universal divisor defines
+Shifting an arbitrary divisor by an effective one and using the same one-point exact sequences gives the general formula. Equivalently, the divisor exact sequence gives the perfect obstruction pairing
 
 $$
-\Psi:H\longrightarrow Q_d(X),
+H^1(C,M)\times H^0(C,\omega_C\otimes M^{-1})\longrightarrow k
 $$
 
-and the incidence scheme over $H$ is the pullback of $\mathcal Z_d$. Its evaluation map to $C\subset X$ is the first projection. The total space remains geometrically integral after restricting to $H$.
+for every line bundle $M$. In particular,
 
-**Step 6: stabilizing the arithmetic data.** Finite étale local constancy now gives neighborhoods $V_v$ of the local parameters on which the fiber algebra and evaluated support remain in $\mathcal U_v$. In the split case this says that all $d$ roots remain $K_v$-rational and inside $\Omega_v$. In the fixed-packet case it says that the specified finite étale algebra and the point in its restriction-of-scalars space remain unchanged. The universal property of the reduced symmetric locus supplies the Cartesian identity
+$$
+h^0(M)-h^0(\omega_C\otimes M^{-1})=\deg M+1-g.
+$$
+
+This is the elementary principal-parts proof of the precise duality and Riemann–Roch statements needed below. If $\deg M>2g-2$, the second space vanishes because a nonzero section cannot have a divisor of negative degree. Hence $h^0(M)=\deg M+1-g$, over $k$ and after every scalar extension.
+
+It follows that, for $m\ge2g-1$, every degree-$m$ line bundle has a nonzero $k$-section and the Abel map
+
+$$
+\operatorname{Sym}^m(C)(k)\longrightarrow\operatorname{Pic}^m(C)(k)
+$$
+
+is surjective, with fiber over $M$ equal to the projective space of nonzero sections of $M$ modulo scalars. Give the divisor-class group the quotient topology from this map. Divisor equivalence is closed, its projective fibers give local analytic quotient charts, and addition and inversion come from adding divisors and replacing a divisor by a linearly equivalent complement in a sufficiently positive linear system. Thus $J(k)$ is a Hausdorff locally analytic group. It is compact because $\operatorname{Sym}^m(C)(k)$ is compact. In local parameters, differentiating a moving divisor shows that the differential of the Abel map at $P_1+\cdots+P_m$ is dual to evaluation of regular differentials at the $P_i$. One can choose $g$ distinct points in the arbitrarily small open $U$ for which this evaluation has full rank: otherwise a nonzero regular differential would vanish on infinitely many points of a smooth curve. The inverse function theorem therefore says that a finite sum of classes
+
+$$
+B=\{[Q-P]:Q\in U\}\subset J(k)
+$$
+
+has nonempty interior.
+
+We use one elementary compact-group lemma. If $G$ is a compact topological group and $B\subset G$ contains the identity and some finite product $B^m$ has interior, then the semigroup $\bigcup_{j\ge0}B^j$ is an open subgroup $G_B$, and compactness gives $G_B=B^{m_0}$ for some $m_0$. To prove the subgroup assertion, put an open set $c+W$ inside $B^m$, with $W$ a symmetric neighborhood of zero. Recurrence of the positive multiples of $c$ in its compact cyclic closure gives $q>0$ for which $(q+1)c\in W$. Hence
+
+$$
+(q+1)c+(q+1)W\subset B^{m(q+1)}
+$$
+
+contains a neighborhood of zero. Shrink to a symmetric neighborhood $W_0$ contained in the semigroup. If $x$ belongs to the semigroup, recurrence of the positive multiples of $x$ gives $q x\in-x+W_0$; writing $-x=qx+w$ with $w\in W_0$ proves that the inverse also belongs. Thus the semigroup is an open subgroup. Finally choose $W_0\subset B^a$. The translates $x+W_0$, for $x$ in the subgroup, form an open cover; compactness selects finitely many, and their finitely many representatives lie in one $B^b$. Hence $G_B\subset B^{a+b}$, proving the last assertion.
+
+Apply the lemma to $J(k)$. The quotient $J(k)/G_B$ is finite. Let
+
+$$
+b=[\mathcal A]-e[P]\in J(k).
+$$
+
+If $n$ is divisible by the exponent of this finite quotient and $ne\ge m_0+g$, then $nb\in G_B=B^{m_0}\subset B^{ne}$. Thus there are $ne$ points $Q_i\in U$, allowing repetitions at first, such that
+
+$$
+[Q_1+\cdots+Q_{ne}]=[\mathcal A^n].
+$$
+
+Hence $\mathcal A^n$ has a section with its entire divisor in $U$. We still have to remove repetitions without losing the divisor class. Choose once and for all distinct points $R_1,\ldots,R_g\in U$ at which the Abel map is a submersion, as above, and put $c_0=\sum_j[R_j-P]$. Since $c_0\in G_B$ and $G_B=B^{m_0}$ is a group, every $x\in G_B$ can be written as
+
+$$
+x=\sum_{i=1}^{m_0}[Q_i-P]+\sum_{j=1}^g[R_j-P].
+$$
+
+The addition map is submersive at this tuple because of its last $g$ coordinates. Pad the tuple to length $ne$ with copies of $P$, and choose pairwise disjoint small neighborhoods of the $R_j$. Vary the first $ne-g$ points generically, by arbitrarily small amounts inside $U$, so that they are pairwise distinct. Their divisor class changes only slightly. The inverse function theorem moves the last $g$ points inside their respective neighborhoods and corrects that change exactly. The corrected points depend analytically on the free ones. Equality of one of them with a free point is a proper analytic condition, so the free tuple may be chosen off the finitely many such collision loci. All $ne$ points are then distinct, remain in $U$, and represent the original class $x$. Applying this with $x=nb$ gives a reduced divisor in the class of $\mathcal A^n$.
+
+Equivalently, the resulting section of $\mathcal A^n$ has a reduced split zero divisor supported in $U$. Simple-root stability makes this property open in the local section space. This proves the moving-divisor fact.
+
+The proof also explains why “sufficiently divisible” cannot be replaced casually by “every sufficiently large degree.” The finite quotient $J(k)/G_B$ records the component and local divisor-class obstruction. Since only finitely many places occur, one integer $n$ can satisfy all their progressions.
+
+**Step 3: one global pencil with all local split fibers.** Choose an ample line bundle $\mathcal A$ on $\bar C$, for example the pullback of a high power of $\mathcal L$. Apply Step 2 to every pair $(\bar C_{K_v},\Omega_{C,v})$ and choose one sufficiently large common exponent $n$. Put
+
+$$
+d=n\deg\mathcal A.
+$$
+
+For every $v$, choose a local section $s_{\infty,v}$ of $\mathcal A^n$ whose zero divisor $D_v$ consists of $d$ distinct $K_v$-points in $\Omega_{C,v}$. Choose a second local section $s_{0,v}$ nonzero at every point of $D_v$.
+
+Proper cohomology in degree zero commutes with extension of a ground field, so
+
+$$
+H^0(\bar C,\mathcal A^n)\otimes_KK_v
+\simeq H^0(\bar C_{K_v},\mathcal A^n).
+$$
+
+Weak approximation in the two copies of this finite-dimensional vector space gives global sections $(s_0,s_\infty)$ close to every local pair. We also require that they have no common geometric zero. This is the complement of the resultant locus, a proper Zariski-closed subset: for $n$ large the line bundle is globally generated, and two general sections on a curve have disjoint zero divisors. As in Step 1, weak approximation inside the local boxes can avoid that closed subset. After shrinking the boxes, the divisor of $s_\infty$ over every $K_v$ remains reduced, split, contained in $\Omega_{C,v}$, and disjoint from the divisor of $s_0$.
+
+The pair defines a finite morphism
+
+$$
+f=[s_\infty:s_0]:\bar C\longrightarrow\mathbf P^1_K
+$$
+
+of degree $d$, whose fiber over $0=[0:1]$ is $\operatorname{div}(s_\infty)$. Its reducedness says precisely that $0$ is not a branch value. Moreover, a point of the finite exceptional set $\bar C\setminus C^{\mathrm{emb}}$ mapping to $0$ would remain an exceptional zero after extension to any one of the fields $K_v$, contradicting the fact that the $d$ local zeros already form the whole degree-$d$ fiber and lie in $C^{\mathrm{emb}}$. Remove from $\mathbf A^1_K=\mathbf P^1_K\setminus\{\infty\}$ all branch values and the images of $\bar C\setminus C^{\mathrm{emb}}$. The resulting open $H$ contains $0$ and is therefore nonempty. Then
+
+$$
+\mathcal T=f^{-1}(H)\longrightarrow H
+$$
+
+is finite étale of degree $d$, $\mathcal T$ is geometrically integral, and the embedding $\mathcal T\subset C^{\mathrm{emb}}\hookrightarrow X$ gives $e:\mathcal T\to X$. Because $C^{\mathrm{emb}}\to X$ is an immersion identifying it with a locally closed subcurve, every geometric fiber evaluates to $d$ distinct points of $X$. For each $v$, take $h_v=0$. Simple-root stability supplies a neighborhood $V_v\subset H(K_v)$ on which all $d$ points of the fiber remain $K_v$-rational and evaluate into $\Omega_v$.
+
+Every fiber gives a reduced degree-$d$ cycle, hence a morphism
+
+$$
+\Psi:H\longrightarrow Q_d(X).
+$$
+
+By the universal property of the incidence family,
 
 $$
 \mathcal T\simeq\mathcal Z_d\times_{Q_d(X),\Psi}H.
 $$
 
-This proves the lemma.
+Shrinking the $V_v$ once more produces the required $q_v$, $\mathcal U_v$, and stability. This proves the flexible split assertion of the lemma.
 
-There are two distinct approximation steps in the full argument. Approximation of section coefficients constructs one $K$-defined moving family with the correct local models. Approximation of the final parameter in $H$, used in Section 5.3, chooses one fiber of that family. Keeping them separate prevents unrelated local coordinate charts from being mistaken for one global morphism.
+For nonsplit packets, the arithmetic part of the proof is unchanged once a common moving presentation is supplied. Such a presentation may sometimes be obtained by carrying labeled packets through restriction of scalars and retaining enough coefficient directions in the curve-and-pencil construction. It is not automatic from equality of ranks, so the exact local-algebra theorems below continue to state it as a hypothesis.
 
-High degree has now been accounted for: it supplies enough sections to interpolate values and first jets, enough room for Bertini and boundary avoidance, and enough permitted auxiliary points to make the incidence family geometrically integral. It is geometric room, not a hidden assertion that every integer is an allowed degree. This proof also explains why the exact-rank form must assume the presentation rather than infer it from local realizability alone.
+There are three distinct finite approximation steps in the full argument. The first chooses one global curve meeting all local opens. The second chooses one global pencil with a split local fiber at every designated place. The third, used in Section 5.3, chooses one parameter of that pencil in the required Hilbert subset. Keeping them separate prevents unrelated local coordinate charts from being mistaken for one global morphism.
+
+High degree has now been accounted for: it supplies first-jet separation for the global slice, makes the local Abel images large enough to overcome their finite divisor-class obstructions, and makes the pencil basepoint-free with a reduced split fiber. It is geometric room, not a hidden assertion that every integer is an allowed degree. This proof also explains why the exact-rank form must assume the presentation rather than infer it from local realizability alone.
 
 ### 5.3 Weak approximation in the parameter space
 
@@ -928,7 +1002,7 @@ $L$ is totally real, every $v\in S$ splits completely in $L$, and $L$ is linearl
 
 **Proof strategy.** Use the affine line as the variety. Small split packets at every prescribed completion and at every real place determine the local conditions. The moving construction permits the degree to be made arbitrarily large, and the base-changed incidence condition enforces avoidance.
 
-**Proof.** Take $X=\mathbf A^1_K$. At each $v\in S$, choose a small open ball in $K_v$; at each real place choose a bounded real interval. In the split moving lemma, begin with at least $N$ distinct points in every one of these opens. Increasing the interpolation degree preserves those chosen points and yields a common degree $d\ge N$. Apply Theorem 8.1 with avoidance field $E$. The output satisfies
+**Proof.** Take $X=\mathbf A^1_K$. At each $v\in S$, choose a small open ball in $K_v$; at each real place choose a bounded real interval. The local moving-divisor step in Lemma 5.2 works for every sufficiently large exponent in one arithmetic progression at each of these finitely many places. Choose a common allowed exponent for which the resulting degree is $d\ge N$, and use split divisors supported in the selected balls and intervals. Apply Theorem 8.1 with avoidance field $E$. The output satisfies
 
 $$
 L\otimes_KK_v\simeq K_v^d\quad(v\in S),
