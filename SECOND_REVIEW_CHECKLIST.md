@@ -24,7 +24,7 @@ any resulting corrections.
 
 ## All-books second-review ledger
 
-- [ ] 001. Valuations, DVRs, and Completions
+- [x] 001. Valuations, DVRs, and Completions
 - [ ] 002. Finite Extensions of Local Fields
 - [ ] 003. Ramification Theory
 - [ ] 004. Adeles and Ideles
@@ -216,4 +216,3 @@ any resulting corrections.
 - [ ] 190. The Fixed-Three Integral Local Theory
 - [ ] 191. Quintic Cyclotomic Units and Kummer Arithmetic
 - [ ] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
-

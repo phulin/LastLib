@@ -1449,9 +1449,38 @@ $$
 
 **Proof roadmap.** Completeness gives Hensel factor lifting, and the henselian uniqueness criterion converts that lifting property into uniqueness of the algebraic extension of the valuation. Theorem 12.2 proves this criterion from the extension-center lemma; it is independent of the norm formula used here. After uniqueness is established, automorphisms preserve the value automatically. Norm transitivity separates the separable and purely inseparable cases and yields the formula. Finite-dimensional norm equivalence then identifies the valuation topology with the complete vector-space topology constructed above.
 
-**Proof.** For the trivial absolute value, algebraicity forces the only extension to remain trivial. In the nontrivial case, Section 9.4 proves that the valuation ring is henselian. The henselian uniqueness criterion, Theorem 12.2, therefore gives a unique extension to every algebraic field; existence also follows independently from Theorem 10.1. The forward reference is only to the algebraic equivalence between factor lifting and unique extension, not to any assertion about norms or completeness of finite-dimensional spaces.
+**Proof.** For the trivial absolute value, algebraicity forces the only extension to remain trivial. Indeed, in the monic minimal equation of a nonzero algebraic element, the nonzero base coefficients all have size $1$. If the element had size less than $1$, the constant term would be the unique largest term; if it had size greater than $1$, the leading term would be the unique largest term. Either case is impossible in a zero sum. In the nontrivial case, Section 9.4 proves that the valuation ring is henselian. The henselian uniqueness criterion, Theorem 12.2, therefore gives a unique extension ring in every algebraic field; existence also follows independently from Theorem 10.1. The forward reference is only to the algebraic equivalence between factor lifting and unique extension, not to any assertion about norms or completeness of finite-dimensional spaces.
 
-Let $M/K$ be a finite normal extension containing the normal closure of the maximal separable subextension of $L/K$. Uniqueness implies that every $K$-automorphism $\sigma$ of $M$ preserves the extended absolute value: $x\mapsto|\sigma x|_M$ is another extension of $|\cdot|_K$. If $L/K$ is separable, the norm is the product over its $K$-embeddings into $M$, so
+We must still show that the real scale of the given absolute value extends uniquely, rather than only up to equivalence. Put
+
+$$
+v_K(a)=-\log|a|_K
+$$
+
+for $a\ne0$, and let $w:L^\times\to\Gamma$ be any additive valuation belonging to the unique extension class, with $\Gamma=w(L^\times)$ its attained value group. The quotient $\Gamma/w(K^\times)$ is torsion. Indeed, if $x\in L^\times$ satisfies a relation $\sum_i a_ix^i=0$ over $K$, the least value among the nonzero terms $a_ix^i$ occurs at least twice. Thus for some $i\ne j$,
+
+$$
+(i-j)w(x)=w(a_j)-w(a_i)\in w(K^\times).
+$$
+
+For $\gamma\in\Gamma$, choose $m\geq1$ and $a\in K^\times$ with $m\gamma=w(a)$, and define
+
+$$
+\lambda(\gamma)=\frac{v_K(a)}m.
+$$
+
+This is well defined. If also $n\gamma=w(b)$, then $w(a^n)=w(b^m)$; equivalence on $K$ gives $nv_K(a)=mv_K(b)$. The same calculation with common multiples proves additivity. It is order preserving because $\gamma>0$ implies $w(a)=m\gamma>0$, hence $v_K(a)>0$. Finally it is the unique additive map $\Gamma\to\mathbf R$ extending the prescribed values on $K^\times$, since the equation $m\gamma=w(a)$ forces its value at $\gamma$.
+
+Consequently
+
+$$
+|x|_L=\exp\bigl(-\lambda(w(x))\bigr),
+\qquad |0|_L=0,
+$$
+
+is a nonarchimedean absolute value restricting exactly to $|\cdot|_K$. The uniqueness of the extension ring and of $\lambda$ proves uniqueness with this normalization.
+
+Now assume $L/K$ is finite. Let $M/K$ be a finite normal extension containing the normal closure of the maximal separable subextension of $L/K$. Uniqueness implies that every $K$-automorphism $\sigma$ of $M$ preserves the extended absolute value: $x\mapsto|\sigma x|_M$ is another extension of $|\cdot|_K$. If $L/K$ is separable, the norm is the product over its $K$-embeddings into $M$, so
 
 $$
 |N_{L/K}(x)|_K
@@ -1893,7 +1922,7 @@ We can now collect the exact uniqueness statements.
 
 1. $A$ is henselian.
 2. The valuation $v$ has a unique extension, up to equivalence, to every algebraic extension of $K$.
-3. The valuation has a unique extension to a fixed algebraic closure of $K$.
+3. The valuation has a unique extension, up to equivalence, to a fixed algebraic closure of $K$.
 4. For every finite field extension $E/K$, the integral closure of $A$ in $E$ is a local ring.
 
 For a complete nonarchimedean valued field these conditions hold.
@@ -1906,7 +1935,45 @@ $$
 W\longmapsto\mathfrak m_W\cap B
 $$
 
-is a bijection from valuation rings $W$ of $E$ extending $A$ to maximal ideals of $B$ above $\mathfrak m_A$; the inverse sends $\mathfrak P$ to $B_{\mathfrak P}$. Here are the algebraic ingredients. Every such $W$ contains $B$, so it has a center on $B$. Conversely, localize $B$ at $\mathfrak P$. For $z\in E^\times$, work in the finite field $K(z)$ and clear a minimal equation over $K$. Because coefficient ideals in $A$ are totally ordered, the extremal-coefficient argument used in Theorem 10.1 may be applied to this equation and to its reversed equation in $z^{-1}$. If the chosen extremal coefficient is internal, eliminating its extreme power shortens one of the two equations; induction terminates with an extremal coefficient at an end. After localization, the terminal relation is monic either in $z$ or in $z^{-1}$, with coefficients integral over $A$ away from $\mathfrak P$. Since $B_{\mathfrak P}$ is integrally closed, either $z$ or $z^{-1}$ belongs to it. Thus $B_{\mathfrak P}$ is a valuation ring. Its intersection with $K$ is $A$, by the same unit argument used in Theorem 11.1. Finally, a valuation ring centered at $\mathfrak P$ contains $B_{\mathfrak P}$, and the maximality principle of Section 3.5 forces equality. This proves the lemma.
+is a bijection from valuation rings $W$ of $E$ extending $A$ to maximal ideals of $B$ above $\mathfrak m_A$; the inverse sends $\mathfrak P$ to $B_{\mathfrak P}$.
+
+Every such $W$ contains $B$, because elements of $B$ are integral over $A\subset W$ and valuation rings are integrally closed. Its maximal ideal therefore has a center $\mathfrak P=\mathfrak m_W\cap B$ above $\mathfrak m_A$, and localization gives $B_{\mathfrak P}\subseteq W$.
+
+Conversely, fix a maximal ideal $\mathfrak P$ of $B$ above $\mathfrak m_A$. The maximal-domination construction in the proof of Theorem 10.1, begun with the local domain $B_{\mathfrak P}$ in place of $A$, produces a valuation ring $W\subset E$ dominating $B_{\mathfrak P}$; write $w$ for its valuation. Its maximal ideal contracts to $\mathfrak m_A$ on $A$. Moreover $W\cap K=A$: if $c\in K\setminus A$, then $c^{-1}\in\mathfrak m_A\subset\mathfrak m_W$, so $c$ cannot also belong to $W$. Thus $W$ extends the original valuation.
+
+We prove that $W=B_{\mathfrak P}$. Take $0\ne z\in W$. Choose a nonzero relation
+
+$$
+b_0+b_1z+\cdots+b_nz^n=0
+$$
+
+by starting with an equation over $K$ and dividing all its coefficients by one having least $v$-value. Then every $b_i$ lies in $A$ and at least one is a unit. Let $j$ be the largest index for which $b_j\in A^\times$. In fact $j\geq1$: if $j=0$, then in $W$ the constant term would have value zero and every other term positive value, which is impossible in a zero sum. Set
+
+$$
+y=b_j+b_{j+1}z+\cdots+b_nz^{n-j}.
+$$
+
+We claim that both $y$ and $zy$ lie in $B$. By Section 10.3 it is enough to check boundedness in every valuation ring $U$ of $E$ extending $A$. Write $u$ for its additive valuation. If $u(z)\geq0$, then every term of $y$ after $b_j$ has positive value, by the maximal choice of $j$, while $u(b_j)=0$. Hence $u(y)=0$ and $u(zy)\geq0$. If $u(z)<0$, divide the displayed relation by $z^j$ to obtain
+
+$$
+y=-\sum_{i<j}b_i z^{i-j}.
+$$
+
+Every term on the right has value at least $(j-i)(-u(z))\geq-u(z)$. Therefore
+
+$$
+u(y)\geq-u(z)>0,
+\qquad
+u(zy)\geq0.
+$$
+
+This proves $y,zy\in B$. For the particular ring $W$, we have $w(z)\geq0$, so the first case also shows that $y$ is a unit of $W$. Consequently $y\notin\mathfrak P$, and
+
+$$
+z=\frac{zy}{y}\in B_{\mathfrak P}.
+$$
+
+Thus $W\subseteq B_{\mathfrak P}$; the reverse inclusion was built into the construction, so equality holds. Applying the same conclusion to any valuation ring centered at $\mathfrak P$ proves uniqueness, while distinct centers plainly give distinct rings. This proves the extension-center lemma.
 
 Assume 1 and let $E/K$ be finite, with integral closure $B$. Suppose $B$ had distinct maximal ideals $\mathfrak P$ and $\mathfrak Q$. Choose $x\in\mathfrak P\setminus\mathfrak Q$. Its minimal polynomial $q\in K[X]$ lies in $A[X]$: the element $x$ is integral, the coefficients of $q$ are integral over $A$, and $A$ is integrally closed. Moreover
 
