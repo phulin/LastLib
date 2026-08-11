@@ -34,7 +34,7 @@
    - [Descent of a stable component union](#64-descent-of-a-stable-component-union)
 7. [Fine, stacky, and coarse levels](#7-fine-stacky-and-coarse-levels)
    - [Cofinal fine covers](#71-cofinal-fine-covers)
-   - [The effective deck group](#72-the-effective-deck-group)
+   - [Nominal and effective level groups](#72-nominal-and-effective-level-groups)
    - [Quotient stacks and coarse curves](#73-quotient-stacks-and-coarse-curves)
    - [What descends to which quotient](#74-what-descends-to-which-quotient)
 8. [Commensurable lattices and universal isogenies](#8-commensurable-lattices-and-universal-isogenies)
@@ -84,17 +84,17 @@ is easy to write and surprisingly easy to misuse. It does not itself explain whi
 
 The preceding books supplied the ingredients separately. The quaternionic datum, its reflex field, and canonical model are known. A genuine PEL realization gives a fine moduli scheme after sufficient level and a universal abelian family. General correspondence theory explains how a finite span of curves acts on Jacobians. The present task is to join these pieces without changing a variance convention in the middle.
 
-There are four main theorems to prove. First, the complex points of the selected PEL curve are exactly the appropriate components of (1.1). Second, connected components are computed by an exact abelianized class quotient, with the rational positivity and norm conditions retained. Third, fine and coarse levels are related by their effective, rather than nominal, deck groups. Fourth, the lattice modification attached to $a\in G(\mathbf A_f)$ produces a universal isogeny on the fine Hecke space and a Hecke correspondence on every coarse canonical curve, all defined over the reflex field.
+There are four main theorems to prove. First, the complex points of the selected PEL curve are exactly the appropriate components of (1.1). Second, connected components are computed by an exact abelianized class quotient, with the rational positivity and norm conditions retained. Third, a fine cover presents the moduli stack through the nominal level group, while its effective image presents the coarse curve. Fourth, the lattice modification attached to $a\in G(\mathbf A_f)$ produces a universal isogeny on the fine Hecke space and a Hecke correspondence on every coarse canonical curve, all defined over the reflex field.
 
 ### 1.2 Standing quaternionic PEL datum
 
-Let $F$ be a totally real field and $B/F$ a quaternion algebra split at exactly one real embedding $\tau_0$. Thus the associated symmetric domain has one complex dimension. We allow either the basic group
+Let $F$ be a totally real field and $B/F$ a quaternion algebra split at exactly one real embedding $\tau_0$. Thus the associated symmetric domain has one complex dimension. Write
 
 $$
-G=\operatorname{Res}_{F/\mathbf Q}B^\times                         \tag{1.2}
+G^{\mathrm b}=\operatorname{Res}_{F/\mathbf Q}B^\times.          \tag{1.2}
 $$
 
-or a connected central modification with the same adjoint datum. In the second case no reduced-norm component formula will be asserted until the actual abelian quotient has been identified.
+The group used for the PEL constructions will be denoted $G$. It is either $G^{\mathrm b}$, if the basic group itself carries the stated direct PEL realization, or a specified connected PEL-exact central modification with the same adjoint datum. In the latter case a central morphism from the PEL tower to the basic tower is an additional finite comparison; equality of their adjoint data does not identify their component sets or their universal families. No reduced-norm component formula will be asserted for $G$ unless $G=G^{\mathrm b}$.
 
 Fix a quaternionic PEL realization
 
@@ -108,9 +108,11 @@ $$
 \psi(bx,y)=\psi(x,b^*y),
 $$
 
-and the connected $D$-linear similitude group of $(V,\psi)$ is the chosen central modification of $G$. The homomorphism $h_0:\mathbb S\to G_{\mathbf R}$ gives $V$ types $(-1,0)$ and $(0,-1)$ and is positive. Its conjugacy class is $X$, and $E$ denotes the reflex field. In the one-split-place basic case, $E$ is the embedded copy $\tau_0(F)$.
+and the connected $D$-linear similitude group of $(V,\psi)$ is exactly $G$. The homomorphism $h_0:\mathbb S\to G_{\mathbf R}$ gives $V$ types $(-1,0)$ and $(0,-1)$ and is positive. Its conjugacy class is $X$, and $E$ denotes the reflex field. In the one-split-place basic case, $E$ is the embedded copy $\tau_0(F)$.
 
 Choose a $*$-stable order $\mathcal O\subset D$, an $\mathcal O$-stable lattice $\Lambda\subset V$, a polarization type, and a compact open $K\subset G(\mathbf A_f)$ compatible with the completed lattice $\widehat\Lambda$. We work in characteristic zero. Whenever a universal family is mentioned on a scheme, the level is assumed fine: it is neat and detects the rational center, or it contains a rigid principal level of order at least three. Arbitrary $K$ will be treated by a quotient stack and its coarse curve.
+
+This convention fixes an important interface. Every adelic element used to modify the universal lattice lies in the actual PEL group $G(\mathbf A_f)$. If a finite central comparison $G\to G^{\mathrm b}$ is present, the resulting family or isogeny on the $G$-cover descends to the basic curve only when the central inertia acts trivially on the entire PEL diagram. The underlying finite correspondence can descend even when the universal object does not.
 
 The fixed integral PEL type can select only a union of the components of (1.1). We denote its adelic label set by $\mathcal C_K$ and assume it is stable under the canonical Galois action when descent to $E$ is asserted. This qualification is necessary. Changing the adelic lattice can change the polarization module or its elementary divisors even though it does not change the rational Shimura datum.
 
@@ -143,6 +145,8 @@ x^{\operatorname{Art}(s)}=[h,r_h(s_f)g].                           \tag{1.4}
 $$
 
 The reciprocity multiplier is on the left; the Hecke multiplier is on the right. Their commutation is the basic descent identity of the book.
+
+For the ambient action on connected components, the reflex field $E$ can have real places. An Artin class is then represented by an idele whose real components are all positive; weak approximation supplies such a representative. Two positive representatives of the same Artin class differ, on their finite parts, by a totally positive principal element and a connected archimedean element. This is the normalization that makes the action well defined on the narrow quotient. No positivity choice is needed for the CM reflex field of a special point, whose archimedean idele group is connected.
 
 For a finite correspondence
 
@@ -387,9 +391,9 @@ $$
 
 Its adjoint image is finite. Indeed, $Z_{G^{\mathrm{ad}}(\mathbf R)}(h)$ is compact, while the intersection of $G(\mathbf Q)$ with a compact-open finite adelic condition is discrete in the real factor. A discrete subgroup of a compact group is finite. The kernel of the adjoint map lies in the rational center and can still contain torsion acting on the PEL object.
 
-**Proposition 4.1.** The automorphism group of the PEL object corresponding to $[h,g]$ is canonically $I_{h,g}$ modulo rational central elements acting trivially on every part of the object.
+**Proposition 4.1.** For the faithful PEL realization fixed in Chapter 1, the automorphism group of the PEL object corresponding to $[h,g]$ is canonically $I_{h,g}$. If one forgets the PEL object and looks only at the action on the analytic domain, the subgroup of rational central elements acting trivially on the domain becomes an ineffective kernel; it must not be divided out when computing stack inertia.
 
-**Proof.** An automorphism induces a $D$-linear automorphism of rational homology commuting with $h$, preserving the polarization, and preserving the $K$-level orbit. These are exactly the three conditions in (4.1). Conversely such a rational Hodge automorphism preserves the integral lattice because of the level condition, so Proposition 2.1 algebraizes it to an automorphism. Elements acting identically on homology, polarization, and level are the ineffective central kernel and must be divided out. $\square$
+**Proof.** An automorphism induces a $D$-linear automorphism of rational homology commuting with $h$, preserving the polarization, and preserving the $K$-level orbit. These are exactly the three conditions in (4.1); on the selected integral component, the polarization normalization forces the actual, rather than merely similitude, compatibility. Conversely such a rational Hodge automorphism preserves the integral lattice because of the level condition, so Proposition 2.1 algebraizes it to an automorphism. Faithfulness of $V$ makes an element acting identically on homology equal to the identity in $G$. A nontrivial rational central element may act trivially on $X$ while acting nontrivially on $V$ and on the abelian variety. It is then genuine inertia, even though it is invisible on the coarse analytic orbit space. $\square$
 
 ### 4.2 Neatness and fine level
 
@@ -433,14 +437,25 @@ $$
 G(\mathbf Q)_+=\{q\in G(\mathbf Q):qX^+=X^+\}.                   \tag{5.1}
 $$
 
-**Proposition 5.1.** There is a natural bijection
+Without any transitivity hypothesis there is always a natural orbit formula
+
+$$
+\pi_0\bigl(\operatorname{Sh}_K(G,X)(\mathbf C)\bigr)
+\simeq
+G(\mathbf Q)\backslash
+\bigl(\pi_0(X)\times G(\mathbf A_f)/K\bigr).                    \tag{5.2a}
+$$
+
+Indeed a path keeps the finite adelic coordinate fixed and stays in one component of $X$, while the diagonal rational action gives exactly the displayed identifications. To replace (5.2a) by a single class set based at $X^+$, one needs rational transitivity on $\pi_0(X)$.
+
+**Proposition 5.1.** Assume that $G(\mathbf Q)$ acts transitively on $\pi_0(X)$. Then there is a natural bijection
 
 $$
 \pi_0\bigl(\operatorname{Sh}_K(G,X)(\mathbf C)\bigr)
 \simeq G(\mathbf Q)_+\backslash G(\mathbf A_f)/K.                 \tag{5.2}
 $$
 
-**Proof.** Every component of $X$ is a $G(\mathbf R)$-translate of $X^+$. In the quaternionic case, weak approximation in the split real factor and openness at the finite places allow a rational element to move a representative into $X^+$ without changing its double-coset class. Once the first coordinate lies in $X^+$, a continuous path cannot change the discrete finite adelic coset. Two such charts belong to the same component exactly when a rational element preserving $X^+$ and a right element of $K$ relate their finite coordinates. That is precisely (5.2). $\square$
+**Proof.** Rational transitivity moves the first coordinate of every representative into $X^+$. Once the first coordinate lies there, a continuous path cannot change the discrete finite adelic coset. Two such charts belong to the same component exactly when a rational element preserving $X^+$ and a right element of $K$ relate their finite coordinates. That is precisely (5.2). For the basic quaternionic group, the required transitivity is genuine prior mathematics: the rational reduced-norm theorem realizes every sign pattern allowed at the split real places and forces positivity only at Hamiltonian places. For a central modification it must be verified for that group and is not a consequence of equality of adjoint domains alone. $\square$
 
 The label of $[h,g]$ is therefore the class of $g$, not its reduced norm until a theorem identifies those two descriptions.
 
@@ -458,7 +473,7 @@ $$
 T(\mathbf Q)^\dagger=\nu(G(\mathbf Q)_+).                         \tag{5.3}
 $$
 
-Assume that $G^{\mathrm{der}}$ is simply connected and has a noncompact real factor. For the quaternionic curve this derived group is a central form of $\operatorname{Res}_{F/\mathbf Q}B^1$, and the split place $\tau_0$ supplies the required noncompact factor. Strong approximation then makes $G^{\mathrm{der}}(\mathbf Q)$ dense in $G^{\mathrm{der}}(\mathbf A_f)$.
+For the remainder of Sections 5.2--5.5, assume the rational transitivity used in Proposition 5.1. Also assume that $G^{\mathrm{der}}$ is simply connected and has a noncompact real factor. For the quaternionic curve this derived group is $\operatorname{Res}_{F/\mathbf Q}B^1$ in the basic case, and the split place $\tau_0$ supplies the required noncompact factor. A central modification must separately have the stated simply connected derived group. The rank-one strong-approximation theorem proved for these groups then makes $G^{\mathrm{der}}(\mathbf Q)$ dense in $G^{\mathrm{der}}(\mathbf A_f)$.
 
 **Theorem 5.2 (component reduction).** Abelianization induces a bijection
 
@@ -622,7 +637,7 @@ The norm in (6.2) is forced by the different reflex fields. A special point can 
 
 ### 6.2 Galois action on the label set
 
-For $s\in\mathbf A_E^\times$, define
+Let an Artin class be represented by $s\in\mathbf A_E^\times$ with positive component at every real place. Define
 
 $$
 [t]^{\operatorname{Art}_E(s)}
@@ -630,6 +645,8 @@ $$
 $$
 
 on the right side of (5.4). Principal ideles map to rational points and a sufficiently small open subgroup of finite ideles maps into $\nu(K)$, so (6.3) is well defined and factors through a finite ray class quotient.
+
+Here the principal-idele assertion means **totally positive** principal ambiguity. The labelled-cocharacter construction of ambient reciprocity sends such an element into $T(\mathbf Q)^\dagger$. A general negative principal representative need not do so and can change a narrow component label; this is why the positivity convention of Chapter 1 is part of the formula, not an optional simplification.
 
 **Theorem 6.1.** Under complex uniformization, the Galois action on geometric connected components of the canonical model is (6.3).
 
@@ -649,15 +666,17 @@ The action is a translation action on a finite abelian quotient. In particular, 
 
 ### 6.3 Fields of definition of individual components
 
-Let $c$ be a geometric component label represented by $t\in\nu(G(\mathbf A_f))$. Define
+Let $c$ be a geometric component label represented by $t\in\nu(G(\mathbf A_f))$. Since $T$ is commutative, the factor $t$ cancels from its stabilizer condition. Define the open subgroup of the idele class group
 
 $$
-U_c=\{s\in\mathbf A_E^\times:
-r_{(G,X)}(s_f)t\in
-T(\mathbf Q)^\dagger t\nu(K)\}.                                  \tag{6.4}
+U_c=
+E^\times
+r_{(G,X)}^{-1}\bigl(T(\mathbf Q)^\dagger\nu(K)\bigr)
+E_\infty^{\times,0}/E^\times
+\subset\mathbf A_E^\times/E^\times,                             \tag{6.4}
 $$
 
-Modulo $E^\times$ and the connected archimedean subgroup, $U_c$ is open of finite index. Let $E_c/E$ be the finite abelian extension corresponding to it under arithmetic class field theory.
+where the inverse image is taken on finite ideles and $E_\infty^{\times,0}$ is the identity component of the archimedean idele group. It is open of finite index. Let $E_c/E$ be the finite abelian extension corresponding to it under arithmetic class field theory. The notation retains $c$ to emphasize which component is descending, although the translation action makes the subgroup independent of the chosen label.
 
 **Proposition 6.2.** The geometric component $C_c$ descends to $E_c$, and $E_c$ is its minimal field of definition inside $E^{\mathrm{ab}}$.
 
@@ -699,35 +718,42 @@ The curve $S_{K'}^{\mathcal C'}$ is fine on every PEL component union $\mathcal 
 
 Normality is not needed merely to forget level, but it is what turns the finite cover into a group quotient. If a first congruence subgroup is not normal, intersect its finitely many $K$-conjugates. The intersection remains open, fine, and of finite index, and is now normal. This elementary refinement is what makes the cocycles in Chapters 9 and 12 honest group-action cocycles.
 
-### 7.2 The effective deck group
+### 7.2 Nominal and effective level groups
 
-The abstract quotient $K/K'$ counts changes of a chosen marking. The geometric cover counts changes not already produced by a rational automorphism. Passing from the former to the latter is the source of the word “effective.”
-
-The nominal right action of $K/K'$ need not be faithful. Put
+The abstract quotient
 
 $$
-Z_{K,K'}=
-\{k\in K:\text{right translation by }k
-\text{ is induced by a rational central element on every point}\}.
+\widetilde\Delta_{K,K'}=K/K'                                     \tag{7.1}
 $$
 
-The effective deck group is
+counts changes of a chosen marking. It is the **nominal level group**. Its action on the fine curve need not be faithful: a rational central element can act trivially on the analytic base while acting nontrivially on the universal abelian variety. That element is invisible to a coarse orbit space but remains genuine inertia in the moduli stack.
+
+Let
 
 $$
-\Delta_{K,K'}=(K/K')/(Z_{K,K'}/K').                               \tag{7.1}
+Z_{K,K'}/K'
+=\ker\bigl(\widetilde\Delta_{K,K'}
+\longrightarrow\operatorname{Aut}(S_{K'}^{\mathcal C'})\bigr),
 $$
 
-More locally, the stabilizer of $[h,gK']$ in $K/K'$ consists of those $k$ for which
+and define the **effective geometric group**
 
 $$
-q h=h,\qquad qgK'=gkK'                                             \tag{7.2}
+\Delta_{K,K'}^{\mathrm{eff}}
+=\widetilde\Delta_{K,K'}/(Z_{K,K'}/K').                          \tag{7.2}
 $$
 
-for some $q\in G(\mathbf Q)$. At fine target level this stabilizer is trivial. At non-neat target level it is the automorphism group of the underlying $K$-level PEL object.
+In the present faithful connected PEL setting, the kernel is accounted for by rational central elements whose right translation is already identified by the left rational action. The kernel should be removed when forming the coarse geometric quotient, but not when presenting the moduli stack.
 
-The central quotient in (7.1) prevents overcounting deck transformations. For instance, a scalar lying both in $G(\mathbf Q)$ and in $K$ acts on the right but is already identified by the left rational action.
+More locally, the stabilizer of $[h,gK']$ in the nominal group consists of those $k$ for which
 
-On a connected component with adelic representative $g$, the kernel can be calculated directly. A class $k\in K/K'$ acts trivially precisely when there is $q\in G(\mathbf Q)$ with $qX^+=X^+$ and $qgK'=gkK'$, and when the resulting action on the quotient of $X^+$ is the identity. At fine source level an element fixing one point fixes no point unless it is in the ineffective center. Thus the global definition (7.1) and the pointwise condition (7.2) agree after the rational central kernel is removed.
+$$
+q h=h,\qquad qgK'=gkK'                                             \tag{7.3}
+$$
+
+for some $q\in G(\mathbf Q)$. If the target level $K$ is fine, this stabilizer is trivial. At non-neat target level it is the automorphism group of the underlying $K$-level PEL object. The subgroup fixing every base point is the kernel in (7.2); its members still occur in every relevant stack stabilizer when they act nontrivially on the universal PEL object.
+
+The distinction is already forced by level two. The scalar $-1$ can act trivially on the symmetric domain and on the coarse base while acting as $[-1]$ on every abelian fiber. Replacing the nominal group by its effective image in a quotient-stack presentation would delete precisely this inertia.
 
 ### 7.3 Quotient stacks and coarse curves
 
@@ -735,7 +761,7 @@ Define
 
 $$
 \mathscr S_K^{\mathcal C}=
-[S_{K'}^{\mathcal C'}/\Delta_{K,K'}],                             \tag{7.3}
+[S_{K'}^{\mathcal C'}/\widetilde\Delta_{K,K'}],                  \tag{7.4}
 $$
 
 where $\mathcal C'$ is the full inverse image of $\mathcal C$. This quotient stack is independent of $K'$: two fine covers are dominated by their intersection, and the resulting action groupoids are equivalent.
@@ -744,16 +770,16 @@ The finite categorical quotient
 
 $$
 S_K^{\mathcal C,\mathrm{coarse}}
-=S_{K'}^{\mathcal C'}/\Delta_{K,K'}                               \tag{7.4}
+=S_{K'}^{\mathcal C'}/\Delta_{K,K'}^{\mathrm{eff}}              \tag{7.5}
 $$
 
-is the coarse canonical curve. It is independent of the cover because its function field on each component is the invariant field and normalization gives a unique normal curve. Its complex points are the orbit set (1.1) on $\mathcal C$.
+is the coarse canonical curve. Equivalently it is the finite categorical quotient by the nominal group, since an ineffectively acting kernel does not change invariant functions. It is independent of the cover because its function field on each component is the invariant field and normalization gives a unique normal curve. Its complex points are the orbit set (1.1) on $\mathcal C$.
 
-If the quaternion algebra is division, both (7.3) and (7.4) are proper. In dimension one the coarse curve is smooth over characteristic zero even at a cyclic quotient point, but the stack still records its nontrivial stabilizer.
+If the quaternion algebra is division, both the stack (7.4) and the coarse curve (7.5) are proper. In dimension one the coarse curve is smooth over characteristic zero even at a cyclic quotient point, but the stack still records its nontrivial stabilizer.
 
 ### 7.4 What descends to which quotient
 
-The universal PEL abelian scheme on $S_{K'}$ is equivariant and therefore descends to the quotient stack (7.3). It descends to the coarse curve if and only if every inertia group acts trivially on the fiber with all its PEL tensors. Indeed, a family pulled back from a coarse space has trivial inertia action, while the universal object's inertia action is the corresponding automorphism of the abelian variety. Thus coarse descent is equivalent to the fine condition.
+The universal PEL abelian scheme on $S_{K'}$ is equivariant for the nominal group and therefore descends to the quotient stack (7.4). It descends to the coarse curve if and only if every inertia group acts trivially on the fiber with all its PEL tensors. Indeed, a family pulled back from a coarse space has trivial inertia action, while the universal object's inertia action is the corresponding automorphism of the abelian variety. Thus coarse descent is equivalent to the fine condition.
 
 The obstruction can be seen without stack language. Suppose a coarse point represents an object $A$ with a nontrivial automorphism $u$. A putative universal family over a neighborhood of that point would pull back to the same family along the two local branches related by $u$, but coarse descent would identify them through the identity on the fiber. The moduli descent datum identifies them through $u$. These data agree only if $u=1$. The quotient stack retains the choice of $u$ and therefore has no such contradiction.
 
@@ -809,6 +835,8 @@ a_v=\begin{pmatrix}\varpi_v&0\\0&1\end{pmatrix}.
 $$
 
 Then $a_v\Lambda_v\subset\Lambda_v$ with quotient the residue field $k_v$ as an additive module. The associated isogeny has a kernel of order $q_v=|k_v|$ in the active rank-two factor. Away from $v$ the lattices agree, so the kernel is supported entirely at $v$. This local picture is the quaternionic analogue of a cyclic $\mathfrak p$-isogeny of elliptic curves.
+
+The phrase “in the active rank-two factor” is essential. In a higher-dimensional PEL representation that factor can occur with a fixed multiplicity, and the order of the full kernel is then the corresponding power of $q_v$. The invariant general formula is the lattice index (8.10), not the elliptic-curve number $q_v$.
 
 ### 8.3 The intermediate level
 
@@ -890,7 +918,7 @@ The lattice formula gives an isogeny on every complex fiber, but later arithmeti
 
 ### 9.1 Construction from a finite subgroup
 
-Assume first that $K_a$ is fine. Choose an integer $N$ annihilating $C_a$ in (8.9). After passing temporarily to a normal finer level $K'\subset K_a$ contained in the principal level-$N$ subgroup and in an auxiliary principal level of order at least three, the universal level marking identifies $C_a$ with a finite subgroup
+Assume first that the endpoint level $K$ is fine; then $K_a\subset K$ is fine as well, and both universal families in (8.7) exist on schemes. Choose an integer $N$ annihilating $C_a$ in (8.9). After passing temporarily to a normal finer level $K'\subset K_a$ contained in the principal level-$N$ subgroup and in an auxiliary principal level of order at least three, the universal level marking identifies $C_a$ with a finite subgroup
 
 $$
 \mathcal H_a\subset p_2^*\mathcal A_K[N].                         \tag{9.1}
@@ -944,9 +972,9 @@ This proof is algebraic and does not require compactness. In the division case o
 
 ### 9.3 Descent from a rigidifying cover
 
-Let $K'\triangleleft K_a$ be a rigidifying cover as above, with effective deck group $\Delta$. The subgroup $\mathcal H_a$, its quotient, and $\Phi_a$ carry natural $\Delta$-equivariant structures. The cocycle is literal: two deck transformations act by composing the corresponding changes of level on the same lattice quotient. Effective finite descent for abelian schemes and their homomorphisms therefore gives (8.8) on the fine curve $S_{K_a}$.
+Let $K'\triangleleft K_a$ be a rigidifying cover as above. The subgroup $\mathcal H_a$, its quotient, and $\Phi_a$ carry natural equivariant structures for the nominal level group $K_a/K'$. The cocycle is literal: two level changes act by composing their actions on the same lattice quotient. Because the target $K_a$ is fine in the present paragraph, this action has no stabilizer on the moduli object, and effective finite descent for abelian schemes and their homomorphisms gives (8.8) on the fine curve $S_{K_a}$.
 
-At arbitrary $K_a$, the same equivariant object descends to the quotient stack $\mathscr S_{K_a}$. It descends to the coarse curve precisely when every inertia element acts trivially on the source family, target family, and the isogeny. Since an inertia element is already a nontrivial automorphism of a universal PEL object in the non-fine case, this condition generally fails.
+At arbitrary $K_a$, the same equivariant object descends through the nominal level group to the quotient stack $\mathscr S_{K_a}$. Passing first to the effective geometric group would lose any central inertia acting trivially on the base. The isogeny descends to the coarse curve precisely when every inertia element acts trivially on the source family, target family, and the isogeny. Since an inertia element is already a nontrivial automorphism of a universal PEL object in the non-fine case, this condition generally fails.
 
 The failure is not a defect in the Hecke theory. The coarse maps $p_1,p_2$ descend independently of universal families, and hence the coarse finite correspondence exists. What is lost is the ability to regard each coarse point as carrying one functorially chosen abelian variety and one functorially chosen isogeny.
 
@@ -1221,7 +1249,7 @@ Applying the theorem to the inclusions and translation defining $p_1,p_2$ proves
 
 Coarse descent cannot be proved by pretending a non-neat moduli problem is fine. Instead one descends the fine equivariant diagram and only then forgets inertia by taking the finite categorical quotient.
 
-Choose a common normal fine subgroup $K'\subset K_a\subset K$. The maps $p_1,p_2$ on $S_{K'}$ are equivariant for the appropriate effective deck groups. Finite descent therefore gives a diagram of quotient stacks over $E$, and taking finite categorical quotients gives
+Choose a common normal fine subgroup $K'\subset K_a\subset K$. The maps $p_1,p_2$ on $S_{K'}$ are equivariant for the appropriate nominal level groups. Quotienting by those groups gives a diagram of quotient stacks over $E$, with all ineffective central stabilizers retained. Taking finite categorical quotients, equivalently passing to the effective images on the base curves, gives
 
 $$
 S_K^{\mathrm{coarse}}
@@ -1276,9 +1304,10 @@ We can now state the result as one reusable theorem. Its hypotheses separate rat
 **Theorem 13.1 (uniformization, components, and Hecke descent).** Let $(G,X)$ be a quaternionic Shimura datum of dimension one with reflex field $E$. Assume that:
 
 1. $G$ is either $\operatorname{Res}_{F/\mathbf Q}B^\times$, where $B/F$ is split at exactly one real place, or a specified connected central modification with the same adjoint datum;
-2. the chosen group has a genuine quaternionic PEL realization $(D,*,V,\psi,h_0)$, with compatible order, lattice, polarization data, determinant law, and compact open levels;
+2. the chosen group $G$ itself is the connected similitude group of a genuine quaternionic PEL realization $(D,*,V,\psi,h_0)$, with compatible order, lattice, polarization data, determinant law, and compact open levels;
 3. $G^{\mathrm{der}}$ is simply connected and satisfies strong approximation away from the noncompact real factor;
-4. every PEL component union under discussion is selected by explicit locally constant integral invariants and is stable under the relevant Galois action when descent to $E$ is claimed.
+4. $G(\mathbf Q)$ acts transitively on $\pi_0(X)$ whenever the single-base-component formulas (5.2)--(5.4) are used;
+5. every PEL component union under discussion is selected by explicit locally constant integral invariants and is stable under the relevant Galois action when descent to $E$ is claimed.
 
 Then the following statements hold.
 
@@ -1303,8 +1332,8 @@ Then the following statements hold.
    F_+^\times\backslash\mathbf A_{F,f}^\times/\operatorname{Nrd}(K).
    $$
 
-4. Arithmetic Galois acts on component labels by left multiplication with $r_{(G,X)}(s_f)$. The field of an individual component is the finite abelian extension cut out by (6.4).
-5. Every arbitrary level is the quotient stack of a cofinal fine cover by its effective deck group; its coarse canonical curve is the normal finite categorical quotient. The universal family descends to the stack and to the coarse curve exactly in the fine case.
+4. Arithmetic Galois acts on component labels by left multiplication with $r_{(G,X)}(s_f)$, where the Artin class is represented positively at every real place. The field of an individual component is the finite abelian extension cut out by (6.4).
+5. Every arbitrary level is the quotient stack of a cofinal fine cover by the nominal level group $K/K'$, so ineffective central inertia is retained. Its coarse canonical curve is the normal finite categorical quotient, equivalently the quotient by the effective geometric image. The universal family descends to the stack and to the coarse curve exactly in the fine case.
 6. For $a\in G(\mathbf A_f)$ and $K_a=K\cap aKa^{-1}$, the two finite maps (8.5)--(8.6) define the Hecke correspondence $T(a)$, depending only on $KaK$. At fine level an integral representative of $a$ gives the universal $D$-linear isogeny
 
    $$
@@ -1315,6 +1344,7 @@ Then the following statements hold.
 7. Hecke correspondences route components by multiplication with $\nu(a)$, transpose by $a^{-1}$, and compose with the double-coset convolution multiplicities.
 8. Level maps, Hecke spans, their convolution relations, and universal isogenies on fine curves or quotient stacks descend over their canonical component fields. The coarse span always descends; the universal isogeny descends to a coarse curve only when inertia is trivial.
 9. In the quaternion division case the curves are smooth projective. The Hecke span acts on their Jacobians by $p_{2*}p_1^*$, convolution becomes composition, and $T(a^{-1})$ is the polarized adjoint of $T(a)$.
+10. If $G$ maps centrally to a different basic quaternionic group with the same adjoint datum, the induced map of canonical curves is a separate finite comparison. The component map is computed through the two actual abelian quotients. Universal families and universal isogenies descend across that comparison exactly when its inertia acts trivially; the coarse Hecke span needs no such hypothesis.
 
 **Proof.** The complex classification is Theorem 3.2. Chapter 4 proves the stabilizer, smoothness, and compactness assertions. Theorem 5.2 and Corollary 5.3 compute components, while Chapter 6 proves their canonical Galois descent. Chapter 7 gives the fine, stacky, and coarse comparisons. Chapters 8 and 9 construct the universal isogeny. Chapter 10 constructs the Hecke span, and Chapter 11 proves convolution, transpose, and the Jacobian action. Theorems 12.1 and 12.2 prove canonical descent. $\square$
 
@@ -1326,11 +1356,15 @@ Then the following statements hold.
 | actual polarized abelian variety from $[h,g]$ | selected integral lattice and polarization type | the rational point gives only a polarization class up to isogeny |
 | injectivity of the period map | the full finite adelic level coordinate | rational Hodge structures classify only up to quasi-isogeny |
 | trivial stabilizers | neatness plus detection of the rational center, or full level at least three | central automorphisms can survive adjoint neatness |
+| single-base-component formula (5.2) | rational transitivity on $\pi_0(X)$ | one must retain the orbit formula (5.2a) |
 | abelianized component formula | simply connected derived group and strong approximation | a residual derived class set can remain |
 | basic narrow norm formula | $G=\operatorname{Res}_{F/\mathbf Q}B^\times$ and the rational reduced-norm theorem | a central modification can have a different torus and finite correction |
 | component over the ambient reflex field | stability under (6.3) | Galois can permute geometric components |
+| ambient component reciprocity | a positive-at-infinity idele representative and the connected archimedean factor in (6.4) | a negative principal idele can falsely move a narrow component |
 | universal family on a scheme | fine level | inertia obstructs coarse descent |
+| quotient-stack presentation | nominal level group, including any ineffective kernel | replacing it by the effective image erases central inertia |
 | honest universal isogeny | an integral representative of the adelic lattice modification | only a quasi-isogeny is canonical; scalar normalization changes degree |
+| descent from a PEL central cover | trivial inertia on the complete universal diagram | equality of adjoint data descends the coarse curve, not the universal object |
 | formula $K_a=K\cap aKa^{-1}$ | right translation $g\mapsto ga$ | the other intersection does not make $p_2$ well defined with this convention |
 | projectivity | quaternionic adjoint group anisotropic over $\mathbf Q$ | rational parabolics produce cusps |
 | action on Jacobians | smooth proper component curves | an open curve requires generalized Jacobians or compactification data |
@@ -1347,6 +1381,8 @@ r_h(s_f)(ga)=(r_h(s_f)g)a.
 $$
 
 If a proposed descent proof needs $r_h(s_f)$ to commute with $a$, its conventions have already gone wrong.
+
+For ambient component reciprocity over a field with real places, the Artin representative must also be positive at infinity. A negative principal idele is trivial under global Artin reciprocity but need not lie in $T(\mathbf Q)^\dagger$ on a narrow label set. Omitting the connected archimedean factor from (6.4) therefore makes the stated component field depend on a representative.
 
 Second, the intermediate group must satisfy $a^{-1}K_aa\subset K$. With $K_a=K\cap aKa^{-1}$ this is immediate. This check is more reliable than remembering one of two visually similar intersections.
 
@@ -1370,7 +1406,7 @@ The Riemann bilinear relations turn these data into a polarized abelian variety,
 
 Connectedness is controlled by a different quotient. Strong approximation removes the simply connected derived coordinate and leaves the actual abelianized adelic image. For the basic quaternionic group, reduced norm turns this into a narrow idele class quotient: orientation contributes positivity at the split real place, and the Hamilton norm contributes positivity at every ramified real place. Central modifications retain their own torus quotient and finite corrections. Canonical reciprocity acts on these labels, so the stabilizer of a label gives the exact abelian field over which that geometric component is defined.
 
-Level has three honest forms. A fine curve represents PEL objects and carries a universal abelian scheme. A quotient stack retains that universal object together with its inertia. A coarse curve retains the orbit geometry but generally loses the family. The effective deck group, with rational central identifications removed, relates all three.
+Level has three honest forms. A fine curve represents PEL objects and carries a universal abelian scheme. A quotient stack retains that universal object together with its inertia, so its presentation uses the full nominal level group. A coarse curve retains only the orbit geometry and generally loses the family; its faithful geometric action is the effective quotient of that group. Keeping those two groups distinct prevents a rational central automorphism from disappearing between the stack and the coarse curve.
 
 Finally, right translation by $a$ changes $L_g$ to the commensurable lattice $L_{ga}$. On the intermediate level $K\cap aKa^{-1}$ this produces a universal quasi-isogeny, and after an integral normalization it produces an honest isogeny with explicit finite kernel. Forgetting the intermediate structure in two ways gives the Hecke span. Fiber products give double-coset convolution, inversion gives transpose, and pull--norm gives the corresponding action and adjunction on Jacobians.
 
