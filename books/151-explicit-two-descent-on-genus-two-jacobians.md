@@ -187,7 +187,7 @@ Because $f$ is squarefree, $L$ is a finite etale $K$-algebra. If
 $f=f_1\cdots f_r$ is its factorization into distinct monic irreducibles, then
 
 $$
-L\simeq\prod_{i=1}^rK_i,qquad K_i=K[T]/(f_i). \tag{2.2}
+L\simeq\prod_{i=1}^rK_i,\qquad K_i=K[T]/(f_i). \tag{2.2}
 $$
 
 Thus $L^\times/L^{\times2}$ is the product of the squareclass groups of the
@@ -195,9 +195,9 @@ field factors. Working with the algebra, rather than choosing all roots in a
 splitting field, retains the Galois action automatically.
 
 Over a separable closure, $L$ becomes a product of one copy of the ground
-field for every finite branch point. An element of $\operatorname{Res}_{L/K}
-\mu_2$ is therefore a sign attached to every finite branch point. This simple
-description is the source of the descent algebra.
+field for every finite branch point. An element of
+$\operatorname{Res}_{L/K}\mu_2$ is therefore a sign attached to every finite
+branch point. This simple description is the source of the descent algebra.
 
 ### 2.2 Signs on branch points
 
@@ -574,87 +574,240 @@ fake: (5.2) may identify two distinct true cohomology classes.
 
 ### 5.2 The norm-compatible pair
 
-It is useful to retain the scalar discarded by (5.2). Define
+The scalar quotient becomes transparent only after one first retains, and
+then quotients, the norm trivialization. Put
+
+$$
+R=\operatorname{Res}_{L/K}\mu _2,\qquad
+R^1=\ker(N:R\to\mu _2). \tag{5.3}
+$$
+
+For the rest of this chapter the sextic is monic. Define two groups
+
+$$
+\mathcal D_K=
+\frac{\{(\alpha,s)\in L^\times\times K^\times:N(\alpha)=s^2\}}
+{\{(\gamma^2,N(\gamma)):\gamma\in L^\times\}}, \tag{5.4}
+$$
+
+and
 
 $$
 \mathcal H_K=
-\frac{\{(\alpha,s)\in L^\times\times K^\times:
-N_{L/K}(\alpha)=s^2\}}
-{\{(\gamma^2r,r^3N(\gamma)):
-\gamma\in L^\times, r\in K^\times\}}. \tag{5.3}
+\frac{\{(\alpha,s)\in L^\times\times K^\times:N(\alpha)=s^2\}}
+{\{(\gamma^2r,N(\gamma)r^3):
+\gamma\in L^\times, r\in K^\times\}}. \tag{5.5}
 $$
 
-For a monic sextic, evaluation on a degree-zero good divisor produces such a
-pair: $\alpha$ is its $x-T$ value and $s$ is the product of its $y$-values.
-For leading coefficient $c$, the same formula contains the predictable power
-of $c$ determined by the degree of the chosen reference divisor; fixing that
-reference fixes the normalization.
+The exponent $3$ is half the sextic degree: $N(r)=r^6$, so changing
+$\alpha$ by a scalar $r$ changes the chosen square root of its norm by
+$r^3$. For a nonmonic sextic the resultant formula inserts the corresponding
+power of the leading coefficient. One must either record that factor or
+first pass to a monic model; the curve in Chapter 12 is already monic.
 
-The first component maps $\mathcal H_K$ to (5.2). The pair remembers enough
-norm information to construct the corresponding two-covering and to compare
-with $H^1(K,J[2])$. Different normalizations of the sextic change (5.3) by a
-canonical isomorphism, whereas dropping the second coordinate without taking
-the scalar quotient is not invariant.
+The group $\mathcal D_K$ is not an ad hoc refinement. There is a canonical
+isomorphism
 
-The exponent $3$ in (5.3) is half the sextic degree. Multiplying $\alpha$ by
-a scalar $r$ multiplies its norm by $r^6$, so the compatible square root must
-be multiplied by $r^3$. Multiplying $\alpha$ by $\gamma^2$ multiplies that
-root by $N(\gamma)$. The denominator in (5.3) is therefore exactly the change
-of trivialization.
+$$
+\mathcal D_K\simeq H^1(K,R^1). \tag{5.6}
+$$
+
+Explicitly, choose $\beta\in(L\otimes_KK^{\mathrm s})^\times$ with
+$\beta^2=\alpha$. The relation $N(\alpha)=s^2$ gives
+$N(\beta)=\pm s$, so
+$\sigma\mapsto\sigma(\beta)/\beta$ is an $R^1$-cocycle. Replacing the
+representative by $(\alpha\gamma^2,sN(\gamma))$ changes this cocycle by a
+coboundary. Conversely, Kummer theory applied to an $R^1$-cocycle gives
+$\alpha$, while its norm-one condition gives the rational trivialization
+$s$; these operations are inverse. The sign of $s$ retains the kernel of
+$H^1(K,R^1)\to H^1(K,R)$, which is why the pair, rather than $\alpha$ alone,
+is required.
 
 ### 5.3 The true-to-fake map
 
-The exact sequence (2.7) gives a natural map
+The two exact group-scheme sequences are
 
 $$
-H^1(K,J[2])\longrightarrow
-L^\times/(L^{\times2}K^\times). \tag{5.4}
-$$
-
-Its image satisfies the norm condition coming from (5.3). Its kernel and
-cokernel are controlled by the diagonal $\mu_2$ and by the connecting map
-attached to the norm sequence. Both have order at most two in the common
-sextic situations, but they are not automatically zero.
-
-Define the **fake $2$-Selmer group** by imposing all local $x-T$ image
-conditions in the quotient (5.2). Define the **true $2$-Selmer group** by the
-usual local Kummer conditions in $H^1(K,J[2])$. Then there is a natural map
-
-$$
-\operatorname{Sel}_2(J/K)\longrightarrow
-\operatorname{Sel}^{\mathrm{fake}}_{x-T}(J/K). \tag{5.5}
-$$
-
-One must compute the kernel of (5.5), or prove it irrelevant to the desired
-rank bound. Equality of the two groups is a conclusion, never a definition.
-
-The comparison is organized by
-
-$$
-1\to\mu_2\to\ker(N)\to J[2]\to1,
+1\longrightarrow\mu _2\longrightarrow R^1
+\longrightarrow J[2]\longrightarrow1,
 \qquad
-1\to\ker(N)\to\operatorname{Res}_{L/K}\mu_2\to\mu_2\to1. \tag{5.5a}
+1\longrightarrow R^1\longrightarrow R
+\xrightarrow{N}\mu _2\longrightarrow1. \tag{5.7}
 $$
 
-Their cohomology sequences show that the kernel in (5.5) comes from a
-diagonal scalar class, while failure of a fake class to lift is measured by
-the next connecting map. The norm-compatible pair retains the data needed to
-test both phenomena without choosing all six roots.
+Under (5.6), the map $H^1(K,\mu _2)\to H^1(K,R^1)$ sends the squareclass of
+$r$ to $(r,r^3)$. The long exact sequence of the first row of (5.7) therefore
+first quotients $\mathcal D_K$ by precisely these pairs; the resulting
+cokernel is (5.5). Its next connecting map lands in
+$H^2(K,\mu_2)=\operatorname{Br}(K)[2]$, giving the exact comparison
+
+$$
+0\longrightarrow\mathcal H_K
+\xrightarrow{\ \iota_K\ }H^1(K,J[2])
+\xrightarrow{\operatorname{ob}_K}\operatorname{Br}(K)[2]. \tag{5.8}
+$$
+
+Exactness here means that $\mathcal H_K$ is precisely the kernel of the
+displayed Brauer obstruction; no claim is made that the last arrow is onto.
+This proves, rather than assumes, that the norm-compatible pairs are the
+true cohomology classes with vanishing diagonal obstruction.
+
+Now define the fake cohomological target
+
+$$
+\mathcal F_K=
+\left\{[\alpha]\in L^\times/(L^{\times2}K^\times):
+N(\alpha)\in K^{\times2}\right\}. \tag{5.9}
+$$
+
+Projection onto the first coordinate is onto $\mathcal F_K$. Its kernel is
+completely explicit. Put
+
+$$
+E_K=\{r^3N(\gamma)\in\mu _2(K):
+\gamma\in L^\times, r\in K^\times, \gamma^2r=1\},
+\qquad
+\mathcal A_K=\mu _2(K)/E_K. \tag{5.10}
+$$
+
+Then
+
+$$
+0\longrightarrow\mathcal A_K
+\xrightarrow{\epsilon\mapsto[(1,\epsilon)]}
+\mathcal H_K\xrightarrow{\mathrm{pr}}\mathcal F_K
+\longrightarrow0. \tag{5.11}
+$$
+
+To verify the kernel, write a fake-trivial first coordinate as
+$\alpha=\gamma^2r$ and divide by
+$(\gamma^2r,N(\gamma)r^3)$. What remains is $(1,\epsilon)$ with
+$\epsilon^2=1$; it is trivial exactly for the signs in $E_K$. Thus the
+true-to-fake kernel has order at most two, but the criterion for its
+vanishing is the explicit equation in (5.10), not a dimension heuristic.
+
+The local conditions fit this comparison exactly. For the Selmer sequence
+below, assume that $K$ is a number field and that $C$ has a $K$-rational
+divisor of odd degree. This puts every local Kummer image inside the image of
+$\iota_{K_v}$; it holds, in particular, when either point at infinity is
+rational. For every place $v$, set
+
+$$
+\mathcal I_v^{\mathrm{tr}}
+=\iota_{K_v}^{-1}\!\left(
+\delta_{2,v}(J(K_v)/2J(K_v))\right)\subset\mathcal H_{K_v},
+\qquad
+\mathcal I_v^{\mathrm{fk}}
+=\mathrm{pr}_v(\mathcal I_v^{\mathrm{tr}})\subset\mathcal F_{K_v}. \tag{5.12}
+$$
+
+Every true Selmer class then belongs to $\mathcal H_K$: its obstruction in
+(5.8) is zero at every completion, and the Brauer--Hasse--Noether injection
+makes it zero globally. Without such a divisor, the same construction
+applies to the obstruction-zero part, but it must not be advertised as the
+whole true Selmer group without a separate Picard-obstruction calculation.
+
+Thus the two local-condition groups in this comparison are exactly
+
+$$
+\begin{aligned}
+\operatorname{Sel}_2(J/K)
+&=\{h\in\mathcal H_K:h_v\in\mathcal I_v^{\mathrm{tr}}
+\text{ for every }v\},\\
+\operatorname{Sel}^{\mathrm{fake}}_{x-T}(J/K)
+&=\{f\in\mathcal F_K:f_v\in\mathcal I_v^{\mathrm{fk}}
+\text{ for every }v\}.
+\end{aligned} \tag{5.12a}
+$$
+
+In particular, the fake group uses the **projected complete local images**,
+not the entire local norm kernel and not just a sample of point values. If
+$f$ is a fake Selmer class, choose a global lift $h\in\mathcal H_K$. For
+each $v$, choose
+$i_v\in\mathcal I_v^{\mathrm{tr}}$ above $f_v$. The difference
+$h_v-i_v$ lies in $\mathcal A_{K_v}$ and defines a class modulo
+$\mathcal A_{K_v}\cap\mathcal I_v^{\mathrm{tr}}$. Changing $h$ changes all
+these classes by the localization of one element of $\mathcal A_K$. Hence
+there is an exact sequence
+
+$$
+\begin{aligned}
+0\longrightarrow\mathcal A_K^{\mathrm{loc}}
+\longrightarrow\operatorname{Sel}_2(J/K)
+\longrightarrow\operatorname{Sel}^{\mathrm{fake}}_{x-T}(J/K)
+\xrightarrow{\partial_{\mathrm{lift}}}
+\operatorname{coker}\!\left(
+\mathcal A_K\longrightarrow
+\bigoplus_v
+\frac{\mathcal A_{K_v}}
+{\mathcal A_{K_v}\cap\mathcal I_v^{\mathrm{tr}}}
+\right), \tag{5.13}
+\end{aligned}
+$$
+
+where
+
+$$
+\mathcal A_K^{\mathrm{loc}}
+=\{a\in\mathcal A_K:a_v\in\mathcal I_v^{\mathrm{tr}}
+\text{ for every }v\}. \tag{5.14}
+$$
+
+Only finitely many summands in (5.13) are nonzero. Exactness is immediate
+from the construction: $\partial_{\mathrm{lift}}(f)=0$ precisely when a
+global kernel element can adjust $h$ into every true local Kummer image.
+This is the missing local-coordinate lifting test; it identifies both the
+kernel and the possible failure of surjectivity.
 
 ### 5.4 When a fake computation is sufficient
 
 There are three safe ways to use an even-degree computation.
 
 First, compute in $\mathcal H_K$ and identify it directly with the true
-cohomological classes. Second, determine the kernel of (5.5) from the
+cohomological classes. Second, determine the kernel in (5.11) from the
 diagonal connecting sequence and add its dimension to the fake bound. Third,
 if a rational divisor of odd degree fixes the Picard obstruction, use it to
 split the scalar ambiguity and prove that the relevant kernel is trivial.
 
-Rational points at infinity are helpful but do not, by themselves, license
-the odd-degree formula. Their difference can be a nontrivial Jacobian class,
-and its fake $x-T$ value may disappear. The $X_1(13)$ calculation in Chapter
-12 explicitly performs the true lift after the fake local intersection.
+Rational points at infinity give a particularly sharp specialization of
+(5.13), but they still do not turn a sextic into the odd-degree case. Suppose
+$\infty^+,\infty^-$ are rational and put
+
+$$
+\tau=[\infty^- -\infty^+]\in J(K). \tag{5.15}
+$$
+
+Balancing a divisor at $\infty^+$ or at $\infty^-$ changes its $x-T$ value
+by a scalar. Conversely, if the fake value is scalar times a square, the
+parities of the two orders at infinity give
+$P=2Q$ or $P=2Q+\tau$. Under the true Kummer map, the second alternative is
+the pair $(1,-1)$. Therefore, over every extension $F/K$,
+
+$$
+\ker\left(J(F)/2J(F)\to\mathcal F_F\right)
+=\langle\tau+2J(F)\rangle,
+\qquad
+\mathcal A_F\subseteq\mathcal I_F^{\mathrm{tr}}. \tag{5.16}
+$$
+
+Every quotient on the right of (5.13) is then zero, and the comparison
+becomes the short exact sequence
+
+$$
+0\longrightarrow
+\langle\delta_2(\tau)\rangle
+\longrightarrow\operatorname{Sel}_2(J/K)
+\longrightarrow\operatorname{Sel}^{\mathrm{fake}}_{x-T}(J/K)
+\longrightarrow0. \tag{5.17}
+$$
+
+The left term is zero exactly when $\tau\in2J(K)$. There is an even more
+direct field-algebra test: if some $\zeta\in L$ satisfies
+$\zeta^2=-1$ and $N(\zeta)=1$, then taking
+$(\gamma,r)=(\zeta,-1)$ in (5.10) shows $E_K=\mu _2$ and
+$\mathcal A_K=0$. In that case true and fake Selmer groups are canonically
+equal. Chapter 12 supplies exactly such a $\zeta$, as well as an independent
+divisor certificate that $\tau$ has odd order.
 
 ## 6. Global squareclasses and finite support
 
@@ -752,8 +905,9 @@ Choose $S$ to contain
 - all archimedean places;
 - every place above $2$;
 - every place at which the chosen curve has bad reduction;
-- every place needed for the denominators and leading coefficient of the
-  chosen model.
+- every place at which the chosen integral hyperelliptic equation or its
+  branch algebra is not etale, including places needed for its denominators
+  and leading coefficient.
 
 For a monic integral squarefree odd-degree equation over $\mathbf Q$, it is
 safe to take
@@ -775,8 +929,9 @@ of model and the integral descent functions have been checked.
 **Proposition 6.1 (finite-support theorem).** Every odd-degree Selmer class
 belongs to $V_S$.
 
-**Proof.** At $v\notin S$, the Jacobian has good reduction, $2$ is a unit,
-and the branch algebra is etale over the valuation ring. Integral Kummer
+**Proof.** At $v\notin S$, the chosen equation is integral with squarefree
+reduction, the Jacobian has good reduction, $2$ is a unit, and the branch
+algebra is etale over the valuation ring. Integral Kummer
 theory identifies the local image with unramified cohomology. Kummer theory
 in each field factor identifies an unramified squareclass with one of even
 valuation. Thus every prime of $L$ outside $S_L$ has even valuation on the
@@ -1264,133 +1419,576 @@ $$
 L_{13}=\mathbf Q[\theta]/(F(\theta)). \tag{12.6}
 $$
 
-The polynomial $F$ is irreducible over $\mathbf Q$. Its signature is
-$(0,3)$, and the polynomial discriminant is (12.4). Away from $2$ the power
-basis is maximal; the integral-basis check at $2$ and the ideal relations at
-$2$ and $13$ give the complete set of squareclasses unramified outside
+We now give the complete number-field certificate. Irreducibility is checked
+modulo $3$ by
 
 $$
-S=\{2,13,\infty\}. \tag{12.7}
+\gcd(F,X^{3^2}-X)=\gcd(F,X^{3^3}-X)=1,
+\qquad X^{3^6}\equiv X\pmod F. \tag{12.7}
 $$
 
-Two elementary factorization checks used in that ledger are
+The identity
 
 $$
-F(X)\equiv(X^3+X^2+1)^2\pmod2 \tag{12.8}
+F(x)=(x^3+x^2+1)^2+4x(x+1) \tag{12.8}
 $$
 
-and
+shows directly that $F$ has no real root. Outside $[-1,0]$ both terms are
+nonnegative and cannot vanish together. Inside, write $x=-t$ with
+$0<t<1$; then the square is
+$(1+t^2(1-t))^2\geq1$, while $4t(1-t)\leq1$, and equality in the two
+bounds cannot occur simultaneously. Thus $F(x)>0$ for every real $x$, and
+$L_{13}$ has signature $(0,3)$.
+
+An integral basis is
 
 $$
-F(X)\equiv(X-3)^3
-(X^3+11X^2+8X+12)\pmod{13}. \tag{12.9}
+\begin{aligned}
+\beta _0&=1,&\beta _1&=\theta,&\beta _2&=\theta^2,\\
+\beta _3&=\frac{\theta^2+\theta^4+\theta^5}{2},&
+\beta _4&=\frac{\theta+\theta^3+\theta^4}{2},&
+\beta _5&=\frac{1+\theta^3+\theta^4+\theta^5}{2}.
+\end{aligned} \tag{12.9}
 $$
 
-The last expression denotes a product. The cubic factor in (12.9) is
-coprime to $X-3$. These factorizations, together with the integral basis,
-determine the primes above the bad rational primes and their ramification.
-
-Irreducibility has an independent finite certificate: modulo $3$, the
-polynomial has no factor of degree $1$, $2$, or $3$, as verified by the gcd
-tests with $X^{3^i}-X$ for the proper divisors of six. Hence it is irreducible
-over $\mathbf Q$. A direct interval check using
+In this ordered basis the trace-pairing matrix and multiplication-by-$\theta$
+matrix, whose columns are the coordinates of $\theta\beta_j$, are
 
 $$
-F(x)=(x^3+x^2+1)^2+4x(x+1) \tag{12.9a}
+G=\begin{pmatrix}
+6&-2&2&2&-8&0\\
+-2&2&-8&-2&2&-2\\
+2&-8&-6&22&-2&30\\
+2&-2&22&-4&-2&-12\\
+-8&2&-2&-2&14&6\\
+0&-2&30&-12&6&-30
+\end{pmatrix},
+\quad
+M_\theta=\begin{pmatrix}
+0&0&-1&0&0&1\\
+1&0&0&-2&0&-2\\
+0&1&1&-3&0&-4\\
+0&0&-2&0&1&2\\
+0&0&0&0&0&1\\
+0&0&2&-1&0&-3
+\end{pmatrix}. \tag{12.10}
 $$
 
-shows $F(x)>0$ outside $[-1,0]$. On that interval put
-$q=-x(x+1)\le1/4$. Since $x^3+x^2+1=1+x^2(x+1)\ge1$, one has
-$F(x)\ge1-4q\ge0$; equality in the last inequality would require
-$x=-1/2$, where the first square is strictly larger than one. Thus $F$ has
-no real root and the field has signature $(0,3)$.
-
-The global squareclass calculation is most compactly recorded by dimensions:
+For completeness, the multiplication matrices of the three half-integral
+basis elements are
 
 $$
-\begin{array}{c|c}
-\text{space}&\mathbf F_2\text{-dimension}\\ \hline
-L_{13}(S,2)&6\\
-\text{after quotient by scalar classes}&3\\
-\text{after the norm-compatible-pair relation}&2.
-\end{array} \tag{12.10}
+\begin{aligned}
+M_{\beta_3}&=
+\begin{pmatrix}
+0&0&2&-1&0&-3\\
+0&-2&2&4&0&3\\
+0&-3&-1&7&1&8\\
+1&0&4&-2&-2&-6\\
+0&0&-1&0&0&-1\\
+0&-1&-3&4&0&7
+\end{pmatrix},&
+M_{\beta_4}&=
+\begin{pmatrix}
+0&0&0&0&0&1\\
+0&0&-2&0&1&2\\
+0&0&-3&1&0&2\\
+0&1&0&-2&0&0\\
+1&0&0&0&-2&0\\
+0&0&-1&0&0&-1
+\end{pmatrix},\\[4pt]
+M_{\beta_5}&=
+\begin{pmatrix}
+0&1&1&-3&1&-4\\
+0&-2&3&3&2&0\\
+0&-4&0&8&2&7\\
+0&2&3&-6&0&-10\\
+0&1&-3&-1&0&0\\
+1&-3&-1&7&-1&8
+\end{pmatrix}.&&
+\end{aligned} \tag{12.10a}
 $$
 
-These dimensions come from the unit and ideal relation matrix, not from
-assuming the class group trivial. In particular its $2$-primary contribution
-is included before the scalar quotient.
+They can also be reproduced without any number-field software from
+
+$$
+M_{\beta_3}=\frac{M_\theta^2+M_\theta^4+M_\theta^5}{2},\quad
+M_{\beta_4}=\frac{M_\theta+M_\theta^3+M_\theta^4}{2},\quad
+M_{\beta_5}=\frac{I+M_\theta^3+M_\theta^4+M_\theta^5}{2}. \tag{12.10b}
+$$
+
+Together with $M_{\beta_0}=I$, $M_{\beta_1}=M_\theta$, and
+$M_{\beta_2}=M_\theta^2$, their integrality proves that the lattice
+$\mathcal O'=\bigoplus_i\mathbf Z\beta_i$ is an order. Its change-of-basis
+determinant relative to $(1,\theta,\ldots,\theta^5)$ is $1/8$, so
+$[\mathcal O': \mathbf Z[\theta]]=8$. Direct multiplication using
+$F(\theta)=0$ verifies all the displayed matrices and the trace matrix, and
+
+$$
+\det G=-10816=-2^6 13^2. \tag{12.11}
+$$
+
+Here is a finite maximality certificate, so (12.9) is not merely an order of
+small discriminant. For a nonzero bit vector
+$a=a_0\cdots a_5$, let
+$w_a=(\sum a_i\beta_i)/2$ and let $c_k(a)$ be the coefficient of
+$X^{6-k}$ in its characteristic polynomial. The first nonintegral
+coefficient is $c_4$ for
+
+$$
+000100, 000111, 010101, 111001, \tag{12.12a}
+$$
+
+it is $c_3$ for
+
+$$
+\begin{gathered}
+001010, 001101, 001110, 010010, 010110, 011011,\\
+100010, 100101, 100110, 101011, 110011,
+\end{gathered} \tag{12.12b}
+$$
+
+and it is $c_2$ for the other $48$ nonzero vectors. These $63$
+characteristic polynomials are obtained from the integer multiplication
+table determined by (12.9)--(12.10b). Hence no integral element of
+$\frac12\langle\beta_i\rangle$ lies outside the displayed order, proving
+$2$-maximality: if the maximal-order quotient had even order, its additive
+group would contain an element of order two, represented by exactly such an
+integral half-vector. At $13$ one has
+
+$$
+F(3+X)=1417+2470X+1833X^2+734X^3+166X^4+20X^5+X^6. \tag{12.12c}
+$$
+
+Also, directly in the residue fields,
+
+$$
+\begin{aligned}
+F(X)&\equiv(X^3+X^2+1)^2\pmod2,\\
+F(X)&\equiv(X-3)^3(X^3+11X^2+8X+12)\pmod {13}.
+\end{aligned} \tag{12.12d}
+$$
+
+The Newton segment from $(0,1)$ to $(3,0)$ has residual polynomial
+$5+6Y$, so it gives one tame prime with $(e,f)=(3,1)$. The other factor is
+$q=X^3+11X^2+8X+12$; the exact test
+$\gcd(q,X^{13}-X)=1$ proves that this cubic is irreducible, and its factor is
+unramified. The local different therefore has
+$13$-adic exponent $2$, already equal to (12.11). No $13$-index remains,
+and primes outside $2\cdot13$ cannot divide the index. This proves
+
+$$
+\mathcal O_{L_{13}}=\bigoplus_{i=0}^5\mathbf Z\beta_i,
+\qquad \operatorname{disc}(L_{13})=-2^6 13^2. \tag{12.13}
+$$
+
+The class group contributes nothing. The Minkowski bound is
+
+$$
+\left(\frac4\pi\right)^3\frac{6!}{6^6}\sqrt{10816}
+=\frac{8320}{81\pi^3}<3.32. \tag{12.14}
+$$
+
+Because $2$ divides the power-basis index, we do not infer the prime
+factorization from (12.12d) alone. Instead, reducing the integer matrices
+(12.10)--(12.10a) modulo $2$ shows that the $64$ elements of
+$\mathcal O_{L_{13}}/2\mathcal O_{L_{13}}$ comprise $56$ units and an
+eight-element nonunit ideal. In $(\beta_0,\ldots,\beta_5)$ coordinates its
+elements are
+
+$$
+000000,110100,111010,001110,010001,100101,101011,011111. \tag{12.14a}
+$$
+
+Addition and multiplication by the six matrices displayed above verify
+directly that this set is an ideal. It is therefore the unique maximal ideal,
+and the residue field has order $8$; hence every prime above $2$ has norm at
+least $8$. Modulo $3$ the power-basis index is a unit and $F$ is irreducible, so
+every prime above $3$ has norm $3^6$. There is therefore no nontrivial ideal
+of norm $2$ or $3$, and (12.14) proves
+
+$$
+\operatorname{Cl}(\mathcal O_{L_{13}})=0. \tag{12.15}
+$$
+
+The full unit group is also certified. Define
+
+$$
+\begin{aligned}
+\zeta&=-\frac{4+11\theta+4\theta^2+\theta^3+3\theta^4+2\theta^5}{2},\\
+\epsilon _1&=\frac{2+\theta+\theta^3+\theta^4}{2}=1+\beta _4,\\
+\epsilon _2&=\frac{4\theta+\theta^2+\theta^4+\theta^5}{2}
+=2\beta _1+\beta _3.
+\end{aligned} \tag{12.16}
+$$
+
+Their characteristic polynomials are respectively
+
+$$
+(X^2+1)^3,\qquad
+X^6+2X^5-2X^3-X^2+1,\qquad
+X^6+2X^5+4X^4+4X^3+3X^2+2X+1. \tag{12.17}
+$$
+
+Thus $\zeta^2=-1$ and $\epsilon_1,\epsilon_2$ are units. For completeness,
+the following compact unit-index enumeration proves they are fundamental.
+Because the signature is $(0,3)$, every nonzero field norm is positive, so
+every unit has norm $+1$.
+The three roots in the upper half-plane lie in the width-$10^{-9}$ rational
+rectangles centered at
+
+$$
+-1.4022257768+0.5865084714i,\quad
+-0.3930361082+0.2538745688i,\quad
+0.7952618850+1.1596169599i. \tag{12.18}
+$$
+
+Interval Newton evaluation of $F,F'$ certifies the rectangles. With
+$\ell(u)=(2\log|\sigma_1u|,2\log|\sigma_2u|,2\log|\sigma_3u|)$, interval
+evaluation gives
+
+$$
+\begin{pmatrix}\ell(\epsilon_1)\\\ell(\epsilon_2)\end{pmatrix}
+\in
+\begin{pmatrix}
+-0.340829&-0.418674&0.759503\\
+0.759503&-0.340829&-0.418674
+\end{pmatrix}
+\pm10^{-6}. \tag{12.19}
+$$
+
+The regulator lies in $(0.4341,0.4342)$. A unit representing a coset of a
+larger logarithmic lattice may be chosen in the centered parallelogram of
+these two rows. Its three absolute values are then at most
+$1.3167,1.2092,1.3426$ and at least their reciprocals. Inverting the
+Minkowski embedding matrix of (12.9), with the certified rectangles (12.18),
+bounds its integral coordinates by
+
+$$
+|a_0|<4.402, |a_1|<7.391, |a_2|<2.111,
+|a_3|<5.308, |a_4|<2.803, |a_5|<2.104. \tag{12.20}
+$$
+
+This box contains
+$9\cdot15\cdot5\cdot11\cdot5\cdot5=185625$ integer vectors. For each one,
+the norm is computed exactly as
+$\det(\sum_i a_iM_{\beta_i})$, and interval evaluation in (12.18) decides
+the six absolute-value inequalities. Retaining norm-one elements gives only
+
+$$
+\pm(1,0,0,0,0,0),\qquad
+\pm(2,5,1,2,1,0), \tag{12.21}
+$$
+
+the latter pair being $\pm\zeta$. Thus the centered parallelogram contains no
+new unit coset, proving
+
+$$
+\mathcal O_{L_{13}}^\times
+=\langle\zeta\rangle\times
+\langle\epsilon_1,\epsilon_2\rangle,
+\qquad |\langle\zeta\rangle|=4. \tag{12.22}
+$$
+
+We next record the ideal relations. Put
+
+$$
+\pi_2=\frac{1+\theta^2-\theta^3}{2},\qquad
+\pi_{13}=1+\theta+\theta^2,\qquad
+\rho_{13}=15-62\theta-29\theta^2+7\theta^3-15\theta^4-15\theta^5.
+\tag{12.23}
+$$
+
+Their norms are $8,13,13^3$, and direct reduction modulo $F$ gives
+
+$$
+2\epsilon_1^4\epsilon_2^6=\zeta\pi_2^2,
+\qquad 13=\pi_{13}^3\rho_{13}. \tag{12.24}
+$$
+
+Equivalently, with columns
+$(\zeta,\epsilon_1,\epsilon_2,\pi_2,\pi_{13},\rho_{13})$, the exact
+scalar-relation exponent matrix is
+
+$$
+\begin{array}{c|rrrrrr}
+&\zeta&\epsilon_1&\epsilon_2&\pi_2&\pi_{13}&\rho_{13}\\ \hline
+2&1&-4&-6&2&0&0\\
+13&0&0&0&0&3&1.
+\end{array} \tag{12.24a}
+$$
+
+Consequently
+
+$$
+(2)=\mathfrak p_2^2,\qquad
+(13)=\mathfrak p_{13}^3\mathfrak q_{13}, \tag{12.25}
+$$
+
+where the three primes are generated by
+$\pi_2,\pi_{13},\rho_{13}$ and have norms $8,13,13^3$. The prime-ideal
+valuation matrix of
+
+$$
+(\zeta,\epsilon_1,\epsilon_2,\pi_2,\pi_{13},\rho_{13})
+$$
+
+is therefore
+
+$$
+V=\begin{pmatrix}
+0&0&0&1&0&0\\
+0&0&0&0&1&0\\
+0&0&0&0&0&1
+\end{pmatrix},
+\qquad
+\begin{pmatrix}(2)\\(13)\end{pmatrix}
+=\begin{pmatrix}2&0&0\\0&3&1\end{pmatrix}
+\begin{pmatrix}\mathfrak p_2\\\mathfrak p_{13}\\\mathfrak q_{13}\end{pmatrix}.
+\tag{12.26}
+$$
+
+Take $S=\{2,13,\infty\}$. Equations (12.15), (12.22), and (12.26) prove
+that the six displayed elements are a basis of $L_{13}(S,2)$. In that basis,
+the scalar-image matrix (columns $-1,2,13$) and norm matrix (rows
+$-1,2,13$) are
+
+$$
+C=\begin{pmatrix}
+0&1&0\\
+0&0&0\\
+0&0&0\\
+0&0&0\\
+0&0&1\\
+0&0&1
+\end{pmatrix},
+\qquad
+N=\begin{pmatrix}
+0&0&0&0&0&0\\
+0&0&0&1&0&0\\
+0&0&0&0&1&1
+\end{pmatrix}. \tag{12.27}
+$$
+
+Here $[2]=[\zeta]$ follows from (12.24), $[-1]=[\zeta^2]=0$, and
+$[13]=[\pi_{13}\rho_{13}]$. The first norm row is zero because every norm
+from a totally imaginary field is positive. Thus the scalar image has
+dimension $2$, not $3$. Since $NC=0$, the fake norm-compatible global space
+is
+
+$$
+\ker N/\operatorname{im}C
+=\langle b_1,b_2\rangle,\qquad
+b_1=[\epsilon_1],\quad b_2=[\epsilon_2]. \tag{12.28}
+$$
+
+This proves the corrected dimension ledger
+
+$$
+6\xrightarrow{\text{scalar quotient}}4
+\xrightarrow{\text{norm}}2, \tag{12.29}
+$$
+
+with zero class-group contribution.
+
+At every finite place outside $S$, these classes have even valuation in
+every field factor. The curve and branch algebra have good integral reduction
+there, and the residue characteristic is odd, so integral Kummer theory
+identifies the local image with the unramified subgroup. Hence no omitted
+good place can make an additional cut; only the three places in $S$ remain.
 
 ### 12.3 The finite two-descent calculation
 
-At the real place there are no real field factors in $L_{13}$, so the sign
-target is trivial. The two nontrivial global candidates in (12.10) are tested
-at $2$ and $13$. Using the integral basis fixed above, unit squareclasses at
-$2$ are tested modulo $8\mathcal O_{L_{13},2}$; at $13$, valuation parity and
-residue-square tests on the two local factors suffice after the ramified
-uniformizer is separated.
-
-The exact local ledger is
+There is no real condition because $L_{13}$ has no real factor. At $2$,
+(12.25) shows that $L_{13}\otimes\mathbf Q_2$ is one field with
+$(e,f)=(2,3)$. For its normalized valuation,
+$v(8)=6>2v(2)=4$, so Hensel's lemma gives
 
 $$
-\begin{array}{c|c}
-\text{stage}&\mathbf F_2\text{-dimension}\\ \hline
-\text{global fake norm-compatible candidates}&2\\
-\text{after the }2\text{-adic image}&1\\
-\text{after the }13\text{-adic image}&0.
-\end{array} \tag{12.11}
+1+8\mathcal O_{L_{13},2}\subset L_{13,2}^{\times2}. \tag{12.30}
 $$
 
-If $b_1,b_2$ is the ordered basis of the last global line in (12.10), the
-surviving obstruction functionals may be normalized to
+Thus unit squareclasses are decided exactly modulo $8$ in the integral basis
+(12.9). All global candidates and rational scalar classes have even local
+valuation, so after removing square powers it is enough to work in this unit
+quotient. For a residue vector $(a_0,\ldots,a_5)$ write
+$[a_0,\ldots,a_5]=\sum a_i\beta_i$. The following seven unit residues form a
+basis of
+$\mathcal O_{L_{13},2}^\times/\mathcal O_{L_{13},2}^{\times2}$:
+
+$$
+\begin{aligned}
+q_1&=[0,0,0,0,0,1],&q_2&=[0,0,0,0,1,0],&
+q_3&=[0,0,0,0,1,1],\\
+q_4&=[0,0,0,1,1,1],&q_5&=[0,0,1,0,0,1],&
+q_6&=[0,0,1,0,1,0],\\
+q_7&=[0,0,1,1,0,0].
+\end{aligned} \tag{12.31}
+$$
+
+This basis has a short exhaustive certificate. The ring
+$\mathcal O_{L_{13}}/8\mathcal O_{L_{13}}$ has $8^6=262144$ elements,
+$229376$ units, and
+$1792$ distinct unit squares. The $128$ products of the $q_i$ lie in
+different square cosets. These counts follow by multiplying coordinate
+vectors with (12.10)--(12.10a); together with (12.30), they prove
+both independence and completeness.
+
+The scalar subgroup in the unit quotient is generated by
+
+$$
+s_2=2/\pi_2^2\equiv[4,5,1,6,6,7],\qquad
+5\equiv[5,0,0,0,0,0]\pmod8. \tag{12.32}
+$$
+
+Indeed $(-1,2,5)$ is the standard basis of
+$\mathbf Q_2^\times/\mathbf Q_2^{\times2}$, and the scalar $-1$ is already
+the square $\zeta^2$ in $L_{13,2}$. Thus these two rows are the full local
+scalar image. The next table is a complete
+reproduction certificate. A class vector $c=(c_i)$ means
+$a\prod q_i^{c_i}\equiv r^2\pmod8$; the last column gives one square root.
+
+$$
+\begin{array}{c|c|c|c}
+a&[a_0,\ldots,a_5]&c&r\\ \hline
+s_2&(4,5,1,6,6,7)&0100010&(1,0,3,1,0,3)\\
+5&(5,0,0,0,0,0)&0001011&(1,3,1,2,2,2)\\
+1-\theta&(1,7,0,0,0,0)&0010110&(1,3,1,3,0,1)\\
+2-\theta&(2,7,0,0,0,0)&0110010&(1,3,0,1,1,1)\\
+\epsilon_1&(1,0,0,0,1,0)&1111001&(1,1,3,1,1,2)\\
+\epsilon_2&(0,2,0,1,0,0)&0100000&(0,1,0,0,0,0)
+\end{array} \tag{12.33}
+$$
+
+The points
+
+$$
+P_1=(1,\sqrt{17}),\qquad P_2=(2,\sqrt{193}) \tag{12.34}
+$$
+
+belong to $C_{13}(\mathbf Q_2)$ because $17\equiv193\equiv1\pmod8$.
+Their fake values are $1-\theta$ and $2-\theta$. The unique factor of $F$
+over $\mathbf Q_2$ has degree six, so $J(\mathbf Q_2)[2]=0$ and
+
+$$
+\dim J(\mathbf Q_2)/2J(\mathbf Q_2)=2. \tag{12.35}
+$$
+
+Rows three and four of (12.33) are independent modulo the two scalar rows;
+they therefore give the complete fake local image. In the $q_i$ coordinates,
+the annihilator of the span of $s_2,5,1-\theta,2-\theta$ is
+
+$$
+(0,0,0,1,0,0,1),\quad
+(0,1,0,0,1,1,1),\quad
+(1,0,0,0,0,0,0). \tag{12.36}
+$$
+
+The first row vanishes on both global units. The other two evaluate on
+$(b_1,b_2)=(\epsilon_1,\epsilon_2)$ as $(0,1)$ and $(1,0)$. Hence the exact
+global obstruction matrix is
 
 $$
 \begin{array}{c|cc}
 &b_1&b_2\\ \hline
 \mathbf Q_2&1&0\\
-\mathbf Q_{13}&0&1.
-\end{array} \tag{12.11b}
+\mathbf Q_2&0&1
+\end{array}, \tag{12.37}
 $$
 
-This is the row-reduced form of the exact unit-square tests, not a deduction
-from the desired rank. Invertible changes of the global basis alter the two
-columns but preserve the zero kernel.
+and the fake Selmer group is already zero at $2$.
 
-Each local image is complete by the local source-order calculation: the
-factorization of $F$ over the relevant local field determines
-$J(\mathbf Q_v)[2]$, and residue-disk representatives attain the dimension
-given by (7.3) or (7.4).
-
-It remains essential to lift from fake to true descent. The connecting
-sequence of (2.7), with the rational divisor $\infty^+$ of degree one as
-base divisor, shows that the kernel of the true-to-fake map is generated by
-the infinity-difference alternative. Its associated norm-compatible pair
-fails the $13$-adic lifting condition. Consequently
+For an independent check at $13$, the two local factors are the totally
+ramified cubic above $\theta\equiv3$ and the unramified cubic with residue
+polynomial
+$q=X^3+11X^2+8X+12$. Both have odd residue characteristic, so a unit is a
+square exactly when its residue is a square. If $\bar\eta$ denotes the class
+of $X$ modulo $q$, direct exponentiation in
+$\mathbf F_{13^3}$ gives
 
 $$
-\operatorname{Sel}_2(J_{13}/\mathbf Q)=0, \tag{12.12}
+\begin{array}{c|c|c|c|c}
+&a(3)&a(3)^6&a(\bar\eta)&a(\bar\eta)^{(13^3-1)/2}\\ \hline
+\epsilon_1&11&-1&9+2\bar\eta+12\bar\eta^2&-1\\
+\epsilon_2&10&1&12+5\bar\eta&1
+\end{array} \tag{12.38}
 $$
 
-and therefore
+Because a nonsquare of $\mathbf F_{13}$ remains nonsquare in its odd-degree
+cubic extension, a rational nonsquare scalar has character $(-1,-1)$ in the
+two factors. Thus each displayed unit is scalar times a square and is
+fake-trivial at $13$. Moreover the
+two irreducible cubic factors give $J(\mathbf Q_{13})[2]=0$, whence
+$J(\mathbf Q_{13})/2J(\mathbf Q_{13})=0$. The $13$-adic condition is
+therefore neutral, exactly as (12.38) predicts. The corrected local ledger is
+
+$$
+2\xrightarrow{\mathbf Q_2}0\xrightarrow{\mathbf Q_{13}}0. \tag{12.39}
+$$
+
+Finally, (12.16) gives $\zeta^2=-1$ and $N(\zeta)=1$. Equations
+(5.10)--(5.11) therefore make the true-to-fake kernel zero. The zero fake
+Selmer group is the true Selmer group, so
+
+$$
+\operatorname{Sel}_2(J_{13}/\mathbf Q)=0,\qquad
+J_{13}(\mathbf Q)/2J_{13}(\mathbf Q)=0. \tag{12.40}
+$$
+
+In particular
 
 $$
 \operatorname{rank}J_{13}(\mathbf Q)=0,
-\qquad J_{13}(\mathbf Q)[2]=0. \tag{12.13}
+\qquad J_{13}(\mathbf Q)[2]=0. \tag{12.41}
 $$
 
-The second equality is also visible from irreducibility of $F$: there is no
-nontrivial Galois-stable even branch subset modulo complement.
+The following independent Pell certificate controls the infinity difference
+and later exhibits all odd torsion. Put
+
+$$
+\begin{aligned}
+P={}&x^{19}+3x^{18}+2x^{17}+5x^{16}+22x^{15}+22x^{14}
++10x^{13}+54x^{12}\\
+&+78x^{11}+20x^{10}+51x^9+113x^8+36x^7+13x^6
++66x^5+26x^4-2x^3+12x^2+4x,\\
+Q={}&x^{16}+2x^{15}+4x^{13}+14x^{12}+4x^{11}+2x^{10}
++32x^9+18x^8-8x^7\\
+&+29x^6+24x^5-10x^4+10x^3+10x^2-4x+2.
+\end{aligned} \tag{12.42}
+$$
+
+Direct polynomial multiplication gives
+
+$$
+P^2-FQ^2=-4. \tag{12.43}
+$$
+
+Thus $(P+Qz)/2$ is a unit on the affine curve. At $\infty^+$ it has a pole
+of order $19$, because the leading terms of $P$ and $Qz$ add; its norm is
+$-1$, so at $\infty^-$ it has a zero of order $19$. Hence
+
+$$
+19[\infty^- -\infty^+]=0. \tag{12.44}
+$$
+
+The class is therefore twice another rational class: if $U$ denotes it, then
+$U=2(10U)$ because $20\equiv1\pmod {19}$. This independently confirms the
+vanishing of the rational-infinity kernel in (5.17). The absence of rational
+two-torsion in (12.41) is also visible directly from irreducibility of $F$:
+there is no nontrivial Galois-stable even branch subset modulo complement.
 
 ### 12.4 Torsion and the complete Jacobian
 
 Let
 
 $$
-T=[\infty^- -\infty^+]\in J_{13}(\mathbf Q). \tag{12.14}
+T=[\infty^- -\infty^+]\in J_{13}(\mathbf Q). \tag{12.45}
 $$
 
 The class $T$ is nonzero, because a principal divisor
 $\infty^- -\infty^+$ would define a degree-one map from a genus-two curve to
-$\mathbf P^1$.
+$\mathbf P^1$. Equation (12.44) proves directly that its order divides
+$19$.
 
 The independently counted good reductions are
 
@@ -1400,26 +1998,28 @@ p&\#C_{13}(\mathbf F_p)&\#C_{13}(\mathbf F_{p^2})
 &\#J_{13}(\mathbf F_p)\\ \hline
 3&6&8&19\\
 5&6&12&19.
-\end{array} \tag{12.16}
+\end{array} \tag{12.46}
 $$
 
 For a genus-two curve,
 
 $$
 \#J(\mathbf F_p)=
-\frac{\#C(\mathbf F_p)^2+\#C(\mathbf F_{p^2})}{2}-p. \tag{12.17}
+\frac{\#C(\mathbf F_p)^2+\#C(\mathbf F_{p^2})}{2}-p. \tag{12.47}
 $$
 
-Thus rational torsion injects into groups of order $19$ at both good primes.
-Since (12.13) says the entire rational group is torsion, the nonzero class
-$T$ has order dividing $19$ and therefore exact order $19$. The same
-reduction bound shows there can be no further class. Together with (12.13),
+Prime by prime as in (10.1), the two reduction orders show that rational
+torsion has order dividing $19$: for the residue primes $3$ and $5$, use the
+other reduction, and for every other torsion prime either reduction is
+injective. Since (12.41) says the entire rational group is torsion, the
+nonzero class $T$ has exact order $19$. The same reduction bound shows there
+can be no further class. Together with (12.41),
 this proves the first required finite
 calculation:
 
 $$
 \boxed{J_{13}(\mathbf Q)=\langle T\rangle
-\simeq\mathbf Z/19\mathbf Z.} \tag{12.18}
+\simeq\mathbf Z/19\mathbf Z.} \tag{12.48}
 $$
 
 This chapter determines the Jacobian. Determining which of its nineteen
@@ -1463,6 +2063,25 @@ $$
 2A=[t^2-t+1,3t-1]=-A. \tag{13.5}
 $$
 
+Here is an exact certificate for that reduction. For
+$u=t^2-t+1$ and $v=1-3t$, the doubling Bezout identity is
+
+$$
+\frac97u+\left(-\frac17+\frac3{14}t\right)(2v)=1. \tag{13.5a}
+$$
+
+The composition polynomial and its complementary quotient are
+
+$$
+w=t^3-t^2-2t+1,
+\qquad
+\frac{f-w^2}{u^2}=-(t^2-t+1). \tag{13.5b}
+$$
+
+Reduction therefore keeps $u$ and replaces $w$ by
+$-w\equiv3t-1\pmod u$, proving (13.5) by the total addition law of the
+preceding book.
+
 Hence $A$ has exact order three.
 
 ### 13.2 Arithmetic of the cubic factor
@@ -1484,43 +2103,95 @@ $$
 Direct substitution gives
 
 $$
-\theta=-1-\alpha+2\alpha^2,qquad
+\theta=-1-\alpha+2\alpha^2,\qquad
 K=\mathbf Q(\zeta_7+\zeta_7^{-1}), \tag{13.8}
 $$
 
 and
 
 $$
-[\mathcal O_K:\mathbf Z[\theta]]=7,qquad
+[\mathcal O_K:\mathbf Z[\theta]]=7,\qquad
 \operatorname{disc}(K)=49. \tag{13.9}
 $$
 
-The Minkowski bound is $14/9<2$, so every ideal class contains the unit ideal
-and $K$ has class number one. The unit index calculation shows that
-$\alpha$ and $\alpha+1$ form a system of fundamental units. Their norms and
-the ramified prime generator satisfy
+The polynomial in (13.7) has discriminant $49$. Hence
+$\mathcal O_K=\mathbf Z[\alpha]$: an index divisible by $7$ would give field
+discriminant $1$, impossible for a cubic field. The totally real cubic
+Minkowski bound is
 
 $$
-N(\alpha)=1,qquad N(\alpha+1)=-1,qquad
-N(2-\alpha)=7. \tag{13.10}
+\frac{3!}{3^3}\sqrt{49}=\frac{14}{9}<2, \tag{13.10}
 $$
 
-Moreover,
+so every ideal class contains the unit ideal and
+$\operatorname{Cl}(\mathcal O_K)=0$.
+
+We also certify the **full** unit group. The three roots of (13.7), in
+increasing order, lie in rational intervals of width $10^{-9}$ centered at
 
 $$
-\theta=\frac{\alpha^3}{\alpha+1},qquad
-1-\theta=\frac{\alpha^2}{(\alpha+1)^3}. \tag{13.11}
+-1.801937736,\qquad -0.445041868,\qquad 1.246979604. \tag{13.11}
 $$
 
-The polynomial $X^3+X^2+1$ is irreducible over $\mathbf F_2$, so $2$ is
-inert in $K$. The prime $7$ is totally ramified and generated by
-$2-\alpha$. Thus all arithmetic entering the $S$-squareclasses for
-$S=\{2,7,\infty\}$ is explicit.
+Sign evaluation of the polynomial and interval Newton evaluation of its
+derivative certify the intervals. The logarithmic rows of $\alpha$ and
+$\alpha+1$ are
 
-The class-number proof is short: every ideal class contains an integral ideal
-of norm at most $14/9$, and the only positive integer below that bound is
-$1$. The norm identities in (13.10) follow from signed constant terms.
-Reducing powers of $\alpha$ with (13.7) verifies (13.11) directly.
+$$
+\begin{pmatrix}
+0.588863&-0.809587&0.220725\\
+-0.220725&-0.588863&0.809587
+\end{pmatrix}\pm10^{-6}, \tag{13.12}
+$$
+
+and their regulator lies in $(0.5254,0.5256)$. A representative of a coset
+of any larger unit lattice may be chosen in the centered parallelogram of
+these rows. Its three absolute values are bounded above by
+$1.500,2.013,1.675$ and below by their reciprocals. Inverting the embedding
+matrix $(1,\alpha_i,\alpha_i^2)$ gives
+
+$$
+|a|<2.431,\qquad |b|<1.507,\qquad |c|<1.564 \tag{13.13}
+$$
+
+for a possible unit $a+b\alpha+c\alpha^2$ in that parallelogram. The exact
+norm form is
+
+$$
+\begin{aligned}
+N(a+b\alpha+c\alpha^2)={}&a^3-a^2b+5a^2c-2ab^2-abc+6ac^2\\
+&+b^3-b^2c-2bc^2+c^3. \tag{13.14}
+\end{aligned}
+$$
+
+Checking the $5\cdot3\cdot3=45$ integer triples allowed by (13.13), retaining
+$N=\pm1$ via (13.14) and imposing the three embedding inequalities, leaves only
+$(a,b,c)=\pm(1,0,0)$. Thus no new logarithmic coset exists and
+
+$$
+\mathcal O_K^\times=\langle-1,\alpha,\alpha+1\rangle,
+\qquad N(\alpha)=1,\quad N(\alpha+1)=-1. \tag{13.15}
+$$
+
+Put $\pi_7=2-\alpha$. Direct reduction with (13.7) gives
+
+$$
+N(\pi_7)=7,\qquad
+\frac7{\pi_7^3}=3+7\alpha+3\alpha^2
+=\alpha^{-2}(\alpha+1)^4. \tag{13.16}
+$$
+
+Thus $(7)=(\pi_7)^3$. The polynomial $X^3+X^2+1$ is irreducible over
+$\mathbf F_2$, so $(2)$ is prime of norm $8$. Finally,
+
+$$
+\theta=\frac{\alpha^3}{\alpha+1},\qquad
+1-\theta=\frac{\alpha^2}{(\alpha+1)^3} \tag{13.17}
+$$
+
+is verified directly from (13.7). Equations (13.10), (13.15)--(13.17) are a
+complete unit, class-group, and prime-ideal certificate for
+$S=\{2,7,\infty\}$.
 
 ### 13.3 The global norm kernel
 
@@ -1530,17 +2201,40 @@ $$
 \delta([u,v])=
 \bigl((-1)^{\deg u}u(0),
 (-1)^{\deg u}u(1),
-(-1)^{\deg u}u(\theta)\bigr). \tag{13.12}
+(-1)^{\deg u}u(\theta)\bigr). \tag{13.18}
 $$
 
 The derivative rule gives
 
 $$
-e_0:=\delta(T_0)=(-1,-1,-\theta),qquad
-e_1:=\delta(T_1)=(1,-1,1-\theta). \tag{13.13}
+e_0:=\delta(T_0)=(-1,-1,-\theta),\qquad
+e_1:=\delta(T_1)=(1,-1,1-\theta). \tag{13.19}
 $$
 
-Using (13.10)--(13.11), the $S$-unit norm kernel has the following basis:
+We now derive the global basis. Order the ambient squareclasses as
+
+$$
+\begin{gathered}
+(-1,1,1),(2,1,1),(7,1,1),
+(1,-1,1),(1,2,1),(1,7,1),\\
+(1,1,-1),(1,1,\alpha),(1,1,\alpha+1),
+(1,1,2),(1,1,\pi_7).
+\end{gathered} \tag{13.20}
+$$
+
+The first six columns come from the two rational factors, and the last five
+are complete by (13.15)--(13.16). In the target basis $(-1,2,7)$, the
+product norm has matrix
+
+$$
+N_S=\begin{pmatrix}
+1&0&0&1&0&0&1&0&1&0&0\\
+0&1&0&0&1&0&0&0&0&1&0\\
+0&0&1&0&0&1&0&0&0&0&1
+\end{pmatrix}. \tag{13.21}
+$$
+
+It has rank three, so its kernel has dimension eight. In that kernel use
 
 $$
 \begin{aligned}
@@ -1548,67 +2242,175 @@ e_0,e_1,\qquad
 h_1&=(-1,1,-1),&h_2&=(1,-1,-1),\\
 h_3&=(2,1,2),&h_4&=(1,2,2),\\
 h_5&=(7,1,2-\alpha),&h_6&=(1,7,2-\alpha).
-\end{aligned} \tag{13.14}
+\end{aligned} \tag{13.22}
 $$
 
-Their norms are squares: respectively $1,1,1,1,16,16,49,49$. Independence
-follows by valuation parity at the two rational factors, the inert prime over
-$2$, the ramified prime over $7$, and the three independent unit signs and
-squareclasses. Hence the global ambient space has dimension eight.
-
-For spanning, the cubic-component squareclasses are generated by
+For exact verification, the coordinate matrix of these eight columns in
+(13.20) is
 
 $$
--1,\ \alpha,\ \alpha+1,\ 2,\ 2-\alpha. \tag{13.14a}
+B_S=\begin{pmatrix}
+1&0&1&0&0&0&0&0\\
+0&0&0&0&1&0&0&0\\
+0&0&0&0&0&0&1&0\\
+1&1&0&1&0&0&0&0\\
+0&0&0&0&0&1&0&0\\
+0&0&0&0&0&0&0&1\\
+1&0&1&1&0&0&0&0\\
+1&0&0&0&0&0&0&0\\
+1&1&0&0&0&0&0&0\\
+0&0&0&0&1&1&0&0\\
+0&0&0&0&0&0&1&1
+\end{pmatrix}. \tag{13.23}
 $$
 
-The rational components are generated by $-1,2,7$. Writing all norms in that
-rational basis and taking the kernel of the product-norm row gives exactly
-the eight vectors in (13.14). This derives the basis from the complete unit
-and ideal calculation rather than guessing it from visible torsion.
+Equations (13.17) give the first two columns. Direct multiplication gives
+$N_SB_S=0$, and the first eight rows of $B_S$ have rank eight over
+$\mathbf F_2$. Thus (13.22) is an exact basis of the entire norm kernel.
+This also records the class-group contribution: it is zero by (13.10), not
+silently omitted.
 
 ### 13.4 The local cuts
 
-Write addition of the symbols in (13.14) for multiplication of squareclasses.
-The complete real and $2$-adic images intersect the global space as
+We now give the local calculation in coordinates. Addition of the symbols in
+(13.22) means multiplication of squareclasses. At the three real embeddings
+of $K$, ordered by (13.11), write $1$ for a negative sign and $0$ for a
+positive sign. The sign-coordinate matrix is
 
 $$
-\begin{aligned}
+\begin{array}{c|cc|ccc}
+&\mathbf Q_0&\mathbf Q_1&\alpha_1&\alpha_2&\alpha_3\\ \hline
+e_0&1&1&1&0&1\\
+e_1&0&1&1&0&0\\
+h_1&1&0&1&1&1\\
+h_2&0&1&1&1&1\\
+h_3&0&0&0&0&0\\
+h_4&0&0&0&0&0\\
+h_5&0&0&0&0&0\\
+h_6&0&0&0&0&0.
+\end{array} \tag{13.24}
+$$
+
+All five finite branch points are real, so $C_7(\mathbf R)$ has three
+components and
+$\dim_{\mathbf F_2}J(\mathbf R)/2J(\mathbf R)=2$. The independent rows
+$e_0,e_1$ are therefore the complete real image. Row reduction of (13.24)
+gives
+
+$$
 V_S\cap\mathcal I_\infty
-&=\langle e_0,e_1,h_3,h_4,h_5,h_6\rangle,\\
-V_S\cap\mathcal I_2
-&=\langle e_0,e_1,h_1+h_5,h_2+h_6\rangle.
-\end{aligned} \tag{13.15}
+=\langle e_0,e_1,h_3,h_4,h_5,h_6\rangle. \tag{13.25}
 $$
 
-At $2$, the cubic extension is unramified. Valuation parity and unit residues
-modulo $8\mathcal O_{K,2}$ verify the second line. Completeness has an
-independent dimension proof. The points with $t=-4$ and $t=13$ exist over
-$\mathbf Q_2$ because
+At $2$, the polynomial $X^3+X^2+1$ is irreducible modulo $2$, so
+$K_2/\mathbf Q_2$ is the unramified cubic extension. Since
+$1+8\mathcal O_{K_2}\subset K_2^{\times2}$, unit squareclasses can be
+computed exactly in $\mathcal O_K/8\mathcal O_K$. In the power basis
+$(1,\alpha,\alpha^2)$ put
 
 $$
-f(-4)=4(-1055),\qquad f(13)=4(35529), \tag{13.16}
+q_1=3\alpha^2,\qquad q_2=5\alpha^2,\qquad
+q_3=\alpha,\qquad q_4=\alpha+\alpha^2. \tag{13.26}
 $$
 
-and both parenthesized odd units are $1$ modulo $8$. Their descent values,
-together with $e_0,e_1$, are independent. Since
+The residue ring has $8^3=512$ elements, $448$ units, and $28$ distinct
+unit squares. The sixteen products of the $q_i$ occupy sixteen different
+square cosets. Thus $q_1,\ldots,q_4$ are an exact basis of
+$\mathcal O_{K_2}^{\times}/\mathcal O_{K_2}^{\times2}$. These counts are
+reproduced simply by multiplying triples modulo $8$ and reducing
+$\alpha^3=-\alpha^2+2\alpha+1$.
+
+For a unit $u$, the bit vector $c=c_1c_2c_3c_4$ in the next table means
+$u\prod q_i^{c_i}\equiv r^2\pmod {8\mathcal O_K}$; the last column is one
+square root, again in the power basis.
+
+$$
+\begin{array}{c|c|c|c}
+u&u\bmod8&c&r\bmod8\\ \hline
+-\theta&(1,1,6)&1101&(1,1,1)\\
+1-\theta&(2,1,6)&0011&(1,1,3)\\
+-1&(7,0,0)&1100&(0,0,1)\\
+2-\alpha&(2,7,0)&1100&(2,1,1)\\
+-4-\theta&(5,1,6)&1001&(1,2,1)\\
+13-\theta&(6,1,6)&0011&(1,1,1).
+\end{array} \tag{13.27}
+$$
+
+This table is an independently checkable squareclass certificate: every row
+is verified by one multiplication and one squaring modulo $8$ using (13.7).
+Use $(-1,2,5)$ as the squareclass basis in each rational factor and
+$(2,q_1,q_2,q_3,q_4)$ in the cubic factor. Thus the ordered local-coordinate
+space is
+
+$$
+(-1,2,5)_0\mid(-1,2,5)_1\mid(2,q_1,q_2,q_3,q_4)_K. \tag{13.28}
+$$
+
+The complete coordinate calculation is
+
+$$
+\begin{array}{c|c|c|c}
+&\mathbf Q_{2,0}&\mathbf Q_{2,1}&K_2\\ \hline
+e_0&100&100&01101\\
+e_1&000&100&00011\\
+h_1&100&000&01100\\
+h_2&000&100&01100\\
+h_3&010&000&10000\\
+h_4&000&010&10000\\
+h_5&100&000&01100\\
+h_6&000&100&01100\\ \hline
+d_{-4}&100&101&01001\\
+d_{13}&001&101&00011.
+\end{array} \tag{13.29}
+$$
+
+Here the final two rows are genuine local point classes:
+
+$$
+d_x=(x,x-1,x-\theta),\qquad x=-4,13, \tag{13.30}
+$$
+
+because
+
+$$
+f(-4)=4(-1055),\qquad f(13)=4(35529),\qquad
+-1055\equiv35529\equiv1\pmod8. \tag{13.31}
+$$
+
+Thus both right sides are squares in $\mathbf Q_2$. The first eight rows of
+(13.29) follow from (13.27), together with
+$7\sim-1$ in $\mathbf Q_2^\times/\mathbf Q_2^{\times2}$; the last two use
+the last two rows of (13.27). Direct binary row reduction shows that
+$e_0,e_1,d_{-4},d_{13}$ have rank four. On the other hand the three
+irreducible factors $t,t-1$, and the cubic give
+$J(\mathbf Q_2)[2]=\langle T_0,T_1\rangle$, and the local dimension formula
+gives
 
 $$
 \dim_{\mathbf F_2}J(\mathbf Q_2)/2J(\mathbf Q_2)
-=2+\dim_{\mathbf F_2}J(\mathbf Q_2)[2]=4, \tag{13.17}
+=2+\dim_{\mathbf F_2}J(\mathbf Q_2)[2]=4. \tag{13.32}
 $$
 
-they generate the full local image.
-
-At $7$, the cubic is irreducible over $\mathbf Q_7$ although its reduction
-has a triple root, and
+Consequently these four rows are the complete $2$-adic Kummer image. Row
+reduction of the same displayed matrix, now intersecting its span with the
+span of the first eight rows, gives exactly
 
 $$
-J(\mathbf Q_7)[2]=\langle T_0,T_1\rangle. \tag{13.18}
+V_S\cap\mathcal I_2
+=\langle e_0,e_1,h_1+h_5,h_2+h_6\rangle. \tag{13.33}
 $$
 
-Equation (7.3) makes the local quotient two-dimensional, so these two classes
-give its entire image. The sequential ledger is
+At $7$, (13.16) shows that $K_7/\mathbf Q_7$ is a totally ramified cubic
+field. Hence the three factors of the branch algebra remain precisely
+$\mathbf Q_7,\mathbf Q_7,K_7$, and
+
+$$
+J(\mathbf Q_7)[2]=\langle T_0,T_1\rangle,\qquad
+\dim J(\mathbf Q_7)/2J(\mathbf Q_7)=2. \tag{13.34}
+$$
+
+The two visible torsion classes therefore give the complete $7$-adic image,
+so this place makes no further cut. The exact dimension ledger is
 
 $$
 \begin{array}{c|c}
@@ -1617,10 +2419,11 @@ S\text{-unit norm kernel}&8\\
 \text{after the real image}&6\\
 \text{after the }2\text{-adic image}&2\\
 \text{after the }7\text{-adic image}&2.
-\end{array} \tag{13.19}
+\end{array} \tag{13.35}
 $$
 
-Equivalently, in the ordered basis of (13.14), an obstruction matrix is
+Equivalently, in the ordered global basis (13.22), the independently
+reproducible obstruction matrix is
 
 $$
 \begin{array}{c|cc|cccccc}
@@ -1631,15 +2434,16 @@ $$
 \mathbf Q_2&0&0&0&0&0&1&0&0\\
 \mathbf Q_2&0&0&1&0&0&0&1&0\\
 \mathbf Q_2&0&0&0&1&0&0&0&1.
-\end{array} \tag{13.20}
+\end{array} \tag{13.36}
 $$
 
-Its kernel is exactly $\langle e_0,e_1\rangle$. Therefore
+Its kernel is exactly $\langle e_0,e_1\rangle$. Since this is the
+odd-degree, true descent of Chapter 4,
 
 $$
 \operatorname{Sel}_2(J/\mathbf Q)
-=\langle\delta(T_0),\delta(T_1)\rangle,qquad
-\operatorname{rank}J(\mathbf Q)=0. \tag{13.21}
+=\langle\delta(T_0),\delta(T_1)\rangle,\qquad
+\operatorname{rank}J(\mathbf Q)=0. \tag{13.37}
 $$
 
 ### 13.5 The Mordell-Weil group
@@ -1652,30 +2456,30 @@ q&\#C_7(\mathbf F_q)&\#C_7(\mathbf F_{q^2})
 &\#J(\mathbf F_q)\\ \hline
 3&5&5&12\\
 5&9&25&48.
-\end{array} \tag{13.22}
+\end{array} \tag{13.38}
 $$
-
-Thus rational torsion has order dividing $\gcd(12,48)=12$, prime by prime as
-in (10.1). The subgroup generated by $A,T_0,T_1$ has order
-$3\cdot2\cdot2=12$. Combining this lower bound with (13.21)--(13.22) proves
-the second required finite calculation:
-
-$$
-\boxed{
-J_7(\mathbf Q)=\langle A\rangle\oplus\langle T_0\rangle
-\oplus\langle T_1\rangle
-\simeq\mathbf Z/3\mathbf Z\oplus(\mathbf Z/2\mathbf Z)^2.} \tag{13.23}
-$$
-
-Again, the statement concerns the complete Jacobian group. The further task
-of testing which of its twelve classes lie on the embedded curve is a finite
-Mordell--Weil sieve, logically downstream from (13.23).
 
 The displayed subgroup already has twelve elements. The order-three group
 $\langle A\rangle$ meets the two-primary group trivially. The classes
 $T_0,T_1$ are distinct and nonzero by injectivity of the Abel map, and their
 sum is the nonidentity reduced class $[t(t-1),0]$. Hence they generate a
 group of order four before any reduction upper bound is invoked.
+
+Thus rational torsion has order dividing $\gcd(12,48)=12$, prime by prime as
+in (10.1). The subgroup generated by $A,T_0,T_1$ has order
+$3\cdot2\cdot2=12$. Combining this lower bound with (13.37)--(13.38) proves
+the second required finite calculation:
+
+$$
+\boxed{
+J_7(\mathbf Q)=\langle A\rangle\oplus\langle T_0\rangle
+\oplus\langle T_1\rangle
+\simeq\mathbf Z/3\mathbf Z\oplus(\mathbf Z/2\mathbf Z)^2.} \tag{13.39}
+$$
+
+Again, the statement concerns the complete Jacobian group. The further task
+of testing which of its twelve classes lie on the embedded curve is a finite
+Mordell--Weil sieve, logically downstream from (13.39).
 
 ## 14. Odd-prime saturation in practice
 
@@ -1742,8 +2546,9 @@ pairs, total Cantor addition, finite-field point counting, specialization at
 good primes, and torsion certificates. Its odd-degree formulas require a
 monic squarefree quintic in characteristic different from two and a rational
 Weierstrass point at infinity. Every use in Chapter 13 satisfies these
-hypotheses. Chapter 12 uses the separately stated sextic divisor arithmetic
-and never imports the quintic normal form unchanged.
+hypotheses. Chapter 12 instead works with balanced degree-zero divisors on
+the sextic and the general evaluation-by-moving construction of Chapter 3;
+it never imports the quintic Mumford normal form unchanged.
 
 The finite-field order formula rests on the Weil theorem for smooth proper
 genus-two curves. Squarefreeness and good reduction are checked before each
@@ -1761,7 +2566,7 @@ The new mathematical package consists of:
 - finite $S$-squareclass enumeration with class-group corrections;
 - complete local-image methods at real, odd, bad, and $2$-adic places;
 - rank, torsion, and odd-prime saturation certificates;
-- the complete Mordell--Weil calculations (12.18) and (13.23).
+- the complete Mordell--Weil calculations (12.48) and (13.39).
 
 No rational-point classification is inferred solely from these Jacobian
 groups. Recovering curve points requires testing the Abel image in the finite
@@ -1777,6 +2582,7 @@ The hypotheses and their consequences can be summarized as follows.
 | odd-degree norm-kernel identification | $\deg f=5$, $2\ne0$, rational branch point at infinity |
 | Mumford formula $(-1)^{\deg u}u(\theta)$ | pointed monic quintic; use moving at branch support |
 | fake quotient in sextic degree | squarefree sextic; a reference divisor fixes normalization |
+| true-to-fake sequence (5.13) | monic sextic with a rational odd-degree divisor; otherwise restrict to the obstruction-zero part |
 | finite global squareclass space | number field and finite $S$, including class-group terms |
 | unramified local equality | good reduction and residue characteristic not two |
 | formula (7.4) | finite extension of $\mathbf Q_2$ and an abelian variety of dimension $g$ |
@@ -1810,8 +2616,9 @@ $L=K[T]/(f)$. Then:
 2. under this identification the explicit Selmer group cut out by all local
    $x-T$ images is the true $2$-Selmer group;
 3. it is contained in the finite $S$-unit norm kernel for any $S$ containing
-   the archimedean places, the places above two, and all places of bad
-   reduction;
+   the archimedean places, the places above two, all places of bad reduction,
+   and all places where the chosen integral equation or branch algebra is not
+   etale;
 4. complete local images at the places of $S$ reduce its computation to
    finite linear algebra;
 5. its dimension gives the rank bound (9.5), and exact reductions determine
@@ -1831,8 +2638,11 @@ norm-compatible pair and the diagonal connecting calculation.
 ### 16.2 The two finite calculations
 
 For the sextic model of $X_1(13)$, the bad-place set is
-$\{2,13,\infty\}$. The fake candidates are eliminated locally and the true
-lifting kernel is checked separately. Exact reduction at $3$ and $5$ then
+$\{2,13,\infty\}$. The two fake candidates are eliminated by the exact
+$2$-adic matrix (12.37); the $13$-adic test (12.38) is neutral. The element
+$\zeta$ in (12.16) makes the true-to-fake kernel zero, while (12.42)--(12.44)
+independently proves that the infinity difference has odd order. Exact
+reduction at $3$ and $5$ then
 proves
 
 $$
