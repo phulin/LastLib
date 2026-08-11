@@ -113,7 +113,7 @@ any resulting corrections.
 - [x] 087. Quaternion Algebras over Number Fields
 - [x] 088. Orders in Quaternion Algebras
 - [x] 089. Automorphic Forms on Definite Quaternion Algebras
-- [ ] 090. Hecke Operators on Quaternionic Forms
+- [x] 090. Hecke Operators on Quaternionic Forms
 - [ ] 091. Hecke Algebras and Congruences
 - [ ] 092. Automorphic Representations of (GL_2)
 - [ ] 093. Automorphic Representations of (D^\times)

@@ -737,7 +737,13 @@ $$
 K=\operatorname{GL}_2(\mathcal O).
 $$
 
-Two such integral splittings differ by conjugation through the normalizer of $K$, namely $L^\times K$. Conjugation by that normalizer preserves all $K$-double cosets used below. Hence the resulting operators are independent of the compatible splitting, even though their diagonal matrix representatives are not meaningful before a splitting is chosen.
+Book 87 proved that every automorphism of a quaternion algebra is inner, so two such integral splittings differ by conjugation through the normalizer of $K$. That normalizer is exactly $L^\times K$. Indeed, the elementary-divisor theorem writes a normalizing element as
+
+$$
+g=k_1\operatorname{diag}(\pi^a,\pi^b)k_2.
+$$
+
+The factors $k_i$ already normalize $K$. Conjugating the upper and lower unipotent matrices with entries in $\mathcal O$ by the diagonal factor shows respectively that $a-b\ge0$ and $b-a\ge0$. Hence $a=b$, so $g\in L^\times K$; the reverse inclusion is immediate. Conjugation by this normalizer preserves all $K$-double cosets used below. Therefore the resulting operators are independent of the compatible splitting, even though their diagonal matrix representatives are not meaningful before a splitting is chosen.
 
 This distinction matters. An arbitrary isomorphism $D_v\cong M_2(L)$ can send the given maximal order to a conjugate maximal order rather than to $M_2(\mathcal O)$. Silently retaining the old $K$ after such a change produces a different level.
 
@@ -1783,7 +1789,13 @@ q+1&-t\\-s^{-1}t&q+1
 \end{pmatrix}.
 $$
 
-If $d_v$ is nonzero but not a unit, the generic old space splits while the integral old image need not. If $d_v=0$ on a characteristic-zero eigenspace, the two degeneracy maps are dependent there. These are three different phenomena, detected by the same exact matrix.
+If $A$ is a domain and $d_v$ is nonzero but not a unit, the generic old space splits while the integral old image need not. If $d_v=0$, the Gram operator is singular, but this alone does not force the two degeneracy maps to be dependent: for an indefinite Hermitian form, their image can contain a nonzero vector orthogonal to the whole old image. Dependence follows when the specialized mass pairing is positive definite, because then
+
+$$
+\ker(\Delta^*\Delta)=\ker(\Delta).
+$$
+
+Thus invertibility of $d_v$, integral noninvertibility of $d_v$, and vanishing of $d_v$ are distinct phenomena; in the last case one must record the definiteness hypothesis before inferring dependence.
 
 When the central scalar acts trivially, $S=1$ and the Gram matrix becomes the familiar symmetric matrix
 
