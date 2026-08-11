@@ -254,6 +254,6 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 187. Brauer Induction for Automorphy Families
 - [x] 188. Brauer Characters and Effectivity of Compatible Families
 - [x] 189. Compatible Systems over the Base Field
-- [ ] 190. The Fixed-Three Integral Local Theory
+- [x] 190. The Fixed-Three Integral Local Theory
 - [x] 191. Quintic Cyclotomic Units and Kummer Arithmetic
 - [x] 192. Cyclotomic Descent for Quintic Fermat-Type Equations
