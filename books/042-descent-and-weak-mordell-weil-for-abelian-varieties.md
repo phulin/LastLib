@@ -296,7 +296,21 @@ $$
 =\delta_{\phi,F}\bigl(\operatorname{Tr}_{L/F}P\bigr), \tag{2.8}
 $$
 
-where $\operatorname{Tr}_{L/F}P=\sum_\sigma\sigma P$ after passage to a Galois closure. Both sides are represented by summing the conjugate division cocycles. Formula (2.8) remains valid without assuming $L/F$ Galois because restriction to a Galois closure is faithful on the cocycle calculation and trace is transitive.
+where $\operatorname{Tr}_{L/F}$ is the sum of the conjugates, equivalently the trace obtained from Weil restriction. Both sides are represented by summing conjugate division cocycles.
+
+Here is a proof that does not assume any injectivity after further restriction. Choose representatives $r_1,\ldots,r_m$ with $G_F=\coprod_i r_iG_L$ and a point $Q\in A(\overline F)$ with $\phi(Q)=P$. The standard transfer formula, after reindexing the cosets, is the division cocycle $\sigma\mapsto\sigma Q_0-Q_0$ attached to
+
+$$
+Q_0=\sum_{i=1}^m r_iQ,
+$$
+
+Indeed, expanding $\sigma Q_0-Q_0$ produces exactly the corestriction sum. Moreover
+
+$$
+\phi(Q_0)=\sum_{i=1}^m r_iP=\operatorname{Tr}_{L/F}P.
+$$
+
+Thus the transferred class is the division class of the trace. The calculation is independent of the coset representatives up to a coboundary and applies to every finite separable extension. In the Galois case it reduces to the displayed sum over $\operatorname{Gal}(L/F)$; transitivity gives the usual tower formula.
 
 ## 3. Coverings and Selmer sets
 
@@ -421,7 +435,7 @@ $$
 |B(K_v)/\phi A(K_v)|\leq |H^1(K_v,G)|.
 $$
 
-At primes away from $d$, Theorem 4.2 sharpens this to the exact Frobenius count (4.10).
+At good-reduction primes away from $d$, Theorem 4.2 sharpens this to the exact Frobenius count (4.10).
 
 ### 4.3 Archimedean places
 
@@ -453,7 +467,13 @@ $$
 H^1(\mathcal O_v,\mathcal C)=0.
 $$
 
-**Proof.** A $\mathcal C$-torsor $X$ is smooth and proper over $\mathcal O_v$. Its special fiber is a torsor under the connected algebraic group $\mathcal C_{k_v}$. Lang's theorem gives $X(k_v)\ne\varnothing$. For completeness, Lang's theorem here follows from surjectivity of the map $x\mapsto \operatorname{Frob}(x)-x$ on a connected algebraic group over a finite field: its differential is $-1$, so it is etale; its image is open and closed, hence all of the connected group, and its fibers are finite. A $k_v$-point of the smooth scheme $X$ lifts through the henselian ring $\mathcal O_v$ to an $\mathcal O_v$-point. A torsor with a section is trivial. $\square$
+**Proof.** A $\mathcal C$-torsor $X$ is smooth and proper over $\mathcal O_v$. Its special fiber is a torsor under the abelian variety $\mathcal C_{k_v}$. Lang's theorem gives $X(k_v)\ne\varnothing$. For completeness, the required commutative proper case follows from surjectivity of
+
+$$
+x\longmapsto \operatorname{Frob}(x)-x
+$$
+
+on $\mathcal C_{k_v}$. Its differential is $-1$, so it is etale and its image is open. It is also proper, so its image is closed. Since $\mathcal C_{k_v}$ is connected, the image is the whole group. A $k_v$-point of the smooth scheme $X$ lifts through the henselian ring $\mathcal O_v$ to an $\mathcal O_v$-point. A torsor with a section is trivial. $\square$
 
 Here is the torsor argument inside Lang's theorem. Choose $x\in X(\overline{k_v})$. There is a unique $a\in\mathcal C(\overline{k_v})$ with $\operatorname{Frob}(x)=x+a$. Surjectivity of the Lang map supplies $b$ with $\operatorname{Frob}(b)-b=-a$. Then $x+b$ is Frobenius-fixed and hence belongs to $X(k_v)$. For an abelian variety the Lang map is proper as well as etale; it is therefore finite, so its image is both open and closed. This fills the only point at which connectedness and finiteness of the residue field enter Lemma 4.1.
 
@@ -590,17 +610,18 @@ is finite.
 
 No polarization hypothesis is required. No reduction hypothesis is imposed globally: bad reduction merely enlarges the finite controlling set.
 
-Although restricted-cohomology finiteness is available as a general theorem, its arithmetic mechanism is important here. Choose a finite Galois extension $L/K$, unramified outside an enlargement $S_L$ of $S$, over which $G$ becomes constant. Inflation--restriction gives
+Although restricted-cohomology finiteness is available as a general theorem, its arithmetic mechanism is important here. Let $L/K$ be the finite Galois extension cut out by the action on $G$. Since $G$ is unramified outside $S$, we have $L\subseteq K_S$. If $S_L$ is the set of places of $L$ above $S$, then $G_{L,S_L}$ is the subgroup of $G_{K,S}$ fixing $L$. Put $\Delta=\operatorname{Gal}(L/K)$. Inflation--restriction gives the five-term fragment
 
 $$
-0\to H^1(\operatorname{Gal}(L/K),G)
+0\to H^1(\Delta,G)
 \to H^1(G_{K,S},G)
-\to H^1(G_{L,S_L},G)^{\operatorname{Gal}(L/K)}. \tag{5.4a}
+\to H^1(G_{L,S_L},G)^\Delta
+\xrightarrow{\operatorname{tg}}H^2(\Delta,G). \tag{5.4a}
 $$
 
-The left group is finite because both the acting group and the coefficient are finite. On the right the action on $G$ is trivial, so classes are continuous homomorphisms from the abelianization of $G_{L,S_L}$ to $G$. It suffices to show that there are only finitely many abelian extensions of $L$, of exponent dividing the exponent of $G$, unramified outside $S_L$.
+The two finite-group cohomology terms are finite. In the middle-right term the subgroup $G_{L,S_L}$ acts trivially on $G$, so its classes are continuous homomorphisms from the abelianization of $G_{L,S_L}$ to $G$. It therefore suffices for finiteness to show that there are only finitely many abelian extensions of $L$, of exponent dividing the exponent of $G$, unramified outside $S_L$.
 
-Global reciprocity reduces such extensions to finite-exponent quotients of an $S_L$-idele class group. The valuation factors outside $S_L$ are killed by the unramified requirement; modulo the chosen exponent, the remaining contribution is controlled by the finite $S_L$-class group and the finitely generated $S_L$-unit group. Equivalently, after decomposing a constant finite abelian coefficient into cyclic factors and adjoining the necessary roots of unity over one further finite extension, the exact sequence
+Global reciprocity reduces such extensions to finite-exponent quotients of an $S_L$-idele class group. The unramified requirement kills the local unit subgroups outside $S_L$; the surviving valuation data assemble into fractional ideals. After quotienting by principal ideles and by the chosen exponent, they are controlled by the finite $S_L$-class group, while the principal relations are controlled by the finitely generated $S_L$-unit group. Equivalently, after decomposing a constant finite abelian coefficient into cyclic factors and adjoining the necessary roots of unity over one further finite extension unramified outside $S_L$, the exact sequence
 
 $$
 0\to\mathcal O_{L,S_L}^\times/\mathcal O_{L,S_L}^{\times n}
@@ -608,9 +629,9 @@ $$
 \to\operatorname{Cl}(\mathcal O_{L,S_L})[n]\to0
 $$
 
-shows finiteness factor by factor. Descent through the finite Galois group preserves finiteness. This is the arithmetic content behind (5.3): finite coefficients alone are not enough; bounded ramification is the decisive global constraint.
+shows finiteness factor by factor. Taking $\Delta$-invariants and the kernel of the transgression in (5.4a), then adjoining the finite inflation term $H^1(\Delta,G)$, preserves finiteness. This is the arithmetic content behind (5.3): finite coefficients alone are not enough; bounded ramification is the decisive global constraint.
 
-The same proof gives a coarse order bound once generators for the $S_L$-unit group, the $S_L$-class group, and the finite Galois action are known. The bound is rarely sharp because it precedes the local Kummer cuts, but it proves that the ambient search space is effectively finite in the elementary range.
+The same proof is an enumeration procedure in the elementary range. Once the splitting field, the finite $\Delta$-action, generators for the $S_L$-unit group, and the relevant $S_L$-class-group torsion are known, one lists the finite group $H^1(G_{L,S_L},G)^\Delta$, computes the finite transgression cocycle, and adjoins the possible inflation classes from $H^1(\Delta,G)$. This gives a finite list for $H^1(G_{K,S},G)$, not merely an order bound. The list is rarely economical because it precedes the local Kummer cuts, but every ambiguity and obstruction in descent from $L$ to $K$ is a calculation in a finite group.
 
 ### 5.3 The Mordell--Weil--Selmer--Tate--Shafarevich sequence
 
@@ -697,7 +718,20 @@ If weak Mordell--Weil is known for one integer $n\geq2$, it follows for every di
 
 There is a purely group-theoretic reason not to stop here. The additive group $\mathbf Q$ satisfies $\mathbf Q/n\mathbf Q=0$ for every $n$, yet it is not finitely generated. Weak Mordell--Weil rules out infinitely many independent residue classes but does not rule out unlimited divisibility. Rational points on an abelian variety are not expected to behave like $\mathbf Q$, but proving that requires a size function. A canonical height supplies precisely the missing prohibition against endless division.
 
-Torsion is already controlled without heights. The torsion subgroup $A(K)_{\mathrm{tors}}$ injects into $A[n](\overline K)$ on its $n$-primary part at each fixed level, but this alone does not bound all levels simultaneously. At a good finite place of residue characteristic $p$, reduction is injective on prime-to-$p$ torsion. Choosing two good places of distinct residue characteristics embeds the entire torsion group into the product of two finite reduction groups, after separating its primary parts. Thus $A(K)_{\mathrm{tors}}$ is finite. This observation is compatible with weak Mordell--Weil but logically separate from finite generation of the free quotient.
+Torsion is already controlled without heights. The torsion subgroup $A(K)_{\mathrm{tors}}$ injects into $A[n](\overline K)$ on its $n$-primary part at each fixed level, but this alone does not bound all levels simultaneously. At a good finite place $v$ of residue characteristic $p$, the kernel $A_1(K_v)$ of reduction has a filtration by formal neighborhoods whose successive quotients are additive groups over $k_v$. It therefore has no torsion of order prime to $p$. Reduction
+
+$$
+A(K)_{\mathrm{tors}}\longrightarrow\mathcal A(k_v)
+$$
+
+is consequently injective on the prime-to-$p$ part. Choose two good places $v,w$ of distinct residue characteristics $p$ and $q$. If a torsion point reduces to zero at both, its order is a power of $p$ by the first kernel calculation and a power of $q$ by the second, so the point is zero. Hence diagonal reduction embeds
+
+$$
+A(K)_{\mathrm{tors}}
+\hookrightarrow\mathcal A(k_v)\times\mathcal A(k_w),
+$$
+
+a finite group. Thus $A(K)_{\mathrm{tors}}$ is finite. This observation is compatible with weak Mordell--Weil but logically separate from finite generation of the free quotient.
 
 ### 6.3 Why this is the algebraic half of Mordell--Weil
 
@@ -897,15 +931,28 @@ $$
 
 is a well-defined character coordinate wherever the displayed evaluation is finite and nonzero. The moving construction below removes that temporary restriction.
 
-There is a second, equivalent presentation more common in multiplication descent. If a divisor class $D$ has order dividing $n$ in $B^\vee(K)$, choose $f$ on $B$ with
+There is a second, equivalent presentation more common in multiplication descent. For the character under discussion, put $L=L_\chi$; it is killed by $n$. Because a $K$-point of the rigidified dual represents an actual line bundle over $K$, a nonzero rational section gives a $K$-rational divisor $D$ representing $L$. A chosen trivialization $L^{\otimes n}\simeq\mathcal O_B$ then gives $f\in K(B)^\times$ with
 
 $$
 \operatorname{div}(f)=nD. \tag{8.2}
 $$
 
-Evaluation of $f$ gives an $n$th-power class. Formula (8.2) is available only when $nD$ is principal as an actual rational divisor; a rational torsion line-bundle class may require a Galois-stable tuple of divisors and hence the étale algebra of Section 7.4.
+Evaluation of $f$ gives an $n$th-power class. If one starts only with a Galois-stable collection of geometric character classes rather than a $K$-rational character, the individual divisors need not descend separately; they must be retained as a conjugate tuple in the étale algebra of Section 7.4.
 
-With compatible rigidifications, the presentation (8.2) produces the same power class as (8.1b). The two functions express the same trivialized torsion line bundle, once on $B$ and once after pullback to the covering $A$. Their quotient after pullback has trivial divisor and is constant; the normalization at the identity makes that constant an $n$th power. This is why explicit formulas may look different while defining the same Kummer coordinate.
+With compatible rigidifications, the presentation (8.2) produces the same power class as (8.1b). Indeed, after choosing the two rational trivializations there is a constant $c\in K^\times$ such that
+
+$$
+f_\chi^n=c\,\phi^*f. \tag{8.2a}
+$$
+
+Both sides have divisor $n\phi^*D$. After choosing the rational sections to be nonvanishing at the points in question, evaluate at a division point of $P$ and at the origin, which divides $0$. This gives
+
+$$
+\frac{a_\chi(P)}{a_\chi(0)}
+=\frac{f(P)}{f(0)}.
+$$
+
+The class of $a_\chi(0)=f_\chi(0)^n$ is trivial, so the two formulas define the same element of $K^\times/K^{\times n}$. The constant in (8.2a) cancels; one does not need to assume that it has an $n$th root in $K$. Lemma 8.1 below guarantees the required nonvanishing choices. This is why explicit formulas may look different while defining the same Kummer coordinate.
 
 ### 8.2 Evaluation away from divisors
 
@@ -915,21 +962,39 @@ $$
 \operatorname{ev}_f(P)=\frac{f(P)}{f(0)}\bmod K^{\times n}. \tag{8.3}
 $$
 
-The ratio makes the value independent of multiplying $f$ by a nonzero constant. If the rational trivialization is changed by an $n$th power $h^n$, (8.3) changes by $(h(P)/h(0))^n$ and hence represents the same class. For any degree-zero zero-cycle $z=\sum m_PP$ disjoint from the relevant divisors, define
+The ratio makes the value independent of multiplying $f$ by a nonzero constant. If the rational section representing $D$ is changed by a factor $h$, then $f$ changes by the $n$th power $h^n$; consequently (8.3) changes by $(h(P)/h(0))^n$ and represents the same class. For any degree-zero zero-cycle $z=\sum m_PP$ disjoint from the relevant divisors, define
 
 $$
 f(z)=\prod_P N_{K(P)/K}(f(P))^{m_P}. \tag{8.4}
 $$
 
-Weil reciprocity shows that principal rational equivalences change (8.4) by the evaluation of $\operatorname{div}(f)=nD$, hence by an $n$th power. Therefore the construction depends only on the relevant divisor or Albanese class.
+Changing the rational section that represents $D$ multiplies $f$ by an $n$th power, so (8.4) changes by an $n$th power as well. Norms are included because a Galois-stable zero-cycle can contain closed points of degree greater than one. For the descent map on $B(K)$, the only cycle needed is $[P]-[0]$.
 
 ### 8.3 Extending evaluation to every rational point
 
-A point can lie on the chosen divisor, so literal substitution is not a total map. The moving lemma supplies a rationally equivalent zero-cycle disjoint from any prescribed finite collection of divisors on a smooth projective variety. For an abelian variety, one can see the mechanism concretely: translate auxiliary points by a sufficiently general rational point over a finite extension, take the Galois trace of the resulting cycle, and subtract a cycle of the same degree. The bad translations lie in a proper closed subset, while a finite extension supplies a point outside it.
+A point can lie on the chosen divisor, so literal substitution into one fixed formula is not a total map. What must be moved is the rational section representing the torsion line bundle; no unproved rational equivalence of zero-cycles is needed.
 
-Define the value at $P$ by evaluating on such a moved cycle representing $[P]-[0]$. Weil reciprocity proves independence of the move, and the degree-zero condition cancels every constant normalization. Norms return values from the auxiliary extension to $K$. Thus the descent-by-functions map is defined on every rational point even though no single formula is regular everywhere.
+**Lemma 8.1 (moving a rational section).** Let $X$ be an integral variety over a field, let $L$ be a line bundle on $X$, and let $Z$ be a finite set of closed points. There is a nonzero rational section of $L$ that is regular and nonvanishing at every point of $Z$.
 
-This moving step is essential. Simply declaring that points on the divisor may be ignored would leave the descent map partially defined and could discard entire cosets.
+**Proof.** Restrict $L$ to the semilocal scheme whose local rings are the $\mathcal O_{X,z}$ for $z\in Z$. Every rank-one projective module over a semilocal ring is free: choose generators modulo its finitely many maximal ideals and combine them by the Chinese remainder theorem. A generator of this restriction is represented on some open neighborhood of $Z$ by a regular nowhere-zero section. Since $X$ is integral, that section determines a nonzero rational section of $L$. $\square$
+
+Apply the lemma to $X=B$, $L=\mathcal O(D)$, and $Z=\{0,P\}$. Choose a rational section $s$ nonvanishing at both points and let $D_s=\operatorname{div}(s)$. A fixed trivialization $L^{\otimes n}\simeq\mathcal O_B$ sends $s^n$ to a rational function $f_s$ with
+
+$$
+\operatorname{div}(f_s)=nD_s.
+$$
+
+Define the value at $P$ by $f_s(P)/f_s(0)$ modulo $n$th powers. If $s'=hs$ is another allowed section, then $h$ is regular and nonzero at $0$ and $P$, and
+
+$$
+\frac{f_{s'}(P)}{f_{s'}(0)}
+=\left(\frac{h(P)}{h(0)}\right)^n
+\frac{f_s(P)}{f_s(0)}.
+$$
+
+Thus the power class is independent of the move. Changing the power trivialization multiplies both numerator and denominator by the same constant. This defines the descent coordinate at every rational point, including points on the divisor of an initially chosen section. In an étale-algebra presentation the same argument is applied to the conjugate sections simultaneously and the values are returned by the relevant norms.
+
+This moving step is essential. Simply declaring that points on the original divisor may be ignored would leave the descent map partially defined and could discard entire cosets.
 
 ### 8.4 Compatibility with the Kummer boundary
 
@@ -1002,13 +1067,33 @@ $$
 \mathbf t\longmapsto M\mathbf t+\text{terms of degree at least two}, \tag{9.3}
 $$
 
-where $M=d\phi$ has nonzero determinant. If $c$ is larger than the valuation of $\det M$ plus a convergence bound for the higher terms, Hensel iteration solves (9.3) for every target in a sufficiently deep congruence neighborhood. Hence a computable depth $c_v$ satisfies
+where $M=d\phi$ has nonzero determinant. For a precise finite-depth argument, shrink until the formal logarithms converge and give group isomorphisms
 
 $$
-B_c(K_v)\subseteq\phi A(K_v), \tag{9.4}
+\log_A:U_A\xrightarrow{\sim}\Lambda_A,
+\qquad
+\log_B:U_B\xrightarrow{\sim}\Lambda_B
 $$
 
-where $B_c$ is the parameter neighborhood with coordinates in $\mathfrak m_v^{c_v}$. The quotient can then be found by reduction modulo $\mathfrak m_v^{c_v}$ on finitely many analytic charts.
+onto full $\mathcal O_v$-lattices in the two Lie spaces. Functoriality of the formal logarithm gives
+
+$$
+\log_B(\phi(x))=M\log_A(x).
+$$
+
+After shrinking $U_A$ if necessary, elementary divisors of the invertible $K_v$-linear map $M$ give an effectively computable integer $c_v$ for which
+
+$$
+\mathfrak m_v^{c_v}\Lambda_B\subseteq M\Lambda_A.
+$$
+
+Consequently the corresponding parameter neighborhood satisfies
+
+$$
+B_{c_v}(K_v)\subseteq\phi A(K_v). \tag{9.4}
+$$
+
+Here $B_{c_v}$ is the parameter neighborhood with logarithmic coordinates in $\mathfrak m_v^{c_v}\Lambda_B$. The convergence depth and the elementary divisors of $M$ are finite algebraic data. The quotient can therefore be found by reduction to finitely many residue classes on finitely many analytic charts.
 
 ### 9.4 Reduction and formal neighborhoods
 
@@ -1022,11 +1107,16 @@ $$
 0\to B_1(K_v)\to B(K_v)\to\mathcal B(k_v)\to0,
 $$
 
-where $A_1$ and $B_1$ are kernels of reduction. The residue groups are finite. On the formal neighborhoods, (9.3) applies. A finite diagram chase shows that the cokernel of $\phi:A(K_v)\to B(K_v)$ is determined by
+where $A_1$ and $B_1$ are kernels of reduction. Let $\phi_1:A_1\to B_1$ and $\overline\phi:\mathcal A(k_v)\to\mathcal B(k_v)$ be the induced maps. The snake lemma gives the exact sequence
 
-* the map $\mathcal A(k_v)\to\mathcal B(k_v)$;
-* the cokernel on a finite formal quotient $A_1/A_c\to B_1/B_c$;
-* the finite connecting correction measuring lifts of residue points.
+$$
+0\to\ker\phi_1\to\ker\phi\to\ker\overline\phi
+\xrightarrow{\partial}\operatorname{coker}\phi_1
+\to\operatorname{coker}\phi
+\to\operatorname{coker}\overline\phi\to0. \tag{9.5}
+$$
+
+Thus the finite residue map, the formal-group cokernel, and the connecting map $\partial$ determine the desired local quotient exactly. On the formal neighborhoods, (9.3) applies. Applying the logarithm argument of (9.4) inside $A_1$ and $B_1$, choose $c$ so deep that $B_c\subseteq\phi A_1$ and put $A_c=\phi_1^{-1}(B_c)$. Then $A_1/A_c$ and $B_1/B_c$ are finite, their induced map has cokernel $\operatorname{coker}\phi_1$, and the same finite quotients determine $\partial$. No infinite formal limit remains.
 
 At bad reduction one may use projective equations and finitely many analytic charts instead of an abelian-scheme special fiber. Compactness gives a finite cover by charts, and openness of the image gives a finite precision on each. No assertion about a smooth proper integral model is then being made.
 
@@ -1282,7 +1372,8 @@ $$
 B(K)/\phi A(K)\hookrightarrow H^1(K,G)\\
 \Downarrow\ \text{localize}\\
 \operatorname{Sel}^{\phi}(A/K)
-=H^1(G_{K,S},G)\cap\prod_{v\in S}\mathcal L_v^\phi\\
+=\ker\!\left(H^1(G_{K,S},G)\to
+\displaystyle\bigoplus_{v\in S}H^1(K_v,G)/\mathcal L_v^\phi\right)\\
 \Downarrow\ \text{restricted-cohomology finiteness}\\
 B(K)/\phi A(K)\ \text{is finite}.
 \end{array}
