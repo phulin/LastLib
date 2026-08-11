@@ -251,7 +251,7 @@ requires the current full-book pass. Root updates this list when each reviewed b
 - [x] 184. Relation Obstructions and Poitou–Tate Corrections
 - [x] 185. Finite Image and the Balanced Minimal-Lift Argument
 - [x] 186. Potential Automorphy and Galois Refinement of a Chosen Lift
-- [ ] 187. Brauer Induction for Automorphy Families
+- [x] 187. Brauer Induction for Automorphy Families
 - [ ] 188. Brauer Characters and Effectivity of Compatible Families
 - [ ] 189. Compatible Systems over the Base Field
 - [ ] 190. The Fixed-Three Integral Local Theory
