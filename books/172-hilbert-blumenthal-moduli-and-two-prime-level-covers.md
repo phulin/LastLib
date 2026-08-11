@@ -91,13 +91,7 @@ Fix throughout:
 
 More general neat ideals work as well, but principal integer level keeps the rigidity convention unambiguous and is sufficient for the two-prime construction.
 
-We assume
-
-$$
-D_FNpq\,\operatorname N(\mathfrak c\mathfrak n)
-$$
-
-is invertible on the base whenever a factor has not already been absorbed into the notation. More invariantly, there is a finite set $\Sigma$ of rational primes containing those dividing $D_F$, the denominator and numerator ideals of $\mathfrak c$, and $\mathfrak n$; both $p$ and $q$ lie outside $\Sigma$ and are distinct. Put $M_\Sigma=\prod_{\ell\in\Sigma}\ell$. The working base is
+Choose a finite set $\Sigma$ of rational primes containing those below the different of $F$, the numerator and denominator ideals of $\mathfrak c$, and $\mathfrak n$. Assume that the distinct primes $p$ and $q$ lie outside $\Sigma$. Put $M_\Sigma=\prod_{\ell\in\Sigma}\ell$. Thus the working base is
 
 $$
 B=\operatorname{Spec}\mathbf Z[1/M_\Sigma pq].
@@ -117,7 +111,7 @@ These are finite fields, not necessarily prime fields. The two-dimensionality of
 
 Three distinct meanings of “good” occur and must not be conflated. A prime is good for the coefficient algebra if $F/\mathbf Q$ is unramified there, so $\mathcal O_F\otimes\mathbf Z_p$ is étale. It is good for the polarization if the local tensor polarization is perfect. It is good for level if the level order is invertible on the base. Our set $\Sigma$ is chosen so all three properties hold outside it.
 
-At such a prime the determinant condition is equivalent to the Rapoport rank-one condition on the Lie algebra, the polarization pairing on Tate modules is unimodular, and torsion is finite étale. Consequently ordinary infinitesimal deformation theory proves smoothness of relative dimension $d$ without a ramified local model.
+At such a prime the determinant condition is equivalent to the Rapoport rank-one condition on the Lie algebra, the polarization pairing on Tate modules is unimodular, and torsion of order prime to the residue characteristic is finite étale. The polarized Serre--Tate and Hodge-filtration deformation theorem then proves smoothness of relative dimension $d$ without a ramified local model. This use of Serre--Tate theory is unrelated to ordinarity: unrestricted polarized deformations of a $p$-divisible group are controlled by lifts of its Hodge filtration, whether or not its special fiber is ordinary.
 
 The exclusions are mathematical, not cosmetic. At a ramified prime, the correct characteristic polynomial on $\operatorname{Lie}(A)$ need not make it locally free of rank one over $\mathcal O_F\otimes\mathcal O_S$. If the polarization type is not prime to the residue characteristic, the induced pairing may fail to identify torsion with its dual. If a level prime equals the residue characteristic, geometric frames cease to describe the finite flat group scheme. Every theorem below records the good-prime hypotheses at the point where they are used.
 
@@ -147,16 +141,23 @@ P_a(T)=\operatorname N_{F/\mathbf Q}(T-a)
 \in\mathbf Z[T].
 $$
 
-The **Hilbert determinant condition** is the identity
+Choose a $\mathbf Z$-basis $a_1,\ldots,a_d$ of $\mathcal O_F$. The **Hilbert determinant condition** is the universal polynomial-law identity
 
 $$
-\det\bigl(T-\iota(a)\mid\operatorname{Lie}(A/S)\bigr)=P_a(T)
+\det\!\left(T-\sum_iX_i\iota(a_i)
+\mathrel{\Big|}\operatorname{Lie}(A/S)\right)
+=\operatorname N_{F/\mathbf Q}\!\left(T-\sum_iX_i a_i\right)
+\quad\text{in }\mathcal O_S[X_1,\ldots,X_d,T].
 \tag{2.1}
 $$
 
-for every $a\in\mathcal O_F$, as an equality in $\Gamma(S,\mathcal O_S)[T]$ after restriction to affine opens. It commutes with arbitrary base change because characteristic polynomials do.
+It is independent of the chosen basis, since a change of basis merely makes an invertible integral substitution in the variables. Specializing the $X_i$ gives
 
-Although (2.1) is written for every $a$, it is a finite-presentation condition. Choose a $\mathbf Z$-basis $a_1,\ldots,a_d$ of $\mathcal O_F$. The matrix of $\sum X_i\iota(a_i)$ on $\operatorname{Lie}(A)$ has characteristic polynomial whose coefficients are polynomials in the $X_i$. Equating these finitely many coefficients with those of $\operatorname N_{F/\mathbf Q}(T-\sum X_i a_i)$ implies (2.1) after every scalar specialization. This observation is what allows the determinant locus to be cut out in a parameter space.
+$$
+\det\bigl(T-\iota(a)\mid\operatorname{Lie}(A/S)\bigr)=P_a(T)
+$$
+
+for every $a\in\mathcal O_F$, and more generally for every element after arbitrary scalar extension. The universal formulation matters in small characteristic: equality on the integral points alone need not determine a polynomial law over a finite residue field. Equation (2.1) is a finite list of coefficient equalities, commutes with arbitrary base change, and cuts out the required closed determinant locus.
 
 ### 2.3 Rank one and determinant at unramified primes
 
@@ -165,7 +166,7 @@ The determinant condition becomes especially transparent on $B$.
 **Proposition 2.1.** Let $S$ be a $\mathbf Z[1/D_F]$-scheme and let $M$ be a locally free $\mathcal O_S$-module of rank $d$ with an $\mathcal O_F$-action. Then the following are equivalent:
 
 1. $M$ is locally free of rank one over $\mathcal O_F\otimes_{\mathbf Z}\mathcal O_S$;
-2. for every $a\in\mathcal O_F$, the characteristic polynomial of $a$ on $M$ is $P_a(T)$.
+2. the action on $M$ satisfies the universal determinant identity (2.1).
 
 **Proof.** The assertion is étale-local on $S$. Because $D_F$ is invertible, the finite algebra $\mathcal O_F\otimes\mathcal O_S$ is étale-locally isomorphic to $\mathcal O_S^d$. Let $e_1,\ldots,e_d$ be its primitive idempotents and write $M=\bigoplus M_i$, where $M_i=e_iM$ has rank $r_i$. An element $a$ acts on $M_i$ by the corresponding embedding value $a_i$, so
 
@@ -173,7 +174,13 @@ $$
 \det(T-a\mid M)=\prod_i(T-a_i)^{r_i}.
 $$
 
-If $M$ has rank one over the product algebra, every $r_i=1$, proving the determinant identity. Conversely, after a further étale localization choose $a\in\mathcal O_F$ whose $d$ images in each geometric residue field are pairwise distinct. Such elements exist after localization because equality of two embeddings cuts out a proper discriminant divisor, already removed by inverting $D_F$. Comparison with $P_a(T)=\prod_i(T-a_i)$ forces $r_i=1$ for all $i$. Hence $M$ is rank one over the product algebra, and descent gives the claimed local freeness. $\square$
+If $M$ has rank one over the product algebra, every $r_i=1$, proving the determinant identity. Conversely, the universal identity may be specialized after the étale base change to the primitive idempotent $e_i$. Its characteristic polynomial on $M$ is
+
+$$
+(T-1)^{r_i}T^{d-r_i},
+$$
+
+whereas its norm polynomial on the regular rank-$d$ algebra is $(T-1)T^{d-1}$. Equality forces $r_i=1$. Doing this for every $i$ shows that $M$ is rank one over the product algebra, and descent gives the claimed local freeness. This idempotent argument remains valid over arbitrarily small residue fields; it does not require one element whose embedding values are all distinct. $\square$
 
 Applied to $M=\operatorname{Lie}(A/S)$, this says that our Hilbert determinant condition is exactly the rank-one Hodge condition on the good base.
 
@@ -284,22 +291,38 @@ $$
 \tag{4.1}
 $$
 
-For example one may take $L=\mathcal O_F\oplus\mathfrak c^\vee$ and $\psi((x,y),(x',y'))=xy'-x'y$. The trace $\operatorname{Tr}_{F/\mathbf Q}\psi$ is then a perfect integral alternating form. Different choices in the same genus give canonically related prime-to-$\Sigma$ moduli problems; fixing one prevents hidden changes of determinant normalization.
+For example one may take $L=\mathcal O_F\oplus\mathfrak c^\vee$ and $\psi((x,y),(x',y'))=xy'-x'y$. This is perfect as an alternating form with values in the invertible line $\mathfrak c^\vee$. For $c_0\in\mathfrak c^+$, the scalar form $\operatorname{Tr}_{F/\mathbf Q}(c_0\psi)$ is integral; its elementary divisors record the generally nonprincipal polarization $\lambda(c_0)$. It need not itself be unimodular unless the chosen polarization is principal. Different choices in the same genus give canonically related prime-to-$\Sigma$ moduli problems; fixing one prevents hidden changes of determinant normalization.
 
 Let $G$ be the group of $\mathcal O_F$-linear symplectic similitudes of $(L,\psi)$. Since the module has rank two, the multiplier of a matrix equals its determinant locally. This rank-two identity is why a pairing condition is exactly a determinant condition, not an additional unrelated tensor.
 
 ### 4.2 Prime-to-the-base level
 
-Let $K(\mathfrak n)\subset G(\widehat{\mathbf Z})$ be the principal congruence subgroup acting trivially on $L/\mathfrak nL$. Over a base on which $\mathfrak n$ is invertible, a full $\mathfrak n$-level structure on $(A,\iota,\lambda)$ is an $\mathcal O_F$-linear isomorphism
+Let $K(\mathfrak n)\subset G(\widehat{\mathbf Z})$ be the principal congruence subgroup acting trivially on $L/\mathfrak nL$. Over a base on which $\mathfrak n$ is invertible, a full paired $\mathfrak n$-level structure on $(A,\iota,\lambda)$ consists of an $\mathcal O_F$-linear isomorphism
 
 $$
 \eta_{\mathfrak n}:L/\mathfrak nL\xrightarrow{\sim}A[\mathfrak n]
 \tag{4.2}
 $$
 
-that carries the form induced by (4.1) to the form induced by $\lambda$, with the chosen common similitude convention. One can equivalently use the $K(\mathfrak n)$-orbit of a prime-to-$\Sigma$ adelic trivialization. The finite description (4.2) is more concrete here.
+and an $\mathcal O_F/\mathfrak n$-linear isomorphism of value lines
 
-The pairing target contains the cyclotomic factor, so a literal equality in (4.2) requires the corresponding trivialization of the target line. An invariant formulation includes an isomorphism between the standard determinant line and the cyclotomic coefficient line and asks the square of pairings to commute. We always mean this invariant formulation. It avoids choosing a primitive root of unity on the base.
+$$
+\delta_{\mathfrak n}:
+(\mathfrak c^\vee/\mathfrak n\mathfrak c^\vee)_S
+\xrightarrow{\sim}
+(\mathfrak c^\vee/\mathfrak n\mathfrak c^\vee)_S(1)
+\tag{4.3}
+$$
+
+such that
+
+$$
+\bigl\langle\eta_{\mathfrak n}x,\eta_{\mathfrak n}y\bigr\rangle_{\mathfrak n}
+=\delta_{\mathfrak n}\bigl(\psi(x,y)\bigr).
+\tag{4.4}
+$$
+
+The notation $\eta_{\mathfrak n}$ below includes the orientation $\delta_{\mathfrak n}$. The sheaf of choices of (4.3) is the primitive cyclotomic torsor; it does not amount to choosing one primitive root of unity globally on $B$. Equivalently, one can use the appropriate principal-level orbit of a prime-to-$\Sigma$ adelic trivialization. Keeping (4.3) visible prevents a constant determinant line from being silently identified with its Tate twist.
 
 ### 4.3 Neatness kills automorphisms
 
@@ -307,9 +330,17 @@ A compact open subgroup $K\subset G(\mathbf A_f)$ is **neat** if, for every $g\i
 
 **Proposition 4.1.** Principal level $N\geq3$ is neat enough for the Hilbert moduli problem above, and every object with that level has trivial automorphism group.
 
-**Proof.** Let $f$ be an automorphism preserving $\mathcal O_F$, $\lambda$, and the full level. A polarization makes the automorphism group finite: its action on a sufficiently high tensor power of an ample line bundle is faithful and belongs to a finite stabilizer. Hence every eigenvalue of $f$ on a prime-to-characteristic Tate module is a root of unity. Preservation of full level says its matrix is congruent to $1$ modulo $N$.
+**Proof.** Let $f$ be an automorphism preserving $\mathcal O_F$, $\lambda$, and the full level. A polarization makes its automorphism group finite, and the action of this group on a prime-to-characteristic Tate module is faithful. Preservation of full level says that $f$ acts as the identity modulo $N$.
 
-If a root of unity $\zeta$ is congruent to $1$ modulo $N\geq3$ in the ring generated by it, then $\zeta=1$. Indeed the norm of $1-\zeta$ is supported only at primes dividing the order of $\zeta$, while divisibility by $N$ at every conjugate would force a norm at least $N^{[\mathbf Q(\zeta):\mathbf Q]}$; the standard cyclotomic norm formula leaves only the exceptional congruence modulo $2$. Thus all eigenvalues are $1$. A finite-order unipotent operator in characteristic zero is the identity. Faithfulness of the Tate module action gives $f=1$. $\square$
+We use the integral congruence lemma: if every prime dividing $N$ is invertible in the ground field, the kernel of reduction on the corresponding prime-to-characteristic Tate lattice,
+
+$$
+\operatorname{GL}_r\!\left(\prod_{v\mid N}\mathbf Z_v\right)
+\longrightarrow
+\operatorname{GL}_r(\mathbf Z/N\mathbf Z)
+$$
+
+is torsion-free for $N\geq3$. For completeness, replace a nontrivial torsion element by a power $u$ of prime order $\ell$ and work in one $v$-adic factor, writing $u=1+NA$. If a prime $r\mid N$ differs from $\ell$, the binomial identity $u^\ell=1$, divided by $N$ and reduced modulo $r$, gives $A\equiv0\pmod r$. Repeating after writing $A=rA_1$ makes $A$ divisible by every power of $r$, a contradiction. It remains that $N$ is a power of $\ell$. After division by $\ell N$, the same identity reduces to $A\equiv0\pmod\ell$ when $\ell$ is odd, and also when $\ell=2$ provided $4\mid N$; iteration gives the same contradiction. If $N\equiv2\pmod4$ and $N>2$, it has an odd divisor, which handles $\ell=2$ by the first case. This is exactly why level two is exceptional. Apply the lemma to the Tate action of $f$. The action is the identity, and faithfulness gives $f=1$. $\square$
 
 ### 4.4 Representability and smoothness
 
@@ -317,18 +348,18 @@ Let $H_{\mathfrak c,\mathfrak n}$ be the functor assigning to a $B$-scheme $S$ t
 
 $$
 (A,\iota,\lambda,\eta_{\mathfrak n})
-\tag{4.3}
+\tag{4.5}
 $$
 
 satisfying the determinant condition, $\mathfrak c$-polarization condition, and full auxiliary level.
 
 **Theorem 4.2.** The functor $H_{\mathfrak c,\mathfrak n}$ is represented by a smooth quasi-projective $B$-scheme of relative dimension $d$. It carries a universal quadruple.
 
-**Proof.** Faithfully flat descent applies separately to the abelian scheme, the $\mathcal O_F$-action, the polarization homomorphisms, and the finite level isomorphism. The determinant and adjoint identities are closed equations, while positivity and ampleness descend. Thus the functor is a sheaf.
+**Proof.** Faithfully flat descent applies separately to the abelian scheme, the $\mathcal O_F$-action, the polarization homomorphisms, and the two finite level isomorphisms (4.2)--(4.3). The determinant and adjoint identities are closed equations, while positivity and ampleness descend. Thus the moduli groupoid is a stack.
 
-To construct a parameter space, choose one positive $c\in\mathfrak c^+$ and a sufficiently high power of a relatively ample bundle inducing a multiple of $\lambda(c)$. Its Hilbert polynomial is fixed by the polarization type. Projective embeddings put the objects in a Hilbert scheme. The group law, zero section, $\mathcal O_F$-action, symmetry, tensor-polarization isomorphism, determinant equations, and level structure cut out a locally closed subscheme. Changing the projective frame gives a general-linear torsor. Descent by that free action produces a quasi-projective representing space; Proposition 4.1 ensures that no residual inertia remains. The universal object descends because the action carries its complete descent datum.
+The established PEL parameter theorem applies to precisely these data. Choose a positive $c\in\mathfrak c^+$ and a sufficiently high power of an ample bundle inducing a multiple of $\lambda(c)$. Projective embeddings place the objects in the relevant Hilbert parameter scheme; the group law, zero section, $\mathcal O_F$-action, symmetry, tensor-polarization isomorphism, determinant equations, and level structures define the stated locally closed PEL locus. The PEL theorem gives an algebraic finite-presentation stack with finite separated diagonal and a quasi-projective fine scheme when the level is neat. Proposition 4.1 makes the inertia trivial, so the stack is represented by a quasi-projective scheme and its tautological object is the universal quadruple. This invokes the earlier PEL representability theorem rather than treating a free quotient of one chosen Hilbert presentation as automatic.
 
-It remains to prove smoothness. Work over a geometric point $s$ of residue characteristic outside $\Sigma$. Since $\mathcal O_F\otimes k(s)$ is a product of $d$ fields after a finite étale extension, the de Rham module decomposes into $d$ rank-two summands. The determinant condition makes the Hodge subbundle a line in each summand. Across a square-zero thickening, an abelian scheme with its endomorphisms and prime-to-characteristic polarization lifts exactly by lifting these isotropic Hodge lines. In a two-dimensional alternating space every line is isotropic, and the space of lifts of one line is an affine space of dimension one. The $d$ factors therefore have no obstruction and total tangent dimension $d$. Prime-to-base level structures lift uniquely because finite étale schemes are insensitive to nilpotent thickenings. The infinitesimal criterion gives smoothness of relative dimension $d$. $\square$
+It remains to prove smoothness. It is enough to check closed geometric points, because the nonsmooth locus of this finite-presentation morphism is closed and the base is Jacobson. Let $s$ have residue characteristic $\ell\notin\Sigma$. Polarized Serre--Tate theory replaces deformations of the abelian scheme by deformations of $A_s[\ell^\infty]$, and the Hodge-filtration lifting theorem classifies the latter by lifts of the $\mathcal O_F$-stable Lagrangian Hodge summand. After an étale extension, $\mathcal O_F\otimes k(s)$ splits into $d$ factors. The determinant condition makes the Hodge summand a line in each factor; the tensor polarization gives the same rank statement for the dual Hodge quotient, so each corresponding de Rham factor has rank two. Every line in a rank-two alternating module is Lagrangian, and its lifts across a square-zero thickening form an affine line. Hence the deformation functor is unobstructed with tangent dimension $d$. The $\mathcal O_F$-endomorphisms and every map in the ordered polarization module lift exactly when the filtration is stable and self-dual, which are the conditions just imposed. Prime-to-$\ell$ levels lift uniquely because finite étale schemes are unchanged by nilpotent thickenings. The infinitesimal criterion proves smoothness of relative dimension $d$. $\square$
 
 The proof separates the roles of the hypotheses. Neat level gives a scheme, good coefficient primes split the Hodge problem, perfect polarization makes the lifted filtration self-dual, and invertible level makes the frame rigid under nilpotent lifting.
 
@@ -399,7 +430,7 @@ $$
 is a one-dimensional $k_{\mathfrak p}$-local system. Projecting (5.1) gives
 
 $$
-\langle, ,,\rangle_{\mathfrak p}:
+\langle\ ,\ \rangle_{\mathfrak p}:
 A[\mathfrak p]\times A[\mathfrak p]
 \longrightarrow\mathscr D_{\mathfrak p}.
 \tag{5.5}
@@ -424,7 +455,7 @@ $$
 \mathcal O_F\otimes\mathbf F_p=\prod_{\mathfrak r\mid p}k_{\mathfrak r}
 $$
 
-decomposes it into the $A[\mathfrak r]$. On every geometric fiber the $p$-adic Tate module is locally free of rank two over $\mathcal O_F\otimes\mathbf Z_p$: in characteristic zero this follows from the rank-one Hodge type and comparison with singular homology, and in every good characteristic it persists because the finite étale rank is locally constant. Hence $A[\mathfrak p]$ has $k_{\mathfrak p}$-rank two.
+decomposes it into the $A[\mathfrak r]$. We justify the rank rather than infer it from total order alone. Every connected component of the smooth scheme $H_{\mathfrak c,\mathfrak n}$ meets the characteristic-zero fiber: its image in the integral base is nonempty and open, hence contains the generic point. On a complex fiber, $H_1(A,\mathbf Q)$ has dimension $2d$ over $\mathbf Q$ and is a faithful $F$-module, so it has dimension two over $F$. At an unramified prime its integral Tate lattice is therefore locally free of rank two over $\mathcal O_F\otimes\mathbf Z_p$. Thus $A[\mathfrak p]$ has $k_{\mathfrak p}$-rank two in characteristic zero. The rank of the finite étale group scheme $A[\mathfrak p]$ is locally constant, so the same is true on every fiber of that component.
 
 The Weil pairing identifies $A[p]$ with the Cartier dual of $A^\vee[p]$. The tensor polarization (3.2) identifies $A^\vee[p]$ with $A[p]\otimes\mathfrak c$. Tensor--Hom adjunction and trace duality therefore identify the adjoint of (5.1) with an isomorphism. Passing to the $\mathfrak p$-idempotent proves perfectness of (5.5). A perfect alternating form on a rank-two module with values in a line sends $x\wedge y$ to $\langle x,y\rangle$ and yields (5.6). $\square$
 
@@ -439,15 +470,17 @@ $$
 \operatorname{GL}_2(k_{\mathfrak p})
 $$
 
-be the action on $A[\mathfrak p](K^s)$. Galois equivariance of (5.6) gives
+be the action on $A[\mathfrak p](K^s)$. Galois equivariance of (5.6) gives an isomorphism of one-dimensional $k_{\mathfrak p}$-representations
 
 $$
 \det\rho_{A,\mathfrak p}
-=\chi_p\cdot\varepsilon_{\mathfrak c,\mathfrak p},
+\simeq
+(\mathfrak c^\vee\otimes_{\mathcal O_F}k_{\mathfrak p})
+\otimes_{\mathbf F_p}\mathbf F_p(1),
 \tag{5.7}
 $$
 
-where $\chi_p:G_K\to\mathbf F_p^\times\subset k_{\mathfrak p}^\times$ is the mod-$p$ cyclotomic character and $\varepsilon_{\mathfrak c,\mathfrak p}$ is the action on the algebraic coefficient line $\mathfrak c^\vee\otimes k_{\mathfrak p}$. With $F$ and $\mathfrak c$ fixed over the base this latter line is constant, so $\varepsilon_{\mathfrak c,\mathfrak p}=1$. We nevertheless retain the line in the intrinsic formulas because a descended or twisted PEL datum can give it nontrivial descent.
+The first factor on the right is a fixed constant line, while $G_K$ acts on the second through the mod-$p$ cyclotomic character $\chi_p:G_K\to\mathbf F_p^\times\subset k_{\mathfrak p}^\times$. After choosing a basis of the constant first factor, (5.7) reads $\det\rho_{A,\mathfrak p}=\chi_p$. The intrinsic line formulation is preferable because it records how that basis changes with the polarization ideal.
 
 Equation (5.7) is not an extra assumption on Hilbert--Blumenthal torsion. It is a theorem forced by polarization. Conversely, any local system intended to be framed against $A[\mathfrak p]$ must have the same determinant line. Equality only after forgetting Galois action is insufficient.
 
@@ -499,7 +532,7 @@ $$
 \tag{6.3}
 $$
 
-the isomorphisms carrying $\beta_{\mathfrak p}$ to $\langle, ,,\rangle_{\mathfrak p}$. Denote the resulting space by
+the isomorphisms carrying $\beta_{\mathfrak p}$ to $\langle\ ,\ \rangle_{\mathfrak p}$. Denote the resulting space by
 
 $$
 H_{\mathfrak c,\mathfrak n}(V_{\mathfrak p}).
@@ -611,29 +644,57 @@ For example, if two copies of the same finite group $G$ act on two torsors and e
 
 ### 8.1 Descent data as a torsor
 
-Suppose $S$ is connected with geometric point $\bar s$. A paired local system $V_{\mathfrak p}$ becomes isomorphic to a fixed symplectic plane after a finite étale cover. The sheaf of such paired isomorphisms is a right $\operatorname{SL}_2(k_{\mathfrak p})$-torsor $T_{\mathfrak p}$. Choosing a geometric frame identifies it with the group but produces a cocycle
+Suppose $S$ is connected with geometric point $\bar s$. There is a convenient reference paired local system even when the determinant line is not constant:
 
 $$
-z_{\mathfrak p}:\pi_1(S,\bar s)longrightarrow
-\operatorname{SL}_2(k_{\mathfrak p}).
+V_{\mathfrak p}^0=k_{\mathfrak p}\oplus\mathscr D_{\mathfrak p},
+\qquad
+\beta^0((a,u),(b,v))=av-bu.
+$$
+
+Its determinant is canonically $\mathscr D_{\mathfrak p}$. Any paired local system $V_{\mathfrak p}$ becomes isomorphic to $V_{\mathfrak p}^0$ after a finite étale cover. The sheaf
+
+$$
+T_{\mathfrak p}=
+\operatorname{Isom}^{\mathrm{pair}}(V_{\mathfrak p}^0,V_{\mathfrak p})
+$$
+
+is a right torsor under $G_{\mathfrak p}^0=\operatorname{Aut}^{\mathrm{pair}}(V_{\mathfrak p}^0)$. After choosing geometric paired frames, its geometric fiber is $\operatorname{SL}_2(k_{\mathfrak p})$. Because $V_{\mathfrak p}^0$ itself can have cyclotomic descent, the invariant attached to the torsor is in general a crossed cocycle, not an ordinary homomorphism:
+
+$$
+z_{\mathfrak p}:\pi_1(S,\bar s)\longrightarrow
+\operatorname{SL}_2(k_{\mathfrak p}),
+\qquad
+z_{\mathfrak p}(\gamma\delta)
+=z_{\mathfrak p}(\gamma)\,{}^\gamma z_{\mathfrak p}(\delta).
 \tag{8.1}
 $$
 
-Changing the frame conjugates the cocycle. The torsor, rather than one chosen matrix cocycle, is the invariant descent datum.
+Here ${}^\gamma g$ is the action on the automorphism group induced by the descent of $V_{\mathfrak p}^0$. Changing the geometric frame changes $z_{\mathfrak p}$ by a coboundary. The torsor, rather than one chosen matrix cocycle, is the invariant descent datum. When the reference local system is constant, the action is trivial and (8.1) is an ordinary homomorphism up to conjugacy.
 
-If a rank-two representation $r_{\mathfrak p}$ has determinant $\chi_p$, one first uses the specified isomorphism $\det r_{\mathfrak p}\simeq\mathscr D_{\mathfrak p}$ to regard it as a paired local system. Only then does the discrepancy from a standard paired plane take values in $\operatorname{SL}_2$. Without the determinant isomorphism, it takes values in $\operatorname{GL}_2$ and cannot twist the paired cover.
+If a rank-two representation $r_{\mathfrak p}$ has cyclotomic determinant after a basis of the constant polarization line is chosen, one must still supply the intrinsic isomorphism $\det r_{\mathfrak p}\simeq\mathscr D_{\mathfrak p}$. Only then does the discrepancy from $V_{\mathfrak p}^0$ take values in the special-linear group. Without that determinant isomorphism, it takes values in the general-linear group and cannot twist the paired cover.
 
 ### 8.2 Twisting the frame cover
 
-Let $P_{\mathfrak p}\to H_S$ be the standard paired-frame torsor, where $H_S=H_{\mathfrak c,\mathfrak n}\times_BS$. If $T_{\mathfrak p}$ is the torsor attached to $V_{\mathfrak p}$, define the twist
+Let
 
 $$
-{}^{T_{\mathfrak p}}P_{\mathfrak p}
-=T_{\mathfrak p}\times^{G_{\mathfrak p}}P_{\mathfrak p},
+P_{\mathfrak p}^0=
+\operatorname{Isom}^{\mathrm{pair}}(V_{\mathfrak p}^0,\mathcal A[\mathfrak p])
+\longrightarrow H_S,
+\qquad
+H_S=H_{\mathfrak c,\mathfrak n}\times_BS,
+$$
+
+be the reference paired-frame torsor. If $T_{\mathfrak p}$ is the torsor attached to $V_{\mathfrak p}$, define the twist
+
+$$
+{}^{T_{\mathfrak p}}P_{\mathfrak p}^0
+=\bigl(T_{\mathfrak p}\times_SP_{\mathfrak p}^0\bigr)/G_{\mathfrak p}^0,
 \tag{8.2}
 $$
 
-using the change-of-frame action. Étale-locally on $S$, a point of $T_{\mathfrak p}$ trivializes (8.2) and identifies it with the standard cover. Descent on overlaps changes that identification by precisely the cocycle (8.1). Therefore (8.2) is the cover $H(V_{\mathfrak p})$ of Chapter 6.
+The diagonal action is $(t,a)\cdot g=(t\circ g,a\circ g)$. It is free, its finite étale quotient exists, and the expression $a\circ t^{-1}:V_{\mathfrak p}\to\mathcal A[\mathfrak p]$ is invariant under it. Étale-locally on $S$, a point of $T_{\mathfrak p}$ identifies (8.2) with the reference cover. On overlaps the change is exactly (8.1). Effective descent therefore gives a canonical identification of (8.2) with the directly defined cover $H(V_{\mathfrak p})$ of Chapter 6.
 
 For two primes, twist by $T_{\mathfrak p}\times T_{\mathfrak q}$ under $G_{\mathfrak p}\times G_{\mathfrak q}$. Contracted products commute with the fiber product in (7.1), so one may twist simultaneously or one prime at a time with the same result.
 
@@ -650,7 +711,7 @@ When (8.3) is supplied, $W$ has a unique alternating pairing with this determina
 
 **Proof.** Necessity follows by taking determinants of an isomorphism $W\simeq A[\mathfrak p]$ and applying (5.6). Given (8.3), send $(x,y)$ to the image of $x\wedge y$. This is alternating and perfect because $W$ has rank two and (8.3) is an isomorphism. It is the only such pairing inducing the chosen determinant isomorphism. Chapter 6 then represents its frame functor. $\square$
 
-Equality of determinant characters is weaker than (8.3) when the base has nontrivial line local systems: characters give isomorphic one-dimensional representations only after one chooses an isomorphism. The choice affects the paired cover by a scalar square class and must be included in the data.
+Equality of determinant characters is weaker than (8.3) when the base has nontrivial line local systems: one-dimensional representations with the same character become identified only after an isomorphism of their underlying coefficient lines has been supplied. Different choices differ by a unit of $k_{\mathfrak p}$ and change the orientation of the paired-frame problem. The choice must therefore be included in the data.
 
 ### 8.4 Moduli interpretation of the twist
 
@@ -696,7 +757,7 @@ G(\mathbf Q)\backslash\bigl(X\times G(\mathbf A_f)/K\bigr).
 \tag{9.1}
 $$
 
-The identification is obtained by sending a complex abelian variety to its rational homology with $F$-action, its Hodge complex structure, and its adelic level trivialization, while retaining the similitude class of its polarization module. Conversely, an $F$-lattice in $F^2$ together with $z\in X$ gives a complex torus. The alternating trace form from (4.1), with sign determined by the component of $X$, is a Riemann form, hence the torus is algebraic and polarized by the ordered ideal belonging to its determinant class. Changing the rational or integral trivialization gives the two quotient actions in (9.1). These constructions are inverse because homomorphisms of polarized complex tori are exactly the compatible maps of their integral Hodge lattices.
+The identification is obtained by sending a complex abelian variety to its rational homology with $F$-action, its Hodge complex structure, and its adelic level trivialization, while retaining the similitude class of its polarization module. Conversely, an $F$-lattice in $F^2$ together with $z\in X$ gives a complex torus. For each positive $c_0$ in the ordered polarization ideal, the scalar form $\operatorname{Tr}_{F/\mathbf Q}(c_0\psi)$ from (4.1), with sign determined by the component of $X$, satisfies the Riemann relations. Hence the torus is algebraic and carries the whole ordered polarization module belonging to its determinant class. Changing the rational or integral trivialization gives the two quotient actions in (9.1). These constructions are inverse because homomorphisms of polarized complex tori are exactly the compatible maps of their integral Hodge lattices.
 
 The fine scheme $H_{\mathfrak c,\mathfrak n}$ with the exact ordered isomorphism (3.1) is the union of those open-and-closed pieces of (9.1) having the selected $\mathfrak c$-type and determinant-level datum. Inside one such piece, the stabilizer preserves the chosen alternating form, not merely its similitude class. Under the rank-two lattice identification this exact stabilizer has determinant one. This distinction is what makes geometric torsion monodromy special linear.
 
@@ -739,11 +800,28 @@ $$
 =\operatorname{SL}_2(F)\,(gKg^{-1}\cap\operatorname{SL}_2(\mathbf A_{F,f})).
 $$
 
-For completeness, density in this instance can be seen directly. A matrix over a local field lies, after multiplying by the Weyl matrix if necessary, in the open Bruhat cell and can there be written as a product of three elementary upper and lower unipotent matrices and one diagonal determinant-one matrix. The diagonal matrix is itself a product of elementary matrices. Only finitely many finite places impose a nonintegral condition on $h$. Weak approximation in $F$ chooses all elementary parameters simultaneously as close as desired to their local parameters; at every other place choose them integral. The resulting product belongs to $\operatorname{SL}_2(F)$ and to the prescribed open adelic coset of $h$. Taking that coset to be $h(gKg^{-1}\cap\operatorname{SL}_2(\mathbf A_{F,f}))$ gives $h=\gamma k'$ with $\gamma\in\operatorname{SL}_2(F)\subset G(\mathbf Q)^+$ and $k'\in gKg^{-1}$. Rearrangement gives $g'=\gamma gk$ and the two pieces coincide. $\square$
+For completeness, density in this instance can be seen directly. A matrix over a field is, after multiplication by the Weyl matrix when necessary, a product of upper and lower elementary matrices; the diagonal determinant-one factor in the Bruhat decomposition is itself such a product. An adelic open coset imposes conditions at only finitely many places and integrality outside them. Approximation in the corresponding ring of $S$-integers chooses the elementary parameters simultaneously in those local neighborhoods while retaining integrality elsewhere. Their product lies in $\operatorname{SL}_2(F)$ and in the prescribed adelic coset. Taking that coset to be $h(gKg^{-1}\cap\operatorname{SL}_2(\mathbf A_{F,f}))$ gives $h=\gamma k'$ with $\gamma\in\operatorname{SL}_2(F)\subset G(\mathbf Q)^+$ and $k'\in gKg^{-1}$. Rearrangement gives $g'=\gamma gk$ and the two pieces coincide. This proves exactly the finite-adelic strong-approximation statement used here. $\square$
 
 ### 9.3 Connected components of a fixed polarization type
 
-The moduli problem with one fixed ordered ideal $\mathfrak c$ selects one or several classes in (9.2), depending on the determinant trivialization included in the finite level. This selection is a union of open-and-closed components. On a selected component, exact preservation of (3.1) replaces $\widetilde\Gamma_g$ by its polarization-isometry subgroup
+The moduli problem with one fixed ordered ideal $\mathfrak c$ selects one or several classes in (9.2), depending on the determinant orientation included in the finite level. Make this selection intrinsic by writing
+
+$$
+\mathcal C_{\mathfrak c,\mathfrak n}
+=\{[a]\in\mathcal C_K:
+\text{the lattice in the class }[a]\text{ has ordered polarization module }
+(\mathfrak c,\mathfrak c^+)\text{ and paired principal-level orientation as in (4.3)--(4.4)}\}.
+$$
+
+Polarization type and finite-level orientation are locally constant, so this is a union of open-and-closed components. Theorem 9.1 now gives the exact statement
+
+$$
+\pi_0\bigl(H_{\mathfrak c,\mathfrak n}(\mathbf C)\bigr)
+\xrightarrow{\sim}\mathcal C_{\mathfrak c,\mathfrak n}.
+\tag{9.3a}
+$$
+
+This is also a practical description: starting with a double-coset representative, one computes the trace-dual of its lattice and compares its ordered ideal and reduction modulo $\mathfrak n$ with the fixed data. On a selected component, exact preservation of (3.1) replaces $\widetilde\Gamma_g$ by its polarization-isometry subgroup
 
 $$
 \Gamma_g=\{\gamma\in\widetilde\Gamma_g:
@@ -759,9 +837,9 @@ The auxiliary level refines the class set through $\det K$. If $K$ is replaced b
 
 ### 9.4 Algebraic and geometric components
 
-Over a characteristic-zero field, analytification preserves connected components of a finite-type scheme: an algebraic idempotent gives an analytic decomposition, and an analytic open-and-closed decomposition of a complex algebraic variety is algebraic because its characteristic function is a global analytic idempotent, hence constant algebraically on every irreducible component. Therefore Theorem 9.1 computes the ambient determinant classes, while the selection described in Section 9.3 computes the geometric components of $H_{\mathfrak c,\mathfrak n,\overline{\mathbf Q}}$ exactly.
+For a finite-type complex scheme, algebraic and analytic connected components agree. One way to see this without making a false algebraicity claim about arbitrary holomorphic functions is to decompose the scheme into its finitely many algebraic irreducible components: the analytification of each irreducible component is connected, and the incidence graph of their nonempty intersections is unchanged by analytification. Connected components are the connected components of this finite graph in both categories. Therefore Theorem 9.1 computes the ambient determinant classes, while the selection described in Section 9.3 computes the geometric components of $H_{\mathfrak c,\mathfrak n,\overline{\mathbf Q}}$ exactly.
 
-The absolute Galois group may permute these geometric components. The permutation is controlled by the reciprocity action on (9.2), but no reciprocity formula is needed for geometric monodromy: choose one geometric component $H^\circ$ and work over it. A twist can alter the arithmetic permutation of components while becoming trivial over $\overline{\mathbf Q}$; it cannot alter the set or geometry of the geometric components.
+The absolute Galois group may permute these geometric components. Determining that arithmetic permutation requires additional canonical-model descent data and is not used here: for geometric monodromy, choose one geometric component $H^\circ$ and work over it. A twist can alter the arithmetic permutation of components while becoming trivial over $\overline{\mathbf Q}$; it cannot alter the set or geometry of the geometric components.
 
 ## 10. Geometric monodromy of a prime-level frame cover
 
@@ -780,7 +858,7 @@ $$
 \tag{10.1}
 $$
 
-The universal $\mathfrak p$-torsion local system is obtained from the fixed lattice by the action of $\Gamma_g$. Hence its paired-frame cover has monodromy
+The universal $\mathfrak p$-torsion local system is obtained from the fixed lattice by the action of $\Gamma_g$. Hence the analytification of its paired-frame cover is the quotient of $\mathfrak H^d\times\operatorname{SL}_2(k_{\mathfrak p})$ by $\gamma(z,h)=(\gamma z,\overline\rho_{\mathfrak p}(\gamma)h)$, where
 
 $$
 \overline\rho_{\mathfrak p}:\Gamma_g
@@ -790,7 +868,7 @@ $$
 
 after a reference paired frame is chosen. The image lies in $\operatorname{SL}_2$ because loops in a geometric complex component preserve the determinant trivialization; the similitude or cyclotomic variation belongs to the arithmetic base, not to geometric loops.
 
-Comparison of finite topological covers with finite étale covers identifies the profinite completion of (10.1) with the geometric étale fundamental group for the purpose of finite quotients. Thus surjectivity of (10.2) is exactly full geometric monodromy of the algebraic frame cover.
+This explicit quotient is enough for the argument; no general topological--étale comparison theorem is being imported. Its analytic total space is connected exactly when the image of (10.2) acts transitively on the second factor, equivalently when that image is the full special-linear group. Algebraic and analytic connected components agree by Section 9.4. Once the algebraic torsor is known to be connected, the finite-covering dictionary proves that its étale monodromy is transitive, and a transitive subgroup acting by left translations on a regular $\operatorname{SL}_2(k_{\mathfrak p})$-set is the whole group.
 
 ### 10.2 A congruence-surjectivity lemma
 
@@ -847,7 +925,9 @@ $$
 
 If the component classes are represented by a fixed finite set, one finite exceptional set works for all of them.
 
-**Proof.** The group $\Gamma_g$ in (9.4) is arithmetic, is commensurable with $\operatorname{SL}_2(\mathcal O_F)$, and contains a principal congruence subgroup after coordinates are chosen on the component lattice. Lemma 10.1 shows that its reduction contains the full group in (10.3). Pairing compatibility shows that the monodromy image is contained in that same group, so equality holds. There are finitely many components by (9.2); taking the union of their finite exceptional sets gives the final assertion. $\square$
+**Proof.** The group $\Gamma_g$ in (9.4) is arithmetic and commensurable with $\operatorname{SL}_2(\mathcal O_F)$. More is true here than abstract arithmeticity: by definition it is the rational stabilizer of the fixed component lattice with the fixed adelic principal level. The local open stabilizers therefore contain principal congruence kernels, and after choosing coordinates and clearing finitely many denominators their intersection contains a global $\Gamma(\mathfrak a)$. No congruence-subgroup property for arbitrary finite-index subgroups is being assumed. Lemma 10.1 shows that the reduction map (10.2) is onto.
+
+The explicit analytic quotient of Section 10.1 is consequently connected. Section 9.4 makes the algebraic frame cover geometrically connected, and the finite-covering dictionary then makes its étale monodromy transitive. Since the fiber is a regular special-linear set, the monodromy image is the full group in (10.3). There are finitely many components by (9.2); taking the union of their finite exceptional sets gives the final assertion. $\square$
 
 This proof also explains the phrase **monodromy-admissible prime**: it means a prime outside the explicit finite set formed from $D_F$, the polarization and lattice denominators, the auxiliary level, and the chosen component representatives. No assertion is made at the excluded primes.
 
@@ -855,9 +935,9 @@ This proof also explains the phrase **monodromy-admissible prime**: it means a p
 
 A finite étale cover of a connected scheme is connected exactly when its geometric monodromy acts transitively on one geometric fiber. For a right $G$-torsor the fiber is a simply transitive $G$-set, and the monodromy action is transitive exactly when its image is all of $G$.
 
-**Corollary 10.3.** At every monodromy-admissible $\mathfrak p$, the paired $\mathfrak p$-frame cover over $H^\circ$ is geometrically connected. Its deck group is $\operatorname{SL}_2(k_{\mathfrak p})$.
+**Corollary 10.3.** At every monodromy-admissible $\mathfrak p$, the paired $\mathfrak p$-frame cover over $H^\circ$ is geometrically connected. Its deck group is the opposite of the right torsor group, and hence is identified with $\operatorname{SL}_2(k_{\mathfrak p})$ by inversion.
 
-**Proof.** Theorem 10.2 makes the monodromy action on the torsor fiber transitive, proving connectedness. The right torsor action supplies all deck transformations. A deck transformation is determined by its value at one point of a connected cover, so there are no others. $\square$
+**Proof.** Theorem 10.2 makes the monodromy action on the torsor fiber transitive, proving connectedness. The right torsor action supplies all deck transformations. A deck transformation is determined by its value at one point of a connected cover, so there are no others. Composition of right translations reverses the displayed multiplication, giving the stated opposite-group convention. $\square$
 
 ## 11. Product monodromy at two primes
 
@@ -904,7 +984,7 @@ $$
 
 Consequently the two-prime cover over $H^\circ$ is geometrically connected.
 
-**Proof.** Under analytic uniformization, both torsion local systems are obtained by reducing the same arithmetic group $\Gamma_g$ at the two primes. Lemma 11.1 says the simultaneous reduction is the product in (11.2). The fiber of the two-prime cover is a simply transitive set under that product, so its monodromy is transitive. The finite étale connectedness criterion proves the final assertion. $\square$
+**Proof.** Under analytic uniformization, both torsion local systems are obtained by reducing the same arithmetic group $\Gamma_g$ at the two primes. Lemma 11.1 says the simultaneous reduction is the product in (11.2). Therefore the explicit analytic quotient with fiber the product group is connected. Algebraic and analytic components agree, so the algebraic two-prime cover is geometrically connected. Its étale monodromy is then transitive by the finite-covering dictionary; on a regular product-group fiber, transitivity forces the image to be the whole product. $\square$
 
 Notice the order of reasoning: product monodromy proves connectedness. Connectedness is not assumed in order to enlarge monodromy, and the product cardinality is not used before surjectivity has been established.
 
@@ -959,11 +1039,13 @@ Then:
    $$
 
    after geometric trivialization of the prescribed local systems, and has the degree in (7.4);
-4. geometric components of the base are indexed by the determinant classes selected from
+4. geometric components of the characteristic-zero base are indexed by the subset $\mathcal C_{\mathfrak c,\mathfrak n}$ of determinant classes in
 
    $$
-   F_+^\times\backslash\mathbf A_{F,f}^\times/\det K(\mathfrak n);
+   F_+^\times\backslash\mathbf A_{F,f}^\times/\det K(\mathfrak n)
    $$
+
+   defined by the ordered polarization module and level orientation in (9.3a);
 5. over every such characteristic-zero geometric component of the untwisted base, the standard two-prime cover has full product geometric monodromy and is geometrically connected;
 6. if $S=\operatorname{Spec}K$ for a characteristic-zero field $K$, replacing the standard frames by the determinant-compatible arithmetic twists $V_{\mathfrak p}$ and $V_{\mathfrak q}$ preserves assertions 2--5 after base change to $\overline K$.
 
@@ -975,7 +1057,7 @@ For either prime, Theorem 5.1 gives a perfect alternating torsion pairing and th
 
 ### 12.3 Proof of components and monodromy
 
-**Proof.** Complex uniformization identifies each base component with $\Gamma_g\backslash\mathfrak H^d$. The determinant and strong-approximation argument of Theorem 9.1 gives the stated component classes. Because $\Sigma$ contains the component-lattice denominators and the auxiliary level primes, each $\Gamma_g$ contains the congruence subgroup required by Lemma 11.1 at $\mathfrak p$ and $\mathfrak q$. Its simultaneous reduction is therefore the full product of special linear groups. Comparison of finite analytic and finite étale covers identifies this reduction with geometric étale monodromy. A full product acts transitively on its torsor fiber, so the cover is geometrically connected over the component.
+**Proof.** Complex uniformization identifies each base component with $\Gamma_g\backslash\mathfrak H^d$. The determinant and strong-approximation argument of Theorem 9.1 gives the stated component classes. Because $\Sigma$ contains the component-lattice denominators and the auxiliary level primes, each $\Gamma_g$ contains the congruence subgroup required by Lemma 11.1 at $\mathfrak p$ and $\mathfrak q$. Its simultaneous reduction is therefore the full product of special linear groups. The explicit analytic quotient with that regular fiber is connected; agreement of algebraic and analytic components makes the algebraic cover geometrically connected. The finite-covering dictionary then identifies its étale monodromy as the full product, exactly as in Theorem 11.2.
 
 Finally, under the field hypothesis in assertion 6, every determinant-compatible arithmetic twist becomes isomorphic to the standard cover over an algebraic closure, by (11.3). It has the same geometric components and conjugate geometric monodromy. For a general $S$, assertions 1--3 still hold, while a geometrically varying local system contributes its own monodromy and is deliberately excluded from assertion 6. This proves the remaining assertions. $\square$
 
@@ -1016,7 +1098,14 @@ $$
 
 over the locus where both levels are invertible. Its deck group is the appropriate quotient of congruence groups, subject to the pairing multiplier convention. The universal two-prime cover pulls back to the cover for the finer level. Monodromy at primes away from both levels remains full because the congruence approximation can impose the finer auxiliary condition and the two residual conditions simultaneously by the Chinese remainder theorem.
 
-For a fractional ideal $\mathfrak a$, Serre tensoring $A$ by $\mathfrak a$ changes its polarization module by an explicitly determined square ideal and moves its determinant class in (9.2). This operation is not invisible. To compare two polarization types one must transport the standard lattice, its value line, and both determinant pairings. Merely declaring that all polarizations are equivalent up to isogeny would destroy the fine moduli interpretation.
+For a fractional ideal $\mathfrak a$, Serre tensoring gives
+
+$$
+(A\otimes_{\mathcal O_F}\mathfrak a)^\vee
+\simeq A^\vee\otimes_{\mathcal O_F}\mathfrak a^{-1},
+$$
+
+and hence changes the ordered polarization module from $\mathfrak c$ to $\mathfrak c\mathfrak a^{-2}$. Its value line changes correspondingly from $\mathfrak c^\vee$ to $\mathfrak c^\vee\mathfrak a^2$. Thus Serre tensoring moves the determinant class in (9.2) and is not invisible. To compare the two polarization types one must transport the standard lattice, its value line, and both determinant pairings. Merely declaring that all polarizations are equivalent up to isogeny would destroy the fine moduli interpretation.
 
 ### 13.3 What is geometric and what is arithmetic
 
