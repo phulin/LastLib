@@ -160,7 +160,7 @@ The word “complex” in complex multiplication is arithmetic, not merely analy
 A number field $F$ is **totally real** if every embedding $F\hookrightarrow\mathbf C$ has image in $\mathbf R$. A number field $K$ is a **CM field** if it is a totally imaginary quadratic extension of a totally real field $F$. Thus
 
 $$
-[K:F]=2,qquad [F:\mathbf Q]=g,qquad [K:\mathbf Q]=2g.
+[K:F]=2,\qquad [F:\mathbf Q]=g,\qquad [K:\mathbf Q]=2g.
 $$
 
 The nontrivial automorphism of $K/F$ is denoted $c$. Under every complex embedding it becomes ordinary complex conjugation:
@@ -198,7 +198,7 @@ $$
 
 so $2\Rightarrow3$.
 
-Assume 3. Extend $c$ to the factors of $K\otimes\mathbf R$. Because $K$ is a field and $c$ is nonidentity, a real embedding cannot be fixed by precomposition with $c$: such equality would imply $c=1$ by injectivity. Hence real factors, if present, occur in exchanged pairs. On such a pair the form is $2xy$, which is indefinite. On a complex factor the identity involution gives $2\operatorname{Re}(z^2)$, also indefinite, whereas complex conjugation gives $2|z|^2$. Positivity therefore rules out real factors and forces complex conjugation on every complex factor. The fixed algebra is $\mathbf R^g$, so the fixed field is totally real of degree $g$, $K$ has no real embeddings, and $K$ is quadratic over its fixed field. Thus $3\Rightarrow1$. $\square$
+Assume 3. Extend $c$ to the factors of $K\otimes\mathbf R$. The involution permutes the archimedean factors in orbits of size one or two. A two-element orbit contributes either $2xy$ on two real factors or $4\operatorname{Re}(zw)$ on two complex factors; both forms are indefinite. Thus every factor is fixed. A fixed real factor would mean that a real embedding $\tau$ satisfies $\tau\circ c=\tau$, and injectivity of $\tau$ would force $c=1$, contrary to the hypothesis. On a fixed complex factor the identity involution gives $2\operatorname{Re}(z^2)$, which is indefinite, whereas complex conjugation gives $2|z|^2$. Positivity therefore rules out real factors and forces complex conjugation on every complex factor. The fixed algebra is $\mathbf R^g$, so the fixed field is totally real of degree $g$, $K$ has no real embeddings, and $K$ is quadratic over its fixed field. Thus $3\Rightarrow1$. $\square$
 
 The positivity in condition 3 is often called positivity of the involution. It is the field-theoretic shadow of the Rosati involution attached to a polarization.
 
@@ -316,7 +316,7 @@ $$
 \gamma\Phi=\{\gamma\circ\varphi:\varphi\in\Phi\}. \tag{3.5}
 $$
 
-This is a CM type on the conjugate field $\gamma(K)$. If $\gamma(K)=K$, it is a type on $K$. Two CM pairs $(K,\Phi)$ and $(K',\Phi')$ are **isomorphic** if there is a field isomorphism $u:K\to K'$ such that
+Here embeddings retain domain $K$, so this is again a CM type on $K$: in a Galois CM field containing the normal closure of $K$, complex conjugation is central, and postcomposition therefore preserves conjugate pairs. To transport the embedded field itself to $\gamma(K)$, one instead conjugates both the domain and the embeddings. Two CM pairs $(K,\Phi)$ and $(K',\Phi')$ are **isomorphic** if there is a field isomorphism $u:K\to K'$ such that
 
 $$
 \Phi=\{\varphi'\circ u:\varphi'\in\Phi'\}.
@@ -332,7 +332,7 @@ $$
 \gamma\Phi=\Phi\} \tag{3.6}
 $$
 
-is open: the type is determined inside a finite Galois closure of $K$. Its fixed field will be the reflex field. Notice that $\gamma\Phi=\Phi$ includes equality of the embedded copy of $K$: such a $\gamma$ must stabilize $K$ as well as the chosen half of its embeddings.
+is open: the type is determined inside a finite Galois closure of $K$. Its fixed field will be the reflex field. No assertion that $\gamma$ preserves the distinguished embedded image of $K$ is implicit here; the action is by postcomposition on $\operatorname{Hom}_{\mathbf Q}(K,\mathbf C)$.
 
 ### 3.4 Induced and primitive types
 
@@ -437,7 +437,7 @@ $$
 
 Two proper invertible ideals $\mathfrak a$ and $\mathfrak b$ define the same class precisely when $\mathfrak b=x\mathfrak a$ for some $x\in K^\times$. The inverse convention in the ideal action of Chapter 5 will turn this group into a genuine left action on isomorphism classes.
 
-Conjugation acts on $\operatorname{Pic}(\mathcal O)$. The product $\mathfrak a\bar{\mathfrak a}$ is fixed by conjugation but need not be principal as an ideal of $K^+$. This is the global obstruction appearing in the principal-polarization equation.
+Conjugation acts on $\operatorname{Pic}(\mathcal O)$. The product $\mathfrak a\bar{\mathfrak a}$ is a conjugation-stable fractional ideal of $K$, but its class need not match the class required by the trace dual. One should not silently regard every stable ideal as the extension of an ideal of $K^+$: ramified primes can obstruct such a literal descent. The class comparison inside $K$ is the global obstruction appearing in the principal-polarization equation.
 
 ### 4.4 Changing the order
 
@@ -563,7 +563,7 @@ For a CM algebra, homomorphisms respecting all idempotents split componentwise. 
 
 ### 5.4 The ideal action
 
-Fix a CM order $\mathcal O=(\mathfrak a:\mathfrak a)$. For an invertible fractional $\mathcal O$-ideal $\mathfrak b$, define
+Fix a CM order $\mathcal O$ and a proper invertible fractional $\mathcal O$-ideal $\mathfrak a$. For an invertible fractional $\mathcal O$-ideal $\mathfrak b$, define
 
 $$
 \mathfrak b*A(\mathfrak a,\Phi)
@@ -599,7 +599,7 @@ $$
 (\mathfrak c\mathfrak b)*A. \tag{5.14}
 $$
 
-Principal ideals act trivially on isomorphism classes, because multiplication by $u^{-1}$ identifies $A(\mathfrak a)$ with $A(u^{-1}\mathfrak a)$. Hence $\operatorname{Pic}(\mathcal O)$ acts on $K$-linear isomorphism classes. For proper invertible ideals this action is simply transitive: (5.8) gives both transitivity and freeness.
+Principal ideals act trivially on isomorphism classes, because multiplication by $u^{-1}$ identifies $A(\mathfrak a)$ with $A(u^{-1}\mathfrak a)$. Hence $\operatorname{Pic}(\mathcal O)$ acts on $K$-linear isomorphism classes with proper invertible lattice and multiplier order $\mathcal O$. On that set the action is simply transitive: (5.8) gives both transitivity and freeness. If the starting lattice is proper but noninvertible, the same transform by invertible ideals is defined, but its orbit need not contain every proper lattice.
 
 At primes dividing the conductor, a noninvertible ideal can still define a quotient, but it does not belong to a group action and its multiplier ring may grow. Statements using the class group will always retain invertibility or a prime-to-conductor hypothesis.
 
@@ -690,43 +690,97 @@ $$
 \quad(\varphi\in\Phi). \tag{6.6}
 $$
 
+We record why “Riemann form” really implies algebraicity here, rather than importing an unproved bridge from complex tori to abelian varieties.
+
+**Theorem 6.2 (Riemann bilinear theorem in the required form).** Let $V$ be a complex vector space, let $\Lambda\subset V$ be a full lattice, and let $J$ denote multiplication by $i$ on the underlying real space. Suppose an integral alternating form $E:\Lambda\times\Lambda\to\mathbf Z$ extends to $V_{\mathbf R}$ and satisfies
+
+$$
+E(Jx,Jy)=E(x,y),\qquad E(Jx,x)>0\quad(x\ne0). \tag{6.7}
+$$
+
+Then $V/\Lambda$ carries an ample holomorphic line bundle with first Chern form $E$ and is a projective complex torus. Conversely, the first Chern form of an ample line bundle satisfies (6.7).
+
+**Proof strategy.** The alternating form and the complex structure combine into a positive Hermitian form. Integrality supplies a factor of automorphy, and the resulting theta series give enough sections of a high tensor power to embed the torus in projective space.
+
+**Proof.** Put
+
+$$
+H(x,y)=E(Jx,y)+iE(x,y).
+$$
+
+The first relation in (6.7) makes $E(Jx,y)$ symmetric, so $H$ is Hermitian, and the second makes it positive definite. Its imaginary part is $E$. Choose a symplectic elementary-divisor basis $e_i,f_i$ of $\Lambda$, so $E(e_i,f_j)=d_i\delta_{ij}$ and the pairings among the $e_i$ or among the $f_i$ vanish. For
+
+$$
+\lambda=\sum_i(m_i e_i+n_i f_i),
+$$
+
+set $\alpha(\lambda)=(-1)^{\sum_i d_i m_i n_i}$. Expanding the exponent shows that this semicharacter satisfies
+
+$$
+\alpha(\lambda+\mu)
+=\alpha(\lambda)\alpha(\mu)
+\exp\bigl(\pi iE(\lambda,\mu)\bigr). \tag{6.8}
+$$
+
+The functions
+
+$$
+j_\lambda(z)=\alpha(\lambda)
+\exp\!\left(\pi H(z,\lambda)+\frac\pi2H(\lambda,\lambda)\right)
+$$
+
+satisfy $j_{\lambda+\mu}(z)=j_\lambda(z+\mu)j_\mu(z)$; this is a direct substitution using (6.8) and $\operatorname{Im}H=E$. Hence the action
+
+$$
+\lambda\cdot(z,t)=(z+\lambda,j_\lambda(z)t)
+$$
+
+on $V\times\mathbf C$ defines a holomorphic line bundle $L(H,\alpha)$ on $V/\Lambda$. Differentiating the factor of automorphy shows that its Chern form is represented by $E$ and that its Hermitian curvature is positive.
+
+For completeness, positivity also supplies projective coordinates. After choosing complementary maximal isotropic sublattices in the elementary-divisor basis, the usual theta sums are indexed by the finite residue classes of one sublattice modulo a sufficiently large multiple. Positive definiteness of $H$ makes these Gaussian series converge normally, so they are holomorphic sections of $L(H,\alpha)^{\otimes m}$. Fourier orthogonality in the isotropic coordinates shows, for all sufficiently large $m$, that the sections have no common zero, separate two distinct points, and separate tangent vectors at every point. Their evaluation map is therefore a holomorphic closed immersion
+
+$$
+V/\Lambda\hookrightarrow\mathbf P^N.
+$$
+
+The image is a closed analytic subset of projective space and hence algebraic; the pulled-back hyperplane bundle is a positive power of $L(H,\alpha)$. Thus the torus is projective and the constructed line bundle is ample. Conversely, the Chern form of an ample line bundle is integral and of type $(1,1)$, giving $J$-invariance, while positivity of its curvature gives $E(Jx,x)>0$. $\square$
+
 Equation (6.5) is the decisive sign check. Had we defined $E$ as $\operatorname{Tr}(\xi x\bar y)$, the same calculation would demand negative imaginary parts. Many apparent disagreements about CM polarizations are nothing more than this switch of variables.
 
 ### 6.3 Integrality, dual lattices, and degree
 
-The form is integral on $\mathfrak a$ exactly when
+For an arbitrary full lattice $\mathfrak a$, the form is integral exactly when
 
 $$
-\operatorname{Tr}(\xi\bar{\mathfrak a}\mathfrak a)
-\subseteq\mathbf Z,
+\xi\bar{\mathfrak a}\subseteq\mathfrak a^t. \tag{6.9}
 $$
 
-or equivalently
+Suppose more particularly that $\mathfrak a$ is a proper invertible ideal of a conjugation-stable order $\mathcal O$. Because $\mathfrak a\mathcal O=\mathfrak a$, condition (6.9) is equivalent to
 
 $$
 \xi\bar{\mathfrak a}\mathfrak a
-\subseteq\mathfrak D_K^{-1}. \tag{6.7}
+\subseteq\mathcal O^t. \tag{6.10}
 $$
 
-For a general order, replace $\mathfrak D_K^{-1}$ by the trace dual of the relevant lattice; (6.7) is written for maximal-order ideals.
+For $\mathcal O=\mathcal O_K$, this becomes $\xi\bar{\mathfrak a}\mathfrak a\subseteq\mathfrak D_K^{-1}$. The order trace dual is essential at conductor primes; replacing it by the inverse different of the maximal order would impose the wrong integral condition.
 
 Define the $E_\xi$-dual lattice
 
 $$
 \mathfrak a^{\#,\xi}
-=\{x\in K:E_\xi(x,\mathfrak a)\subseteq\mathbf Z\}. \tag{6.8}
+=\{x\in K:E_\xi(x,\mathfrak a)\subseteq\mathbf Z\}. \tag{6.11}
 $$
 
-For an invertible $\mathcal O_K$-ideal, trace duality gives
+For a proper invertible $\mathcal O$-ideal, trace duality gives
 
 $$
 \mathfrak a^{\#,\xi}
-=\xi^{-1}\mathfrak D_K^{-1}\bar{\mathfrak a}^{-1}. \tag{6.9}
+=\xi^{-1}\mathcal O^t\bar{\mathfrak a}^{-1}. \tag{6.12}
 $$
 
-The harmless sign arising from $\bar\xi=-\xi$ does not change the lattice. Indeed, the condition is $\xi\bar x\mathfrak a\subseteq\mathfrak D_K^{-1}$; conjugating and solving for $x$ gives (6.9).
+The harmless sign arising from $\bar\xi=-\xi$ does not change the lattice. Indeed, the condition is $\xi\bar x\mathfrak a\subseteq\mathcal O^t$; conjugating and solving for $x$ gives (6.12). For the maximal order, $\mathcal O^t=\mathfrak D_K^{-1}$.
 
-When (6.7) holds, $\mathfrak a\subseteq\mathfrak a^{\#,\xi}$. The polarization homomorphism has kernel canonically dual to the finite quotient
+When (6.9) holds, $\mathfrak a\subseteq\mathfrak a^{\#,\xi}$. Under analytic uniformization, the polarization homomorphism has kernel canonically isomorphic to the finite quotient
 
 $$
 \mathfrak a^{\#,\xi}/\mathfrak a,
@@ -736,7 +790,7 @@ and its degree is
 
 $$
 \deg\lambda_\xi
-=[\mathfrak a^{\#,\xi}:\mathfrak a]. \tag{6.10}
+=[\mathfrak a^{\#,\xi}:\mathfrak a]. \tag{6.13}
 $$
 
 This is the determinant of an integral alternating matrix. Its order is a square, in agreement with the general theory of polarizations. If its elementary divisors are $d_1\mid\cdots\mid d_g$, then the polarization type is $(d_1,\ldots,d_g)$ and the index equals $(d_1\cdots d_g)^2$.
@@ -749,16 +803,16 @@ $$
 \mathfrak a=\mathfrak a^{\#,\xi}.
 $$
 
-For an invertible maximal-order ideal, (6.9) turns this into the ideal equation
+For a proper invertible $\mathcal O$-ideal, (6.12) turns this into the ideal equation
 
 $$
 \xi\mathfrak a\bar{\mathfrak a}
-=\mathfrak D_K^{-1}. \tag{6.11}
+=\mathcal O^t. \tag{6.14}
 $$
 
-Together with $\bar\xi=-\xi$ and positivity (6.6), equation (6.11) is the complete principal-polarization criterion.
+Together with $\bar\xi=-\xi$ and positivity (6.6), equation (6.14) is the complete principal-polarization criterion. For $\mathcal O_K$ it reads $\xi\mathfrak a\bar{\mathfrak a}=\mathfrak D_K^{-1}$.
 
-Not every ideal class satisfies it. Taking ideal classes in (6.11) requires
+Not every ideal class satisfies it. In the maximal-order case, taking ideal classes in (6.14) requires
 
 $$
 [\mathfrak a\bar{\mathfrak a}]
@@ -767,7 +821,7 @@ $$
 
 after allowing the principal factor $(\xi)$. Even when the class obstruction vanishes, a generator must be purely imaginary and have the required signs. Multiplication by a unit $u\in\mathcal O_K^\times$ changes the generator; preserving pure imaginarity forces $u/\bar u$ to interact correctly, and preserving positivity imposes a totally positive condition on the real factor.
 
-Every CM torus is nevertheless polarizable. Choose positive imaginary $\xi_0$ and multiply it by a sufficiently large positive integer so that (6.7) holds. This proves projectivity but generally produces a nonprincipal polarization.
+Every CM torus is nevertheless polarizable. Choose positive imaginary $\xi_0$ and multiply it by a sufficiently divisible positive integer so that $m\xi_0\bar{\mathfrak a}\subseteq\mathfrak a^t$. This proves projectivity but generally produces a nonprincipal polarization.
 
 For an imaginary quadratic field, $\mathfrak D_K^{-1}$ is generated by a purely imaginary element up to a rational positive factor, and every ideal product $\mathfrak a\bar{\mathfrak a}$ is generated by the positive rational norm of $\mathfrak a$. Thus every CM elliptic curve has its canonical principal polarization. In higher dimension the ideal-class and unit-sign obstructions become genuine.
 
@@ -782,7 +836,7 @@ $$
 Equation (6.2) proves, on the embedded field $K$, that
 
 $$
-a^\dagger=\bar a. \tag{6.12}
+a^\dagger=\bar a. \tag{6.15}
 $$
 
 Indeed, duality with respect to the alternating form is characterized by the adjoint identity, and (6.2) identifies that adjoint. This also proves positivity:
@@ -794,7 +848,7 @@ $$
 
 for $a\ne0$.
 
-Conversely, suppose a polarization on a CM abelian variety has Rosati involution preserving $K$. A positive involution on the CM field must be its complex conjugation by Proposition 2.1. Hence (6.12) is forced, not an extra normalization. This is the precise polarization hypothesis used in CM and PEL moduli: the action must intertwine the specified involution on the coefficient algebra with Rosati.
+Conversely, suppose a polarization on a CM abelian variety has Rosati involution preserving $K$. A positive involution on the CM field must be its complex conjugation by Proposition 2.1. Hence (6.15) is forced, not an extra normalization. This is the precise polarization hypothesis used in CM and PEL moduli: the action must intertwine the specified involution on the coefficient algebra with Rosati.
 
 ## 7. Classification over the complex numbers
 
@@ -866,10 +920,10 @@ The Riemann positivity condition and lattice integrality give
 $$
 \operatorname{Im}\varphi(\xi)>0\quad(\varphi\in\Phi),
 \qquad
-\xi\bar{\mathfrak a}\mathfrak a\subseteq\mathfrak D_K^{-1}. \tag{7.3}
+\xi\bar{\mathfrak a}\subseteq\mathfrak a^t. \tag{7.3}
 $$
 
-Conversely these conditions construct a polarized CM abelian variety. Hence polarized labelled objects are triples
+For a proper invertible ideal of a CM order $\mathcal O$, the second condition is equivalently $\xi\bar{\mathfrak a}\mathfrak a\subseteq\mathcal O^t$; only for the maximal order may one replace $\mathcal O^t$ by $\mathfrak D_K^{-1}$. Conversely the conditions in (7.3) construct a polarized CM abelian variety. Hence polarized labelled objects are triples
 
 $$
 (\Phi,\mathfrak a,\xi)
@@ -889,7 +943,7 @@ $$
 E_{\xi/(u\bar u)}(ux,uy)=E_\xi(x,y). \tag{7.5}
 $$
 
-The principal objects are exactly those satisfying equality in (6.11). Formula (7.4) is indispensable: quotienting lattices by $K^\times$ while holding $\xi$ fixed would identify nonisomorphic polarized objects.
+For a proper invertible $\mathcal O$-ideal, the principal objects are exactly those satisfying (6.14). Formula (7.4) is indispensable: quotienting lattices by $K^\times$ while holding $\xi$ fixed would identify nonisomorphic polarized objects.
 
 An isogeny given by $u\mathfrak a\subseteq\mathfrak b$ pulls back a polarization $E_\eta$ to $E_{\bar u\eta u}=E_{u\bar u\eta}$. Thus it is a polarized similitude with multiplier $m\in\mathbf Q_{>0}$ exactly when
 
@@ -909,7 +963,37 @@ $$
 
 Thus an induced type does not give a simple abelian variety.
 
-Conversely, suppose $A(K,\Phi)$ is not simple. Up to isogeny it contains a proper abelian subvariety $B$. The projector onto a simple isotypic factor is a nontrivial idempotent in $\operatorname{End}^0(A)$ after passing to a matrix description. The action of $K$ permutes the isogenous simple factors transitively because $K$ is a field. Let $K_0$ be the subfield acting on one factor through scalar endomorphisms. Restriction of the embedding eigenlines shows that membership in $\Phi$ depends only on restriction to $K_0$, so $\Phi$ is induced from a type on $K_0$. The positivity of the restricted Hodge structure forces $K_0$ to be CM.
+We justify both the Hodge-theoretic bridge and the converse. If $W\subset H_1(A,\mathbf Q)$ is a rational Hodge substructure, then $W_\mathbf R/(W\cap H_1(A,\mathbf Z))$ is a closed complex subtorus. The restriction of a polarization is a positive integral Riemann form, so Theorem 6.2 makes this subtorus an abelian subvariety. Conversely, the homology of an abelian subvariety is a rational Hodge substructure. Thus $A$ is simple up to isogeny exactly when its rational Hodge structure is simple.
+
+The remaining linear-algebra statement is the **induction lemma**: the CM Hodge structure on $K$ defined by $\Phi$ is simple if and only if $\Phi$ is not induced from a proper CM subfield. Here is a proof. Let $L$ be a Galois CM field containing the normal closure of $K$, put $G=\operatorname{Gal}(L/\mathbf Q)$ and $H=\operatorname{Gal}(L/K)$, and identify the embeddings of $K$ with $X=G/H$. Write $\epsilon:X\to\{0,1\}$ for the characteristic function of $\Phi$. After scalar extension to $L$, a rational endomorphism of the underlying vector space is a matrix $(a_{xy})_{x,y\in X}$ satisfying the Galois rule
+
+$$
+a_{\gamma x,\gamma y}=\gamma(a_{xy}). \tag{7.8}
+$$
+
+It is a Hodge endomorphism exactly when
+
+$$
+a_{xy}=0\quad\text{if }\epsilon(x)\ne\epsilon(y), \tag{7.9}
+$$
+
+because a Hodge map cannot mix the two bidegrees. These two assertions follow by writing $K\otimes_{\mathbf Q}L=\prod_{x\in X}L$ and descending the coordinate matrix.
+
+Suppose the Hodge structure has a nontrivial direct summand, and let $p$ be the associated idempotent. A diagonal matrix satisfying (7.8) is multiplication by an element of $K$; if it is idempotent, the field property makes it $0$ or $1$. Hence a nontrivial idempotent has an off-diagonal entry. On $X$, take the equivalence relation generated by pairs $(x,y)$ for which $p$ has nonzero $(x,y)$-entry. Equation (7.8) makes the relation $G$-invariant, and (7.9) makes $\epsilon$ constant on every equivalence class. Let $H_0$ be the stabilizer of the class of $H$. Then
+
+$$
+H\subsetneq H_0\subsetneq G. \tag{7.10}
+$$
+
+The first inclusion is strict because an off-diagonal entry occurs. The second is strict because a class is monochromatic, whereas central complex conjugation interchanges $\Phi$ and $\bar\Phi$. Put $K_0=L^{H_0}$. Central conjugation normalizes $H_0$ but is not in it, so $K_0$ is CM. Constancy of $\epsilon$ on the $H_0$-orbits says precisely
+
+$$
+\varphi\in\Phi
+\quad\Longleftrightarrow\quad
+\varphi|_{K_0}\in\Phi_0
+$$
+
+for one CM type $\Phi_0$ on $K_0$. Hence $\Phi$ is induced. Conversely, if $\epsilon$ factors through $G/H_0$, then choosing a $K_0$-basis of $K$ identifies its Hodge structure with $[K:K_0]$ copies of the one on $K_0$; projection onto one copy is a nontrivial rational Hodge idempotent. This proves the induction lemma without assuming the desired simplicity criterion.
 
 This proves the standard criterion.
 
@@ -925,7 +1009,7 @@ Complex uniformization identifies all CM endomorphisms explicitly, but arithmeti
 
 Let $A=V/\Lambda$ and $B=W/M$ be complex abelian varieties. Every holomorphic group homomorphism $f:A\to B$ lifts uniquely to a complex-linear map $F:V\to W$ satisfying $F(\Lambda)\subseteq M$. It is algebraic.
 
-One proof uses the graph. The graph $\Gamma_f$ is a closed complex subtorus of $A\times B$. A product polarization restricts to a positive integral Riemann form on it, so $\Gamma_f$ is itself a projective complex torus. The analytic inclusion $\Gamma_f\hookrightarrow A\times B$ is induced by a linear map respecting lattices and polarizations; the corresponding graph cycles are algebraic. Projection $\Gamma_f\to A$ is an analytic isomorphism between projective varieties and hence algebraic, as is its inverse. Composing with the second projection proves that $f$ is algebraic.
+One proof uses the graph. The graph $\Gamma_f$ is a closed complex subtorus of $A\times B$. A product polarization restricts to a positive integral Riemann form on it, so Theorem 6.2 makes $\Gamma_f$ projective. Under projective embeddings, its image is a closed analytic subset of projective space and is algebraic by the same analytic-to-algebraic step used in Theorem 6.2. The two projections of the algebraic graph are algebraic; the first is an isomorphism because it becomes one analytically. Composing its inverse with the second projection proves that $f$ is algebraic.
 
 Consequently the lattice calculation (5.8) computes algebraic homomorphisms, not merely analytic ones. It also proves that every isomorphism and isogeny used in the ideal action belongs to the algebraic category.
 
@@ -958,7 +1042,7 @@ $$
 
 The right side has coefficients in the reflex field, as Chapter 9 will prove. Therefore it makes sense over an $E$-base. Equation (8.2), required universally after base change, is the **determinant condition** associated with $\Phi$.
 
-It is stronger than matching dimensions. If $K$ is not a field over the residue characteristic or if embeddings coalesce modulo a prime, one cannot recover the condition by listing geometric eigenvalues. The polynomial identity remains meaningful and imposes the correct multiplicities scheme-theoretically. For $a$ ranging through a $\mathbf Z$-basis of $\mathcal O$, it determines the characteristic polynomial for every element by polynomiality, but moduli problems often state it for all $a$ to make base change transparent.
+It is stronger than matching dimensions. If $K$ is not a field over the residue characteristic or if embeddings coalesce modulo a prime, one cannot recover the condition by listing geometric eigenvalues. The polynomial identity remains meaningful and imposes the correct multiplicities scheme-theoretically. Checking it only on the members of a $\mathbf Z$-basis is not sufficient: two polynomial laws can agree at those finitely many points and differ on their sums. One may either require (8.2) for every $a$, or impose equality of the two polynomial laws on the universal element $\sum_iX_i a_i$ for a chosen basis $(a_i)$. The latter is a finite list of coefficient identities and is manifestly stable under base change.
 
 For a CM algebra $K=\prod K_i$, the idempotents decompose $\operatorname{Lie}A$, and (8.2) is the product of the type polynomials on the factors. The ranks of the idempotent summands are part of the condition.
 
@@ -1287,7 +1371,13 @@ The same identity holds over every $\mathbf Q$-algebra and on finite ideles. It 
 
 ### 10.5 Functoriality and induced types
 
-If $\gamma\in\operatorname{Aut}(\mathbf C/\mathbf Q)$, transport carries $E(K,\Phi)$ to $E(\gamma K,\gamma\Phi)$ and $r_\Phi$ to $r_{\gamma\Phi}$. This is equality of transported morphisms, not an assertion that the embedded fields are fixed pointwise.
+If $\gamma\in\operatorname{Aut}(\mathbf C/\mathbf Q)$ acts on types by postcomposition as in (3.5), then
+
+$$
+E(K,\gamma\Phi)=\gamma E(K,\Phi).
+$$
+
+The canonical isomorphism $E\xrightarrow{\gamma}\gamma E$ intertwines the transported cocharacter construction with $r_{\gamma\Phi}$. More generally, every isomorphism of CM pairs transports reflex fields and reflex norms functorially. This is an isomorphism statement, not an assertion that either embedded field is fixed pointwise.
 
 Suppose $K_0\subset K$ and $\Phi$ is induced from $\Phi_0$. Their reflex fields agree in the chosen closure. On cocharacters one checks
 
@@ -1298,7 +1388,16 @@ $$
 
 in multiplicative notation: both sides send $[\iota_E]$ to $[K:K_0]\mu_{\Phi_0}$.
 
-For primitive $(K,\Phi)$, the reflex pair $(E,\Phi^*)$ is again primitive, and taking the reflex a second time returns a pair isomorphic to $(K,\Phi)$. In the Galois closure, inverse sets satisfy $(S^{-1})^{-1}=S$. This does not say that the composite of the two reflex norm maps is the identity: its exponent matrix is a convolution and generally has higher degree. Double reflexivity concerns the pair and its cocharacter orbit, not cancellation of norm products.
+For primitive $(K,\Phi)$, the reflex pair $(E,\Phi^*)$ is again primitive, and taking the reflex a second time returns a pair isomorphic to $(K,\Phi)$. Here is the subgroup check hidden in that statement. The lifted type set $\widetilde S\subset G$ is stable on the right by $H$. Its right stabilizer is larger than $H$ exactly when $\widetilde S$ is a union of right cosets of a larger subgroup $H_0$; that is exactly the assertion that membership in $\Phi$ depends only on restriction to the proper CM subfield $L^{H_0}$. Thus primitivity says that the right stabilizer is $H$. The lifted inverse set $\widetilde S^{-1}$ has left stabilizer equal to that right stabilizer, so the reflex field of the reflex type is $L^H=K$. Applying the same argument once more proves primitivity of $\Phi^*$, and $(S^{-1})^{-1}=S$ recovers the original type. This does not say that the composite of the two reflex norm maps is the identity: its exponent matrix is a convolution and generally has higher degree. Double reflexivity concerns the pair and its cocharacter orbit, not cancellation of norm products.
+
+For a CM algebra $K=\prod_iK_i$ with type $\Phi=\coprod_i\Phi_i$, the reflex field is the compositum $E$ of the fields $E_i=E(K_i,\Phi_i)$. The algebra reflex norm is the product of the component maps
+
+$$
+T_E\xrightarrow{N_{E/E_i}}T_{E_i}
+\xrightarrow{r_{\Phi_i}}T_{K_i}. \tag{10.19}
+$$
+
+On the distinguished cocharacter, the $i$th component is $\mu_{\Phi_i}$, so (10.19) is exactly the cocharacter definition for the product type. Each component has the same scalar weight $N_{E/\mathbf Q}$; consequently the image lies in the common-similitude torus required by polarized product PEL data.
 
 ## 11. Reflex ideals, finite ideles, and polarized ideal actions
 
@@ -1322,7 +1421,7 @@ $$
 
 It is continuous and respects principal elements. Locally it is a monomial in components over places linked inside a common normal closure. It is not generally a product of local field norms $E_w\to K_v$, because $E$ and $K$ need not contain one another. The torus formula replaces that nonexistent extension norm.
 
-Let $\widehat{\mathcal O}_F=\prod_p\mathcal O_F\otimes\mathbf Z_p$. Away from primes where chosen orders are nonmaximal, the morphism extends to integral tori and sends
+Let $\widehat{\mathcal O}_F=\prod_p\mathcal O_F\otimes\mathbf Z_p$. For maximal orders, the map sends
 
 $$
 \widehat{\mathcal O}_E^\times
@@ -1330,7 +1429,7 @@ $$
 \widehat{\mathcal O}_K^\times. \tag{11.3}
 $$
 
-At excluded primes the generic torus map still exists, but claims about order-unit subgroups require a direct integral calculation. The weight identity becomes
+Indeed, locally $\mathcal O_{E,p}^\times$ is the maximal compact subgroup of $(E\otimes\mathbf Q_p)^\times$; its image is compact, and every compact subgroup of $(K\otimes\mathbf Q_p)^\times$ has valuation zero in every field factor. For nonmaximal chosen orders, the analogous order-unit assertion is automatic away from conductor primes and requires a direct integral calculation at the conductors. The weight identity becomes
 
 $$
 r_\Phi(s)\overline{r_\Phi(s)}
@@ -1372,11 +1471,11 @@ R_\Phi(\mathfrak b)\,
 =N_{E/\mathbf Q}(\mathfrak b)\mathcal O_K, \tag{11.8}
 $$
 
-where the ideal norm on the right is a positive integer ideal extended to $K$. Both sides have equal prime exponents because (10.17) holds for a finite idele representing $\mathfrak b$.
+where the ideal norm on the right is a positive fractional ideal of $\mathbf Q$ extended to $K$. Both sides have equal prime exponents because (10.17) holds for a finite idele representing $\mathfrak b$. The norm is generated by a positive rational number, and by a positive integer when $\mathfrak b$ is integral.
 
 ### 11.3 Compatibility with polarizations
 
-Let $A=A(\mathfrak a,\Phi)$ be polarized by $E_\xi$. For an invertible $K$-ideal $\mathfrak c$, the ideal action gives
+Work first with maximal orders. Let $\mathfrak a$ be an invertible $\mathcal O_K$-ideal and let $A=A(\mathfrak a,\Phi)$ be polarized by $E_\xi$. For an invertible $K$-ideal $\mathfrak c$, the ideal action gives
 
 $$
 \mathfrak c*A=A(\mathfrak c^{-1}\mathfrak a,\Phi). \tag{11.9}
@@ -1390,7 +1489,7 @@ $$
 \subseteq\mathfrak D_K^{-1}. \tag{11.10}
 $$
 
-If $\mathfrak c=R_\Phi(\mathfrak b)$, equation (11.8) says
+Suppose $\mathfrak b$ is integral and put $\mathfrak c=R_\Phi(\mathfrak b)$, which is then integral. Equation (11.8) says
 
 $$
 \mathfrak c\bar{\mathfrak c}
@@ -1421,6 +1520,8 @@ $$
 
 Taking degrees in (11.13) gives $(n^g)^2=n^{2g}$, the degree of multiplication by $n$ on a principally polarized $g$-fold. This check detects both a missing conjugate and a reversed ideal action.
 
+For a conjugation-stable nonmaximal order, the same argument is valid for ideals prime to the relevant conductors, with $\mathcal O^t$ in place of $\mathfrak D_K^{-1}$. At conductor primes, invertibility and preservation of the order must be checked before forming the polarized transform.
+
 For a finite idele $s$, choose a fractional ideal represented by it. Changing $s$ by $b\in E^\times$ changes $r_\Phi(s)$ by a principal element and yields an isomorphic torus. Changing it by an integral unit preserves the lattice class away from excluded primes. Thus the finite idele class controls a polarized ideal action up to the expected equivalence.
 
 ### 11.4 Level structures and prime-to-level control
@@ -1433,20 +1534,20 @@ $$
 
 If $\mathfrak c$ is prime to $N$, a local generator at primes dividing $N$ identifies the torsion of $A(\mathfrak a)$ and $A(\mathfrak c^{-1}\mathfrak a)$. This depends on the generator modulo $N$, so an ideal class alone does not act on a chosen full level structure. A finite idele representative records the missing generators.
 
-If $s\in\mathbf A_{E,f}^\times$ is a unit at primes above $N$, then $r_\Phi(s)$ transports level through its image in
+If $s\in\mathbf A_{E,f}^\times$ is a unit at primes above $N$, then $r_\Phi(s)$ has an image in
 
 $$
 (\mathcal O/N\mathcal O)^\times. \tag{11.16}
 $$
 
-The weight identity controls the pairing:
+Under a chosen trivialization of the standard $\mathcal O/N\mathcal O$-module, multiplication by that image is a similitude of the standard CM pairing:
 
 $$
 e_N(r_\Phi(s)x,r_\Phi(s)y)
 =e_N(x,y)^{N_{E/\mathbf Q}(s)}, \tag{11.17}
 $$
 
-where the finite idele norm is read modulo $N$. A symplectic level requires multiplier $1$ modulo $N$; a similitude level records the multiplier. At bad primes one must use the finite group scheme and the exact order action rather than geometric points.
+where the components of $N_{E/\mathbf Q}(s)$ at primes dividing $N$ are units and therefore define an element of $(\mathbf Z/N\mathbf Z)^\times$. This formula is the reduction of the adjoint identity $a^\dagger=\bar a$ together with $r_\Phi(s)\overline{r_\Phi(s)}=N_{E/\mathbf Q}(s)$; it is not a claim that an ideal class alone canonically identifies two chosen level structures. A symplectic level requires multiplier $1$ modulo $N$; a similitude level records the multiplier. At bad primes one must use the finite group scheme and the exact order action rather than geometric points.
 
 ## 12. Mumford--Tate tori and the limits of structural CM theory
 
@@ -1546,18 +1647,18 @@ The left and bottom arrows have been constructed here. Commutativity, the placem
 
 ### 12.4 Conclusion
 
-A CM field is a totally imaginary quadratic extension of a totally real field, equipped with its positive conjugation. A CM type chooses one embedding from every conjugate pair and turns the rank-one $K$-module $K$ into a weight $-1$ Hodge structure. Full lattices give complex tori, and positive imaginary trace forms make every such torus projective. Integrality and principality are governed exactly by
+A CM field is a totally imaginary quadratic extension of a totally real field, equipped with its positive conjugation. A CM type chooses one embedding from every conjugate pair and turns the rank-one $K$-module $K$ into a weight $-1$ Hodge structure. Full lattices give complex tori, and positive imaginary trace forms make every such torus projective. For an arbitrary lattice, integrality is exactly $\xi\bar{\mathfrak a}\subseteq\mathfrak a^t$. For a proper invertible ideal of a CM order $\mathcal O$, integrality and principality become
 
 $$
 \xi\bar{\mathfrak a}\mathfrak a
-\subseteq\mathfrak D_K^{-1},
+\subseteq\mathcal O^t,
 \qquad
 \xi\mathfrak a\bar{\mathfrak a}
-=\mathfrak D_K^{-1}
+=\mathcal O^t
 \text{ in the principal case}.
 $$
 
-These formulas classify polarized CM abelian varieties over $\mathbf C$, identify Rosati with conjugation, and explain how invertible ideals act through $\mathfrak b^{-1}\mathfrak a$. Primitive types are exactly those yielding simple isogeny factors. Orders and conductor primes record where the class-group action and prime-to-level descriptions require qualification.
+For the maximal order, $\mathcal O^t=\mathfrak D_K^{-1}$. These formulas classify polarized CM abelian varieties over $\mathbf C$, identify Rosati with conjugation, and explain how invertible ideals act through $\mathfrak b^{-1}\mathfrak a$. Primitive types are exactly those yielding simple isogeny factors. Orders and conductor primes record where the class-group action and prime-to-level descriptions require qualification.
 
 The type stabilizer defines the reflex field $E$. The Hodge cocharacter defines, without choices, the reflex norm
 

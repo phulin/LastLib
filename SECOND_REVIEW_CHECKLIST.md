@@ -147,7 +147,7 @@ any resulting corrections.
 - [ ] 121. Modular Jacobians, Néron Models, and Hecke Correspondences
 - [ ] 122. Hecke Correspondences on Curves and Jacobians
 - [x] 123. Reductive Groups, Inner Forms, and Corestriction in Rank Two
-- [ ] 124. CM Abelian Varieties, Types, and Reflex Norms
+- [x] 124. CM Abelian Varieties, Types, and Reflex Norms
 - [ ] 125. Complex Multiplication, Reciprocity, and Reduction
 - [ ] 126. Shimura Data and Canonical Models in the FLT Cases
 - [ ] 127. Quaternionic PEL Functors and Representability
