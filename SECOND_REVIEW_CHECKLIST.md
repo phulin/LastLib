@@ -124,7 +124,7 @@ any resulting corrections.
 - [x] 098. Schwartz–Bruhat Analysis and Tate’s Thesis
 - [x] 099. Archimedean GL₂ and Discrete Series
 - [x] 100. Hilbert-Space Spectral and Trace-Class Theory
-- [ ] 101. Sobolev Theory and Elliptic Regularity on Arithmetic Quotients
+- [x] 101. Sobolev Theory and Elliptic Regularity on Arithmetic Quotients
 - [ ] 102. Reduction Theory and the Cuspidal Spectrum of GL₂
 - [ ] 103. Global Constant Terms and Eisenstein Contributions for GL₂
 - [ ] 104. Global Whittaker Models and Rankin–Selberg Theory

@@ -87,7 +87,7 @@ $$
 \end{aligned}
 $$
 
-The preceding spectral foundations supply closed operators, quadratic forms, functional calculus, compact-resolvent theory, and trace ideals. We use those results rather than rebuilding them. The geometric input from the preceding study of real groups supplies maximal compact subgroups, invariant differential operators, and compact-type decompositions. Everything peculiar to noncompact quotients—the local and global elliptic estimates, weak regularity, cusp tail bounds, truncation argument, and kernel estimates—is proved here under explicit hypotheses.
+The preceding spectral foundations supply closed operators, quadratic forms, functional calculus, compact-resolvent theory, and trace ideals. We use those results rather than rebuilding them. The preceding study of real groups supplies the maximal compact subgroup and compact-type data needed at the archimedean places; invariant vector fields and differential operators are part of the elementary Lie-group background recalled explicitly below. Everything peculiar to noncompact quotients—the local and global elliptic estimates, weak regularity, cusp tail bounds, truncation argument, and kernel estimates—is proved here under explicit hypotheses.
 
 Our principal setting is a torsion-free lattice $\Gamma$ in a unimodular real Lie group $G$. The quotient $X=\Gamma\backslash G$ is then a smooth manifold without boundary. Arithmeticity matters because later reduction theory supplies finitely many cusp charts of the form assumed in Chapter 6; none of the local analysis depends on the arithmetic construction itself. If a lattice has torsion, the same arguments apply in finite quotient charts, but we avoid silently replacing a manifold by an orbifold. If a noncompact split center is to be removed, it is removed before $X$ is defined.
 
@@ -453,7 +453,13 @@ $$
 \leq C\sum_j\|(X_j\chi_R)u\|_2^2.
 $$
 
-The right side tends to zero because $\|X_j\chi_R\|_\infty\to0$ and $u\in L^2$. Hence $u=0$. The same argument for the other nonreal deficiency equation, or the range criterion after a harmless shift, proves essential self-adjointness.
+The right side tends to zero because $\|X_j\chi_R\|_\infty\to0$ and $u\in L^2$. Hence $u=0$. This one real equation below the lower bound already suffices. The estimate
+
+$$
+\|(\Lambda+1)v\|_2\geq2\|v\|_2
+$$
+
+makes the range of the closure of $\Lambda+1$ closed, while its orthogonal complement is $\ker(\Lambda^*+1)=0$; the range is therefore all of $L^2$. If $y\in D(\Lambda^*)$, choose $x$ in the closed domain with $(\overline\Lambda+1)x=(\Lambda^*+1)y$. Their difference lies in $\ker(\Lambda^*+1)$, so $y=x$. Thus $\overline\Lambda=\Lambda^*$ and essential self-adjointness is proved.
 
 If $u\in D(A)$, choose $u_n\in C_c^\infty$ converging in the graph norm. Estimate (3.4) makes $(u_n)$ Cauchy in $H^2$, so $u\in H^2$. Conversely, if $u\in H^2$, then $\Lambda u\in L^2$ weakly, and the form identity shows $u\in D(A)$. Estimate (3.4) gives norm equivalence. $\square$
 
@@ -494,7 +500,7 @@ $$
 \tag{4.3}
 $$
 
-The Hilbert representation theorem therefore gives a unique weak solution to $(P+\lambda)u=f$ for $\lambda$ large, under Dirichlet conditions or after removing the finite-dimensional Neumann kernel.
+The Hilbert representation theorem therefore gives a unique weak solution to $(P+\lambda)u=f$ for $\lambda$ sufficiently large on either the Dirichlet or Neumann form domain. For the unshifted Neumann problem, coercivity may fail on a finite-dimensional kernel; one then restricts to its orthogonal complement and imposes the corresponding orthogonality condition on $f$.
 
 ### 4.2 Difference quotients and the gain of two derivatives
 
@@ -520,7 +526,15 @@ $$
 \delta_hu(x)=\frac{u(x+he_k)-u(x)}h.
 $$
 
-Use $-\delta_{-h}(\eta^2\delta_hu)$ as a test function in (4.2). Discrete integration by parts moves $\delta_h$ from the test function to the coefficients and $u$. Strong ellipticity supplies
+Use $-\delta_{-h}(\eta^2\delta_hu)$ as a test function in (4.2). Equivalently, first apply $\delta_h$ to the equation as an identity in $H^{-1}$ and test against $\eta^2\delta_hu$. This formulation avoids asking for a difference quotient of $f$ in $L^2$: for $v\in H_0^1$,
+
+$$
+|\langle\delta_hf,v\rangle|
+=|\langle f,-\delta_{-h}v\rangle|
+\leq \|f\|_2\|\nabla v\|_2,
+$$
+
+uniformly for small $h$. Discrete integration by parts moves the remaining difference quotients onto the coefficients and $u$. Strong ellipticity supplies
 
 $$
 c_0\|\eta\nabla\delta_hu\|_2^2
@@ -528,23 +542,35 @@ c_0\|\eta\nabla\delta_hu\|_2^2
 +\frac{c_0}{2}\|\eta\nabla\delta_hu\|_2^2,
 $$
 
-where coefficient difference quotients are uniformly bounded and cutoff terms are handled by Cauchy--Schwarz. Absorb the last term. The bound is independent of small $h$. Weak compactness and the characterization of weak derivatives by bounded difference quotients give all second derivatives of $u$ in $L^2$ on the smaller ball.
+where coefficient difference quotients are uniformly bounded, the displayed $H^{-1}$ estimate controls the data term, and cutoff terms are handled by Cauchy--Schwarz. Absorb the last term. The bound is independent of small $h$. Weak compactness and the characterization of weak derivatives by bounded difference quotients give all second derivatives of $u$ in $L^2$ on the smaller ball.
 
-The equation and the first-order energy estimate control the displayed right side by $\|f\|_2+\|u\|_2$, yielding (4.4) for $s=0$. For higher $s$, differentiate the equation weakly. Commutators have one fewer derivative on $u$ than the leading term, so induction applies. Localization and the norm comparison (2.6) return the manifold statement. $\square$
+To obtain the asserted local right side, choose a cutoff $\eta_0$ equal to one on the support of $\eta$ and test the original equation with $\eta_0^2u$. Strong ellipticity, Cauchy--Schwarz, and absorption give the Caccioppoli estimate
+
+$$
+\|u\|_{H^1(\operatorname{supp}\eta)}
+\leq C\bigl(\|f\|_{L^2(U)}+\|u\|_{L^2(U)}\bigr).
+$$
+
+Substitution into the difference-quotient bound yields (4.4) for $s=0$. For higher $s$, differentiate the equation weakly. Commutators have one fewer derivative on $u$ than the leading term, so induction applies. Localization and the norm comparison (2.6) return the manifold statement. $\square$
 
 For an elliptic operator of order $r$, the same conclusion is a gain of $r$ derivatives, proved by the Fourier localization argument of Theorem 3.1 and approximation. The second-order difference-quotient proof is singled out because it makes the weak mechanism transparent.
 
 ### 4.3 Bootstrapping and smoothness
 
-If $f\in C^\infty(\Omega)$ and $Pu=f$ distributionally, first assume only $u$ is a distribution. On every compact coordinate ball, a distribution has finite order and therefore belongs to $H^{-N}$ for some $N$: its action is bounded by finitely many sup norms of test-function derivatives, and Fourier Cauchy--Schwarz bounds those sup norms by $H^N$ once $N$ is large enough. Dualizing the localized estimate (3.3), or applying it to mollifications and passing to weak limits, gives
+If $f\in C^\infty(\Omega)$ and $Pu=f$ distributionally, first assume only $u$ is a distribution. On every compact coordinate ball, a distribution has finite order and therefore belongs to $H^{-N}$ for some $N$: its action is bounded by finitely many sup norms of test-function derivatives, and Fourier Cauchy--Schwarz bounds those sup norms by $H^N$ once $N$ is large enough.
+
+The negative-order step can be made explicit. For nested cutoffs $\chi\prec\chi_1$ in a coordinate ball, the frozen-symbol proof of Theorem 3.1, multiplied by the Fourier weight $(1+|\xi|^2)^{q/2}$, gives for every integer $q$
 
 $$
-Pu\in H^s_{\mathrm{loc}}
-\quad\Longrightarrow\quad
-u\in H^{s+2}_{\mathrm{loc}}
+\|\chi u\|_{H^{q+2}}
+\leq C_q\bigl(
+\|\chi_1Pu\|_{H^q}
++\|\chi_1u\|_{H^{q+1}}
+\bigr).
+\tag{4.4a}
 $$
 
-for negative integers as well. Starting at $s=-N$ reaches $L^2$ after finitely many steps; Theorem 4.1 then raises regularity two orders at a time. For every $m$, $u\in H^m_{\mathrm{loc}}$. Sobolev embedding yields $u\in C^r$ for every $r$, hence $u$ is smooth.
+For smooth $u$ this is the same freezing and absorption argument as before; the last term comes from the first-order commutator $[P,\chi_1]$. Convolving a distribution in a slightly larger ball, applying the estimate uniformly, and passing to weak limits proves (4.4a) for distributions. If $u\in H^{-N}$ locally, choose $q=-N-1$; smoothness of $Pu$ makes the first term finite and (4.4a) raises $u$ to $H^{-N+1}$ on a smaller ball. A finite nested sequence of cutoffs reaches $L^2$. Theorem 4.1 then raises regularity two orders at a time. Thus $u\in H^m_{\mathrm{loc}}$ for every $m$. Sobolev embedding yields $u\in C^r$ for every $r$, hence $u$ is smooth.
 
 More quantitatively, if $Pu=\lambda u$ with $u\in L^2(X)$, local regularity makes $u$ smooth and the global estimate gives recursively
 
@@ -626,7 +652,13 @@ H_A^s=D(A^{s/2}),
 \tag{5.2}
 $$
 
-Since $A\geq I$, this is a norm. For even integers, (3.8) and induction show equivalence with the invariant norm. Interpolation between adjacent integers extends equivalence to every real $s\geq0$. Negative orders are obtained by duality. The benefit is multiplicativity:
+Since $A\geq I$, this is a norm. The form identity gives equivalence at order one, and (3.8), commutation with $\Lambda$, and induction give equivalence with the invariant norm at every integer order. For nonintegral $s$, define the invariant scale by interpolation between the adjacent integer spaces. This is not an additional analytic input: in the spectral multiplication model, the interpolation identity for the weights $\lambda^a$ and $\lambda^b$ follows from Hölder's inequality applied to the scalar spectral measure, first on simple spectral functions and then by completion. The endpoint norm equivalences and the same argument for the inverse identity map therefore give
+
+$$
+H_A^s=H^s_{\mathrm{inv}}
+$$
+
+with equivalent norms for every real $s\geq0$. Negative orders are obtained by duality. The benefit is multiplicativity:
 
 $$
 A^{t/2}:H_A^s\longrightarrow H_A^{s-t}
@@ -648,11 +680,26 @@ $$
 Differentiating under the integral and changing variables give
 
 $$
-X^\alpha R(f)u=R(L^\alpha f)u,
+X^\alpha R(f)u=(-1)^{|\alpha|}R(L^\alpha f)u,
 \tag{5.4}
 $$
 
-where $L^\alpha$ is the corresponding product of derivatives on the test function, with signs and adjoint conjugations fixed by the change of variables. Young's inequality yields
+where
+
+$$
+(L_Xf)(g)=\left.\frac d{dt}\right|_{t=0}f(\exp(tX)g)
+$$
+
+and $L^\alpha$ uses the same word order as $X^\alpha$. For one derivative, substitute $h=\exp(tX)g$:
+
+$$
+X R(f)u(x)
+=\left.\frac d{dt}\right|_{0}
+\int_Gf(\exp(-tX)h)u(xh)\,dh
+=-R(L_Xf)u(x).
+$$
+
+Iteration proves (5.4), including its sign and order. Young's inequality yields
 
 $$
 \|R(f)u\|_{H^m}
@@ -701,15 +748,22 @@ $$
 There are vector fields $V_{c,1},\ldots,V_{c,q_c}$ spanning $TY_c$ and positive numbers $\lambda_{c,j}$ such that the invariant frame on the end is uniformly equivalent, with all derivatives, to
 
 $$
-\partial_t,qquad W_{c,j}=e^{\lambda_{c,j}t}V_{c,j},
+\partial_t,\qquad W_{c,j}=e^{\lambda_{c,j}t}V_{c,j},
 \tag{6.4}
 $$
 
-together with any compact-fiber directions already included among the $V_{c,j}$. Put $\lambda_c=\min_j\lambda_{c,j}>0$. More general parabolic ends have several height variables; every argument below applies in each outward cone after replacing $\lambda_ct$ by the least positive root on that cone.
+after any fixed compact-type directions have been encoded in the finite-rank coefficient bundle. Concretely, if the original quotient retains a compact right fiber, a fixed-type equivariant function is read here as a section of the associated bundle over the compact-fiber quotient. Section 2.5 shows that this does not lose Sobolev control, since derivatives along the fixed compact type are bounded matrices. The density $dy$ is invariant under the flows of the $V_{c,j}$, so
+
+$$
+\int_{Y_c}V_{c,j}v\,dy=0
+\tag{6.4a}
+$$
+
+for smooth scalar $v$. Put $\lambda_c=\min_j\lambda_{c,j}>0$. More general parabolic ends have several height variables; every argument below applies in each outward cone after replacing $\lambda_ct$ by the least positive root on that cone.
 
 The hypotheses include all facts about the end used here: finite multiplicity of cusps, compact cross-sections, the exact density, uniform coefficient bounds, and exponential expansion of transverse invariant derivatives. Establishing these coordinates for particular arithmetic groups is reduction theory and belongs to the next stage of the subject.
 
-Define the constant term on the $c$-th end by normalized fiber average,
+For scalar functions define the constant term on the $c$-th end by normalized fiber average,
 
 $$
 (\mathcal C_cu)(t)
@@ -717,7 +771,16 @@ $$
 \tag{6.5}
 $$
 
-For bundles or a fixed compact type, this is the orthogonal projection onto the finite-dimensional transverse zero modes. Requiring all proper parabolic constant terms to vanish reduces in each cusp chart to the assertion that this projection is zero. We call a smooth function cuspidal on the end if $\mathcal C_cu=0$ for every $t\geq T_0$.
+For a bundle or a fixed compact type, the corresponding datum is a finite-rank orthogonal projection $\Pi_c$ onto the transverse zero modes. We include in the standard cusp hypothesis the three properties actually needed below: $\Pi_c$ is bounded on every fiber Sobolev space, its kernel is preserved by $\partial_t$ and every $V_{c,j}$, and there is a uniform transverse spectral gap
+
+$$
+\|v\|_{L^2(Y_c)}^2
+\leq C_c\sum_j\|V_{c,j}v\|_{L^2(Y_c)}^2
+\quad\text{when }\Pi_cv=0.
+\tag{6.5a}
+$$
+
+In the scalar case $\Pi_c$ is the average (6.5): preservation follows from (6.4a), and the gap is Lemma 6.1. These explicit assumptions prevent a common error. A general spanning vector field need not preserve mean zero unless its divergence with respect to $dy$ vanishes, and a compact-type zero mode need not be the scalar constants. Requiring all proper parabolic constant terms to vanish reduces in each cusp chart to $\Pi_cu(t)=0$. We call a section cuspidal on the end when this holds for almost every $t\geq T_0$.
 
 ### 6.2 Constant terms and the transverse Poincare inequality
 
@@ -739,17 +802,16 @@ $$
 \int_Y\int_Y|v(y)-v(z)|^2\,dy\,dz.
 $$
 
-Cover $Y$ by finitely many geodesically convex coordinate balls and join any two points by a chain of at most $N$ such balls, with $N$ independent of the points. Along a minimizing segment in one ball,
+Choose finitely many precompact coordinate cubes $Q_1,\ldots,Q_m$ whose smaller concentric cubes still cover $Y$ and whose overlap graph is connected. Integration along coordinate lines and boundedness of the coordinate Jacobians give the local cube inequality
 
 $$
-|v(y)-v(z)|^2
-\leq \operatorname{length}(\gamma)
-\int_\gamma|\nabla v|^2.
+\|v-v_{Q_i}\|_{L^2(Q_i)}
+\leq C_i\|\nabla v\|_{L^2(Q_i)},
 $$
 
-Integrating over the endpoints in the ball and using bounded coordinate Jacobians bounds the double integral by a constant times $\|\nabla v\|_2^2$. Summing over the finite chain proves (6.6) first for smooth $v$, and density proves it for $H^1(Y)$. Connectedness is necessary: a function constant with different values on two components has zero gradient and nonzero mean-zero part. $\square$
+where $v_{Q_i}$ is the average on $Q_i$. If two smaller cubes overlap in a set of positive measure, integration over that overlap bounds $|v_{Q_i}-v_{Q_j}|$ by the two local gradient norms. A chain in the finite overlap graph therefore controls every local average by one chosen average and $\|\nabla v\|_{L^2(Y)}$. Subtracting the global average forces the remaining chosen constant to be bounded by the same gradient norm. Summing the local inequalities proves (6.6) for smooth $v$, and density proves it for $H^1(Y)$. Connectedness is necessary: a function constant with different values on two components has zero gradient and nonzero mean-zero part. $\square$
 
-Because the $V_{c,j}$ span $TY_c$, their squared norms are uniformly equivalent to $\|\nabla_Yv\|_2^2$. If $\mathcal C_cu(t)=0$, (6.4) and (6.6) give the strengthened slice estimate
+Because the $V_{c,j}$ span $TY_c$, their squared norms are uniformly equivalent to $\|\nabla_Yv\|_2^2$. In the bundle and fixed-type setting the same role is played directly by the spectral gap (6.5a). Thus, if $\Pi_cu(t)=0$, (6.4) gives the strengthened slice estimate
 
 $$
 \|u(t,\cdot)\|_{L^2(Y_c)}^2
@@ -772,7 +834,7 @@ $$
 
 where $\mathcal C_c(T)=[T,\infty)\times Y_c$. The constant is independent of $T\geq T_0$.
 
-Every tangential invariant derivative of a cuspidal function is again cuspidal: the integral of a derivative on compact $Y_c$ vanishes. The $t$ derivative also preserves zero average because differentiation passes through (6.5). Apply (6.7) successively to derivatives. For every integer $N\geq1$,
+Every invariant derivative occurring in the cusp frame preserves cuspidality by the preservation clause in the standard cusp hypothesis. In the scalar case, the tangential assertion is exactly (6.4a), while $\partial_t$ passes through the fixed average (6.5). Apply (6.7) successively to derivatives. For every integer $N\geq1$,
 
 $$
 \|u\|_{L^2(\mathcal C_c(T))}
@@ -874,7 +936,7 @@ The same proof gives compactness $H^s(M)\hookrightarrow H^t(M)$ whenever $s>t$. 
 
 ### 7.3 Compactness after imposing vanishing constant terms
 
-Let $H^1_{\mathrm{cusp}}(X)$ be the closed subspace of $H^1(X)$ whose constant terms vanish in every cusp. Closedness follows because fiber averaging is bounded on each cusp cylinder and commutes with weak limits.
+Let $H^1_{\mathrm{cusp}}(X)$ be the subspace of $H^1(X)$ annihilated by every $\Pi_c$. It is closed: the projections are bounded on the fiber Sobolev spaces by hypothesis, Fubini makes the induced maps bounded on each weighted cusp cylinder, and bounded operators commute with weak and strong limits. In the scalar case this is precisely vanishing of the averages (6.5).
 
 **Theorem 7.2.** Under the standard cusp hypothesis, the inclusion
 
@@ -1090,24 +1152,31 @@ and the canonical smooth representative (9.4).
 
 ### 9.5 Off-diagonal localization
 
-For a Laplace-type $P\geq0$, heat cannot move significant mass an arbitrarily long distance in a short time. If $A,B\subset X$ are measurable with distance $r>0$, then
+Off-diagonal localization is a statement about a local form, so one further hypothesis is necessary here. Let $\widetilde P\geq0$ be a self-adjoint Laplace-type operator on the full $L^2(X;E)$, and suppose $\mathcal H_{\mathrm{cusp}}$ reduces $\widetilde P$ and $P=\widetilde P|_{\mathcal H_{\mathrm{cusp}}}$. Heat for $\widetilde P$ cannot move significant mass an arbitrarily long distance in a short time. If $A,B\subset X$ are measurable with distance $r>0$, then
 
 $$
-\|\mathbf1_Ae^{-tP}\mathbf1_B\|_{2\to2}
+\|\mathbf1_Ae^{-t\widetilde P}\mathbf1_B\|_{2\to2}
 \leq \exp\left(-\frac{r^2}{4ct}\right),
 \tag{9.8}
 $$
 
-where $c$ is the principal-symbol speed constant.
+where $c$ is the principal-symbol speed constant. In particular, if $u_0\in\mathcal H_{\mathrm{cusp}}$ is supported in $B$, then
 
-To prove it, choose a bounded Lipschitz function $\psi$ equal to zero on $B$, at least $r$ on $A$, and with $|\nabla\psi|\leq1$. For $u(t)=e^{-tP}u_0$, differentiate $\|e^{a\psi}u(t)\|_2^2$. Integration by parts and the symbol bound give
+$$
+\|\mathbf1_Ae^{-tP}u_0\|_2
+\leq \exp\left(-\frac{r^2}{4ct}\right)\|u_0\|_2,
+$$
+
+because $e^{-tP}u_0=e^{-t\widetilde P}u_0$. This is the correct restricted statement; multiplication by $\mathbf1_B$ need not itself preserve the cuspidal subspace.
+
+To prove it, choose a bounded Lipschitz function $\psi$ equal to zero on $B$, at least $r$ on $A$, and with $|\nabla\psi|\leq1$. For $u(t)=e^{-t\widetilde P}u_0$, differentiate $\|e^{a\psi}u(t)\|_2^2$. Integration by parts and the symbol bound give
 
 $$
 \frac d{dt}\|e^{a\psi}u(t)\|_2^2
 \leq ca^2\|e^{a\psi}u(t)\|_2^2.
 $$
 
-Gronwall yields $\|e^{a\psi}u(t)\|_2\leq e^{ca^2t/2}\|u_0\|_2$. On $A$ this costs $e^{-ar}$; optimizing at $a=r/(ct)$ gives (9.8), with the displayed harmless normalization of $c$. Smooth approximations to $\psi$ justify the calculation. This estimate is useful when periodized kernels are split into near and far group elements.
+Gronwall yields $\|e^{a\psi}u(t)\|_2\leq e^{ca^2t/2}\|u_0\|_2$. On $A$ this costs $e^{-ar}$; optimizing in $a$ gives (9.8), after enlarging the harmless symbol constant $c$. Smooth approximations to $\psi$ justify the calculation. Working first on the full local form is essential: multiplication by $e^{a\psi}$ need not preserve a constant-term condition, so the weighted-energy proof cannot in general be run solely inside an abstract projected cuspidal form. This estimate is useful when periodized kernels are split into near and far group elements.
 
 ## 10. Analytic estimates for automorphic kernels
 
@@ -1163,40 +1232,72 @@ If $k=k_1*k_2$, absolute convergence and threefold Fubini give $T_k=T_{k_1}T_{k_
 
 ### 10.3 Cuspidal annihilation of constant terms
 
-In a cusp associated with a compact transverse quotient $N_\Gamma\backslash N$, suppose the covering kernel has vanishing parabolic average
+In a cusp associated with a compact transverse quotient $N_\Gamma\backslash N$, a one-sided average at the identity is not enough to control every summand of a periodized kernel. Assume the required two-sided parabolic cancellation
 
 $$
-\int_Nk(n g)\,dn=0
+\int_Nk(g_1ng_2)\,dn=0
 \tag{10.6}
 $$
 
-for every $g$, with Haar measure normalized compatibly with the quotient cross-section. Assume (10.3) strongly enough that all relevant sums and integrals are absolutely convergent. Averaging (10.1) over $N_\Gamma\backslash N$ and unfolding the lattice sum in the unipotent direction gives
+for every $g_1,g_2\in G$ and every unipotent radical representing a proper cusp under consideration, with Haar measure normalized compatibly with the quotient cross-section. Assume (10.3) strongly enough that all relevant sums and integrals are absolutely convergent. Averaging (10.1) in its first variable gives
+
+$$
+\int_{N_\Gamma\backslash N}
+\sum_{\gamma\in\Gamma}
+k(g^{-1}n^{-1}\gamma h)\,dn.
+$$
+
+Choose representatives for $N_\Gamma\backslash\Gamma$ and write $\gamma=\eta\delta$ with $\eta\in N_\Gamma$. Tonelli permits regrouping, and the quotient integration formula unfolds the sum over $\eta$ to $N$:
+
+$$
+\sum_{\delta\in N_\Gamma\backslash\Gamma}
+\int_N k(g^{-1}n\delta h)\,dn=0
+$$
+
+by (10.6). Therefore
 
 $$
 \mathcal C_c(K_k(\cdot,y))=0.
 \tag{10.7}
 $$
 
-The decisive step is the disjoint decomposition of $N$ by $N_\Gamma$ translates; after reindexing, the quotient integral and lattice sum become the full integral in (10.6). Therefore $T_k$ lands in the cuspidal subspace in the first variable. Applying the analogous right average makes it annihilate noncuspidal input as well.
+The inverse on $n$ and the choice of left or right coset representatives only reparameterize Haar measure. The decisive points are absolute convergence and the disjoint decomposition of $N$ by $N_\Gamma$ translates. Thus $T_k$ lands in the cuspidal subspace in the first variable. Applying the analogous calculation in the second variable makes its adjoint land in the cuspidal subspace and hence makes $T_k$ annihilate the orthogonal noncuspidal input. For a particular trace-formula test function one can often replace (10.6) by a weaker local cuspidality statement, but that replacement must be proved to imply the displayed unfolded vanishing; it cannot be inferred from smoothing.
 
 Equation (10.7) is not a consequence of smoothing or trace class. It is a structural cancellation of the chosen test kernel. Once proved, it activates the cusp decay and compactness theorems.
 
 ### 10.4 Trace-class criteria from elliptic smoothing
 
-Let $P$ be the positive cuspidal typewise elliptic operator. Suppose that for some integer $N>D$,
+Let $P$ be the positive cuspidal typewise elliptic operator. Suppose that for some integer $N>D$ at least one of the operators
 
 $$
+P^NT_k:L^2\longrightarrow L^2,
+\qquad
 T_kP^N:L^2\longrightarrow L^2
 $$
 
-extends boundedly. This is equivalent to a smoothing estimate of order $2N$ for the adjoint kernel. Then
+extends boundedly from its natural dense domain. The first is an output-smoothing estimate for $T_k$; the second is the corresponding input-smoothing estimate, equivalently output smoothing for $T_k^*$. In the first case
 
 $$
-T_k=(T_kP^N)P^{-N}
+T_k=P^{-N}(P^NT_k),
 \tag{10.8}
 $$
 
-is trace class by (9.6). A symmetric alternative is to prove $T_kP^{N/2}$ and $P^{N/2}T_k$ bounded with $N>D$; this factors $T_k$ through two Hilbert--Schmidt half-powers.
+and in the second case $T_k=(T_kP^N)P^{-N}$. Since $P^{-N}$ is trace class by (9.6), either factorization proves that $T_k$ is trace class. A genuinely two-sided alternative is to prove
+
+$$
+P^{N/2}T_kP^{N/2}\in\mathcal B(L^2)
+$$
+
+with $N>D$. Then
+
+$$
+T_k=P^{-N/2}
+\bigl(P^{N/2}T_kP^{N/2}\bigr)P^{-N/2},
+$$
+
+and the two outer factors are Hilbert--Schmidt because $\sum_n\lambda_n^{-N}<\infty$. Merely knowing the two separate one-sided half-order bounds would prove only Hilbert--Schmidt membership and is not a trace-class argument.
+
+Each displayed identity is first an identity on the common spectral core, the finite span of the eigenvectors of $P$. The assumed middle operator is bounded there, while the remaining factors are bounded on all of $L^2$; density therefore extends the identity to the whole Hilbert space. No multiplication of unbounded operators is being used without a domain check.
 
 If its canonical smooth kernel has the rapid cusp bound supplied by (10.7) and Chapter 6, then
 
@@ -1236,18 +1337,27 @@ The preceding chapters can be condensed into one reusable theorem. Its length li
 
 ### 11.1 Hypotheses and statement
 
-Let $G$ be a second-countable unimodular real Lie group, $\Gamma\subset G$ a torsion-free lattice, and $X=\Gamma\backslash G$ with the quotient of a left-invariant complete metric and the finite right-invariant measure (1.1). Suppose $X$ satisfies the finite standard cusp hypothesis (6.1)--(6.4).
+Let $G$ be a second-countable unimodular real Lie group, $\Gamma\subset G$ a torsion-free lattice, and $X=\Gamma\backslash G$ with the quotient of a left-invariant complete metric and the finite right-invariant measure (1.1). Suppose $X$ satisfies the finite standard cusp hypothesis (6.1)--(6.5a).
 
-Let $E\to X$ be a finite-rank Hermitian homogeneous bundle. Fix a finite level and compact type. Let $\mathcal H_{\mathrm{cusp}}\subset L^2(X;E)$ be a closed invariant subspace whose vectors have zero transverse projection in every proper cusp. Let $P$ be a symmetric second-order operator on compactly supported smooth cuspidal sections such that:
+Let $E\to X$ be a finite-rank Hermitian homogeneous bundle. Fix a finite level and compact type. Let $\mathcal H_{\mathrm{cusp}}\subset L^2(X;E)$ be a closed invariant subspace whose vectors have zero transverse projection in every proper cusp. Let $\widetilde P$ be a symmetric second-order differential operator on $C_c^\infty(X;E)$, and let $P$ denote its restriction to compactly supported smooth cuspidal sections. Assume:
 
-- its coefficients and all invariant derivatives are uniformly bounded;
-- its principal symbol is uniformly strongly elliptic;
-- $P\geq I$ on its initial domain;
-- its closed form norm is equivalent to the $H^1$ norm on $H^1_{\mathrm{cusp}}(X;E)$.
+- the coefficients of $\widetilde P$ and all their invariant derivatives are uniformly bounded;
+- the principal symbol of $\widetilde P$ is uniformly strongly elliptic;
+- $\widetilde P\geq I$ on its initial domain;
+- the closed form of $\widetilde P$ on $H^1(X;E)$ is reduced by $\mathcal H_{\mathrm{cusp}}$, and compactly supported smooth cuspidal sections form a core for the restricted form;
+- the restricted closed form norm is equivalent to the $H^1$ norm on $H^1_{\mathrm{cusp}}(X;E)$.
+
+The reduction clause means that the orthogonal projection $Q_{\mathrm{cusp}}$ preserves the full form domain and
+
+$$
+\mathfrak q[Q_{\mathrm{cusp}}u,(I-Q_{\mathrm{cusp}})v]=0.
+$$
+
+It is automatic when the full form is built from the unitary right action and $\mathcal H_{\mathrm{cusp}}$ is a reducing subrepresentation. It is stated because invariance of a set of smooth vectors alone would not identify the domain of the restricted closed operator.
 
 **Theorem 11.1.** Under these hypotheses:
 
-1. $P$ has a unique self-adjoint realization associated with its closed form, and its operator domain is $H^2(X;E)\cap\mathcal H_{\mathrm{cusp}}$.
+1. The restricted closed form has a unique associated self-adjoint realization of $P$, and its operator domain is $H^2(X;E)\cap\mathcal H_{\mathrm{cusp}}$.
 2. For every integer $s\geq0$,
    $$
    \|u\|_{H^{s+2}}\leq C_s(\|Pu\|_{H^s}+\|u\|_2).
@@ -1259,7 +1369,14 @@ Let $E\to X$ be a finite-rank Hermitian homogeneous bundle. Fix a finite level a
 
 ### 11.2 Proof of the theorem
 
-The closed positive form gives the self-adjoint realization. The global estimate of Theorem 3.2, extended to uniformly controlled coefficients, identifies its graph domain with $H^2$ exactly as in Theorem 3.3. Commuting derivatives through $P$ proves assertion 2. Difference quotients and localization prove assertion 3.
+The full closed positive form gives a self-adjoint realization on $L^2(X;E)$. The global estimate of Theorem 3.2, extended to uniformly controlled coefficients, identifies its graph domain with $H^2(X;E)$ exactly as in Theorem 3.3. Form reduction makes the cuspidal realization its self-adjoint restriction, so its domain is
+
+$$
+D(P_{\mathrm{full}})\cap\mathcal H_{\mathrm{cusp}}
+=H^2(X;E)\cap\mathcal H_{\mathrm{cusp}}.
+$$
+
+The core clause identifies this restriction with the operator generated by the stated compactly supported cuspidal sections. Commuting derivatives through $P$ proves assertion 2. Difference quotients and localization prove assertion 3.
 
 The fiber Poincare inequality gives the uniform tail estimate (6.8). Rellich compactness on $X_T$ and the tail estimate give compactness of the form embedding by Theorem 7.2. Closed-form spectral theory then gives compact resolvent. Elliptic bootstrapping makes eigenvectors globally Sobolev of every order; Theorem 5.1 makes them smooth vectors, and Section 6.4 gives rapid decay.
 
@@ -1267,7 +1384,7 @@ Finally, the logarithmic truncation and finite-rank averaging argument prove the
 
 ### 11.3 Consequences for spectral kernels
 
-Suppose a smooth convolution kernel preserves the fixed level and type, satisfies the derivative bounds of Section 10.1, and has vanishing proper parabolic averages. It maps $L^2$ into the domain of every power of $P$ by (5.5), lands in $\mathcal H_{\mathrm{cusp}}$ by (10.7), and is trace class by (10.8) with $N>D$. Its trace is simultaneously
+Suppose a smooth convolution kernel preserves the fixed level and type, satisfies the derivative bounds of Section 10.1 and the integrable-majorant hypotheses of Section 10.2, and has the two-sided proper-parabolic cancellation (10.6). The resulting estimates are precisely (5.5), so it maps $L^2$ into the domain of every power of $P$; the closed graph theorem makes $P^NT_k$ bounded for every $N$. It lands in $\mathcal H_{\mathrm{cusp}}$ by (10.7), and the first factorization in Section 10.4 makes it trace class once $N>D$. Its trace is simultaneously
 
 $$
 \sum_n\langle T_k\phi_n,\phi_n\rangle
