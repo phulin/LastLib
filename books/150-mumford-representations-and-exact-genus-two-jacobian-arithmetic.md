@@ -119,6 +119,16 @@ $$
 K_C\sim2\infty. \tag{1.4}
 $$
 
+Here and below, **squarefree** means geometrically squarefree:
+
+$$
+\gcd(f,f')=1. \tag{1.4a}
+$$
+
+Over an imperfect field this is stronger than merely asking that no square of a nonconstant
+polynomial in $k[x]$ divide $f$. The stronger condition is exactly what makes the affine curve
+geometrically smooth and is the condition used in every argument below.
+
 The monicity of $f$ is a normalization, not a geometric necessity. A quintic with nonzero leading coefficient can be treated after a harmless rescaling when that coefficient can be made one over the chosen field; otherwise every formula below still works with systematic leading-coefficient factors. We impose monicity so that “make monic” is the only normalization needed during reduction.
 
 Squarefreeness and $2\ne0$ imply affine smoothness: a singular affine point would have $y=0$ and $f=f'=0$. The odd degree gives the single smooth point at infinity. These hypotheses are checked before any Jacobian calculation. Sections 14.1--14.4 explain exactly what must change for a sextic equation, for characteristic two, or under a coordinate transformation.
@@ -216,7 +226,7 @@ Conjugation of an ideal is defined by applying $y\mapsto-y$ to its elements. Fro
 Let $u,v\in k[x]$ satisfy
 
 $$
-u\ne0,qquad u\mid f-v^2. \tag{2.7}
+u\ne0,\qquad u\mid f-v^2. \tag{2.7}
 $$
 
 Then
@@ -225,7 +235,15 @@ $$
 I(u,v)=(u,y-v)\subset A \tag{2.8}
 $$
 
-is an ideal. Indeed multiplication of $y-v$ by $y+v$ gives $f-v^2$, which lies in $(u)$, so the relation $y^2=f$ introduces no incompatible remainder.
+is the kernel of the well-defined quotient map
+
+$$
+A\longrightarrow k[x]/(u),\qquad x\longmapsto x,\quad y\longmapsto v. \tag{2.8a}
+$$
+
+Indeed the relation $y^2=f$ survives in the target exactly because $u\mid f-v^2$. The two
+generators in (2.8) would generate an ideal even without this divisibility; what the condition
+ensures is that the quotient has the intended length and graph interpretation.
 
 Over an algebraic closure, write
 
@@ -287,7 +305,14 @@ $$
 \gcd(u,u',v)=1. \tag{3.1}
 $$
 
-Under our standing hypotheses this condition is automatic for every admissible pair. Indeed, if an irreducible polynomial $p$ divided $u,u'$, and $v$, then $p^2\mid u$ and $p^2\mid v^2$. Divisibility $u\mid f-v^2$ would give $p^2\mid f$, contradicting squarefreeness. We retain the word semireduced to emphasize the geometric consequence: the graph $y=v(x)$ chooses only one branch over each $x$-subscheme and therefore contains no pair $P+\iota(P)$. At a branch point the valid pair $(x-a,0)$ satisfies
+Under our standing hypotheses this condition is automatic for every admissible pair. The point
+needs a little care over an imperfect field. Suppose that an irreducible $p$ divides $u,u'$, and
+$v$. If $p'\ne0$, then $p\mid u'$ forces $p^2\mid u$; hence $p^2\mid f-v^2$ and $p^2\mid v^2$
+force $p^2\mid f$, contrary to (1.4a). If $p'=0$, then $p\mid u$ and $p\mid v$ imply $p\mid f$;
+but differentiating a factorization $f=ph$ gives $p\mid f'$, again contrary to (1.4a). Thus
+$\gcd(u,u',v)=1$ in all cases. We retain the word semireduced to emphasize the geometric
+consequence: the graph $y=v(x)$ chooses only one branch over each $x$-subscheme and therefore
+contains no pair $P+\iota(P)$. At a branch point the valid pair $(x-a,0)$ satisfies
 
 $$
 \gcd(x-a,1,0)=1. \tag{3.2}
@@ -420,7 +445,20 @@ These are effective divisors of degree two. If the class is noncanonical, degree
 
 **Theorem 4.2 (unique reduced Mumford representation).** Every class in $J(k)$ has a unique reduced pair $(u,v)$ over $k$.
 
-**Proof.** Genus-two divisor reduction supplies an effective semireduced representative of degree at most two after cancelling conjugate pairs; Sections 4.1--4.2 give the polynomial process. Lemma 4.1 gives uniqueness of the divisor. Proposition 3.1 then gives uniqueness of its monic $u$ and reduced residue representative $v$. Field-of-definition compatibility shows that a $k$-rational class has its unique pair over $k$. $\square$
+**Proof.** The genus-two small-divisor theorem applied over $k$ supplies, for every class $\xi$,
+an effective $k$-rational divisor $D$ of degree two with
+
+$$
+\xi=[D-2\infty].
+$$
+
+If $D$ is canonical, then $D\sim2\infty$ and $\xi=0$, represented by $(1,0)$. Otherwise $D$
+cannot contain a conjugate pair, because every degree-two conjugate pair is a canonical fiber.
+Proposition 3.1 therefore gives a semireduced pair over $k$, already of degree at most two.
+This proves existence over the ground field without first choosing geometric points. Lemma 4.1
+gives uniqueness of the divisor, and Proposition 3.1 gives uniqueness of its monic $u$ and its
+reduced residue representative $v$. Sections 4.1--4.2 additionally give the terminating
+polynomial reduction of any larger semireduced representative. $\square$
 
 The final assertion uses the rational point $\infty$, which identifies every rational point of the Picard scheme with an actual degree-zero line bundle. Without such a point, a Picard-class obstruction can prevent this literal ground-field divisor description.
 
@@ -505,7 +543,14 @@ $$
 [u,0],\qquad u\text{ monic},\quad u\mid f,\quad1\le\deg u\le2. \tag{5.7}
 $$
 
-Here a divisor of $f$ of degree three, four, or five gives the same geometric even subset of branch points as its complementary divisor, and reduction selects the representative of degree at most two. This complement relation is the divisor identity saying that the sum of all six Weierstrass points, including $\infty$, is twice a canonical divisor.
+Here a divisor of $f$ of degree three, four, or five gives the same geometric even subset of branch points as its complementary divisor, and reduction selects the representative of degree at most two. The complement relation follows from
+
+$$
+\operatorname{div}(y)=\sum_{f(a)=0}(a,0)-5\infty. \tag{5.7a}
+$$
+
+Equivalently, the sum of all six Weierstrass points, including $\infty$, is linearly equivalent
+to $6\infty=3K_C$. The factor is three, not two; the latter would even have the wrong degree.
 
 Over an algebraic closure, $J[2]$ has $16$ elements. They correspond to even subsets of the six Weierstrass points modulo identifying a subset with its complement. The polynomial formula (5.7) is the ground-field version appropriate to a distinguished branch point at infinity; irreducible factors of $f$ are retained as Galois-stable blocks.
 
@@ -664,40 +709,74 @@ $$
 w\equiv v_2\pmod{\tilde u_2}. \tag{6.15}
 $$
 
-The multiplicity assertion can be checked without splitting the polynomials. Localize $k[x]$ at an irreducible factor $p$ and put
+These two congruences alone would prove divisibility only by the least common multiple of
+$\tilde u_1$ and $\tilde u_2$. The extra multiplicity when they share a factor is the decisive
+part of the formula, so we verify it by an exact polynomial identity. Put
 
 $$
-a=\operatorname{ord}_p(u_1),\quad
-b=\operatorname{ord}_p(u_2),\quad
-c=\min\{a,b,\operatorname{ord}_p(v_1+v_2)\}. \tag{6.15a}
+h_i=\frac{f-v_i^2}{u_i},\qquad
+A=e_1(v_2-v_1)+e_3h_1. \tag{6.15a}
 $$
 
-The required exponent of $p$ in $u$ is $a+b-2c$. If $c=\min(a,b)$, the smaller inverse jet cancels completely and (6.14) or (6.15) gives divisibility to the remaining exponent $|a-b|$. If $c<\min(a,b)$, divide (6.7) by $d$ in the local ring. The residue of $(v_1+v_2)/d$ is then a unit at the first level where the branches cease to be inverse. Substituting (6.13) into $f-w^2$, and using
+The numerator identity defining $w$ can be regrouped as
 
 $$
-f-v_i^2\in(u_i),\qquad
-v_1+v_2\in(d), \tag{6.15b}
+dw=dv_1+u_1A. \tag{6.15b}
 $$
 
-shows successively at each $p$-adic level that the first $a-c$ jets agree with the first input and the next $b-c$ jets agree with the second; hence $\operatorname{ord}_p(f-w^2)\ge a+b-2c$. This is Hermite interpolation: when $c=0$ and the same point occurs in both inputs, the second block supplies the tangent and higher jets rather than a second value. Thus
+Consequently
 
 $$
-\tilde u_1\tilde u_2=u
+d^2(f-w^2)
+=u_1R,
+\qquad
+R=d^2h_1-2dv_1A-u_1A^2. \tag{6.15c}
+$$
+
+It remains to show $u_2\mid R$. Work modulo $u_2$, put $s=v_1+v_2$ and
+$\delta=v_2-v_1$, and use $d\equiv e_1u_1+e_3s$. Expanding and grouping the
+$e_1^2$, $e_1e_3$, and $e_3^2$ terms gives
+
+$$
+R\equiv
+(e_1^2u_1+2e_1e_3v_1-e_3^2h_1)
+\bigl(u_1h_1-s\delta\bigr)
+\pmod{u_2}. \tag{6.15d}
+$$
+
+But $s\delta=v_2^2-v_1^2$ and
+
+$$
+u_1h_1-(v_2^2-v_1^2)=f-v_2^2=u_2h_2. \tag{6.15e}
+$$
+
+Thus $u_2\mid R$. Since $u_1u_2=d^2u$, equation (6.15c) now permits
+cancellation of the nonzero polynomial $d^2$ and proves
+
+$$
+u=\frac{u_1u_2}{d^2}
 \mid f-w^2. \tag{6.16}
 $$
 
 Replacing $w$ by its remainder modulo $u$ preserves this divisibility, proving (6.10).
 
+Identity (6.15d) is the algebraic content of tangent and higher-jet interpolation. It does not
+factor the inputs and remains valid for repeated irreducible factors and inseparable residue
+extensions.
+
 For the class statement, factor the input ideals locally in the Dedekind domain $A$. At a prime corresponding to a point $P$, multiplication adds valuations. If the second divisor contains $\iota(P)$, the factor $d$ records the common power and (2.6) turns the product into a principal power of $x-x(P)$; division by $d^2$ removes its two $x$-factors. If both divisors contain $P$, then $v_1+v_2$ is a unit at $P$ unless $P$ is ramified, so $d$ does not cancel it and the valuation is added. Equations (6.14)--(6.15) show that $I(u,v)$ has exactly the remaining local valuations. Therefore
 
 $$
 I(u_1,v_1)I(u_2,v_2)
-=(d)I(u,v) \tag{6.17}
+=(d)I(u,v). \tag{6.17}
 $$
 
-up to an invertible scalar normalization. The ideal $(d)$ is principal, so the two sides have the same ideal class. Under the sign convention of Section 2.1 this is precisely (6.11). $\square$
+The equality follows because the two invertible ideals have the same valuation at every
+height-one prime. The ideal $(d)$ is principal, so the two sides have the same ideal class. Under
+the sign convention of Section 2.1 this is precisely (6.11). $\square$
 
-The local proof also covers repeated irreducible factors and inseparable residue extensions; it does not require factoring $u_1$ or $u_2$ over $k$. Squarefreeness of $f$ ensures that the affine coordinate ring remains Dedekind and that ramified points are nonsingular.
+Squarefreeness in the sense of (1.4a) ensures that the affine coordinate ring remains Dedekind
+and that ramified points are nonsingular.
 
 ## 7. Cantor addition in genus two
 
@@ -735,7 +814,7 @@ $$
 For a semireduced divisor with no Weierstrass support, $\gcd(u,v)=1$, and $2$ is a unit, so $d=1$. Composition produces $u^2$. The new polynomial $w$ satisfies
 
 $$
-w\equiv v\pmod u,qquad w^2\equiv f\pmod{u^2}. \tag{7.3}
+w\equiv v\pmod u,\qquad w^2\equiv f\pmod{u^2}. \tag{7.3}
 $$
 
 The second congruence is the tangent lift of the first. If $u=x-a$ and $v=b\ne0$, it gives
@@ -757,7 +836,7 @@ The full gcd formula should be tested against the following cases.
 **Partial inverse support.** Suppose
 
 $$
-u_1=(x-a)r_1,qquad u_2=(x-a)r_2,qquad
+u_1=(x-a)r_1,\qquad u_2=(x-a)r_2,\qquad
 v_1(a)=-v_2(a), \tag{7.5}
 $$
 
@@ -878,7 +957,13 @@ This is also a proof without circularity. Ideal multiplication first proves that
 
 ### 8.2 Normalization choices and independence
 
-Extended gcd expressions are not unique. If $(e_1,e_2,e_3)$ and $(e'_1,e'_2,e'_3)$ both satisfy (6.7), their difference is a syzygy among $u_1,u_2,v_1+v_2$. Substitution in (6.9), followed by the congruences in the proof of Theorem 6.1, shows that the two values of $w$ differ by a multiple of $u=u_1u_2/d^2$. Hence the reduced remainder $v$ is the same.
+Extended gcd expressions are not unique. If $(e_1,e_2,e_3)$ and
+$(e'_1,e'_2,e'_3)$ both satisfy (6.7), either choice gives, by Theorem 6.1, the ideal obtained
+from $I(u_1,v_1)I(u_2,v_2)$ after removing the same principal factor $(d)$. The resulting ideal
+has the fixed monic first polynomial $u=u_1u_2/d^2$. The pair--ideal correspondence then makes
+its second polynomial unique modulo $u$. Thus the two values of $w$ differ by a multiple of $u$,
+and their reduced remainders are identical. This argument includes the shared-factor case, where
+the two elementary congruences (6.14)--(6.15) by themselves would not suffice.
 
 Likewise, the quotient $q=(f-v^2)/u$ may have any nonzero leading coefficient. Dividing by that coefficient changes neither its roots nor the complementary divisor. Reducing $-v$ modulo the monic associate makes the next pair canonical.
 
@@ -941,7 +1026,7 @@ Over any field, polynomial division uses the unique quotient and remainder with 
 For three polynomials, one may compute (6.7) in two stages. First find
 
 $$
-a_1u_1+a_2u_2=g,qquad g=\gcd(u_1,u_2), \tag{9.1}
+a_1u_1+a_2u_2=g,\qquad g=\gcd(u_1,u_2), \tag{9.1}
 $$
 
 then find
@@ -953,7 +1038,7 @@ $$
 The Bézout triple is
 
 $$
-e_1=b_1a_1,qquad e_2=b_1a_2,qquad e_3=b_2. \tag{9.3}
+e_1=b_1a_1,\qquad e_2=b_1a_2,\qquad e_3=b_2. \tag{9.3}
 $$
 
 Scaling $d$ to monic requires scaling all three $e_i$ by the same unit. Forgetting that simultaneous scaling makes (6.7) false and usually makes the numerator of (6.9) fail divisibility by $d$.
@@ -1062,7 +1147,7 @@ $$
 where
 
 $$
-a_1=q+1-N_1,qquad
+a_1=q+1-N_1,\qquad
 a_2=\frac{N_2-q^2-1+a_1^2}{2}. \tag{10.4}
 $$
 
@@ -1098,7 +1183,7 @@ $$
 Equations (10.4)--(10.5) yield
 
 $$
-a_1=-3,qquad a_2=7,qquad
+a_1=-3,\qquad a_2=7,\qquad
 \#J(\mathbf F_3)=\frac{7^2+15}{2}-3=29. \tag{10.6c}
 $$
 
@@ -1110,7 +1195,7 @@ Let $G=J(\mathbf F_q)$ and let $N=\#G$. The classification of finite abelian gro
 
 $$
 G\simeq\mathbf Z/n_1\mathbf Z\times\cdots\times
-\mathbf Z/n_r\mathbf Z,qquad
+\mathbf Z/n_r\mathbf Z,\qquad
 n_1\mid\cdots\mid n_r. \tag{10.7}
 $$
 
@@ -1119,7 +1204,7 @@ For a genus-two Jacobian, at most four generators are needed because $G/\ell G$ 
 A constructive structure certificate chooses pairs $P_1,\ldots,P_r$, proves their exact orders $n_i$, proves that the homomorphism
 
 $$
-\prod_i\mathbf Z/n_i\mathbf Z\longrightarrow G,qquad
+\prod_i\mathbf Z/n_i\mathbf Z\longrightarrow G,\qquad
 (a_i)\longmapsto\sum_i a_iP_i \tag{10.8}
 $$
 
@@ -1201,16 +1286,25 @@ v_\ell(\#J(\mathbf Q)_{\mathrm{tors}})
 \le v_\ell(\#J(\mathbf F_p)). \tag{11.5}
 $$
 
-Using several good primes and taking the minimum valuation yields
+Using several good primes gives the prime-by-prime bound
 
 $$
-\#J(\mathbf Q)_{\mathrm{tors}}mid
-\gcd_{p\in S}\#J(\mathbf F_p) \tag{11.6}
+v_\ell\bigl(\#J(\mathbf Q)_{\mathrm{tors}}\bigr)
+\le
+\min_{\substack{p\in S\\p\ne\ell}}
+v_\ell\bigl(\#J(\mathbf F_p)\bigr). \tag{11.6}
 $$
 
-provided, for each prime divisor $\ell$ of the gcd, at least one $p\in S$ differs from $\ell$. More precisely, (11.5) is the authoritative statement; the compact gcd formulation must not accidentally use only reduction in residue characteristic $\ell$ to bound $\ell$-power torsion.
+The minimum is taken only over residue characteristics different from $\ell$ and must be nonempty.
+A compact divisibility by $\gcd_{p\in S}\#J(\mathbf F_p)$ follows from the prime-to-$p$
+injectivity proved here only when, for every relevant $\ell$, that gcd's minimum $\ell$-adic
+valuation is attained at some $p\ne\ell$. Merely having one such prime in $S$ is not enough:
+including the count in residue characteristic $\ell$ can otherwise make the gcd artificially
+smaller. Formula (11.6), rather than an unqualified gcd, is the authoritative bound.
 
-Group structure gives sharper bounds than orders. A rational torsion subgroup injects prime-to-$p$ as a subgroup of the actual finite abelian group $J(\mathbf F_p)$, so incompatible invariant factors can exclude a candidate even when its order divides (11.6).
+Group structure gives sharper bounds than orders. The prime-to-$p$ part of a rational torsion
+subgroup injects into the actual finite abelian group $J(\mathbf F_p)$, so incompatible invariant
+factors can exclude a candidate even when all its prime-by-prime orders satisfy (11.6).
 
 ### 11.4 Proving a complete torsion statement
 
@@ -1448,9 +1542,20 @@ We finish by collecting the representation, group law, finite-field, torsion, an
 
 ### 15.1 Hypothesis and dependency ledger
 
-The intrinsic geometric input is the following established genus-two package: a smooth proper geometrically connected genus-two curve is hyperelliptic; a rational Weierstrass point $\infty$ satisfies $K_C\sim2\infty$; every degree-zero class reduces to an effective divisor of degree at most two; the Abel map is an embedding; and good models specialize points and divisor classes compatibly. In this book these facts are sharpened to a unique polynomial normal form and an exact group operation.
+The intrinsic geometric input is the theorem package proved in Book 149: a smooth proper
+geometrically connected genus-two curve is hyperelliptic; a rational Weierstrass point $\infty$
+satisfies $K_C\sim2\infty$; every degree-zero class has an effective representative of degree
+two relative to a rational base point; the noncanonical degree-two representative is unique; the
+Abel map is an embedding; and good models specialize points and divisor classes compatibly. In
+this book these facts are sharpened to a unique polynomial normal form and an exact group
+operation.
 
-The finite-field input is the established Weil theorem for smooth proper curves: Frobenius on $H^1$ has four eigenvalues of absolute value $\sqrt q$ in genus two, the trace formula gives the curve counts, and $\#J(\mathbf F_q)=P(1)$. Its hypotheses match Sections 1.2 and 9.3: the odd-degree squarefree equation produces a smooth proper geometrically connected curve over the finite field. We use the theorem only after that check.
+The finite-field input is the Weil theorem for smooth proper curves proved in Book 26 and imported
+geometrically in Book 149: Frobenius on $H^1$ has four eigenvalues of absolute value $\sqrt q$ in
+genus two, the trace formula gives the curve counts, and $\#J(\mathbf F_q)=P(1)$. Its hypotheses
+match Sections 1.2 and 9.3: the odd-degree geometrically squarefree equation produces a smooth
+proper geometrically connected curve over the finite field. We use the theorem only after that
+check.
 
 All other central assertions are proved here from polynomial arithmetic, ideal factorization on a smooth affine curve, and the divisor geometry just recalled. In particular, no unproved descent theorem, Mordell--Weil computation, or rational-point classification is used. A finite-field order is never treated as a group structure, and local survival is never treated as global existence.
 

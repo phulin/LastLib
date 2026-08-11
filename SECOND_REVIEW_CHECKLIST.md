@@ -173,7 +173,7 @@ any resulting corrections.
 - [ ] 147. Eisenstein Cotangent Lattices and Formal Immersion
 - [ ] 148. Rational Isogenies of Prime Degree
 - [x] 149. Genus-Two Curves, Jacobians, and Abel–Jacobi Geometry
-- [ ] 150. Mumford Representations and Exact Genus-Two Jacobian Arithmetic
+- [x] 150. Mumford Representations and Exact Genus-Two Jacobian Arithmetic
 - [ ] 151. Explicit Two-Descent on Genus-Two Jacobians
 - [ ] 152. Mordell–Weil Sieves for Hyperelliptic Curves
 - [ ] 153. Semistable Isogeny Characters and Frey Residual Representations
