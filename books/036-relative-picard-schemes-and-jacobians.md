@@ -111,6 +111,8 @@ $$
 
 For a nodal family, $\omega_{C/S}$ means the relative dualizing line bundle and the necessary Gorenstein hypothesis will be stated.
 
+The dependency boundary is precise. The divisor, duality, and Abel-differential package comes from Book 9; the nodal normalization, graph-lattice, and semistable Picard-quotient theorems come from Book 12; effective faithfully flat descent comes from Book 13; and finite cohomology, arbitrary base change in the stated vanishing range, smooth Picard representability with a section, and dual abelian schemes come from Book 15. This book reconstructs the Picard and Jacobian package needed for its catalog scope, but does not appeal to the later theories of general abelian schemes or Néron models.
+
 ### 1.3 What must be rigidified
 
 Suppose $\mathcal L$ is a line bundle on $C_T$ and $\mathcal M$ is a line bundle on $T$. On every geometric fiber of $C_T/T$, the bundles $\mathcal L$ and $\mathcal L\otimes f_T^*\mathcal M$ are isomorphic. A relative moduli problem must therefore identify them. This is not merely convenient: without the quotient, the base contributes an irrelevant copy of $\operatorname{Pic}(T)$ at every test scheme.
@@ -235,24 +237,32 @@ The bound is exact for uniform vanishing. At $d=2g-2$, the canonical bundle has 
 
 ### 3.2 The quotient construction
 
-Two effective divisors $D,E$ have the same image under (3.1) exactly when $\mathcal O(D-E)$ is pulled back from the base, or, after rigidification, when their line bundles are isomorphic. In high degree the set of divisors in a fixed class is the projective bundle
+Two effective divisors $D,E$ have the same image under (3.1) exactly when $\mathcal O(D-E)$ is pulled back from the base, or, after rigidification, when their line bundles are isomorphic. This relation can be constructed without presupposing a Picard scheme. Put $Q=C^{(d)}$, let $\Delta$ be its universal divisor, and write
 
 $$
-\mathbf P\bigl((f_T)_*\mathcal L\bigr)
+p:C\times_SQ\longrightarrow Q,
+\qquad \mathcal E=p_*\mathcal O(\Delta).
 $$
 
-with the convention that points are one-dimensional spaces of sections. Hence the equivalence relation
+For $d\geq2g-1$, $\mathcal E$ is locally free of rank $d+1-g$ and has arbitrary base change. With our convention that projective space parametrizes lines of sections, the projective bundle $\mathbf P_Q(\mathcal E)$ parametrizes a divisor $D$ together with a nonzero section of $\mathcal O(D)$ up to scalar. Taking its zero divisor gives a second map to $Q$. Thus
 
 $$
-R_d=C^{(d)}\times_{\operatorname{Pic}^d}C^{(d)}
-\rightrightarrows C^{(d)} \tag{3.3}
+R_d=\mathbf P_Q(\mathcal E)
+\rightrightarrows Q \tag{3.3}
 $$
 
-is represented locally by a projective-bundle relation. This description is not circular: (3.3) means the subfunctor of pairs whose rigidified line bundles are isomorphic; isomorphisms of rigidified bundles have no stabilizers, and their existence is represented by the appropriate open in a relative Hom bundle.
+represents pairs $(D,E)$ with isomorphic rigidified line bundles. The map $R_d\to Q\times_SQ$ is a monomorphism: once $D$ and $E$ are fixed, a section with zero divisor $E$ is unique up to scalar. It is proper, hence a closed immersion. Consequently (3.3) is a closed equivalence relation, and either projection is a projective-space bundle of relative dimension $d-g$.
 
-Locally trivializing the vector bundles of sections produces affine invariant neighborhoods. Functions constant on the projective fibers give affine quotients there. On overlaps, uniqueness of a rigidified isomorphism supplies the descent cocycle, so the local quotients glue. The quotient is separated because the isomorphism functor between two line bundles on a proper curve is closed once scalars have been fixed, and it is of finite presentation because the divisor space and relation are.
+It remains to explain why this particular quotient is a scheme. After an fppf base change, choose $d-g$ disjoint sections $x_1,\ldots,x_{d-g}$ of $C/S$. On the open locus where evaluation
 
-For any $m$, choose $n$ with $m+n\geq2g-1$. Tensoring by $\mathcal O(ne)$ identifies the degree-$m$ and degree-$(m+n)$ functors. Thus one high-degree construction produces every component.
+$$
+\mathcal E\longrightarrow
+\bigoplus_{i=1}^{d-g}\mathcal O(\Delta)|_{x_i}
+$$
+
+is surjective, its kernel is a line. Its unique projective section selects one divisor in each complete linear system. Such opens cover $Q$: on a geometric fiber, choose the $x_i$ successively away from the base locus, lowering the dimension of the section space by one each time. The selected slices are invariant under (3.3). On overlaps, the relation gives their unique transition isomorphism, and transitivity gives the triple cocycle. Effective faithfully flat descent glues the slices to a separated finitely presented quotient representing degree-$d$ rigidified line bundles. This is the quotient construction used below; it does not assume a general theorem about arbitrary equivalence relations.
+
+For any $m$, choose $n\geq0$ with $m+n\geq\max\{2g-1,0\}$. Tensoring by $\mathcal O(ne)$ identifies the degree-$m$ and degree-$(m+n)$ functors. Thus one high-degree construction produces every component, including the genus-zero case where a symmetric power still has nonnegative degree.
 
 ### 3.3 The representability theorem
 
@@ -264,7 +274,9 @@ $$
 
 Each $\operatorname{Pic}^d_{C/S}$ is smooth and proper of relative dimension $g$, and formation of all these schemes commutes with arbitrary base change.
 
-**Proof.** With a section, Sections 3.1--3.2 construct each component and identify its functor. Properness follows from the fppf-surjective proper map $C^{(d)}\to\operatorname{Pic}^d$ in high degree: properness descends under an fpqc cover of the target. The infinitesimal calculation of Chapter 5 shows formal smoothness, while finite presentation turns it into smoothness. The tangent rank is $g$, hence the relative dimension is $g$.
+**Proof.** With a section, Sections 3.1--3.2 construct each component and identify its functor. In high degree the Abel map $q:C^{(d)}\to\operatorname{Pic}^d$ is proper and surjective. Hence $\operatorname{Pic}^d\to S$ is universally closed: after any $T\to S$, the image in $T$ of a closed subset $Z\subset\operatorname{Pic}^d_T$ equals the image of the closed subset $q_T^{-1}Z$ of the proper $T$-scheme $C_T^{(d)}$. The quotient is separated and finitely presented, so it is proper.
+
+For a square-zero extension with ideal $I$, the exact sequence $1+I\mathcal O\to\mathcal O^\times\to\mathcal O_0^\times$ puts the obstruction to lifting a line bundle in $H^2(C_0,I\mathcal O_{C_0})$. This group vanishes because the fibers are curves. Thus the representing morphism is formally smooth, and finite presentation makes it smooth. The first-order deformation space is $H^1(C_s,\mathcal O_{C_s})$, of dimension $g$, so the relative dimension is $g$. Chapter 5 will identify these deformation spaces canonically in families.
 
 All ingredients commute with base change: symmetric powers and universal divisors do, the vanishing (3.2) gives arbitrary coherent base change, and quotient descent is unique. This proves the claim with a section. The next section descends the result without one. $\square$
 
@@ -335,7 +347,9 @@ A torsor can have no global section. Consequently $\operatorname{Pic}^d(S)$ may 
 
 ### 4.3 The identity component
 
-The scheme $J_{C/S}$ is proper, smooth, and finitely presented with geometrically connected fibers. It is a commutative group scheme. Therefore it is an **abelian scheme** of relative dimension $g$.
+The scheme $J_{C/S}$ is proper, smooth, and finitely presented with geometrically connected fibers. It is a commutative group scheme. The complete-group projectivity theorem therefore makes it an **abelian scheme** of relative dimension $g$.
+
+Projectivity is not being inferred from the later polarization. The complete-group theorem is the foundational algebraic-group result that a smooth proper group scheme with geometrically connected fibers over a locally noetherian base is projective locally on the base. It is proved by the cubical-line-bundle construction and faithfully flat descent, independently of Jacobian autoduality, so it applies before theta or the dual abelian scheme is introduced.
 
 Connectedness deserves proof. Over an algebraically closed field, every degree-zero divisor class can be written as
 
@@ -358,7 +372,13 @@ C\longrightarrow J,
 \qquad p\longmapsto\mathcal O(p-e)
 $$
 
-is an isomorphism. On each geometric fiber it is a nonconstant map between smooth proper genus-one curves sending $e$ to zero. A degree-zero bundle $\mathcal O(p-e)$ determines $p$, so the map is injective on geometric points; its differential is an isomorphism by (7.9), excluding a hidden purely inseparable degree. It therefore has degree one. A proper morphism that is an isomorphism on every geometric fiber is an isomorphism. Thus a pointed genus-one curve obtains its group law from its Jacobian. An unpointed genus-one curve is instead a torsor under its Jacobian.
+is an isomorphism. On each geometric fiber it is a nonconstant map between smooth proper genus-one curves sending $e$ to zero. A degree-zero bundle $\mathcal O(p-e)$ determines $p$, so the map is injective on geometric points. Its cotangent map at $p$ is the evaluation map
+
+$$
+H^0(C,\omega_C)\longrightarrow\omega_C|_p.
+$$
+
+The description follows by moving a local equation of the point to first order and pairing the resulting principal part with a differential. Both sides are one-dimensional, and a nonzero differential on a genus-one curve has canonical divisor of degree zero and hence vanishes nowhere. The cotangent map is therefore an isomorphism, excluding a hidden purely inseparable degree. The Abel map has degree one. A proper morphism that is an isomorphism on every geometric fiber is an isomorphism. Thus a pointed genus-one curve obtains its group law from its Jacobian. An unpointed genus-one curve is instead a torsor under its Jacobian.
 
 ## 5. Infinitesimal geometry
 
@@ -416,7 +436,7 @@ Both identifications commute with arbitrary base change. Formula (5.4) is one of
 
 **Proof.** The obstruction group in Section 5.1 vanishes for every square-zero extension, so the functor has the infinitesimal lifting property. The representing morphism is finitely presented, hence formally smooth implies smooth. Its relative tangent space is $H^1(C_s,\mathcal O_{C_s})$, of dimension $g$ on every geometric fiber. Smooth morphisms have relative dimension equal to tangent dimension, giving the claim. Translation by a local degree-$d$ point carries the calculation from $J$ to $\operatorname{Pic}^d$. $\square$
 
-For singular curves, the same $H^2$ argument can still give smoothness of the Picard scheme if the curve is reduced with ordinary nodes, but properness fails because gluing parameters contribute a torus. For nonreduced curves the Picard scheme can have a unipotent part and can fail to be reduced; $H^2=0$ alone does not imply all the pleasant structure asserted above without representability and finite-presentation control.
+For singular proper curves, the same $H^2$ argument gives formal smoothness once the Picard functor is represented and locally of finite presentation. For a nodal curve, properness can fail because gluing parameters contribute a torus. A nonreduced curve can contribute a unipotent affine part and can destroy cohomological flatness in a relative family. Thus $H^2=0$ controls infinitesimal lifting, but by itself does not supply representability, separatedness, properness, or base-change control.
 
 ### 5.4 The formal group at the identity
 
@@ -494,7 +514,7 @@ $$
 
 Both sides represent the tensor product of the two universal degree-zero classes and have the same rigidification. Associativity of (6.3) follows from uniqueness. Similarly, pullback by inversion on $J$ changes $\mathcal P_C$ to its dual.
 
-These identities express that $\mathcal P_C$ is linear in the Picard variable. Once the Jacobian is identified with its dual, it becomes linear in both variables and is a biextension. The word records genuine coherence: the two distributive structures agree on fourfold products, again because normalized universal line bundles admitting the same fiberwise interpretation are uniquely isomorphic.
+These identities express that $\mathcal P_C$ is linear in the Picard variable. The Poincare bundle on $J\times_SJ^\vee$ is linear in both group variables and is a biextension; its pullback along $j_e\times1$ is $\mathcal P_C|_{C\times J}$. After the canonical identification $J\simeq J^\vee$, this gives a biextension on $J\times J$, not a group law on the curve variable. The word records genuine coherence: the two distributive structures agree on fourfold products because normalized universal line bundles with the same fiberwise interpretation are uniquely isomorphic.
 
 ## 7. Abel maps
 
@@ -586,7 +606,13 @@ j_e^*:H^0(J,\Omega^1_{J/k})
 \xrightarrow{\sim}H^0(C,\omega_C). \tag{7.9}
 $$
 
-Relatively, $j_e^*\omega_J\simeq f_*\omega_{C/S}$ is the identity under (5.4).
+Relatively, adjunction gives a map
+
+$$
+j_e^*:\omega_J\longrightarrow f_*\omega_{C/S},
+$$
+
+and it is the identity under (5.4). Equivalently, $f^*\omega_J\to\Omega^1_{C/S}$ is the differential of $j_e$.
 
 ### 7.4 Generation of the Jacobian
 
@@ -650,6 +676,8 @@ $$
 x\longmapsto t_x^*M\otimes M^{-1}. \tag{8.4}
 $$
 
+Here $t_x(y)=y+x$. This convention matters for the sign in the Albanese formula below.
+
 The theorem of the square gives
 
 $$
@@ -667,7 +695,7 @@ $$
 \lambda_C=\phi_{\mathcal O(\Theta_e)}:J\longrightarrow J^\vee \tag{8.5}
 $$
 
-is a polarization because $\Theta_e$ is relatively ample. Fiberwise ampleness follows from the fact that every positive-dimensional closed subgroup translated inside $J$ meets $\Theta$: otherwise a positive-dimensional family of degree-zero twists of a degree-$(g-1)$ bundle would all have the same vanishing behavior, contradicting the generation theorem and Riemann--Roch. For an abelian scheme, fiberwise ampleness of a line bundle is relative ampleness after restricting to components of the base.
+will be shown in the next section to be a principal polarization. At this stage it is a homomorphism; ampleness and principality are conclusions, not inputs.
 
 There is a useful formula for the family of bundles represented by $\lambda_C$. If $x\in J(T)$ corresponds to a rigidified degree-zero bundle $L_x$ on $C_T$, then $\lambda_C(x)$ is the algebraically trivial bundle on $J_T$ obtained by comparing the determinants of cohomology of $\mathcal U\otimes L_x$ and $\mathcal U$. This determinant description shows directly that (8.5) commutes with arbitrary base change.
 
@@ -677,43 +705,64 @@ The crucial assertion is stronger than ampleness.
 
 **Principal polarization theorem.** The homomorphism $\lambda_C:J\to J^\vee$ is an isomorphism.
 
-**Proof strategy.** It suffices to prove the assertion on geometric fibers, because a homomorphism of abelian schemes that is an isomorphism on every geometric fiber is an isomorphism. On a fiber over an algebraically closed field, an ample line bundle $M$ defines an isogeny and
+**Proof.** It suffices to work on a geometric fiber, because a homomorphism of abelian schemes that is an isomorphism on every geometric fiber is an isomorphism. We first establish the intersection calculation that also proves ampleness.
+
+Let $k$ be algebraically closed, put $W_d=a_d(C^{(d)})$, and translate $W_d$ to $J$. The determinantal construction of Section 8.2 gives the **Poincare cycle formula**
 
 $$
-\deg\phi_M=\chi(M)^2. \tag{8.6}
+[W_d]=\frac{c_1(\mathcal O(\Theta))^{g-d}}{(g-d)!},
+\qquad 0\leq d\leq g-1. \tag{8.6}
 $$
 
-For the theta line, $\chi(\mathcal O_J(\Theta))=1$. Hence $\deg\lambda_C=1$.
+Here is the intersection calculation, including its multiplicities. Choose an effective divisor $E$ of degree $N\gg0$ and a normalized universal line bundle $\mathcal L$ on $C\times\operatorname{Pic}^d$. The exact sequence for $E$ gives a map of vector bundles
 
-We justify the two numerical inputs. For an ample line bundle on a $g$-dimensional abelian variety, translation invariance and the theorem of the cube imply that $[n]^*M$ is algebraically equivalent to $M^{\otimes n^2}$. Riemann--Roch on the smooth proper variety gives $\chi(M^{\otimes n^2})=n^{2g}\chi(M)$, while the finite map $[n]$ has degree $n^{2g}$. Applying these identities to the stabilizer homomorphism $\phi_M$ yields
+$$
+p_*\mathcal L(E)\longrightarrow p_*(\mathcal L(E)|_E) \tag{8.7}
+$$
+
+of ranks $N+d+1-g$ and $N$. Its kernel at $[L]$ is $H^0(C,L)$. Thus $W_d$, with the Abel-image scheme structure, is the locus where (8.7) has rank at most $N+d-g$. Its expected codimension is $g-d$, and it has that codimension because $C^{(d)}\to W_d$ is generically one-to-one: a general effective divisor of degree $d\leq g-1$ has only its canonical section.
+
+The maximal-minor resolution of (8.7) now computes its cycle as the degree-$(g-d)$ Chern class of the virtual bundle
+
+$$
+p_*(\mathcal L(E)|_E)-p_*\mathcal L(E).
+$$
+
+Its $K$-class is $-Rp_*\mathcal L$, independently of $E$. The curve case of Riemann--Roch computes its Chern character explicitly. Write the first Chern class of the normalized universal bundle as $d\eta+\xi$, where $\eta$ is the class of a point on $C$ and $\xi$ has one degree in the curve direction and one in the Picard direction. In
+
+$$
+\operatorname{ch}(Rp_*\mathcal L)
+=p_*\bigl(\exp(d\eta+\xi)\operatorname{td}(C)\bigr),
+$$
+
+In relative dimension one the displayed identity follows directly by resolving $\mathcal L(E)$ and $\mathcal L(E)|_E$ into finite locally free sheaves, applying additivity of the Chern character to their divisor exact sequence, and then splitting the finite divisor $E$; no higher-dimensional Riemann--Roch input is hidden here. Only $d\eta$, the degree-one term $(1-g)\eta$ of $\operatorname{td}(C)$, and $\xi^2/2$ have curve degree two. The first two give the rank $d+1-g$. Contraction of $\xi^2/2$ by the Serre-duality pairing is $-c_1(\Theta)$; this sign also follows from the determinant line $(\det E^0)^{-1}\det E^1=\mathcal O(\Theta)$. All higher Chern-character terms vanish. Hence for $V=-Rp_*\mathcal L$,
+
+$$
+\operatorname{ch}(V)=g-d-1+c_1(\Theta),
+\qquad c(V)=\exp(c_1(\Theta)).
+$$
+
+Therefore $c_r(V)=c_1(\Theta)^r/r!$. Taking $r=g-d$ proves (8.6). The calculation is an identity of determinantal cycles, so it retains diagonal and inseparable lengths and is valid in every characteristic.
+
+At $d=0$, $W_0$ is the reduced origin, so (8.6) gives
+
+$$
+c_1(\mathcal O(\Theta))^g=g![0]. \tag{8.8}
+$$
+
+An effective divisor on an abelian variety is nef: translate it so that it does not contain a given curve, and its intersection with that curve is nonnegative. A nef line bundle on an abelian variety has positive top self-intersection exactly when its translation stabilizer is finite. Indeed, a positive-dimensional connected stabilizer makes the numerical class descend to a quotient of smaller dimension and forces the top power to vanish; conversely the kernel of the associated homomorphism is the stabilizer scheme. The abelian Nakai criterion now says that a nef class with finite stabilizer is ample: after quotienting by the connected stabilizer the descended class is ample, and a finite stabilizer leaves the quotient dimension unchanged. Thus (8.8) makes $\mathcal O(\Theta)$ ample and $\lambda_C$ an isogeny.
+
+We use the following numerical identity for an ample line bundle $M$ on a $g$-dimensional abelian variety:
 
 $$
 \operatorname{length}\ker(\phi_M)
-=\left(\frac{c_1(M)^g}{g!}\right)^2=\chi(M)^2,
+=\left(\frac{c_1(M)^g}{g!}\right)^2
+=\chi(M)^2. \tag{8.9}
 $$
 
-as a finite group-scheme length; this remains valid in positive characteristic and does not count only geometric points.
+For clarity, this identity is scheme-theoretic. The theorem of the cube gives $[n]^*M\equiv M^{\otimes n^2}$. Applying the intersection form to the graph of $\phi_M$ and the zero section computes their intersection as the square of $c_1(M)^g/g!$; that intersection is the full finite group-scheme kernel, with local intersection length at infinitesimal points. Riemann--Roch identifies $c_1(M)^g/g!$ with $\chi(M)$. Thus (8.9) counts inseparable and nonreduced kernel structure as well as geometric points.
 
-For completeness, the theta intersection calculation is obtained directly from the Abel construction. Put $W_d=a_d(C^{(d)})$ in $\operatorname{Pic}^d$ and translate all $W_d$ into $J$. Adding one point gives a generically finite incidence map
-
-$$
-C\times W_{d-1}\longrightarrow W_d
-$$
-
-of generic degree $d$: a general divisor of degree $d$ has $d$ choices for the distinguished point. Intersecting successively with general translates of $W_{g-1}=\Theta$ and using the divisor exact sequence
-
-$$
-0\longrightarrow L(-p)\longrightarrow L\longrightarrow L|_p\longrightarrow0
-$$
-
-shows inductively that the scheme-theoretic intersection of $g-d$ such translates represents $(g-d)![W_d]$. The induction is an equality of intersection cycles: away from the diagonals, the incidence map is finite etale and contributes its degree; the diagonal multiplicities are the lengths of the displayed evaluation cokernels and give the same degree after specialization. At $d=0$, $W_0$ is the reduced origin. Hence the intersection of $g$ general theta translates has length $g!$, so
-
-$$
-c_1(\mathcal O(\Theta))^g=g!,
-\qquad \chi(\mathcal O(\Theta))=1. \tag{8.7}
-$$
-
-Equations (8.6)--(8.7) give a finite flat kernel of rank one, hence the trivial kernel. The isogeny is an isomorphism. $\square$
+For $M=\mathcal O(\Theta)$, (8.8) and Riemann--Roch give $\chi(M)=1$. Formula (8.9) gives a finite flat kernel of rank one, so the kernel is trivial and $\lambda_C$ is an isomorphism. Fiberwise ampleness of the theta line is relative ampleness over $S$, so this is a principal polarization in families. $\square$
 
 This proof uses scheme-theoretic lengths, so it does not fail when the characteristic divides an integer occurring in a multiplication map. A bijection on geometric points alone would not exclude an infinitesimal kernel.
 
@@ -724,10 +773,18 @@ Changing $e$ translates $\Theta_e$. Changing the universal line bundle tensors t
 The determinant construction, translation, and dual abelian scheme all commute with arbitrary base change. Therefore
 
 $$
-\lambda_{C_{S'}/S'}=\lambda_{C/S}\times_SS' \tag{8.8}
+\lambda_{C_{S'}/S'}=\lambda_{C/S}\times_SS' \tag{8.10}
 $$
 
 for every $S'\to S$. The Jacobian is canonically self-dual through $\lambda_C$. The adjective **canonical** refers to the homomorphism, not to a uniquely chosen symmetric theta divisor: theta divisors can differ by translation, especially before a theta characteristic is chosen.
+
+The sign relating this self-duality to the chosen Abel map is also canonical. Pullback of algebraically trivial line bundles along $j_e$ gives $j_e^*:J^\vee\to J$, and
+
+$$
+j_e^*\circ\lambda_C=[-1]_J. \tag{8.11}
+$$
+
+To verify (8.11), let $x$ be represented by a normalized degree-zero line bundle $L_x$ on $C$. Restrict to $C\times J$ the determinant comparison defining $t_x^*\mathcal O(\Theta)\otimes\mathcal O(\Theta)^{-1}$. The exact sequence for adding the moving point $p$ identifies the resulting normalized bundle on $C$ with $L_x^{-1}$. The comparison is functorial in $x$, so see-saw upgrades the fiber calculation to an identity of the two homomorphisms. In genus one, $t_x^{-1}(e)=-x$, so the divisor difference $(-x)-(e)$ represents the inverse of $x-e$; this visible case confirms the sign.
 
 ## 9. The Albanese property
 
@@ -744,10 +801,10 @@ $$
 Dualize and use the bidual isomorphism $A\simeq A^{\vee\vee}$ and the principal polarization of $J$ to define
 
 $$
-u_*=(u^*)^\vee\circ\lambda_C:J\longrightarrow A. \tag{9.2}
+u_*=-\,(u^*)^\vee\circ\lambda_C:J\longrightarrow A. \tag{9.2}
 $$
 
-The direction is worth checking: pullback is contravariant on Picard varieties, duality reverses it again, and $\lambda_C$ changes $J$ into $J^\vee$.
+The direction and sign are worth checking. Pullback is contravariant on Picard varieties, duality reverses it again, and $\lambda_C$ changes $J$ into $J^\vee$. The minus sign is forced by (8.11) for the convention $j_e(p)=\mathcal O(p-e)$.
 
 ### 9.2 Existence and uniqueness of factorization
 
@@ -759,7 +816,19 @@ $$
 
 It is the homomorphism (9.2), and its formation commutes with base change.
 
-**Proof.** Pull the Poincare bundle of $A\times A^\vee$ back along $u\times1$. By definition it is the family of degree-zero bundles on $C$ classified by $u^*:A^\vee\to J$. Dualizing this classifying map says that the two morphisms $u$ and $u_*\circ j_e$ induce the same morphism $A^\vee\to J$, hence the same normalized pullback of the Poincare bundle. The see-saw principle identifies these normalized families, and the bidual map $A\to A^{\vee\vee}$ is an isomorphism, so the two morphisms to $A$ are equal. This proves existence.
+**Proof.** Pull the Poincare bundle of $A\times A^\vee$ back along $u\times1$. By definition it is the family of degree-zero bundles on $C$ classified by $u^*:A^\vee\to J$. A polarization homomorphism is symmetric under biduality, so dualizing (9.2) gives
+
+$$
+u_*^*=-\lambda_C\circ u^*:A^\vee\longrightarrow J^\vee.
+$$
+
+After pullback along $j_e$, (8.11) gives
+
+$$
+j_e^*u_*^*=-(j_e^*\lambda_C)u^*=u^*.
+$$
+
+Thus $u$ and $u_*\circ j_e$ induce the same normalized family of line bundles parametrized by $A^\vee$. The see-saw principle identifies those families, and the bidual map $A\to A^{\vee\vee}$ is an isomorphism, so the two morphisms to $A$ are equal. This proves existence.
 
 If $v,w:J\to A$ both satisfy (9.3), then $v-w$ vanishes on $j_e(C)$. It vanishes on the closed subgroup generated by that image, which is all of $J$ by Section 7.4. Thus $v=w$. Every construction used in (9.2) is compatible with base change, proving the last assertion. $\square$
 
@@ -802,7 +871,9 @@ $$
 
 so (10.1) restricts to $h^*:J_D\to J_C$.
 
-For curves over a field, every nonconstant finite morphism between smooth curves is finite flat: the target local rings are discrete valuation rings and the finite source algebra is torsion-free. In a relative family, fiberwise finiteness alone is not enough; we assume finite locally free or verify flatness separately. Constant maps do not induce the degree formula (10.2), though ordinary pullback still exists.
+Under the standing smooth-family hypotheses, every finite $S$-morphism $h:C\to D$ is finite locally free. Affine-locally on $D$, write $B\to M$ for the finite algebra $h_*\mathcal O_C$. Both $B$ and $M$ are flat over the base because $D/S$ and $C/S$ are smooth. On every geometric fiber, $M_s$ is the finite algebra of a nonconstant finite map between smooth curves; it is torsion-free over each discrete valuation ring of $D_s$ and hence flat. The fiberwise flatness criterion makes $M$ flat over $B$. Being finite and finitely presented, it is locally free, with rank locally constant on $S$. Thus the finite locally free theory below covers every finite map between the smooth relative curves of this book.
+
+Mere fiberwise finiteness of a morphism not already known to be finite is insufficient in a broader family, so finite local freeness must then be verified separately. Constant maps do not induce the degree formula (10.2), though ordinary pullback still exists.
 
 ### 10.2 The norm of a line bundle
 
@@ -891,7 +962,17 @@ $$
 =\langle M,\operatorname{Nm}_hL\rangle_D, \tag{10.13}
 $$
 
-for the determinant-of-cohomology pairing defining theta. The normalizations agree at the identity, so see-saw upgrades the fiberwise equality to an isomorphism of universal bundles. Hence the homomorphisms agree. $\square$
+for the determinant-of-cohomology pairing defining theta. Explicitly, for two degree-zero families $L_1,L_2$ on the same curve it is the normalized line
+
+$$
+\langle L_1,L_2\rangle=
+\det Rf_*(L_1\otimes L_2)\otimes
+(\det Rf_*L_1)^{-1}\otimes
+(\det Rf_*L_2)^{-1}\otimes
+\det Rf_*\mathcal O.
+$$
+
+The projection formula for $h_*$ and transitivity of determinant identify the two displayed pairings, including their rigidifications. The normalizations agree at the identity, so see-saw upgrades this equality to an isomorphism of universal bundles. Hence the homomorphisms agree. $\square$
 
 On cotangent spaces, (10.11) is the familiar adjunction between pullback of differentials and trace. The group-scheme identity is stronger and remains meaningful when the differential trace is degenerate.
 
@@ -923,7 +1004,7 @@ If $Z$ is a disjoint union, its action is the sum of the actions of the componen
 
 ### 11.2 Composition and transpose
 
-Suppose $C\xleftarrow{\alpha}Z\xrightarrow{\beta}D$ and $D\xleftarrow{\gamma}W\xrightarrow{\delta}E$ are finite locally free correspondences. Their geometric composite is based on $Z\times_DW$. If this fiber product is not smooth, one uses its one-dimensional cycle with scheme-theoretic multiplicities, or normalizes its components; the induced Picard homomorphism is unchanged because finite pushforward records those multiplicities.
+Suppose $C\xleftarrow{\alpha}Z\xrightarrow{\beta}D$ and $D\xleftarrow{\gamma}W\xrightarrow{\delta}E$ are finite locally free correspondences. Their composite is based on $Z\times_DW$. This fiber product need not be smooth, but no normalization is needed: both projections remain finite locally free, so pullback and determinant norm are defined directly on it and retain its nilpotent and intersection multiplicities. Over a field its associated one-dimensional cycle gives the equivalent divisor description with the same local lengths.
 
 Flat base change for pullback and norm gives
 
@@ -1112,13 +1193,13 @@ whose normalization description allows simple poles with opposite residues at pa
 
 ### 13.1 Why total degree is not separated
 
-Let $R$ be a discrete valuation ring, $S=\operatorname{Spec}R$, and let $\mathcal X/S$ be a regular proper semistable curve with smooth geometrically connected generic fiber $C$. Write the geometric special fiber as
+Let $R$ be a henselian discrete valuation ring, $S=\operatorname{Spec}R$, and let $\mathcal X/S$ be a regular proper semistable curve with smooth geometrically connected generic fiber $C$. After passing to the strict henselization, write the split geometric special fiber as
 
 $$
 \mathcal X_{\bar s}=\sum_{v\in V}Y_v.
 $$
 
-A vertical divisor $V=\sum_va_vY_v$ is empty on the generic fiber, so $\mathcal O_{\mathcal X}(V)$ is generically trivial. It can nevertheless have a nonzero special multidegree. Therefore two sections of the total-degree-zero Picard object can agree generically and differ at the closed point. The diagonal is not closed: the object is nonseparated.
+A vertical divisor $V=\sum_va_vY_v$ on this strict-henselian base is empty on the generic fiber, so $\mathcal O_{\mathcal X}(V)$ is generically trivial. It can nevertheless have a nonzero special multidegree. Therefore two sections of the total-degree-zero Picard object can agree generically and differ at the closed point. The diagonal is not closed: the object is nonseparated. All lattice calculations below are equivariant for the residue-field Galois action and hence descend to $R$; without splitting, an individual $Y_v$ need not itself be a divisor over the ground ring.
 
 This does not contradict separatedness of the Picard scheme for a smooth family. The special fiber here is reducible, and degree zero on the generic curve imposes only total degree zero after specialization. It does not force multidegree zero.
 
@@ -1161,7 +1242,7 @@ $$
 P^{\mathrm{sep}}=P/E. \tag{13.3}
 $$
 
-For a regular semistable curve, this quotient is smooth and separated over $R$, has generic fiber $J_C$, and has the extension property for line-bundle classes from smooth $R$-schemes. Its special identity component is the generalized Jacobian (12.2), and its geometric component group is
+For a regular semistable curve, the semistable Picard-quotient theorem established for this exact henselian setting shows that $E$ is flat, that the fppf quotient is represented, and that it is smooth and separated over $R$. It has generic fiber $J_C$ and the extension property for line-bundle classes from smooth $R$-schemes. Its special identity component is the generalized Jacobian (12.2), and its geometric component group is
 
 $$
 \Phi\simeq
@@ -1217,7 +1298,7 @@ The principal theorems have sharp boundaries.
 
 **Geometric connectedness.** If fibers have several connected components, $f_*\mathcal O_C$ is not $\mathcal O_S$. Scalar rigidification along one section does not control automorphisms on the other components, and degree becomes a vector indexed by connected components.
 
-**Smoothness.** For a nodal curve, $\operatorname{Pic}^0$ acquires a torus and may cease to be proper. For a cusp, the connected Picard group has a unipotent additive part rather than a torus. For nonreduced curves it can be nonreduced. The phrase “Jacobian is an abelian variety” therefore requires a smooth proper curve, or compact-type hypotheses in a controlled nodal case.
+**Smoothness.** For a nodal curve, $\operatorname{Pic}^0$ acquires a torus and may cease to be proper. For a cusp, the connected Picard group has a unipotent additive part rather than a torus. Nonreduced curves can contribute further unipotent directions and can violate the relative cohomological-flatness hypotheses used above. The phrase “Jacobian is an abelian variety” therefore requires a smooth proper curve, or compact-type hypotheses in a controlled nodal case.
 
 **Flatness and finite presentation.** Without flatness, Euler characteristics and degrees can jump and the relative Picard functor need not have the stated components. Without finite presentation, infinitesimal smoothness does not automatically become smoothness and descent need not preserve bounded geometry.
 
@@ -1269,7 +1350,7 @@ $$
 \lambda_C:J\xrightarrow{\sim}J^\vee,
 $$
 
-independent of the section and compatible with every base change. For a finite locally free map $h:C\to D$, pullback and norm satisfy
+independent of the section and compatible with every base change. With $t_x(y)=y+x$ and $j_e(p)=\mathcal O(p-e)$, its sign is $j_e^*\lambda_C=[-1]_J$, so Albanese factorization uses the minus sign in (9.2). For a finite map $h:C\to D$, automatically finite locally free under the standing smooth-family hypotheses, pullback and norm satisfy
 
 $$
 \operatorname{Nm}_h h^*=[\deg h],
