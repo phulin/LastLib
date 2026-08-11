@@ -148,25 +148,64 @@ The notation $(a,b)_F$ would be much less useful if it described only specially 
 
 **Theorem 1.1 (presentation theorem).** Every four-dimensional central simple $F$-algebra is isomorphic to $(a,b)_F$ for some $a,b\in F^\times$.
 
-**Proof strategy.** First find a quadratic étale subalgebra and choose a generator of trace zero inside it. Then find a second element that implements the nontrivial automorphism of that subalgebra. The two elements necessarily anticommute.
+**Proof strategy.** Use the reduced trace form to choose two nonisotropic pure quaternions orthogonal to one another. Their quadratic equations make their squares nonzero scalars, while orthogonality makes them anticommute.
 
-**Proof.** Let $B$ be a quaternion algebra. The separable-element theorem for central simple algebras supplies a quadratic separable étale subalgebra $E\subset B$; the hypothesis $\operatorname{char}F\ne2$ excludes an inseparable degree-two obstruction. Choose a generator $i\in E$ of trace zero for the quadratic étale trace. Its two conjugates are $i$ and $-i$, so
-
-$$
-i^2=a\in F^\times.
-$$
-
-The scalar is nonzero because the chosen subalgebra is étale. Thus $E=F[i]$ is either a quadratic field or the split quadratic algebra $F\times F$.
-
-The nontrivial $F$-automorphism $\sigma$ of $E$ sends $i$ to $-i$. The conjugacy theorem for embeddings of a separable commutative subalgebra in a central simple algebra supplies $j\in B^\times$ such that
+**Proof.** Let $B$ be a quaternion algebra. After extension to a separable closure, $B$ is $M_2$; matrix trace and determinant descend to the reduced trace and norm on $B$. The quadratic Cayley--Hamilton identity and the trace pairing are therefore available intrinsically:
 
 $$
-jxj^{-1}=\sigma(x)\qquad(x\in E).
+x^2-\operatorname{Trd}(x)x+\operatorname{Nrd}(x)=0,
+\qquad
+T_B(x,y)=\operatorname{Trd}(xy).
 $$
 
-Consequently $ji=-ij$. The four elements $1,i,j,ij$ are independent. If $E$ is a field, a relation $x+yj=0$ with $x,y\in E$ and $y\ne0$ would put $j=-y^{-1}x$ in $E$, where conjugation by $j$ could not induce $\sigma$. If $E\cong F\times F$, let $e$ and $1-e$ be its primitive idempotents. The relation $je=(1-e)j$ places $ej$ and $(1-e)j$ in the two off-diagonal Peirce components, while $E$ occupies the diagonal components; invertibility of $j$ makes both off-diagonal vectors nonzero. Thus $E\oplus Ej$ has dimension four in either case and equals $B$.
+The pairing $T_B$ is nondegenerate because it becomes the nondegenerate matrix trace pairing after scalar extension. The pure subspace
 
-Now $j^2$ centralizes $E$ because $\sigma^2=1$, and it plainly centralizes $j$. Since $E$ and $j$ generate $B$, centrality of $B$ gives $j^2=b\in F^\times$. The basis $1,i,j,ij$ and its relations give $B\cong(a,b)_F$. $\square$
+$$
+B^0=\ker(\operatorname{Trd})
+$$
+
+is the orthogonal complement of $1$ and has dimension three. Since $T_B(1,1)=2\ne0$, its restriction to $B^0$ is nondegenerate. For $x\in B^0$, the quadratic identity gives
+
+$$
+T_B(x,x)=-2\operatorname{Nrd}(x).
+$$
+
+Because the characteristic is not two, a nondegenerate symmetric pairing cannot have every diagonal value zero. We may therefore choose $i\in B^0$ with $\operatorname{Nrd}(i)\ne0$. The quadratic identity then gives
+
+$$
+i^2=a=-\operatorname{Nrd}(i)\in F^\times.
+$$
+
+The orthogonal complement of the nonisotropic vector $i$ inside $B^0$ is a nondegenerate plane. Choose $j$ in that plane with $\operatorname{Nrd}(j)\ne0$, and put
+
+$$
+j^2=b=-\operatorname{Nrd}(j)\in F^\times.
+$$
+
+Apply the quadratic identity to $i+j$. Since both elements are pure,
+
+$$
+ij+ji
+=-\bigl(\operatorname{Nrd}(i+j)-\operatorname{Nrd}(i)-\operatorname{Nrd}(j)\bigr).
+$$
+
+The parenthesized scalar is the polar value of the norm. The displayed identity makes $ij+ji$ a scalar; taking reduced traces and using cyclicity shows that this polar value is $-\operatorname{Trd}(ij)$. Orthogonality for $T_B$ makes it zero, so $ij=-ji$.
+
+It remains to verify that the four resulting elements fill $B$. They are mutually orthogonal for $T_B$: the pure elements have trace zero, $T_B(i,j)=0$, and
+
+$$
+T_B(i,ij)=a\operatorname{Trd}(j)=0,
+\qquad
+T_B(j,ij)=-b\operatorname{Trd}(i)=0.
+$$
+
+Their diagonal pairings are
+
+$$
+2,\qquad 2a,\qquad 2b,\qquad -2ab,
+$$
+
+all nonzero. Hence $1,i,j,ij$ are linearly independent and form a basis of the four-dimensional algebra $B$. Their relations give $B\cong(a,b)_F$. $\square$
 
 This proof also explains the shape of the presentation. One generator records a quadratic subalgebra; the other records its Galois involution. Anticommutation is not an arbitrary flourish but the equation expressing that involution.
 
@@ -230,7 +269,7 @@ $$
 
 lies in $V^\times$ and intertwines the embeddings. This proves the third and second statements.
 
-For the first, let $\varphi$ be an $F$-automorphism of $B$. Choose a quadratic étale subalgebra $E\subset B$. By the third statement, after composing $\varphi$ with an inner automorphism we may suppose that it fixes $E$ pointwise. Write $B=E\oplus Ej$ with $jx=\sigma(x)j$. An automorphism fixing $E$ must send $j$ to $cj$ for some $c\in E^\times$, because $Ej$ is exactly the subspace on which right multiplication twists by $\sigma$. Preservation of $j^2$ gives $N_{E/F}(c)=1$. Hilbert's theorem 90 supplies $d\in E^\times$ with $c=d/\sigma(d)$. Conjugation by $d$ fixes $E$ and sends $j$ to $(d/\sigma(d))j=cj$. Thus the adjusted automorphism is also inner, and so is $\varphi$. $\square$
+For the first, let $\varphi$ be an $F$-automorphism of $B$. Choose a quadratic étale subalgebra $E\subset B$. By the third statement, after composing $\varphi$ with an inner automorphism we may suppose that it fixes $E$ pointwise. Write $B=E\oplus Ej$ with $jx=\sigma(x)j$. An automorphism fixing $E$ must send $j$ to $cj$ for some $c\in E^\times$, because $Ej$ is exactly the subspace on which right multiplication twists by $\sigma$. Preservation of $j^2$ gives $N_{E/F}(c)=1$. If $E$ is a field, Hilbert's theorem 90 supplies $d\in E^\times$ with $c=d/\sigma(d)$. If $E=F\times F$, write $c=(r,r^{-1})$ and take $d=(r,1)$; the same identity holds. Conjugation by $d$ fixes $E$ and sends $j$ to $(d/\sigma(d))j=cj$. Thus the adjusted automorphism is also inner, and so is $\varphi$. $\square$
 
 The infinitude hypothesis enters only in the nonvanishing argument. The conclusion also holds over finite fields, but that extension is not needed here. Every field considered from Chapter 7 onward is infinite.
 
@@ -516,7 +555,7 @@ where $\langle u,v\rangle=\operatorname{Trd}(u\bar v)$ is the polar form of the 
 $$
 uv=-vu
 \quad\Longleftrightarrow\quad
-\langle u,v\rangle=0,
+\langle u,v\rangle=0.
 $$
 
 If nonzero pure elements $u$ and $v$ commute, then their cross product vanishes. The centralizer of $u$ is the quadratic algebra $F[u]$, whose pure part is one-dimensional; hence $u$ and $v$ lie on the same pure line.
@@ -675,7 +714,13 @@ $$
 
 If $a$ was already a square, the algebra was split before extension. Thus every nonsplit quaternion algebra has a quadratic splitting field. More intrinsically, any maximal commutative subfield $E\subset B$ has degree two, and $B\otimes_FE\cong M_2(E)$.
 
-The converse needs its degree hypothesis. If a quadratic field $E/F$ splits a quaternion algebra $B$, then $E$ embeds in $B$. One way to see this is to view the split algebra $B_E$ as endomorphisms of a two-dimensional $E$-space and descend a minimal left ideal; equivalently, use the embedding theorem for separable extensions of degree equal to the degree of a central simple algebra. We will exploit this equivalence locally and globally.
+The converse needs its degree hypothesis. Suppose that a quadratic field $E/F$ splits a quaternion algebra $B$. The degree-two case of cyclic descent, developed in Chapter 5, gives
+
+$$
+B\cong(E/F,\sigma,b)
+$$
+
+for some $b\in F^\times$. Concretely, after choosing a matrix realization over $E$, the descent operator implementing $\sigma$ has square in $F^\times$; adjoining that operator to $E$ produces the displayed crossed-product basis. Thus the cyclic algebra is $B$ itself, not merely a matrix algebra with the same division part. It visibly contains $E$, so $E$ embeds in $B$. This proves, in the degree-two case needed throughout the book, that a quadratic field embeds in $B$ exactly when it splits $B$.
 
 A finite separable extension of odd degree cannot split a quaternion division algebra. In Brauer-group language its class has order two and restriction followed by corestriction multiplies it by the odd degree. If restriction were zero, the original class would be zero. The local invariant formula later gives the sharper place-by-place version. Over the characteristic-zero arithmetic fields used below, every finite extension is separable.
 
@@ -988,7 +1033,7 @@ $$
 
 For odd $[L:F]$, multiplication by the degree acts as the identity on a group of exponent two, so $\alpha=0$.
 
-Two numerical invariants of a Brauer class must be distinguished. Its **exponent** is its order in the Brauer group. Its **index** is the degree of the central division algebra representing it. The exponent divides the index and they have the same prime divisors. For a quaternion division algebra both are two. A class of exponent two can nevertheless have index four or larger over a general field; it need not be represented by a quaternion algebra. This is why the number-field index theorem is used explicitly in the global existence proof: local invariants in $\{0,1/2\}$ force global index at most two there, a conclusion unavailable over arbitrary fields.
+Two numerical invariants of a Brauer class must be distinguished. Its **exponent** is its order in the Brauer group. Its **index** is the degree of the central division algebra representing it. The exponent divides the index and they have the same prime divisors. For a quaternion division algebra both are two. A class of exponent two can nevertheless have index four or larger over a general field; it need not be represented by a quaternion algebra. Accordingly, the global existence proof below will not infer the degree of a representative merely from exponent two. It will choose a quadratic field that kills the class and use the relative cyclic-algebra classification to produce a degree-two representative.
 
 For local fields the invariant map makes the functorial laws numerical. If $L/F$ is finite and $\alpha\in\operatorname{Br}(F)$, then
 
@@ -1004,7 +1049,7 @@ $$
 =\operatorname{inv}_L(\beta).
 $$
 
-Applying the second formula to a restriction recovers the first compatibility with transfer. Over number fields, corestriction sums these local contributions over all places above a fixed place. More precisely, for $w\mid v$,
+Applying the second formula to a restriction recovers the first compatibility with transfer. Over number fields, corestriction sums these local contributions over all places above a fixed place. More precisely, at each place $v$ of $F$,
 
 $$
 \operatorname{inv}_v\bigl((\operatorname{Cor}_{L/F}\beta)_v\bigr)
@@ -1434,7 +1479,7 @@ $$
 \operatorname{inv}_E(D\otimes_KE)=2\cdot\frac12=0.
 $$
 
-Thus $E$ splits $D$, and the degree-two embedding theorem gives $E\hookrightarrow D$. We obtain the compact local rule:
+Thus $E$ splits $D$, and the degree-two result of Section 4.3 gives $E\hookrightarrow D$. We obtain the compact local rule:
 
 $$
 E\hookrightarrow B
@@ -1486,7 +1531,25 @@ $$
 \operatorname{Nrd}(D^\times)=K^\times.
 $$
 
-This surjectivity should not be confused with norms from a quadratic subfield, which have index two. One route to surjectivity uses an unramified quadratic maximal subfield to obtain every even valuation and a ramified quadratic maximal subfield to obtain odd valuations; the unit norm images together fill the units. More generally, reduced norms from central division algebras over nonarchimedean local fields are surjective. The quaternion Hilbert symbol measures a quadratic **field** norm obstruction, not an obstruction to reduced norms from $D$.
+This surjectivity should not be confused with norms from a quadratic subfield, which have index two. Here is a proof in the quaternion case. Let $E_0/K$ be the unramified quadratic extension and let $E_1/K$ be a ramified quadratic extension; for instance, one may obtain $E_1$ from the Eisenstein polynomial $X^2-\pi$. Both fields embed in $D$ by Section 8.4. The norm from $E_0$ is surjective on units. If $\Pi$ is a uniformizer of $E_1$, the norm-valuation formula gives
+
+$$
+v_K(N_{E_1/K}(\Pi))=1.
+$$
+
+Given $c\in K^\times$, put $m=v_K(c)$. Then
+
+$$
+u=cN_{E_1/K}(\Pi)^{-m}
+$$
+
+is a unit, so $u=N_{E_0/K}(y)$ for some $y\in E_0^\times$. Field norm on an embedded maximal subfield is the restriction of reduced norm. Multiplicativity therefore gives
+
+$$
+c=\operatorname{Nrd}(\Pi^m y).
+$$
+
+Thus reduced norm is surjective. The quaternion Hilbert symbol measures a quadratic **field** norm obstruction, not an obstruction to reduced norms from $D$.
 
 ## 9. Global ramification and reciprocity
 
@@ -1659,7 +1722,7 @@ $$
 
 In particular, if $B$ is split at every real place, its reduced norm map is surjective.
 
-**Proof strategy.** Necessity is the positivity of the Hamilton norm. For sufficiency, view $\operatorname{Nrd}(x)=c$ as a quadratic-form representation problem, solve it at every completion, and apply the local--global theorem for quadratic forms. Anisotropy of the quaternion norm rules out a solution at infinity in the homogenizing coordinate.
+**Proof strategy.** Necessity is the positivity of the Hamilton norm. For sufficiency, choose the trace of a prospective element by weak approximation. Its discriminant is required to define a quadratic field at every ramified place. That field kills the Brauer class, embeds in $B$ through the relative cyclic-algebra classification, and contains an element of norm $c$.
 
 **Proof.** If $c=\operatorname{Nrd}(x)$ and $v$ is a ramified real place, then $B_v\cong\mathbf H$ and its reduced norm is the positive-definite sum of four squares. Hence $c$ is positive at $v$.
 
@@ -1669,27 +1732,39 @@ $$
 \begin{pmatrix}c&0\\0&1\end{pmatrix}
 $$
 
-has determinant $c$, so assume that $B$ is division. Let $n_B$ be its reduced norm form and consider the five-dimensional quadratic form
+has determinant $c$, so assume that $B$ is division.
+
+At each finite $v\in\operatorname{Ram}(B)$, Section 8.5 supplies an element $x_v\in B_v^\times$ of reduced norm $c$. We may take $x_v$ nonscalar. Indeed, if a chosen preimage is scalar, then $c$ is a square in $F_v$; multiplying it by a nonscalar norm-one element from any quadratic subfield gives another preimage. Put
 
 $$
-q_c=n_B\perp\langle-c\rangle.
+t_v=\operatorname{Trd}(x_v),
+\qquad
+d_v=t_v^2-4c.
 $$
 
-We show that $q_c$ is isotropic over every completion $F_v$. At a finite place, if $B_v$ is split, determinants represent every nonzero element. If $B_v$ is division, the local reduced norm map is surjective by Section 8.5. At a complex place every quaternion algebra is split. At a real split place determinants are again surjective. At a real ramified place, the Hamilton norm represents precisely the positive numbers, and the hypothesis gives $c>0$. Thus in every case there is $x_v\in B_v^\times$ with $n_B(x_v)=c$, so $(x_v,1)$ is an isotropic vector for $q_c$.
-
-The local--global theorem for quadratic forms now makes $q_c$ isotropic over $F$. Choose a nonzero pair $(x,t)\in B\oplus F$ with
+The reduced characteristic polynomial of a nonscalar element of the division algebra $B_v$ is irreducible, so $d_v$ is a nonsquare in $F_v^\times$. At each ramified real place take $t_v=0$; then $t_v^2-4c=-4c<0$. Nonsquare classes at finite places and negativity at real places are open conditions. Weak approximation therefore gives $t\in F$ such that
 
 $$
-n_B(x)=ct^2.
+d=t^2-4c
 $$
 
-If $t=0$, then $n_B(x)=0$. Since $B$ is division, its norm form is anisotropic, forcing $x=0$, contrary to the choice of a nonzero pair. Hence $t\ne0$, and
+is a nonsquare in every ramified finite completion and is negative at every ramified real completion. The ramification set is nonempty: otherwise global Brauer injectivity would make $B$ split. Hence these local conditions also ensure that $d$ is not a square in $F$. Put $E=F(\sqrt d)$.
+
+The field $E$ kills the Brauer class of $B$. Indeed, at every ramified place it has local degree two, so the restriction formula sends $1/2$ to zero; at every other place the old invariant was already zero. Global Brauer injectivity over $E$ gives $B_E\cong M_2(E)$. Hence $[B]$ lies in the relative Brauer group $\operatorname{Br}(E/F)$. The relative cyclic-algebra classification of Section 5.5 represents this class by a degree-two cyclic algebra containing $E$. Since that cyclic algebra and $B$ are quaternion algebras with the same Brauer class, they are isomorphic. Thus $E$ embeds in $B$.
+
+Finally,
 
 $$
-\operatorname{Nrd}(x/t)=c.
+z=\frac{t+\sqrt d}{2}\in E^\times
 $$
 
-The element $x/t$ is invertible because its norm is nonzero. This proves sufficiency. $\square$
+has field norm
+
+$$
+N_{E/F}(z)=\frac{t^2-d}{4}=c.
+$$
+
+On a maximal subfield, field norm is the restriction of reduced norm. The image of $z$ in $B^\times$ therefore has reduced norm $c$, proving sufficiency. $\square$
 
 The theorem separates two norm phenomena that are easy to conflate. For a quadratic field $E\subset B$, the field norm subgroup $N_{E/F}(E^\times)$ can have many local index-two conditions. Allowing all of $B^\times$ removes every finite-place condition; only positivity at ramified real places survives.
 
@@ -1745,7 +1820,15 @@ $$
 
 Their sum is $|S|/2=0$ in $\mathbf Q/\mathbf Z$. Exactness of the global Brauer invariant sequence produces a class $\alpha\in\operatorname{Br}(F)$ with precisely these local invariants.
 
-It remains important to explain why $\alpha$ is represented by a quaternion algebra, not merely by some larger central simple algebra. The local indices of $\alpha$ are $1$ and $2$, so the global index theorem says that the index of $\alpha$ is their least common multiple, at most $2$. If $S$ is empty, $\alpha=0$ and $M_2(F)$ represents it. If $S$ is nonempty, its division representative has degree two and is therefore a quaternion division algebra. This gives existence.
+It remains important to explain why $\alpha$ is represented by a quaternion algebra, not merely by some larger central simple algebra. If $S$ is empty, $\alpha=0$ and $M_2(F)$ represents it. Suppose that $S$ is nonempty. Use weak approximation to choose $a\in F^\times$ whose square class is nonsquare at every finite $v\in S$ and which is negative at every real $v\in S$. Then $E=F(\sqrt a)$ is a quadratic field, and $E\otimes_FF_v$ is a field of degree two for every $v\in S$.
+
+After restriction to $E$, every local invariant of $\alpha$ vanishes: the invariant $1/2$ at a place of $S$ is multiplied by local degree two, while all other invariants were zero already. Global injectivity over $E$ gives $\operatorname{Res}_{E/F}(\alpha)=0$. The relative cyclic-algebra classification now gives
+
+$$
+\alpha=[(E/F,\sigma,b)]
+$$
+
+for some $b\in F^\times$. This cyclic algebra has degree two, so it is a quaternion algebra, and its local invariants are exactly the prescribed family. This proves existence without making an unjustified inference from exponent to index.
 
 The parity condition is exactly sufficient, not just necessary. In particular, one may prescribe a real place and a finite place together, two finite places, or any larger even collection. A singleton can never occur.
 
@@ -1817,9 +1900,9 @@ $$
 
 When it exists, it is unique up to $F$-algebra isomorphism.
 
-**Proof strategy.** Translate the desired behavior into local invariants and use exactness of the global invariant sequence. Degree two then converts the resulting class back into a quaternion algebra.
+**Proof strategy.** Translate the desired behavior into one finite even ramification set and apply the classification theorem, whose existence proof constructs a degree-two cyclic representative.
 
-**Proof.** Necessity follows from reciprocity: each prescribed ramified place contributes $1/2$, so the invariant sum vanishes only when the total number is even. Conversely, assume the parity condition and define a finite family of local invariants by assigning $1/2$ at $S_\infty\cup S_f$ and $0$ elsewhere. The sum is zero. Exactness produces a global Brauer class with precisely these localizations. As in Section 10.3, its global index is the least common multiple of its local indices, hence at most two. The zero class is represented by $M_2(F)$; a nonzero class has a division representative of degree two. In either case there is a quaternion algebra with the required local forms. Equality of all local invariants and global injectivity prove uniqueness. $\square$
+**Proof.** Necessity follows from reciprocity: each prescribed ramified place contributes $1/2$, so the invariant sum vanishes only when the total number is even. Conversely, if the parity condition holds, the set $S_\infty\cup S_f$ is a finite even set of noncomplex places. Theorem 10.1, with the degree-two construction of Section 10.3, supplies a quaternion algebra ramified exactly there. Its local forms are the displayed ones. The uniqueness clause of Theorem 10.1 proves uniqueness. $\square$
 
 Several consequences are worth recording separately.
 
@@ -1924,7 +2007,7 @@ $$
 \operatorname{inv}_w(B_E)=2\cdot\frac12=0.
 $$
 
-Above an unramified place the invariant was already zero. Hence $B_E$ splits at every place of $E$, and global injectivity gives $B_E\cong M_2(E)$. The degree-two embedding theorem now supplies $E\hookrightarrow B$. $\square$
+Above an unramified place the invariant was already zero. Hence $B_E$ splits at every place of $E$, and global injectivity gives $B_E\cong M_2(E)$. The degree-two result of Section 4.3 now supplies $E\hookrightarrow B$. $\square$
 
 At a real ramified place, the condition says that $E$ must become complex. Thus every quadratic subfield of a totally definite algebra is totally imaginary. At a finite ramified place, the condition allows either a ramified or unramified quadratic local field, but forbids two copies of the base field.
 
