@@ -129,11 +129,11 @@ The first temptation is to take the product of all completions. That product is 
 
 This book develops that construction first additively and then multiplicatively. The additive object makes approximation and compact quotients transparent. The multiplicative object remembers valuations, ideals, units, and norms. Their resemblance is useful, but their topologies are not interchangeable. A recurring theme will be that the chosen compact local subgroups are part of the construction, not cosmetic constraints.
 
-We assume the valuation, completion, and nonarchimedean topology developed in Book 1, together
-with the local extension, trace, norm, and unit-filtration results of Book 2. We briefly recall the
-notation needed here and supply the global algebraic-number-theoretic framework. The finer
-ramification invariants of Book 3 enter only when we explain why norm-congruence depths can depend
-on the different.
+We use the ordinary background theory of valuations, completions, finite-dimensional field
+extensions, traces, norms, and locally compact groups. We briefly recall the local notation and
+supply the global algebraic-number-theoretic framework needed for every adelic argument. The few
+local norm and unit-filtration facts that do substantive work below are proved when they enter;
+the different is used only to explain why sharp norm-congruence depths depend on ramification.
 
 ### 1.2 Number fields and their integers
 
@@ -211,7 +211,27 @@ $$
 \left(\frac4\pi\right)^{r_2}\frac{n!}{n^n}|d_K|^{1/2}N\mathfrak a.
 $$
 
-Apply this to an integral multiple of $\mathfrak a^{-1}$. After cancellation, the class of $\mathfrak a$ contains an integral ideal $\mathfrak b$ with norm at most the constant on the right that is independent of the class. An integral ideal of norm at most $B$ contains the integer $(m)$ for some bounded $m$: since $|\mathcal O_K/\mathfrak b|\leq B$, the exponent of that finite group is at most $B$, so $m\mathcal O_K\subseteq\mathfrak b$ for some $m\leq B$. For each $m$ there are only finitely many subgroups between $m\mathcal O_K$ and $\mathcal O_K$. Hence there are finitely many possible $\mathfrak b$. $\square$
+For a given ideal class, choose a fractional ideal $\mathfrak a$ in it and $0\ne d\in\mathcal O_K$
+such that $\mathfrak j=d\mathfrak a^{-1}$ is integral. Apply the displayed bound to
+$\mathfrak j$ and choose $0\ne x\in\mathfrak j$. Then
+
+$$
+\mathfrak b=(x)\mathfrak j^{-1}
+$$
+
+is integral because $(x)\subseteq\mathfrak j$, and its class is
+$[\mathfrak j]^{-1}=[\mathfrak a]$. Moreover,
+
+$$
+N\mathfrak b=\frac{|N_{K/\mathbf Q}(x)|}{N\mathfrak j}
+\leq\left(\frac4\pi\right)^{r_2}\frac{n!}{n^n}|d_K|^{1/2},
+$$
+
+independently of the class. An integral ideal of norm at most $B$ contains the integer $(m)$ for
+some bounded $m$: since $|\mathcal O_K/\mathfrak b|\leq B$, the exponent of that finite group is
+at most $B$, so $m\mathcal O_K\subseteq\mathfrak b$ for some $m\leq B$. For each $m$ there are
+only finitely many subgroups between $m\mathcal O_K$ and $\mathcal O_K$. Hence there are finitely
+many possible $\mathfrak b$. $\square$
 
 The exact Minkowski constant is less important here than the uniform bound. Its conclusion will later become a finite decomposition of the idele class group.
 
@@ -474,7 +494,9 @@ This formula reconciles the normalization internal to $K$ with the rational one.
 
 ### 3.1 The algebraic construction
 
-Let $(G_i)_{i\in I}$ be topological groups, and choose a subgroup $H_i\subseteq G_i$ for all but finitely many $i$. The **restricted product** is
+Let $(G_i)_{i\in I}$ be topological groups, and choose a subgroup $H_i\subseteq G_i$ for every
+$i$. A finite set of indices may be declared unrestricted by taking $H_i=G_i$ there; equivalently,
+those indices may be required to lie in every exceptional set below. The **restricted product** is
 
 $$
 \prod_i' (G_i,H_i)
@@ -779,25 +801,34 @@ $$
 K_{v_1}\times\cdots\times K_{v_r}.
 $$
 
-**Proof strategy.** Construct approximate coordinate selectors: global elements close to $1$ at one chosen place and close to $0$ at all the others. A linear combination then approximates arbitrary targets.
+**Proof strategy.** First solve all selected finite congruences. The permitted corrections form a
+fractional ideal. Inverting higher powers of one auxiliary rational prime does not change those
+finite congruence conditions, while it shrinks the corresponding archimedean lattice mesh to
+zero. A correction can therefore meet all selected archimedean conditions as well.
 
-**Proof.** We use the elementary independence lemma for absolute values: if $|\cdot|_1,\ldots,|\cdot|_r$ are pairwise inequivalent nontrivial absolute values and $0<\varepsilon<1$, then for each $i$ there is $e_i\in K$ such that
-
-$$
-|e_i-1|_i<\varepsilon,
-\qquad
-|e_i|_j<\varepsilon\quad(j\ne i).
-$$
-
-For two places, inequivalence supplies $z$ that is large at one and small at the other; a large power of $z/(1+z)$ has the required limiting behavior. The finite-family lemma follows by induction: adjoin one absolute value at a time, take sufficiently large powers so that all previously obtained strict inequalities persist, and apply the same transform to correct the new coordinate. Because only finitely many inequalities occur at each step, one power works for all of them. This proves the independence lemma without any completeness assumption.
-
-First approximate each desired local target $x_i\in K_{v_i}$ by some $a_i\in K$, using the definition of completion. Apply the lemma with $\varepsilon$ small enough that
+**Proof.** It is enough to meet a product of prescribed neighborhoods. Partition the selected
+places into finite places $T_f$ and archimedean places $T_\infty$. At $v\in T_f$, shrink the
+desired neighborhood of $x_v$ to $x_v+\mathfrak p_v^{m_v}$. Proposition 1.2 gives
+$a_0\in K$ meeting all these finite conditions. Put
 
 $$
-a=\sum_{i=1}^r e_i a_i
+\mathfrak c=\prod_{v\in T_f}\mathfrak p_v^{m_v}.
 $$
 
-is as close to $x_i$ at $v_i$ as desired. The errors from the other summands are small, and the $i$th summand differs from $a_i$ by the small factor $e_i-1$. $\square$
+Choose a rational prime $\ell$ lying below none of the places in $T_f$. Because $\ell$ is a unit
+at every such $v$, each element of $\ell^{-s}\mathfrak c$ still belongs locally to
+$\mathfrak p_v^{m_v}$. Under the Minkowski embedding, $\mathfrak c$ is a full lattice in
+$K_\infty$, and $\ell^{-s}\mathfrak c$ is its scalar dilation by $\ell^{-s}$. A compact
+fundamental parallelotope for $\mathfrak c$ therefore dilates to one of diameter tending to zero.
+It follows that, for all sufficiently large $s$, every point of $K_\infty$ lies arbitrarily close
+to some element of $\ell^{-s}\mathfrak c$.
+
+Choose arbitrary coordinates at the unselected archimedean places and form a vector in
+$K_\infty$ whose selected coordinates are $x_v-a_0$. The preceding lattice-mesh statement gives
+$c\in\ell^{-s}\mathfrak c$ as close to this vector as required at every selected archimedean
+place. Then $a=a_0+c$ still meets every finite condition, because
+$c\in\mathfrak p_v^{m_v}\mathcal O_v$ for $v\in T_f$, and it meets every selected archimedean
+condition by construction. $\square$
 
 Weak approximation permits archimedean and nonarchimedean targets together, but it says nothing about uncontrolled places. Adelic density additionally demands an almost-everywhere tail condition. In the finite adeles that condition can be preserved; in the full adeles discreteness prevents density.
 
@@ -1199,7 +1230,12 @@ Thus the ideal class group is the coarsest discrete quotient of the idele class 
 
 The ideal-class map has open kernel because $K_\infty^\times\widehat{\mathcal O}_K^\times$ is open in $\mathbf A_K^\times$. Hence $\operatorname{Cl}(K)$ is a discrete quotient of $C_K$. Theorem 1.1 says this quotient is finite.
 
-Conversely, once the compactness of the norm-one idele class group is proved, ideal-class finiteness follows immediately: a discrete continuous image of a compact group is finite. To make that argument, restrict the ideal-class map to the norm-one part and note that every ideal class has a representative there after adjusting one archimedean coordinate. This gives an adelic proof of the same finiteness theorem. We retained the geometry-of-numbers proof earlier because it also supplies the global setup used in the compactness argument.
+Conversely, once the compactness of the norm-one idele class group is known, ideal-class finiteness
+follows immediately: a discrete continuous image of a compact group is finite. To make that
+argument, restrict the ideal-class map to the norm-one part and note that every ideal class has a
+representative there after adjusting one archimedean coordinate. In the present development this
+is a consistency consequence, not an independent proof: compactness in Section 9.3 itself uses
+the finite list supplied by Theorem 1.1. Reversing that logical order would be circular.
 
 ### 8.4 Lattices and finite ideles
 
@@ -1351,7 +1387,7 @@ noncanonically.
 
 **Proof strategy.** Bounded logarithms give discreteness. For cocompactness, build for every point $t\in H$ an algebraic integer whose logarithmic vector stays a uniformly bounded distance from $t$. Only finitely many principal ideals can arise; dividing by fixed generators then produces a unit uniformly close to $t$.
 
-**Proof.** If $\lambda(u)=0$, every conjugate of $u$ has modulus $1$. The coefficients of the monic minimal polynomial of $u^m$ are bounded independently of $m$, because they are elementary symmetric functions of conjugates of modulus $1$. Only finitely many such integral polynomials exist, so two powers of $u$ agree and $u$ is a root of unity. Conversely every root of unity lies in the kernel.
+**Proof.** If $\lambda(u)=0$, every conjugate of $u$ has modulus $1$. The coefficients of the monic minimal polynomial of $u^m$ are bounded independently of $m$, because they are elementary symmetric functions of conjugates of modulus $1$. Only finitely many such integral polynomials exist, and the union of their finite root sets is finite. Thus two powers of $u$ agree and $u$ is a root of unity. Conversely every root of unity lies in the kernel.
 
 If $\lambda(u)$ ranges over a bounded set, every archimedean conjugate of $u$ lies in a fixed bounded subset of $K_\infty$. The lattice $\mathcal O_K$ has only finitely many points there. Hence the inverse image of a bounded subset under $\lambda|_{\mathcal O_K^\times}$ is finite, and $\lambda(\mathcal O_K^\times)$ is discrete.
 
@@ -1535,6 +1571,39 @@ $$
 
 The norm on $E^\times$ is continuous. Its image is not generally all of $F^\times$. Already for $\mathbf C/\mathbf R$, the norm image is $\mathbf R_{>0}$, excluding negative numbers. At a nonarchimedean unramified extension of degree $d$, valuation of a norm is divisible by $d$, although the norm on unit groups is surjective when the residue extension is finite. These are local obstructions that any global norm must satisfy.
 
+The unit-surjectivity assertion will be used in assembling local preimages, so we record its proof.
+
+**Lemma 10.1 (norms in an unramified extension).** Let $E/F$ be an unramified extension of
+nonarchimedean local fields of degree $d$. Then
+
+$$
+N_{E/F}(\mathcal O_E^\times)=\mathcal O_F^\times,
+\qquad
+N_{E/F}(E^\times)=\pi_F^{d\mathbf Z}\mathcal O_F^\times.
+$$
+
+**Proof.** A uniformizer $\pi_F$ remains a uniformizer of $E$, and
+$N_{E/F}(\pi_F)=\pi_F^d$. It remains to prove surjectivity on units. Write
+$U_E^r=1+\mathfrak p_E^r$ and $U_F^r=1+\mathfrak p_F^r$ for $r\geq1$. The norm on residue-field
+units is surjective: if $k_E/k_F$ has cardinalities $q^d/q$, its multiplicative norm is
+$z\mapsto z^{(q^d-1)/(q-1)}$, whose image has $q-1$ elements because $k_E^\times$ is cyclic.
+
+For $r\geq1$, expansion of the product over the $F$-embeddings of $E$ gives
+
+$$
+N_{E/F}(1+\pi_F^r z)
+\equiv 1+\pi_F^r\operatorname{Tr}_{k_E/k_F}(\bar z)
+\pmod{\mathfrak p_F^{r+1}}.
+$$
+
+The finite-field trace is a nonzero $k_F$-linear map, because the finite separable trace pairing
+is nondegenerate, and hence is surjective. Therefore the norm
+maps $U_E^r/U_E^{r+1}$ onto $U_F^r/U_F^{r+1}$ at every depth. Given $u\in\mathcal O_F^\times$,
+first lift a residue-field preimage. Inductively multiply that lift by elements of $U_E^r$ so
+that its norm agrees with $u$ modulo $\mathfrak p_F^{r+1}$. The corrections form a Cauchy
+product in the complete group $\mathcal O_E^\times$; its limit has norm $u$ by continuity.
+Combining unit surjectivity with the valuation formula gives the second equality. $\square$
+
 ### 10.2 The adelic norm
 
 Let $L/K$ be a finite extension. For $y=(y_w)\in\mathbf A_L^\times$, define its $v$-component by
@@ -1629,10 +1698,9 @@ N_{L/K}(\mathbf A_L^\times)
 $$
 
 Only the reverse inclusion needs explanation. Choose a local preimage at every place. Outside
-finitely many places the extension is unramified, $x_v$ is a unit, and the norm on the units of
-each unramified local factor is surjective by the successive-unit calculation for finite residue
-fields established in Book 2; one may therefore choose unit preimages there. The resulting family
-is an idele of $L$. In particular,
+finitely many places the extension is unramified, $x_v$ is a unit, and Lemma 10.1 supplies a unit
+preimage in any one local factor over $v$; take $1$ in the other factors. The resulting family is
+an idele of $L$. In particular,
 
 $$
 K^\times\cap N_{L/K}(\mathbf A_L^\times)
@@ -1690,13 +1758,13 @@ quotient.
 
 For $\mathbf C/\mathbf R$, $N(z)=|z|^2$, so a negative real number is never a local norm. Consequently, if a real place of $K$ becomes complex in $L$, every global norm from $L$ is positive at that place.
 
-For an unramified extension $E/F$ of nonarchimedean local fields of degree $d$, the valuation formula shows
+For an unramified extension $E/F$ of nonarchimedean local fields of degree $d$, Lemma 10.1 and the valuation formula show
 
 $$
 N(E^\times)=\pi_F^{d\mathbf Z}\mathcal O_F^\times.
 $$
 
-Surjectivity on units can be seen first in the finite residue fields, where the norm is surjective, and then on successive principal-unit quotients, followed by completeness. The missing valuation classes form a cyclic quotient of order $d$.
+The missing valuation classes form a cyclic quotient of order $d$.
 
 For a totally ramified extension, the valuation of a norm is unrestricted because $f=1$, while the unit norm may be a proper subgroup. Thus unramified and ramified extensions place their most visible norm obstruction in different parts of $F^\times=\pi_F^{\mathbf Z}\mathcal O_F^\times$.
 
@@ -2133,10 +2201,13 @@ Conversely, every continuous character $\chi:\mathbf A_K^\times\to\mathbf C^\tim
 this way. Restriction along the embedding of a single local factor gives $\chi_v$. Choose a
 neighborhood $W$ of $1$ in $\mathbf C^\times$ containing no nontrivial subgroup; a sufficiently
 small disk about $1$ works. Continuity gives a basic identity neighborhood $U$ whose image lies in
-$W$. Away from the finite exceptional set defining $U$, the whole subgroup
-$\mathcal O_v^\times$ lies in $U$. Its image under $\chi$ is a subgroup contained in $W$, hence is
-trivial. Thus almost all local restrictions are unramified in the elementary sense of being
-trivial on local units.
+$W$. If $S$ is the finite exceptional set defining $U$, the full tail subgroup consisting of
+ideles equal to $1$ on $S$ and arbitrary in $\mathcal O_v^\times$ off $S$ lies in $U$. Its image
+under $\chi$ is a subgroup contained in $W$, hence is trivial. Thus almost all local restrictions
+are unramified in the elementary sense of being trivial on local units. More importantly, for any
+idele $x$, enlarge $S$ to contain its nonunit coordinates and split $x$ into an idele supported on
+$S$ and an element of this tail subgroup. The latter is killed by $\chi$, proving
+$\chi(x)=\prod_v\chi_v(x_v)$ rather than merely identifying all one-coordinate restrictions.
 
 The character descends to the idele class group exactly when
 
@@ -2341,10 +2412,47 @@ $$
 $$
 
 For fixed $y$, this is a continuous additive character in $x$. The local trace pairing is
-nondegenerate, and the standard characters of $\mathbf R$, $\mathbf C$, and finite extensions of
-$\mathbf Q_p$ identify each local additive group with its character group. The annihilator of the
-distinguished local integer ring is the inverse different, which equals the integer ring at all
-but finitely many places. These local identifications therefore assemble into an adelic one:
+nondegenerate. We first justify the local character classification rather than importing it as a
+black box. Over $\mathbf R$, every continuous additive character is
+$x\mapsto e^{2\pi ixy}$ for a unique $y\in\mathbf R$; this follows by lifting the character to a
+real-valued homomorphism on a sufficiently small interval and then using additivity. Viewing
+$\mathbf C$ as $\mathbf R^2$ gives the analogous assertion, and the pairing
+$2\operatorname{Re}(xy)$ realizes every real linear functional.
+
+Now let $F$ be a finite extension of $\mathbf Q_p$, with ring of integers $\mathcal O$, uniformizer
+$\pi$, and inverse different $\mathfrak D^{-1}$. Let
+$\psi_F=\psi_p\circ\operatorname{Tr}_{F/\mathbf Q_p}$. The annihilator of $\mathcal O$ is
+$\mathfrak D^{-1}$, and consequently the pairing induced by $\psi_F(xy)$ on the finite groups
+
+$$
+\pi^{-r}\mathcal O/\pi^m\mathcal O
+\quad\text{and}\quad
+\pi^{-m}\mathfrak D^{-1}/\pi^r\mathfrak D^{-1}
+$$
+
+is perfect for $r\geq0$. Indeed, its left and right kernels are zero by the definition of the
+trace-dual ideal, and both groups have $q^{r+m}$ elements. If $\chi$ is any continuous additive
+character of $F$, then $\chi$ is trivial on $\pi^m\mathcal O$ for some $m\geq0$. Its restrictions
+to the first finite groups are therefore represented by compatible classes $y_r$ in the second
+groups.
+Completeness identifies their inverse limit with an element
+$y\in\pi^{-m}\mathfrak D^{-1}$, and $\chi(x)=\psi_F(xy)$ because
+$F=\bigcup_r\pi^{-r}\mathcal O$. Uniqueness follows from nondegeneracy. Thus every local additive
+group is self-dual under the stated pairing. This is a topological identification: annihilating
+a fixed compact open fractional ideal is an open condition in the compact-open topology on the
+character group, and its parameters form the corresponding trace-dual fractional ideal. These
+paired neighborhood bases make the parametrization and its inverse continuous.
+
+For a continuous character of $\mathbf A_K$, restriction to each local factor gives parameters
+$y_v\in K_v$. The same no-small-subgroups argument as in Section 13.2 shows that the character
+kills a full compact open tail, not just each one-coordinate subgroup separately. It is therefore
+the product of its local restrictions. In particular it is trivial on $\mathcal O_v$ at almost
+every finite place, so $y_v\in\mathfrak D_v^{-1}$ there. Since
+$\mathfrak D_v^{-1}=\mathcal O_v$ away from the finitely many primes dividing the global
+different, $(y_v)$ is an adele. Conversely an adelic parameter gives a convergent product of
+local characters. The same compact-open neighborhood test, now with a compact restricted-product
+tail and only finitely many exceptional coordinates, shows that the assembled bijection and its
+inverse are continuous. The local identifications therefore assemble into an adelic one:
 
 $$
 \mathbf A_K\xrightarrow{\sim}\widehat{\mathbf A_K},
@@ -2393,18 +2501,16 @@ $\psi_{K,v}(w_v a)=1$. Passing to the limit gives
 $\psi_{K,v}(w_vt)=1$ for all $t\in K_v$. Nondegeneracy of the local pairing forces $w_v=0$.
 This holds at every finite place, so $w=0$ and $y=b+c$ is diagonal.
 
-Equivalently, dualizing the closed inclusion $K\subset\mathbf A_K$ gives the paired statements
+Characters of the quotient $\mathbf A_K/K$ are exactly the characters of $\mathbf A_K$ that are
+trivial on $K$. The self-duality just proved and the annihilator calculation therefore give
 
 $$
 \widehat{\mathbf A_K/K}\cong K,
-\qquad
-\widehat K\cong\mathbf A_K/K,
 $$
 
-where $K$ is discrete in the first display and is given the discrete topology in the second.
-Compactness of $\mathbf A_K/K$ and discreteness of $K$ are thus dual aspects of the same lattice
-theorem. This is the harmonic-analytic reason that global sums over $K$ and integrals over
-$\mathbf A_K$ transform into one another.
+where $K$ has the discrete topology. Compactness of $\mathbf A_K/K$ and discreteness of this
+character group are thus dual aspects of the same lattice theorem. This is the harmonic-analytic
+reason that global sums over $K$ and integrals over $\mathbf A_K$ transform into one another.
 
 ## 14. The grammar of global reciprocity
 
@@ -2716,8 +2822,25 @@ does not change the lattice. Left multiplication by $\operatorname{GL}_n(K)$ cha
 basis. Thus finite double cosets organize global lattices together with whatever extra structure a
 smaller level retains.
 
-For $n=1$, $\Lambda(g_f)$ is the inverse fractional ideal of Section 8.4, and the double quotient
-by $K^\times$ and $\widehat{\mathcal O}_K^\times$ is the ideal class group. Higher rank therefore
+To verify the asserted lattice property, choose a finite set $S$ outside which both $g_v$ and
+$g_v^{-1}$ are integral. For each $v\in S$, choose $c_v\geq0$ with
+
+$$
+\mathfrak p_v^{c_v}\mathcal O_v^n
+\subseteq g_v\mathcal O_v^n
+\subseteq\mathfrak p_v^{-c_v}\mathcal O_v^n.
+$$
+
+The corresponding global fractional ideals $\mathfrak a\subseteq\mathfrak b$ then satisfy
+$\mathfrak a^n\subseteq\Lambda(g_f)\subseteq\mathfrak b^n$. The quotient
+$\mathfrak b^n/\mathfrak a^n$ is finite, so the intermediate module $\Lambda(g_f)$ is finitely
+generated; containing $\mathfrak a^n$ shows that it spans $K^n$. This proves that no finiteness or
+spanning assertion was hidden in the local definition.
+
+For $n=1$, $\Lambda(g_f)$ is the fractional ideal $\mathfrak a(g_f)$ of Section 8.1: the condition
+$g_v^{-1}x\in\mathcal O_v$ is
+$\operatorname{ord}_v(x)\geq\operatorname{ord}_v(g_v)$. The double quotient by $K^\times$ and
+$\widehat{\mathcal O}_K^\times$ is the ideal class group. Higher rank therefore
 extends rather than replaces the idelic picture: fractional ideals are rank-one projective
 lattices, and matrix adeles treat all ranks uniformly.
 
