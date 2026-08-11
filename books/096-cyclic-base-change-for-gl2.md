@@ -196,19 +196,68 @@ determinant character, principal series, special representation, or one of the d
 tame dihedral supercuspidals constructed in the local theory, and its restricted parameter is
 again in that range. Primitive wild supercuspidals and ramified dyadic wild packets are not
 included. At infinity we use the real and complex cohomological parameters and selectors of
-Book 115. Finally, the packet is **trace-comparable** if the matching global test tensors can
-be chosen with one strongly cuspidal factor. This holds for the cohomological packets used in
-the route whenever a real discrete-series factor survives at a split real place, or a selected
-finite square-integrable factor survives after restriction. These hypotheses are exactly the
-hypotheses of the local matching and simple trace-formula theorems.
+Book 115. Finally, the packet is **trace-comparable** if it can be detected by the
+restricted-tensor matching category defined in Section 4.5, with one factor satisfying the
+actual strongly cuspidal hypothesis of the ordinary and twisted simple trace formulas. This
+holds for the cohomological packets used in the route whenever a real discrete-series factor
+survives at a split real place, or when the cited finite-place simple formula admits the
+selected square-integrable factor. The phrase does not mean that an arbitrary smooth local
+function has a transfer.
+
+The spectral comparison needs one further, genuinely local boundary condition.  At a
+nonsplit place put $\Phi_v=\operatorname{rec}_{E_w}(\Pi_w)$ and fix the source central
+character $\omega_v$ in the comparison, so
+$\det\Phi_v=\operatorname{rec}(\omega_v)|_{W_{E_w}}$.  Retain Book 86's
+$\operatorname{Ext}^{\mathrm{sel}}$ and write $\operatorname{Ext}^{\mathrm{adm}}$ for its
+corresponding set with ``selected'' omitted.  The fixed-central-character slices are
+
+$$
+\operatorname{Ext}^{\mathrm{sel}}_{F_v/E_w}(\Phi_v;\omega_v)
+\subseteq
+\operatorname{Ext}^{\mathrm{adm}}_{F_v/E_w}(\Phi_v;\omega_v),
+$$
+
+where the right side is the finite set of conjugacy classes of admissible solutions of the
+cyclic extension equation $A^{[E_w:F_v]}=r(s^{[E_w:F_v]})$, with the monodromy covariance
+included and determinant $\operatorname{rec}(\omega_v)$, and the left side consists of the
+classes represented in the selected dictionary.  An invariant target parameter with the
+chosen norm antecedent $\omega$ is **extension-complete selected** when
+
+$$
+\operatorname{Ext}^{\mathrm{sel}}_{F_v/E_w}(\Phi_v;\omega_v)
+=\operatorname{Ext}^{\mathrm{adm}}_{F_v/E_w}(\Phi_v;\omega_v)
+\tag{1.1}
+$$
+
+at every nonsplit place; at a split place the cyclic tensor has one underlying factor and this
+condition is automatic.  Equality (1.1) permits reducible restricted parameters and all of
+their distinct semisimple cyclic operators.  It merely excludes a fiber containing an
+unconstructed primitive-wild or ramified-dyadic row.  Requiring only that one selected
+extension exist would not be enough either for forward isolation or for reverse descent,
+since matching functions cannot distinguish two extensions after their restrictions have
+become isomorphic. A source packet is called extension-complete when each of its restricted
+local parameters has this property for its own central character $\omega_\pi$.
+For an invariant target with central character $\Omega$, call the packet
+**antecedent-complete selected** if (1.1) holds for every
+$\omega\in\operatorname{Ant}(\Omega)$, where
+
+$$
+\operatorname{Ant}(\Omega)
+=\{\omega:C_F\to\mathbb C^\times:\omega\circ N_{E/F}=\Omega\}.
+\tag{1.2}
+$$
+
+This is the exact reverse-comparison hypothesis when no descent central character is known in
+advance.  Forward comparison uses only the slice belonging to $\omega_\pi$.
 
 Unless explicitly discussing an isobaric boundary, $\pi$ will mean a unitary cuspidal,
 selected, trace-comparable automorphic representation. An essentially unitary cohomological
 normalization is reduced to this one by a common real norm twist. No assertion below silently
-includes a local packet outside the selected range. Statements about the **full** twisting
-fiber additionally assume $X(E/F)$-saturation: every $\pi\otimes\chi$ that occurs remains
-selected and trace-comparable. Without saturation the same formulas describe the ambient
-parameter fiber, but this book constructs only its selected members.
+includes a local packet outside the selected range. Every spectral construction below uses the
+extension-complete condition just stated. Statements about the **full** twisting fiber assume
+$X(E/F)$-saturation: every $\pi\otimes\chi$ that occurs remains selected and
+trace-comparable. Without saturation the formulas describe the ambient automorphic fiber, but
+the book asserts only those members lying in its declared test category.
 
 ### 1.3 The theorem we are trying to earn
 
@@ -239,7 +288,8 @@ There are therefore three distinct assertions to prove:
 2. it is either cuspidal or a precisely described isobaric sum;
 3. its isomorphism class and every local component are forced by $\pi$.
 
-The stabilized simple trace formula proves the first assertion on free norm-character orbits.
+The completed split/quaternion simple trace formula proves the first assertion on free
+norm-character orbits.
 The quadratic theta construction proves the exceptional isobaric case. Strong multiplicity
 one proves the third only after automorphic existence has been established.
 
@@ -533,17 +583,43 @@ global volume coefficients can match.
 Choose adelic measures from invariant differential forms, and quotient measures by Weil's
 formula. At almost every finite place normalize the hyperspecial subgroup to have volume one.
 The same measure on the identified ordinary and twisted centralizer must be used in the two
-quotient formulas. Raw orbital integrals are not generally equal: their conversion contains
-the discriminant factor
+quotient formulas. There are two twisted tangent determinants in the preceding books, and they
+must not be conflated. Book 113 uses the full determinant
 
 $$
-\Delta_{E_w/F_v}(\gamma,\delta)
-=\left|\frac{D_G(\gamma)}{D^\sigma(\delta)}\right|_v^{1/2}.
+D_{\mathrm{full}}^\sigma(\delta)
+=\det_{F_v}\left(1-\operatorname{Ad}(\delta)\sigma
+\mathbin{\big|}\mathfrak h/\mathfrak i_\delta\right).
 $$
 
-The normalized orbital integrals absorb this factor. Saying simply that the transfer factor is
-$+1$ is correct only after normalized orbital integrals and compatible centralizer measures
-have been declared.
+It contains the nonfixed tangent directions of the norm centralizer. If
+$T=G_\gamma\cong G_{\delta,\sigma}$ and $E_w/F_v$ is nonsplit of degree $d_v$, put
+
+$$
+D_T^\sigma
+=\det_{F_v}\left(1-\sigma
+\mathbin{\big|}\operatorname{Lie}T(E_w)/\operatorname{Lie}T(F_v)\right)
+=d_v^2.
+$$
+
+Book 115's base-change-relative determinant is
+
+$$
+D_{\mathrm{bc}}^\sigma(\delta)
+=D_{\mathrm{full}}^\sigma(\delta)/D_T^\sigma,
+$$
+
+and its relative-root calculation gives the exact identity
+
+$$
+D_{\mathrm{bc}}^\sigma(\delta)=D_G(\gamma).
+$$
+
+Consequently the transfer factor is $+1$ for raw orbital integrals when the shared centralizer
+measure and complementary quotient measures are used. If one instead uses Book 113's full
+normalization, the additional factor is $|D_T^\sigma|_v^{1/2}$. This toral factor can be
+nonunit when the residue characteristic divides $d_v$. At a completely split place the cyclic
+convolution calculation replaces this field-extension determinant calculation.
 
 ## 4. Matching functions and local traces
 
@@ -575,26 +651,29 @@ Put
 
 $$
 I_\gamma(f_v)=|D_G(\gamma)|_v^{1/2}O_\gamma(f_v),\qquad
-I^\sigma_\delta(\phi_v)=|D^\sigma(\delta)|_v^{1/2}
+I^{\sigma,\mathrm{bc}}_\delta(\phi_v)
+=|D_{\mathrm{bc}}^\sigma(\delta)|_v^{1/2}
 TO_{\delta,\sigma}(\phi_v).
 $$
 
 The pair $(f_v,\phi_v)$ is **matching** if
 
 $$
-I_\gamma(f_v)=I^\sigma_\delta(\phi_v)
+I_\gamma(f_v)=I^{\sigma,\mathrm{bc}}_\delta(\phi_v)
 $$
 
 whenever $\gamma$ is the norm of $\delta$, and the ordinary normalized orbital integral
 vanishes on regular classes that are not norms. Equivalently,
 
 $$
-O_\gamma(f_v)=\Delta_{E_w/F_v}(\gamma,\delta)^{-1}
-TO_{\delta,\sigma}(\phi_v).
+O_\gamma(f_v)=TO_{\delta,\sigma}(\phi_v).
 $$
 
-Singular germs and central distributions must also obey their separately stated matching
-rules; regular matching alone is insufficient for the simple trace formula.
+This raw equality uses the shared centralizer and complementary quotient measures. With Book
+113's full tangent normalization, the twisted side acquires the factor
+$|D_T^\sigma|_v^{1/2}$. Singular germs and central distributions must also obey their
+separately stated matching rules; regular matching alone is insufficient for the simple trace
+formula.
 
 ### 4.2 Central covariance
 
@@ -621,10 +700,11 @@ They are also compatible under the norm of scalar matrices. If one starts with a
 ordinary compactly supported function, central averaging produces the required
 covariance.
 
-The choice of $\omega$ is essential on descent. A Galois-invariant central character
-$\Omega$ over $E$ may have several norm antecedents $\omega$; the trace formula is run
-with one chosen antecedent, and Chapter 11 will explain which of them can occur as the
-central character of a particular descent.
+The choice of $\omega$ is essential in a fixed-central comparison. A Galois-invariant central
+character $\Omega$ over $E$ may have several norm antecedents. Forward comparison uses the
+known $\omega_\pi$; reverse comparison first uses the determinant-one formula, lets a source
+central character emerge, and only then returns to a fixed-central block. Chapter 11 explains
+which other antecedents can occur as central characters of descents.
 
 ### 4.3 The unramified fundamental function
 
@@ -702,25 +782,157 @@ functions to vary enough to recover a ramified or archimedean representation.
 
 ### 4.5 Existence of matching functions
 
-At nonarchimedean places, Book 115 constructs regular transfer for every finite cyclic local
-extension. At unramified places its unit and spherical fundamental lemmas supply canonical
-matching functions. At ramified places its segment recursion and finite norm-character
-projectors construct the selected type functions. Germ compatibility completes the comparison
-near the scalar divisor. For $\mathrm{GL}_2$, the only proper Levi is the diagonal torus, but
-the quadratic nonnorm scalar channel is an additional elliptic term and cannot be folded into
-that Levi calculation.
+The transfer theorem needed here has a directed and finite scope.  We record it instead of
+silently replacing it by surjectivity on the whole Hecke algebra.
 
-At archimedean places, smooth rapidly decreasing test functions replace compactly
-supported locally constant ones. Matching is characterized by the same twisted
-character identity on regular semisimple classes, together with compatible central
-and infinitesimal-character projectors.
+Let $L_v=E\otimes_FF_v$, with the cyclic permutation induced by $\sigma$.  On the twisted
+side let $\mathscr T_v^{\mathrm{sel}}$ be the algebraic span, with the central covariance of
+Section 4.2, of the following functions.  Each individual test uses only a
+finite-dimensional subspace.
 
-The germ construction also gives enough transfer in the reverse direction: while a
-matching partner is not unique, transferred functions separate irreducible ordinary
-characters and invariant twisted characters. These assertions are local harmonic
-analysis, not the global theorem. Their role is to ensure that every sufficiently
-flexible $f_v$ has a matching $\phi_v$, and that the trace equality of Section 4.4 is
-valid before any global lift has been constructed.
+1. at a split algebra, finite tensors whose cyclic convolution is defined;
+2. at an unramified field place, the full spherical Hecke algebra;
+3. on any nonarchimedean regular region separated from the discriminant, the compact
+   regular-slice functions of Book 115, Theorem 8.1;
+4. at a ramified finite place, selected invariant finite-level, finite Iwahori,
+   $K_0/K_1$, and normalized selected type functions, including the two germ rows of
+   Books 111 and 115;
+5. at infinity, the cohomological Euler--Poincare and Schwartz selectors constructed in
+   Book 115.
+
+The span is closed under the finitely many central translates, inversions, determinant/norm
+twists, and convolutions for which the cited constructions prove compatibility.  A function
+which meets the scalar divisor is admitted only together with its complete zero-orbit,
+regular-nilpotent, and central prescription.  Thus an arbitrary noninvariant wild coset, or an
+arbitrary smooth function with uncontrolled singular germ, is not in
+$\mathscr T_v^{\mathrm{sel}}$.
+
+**Theorem 4.2 (directed local matching category).** For
+$\phi_v\in\mathscr T_v^{\mathrm{sel}}$ there is a compact-mod-center ordinary companion
+$f_v^0$ on $\mathrm{GL}_2(F_v)$ with the following properties.
+
+1. Regular norm orbital integrals match, regular nonnorm orbital integrals of $f_v^0$ vanish,
+   and the two split germs match.
+2. The split scalar distribution satisfies the separately imposed central identity of
+   Book 115, Section 12.5.
+3. If $E_w/F_v$ is a nonsplit quadratic field extension, there is in addition a function
+   $f_v^{\mathrm{div}}$ on the quaternion division group.  Its central value is the relative
+   twisted orbital integral on the nontrivial scalar-obstruction stratum (possibly zero), and
+   its neighboring elliptic orbital data are those prescribed in Book 115, Section 12.4.
+4. On every finite selected spectral window, the twisted traces of functions in
+   $\mathscr T_v^{\mathrm{sel}}$ separate invariant selected representations with their
+   normalized cyclic intertwiners.  Their ordinary traces separate precisely the equivalence
+   classes defined by isomorphic restricted parameters.  They are not asserted to separate
+   two different extension operators whose restrictions are already isomorphic.
+
+The companion is unique only modulo regular orbital-null functions after its germ and central
+coordinates have been fixed.  No assertion is made that every $f_v\in C_c^\infty$ has a
+twisted partner.
+
+**Proof.**  The split row is cyclic convolution.  The unramified row is the spherical
+fundamental lemma.  Book 115, Theorem 8.1, gives both realizations for compact regular orbital
+data bounded away from the discriminant, while Theorems 9.1, 10.1, and 11.1 give the stated
+finite-level and type rows.  Its Theorem 12.1 supplies exactly the two split germs.  Sections
+12.4 and 12.5 construct, rather than merely prescribe, the division and split central
+companions.  Chapter 13 gives the archimedean rows.  All these constructions start with
+$\phi_v$ (or with a compact regular orbital datum); none proves surjectivity from the full
+ordinary Hecke algebra.
+
+For the separation assertion, first fix the finite window.  Selected type Schur
+orthogonality gives the diagonal trace coordinates for distinct types.  Representations left
+in one type row have linearly independent regular character distributions; hence finitely many
+regular neighborhoods give a full-rank evaluation matrix.  The regular-slice construction
+realizes its inverse matrix. At a scalar boundary the zero-orbit coordinate (the central point
+value) and the regular-nilpotent germ form the triangular system of Book 115, equation (9.6), so the
+same interpolation remains possible there.  Twisted character independence proves target
+separation.  On the source, a norm-trivial quotient twist has the same character on every norm
+class, and more general reducible extension classes can also have the same restriction; the
+matching algebra therefore separates exactly the stated restriction classes and no more.
+$\square$
+
+The local companions genuinely globalize, including their central terms.
+
+**Theorem 4.3 (restricted tensors and coherent quaternion channels).** Let
+
+$$
+\phi=\sum_{j=1}^r\bigotimes_v\phi_{j,v}
+$$
+
+be a finite sum of tensors with $\phi_{j,v}\in\mathscr T_v^{\mathrm{sel}}$, the
+hyperspecial unit almost everywhere, and one common matching strongly cuspidal row.  Then the
+split companions form a finite sum of restricted tensors
+
+$$
+f^0=\sum_{j=1}^r\bigotimes_v f^0_{j,v}.
+$$
+
+If $\ell=2$, there is also a finite set $\mathcal Q(\phi)$ of nonsplit quaternion algebras
+$B/F$, each split by $E$, and for every $B\in\mathcal Q(\phi)$ a restricted tensor
+
+$$
+f^B=\sum_{j=1}^r\bigotimes_v f^B_{j,v}
+\quad\text{on }B^\times(\mathbb A_F).
+$$
+
+At a split place of $B$ use $f^0_{j,v}$; at a division place use the companion
+$f^{\mathrm{div}}_{j,v}$.  These functions simultaneously compare the neighboring regular
+terms and the complete scalar terms.  With the global quotient measures of Books 113 and 115,
+the split scalar channel is the central distribution of $f^0$, and the scalar classes whose
+cyclic algebra is $B$ give the central distribution of $f^B$.  No local scalar value or
+projective stabilizer index remains to be supplied after tensoring.
+
+The same assertion holds on the determinant-one trace quotients used in Book 113.  In that
+version no Fourier averaging by a chosen $\omega$ is made: one retains each rational scalar
+$a$ and its arithmetic quotient volume, and the local central prescriptions tensor with that
+actual $a$.  We denote the resulting companion by
+$\mathbf f^1=(f^{0,1},\{f^{B,1}\})$.  This version is essential
+when the central character of a reverse descent is not known beforehand.
+
+**Proof.**  Choose a finite set $S$ containing the archimedean places, the places where
+$E/F$, the central character, or a tensor factor is ramified, and every place at which a
+nonunit germ row is used.  Outside $S$ the extension is unramified and the twisted function is
+the hyperspecial unit.  A projective scalar class with quaternion division centralizer has odd
+determinant valuation there, whereas the unit row has even projective determinant valuation;
+its twisted orbital integral is therefore zero.  Hence a contributing $B$ is split outside
+$S$.  Its local invariants are $0$ or $1/2$, have even total parity, and determine one global
+quaternion algebra.  There are only finitely many such patterns, proving finiteness of
+$\mathcal Q(\phi)$.
+
+There is a small linearity point here which is essential for globalization.  For each
+$v\in S$, take the finite-dimensional span of the finitely many factors $\phi_{j,v}$ together
+with the germ and central rows they use.  The slice, finite-level, and two-germ constructions
+in the proof of Theorem 4.2 are linear maps on their orbital-coordinate spaces.  Choose a
+right inverse once on this finite-dimensional span, sending the unramified unit to the unit,
+and use it for every $j$.  This gives linear sections
+
+$$
+s_v^0:\phi_{j,v}\longmapsto f^0_{j,v},
+\qquad
+s_v^{\mathrm{div}}:\phi_{j,v}\longmapsto f^{\mathrm{div}}_{j,v}
+$$
+
+with the central and both germ coordinates included in the same linear system.  No choice is
+made separately for each rational scalar.  For each coherent pattern these sections supply
+the finitely many exceptional local factors; all other factors are the common unit.  This
+proves the restricted-product assertion, including compatibility with the finite sum over
+$j$.  The local central constructions are uniform on compact-open scalar strata, so one tensor encodes
+all rational scalar representatives in that stratum, not merely one chosen $a$.  Their local
+covariances tensor to a genuine adelic fixed-central-character function because
+$\prod_v\omega_v(z)=1$ for $z\in F^\times$; compactness modulo the center is inherited from
+the finitely many local supports.  Their local point values multiply, and the common global centralizer measure disintegrates into the same
+local quotient measures.  Book 113's global projective stabilizer index is consequently the
+one already present on both sides.  On the determinant-one quotient omit central averaging;
+the restricted tensor is compact on each retained determinant shell, and the same
+disintegration gives the coefficient of the actual scalar $a$. The cyclic-algebra classification
+$F^\times/N_{E/F}(E^\times)\to\operatorname{Br}(E/F)$, the Hasse norm theorem, and the
+Albert--Brauer--Hasse--Noether parity relation say that precisely the coherent patterns just
+listed come from global scalar classes.
+
+Finally, the primary local identity is equality of raw orbital integrals, equivalently equality
+with Book 115's relative discriminant.  If Book 113's full twisted tangent determinant is
+used, each local equality acquires $|D_T^\sigma|_v^{1/2}$; these factors are the localizations
+of one rational determinant and their global product is one.  Thus globalization changes
+neither the full-versus-relative discriminant ledger nor its scalar normalization. $\square$
 
 ## 5. The twisted trace formula in rank two
 
@@ -760,10 +972,9 @@ legitimate, and it is why the trace-comparability condition was stated in Chapte
 
 ### 5.2 Why norm characters label identical comparisons
 
-The lift cannot distinguish $\pi$ from $\pi\otimes\chi$ for $\chi\in X(E/F)$, but the simple
-trace comparison is run in one fixed central-character block at a time; it does not attach a
-fictitious coefficient $1/\ell$ to a twisting orbit. If $\omega$ is the central character on
-the source, then the target character is $\Omega=\omega\circ N_{E/F}$. For
+The lift cannot distinguish $\pi$ from $\pi\otimes\chi$ for $\chi\in X(E/F)$.  If $\omega$
+is the central character on the source, then the target character is
+$\Omega=\omega\circ N_{E/F}$. For
 $\chi\in X(E/F)$ put
 
 $$
@@ -778,13 +989,22 @@ $$
 
 Moreover $f$ and $f^\chi$ have the same transfer: if $\gamma=N_\sigma(\delta)$, then
 $\chi(\det\gamma)=1$. Thus the collection of fixed-character comparisons is constant along
-the $X(E/F)$-orbit, which is exactly the source of the descent ambiguity. No orbit average is
-needed for existence, and no Weyl-stabilizer coefficient is imported into the simple formula.
+the $X(E/F)$-orbit, which is exactly the source of the descent ambiguity.
 
-This distinction matters in quadratic degree. A self-twist is an equality of two labels in the
-same source block, not a half-weight spectral term. The associated noncuspidal base change is
-constructed and proved separately in Chapter 10 because strongly cuspidal test functions
-annihilate the induced spectrum altogether.
+For odd $\ell$, squaring is an automorphism of $X(E/F)$, so a fixed source central-character
+block meets a twisting orbit in exactly one member.  Quadratic degree is different:
+$\chi^2=1$, the two members of a free orbit have the same central character, and every matching
+function has the same trace on them.  It is therefore impossible to isolate either member by
+the matching algebra. The coherent split/quaternion completion of Section 6.1, after its
+finite Brauer-pattern inclusion--exclusion, realizes the two spectral coordinates for the
+global group $X(E/F)=\{1,\eta_{E/F}\}$. The inverse order-two Fourier matrix gives one common
+trace for a free orbit and removes a fixed cuspidal orbit from the cuspidal comparison. The factor $1/2$ occurring in that inverse
+matrix is forced by Fourier inversion, not assigned ad hoc to an individual automorphic
+representation.  Section 6.1 proves this completion before it is used for existence.
+
+The fixed orbit is treated by the independent quadratic theta identity of Lemma 10.1.  Its
+base change is an isobaric character sum, and the strongly cuspidal target operator kills that
+sum.  Thus stabilizer size, orbit size, and spectral multiplicity remain distinct throughout.
 
 ### 5.3 The geometric expansion
 
@@ -822,8 +1042,7 @@ Z(\mathbb A_F)G_{\delta,\sigma}(F)
 $$
 
 Under the norm correspondence this is the same torus volume as the coefficient $a(\gamma)$
-on the $F$-side. With complementary measures, the normalized discriminants obey the product
-formula and the adelic orbital terms factor:
+on the $F$-side. With complementary measures, the raw adelic orbital terms factor:
 
 $$
 TO_{\delta,\sigma}(\phi)
@@ -832,7 +1051,11 @@ TO_{\delta,\sigma}(\phi)
 O_\gamma(f)=\prod_vO_{\gamma_v}(f_v).
 $$
 
-Matching at every place therefore identifies every regular elliptic term.
+Matching at every place therefore identifies every regular elliptic term. If the geometric
+formula is written with Book 113's full tangent normalization, the conversion contributes the
+local toral factors $|D_T^\sigma|_v^{1/2}$; their adelic product is one because they localize
+one rational determinant. Thus no degree factor survives globally, although it cannot be
+discarded in an individual local identity.
 
 The scalar terms require separate matching and cannot be inferred by taking a limit of regular
 orbital integrals. Book 115 matches the two nilpotent germs, the projective split-scalar
@@ -895,51 +1118,392 @@ Whittaker functionals to multiply to the global one makes the product canonical.
 
 ### 6.1 The global matching identity
 
-Let $f=\bigotimes_vf_v$ and $\phi=\bigotimes_v\phi_v$ be matching, with spherical
-units almost everywhere, the central covariance of Chapter 4, and one matching strongly
-cuspidal factor. Let $I_{F,\omega}^{\mathrm{st,sel}}(f)$ denote the selected stabilized
-source distribution supplied by Book 115's assembly theorem. For odd $\ell$ its selected
-$\mathrm{GL}_2$ block is the ordinary cuspidal trace. For $\ell=2$ the quaternion
-division-centralizer scalar family is included with its prescribed sign; on a source packet
-with no $X(E/F)$-self-twist, an exact selector makes its coefficient the ordinary trace of that
-packet. The two simple trace formulas and local matching give
+Let $\phi$ be a global test in Theorem 4.3 and write
+
+$$
+\mathbf f=\left(f^0,\{f^B:B\in\mathcal Q(\phi)\}\right)
+$$
+
+for its complete source companion.  The symbol $\mathbf f$ is important: in quadratic degree
+the source of the comparison is not one function on one group.
+
+For a fixed level, compact type, central character, and bounded infinitesimal-character window,
+let $\mathcal O_\omega^{\mathrm{fr}}$ be the set of free $X(E/F)$-orbits of selected,
+extension-complete cuspidal $\mathrm{GL}_2(\mathbb A_F)$ representations meeting the
+central-character block $\omega$.
+If $\ell$ is odd, such an orbit has one member in that block.  If $\ell=2$, its two members
+have the same central character and matching functions have the same trace on both; denote this
+common value by
+
+$$
+\operatorname{tr}_{\mathcal O}(f^0).
+$$
+
+Write $\mathscr W$ for the finite selected, extension-complete spectral window generated by
+this nonempty source matching class and its possible target constituents.
+A test is **$\mathscr W$-projected** if it contains the exact compact-type projectors and the
+bounded archimedean multiplier defining $\mathscr W$, and if the finite regular-slice/Hecke
+interpolation of Theorem 4.2 makes every other selected restriction class in that bounded
+window have trace zero. The multiplier is understood as the trace-norm limit used in Book 93.
+Thus this adjective describes an actual finite test construction; it does not discard terms
+from a trace formula after it has been written. Put
+$\mathcal A_{\mathrm{cusp}}(E,\Omega;\mathscr W)$ for the resulting finite target set.  This
+fixed-central form is source-directed; the target-directed reverse comparison is the
+determinant-one identity proved after Theorem 6.1.
+
+**Theorem 6.1 (geometric comparison and spectral completion).** For the complete companion
+of a $\mathscr W$-projected test there is a canonically completed source distribution
+$I_{F,\omega}^{\mathrm{bc,sel}}(\mathbf f)$ such that
 
 $$
 \boxed{
-I_{F,\omega}^{\mathrm{st,sel}}(f)
-=
-\sum_{\substack{\Pi\in\mathcal A_{\mathrm{cusp}}(E,\Omega)\\
+I_{F,\omega}^{\mathrm{bc,sel}}(\mathbf f)
+=\sum_{\mathcal O\in\mathcal O_\omega^{\mathrm{fr}}}
+\operatorname{tr}_{\mathcal O}(f^0)
+=\sum_{\substack{\Pi\in\mathcal A_{\mathrm{cusp}}(E,\Omega;\mathscr W)\\
 \Pi^\sigma\simeq\Pi}}
 \operatorname{tr}\bigl(\Pi(\phi)A_\Pi^{\mathrm{aut}}\bigr).
 }
+\tag{6.1}
 $$
 
-This is the cyclic twisted trace identity for $\mathrm{GL}_2$. It is a conclusion of
-the geometric comparison, not an assumed statement about automorphic representations.
+The first equality includes, rather than discards, every noncharacter quaternionic spectral
+block occurring in the scalar completion.  Quaternionic norm characters are removed only by
+the character-clean interpolation described below.  The identity is compatible as
+$\mathscr W$ is enlarged through the declared selected, extension-complete category. When the
+corresponding selected multiplier has a trace-class limit, that limit is the absolutely
+convergent selected distribution in (6.1); no assertion is made about constituents outside
+this directed category.
 
-**Proof strategy.** Compare regular elliptic terms using normalized local orbital matching and
-the common global torus coefficient. Then compare the split scalar channel and, when
-$\ell=2$, insert the quaternionic source formulas required by the division-centralizer family.
-Strong cuspidality has already removed
-the parabolic geometry and the noncuspidal spectrum on both sides. Finally invoke the two
-absolutely convergent simple spectral expansions.
+**Proof strategy.**  First globalize all three geometric channels by Theorem 4.3.  In quadratic
+degree complete each quaternionic central term by its compact trace formula, retaining the
+regular terms introduced by that completion.  Finite Fourier inversion on the coherent local
+Brauer-invariant patterns cancels those extra regular rows.  Transfer every surviving
+quaternionic noncharacter block to a split cuspidal block by the character-clean trace argument
+of Book 93.  Only after this step regroup by split Hecke characters.  The resulting order-two
+Fourier projector has one common trace on a free twisting orbit and zero on a fixed cuspidal
+orbit.
 
-**Proof.** Every regular global class contributes a product of local orbital
-integrals. If the $F$-class is not a norm, one local normalized orbital integral is zero. If
-it is a norm, the twisted and ordinary centralizers are the same $F$-torus, so their volume
-coefficients agree; the product formula for the discriminants and local matching identify the
-adelic orbital products. The separately proved scalar and germ identities identify the split
-scalar channel. In quadratic degree the nonnorm scalar terms are identified with the matching
-quaternionic centralizer family, whose local signs multiply to one. Books 113 and 114 prove
-absolute convergence, so these identities may be summed. Their geometric sides agree, and
-the simple trace formulas give the displayed spectral equality. In quadratic degree, omitting
-the quaternionic correction would leave the nonnorm scalar classes unmatched; that omission is
-exactly what would create the false conclusion that a quadratic self-twist has a cuspidal lift.
-$\square$
+**Proof.**  For a regular norm class, Theorem 4.3 gives equality of the raw local orbital
+integrals.  The ordinary and twisted centralizers are the same global torus, with the same
+arithmetic volume.  A regular nonnorm class has a zero local ordinary factor.  For split scalar
+norms, the complete central prescription of Theorem 4.2 identifies the relative twisted
+distribution with the ordinary central distribution, including the projective stabilizer
+index.  When $\ell=2$, the remaining scalar classes are partitioned by their cyclic quaternion
+algebra $B=(E/F,a)$ and are the central distributions of the restricted tensors $f^B$.
+Theorem 4.3 proves that only finitely many $B$ occur.
 
-The hypothesis of a strongly cuspidal factor is indispensable here. If a packet admits no such
-selected matching factor, the simple comparison proved here does not transfer it; that case is
-outside the theorem rather than hidden behind an unavailable truncated formula.
+We now justify the word *completed*. Enlarge the actual scalar family
+$\mathcal Q(\phi)$ to the finite set $\mathcal B_S$ of all quaternion algebras split outside
+$S$. For $B=M_2(F)$ retain $f^0$ and its split scalar coordinate. If $B$ is division and
+$B\notin\mathcal Q(\phi)$, give it an **auxiliary** restricted tensor as follows. At a
+division place prescribe on $B_v^\times$ the neighboring elliptic orbital function obtained
+from $f_v^0$, with the local inner-form sign of Books 111--112, and prescribe central value zero; the ordinary orbit map is a submersion on the
+regular set and the division algebra has only the zero germ, so the regular-slice and central
+bump argument of Books 111--112 realizes these two coordinates simultaneously. At split
+places use the corresponding split factor, and use units almost everywhere. These auxiliary
+forms carry no scalar channel; they are introduced only in pairs of complete trace formulas
+whose regular rows cancel below.
+
+Choose a strongly cuspidal selector place $v_*\in S$; in the declared category it is finite or
+real. Every regular class which survives there
+has a quadratic **field** centralizer. Let $S_0\subset S$ be the finite and real places at
+which a quaternion algebra can ramify; complex places carry no Brauer coordinate. Put
+
+$$
+\mathcal A_S=
+\left\{\epsilon=(\epsilon_v)_{v\in S_0}\in(\mathbb Z/2\mathbb Z)^{S_0}:
+\sum_{v\in S_0}\epsilon_v=0\right\};
+$$
+
+these are exactly the coherent ramification patterns of quaternion algebras split outside
+$S$. The actual scalar obstruction patterns form the subgroup
+
+$$
+\mathcal A_S^E
+=\{\epsilon\in\mathcal A_S:\epsilon_v=0
+\text{ whenever }E\otimes_FF_v\text{ is split}\};
+\tag{6.2a}
+$$
+
+the other patterns label the zero-central auxiliary forms introduced above. For a regular quadratic torus put $q_v(T)=1$ if $T_v$ is a field and $q_v(T)=0$ if it is
+split. The embedding criterion is the explicit Boolean monomial
+
+$$
+m_{\epsilon}(T)
+=\prod_{\{v:\epsilon_v=1\}}q_v(T).
+\tag{6.2}
+$$
+
+Indeed a split quaternion algebra admits both quadratic étale types, whereas a division
+quaternion algebra admits precisely the field type. Since $q_{v_*}(T)=1$ and parity determines
+$\epsilon_{v_*}$ from the other coordinates, the rows of (6.2) are all square-free monomials
+in the variables $q_v$, $v\in S_0\setminus\{v_*\}$. Weak approximation for quadratic
+polynomials realizes every such local split/field pattern by a global quadratic field, since
+the condition at $v_*$ keeps the polynomial irreducible globally. Their values on the Boolean cube form the
+zeta matrix of the subset lattice. Its inverse is the Möbius matrix
+
+$$
+(M^{-1})_{A,C}=
+\begin{cases}
+(-1)^{|C\setminus A|},&A\subseteq C,\\
+0,&A\not\subseteq C.
+\end{cases}
+\tag{6.3}
+$$
+
+after indexing a monomial and a Boolean point by their supports.
+
+This matrix is applied to functions, not separately to infinitely many rational orbits.  On
+the regular invariant support, split versus field at every $v\in S_0$ is an open-and-closed
+condition after the discriminant-zero locus has been removed.  A finite invariant partition
+of unity therefore decomposes the compact regular orbital datum as
+$R=\sum_C R_C$ by its Boolean pattern $C$; at a real place use the two smooth components of
+the regular quotient.  The germ rows handle the omitted discriminant-zero boundary.  The
+regular-slice theorem realizes every $R_C$, so the constant row $(M^{-1})_{A,C}$ can be
+applied to that whole slice at once.  Weak approximation above proves that no column of this
+finite functional matrix is merely formal.
+
+To include the scalar rows, use two independently variable families of test functions.  Here a
+``regular coordinate'' at a scalar boundary means the regular orbital transform after the
+universal zero-orbit germ $\Gamma_0f(z)$ has been removed; the coefficient $f(z)$ itself is
+the scalar coordinate.  This is the direct-sum coordinate system of Book 115, Sections
+12.3--12.5, not an assertion that a smooth central bump is pointwise supported on the center.
+The regular-slice family has incidence matrix $M$.  In the zero-orbit/central-bump family,
+subtracting the second germ function kills the regular-nilpotent coordinate, and subtracting
+the prescribed $\Gamma_0$ multiple leaves the reduced regular coordinate zero.  Its remaining
+central-value matrix is diagonal.  Thus, on the finite orbital-coordinate module generated by
+the test, and with reduced regular coordinates first and scalar coordinates second, the
+complete matrix is block triangular:
+
+$$
+\begin{pmatrix}M&0\\ *&I\end{pmatrix}.
+\tag{6.3a}
+$$
+
+Its inverse exists by (6.3). Apply it to the vector consisting of the original regular norm
+rows, the split scalar row, the actual $\mathcal A_S^E$ quaternion rows, and zeros in every
+auxiliary scalar row. This expresses that exact vector as a finite linear combination of
+**complete** inner-form geometric traces. Equivalently, it cancels every neighboring regular
+row introduced while retaining all prescribed central rows. This finite
+inclusion--exclusion is the inner-form completion; no partial central term is called a spectral
+trace and no regular quaternionic orbit is lost.
+
+The scalar obstruction itself is the finite subgroup $\mathcal A_S^E$; its nonzero
+elements are the distinct quaternion channels and must not be collapsed to one ``nonnorm''
+class. The larger $\mathcal A_S$ supplies the auxiliary regular rows needed for the invertible
+incidence matrix. After (6.3) has completed them and Book 93 has regrouped their spectra on the
+split group, the remaining global spectral symmetry is
+$X(E/F)=\{1,\eta_{E/F}\}$. Its character table is
+
+$$
+H_2=\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+\qquad H_2^{-1}=\frac12H_2.
+\tag{6.4}
+$$
+
+Apply (6.4) to the regrouped spectral coordinates after the inner-form completion. This is the
+canonical order-two operation which defines the orbit coordinate of
+$I_{F,\omega}^{\mathrm{bc,sel}}(\mathbf f)$. The Brauer-pattern inclusion--exclusion (6.3),
+which retains every rational scalar obstruction class, and the global norm-character Fourier
+inversion (6.4) must not be conflated.
+The character calculation proving that exactly these two global coordinates survive is given
+below in (6.4a).
+
+This definition is independent of $S$ and of the slice representatives. Enlarging $S$ tensors
+the incidence matrix with the two-element zeta matrix and appends zero scalar coordinates;
+Möbius inversion sends that enlarged vector back to the old one. Two auxiliary tensors with
+the same regular data and zero central coordinate differ by an orbital-null, scalar-null
+function, whose trace is zero by Weyl integration. Hence the completed distribution depends
+only on the original companion $\mathbf f$.
+
+For completeness, we pass from this geometric completion to its spectrum without assuming
+global Jacquet--Langlands. If $B_\epsilon$ is division, Book 93 proves compactness modulo the center
+and the spectral formula
+
+$$
+I_{B_\epsilon}(f^{B_\epsilon})
+=\sum_\rho\operatorname{tr}\rho(f^{B_\epsilon}).
+$$
+
+Let $g^{B_\epsilon}$ denote the split transfer used in Book 93's comparison. It has the prescribed
+regular orbital data and the separately normalized scalar coordinate; it is not asserted to be
+pointwise equal to the original $f^0$. The matrices (6.3)--(6.4) act on these complete
+distributions. Once their extra regular and scalar rows have canceled, Weyl integration says
+that the surviving split cocenter coordinate is precisely that of $f^0$; changing a
+representative by a regular orbital-null function changes no irreducible trace.
+
+At the outset of the fixed-window interpolation, use at every ramified finite place the exact
+compact-type idempotent, and at infinity the bounded selected multiplier, occurring in the
+definition of the global test category. Schur orthogonality makes every constituent outside
+those selected type blocks have trace zero; we do not try to separate an arbitrary wild
+constituent by an unproved matching character identity. Inside the resulting finite selected
+block, regular-character independence separates coordinates with different restricted trace
+functionals. A constituent with the same functional would be another extension of that
+restricted parameter, and extension-completeness says that it too is one of the selected
+indices retained in the block. Thus this is an actual finite spectral projection, not notation
+suppressing an unwanted summand.
+
+Book 93, Proposition 7.2, then interpolates against all global norm characters
+and against the scalar point mass.  The two-germ triangular system preserves the required
+central value while making those character traces zero.  It then compares every remaining
+noncharacter block with a split cuspidal trace.  This argument applies to every global
+quaternion division algebra, even one split at a real place: Book 93 uses anisotropic
+compactness and its two ramified transfer places, not the totally-definite hypothesis of the
+packaged theorem in Book 94.  Its Bessel inequality and strong determination show that a
+surviving quaternionic block has one unique split cuspidal completion.  At selected division
+places Books 84, 111, and 112 identify the local component and the two local signs; the global
+number of ramified places is even, so their product is $+1$.
+
+The word ``then'' denotes an order of proof, not a later alteration of an already matched
+function.  Append the finitely many norm-character trace equations and prescribed
+noncharacter coordinates to the orbital matrix (6.3a) before taking its inverse.  Proposition
+7.2 says that the character distributions and scalar point mass are independent of the chosen
+regular-slice coordinates; its central bump supplies the last diagonal entry.  The augmented
+matrix is therefore again block triangular with invertible diagonal blocks.  Solving it once
+imposes character-cleanliness, scalar values, and cancellation of auxiliary regular rows
+simultaneously.  Thus the Book 93 interpolation cannot reopen a geometric row canceled by
+(6.3a).
+
+We record the finite character calculation which connects this completed inner-form spectrum
+to (6.4). Let $V_S=(\mathbb F_2)^{S_0}$ and let
+$\mathcal A_S=\mathbf1^\perp\subset V_S$ be the even-parity Brauer patterns. On a selected
+noncharacter block, the local elliptic character identity of Books 84--85 and 112 says that
+changing the local inner-form coordinate $\epsilon_v$ multiplies its elliptic extension
+coordinate $x_v$ by $(-1)^{\epsilon_vx_v}$. If the block has no division member at $v$, its
+$\epsilon_v=1$ coefficient is zero; that is the vanishing of a principal-series character on
+elliptic classes, not the deletion of a quaternionic representation. Tensoring the local
+tables gives $(-1)^{\langle\epsilon,x\rangle}$, and therefore
+
+$$
+\frac1{|\mathcal A_S|}
+\sum_{\epsilon\in\mathcal A_S}
+(-1)^{\langle\epsilon,x\rangle}
+=
+\begin{cases}
+1,&x=0\ \text{or}\ x=\mathbf1,\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{6.4a}
+$$
+
+This is character orthogonality, since
+$\mathcal A_S^\perp=\{0,\mathbf1\}$. The auxiliary rows in
+$\mathcal A_S\setminus\mathcal A_S^E$ are exactly what makes the full sum in (6.4a)
+available: their scalar coordinates are zero, while (6.3a) cancels their regular
+coordinates. At places split in $E$, cyclic convolution identifies the two formal columns.
+At nonsplit places the two remaining coherent cyclic-extension columns differ by the local
+quotient character. Global reciprocity thus identifies the surviving columns with $1$ and
+$\eta_{E/F}$, giving exactly $H_2$ and proving the norm-character Fourier step in (6.1).
+
+The calculation acts only on the split/division sign coordinate. Additional classes in a
+reducible local extension fiber remain as separate finite indices; none is declared a local
+twisting torsor. Extension-completeness ensures that every such index is included in the
+interpolation, and the global trace argument of Sections 6.3 and 11.3, rather than (6.4a),
+determines which compatible global assembly occurs.
+
+We may therefore regroup all completed blocks by their split good-place Hecke character.
+Strong multiplicity one is used here only after the preceding trace argument has produced the
+split cusp. The order-two Fourier orthogonality in (6.4) is orthogonality for the
+norm-character action. For odd $\ell$, a fixed central-character block contains one member of each orbit.
+For $\ell=2$, the two global $X(E/F)$ spectral coordinates give the order-two inverse Fourier matrix. On a free pair
+$\{\pi,\pi\otimes\eta_{E/F}\}$ it changes the sum of two equal matching traces into their one
+common value. More explicitly, on the sum of the two free isotypic spaces the normalized
+twisting operator $U_\eta$ exchanges the summands, and hence
+
+$$
+\operatorname{tr}_{\mathcal H_\pi\oplus\mathcal H_{\pi\otimes\eta}}
+R(f^0)=2\operatorname{tr}_{\mathcal O}(f^0),
+\qquad
+\operatorname{tr}_{\mathcal H_\pi\oplus\mathcal H_{\pi\otimes\eta}}
+(R(f^0)U_\eta)=0.
+\tag{6.5}
+$$
+
+Multiplication by $H_2^{-1}$ takes (6.5) to the single common trace. On an
+$\eta_{E/F}$-stable cuspidal block, $U_\eta$ acts within the isotypic space and the second
+coordinate is instead the genuine quadratic twisting distribution
+$\operatorname{tr}(R(f^0)U_\eta)$. The independent theta-kernel identity proved in Lemma 10.1 identifies that
+distribution with the two-character isobaric channel, on which the strongly cuspidal target
+operator is zero.  Hence precisely the free orbits in the middle term of (6.1) remain.  This is
+the promised scalar/quaternion spectral calculation; no inner-form block has been annihilated
+by a local pseudo-coefficient.
+
+Finally, Books 113 and 114 give absolute convergence of the twisted geometric and spectral
+distributions.  The ordinary trace formula gives the same for the split companion.  Book 93's
+bounded-window projectors are trace-norm limits of admissible multipliers, and all distributions
+used above are continuous in that limit.  We can therefore remove the smoothing approximation
+to the projector and obtain (6.1) for $\mathscr W$; compatible directed limits are only those
+stated immediately after the theorem.  The relative discriminant identity and the full toral
+product-one conversion are exactly those retained in Theorem 4.3. $\square$
+
+The fixed-central identity is the right forward tool because $\omega_\pi$ is then known.  For
+reverse comparison we need the following genuinely different form.
+
+**Proposition 6.2 (target-directed determinant-one comparison).**  Fix a finite projected
+window containing an antecedent-complete selected invariant target block of central character
+$\Omega$, but do not choose a member of $\operatorname{Ant}(\Omega)$.  On the
+determinant-one trace quotients let $\mathcal O_\Omega^{\mathrm{fr},1}$ be the set of free
+$X(E/F)$-orbits of selected cuspidal source representations whose central character belongs
+to $\operatorname{Ant}(\Omega)$, each orbit counted once.  For the determinant-one companion
+$\mathbf f^1$ of Theorem 4.3,
+
+$$
+\boxed{
+I_F^{\mathrm{bc,sel},1}(\mathbf f^1)
+=\sum_{\mathcal O\in\mathcal O_\Omega^{\mathrm{fr},1}}
+\operatorname{tr}_{\mathcal O}(f^{0,1})
+=\sum_{\substack{\Pi\in\mathcal A_{\mathrm{cusp}}(E;\mathscr W^1)\\
+\Pi^\sigma\simeq\Pi}}
+\operatorname{tr}\bigl(\Pi(\phi^1)A_\Pi^{\mathrm{aut}}\bigr).
+}
+\tag{6.6}
+$$
+
+Here the unitary normalization fixes the otherwise invisible common real norm twist on the
+determinant-one group.  In odd degree one $X(E/F)$-orbit meets all antecedent blocks because
+squaring is bijective; in quadratic degree its members have one common central character, so
+different antecedent blocks remain distinct in the displayed union.
+
+**Proof.** Use Book 113's determinant-one geometric expansion, Book 114, Theorem 11.1, and the
+determinant-one clause of Theorem 4.3; use the ordinary determinant-one simple trace formula
+on the source groups.  Regular classes and their full/relative discriminants compare exactly as in
+Theorem 6.1.  For a split scalar retain its rational value $a$ and quotient volume instead of
+Fourier-projecting by $\omega$; for a nonsplit quadratic scalar retain the complete
+$B_a^\times$ channel.  Consequently the restricted-tensor globalization loses no central
+coordinate and makes no choice of a norm antecedent.
+
+Apply the same block inversion (6.3a), Book 93 character-clean comparison, and Brauer-sign
+orthogonality (6.4a).  These operations use complete inner-form trace formulas, so every
+quaternionic noncharacter block is carried to the split cuspidal spectrum and no such block is
+annihilated.  Formally, Book 93 is applied after Fourier disintegration along the compact
+norm-one center.  Take the Fourier coefficient defined by the restriction of $\Omega$; its
+source lifts are precisely the finite torsor $\operatorname{Ant}(\Omega)$.  Applying Book 93
+to those finitely many fixed-central summands and adding them reconstructs the required
+determinant-one coordinate.  Finally apply the full character table of
+$X(E/F)$ to the compact determinant
+quotient.  On the direct sum of an $X$-orbit the nonidentity twisting operators permute the
+isotypic summands without fixed diagonal blocks, so character orthogonality changes the sum of
+$|X|$ equal traces into their one common orbit trace.  For $\ell=2$ this is the
+$H_2^{-1}$ calculation (6.5); for odd $\ell$ it is the same cyclic Fourier calculation of
+order $\ell$.  This is a transform on the source $X(E/F)$-orbit, not on the set of
+central-character antecedents.  The distinction is why (6.6) counts every source orbit once
+while allowing its central character to emerge from the trace.
+
+Exact target type/Hecke interpolation gives the projected right side.  On the source, the
+compact-type projectors remove rows outside the selected category, and
+antecedent-completeness retains every admissible extension in every determinant slice which
+can contribute.  The determinant character identity in the local matching theorem, followed
+by Fourier orthogonality on the compact idele-class determinant quotient, makes precisely the
+slices with $\omega_\pi\circ N=\Omega$ survive.  The finite-window and trace-norm limiting
+arguments of Theorem 6.1 then give
+(6.6).  This proof uses only geometric matching and the independent Book 93 comparison; it
+does not assume descent. $\square$
+
+The strongly cuspidal row is indispensable. If a packet admits no such row in
+$\mathscr T^{\mathrm{sel}}$, the simple comparison proved here does not transfer it.  Likewise,
+quadratic degree requires the complete family $\mathbf f$; omitting the quaternion terms would
+invalidate the completed identities (6.1) and (6.6).
 
 ### 6.2 Annihilation of the induced spectrum
 
@@ -969,12 +1533,23 @@ places, all places ramified in $E/F$, and all places where $\pi$ or its central
 character is ramified. Outside $S$, the spherical Hecke algebra is commutative. Its
 characters attached to distinct cuspidal representations are linearly independent.
 
-At the distinguished place choose a strongly cuspidal selector for $\pi_v$ and its matching
-twisted selector. At the other places of $S$ choose selected type operators having nonzero
-trace, and vary the spherical factors outside $S$. If no invariant cuspidal representation
-over $E$ had the predicted transformed Hecke character, the isolated $\pi$ term on the source
-could not be matched on the twisted side for all such variations. Absolute convergence and
-linear independence of Hecke characters give a contradiction.
+Place $\pi$ and all source and quaternionic constituents meeting its level, compact types, and
+bounded archimedean window in one finite list.  At the distinguished place choose a strongly
+cuspidal row in $\mathscr T_v^{\mathrm{sel}}$.  At the remaining places of $S$ use the type and
+regular-slice rows of Theorem 4.2.  At finitely many good places apply Lagrange interpolation
+in the spherical base-change algebra.  This isolates the finite **matching-trace class**
+$\mathfrak C$ containing the free $X(E/F)$-orbit of $\pi$.  We do not assume that matching
+functions already distinguish two global orbits having identical restricted local data.
+
+Normalize the common orbit trace to one.  Let $n$ be the number of free source orbits in
+$\mathfrak C$.  The middle term of (6.1) is then $n\ge1$.  On the target side, the corresponding
+type and Hecke interpolation normalizes each surviving twisted trace to one, while strong
+multiplicity one permits at most one invariant cuspidal representation with the complete
+good-place character.  Hence the right side is either zero or one.  Equality (6.1) forces it
+to be one and simultaneously forces $n=1$.  Thus the comparison itself proves that the selected
+source orbit is not accompanied by a second global orbit with the same matching data.  The
+quaternionic terms which occur before completion have already been transferred and regrouped
+by Theorem 6.1, so they cannot cancel the positive integer $n$ invisibly.
 
 Thus, provided $\pi$ has no quadratic norm-character self-twist, there exists a cuspidal
 automorphic representation $\Pi$ over $E$ such that at every
@@ -985,36 +1560,41 @@ $$
 =\{\alpha_v^{f_v},\beta_v^{f_v}\}.
 $$
 
-The no-self-twist condition ensures that the source selector isolates a free descent datum; in
-quadratic degree the stabilized case is reserved for the explicit isobaric construction of
-Chapter 10. This is the first existence statement. At this stage the components at $S$ have
-not yet been identified; that requires varying one local transfer factor while holding the
-others fixed.
+The no-self-twist condition is exactly what places the source in
+$\mathcal O_\omega^{\mathrm{fr}}$; a quadratic fixed orbit has zero coefficient in (6.1) and is
+handled by Chapter 10.  This is the first existence statement. At this stage the components at
+$S$ have not yet been identified.  Notice that the argument used only the finite matching
+category, not an unsupported transfer for an arbitrary smooth source function.
 
 ### 6.4 Recovering a ramified or archimedean component
 
-Fix $v_0\in S$. At every other place choose matching functions whose trace on the
-already isolated representation is nonzero. Vary $f_{v_0}$ through the selected separating
-subspace of the local Hecke algebra supplied by Book 115 and choose matching
-$\phi_{v_0}$. Factorization of the global trace gives
+Fix $v_0\in S$. At every other place choose rows whose trace on the already isolated orbit and
+target representation is nonzero, and normalize their product to one.  Now vary
+$\phi_{v_0}$ through $\mathscr T_{v_0}^{\mathrm{sel}}$ and construct its companions by Theorem
+4.2.  The direction is important: we do not vary an arbitrary $f_{v_0}$ and assert that it has
+a partner.  Factorization of (6.1) gives
 
 $$
-\operatorname{tr}\pi_{v_0}(f_{v_0})
+\operatorname{tr}\pi_{v_0}(f^0_{v_0})
 =\operatorname{tr}\bigl(
 \Pi_{v_0}^E(\phi_{v_0})A_{\sigma,v_0}
 \bigr)
 $$
 
-for all matching pairs. By the local character identity and independence of twisted
-characters,
+for every row of the matching category.  Theorem 4.1 gives the same left side as the twisted
+trace of the already constructed local candidate
+$\bigotimes_{w\mid v_0}\operatorname{BC}_{E_w/F_{v_0}}(\pi_{v_0})$.  Subtracting the two
+identities and applying the finite-window separation clause of Theorem 4.2 gives
 
 $$
 \Pi_w\cong\operatorname{BC}_{E_w/F_{v_0}}(\pi_{v_0})
 \qquad(w\mid v_0).
 $$
 
-The argument applies at a selected ramified finite place and for the cohomological infinity
-types matched in Book 115. Therefore the global construction has the prescribed local
+This remains valid when the restricted parameter is reducible: separation is performed on the
+two representations over $E_{v_0}$, not by pretending that the set of its extensions is a
+torsor.  The argument applies at a selected ramified finite place and for the cohomological
+infinity types matched in Book 115. Therefore the global construction has the prescribed local
 component at **every** place in the declared range, not merely at almost every place.
 
 ## 7. Construction and uniqueness of the lift
@@ -1025,7 +1605,8 @@ We can now name the object produced by the comparison.
 
 **Theorem 7.1 (prime cyclic base change in the free selected case).** Let $E/F$ be cyclic of
 prime degree $\ell$, and let $\pi$ be a selected, trace-comparable cuspidal representation of
-$\mathrm{GL}_2(\mathbb A_F)$. Assume
+$\mathrm{GL}_2(\mathbb A_F)$ whose restricted local parameters are extension-complete
+selected relative to $\omega_\pi$. Assume
 
 $$
 \pi\otimes\chi\not\simeq\pi
@@ -1048,11 +1629,11 @@ $$
 
 It is invariant under $\Gamma$.
 
-**Proof strategy.** The stabilized simple trace comparison first constructs a cuspidal spectral
-term with the expected good-place Hecke data. Freeness of the norm-character orbit prevents
-the quadratic scalar correction from absorbing the selected source term. Variation of one
-local matching pair at a time identifies every component. Strong multiplicity one gives
-uniqueness.
+**Proof strategy.** The completed identity (6.1) gives the free source orbit coefficient one
+common trace after every quaternionic block has been carried through the Book 93 comparison.
+It therefore constructs a cuspidal target with the expected good-place Hecke data. Directed
+variation inside $\mathscr T_v^{\mathrm{sel}}$ identifies every component, and strong
+multiplicity one gives uniqueness.
 
 **Proof.** Sections 6.3 and 6.4 give cuspidal existence and the all-place local identities.
 The Galois action permutes the local factors of the
@@ -1130,7 +1711,7 @@ $$
 $$
 
 where the twisting formula is asserted whenever $\pi\otimes\mu$ remains in the theorem's
-selected trace-comparable range. The proof is not a new trace comparison. Each pair has identical local components by the
+selected, extension-complete, trace-comparable range. The proof is not a new trace comparison. Each pair has identical local components by the
 finite and archimedean restriction theory of Books 86 and 115, and global uniqueness
 identifies them. In particular, a norm character
 $\chi\in X(E/F)$ acts trivially after base change.
@@ -1393,16 +1974,16 @@ from its twisted character.
 
 The inner-form situation is different: a discrete parameter may also label a representation
 of a quaternion division group. Quadratic inner forms enter this book only as the scalar
-geometric correction required by the stabilized trace comparison. The fact that a quaternion
+geometric correction required by the completed trace comparison. The fact that a quaternion
 algebra occurs as a twisted centralizer is not a second choice inside a $\mathrm{GL}_2$ packet.
 
 ## 10. The cuspidality criterion
 
 ### 10.1 Why self-twists are the only obstruction
 
-The stabilized source comparison constructs a cuspidal lift on a free norm-character orbit.
-When a quadratic self-twist is present, the quaternionic scalar correction prevents that
-source term from being mistaken for a cuspidal target. To identify what replaces it, we need a
+The completed source comparison of Theorem 6.1 constructs a cuspidal lift on a free
+norm-character orbit. When a quadratic self-twist is present, its coherent quaternionic scalar
+completion prevents that source term from being mistaken for a cuspidal target. To identify what replaces it, we need a
 global monomiality statement. We include the required quadratic construction and its proof here
 so that the cuspidality argument has no hidden automorphic-induction premise.
 
@@ -1497,11 +2078,15 @@ T\pi\!\begin{pmatrix}y&0\\0&1\end{pmatrix}
 =\eta(y)\pi\!\begin{pmatrix}y&0\\0&1\end{pmatrix}T,
 $$
 
-the normalized contribution of $\pi$ to the left side is nonzero for a pseudo-coefficient that
-selects $\pi$. The monomiality identity forces a character $\theta$ on the right. Varying the
-unramified Hecke factors shows that the theta representation and $\pi$ have the same Hecke
-polynomial outside a finite set; varying the selected ramified factors gives the matching local
-types as well.
+finite compact-type and good-place Hecke interpolation in a bounded archimedean window gives a
+strongly cuspidal tensor for which the normalized contribution of $\pi$ to the left side is
+one and every other self-twisted constituent in that window has trace zero.  This uses only
+compact-type Schur orthogonality, the bounded multipliers of Books 92--93, and finitely many
+spherical Hecke operators; it is not an idempotent for an arbitrary isolated point of the full
+automorphic dual. The monomiality identity forces a character $\theta$ on
+the right. Varying the unramified Hecke factors shows that the theta representation and $\pi$
+have the same Hecke polynomial outside a finite set; varying the selected ramified factors
+gives the matching local types as well.
 
 At every unramified place, the local theta unfolding gives
 
@@ -1700,9 +2285,11 @@ $$
 $$
 
 In the quadratic noncuspidal case the source twisting orbit has one isomorphism class, whereas
-the constituent orbit upstairs has two elements and each character occurs once. No factor
-$1/2$ is assigned to the source representation in the simple trace formula. Instead the
-quadratic division-centralizer terms enter the stabilized source distribution of Section 6.1.
+the constituent orbit upstairs has two elements and each character occurs once. No ad hoc
+$1/2$ is assigned to that source representation. The only factor $1/2$ is the inverse Fourier
+coefficient in (6.4), which turns a free pair of equal traces into one orbit trace; the
+quadratic division-centralizer terms enter that completed distribution before the fixed orbit
+is sent to the theta channel.
 This separates three notions that should never be conflated: stabilizer size, number of source
 isomorphism classes, and multiplicity of isobaric constituents.
 
@@ -1767,54 +2354,90 @@ This ambiguity will interact with the square in the central character of a twist
 
 **Theorem 11.1 (selected cuspidal descent).** Let $E/F$ have prime degree and let $\Pi$ be a
 selected, trace-comparable cuspidal automorphic representation of
-$\mathrm{GL}_2(\mathbb A_E)$. Assume its invariant local parameters admit selected
-extensions at every place. Then the following are equivalent:
+$\mathrm{GL}_2(\mathbb A_E)$. Assume its central character has a norm antecedent and its local
+parameters are antecedent-complete selected in the sense of Section 1.2. Then the following
+are equivalent:
 
 1. $\Pi^\sigma\cong\Pi$;
-2. there is a cuspidal automorphic representation $\pi$ of
-   $\mathrm{GL}_2(\mathbb A_F)$ such that
+2. there is a selected, trace-comparable, extension-complete cuspidal automorphic
+   representation $\pi$ of $\mathrm{GL}_2(\mathbb A_F)$ such that
    $\operatorname{BC}_{E/F}(\pi)\cong\Pi$.
 
 Every such descent is cuspidal.
 
 **Proof strategy.** Necessity is Galois invariance of base change. For sufficiency,
-choose a Whittaker-normalized cyclic intertwiner on $\Pi$ and a norm antecedent of its
-central character. Insert $\Pi$ into the twisted spectral distribution and vary matching
-source functions. Exact selectors in the stabilized comparison force a split-group
-automorphic constituent over $F$. Local matching recovers its component at every place.
-Because a noncuspidal source has noncuspidal norm pullback, this constituent is cuspidal.
+choose a Whittaker-normalized cyclic intertwiner on $\Pi$ and insert $\Pi$ into the
+determinant-one twisted spectral distribution, where no norm antecedent is chosen.  The global
+trace count forces one free split cuspidal orbit and lets its central character emerge
+over $F$; a quaternionic block is first transported through Book 93 and is never declared
+zero. The already proved fixed-central forward theorem then recovers the component at every
+place.
 
 **Proof.** If $\Pi=\operatorname{BC}(\pi)$, Theorem 7.1 gives invariance. Conversely,
-assume invariance and normalize $A_\sigma$ in the global Whittaker model. Section 11.2
-supplies $\omega$ with $\Omega=\omega\circ N$. Choose $\phi$ having nonzero twisted
-trace on $\Pi$ and vary its matching functions $f$. In the stabilized identity of Section
-6.1, selected pseudo-coefficients eliminate the quadratic inner-form blocks, and linear
-independence of Hecke characters forces an automorphic representation $\pi$ on the split
-source side with the predicted
-unramified parameters. Varying one place at a time and applying the local twisted
-character identity gives
+assume invariance and normalize $A_\sigma$ in the global Whittaker model. Section 11.2 proves
+that $\operatorname{Ant}(\Omega)$ is nonempty and is an $X(E/F)$-torsor. Choose a
+determinant-one test $\phi^1$ having nonzero twisted
+trace on $\Pi$. Put it in a fixed level, compact-type, and bounded archimedean window and use
+Theorem 4.2 plus finitely many good Hecke operators to make its twisted trace one and the trace
+of every other invariant target constituent in that window zero.
+Form the determinant-one complete companion $\mathbf f^1$ and apply Proposition 6.2.  Its
+right side is one.  Antecedent-completeness and Theorem 4.1 make the common normalized trace of
+every source orbit in the determinant-one matching class equal to one.  The middle term of
+(6.6) is therefore the number of global free source orbits in that class.  Equality with the
+isolated target coefficient one proves at once that this number is exactly one.  In
+particular, the comparison produces both a cuspidal representation $\pi$ and its actual
+central character $\omega_\pi\in\operatorname{Ant}(\Omega)$; it does not guess an antecedent
+before running the trace.  This is the global trace argument which selects a compatible
+determinant slice and rules out incompatible global assemblies of the larger reducible local
+extension fibers.  The defining projectors make $\pi$ selected and trace-comparable, and
+antecedent-completeness makes its $\omega_\pi$-slice extension-complete.
+
+Before completion, a nonzero source coordinate can lie either on the split group or on a
+quaternion group $B^\times$. A global quaternion norm character has already been removed by
+the character-clean scalar interpolation in Theorem 6.1 and Proposition 6.2. A noncharacter block is
+not removed: Book 93, Proposition 7.2 and Theorem 7.3, carry it by a global trace comparison to
+a unique split cuspidal block with the same good Hecke data. This applies even if $B$ is not
+totally definite. The inverse norm-character Fourier matrix then regroups all such blocks into a
+free $X(E/F)$-orbit of cuspidal representations $\pi$ on
+$\mathrm{GL}_2(\mathbb A_F)$. Thus automorphic existence is a consequence of a global trace
+identity, not of assembling local extensions.
+
+Now use the fixed-central forward theorem on this source.  The slice for
+$\omega_\pi$ is selected by antecedent-completeness, so Theorem 7.1 constructs
+$\Pi'=\operatorname{BC}(\pi)$ with every prescribed local restriction.  Return to (6.6), keep
+the factors isolating the now unique source and target, and vary one determinant-one local row;
+at an auxiliary unramified place insert the inverse determinant shell so that the adelic
+module remains one.  Theorem 4.1 and target separation then show that $\Pi'$ and $\Pi$ have
+the same representation on $\mathrm{GL}_2(\mathbb A_E)^1$.
+
+Every $g\in\mathrm{GL}_2(\mathbb A_E)$ can be written $g=zg^1$ with
+$z\in Z(\mathbb A_E)$ and $g^1$ of determinant module one: choose an idele $z$ whose squared
+module is $|\det g|$.  The ambiguity in this decomposition lies in the norm-one center.  Since
+$\Pi'$ and $\Pi$ agree on the module-one group and both central characters equal
+$\omega_\pi\circ N=\Omega$, their extensions to the full adelic group agree.  Hence
 
 $$
-\operatorname{BC}_{E_w/F_v}(\pi_v)\cong\Pi_w
+\Pi'=\operatorname{BC}_{E/F}(\pi)\cong\Pi.
 $$
 
-for every $w\mid v$. Hence $\operatorname{BC}(\pi)\cong\Pi$ by uniqueness. If $\pi$
-were noncuspidal, it would be an isobaric sum of characters and its base change would
-remain such a sum, contradicting cuspidality of $\Pi$. The two pulled-back characters
-could coincide in this last reducible-source argument; that possibility still gives a
-repeated isobaric sum and never a cusp form. $\square$
+This equality and Theorem 7.1 recover the component at every place, including reducible
+restricted parameters.  The source in (6.6) is already the cuspidal spectrum, so $\pi$ is
+cuspidal; no noncuspidal tensor has been promoted to a cusp form. $\square$
 
 Thus, within the selected trace-comparable range, the global image among cuspidal
 representations is exactly the invariant spectrum whose local parameters admit selected
-extensions. The central-character condition is present in the proof but is automatic from
-invariance because $E/F$ is cyclic. The local extension clause cannot be dropped at the wild
-boundary excluded by Book 86.
+extension-complete fibers for every norm antecedent. Existence of central-character
+antecedents is automatic from invariance because $E/F$ is cyclic; antecedent-completeness of
+their fixed-determinant slices is a separate selected-range hypothesis. Merely possessing one selected local
+extension is insufficient at the wild boundary: the trace algebra sees the entire restriction
+class, so that weaker assertion is deliberately not made.
 
 ### 11.4 The precise condition for a prescribed central character
 
 Assume the source fiber is $X(E/F)$-saturated. Fix one descent $\pi_0$ of $\Pi$, and write
-$\omega_0=\omega_{\pi_0}$. Every other
-descent in its twisting fiber has the form $\pi_0\otimes\chi$, with central character
+$\omega_0=\omega_{\pi_0}$. By Theorem 11.2 below, whose proof does not use the present
+central-character calculation, every other descent has the form $\pi_0\otimes\chi$, with
+central character
 
 $$
 \omega_0\chi^2,
@@ -1852,19 +2475,64 @@ for some $\chi\in X(E/F)$. Conversely every such twist that stays in the selecte
 the same base change. Under the $X(E/F)$-saturation hypothesis, this describes the full fiber.
 
 **Proof strategy.** At almost every unramified place, equality after restriction says
-that the two Frobenius conjugacy classes differ by a character of the cyclic quotient.
-The twisted trace formula makes these local choices global and constant across places.
-Strong multiplicity one then identifies the twist.
+that the two restricted Frobenius classes agree. We do **not** choose a quotient character at
+each place: for a reducible restricted parameter the local extension fiber need not be one
+twisting orbit. Instead, the reverse trace comparison gives global automorphic descents, and a
+global Rankin--Selberg/induction identity forces any two of them to differ by one global member
+of $X(E/F)$.
 
 **Proof.** The converse is norm pullback compatibility. For the forward direction,
-the local parameters of $\pi_v$ and $\pi_v'$ are two extensions of the same restricted
-parameter. At every good place their cyclic extension operators differ by a character of the
-local quotient. Compare the two fixed-central-character source formulas against the same
-twisted selector, as in Section 5.2. Varying spherical Hecke functions forces these local
-quotient characters to have one global product relation; global reciprocity therefore gives a
-single $\chi\in X(E/F)$ with those localizations. The unramified components of
-$\pi'$ and $\pi\otimes\chi$ agree outside a finite set. Strong multiplicity one gives the
-asserted global isomorphism. $\square$
+first suppose that the common lift $\Pi$ is cuspidal. The lifts of $\pi$ and $\pi'$ were
+globally constructed by Theorem 7.1, so no tuple of local extensions is being promoted to an
+automorphic representation in this argument.
+
+Choose a finite set $S$ containing all ramified and archimedean places, and let $S_E$ be the
+places of $E$ above it. Artin formalism for
+the cyclic quotient gives, at every $v\notin S$, the local identity obtained from
+
+$$
+\operatorname{Ind}_{W_E}^{W_F}\mathbf1
+=\bigoplus_{\chi\in X(E/F)}\chi.
+$$
+
+Multiplying the unramified factors gives the global incomplete identity
+
+$$
+L_E^{S_E}\!\left(s,\operatorname{BC}(\pi)\times
+\operatorname{BC}(\pi')^\vee\right)
+=\prod_{\chi\in X(E/F)}
+L_F^S\!\left(s,\pi\times(\pi'\otimes\chi)^\vee\right).
+\tag{11.1}
+$$
+
+This is a finite Euler-factor calculation, not an appeal to the fiber theorem: restriction of
+the tensor-product parameter followed by induction is tensoring with
+$\operatorname{Ind}_{W_E}^{W_F}\mathbf1$.  Book 92 supplies meromorphic continuation and the
+Rankin--Selberg pole criterion for every factor.  Since the two base changes are the same
+cuspidal $\Pi$, the left side of (11.1) has a pole at $s=1$.  If no
+$\pi'\otimes\chi$ were isomorphic to $\pi$, every factor on the right would be holomorphic at
+$1$, and their finite product would be holomorphic, a contradiction.  Hence
+
+$$
+\pi\cong\pi'\otimes\chi
+$$
+
+for some $\chi\in X(E/F)$, which is the assertion after replacing $\chi$ by its inverse.
+No nonvanishing of a cross Rankin--Selberg value is needed.
+
+If the common lift is noncuspidal, Theorem 10.2 makes the extension quadratic and writes every
+cuspidal source as $\operatorname{AI}_{E/F}(\theta)$ for one of the two constituents of the
+common sum $\theta\boxplus\theta^\tau$.  Interchanging the constituents gives the same
+automorphic induction, so there is one source isomorphism class; it is fixed by
+$\eta_{E/F}$. This proves the theorem in the remaining case. $\square$
+
+This proof is compatible with the larger local fibers in Book 86. For example,
+$1\oplus1$ and $1\oplus\eta_v$ can have the same quadratic restriction without being common
+local twists, and an invariant split parameter can have both principal and induced extension
+classes. Theorem 11.1 uses the completed trace formula to prove that a reverse source exists,
+while (11.1) says that any already automorphic **global cuspidal** sources form one
+$X(E/F)$-orbit. No tuple of local quotient characters is patched, and no scalar-endomorphism
+hypothesis is imposed.
 
 Assume now that the source fiber is $X(E/F)$-saturated. If the common lift is cuspidal, the
 $X$-action is free: a nontrivial stabilizer would
@@ -2136,16 +2804,18 @@ conditions in one place before the examples and final theorem.
 Book 86 proves parameter restriction for determinant characters, principal series, special
 representations, and selected tame dihedral packets. Its image theorem says that invariance is
 sufficient for extension as an abstract admissible parameter, but a smooth selected descent
-exists only when at least one extension remains inside the constructed range. Consequently the
-global theorem may use
+exists only when an extension remains inside the constructed range. The matching trace algebra
+sees every extension of the same restriction. Forward isolation uses the extension-complete
+slice for $\omega_\pi$; determinant-one reverse descent uses the antecedent-complete union of
+such slices from Section 1.2. Consequently the global theorem may use
 
 $$
 \operatorname{rec}_{E_w}(\Pi_w)
 =\operatorname{rec}_{F_v}(\pi_v)|_{W_{E_w}}
 $$
 
-only under that selected-extension clause. Primitive wild packets and the ramified dyadic wild
-boundary are excluded, not inferred by continuity or by equality of $L$-factors.
+only under that complete-fiber clause. Primitive wild packets and the ramified
+dyadic wild boundary are excluded, not inferred by continuity or by equality of $L$-factors.
 
 ### 14.3 Three independent global inputs
 
@@ -2154,7 +2824,9 @@ classes, fixes their measures, and proves absolute convergence of the geometric 
 Book 114 proves trace class, factorization of the automorphic intertwiner, annihilation of the
 noncuspidal spectrum, and the twisted simple spectral expansion. Book 115 proves normalized
 orbital matching, the spherical fundamental lemma, selected ramified and archimedean matching,
-and the quadratic scalar correction. None of these statements implies either of the other two.
+and the quadratic scalar correction. Book 93 supplies the character-clean compact trace and
+split completion of every global quaternion division block, including algebras which are not
+totally definite. None of these statements implies either of the other three.
 
 The logical chain is therefore
 
@@ -2194,14 +2866,22 @@ Before applying the theorem to a packet, verify the following finite list:
 2. Every finite local component and every restriction lies in the selected range.
 3. The archimedean components are the cohomological parameters matched in Book 115.
 4. One place supplies matching strongly cuspidal selectors.
-5. Central characters use $\Omega=\omega\circ N_{E/F}$ and the same centralizer measures are
+5. Fixed-central forward comparison uses $\Omega=\omega\circ N_{E/F}$; reverse comparison
+   uses the determinant-one form until $\omega$ emerges. The same centralizer measures are
    used in normalized orbital integrals.
-6. In quadratic degree the division-centralizer scalar correction is retained.
+6. Every local factor belongs to $\mathscr T_v^{\mathrm{sel}}$ and the global companions are
+   the restricted tensors of Theorem 4.3; no arbitrary smooth source variation is used.
+7. In quadratic degree the entire coherent quaternion family is retained and completed through
+   its noncharacter spectrum; it is not killed by a pseudo-coefficient.
+8. Every local extension fiber used in forward or reverse comparison is extension-complete
+   selected in the central-character slice being compared; reverse comparison without a
+   pre-existing descent uses every antecedent slice. Reducible fibers are allowed and need not
+   be local torsors.
 
 Under these conditions Chapters 5--7 prove existence and local compatibility. Chapter 10
-settles the sole isobaric boundary, and Chapter 11 proves selected descent and fibers. This
-list is also the reason the final theorem does not claim arbitrary cyclic degree or primitive
-wild local compatibility.
+settles the sole isobaric boundary, and Chapter 11 proves selected descent and global fibers.
+This list is also the reason the final theorem does not claim arbitrary cyclic degree,
+arbitrary local test functions, or primitive-wild local compatibility.
 
 ## 15. Four extended examples
 
@@ -2345,9 +3025,10 @@ X(E/F)=\widehat{C_F/N_{E/F}(C_E)}.
 $$
 
 Let $\pi$ be a unitary cuspidal automorphic representation on
-$\mathrm{GL}_2(\mathbb A_F)$ satisfying the selected local and strongly cuspidal selector
-hypotheses of Chapter 1. Then there is a unique automorphic isobaric
-$\Pi=\operatorname{BC}_{E/F}(\pi)$ on $\mathrm{GL}_2(\mathbb A_E)$ with these properties.
+$\mathrm{GL}_2(\mathbb A_F)$ satisfying the selected local, extension-complete relative to
+$\omega_\pi$, and strongly cuspidal selector hypotheses of Chapter 1. Then there is a unique
+automorphic isobaric $\Pi=\operatorname{BC}_{E/F}(\pi)$ on
+$\mathrm{GL}_2(\mathbb A_E)$ with these properties.
 
 1. For every $v$ and $w\mid v$,
 
@@ -2359,7 +3040,7 @@ $\Pi=\operatorname{BC}_{E/F}(\pi)$ on $\mathrm{GL}_2(\mathbb A_E)$ with these pr
 
 2. It is $\Gamma$-invariant, has
    $\omega_\Pi=\omega_\pi\circ N_{E/F}$, and commutes with duals and with twists that remain
-   in the selected trace-comparable range.
+   in the selected, extension-complete, trace-comparable range.
 
 3. At an unramified $w\mid v$, its Satake pair is
    $\{\alpha_v^{f(w/v)},\beta_v^{f(w/v)}\}$. Conductors, local types,
@@ -2375,40 +3056,46 @@ $\Pi=\operatorname{BC}_{E/F}(\pi)$ on $\mathrm{GL}_2(\mathbb A_E)$ with these pr
 
    The two displayed characters are distinct and each occurs with multiplicity one.
 
-5. A selected trace-comparable cuspidal representation over $E$ lies in the image exactly when
-   it is $\Gamma$-invariant and its local parameters admit selected extensions. If its source
-   fiber is $X(E/F)$-saturated, its descents form an $X(E/F)$-torsor.
+5. A selected trace-comparable cuspidal representation over $E$ with antecedent-complete
+   selected local fibers lies in the image exactly when it is $\Gamma$-invariant. If its
+   source fiber is $X(E/F)$-saturated, its descents form an $X(E/F)$-torsor. Reducible local
+   extension sets may contain several local twisting orbits; the global cuspidal fiber is still
+   the single torsor just stated.
 
 6. For cuspidal sources, two base changes agree exactly when the sources differ by a
    member of $X(E/F)$. When their common lift is noncuspidal, the quadratic
    self-twist is the stabilizer and the fiber of cuspidal sources has one member.
 
-7. Under the source-fiber saturation hypothesis, if $\Omega$ is the central character of an invariant cuspidal $\Pi$, then
-   $\Omega=\omega\circ N$ for some $\omega$. Relative to one descent of central
-   character $\omega_0$, a descent with prescribed central character $\omega$ exists
-   exactly when $\omega/\omega_0\in X(E/F)^2$.
+7. Under the source-fiber saturation hypothesis, if $\Omega$ is the central character of an
+   invariant cuspidal $\Pi$, then $\Omega=\omega\circ N$ for some $\omega$. Relative to one
+   descent of central character $\omega_0$, a descent with prescribed central character
+   $\omega$ exists exactly when $\omega/\omega_0\in X(E/F)^2$.
 
 8. Regular algebraic and cohomological weights pull back along embeddings, algebraic
    conjugation commutes with base change, and the field of rationality can shrink
    precisely because coefficient conjugation can move $\pi$ in its norm-character
    twisting orbit.
 
-9. The construction uses normalized orbital matching, including the quadratic
-   division-centralizer correction, and makes no claim for primitive wild packets, ramified
-   dyadic wild types, packets without a strongly cuspidal selector, or composite cyclic degree.
+9. The construction uses the directed finite matching category, its complete split and
+   quaternion scalar companions, and the corrected relative/full discriminant conversion. It
+   makes no claim for an arbitrary smooth test function, a target fiber containing an
+   unconstructed primitive-wild or ramified-dyadic extension, a packet without a strongly
+   cuspidal selector, or composite cyclic degree.
 
-**Proof strategy.** Separate the free twisting orbit, where the stabilized simple trace formula
-constructs a cusp form, from the quadratic fixed orbit, where the theta kernel constructs the
-isobaric sum. Then read every invariant from the all-place local identity and run the same
-comparison backward for descent.
+**Proof strategy.** Separate the free twisting orbit, where the completed split/quaternion
+trace identity constructs a cusp form, from the quadratic fixed orbit, where the theta kernel
+constructs the isobaric sum. Then read every invariant from the all-place local identity and
+run the completed comparison backward for descent. Use the global Rankin--Selberg identity
+(11.1), rather than local extension torsors, to determine the fiber.
 
 **Proof.** Chapters 5 and 6 construct the lift by comparing ordinary and twisted trace
-formulas. The local matching trace identity identifies all components, and strong
+formulas. The directed local matching trace identity identifies all components, and strong
 multiplicity one gives uniqueness. Chapters 8 and 9 give the Hecke, factor, conductor,
 type, and archimedean formulas. Chapter 10 constructs quadratic automorphic induction and proves
-the self-twist criterion. Chapter 11 proves selected descent and fibers while retaining the
-central square class. Chapters 12--14 establish algebraic and level compatibility and audit
-every comparison hypothesis. $\square$
+the self-twist criterion. Chapter 11 proves selected descent by the global completed trace and
+proves fibers by the quotient-character Rankin--Selberg product, while retaining reducible
+local extensions and the central square class. Chapters 12--14 establish algebraic and level
+compatibility and audit every comparison hypothesis. $\square$
 
 ### 16.2 The data passed to cyclic towers
 
@@ -2420,8 +3107,8 @@ a later tower argument are nevertheless clear:
 - the kernel of a cyclic step is its finite norm-character group;
 - cuspidality can fail only at a quadratic self-twist, with an explicit
   multiplicity-free two-character isobaric sum;
-- invariant cuspidal representations descend, with controlled fibers and central
-  square classes;
+- invariant cuspidal representations with antecedent-complete selected local fibers descend,
+  with controlled global fibers and central square classes;
 - conductors, weights, coefficient fields, and selector conditions are checked one
   place at a time.
 
@@ -2454,7 +3141,7 @@ Those two characters are distinct and occur once each. Odd-degree cyclic base ch
 is therefore always cuspidal.
 
 In the reverse direction, Galois invariance is the image condition for cuspidal
-representations. Norm characters measure the full fiber, while their squares measure
+representations inside the antecedent-complete selected scope. Norm characters measure the full global fiber, while their squares measure
 which prescribed central characters occur. This distinction survives at infinity and in fields
 of rationality. The result is a complete prime-degree transfer theorem in the selected
 cohomological range: globally constructed, locally exact, explicit at its cuspidal boundary,
