@@ -136,7 +136,7 @@ any resulting corrections.
 - [x] 110. The Geometric Side of the GL₂ Trace Formula
 - [x] 111. Orbital Integrals for GL₂ and Quaternion Algebras
 - [x] 112. Transfer of Test Functions and the Rank-Two Fundamental Lemma
-- [ ] 113. Twisted Conjugacy and Geometric Trace Distributions
+- [x] 113. Twisted Conjugacy and Geometric Trace Distributions
 - [ ] 114. Twisted Cuspidal Trace Kernels and Spectral Expansion
 - [ ] 115. Twisted Orbital Matching and the Cyclic Fundamental Lemma
 - [x] 116. Generalized Elliptic Curves and Level Structures

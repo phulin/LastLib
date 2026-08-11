@@ -129,12 +129,17 @@ parabolic channel.  We then prove separate height, counting, orbital-decay, and 
 for the surviving terms.  The result is an absolutely convergent sum, not a notation for a
 regularized expression.
 
-The background needed from the preceding theory is deliberately small and explicit.  We use
-the adelic quotient, Haar-measure, reduction-theoretic, and rapid-decay language established
-for automorphic representations of $\mathrm{GL}_2$, and the convention that cyclic base change
-is governed locally by restriction along Weil groups and multiplicatively by field norms.  No
-global base-change theorem is assumed.  In particular, the norm geometry developed here is an
-input to a later comparison, not a consequence of it.
+The background needed from the preceding theory is deliberately small and explicit.  The
+automorphic-representation input supplies the adelic quotient, right-action convention,
+quotient measures, rank-one reduction theory, and the rapid-decay argument for a vanishing
+constant term.  The local cyclic-base-change input fixes geometric Frobenius and, more
+importantly here, the direction $E_v^\times\to F_v^\times$ of the field norm.  We use no local
+character identity from that theory and no global base-change theorem.  Hilbert 90, descent for
+finite-dimensional algebras, the cyclic-algebra norm criterion, and global Brauer reciprocity
+are ordinary algebraic and number-theoretic inputs already available in the preceding
+foundation; whenever a matrix or torus norm depends on them, the reduction to the precise
+input is written out below.  Thus the norm geometry developed here is an input to a later
+comparison, not a consequence of it.
 
 ## 1. The geometric problem created by cyclic base change
 
@@ -1432,8 +1437,11 @@ f(h^{-1}\delta\sigma(h))\,d\dot h.
 $$
 
 By (7.2) the same integral can be taken over determinant-one quotients.  Absolute convergence
-follows place by place and globally from the compact finite-adelic support and archimedean
-Schwartz decay.
+is not inferred from unrelated local convergence statements.  For a rational twisted
+semisimple $\delta$, all but finitely many local data extend to smooth integral models,
+$f_v$ is the hyperspecial unit there, and the local quotient has one integral orbit of volume
+one.  Thus the absolute adelic integral is a finite product of the remaining local absolute
+integrals.  Proposition 6.1 handles those factors, including the archimedean ones.
 
 **Proposition 7.2 (factorization).** With the restricted-product measures of Section 7.2,
 
@@ -1595,18 +1603,49 @@ then applying (8.3).  Absolute local uniform convergence from Proposition 8.1 ju
 interchange.  The same argument in the second variable uses the freedom in both $x$ and $y$ in
 (8.2).
 
-The rapid-decay theorem for cuspidal automorphic forms over the number field $E$, applied
-uniformly to the finite collection of derivatives and compact types occurring in the kernel,
-therefore gives: for every $A>0$,
+The usual rapid-decay theorem is stated for finite automorphic vectors.  A kernel obtained from
+an arbitrary Schwartz function need not be finite under the archimedean infinitesimal center,
+so applying that theorem to the whole two-variable family without comment would leave a
+hypothesis gap.  Its rank-one Fourier proof does, however, apply uniformly to this family.
+
+**Proposition 8.2 (two-variable rapid decay).** For every $A>0$ and every pair of
+right-invariant differential operators $D_1,D_2$, there is a continuous Schwartz seminorm
+$q_{A,D_1,D_2}$ such that, on products of Siegel sets,
 
 $$
-|K_f^\sigma(x,y)|
-\le C_A\operatorname{ht}(x)^{-A}\operatorname{ht}(y)^{-A}
+|D_1^xD_2^yK_f^\sigma(x,y)|
+\le q_{A,D_1,D_2}(f)
+\operatorname{ht}(x)^{-A}\operatorname{ht}(y)^{-A}
 \tag{8.5}
 $$
 
-on products of Siegel sets after the determinant direction has been removed.  The same estimate
-holds after differentiation.
+after the determinant direction has been removed.
+
+**Proof.** Fix the finite level and the finitely many cusp charts meeting the finite support of
+$f$.  On a unipotent cross-section in the first variable, the calculation preceding the
+proposition says that the zero Fourier coefficient is zero.  The same is true in the second
+variable.  The restriction of the kernel to a product of two cross-sections is therefore a
+double Fourier series indexed by nonzero elements of two fixed fractional lattices.
+
+At height $H_x$, an invariant unipotent derivative multiplies each nonzero first Fourier mode
+by at least $cH_x^{1/[E:\mathbf Q]}$ in one archimedean direction; the analogous assertion
+holds with $H_y$ in the second variable.  Integrating by parts $r$ times in each set of
+unipotent coordinates and applying Sobolev embedding on the two fixed compact tori gives
+
+$$
+|D_1^xD_2^yK_f^\sigma(x,y)|
+\le C_rH_x^{-r/[E:\mathbf Q]}H_y^{-r/[E:\mathbf Q]}
+\max_{|I|,|J|\le r+s}|X^IY^JK_f^\sigma(x',y')|,
+\tag{8.5a}
+$$
+
+where $s$ is a fixed Sobolev loss and $x',y'$ range over the corresponding compact
+cross-sections.  Proposition 8.1, applied to the finitely many derivatives in (8.5a), bounds the
+last maximum by a Schwartz seminorm times a polynomial in $H_xH_y$.  The polynomial exponent
+can be chosen independently of $r$: differentiating the rational-point series replaces $f$ by
+an invariant derivative, and every such derivative has arbitrary Schwartz decay.  Choose $r$
+so that the two Fourier gains dominate that common polynomial and the prescribed exponent $A$.
+The compact parts of the finitely many Siegel sets are absorbed into the seminorm. $\square$
 
 Since $[H]^1$ has finite-volume cusp regions of polynomial density, (8.5) makes the diagonal
 absolutely integrable.  We may therefore define
@@ -2090,30 +2129,59 @@ $$
 
 The order $M$ may increase with $N$ but is independent of $\delta$.
 
-**Proof strategy.** Away from the discriminant, orbit-times-slice coordinates have uniformly
-bounded Jacobians.  Near the discriminant, their loss is at most a fixed power of
-$|\Delta|^{-1}$.  The product formula converts a small local discriminant into growth at other
-places or into the explicit $H_F(\Delta^{-1})$ factor.  Archimedean Schwartz decay then supplies
-an arbitrary remaining inverse power.
+**Proof strategy.** The coefficients $s,d$ are polynomial functions of an orbit point and its
+Galois conjugates, so large invariant height forces large matrix height somewhere.  Quotient
+coordinates can lose powers of the discriminant near the singular locus, but only powers.  The
+height in (11.1) records exactly that loss.  Arbitrary Schwartz decay then dominates both the
+polynomial quotient volume and the polynomial loss of coordinates.
 
-**Proof.** Cover the regular semisimple locus in the affine matrix space by finitely many
-charts in which one off-diagonal coordinate is nonzero.  Solving the twisted conjugation
-equations in such a chart uses Cramer's rule on the tangent operator (4.7); denominators are
-minors of that operator and hence divide a fixed power of $D^\sigma(\delta)$.  Since the norm
-map is polynomial of degree $\ell$, those minors are algebraic functions whose zeros lie over
-$\Delta=0$.  On a fixed finite support, the resulting quotient Jacobian is bounded by
-$C|\Delta|_v^{-m}$ for a fixed $m$.
+**Proof.** On the strongly regular locus, choose finitely many cyclic-vector charts for the norm
+matrix and finitely many complementary minors of the tangent map (4.7).  These charts cover the
+whole locus, including diagonal representatives: a regular $2\times2$ matrix always has a
+cyclic vector, although a fixed coordinate vector need not be cyclic.  Cramer's rule expresses
+the orbit and slice coordinates with denominators among the chosen tangent minors.  The common
+zero set of those minors is the locus where the twisted centralizer dimension jumps.  By
+Proposition 4.2 this is the inverse image of $\Delta=0$.  Clearing denominators on the finite
+affine cover therefore gives constants $m,C_v$ such that the quotient Jacobian and the volume
+of every unit matrix-height box are bounded by
 
-At nonarchimedean places outside a fixed finite set, integral regularity makes the bound one.
-At the remaining finite places it is a fixed power of the local height.  At infinity, Cartan
-decomposition as in Proposition 6.1 shows that an orbit of invariant height $R$ can meet a
-fixed matrix-height shell only after some Cartan or matrix coordinate has size at least
-$R^c$, up to the preceding discriminant loss.  Applying (8.1) with arbitrarily large order
-gives $R^{-N}$ after increasing that order.  Multiplying the local bounds and using the product
-formula absorbs every discriminant denominator into (11.1).  The scalar semisimple orbits have
-no regular discriminant; their explicit representatives $b_aI$ and $\delta_a$ make the same
-Cartan estimate depend polynomially on $H_F(a)$, and Schwartz decay again gives arbitrary
-inverse powers. $\square$
+$$
+C_v\max(1,|\Delta|_v^{-1})^m
+$$
+
+times a fixed power of the box height.  Outside a finite set of places the charts, measures,
+and class are integral with regular reduction, so $C_v=1$ and no loss occurs.
+
+Let $Y_v=h_v^{-1}\delta\sigma(h_v)$ be an orbit point.  Trace and determinant of
+$N_\sigma(Y_v)$ are polynomials of degree at most $2\ell$ in the entries of the Galois
+conjugates of $Y_v$ and their inverses.  The elementary height inequality for a polynomial map,
+multiplied over all places, gives
+
+$$
+H_F(s)H_F(d)H_F(d^{-1})
+\le C\prod_v\max(1,\|Y_v\|_v,\|Y_v^{-1}\|_v)^c.
+\tag{11.3a}
+$$
+
+The finite support bounds the factors on the right at every finite place.  A small local
+discriminant can enlarge a quotient chart, but the product formula and the factor
+$H_F(\Delta^{-1})$ in (11.1) bound the product of all such enlargements by a fixed power of
+$H([\delta]_\sigma)$.  Consequently, on the part of the orbit where the integrand is not
+already $O(H^{-N})$, (11.3a) forces an archimedean matrix height at least a fixed positive power
+of $H$, after a fixed discriminant power is removed.
+
+Divide each archimedean quotient into unit Cartan boxes.  Their volumes grow at most
+exponentially in Cartan distance, whereas matrix height grows exponentially away from the
+stabilizer.  A Schwartz estimate of order $M$ therefore makes the sum of the boxes converge and
+contributes an arbitrarily large inverse power of $H$ once $M$ is chosen large enough.  The
+finitely many bad finite-place Jacobian factors cost only the fixed height power already
+recorded above.  This proves (11.3) for regular classes.
+
+For scalar semisimple classes, use the explicit representatives $b_aI$ and $\delta_a$.  Their
+matrix norms and inverse norms control $H_F(a)H_F(a^{-1})$ by the same polynomial-height
+inequality.  On the split relative orbit, the only neutral Cartan direction lies in the
+stabilizer $G(F_v)$; for a division centralizer the quotient has fewer escaping directions.
+The identical box estimate therefore gives arbitrary inverse powers in the scalar height. $\square$
 
 The proposition is a bound for the global orbital integral, not a claim that each local
 orbital integral decays independently in a global height.  At one place a class can approach
@@ -2246,7 +2314,7 @@ Strong cuspidality kills its main term, and rapid decay kills the truncation bou
 each remaining closed orbit through its reductive centralizer.  Finally use the independent
 height estimates to remove the cutoff and sum the orbit terms.
 
-**Proof.** Proposition 8.1 and (8.5) define the diagonal distribution and prove (9.5).
+**Proof.** Propositions 8.1--8.2 define the diagonal distribution and prove (9.5).
 Sections 9.1--9.4 justify every finite truncated rearrangement, and Theorem 9.2 removes the
 split regular and nonsemisimple channels.  Sections 10.1--10.4 give the orbitwise limits for the
 three surviving families with the coefficient and orbital measures of Chapter 7.  Chapter 11
@@ -2286,7 +2354,8 @@ $$
 \qquad \Omega\circ\sigma=\Omega.
 $$
 
-Let local test functions satisfy inverse central covariance
+Use smooth test functions that are compactly supported modulo the center at finite places,
+Schwartz modulo the center at archimedean places, and satisfy inverse central covariance
 
 $$
 f(zg)=\Omega(z)^{-1}f(g).
@@ -2300,15 +2369,32 @@ $\sigma$-invariance.
 
 Disintegrate the determinant-one formula along the norm-one idele-class center and apply its
 $\Omega$-Fourier coefficient.  Absolute convergence from Theorem 12.1 justifies this operation.
-The result has the same form as (12.1), but its classes are projective twisted classes:
+The result has the same three channels as (12.1), but it is indexed by projective twisted
+classes, namely the $E^\times$-orbits of actual twisted classes.
 
-- regular elliptic norms are considered modulo $F^\times$;
-- all split scalar norms combine into one scalar projective channel, with the chosen central
-  character supplying the scalar weight;
-- in quadratic degree, exceptional scalar classes are indexed by the nontrivial projective
-  obstruction classes in $F^\times/N(E^\times)$.
+There is an important restriction on how the regular channel may be reindexed.  Replacing a
+lift $\delta$ by $z\delta$ changes its actual stable norm $\gamma$ to
+$N_{E/F}(z)\gamma$.  It follows that two lift norms are identified by central projection only
+through a scalar in $N_{E/F}(E^\times)$, not automatically through every scalar in
+$F^\times$.  Their images in $\mathrm{PGL}_2(F)$ can therefore coincide while the projective
+twisted classes remain distinct.  The safe regular indexing is
 
-The projective twisted stabilizer is
+$$
+\{[\delta]_\sigma:\delta\text{ regular elliptic}\}/E^\times,
+\tag{12.4a}
+$$
+
+or, equivalently, norm pairs $(\gamma,[c])$ modulo the norm-scalar relation actually induced
+by a lift.  One may replace (12.4a) by projective stable norms only after proving that the
+resulting fiber has no extra scalar obstruction.  No such unwarranted collapse is made here.
+
+All split scalar norms do combine into one scalar projective channel, with $\Omega$ supplying
+the scalar weight.  In quadratic degree the exceptional scalar channels are indexed by the
+nontrivial classes in $F^\times/N(E^\times)$.  These two scalar assertions follow directly
+from Theorem 5.1 and do not imply the stronger, false assertion that every regular projective
+fiber is a singleton.
+
+For a chosen projective class, the projective twisted stabilizer is
 
 $$
 \overline I_\delta(F)=
@@ -2326,15 +2412,28 @@ Thus the determinant-one and central-character formulas are two realizations of 
 distribution, not rival normalizations.  The first keeps the scalar-norm classification most
 transparent; the second is often best suited to a fixed automorphic central character.
 
-More explicitly, choose a smooth compactly supported function $\rho$ on the positive modulus
-group with integral one.  Every $h\in H(\mathbf A_F)$ can be written as $h=h^1a(t)$ with
-$h^1\in H(\mathbf A_F)^1$.  Multiplying a central-covariant function by $\rho(t)$ gives an
-integrable lift to the determinant direction.  Fourier expansion along the compact norm-one
-idele-class center projects this lift to its $\Omega$-isotypic component.  Applying Theorem
-12.1 before the projection is legitimate by absolute convergence, and applying the projection
-term by term identifies scalar multiples exactly as described above.  Changing $\rho$ changes
-only a function whose central integral is zero, so the projected distribution is independent
-of the auxiliary lift.
+More explicitly, let
+
+$$
+C_E^1=E^\times\backslash\{z\in\mathbf A_E^\times:|z|_{\mathbf A_E}=1\}.
+$$
+
+This is compact.  Restriction of a central-covariant function to $H(\mathbf A_F)^1$ has
+$\Omega^{-1}$-covariance under $C_E^1$, and the corresponding isotypic projector is integration
+against $\Omega$ over this compact group.  Conversely, choose a central section $z(t)$ of the
+positive determinant modulus.  An $\Omega^{-1}$-covariant function on the determinant-one group
+extends uniquely modulo the center by
+
+$$
+f(z(t)h^1)=\Omega(z(t))^{-1}f(h^1).
+$$
+
+If an integrable function on the full determinant direction is desired before taking the
+central quotient, multiply this extension by a smooth compactly supported $\rho(t)$ with
+$\int\rho(t)\,dt/t=1$.  Apply Theorem 12.1 first and then the compact $C_E^1$-projector.
+Absolute convergence permits the projector to pass through the class sum and groups precisely
+the scalar multiples described above.  A different normalized $\rho$ has the same central
+quotient integral, so the resulting distribution is independent of the auxiliary lift.
 
 The hypothesis $\Omega\circ\sigma=\Omega$ is necessary.  Without it, the field automorphism
 sends the $\Omega$-central-character space to the distinct
