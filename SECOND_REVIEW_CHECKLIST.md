@@ -53,7 +53,7 @@ any resulting corrections.
 - [ ] 027. Betti, de Rham, and Étale Comparison for Curves
 - [x] 028. fppf Cohomology and Kummer Theory
 - [x] 029. Continuous Cohomology of Profinite Groups
-- [ ] 030. Local Galois Cohomology
+- [x] 030. Local Galois Cohomology
 - [ ] 031. Tate Local Duality
 - [ ] 032. Global Galois Cohomology and Selmer Groups
 - [ ] 033. Poitou–Tate Duality

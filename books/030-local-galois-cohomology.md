@@ -244,7 +244,8 @@ When $\ell\ne p$, it is unramified and $\chi_\ell(\varphi)=q$. When $\ell=p$ and
 
 ### 2.4 Dual modules, without invoking duality
 
-For a finite $\ell$-primary module $M$, define its Pontryagin dual and Tate dual by
+Assume $\ell\ne\operatorname{char}K$. For a finite $\ell$-primary module $M$, define its
+Pontryagin dual and Tate dual by
 
 $$
 M^\vee=\operatorname{Hom}(M,\mathbf Q_\ell/\mathbf Z_\ell),
@@ -258,7 +259,7 @@ $$
 V^*(1)=\operatorname{Hom}_E(V,E)(1).
 $$
 
-Evaluation gives a $G_K$-equivariant pairing $M\times M^*(1)\to\mu_{\ell^n}$ at a sufficiently large finite level, and hence cup products into $H^2(K,\mu_{\ell^n})$. We construct the target and its invariant below. We do **not** assert here that the resulting pairings are perfect; that is the central theorem of Book 31.
+Evaluation gives a $G_K$-equivariant pairing $M\times M^*(1)\to\mu_{\ell^n}$ at a sufficiently large finite level, and hence cup products into $H^2(K,\mu_{\ell^n})$. We construct the target and its invariant below. In equal characteristic $p$, this construction deliberately excludes $p$-primary $M$: the missing etale $p$-power roots of unity cannot be repaired by notation. We do **not** assert here that the resulting pairings are perfect; that is the central theorem of Book 31.
 
 ### 2.5 One-dimensional notation
 
@@ -346,7 +347,7 @@ This interpretation is useful in deformation problems, where $c(g)$ is the first
 
 An $M$-torsor with compatible continuous $G_K$-action determines a class in $H^1(K,M)$ after a geometric point is chosen; a different point changes the cocycle by a coboundary. The torsor has a $K$-rational point exactly when its class is zero.
 
-For $M=\mu_n$, torsors are equations
+Assume here that $n$ is prime to $\operatorname{char}K$. For $M=\mu_n$, Galois torsors are equations
 
 $$
 X^n=a.
@@ -359,6 +360,10 @@ g\longmapsto \frac{g(b)}b\in\mu_n.
 $$
 
 Its class is independent of $b$, and it vanishes exactly when $a$ is an $n$th power in $K$. Thus a concrete failure to solve an equation is the same object as an affine descent obstruction.
+
+If $\operatorname{char}K=p$ and $p\mid n$, the same equation defines a flat
+$\mu_n$-torsor when $a\in K^\times$, but it is not a torsor under a discrete Galois module:
+an $n$th root need not lie in $K^s$. This is exactly the distinction made in Section 2.6.
 
 ### 3.4 Kummer theory
 
@@ -867,13 +872,14 @@ Hochschild--Serre page is literally a two-by-two square, and total degree cannot
 This argument works for every finite $\ell$-primary action, not merely an unramified or
 semisimple one.
 
-The bound is sharp. Take $M=\mu_\ell$ if necessary after replacing $K$ by a finite extension containing it. The Brauer calculation gives
+The bound is sharp without changing the field. The Galois module $\mu_\ell$ is defined whether
+or not its elements are $K$-rational, and the Brauer calculation gives
 
 $$
 H^2(K,\mu_\ell)\simeq\mathbf Z/\ell\mathbf Z\ne0.
 $$
 
-Cohomological dimension is unchanged on passing between open subgroups of index prime to $\ell$, and the direct calculation also supplies nonvanishing over the original field with a suitable twist. Thus the dimension is exactly two.
+Thus the dimension is exactly two.
 
 ### 6.3 The equal-characteristic $p$ proof
 
@@ -889,7 +895,21 @@ $$
 H^i(K,\mathbf F_p)=0\qquad(i\geq2).
 $$
 
-The same argument works after every finite separable extension of $K$. The finite-coefficient detection criterion now gives $\operatorname{cd}_p(G_K)\leq1$: one proves the criterion by dimension shifting and induction on the length of a finite $p$-primary module, reducing simple factors after a finite extension to $\mathbf F_p$. Nonzero Artin–Schreier classes show $H^1(K,\mathbf F_p)\ne0$, so equality holds.
+The same argument works after every finite separable extension of $K$. We use the following
+standard open-subgroup criterion: if
+
+$$
+H^{d+1}(U,\mathbf F_p)=0
+$$
+
+for every open subgroup $U$ of a profinite group $G$, then
+$\operatorname{cd}_p(G)\leq d$. This is a dimension-shifting statement, not a claim that an
+arbitrary modular representation becomes trivial after a prime-to-$p$ extension. One proof
+uses permutation modules $\mathbf F_p[G/U]$ and Shapiro's lemma to test the projective dimension
+of the trivial module; dimension shifting then gives vanishing for every finite $p$-primary
+module, and filtered unions give it for every discrete $p$-primary module. Applying the
+criterion with $d=1$ gives $\operatorname{cd}_p(G_K)\leq1$. Nonzero Artin--Schreier classes show
+$H^1(K,\mathbf F_p)\ne0$, so equality holds.
 
 This proof also explains the infinite group in Section 5.6. Surjectivity of $F-1$ over $K^s$ kills degree two, while its large cokernel over $K$ creates many degree-one extensions.
 
@@ -907,30 +927,64 @@ for every finite $p$-primary $G_F$-module $M$.
 
 Here is a complete proof route. We include the reduction because simply quoting the prime-to-$p$ inertia argument would be wrong: wild inertia is now visible.
 
-First we need a multiplicative-coefficient lemma. For every finite extension $E/F$,
+First we need only the following degree-three multiplicative-coefficient lemma. For every finite
+extension $E/F$,
 
 $$
-H^j(E,(E^s)^\times)=0\qquad(j\geq3). \tag{6.2}
+H^3(E,(E^s)^\times)=0. \tag{6.2}
 $$
 
-To prove it, represent a class at a finite Galois level $L/E$. The local fundamental class $u_{L/E}$ has invariant $1/[L:E]$. The class-formation calculation from local reciprocity—dimension shifting followed by cup product with $u_{L/E}$—identifies the relevant positive Tate cohomology with a shifted Tate group of $\mathbf Z$. Enlarge $L$ by an unramified extension whose degree is divisible by the order of the represented finite-level class. Compatibility of fundamental classes shows that inflation multiplies the shifted integral class by that degree, so it becomes zero. Since absolute cohomology is the filtered colimit over finite Galois levels, (6.2) follows. This argument works over every finite $E/F$ and is exactly where the local fundamental class supplies the ramification input.
+Indeed, continuous cohomology with the discrete module $(E^s)^\times$ is the filtered colimit of
 
-After a finite extension of degree prime to $p$, we may assume $\mu_p\subset E$; this does not change $p$-cohomological dimension. Apply the Kummer sequence
+$$
+H^3(\operatorname{Gal}(L/E),L^\times)
+$$
+
+over finite Galois $L/E$. The local fundamental class of Book 5 gives the class-formation
+isomorphism
+
+$$
+H^3(\operatorname{Gal}(L/E),L^\times)
+\simeq H^1(\operatorname{Gal}(L/E),\mathbf Z).
+$$
+
+The group on the right is zero: a homomorphism from a finite group to the torsion-free group
+$\mathbf Z$ vanishes. Every term in the filtered system is therefore zero, proving (6.2). This
+is precisely the multiplicative input needed below; no blanket cohomological-dimension claim for
+$(E^s)^\times$ has been smuggled in.
+
+Since $E$ has characteristic zero, apply the Kummer sequence; it is exact whether or not
+$\mu_p\subset E$:
 
 $$
 1\to\mu_p\to(E^s)^\times\xrightarrow{p}(E^s)^\times\to1.
 $$
 
-For degrees at least four, (6.2) immediately gives $H^j(E,\mu_p)=0$. In degree three, exactness gives
+The degree-three part of its long exact sequence is
 
 $$
 \operatorname{Br}(E)\xrightarrow{p}\operatorname{Br}(E)
-\longrightarrow H^3(E,\mu_p)\longrightarrow0.
+\longrightarrow H^3(E,\mu_p)
+\longrightarrow H^3(E,(E^s)^\times).
 $$
 
-Multiplication by $p$ on $\operatorname{Br}(E)\simeq\mathbf Q/\mathbf Z$ is surjective, so $H^3(E,\mu_p)=0$ as well.
+The last group vanishes by (6.2), and multiplication by $p$ on
+$\operatorname{Br}(E)\simeq\mathbf Q/\mathbf Z$ is surjective. Hence
+$H^3(E,\mu_p)=0$.
 
-Finally, the finite-coefficient detection criterion says that $\operatorname{cd}_p(G)\leq2$ if $H^3(U,\mathbf F_p)=0$ for every open subgroup $U$. Its proof uses dimension shifting: resolve a finite $p$-primary module by coinduced modules, reduce by length to modules killed by $p$, and after a finite prime-to-$p$ scalar extension reduce simple factors to the trivial module. Restriction–corestriction descends the vanishing. Every open subgroup of $G_F$ is the absolute Galois group of a finite extension $E/F$, and after adjoining $\mu_p$ the trivial module $\mathbf F_p$ is $\mu_p$. The preceding vanishing therefore proves the criterion. The nonzero group $H^2(F,\mu_p)$, after the same harmless extension if necessary, shows that the bound is sharp. Consequently $\operatorname{cd}_p(G_F)=2$.
+Finally apply the open-subgroup criterion stated in Section 6.3. Every open subgroup of $G_F$ is
+$G_E$ for a finite extension $E/F$. Put $E'=E(\mu_p)$. Its degree over $E$ divides $p-1$, so
+restriction on $p$-primary cohomology is injective. Over $E'$, a choice of primitive $p$th root
+identifies the trivial module $\mathbf F_p$ with $\mu_p$, and the preceding calculation gives
+
+$$
+H^3(E',\mathbf F_p)=0.
+$$
+
+Injectivity of restriction gives $H^3(E,\mathbf F_p)=0$. The criterion now proves
+$\operatorname{cd}_p(G_F)\leq2$. Finally $H^2(F,\mu_p)\simeq\operatorname{Br}(F)[p]$ is already
+nonzero over $F$, whether or not $\mu_p\subset F$, so the bound is sharp. Consequently
+$\operatorname{cd}_p(G_F)=2$.
 
 ### 6.5 Vanishing for arbitrary finite torsion modules
 
@@ -967,12 +1021,12 @@ $$
 \qquad\text{if }\ell\nmid[L:K]. \tag{6.3}
 $$
 
-This justifies two reductions used above. For $\ell\ne p$, adjoining $\mu_\ell$ has degree
-dividing $\ell-1$, so it does not change $\ell$-cohomological dimension. Over the resulting
-field $H^2(\mu_\ell)$ is nonzero by the Brauer invariant, proving sharpness. In mixed
-characteristic the same argument adjoins $\mu_p$ through an extension of degree dividing
-$p-1$; for $p=2$ the root $-1$ is already present. Nonvanishing of $H^2(\mu_p)$ then proves
-that the upper bound two is sharp over the original field as well.
+This justifies the prime-to-$p$ descent used in Section 6.4. Adjoining $\mu_p$ in mixed
+characteristic has degree dividing $p-1$; for $p=2$ the root $-1$ is already present. Thus the
+vanishing of $H^3$ for the trivial module may safely be checked after that extension. For any
+$\ell\ne\operatorname{char}K$, no extension is needed to prove sharpness:
+$H^2(K,\mu_\ell)$ is nonzero by the Brauer invariant even when the roots themselves are not
+$K$-rational.
 
 The vanishing bound is also uniform in the coefficient exponent. If $M$ is killed by
 $\ell^r$, no constant in Theorem 6.1 depends on $r$, on the size of the finite quotient through
@@ -1261,35 +1315,85 @@ below.
 
 ### 8.5 Proof for every mixed-characteristic finite module
 
-We now explain why the constant calculation determines all finite $p$-primary modules. The
-required finite-group Euler lemma says that an additive Euler characteristic compatible with
-Shapiro is determined by its value on the trivial $\mathbf F_p$-module over every open
-subgroup. Here is the proof in the form needed locally.
-
-Choose a finite Galois extension through which the action on a module $N$ killed by $p$ factors,
-and call the finite quotient $G$. Induct simultaneously on $|G|$ and $\dim N$. If $P$ is a
-$p$-Sylow subgroup, the restriction of $N$ to $P$ has a filtration with trivial one-dimensional
-factors: a central element of order $p$ acts unipotently and supplies a fixed vector, and
-induction supplies the rest. Subgroups of order prime to $p$ are semisimple by averaging.
-Applying these facts successively to $P$, its normalizer, and the proper subgroups met in the
-process expresses the Euler value of $N$ as a sum of Euler values of trivial lines over fixed
-fields, divided by the same subgroup indices that occur in the dimension count. Shapiro turns
-each induced term over $K$ into the corresponding trivial term over that fixed field. Since
+We now explain carefully why the constant calculation determines every finite $p$-primary
+module. More generally, for a finite coefficient field $k_0$ of characteristic $p$ and a
+finite-dimensional $k_0$-representation $N$, put
 
 $$
-[F:\mathbf Q_p]=[F:K]d_K
+e_K(N)=\sum_{i=0}^2(-1)^i\dim_{k_0}H^i(K,N).
 $$
 
-for every such field $F$, the index factors cancel and the direct computation (8.6a) yields
+This is additive in short exact sequences, is unchanged after extending the finite coefficient
+field, and satisfies Shapiro's identity
 
 $$
-\chi_K(N)=-d_K\dim_{\mathbf F_p}N. \tag{8.7}
+e_K(\operatorname{Ind}_{G_F}^{G_K}N)=e_F(N) \tag{8.7}
 $$
 
-This is the finite-group Euler lemma. The two induction parameters decrease at every step; the
-$p$-part is controlled by the fixed-vector filtration and the prime-to-$p$ part by the averaging
-idempotent. Thus no filtration of the original $G$-module by trivial $G$-modules has been
-assumed.
+for every finite $F/K$. We shall prove that these properties and (8.6a) force
+
+$$
+e_K(N)=-d_K\dim_{k_0}N. \tag{8.7a}
+$$
+
+First consider a one-dimensional character $\theta$ of finite order $m$ prime to $p$. After a
+finite extension of the coefficient field, all characters of the cyclic group cut out by
+$\theta$ are defined. Let $L/K$ be that cyclic extension. For every divisor $a$ of $m$, let
+$L_a/K$ be its subextension of degree $a$. The permutation representation decomposes as
+
+$$
+\operatorname{Ind}_{G_{L_a}}^{G_K}k_0
+=\bigoplus_{\psi^a=1}k_0(\psi).
+$$
+
+Shapiro and the already proved trivial calculation over $L_a$ give
+
+$$
+\sum_{\psi^a=1}e_K(k_0(\psi))
+=e_{L_a}(k_0)=-[L_a:\mathbf Q_p]=-a d_K. \tag{8.7b}
+$$
+
+Induction over the divisors of $m$ isolates the sum over characters of exact order $a$.
+Automorphisms of the splitting coefficient field act transitively on those characters and do
+not change cohomology dimensions. Hence every summand in that exact-order sum has the same Euler
+value, and (8.7b) gives
+
+$$
+e_K(k_0(\theta))=-d_K. \tag{8.7c}
+$$
+
+It remains to pass from lines to an arbitrary modular representation. We record the finite-group
+induction fact being used. If $\Gamma$ is finite and the coefficient field splits its
+$p$-regular elements, the rational Grothendieck group of finite-dimensional
+$k_0[\Gamma]$-modules is spanned by
+
+$$
+[\operatorname{Ind}_H^\Gamma\theta],
+$$
+
+where $H$ runs through subgroups and $\theta$ through their one-dimensional characters. This is
+the modular Brauer induction lemma. A quick proof is to send a module to its Brauer character
+on the $p$-regular conjugacy classes. These characters inject the Grothendieck group into the
+space of class functions. Induct on the order of the cyclic subgroup generated by a
+$p$-regular element: the induced linear characters from its subgroups have a triangular value
+matrix, with nonzero diagonal, on the corresponding cyclic-subgroup classes. They therefore
+span the class functions over $\mathbf Q$, which proves the stated rational spanning result.
+
+Choose a finite Galois extension through which the action on $N$ factors, with quotient
+$\Gamma$. For a term induced from $H\subseteq\Gamma$, let $F$ be the fixed field of $H$.
+The character $\theta$ has prime-to-$p$ image, because a finite subgroup of a field's
+multiplicative group has order prime to its characteristic. Equations (8.7) and (8.7c), now over
+$F$, give
+
+$$
+e_K(\operatorname{Ind}_H^\Gamma\theta)
+=e_F(\theta)=-d_F=-[\Gamma:H]d_K.
+$$
+
+The right side is $-d_K$ times the dimension of the induced representation. Thus the two
+additive functions $e_K(-)$ and $-d_K\dim(-)$ agree on a rational spanning set of the
+Grothendieck group, and hence agree on $N$. This proves (8.7a) without assuming that $N$ has a
+filtration by trivial $G_K$-modules.
 
 For local cohomology, additivity is (8.5), vanishing is Theorem 6.1, and Shapiro's lemma gives
 
@@ -1297,10 +1401,11 @@ $$
 \chi_K(\operatorname{Ind}_{G_L}^{G_K}N)=\chi_L(N).
 $$
 
-Taking the base-$p$ logarithm of the multiplicative Euler characteristic makes it an integer
-with precisely these properties. Devissage along powers of a uniformizer of $\mathcal O$ proves
-(8.3) in general. This proof uses only Kummer theory, the local Brauer invariant, finite-group
-induction, Shapiro, and exact sequences; perfect cohomological pairings play no role.
+For a finite $p$-primary abelian module, devissage by the subquotients $p^jM/p^{j+1}M$ gives the
+corresponding order formula. For a finite-length module over $\mathcal O$, devissage along powers
+of its uniformizer gives (8.3). This proof uses only Kummer theory, the local Brauer invariant,
+finite-group induction, Shapiro, and exact sequences; perfect cohomological pairings play no
+role.
 
 ### 8.6 Dimension and length consequences
 
@@ -2283,12 +2388,17 @@ At the residue characteristic in mixed characteristic, principal units add $[K:\
 
 We now have a complete low-degree local toolkit: fixed vectors, cocycles and torsors, Kummer and reciprocity calculations, unramified and tame restriction, cohomological dimensions, vanishing above degree two, the Brauer invariant, $H^2(K,\mu_n)$, finite and $\ell$-adic coefficient passage, Euler–Poincaré formulas, field-extension functoriality, and adjoint tangent dimensions. The flat and Galois Kummer theories have been compared without conflating them in equal characteristic, and the tangent formulas have been rearranged into the parameter–relation ledgers used by restricted ramification conditions. Every topology, twist, Frobenius direction, and residue-characteristic exception has been kept explicit.
 
-The remaining step is not another size calculation. Evaluation and cup product already give pairings
+The remaining step is not another size calculation. If $M$ is finite $\ell$-primary, killed by
+$n=\ell^r$, with $\ell\ne\operatorname{char}K$, evaluation and cup product already give pairings
 
 $$
 H^i(K,M)\times H^{2-i}(K,M^*(1))
 \longrightarrow H^2(K,\mu_n)
 \xrightarrow{\operatorname{inv}_K}\mathbf Q/\mathbf Z.
 $$
+
+This includes $p$-primary modules over mixed-characteristic local fields. It excludes the
+equal-characteristic $p$ branch, where the etale Tate twist used in the displayed pairing does
+not exist.
 
 What remains is to prove that these pairings are perfect and to identify annihilators of natural local conditions. That theorem will turn the obstruction term $H^2$ into a computable twisted invariant space. The arithmetic developed here ensures that, when duality arrives, it acts on finite groups of the right size, respects restriction and corestriction, and carries exactly the local dimensions required by deformation theory. Local Galois cohomology has thus reduced an infinite profinite symmetry to a finite and reusable calculus of inertia, Frobenius, units, and one final Brauer obstruction.
