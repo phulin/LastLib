@@ -77,7 +77,7 @@ any resulting corrections.
 - [x] 051. Torsion and Tate Modules of Elliptic Curves
 - [x] 052. Algebraic de Rham Cohomology and Gauss–Manin Connections
 - [x] 053. Divided Powers and Crystalline Sites
-- [ ] 054. Crystalline Cohomology of Curves and Abelian Schemes
+- [x] 054. Crystalline Cohomology of Curves and Abelian Schemes
 - [ ] 055. Syntomic Cohomology and Integral Period Maps
 - [x] 056. Finite-Flat Group Schemes of Small Height
 - [ ] 057. Dieudonné Theory and Raynaud Full Faithfulness

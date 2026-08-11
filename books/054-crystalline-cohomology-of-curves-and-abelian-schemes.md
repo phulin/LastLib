@@ -99,7 +99,9 @@ and a principal polarization turns $H^1_{\mathrm{cris}}$ into a symplectic Frobe
 
 ### 1.2 Standing hypotheses and conventions
 
-A **nilpotent PD base** is a scheme $S$ with a quasi-coherent nilpotent ideal $J\subset\mathcal O_S$ and divided powers $\gamma$, with special fiber $S_0=V(J)$. We assume all schemes locally noetherian and all morphisms of finite presentation whenever finiteness is discussed. A **PD morphism** preserves the stated divided powers. The small crystalline site and its structure sheaf have the meaning established in Book 53.
+A **finite-level PD base** in this book is a locally noetherian $\mathbf Z_{(p)}$-scheme $S$ on which $p$ is locally nilpotent, equipped with a quasi-coherent nilpotent ideal $J\subset\mathcal O_S$ and divided powers $\gamma$ compatible with the canonical divided powers on $(p)$. Its special fiber is $S_0=V(J)$. All morphisms between such bases are PD morphisms and preserve the chosen prime. These are exactly the hypotheses under which Book 53 proved the passage among nilpotent crystalline objects, stratifications, and quasi-nilpotent connections. The $p$-adic base $W(k)$ itself is treated only as the inverse limit of its finite-level bases $W_n(k)$; it is not silently regarded as an object of the nilpotent site.
+
+All schemes are locally noetherian and all morphisms are of finite presentation whenever finiteness is discussed. The small crystalline site and its structure sheaf have the meaning established in Book 53. Results over a general PD base require an independently proved crystalline Poincare lemma and finiteness theorem in that greater generality; no such extension is implicit here.
 
 For a morphism $f:X\to S_0$, write
 
@@ -119,7 +121,7 @@ Coefficients are the structure crystal unless displayed. Complexes are cohomolog
 
 At finite Witt level we write $W_n(k)=W(k)/p^n$. If $k$ is perfect, $\sigma$ denotes Witt Frobenius. The notation $M(-r)$ means the same module with Frobenius multiplied by $p^r$; thus the rank-one object $W(k)(-r)$ has Frobenius $p^r\sigma$. This is a convention, not tensoring by an unconstructed line.
 
-A **smooth proper curve** has geometrically connected fibers of pure dimension one. An abelian scheme has the definition of Book 38. For relative results about a smooth proper morphism $X\to B_0$ over a PD base $B$, the phrase "its crystalline cohomology crystal" refers to the assignment on a base thickening $(U,T)$
+A **smooth proper curve** has geometrically connected fibers of pure dimension one. An abelian scheme has the definition of Book 38. For relative results about a smooth proper morphism $X\to B_0$ over a finite-level PD base $B$, the phrase "its crystalline cohomology crystal" refers to the assignment on a base thickening $(U,T)$
 
 $$
 (U,T)\longmapsto H^i_{\mathrm{cris}}(X_U/T).
@@ -133,7 +135,7 @@ The central results have four layers.
 
 First, for smooth proper $X/S_0$, crystalline cohomology is represented by a bounded perfect complex and satisfies derived PD base change. Second, for curves and abelian schemes its individual cohomology modules are finite locally free, so derived base change descends to ordinary base change. Third, cup product, trace, duality, and Künneth are compatible and perfect. Fourth, in characteristic $p$, Frobenius is semilinear integrally and is an isomorphism after $p$ is inverted.
 
-The order matters. For example, reduction modulo $p^n$ fits into
+The order matters. For example, if $K$ is a perfect complex over the $p$-torsion-free ring $W(k)$, reduction modulo $p^n$ fits into
 
 $$
 0\to H^i/p^nH^i\to
@@ -189,9 +191,9 @@ P\otimes^LRf_*K\longrightarrow
 Rf_*(f^*P\otimes^LK) \tag{2.2}
 $$
 
-is an isomorphism whenever $f$ is quasi-compact and quasi-separated in the crystalline sense and $K$ has quasi-coherent evaluations.
+is an isomorphism for every $K$ for which the displayed derived direct images are defined.
 
-**Proof.** The assertion is local on the base. Resolve $K$ by modules acyclic for $f_*$ and represent $P$ by a bounded complex of finite free modules. For one finite free module, (2.2) is the compatibility of direct image with finite direct sums. Passing through the bounded complex proves the claim by totalization. Finite locally free summands follow from finite free ones by splitting idempotents. $\square$
+**Proof.** The assertion is local on the base. Resolve $K$ by modules acyclic for $f_*$ and represent $P$ by a bounded complex of finite free modules. For one finite free module, (2.2) is the compatibility of direct image with finite direct sums. Passing through the bounded complex proves the claim by finite totalization. Finite locally free summands follow from finite free ones by splitting idempotents. Perfect complexes are locally of this form, and the local isomorphisms glue. $\square$
 
 The perfectness requirement cannot be weakened to arbitrary coherence: tensoring an injective resolution by a nonflat module can create higher Tor and destroy acyclicity.
 
@@ -221,7 +223,7 @@ The crystalline site looks much larger than a de Rham complex. Smoothness collap
 
 ### 3.1 Linearization of a module with connection
 
-Let $S=\operatorname{Spec}A$ be a nilpotent PD base, let $X/S_0$ be smooth affine, and choose a smooth lift $Y=\operatorname{Spec}R$ over $S$. A finite locally free crystal $\mathcal E$ evaluates on $Y$ as a finite projective $R$-module $M$ with integrable quasi-nilpotent connection
+Let $S=\operatorname{Spec}A$ be a finite-level PD base, let $X/S_0$ be smooth affine, and choose a smooth lift $Y=\operatorname{Spec}R$ over $S$. Book 53 identifies a finite locally free crystal $\mathcal E$ with a finite projective $R$-module $M$ carrying an integrable quasi-nilpotent connection
 
 $$
 \nabla:M\longrightarrow M\otimes_R\Omega^1_{R/A}.
@@ -245,7 +247,7 @@ Integrability gives $\nabla^2=0$. The augmentation sends a transported section o
 
 **Proof strategy.** Exactness may be checked on a crystalline object $(U,T)$ and locally on $T$. Smoothness lifts $T\to Y$ locally. After choosing étale coordinates, every competing lift differs by divided-power variables $\xi_1,\ldots,\xi_d$. The complex then separates into one-variable complexes, each of which has an integral contraction.
 
-Choose coordinates $x_i$ and write the diagonal envelope as
+Choose coordinates $x_i$. As in Book 53, the full diagonal envelope is used through its tower of ordinary nilpotent quotients; it is not itself declared an object of the nilpotent crystalline site. Schematically its coordinate ring is
 
 $$
 R\langle\xi_1,\ldots,\xi_d\rangle,
@@ -260,7 +262,7 @@ $$
 
 Define $h(\xi^{[n]}d\xi)=\xi^{[n+1]}$ and let $h$ vanish in degree zero. Then $dh+hd$ is the identity on every positive divided-power degree and zero on constants. No factorial is divided. Tensoring these contractions, with the usual Koszul signs, contracts the multivariable complex onto its constant term.
 
-For coefficients, use the Taylor stratification to conjugate the differential to the tensor product differential. Quasi-nilpotence makes the conjugating Taylor sum finite on every nilpotent object. The constant survivors are precisely $\mathcal E$. Descent glues the local contractions up to homotopy, which suffices for a quasi-isomorphism. Since $\Omega^q_{R/A}=0$ for $q>d$, the complex has the asserted length. $\square$
+For coefficients, use the Taylor stratification to conjugate the differential to the tensor-product differential. Quasi-nilpotence makes the conjugating Taylor sum finite on every nilpotent quotient. The homotopies are compatible as that quotient varies, so they define a homotopy on the entire tower. The constant survivors are precisely $\mathcal E$. Descent glues the local contractions up to homotopy, which suffices for a quasi-isomorphism. Since $\Omega^q_{R/A}=0$ for $q>d$, the complex has the asserted length. $\square$
 
 The identity (3.2) is the arithmetic heart of the proof. An ordinary polynomial contraction would divide by $n+1$; divided powers have already absorbed that denominator.
 
@@ -291,7 +293,7 @@ If $Y$ is affine, (3.3) is computed by the complex of global modules. If $Y$ is 
 
 Two smooth lifts $Y$ and $Y'$ need not be isomorphic. Their de Rham complexes nevertheless compute the same object.
 
-**Proposition 3.3.** The comparison (3.3) is independent of the chosen smooth lift in the following precise sense: the PD envelope of $X$ in $Y\times_SY'$ induces a canonical zigzag of multiplicative quasi-isomorphisms between the two de Rham models, and three lifts satisfy the cocycle condition in the derived category.
+**Proposition 3.3.** The comparison (3.3) is independent of the chosen smooth lift in the following precise sense: the tower of nilpotent quotients of the PD envelope of $X$ in $Y\times_SY'$ induces a canonical zigzag of multiplicative quasi-isomorphisms between the two de Rham models, and three lifts satisfy the cocycle condition in the derived category.
 
 **Proof.** The two projections from $Y\times_SY'$ give two maps from its PD envelope. Pulling a crystal to that envelope identifies both evaluations by crystallinity. Applying the Poincaré lemma to each projection gives the two quasi-isomorphisms. For three lifts, the comparisons are pulled back from the three pairwise projections of the envelope in $Y\times Y'\times Y''$. The cocycle is exactly transitivity of the crystal transition maps. $\square$
 
@@ -311,7 +313,7 @@ $$
 
 and take the PD envelope of the intersection inside it. Face maps omit a factor and degeneracy maps repeat one. The universal property of PD envelopes makes the simplicial identities hold.
 
-This construction is an **embedding system** $U_\bullet\hookrightarrow Y_\bullet$. At each finite nilpotent level its PD envelopes $D_\bullet$ are objects of the crystalline site. The cover is finite, so only finitely many Čech degrees contribute after normalization.
+This construction is an **embedding system** $U_\bullet\hookrightarrow Y_\bullet$. At each finite nilpotent level its PD envelopes $D_\bullet$ are objects of the crystalline site. The ordinary normalized Čech nerve can still contain strings with nonconsecutive repeated indices, so finiteness of the cover alone does not bound that normalization. We instead use its standard alternating retract, indexed by strictly increasing tuples $i_0<\cdots<i_r$. The degeneracy subcomplex and the complementary repeated-index terms are contractible, so the alternating complex is homotopy equivalent to the full Čech total and vanishes for $r$ at least the number of opens. Below, "normalized Čech total" means this bounded alternating model.
 
 ### 4.2 The simplicial de Rham model
 
@@ -347,14 +349,18 @@ If $X/S_0$ has relative dimension $d$, the intrinsic cohomology vanishes above d
 
 **Proposition 4.2.** For smooth proper $X/S_0$ of relative dimension $d$, $H^i_{\mathrm{cris}}(X/S)=0$ for $i<0$ and $i>2d$.
 
-**Proof.** The negative vanishing is immediate from a first-quadrant model. For the upper bound, the assertion is local on $S$ and stable under nilpotent base change. On a local smooth lift it follows from the Hodge-to-de Rham spectral sequence
+**Proof strategy.** The number of opens in an embedding system is not a dimension bound: a raw Cech total can be longer than $2d$. We must cancel the artificial normal directions and then recognize the surviving Cech complex as coherent descent on the proper $d$-fold.
+
+Filter the normalized embedding-system complex by divided-power degree in the diagonal variables. On every multiple intersection, the homotopy of Theorem 3.1 splits the positive divided-power part into contractible pairs. The splitting is compatible with restriction because it comes from the universal diagonal stratification, so it passes to the normalized Cech total. What remains is locally the de Rham complex of a smooth $d$-dimensional lift, with form degrees $0,\ldots,d$.
+
+For each fixed form degree, the augmented normalized Cech complex is coherent descent on $X$; changing the local lift changes it only by the homotopies of Proposition 3.3. Its cohomology is therefore coherent cohomology on the proper scheme $X$, which vanishes above degree $d$. On any open over which the local lifts glue to a smooth proper lift $Y$, the surviving spectral sequence is
 
 $$
 E_1^{a,b}=H^b(Y,\Omega^a_{Y/S})\Longrightarrow
 H^{a+b}_{\mathrm{dR}}(Y/S),
 $$
 
-because $0\le a\le d$ and coherent cohomology of a proper relative $d$-fold vanishes for $b>d$. For a general embedding system, the comparisons on overlaps identify this local bound, and cohomological descent preserves it. $\square$
+with $0\le a,b\le d$. Hence total cohomology vanishes above $2d$. Negative vanishing follows from the first-quadrant construction. $\square$
 
 The argument uses properness in the coherent-cohomology bound. Nonproper crystalline cohomology can have a different finiteness theory.
 
@@ -364,7 +370,7 @@ The embedding-system model is explicit but not yet finite. Its terms may contain
 
 ### 5.1 Perfect complexes at finite level
 
-**Theorem 5.1 (crystalline finiteness).** Let $(S,J,\gamma)$ be a locally noetherian nilpotent PD base and let $f:X\to S_0$ be smooth and proper of relative dimension $d$. Then
+**Theorem 5.1 (crystalline finiteness).** Let $(S,J,\gamma)$ be a finite-level PD base and let $f:X\to S_0$ be smooth and proper of relative dimension $d$. Then
 
 $$
 Rf_{\mathrm{cris},*}\mathcal O_{X/S}
@@ -372,23 +378,26 @@ $$
 
 is a perfect complex of amplitude contained locally in $[0,2d]$. With coefficients in a finite locally free crystal $\mathcal E$, the same conclusion holds.
 
-**Proof strategy.** Perfectness is local on $S$. We use the embedding-system comparison, truncate in a range which already contains all cohomology, and replace proper coherent direct images by bounded finite projective resolutions. The subtle point is to prove that truncating the PD direction loses no cohomology.
+**Proof strategy.** Perfectness is local on $S$, so take $S=\operatorname{Spec}A$. The infinite-looking pieces of a PD envelope cannot simply be discarded at a chosen order. We use the explicit integral homotopy of Theorem 3.1 to remove them, prove pseudo-coherence from proper coherent descent, and prove finite Tor amplitude by running the same contraction after tensoring with an arbitrary module.
 
-Take a finite affine cover and its embedding system. Filter (4.2) by divided-power order in the envelope ideal. The graded pieces are finite sums of modules of the form
+Choose a finite affine cover and its normalized embedding system. At each nilpotent envelope level, order the total complex first by Cech degree, then by de Rham degree, and finally by positive divided-power degree in the normal variables. Equation (3.2) pairs every positive divided monomial with its differential with coefficient $1$. Elementary row and column cancellation therefore splits off an acyclic summand; no factorial, prime, or base element is inverted. The Taylor stratification performs the same cancellation with coefficients in $\mathcal E$. Compatibility of the contraction with face and degeneracy maps makes these splittings compatible in the normalized simplicial total and at every nilpotent level.
+
+After cancellation, only de Rham degrees $0,\ldots,d$ remain. Its Cech terms are $A$-flat: the local lifts are smooth over $A$, their differential modules are finite locally free, and localization and finite normalized sums preserve flatness. In each form degree the Cech augmentation is coherent descent on $X$. Proper coherent finiteness therefore makes the resulting total pseudo-coherent over $A$, and Proposition 4.2 bounds its cohomology by $[0,2d]$.
+
+It remains to rule out hidden infinite Tor amplitude. The bounded normalized survivor complex is termwise flat, hence $K$-flat. For any $A$-module $N$, its ordinary tensor with $N$ therefore computes derived tensor. The contraction just used is $A$-linear and still has coefficient $1$, so it survives this tensor product. Its survivors again have de Rham degree at most $d$, and Cech cohomology of a quasi-coherent sheaf on a proper relative $d$-fold has degree at most $d$. Thus
 
 $$
-\operatorname{Sym}^{[m]}(N)\otimes\Omega^a,
+H^i\bigl(R\Gamma_{\mathrm{cris}}(X/S,\mathcal E)\otimes_A^LN\bigr)=0
+\quad\text{for }i\notin[0,2d]
 $$
 
-where $N$ is the conormal bundle of a smooth local presentation. In any fixed total cohomological range, the contraction of Theorem 3.1 shows that all sufficiently high divided-power orders occur in contractible pairs. Thus the quotient by a sufficiently high order has the same cohomology through degree $2d$, and Proposition 4.2 says that no other degree matters.
-
-At a fixed order every term is coherent and supported on the proper scheme $X$; its derived direct image is pseudo-coherent and bounded. Smoothness gives finite Tor dimension: locally the terms have finite resolutions by vector bundles, and the relative cotangent bundles are finite locally free. A bounded pseudo-coherent complex of finite Tor dimension is perfect. The same argument applies to $\mathcal E$, since its evaluations are finite locally free. The amplitude bound is Proposition 4.2. $\square$
+for every $N$. Hence the pseudo-coherent complex has Tor amplitude in $[0,2d]$. A pseudo-coherent complex of finite Tor amplitude is perfect. The same construction on affine opens of the base proves the relative assertion. $\square$
 
 The theorem claims perfectness of the total complex, not local freeness of each $H^i$. A two-term complex $[A\xrightarrow{p}A]$ is perfect over $A=\mathbf Z_p$ but has torsion cohomology. Additional geometry will rule this out for curves and abelian schemes.
 
 ### 5.2 Derived base change
 
-Let $g:(S',J',\gamma')\to(S,J,\gamma)$ be a morphism of nilpotent PD bases, put $X'=X\times_{S_0}S'_0$, and let $Lg_{mathrm{cris}}^*$ denote derived scalar extension on the base crystalline topoi.
+Let $g:(S',J',\gamma')\to(S,J,\gamma)$ be a morphism of finite-level PD bases, put $X'=X\times_{S_0}S'_0$, and let $Lg_{\mathrm{cris}}^*$ denote derived scalar extension on the base crystalline topoi.
 
 **Theorem 5.2 (proper smooth derived base change).** There is a canonical isomorphism
 
@@ -407,9 +416,11 @@ R\Gamma_{\mathrm{cris}}(X/S,\mathcal E)
 R\Gamma_{\mathrm{cris}}(X'/S',\mathcal E'). \tag{5.2}
 $$
 
-**Proof strategy and proof.** Choose an embedding system and base-change it. The PD envelope after nonflat base change must be interpreted as the PD pushout, not blindly as an ordinary tensor product. The universal property gives the base-changed simplicial envelope. Apply the comparison (4.2) on both bases.
+**Proof strategy and proof.** Choose an embedding system. After a nonflat change of PD base, its envelope is the PD pushout, not necessarily the ordinary tensor product of the old envelope. The universal property gives a map from the derived scalar extension of the old simplicial model to the model formed from the base-changed embedding system.
 
-Replace the left-hand complex by a bounded finite locally free representative furnished by Theorem 5.1. Derived tensoring is then termwise tensoring. At each finite divided-power order, proper coherent derived base change identifies the base change of the simplicial de Rham term with its counterpart over $S'$. These identifications respect face maps and differentials. Passing through the finite totalization gives (5.2). Independence of the embedding system makes the isomorphism canonical, and sheafification gives (5.1). $\square$
+Use the normal divided-power degree to order the cone. On both sides, all positive-degree terms split into the same contractible pairs by (3.2); the homotopy is functorial for PD pushout and acts on the whole nilpotent tower, so no convergence from an infinite filtration is being inferred. The surviving degree-zero map is the base-change map for the de Rham terms after coherent descent on the special fiber. Those terms are finite locally free along the smooth morphism, and proper coherent derived base change identifies their normalized Cech totals. The cone is therefore the direct sum of contractible pairs and the acyclic surviving cone, hence is acyclic.
+
+Equivalently, after replacing the source by the bounded finite locally free representative from Theorem 5.1, derived tensoring is termwise tensoring and the preceding filtered comparison identifies it with the base-changed crystalline total. Independence of the embedding system makes the isomorphism canonical. Evaluation on affine base thickenings gives (5.2), and sheafification gives (5.1). $\square$
 
 No flatness is needed in this derived statement. Flatness becomes relevant only when removing the letter $L$ or taking cohomology before tensoring.
 
@@ -430,11 +441,11 @@ $$
 H^i(K)\otimes_AA'\xrightarrow{\sim}H^i(K\otimes_A^LA') \tag{5.4}
 $$
 
-for every $A'$. Conversely, if (5.4) holds for every residue field and the dimensions are locally constant, then each $H^i(K)$ is finite locally free.
+for every $A'$.
 
-**Proof.** Finite local freeness kills all higher Tor in (5.3), which proves the first assertion. For the converse, a perfect complex may locally be represented by finite free modules. The universal coefficient exact sequence shows that constancy of fiber dimensions and base change force the ranks of consecutive differentials to be locally constant. Matrices of locally constant rank can locally be reduced by invertible row and column operations to a block containing an identity and a zero block. Kernels and cokernels are then finite locally free, so the cohomology is finite locally free. $\square$
+**Proof.** Finite local freeness kills all higher Tor in (5.3), so the spectral sequence collapses to (5.4). $\square$
 
-This criterion turns geometric rank calculations into arbitrary coefficient change. Chapters 6 and 12 will supply those calculations.
+The omitted converse is genuinely false over a nonreduced base. For example, over $A=k[\epsilon]/(\epsilon^2)$ the perfect complex $[A\xrightarrow{\epsilon}A]$ has constant-dimensional special-fiber cohomology and the expected maps to that fiber, but its kernel and cokernel are killed by $\epsilon$ and are not locally free. In the curve and abelian arguments below, local freeness comes from explicit Hodge extensions on actual lifts, not from fiber ranks alone.
 
 ## 6. Smooth proper curves
 
@@ -442,10 +453,10 @@ For a curve only degrees $0,1,2$ can occur. The edge groups are controlled by co
 
 ### 6.1 The three cohomological degrees
 
-Let $f:C\to S_0$ be a smooth proper curve of genus $g$ over a nilpotent PD base $S$. Locally choose a smooth proper lift $\widetilde C/S$. Such a lift exists after passing to an étale cover of $S$: deformations of a smooth curve across a square-zero ideal are obstructed in
+Let $f:C\to S_0$ be a smooth proper curve of genus $g$ over a finite-level PD base $S$. Locally choose a smooth proper lift $\widetilde C/S$. Such a lift exists after passing to an étale cover of $S$. Across one square-zero layer with ideal $I$, the obstruction lies in
 
 $$
-H^2(C,T_{C/S_0})\otimes J,
+H^2(C,T_{C/S_0}\otimes I),
 $$
 
 which vanishes because coherent cohomology on a curve has no degree two. Induction through a nilpotence filtration gives a lift across $J$; properness and smoothness algebraize the successive formal lifts at finite nilpotent level.
@@ -458,7 +469,7 @@ R\Gamma_{\mathrm{cris}}(C/S)
 [\mathcal O_{\widetilde C}\xrightarrow d\Omega^1_{\widetilde C/S}]). \tag{6.1}
 $$
 
-Book 52 proved that the Hodge-to-de Rham spectral sequence of a smooth proper curve degenerates in every characteristic. Its proof uses constants, residues, and relative duality, so it remains valid over the nilpotent base $S$. Hence
+Book 52 proved over every locally noetherian base that the Hodge-to-de Rham spectral sequence of a smooth proper curve degenerates, with arbitrary base change. Applying that theorem to $\widetilde C/S$ gives
 
 $$
 H^0_{\mathrm{cris}}(C/S)\simeq\mathcal O_S,
@@ -617,29 +628,57 @@ $$
 
 **Corollary 7.3.** The pairing (7.5) on $H^1_{\mathrm{cris}}(C/S)$ is perfect and alternating in every characteristic. The Hodge submodule $f_*\Omega^1_{\widetilde C/S}$ in (6.3) is Lagrangian.
 
-**Proof.** Perfection follows from Theorems 6.2 and 7.2. Graded commutativity gives skew-symmetry. In characteristic two, skew-symmetry alone does not imply alternation. Use the two-column Čech--de Rham model: the square of a total degree-one cocycle is the boundary of its product correction, while the wedge of two relative one-forms vanishes because $\Omega^2_{C/S}=0$. Hence $x\smile x=0$ in top cohomology.
+**Proof.** Perfection follows from Theorems 6.2 and 7.2. Graded commutativity gives skew-symmetry. In characteristic two, skew-symmetry alone does not imply alternation. Work faithfully flat locally on a smooth curve lift and use crystalline--de Rham comparison. Book 52 computes the trace of the square of a Cech--de Rham class as a sum of residues $\operatorname{Res}(g\,dg)$. If $g=\sum a_nt^n$, then the coefficient of $t^{-1}dt$ is $\sum_{m+n=0}n a_ma_n$; the terms indexed by $(m,n)$ and $(n,m)$ cancel, and a diagonal term has coefficient zero. Thus every self-pairing vanishes over an arbitrary base ring. Descent carries the equality back to crystalline cohomology.
 
 Two Hodge classes cup into filtration degree two, which is zero for a curve; the Hodge submodule is isotropic. Its rank is $g$, half the rank $2g$ of the ambient module, so perfection makes it Lagrangian. $\square$
 
 ### 7.4 Adjointness for finite maps
 
-Let $u:C\to D$ be a finite locally free morphism of smooth proper curves. Trace of finite algebras on functions and relative-duality trace on one-forms commute with $d$, giving
+Let $u:X\to Y$ be a finite locally free morphism of constant degree $n$ between smooth proper $S_0$-schemes of the same pure relative dimension $d$. In positive characteristic, the algebra trace on functions and the duality trace on forms need not form a termwise map of naive de Rham complexes; a purely inseparable map is the basic obstruction. We therefore use the characteristic-free construction of Book 52.
+
+Derived Poincare duality makes pullback $u^*:R\Gamma_{\mathrm{cris}}(Y/S)\to R\Gamma_{\mathrm{cris}}(X/S)$ admit a unique adjoint
 
 $$
-u_*:H^i_{\mathrm{cris}}(C/S)\to H^i_{\mathrm{cris}}(D/S).
+u_*:R\Gamma_{\mathrm{cris}}(X/S)\longrightarrow
+R\Gamma_{\mathrm{cris}}(Y/S) \tag{7.6}
 $$
 
-**Proposition 7.4.** For $x\in H^*_{\mathrm{cris}}(D/S)$ and $y\in H^*_{\mathrm{cris}}(C/S)$,
+characterized by
 
 $$
-u_*(u^*x\smile y)=x\smile u_*y, \tag{7.6}
+\operatorname{Tr}_Y(u_*y\smile z)
+=\operatorname{Tr}_X(y\smile u^*z) \tag{7.7}
 $$
 
-and $u_*u^*=(\deg u)$.
+for all complementary-degree classes. This definition also works when individual cohomology modules are not locally free, because (7.4) is an isomorphism of perfect complexes.
 
-**Proof.** Both identities may be checked after crystalline--de Rham comparison. On functions they are the projection formula and the identity $\operatorname{Tr}(1)=\deg u$. On top forms they follow from transitivity of residues. Compatibility with $d$ makes these termwise identities identities of de Rham complexes, hence of hypercohomology. $\square$
+**Proposition 7.4.** The adjoint satisfies the projection formula
 
-Thus pullback and pushforward are adjoint for (7.5). No inverse to $\deg u$ is asserted integrally.
+$$
+u_*(u^*x\smile y)=x\smile u_*y, \tag{7.8}
+$$
+
+commutes with PD base change, and satisfies $u_*u^*=n$.
+
+**Proof.** Pair the two sides of (7.8) with an arbitrary complementary class and use associativity of cup product plus (7.7); perfect duality makes the two sides equal. The same characterization and base change for pullback, cup product, and trace prove base-change compatibility.
+
+It remains to compute the composite. Relative duality for the finite locally free algebra $u_*\mathcal O_X$ gives
+
+$$
+\operatorname{Tr}_X(u^*w)=n\operatorname{Tr}_Y(w) \tag{7.9}
+$$
+
+in top degree: evaluation at $1$ followed by algebra trace is multiplication by the rank $n$. For classes $x,z$ of complementary degrees, (7.7), (7.9), and multiplicativity give
+
+$$
+\operatorname{Tr}_Y(u_*u^*x\smile z)
+=\operatorname{Tr}_X(u^*(x\smile z))
+=n\operatorname{Tr}_Y(x\smile z).
+$$
+
+Perfect duality yields $u_*u^*=n$. $\square$
+
+For curves this recovers exactly the pull-push operation of Book 52 and makes pullback and pushforward adjoint for (7.5). No inverse to $n$ is asserted integrally.
 
 ## 8. The Künneth theorem
 
@@ -751,13 +790,13 @@ It is functorial in $X$, multiplicative, compatible with finite-level reduction,
 
 **Proof.** On every simplicial lift, pullback by $\varphi$ is a map of de Rham models. The diagonal stratification supplies a chain homotopy between maps from two choices; the triple diagonal gives coherence among three choices. Hence the maps glue in the derived category and are independent of all choices. Pullback of functions and forms respects products and simplicial maps, proving functoriality, multiplicativity, and Künneth compatibility. All constructions commute with reduction of PD envelopes. Trace compatibility follows from functoriality of relative duality, with the factor $p^d$ computed in Section 9.4. $\square$
 
-The differential $d\varphi$ is divisible by $p$ on a $p$-torsion-free lift. In degree $a$ there is therefore a divided pullback
+The differential $d\varphi$ is divisible by $p$ on a $p$-torsion-free lift. In degree $a$ there is therefore a divided map of modules
 
 $$
 p^{-a}\varphi^*: \sigma^*\Omega^a_{Y/W}\longrightarrow\Omega^a_{Y/W}. \tag{9.4}
 $$
 
-This auxiliary map helps prove that $\Phi$ is an isogeny, but the canonical $\Phi$ itself uses the undivided pullback.
+This auxiliary map explains the integral divisibility of Frobenius on forms. The degreewise divided maps are not, by themselves, a map of the ordinary de Rham complex: division changes by one power of $p$ when the degree changes. The canonical $\Phi$ uses the undivided pullback, and the isogeny proof below instead uses finite-flat adjunction.
 
 ### 9.3 The Frobenius isogeny theorem
 
@@ -776,29 +815,31 @@ $$
 
 If $H^i$ is torsion-free, $\Phi$ is injective and its cokernel is killed by a power of $p$.
 
-**Proof strategy.** Filter the de Rham model by form degree. Divisibility of $d\varphi$ supplies divided Frobenius on each graded degree. Modulo $p$, the resulting graded map is the Cartier operator, which is an isomorphism for a smooth scheme. A filtered-map argument then proves rational invertibility.
-
-More explicitly, on a smooth affine special fiber the Cartier isomorphism is
+**Proof strategy and proof.** Keep the relative Frobenius visible:
 
 $$
-C^{-1}:\Omega^a_{X^{(p)}/k}
-\xrightarrow{\sim}\mathcal H^a(F_{X/k,*}\Omega^\bullet_{X/k}), \tag{9.6}
+F_{X/k}:X\longrightarrow X^{(p)}.
 $$
 
-characterized in coordinates by
+Because $X/k$ is smooth of dimension $d$, this morphism is finite locally free of degree $p^d$. Indeed, étale-locally it is the map
+$k[x_1^p,\ldots,x_d^p]\to k[x_1,\ldots,x_d]$, whose target is free on the monomials $x_1^{a_1}\cdots x_d^{a_d}$ with $0\le a_j<p$; finite local freeness descends through the étale charts.
+
+Proposition 7.4 supplies an adjoint to crystalline pullback and gives
 
 $$
-dx_{i_1}\wedge\cdots\wedge dx_{i_a}
-\longmapsto
-[x_{i_1}^{p-1}\cdots x_{i_a}^{p-1}
-dx_{i_1}\wedge\cdots\wedge dx_{i_a}].
+(F_{X/k})_*(F_{X/k})^*=p^d. \tag{9.6}
 $$
 
-To prove (9.6), reduce étale-locally to a polynomial algebra. Write every polynomial uniquely as a sum of monomials $x^\nu g_\nu(x^p)$ with $0\le\nu_i<p$. The de Rham complex becomes a tensor product of one-variable complexes. In one variable, all summands are exact except the constant in degree zero and $x^{p-1}dx$ in degree one. Tensoring gives precisely the displayed basis. Étale descent globalizes the calculation.
+After inverting $p$, $(F_{X/k})^*$ is therefore injective. Derived base change along the Witt automorphism $\sigma$ identifies
 
-Now use (9.4). On form degree $a$, $p^{-a}\varphi^*$ reduces to $C^{-1}$. Hence the direct sum of the divided graded maps is a quasi-isomorphism modulo $p$. For the undivided map $\Phi$, multiplication by $p^a$ intervenes on the $a$th filtration layer. After $p$ is inverted these factors are units, so the associated graded map is a quasi-isomorphism. A finite filtered-complex comparison proves that $\Phi$ is a quasi-isomorphism after inverting $p$. Taking cohomology gives (9.5).
+$$
+H^i_{\mathrm{cris}}(X^{(p)}/W)[1/p]
+\simeq \sigma^*H^i_{\mathrm{cris}}(X/W)[1/p].
+$$
 
-Finite generation follows from the inverse-limit perfect complex of Chapter 10, or directly from finite-level perfectness and compatible bounded finite free representatives. If $H^i$ is torsion-free, a map which becomes injective after inverting $p$ is injective. Its finite cokernel is $p$-power torsion and hence killed by some power of $p$. $\square$
+The two sides of (9.5) consequently have the same finite $K_0=W[1/p]$-dimension. An injective map between them is an isomorphism. The required finiteness follows from the compatible finite-free lifting theorem proved in Theorem 10.1; that proof uses only finite-level perfectness and derived base change, not Frobenius.
+
+If $H^i$ is torsion-free, rational injectivity implies integral injectivity. Its finite cokernel becomes zero after inverting $p$, so it is killed by a power of $p$. $\square$
 
 The theorem does not say that $\Phi$ is integrally invertible. For $H^2_{\mathrm{cris}}(\mathbf P^1/W)=Wh$, one has $\Phi(h)=ph$.
 
@@ -818,7 +859,7 @@ $$
 =p^d\sigma\langle x,y\rangle. \tag{9.8}
 $$
 
-**Proof.** It is enough to compute on a local smooth lift. Pullback by Frobenius on a top form is divisible by $p^d$. Modulo $p$, the divided top pullback is the top Cartier operator, whose residue trace agrees with Frobenius on scalars. Thus (9.7) holds modulo every $p^n$, and separatedness gives it over $W$. Equation (9.8) follows from multiplicativity of $\Phi$ and the definition of the pairing. $\square$
+**Proof.** Apply the top-degree trace formula (7.9) to the finite locally free relative Frobenius, whose degree is $p^d$. Base change along $\sigma$ accounts for semilinearity on scalars and gives (9.7). Equation (9.8) follows from multiplicativity of $\Phi$ and the definition of the pairing. $\square$
 
 For a curve, the alternating form on $H^1$ therefore takes values in $W(-1)$. For an abelian variety of dimension $g$, top duality takes values in $W(-g)$, while the polarization form on degree one takes values in $W(-1)$.
 
@@ -854,11 +895,19 @@ $$
 
 so completed crystalline cohomology is a perfect $W$-complex.
 
-**Proof strategy and proof.** Choose bounded finite free representatives for $K_n$ with the common amplitude $[0,2d]$. Assume $P_n$ has been chosen. Lift the matrices of its differentials to $W_{n+1}$. The relation $d^2=0$ may fail by a matrix divisible by $p^n$; the derived base-change isomorphism (10.1) and the vanishing of the resulting obstruction in the deformation group of the perfect complex allow a correction by a matrix divisible by $p^n$. Inductively obtain compatible $P_n$ with degreewise surjective transitions.
+**Proof strategy.** Lifting arbitrary differential matrices and then asserting that the obstruction vanishes would leave a gap. Over the Artinian local rings $W_n$, minimal finite free complexes make the lifting canonical enough.
 
-Taking inverse limits degreewise gives finite free $W$-modules because a compatible system of finite free $W_n$-modules of fixed rank is the reduction system of a finite free $W$-module. Surjectivity kills $R^1\varprojlim$ in every degree. The limit differential squares to zero and reduces to every $P_n$, proving the claim. $\square$
+Every bounded perfect $W_n$-complex is represented by a bounded **minimal** finite free complex: whenever a differential matrix has a unit entry, row and column operations split off the contractible summand $[W_n\xrightarrow{1}W_n]$; iteration stops because the complex is bounded and finite. In the remaining complex every differential has entries in $(p)$. A quasi-isomorphism between two minimal complexes is a chain isomorphism. To see this, reduce modulo $p$. The differentials become zero, so a quasi-isomorphism is an isomorphism in every degree; Nakayama then makes each component an isomorphism over $W_n$.
 
-The correction argument is the usual idempotent-and-differential lifting for perfect complexes over the complete ring $W$. It would fail without the compatibility (10.1) or without a uniform bounded finite projective model.
+Choose a minimal representative $P_1$ of $K_1$. Suppose $P_n$ has been chosen. Choose a minimal representative $Q_{n+1}$ of $K_{n+1}$. Its reduction $Q_{n+1}\otimes W_n$ is still minimal and represents $K_n$ by (10.1), so minimal uniqueness gives a chain isomorphism
+
+$$
+Q_{n+1}\otimes_{W_{n+1}}W_n\xrightarrow{\sim}P_n.
+$$
+
+Set $P_{n+1}=Q_{n+1}$ and use this isomorphism after reduction as the transition map. These transitions are degreewise surjective. Minimality also shows that the rank in each degree is independent of $n$: after reduction modulo $p$, it is the dimension of the corresponding graded term of the minimal model of $K_1$.
+
+Taking inverse limits degreewise now gives finite free $W$-modules. The compatible differentials square to zero, and surjectivity kills $R^1\varprojlim$ degree by degree. The resulting bounded finite free complex $P$ reduces to every $P_n$ and therefore to every $K_n$. It computes the derived inverse limit. $\square$
 
 ### 10.2 Torsion-freeness and reduction
 
@@ -882,7 +931,7 @@ is an isomorphism if and only if $H^{i+1}_{\mathrm{cris}}(X/W)$ has no $p^n$-tor
 
 **Proof.** This is exactly (10.2). $\square$
 
-For curves, duality and the rank calculation show that $H^0,H^1,H^2$ are finite free over $W$, so reduction is exact in every degree. The same will follow for abelian schemes from the exterior algebra theorem. For a general smooth proper variety, crystalline cohomology can contain torsion; perfectness alone does not remove the right term of (10.2).
+For curves, Theorem 6.2 makes every finite-level group free over $W_n$ and makes the transition map its ordinary reduction. The transition maps are therefore surjective, and the inverse limit of the rank-$1,2g,1$ systems is free over $W$ of the same rank. The Milnor sequence has no first-derived-limit term, so these inverse limits are precisely $H^0,H^1,H^2$ of $P$. Thus reduction is exact in every degree. The same argument will apply to abelian schemes after the exterior algebra theorem. For a general smooth proper variety, crystalline cohomology can contain torsion; perfectness alone does not remove the right term of (10.2).
 
 ### 10.3 The integral and rational objects
 
@@ -910,7 +959,7 @@ An abelian scheme adds a Hopf structure to crystalline cohomology. Degree one is
 
 ### 11.1 The first crystalline crystal
 
-Let $a:A\to S_0$ be an abelian scheme of relative dimension $g$ over a nilpotent PD base $S$. By Theorem 5.1, $Ra_{\mathrm{cris},*}\mathcal O$ is perfect. The group law, identity, inversion, and multiplication maps act contravariantly on it.
+Let $a:A\to S_0$ be an abelian scheme of relative dimension $g$ over a finite-level PD base $S$. By Theorem 5.1, $Ra_{\mathrm{cris},*}\mathcal O$ is perfect. The group law, identity, inversion, and multiplication maps act contravariantly on it.
 
 For a relative abelian scheme $A\to B_0$, define
 
@@ -921,7 +970,52 @@ $$
 
 At this point (11.1) is only a coherent cohomology sheaf. We shall prove it finite locally free by evaluating on local PD thickenings.
 
-Deformations of an abelian scheme over a nilpotent thickening exist locally on the base. One route is to deform the identity-rigidified group law together with a relatively ample symmetric line bundle: the obstruction to deforming the line bundle is killed after a faithfully flat localization, the smooth proper scheme deforms formally, and rigidity extends the group law uniquely from the special fiber. The theorem of the cube verifies associativity. Thus every base point has a PD neighborhood $T$ on which $A$ has an abelian-scheme lift $\widetilde A/T$.
+We need one deformation fact before using de Rham theory.
+
+**Local lifting lemma.** Let $T_0\hookrightarrow T$ be a nilpotent closed immersion of locally noetherian schemes. Every abelian scheme $A_0/T_0$ lifts, after a faithfully flat localization on $T$, to an abelian scheme $\widetilde A/T$.
+
+**Proof strategy and proof.** Filter the ideal of $T_0$ in $T$ by powers and treat one square-zero layer with ideal $I$. Work after an affine faithfully flat localization. Deform the unit, multiplication, and inversion simultaneously, using the normalized bar diagram
+
+$$
+A_0\;\substack{\longleftarrow\\[-6pt]\longleftarrow}\;
+A_0^2\;\substack{\longleftarrow\\[-6pt]\longleftarrow\\[-6pt]\longleftarrow}\;
+A_0^3.
+$$
+
+Smoothness lifts each affine chart. The obstruction to gluing the lifted charts as a smooth scheme lies in
+
+$$
+H^2(A_0,T_{A_0/T_0}\otimes a_0^*I).
+$$
+
+Translation identifies $T_{A_0/T_0}$ with $a_0^*\operatorname{Lie}(A_0)$, so the obstruction is a section of
+
+$$
+R^2a_{0,*}\mathcal O_{A_0}\otimes
+\operatorname{Lie}(A_0)\otimes I.
+$$
+
+Compatibility with the two projections and multiplication in the bar diagram makes this section primitive for the coherent Hopf coproduct. The coherent exterior-algebra theorem for abelian schemes, recalled in Book 52, identifies
+
+$$
+R^2a_{0,*}\mathcal O_{A_0}
+\simeq\bigwedge^2R^1a_{0,*}\mathcal O_{A_0}.
+$$
+
+Its reduced coproduct sends $v\wedge w$ to $v\otimes w-w\otimes v$ and is injective, including in characteristic two. There is therefore no nonzero primitive obstruction in degree two, so the normalized deformation supplies an underlying smooth lift together with lifted unit, multiplication, and inverse.
+
+The group identities have no further obstruction. For example, the two composites on the two sides of associativity lift the same map $A_0^3\to A_0$. Their first-order difference is a global section of the pullback of $T_{A_0/T_0}\otimes a_0^*I$. Translation trivializes that tangent bundle, and proper geometric connectedness gives $H^0(A_0^3,\mathcal O)=\mathcal O_{T_0}$ after the faithfully flat localization. The difference is therefore constant; normalization at the identity makes it zero. The same argument, with two factors, proves commutativity and the inverse identities. Hence a smooth commutative group-scheme lift exists. The possible corrections form the expected degree-one module
+
+$$
+R^1a_{0,*}\mathcal O_{A_0}\otimes
+\operatorname{Lie}(A_0)\otimes I,
+$$
+
+so the argument proves existence without falsely asserting uniqueness.
+
+Properness is invariant under a nilpotent thickening for a finitely presented flat lift: the underlying topological maps are unchanged after arbitrary base change, while separatedness is detected by the diagonal. Geometric fibers are unchanged as reduced topological spaces, so their connectedness persists. The lift is therefore an abelian scheme. Iterating the square-zero construction proves the lemma. $\square$
+
+Applying the lemma to a base crystalline object gives, faithfully flat locally on every PD thickening $T$, an abelian-scheme lift $\widetilde A/T$.
 
 ### 11.2 The crystalline Hodge extension
 
@@ -1011,7 +1105,7 @@ In characteristic two, graded commutativity only says $x\smile y=-y\smile x$, wh
 
 ### 12.2 Proof of the exterior algebra theorem
 
-**Theorem 12.1 (abelian exterior algebra).** For an abelian scheme $A/S_0$ of relative dimension $g$ over a nilpotent PD base,
+**Theorem 12.1 (abelian exterior algebra).** For an abelian scheme $A/S_0$ of relative dimension $g$ over a finite-level PD base,
 
 $$
 \alpha:\bigwedge
@@ -1027,7 +1121,7 @@ $$
 
 and all cohomology vanishes outside $0\le n\le2g$.
 
-**Proof strategy.** The assertion is local for the faithfully flat topology on the base. Choose an abelian lift $\widetilde A/S$. Theorem 3.2 identifies crystalline cohomology with de Rham cohomology, compatibly with products and the group law. Book 52 proved the de Rham exterior algebra theorem for abelian schemes by filtering both sides by the Hodge filtration and identifying their graded pieces.
+**Proof strategy.** The assertion is local for the faithfully flat topology on the base. The local lifting lemma of Chapter 11 supplies an abelian lift $\widetilde A/S$. Theorem 3.2 identifies crystalline cohomology with de Rham cohomology, compatibly with products and the group law. Book 52 proved the integral de Rham exterior algebra theorem for abelian schemes, including arbitrary base change and genuine alternation in characteristic two. We recall the decisive comparison to verify that its hypotheses and normalizations are exactly those used here.
 
 For completeness, those graded pieces are
 
@@ -1044,7 +1138,13 @@ R^ba_*\mathcal O_{\widetilde A}
 \simeq\bigwedge^bR^1a_*\mathcal O_{\widetilde A}. \tag{12.5}
 $$
 
-Thus (12.4) is exactly $R^ba_*\Omega^a$, the Hodge graded piece of $H^n_{\mathrm{dR}}$. The degree-one Hodge differentials vanish by primitivity, and every later differential is a derivation compatible with the Hopf coproduct. An exterior Hopf algebra on primitive degree-one generators has no new primitive generator in higher degree: the coproduct of $x_1\wedge\cdots\wedge x_r$ contains nonzero mixed tensors for $r>1$. Hence all differentials vanish. The associated graded of $\alpha_n$ is the identity on (12.4), so finite filtered comparison makes it an isomorphism.
+Thus (12.4) is exactly $R^ba_*\Omega^a$, the Hodge graded piece of $H^n_{\mathrm{dR}}$. Book 52 proves degeneration by observing that every spectral-sequence differential is a derivation compatible with the Hopf coproduct. It is therefore enough to test the degree-one generators. Their images would be primitive in degree two, but the reduced coproduct of
+
+$$
+\sum_{i<j}a_{ij}v_i\wedge v_j
+$$
+
+is $\sum_{i<j}a_{ij}(v_i\otimes v_j-v_j\otimes v_i)$; the ordered basis tensors force all $a_{ij}$ to vanish, also in characteristic two. The same reduced-coproduct argument makes the square of a degree-one abutment class zero, so cup product factors through the exterior power. Finally, the associated graded of $\alpha_n$ is the identity on (12.4), and finite filtered comparison makes it an isomorphism.
 
 The local isomorphisms agree on overlaps because $\alpha$ is intrinsically cup product. Faithfully flat descent proves (12.2). The source is finite locally free by Theorem 11.1, giving (12.3), base change, and the crystal assertion. Compatibility with the coproduct follows from functoriality of cup product under addition. $\square$
 
@@ -1073,7 +1173,7 @@ Trace identifies this line with $\mathcal O_S$, while Frobenius on it is $p^g\si
 
 The exterior algebra describes the size of abelian crystalline cohomology. The Poincaré bundle describes its duality. Its first crystalline Chern class pairs the degree-one objects of $A$ and $A^\vee$; a polarization then converts this evaluation pairing into an alternating form on one object.
 
-Throughout this chapter, the base PD ideal is PD-nilpotent, or a prime $p$ is locally nilpotent on the base. The second condition is the one satisfied by the finite Witt bases. It ensures that the divided-power logarithms used to construct integral Chern classes terminate locally.
+Throughout this chapter we retain the finite-level hypotheses of Section 1.2. In particular $p$ is locally nilpotent. Together with ordinary nilpotence of each crystalline defining ideal, this makes the divided-power logarithms used below finite locally: ordinary powers terminate, while the increasing $p$-adic valuation of the factorial coefficient kills the remaining high divided monomials.
 
 ### 13.1 The crystalline Poincaré class
 
@@ -1133,7 +1233,7 @@ $$
 
 **Theorem 13.1 (Poincaré duality for the dual abelian scheme).** The map (13.6) is an isomorphism of finite locally free crystals. It is compatible with arbitrary base change, biduality, and homomorphisms: for $u:A\to B$, the maps $u^*$ and $(u^\vee)^*$ are adjoint.
 
-**Proof strategy and proof.** Work locally on a PD thickening admitting lifts of $A$ and $A^\vee$ together with the Poincaré biextension; the biextension lifts because its cubical rigidifications remove the obstruction and scalar ambiguity. Under crystalline--de Rham comparison, (13.6) is the de Rham Poincaré map of Book 52.
+**Proof strategy and proof.** Work locally on a PD thickening and choose an abelian lift $\widetilde A$. Book 38 constructs its dual abelian scheme $\widetilde A^\vee$ and its uniquely normalized Poincare biextension; base change identifies their special fibers with $A^\vee$ and $\mathcal P$. Under crystalline--de Rham comparison, (13.6) is therefore the de Rham Poincare map of Book 52.
 
 Its Hodge graded pieces are the evaluation isomorphisms
 
@@ -1143,7 +1243,7 @@ $$
 R^1a_*\mathcal O_A\simeq\omega_{A^\vee}^*. \tag{13.7}
 $$
 
-They follow from the tangent description of the dual abelian scheme in Book 38. Therefore the associated graded of (13.6) is an isomorphism, and finite filtered comparison proves the map itself is an isomorphism. The construction from the normalized Poincaré bundle is intrinsic, so it descends. Base change follows from Theorem 12.1. Finally,
+They follow from the tangent description of the dual abelian scheme in Book 38. Therefore the associated graded of (13.6) is an isomorphism, and finite filtered comparison proves the map itself is an isomorphism. The construction from the normalized Poincaré bundle is intrinsic, so it descends. Base change follows from the base-change compatibility of the normalized Poincaré bundle and of the crystalline Chern class. Finally,
 
 $$
 (u\times1)^*\mathcal P_B\simeq(1\times u^\vee)^*\mathcal P_A
@@ -1228,7 +1328,7 @@ Curves and abelian schemes meet through the Jacobian. Their degree-one crystalli
 
 ### 14.1 The Abel--Jacobi map in degree one
 
-Let $C/S_0$ be a smooth proper curve of genus $g$ with a section $c$. The relative Picard and Jacobian theory established earlier proves that $J=\operatorname{Pic}^0_{C/S_0}$ is an abelian scheme, constructs its canonical principal polarization compatibly with base change, and gives the Abel--Jacobi map
+Let $C/S_0$ be a smooth proper curve of genus $g$ with a section $c$. Book 36 proves that $J=\operatorname{Pic}^0_{C/S_0}$ is an abelian scheme, constructs its canonical principal theta polarization compatibly with arbitrary base change, and gives the Abel--Jacobi map
 
 $$
 j_c:C\longrightarrow J,
@@ -1261,7 +1361,7 @@ $$
 
 Invariant one-forms on the Picard scheme are cotangent vectors at the identity. The tangent space of $J$ is $R^1f_*\mathcal O_C$, so relative duality identifies its cotangent space with $f_*\omega_C$. Under this identification (14.3) is the identity. On the quotients of the Hodge sequences, duality makes the induced map the dual identity. Hence the associated graded of (14.2) is an isomorphism, and finite filtered comparison proves (14.2).
 
-The theta polarization is characterized by the Poincaré divisor and the Abel--Jacobi image. Pulling its Poincaré Chern class back along $j_c\times j_c$ gives the diagonal class minus the two base-point axes. The axes contribute nothing to degree $(1,1)$, while the diagonal acts as the identity under Poincaré duality. Consequently the induced alternating pairing is exactly cup product followed by the curve trace. Frobenius and base-change compatibility follow from functoriality. $\square$
+Book 52 proves, with the Abel-map and theta sign convention of Book 36, that the resulting de Rham polarization form is exactly cup product followed by the curve trace. Crystalline--de Rham comparison transports that equality without changing either trace normalization. Frobenius and base-change compatibility follow from functoriality. $\square$
 
 This proof also explains why degree one is the natural meeting point: higher cohomology of $J$ is the exterior algebra on the curve's $H^1$, not the cohomology of the curve itself.
 
@@ -1289,7 +1389,7 @@ $$
 =\langle x,T_{Z^t}y\rangle_C. \tag{14.5}
 $$
 
-Composing correspondences by fiber product and proper pushforward corresponds to composing their cohomological actions. This follows from flat base change and the projection formula; when a fiber product is not flat, the derived intersection must be used and the naive formula is not asserted.
+Composing correspondences by the scheme-theoretic fiber product corresponds to composing their cohomological actions. Under the standing hypothesis that both legs are finite locally free, the projections from that fiber product are again finite locally free, even if its middle scheme is singular or nonreduced. In that case one does **not** invoke smooth crystalline cohomology of the middle scheme. Book 36 defines its action by pullback and determinant norm on Jacobians; flat base change retains the intersection lengths and proves the composition formula there. Theorem 14.1 then transports the formula to degree-one crystalline cohomology. Replacing the fiber product by its reduction or normalization would lose multiplicities.
 
 Via Theorem 14.1, a correspondence action agrees with the pull-push homomorphism it induces on Jacobians. Thus its adjoint under the theta polarizations is represented by the transposed correspondence.
 
@@ -1313,10 +1413,10 @@ $$
 
 It commutes with Frobenius because every endomorphism is defined on the same special fiber. It preserves the Hodge submodule on lifts because pullback preserves invariant differentials.
 
-If $e\in\mathcal O\otimes R$ is an idempotent over a coefficient ring $R$, then
+If $e\in\mathcal O\otimes R$ is an idempotent over a coefficient ring $R$, then, consistently with the right action,
 
 $$
-M_R=eM_R\oplus(1-e)M_R \tag{15.2}
+M_R=M_Re\oplus M_R(1-e) \tag{15.2}
 $$
 
 for $M=H^1_{\mathrm{cris}}$. Both summands are direct factors and hence finite projective. The decomposition commutes with Frobenius when $e$ is fixed by the coefficient Frobenius.
@@ -1338,7 +1438,13 @@ $$
 =\psi_\lambda(x,y\cdot a^\dagger). \tag{15.3}
 $$
 
-Together with Frobenius, the degree-one package is therefore
+At a finite nilpotent level, Proposition 9.1 supplies a semilinear Frobenius map, but calling it an isogeny would be vacuous because $p$ is nilpotent on the base. For the following $F$-crystal package, assume either that the base is a perfect field $k$ and
+
+$$
+M=H^1_{\mathrm{cris}}(A/W(k)),
+$$
+
+or that an effective relative $p$-adic inverse system over a $p$-torsion-free base has been fixed. Theorem 10.1 and the exterior-algebra theorem make $M$ finite locally free, while Theorem 9.2 makes Frobenius an isogeny. Together with the polarization and endomorphism action, the completed degree-one package is therefore
 
 $$
 (M,\Phi,\psi,\iota), \tag{15.4}
@@ -1346,7 +1452,7 @@ $$
 
 where $M$ is finite locally free of rank $2g$, $\Phi:\sigma^*M\to M$ is an isogeny, $\psi$ is perfect alternating with values in the weight-one line, and $\mathcal O$ acts with adjoint involution $\dagger$.
 
-On a lift, the Hodge submodule $\omega_A\subset M$ is Lagrangian and $\mathcal O$-stable. A determinant or signature condition in a PEL moduli problem is a statement about the characteristic polynomial of $a$ on $\omega_A$, not merely on $M$. The exact sequence
+At each finite quotient $M_n$ admitting a lift---with $M_n=M\otimes_WW_n$ over a perfect field---the Hodge submodule $\omega_A\subset M_n$ is Lagrangian and $\mathcal O$-stable. A determinant or signature condition in a PEL moduli problem is a statement about the characteristic polynomial of $a$ on $\omega_A$, not merely on the ambient finite-level module. The exact sequence
 
 $$
 0\to\omega_A\to M\to\omega_{A^\vee}^{\vee}\to0 \tag{15.5}
@@ -1356,13 +1462,13 @@ shows how the polarization pairs the two Hodge pieces.
 
 **Proposition 15.1.** If an idempotent $e$ is self-adjoint, the two factors in (15.2) are orthogonal. If $e^\dagger=1-e$, each factor is totally isotropic and the pairing identifies one with the dual of the other.
 
-**Proof.** For $x=e x$ and $y=(1-e)y$, (15.3) gives
+**Proof.** For $x=xe$ and $y=y(1-e)$, (15.3) gives
 
 $$
-\psi(x,y)=\psi(x,e^\dagger(1-e)y).
+\psi(x,y)=\psi(x,ye^\dagger).
 $$
 
-If $e^\dagger=e$, the right side is zero. If $e^\dagger=1-e$, the same calculation with two vectors in $eM$ gives zero, and likewise for $(1-e)M$. Perfection of $\psi$ and the direct-sum ranks then identifies the two factors as mutual duals. $\square$
+If $e^\dagger=e$, then $ye=y(1-e)e=0$. If $e^\dagger=1-e$, the same calculation with two vectors in $M_Re$ gives zero, and likewise for $M_R(1-e)$. Perfection of $\psi$ and the direct-sum decomposition then identifies the two factors as mutual duals. $\square$
 
 ### 15.3 Integral cautions at the residue prime
 
@@ -1370,7 +1476,7 @@ Three distinctions govern applications.
 
 First, an isogeny of degree divisible by $p$ need not identify integral crystalline lattices. It identifies their isocrystals, and it identifies lattices only after its degree is inverted or a stronger integral argument is supplied.
 
-Second, a polarization of degree divisible by $p$ need not give a perfect integral alternating form. The integral datum is the map $M^*\to M$ with finite cokernel; perfectness appears after the polarization degree is inverted.
+Second, a polarization of degree divisible by $p$ need not give a perfect integral alternating form. The integral datum is the map $M^*\to M$ whose kernel and cokernel are killed by the polarization degree; perfectness appears after that degree is inverted.
 
 Third, a Frobenius-stable rational direct summand need not meet $M$ in a direct summand. Saturation and local freeness of the intersection must be proved. A rational PEL decomposition therefore does not automatically produce the finite-level integral pieces needed for finite-flat geometry.
 
@@ -1382,7 +1488,7 @@ The local crystalline site has now produced a global, finite, functorial theory.
 
 ### 16.1 The complete crystalline package
 
-For a smooth proper morphism $X\to S_0$ over a locally noetherian nilpotent PD base:
+For a smooth proper morphism $X\to S_0$ over a finite-level PD base:
 
 - $Rf_{\mathrm{cris},*}\mathcal O$ is perfect and satisfies arbitrary derived PD base change;
 - crystalline--de Rham comparison holds on every smooth lift and descends through embedding systems;
@@ -1406,8 +1512,8 @@ with ranks $\binom{2g}{n}$. The Poincaré bundle identifies the degree-one cryst
 |---|---|---|
 | local de Rham comparison | smooth lift and quasi-nilpotent crystal | Taylor transport may not converge or integrate |
 | global comparison | embedding system and cohomological descent | a global lift may not exist |
-| finite perfect direct image | smoothness, properness, finite presentation, noetherian base | nonproper cohomology need not be finite |
-| arbitrary base change | derived tensor product | nonflat change creates Tor |
+| finite perfect direct image | finite-level PD base, smoothness, properness, finite presentation, noetherian base | nonproper cohomology need not be finite, and the nilpotent comparison need not apply outside its regime |
+| arbitrary base change | a morphism of finite-level PD bases and derived tensor product | nonflat change creates Tor, while an unproved change of crystalline regime has no comparison theorem |
 | ordinary base change on $H^i$ | finite local freeness, or the precise neighboring Tor vanishing | cohomology need not commute with reduction |
 | degreewise perfect duality | locally free cohomology | derived duality may contain Ext between degrees |
 | cohomological Künneth direct sum | flat cohomology modules | Tor terms can survive |
