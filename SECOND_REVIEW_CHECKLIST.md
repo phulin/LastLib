@@ -96,7 +96,7 @@ any resulting corrections.
 - [x] 070. Depth, Complete Intersections, and Fitting Ideals
 - [x] 071. Numerical Criteria for (R=T)
 - [x] 072. Taylor–Wiles Primes
-- [ ] 073. Taylor–Wiles Systems
+- [x] 073. Taylor–Wiles Systems
 - [ ] 074. Patching Modules and Rings
 - [ ] 075. The Abstract (R=T) Argument
 - [x] 076. Smooth Representations of (p)-adic Groups
