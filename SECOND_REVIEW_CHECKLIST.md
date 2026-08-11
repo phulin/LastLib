@@ -190,7 +190,7 @@ any resulting corrections.
 - [ ] 164. Minimal Patching and R=T over Totally Real Fields
 - [ ] 165. One-Prime Type Complexes and Component Support
 - [ ] 166. One-Prime Nonminimal Patching and R=T
-- [ ] 167. Hilbert Irreducibility and Arithmetic Approximation
+- [x] 167. Hilbert Irreducibility and Arithmetic Approximation
 - [ ] 168. Moret–Bailly’s Theorem
 - [ ] 169. Moduli Constructions for Potential Modularity
 - [ ] 170. Potential Modularity of Two-Dimensional Representations

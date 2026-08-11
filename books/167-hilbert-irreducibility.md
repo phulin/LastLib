@@ -268,19 +268,104 @@ Separability is indispensable over imperfect fields. A purely inseparable polyno
 
 ### 3.2 One parameter, many parameters
 
-The one-parameter definition implies the corresponding assertion for $K(T_1,\ldots,T_m)$, but a naive induction would be circular: applying Hilbert irreducibility to $T_m$ while leaving the other parameters transcendental would assume that $K(T_1,\ldots,T_{m-1})$ is already Hilbertian.
+The one-parameter definition implies the corresponding assertion for $K(T_1,\ldots,T_m)$, but a naive induction would be circular: applying Hilbert irreducibility to $T_m$ while leaving the other parameters transcendental would assume that $K(T_1,\ldots,T_{m-1})$ is already Hilbertian. The bridge is a line-selection lemma whose proof is algebraic rather than Hilbertian.
 
-The correct bridge is the **affine-line specialization lemma**. Given finitely many finite separable field extensions of $K(T_1,\ldots,T_m)$, there is a $K$-rational affine line
+**Lemma 3.1 (affine-line specialization).** Let $K$ be an infinite field of characteristic zero, and let
+
+$$
+E_1,\ldots,E_r/K(T_1,\ldots,T_m)
+$$
+
+be finite separable field extensions. There is a nonempty Zariski-open set of affine lines
 
 $$
 T_i=a_i+b_iU
 $$
 
-after allowing the $a_i,b_i$ themselves to be chosen by successive one-variable Hilbert specializations, such that every pulled-back extension remains a field over $K(U)$. One proves the lemma with primitive elements: introduce independent line coefficients, observe that the generic pullback is integral, and specialize those coefficients one at a time while applying the one-variable definition to the finitely many primitive-element polynomials and avoiding their denominators and discriminants. At no stage is Hilbertianity of a rational function extension assumed; the active Hilbert parameter and the coefficients being specialized lie in $K$.
+with the following property. Choose a primitive-element equation for each $E_j$, clear its
+denominators, and restrict that equation to the line. The resulting polynomial is irreducible
+over $K(U)$ and has its generic degree. Equivalently, if the extensions are represented by
+finite integral covers of a common open of $\mathbf A^m_K$, the inverse image of the generic
+point of the line is integral. If $K$ is a number field, the coefficients
+$(\mathbf a,\mathbf b)$ may simultaneously be chosen in any prescribed finite product of
+nonempty local open sets.
 
-Once such a line is chosen, the one-variable definition supplies $u\in K$ with all pulled-back fibers connected, and $(a_i+b_iu)_i$ is the desired point of $K^m$. This also retains a prescribed nonempty local box if the line coefficients are first chosen sufficiently close to local lines meeting that box.
+The formulation through equations or covers is essential. When $m>1$, substitution along a
+line is not a homomorphism from the entire field $K(T_1,\ldots,T_m)$ to $K(U)$, because a line
+satisfies algebraic relations. It becomes a legitimate pullback only after one chooses a model
+on an open subset and excludes lines on which a required denominator vanishes identically.
 
-For several polynomials simultaneously, one may either repeat this induction or encode failure by a finite union of thin sets. Since finite unions of thin sets are thin, affine space cannot be exhausted by them. Thus a Hilbertian field satisfies the simultaneous-polynomial formulation used in the definition of a basic Hilbert subset.
+**Proof strategy.** First remove the constant field of each extension. The resulting cover is
+geometrically integral. A special case of Bertini irreducibility says that its inverse image over
+a general line is geometrically integral. The conjugate geometric components then descend to an
+integral cover over $K$.
+
+**Proof.** We first prove the Bertini statement being used. Let $k$ be algebraically closed of
+characteristic zero, and let $Z$ be a geometrically integral $d$-fold with a dominant
+generically finite map to $\mathbf P^d_k$. If $d\ge2$, the inverse image of a general hyperplane
+is geometrically integral. Indeed, pass to the normalization of a projective graph of the map
+and choose a general pencil of hyperplanes. Its codimension-two base locus meets the smooth
+étale locus of the map. After blowing up the base ideal and normalizing, the pencil gives a
+proper morphism
+
+$$
+p:\widetilde Z\longrightarrow\mathbf P^1_k.
+$$
+
+At a smooth transverse base point, the exceptional line maps isomorphically to $\mathbf P^1$,
+so $p$ has a section. In the Stein factorization
+
+$$
+\widetilde Z\longrightarrow C\longrightarrow\mathbf P^1,
+$$
+
+the finite map $C\to\mathbf P^1$ consequently has a section. Since $C$ is integral, the induced
+finite extension of function fields admits a retraction and must have degree one. Thus the
+generic fiber of $p$ is connected. It is also normal, being obtained by localizing the normal
+scheme $\widetilde Z$, so it is integral. The equality $C=\mathbf P^1$ says exactly that
+$k(\mathbf P^1)$ is algebraically closed in $k(\widetilde Z)$. In characteristic zero the
+resulting function-field extension is separable and therefore regular, which makes the generic
+fiber geometrically integral. Geometric integrality is open in this proper family after deleting
+the nonflat locus. Hence a general member of the pencil is geometrically integral, and the same
+is true of a general hyperplane. Repeating the argument $d-1$ times proves that the inverse image
+of a general projective line is geometrically integral. Removing its point at infinity gives the
+corresponding assertion for affine lines.
+
+Now represent $E_j$ by the normalization $Y_j$ of a common nonempty open of
+$\mathbf A^m_K$. Let $C_j$ be the algebraic closure of $K$ in $E_j$. A component of
+$(Y_j)_{C_j}$ has a geometrically integral function field, because $C_j$ is algebraically closed
+in $E_j$ and the extension is separable. Apply the proved line statement to that component.
+The good lines form a nonempty open over $C_j$. Intersect all its conjugates in a normal closure
+of $C_j/K$ and descend the intersection; this produces a nonempty open of the line-parameter
+space over $K$. Also exclude lines contained in the boundary of the chosen model or on which
+two conjugate components coalesce.
+
+On any remaining line, every geometric component stays integral and the components are still
+permuted transitively by the constant-field embeddings. Their descent is therefore integral:
+a decomposition over $K(U)$ would base change to a nonempty proper union of components stable
+under the transitive action. A primitive-element equation consequently remains irreducible of
+its generic degree.
+
+Finally, over a number field a proper algebraic subset has empty interior in every product of
+finitely many local open sets. Choose a local point of the box off one nonzero defining
+polynomial and shrink around it; the independently proved weak approximation theorem of
+Section 6.1 then supplies a $K$-point in that smaller box, still off the closed subset. Thus the
+line coefficients can retain all prescribed local restrictions. $\square$
+
+Once such a line is chosen, form the compositum of the finitely many pulled-back extensions in
+one algebraic closure of $K(U)$. It is a finite separable field extension. Applying the
+one-variable definition to a primitive-element polynomial for that compositum supplies $u\in K$
+for which the compositum fiber, and hence every subextension fiber, is connected. Then
+$(a_i+b_iu)_i$ is the desired point of $K^m$. To retain a prescribed local box, choose each local
+$\mathbf a_v$ inside that box and choose line coefficients in small neighborhoods of these data
+using the final clause of the lemma. Then $\mathbf a+\mathbf b u$ stays in the box for $u$ in a
+sufficiently small neighborhood of $0$ at every prescribed place. The one-variable approximation
+theorem can impose those neighborhoods on $u$.
+
+This compositum argument also proves the simultaneous-polynomial formulation used in the
+definition of a basic Hilbert subset. Together with the factor-cover dictionary of Section 2.5,
+it shows without circularity that a finite union of thin sets cannot exhaust affine space over a
+Hilbertian field.
 
 ### 3.3 Polynomial, cover, and rational-point formulations
 
@@ -401,13 +486,13 @@ $$
 =|C_H(c)|\,\#\{u\in U(k):\operatorname{Frob}_u=\mathcal C\}.
 $$
 
-The twist is geometrically isomorphic to $V$, hence geometrically connected. If its smooth projective completion has genus $g$, the Riemann hypothesis for curves gives
+The twist is geometrically isomorphic to $V$, hence geometrically connected. If its smooth projective completion has genus $g$, the Hasse--Weil bound for curves, proved earlier in the local library from Jacobian Frobenius and Rosati positivity, gives
 
 $$
 |\overline {V^{(c)}}(k)|=q+1+O(2gq^{1/2}).
 $$
 
-Removing the bounded set of points outside the étale open changes this estimate by $O_{V/U}(1)$. Since $|\mathcal C|=|H|/|C_H(c)|$, division gives the stated main term. The genera and the number of omitted points are bounded in a fixed model, so the error is uniform for its good reductions. $\square$
+Removing the bounded set of points outside the étale open changes this estimate by $O_{V/U}(1)$. Since $|\mathcal C|=|H|/|C_H(c)|$, division gives the stated main term. The genera and the number of omitted points are bounded in a fixed model, so the error is uniform for its good reductions. This Hasse--Weil estimate is the only weight-theoretic input in the proof of Hilbert irreducibility; everything else in the argument is finite-cover geometry, local-field theory, elementary group theory, and weak approximation. $\square$
 
 The arithmetic Frobenius convention agrees with the earlier local convention: it acts on the residue field by $x\mapsto x^q$. Replacing it by geometric Frobenius would invert every class. Since inversion preserves the property of avoiding a subgroup, the Hilbertian conclusion is convention-independent, but local Galois prescriptions are not.
 
@@ -425,19 +510,30 @@ Suppose $v$ splits completely in the constant field $C$. Then the reduction of t
 
 There are infinitely many suitable split places, and the special case needed here has an
 elementary proof. Choose an integral primitive element $\theta$ for the Galois extension $C/K$
-and let $h\in\mathcal O_K[X]$ be its monic minimal polynomial. A nonconstant polynomial over
-$\mathcal O_K$ has values divisible by infinitely many prime ideals. Indeed, suppose a finite
-list contained all prime divisors of its nonzero values. Choose $b$ with $d=h(b)\ne0$, enlarging
-the list so that it contains every prime divisor of $d$. For $a=b+d^2t$ one has
+and let $h\in\mathcal O_K[X]$ be its monic minimal polynomial. We first recall Schur's elementary
+lemma over $\mathbf Z$: a nonconstant polynomial $H\in\mathbf Z[X]$ has values divisible by
+infinitely many rational primes. If only $p_1,\ldots,p_s$ occurred, choose $b$ with
+$d=H(b)\ne0$ and enlarge the list by the prime divisors of $d$. For $a=b+d^2t$ one has
 
 $$
-h(a)=d(1+dq_t)
+H(a)=d(1+dq_t),\qquad q_t\in\mathbf Z.
 $$
 
-with $q_t\in\mathcal O_K$, because $h(a)-h(b)$ is divisible by $a-b$. By choosing an ordinary
-integer $t$ of sufficiently large absolute value, the second factor is a nonunit and is
-congruent to $1$ modulo every prime dividing $d$. It therefore has a prime divisor outside the
-list, a contradiction.
+For a sufficiently large integer $t$, the second factor is an integer of absolute value greater
+than one and is congruent to $1$ modulo every prime dividing $d$. It has a prime divisor outside
+the list, a contradiction.
+
+Apply this lemma to the integer polynomial
+
+$$
+H(T)=N_{K/\mathbf Q}(h(T))
+=\prod_{\sigma:K\hookrightarrow\mathbf C}\sigma(h)(T).
+$$
+
+It is nonconstant and lies in $\mathbf Z[T]$. Every rational prime dividing a nonzero value
+$H(t)$ lies below a prime ideal of $\mathcal O_K$ dividing $h(t)$. Hence the values of $h$ are
+divisible by infinitely many prime ideals. This norm argument is necessary: in a number ring,
+large Archimedean size does not imply that an element is a nonunit.
 
 Discard the finitely many primes dividing the discriminant of $h$ or the index of
 $\mathcal O_K[\theta]$ in $\mathcal O_C$. If such a remaining prime $v$ divides a value $h(a)$,
@@ -467,7 +563,11 @@ D_a\longrightarrow G/N.
 
 $$
 
-Equivalently, $D_aN=G$. When $E/K(T)$ is regular, $N=G$ and this assertion is empty; in the nonregular case it is the step that retains the constant quotient.
+Indeed, the valuation $T-a$ is trivial on $C$, so reduction embeds $C$ into the residue field
+$F_a$. The unramified residue extension $F_a/K$ is Galois with group $D_a$. Since $C/K$ is
+Galois, every $K$-automorphism of $C$ extends to $F_a$, and the restriction map is surjective.
+Equivalently, $D_aN=G$. When $E/K(T)$ is regular, $N=G$ and this assertion is empty; in the
+nonregular case it is the step that retains the constant quotient.
 
 If a finite place $v$ belongs to one of the congruence tubes constructed above, the decomposition group at a place of $F_a$ above $v$ is a subgroup of $D_a$. Its unramified Frobenius, transported into $G$, belongs to the prescribed conjugacy class. Different choices of the component or the prime above $v$ conjugate the element, which is why classes rather than individual elements are the invariant data.
 
@@ -501,7 +601,7 @@ $$
 
 For each $j$, choose a distinct large finite place $w_j\notin S$ that splits completely in $C$, is a place of good reduction, and whose residue cover realizes the conjugacy class of $\gamma_j$. Section 4.4 supplies a nonempty congruence tube $\Theta_j\subset K_{w_j}$ on which that class occurs.
 
-Weak approximation gives
+Weak approximation, proved independently in Section 6.1, gives
 
 $$
 a\in K\cap
@@ -518,10 +618,11 @@ The fiber of the Galois cover is therefore connected, and the specialized action
 
 **Proof.** The one-parameter assertion is Theorem 4.3, and allowing a further nonzero polynomial
 to vanish on any finite set of old parameters makes the good set infinite. For several
-parameters, apply the one-parameter argument successively while retaining the specified local
-boxes, or restrict to a carefully chosen affine line through a local box on which none of the
-generic irreducibilities degenerates. The exceptional choices of line form a proper closed
-subset. Applying Theorem 4.3 on the selected line proves the stated affine-space form. $\square$
+parameters, apply Lemma 3.1 simultaneously to the finite extensions defined by all the
+primitive-element polynomials. Choose the line coefficients in local neighborhoods for which
+$\mathbf a+\mathbf b u$ remains in the prescribed box whenever $u$ is sufficiently close to
+$0$. On the selected line every generic polynomial remains irreducible over $K(U)$. Theorem 4.3,
+with those local neighborhoods of $u$, then proves the stated affine-space form. $\square$
 
 ### 4.7 What the proof actually gives
 
@@ -550,8 +651,8 @@ be dominant generically finite maps with $Y_i$ integral and $K(Y_i)/K(U)$ separa
 primitive element for each field extension $K(Y_i)/K(U)$. Its minimal polynomial is irreducible
 and separable over $K(U)$, and the fiber of $Y_i$ is connected exactly when its specialization is
 irreducible. The simultaneous connectedness locus is therefore a basic Hilbert subset, up to the
-proper closed set removed while choosing the presentations. The several-parameter form of
-Theorem 4.3 makes it dense in every stated local box. $\square$
+proper closed set removed while choosing the presentations. Corollary 4.4 makes it dense in
+every stated local box. $\square$
 
 The total spaces need not be geometrically integral. If they are, their regularity becomes useful for disjointness, but connected specialization alone requires only integrality. The fiber product $Y_1\times_UY_2$ may be disconnected because the two generic fields can intersect; simultaneous connectedness of the two individual fibers does not assert that their compositum has product degree.
 
@@ -602,10 +703,10 @@ This is a convenient criterion, though stronger than necessary: irreducibility o
 **Theorem 5.2 (preservation of the full Galois group).** Outside a thin subset of $K^m$, a separable polynomial has specialized Galois group isomorphic, in its given permutation action, to its generic Galois group. The same conclusion holds for finitely many polynomials at once and inside any finite product of prescribed nonempty local opens.
 
 **Proof.** Remove the degeneration locus and choose the finitely many maximal-subgroup resolvents
-above. Each resolvent is generically irreducible. Theorem 4.3 supplies a Hilbert subset on which
+above. Each resolvent is generically irreducible. Corollary 4.4 supplies a Hilbert subset on which
 all of them remain irreducible, so the specialized group lies in no maximal proper subgroup and
 equals $G$. The complement of that basic Hilbert subset is thin by Proposition 2.1. For finitely
-many polynomials, take all their resolvents at once; Theorem 4.3 also retains the prescribed local
+many polynomials, take all their resolvents at once; Corollary 4.4 also retains the prescribed local
 opens. $\square$
 
 The qualification “in its given permutation action” prevents an ambiguity. Two abstractly isomorphic groups can act differently on the roots, and factorization data depends on the action, not only on the abstract group.
@@ -828,7 +929,7 @@ K_v[X]/(F(\mathbf t,X))
 
 $$
 
-Theorem 4.3 then finds $\mathbf a\in K^m$ in all the $\Omega_v$ while retaining global irreducibility and any finite collection of Hilbert conditions. If $M=K[X]/(F(\mathbf a,X))$, then
+Corollary 4.4 then finds $\mathbf a\in K^m$ in all the $\Omega_v$ while retaining global irreducibility and any finite collection of Hilbert conditions. If $M=K[X]/(F(\mathbf a,X))$, then
 
 $$
 M\otimes_KK_v\cong K_v[X]/(F(b_v,X)).
@@ -897,7 +998,10 @@ The universal polynomial family can realize arbitrary degree-$n$ finite étale a
 
 For a fixed finite group $G$, the specialization method needs a regular $G$-cover and, at every prescribed place, a local parameter whose fiber realizes the desired $G$-algebra. Either requirement can fail. Even when abstract subgroups $I\triangleleft D\subset G$ pass the condition that $D/I$ be cyclic, they may fail local ramification constraints or may not occur in the chosen cover. Global reciprocity imposes further restrictions in abelian problems, and exceptional prime-power phenomena show that naive prescriptions of cyclic local extensions are not always simultaneously globalizable.
 
-There is no contradiction with Theorem 4.3. That theorem says that **existing nonempty local opens in one global family** can be met simultaneously while retaining a Hilbert condition. It does not say that every list of abstract local extensions arises as fibers of such a family. The family supplies the compatibility certificate.
+There is no contradiction with Theorem 4.3 or its affine-space Corollary 4.4. Those results say
+that **existing nonempty local opens in one global family** can be met simultaneously while
+retaining a Hilbert condition. They do not say that every list of abstract local extensions
+arises as fibers of such a family. The family supplies the compatibility certificate.
 
 A similar caution applies to ramification avoidance. Given a finite list of places, choosing unramified local models avoids ramification there. One cannot conclude that the specialization is unramified at every other place. The coefficients and discriminant of the chosen global polynomial have only finitely many bad primes, but which additional primes occur depends on the specialization. Imposing infinitely many unit-discriminant conditions lies beyond weak approximation.
 
@@ -943,7 +1047,15 @@ If it already factors there, no specialization theorem can promise irreducibilit
 
 There is a small logical gap to close: Hilbert irreducibility over $L$ produces parameters in $L$, whereas we need $a\in K$. The bad $K$-parameters for which $f(a,X)$ factors over $L$ form a thin subset of $\mathbf A^1(K)$.
 
-To see this concretely, for each possible factor degree $d$ construct over $L$ the finite factor-parameter cover whose points encode a monic degree-$d$ factor. Take all conjugates under the embeddings of a normal closure of $L/K$, and use restriction of scalars to regard the resulting finite data over $K$. A $K$-parameter at which a factor exists over $L$ lifts to a rational point of one of these descended covers. The generic irreducibility over $L(T)$ ensures that none has degree one over the base. Their images, together with the degeneration locus, are thin over $K$.
+To see this concretely, for each possible factor degree $d$, the coefficient equations for a monic degree-$d$ factor define a finite scheme $Z_d$ over a dense open of $\mathbf A^1_L$; finiteness follows because a separable polynomial has only finitely many subsets of roots. Form the restriction of scalars
+
+$$
+\operatorname{Res}_{L/K}Z_d
+\longrightarrow
+\operatorname{Res}_{L/K}\mathbf A^1_L
+$$
+
+and pull it back along the diagonal map $\mathbf A^1_K\to\operatorname{Res}_{L/K}\mathbf A^1_L$. A $K$-point of this pullback over $a$ is exactly an $L$-point of $Z_d$ over the same parameter $a$, hence exactly a degree-$d$ factor over $L$. Normalize every component that dominates the diagonal line. Such a component cannot have generic degree one: a degree-one component would give an $L(T)$-rational factor of $f$, contrary to the assumed irreducibility over $L(T)$. Therefore every dominating component has degree at least two over $K(T)$. The nondominating components and all deleted loci are type I, while the dominating components give finitely many type II images. Thus the bad $K$-parameters form a thin set over $K$.
 
 Theorem 4.3 therefore gives the following.
 
@@ -1170,11 +1282,15 @@ This proof works in every degree. It also makes the parity constraints automatic
 
 ### 8.4 Full symmetric Galois closure
 
-The preceding construction can be refined so that the Galois closure has group $S_n$. Choose the $c_i$ so that the critical points of $P$ are simple and their critical values are distinct. Such choices form a nonempty open set of rational configurations; slightly perturbing any configuration with simple roots achieves it.
+The preceding construction can be refined so that the Galois closure has group $S_n$. Choose the $c_i$ so that the critical points of $P$ are simple and their critical values are distinct. These requirements are the nonvanishing of finitely many discriminants and resultants in the coefficients of $P$. They define a Zariski-open condition, and it is nonempty: the polynomial $X^n-X$ has simple critical points, and at a critical point $z$ its value is $-(n-1)z/n$, so distinct critical points have distinct critical values. The finite dominant map from ordered roots to monic polynomial coefficients has dense image. Consequently the inverse image of this nonempty coefficient open meets the open locus of distinct ordered roots, and density of $\mathbf Q$ in affine space supplies a tuple of distinct rational $c_i$ with the required property.
 
 The cover $P:\mathbf P^1\to\mathbf P^1$ then has simple finite branch points. Local monodromy around each is a transposition. The inertia element at infinity is the inverse of the product of the finite branch cycles, so the finite transpositions generate the entire geometric monodromy group. The cover is connected, hence this group acts transitively. A transitive subgroup of $S_n$ generated by transpositions is $S_n$: draw a graph with vertices the roots and an edge for every generating transposition; transitivity says the graph is connected, and edge transpositions of a connected graph generate all of $S_n$.
 
-Thus the generic splitting field of $P(X)-T$ is regular over $K$ with group $S_n$. Imposing the full-group Hilbert conditions while keeping $a$ in all the real intervals produces a totally real degree-$n$ field whose Galois closure has group $S_n$.
+Thus the geometric monodromy group is $S_n$. The arithmetic monodromy group is a subgroup of
+$S_n$ containing the geometric group, so it too is $S_n$; their quotient, which measures the
+constant field, is trivial. Hence the generic splitting field of $P(X)-T$ is regular over $K$
+with group $S_n$. Imposing the full-group Hilbert conditions while keeping $a$ in all the real
+intervals produces a totally real degree-$n$ field whose Galois closure has group $S_n$.
 
 For $n\ge3$, the degree-$n$ field is not itself Galois. Its Galois closure is totally real, however, because every conjugate of every root of $P(X)-a$ is real under every real embedding of $K$; a compositum of totally real fields is totally real.
 
@@ -1247,7 +1363,7 @@ $$
 
 Changing $U$ changes $H$ only by points in a proper closed subset. Normalizing the $Y_i$ likewise does not change the generic condition. A type II set is the shadow of failure for an intermediate cover, while a Hilbert subset asks for maximal connectedness of the whole fiber.
 
-If $X$ has a dense open $W$ isomorphic to a dense open of $\mathbf A^m$, Theorem 4.3 applies in those coordinates. Hence every geometric Hilbert subset meets $W(K)$ and is Zariski dense in $X$. More precisely, it is dense in every finite product of local opens that meet $W(K_v)$.
+If $X$ has a dense open $W$ isomorphic to a dense open of $\mathbf A^m$, Corollary 4.4 applies in those coordinates. Hence every geometric Hilbert subset meets $W(K)$ and is Zariski dense in $X$. More precisely, it is dense in every finite product of local opens that meet $W(K_v)$.
 
 **Theorem 9.1 (rational-variety form).** Let $X$ be a $K$-rational geometrically integral variety over a number field. For finitely many integral generically finite separable covers of $X$, their common connected-fiber locus is a Hilbert subset. On a common rational chart it is dense in products of finitely many local nonempty opens.
 
@@ -1391,7 +1507,7 @@ therefore the following. Given a finite étale cover over a rational parameter s
 choose a rational parameter for which the fiber is connected while its fibers over selected
 completions have prescribed, already realizable forms?
 
-Let $X$ be a connected $K$-variety and let
+Let $X$ be a normal integral $K$-variety and let
 
 $$
 \pi:Y\longrightarrow X
@@ -1421,7 +1537,9 @@ when $A_x=F_x$ is a field. Consequently the local fiber records all places above
 their completions at once. A single chosen factor records only one place.
 
 The generic hypothesis needed for connected specialization is equally exact. Since $X$ is
-connected, $Y$ is connected if and only if its generic fiber is the spectrum of a field. If $Y$
+normal and integral, the finite étale scheme $Y$ is normal; its connected components are its
+irreducible components. Hence $Y$ is connected if and only if its generic fiber is the spectrum
+of a field. If $Y$
 is disconnected, every fiber inherits a nontrivial open-and-closed decomposition after shrinking
 $X$ if necessary, so no theorem can make all of $Y_x$ connected. We shall therefore assume that
 each cover whose fiber is required to be connected has integral total space.
@@ -1536,13 +1654,13 @@ polynomial. Since $Y_i$ is integral, that polynomial is irreducible over $K(X)$.
 connected-fiber locus is a Hilbert subset of $X(K)$.
 
 By Proposition 2.1, there is a basic Hilbert subset disjoint from the given thin set $Z$.
-Intersect it with the finitely many connected-fiber conditions. Theorem 4.3 in $m$ parameters
+Intersect it with the finitely many connected-fiber conditions. Corollary 4.4
 meets this intersection inside the local box $\prod_v\Omega_v$. Proposition 11.1 gives the local
 fiber isomorphisms. Repeating the argument in every smaller local box proves density.
 
 If the resulting set were thin, Proposition 2.1 would provide a further basic Hilbert subset
 disjoint from it. Intersecting that further condition with all the preceding ones and applying
-Theorem 4.3 would produce a point both in and outside the resulting set, a contradiction. Hence
+Corollary 4.4 would produce a point both in and outside the resulting set, a contradiction. Hence
 the set is not thin. $\square$
 
 The same theorem holds on a $K$-rational geometrically integral variety after restricting to a
@@ -1835,9 +1953,15 @@ such that:
 
 The set of such coefficient vectors is dense in $\prod_{v\in S}\Omega_v$ and is not thin.
 
-**Proof strategy.** Each conclusion will be identified either as a local open condition or as a Hilbert condition on the rational coefficient space. Their finite intersection is then handled by Theorem 4.3.
+**Proof strategy.** Each conclusion will be identified either as a local open condition or as a Hilbert condition on the rational coefficient space. Their finite intersection is then handled by Corollary 4.4.
 
-**Proof.** Conditions 1 and 3 are equivalent by the construction of the Krasner neighborhoods. At real places the same local constancy proves condition 7. The universal polynomial is generically irreducible, and its regular generic splitting field has group $S_n$. Apply the full-group resolvent conditions over $K$ to obtain conditions 2 and 4.
+**Proof.** Conditions 1 and 3 are equivalent by the construction of the Krasner neighborhoods. At real places the same local constancy proves condition 7. The universal polynomial is generically irreducible, and its regular generic splitting field has group $S_n$. For completeness, if $x_1,\ldots,x_n$ are algebraically independent and $e_i$ are their elementary symmetric functions, the fundamental theorem on symmetric rational functions gives
+
+$$
+K(x_1,\ldots,x_n)^{S_n}=K(e_1,\ldots,e_n).
+$$
+
+The extension on the left has degree $n!$ over the fixed field. Thus $\prod_i(X-x_i)$ is the universal polynomial after identifying its coefficients with the $e_i$, its splitting field has group $S_n$, and the algebraically independent variables introduce no algebraic constants. The splitting field is therefore regular over $K$. Apply the full-group resolvent conditions over $K$ to obtain conditions 2 and 4.
 
 Base change the regular generic splitting field to a normal closure $L'/K$ of $L$. It remains a field with group $S_n$. Descending the full-group Hilbert condition from $L'$ to parameters in $K$ gives
 
@@ -1848,7 +1972,7 @@ $$
 
 so $\widetilde M\cap L'=K$ and condition 5 follows. Add the finitely many covers defining the $H_i$. The thin set $Z$ is contained in the failure locus of another finite collection of cover conditions and a proper closed subset. The finite intersection is therefore a Hilbert subset.
 
-Theorem 4.3 makes this Hilbert subset dense in the product of the local opens. To prove the stronger assertion, suppose that the set of coefficient vectors satisfying all seven conclusions were thin. Proposition 2.1 would supply finitely many further Hilbert conditions avoiding that thin set. Appending them to the conditions already imposed and applying Theorem 4.3 inside the same local box would produce a coefficient vector satisfying all seven conclusions but lying outside the alleged set of all such vectors, a contradiction. Thus the set is not thin. $\square$
+Corollary 4.4 makes this Hilbert subset dense in the product of the local opens. To prove the stronger assertion, suppose that the set of coefficient vectors satisfying all seven conclusions were thin. Proposition 2.1 would supply finitely many further Hilbert conditions avoiding that thin set. Appending them to the conditions already imposed and applying Corollary 4.4 inside the same local box would produce a coefficient vector satisfying all seven conclusions but lying outside the alleged set of all such vectors, a contradiction. Thus the set is not thin. $\square$
 
 ### 12.3 Reading the local conclusions
 
@@ -1869,6 +1993,20 @@ To avoid finitely many prescribed extensions, take $L$ to be the compositum of t
 The bound $n!$ is needed when avoiding intersection with the Galois closure. If only the degree-$n$ root field matters, degree $n$ bounds its intersection, but trivial intersection may still be weaker than linear disjointness unless a Galois hypothesis is present. Using the closure produces the cleanest statement at the cost of the larger bound.
 
 For an arbitrary infinite extension with infinitely many bounded-degree subfields, Theorem 12.1 makes no avoidance promise. That exact limit prevents a finite Hilbert argument from being mistaken for an infinite approximation theorem.
+
+This is the specialization interface used for later Moret--Bailly and automorphy fields. Put in
+$L$ the finite extensions cut out by the residual representations whose images must survive;
+when $K$ is totally real and total reality is required, include every real place, and also include
+every finite place carrying a deformation or automorphic local type in $S$; choose the algebras
+$A_v$ to encode the required completions; and put the finitely many
+monodromy or level-structure demands among the covers $H_i$. Theorem 12.1 then gives an auxiliary
+field of the chosen degree whose Galois closure is disjoint from $L$, whose local completions have
+the prescribed realizable types, and on which all the listed finite covers stay connected; under
+the stated totally real hypotheses, the field and its Galois closure are totally real. This
+conclusion is conditional only on the explicit compatibility of those local
+models. It does not manufacture a point on a nonrational moduli variety: the later
+Moret--Bailly theorem supplies that geometric existence step, after which the specialization and
+disjointness controls proved here apply.
 
 ### 12.5 Existential and effective content
 
