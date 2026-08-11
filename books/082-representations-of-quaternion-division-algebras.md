@@ -123,9 +123,21 @@ $$
 
 This convention fixes every inverse in the later Mackey and character formulas.
 
-We write $\operatorname{Trd}$ and $\operatorname{Nrd}$ for reduced trace and reduced norm. Book 87 established their intrinsic meaning. Here the norm is more than a quadratic form: it supplies the valuation and eventually the entire abelianization of $D^\times$.
+We write $\operatorname{Trd}$ and $\operatorname{Nrd}$ for reduced trace and reduced norm. Intrinsically, after a splitting $D\otimes_KK^s\cong M_2(K^s)$ they are the descended matrix trace and determinant. Thus every $x\in D$ satisfies
 
-The argument has three movements. First, the valuation filtration and compact central quotient reduce every irreducible representation to finite data. Second, Clifford theory and compact induction turn regular residue characters and tame quadratic characters into the special and dihedral packets required in the selected route, while an abstract finite-quotient classification keeps the primitive wild boundary honest. Third, conductors, type multiplicities, pairings, lattices, characters, and compatible measures prepare those packets for comparison with their selected split companions. General harmonic analysis is used from Book 76, and the quaternionic algebra and tame type inputs are used in precisely this range; all consequences peculiar to $D^\times$ are proved here.
+$$
+x^2-\operatorname{Trd}(x)x+\operatorname{Nrd}(x)=0,
+$$
+
+the equation given by its reduced characteristic polynomial, and canonical conjugation is
+
+$$
+\bar x=\operatorname{Trd}(x)-x.
+$$
+
+Consequently $x\bar x=\bar x x=\operatorname{Nrd}(x)$, reduced norm is multiplicative, and its restriction to any quadratic subfield is the field norm. These facts make the norm much more than a quadratic form: it supplies the valuation and eventually the entire abelianization of $D^\times$.
+
+The argument has three movements. First, the valuation filtration and compact central quotient reduce every irreducible representation to finite data. Second, Clifford theory and compact induction turn regular residue characters and tame quadratic characters into the special and dihedral packets required in the selected route, while an abstract finite-quotient classification keeps the primitive wild boundary honest. Third, conductors, type multiplicities, pairings, lattices, characters, and compatible measures prepare those packets for comparison with their selected split companions. The general induction, Mackey, contragredient, and character formalism comes from Book 76. The admissible-pair and character-dependent rectifier normalization comes from Book 79. The valuation filtration, division-side types, their intertwining, and all other consequences peculiar to $D^\times$ are proved here.
 
 ### 1.2 The unramified cyclic model
 
@@ -140,6 +152,14 @@ D=L\oplus L\Pi,
 $$
 
 Changing $\Pi$ by a unit of $L$ changes its square by a norm; the displayed normalization is available because the cyclic algebra $(L/K,\sigma,\varpi)$ represents the unique nontrivial degree-two Brauer class. None of the intrinsic objects below depends on this choice.
+
+Here is the local-algebra argument behind this coordinate model. The local invariant isomorphism
+
+$$
+\operatorname{inv}_K:\operatorname{Br}(K)\xrightarrow{\sim}\mathbf Q/\mathbf Z
+$$
+
+sends the class of a quaternion division algebra to $1/2$. The unramified cyclic algebra $(L/K,\sigma,\varpi)$ also has invariant $1/2$: norms from $L$ have even valuation, so $\varpi$ is not a norm, while the quadratic cyclic class has order two. It is therefore isomorphic to $D$. This proves simultaneously that $L$ embeds and that the displayed basis and relations may be chosen. More generally, if $E/K$ is any quadratic field, scalar extension multiplies the invariant by two, so $D\otimes_KE$ is split. Degree-two cyclic descent then embeds $E$ in $D$, and conjugacy of embeddings follows from the usual central-simple intertwiner argument. These are the only local Brauer facts used below.
 
 For $x=a+b\Pi$, canonical conjugation is
 
@@ -542,6 +562,40 @@ v_K(\operatorname{Trd}(\beta xy))\ge0
 $$
 
 for $x,y\in\mathfrak P_D^n$.
+
+The word “suitable” can be made exact. With the chosen conductor of $\psi$, the annihilator of $\mathfrak P_D^r$ is
+
+$$
+(\mathfrak P_D^r)^\perp=\mathfrak P_D^{-r-1}.
+$$
+
+For $r=0$, write $x=a+b\Pi$ and $y=c+d\Pi$. The scalar part of $xy$ is $ac+\varpi b\sigma(d)$. Requiring its field trace to be integral for every $c,d\in\mathcal O_L$ gives
+
+$$
+\mathcal O_D^\perp
+=\mathcal O_L\oplus\varpi^{-1}\mathcal O_L\Pi
+=\mathfrak P_D^{-1}.
+$$
+
+Multiplication by powers of $\Pi$ and cyclicity of reduced trace give the general formula. It follows that the character group of
+
+$$
+\mathfrak P_D^r/\mathfrak P_D^s\qquad(r<s)
+$$
+
+is parametrized exactly by
+
+$$
+\mathfrak P_D^{-s-1}/\mathfrak P_D^{-r-1}.
+$$
+
+Moreover $1+x\mapsto\psi(\operatorname{Trd}(\beta x))$ is multiplicative on $U_D^r$ whenever
+
+$$
+\beta\mathfrak P_D^{2r}\subseteq\mathfrak P_D^{-1};
+$$
+
+this is precisely the condition that the quadratic error $\beta xy$ be annihilated. These exact dual lattices will locate both the simple character and the first congruence subgroup in its kernel.
 
 The parameter $\beta$ is not unique: adding the annihilator of $\mathfrak P_D^n/\mathfrak P_D^m$ gives the same character. Conjugation sends $\psi_\beta$ to $\psi_{g\beta g^{-1}}$. Thus the orbit of a filtration character is controlled by the quadratic algebra $K[\beta]$, which is the bridge to admissible pairs.
 
@@ -1064,20 +1118,54 @@ $$
 a_E(\theta)=\min\{n\ge0\mid\theta|_{U_E^n}=1\}.
 $$
 
-Thus an unramified character has conductor zero, while a nontrivial residue-field character has conductor one. For quadratic extensions, regularity is equivalent to saying that $\theta$ does not factor through $N_{E/K}$. It is **$K$-minimal** if
+Thus an unramified character has conductor zero, while a nontrivial residue-field character has conductor one. For quadratic extensions, regularity is equivalent to saying that $\theta$ does not factor through $N_{E/K}$. A pair $(E,\theta)$ is **admissible** if it is regular and also satisfies
+
+$$
+\theta/\theta^\sigma\text{ trivial on }U_E^1
+\quad\Longrightarrow\quad
+E/K\text{ unramified}.
+$$
+
+The second condition is essential for a ramified torus. A character whose asymmetry occurs only in residue or valuation data has extra intertwining from the nontrivial normalizer coset, so the positive-depth compact induction below is not irreducible. An admissible character is **$K$-minimal** if
 
 $$
 a_E(\theta)\le
 a_E(\theta(\chi\circ N_{E/K}))
 $$
 
-for every character $\chi$ of $K^\times$. An **admissible pair** is a quadratic extension together with a regular character, placed in minimal form when conductor formulas are asserted.
+for every character $\chi$ of $K^\times$. Every tame admissible pair can be put in minimal form: whenever the last unit-layer character comes from the first-order norm, lift the corresponding character of $K^\times$ and cancel it. The conductor strictly decreases, so the process terminates.
 
-At level zero for unramified $E$, regularity is exactly the residue-field condition of Chapter 9. For a tamely ramified quadratic extension, the residue action of $\sigma$ is trivial, so a conductor-one character cannot be regular after minimal norm factors are removed. A minimal regular tame character has even conductor at least two. This parity is what makes the ramified conductor below odd.
+At level zero for unramified $E$, regularity is exactly the residue-field condition of Chapter 9. For a tamely ramified quadratic extension, admissibility forces genuine asymmetry on $U_E^1$. On
+
+$$
+U_E^r/U_E^{r+1}\cong(k,+),
+$$
+
+conjugation by $\sigma$ acts as multiplication by $(-1)^r$: choose a uniformizer $\varpi_E$ with $\sigma(\varpi_E)=-\varpi_E$. If $n=a_E(\theta)$ is the conductor of a minimal admissible character, its last nontrivial layer has index $r=n-1$ and must be moved by $\sigma$. Hence $n-1$ is odd, so $n$ is even and at least two. This parity is what makes the ramified conductor below odd.
 
 ### 10.3 The inducing subgroup and its extension
 
-Let $n=a_E(\theta)>0$. When $E/K$ is unramified and $n=1$, this is exactly the residue-field construction of Chapter 9. Assume now that $n\ge2$. The restriction of $\theta$ to its last nontrivial principal-unit layer is represented by a trace character $\psi_\beta$ with $K[\beta]=E$. From $\psi_\beta$ one constructs an irreducible representation $\eta_\beta$ of a finite quotient of a principal-unit subgroup. If the relevant quotient is abelian, $\eta_\beta$ is itself a character. If it is two-step nilpotent, the commutator formula of Section 4.4 gives a nondegenerate alternating pairing and $\eta_\beta$ is its unique Heisenberg representation with the prescribed central character.
+Let $(E,\theta)$ be minimal and put $n=a_E(\theta)>0$. When $E/K$ is unramified and $n=1$, this is exactly the residue-field construction of Chapter 9. Assume now that $n\ge2$. The restriction of $\theta$ to its last nontrivial principal-unit layer is represented by a trace character $\psi_\beta$ with $K[\beta]=E$. From $\psi_\beta$ one constructs an irreducible representation $\eta_\beta$ of a finite quotient of a principal-unit subgroup. If the relevant quotient is abelian, $\eta_\beta$ is itself a character. If it is two-step nilpotent, the commutator formula of Section 4.4 gives a nondegenerate alternating pairing and $\eta_\beta$ is its unique Heisenberg representation with the prescribed central character.
+
+We now give the construction rather than using that summary as a black box. Let
+
+$$
+d_E=v_E(\mathfrak D_{E/K})
+$$
+
+be the different exponent. Trace duality on $E$ gives a leading element $\beta\in E$ satisfying
+
+$$
+v_E(\beta)=-n-d_E
+$$
+
+and
+
+$$
+\theta(1+x)=\psi(\operatorname{Tr}_{E/K}(\beta x))
+$$
+
+on the deep half of the unit filtration. Minimality makes the class of $\beta$ noncentral at the decisive precision: if it were scalar modulo the trace annihilator, its character would factor through the first-order norm and a norm twist would lower $n$. Thus $K[\beta]=E$.
 
 In the tame quadratic range the subgroup can be stated explicitly. Put
 
@@ -1095,9 +1183,74 @@ $$
 J_\theta=E^\times U_D^{r_\theta}.
 $$
 
-For $n\ge2$, the torus character and filtration representation agree on $E^\times\cap U_D^{r_\theta}$ because both restrict to the same trace character. At level zero the common intersection condition is the triviality on $U_E^1$. This compatibility is part of the construction; arbitrarily declaring a character trivial on the principal-unit factor would usually be ill-defined.
+There are two constructions, and their parity difference explains the dimension formula.
 
-At positive depth there can be more than one raw extension of the Heisenberg representation. The action of $E^\times$ on the unique Heisenberg space is initially projective, with the cocycle of Section 6.3. In the tame quadratic case that cocycle splits after the action on $E^\times\cap U_D^{r_\theta}$ has been fixed, but tensoring a splitting by a character of the residual quotient can change the extension. We do not suppress this point: a **normalized tame admissible datum** consists of $(E,\theta)$ together with the compatible extension class $[\Lambda_\theta]$. At positive depth, compatibility means that the intersection action is the trace character determined by $\theta$ and that $K^\times$ acts through $\theta|_{K^\times}$; at level zero Chapter 9 already fixes the inducing character. A fixed admissible-pair normalization selects one such class coherently; until that convention is fixed, $[\Lambda_\theta]$ remains part of the datum. All dimension and conductor formulas below are independent of the model used within the fixed class. For a normalized datum,
+If $E/K$ is unramified, put
+
+$$
+J^1=U_E^1U_D^{n-1},
+\qquad
+H^1=U_E^1U_D^n.
+$$
+
+On $H^1$ define
+
+$$
+\vartheta_\beta(u(1+x))
+=\theta(u)\psi(\operatorname{Trd}(\beta x)),
+\qquad
+u\in U_E^1,\quad x\in\mathfrak P_D^n.
+$$
+
+The two factors agree on their intersection by the trace formula for $\theta$. Since $v_D(\beta)=-2n$, the quadratic error satisfies
+
+$$
+\beta\mathfrak P_D^{2n}\subseteq\mathcal O_D\subseteq\mathfrak P_D^{-1},
+$$
+
+so the formula is multiplicative and independent of the chosen factorization. If $n$ is odd, the even layer $\mathfrak P_D^{n-1}/\mathfrak P_D^n$ is already filled by $U_E^1$, and $J^1=H^1$. Then $\eta_\beta=\vartheta_\beta$ is one dimensional. If $n$ is even, then
+
+$$
+J^1/H^1\cong\mathfrak P_D^{n-1}/\mathfrak P_D^n
+$$
+
+has order $q^2$. The rule
+
+$$
+\langle\bar x,\bar y\rangle_\beta
+=\vartheta_\beta([x,y])
+$$
+
+is alternating and nondegenerate. Indeed a radical class commutes with $\beta$ on the associated graded; the centralizer of the noncentral element $\beta$ is $E$, and the $E$-classes have already been absorbed into $H^1$. Choose a maximal isotropic subgroup, extend $\vartheta_\beta$ to it, and induce to $J^1$. Mackey's criterion and nondegeneracy prove that the result $\eta_\beta$ is irreducible, independent of the polarization, and has dimension $q$.
+
+If $E/K$ is tamely ramified, admissibility gives $n=2s$. Put
+
+$$
+J^1=U_E^1U_D^s,
+\qquad
+J_\theta=E^\times J^1=E^\times U_D^s.
+$$
+
+Now $d_E=1$ and $v_D(\beta)=-2s-1$. The direct formula
+
+$$
+\Lambda_\theta(e(1+x))
+=\theta(e)\psi(\operatorname{Trd}(\beta x)),
+\qquad
+e\in E^\times,\quad x\in\mathfrak P_D^s,
+$$
+
+defines a character of $E^\times U_D^s$. Agreement on $E^\times\cap U_D^s=U_E^s$ is the deep trace formula, and
+
+$$
+\beta\mathfrak P_D^{2s}\subseteq\mathfrak P_D^{-1}
+$$
+
+annihilates the quadratic error. Thus no Heisenberg enlargement is needed in this parity.
+
+It remains in the unramified case to extend $\eta_\beta$ from $J^1$ to $J_\theta=E^\times J^1$. Uniqueness of the Heisenberg representation makes the $E^\times$-action projective. After the prescribed action of $K^\times U_E^1$ is removed, the nontrivial quotient is the cyclic group $k_E^\times/k^\times$. A projective representation of a cyclic group is linearized by rescaling an operator for one generator to satisfy its power relation. Requiring that restriction to $E^\times$ contain the $\theta$-isotypic line, and that $K^\times$ act through $\theta|_{K^\times}$, removes the remaining character ambiguity. This produces $\Lambda_\theta$.
+
+At positive depth $\Lambda_\theta|_{E^\times}$ need not be scalar when the Heisenberg space has dimension $q$; what is canonical is its multiplicity-one $\theta$-line and its scalar action on the center. This distinction is indispensable in later character and toric-functional formulas. A **normalized tame admissible datum** consists of $(E,\theta)$ together with this compatible extension class $[\Lambda_\theta]$. The construction just given selects the class once the tame normalization is fixed. For such a datum,
 
 $$
 \dim\Lambda_\theta=
@@ -1114,11 +1267,40 @@ $$
 \pi(E,\theta)=\mathrm{c\text{-}Ind}_{J_\theta}^{D^\times}\Lambda_\theta.
 $$
 
-Regularity forces $I_{D^\times}(\Lambda_\theta)=J_\theta$, so this representation is irreducible.
+Admissibility forces $I_{D^\times}(\Lambda_\theta)=J_\theta$, so this representation is irreducible.
 
-The intertwining proof has three steps. First, an intertwiner of $\Lambda_\theta$ must intertwine its restriction to the last nontrivial congruence layer. Second, the trace pairing translates that condition into conjugacy of $\beta$ modulo a deeper dual lattice. Minimality improves this approximate statement to preservation of the field $E=K[\beta]$. Third, the normalizer of $E^\times$ in $D^\times$ has quotient of order two, represented by the Galois involution. Its nontrivial coset replaces $\theta$ by $\theta^\sigma$ and fails to intertwine when $\theta$ is regular. What remains is exactly $J_\theta$.
+For a nonminimal tame admissible pair, choose
 
-This also explains both hypotheses. Without minimality, the leading parameter can be central modulo the relevant dual lattice, so the field is not detected at the claimed depth. Without regularity, the Galois-normalizer coset intertwines, enlarges the endomorphism algebra, and makes the induced representation reducible.
+$$
+\theta=\theta_0(\chi\circ N_{E/K})
+$$
+
+with $\theta_0$ minimal, and define
+
+$$
+\pi(E,\theta)
+=\pi(E,\theta_0)\otimes(\chi\circ\operatorname{Nrd}).
+$$
+
+Two minimal decompositions give isomorphic results because their quotient is itself a norm pullback and twisting the inducing action by reduced norm changes its torus line by precisely that pullback. Thus the construction is independent of the chosen minimization.
+
+The intertwining proof has three steps. First, an intertwiner of $\Lambda_\theta$ must intertwine its restriction to the last nontrivial congruence layer. Exact trace duality translates this into
+
+$$
+g^{-1}\beta g\equiv\beta
+$$
+
+modulo the dual error lattice at that layer. Second, improve this approximate centralizing statement one layer at a time. On every associated graded quotient, the kernel of
+
+$$
+\operatorname{ad}(\beta):x\longmapsto\beta x-x\beta
+$$
+
+is the image of $E=C_D(\beta)$; on a complementary $k$-line the map is invertible in the tame range. If $g$ normalizes $E$ modulo $\mathfrak P_D^t$, solve the resulting linear commutator equation for $h\in\mathfrak P_D^t$ and replace $g$ by $g(1+h)$. This improves the congruence by one layer. Completeness and the finite depth of the type eventually put $g$, modulo $J^1$, in $N_{D^\times}(E^\times)$.
+
+Third, the normalizer quotient has order two. Its nontrivial coset replaces $\theta$ by $\theta^\sigma$. At depth zero regularity distinguishes the two residue characters; at positive depth the second admissibility condition ensures that their difference is visible on $U_E^1$. Hence this coset does not intertwine. After removing an element of $E^\times$, any remaining first graded class outside $J^1$ pairs nontrivially with a complementary class under $\langle\ ,\ \rangle_\beta$, again contradicting intertwining. Descending through the remaining finite layers forces the error into $J^1$. What remains is exactly $J_\theta$.
+
+This also explains all three hypotheses. Without minimality, the leading parameter can be central modulo the relevant dual lattice, so the field is not detected at the claimed depth. Without regularity, the Galois-normalizer coset intertwines. For a ramified torus, regularity visible only outside $U_E^1$ is still insufficient, which is exactly why admissibility has its second clause. In either failure the endomorphism algebra enlarges and the induced representation is reducible.
 
 The same leading-character argument gives the isomorphism criterion. For normalized minimal tame data,
 
@@ -1161,7 +1343,7 @@ $$
 \quad(E/K\text{ ramified}),
 $$
 
-for $r\ge1$. These follow by dividing the order of $\mathcal O_D^\times/U_D^r$ by the image of $\mathcal O_E^\times$ and, in the unramified case, adding the missing odd valuation coset. The actual $J_\theta$ and the Heisenberg dimension divide the same total in a way depending on $n$.
+for $r\ge1$. These follow by dividing the order of $\mathcal O_D^\times/U_D^r$ by the image of $\mathcal O_E^\times$ and, in the unramified case, adding the missing odd valuation coset. Substitution now proves the advertised dimensions, including their parity. If $E/K$ is unramified and $n$ is odd, then $r=n-1$ is even, the index is $2q^{n-1}$, and $\Lambda_\theta$ has dimension one. If $n$ is even, the index is $2q^{n-2}$ and the Heisenberg representation has dimension $q$. If $E/K$ is ramified, then $r=n/2$ and the index is $(q+1)q^{n/2-1}$, while the inducing type is a character.
 
 For a minimal tame admissible pair the result simplifies to
 
@@ -1173,7 +1355,7 @@ $$
 \end{cases}
 $$
 
-The second exponent is integral because minimal regular tame ramified characters have even $n$. In every case
+The second exponent is integral because minimal tame ramified admissible characters have even $n$. In every case
 
 $$
 \omega_{\pi(E,\theta)}=\theta|_{K^\times},
@@ -1208,13 +1390,25 @@ c_D(\pi)=a_D(\pi)-1,
 \ell_D(\pi)=a_D(\pi)-2.
 $$
 
-The formula can be proved directly from the filtration construction. The trace-dual of $\mathfrak p_E^n$ is shifted by the inverse different, whose $K$-valuation contributes $\Delta(E/K)$. Counting the $f(E/K)$ residue dimensions at each $E$-unit step then shows that $\Lambda_\theta$ is trivial on $U_D^{\Delta+fn-1}$ and nontrivial on $U_D^{\Delta+fn-2}$. Thus
+The formula follows directly from the exact dual lattice in Section 4.5. In the unramified case $v_D(\beta)=-2n$. Hence
 
 $$
-c_D(\pi)=\Delta(E/K)+f(E/K)n-1,
+\beta\mathfrak P_D^{2n-1}\subseteq\mathfrak P_D^{-1},
 $$
 
-and the displayed conductor formula follows from the definition $a_D=c_D+1$ for higher-dimensional representations. Minimality is exactly what prevents the leading functional from becoming central and being removed by a norm twist.
+so $U_D^{2n-1}$ is killed, whereas the class of $\beta$ in
+
+$$
+\mathfrak P_D^{-2n}/\mathfrak P_D^{-2n+1}
+$$
+
+pairs nontrivially with $\mathfrak P_D^{2n-2}/\mathfrak P_D^{2n-1}$. Thus $U_D^{2n-2}$ is not killed. In the tame ramified case, $d_E=1$, $v_D(\beta)=-n-1$, and the identical calculation shows triviality on $U_D^n$ and nontriviality on $U_D^{n-1}$. These are exactly the two instances of
+
+$$
+c_D(\pi)=\Delta(E/K)+f(E/K)n-1.
+$$
+
+The discriminant term is the inverse-different displacement, and the factor $f(E/K)$ counts the $K$-length of an $E$-unit layer. The Heisenberg enlargement creates no extra shift: its central character is precisely the simple character just tested. The displayed conductor formula now follows from $a_D=c_D+1$ for higher-dimensional representations. Minimality is exactly what prevents the leading functional from becoming central and being removed by a norm twist.
 
 For a nonminimal pair one must first minimize, or use the exact twisted expression
 
@@ -1258,7 +1452,7 @@ This parity diagnostic is useful but not a universal classification in residue c
 
 ### 10.7 Direct and quadratic-induction normalizations
 
-There are two honest ways to name the torus character, and confusing them changes the central character. In the **direct normalization** used in the construction above, the inducing type restricts to the stated character $\theta$ on $E^\times$. We write the result as
+There are two honest ways to name the torus character, and confusing them changes the central character. In the **direct normalization** used in the construction above, the inducing type contains the stated $\theta$-isotypic line on $E^\times$ and the center acts by $\theta|_{K^\times}$. At depth zero the whole type is one dimensional and literally restricts to $\theta$; in a positive-depth Heisenberg case scalar restriction would be false. We write the result as
 
 $$
 \pi_D^{\mathrm{dir}}(E,\theta),
@@ -1272,28 +1466,45 @@ $$
 \theta|_{K^\times}\omega_{E/K},
 $$
 
-where $\omega_{E/K}$ is the quadratic character of $K^\times$ attached to $E/K$. To use the same symbol $\theta$ on both sides, fix the tame rectifying character $\Delta_{E/K}$ of $E^\times$ characterized by the selected type normalization and, in particular, by
+where $\omega_{E/K}$ is the quadratic character of $K^\times$ attached to $E/K$. To use the same symbol $\theta$ on both sides, use the tame rectifying character
 
 $$
-\Delta_{E/K}|_{K^\times}=\omega_{E/K}.
+\Delta_{E/K,\theta}:E^\times\longrightarrow C^\times
 $$
 
-Put $\theta^\natural=\theta\Delta_{E/K}$ and define the **quadratic-induction normalization** by
+constructed from the normalized finite Gauss sum of the admissible pair. Its relevant properties, proved in the tame quadratic theory, are
+
+$$
+\Delta_{E/K,\theta}|_{K^\times}=\omega_{E/K},
+$$
+
+$$
+\Delta_{E/K,\theta^\sigma}
+=\Delta_{E/K,\theta}^\sigma,
+\qquad
+\Delta_{E/K,\theta(\chi\circ N_{E/K})}
+=\Delta_{E/K,\theta},
+\qquad
+\Delta_{E/K,\theta^{-1}}
+=\Delta_{E/K,\theta}^{-1}.
+$$
+
+Put $\theta^\natural=\theta\Delta_{E/K,\theta}$ and define the **quadratic-induction normalization** by
 
 $$
 \pi_D(E,\theta)=\pi_D^{\mathrm{dir}}(E,\theta^\natural).
 $$
 
-The rectifier has conductor small enough not to change any conductor formula in the selected tame range. It does change the central-character formula to
+In the unramified case the rectifier is the fixed unramified character whose value on a common uniformizer is $-1$. In the tamely ramified case it has conductor at most one and genuinely depends on $\theta$: the normalized quadratic Gauss sum selects one of the two extensions with the required central restriction. Suppressing this dependence can reverse a Gauss phase and breaks the inversion formula above. Since a ramified admissible character has conductor at least two, the rectifier does not change any conductor formula in the selected tame range. It does change the central-character formula to
 
 $$
 \omega_{\pi_D(E,\theta)}
 =\theta|_{K^\times}\omega_{E/K}.
 $$
 
-This is not a cosmetic convention. If one writes $\theta|_{K^\times}\omega_{E/K}$ while inducing a type whose actual restriction is $\theta$, one has asserted two incompatible central actions. Direct normalization is best for constructing and evaluating the type; quadratic-induction normalization is best for placing it beside the selected split representation. We will display both whenever the distinction matters.
+This is not a cosmetic convention. If one writes $\theta|_{K^\times}\omega_{E/K}$ while the center of the inducing type actually acts through $\theta|_{K^\times}$, one has asserted two incompatible central actions. Direct normalization is best for constructing and evaluating the type; quadratic-induction normalization is best for placing it beside the selected split representation. We will display both whenever the distinction matters.
 
-The rectifier is fixed coherently under conjugation and norm twists. Consequently
+The displayed identities give coherence under conjugation, norm twists, and duality. In particular,
 
 $$
 \pi_D(E,\theta)\otimes(\chi\circ\operatorname{Nrd})
@@ -1622,7 +1833,7 @@ A counterexample makes the point sharp. Two distinct regular characters of $k_D^
 
 ### 15.2 The canonical type multiplicity space
 
-Let $\pi=\mathrm{c\text{-}Ind}_J^{D^\times}\Lambda$ be one of the regular tame constructions, with exact self-intertwining set $J$. Frobenius reciprocity gives
+Let $\pi=\mathrm{c\text{-}Ind}_J^{D^\times}\Lambda$ be one of the tame admissible constructions, with exact self-intertwining set $J$. Frobenius reciprocity gives
 
 $$
 \operatorname{Hom}_J(\Lambda,\pi|_J)
@@ -1652,7 +1863,36 @@ $$
 \dim\operatorname{Hom}_{E^\times}(\pi,\Omega)\le1
 $$
 
-whenever $\Omega|_{K^\times}=\omega_\pi$ with the compatible variance. Here is the proof idea. Choose an element implementing the nontrivial automorphism of $E/K$ and combine its conjugation with canonical quaternion conjugation. The resulting anti-involution fixes $E$ pointwise. Reduced trace and norm show that it preserves every double coset $E^\times dE^\times$. A matrix coefficient transforming by $\Omega$ on the left and $\Omega^{-1}$ on the right is therefore fixed by that anti-involution. Applying this symmetry to two toric functionals makes their two compositions proportional; irreducibility then forces the product of the two multiplicities to be at most one. Duality identifies the two multiplicities and proves the claim.
+whenever $\Omega|_{K^\times}=\omega_\pi$ with the compatible variance. We prove the bound by making the required symmetry explicit. Choose $j_E\in D^\times$ inducing $\sigma$ and write
+
+$$
+D=E\oplus Ej_E,
+\qquad
+j_Ee=\sigma(e)j_E.
+$$
+
+Let $\tau=\operatorname{Ad}(j_E)\circ\overline{\phantom{x}}$. This is an anti-involution, it fixes $E$ pointwise, and
+
+$$
+\tau(a+bj_E)=a-\sigma(b)j_E.
+$$
+
+Every double coset $E^\times dE^\times$ is $\tau$-stable. If $d=a+bj_E$ with $ab\ne0$, Hilbert 90 gives $x\in E^\times$ such that
+
+$$
+\frac{x}{\sigma(x)}=-\frac{\sigma(b)}b.
+$$
+
+Taking $y=x^{-1}$ gives $xdy=\tau(d)$. If $b=0$, then $d\in E$ is already fixed; if $a=0$, choose $y=1$ and $x=-\sigma(b)/b$. Thus the assertion holds in every case.
+
+Now pass to a principal-unit subgroup that kills $\pi$ and the two characters involved. All operators factor through a finite central extension. On this finite group, transpose with respect to $\tau$ reverses the composition of an $\Omega$-equivariant functional and an $\Omega^{-1}$-equivariant functional. Double-coset stability says the reversed operator equals the original one. If two independent $\Omega$-functionals existed, rank-one compositions with dual functionals would yield two independent endomorphisms of the irreducible representation, contradicting Schur's lemma. Hence
+
+$$
+\dim\operatorname{Hom}_{E^\times}(\pi,\Omega)
+\dim\operatorname{Hom}_{E^\times}(\pi^\vee,\Omega^{-1})\le1.
+$$
+
+Duality identifies the two dimensions and proves the claim.
 
 For the inducing torus and its prescribed character, existence was built into $\Lambda_\theta$, so the Hom space is exactly one dimensional. A generator is a **toric test vector functional**. There need not be such a functional for every character of every other quadratic torus. Multiplicity one proves uniqueness when a functional exists; it does not prove existence.
 
@@ -1848,7 +2088,7 @@ Likewise, the finite compact-induction formula contains no volume factor. Volume
 
 ### 17.4 The selected comparison package
 
-The selected parameter table now has two rows. A character $\mu$ gives the special packet $\operatorname{Sp}_D(\mu)$. A tame regular quadratic pair $(E,\theta)$ gives the quadratic-induction-normalized packet $\pi_D(E,\theta)$. Their central characters and conductors agree with those of the correspondingly labelled selected split representations:
+The selected parameter table now has two rows. A character $\mu$ gives the special packet $\operatorname{Sp}_D(\mu)$. A tame admissible quadratic pair $(E,\theta)$ gives the quadratic-induction-normalized packet $\pi_D(E,\theta)$. Their central characters and conductors agree with those of the correspondingly labelled selected split representations:
 
 $$
 \mu^2,
@@ -1973,8 +2213,8 @@ The following table collects intrinsic data without asserting a correspondence w
 |---|---|---:|---:|---|---|
 | special norm character | $\mu:K^\times\to C^\times$ | $1$ | $1$ if $a(\mu)=0$, otherwise $2a(\mu)$ | $\mu^2$ | $\mu^{-1}\circ\operatorname{Nrd}$ |
 | level zero | regular $\theta$ on unramified $L^\times$, $a_L(\theta)=1$ | $2$ | $2$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{L/K}$ | inverse normalized datum |
-| tame unramified positive depth | normalized minimal regular $(L/K,\theta,[\Lambda_\theta])$, $a_L(\theta)=n\ge2$ | $2q^{n-1}$ | $2n$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{L/K}$ | dual normalized datum |
-| tame ramified | normalized minimal regular $(E/K,\theta,[\Lambda_\theta])$, $a_E(\theta)=n\ge2$ even | $(q+1)q^{(n-2)/2}$ | $n+1$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{E/K}$ | dual normalized datum |
+| tame unramified positive depth | normalized minimal admissible $(L/K,\theta,[\Lambda_\theta])$, $a_L(\theta)=n\ge2$ | $2q^{n-1}$ | $2n$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{L/K}$ | dual normalized datum |
+| tame ramified | normalized minimal admissible $(E/K,\theta,[\Lambda_\theta])$, $a_E(\theta)=n\ge2$ even | $(q+1)q^{(n-2)/2}$ | $n+1$ | direct: $\theta|_{K^\times}$; selected: $\theta|_{K^\times}\omega_{E/K}$ | dual normalized datum |
 | wild/general | Clifford datum $(m,\rho,G_\rho,[\alpha],\eta)$ | orbit size $\times\dim\rho\times\dim\eta$ | from minimal killed $U_D^m$; $m+1$ for noncharacters | prescribed $\omega$ | dual Clifford datum |
 
 For every higher-dimensional row,
@@ -2024,7 +2264,7 @@ Every irreducible smooth representation of $D^\times$ now enters later theory wi
 - concrete admissible-pair data in the level-zero and tame quadratic ranges;
 - exact compact-induction and isomorphism criteria;
 - matrix-character values on regular elements through a finite conjugacy sum;
-- maximal and Eichler-like compact-open invariant dimensions through finite Mackey theory.
+- maximal and Eichler-like compact-open invariant dimensions through finite Mackey theory;
 - a one-dimensional type multiplicity space replacing the split newvector line;
 - stable finite free lattices and perfect contragredient pairings for unit-valued selected data;
 - compatible centralizer, quotient, orbital-integral, and formal-degree measures.
@@ -2035,6 +2275,6 @@ No representation has yet been matched with a representation of $\mathrm{GL}_2(K
 
 The apparent simplicity of $D^\times/K^\times$ hides a remarkably structured finite theory. The reduced norm fixes the valuation, doubles the center's depth, and identifies every one-dimensional representation. The maximal order supplies a canonical normal filtration whose residue layer is $\mathbf F_{q^2}^\times$ and whose positive layers are additive copies of $\mathbf F_{q^2}$. Frobenius conjugation and commutator pairings then determine which characters descend, which travel in nontrivial orbits, and which require Heisenberg or projective extensions.
 
-Compactness modulo the center turns those filtration calculations into a complete classification. Every irreducible is finite dimensional; every one kills a congruence subgroup; and every one is recovered from a finite representation of the maximal compact together with the action of a division uniformizer. Regular residue characters give the two-dimensional level-zero family. Minimal regular characters of embedded quadratic fields give the tame positive-depth families, with explicit dimensions, centers, conductors, duals, and twists. Where wild ramification prevents a uniform elementary label, the Clifford datum remains exact and exhaustive rather than hiding the missing cases.
+Compactness modulo the center turns those filtration calculations into a complete classification. Every irreducible is finite dimensional; every one kills a congruence subgroup; and every one is recovered from a finite representation of the maximal compact together with the action of a division uniformizer. Regular residue characters give the two-dimensional level-zero family. Minimal admissible characters of embedded quadratic fields give the tame positive-depth families, with explicit dimensions, centers, conductors, duals, and twists. Where wild ramification prevents a uniform elementary label, the Clifford datum remains exact and exhaustive rather than hiding the missing cases.
 
 The resulting representation is visible through several compatible shadows: its inducing orbit, its first nontrivial congruence layer, its central character, its finite matrix character on regular classes, its type multiplicity line, its integral lattice, and its formal degree. Compatible centralizer measures and rectifiers make these shadows one coherent local object. The next stage may compare that object with discrete-series representation theory on the split inner form; the division-algebra side itself is complete in the selected special and tame dihedral range, while the primitive wild boundary remains explicit.
